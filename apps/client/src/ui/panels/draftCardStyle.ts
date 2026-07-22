@@ -10,10 +10,39 @@
  * gold / prismatic augments and legendary WEAPON cards read apart at a glance
  * exactly like LoL-Arena rarities.
  */
+import { Items } from "@ggd/shared/sim/content/registry";
+import type { ItemId } from "@ggd/shared/ids";
 import { GOLD } from "../theme";
+import { buildItemRow, formatAuthoredBonus, type RowItem } from "./itemStats";
 
 /** audio-map.json sfx key for the card lock-in cue (content/config/audio-map.json). */
 export const DRAFT_CONFIRM_SFX = "draftConfirm";
+
+/**
+ * A concrete EFFECT description for a WEAPON (item) draft choice, mirroring the
+ * shop's inline read of the SAME item (itemStats.buildItemRow): the ✦ mechanical
+ * effect line first, then the merged stat bonuses — so a legendary weapon card is
+ * never a blind pick. resolveChoice only surfaces an item's cost (`300 g`), which
+ * says nothing about what the weapon DOES; this fills that gap from the identical
+ * content the shop shelf reads, never a re-derivation.
+ *
+ * Returns null when the choice is not an item, or the item has no printable
+ * effect/stat — the caller then keeps resolveChoice's text (augment/ability
+ * descriptions already carry their own, and a bare item keeps its cost).
+ *
+ * The `as unknown as RowItem` mirrors MerchantShop: the runtime item doc carries
+ * `description`, which the compile-time ItemDef type omits.
+ */
+export function weaponEffectDescription(choice: string): string | null {
+  const item = Items.tryGet(choice as ItemId);
+  if (!item) return null;
+  // no anchor stat on a draft card → every bonus stays a labelled chip
+  const row = buildItemRow(item as unknown as RowItem, null);
+  const parts: string[] = [];
+  if (row.effect) parts.push(row.effect);
+  for (const m of row.merged) parts.push(formatAuthoredBonus(m));
+  return parts.length > 0 ? parts.join(" · ") : null;
+}
 
 /** Rarity/kind → accent colour. Mirrors LoL-Arena's silver/gold/prismatic. */
 export const DRAFT_TIER_COLOR: Record<string, string> = {

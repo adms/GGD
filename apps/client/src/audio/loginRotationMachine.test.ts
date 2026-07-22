@@ -63,13 +63,13 @@ describe("login rotation state machine", () => {
       if (now >= bedStart + LOGIN_SEGMENT_MS) bedStart = now;
       return bedStart;
     });
-    expect(r.themes).toEqual(["menu", "menuNocturne", "menu", "menuNocturne", "menu"]);
+    expect(r.themes).toEqual(["menuNocturne", "menu", "menuNocturne", "menu", "menuNocturne"]);
   });
 
   it("FAILURE 1 — a bed that never starts holds theme 0 and keeps polling", () => {
     // autoplay never unlocked: bedStartedAtMs stays null forever
     const r = drive(LOGIN_SEGMENT_MS * 3, () => null);
-    expect(r.themes).toEqual(["menu"]); // never advances past the first theme
+    expect(r.themes).toEqual(["menuNocturne"]); // never advances past the first theme
     // ...but it also never gives up: it is still polling at the poll interval
     const { step } = stepLoginRotation(r.state, { bedStartedAtMs: null, nowMs: 1e6 });
     expect(step.armed).toBe(false);
@@ -97,7 +97,7 @@ describe("login rotation state machine", () => {
       return bedStart;
     });
     // exactly one advance per segment — NOT one per poll
-    expect(r.themes).toEqual(["menu", "menuNocturne", "menu"]);
+    expect(r.themes).toEqual(["menuNocturne", "menu", "menuNocturne"]);
     // and while stuck it polled rather than re-armed: bounded step count
     expect(r.steps).toBeLessThan(3 + (3 * STUCK_MS) / LOGIN_ROTATION_POLL_MS + 10);
   });
@@ -111,12 +111,12 @@ describe("login rotation state machine", () => {
     // the hold expires but the bed is unchanged → advance the theme ONCE, then
     // poll (waitMs is a poll, not a zero-length segment)
     const after = stepLoginRotation(armed.next, { bedStartedAtMs: 1000, nowMs: 1000 + LOGIN_SEGMENT_MS });
-    expect(after.step.theme).toBe("menuNocturne");
+    expect(after.step.theme).toBe("menu");
     expect(after.step.armed).toBe(false);
     expect(after.step.waitMs).toBe(LOGIN_ROTATION_POLL_MS);
     // polling again on the same anchor does NOT advance any further
     const again = stepLoginRotation(after.next, { bedStartedAtMs: 1000, nowMs: 2e6 });
-    expect(again.step.theme).toBe("menuNocturne");
+    expect(again.step.theme).toBe("menu");
     expect(again.step.armed).toBe(false);
   });
 
@@ -131,7 +131,7 @@ describe("login rotation state machine", () => {
     r = stepLoginRotation(s, { bedStartedAtMs: UNLOCK, nowMs: UNLOCK });
     expect(r.step.armed).toBe(true);
     expect(r.step.waitMs).toBe(LOGIN_SEGMENT_MS); // a whole loop, not 45 s
-    expect(r.step.theme).toBe("menu");
+    expect(r.step.theme).toBe("menuNocturne");
   });
 
   it("a suspended tab fires immediately instead of scheduling in the past", () => {
@@ -323,7 +323,7 @@ describe("login rotation end-to-end through the real mixer", () => {
       await settle();
       now += step.waitMs;
     }
-    expect([...themes]).toEqual(["menu"]); // parked on the identity theme
+    expect([...themes]).toEqual(["menuNocturne"]); // parked on the identity theme
     expect(sys.bedFile).toBeNull(); // and nothing is playing at all
     sys.dispose();
     vi.useRealTimers();

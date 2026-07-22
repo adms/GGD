@@ -79,6 +79,12 @@ export function basicAttackSystem(world: SimWorld): void {
       continue;
     }
     if ((world.hitstop.get(id) ?? 0) > 0) continue;
+    // Combat-juice HITSTUN: a victim-only action-lock that outlasts the shared
+    // hitstop (frame advantage — the attacker is already free while the
+    // defender still cannot swing). PAUSES the wind-up like hitstop (resumes
+    // after), so cadence/DPS is unchanged; it only denies the on-the-back-foot
+    // defender a free counter-swing mid-shove. See combat/damage.ts.
+    if ((world.hitstun.get(id) ?? 0) > 0) continue;
 
     const champ = world.champion.get(id);
     const cdef = champ ? Champions.tryGet(champ.championId as ChampionId) : undefined;

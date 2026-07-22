@@ -36,9 +36,75 @@ export interface DamagePacket {
 /** Below this mitigated impact a hit is "chip": no hitstop, no knockback. */
 const HITSTOP_MIN_IMPACT = 12;
 const HITSTOP_MIN_TICKS = 2;
-const HITSTOP_MAX_TICKS = 6; // contract cap (~6 ticks)
+const HITSTOP_MAX_TICKS = 6; // base cap (~6 ticks) for a plain hit
 /** +1 hitstop tick per this much impact (heavier hit = longer freeze). */
 const HITSTOP_PER_IMPACT = 55;
+
+// ----------------------------------------------------- UNIFIED IMPACT PROFILE
+// ONE hit-weight computed once here in applyImpact and carried on the hitImpact
+// event so every downstream (sim + client) channel reads a single source of
+// truth instead of each re-classifying "how hard did that land" with its own
+// constant. All integer / branch-only maths — no rng, no trig, no wall-clock —
+// so the client's prediction shadow world derives the identical profile.
+
+/** Impact tier boundaries (mitigated, pre-shield force). crit overrides both. */
+const TIER_MEDIUM_IMPACT = 60;
+const TIER_HEAVY_IMPACT = 120;
+
+/** Crit lands a DISTINCTLY longer freeze (the "that one HURT" pause): +2 ticks. */
+const HITSTOP_CRIT_BONUS = 2;
+/** A guard shatter is the biggest 破碎 beat — floor its freeze to the cap. */
+const HITSTOP_COUNTER_CAP = 8; // emphasis cap: crit/guardBreak may exceed the base 6
+
+/** Victim-only hitstun: +1 tick per this much impact on top of the base lock. */
+const HITSTUN_PER_IMPACT = 40;
+/** Ticks the victim stays action-locked BEYOND the attacker's freeze (frame
+ *  advantage — the attacker recovers first, the defender is on the back foot). */
+const HITSTUN_ADVANTAGE = 2;
+/** Hitstun never roots longer than this (a knockdown handles the heaviest CC). */
+const HITSTUN_MAX_TICKS = 12;
+
+export type ImpactTier = "light" | "medium" | "heavy" | "crit";
+
+/**
+ * The one hit-weight for a landed hit, computed once and carried on `hitImpact`.
+ * Every reaction channel (sim hitstop/hitstun/knockback + client shake / spark /
+ * blood / ripple / flash / sfx / freeze) reads THIS instead of re-deriving its
+ * own "heavy" cut, so light→heavy crosses on the same frame across all of them.
+ */
+export interface ImpactProfile {
+  tier: ImpactTier;
+  /** freeze ticks applied to BOTH fighters (crit/guardBreak-emphasised). */
+  hitstopTicks: number;
+  /** victim-only action-lock ticks (>= hitstopTicks; roots auto + cast). */
+  hitstunTicks: number;
+  /** unit push direction (victim away from source); {0,0} when none resolved. */
+  knockbackDir: { x: number; z: number };
+  /** push distance actually applied this hit (0 = no shove). */
+  knockbackMag: number;
+  isEX: boolean;
+  isBlock: boolean;
+  isCounter?: boolean;
+}
+
+/** Tier from the mitigated impact + crit + guardBreak (crit is the top tier). */
+function deriveTier(impact: number, crit: boolean, guardBreak: boolean): ImpactTier {
+  if (crit) return "crit";
+  if (guardBreak || impact >= TIER_HEAVY_IMPACT) return "heavy";
+  if (impact >= TIER_MEDIUM_IMPACT) return "medium";
+  return "light";
+}
+
+/**
+ * Whether this packet is an EX / super. Detected from a damage-origin marker so
+ * no extra field has to thread through the un-owned effect runner. Populating it
+ * needs the EX-origin tagging follow-up (audit P2) in the ability/cast layer;
+ * until then no content produces the marker and this stays false — the FIELD is
+ * on the contract now so the client stage can consume it verbatim.
+ */
+function originIsEX(origin: string): boolean {
+  return origin.startsWith("ex:") || origin.includes(":ex:");
+}
 
 /** Knockback only for meaningful blows (autos/DoTs stay put; abilities shove). */
 const KB_MIN_IMPACT = 70;
@@ -78,48 +144,91 @@ function applyImpact(
   guardBreak: boolean,
   crit: boolean,
   killingBlow: boolean,
+  origin: string,
 ): void {
   const tt = world.transform.get(target);
+  const st = world.transform.get(source);
+  const nav = world.nav.get(target);
   const x = tt?.pos.x ?? 0;
   const z = tt?.pos.z ?? 0;
+  const isEX = originIsEX(origin);
+
+  // ---- resolve the shove direction/distance up front so the profile carries
+  // the SAME knockback the sim applies (one source of truth for the client too).
+  let kbDir = { x: 0, z: 0 };
+  let kbMag = 0;
+  if (impact >= KB_MIN_IMPACT && nav && tt && st) {
+    let dir = normalize(sub(tt.pos, st.pos));
+    if (lenSq(dir) < 1e-12) {
+      // same position (rare): shove opposite the victim's facing, else a fixed axis
+      dir = lenSq(tt.facing) > 1e-12 ? { x: -tt.facing.x, z: -tt.facing.z } : { x: 1, z: 0 };
+    }
+    let distance = (impact / 100) * KB_UNIT_AT_100 * KB_TYPE_MULT[type];
+    if (blocked) distance *= KB_BLOCK_MULT;
+    distance = Math.min(KB_MAX_DIST, distance);
+    kbDir = dir;
+    kbMag = distance;
+  }
+
+  // ---- HITSTOP — freeze BOTH fighters (SF-style), heavier hit = longer freeze,
+  // with crit / guard-shatter EMPHASIS so the biggest beats read distinctly.
+  // Chip never freezes, but a guard shatter always lands its dramatic hold.
+  let hitstopTicks = 0;
+  if (impact >= HITSTOP_MIN_IMPACT || guardBreak) {
+    hitstopTicks = Math.min(
+      HITSTOP_MAX_TICKS,
+      Math.max(HITSTOP_MIN_TICKS, HITSTOP_MIN_TICKS + Math.floor(impact / HITSTOP_PER_IMPACT)),
+    );
+    if (crit) hitstopTicks += HITSTOP_CRIT_BONUS; // crit: distinctly longer hold
+    if (guardBreak) hitstopTicks = Math.max(hitstopTicks, HITSTOP_COUNTER_CAP); // shatter: floor to max
+    hitstopTicks = Math.min(hitstopTicks, HITSTOP_COUNTER_CAP); // clamp to the emphasis cap
+  }
+
+  // ---- HITSTUN — a victim-ONLY action-lock that outlasts the shared freeze:
+  // the attacker recovers first (frame advantage), the defender is rooted out of
+  // auto/cast while they get shoved. Scales with impact, always >= the hitstop.
+  let hitstunTicks = 0;
+  if (hitstopTicks > 0) {
+    hitstunTicks = Math.min(
+      HITSTUN_MAX_TICKS,
+      hitstopTicks + HITSTUN_ADVANTAGE + Math.floor(impact / HITSTUN_PER_IMPACT),
+    );
+  }
+
+  const profile: ImpactProfile = {
+    tier: deriveTier(impact, crit, guardBreak),
+    hitstopTicks,
+    hitstunTicks,
+    knockbackDir: kbDir,
+    knockbackMag: kbMag,
+    isEX,
+    isBlock: blocked,
+  };
 
   // Client uses hitImpact purely for shake/particle timing (fires for EVERY
-  // connected hit, blocked or not — blockstun still reads as impact).
-  world.emit("hitImpact", { x, z, source, target, dmgType: type, amount: impact, blocked, crit, killingBlow });
+  // connected hit, blocked or not — blockstun still reads as impact). The
+  // unified `profile` rides along so every channel reads one hit-weight.
+  world.emit("hitImpact", {
+    x, z, source, target, dmgType: type, amount: impact, blocked, crit, killingBlow, profile,
+  });
 
   // A shield that broke this frame = a bigger "guard shatter" reaction.
   if (guardBreak) world.emit("guardBreak", { target, source, x, z });
 
-  if (impact < HITSTOP_MIN_IMPACT) return; // chip: no freeze / no shove
+  // apply the freeze / action-lock world state derived above.
+  if (hitstopTicks > 0) {
+    bumpFreeze(world.hitstop, source, hitstopTicks);
+    bumpFreeze(world.hitstop, target, hitstopTicks);
+    bumpFreeze(world.hitstun, target, hitstunTicks);
+  }
 
-  // HITSTOP — freeze BOTH the attacker and the victim (SF-style), longer the
-  // heavier the hit, capped. Cooldowns keep ticking (see HitstopSystem docs).
-  const ticks = Math.min(
-    HITSTOP_MAX_TICKS,
-    Math.max(HITSTOP_MIN_TICKS, HITSTOP_MIN_TICKS + Math.floor(impact / HITSTOP_PER_IMPACT)),
-  );
-  bumpFreeze(world.hitstop, source, ticks);
-  bumpFreeze(world.hitstop, target, ticks);
-
-  if (impact < KB_MIN_IMPACT) return; // notable enough to freeze, too light to shove
+  if (kbMag <= 0 || !nav || !tt || !st) return; // too light to shove (or no body)
 
   // KNOCKBACK — a forced impulse away from the source. Integrated by
   // MovementSystem via moveWithCollision, so it slides along / stops at walls
   // and clamps inside the zone boundary (never clips through). Needs a nav
   // component (neutrals/flowers have none -> no knockback, by construction).
-  const nav = world.nav.get(target);
-  const st = world.transform.get(source);
-  if (!nav || !tt || !st) return;
-
-  let dir = normalize(sub(tt.pos, st.pos));
-  if (lenSq(dir) < 1e-12) {
-    // same position (rare): shove opposite the victim's facing, else a fixed axis
-    dir = lenSq(tt.facing) > 1e-12 ? { x: -tt.facing.x, z: -tt.facing.z } : { x: 1, z: 0 };
-  }
-  let distance = (impact / 100) * KB_UNIT_AT_100 * KB_TYPE_MULT[type];
-  if (blocked) distance *= KB_BLOCK_MULT;
-  distance = Math.min(KB_MAX_DIST, distance);
-  nav.override = { kind: "knockback", dir, speed: KB_SPEED, remaining: distance };
+  nav.override = { kind: "knockback", dir: kbDir, speed: KB_SPEED, remaining: kbMag };
 
   // KNOCKDOWN — heavy UNBLOCKED physical/true blow floors the victim (brief
   // root + getup). Blocked or magic hits shove but don't knock down.
@@ -253,7 +362,7 @@ export function combatResolveSystem(world: SimWorld): void {
       });
 
       // on-impact reactions (hitstop/knockback/knockdown/guardBreak/hitImpact)
-      applyImpact(world, pkt.source, pkt.target, impact, pkt.type, blocked, guardBreak, pkt.crit, killingBlow);
+      applyImpact(world, pkt.source, pkt.target, impact, pkt.type, blocked, guardBreak, pkt.crit, killingBlow, pkt.origin);
 
       fireHooks(world, pkt.source, "onDamageDealt", pkt.target);
       fireHooks(world, pkt.target, "onDamageTaken", pkt.source);

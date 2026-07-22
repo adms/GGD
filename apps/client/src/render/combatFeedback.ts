@@ -1,20 +1,28 @@
 /**
- * combatFeedback — the PURE tunables + math for the client "combat juice" layer
- * (Capcom-style 打擊感). Every decision worth testing lives here and touches
- * neither Babylon nor the DOM: camera-shake magnitude/decay/duration, the
- * hitstop window derived from a damage amount, the hit-flash colour per damage
- * type, and the quality-tier gates that keep the ~700 fps baseline intact.
+ * combatFeedback — the PURE tunables + math AND the SINGLE ORCHESTRATOR for the
+ * client "combat juice" layer (Capcom-style 打擊感). Every decision worth testing
+ * lives here and touches neither Babylon nor the DOM: camera-shake
+ * magnitude/decay/duration, the hit-flash colour per damage type, the
+ * quality-tier gates that keep the ~700 fps baseline intact — and, new here,
+ * `planImpactFeedback`, which turns ONE sim `ImpactProfile` into ONE coordinated
+ * set of reactions so every channel crosses the light→heavy boundary on the
+ * SAME frame at the SAME threshold (the audit's "single unified hit-weight"
+ * fix — no more five decoupled constants each picking their own "heavy" cut).
  *
  * The imperative shells consume these:
  *   • CameraRig      — queues shake impulses, decays them via shakeDecayEnvelope
- *   • ChampionView   — flashColorFor tint + the hitstop freeze window
- *   • GameApp        — impactShakeAmp per event, the two quality-tier gates
+ *   • EntityViewRegistry — on `hitImpact`, calls planImpactFeedback and DISPATCHES
+ *       the freeze + victim flash + attacker flash it returns onto the two views
+ *   • GameApp        — impactShakeAmp per event, the two quality-tier gates; a
+ *       LATER camera wave consumes the plan's `shake` REQUEST
  *
- * DETERMINISM NOTE (client only): the sim owns the authoritative hitstop (a
- * deterministic tick freeze of the two involved entities — see the sim half).
- * This module only mirrors the sim's "heavier hit = longer freeze, cap 6 ticks"
- * curve so the STRUCK MODEL's animation freeze reads in lock-step with it; it
- * never feeds the sim, so trig/float here can't desync anything.
+ * AUTHORITATIVE HITSTOP (client only): the sim owns the freeze — a deterministic
+ * tick freeze of the two involved entities carried on `ImpactProfile.hitstopTicks`
+ * (replicated in world.hitstop). The client NO LONGER re-derives a freeze curve
+ * from the damage amount; it reads the sim's tick count verbatim so the struck
+ * model un-freezes EXACTLY with the body, and a fully-blocked hit (dmg 0 but
+ * impact ≥ the sim's floor) still freezes both bodies. This module never feeds
+ * the sim, so trig/float here can't desync anything.
  */
 import type { Quality } from "./RenderConfig";
 
@@ -64,28 +72,168 @@ export const FLASH_ALPHA = 0.6;
 export const FLASH_MS = 130;
 
 // ---------------------------------------------------------------------------
-// hitstop (ChampionView animation freeze)
+// ImpactProfile — the ONE sim-computed hit-weight (client-side mirror)
 // ---------------------------------------------------------------------------
 
-/** Cap on the hitstop freeze — mirrors the sim's ~6-tick cap. */
-export const HITSTOP_MAX_TICKS = 6;
-/** Damage that maps to one extra freeze tick (heavier hit = longer freeze). */
-export const HITSTOP_DMG_PER_TICK = 22;
-
 /**
- * Ticks to freeze the struck model's animation for a hit of `amount`. Mirrors
- * the sim's deterministic curve: a floor of 1 tick on any landed hit, +1 per
- * HITSTOP_DMG_PER_TICK of damage, capped at HITSTOP_MAX_TICKS. Pure + integer.
+ * Client mirror of the sim's `ImpactProfile` (packages/shared sim/combat/damage).
+ * The wire carries it untyped on `hitImpact.data.profile` (Record<string,unknown>);
+ * this is the shape the client narrows it to. Kept verbatim in step with the
+ * STAGE-1 contract — do not diverge the field set.
  */
-export function hitstopTicksForDamage(amount: number): number {
-  if (!(amount > 0)) return 0;
-  const extra = Math.floor(amount / HITSTOP_DMG_PER_TICK);
-  return Math.min(HITSTOP_MAX_TICKS, 1 + extra);
+export type ImpactTier = "light" | "medium" | "heavy" | "crit";
+export interface ImpactProfile {
+  tier: ImpactTier;
+  /** authoritative freeze ticks applied to BOTH fighters (crit/guardBreak-emphasised). */
+  hitstopTicks: number;
+  /** victim-only action-lock ticks (>= hitstopTicks). Client does not gate on it. */
+  hitstunTicks: number;
+  /** unit push direction (victim away from source); {0,0} when none. */
+  knockbackDir: { x: number; z: number };
+  /** push distance actually applied this hit (0 = no shove). */
+  knockbackMag: number;
+  isEX: boolean;
+  isBlock: boolean;
+  isCounter?: boolean;
 }
 
-/** The hitstop window in ms for a hit of `amount` (ticks × tick length). */
-export function hitstopMsForDamage(amount: number, tickMs: number): number {
-  return hitstopTicksForDamage(amount) * tickMs;
+/**
+ * Narrow an untyped `hitImpact.data.profile` into an ImpactProfile, or null when
+ * the field is absent/malformed (older replays, non-hit events). Defensive:
+ * the client must never throw on a wire payload it doesn't recognise.
+ */
+export function asImpactProfile(v: unknown): ImpactProfile | null {
+  if (typeof v !== "object" || v === null) return null;
+  const p = v as Record<string, unknown>;
+  const tier = p.tier;
+  if (tier !== "light" && tier !== "medium" && tier !== "heavy" && tier !== "crit") return null;
+  if (typeof p.hitstopTicks !== "number") return null;
+  const dir = p.knockbackDir as { x?: unknown; z?: unknown } | undefined;
+  return {
+    tier,
+    hitstopTicks: p.hitstopTicks,
+    hitstunTicks: typeof p.hitstunTicks === "number" ? p.hitstunTicks : 0,
+    knockbackDir: {
+      x: typeof dir?.x === "number" ? dir.x : 0,
+      z: typeof dir?.z === "number" ? dir.z : 0,
+    },
+    knockbackMag: typeof p.knockbackMag === "number" ? p.knockbackMag : 0,
+    isEX: Boolean(p.isEX),
+    isBlock: Boolean(p.isBlock),
+    isCounter: p.isCounter === undefined ? undefined : Boolean(p.isCounter),
+  };
+}
+
+// ---------------------------------------------------------------------------
+// tier weight table — the SINGLE scalar every channel scales from
+// ---------------------------------------------------------------------------
+
+/**
+ * Per-tier reaction tunables. `weight` (0..1) is the one scalar shake/spark/sfx
+ * scale from so light→heavy crosses on the same tier for every channel. The
+ * flash durations stay short (收尾精準): even a crit flash clears well under
+ * 200 ms so back-to-back hits never strobe.
+ */
+interface TierFx {
+  /** 0..1 hit-weight — shake amp, damage-number emphasis, sfx variant all scale from this. */
+  weight: number;
+  /** victim red/magenta flash duration (ms) and overlay strength (0..1). */
+  flashMs: number;
+  flashAlpha: number;
+  /** attacker white "I connected" pop — shorter + lighter than the victim flash. */
+  attackerMs: number;
+  attackerAlpha: number;
+}
+
+const TIER_FX: Record<ImpactTier, TierFx> = {
+  light: { weight: 0.35, flashMs: 110, flashAlpha: 0.5, attackerMs: 60, attackerAlpha: 0.45 },
+  medium: { weight: 0.6, flashMs: 130, flashAlpha: 0.6, attackerMs: 70, attackerAlpha: 0.55 },
+  heavy: { weight: 0.85, flashMs: 160, flashAlpha: 0.72, attackerMs: 85, attackerAlpha: 0.68 },
+  crit: { weight: 1.0, flashMs: 185, flashAlpha: 0.85, attackerMs: 95, attackerAlpha: 0.8 },
+};
+
+/** 0..1 hit-weight for a tier — the single scalar every channel scales from. */
+export function tierWeight(tier: ImpactTier): number {
+  return TIER_FX[tier].weight;
+}
+
+// ---------------------------------------------------------------------------
+// planImpactFeedback — the ONE orchestrator
+// ---------------------------------------------------------------------------
+
+/** A flash instruction: overlay colour, strength, and how long to hold it. */
+export interface FlashSpec {
+  rgb: [number, number, number];
+  alpha: number;
+  ms: number;
+}
+
+/**
+ * A camera-shake REQUEST (not an applied shake). combatFeedback is the single
+ * authority for how hard a tier shakes; the CAMERA wave (GameApp/CameraRig)
+ * consumes this and layers on the local-perspective (taken vs self) + quality
+ * multipliers it alone knows. `dir` is the knockback vector, reserved for the
+ * future directional camera kick (audit P1). `amp` is the pre-multiplier base.
+ */
+export interface ShakeRequest {
+  amp: number;
+  durationMs: number;
+  dir: { x: number; z: number };
+}
+
+/**
+ * The coordinated reaction set for ONE landed hit, all keyed off ONE tier.
+ * `freeze*` are AUTHORITATIVE (the sim's hitstopTicks, never re-derived), so the
+ * animation freeze un-freezes exactly with the body and a fully-blocked hit
+ * (dmg 0, impact ≥ the sim floor) still freezes both fighters.
+ */
+export interface ImpactFeedbackPlan {
+  tier: ImpactTier;
+  isBlock: boolean;
+  isEX: boolean;
+  /** authoritative sim freeze applied to BOTH fighters. 0 = no freeze (chip). */
+  freezeTicks: number;
+  freezeMs: number;
+  /** victim red/magenta flash, tier-scaled intensity + duration. */
+  victimFlash: FlashSpec;
+  /** attacker white pop, tier-scaled. */
+  attackerFlash: FlashSpec;
+  /** camera-shake REQUEST — consumed by the camera wave, NOT applied here. */
+  shake: ShakeRequest;
+  // ----- reserved hook / request points (a LATER wave consumes them) --------
+  // SPARKS  : VfxSystem already reads `profile` off the same hitImpact event;
+  //           it should switch its spark heaviness to `tier` (do NOT spawn here).
+  // CAMERA  : consume `shake` (amp + dir) — a directional kick is a follow-up.
+  // SFX     : combatSfx should pick a light/med/heavy variant off `tier` (audit
+  //           "SFX weight tiering") — do NOT play audio here.
+  // NUMBER  : the floating damage number (#92) already emphasises crit/kill; it
+  //           should read `tier` so its pop crosses the same boundary. Spawned
+  //           in the UI layer, not here.
+}
+
+/**
+ * Turn ONE sim `ImpactProfile` into ONE coordinated reaction set. Pure: returns
+ * data, dispatches nothing (the imperative shell applies freeze + flashes and
+ * hands `shake` to the camera wave). Every channel is scaled by the SAME tier,
+ * except the freeze, which is taken VERBATIM from the sim's authoritative tick
+ * count so the client and sim un-freeze on the identical frame.
+ */
+export function planImpactFeedback(
+  profile: ImpactProfile,
+  ctx: { dmgType?: string; tickMs: number },
+): ImpactFeedbackPlan {
+  const fx = TIER_FX[profile.tier];
+  const amp = Math.min(SHAKE_MAX_AMP, fx.weight * SHAKE_MAX_AMP);
+  return {
+    tier: profile.tier,
+    isBlock: profile.isBlock,
+    isEX: profile.isEX,
+    freezeTicks: profile.hitstopTicks,
+    freezeMs: Math.max(0, profile.hitstopTicks) * ctx.tickMs,
+    victimFlash: { rgb: flashColorFor(ctx.dmgType), alpha: fx.flashAlpha, ms: fx.flashMs },
+    attackerFlash: { rgb: [...ATTACKER_FLASH_RGB], alpha: fx.attackerAlpha, ms: fx.attackerMs },
+    shake: { amp, durationMs: shakeDurationMs(amp), dir: { ...profile.knockbackDir } },
+  };
 }
 
 // ---------------------------------------------------------------------------

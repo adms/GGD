@@ -1,7 +1,7 @@
 /**
- * HitstopSystem — ages the combat-juice freeze counters (hitstop + knockdown)
- * by one tick each. Deterministic: integer decrements only, iteration order
- * irrelevant (each entry is independent).
+ * HitstopSystem — ages the combat-juice freeze counters (hitstop + knockdown +
+ * the victim-only hitstun) by one tick each. Deterministic: integer decrements
+ * only, iteration order irrelevant (each entry is independent).
  *
  * Placement matters. This runs in step() AFTER the systems that GATE on the
  * counters (castResolve/tickCooldowns, movement, basicAttack) have read them
@@ -25,4 +25,5 @@ function age(map: Map<import("../../ids").EntityId, number>): void {
 export function hitstopDecaySystem(world: SimWorld): void {
   age(world.hitstop);
   age(world.knockdown);
+  age(world.hitstun);
 }

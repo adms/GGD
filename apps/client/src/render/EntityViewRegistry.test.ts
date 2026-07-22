@@ -217,7 +217,7 @@ describe("EntityViewRegistry attacker flash (juice-attacker-flash, task #69)", (
     registry.dispose();
   });
 
-  it("a landed hit flashes BOTH the victim (red) and the attacker (source)", () => {
+  it("a landed hit (hitImpact) flashes BOTH the victim (red) and the attacker (source)", () => {
     cover("juice-attacker-flash");
     const registry = new EntityViewRegistry(scene, new AssetManager(scene));
     spawnTwo(registry);
@@ -227,12 +227,113 @@ describe("EntityViewRegistry attacker flash (juice-attacker-flash, task #69)", (
     const tFlash = vi.spyOn(target, "flash");
 
     registry.handleEvent(
-      { type: "damage", data: { source: 20, target: 21, amount: 40, dmgType: "physical" } } as never,
+      {
+        type: "hitImpact",
+        data: {
+          source: 20,
+          target: 21,
+          dmgType: "physical",
+          profile: {
+            tier: "medium",
+            hitstopTicks: 3,
+            hitstunTicks: 5,
+            knockbackDir: { x: 1, z: 0 },
+            knockbackMag: 0,
+            isEX: false,
+            isBlock: false,
+          },
+        },
+      } as never,
       100,
     );
 
-    expect(sFlash).toHaveBeenCalled(); // attacker: the new "I connected" pop
-    expect(tFlash).toHaveBeenCalled(); // victim: the existing red flash preserved
+    expect(sFlash).toHaveBeenCalled(); // attacker: the "I connected" pop
+    expect(tFlash).toHaveBeenCalled(); // victim: the red flash preserved
+    registry.dispose();
+  });
+});
+
+describe("EntityViewRegistry authoritative hitstop (juice-hitstop)", () => {
+  const spawnTwo = (registry: EntityViewRegistry): void =>
+    registry.sync({
+      entities: [champ(20, 0, 0), champ(21, 2, 0)], // 20 = attacker, 21 = victim
+      poseFor: passthrough,
+      nowMs: 0,
+      dtMs: 16,
+      loadModels: false,
+    });
+
+  const hitImpact = (over: Record<string, unknown>): never =>
+    ({
+      type: "hitImpact",
+      data: {
+        source: 20,
+        target: 21,
+        dmgType: "physical",
+        profile: {
+          tier: "medium",
+          hitstopTicks: 3,
+          hitstunTicks: 5,
+          knockbackDir: { x: 1, z: 0 },
+          knockbackMag: 0,
+          isEX: false,
+          isBlock: false,
+          ...over,
+        },
+      },
+    }) as never;
+
+  it("freezes BOTH fighters off the sim's hitstopTicks (not the damage amount)", () => {
+    cover("juice-hitstop");
+    const registry = new EntityViewRegistry(scene, new AssetManager(scene));
+    spawnTwo(registry);
+    const sHit = vi.spyOn(registry.getChampionView(20)!, "setHitstop");
+    const tHit = vi.spyOn(registry.getChampionView(21)!, "setHitstop");
+
+    registry.handleEvent(hitImpact({ hitstopTicks: 4 }), 100);
+
+    // both get the SAME freeze window, taken verbatim from the profile ticks
+    expect(sHit).toHaveBeenCalledTimes(1);
+    expect(tHit).toHaveBeenCalledTimes(1);
+    expect(tHit.mock.calls[0]![0]).toBe(sHit.mock.calls[0]![0]);
+    expect(tHit.mock.calls[0]![0]).toBeGreaterThan(0);
+    registry.dispose();
+  });
+
+  it("a FULLY-BLOCKED hit still freezes both bodies (impact-driven, dmg-agnostic)", () => {
+    cover("juice-hitstop");
+    const registry = new EntityViewRegistry(scene, new AssetManager(scene));
+    spawnTwo(registry);
+    const tHit = vi.spyOn(registry.getChampionView(21)!, "setHitstop");
+
+    // blocked heavy hit: dmg would be 0, but the sim froze (hitstopTicks > 0)
+    registry.handleEvent(hitImpact({ isBlock: true, hitstopTicks: 5 }), 100);
+    expect(tHit).toHaveBeenCalledTimes(1);
+    expect(tHit.mock.calls[0]![0]).toBeGreaterThan(0); // still freezes despite dmg 0
+    registry.dispose();
+  });
+
+  it("a chip hit the sim did NOT freeze (hitstopTicks 0) leaves the animation running", () => {
+    cover("juice-hitstop");
+    const registry = new EntityViewRegistry(scene, new AssetManager(scene));
+    spawnTwo(registry);
+    const tHit = vi.spyOn(registry.getChampionView(21)!, "setHitstop");
+
+    registry.handleEvent(hitImpact({ tier: "light", hitstopTicks: 0 }), 100);
+    // setHitstop is still called, but with 0 → ChampionView.setHitstop no-ops
+    expect(tHit).toHaveBeenCalledWith(0, 100);
+    registry.dispose();
+  });
+
+  it("ignores a malformed hitImpact with no profile (older replay) without throwing", () => {
+    cover("juice-hitstop");
+    const registry = new EntityViewRegistry(scene, new AssetManager(scene));
+    spawnTwo(registry);
+    const tHit = vi.spyOn(registry.getChampionView(21)!, "setHitstop");
+    expect(() =>
+      registry.handleEvent({ type: "hitImpact", data: { source: 20, target: 21 } } as never, 100),
+    ).not.toThrow();
+    expect(tHit).not.toHaveBeenCalled();
     registry.dispose();
   });
 });

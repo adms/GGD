@@ -32,6 +32,11 @@ export function castResolveSystem(world: SimWorld): void {
     // Combat-juice hitstop PAUSES the cast wind-up (a mid-channel hit hitches
     // the animation) without interrupting it or refunding — resumes after.
     if ((world.hitstop.get(id) ?? 0) > 0) continue;
+    // Combat-juice HITSTUN (victim-only) also pauses the cast: the defender is
+    // action-locked past the shared freeze (frame advantage) so a mid-channel
+    // hit hitches the wind-up longer for the one who got hit. No refund/
+    // interrupt — resumes after. See combat/damage.ts.
+    if ((world.hitstun.get(id) ?? 0) > 0) continue;
 
     cast.ticksLeft--;
     if (cast.ticksLeft > 0) continue;

@@ -23,6 +23,7 @@ import { GOLD, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../../theme";
 import { splitChampionName } from "../../codex/codexData";
 import { attackTypeLabel, num, SLOT_COLOR, statLabel } from "../../codex/codexLabels";
 import { skillRows, slotLabel, type SkillRow, type SkillRowSlot } from "../skillDetails";
+import { displayFinalText, useDisplayEnv } from "../../displayFinal";
 import {
   champSelectSkillSeat,
   championDescription,
@@ -48,9 +49,12 @@ function slotAccent(slot: SkillRowSlot): string {
 /** One skill row — icon or letter-tile fallback, name, meta line, description. */
 function SkillRowView({ row }: { row: SkillRow }): React.JSX.Element {
   const accent = slotAccent(row.slot);
+  const env = useDisplayEnv();
   const meta: string[] = [];
   if (row.castLabel) meta.push(row.castLabel);
-  if (row.cooldownSec !== undefined && row.cooldownSec > 0) meta.push(`冷卻 ${num(row.cooldownSec)} 秒`);
+  // #125: show the post-multiplier FINAL cooldown (combat-env), not the base.
+  if (row.cooldownSec !== undefined && row.cooldownSec > 0)
+    meta.push(`冷卻 ${displayFinalText(row.cooldownSec, "cooldown", { env })} 秒`);
   if (row.manaCost !== undefined) meta.push(`魔力 ${num(row.manaCost)}`);
   if (row.maxRank > 1) meta.push(`最大 ${row.maxRank} 級`);
   return (

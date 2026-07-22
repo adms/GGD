@@ -1,25 +1,25 @@
 {
  "schema": "model-budget@1",
- "generatedAt": "2026-07-22T13:20:56.551Z",
+ "generatedAt": "2026-07-22T13:58:53.562Z",
  "generatedBy": "tools/model-budget/emit_report.ts (task #99)",
  "sources": [
   {
    "path": "content/models/_index.json",
    "sha256": "a435a1e59a5abd89",
    "bytes": 16674,
-   "mtime": "2026-07-22T11:34:07.898Z"
+   "mtime": "2026-07-22T13:58:28.069Z"
   },
   {
    "path": "content/arenas/_index.json",
    "sha256": "662c794f19e83f36",
    "bytes": 741,
-   "mtime": "2026-07-22T11:34:07.890Z"
+   "mtime": "2026-07-22T13:58:28.058Z"
   },
   {
    "path": "content/champions/_index.json",
    "sha256": "5fc455cf145d2a1a",
    "bytes": 14861,
-   "mtime": "2026-07-22T11:34:07.821Z"
+   "mtime": "2026-07-22T13:58:28.003Z"
   },
   {
    "path": "apps/client/src/render/ArenaGround.ts",

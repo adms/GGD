@@ -87,7 +87,7 @@ export function AbilityBar(): React.JSX.Element | null {
         const manaMeta = ability.manaCost[Math.max(0, rank - 1)] ?? ability.manaCost[0] ?? 0;
         const meta: TooltipMeta[] = [
           { label: "施法", value: castTypeLabel(ability.castType) },
-          { label: "冷卻", value: `${cdMeta}s` },
+          { label: "冷卻", base: cdMeta, factor: "cooldown", unit: "s" },
         ];
         if (manaMeta > 0) meta.push({ label: "魔力", value: `${manaMeta}` });
         return (
@@ -211,7 +211,7 @@ export function AbilityBar(): React.JSX.Element | null {
         const { cdSecs, sweep } = ex;
         const exMeta: TooltipMeta[] = [
           { label: "EX 技能", value: castTypeLabel(ex.castType) },
-          { label: "冷卻", value: `${ex.cooldownSec}s` },
+          { label: "冷卻", base: ex.cooldownSec, factor: "cooldown", unit: "s" },
         ];
         if (ex.manaCost !== undefined) exMeta.push({ label: "魔力", value: `${ex.manaCost}` });
         exMeta.push({ label: "快捷", value: "F / Back" });

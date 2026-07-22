@@ -31,7 +31,7 @@ import { GlyphTile } from "../components/GlyphTile";
 import { Tooltip } from "../components/Tooltip";
 import { SfxButton } from "../SfxButton";
 import { resolveChoice } from "./resolveChoice";
-import { DRAFT_CONFIRM_SFX, tierColor, tierLabel } from "./draftCardStyle";
+import { DRAFT_CONFIRM_SFX, tierColor, tierLabel, weaponEffectDescription } from "./draftCardStyle";
 import { PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
 
 export function AugmentDraftPanel(): React.JSX.Element | null {
@@ -70,11 +70,16 @@ export function AugmentDraftPanel(): React.JSX.Element | null {
             <div style={{ display: "flex", gap: 8 }}>
               {offer.choices.map((choice, idx) => {
                 const { name, desc, icon } = resolveChoice(choice);
+                // Weapon cards must state what the weapon DOES, not just its cost:
+                // pull the shop's concrete effect+stat read of the same item, and
+                // keep resolveChoice's text for augments/abilities (they already
+                // carry a description) and for a bare item (its cost).
+                const cardDesc = weaponEffectDescription(choice) ?? desc;
                 return (
                   <Tooltip
                     key={choice}
                     title={name}
-                    body={desc}
+                    body={cardDesc}
                     style={{ flex: 1, minWidth: 0, display: "flex" }}
                   >
                     <SfxButton
@@ -119,7 +124,7 @@ export function AugmentDraftPanel(): React.JSX.Element | null {
                       <div style={{ fontSize: 12.5, fontWeight: "bold", color: accent, lineHeight: 1.15 }}>
                         {name}
                       </div>
-                      <div style={{ fontSize: 10, color: TEXT_DIM, lineHeight: 1.3 }}>{desc}</div>
+                      <div style={{ fontSize: 10, color: TEXT_DIM, lineHeight: 1.3 }}>{cardDesc}</div>
                     </SfxButton>
                   </Tooltip>
                 );

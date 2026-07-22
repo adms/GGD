@@ -121,9 +121,15 @@ export class SimWorld {
    * knockdown: per-entity remaining ticks of a PRONE/rooted state from a heavy
    *   unblocked hit (movement rooted, attacks/casts blocked; the knockback slide
    *   still plays). Same decay/exact-N semantics as hitstop.
+   * hitstun: per-entity (VICTIM-ONLY) remaining ticks of an action-lock that
+   *   OUTLASTS the shared hitstop (>= it) — the attacker recovers first, so the
+   *   defender is rooted out of auto/cast (but may still be shoved / walk) while
+   *   on the back foot (frame advantage). Gates basicAttack/castResolve, not
+   *   movement. Same decay/exact-N semantics as hitstop (see combat/damage.ts).
    */
   readonly hitstop = new Map<EntityId, number>();
   readonly knockdown = new Map<EntityId, number>();
+  readonly hitstun = new Map<EntityId, number>();
 
   /** queued damage, drained by combatResolveSystem in one ordered pass */
   readonly damageQueue: DamagePacket[] = [];
@@ -247,6 +253,7 @@ export class SimWorld {
     this.reviveCircle.delete(id);
     this.hitstop.delete(id);
     this.knockdown.delete(id);
+    this.hitstun.delete(id);
     this.matchStats.delete(id);
     this.recentDamagers.delete(id);
     this.killTracking.delete(id);
@@ -340,6 +347,7 @@ export class SimWorld {
       // shows up here as well as in the positions it gates)
       mix(this.hitstop.get(id) ?? 0);
       mix(this.knockdown.get(id) ?? 0);
+      mix(this.hitstun.get(id) ?? 0);
     }
     // match scoreboard is authoritative world state — a desync here (a counter
     // that fired on one run but not the other) surfaces as a digest mismatch.

@@ -8,18 +8,32 @@ import { describe, it, expect } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
 import {
   SHAKE_MAX_AMP,
-  HITSTOP_MAX_TICKS,
   FLASH_MS,
   FLASH_ALPHA,
   flashColorFor,
-  hitstopTicksForDamage,
-  hitstopMsForDamage,
+  asImpactProfile,
+  planImpactFeedback,
+  tierWeight,
+  type ImpactProfile,
+  type ImpactTier,
   impactShakeAmp,
   shakeDurationMs,
   shakeDecayEnvelope,
   heavyPostFxEnabled,
   cameraShakeScaleFor,
 } from "./combatFeedback";
+
+/** A minimal well-formed profile for a given tier + hitstop (test helper). */
+const profileOf = (tier: ImpactTier, hitstopTicks: number, over: Partial<ImpactProfile> = {}): ImpactProfile => ({
+  tier,
+  hitstopTicks,
+  hitstunTicks: hitstopTicks + 2,
+  knockbackDir: { x: 1, z: 0 },
+  knockbackMag: 0,
+  isEX: false,
+  isBlock: false,
+  ...over,
+});
 
 describe("shake impulse decay math (juice-shake)", () => {
   it("envelope is 1 at birth, 0 at/after the end, and monotonically decreasing", () => {
@@ -71,21 +85,87 @@ describe("shake impulse decay math (juice-shake)", () => {
   });
 });
 
-describe("hitstop window (juice-hitstop)", () => {
-  it("floors at 1 tick on any hit, grows with damage, caps at HITSTOP_MAX_TICKS", () => {
+describe("impact profile narrowing (juice-profile)", () => {
+  it("narrows a well-formed wire payload and rejects malformed ones", () => {
+    cover("juice-profile");
+    const p = asImpactProfile({
+      tier: "heavy",
+      hitstopTicks: 5,
+      hitstunTicks: 8,
+      knockbackDir: { x: 1, z: 0 },
+      knockbackMag: 2,
+      isEX: false,
+      isBlock: true,
+    });
+    expect(p).not.toBeNull();
+    expect(p!.tier).toBe("heavy");
+    expect(p!.hitstopTicks).toBe(5);
+    expect(p!.isBlock).toBe(true);
+
+    // absent / malformed → null (never throws on an unknown wire payload)
+    expect(asImpactProfile(undefined)).toBeNull();
+    expect(asImpactProfile(null)).toBeNull();
+    expect(asImpactProfile({})).toBeNull(); // no tier
+    expect(asImpactProfile({ tier: "bogus", hitstopTicks: 3 })).toBeNull();
+    expect(asImpactProfile({ tier: "light" })).toBeNull(); // no hitstopTicks
+    // a missing knockbackDir defaults to {0,0} rather than throwing
+    const q = asImpactProfile({ tier: "light", hitstopTicks: 2 })!;
+    expect(q.knockbackDir).toEqual({ x: 0, z: 0 });
+  });
+});
+
+describe("planImpactFeedback orchestrator (juice-hitstop / juice-orchestrator)", () => {
+  it("freeze is AUTHORITATIVE — from profile.hitstopTicks, never re-derived from damage", () => {
     cover("juice-hitstop");
-    expect(hitstopTicksForDamage(0)).toBe(0);
-    expect(hitstopTicksForDamage(1)).toBe(1);
-    expect(hitstopTicksForDamage(10)).toBe(1);
-    expect(hitstopTicksForDamage(50)).toBeGreaterThan(hitstopTicksForDamage(10));
-    expect(hitstopTicksForDamage(100000)).toBe(HITSTOP_MAX_TICKS);
+    // a chip hit that the sim did NOT freeze (hitstopTicks 0) → no client freeze,
+    // regardless of tier. This is the fix: the client stops re-deriving a curve.
+    expect(planImpactFeedback(profileOf("light", 0), { tickMs: 33.3 }).freezeMs).toBe(0);
+    // heavier sim freeze → longer client window, exactly ticks × tickMs
+    const p = planImpactFeedback(profileOf("heavy", 5), { tickMs: 33.3 });
+    expect(p.freezeTicks).toBe(5);
+    expect(p.freezeMs).toBeCloseTo(5 * 33.3, 5);
   });
 
-  it("hitstopMsForDamage = ticks × tick length", () => {
+  it("a FULLY-BLOCKED hit (dmg 0) still freezes both bodies when the sim froze", () => {
     cover("juice-hitstop");
-    expect(hitstopMsForDamage(0, 50)).toBe(0);
-    expect(hitstopMsForDamage(1, 50)).toBe(50);
-    expect(hitstopMsForDamage(100000, 50)).toBe(HITSTOP_MAX_TICKS * 50);
+    // dmg is irrelevant to the plan — a blocked hit carries a real hitstopTicks.
+    const plan = planImpactFeedback(profileOf("medium", 3, { isBlock: true }), { tickMs: 33.3 });
+    expect(plan.isBlock).toBe(true);
+    expect(plan.freezeMs).toBeGreaterThan(0); // still freezes, unlike the old amount-driven curve
+  });
+
+  it("every channel scales by the SAME tier (weight monotonic light→crit)", () => {
+    cover("juice-orchestrator");
+    const tiers: ImpactTier[] = ["light", "medium", "heavy", "crit"];
+    const weights = tiers.map((t) => tierWeight(t));
+    for (let i = 1; i < weights.length; i++) expect(weights[i]!).toBeGreaterThan(weights[i - 1]!);
+
+    // flash strength + duration + shake amp all grow with the tier
+    const plans = tiers.map((t) => planImpactFeedback(profileOf(t, 3), { tickMs: 33.3 }));
+    for (let i = 1; i < plans.length; i++) {
+      expect(plans[i]!.victimFlash.alpha).toBeGreaterThan(plans[i - 1]!.victimFlash.alpha);
+      expect(plans[i]!.victimFlash.ms).toBeGreaterThanOrEqual(plans[i - 1]!.victimFlash.ms);
+      expect(plans[i]!.attackerFlash.alpha).toBeGreaterThan(plans[i - 1]!.attackerFlash.alpha);
+      expect(plans[i]!.shake.amp).toBeGreaterThan(plans[i - 1]!.shake.amp);
+    }
+    // flashes stay crisp — even a crit clears well under 200 ms (收尾精準)
+    expect(plans[3]!.victimFlash.ms).toBeLessThan(200);
+    // shake amp never exceeds the cap
+    expect(plans[3]!.shake.amp).toBeLessThanOrEqual(SHAKE_MAX_AMP);
+  });
+
+  it("victim flash colour follows dmgType; attacker pop is white; shake carries the kb dir", () => {
+    cover("juice-orchestrator");
+    const magic = planImpactFeedback(profileOf("medium", 3, { knockbackDir: { x: 0, z: -1 } }), {
+      dmgType: "magic",
+      tickMs: 33.3,
+    });
+    expect(magic.victimFlash.rgb).toEqual(flashColorFor("magic"));
+    expect(magic.attackerFlash.rgb).toEqual([1, 1, 1]); // "I connected" white pop
+    expect(magic.shake.dir).toEqual({ x: 0, z: -1 }); // knockback vector forwarded for the camera wave
+
+    const phys = planImpactFeedback(profileOf("medium", 3), { dmgType: "physical", tickMs: 33.3 });
+    expect(phys.victimFlash.rgb).toEqual(flashColorFor("physical"));
   });
 });
 

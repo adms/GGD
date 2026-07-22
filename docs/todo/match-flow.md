@@ -18,3 +18,4 @@ PairedDuels + driver seam + AI Tier-0 + Go⇄Colyseus HMAC.
 | match-11 | Human mailbox: stale seq dropped, latest order wins | input-mailbox-seq | unit | done |
 | match-12 | Snapshot projects seats/teams/entities to schema | snapshot-projection | unit | done |
 | match-13 | Schema state ENCODES without crashing (field semantics) | schema-encode | regression | done |
+| match-nopick | No champ-select pick at expiry → seat is AUTO-ASSIGNED a random ENABLED champion and spawns ALIVE in round 1 (never a 0-HP ☠觀戰中 spectator); a stale/invalid pre-set id is re-rolled instead of crashing spawn (task #130) | match-nopick-alive | regression | done |

@@ -249,16 +249,35 @@ export class MatchController {
     return base;
   }
 
+  /**
+   * A championId that is safe to lock in and spawn: enabled by the whitelist AND
+   * a real, loaded champion. Empty (the no-pick seat), stale, or otherwise
+   * unknown ids all fail here — including a bogus id that the dev `bypass`
+   * whitelist would otherwise wave through (`allowsChampion` is unconditionally
+   * true under bypass), which would make `spawnChampion` throw on
+   * `Champions.get`. autoPickAndSpawn re-rolls anything that fails into a random
+   * ENABLED champion (from the model-backed `randomChampionPool`), so a seat can
+   * never drop into round 1 as a broken/un-spawnable 0-HP unit (#130).
+   */
+  private isEnabledSpawnablePick(championId: string): boolean {
+    if (!championId) return false;
+    if (!this.whitelist.allowsChampion(championId)) return false;
+    return Champions.tryGet(championId as ChampionId) !== undefined;
+  }
+
   private autoPickAndSpawn(): void {
     // uniform pick over the whitelisted, model-backed champion pool (falls back
     // to the full pool when the whitelist would starve the match — see
     // randomChampionPool).
     const pool = this.randomChampionPool();
     for (const [seatId, seat] of this.seats) {
-      // Assign a champion when unset, OR when a pre-set one (from the match
-      // spec) is no longer whitelisted — so a champion removed from the
-      // whitelist after the match was created can never actually spawn.
-      if (!seat.championId || !this.whitelist.allowsChampion(seat.championId)) {
+      // AUTO-ASSIGN (the 隨機英雄 path): a seat with no pick, or one carrying a
+      // champion that is no longer enabled / no longer a valid model-backed
+      // champion, gets a random ENABLED champion at lock-in. This is what keeps
+      // a player who let the champ-select clock run out from spawning into a
+      // confusing dead/spectator state (0 HP, ☠觀戰中) in round 1 — they drop in
+      // ALIVE as a real character instead (#130).
+      if (!this.isEnabledSpawnablePick(seat.championId)) {
         seat.championId = pool[this.world.rng.int(pool.length)]!;
       }
       // spawn at team's eventual side; positions are reset at each combat entry

@@ -91,6 +91,8 @@ export class ChampionView {
   /** hit flash (white physical/true, red magic) — brief emissive-style overlay. */
   private flashUntilMs = 0;
   private flashRgb: [number, number, number] = [1, 1, 1];
+  /** per-flash overlay strength (0..1) — tier-driven, defaults to FLASH_ALPHA. */
+  private flashAlpha = FLASH_ALPHA;
   private flashActive = false;
   /** hitstop: freeze this model's animation until this time (sim-synced). */
   private hitstopUntilMs = 0;
@@ -278,10 +280,18 @@ export class ChampionView {
   /**
    * HIT FLASH — briefly tint the struck model (white physical/true, red magic)
    * via a per-mesh render overlay (never mutates shared .glb materials, so one
-   * champion's flash can't bleed onto another sharing the material). ~80 ms.
+   * champion's flash can't bleed onto another sharing the material). Duration +
+   * strength are tier-driven by combatFeedback's plan; both default to the
+   * medium-hit values (FLASH_MS / FLASH_ALPHA) for direct callers.
    */
-  flash(rgb: [number, number, number], nowMs: number, durMs: number = FLASH_MS): void {
+  flash(
+    rgb: [number, number, number],
+    nowMs: number,
+    durMs: number = FLASH_MS,
+    alpha: number = FLASH_ALPHA,
+  ): void {
     this.flashRgb = rgb;
+    this.flashAlpha = alpha;
     this.flashUntilMs = Math.max(this.flashUntilMs, nowMs + durMs);
   }
 
@@ -384,7 +394,7 @@ export class ChampionView {
       m.renderOverlay = on;
       if (on) {
         m.overlayColor.copyFromFloats(this.flashRgb[0], this.flashRgb[1], this.flashRgb[2]);
-        m.overlayAlpha = FLASH_ALPHA;
+        m.overlayAlpha = this.flashAlpha;
       }
     }
     this.flashActive = on;

@@ -6,6 +6,7 @@
 import { describe, it, expect } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
 import {
+  abilityMetaChips,
   castTypeLabel,
   classifyRole,
   docDescription,
@@ -15,6 +16,8 @@ import {
   stripAbilityNumber,
   type DescRole,
 } from "./abilityText";
+import { metaValue } from "./Tooltip";
+import { normalizeCombatEnv, DEFAULT_COMBAT_ENV } from "@ggd/shared/sim/combatEnv";
 
 describe("stripAbilityNumber (hud-strip-ability-number)", () => {
   it("drops a 2-digit-hero / 2-digit-skill tag", () => {
@@ -80,6 +83,42 @@ describe("docDescription + castTypeLabel (hud-strip-ability-number)", () => {
     expect(castTypeLabel("targeted")).toBe("鎖定");
     expect(castTypeLabel("ground")).toBe("地面指定");
     expect(castTypeLabel("dash")).toBe("位移");
+  });
+});
+
+// ---------------------------------------------------------------------------
+// task #125: shared ability meta chips carry the cooldown as a scaled final
+// ---------------------------------------------------------------------------
+
+describe("abilityMetaChips (hud-display-final)", () => {
+  const CD_QUARTER = normalizeCombatEnv({ cooldown: 0.25 });
+
+  it("emits cooldown as a scaled {base, factor} chip and mana cost as a literal", () => {
+    cover("hud-display-final");
+    const chips = abilityMetaChips({ castType: "self", cooldownSec: 35, manaCost: 40 });
+    expect(chips).toEqual([
+      { label: "施法", value: "自身" },
+      { label: "冷卻", base: 35, factor: "cooldown", unit: "s" },
+      { label: "魔力", value: "40" },
+    ]);
+    // rendered through <Tooltip> the cooldown shows the FINAL — 8.75s at 0.25,
+    // 35s under a neutral table — while the mana COST is never scaled.
+    expect(metaValue(chips[1]!, CD_QUARTER)).toBe("8.75s");
+    expect(metaValue(chips[1]!, DEFAULT_COMBAT_ENV)).toBe("35s");
+    expect(metaValue(chips[2]!, CD_QUARTER)).toBe("40");
+  });
+
+  it("prefers a pre-built castLabel (EX) and drops a zero/absent mana row", () => {
+    cover("hud-display-final");
+    const chips = abilityMetaChips({ castLabel: "位移", cooldownSec: 12, manaCost: 0 });
+    expect(chips).toEqual([
+      { label: "施法", value: "位移" },
+      { label: "冷卻", base: 12, factor: "cooldown", unit: "s" },
+    ]);
+    // no cast + no mana → just the cooldown chip
+    expect(abilityMetaChips({ cooldownSec: 8 })).toEqual([
+      { label: "冷卻", base: 8, factor: "cooldown", unit: "s" },
+    ]);
   });
 });
 

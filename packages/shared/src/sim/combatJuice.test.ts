@@ -400,6 +400,203 @@ describe("knockdown", () => {
   });
 });
 
+// ---------------------------------------------------------- IMPACT PROFILE --
+describe("unified ImpactProfile (one hit-weight on hitImpact)", () => {
+  it("carries tier / hitstop / hitstun / knockback / flags computed once", () => {
+    cover("cj-impact-profile");
+    cover("cj-profile-knockback");
+    const world = makeWorld();
+    const a = spawnDummy(world, 0, 0, { x: ZC.x, z: Y });
+    const b = spawnDummy(world, 1, 1, { x: ZC.x + 3, z: Y }); // +x of a
+    world.nav.get(b)!.moveTarget = { x: ZC.x + 18, z: Y };
+
+    pushHit(world, a, b, 100, "physical"); // impact 100 → medium, +x shove
+    world.step(empty());
+
+    const p = firstEvent(world, "hitImpact")!.profile as Record<string, unknown>;
+    expect(p.tier).toBe("medium"); // 100 in [60,120)
+    expect(p.hitstopTicks).toBe(3); // 2 + floor(100/55)
+    expect(p.hitstunTicks).toBeGreaterThan(p.hitstopTicks as number); // frame advantage
+    expect((p.knockbackDir as V.Vec2).x).toBeCloseTo(1, 6);
+    expect((p.knockbackDir as V.Vec2).z).toBeCloseTo(0, 6);
+    expect(p.knockbackMag as number).toBeGreaterThan(0);
+    expect(p.isEX).toBe(false);
+    expect(p.isBlock).toBe(false);
+
+    // the published profile IS the world state the sim applied
+    expect(world.hitstop.get(a)).toBe(p.hitstopTicks); // both fighters freeze
+    expect(world.hitstop.get(b)).toBe(p.hitstopTicks);
+    expect(world.hitstun.get(b)).toBe(p.hitstunTicks); // ...only the victim is stunned
+    expect(world.hitstun.get(a) ?? 0).toBe(0);
+  });
+
+  it("tiers light/medium/heavy by impact; crit is the top tier", () => {
+    cover("cj-profile-tier");
+    const world = makeWorld();
+    const a = spawnDummy(world, 0, 0, { x: ZC.x, z: Y });
+    const mk = (seat: number, dz: number): EntityId =>
+      spawnDummy(world, seat, 1, { x: ZC.x + 3, z: Y + dz });
+    const light = mk(1, 0);
+    const medium = mk(2, 4);
+    const heavy = mk(3, 8);
+    const critT = mk(4, 12);
+
+    pushHit(world, a, light, 30, "true"); // < 60 → light
+    pushHit(world, a, medium, 90, "true"); // [60,120) → medium
+    pushHit(world, a, heavy, 150, "true"); // >= 120 → heavy
+    pushHit(world, a, critT, 30, "true", /*crit*/ true); // crit overrides tier
+    world.step(empty());
+
+    const tierOf = (id: EntityId): unknown =>
+      (world.events.find((e) => e.type === "hitImpact" && e.data.target === id)!.data
+        .profile as Record<string, unknown>).tier;
+    expect(tierOf(light)).toBe("light");
+    expect(tierOf(medium)).toBe("medium");
+    expect(tierOf(heavy)).toBe("heavy");
+    expect(tierOf(critT)).toBe("crit");
+  });
+});
+
+// ------------------------------------------------- HITSTOP CRIT/GB EMPHASIS --
+describe("hitstop crit / guard-break emphasis", () => {
+  it("a crit freezes distinctly longer (+2 ticks) than the same non-crit hit", () => {
+    cover("cj-hitstop-crit");
+    const world = makeWorld();
+    const a = spawnDummy(world, 0, 0, { x: ZC.x, z: Y });
+    const plain = spawnDummy(world, 1, 1, { x: ZC.x + 3, z: Y });
+    const critT = spawnDummy(world, 2, 1, { x: ZC.x + 3, z: Y + 4 });
+
+    pushHit(world, a, plain, 100, "true", /*crit*/ false); // base 3
+    pushHit(world, a, critT, 100, "true", /*crit*/ true); // 3 + 2
+    world.step(empty());
+
+    expect(world.hitstop.get(plain)).toBe(3);
+    expect(world.hitstop.get(critT)).toBe(5);
+  });
+
+  it("a guard shatter floors the freeze to the emphasis cap (~8), even on a light impact", () => {
+    cover("cj-hitstop-guardbreak");
+    const world = makeWorld();
+    const a = spawnDummy(world, 0, 0, { x: ZC.x, z: Y });
+    const b = spawnDummy(world, 1, 1, { x: ZC.x + 3, z: Y }, {
+      shields: [{ amount: 25, expiresAtTick: world.tick + 100, sourceId: "t" }],
+    });
+
+    pushHit(world, a, b, 40, "true"); // 25 eaten → shatter; bare impact 40 would be 2 ticks
+    world.step(empty());
+
+    expect(firstEvent(world, "guardBreak")).toBeDefined();
+    expect(world.hitstop.get(b)).toBe(8); // floored to the cap, not the impact-scaled 2
+    const p = firstEvent(world, "hitImpact")!.profile as Record<string, unknown>;
+    expect(p.tier).toBe("heavy");
+    expect(p.isBlock).toBe(true);
+    expect(p.hitstopTicks).toBe(8);
+  });
+
+  it("emphasis never exceeds the counter cap (crit on a max-impact hit stays 8)", () => {
+    cover("cj-hitstop-cap");
+    const world = makeWorld();
+    const a = spawnDummy(world, 0, 0, { x: ZC.x, z: Y });
+    const b = spawnDummy(world, 1, 1, { x: ZC.x + 3, z: Y });
+
+    pushHit(world, a, b, 400, "true", /*crit*/ true); // base 6 + 2 = 8, capped 8
+    world.step(empty());
+    expect(world.hitstop.get(b)).toBe(8);
+  });
+});
+
+// ------------------------------------------------------------------ HITSTUN --
+describe("hitstun (victim-only action-lock, frame advantage)", () => {
+  it("gates the victim's basic attack past the shared hitstop, then releases", () => {
+    cover("cj-hitstun-gate-basic");
+    cover("cj-hitstun-release");
+    const world = makeWorld();
+    const c = ZC;
+    const v = spawnChampion(world, {
+      championId: "thorne" as ChampionId, // melee
+      seatId: asSeatId(0),
+      teamId: asTeamId(0),
+      pos: { x: c.x - 1, z: c.z + 8 },
+      zone: 0,
+    });
+    const t = spawnChampion(world, {
+      championId: "sela" as ChampionId,
+      seatId: asSeatId(1),
+      teamId: asTeamId(1),
+      pos: { x: c.x + 1, z: c.z + 8 },
+      zone: 0,
+    });
+    world.nav.get(v)!.attackTarget = t; // v wants to auto t
+
+    const swingThisStep = (): boolean =>
+      world.events.some(
+        (e) => (e.type === "basicAttack" || e.type === "attackWindup") && e.data.source === v,
+      );
+
+    world.hitstun.set(v, 3); // action-locked (no hitstop → other systems free)
+    world.step(empty());
+    expect(swingThisStep()).toBe(false); // no swing while stunned
+
+    // ride out the lock, then the swing is allowed again
+    for (let k = 0; k < 2; k++) {
+      world.step(empty());
+      expect(swingThisStep()).toBe(false); // still locked (3 ticks total)
+    }
+    expect(world.hitstun.get(v)).toBeUndefined();
+    let swung = false;
+    for (let k = 0; k < 40 && !swung; k++) {
+      world.step(empty());
+      if (swingThisStep()) swung = true;
+    }
+    expect(swung).toBe(true);
+  });
+
+  it("pauses an in-progress cast without interrupting or refunding it", () => {
+    cover("cj-hitstun-gate-cast");
+    const world = makeWorld();
+    const c = ZC;
+    const v = spawnChampion(world, {
+      championId: "sela" as ChampionId,
+      seatId: asSeatId(0),
+      teamId: asTeamId(0),
+      pos: { x: c.x, z: c.z + 8 },
+      zone: 0,
+    });
+    const ab = world.abilities.get(v)!;
+    ab.cast = {
+      slot: "Q",
+      abilityId: ab.slots.Q.abilityId,
+      rank: 1,
+      ticksLeft: 5,
+      targets: [],
+      rooted: true,
+    };
+    world.hitstun.set(v, 2);
+
+    world.step(empty());
+    expect(world.abilities.get(v)!.cast).not.toBeNull(); // not interrupted
+    expect(world.abilities.get(v)!.cast!.ticksLeft).toBe(5); // paused (no decrement)
+  });
+
+  it("a real medium hit locks the victim LONGER than the attacker (frame advantage)", () => {
+    cover("cj-hitstun-frameadv");
+    const world = makeWorld();
+    const a = spawnDummy(world, 0, 0, { x: ZC.x, z: Y });
+    const b = spawnDummy(world, 1, 1, { x: ZC.x + 3, z: Y });
+
+    pushHit(world, a, b, 100, "true"); // medium: hitstop 3, hitstun > 3
+    world.step(empty());
+    const stop = world.hitstop.get(b)!;
+    const stun = world.hitstun.get(b)!;
+    expect(stun).toBeGreaterThan(stop);
+    expect(world.hitstun.get(a) ?? 0).toBe(0); // the attacker is NOT stunned
+    // attacker's freeze ends first; the victim is still action-locked afterwards
+    for (let k = 0; k < stop; k++) world.step(empty());
+    expect(world.hitstop.get(a) ?? 0).toBe(0);
+    expect(world.hitstun.get(b) ?? 0).toBeGreaterThan(0);
+  });
+});
+
 // --------------------------------------------------------------------- WHIFF --
 describe("whiff", () => {
   it("a committed melee swing that connects with nothing emits whiff + a forward lunge", () => {

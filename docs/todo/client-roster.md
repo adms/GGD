@@ -15,3 +15,5 @@ client-side movement/rotation smoothing (visual layer), and a scrollable/filtera
 | roster-08 | Imported champion renders its GLB and turns smoothly in a live match | client-roster-render | e2e | pending |
 | roster-09 | Local hero is rendered BETWEEN 30 Hz sim ticks via a render alpha — even per-frame motion at 60 fps, no tick staircase | client-tick-interp | regression | done |
 | roster-10 | Relocation (spawn/respawn/teleport/blink) SNAPS in prediction, snapshot buffer and anim rates — never glides or spins the walk cycle | client-teleport-snap | regression | done |
+| roster-11 | Champ-select 3D preview MOUNTS the champion's .glb on the stage (task #129) | client-preview-mounts | unit | done |
+| roster-12 | Champ-select 3D preview auto-FRAMES + GROUNDS each model to its own bounding box, so off-origin imported champions (皮卡丘) are centred + in view, not blank/black (task #129) | client-preview-frames | unit | done |

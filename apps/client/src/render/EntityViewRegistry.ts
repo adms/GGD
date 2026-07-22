@@ -22,8 +22,8 @@ import type { AssetManager } from "./AssetManager";
 import {
   ATTACKER_FLASH_MS,
   ATTACKER_FLASH_RGB,
-  flashColorFor,
-  hitstopMsForDamage,
+  asImpactProfile,
+  planImpactFeedback,
 } from "./combatFeedback";
 import { TELEPORT_STEP_UNITS } from "./math/motion";
 
@@ -212,29 +212,42 @@ export class EntityViewRegistry {
         }
         break;
       }
-      // damage → hurt flinch + HIT FLASH (red; magenta on magic) +
-      // HITSTOP freeze on the victim, and a matching hitstop on the attacker
-      // (Capcom "both freeze"), all synced to the sim's tick-freeze window.
-      case "damage": {
+      // hitImpact → the ONE orchestrated on-hit moment. combatFeedback turns the
+      // sim's single ImpactProfile into ONE coordinated set of reactions; here we
+      // DISPATCH the three we own onto the two views — hurt flinch + victim flash
+      // + AUTHORITATIVE hitstop on the victim, and a matching freeze + white "I
+      // connected" pop on the attacker (Capcom "both freeze") — all scaled by the
+      // SAME tier. The freeze comes VERBATIM from profile.hitstopTicks (never
+      // re-derived from the damage amount), so a fully-blocked hit (dmg 0 but
+      // impact ≥ the sim floor) still freezes both bodies and the pose un-freezes
+      // exactly with the body. `hitImpact` co-ticks with `damage`, and always
+      // carries the profile, so it is the single source for the freeze window.
+      // The plan's `shake` REQUEST + spark/camera/sfx/number hooks are consumed
+      // by later waves (GameApp/VfxSystem/UI), not here.
+      case "hitImpact": {
+        const profile = asImpactProfile(ev.data.profile);
+        if (!profile) break; // pre-profile replay / malformed payload → no-op
         const target = ev.data.target as number | undefined;
         const source = ev.data.source as number | undefined;
-        const amount = typeof ev.data.amount === "number" ? ev.data.amount : 0;
-        const hitstopMs = hitstopMsForDamage(amount, TICK_MS);
+        const dmgType = (ev.data.dmgType ?? ev.data.type) as string | undefined;
+        const plan = planImpactFeedback(profile, { dmgType, tickMs: TICK_MS });
         if (target !== undefined) {
           const view = this.champions.get(target);
           if (view) {
             view.triggerHurt(nowMs);
-            view.flash(flashColorFor((ev.data.dmgType ?? ev.data.type) as string | undefined), nowMs);
-            view.setHitstop(hitstopMs, nowMs);
+            view.flash(plan.victimFlash.rgb, nowMs, plan.victimFlash.ms, plan.victimFlash.alpha);
+            view.setHitstop(plan.freezeMs, nowMs);
           }
         }
-        // freeze the attacker's swing at the impact frame too, and flash the
-        // attacker white (task #69 — the "I connected" beat that mirrors the
-        // victim's red flash; melee autos had none).
         if (source !== undefined) {
           const sourceView = this.champions.get(source);
-          sourceView?.setHitstop(hitstopMs, nowMs);
-          sourceView?.flash([...ATTACKER_FLASH_RGB], nowMs, ATTACKER_FLASH_MS);
+          sourceView?.flash(
+            plan.attackerFlash.rgb,
+            nowMs,
+            plan.attackerFlash.ms,
+            plan.attackerFlash.alpha,
+          );
+          sourceView?.setHitstop(plan.freezeMs, nowMs);
         }
         break;
       }

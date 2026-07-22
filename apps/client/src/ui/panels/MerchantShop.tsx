@@ -49,6 +49,7 @@ import { shopGate, shouldAutoOpen } from "./shopGate";
 import { shopClockChip } from "./prepCountdown";
 import { groupCatalogue, type Shelf, type ShelfItem } from "./shopGrouping";
 import { skillRows, slotLabel } from "./skillDetails";
+import { displayFinalText, useDisplayEnv } from "../displayFinal";
 import { STAT_META, formatStatValue, formatStatDelta, isVisibleDelta } from "./statDisplay";
 import { buildItemRow, type RowItem } from "./itemStats";
 import {
@@ -916,6 +917,7 @@ function labelFor(stat: Stat): string {
 
 function SkillsTab(props: { seat: Parameters<typeof skillRows>[0] }): React.JSX.Element {
   const rows = skillRows(props.seat);
+  const env = useDisplayEnv(); // #125: cooldown shown as post-multiplier final
   if (rows.length === 0) {
     return <div style={{ color: TEXT_DIM, fontSize: 12 }}>尚未選擇英雄</div>;
   }
@@ -959,7 +961,7 @@ function SkillsTab(props: { seat: Parameters<typeof skillRows>[0] }): React.JSX.
             )}
             <div style={{ display: "flex", flexWrap: "wrap", gap: 10, fontSize: 11, color: TEXT_DIM, marginTop: 4 }}>
               {row.castLabel && <span>施法：{row.castLabel}</span>}
-              {row.cooldownSec !== undefined && <span>冷卻：{row.cooldownSec}s</span>}
+              {row.cooldownSec !== undefined && <span>冷卻：{displayFinalText(row.cooldownSec, "cooldown", { env })}s</span>}
               {row.manaCost !== undefined && <span>魔力：{row.manaCost}</span>}
               {row.cooldownLeftSec > 0 && (
                 <span style={{ color: "#ffbcbc" }}>剩餘冷卻 {Math.ceil(row.cooldownLeftSec)}s</span>

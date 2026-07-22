@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { cover } from "../../../../packages/shared/testkit/cover";
 import { asSeatId, asTeamId, type TeamId } from "@ggd/shared/ids";
+import { Champions } from "@ggd/shared/sim/content/registry";
 import { MatchController, type SeatSpec } from "./MatchController";
 import { PhaseMachine } from "./PhaseMachine";
 import { pairTeams, livesLost } from "./PairedDuels";
@@ -195,6 +196,64 @@ describe("driver seam (match-05, match-06)", () => {
     expect(anyRanked).toBeGreaterThan(12); // Q starts learned (12) + level-up points spent
     // offers consumed at combat start
     expect(ctl.offers.size).toBe(0);
+  });
+});
+
+describe("no-pick champ-select auto-assign (match-nopick)", () => {
+  // #130: letting the champ-select clock run out must NOT strand the player in a
+  // dead/spectator state (0 HP, ☠觀戰中). autoPickAndSpawn assigns a random
+  // ENABLED, model-backed champion and spawns it ALIVE.
+  const oneHumanRestBots = (): SeatSpec[] =>
+    Array.from({ length: 12 }, (_, i) => ({ seatId: i, teamId: Math.floor(i / 3), isBot: i !== 0 }));
+
+  it("human never picks -> spawns ALIVE with a valid model-backed champion in round 1", () => {
+    cover("match-nopick-alive");
+    const ctl = new MatchController("nopick", 1234, oneHumanRestBots(), FAST);
+    const seat0 = ctl.seats.get(asSeatId(0))!;
+    seat0.setDriver(new HumanDriver()); // a real human seat…
+    // …that NEVER calls selectChampion: run the champ-select clock to expiry
+    while (ctl.phase.phase === "champSelect") ctl.tick();
+
+    // a champion was auto-assigned, and it is a real champion with a model key
+    // (not "" / stale). NB: unit tests register skeleton champions but not the
+    // Models registry, so model-backing is enforced in-controller via
+    // randomChampionPool + isEnabledSpawnablePick; here we assert the champion
+    // resolves and carries a modelKey.
+    expect(seat0.championId.length).toBeGreaterThan(0);
+    const def = Champions.tryGet(seat0.championId as never);
+    expect(def).toBeDefined();
+    expect(def!.modelKey.length).toBeGreaterThan(0);
+    // an entity exists and is alive with real HP (never a 0-HP spectator)
+    expect(seat0.entityId).not.toBeNull();
+    const hp = ctl.world.health.get(seat0.entityId!)!;
+    expect(hp.maxHp).toBeGreaterThan(0);
+
+    // …and it is still alive once round-1 combat actually starts
+    while (ctl.phase.phase !== "combat") ctl.tick();
+    const hpCombat = ctl.world.health.get(seat0.entityId!)!;
+    expect(hpCombat.alive).toBe(true);
+    expect(hpCombat.hp).toBeGreaterThan(0);
+  });
+
+  it("a stale/invalid pre-set champion is re-rolled, not spawned broken (match-nopick)", () => {
+    cover("match-nopick-alive");
+    // Under the dev bypass whitelist, allowsChampion() is true for ANY string —
+    // so an invalid id must be caught by the model-backed guard, else spawnChampion
+    // throws / spawns an un-renderable unit (the 0-HP spectator symptom).
+    const specs: SeatSpec[] = Array.from({ length: 12 }, (_, i) => ({
+      seatId: i,
+      teamId: Math.floor(i / 3),
+      isBot: true,
+      ...(i === 0 ? { championId: "godie-not-a-real-champion" } : {}),
+    }));
+    const ctl = new MatchController("stale", 77, specs, FAST);
+    expect(() => {
+      while (ctl.phase.phase === "champSelect") ctl.tick();
+    }).not.toThrow();
+    const seat0 = ctl.seats.get(asSeatId(0))!;
+    expect(Champions.tryGet(seat0.championId as never)).toBeDefined();
+    expect(seat0.entityId).not.toBeNull();
+    expect(ctl.world.health.get(seat0.entityId!)!.maxHp).toBeGreaterThan(0);
   });
 });
 

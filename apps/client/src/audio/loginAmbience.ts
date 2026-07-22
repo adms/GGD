@@ -141,11 +141,21 @@ export function stepCalmRoar(
   input: CalmRoarInput,
 ): { decision: CalmRoarDecision; next: CalmRoarState } {
   const volume = Number.isFinite(ev.volume) ? Math.max(0, ev.volume) : 0;
-  const calm = !ev.big && input.bgmAudible && isCalmLoginTheme(input.scene);
-  if (!calm) {
+  const calmScene = input.bgmAudible && isCalmLoginTheme(input.scene);
+  if (!calmScene) {
     // untouched — and the spacing clock is NOT advanced, so a loud epic-theme
     // cry can never eat into the nocturne's first quiet window.
     return { decision: { volume, calmed: false }, next: state };
+  }
+  if (ev.big) {
+    // A big scripted roar (the enter/return transition) landing on the serene
+    // nocturne — which the rotation now OPENS on (task #88) — must not blast
+    // over the stillness. Duck it to the ceiling, but never DROP it (it is a
+    // scripted beat, not ambient spam) and do not advance the spacing clock.
+    return {
+      decision: { volume: Math.min(volume, CALM_ROAR_CEILING) * CALM_ROAR_DUCK, calmed: true },
+      next: state,
+    };
   }
   const last = state.lastCalmRoarMs;
   const nowMs = Number.isFinite(input.nowMs) ? input.nowMs : 0;

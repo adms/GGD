@@ -63,13 +63,18 @@ describe("login ambience — the serene theme hushes the dragons", () => {
     expect(quiet.decision.volume!).toBeLessThan(decision.volume!);
   });
 
-  it("NEVER touches the scripted angry roar — it is a transition, not ambience", () => {
+  it("ducks a big roar on the calm nocturne, leaves it untouched on epic (task #88)", () => {
     cover("login-calm-big-roar-exempt");
-    for (const input of [epic, calm]) {
-      const { decision } = stepCalmRoar(CALM_ROAR_INITIAL, { volume: 1.5, big: true }, input);
-      expect(decision.volume).toBe(1.5);
-      expect(decision.calmed).toBe(false);
-    }
+    // epic theme: the big transition roar plays at its full designed level.
+    const onEpic = stepCalmRoar(CALM_ROAR_INITIAL, { volume: 1.5, big: true }, epic);
+    expect(onEpic.decision.volume).toBe(1.5);
+    expect(onEpic.decision.calmed).toBe(false);
+    // calm nocturne (now the OPENING theme): the roar is ducked to the ceiling
+    // so it never blasts over the stillness — but it is never dropped.
+    const onCalm = stepCalmRoar(CALM_ROAR_INITIAL, { volume: 1.5, big: true }, calm);
+    expect(onCalm.decision.calmed).toBe(true);
+    expect(onCalm.decision.volume).not.toBeNull();
+    expect(onCalm.decision.volume!).toBeLessThan(1.5);
   });
 
   it("a big roar does not consume the ambient spacing budget", () => {
@@ -187,14 +192,24 @@ describe("login ambience — the serene theme hushes the dragons", () => {
   });
 });
 
-describe("the scripted angry roar can never land on the nocturne", () => {
-  it("a fresh visit always opens on the epic theme, where the roar fires", () => {
+describe("the scripted angry roar is ducked when it opens on the nocturne", () => {
+  it("the rotation opens on the calm nocturne, and a big roar there is ducked (task #88)", () => {
     cover("login-calm-return-intro-epic");
-    // AuthScreen fires the return-from-app roar at MOUNT; useLoginTheme resets
-    // the rotation on every visit, so the theme at that instant is index 0.
-    expect(loginThemeAt(0)).toBe("menu");
-    expect(isCalmLoginTheme(loginThemeAt(0))).toBe(false);
-    // if this ever flips, the big roar needs its own rule — that is the point
-    // of pinning it here rather than relying on the coincidence.
+    // task #88: a fresh visit now OPENS on the serene nocturne (index 0);
+    // useLoginTheme resets the rotation on every visit, and AuthScreen fires
+    // the return-from-app roar at MOUNT — so the big roar can land on the calm.
+    expect(loginThemeAt(0)).toBe("menuNocturne");
+    expect(isCalmLoginTheme(loginThemeAt(0))).toBe(true);
+    // the test's old tripwire said "if this flips, the big roar needs its own
+    // rule": it now HAS one — a big roar on the calm bed is ducked to the
+    // ceiling (never blasted at full over the stillness), but never dropped.
+    const { decision } = stepCalmRoar(
+      { lastCalmRoarMs: null },
+      { volume: 1, big: true },
+      { scene: loginThemeAt(0), bgmAudible: true, nowMs: 0 },
+    );
+    expect(decision.calmed).toBe(true);
+    expect(decision.volume).not.toBeNull();
+    expect(decision.volume!).toBeLessThan(1);
   });
 });

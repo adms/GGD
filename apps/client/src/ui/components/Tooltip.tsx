@@ -16,14 +16,38 @@ import { useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode }
 import { createPortal } from "react-dom";
 import { computeTooltipPlacement, type TooltipSide } from "./tooltipPlacement";
 import { parseRoleMarkup, ROLE_COLOR } from "./abilityText";
+import { displayFinalText, useDisplayEnv, type DisplayFactor } from "../displayFinal";
+import type { CombatEnvMultipliers } from "@ggd/shared/sim/combatEnv";
 import { PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
 
 /** above AudioToggle's Z_TOP (2147483000) menu — the tooltip tops everything. */
 const Z_TOOLTIP = 2147483001;
 
+/**
+ * A key→value chip under the title. Two mutually-exclusive value forms:
+ *   • a literal `value` string (cast type, an un-scaled cost, a raw label), or
+ *   • a `base` number + the combat-env `factor` that scales it — the chip then
+ *     renders the POST-MULTIPLIER final (task #125), live against the current
+ *     table, so 冷卻 base 35s under `cooldown: 0.25` shows `8.75s`, never 35s.
+ * When both are present the scaled final wins.
+ */
 export interface TooltipMeta {
   label: string;
-  value: string;
+  value?: string;
+  /** pre-multiplier value; rendered as `base × env[factor]` when set. */
+  base?: number;
+  /** which combat-env factor scales `base` (`"none"`/omitted → not scaled). */
+  factor?: DisplayFactor;
+  /** unit appended after a scaled final (e.g. "s"). */
+  unit?: string;
+}
+
+/** Resolve a meta chip to its display string against the live env table. */
+export function metaValue(m: TooltipMeta, env: CombatEnvMultipliers): string {
+  if (m.factor !== undefined && typeof m.base === "number") {
+    return displayFinalText(m.base, m.factor, { env, unit: m.unit });
+  }
+  return m.value ?? "";
 }
 
 export interface TooltipProps {
@@ -70,6 +94,9 @@ export function Tooltip({
   const panelRef = useRef<HTMLDivElement | null>(null);
   const [open, setOpen] = useState(false);
   const [pos, setPos] = useState<{ left: number; top: number } | null>(null);
+  // live combat-env table — meta chips carrying {base, factor} render the
+  // post-multiplier FINAL and re-render when an operator changes the table.
+  const env = useDisplayEnv();
 
   const hasContent = !!(title || body || (meta && meta.length > 0));
 
@@ -119,7 +146,7 @@ export function Tooltip({
               <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 4 }}>
                 {meta.map((m) => (
                   <span key={m.label} style={{ fontSize: 11, color: TEXT_DIM }}>
-                    {m.label} <span style={{ color: TEXT_MAIN }}>{m.value}</span>
+                    {m.label} <span style={{ color: TEXT_MAIN }}>{metaValue(m, env)}</span>
                   </span>
                 ))}
               </div>

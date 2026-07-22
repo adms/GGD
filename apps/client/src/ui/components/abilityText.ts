@@ -8,6 +8,7 @@
  * available for the tooltip header.
  */
 import type { CastType } from "@ggd/shared/sim/content/defs";
+import type { TooltipMeta } from "./Tooltip";
 
 /** Leading "<hero>-<skill> " number tag (hero 1-3 digits, skill 2-3 digits). */
 const ABILITY_NUMBER_PREFIX = /^\d{1,3}-\d{2,3}\s+/;
@@ -176,4 +177,47 @@ const CAST_TYPE_LABEL: Record<CastType, string> = {
 
 export function castTypeLabel(castType: CastType): string {
   return CAST_TYPE_LABEL[castType] ?? castType;
+}
+
+// ---------------------------------------------------------------------------
+// shared ability-number meta (task #125: 數字可信)
+//
+// The ONE place that turns an ability's authored numbers into tooltip chips, so
+// the in-game AbilityBar tooltip and the champ-select skill profile show the
+// SAME rows — and the same POST-MULTIPLIER finals. The cooldown row is emitted
+// as `{ base, factor: "cooldown" }`, so <Tooltip> multiplies it by the live
+// combat-env `cooldown` factor (0.25 → base 35s shows 8.75s). Mana COST is NOT
+// scaled — the env table has `maxMana`/`manaRegen` for the POOL and REGEN but no
+// cost multiplier — so it is emitted as a literal `value`. Cast type is a label.
+// ---------------------------------------------------------------------------
+
+/** The authored numbers a meta row set reads (base, pre-multiplier). */
+export interface AbilityMetaInput {
+  /** 施法方式; omit for slots that don't show one (EX with a bespoke label passes castLabel). */
+  castType?: CastType;
+  /** pre-built 施法 label (EX already has one); wins over castType when set. */
+  castLabel?: string;
+  /** base cooldown seconds at the shown rank (pre combat-env). */
+  cooldownSec?: number;
+  /** base mana cost at the shown rank; omitted/0 → no 魔力 row. */
+  manaCost?: number;
+}
+
+/**
+ * Build the tooltip meta chips for an ability, cooldown carried as a scaled
+ * `{ base, factor: "cooldown" }` so <Tooltip> renders the live final. Shared by
+ * the ability bar and the champ-select profile so a cooldown can never disagree
+ * between them, or with the sim.
+ */
+export function abilityMetaChips(input: AbilityMetaInput): TooltipMeta[] {
+  const meta: TooltipMeta[] = [];
+  const cast = input.castLabel ?? (input.castType ? castTypeLabel(input.castType) : undefined);
+  if (cast) meta.push({ label: "施法", value: cast });
+  if (input.cooldownSec !== undefined) {
+    meta.push({ label: "冷卻", base: input.cooldownSec, factor: "cooldown", unit: "s" });
+  }
+  if (input.manaCost !== undefined && input.manaCost > 0) {
+    meta.push({ label: "魔力", value: `${input.manaCost}` });
+  }
+  return meta;
 }

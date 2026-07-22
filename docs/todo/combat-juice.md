@@ -32,13 +32,25 @@ existing `basicAttackHit` / `abilityCast` / `death` / `levelUp` reused.
   damage, bigger on crit/killingBlow, a small kick on your own landed hit vs a
   stronger jolt when you take damage. Driven from the `damage` event in the
   GameApp drain, quality-scaled (mobile ½, off-tier still on — shake is cheap).
-- **Hit flash + hitstop** (`render/views/ChampionView.ts`): a ~80 ms per-mesh
+- **Unified on-hit orchestrator** (`render/combatFeedback.ts` + `render/EntityViewRegistry.ts`):
+  the `hitImpact` event carries the sim's ONE `ImpactProfile`; `planImpactFeedback`
+  turns it into ONE coordinated reaction set — freeze + victim flash + attacker
+  flash + a camera-shake REQUEST — all scaled by the SAME `tier`, so every channel
+  crosses light→heavy on the same frame (the audit's "single unified hit-weight"
+  P0). `EntityViewRegistry` dispatches the three it owns onto the two views on
+  `hitImpact` (was `damage`); the plan's `shake` request + spark/camera/sfx/number
+  hook points are documented for later waves (do NOT spawn/move/play here).
+- **Hit flash + hitstop** (`render/views/ChampionView.ts`): a per-mesh
   render-overlay tint on the struck model (white physical/true, red magic) — via
   `mesh.renderOverlay` so a shared `.glb` material never bleeds the flash onto
-  another champion; and an animation FREEZE for the sim's hitstop window
-  (`ClipAnimator.setFrozen`), mirroring the sim's "heavier hit = longer freeze,
-  cap 6 ticks" curve so the struck model reads in lock-step. Position keeps
-  flowing so knockback still slides — only the clip freezes.
+  another champion — whose strength + duration are tier-driven by the plan (still
+  short: even a crit clears <200 ms, no strobe). The animation FREEZE
+  (`ClipAnimator.setFrozen`) is now AUTHORITATIVE: it reads the sim's
+  `profile.hitstopTicks` verbatim (NOT a re-derived damage-amount curve), so the
+  pose un-freezes EXACTLY with the body, a fully-blocked hit (dmg 0, impact ≥ the
+  sim floor) still freezes both fighters, and a chip hit the sim did not freeze
+  leaves the animation running. Position keeps flowing so knockback still slides —
+  only the clip freezes.
 - **Vignette + ripple post-fx** (`vfx/CombatPostFx.ts` + pure `vfx/postFxMath.ts`):
   one full-screen pass folding a red screen-edge vignette (LOCAL-player damage,
   intensity by hp lost) and a ripple / heat-distortion (heavy hits + beams).
@@ -77,7 +89,7 @@ guard SFX/spark, a greyed "guard" number, a bigger break pop).
 |----|------|---------|----------|--------|
 | cj-c01 | Camera-shake math: decay envelope endpoints + monotonicity, impact amplitude by damage/crit/kill/taken with clamp, duration bounds | juice-shake | unit | done |
 | cj-c02 | Camera shake applied to the live camera then decays back to rest; zero amp/duration ignored | juice-camera-shake | integration | done |
-| cj-c03 | Hitstop window: ticks/ms from damage (floor 1, cap 6) + struck-model freeze update path | juice-hitstop | unit | done |
+| cj-c03 | Hitstop window is AUTHORITATIVE — the client freeze is taken verbatim from the sim's `ImpactProfile.hitstopTicks` (never re-derived from the damage amount); a fully-blocked hit (dmg 0, impact ≥ sim floor) still freezes both bodies, a chip hit the sim did not freeze leaves the animation running, and both fighters get the identical window + struck-model freeze update path | juice-hitstop | unit | done |
 | cj-c04 | Hit-flash colour (white physical/true, red magic) + ~80 ms flash timing on the struck model | juice-flash | unit | done |
 | cj-c05 | Post-fx math: red-vignette intensity by hp lost, ripple by impact (crit/kill), exponential decay to zero | juice-postfx-math | unit | done |
 | cj-c06 | **SUPERSEDED by task #92** ([combat-text.md](combat-text.md)) — floating numbers now key colour on WHO (造成/受到傷害/補血/補魔), not on `dmgType`, and size is constant per category rather than scaled by amount. Still asserted here: crit/killingBlow are bigger with a pop, a fully-absorbed hit reads "guard". `ui/damageNumberStyle` was replaced by `ui/combatText`; the test id is re-covered by `ui/combatText.test.ts` | juice-damage-number | unit | done |
@@ -87,6 +99,8 @@ guard SFX/spark, a greyed "guard" number, a bigger break pop).
 | cj-c10 | Hit flash tints the LOADED .glb child meshes (per-mesh renderOverlay), not only the procedural voxel fallback, then clears after the window (task #64) | juice-flash-glb | unit | done |
 | cj-c11 | A landed hit AND a basicAttack flash the ATTACKER (source) view — a brief white impact pop — in addition to the victim's red flash; melee autos had no attacker flash (task #69) | juice-attacker-flash | unit | done |
 | cj-c12 | A champion whose model is an empty (0-mesh) glb — `imported.collision` (godie-u011) — keeps the procedural voxel figure and its attack gesture instead of vanishing with a "Stand"-only clip (task #69) | client-empty-glb-fallback | unit | done |
+| cj-c13 | `combatFeedback.planImpactFeedback` is the ONE orchestrator: from a single `ImpactProfile` it produces freeze + victim flash + attacker flash + a camera-shake REQUEST all scaled by the SAME tier (flash strength/duration + shake amp monotonic light→crit, flashes stay <200 ms), victim flash colour follows dmgType, and it leaves documented request/hook points for sparks + camera + sfx + damage-number that a LATER wave consumes | juice-orchestrator | unit | done |
+| cj-c14 | `asImpactProfile` narrows the untyped `hitImpact.data.profile` wire payload (valid tier + numeric hitstopTicks) and returns null on absent/malformed input without throwing (older replays); a missing knockbackDir defaults to {0,0} | juice-profile | unit | done |
 
 ## Sim half — what landed
 
@@ -152,3 +166,52 @@ identically.
 | cj-s19 | A knocked-down victim is rooted while prone, then moves again on getup | cj-knockdown-root | unit | done |
 | cj-s20 | A blocked heavy hit knocks back but does NOT knock down | cj-knockdown-blocked-none | unit | done |
 | cj-s21 | A committed melee swing that connects with nothing emits `whiff` + a forward lunge | cj-whiff-lunge | unit | done |
+
+## Sim deepening — unified ImpactProfile + crit/guard emphasis + hitstun (task #3, audit P0 + hitstop P1s)
+
+Closes the audit's P0 ("no single hit-weight drives all channels") and two hitstop
+P1s ("crit/guard-break emphasis" + "hitstun as a victim-only recovery-lock"). All
+additive, deterministic (integer/branch only — purity gate green), balance-neutral.
+
+- **Unified `ImpactProfile`** (`sim/combat/damage.ts`): `applyImpact` computes ONE
+  hit-weight once and rides it on the **`hitImpact`** event as `profile`, so every
+  downstream channel (sim + client) reads a single source of truth instead of
+  re-classifying "how hard did that land" with its own constant. Shape (the seam
+  the client stage consumes verbatim):
+  `profile: { tier:"light"|"medium"|"heavy"|"crit", hitstopTicks:int, hitstunTicks:int, knockbackDir:{x,z}, knockbackMag:number, isEX:bool, isBlock:bool, isCounter?:bool }`.
+  `tier` = `crit` if crit, else `heavy` if guardBreak or impact≥120, else `medium`
+  if impact≥60, else `light`. `knockbackDir/Mag` mirror the shove the sim actually
+  applies (0 when below the shove threshold). `isBlock` = the event's `blocked`.
+  `isEX` reads a damage-origin marker (`ex:` / `:ex:`); no content emits it yet, so
+  it is `false` today — the FIELD ships now so the client stage binds it, and the
+  EX-origin tagging follow-up (audit P2, ability/cast layer) lights it up.
+  `isCounter` is reserved (optional) for the counter-hit follow-up.
+- **Crit / guard-break hitstop emphasis** (`sim/combat/damage.ts`): on top of the
+  base `clamp(2+floor(impact/55),2,6)` freeze, a **crit** adds **+2 ticks** (the
+  distinct "that HURT" hold) and a **guard shatter** floors the freeze to the new
+  **counter cap (8)** — the biggest 破碎 beat — even on an otherwise light impact.
+  Emphasis is clamped to the cap so a max-impact crit stays 8. Both fighters share
+  the emphasised freeze; deterministic integers, folded into the digest.
+- **Victim-only hitstun** (`sim/combat/damage.ts` + `HitstopSystem` + `SimWorld`):
+  a new `world.hitstun` map — a victim-ONLY action-lock that OUTLASTS the shared
+  hitstop (`hitstopTicks + 2 + floor(impact/40)`, cap 12), so the attacker recovers
+  first (frame advantage) while the defender is rooted out of auto/cast but may
+  still be shoved / walk. `BasicAttackSystem` + `CastResolveSystem` PAUSE on it
+  (like hitstop — no interrupt/refund, cadence/DPS unchanged); `MovementSystem` is
+  NOT gated so the knockback slide still plays. Aged by `hitstopDecaySystem`
+  (exact-N), cleaned in `removeEntity`, and mixed into `digest()` for replay
+  parity. Fixes "medium hits give the victim a free counter-slide" — only the
+  ≥170 knockdown locked them before.
+
+| ID | Item | Test ID | Category | Status |
+|----|------|---------|----------|--------|
+| cj-s22 | `hitImpact` carries a unified `ImpactProfile` (tier/hitstop/hitstun/knockback/flags) matching the world state the sim applied | cj-impact-profile | unit | done |
+| cj-s23 | Profile `knockbackDir/Mag` mirror the applied shove (direction + magnitude) | cj-profile-knockback | unit | done |
+| cj-s24 | Tier derives light/medium/heavy by impact, crit overrides to the top tier | cj-profile-tier | unit | done |
+| cj-s25 | A crit freezes distinctly longer (+2 ticks) than the same non-crit hit | cj-hitstop-crit | unit | done |
+| cj-s26 | A guard shatter floors the freeze to the emphasis cap (~8), even on a light impact | cj-hitstop-guardbreak | unit | done |
+| cj-s27 | Emphasis never exceeds the counter cap (crit on a max-impact hit stays 8) | cj-hitstop-cap | unit | done |
+| cj-s28 | Hitstun gates the victim's basic attack past the shared hitstop, then releases | cj-hitstun-gate-basic | unit | done |
+| cj-s29 | Hitstun release: the victim swings again once the action-lock ends | cj-hitstun-release | unit | done |
+| cj-s30 | Hitstun pauses an in-progress cast without interrupting or refunding it | cj-hitstun-gate-cast | unit | done |
+| cj-s31 | A real medium hit locks the victim LONGER than the attacker (frame advantage) | cj-hitstun-frameadv | unit | done |
