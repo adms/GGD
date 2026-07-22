@@ -1,0 +1,818 @@
+{
+  "id": "unit-tints",
+  "schema": "config.unit-tints@1",
+  "units": {
+    "Hapm": {
+      "championId": "godie-hapm",
+      "name": "海克力斯",
+      "tint": [
+        0.3137,
+        0.3137,
+        0.3137
+      ],
+      "source": "w3u-static",
+      "evidence": "STATIC: tools/w3x-import/out/GoDieEX22s-src/raw/war3map.w3u original-table entry Hapm sets uclr=80 uclg=80 uclb=80 (=0.3137 each). RUNTIME CORROBORATION: war3map.j:51694 Trig_berserker_2_Actions restores SetUnitVertexColorBJ(udg_BerserkerUnit,30,30,30,0) and war3map.j:52027 Trig_Gigantomakhia_2_Actions does the same - the map's rest state is 30% grey, NOT white. Model is the stock Blizzard units\\demon\\FelgaurdBlue\\FelgaurdBlue.mdl, so without this tint it renders in the untouched Blizzard hero colours. The 黑 of 黑紅 is this 0.314 multiply; the 紅 is the Q-buff tint in `transient`."
+    },
+    "E00Q": {
+      "championId": "godie-e00q",
+      "name": "英靈-亞瑟王",
+      "tint": [
+        0.2941,
+        0.2941,
+        0.2941
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry E00Q (base Ewrd, model HeroSaber.mdl): uclr=75 uclg=75 uclb=75. Champion 「英靈-亞瑟王 - 黑化Saber」(黑化 = blackened) - the darkening IS the skin identity."
+    },
+    "Ogld": {
+      "championId": "godie-ogld",
+      "name": "美白大法師",
+      "tint": [
+        0.1961,
+        0.1961,
+        0.1961
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u original entry Ogld: uclr=50 uclg=50 uclb=50. Champion 「美白大法師 - 黑人牙膏」; Ogld is a blizzard-overlay stock-mesh unit so the near-black multiply is the entire visual gag."
+    },
+    "E00T": {
+      "championId": "godie-e00t",
+      "name": "七夜怪談",
+      "tint": [
+        0.1961,
+        0.1961,
+        0.1961
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry E00T (base Ewrd, model units\\creeps\\BansheeGhost\\BansheeGhost.mdl): uclr=50 uclg=50 uclb=50. Champion 「七夜怪談 - 貞子」."
+    },
+    "E00R": {
+      "championId": "godie-e00r",
+      "name": "最終泛用人型決戰兵器",
+      "tint": [
+        0.3922,
+        0.3922,
+        0.3922
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry E00R (base Eill, model units\\creeps\\SatyrTrickster\\SatyrTrickster.mdl): uclr=uclg=uclb=100. Champion 「最終泛用人型決戰兵器 - 初號機」(EVA-01); blizzard-overlay unit."
+    },
+    "U034": {
+      "championId": "godie-u034",
+      "name": "職業獵人",
+      "tint": [
+        0.3922,
+        0.3922,
+        0.3922
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry U034 (base Ucrl, model HeroBigGon.mdl): uclr=uclg=uclb=100."
+    },
+    "U01F": {
+      "championId": "godie-u01f",
+      "name": "萬夫莫敵",
+      "tint": [
+        0.3922,
+        0.2745,
+        0.2745
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry U01F (base Utic, model units\\orc\\Grunt\\Grunt.mdl): uclr=100 uclg=70 uclb=70 - dark red. Champion 「萬夫莫敵 - 黑化張飛」; blizzard-overlay unit."
+    },
+    "U011": {
+      "championId": "godie-u011",
+      "name": "死亡老二",
+      "tint": [
+        0.5882,
+        0.5882,
+        0.5882
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry U011 (base Udre, model collision.mdl): uclr=uclg=uclb=150."
+    },
+    "U012": {
+      "championId": "godie-u012",
+      "name": "重金屬樂團的怪物",
+      "tint": [
+        0.5882,
+        0.5882,
+        0.5882
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry U012 (base Udre): uclr=uclg=uclb=150. Champion 「重金屬樂團的怪物 - 克勞薩II世」; blizzard-overlay unit."
+    },
+    "H02Z": {
+      "championId": "godie-h02z",
+      "name": "不良少年",
+      "tint": [
+        0.7059,
+        0.7059,
+        0.7059
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry H02Z (base Harf): uclr=uclg=uclb=180; blizzard-overlay unit."
+    },
+    "Umal": {
+      "championId": "godie-umal",
+      "name": "北斗神拳掌門人",
+      "tint": [
+        0.7843,
+        0.7843,
+        0.7843
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u original entry Umal (model units\\critters\\VillagerMan1\\VillagerMan1.mdl): uclr=uclg=uclb=200. Champion 「北斗神拳掌門人 - 拳四郎」; blizzard-overlay unit."
+    },
+    "U00B": {
+      "championId": "godie-u00b",
+      "name": "最M的魔法Jizz",
+      "tint": [
+        0.9412,
+        0.5882,
+        0.5882
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry U00B (base Udea): uclr=240 uclg=150 uclb=150 - pink/flesh. Champion 「最M的魔法Jizz - 清蒸 飛鼠先生」; blizzard-overlay unit."
+    },
+    "Nman": {
+      "championId": "godie-nman",
+      "name": "地獄歌神",
+      "tint": [
+        1.0,
+        0.3922,
+        0.3922
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u original entry Nman (model Units\\Creeps\\EarthPandarenBrewmaster\\EarthPandarenBrewmaster.mdl): uclg=100 uclb=100, uclr absent -> Blizzard UnitUI.slk default 255. Effective red tint. Champion 「地獄歌神 - 憤怒的胖虎」; blizzard-overlay unit. Runtime deepens it further, see transient."
+    },
+    "Othr": {
+      "championId": "godie-othr",
+      "name": "X戰警",
+      "tint": [
+        1.0,
+        1.0,
+        0.0
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u original entry Othr (model Units\\Demon\\ChaosOrcRange\\ChaosOrcRange.mdl): uclb=0 only, uclr/uclg absent -> 255 (UnitUI.slk default for Othr is 255/255/255, verified). Effective pure yellow. Champion 「X戰警 - 金鋼狼」(Wolverine's yellow suit); blizzard-overlay unit."
+    },
+    "E00V": {
+      "championId": "godie-e00v",
+      "name": "百畝森林的霸主",
+      "tint": [
+        1.0,
+        0.7843,
+        0.0
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry E00V (base Ewrd, model units\\creeps\\PolarBear\\PolarBear.mdl): uclg=200 uclb=0 -> golden-yellow bear. Champion 「百畝森林的霸主 - 維尼」(Winnie the Pooh); blizzard-overlay unit. A polar bear turned yellow purely by tint."
+    },
+    "Ucrl": {
+      "championId": "godie-ucrl",
+      "name": "職業獵人",
+      "tint": [
+        0.3922,
+        1.0,
+        0.3922
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u original entry Ucrl (model units\\critters\\HighElfPeasant\\HighElfPeasant.mdl): uclr=100 uclb=100 (green tint) PLUS utco=6 (Art - Team Color forced to slot 6/orange instead of owner colour). blizzard-overlay unit. NOTE: utco is a second dropped art field, not expressible as a tint."
+    },
+    "Ecen": {
+      "championId": "godie-ecen",
+      "name": "姜窩肯",
+      "tint": [
+        1.0,
+        0.7843,
+        1.0
+      ],
+      "source": "slk-inherited",
+      "evidence": "INHERITED default: the map sets no tint mods, but Blizzard UnitUI.slk row Ecen (Keeper of the Grove) ships red=255 green=200 blue=255. The importer dropped this too because it never read the field. Verified by parsing Units\\UnitUI.slk out of War3Patch.mpq."
+    },
+    "E00S": {
+      "championId": "godie-e00s",
+      "name": "白木老樹精",
+      "tint": [
+        1.0,
+        0.7843,
+        1.0
+      ],
+      "source": "slk-inherited",
+      "evidence": "INHERITED from base Ecen (UnitUI.slk 255/200/255); custom entry E00S 「白木老樹精」 sets no tint mods. Model buildings\\nightelf\\AncientProtector\\AncientProtector.mdl."
+    },
+    "E010": {
+      "name": "白木老樹精",
+      "tint": [
+        1.0,
+        0.7843,
+        1.0
+      ],
+      "source": "slk-inherited",
+      "evidence": "INHERITED from base Ecen (UnitUI.slk 255/200/255). Custom entry E010 「白木老樹精」, a second copy with no champion doc."
+    },
+    "Ubal": {
+      "championId": "godie-ubal",
+      "name": "魔界霸主",
+      "tint": [
+        1.0,
+        0.7843,
+        0.7843
+      ],
+      "source": "slk-inherited",
+      "evidence": "INHERITED default: UnitUI.slk row Ubal (Pit Lord) ships red=255 green=200 blue=200. Champion 「魔界霸主」."
+    },
+    "U00J": {
+      "championId": "godie-u00j",
+      "name": "神性的流失",
+      "tint": [
+        1.0,
+        0.7843,
+        0.7843
+      ],
+      "source": "slk-inherited",
+      "evidence": "INHERITED from base Ubal (255/200/200); custom entry U00J 「神性的流失」, model HeroSephiroth.mdl."
+    },
+    "N01B": {
+      "name": "地獄歌神",
+      "tint": [
+        1.0,
+        0.3922,
+        0.3922
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry N01B (base Nman, same model): uclg=100 uclb=100. Second copy of 地獄歌神 with no champion doc; same red tint as Nman."
+    },
+    "Utic": {
+      "name": "嗜血劍",
+      "tint": [
+        1.0,
+        0.7843,
+        0.7843
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u original entry Utic 「嗜血劍」: uclg=200 uclb=200. Hero-table entry with no champion doc; it is the base of U01F."
+    },
+    "uloc": {
+      "name": "uloc",
+      "tint": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u original entry uloc (model units\\creeps\\NetherDragon\\NetherDragon.mdl): uclg=0 uclb=0 -> pure red dragon."
+    },
+    "uktg": {
+      "name": "Gantz",
+      "tint": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u original entry uktg 「Gantz」 (model Units\\Human\\HeroBloodElf\\BloodElfBall.mdl): uclr=uclg=uclb=0 -> the black Gantz sphere. Its stock UnitUI.slk default was 125/255/200, so this override is doubly load-bearing."
+    },
+    "njgb": {
+      "name": "魔崇神",
+      "tint": [
+        0.3922,
+        0.3922,
+        0.3922
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u original entry njgb 「魔崇神」 (units\\critters\\Felboar\\Felboar.mdl): uclr=uclg=uclb=100."
+    },
+    "nlrv": {
+      "name": "惡夢魔王",
+      "tint": [
+        0.3922,
+        0.6863,
+        0.6863
+      ],
+      "source": "slk-inherited",
+      "evidence": "INHERITED default from UnitUI.slk row nlrv 「惡夢魔王」 (100/175/175), model units\\other\\KiljaedenCinema\\KiljaedenCinema.mdl."
+    },
+    "n007": {
+      "name": "妖狐",
+      "tint": [
+        0.7843,
+        0.7843,
+        0.7843
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry n007 「妖狐」 (base nwld, units\\creeps\\WhiteWolf\\WhiteWolf.mdl): uclr=uclg=uclb=200. One of three white-wolf variants distinguished ONLY by tint (see n00H/n00J)."
+    },
+    "n00H": {
+      "name": "妖狐",
+      "tint": [
+        0.5882,
+        0.5882,
+        0.5882
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry n00H 「妖狐」 (base nwld, WhiteWolf.mdl): uclr=uclg=uclb=150."
+    },
+    "n00J": {
+      "name": "妖狐",
+      "tint": [
+        0.3922,
+        0.3922,
+        0.3922
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry n00J 「妖狐」 (base nwld, WhiteWolf.mdl): uclr=uclg=uclb=100. Without tint these three 妖狐 tiers are visually identical."
+    },
+    "u02D": {
+      "name": "狼",
+      "tint": [
+        0.5882,
+        0.5882,
+        0.5882
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry u02D 「狼」 (base uaco, WhiteWolf.mdl): uclr=uclg=uclb=150."
+    },
+    "u00Q": {
+      "name": "式神",
+      "tint": [
+        0.3922,
+        0.0392,
+        0.0392
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry u00Q 「式神」 (base uaco, units\\creeps\\BansheeGhost\\BansheeGhost.mdl): uclr=100 uclg=10 uclb=10 -> dark blood-red."
+    },
+    "o02A": {
+      "name": "愛爾摩士兵",
+      "tint": [
+        0.4706,
+        0.3922,
+        0.3922
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry o02A 「愛爾摩士兵」 (base osw3): uclr=120 uclg=100 uclb=100."
+    },
+    "o02B": {
+      "name": "食人妖精",
+      "tint": [
+        1.0,
+        0.6667,
+        0.6667
+      ],
+      "source": "slk-inherited",
+      "evidence": "INHERITED from base osw3 (UnitUI.slk 255/170/170) - 「食人妖精」, units\\undead\\Abomination\\Abomination.mdl, no explicit tint mods."
+    },
+    "o02C": {
+      "name": "阿魯巴",
+      "tint": [
+        1.0,
+        0.6667,
+        0.6667
+      ],
+      "source": "slk-inherited",
+      "evidence": "INHERITED from base osw3 (255/170/170) - 「阿魯巴」, units\\creeps\\OgreLord\\OgreLord.mdl."
+    },
+    "o02F": {
+      "name": "骷髏斧手",
+      "tint": [
+        1.0,
+        0.6667,
+        0.6667
+      ],
+      "source": "slk-inherited",
+      "evidence": "INHERITED from base osw3 (255/170/170) - 「骷髏斧手」, units\\creeps\\SkeletonOrc\\SkeletonOrc.mdl."
+    },
+    "o02D": {
+      "name": "熔岩高崙",
+      "tint": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry o02D 「熔岩高崙」 (base osw3, units\\demon\\Infernal\\Infernal.mdl): uclg=0 uclb=0 -> pure red lava golem."
+    },
+    "o02E": {
+      "name": "烈炎獸",
+      "tint": [
+        0.3922,
+        0.1176,
+        0.1176
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry o02E 「烈炎獸」 (base osw3, ThunderLizardSalamander.mdl): uclr=100 uclg=30 uclb=30."
+    },
+    "o02R": {
+      "name": "成熟的牙菌斑",
+      "tint": [
+        0.3922,
+        0.0,
+        0.0
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry o02R 「成熟的牙菌斑」 (base osw3, units\\creeps\\SludgeMonster\\SludgeMonster.mdl): uclr=100 uclg=0 uclb=0."
+    },
+    "u016": {
+      "name": "異形母體",
+      "tint": [
+        0.3922,
+        0.3922,
+        0.3922
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry u016 「異形母體」 (base ubsp, Units\\Critters\\Hydralisk\\Hydralisk.mdl): uclr=uclg=uclb=100. Identical to u01B/u01C."
+    },
+    "u01B": {
+      "name": "異形母體",
+      "tint": [
+        0.3922,
+        0.3922,
+        0.3922
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry u01B 「異形母體」 (base ubsp, Hydralisk.mdl): uclr=uclg=uclb=100."
+    },
+    "u01C": {
+      "name": "異形母體",
+      "tint": [
+        0.3922,
+        0.3922,
+        0.3922
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry u01C 「異形母體」 (base ubsp, Hydralisk.mdl): uclr=uclg=uclb=100."
+    },
+    "u01T": {
+      "name": "異形皇后",
+      "tint": [
+        0.1961,
+        0.1961,
+        0.1961
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry u01T 「異形皇后」 (base ubsp, Hydralisk.mdl): uclr=uclg=uclb=50 - the queen is the darkest of the Hydralisk tier, distinguished from u016/u01B/u01C only by tint."
+    },
+    "u02H": {
+      "name": "鳳凰",
+      "tint": [
+        0.7059,
+        0.3137,
+        0.3137
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry u02H 「鳳凰」 (base uaco, units\\human\\phoenix\\phoenix.mdl): uclr=180 uclg=80 uclb=80."
+    },
+    "u02M": {
+      "name": "黏液獸",
+      "tint": [
+        1.0,
+        0.0,
+        0.3922
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry u02M 「黏液獸」 (base uaco, units\\other\\DalaranReject\\DalaranReject.mdl): uclg=0 uclb=100 -> magenta slime."
+    },
+    "u02W": {
+      "name": "聖杯黑泥",
+      "tint": [
+        0.1176,
+        0.0,
+        0.0
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry u02W 「聖杯黑泥」 (base uaco, Units\\Creeps\\ForgottenOne\\ForgottenOneTent.mdl): uclr=30 uclg=0 uclb=0 -> near-black Grail mud (Fate). Without tint it renders as the bright stock Forgotten One."
+    },
+    "u02V": {
+      "name": "聖杯黑泥",
+      "tint": [
+        0.1176,
+        0.0,
+        0.0
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry u02V 「聖杯黑泥」 (base uaco, ForgottenOneTent.mdl): uclr=30 uclg=0 uclb=0."
+    },
+    "u02X": {
+      "name": "聖杯黑泥",
+      "tint": [
+        0.1176,
+        0.0,
+        0.0
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry u02X 「聖杯黑泥」 (base uaco, ForgottenOneTent.mdl): uclr=30 uclg=0 uclb=0."
+    },
+    "u015": {
+      "name": "u015",
+      "tint": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry u015 (base uloc, units\\critters\\Vulture\\Vulture.mdl): uclr=uclg=uclb=0 -> silhouette-black bird."
+    },
+    "h00Y": {
+      "name": "老二",
+      "tint": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry h00Y 「老二」 (base hfoo, buildings\\naga\\TidalGuardian\\TidalGuardian.mdl): uclr=uclg=uclb=0."
+    },
+    "h00B": {
+      "name": "Pikeman",
+      "tint": [
+        1.0,
+        0.7843,
+        0.7843
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry h00B 「Pikeman」 (base hfoo, BanditSpearThrower.mdl): uclg=200 uclb=200 PLUS utco=4 and utcc=1 (custom team colour forced to slot 4). Two dropped art fields on one unit."
+    },
+    "h00C": {
+      "name": "Pikeman",
+      "tint": [
+        1.0,
+        0.7843,
+        0.7843
+      ],
+      "source": "w3u-static",
+      "evidence": "war3map.w3u custom entry h00C 「Pikeman」 (base hfoo, BanditSpearThrower.mdl): uclg=200 uclb=200, utco=4, utcc=1."
+    }
+  },
+  "transient": [
+    {
+      "championId": "godie-hart",
+      "trigger": "Trig_XFight_Actions",
+      "line": 33417,
+      "note": "克勞德 A0AZ 分身衝刺 — pale blue at 50% transparency (SetUnitVertexColorBJ 70,70,100,50). godie-hart has NO static tint, so the paired restore is a clean no-op.",
+      "tint": [
+        0.7,
+        0.7,
+        1.0
+      ],
+      "alpha": 0.5
+    },
+    {
+      "championId": "godie-hart",
+      "trigger": "Trig_XFight_Actions",
+      "line": 33420,
+      "note": "restore after the A0AZ branch (100,100,100,0 = opaque white).",
+      "tint": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "championId": "godie-hart",
+      "trigger": "Trig_XFight_Actions",
+      "line": 33429,
+      "note": "same state on the A072 branch of Trig_XFight.",
+      "tint": [
+        0.7,
+        0.7,
+        1.0
+      ],
+      "alpha": 0.5
+    },
+    {
+      "championId": "godie-hart",
+      "trigger": "Trig_XFight_Actions",
+      "line": 33431,
+      "note": "restore on the A072 branch.",
+      "tint": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "championId": "godie-hart",
+      "trigger": "Trig_SuperFF7_Actions",
+      "line": 33806,
+      "note": "克勞德 超級新星 limit break — red-washed and 50% transparent (100,60,60,50).",
+      "tint": [
+        1.0,
+        0.6,
+        0.6
+      ],
+      "alpha": 0.5
+    },
+    {
+      "championId": "godie-hart",
+      "trigger": "Trig_SuperFF7_Actions",
+      "line": 33927,
+      "note": "limit-break end restore.",
+      "tint": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "championId": "godie-h022",
+      "trigger": "Trig_DarkMagic_Actions",
+      "line": 35612,
+      "note": "涅吉 A0Q6 黑魔法 — near-black while channelling (20,20,20,0 = OPAQUE, the 4th arg is transparency).",
+      "tint": [
+        0.2,
+        0.2,
+        0.2
+      ]
+    },
+    {
+      "championId": "godie-h022",
+      "trigger": "Trig_DarkMagic_Actions",
+      "line": 35620,
+      "note": "黑魔法 end restore.",
+      "tint": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "championId": "godie-h01n",
+      "trigger": "Trig_Bleach_Null_start_Actions",
+      "line": 37644,
+      "note": "黑崎一護 A0W5 虛化 — 30% grey. The rawcode is shared by H01N and H01O (the map ships an upgraded duplicate of the hero), so both champions get the state.",
+      "tint": [
+        0.3,
+        0.3,
+        0.3
+      ]
+    },
+    {
+      "championId": "godie-h01o",
+      "trigger": "Trig_Bleach_Null_start_Actions",
+      "line": 37644,
+      "note": "同上 — the A0W5 caster may also be the upgraded 外掛開很大的死神 (H01O).",
+      "tint": [
+        0.3,
+        0.3,
+        0.3
+      ]
+    },
+    {
+      "championId": "godie-h01n",
+      "trigger": "Trig_Bleach_Null_close_Actions",
+      "line": 37670,
+      "note": "虛化 end restore.",
+      "tint": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "championId": "godie-h01o",
+      "trigger": "Trig_Bleach_Null_close_Actions",
+      "line": 37670,
+      "note": "虛化 end restore (H01O copy).",
+      "tint": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "championId": "godie-nman",
+      "trigger": "Trig_Hell_Timer2_Actions",
+      "line": 39266,
+      "note": "憤怒的胖虎 A0LZ 地獄搖滾 — pure red rage (100,0,0,0).",
+      "tint": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "championId": "godie-nman",
+      "trigger": "Trig_Hell_Timer9_Actions",
+      "line": 39537,
+      "note": "ORIGINAL-MAP BUG: restores to WHITE, which permanently erases 地獄歌神's static [1,0.3922,0.3922] for the rest of the match. Port must restore to champion.tint.",
+      "tint": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "erasesStaticTint": true
+    },
+    {
+      "championId": "godie-o02l",
+      "trigger": "Trig_WildPika_Actions",
+      "line": 40329,
+      "note": "A040 is shared with the 神騎寶貝 duplicate (O02L); same harmless restore.",
+      "tint": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "championId": "godie-ofar",
+      "trigger": "Trig_WildPika_Actions",
+      "line": 40329,
+      "note": "皮卡丘 A040 restore to white; godie-ofar carries no static tint so this is harmless.",
+      "tint": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "championId": "godie-o02l",
+      "trigger": "Trig_WildPikaAttacked_Actions",
+      "line": 40369,
+      "note": "同上 for the O02L duplicate.",
+      "tint": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "championId": "godie-ofar",
+      "trigger": "Trig_WildPikaAttacked_Actions",
+      "line": 40369,
+      "note": "皮卡丘 hurt flash — pure red (100,0,0,0); the very next line fades it back per ability level.",
+      "tint": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "championId": "godie-naka",
+      "trigger": "Trig_FlySwallow_Actions",
+      "line": 41675,
+      "note": "風魔小次郎 A030 飛燕 restore to white; godie-naka has no static tint, so no-op.",
+      "tint": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "championId": "godie-ogld",
+      "trigger": "Trig_BlackTooth_Actions",
+      "line": 47379,
+      "note": "黑人牙膏 A0CO — 20% grey at 10% transparency (20,20,20,10). The only champion state in the whole map with alpha < 1 AND a colour change.",
+      "tint": [
+        0.2,
+        0.2,
+        0.2
+      ],
+      "alpha": 0.9
+    },
+    {
+      "championId": "godie-ogld",
+      "trigger": "Trig_BlackTooth_Actions",
+      "line": 47390,
+      "note": "ORIGINAL-MAP BUG: restores to WHITE and erases 美白大法師's static [0.1961,0.1961,0.1961] for the rest of the match. Port must restore to champion.tint.",
+      "tint": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "erasesStaticTint": true
+    },
+    {
+      "championId": "godie-hapm",
+      "trigger": "Trig_berserker_Actions",
+      "line": 51668,
+      "note": "海克力斯 Berserker Q 狂戰士之怒 (A0VJ) — the 紅 of 黑紅: SetUnitVertexColorBJ(udg_BerserkerUnit,100,30,30,0), i.e. rgb 1.0/0.3/0.3 fully OPAQUE, held for the 12s buff.",
+      "tint": [
+        1.0,
+        0.3,
+        0.3
+      ]
+    },
+    {
+      "championId": "godie-hapm",
+      "trigger": "Trig_berserker_2_Actions",
+      "line": 51694,
+      "note": "狂戰士之怒 expiry — restores to 30% grey, NOT white. This is the map itself confirming that Berserker's rest state is the 黑 (champion.tint 0.3137, w3u 80/255).",
+      "tint": [
+        0.3,
+        0.3,
+        0.3
+      ]
+    },
+    {
+      "championId": "godie-hapm",
+      "trigger": "Trig_Gigantomakhia_2_Actions",
+      "line": 52027,
+      "note": "巨神一擊 end — the same correct restore-to-grey. Hapm is the one champion the original map does NOT bug out.",
+      "tint": [
+        0.3,
+        0.3,
+        0.3
+      ]
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "id": "godie-lubu-p0",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.05,
+    "angleDeg": 63.5
+  },
+  "mode": "continuous",
+  "rate": 60.0,
+  "lifetimeSec": {
+    "min": 0.05,
+    "max": 0.05
+  },
+  "size": {
+    "start": 1.862,
+    "end": 0.931
+  },
+  "color": {
+    "start": [
+      0.0,
+      1.0,
+      0.0,
+      1.0
+    ],
+    "end": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        0.0,
+        1.0,
+        0.0,
+        1.0
+      ]
+    ],
+    [
+      0.5,
+      [
+        0.063,
+        0.384,
+        0.275,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      1.862
+    ],
+    [
+      0.5,
+      0.931
+    ],
+    [
+      1,
+      0.931
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/circle_05.png",
+  "stretched": true,
+  "tailLength": 0.2,
+  "speed": {
+    "min": 6.9059,
+    "max": 7.2826
+  },
+  "anchorBone": "Sword"
+}

@@ -1,0 +1,264 @@
+/**
+ * buttonFx.css — the ONE shared button skin for the whole client. Imported once
+ * (main.tsx) so every button inherits it: the shared platform Btn
+ * (ui/platform/widgets.tsx) and the SfxButton wrapper (ui/SfxButton.tsx) both
+ * add the `.ggd-btn` class (+ a `.ggd-btn--<kind>` modifier), so no screen
+ * needs per-file styling.
+ *
+ * The look: a Japanese-RPG menu panel (dark indigo gradient, brass/gold trim,
+ * notched 45° corners, wide letter-spacing) wrapped in a flowing "cyber"
+ * gradient light-leak — an animated conic-ish gradient ring (`::before`), a
+ * diagonal light-leak sheen sweep (`::after`) and a slow colour-cycling bloom
+ * (box-shadow). Robust technique per browser support: a 300%-wide gradient with
+ * an animated background-position (no @property dependency) drives the ring.
+ *
+ * The classes are SKIN only — geometry (padding/size/radius) still comes from
+ * each button's inline `style`, so callers' layout always wins. Disabled
+ * buttons and prefers-reduced-motion drop the motion (the base gradient trim
+ * stays; the SFX + press-scale are unaffected — they live in JS).
+ */
+
+.ggd-btn {
+  position: relative;
+  isolation: isolate; /* contain ::before/::after + the screen-blend sheen */
+  border: 1px solid #7a6a38; /* brass trim (kind modifiers override) */
+  background: linear-gradient(165deg, #1a2138 0%, #10141f 100%);
+  color: #e8ecf4;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  overflow: hidden; /* clip the sheen + click ripple to the button */
+  /* notched 45° corners — Persona / Final Fantasy menu silhouette */
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+  animation: ggd-btn-bloom 6s linear infinite;
+}
+
+/* flowing cyber gradient trim (漸層漏光) — a masked gradient-border ring */
+.ggd-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  clip-path: inherit; /* the ring follows the notched silhouette */
+  padding: 1.4px; /* ring thickness */
+  background: linear-gradient(115deg, #ffd76a, #35f1ff, #7a5cff, #ff4fd8, #ffd76a);
+  background-size: 300% 300%;
+  animation: ggd-btn-glow 6s linear infinite;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude; /* keep only the border ring */
+  opacity: 0.55;
+  filter: blur(0.4px);
+  pointer-events: none;
+}
+
+/* light-leak sheen (漏光) — a diagonal screen-blended stripe sweeping across */
+.ggd-btn::after {
+  content: "";
+  position: absolute;
+  top: -30%;
+  left: 0;
+  width: 45%;
+  height: 160%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: translateX(-260%) skewX(-18deg);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  animation: ggd-btn-sheen 4.5s ease-in-out infinite;
+}
+
+@keyframes ggd-btn-glow {
+  to {
+    background-position: 300% 0;
+  }
+}
+
+@keyframes ggd-btn-bloom {
+  0% {
+    box-shadow: 0 0 6px rgba(53, 241, 255, 0.3);
+  }
+  33% {
+    box-shadow: 0 0 8px rgba(122, 92, 255, 0.38);
+  }
+  66% {
+    box-shadow: 0 0 8px rgba(255, 79, 216, 0.38);
+  }
+  100% {
+    box-shadow: 0 0 6px rgba(255, 215, 106, 0.3);
+  }
+}
+
+@keyframes ggd-btn-sheen {
+  0% {
+    transform: translateX(-260%) skewX(-18deg);
+    opacity: 0;
+  }
+  6% {
+    opacity: 0.9;
+  }
+  20% {
+    transform: translateX(320%) skewX(-18deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(320%) skewX(-18deg);
+    opacity: 0;
+  }
+}
+
+/* hover: brighter trim, faster loops + an immediate sheen sweep */
+.ggd-btn:hover {
+  animation-duration: 3s;
+}
+.ggd-btn:hover::before {
+  opacity: 0.92;
+  animation-duration: 3s;
+}
+.ggd-btn:hover::after {
+  animation-duration: 0.9s;
+}
+
+/* kind: primary — gold text + a stronger, brighter trim */
+.ggd-btn--primary {
+  color: #ffd76a;
+  border-color: #caa64a;
+}
+.ggd-btn--primary::before {
+  opacity: 0.82;
+  padding: 1.8px;
+}
+
+/* kind: danger — crimson / magenta trim + bloom */
+.ggd-btn--danger {
+  border-color: #7a3247;
+  animation-name: ggd-btn-bloom-danger;
+}
+.ggd-btn--danger::before {
+  background: linear-gradient(115deg, #ff4f7a, #ff2fd0, #b02a5a, #ff4f7a);
+  background-size: 300% 300%;
+}
+@keyframes ggd-btn-bloom-danger {
+  0%,
+  100% {
+    box-shadow: 0 0 7px rgba(255, 79, 122, 0.38);
+  }
+  50% {
+    box-shadow: 0 0 9px rgba(255, 47, 208, 0.42);
+  }
+}
+
+/* kind: ghost — dim, glow ONLY on hover (no idle bloom/sheen) */
+.ggd-btn--ghost {
+  animation: none;
+  box-shadow: none;
+}
+.ggd-btn--ghost::before {
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.ggd-btn--ghost::after {
+  display: none;
+}
+.ggd-btn--ghost:hover {
+  animation: ggd-btn-bloom 3s linear infinite;
+}
+.ggd-btn--ghost:hover::before {
+  opacity: 0.7;
+}
+
+/* subdued — ability-bar QWER / EX: a thin glow only, NO sheen, no notch, so
+   combat stays quiet visually as well as audibly */
+.ggd-btn--subdued {
+  clip-path: none;
+  animation: none;
+  box-shadow: none;
+}
+.ggd-btn--subdued::before {
+  opacity: 0.4;
+  padding: 1px;
+  filter: none;
+}
+.ggd-btn--subdued::after {
+  display: none;
+}
+.ggd-btn--subdued:hover::before {
+  opacity: 0.72;
+  animation-duration: 4s;
+}
+
+/* kind: card — the 3-choose-1 draft cards (task #110). LoL-Arena flourish: a
+   SUBTLE, tier-tinted light FLOWING around the border (微微發光流轉), the same
+   masked gradient-ring family as the base .ggd-btn::before but retinted per tier
+   through --ggd-card-glow (set inline by AugmentDraftPanel) and slowed to an
+   "expensive" idle loop. The diagonal sheen strobe is DROPPED so three cards
+   side by side stay calm rather than busy (避免光污染) — the flowing ring is the
+   whole effect. Cards are rounded rectangles, not notched chips. */
+.ggd-btn--card {
+  clip-path: none;
+  animation: none; /* no colour-cycling bloom; a static tier drop-glow instead */
+  box-shadow: 0 6px 20px -12px var(--ggd-card-glow, #6f7fb0);
+  transition: box-shadow 0.25s ease, transform 80ms ease;
+}
+.ggd-btn--card::before {
+  padding: 1.5px; /* ring thickness */
+  /* one bright travelling glint framed by the tier colour: the white stop is the
+     "expensive" highlight, the tier stops are identity. No color-mix / @property
+     so it degrades on every browser exactly like the #24 ring. */
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    var(--ggd-card-glow, #6f7fb0) 20%,
+    rgba(255, 255, 255, 0.85) 34%,
+    var(--ggd-card-glow, #6f7fb0) 47%,
+    transparent 66%,
+    var(--ggd-card-glow, #6f7fb0) 86%,
+    transparent 100%
+  );
+  background-size: 300% 300%;
+  animation: ggd-btn-glow 8.5s linear infinite; /* reuse #24 keyframe; slow = expensive */
+  opacity: 0.62;
+  filter: blur(0.3px);
+}
+.ggd-btn--card::after {
+  display: none; /* no sheen strobe — restraint */
+}
+.ggd-btn--card:hover {
+  box-shadow: 0 8px 24px -10px var(--ggd-card-glow, #6f7fb0);
+}
+.ggd-btn--card:hover::before {
+  opacity: 0.9;
+  animation-duration: 4.5s; /* quickens on hover, still slower than a button */
+}
+
+/* disabled — dim, no glow / sheen / bloom, no pointer cursor */
+.ggd-btn:disabled {
+  animation: none;
+  box-shadow: none;
+  opacity: 0.5;
+  cursor: default;
+}
+.ggd-btn:disabled::before,
+.ggd-btn:disabled::after {
+  display: none;
+}
+
+/* reduced motion — keep a STATIC gradient trim; drop rotation, sheen + bloom.
+   (The JS SFX + press-scale are untouched; those are handled in the components.) */
+@media (prefers-reduced-motion: reduce) {
+  .ggd-btn,
+  .ggd-btn--danger,
+  .ggd-btn--ghost:hover {
+    animation: none !important;
+  }
+  .ggd-btn::before,
+  .ggd-btn--subdued::before {
+    animation: none !important;
+  }
+  .ggd-btn::after {
+    display: none !important;
+  }
+}

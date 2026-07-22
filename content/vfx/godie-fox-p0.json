@@ -1,0 +1,83 @@
+{
+  "id": "godie-fox-p0",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.503,
+    "angleDeg": 104.0
+  },
+  "mode": "continuous",
+  "rate": 45.0,
+  "lifetimeSec": {
+    "min": 0.5,
+    "max": 0.5
+  },
+  "size": {
+    "start": 0.239,
+    "end": 0.023
+  },
+  "color": {
+    "start": [
+      0.702,
+      0.871,
+      0.949,
+      1.0
+    ],
+    "end": [
+      1.0,
+      1.0,
+      1.0,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        0.702,
+        0.871,
+        0.949,
+        1.0
+      ]
+    ],
+    [
+      0.3,
+      [
+        0.384,
+        0.478,
+        0.816,
+        0.525
+      ]
+    ],
+    [
+      1.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.239
+    ],
+    [
+      0.3,
+      0.187
+    ],
+    [
+      1,
+      0.023
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/star_04.png",
+  "speed": {
+    "min": 0.5028,
+    "max": 0.5028
+  },
+  "anchorBone": "Bone_Hand_L"
+}

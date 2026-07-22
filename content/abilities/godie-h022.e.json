@@ -1,0 +1,43 @@
+{
+  "id": "godie-h022.e",
+  "name": "82-03 雷之投擲",
+  "description": "[主動攻擊]\n45秒冷卻時間\n以雷創造出的魔法之槍，急速落下給予隨機範圍內敵人(350+智慧*3)點傷害，若是於闇之魔法型態下攻擊即會施放造成直線範圍內敵人(250+智慧*1)*次數點傷害。(可點選自身累積，最多3次)",
+  "slot": "E",
+  "castType": "skillshot",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "manaCost": [
+    150.0,
+    210.0,
+    270.0,
+    330.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "imported.wave",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

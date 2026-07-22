@@ -1,0 +1,30 @@
+{
+  "id": "godie-udre.ex",
+  "name": "11-002 武裝色霸氣",
+  "description": "[輔助]\n60秒冷卻時間\n\n能夠提昇個人的防禦力，作用猶如看不見的盔甲；更可演化為攻擊力，進而與惡魔果實能力者抗衡。\n\n提升三千世界及阿修羅的傷害，期間防禦增加15點，魔法抗性增加為50%，持續15秒。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    390.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

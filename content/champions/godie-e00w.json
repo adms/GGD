@@ -1,0 +1,222 @@
+{
+  "id": "godie-e00w",
+  "schema": "champion@1",
+  "name": "神鳴流劍士 - 櫻綻剎那",
+  "description": "故事：\n武道四天王之一，是在京都流傳已久的神鳴流劍術高手，也是個精通陰陽道的劍士。烏鴉族混血兒，由於擁有白色翅膀被族人逐出村莊，遂為木乃香的父親收養。\n(出自:魔法老師)\n\n推薦玩家 : 追擊殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.85\n智慧 + 1.65\n基礎跑速 300\n\n可學習的技能：\n百烈櫻華斬、雷鳴劍、GLADIARIA ALAT、真-雷光劍",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "imported.mfls",
+  "baseStats": {
+    "maxHealth": 480,
+    "healthRegen": 1.15,
+    "maxMana": 292,
+    "manaRegen": 1.44,
+    "ad": 34,
+    "ap": 0,
+    "armor": 9,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 36,
+    "healthRegen": 0.09,
+    "maxMana": 20,
+    "manaRegen": 0.07,
+    "ad": 2.8,
+    "armor": 0.9,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-e00w.q",
+      "name": "77-01 百烈櫻華斬",
+      "description": "[主動攻擊]\n40秒冷卻時間\n\n用劍捲起一陣由內往外的旋風，給予複數敵人200點傷害，並暈眩1秒，擊退1000距離。",
+      "slot": "Q",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        40.0,
+        40.0,
+        40.0,
+        40.0
+      ],
+      "manaCost": [
+        75.0,
+        110.0,
+        145.0,
+        180.0
+      ],
+      "range": 0.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              200.0,
+              300.0,
+              400.0,
+              500.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "burnstun",
+          "duration": 0.8,
+          "stun": true
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "radius": 6.0
+    },
+    "W": {
+      "id": "godie-e00w.w",
+      "name": "77-02 雷鳴劍",
+      "description": "[被動]\n0秒冷卻時間\n\n攻擊時有10%的機率可以使出會心一擊造成1.5倍的傷害，並且有10%的機率掉下一條落雷，造成範圍內部隊50點傷害。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "critChance",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "duration": 6.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "E": {
+      "id": "godie-e00w.e",
+      "name": "77-03 GLADIARIA ALAT",
+      "description": "[變身]\n60秒冷卻時間\n\nGLADIARIA  ALAT意指有翼的劍士，剎那不輕易展露烏鴉族的身分，一但展開翅膀，剎那就可以發揮100%的實力，提升攻擊和移動速度以及對英雄攻擊附帶額外敏捷*1傷害，副作用是裝甲下降3點，持續6秒。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        90.0,
+        180.0,
+        270.0,
+        360.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.9
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "R": {
+      "id": "godie-e00w.r",
+      "name": "77-04 真-雷光劍",
+      "description": "[主動攻擊]\n70秒冷卻時間\n\n神鳴流決戰奧義，聚集大量雷電於劍上予以斬擊，給予擊中範圍500內敵人600傷害，若範圍內含有英雄則額外受到600/(範圍內英雄數)點傷害。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        70.0,
+        70.0,
+        70.0
+      ],
+      "manaCost": [
+        150.0,
+        225.0,
+        300.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.48
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.cinder-ward",
+      "targetsEnemies": true
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ],
+  "exAbility": "godie-e00w.ex",
+  "icon": "assets/icons/champions/godie-e00w.png"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "godie-i05r",
+  "schema": "item@1",
+  "name": "吸血石",
+  "description": "效能\n吸血+26.6%\n\n解說\n殺傷敵方轉化為生命，是一種稀有的礦石。",
+  "cost": 300,
+  "tier": 1,
+  "tags": [
+    "wc3-import"
+  ],
+  "modifiers": [
+    {
+      "stat": "lifesteal",
+      "op": "flat",
+      "value": 0.266
+    }
+  ]
+}

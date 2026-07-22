@@ -1,0 +1,23 @@
+{
+  "id": "godie-i00p",
+  "schema": "item@1",
+  "name": "聖誕之靴",
+  "description": "防具\n效能\n攻擊速度+11.2%\n移動速度+0.225\n\n解說\n聖誕老人穿戴的靴子，能夠某種程度上加快動作。",
+  "cost": 300,
+  "tier": 1,
+  "tags": [
+    "wc3-import"
+  ],
+  "modifiers": [
+    {
+      "stat": "as",
+      "op": "pctAdd",
+      "value": 0.112
+    },
+    {
+      "stat": "ms",
+      "op": "flat",
+      "value": 0.225
+    }
+  ]
+}

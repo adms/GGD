@@ -1,0 +1,47 @@
+{
+  "id": "godie-o02w.r",
+  "name": "96-04 獨孤九劍",
+  "description": "[主動攻擊]\n70秒冷卻時間\n\n用極快的速度像敵人攻去，在一瞬間連續攻擊數十次使其無法招架暈眩1秒，其留下的殘影在旁人看來就有如9人同時攻擊一般。每個殘影擁有30點攻擊力，持續9秒。\n\n殘影會觸發華山劍法及易筋經",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    70.0,
+    70.0,
+    70.0
+  ],
+  "manaCost": [
+    150.0,
+    240.0,
+    330.0
+  ],
+  "range": 7.33,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.003
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "burnstun",
+      "duration": 0.3,
+      "stun": true
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "godie-h00l.w",
+  "name": "60-02 鎖鏈槍",
+  "description": "[輔助]\n35秒冷卻時間\n\n勾住一個單位，將他拉到身邊來，範圍300，並且給予額外傷害150。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    35.0,
+    35.0,
+    35.0,
+    35.0
+  ],
+  "manaCost": [
+    50.0,
+    75.0,
+    100.0,
+    125.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "shield",
+      "amount": {
+        "perRank": [
+          150.0,
+          150.0,
+          150.0,
+          150.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.45
+          }
+        ]
+      },
+      "duration": 5.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

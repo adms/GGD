@@ -1,0 +1,16 @@
+{
+  "id": "godie-holyawakening-r2",
+  "schema": "ribbon@1",
+  "texture": "assets/textures/particles/light_02.png",
+  "widthAbove": 0.425,
+  "widthBelow": 0.425,
+  "lifespanSec": 0.15,
+  "color": [
+    0.176,
+    0.267,
+    0.937,
+    1.0
+  ],
+  "blendMode": "additive",
+  "anchorBone": "Dummy24"
+}

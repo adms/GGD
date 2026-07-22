@@ -1,0 +1,2940 @@
+{
+ "I004": {
+  "id": "I004",
+  "base": "rnsp",
+  "name": "魔戒",
+  "tooltip": null,
+  "description": "|cffff8c00任務|r\r\n|cffffcc00效能|r\r\n全能力+12\r\n永久隱身\r\n(死亡後掉落)\r\n\r\n|cffffcc00解說|r|cffffdead\r\n王者之戒，戴上者能夠跟黑暗之王索崙產生連結進而提昇能力。",
+  "flavor": "不可以隨便亂戴阿",
+  "gold": 44444,
+  "lumber": null,
+  "abilities": [
+   "Apiv",
+   "A073",
+   "A0J3",
+   "A0J4"
+  ],
+  "icon": null
+ },
+ "I006": {
+  "id": "I006",
+  "base": "sneg",
+  "name": "雅典娜的驚嘆號",
+  "tooltip": null,
+  "description": "|cffff8c00神器|r\r\n|cff8b00ff施展需求魔力：260點|r\r\n|cff8b00ff技能冷卻時間：60秒|r\r\n\r\n|cffffcc00效能|r\r\n雅典娜驚嘆號, 連鎖閃電傷害400\r\n智慧+24\r\n魔力回復速度+100%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n雅典娜的驚嘆號是三位聖鬥士的小宇宙燃燒到極致所鍛造的武器，可使用雅典娜的驚嘆攻擊三個敵人造成極大傷害，主目標額外造成智慧*3點傷害。",
+  "flavor": "雅典娜的驚嘆號是三位聖鬥士的小宇宙燃燒到極致所鍛造的武器。",
+  "gold": 7500,
+  "lumber": 550,
+  "abilities": [
+   "A004",
+   "A086",
+   "A01V"
+  ],
+  "icon": null
+ },
+ "I007": {
+  "id": "I007",
+  "base": "srbd",
+  "name": "妖刀村正",
+  "tooltip": "購買妖刀村正(|cffffcc00B|r)",
+  "description": "|cffff8c00武器|r\r\n|cffffcc00效能|r\r\n吸血25%（法球）\r\n攻擊力+30\r\n\r\n|cffffcc00解說|r|cffffdead\r\n村正打造的妖刀之一，在英雄戴著它砍殺敵人時將會在傷害中吸取作為生命回復。",
+  "flavor": "村正打造的妖刀",
+  "gold": 3350,
+  "lumber": 100,
+  "abilities": [
+   "A0JT",
+   "A0RK"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNArcaniteRanged.blp"
+ },
+ "I00L": {
+  "id": "I00L",
+  "base": "asbl",
+  "name": "落魂的嗜血劍",
+  "tooltip": "購買落魂的嗜血劍(|cffffcc00R|r)",
+  "description": "|cffff8c00夢幻|r\r\n|cffffcc00效能|r\r\n吸血25%(法球)\r\n吸血25%(結界)\r\n攻擊力+50\r\n\r\n|cffffcc00解說|r|cffffdead\r\n聖劍與魔劍的差異在於影響持有者和武器心智的交互作用，而這把嗜血劍代表的就是魔劍的極致，歷代持有者為控制魔劍皆付出慘痛代價，魔力會不斷被貪婪的魔劍吸收，考據持有最久是死之王軍團長之一\"魔霜奈洛\"。",
+  "flavor": null,
+  "gold": 11500,
+  "lumber": 1400,
+  "abilities": [
+   "A0JT",
+   "A0FJ",
+   "A06Z",
+   "A00G"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNSteelRanged.blp"
+ },
+ "I00M": {
+  "id": "I00M",
+  "base": "rde3",
+  "name": "米索莉護板",
+  "tooltip": "購買米索莉護板(|cffffcc00D|r)",
+  "description": "|cffffcc00效能|r\r\n裝甲+8\r\n\r\n|cffffcc00解說|r|cffffdead\r\n雖然外表很普通，但是實用的裝備。",
+  "flavor": "瞬間提昇裝甲8點。",
+  "gold": 950,
+  "lumber": null,
+  "abilities": [
+   "AId1",
+   "AId7"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNAdvancedMoonArmor.blp"
+ },
+ "I00N": {
+  "id": "I00N",
+  "base": "lnrn",
+  "name": "分手之鎚",
+  "tooltip": "購買分手之鎚(|cffffcc00T|r)",
+  "description": "|cffff8c00武器|r\r\n|cffffcc00效能|r\r\n攻擊力+25\r\n攻擊時削弱目標裝甲7點（法球）\r\n\r\n|cffffcc00解說|r|cffffdead\r\n據說是分手的時候，想要發洩心情砸東西的好工具。",
+  "flavor": "一擊必殺鎚",
+  "gold": 4000,
+  "lumber": 50,
+  "abilities": [
+   "A0XA",
+   "A0O3"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNStormHammer.blp"
+ },
+ "I00O": {
+  "id": "I00O",
+  "base": "gold",
+  "name": "金雞蛋",
+  "tooltip": null,
+  "description": "使用之後可以讓玩者獲得20黃金。",
+  "flavor": null,
+  "gold": null,
+  "lumber": null,
+  "abilities": [
+   "A02N"
+  ],
+  "icon": "UI\\MiniMap\\MinimapIcon\\MinimapIconGold.blp"
+ },
+ "I00Q": {
+  "id": "I00Q",
+  "base": "arsh",
+  "name": "伊娃之盾",
+  "tooltip": "購買伊娃之盾(|cffffcc00A|r)",
+  "description": "|cffff8c00防具|r\r\n|cff8b00ff施展需求魔力：100點|r\r\n|cff8b00ff技能冷卻時間：30秒|r\r\n|cffffcc00效能|r\r\n治癒術\r\n魔力回復速度+150%\r\n生命+400\r\n裝甲+8\r\n\r\n|cffffcc00解說|r|cffffdead\r\n被伊娃所祝福的盾牌，可以施展治癒術治療自身500點生命。",
+  "flavor": "受到伊娃祝福的盾牌。",
+  "gold": 4000,
+  "lumber": null,
+  "abilities": [
+   "A0FC",
+   "A0X1",
+   "A04P",
+   "AId8"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNAdvancedUnholyArmor.blp"
+ },
+ "I00R": {
+  "id": "I00R",
+  "base": "dtsb",
+  "name": "山之書",
+  "tooltip": "購買山之書(|cffffcc00T|r)",
+  "description": "|cff8b00ff施展需求魔力：216點|r\r\n|cff8b00ff技能冷卻時間：75秒|r\r\n|cffffcc00效能|r\r\n流星雨\r\n\r\n|cffffcc00解說|r|cffffdead\r\n招喚傷害範圍600的流星雨，施展範圍550，造成傷害650。",
+  "flavor": "招喚傷害範圍600的流星雨，施展範圍550，造成傷害650。",
+  "gold": 2785,
+  "lumber": 450,
+  "abilities": [
+   "A0E2"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNManual3.blp"
+ },
+ "I00S": {
+  "id": "I00S",
+  "base": "crdt",
+  "name": "黃金聖鬥衣",
+  "tooltip": "購買黃金聖鬥衣(|cffffcc00F|r)",
+  "description": "|cffff8c00夢幻|r\r\n|cffffcc00效能|r\r\n50%機率抵擋125傷害\r\n攻擊速度+90%\r\n移動速度+95\r\n全能力+15\r\n\r\n|cffffcc00解說|r|cffffdead\r\n傳說從神話時代就與黃道十二宮並存的黃金聖衣，能將攻擊和移動速度大幅提升。",
+  "flavor": "黃金打造的聖鬥裝甲。",
+  "gold": 10000,
+  "lumber": 1450,
+  "abilities": [
+   "A035",
+   "A0TG",
+   "A00Q",
+   "A0MB"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNNagaArmorUp3.blp"
+ },
+ "I00T": {
+  "id": "I00T",
+  "base": "sbok",
+  "name": "風之書",
+  "tooltip": "購買風之書(|CFFffcc00W|R)",
+  "description": "|cff8b00ff施展需求魔力：150點|r\r\n|cff8b00ff技能冷卻時間：60秒|r\r\n|cffffcc00效能|r\r\n範圍移動速度增加\r\n\r\n|cffffcc00解說|r|cffffdead\r\n施展風元素魔法使範圍群體移動速度短暫的提升，狀態持續15秒。",
+  "flavor": "施展風元素魔法使範圍群體移動速度短暫的提升，狀態持續15秒，消耗150魔力，冷卻時間60秒。",
+  "gold": 1950,
+  "lumber": 450,
+  "abilities": [
+   "A036"
+  ],
+  "icon": null
+ },
+ "I00V": {
+  "id": "I00V",
+  "base": "hbth",
+  "name": "四魂之玉的碎片-荒魂",
+  "tooltip": "購買四魂之玉的碎片(|cffffcc00B|r)",
+  "description": "|cffffcc00效能|r\r\n力量+6\r\n\r\n|cffffcc00解說|r|cffffdead\r\n荒魂的碎片可以讓持有者的力量增加，當你收集到四種就可以合成為完整的四魂之玉。(只能合成一顆)",
+  "flavor": "（|cff8b00ff獨特|r）|n這是充滿惡意妖氣的寶石碎片。",
+  "gold": 0,
+  "lumber": null,
+  "abilities": [
+   "AIs6"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNMoonStone.blp"
+ },
+ "I00W": {
+  "id": "I00W",
+  "base": "hbth",
+  "name": "四魂之玉的碎片-和魂",
+  "tooltip": "購買四魂之玉的碎片(|cffffcc00B|r)",
+  "description": "|cffffcc00效能|r\r\n全能力+4\r\n\r\n|cffffcc00解說|r|cffffdead\r\n和魂的碎片可以讓持有者的各項能力都增加，當你收集到四種就可以合成為完整的四魂之玉。(只能合成一顆)",
+  "flavor": "（|cff8b00ff獨特|r）|n這是充滿惡意妖氣的寶石碎片。",
+  "gold": 0,
+  "lumber": null,
+  "abilities": [
+   "AIx2",
+   "AIx2"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNMoonStone.blp"
+ },
+ "I00X": {
+  "id": "I00X",
+  "base": "hbth",
+  "name": "四魂之玉的碎片-幸魂",
+  "tooltip": "購買四魂之玉的碎片(|cffffcc00B|r)",
+  "description": "|cffffcc00效能|r\r\n敏捷+6\r\n\r\n|cffffcc00解說|r|cffffdead\r\n幸魂的碎片可以讓持有者的敏捷增加，當你收集到四種就可以合成為完整的四魂之玉。(只能合成一顆)",
+  "flavor": "（|cff8b00ff獨特|r）|n這是充滿惡意妖氣的寶石碎片。",
+  "gold": 0,
+  "lumber": null,
+  "abilities": [
+   "AIa6"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNMoonStone.blp"
+ },
+ "I00Y": {
+  "id": "I00Y",
+  "base": "hbth",
+  "name": "四魂之玉的碎片-奇魂",
+  "tooltip": "購買四魂之玉的碎片(|cffffcc00B|r)",
+  "description": "|cffffcc00效能|r\r\n智慧+6\r\n\r\n|cffffcc00解說|r|cffffdead\r\n奇魂的碎片可以讓持有者的智慧增加，當你收集到四種就可以合成為完整的四魂之玉。(只能合成一顆)",
+  "flavor": "（|cff8b00ff獨特|r）|n這是充滿惡意妖氣的寶石碎片。",
+  "gold": 0,
+  "lumber": null,
+  "abilities": [
+   "AIi6"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNMoonStone.blp"
+ },
+ "I00Z": {
+  "id": "I00Z",
+  "base": "gsou",
+  "name": "四魂之玉",
+  "tooltip": "購買四魂之玉(|cffffcc00G|r)",
+  "description": "|cffff8c00任務|r\r\n|cffffcc00效能|r\r\n全能力+30\r\n減緩周圍移動、攻擊速度\r\n(死亡後掉落)\r\n\r\n|cffffcc00解說|r|cffffdead\r\n接近持有者的部隊都會受到強大的妖氣阻礙移動以及攻擊速度，千萬不可以落到奈洛手中，不然又要拖個幾百話才能完結篇。",
+  "flavor": "邪惡妖氣的結晶",
+  "gold": 0,
+  "lumber": null,
+  "abilities": [
+   "A027",
+   "A02I",
+   "A039"
+  ],
+  "icon": null
+ },
+ "I010": {
+  "id": "I010",
+  "base": "ciri",
+  "name": "熱戀魔杖",
+  "tooltip": "購買熱戀魔杖(|cffffcc00R|r)",
+  "description": "|cffffcc00效能|r\r\n智慧+10\r\n\r\n|cffffcc00解說|r|cffffdead\r\n會叫做熱戀魔杖純粹是因為這是情人節的促銷品。",
+  "flavor": null,
+  "gold": 1100,
+  "lumber": null,
+  "abilities": [
+   "A03W"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNScepterOfMastery.blp"
+ },
+ "I012": {
+  "id": "I012",
+  "base": "ofir",
+  "name": "熾天使之弓",
+  "tooltip": "購買熾天使之弓(|cffffcc00D|r)",
+  "description": "|cffff8c00武器|r\r\n|cffffcc00效能|r\r\n火焰擴散傷害44(法球)\r\n敏捷+10\r\n\r\n|cffffcc00解說|r|cffffdead\r\n擁有神聖力量的短弓，能在攻擊上附上淨化的火焰。",
+  "flavor": null,
+  "gold": 3350,
+  "lumber": 50,
+  "abilities": [
+   "A0CG",
+   "AIaz"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNImprovedBows.blp"
+ },
+ "I013": {
+  "id": "I013",
+  "base": "frgd",
+  "name": "八取武士刀",
+  "tooltip": "購買八取武士刀(|cffffcc00W|r)",
+  "description": "|cffff8c00武器|r\r\n|cffffcc00效能|r\r\n力量+10\r\n攻擊力+25\r\n15%的機率增加140點傷害並暈眩0.1秒\r\n\r\n|cffffcc00解說|r|cffffdead\r\n八取大師製作的精銳武士刀，追殺比爾裡人人都想要的名刀，據說有百萬的價值，能斬斷鋼鐵。",
+  "flavor": "增加攻擊傷害與力量。",
+  "gold": 3100,
+  "lumber": null,
+  "abilities": [
+   "A0NZ",
+   "AItx",
+   "AItj",
+   "A02S"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNCleavingAttack.blp"
+ },
+ "I014": {
+  "id": "I014",
+  "base": "wcyc",
+  "name": "天叢雲劍",
+  "tooltip": "購買天叢雲劍",
+  "description": "|cffff8c00武器|r\r\n|cff8b00ff施展需求魔力：150點|r\r\n|cff8b00ff技能冷卻時間：75秒|r\r\n\r\n|cffffcc00效能|r\r\n颶風術, 持續5秒\r\n全能力+10\r\n攻擊力+30\r\n\r\n|cffffcc00解說|r|cffffdead\r\n傳說中封印八岐大蛇的神劍，實際上是烙跑的好工具。",
+  "flavor": "傳說中封印八岐大蛇的神劍",
+  "gold": 5050,
+  "lumber": 400,
+  "abilities": [
+   "AIcy",
+   "A0RK",
+   "A027"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNThoriumRanged.blp"
+ },
+ "I015": {
+  "id": "I015",
+  "base": "thdm",
+  "name": "瑪那魔杖製作書",
+  "tooltip": "購買瑪那魔杖製作書(|cffffcc00R|r)",
+  "description": "|cffff8c00武器|r\r\n|cff8b00ff合成配方：|r\r\n熱戀魔杖\r\n嚇人面具\r\n瑪那魔杖製作書\r\n\r\n|cffffcc00效能|r\r\n連鎖閃電\r\n智慧+10\r\n攻擊力+20\r\n魔力回復速度+100%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n點選可施展瑪那連鎖閃電造成傷害275點，最多六個敵人。大巫師才會有的神聖法杖，只要握住便會感覺到魔力源源不絕的湧出。",
+  "flavor": "",
+  "gold": 1500,
+  "lumber": null,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNWitchDoctorAdept.blp"
+ },
+ "I016": {
+  "id": "I016",
+  "base": "ciri",
+  "name": "晨曦之光",
+  "tooltip": "購買晨曦之光|cffffcc00R|r)",
+  "description": "|cffff8c00飾品|r\r\n|cff8b00ff技能冷卻時間：45秒|r\r\n|cffffcc00效能|r\r\n全能力+10\r\n看穿隱形\r\n抵擋指定法術\r\n\r\n|cffffcc00解說|r|cffffdead\r\n想讓你的女友發出快樂的笑容嗎? 想要到處施發閃光彈嗎? 微硬最新手機外殼\"晨曦之光\"，可以自由調整手機的顏色和亮度，不但能發出取悅女友的瑩瑩藍光，還能當嚇死人的強烈白色閃光彈，讓你情場無往不利。",
+  "flavor": "最新的手機外殼，聽說能讓人縱橫情場。",
+  "gold": 5550,
+  "lumber": 400,
+  "abilities": [
+   "A0C9",
+   "A027",
+   "Adt1"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNPriestAdept.blp"
+ },
+ "I017": {
+  "id": "I017",
+  "base": "spsh",
+  "name": "祕銀鎖子甲製作書",
+  "tooltip": "購買祕銀鎖子甲製作書(|CFFffcc00S|R)",
+  "description": "|cffff8c00精品|r\r\n|cff8b00ff合成配方：|r\r\n辣妹護腕\r\n米索莉護板\r\n秘銀鎖子甲製作書\r\n\r\n|cffffcc00效能|r\r\n裝甲+7\r\n抗魔25%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n由相當稀有的魔法金屬-奧里哈魯根所精練而成，相當貼身的護身鎧甲，是戰士和法師夢寐以求的防具。",
+  "flavor": "",
+  "gold": 1500,
+  "lumber": 50,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNAdvancedReinforcedHides.blp"
+ },
+ "I018": {
+  "id": "I018",
+  "base": "frgd",
+  "name": "朗基努斯之槍",
+  "tooltip": "購買朗基努斯之槍(|cffffcc00F|r)",
+  "description": "|cffff8c00神器|r\r\n|cffffcc00效能|r\r\n10%機率淨化(法球)\r\n力量、敏捷+15\r\n攻擊力+50\r\n機率性造成等同力量之閃電傷害(敏捷越高機率越高)\r\n\r\n|cffffcc00解說|r|cffffdead\r\n據說是沾有神之血的傳說武器，無法判定是否為真品。",
+  "flavor": "據說是沾有神之血的傳說武器，無法判定是否為真品。",
+  "gold": 8050,
+  "lumber": 600,
+  "abilities": [
+   "AIlx",
+   "A0VM",
+   "A0VL",
+   "A0HP"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNImpale.blp"
+ },
+ "I01A": {
+  "id": "I01A",
+  "base": "lure",
+  "name": "好像有毒的生肉",
+  "tooltip": "購買好像有毒的生肉(|CFFffcc00L|R)",
+  "description": "|cffffcc00效能|r\r\n點選使用後可以把附近的生物吸引過來\r\n\r\n|cffffcc00解說|r|cffffdead\r\n看起來比一般的肉好吃許多，不知道味道如何？",
+  "flavor": "想要屁屁噴火嗎? 吃我吧",
+  "gold": null,
+  "lumber": null,
+  "abilities": [],
+  "icon": null
+ },
+ "I01B": {
+  "id": "I01B",
+  "base": "sbok",
+  "name": "林之書",
+  "tooltip": "購買林之書(|CFFffcc00E|R)",
+  "description": "|cff8b00ff施展需求魔力：250點|r\r\n|cff8b00ff技能冷卻時間：60秒|r\r\n|cffffcc00效能|r\r\n範圍隱身術\r\n\r\n|cffffcc00解說|r|cffffdead\r\n招喚自然精靈將附近我方部隊身體隱藏25秒。",
+  "flavor": null,
+  "gold": 2550,
+  "lumber": 450,
+  "abilities": [
+   "A00U"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNManual.blp"
+ },
+ "I01C": {
+  "id": "I01C",
+  "base": "sbok",
+  "name": "火之書",
+  "tooltip": "購買火之書(|CFFffcc00R|R)",
+  "description": "|cff8b00ff施展需求魔力：100點|r\r\n|cff8b00ff技能冷卻時間：60秒|r\r\n|cffffcc00效能|r\r\n暈眩火焰彈\r\n\r\n|cffffcc00解說|r|cffffdead\r\n點選施展強力火焰彈傷害敵人，可暈眩1.5秒，施法範圍800。",
+  "flavor": "點選施展強力火焰彈傷害敵人，可暈眩1.5秒，施法範圍800，法力消耗100，冷卻時間60秒。",
+  "gold": 2040,
+  "lumber": 450,
+  "abilities": [
+   "A06E"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNNecromancerMaster.blp"
+ },
+ "I01D": {
+  "id": "I01D",
+  "base": "crdt",
+  "name": "死之王的長槍",
+  "tooltip": "購買死之王的長槍(|cffffcc00D|r)",
+  "description": "|cffff8c00傳說|r\r\n|cff8b00ff技能冷卻時間：45秒|r\r\n|cffffcc00效能|r\r\n針刺地獄\r\n力量、敏捷+15\r\n額外17%攻擊力增加\r\n\r\n|cffffcc00解說|r|cffffdead\r\n點選能招喚惡毒的針刺地獄，給予周圍450傷害，附帶暈眩1秒。傳說不朽王與飛鼠先生在腎虧谷之役中，刺穿飛鼠先生盔甲的邪惡武器。據說該物是從死靈之谷中名匠\"深遂之手\"鑄造，並刺穿自己身體完成槍身。",
+  "flavor": "（|cffff8c00物品|r）|n一個發出陰森氣息的長槍。",
+  "gold": 8600,
+  "lumber": 900,
+  "abilities": [
+   "A0GX",
+   "AIcd",
+   "A0EE",
+   "A064"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNNagaWeaponUp3.blp"
+ },
+ "I01K": {
+  "id": "I01K",
+  "base": "bgst",
+  "name": "火焰泰坦腰帶",
+  "tooltip": "購買泰坦腰帶(|cffffcc00B|r)",
+  "description": "|cffff8c00積分獎勵|r\r\n|cffffcc00效能|r\r\n火焰噴射\r\n裝甲+7\r\n力量+26\r\n\r\n|cffffcc00解說|r|cffffdead\r\n石製的腰帶，持續散發著高溫，附著在火焰泰坦腰帶上的火炎精靈每15秒將給予附近敵人450傷害。",
+  "flavor": "",
+  "gold": 0,
+  "lumber": null,
+  "abilities": [
+   "A01N",
+   "A01G",
+   "A0UU",
+   "AId7"
+  ],
+  "icon": null
+ },
+ "I01N": {
+  "id": "I01N",
+  "base": "azhr",
+  "name": "天堂之劍",
+  "tooltip": "天堂之劍",
+  "description": "|cffff8c00任務|r\r\n|cffffcc00效能|r\r\n魂藏\r\n3%機率造成50倍傷害\r\n生命最大-500\r\n\r\n|cffffcc00解說|r|cffffdead\r\n天堂之劍可以讓持有者起死回生3次，相傳是由大同萌會的鐵拳無敵孫中山所守護著。在一次例行性的革命失敗後不知道消失到哪裡去了。",
+  "flavor": "神界的聖物",
+  "gold": 0,
+  "lumber": null,
+  "abilities": [
+   "AIrc",
+   "A0JU",
+   "A110"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNStaffOfPurification.tga"
+ },
+ "I01R": {
+  "id": "I01R",
+  "base": "jdrn",
+  "name": "一克拉鑽戒製作書",
+  "tooltip": "購買一克拉鑽戒製作書(|cffffcc00W|r)",
+  "description": "|cffff8c00飾品|r\r\n|cff8b00ff合成配方：|r\r\n定情戒指\r\n寶石碎片\r\n網友手環\r\n一克拉鑽戒製作書\r\n\r\n|cffffcc00效能|r\r\n每秒回復生命+8\r\n生命+320\r\n裝甲+4\r\n\r\n|cffffcc00解說|r|cffffdead\r\n鑽石恆久遠，一顆就破產。",
+  "flavor": "",
+  "gold": 150,
+  "lumber": null,
+  "abilities": [],
+  "icon": null
+ },
+ "I01T": {
+  "id": "I01T",
+  "base": "ciri",
+  "name": "晨曦之光製作書",
+  "tooltip": "購買晨曦之光製作書(|cffffcc00V|r)",
+  "description": "|cffff8c00飾品|r\r\n|cff8b00ff合成配方：|r\r\n真知之石\r\n初心者寶石\r\n觀世音護身符\r\n晨曦之光製作書\r\n\r\n|cffffcc00效能|r\r\n全能力+10\r\n看穿隱形\r\n抵擋指定法術\r\n\r\n|cffffcc00解說|r|cffffdead\r\n想讓你的女友發出快樂的笑容嗎? 想要到處施發閃光彈嗎? 微硬最新手機外殼\"晨曦之光\"，可以自由調整手機的顏色和亮度，不但能發出取悅女友的瑩瑩藍光，還能當嚇死人的強烈白色閃光彈，讓你情場無往不利。",
+  "flavor": "",
+  "gold": null,
+  "lumber": 400,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNPriestAdept.blp"
+ },
+ "I01U": {
+  "id": "I01U",
+  "base": "arsh",
+  "name": "伊娃之盾製作書",
+  "tooltip": "購買伊娃之盾製作書(|cffffcc00E|r)",
+  "description": "|cffff8c00防具|r\r\n|cff8b00ff合成配方：|r\r\n米索莉護板\r\n寶石碎片\r\n嚇人面具\r\n伊娃之盾製作書\r\n\r\n|cffffcc00效能|r\r\n治癒術\r\n魔力回復速度+150%\r\n生命+400\r\n裝甲+8\r\n\r\n|cffffcc00解說|r|cffffdead\r\n被伊娃所祝福的盾牌，可以施展治癒術治療自身500點生命。",
+  "flavor": "",
+  "gold": 1500,
+  "lumber": null,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNAdvancedUnholyArmor.blp"
+ },
+ "I01W": {
+  "id": "I01W",
+  "base": "spsh",
+  "name": "祕銀鎖子甲",
+  "tooltip": "購買祕銀鎖子甲(|CFFffcc00A|R)",
+  "description": "|cffff8c00防具|r\r\n|cffffcc00效能|r\r\n裝甲+7\r\n抗魔25%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n由相當稀有的魔法金屬-奧里哈魯根所精練而成，相當貼身的護身鎧甲，是戰士和法師夢寐以求的防具。",
+  "flavor": "手工精巧的貼身玩偶裝。",
+  "gold": 3100,
+  "lumber": 50,
+  "abilities": [
+   "A003",
+   "AId7"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNAdvancedReinforcedHides.blp"
+ },
+ "I01X": {
+  "id": "I01X",
+  "base": "blba",
+  "name": "思念的守護製作書",
+  "tooltip": "購買思念的守護製作書(|cffffcc00D|r)",
+  "description": "|cffff8c00防具|r\r\n|cff8b00ff合成配方：|r\r\n米索莉護板\r\n熱戀魔杖\r\n思念的守護製作書\r\n\r\n|cffffcc00效能|r\r\n範圍裝甲+8\r\n智慧+10\r\n\r\n|cffffcc00解說|r|cffffdead\r\n焠鍊米索莉護板的魔力以後，讓魔力緩緩散發出來形成類似結界的防禦效果。",
+  "flavor": "",
+  "gold": 1000,
+  "lumber": 50,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNPeriapt1.blp"
+ },
+ "I01Y": {
+  "id": "I01Y",
+  "base": "ofir",
+  "name": "熾天使之弓製作書",
+  "tooltip": "購買熾天使之弓製作書(|cffffcc00D|r)",
+  "description": "|cffff8c00武器|r\r\n|cff8b00ff合成配方：|r\r\n奧理哈魯根劍身\r\n血羽之心\r\n熾天使之弓製作書\r\n\r\n|cffffcc00效能|r\r\n火焰擴散傷害44(法球)\r\n敏捷+10\r\n\r\n|cffffcc00解說|r|cffffdead\r\n擁有神聖力量的短弓，能在攻擊上附上淨化的火焰。",
+  "flavor": "",
+  "gold": 500,
+  "lumber": 50,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNImprovedBows.blp"
+ },
+ "I01Z": {
+  "id": "I01Z",
+  "base": "frgd",
+  "name": "八取武士刀製作書",
+  "tooltip": "購買八取武士刀製作書(|cffffcc00W|r)",
+  "description": "|cffff8c00武器|r\r\n|cff8b00ff合成配方：|r\r\n恐龍之斧\r\n恐龍之斧\r\n八取武士刀製作書\r\n\r\n|cffffcc00效能|r\r\n力量+10\r\n攻擊力+25\r\n15%的機率增加140點傷害並暈眩0.1秒\r\n\r\n|cffffcc00解說|r|cffffdead\r\n八取大師製作的精銳武士刀，追殺比爾裡人人都想要的名刀，據說有百萬的價值，能斬斷鋼鐵。",
+  "flavor": "",
+  "gold": 1000,
+  "lumber": null,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNCleavingAttack.blp"
+ },
+ "I020": {
+  "id": "I020",
+  "base": "thdm",
+  "name": "瑪那魔杖",
+  "tooltip": "購買瑪那魔杖(|cffffcc00T|r)",
+  "description": "|cffff8c00武器|r\r\n|cff8b00ff施展需求魔力：75點|r\r\n|cff8b00ff技能冷卻時間：25秒|r\r\n|cffffcc00效能|r\r\n連鎖閃電\r\n智慧+10\r\n魔力回復速度+100%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n點選可施展瑪那連鎖閃電造成傷害275點，最多六個敵人。大巫師才會有的神聖法杖，只要握住便會感覺到魔力源源不絕的湧出。",
+  "flavor": "大巫師才會有的神聖法杖。",
+  "gold": 3000,
+  "lumber": null,
+  "abilities": [
+   "A00V",
+   "A03W",
+   "A01V"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNWitchDoctorAdept.blp"
+ },
+ "I021": {
+  "id": "I021",
+  "base": "wcyc",
+  "name": "天叢雲劍製作書",
+  "tooltip": "購買天叢雲劍製作書(|cffffcc00T|r)",
+  "description": "|cffff8c00武器|r\r\n|cff8b00ff合成配方：|r\r\n初心者寶石\r\n奧理哈魯根劍身\r\n天叢雲劍製作書\r\n\r\n|cffffcc00效能|r\r\n颶風術, 持續5秒\r\n全能力+10\r\n攻擊力+30\r\n\r\n|cffffcc00解說|r|cffffdead\r\n傳說中封印八岐大蛇的神劍，實際上是烙跑的好工具。",
+  "flavor": "",
+  "gold": 1000,
+  "lumber": 400,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNThoriumRanged.blp"
+ },
+ "I022": {
+  "id": "I022",
+  "base": "srbd",
+  "name": "龍騎士之劍製作書",
+  "tooltip": "購買龍騎士之劍製作書(|cffffcc00E|r)",
+  "description": "|cffff8c00武器|r\r\n|cff8b00ff合成配方：|r\r\n血羽之心\r\n武聖手鐲\r\n龍騎士之劍製作書\r\n\r\n|cffffcc00效能|r\r\n攻擊力+30\r\n敏捷+10\r\n15%機率造成2倍傷害\r\n\r\n|cffffcc00解說|r|cffffdead\r\n佩帶這把龍騎士之劍雖然沒辦法真的當上龍騎士，但是帥氣會增加100點。",
+  "flavor": "",
+  "gold": 800,
+  "lumber": null,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNMysticSword.blp"
+ },
+ "I023": {
+  "id": "I023",
+  "base": "srbd",
+  "name": "妖刀村正製作書",
+  "tooltip": "購買妖刀村正製作書(|cffffcc00D|r)",
+  "description": "|cffff8c00武器|r\r\n|cff8b00ff合成配方：|r\r\n吸血石\r\n奧理哈魯根劍身\r\n妖刀村正製作書\r\n\r\n|cffffcc00效能|r\r\n吸血25%（法球）\r\n攻擊力+30\r\n\r\n|cffffcc00解說|r|cffffdead\r\n村正打造的妖刀之一，在英雄戴著它砍殺敵人時將會在傷害中吸取作為生命回復",
+  "flavor": "",
+  "gold": 500,
+  "lumber": 100,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNArcaniteRanged.blp"
+ },
+ "I024": {
+  "id": "I024",
+  "base": "frgd",
+  "name": "朗基努斯之槍製作書",
+  "tooltip": "購買朗基努斯之槍製作書(|cffffcc00X|r)",
+  "description": "|cffff8c00武器|r\r\n|cff8b00ff合成配方：|r\r\n貫雷槍\r\n朗基努斯之槍製作書\r\n\r\n|cffffcc00效能|r\r\n10%機率淨化(法球)\r\n力量、敏捷+15\r\n攻擊力+50\r\n機率性造成等同力量之閃電傷害(敏捷越高機率越高)\r\n\r\n|cffffcc00解說|r|cffffdead\r\n據說是沾有神之血的傳說武器，無法判定是否為真品。",
+  "flavor": "",
+  "gold": 3750,
+  "lumber": 550,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNImpale.blp"
+ },
+ "I025": {
+  "id": "I025",
+  "base": "k3m3",
+  "name": "惡夢魔王碎片製作書",
+  "tooltip": "購買惡夢魔王碎片製作書(|cffffcc00R|r)",
+  "description": "|cffff8c00神器|r\r\n|cff8b00ff合成配方：|r\r\n黑核晶\r\n惡夢魔王碎片製作書\r\n\r\n|cffffcc00效能|r\r\n魔力+600\r\n魔力回復速度+200%\r\n攻擊時會消去目標100點法力(會被法球覆蓋)\r\n\r\n|cffffcc00解說|r|cffffdead\r\n傳說中惡夢魔王的碎片是惡夢魔王遺留下來的血液結晶，擁有強大的魔力，傳說有增幅魔法攻擊力的效用。",
+  "flavor": "",
+  "gold": 4500,
+  "lumber": 950,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNorb.tga"
+ },
+ "I026": {
+  "id": "I026",
+  "base": "sneg",
+  "name": "雅典娜的驚嘆號製作書",
+  "tooltip": "購買雅典娜的驚嘆號製作書(|CFFffcc00R|R)",
+  "description": "|cffff8c00神器|r\r\n|cff8b00ff合成配方：|r\r\n瑪那魔杖\r\n雅典娜的驚嘆號製作書\r\n(可藉由製作書強化兩次)\r\n\r\n|cffffcc00效能|r\r\n雅典娜驚嘆號, 連鎖閃電傷害400/700/1000\r\n智慧+24/32/40\r\n魔力回復速度+100/150/200%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n雅典娜的驚嘆號是三位聖鬥士的小宇宙燃燒到極致所鍛造的武器，可使用雅典娜的驚嘆攻擊三個敵人造成傷害，主目標將造成智慧加成傷害。",
+  "flavor": "",
+  "gold": 4500,
+  "lumber": 550,
+  "abilities": [],
+  "icon": null
+ },
+ "I028": {
+  "id": "I028",
+  "base": "mlst",
+  "name": "月神槍製作書",
+  "tooltip": "購買月神槍製作書(|cffffcc00D|r)",
+  "description": "|cffff8c00飾品|r\r\n|cff8b00ff合成配方：|r\r\n思念的守護\r\n月神槍製作書\r\n\r\n|cffffcc00效能|r\r\n智慧+24\r\n範圍裝甲+16\r\n範圍每秒回復生命+10\r\n\r\n|cffffcc00解說|r|cffffdead\r\n傳說來自月之海的夢幻武器，攜帶者會受到月之女神的守護。",
+  "flavor": "",
+  "gold": 4150,
+  "lumber": 400,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNAdvancedStrengthOfTheMoon.blp"
+ },
+ "I029": {
+  "id": "I029",
+  "base": "srtl",
+  "name": "斬龍刀製作書",
+  "tooltip": "購買斬龍刀製作書(|cffffcc00E|r)",
+  "description": "|cffff8c00神器|r\r\n|cff8b00ff合成配方：|r\r\n龍騎士之劍\r\n斬龍刀製作書\r\n\r\n|cffffcc00效能|r\r\n敏捷+20\r\n30%機率造成2.5倍傷害\r\n攻擊力+55\r\n\r\n|cffffcc00解說|r|cffffdead\r\n這把精良的重刀是由甘豆腐為飛鼠先生親手打造的，而且曾經出現在屠龍戰爭中，結束了飛龍部族的侵攻，此刀有混亂人心的副作用。",
+  "flavor": "",
+  "gold": 4500,
+  "lumber": 500,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNSwordofLight.blp"
+ },
+ "I02A": {
+  "id": "I02A",
+  "base": "ofir",
+  "name": "炎神弩製作書",
+  "tooltip": "購買炎神弩製作書(|cffffcc00D|r)",
+  "description": "|cffff8c00神器|r\r\n|cff8b00ff合成配方：|r\r\n熾天使之弓\r\n炎神弩製作書\r\n\r\n|cffffcc00效能|r\r\n敏捷+20\r\n攻擊力+40\r\n額外(敏捷+敵我距離)*0.11穿刺傷害\r\n\r\n|cffffcc00解說|r|cffffdead\r\n最近人口爆炸，天界感情部業績暴增，導致全球各部門的愛神邱比特出現腕關節炎等職業病症狀。有鑑於此，科技部研發了一批國產L65K2邱比特專用槍，減輕各部門邱比特手部負擔，唯時效性與準確性不佳，請多注意。",
+  "flavor": "",
+  "gold": 4000,
+  "lumber": 550,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNHumanMissileUpOne.blp"
+ },
+ "I02B": {
+  "id": "I02B",
+  "base": "shcw",
+  "name": "妖物碎殺牙製作書",
+  "tooltip": "購買妖物碎殺牙製作書(|cffffcc00D|r)",
+  "description": "|cffff8c00神器|r\r\n|cff8b00ff合成配方：|r\r\n妖刀村正\r\n妖物碎殺牙製作書\r\n\r\n|cffffcc00效能|r\r\n攻擊力+50\r\n吸血35%（法球）\r\n6%機率造成255穿刺傷害\r\n\r\n|cffffcc00解說|r|cffffdead\r\n碎殺牙一開始只是矮人族為了開發強力的武器，將吸血礦石不斷鍛造的傑作，但是這把武器卻被大量訂購的黑暗妖精拿來屠殺矮人，形成強烈的諷刺，此後才冠上妖物之名。",
+  "flavor": "",
+  "gold": 5500,
+  "lumber": 550,
+  "abilities": [],
+  "icon": null
+ },
+ "I02V": {
+  "id": "I02V",
+  "base": "shen",
+  "name": "黑核晶製作書",
+  "tooltip": "購買黑核晶製作書(|cffffcc00E|r)",
+  "description": "|cffff8c00飾品|r\r\n|cff8b00ff合成配方：|r\r\n瑪那寶石\r\n嚇人面具\r\n黑核晶製作書\r\n\r\n|cffffcc00效能|r\r\n魔力+200\r\n魔力回復速度+150%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n將巨大魔力壓縮後後得到的黑色結晶。",
+  "flavor": "魔力的結晶",
+  "gold": 150,
+  "lumber": null,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNOrbOfDarkness.blp"
+ },
+ "I02W": {
+  "id": "I02W",
+  "base": "shen",
+  "name": "靈魂魔石製作書",
+  "tooltip": "購買靈魂魔石製作書(|cffffcc00R|r)",
+  "description": "|cffff8c00飾品|r\r\n|cff8b00ff合成配方：|r\r\n女神之淚\r\n靈魂魔石製作書\r\n\r\n|cffffcc00效能|r\r\n生命+600\r\n魔力+375\r\n閃避25%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n封印著遠古守衛護靈魂遺志的神祕石頭。",
+  "flavor": "",
+  "gold": 2750,
+  "lumber": 400,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNUsedSoulGem.blp"
+ },
+ "I02X": {
+  "id": "I02X",
+  "base": "rat3",
+  "name": "斬岩刃",
+  "tooltip": "斬岩刃(|cffffcc00S|r)",
+  "description": "|cffff8c00武器|r\r\n|cffffcc00效能|r\r\n30%機率造成100點範圍傷害\r\n攻擊力+20\r\n力量+10\r\n\r\n|cffffcc00解說|r|cffffdead\r\n據說是遠古時知名刀匠所打造的不可褻瀆之刀。",
+  "flavor": "據說是遠古時知名刀匠所打造的不可褻瀆之刀",
+  "gold": 3450,
+  "lumber": 50,
+  "abilities": [
+   "A0HO",
+   "A0XD",
+   "A02S",
+   "AItx"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNVorpalBlades.blp"
+ },
+ "I02Y": {
+  "id": "I02Y",
+  "base": "rat3",
+  "name": "斬岩刃製作書",
+  "tooltip": "購買斬岩刃製作書(|cffffcc00S|r)",
+  "description": "|cffff8c00武器|r\r\n|cff8b00ff合成配方：|r\r\n奧理哈魯根劍身\r\n恐龍之斧\r\n斬岩刃製作書\r\n\r\n|cffffcc00效能|r\r\n30%機率造成100點範圍傷害\r\n攻擊力+20\r\n力量+10\r\n\r\n|cffffcc00解說|r|cffffdead\r\n據說是遠古時知名刀匠所打造的不可褻瀆之刀。",
+  "flavor": "",
+  "gold": 800,
+  "lumber": 50,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNVorpalBlades.blp"
+ },
+ "I037": {
+  "id": "I037",
+  "base": "penr",
+  "name": "隱密介紹信",
+  "tooltip": "購買隱密介紹信(|cffffcc00X|r)",
+  "description": "|cffffcc00效能|r\r\n不明\r\n\r\n|cffffcc00解說|r|cffffdead\r\n據說是某奇異事務所的介紹信。",
+  "flavor": "隱密介紹信，具有不可思議的神祕力量。",
+  "gold": 1000,
+  "lumber": 950,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNINV_Misc_Note_06.blp"
+ },
+ "I03B": {
+  "id": "I03B",
+  "base": "sneg",
+  "name": "真．雅典娜的驚嘆號",
+  "tooltip": null,
+  "description": "|cffff8c00神器|r\r\n|cff8b00ff施展需求魔力：700點|r\r\n|cff8b00ff技能冷卻時間：60秒|r|n\r\n|cffffcc00效能|r\r\n雅典娜驚嘆號, 連鎖閃電傷害1000\r\n智慧+40\r\n魔力回復速度+200%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n雅典娜的驚嘆號是三位聖鬥士的小宇宙燃燒到極致所鍛造的武器，可使用雅典娜的驚嘆攻擊三個敵人造成傷害，主目標額外造成智慧*9點傷害。",
+  "flavor": "真．雅典娜的驚嘆號是三位聖鬥士的小宇宙燃燒到極致所鍛造的武器。",
+  "gold": 16500,
+  "lumber": 1650,
+  "abilities": [
+   "A07R",
+   "A0KB",
+   "A03X"
+  ],
+  "icon": null
+ },
+ "I03C": {
+  "id": "I03C",
+  "base": "sneg",
+  "name": "雅典娜的驚嘆號．改",
+  "tooltip": null,
+  "description": "|cffff8c00神器|r\r\n|cff8b00ff施展需求魔力：480點|r\r\n|cff8b00ff技能冷卻時間：60秒|r|n\r\n|cffffcc00效能|r\r\n雅典娜驚嘆號, 連鎖閃電傷害700\r\n智慧+32\r\n魔力回復速度+150%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n雅典娜的驚嘆號是三位聖鬥士的小宇宙燃燒到極致所鍛造的武器，可使用雅典娜的驚嘆攻擊三個敵人造成傷害，主目標額外造成智慧*6點傷害。",
+  "flavor": "雅典娜的驚嘆號．改是三位聖鬥士的小宇宙燃燒到極致所鍛造的武器。",
+  "gold": 12000,
+  "lumber": 1100,
+  "abilities": [
+   "A076",
+   "A0X0",
+   "A0X1"
+  ],
+  "icon": null
+ },
+ "I03D": {
+  "id": "I03D",
+  "base": "lnrn",
+  "name": "光明虎徹",
+  "tooltip": "購買光明虎徹(|cffffcc00K|r)",
+  "description": "|cffff8c00飾品|r\r\n|cff8b00ff施展需求魔力：350點|r\r\n|cff8b00ff技能冷卻時間：60秒|r\r\n|cffffcc00效能|r\r\n治療之風\r\n看穿隱形\r\n全能力+10\r\n\r\n|cffffcc00解說|r|cffffdead\r\n傳說能發出萬丈光芒使隱藏敵人無所遁形的名刀，可以施展治癒之風連續回復三位友方1800生命，每回復一名遞減25%回復量，第一個目標不能為自己。",
+  "flavor": "",
+  "gold": 5450,
+  "lumber": 400,
+  "abilities": [
+   "A02O",
+   "A027",
+   "Adt1"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNTransmute.blp"
+ },
+ "I03E": {
+  "id": "I03E",
+  "base": "lnrn",
+  "name": "光明虎徹製作書",
+  "tooltip": "購買光明虎徹製作書(|cffffcc00X|r)",
+  "description": "|cffff8c00飾品|r\r\n|cff8b00ff合成配方：|r\r\n真知之石\r\n初心者寶石\r\n聖光石\r\n光明虎徹製作書\r\n\r\n|cffffcc00效能|r\r\n治療之風\r\n看穿隱形\r\n全能力+10\r\n\r\n|cffffcc00解說|r|cffffdead\r\n傳說能發出萬丈光芒使隱藏敵人無所遁形的名刀，可以施展治癒之風連續回復三位友方1800生命，每回復一名遞減25%回復量，第一個目標不能為自己。",
+  "flavor": "",
+  "gold": 600,
+  "lumber": 400,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNTransmute.blp"
+ },
+ "I03L": {
+  "id": "I03L",
+  "base": "pomn",
+  "name": "我愛一條柴",
+  "tooltip": "購買我愛一條柴(|CFFffcc00R|R)",
+  "description": "|cff8b00ff技能冷卻時間：1秒|r|n\r\n|cffffcc00效能|r\r\n吃掉條狀物(樹), 5秒回復生命120\r\n\r\n|cffffcc00解說|r|cffffdead\r\n服用後會對條狀物產生極大的興奮感，能讓服用者啃食掉條狀物。",
+  "flavor": "讓你變成草食性動物。",
+  "gold": 200,
+  "lumber": null,
+  "abilities": [
+   "A0C4"
+  ],
+  "icon": null
+ },
+ "I03M": {
+  "id": "I03M",
+  "base": "prvt",
+  "name": "反射之盾",
+  "tooltip": "購買反射之盾(|CFFffcc00D|R)",
+  "description": "|cffff8c00夢幻|r\r\n|cffffcc00效能|r\r\n近戰傷害反彈150%\r\n裝甲+5\r\n\r\n|cffffcc00解說|r|cffffdead\r\n死之王與飛鼠先生的死戰之中，詛咒飛鼠先生的裝甲，飛鼠先生為了破除詛咒將效應轉移到盾牌之上，從此飛鼠先生為無裝甲狀態，而此盾也具有了恐怖的反彈效果。",
+  "flavor": "恐怖的詛咒之盾。",
+  "gold": 10000,
+  "lumber": 1350,
+  "abilities": [
+   "A0C6",
+   "AId5"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNImprovedUnholyArmor.blp"
+ },
+ "I03N": {
+  "id": "I03N",
+  "base": "ches",
+  "name": "餅乾",
+  "tooltip": "購買餅乾",
+  "description": "|cffffcc00效能|r\r\n生命回復500\r\n\r\n|cffffcc00解說|r|cffffdead\r\n把可憐的小生物轉變成餅乾，看起來不好吃普烏可能還會吐掉。",
+  "flavor": "這是餅乾！",
+  "gold": 150,
+  "lumber": null,
+  "abilities": [
+   "A0CW"
+  ],
+  "icon": null
+ },
+ "I03O": {
+  "id": "I03O",
+  "base": "frgd",
+  "name": "死之王長槍的碎片",
+  "tooltip": "購買死之王長槍的碎片(|cffffcc00R|r)",
+  "description": "|cffff8c00傳說|r\r\n|cff8b00ff合成配方：|r\r\n死之王長槍碎片\r\n貫雷槍\r\n\r\n|cffffcc00效能|r\r\n針刺地獄\r\n力量、敏捷+15\r\n額外17%攻擊力增加\r\n\r\n|cffffcc00解說|r|cffffdead\r\n點選能招喚惡毒的針刺地獄，給予周圍450傷害，附帶暈眩1秒。傳說不朽王與飛鼠先生在腎虧谷之役中，刺穿飛鼠先生盔甲的邪惡武器。據說該物是從死靈之谷中名匠\"深遂之手\"鑄造，並刺穿自己身體完成槍身。",
+  "flavor": "不朽王長槍碎片。",
+  "gold": 4300,
+  "lumber": 850,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNNagaWeaponUp3.blp"
+ },
+ "I03P": {
+  "id": "I03P",
+  "base": "frgd",
+  "name": "死之王意志的碎片",
+  "tooltip": "購買死之王意志的碎片(|cffffcc00W|r)",
+  "description": "|cffff8c00傳說|r\r\n|cff8b00ff合成配方：|r\r\n死之王意志的碎片\r\n女神之淚\r\n\r\n|cffffcc00效能|r\r\n死亡閃電，消去600魔力並給予等同傷害\r\n生命+960\r\n每秒回復生命+40\r\n\r\n|cffffcc00解說|r|cffffdead\r\n傳說死之王曾經是一位喜歡搞笑的學生，隸屬於一個魔法學校；但是他卻殺了整個班級，原因竟然只是認為同學不喜歡她的冷笑話。",
+  "flavor": "不朽王意志的碎片。",
+  "gold": 4600,
+  "lumber": 900,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNRevenant.blp"
+ },
+ "I03Q": {
+  "id": "I03Q",
+  "base": "frgd",
+  "name": "死之王神盾的碎片",
+  "tooltip": "購買死之王神盾的碎片(|cffffcc00E|r)",
+  "description": "|cffff8c00傳說|r\r\n|cff8b00ff合成配方：|r\r\n死之王神盾的碎片\r\n祕銀鎖子甲\r\n\r\n|cffffcc00效能|r\r\n焚身每秒範圍傷害100點\r\n裝甲+12\r\n減少魔法傷害40%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n死之王最讓人害怕的時刻，莫過於在魔法學校的大屠殺。尤其當死之王學會奪取心智與魔力的魔法後，魔法學校的慘劇已成定局。",
+  "flavor": "不朽王神盾的碎片。",
+  "gold": 4000,
+  "lumber": 950,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNLightningShield.blp"
+ },
+ "I00F": {
+  "id": "I00F",
+  "base": "frgd",
+  "name": "霸王槍",
+  "tooltip": "購買霸王破甲槍(|cffffcc00F|r)",
+  "description": "|cffff8c00神器|r\r\n|cffffcc00效能|r\r\n攻擊力+40\r\n40%機率造成225點範圍傷害\r\n力量+20\r\n\r\n|cffffcc00解說|r|cffffdead\r\n霸王槍和破甲槍原是龍宮中兩把被封印的兵器，在飛鼠的戰友彼得龜的研究下，結合成攻防一體的神兵霸王破甲槍。彼得龜消失之後，兩把槍就此分開，再也沒有人能把霸王破甲槍組合起來。",
+  "flavor": "增加範圍攻擊傷害。",
+  "gold": 7100,
+  "lumber": 600,
+  "abilities": [
+   "A0L0",
+   "A0CJ",
+   "A0WV",
+   "A0M9"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNImprovedStrengthOfTheMoon.blp"
+ },
+ "I019": {
+  "id": "I019",
+  "base": "frgd",
+  "name": "霸王槍製作書",
+  "tooltip": "購買霸王槍製作書(|cffffcc00S|r)",
+  "description": "|cffff8c00神器|r\r\n|cff8b00ff合成配方：|r\r\n斬岩刃\r\n霸王槍製作書\r\n\r\n|cffffcc00效能|r\r\n攻擊力+40\r\n40%機率造成225點範圍傷害\r\n力量+20\r\n\r\n|cffffcc00解說|r|cffffdead\r\n霸王槍和破甲槍原是龍宮中兩把被封印的兵器，在飛鼠的戰友彼得龜的研究下，結合成攻防一體的神兵霸王破甲槍。彼得龜消失之後，兩把槍就此分開，再也沒有人能把霸王破甲槍組合起來。",
+  "flavor": "",
+  "gold": 3650,
+  "lumber": 550,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNImprovedStrengthOfTheMoon.blp"
+ },
+ "I00P": {
+  "id": "I00P",
+  "base": "lnrn",
+  "name": "聖誕之靴",
+  "tooltip": "購買聖誕之靴(|cffffcc00K|r)",
+  "description": "|cffff8c00防具|r\r\n|cffffcc00效能|r\r\n移動速度+75\r\n攻擊速度+30%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n聖誕老人穿戴的靴子，能夠某種程度上加快動作。",
+  "flavor": "華麗的靴子",
+  "gold": 1650,
+  "lumber": null,
+  "abilities": [
+   "A06S",
+   "AIms"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNWirtsOtherLeg.blp"
+ },
+ "I02F": {
+  "id": "I02F",
+  "base": "lnrn",
+  "name": "死神裝束製作書",
+  "tooltip": "購買死神裝束製作書(|cffffcc00F|r)",
+  "description": "|cffff8c00防具|r\r\n|cff8b00ff合成配方：|r\r\n聖誕之靴\r\n死神裝束製作書\r\n\r\n|cffffcc00效能|r\r\n移動速度+95\r\n攻擊速度+60%\r\n全能力+10\r\n\r\n|cffffcc00解說|r|cffffdead\r\n棲息在月之海死神一族的權力象徵，是統領級人物才能裝備的戰甲",
+  "flavor": "",
+  "gold": 4500,
+  "lumber": 500,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNUltravision.blp"
+ },
+ "I033": {
+  "id": "I033",
+  "base": "shen",
+  "name": "初心者護腕",
+  "tooltip": "初心者護腕",
+  "description": "|cffff8c00飾品|r\r\n|cffffcc00效能|r\r\n全能力+5\r\n裝甲+5\r\n減少魔法傷害15%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n適合給初心者使用的防禦道具，只有一開始才能獲得。\r\n|r\r\n|cffffcc00(點選可轉換屬性加成)|r",
+  "flavor": "",
+  "gold": 1400,
+  "lumber": 70,
+  "abilities": [
+   "A0VO",
+   "AId5",
+   "AIx5",
+   "A00K"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNSpiderSilkBroach.blp"
+ },
+ "I03H": {
+  "id": "I03H",
+  "base": "srbd",
+  "name": "天地崩裂魔杖",
+  "tooltip": "購買天地崩裂魔杖(|cffffcc00B|r)",
+  "description": "|cffff8c00法器|r\r\n|cff8b00ff施展需求魔力：450點|r\r\n|cff8b00ff技能冷卻時間：60秒|r\r\n|cffffcc00效能|r\r\n隕石流星雨\r\n\r\n|cffffcc00解說|r|cffffdead\r\n隱藏巨大魔力使天地崩裂的可怕魔杖，可點選施展隕石流星雨，造成950傷害，2秒暈眩，施法距離250。",
+  "flavor": "",
+  "gold": 7575,
+  "lumber": 900,
+  "abilities": [
+   "A03P"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNEntrapmentWard.blp"
+ },
+ "I03I": {
+  "id": "I03I",
+  "base": "srbd",
+  "name": "天地崩裂魔杖製作書",
+  "tooltip": "購買天地崩裂魔杖製作書(|cffffcc00W|r)",
+  "description": "|cffff8c00法器|r\r\n|cff8b00ff合成配方：|r\r\n山之書\r\n火之書\r\n天地崩裂魔杖製作書\r\n\r\n|cffffcc00效能|r\r\n隕石流星雨\r\n\r\n|cffffcc00解說|r|cffffdead\r\n隱藏巨大魔力使天地崩裂的可怕魔杖，可點選施展隕石流星雨，造成950傷害，2秒暈眩，施法距離250。",
+  "flavor": "",
+  "gold": 2750,
+  "lumber": null,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNEntrapmentWard.blp"
+ },
+ "I008": {
+  "id": "I008",
+  "base": "stel",
+  "name": "初級傳送捲軸",
+  "tooltip": "購買初級傳送捲軸(|cffffcc00E|r)",
+  "description": "|cff8b00ff技能冷卻時間：45秒|r\r\n|cffffcc00效能|r\r\n傳送到同盟\r\n全能力+6\r\n\r\n|cffffcc00解說|r|cffffdead\r\n由於這是限量票卡，請珍惜使用。",
+  "flavor": null,
+  "gold": 600,
+  "lumber": 100,
+  "abilities": [
+   "AImt",
+   "AIx5",
+   "AIx1"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNSnazzyScrollPurple.blp"
+ },
+ "I03X": {
+  "id": "I03X",
+  "base": "mnsf",
+  "name": "破甲槍製作書",
+  "tooltip": "購買破甲槍製作書(|cffffcc00F|r)",
+  "description": "|cffff8c00神器|r\r\n|cff8b00ff合成配方：|r\r\n分手之鎚\r\n破甲槍製作書\r\n\r\n|cffffcc00效能：|r\r\n使目標瞬間減少10點裝甲，持續7秒\r\n攻擊力+40\r\n攻擊時削弱目標裝甲12點(法球)\r\n\r\n|cffffcc00歷史|r|cffffdead\r\n曾和霸王槍同為霸王破甲槍的一部分，與僅剩力量的霸王槍不同的是，破甲槍上仍然附帶著些微的風系魔法，每次攻擊都會破除對手的防禦。|r",
+  "flavor": "",
+  "gold": 4000,
+  "lumber": 600,
+  "abilities": [],
+  "icon": null
+ },
+ "I040": {
+  "id": "I040",
+  "base": "mnsf",
+  "name": "破甲槍",
+  "tooltip": "購買 破甲槍(|cffffcc00M|r)",
+  "description": "|cffff8c00神器|r\r\n|cff8b00ff施展需求魔力：200點|r\r\n|cff8b00ff技能冷卻時間：45秒|r\r\n|cffffcc00效能：|r\r\n使目標瞬間減少10點裝甲，持續7秒\r\n攻擊力+40\r\n攻擊時削弱目標裝甲12點(法球)\r\n\r\n|cffffcc00歷史|r|cffffdead\r\n曾和霸王槍同為霸王破甲槍的一部分，與僅剩力量的霸王槍不同的是，破甲槍上仍然附帶著些微的風系魔法，每次攻擊都會破除對手的防禦。|r",
+  "flavor": "發著微微藍光的削瘦長槍，仔細聆聽似乎還有風的聲音。",
+  "gold": 8000,
+  "lumber": 650,
+  "abilities": [
+   "A0D7",
+   "A0L0",
+   "A0O3"
+  ],
+  "icon": null
+ },
+ "I041": {
+  "id": "I041",
+  "base": "will",
+  "name": "火閃電",
+  "tooltip": "購買 火閃電(|cffffcc00I|r)",
+  "description": "|cffff8c00飾品|r\r\n|cffffcc00效能|r\r\n移動速度+110\r\n25%物理傷害迴避\r\n\r\n|cffffcc00解說|r|cffffdead\r\n火閃電是巫師們最優秀的交通工具，速度快如火箭，價格也其貴無比；不過汰換掉的實驗機\"火閃電Beta\"就便宜的多，但速度也沒那麼快。",
+  "flavor": "一隻光滑美麗的掃帚，具有強大的機動性。",
+  "gold": 2950,
+  "lumber": 450,
+  "abilities": [
+   "A07X",
+   "A09X"
+  ],
+  "icon": null
+ },
+ "I042": {
+  "id": "I042",
+  "base": "will",
+  "name": "火閃電製作書",
+  "tooltip": "購買火閃電製作書(|cffffcc00G|r)",
+  "description": "|cffff8c00飾品|r\r\n|cff8b00ff合成配方：|r\r\n熱舞之靴\r\n求生護腕\r\n火閃電製作書\r\n\r\n|cffffcc00效能|r\r\n移動速度+110\r\n25%物理傷害迴避\r\n\r\n|cffffcc00解說|r|cffffdead\r\n火閃電是巫師們最優秀的交通工具，速度快如火箭，價格也其貴無比；不過汰換掉的實驗機\"火閃電Beta\"就便宜的多，但速度也沒那麼快。",
+  "flavor": "",
+  "gold": 1500,
+  "lumber": 450,
+  "abilities": [],
+  "icon": null
+ },
+ "I044": {
+  "id": "I044",
+  "base": "srbd",
+  "name": "寂靜刃 - 詠月製作書",
+  "tooltip": "購買寂靜刃 - 詠月製作書(|cffffcc00E|r)",
+  "description": "|cffff8c00飾品|r\r\n|cff8b00ff合成配方：|r\r\n黑核晶\r\n寂靜刃 - 詠月製作書\r\n\r\n|cffffcc00效能|r\r\n封默刀氣\r\n魔力+300\r\n魔力回復速度+200%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n點選使用封默刀氣，指定目標無法使用技能6秒。以孤獨為象徵的劍，從鑄造完成經過了將近三個世紀才解封，寂靜的歲月讓詠月得以吸收驚人的靈力，解封後三天三夜，方圓百里的咒語都被詠月的力量所干涉封阻，因此被稱為\"寂靜刃\"。|r",
+  "flavor": "",
+  "gold": 2200,
+  "lumber": 350,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNPaladinsSword.BLP"
+ },
+ "I045": {
+  "id": "I045",
+  "base": "srbd",
+  "name": "寂靜刃 - 詠月",
+  "tooltip": "寂靜刃 - 詠月",
+  "description": "|cffff8c00飾品|r\r\n|cff8b00ff施展需求魔力：125點|r\r\n|cff8b00ff技能冷卻時間：60秒|r\r\n\r\n|cffffcc00效能|r\r\n封默刀氣\r\n魔力+300\r\n魔力回復速度+200%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n點選使用封默刀氣，指定目標無法使用技能6秒。以孤獨為象徵的劍，從鑄造完成經過了將近三個世紀才解封，寂靜的歲月讓詠月得以吸收驚人的靈力，解封後三天三夜，方圓百里的咒語都被詠月的力量所干涉封阻，因此被稱為\"寂靜刃\"。|r",
+  "flavor": "可以施展禁言法術。",
+  "gold": 4000,
+  "lumber": 350,
+  "abilities": [
+   "A0EP",
+   "AIbm",
+   "A03X"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNPaladinsSword.BLP"
+ },
+ "I049": {
+  "id": "I049",
+  "base": "spsh",
+  "name": "賢者之石",
+  "tooltip": "購買賢者之石(|CFFffcc00A|R)",
+  "description": "|cffff8c00飾品|r\r\n|cff8b00ff技能冷卻時間：60秒|r\r\n|cffffcc00效能|r\r\n抗魔結界\r\n全能力+10\r\n\r\n|cffffcc00解說|r|cffffdead\r\n點選施展抗魔結界吸收5000點魔法傷害，持續時間9秒。古代煉金術師留下來的遺產之一，可以吸收任何魔法傷害，至今材質依然是謎，只能猜測跟奧里哈魯根有關。",
+  "flavor": "可吸收魔法傷害。",
+  "gold": 3450,
+  "lumber": 200,
+  "abilities": [
+   "A11H",
+   "A027"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNManaStone.blp"
+ },
+ "I04A": {
+  "id": "I04A",
+  "base": "gcel",
+  "name": "賢者之石製作書",
+  "tooltip": "購買賢者之石製作書(|CFFffcc00T|R)",
+  "description": "|cffff8c00飾品|r\r\n|cff8b00ff合成配方：|r\r\n初心者寶石\r\n賢者之石製作書\r\n\r\n|cffffcc00效能|r\r\n抗魔結界\r\n全能力+10\r\n\r\n|cffffcc00解說|r|cffffdead\r\n點選施展抗魔結界吸收5000點魔法傷害，持續時間9秒。古代煉金術師留下來的遺產之一，可以吸收任何魔法傷害，至今材質依然是謎，只能猜測跟奧里哈魯根有關。",
+  "flavor": "",
+  "gold": 1000,
+  "lumber": 200,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNManaStone.blp"
+ },
+ "I04B": {
+  "id": "I04B",
+  "base": "lnrn",
+  "name": "冰晶虎魄",
+  "tooltip": "購買冰晶虎魄(|cffffcc00F|r)",
+  "description": "|cffff8c00武器|r\r\n|cffffcc00效能|r\r\n攻擊附帶冰凍緩速30%持續0.4秒(法球)\r\n力量、智慧+10\r\n攻擊力+25\r\n\r\n\r\n|cffffcc00解說|r|cffffdead\r\n飛鼠先生在極地之南探險時發現古代遺留的白虎結晶，利用其極寒特性鍛造了一把有魔力的斧頭，也因此成了戰勝海妖一族的關鍵。",
+  "flavor": "一把寒冷的斧頭。",
+  "gold": 4150,
+  "lumber": 50,
+  "abilities": [
+   "A0FY",
+   "A03W",
+   "A02S"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNFrostAxe.BLP"
+ },
+ "I04C": {
+  "id": "I04C",
+  "base": "lnrn",
+  "name": "冰晶虎魄製作書",
+  "tooltip": "購買冰晶虎魄製作書(|cffffcc00C|r)",
+  "description": "|cffff8c00武器|r\r\n|cff8b00ff合成配方：|r\r\n恐龍之斧\r\n熱戀魔杖\r\n冰晶琥珀製作書\r\n\r\n|cffffcc00效能|r\r\n攻擊附帶冰凍緩速30%持續0.4秒(法球)\r\n力量、智慧+10\r\n攻擊力+25\r\n\r\n\r\n|cffffcc00解說|r|cffffdead\r\n飛鼠先生在極地之南探險時發現古代遺留的白虎結晶，利用其極寒特性鍛造了一把有魔力的斧頭，也因此成了戰勝海妖一族的關鍵。",
+  "flavor": "",
+  "gold": 2000,
+  "lumber": 50,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNFrostAxe.BLP"
+ },
+ "I04D": {
+  "id": "I04D",
+  "base": "lnrn",
+  "name": "冰晶虎魄 - 改",
+  "tooltip": "購買冰晶虎魄.改(|cffffcc00K|r)",
+  "description": "|cffff8c00神器|r\r\n|r|cffffcc00效能|r\r\n攻擊附帶冰凍緩速30%持續0.6秒(法球)\r\n10%機率寒冰爆，範圍300點傷害並緩速3秒(近距離機率提升到15%)\r\n力量、智慧+15\r\n攻擊力+40\r\n\r\n|cffffcc00解說|r|cffffdead\r\n飛鼠先生在極地之南探險時發現古代遺留的白虎結晶，利用其極寒特性鍛造了一把有魔力的斧頭，也因此成了戰勝海妖一族的關鍵。",
+  "flavor": "一把寒冷的斧頭。",
+  "gold": 7900,
+  "lumber": 600,
+  "abilities": [
+   "A0FX",
+   "A0VL",
+   "A0VN"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNFrostAxe.BLP"
+ },
+ "I04E": {
+  "id": "I04E",
+  "base": "lnrn",
+  "name": "冰晶虎魄 - 改製作書",
+  "tooltip": "購買冰晶虎魄.改製作書(|cffffcc00C|r)",
+  "description": "|cffff8c00神器|r\r\n|cff8b00ff合成配方：|r\r\n冰晶虎魄\r\n冰晶琥珀 - 改製作書\r\n\r\n|r|cffffcc00效能|r\r\n攻擊附帶冰凍緩速30%持續0.6秒(法球)\r\n10%機率寒冰爆，範圍300點傷害並緩速3秒(近距離機率提升到15%)\r\n力量、智慧+15\r\n攻擊力+40\r\n\r\n|cffffcc00解說|r|cffffdead\r\n飛鼠先生在極地之南探險時發現古代遺留的白虎結晶，利用其極寒特性鍛造了一把有魔力的斧頭，也因此成了戰勝海妖一族的關鍵。",
+  "flavor": "",
+  "gold": 3750,
+  "lumber": 550,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNBansheeMaster.blp"
+ },
+ "I001": {
+  "id": "I001",
+  "base": "rspl",
+  "name": "出動怨念射手兵團",
+  "tooltip": "出動怨念射手兵團，遠距離穿刺傷害、輕型裝甲，對付非建築單位特別有效，但是害怕受到建築傷害。",
+  "description": "",
+  "flavor": null,
+  "gold": 1200,
+  "lumber": 350,
+  "abilities": [
+   "APra"
+  ],
+  "icon": null
+ },
+ "I00D": {
+  "id": "I00D",
+  "base": "rspl",
+  "name": "出動戀愛戰士兵團",
+  "tooltip": "出動戀愛戰士兵團，近戰普通傷害、重型裝甲，對於破壞建築物特別擅長，但是害怕法術攻擊。",
+  "description": "",
+  "flavor": null,
+  "gold": 1600,
+  "lumber": 350,
+  "abilities": [
+   "APra"
+  ],
+  "icon": null
+ },
+ "I00E": {
+  "id": "I00E",
+  "base": "rspl",
+  "name": "出動兄貴戰士兵團",
+  "tooltip": "出動兄貴戰士兵團，近戰普通傷害、重型裝甲，對於破壞建築物特別擅長，但是害怕法術攻擊。",
+  "description": "",
+  "flavor": null,
+  "gold": 1600,
+  "lumber": 350,
+  "abilities": [
+   "APra"
+  ],
+  "icon": null
+ },
+ "I00I": {
+  "id": "I00I",
+  "base": "ofir",
+  "name": "炎龍巨弩",
+  "tooltip": "購買炎龍巨弩(|cffffcc00F|r)",
+  "description": "|cffff8c00傳說|r\r\n|cffffcc00效能|r\r\n炎龍之怒\r\n敏捷+24\r\n攻擊力+60\r\n\r\n|cffffcc00解說|r|cffffdead\r\n裝備可發出3道100%威力的炎龍怒火。傳說中飛鼠先生曾經為了破除冰封城堡的魔咒，向脾氣暴躁的炎龍借助火焰之力，最終被飛鼠先生的魔法所收服，將力量引借到充滿魔法力量的巨弩上。",
+  "flavor": null,
+  "gold": 7500,
+  "lumber": 700,
+  "abilities": [
+   "A0HQ",
+   "A0WW",
+   "A0L0",
+   "AItx"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNHumanMissileUpThree.blp"
+ },
+ "I00J": {
+  "id": "I00J",
+  "base": "arsh",
+  "name": "奇門盾甲",
+  "tooltip": "購買奇門盾甲(|cffffcc00A|r)",
+  "description": "|cffff8c00傳說|r\r\n|cffffcc00效能|r\r\n生命+777\r\n每秒回復生命+16\r\n50%格擋100點傷害\r\n\r\n|cffffcc00解說|r|cffffdead\r\n傳說中飛鼠先生的神秘中國老師，擅長施展高超的道術，在飛鼠先生通過仙人試練轉生以後，贈與一項奇幻的寶具，曾在一次重要戰爭中扭轉局面，但事後也被毀壞。",
+  "flavor": null,
+  "gold": 6550,
+  "lumber": 850,
+  "abilities": [
+   "A0MK",
+   "A0KI",
+   "A0US"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNLeatherUpgradeThree.blp"
+ },
+ "I00U": {
+  "id": "I00U",
+  "base": "shdt",
+  "name": "名刀-天狼",
+  "tooltip": "購買名刀-天狼(|cffffcc00D|r)",
+  "description": "|cffff8c00武器|r\r\n|cffffcc00效能|r\r\n每次攻擊造成敵方英雄最大生命4%傷害（法球）\r\n攻擊速度+30%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n名刀-天狼源自於飛鼠先生的夥伴，傳說中的名匠呆牙之手，擁有不可思議的力量，可以穿透敵人生命之源汲取生命。",
+  "flavor": "傳說威力可以殺神的武器",
+  "gold": 4000,
+  "lumber": 100,
+  "abilities": [
+   "A0RJ",
+   "A06S",
+   "A09G"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNSpiritWalkerAdeptTraining.blp"
+ },
+ "I011": {
+  "id": "I011",
+  "base": "shen",
+  "name": "名刀-天狼製作書",
+  "tooltip": "購買名刀-天狼製作書(|cffffcc00G|r)",
+  "description": "|cffff8c00武器|r\r\n|cff8b00ff合成配方：|r\r\n奧理哈魯根劍身\r\n破壞王手套\r\n名刀-天狼製作書\r\n\r\n|cffffcc00效能|r\r\n每次攻擊造成敵方英雄最大生命4%傷害（法球）\r\n攻擊速度+30%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n名刀-天狼源自於飛鼠先生的夥伴，傳說中的名匠呆牙之手，擁有不可思議的力量，可以穿透敵人生命之源汲取生命。",
+  "flavor": "",
+  "gold": 1750,
+  "lumber": 100,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNSpiritWalkerAdeptTraining.blp"
+ },
+ "I01S": {
+  "id": "I01S",
+  "base": "spsh",
+  "name": "仙后座",
+  "tooltip": "購買仙后座(|CFFffcc00A|R)",
+  "description": "|cffff8c00積分獎勵|r\r\n|cff8b00ff施展需求魔力：75點|r\r\n|cff8b00ff技能冷卻時間：0秒|r\r\n|cffffcc00效能|r\r\n瞬間移動\r\n25%物理傷害迴避\r\n\r\n|cffffcc00解說|r|cffffdead\r\n使用可以瞬間移動一小段距離，技巧高超的魔法師甚至可以做到連續移動。傳說中儲存強大魔力並且可以瞬間改變空間的神祕道具，傳聞製造者是火星人。",
+  "flavor": "小型時光機。",
+  "gold": 0,
+  "lumber": null,
+  "abilities": [
+   "A0DV",
+   "A09X",
+   "A0JQ"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNTalisman.blp"
+ },
+ "I01V": {
+  "id": "I01V",
+  "base": "srbd",
+  "name": "螺旋劍",
+  "tooltip": "螺旋劍",
+  "description": "|cffff8c00傳說|r\r\n|cff8b00ff施展需求魔力：260點|r\r\n|cff8b00ff技能冷卻時間：45秒|r\r\n|cffffcc00效能|r\r\n螺旋擊\r\n攻擊力+80\r\n全能力+15\r\n\r\n|cffffcc00解說|r|cffffdead\r\n點選使用螺旋擊，直線範圍傷害800。傳說中某個瘋子在夢中幻想出來的道具，委託飛鼠先生以風元素石鍛鍊，原本是失敗品，後來意外吸收了螺旋巨魔的魔力，變成了難得一見的神祕寶具。",
+  "flavor": null,
+  "gold": 9750,
+  "lumber": 1250,
+  "abilities": [
+   "A0JP",
+   "A09V",
+   "A0MB",
+   "A0JQ"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNTornado.blp"
+ },
+ "I04G": {
+  "id": "I04G",
+  "base": "sor4",
+  "name": "奇門遁甲製作書",
+  "tooltip": "購買奇門遁甲製作書(|cffffcc00F|r)",
+  "description": "|cffff8c00傳說|r\r\n|cff8b00ff合成配方：|r\r\n一克拉鑽戒\r\n奇門遁甲製作書\r\n\r\n|cffffcc00效能|r\r\n生命+777\r\n每秒回復生命+16\r\n50%格擋100點傷害\r\n\r\n|cffffcc00解說|r|cffffdead\r\n傳說中飛鼠先生的神秘中國老師，擅長施展高超的道術，在飛鼠先生通過仙人試練轉生以後，贈與一項奇幻的寶具，曾在一次重要戰爭中扭轉局面，但事後也被毀壞。",
+  "flavor": "傳說中的鍊金術之盾",
+  "gold": 4700,
+  "lumber": 850,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNLeatherUpgradeThree.blp"
+ },
+ "I04H": {
+  "id": "I04H",
+  "base": "sor4",
+  "name": "炎龍巨弩製作書",
+  "tooltip": "購買炎龍巨弩製作書(|cffffcc00D|r)",
+  "description": "|cffff8c00神器|r\r\n|cff8b00ff合成配方：|r\r\n熾天使之弓\r\n炎龍巨弩製作書\r\n\r\n|cffffcc00效能|r\r\n炎龍之怒\r\n敏捷+24\r\n攻擊力+60\r\n\r\n|cffffcc00解說|r|cffffdead\r\n裝備可發出3道100%威力的炎龍怒火。傳說中飛鼠先生曾經為了破除冰封城堡的魔咒，向脾氣暴躁的炎龍借助火焰之力，最終被飛鼠先生的魔法所收服，將力量引借到充滿魔法力量的巨弩上。",
+  "flavor": "",
+  "gold": 4150,
+  "lumber": 650,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNHumanMissileUpThree.blp"
+ },
+ "I04J": {
+  "id": "I04J",
+  "base": "gold",
+  "name": "金幣(寶箱)",
+  "tooltip": null,
+  "description": null,
+  "flavor": null,
+  "gold": null,
+  "lumber": null,
+  "abilities": [
+   "A0O4"
+  ],
+  "icon": null
+ },
+ "I000": {
+  "id": "I000",
+  "base": "frgd",
+  "name": "丈八蛇矛",
+  "tooltip": "購買丈八蛇矛(|cffffcc00E|r)",
+  "description": "|cffff8c00夢幻|r\r\n|cffffcc00效能|r\r\n攻擊力+50\r\n力量+30\r\n擴散傷害60%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n是把相當神奇的兵器，使用者智力會降低，至於原因仍然是個謎。",
+  "flavor": "",
+  "gold": 10000,
+  "lumber": 1100,
+  "abilities": [
+   "A06Z",
+   "A02R",
+   "AIs6",
+   "A0AJ"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNStrengthOfTheMoon.blp"
+ },
+ "I00C": {
+  "id": "I00C",
+  "base": "srbd",
+  "name": "風行天衣",
+  "tooltip": "",
+  "description": "|cffff8c00法器|r\r\n|cff8b00ff施展需求魔力：240點|r\r\n|cff8b00ff技能冷卻時間：30秒|r\r\n|cffffcc00效能|r\r\n隱身風行\r\n25%物理傷害迴避\r\n\r\n|cffffcc00解說|r|cffffdead\r\n點選可施展風行，隱形並將速度提升到極限，持續20秒。據說風行天衣原本是一件天上的仙服，又稱天衣無縫。",
+  "flavor": "",
+  "gold": 5500,
+  "lumber": 900,
+  "abilities": [
+   "A04E",
+   "A09X"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNNightElfCaptureFlag.blp"
+ },
+ "I00H": {
+  "id": "I00H",
+  "base": "srbd",
+  "name": "風行天衣製作書",
+  "tooltip": "購買風行天衣製作書(|cffffcc00R|r)",
+  "description": "|cffff8c00法器|r\r\n|cff8b00ff合成配方：|r\r\n風之書\r\n林之書\r\n風行天衣製作書\r\n\r\n|cffffcc00效能|r\r\n隱身風行\r\n25%物理傷害迴避\r\n\r\n|cffffcc00解說|r|cffffdead\r\n點選可施展風行，隱形並將速度提升到極限，持續20秒。據說風行天衣原本是一件天上的仙服，又稱天衣無縫。",
+  "flavor": "",
+  "gold": 1000,
+  "lumber": null,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNNightElfCaptureFlag.blp"
+ },
+ "I01I": {
+  "id": "I01I",
+  "base": "srbd",
+  "name": "雷神之鎚",
+  "tooltip": "",
+  "description": "|cffff8c00法器|r\r\n|cff8b00ff施展需求魔力：300點|r\r\n|cff8b00ff技能冷卻時間：40秒|r\r\n|cffffcc00效能|r\r\n疾風狂雷\r\n普通攻擊對部隊單位造成2倍傷害(會被法球覆蓋)\r\n\r\n|cffffcc00解說|r|cffffdead\r\n點選可施展疾風狂雷，隨機產生7道造成300雷電傷害，並使範圍內部隊移動速度下降50%，持續3秒。普通攻擊的時候，對非英雄的一般部隊能增加100%傷害。相傳是雷公用來打蹧蹋食物的小壞蛋的寶具。",
+  "flavor": "",
+  "gold": 7990,
+  "lumber": 900,
+  "abilities": [
+   "A01M",
+   "A0AW"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNControlMagic.blp"
+ },
+ "I01L": {
+  "id": "I01L",
+  "base": "srbd",
+  "name": "雷神之鎚製作書",
+  "tooltip": "購買雷神之鎚製作書(|cffffcc00E|r)",
+  "description": "|cffff8c00神器|r\r\n|cff8b00ff合成配方：|r\r\n風之書\r\n火之書\r\n雷神之鎚製作書\r\n\r\n|cffffcc00效能|r\r\n疾風狂雷\r\n普通攻擊對部隊單位造成2倍傷害(會被法球覆蓋)\r\n\r\n|cffffcc00解說|r|cffffdead\r\n點選可施展疾風狂雷，隨機產生7道造成300雷電傷害，並使範圍內部隊移動速度下降50%，持續3秒。普通攻擊的時候，對非英雄的一般部隊能增加100%傷害。相傳是雷公用來打蹧蹋食物的小壞蛋的寶具。",
+  "flavor": "",
+  "gold": 4000,
+  "lumber": null,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNControlMagic.blp"
+ },
+ "I03Z": {
+  "id": "I03Z",
+  "base": "srbd",
+  "name": "螺旋劍製作書",
+  "tooltip": "購買螺旋劍製作書(|CFFffcc00T|R)",
+  "description": "|cffff8c00神器|r\r\n|cff8b00ff合成配方：|r\r\n天叢雲劍\r\n螺旋劍製作書\r\n\r\n|cffffcc00效能|r\r\n螺旋擊\r\n攻擊力+80\r\n全能力+15\r\n\r\n|cffffcc00解說|r|cffffdead\r\n點選使用螺旋擊，直線範圍傷害800。傳說中某個瘋子在夢中幻想出來的道具，委託飛鼠先生以風元素石鍛鍊，原本是失敗品，後來意外吸收了螺旋巨魔的魔力，變成了難得一見的神祕寶具。",
+  "flavor": null,
+  "gold": 4700,
+  "lumber": 850,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNTornado.blp"
+ },
+ "I04I": {
+  "id": "I04I",
+  "base": "srbd",
+  "name": "厄夜鐮刀",
+  "tooltip": "",
+  "description": "|cffff8c00神器|r\r\n|cff8b00ff施展需求魔力：300點|r\r\n|cff8b00ff技能冷卻時間：30秒|r\r\n|cffffcc00效能|r\r\n奪取目標肉體, 短暫呈現虛空狀態\r\n魔力回復速度+150%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n點選施展將目標的靈魂放逐，使之呈現虛空狀態，無法被物理攻擊所傷害，也無法造成物理傷害，但是遭到法術攻擊時傷害將提昇為150%，持續3秒。",
+  "flavor": "",
+  "gold": 6590,
+  "lumber": 900,
+  "abilities": [
+   "A0B0",
+   "A0X1"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNCurse.blp"
+ },
+ "I04K": {
+  "id": "I04K",
+  "base": "shen",
+  "name": "厄夜鐮刀製作書",
+  "tooltip": "購買厄夜鐮刀製作書(|cffffcc00T|r)",
+  "description": "|cffff8c00神器|r\r\n|cff8b00ff合成配方：|r\r\n火之書\r\n林之書\r\n厄夜鐮刀製作書\r\n\r\n|cffffcc00效能|r\r\n奪取目標肉體, 短暫呈現虛空狀態\r\n魔力回復速度+150%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n點選施展將目標的靈魂放逐，使之呈現虛空狀態，無法被物理攻擊所傷害，也無法造成物理傷害，但是遭到法術攻擊時傷害將提昇為150%，持續3秒。傳說中彼得龜在眾神黃昏的戰役中曾被此物劃破胸口，使得靈魂飄蕩在異次元之中。",
+  "flavor": "",
+  "gold": 2000,
+  "lumber": null,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNCurse.blp"
+ },
+ "I04M": {
+  "id": "I04M",
+  "base": "stwa",
+  "name": "殺豬刀製作書",
+  "tooltip": "購買殺豬刀製作書(|cffffcc00E|r)",
+  "description": "|cffff8c00神器|r\r\n|cff8b00ff合成配方：|r\r\n龍騎士之劍\r\n殺豬刀製作書\r\n\r\n|cffffcc00效能|r\r\n敏捷+24\r\n專殺畜牲，7%將敵人變成食材\r\n攻擊力+60\r\n25%機率造成2倍傷害\r\n\r\n|cffffcc00解說|r|cffffdead\r\n傳說中由上古寒鐵煉制而成，食神專用菜刀，可以隨機將敵人變成食材，而且還可以拿來擋子彈。",
+  "flavor": "月光仙子專屬武器",
+  "gold": 5500,
+  "lumber": 950,
+  "abilities": [],
+  "icon": null
+ },
+ "I04V": {
+  "id": "I04V",
+  "base": "stel",
+  "name": "正義之杖",
+  "tooltip": "購買傳送之杖(|cffffcc00X|r)",
+  "description": "|cff8b00ff技能冷卻時間：0秒|r\r\n|cffffcc00效能|r\r\n正義藍光\r\n全能力+100\r\n\r\n|cffffcc00解說|r|cffffdead\r\n面對邪惡的盟友，有時也不得不痛下心來制裁他，世人們稱呼這種行為叫做「正義的制裁!!」",
+  "flavor": null,
+  "gold": 100000,
+  "lumber": 100000,
+  "abilities": [
+   "A0RT",
+   "A0IL"
+  ],
+  "icon": null
+ },
+ "I04Y": {
+  "id": "I04Y",
+  "base": "rhe1",
+  "name": "兌換空罐頭",
+  "tooltip": "兌換空罐頭 |c008ad080-30點|r(|cffffcc00F|r)",
+  "description": "|cff8b00ff合成配方：|r\r\n空罐頭\r\n世界樹的果實\r\n\r\n|cffff8c00積分獎勵 - 蜂蜜罐|r\r\n|cffffcc00效能|r\r\n回復生命1500點、魔力500點\r\n每秒回復生命+6\r\n魔力回復速度+100%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n小熊維尼最愛的食物，只要吃下一口便可立即恢復戰力。",
+  "flavor": null,
+  "gold": 0,
+  "lumber": null,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNVialEmpty.blp"
+ },
+ "I051": {
+  "id": "I051",
+  "base": "rhe1",
+  "name": "兌換仙后座",
+  "tooltip": "兌換仙后座殘骸 |c008ad080-40點|r(|cffffcc00W|r)",
+  "description": "|cff8b00ff合成配方：|r\r\n奇美拉之翼\r\n仙后座殘骸\r\n\r\n|cffff8c00積分獎勵 - 仙后座|r\r\n|cffffcc00效能|r\r\n瞬間移動\r\n25%物理傷害迴避\r\n\r\n|cffffcc00解說|r|cffffdead\r\n使用可以瞬間移動一小段距離，技巧高超的魔法師甚至可以做到連續移動。傳說中儲存強大魔力並且可以瞬間改變空間的神祕道具，傳聞製造者是火星人。",
+  "flavor": null,
+  "gold": 0,
+  "lumber": null,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNTalisman.blp"
+ },
+ "I053": {
+  "id": "I053",
+  "base": "spsh",
+  "name": "仙后座殘骸",
+  "tooltip": "購買仙后座(|CFFffcc00A|R)",
+  "description": "|cffff8c00特殊|r\r\n|cff8b00ff合成配方：|r\r\n奇美拉之翼\r\n仙后座殘骸\r\n\r\n|cffffcc00解說|r|cffffdead\r\n一個破損的懷錶，但只要注入魔力似乎還是可以運作。",
+  "flavor": "",
+  "gold": 0,
+  "lumber": null,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNTalisman.blp"
+ },
+ "I054": {
+  "id": "I054",
+  "base": "rhe1",
+  "name": "認領寵物",
+  "tooltip": "認領寵物 |c008ad080-60點|r(|cffffcc00S|r)",
+  "description": "|cffff8c00特殊|r\r\n|cffffcc00解說|r|cffffdead\r\n認養一隻寵物，寵物會帶給你強大的力量。\r\n\r\n|cffff2020寵物為以下九種隨機給予|r\r\n熊貓：提昇英雄攻擊速度\r\n狼：提昇英雄攻擊力\r\n老鷹：給予視野輔助，可以看穿隱形\r\n冥龍：提昇英雄移動速度\r\n黏液獸：減緩周圍敵方部隊速度\r\n蜘蛛：減緩周圍敵方部隊移動速度\r\n鳥人：減緩周圍敵方部隊攻擊速度\r\n鳳凰：定期回復英雄生命\r\n烏龜：提昇英雄裝甲",
+  "flavor": null,
+  "gold": 0,
+  "lumber": null,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNSeal.blp"
+ },
+ "I055": {
+  "id": "I055",
+  "base": "rhe1",
+  "name": "兌換牛蒡男",
+  "tooltip": "兌換牛蒡男 |c008ad080-50點|r(|cffffcc00E|r)",
+  "description": "|cff8b00ff合成配方：|r\r\n牛蒡男\r\n吸血石\r\n\r\n|cffff8c00積分獎勵 - 惡魔吉他|r\r\n|cffffcc00效能|r\r\n周圍的部隊獲得吸血30%的能力\r\n回魔加速靈氣\r\n\r\n|cffffcc00解說|r|cffffdead\r\n這把吉他原屬於死亡系重金屬之神 - 卡爾斯馬達所有，是重金屬帝王的象徵，傳說有惡魔附身其中，必須不斷吸食活人生血，吉他本體的紅色，正是被鮮血所染紅的。",
+  "flavor": null,
+  "gold": 0,
+  "lumber": null,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNShadowPact.blp"
+ },
+ "I056": {
+  "id": "I056",
+  "base": "rhe1",
+  "name": "交換寵物",
+  "tooltip": "交換寵物 |c008ad080-40點|r(|cffffcc00D|r)",
+  "description": "|cffff8c00特殊|r\r\n|cffffcc00解說|r|cffffdead\r\n不喜歡你的寵物? 跟我交換吧! 只需要一點微薄的費用。\r\n\r\n|cffff2020寵物種類為隨機給予|r",
+  "flavor": null,
+  "gold": 0,
+  "lumber": null,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNScout.blp"
+ },
+ "I059": {
+  "id": "I059",
+  "base": "rhe1",
+  "name": "兌換舊系服",
+  "tooltip": "兌換舊系服 |c008ad080-40點|r(|cffffcc00R|r)",
+  "description": "|cff8b00ff合成配方：|r\r\n舊系服\r\n求生護腕\r\n\r\n|cffff8c00積分獎勵 - 復仇之袍|r\r\n|cffffcc00效能|r\r\n周圍的部隊獲得反彈70%傷害的能力\r\n被攻擊有機率對敵人施展詛咒\r\n\r\n|cffffcc00解說|r|cffffdead\r\n宅宅身上的系服，上面長年累積了大量的怨念而轉變成強大的物品。",
+  "flavor": null,
+  "gold": 0,
+  "lumber": null,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNHoodOfCunning.blp"
+ },
+ "I05A": {
+  "id": "I05A",
+  "base": "rhe1",
+  "name": "兌換泰坦之魂",
+  "tooltip": "兌換泰坦之魂 |c008ad080-70點|r(|cffffcc00X|r)",
+  "description": "|cff8b00ff合成配方：|r\r\n泰坦之魂\r\n火之書or山之書or澤之書\r\n\r\n|cffff8c00積分獎勵 - 上古泰坦裝備|r\r\n|cffffcc00效能|r\r\n元素之力(根據合成物不同能力會有所改變)\r\n裝甲+7\r\n力量+26\r\n\r\n|cffffcc00解說|r|cffffdead\r\n遠古巨人泰坦身上那些看似裝甲的東西，其實是他們的力量結晶，具有控制自然精靈的能力。泰坦之魂則是它們的原型，可藉由法術書引導出自然之力。",
+  "flavor": null,
+  "gold": 0,
+  "lumber": null,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNArmorGolem.blp"
+ },
+ "I05E": {
+  "id": "I05E",
+  "base": "rhe1",
+  "name": "兌換斯巴達圓盾",
+  "tooltip": "兌換斯巴達圓盾 |c008ad080-60點|r(|cffffcc00T|r)",
+  "description": "|cff8b00ff合成配方：|r\r\n斯巴達圓盾\r\n復仇之玉\r\n\r\n|cffff8c00積分獎勵 - 戰旗|r\r\n|cffffcc00效能|r\r\n點選施展提振士氣的怒吼-使附近的友軍攻擊力提昇100%，持續4秒\r\n使附近的友軍攻擊力增強35%\r\n\r\n|cffffcc00解說|r|cffffdead\r\nThis is Sparta!!",
+  "flavor": null,
+  "gold": 0,
+  "lumber": null,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNGoblinLandMine.blp"
+ },
+ "I05G": {
+  "id": "I05G",
+  "base": "pres",
+  "name": "世界樹的果實",
+  "tooltip": "購買世界樹的果實(|cffffcc00G|r)",
+  "description": "|cff8b00ff技能冷卻時間：25秒|r\r\n|cffffcc00效能|r\r\n生命回復全滿\r\n魔力回復全滿\r\n\r\n|cffffcc00解說|r|cffffdead\r\n持有者死亡時會掉落，遊戲開始經過30分鐘之後才會上市。在遠古時代，守護世界樹一族的黃金龍族珍藏的聖物，也是幹架必備寶具。",
+  "flavor": "",
+  "gold": 1800,
+  "lumber": 350,
+  "abilities": [
+   "A0V8"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNClayFigurine.blp"
+ },
+ "I05H": {
+  "id": "I05H",
+  "base": "srbd",
+  "name": "失心匕首",
+  "tooltip": "",
+  "description": "|cffff8c00神器|r\r\n|cffffcc00效能|r\r\n攻擊力+25\r\n每次攻擊造成敵方英雄最大生命8%傷害（法球）\r\n攻擊速度+50%\r\n10%機率增加攻擊速度50%，持續3秒\r\n\r\n|cffffcc00解說|r|cffffdead\r\n傳說中神匠呆牙在失去摯愛之時，不眠不休打造一把短刀，使得此短刀散發出沉重悲傷的氣息，被此刀重傷的人會被此氣息帶走一部分記憶，使用此刀的人同時也會失去理智。",
+  "flavor": "失心匕首",
+  "gold": 8000,
+  "lumber": 700,
+  "abilities": [
+   "A0RJ",
+   "A0XA",
+   "A06R",
+   "A09G"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNHornOfCenarius.blp"
+ },
+ "I05K": {
+  "id": "I05K",
+  "base": "stwp",
+  "name": "打我阿笨蛋卷軸",
+  "tooltip": null,
+  "description": "|cffffcc00效能|r\r\n短時間內傳送至主堡\r\n全能力+6\r\n\r\n|cffffcc00解說|r|cffffdead\r\n傳送回主堡，讓敵人氣得牙癢癢。",
+  "flavor": null,
+  "gold": 600,
+  "lumber": 100,
+  "abilities": [
+   "AItp",
+   "AIx1",
+   "AIx5"
+  ],
+  "icon": null
+ },
+ "I05L": {
+  "id": "I05L",
+  "base": "shen",
+  "name": "力量護腕",
+  "tooltip": "力量護腕",
+  "description": "|cffff8c00飾品|r\r\n|cffffcc00效能|r\r\n力量+12\r\n裝甲+5\r\n減少魔法傷害15%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n適合給初心者使用的防禦道具，只有一開始才能獲得。\r\n|r\r\n|cffffcc00(點選可轉換屬性加成)|r",
+  "flavor": "",
+  "gold": 1400,
+  "lumber": 70,
+  "abilities": [
+   "A0VQ",
+   "AId5",
+   "A0WE",
+   "A00K"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNSpiderSilkBroach.blp"
+ },
+ "I05M": {
+  "id": "I05M",
+  "base": "shen",
+  "name": "敏捷護腕",
+  "tooltip": "敏捷護腕",
+  "description": "|cffff8c00飾品|r\r\n|cffffcc00效能|r\r\n敏捷+12\r\n裝甲+5\r\n減少魔法傷害15%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n適合給初心者使用的防禦道具，只有一開始才能獲得。\r\n|r\r\n|cffffcc00(點選可轉換屬性加成)|r",
+  "flavor": "",
+  "gold": 1400,
+  "lumber": 70,
+  "abilities": [
+   "A0VP",
+   "AId5",
+   "A0WY",
+   "A00K"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNSpiderSilkBroach.blp"
+ },
+ "I05N": {
+  "id": "I05N",
+  "base": "shen",
+  "name": "智慧護腕",
+  "tooltip": "智慧護腕",
+  "description": "|cffff8c00飾品|r\r\n|cffffcc00效能|r\r\n智慧+12\r\n裝甲+5\r\n減少魔法傷害15%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n適合給初心者使用的防禦道具，只有一開始才能獲得。\r\n|r\r\n|cffffcc00(點選可轉換屬性加成)|r",
+  "flavor": "",
+  "gold": 1400,
+  "lumber": 70,
+  "abilities": [
+   "A0VR",
+   "AId5",
+   "A0WF",
+   "A00K"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNSpiderSilkBroach.blp"
+ },
+ "I05O": {
+  "id": "I05O",
+  "base": "thdm",
+  "name": "刺針",
+  "tooltip": "購買刺針(|cffffcc00T|r)",
+  "description": "|cffff8c00飾品|r\r\n|cffffcc00效能|r\r\n攻擊力+40\r\n全能力+10\r\n看穿隱形\r\n\r\n|cffffcc00解說|r|cffffdead\r\n刺針是一把精靈匕首，原為哈比人比爾博-巴金斯所有。比爾博在幽暗密林以此劍刺擊大蜘蛛，因此為其取名為刺針。刺針的法力可偵察附近的敵人，當敵人接近時，劍面會泛起藍光。",
+  "flavor": "精靈匕首。",
+  "gold": 5500,
+  "lumber": 400,
+  "abilities": [
+   "A0L0",
+   "A027",
+   "Adt1"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNShimmerWeed.blp"
+ },
+ "I00G": {
+  "id": "I00G",
+  "base": "stel",
+  "name": "奇美拉之翼",
+  "tooltip": "購買奇美拉之翼(|cffffcc00T|r)",
+  "description": "|cff8b00ff技能冷卻時間：45秒|r|n\r\n|cffffcc00效能|r\r\n傳送到同盟\r\n全能力+6\r\n\r\n|cffffcc00解說|r|cffffdead\r\n有了這項道具以後，高鐵和航空公司都陸續倒閉了。",
+  "flavor": null,
+  "gold": 1750,
+  "lumber": 350,
+  "abilities": [
+   "AImt",
+   "AIx5",
+   "AIx1"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNSpellShieldAmulet.blp"
+ },
+ "I05Q": {
+  "id": "I05Q",
+  "base": "dsum",
+  "name": "友情呼喚號角",
+  "tooltip": "購買友情呼喚號角(|Cffffcc00D|R)",
+  "description": "|cffffcc00效能|r\r\n友情的呼喚，將範圍內的KRR小隊召喚至身邊\r\n熱血力量，攻速+50%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n可以從號角中感受到滿滿的友情支援，友情號角的熱血力量可以讓英雄增加50%的攻擊速度。",
+  "flavor": null,
+  "gold": 2800,
+  "lumber": null,
+  "abilities": [
+   "AUds",
+   "A06R"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNHornOfDoom.blp"
+ },
+ "I05R": {
+  "id": "I05R",
+  "base": "sbch",
+  "name": "吸血石",
+  "tooltip": "購買吸血石(|cffffcc00C|r)",
+  "description": "|cffffcc00效能|r\r\n吸血20%（法球）\r\n\r\n|cffffcc00解說|r|cffffdead\r\n殺傷敵方轉化為生命，是一種稀有的礦石。",
+  "flavor": null,
+  "gold": 1250,
+  "lumber": null,
+  "abilities": [
+   "A0JS"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNOrbofSlowness.blp"
+ },
+ "I05S": {
+  "id": "I05S",
+  "base": "rwiz",
+  "name": "嚇人假面",
+  "tooltip": "購買嚇人假面(|CFFffcc00C|R)",
+  "description": "|cffffcc00效能|r\r\n魔力回復速度+100%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n以為戴著可以嚇人，其實看到的人都在偷笑。",
+  "flavor": null,
+  "gold": null,
+  "lumber": null,
+  "abilities": [
+   "A01V"
+  ],
+  "icon": null
+ },
+ "I05T": {
+  "id": "I05T",
+  "base": "rlif",
+  "name": "定情戒指",
+  "tooltip": "購買定情戒指|Cffffcc00X|R)",
+  "description": "|cffffcc00效能|r\r\n每秒回復生命+6\r\n\r\n|cffffcc00解說|r|cffffdead\r\n號稱可以定情用的戒指，但常常出現在正妹的垃圾桶。",
+  "flavor": null,
+  "gold": 400,
+  "lumber": null,
+  "abilities": [
+   "A0RB"
+  ],
+  "icon": null
+ },
+ "I05U": {
+  "id": "I05U",
+  "base": "bspd",
+  "name": "熱舞之靴",
+  "tooltip": "購買熱舞之靴(|cffffcc00W|r)",
+  "description": "|cffffcc00效能|r\r\n移動速度+75\r\n\r\n|cffffcc00解說|r|cffffdead\r\n讓你跑的比別人快，但是拿來跳踢躂舞可能有困難。",
+  "flavor": null,
+  "gold": 500,
+  "lumber": null,
+  "abilities": [],
+  "icon": null
+ },
+ "I05V": {
+  "id": "I05V",
+  "base": "gcel",
+  "name": "破壞王手套",
+  "tooltip": "購買破壞王手套(|cffffcc00E|r)",
+  "description": "|cffffcc00效能|r\r\n攻擊速度+30%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n穿戴手套打壞任何店內物品照價賠償。\r\n",
+  "flavor": null,
+  "gold": 650,
+  "lumber": null,
+  "abilities": [],
+  "icon": null
+ },
+ "I05W": {
+  "id": "I05W",
+  "base": "spsh",
+  "name": "觀音菩薩護身符",
+  "tooltip": "購買觀音菩薩護身符(|CFFffcc00D|R)",
+  "description": "|cff8b00ff技能冷卻時間：55秒|r\r\n|cffffcc00效能|r\r\n抵擋指定法術\r\n\r\n|cffffcc00解說|r|cffffdead\r\n當你逃過一劫的時候，記得默念謝謝菩薩保佑。",
+  "flavor": null,
+  "gold": 1650,
+  "lumber": null,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNIncinerate.blp"
+ },
+ "I05X": {
+  "id": "I05X",
+  "base": "brac",
+  "name": "辣妹護腕",
+  "tooltip": "購買辣妹護腕(|CFFffcc00F|R)",
+  "description": "|cffffcc00效能|r\r\n減少魔法傷害10%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n曾經是辣妹流行的飾品，穿上或許會有大哥攔妳下來買檳榔。",
+  "flavor": null,
+  "gold": 650,
+  "lumber": null,
+  "abilities": [
+   "A03V"
+  ],
+  "icon": null
+ },
+ "I05Y": {
+  "id": "I05Y",
+  "base": "hlst",
+  "name": "蜂蜜罐",
+  "tooltip": "",
+  "description": "|cffff8c00積分獎勵|r\r\n|cff8b00ff技能冷卻時間：60秒|r\r\n|cffffcc00效能|r\r\n回復生命1500點、魔力500點\r\n每秒回復生命+6\r\n魔力回復速度+100%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n小熊維尼最愛的食物，只要吃下一口便可立即恢復戰力。",
+  "flavor": "小熊維尼最愛的食物，只要吃下一口便可立即恢復戰力。",
+  "gold": null,
+  "lumber": null,
+  "abilities": [
+   "A0FB",
+   "A0RB",
+   "A01V"
+  ],
+  "icon": null
+ },
+ "I05Z": {
+  "id": "I05Z",
+  "base": "rspl",
+  "name": "出動正義射手兵團",
+  "tooltip": "出動正義射手兵團，遠距離穿刺傷害、輕型裝甲，對付非建築單位特別有效，但是害怕受到建築傷害。",
+  "description": "",
+  "flavor": null,
+  "gold": 1200,
+  "lumber": 350,
+  "abilities": [
+   "APra"
+  ],
+  "icon": null
+ },
+ "I060": {
+  "id": "I060",
+  "base": "crdt",
+  "name": "死之王的意志",
+  "tooltip": "購買死之王的意志(|cffffcc00D|r)",
+  "description": "|cffff8c00傳說|r\r\n|cff8b00ff技能冷卻時間：45秒|r\r\n|cffffcc00效能|r\r\n死亡閃電，消去600魔力並給予等同傷害\r\n生命+960\r\n每秒回復生命+40\r\n\r\n|cffffcc00解說|r|cffffdead\r\n傳說死之王曾經是一位喜歡搞笑的學生，隸屬於一個魔法學校；但是他卻殺了整個班級，原因竟然只是認為同學不喜歡她的冷笑話。",
+  "flavor": "（|cffff8c00物品|r）|n一個簡單的皇冠，上面放了一個Kuso的標誌。",
+  "gold": 7500,
+  "lumber": 900,
+  "abilities": [
+   "A0B3",
+   "A0H3",
+   "A0E5"
+  ],
+  "icon": null
+ },
+ "I061": {
+  "id": "I061",
+  "base": "shdt",
+  "name": "死之王的神盾",
+  "tooltip": "購買死之王的神盾(|cffffcc00S|r)",
+  "description": "|cffff8c00傳說|r\r\n|cffffcc00效能|r\r\n焚身每秒範圍傷害100點\r\n裝甲+12\r\n減少魔法傷害40%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n死之王最讓人害怕的時刻，莫過於在魔法學校的大屠殺。尤其當死之王學會奪取心智與魔力的魔法後，魔法學校的慘劇已成定局。",
+  "flavor": null,
+  "gold": 7100,
+  "lumber": 1000,
+  "abilities": [
+   "A063",
+   "AId0",
+   "AId2",
+   "AIcf"
+  ],
+  "icon": null
+ },
+ "I062": {
+  "id": "I062",
+  "base": "desc",
+  "name": "飛鼠跳刀",
+  "tooltip": "購買飛鼠跳刀(|cffffcc00E|r)",
+  "description": "讓攜帶的英雄瞬間傳送一段距離",
+  "flavor": "讓攜帶的英雄瞬間傳送一段距離",
+  "gold": 1550,
+  "lumber": 400,
+  "abilities": [
+   "A0UF"
+  ],
+  "icon": null
+ },
+ "I063": {
+  "id": "I063",
+  "base": "stwp",
+  "name": "防狼電擊棒",
+  "tooltip": null,
+  "description": "|cff8b00ff施展需求魔力：75點|r\r\n|cff8b00ff技能冷卻時間：25秒|r\r\n|cffffcc00效能|r\r\n魔力+275\r\n魔力回復速度+25%\r\n防狼電擊，傷害275，最多4人\r\n\r\n|cffffcc00解說|r|cffffdead\r\n近距離電擊圖謀不軌的壞人，根據電弧效應在旁邊以及後方的敵人也會受到波及。",
+  "flavor": "",
+  "gold": 1400,
+  "lumber": 70,
+  "abilities": [
+   "A0MR",
+   "A0X7",
+   "AIrn"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNWandOfCyclone.blp"
+ },
+ "I065": {
+  "id": "I065",
+  "base": "gmfr",
+  "name": null,
+  "tooltip": "購買寶石碎片(|cffffcc00S|r)",
+  "description": "|cffffcc00效能|r\r\n生命+320\r\n\r\n|cffffcc00解說|r|cffffdead\r\n從一枚強大戒指掉出來的寶石碎片，可以讓持有者增加生命最大值，雖然如此，還是完整的戒指比較有用。",
+  "flavor": null,
+  "gold": 1150,
+  "lumber": null,
+  "abilities": [
+   "A0X2"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNpebble.tga"
+ },
+ "I066": {
+  "id": "I066",
+  "base": "skrt",
+  "name": "復仇之玉",
+  "tooltip": "購買復仇之玉(|cffffcc00X|r)",
+  "description": "|cffffcc00效能|r\r\n攻擊時削弱目標裝甲4點（法球）\r\n\r\n|cffffcc00解說|r|cffffdead\r\n是一塊稀奇的石頭，上面浮出恐怖的臉，膽小的人請勿購買。",
+  "flavor": "攻擊破甲5點。",
+  "gold": 1450,
+  "lumber": null,
+  "abilities": [
+   "A0GT"
+  ],
+  "icon": null
+ },
+ "I067": {
+  "id": "I067",
+  "base": "k3m3",
+  "name": "惡夢魔王碎片",
+  "tooltip": "購買惡夢魔王碎片",
+  "description": "|cffff8c00傳說|r\r\n|cffffcc00效能|r\r\n魔力+600\r\n魔力回復速度+200%\r\n攻擊時會消去目標100點法力(會被法球覆蓋)\r\n\r\n|cffffcc00解說|r|cffffdead\r\n傳說中惡夢魔王的碎片是惡夢魔王遺留下來的血液結晶，擁有強大的魔力，傳說有增幅魔法攻擊力的效用。",
+  "flavor": "魔王之血。",
+  "gold": 6300,
+  "lumber": 950,
+  "abilities": [
+   "A03X",
+   "A0X4",
+   "Afbk"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNorb.tga"
+ },
+ "I068": {
+  "id": "I068",
+  "base": "engs",
+  "name": "瑪那寶石",
+  "tooltip": "購買瑪那寶石(|cffffcc00D|r)",
+  "description": "|cffffcc00效能|r\r\n魔力+200\r\n\r\n|cffffcc00解說|r|cffffdead\r\n這個烏鴉族的寶物傳說中擁有最閃亮純淨的能源。當烏鴉一族傾倒之後，黑龍族很快的四處收集這種美麗而威力強大的物品。",
+  "flavor": null,
+  "gold": 1250,
+  "lumber": null,
+  "abilities": [
+   "A08D",
+   "AImv"
+  ],
+  "icon": null
+ },
+ "I069": {
+  "id": "I069",
+  "base": "shen",
+  "name": "女神之淚製作書",
+  "tooltip": "購買女神之淚製作書(|cffffcc00R|r)",
+  "description": "|cffff8c00飾品|r\r\n|cff8b00ff合成配方：|r\r\n寶石碎片\r\n瑪那寶石\r\n網友手環\r\n女神之淚製作書\r\n\r\n|cffffcc00效能|r\r\n生命+400\r\n魔力+275\r\n裝甲+5\r\n\r\n|cffffcc00解說|r|cffffdead\r\n雖然說是女神之淚，但實質上只是充滿魔力寶石的美名。",
+  "flavor": "增加裝甲和生命與法力點數。",
+  "gold": 350,
+  "lumber": null,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNFrost.blp"
+ },
+ "I06A": {
+  "id": "I06A",
+  "base": "shcw",
+  "name": "妖物碎殺牙",
+  "tooltip": "購買妖物碎殺牙(|cffffcc00S|r)",
+  "description": "|cffff8c00神器|r\r\n|cffffcc00效能|r\r\n攻擊力+50\r\n吸血35%（法球）\r\n6%機率造成255穿刺傷害\r\n\r\n|cffffcc00解說|r|cffffdead\r\n碎殺牙一開始只是矮人族為了開發強力的武器，將吸血礦石不斷鍛造的傑作，但是這把武器卻被大量訂購的黑暗妖精拿來屠殺矮人，形成強烈的諷刺，此後才冠上妖物之名。",
+  "flavor": "傳說中不祥的殺戮武器。",
+  "gold": 8850,
+  "lumber": 650,
+  "abilities": [
+   "A0QN",
+   "A06Z",
+   "A064"
+  ],
+  "icon": null
+ },
+ "I06B": {
+  "id": "I06B",
+  "base": "blba",
+  "name": "思念的守護",
+  "tooltip": "購買思念的守護(|cffffcc00A|r)",
+  "description": "|cffff8c00防具|r\r\n|cffffcc00效能|r\r\n範圍裝甲+8\r\n智慧+10\r\n\r\n|cffffcc00解說|r|cffffdead\r\n焠鍊米索莉護板的魔力以後，讓魔力緩緩散發出來形成類似結界的防禦效果。",
+  "flavor": null,
+  "gold": 3050,
+  "lumber": 50,
+  "abilities": [
+   "A032",
+   "A03W"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNPeriapt1.blp"
+ },
+ "I06C": {
+  "id": "I06C",
+  "base": "rat3",
+  "name": "恐龍之斧",
+  "tooltip": "購買恐龍之斧(|cffffcc00W|r)",
+  "description": "|cffffcc00效能|r\r\n力量+10\r\n\r\n|cffffcc00解說|r|cffffdead\r\n揮動的時候請對準恐龍。",
+  "flavor": "英雄穿戴時增加力量10點。",
+  "gold": 1050,
+  "lumber": null,
+  "abilities": [
+   "A02S"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNSpiritWalkerMasterTraining.blp"
+ },
+ "I06D": {
+  "id": "I06D",
+  "base": "srtl",
+  "name": "斬龍刀",
+  "tooltip": "購買斬龍刀(|cffffcc00T|r)",
+  "description": "|cffff8c00神器|r\r\n|cffffcc00效能|r\r\n敏捷+20\r\n30%機率造成2.5倍傷害\r\n攻擊力+55\r\n\r\n|cffffcc00解說|r|cffffdead\r\n這把精良的重刀是由甘豆腐為飛鼠先生親手打造的，而且曾經出現在屠龍戰爭中，結束了飛龍部族的侵攻，此刀有混亂人心的副作用。",
+  "flavor": "這把重刀上面刻了各種凹痕與符文。",
+  "gold": 7850,
+  "lumber": 500,
+  "abilities": [
+   "A0HA",
+   "A03G",
+   "A0EO"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNSwordofLight.blp"
+ },
+ "I06E": {
+  "id": "I06E",
+  "base": "btst",
+  "name": "月牙魔杖",
+  "tooltip": "購買月牙魔杖(|cffffcc00G|r)",
+  "description": "|cffff8c00夢幻|r\r\n|cffffcc00效能|r\r\n每秒造成範圍流星傷害160（距離越遠流星傷害越低）\r\n減少魔法傷害50%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n眾神黃昏之戰裡，月神為了抵抗火星人特別為飛鼠先生鑄造的神器，是月之海裡最高等級的武器。",
+  "flavor": "能招喚流星的魔杖。",
+  "gold": 10000,
+  "lumber": 1350,
+  "abilities": [
+   "A05W",
+   "A0F2",
+   "A05X"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNrejuvenationPotion.tga"
+ },
+ "I06F": {
+  "id": "I06F",
+  "base": "mlst",
+  "name": "月神槍",
+  "tooltip": "購買月神槍",
+  "description": "|cffff8c00飾品|r\r\n|cffffcc00效能|r\r\n智慧+24\r\n範圍裝甲+16\r\n範圍每秒回復生命+10\r\n\r\n|cffffcc00解說|r|cffffdead\r\n傳說來自月之海的夢幻武器，攜帶者會受到月之女神的守護。",
+  "flavor": "傳說來自月之海的夢幻武器。",
+  "gold": 7200,
+  "lumber": 450,
+  "abilities": [
+   "A0XE",
+   "A086",
+   "A0ZL"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNAdvancedStrengthOfTheMoon.blp"
+ },
+ "I06G": {
+  "id": "I06G",
+  "base": "stwa",
+  "name": "殺豬刀",
+  "tooltip": "殺豬刀(|cffffcc00T|r)",
+  "description": "|cffff8c00傳說|r\r\n|cff8b00ff技能冷卻時間：100秒|r\r\n|cffffcc00效能|r\r\n敏捷+24\r\n專殺畜牲，7%將敵人變成食材\r\n攻擊力+60\r\n抵擋指定法術\r\n\r\n|cffffcc00解說|r|cffffdead\r\n傳說中由上古寒鐵煉制而成，食神專用菜刀，可以隨機將敵人變成食材，而且還可以拿來擋子彈。",
+  "flavor": "月光仙子專屬武器",
+  "gold": 10000,
+  "lumber": 1200,
+  "abilities": [
+   "A0WW",
+   "A028",
+   "A03U",
+   "A0KW"
+  ],
+  "icon": null
+ },
+ "I06H": {
+  "id": "I06H",
+  "base": "brag",
+  "name": "求生護腕",
+  "tooltip": "購買求生護腕(|cffffcc00F|r)",
+  "description": "|cffffcc00效能|r\r\n全能力+5\r\n15%物理傷害迴避\r\n\r\n|cffffcc00解說|r|cffffdead\r\n為什麼能幫助求生呢，大概是因為上面塗滿難聞的味道讓人不敢靠近吧。",
+  "flavor": "提升野外求生能力的護腕。",
+  "gold": 950,
+  "lumber": null,
+  "abilities": [
+   "AIx5",
+   "AIev"
+  ],
+  "icon": null
+ },
+ "I06I": {
+  "id": "I06I",
+  "base": "ofir",
+  "name": "炎神弩",
+  "tooltip": "購買炎神弩(|cffffcc00F|r)",
+  "description": "|cffff8c00神器|r\r\n|cffffcc00效能|r\r\n敏捷+20\r\n攻擊力+40\r\n額外(敏捷+敵我距離)*0.11穿刺傷害\r\n\r\n|cffffcc00解說|r|cffffdead\r\n最近人口爆炸，天界感情部業績暴增，導致全球各部門的愛神邱比特出現腕關節炎等職業病症狀。有鑑於此，科技部研發了一批國產L65K2邱比特專用槍，減輕各部門邱比特手部負擔，唯時效性與準確性不佳，請多注意。",
+  "flavor": "天界感情部最新配備，在攻擊附加火焰擴散傷害。",
+  "gold": 7350,
+  "lumber": 600,
+  "abilities": [
+   "A0L0",
+   "A0HA"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNHumanMissileUpOne.blp"
+ },
+ "I06J": {
+  "id": "I06J",
+  "base": "rump",
+  "name": "獸人船長十字鎬",
+  "tooltip": null,
+  "description": "|cffff8c00任務|r\r\n|cffffcc00效能|r\r\n攻擊力+20\r\n11%機率攻擊附帶暈眩1.5秒\r\n\r\n|cffffcc00解說|r|cffffdead\r\n看起來非常普通的工具，但是給人品極佳的人使用，會有暈到死的情形發生。",
+  "flavor": null,
+  "gold": 0,
+  "lumber": null,
+  "abilities": [
+   "AItx",
+   "AIbx"
+  ],
+  "icon": null
+ },
+ "I06K": {
+  "id": "I06K",
+  "base": "asbl",
+  "name": "奧理哈魯根劍身",
+  "tooltip": "購買奧理哈魯根劍身(|cffffcc00S|r)",
+  "description": "|cffffcc00效能|r\r\n攻擊力+30\r\n\r\n|cffffcc00解說|r|cffffdead\r\n常用於煉劍的材料",
+  "flavor": null,
+  "gold": 1600,
+  "lumber": null,
+  "abilities": [
+   "AItf",
+   "AItf"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNFrostSWORD.blp"
+ },
+ "I06L": {
+  "id": "I06L",
+  "base": "lure",
+  "name": "生肉",
+  "tooltip": "購買生肉(|CFFffcc00L|R)",
+  "description": "|cffffcc00效能|r\r\n可點選食用，慢慢回復225點生命和75點魔力\r\n\r\n|cffffcc00解說|r|cffffdead\r\n食人巨魔最喜歡吃的生肉，拿去給他的話似乎會有好事情發生？",
+  "flavor": "別以為這很噁心，你也是吃肉長大的。",
+  "gold": 150,
+  "lumber": null,
+  "abilities": [
+   "AIp2"
+  ],
+  "icon": null
+ },
+ "I06M": {
+  "id": "I06M",
+  "base": "gemt",
+  "name": "真知之石",
+  "tooltip": "購買真知之石(|cffffcc00R|r)",
+  "description": "|cffffcc00效能|r\r\n看穿隱形\r\n\r\n|cffffcc00解說|r|cffffdead\r\n在攜帶時可以讓英雄在視線中，偵測到躲藏或是隱形部隊，但是對視力矯正沒有任何幫助，請多看綠色植物。",
+  "flavor": null,
+  "gold": 950,
+  "lumber": null,
+  "abilities": [],
+  "icon": null
+ },
+ "I06N": {
+  "id": "I06N",
+  "base": "stre",
+  "name": "老衲的棒子",
+  "tooltip": "購買老衲的棒子(|cffffcc00R|r)",
+  "description": "|cffff8c00任務|r\r\n|cffffcc00效能|r\r\n攻擊力+44\r\n10%機率攻擊附帶癱瘓4秒\r\n\r\n|cffffcc00解說|r|cffffdead\r\n嚐嚐老衲的棒子!? 這根來路不明的奇怪的棒子似乎會讓人精神癱軟。",
+  "flavor": "嚐嚐老衲的棒子",
+  "gold": 0,
+  "lumber": null,
+  "abilities": [
+   "A00Y"
+  ],
+  "icon": null
+ },
+ "I06O": {
+  "id": "I06O",
+  "base": "klmm",
+  "name": "血染八月",
+  "tooltip": "購買血染八月(|cffffcc00W|r)",
+  "description": "|cffff8c00夢幻|r\r\n|cffffcc00效能|r\r\n攻擊力+158\r\n50%攻擊附帶暈眩0.01秒及88傷害\r\n\r\n|cffffcc00解說|r|cffffdead\r\n眾神黃昏(Ragnarok)之戰中，飛鼠先生對上了當時最強的黑暗精靈族，飛鼠先生手持聖劍經過三個多星期的血戰，終於將黑暗精靈擊退，此劍被後人以血戰的八月命名為血染八月",
+  "flavor": "一把修長如弦月的長劍，散發出血腥的鹹味。",
+  "gold": 12000,
+  "lumber": 1300,
+  "abilities": [
+   "A0EG",
+   "A0AH"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNUpgradeRegenerationAura.tga"
+ },
+ "I06P": {
+  "id": "I06P",
+  "base": "bfhr",
+  "name": null,
+  "tooltip": "購買血羽之心(|cffffcc00E|r)",
+  "description": "|cffffcc00效能|r\r\n敏捷+10\r\n\r\n|cffffcc00解說|r|cffffdead\r\n血羽是烏鴉族的聖物，也是代代烏鴉族長的靈魂結晶。",
+  "flavor": null,
+  "gold": 1250,
+  "lumber": null,
+  "abilities": [],
+  "icon": null
+ },
+ "I06Q": {
+  "id": "I06Q",
+  "base": "sor4",
+  "name": "鍊金術之盾",
+  "tooltip": "購買鍊金術之盾(|CFFffcc00S|R)",
+  "description": "|cffff8c00夢幻|r\r\n|cff8b00ff技能冷卻時間：30秒|r\r\n|cffffcc00效能|r\r\n嘲弄\r\n裝甲+20\r\n受攻擊機率將敵人變成黃金\r\n\r\n|cffffcc00解說|r|cffffdead\r\n傑出的鍊金術師飛鼠先生在魔法學校結業考試中製作的防具，本來是留在魔法博物館展示，但是在一次戰亂中被強盜奪走，從此下落不明。",
+  "flavor": "傳說中的鍊金術之盾",
+  "gold": 15000,
+  "lumber": 2000,
+  "abilities": [
+   "A062",
+   "A0C5",
+   "AId5"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNMgexchange.tga"
+ },
+ "I06R": {
+  "id": "I06R",
+  "base": "jdrn",
+  "name": "一克拉鑽戒",
+  "tooltip": "一克拉鑽戒",
+  "description": "|cffff8c00飾品|r\r\n|cffffcc00效能|r\r\n每秒回復生命+8\r\n生命+320\r\n裝甲+4\r\n\r\n|cffffcc00解說|r|cffffdead\r\n鑽石恆久遠，一顆就破產。",
+  "flavor": "完整的戒指，帶給持有者生命的力量",
+  "gold": 1850,
+  "lumber": null,
+  "abilities": [
+   "AId4",
+   "A01Y",
+   "A01Y",
+   "A0X2"
+  ],
+  "icon": null
+ },
+ "I06S": {
+  "id": "I06S",
+  "base": "srbd",
+  "name": "龍騎士之劍",
+  "tooltip": "購買龍騎士之劍(|cffffcc00B|r)",
+  "description": "|cffff8c00武器|r\r\n|cffffcc00效能|r\r\n攻擊力+30\r\n敏捷+10\r\n15%機率造成2倍傷害\r\n\r\n|cffffcc00解說|r|cffffdead\r\n佩帶這把龍騎士之劍雖然沒辦法真的當上龍騎士，但是帥氣會增加100點。",
+  "flavor": null,
+  "gold": 3350,
+  "lumber": null,
+  "abilities": [
+   "AIaz",
+   "A0RK",
+   "AIcs"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNMysticSword.blp"
+ },
+ "I002": {
+  "id": "I002",
+  "base": "rump",
+  "name": "武聖手鐲",
+  "tooltip": "購買武聖手鐲(|cffffcc00G|r)",
+  "description": "|cffffcc00效能|r\r\n15%機率造成2倍傷害\r\n\r\n|cffffcc00解說|r|cffffdead\r\n月之海一位傳奇性的人物遺留下的手鐲，有著神秘的能源，據說當他戴上手鐲衝向敵陣時能夠以一擋百。",
+  "flavor": "攻擊時有機會增加攻擊傷害。",
+  "gold": 950,
+  "lumber": null,
+  "abilities": [
+   "AIcs"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNRingVioletSpider.blp"
+ },
+ "I003": {
+  "id": "I003",
+  "base": "crys",
+  "name": "聖光石",
+  "tooltip": "購買聖光石(|cffffcc00X|r)",
+  "description": "|cff8b00ff施展需求魔力：150點|r\r\n|cff8b00ff技能冷卻時間：50秒|r\r\n|cffffcc00效能|r\r\n恢復目標500點生命\r\n\r\n|cffffcc00解說|r|cffffdead\r\n囚禁著那魯靈魂的石頭。",
+  "flavor": "可以恢復體力。",
+  "gold": 1450,
+  "lumber": null,
+  "abilities": [
+   "A05N"
+  ],
+  "icon": null
+ },
+ "I005": {
+  "id": "I005",
+  "base": "cnob",
+  "name": "初心者寶石",
+  "tooltip": "購買初心者寶石(|CFFffcc00T|R)",
+  "description": "|cffffcc00效能|r\r\n全能力+10\r\n\r\n|cffffcc00解說|r|cffffdead\r\n給初心者的優惠道具，看似不起眼卻隱藏著巨大的力量。",
+  "flavor": "提供力量、靈活和智慧的加成。",
+  "gold": 2450,
+  "lumber": null,
+  "abilities": [
+   "A027"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTN3M3.blp"
+ },
+ "I009": {
+  "id": "I009",
+  "base": "lnrn",
+  "name": "分手之鎚製作書",
+  "tooltip": "購買分手之鎚(|cffffcc00F|r)",
+  "description": "|cffff8c00武器|r\r\n|cff8b00ff合成配方：|r\r\n復仇之玉\r\n奧理哈魯根劍身\r\n分手之鎚製作書\r\n\r\n|cffffcc00效能|r\r\n攻擊力+25\r\n攻擊時削弱目標裝甲7點（法球）\r\n\r\n|cffffcc00解說|r|cffffdead\r\n據說是分手的時候，想要發洩心情砸東西的好工具。",
+  "flavor": "一擊必殺鎚",
+  "gold": 1150,
+  "lumber": 50,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNStormHammer.blp"
+ },
+ "I00A": {
+  "id": "I00A",
+  "base": "thdm",
+  "name": "刺針製作書",
+  "tooltip": "購買刺針製作書(|cffffcc00C|r)",
+  "description": "|cffff8c00飾品|r\r\n|cff8b00ff合成配方：|r\r\n真知之石\r\n初心者寶石\r\n奧理哈魯根劍身\r\n刺針製作書\r\n\r\n|cffffcc00效能|r\r\n攻擊力+40\r\n全能力+10\r\n看穿隱形\r\n\r\n|cffffcc00解說|r|cffffdead\r\n刺針是一把精靈匕首，原為哈比人比爾博-巴金斯所有。比爾博在幽暗密林以此劍刺擊大蜘蛛，因此為其取名為刺針。刺針的法力可偵察附近的敵人，當敵人接近時，劍面會泛起藍光。",
+  "flavor": "精靈匕首。",
+  "gold": 500,
+  "lumber": 400,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNShimmerWeed.blp"
+ },
+ "I00B": {
+  "id": "I00B",
+  "base": "srbd",
+  "name": "失心匕首製作書",
+  "tooltip": "購買失心匕首製作書(|cffffcc00G|r)",
+  "description": "|cffff8c00神器|r\r\n|cff8b00ff合成配方：|r\r\n名刀-天狼\r\n失心匕首製作書\r\n\r\n|cffffcc00效能|r\r\n攻擊力+25\r\n每次攻擊造成敵方英雄最大生命8%傷害，（法球）\r\n攻擊速度+50%\r\n10%機率增加攻擊速度50%，持續3秒\r\n\r\n|cffffcc00解說|r|cffffdead\r\n傳說中神匠呆牙在失去摯愛之時，不眠不休打造一把短刀，使得此短刀散發出沉重悲傷的氣息，被此刀重傷的人會被此氣息帶走一部分記憶，使用此刀的人同時也會失去理智。",
+  "flavor": "失心匕首",
+  "gold": 4000,
+  "lumber": 600,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNHornOfCenarius.blp"
+ },
+ "I00K": {
+  "id": "I00K",
+  "base": "shen",
+  "name": "女神之淚",
+  "tooltip": "購買女神之淚(|cffffcc00D|r)",
+  "description": "|cffff8c00飾品|r\r\n|cffffcc00效能|r\r\n生命+400\r\n魔力+275\r\n裝甲+5\r\n\r\n|cffffcc00解說|r|cffffdead\r\n雖然說是女神之淚，但實質上只是充滿魔力寶石的美名。",
+  "flavor": "增加裝甲和生命與法力點數。",
+  "gold": 2900,
+  "lumber": null,
+  "abilities": [
+   "AId5",
+   "A0X7",
+   "A0X2"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNFrost.blp"
+ },
+ "I01E": {
+  "id": "I01E",
+  "base": "frgd",
+  "name": "和道一文字製作書",
+  "tooltip": "購買和道一文字製作書(|cffffcc00V|r)",
+  "description": "|cffff8c00武器|r\r\n|cff8b00ff合成配方：|r\r\n血羽之心\r\n破壞王手套\r\n和道一文字製作書\r\n\r\n|cffffcc00效能|r\r\n敏捷+20\r\n攻擊速度+30%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n索隆劍客老師的女兒克依娜死了，傷心的索隆就要求把她的刀給他，要連她的份一起變強。",
+  "flavor": "",
+  "gold": 1200,
+  "lumber": null,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNLightningSword.blp"
+ },
+ "I01F": {
+  "id": "I01F",
+  "base": "frgd",
+  "name": "和道一文字",
+  "tooltip": "購買和道一文字(|cffffcc00F|r)",
+  "description": "|cffff8c00武器|r\r\n|cffffcc00效能|r\r\n敏捷+20\r\n攻擊速度+30%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n索隆劍客老師的女兒克依娜死了，傷心的索隆就要求把她的刀給他，要連她的份一起變強。",
+  "flavor": "",
+  "gold": 3100,
+  "lumber": null,
+  "abilities": [
+   "A0HA",
+   "AIsx"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNLightningSword.blp"
+ },
+ "I01G": {
+  "id": "I01G",
+  "base": "lnrn",
+  "name": "貫雷槍",
+  "tooltip": "購買貫雷槍(|cffffcc00F|r)",
+  "description": "|cffff8c00武器|r\r\n|cffffcc00效能|r\r\n10%機率淨化（法球）\r\n力量、敏捷+10\r\n攻擊力+25\r\n\r\n\r\n|cffffcc00解說|r|cffffdead\r\n光之神-盧烏所持有的光之神槍，這支槍象徵其本身力量-太陽光以及天空的閃電。不管面對多遙遠的敵人，都可放射出死亡的光芒。",
+  "flavor": "槍頭麻麻的。",
+  "gold": 4300,
+  "lumber": 50,
+  "abilities": [
+   "A0XF",
+   "A0WX",
+   "A02S",
+   "A0HP"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNNagaWeaponUp1.blp"
+ },
+ "I01H": {
+  "id": "I01H",
+  "base": "lnrn",
+  "name": "貫雷槍製作書",
+  "tooltip": "購買貫雷槍製作書(|cffffcc00X|r)",
+  "description": "|cffff8c00武器|r\r\n|cff8b00ff合成配方：|r\r\n恐龍之斧\r\n血羽之心\r\n貫雷槍製作書\r\n\r\n|cffffcc00效能|r\r\n10%機率淨化（法球）\r\n力量、敏捷+10\r\n攻擊力+25\r\n\r\n\r\n|cffffcc00解說|r|cffffdead\r\n光之神-盧烏所持有的光之神槍，這支槍象徵其本身力量-太陽光以及天空的閃電。不管面對多遙遠的敵人，都可放射出死亡的光芒。",
+  "flavor": "槍頭麻麻的。",
+  "gold": 2000,
+  "lumber": 50,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNNagaWeaponUp1.blp"
+ },
+ "I01J": {
+  "id": "I01J",
+  "base": "shen",
+  "name": "靈魂魔石",
+  "tooltip": "靈魂魔石",
+  "description": "|cffff8c00飾品|r\r\n|cffffcc00效能|r\r\n生命+600\r\n魔力+375\r\n閃避25%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n封印著遠古守衛護靈魂遺志的神祕石頭。",
+  "flavor": "封印著遠古守衛護靈魂遺志的神祕石頭",
+  "gold": 5650,
+  "lumber": 400,
+  "abilities": [
+   "A09X",
+   "A0EK",
+   "A0X5"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNUsedSoulGem.blp"
+ },
+ "I01M": {
+  "id": "I01M",
+  "base": "shen",
+  "name": "黑核晶",
+  "tooltip": "靈魂魔石",
+  "description": "|cffff8c00飾品|r\r\n|cffffcc00效能|r\r\n魔力+200\r\n魔力回復速度+150%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n將巨大魔力壓縮後後得到的黑色結晶。",
+  "flavor": "魔力的結晶",
+  "gold": 1800,
+  "lumber": null,
+  "abilities": [
+   "A0X1",
+   "A0X6"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNOrbOfDarkness.blp"
+ },
+ "I01O": {
+  "id": "I01O",
+  "base": "lnrn",
+  "name": "死神裝束",
+  "tooltip": "購買死神裝束(|cffffcc00K|r)",
+  "description": "|cffff8c00防具|r\r\n|cffffcc00效能|r\r\n移動速度+95\r\n攻擊速度+60%\r\n全能力+10\r\n\r\n|cffffcc00解說|r|cffffdead\r\n棲息在月之海死神一族的權力象徵，是統領級人物才能裝備的戰甲",
+  "flavor": "高級戰甲",
+  "gold": 6150,
+  "lumber": 500,
+  "abilities": [
+   "A0EJ",
+   "A027",
+   "A00Q"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNUltravision.blp"
+ },
+ "I01P": {
+  "id": "I01P",
+  "base": "lnrn",
+  "name": "聖誕之靴製作書",
+  "tooltip": "購買聖誕之靴製作書(|cffffcc00F|r)",
+  "description": "|cffff8c00防具|r\r\n|cff8b00ff合成配方：|r\r\n熱舞之靴\r\n破壞王手套\r\n聖誕之靴製作書\r\n\r\n|cffffcc00效能|r\r\n移動速度+75\r\n攻擊速度+30%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n聖誕老人穿戴的靴子，能夠某種程度上加快動作。",
+  "flavor": "華麗的靴子",
+  "gold": 500,
+  "lumber": null,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNWirtsOtherLeg.blp"
+ },
+ "I01Q": {
+  "id": "I01Q",
+  "base": "rag1",
+  "name": "光魔杖製作書",
+  "tooltip": "購買光魔杖製作書(|cffffcc00T|r)",
+  "description": "|cffff8c00神器|r\r\n|cff8b00ff合成配方：|r\r\n瑪那魔杖\r\n光魔杖製作書\r\n\r\n|cffffcc00效能|r\r\n智慧+24\r\n攻擊力+30\r\n25%機率發出連鎖閃電，傷害185，最多6人\r\n\r\n|cffffcc00解說|r|cffffdead\r\n只要巴恩手上拿著光魔杖，就會有源源不斷的魔力，可以將魔力轉換為攻擊力，號稱地上最強的武器。",
+  "flavor": "光魔杖",
+  "gold": 3700,
+  "lumber": 600,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNPendantOfMana.blp"
+ },
+ "I027": {
+  "id": "I027",
+  "base": "rag1",
+  "name": "光魔杖",
+  "tooltip": "光魔杖",
+  "description": "|cffff8c00神器|r\r\n|cffffcc00效能|r\r\n智慧+24\r\n攻擊力+30\r\n25%機率發出連鎖閃電，傷害185，最多6人\r\n\r\n|cffffcc00解說|r|cffffdead\r\n只要巴恩手上拿著光魔杖，就會有源源不斷的魔力，可以將魔力轉換為攻擊力，號稱地上最強的武器。",
+  "flavor": "光魔杖",
+  "gold": 6700,
+  "lumber": 600,
+  "abilities": [
+   "A086",
+   "A0RK"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNPendantOfMana.blp"
+ },
+ "I02E": {
+  "id": "I02E",
+  "base": "rump",
+  "name": "狂暴軒轅劍",
+  "tooltip": "狂暴軒轅劍(|cffffcc00R|r)",
+  "description": "|cffff8c00傳說|r\r\n|cffffcc00效能：|r\r\n攻擊力+60\r\n力量+24\r\n15%的機率增加225點傷害並暈眩0.4秒\r\n\r\n|cffffcc00歷史|r|cffffdead\r\n傳說中的上古十大神器之ㄧ，被封為最強力量。",
+  "flavor": "增加各種能力，而且有機會打昏敵人。",
+  "gold": 8100,
+  "lumber": 950,
+  "abilities": [
+   "A06Z",
+   "AItn",
+   "A02R",
+   "A0FE"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNArcaniteMelee.blp"
+ },
+ "I02C": {
+  "id": "I02C",
+  "base": "rump",
+  "name": "狂暴軒轅劍製作書",
+  "tooltip": "購買狂暴軒轅劍製作書(|cffffcc00W|r)",
+  "description": "|cffff8c00傳說|r\r\n|cff8b00ff合成配方：|r\r\n八取武士刀\r\n狂暴軒轅劍製作書\r\n\r\n|cffffcc00效能：|r\r\n攻擊力+60\r\n力量+24\r\n15%的機率增加225點傷害並暈眩0.4秒\r\n\r\n|cffffcc00歷史|r|cffffdead\r\n傳說中的上古十大神器之ㄧ，被封為最強力量。",
+  "flavor": "增加各種能力，而且有機會打昏敵人。",
+  "gold": 5000,
+  "lumber": 950,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNArcaniteMelee.blp"
+ },
+ "I02D": {
+  "id": "I02D",
+  "base": "lnrn",
+  "name": "消失的密室",
+  "tooltip": "",
+  "description": "|cffff8c00作者威能超神器|r\r\n|cffffcc00效能|r\r\n我超強\r\n你追不到我\r\n你打不著我\r\n你轟不痛我\r\n我有神出鬼沒的大蟒蛇(挺\r\n\r\n|cffffcc00解說|r|cffffdead\r\n傳說等級的內褲，可刺激穿戴者使速度激增。除此之外，密室裡頭神出鬼沒的大蟒蛇也會趁虛擊暈敵人，是全天下的男人都想要擁有一件的夢幻珍寶！",
+  "flavor": "看起來像是夜市一件50的普通內褲。",
+  "gold": 40000,
+  "lumber": 3000,
+  "abilities": [
+   "A0U4",
+   "A02U",
+   "A0IL",
+   "A0JI"
+  ],
+  "icon": "underpants.blp"
+ },
+ "I02G": {
+  "id": "I02G",
+  "base": "stel",
+  "name": "奇美拉之翼(電腦)",
+  "tooltip": "購買奇美拉之翼(|cffffcc00T|r)",
+  "description": "|cff8b00ff技能冷卻時間：0秒|r|n\r\n|cffffcc00效能|r\r\n傳送到同盟\r\n全能力+10\r\n\r\n|cffffcc00解說|r|cffffdead\r\n有了這項道具以後，高鐵和航空公司都陸續倒閉了。",
+  "flavor": null,
+  "gold": 1750,
+  "lumber": 350,
+  "abilities": [
+   "A0FG",
+   "AIx5",
+   "AIx5"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNSpellShieldAmulet.blp"
+ },
+ "I02H": {
+  "id": "I02H",
+  "base": "shcw",
+  "name": "戰旗",
+  "tooltip": "戰旗",
+  "description": "|cffff8c00積分獎勵|r\r\n|cff8b00ff施展需求魔力：300點|r\r\n|cff8b00ff技能冷卻時間：30秒|r\r\n|cffffcc00效能|r\r\n點選施展提振士氣的怒吼-使附近的友軍攻擊力提昇100%，持續4秒\r\n使附近的友軍攻擊力增強35%\r\n\r\n|cffffcc00解說|r|cffffdead\r\nThis is Sparta!!",
+  "flavor": "This is Sparta!!",
+  "gold": 9065,
+  "lumber": 950,
+  "abilities": [
+   "Aroa",
+   "A0XL",
+   "A0XJ"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNOrcBattleStandard.blp"
+ },
+ "I02I": {
+  "id": "I02I",
+  "base": "frgd",
+  "name": "泰坦之魂",
+  "tooltip": "",
+  "description": "|cffff8c00特殊|r\r\n|cff8b00ff合成配方：|r\r\n泰坦之魂\r\n火之書or山之書or澤之書\r\n\r\n|cffffcc00解說|r|cffffdead\r\n看起來很老舊的石製人偶，作工精緻，仔細一看似乎正朝著你咆嘯。\r\n\r\n|cffffcc00歷史|r|cffffdead\r\n遠古巨人泰坦身上那些看似裝甲的東西，其實是他們的力量結晶，具有控制自然精靈的能力。泰坦之魂則是它們的原型，可藉由法術書引導出自然之力。",
+  "flavor": "",
+  "gold": 0,
+  "lumber": null,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNArmorGolem.blp"
+ },
+ "I02J": {
+  "id": "I02J",
+  "base": "shcw",
+  "name": "復仇之袍",
+  "tooltip": "復仇之袍",
+  "description": "|cffff8c00積分獎勵|r\r\n|cffffcc00效能|r\r\n周圍的部隊獲得反彈70%傷害的能力\r\n被攻擊有機率對敵人施展詛咒\r\n\r\n|cffffcc00解說|r|cffffdead\r\n宅宅身上的系服，上面長年累積了大量的怨念而轉變成強大的物品。",
+  "flavor": "宅宅身上的系服，上面長年累積了大量的怨念而轉變成強大的物品。",
+  "gold": 9065,
+  "lumber": 950,
+  "abilities": [
+   "A0XK"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNCloakOfFlames.blp"
+ },
+ "I02K": {
+  "id": "I02K",
+  "base": "shcw",
+  "name": "惡魔吉他",
+  "tooltip": "惡魔吉他",
+  "description": "|cffff8c00積分獎勵|r\r\n|cffffcc00效能|r\r\n周圍的近戰友軍獲得吸血30%的能力\r\n周圍的友軍每秒回魔+2\r\n\r\n|cffffcc00解說|r|cffffdead\r\n這把吉他原屬於死亡系重金屬之神 - 卡爾斯馬達所有，是重金屬帝王的象徵，傳說有惡魔附身其中，必須不斷吸食活人生血，吉他本體的紅色，正是被鮮血所染紅的。",
+  "flavor": "這把吉他原屬於死亡系重金屬之神 - 卡爾斯馬達所有，是重金屬帝王的象徵，傳說有惡魔附身其中，必須不斷吸食活人生血，吉他本體的紅色，正是被鮮血所染紅的。",
+  "gold": 9065,
+  "lumber": 950,
+  "abilities": [
+   "A0GC",
+   "A0XI"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNStaffOfSilence.blp"
+ },
+ "I02L": {
+  "id": "I02L",
+  "base": "spsh",
+  "name": "舊系服",
+  "tooltip": "",
+  "description": "|cffff8c00特殊|r\r\n|cff8b00ff合成配方：|r\r\n舊系服\r\n求生護腕\r\n\r\n|cffffcc00解說|r|cffffdead\r\n破破髒髒的系服，應該被持續穿好幾年了。",
+  "flavor": "",
+  "gold": 0,
+  "lumber": null,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNHoodOfCunning.blp"
+ },
+ "I02M": {
+  "id": "I02M",
+  "base": "frgd",
+  "name": "牛蒡男",
+  "tooltip": "",
+  "description": "|cffff8c00特殊|r\r\n|cff8b00ff合成配方：|r\r\n牛蒡男\r\n吸血石\r\n\r\n|cffffcc00解說|r|cffffdead\r\n形容軟弱男人的詞語。牛蒡是菊科植物，因為根部很細，所以就衍生出『牛蒡男』這個詞。\r\n但是這個詞看起來有狂野的感覺。\r\n\r\n|cffffcc00【使用例】|r|cffffdead\r\n珍妮，妳的男朋友是個牛蒡男！",
+  "flavor": "",
+  "gold": 0,
+  "lumber": null,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNShadowPact.blp"
+ },
+ "I02N": {
+  "id": "I02N",
+  "base": "spsh",
+  "name": "斯巴達圓盾",
+  "tooltip": "",
+  "description": "|cffff8c00特殊|r\r\n|cff8b00ff合成配方：|r\r\n斯巴達圓盾\r\n復仇之玉\r\n\r\n|cffffcc00解說|r|cffffdead\r\n上面沾滿了鮮血",
+  "flavor": "",
+  "gold": 0,
+  "lumber": null,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNGoblinLandMine.blp"
+ },
+ "I02O": {
+  "id": "I02O",
+  "base": "spsh",
+  "name": "空罐頭",
+  "tooltip": "",
+  "description": "|cffff8c00特殊|r\r\n|cff8b00ff合成配方：|r\r\n空罐頭\r\n世界樹的果實\r\n\r\n|cffffcc00解說|r|cffffdead\r\n一個空罐頭。",
+  "flavor": "",
+  "gold": 0,
+  "lumber": null,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNVialEmpty.blp"
+ },
+ "I02P": {
+  "id": "I02P",
+  "base": "rde1",
+  "name": "網友手環",
+  "tooltip": "購買網友手環(|cffffcc00F|r)",
+  "description": "|cffffcc00效能|r\r\n裝甲+4\r\n\r\n|cffffcc00解說|r|cffffdead\r\n可幫助網聚相認的信物。",
+  "flavor": "瞬間提昇裝甲4點。",
+  "gold": null,
+  "lumber": null,
+  "abilities": [
+   "AId4"
+  ],
+  "icon": null
+ },
+ "I02Q": {
+  "id": "I02Q",
+  "base": "dtsb",
+  "name": "澤之書",
+  "tooltip": "購買澤之書(|cffffcc00S|r)",
+  "description": "|cff8b00ff施展需求魔力：200點|r\r\n|cff8b00ff技能冷卻時間：55秒|r\r\n|cffffcc00效能|r\r\n自我修復\r\n\r\n|cffffcc00解說|r|cffffdead\r\n醫療所指定的友方部隊，在5秒中回復1000點生命點數。",
+  "flavor": "醫療所指定的友方部隊，在5秒中回復1000點生命點數。",
+  "gold": 2785,
+  "lumber": 450,
+  "abilities": [
+   "A0TE"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNSorceressAdept.blp"
+ },
+ "I02R": {
+  "id": "I02R",
+  "base": "ciri",
+  "name": "奇蹟之墜",
+  "tooltip": "購買奇蹟之墜(|cffffcc00R|r)",
+  "description": "|cffff8c00飾品|r\r\n|cff8b00ff施展需求魔力：150點|r\r\n|cff8b00ff技能冷卻時間：60秒|r\r\n|cffffcc00效能|r\r\n範圍移動速度增加\r\n智慧+20\r\n生命+600\r\n\r\n|cffffcc00解說|r|cffffdead\r\n傳說中龍王身上的吊飾，可以讓持有者擁有媲美飛龍一般的速度。",
+  "flavor": "帶來神蹟的吊飾",
+  "gold": 6700,
+  "lumber": 450,
+  "abilities": [
+   "A036",
+   "A0WZ",
+   "A0EK"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNMedalionOfCourage.blp"
+ },
+ "I02S": {
+  "id": "I02S",
+  "base": "ciri",
+  "name": "奇蹟之墜製作書",
+  "tooltip": "購買奇蹟之墜製作書(|cffffcc00W|r)",
+  "description": "|cffff8c00飾品|r\r\n|cff8b00ff合成配方：|r\r\n風之書\r\n寶石碎片\r\n熱戀魔杖\r\n奇蹟之墜製作書\r\n\r\n|cffffcc00效能|r\r\n範圍移動速度增加\r\n智慧+20\r\n生命+600\r\n\r\n|cffffcc00解說|r|cffffdead\r\n傳說中龍王身上的吊飾，可以讓持有者擁有媲美飛龍一般的速度。",
+  "flavor": "帶來神蹟的吊飾",
+  "gold": 2500,
+  "lumber": null,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNMedalionOfCourage.blp"
+ },
+ "I02T": {
+  "id": "I02T",
+  "base": "srbd",
+  "name": "盾甲天書",
+  "tooltip": null,
+  "description": "|cffff8c00法器|r\r\n|cff8b00ff施展需求魔力：350點|r\r\n|cff8b00ff技能冷卻時間：60秒|r\r\n|cffffcc00效能|r\r\n奇門之術\r\n\r\n|cffffcc00解說|r|cffffdead\r\n相傳盾甲術與煉金術系出同源，在一邊對敵方造成傷害的同時能回復友軍生命，亦有傳說此書與大惡魔撒但有關。點選施展奇門之術，對範圍內敵方傷害(222+智慧*6)，回復友軍血量(222+智慧*6)。",
+  "flavor": "",
+  "gold": 7635,
+  "lumber": 900,
+  "abilities": [
+   "A0JA"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNTomeBrown.blp"
+ },
+ "I02U": {
+  "id": "I02U",
+  "base": "srbd",
+  "name": "黑色魔書製作書",
+  "tooltip": "購買黑色魔書製作書(|cffffcc00D|r)",
+  "description": "|cffff8c00法器|r\r\n|cff8b00ff合成配方：|r\r\n山之書\r\n風之書\r\n黑色魔書製作書\r\n\r\n|cffffcc00解說|r|cffffdead\r\n紀錄著操縱大地力量之法的魔書，精通者可遠距離撕裂大地。可點選施展重力強化，敵人緩速90%，並對建築產生每秒350點傷害，持續7秒。",
+  "flavor": "",
+  "gold": 1500,
+  "lumber": null,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNBookOfTheDead.blp"
+ },
+ "I02Z": {
+  "id": "I02Z",
+  "base": "srbd",
+  "name": "盾甲天書製作書",
+  "tooltip": "購買盾甲天書製作書(|cffffcc00S|r)",
+  "description": "|cffff8c00法器|r\r\n|cff8b00ff合成配方：|r\r\n山之書\r\n澤之書\r\n盾甲天書製作書\r\n\r\n|cffffcc00解說|r|cffffdead\r\n相傳盾甲術與煉金術系出同源，在一邊對敵方造成傷害的同時能回復友軍生命，亦有傳說此書與大惡魔撒但有關。點選施展奇門之術，對範圍內敵方傷害(222+智慧*6)，回復友軍血量(222+智慧*6)。",
+  "flavor": "",
+  "gold": 2500,
+  "lumber": null,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNTomeBrown.blp"
+ },
+ "I030": {
+  "id": "I030",
+  "base": "srbd",
+  "name": "黑色魔書",
+  "tooltip": null,
+  "description": "|cffff8c00法器|r\r\n|cff8b00ff施展需求魔力：300點|r\r\n|cff8b00ff技能冷卻時間：40秒|r\r\n|cffffcc00效能|r\r\n重力強化\r\n\r\n|cffffcc00解說|r|cffffdead\r\n紀錄著操縱大地力量之法的魔書，精通者可遠距離撕裂大地。可點選施展重力強化，敵人緩速90%，並對建築產生每秒350點傷害，持續7秒。",
+  "flavor": "",
+  "gold": 6235,
+  "lumber": 900,
+  "abilities": [
+   "A0YJ"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNBookOfTheDead.blp"
+ },
+ "I031": {
+  "id": "I031",
+  "base": "klmm",
+  "name": "天生牙",
+  "tooltip": "天生牙(|cffffcc00K|r)",
+  "description": "|cffff8c00法器|r\r\n|cff8b00ff技能冷卻時間：60秒|r\r\n|cffffcc00效能|r\r\n力量+30\r\n範圍復活\r\n\r\n|cffffcc00解說|r|cffffdead\r\n天生牙是救贖之刀，也是彼世之刀，是屬於死者的世界的刀，可以使剛死去的死者復活。",
+  "flavor": "",
+  "gold": 6400,
+  "lumber": 950,
+  "abilities": [
+   "AIrx",
+   "A0WV",
+   "A02S"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNTheBlackArrow.blp"
+ },
+ "I032": {
+  "id": "I032",
+  "base": "klmm",
+  "name": "天生牙製作書",
+  "tooltip": "購買天生牙製作書(|cffffcc00F|r)",
+  "description": "|cffff8c00法器|r\r\n|cff8b00ff合成配方：|r\r\n林之書\r\n澤之書\r\n天生牙製作書\r\n\r\n|cffffcc00解說|r|cffffdead\r\n天生牙是救贖之刀，也是彼世之刀，是屬於死者的世界的刀，可以使剛死去的死者復活。",
+  "flavor": "",
+  "gold": 1500,
+  "lumber": 100,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNTheBlackArrow.blp"
+ },
+ "I034": {
+  "id": "I034",
+  "base": "bgst",
+  "name": "大地泰坦角盔",
+  "tooltip": "購買泰坦腰帶(|cffffcc00B|r)",
+  "description": "|cffff8c00積分獎勵|r\r\n|cff8b00ff施展需求魔力：200點|r\r\n|cff8b00ff技能冷卻時間：60秒|r\r\n\r\n|cffffcc00效能|r\r\n恐懼狂嘯\r\n裝甲+7\r\n力量+26\r\n\r\n|cffffcc00解說|r|cffffdead\r\n擁有看起來很恐怖的面罩，令人不寒而慄，當注入法力驅動之後會產生更強大的壓迫感，降低周圍敵軍的攻擊力50%，持續15秒。",
+  "flavor": "",
+  "gold": 0,
+  "lumber": null,
+  "abilities": [
+   "A0YL",
+   "A0YM",
+   "A0UU",
+   "AId7"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNUnholyAura.blp"
+ },
+ "I035": {
+  "id": "I035",
+  "base": "bgst",
+  "name": "海潮泰坦護盾",
+  "tooltip": "購買泰坦腰帶(|cffffcc00B|r)",
+  "description": "|cffff8c00積分獎勵|r\r\n|cff8b00ff施展需求魔力：350點|r\r\n|cff8b00ff技能冷卻時間：60秒|r\r\n\r\n|cffffcc00效能|r\r\n海潮之聲\r\n裝甲+7\r\n力量+26\r\n\r\n|cffffcc00解說|r|cffffdead\r\n看似盾牌，實際上象徵意義大於格擋作用，能驅使附近的水元素治療周圍友軍，在3秒內回復1000點生命。",
+  "flavor": "",
+  "gold": 0,
+  "lumber": null,
+  "abilities": [
+   "AIsl",
+   "A0YN",
+   "A0UU",
+   "AId7"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNWaterShield.blp"
+ },
+ "I036": {
+  "id": "I036",
+  "base": "jdrn",
+  "name": "嗜血邪書製作書",
+  "tooltip": "購買嗜血邪書製作書(|cffffcc00G|r)",
+  "description": "|cffff8c00法器|r\r\n|cff8b00ff合成配方：|r\r\n風之書\r\n澤之書\r\n嗜血邪書製作書\r\n\r\n|cffffcc00解說|r|cffffdead\r\n此書來源不明，記載著失落已久的邪法，上面寫著詳加研讀將可成為統一魔界的魔王，點選施展可召喚嗜血魔陣，造成範圍內敵方部隊損失150點生命，並每秒損失7%生命減緩50%攻速，持續7秒，此書的最後寫著-\r\n作者：阿笨\r\n統一販賣價格50元",
+  "flavor": "",
+  "gold": 3000,
+  "lumber": null,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNNecromancerAdept.blp"
+ },
+ "I038": {
+  "id": "I038",
+  "base": "jdrn",
+  "name": "嗜血邪書",
+  "tooltip": "嗜血邪書",
+  "description": "|cffff8c00法器|r\r\n|cff8b00ff施展需求魔力：400點|r\r\n|cff8b00ff技能冷卻時間：60秒|r\r\n|cffffcc00效能|r\r\n嗜血魔陣\r\n\r\n|cffffcc00解說|r|cffffdead\r\n此書來源不明，記載著失落已久的邪法，上面寫著詳加研讀將可成為統一魔界的魔王，點選施展可召喚嗜血魔陣，造成範圍內敵方部隊損失150點生命，並每秒損失7%生命減緩50%攻速，持續7秒，此書的最後寫著-\r\n作者：阿笨\r\n統一販賣價格50元",
+  "flavor": "",
+  "gold": 7735,
+  "lumber": 900,
+  "abilities": [
+   "A0YZ"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNNecromancerAdept.blp"
+ },
+ "I039": {
+  "id": "I039",
+  "base": "frgd",
+  "name": "幻之匕首",
+  "tooltip": "購買幻之匕首(|cffffcc00F|r)",
+  "description": "|cffff8c00神器|r\r\n|cff8b00ff施展需求魔力：50點|r\r\n|cff8b00ff技能冷卻時間：45秒|r\r\n|cffffcc00效能|r\r\n闇影擊\r\n敏捷+40\r\n攻擊速度+50%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n傳說中一名欲暗殺飛鼠先生的刺客所用的匕首，匕首本身若隱若現散發著白光，最後因為刺客睡過頭而暗殺失敗，最後匕首不曉得流落何方，點選施展闇影擊，對目標造成300點傷害，減緩移動速度3秒。",
+  "flavor": "",
+  "gold": 7600,
+  "lumber": 700,
+  "abilities": [
+   "A103",
+   "A0WX",
+   "A0ME",
+   "A06R"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNSacrifice.blp"
+ },
+ "I03A": {
+  "id": "I03A",
+  "base": "lnrn",
+  "name": "幻之匕首製作書",
+  "tooltip": "購買幻之匕首製作書(|cffffcc00W|r)",
+  "description": "|cffff8c00神器|r\r\n|cff8b00ff合成配方：|r\r\n和道一文字\r\n幻之匕首製作書\r\n\r\n|cffffcc00效能|r\r\n敏捷+40\r\n攻擊速度+50%\r\n\r\n|cffffcc00解說|r|cffffdead\r\n傳說中一名欲暗殺飛鼠先生的刺客所用的匕首，匕首本身若隱若現散發著白光，最後因為刺客睡過頭而暗殺失敗，最後匕首不曉得流落何方，點選施展闇影擊，對目標造成300點傷害，減緩移動速度3秒。",
+  "flavor": "",
+  "gold": 4500,
+  "lumber": 700,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNSacrifice.blp"
+ },
+ "I03F": {
+  "id": "I03F",
+  "base": "arsh",
+  "name": "甘豆腐之袍",
+  "tooltip": "購買甘豆腐之袍(|cffffcc00A|r)",
+  "description": "|cffff8c00傳說|r\r\n|cff8b00ff施展需求魔力：200點|r\r\n|cff8b00ff技能冷卻時間：75秒|r\r\n|cffffcc00效能|r\r\n治癒術\r\n魔力增幅\r\n魔力回復速度+150%\r\n生命+400\r\n裝甲+8\r\n\r\n|cffffcc00解說|r|cffffdead\r\n傳說中的賢者甘豆腐所穿的衣服，看起來好像破破舊舊的，但是實際上蘊含著強大的魔力，每殺死一名英雄可以額外獲得10點智慧，最多累積7次，達最高層額外獲得40點智慧，死亡時將會降低2次累積，並可施展治癒術治療自身1000點生命。",
+  "flavor": "看起來破破爛爛，但是卻散發著光芒的法袍。",
+  "gold": 8000,
+  "lumber": 850,
+  "abilities": [
+   "A0ZS",
+   "A0X1",
+   "A04P",
+   "AId8"
+  ],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNMantleOfIntelligence.blp"
+ },
+ "I03G": {
+  "id": "I03G",
+  "base": "arsh",
+  "name": "甘豆腐之袍製作書",
+  "tooltip": "購買甘豆腐之袍製作書(|cffffcc00G|r)",
+  "description": "|cffff8c00傳說|r\r\n|cff8b00ff合成配方：|r\r\n伊娃之盾\r\n甘豆腐之袍製作書\r\n\r\n|cffffcc00效能|r\r\n治癒術\r\n魔力增幅\r\n魔力回復速度+150%\r\n生命+400\r\n裝甲+8\r\n\r\n|cffffcc00解說|r|cffffdead\r\n傳說中的賢者甘豆腐所穿的衣服，看起來好像破破舊舊的，但是實際上蘊含著強大的魔力，每殺死一名英雄可以額外獲得10點智慧，最多累積7次，達最高層額外獲得40點智慧，死亡時將會降低2次累積，並可施展治癒術治療自身1000點生命。",
+  "flavor": "",
+  "gold": 4000,
+  "lumber": 850,
+  "abilities": [],
+  "icon": "ReplaceableTextures\\CommandButtons\\BTNMantleOfIntelligence.blp"
+ },
+ "I03J": {
+  "id": "I03J",
+  "base": "pams",
+  "name": "黃昏公主的血脈",
+  "tooltip": "購買黃昏公主的血脈(|CFFffcc00V|R)",
+  "description": "|cff8b00ff技能冷卻時間：60秒|r\r\n|cffffcc00效能|r\r\n抗魔結界\r\n\r\n|cffffcc00解說|r|cffffdead\r\n以黃昏公主的血製成的稀有藥劑，服用後於6秒內將可對所有魔法免疫。",
+  "flavor": null,
+  "gold": 450,
+  "lumber": null,
+  "abilities": [
+   "A0FH"
+  ],
+  "icon": null
+ }
+}

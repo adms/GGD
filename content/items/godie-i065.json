@@ -1,0 +1,18 @@
+{
+  "id": "godie-i065",
+  "schema": "item@1",
+  "name": "godie-i065",
+  "description": "效能\n生命+320\n\n解說\n從一枚強大戒指掉出來的寶石碎片，可以讓持有者增加生命最大值，雖然如此，還是完整的戒指比較有用。",
+  "cost": 1150,
+  "tier": 2,
+  "tags": [
+    "wc3-import"
+  ],
+  "modifiers": [
+    {
+      "stat": "maxHealth",
+      "op": "flat",
+      "value": 320
+    }
+  ]
+}

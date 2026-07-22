@@ -1,0 +1,65 @@
+{{- /*
+DEV/CI ONLY — test orchestration service (+ the dashboard talks to it).
+Gated twice: test.enabled here, and the binary refuses APP_ENV=production.
+*/ -}}
+{{- if .Values.test.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-testrunner
+  labels:
+    {{- include "ggd.labels" . | nindent 4 }}
+    app.kubernetes.io/name: testrunner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "ggd.selector" (dict "root" . "name" "testrunner") | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "ggd.labels" . | nindent 8 }}
+        {{- include "ggd.selector" (dict "root" . "name" "testrunner") | nindent 8 }}
+    spec:
+      containers:
+        - name: testrunner
+          image: ggd-testrunner:dev
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          # NOTE: suites exec repo commands, so the repo must be present at
+          # /repo — in kind that means an extraMount of the repo root. This is
+          # a CI/bench convenience; the usual dev flow runs the runner on the
+          # host (`make test` / `go run ./cmd/testrunner`).
+          args: ["-addr", "0.0.0.0:8799", "-root", "/repo"]
+          env:
+            - name: APP_ENV
+              value: {{ .Values.appEnv | quote }}
+            - name: ENABLE_TEST_DASHBOARD
+              value: "1"
+          ports:
+            - name: http
+              containerPort: 8799
+          volumeMounts:
+            - name: repo
+              mountPath: /repo
+      volumes:
+        - name: repo
+          hostPath:
+            path: /ggd/repo   # provide via kind extraMounts when test.enabled
+            type: Directory
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-testrunner
+  labels:
+    {{- include "ggd.labels" . | nindent 4 }}
+    app.kubernetes.io/name: testrunner
+spec:
+  type: ClusterIP
+  selector:
+    {{- include "ggd.selector" (dict "root" . "name" "testrunner") | nindent 4 }}
+  ports:
+    - name: http
+      port: 8799
+      targetPort: http
+{{- end }}

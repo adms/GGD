@@ -1,0 +1,50 @@
+{
+  "id": "godie-efur.q",
+  "name": "13-01 老樹盤根",
+  "description": "[主動攻擊]\n26秒冷卻時間\n\n用植物的根部將敵人羈絆住而無法移動，被綑綁的敵人每秒也會承受25點的傷害，持續1秒。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    26.0,
+    26.0,
+    26.0,
+    26.0
+  ],
+  "manaCost": [
+    150.0,
+    185.0,
+    220.0,
+    255.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          75.0,
+          75.0,
+          75.0,
+          75.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.225
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "root",
+      "duration": 1.0,
+      "root": true
+    }
+  ],
+  "vfxKey": "fx.root-snare",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

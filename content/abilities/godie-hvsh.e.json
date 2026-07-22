@@ -1,0 +1,44 @@
+{
+  "id": "godie-hvsh.e",
+  "name": "48-03 鮮血神殿",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n召喚一個嗜血的結界，每秒可以損傷敵方部隊75生命，降低攻擊速度50%，每秒受到傷害的部隊可恢復Rider1%的生命，每殺死14個部隊則增加Rider1點全能力，可持續10秒。",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    120.0,
+    195.0,
+    270.0,
+    345.0
+  ],
+  "range": 1.83,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          80,
+          120,
+          160,
+          200
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

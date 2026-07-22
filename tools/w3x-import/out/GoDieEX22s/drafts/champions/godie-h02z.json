@@ -1,0 +1,195 @@
+{
+  "id": "godie-h02z",
+  "schema": "champion@1",
+  "name": "不良少年",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "champ.sela",
+  "baseStats": {
+    "maxHealth": 620,
+    "healthRegen": 1.5,
+    "maxMana": 292,
+    "manaRegen": 1.44,
+    "ad": 35,
+    "ap": 0,
+    "armor": 7,
+    "mr": 28,
+    "as": 0.53,
+    "ms": 5.9,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 36,
+    "healthRegen": 0.09,
+    "maxMana": 22,
+    "manaRegen": 0.07,
+    "ad": 1.8,
+    "armor": 0.5,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-h02z.q",
+      "name": "死亡之握",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        40.0,
+        40.0,
+        40.0,
+        40.0
+      ],
+      "manaCost": [
+        140.0,
+        180.0,
+        220.0,
+        260.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "shield",
+          "amount": {
+            "perRank": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "duration": 5.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "W": {
+      "id": "godie-h02z.w",
+      "name": "疫病",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": 20
+            }
+          ],
+          "duration": 8.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "E": {
+      "id": "godie-h02z.e",
+      "name": "碎心打擊",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        130.0,
+        170.0,
+        210.0,
+        250.0
+      ],
+      "range": 5.5,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              225.0,
+              300.0,
+              375.0,
+              450.0
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow40",
+          "duration": 1.5,
+          "moveSpeedMult": 0.6
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "radius": 3.67
+    },
+    "R": {
+      "id": "godie-h02z.r",
+      "name": "血魄暴噬",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "duration": 3.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ]
+}

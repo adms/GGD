@@ -1,0 +1,47 @@
+{
+  "id": "godie-hblm.r",
+  "name": "05-04 巴歐．薩喀爾嘎",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n賈修的最強咒語，招換出一條金色的雷龍衝擊敵人造成550點傷害，並擊退一段距離，若受到撞擊停止，周圍敵人將會受到力量*3額外傷害。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    140.0,
+    230.0,
+    320.0
+  ],
+  "range": 8.25,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          550.0,
+          1000.0,
+          1450.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow25",
+      "duration": 1.0,
+      "moveSpeedMult": 0.6
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

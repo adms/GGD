@@ -1,0 +1,230 @@
+{
+  "id": "godie-hpal",
+  "schema": "champion@1",
+  "name": "不死之身-無 - 藤井八雲",
+  "description": "故事：\n身為三隻眼的僕人，擁有不死之身的藤井八雲，雖然可以招喚威力強大的魔獸，卻要付出自身血肉作為代價。\n(出自:三隻眼)\n\n推薦玩家 : 破塔殺人\n上手度 : 易\n\n角色成長：\n力量 + 2.50\n敏捷 + 1.80\n智慧 + 1.80\n基礎跑速 305\n\n可學習的技能：\n土爪、石絲、鏡蠱、光牙",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "champ.skin.barbarian",
+  "attackDamagePoint": 0.3,
+  "baseStats": {
+    "maxHealth": 600,
+    "healthRegen": 1.45,
+    "maxMana": 280,
+    "manaRegen": 1.4,
+    "ad": 35,
+    "ap": 0,
+    "armor": 8,
+    "mr": 28,
+    "as": 0.53,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 50,
+    "healthRegen": 0.12,
+    "maxMana": 22,
+    "manaRegen": 0.07,
+    "ad": 2.5,
+    "armor": 0.5,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-hpal.q",
+      "name": "35-01 土爪",
+      "description": "[主動攻擊]\n25秒冷卻時間\n\n召喚爪魔獸在地下爬出，劃破地面進行兩次攻擊，每次造成100點傷害，最多300點傷害。但是召喚魔獸也會消耗自身的生命力44%，消耗的生命力最多為925。",
+      "slot": "Q",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        25.0,
+        25.0,
+        25.0,
+        25.0
+      ],
+      "manaCost": [
+        30.0,
+        60.0,
+        90.0,
+        120.0
+      ],
+      "range": 9.17,
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.wave",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "perRank": [
+                  120.0,
+                  240.0,
+                  360.0,
+                  480.0
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "W": {
+      "id": "godie-hpal.w",
+      "name": "35-02 石絲",
+      "description": "[主動攻擊]\n25秒冷卻時間\n\n使生物短時間內不能活動，使敵身體硬化0.75秒，每秒承受50點傷害。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        25.0,
+        25.0,
+        25.0,
+        25.0
+      ],
+      "manaCost": [
+        110.0,
+        145.0,
+        180.0,
+        215.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              75.0,
+              75.0,
+              75.0,
+              75.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.225
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "root",
+          "duration": 0.75,
+          "root": true
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "E": {
+      "id": "godie-hpal.e",
+      "name": "35-03 鏡蠱",
+      "description": "[輔助]\n45秒冷卻時間\n\n召喚蜘蛛獸，吐絲作繩索，為目標單位抵擋住1000點的法術傷害，持續10秒。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        100.0,
+        150.0,
+        200.0,
+        250.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "R": {
+      "id": "godie-hpal.r",
+      "name": "35-04 光牙",
+      "description": "[主動攻擊]\n55秒冷卻時間\n\n召喚光龍魔獸衝擊敵人，造成攻擊線地面部隊600點傷害。但是召喚魔獸將會消耗自身的生命力44%，消耗的生命力最多為925。\n\n(當佩跟八雲的距離小於300時，光牙附加(佩損失的血量*1.5)的傷害)",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        55.0,
+        55.0,
+        55.0
+      ],
+      "manaCost": [
+        100.0,
+        160.0,
+        220.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              600.0,
+              1000.0,
+              1400.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.cinder-ward",
+      "targetsEnemies": true
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin"
+  ],
+  "exAbility": "godie-hpal.ex",
+  "icon": "assets/icons/champions/godie-hpal.png"
+}

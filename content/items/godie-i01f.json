@@ -1,0 +1,24 @@
+{
+  "id": "godie-i01f",
+  "schema": "item@1",
+  "name": "和道一文字",
+  "description": "武器\n效能\n裝甲+1.2\n攻擊速度+14.3%\n\n解說\n索隆劍客老師的女兒克依娜死了，傷心的索隆就要求把她的刀給他，要連她的份一起變強。",
+  "cost": 300,
+  "tier": 1,
+  "tags": [
+    "wc3-import"
+  ],
+  "modifiers": [
+    {
+      "stat": "armor",
+      "op": "flat",
+      "value": 1.2
+    },
+    {
+      "stat": "as",
+      "op": "pctAdd",
+      "value": 0.143
+    }
+  ],
+  "icon": "assets/icons/items/godie-i01f.png"
+}

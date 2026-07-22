@@ -1,0 +1,240 @@
+/**
+ * InputCapture — DOM listeners → IntentFrame-shaped orders/commands.
+ *   right-click        move order (or attackTarget when over an enemy)
+ *   A + left-click     attackMove order (A also swaps in the attack cursor)
+ *   plain left-click   on YOUR OWN hero → onSelectSelf (select voice quip);
+ *                      anywhere else it stays inert (misclicks are free)
+ *   Q/W/E/R keydown    quick-cast per the champion ability's castType
+ *   S stop · B recall · Space camera follow toggle · wheel zoom
+ * The pure mapping helpers are exported for unit tests (client-05); the class
+ * only wires DOM events onto them. NO @babylonjs imports here — the ray comes
+ * in via the injected screenToGround callback.
+ */
+import { asEntityId } from "@ggd/shared/ids";
+import type { AbilitySlot, Command, Order } from "@ggd/shared/sim/intents";
+import type { Vec2 } from "@ggd/shared/sim/math/vec2";
+import { setCursorVariant } from "../cursor";
+import { buildCastCommand, type AimAbility } from "./AimResolver";
+
+/** Right-click: attack the hovered enemy, otherwise move to the point. */
+export function mapRightClick(ground: Vec2, hoveredEnemyId: number | null): Order {
+  if (hoveredEnemyId !== null) return { kind: "attackTarget", entity: asEntityId(hoveredEnemyId) };
+  return { kind: "move", point: { x: ground.x, z: ground.z } };
+}
+
+/** A + click: attack-move toward the point. */
+export function mapAttackMoveClick(ground: Vec2): Order {
+  return { kind: "attackMove", point: { x: ground.x, z: ground.z } };
+}
+
+export type LeftClickAction = { kind: "order"; order: Order } | { kind: "selectSelf" } | null;
+
+/**
+ * Left-click (button 0) decision. An A-armed click is ALWAYS the attack-move —
+ * your own hero under the cursor never swallows it. A plain click is a
+ * self-select only when your own champion is hit, and otherwise nothing: plain
+ * left-click must never issue an order (MOBA convention — misclicks are free).
+ */
+export function mapLeftClick(
+  armed: boolean,
+  ground: Vec2 | null,
+  selfHit: boolean,
+): LeftClickAction {
+  if (armed) return ground ? { kind: "order", order: mapAttackMoveClick(ground) } : null;
+  return ground && selfHit ? { kind: "selectSelf" } : null;
+}
+
+export const STOP_ORDER: Order = { kind: "stop" };
+export const RECALL_COMMAND: Command = { kind: "recall" };
+
+export const SLOT_BY_CODE: Record<string, AbilitySlot> = {
+  KeyQ: "Q",
+  KeyW: "W",
+  KeyE: "E",
+  KeyR: "R",
+  KeyF: "EX", // per-hero "EX 技能" (5th slot); only fires once unlocked
+};
+
+export interface CursorState {
+  /** last pointer position in CSS px relative to the canvas */
+  x: number;
+  y: number;
+  inside: boolean;
+}
+
+export interface PanKeys {
+  up: boolean;
+  down: boolean;
+  left: boolean;
+  right: boolean;
+}
+
+export interface InputDeps {
+  /** cursor → ground plane (from the camera rig); null when off-world */
+  screenToGround(clientX: number, clientY: number): Vec2 | null;
+  /** local champion's current (predicted) position */
+  getSelfPos(): Vec2 | null;
+  /** shared ability def (castType/range) for the local champion's slot */
+  getAbility(slot: AbilitySlot): AimAbility | null;
+  /** enemy entity under a ground point (server's circle model) */
+  pickEnemy(ground: Vec2): number | null;
+  /** true when the LOCAL player's own champion is under the ground point */
+  pickSelf(ground: Vec2): boolean;
+  onOrder(order: Order): void;
+  onCommand(cmd: Command): void;
+  /** plain left-click landed on your own champion (select voice; no order) */
+  onSelectSelf(): void;
+  onZoom(deltaY: number): void;
+  onToggleFollow(): void;
+}
+
+export class InputCapture {
+  readonly cursor: CursorState = { x: 0, y: 0, inside: false };
+  readonly panKeys: PanKeys = { up: false, down: false, left: false, right: false };
+  private attackMoveArmed = false;
+  private disposers: (() => void)[] = [];
+
+  /**
+   * Arm/disarm the attack-move AND mirror it onto the mouse cursor: while A is
+   * armed the arena surface shows the crimson reticle instead of the blade
+   * (cursor/, task #54a), so the pending order is visible where the player is
+   * actually looking. Every assignment to `attackMoveArmed` goes through here
+   * so the two can never disagree — which is the entire failure mode (a stuck
+   * reticle after the click resolves). `setCursorVariant` is a DOM-safe no-op
+   * outside a browser, so the node-env unit tests are unaffected.
+   */
+  private setAttackArmed(armed: boolean): void {
+    this.attackMoveArmed = armed;
+    setCursorVariant(armed ? "attack" : null);
+  }
+
+  constructor(
+    private readonly el: HTMLElement,
+    private readonly deps: InputDeps,
+  ) {}
+
+  attach(): void {
+    const on = <K extends keyof HTMLElementEventMap>(
+      target: HTMLElement | Window,
+      type: string,
+      fn: (ev: never) => void,
+      opts?: AddEventListenerOptions,
+    ): void => {
+      target.addEventListener(type, fn as EventListener, opts);
+      this.disposers.push(() => target.removeEventListener(type, fn as EventListener, opts));
+    };
+
+    on(this.el, "contextmenu", (ev: MouseEvent) => {
+      ev.preventDefault();
+      this.trackCursor(ev);
+      const ground = this.ground(ev);
+      if (!ground) return;
+      this.setAttackArmed(false);
+      this.deps.onOrder(mapRightClick(ground, this.deps.pickEnemy(ground)));
+    });
+
+    on(this.el, "pointerdown", (ev: PointerEvent) => {
+      this.trackCursor(ev);
+      if (ev.button !== 0) return;
+      const armed = this.attackMoveArmed;
+      this.setAttackArmed(false);
+      const ground = this.ground(ev);
+      // pickSelf is only consulted for a PLAIN click — an armed click is
+      // always the attack-move, even right on top of your own hero
+      const selfHit = !armed && ground !== null && this.deps.pickSelf(ground);
+      const action = mapLeftClick(armed, ground, selfHit);
+      if (!action) return;
+      if (action.kind === "order") this.deps.onOrder(action.order);
+      else this.deps.onSelectSelf();
+    });
+
+    on(this.el, "pointermove", (ev: PointerEvent) => this.trackCursor(ev));
+    on(this.el, "pointerleave", () => {
+      this.cursor.inside = false;
+    });
+
+    on(this.el, "wheel", (ev: WheelEvent) => {
+      ev.preventDefault();
+      this.deps.onZoom(ev.deltaY);
+    }, { passive: false });
+
+    on(window, "keydown", (ev: KeyboardEvent) => this.onKeyDown(ev));
+    on(window, "keyup", (ev: KeyboardEvent) => this.setPanKey(ev.code, false));
+    on(window, "blur", () => {
+      this.panKeys.up = this.panKeys.down = this.panKeys.left = this.panKeys.right = false;
+    });
+  }
+
+  dispose(): void {
+    for (const d of this.disposers) d();
+    this.disposers = [];
+    // leaving a match with A still armed must not strand the reticle on the
+    // lobby screens, where there is no canvas and no order to place
+    this.setAttackArmed(false);
+  }
+
+  private onKeyDown(ev: KeyboardEvent): void {
+    // don't steal keys from HUD inputs
+    const tag = (ev.target as HTMLElement | null)?.tagName;
+    if (tag === "INPUT" || tag === "TEXTAREA") return;
+
+    const slot = SLOT_BY_CODE[ev.code];
+    if (slot && !ev.repeat) {
+      // quick-cast at the current cursor position
+      const ability = this.deps.getAbility(slot);
+      const selfPos = this.deps.getSelfPos();
+      const ground = this.cursor.inside
+        ? this.deps.screenToGround(this.cursor.x, this.cursor.y)
+        : null;
+      if (ability && selfPos) {
+        const cursorGround = ground ?? selfPos;
+        const cmd = buildCastCommand(slot, ability, {
+          selfPos,
+          cursorGround,
+          hoveredEntityId: this.deps.pickEnemy(cursorGround),
+        });
+        if (cmd) this.deps.onCommand(cmd);
+      }
+    }
+
+    switch (ev.code) {
+      case "KeyA":
+        this.setAttackArmed(true);
+        break;
+      case "KeyS":
+        this.setAttackArmed(false);
+        this.deps.onOrder(STOP_ORDER);
+        break;
+      case "KeyB":
+        this.deps.onCommand(RECALL_COMMAND);
+        break;
+      case "Space":
+        ev.preventDefault();
+        this.deps.onToggleFollow();
+        break;
+      default:
+        this.setPanKey(ev.code, true);
+    }
+  }
+
+  private setPanKey(code: string, down: boolean): void {
+    // arrow keys pan; WASD is reserved for game keys (A attack-move, S stop,
+    // W/E abilities) — matching MOBA conventions.
+    if (code === "ArrowUp") this.panKeys.up = down;
+    else if (code === "ArrowDown") this.panKeys.down = down;
+    else if (code === "ArrowLeft") this.panKeys.left = down;
+    else if (code === "ArrowRight") this.panKeys.right = down;
+  }
+
+  private trackCursor(ev: MouseEvent): void {
+    const rect = this.el.getBoundingClientRect();
+    this.cursor.x = ev.clientX - rect.left;
+    this.cursor.y = ev.clientY - rect.top;
+    this.cursor.inside = true;
+  }
+
+  private ground(ev: MouseEvent): Vec2 | null {
+    const rect = this.el.getBoundingClientRect();
+    return this.deps.screenToGround(ev.clientX - rect.left, ev.clientY - rect.top);
+  }
+}

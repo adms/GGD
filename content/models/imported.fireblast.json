@@ -1,0 +1,15 @@
+{
+  "id": "imported.fireblast",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/fireblast.glb",
+  "scale": 0.6362,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Stand",
+    "attack": "Stand",
+    "cast": "Stand",
+    "hurt": "Stand",
+    "death": "Death"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "id": "godie-nplh.e",
+  "name": "16-04 劍之精靈",
+  "description": "[召喚]\n65秒冷卻時間\n\n召喚肉肉的阿彌陀丸來幫助麻倉葉，附身合體可暫時增加麻倉葉10點全能力。",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    65.0,
+    65.0,
+    65.0
+  ],
+  "manaCost": [
+    100.0,
+    200.0,
+    300.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          80,
+          120,
+          160
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.48
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

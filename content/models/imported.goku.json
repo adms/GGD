@@ -1,0 +1,62 @@
+{
+  "id": "imported.goku",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/goku.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Spell",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "hand right": {
+      "x": 0.1317,
+      "y": 0.9593,
+      "z": 0.315
+    },
+    "hand left": {
+      "x": 0.1317,
+      "y": 0.9593,
+      "z": -0.3221
+    },
+    "Origin": {
+      "x": -0.0026,
+      "y": -0.005,
+      "z": -0.006
+    },
+    "OverHead": {
+      "x": 0.0257,
+      "y": 1.9183,
+      "z": 0.0052
+    },
+    "Foot Left": {
+      "x": 0.039,
+      "y": 0.0737,
+      "z": 0.2929
+    },
+    "Foot Right": {
+      "x": 0.039,
+      "y": 0.0737,
+      "z": -0.2929
+    },
+    "Weapon": {
+      "x": 0.1317,
+      "y": 0.9591,
+      "z": 0.315
+    },
+    "Head -": {
+      "x": 0.0257,
+      "y": 1.9067,
+      "z": 0.0052
+    },
+    "Chest": {
+      "x": 0.0755,
+      "y": 1.4481,
+      "z": 0.0052
+    }
+  }
+}

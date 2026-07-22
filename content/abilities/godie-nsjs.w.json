@@ -1,0 +1,43 @@
+{
+  "id": "godie-nsjs.w",
+  "name": "18-02 寄生種子",
+  "description": "[主動攻擊]\n30秒冷卻時間\n\n把魔界凶惡植物寄生在敵人身上造成75點傷害，若干時間後將會侵蝕敵人的身體造成每秒60點傷害，持續2秒。",
+  "slot": "W",
+  "castType": "skillshot",
+  "maxRank": 4,
+  "cooldown": [
+    30.0,
+    30.0,
+    30.0,
+    30.0
+  ],
+  "manaCost": [
+    80.0,
+    105.0,
+    130.0,
+    155.0
+  ],
+  "range": 7.33,
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "imported.bolt",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

@@ -1,0 +1,46 @@
+{
+  "id": "godie-h01u.w",
+  "name": "80-02 弒鬼神",
+  "description": "[主動攻擊]\n35秒冷卻時間\n\n氣貫長槍，以電光石火之速回旋猛刺，其勢威猛，似可弒殺鬼神，造成直線450距離敵方部隊150點傷害。",
+  "slot": "W",
+  "castType": "skillshot",
+  "maxRank": 5,
+  "cooldown": [
+    35.0,
+    35.0,
+    35.0,
+    35.0,
+    35.0
+  ],
+  "manaCost": [
+    50.0,
+    85.0,
+    120.0,
+    120.0,
+    120.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "imported.wave",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              150.0,
+              250.0,
+              350.0,
+              0.0,
+              0.0
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "godie-i040",
+  "schema": "item@1",
+  "name": "破甲槍",
+  "description": "神器\n施展需求魔力：200點\n技能冷卻時間：45秒\n效能：\n使目標瞬間減少10點裝甲，持續7秒\n攻擊力+26\n攻擊時削弱目標裝甲12點(法球)\n\n歷史\n曾和霸王槍同為霸王破甲槍的一部分，與僅剩力量的霸王槍不同的是，破甲槍上仍然附帶著些微的風系魔法，每次攻擊都會破除對手的防禦。",
+  "cost": 1200,
+  "tier": 2,
+  "modifiers": [
+    {
+      "stat": "ad",
+      "op": "flat",
+      "value": 26
+    }
+  ],
+  "passive": [
+    {
+      "on": "onBasicAttack",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": -12
+            }
+          ],
+          "duration": 5
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "wc3-import"
+  ]
+}

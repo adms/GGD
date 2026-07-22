@@ -1,0 +1,211 @@
+{
+  "id": "godie-ucrl",
+  "schema": "champion@1",
+  "name": "職業獵人 - 傑 富力士",
+  "description": "故事：\n出身於鯨魚島，從小就在大自然中成長，鍛鍊出他一身恐怖的能力。在尋找父親的旅程中，莫名其妙捲入愛與怨念的戰場。\n(出自:獵人X獵人)\n\n推薦玩家 : 血牛巨砲\n上手度 : 易\n\n角色成長：\n力量 + 2.45\n敏捷 + 1.80\n智慧 + 1.75\n基礎跑速 300\n\n可學習的技能：\n山形修煉-放出系、山形修煉-變化系、山形修煉-強化系、傑桑",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "champ.thorne",
+  "attackDamagePoint": 0.5,
+  "baseStats": {
+    "maxHealth": 620,
+    "healthRegen": 1.5,
+    "maxMana": 268,
+    "manaRegen": 1.36,
+    "ad": 36,
+    "ap": 0,
+    "armor": 6,
+    "mr": 28,
+    "as": 0.45,
+    "ms": 5.9,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 49,
+    "healthRegen": 0.12,
+    "maxMana": 21,
+    "manaRegen": 0.07,
+    "ad": 1.8,
+    "armor": 0.5,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-ucrl.q",
+      "name": "06-01 山形修煉-放",
+      "description": "[被動]\n0秒冷卻時間\n\n攻擊敵人時，4%機率施展放出系能力，由掌心放出念彈造成一直線敵人150點傷害，並增強「猜猜拳-布」的威力為300點。",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": 25
+            }
+          ],
+          "duration": 6.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "W": {
+      "id": "godie-ucrl.w",
+      "name": "06-02 山形修煉-變",
+      "description": "[被動]\n0秒冷卻時間\n\n攻擊時有25%機率會發動變化系能力，將念化為刀刃攻擊目標造成75點額外傷害。並增強「猜猜拳-剪刀」的威力為350。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "duration": 3.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "E": {
+      "id": "godie-ucrl.e",
+      "name": "06-03 山形修煉-強",
+      "description": "[被動]\n0秒冷卻時間\n\n不斷地修煉強化系能力，能讓自身攻防能力大幅上升，永久性的提昇力量7點。並增強「猜猜拳-石頭」的威力為500點。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200,
+              240
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.72
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "R": {
+      "id": "godie-ucrl.r",
+      "name": "06-04 傑桑變化",
+      "description": "[變身]\n60秒冷卻時間\n\n將全身的念發揮至極限，強制讓身體成長為數十年後的面貌，成長後攻擊和移動速度大幅提昇，攻擊時有(5+敏捷/10)%的機率隨機使出猜猜拳(無視距離因素)，持續7秒。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        200.0,
+        300.0,
+        400.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "maxHealth",
+              "op": "flat",
+              "value": 300
+            }
+          ],
+          "duration": 3.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "icon": "assets/icons/abilities/godie-ucrl.r.png"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin"
+  ],
+  "exAbility": "godie-ucrl.ex",
+  "icon": "assets/icons/champions/godie-ucrl.png",
+  "tint": [
+    0.3922,
+    1.0,
+    0.3922
+  ]
+}

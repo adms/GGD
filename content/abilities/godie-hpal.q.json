@@ -1,0 +1,43 @@
+{
+  "id": "godie-hpal.q",
+  "name": "35-01 土爪",
+  "description": "[主動攻擊]\n25秒冷卻時間\n\n召喚爪魔獸在地下爬出，劃破地面進行兩次攻擊，每次造成100點傷害，最多300點傷害。但是召喚魔獸也會消耗自身的生命力44%，消耗的生命力最多為925。",
+  "slot": "Q",
+  "castType": "skillshot",
+  "maxRank": 4,
+  "cooldown": [
+    25.0,
+    25.0,
+    25.0,
+    25.0
+  ],
+  "manaCost": [
+    30.0,
+    60.0,
+    90.0,
+    120.0
+  ],
+  "range": 9.17,
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "imported.wave",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              120.0,
+              240.0,
+              360.0,
+              480.0
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

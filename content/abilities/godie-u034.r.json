@@ -1,0 +1,35 @@
+{
+  "id": "godie-u034.r",
+  "name": "06-04 傑桑變化",
+  "description": "[變身]\n60秒冷卻時間\n\n將全身的念發揮至極限，強制讓身體成長為數十年後的面貌，成長後攻擊和移動速度大幅提昇，攻擊時有(5+敏捷/10)%的機率隨機使出猜猜拳(無視距離因素)，持續7秒。",
+  "slot": "R",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    200.0,
+    300.0,
+    400.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "maxHealth",
+          "op": "flat",
+          "value": 300
+        }
+      ],
+      "duration": 3.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/godie-u034.r.png"
+}

@@ -1,0 +1,82 @@
+{
+  "id": "godie-boomnl-p2",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 1.948,
+    "angleDeg": 90.0
+  },
+  "mode": "continuous",
+  "rate": 600.0,
+  "lifetimeSec": {
+    "min": 1.0,
+    "max": 1.0
+  },
+  "size": {
+    "start": 0.556,
+    "end": 1.389
+  },
+  "color": {
+    "start": [
+      0.067,
+      0.016,
+      0.0,
+      1.0
+    ],
+    "end": [
+      0.271,
+      0.271,
+      0.271,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        0.067,
+        0.016,
+        0.0,
+        1.0
+      ]
+    ],
+    [
+      0.5,
+      [
+        0.271,
+        0.271,
+        0.271,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.271,
+        0.271,
+        0.271,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.556
+    ],
+    [
+      0.5,
+      0.833
+    ],
+    [
+      1,
+      1.389
+    ]
+  ],
+  "blendMode": "alpha",
+  "texture": "assets/textures/particles/fire_02.png",
+  "speed": {
+    "min": 5.0004,
+    "max": 6.1116
+  }
+}

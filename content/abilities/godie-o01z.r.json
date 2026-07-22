@@ -1,0 +1,48 @@
+{
+  "id": "godie-o01z.r",
+  "name": "81-04 Starlight Breaker Plus",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n集結周遭的魔力來放出巨大砲擊的集束型砲擊魔法，以長時間的充能換取了強大的破壞力以及破壞範圍，造成敵方400點傷害並暈眩1秒，為奈葉最強的攻擊魔法。",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    250.0,
+    400.0,
+    550.0
+  ],
+  "range": 7.33,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.003
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "burnstun",
+      "duration": 0.8,
+      "stun": true
+    }
+  ],
+  "vfxKey": "fx.cinder-ward",
+  "targetsEnemies": true,
+  "radius": 6.0,
+  "schema": "ability@1"
+}

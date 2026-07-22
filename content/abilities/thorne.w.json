@@ -1,0 +1,57 @@
+{
+  "id": "thorne.w",
+  "schema": "ability@1",
+  "name": "Barkskin Bulwark",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 5,
+  "cooldown": [
+    14,
+    13,
+    12,
+    11,
+    10
+  ],
+  "manaCost": [
+    50,
+    55,
+    60,
+    65,
+    70
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "shield",
+      "amount": {
+        "flat": 60,
+        "perRank": [
+          50,
+          85,
+          120,
+          155,
+          190
+        ],
+        "ratios": [
+          {
+            "stat": "maxHealth",
+            "coeff": 0.06
+          }
+        ]
+      },
+      "duration": 3
+    },
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "armor",
+          "op": "flat",
+          "value": 30
+        }
+      ],
+      "duration": 3
+    }
+  ],
+  "vfxKey": "fx.barkskin"
+}

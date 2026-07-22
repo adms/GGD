@@ -1,0 +1,16 @@
+{
+  "contentId": "godie-i01b",
+  "nameZh": "林之書",
+  "gold": 2550,
+  "kind": "effect",
+  "description": "施展需求魔力：250點\r\n技能冷卻時間：60秒\r\n效能\r\n範圍隱身術\r\n\r\n解說\r\n招喚自然精靈將附近我方部隊身體隱藏25秒。",
+  "abilities": [
+    {
+      "rawcode": "A00U",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    }
+  ]
+}

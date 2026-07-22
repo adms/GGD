@@ -1,0 +1,82 @@
+{
+  "id": "godie-heroraichus3-p0",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.05,
+    "angleDeg": 180.0
+  },
+  "mode": "burst",
+  "burstCount": 9,
+  "lifetimeSec": {
+    "min": 0.3,
+    "max": 0.3
+  },
+  "size": {
+    "start": 0.381,
+    "end": 0.003
+  },
+  "color": {
+    "start": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "end": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    [
+      0.3,
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.381
+    ],
+    [
+      0.3,
+      0.261
+    ],
+    [
+      1,
+      0.003
+    ]
+  ],
+  "blendMode": "alpha",
+  "texture": "assets/textures/particles/smoke_01.png",
+  "speed": {
+    "min": 10.5564,
+    "max": 10.5564
+  }
+}

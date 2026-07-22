@@ -1,0 +1,14 @@
+{
+  "id": "store",
+  "schema": "config.store@1",
+  "championPrices": {
+    "sela": 0,
+    "thorne": 0
+  },
+  "mcoinRewards": {
+    "placement1": 200,
+    "placement2": 120,
+    "placement3": 80,
+    "placement4": 50
+  }
+}

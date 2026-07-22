@@ -1,0 +1,51 @@
+{
+  "id": "godie-n003.q",
+  "name": "42-01 凍結的大地",
+  "description": "[主動攻擊]\n25秒冷卻時間\n\n以一波冰雪轟擊敵方部隊，造成目標250點的傷害，以及周圍目標150點的冰爆傷害。冰冷傷害可以降低部隊的移動與攻擊速度1.2秒。",
+  "slot": "Q",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    25.0,
+    25.0,
+    25.0,
+    25.0
+  ],
+  "manaCost": [
+    100.0,
+    130.0,
+    160.0,
+    190.0
+  ],
+  "range": 10.08,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          150.0,
+          200.0,
+          250.0,
+          300.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.9
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow40",
+      "duration": 1.5,
+      "moveSpeedMult": 0.6
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "radius": 5.5,
+  "schema": "ability@1"
+}

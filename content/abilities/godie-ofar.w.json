@@ -1,0 +1,116 @@
+{
+  "id": "godie-ofar.w",
+  "name": "58-02 鋼鐵尾巴",
+  "description": "[被動]\n0秒冷卻時間\n\n揮動鋼鐵尾巴可以讓皮卡在攻擊時有10%機率增加75點破壞力，並有機會將敵人震昏0.01秒。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 5,
+  "cooldown": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0,
+  "effects": [],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1",
+  "passive": {
+    "name": "58-02 鋼鐵尾巴",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "chance": 0.1,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "flat": 75.0
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "chance": 0.1,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "flat": 150.0
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "chance": 0.1,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "flat": 225.0
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "chance": 0.1,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "flat": 300.0
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "chance": 0.1,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "flat": 300.0
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "id": "burnstun",
+  "schema": "status-effect@1",
+  "name": "Searing Stun",
+  "description": "Stunned by the firestorm.",
+  "polarity": "debuff",
+  "tags": [
+    "stun"
+  ]
+}

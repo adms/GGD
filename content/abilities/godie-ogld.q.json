@@ -1,0 +1,47 @@
+{
+  "id": "godie-ogld.q",
+  "name": "72-01洗刷刷",
+  "description": "[主動攻擊]\n35秒冷卻時間\n\n召喚一陣雨季的暴風來攻擊對方的部隊，在350範圍造成150點的傷害。可持續2秒。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 5,
+  "cooldown": [
+    35.0,
+    35.0,
+    35.0,
+    35.0,
+    35.0
+  ],
+  "manaCost": [
+    100.0,
+    200.0,
+    300.0,
+    300.0,
+    300.0
+  ],
+  "range": 14.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          150.0,
+          300.0,
+          450.0,
+          450.0,
+          450.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

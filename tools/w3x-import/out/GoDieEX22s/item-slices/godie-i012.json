@@ -1,0 +1,23 @@
+{
+  "contentId": "godie-i012",
+  "nameZh": "熾天使之弓",
+  "gold": 3350,
+  "kind": "effect",
+  "description": "武器\r\n效能\r\n火焰擴散傷害44(法球)\r\n敏捷+10\r\n\r\n解說\r\n擁有神聖力量的短弓，能在攻擊上附上淨化的火焰。",
+  "abilities": [
+    {
+      "rawcode": "A0CG",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "AIaz",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    }
+  ]
+}

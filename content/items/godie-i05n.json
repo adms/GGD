@@ -1,0 +1,28 @@
+{
+  "id": "godie-i05n",
+  "schema": "item@1",
+  "name": "智慧護腕",
+  "description": "飾品\n效能\n法術強度+19.2\n裝甲+1.6\n魔力+57\n\n解說\n適合給初心者使用的防禦道具，只有一開始才能獲得。\n\n(點選可轉換屬性加成)",
+  "cost": 300,
+  "tier": 1,
+  "tags": [
+    "wc3-import"
+  ],
+  "modifiers": [
+    {
+      "stat": "armor",
+      "op": "flat",
+      "value": 1.6
+    },
+    {
+      "stat": "ap",
+      "op": "flat",
+      "value": 19.2
+    },
+    {
+      "stat": "maxMana",
+      "op": "flat",
+      "value": 57
+    }
+  ]
+}

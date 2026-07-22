@@ -1,0 +1,231 @@
+{
+  "id": "godie-orkn",
+  "schema": "champion@1",
+  "name": "電車癡漢 - 臭作",
+  "description": "故事：\n傳說中的變態色魔老頭，身懷眾多變態絕技，是去死團裡強大的怨念支柱，興趣是偷窺以及(嗶.............成人向)。\n(出自:臭作)\n\n推薦玩家 : 牽制殺人\n上手度 : 中\n\n角色成長：\n力量 + 1.90\n敏捷 + 2.75\n智慧 + 1.75\n基礎跑速 295\n\n可學習的技能：\n綁架、酒精灌腸、癡漢火焰、電車之狼衝擊",
+  "role": "marksman",
+  "attackType": "ranged",
+  "modelKey": "champ.sela",
+  "baseStats": {
+    "maxHealth": 440,
+    "healthRegen": 1.05,
+    "maxMana": 328,
+    "manaRegen": 1.56,
+    "ad": 30,
+    "ap": 0,
+    "armor": 8,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.7,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 9.2
+  },
+  "growth": {
+    "maxHealth": 38,
+    "healthRegen": 0.09,
+    "maxMana": 21,
+    "manaRegen": 0.07,
+    "ad": 1.9,
+    "armor": 0.8,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-orkn.q",
+      "name": "30-01 綁架",
+      "description": "[輔助]\n15秒冷卻時間\n\n因為想非常想要肛人而起了綁架人的念頭，導致不分敵我的胡亂綁架來肛，綑綁範圍300。",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 5,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        30.0,
+        50.0,
+        70.0,
+        90.0,
+        110.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "shield",
+          "amount": {
+            "perRank": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.003
+              }
+            ]
+          },
+          "duration": 5.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "W": {
+      "id": "godie-orkn.w",
+      "name": "30-02 酒精灌腸",
+      "description": "[輔助]\n30秒冷卻時間\n\n把敵人肛門泡在酒精中，讓他們的移動速度降低10%，而且有20%的機會在攻擊時失手。當這個受到酒醉迷霧影響的敵方部隊，再受到火焰之息的攻擊時，它們會著火並不斷受到灼傷。可持續8秒。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        50.0,
+        80.0,
+        110.0,
+        140.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "E": {
+      "id": "godie-orkn.e",
+      "name": "30-03 痴漢火焰",
+      "description": "[主動攻擊]\n30秒冷卻時間\n\n讓一個敵方單位身陷痴漢火焰之中，造成每秒16點的持續性的傷害，並使其無法施展法術、並降低攻擊力50%，持續7秒。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        150.0,
+        175.0,
+        200.0,
+        225.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              16.0,
+              32.0,
+              48.0,
+              64.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.192
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.firestorm",
+      "targetsEnemies": true
+    },
+    "R": {
+      "id": "godie-orkn.r",
+      "name": "30-04 電車之狼衝擊",
+      "description": "[主動攻擊]\n30秒冷卻時間\n\n在臭作肛了新幹線車長之時，導致車長興奮過度讓新幹線脫軌衝了出來，造成一直線地面部隊550點傷害。",
+      "slot": "R",
+      "castType": "skillshot",
+      "maxRank": 3,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        150.0,
+        210.0,
+        270.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.wave",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "perRank": [
+                  800.0,
+                  800.0,
+                  800.0
+                ]
+              }
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "burnstun",
+              "duration": 1.2,
+              "stun": true
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin"
+  ],
+  "exAbility": "godie-orkn.ex",
+  "icon": "assets/icons/champions/godie-orkn.png"
+}

@@ -1,0 +1,23 @@
+{
+  "contentId": "godie-i01m",
+  "nameZh": "黑核晶",
+  "gold": 1800,
+  "kind": "stat",
+  "description": "飾品\r\n效能\r\n魔力+200\r\n魔力回復速度+150%\r\n\r\n解說\r\n將巨大魔力壓縮後後得到的黑色結晶。",
+  "abilities": [
+    {
+      "rawcode": "A0X1",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A0X6",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    }
+  ]
+}

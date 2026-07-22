@@ -1,0 +1,192 @@
+{
+  "id": "godie-h02y",
+  "schema": "champion@1",
+  "name": "幕末復仇狂者 - 志志雄真實",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "champ.sela",
+  "baseStats": {
+    "maxHealth": 600,
+    "healthRegen": 1.45,
+    "maxMana": 280,
+    "manaRegen": 1.4,
+    "ad": 34,
+    "ap": 0,
+    "armor": 6,
+    "mr": 28,
+    "as": 0.53,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 50,
+    "healthRegen": 0.12,
+    "maxMana": 22,
+    "manaRegen": 0.07,
+    "ad": 2.5,
+    "armor": 0.5,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-h02y.q",
+      "name": "壹之秘劍-焰靈",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              20.0,
+              20.0,
+              20.0,
+              20.0
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "W": {
+      "id": "godie-h02y.w",
+      "name": "貳之秘劍-紅蓮腕",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        40.0,
+        40.0,
+        40.0,
+        40.0
+      ],
+      "manaCost": [
+        140.0,
+        180.0,
+        220.0,
+        260.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "shield",
+          "amount": {
+            "perRank": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "duration": 5.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "E": {
+      "id": "godie-h02y.e",
+      "name": "弱肉強食",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              0.1,
+              0.2,
+              0.3,
+              0.4
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "R": {
+      "id": "godie-h02y.r",
+      "name": "終極秘劍-火產靈神",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        60.0,
+        350.0,
+        500.0
+      ],
+      "range": 0.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              200.0,
+              300.0,
+              400.0
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.firestorm",
+      "targetsEnemies": true,
+      "radius": 3.67
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ]
+}

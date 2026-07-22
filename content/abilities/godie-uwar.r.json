@@ -1,0 +1,41 @@
+{
+  "id": "godie-uwar.r",
+  "name": "43-03 少林絕學-火雲掌",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n運起深厚的內力，把地板像煎荷包蛋一樣急速加熱，讓地面震動碎裂，每秒對建築物造成每秒150點的劇烈傷害，並在有效範圍與時間之中，讓部隊行動速度降低35%，持續6秒。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    250.0,
+    300.0,
+    350.0
+  ],
+  "range": 12.83,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          80,
+          120,
+          160
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.48
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.firestorm",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

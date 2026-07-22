@@ -1,0 +1,82 @@
+{
+  "id": "godie-demonfilth-p1",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.695,
+    "angleDeg": 180.0
+  },
+  "mode": "continuous",
+  "rate": 555.0,
+  "lifetimeSec": {
+    "min": 3.0,
+    "max": 3.0
+  },
+  "size": {
+    "start": 1.806,
+    "end": 1.806
+  },
+  "color": {
+    "start": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "end": [
+      0.486,
+      0.133,
+      0.012,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    ],
+    [
+      0.5,
+      [
+        0.651,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.486,
+        0.133,
+        0.012,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      1.806
+    ],
+    [
+      0.5,
+      1.806
+    ],
+    [
+      1,
+      1.806
+    ]
+  ],
+  "blendMode": "alpha",
+  "texture": "assets/textures/particles/smoke_07.png",
+  "speed": {
+    "min": 0.6945,
+    "max": 0.6945
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "id": "godie-u00k.ex",
+  "name": "71-002 夜之主",
+  "description": "[被動]\n0秒冷卻時間\n\n當死之王累積到足夠的邪惡，祂將重新奪回祂的力量，所施展的每一個招式都將喚來黑夜，持續30秒。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    120.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

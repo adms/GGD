@@ -1,0 +1,91 @@
+{
+  "id": "fx.barkskin",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "sphere",
+    "radius": 0.85
+  },
+  "mode": "burst",
+  "burstCount": 34,
+  "lifetimeSec": {
+    "min": 0.14,
+    "max": 0.5
+  },
+  "size": {
+    "start": 0.26,
+    "end": 0.0
+  },
+  "sizeStops": [
+    [
+      0,
+      0.26
+    ],
+    [
+      0.12,
+      0.62
+    ],
+    [
+      1,
+      0.0
+    ]
+  ],
+  "color": {
+    "start": [
+      0.45,
+      0.95,
+      0.4,
+      0.95
+    ],
+    "end": [
+      0.06,
+      0.16,
+      0.06,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        0.85,
+        1.0,
+        0.8,
+        1.0
+      ]
+    ],
+    [
+      0.15,
+      [
+        0.45,
+        0.95,
+        0.4,
+        0.95
+      ]
+    ],
+    [
+      0.55,
+      [
+        0.16,
+        0.5,
+        0.18,
+        0.45
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.06,
+        0.16,
+        0.06,
+        0.0
+      ]
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": 2.2,
+  "speed": {
+    "min": 1.8,
+    "max": 4.6
+  },
+  "texture": "assets/textures/particles/circle_03.png"
+}

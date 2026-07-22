@@ -1,0 +1,31 @@
+{
+  "id": "godie-u00h.ex",
+  "name": "39-002-紅王",
+  "description": "[被動]\n0秒冷卻時間\n\n取回原本的身體，使得全能力值大幅提升30點，並額外增加蛟龍及金色神風 3倍敏捷傷害。",
+  "icon": "assets/icons/abilities/godie-u00h.ex.png",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    120.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

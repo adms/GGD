@@ -1,0 +1,48 @@
+{
+  "contentId": "godie-i00f",
+  "nameZh": "霸王槍",
+  "gold": 7100,
+  "kind": "effect",
+  "description": "神器\r\n效能\r\n攻擊力+40\r\n40%機率造成225點範圍傷害\r\n力量+20\r\n\r\n解說\r\n霸王槍和破甲槍原是龍宮中兩把被封印的兵器，在飛鼠的戰友彼得龜的研究下，結合成攻防一體的神兵霸王破甲槍。彼得龜消失之後，兩把槍就此分開，再也沒有人能把霸王破甲槍組合起來。",
+  "abilities": [
+    {
+      "rawcode": "A0L0",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A0CJ",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {
+        "1": {
+          "1": 40.0
+        },
+        "2": {
+          "1": 225.0
+        }
+      }
+    },
+    {
+      "rawcode": "A0WV",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A0M9",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {
+        "1": {
+          "1": "A0AB,A0HR"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "id": "imported.long",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/long.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Spell",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Origin": {
+      "x": -0.0,
+      "y": 0.0247,
+      "z": -0.0
+    },
+    "Chest": {
+      "x": 0.011,
+      "y": 1.0211,
+      "z": -0.0
+    },
+    "Hand Right": {
+      "x": -0.0125,
+      "y": 1.1663,
+      "z": 0.7314
+    },
+    "Hand Left": {
+      "x": -0.0125,
+      "y": 1.1663,
+      "z": -0.7314
+    },
+    "Head": {
+      "x": -0.0192,
+      "y": 1.3483,
+      "z": -0.0
+    },
+    "Foot Right": {
+      "x": 0.1905,
+      "y": 0.0395,
+      "z": 0.1047
+    },
+    "Foot Left": {
+      "x": 0.1906,
+      "y": 0.0395,
+      "z": -0.1031
+    },
+    "OverHead": {
+      "x": 0.0522,
+      "y": 1.7213,
+      "z": -0.0
+    },
+    "Weapon": {
+      "x": -0.0128,
+      "y": 1.1563,
+      "z": 0.728
+    }
+  }
+}

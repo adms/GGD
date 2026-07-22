@@ -1,0 +1,62 @@
+{
+  "id": "imported.heroxelloss",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/heroxelloss.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "stand - 1",
+    "run": "walk",
+    "attack": "attack 1",
+    "cast": "spell",
+    "hurt": "stand - 1",
+    "death": "death"
+  },
+  "attachPoints": {
+    "chest": {
+      "x": 0.1059,
+      "y": 1.2977,
+      "z": -0.0
+    },
+    "overhead": {
+      "x": 0.0,
+      "y": 1.8009,
+      "z": -0.0
+    },
+    "head": {
+      "x": 0.0,
+      "y": 1.5255,
+      "z": -0.0
+    },
+    "origin": {
+      "x": 0.0,
+      "y": 0.0106,
+      "z": -0.0
+    },
+    "hand right": {
+      "x": 0.0318,
+      "y": 0.8793,
+      "z": 0.2754
+    },
+    "weapon": {
+      "x": 0.0318,
+      "y": 0.8793,
+      "z": 0.2754
+    },
+    "hand left": {
+      "x": -0.0212,
+      "y": 0.8899,
+      "z": -0.286
+    },
+    "foot right": {
+      "x": -0.0106,
+      "y": 0.0106,
+      "z": 0.1059
+    },
+    "foot left": {
+      "x": -0.0106,
+      "y": 0.0106,
+      "z": -0.1059
+    }
+  }
+}

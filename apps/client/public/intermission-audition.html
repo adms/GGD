@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>店員視線確認 — 中場商店 (task #103)</title>
+<style>
+  :root { --bg:#0b0e14; --panel:#151926; --line:#2a3145; --fg:#e8ecf6;
+          --dim:#98a2bd; --accent:#7dd3fc; --gold:#f0c674; --ok:#6ee7a8; --bad:#ff8a8a; }
+  * { box-sizing:border-box; }
+  html,body { margin:0; height:100%; }
+  body { background:var(--bg); color:var(--fg); overflow:hidden;
+         font:13px/1.5 -apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans TC",sans-serif; }
+  #view { position:fixed; inset:0; width:100%; height:100%; display:block; }
+  /* the shop card's DECLARED footprint (SHOP_CARD_SIDE / SHOP_CARD_WIDTH_FRACTION),
+     drawn so the eye can confirm the whole cast clears its right edge. */
+  #card { position:fixed; top:0; bottom:0; left:0; z-index:2;
+          background:linear-gradient(90deg,rgba(10,13,22,.92),rgba(10,13,22,.82) 78%,rgba(10,13,22,.45));
+          border-right:2px dashed rgba(125,211,252,.7); pointer-events:none;
+          display:flex; align-items:center; justify-content:center; }
+  #card span { color:var(--dim); font-size:15px; letter-spacing:.05em; transform:rotate(-90deg);
+               white-space:nowrap; }
+  .mark { position:fixed; z-index:3; transform:translate(-50%,-50%); pointer-events:none;
+          font-size:11px; color:#fff; text-shadow:0 0 4px #000,0 0 4px #000; }
+  .mark::before { content:""; position:absolute; left:50%; top:50%; width:16px; height:16px;
+                  transform:translate(-50%,-50%); border:2px solid var(--gold); border-radius:50%;
+                  box-shadow:0 0 6px #000; }
+  .mark b { position:absolute; left:14px; top:-6px; }
+  .hud { position:fixed; z-index:4; background:rgba(16,20,32,.92); border:1px solid var(--line);
+         border-radius:10px; padding:11px 13px; backdrop-filter:blur(6px); }
+  #panel { top:12px; right:12px; max-width:340px; }
+  #panel h1 { margin:0 0 4px; font-size:15px; }
+  #panel p { margin:5px 0 0; color:var(--dim); font-size:12px; }
+  #panel .verdict { font-size:14px; font-weight:700; margin-top:8px; }
+  .ok { color:var(--ok); } .bad { color:var(--bad); }
+  pre { margin:8px 0 0; white-space:pre-wrap; font:11px/1.45 ui-monospace,Menlo,monospace;
+        color:#cfe0ff; background:#0009; padding:8px; border-radius:6px; max-height:44vh; overflow:auto; }
+  #err { top:12px; left:12px; right:12px; max-width:680px; border-color:#7f2d2d;
+         background:#2a1212; display:none; }
+  code { background:#0009; padding:1px 5px; border-radius:4px; }
+  .row { display:flex; gap:6px; margin-top:8px; }
+  button { font:inherit; font-size:12px; color:var(--fg); background:#1d2334;
+           border:1px solid var(--line); border-radius:7px; padding:4px 9px; cursor:pointer; }
+  button:hover { border-color:var(--accent); }
+</style>
+</head>
+<body>
+<canvas id="view"></canvas>
+<div id="card"><span id="card-lbl">shop card</span></div>
+
+<div id="err" class="hud">
+  <h1>載入失敗</h1>
+  <p id="errmsg"></p>
+  <p>這頁只在 <code>vite dev</code> 下可用（直接載入 <code>/src/render/intermission/*.ts</code>）。</p>
+</div>
+
+<div id="panel" class="hud">
+  <h1>店員視線確認 <span style="color:var(--dim);font-size:11px">task #103 / int-28</span></h1>
+  <p>真的 <code>IntermissionScene</code> + 真的 <code>layout.ts</code> + 出貨的 <code>.glb</code>，
+     從合成鏡頭對店員 head/chest/feet 與英雄現場打 <code>multiPickWithRay</code>。</p>
+  <div class="verdict" id="verdict">建構中…</div>
+  <pre id="readout">…</pre>
+  <div class="row" id="ratios"></div>
+</div>
+
+<script type="module">
+const fail = (m) => {
+  document.getElementById("err").style.display = "block";
+  document.getElementById("errmsg").textContent = String(m && m.stack ? m.stack : m);
+  document.getElementById("panel").style.display = "none";
+};
+
+try {
+  const [{ startIntermissionAudition }, L] = await Promise.all([
+    import("/src/render/intermission/intermissionAudition.ts"),
+    import("/src/render/intermission/layout.ts"),
+  ]);
+  const canvas = document.getElementById("view");
+  const app = startIntermissionAudition(canvas);
+  window.__ggdIm = app;
+
+  // draw the declared shop-card footprint at its true width fraction
+  const card = document.getElementById("card");
+  card.style.width = (app.cardFraction * 100) + "vw";
+  if (app.cardSide === "right") {
+    card.style.left = "auto"; card.style.right = "0";
+    card.style.borderRight = "none"; card.style.borderLeft = "2px dashed rgba(125,211,252,.7)";
+  }
+  document.getElementById("card-lbl").textContent =
+    `商店卡 shop card · ${app.cardSide.toUpperCase()} · ${Math.round(app.cardFraction * 100)}%`;
+
+  // crosshair markers: the gold ring IS where the shopkeeper's head projects.
+  const marks = [
+    { label: "店員 head", x: L.MERCHANT.x, y: 1.62, z: L.MERCHANT.z },
+    { label: "英雄 head", x: L.CHAMPION_STAND.x, y: 1.55, z: L.CHAMPION_STAND.z },
+  ];
+  const paintMarks = () => {
+    for (const m of document.querySelectorAll(".mark")) m.remove();
+    for (const mk of marks) {
+      const p = app.project(mk.x, mk.y, mk.z);
+      const el = document.createElement("div");
+      el.className = "mark";
+      el.style.left = (p.xFrac * 100) + "vw";
+      el.style.top = (p.yFrac * 100) + "vh";
+      el.innerHTML = `<b>${mk.label}</b>`;
+      document.body.appendChild(el);
+    }
+  };
+
+  addEventListener("resize", () => { app.resize(); paintMarks(); });
+
+  const ok = await app.ready();
+  if (!ok) throw new Error("scene never finished building (isBuilt stayed false)");
+  app.pump(6);
+
+  const report = app.cast();
+  paintMarks();
+
+  const fmt = (r) => {
+    const lines = [`${r.subject}: ${r.clear ? "CLEAR ✅" : "BLOCKED ❌"}`];
+    for (const s of r.samples) {
+      lines.push(`  ${s.sample.padEnd(5)} y${s.y.toFixed(2)}: ` +
+        (s.blockers.length ? s.blockers.map((b) => `${b.name} @ ${b.distance}u`).join(", ") : "clear"));
+    }
+    return lines.join("\n");
+  };
+  const merchant = report.results.find((r) => r.subject === "im-merchant");
+  const champ = report.results.find((r) => r.subject === "im-champion");
+  const allClear = report.results.every((r) => r.clear);
+  const v = document.getElementById("verdict");
+  v.className = "verdict " + (allClear ? "ok" : "bad");
+  v.textContent = allClear ? "店員可見 ✅  英雄可見 ✅"
+    : `${merchant.clear ? "" : "店員被擋 ❌ "}${champ.clear ? "" : "英雄被擋 ❌"}`;
+
+  const proj = app.project(L.MERCHANT.x, 1.62, L.MERCHANT.z);
+  document.getElementById("readout").textContent =
+    `eye (composed) = [${report.eye.map((n) => n.toFixed(2)).join(", ")}]\n` +
+    `camera.global  = [${report.cameraGlobal.join(", ")}]  driftless=${report.driftless}\n` +
+    `店員 head screen-x = ${(proj.xFrac * 100).toFixed(1)}%  (card 覆蓋左 ${Math.round(app.cardFraction * 100)}%)\n\n` +
+    fmt(merchant) + "\n\n" + fmt(champ);
+
+  window.__ggdImReport = report;
+} catch (e) { fail(e); }
+</script>
+</body>
+</html>

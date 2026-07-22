@@ -1,0 +1,190 @@
+/**
+ * itemTiers — THE price list. 「武器價格請統一化，只有三種價格」.
+ *
+ * WHY THIS FILE EXISTS. Before task #82 every item carried whatever price the
+ * w3x author happened to type: 正義之杖 cost 100,000g for 40 HP / 2 ad / 24
+ * mana, 恐龍之斧 cost 1,050g for four times that value, and price rank and
+ * VALUE rank disagreed on 41 of the 59 imported shop items. Price therefore
+ * carried no information at all, which is why unifying it costs the design
+ * nothing and buys it a shop a player can read at a glance.
+ *
+ * THE MODEL (derived in phase 1; the derivation is not repeated here, only its
+ * conclusions, because these constants are the contract every other file in the
+ * economy reads):
+ *
+ *   POWER   = sqrt(DPS_mitigated x eHP) measured on the shipped sim.
+ *   1 AEP   = the marginal POWER of 1 point of AD on the roster-median champion
+ *             at level 5. It is the common currency: 1 AD = 10.2 HP = 2.6 armor
+ *             = 4.87 AP, so 45 armour and 572 maxHealth become comparable
+ *             without a hand-picked exchange rate.
+ *   x2.5    = the design target for a full 6-slot build at level 8. Solved
+ *             numerically against the AEP rates it needs 208 AEP, and the
+ *             canonical end state (4 POWERFUL bought + 2 draft-granted
+ *             LEGENDARY = 32 SIMPLE-budgets) fixes B_SIMPLE = 6.5 AEP.
+ *   rho*    = 300 g / 6.5 AEP = 46.15 gold per AEP, UNIFORM across the ladder.
+ *
+ * WHY 4x BETWEEN TIERS AND NOT A PREMIUM. B_POWERFUL = 4 x B_SIMPLE exactly
+ * matches 1200 = 4 x 300, so gold-efficiency is FLAT and there is no arithmetic
+ * reason to prefer either. The reason to upgrade is the SLOT: four SIMPLE items
+ * and one POWERFUL item are worth the same 26 AEP, but the first eats 4 of your
+ * 6 slots and the second eats 1. That makes the late game a slot-pressure game
+ * rather than a gold-efficiency spreadsheet.
+ *
+ * LEGENDARY IS NOT IN {@link ITEM_TIER_PRICE} ON PURPOSE — 「傳說的武器道具，
+ * 只能隨機三選一」. It has a BUDGET (52 AEP) but no price: the only ways to it
+ * are the round-5 card and the {@link LEGENDARY_ORB_ITEM_ID} roll trigger.
+ * `everyPurchasablePriceIsATierPrice` in itemTiers.test.ts is the gate.
+ */
+import type { ItemId } from "../../ids";
+import { ModOp, type StatModifier } from "../stats/modifiers";
+import { Stat } from "../stats/statTypes";
+
+/** The ONLY two prices a weapon may carry. 統一化, in one object. */
+export const ITEM_TIER_PRICE = {
+  SIMPLE: 300,
+  POWERFUL: 1200,
+} as const;
+
+export type ItemTier = keyof typeof ITEM_TIER_PRICE;
+
+/**
+ * Power budget per tier, in AEP. LEGENDARY is here (it is a real budget the
+ * draft pool is authored against) even though it has no price.
+ */
+export const TIER_AEP_BUDGET = {
+  SIMPLE: 6.5,
+  POWERFUL: 26,
+  LEGENDARY: 52,
+} as const;
+
+/** The uniform exchange rate every price in this file is derived from. */
+export const GOLD_PER_AEP = 46.15;
+
+/**
+ * 傳說寶玉 — the legendary ROLL TRIGGER. 2400g for a 52-AEP legendary is
+ * exactly rho*, so the orb is priced AT rate and its entire value-add is that
+ * it collapses two draft slots into one purchase and lets you choose from
+ * three. It is a CONSUMABLE, never an inventory item and never a recipe
+ * component (the standing no-crafting decision).
+ */
+export const LEGENDARY_ORB_ITEM_ID = "legendary-orb" as ItemId;
+export const LEGENDARY_ORB_PRICE = 2400;
+/** The pool the orb rolls from — the same table the round-5 card uses. */
+export const LEGENDARY_POOL_TABLE = "legendary-weapons";
+
+/**
+ * 能力屬性強化 — the repeatable stat tick. 375g for the same 6.5 AEP a SIMPLE
+ * item carries is 57.69 g/AEP, a flat 25% premium over rho*. That premium is
+ * SLOT RENT: the tick consumes no inventory slot and is uncapped, which is
+ * worth strictly more than an item of equal stats. Without it the stat path
+ * would dominate on pure arithmetic and the fork would be fake in the other
+ * direction.
+ *
+ * WHY 375 AND NOT THE USER'S 380 (= 7600/20). 380 x 20 = 7,600 lands exactly ON
+ * the deterministic income ceiling with zero margin, so a single lost round
+ * makes the capstone unreachable. 375 x 20 = 7,500 leaves a 100g cushion, is
+ * exactly 1.25 x SIMPLE so the slot rent is an exact 25%, and keeps every price
+ * in the ladder a clean multiple of 75. Simulated against all three income
+ * paths the 20th tick lands in the ROUND-6 shop on every one of them — 「大約
+ * 是第五場之後」, reachable but only just.
+ */
+export const STAT_TICK_ITEM_ID = "stat-attunement" as ItemId;
+export const STAT_TICK_PRICE = 375;
+/** 20th cumulative tick = the capstone. 20 x 375 = 7,500g of a ~7,600g match. */
+export const STAT_TICK_TARGET = 20;
+
+/**
+ * The two SHOP SERVICES: listings that take gold but never occupy a slot.
+ * They are real item@1 documents (so they carry a name, a description and the
+ * operator whitelist gates them like anything else) but `buyItem` intercepts
+ * them BEFORE the inventory path — see economy/shop.ts.
+ */
+export const SHOP_SERVICE_ITEM_IDS: readonly ItemId[] = [STAT_TICK_ITEM_ID, LEGENDARY_ORB_ITEM_ID];
+
+export function isShopService(itemId: string): boolean {
+  return itemId === STAT_TICK_ITEM_ID || itemId === LEGENDARY_ORB_ITEM_ID;
+}
+
+/**
+ * S3 — «this item does SOMETHING in the shipped engine». THE definition of an
+ * effect, in the one place both the price contract and the sim can read it.
+ *
+ * `item@1` can express exactly two payloads, `modifiers` and `passive`, so an
+ * item carrying neither is inert BY CONSTRUCTION — no amount of tags, tier or
+ * description makes it do anything at runtime. That is not hypothetical: 18
+ * imported "final" items and all 55 recipe books (製作書) came out of the w3x
+ * with their whole payload in an ACTIVE ability the schema cannot express yet,
+ * so they ship as inert docs on purpose (the curation layer's own copy of this
+ * rule, `itemDoc.hasEffect` in starter_content_test.go, is what keeps them off
+ * both surfaces).
+ *
+ * Structural parameter type so the ONE rule covers both sides of the content
+ * boundary: `ItemDoc` (the loaded JSON, checked in itemTiers.test.ts) and
+ * `ItemDef` (the registered runtime def, checked in shop.ts).
+ */
+export function itemHasEffect(def: { modifiers?: readonly unknown[]; passive?: readonly unknown[] }): boolean {
+  return (def.modifiers?.length ?? 0) > 0 || (def.passive?.length ?? 0) > 0;
+}
+
+/** Price of a shop service, or null when the id is a normal item. */
+export function shopServicePrice(itemId: string): number | null {
+  if (itemId === STAT_TICK_ITEM_ID) return STAT_TICK_PRICE;
+  if (itemId === LEGENDARY_ORB_ITEM_ID) return LEGENDARY_ORB_PRICE;
+  return null;
+}
+
+/**
+ * THE STAT-TICK ROLL POOL — nine entries, each worth 6.5 AEP (= B_SIMPLE) at
+ * the level-5 reference, rolled uniformly on `world.rng`.
+ *
+ * WHAT IS DELIBERATELY MISSING, and why. These are not oversights; each is a
+ * stat this sim cannot pay for:
+ *   cdr        10% cdr measures at 0.047 AEP — a 6.5-AEP roll would need cdr
+ *              13.9 against a hard 0.45 clamp. It is an unbuyable stat here.
+ *   maxMana    0.034 AEP/point at L5, collapsing to 0.007 at L8: with Q/W on
+ *              25s and E/R on 55-60s against a ~19s duel, casts are COOLDOWN-
+ *              limited, never mana-limited. One roll would be +190 mana.
+ *   manaRegen  same cause; one roll would be +626%.
+ *   critDamage identically 0 AEP at the champion base critChance of 0 (all 113
+ *              champions ship critChance 0), so it may never be offered alone.
+ *
+ * Armour stacking needs no cap and has none: 20 armour rolls = 340 armour, but
+ * with ~40% of incoming damage magic the eHP multiple tops out at 2.34x.
+ */
+export const STAT_TICK_ROLLS: readonly StatModifier[] = [
+  { stat: Stat.AttackDamage, op: ModOp.Flat, value: 6.5 },
+  { stat: Stat.MaxHealth, op: ModOp.Flat, value: 66 },
+  { stat: Stat.Armor, op: ModOp.Flat, value: 17 },
+  { stat: Stat.MagicResist, op: ModOp.Flat, value: 38 },
+  { stat: Stat.AbilityPower, op: ModOp.Flat, value: 32 },
+  { stat: Stat.AttackSpeed, op: ModOp.PercentAdd, value: 0.154 },
+  { stat: Stat.MoveSpeed, op: ModOp.Flat, value: 0.83 },
+  { stat: Stat.CritChance, op: ModOp.Flat, value: 0.23 },
+  { stat: Stat.Lifesteal, op: ModOp.Flat, value: 0.27 },
+];
+
+/**
+ * 傳說·萬象強化 — the capstone granted on the 20th clean tick.
+ *
+ * pctAdd r to all four of these with r ~ U[10%, 100%] in 10% steps, which is
+ * literally the user's 「加強 10~100%能力屬性強化」. Measured at level 8:
+ * r=10% -> 11.9 AEP (a genuine dud, 0.23 of a legendary), r=55% -> 56.7 AEP
+ * (1.09), r=100% -> 91.9 AEP (1.77, the jackpot). Using pctAdd rather than flat
+ * is what makes it read as 能力屬性強化 and makes it self-balancing across
+ * archetypes: a tank cashes it as HP, a carry as AD.
+ *
+ * `ap` is EXCLUDED on purpose — base ap is 0 on all 113 champions, so a
+ * percentage of it is a percentage of nothing.
+ */
+export const CAPSTONE_ITEM_ID = "legendary-attunement";
+export const CAPSTONE_STATS: readonly Stat[] = [Stat.MaxHealth, Stat.AttackDamage, Stat.Armor, Stat.MagicResist];
+/** r is drawn from {0.1, 0.2, … 1.0} — ten equally likely 10% steps. */
+export const CAPSTONE_STEPS = 10;
+export const CAPSTONE_MIN_PCT = 10;
+export const CAPSTONE_MAX_PCT = 100;
+
+/** Build the capstone's modifier list for a rolled percentage (10..100). */
+export function capstoneModifiers(pct: number): StatModifier[] {
+  const value = pct / 100;
+  return CAPSTONE_STATS.map((stat) => ({ stat, op: ModOp.PercentAdd, value }));
+}

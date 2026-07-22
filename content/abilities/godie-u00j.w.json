@@ -1,0 +1,47 @@
+{
+  "id": "godie-u00j.w",
+  "name": "74-02 八刀一閃",
+  "description": "[主動攻擊]\n30秒冷卻時間\n\n極快的速度衝刺到敵人面前，給予週遭敵人敏捷*3+150傷害。",
+  "slot": "W",
+  "castType": "targeted",
+  "maxRank": 5,
+  "cooldown": [
+    30.0,
+    30.0,
+    30.0,
+    50.0,
+    50.0
+  ],
+  "manaCost": [
+    150.0,
+    180.0,
+    210.0,
+    275.0,
+    275.0
+  ],
+  "range": 14.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          80,
+          120,
+          160,
+          200,
+          240
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

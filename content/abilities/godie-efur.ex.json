@@ -1,0 +1,30 @@
+{
+  "id": "godie-efur.ex",
+  "name": "13-002 KISS ME!",
+  "description": "[被動]\n0秒冷卻時間\n\n揍敵客殺意激發，施展快步將會附帶周圍0.01秒暈眩及額外75傷害。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    120.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

@@ -1,0 +1,46 @@
+{
+  "id": "godie-h02n.e",
+  "schema": "ability@1",
+  "name": "none",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 5,
+  "cooldown": [
+    12.0,
+    12.0,
+    12.0,
+    12.0,
+    12.0
+  ],
+  "manaCost": [
+    60.0,
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          80,
+          120,
+          160,
+          200,
+          240
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.72
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true
+}

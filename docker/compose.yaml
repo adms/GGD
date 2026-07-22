@@ -1,0 +1,106 @@
+# docker/compose.yaml — lightest inner dev loop (no k8s): redis + platform +
+# game + edge with live ./content and ./data bind mounts.
+#
+#   docker compose -f docker/compose.yaml up --build
+#   docker compose -f docker/compose.yaml --profile dev up   # + content-api
+#
+# CONTRACT NOTE: apps/{platform,game-server,client,editor,content-api} are
+# being built in parallel; their image builds will succeed once those packages
+# land. Until then you can bring up subsets, e.g.:
+#   docker compose -f docker/compose.yaml up redis
+#
+# Secrets are injected via env (never baked into images) and are REQUIRED: each
+# uses the ${VAR:?...} fail-fast form, so `docker compose ... up|config` errors
+# immediately if a value is unset instead of silently booting on a guessable
+# default. Provide them in a .env file next to this compose file (gitignored via
+# the root .gitignore `.env` rule); copy docker/.env.example and fill it, e.g.
+#   REDIS_PASSWORD=$(openssl rand -hex 32)
+
+name: ggd
+
+services:
+  redis:
+    image: redis:7-alpine
+    command:
+      [
+        "redis-server",
+        "--appendonly", "yes",
+        "--appendfsync", "everysec",
+        "--requirepass", "${REDIS_PASSWORD:?set REDIS_PASSWORD in docker/.env}",
+      ]
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:?set REDIS_PASSWORD in docker/.env}", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  platform:
+    build:
+      context: ..
+      dockerfile: docker/platform.Dockerfile
+    environment:
+      APP_ENV: development
+      HTTP_ADDR: ":8080"
+      REDIS_ADDR: "redis:6379"
+      REDIS_PASSWORD: "${REDIS_PASSWORD:?set REDIS_PASSWORD in docker/.env}"
+      DATA_DIR: /data
+      CONTENT_DIR: /srv/content
+      JWT_SIGNING_SECRET: "${JWT_SIGNING_SECRET:?set JWT_SIGNING_SECRET in docker/.env}"
+      PLATFORM_GAME_SHARED_SECRET: "${PLATFORM_GAME_SHARED_SECRET:?set PLATFORM_GAME_SHARED_SECRET in docker/.env}"
+      GAME_INTERNAL_URL: "http://game:2567"
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      # durable truth — survives container restarts, lives in the repo
+      - ../data:/data
+      - ../content:/srv/content:ro
+    depends_on:
+      redis:
+        condition: service_healthy
+
+  game:
+    build:
+      context: ..
+      dockerfile: docker/game.Dockerfile
+    environment:
+      NODE_ENV: development
+      PORT: "2567"
+      PLATFORM_GAME_SHARED_SECRET: "${PLATFORM_GAME_SHARED_SECRET:?set PLATFORM_GAME_SHARED_SECRET in docker/.env}"
+      CONTENT_DIR: /srv/content
+    ports:
+      - "127.0.0.1:2567:2567"
+    volumes:
+      - ../content:/srv/content:ro
+
+  edge:
+    build:
+      context: ..
+      dockerfile: docker/edge.Dockerfile
+    ports:
+      - "127.0.0.1:8088:8080"
+    volumes:
+      - ../content:/srv/content:ro
+    depends_on:
+      - platform
+      - game
+
+  # dev profile only: content CRUD/validate/SSE (RW mount!)
+  content-api:
+    profiles: ["dev"]
+    build:
+      context: ..
+      dockerfile: docker/content-api.Dockerfile
+    environment:
+      APP_ENV: development
+      CONTENT_DIR: /srv/content
+    ports:
+      - "127.0.0.1:8787:8787"
+    volumes:
+      - ../content:/srv/content
+
+volumes:
+  redis-data:

@@ -1,0 +1,24 @@
+{
+  "collection": "loot-tables",
+  "hash": "9fbeb9a379c5",
+  "entries": [
+    {
+      "id": "legendary-weapons",
+      "path": "loot-tables/legendary-weapons.json",
+      "hash": "a53b9ee0c61c",
+      "size": 1604
+    },
+    {
+      "id": "quest-rewards",
+      "path": "loot-tables/quest-rewards.json",
+      "hash": "bb5130c6666e",
+      "size": 502
+    },
+    {
+      "id": "round-reward",
+      "path": "loot-tables/round-reward.json",
+      "hash": "8788777200f3",
+      "size": 328
+    }
+  ]
+}

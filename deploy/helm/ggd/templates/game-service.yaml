@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-game
+  labels:
+    {{- include "ggd.labels" . | nindent 4 }}
+    app.kubernetes.io/name: game
+spec:
+  type: ClusterIP
+  # WebSocket stickiness: keep a client's connections on one pod even when
+  # game scales beyond one replica.
+  sessionAffinity: ClientIP
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 10800
+  selector:
+    {{- include "ggd.selector" (dict "root" . "name" "game") | nindent 4 }}
+  ports:
+    - name: ws
+      port: {{ .Values.game.port }}
+      targetPort: ws

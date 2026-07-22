@@ -1,0 +1,71 @@
+# Colyseus game server. Single replica for now (WS stickiness by construction);
+# the Service adds sessionAffinity: ClientIP so a future multi-replica rollout
+# keeps clients pinned (plan "Key risks — WS sticky sessions").
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-game
+  labels:
+    {{- include "ggd.labels" . | nindent 4 }}
+    app.kubernetes.io/name: game
+spec:
+  replicas: {{ .Values.game.replicas }}
+  selector:
+    matchLabels:
+      {{- include "ggd.selector" (dict "root" . "name" "game") | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "ggd.labels" . | nindent 8 }}
+        {{- include "ggd.selector" (dict "root" . "name" "game") | nindent 8 }}
+    spec:
+      securityContext:
+        runAsNonRoot: true
+      containers:
+        - name: game
+          image: {{ .Values.game.image | quote }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: ws
+              containerPort: {{ .Values.game.port }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-config
+            - secretRef:
+                name: {{ .Release.Name }}-secrets
+          env:
+            - name: PORT
+              value: {{ .Values.game.port | quote }}
+          # CONTRACT: apps/game-server is in flight; a /healthz HTTP route is
+          # planned but not guaranteed yet, so probe the WS port itself.
+          readinessProbe:
+            tcpSocket:
+              port: ws
+            initialDelaySeconds: 3
+            periodSeconds: 5
+          livenessProbe:
+            tcpSocket:
+              port: ws
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          {{- with .Values.game.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: content
+              mountPath: /srv/content
+              readOnly: true
+      volumes:
+        - name: content
+          {{- if .Values.content.hostPath }}
+          hostPath:
+            path: {{ .Values.content.hostPath | quote }}
+            type: Directory
+          {{- else if .Values.content.existingClaim }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.content.existingClaim | quote }}
+            readOnly: true
+          {{- else }}
+          emptyDir: {}
+          {{- end }}

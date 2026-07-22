@@ -1,0 +1,83 @@
+{
+  "id": "godie-flash-p0",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.05,
+    "angleDeg": 180.0
+  },
+  "mode": "continuous",
+  "rate": 25.0,
+  "lifetimeSec": {
+    "min": 0.4,
+    "max": 0.4
+  },
+  "size": {
+    "start": 0.417,
+    "end": 2.222
+  },
+  "color": {
+    "start": [
+      1.0,
+      1.0,
+      1.0,
+      0.91
+    ],
+    "end": [
+      1.0,
+      1.0,
+      1.0,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.91
+      ]
+    ],
+    [
+      0.5,
+      [
+        0.976,
+        0.988,
+        0.09,
+        0.49
+      ]
+    ],
+    [
+      1.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.417
+    ],
+    [
+      0.5,
+      1.389
+    ],
+    [
+      1,
+      2.222
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/circle_05.png",
+  "speed": {
+    "min": 0.2,
+    "max": 0.9112
+  },
+  "anchorBone": "Dummy01"
+}

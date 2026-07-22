@@ -1,0 +1,36 @@
+{
+  "id": "godie-h02z.w",
+  "schema": "ability@1",
+  "name": "91-02 疫病",
+  "description": "[被動]\n0秒冷卻時間\n\n死騎掌握著各種疫病能力，能使敵人在痛苦中死亡。\nLV1：15%機率打出瘟疫打擊：使目標染上瘟疫，每秒損失30點生命，持續10秒。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    12.0,
+    12.0,
+    12.0,
+    12.0
+  ],
+  "manaCost": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "armor",
+          "op": "flat",
+          "value": 20
+        }
+      ],
+      "duration": 8.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast"
+}

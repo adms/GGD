@@ -1,0 +1,36 @@
+{
+  "id": "godie-h01o.w",
+  "name": "79-02 斬擊",
+  "description": "[輔助]\n22秒冷卻時間\n\n將月牙的能量聚集在斬月上，在攻擊敵人的同時釋放出，給予目標額外100+力量*2點傷害，蓄力最久可持續10秒。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    22.0,
+    22.0,
+    22.0,
+    22.0
+  ],
+  "manaCost": [
+    60.0,
+    80.0,
+    100.0,
+    120.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "flat",
+          "value": 0.4
+        }
+      ],
+      "duration": 10.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

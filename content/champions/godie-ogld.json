@@ -1,0 +1,232 @@
+{
+  "id": "godie-ogld",
+  "schema": "champion@1",
+  "name": "美白大法師 - 黑人牙膏",
+  "description": "故事：\n曾是魔法界首屈一指美白專家，個性善良；但在一次魔法決鬥中敗給飛鼠先生。自認為輸給飛鼠是因為智慧不夠，所以希望在有生之年收個聰明的徒弟一雪前恥。\n(出自:去死去死團的逆襲原創)\n\n角色成長：\n力量 + 1\n敏捷 + 1.50\n智慧 + 1.50\n基礎跑速 250\n\n可學習的技能：\n洗刷刷、黑人牙菌斑、超亮白牙膏、黑化",
+  "role": "marksman",
+  "attackType": "ranged",
+  "modelKey": "champ.sela",
+  "baseStats": {
+    "maxHealth": 440,
+    "healthRegen": 1.05,
+    "maxMana": 500,
+    "manaRegen": 1.8,
+    "ad": 39,
+    "ap": 0,
+    "armor": 6,
+    "mr": 28,
+    "as": 0.4,
+    "ms": 5.5,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 12.0
+  },
+  "growth": {
+    "maxHealth": 20,
+    "healthRegen": 0.05,
+    "maxMana": 18,
+    "manaRegen": 0.06,
+    "ad": 1.0,
+    "armor": 0.5,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-ogld.q",
+      "name": "72-01洗刷刷",
+      "description": "[主動攻擊]\n35秒冷卻時間\n\n召喚一陣雨季的暴風來攻擊對方的部隊，在350範圍造成150點的傷害。可持續2秒。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        35.0,
+        35.0,
+        35.0,
+        35.0,
+        35.0
+      ],
+      "manaCost": [
+        100.0,
+        200.0,
+        300.0,
+        300.0,
+        300.0
+      ],
+      "range": 14.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              150.0,
+              300.0,
+              450.0,
+              450.0,
+              450.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "W": {
+      "id": "godie-ogld.w",
+      "name": "72-02 黑人牙菌斑",
+      "description": "[主動]\n15秒冷卻時間\n\n釋放黑人牙菌斑病毒，被感染的部隊會每秒受到20點傷害並減緩攻擊移動速度30%，持續10秒。死亡後會釋放出1隻成熟的牙菌斑並聽從黑人控制，持續60秒。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        60.0,
+        80.0,
+        110.0
+      ],
+      "range": 14.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              20.0,
+              30.0,
+              40.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.12
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "E": {
+      "id": "godie-ogld.e",
+      "name": "72-03 超亮白",
+      "description": "[輔助]\n45秒冷卻時間\n\n使用超亮白牙膏攻擊目標，帶腐蝕性的牙膏會侵蝕目標6點裝甲，亮白效果也將使目標暴露於我方視野之中，持續8秒。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        75.0,
+        150.0,
+        225.0
+      ],
+      "range": 14.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              6.0,
+              12.0,
+              18.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.054
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "R": {
+      "id": "godie-ogld.r",
+      "name": "72-04 黑化",
+      "description": "[主動攻擊]\n90秒冷卻時間\n\n黑化後的黑人牙膏將會在短時間內使出敵我皆傷的噴牙膏攻擊，對周圍所有生物造成最多智慧*9的傷害。",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "manaCost": [
+        250.0,
+        350.0,
+        450.0
+      ],
+      "range": 0.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              77.0,
+              77.0,
+              77.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.347
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "burnstun",
+          "duration": 0.8,
+          "stun": true
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "radius": 3.67
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin"
+  ],
+  "exAbility": "godie-ogld.ex",
+  "tint": [
+    0.1961,
+    0.1961,
+    0.1961
+  ]
+}

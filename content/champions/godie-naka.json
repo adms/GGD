@@ -1,0 +1,226 @@
+{
+  "id": "godie-naka",
+  "schema": "champion@1",
+  "name": "猿飛佐助 - 風魔小次郎",
+  "description": "故事：\n神秘的忍者，藏在敵人的影子之中難以發現，暗殺的達人，不攻擊的時候甚至可以永久隱形。\n(出自:忍者傳說)\n\n推薦玩家 : 暗殺鬼隱\n上手度 : 難\n\n角色成長：\n力量 + 1.65\n敏捷 + 2.00\n智慧 + 2.65\n基礎跑速 310\n\n可學習的技能：\n忍法風魔手裡劍、忍法鬼穿刺、忍法千變萬化之刀、忍法暗殺奧義-飛燕閃",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "imported.herohanzouhattori",
+  "baseStats": {
+    "maxHealth": 380,
+    "healthRegen": 0.9,
+    "maxMana": 400,
+    "manaRegen": 1.8,
+    "ad": 29,
+    "ap": 0,
+    "armor": 8,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.9,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 33,
+    "healthRegen": 0.08,
+    "maxMana": 32,
+    "manaRegen": 0.11,
+    "ad": 2.0,
+    "armor": 0.6,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-naka.q",
+      "name": "27-01 忍法風魔手裡劍",
+      "description": "[主動攻擊]\n45秒冷卻時間\n\n使用兩發風魔手裡劍以華麗的軌道攻擊敵人，造成100點傷害。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        45.0,
+        75.0,
+        105.0,
+        135.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "W": {
+      "id": "godie-naka.w",
+      "name": "27-02 忍法鬼穿刺",
+      "description": "[主動攻擊]\n35秒冷卻時間\n\n忍法鬼穿刺可以攻擊一直線敵人，將其打到空中給予200點損害，落地後暈眩1秒。",
+      "slot": "W",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        35.0,
+        35.0,
+        35.0,
+        35.0
+      ],
+      "manaCost": [
+        90.0,
+        120.0,
+        150.0,
+        180.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.wave",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "perRank": [
+                  90.0,
+                  90.0,
+                  90.0,
+                  90.0
+                ]
+              }
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "burnstun",
+              "duration": 1.2,
+              "stun": true
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "E": {
+      "id": "godie-naka.e",
+      "name": "27-03 忍法千變萬化之刀",
+      "description": "[傷害加成]\n60秒冷卻時間\n\n窮究一切武藝和自然元素的精隨，讓小次郎悟出深奧的忍法理論，可以隨機以不同的屬性來攻擊他的敵人，最多6次攻擊，持續30秒。\n\n火屬性給予20點傷害，持續15秒\n冰屬性緩慢敵人2.0秒\n地屬性暈眩敵人0.75秒\n風屬性給予多個敵人130點傷害\n\n本技能為法球效應\n本技能只對英雄有效",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        120.0,
+        180.0,
+        240.0,
+        300.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "flat",
+              "value": 0.4
+            }
+          ],
+          "duration": 3.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "R": {
+      "id": "godie-naka.r",
+      "name": "27-04 忍法暗殺奧義-飛燕閃",
+      "description": "[主動攻擊]\n60秒冷卻時間\n\n忍法暗殺術最高奧義，以肉眼難以察覺的速度衝刺到前方突刺，造成指定單位敏捷*3+450點傷害，暈眩時間1秒。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        150.0,
+        225.0,
+        300.0
+      ],
+      "range": 8.25,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              450.0,
+              700.0,
+              950.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "burnstun",
+          "duration": 1.0,
+          "stun": true
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ],
+  "exAbility": "godie-naka.ex",
+  "icon": "assets/icons/champions/godie-naka.png"
+}

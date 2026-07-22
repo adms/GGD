@@ -1,0 +1,43 @@
+{
+  "id": "godie-o02s.w",
+  "name": "53-01 獸王牙操彈",
+  "description": "[傷害加成]\n35秒冷卻時間\n\n借獸王之力施展之咒文，可依施法者思考操縱攻擊，光帶周圍每秒造成250+智慧*3點傷害。",
+  "slot": "W",
+  "castType": "skillshot",
+  "maxRank": 4,
+  "cooldown": [
+    35.0,
+    35.0,
+    35.0,
+    35.0
+  ],
+  "manaCost": [
+    180.0,
+    210.0,
+    240.0,
+    270.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "imported.wave",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

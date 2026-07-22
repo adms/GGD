@@ -1,0 +1,41 @@
+{
+  "contentId": "godie-i013",
+  "nameZh": "八取武士刀",
+  "gold": 3100,
+  "kind": "effect",
+  "description": "武器\r\n效能\r\n力量+10\r\n攻擊力+25\r\n15%的機率增加140點傷害並暈眩0.1秒\r\n\r\n解說\r\n八取大師製作的精銳武士刀，追殺比爾裡人人都想要的名刀，據說有百萬的價值，能斬斷鋼鐵。",
+  "abilities": [
+    {
+      "rawcode": "A0NZ",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {
+        "3": {
+          "1": 140.0
+        }
+      }
+    },
+    {
+      "rawcode": "AItx",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "AItj",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A02S",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    }
+  ]
+}

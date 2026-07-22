@@ -1,0 +1,44 @@
+{
+  "id": "godie-oshd.e",
+  "name": "29-03 有功夫無懦夫",
+  "description": "[輔助]\n60秒冷卻時間\n\n聽到這句話的人，驚覺只要有功夫就沒有懦夫，啟發四周人的功夫之心，而得到無敵神力，讓附近一定區域的友方部隊，統統進入無敵狀態，但是本身並非無敵，持續3秒。",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    130.0,
+    195.0,
+    260.0,
+    325.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          80,
+          120,
+          160,
+          200
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

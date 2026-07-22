@@ -1,0 +1,32 @@
+{
+  "id": "thorne.q",
+  "schema": "ability@1",
+  "name": "Thorn Lash",
+  "slot": "Q",
+  "castType": "dash",
+  "maxRank": 5,
+  "cooldown": [
+    9,
+    8,
+    7,
+    6,
+    5
+  ],
+  "manaCost": [
+    40,
+    40,
+    40,
+    40,
+    40
+  ],
+  "range": 6,
+  "effects": [
+    {
+      "kind": "dash",
+      "mode": "forward",
+      "speed": 28,
+      "maxDistance": 6
+    }
+  ],
+  "vfxKey": "fx.thorn-lash"
+}

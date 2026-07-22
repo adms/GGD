@@ -1,0 +1,239 @@
+{
+  "id": "godie-u00j",
+  "schema": "champion@1",
+  "name": "神性的流失 - 賽菲洛斯",
+  "description": "故事：\n賽菲洛斯是路克麗西亞和寶條博士的兒子。在胎兒時期被親生父親植入傑諾娃細胞，造成年輕的他成了神羅最強的精英戰士，與扎克斯和克勞德到了尼布爾罕做觀察，在那裡的神羅建築地下室發現自己真正的身世，毀了尼布爾罕之後，開始向全世界「復仇」，尋找「約束之地」。\n(出自:最終幻想7)\n\n推薦玩家 : 團戰破塔\n上手度 : 中\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.10\n智慧 + 1.90\n基礎跑速 295\n\n可學習的技能：\n獄門、八刀一閃、闇之天使、最終殞落星",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "imported.herosephiroth",
+  "baseStats": {
+    "maxHealth": 440,
+    "healthRegen": 1.05,
+    "maxMana": 268,
+    "manaRegen": 1.36,
+    "ad": 36,
+    "ap": 0,
+    "armor": 10,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.7,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 36,
+    "healthRegen": 0.09,
+    "maxMana": 23,
+    "manaRegen": 0.08,
+    "ad": 1.9,
+    "armor": 0.6,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-u00j.q",
+      "name": "74-01 獄門",
+      "description": "[主動攻擊]\n45秒冷卻時間\n\n傳說中刺死愛麗絲的必殺技，雖然命中範圍小，卻具有強大殺傷力，造成小範圍350傷害。",
+      "slot": "Q",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        120.0,
+        155.0,
+        190.0,
+        225.0
+      ],
+      "range": 0.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.003
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "burnstun",
+          "duration": 0.8,
+          "stun": true
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "radius": 1.5
+    },
+    "W": {
+      "id": "godie-u00j.w",
+      "name": "74-02 八刀一閃",
+      "description": "[主動攻擊]\n30秒冷卻時間\n\n極快的速度衝刺到敵人面前，給予週遭敵人敏捷*3+150傷害。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0,
+        50.0,
+        50.0
+      ],
+      "manaCost": [
+        150.0,
+        180.0,
+        210.0,
+        275.0,
+        275.0
+      ],
+      "range": 14.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200,
+              240
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "E": {
+      "id": "godie-u00j.e",
+      "name": "74-03 闇之天使",
+      "description": "[主動攻擊]\n60秒冷卻時間\n\n抽取星球之力轉換為魔晃能量，瞬間爆發的威力造成150點傷害，共8道爆炸。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        200.0,
+        275.0,
+        350.0,
+        425.0
+      ],
+      "range": 6.42,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              2.0,
+              2.0,
+              2.0,
+              2.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.006
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "radius": 6.0
+    },
+    "R": {
+      "id": "godie-u00j.r",
+      "name": "74-04 最終殞落星",
+      "description": "[主動攻擊]\n75秒冷卻時間\n\n招喚災難彗星造成地面嚴重傷害，每顆隕石造成650點傷害，總共1顆隕石。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        220.0,
+        330.0,
+        440.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              75.0,
+              75.0,
+              75.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.225
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ],
+  "exAbility": "godie-u00j.ex",
+  "icon": "assets/icons/champions/godie-u00j.png",
+  "tint": [
+    1.0,
+    0.7843,
+    0.7843
+  ]
+}

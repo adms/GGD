@@ -1,0 +1,31 @@
+{
+  "id": "godie-hblm.w",
+  "name": "05-02 薩喀爾嘎",
+  "description": "[主動攻擊]\n15秒冷卻時間\n\n薩喀爾的強化版，放射出集中並且有穿透力的電擊，造成150傷害。",
+  "slot": "W",
+  "castType": "dash",
+  "maxRank": 4,
+  "cooldown": [
+    12.0,
+    12.0,
+    12.0,
+    12.0
+  ],
+  "manaCost": [
+    30.0,
+    50.0,
+    70.0,
+    90.0
+  ],
+  "range": 7.33,
+  "effects": [
+    {
+      "kind": "dash",
+      "mode": "toPoint",
+      "speed": 30.0,
+      "maxDistance": 7.33
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

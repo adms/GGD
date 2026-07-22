@@ -1,0 +1,46 @@
+{
+  "id": "godie-h02k.e",
+  "schema": "ability@1",
+  "name": "89-03 憤怒的胸毛",
+  "description": "[輔助]\n0秒冷卻時間\n\n傳說中拔下熊貓的一根胸毛，也就是熊貓胸毛，可以讓胸毛..是熊貓復活，這份刺激的快感也讓熊貓行動加速及提升全能力，並且隨機爆炸，但是熊貓還是常常忘記這回事，只有4%機率會想起。",
+  "slot": "E",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    12.0,
+    12.0,
+    12.0,
+    12.0
+  ],
+  "manaCost": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ms",
+          "op": "pctAdd",
+          "value": 0.04
+        },
+        {
+          "stat": "ad",
+          "op": "flat",
+          "value": 10
+        },
+        {
+          "stat": "as",
+          "op": "pctAdd",
+          "value": 0.04
+        }
+      ],
+      "duration": 12.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast"
+}

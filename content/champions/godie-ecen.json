@@ -1,0 +1,231 @@
+{
+  "id": "godie-ecen",
+  "schema": "champion@1",
+  "name": "姜窩肯 - 約翰走路",
+  "description": "故事：\n酒不醉人人自醉，當初發跡是由一家小雜貨店開始。當時年紀才十五歲的約翰華克（John Walker）由於父親去世必須承擔家計，因此買下一間雜貨店，並開始販賣調和威士忌，但是他發現每次口味都不一樣，讓人失望，會調茶的他於是開始依樣畫葫蘆調和起威士忌，沒想到所調出的威士忌風味佳、品質穩定，不少有錢人漸漸成了老主顧；結果約翰華克調製的獨一無二威士忌，很快紅遍了蘇格蘭西部。\n(出自:約翰走路)\n\n角色成長：\n力量 + 1.85\n敏捷 + 1.65\n智慧 + 2.80\n基礎跑速 295\n\n可學習的技能：\n威士忌攻擊、酒釀精華、AT工廠機器人、魔幻浮水印",
+  "role": "marksman",
+  "attackType": "ranged",
+  "modelKey": "champ.sela",
+  "baseStats": {
+    "maxHealth": 500,
+    "healthRegen": 1.2,
+    "maxMana": 400,
+    "manaRegen": 1.8,
+    "ad": 40,
+    "ap": 0,
+    "armor": 7,
+    "mr": 28,
+    "as": 0.45,
+    "ms": 5.7,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 11.9
+  },
+  "growth": {
+    "maxHealth": 37,
+    "healthRegen": 0.09,
+    "maxMana": 34,
+    "manaRegen": 0.11,
+    "ad": 1.6,
+    "armor": 0.5,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-ecen.q",
+      "name": "64-01 威士忌攻擊",
+      "description": "[主動傷害]\n25秒冷卻時間\n\n約翰走路藉由獨家調配的奇異威士忌發動神秘的攻擊，造成100點傷害並且緩慢對手移動速度25%，持續6秒。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        25.0,
+        25.0,
+        25.0
+      ],
+      "manaCost": [
+        75.0,
+        105.0,
+        135.0
+      ],
+      "range": 9.17,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              100.0,
+              200.0,
+              300.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.9
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow25",
+          "duration": 6.0,
+          "moveSpeedMult": 0.75
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "W": {
+      "id": "godie-ecen.w",
+      "name": "64-02 酒釀精華",
+      "description": "[主動傷害]\n50秒冷卻時間\n\n約翰走路取出酒釀精華發動神秘的攻擊，對敵方造成每秒78點傷害的連續性攻擊，若對友方造成每秒78點的HP和MP恢復，持續4波，需要持續施法。\n若約翰自身有魔幻浮水印效果，則將增加約翰智慧係數的傷害量和恢復量。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        50.0,
+        50.0,
+        50.0,
+        50.0
+      ],
+      "manaCost": [
+        60.0,
+        80.0,
+        100.0,
+        120.0
+      ],
+      "range": 7.33,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              4.01,
+              4.01,
+              4.01,
+              4.01
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.012
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "E": {
+      "id": "godie-ecen.e",
+      "name": "64-03 工廠機器人",
+      "description": "[召喚]\n75秒冷卻時間\n\n約翰走路召喚2位製酒工廠中的巨大機器人LV1一同幫忙攻擊對手，持續30秒。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        75.0,
+        75.0,
+        75.0,
+        75.0
+      ],
+      "manaCost": [
+        150.0,
+        225.0,
+        300.0,
+        375.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "R": {
+      "id": "godie-ecen.r",
+      "name": "64-04 魔幻浮水印",
+      "description": "[輔助]\n10秒冷卻時間\n\n約翰走路製造一個魔幻浮水印在友軍裝甲身上，據說是約翰走路家族代代相傳驅凶避邪的商業標籤，可提升裝甲3點，攻擊帶有此浮水印單位的玩家將受到反噬性的魔法傷害60~100點，效果持續20秒。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        10.0,
+        10.0,
+        10.0
+      ],
+      "manaCost": [
+        150.0,
+        225.0,
+        300.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.48
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin"
+  ],
+  "exAbility": "godie-ecen.ex",
+  "tint": [
+    1.0,
+    0.7843,
+    1.0
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "id": "godie-e015.r",
+  "schema": "ability@1",
+  "name": "94-04 賣扣~~",
+  "description": "[主動攻擊]\n50秒冷卻時間\n\n召喚一台貨車攻擊目標，給予目標強力的衝擊造成600點傷害，並將目標撞出天邊。\n在恰恰狀態下傷害加成300點",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    50.0,
+    50.0,
+    50.0
+  ],
+  "manaCost": [
+    200.0,
+    275.0,
+    350.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          600.0,
+          1000.0,
+          1400.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow25",
+      "duration": 1.0,
+      "moveSpeedMult": 0.6
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true
+}

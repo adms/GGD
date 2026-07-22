@@ -1,0 +1,46 @@
+{
+  "id": "godie-h01u.r",
+  "name": "80-04 赤兔咆哮",
+  "description": "[主動攻擊]\n15秒冷卻時間\n\n招喚赤兔馬人馬合一，於亂世中有一夫當關的氣勢，可以提升自身跑速10%並給予週遭450範圍內敵人每0.2秒10點傷害，攻擊時有20%使出弒鬼神，被攻擊時也有10%機率使出弒鬼神反擊，每秒消耗75點瑪那。",
+  "slot": "R",
+  "castType": "skillshot",
+  "maxRank": 3,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0
+  ],
+  "manaCost": [
+    70.0,
+    110.0,
+    150.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "imported.wave",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              90.0,
+              20.0,
+              30.0
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "burnstun",
+          "duration": 1.2,
+          "stun": true
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

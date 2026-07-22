@@ -1,0 +1,30 @@
+{
+  "id": "godie-e00s.ex",
+  "name": "70-002 樹海降臨",
+  "description": "[強化]\n0秒冷卻時間\n\n集千年煉成之大成，白木將悟得樹海降臨，可以瞬間召喚樹精，召喚的樹精將獲得十倍之血量及五倍之裝甲，召喚傷害及數量也將是千年煉成的兩倍。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    120.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

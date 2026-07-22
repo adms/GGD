@@ -1,0 +1,36 @@
+{
+  "id": "godie-i00n",
+  "schema": "item@1",
+  "name": "分手之鎚",
+  "description": "武器\n效能\n攻擊力+26\n攻擊時削弱目標裝甲7點（法球）\n\n解說\n據說是分手的時候，想要發洩心情砸東西的好工具。",
+  "cost": 1200,
+  "tier": 2,
+  "modifiers": [
+    {
+      "stat": "ad",
+      "op": "flat",
+      "value": 26
+    }
+  ],
+  "passive": [
+    {
+      "on": "onBasicAttack",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": -7
+            }
+          ],
+          "duration": 5
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "wc3-import"
+  ]
+}

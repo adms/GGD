@@ -1,0 +1,207 @@
+{
+  "id": "godie-e00n",
+  "schema": "champion@1",
+  "name": "蟬在叫人壞掉 - 龍宮禮奈",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "imported.renaryugu2",
+  "baseStats": {
+    "maxHealth": 460,
+    "healthRegen": 1.1,
+    "maxMana": 292,
+    "manaRegen": 1.44,
+    "ad": 93,
+    "ap": 0,
+    "armor": 9,
+    "mr": 28,
+    "as": 0.67,
+    "ms": 6.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 35,
+    "healthRegen": 0.09,
+    "maxMana": 20,
+    "manaRegen": 0.07,
+    "ad": 2.8,
+    "armor": 0.8,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-e00n.q",
+      "name": "22-01 鬼隱之擊",
+      "description": "[輔助]\n30秒冷卻時間\n\n隱形並在一定的時間內提昇50%速度以暗殺目標，當攻擊時隱形術即告失效，但是會造成額外100點的背刺傷害，持續12秒。",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 5,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0,
+        75.0,
+        75.0
+      ],
+      "manaCost": [
+        60.0,
+        110.0,
+        160.0,
+        255.0,
+        255.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "value": 1.0
+            }
+          ],
+          "duration": 6.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "W": {
+      "id": "godie-e00n.w",
+      "name": "22-02 染血的柴刀",
+      "description": "[被動]\n0秒冷卻時間\n\n攻擊時有18%的機率可以使出會心一擊造成1.25倍的傷害。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "critChance",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "duration": 6.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "E": {
+      "id": "godie-e00n.e",
+      "name": "22-03 五吋釘",
+      "description": "[主動攻擊]\n25秒冷卻時間\n\n將一枚充滿詛咒的五吋釘射向敵方目標，造成瞬間350點傷害，並減緩60%移動速度5秒。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        25.0,
+        25.0,
+        25.0,
+        25.0
+      ],
+      "manaCost": [
+        100.0,
+        140.0,
+        180.0,
+        220.0
+      ],
+      "range": 8.25,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              350.0,
+              500.0,
+              650.0,
+              800.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow40",
+          "duration": 5.0,
+          "moveSpeedMult": 0.4
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "R": {
+      "id": "godie-e00n.r",
+      "name": "22-04 雛見澤症候群L5",
+      "description": "[輔助]\n60秒冷卻時間\n\n注射藥物使自己短暫激發到L5的病狀，此狀態將會強化攻擊55點和移動速度，並暫時減少生命最大值150點，持續7秒。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        70.0,
+        140.0,
+        210.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ad",
+              "op": "flat",
+              "value": 55
+            }
+          ],
+          "duration": 7
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ],
+  "exAbility": "godie-e00n.ex",
+  "icon": "assets/icons/champions/godie-e00n.png"
+}

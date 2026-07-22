@@ -1,0 +1,226 @@
+{
+  "id": "godie-hgam",
+  "schema": "champion@1",
+  "name": "種子神奇寶貝 - 妙蛙種子",
+  "description": "故事：\n一出生背上就負著不可思議的種子。背上的種子裡面，擁有大量的營養 ，種子會跟著身體一起長大。\n(出自:神奇寶貝)\n\n推薦玩家 : 牽制會戰\n上手度 : 中\n\n角色成長：\n力量 + 1.50\n敏捷 + 2.00\n智慧 + 2.30\n基礎跑速 300\n\n可學習的技能：\n飛葉快刀、麻痺粉、藤鞭、陽光烈焰",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "imported.bulbasaur",
+  "baseStats": {
+    "maxHealth": 440,
+    "healthRegen": 1.05,
+    "maxMana": 316,
+    "manaRegen": 1.52,
+    "ad": 35,
+    "ap": 0,
+    "armor": 9,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 30,
+    "healthRegen": 0.08,
+    "maxMana": 28,
+    "manaRegen": 0.09,
+    "ad": 1.5,
+    "armor": 0.6,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-hgam.q",
+      "name": "90-01 飛葉快刀",
+      "description": "[主動攻擊]\n25秒冷卻時間\n\n發出飛快的葉子進行攻擊，每秒對附近的敵人造成100點傷害，持續2秒。",
+      "slot": "Q",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        25.0,
+        25.0,
+        25.0
+      ],
+      "manaCost": [
+        70.0,
+        120.0,
+        170.0
+      ],
+      "range": 0.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              100.0,
+              200.0,
+              300.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.9
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "radius": 4.12
+    },
+    "W": {
+      "id": "godie-hgam.w",
+      "name": "90-02 麻痺粉",
+      "description": "[輔助]\n25秒冷卻時間\n\n散發出麻痺的粉末，令周圍600的敵人減緩速度60%，持續3秒。",
+      "slot": "W",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        25.0,
+        25.0,
+        25.0,
+        25.0
+      ],
+      "manaCost": [
+        20.0,
+        50.0,
+        80.0,
+        110.0
+      ],
+      "range": 0.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.003
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow40",
+          "duration": 1.5,
+          "moveSpeedMult": 0.6
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "radius": 6.0
+    },
+    "E": {
+      "id": "godie-hgam.e",
+      "name": "90-03 藤鞭",
+      "description": "[輔助]\n45秒冷卻時間\n\n指定目標區域，1秒後將位於該區域上的所有單位拉到身旁，若受作用的目標是敵人則會給予350點傷害。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        125.0,
+        200.0,
+        275.0,
+        350.0
+      ],
+      "range": 9.17,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              350,
+              500,
+              650,
+              800
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.root-snare",
+      "targetsEnemies": true
+    },
+    "R": {
+      "id": "godie-hgam.r",
+      "name": "90-04 陽光烈焰",
+      "description": "[主動攻擊]\n60秒冷卻時間\n\n草系的強力招式之一，將陽光的能量慢慢聚集起來，累積成強烈的烈焰後發射，造成一直線上敵方部隊600+全能力總和*2傷害。",
+      "slot": "R",
+      "castType": "skillshot",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        200.0,
+        300.0,
+        400.0
+      ],
+      "range": 14.0,
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.wave",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "perRank": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.cinder-ward"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ],
+  "exAbility": "godie-hgam.ex"
+}

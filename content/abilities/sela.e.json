@@ -1,0 +1,54 @@
+{
+  "id": "sela.e",
+  "schema": "ability@1",
+  "name": "Scorch Ring",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 5,
+  "cooldown": [
+    12,
+    11,
+    10,
+    9,
+    8
+  ],
+  "manaCost": [
+    70,
+    75,
+    80,
+    85,
+    90
+  ],
+  "range": 12,
+  "radius": 3,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "flat": 40,
+        "perRank": [
+          30,
+          60,
+          90,
+          120,
+          150
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.5
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow40",
+      "duration": 1.5,
+      "moveSpeedMult": 0.6
+    }
+  ],
+  "vfxKey": "fx.scorch-ring"
+}

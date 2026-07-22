@@ -1,0 +1,189 @@
+{
+  "id": "godie-h02k",
+  "schema": "champion@1",
+  "name": "國寶級的畜生 - 熊貓",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "champ.sela",
+  "baseStats": {
+    "maxHealth": 720,
+    "healthRegen": 1.75,
+    "maxMana": 124,
+    "manaRegen": 0.88,
+    "ad": 106,
+    "ap": 0,
+    "armor": 6,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 0,
+    "healthRegen": 0.0,
+    "maxMana": 0,
+    "manaRegen": 0.0,
+    "ad": 0.0,
+    "armor": 0.0,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-h02k.q",
+      "name": "憤怒的頭槌",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 5,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "duration": 3.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "W": {
+      "id": "godie-h02k.w",
+      "name": "憤怒的菊花",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "duration": 3.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "E": {
+      "id": "godie-h02k.e",
+      "name": "憤怒的胸毛",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              0.03,
+              0.06,
+              0.09,
+              0.12
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "R": {
+      "id": "godie-h02k.r",
+      "name": "憤怒的簡諧運動",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": 25
+            }
+          ],
+          "duration": 6.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ]
+}

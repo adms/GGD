@@ -1,0 +1,38 @@
+{
+  "id": "godie-osam.q",
+  "name": "34-01 風華之爪",
+  "description": "[被動]\n0秒冷卻時間\n\n殺生丸以風華之爪攻擊，導致這一擊之中10%的傷害會擊穿對方，並造成附近敵人的傷害。",
+  "slot": "Q",
+  "castType": "self",
+  "maxRank": 5,
+  "cooldown": [
+    12.0,
+    12.0,
+    12.0,
+    12.0,
+    12.0
+  ],
+  "manaCost": [
+    60.0,
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.1
+        }
+      ],
+      "duration": 12.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

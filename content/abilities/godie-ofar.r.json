@@ -1,0 +1,41 @@
+{
+  "id": "godie-ofar.r",
+  "name": "58-04 瘋狂皮卡丘",
+  "description": "[變身]\n60秒冷卻時間\n\n再也受不了裝可愛清純路線的皮卡丘終於露出本性，變身為瘋狂癡呆惡棍皮卡，瘋狂使用鋼鐵尾巴攻擊敵人，轉變成近戰單位，攻擊速度大幅提升，被敵人攻擊時會刺激攻擊力上升5點，極限是刺激50次。生命最大暫時提昇250。持續6秒。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    90.0,
+    180.0,
+    270.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          80,
+          120,
+          160
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.48
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

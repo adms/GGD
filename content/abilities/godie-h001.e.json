@@ -1,0 +1,47 @@
+{
+  "id": "godie-h001.e",
+  "schema": "ability@1",
+  "name": "41-03 召喚術",
+  "description": "[召喚]\n60秒冷卻時間\n\n從一具屍體中召喚5位來自地獄的僕人骷髏斧手，持續40秒。",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 5,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    200.0,
+    275.0,
+    350.0,
+    425.0,
+    500.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          5.0,
+          5.0,
+          4.0,
+          4.0,
+          3.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.015
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true
+}

@@ -1,0 +1,43 @@
+{
+  "id": "godie-u00v.w",
+  "name": "78-02 地走龍牙破",
+  "description": "[主動攻擊]\n55秒冷卻時間\n\n對付裝甲戰車時發動之必殺技，挖地道到目標上方後突襲，使該範圍受到200點傷害，並且暈眩0.1秒。",
+  "slot": "W",
+  "castType": "skillshot",
+  "maxRank": 4,
+  "cooldown": [
+    55.0,
+    55.0,
+    55.0,
+    55.0
+  ],
+  "manaCost": [
+    75.0,
+    105.0,
+    135.0,
+    165.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "imported.wave",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

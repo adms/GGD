@@ -1,0 +1,29 @@
+{
+  "id": "godie-i035",
+  "schema": "item@1",
+  "name": "海潮泰坦護盾",
+  "description": "積分獎勵\n施展需求魔力：350點\n技能冷卻時間：60秒\n\n效能\n海潮之聲\n攻擊力+8\n裝甲+2.1\n生命+175\n\n解說\n看似盾牌，實際上象徵意義大於格擋作用，能驅使附近的水元素治療周圍友軍，在3秒內回復1000點生命。",
+  "cost": 0,
+  "tier": 2,
+  "tags": [
+    "wc3-import"
+  ],
+  "modifiers": [
+    {
+      "stat": "ad",
+      "op": "flat",
+      "value": 8
+    },
+    {
+      "stat": "maxHealth",
+      "op": "flat",
+      "value": 175
+    },
+    {
+      "stat": "armor",
+      "op": "flat",
+      "value": 2.1
+    }
+  ],
+  "icon": "assets/icons/items/godie-i035.png"
+}

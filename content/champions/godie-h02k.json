@@ -1,0 +1,204 @@
+{
+  "id": "godie-h02k",
+  "schema": "champion@1",
+  "name": "國寶級的畜生 - 熊貓",
+  "description": "故事：\n來自四川的熊貓，經歷過四川的地震以後，流落到馬戲團賣藝，雖然自稱賣藝不賣身，但是為了生活還是常常到228公園去，而支持他苟延殘喘活下來的動力，就是希望在有生之年能拍一張彩色的照片。\n(出自:去死團原創)\n\n推薦玩家 : 人品爆發\n上手度 : 殘\n\n角色成長：\n力量 + 1~4\n敏捷 + 1~2\n智慧 + 0~1\n基礎跑速 305\n\n可學習的技能：\n憤怒的門牙、憤怒的菊花、憤怒的胸毛、憤怒的簡諧運動",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "champ.skin.barbarian",
+  "baseStats": {
+    "maxHealth": 720,
+    "healthRegen": 1.75,
+    "maxMana": 124,
+    "manaRegen": 0.88,
+    "ad": 106,
+    "ap": 0,
+    "armor": 6,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 0,
+    "healthRegen": 0.0,
+    "maxMana": 0,
+    "manaRegen": 0.0,
+    "ad": 0.0,
+    "armor": 0.0,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-h02k.q",
+      "name": "89-01 憤怒的頭槌",
+      "description": "[被動]\n0秒冷卻時間\n\n當熊貓憤怒到極點的時候將會使出致命殺傷力的頭槌攻擊，但是牠總是忘記有這招，攻擊時有5%機率想起頭槌攻擊，造成111點破壞力，並將敵人震昏0.5秒。",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 5,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "duration": 3.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "W": {
+      "id": "godie-h02k.w",
+      "name": "89-02 憤怒的菊花",
+      "description": "[被動]\n0秒冷卻時間\n\n當敵人攻擊熊貓的時候，有3%機率會讓熊貓想起四川地震牠剛好在撇條的痛苦，會胡亂噴放排泄物使敵人造成癱瘓，累積到一定次數會讓臉色難看的熊貓一洩千里。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "duration": 3.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "E": {
+      "id": "godie-h02k.e",
+      "name": "89-03 憤怒的胸毛",
+      "description": "[輔助]\n0秒冷卻時間\n\n傳說中拔下熊貓的一根胸毛，也就是熊貓胸毛，可以讓胸毛..是熊貓復活，這份刺激的快感也讓熊貓行動加速及提升全能力，並且隨機爆炸，但是熊貓還是常常忘記這回事，只有4%機率會想起。",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "value": 0.04
+            },
+            {
+              "stat": "ad",
+              "op": "flat",
+              "value": 10
+            },
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 0.04
+            }
+          ],
+          "duration": 12.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "R": {
+      "id": "godie-h02k.r",
+      "name": "89-04 憤怒的簡諧運動",
+      "description": "[被動]\n0秒冷卻時間\n\n[我心中有個夢...] 牠這樣說著，雖然牠搞不清楚是是夢遺還是夢三小，但是每當牠想起的時候，手掌就會緊握不停揮動，攻擊時有1%機率將攻速提升到最高，並且擁有8%物理迴避。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": 25
+            }
+          ],
+          "duration": 6.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin"
+  ],
+  "exAbility": "godie-h02k.ex"
+}

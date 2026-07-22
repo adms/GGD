@@ -1,0 +1,82 @@
+{
+  "id": "godie-holyawakening-p5",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.05,
+    "angleDeg": 1.0
+  },
+  "mode": "continuous",
+  "rate": 30.0,
+  "lifetimeSec": {
+    "min": 1.0,
+    "max": 1.0
+  },
+  "size": {
+    "start": 1.403,
+    "end": 3.825
+  },
+  "color": {
+    "start": [
+      1.0,
+      1.0,
+      1.0,
+      0.529
+    ],
+    "end": [
+      1.0,
+      1.0,
+      1.0,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.529
+      ]
+    ],
+    [
+      0.5,
+      [
+        0.125,
+        0.455,
+        0.882,
+        0.333
+      ]
+    ],
+    [
+      1.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      1.403
+    ],
+    [
+      0.5,
+      2.561
+    ],
+    [
+      1,
+      3.825
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/light_02.png",
+  "speed": {
+    "min": 4.167,
+    "max": 12.501
+  }
+}

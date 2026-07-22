@@ -1,0 +1,51 @@
+{
+  "id": "godie-ekee.e",
+  "name": "93-03 這次考試很簡單",
+  "description": "[輔助]\n50秒冷卻時間\n\n小考的時候叫獸都會跟學生說考試很簡單，讓學生放鬆戒心，導致發生致命的錯誤，暫時抽取目標現有生命及瑪那值10%，並於8秒後歸還。",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    50.0,
+    60.0,
+    70.0,
+    80.0
+  ],
+  "manaCost": [
+    200.0,
+    320.0,
+    440.0,
+    560.0
+  ],
+  "range": 9.17,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          100.0,
+          200.0,
+          300.0,
+          400.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow40",
+      "duration": 8.0,
+      "moveSpeedMult": 0.6
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "radius": 1.5,
+  "schema": "ability@1"
+}

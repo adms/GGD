@@ -1,0 +1,42 @@
+{
+  "id": "godie-e002.w",
+  "name": "20-01 風王結界",
+  "description": "開啟風王結界，每次攻擊消耗 30法力，對目標造成額外10+力量*1倍的傷害，此為法球效應。",
+  "slot": "W",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    12.0,
+    12.0,
+    12.0
+  ],
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          160.0,
+          160.0,
+          160.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.72
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "radius": 3.67,
+  "schema": "ability@1"
+}

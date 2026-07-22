@@ -1,0 +1,43 @@
+{
+  "id": "godie-ntin.e",
+  "name": "23-03 雷牙一閃˙雷牙烈霸",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n高速的儀式魔法產生落雷，刀身積蓄了能源之後，在揮刀同時將自分魔力連同魔力彈全部一併放出，造成一直線敵人450點傷害。",
+  "slot": "E",
+  "castType": "skillshot",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    150.0,
+    220.0,
+    290.0,
+    360.0
+  ],
+  "range": 13.75,
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "imported.wave",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              450.0,
+              660.0,
+              870.0,
+              1080.0
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

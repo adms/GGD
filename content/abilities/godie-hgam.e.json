@@ -1,0 +1,44 @@
+{
+  "id": "godie-hgam.e",
+  "name": "90-03 藤鞭",
+  "description": "[輔助]\n45秒冷卻時間\n\n指定目標區域，1秒後將位於該區域上的所有單位拉到身旁，若受作用的目標是敵人則會給予350點傷害。",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "manaCost": [
+    125.0,
+    200.0,
+    275.0,
+    350.0
+  ],
+  "range": 9.17,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          350,
+          500,
+          650,
+          800
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.root-snare",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

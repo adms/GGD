@@ -1,0 +1,50 @@
+{
+  "id": "godie-hpal.w",
+  "name": "35-02 石絲",
+  "description": "[主動攻擊]\n25秒冷卻時間\n\n使生物短時間內不能活動，使敵身體硬化0.75秒，每秒承受50點傷害。",
+  "slot": "W",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    25.0,
+    25.0,
+    25.0,
+    25.0
+  ],
+  "manaCost": [
+    110.0,
+    145.0,
+    180.0,
+    215.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          75.0,
+          75.0,
+          75.0,
+          75.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.225
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "root",
+      "duration": 0.75,
+      "root": true
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

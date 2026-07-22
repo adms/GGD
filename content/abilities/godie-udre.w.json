@@ -1,0 +1,51 @@
+{
+  "id": "godie-udre.w",
+  "name": "11-02 虎狩獵",
+  "description": "[主動傷害]\n45秒冷卻時間\n\n由背負著2把刀的型態下揮出「斬擊」系招式。據說名稱的由來是因為其傷痕簡直好像老虎的條紋一樣。給予多個對手250傷害並擊暈對手1.25秒。",
+  "slot": "W",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "manaCost": [
+    75.0,
+    100.0,
+    125.0,
+    150.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          250.0,
+          325.0,
+          400.0,
+          475.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "burnstun",
+      "duration": 0.8,
+      "stun": true
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "radius": 3.67,
+  "schema": "ability@1"
+}

@@ -1,0 +1,51 @@
+{
+  "id": "godie-e012.e",
+  "name": "47-03 九頭龍閃",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n使出飛天御劍流快速拔刀術，擊退前方範圍敵人並造成目標暫時性的速度減緩，附加連續九次共200+75*9點傷害。",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    120.0,
+    180.0,
+    240.0,
+    300.0
+  ],
+  "range": 6.42,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          9.0,
+          9.0,
+          9.0,
+          9.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.027
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow25",
+      "duration": 1.5,
+      "moveSpeedMult": 0.6
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "radius": 6.0,
+  "schema": "ability@1"
+}

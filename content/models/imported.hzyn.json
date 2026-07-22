@@ -1,0 +1,67 @@
+{
+  "id": "imported.hzyn",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/hzyn.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Stand Channel",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Foot Right": {
+      "x": -0.0188,
+      "y": 0.0897,
+      "z": 0.137
+    },
+    "Foot Left": {
+      "x": -0.0188,
+      "y": 0.0897,
+      "z": -0.1285
+    },
+    "Hand Left": {
+      "x": 0.0034,
+      "y": 0.8977,
+      "z": -0.3704
+    },
+    "Overhead": {
+      "x": -0.0188,
+      "y": 1.6929,
+      "z": 0.0019
+    },
+    "Head": {
+      "x": -0.0188,
+      "y": 1.5017,
+      "z": 0.0019
+    },
+    "Weapon": {
+      "x": 1.0949,
+      "y": 0.8603,
+      "z": 0.3558
+    },
+    "Hand Right": {
+      "x": 0.0034,
+      "y": 0.8977,
+      "z": 0.3558
+    },
+    "Chest": {
+      "x": -0.0188,
+      "y": 1.2528,
+      "z": 0.0019
+    },
+    "feet": {
+      "x": -0.0188,
+      "y": 0.0897,
+      "z": 0.0019
+    },
+    "Origin": {
+      "x": -0.0188,
+      "y": 0.0188,
+      "z": 0.0019
+    }
+  }
+}

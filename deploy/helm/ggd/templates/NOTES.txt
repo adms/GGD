@@ -1,0 +1,15 @@
+GGD deployed.
+
+Access the edge locally:
+
+  kubectl port-forward svc/{{ .Release.Name }}-edge 8080:{{ .Values.edge.port }}
+
+Then:
+  client   http://localhost:8080/
+  editor   http://localhost:8080/editor/
+  API      http://localhost:8080/api/
+{{- if .Values.dev.enabled }}
+  content  http://localhost:8080/content-api/   (DEV profile)
+{{- end }}
+
+Profiles: dev.enabled={{ .Values.dev.enabled }}  test.enabled={{ .Values.test.enabled }}  appEnv={{ .Values.appEnv }}

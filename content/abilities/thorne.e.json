@@ -1,0 +1,58 @@
+{
+  "id": "thorne.e",
+  "schema": "ability@1",
+  "name": "Root Snare",
+  "slot": "E",
+  "castType": "skillshot",
+  "maxRank": 5,
+  "cooldown": [
+    13,
+    12,
+    11,
+    10,
+    9
+  ],
+  "manaCost": [
+    60,
+    65,
+    70,
+    75,
+    80
+  ],
+  "range": 10,
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "thorne.e.thorn",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "flat": 20,
+            "perRank": [
+              40,
+              70,
+              100,
+              130,
+              160
+            ],
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.6
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "root",
+          "duration": 1.25,
+          "root": true
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.root-snare"
+}

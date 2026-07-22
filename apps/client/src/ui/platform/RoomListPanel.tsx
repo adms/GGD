@@ -1,0 +1,184 @@
+/**
+ * RoomListPanel — open room browser (poll /lobby/rooms), create-room dialog
+ * (name / mode / bot difficulty / localPlayers for future couch play) and the
+ * join-by-code input for invite tokens.
+ */
+import { useEffect, useState } from "react";
+import { useApp } from "./store";
+import { Btn, TextInput, Panel, Badge, ACCENT, OK } from "./widgets";
+import { ARENA_OPTIONS, DEFAULT_MAP_ID } from "./maps";
+import { TEXT_DIM, TEXT_MAIN } from "../theme";
+
+const ROOM_POLL_MS = 5000;
+
+function CreateRoomDialog(props: { onClose: () => void }): React.JSX.Element {
+  const createRoom = useApp((s) => s.createRoom);
+  const [name, setName] = useState("");
+  const [difficulty, setDifficulty] = useState("normal");
+  const [mapId, setMapId] = useState(DEFAULT_MAP_ID);
+  const [localPlayers, setLocalPlayers] = useState(1);
+
+  const selStyle: React.CSSProperties = {
+    padding: "8px 10px",
+    borderRadius: 8,
+    border: "1px solid #2c3448",
+    background: "#10141f",
+    color: TEXT_MAIN,
+    fontSize: 13,
+    width: "100%",
+  };
+
+  return (
+    <div
+      style={{
+        position: "absolute",
+        inset: 0,
+        background: "rgba(4,6,10,0.7)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        zIndex: 30,
+        pointerEvents: "auto",
+      }}
+    >
+      <Panel title="Create room" style={{ width: 320 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <TextInput value={name} onChange={setName} placeholder="room name" autoFocus />
+          <div>
+            <div style={{ fontSize: 11, color: TEXT_DIM, marginBottom: 3 }}>Mode</div>
+            <select style={selStyle} value="PairedDuels" onChange={() => undefined}>
+              <option value="PairedDuels">Paired Duels (3v3v3v3)</option>
+            </select>
+          </div>
+          <div>
+            <div style={{ fontSize: 11, color: TEXT_DIM, marginBottom: 3 }}>Arena</div>
+            <select style={selStyle} value={mapId} onChange={(e) => setMapId(e.target.value)}>
+              {ARENA_OPTIONS.map((m) => (
+                <option key={m.id} value={m.id}>
+                  {m.label}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <div style={{ fontSize: 11, color: TEXT_DIM, marginBottom: 3 }}>
+              Bot fill — empty seats are auto-filled with bots
+            </div>
+            <select style={selStyle} value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
+              <option value="easy">easy bots</option>
+              <option value="normal">normal bots</option>
+              <option value="hard">hard bots</option>
+            </select>
+          </div>
+          <div>
+            <div style={{ fontSize: 11, color: TEXT_DIM, marginBottom: 3 }}>
+              Local players (couch co-op — coming soon)
+            </div>
+            <input
+              type="number"
+              min={1}
+              max={1}
+              value={localPlayers}
+              onChange={(e) => setLocalPlayers(Math.max(1, Math.min(1, Number(e.target.value) || 1)))}
+              style={{ ...selStyle, boxSizing: "border-box" }}
+            />
+          </div>
+          <div style={{ display: "flex", gap: 8, marginTop: 4 }}>
+            <Btn
+              kind="primary"
+              style={{ flex: 1 }}
+              onClick={() => {
+                void createRoom(name.trim() || "New Room", difficulty, mapId);
+                props.onClose();
+              }}
+            >
+              Create
+            </Btn>
+            <Btn onClick={props.onClose}>Cancel</Btn>
+          </div>
+        </div>
+      </Panel>
+    </div>
+  );
+}
+
+export function RoomListPanel(): React.JSX.Element {
+  const rooms = useApp((s) => s.rooms);
+  const refreshRooms = useApp((s) => s.refreshRooms);
+  const joinRoom = useApp((s) => s.joinRoom);
+  const joinByCode = useApp((s) => s.joinByCode);
+  const [creating, setCreating] = useState(false);
+  const [code, setCode] = useState("");
+
+  useEffect(() => {
+    void refreshRooms();
+    const t = setInterval(() => void refreshRooms(), ROOM_POLL_MS);
+    return () => clearInterval(t);
+  }, [refreshRooms]);
+
+  const submitCode = (): void => {
+    if (!code.trim()) return;
+    void joinByCode(code);
+    setCode("");
+  };
+
+  return (
+    <Panel title="Rooms" style={{ flex: 1, minHeight: 0 }}>
+      <div style={{ display: "flex", gap: 8, marginBottom: 10 }}>
+        <Btn kind="primary" onClick={() => setCreating(true)}>
+          Create room
+        </Btn>
+        <div style={{ flex: 1 }} />
+        <TextInput
+          value={code}
+          onChange={setCode}
+          placeholder="invite code"
+          onEnter={submitCode}
+          style={{ width: 160 }}
+        />
+        <Btn small onClick={submitCode} style={{ flexShrink: 0 }}>
+          Join by code
+        </Btn>
+      </div>
+
+      <div style={{ flex: 1, overflowY: "auto", minHeight: 0 }}>
+        {rooms.length === 0 && (
+          <div style={{ fontSize: 12, color: TEXT_DIM, padding: 8 }}>
+            No open rooms — create one and invite your friends.
+          </div>
+        )}
+        {rooms.map((r) => (
+          <div
+            key={r.id}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              padding: "8px 10px",
+              marginBottom: 6,
+              borderRadius: 8,
+              background: "#141926",
+              border: "1px solid #232b3d",
+            }}
+          >
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ fontSize: 14, fontWeight: 600, color: TEXT_MAIN, overflow: "hidden", textOverflow: "ellipsis" }}>
+                {r.name}
+              </div>
+              <div style={{ fontSize: 11, color: TEXT_DIM }}>
+                {r.mode} · {r.botDifficulty} bots
+              </div>
+            </div>
+            <Badge color={r.players < r.max ? OK : ACCENT}>
+              {r.players}/{r.max}
+            </Badge>
+            <Btn small kind="primary" onClick={() => void joinRoom(r.id)}>
+              Join
+            </Btn>
+          </div>
+        ))}
+      </div>
+      {creating && <CreateRoomDialog onClose={() => setCreating(false)} />}
+    </Panel>
+  );
+}

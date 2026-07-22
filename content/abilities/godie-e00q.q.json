@@ -1,0 +1,101 @@
+{
+  "id": "godie-e00q.q",
+  "name": "69-01 力量強化",
+  "description": "[被動]\n0秒冷卻時間\n\n不斷修煉讓自身攻防能力大幅上升，增加力量4點。",
+  "slot": "Q",
+  "castType": "self",
+  "maxRank": 5,
+  "cooldown": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0,
+  "effects": [],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1",
+  "passive": {
+    "name": "69-01 力量強化",
+    "ranks": [
+      {
+        "modifiers": [
+          {
+            "stat": "ad",
+            "op": "flat",
+            "value": 4.0
+          },
+          {
+            "stat": "maxHealth",
+            "op": "flat",
+            "value": 88.0
+          }
+        ]
+      },
+      {
+        "modifiers": [
+          {
+            "stat": "ad",
+            "op": "flat",
+            "value": 8.0
+          },
+          {
+            "stat": "maxHealth",
+            "op": "flat",
+            "value": 176.0
+          }
+        ]
+      },
+      {
+        "modifiers": [
+          {
+            "stat": "ad",
+            "op": "flat",
+            "value": 12.0
+          },
+          {
+            "stat": "maxHealth",
+            "op": "flat",
+            "value": 264.0
+          }
+        ]
+      },
+      {
+        "modifiers": [
+          {
+            "stat": "ad",
+            "op": "flat",
+            "value": 16.0
+          },
+          {
+            "stat": "maxHealth",
+            "op": "flat",
+            "value": 352.0
+          }
+        ]
+      },
+      {
+        "modifiers": [
+          {
+            "stat": "ad",
+            "op": "flat",
+            "value": 20.0
+          },
+          {
+            "stat": "maxHealth",
+            "op": "flat",
+            "value": 440.0
+          }
+        ]
+      }
+    ]
+  }
+}

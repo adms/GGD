@@ -1,0 +1,39 @@
+{
+  "id": "godie-e007.ex",
+  "name": "12-002 仙氣發勁",
+  "description": "[主動攻擊]\n30秒冷卻時間\n\n天地志狼在近身的最後必殺絕技，將身上所有的仙氣集中在手上瞬間爆發造成1800點傷害。",
+  "slot": "EX",
+  "castType": "targeted",
+  "maxRank": 1,
+  "cooldown": [
+    30.0
+  ],
+  "manaCost": [
+    360.0
+  ],
+  "range": 7.65,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "flat": 300,
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.9
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow40",
+      "duration": 3.0,
+      "moveSpeedMult": 0.6
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1",
+  "targetsEnemies": true
+}

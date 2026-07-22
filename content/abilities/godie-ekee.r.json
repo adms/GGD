@@ -1,0 +1,47 @@
+{
+  "id": "godie-ekee.r",
+  "name": "93-04 當掉",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n威力滿點的宣言，對目標造成500點精神攻擊，並使其僵直2秒。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    300.0,
+    400.0,
+    500.0
+  ],
+  "range": 7.33,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          500.0,
+          800.0,
+          1100.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "burnstun",
+      "duration": 3.0,
+      "stun": true
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

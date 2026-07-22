@@ -1,0 +1,52 @@
+{
+  "id": "sela.q",
+  "schema": "ability@1",
+  "name": "Ember Bolt",
+  "slot": "Q",
+  "castType": "skillshot",
+  "maxRank": 5,
+  "cooldown": [
+    6,
+    5.5,
+    5,
+    4.5,
+    4
+  ],
+  "manaCost": [
+    50,
+    55,
+    60,
+    65,
+    70
+  ],
+  "range": 14,
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "sela.q.bolt",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "flat": 20,
+            "perRank": [
+              60,
+              95,
+              130,
+              165,
+              200
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.7
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast"
+}

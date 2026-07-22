@@ -1,0 +1,201 @@
+{
+  "id": "godie-e00t",
+  "schema": "champion@1",
+  "name": "七夜怪談 - 貞子",
+  "role": "marksman",
+  "attackType": "ranged",
+  "modelKey": "champ.sela",
+  "baseStats": {
+    "maxHealth": 400,
+    "healthRegen": 0.95,
+    "maxMana": 388,
+    "manaRegen": 1.76,
+    "ad": 56,
+    "ap": 0,
+    "armor": 7,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.7,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 6.0
+  },
+  "growth": {
+    "maxHealth": 32,
+    "healthRegen": 0.08,
+    "maxMana": 26,
+    "manaRegen": 0.09,
+    "ad": 2.0,
+    "armor": 0.6,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-e00t.q",
+      "name": "靈體化",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        20.0,
+        20.0,
+        20.0,
+        20.0
+      ],
+      "manaCost": [
+        56.0,
+        72.0,
+        88.0,
+        104.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "value": 0.3
+            }
+          ],
+          "duration": 6.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "W": {
+      "id": "godie-e00t.w",
+      "name": "驚駭",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        55.0,
+        50.0,
+        45.0,
+        40.0
+      ],
+      "manaCost": [
+        150.0,
+        150.0,
+        150.0,
+        150.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "E": {
+      "id": "godie-e00t.e",
+      "name": "七夜怪談",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        180.0,
+        250.0,
+        320.0,
+        390.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              7.0,
+              12.0,
+              17.0,
+              22.0
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "R": {
+      "id": "godie-e00t.r",
+      "name": "靈壓震撼",
+      "slot": "R",
+      "castType": "skillshot",
+      "maxRank": 3,
+      "cooldown": [
+        10.0,
+        10.0,
+        10.0
+      ],
+      "manaCost": [
+        50.0,
+        70.0,
+        90.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.wave",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "perRank": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "burnstun",
+              "duration": 1.2,
+              "stun": true
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ]
+}

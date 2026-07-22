@@ -1,0 +1,44 @@
+{
+  "id": "godie-e007.w",
+  "name": "12-02 仙氣．採藥",
+  "description": "[輔助]\n60秒冷卻時間\n\n利用身體小周天循環恢復生命持續250點，並且除去身上任何附加法術狀態。",
+  "slot": "W",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    50.0,
+    100.0,
+    150.0,
+    200.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          80,
+          120,
+          160,
+          200
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

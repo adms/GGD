@@ -1,0 +1,44 @@
+{
+  "contentId": "godie-i000",
+  "nameZh": "丈八蛇矛",
+  "gold": 10000,
+  "kind": "effect",
+  "description": "夢幻\r\n效能\r\n攻擊力+50\r\n力量+30\r\n擴散傷害60%\r\n\r\n解說\r\n是把相當神奇的兵器，使用者智力會降低，至於原因仍然是個謎。",
+  "abilities": [
+    {
+      "rawcode": "A06Z",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A02R",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "AIs6",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A0AJ",
+      "name": null,
+      "tooltip": "風華之爪 (等級1)",
+      "description": "[被動]\r\n0秒冷卻時間\r\n\r\n殺生丸以風華之爪攻擊，導致這一擊之中10%的傷害會擊穿對方，並造成附近敵人的傷害。",
+      "dataColumns": {
+        "1": {
+          "2": 0.20000000298023224,
+          "3": 0.30000001192092896,
+          "1": 0.6000000238418579,
+          "4": 0.4000000059604645
+        }
+      }
+    }
+  ]
+}

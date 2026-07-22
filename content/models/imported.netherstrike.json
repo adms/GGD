@@ -1,0 +1,15 @@
+{
+  "id": "imported.netherstrike",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/netherstrike.glb",
+  "scale": 0.0554,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "stand",
+    "run": "stand",
+    "attack": "stand",
+    "cast": "stand",
+    "hurt": "stand",
+    "death": "stand"
+  }
+}

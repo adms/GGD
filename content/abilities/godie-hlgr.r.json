@@ -1,0 +1,40 @@
+{
+  "id": "godie-hlgr.r",
+  "name": "03-04 全彈發射",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n用為數龐大的飛彈轟炸一塊區域造成力量*2+200點傷害，並擊暈1秒。",
+  "slot": "R",
+  "castType": "skillshot",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    120.0,
+    200.0,
+    280.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "imported.wave",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              320.0,
+              470.0,
+              620.0
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

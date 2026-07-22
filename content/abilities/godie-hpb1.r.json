@@ -1,0 +1,66 @@
+{
+  "id": "godie-hpb1.r",
+  "name": "07-04 神聖結界",
+  "description": "[輔助]\n45秒冷卻時間\n\n展開一道強力的結界，可以抵擋50%的傷害，持續8秒。",
+  "slot": "R",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0
+  ],
+  "manaCost": [
+    150.0,
+    300.0,
+    450.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "armor",
+          "op": "flat",
+          "value": 25
+        }
+      ],
+      "duration": 8.0,
+      "perRank": [
+        {
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": 25
+            }
+          ],
+          "duration": 8.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": 25
+            }
+          ],
+          "duration": 12.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": 25
+            }
+          ],
+          "duration": 16.0
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.cinder-ward",
+  "schema": "ability@1"
+}

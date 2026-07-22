@@ -1,0 +1,47 @@
+{
+  "id": "godie-nplh.r",
+  "name": "16-02 阿彌陀流真空佛陀斬",
+  "description": "[主動攻擊]\n30秒冷卻時間\n\n阿彌陀流真空佛陀斬會以高超的拔刀術攻擊對方造成200點傷害並癱瘓行動1.5秒。\n在在附身合體的狀態下將會附加強化版的式神召來，給予敵人更強的傷害。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    30.0,
+    30.0,
+    30.0
+  ],
+  "manaCost": [
+    40.0,
+    60.0,
+    80.0
+  ],
+  "range": 6.42,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          200.0,
+          300.0,
+          400.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "burnstun",
+      "duration": 1.3,
+      "stun": true
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

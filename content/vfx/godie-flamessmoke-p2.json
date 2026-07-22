@@ -1,0 +1,83 @@
+{
+  "id": "godie-flamessmoke-p2",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 1.681,
+    "angleDeg": 45.0
+  },
+  "mode": "continuous",
+  "rate": 3.0,
+  "lifetimeSec": {
+    "min": 4.0,
+    "max": 4.0
+  },
+  "size": {
+    "start": 0.695,
+    "end": 0.167
+  },
+  "color": {
+    "start": [
+      1.0,
+      0.871,
+      0.0,
+      1.0
+    ],
+    "end": [
+      0.008,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        1.0,
+        0.871,
+        0.0,
+        1.0
+      ]
+    ],
+    [
+      0.5,
+      [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.008,
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.695
+    ],
+    [
+      0.5,
+      0.278
+    ],
+    [
+      1,
+      0.167
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/flare_01.png",
+  "speed": {
+    "min": 10.8898,
+    "max": 11.3342
+  },
+  "gravityY": -8.334
+}

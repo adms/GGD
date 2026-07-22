@@ -1,0 +1,232 @@
+{
+  "id": "godie-oshd",
+  "schema": "champion@1",
+  "name": "魔鬼筋肉人 - 鬼王達",
+  "description": "故事：\n雜貨店的老闆，也是傳說中的懦夫救星、中國古拳法的掌門人-綽號魔鬼筋肉人。選擇加入去死團展現他出色(!?)的武力。\n(出自:破壞之王)\n\n推薦玩家 : 輔助牽制\n上手度 : 中\n\n角色成長：\n力量 + 1.75\n敏捷 + 1.85\n智慧 + 2.70\n基礎跑速 295\n\n可學習的技能：\n鐵砂掌、鬼王流星雨、有功夫無懦夫、電光毒龍鑽",
+  "role": "marksman",
+  "attackType": "ranged",
+  "modelKey": "champ.sela",
+  "baseStats": {
+    "maxHealth": 460,
+    "healthRegen": 1.1,
+    "maxMana": 388,
+    "manaRegen": 1.76,
+    "ad": 35,
+    "ap": 0,
+    "armor": 6,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.7,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 8.2
+  },
+  "growth": {
+    "maxHealth": 35,
+    "healthRegen": 0.09,
+    "maxMana": 32,
+    "manaRegen": 0.11,
+    "ad": 1.8,
+    "armor": 0.6,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-oshd.q",
+      "name": "29-01 鐵砂掌",
+      "description": "[主動攻擊]\n20秒冷卻時間\n\n源於泗水鐵掌幫，威力無窮，任何人被擊中，五臟俱碎而導致送醫途中不治。減少護甲3點；對主要目標造成每秒25點的傷害；對附近目標造成較輕的5點傷害，持續8秒。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        20.0,
+        20.0,
+        20.0,
+        20.0
+      ],
+      "manaCost": [
+        45.0,
+        90.0,
+        135.0,
+        180.0
+      ],
+      "range": 14.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "W": {
+      "id": "godie-oshd.w",
+      "name": "29-02 鬼王流星雨",
+      "description": "[主動攻擊]\n45秒冷卻時間\n\n呼喚數波流星雨來傷害附近的敵方部隊。每一波可以造成150點傷害，可持續6秒。",
+      "slot": "W",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        150.0,
+        200.0,
+        250.0,
+        250.0
+      ],
+      "range": 0.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              450.0,
+              600.0,
+              750.0,
+              900.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "radius": 6.0
+    },
+    "E": {
+      "id": "godie-oshd.e",
+      "name": "29-03 有功夫無懦夫",
+      "description": "[輔助]\n60秒冷卻時間\n\n聽到這句話的人，驚覺只要有功夫就沒有懦夫，啟發四周人的功夫之心，而得到無敵神力，讓附近一定區域的友方部隊，統統進入無敵狀態，但是本身並非無敵，持續3秒。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        130.0,
+        195.0,
+        260.0,
+        325.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "R": {
+      "id": "godie-oshd.r",
+      "name": "29-04 電光毒龍鑽",
+      "description": "[主動攻擊]\n60秒冷卻時間\n\n源於龍虎門的王小虎，原本只是一種幻想，但是經過鬼王達的改良已經成為一種必殺技，對附近的敵方地面部隊造成合計最多700點的傷害，單體攻擊400，並擊暈他們1秒，對建築物有80%傷害。",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        150.0,
+        300.0,
+        450.0
+      ],
+      "range": 14.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              200.0,
+              400.0,
+              600.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow25",
+          "duration": 1.5,
+          "moveSpeedMult": 0.6
+        }
+      ],
+      "vfxKey": "fx.cinder-ward",
+      "targetsEnemies": true,
+      "radius": 4.58
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin"
+  ],
+  "exAbility": "godie-oshd.ex",
+  "icon": "assets/icons/champions/godie-oshd.png"
+}

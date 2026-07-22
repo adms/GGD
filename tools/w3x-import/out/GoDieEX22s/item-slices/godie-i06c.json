@@ -1,0 +1,16 @@
+{
+  "contentId": "godie-i06c",
+  "nameZh": "恐龍之斧",
+  "gold": 1050,
+  "kind": "stat",
+  "description": "效能\r\n力量+10\r\n\r\n解說\r\n揮動的時候請對準恐龍。",
+  "abilities": [
+    {
+      "rawcode": "A02S",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    }
+  ]
+}

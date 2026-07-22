@@ -1,0 +1,51 @@
+{
+  "id": "godie-h02s.e",
+  "schema": "ability@1",
+  "name": "91-03 碎心打擊",
+  "description": "[主動攻擊]\n45秒冷卻時間\n\n立即打擊目標與其周圍的盟友，對主要目標造成450點傷害，且周圍也會受到一半的傷害，並且降低部隊的移動與攻擊速度，持續2.5秒。主要目標身上每個疾病效果可使此攻擊額外造成75點的傷害。",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "manaCost": [
+    130.0,
+    170.0,
+    210.0,
+    250.0
+  ],
+  "range": 5.5,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          225.0,
+          300.0,
+          375.0,
+          450.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow40",
+      "duration": 1.5,
+      "moveSpeedMult": 0.6
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "radius": 3.67
+}

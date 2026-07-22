@@ -1,0 +1,41 @@
+{
+  "id": "godie-osam.r",
+  "name": "34-04 奧義˙蒼龍破",
+  "description": "[主動攻擊]\n45秒冷卻時間\n\n蒼龍破是殺生丸釋放自己的妖力施展出來的絕招，將妖氣集中在劍刃上揮出，傷害範圍900內一直線上的敵人，給予600點傷害。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    200.0,
+    300.0,
+    400.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          600.0,
+          900.0,
+          1200.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

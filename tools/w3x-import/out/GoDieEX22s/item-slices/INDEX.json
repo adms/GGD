@@ -1,0 +1,452 @@
+[
+  {
+    "contentId": "godie-i007",
+    "nameZh": "妖刀村正",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i007.json",
+    "kind": "stat"
+  },
+  {
+    "contentId": "godie-i068",
+    "nameZh": "瑪那寶石",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i068.json",
+    "kind": "stat"
+  },
+  {
+    "contentId": "godie-i06k",
+    "nameZh": "奧理哈魯根劍身",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i06k.json",
+    "kind": "stat"
+  },
+  {
+    "contentId": "godie-i01m",
+    "nameZh": "黑核晶",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i01m.json",
+    "kind": "stat"
+  },
+  {
+    "contentId": "godie-i00v",
+    "nameZh": "四魂之玉的碎片-荒魂",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i00v.json",
+    "kind": "stat"
+  },
+  {
+    "contentId": "godie-i00x",
+    "nameZh": "四魂之玉的碎片-幸魂",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i00x.json",
+    "kind": "stat"
+  },
+  {
+    "contentId": "godie-i00y",
+    "nameZh": "四魂之玉的碎片-奇魂",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i00y.json",
+    "kind": "stat"
+  },
+  {
+    "contentId": "godie-i010",
+    "nameZh": "熱戀魔杖",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i010.json",
+    "kind": "stat"
+  },
+  {
+    "contentId": "godie-i05r",
+    "nameZh": "吸血石",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i05r.json",
+    "kind": "stat"
+  },
+  {
+    "contentId": "godie-i05s",
+    "nameZh": "嚇人假面",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i05s.json",
+    "kind": "stat"
+  },
+  {
+    "contentId": "godie-i05t",
+    "nameZh": "定情戒指",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i05t.json",
+    "kind": "stat"
+  },
+  {
+    "contentId": "godie-i05x",
+    "nameZh": "辣妹護腕",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i05x.json",
+    "kind": "stat"
+  },
+  {
+    "contentId": "godie-i065",
+    "nameZh": null,
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i065.json",
+    "kind": "stat"
+  },
+  {
+    "contentId": "godie-i06c",
+    "nameZh": "恐龍之斧",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i06c.json",
+    "kind": "stat"
+  },
+  {
+    "contentId": "godie-i05u",
+    "nameZh": "熱舞之靴",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i05u.json",
+    "kind": "stat"
+  },
+  {
+    "contentId": "godie-i05v",
+    "nameZh": "破壞王手套",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i05v.json",
+    "kind": "stat"
+  },
+  {
+    "contentId": "godie-i06p",
+    "nameZh": null,
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i06p.json",
+    "kind": "stat"
+  },
+  {
+    "contentId": "godie-i013",
+    "nameZh": "八取武士刀",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i013.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i018",
+    "nameZh": "朗基努斯之槍",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i018.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i02x",
+    "nameZh": "斬岩刃",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i02x.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i00f",
+    "nameZh": "霸王槍",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i00f.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i00i",
+    "nameZh": "炎龍巨弩",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i00i.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i000",
+    "nameZh": "丈八蛇矛",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i000.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i06g",
+    "nameZh": "殺豬刀",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i06g.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i01g",
+    "nameZh": "貫雷槍",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i01g.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i02e",
+    "nameZh": "狂暴軒轅劍",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i02e.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i040",
+    "nameZh": "破甲槍",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i040.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i045",
+    "nameZh": "寂靜刃 - 詠月",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i045.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i04b",
+    "nameZh": "冰晶虎魄",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i04b.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i04d",
+    "nameZh": "冰晶虎魄 - 改",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i04d.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i00j",
+    "nameZh": "奇門盾甲",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i00j.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i05y",
+    "nameZh": "蜂蜜罐",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i05y.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i060",
+    "nameZh": "死之王的意志",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i060.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i063",
+    "nameZh": "防狼電擊棒",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i063.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i067",
+    "nameZh": "惡夢魔王碎片",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i067.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i06a",
+    "nameZh": "妖物碎殺牙",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i06a.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i06e",
+    "nameZh": "月牙魔杖",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i06e.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i06f",
+    "nameZh": "月神槍",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i06f.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i02r",
+    "nameZh": "奇蹟之墜",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i02r.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i00n",
+    "nameZh": "分手之鎚",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i00n.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i012",
+    "nameZh": "熾天使之弓",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i012.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i01i",
+    "nameZh": "雷神之鎚",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i01i.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i04i",
+    "nameZh": "厄夜鐮刀",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i04i.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i06b",
+    "nameZh": "思念的守護",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i06b.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i06i",
+    "nameZh": "炎神弩",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i06i.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i06o",
+    "nameZh": "血染八月",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i06o.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i027",
+    "nameZh": "光魔杖",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i027.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i00r",
+    "nameZh": "山之書",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i00r.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i00t",
+    "nameZh": "風之書",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i00t.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i01b",
+    "nameZh": "林之書",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i01b.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i01c",
+    "nameZh": "火之書",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i01c.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i03l",
+    "nameZh": "我愛一條柴",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i03l.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i03n",
+    "nameZh": "餅乾",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i03n.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i03h",
+    "nameZh": "天地崩裂魔杖",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i03h.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i001",
+    "nameZh": "出動怨念射手兵團",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i001.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i00d",
+    "nameZh": "出動戀愛戰士兵團",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i00d.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i00e",
+    "nameZh": "出動兄貴戰士兵團",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i00e.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i05g",
+    "nameZh": "世界樹的果實",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i05g.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i05z",
+    "nameZh": "出動正義射手兵團",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i05z.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i066",
+    "nameZh": "復仇之玉",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i066.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i06l",
+    "nameZh": "生肉",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i06l.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i06n",
+    "nameZh": "老衲的棒子",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i06n.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i02j",
+    "nameZh": "復仇之袍",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i02j.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i02q",
+    "nameZh": "澤之書",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i02q.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i02t",
+    "nameZh": "盾甲天書",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i02t.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i030",
+    "nameZh": "黑色魔書",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i030.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i038",
+    "nameZh": "嗜血邪書",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i038.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i05w",
+    "nameZh": "觀音菩薩護身符",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i05w.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i06m",
+    "nameZh": "真知之石",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i06m.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i01a",
+    "nameZh": "好像有毒的生肉",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i01a.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i054",
+    "nameZh": "認領寵物",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i054.json",
+    "kind": "effect"
+  },
+  {
+    "contentId": "godie-i00o",
+    "nameZh": "金雞蛋",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i00o.json",
+    "kind": "skip"
+  },
+  {
+    "contentId": "godie-i04j",
+    "nameZh": "金幣(寶箱)",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i04j.json",
+    "kind": "skip"
+  },
+  {
+    "contentId": "godie-i037",
+    "nameZh": "隱密介紹信",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i037.json",
+    "kind": "skip"
+  },
+  {
+    "contentId": "godie-i056",
+    "nameZh": "交換寵物",
+    "sliceFile": "tools/w3x-import/out/GoDieEX22s/item-slices/godie-i056.json",
+    "kind": "skip"
+  }
+]

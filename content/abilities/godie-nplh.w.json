@@ -1,0 +1,44 @@
+{
+  "id": "godie-nplh.w",
+  "name": "16-01 超．占事略決",
+  "description": "[魔法書]\n0秒冷卻時間\n\n內隱藏著許多失傳的法術。\n等級一可習得天雷 (主動攻擊)",
+  "slot": "W",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    12.0,
+    12.0,
+    12.0,
+    12.0
+  ],
+  "manaCost": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          80,
+          120,
+          160,
+          200
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

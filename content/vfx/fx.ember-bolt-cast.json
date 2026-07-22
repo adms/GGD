@@ -1,0 +1,39 @@
+{
+  "id": "fx.ember-bolt-cast",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "point"
+  },
+  "mode": "burst",
+  "burstCount": 48,
+  "lifetimeSec": {
+    "min": 0.15,
+    "max": 0.4
+  },
+  "size": {
+    "start": 0.7,
+    "end": 0
+  },
+  "sizeStops": [
+    [0, 0.32],
+    [0.12, 0.7],
+    [1, 0]
+  ],
+  "color": {
+    "start": [1, 0.6, 0.2, 1],
+    "end": [1, 0.2, 0.05, 0]
+  },
+  "colorStops": [
+    [0, [1, 1, 1, 1]],
+    [0.15, [1, 0.6, 0.2, 1]],
+    [0.53, [0.35, 0.21, 0.07, 0.35]],
+    [1, [0, 0, 0, 0]]
+  ],
+  "speed": {
+    "min": 3.5,
+    "max": 8
+  },
+  "gravityY": -6,
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/magic_01.png"
+}

@@ -1,0 +1,44 @@
+{
+  "contentId": "godie-i01g",
+  "nameZh": "貫雷槍",
+  "gold": 4300,
+  "kind": "effect",
+  "description": "武器\r\n效能\r\n10%機率淨化（法球）\r\n力量、敏捷+10\r\n攻擊力+25\r\n\r\n\r\n解說\r\n光之神-盧烏所持有的光之神槍，這支槍象徵其本身力量-太陽光以及天空的閃電。不管面對多遙遠的敵人，都可放射出死亡的光芒。",
+  "abilities": [
+    {
+      "rawcode": "A0XF",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {
+        "2": {
+          "1": 15.0
+        },
+        "4": {
+          "1": 15.0
+        }
+      }
+    },
+    {
+      "rawcode": "A0WX",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A02S",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A0HP",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    }
+  ]
+}

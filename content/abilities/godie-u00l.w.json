@@ -1,0 +1,44 @@
+{
+  "id": "godie-u00l.w",
+  "name": "25-02 北斗神拳秘訣轉龍呼吸法",
+  "description": "[被動]\n0秒冷卻時間\n\n有7%的機會閃避攻擊，而且有12%機會擊中敵人祕穴造成正常攻擊1.5倍的傷害。",
+  "slot": "W",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    12.0,
+    12.0,
+    12.0,
+    12.0
+  ],
+  "manaCost": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          12.0,
+          15.0,
+          18.0,
+          21.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.063
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

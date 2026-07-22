@@ -1,0 +1,47 @@
+{
+  "id": "godie-e00q.w",
+  "name": "69-02 黑泥召喚",
+  "description": "[主動攻擊]\n20秒冷卻時間\n\n召喚聖杯黑泥攻擊敵人。黑泥擁有極快的攻擊速度，可造成30-50點法術傷害，並且使攻擊目標減緩移動速度，持續8秒。",
+  "slot": "W",
+  "castType": "targeted",
+  "maxRank": 5,
+  "cooldown": [
+    20.0,
+    14.0,
+    8.0,
+    8.0,
+    8.0
+  ],
+  "manaCost": [
+    130.0,
+    200.0,
+    270.0,
+    270.0,
+    270.0
+  ],
+  "range": 14.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          80,
+          120,
+          160,
+          200,
+          240
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.72
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

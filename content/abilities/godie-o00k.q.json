@@ -1,0 +1,48 @@
+{
+  "id": "godie-o00k.q",
+  "name": "86-01 十萬伏特",
+  "description": "[主動攻擊]\n35秒冷卻時間\n\n皮卡的得意絕招，使出電擊攻擊6個敵人，每個敵人傷害175。",
+  "slot": "Q",
+  "castType": "ground",
+  "maxRank": 5,
+  "cooldown": [
+    35.0,
+    35.0,
+    35.0,
+    35.0,
+    35.0
+  ],
+  "manaCost": [
+    55.0,
+    85.0,
+    115.0,
+    115.0,
+    115.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          175.0,
+          275.0,
+          375.0,
+          375.0,
+          375.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "radius": 6.42
+}

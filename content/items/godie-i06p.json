@@ -1,0 +1,23 @@
+{
+  "id": "godie-i06p",
+  "schema": "item@1",
+  "name": "godie-i06p",
+  "description": "效能\n裝甲+3\n攻擊速度+20%\n\n解說\n血羽是烏鴉族的聖物，也是代代烏鴉族長的靈魂結晶。",
+  "cost": 1250,
+  "tier": 2,
+  "modifiers": [
+    {
+      "stat": "armor",
+      "op": "flat",
+      "value": 3
+    },
+    {
+      "stat": "as",
+      "op": "pctAdd",
+      "value": 0.2
+    }
+  ],
+  "tags": [
+    "wc3-import"
+  ]
+}

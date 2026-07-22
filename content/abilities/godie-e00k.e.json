@@ -1,0 +1,45 @@
+{
+  "id": "godie-e00k.e",
+  "name": "19-03 瞬切百殺",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n當安云開始殺戮時，刀子動的比反射神經還快，將會對附近的敵人進行斬殺，給予(40+敏捷*1)傷害，共八次斬殺。\n\n(迴切1秒內瞬切百殺附加力量*0.5傷害)",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    75.0,
+    150.0,
+    225.0,
+    300.0
+  ],
+  "range": 8.25,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          40.0,
+          90.0,
+          140.0,
+          190.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.57
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "radius": 6.0,
+  "schema": "ability@1"
+}

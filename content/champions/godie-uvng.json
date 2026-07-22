@@ -1,0 +1,234 @@
+{
+  "id": "godie-uvng",
+  "schema": "champion@1",
+  "name": "邪眼師 - 飛影",
+  "description": "故事：\n在魔界中有名的盜賊妖怪，除了是一位邪王炎殺拳的高手之外，也是一位用劍的高手。為了尋找妹妹雪菜，而流浪於人間界與魔界。\n(出自:幽遊白書)\n\n推薦玩家 : PK殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.95\n敏捷 + 2.65\n智慧 + 1.65\n基礎跑速 310\n\n可學習的技能：\n邪王炎殺劍、邪王炎殺煉獄焦、邪王炎殺黑龍波、黑龍波吸收",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "imported.herohehi",
+  "attackDamagePoint": 0.3,
+  "baseStats": {
+    "maxHealth": 420,
+    "healthRegen": 1.0,
+    "maxMana": 268,
+    "manaRegen": 1.36,
+    "ad": 37,
+    "ap": 0,
+    "armor": 12,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.9,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 39,
+    "healthRegen": 0.1,
+    "maxMana": 20,
+    "manaRegen": 0.07,
+    "ad": 1.6,
+    "armor": 0.8,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-uvng.q",
+      "name": "38-01 邪王炎殺劍",
+      "description": "[主動攻擊]\n45秒冷卻時間\n\n招喚魔界火炎盤旋在劍上，使劍在瞬間變得鋒利無比，衝刺砍殺一直線上的敵人直到撞到為止，砍殺造成250+敏捷*1傷害。\n\n邪眼發動期間，可增加威力(敏捷*2)",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        50.0,
+        50.0
+      ],
+      "manaCost": [
+        85.0,
+        115.0,
+        145.0,
+        275.0,
+        275.0
+      ],
+      "range": 11.92,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200,
+              240
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.firestorm",
+      "targetsEnemies": true
+    },
+    "W": {
+      "id": "godie-uvng.w",
+      "name": "38-02 邪王炎殺煉獄焦",
+      "description": "[主動攻擊]\n25秒冷卻時間\n\n將火燄集中於拳頭上，以連續拳頭攻擊區域內的敵人造成250傷害。\n\n邪眼發動期間，可增加威力(敏捷*2)",
+      "slot": "W",
+      "castType": "ground",
+      "maxRank": 5,
+      "cooldown": [
+        25.0,
+        25.0,
+        25.0,
+        25.0,
+        25.0
+      ],
+      "manaCost": [
+        75.0,
+        125.0,
+        175.0,
+        175.0,
+        175.0
+      ],
+      "range": 8.25,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.005
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow25",
+          "duration": 1.5,
+          "moveSpeedMult": 0.6
+        }
+      ],
+      "vfxKey": "fx.firestorm",
+      "targetsEnemies": true,
+      "radius": 6.0
+    },
+    "E": {
+      "id": "godie-uvng.e",
+      "name": "38-03 邪王炎殺黑龍波",
+      "description": "[主動攻擊]\n60秒冷卻時間\n\n將飛影手上封印的魔界生物炎殺黑龍釋放，凝聚到極限使出邪王奧義黑龍波，造成650傷害將敵方燒得只剩影子。",
+      "slot": "E",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        215.0,
+        300.0,
+        385.0,
+        470.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.wave",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "perRank": [
+                  1.0,
+                  1.0,
+                  1.0,
+                  1.0
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.firestorm"
+    },
+    "R": {
+      "id": "godie-uvng.r",
+      "name": "38-04 黑龍波吸收",
+      "description": "[輔助]\n60秒冷卻時間\n\n吸收黑龍波的妖力，使支配魔界火焰的妖術師獲得爆發性的能力成長，但是會持續消耗魔力10點。\n增加100%傷害，每使用一次敏捷永久增加1點，持續10秒。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        100.0,
+        200.0,
+        300.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ad",
+              "op": "pctAdd",
+              "value": 1.0
+            },
+            {
+              "stat": "manaRegen",
+              "op": "flat",
+              "value": -10
+            }
+          ],
+          "duration": 10.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ],
+  "exAbility": "godie-uvng.ex",
+  "icon": "assets/icons/champions/godie-uvng.png"
+}

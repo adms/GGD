@@ -1,0 +1,46 @@
+{
+  "id": "godie-hvwd.r",
+  "name": "02-04 百鬼夜行",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n招換6位式神，吸取附近敵軍部隊的生命能量。當他們回到身邊時，他們會將從犧牲者身上吸取的生命能量，用於補充生命值 。持續時間8秒。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    120.0,
+    210.0,
+    300.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          6.0,
+          12.0,
+          18.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.054
+          }
+        ]
+      }
+    },
+    {
+      "kind": "spawnVfx",
+      "vfxId": "godie-aquaspikeversion2-p0",
+      "at": "self"
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "godie-obla.w",
+  "name": "33-02 吃完的口香糖",
+  "description": "[輔助]\n45秒冷卻時間\n\n真正的高手能將身邊任何道具變成兇器，口中吐出口香糖黏住敵方腳底，導致指定的敵方部隊受到囚禁，在2秒中無法移動。空中部隊如果在地面時，一樣會受到口香糖的影響。",
+  "slot": "W",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "manaCost": [
+    100.0,
+    150.0,
+    200.0,
+    250.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "applyStatus",
+      "statusId": "root",
+      "duration": 2.0,
+      "root": true
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

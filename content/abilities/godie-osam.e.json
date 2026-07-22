@@ -1,0 +1,44 @@
+{
+  "id": "godie-osam.e",
+  "name": "34-03 爆碎丸",
+  "description": "[被動]\n0秒冷卻時間\n\n新生的爆碎丸，有15%的機會，對目標敵人造成90點額外傷害，並擊昏敵人0.5秒。",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    12.0,
+    12.0,
+    12.0,
+    12.0
+  ],
+  "manaCost": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          15.0,
+          15.0,
+          15.0,
+          15.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.045
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

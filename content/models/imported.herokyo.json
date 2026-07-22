@@ -1,0 +1,62 @@
+{
+  "id": "imported.herokyo",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/herokyo.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Spell",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Hand Right": {
+      "x": -0.0031,
+      "y": 0.8828,
+      "z": 0.5235
+    },
+    "Weapon": {
+      "x": 0.9617,
+      "y": 0.8838,
+      "z": 0.4884
+    },
+    "Hand Left": {
+      "x": 0.0258,
+      "y": 0.886,
+      "z": -0.539
+    },
+    "Head -": {
+      "x": 0.0444,
+      "y": 1.7139,
+      "z": -0.0012
+    },
+    "Chest": {
+      "x": -0.0318,
+      "y": 1.0933,
+      "z": -0.0018
+    },
+    "Foot Right": {
+      "x": 0.0183,
+      "y": 0.1874,
+      "z": 0.2163
+    },
+    "Foot Left": {
+      "x": 0.0212,
+      "y": 0.1861,
+      "z": -0.2408
+    },
+    "Origin": {
+      "x": 0.0,
+      "y": -0.0021,
+      "z": 0.0
+    },
+    "Overhead": {
+      "x": 0.0036,
+      "y": 1.7383,
+      "z": -0.0012
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "id": "godie-u034.w",
+  "name": "06-02 山形修煉-變",
+  "description": "[被動]\n0秒冷卻時間\n\n攻擊時有25%機率會發動變化系能力，將念化為刀刃攻擊目標造成75點額外傷害。並增強「猜猜拳-剪刀」的威力為350。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    12.0,
+    12.0,
+    12.0,
+    12.0
+  ],
+  "manaCost": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "flat",
+          "value": 0.25
+        }
+      ],
+      "duration": 3.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "godie-i01o",
+  "schema": "item@1",
+  "name": "死神裝束",
+  "description": "防具\n效能\n攻擊力+2.8\n生命+55\n魔力+33\n攻擊速度+33.3%\n移動速度+0.333\n\n解說\n棲息在月之海死神一族的權力象徵，是統領級人物才能裝備的戰甲",
+  "cost": 1200,
+  "tier": 2,
+  "tags": [
+    "wc3-import"
+  ],
+  "modifiers": [
+    {
+      "stat": "as",
+      "op": "pctAdd",
+      "value": 0.333
+    },
+    {
+      "stat": "maxHealth",
+      "op": "flat",
+      "value": 55
+    },
+    {
+      "stat": "ad",
+      "op": "flat",
+      "value": 2.8
+    },
+    {
+      "stat": "maxMana",
+      "op": "flat",
+      "value": 33
+    },
+    {
+      "stat": "ms",
+      "op": "flat",
+      "value": 0.333
+    }
+  ]
+}

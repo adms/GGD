@@ -1,0 +1,17 @@
+{
+  "id": "ember-rod",
+  "schema": "item@1",
+  "name": "Ember Rod",
+  "cost": 300,
+  "tier": 1,
+  "modifiers": [
+    {
+      "stat": "ap",
+      "op": "flat",
+      "value": 31.6
+    }
+  ],
+  "tags": [
+    "ap"
+  ]
+}

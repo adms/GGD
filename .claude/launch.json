@@ -1,0 +1,166 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "testrunner",
+      "runtimeExecutable": "go",
+      "runtimeArgs": [
+        "-C",
+        "tools/testrunner",
+        "run",
+        "./cmd/testrunner"
+      ],
+      "port": 8799
+    },
+    {
+      "name": "game-server",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "--filter",
+        "@ggd/game-server",
+        "dev"
+      ],
+      "port": 2567
+    },
+    {
+      "name": "game-server-seam",
+      "runtimeExecutable": "env",
+      "runtimeArgs": [
+        "PLATFORM_GAME_SHARED_SECRET=devseam",
+        "pnpm",
+        "--filter",
+        "@ggd/game-server",
+        "dev"
+      ],
+      "port": 2567
+    },
+    {
+      "name": "game-server-platform",
+      "runtimeExecutable": "env",
+      "runtimeArgs": [
+        "GGD_PLATFORM_URL=http://127.0.0.1:8080",
+        "GGD_WHITELIST_BYPASS=1",
+        "pnpm",
+        "--filter",
+        "@ggd/game-server",
+        "dev"
+      ],
+      "port": 2567,
+      "comment": "game-server that can actually reach a LOCAL platform (the built-in default is the k8s host `platform:8080`, which never resolves on a dev box, so combat-env/curation always fail safe). Whitelist stays bypassed so the default-empty curation list cannot filter the roster to zero."
+    },
+    {
+      "name": "platform",
+      "runtimeExecutable": "env",
+      "runtimeArgs": [
+        "DATA_DIR=/private/tmp/claude-503/-Users-Takuro-GGD/fd5c26a1-0800-489d-8d4d-b674272a6efb/scratchpad/platform-data",
+        "REDIS_ADDR=127.0.0.1:6379",
+        "PLATFORM_ADDR=127.0.0.1:8080",
+        "JWT_SIGNING_SECRET=devsecret",
+        "PLATFORM_GAME_SHARED_SECRET=devseam",
+        "GAME_SERVER_ADDR=http://127.0.0.1:2567",
+        "PLATFORM_INTERNAL_URL=http://127.0.0.1:8080",
+        "go",
+        "-C",
+        "apps/platform",
+        "run",
+        "./cmd/platform"
+      ],
+      "port": 8080
+    },
+    {
+      "name": "client",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "--filter",
+        "@ggd/client",
+        "dev",
+        "--port",
+        "39527",
+        "--strictPort"
+      ],
+      "port": 39527
+    },
+    {
+      "name": "admin",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "--filter",
+        "@ggd/admin",
+        "dev"
+      ],
+      "port": 60721
+    },
+    {
+      "name": "game-server-mobile",
+      "runtimeExecutable": "env",
+      "runtimeArgs": [
+        "GAME_PORT=2599",
+        "pnpm",
+        "--filter",
+        "@ggd/game-server",
+        "dev"
+      ],
+      "port": 2599
+    },
+    {
+      "name": "client-mobile",
+      "runtimeExecutable": "env",
+      "runtimeArgs": [
+        "VITE_GAME_WS=ws://localhost:2599",
+        "pnpm",
+        "--filter",
+        "@ggd/client",
+        "dev",
+        "--port",
+        "5199",
+        "--strictPort"
+      ],
+      "port": 5199
+    },
+    {
+      "name": "test-dashboard",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "--filter",
+        "@ggd/test-dashboard",
+        "dev"
+      ],
+      "port": 5173
+    },
+    {
+      "name": "content-api",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "--filter",
+        "@ggd/content-api",
+        "dev"
+      ],
+      "port": 8787
+    },
+    {
+      "name": "editor",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "--filter",
+        "@ggd/editor",
+        "dev"
+      ],
+      "port": 5174
+    },
+    {
+      "name": "client-lan",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": [
+        "--filter",
+        "@ggd/client",
+        "dev",
+        "--port",
+        "39527",
+        "--strictPort",
+        "--host",
+        "0.0.0.0"
+      ],
+      "port": 39527
+    }
+  ]
+}

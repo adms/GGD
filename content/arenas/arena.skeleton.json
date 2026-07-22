@@ -1,0 +1,320 @@
+{
+  "id": "arena.skeleton",
+  "schema": "arena@1",
+  "name": "Skeleton Arena",
+  "zones": [
+    {
+      "id": "zone-0",
+      "center": {
+        "x": -40,
+        "z": 0
+      },
+      "boundaryRadius": 24,
+      "obstacles": [
+        {
+          "kind": "circle",
+          "center": {
+            "x": -40,
+            "z": 0
+          },
+          "radius": 2.5
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": -49,
+            "z": 8
+          },
+          "radius": 1.8
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": -31,
+            "z": -8
+          },
+          "radius": 1.8
+        }
+      ],
+      "spawns": [
+        [
+          {
+            "x": -56,
+            "z": -4
+          },
+          {
+            "x": -56,
+            "z": 0
+          },
+          {
+            "x": -56,
+            "z": 4
+          }
+        ],
+        [
+          {
+            "x": -24,
+            "z": -4
+          },
+          {
+            "x": -24,
+            "z": 0
+          },
+          {
+            "x": -24,
+            "z": 4
+          }
+        ]
+      ]
+    },
+    {
+      "id": "zone-1",
+      "center": {
+        "x": 40,
+        "z": 0
+      },
+      "boundaryRadius": 24,
+      "obstacles": [
+        {
+          "kind": "circle",
+          "center": {
+            "x": 40,
+            "z": 0
+          },
+          "radius": 2.5
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": 31,
+            "z": 8
+          },
+          "radius": 1.8
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": 49,
+            "z": -8
+          },
+          "radius": 1.8
+        }
+      ],
+      "spawns": [
+        [
+          {
+            "x": 24,
+            "z": -4
+          },
+          {
+            "x": 24,
+            "z": 0
+          },
+          {
+            "x": 24,
+            "z": 4
+          }
+        ],
+        [
+          {
+            "x": 56,
+            "z": -4
+          },
+          {
+            "x": 56,
+            "z": 0
+          },
+          {
+            "x": 56,
+            "z": 4
+          }
+        ]
+      ]
+    }
+  ],
+  "decor": [
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": -40,
+      "z": 0,
+      "rotQuarter": 0,
+      "scale": 2.5
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": -49,
+      "z": 8,
+      "rotQuarter": 0,
+      "scale": 1.8
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": -31,
+      "z": -8,
+      "rotQuarter": 0,
+      "scale": 1.8
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": -16.8,
+      "z": 0,
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": -23.6,
+      "z": 16.4,
+      "rotQuarter": 1,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": -40,
+      "z": 23.2,
+      "rotQuarter": 2,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": -56.4,
+      "z": 16.4,
+      "rotQuarter": 3,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": -63.2,
+      "z": 0,
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": -56.4,
+      "z": -16.4,
+      "rotQuarter": 1,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": -40,
+      "z": -23.2,
+      "rotQuarter": 2,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": -23.6,
+      "z": -16.4,
+      "rotQuarter": 3,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/banner_shield_blue.glb",
+      "x": -65.8,
+      "z": 0,
+      "rotQuarter": 1,
+      "scale": 1.6
+    },
+    {
+      "model": "assets/models/props/banner_shield_red.glb",
+      "x": -14.2,
+      "z": 0,
+      "rotQuarter": 3,
+      "scale": 1.6
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": 40,
+      "z": 0,
+      "rotQuarter": 0,
+      "scale": 2.5
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": 31,
+      "z": 8,
+      "rotQuarter": 0,
+      "scale": 1.8
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": 49,
+      "z": -8,
+      "rotQuarter": 0,
+      "scale": 1.8
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": 63.2,
+      "z": 0,
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": 56.4,
+      "z": 16.4,
+      "rotQuarter": 1,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": 40,
+      "z": 23.2,
+      "rotQuarter": 2,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": 23.6,
+      "z": 16.4,
+      "rotQuarter": 3,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": 16.8,
+      "z": 0,
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": 23.6,
+      "z": -16.4,
+      "rotQuarter": 1,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": 40,
+      "z": -23.2,
+      "rotQuarter": 2,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": 56.4,
+      "z": -16.4,
+      "rotQuarter": 3,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/banner_shield_green.glb",
+      "x": 14.2,
+      "z": 0,
+      "rotQuarter": 1,
+      "scale": 1.6
+    },
+    {
+      "model": "assets/models/props/banner_shield_yellow.glb",
+      "x": 65.8,
+      "z": 0,
+      "rotQuarter": 3,
+      "scale": 1.6
+    }
+  ],
+  "groundStyle": "stone"
+}

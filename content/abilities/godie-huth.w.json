@@ -1,0 +1,53 @@
+{
+  "id": "godie-huth.w",
+  "name": "28-02 把你變成餅乾",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n把低等的敵人變成餅乾，吃下餅乾可以回復體力500點，也會對目標造成250傷害。",
+  "slot": "W",
+  "castType": "targeted",
+  "maxRank": 5,
+  "cooldown": [
+    60.0,
+    50.0,
+    40.0,
+    30.0,
+    20.0
+  ],
+  "manaCost": [
+    100.0,
+    160.0,
+    220.0,
+    280.0,
+    340.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          250.0,
+          350.0,
+          450.0,
+          550.0,
+          650.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "burnstun",
+      "duration": 0.3,
+      "stun": true
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "imported.bulbasaur",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/bulbasaur.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "spell",
+    "hurt": "Stand",
+    "death": "death"
+  },
+  "attachPoints": {
+    "Head": {
+      "x": 0.9494,
+      "y": 0.5273,
+      "z": -0.0
+    },
+    "OverHead": {
+      "x": 0.7942,
+      "y": 1.8361,
+      "z": -0.0
+    },
+    "Chest": {
+      "x": 0.4865,
+      "y": 0.5351,
+      "z": -0.0
+    },
+    "Origin": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -0.0
+    }
+  }
+}

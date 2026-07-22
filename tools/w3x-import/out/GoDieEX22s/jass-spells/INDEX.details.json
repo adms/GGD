@@ -1,0 +1,2838 @@
+[
+ {
+  "rawcode": "A02Q",
+  "champ": "godie-e001",
+  "slot": "r",
+  "nameZh": "雛見澤症候群L5",
+  "abilityDoc": "content/abilities/godie-e001.r.json",
+  "championDoc": "content/champions/godie-e001.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8853
+  ]
+ },
+ {
+  "rawcode": "A02K",
+  "champ": "godie-e007",
+  "slot": "w",
+  "nameZh": "仙氣．採藥",
+  "abilityDoc": "content/abilities/godie-e007.w.json",
+  "championDoc": "content/champions/godie-e007.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A02K.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "DWv",
+    "actions": [
+     "DYv"
+    ]
+   }
+  ],
+  "sliceLines": 24,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A02W",
+  "champ": "godie-e007",
+  "slot": "e",
+  "nameZh": "破凰之心-徒手空破山",
+  "abilityDoc": "content/abilities/godie-e007.e.json",
+  "championDoc": "content/champions/godie-e007.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8793
+  ]
+ },
+ {
+  "rawcode": "A04X",
+  "champ": "godie-e007",
+  "slot": "r",
+  "nameZh": "龍氣爆發",
+  "abilityDoc": "content/abilities/godie-e007.r.json",
+  "championDoc": "content/champions/godie-e007.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A04X.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "DZv",
+    "actions": [
+     "D_v"
+    ]
+   }
+  ],
+  "sliceLines": 23,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0BH",
+  "champ": "godie-e008",
+  "slot": "w",
+  "nameZh": "火羽",
+  "abilityDoc": "content/abilities/godie-e008.w.json",
+  "championDoc": "content/champions/godie-e008.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8845
+  ]
+ },
+ {
+  "rawcode": "A0Y6",
+  "champ": "godie-e00j",
+  "slot": "w",
+  "nameZh": "大和戰氣",
+  "abilityDoc": "content/abilities/godie-e00j.w.json",
+  "championDoc": "content/champions/godie-e00j.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": []
+ },
+ {
+  "rawcode": "A0Y9",
+  "champ": "godie-e00j",
+  "slot": "r",
+  "nameZh": "藍色戰氣一百重天",
+  "abilityDoc": "content/abilities/godie-e00j.r.json",
+  "championDoc": "content/champions/godie-e00j.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0Y9.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "nPe",
+    "actions": [
+     "nse"
+    ]
+   }
+  ],
+  "sliceLines": 34,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A02Q",
+  "champ": "godie-e00n",
+  "slot": "r",
+  "nameZh": "雛見澤症候群L5",
+  "abilityDoc": "content/abilities/godie-e00n.r.json",
+  "championDoc": "content/champions/godie-e00n.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8853
+  ]
+ },
+ {
+  "rawcode": "A031",
+  "champ": "godie-e00q",
+  "slot": "q",
+  "nameZh": "力量強化",
+  "abilityDoc": "content/abilities/godie-e00q.q.json",
+  "championDoc": "content/champions/godie-e00q.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8761
+  ]
+ },
+ {
+  "rawcode": "AOsw",
+  "champ": "godie-e00q",
+  "slot": "w",
+  "nameZh": "黑泥召喚",
+  "abilityDoc": "content/abilities/godie-e00q.w.json",
+  "championDoc": "content/champions/godie-e00q.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": []
+ },
+ {
+  "rawcode": "A0FS",
+  "champ": "godie-e00q",
+  "slot": "r",
+  "nameZh": "魔力增幅",
+  "abilityDoc": "content/abilities/godie-e00q.r.json",
+  "championDoc": "content/champions/godie-e00q.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0FS.j",
+  "status": "sliced",
+  "kind": "passive",
+  "handlers": [
+   {
+    "event": "helper-ref; called from hYv (events: EVENT_PLAYER_HERO_SKILL,EVENT_PLAYER_HERO_LEVEL)",
+    "cond": null,
+    "actions": [
+     "hyv"
+    ]
+   },
+   {
+    "event": "EVENT_PLAYER_HERO_SKILL,EVENT_PLAYER_HERO_LEVEL",
+    "cond": null,
+    "actions": [
+     "hYv"
+    ]
+   }
+  ],
+  "sliceLines": 9,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0GR",
+  "champ": "godie-e00s",
+  "slot": "e",
+  "nameZh": "木束縛之術",
+  "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-e00s.json#abilities.E",
+  "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-e00s.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0GR.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "Y1v",
+    "actions": [
+     "Y4v"
+    ]
+   }
+  ],
+  "sliceLines": 35,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0I8",
+  "champ": "godie-e00t",
+  "slot": "w",
+  "nameZh": "驚駭",
+  "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-e00t.json#abilities.W",
+  "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-e00t.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0I8.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "Zgv",
+    "actions": [
+     "ZGv"
+    ]
+   }
+  ],
+  "sliceLines": 15,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0IB",
+  "champ": "godie-e00t",
+  "slot": "e",
+  "nameZh": "七夜怪談",
+  "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-e00t.json#abilities.E",
+  "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-e00t.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   9095
+  ]
+ },
+ {
+  "rawcode": "none",
+  "champ": "godie-e00u",
+  "slot": "q",
+  "status": "no-wc3-ability"
+ },
+ {
+  "rawcode": "none",
+  "champ": "godie-e00u",
+  "slot": "w",
+  "status": "no-wc3-ability"
+ },
+ {
+  "rawcode": "none",
+  "champ": "godie-e00u",
+  "slot": "e",
+  "status": "no-wc3-ability"
+ },
+ {
+  "rawcode": "none",
+  "champ": "godie-e00u",
+  "slot": "r",
+  "status": "no-wc3-ability"
+ },
+ {
+  "rawcode": "A0D6",
+  "champ": "godie-e00v",
+  "slot": "e",
+  "nameZh": "蜜汁",
+  "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-e00v.json#abilities.E",
+  "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-e00v.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0D6.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "x5e",
+    "actions": [
+     "x6e"
+    ]
+   }
+  ],
+  "sliceLines": 27,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0JG",
+  "champ": "godie-e00w",
+  "slot": "e",
+  "nameZh": "GLADIARIA ALAT",
+  "abilityDoc": "content/abilities/godie-e00w.e.json",
+  "championDoc": "content/champions/godie-e00w.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": []
+ },
+ {
+  "rawcode": "A0UB",
+  "champ": "godie-e00w",
+  "slot": "r",
+  "nameZh": "真-雷光劍",
+  "abilityDoc": "content/abilities/godie-e00w.r.json",
+  "championDoc": "content/champions/godie-e00w.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0UB.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "vZe",
+    "actions": [
+     "v_e"
+    ]
+   }
+  ],
+  "sliceLines": 35,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0JG",
+  "champ": "godie-e00x",
+  "slot": "e",
+  "nameZh": "GLADIARIA ALAT",
+  "abilityDoc": "content/abilities/godie-e00x.e.json",
+  "championDoc": "content/champions/godie-e00x.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": []
+ },
+ {
+  "rawcode": "A0UB",
+  "champ": "godie-e00x",
+  "slot": "r",
+  "nameZh": "真-雷光劍",
+  "abilityDoc": "content/abilities/godie-e00x.r.json",
+  "championDoc": "content/champions/godie-e00x.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0UB.j",
+  "status": "shared-slice",
+  "handlers": [
+   [
+    "v_e"
+   ]
+  ]
+ },
+ {
+  "rawcode": "A0GP",
+  "champ": "godie-e010",
+  "slot": "q",
+  "nameZh": "伸卡球",
+  "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-e010.json#abilities.Q",
+  "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-e010.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   9099
+  ]
+ },
+ {
+  "rawcode": "A0GR",
+  "champ": "godie-e010",
+  "slot": "e",
+  "nameZh": "木束縛之術",
+  "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-e010.json#abilities.E",
+  "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-e010.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0GR.j",
+  "status": "shared-slice",
+  "handlers": [
+   [
+    "Y4v"
+   ]
+  ]
+ },
+ {
+  "rawcode": "A013",
+  "champ": "godie-e012",
+  "slot": "q",
+  "nameZh": "飛龍閃",
+  "abilityDoc": "content/abilities/godie-e012.q.json",
+  "championDoc": "content/champions/godie-e012.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   9014
+  ]
+ },
+ {
+  "rawcode": "A0OV",
+  "champ": "godie-e015",
+  "slot": "q",
+  "nameZh": "北斗爆橘拳",
+  "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-e015.json#abilities.Q",
+  "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-e015.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0OV.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "ame",
+    "actions": [
+     "aPe"
+    ]
+   }
+  ],
+  "sliceLines": 36,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0QJ",
+  "champ": "godie-e015",
+  "slot": "e",
+  "nameZh": "珍奶顏射",
+  "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-e015.json#abilities.E",
+  "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-e015.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0QJ.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "aTe",
+    "actions": [
+     "aue"
+    ]
+   }
+  ],
+  "sliceLines": 9,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0PH",
+  "champ": "godie-h001",
+  "slot": "e",
+  "nameZh": "召喚術",
+  "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-h001.json#abilities.E",
+  "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-h001.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8984
+  ]
+ },
+ {
+  "rawcode": "A0BO",
+  "champ": "godie-h00l",
+  "slot": "q",
+  "nameZh": "科奇利族的迴旋鏢",
+  "abilityDoc": "content/abilities/godie-h00l.q.json",
+  "championDoc": "content/champions/godie-h00l.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0BO.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "wYv",
+    "actions": [
+     "w0v"
+    ]
+   }
+  ],
+  "sliceLines": 44,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "Adef",
+  "champ": "godie-h00l",
+  "slot": "e",
+  "nameZh": "海拉爾之盾的庇護",
+  "abilityDoc": "content/abilities/godie-h00l.e.json",
+  "championDoc": "content/champions/godie-h00l.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   9077
+  ]
+ },
+ {
+  "rawcode": "A0F9",
+  "champ": "godie-h00w",
+  "slot": "e",
+  "nameZh": "熱血",
+  "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-h00w.json#abilities.E",
+  "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-h00w.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8900
+  ]
+ },
+ {
+  "rawcode": "A0EW",
+  "champ": "godie-h00w",
+  "slot": "r",
+  "nameZh": "開天闢地‧洨者聖臨",
+  "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-h00w.json#abilities.R",
+  "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-h00w.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0EW.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_CAST",
+    "cond": "mFv",
+    "actions": [
+     "mgv"
+    ]
+   }
+  ],
+  "sliceLines": 20,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0LL",
+  "champ": "godie-h01n",
+  "slot": "e",
+  "nameZh": "月牙天衝",
+  "abilityDoc": "content/abilities/godie-h01n.e.json",
+  "championDoc": "content/champions/godie-h01n.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0LL.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "Ljv",
+    "actions": [
+     "Lkv"
+    ]
+   }
+  ],
+  "sliceLines": 25,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0LL",
+  "champ": "godie-h01o",
+  "slot": "e",
+  "nameZh": "月牙天衝",
+  "abilityDoc": "content/abilities/godie-h01o.e.json",
+  "championDoc": "content/champions/godie-h01o.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0LL.j",
+  "status": "shared-slice",
+  "handlers": [
+   [
+    "Lkv"
+   ]
+  ]
+ },
+ {
+  "rawcode": "A0N0",
+  "champ": "godie-h01u",
+  "slot": "e",
+  "nameZh": "鬼神烈戟",
+  "abilityDoc": "content/abilities/godie-h01u.e.json",
+  "championDoc": "content/champions/godie-h01u.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0N0.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "eue",
+    "actions": [
+     "eWe"
+    ]
+   }
+  ],
+  "sliceLines": 43,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0AY",
+  "champ": "godie-h020",
+  "slot": "q",
+  "nameZh": "火球術",
+  "abilityDoc": "content/abilities/godie-h020.q.json",
+  "championDoc": "content/champions/godie-h020.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8749
+  ]
+ },
+ {
+  "rawcode": "A08Z",
+  "champ": "godie-h021",
+  "slot": "q",
+  "nameZh": "薩喀爾",
+  "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-h021.json#abilities.Q",
+  "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-h021.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8755
+  ]
+ },
+ {
+  "rawcode": "A0TN",
+  "champ": "godie-h02k",
+  "slot": "e",
+  "nameZh": "憤怒的胸毛",
+  "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-h02k.json#abilities.E",
+  "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-h02k.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0TN.j",
+  "status": "sliced",
+  "kind": "passive",
+  "handlers": [
+   {
+    "event": "helper-ref; called from rwe (events: EVENT_PLAYER_UNIT_DEATH)",
+    "cond": null,
+    "actions": [
+     "rue"
+    ]
+   },
+   {
+    "event": "helper-ref; called from rwe (events: EVENT_PLAYER_UNIT_DEATH)",
+    "cond": null,
+    "actions": [
+     "rUe"
+    ]
+   }
+  ],
+  "sliceLines": 40,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "none",
+  "champ": "godie-h02n",
+  "slot": "q",
+  "status": "no-wc3-ability"
+ },
+ {
+  "rawcode": "none",
+  "champ": "godie-h02n",
+  "slot": "w",
+  "status": "no-wc3-ability"
+ },
+ {
+  "rawcode": "none",
+  "champ": "godie-h02n",
+  "slot": "e",
+  "status": "no-wc3-ability"
+ },
+ {
+  "rawcode": "none",
+  "champ": "godie-h02n",
+  "slot": "r",
+  "status": "no-wc3-ability"
+ },
+ {
+  "rawcode": "A0Y4",
+  "champ": "godie-h02r",
+  "slot": "e",
+  "nameZh": "藤鞭",
+  "abilityDoc": "content/abilities/godie-h02r.e.json",
+  "championDoc": "content/champions/godie-h02r.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0Y4.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "civ",
+    "actions": [
+     "cEv"
+    ]
+   }
+  ],
+  "sliceLines": 36,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0WA",
+  "champ": "godie-h02u",
+  "slot": "e",
+  "nameZh": "消化液",
+  "abilityDoc": "content/abilities/godie-h02u.e.json",
+  "championDoc": "content/champions/godie-h02u.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": []
+ },
+ {
+  "rawcode": "A0WA",
+  "champ": "godie-h02v",
+  "slot": "e",
+  "nameZh": "消化液",
+  "abilityDoc": "content/abilities/godie-h02v.e.json",
+  "championDoc": "content/champions/godie-h02v.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": []
+ },
+ {
+  "rawcode": "ANic",
+  "champ": "godie-h02y",
+  "slot": "q",
+  "nameZh": "壹之秘劍-焰靈",
+  "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-h02y.json#abilities.Q",
+  "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-h02y.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": []
+ },
+ {
+  "rawcode": "A0YG",
+  "champ": "godie-h02y",
+  "slot": "e",
+  "nameZh": "弱肉強食",
+  "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-h02y.json#abilities.E",
+  "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-h02y.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": []
+ },
+ {
+  "rawcode": "A0NE",
+  "champ": "godie-n00b",
+  "slot": "w",
+  "nameZh": "複製鏡",
+  "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-n00b.json#abilities.W",
+  "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-n00b.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0NE.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_CAST",
+    "cond": "wmv",
+    "actions": [
+     "wpv"
+    ]
+   }
+  ],
+  "sliceLines": 12,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0IO",
+  "champ": "godie-n00p",
+  "slot": "q",
+  "nameZh": "風華圓舞陣",
+  "abilityDoc": "content/abilities/godie-n00p.q.json",
+  "championDoc": "content/champions/godie-n00p.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8827
+  ]
+ },
+ {
+  "rawcode": "A0IH",
+  "champ": "godie-n00p",
+  "slot": "e",
+  "nameZh": "妖狐變化",
+  "abilityDoc": "content/abilities/godie-n00p.e.json",
+  "championDoc": "content/champions/godie-n00p.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0IH.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "dRv",
+    "actions": [
+     "dIv"
+    ]
+   }
+  ],
+  "sliceLines": 16,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0P7",
+  "champ": "godie-n00p",
+  "slot": "r",
+  "nameZh": "億年樹",
+  "abilityDoc": "content/abilities/godie-n00p.r.json",
+  "championDoc": "content/champions/godie-n00p.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0P7.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "C7v",
+    "actions": [
+     "dev"
+    ]
+   }
+  ],
+  "sliceLines": 28,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0ND",
+  "champ": "godie-n01b",
+  "slot": "e",
+  "nameZh": "萬解-貓王胖虎",
+  "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-n01b.json#abilities.E",
+  "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-n01b.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": []
+ },
+ {
+  "rawcode": "A0LZ",
+  "champ": "godie-n01b",
+  "slot": "r",
+  "nameZh": "地獄搖滾",
+  "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-n01b.json#abilities.R",
+  "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-n01b.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0LZ.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "pVv",
+    "actions": [
+     "pEv"
+    ]
+   }
+  ],
+  "sliceLines": 23,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A05T",
+  "champ": "godie-n01c",
+  "slot": "w",
+  "nameZh": "萊丁快速劍",
+  "abilityDoc": "content/abilities/godie-n01c.w.json",
+  "championDoc": "content/champions/godie-n01c.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A05T.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_CAST",
+    "cond": "Dxv",
+    "actions": [
+     "Dov"
+    ]
+   }
+  ],
+  "sliceLines": 55,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0ZE",
+  "champ": "godie-n01l",
+  "slot": "w",
+  "nameZh": "平易近人的笑容",
+  "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-n01l.json#abilities.W",
+  "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-n01l.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0ZE.j",
+  "status": "sliced",
+  "kind": "passive",
+  "handlers": [
+   {
+    "event": "TimerEventPeriodic",
+    "cond": "VCe",
+    "actions": [
+     "Vfe"
+    ]
+   },
+   {
+    "event": "helper-ref; called from Vfe (events: TimerEventPeriodic)",
+    "cond": null,
+    "actions": [
+     "VDe"
+    ]
+   }
+  ],
+  "sliceLines": 24,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0ZH",
+  "champ": "godie-n01l",
+  "slot": "e",
+  "nameZh": "從過去中學習",
+  "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-n01l.json#abilities.E",
+  "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-n01l.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": []
+ },
+ {
+  "rawcode": "A0ZI",
+  "champ": "godie-n01l",
+  "slot": "r",
+  "nameZh": "自在飛翔",
+  "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-n01l.json#abilities.R",
+  "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-n01l.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0ZI.j",
+  "status": "sliced",
+  "kind": "passive",
+  "handlers": [
+   {
+    "event": "helper-ref; called from VGe (events: EVENT_UNIT_DAMAGED)",
+    "cond": null,
+    "actions": [
+     "Vge"
+    ]
+   }
+  ],
+  "sliceLines": 19,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0BZ",
+  "champ": "godie-o00k",
+  "slot": "q",
+  "nameZh": "十萬伏特",
+  "abilityDoc": "content/abilities/godie-o00k.q.json",
+  "championDoc": "content/champions/godie-o00k.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   9069
+  ]
+ },
+ {
+  "rawcode": "A0UE",
+  "champ": "godie-o00l",
+  "slot": "r",
+  "nameZh": "暴爆咒",
+  "abilityDoc": "content/abilities/godie-o00l.r.json",
+  "championDoc": "content/champions/godie-o00l.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0UE.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "PIv",
+    "actions": [
+     "PBv"
+    ]
+   }
+  ],
+  "sliceLines": 34,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A082",
+  "champ": "godie-o00x",
+  "slot": "q",
+  "nameZh": "界王拳",
+  "abilityDoc": "content/abilities/godie-o00x.q.json",
+  "championDoc": "content/champions/godie-o00x.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8779
+  ]
+ },
+ {
+  "rawcode": "A09E",
+  "champ": "godie-o00x",
+  "slot": "e",
+  "nameZh": "超級賽亞人",
+  "abilityDoc": "content/abilities/godie-o00x.e.json",
+  "championDoc": "content/champions/godie-o00x.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A09E.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "inline-check; called from GRv (events: EVENT_PLAYER_UNIT_SPELL_EFFECT)",
+    "cond": null,
+    "actions": [
+     "GOv"
+    ]
+   }
+  ],
+  "sliceLines": 6,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0BZ",
+  "champ": "godie-o02l",
+  "slot": "q",
+  "nameZh": "十萬伏特",
+  "abilityDoc": "content/abilities/godie-o02l.q.json",
+  "championDoc": "content/champions/godie-o02l.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   9069
+  ]
+ },
+ {
+  "rawcode": "A040",
+  "champ": "godie-o02l",
+  "slot": "r",
+  "nameZh": "瘋狂皮卡丘",
+  "abilityDoc": "content/abilities/godie-o02l.r.json",
+  "championDoc": "content/champions/godie-o02l.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A040.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "PZv",
+    "actions": [
+     "P_v"
+    ]
+   }
+  ],
+  "sliceLines": 10,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0DB",
+  "champ": "godie-o02n",
+  "slot": "e",
+  "nameZh": "天下號令",
+  "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-o02n.json#abilities.E",
+  "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-o02n.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": []
+ },
+ {
+  "rawcode": "A0DB",
+  "champ": "godie-o02o",
+  "slot": "e",
+  "nameZh": "天下號令",
+  "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-o02o.json#abilities.E",
+  "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-o02o.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": []
+ },
+ {
+  "rawcode": "A116",
+  "champ": "godie-o02p",
+  "slot": "q",
+  "nameZh": "甩蔥歌",
+  "abilityDoc": "content/abilities/godie-o02p.q.json",
+  "championDoc": "content/champions/godie-o02p.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A116.j",
+  "status": "sliced",
+  "kind": "passive",
+  "handlers": [
+   {
+    "event": "TimerEventPeriodic",
+    "cond": null,
+    "actions": [
+     "Vae"
+    ]
+   }
+  ],
+  "sliceLines": 52,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0Y0",
+  "champ": "godie-o02w",
+  "slot": "e",
+  "nameZh": "吸星大法",
+  "abilityDoc": "content/abilities/godie-o02w.e.json",
+  "championDoc": "content/champions/godie-o02w.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0Y0.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "u8v",
+    "actions": [
+     "Uvv"
+    ]
+   }
+  ],
+  "sliceLines": 29,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "ANdh",
+  "champ": "godie-o030",
+  "slot": "w",
+  "nameZh": "酒精灌腸",
+  "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-o030.json#abilities.W",
+  "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-o030.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8923
+  ]
+ },
+ {
+  "rawcode": "ANso",
+  "champ": "godie-o030",
+  "slot": "e",
+  "nameZh": "痴漢火焰",
+  "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-o030.json#abilities.E",
+  "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-o030.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8924
+  ]
+ },
+ {
+  "rawcode": "A075",
+  "champ": "godie-u00b",
+  "slot": "q",
+  "nameZh": "超．祕技略決",
+  "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-u00b.json#abilities.Q",
+  "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-u00b.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": []
+ },
+ {
+  "rawcode": "ANto",
+  "champ": "godie-u00b",
+  "slot": "e",
+  "nameZh": "龍捲風",
+  "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-u00b.json#abilities.E",
+  "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-u00b.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": []
+ },
+ {
+  "rawcode": "A0ET",
+  "champ": "godie-u00j",
+  "slot": "w",
+  "nameZh": "八刀一閃",
+  "abilityDoc": "content/abilities/godie-u00j.w.json",
+  "championDoc": "content/champions/godie-u00j.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0ET.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "zuv",
+    "actions": [
+     "zUv"
+    ]
+   }
+  ],
+  "sliceLines": 20,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A08T",
+  "champ": "godie-u00k",
+  "slot": "w",
+  "nameZh": "靈魂吸取",
+  "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-u00k.json#abilities.W",
+  "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-u00k.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A08T.j",
+  "status": "sliced",
+  "kind": "passive",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_DEATH",
+    "cond": "zPv",
+    "actions": [
+     "zQv"
+    ]
+   },
+   {
+    "event": "EVENT_PLAYER_UNIT_DEATH",
+    "cond": null,
+    "actions": [
+     "zQv"
+    ]
+   }
+  ],
+  "sliceLines": 19,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0HJ",
+  "champ": "godie-u00k",
+  "slot": "e",
+  "nameZh": "厄夜靈魂",
+  "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-u00k.json#abilities.E",
+  "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-u00k.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0HJ.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "zhv",
+    "actions": [
+     "zjv"
+    ]
+   }
+  ],
+  "sliceLines": 15,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0HK",
+  "champ": "godie-u00k",
+  "slot": "r",
+  "nameZh": "萬惡歸宗",
+  "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-u00k.json#abilities.R",
+  "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-u00k.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0HK.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "zkv",
+    "actions": [
+     "zMv"
+    ]
+   }
+  ],
+  "sliceLines": 44,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0AF",
+  "champ": "godie-u00l",
+  "slot": "q",
+  "nameZh": "北斗懺悔拳",
+  "abilityDoc": "content/abilities/godie-u00l.q.json",
+  "championDoc": "content/champions/godie-u00l.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0AF.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "MBv",
+    "actions": [
+     "Mdv"
+    ]
+   }
+  ],
+  "sliceLines": 46,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A01J",
+  "champ": "godie-u00l",
+  "slot": "w",
+  "nameZh": "北斗神拳秘訣轉龍呼吸法",
+  "abilityDoc": "content/abilities/godie-u00l.w.json",
+  "championDoc": "content/champions/godie-u00l.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8870
+  ]
+ },
+ {
+  "rawcode": "A0HW",
+  "champ": "godie-u00l",
+  "slot": "r",
+  "nameZh": "ChangeDNA",
+  "abilityDoc": "content/abilities/godie-u00l.r.json",
+  "championDoc": "content/champions/godie-u00l.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0HW.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "inline-check; called from MFv (events: EVENT_PLAYER_UNIT_SPELL_EFFECT)",
+    "cond": null,
+    "actions": [
+     "Mfv"
+    ]
+   }
+  ],
+  "sliceLines": 6,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0OG",
+  "champ": "godie-u010",
+  "slot": "q",
+  "nameZh": "邪王炎殺劍",
+  "abilityDoc": "content/abilities/godie-u010.q.json",
+  "championDoc": "content/champions/godie-u010.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0OG.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "Tcv",
+    "actions": [
+     "Tdv"
+    ]
+   }
+  ],
+  "sliceLines": 23,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A09K",
+  "champ": "godie-u010",
+  "slot": "r",
+  "nameZh": "黑龍波吸收",
+  "abilityDoc": "content/abilities/godie-u010.r.json",
+  "championDoc": "content/champions/godie-u010.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A09K.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "TPv",
+    "actions": [
+     "Ttv"
+    ]
+   }
+  ],
+  "sliceLines": 81,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0OS",
+  "champ": "godie-u011",
+  "slot": "e",
+  "nameZh": "打屁股風林火豬",
+  "abilityDoc": "content/abilities/godie-u011.e.json",
+  "championDoc": "content/champions/godie-u011.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0OS.j",
+  "status": "sliced",
+  "kind": "passive",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_HERO_SKILL",
+    "cond": "xCe",
+    "actions": [
+     "xDe"
+    ]
+   },
+   {
+    "event": "helper-ref; called from xDe (events: EVENT_PLAYER_HERO_SKILL)",
+    "cond": null,
+    "actions": [
+     "xde"
+    ]
+   },
+   {
+    "event": "helper-ref; called from xge (events: EVENT_PLAYER_UNIT_ATTACKED)",
+    "cond": null,
+    "actions": [
+     "xFe"
+    ]
+   },
+   {
+    "event": "helper-ref; called from xje (events: EVENT_PLAYER_UNIT_ATTACKED)",
+    "cond": null,
+    "actions": [
+     "xHe"
+    ]
+   }
+  ],
+  "sliceLines": 23,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0OS",
+  "champ": "godie-u012",
+  "slot": "e",
+  "nameZh": "打屁股風林火豬",
+  "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-u012.json#abilities.E",
+  "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-u012.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0OS.j",
+  "status": "shared-slice",
+  "handlers": [
+   [
+    "xDe"
+   ],
+   [
+    "xde"
+   ],
+   [
+    "xFe"
+   ],
+   [
+    "xHe"
+   ]
+  ]
+ },
+ {
+  "rawcode": "none",
+  "champ": "godie-u01f",
+  "slot": "q",
+  "status": "no-wc3-ability"
+ },
+ {
+  "rawcode": "none",
+  "champ": "godie-u01f",
+  "slot": "w",
+  "status": "no-wc3-ability"
+ },
+ {
+  "rawcode": "none",
+  "champ": "godie-u01f",
+  "slot": "e",
+  "status": "no-wc3-ability"
+ },
+ {
+  "rawcode": "none",
+  "champ": "godie-u01f",
+  "slot": "r",
+  "status": "no-wc3-ability"
+ },
+ {
+  "rawcode": "none",
+  "champ": "godie-u01q",
+  "slot": "q",
+  "status": "no-wc3-ability"
+ },
+ {
+  "rawcode": "none",
+  "champ": "godie-u01q",
+  "slot": "w",
+  "status": "no-wc3-ability"
+ },
+ {
+  "rawcode": "none",
+  "champ": "godie-u01q",
+  "slot": "e",
+  "status": "no-wc3-ability"
+ },
+ {
+  "rawcode": "none",
+  "champ": "godie-u01q",
+  "slot": "r",
+  "status": "no-wc3-ability"
+ },
+ {
+  "rawcode": "A020",
+  "champ": "godie-u034",
+  "slot": "e",
+  "nameZh": "山形修煉-強",
+  "abilityDoc": "content/abilities/godie-u034.e.json",
+  "championDoc": "content/champions/godie-u034.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A020.j",
+  "status": "sliced",
+  "kind": "passive",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": null,
+    "actions": [
+     "csv"
+    ]
+   },
+   {
+    "event": "EVENT_PLAYER_UNIT_ATTACKED",
+    "cond": null,
+    "actions": [
+     "c5v"
+    ]
+   }
+  ],
+  "sliceLines": 220,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A000",
+  "champ": "godie-hart",
+  "slot": "e",
+  "nameZh": "畫龍點睛",
+  "abilityDoc": "content/abilities/godie-hart.e.json",
+  "championDoc": "content/champions/godie-hart.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A000.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "inline-check; called from Hzv (events: EVENT_PLAYER_UNIT_SPELL_EFFECT)",
+    "cond": null,
+    "actions": [
+     "HYv"
+    ]
+   }
+  ],
+  "sliceLines": 6,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A03C",
+  "champ": "godie-hvwd",
+  "slot": "q",
+  "nameZh": "破魔之箭",
+  "abilityDoc": "content/abilities/godie-hvwd.q.json",
+  "championDoc": "content/champions/godie-hvwd.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A03C.j",
+  "status": "sliced",
+  "kind": "passive",
+  "handlers": [
+   {
+    "event": "helper-ref; called from jpv (events: EVENT_PLAYER_HERO_SKILL,EVENT_PLAYER_HERO_LEVEL)",
+    "cond": null,
+    "actions": [
+     "jMv"
+    ]
+   },
+   {
+    "event": "?",
+    "cond": null,
+    "actions": [
+     "jqv"
+    ]
+   }
+  ],
+  "sliceLines": 26,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A045",
+  "champ": "godie-hvwd",
+  "slot": "w",
+  "nameZh": "明鏡止水",
+  "abilityDoc": "content/abilities/godie-hvwd.w.json",
+  "championDoc": "content/champions/godie-hvwd.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8738
+  ]
+ },
+ {
+  "rawcode": "A03D",
+  "champ": "godie-hvwd",
+  "slot": "e",
+  "nameZh": "魂飛魄散",
+  "abilityDoc": "content/abilities/godie-hvwd.e.json",
+  "championDoc": "content/champions/godie-hvwd.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8739
+  ]
+ },
+ {
+  "rawcode": "A0Z6",
+  "champ": "godie-hvwd",
+  "slot": "r",
+  "nameZh": "百鬼夜行",
+  "abilityDoc": "content/abilities/godie-hvwd.r.json",
+  "championDoc": "content/champions/godie-hvwd.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": []
+ },
+ {
+  "rawcode": "ANab",
+  "champ": "godie-hlgr",
+  "slot": "q",
+  "nameZh": "詭雷",
+  "abilityDoc": "content/abilities/godie-hlgr.q.json",
+  "championDoc": "content/champions/godie-hlgr.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8744
+  ]
+ },
+ {
+  "rawcode": "A0AY",
+  "champ": "godie-hjai",
+  "slot": "q",
+  "nameZh": "火球術",
+  "abilityDoc": "content/abilities/godie-hjai.q.json",
+  "championDoc": "content/champions/godie-hjai.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8749
+  ]
+ },
+ {
+  "rawcode": "A08Z",
+  "champ": "godie-hblm",
+  "slot": "q",
+  "nameZh": "薩喀爾",
+  "abilityDoc": "content/abilities/godie-hblm.q.json",
+  "championDoc": "content/champions/godie-hblm.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8755
+  ]
+ },
+ {
+  "rawcode": "A020",
+  "champ": "godie-ucrl",
+  "slot": "e",
+  "nameZh": "山形修煉-強",
+  "abilityDoc": "content/abilities/godie-ucrl.e.json",
+  "championDoc": "content/champions/godie-ucrl.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A020.j",
+  "status": "shared-slice",
+  "handlers": [
+   [
+    "csv"
+   ],
+   [
+    "c5v"
+   ]
+  ]
+ },
+ {
+  "rawcode": "A0G2",
+  "champ": "godie-hpb1",
+  "slot": "w",
+  "nameZh": "者、皆、陣",
+  "abilityDoc": "content/abilities/godie-hpb1.w.json",
+  "championDoc": "content/champions/godie-hpb1.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0G2.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "j6v",
+    "actions": [
+     "Jrv"
+    ]
+   }
+  ],
+  "sliceLines": 101,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0G3",
+  "champ": "godie-hpb1",
+  "slot": "e",
+  "nameZh": "列、在、前",
+  "abilityDoc": "content/abilities/godie-hpb1.e.json",
+  "championDoc": "content/champions/godie-hpb1.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0G3.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "juv",
+    "actions": [
+     "jWv"
+    ]
+   }
+  ],
+  "sliceLines": 41,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A05T",
+  "champ": "godie-nbbc",
+  "slot": "w",
+  "nameZh": "萊丁快速劍",
+  "abilityDoc": "content/abilities/godie-nbbc.w.json",
+  "championDoc": "content/champions/godie-nbbc.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A05T.j",
+  "status": "shared-slice",
+  "handlers": [
+   [
+    "Dov"
+   ]
+  ]
+ },
+ {
+  "rawcode": "A082",
+  "champ": "godie-ogrh",
+  "slot": "q",
+  "nameZh": "界王拳",
+  "abilityDoc": "content/abilities/godie-ogrh.q.json",
+  "championDoc": "content/champions/godie-ogrh.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8779
+  ]
+ },
+ {
+  "rawcode": "A09E",
+  "champ": "godie-ogrh",
+  "slot": "e",
+  "nameZh": "超級賽亞人",
+  "abilityDoc": "content/abilities/godie-ogrh.e.json",
+  "championDoc": "content/champions/godie-ogrh.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A09E.j",
+  "status": "shared-slice",
+  "handlers": [
+   [
+    "GOv"
+   ]
+  ]
+ },
+ {
+  "rawcode": "A02K",
+  "champ": "godie-ewar",
+  "slot": "w",
+  "nameZh": "仙氣．採藥",
+  "abilityDoc": "content/abilities/godie-ewar.w.json",
+  "championDoc": "content/champions/godie-ewar.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A02K.j",
+  "status": "shared-slice",
+  "handlers": [
+   [
+    "DYv"
+   ]
+  ]
+ },
+ {
+  "rawcode": "A02W",
+  "champ": "godie-ewar",
+  "slot": "e",
+  "nameZh": "破凰之心-徒手空破山",
+  "abilityDoc": "content/abilities/godie-ewar.e.json",
+  "championDoc": "content/champions/godie-ewar.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8793
+  ]
+ },
+ {
+  "rawcode": "A04X",
+  "champ": "godie-ewar",
+  "slot": "r",
+  "nameZh": "龍氣爆發",
+  "abilityDoc": "content/abilities/godie-ewar.r.json",
+  "championDoc": "content/champions/godie-ewar.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A04X.j",
+  "status": "shared-slice",
+  "handlers": [
+   [
+    "D_v"
+   ]
+  ]
+ },
+ {
+  "rawcode": "A00X",
+  "champ": "godie-efur",
+  "slot": "w",
+  "nameZh": "變化念力",
+  "abilityDoc": "content/abilities/godie-efur.w.json",
+  "championDoc": "content/champions/godie-efur.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8798
+  ]
+ },
+ {
+  "rawcode": "A0SS",
+  "champ": "godie-etyr",
+  "slot": "r",
+  "nameZh": "聖夜降臨",
+  "abilityDoc": "content/abilities/godie-etyr.r.json",
+  "championDoc": "content/champions/godie-etyr.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": []
+ },
+ {
+  "rawcode": "A0D3",
+  "champ": "godie-emfr",
+  "slot": "q",
+  "nameZh": "風精召喚",
+  "abilityDoc": "content/abilities/godie-emfr.q.json",
+  "championDoc": "content/champions/godie-emfr.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0D3.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "Jsv",
+    "actions": [
+     "JSv"
+    ]
+   }
+  ],
+  "sliceLines": 41,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A041",
+  "champ": "godie-nplh",
+  "slot": "w",
+  "nameZh": "超．占事略決",
+  "abilityDoc": "content/abilities/godie-nplh.w.json",
+  "championDoc": "content/champions/godie-nplh.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8815
+  ]
+ },
+ {
+  "rawcode": "A043",
+  "champ": "godie-nplh",
+  "slot": "e",
+  "nameZh": "劍之精靈",
+  "abilityDoc": "content/abilities/godie-nplh.e.json",
+  "championDoc": "content/champions/godie-nplh.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A043.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "g6v",
+    "actions": [
+     "g7v"
+    ]
+   }
+  ],
+  "sliceLines": 6,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A07M",
+  "champ": "godie-ewrd",
+  "slot": "e",
+  "nameZh": "空破圓斬",
+  "abilityDoc": "content/abilities/godie-ewrd.e.json",
+  "championDoc": "content/champions/godie-ewrd.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A07M.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_CAST",
+    "cond": "duv",
+    "actions": [
+     "dUv"
+    ]
+   }
+  ],
+  "sliceLines": 16,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0IO",
+  "champ": "godie-nsjs",
+  "slot": "q",
+  "nameZh": "風華圓舞陣",
+  "abilityDoc": "content/abilities/godie-nsjs.q.json",
+  "championDoc": "content/champions/godie-nsjs.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8827
+  ]
+ },
+ {
+  "rawcode": "A0IH",
+  "champ": "godie-nsjs",
+  "slot": "e",
+  "nameZh": "妖狐變化",
+  "abilityDoc": "content/abilities/godie-nsjs.e.json",
+  "championDoc": "content/champions/godie-nsjs.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0IH.j",
+  "status": "shared-slice",
+  "handlers": [
+   [
+    "dIv"
+   ]
+  ]
+ },
+ {
+  "rawcode": "A0P7",
+  "champ": "godie-nsjs",
+  "slot": "r",
+  "nameZh": "億年樹",
+  "abilityDoc": "content/abilities/godie-nsjs.r.json",
+  "championDoc": "content/champions/godie-nsjs.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0P7.j",
+  "status": "shared-slice",
+  "handlers": [
+   [
+    "dev"
+   ]
+  ]
+ },
+ {
+  "rawcode": "A0NA",
+  "champ": "godie-ntin",
+  "slot": "q",
+  "nameZh": "電離光槍 - 繁星飛躍",
+  "abilityDoc": "content/abilities/godie-ntin.q.json",
+  "championDoc": "content/champions/godie-ntin.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0NA.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "gXv",
+    "actions": [
+     "gIv"
+    ]
+   },
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "gNv",
+    "actions": [
+     "gbv"
+    ]
+   }
+  ],
+  "sliceLines": 68,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A074",
+  "champ": "godie-nbst",
+  "slot": "w",
+  "nameZh": "變態根性",
+  "abilityDoc": "content/abilities/godie-nbst.w.json",
+  "championDoc": "content/champions/godie-nbst.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8864
+  ]
+ },
+ {
+  "rawcode": "A0AP",
+  "champ": "godie-nbst",
+  "slot": "e",
+  "nameZh": "變態絕技悶絕地獄車",
+  "abilityDoc": "content/abilities/godie-nbst.e.json",
+  "championDoc": "content/champions/godie-nbst.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0AP.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "inline-check; called from bbv (events: EVENT_PLAYER_UNIT_SPELL_EFFECT)",
+    "cond": null,
+    "actions": [
+     "bNv"
+    ]
+   }
+  ],
+  "sliceLines": 9,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0AF",
+  "champ": "godie-umal",
+  "slot": "q",
+  "nameZh": "北斗懺悔拳",
+  "abilityDoc": "content/abilities/godie-umal.q.json",
+  "championDoc": "content/champions/godie-umal.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0AF.j",
+  "status": "shared-slice",
+  "handlers": [
+   [
+    "Mdv"
+   ]
+  ]
+ },
+ {
+  "rawcode": "A01J",
+  "champ": "godie-umal",
+  "slot": "w",
+  "nameZh": "北斗神拳秘訣轉龍呼吸法",
+  "abilityDoc": "content/abilities/godie-umal.w.json",
+  "championDoc": "content/champions/godie-umal.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8870
+  ]
+ },
+ {
+  "rawcode": "A0HW",
+  "champ": "godie-umal",
+  "slot": "r",
+  "nameZh": "ChangeDNA",
+  "abilityDoc": "content/abilities/godie-umal.r.json",
+  "championDoc": "content/champions/godie-umal.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0HW.j",
+  "status": "shared-slice",
+  "handlers": [
+   [
+    "Mfv"
+   ]
+  ]
+ },
+ {
+  "rawcode": "A0BS",
+  "champ": "godie-harf",
+  "slot": "w",
+  "nameZh": "亂入",
+  "abilityDoc": "content/abilities/godie-harf.w.json",
+  "championDoc": "content/champions/godie-harf.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": []
+ },
+ {
+  "rawcode": "A0F9",
+  "champ": "godie-harf",
+  "slot": "e",
+  "nameZh": "熱血",
+  "abilityDoc": "content/abilities/godie-harf.e.json",
+  "championDoc": "content/champions/godie-harf.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8900
+  ]
+ },
+ {
+  "rawcode": "A0EW",
+  "champ": "godie-harf",
+  "slot": "r",
+  "nameZh": "開天闢地‧洨者聖臨",
+  "abilityDoc": "content/abilities/godie-harf.r.json",
+  "championDoc": "content/champions/godie-harf.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0EW.j",
+  "status": "shared-slice",
+  "handlers": [
+   [
+    "mgv"
+   ]
+  ]
+ },
+ {
+  "rawcode": "A03A",
+  "champ": "godie-naka",
+  "slot": "q",
+  "nameZh": "忍法風魔手裡劍",
+  "abilityDoc": "content/abilities/godie-naka.q.json",
+  "championDoc": "content/champions/godie-naka.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A03A.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "Qnv",
+    "actions": [
+     "QVv"
+    ]
+   }
+  ],
+  "sliceLines": 25,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0GB",
+  "champ": "godie-huth",
+  "slot": "q",
+  "nameZh": "吃掉你",
+  "abilityDoc": "content/abilities/godie-huth.q.json",
+  "championDoc": "content/champions/godie-huth.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0GB.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "qCv",
+    "actions": [
+     "qDv"
+    ]
+   },
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_CAST",
+    "cond": "qFv",
+    "actions": [
+     "qhv"
+    ]
+   }
+  ],
+  "sliceLines": 32,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A03T",
+  "champ": "godie-huth",
+  "slot": "e",
+  "nameZh": "分身",
+  "abilityDoc": "content/abilities/godie-huth.e.json",
+  "championDoc": "content/champions/godie-huth.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8910
+  ]
+ },
+ {
+  "rawcode": "A08U",
+  "champ": "godie-huth",
+  "slot": "r",
+  "nameZh": "破滅能量彈",
+  "abilityDoc": "content/abilities/godie-huth.r.json",
+  "championDoc": "content/champions/godie-huth.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A08U.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "qjv",
+    "actions": [
+     "qlv"
+    ]
+   }
+  ],
+  "sliceLines": 35,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A06U",
+  "champ": "godie-oshd",
+  "slot": "q",
+  "nameZh": "鐵砂掌",
+  "abilityDoc": "content/abilities/godie-oshd.q.json",
+  "championDoc": "content/champions/godie-oshd.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8916
+  ]
+ },
+ {
+  "rawcode": "AOvd",
+  "champ": "godie-oshd",
+  "slot": "e",
+  "nameZh": "有功夫無懦夫",
+  "abilityDoc": "content/abilities/godie-oshd.e.json",
+  "championDoc": "content/champions/godie-oshd.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8918
+  ]
+ },
+ {
+  "rawcode": "ANdh",
+  "champ": "godie-orkn",
+  "slot": "w",
+  "nameZh": "酒精灌腸",
+  "abilityDoc": "content/abilities/godie-orkn.w.json",
+  "championDoc": "content/champions/godie-orkn.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8923
+  ]
+ },
+ {
+  "rawcode": "ANso",
+  "champ": "godie-orkn",
+  "slot": "e",
+  "nameZh": "痴漢火焰",
+  "abilityDoc": "content/abilities/godie-orkn.e.json",
+  "championDoc": "content/champions/godie-orkn.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8924
+  ]
+ },
+ {
+  "rawcode": "A0I4",
+  "champ": "godie-othr",
+  "slot": "q",
+  "nameZh": "迴旋爪擊",
+  "abilityDoc": "content/abilities/godie-othr.q.json",
+  "championDoc": "content/champions/godie-othr.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0I4.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "qYv",
+    "actions": [
+     "qZv"
+    ]
+   }
+  ],
+  "sliceLines": 25,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0TH",
+  "champ": "godie-opgh",
+  "slot": "w",
+  "nameZh": "橫掃千軍",
+  "abilityDoc": "content/abilities/godie-opgh.w.json",
+  "championDoc": "content/champions/godie-opgh.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": []
+ },
+ {
+  "rawcode": "A0I1",
+  "champ": "godie-opgh",
+  "slot": "e",
+  "nameZh": "閃光龍牙",
+  "abilityDoc": "content/abilities/godie-opgh.e.json",
+  "championDoc": "content/champions/godie-opgh.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0I1.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "Ssv",
+    "actions": [
+     "SSv"
+    ]
+   }
+  ],
+  "sliceLines": 22,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0YW",
+  "champ": "godie-opgh",
+  "slot": "r",
+  "nameZh": "狂龍霸體",
+  "abilityDoc": "content/abilities/godie-opgh.r.json",
+  "championDoc": "content/champions/godie-opgh.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": []
+ },
+ {
+  "rawcode": "A02L",
+  "champ": "godie-obla",
+  "slot": "q",
+  "nameZh": "放山雞",
+  "abilityDoc": "content/abilities/godie-obla.q.json",
+  "championDoc": "content/champions/godie-obla.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A02L.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "tTv",
+    "actions": [
+     "tuv"
+    ]
+   }
+  ],
+  "sliceLines": 6,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A00P",
+  "champ": "godie-obla",
+  "slot": "w",
+  "nameZh": "吃完的口香糖",
+  "abilityDoc": "content/abilities/godie-obla.w.json",
+  "championDoc": "content/champions/godie-obla.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8941
+  ]
+ },
+ {
+  "rawcode": "A034",
+  "champ": "godie-osam",
+  "slot": "q",
+  "nameZh": "風華之爪",
+  "abilityDoc": "content/abilities/godie-osam.q.json",
+  "championDoc": "content/champions/godie-osam.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8946
+  ]
+ },
+ {
+  "rawcode": "A0F5",
+  "champ": "godie-osam",
+  "slot": "e",
+  "nameZh": "爆碎丸",
+  "abilityDoc": "content/abilities/godie-osam.e.json",
+  "championDoc": "content/champions/godie-osam.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8948
+  ]
+ },
+ {
+  "rawcode": "A06H",
+  "champ": "godie-hpal",
+  "slot": "e",
+  "nameZh": "鏡蠱",
+  "abilityDoc": "content/abilities/godie-hpal.e.json",
+  "championDoc": "content/champions/godie-hpal.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8954
+  ]
+ },
+ {
+  "rawcode": "A01I",
+  "champ": "godie-ubal",
+  "slot": "q",
+  "nameZh": "凱薩之鷹",
+  "abilityDoc": "content/abilities/godie-ubal.q.json",
+  "championDoc": "content/champions/godie-ubal.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8958
+  ]
+ },
+ {
+  "rawcode": "A0OY",
+  "champ": "godie-ubal",
+  "slot": "e",
+  "nameZh": "黑核晶",
+  "abilityDoc": "content/abilities/godie-ubal.e.json",
+  "championDoc": "content/champions/godie-ubal.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8959
+  ]
+ },
+ {
+  "rawcode": "A01Z",
+  "champ": "godie-ubal",
+  "slot": "r",
+  "nameZh": "魔界之王",
+  "abilityDoc": "content/abilities/godie-ubal.r.json",
+  "championDoc": "content/champions/godie-ubal.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A01Z.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "uFv",
+    "actions": [
+     "uGv"
+    ]
+   }
+  ],
+  "sliceLines": 31,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0OG",
+  "champ": "godie-uvng",
+  "slot": "q",
+  "nameZh": "邪王炎殺劍",
+  "abilityDoc": "content/abilities/godie-uvng.q.json",
+  "championDoc": "content/champions/godie-uvng.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0OG.j",
+  "status": "shared-slice",
+  "handlers": [
+   [
+    "Tdv"
+   ]
+  ]
+ },
+ {
+  "rawcode": "A09K",
+  "champ": "godie-uvng",
+  "slot": "r",
+  "nameZh": "黑龍波吸收",
+  "abilityDoc": "content/abilities/godie-uvng.r.json",
+  "championDoc": "content/champions/godie-uvng.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A09K.j",
+  "status": "shared-slice",
+  "handlers": [
+   [
+    "Ttv"
+   ]
+  ]
+ },
+ {
+  "rawcode": "A0ND",
+  "champ": "godie-nman",
+  "slot": "e",
+  "nameZh": "萬解-貓王胖虎",
+  "abilityDoc": "content/abilities/godie-nman.e.json",
+  "championDoc": "content/champions/godie-nman.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": []
+ },
+ {
+  "rawcode": "A0LZ",
+  "champ": "godie-nman",
+  "slot": "r",
+  "nameZh": "地獄搖滾",
+  "abilityDoc": "content/abilities/godie-nman.r.json",
+  "championDoc": "content/champions/godie-nman.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0LZ.j",
+  "status": "shared-slice",
+  "handlers": [
+   [
+    "pEv"
+   ]
+  ]
+ },
+ {
+  "rawcode": "ANfl",
+  "champ": "godie-uwar",
+  "slot": "q",
+  "nameZh": "得罪了方丈還想走",
+  "abilityDoc": "content/abilities/godie-uwar.q.json",
+  "championDoc": "content/champions/godie-uwar.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8994
+  ]
+ },
+ {
+  "rawcode": "A00D",
+  "champ": "godie-uwar",
+  "slot": "r",
+  "nameZh": "少林絕學-火雲掌",
+  "abilityDoc": "content/abilities/godie-uwar.r.json",
+  "championDoc": "content/champions/godie-uwar.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   8996
+  ]
+ },
+ {
+  "rawcode": "A0IK",
+  "champ": "godie-emns",
+  "slot": "q",
+  "nameZh": "死神之眼",
+  "abilityDoc": "content/abilities/godie-emns.q.json",
+  "championDoc": "content/champions/godie-emns.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0IK.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "Sov",
+    "actions": [
+     "Siv"
+    ]
+   }
+  ],
+  "sliceLines": 29,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A05G",
+  "champ": "godie-emns",
+  "slot": "w",
+  "nameZh": "死神的規則",
+  "abilityDoc": "content/abilities/godie-emns.w.json",
+  "championDoc": "content/champions/godie-emns.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   9001
+  ]
+ },
+ {
+  "rawcode": "A05I",
+  "champ": "godie-emns",
+  "slot": "r",
+  "nameZh": "心臟麻痺",
+  "abilityDoc": "content/abilities/godie-emns.r.json",
+  "championDoc": "content/champions/godie-emns.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A05I.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "SAv",
+    "actions": [
+     "SNv"
+    ]
+   }
+  ],
+  "sliceLines": 17,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0IJ",
+  "champ": "godie-edem",
+  "slot": "e",
+  "nameZh": "千鳥",
+  "abilityDoc": "content/abilities/godie-edem.e.json",
+  "championDoc": "content/champions/godie-edem.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0IJ.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "shv",
+    "actions": [
+     "sJv"
+    ]
+   }
+  ],
+  "sliceLines": 54,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0U7",
+  "champ": "godie-edem",
+  "slot": "r",
+  "nameZh": "哥哥",
+  "abilityDoc": "content/abilities/godie-edem.r.json",
+  "championDoc": "content/champions/godie-edem.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0U7.j",
+  "status": "sliced",
+  "kind": "passive",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": null,
+    "actions": [
+     "sJv"
+    ]
+   },
+   {
+    "event": "helper-ref; called from sUv (events: TimerEventPeriodic)",
+    "cond": null,
+    "actions": [
+     "sPv"
+    ]
+   },
+   {
+    "event": "helper-ref; called from sUv (events: TimerEventPeriodic)",
+    "cond": null,
+    "actions": [
+     "sQv"
+    ]
+   }
+  ],
+  "sliceLines": 210,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0RO",
+  "champ": "godie-hvsh",
+  "slot": "q",
+  "nameZh": "魔法鎖鏈",
+  "abilityDoc": "content/abilities/godie-hvsh.q.json",
+  "championDoc": "content/champions/godie-hvsh.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0RO.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "mQv",
+    "actions": [
+     "msv"
+    ]
+   }
+  ],
+  "sliceLines": 12,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A06C",
+  "champ": "godie-hvsh",
+  "slot": "e",
+  "nameZh": "鮮血神殿",
+  "abilityDoc": "content/abilities/godie-hvsh.e.json",
+  "championDoc": "content/champions/godie-hvsh.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A06C.j",
+  "status": "sliced",
+  "kind": "passive",
+  "handlers": [
+   {
+    "event": "helper-ref; called from MOv (events: TimerEventPeriodic)",
+    "cond": null,
+    "actions": [
+     "MEv"
+    ]
+   }
+  ],
+  "sliceLines": 30,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0RQ",
+  "champ": "godie-hvsh",
+  "slot": "r",
+  "nameZh": "騎英之疆繩",
+  "abilityDoc": "content/abilities/godie-hvsh.r.json",
+  "championDoc": "content/champions/godie-hvsh.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0RQ.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "inline-check; called via bNv<-bbv (events: EVENT_PLAYER_UNIT_SPELL_EFFECT)",
+    "cond": null,
+    "actions": [
+     "bAv"
+    ]
+   },
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "mzv",
+    "actions": [
+     "mZv"
+    ]
+   }
+  ],
+  "sliceLines": 30,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0BU",
+  "champ": "godie-usyl",
+  "slot": "w",
+  "nameZh": "腐蝕毒液",
+  "abilityDoc": "content/abilities/godie-usyl.w.json",
+  "championDoc": "content/champions/godie-usyl.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   9025
+  ]
+ },
+ {
+  "rawcode": "A0BV",
+  "champ": "godie-usyl",
+  "slot": "e",
+  "nameZh": "蛻變",
+  "abilityDoc": "content/abilities/godie-usyl.e.json",
+  "championDoc": "content/champions/godie-usyl.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0BV.j",
+  "status": "sliced",
+  "kind": "passive",
+  "handlers": [
+   {
+    "event": "helper-ref; called from WMv (events: EVENT_PLAYER_HERO_SKILL)",
+    "cond": null,
+    "actions": [
+     "Wmv"
+    ]
+   },
+   {
+    "event": "EVENT_PLAYER_UNIT_DEATH",
+    "cond": null,
+    "actions": [
+     "Wsv"
+    ]
+   }
+  ],
+  "sliceLines": 22,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0R3",
+  "champ": "godie-usyl",
+  "slot": "r",
+  "nameZh": "母體",
+  "abilityDoc": "content/abilities/godie-usyl.r.json",
+  "championDoc": "content/champions/godie-usyl.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   9027
+  ]
+ },
+ {
+  "rawcode": "A0VJ",
+  "champ": "godie-hapm",
+  "slot": "q",
+  "nameZh": "狂戰士之怒",
+  "abilityDoc": "content/abilities/godie-hapm.q.json",
+  "championDoc": "content/champions/godie-hapm.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0VJ.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "ohe",
+    "actions": [
+     "oHe"
+    ]
+   }
+  ],
+  "sliceLines": 8,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0U1",
+  "champ": "godie-hapm",
+  "slot": "w",
+  "nameZh": "蹂躪編年史",
+  "abilityDoc": "content/abilities/godie-hapm.w.json",
+  "championDoc": "content/champions/godie-hapm.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0U1.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "ole",
+    "actions": [
+     "oLe"
+    ]
+   }
+  ],
+  "sliceLines": 19,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0BA",
+  "champ": "godie-hapm",
+  "slot": "e",
+  "nameZh": "無銘斧劍",
+  "abilityDoc": "content/abilities/godie-hapm.e.json",
+  "championDoc": "content/champions/godie-hapm.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   9053
+  ]
+ },
+ {
+  "rawcode": "A0BZ",
+  "champ": "godie-ofar",
+  "slot": "q",
+  "nameZh": "十萬伏特",
+  "abilityDoc": "content/abilities/godie-ofar.q.json",
+  "championDoc": "content/champions/godie-ofar.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   9069
+  ]
+ },
+ {
+  "rawcode": "A040",
+  "champ": "godie-ofar",
+  "slot": "r",
+  "nameZh": "瘋狂皮卡丘",
+  "abilityDoc": "content/abilities/godie-ofar.r.json",
+  "championDoc": "content/champions/godie-ofar.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A040.j",
+  "status": "shared-slice",
+  "handlers": [
+   [
+    "P_v"
+   ]
+  ]
+ },
+ {
+  "rawcode": "A0A2",
+  "champ": "godie-ecen",
+  "slot": "q",
+  "nameZh": "威士忌攻擊",
+  "abilityDoc": "content/abilities/godie-ecen.q.json",
+  "championDoc": "content/champions/godie-ecen.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0A2.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "Wyv",
+    "actions": [
+     "WYv"
+    ]
+   }
+  ],
+  "sliceLines": 6,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "A0A7",
+  "champ": "godie-ecen",
+  "slot": "w",
+  "nameZh": "酒釀精華",
+  "abilityDoc": "content/abilities/godie-ecen.w.json",
+  "championDoc": "content/champions/godie-ecen.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0A7.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_EFFECT",
+    "cond": "WZv",
+    "actions": [
+     "W3v"
+    ]
+   }
+  ],
+  "sliceLines": 36,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "ANrc",
+  "champ": "godie-ecen",
+  "slot": "e",
+  "nameZh": "工廠機器人",
+  "abilityDoc": "content/abilities/godie-ecen.e.json",
+  "championDoc": "content/champions/godie-ecen.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": [
+   9089
+  ]
+ },
+ {
+  "rawcode": "A0A3",
+  "champ": "godie-ecen",
+  "slot": "r",
+  "nameZh": "魔幻浮水印",
+  "abilityDoc": "content/abilities/godie-ecen.r.json",
+  "championDoc": "content/champions/godie-ecen.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0A3.j",
+  "status": "sliced",
+  "kind": "active",
+  "handlers": [
+   {
+    "event": "EVENT_PLAYER_UNIT_SPELL_CAST",
+    "cond": "yxv",
+    "actions": [
+     "yov"
+    ]
+   }
+  ],
+  "sliceLines": 6,
+  "truncatedHelpers": []
+ },
+ {
+  "rawcode": "ANmo",
+  "champ": "godie-ogld",
+  "slot": "q",
+  "nameZh": "洗刷刷",
+  "abilityDoc": "content/abilities/godie-ogld.q.json",
+  "championDoc": "content/champions/godie-ogld.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": []
+ },
+ {
+  "rawcode": "ACpa",
+  "champ": "godie-ogld",
+  "slot": "w",
+  "nameZh": "黑人牙菌斑",
+  "abilityDoc": "content/abilities/godie-ogld.w.json",
+  "championDoc": "content/champions/godie-ogld.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": []
+ },
+ {
+  "rawcode": "Afae",
+  "champ": "godie-ogld",
+  "slot": "e",
+  "nameZh": "超亮白",
+  "abilityDoc": "content/abilities/godie-ogld.e.json",
+  "championDoc": "content/champions/godie-ogld.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": []
+ },
+ {
+  "rawcode": "A0Y4",
+  "champ": "godie-hgam",
+  "slot": "e",
+  "nameZh": "藤鞭",
+  "abilityDoc": "content/abilities/godie-hgam.e.json",
+  "championDoc": "content/champions/godie-hgam.json",
+  "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0Y4.j",
+  "status": "shared-slice",
+  "handlers": [
+   [
+    "cEv"
+   ]
+  ]
+ },
+ {
+  "rawcode": "Abof",
+  "champ": "godie-ekee",
+  "slot": "q",
+  "nameZh": "期末報告",
+  "abilityDoc": "content/abilities/godie-ekee.q.json",
+  "championDoc": "content/champions/godie-ekee.json",
+  "status": "no-trigger-handler",
+  "otherRefLines": []
+ }
+]

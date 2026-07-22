@@ -1,0 +1,86 @@
+[
+  {
+    "id": "announcer-match-start",
+    "lang": "zh-TW",
+    "text": "歡迎來到競技場！",
+    "out": "../assets/audio/announcer/retired-zh/match-start.mp3",
+    "rate": 200
+  },
+  {
+    "id": "announcer-round-start-1",
+    "lang": "zh-TW",
+    "text": "回合開始！",
+    "out": "../assets/audio/announcer/retired-zh/round-start-1.mp3",
+    "rate": 200
+  },
+  {
+    "id": "announcer-round-start-2",
+    "lang": "zh-TW",
+    "text": "準備，開戰！",
+    "out": "../assets/audio/announcer/retired-zh/round-start-2.mp3",
+    "rate": 200
+  },
+  {
+    "id": "announcer-level-up-1",
+    "lang": "zh-TW",
+    "text": "升級！",
+    "out": "../assets/audio/announcer/retired-zh/level-up-1.mp3",
+    "rate": 200
+  },
+  {
+    "id": "announcer-level-up-2",
+    "lang": "zh-TW",
+    "text": "等級提升！",
+    "out": "../assets/audio/announcer/retired-zh/level-up-2.mp3",
+    "rate": 200
+  },
+  {
+    "id": "announcer-death-1",
+    "lang": "zh-TW",
+    "text": "你被擊倒了！",
+    "out": "../assets/audio/announcer/retired-zh/death-1.mp3",
+    "rate": 200
+  },
+  {
+    "id": "announcer-death-2",
+    "lang": "zh-TW",
+    "text": "陣亡！",
+    "out": "../assets/audio/announcer/retired-zh/death-2.mp3",
+    "rate": 200
+  },
+  {
+    "id": "announcer-death-3",
+    "lang": "zh-TW",
+    "text": "太大意了！",
+    "out": "../assets/audio/announcer/retired-zh/death-3.mp3",
+    "rate": 200
+  },
+  {
+    "id": "announcer-multi-kill-1",
+    "lang": "zh-TW",
+    "text": "連續擊殺！",
+    "out": "../assets/audio/announcer/retired-zh/multi-kill-1.mp3",
+    "rate": 200
+  },
+  {
+    "id": "announcer-multi-kill-2",
+    "lang": "zh-TW",
+    "text": "殺瘋了！",
+    "out": "../assets/audio/announcer/retired-zh/multi-kill-2.mp3",
+    "rate": 200
+  },
+  {
+    "id": "announcer-multi-kill-3",
+    "lang": "zh-TW",
+    "text": "無人能擋！",
+    "out": "../assets/audio/announcer/retired-zh/multi-kill-3.mp3",
+    "rate": 200
+  },
+  {
+    "id": "announcer-ally-slain",
+    "lang": "zh-TW",
+    "text": "請確認你的隊友是不是白目!!",
+    "out": "../assets/audio/announcer/retired-zh/ally-slain.mp3",
+    "rate": 200
+  }
+]

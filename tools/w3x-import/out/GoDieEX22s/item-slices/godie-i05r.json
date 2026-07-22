@@ -1,0 +1,16 @@
+{
+  "contentId": "godie-i05r",
+  "nameZh": "吸血石",
+  "gold": 1250,
+  "kind": "stat",
+  "description": "效能\r\n吸血20%（法球）\r\n\r\n解說\r\n殺傷敵方轉化為生命，是一種稀有的礦石。",
+  "abilities": [
+    {
+      "rawcode": "A0JS",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    }
+  ]
+}

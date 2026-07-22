@@ -1,0 +1,82 @@
+{
+  "id": "godie-oblivionaura-p0",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.278,
+    "angleDeg": 76.0
+  },
+  "mode": "continuous",
+  "rate": 0.9,
+  "lifetimeSec": {
+    "min": 3.0,
+    "max": 3.0
+  },
+  "size": {
+    "start": 0.278,
+    "end": 0.139
+  },
+  "color": {
+    "start": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "end": [
+      1.0,
+      1.0,
+      1.0,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    ],
+    [
+      0.72,
+      [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.278
+    ],
+    [
+      0.72,
+      1.389
+    ],
+    [
+      1,
+      0.139
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/light_01.png",
+  "speed": {
+    "min": 1.3612,
+    "max": 1.4168
+  }
+}

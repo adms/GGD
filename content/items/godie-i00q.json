@@ -1,0 +1,28 @@
+{
+  "id": "godie-i00q",
+  "schema": "item@1",
+  "name": "伊娃之盾",
+  "description": "防具\n施展需求魔力：100點\n技能冷卻時間：30秒\n效能\n治癒術\n裝甲+1.2\n生命+59\n魔力回復速度+22.3%\n\n解說\n被伊娃所祝福的盾牌，可以施展治癒術治療自身500點生命。",
+  "cost": 300,
+  "tier": 1,
+  "tags": [
+    "wc3-import"
+  ],
+  "modifiers": [
+    {
+      "stat": "manaRegen",
+      "op": "pctAdd",
+      "value": 0.223
+    },
+    {
+      "stat": "maxHealth",
+      "op": "flat",
+      "value": 59
+    },
+    {
+      "stat": "armor",
+      "op": "flat",
+      "value": 1.2
+    }
+  ]
+}

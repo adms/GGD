@@ -1,0 +1,36 @@
+{
+  "id": "godie-u011.e",
+  "name": "61-03 打屁股風林火豬",
+  "description": "[被動]\n0秒冷卻時間\n\n調教被虐待狂的調教術，用在實戰中也有意想不到的效果。\n疾如風：攻擊速度增加50%",
+  "slot": "E",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    12.0,
+    12.0,
+    12.0,
+    12.0
+  ],
+  "manaCost": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "pctAdd",
+          "value": 0.5
+        }
+      ],
+      "duration": 12.0
+    }
+  ],
+  "vfxKey": "fx.firestorm",
+  "schema": "ability@1"
+}

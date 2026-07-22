@@ -1,0 +1,90 @@
+{
+  "id": "fx.root-snare",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "point"
+  },
+  "mode": "burst",
+  "burstCount": 24,
+  "lifetimeSec": {
+    "min": 0.14,
+    "max": 0.4
+  },
+  "size": {
+    "start": 0.24,
+    "end": 0.0
+  },
+  "sizeStops": [
+    [
+      0,
+      0.24
+    ],
+    [
+      0.1,
+      0.6
+    ],
+    [
+      1,
+      0.0
+    ]
+  ],
+  "color": {
+    "start": [
+      0.4,
+      0.65,
+      0.25,
+      0.9
+    ],
+    "end": [
+      0.14,
+      0.22,
+      0.08,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        0.82,
+        0.95,
+        0.62,
+        1.0
+      ]
+    ],
+    [
+      0.18,
+      [
+        0.4,
+        0.65,
+        0.25,
+        0.9
+      ]
+    ],
+    [
+      0.6,
+      [
+        0.26,
+        0.32,
+        0.14,
+        0.5
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.14,
+        0.22,
+        0.08,
+        0.0
+      ]
+    ]
+  ],
+  "blendMode": "alpha",
+  "gravityY": -7.5,
+  "speed": {
+    "min": 2.4,
+    "max": 5.5
+  },
+  "texture": "assets/textures/particles/dirt_02.png"
+}

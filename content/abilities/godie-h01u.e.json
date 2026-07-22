@@ -1,0 +1,93 @@
+{
+  "id": "godie-h01u.e",
+  "name": "80-03 鬼神烈戟",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n武將殺氣凝聚為無堅不摧的巨大畫戟形象，造成範圍500內敵人350+(力量*3)點傷害。重擊敵軍的同時，氣勁化為千萬粉蝶形象追魂噬骨，並減少敵人防禦3點，持續3秒。",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    250.0,
+    350.0,
+    450.0,
+    550.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          350.0,
+          550.0,
+          750.0,
+          950.0
+        ]
+      }
+    },
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "armor",
+          "op": "flat",
+          "value": -3
+        }
+      ],
+      "duration": 3.0,
+      "perRank": [
+        {
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": -3
+            }
+          ],
+          "duration": 3.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": -6
+            }
+          ],
+          "duration": 3.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": -9
+            }
+          ],
+          "duration": 3.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": -12
+            }
+          ],
+          "duration": 3.0
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "radius": 9.72,
+  "castTimeSec": 0.6
+}

@@ -1,0 +1,41 @@
+{
+  "id": "godie-u00j.r",
+  "name": "74-04 最終殞落星",
+  "description": "[主動攻擊]\n75秒冷卻時間\n\n招喚災難彗星造成地面嚴重傷害，每顆隕石造成650點傷害，總共1顆隕石。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    220.0,
+    330.0,
+    440.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          75.0,
+          75.0,
+          75.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.225
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

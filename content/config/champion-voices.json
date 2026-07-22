@@ -1,0 +1,605 @@
+{
+  "id": "champion-voices",
+  "schema": "config.champion-voices@1",
+  "champions": {
+    "godie-e001": {
+      "select": [
+        "assets/audio/sfx/ringnai.mp3"
+      ],
+      "source": "map-quip",
+      "soundset": "Runner"
+    },
+    "godie-e002": {
+      "select": [],
+      "source": "none",
+      "soundset": "Naisha"
+    },
+    "godie-e007": {
+      "select": [],
+      "source": "none",
+      "soundset": "Furion"
+    },
+    "godie-e008": {
+      "select": [],
+      "source": "none",
+      "soundset": "Huntress"
+    },
+    "godie-e00j": {
+      "select": [],
+      "source": "none",
+      "soundset": "PandarenBrewmaster"
+    },
+    "godie-e00k": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "godie-e00l": {
+      "select": [],
+      "source": "none",
+      "soundset": "Naisha"
+    },
+    "godie-e00n": {
+      "select": [
+        "assets/audio/sfx/ringnai.mp3"
+      ],
+      "source": "map-quip",
+      "soundset": "Runner"
+    },
+    "godie-e00q": {
+      "select": [],
+      "source": "none",
+      "soundset": "Banshee"
+    },
+    "godie-e00r": {
+      "select": [],
+      "source": "none",
+      "soundset": "ObsidianStatue"
+    },
+    "godie-e00s": {
+      "select": [],
+      "source": "none",
+      "soundset": "MountainGiant"
+    },
+    "godie-e00t": {
+      "select": [],
+      "source": "none",
+      "soundset": "Banshee"
+    },
+    "godie-e00u": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "godie-e00v": {
+      "select": [],
+      "source": "none",
+      "soundset": "GrizzlyBear"
+    },
+    "godie-e00w": {
+      "select": [],
+      "source": "none",
+      "soundset": "Dryad"
+    },
+    "godie-e00x": {
+      "select": [],
+      "source": "none",
+      "soundset": "Dryad"
+    },
+    "godie-e00z": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "godie-e012": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "godie-e015": {
+      "select": [],
+      "source": "none",
+      "soundset": "PandarenBrewmaster"
+    },
+    "godie-ecen": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "godie-edem": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "godie-efur": {
+      "select": [
+        "assets/audio/sfx/87joke.mp3"
+      ],
+      "source": "map-quip",
+      "soundset": null
+    },
+    "godie-ekee": {
+      "select": [],
+      "source": "none",
+      "soundset": "DruidoftheClaw"
+    },
+    "godie-emfr": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "godie-emns": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "godie-etyr": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "godie-ewar": {
+      "select": [],
+      "source": "none",
+      "soundset": "Furion"
+    },
+    "godie-ewrd": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "godie-h001": {
+      "select": [
+        "assets/audio/sfx/pick.mp3",
+        "assets/audio/sfx/mandie.mp3"
+      ],
+      "source": "map-quip",
+      "soundset": "VillagerKid"
+    },
+    "godie-h00l": {
+      "select": [],
+      "source": "none",
+      "soundset": "HeroPaladin"
+    },
+    "godie-h01n": {
+      "select": [],
+      "source": "none",
+      "soundset": "HeroLich"
+    },
+    "godie-h01o": {
+      "select": [],
+      "source": "none",
+      "soundset": "NagaRoyalGuard"
+    },
+    "godie-h01u": {
+      "select": [],
+      "source": "none",
+      "soundset": "DragonHawk"
+    },
+    "godie-h020": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "godie-h021": {
+      "select": [],
+      "source": "none",
+      "soundset": "VillagerKid"
+    },
+    "godie-h022": {
+      "select": [],
+      "source": "none",
+      "soundset": "HeroPaladin"
+    },
+    "godie-h02k": {
+      "select": [],
+      "source": "none",
+      "soundset": "PandarenBrewmaster"
+    },
+    "godie-h02n": {
+      "select": [
+        "assets/audio/sfx/kickme.mp3"
+      ],
+      "source": "map-quip",
+      "soundset": "Jaina"
+    },
+    "godie-h02r": {
+      "select": [],
+      "source": "none",
+      "soundset": "Frog"
+    },
+    "godie-h02s": {
+      "select": [],
+      "source": "none",
+      "soundset": "HeroBladeMaster"
+    },
+    "godie-h02u": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "godie-h02v": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "godie-h02y": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "godie-h02z": {
+      "select": [],
+      "source": "none",
+      "soundset": "HeroBladeMaster"
+    },
+    "godie-hapm": {
+      "select": [],
+      "source": "none",
+      "soundset": "Wendigo"
+    },
+    "godie-harf": {
+      "select": [],
+      "source": "none",
+      "soundset": "HeroBladeMaster"
+    },
+    "godie-hart": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "godie-hblm": {
+      "select": [],
+      "source": "none",
+      "soundset": "VillagerKid"
+    },
+    "godie-hgam": {
+      "select": [],
+      "source": "none",
+      "soundset": "Frog"
+    },
+    "godie-hjai": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "godie-hlgr": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "godie-hpal": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "godie-hpb1": {
+      "select": [
+        "assets/audio/sfx/moongo.mp3",
+        "assets/audio/sfx/moonjump.mp3"
+      ],
+      "source": "map-quip",
+      "soundset": "Captain"
+    },
+    "godie-huth": {
+      "select": [],
+      "source": "none",
+      "soundset": "Tichondrius"
+    },
+    "godie-hvsh": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "godie-hvwd": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "godie-n003": {
+      "select": [
+        "assets/audio/sfx/even.mp3"
+      ],
+      "source": "map-quip",
+      "soundset": "Demoness"
+    },
+    "godie-n00b": {
+      "select": [
+        "assets/audio/sfx/dorakill.mp3"
+      ],
+      "source": "map-quip",
+      "soundset": "Maiev"
+    },
+    "godie-n00p": {
+      "select": [],
+      "source": "none",
+      "soundset": "DruidOfTheTalon"
+    },
+    "godie-n01c": {
+      "select": [],
+      "source": "none",
+      "soundset": "EvilArthas"
+    },
+    "godie-n01g": {
+      "select": [
+        "assets/audio/sfx/even.mp3"
+      ],
+      "source": "map-quip",
+      "soundset": "Demoness"
+    },
+    "godie-n01l": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "godie-naka": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "godie-nbbc": {
+      "select": [],
+      "source": "none",
+      "soundset": "EvilArthas"
+    },
+    "godie-nbst": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "godie-nman": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "godie-nplh": {
+      "select": [],
+      "source": "none",
+      "soundset": "SpellBreaker"
+    },
+    "godie-nsjs": {
+      "select": [],
+      "source": "none",
+      "soundset": "Archer"
+    },
+    "godie-ntin": {
+      "select": [],
+      "source": "none",
+      "soundset": "Maiev"
+    },
+    "godie-o00k": {
+      "select": [
+        "assets/audio/sfx/nocute.mp3"
+      ],
+      "source": "map-quip",
+      "soundset": "Dryad"
+    },
+    "godie-o00l": {
+      "select": [],
+      "source": "none",
+      "soundset": "SpiritWalker"
+    },
+    "godie-o00x": {
+      "select": [],
+      "source": "none",
+      "soundset": "Arthas"
+    },
+    "godie-o01z": {
+      "select": [],
+      "source": "none",
+      "soundset": "Shandris"
+    },
+    "godie-o02l": {
+      "select": [
+        "assets/audio/sfx/pikakill.mp3"
+      ],
+      "source": "map-quip",
+      "soundset": "Dryad"
+    },
+    "godie-o02o": {
+      "select": [],
+      "source": "none",
+      "soundset": "Dryad"
+    },
+    "godie-o02p": {
+      "select": [],
+      "source": "none",
+      "soundset": "VillagerKid"
+    },
+    "godie-o02s": {
+      "select": [],
+      "source": "none",
+      "soundset": "SpiritWalker"
+    },
+    "godie-o02v": {
+      "select": [],
+      "source": "none",
+      "soundset": "Shandris"
+    },
+    "godie-o02w": {
+      "select": [],
+      "source": "none",
+      "soundset": "Necromancer"
+    },
+    "godie-obla": {
+      "select": [],
+      "source": "none",
+      "soundset": "Peon"
+    },
+    "godie-ofar": {
+      "select": [
+        "assets/audio/sfx/pikakill.mp3"
+      ],
+      "source": "map-quip",
+      "soundset": "Dryad"
+    },
+    "godie-ogld": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "godie-ogrh": {
+      "select": [],
+      "source": "none",
+      "soundset": "Arthas"
+    },
+    "godie-opgh": {
+      "select": [],
+      "source": "none",
+      "soundset": "Draenei"
+    },
+    "godie-orkn": {
+      "select": [
+        "assets/audio/sfx/bads.mp3"
+      ],
+      "source": "map-quip",
+      "soundset": null
+    },
+    "godie-osam": {
+      "select": [],
+      "source": "none",
+      "soundset": "Necromancer"
+    },
+    "godie-oshd": {
+      "select": [
+        "assets/audio/sfx/kickme.mp3"
+      ],
+      "source": "map-quip",
+      "soundset": "Rifleman"
+    },
+    "godie-othr": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "godie-u00b": {
+      "select": [
+        "assets/audio/sfx/dogdie.mp3"
+      ],
+      "source": "map-quip",
+      "soundset": null
+    },
+    "godie-u00h": {
+      "select": [],
+      "source": "none",
+      "soundset": "EvilArthas"
+    },
+    "godie-u00j": {
+      "select": [],
+      "source": "none",
+      "soundset": "EvilArthas"
+    },
+    "godie-u00k": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "godie-u00l": {
+      "select": [],
+      "source": "none",
+      "soundset": "Uther"
+    },
+    "godie-u00n": {
+      "select": [],
+      "source": "none",
+      "soundset": "Priest"
+    },
+    "godie-u00o": {
+      "select": [],
+      "source": "none",
+      "soundset": "Priest"
+    },
+    "godie-u00v": {
+      "select": [],
+      "source": "none",
+      "soundset": "IceTroll"
+    },
+    "godie-u010": {
+      "select": [],
+      "source": "none",
+      "soundset": "Shade"
+    },
+    "godie-u011": {
+      "select": [],
+      "source": "none",
+      "soundset": "Priest"
+    },
+    "godie-u012": {
+      "select": [],
+      "source": "none",
+      "soundset": "Priest"
+    },
+    "godie-u01f": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "godie-u01q": {
+      "select": [],
+      "source": "none",
+      "soundset": "Priest"
+    },
+    "godie-u01u": {
+      "select": [],
+      "source": "none",
+      "soundset": "Priest"
+    },
+    "godie-u034": {
+      "select": [],
+      "source": "none",
+      "soundset": "Grunt"
+    },
+    "godie-ubal": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "godie-ucrl": {
+      "select": [],
+      "source": "none",
+      "soundset": "VillagerKid"
+    },
+    "godie-udea": {
+      "select": [
+        "assets/audio/sfx/dogdie.mp3"
+      ],
+      "source": "map-quip",
+      "soundset": null
+    },
+    "godie-udre": {
+      "select": [],
+      "source": "none",
+      "soundset": "Priest"
+    },
+    "godie-umal": {
+      "select": [],
+      "source": "none",
+      "soundset": "Uther"
+    },
+    "godie-usyl": {
+      "select": [],
+      "source": "none",
+      "soundset": "Hydralisk"
+    },
+    "godie-uvng": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "godie-uwar": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "sela": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    },
+    "thorne": {
+      "select": [],
+      "source": "none",
+      "soundset": null
+    }
+  }
+}

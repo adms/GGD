@@ -1,0 +1,41 @@
+{
+  "id": "godie-o02p.e",
+  "name": "99-03 初音未來的消失",
+  "description": "[輔助]\n50秒冷卻時間\n\n初音的成名曲之一，讓聽者莫名的悲憤及難過，進而在一定時間內武裝自己；在初音週遭的部隊可以額外獲得10%攻擊力加成及3點防禦，持續15秒。",
+  "slot": "E",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    50.0,
+    50.0,
+    50.0,
+    50.0
+  ],
+  "manaCost": [
+    175.0,
+    255.0,
+    335.0,
+    415.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.1
+        },
+        {
+          "stat": "armor",
+          "op": "flat",
+          "value": 3
+        }
+      ],
+      "duration": 15.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

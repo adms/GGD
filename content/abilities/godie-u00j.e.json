@@ -1,0 +1,45 @@
+{
+  "id": "godie-u00j.e",
+  "name": "74-03 闇之天使",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n抽取星球之力轉換為魔晃能量，瞬間爆發的威力造成150點傷害，共8道爆炸。",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    200.0,
+    275.0,
+    350.0,
+    425.0
+  ],
+  "range": 6.42,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          2.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.006
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "radius": 6.0,
+  "schema": "ability@1"
+}

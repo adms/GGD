@@ -1,0 +1,79 @@
+{
+  "id": "godie-linainvers-p1",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.124,
+    "angleDeg": 1.0
+  },
+  "mode": "continuous",
+  "rate": 20.0,
+  "lifetimeSec": {
+    "min": 0.5,
+    "max": 0.5
+  },
+  "size": {
+    "start": 0.248,
+    "end": 0.124
+  },
+  "color": {
+    "start": [
+      0.518,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "end": [
+      0.0,
+      0.251,
+      0.502,
+      1.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        0.518,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    [
+      0.5,
+      [
+        1.0,
+        0.012,
+        0.012,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.0,
+        0.251,
+        0.502,
+        1.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.248
+    ],
+    [
+      0.5,
+      0.558
+    ],
+    [
+      1,
+      0.124
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/light_01.png",
+  "anchorBone": "bone right hand"
+}

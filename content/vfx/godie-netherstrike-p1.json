@@ -1,0 +1,82 @@
+{
+  "id": "godie-netherstrike-p1",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 1.667,
+    "angleDeg": 10.0
+  },
+  "mode": "continuous",
+  "rate": 20.0,
+  "lifetimeSec": {
+    "min": 1.65,
+    "max": 1.65
+  },
+  "size": {
+    "start": 1.667,
+    "end": 1.111
+  },
+  "color": {
+    "start": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "end": [
+      1.0,
+      1.0,
+      1.0,
+      0.784
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    ],
+    [
+      0.4,
+      [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.784
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      1.667
+    ],
+    [
+      0.4,
+      1.667
+    ],
+    [
+      1,
+      1.111
+    ]
+  ],
+  "blendMode": "modulate",
+  "texture": "assets/textures/particles/smoke_09.png",
+  "speed": {
+    "min": 4.4448,
+    "max": 6.6672
+  }
+}

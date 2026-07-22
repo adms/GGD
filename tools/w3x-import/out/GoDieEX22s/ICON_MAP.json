@@ -1,0 +1,5192 @@
+{
+  "godie-e001": {
+    "wc3": "e001",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNLena.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-e001.png"
+  },
+  "godie-e001.q": {
+    "wc3": "A007",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAmbush.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e001.w": {
+    "wc3": "AOcr",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNStaffOfSanctuary.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e001.e": {
+    "wc3": "AEsh",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNTheBlackArrow.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e001.r": {
+    "wc3": "A02Q",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-e002": {
+    "wc3": "e002",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSaber.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-e002.png"
+  },
+  "godie-e002.q": {
+    "wc3": "A0CM",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-e002.w": {
+    "wc3": "A0DZ",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNWispSplode.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e002.e": {
+    "wc3": "A0D5",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNArcaniteMelee.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e002.r": {
+    "wc3": "A0CT",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-e007": {
+    "wc3": "e007",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNChLon.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-e007.png"
+  },
+  "godie-e007.q": {
+    "wc3": "A04Y",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMirrorImage.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e007.w": {
+    "wc3": "A02K",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHealthStone.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e007.e": {
+    "wc3": "A02W",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSalamader.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/abilities/godie-e007.e.png"
+  },
+  "godie-e007.r": {
+    "wc3": "A04X",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMentalPrison.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/abilities/godie-e007.r.png"
+  },
+  "godie-e008": {
+    "wc3": "e008",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSana.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-e008.png"
+  },
+  "godie-e008.q": {
+    "wc3": "A0BD",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFireForTheCannon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e008.w": {
+    "wc3": "A0BH",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-e008.e": {
+    "wc3": "A0BF",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSearingArrows.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e008.r": {
+    "wc3": "A0HB",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAntiMagicShell.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00j": {
+    "wc3": "e00j",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMrChin.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-e00j.png"
+  },
+  "godie-e00j.q": {
+    "wc3": "A0Y7",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSpellStealOn.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00j.w": {
+    "wc3": "A0Y6",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNPillage.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00j.e": {
+    "wc3": "A0Y8",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBronzeDragon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00j.r": {
+    "wc3": "A0Y9",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-e00k": {
+    "wc3": "e00k",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAzumi.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-e00k.png"
+  },
+  "godie-e00k.q": {
+    "wc3": "A00F",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-e00k.w": {
+    "wc3": "A0H5",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNWhirlwind.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00k.e": {
+    "wc3": "A0H9",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNStun.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00k.r": {
+    "wc3": "A02Y",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNEvasion.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00l": {
+    "wc3": "e00l",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSaber.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-e00l.png"
+  },
+  "godie-e00l.q": {
+    "wc3": "A0CM",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-e00l.w": {
+    "wc3": "A0DZ",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNWispSplode.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00l.e": {
+    "wc3": "A0D5",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNArcaniteMelee.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00l.r": {
+    "wc3": "A0CT",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-e00n": {
+    "wc3": "e00n",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNLena.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-e00n.png"
+  },
+  "godie-e00n.q": {
+    "wc3": "A007",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAmbush.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00n.w": {
+    "wc3": "AOcr",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNStaffOfSanctuary.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00n.e": {
+    "wc3": "AEsh",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNTheBlackArrow.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00n.r": {
+    "wc3": "A02Q",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-e00q": {
+    "wc3": "e00q",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSaber.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-e00q.png"
+  },
+  "godie-e00q.q": {
+    "wc3": "A031",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNGnollCommandAura.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00q.w": {
+    "wc3": "AOsw",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNTentacle.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00q.e": {
+    "wc3": "A0D5",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNArcaniteMelee.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00q.r": {
+    "wc3": "A0FS",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNGenericSpellImmunity.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00r": {
+    "wc3": "e00r",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFirst.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-e00r.png"
+  },
+  "godie-e00r.q": {
+    "wc3": "A0O5",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBerserkForTrolls.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00r.w": {
+    "wc3": "A0GF",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNCleavingAttack.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00r.e": {
+    "wc3": "A0GH",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNPillage.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00r.r": {
+    "wc3": "A0GI",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-e00s": {
+    "wc3": "e00s",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNTreant.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00s.q": {
+    "wc3": "A0UJ",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNEarthquake.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00s.w": {
+    "wc3": "A0GQ",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-e00s.e": {
+    "wc3": "A0GR",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNThorns.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00s.r": {
+    "wc3": "A0GN",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNEnt.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00t": {
+    "wc3": "e00t",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBanshee.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00t.q": {
+    "wc3": "A0I7",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNShadowMeld.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00t.w": {
+    "wc3": "A0I8",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAuraOfDarkness.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00t.e": {
+    "wc3": "A0IB",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNVengeanceIncarnate.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00t.r": {
+    "wc3": "A0IC",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNLamp.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00u": {
+    "wc3": "e00u",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAvengingWatcher.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00u.q": {
+    "wc3": null,
+    "art": null,
+    "resolution": "no-wc3-source",
+    "icon": null
+  },
+  "godie-e00u.w": {
+    "wc3": null,
+    "art": null,
+    "resolution": "no-wc3-source",
+    "icon": null
+  },
+  "godie-e00u.e": {
+    "wc3": null,
+    "art": null,
+    "resolution": "no-wc3-source",
+    "icon": null
+  },
+  "godie-e00u.r": {
+    "wc3": null,
+    "art": null,
+    "resolution": "no-wc3-source",
+    "icon": null
+  },
+  "godie-e00v": {
+    "wc3": "e00v",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNGrizzlyBear.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00v.q": {
+    "wc3": "A0CR",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNFreezingBreath.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00v.w": {
+    "wc3": "A0CV",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAcorn.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00v.e": {
+    "wc3": "A0D6",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNMagicImmunity.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00v.r": {
+    "wc3": "A0CX",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSeal.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00w": {
+    "wc3": "e00w",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNsetuna.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-e00w.png"
+  },
+  "godie-e00w.q": {
+    "wc3": "A0TV",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNVolcano.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00w.w": {
+    "wc3": "A0TX",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNThoriumMelee.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00w.e": {
+    "wc3": "A0JG",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPhaseShift.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00w.r": {
+    "wc3": "A0UB",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHeartOfAszune.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00x": {
+    "wc3": "e00x",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNsetuna.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-e00x.png"
+  },
+  "godie-e00x.q": {
+    "wc3": "A0TV",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNVolcano.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00x.w": {
+    "wc3": "A0TX",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNThoriumMelee.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00x.e": {
+    "wc3": "A0JG",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPhaseShift.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00x.r": {
+    "wc3": "A0UB",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHeartOfAszune.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00z": {
+    "wc3": "e00z",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAzumi.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-e00z.png"
+  },
+  "godie-e00z.q": {
+    "wc3": "A00F",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-e00z.w": {
+    "wc3": "A0H5",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNWhirlwind.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00z.e": {
+    "wc3": "A0H9",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNStun.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00z.r": {
+    "wc3": "A02Y",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNEvasion.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e012": {
+    "wc3": "e012",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNKenshin.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-e012.png"
+  },
+  "godie-e012.q": {
+    "wc3": "A013",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFlare.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e012.w": {
+    "wc3": "A014",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-e012.e": {
+    "wc3": "A01B",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNChimaera.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e012.r": {
+    "wc3": "A012",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNDestroyer.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e015": {
+    "wc3": "e015",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMrChin.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-e015.png"
+  },
+  "godie-e015.q": {
+    "wc3": "A0OV",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-e015.w": {
+    "wc3": "A0QG",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-e015.e": {
+    "wc3": "A0QJ",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-e015.r": {
+    "wc3": "A0O0",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBloodElfSupplyWagon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ecen": {
+    "wc3": "ecen",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-ecen.q": {
+    "wc3": "A0A2",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPotionOfOmniscience.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ecen.w": {
+    "wc3": "A0A7",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPackBeast.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ecen.e": {
+    "wc3": "ANrc",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-ecen.r": {
+    "wc3": "A0A3",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSpy.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-edem": {
+    "wc3": "edem",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNJoCu.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-edem.png"
+  },
+  "godie-edem.q": {
+    "wc3": "A0M7",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFireForTheCannon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-edem.w": {
+    "wc3": "A0JX",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNDispelMagic.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-edem.e": {
+    "wc3": "A0IJ",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNChainLightning.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-edem.r": {
+    "wc3": "A0U7",
+    "art": "ReplaceableTextures\\CommandButtonsDisabled\\DISWeasel.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/abilities/godie-edem.r.png"
+  },
+  "godie-efur": {
+    "wc3": "efur",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-efur.q": {
+    "wc3": "AEer",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-efur.w": {
+    "wc3": "A00X",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-efur.e": {
+    "wc3": "AEtq",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMirrorImage.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-efur.r": {
+    "wc3": "A00S",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNVorpalBlades.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ekee": {
+    "wc3": "ekee",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNDruidOfTheClaw.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ekee.q": {
+    "wc3": "Abof",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNINV_Misc_Note_06.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/abilities/godie-ekee.q.png"
+  },
+  "godie-ekee.w": {
+    "wc3": "A0WH",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSpy.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ekee.e": {
+    "wc3": "A0NG",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNManaDrain.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ekee.r": {
+    "wc3": "A0WJ",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNNecromancerAdept.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-emfr": {
+    "wc3": "emfr",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNNaGi.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-emfr.png"
+  },
+  "godie-emfr.q": {
+    "wc3": "A0D3",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMassTeleport.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-emfr.w": {
+    "wc3": "A054",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-emfr.e": {
+    "wc3": "A052",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNOrbOfLightning.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-emfr.r": {
+    "wc3": "A053",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNManaFlare.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-emns": {
+    "wc3": "emns",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMoon.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-emns.png"
+  },
+  "godie-emns.q": {
+    "wc3": "A0IK",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNUnholyFrenzy.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-emns.w": {
+    "wc3": "A05G",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNIceShard.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-emns.e": {
+    "wc3": "A05H",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-emns.r": {
+    "wc3": "A05I",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBattleStations.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-etyr": {
+    "wc3": "etyr",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMoNi.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-etyr.png"
+  },
+  "godie-etyr.q": {
+    "wc3": "A0JL",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNCallToArms.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-etyr.w": {
+    "wc3": "AOae",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-etyr.e": {
+    "wc3": "A0JM",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNEarthquake.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-etyr.r": {
+    "wc3": "A0SS",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-ewar": {
+    "wc3": "ewar",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNChLon.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-ewar.png"
+  },
+  "godie-ewar.q": {
+    "wc3": "A04Y",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMirrorImage.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ewar.w": {
+    "wc3": "A02K",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHealthStone.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ewar.e": {
+    "wc3": "A02W",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSalamader.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/abilities/godie-ewar.e.png"
+  },
+  "godie-ewar.r": {
+    "wc3": "A04X",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMentalPrison.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/abilities/godie-ewar.r.png"
+  },
+  "godie-ewrd": {
+    "wc3": "ewrd",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNNight.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-ewrd.png"
+  },
+  "godie-ewrd.q": {
+    "wc3": "AHad",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNvengeanceIncarnate.tga",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ewrd.w": {
+    "wc3": "A07L",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNVorpalBlades.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ewrd.e": {
+    "wc3": "A07M",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNDispelMagic.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ewrd.r": {
+    "wc3": "A07N",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAzureDragon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h001": {
+    "wc3": "h001",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNLineage.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-h001.png"
+  },
+  "godie-h001.q": {
+    "wc3": "A015",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNVampiricAura.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h001.w": {
+    "wc3": "A0Z2",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNEarthquake.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h001.e": {
+    "wc3": "A0PH",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-h001.r": {
+    "wc3": "ANr3",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNWallOfFire.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h00l": {
+    "wc3": "h00l",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNLink.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-h00l.png"
+  },
+  "godie-h00l.q": {
+    "wc3": "A0BO",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNUpgradeMoonGlaive.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h00l.w": {
+    "wc3": "A0BP",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAdvancedStrengthOfTheMoon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h00l.e": {
+    "wc3": "Adef",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHumanArmorUpThree.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h00l.r": {
+    "wc3": "A0BR",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNWhirlwind.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h01n": {
+    "wc3": "h01n",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNIchigo.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-h01n.png"
+  },
+  "godie-h01n.q": {
+    "wc3": "A0RX",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBlink.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h01n.w": {
+    "wc3": "A0LK",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNTheBlackArrow.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h01n.e": {
+    "wc3": "A0LL",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNEarthquake.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h01n.r": {
+    "wc3": "A0LN",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNTransmute.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h01o": {
+    "wc3": "h01o",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNIchigo.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-h01o.png"
+  },
+  "godie-h01o.q": {
+    "wc3": "A0RX",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBlink.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h01o.w": {
+    "wc3": "A0LK",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNTheBlackArrow.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h01o.e": {
+    "wc3": "A0LL",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNEarthquake.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h01o.r": {
+    "wc3": "A0LN",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNTransmute.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h01u": {
+    "wc3": "h01u",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNLubu.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-h01u.png"
+  },
+  "godie-h01u.q": {
+    "wc3": "A0MX",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNThornShield.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h01u.w": {
+    "wc3": "A0MY",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNIncinerate.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h01u.e": {
+    "wc3": "A0N0",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNCorpseExplode.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h01u.r": {
+    "wc3": "A0MZ",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-h020": {
+    "wc3": "h020",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNLina.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-h020.png"
+  },
+  "godie-h020.q": {
+    "wc3": "A0AY",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFireForTheCannon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h020.w": {
+    "wc3": "A021",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-h020.e": {
+    "wc3": "A04R",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHeartOfSearinox.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h020.r": {
+    "wc3": "A07F",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNWandOfNeutralization.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h021": {
+    "wc3": "h021",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNCaso.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-h021.png"
+  },
+  "godie-h021.q": {
+    "wc3": "A08Z",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-h021.w": {
+    "wc3": "A090",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-h021.e": {
+    "wc3": "A091",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBearForm.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h021.r": {
+    "wc3": "A092",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBronzeDragon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h022": {
+    "wc3": "h022",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNNaGi.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-h022.png"
+  },
+  "godie-h022.q": {
+    "wc3": "A0Q4",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNManaFlare.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h022.w": {
+    "wc3": "A0PM",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMassTeleport.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h022.e": {
+    "wc3": "A0Q5",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBrilliance.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h022.r": {
+    "wc3": "A0Q6",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNDispelMagic.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h02k": {
+    "wc3": "h02k",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPandarenBrewmaster.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h02k.q": {
+    "wc3": "A0TL",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-h02k.w": {
+    "wc3": "A0TK",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNCriticalStrike.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h02k.e": {
+    "wc3": "A0TN",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-h02k.r": {
+    "wc3": "A0TO",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-h02n": {
+    "wc3": "h02n",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-h02n.q": {
+    "wc3": null,
+    "art": null,
+    "resolution": "no-wc3-source",
+    "icon": null
+  },
+  "godie-h02n.w": {
+    "wc3": null,
+    "art": null,
+    "resolution": "no-wc3-source",
+    "icon": null
+  },
+  "godie-h02n.e": {
+    "wc3": null,
+    "art": null,
+    "resolution": "no-wc3-source",
+    "icon": null
+  },
+  "godie-h02n.r": {
+    "wc3": null,
+    "art": null,
+    "resolution": "no-wc3-source",
+    "icon": null
+  },
+  "godie-h02r": {
+    "wc3": "h02r",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFaerieDragon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h02r.q": {
+    "wc3": "AOww",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNShimmerWeed.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h02r.w": {
+    "wc3": "A0NB",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNDryadDispelMagic.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h02r.e": {
+    "wc3": "A0Y4",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNDarkSummoning.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h02r.r": {
+    "wc3": "A0R4",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSearingArrows.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h02s": {
+    "wc3": "h02s",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHeroDeathKnight.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h02s.q": {
+    "wc3": "A0W3",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNDoom.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h02s.w": {
+    "wc3": "A0W4",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNPlagueCloud.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h02s.e": {
+    "wc3": "A0W1",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNCriticalStrike.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h02s.r": {
+    "wc3": "A0N1",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNReincarnation.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h02u": {
+    "wc3": "h02u",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNCritterRabbit.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h02u.q": {
+    "wc3": "A0W9",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSeaElemental.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h02u.w": {
+    "wc3": "A0WB",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-h02u.e": {
+    "wc3": "A0WA",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-h02u.r": {
+    "wc3": "A06Y",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAntiMagicShell.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h02v": {
+    "wc3": "h02v",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNCritterRabbit.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h02v.q": {
+    "wc3": "A0W9",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSeaElemental.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h02v.w": {
+    "wc3": "A0WB",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-h02v.e": {
+    "wc3": "A0WA",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-h02v.r": {
+    "wc3": "A06Y",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAntiMagicShell.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h02y": {
+    "wc3": "h02y",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNNico.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-h02y.png"
+  },
+  "godie-h02y.q": {
+    "wc3": "ANic",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-h02y.w": {
+    "wc3": "A0YF",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAdvancedUnholyStrength.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h02y.e": {
+    "wc3": "A0YG",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-h02y.r": {
+    "wc3": "A0YH",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNDestroyer.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h02z": {
+    "wc3": "h02z",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-h02z.q": {
+    "wc3": "A0W3",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNDoom.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h02z.w": {
+    "wc3": "A0W4",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNPlagueCloud.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h02z.e": {
+    "wc3": "A0W1",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNCriticalStrike.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h02z.r": {
+    "wc3": "A0N1",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNReincarnation.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hapm": {
+    "wc3": "hapm",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBerserker.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-hapm.png"
+  },
+  "godie-hapm.q": {
+    "wc3": "A0VJ",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBerserkForTrolls.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hapm.w": {
+    "wc3": "A0U1",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNRavenForm.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hapm.e": {
+    "wc3": "A0BA",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNOrcMeleeUpThree.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hapm.r": {
+    "wc3": "A0U8",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNUnstableConcoction.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-harf": {
+    "wc3": "harf",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMrChin.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-harf.png"
+  },
+  "godie-harf.q": {
+    "wc3": "A00L",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAvatarOn.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-harf.w": {
+    "wc3": "A0BS",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-harf.e": {
+    "wc3": "A0F9",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-harf.r": {
+    "wc3": "A0EW",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNDeathPact.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hart": {
+    "wc3": "hart",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNCloud.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-hart.png"
+  },
+  "godie-hart.q": {
+    "wc3": "A072",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSacrifice.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hart.w": {
+    "wc3": "A0UX",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNWallOfFire.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hart.e": {
+    "wc3": "A000",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNTornado.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hart.r": {
+    "wc3": "A077",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNDevourMagic.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hblm": {
+    "wc3": "hblm",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNCaso.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-hblm.png"
+  },
+  "godie-hblm.q": {
+    "wc3": "A08Z",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-hblm.w": {
+    "wc3": "A090",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-hblm.e": {
+    "wc3": "A091",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBearForm.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hblm.r": {
+    "wc3": "A092",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBronzeDragon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hgam": {
+    "wc3": "hgam",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFaerieDragon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hgam.q": {
+    "wc3": "AOww",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNShimmerWeed.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hgam.w": {
+    "wc3": "A0NB",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNDryadDispelMagic.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hgam.e": {
+    "wc3": "A0Y4",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNDarkSummoning.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hgam.r": {
+    "wc3": "A0R4",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSearingArrows.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hjai": {
+    "wc3": "hjai",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNLina.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-hjai.png"
+  },
+  "godie-hjai.q": {
+    "wc3": "A0AY",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFireForTheCannon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hjai.w": {
+    "wc3": "A021",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-hjai.e": {
+    "wc3": "A04R",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHeartOfSearinox.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hjai.r": {
+    "wc3": "A07F",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNWandOfNeutralization.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hlgr": {
+    "wc3": "hlgr",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNGundam.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-hlgr.png"
+  },
+  "godie-hlgr.q": {
+    "wc3": "ANab",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-hlgr.w": {
+    "wc3": "A04M",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHumanArtilleryUpOne.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hlgr.e": {
+    "wc3": "A04L",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-hlgr.r": {
+    "wc3": "A04N",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-hpal": {
+    "wc3": "hpal",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBawind.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-hpal.png"
+  },
+  "godie-hpal.q": {
+    "wc3": "A06G",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNEnchantedBears.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hpal.w": {
+    "wc3": "A06J",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNTaunt.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hpal.e": {
+    "wc3": "A06H",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-hpal.r": {
+    "wc3": "A0U6",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBlackDragon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hpb1": {
+    "wc3": "hpb1",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHosilo.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-hpb1.png"
+  },
+  "godie-hpb1.q": {
+    "wc3": "A0G0",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-hpb1.w": {
+    "wc3": "A0G2",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNUnstableConcoction.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hpb1.e": {
+    "wc3": "A0G3",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNCommand.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hpb1.r": {
+    "wc3": "A02C",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNReincarnation.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-huth": {
+    "wc3": "huth",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPowo.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-huth.png"
+  },
+  "godie-huth.q": {
+    "wc3": "A0GB",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNDevour.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-huth.w": {
+    "wc3": "A0CK",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNCheese.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-huth.e": {
+    "wc3": "A03T",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-huth.r": {
+    "wc3": "A08U",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNOrbOfDeath.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hvsh": {
+    "wc3": "hvsh",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSnake.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-hvsh.png"
+  },
+  "godie-hvsh.q": {
+    "wc3": "A0RO",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSlow.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hvsh.w": {
+    "wc3": "A069",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNMagicalSentry.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hvsh.e": {
+    "wc3": "A06C",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPowerGenerator.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hvsh.r": {
+    "wc3": "A0RQ",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAnimalWarTraining.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hvwd": {
+    "wc3": "hvwd",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNKike.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-hvwd.png"
+  },
+  "godie-hvwd.q": {
+    "wc3": "A03C",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFlare.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hvwd.w": {
+    "wc3": "A045",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-hvwd.e": {
+    "wc3": "A03D",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPhoenix_Samwise.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/abilities/godie-hvwd.e.png"
+  },
+  "godie-hvwd.r": {
+    "wc3": "A0Z6",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNGhost.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-n003": {
+    "wc3": "n003",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNVampire.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-n003.png"
+  },
+  "godie-n003.q": {
+    "wc3": "A05B",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-n003.w": {
+    "wc3": "AUdr",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMaskOfDeath.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-n003.e": {
+    "wc3": "A05C",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNOrbOfFrost.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-n003.r": {
+    "wc3": "A05D",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNWispSplode.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-n00b": {
+    "wc3": "n00b",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNStormBrewmaster.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-n00b.q": {
+    "wc3": "A0D0",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNDwarvenLongRifle.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-n00b.w": {
+    "wc3": "A0NE",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNCharm.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-n00b.e": {
+    "wc3": "A0D2",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHumanCaptureFlag.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-n00b.r": {
+    "wc3": "A0JN",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNTornado.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-n00p": {
+    "wc3": "n00p",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNChama.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-n00p.png"
+  },
+  "godie-n00p.q": {
+    "wc3": "A0IO",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNDeathAndDecay.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-n00p.w": {
+    "wc3": "A0RV",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNWandOfShadowSight.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-n00p.e": {
+    "wc3": "A0IH",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSatyrTrickster.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-n00p.r": {
+    "wc3": "A0P7",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNNightElfBuild.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-n01c": {
+    "wc3": "n01c",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNStupid.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-n01c.png"
+  },
+  "godie-n01c.q": {
+    "wc3": "A0CF",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBerserkForTrolls.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-n01c.w": {
+    "wc3": "A05T",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHeartOfAszune.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-n01c.e": {
+    "wc3": "A05J",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNGreenDragon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-n01c.r": {
+    "wc3": "A0EZ",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNPillage.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-n01g": {
+    "wc3": "n01g",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNVampire.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-n01g.png"
+  },
+  "godie-n01g.q": {
+    "wc3": "A05B",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-n01g.w": {
+    "wc3": "AUdr",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMaskOfDeath.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-n01g.e": {
+    "wc3": "A05C",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNOrbOfFrost.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-n01g.r": {
+    "wc3": "A05D",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNWispSplode.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-n01l": {
+    "wc3": "n01l",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-n01l.q": {
+    "wc3": "A0ZD",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNChestOfGold.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-n01l.w": {
+    "wc3": "A0ZE",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNTemp.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-n01l.e": {
+    "wc3": "A0ZH",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNManual3.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-n01l.r": {
+    "wc3": "A0ZI",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBearBlink.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-naka": {
+    "wc3": "naka",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNNinja!.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-naka.png"
+  },
+  "godie-naka.q": {
+    "wc3": "A03A",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFanOfKnives.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-naka.w": {
+    "wc3": "AUim",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-naka.e": {
+    "wc3": "A03I",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNCurse.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-naka.r": {
+    "wc3": "A030",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNRavenForm.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-nbbc": {
+    "wc3": "nbbc",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNStupid.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-nbbc.png"
+  },
+  "godie-nbbc.q": {
+    "wc3": "A0CF",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBerserkForTrolls.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-nbbc.w": {
+    "wc3": "A05T",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHeartOfAszune.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-nbbc.e": {
+    "wc3": "A05J",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNGreenDragon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-nbbc.r": {
+    "wc3": "A0EZ",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNPillage.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-nbst": {
+    "wc3": "nbst",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNWildmask.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-nbst.png"
+  },
+  "godie-nbst.q": {
+    "wc3": "A00A",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-nbst.w": {
+    "wc3": "A074",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-nbst.e": {
+    "wc3": "A0AP",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAnimalWarTraining.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-nbst.r": {
+    "wc3": "A0AN",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHire.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-nman": {
+    "wc3": "nman",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNGrant.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-nman.png"
+  },
+  "godie-nman.q": {
+    "wc3": "A070",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNSeaGiantPulverize.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-nman.w": {
+    "wc3": "A07I",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNChemicalRage.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-nman.e": {
+    "wc3": "A0ND",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPhaseShift.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-nman.r": {
+    "wc3": "A0LZ",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNLavaSpawn.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-nplh": {
+    "wc3": "nplh",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNLeaf.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-nplh.png"
+  },
+  "godie-nplh.q": {
+    "wc3": "A044",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNDizzy.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-nplh.w": {
+    "wc3": "A041",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-nplh.e": {
+    "wc3": "A043",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNWispSplode.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-nplh.r": {
+    "wc3": "A042",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMarksmanship.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-nsjs": {
+    "wc3": "nsjs",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNChama.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-nsjs.png"
+  },
+  "godie-nsjs.q": {
+    "wc3": "A0IO",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNDeathAndDecay.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-nsjs.w": {
+    "wc3": "A0RV",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNWandOfShadowSight.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-nsjs.e": {
+    "wc3": "A0IH",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSatyrTrickster.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-nsjs.r": {
+    "wc3": "A0P7",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNNightElfBuild.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ntin": {
+    "wc3": "ntin",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFate.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-ntin.png"
+  },
+  "godie-ntin.q": {
+    "wc3": "A0NA",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNStasisTrap.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ntin.w": {
+    "wc3": "A0UD",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNImprovedUnholyStrength.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ntin.e": {
+    "wc3": "A0SY",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNWandOfNeutralization.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ntin.r": {
+    "wc3": "A0OD",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNDaggerOfEscape.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o00k": {
+    "wc3": "o00k",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNpikagirl.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-o00k.png"
+  },
+  "godie-o00k.q": {
+    "wc3": "A0BZ",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-o00k.w": {
+    "wc3": "A0BY",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBearBlink.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o00k.e": {
+    "wc3": "A04V",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNChainLightning.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o00k.r": {
+    "wc3": "A0C0",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNManaFlare.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o00l": {
+    "wc3": "o00l",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNZeros.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-o00l.png"
+  },
+  "godie-o00l.q": {
+    "wc3": "A0K1",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFireForTheCannon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o00l.w": {
+    "wc3": "A0DQ",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-o00l.e": {
+    "wc3": "A07T",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAntiMagicShell.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o00l.r": {
+    "wc3": "A0UE",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNVolcano.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o00x": {
+    "wc3": "o00x",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNGoku.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-o00x.png"
+  },
+  "godie-o00x.q": {
+    "wc3": "A082",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNInfernal.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o00x.w": {
+    "wc3": "A03Y",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-o00x.e": {
+    "wc3": "A09E",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMaskOfDeath.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o00x.r": {
+    "wc3": "A03S",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFrostBolt.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o01z": {
+    "wc3": "o01z",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNNiya.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-o01z.png"
+  },
+  "godie-o01z.q": {
+    "wc3": "A0XG",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSlow.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o01z.w": {
+    "wc3": "A0LB",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNScatterRockets.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o01z.e": {
+    "wc3": "A0XN",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFireForTheCannon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o01z.r": {
+    "wc3": "A0XO",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHeartOfAszune.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o02l": {
+    "wc3": "o02l",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPika.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-o02l.png"
+  },
+  "godie-o02l.q": {
+    "wc3": "A0BZ",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-o02l.w": {
+    "wc3": "A04U",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNDrunkenDodge.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o02l.e": {
+    "wc3": "A0C3",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNVillagerKid2.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o02l.r": {
+    "wc3": "A040",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBerserkForTrolls.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o02o": {
+    "wc3": "o02o",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPika.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-o02o.png"
+  },
+  "godie-o02o.q": {
+    "wc3": "A0DE",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNIncinerate.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o02o.w": {
+    "wc3": "A0DD",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNPillage.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o02o.e": {
+    "wc3": "A0DB",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPhaseShift.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o02o.r": {
+    "wc3": "A0C2",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBerserkForTrolls.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o02p": {
+    "wc3": "o02p",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNNico.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-o02p.png"
+  },
+  "godie-o02p.q": {
+    "wc3": "A116",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNStasisTrap.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o02p.w": {
+    "wc3": "A118",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-o02p.e": {
+    "wc3": "A11B",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMassTeleport.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o02p.r": {
+    "wc3": "A11C",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNStaffOfPreservation.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o02s": {
+    "wc3": "o02s",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNZeros.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-o02s.png"
+  },
+  "godie-o02s.q": {
+    "wc3": "A0DQ",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-o02s.w": {
+    "wc3": "A0K1",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFireForTheCannon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o02s.e": {
+    "wc3": "A0DT",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNVolcano.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o02s.r": {
+    "wc3": "A07T",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAntiMagicShell.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o02v": {
+    "wc3": "o02v",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNNiya.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-o02v.png"
+  },
+  "godie-o02v.q": {
+    "wc3": "A0XG",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSlow.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o02v.w": {
+    "wc3": "A0LB",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNScatterRockets.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o02v.e": {
+    "wc3": "A0XN",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFireForTheCannon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o02v.r": {
+    "wc3": "A0XO",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHeartOfAszune.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o02w": {
+    "wc3": "o02w",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNArthas.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o02w.q": {
+    "wc3": "A0XS",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNThoriumMelee.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o02w.w": {
+    "wc3": "A0XU",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNDispelMagic.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o02w.e": {
+    "wc3": "A0Y0",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNManaDrain.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o02w.r": {
+    "wc3": "A0Y5",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNWhirlwind.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-obla": {
+    "wc3": "obla",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPeon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-obla.q": {
+    "wc3": "A02L",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNCritterChicken.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-obla.w": {
+    "wc3": "A00P",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-obla.e": {
+    "wc3": "A07D",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNRoot.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-obla.r": {
+    "wc3": "A09J",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-ofar": {
+    "wc3": "ofar",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPika.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-ofar.png"
+  },
+  "godie-ofar.q": {
+    "wc3": "A0BZ",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-ofar.w": {
+    "wc3": "A04U",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNDrunkenDodge.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ofar.e": {
+    "wc3": "A0C3",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNVillagerKid2.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ofar.r": {
+    "wc3": "A040",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBerserkForTrolls.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ogld": {
+    "wc3": "ogld",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-ogld.q": {
+    "wc3": "ANmo",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-ogld.w": {
+    "wc3": "ACpa",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAnimateDead.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ogld.e": {
+    "wc3": "Afae",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBlink.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ogld.r": {
+    "wc3": "A0CO",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPossession.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ogrh": {
+    "wc3": "ogrh",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNGoku.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-ogrh.png"
+  },
+  "godie-ogrh.q": {
+    "wc3": "A082",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNInfernal.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ogrh.w": {
+    "wc3": "A03Y",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-ogrh.e": {
+    "wc3": "A09E",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMaskOfDeath.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ogrh.r": {
+    "wc3": "A03S",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFrostBolt.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-opgh": {
+    "wc3": "opgh",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNCCL.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-opgh.png"
+  },
+  "godie-opgh.q": {
+    "wc3": "A049",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNStrengthOfTheMoon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-opgh.w": {
+    "wc3": "A0TH",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNPillage.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-opgh.e": {
+    "wc3": "A0I1",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFlare.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-opgh.r": {
+    "wc3": "A0YW",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSalamader.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/abilities/godie-opgh.r.png"
+  },
+  "godie-orkn": {
+    "wc3": "orkn",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHentai.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-orkn.png"
+  },
+  "godie-orkn.q": {
+    "wc3": "A09L",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-orkn.w": {
+    "wc3": "ANdh",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-orkn.e": {
+    "wc3": "ANso",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-orkn.r": {
+    "wc3": "A01P",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNManaFlare.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-osam": {
+    "wc3": "osam",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNKiller.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-osam.png"
+  },
+  "godie-osam.q": {
+    "wc3": "A034",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAdvancedUnholyStrength.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-osam.w": {
+    "wc3": "A038",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBanish.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-osam.e": {
+    "wc3": "A0F5",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNUnholyStrength.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-osam.r": {
+    "wc3": "A0FP",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFrostWyrm.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-oshd": {
+    "wc3": "oshd",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNGhost2.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-oshd.png"
+  },
+  "godie-oshd.q": {
+    "wc3": "A06U",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-oshd.w": {
+    "wc3": "AEsf",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-oshd.e": {
+    "wc3": "AOvd",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-oshd.r": {
+    "wc3": "A00Z",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNChainLightning.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-othr": {
+    "wc3": "othr",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNWolverine.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-othr.png"
+  },
+  "godie-othr.q": {
+    "wc3": "A0I4",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNImprovedStrengthOfTheWild.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-othr.w": {
+    "wc3": "A0AQ",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAdvancedCreatureAttack.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-othr.e": {
+    "wc3": "A0I2",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNChaosWolfRider.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-othr.r": {
+    "wc3": "A0ML",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNLifeDrain.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00b": {
+    "wc3": "u00b",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-u00b.q": {
+    "wc3": "A075",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-u00b.w": {
+    "wc3": "A07W",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNEvasion.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00b.e": {
+    "wc3": "ANto",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-u00b.r": {
+    "wc3": "A07Z",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNStun.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00h": {
+    "wc3": "u00h",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNKYO.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-u00h.png"
+  },
+  "godie-u00h.q": {
+    "wc3": "A0DG",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPriestessOfTheMoon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00h.w": {
+    "wc3": "A0Z4",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPhoenix_Samwise.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/abilities/godie-u00h.w.png"
+  },
+  "godie-u00h.e": {
+    "wc3": "A0DO",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNNetherDragon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00h.r": {
+    "wc3": "A0DJ",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPortal.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00j": {
+    "wc3": "u00j",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSeph.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-u00j.png"
+  },
+  "godie-u00j.q": {
+    "wc3": "A0S4",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNThunderclap.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00j.w": {
+    "wc3": "A0ET",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFlare.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00j.e": {
+    "wc3": "A0F4",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFire.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00j.r": {
+    "wc3": "A0G5",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNVolcano.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00k": {
+    "wc3": "u00k",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-u00k.q": {
+    "wc3": "A03L",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNEarthquake.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00k.w": {
+    "wc3": "A08T",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNManaDrain.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00k.e": {
+    "wc3": "A0HJ",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHornOfDoom.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00k.r": {
+    "wc3": "A0HK",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNReincarnation.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00l": {
+    "wc3": "u00l",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNKenshro.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-u00l.png"
+  },
+  "godie-u00l.q": {
+    "wc3": "A0AF",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-u00l.w": {
+    "wc3": "A01J",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNReincarnation.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00l.e": {
+    "wc3": "A0HV",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNGolemThunderclap.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00l.r": {
+    "wc3": "A0HW",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHeroDemonHunter.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00n": {
+    "wc3": "u00n",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNluff.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-u00n.png"
+  },
+  "godie-u00n.q": {
+    "wc3": "A0IS",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNOrcMeleeUpThree.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00n.w": {
+    "wc3": "A0IP",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNClusterRockets.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00n.e": {
+    "wc3": "A0IV",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFlakCannons.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00n.r": {
+    "wc3": "A0RZ",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNDeathPact.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00o": {
+    "wc3": "u00o",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNluff.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-u00o.png"
+  },
+  "godie-u00o.q": {
+    "wc3": "A0IS",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNOrcMeleeUpThree.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00o.w": {
+    "wc3": "A0IP",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNClusterRockets.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00o.e": {
+    "wc3": "A0IV",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFlakCannons.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00o.r": {
+    "wc3": "A0RZ",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNDeathPact.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00v": {
+    "wc3": "u00v",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNRabbit.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-u00v.png"
+  },
+  "godie-u00v.q": {
+    "wc3": "A0L5",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNSeaGiantPulverize.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00v.w": {
+    "wc3": "A0L4",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNRoot.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00v.e": {
+    "wc3": "A0L2",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBearForm.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00v.r": {
+    "wc3": "A0L6",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNDeathPact.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u010": {
+    "wc3": "u010",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHehi.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-u010.png"
+  },
+  "godie-u010.q": {
+    "wc3": "A0OG",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSearingArrowsOn.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u010.w": {
+    "wc3": "A09H",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNWallOfFire.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u010.e": {
+    "wc3": "A09I",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBlackDragon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u010.r": {
+    "wc3": "A09K",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-u011": {
+    "wc3": "u011",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNWarcraft3 DMC.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-u011.png"
+  },
+  "godie-u011.q": {
+    "wc3": "A0OP",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNCorrosiveBreath.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u011.w": {
+    "wc3": "A0OQ",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNLeatherUpgradeThree.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u011.e": {
+    "wc3": "A0OS",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSpellSteal.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u011.r": {
+    "wc3": "A0OR",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSeaTurtleRed.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u012": {
+    "wc3": "u012",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNWarcraft3 DMC.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-u012.png"
+  },
+  "godie-u012.q": {
+    "wc3": "A0OP",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNCorrosiveBreath.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u012.w": {
+    "wc3": "A0OQ",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNLeatherUpgradeThree.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u012.e": {
+    "wc3": "A0OS",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSpellSteal.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u012.r": {
+    "wc3": "A0OR",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSeaTurtleRed.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u01f": {
+    "wc3": "u01f",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFelGuard.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u01f.q": {
+    "wc3": null,
+    "art": null,
+    "resolution": "no-wc3-source",
+    "icon": null
+  },
+  "godie-u01f.w": {
+    "wc3": null,
+    "art": null,
+    "resolution": "no-wc3-source",
+    "icon": null
+  },
+  "godie-u01f.e": {
+    "wc3": null,
+    "art": null,
+    "resolution": "no-wc3-source",
+    "icon": null
+  },
+  "godie-u01f.r": {
+    "wc3": null,
+    "art": null,
+    "resolution": "no-wc3-source",
+    "icon": null
+  },
+  "godie-u01q": {
+    "wc3": "u01q",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSolo.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-u01q.png"
+  },
+  "godie-u01q.q": {
+    "wc3": null,
+    "art": null,
+    "resolution": "no-wc3-source",
+    "icon": null
+  },
+  "godie-u01q.w": {
+    "wc3": null,
+    "art": null,
+    "resolution": "no-wc3-source",
+    "icon": null
+  },
+  "godie-u01q.e": {
+    "wc3": null,
+    "art": null,
+    "resolution": "no-wc3-source",
+    "icon": null
+  },
+  "godie-u01q.r": {
+    "wc3": null,
+    "art": null,
+    "resolution": "no-wc3-source",
+    "icon": null
+  },
+  "godie-u01u": {
+    "wc3": "u01u",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSolo.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-u01u.png"
+  },
+  "godie-u01u.q": {
+    "wc3": "A0CC",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSearingArrowsOn.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u01u.w": {
+    "wc3": "A06N",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPriestessOfTheMoon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u01u.e": {
+    "wc3": "A06P",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNRavenForm.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u01u.r": {
+    "wc3": "A0MQ",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNTornado.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u034": {
+    "wc3": "u034",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNGon.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-u034.png"
+  },
+  "godie-u034.q": {
+    "wc3": "A08X",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNRavenForm.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u034.w": {
+    "wc3": "A08W",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-u034.e": {
+    "wc3": "A020",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNGnollCommandAura.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u034.r": {
+    "wc3": "A0Y1",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNGon.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/abilities/godie-u034.r.png"
+  },
+  "godie-ubal": {
+    "wc3": "ubal",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBam.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-ubal.png"
+  },
+  "godie-ubal.q": {
+    "wc3": "A01I",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPhoenix_Samwise.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/abilities/godie-ubal.q.png"
+  },
+  "godie-ubal.w": {
+    "wc3": "A0KC",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNWallOfFire.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ubal.e": {
+    "wc3": "A0OY",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNOrbOfDarkness.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ubal.r": {
+    "wc3": "A01Z",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNTichondrius.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ucrl": {
+    "wc3": "ucrl",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNJay.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-ucrl.png"
+  },
+  "godie-ucrl.q": {
+    "wc3": "A08X",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNRavenForm.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ucrl.w": {
+    "wc3": "A08W",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-ucrl.e": {
+    "wc3": "A020",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNGnollCommandAura.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ucrl.r": {
+    "wc3": "A0Y1",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNGon.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/abilities/godie-ucrl.r.png"
+  },
+  "godie-udea": {
+    "wc3": "udea",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-udea.q": {
+    "wc3": "A04G",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-udea.w": {
+    "wc3": "A05S",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBreathOfFrost.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-udea.e": {
+    "wc3": "A0CH",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNManaDrain.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-udea.r": {
+    "wc3": "A04C",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-udre": {
+    "wc3": "udre",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSolo.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-udre.png"
+  },
+  "godie-udre.q": {
+    "wc3": "A0CC",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSearingArrowsOn.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-udre.w": {
+    "wc3": "A06N",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPriestessOfTheMoon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-udre.e": {
+    "wc3": "A06P",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNRavenForm.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-udre.r": {
+    "wc3": "A0MQ",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNTornado.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-umal": {
+    "wc3": "umal",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNKenshro.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-umal.png"
+  },
+  "godie-umal.q": {
+    "wc3": "A0AF",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-umal.w": {
+    "wc3": "A01J",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNReincarnation.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-umal.e": {
+    "wc3": "A0HV",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNGolemThunderclap.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-umal.r": {
+    "wc3": "A0HW",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHeroDemonHunter.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-usyl": {
+    "wc3": "usyl",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHydralisk.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-usyl.q": {
+    "wc3": "A0FT",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNQuillSpray.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-usyl.w": {
+    "wc3": "A0BU",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNCorrosiveBreath.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-usyl.e": {
+    "wc3": "A0BV",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNUnholyAura.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-usyl.r": {
+    "wc3": "A0R3",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHydralisk.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-uvng": {
+    "wc3": "uvng",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHehi.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/champions/godie-uvng.png"
+  },
+  "godie-uvng.q": {
+    "wc3": "A0OG",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSearingArrowsOn.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-uvng.w": {
+    "wc3": "A09H",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNWallOfFire.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-uvng.e": {
+    "wc3": "A09I",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBlackDragon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-uvng.r": {
+    "wc3": "A09K",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-uwar": {
+    "wc3": "uwar",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-uwar.q": {
+    "wc3": "ANfl",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-uwar.w": {
+    "wc3": "AHbh",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-uwar.e": {
+    "wc3": "ANfd",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-uwar.r": {
+    "wc3": "A00D",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAdvancedUnholyStrength.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e001.ex": {
+    "wc3": "A0SU",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNElunesBlessing.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e002.ex": {
+    "wc3": "A0SP",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNRegenerationAura.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e007.ex": {
+    "wc3": "A0SQ",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPurge.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e008.ex": {
+    "wc3": "A0UO",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSelfDestructOff.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00j.ex": {
+    "wc3": "A0YA",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-e00k.ex": {
+    "wc3": "A0SZ",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPhaseShift.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00l.ex": {
+    "wc3": "A0SP",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNRegenerationAura.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00n.ex": {
+    "wc3": "A0SV",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNElunesBlessing.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00q.ex": {
+    "wc3": "A0FK",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-e00r.ex": {
+    "wc3": "A0Z5",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNUnholyAura.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00s.ex": {
+    "wc3": "A0ZQ",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNNightElfBuild.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00t.ex": {
+    "wc3": "A0SH",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNDeathCoil.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00v.ex": {
+    "wc3": "A10U",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHeroTinker.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00w.ex": {
+    "wc3": "A10G",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNTransmute.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00x.ex": {
+    "wc3": "A10G",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNTransmute.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e00z.ex": {
+    "wc3": "A0SZ",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPhaseShift.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-e015.ex": {
+    "wc3": "A113",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSpiritOfVengeance.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ecen.ex": {
+    "wc3": "A0ZR",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHealingWard.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-edem.ex": {
+    "wc3": "A102",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNInnerFire.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-efur.ex": {
+    "wc3": "A10S",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNReincarnation.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ekee.ex": {
+    "wc3": "A0WN",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNTemp.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-emfr.ex": {
+    "wc3": "A0ZU",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNTornado.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-emns.ex": {
+    "wc3": "A0SA",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNTomeOfRetraining.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-etyr.ex": {
+    "wc3": "A0ST",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-ewar.ex": {
+    "wc3": "A0SQ",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPurge.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ewrd.ex": {
+    "wc3": "A114",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNScout.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h001.ex": {
+    "wc3": "A0SD",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNCripple.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h00l.ex": {
+    "wc3": "A10P",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNUnholyAura.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h01n.ex": {
+    "wc3": "A0W5",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMetamorphosis.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h01o.ex": {
+    "wc3": "A0W5",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMetamorphosis.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h01u.ex": {
+    "wc3": "A109",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNDefend.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h020.ex": {
+    "wc3": "A0OE",
+    "art": "ReplaceableTextures\\CommandButtons\\BTN3M3.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h022.ex": {
+    "wc3": "A0Z8",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAntiMagicShell.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h02k.ex": {
+    "wc3": "A0TU",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMagicalSentry.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h02r.ex": {
+    "wc3": "A0VG",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSkink.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h02s.ex": {
+    "wc3": "A0VS",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNDarkSummoning.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h02u.ex": {
+    "wc3": "A0Z9",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNNatureTouchGrow.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h02v.ex": {
+    "wc3": "A0Z9",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNNatureTouchGrow.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h02y.ex": {
+    "wc3": "A0V7",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNReincarnation.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-h02z.ex": {
+    "wc3": "A0VS",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNDarkSummoning.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hapm.ex": {
+    "wc3": "A0U5",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNOrcMeleeUpThree.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-harf.ex": {
+    "wc3": "A106",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHeroTinker.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hart.ex": {
+    "wc3": "A0DP",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNDaggerOfEscape.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hblm.ex": {
+    "wc3": "A0LE",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBronzeDragon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hgam.ex": {
+    "wc3": "A0VG",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSkink.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hjai.ex": {
+    "wc3": "A0OE",
+    "art": "ReplaceableTextures\\CommandButtons\\BTN3M3.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hlgr.ex": {
+    "wc3": "A00C",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNColdArrows.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hpal.ex": {
+    "wc3": "A0V7",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNReincarnation.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hpb1.ex": {
+    "wc3": "A0ZA",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNStrengthOfTheMoon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-huth.ex": {
+    "wc3": "A0VI",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-hvsh.ex": {
+    "wc3": "A0SM",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNReincarnation.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-hvwd.ex": {
+    "wc3": "A0S6",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMagicalSentry.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-n003.ex": {
+    "wc3": "A06K",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNOrcBattleStandard.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-n00b.ex": {
+    "wc3": "A0KO",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBookOfSummoning.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-n00p.ex": {
+    "wc3": "A0SE",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNUnholyAura.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-n01c.ex": {
+    "wc3": "A0T1",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAvatar.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-n01g.ex": {
+    "wc3": "A06K",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNOrcBattleStandard.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-n01l.ex": {
+    "wc3": "A0ZG",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNReveal.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-naka.ex": {
+    "wc3": "A08R",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-nbbc.ex": {
+    "wc3": "A0T1",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAvatar.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-nbst.ex": {
+    "wc3": "A0SG",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBerserk.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-nman.ex": {
+    "wc3": "A10C",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNOrbOfLightning.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-nplh.ex": {
+    "wc3": "A06M",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBloodKey.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-nsjs.ex": {
+    "wc3": "A0SE",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNUnholyAura.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ntin.ex": {
+    "wc3": "A0U9",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNPillage.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o00k.ex": {
+    "wc3": "A10X",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNUnholyAura.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o00l.ex": {
+    "wc3": "A10B",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNScatterRockets.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o00x.ex": {
+    "wc3": "A0O1",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNUnholyAura.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o01z.ex": {
+    "wc3": "A0XP",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNDryadDispelMagic.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o02l.ex": {
+    "wc3": "A0SL",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNManaFlare.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o02p.ex": {
+    "wc3": "A11F",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAnimateDead.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o02v.ex": {
+    "wc3": "A0XP",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNDryadDispelMagic.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-o02w.ex": {
+    "wc3": "A0XY",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNScrollOfProtection.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-obla.ex": {
+    "wc3": "A088",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNGreaterRejuvPotion.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ofar.ex": {
+    "wc3": "A0SL",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNManaFlare.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ogld.ex": {
+    "wc3": "A09B",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-ogrh.ex": {
+    "wc3": "A0O1",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNUnholyAura.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-opgh.ex": {
+    "wc3": "A111",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNRevenant.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-orkn.ex": {
+    "wc3": "A0YY",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNUnholyAura.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-osam.ex": {
+    "wc3": "A0MV",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNManaBurn.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-oshd.ex": {
+    "wc3": "A10L",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNReincarnation.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-othr.ex": {
+    "wc3": "A10J",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNUnholyAura.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00h.ex": {
+    "wc3": "A0Z3",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNKYO.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/abilities/godie-u00h.ex.png"
+  },
+  "godie-u00j.ex": {
+    "wc3": "A0U0",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-u00k.ex": {
+    "wc3": "A0AV",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-u00l.ex": {
+    "wc3": "A10Y",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNUnholyAura.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00n.ex": {
+    "wc3": "A0ZK",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFrostWyrm.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00o.ex": {
+    "wc3": "A0ZK",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFrostWyrm.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u00v.ex": {
+    "wc3": "A10W",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNReincarnation.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u010.ex": {
+    "wc3": "A0SO",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNUnholyAura.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u011.ex": {
+    "wc3": "A0OA",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNStaffOfSilence.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u012.ex": {
+    "wc3": "A0OA",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNStaffOfSilence.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u01u.ex": {
+    "wc3": "A10N",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAvatar.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-u034.ex": {
+    "wc3": "A025",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMetamorphosis.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ubal.ex": {
+    "wc3": "A0ZV",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNIceCrownObelisk.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-ucrl.ex": {
+    "wc3": "A025",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMetamorphosis.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-udea.ex": {
+    "wc3": "A0FF",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-udre.ex": {
+    "wc3": "A10N",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAvatar.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-umal.ex": {
+    "wc3": "A10Y",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNUnholyAura.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-usyl.ex": {
+    "wc3": "A0G4",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNIncinerate.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-uvng.ex": {
+    "wc3": "A0SO",
+    "art": "ReplaceableTextures\\PassiveButtons\\PASBTNUnholyAura.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-uwar.ex": {
+    "wc3": "A105",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNRobeOfTheMagi.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i000": {
+    "wc3": "i000",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNStrengthOfTheMoon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i001": {
+    "wc3": "i001",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i002": {
+    "wc3": "i002",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNRingVioletSpider.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i003": {
+    "wc3": "i003",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i004": {
+    "wc3": "i004",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i005": {
+    "wc3": "i005",
+    "art": "ReplaceableTextures\\CommandButtons\\BTN3M3.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i006": {
+    "wc3": "i006",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i007": {
+    "wc3": "i007",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNArcaniteRanged.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i008": {
+    "wc3": "i008",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSnazzyScrollPurple.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i009": {
+    "wc3": "i009",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNStormHammer.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i00a": {
+    "wc3": "i00a",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNShimmerWeed.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i00b": {
+    "wc3": "i00b",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHornOfCenarius.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i00c": {
+    "wc3": "i00c",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNNightElfCaptureFlag.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i00d": {
+    "wc3": "i00d",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i00e": {
+    "wc3": "i00e",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i00f": {
+    "wc3": "i00f",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNImprovedStrengthOfTheMoon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i00g": {
+    "wc3": "i00g",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSpellShieldAmulet.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i00h": {
+    "wc3": "i00h",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNNightElfCaptureFlag.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i00i": {
+    "wc3": "i00i",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHumanMissileUpThree.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i00j": {
+    "wc3": "i00j",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNLeatherUpgradeThree.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i00k": {
+    "wc3": "i00k",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFrost.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i00l": {
+    "wc3": "i00l",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSteelRanged.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i00m": {
+    "wc3": "i00m",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAdvancedMoonArmor.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i00n": {
+    "wc3": "i00n",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNStormHammer.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i00o": {
+    "wc3": "i00o",
+    "art": "UI\\MiniMap\\MinimapIcon\\MinimapIconGold.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i00p": {
+    "wc3": "i00p",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNWirtsOtherLeg.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i00q": {
+    "wc3": "i00q",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAdvancedUnholyArmor.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i00r": {
+    "wc3": "i00r",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNManual3.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i00s": {
+    "wc3": "i00s",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNNagaArmorUp3.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i00t": {
+    "wc3": "i00t",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i00u": {
+    "wc3": "i00u",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSpiritWalkerAdeptTraining.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i00v": {
+    "wc3": "i00v",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMoonStone.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i00w": {
+    "wc3": "i00w",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMoonStone.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i00x": {
+    "wc3": "i00x",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMoonStone.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i00y": {
+    "wc3": "i00y",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMoonStone.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i00z": {
+    "wc3": "i00z",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i010": {
+    "wc3": "i010",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNScepterOfMastery.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i011": {
+    "wc3": "i011",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSpiritWalkerAdeptTraining.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i012": {
+    "wc3": "i012",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNImprovedBows.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i013": {
+    "wc3": "i013",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNCleavingAttack.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i014": {
+    "wc3": "i014",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNThoriumRanged.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i015": {
+    "wc3": "i015",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNWitchDoctorAdept.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i016": {
+    "wc3": "i016",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPriestAdept.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i017": {
+    "wc3": "i017",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAdvancedReinforcedHides.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i018": {
+    "wc3": "i018",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNImpale.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i019": {
+    "wc3": "i019",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNImprovedStrengthOfTheMoon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i01a": {
+    "wc3": "i01a",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i01b": {
+    "wc3": "i01b",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNManual.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i01c": {
+    "wc3": "i01c",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNNecromancerMaster.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i01d": {
+    "wc3": "i01d",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNNagaWeaponUp3.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i01e": {
+    "wc3": "i01e",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNLightningSword.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/items/godie-i01e.png"
+  },
+  "godie-i01f": {
+    "wc3": "i01f",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNLightningSword.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/items/godie-i01f.png"
+  },
+  "godie-i01g": {
+    "wc3": "i01g",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNNagaWeaponUp1.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i01h": {
+    "wc3": "i01h",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNNagaWeaponUp1.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i01i": {
+    "wc3": "i01i",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNControlMagic.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i01j": {
+    "wc3": "i01j",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNUsedSoulGem.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i01k": {
+    "wc3": "i01k",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i01l": {
+    "wc3": "i01l",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNControlMagic.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i01m": {
+    "wc3": "i01m",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNOrbOfDarkness.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i01n": {
+    "wc3": "i01n",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNStaffOfPurification.tga",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i01o": {
+    "wc3": "i01o",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNUltravision.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i01p": {
+    "wc3": "i01p",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNWirtsOtherLeg.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i01q": {
+    "wc3": "i01q",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPendantOfMana.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i01r": {
+    "wc3": "i01r",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i01s": {
+    "wc3": "i01s",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNTalisman.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i01t": {
+    "wc3": "i01t",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPriestAdept.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i01u": {
+    "wc3": "i01u",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAdvancedUnholyArmor.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i01v": {
+    "wc3": "i01v",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNTornado.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i01w": {
+    "wc3": "i01w",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAdvancedReinforcedHides.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i01x": {
+    "wc3": "i01x",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPeriapt1.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i01y": {
+    "wc3": "i01y",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNImprovedBows.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i01z": {
+    "wc3": "i01z",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNCleavingAttack.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i020": {
+    "wc3": "i020",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNWitchDoctorAdept.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i021": {
+    "wc3": "i021",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNThoriumRanged.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i022": {
+    "wc3": "i022",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMysticSword.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/items/godie-i022.png"
+  },
+  "godie-i023": {
+    "wc3": "i023",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNArcaniteRanged.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i024": {
+    "wc3": "i024",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNImpale.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i025": {
+    "wc3": "i025",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNorb.tga",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i026": {
+    "wc3": "i026",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i027": {
+    "wc3": "i027",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPendantOfMana.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i028": {
+    "wc3": "i028",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAdvancedStrengthOfTheMoon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i029": {
+    "wc3": "i029",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSwordofLight.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/items/godie-i029.png"
+  },
+  "godie-i02a": {
+    "wc3": "i02a",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHumanMissileUpOne.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i02b": {
+    "wc3": "i02b",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i02c": {
+    "wc3": "i02c",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNArcaniteMelee.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i02d": {
+    "wc3": "i02d",
+    "art": "underpants.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/items/godie-i02d.png"
+  },
+  "godie-i02e": {
+    "wc3": "i02e",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNArcaniteMelee.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i02f": {
+    "wc3": "i02f",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNUltravision.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i02g": {
+    "wc3": "i02g",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSpellShieldAmulet.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i02h": {
+    "wc3": "i02h",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNOrcBattleStandard.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i02i": {
+    "wc3": "i02i",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNArmorGolem.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i02j": {
+    "wc3": "i02j",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNCloakOfFlames.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i02k": {
+    "wc3": "i02k",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNStaffOfSilence.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i02l": {
+    "wc3": "i02l",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHoodOfCunning.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i02m": {
+    "wc3": "i02m",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNShadowPact.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i02n": {
+    "wc3": "i02n",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNGoblinLandMine.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i02o": {
+    "wc3": "i02o",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNVialEmpty.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i02p": {
+    "wc3": "i02p",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i02q": {
+    "wc3": "i02q",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSorceressAdept.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i02r": {
+    "wc3": "i02r",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMedalionOfCourage.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i02s": {
+    "wc3": "i02s",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMedalionOfCourage.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i02t": {
+    "wc3": "i02t",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNTomeBrown.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i02u": {
+    "wc3": "i02u",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBookOfTheDead.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i02v": {
+    "wc3": "i02v",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNOrbOfDarkness.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i02w": {
+    "wc3": "i02w",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNUsedSoulGem.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i02x": {
+    "wc3": "i02x",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNVorpalBlades.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i02y": {
+    "wc3": "i02y",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNVorpalBlades.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i02z": {
+    "wc3": "i02z",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNTomeBrown.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i030": {
+    "wc3": "i030",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBookOfTheDead.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i031": {
+    "wc3": "i031",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNTheBlackArrow.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i032": {
+    "wc3": "i032",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNTheBlackArrow.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i033": {
+    "wc3": "i033",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSpiderSilkBroach.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i034": {
+    "wc3": "i034",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNUnholyAura.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i035": {
+    "wc3": "i035",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNWaterShield.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/items/godie-i035.png"
+  },
+  "godie-i036": {
+    "wc3": "i036",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNNecromancerAdept.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i037": {
+    "wc3": "i037",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNINV_Misc_Note_06.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/items/godie-i037.png"
+  },
+  "godie-i038": {
+    "wc3": "i038",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNNecromancerAdept.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i039": {
+    "wc3": "i039",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSacrifice.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i03a": {
+    "wc3": "i03a",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSacrifice.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i03b": {
+    "wc3": "i03b",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i03c": {
+    "wc3": "i03c",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i03d": {
+    "wc3": "i03d",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNTransmute.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i03e": {
+    "wc3": "i03e",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNTransmute.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i03f": {
+    "wc3": "i03f",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMantleOfIntelligence.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i03g": {
+    "wc3": "i03g",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMantleOfIntelligence.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i03h": {
+    "wc3": "i03h",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNEntrapmentWard.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i03i": {
+    "wc3": "i03i",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNEntrapmentWard.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i03j": {
+    "wc3": "i03j",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i03l": {
+    "wc3": "i03l",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i03m": {
+    "wc3": "i03m",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNImprovedUnholyArmor.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i03n": {
+    "wc3": "i03n",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i03o": {
+    "wc3": "i03o",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNNagaWeaponUp3.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i03p": {
+    "wc3": "i03p",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNRevenant.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i03q": {
+    "wc3": "i03q",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNLightningShield.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i03x": {
+    "wc3": "i03x",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i03z": {
+    "wc3": "i03z",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNTornado.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i040": {
+    "wc3": "i040",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i041": {
+    "wc3": "i041",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i042": {
+    "wc3": "i042",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i044": {
+    "wc3": "i044",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPaladinsSword.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/items/godie-i044.png"
+  },
+  "godie-i045": {
+    "wc3": "i045",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPaladinsSword.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/items/godie-i045.png"
+  },
+  "godie-i049": {
+    "wc3": "i049",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNManaStone.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i04a": {
+    "wc3": "i04a",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNManaStone.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i04b": {
+    "wc3": "i04b",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFrostAxe.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/items/godie-i04b.png"
+  },
+  "godie-i04c": {
+    "wc3": "i04c",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFrostAxe.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/items/godie-i04c.png"
+  },
+  "godie-i04d": {
+    "wc3": "i04d",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFrostAxe.BLP",
+    "resolution": "archive",
+    "icon": "assets/icons/items/godie-i04d.png"
+  },
+  "godie-i04e": {
+    "wc3": "i04e",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNBansheeMaster.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i04g": {
+    "wc3": "i04g",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNLeatherUpgradeThree.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i04h": {
+    "wc3": "i04h",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHumanMissileUpThree.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i04i": {
+    "wc3": "i04i",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNCurse.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i04j": {
+    "wc3": "i04j",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i04k": {
+    "wc3": "i04k",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNCurse.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i04m": {
+    "wc3": "i04m",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i04v": {
+    "wc3": "i04v",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i04y": {
+    "wc3": "i04y",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNVialEmpty.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i051": {
+    "wc3": "i051",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNTalisman.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i053": {
+    "wc3": "i053",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNTalisman.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i054": {
+    "wc3": "i054",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSeal.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i055": {
+    "wc3": "i055",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNShadowPact.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i056": {
+    "wc3": "i056",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNScout.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i059": {
+    "wc3": "i059",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHoodOfCunning.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i05a": {
+    "wc3": "i05a",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNArmorGolem.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i05e": {
+    "wc3": "i05e",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNGoblinLandMine.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i05g": {
+    "wc3": "i05g",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNClayFigurine.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i05h": {
+    "wc3": "i05h",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHornOfCenarius.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i05k": {
+    "wc3": "i05k",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i05l": {
+    "wc3": "i05l",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSpiderSilkBroach.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i05m": {
+    "wc3": "i05m",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSpiderSilkBroach.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i05n": {
+    "wc3": "i05n",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSpiderSilkBroach.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i05o": {
+    "wc3": "i05o",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNShimmerWeed.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i05q": {
+    "wc3": "i05q",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHornOfDoom.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i05r": {
+    "wc3": "i05r",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNOrbofSlowness.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i05s": {
+    "wc3": "i05s",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i05t": {
+    "wc3": "i05t",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i05u": {
+    "wc3": "i05u",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i05v": {
+    "wc3": "i05v",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i05w": {
+    "wc3": "i05w",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNIncinerate.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i05x": {
+    "wc3": "i05x",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i05y": {
+    "wc3": "i05y",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i05z": {
+    "wc3": "i05z",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i060": {
+    "wc3": "i060",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i061": {
+    "wc3": "i061",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i062": {
+    "wc3": "i062",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i063": {
+    "wc3": "i063",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNWandOfCyclone.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i065": {
+    "wc3": "i065",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNpebble.tga",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i066": {
+    "wc3": "i066",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i067": {
+    "wc3": "i067",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNorb.tga",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i068": {
+    "wc3": "i068",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i069": {
+    "wc3": "i069",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFrost.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i06a": {
+    "wc3": "i06a",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i06b": {
+    "wc3": "i06b",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNPeriapt1.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i06c": {
+    "wc3": "i06c",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSpiritWalkerMasterTraining.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i06d": {
+    "wc3": "i06d",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNSwordofLight.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/items/godie-i06d.png"
+  },
+  "godie-i06e": {
+    "wc3": "i06e",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNrejuvenationPotion.tga",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i06f": {
+    "wc3": "i06f",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNAdvancedStrengthOfTheMoon.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i06g": {
+    "wc3": "i06g",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i06h": {
+    "wc3": "i06h",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i06i": {
+    "wc3": "i06i",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNHumanMissileUpOne.blp",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i06j": {
+    "wc3": "i06j",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i06k": {
+    "wc3": "i06k",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNFrostSWORD.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/items/godie-i06k.png"
+  },
+  "godie-i06l": {
+    "wc3": "i06l",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i06m": {
+    "wc3": "i06m",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i06n": {
+    "wc3": "i06n",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i06o": {
+    "wc3": "i06o",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNUpgradeRegenerationAura.tga",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i06p": {
+    "wc3": "i06p",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i06q": {
+    "wc3": "i06q",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMgexchange.tga",
+    "resolution": "stock",
+    "icon": null
+  },
+  "godie-i06r": {
+    "wc3": "i06r",
+    "art": null,
+    "resolution": "no-art-field",
+    "icon": null
+  },
+  "godie-i06s": {
+    "wc3": "i06s",
+    "art": "ReplaceableTextures\\CommandButtons\\BTNMysticSword.blp",
+    "resolution": "archive",
+    "icon": "assets/icons/items/godie-i06s.png"
+  }
+}

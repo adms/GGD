@@ -1,0 +1,47 @@
+{
+  "id": "godie-uwar.q",
+  "name": "43-01 得罪了方丈還想走",
+  "description": "[主動攻擊]\n15秒冷卻時間\n\n得罪了方丈還想走，是為了追殺敵人研發的武技，召喚出扇狀的閃電，擊中3個敵人，每個敵人會受到125傷害。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 5,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "manaCost": [
+    45.0,
+    80.0,
+    115.0,
+    150.0,
+    150.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          125.0,
+          200.0,
+          275.0,
+          350.0,
+          350.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

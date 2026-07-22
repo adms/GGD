@@ -1,0 +1,212 @@
+{
+  "id": "godie-osam",
+  "schema": "champion@1",
+  "name": "犬妖 - 殺生丸",
+  "description": "故事：\n犬夜叉同父異母的哥哥。他是完全的妖怪，能力要強得多，性格非常冷酷殘忍，對付自己的弟弟也是手下毫不留情。為了獲得更強大的力量加入去死團。\n(出自:犬夜叉)\n\n推薦玩家 : 龜裝PK\n上手度 : 易\n\n角色成長：\n力量 + 1.85\n敏捷 + 2.80\n智慧 + 1.55\n基礎跑速 305\n\n可學習的技能：\n合氣斬、風華之爪、爆碎丸、奧義蒼龍破",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "imported.sesshomaru",
+  "attackDamagePoint": 0.5,
+  "baseStats": {
+    "maxHealth": 420,
+    "healthRegen": 1.0,
+    "maxMana": 256,
+    "manaRegen": 1.32,
+    "ad": 40,
+    "ap": 0,
+    "armor": 13,
+    "mr": 28,
+    "as": 0.53,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 37,
+    "healthRegen": 0.09,
+    "maxMana": 19,
+    "manaRegen": 0.06,
+    "ad": 1.9,
+    "armor": 0.8,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-osam.q",
+      "name": "34-01 風華之爪",
+      "description": "[被動]\n0秒冷卻時間\n\n殺生丸以風華之爪攻擊，導致這一擊之中10%的傷害會擊穿對方，並造成附近敵人的傷害。",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 5,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ad",
+              "op": "pctAdd",
+              "value": 0.1
+            }
+          ],
+          "duration": 12.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "W": {
+      "id": "godie-osam.w",
+      "name": "34-02 合氣斬",
+      "description": "[被動]\n0秒冷卻時間\n\n攻擊時有10%的機率造成1.5倍的傷害。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 5,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "critChance",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "duration": 6.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "E": {
+      "id": "godie-osam.e",
+      "name": "34-03 爆碎丸",
+      "description": "[被動]\n0秒冷卻時間\n\n新生的爆碎丸，有15%的機會，對目標敵人造成90點額外傷害，並擊昏敵人0.5秒。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              15.0,
+              15.0,
+              15.0,
+              15.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.045
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "R": {
+      "id": "godie-osam.r",
+      "name": "34-04 奧義˙蒼龍破",
+      "description": "[主動攻擊]\n45秒冷卻時間\n\n蒼龍破是殺生丸釋放自己的妖力施展出來的絕招，將妖氣集中在劍刃上揮出，傷害範圍900內一直線上的敵人，給予600點傷害。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        200.0,
+        300.0,
+        400.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              600.0,
+              900.0,
+              1200.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ],
+  "exAbility": "godie-osam.ex",
+  "icon": "assets/icons/champions/godie-osam.png"
+}

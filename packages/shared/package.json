@@ -1,0 +1,35 @@
+{
+  "name": "@ggd/shared",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./sim": "./src/sim/index.ts",
+    "./content": "./src/content/index.ts",
+    "./content/node": "./src/content/node/index.ts",
+    "./*": "./src/*.ts",
+    "./testkit/*": "./testkit/*.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "content:build": "tsx scripts/buildIndexes.ts",
+    "content:validate": "tsx scripts/contentValidate.ts",
+    "content:export": "tsx scripts/exportContentToJson.ts"
+  },
+  "dependencies": {
+    "@colyseus/schema": "^3.0.0",
+    "safe-stable-stringify": "^2.5.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.4"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "id": "godie-i002",
+  "schema": "item@1",
+  "name": "武聖手鐲",
+  "description": "效能\n17.1%機率造成2.036倍傷害\n\n解說\n月之海一位傳奇性的人物遺留下的手鐲，有著神秘的能源，據說當他戴上手鐲衝向敵陣時能夠以一擋百。",
+  "cost": 300,
+  "tier": 1,
+  "tags": [
+    "wc3-import"
+  ],
+  "modifiers": [
+    {
+      "stat": "critChance",
+      "op": "flat",
+      "value": 0.171
+    },
+    {
+      "stat": "critDamage",
+      "op": "flat",
+      "value": 0.286
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "id": "godie-ogrh.w",
+  "name": "09-02 瞬間移動",
+  "description": "[輔助]\n18秒冷卻時間\n\n悟空跟佛利沙大戰之後，在宇宙漂流到了亞德拉特星，跟那邊的人習得了瞬間移動，以傳送的方式移動850的距離到指定的位置。",
+  "slot": "W",
+  "castType": "dash",
+  "maxRank": 4,
+  "cooldown": [
+    18.0,
+    18.0,
+    18.0,
+    18.0
+  ],
+  "manaCost": [
+    100.0,
+    100.0,
+    100.0,
+    100.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "dash",
+      "mode": "toPoint",
+      "speed": 30.0,
+      "maxDistance": 11.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

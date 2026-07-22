@@ -1,0 +1,2156 @@
+{
+ "map": "GoDieEX22s.w3x",
+ "files": {
+  "(listfile)": {
+   "status": "error",
+   "how": "known-name",
+   "error": "out of input",
+   "size": 24
+  },
+  "(attributes)": {
+   "status": "error",
+   "how": "known-name",
+   "error": "out of input",
+   "size": 5552
+  },
+  "war3map.w3e": {
+   "status": "ok",
+   "how": "known-name",
+   "size": 116568,
+   "file": "war3map.w3e"
+  },
+  "war3map.w3i": {
+   "status": "ok",
+   "how": "known-name",
+   "size": 787,
+   "file": "war3map.w3i"
+  },
+  "war3map.wts": {
+   "status": "ok",
+   "how": "known-name",
+   "size": 7911,
+   "file": "war3map.wts"
+  },
+  "scripts\\war3map.j": {
+   "status": "ok",
+   "how": "known-name",
+   "size": 1325539,
+   "file": "scripts__war3map.j"
+  },
+  "war3map.shd": {
+   "status": "ok",
+   "how": "known-name",
+   "size": 262144,
+   "file": "war3map.shd"
+  },
+  "war3mapMap.blp": {
+   "status": "ok",
+   "how": "known-name",
+   "size": 14647,
+   "file": "war3mapMap.blp"
+  },
+  "war3mapPreview.tga": {
+   "status": "ok",
+   "how": "known-name",
+   "size": 196626,
+   "file": "war3mapPreview.tga"
+  },
+  "war3map.mmp": {
+   "status": "ok",
+   "how": "known-name",
+   "size": 376,
+   "file": "war3map.mmp"
+  },
+  "war3map.wpm": {
+   "status": "ok",
+   "how": "known-name",
+   "size": 262160,
+   "file": "war3map.wpm"
+  },
+  "war3map.doo": {
+   "status": "ok",
+   "how": "known-name",
+   "size": 124576,
+   "file": "war3map.doo"
+  },
+  "war3map.w3u": {
+   "status": "ok",
+   "how": "known-name",
+   "size": 341047,
+   "file": "war3map.w3u"
+  },
+  "war3map.w3t": {
+   "status": "ok",
+   "how": "known-name",
+   "size": 135137,
+   "file": "war3map.w3t"
+  },
+  "war3map.w3a": {
+   "status": "ok",
+   "how": "known-name",
+   "size": 1798416,
+   "file": "war3map.w3a"
+  },
+  "war3map.w3b": {
+   "status": "ok",
+   "how": "known-name",
+   "size": 204,
+   "file": "war3map.w3b"
+  },
+  "war3map.w3d": {
+   "status": "ok",
+   "how": "known-name",
+   "size": 48,
+   "file": "war3map.w3d"
+  },
+  "war3map.w3q": {
+   "status": "ok",
+   "how": "known-name",
+   "size": 11606,
+   "file": "war3map.w3q"
+  },
+  "war3map.w3h": {
+   "status": "ok",
+   "how": "known-name",
+   "size": 45590,
+   "file": "war3map.w3h"
+  },
+  "war3mapMisc.txt": {
+   "status": "ok",
+   "how": "known-name",
+   "size": 1700,
+   "file": "war3mapMisc.txt"
+  },
+  "war3mapExtra.txt": {
+   "status": "ok",
+   "how": "known-name",
+   "size": 43,
+   "file": "war3mapExtra.txt"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNHentai.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5372,
+   "file": "ReplaceableTextures__CommandButtons__BTNHentai.BLP"
+  },
+  "GrandOrcAura.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 8136,
+   "file": "GrandOrcAura.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNGrant.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5393,
+   "file": "ReplaceableTextures__CommandButtons__BTNGrant.BLP"
+  },
+  "LavaBreathDamage.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 1407,
+   "file": "LavaBreathDamage.mdx"
+  },
+  "HeroRider.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 72688,
+   "file": "HeroRider.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNZeros.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5893,
+   "file": "ReplaceableTextures__CommandButtons__BTNZeros.BLP"
+  },
+  "Flash.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5750,
+   "file": "Flash.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNMentalPrison.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5186,
+   "file": "ReplaceableTextures__CommandButtons__BTNMentalPrison.blp"
+  },
+  "Katana.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 3160,
+   "file": "Katana.mdx"
+  },
+  "HeroSasuke.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 73666,
+   "file": "HeroSasuke.mdx"
+  },
+  "BlackHole.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 6953,
+   "file": "BlackHole.mdx"
+  },
+  "gx.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 6931,
+   "file": "gx.mdx"
+  },
+  "ReplaceableTextures\\CommandButtonsDisabled\\DISWeasel.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 6413,
+   "file": "ReplaceableTextures__CommandButtonsDisabled__DISWeasel.blp"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNKiller.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5688,
+   "file": "ReplaceableTextures__CommandButtons__BTNKiller.BLP"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNVampire.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 6060,
+   "file": "ReplaceableTextures__CommandButtons__BTNVampire.BLP"
+  },
+  "LOVE2.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 2292,
+   "file": "LOVE2.mdx"
+  },
+  "Bahamut.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 124799,
+   "file": "Bahamut.mdx"
+  },
+  "MinitypeFlame.MDX": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 9616,
+   "file": "MinitypeFlame.MDX"
+  },
+  "FireBlast.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 13580,
+   "file": "FireBlast.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNChLon.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5189,
+   "file": "ReplaceableTextures__CommandButtons__BTNChLon.BLP"
+  },
+  "LightningTornado.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 21482,
+   "file": "LightningTornado.mdx"
+  },
+  "AquaSpikeVersion2.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 14384,
+   "file": "AquaSpikeVersion2.mdx"
+  },
+  "AWING.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 2896,
+   "file": "AWING.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNKike.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5296,
+   "file": "ReplaceableTextures__CommandButtons__BTNKike.BLP"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNMrChin.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5224,
+   "file": "ReplaceableTextures__CommandButtons__BTNMrChin.BLP"
+  },
+  "flamessmoke.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 3196,
+   "file": "flamessmoke.mdx"
+  },
+  "FireFly.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 8152,
+   "file": "FireFly.mdx"
+  },
+  "war3mapImported\\moongo.mp3": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 3030,
+   "file": "war3mapImported__moongo.mp3"
+  },
+  "crescent.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 15091,
+   "file": "crescent.mdx"
+  },
+  "cloud.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 247225,
+   "file": "cloud.mdx"
+  },
+  "war3mapImported\\pikakill.mp3": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 10971,
+   "file": "war3mapImported__pikakill.mp3"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNGoku.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5441,
+   "file": "ReplaceableTextures__CommandButtons__BTNGoku.BLP"
+  },
+  "war3mapImported\\moonjump.mp3": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5851,
+   "file": "war3mapImported__moonjump.mp3"
+  },
+  "Lightningnova.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 10848,
+   "file": "Lightningnova.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNWarcraft3 DMC.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 7879,
+   "file": "ReplaceableTextures__CommandButtons__BTNWarcraft3 DMC.blp"
+  },
+  "Hero_Turtle.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 162439,
+   "file": "Hero_Turtle.mdx"
+  },
+  "Goku3head.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 48226,
+   "file": "Goku3head.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNNight.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 6063,
+   "file": "ReplaceableTextures__CommandButtons__BTNNight.BLP"
+  },
+  "Meteor.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 26048,
+   "file": "Meteor.mdx"
+  },
+  "Magical_Sword.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 17627,
+   "file": "Magical_Sword.mdx"
+  },
+  "Tectonicfury.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 9118,
+   "file": "Tectonicfury.mdx"
+  },
+  "DeathWave.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 12691,
+   "file": "DeathWave.mdx"
+  },
+  "Enchant.MDX": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 4215,
+   "file": "Enchant.MDX"
+  },
+  "KonYui.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 98567,
+   "file": "KonYui.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNSnake.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5195,
+   "file": "ReplaceableTextures__CommandButtons__BTNSnake.BLP"
+  },
+  "HeroSaber.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 77996,
+   "file": "HeroSaber.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNRabbit.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5075,
+   "file": "ReplaceableTextures__CommandButtons__BTNRabbit.blp"
+  },
+  "LuBu.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 101303,
+   "file": "LuBu.mdx"
+  },
+  "war3mapImported\\heycharlie.mp3": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 36361,
+   "file": "war3mapImported__heycharlie.mp3"
+  },
+  "Herokyo.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 69961,
+   "file": "Herokyo.mdx"
+  },
+  "HeroFateZemberForm.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 14086,
+   "file": "HeroFateZemberForm.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNpikagirl.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5896,
+   "file": "ReplaceableTextures__CommandButtons__BTNpikagirl.blp"
+  },
+  "HeroBuu.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 45756,
+   "file": "HeroBuu.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNJoCu.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5893,
+   "file": "ReplaceableTextures__CommandButtons__BTNJoCu.BLP"
+  },
+  "Luffe.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 79478,
+   "file": "Luffe.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNFrostAxe.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5643,
+   "file": "ReplaceableTextures__CommandButtons__BTNFrostAxe.BLP"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNGundam.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 6313,
+   "file": "ReplaceableTextures__CommandButtons__BTNGundam.BLP"
+  },
+  "HeroKunoichi.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 80707,
+   "file": "HeroKunoichi.mdx"
+  },
+  "LinaInvers.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 51555,
+   "file": "LinaInvers.mdx"
+  },
+  "goku.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 51850,
+   "file": "goku.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNCloud.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 4926,
+   "file": "ReplaceableTextures__CommandButtons__BTNCloud.BLP"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNSalamader.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5603,
+   "file": "ReplaceableTextures__CommandButtons__BTNSalamader.blp"
+  },
+  "HeroShanaWingSmall.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 2840,
+   "file": "HeroShanaWingSmall.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNLeaf.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5422,
+   "file": "ReplaceableTextures__CommandButtons__BTNLeaf.BLP"
+  },
+  "picacugy.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 53589,
+   "file": "picacugy.mdx"
+  },
+  "war3mapImported\\nocute.mp3": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5642,
+   "file": "war3mapImported__nocute.mp3"
+  },
+  "war3mapImported\\bads.mp3": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 10344,
+   "file": "war3mapImported__bads.mp3"
+  },
+  "HeroRyuk.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 51684,
+   "file": "HeroRyuk.mdx"
+  },
+  "hzyn.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 124464,
+   "file": "hzyn.mdx"
+  },
+  "HeroPika.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 39327,
+   "file": "HeroPika.mdx"
+  },
+  "HeroHehi.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 78078,
+   "file": "HeroHehi.mdx"
+  },
+  "HeroLight.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 42762,
+   "file": "HeroLight.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNINV_Misc_Note_06.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5485,
+   "file": "ReplaceableTextures__CommandButtons__BTNINV_Misc_Note_06.blp"
+  },
+  "MidchilderNanohaAura.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 4764,
+   "file": "MidchilderNanohaAura.mdx"
+  },
+  "Long.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 60842,
+   "file": "Long.mdx"
+  },
+  "niya.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 108769,
+   "file": "niya.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNPowo.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5092,
+   "file": "ReplaceableTextures__CommandButtons__BTNPowo.BLP"
+  },
+  "linkstik.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 62817,
+   "file": "linkstik.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNLena.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 6014,
+   "file": "ReplaceableTextures__CommandButtons__BTNLena.blp"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNSaber.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5926,
+   "file": "ReplaceableTextures__CommandButtons__BTNSaber.BLP"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNGon.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5629,
+   "file": "ReplaceableTextures__CommandButtons__BTNGon.blp"
+  },
+  "ma.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 50645,
+   "file": "ma.mdx"
+  },
+  "pika.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 58592,
+   "file": "pika.mdx"
+  },
+  "HeroHimuraKenshin.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 77161,
+   "file": "HeroHimuraKenshin.mdx"
+  },
+  "billy.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 41343,
+   "file": "billy.mdx"
+  },
+  "lgcr.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 63461,
+   "file": "lgcr.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNWolverine.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5607,
+   "file": "ReplaceableTextures__CommandButtons__BTNWolverine.blp"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNIchigo.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5786,
+   "file": "ReplaceableTextures__CommandButtons__BTNIchigo.blp"
+  },
+  "war3mapImported\\yooooooooooooo.mp3": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 35943,
+   "file": "war3mapImported__yooooooooooooo.mp3"
+  },
+  "HolyAwakening.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 25418,
+   "file": "HolyAwakening.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNNaGi.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5764,
+   "file": "ReplaceableTextures__CommandButtons__BTNNaGi.BLP"
+  },
+  "war3mapImported\\PICK.mp3": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 1881,
+   "file": "war3mapImported__PICK.mp3"
+  },
+  "NetherStrike.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 25940,
+   "file": "NetherStrike.mdx"
+  },
+  "Bladestorm_SwordEffect.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 20612,
+   "file": "Bladestorm_SwordEffect.mdx"
+  },
+  "HeroIchigo.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 125665,
+   "file": "HeroIchigo.mdx"
+  },
+  "Charlie.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 18463,
+   "file": "Charlie.mdx"
+  },
+  "war3mapImported\\up.mp3": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 7313,
+   "file": "war3mapImported__up.mp3"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNGhost2.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5022,
+   "file": "ReplaceableTextures__CommandButtons__BTNGhost2.BLP"
+  },
+  "GrandUndeadAura.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 8136,
+   "file": "GrandUndeadAura.mdx"
+  },
+  "war3mapImported\\kickme.mp3": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 8359,
+   "file": "war3mapImported__kickme.mp3"
+  },
+  "HeroToshiieMaeda.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 76101,
+   "file": "HeroToshiieMaeda.mdx"
+  },
+  "HeroMiku.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 142000,
+   "file": "HeroMiku.mdx"
+  },
+  "BloodBreathStream.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 3325,
+   "file": "BloodBreathStream.mdx"
+  },
+  "war3mapImported\\ringnai.mp3": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 103698,
+   "file": "war3mapImported__ringnai.mp3"
+  },
+  "Boomnl.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 2623,
+   "file": "Boomnl.mdx"
+  },
+  "boxcat.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 7374,
+   "file": "boxcat.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNNico.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 11498,
+   "file": "ReplaceableTextures__CommandButtons__BTNNico.blp"
+  },
+  "BWING.MDX": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 2840,
+   "file": "BWING.MDX"
+  },
+  "HeroNarutoS4Effect.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5106,
+   "file": "HeroNarutoS4Effect.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNMoNi.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5915,
+   "file": "ReplaceableTextures__CommandButtons__BTNMoNi.blp"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNHehi.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5131,
+   "file": "ReplaceableTextures__CommandButtons__BTNHehi.BLP"
+  },
+  "ReplaceableTextures\\CommandButtons\\Weasel.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 7991,
+   "file": "ReplaceableTextures__CommandButtons__Weasel.blp"
+  },
+  "HeroCloudStrife.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 102987,
+   "file": "HeroCloudStrife.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNSwordofLight.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5150,
+   "file": "ReplaceableTextures__CommandButtons__BTNSwordofLight.blp"
+  },
+  "HeroCloudCyd.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 2588,
+   "file": "HeroCloudCyd.mdx"
+  },
+  "Gokuhead.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 13612,
+   "file": "Gokuhead.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNBerserker.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5920,
+   "file": "ReplaceableTextures__CommandButtons__BTNBerserker.BLP"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNSeph.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 4801,
+   "file": "ReplaceableTextures__CommandButtons__BTNSeph.blp"
+  },
+  "war3mapImported\\87joke.Mp3": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 28224,
+   "file": "war3mapImported__87joke.Mp3"
+  },
+  "AzuNyan.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 74882,
+   "file": "AzuNyan.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNChama.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5376,
+   "file": "ReplaceableTextures__CommandButtons__BTNChama.BLP"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNLineage.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5563,
+   "file": "ReplaceableTextures__CommandButtons__BTNLineage.blp"
+  },
+  "war3mapImported\\die.mp3": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5642,
+   "file": "war3mapImported__die.mp3"
+  },
+  "HeroHanzouHattori.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 61878,
+   "file": "HeroHanzouHattori.mdx"
+  },
+  "holo.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 77191,
+   "file": "holo.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNNinja!.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 4697,
+   "file": "ReplaceableTextures__CommandButtons__BTNNinja!.blp"
+  },
+  "txbbb.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 90800,
+   "file": "txbbb.mdx"
+  },
+  "HeroFateZemberFormBig.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 14086,
+   "file": "HeroFateZemberFormBig.mdx"
+  },
+  "HeroLingTong.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 72202,
+   "file": "HeroLingTong.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNWaterShield.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 6536,
+   "file": "ReplaceableTextures__CommandButtons__BTNWaterShield.blp"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNsetuna.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5958,
+   "file": "ReplaceableTextures__CommandButtons__BTNsetuna.blp"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNluff.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5574,
+   "file": "ReplaceableTextures__CommandButtons__BTNluff.blp"
+  },
+  "SD2.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 67135,
+   "file": "SD2.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNAzumi.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5674,
+   "file": "ReplaceableTextures__CommandButtons__BTNAzumi.BLP"
+  },
+  "NE_Shield.MDX": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 7418,
+   "file": "NE_Shield.MDX"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNKenshro.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 6106,
+   "file": "ReplaceableTextures__CommandButtons__BTNKenshro.BLP"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNBam.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5599,
+   "file": "ReplaceableTextures__CommandButtons__BTNBam.BLP"
+  },
+  "DarkBreathDamage.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 1407,
+   "file": "DarkBreathDamage.mdx"
+  },
+  "HeroSephiroth.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 57645,
+   "file": "HeroSephiroth.mdx"
+  },
+  "Student.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 42162,
+   "file": "Student.mdx"
+  },
+  "HeroXelloss.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 64754,
+   "file": "HeroXelloss.mdx"
+  },
+  "purplecoat.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 7642,
+   "file": "purplecoat.mdx"
+  },
+  "Kikyou.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 57215,
+   "file": "Kikyou.mdx"
+  },
+  "HeroEVA01S2.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 4354,
+   "file": "HeroEVA01S2.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNBawind.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5424,
+   "file": "ReplaceableTextures__CommandButtons__BTNBawind.BLP"
+  },
+  "heroluffeattack.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 8729,
+   "file": "heroluffeattack.mdx"
+  },
+  "Bulbasaur.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 54502,
+   "file": "Bulbasaur.mdx"
+  },
+  "doom.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 2984,
+   "file": "doom.mdx"
+  },
+  "EarthTornado2.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 22150,
+   "file": "EarthTornado2.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNMoon.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5489,
+   "file": "ReplaceableTextures__CommandButtons__BTNMoon.BLP"
+  },
+  "ye-wuqi1.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 77017,
+   "file": "ye-wuqi1.mdx"
+  },
+  "horsehead.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 3867,
+   "file": "horsehead.mdx"
+  },
+  "war3mapImported\\pcdie.mp3": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 7732,
+   "file": "war3mapImported__pcdie.mp3"
+  },
+  "rabbit.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 48824,
+   "file": "rabbit.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNJay.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5471,
+   "file": "ReplaceableTextures__CommandButtons__BTNJay.BLP"
+  },
+  "Darkraor.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 23368,
+   "file": "Darkraor.mdx"
+  },
+  "negi.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 78353,
+   "file": "negi.mdx"
+  },
+  "JapaneseCherry.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 7072,
+   "file": "JapaneseCherry.mdx"
+  },
+  "mfls.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 88114,
+   "file": "mfls.mdx"
+  },
+  "frostnova.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 4547,
+   "file": "frostnova.mdx"
+  },
+  "war3mapImported\\dorakill.mp3": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 13536,
+   "file": "war3mapImported__dorakill.mp3"
+  },
+  "Ritsu.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 70375,
+   "file": "Ritsu.mdx"
+  },
+  "collision.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 1188,
+   "file": "collision.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNLubu.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 6845,
+   "file": "ReplaceableTextures__CommandButtons__BTNLubu.blp"
+  },
+  "Sesshomaru.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 49743,
+   "file": "Sesshomaru.mdx"
+  },
+  "HeroMusashiMiyamoto.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 79150,
+   "file": "HeroMusashiMiyamoto.mdx"
+  },
+  "HeroPikachu.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 32286,
+   "file": "HeroPikachu.mdx"
+  },
+  "BlackHole1.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 8273,
+   "file": "BlackHole1.mdx"
+  },
+  "Luffe punch.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 2178,
+   "file": "Luffe punch.mdx"
+  },
+  "herofate.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 109980,
+   "file": "herofate.mdx"
+  },
+  "HeroShana.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 86520,
+   "file": "HeroShana.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNPaladinsSword.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5082,
+   "file": "ReplaceableTextures__CommandButtons__BTNPaladinsSword.BLP"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNFrostSWORD.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5198,
+   "file": "ReplaceableTextures__CommandButtons__BTNFrostSWORD.blp"
+  },
+  "wuqi.MDX": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 8894,
+   "file": "wuqi.MDX"
+  },
+  "WindMissle.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 11892,
+   "file": "WindMissle.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNFirst.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5054,
+   "file": "ReplaceableTextures__CommandButtons__BTNFirst.BLP"
+  },
+  "HeroBigGon.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 47576,
+   "file": "HeroBigGon.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNMysticSword.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5066,
+   "file": "ReplaceableTextures__CommandButtons__BTNMysticSword.blp"
+  },
+  "fox.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 74605,
+   "file": "fox.mdx"
+  },
+  "zy3.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 122950,
+   "file": "zy3.mdx"
+  },
+  "SuperShinyThingy.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 20549,
+   "file": "SuperShinyThingy.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNLina.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5517,
+   "file": "ReplaceableTextures__CommandButtons__BTNLina.BLP"
+  },
+  "HeroCloudKFKSword.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 2827,
+   "file": "HeroCloudKFKSword.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNLink.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5809,
+   "file": "ReplaceableTextures__CommandButtons__BTNLink.BLP"
+  },
+  "LasercannonfinalRED.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5984,
+   "file": "LasercannonfinalRED.mdx"
+  },
+  "HeroRaichuS3.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 4394,
+   "file": "HeroRaichuS3.mdx"
+  },
+  "HeroOichi.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 69680,
+   "file": "HeroOichi.mdx"
+  },
+  "SonicBreathStream.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 3325,
+   "file": "SonicBreathStream.mdx"
+  },
+  "Demonfilth.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 3119,
+   "file": "Demonfilth.mdx"
+  },
+  "fox2.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 74605,
+   "file": "fox2.mdx"
+  },
+  "gxhuge.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 6931,
+   "file": "gxhuge.mdx"
+  },
+  "war3mapImported\\nog.mp3": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 7314,
+   "file": "war3mapImported__nog.mp3"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNPhoenix_Samwise.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 4776,
+   "file": "ReplaceableTextures__CommandButtons__BTNPhoenix_Samwise.blp"
+  },
+  "xzz.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 79772,
+   "file": "xzz.mdx"
+  },
+  "war3mapImported\\poweraura.MDX": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 124580,
+   "file": "war3mapImported__poweraura.MDX"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNCCL.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 6199,
+   "file": "ReplaceableTextures__CommandButtons__BTNCCL.blp"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNWildmask.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5738,
+   "file": "ReplaceableTextures__CommandButtons__BTNWildmask.BLP"
+  },
+  "war3mapImported\\mandie.mp3": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5433,
+   "file": "war3mapImported__mandie.mp3"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNSana.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5792,
+   "file": "ReplaceableTextures__CommandButtons__BTNSana.BLP"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNKYO.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5548,
+   "file": "ReplaceableTextures__CommandButtons__BTNKYO.BLP"
+  },
+  "DivineRing.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 7268,
+   "file": "DivineRing.mdx"
+  },
+  "war3mapImported\\even.mp3": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 4598,
+   "file": "war3mapImported__even.mp3"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNNiya.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 7818,
+   "file": "ReplaceableTextures__CommandButtons__BTNNiya.blp"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNFate.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 6445,
+   "file": "ReplaceableTextures__CommandButtons__BTNFate.blp"
+  },
+  "gumdam.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 84893,
+   "file": "gumdam.mdx"
+  },
+  "1hswd_01.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 22381,
+   "file": "1hswd_01.mdx"
+  },
+  "OblivionAura.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 6109,
+   "file": "OblivionAura.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNPika.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5604,
+   "file": "ReplaceableTextures__CommandButtons__BTNPika.blp"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNLightningSword.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5349,
+   "file": "ReplaceableTextures__CommandButtons__BTNLightningSword.blp"
+  },
+  "war3mapImported\\4die.mp3": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 6687,
+   "file": "war3mapImported__4die.mp3"
+  },
+  "war3mapImported\\dogdie.mp3": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5433,
+   "file": "war3mapImported__dogdie.mp3"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNCaso.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 6239,
+   "file": "ReplaceableTextures__CommandButtons__BTNCaso.BLP"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNStupid.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 6352,
+   "file": "ReplaceableTextures__CommandButtons__BTNStupid.BLP"
+  },
+  "horse.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 54045,
+   "file": "horse.mdx"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNHosilo.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5401,
+   "file": "ReplaceableTextures__CommandButtons__BTNHosilo.BLP"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNKenshin.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5386,
+   "file": "ReplaceableTextures__CommandButtons__BTNKenshin.BLP"
+  },
+  "ReplaceableTextures\\CommandButtons\\BTNSolo.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5511,
+   "file": "ReplaceableTextures__CommandButtons__BTNSolo.BLP"
+  },
+  "war3mapImported\\letsgo.mp3": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 20838,
+   "file": "war3mapImported__letsgo.mp3"
+  },
+  "RenaRyugu2.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 78036,
+   "file": "RenaRyugu2.mdx"
+  },
+  "HeroGirl.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 80707,
+   "file": "HeroGirl.mdx"
+  },
+  "underpants.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 6752,
+   "file": "underpants.blp"
+  },
+  "babyface.mdx": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 1603,
+   "file": "babyface.mdx"
+  },
+  "LuBu3.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 49841,
+   "file": "LuBu3.blp"
+  },
+  "billy3.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 24934,
+   "file": "billy3.blp"
+  },
+  "HeroFate2.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 21349,
+   "file": "HeroFate2.blp"
+  },
+  "HeroBuu.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 32665,
+   "file": "HeroBuu.blp"
+  },
+  "holo1.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 57124,
+   "file": "holo1.blp"
+  },
+  "LOVE02.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 3910,
+   "file": "LOVE02.blp"
+  },
+  "AWING.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 7247,
+   "file": "AWING.blp"
+  },
+  "346a60.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 20213,
+   "file": "346a60.blp"
+  },
+  "linkface.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 11600,
+   "file": "linkface.blp"
+  },
+  "HeroShana.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 20019,
+   "file": "HeroShana.blp"
+  },
+  "Textures\\HeroRyukWing.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 4607,
+   "file": "Textures__HeroRyukWing.blp"
+  },
+  "HeroGirl.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 31194,
+   "file": "HeroGirl.blp"
+  },
+  "Yuixd128s.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 6175,
+   "file": "Yuixd128s.blp"
+  },
+  "Guitar.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 40040,
+   "file": "Guitar.blp"
+  },
+  "Textures\\HeroPikachu.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 8614,
+   "file": "Textures__HeroPikachu.blp"
+  },
+  "zz 2.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 50406,
+   "file": "zz 2.blp"
+  },
+  "wu-tie.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 9426,
+   "file": "wu-tie.blp"
+  },
+  "SephCloth.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 8041,
+   "file": "SephCloth.blp"
+  },
+  "doom.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 6097,
+   "file": "doom.blp"
+  },
+  "negi.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 20900,
+   "file": "negi.blp"
+  },
+  "angel2.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 84582,
+   "file": "angel2.blp"
+  },
+  "Textures\\JapaneseCherry.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 16050,
+   "file": "Textures__JapaneseCherry.blp"
+  },
+  "BlackHoleSkin04-64.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 12102,
+   "file": "BlackHoleSkin04-64.blp"
+  },
+  "Textures\\Zap1.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 6351,
+   "file": "Textures__Zap1.blp"
+  },
+  "FWING.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 7530,
+   "file": "FWING.blp"
+  },
+  "Textures\\HeroNanoha.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 20991,
+   "file": "Textures__HeroNanoha.blp"
+  },
+  "kikyou.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 27902,
+   "file": "kikyou.blp"
+  },
+  "linkbody.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 11712,
+   "file": "linkbody.blp"
+  },
+  "MegaBlast2.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 11929,
+   "file": "MegaBlast2.blp"
+  },
+  "Textures\\HeroShanaWing.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 7941,
+   "file": "Textures__HeroShanaWing.blp"
+  },
+  "RenaRyugu2.BLP": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 47322,
+   "file": "RenaRyugu2.BLP"
+  },
+  "Bahamut.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 76672,
+   "file": "Bahamut.blp"
+  },
+  "Textures\\HeroSaber.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 38136,
+   "file": "Textures__HeroSaber.blp"
+  },
+  "body256.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 16657,
+   "file": "body256.blp"
+  },
+  "Zember.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 12242,
+   "file": "Zember.blp"
+  },
+  "Textures\\HeroCloudStrife.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 30384,
+   "file": "Textures__HeroCloudStrife.blp"
+  },
+  "Skeleton4.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 22083,
+   "file": "Skeleton4.blp"
+  },
+  "337640.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 17599,
+   "file": "337640.blp"
+  },
+  "LuBu2.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 17288,
+   "file": "LuBu2.blp"
+  },
+  "HeroLuffe.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 34548,
+   "file": "HeroLuffe.blp"
+  },
+  "Sesshomaru.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 20703,
+   "file": "Sesshomaru.blp"
+  },
+  "RitsuUV.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 56435,
+   "file": "RitsuUV.blp"
+  },
+  "gx.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 3815,
+   "file": "gx.blp"
+  },
+  "LGCR2.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 23705,
+   "file": "LGCR2.blp"
+  },
+  "ssjface2.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 13084,
+   "file": "ssjface2.blp"
+  },
+  "Textures\\HeroCloth.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 8963,
+   "file": "Textures__HeroCloth.blp"
+  },
+  "Textures\\HeroIchigo.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 21131,
+   "file": "Textures__HeroIchigo.blp"
+  },
+  "Azusa512.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 61561,
+   "file": "Azusa512.blp"
+  },
+  "fox.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 28317,
+   "file": "fox.blp"
+  },
+  "tlwt.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 25646,
+   "file": "tlwt.blp"
+  },
+  "Textures\\Blue_Glow2.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 4144,
+   "file": "Textures__Blue_Glow2.blp"
+  },
+  "HeroPikachu.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 16040,
+   "file": "HeroPikachu.blp"
+  },
+  "Textures\\HeroSasuke.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 28602,
+   "file": "Textures__HeroSasuke.blp"
+  },
+  "pika.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 19482,
+   "file": "pika.blp"
+  },
+  "Textures\\Red_Glow3.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 3403,
+   "file": "Textures__Red_Glow3.blp"
+  },
+  "Student.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 19855,
+   "file": "Student.blp"
+  },
+  "Yui512.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 51231,
+   "file": "Yui512.blp"
+  },
+  "HeroEVA01Effect.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 4777,
+   "file": "HeroEVA01Effect.blp"
+  },
+  "hzyn.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 39146,
+   "file": "hzyn.blp"
+  },
+  "1Hswd_01.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5664,
+   "file": "1Hswd_01.blp"
+  },
+  "units\\Creeps\\IronGolem\\IronGolem.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 27450,
+   "file": "units__Creeps__IronGolem__IronGolem.blp"
+  },
+  "rabbit.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 27206,
+   "file": "rabbit.blp"
+  },
+  "emotion.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 7425,
+   "file": "emotion.blp"
+  },
+  "Textures\\RockParticle.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 2536,
+   "file": "Textures__RockParticle.blp"
+  },
+  "Textures\\HeroCloudCyd.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 4641,
+   "file": "Textures__HeroCloudCyd.blp"
+  },
+  "miku2.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 72051,
+   "file": "miku2.blp"
+  },
+  "Textures\\Black32.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 2880,
+   "file": "Textures__Black32.blp"
+  },
+  "hourse.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 175942,
+   "file": "hourse.blp"
+  },
+  "bb4.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 17605,
+   "file": "bb4.blp"
+  },
+  "337d60.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 21988,
+   "file": "337d60.blp"
+  },
+  "Textures\\HeroOichi.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 22492,
+   "file": "Textures__HeroOichi.blp"
+  },
+  "long.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 23046,
+   "file": "long.blp"
+  },
+  "cb1.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 36847,
+   "file": "cb1.blp"
+  },
+  "Textures\\HeroRider.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 14093,
+   "file": "Textures__HeroRider.blp"
+  },
+  "Textures\\HeroMusashiMiyamoto.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 26865,
+   "file": "Textures__HeroMusashiMiyamoto.blp"
+  },
+  "HeroLingTong.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 23166,
+   "file": "HeroLingTong.blp"
+  },
+  "MidchilderDivineB.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 10572,
+   "file": "MidchilderDivineB.blp"
+  },
+  "boxcat.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 3628,
+   "file": "boxcat.blp"
+  },
+  "miku1.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 73738,
+   "file": "miku1.blp"
+  },
+  "Textures\\Katana.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 7156,
+   "file": "Textures__Katana.blp"
+  },
+  "Textures\\Zap1b.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 6618,
+   "file": "Textures__Zap1b.blp"
+  },
+  "foxhair2.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 3889,
+   "file": "foxhair2.blp"
+  },
+  "Textures\\FireFly.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 3910,
+   "file": "Textures__FireFly.blp"
+  },
+  "Textures\\HeroToshiieMaeda.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 17450,
+   "file": "Textures__HeroToshiieMaeda.blp"
+  },
+  "Textures\\Tornado2b.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 7355,
+   "file": "Textures__Tornado2b.blp"
+  },
+  "Pikachu_portrait.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 17946,
+   "file": "Pikachu_portrait.blp"
+  },
+  "Textures\\HeroHimuraKenshin.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 22729,
+   "file": "Textures__HeroHimuraKenshin.blp"
+  },
+  "Charlie.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 52027,
+   "file": "Charlie.blp"
+  },
+  "foxhair.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 3584,
+   "file": "foxhair.blp"
+  },
+  "Textures\\HeroKunoichi.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 26673,
+   "file": "Textures__HeroKunoichi.blp"
+  },
+  "yellowaura.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 175942,
+   "file": "yellowaura.blp"
+  },
+  "kmt.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 22490,
+   "file": "kmt.blp"
+  },
+  "Textures\\RibbonBlur1.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 6129,
+   "file": "Textures__RibbonBlur1.blp"
+  },
+  "Textures\\HeroHanzouHattori.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 20413,
+   "file": "Textures__HeroHanzouHattori.blp"
+  },
+  "Textures\\HeroSephiroth.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 29202,
+   "file": "Textures__HeroSephiroth.blp"
+  },
+  "HeroHehi.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 23859,
+   "file": "HeroHehi.blp"
+  },
+  "Lina Invers.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 25571,
+   "file": "Lina Invers.blp"
+  },
+  "MidchilderDivineA.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 16074,
+   "file": "MidchilderDivineA.blp"
+  },
+  "Textures\\ring.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 5958,
+   "file": "Textures__ring.blp"
+  },
+  "BWING.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 6244,
+   "file": "BWING.blp"
+  },
+  "face.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 10204,
+   "file": "face.blp"
+  },
+  "mfls.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 19842,
+   "file": "mfls.blp"
+  },
+  "holo2.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 19384,
+   "file": "holo2.blp"
+  },
+  "zy.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 32112,
+   "file": "zy.blp"
+  },
+  "xellossp.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 21483,
+   "file": "xellossp.blp"
+  },
+  "babyface.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 10233,
+   "file": "babyface.blp"
+  },
+  "HeroBigGon.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 19472,
+   "file": "HeroBigGon.blp"
+  },
+  "picacu.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 50938,
+   "file": "picacu.blp"
+  },
+  "Light-tennis.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 21602,
+   "file": "Light-tennis.blp"
+  },
+  "Textures\\HeroLuffeAttack.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 7589,
+   "file": "Textures__HeroLuffeAttack.blp"
+  },
+  "Textures\\HeroMitsuhideAkechi.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 29082,
+   "file": "Textures__HeroMitsuhideAkechi.blp"
+  },
+  "Textures\\HeroCloudKFKSword.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 4914,
+   "file": "Textures__HeroCloudKFKSword.blp"
+  },
+  "Textures\\HeroRyuk.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 20657,
+   "file": "Textures__HeroRyuk.blp"
+  },
+  "5395b00.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 20664,
+   "file": "5395b00.blp"
+  },
+  "fox2.blp": {
+   "status": "ok",
+   "how": "object-data-path",
+   "size": 34042,
+   "file": "fox2.blp"
+  }
+ },
+ "block_table_entries": 462,
+ "recovered": 356,
+ "unrecovered_blocks": 104
+}

@@ -1,0 +1,41 @@
+{
+  "id": "godie-h021.q",
+  "schema": "ability@1",
+  "name": "05-01 薩喀爾",
+  "description": "[主動攻擊]\n25秒冷卻時間\n\n召喚數道閃電進行攻擊給予最多3位敵人175點的傷害",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    25.0,
+    25.0,
+    25.0
+  ],
+  "manaCost": [
+    60.0,
+    95.0,
+    130.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          175,
+          275,
+          375
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true
+}

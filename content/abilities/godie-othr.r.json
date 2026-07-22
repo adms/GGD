@@ -1,0 +1,34 @@
+{
+  "id": "godie-othr.r",
+  "name": "31-04 不要踢我蛋蛋",
+  "description": "[輔助]\n60秒冷卻時間\n\n被踢到蛋蛋的金鋼狼狂暴化，於時間內增加攻擊力15%、防禦力5點、回血15點，並且反彈(所受傷害)*120%，效果持續7秒。",
+  "slot": "R",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    150.0,
+    250.0,
+    350.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "flat",
+          "value": 0.25
+        }
+      ],
+      "duration": 10.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

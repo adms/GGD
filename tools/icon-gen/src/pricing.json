@@ -1,0 +1,33 @@
+{
+  "_comment": [
+    "PER-IMAGE PROVIDER RATES, IN USD. THIS FILE IS A QUOTE, NOT A CONTRACT.",
+    "These are the published list prices as of the authoring model's Jan-2026",
+    "knowledge cutoff. Nothing in this repo can verify them — the runner prints",
+    "the rate it used and the date below on every dry run, and REFUSES to bill",
+    "unless --i-have-confirmed-pricing is passed, precisely so a stale number",
+    "here can never quietly become a real charge.",
+    "Confirm against the provider's own pricing page before authorising a run."
+  ],
+  "quotedAsOf": "2026-01",
+  "image": {
+    "gpt-image-1": {
+      "note": "1024x1024. Quality tiers are a request parameter, not a model.",
+      "low": 0.011,
+      "medium": 0.042,
+      "high": 0.167
+    },
+    "dall-e-3": {
+      "note": "1024x1024.",
+      "standard": 0.04,
+      "hd": 0.08
+    },
+    "dall-e-2": {
+      "note": "1024x1024. No quality tiers.",
+      "standard": 0.02
+    }
+  },
+  "text": {
+    "_comment": "Per subject-line call for --subject=text. One short prompt in, ~30 tokens out. Small-model class; a frontier model is roughly 20x this.",
+    "perCall": 0.0002
+  }
+}

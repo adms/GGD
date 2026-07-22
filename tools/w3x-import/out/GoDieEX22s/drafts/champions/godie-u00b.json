@@ -1,0 +1,200 @@
+{
+  "id": "godie-u00b",
+  "schema": "champion@1",
+  "name": "最M的魔法Jizz - 清蒸 飛鼠先生",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "champ.sela",
+  "baseStats": {
+    "maxHealth": 620,
+    "healthRegen": 1.5,
+    "maxMana": 342,
+    "manaRegen": 1.44,
+    "ad": 52,
+    "ap": 0,
+    "armor": 7,
+    "mr": 28,
+    "as": 0.77,
+    "ms": 8.0,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 40,
+    "healthRegen": 0.1,
+    "maxMana": 24,
+    "manaRegen": 0.08,
+    "ad": 2.0,
+    "armor": 0.6,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-u00b.q",
+      "name": "超．祕技略決",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200,
+              240
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "W": {
+      "id": "godie-u00b.w",
+      "name": "幻影鬥氣",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "critChance",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "duration": 6.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "E": {
+      "id": "godie-u00b.e",
+      "name": "龍捲風",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        100.0,
+        100.0,
+        200.0,
+        250.0
+      ],
+      "range": 14.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "R": {
+      "id": "godie-u00b.r",
+      "name": "暴雷無限刃",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        200.0,
+        300.0,
+        400.0
+      ],
+      "range": 4.58,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow25",
+          "duration": 1.5,
+          "moveSpeedMult": 0.6
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "radius": 6.0
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ]
+}

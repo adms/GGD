@@ -1,0 +1,244 @@
+{
+  "id": "godie-othr",
+  "schema": "champion@1",
+  "name": "X戰警 - 金鋼狼",
+  "description": "故事：\n名為金鋼狼，是因為全身硬梆梆像金鋼一樣。身材雖然臃腫，速度和力量卻不輸其他人，但是長相不如人常被發好人卡，只有小豬能安慰(!?)他的寂寞。\n(出自:偽特異功能組)\n\n推薦玩家 : 追擊殺人\n上手度 : 中\n\n角色成長：\n力量 + 1.50\n敏捷 + 2.30\n智慧 + 1.80\n基礎跑速 300\n\n可學習的技能：\n迴旋爪擊、重爪擊、野性的呼喚、不要踢我蛋蛋",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "champ.thorne",
+  "baseStats": {
+    "maxHealth": 640,
+    "healthRegen": 1.55,
+    "maxMana": 304,
+    "manaRegen": 1.48,
+    "ad": 37,
+    "ap": 0,
+    "armor": 7,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 50,
+    "healthRegen": 0.12,
+    "maxMana": 22,
+    "manaRegen": 0.07,
+    "ad": 2.5,
+    "armor": 0.5,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-othr.q",
+      "name": "31-01 迴旋爪擊",
+      "description": "[主動攻擊]\n25秒冷卻時間\n\n傳說金鋼狼從夢X代摩天輪領悟的必殺技，以異常快的速度邊旋轉邊刺殺敵人，給予每個敵人力量*2+150點傷害。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0,
+        50.0,
+        50.0
+      ],
+      "manaCost": [
+        120.0,
+        150.0,
+        180.0,
+        275.0,
+        275.0
+      ],
+      "range": 14.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200,
+              240
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "W": {
+      "id": "godie-othr.w",
+      "name": "31-02 重爪擊",
+      "description": "[主動攻擊]\n45秒冷卻時間\n\n使用金鋼狼獨有的爪子來攻擊敵人，造成劇烈的痛苦，給予250點傷害的同時可以恢復自己的生命，並且緩慢敵人移速30%，維持3秒。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        100.0,
+        130.0,
+        160.0,
+        275.0,
+        275.0
+      ],
+      "range": 3.21,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              250.0,
+              400.0,
+              550.0,
+              900.0,
+              900.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        },
+        {
+          "kind": "heal",
+          "amount": {
+            "perRank": [
+              400.0,
+              550.0,
+              700.0,
+              850.0,
+              1000.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow30",
+          "duration": 3.0,
+          "moveSpeedMult": 0.7
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "E": {
+      "id": "godie-othr.e",
+      "name": "31-03 野性的呼喚",
+      "description": "[速度加成]\n60秒冷卻時間\n\n喚醒沉睡在血液中狼的野性，雖然攻擊速度上升50%和移動速度上升27%，但是將會受到額外攻擊20%傷害，持續9秒。",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        120.0,
+        180.0,
+        240.0,
+        300.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "flat",
+              "value": 0.4
+            }
+          ],
+          "duration": 9.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "R": {
+      "id": "godie-othr.r",
+      "name": "31-04 不要踢我蛋蛋",
+      "description": "[輔助]\n60秒冷卻時間\n\n被踢到蛋蛋的金鋼狼狂暴化，於時間內增加攻擊力15%、防禦力5點、回血15點，並且反彈(所受傷害)*120%，效果持續7秒。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        150.0,
+        250.0,
+        350.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "duration": 10.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin"
+  ],
+  "exAbility": "godie-othr.ex",
+  "icon": "assets/icons/champions/godie-othr.png",
+  "tint": [
+    1.0,
+    1.0,
+    0.0
+  ]
+}

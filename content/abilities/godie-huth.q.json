@@ -1,0 +1,47 @@
+{
+  "id": "godie-huth.q",
+  "name": "28-01 吃掉你",
+  "description": "[主動攻擊]\n35秒冷卻時間\n張開大口吃掉目標，把敵人變成養分。\n\n每吃掉6隻增加1點力量。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 5,
+  "cooldown": [
+    35.0,
+    28.0,
+    21.0,
+    14.0,
+    7.0
+  ],
+  "manaCost": [
+    30.0,
+    50.0,
+    70.0,
+    90.0,
+    110.0
+  ],
+  "range": 3.67,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          80,
+          120,
+          160,
+          200,
+          240
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.72
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

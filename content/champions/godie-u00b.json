@@ -1,0 +1,222 @@
+{
+  "id": "godie-u00b",
+  "schema": "champion@1",
+  "name": "最M的魔法Jizz - 清蒸 飛鼠先生",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "champ.skin.barbarian",
+  "baseStats": {
+    "maxHealth": 620,
+    "healthRegen": 1.5,
+    "maxMana": 342,
+    "manaRegen": 1.44,
+    "ad": 52,
+    "ap": 0,
+    "armor": 7,
+    "mr": 28,
+    "as": 0.77,
+    "ms": 8.0,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 40,
+    "healthRegen": 0.1,
+    "maxMana": 24,
+    "manaRegen": 0.08,
+    "ad": 2.0,
+    "armor": 0.6,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-u00b.q",
+      "name": "75-01 超．祕技略決",
+      "description": "[魔法書]\n0秒冷卻時間\n\n內隱藏著許多作弊的法術。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200,
+              240
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.72
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "W": {
+      "id": "godie-u00b.w",
+      "name": "75-02 幻影鬥氣",
+      "description": "[被動]\n0秒冷卻時間\n\n傳說當鬥氣提升到極致之時，將會產生幻影造成對手傷害。攻擊時有10%的機率可以產生幻影造成50點傷害。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "critChance",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "duration": 6.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "E": {
+      "id": "godie-u00b.e",
+      "name": "75-02 龍捲風",
+      "description": "召喚一道可以控制的殘暴龍捲風，降低敵方部隊的移動速度，並以亂數決定將哪些地面部隊丟到半空中，同時傷害敵人的建築物。\n持續<ANto,Dur2>秒。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        100.0,
+        100.0,
+        200.0,
+        250.0
+      ],
+      "range": 14.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "R": {
+      "id": "godie-u00b.r",
+      "name": "75-03 暴雷無限刃",
+      "description": "[主動攻擊]\n60秒冷卻時間\n\n將劍刃附著雷電傷害，將會隨機對附近的敵人進行斬殺，給予50傷害並且淨化，共十五次。",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        200.0,
+        300.0,
+        400.0
+      ],
+      "range": 4.58,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              50.0,
+              90.0,
+              130.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.39
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "radius": 6.0
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin"
+  ],
+  "tint": [
+    0.9412,
+    0.5882,
+    0.5882
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "id": "godie-oshd.r",
+  "name": "29-04 電光毒龍鑽",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n源於龍虎門的王小虎，原本只是一種幻想，但是經過鬼王達的改良已經成為一種必殺技，對附近的敵方地面部隊造成合計最多700點的傷害，單體攻擊400，並擊暈他們1秒，對建築物有80%傷害。",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    150.0,
+    300.0,
+    450.0
+  ],
+  "range": 14.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          200.0,
+          400.0,
+          600.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow25",
+      "duration": 1.5,
+      "moveSpeedMult": 0.6
+    }
+  ],
+  "vfxKey": "fx.cinder-ward",
+  "targetsEnemies": true,
+  "radius": 4.58,
+  "schema": "ability@1"
+}

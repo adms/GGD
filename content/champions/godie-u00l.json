@@ -1,0 +1,228 @@
+{
+  "id": "godie-u00l",
+  "schema": "champion@1",
+  "name": "北斗之鼠 - 拳四郎",
+  "description": "故事：\n北斗神拳的唯一傳人，使用難以置信的秘穴(!?)拳法致敵人於死地。由於北斗星是不祥之星，與拳四郎相愛的女人皆會遭受不幸，使得充滿怨念的拳四郎終於爆發了。\n(出自:北斗神拳)\n\n角色成長：\n力量 + 1.95\n敏捷 + 2.80\n智慧 + 1.45\n基礎跑速 305\n\n可學習的技能：\n北斗懺悔拳、北斗神拳秘訣轉龍呼吸法、北斗百裂拳、ChangeDNA",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "imported.heropikachu",
+  "attackDamagePoint": 0.5,
+  "baseStats": {
+    "maxHealth": 480,
+    "healthRegen": 1.15,
+    "maxMana": 280,
+    "manaRegen": 1.4,
+    "ad": 34,
+    "ap": 0,
+    "armor": 8,
+    "mr": 28,
+    "as": 0.67,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 39,
+    "healthRegen": 0.1,
+    "maxMana": 17,
+    "manaRegen": 0.06,
+    "ad": 1.5,
+    "armor": 0.8,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-u00l.q",
+      "name": "25-01 北斗懺悔拳",
+      "description": "[主動攻擊]\n25秒冷卻時間\n\n\"你還有3秒的時間可以懺悔你這輩子的罪孽\"，點擊指定單位之秘穴，在三秒後造成自身力量*3+150傷害。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        25.0,
+        25.0,
+        25.0,
+        25.0,
+        8.0
+      ],
+      "manaCost": [
+        90.0,
+        120.0,
+        150.0,
+        325.0,
+        85.0
+      ],
+      "range": 2.75,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200,
+              240
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "W": {
+      "id": "godie-u00l.w",
+      "name": "25-02 北斗神拳秘訣轉龍呼吸法",
+      "description": "[被動]\n0秒冷卻時間\n\n有7%的機會閃避攻擊，而且有12%機會擊中敵人祕穴造成正常攻擊1.5倍的傷害。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              12.0,
+              15.0,
+              18.0,
+              21.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.063
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "E": {
+      "id": "godie-u00l.e",
+      "name": "25-03 北斗百裂拳",
+      "description": "[主動攻擊]\n60秒冷卻時間\n\n拳四郎得意絕技之一，以連續拳頭攻擊區域內的敵人造成單體攻擊300+力量*2傷害。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        165.0,
+        240.0,
+        315.0,
+        390.0
+      ],
+      "range": 2.75,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              300.0,
+              550.0,
+              800.0,
+              1050.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "radius": 6.0
+    },
+    "R": {
+      "id": "godie-u00l.r",
+      "name": "25-04 ChangeDNA",
+      "description": "[輔助]\n60秒冷卻時間\n\n在一次偶然失敗實驗中，拳四郎學會招喚強力雷電改變自身DNA，變身成為北斗之鼠，攻擊時擁有25%機率使出連鎖閃電，另外因為皮膚帶有靜電，有25%的機率使攻擊的敵人受到淨化，攻擊速度也會不可思議的加快，持續8秒。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        80.0,
+        160.0,
+        240.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.48
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ],
+  "exAbility": "godie-u00l.ex",
+  "icon": "assets/icons/champions/godie-u00l.png"
+}

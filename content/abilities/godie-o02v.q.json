@@ -1,0 +1,51 @@
+{
+  "id": "godie-o02v.q",
+  "name": "81-01 Barrel Shot",
+  "description": "[主動攻擊]\n30秒冷卻時間\n\n帶有輔助效果的復合高速砲擊，以快速發動的魔力波動封鎖住對手的行動，造成300範圍內的敵人減緩速度80%，持續1秒，爭取砲擊集束時間，其缺點為需要極大的魔力作為高速發射的代價。",
+  "slot": "Q",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    30.0,
+    30.0,
+    30.0,
+    30.0
+  ],
+  "manaCost": [
+    80.0,
+    130.0,
+    180.0,
+    230.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          3.0,
+          3.0,
+          3.0,
+          3.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.009
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow25",
+      "duration": 1.5,
+      "moveSpeedMult": 0.6
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "radius": 5.5,
+  "schema": "ability@1"
+}

@@ -1,0 +1,48 @@
+{
+  "id": "godie-hapm.r",
+  "name": "52-04 巨神一擊",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n燃燒巨斧向前衝刺400距離後揮出致命的一擊，對周圍400內的敵人造成600點傷害。",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    200.0,
+    360.0,
+    520.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          3.0,
+          3.0,
+          3.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.009
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow25",
+      "duration": 1.5,
+      "moveSpeedMult": 0.6
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "radius": 6.0,
+  "schema": "ability@1"
+}

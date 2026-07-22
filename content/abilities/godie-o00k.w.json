@@ -1,0 +1,33 @@
+{
+  "id": "godie-o00k.w",
+  "name": "86-02 電光一閃",
+  "description": "[輔助]\n25秒冷卻時間\n\n讓皮卡娘以疾快的速度移動進出600的距離到指定的位置。",
+  "slot": "W",
+  "castType": "dash",
+  "maxRank": 5,
+  "cooldown": [
+    25.0,
+    20.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "manaCost": [
+    50.0,
+    100.0,
+    150.0,
+    150.0,
+    150.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "dash",
+      "mode": "toPoint",
+      "speed": 30.0,
+      "maxDistance": 11.0
+    }
+  ],
+  "vfxKey": "fx.cinder-ward",
+  "schema": "ability@1"
+}

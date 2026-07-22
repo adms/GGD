@@ -1,0 +1,50 @@
+{
+  "id": "godie-e015.e",
+  "schema": "ability@1",
+  "name": "94-03 珍奶顏射",
+  "description": "[輔助]\n60秒冷卻時間\n\n被珍珠奶茶射中的金居福，進入暴怒狀態，將會額外受到20%傷害，但每次攻擊可附帶125點傷害並暈眩0.1秒，增加攻速30%，跑速4%，持續15秒。",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    100.0,
+    175.0,
+    250.0,
+    325.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          125.0,
+          125.0,
+          125.0,
+          125.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.375
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "burnstun",
+      "duration": 0.1,
+      "stun": true
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true
+}

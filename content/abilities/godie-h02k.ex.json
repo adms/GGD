@@ -1,0 +1,39 @@
+{
+  "id": "godie-h02k.ex",
+  "name": "89-002 俄羅斯輪盤",
+  "description": "[主動攻擊]\n1秒冷卻時間\n\n在馬戲團打工的熊貓，為了保護自己不被從樹後偷襲養成了把周圍的樹木破壞掉的習慣。除此之外，他也學會了生死搏命的技藝，拿出土製左輪手槍裝填一顆子彈，生死一瞬間，有1/6的機會讓對方或1/6自己死亡，剩餘4/6相安無事。",
+  "slot": "EX",
+  "castType": "targeted",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    315.0
+  ],
+  "range": 5.29,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "flat": 300,
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.9
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow40",
+      "duration": 3.0,
+      "moveSpeedMult": 0.6
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1",
+  "targetsEnemies": true
+}

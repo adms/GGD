@@ -1,0 +1,36 @@
+{
+  "id": "godie-naka.e",
+  "name": "27-03 忍法千變萬化之刀",
+  "description": "[傷害加成]\n60秒冷卻時間\n\n窮究一切武藝和自然元素的精隨，讓小次郎悟出深奧的忍法理論，可以隨機以不同的屬性來攻擊他的敵人，最多6次攻擊，持續30秒。\n\n火屬性給予20點傷害，持續15秒\n冰屬性緩慢敵人2.0秒\n地屬性暈眩敵人0.75秒\n風屬性給予多個敵人130點傷害\n\n本技能為法球效應\n本技能只對英雄有效",
+  "slot": "E",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    120.0,
+    180.0,
+    240.0,
+    300.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "flat",
+          "value": 0.4
+        }
+      ],
+      "duration": 3.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

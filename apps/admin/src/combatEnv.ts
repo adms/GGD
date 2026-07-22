@@ -1,0 +1,305 @@
+/**
+ * 戰鬥系統 (combat-env multipliers) — pure, node-testable logic behind the admin
+ * page that tunes the GLOBAL combat-environment table.
+ *
+ * One multiplicative factor per combat quantity (冷卻 / 傷害 / 防禦 / …), 1.0 =
+ * neutral (byte-identical legacy combat). The platform stores the table at
+ * `/admin/combat-env`; the game-server snapshots it into every NEWLY CREATED
+ * match — a save therefore applies **from the next match**, and matches already
+ * in progress keep the table they started with (deterministic-safe dynamic
+ * config: no restart, no mid-match rebalance).
+ *
+ * The key list is imported from the SIM (`@ggd/shared/sim/combatEnv`) rather
+ * than re-declared, so a key added to the engine cannot silently go missing
+ * from this page — the labels map is exhaustively typed over `CombatEnvKey`.
+ *
+ * Form state holds RAW STRINGS (not numbers) so a half-typed "1." or an empty
+ * box is representable and can be reported as a field error instead of being
+ * coerced to something the admin never asked for. Everything here is a pure
+ * function over plain data; the page (ui/CombatEnvPage.tsx) is presentation only.
+ */
+import { COMBAT_ENV_KEYS, type CombatEnvKey } from "@ggd/shared/sim/combatEnv";
+
+export { COMBAT_ENV_KEYS };
+export type { CombatEnvKey };
+
+// ------------------------------------------------------------- bounds ------
+
+/** Neutral factor — legacy combat behaviour. */
+export const NEUTRAL = 1;
+/** Lower bound, mirroring combatenv.MinFactor on the platform (a 400 below it). */
+export const MIN_FACTOR = 0.1;
+/** Upper bound, mirroring combatenv.MaxFactor on the platform (a 400 above it). */
+export const MAX_FACTOR = 10;
+/** Numeric-input step for the table's spinners. */
+export const STEP = 0.05;
+
+// ---------------------------------------------------------------- doc ------
+
+/** The combat-env document the platform GET returns. */
+export interface CombatEnvDoc {
+  version: number;
+  updatedAt: string;
+  /** ALWAYS the full table — every key present (the platform backfills). */
+  multipliers: Record<CombatEnvKey, number>;
+}
+
+/** The neutral table: every factor 1.0 (the shipped default). */
+export function neutralMultipliers(): Record<CombatEnvKey, number> {
+  const m = {} as Record<CombatEnvKey, number>;
+  for (const k of COMBAT_ENV_KEYS) m[k] = NEUTRAL;
+  return m;
+}
+
+/** A fresh, all-neutral doc — what the page shows before the GET resolves. */
+export function emptyCombatEnvDoc(): CombatEnvDoc {
+  return { version: 1, updatedAt: "", multipliers: neutralMultipliers() };
+}
+
+/**
+ * Tolerant parser for whatever the platform returns. Accepts the bare doc or a
+ * `{ combatEnv: doc }` / `{ doc: doc }` envelope; unknown keys are dropped and
+ * any missing / non-finite factor falls back to the neutral 1.0, so the page
+ * never dies on a partial or hand-edited response.
+ */
+export function normalizeCombatEnvDoc(raw: unknown): CombatEnvDoc {
+  if (raw === null || typeof raw !== "object") return emptyCombatEnvDoc();
+  const outer = raw as Record<string, unknown>;
+  const envelope = outer["combatEnv"] ?? outer["doc"];
+  const inner =
+    envelope && typeof envelope === "object" ? (envelope as Record<string, unknown>) : outer;
+
+  const rawMult = inner["multipliers"];
+  const src = (rawMult && typeof rawMult === "object" ? rawMult : {}) as Record<string, unknown>;
+  const multipliers = neutralMultipliers();
+  for (const k of COMBAT_ENV_KEYS) {
+    const v = src[k];
+    if (typeof v === "number" && Number.isFinite(v)) multipliers[k] = v;
+  }
+  return {
+    version: typeof inner["version"] === "number" ? (inner["version"] as number) : 1,
+    updatedAt: typeof inner["updatedAt"] === "string" ? (inner["updatedAt"] as string) : "",
+    multipliers,
+  };
+}
+
+// -------------------------------------------------------------- labels -----
+
+/** zh-Hant label + a one-line note naming exactly what the factor scales. */
+export interface CombatEnvLabel {
+  /** 中文名稱 shown in the table's first column */
+  zh: string;
+  /** what the factor multiplies, in one line */
+  note: string;
+}
+
+/**
+ * Exhaustive zh-Hant labels — `Record<CombatEnvKey, …>` on purpose: adding a key
+ * to the sim makes this map a type error until it is labelled here.
+ */
+export const COMBAT_ENV_LABELS: Record<CombatEnvKey, CombatEnvLabel> = {
+  cooldown: { zh: "技能冷卻時間", note: "技能冷卻秒數（含 EX）。大於 1 = 冷卻更久" },
+  damageDealt: { zh: "造成傷害", note: "所有傷害（減傷前），含普攻、技能、持續傷害" },
+  defense: { zh: "防禦力", note: "護甲與魔法抗性" },
+  attackDamage: { zh: "物理攻擊力", note: "AD" },
+  abilityPower: { zh: "法術強度", note: "AP" },
+  maxHealth: { zh: "生命上限", note: "最大生命值（現有百分比不變）" },
+  healthRegen: { zh: "生命回復", note: "每秒回血" },
+  maxMana: { zh: "魔力上限", note: "最大魔力值（現有百分比不變）" },
+  manaRegen: { zh: "魔力回復", note: "每秒回魔" },
+  moveSpeed: { zh: "移動速度", note: "上下限夾制前的移動速度" },
+  attackSpeed: { zh: "攻擊速度", note: "上下限夾制前的攻速" },
+  healing: { zh: "治療量", note: "治療效果、吸血回復與花朵回復" },
+  shield: { zh: "護盾量", note: "護盾吸收值" },
+  critChance: { zh: "暴擊機率", note: "夾制到 0～100% 之前" },
+  critDamage: { zh: "暴擊傷害", note: "暴擊倍率" },
+  lifesteal: { zh: "生命偷取", note: "普攻吸血比例（夾制前）" },
+  attackRange: { zh: "攻擊距離", note: "普攻射程" },
+};
+
+/** A titled block of rows — the page renders one table section per group. */
+export interface CombatEnvGroup {
+  title: string;
+  keys: CombatEnvKey[];
+}
+
+/**
+ * Display grouping. Every key appears in EXACTLY ONE group (asserted by
+ * `groupsCoverAllKeys`, unit-tested) so the page can never drop a multiplier.
+ */
+export const COMBAT_ENV_GROUPS: CombatEnvGroup[] = [
+  { title: "輸出 · 傷害與技能", keys: ["damageDealt", "cooldown", "attackDamage", "abilityPower"] },
+  { title: "生存 · 防禦與回復", keys: ["maxHealth", "healthRegen", "defense", "shield", "healing", "lifesteal"] },
+  { title: "機動 · 位移與攻擊", keys: ["moveSpeed", "attackSpeed", "attackRange"] },
+  { title: "暴擊", keys: ["critChance", "critDamage"] },
+  { title: "資源 · 魔力", keys: ["maxMana", "manaRegen"] },
+];
+
+/** True when the display groups partition the sim's key list exactly. */
+export function groupsCoverAllKeys(): boolean {
+  const seen = COMBAT_ENV_GROUPS.flatMap((g) => g.keys);
+  return (
+    seen.length === COMBAT_ENV_KEYS.length &&
+    new Set(seen).size === COMBAT_ENV_KEYS.length &&
+    COMBAT_ENV_KEYS.every((k) => seen.includes(k))
+  );
+}
+
+// ---------------------------------------------------------------- form -----
+
+/** Editable form state: one raw input string per key. */
+export type CombatEnvForm = Record<CombatEnvKey, string>;
+
+/** Render a factor for an input box: 1 → "1", 1.05 → "1.05" (no trailing zeros). */
+export function formatFactor(n: number): string {
+  if (!Number.isFinite(n)) return String(NEUTRAL);
+  return String(Number(n.toFixed(4)));
+}
+
+/** Seed the form from a loaded doc. */
+export function formFromDoc(doc: CombatEnvDoc): CombatEnvForm {
+  const form = {} as CombatEnvForm;
+  for (const k of COMBAT_ENV_KEYS) form[k] = formatFactor(doc.multipliers[k] ?? NEUTRAL);
+  return form;
+}
+
+/** An all-neutral form (the 全部重設 target). */
+export function neutralForm(): CombatEnvForm {
+  const form = {} as CombatEnvForm;
+  for (const k of COMBAT_ENV_KEYS) form[k] = formatFactor(NEUTRAL);
+  return form;
+}
+
+/** Set one field (returns a new form — the page holds it in useState). */
+export function setField(form: CombatEnvForm, key: CombatEnvKey, value: string): CombatEnvForm {
+  return { ...form, [key]: value };
+}
+
+/** Per-row 重設: put a single key back to 1.0. */
+export function resetField(form: CombatEnvForm, key: CombatEnvKey): CombatEnvForm {
+  return { ...form, [key]: formatFactor(NEUTRAL) };
+}
+
+/** Global 全部重設: every key back to 1.0. */
+export function resetAll(): CombatEnvForm {
+  return neutralForm();
+}
+
+/** Nudge a field by ±STEP, clamped into [MIN_FACTOR, MAX_FACTOR]. */
+export function stepField(form: CombatEnvForm, key: CombatEnvKey, delta: number): CombatEnvForm {
+  const cur = parseFactor(form[key]);
+  const base = cur === null ? NEUTRAL : cur;
+  const next = Math.min(MAX_FACTOR, Math.max(MIN_FACTOR, base + delta));
+  return { ...form, [key]: formatFactor(next) };
+}
+
+// ---------------------------------------------------------- validation -----
+
+/** Parse an input box: null when it is not a finite number. */
+export function parseFactor(text: string): number | null {
+  const t = text.trim();
+  if (t === "") return null;
+  const n = Number(t);
+  return Number.isFinite(n) ? n : null;
+}
+
+/**
+ * Field-level validation, mirroring the platform's PUT bounds so a bad value is
+ * caught before the round-trip. Returns a zh-Hant message or "" when valid.
+ */
+export function validateFactor(text: string): string {
+  const t = text.trim();
+  if (t === "") return "請輸入倍率（1 = 預設）";
+  const n = Number(t);
+  if (!Number.isFinite(n)) return "必須是數字";
+  if (n < MIN_FACTOR || n > MAX_FACTOR) return `倍率必須介於 ${MIN_FACTOR} 與 ${MAX_FACTOR} 之間`;
+  return "";
+}
+
+export type CombatEnvErrors = Partial<Record<CombatEnvKey, string>>;
+
+/** Validate every field; only failing keys appear in the result. */
+export function validateForm(form: CombatEnvForm): CombatEnvErrors {
+  const errs: CombatEnvErrors = {};
+  for (const k of COMBAT_ENV_KEYS) {
+    const e = validateFactor(form[k]);
+    if (e) errs[k] = e;
+  }
+  return errs;
+}
+
+/** True when nothing blocks the Save button. */
+export function formValid(form: CombatEnvForm): boolean {
+  return Object.keys(validateForm(form)).length === 0;
+}
+
+// ------------------------------------------------------------- summary -----
+
+/** Keys whose (valid) value differs from the saved doc — the unsaved edits. */
+export function changedKeys(form: CombatEnvForm, doc: CombatEnvDoc): CombatEnvKey[] {
+  return COMBAT_ENV_KEYS.filter((k) => {
+    const n = parseFactor(form[k]);
+    if (n === null) return true; // an empty/garbage box IS an edit (and an error)
+    return n !== (doc.multipliers[k] ?? NEUTRAL);
+  });
+}
+
+/** True when the form has edits the server has not stored yet. */
+export function isDirty(form: CombatEnvForm, doc: CombatEnvDoc): boolean {
+  return changedKeys(form, doc).length > 0;
+}
+
+/** Keys currently tuned away from 1.0 (drives the "N 項已調整" badge). */
+export function nonNeutralKeys(form: CombatEnvForm): CombatEnvKey[] {
+  return COMBAT_ENV_KEYS.filter((k) => {
+    const n = parseFactor(form[k]);
+    return n !== null && n !== NEUTRAL;
+  });
+}
+
+/** Same, over a saved doc (the badge after a reload). */
+export function nonNeutralDocKeys(doc: CombatEnvDoc): CombatEnvKey[] {
+  return COMBAT_ENV_KEYS.filter((k) => (doc.multipliers[k] ?? NEUTRAL) !== NEUTRAL);
+}
+
+// ---------------------------------------------------------------- save -----
+
+/** The PUT body: ALWAYS the complete table (PUT-replace semantics). */
+export interface CombatEnvSave {
+  multipliers: Record<CombatEnvKey, number>;
+}
+
+/**
+ * Build the save payload. The platform treats the body as the complete desired
+ * state (an omitted key resets to 1.0), so we always send all keys explicitly —
+ * what the admin sees in the table is exactly what gets stored. Invalid fields
+ * fall back to the neutral 1.0, but the page gates Save on `formValid` so that
+ * branch is only a safety net.
+ */
+export function toSavePayload(form: CombatEnvForm): CombatEnvSave {
+  const multipliers = {} as Record<CombatEnvKey, number>;
+  for (const k of COMBAT_ENV_KEYS) {
+    const n = parseFactor(form[k]);
+    multipliers[k] = n === null ? NEUTRAL : n;
+  }
+  return { multipliers };
+}
+
+/**
+ * The note the page must show next to Save. Kept here (not inlined in JSX) so
+ * the wording is asserted by a unit test — this is the one thing an operator
+ * MUST understand before saving.
+ */
+export const APPLY_NOTE = "儲存後下一場對戰生效（進行中對戰不受影響）";
+
+/** zh-Hant text for a failed save, surfacing the platform's 400 message. */
+export function saveErrorText(err: unknown): string {
+  const msg = err instanceof Error ? err.message : String(err);
+  return `儲存失敗：${msg}`;
+}
+
+/** zh-Hant text for a failed load. */
+export function loadErrorText(err: unknown): string {
+  const msg = err instanceof Error ? err.message : String(err);
+  return `讀取戰鬥系統設定失敗：${msg}`;
+}

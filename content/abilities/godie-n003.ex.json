@@ -1,0 +1,30 @@
+{
+  "id": "godie-n003.ex",
+  "name": "42-002 魔力印章",
+  "description": "[輔助]\n60秒冷卻時間\n\n用校長的印章解除魔力使用限制，讓依文可以隨時在身邊施展出世界終結的效果，這段時間移動速度會因為念咒而降低，持續7秒。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    999.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

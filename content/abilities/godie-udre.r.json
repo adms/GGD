@@ -1,0 +1,34 @@
+{
+  "id": "godie-udre.r",
+  "name": "11-04 三千世界",
+  "description": "[主動傷害]\n60秒冷卻時間\n\n三刀流的奧義，也是索隆最強的招式。把3把刀像風車般旋轉的姿態，會產生強勁的風。然後使出的斬刀幾乎沒可能看穿。給予直線單位333傷害。\n\n點選三刀流持續期間，可增加威力(力量*3)\n點選武裝霸王色持續期間，可增加威力(力量*5)，並可與三刀流效果疊加",
+  "slot": "R",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    111.0,
+    222.0,
+    333.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "flat",
+          "value": 0.4
+        }
+      ],
+      "duration": 3.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

@@ -1,0 +1,57 @@
+{
+  "id": "imported.ye-wuqi1",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/ye-wuqi1.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand - 1",
+    "run": "walk",
+    "attack": "Attack",
+    "cast": "spell",
+    "hurt": "stand-2",
+    "death": "death"
+  },
+  "attachPoints": {
+    "Head": {
+      "x": 0.066,
+      "y": 1.5468,
+      "z": 0.0062
+    },
+    "Hand Left": {
+      "x": 0.066,
+      "y": 0.7151,
+      "z": -0.2823
+    },
+    "Chest": {
+      "x": 0.066,
+      "y": 1.2077,
+      "z": 0.0062
+    },
+    "Foot Right": {
+      "x": 0.066,
+      "y": 0.0275,
+      "z": 0.144
+    },
+    "Foot Left": {
+      "x": 0.066,
+      "y": 0.0275,
+      "z": -0.1189
+    },
+    "OverHead": {
+      "x": 0.035,
+      "y": 1.752,
+      "z": 0.0062
+    },
+    "Origin": {
+      "x": 0.066,
+      "y": -0.0002,
+      "z": -0.0041
+    },
+    "Hand Right": {
+      "x": 0.066,
+      "y": 0.7151,
+      "z": 0.3052
+    }
+  }
+}

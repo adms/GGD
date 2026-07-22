@@ -1,0 +1,62 @@
+{
+  "id": "imported.herohanzouhattori",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/herohanzouhattori.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Spell",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Foot Right": {
+      "x": -0.0077,
+      "y": 0.087,
+      "z": 0.1443
+    },
+    "Foot Left": {
+      "x": -0.0002,
+      "y": 0.085,
+      "z": -0.1479
+    },
+    "Hand Left": {
+      "x": 0.0036,
+      "y": 0.7467,
+      "z": -0.4086
+    },
+    "Head -": {
+      "x": -0.0714,
+      "y": 1.5503,
+      "z": 0.0007
+    },
+    "Hand Right": {
+      "x": -0.133,
+      "y": 0.7452,
+      "z": 0.4008
+    },
+    "Chest": {
+      "x": -0.1695,
+      "y": 1.3755,
+      "z": 0.005
+    },
+    "Weapon": {
+      "x": 0.8494,
+      "y": 0.7968,
+      "z": 0.3331
+    },
+    "OverHead": {
+      "x": 0.0,
+      "y": 1.872,
+      "z": 0.0
+    },
+    "Origin": {
+      "x": -0.0505,
+      "y": 0.0046,
+      "z": 0.0109
+    }
+  }
+}

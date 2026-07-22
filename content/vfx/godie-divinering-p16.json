@@ -1,0 +1,85 @@
+{
+  "id": "godie-divinering-p16",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.111,
+    "angleDeg": 1.0
+  },
+  "mode": "continuous",
+  "rate": 20.0,
+  "lifetimeSec": {
+    "min": 0.75,
+    "max": 0.75
+  },
+  "size": {
+    "start": 0.278,
+    "end": 0.278
+  },
+  "color": {
+    "start": [
+      1.0,
+      0.902,
+      0.247,
+      0.502
+    ],
+    "end": [
+      1.0,
+      1.0,
+      0.749,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        1.0,
+        0.902,
+        0.247,
+        0.502
+      ]
+    ],
+    [
+      0.5,
+      [
+        0.988,
+        0.867,
+        0.043,
+        0.502
+      ]
+    ],
+    [
+      1.0,
+      [
+        1.0,
+        1.0,
+        0.749,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.278
+    ],
+    [
+      0.5,
+      0.278
+    ],
+    [
+      1,
+      0.278
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/light_01.png",
+  "stretched": true,
+  "tailLength": 0.5,
+  "speed": {
+    "min": 7.7784,
+    "max": 11.6676
+  },
+  "anchorBone": "BlizParticle05"
+}

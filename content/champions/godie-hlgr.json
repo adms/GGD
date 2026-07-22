@@ -1,0 +1,231 @@
+{
+  "id": "godie-hlgr",
+  "schema": "champion@1",
+  "name": "鋼彈 - 煌",
+  "description": "故事：\n煌 大和是操縱鋼彈的駕駛員，為了執行宇宙和平的使命，於是開著拼裝的工程用鋼彈加入愛與和平。\n(出自:鋼彈Seed)\n\n推薦玩家 : 攻城巨砲\n上手度 : 易\n\n角色成長：\n力量 + 2.70\n敏捷 + 1.50\n智慧 + 1.90\n基礎跑速 300\n\n可學習的技能：\n詭雷、磁軌砲、鯨式電漿光束炮、全彈發射",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "imported.gumdam",
+  "attackDamagePoint": 0.3,
+  "baseStats": {
+    "maxHealth": 700,
+    "healthRegen": 1.7,
+    "maxMana": 244,
+    "manaRegen": 1.28,
+    "ad": 51,
+    "ap": 0,
+    "armor": 8,
+    "mr": 28,
+    "as": 0.53,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 40,
+    "healthRegen": 0.1,
+    "maxMana": 23,
+    "manaRegen": 0.08,
+    "ad": 2.0,
+    "armor": 0.5,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-hlgr.q",
+      "name": "03-02 詭雷",
+      "description": "[主動攻擊]\n25秒冷卻時間\n\n在一定區域中放出詭雷進行攻擊，被直接擊中的敵人承受30點直接傷害，裝甲2點破壞，周遭的敵人也會承受承受強烈電磁場每秒30點傷害的連續攻擊並降低攻擊速度為200%，持續3秒。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        25.0,
+        25.0,
+        25.0,
+        25.0,
+        25.0
+      ],
+      "manaCost": [
+        55.0,
+        80.0,
+        105.0,
+        200.0,
+        200.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200,
+              240
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.72
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "W": {
+      "id": "godie-hlgr.w",
+      "name": "03-01 磁軌砲",
+      "description": "[主動攻擊]\n15秒冷卻時間\n\n對著敵方部隊發射磁軌砲，造成125點傷害並讓目標昏迷0.5秒。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        35.0,
+        50.0,
+        65.0,
+        80.0
+      ],
+      "range": 8.25,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              125.0,
+              200.0,
+              275.0,
+              350.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "burnstun",
+          "duration": 0.5,
+          "stun": true
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "E": {
+      "id": "godie-hlgr.e",
+      "name": "03-03 鯨式電漿光束炮",
+      "description": "[主動攻擊]\n60秒冷卻時間\n\n一道向外的衝擊波擴散的電漿光束炮，造成一直線地面部隊450點傷害。",
+      "slot": "E",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        150.0,
+        215.0,
+        280.0,
+        345.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.wave",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "perRank": [
+                  450.0,
+                  650.0,
+                  850.0,
+                  1050.0
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.cinder-ward"
+    },
+    "R": {
+      "id": "godie-hlgr.r",
+      "name": "03-04 全彈發射",
+      "description": "[主動攻擊]\n60秒冷卻時間\n\n用為數龐大的飛彈轟炸一塊區域造成力量*2+200點傷害，並擊暈1秒。",
+      "slot": "R",
+      "castType": "skillshot",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        120.0,
+        200.0,
+        280.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.wave",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "perRank": [
+                  320.0,
+                  470.0,
+                  620.0
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ],
+  "exAbility": "godie-hlgr.ex",
+  "icon": "assets/icons/champions/godie-hlgr.png"
+}

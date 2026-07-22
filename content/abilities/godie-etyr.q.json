@@ -1,0 +1,39 @@
+{
+  "id": "godie-etyr.q",
+  "name": "14-01 東風繪扇、南風末廣",
+  "description": "[輔助]\n25秒冷卻時間\n\n揮動兩把具有神奇魔力的扇子，使我方範圍300內單位解除異常狀態，並且回復生命力150+智慧*2點。",
+  "slot": "Q",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    25.0,
+    25.0,
+    25.0
+  ],
+  "manaCost": [
+    120.0,
+    170.0,
+    220.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "heal",
+      "amount": {
+        "perRank": [
+          150.0,
+          150.0,
+          150.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.45
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

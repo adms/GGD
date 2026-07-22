@@ -1,0 +1,45 @@
+{
+  "id": "godie-ekee.q",
+  "name": "93-01 期末報告",
+  "description": "[被動]\n0秒冷卻時間\n\n攻擊目標的同時要求他期末要繳交報告，並且強制把附近的人編成同一組，讓所有人每秒受到15點傷害，持續5秒。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    0.5,
+    0.5,
+    0.5,
+    0.5
+  ],
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          15.0,
+          25.0,
+          35.0,
+          45.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.135
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/godie-ekee.q.png"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "godie-obla.e",
+  "name": "33-03 地道突襲",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n挖地道到目標上方後用炸藥突襲，使該範圍受到500點傷害，並且暈眩1秒。",
+  "slot": "E",
+  "castType": "skillshot",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    165.0,
+    215.0,
+    265.0,
+    315.0
+  ],
+  "range": 14.0,
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "imported.wave",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

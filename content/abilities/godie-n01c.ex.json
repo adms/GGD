@@ -1,0 +1,30 @@
+{
+  "id": "godie-n01c.ex",
+  "name": "08-002 龍魔人",
+  "description": "[輔助]\n60秒冷卻時間\n\n變身成為神魔龍融合的最強生物-龍魔人，使得小呆強化全能力15點，防禦增加15點，魔法抗性增加為50%，持續20秒。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    390.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "godie-e002.e",
+  "name": "20-03 約束與勝利之劍",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n集結了人們的意念而形成的星星的結晶。是一把精鍊的神造兵裝，被譽為「最強的幻想(Last Phantasm)」。\n在聖劍這個分類上位於最頂端的位置。它會將所有者的魔力轉換成光之後收束並加速以增加其動能，可以讓所有者使用出神靈等級的魔法。\n其斬擊看似是放出了一道光帶，但是能讓前方直線敵人受到魔力*0.4+350點傷害。",
+  "slot": "E",
+  "castType": "skillshot",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    150.0,
+    250.0,
+    350.0,
+    450.0
+  ],
+  "range": 14.0,
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "imported.wave",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

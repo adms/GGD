@@ -1,0 +1,8 @@
+{
+  "id": "sela.q.bolt",
+  "schema": "projectile@1",
+  "speed": 24,
+  "maxRange": 14,
+  "hitRadius": 0.5,
+  "vfxKey": "fx.ember-bolt"
+}

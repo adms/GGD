@@ -1,0 +1,53 @@
+{
+  "id": "godie-n01l.w",
+  "schema": "ability@1",
+  "name": "98-02 平易近人的笑容",
+  "description": "[靈氣]\n0秒冷卻時間\n\n學姊平易近人的笑容，足以振奮人心，提升自身及週遭友軍4%攻擊力，並每隔30秒恢復週遭友軍100點生命。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    12.0,
+    12.0,
+    12.0,
+    12.0
+  ],
+  "manaCost": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.04
+        }
+      ],
+      "duration": 12.0
+    },
+    {
+      "kind": "heal",
+      "amount": {
+        "perRank": [
+          100.0,
+          200.0,
+          300.0,
+          400.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast"
+}

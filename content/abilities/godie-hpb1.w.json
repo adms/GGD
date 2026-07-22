@@ -1,0 +1,47 @@
+{
+  "id": "godie-hpb1.w",
+  "name": "07-02 者、皆、陣",
+  "description": "[主動攻擊]\n50秒冷卻時間\n\n以超快的速度衝刺砍殺一直線上的敵人使得血流成河，砍殺造成225+力量*1傷害。\n\n在\"臨、兵、鬥\"發動後1秒內施展可增加(敏捷係數*3)傷害，30級之後可增加(敏捷係數*6)傷害",
+  "slot": "W",
+  "castType": "targeted",
+  "maxRank": 5,
+  "cooldown": [
+    50.0,
+    50.0,
+    50.0,
+    50.0,
+    50.0
+  ],
+  "manaCost": [
+    110.0,
+    140.0,
+    170.0,
+    275.0,
+    275.0
+  ],
+  "range": 14.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          80,
+          120,
+          160,
+          200,
+          240
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

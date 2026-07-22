@@ -1,0 +1,484 @@
+{
+  "id": "arena.castle",
+  "schema": "arena@1",
+  "name": "城堡競技場（室內）",
+  "zones": [
+    {
+      "id": "zone-0",
+      "center": {
+        "x": -40,
+        "z": 0
+      },
+      "boundaryRadius": 24,
+      "obstacles": [
+        {
+          "kind": "segment",
+          "a": {
+            "x": -46,
+            "z": -13
+          },
+          "b": {
+            "x": -46,
+            "z": -5
+          }
+        },
+        {
+          "kind": "segment",
+          "a": {
+            "x": -34,
+            "z": 5
+          },
+          "b": {
+            "x": -34,
+            "z": 13
+          }
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": -40,
+            "z": 0
+          },
+          "radius": 2.5
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": -49,
+            "z": 8
+          },
+          "radius": 1.8
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": -31,
+            "z": -8
+          },
+          "radius": 1.8
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": -46,
+            "z": 12
+          },
+          "radius": 0.84
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": -35,
+            "z": 11
+          },
+          "radius": 0.66
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": -32,
+            "z": 9
+          },
+          "radius": 0.54
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": -29,
+            "z": 6
+          },
+          "radius": 0.7
+        }
+      ],
+      "spawns": [
+        [
+          {
+            "x": -56,
+            "z": -4
+          },
+          {
+            "x": -56,
+            "z": 0
+          },
+          {
+            "x": -56,
+            "z": 4
+          }
+        ],
+        [
+          {
+            "x": -24,
+            "z": -4
+          },
+          {
+            "x": -24,
+            "z": 0
+          },
+          {
+            "x": -24,
+            "z": 4
+          }
+        ]
+      ]
+    },
+    {
+      "id": "zone-1",
+      "center": {
+        "x": 40,
+        "z": 0
+      },
+      "boundaryRadius": 24,
+      "obstacles": [
+        {
+          "kind": "segment",
+          "a": {
+            "x": 34,
+            "z": -13
+          },
+          "b": {
+            "x": 34,
+            "z": -5
+          }
+        },
+        {
+          "kind": "segment",
+          "a": {
+            "x": 46,
+            "z": 5
+          },
+          "b": {
+            "x": 46,
+            "z": 13
+          }
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": 40,
+            "z": 0
+          },
+          "radius": 2.5
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": 31,
+            "z": 8
+          },
+          "radius": 1.8
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": 49,
+            "z": -8
+          },
+          "radius": 1.8
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": 34,
+            "z": 12
+          },
+          "radius": 0.84
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": 45,
+            "z": 11
+          },
+          "radius": 0.66
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": 48,
+            "z": 9
+          },
+          "radius": 0.54
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": 51,
+            "z": 6
+          },
+          "radius": 0.7
+        }
+      ],
+      "spawns": [
+        [
+          {
+            "x": 24,
+            "z": -4
+          },
+          {
+            "x": 24,
+            "z": 0
+          },
+          {
+            "x": 24,
+            "z": 4
+          }
+        ],
+        [
+          {
+            "x": 56,
+            "z": -4
+          },
+          {
+            "x": 56,
+            "z": 0
+          },
+          {
+            "x": 56,
+            "z": 4
+          }
+        ]
+      ]
+    }
+  ],
+  "decor": [
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": -40,
+      "z": 0,
+      "rotQuarter": 0,
+      "scale": 2.5
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": -49,
+      "z": 8,
+      "rotQuarter": 0,
+      "scale": 1.8
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": -31,
+      "z": -8,
+      "rotQuarter": 0,
+      "scale": 1.8
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": -17.5,
+      "z": 0,
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": -24.09,
+      "z": 15.91,
+      "rotQuarter": 1,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": -40,
+      "z": 22.5,
+      "rotQuarter": 1,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": -55.91,
+      "z": 15.91,
+      "rotQuarter": 2,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": -62.5,
+      "z": 0,
+      "rotQuarter": 2,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": -55.91,
+      "z": -15.91,
+      "rotQuarter": 3,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": -40,
+      "z": -22.5,
+      "rotQuarter": 3,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": -24.09,
+      "z": -15.91,
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/banner_shield_blue.glb",
+      "x": -65.8,
+      "z": 0,
+      "rotQuarter": 1,
+      "scale": 1.6
+    },
+    {
+      "model": "assets/models/props/banner_shield_red.glb",
+      "x": -14.2,
+      "z": 0,
+      "rotQuarter": 3,
+      "scale": 1.6
+    },
+    {
+      "model": "assets/models/props/crates_stacked.glb",
+      "x": -46,
+      "z": 12,
+      "rotQuarter": 1,
+      "scale": 1.1
+    },
+    {
+      "model": "assets/models/props/chest.glb",
+      "x": -35,
+      "z": 11,
+      "rotQuarter": 2,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/props/barrel_small.glb",
+      "x": -32,
+      "z": 9,
+      "rotQuarter": 0,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/props/crates_stacked.glb",
+      "x": -29,
+      "z": 6,
+      "rotQuarter": 3,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": 40,
+      "z": 0,
+      "rotQuarter": 0,
+      "scale": 2.5
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": 31,
+      "z": 8,
+      "rotQuarter": 0,
+      "scale": 1.8
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": 49,
+      "z": -8,
+      "rotQuarter": 0,
+      "scale": 1.8
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": 62.5,
+      "z": 0,
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": 55.91,
+      "z": 15.91,
+      "rotQuarter": 1,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": 40,
+      "z": 22.5,
+      "rotQuarter": 1,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": 24.09,
+      "z": 15.91,
+      "rotQuarter": 2,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": 17.5,
+      "z": 0,
+      "rotQuarter": 2,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": 24.09,
+      "z": -15.91,
+      "rotQuarter": 3,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": 40,
+      "z": -22.5,
+      "rotQuarter": 3,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/torch.glb",
+      "x": 55.91,
+      "z": -15.91,
+      "rotQuarter": 0,
+      "scale": 1.5
+    },
+    {
+      "model": "assets/models/props/banner_shield_green.glb",
+      "x": 14.2,
+      "z": 0,
+      "rotQuarter": 1,
+      "scale": 1.6
+    },
+    {
+      "model": "assets/models/props/banner_shield_yellow.glb",
+      "x": 65.8,
+      "z": 0,
+      "rotQuarter": 3,
+      "scale": 1.6
+    },
+    {
+      "model": "assets/models/props/crates_stacked.glb",
+      "x": 34,
+      "z": 12,
+      "rotQuarter": 1,
+      "scale": 1.1
+    },
+    {
+      "model": "assets/models/props/chest.glb",
+      "x": 45,
+      "z": 11,
+      "rotQuarter": 2,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/props/barrel_small.glb",
+      "x": 48,
+      "z": 9,
+      "rotQuarter": 0,
+      "scale": 1.2
+    },
+    {
+      "model": "assets/models/props/crates_stacked.glb",
+      "x": 51,
+      "z": 6,
+      "rotQuarter": 3,
+      "scale": 1
+    }
+  ],
+  "groundStyle": "stone"
+}

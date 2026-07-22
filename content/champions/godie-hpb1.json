@@ -1,0 +1,245 @@
+{
+  "id": "godie-hpb1",
+  "schema": "champion@1",
+  "name": "獸矛傳承使 - 蒼月潮",
+  "description": "故事：\n無意間破除光霸明宗所設的密室結界， 並意外成為獸矛這一世的傳承者。充滿熱血正義感的蒼月潮為了阻止去死團的破壞拿起獸矛奮戰了。\n(出自:魔力小馬、潮與虎)\n\n推薦玩家 : 追擊殺手\n上手度 : 中\n\n角色成長：\n力量 + 2.10\n敏捷 + 2.00\n智慧 + 1.70\n基礎跑速 310\n\n可學習的技能：\n臨兵鬥、者皆陣、列在前、神聖結界",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "imported.herotoshiiemaeda",
+  "baseStats": {
+    "maxHealth": 640,
+    "healthRegen": 1.55,
+    "maxMana": 256,
+    "manaRegen": 1.32,
+    "ad": 37,
+    "ap": 0,
+    "armor": 8,
+    "mr": 28,
+    "as": 0.53,
+    "ms": 5.9,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 42,
+    "healthRegen": 0.1,
+    "maxMana": 20,
+    "manaRegen": 0.07,
+    "ad": 2.1,
+    "armor": 0.6,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-hpb1.q",
+      "name": "07-01 臨、兵、鬥",
+      "description": "[輔助]\n65秒冷卻時間\n\n可抵擋對方負性魔法。",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        65.0,
+        55.0,
+        45.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "value": 0.5
+            }
+          ],
+          "duration": 6.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "W": {
+      "id": "godie-hpb1.w",
+      "name": "07-02 者、皆、陣",
+      "description": "[主動攻擊]\n50秒冷卻時間\n\n以超快的速度衝刺砍殺一直線上的敵人使得血流成河，砍殺造成225+力量*1傷害。\n\n在\"臨、兵、鬥\"發動後1秒內施展可增加(敏捷係數*3)傷害，30級之後可增加(敏捷係數*6)傷害",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        50.0,
+        50.0,
+        50.0,
+        50.0,
+        50.0
+      ],
+      "manaCost": [
+        110.0,
+        140.0,
+        170.0,
+        275.0,
+        275.0
+      ],
+      "range": 14.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200,
+              240
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "E": {
+      "id": "godie-hpb1.e",
+      "name": "07-03 列、在、前",
+      "description": "[主動攻擊]\n65秒冷卻時間\n用盡全身力氣跳起落下斬擊使得大地震動，區域內敵人皆受到(力量*2)+450傷害。\n\n在\"者、皆、陣\"發動後1秒內施展可增加(敏捷係數*5)傷害，30級之後可增加(敏捷係數*10)傷害",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        65.0,
+        65.0,
+        65.0,
+        65.0
+      ],
+      "manaCost": [
+        220.0,
+        250.0,
+        280.0,
+        310.0
+      ],
+      "range": 14.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.9
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "R": {
+      "id": "godie-hpb1.r",
+      "name": "07-04 神聖結界",
+      "description": "[輔助]\n45秒冷卻時間\n\n展開一道強力的結界，可以抵擋50%的傷害，持續8秒。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        150.0,
+        300.0,
+        450.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": 25
+            }
+          ],
+          "duration": 8.0,
+          "perRank": [
+            {
+              "modifiers": [
+                {
+                  "stat": "armor",
+                  "op": "flat",
+                  "value": 25
+                }
+              ],
+              "duration": 8.0
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "armor",
+                  "op": "flat",
+                  "value": 25
+                }
+              ],
+              "duration": 12.0
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "armor",
+                  "op": "flat",
+                  "value": 25
+                }
+              ],
+              "duration": 16.0
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.cinder-ward"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "godie-i05x",
+    "godie-i00m",
+    "godie-i003",
+    "godie-i01w",
+    "godie-i00j"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ],
+  "exAbility": "godie-hpb1.ex",
+  "icon": "assets/icons/champions/godie-hpb1.png"
+}

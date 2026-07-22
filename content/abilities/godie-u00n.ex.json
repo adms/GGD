@@ -1,0 +1,30 @@
+{
+  "id": "godie-u00n.ex",
+  "name": "76-002 霸王色",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n可以靠著自身「氣魄」震攝或嚇昏敵人，但如果控制不好，會使周遭的人一併受牽連。可造成範圍內敵方部隊受到500點傷害，並暈眩英雄部隊5秒，非英雄部隊10秒，若於血量50%以下發動，則有50%的機率降低範圍內全部部隊50%血量。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    250.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

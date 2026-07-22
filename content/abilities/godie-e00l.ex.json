@@ -1,0 +1,30 @@
+{
+  "id": "godie-e00l.ex",
+  "name": "20-002 解放.約束勝利劍MAX",
+  "description": "[被動]\n0秒冷卻時間\n\n理想鄉發動期間如果受到傷害，且魔力高於70%時，能給予敵人連續七次斬擊，每次斬擊造成0.6倍理想鄉啟動瞬間Saber受到攻擊的混沌傷害，最後再給予近距離的約束與勝利之劍造成1800傷害。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    120.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.6
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

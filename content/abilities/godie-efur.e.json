@@ -1,0 +1,31 @@
+{
+  "id": "godie-efur.e",
+  "name": "13-03 快步",
+  "description": "[輔助]\n45秒冷卻時間\n\n使出揍敵客家族的殺手絕技，能快步到指定單位身邊，可持續3秒。",
+  "slot": "E",
+  "castType": "dash",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    40.0,
+    35.0,
+    30.0
+  ],
+  "manaCost": [
+    80.0,
+    120.0,
+    160.0,
+    200.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "dash",
+      "mode": "toPoint",
+      "speed": 30.0,
+      "maxDistance": 11.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

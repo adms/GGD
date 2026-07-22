@@ -1,0 +1,42 @@
+{
+  "id": "godie-e012.r",
+  "name": "47-04 天翔龍閃",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n施展飛天御劍流最強奧義天翔龍閃，每秒可使周圍受到500點傷害，施展期間劍心為魔法免疫狀態，持續2秒。",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    60.0,
+    350.0,
+    500.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          500.0,
+          900.0,
+          1300.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "radius": 3.67,
+  "schema": "ability@1"
+}

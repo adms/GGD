@@ -1,0 +1,47 @@
+{
+  "contentId": "godie-i00i",
+  "nameZh": "炎龍巨弩",
+  "gold": 7500,
+  "kind": "effect",
+  "description": "傳說\r\n效能\r\n炎龍之怒\r\n敏捷+24\r\n攻擊力+60\r\n\r\n解說\r\n裝備可發出3道100%威力的炎龍怒火。傳說中飛鼠先生曾經為了破除冰封城堡的魔咒，向脾氣暴躁的炎龍借助火焰之力，最終被飛鼠先生的魔法所收服，將力量引借到充滿魔法力量的巨弩上。",
+  "abilities": [
+    {
+      "rawcode": "A0HQ",
+      "name": "炎龍之弩",
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {
+        "1": {
+          "1": 700.0
+        },
+        "2": {
+          "1": 700.0
+        },
+        "3": {
+          "1": 2
+        }
+      }
+    },
+    {
+      "rawcode": "A0WW",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A0L0",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "AItx",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    }
+  ]
+}

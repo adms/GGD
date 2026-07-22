@@ -1,0 +1,41 @@
+{
+  "id": "godie-ubal.r",
+  "name": "37-04 魔界之王",
+  "description": "[輔助]\n90秒冷卻時間\n\n召喚巴恩大魔王封印的年輕肉體並將靈魂合而為一，隨著技能等級提升可以使用的招式也將變多，變身後各方面的能力也會隨著技能等級提升而上升，持續35秒。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    90.0,
+    90.0,
+    90.0
+  ],
+  "manaCost": [
+    60.0,
+    300.0,
+    450.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          80,
+          120,
+          160
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.48
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

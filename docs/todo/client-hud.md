@@ -1,0 +1,33 @@
+# Client HUD & netcode — TODO
+
+`apps/client`. Babylon imperative loop; React HUD via Zustand; prediction/interpolation; voxel
+models with capsule fallback.
+
+| ID | Item | Test ID | Category | Status |
+| --- | --- | --- | --- | --- |
+| client-01 | Local prediction reuses shared movement step | client-predict-shared | unit | done |
+| client-02 | Reconciliation replays unacked inputs | client-reconcile | unit | done |
+| client-03 | Remote entities interpolate ~100ms behind | client-interp | unit | done |
+| client-04 | screenToGround maps cursor to (x,z) on y=0 | client-screen-to-ground | unit | done |
+| client-05 | Input maps to IntentFrame order/command shape | client-intent-mapping | unit | done |
+| client-06 | Capsule fallback renders before model loads | client-model-fallback | integration | done |
+| client-07 | Animation state driven by authoritative flags | client-anim-authority | integration | done |
+| client-08 | HUD reads only discrete-rate schema (no per-frame) | client-hud-discrete | unit | done |
+| client-09 | E2E: join match → move → cast → see result | client-e2e-match | e2e | pending |
+| client-10 | Reconnect within grace restores control | client-reconnect | e2e | pending |
+| client-11 | Gamepad twin-stick maps to IntentFrame shapes | client-gamepad-mapping | unit | done |
+| client-12 | Gamepad deadzone + button edge detection | client-gamepad-edge | unit | done |
+| client-13 | Vfx docs map onto Babylon particle systems | client-vfx-doc-mapping | unit | done |
+| client-14 | Clip playback: clone-prefix-tolerant clipMap resolution, event-driven pulse windows (cast/wind-up), run-rate ground-speed sync | client-anim-clip-playback | unit | done |
+| client-15 | Ability bar strips the hero/skill number tag from the displayed NAME (`19-01 斷未`→`斷未`, `22-002 …`→`…`; un-tagged names unchanged; never emptied) while the tooltip keeps the full numbered name | hud-strip-ability-number | unit | done |
+| client-16 | Floating ability/item tooltip placement: offset onto one side so the box never covers the anchor/cursor, edge-flips top↔bottom, and clamps horizontally inside the viewport (pure math) | hud-tooltip-placement | unit | done |
+| client-17 | Augment-draft `resolveChoice` surfaces an ABILITY choice's w3x icon + description (item/weapon icons kept, icon-less choices fall back to the text card) | hud-draft-choice-icon | unit | done |
+| client-18 | Minimap world→map projection: zone-union bounds, aspect-preserving scale, camera-yaw alignment (up-on-map = up-on-screen), team→dot color mapping, self-marker selection | hud-minimap | unit | done |
+| client-19 | HUD corner layout is DECLARED, not hard-coded: every piece of corner chrome claims a `corner + order` slot in `ui/hud/hudLayout`, offsets/gaps/z-order + >=44px coarse-pointer targets come from the registry, panels dock past `hudStackEnd`, and guards reject a duplicated corner+order or a re-introduced literal corner pin | hud-corner-layout | regression | done |
+| client-20 | Minimap PLACEMENT is registry-declared per pointer type: desktop bottom-right (LoL ~200-260px), touch top-left under the ☰/team stack (Wild Rift — bottom-right is the ability arc). Slots reserve a WIDTH as well as a height, and the guard proves the minimap rect stays inside the viewport and disjoint from every other slot at 667x375 / 812x375 / 852x393 / 1280x720 | hud-minimap-placement | regression | done |
+| client-21 | Minimap camera VIEWPORT BOX: the real frustum intersected with the ground plane, derived from the rig's live target/dolly/pitch/yaw/fov/aspect (published by CameraRig.groundView, cross-checked against Babylon's own picking rays), tracking pan/zoom/yaw and degrading safely above the horizon | hud-minimap-camera | unit | done |
+| client-22 | Minimap click→world: `mapToWorld` is the exact inverse of `worldToMap` at any yaw (left-click looks at that spot) and a right-click order clamps into the nearest zone instead of the void | hud-minimap-interact | unit | done |
+| client-23 | Minimap TERRAIN background: zone discs + obstacles + spawn pads projected with the same transform as the markers, sub-unit props stay visible, and the bake is cached — repainted exactly on a map/size/dpr/yaw change and never per frame | hud-minimap-terrain | unit | done |
+| client-24 | Minimap champion PORTRAITS: w3x icons resolved through the shared `championIconUrl`, loaded once, with stock-art/404/unknown champions settling permanently on the team-coloured dot fallback (no per-frame retry, never a blank marker) | hud-minimap-portrait | unit | done |
+| client-25 | Minimap MARKER states: self is the largest marker with a white ring (isLocal fallback before the entity id arrives), allies/enemies wear the team ring, dead champions dim to a hollow ring and then stop drawing, and every size scales with the map | hud-minimap-markers | unit | done |
+| client-26 | HUD panels DECLARE the edge they occupy (`HUD_PANELS` in `ui/hud/hudLayout`), so a docked panel and the chrome it covers are no longer invisible to each other: the left shop owns its edge and every covered slot yields per a `displaced` policy (hide / relocate), portal + overlay chrome are the only exemptions, and a guard proves no managed slot is left painting under the shop on 6 viewports × both pointer types (failing on the pre-fix layout — the FPS pill among the offenders) | hud-panel-cover | regression | done |

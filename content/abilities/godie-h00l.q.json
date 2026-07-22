@@ -1,0 +1,47 @@
+{
+  "id": "godie-h00l.q",
+  "name": "60-01 科奇利族的迴旋鏢",
+  "description": "[主動攻擊]\n15秒冷卻時間\n\n使用科奇利族的迴旋標攻擊敵人，造成150點傷害。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 5,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0,
+    7.0
+  ],
+  "manaCost": [
+    50.0,
+    85.0,
+    120.0,
+    155.0,
+    75.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          150,
+          250,
+          350,
+          450,
+          450
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

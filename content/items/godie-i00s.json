@@ -1,0 +1,38 @@
+{
+  "id": "godie-i00s",
+  "schema": "item@1",
+  "name": "黃金聖鬥衣",
+  "description": "夢幻\n效能\n50%機率抵擋125傷害\n攻擊力+2.2\n生命+44\n魔力+26\n攻擊速度+39.2%\n移動速度+0.261\n\n解說\n傳說從神話時代就與黃道十二宮並存的黃金聖衣，能將攻擊和移動速度大幅提升。",
+  "cost": 1200,
+  "tier": 2,
+  "tags": [
+    "wc3-import"
+  ],
+  "modifiers": [
+    {
+      "stat": "as",
+      "op": "pctAdd",
+      "value": 0.392
+    },
+    {
+      "stat": "ms",
+      "op": "flat",
+      "value": 0.261
+    },
+    {
+      "stat": "maxHealth",
+      "op": "flat",
+      "value": 44
+    },
+    {
+      "stat": "ad",
+      "op": "flat",
+      "value": 2.2
+    },
+    {
+      "stat": "maxMana",
+      "op": "flat",
+      "value": 26
+    }
+  ]
+}

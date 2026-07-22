@@ -1,0 +1,57 @@
+{
+  "id": "imported.negi",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/negi.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Spell - 1",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Hand Right": {
+      "x": 0.0,
+      "y": 0.6705,
+      "z": 0.2958
+    },
+    "Hand Left": {
+      "x": 0.0,
+      "y": 0.6705,
+      "z": -0.2958
+    },
+    "Head -": {
+      "x": 0.0,
+      "y": 1.3804,
+      "z": -0.0
+    },
+    "Chest": {
+      "x": 0.0,
+      "y": 1.0846,
+      "z": -0.0
+    },
+    "Foot Right": {
+      "x": -0.0197,
+      "y": 0.1183,
+      "z": 0.1282
+    },
+    "Foot Left": {
+      "x": -0.0197,
+      "y": 0.1183,
+      "z": -0.1282
+    },
+    "Origin": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -0.0
+    },
+    "Overhead": {
+      "x": 0.0,
+      "y": 1.8241,
+      "z": -0.0
+    }
+  }
+}

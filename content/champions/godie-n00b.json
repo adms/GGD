@@ -1,0 +1,214 @@
+{
+  "id": "godie-n00b",
+  "schema": "champion@1",
+  "name": "小叮噹 - 哆拉A夢",
+  "description": "故事：\n從21世紀來的機械貓，因為感受到體內KUSO魂呼喚，所以決定在去死團大闖天下。\n(出自:小叮噹)\n\n推薦玩家 : 團戰輔助\n上手度 : 中\n\n角色成長：\n力量 + 2.00\n敏捷 + 1.85\n智慧 + 2.45\n基礎跑速 305\n\n可學習的技能：\n空氣砲、任意門、複製鏡、竹蜻蜓",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "champ.sela",
+  "baseStats": {
+    "maxHealth": 460,
+    "healthRegen": 1.1,
+    "maxMana": 376,
+    "manaRegen": 1.72,
+    "ad": 34,
+    "ap": 0,
+    "armor": 7,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 36,
+    "healthRegen": 0.09,
+    "maxMana": 29,
+    "manaRegen": 0.1,
+    "ad": 1.9,
+    "armor": 0.6,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-n00b.q",
+      "name": "57-01 空氣砲",
+      "description": "[主動攻擊]\n35秒冷卻時間\n\n小叮噹的空氣砲可以造成一直線上敵方部隊250傷害並且擊退附近敵人。",
+      "slot": "Q",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        35.0,
+        35.0,
+        35.0,
+        35.0
+      ],
+      "manaCost": [
+        65.0,
+        95.0,
+        125.0,
+        155.0
+      ],
+      "range": 9.17,
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.wave",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "perRank": [
+                  250.0,
+                  350.0,
+                  450.0,
+                  550.0
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "W": {
+      "id": "godie-n00b.w",
+      "name": "57-03 複製鏡",
+      "description": "[輔助攻擊]\n75秒冷卻時間\n\n未來的法寶，可將鏡前的人或物加以複製，複製出來的人物擁有與本尊相同的攻擊力，但將承受200%額外傷害，持續20秒。\n對非英雄部隊及任務用英雄無效。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        75.0,
+        75.0,
+        75.0
+      ],
+      "manaCost": [
+        200.0,
+        300.0,
+        400.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.48
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "E": {
+      "id": "godie-n00b.e",
+      "name": "57-02 任意門",
+      "description": "[輔助]\n80秒冷卻時間\n\n使用任意門可以傳送到地圖探索過的任何一點，準備時間為3秒。",
+      "slot": "E",
+      "castType": "dash",
+      "maxRank": 5,
+      "cooldown": [
+        80.0,
+        60.0,
+        40.0,
+        16.0,
+        16.0
+      ],
+      "manaCost": [
+        225.0,
+        225.0,
+        225.0,
+        100.0,
+        100.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "dash",
+          "mode": "toPoint",
+          "speed": 30.0,
+          "maxDistance": 11.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "R": {
+      "id": "godie-n00b.r",
+      "name": "57-04 竹蜻蜓",
+      "description": "[輔助]\n55秒冷卻時間\n\n給目標帶上竹蜻蜓，而四周會產生共12道龍捲風每個龍捲風都有著150點傷害。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        55.0,
+        55.0,
+        55.0
+      ],
+      "manaCost": [
+        300.0,
+        500.0,
+        700.0
+      ],
+      "range": 6.42,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              75.0,
+              75.0,
+              75.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.225
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "root",
+          "duration": 1.0,
+          "root": true
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin"
+  ],
+  "exAbility": "godie-n00b.ex"
+}

@@ -1,0 +1,219 @@
+/**
+ * effectRunner — the ONE interpreter for EffectDef[]. Abilities, item passives,
+ * augment hooks, and buffs all execute through here. Handlers mutate the world
+ * only via well-defined paths (damage queue, shields, statuses, buff sources,
+ * dash overrides, projectile spawns).
+ */
+import type { EffectContext, EffectDef } from "./effect";
+import { resolveScaling } from "./effect";
+import { Stat } from "../stats/statTypes";
+import { attachSource } from "../stats/statPipeline";
+import { addShield } from "../combat/damage";
+import { healTarget, restoreMana } from "../combat/restore";
+import { recordCc } from "../stats/matchStats";
+import { startDash } from "../systems/MovementSystem";
+import { Projectiles } from "../content/registry";
+import { normalize, sub } from "../math/vec2";
+
+export function runEffects(effects: readonly EffectDef[], ctx: EffectContext): void {
+  for (const e of effects) applyEffect(e, ctx);
+}
+
+function casterStats(ctx: EffectContext): Record<Stat, number> {
+  return ctx.world.stats.get(ctx.caster)?.final ?? ({} as Record<Stat, number>);
+}
+
+function applyEffect(e: EffectDef, ctx: EffectContext): void {
+  const { world } = ctx;
+  switch (e.kind) {
+    case "damage": {
+      const stats = casterStats(ctx);
+      for (const target of ctx.targets) {
+        let amount = resolveScaling(stats, e.amount, ctx.rank);
+        let crit = false;
+        if (e.canCrit) {
+          const cc = stats[Stat.CritChance] ?? 0;
+          if (cc > 0 && ctx.rng.chance(cc)) {
+            crit = true;
+            amount *= stats[Stat.CritDamage] || 1.75;
+          }
+        }
+        world.damageQueue.push({
+          source: ctx.caster,
+          target,
+          amount,
+          type: e.damageType,
+          crit,
+          origin: ctx.origin,
+        });
+      }
+      break;
+    }
+    case "heal": {
+      const stats = casterStats(ctx);
+      // global combat-env healing factor (world.combatEnv, see combatEnv.ts)
+      const amount = resolveScaling(stats, e.amount, ctx.rank) * world.combatEnv.healing;
+      for (const target of ctx.targets) {
+        // same clamp + same recordHealing(actual restored) as before; the
+        // helper additionally emits `heal` so the client can draw 補血 (#92).
+        healTarget(world, {
+          source: ctx.caster,
+          target,
+          amount,
+          origin: ctx.origin,
+          score: true,
+        });
+      }
+      break;
+    }
+    case "shield": {
+      const stats = casterStats(ctx);
+      // global combat-env shield-strength factor
+      const amount = resolveScaling(stats, e.amount, ctx.rank) * world.combatEnv.shield;
+      for (const target of ctx.targets) {
+        addShield(world, target, amount, e.duration, ctx.origin);
+      }
+      break;
+    }
+    case "applyStatus": {
+      const expiresAtTick = world.tick + Math.round(e.duration / world.dt);
+      // hard/soft CC (stun/root/slow) applied to an enemy scores ccAppliedTicks
+      const isCc = e.stun === true || e.root === true || (e.moveSpeedMult !== undefined && e.moveSpeedMult < 1);
+      for (const target of ctx.targets) {
+        const st = world.status.get(target);
+        if (!st) continue;
+        // refresh rule: same status id + origin replaces (no stacking in skeleton)
+        const existing = st.effects.find(
+          (s) => s.statusId === e.statusId && s.sourceId === ctx.origin,
+        );
+        let addedTicks = 0;
+        if (existing) {
+          addedTicks = Math.max(0, expiresAtTick - existing.expiresAtTick);
+          existing.expiresAtTick = Math.max(existing.expiresAtTick, expiresAtTick);
+        } else {
+          addedTicks = Math.max(0, expiresAtTick - world.tick);
+          st.effects.push({
+            statusId: e.statusId,
+            sourceId: ctx.origin,
+            expiresAtTick,
+            moveSpeedMult: e.moveSpeedMult,
+            root: e.root,
+            stun: e.stun,
+          });
+        }
+        if (isCc) recordCc(world, ctx.caster, target, addedTicks);
+      }
+      break;
+    }
+    case "applyBuff": {
+      // rank-indexed variant wins when authored (WC3 buff columns are per
+      // ability level); clamp past the last entry so a GGD maxRank beyond the
+      // native level count keeps the highest authored row instead of vanishing.
+      const rk = e.perRank?.[Math.min(Math.max(1, ctx.rank), e.perRank.length) - 1];
+      const modifiers = rk?.modifiers ?? e.modifiers;
+      const duration = rk?.duration ?? e.duration;
+      const expiresAtTick = world.tick + Math.round(duration / world.dt);
+      for (const target of ctx.targets) {
+        attachSource(world, target, {
+          id: `buff:${ctx.origin}#${world.tick}`,
+          kind: "buff",
+          modifiers,
+          expiresAtTick,
+        });
+      }
+      break;
+    }
+    case "restore": {
+      // Fraction of the TARGET's own maximum (WC3 SetUnit{Life,Mana}PercentBJ).
+      // Health restored is scored as healing, exactly like `heal`.
+      for (const target of ctx.targets) {
+        const hp = world.health.get(target);
+        if (!hp?.alive) continue;
+        if (e.healthPct !== undefined) {
+          healTarget(world, {
+            source: ctx.caster,
+            target,
+            amount: hp.maxHp * e.healthPct * world.combatEnv.healing,
+            origin: ctx.origin,
+            score: true,
+          });
+        }
+        if (e.manaPct !== undefined) {
+          // NOTE: mana restore is deliberately NOT scaled by combatEnv.healing
+          // (it never was) — that factor is the HEALING knob, not a mana knob.
+          restoreMana(world, {
+            source: ctx.caster,
+            target,
+            amount: hp.maxMana * e.manaPct,
+            origin: ctx.origin,
+          });
+        }
+      }
+      break;
+    }
+    case "dash": {
+      const t = world.transform.get(ctx.caster);
+      if (!t) break;
+      const dir =
+        e.mode === "toPoint" && ctx.point
+          ? normalize(sub(ctx.point, t.pos))
+          : ctx.direction ?? t.facing;
+      startDash(world, ctx.caster, dir, e.speed, e.maxDistance);
+      break;
+    }
+    case "spawnProjectile": {
+      const t = world.transform.get(ctx.caster);
+      if (!t) break;
+      const def = Projectiles.get(e.projectileId);
+      const dir = ctx.direction ?? (ctx.point ? normalize(sub(ctx.point, t.pos)) : t.facing);
+      if (dir.x === 0 && dir.z === 0) break;
+      const id = world.spawn();
+      world.transform.set(id, {
+        pos: { x: t.pos.x, z: t.pos.z },
+        vel: { x: dir.x * def.speed, z: dir.z * def.speed },
+        facing: dir,
+        radius: def.hitRadius,
+        zone: t.zone,
+      });
+      world.projectile.set(id, {
+        projectileId: e.projectileId,
+        ownerId: ctx.caster,
+        dir,
+        speed: def.speed,
+        remainingRange: def.maxRange,
+        hitRadius: def.hitRadius,
+        pierce: def.pierce ?? false,
+        hitSet: new Set(),
+        onHit: e.onHit,
+        rank: ctx.rank,
+        origin: ctx.origin,
+        abilitySlot: ctx.abilitySlot,
+      });
+      world.emit("projectileSpawn", { id, owner: ctx.caster, projectileId: e.projectileId });
+      break;
+    }
+    case "spawnVfx": {
+      // Cosmetic only: resolve a world point and emit a vfxSpawn event for the
+      // client's VfxSystem. No world mutation, no rng → deterministic (two
+      // seeded runs emit identical events from identical transforms).
+      const at = e.at ?? "self";
+      let pos: { x: number; z: number } | undefined;
+      if (at === "point") {
+        pos = ctx.point;
+      } else if (at === "target") {
+        const tid = ctx.targets[0];
+        pos = (tid !== undefined ? world.transform.get(tid)?.pos : undefined) ?? ctx.point;
+      }
+      if (!pos) pos = world.transform.get(ctx.caster)?.pos;
+      if (!pos) break;
+      world.emit("vfxSpawn", {
+        vfxId: e.vfxId,
+        x: pos.x,
+        z: pos.z,
+        caster: ctx.caster,
+        ...(e.durationSec !== undefined ? { durationSec: e.durationSec } : {}),
+      });
+      break;
+    }
+  }
+}

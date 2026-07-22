@@ -1,0 +1,50 @@
+{
+  "id": "godie-u012.q",
+  "schema": "ability@1",
+  "name": "61-01惡魔球",
+  "description": "[主動攻擊]\n25秒冷卻時間\n\n惡魔的象徵，只有真正的惡魔才有能力使出如此強大的招式\n對目標造成150點傷害並黏住1秒",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    25.0,
+    25.0,
+    25.0,
+    25.0
+  ],
+  "manaCost": [
+    60.0,
+    70.0,
+    80.0,
+    90.0
+  ],
+  "range": 7.33,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          150.0,
+          200.0,
+          250.0,
+          300.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.9
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "root",
+      "duration": 1.0,
+      "root": true
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true
+}

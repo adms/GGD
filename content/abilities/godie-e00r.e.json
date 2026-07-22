@@ -1,0 +1,36 @@
+{
+  "id": "godie-e00r.e",
+  "schema": "ability@1",
+  "name": "59-03 AT力場",
+  "description": "[被動]\n0秒冷卻時間\n\n一個被稱為神的聖域的力場，有40%降低所有施加在初號機身上的傷害35點。",
+  "slot": "E",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    12.0,
+    12.0,
+    12.0,
+    12.0
+  ],
+  "manaCost": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "armor",
+          "op": "flat",
+          "value": 20
+        }
+      ],
+      "duration": 8.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast"
+}

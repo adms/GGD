@@ -1,0 +1,47 @@
+{
+  "id": "godie-hapm.q",
+  "name": "52-01 狂戰士之怒",
+  "description": "[輔助]\n35秒冷卻時間\n\n進入狂戰士的狀態，可增加40點的額外傷害及裝甲4點，但是會降低攻擊速度20%。持續12秒。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 5,
+  "cooldown": [
+    35.0,
+    35.0,
+    35.0,
+    35.0,
+    57.0
+  ],
+  "manaCost": [
+    60.0,
+    110.0,
+    160.0,
+    210.0,
+    175.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          40.0,
+          80.0,
+          120.0,
+          160.0,
+          200.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

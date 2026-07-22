@@ -1,0 +1,44 @@
+{
+  "id": "godie-ewrd.e",
+  "name": "17-03 空破圓斬",
+  "description": "[主動攻擊]\n45秒冷卻時間\n\n快速衝刺到敵人面前施展猛烈的斬擊最多使5個敵方造成重創，給予375點傷害。",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "manaCost": [
+    95.0,
+    130.0,
+    165.0,
+    200.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          375.0,
+          575.0,
+          775.0,
+          975.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

@@ -1,0 +1,30 @@
+{
+  "id": "godie-naka.ex",
+  "name": "27-002 祕法-霧隱分身之術",
+  "description": "[輔助]\n45秒冷卻時間\n\n實力增強到某個程度的風魔，可以完全隱匿攻擊時的行蹤，並且悟得祕法，產生兩個實體分身，並擁有本尊100%的攻擊力，持續45秒。\n\n此狀態施展飛燕閃額外增加敏捷3倍傷害",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    45.0
+  ],
+  "manaCost": [
+    300.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

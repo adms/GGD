@@ -1,0 +1,82 @@
+{
+  "id": "godie-billy-p0",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.324,
+    "angleDeg": 180.0
+  },
+  "mode": "burst",
+  "burstCount": 30,
+  "lifetimeSec": {
+    "min": 0.5,
+    "max": 0.5
+  },
+  "size": {
+    "start": 0.108,
+    "end": 0.108
+  },
+  "color": {
+    "start": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "end": [
+      0.0,
+      0.0,
+      0.627,
+      0.196
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    ],
+    [
+      0.4,
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.784
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.0,
+        0.0,
+        0.627,
+        0.196
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.108
+    ],
+    [
+      0.4,
+      0.108
+    ],
+    [
+      1,
+      0.108
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/star_08.png",
+  "speed": {
+    "min": 0.0,
+    "max": 10.9181
+  }
+}

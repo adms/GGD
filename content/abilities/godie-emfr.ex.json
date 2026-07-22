@@ -1,0 +1,35 @@
+{
+  "id": "godie-emfr.ex",
+  "name": "15-002 風花-武裝解除",
+  "description": "[輔助]\n65秒冷卻時間\n\n涅吉所有招式中最令人臉紅心跳的絕招，可以將目標的衣服爆破(誤)，造成範圍內部隊減少15點裝甲，英雄在持續時間內所受傷害將加倍，持續4秒。",
+  "slot": "EX",
+  "castType": "ground",
+  "maxRank": 1,
+  "cooldown": [
+    65.0
+  ],
+  "manaCost": [
+    450.0
+  ],
+  "range": 8.82,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "flat": 300,
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.9
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1",
+  "radius": 5.88,
+  "targetsEnemies": true,
+  "castTimeSec": 0.35
+}

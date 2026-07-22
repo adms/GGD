@@ -1,0 +1,38 @@
+{
+  "id": "godie-e00n.q",
+  "name": "22-01 鬼隱之擊",
+  "description": "[輔助]\n30秒冷卻時間\n\n隱形並在一定的時間內提昇50%速度以暗殺目標，當攻擊時隱形術即告失效，但是會造成額外100點的背刺傷害，持續12秒。",
+  "slot": "Q",
+  "castType": "self",
+  "maxRank": 5,
+  "cooldown": [
+    30.0,
+    30.0,
+    30.0,
+    75.0,
+    75.0
+  ],
+  "manaCost": [
+    60.0,
+    110.0,
+    160.0,
+    255.0,
+    255.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ms",
+          "op": "pctAdd",
+          "value": 1.0
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

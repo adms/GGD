@@ -1,0 +1,36 @@
+{
+  "collection": "status-effects",
+  "hash": "5bbbcf3981b7",
+  "entries": [
+    {
+      "id": "burnstun",
+      "path": "status-effects/burnstun.json",
+      "hash": "bc55859bf21c",
+      "size": 178
+    },
+    {
+      "id": "root",
+      "path": "status-effects/root.json",
+      "hash": "3795008df6d9",
+      "size": 155
+    },
+    {
+      "id": "slow25",
+      "path": "status-effects/slow25.json",
+      "hash": "b12ba1186015",
+      "size": 179
+    },
+    {
+      "id": "slow30",
+      "path": "status-effects/slow30.json",
+      "hash": "4c6af68f7300",
+      "size": 179
+    },
+    {
+      "id": "slow40",
+      "path": "status-effects/slow40.json",
+      "hash": "c46824562e6c",
+      "size": 179
+    }
+  ]
+}

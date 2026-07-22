@@ -1,0 +1,16 @@
+{
+  "id": "godie-lubu-r0",
+  "schema": "ribbon@1",
+  "texture": "assets/textures/particles/wc3/ribbonblur1.png",
+  "widthAbove": 0.383,
+  "widthBelow": 0.383,
+  "lifespanSec": 0.15,
+  "color": [
+    1.0,
+    0.631,
+    0.0,
+    0.35
+  ],
+  "blendMode": "additive",
+  "anchorBone": "Sword"
+}

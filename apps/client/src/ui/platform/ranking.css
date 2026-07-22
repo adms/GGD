@@ -1,0 +1,59 @@
+/**
+ * ranking.css — ranked-ladder panel (task #37) touch/narrow-viewport layer.
+ *
+ * The panel itself is inline-styled like the rest of the platform screens; only
+ * the things a style object cannot express live here (media queries). Two
+ * blocks, both additive — desktop/mouse rendering is byte-identical:
+ *
+ *   1. (pointer: coarse) — tier crests scale up (a 22px shield is unreadable on
+ *      a phone), ladder rows get thumb-sized padding, and the 玩家/英雄 tabs +
+ *      champion tiles clear the 44px touch target (ui/mobile.css already sets
+ *      that for every .ggd-platform button; repeated here so the ladder keeps
+ *      it even if the panel is reused outside that scope).
+ *   2. (max-width: 720px) — the lobby's three fixed columns stop being columns:
+ *      the body wraps and each panel spans the full width, so the ladder is
+ *      usable in phone portrait / a narrow window. The champion picker grid
+ *      drops from two columns to one so long names never clip.
+ */
+
+@media (pointer: coarse) {
+  .ggd-rank-tabs button {
+    min-height: 44px;
+    font-size: 13px;
+  }
+
+  .ggd-rank-row {
+    padding: 8px 4px;
+    font-size: 13px;
+  }
+
+  /* tier crest: 22px shield → 28px so the roman division stays legible */
+  .ggd-rank-row svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .ggd-rank-pick,
+  .ggd-rank-picker-grid button {
+    min-height: 48px;
+  }
+}
+
+@media (max-width: 720px) {
+  .ggd-lobby-body {
+    flex-wrap: wrap;
+    overflow-y: auto;
+  }
+
+  /* !important: the lobby columns carry inline width/flex (they are inline-styled
+     like every other platform panel), and inline beats a class selector. */
+  .ggd-lobby-col {
+    width: 100% !important;
+    flex: 1 1 100% !important;
+    min-height: 200px;
+  }
+
+  .ggd-rank-picker-grid {
+    grid-template-columns: 1fr;
+  }
+}

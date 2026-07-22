@@ -1,0 +1,43 @@
+{
+  "id": "godie-hlgr.e",
+  "name": "03-03 鯨式電漿光束炮",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n一道向外的衝擊波擴散的電漿光束炮，造成一直線地面部隊450點傷害。",
+  "slot": "E",
+  "castType": "skillshot",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    150.0,
+    215.0,
+    280.0,
+    345.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "imported.wave",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              450.0,
+              650.0,
+              850.0,
+              1050.0
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.cinder-ward",
+  "schema": "ability@1"
+}

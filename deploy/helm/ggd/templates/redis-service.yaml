@@ -1,0 +1,17 @@
+# Headless service (StatefulSet requirement); with one replica the service
+# name resolves straight to the pod.
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-redis
+  labels:
+    {{- include "ggd.labels" . | nindent 4 }}
+    app.kubernetes.io/name: redis
+spec:
+  clusterIP: None
+  selector:
+    {{- include "ggd.selector" (dict "root" . "name" "redis") | nindent 4 }}
+  ports:
+    - name: redis
+      port: {{ .Values.redis.port }}
+      targetPort: redis

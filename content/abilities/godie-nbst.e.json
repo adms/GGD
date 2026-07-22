@@ -1,0 +1,44 @@
+{
+  "id": "godie-nbst.e",
+  "name": "24-03 變態絕技悶絕地獄車",
+  "description": "[主動攻擊]\n45秒冷卻時間\n\n以超快的速度迅速滑行一段距離並進行攻擊，對一直線上的地面部隊造成350+力量*3傷害。",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "manaCost": [
+    220.0,
+    250.0,
+    280.0,
+    310.0
+  ],
+  "range": 14.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          80,
+          120,
+          160,
+          200
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.9
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

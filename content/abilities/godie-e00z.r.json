@@ -1,0 +1,34 @@
+{
+  "id": "godie-e00z.r",
+  "name": "19-04 幻影暗殺",
+  "description": "[被動]\n0秒冷卻時間\n\n當安云站在敵方背後攻擊的時候，能發揮刺客暗殺的實力，給予額外(敏捷*1)+100點傷害。",
+  "slot": "R",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    12.0,
+    12.0,
+    12.0
+  ],
+  "manaCost": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "critChance",
+          "op": "flat",
+          "value": 0.25
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

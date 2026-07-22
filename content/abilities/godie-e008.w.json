@@ -1,0 +1,66 @@
+{
+  "id": "godie-e008.w",
+  "name": "21-01 火羽",
+  "description": "[傷害加成]\n30秒冷卻時間\n\n召喚火焰般的羽毛幫助周圍單位加速移動1.5倍，持續6秒。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    30.0,
+    30.0,
+    30.0
+  ],
+  "manaCost": [
+    30.0,
+    60.0,
+    90.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ms",
+          "op": "pctAdd",
+          "value": 1.5
+        }
+      ],
+      "duration": 6.0,
+      "perRank": [
+        {
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "value": 1.5
+            }
+          ],
+          "duration": 6.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "value": 1.5
+            }
+          ],
+          "duration": 12.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "value": 1.5
+            }
+          ],
+          "duration": 18.0
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.firestorm",
+  "schema": "ability@1"
+}

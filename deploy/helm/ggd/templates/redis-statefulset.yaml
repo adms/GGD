@@ -1,0 +1,66 @@
+# Redis 7 — rebuildable hot layer (sessions/presence/rooms/chat/leaderboard).
+# AOF everysec only shrinks cold boot; correctness NEVER depends on Redis
+# (data/ JSON is the truth; boot rebuilds Redis from it — infra-08).
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}-redis
+  labels:
+    {{- include "ggd.labels" . | nindent 4 }}
+    app.kubernetes.io/name: redis
+spec:
+  serviceName: {{ .Release.Name }}-redis
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "ggd.selector" (dict "root" . "name" "redis") | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "ggd.labels" . | nindent 8 }}
+        {{- include "ggd.selector" (dict "root" . "name" "redis") | nindent 8 }}
+    spec:
+      containers:
+        - name: redis
+          image: {{ .Values.redis.image | quote }}
+          args:
+            - "redis-server"
+            - "--appendonly"
+            - "yes"
+            - "--appendfsync"
+            - "everysec"
+            - "--requirepass"
+            - "$(REDIS_PASSWORD)"
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-secrets
+                  key: REDIS_PASSWORD
+          ports:
+            - name: redis
+              containerPort: {{ .Values.redis.port }}
+          readinessProbe:
+            exec:
+              command: ["sh", "-c", "redis-cli -a \"$REDIS_PASSWORD\" ping | grep -q PONG"]
+            initialDelaySeconds: 2
+            periodSeconds: 5
+          livenessProbe:
+            tcpSocket:
+              port: redis
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          volumeMounts:
+            - name: redis-data
+              mountPath: /data
+  volumeClaimTemplates:
+    - metadata:
+        name: redis-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: {{ .Values.redis.storage }}
+        {{- with .Values.redis.storageClass }}
+        storageClassName: {{ . | quote }}
+        {{- end }}

@@ -1,0 +1,43 @@
+{
+  "id": "godie-n01c.e",
+  "name": "08-03 龍鬥氣砲咒文",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n龍騎士的得意技之一，發動龍紋章之力使出咒文迫擊砲，造成攻擊線地面部隊450點傷害。",
+  "slot": "E",
+  "castType": "skillshot",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    150.0,
+    200.0,
+    250.0,
+    300.0
+  ],
+  "range": 13.75,
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "imported.wave",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              450.0,
+              600.0,
+              750.0,
+              900.0
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "imported.horsehead",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/horsehead.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand -1",
+    "run": "Walk",
+    "attack": "Attack -1",
+    "cast": "Attack -1",
+    "hurt": "Stand Hit",
+    "death": "Death"
+  }
+}

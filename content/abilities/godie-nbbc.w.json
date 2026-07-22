@@ -1,0 +1,44 @@
+{
+  "id": "godie-nbbc.w",
+  "name": "08-02 萊丁快速劍",
+  "description": "[主動攻擊]\n30秒冷卻時間\n\n使用萊丁(閃電咒文)複合阿邦快速劍使出的魔法劍術，造成150點傷害並瞬間移動到敵方面前，周圍敵人也會受到些許雷擊傷害。",
+  "slot": "W",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    30.0,
+    30.0,
+    30.0,
+    30.0
+  ],
+  "manaCost": [
+    50.0,
+    80.0,
+    110.0,
+    140.0
+  ],
+  "range": 6.42,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          150.0,
+          250.0,
+          350.0,
+          450.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

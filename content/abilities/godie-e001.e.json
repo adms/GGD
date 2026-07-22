@@ -1,0 +1,50 @@
+{
+  "id": "godie-e001.e",
+  "name": "22-03 五吋釘",
+  "description": "[主動攻擊]\n25秒冷卻時間\n\n將一枚充滿詛咒的五吋釘射向敵方目標，造成瞬間350點傷害，並減緩60%移動速度5秒。",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    25.0,
+    25.0,
+    25.0,
+    25.0
+  ],
+  "manaCost": [
+    100.0,
+    140.0,
+    180.0,
+    220.0
+  ],
+  "range": 8.25,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          350.0,
+          500.0,
+          650.0,
+          800.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow40",
+      "duration": 5.0,
+      "moveSpeedMult": 0.4
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

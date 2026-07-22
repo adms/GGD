@@ -1,0 +1,216 @@
+{
+  "id": "godie-hvsh",
+  "schema": "champion@1",
+  "name": "梅杜莎 - Rider",
+  "description": "故事：\n高爾根為蛇髮女怪，她們是海神Phorcys和ceto所生的三女妖：大姐司提娜(Stheno)是代表力量，二姐尤里艾蕾(Euryale)是代表自由(飛翔)，三妹梅杜莎(Medusa)是代表悲哀(女王)。她們三姊妹當中只有梅杜沙是人類的身軀。\n(出自:Fate/stay night)\n\n推薦玩家 : 團戰牽制\n上手度 : 中\n\n角色成長：\n力量 + 1.70\n敏捷 + 2.75\n智慧 + 1.75\n基礎跑速 300\n\n可學習的技能：\n魔法鎖鍊、心眼、鮮血神殿、騎英之韁繩",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "imported.herorider",
+  "attackDamagePoint": 0.5,
+  "baseStats": {
+    "maxHealth": 440,
+    "healthRegen": 1.05,
+    "maxMana": 304,
+    "manaRegen": 1.48,
+    "ad": 33,
+    "ap": 0,
+    "armor": 10,
+    "mr": 28,
+    "as": 0.45,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 34,
+    "healthRegen": 0.09,
+    "maxMana": 21,
+    "manaRegen": 0.07,
+    "ad": 1.7,
+    "armor": 0.8,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-hvsh.q",
+      "name": "48-01 魔法鎖鏈",
+      "description": "[主動攻擊]\n25秒冷卻時間\n\n使用鎖鏈將路線上的部隊拉回自己身旁，並受到150的傷害。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        25.0,
+        25.0,
+        25.0,
+        25.0
+      ],
+      "manaCost": [
+        50.0,
+        75.0,
+        100.0,
+        125.0
+      ],
+      "range": 14.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              150.0,
+              250.0,
+              350.0,
+              450.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "W": {
+      "id": "godie-hvsh.w",
+      "name": "48-02 心眼",
+      "description": "[被動]\n0秒冷卻時間\n\n心眼讓梅杜莎有12%的機會閃避攻擊。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": 25
+            }
+          ],
+          "duration": 6.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "E": {
+      "id": "godie-hvsh.e",
+      "name": "48-03 鮮血神殿",
+      "description": "[主動攻擊]\n60秒冷卻時間\n\n召喚一個嗜血的結界，每秒可以損傷敵方部隊75生命，降低攻擊速度50%，每秒受到傷害的部隊可恢復Rider1%的生命，每殺死14個部隊則增加Rider1點全能力，可持續10秒。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        120.0,
+        195.0,
+        270.0,
+        345.0
+      ],
+      "range": 1.83,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "R": {
+      "id": "godie-hvsh.r",
+      "name": "48-04 騎英之疆繩",
+      "description": "[主動攻擊]\n60秒冷卻時間\n\n招喚飛馬以超快的速度衝擊前方，對指定地點上的地面部隊造成敏捷*3+300的傷害。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        230.0,
+        330.0,
+        430.0
+      ],
+      "range": 14.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.72
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ],
+  "exAbility": "godie-hvsh.ex",
+  "icon": "assets/icons/champions/godie-hvsh.png"
+}

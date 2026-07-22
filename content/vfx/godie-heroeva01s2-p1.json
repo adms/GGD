@@ -1,0 +1,78 @@
+{
+  "id": "godie-heroeva01s2-p1",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.05,
+    "angleDeg": 1.0
+  },
+  "mode": "continuous",
+  "rate": 10.0,
+  "lifetimeSec": {
+    "min": 1.0,
+    "max": 1.0
+  },
+  "size": {
+    "start": 2.222,
+    "end": 2.222
+  },
+  "color": {
+    "start": [
+      1.0,
+      1.0,
+      1.0,
+      0.608
+    ],
+    "end": [
+      1.0,
+      1.0,
+      1.0,
+      0.608
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.608
+      ]
+    ],
+    [
+      0.3,
+      [
+        0.353,
+        0.353,
+        0.353,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.608
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      2.222
+    ],
+    [
+      0.3,
+      2.778
+    ],
+    [
+      1,
+      2.222
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/wc3/heroeva01effect.png"
+}

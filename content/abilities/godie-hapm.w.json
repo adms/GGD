@@ -1,0 +1,44 @@
+{
+  "id": "godie-hapm.w",
+  "name": "52-02 蹂躪編年史",
+  "description": "[主動攻擊]\n45秒冷卻時間\n\n迅速將目標抓回再暴力的丟出去，使之撞擊前方400距離處的敵人造成350傷害。",
+  "slot": "W",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "manaCost": [
+    60.0,
+    155.0,
+    190.0,
+    225.0
+  ],
+  "range": 5.5,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          80,
+          120,
+          160,
+          200
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

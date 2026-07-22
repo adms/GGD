@@ -1,0 +1,57 @@
+{
+  "id": "imported.bahamut",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/bahamut.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand 1",
+    "run": "Walk",
+    "attack": "Attack 1",
+    "cast": "Spell",
+    "hurt": "Stand 1",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Chest": {
+      "x": 0.0,
+      "y": 1.2282,
+      "z": -0.0
+    },
+    "Origin": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -0.0
+    },
+    "Hand Right": {
+      "x": 0.0,
+      "y": 1.0209,
+      "z": 0.3531
+    },
+    "Hand Left": {
+      "x": 0.0,
+      "y": 1.0209,
+      "z": -0.3147
+    },
+    "Head": {
+      "x": 0.3377,
+      "y": 1.3356,
+      "z": -0.0
+    },
+    "Overhead": {
+      "x": 0.3224,
+      "y": 1.7809,
+      "z": -0.0
+    },
+    "Weapon Right": {
+      "x": 0.0,
+      "y": 1.8806,
+      "z": 0.8674
+    },
+    "Weapon Left": {
+      "x": 0.0,
+      "y": 1.8883,
+      "z": -0.7369
+    }
+  }
+}

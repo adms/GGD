@@ -1,0 +1,62 @@
+{
+  "id": "imported.renaryugu2",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/renaryugu2.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Spell",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Foot Right": {
+      "x": 0.058,
+      "y": 0.1675,
+      "z": 0.0845
+    },
+    "Foot Left": {
+      "x": 0.058,
+      "y": 0.1675,
+      "z": -0.0867
+    },
+    "Hand Right": {
+      "x": -0.0196,
+      "y": 0.9581,
+      "z": 0.2458
+    },
+    "Hand Left": {
+      "x": -0.0196,
+      "y": 0.9581,
+      "z": -0.2478
+    },
+    "Head": {
+      "x": 0.0163,
+      "y": 1.8208,
+      "z": -0.0024
+    },
+    "Chest": {
+      "x": 0.0146,
+      "y": 1.2228,
+      "z": -0.0014
+    },
+    "Origin": {
+      "x": -0.0109,
+      "y": 0.1073,
+      "z": 0.0046
+    },
+    "OverHead": {
+      "x": -0.0109,
+      "y": 2.1318,
+      "z": 0.0046
+    },
+    "Weapon": {
+      "x": 0.8323,
+      "y": 0.9336,
+      "z": 0.2371
+    }
+  }
+}

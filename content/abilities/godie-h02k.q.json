@@ -1,0 +1,38 @@
+{
+  "id": "godie-h02k.q",
+  "schema": "ability@1",
+  "name": "89-01 憤怒的頭槌",
+  "description": "[被動]\n0秒冷卻時間\n\n當熊貓憤怒到極點的時候將會使出致命殺傷力的頭槌攻擊，但是牠總是忘記有這招，攻擊時有5%機率想起頭槌攻擊，造成111點破壞力，並將敵人震昏0.5秒。",
+  "slot": "Q",
+  "castType": "self",
+  "maxRank": 5,
+  "cooldown": [
+    12.0,
+    12.0,
+    12.0,
+    12.0,
+    12.0
+  ],
+  "manaCost": [
+    60.0,
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "flat",
+          "value": 0.25
+        }
+      ],
+      "duration": 3.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast"
+}

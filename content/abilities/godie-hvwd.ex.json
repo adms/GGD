@@ -1,0 +1,39 @@
+{
+  "id": "godie-hvwd.ex",
+  "name": "02-002 神通眼",
+  "description": "[主動攻擊]\n30秒冷卻時間\n\n修練到極致的桔梗可以打開神通眼，讓淨化之箭追蹤千里之外的敵人並造成1750點傷害，暈眩2秒。",
+  "slot": "EX",
+  "castType": "targeted",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    315.0
+  ],
+  "range": 5.29,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "flat": 300,
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.9
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow40",
+      "duration": 3.0,
+      "moveSpeedMult": 0.6
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1",
+  "targetsEnemies": true
+}

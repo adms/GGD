@@ -1,0 +1,47 @@
+{
+  "id": "godie-umal.q",
+  "name": "25-01 北斗懺悔拳",
+  "description": "[主動攻擊]\n25秒冷卻時間\n\n\"你還有3秒的時間可以懺悔你這輩子的罪孽\"，點擊指定單位之秘穴，在三秒後造成自身力量*3+150傷害。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 5,
+  "cooldown": [
+    25.0,
+    25.0,
+    25.0,
+    25.0,
+    8.0
+  ],
+  "manaCost": [
+    90.0,
+    120.0,
+    150.0,
+    325.0,
+    85.0
+  ],
+  "range": 2.75,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          80,
+          120,
+          160,
+          200,
+          240
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

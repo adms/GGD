@@ -1,0 +1,30 @@
+{
+  "contentId": "godie-i04d",
+  "nameZh": "冰晶虎魄 - 改",
+  "gold": 7900,
+  "kind": "effect",
+  "description": "神器\r\n效能\r\n攻擊附帶冰凍緩速30%持續0.6秒(法球)\r\n10%機率寒冰爆，範圍300點傷害並緩速3秒(近距離機率提升到15%)\r\n力量、智慧+15\r\n攻擊力+40\r\n\r\n解說\r\n飛鼠先生在極地之南探險時發現古代遺留的白虎結晶，利用其極寒特性鍛造了一把有魔力的斧頭，也因此成了戰勝海妖一族的關鍵。",
+  "abilities": [
+    {
+      "rawcode": "A0FX",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A0VL",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A0VN",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    }
+  ]
+}

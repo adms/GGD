@@ -1,0 +1,44 @@
+{
+  "id": "godie-e00v.e",
+  "schema": "ability@1",
+  "name": "84-03 蜜汁",
+  "description": "[輔助]\n50秒冷卻時間\n\n出自好心提醒對方，但不知什麼原因卻會造成目標羞愧的說不出話而禁言，降低攻擊速度30%以及移動速度50%，並且每秒減少法力60點。持續3秒。",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    50.0,
+    50.0,
+    50.0,
+    50.0
+  ],
+  "manaCost": [
+    125.0,
+    175.0,
+    225.0,
+    275.0
+  ],
+  "range": 6.42,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          60.0,
+          60.0,
+          60.0,
+          60.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.18
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true
+}

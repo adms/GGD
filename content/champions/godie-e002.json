@@ -1,0 +1,215 @@
+{
+  "id": "godie-e002",
+  "schema": "champion@1",
+  "name": "亞瑟王 - Saber",
+  "description": "故事：\n在偶然的情況下與衛宮士郎定下契約的 、外觀嬌小的女性SERVANT，就是被認為能力最高的聖靈。\n(出自:Fate/stay night)\n\n推薦玩家 : 破塔PK\n上手度 : 中\n\n角色成長：\n力量 + 2.70\n敏捷 + 1.80\n智慧 + 1.60\n基礎跑速 300\n\n可學習的技能：\n風王結界、感知能力、約束與勝利之劍、Avalon-永恆的理想鄉",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "imported.herosaber",
+  "baseStats": {
+    "maxHealth": 580,
+    "healthRegen": 1.4,
+    "maxMana": 292,
+    "manaRegen": 1.44,
+    "ad": 38,
+    "ap": 0,
+    "armor": 7,
+    "mr": 28,
+    "as": 0.53,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 54,
+    "healthRegen": 0.14,
+    "maxMana": 19,
+    "manaRegen": 0.06,
+    "ad": 1.8,
+    "armor": 0.5,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-e002.q",
+      "name": "20-02 感知能力",
+      "description": "[被動]\n0秒冷卻時間\n\n受到物理攻擊時有7%機率可迴避物理攻擊。",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 5,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": 25
+            }
+          ],
+          "duration": 6.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "W": {
+      "id": "godie-e002.w",
+      "name": "20-01 風王結界",
+      "description": "開啟風王結界，每次攻擊消耗 30法力，對目標造成額外10+力量*1倍的傷害，此為法球效應。",
+      "slot": "W",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              160.0,
+              160.0,
+              160.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.72
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "radius": 3.67
+    },
+    "E": {
+      "id": "godie-e002.e",
+      "name": "20-03 約束與勝利之劍",
+      "description": "[主動攻擊]\n60秒冷卻時間\n\n集結了人們的意念而形成的星星的結晶。是一把精鍊的神造兵裝，被譽為「最強的幻想(Last Phantasm)」。\n在聖劍這個分類上位於最頂端的位置。它會將所有者的魔力轉換成光之後收束並加速以增加其動能，可以讓所有者使用出神靈等級的魔法。\n其斬擊看似是放出了一道光帶，但是能讓前方直線敵人受到魔力*0.4+350點傷害。",
+      "slot": "E",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        150.0,
+        250.0,
+        350.0,
+        450.0
+      ],
+      "range": 14.0,
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.wave",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "perRank": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "R": {
+      "id": "godie-e002.r",
+      "name": "20-04 Avalon-永恆的理想鄉",
+      "description": "[輔助]\n60秒冷卻時間\n\nSaber手中握著的石中劍的劍鞘，可以發動傳說中EX級寶具Avalon－永恆的理想鄉，是個可以將任何魔法反彈的最強寶具，使Saber在一定時間內受到技能攻擊時，能夠給予對手強大的反擊，基礎威力為等級*30+力量*5，聚集的敵人越多和敵方技能越高，額外的傷害就越高，承受時間2秒。",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        12.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        150.0,
+        250.0,
+        350.0
+      ],
+      "range": 0.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              250.0,
+              500.0,
+              750.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "radius": 3.67
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ],
+  "exAbility": "godie-e002.ex",
+  "icon": "assets/icons/champions/godie-e002.png"
+}

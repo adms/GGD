@@ -1,0 +1,23 @@
+{
+  "id": "godie-i01j",
+  "schema": "item@1",
+  "name": "靈魂魔石",
+  "description": "飾品\n效能\n生命+217\n魔力+136\n閃避25%\n\n解說\n封印著遠古守衛護靈魂遺志的神祕石頭。",
+  "cost": 1200,
+  "tier": 2,
+  "tags": [
+    "wc3-import"
+  ],
+  "modifiers": [
+    {
+      "stat": "maxHealth",
+      "op": "flat",
+      "value": 217
+    },
+    {
+      "stat": "maxMana",
+      "op": "flat",
+      "value": 136
+    }
+  ]
+}

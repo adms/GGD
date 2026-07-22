@@ -1,0 +1,79 @@
+{
+  "id": "godie-linainvers-p0",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.05,
+    "angleDeg": 1.0
+  },
+  "mode": "continuous",
+  "rate": 40.0,
+  "lifetimeSec": {
+    "min": 0.4,
+    "max": 0.4
+  },
+  "size": {
+    "start": 0.186,
+    "end": 0.062
+  },
+  "color": {
+    "start": [
+      0.973,
+      0.412,
+      0.039,
+      1.0
+    ],
+    "end": [
+      0.875,
+      0.8,
+      0.125,
+      0.784
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        0.973,
+        0.412,
+        0.039,
+        1.0
+      ]
+    ],
+    [
+      0.2,
+      [
+        1.0,
+        0.012,
+        0.012,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.875,
+        0.8,
+        0.125,
+        0.784
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.186
+    ],
+    [
+      0.2,
+      0.31
+    ],
+    [
+      1,
+      0.062
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/fire_02.png",
+  "anchorBone": "bone right hand"
+}

@@ -1,0 +1,46 @@
+{{- /*
+Restrict who may reach the platform on its port. The platform exposes the
+public API (fronted by the edge) AND the in-cluster-ONLY result callback at
+/api/v1/internal/matches/{id}/result (called by the game server over
+PLATFORM_INTERNAL_URL). This policy allows ingress to the platform port from
+ONLY the edge pod (public /api) and the game pod (result callback); every other
+source in the namespace is denied.
+
+OFF by default (networkPolicy.enabled=false): local kind's default CNI does not
+enforce NetworkPolicy, so leaving it off keeps `make up` behaving identically.
+Enable on real clusters whose CNI (Calico/Cilium/…) enforces it:
+  --set networkPolicy.enabled=true
+
+Selector labels come from the shared "ggd.selector" helper, so they track the
+exact pod labels on the platform/edge/game Deployments. The seed Job execs
+`/seed` locally against the data volume (no platform-network hop), so
+this policy does not affect seeding.
+*/ -}}
+{{- if .Values.networkPolicy.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ .Release.Name }}-platform
+  labels:
+    {{- include "ggd.labels" . | nindent 4 }}
+    app.kubernetes.io/name: platform
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "ggd.selector" (dict "root" . "name" "platform") | nindent 6 }}
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        # edge → platform: the public /api reverse proxy
+        - podSelector:
+            matchLabels:
+              {{- include "ggd.selector" (dict "root" . "name" "edge") | nindent 14 }}
+        # game → platform: the HMAC-signed match result callback
+        - podSelector:
+            matchLabels:
+              {{- include "ggd.selector" (dict "root" . "name" "game") | nindent 14 }}
+      ports:
+        - protocol: TCP
+          port: {{ .Values.platform.port }}
+{{- end }}

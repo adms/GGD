@@ -1,0 +1,33 @@
+{
+  "id": "godie-i06f",
+  "schema": "item@1",
+  "name": "月神槍",
+  "description": "飾品\n效能\n法術強度+99\n裝甲+13.2\n魔力+297\n每秒回復生命+8.29\n\n解說\n傳說來自月之海的夢幻武器，攜帶者會受到月之女神的守護。",
+  "cost": 0,
+  "tier": 3,
+  "modifiers": [
+    {
+      "stat": "ap",
+      "op": "flat",
+      "value": 99
+    },
+    {
+      "stat": "maxMana",
+      "op": "flat",
+      "value": 297
+    },
+    {
+      "stat": "armor",
+      "op": "flat",
+      "value": 13.2
+    },
+    {
+      "stat": "healthRegen",
+      "op": "flat",
+      "value": 8.29
+    }
+  ],
+  "tags": [
+    "wc3-import"
+  ]
+}

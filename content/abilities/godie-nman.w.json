@@ -1,0 +1,48 @@
+{
+  "id": "godie-nman.w",
+  "name": "40-02 必殺！爆熱神音！",
+  "description": "[主動攻擊]\n25秒冷卻時間\n\n模擬環繞音響的超音波歌聲讓附近敵人受到175傷害。",
+  "slot": "W",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    25.0,
+    25.0,
+    25.0
+  ],
+  "manaCost": [
+    55.0,
+    85.0,
+    115.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          175.0,
+          275.0,
+          375.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "burnstun",
+      "duration": 0.8,
+      "stun": true
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "radius": 6.0,
+  "schema": "ability@1"
+}

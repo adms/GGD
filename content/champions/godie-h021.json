@@ -1,0 +1,202 @@
+{
+  "id": "godie-h021",
+  "schema": "champion@1",
+  "name": "破銅爛鐵 - 阿強一號",
+  "description": "故事：\n。\n(出自:)\n\n推薦玩家 :  團戰殺人\n上手度 : 中\n\n角色成長：\n力量 + 2.40\n敏捷 + 1.40\n智慧 + 2.30\n基礎跑速 305\n\n可學習的技能：\n薩喀爾、薩喀爾嘎、及喀爾度、巴歐薩喀爾嘎",
+  "role": "marksman",
+  "attackType": "ranged",
+  "modelKey": "champ.sela",
+  "baseStats": {
+    "maxHealth": 460,
+    "healthRegen": 1.1,
+    "maxMana": 352,
+    "manaRegen": 1.64,
+    "ad": 35,
+    "ap": 0,
+    "armor": 6,
+    "mr": 28,
+    "as": 0.53,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 6.4
+  },
+  "growth": {
+    "maxHealth": 48,
+    "healthRegen": 0.12,
+    "maxMana": 28,
+    "manaRegen": 0.09,
+    "ad": 2.4,
+    "armor": 0.4,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-h021.q",
+      "name": "05-01 薩喀爾",
+      "description": "[主動攻擊]\n25秒冷卻時間\n\n召喚數道閃電進行攻擊給予最多3位敵人175點的傷害",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        25.0,
+        25.0,
+        25.0
+      ],
+      "manaCost": [
+        60.0,
+        95.0,
+        130.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              175,
+              275,
+              375
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "W": {
+      "id": "godie-h021.w",
+      "name": "05-02 薩喀爾嘎",
+      "description": "[主動攻擊]\n15秒冷卻時間\n\n薩喀爾的強化版，放射出集中並且有穿透力的電擊，造成150傷害。",
+      "slot": "W",
+      "castType": "dash",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        30.0,
+        50.0,
+        70.0,
+        90.0
+      ],
+      "range": 7.33,
+      "effects": [
+        {
+          "kind": "dash",
+          "mode": "toPoint",
+          "speed": 30.0,
+          "maxDistance": 7.33
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "E": {
+      "id": "godie-h021.e",
+      "name": "05-03 及喀爾度",
+      "description": "[主動攻擊]\n60秒冷卻時間\n\n賈修的神秘咒語，招喚2顆磁力球，可將範圍350的對手磁化，並吸引到自己身旁的咒語。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        75.0,
+        125.0,
+        175.0,
+        225.0
+      ],
+      "range": 0.0,
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "root",
+          "duration": 1.5,
+          "root": true
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "radius": 6.0
+    },
+    "R": {
+      "id": "godie-h021.r",
+      "name": "05-04 巴歐．薩喀爾嘎",
+      "description": "[主動攻擊]\n60秒冷卻時間\n\n賈修的最強咒語，招換出一條金色的雷龍衝擊敵人造成550點傷害，並擊退一段距離，若受到撞擊停止，周圍敵人將會受到力量*3額外傷害。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        140.0,
+        230.0,
+        320.0
+      ],
+      "range": 8.25,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              550.0,
+              1000.0,
+              1450.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow25",
+          "duration": 1.0,
+          "moveSpeedMult": 0.6
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin"
+  ],
+  "icon": "assets/icons/champions/godie-h021.png"
+}

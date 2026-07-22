@@ -1,0 +1,70 @@
+{
+  "id": "godie-edem.r",
+  "name": "45-04 哥哥",
+  "description": "[被動]\n0秒冷卻時間\n\n「我愚蠢的弟弟啊！憎恨吧！怨恨把！帶著你對我的仇恨，醜陋的苟延殘喘的活下去。」對哥哥鼬的怨念，使得佐助不斷地變強。增加12點敏捷，並且使千鳥的命中率及速度小幅度提昇；在火遁攻擊完後3秒鐘內，使用千鳥再次攻擊該目標會引發麒麟，造成目標周圍600範圍內敏捷*2點落電傷害。",
+  "slot": "R",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0,
+  "effects": [],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/godie-edem.r.png",
+  "passive": {
+    "name": "45-04 哥哥",
+    "ranks": [
+      {
+        "modifiers": [
+          {
+            "stat": "armor",
+            "op": "flat",
+            "value": 3.6
+          },
+          {
+            "stat": "as",
+            "op": "pctAdd",
+            "value": 0.24
+          }
+        ]
+      },
+      {
+        "modifiers": [
+          {
+            "stat": "armor",
+            "op": "flat",
+            "value": 7.2
+          },
+          {
+            "stat": "as",
+            "op": "pctAdd",
+            "value": 0.48
+          }
+        ]
+      },
+      {
+        "modifiers": [
+          {
+            "stat": "armor",
+            "op": "flat",
+            "value": 10.8
+          },
+          {
+            "stat": "as",
+            "op": "pctAdd",
+            "value": 0.72
+          }
+        ]
+      }
+    ]
+  }
+}

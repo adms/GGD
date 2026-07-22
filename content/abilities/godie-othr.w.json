@@ -1,0 +1,71 @@
+{
+  "id": "godie-othr.w",
+  "name": "31-02 重爪擊",
+  "description": "[主動攻擊]\n45秒冷卻時間\n\n使用金鋼狼獨有的爪子來攻擊敵人，造成劇烈的痛苦，給予250點傷害的同時可以恢復自己的生命，並且緩慢敵人移速30%，維持3秒。",
+  "slot": "W",
+  "castType": "targeted",
+  "maxRank": 5,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    100.0,
+    130.0,
+    160.0,
+    275.0,
+    275.0
+  ],
+  "range": 3.21,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          250.0,
+          400.0,
+          550.0,
+          900.0,
+          900.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "kind": "heal",
+      "amount": {
+        "perRank": [
+          400.0,
+          550.0,
+          700.0,
+          850.0,
+          1000.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow30",
+      "duration": 3.0,
+      "moveSpeedMult": 0.7
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

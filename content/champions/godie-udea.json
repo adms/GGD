@@ -1,0 +1,211 @@
+{
+  "id": "godie-udea",
+  "schema": "champion@1",
+  "name": "至尊學長 - 飛鼠先生",
+  "description": "故事：\n神秘的英雄，擅長以各種KUSO手法襲擊對手並加以推倒。\n(出自:去死去死團的逆襲原創)\n\n角色成長：\n力量 + 1.00\n敏捷 + 1.00\n智慧 + 4.00\n基礎跑速 320\n\n可學習的技能：\n神出鬼沒、寒冰破碎、魔法膨脹、天譴、永恆的愚蠢鄉",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "champ.thorne",
+  "attackDamagePoint": 0.4,
+  "baseStats": {
+    "maxHealth": 620,
+    "healthRegen": 1.5,
+    "maxMana": 366,
+    "manaRegen": 1.52,
+    "ad": 81,
+    "ap": 0,
+    "armor": 9,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 6.0,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 20,
+    "healthRegen": 0.05,
+    "maxMana": 48,
+    "manaRegen": 0.16,
+    "ad": 4.0,
+    "armor": 0.3,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-udea.q",
+      "name": "65-01 神出鬼沒",
+      "description": "[輔助]\n25秒冷卻時間\n\n飛鼠先生可以瞬間移動3300的距離到指定的位置。",
+      "slot": "Q",
+      "castType": "dash",
+      "maxRank": 4,
+      "cooldown": [
+        25.0,
+        25.0,
+        25.0,
+        25.0
+      ],
+      "manaCost": [
+        150.0,
+        250.0,
+        350.0,
+        450.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "dash",
+          "mode": "toPoint",
+          "speed": 30.0,
+          "maxDistance": 11.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "W": {
+      "id": "godie-udea.w",
+      "name": "65-02 寒冰破碎",
+      "description": "[主動攻擊]\n30秒冷卻時間\n\n飛鼠先生在劍術學院結業創造之劍術，成功融合寒冰魔法與劍擊，能給予冰爆和劍斬衝擊雙重傷害，造成一直線敵人150點傷害，附帶隨機冰爆250傷害。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        150.0,
+        215.0,
+        280.0,
+        280.0,
+        280.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              150.0,
+              350.0,
+              550.0,
+              550.0,
+              550.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.scorch-ring",
+      "targetsEnemies": true
+    },
+    "E": {
+      "id": "godie-udea.e",
+      "name": "65-03 魔法膨脹",
+      "description": "[主動攻擊]\n25秒冷卻時間\n\n施咒補充敵方部隊法力的缺陷，但是過度膨脹的法力將會使目標暈眩1秒並造成生命傷害，傷害公式為目標(法力上限-法力值)*1倍魔法傷害。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        25.0,
+        25.0,
+        25.0,
+        25.0,
+        25.0
+      ],
+      "manaCost": [
+        60.0,
+        150.0,
+        225.0,
+        300.0,
+        300.0
+      ],
+      "range": 10.08,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.003
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow25",
+          "duration": 1.0,
+          "moveSpeedMult": 0.6
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "R": {
+      "id": "godie-udea.r",
+      "name": "65-04 天譴",
+      "description": "[主動攻擊]\n90秒冷卻時間\n\n怒氣凝聚為閃電殺暴附近的敵人，對周圍500範圍內的所有敵人放出閃雷造成250點法力損失和150點傷害並傳遞16次，聚集越多敵人則威力越強，另外給予指定目標額外500點傷害。",
+      "slot": "R",
+      "castType": "dash",
+      "maxRank": 3,
+      "cooldown": [
+        90.0,
+        60.0,
+        30.0
+      ],
+      "manaCost": [
+        250.0,
+        350.0,
+        450.0
+      ],
+      "range": 8.25,
+      "effects": [
+        {
+          "kind": "dash",
+          "mode": "toPoint",
+          "speed": 30.0,
+          "maxDistance": 8.25
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin"
+  ],
+  "exAbility": "godie-udea.ex"
+}

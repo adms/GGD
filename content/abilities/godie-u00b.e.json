@@ -1,0 +1,44 @@
+{
+  "id": "godie-u00b.e",
+  "schema": "ability@1",
+  "name": "75-02 龍捲風",
+  "description": "召喚一道可以控制的殘暴龍捲風，降低敵方部隊的移動速度，並以亂數決定將哪些地面部隊丟到半空中，同時傷害敵人的建築物。\n持續<ANto,Dur2>秒。",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    100.0,
+    100.0,
+    200.0,
+    250.0
+  ],
+  "range": 14.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          80,
+          120,
+          160,
+          200
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true
+}

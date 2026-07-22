@@ -1,0 +1,46 @@
+{
+  "id": "godie-e00s.q",
+  "schema": "ability@1",
+  "name": "70-01 伸卡球",
+  "description": "[主動攻擊]\n35秒冷卻時間\n\n某天卡迪納吃著洋芋片從MLB某球員領悟的球技，變化為必殺技後有意想不到的傷害，造成範圍敵人150+力量*3點傷害。",
+  "slot": "Q",
+  "castType": "skillshot",
+  "maxRank": 5,
+  "cooldown": [
+    35.0,
+    35.0,
+    35.0,
+    35.0,
+    35.0
+  ],
+  "manaCost": [
+    150.0,
+    210.0,
+    270.0,
+    270.0,
+    270.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "imported.wave",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast"
+}

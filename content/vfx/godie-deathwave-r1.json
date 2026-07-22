@@ -1,0 +1,16 @@
+{
+  "id": "godie-deathwave-r1",
+  "schema": "ribbon@1",
+  "texture": "assets/textures/particles/light_02.png",
+  "widthAbove": 0.7,
+  "widthBelow": 0.7,
+  "lifespanSec": 0.16,
+  "color": [
+    1.0,
+    1.0,
+    1.0,
+    0.0
+  ],
+  "blendMode": "additive",
+  "anchorBone": "Dummy01x"
+}

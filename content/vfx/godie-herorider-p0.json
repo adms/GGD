@@ -1,0 +1,84 @@
+{
+  "id": "godie-herorider-p0",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 2.271,
+    "angleDeg": 1.0
+  },
+  "mode": "continuous",
+  "rate": 100.0,
+  "lifetimeSec": {
+    "min": 1.0,
+    "max": 1.0
+  },
+  "size": {
+    "start": 0.454,
+    "end": 0.076
+  },
+  "color": {
+    "start": [
+      0.224,
+      0.325,
+      0.584,
+      1.0
+    ],
+    "end": [
+      0.267,
+      0.271,
+      0.325,
+      1.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        0.224,
+        0.325,
+        0.584,
+        1.0
+      ]
+    ],
+    [
+      0.5,
+      [
+        0.125,
+        0.224,
+        0.325,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.267,
+        0.271,
+        0.325,
+        1.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.454
+    ],
+    [
+      0.5,
+      0.151
+    ],
+    [
+      1,
+      0.076
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/light_01.png",
+  "speed": {
+    "min": 0.1484,
+    "max": 0.1544
+  },
+  "anchorBone": "Bone_Hand_R",
+  "ambient": true
+}

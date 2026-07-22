@@ -1,0 +1,47 @@
+{
+  "id": "godie-h001.q",
+  "schema": "ability@1",
+  "name": "41-01 吸血鬼之吻",
+  "description": "[主動攻擊]\n45秒冷卻時間\n\n施展邪惡的吸血魔法，將會從敵人身上奪取200點生命來回復自己的體力。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 5,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "manaCost": [
+    60.0,
+    150.0,
+    225.0,
+    225.0,
+    225.0
+  ],
+  "range": 4.58,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          200.0,
+          400.0,
+          600.0,
+          600.0,
+          600.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true
+}

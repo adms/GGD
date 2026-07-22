@@ -1,0 +1,279 @@
+{
+  "id": "sela",
+  "name": "Sela, the Ember Sage",
+  "role": "mage",
+  "attackType": "ranged",
+  "modelKey": "champ.sela",
+  "missileSpeed": 22,
+  "attackDamagePoint": 0.3,
+  "baseStats": {
+    "maxHealth": 520,
+    "healthRegen": 1.2,
+    "maxMana": 400,
+    "manaRegen": 1.6,
+    "ad": 52,
+    "ap": 0,
+    "armor": 20,
+    "mr": 28,
+    "as": 0.65,
+    "ms": 6.6,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 11
+  },
+  "growth": {
+    "maxHealth": 90,
+    "healthRegen": 0.12,
+    "maxMana": 45,
+    "manaRegen": 0.16,
+    "ad": 3,
+    "armor": 4,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "sela.q",
+      "name": "Ember Bolt",
+      "slot": "Q",
+      "castType": "skillshot",
+      "maxRank": 5,
+      "cooldown": [
+        6,
+        5.5,
+        5,
+        4.5,
+        4
+      ],
+      "manaCost": [
+        50,
+        55,
+        60,
+        65,
+        70
+      ],
+      "range": 14,
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "sela.q.bolt",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "flat": 20,
+                "perRank": [
+                  60,
+                  95,
+                  130,
+                  165,
+                  200
+                ],
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 0.7
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "W": {
+      "id": "sela.w",
+      "name": "Cinder Ward",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 5,
+      "cooldown": [
+        16,
+        15,
+        14,
+        13,
+        12
+      ],
+      "manaCost": [
+        60,
+        65,
+        70,
+        75,
+        80
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "shield",
+          "amount": {
+            "flat": 40,
+            "perRank": [
+              40,
+              70,
+              100,
+              130,
+              160
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.5
+              }
+            ]
+          },
+          "duration": 3
+        },
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ap",
+              "op": "flat",
+              "value": 25
+            }
+          ],
+          "duration": 3
+        }
+      ],
+      "vfxKey": "fx.cinder-ward"
+    },
+    "E": {
+      "id": "sela.e",
+      "name": "Scorch Ring",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 5,
+      "cooldown": [
+        12,
+        11,
+        10,
+        9,
+        8
+      ],
+      "manaCost": [
+        70,
+        75,
+        80,
+        85,
+        90
+      ],
+      "range": 12,
+      "radius": 3,
+      "targetsEnemies": true,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "flat": 40,
+            "perRank": [
+              30,
+              60,
+              90,
+              120,
+              150
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.5
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow40",
+          "duration": 1.5,
+          "moveSpeedMult": 0.6
+        }
+      ],
+      "vfxKey": "fx.scorch-ring"
+    },
+    "R": {
+      "id": "sela.r",
+      "name": "Firestorm",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        110,
+        95,
+        80
+      ],
+      "manaCost": [
+        100,
+        100,
+        100
+      ],
+      "range": 10,
+      "radius": 5,
+      "targetsEnemies": true,
+      "castTimeSec": 0.5,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              200,
+              325,
+              450
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.9
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "burnstun",
+          "duration": 0.75,
+          "stun": true
+        }
+      ],
+      "vfxKey": "fx.firestorm"
+    }
+  },
+  "passive": {
+    "name": "Kindling",
+    "hooks": [
+      {
+        "on": "onAbilityHit",
+        "effects": [
+          {
+            "kind": "damage",
+            "damageType": "magic",
+            "amount": {
+              "flat": 12
+            }
+          }
+        ],
+        "internalCooldown": 2
+      }
+    ]
+  },
+  "skillOrder": [
+    "Q",
+    "E",
+    "W",
+    "R"
+  ],
+  "buildPriority": [
+    "ember-rod",
+    "ironhide-vest"
+  ],
+  "tags": [
+    "mage",
+    "burst",
+    "ranged"
+  ],
+  "schema": "champion@1"
+}

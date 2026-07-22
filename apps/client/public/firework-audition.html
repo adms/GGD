@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>煙火確認 — 勝利煙火 / 烤雞 (task #93)</title>
+<style>
+  :root { --bg:#07080c; --panel:#12161f; --line:#2a3145; --fg:#e8ecf6; --dim:#98a2bd;
+          --accent:#7dd3fc; --gold:#f0c674; }
+  * { box-sizing:border-box; }
+  html,body { margin:0; height:100%; }
+  body { background:var(--bg); color:var(--fg); overflow:hidden;
+         font:14px/1.55 -apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans TC",sans-serif; }
+  #view { position:fixed; inset:0; width:100%; height:100%; display:block; touch-action:none; }
+  .hud { position:fixed; z-index:2; background:rgba(14,18,28,.88); border:1px solid var(--line);
+         border-radius:10px; padding:12px 14px; backdrop-filter:blur(6px); }
+  #panel { top:14px; left:14px; max-width:340px; }
+  #panel h1 { margin:0 0 4px; font-size:16px; letter-spacing:.02em; }
+  #panel p { margin:6px 0 0; color:var(--dim); font-size:12.5px; }
+  .row { display:flex; gap:6px; flex-wrap:wrap; margin-top:9px; }
+  button { font:inherit; font-size:12.5px; color:var(--fg); background:#1d2334;
+           border:1px solid var(--line); border-radius:7px; padding:5px 10px; cursor:pointer; }
+  button:hover { border-color:var(--accent); }
+  button.gold { border-color:#6a5320; background:#2a2211; color:var(--gold); }
+  button.gold:hover { border-color:var(--gold); }
+  .lbl { color:var(--dim); font-size:11px; text-transform:uppercase; letter-spacing:.08em;
+         margin-top:12px; }
+  #stats { bottom:14px; left:14px; right:14px; font-variant-numeric:tabular-nums;
+           color:var(--dim); font-size:12px; }
+  #err { top:14px; left:14px; right:14px; max-width:660px; border-color:#7f2d2d;
+         background:#2a1212; display:none; }
+  code { background:#0009; padding:1px 5px; border-radius:4px; }
+  input[type=range] { width:100%; }
+</style>
+</head>
+<body>
+<canvas id="view"></canvas>
+
+<div id="err" class="hud">
+  <h1>載入失敗</h1>
+  <p id="errmsg"></p>
+  <p>這頁只在 <code>vite dev</code> 下可用（直接載入 <code>/src/vfx/*.ts</code>）。
+     請用 <code>pnpm --filter @ggd/client dev</code> 起 dev server 再開。</p>
+</div>
+
+<div id="panel" class="hud">
+  <h1>勝利煙火確認 <span style="color:var(--dim);font-size:12px">task #93</span></h1>
+  <p>真的 <code>ChickenFireworkFx</code> + 真的 <code>SmallFireworkFx</code>，
+     真的相機。這裡看到的就是打贏時看到的。</p>
+
+  <div class="lbl">第二階 — 吃雞（全螢幕烤雞）</div>
+  <div class="row">
+    <button class="gold" id="play-chicken">▶ 播放烤雞煙火</button>
+  </div>
+
+  <div class="lbl">凍結在某個時間點（截圖用）</div>
+  <div class="row" id="pins"></div>
+  <input type="range" id="scrub" min="0" max="4290" step="10" value="1400">
+
+  <div class="lbl">第一階 — 單局勝利（小煙火）</div>
+  <div class="row" id="rounds"></div>
+
+  <div class="lbl">畫面變暗</div>
+  <div class="row">
+    <input type="range" id="dim" min="0" max="100" step="1" value="0">
+  </div>
+</div>
+
+<div id="stats" class="hud"><span id="readout">—</span></div>
+
+<script type="module">
+const errBox = document.getElementById("err");
+const showErr = (m) => {
+  document.getElementById("errmsg").textContent = String(m);
+  errBox.style.display = "block";
+};
+window.addEventListener("error", (e) => showErr(e.message));
+
+try {
+  const { startFireworkAudition } = await import("/src/vfx/fireworkAudition.ts");
+  const h = startFireworkAudition(document.getElementById("view"));
+
+  document.getElementById("play-chicken").onclick = () => h.playChicken();
+
+  // the moments the acceptance criterion is judged at: mid-rise, just after
+  // the break, formation locked, deep in the hold, and mid-droop
+  const PINS = [
+    ["發射 300", 300],
+    ["炸開 +80", 700],
+    ["成形 950", 950],
+    ["定格 1400", 1400],
+    ["定格 2200", 2200],
+    ["下垂 2900", 2900],
+    ["消散 3600", 3600],
+  ];
+  const pinRow = document.getElementById("pins");
+  const scrub = document.getElementById("scrub");
+  for (const [label, ms] of PINS) {
+    const b = document.createElement("button");
+    b.textContent = label;
+    b.onclick = () => { h.pin(ms); scrub.value = String(ms); };
+    pinRow.appendChild(b);
+  }
+  const live = document.createElement("button");
+  live.textContent = "↺ 即時";
+  live.onclick = () => h.pin(null);
+  pinRow.appendChild(live);
+  scrub.oninput = () => h.pin(Number(scrub.value));
+
+  const roundRow = document.getElementById("rounds");
+  for (let r = 1; r <= 4; r++) {
+    const b = document.createElement("button");
+    b.textContent = `第 ${r} 局`;
+    b.onclick = () => h.playVolley(r);
+    roundRow.appendChild(b);
+  }
+
+  document.getElementById("dim").oninput = (e) => h.setDim(Number(e.target.value) / 100);
+
+  // URL drive, so a screenshot pass can address an exact frame:
+  //   ?t=1400          pin the formation at 1400 ms
+  //   ?t=1400&dim=85   ...over a darkened scene
+  const q = new URLSearchParams(location.search);
+  if (q.has("dim")) {
+    const d = Number(q.get("dim")) / 100;
+    h.setDim(d);
+    document.getElementById("dim").value = String(Number(q.get("dim")));
+  }
+  if (q.has("t")) {
+    const t = Number(q.get("t"));
+    h.pin(t);
+    scrub.value = String(t);
+  }
+  // ?step=1400          play on a frame-stepped clock, stop dead at 1400 ms
+  // ?volley=2&step=700  same, for a tier-1 round-win volley
+  // (the pinned clock cannot show the pooled particle layers at all, and a
+  //  wall-clock freeze is unreproducible on a slow renderer — see stepTo)
+  if (q.has("step")) {
+    h.stepTo(Number(q.get("step")), q.has("volley") ? Number(q.get("volley")) : undefined);
+  }
+  if (q.get("hud") === "0") {
+    document.getElementById("panel").style.display = "none";
+    document.getElementById("stats").style.display = "none";
+  }
+
+  const readout = document.getElementById("readout");
+  setInterval(() => { readout.textContent = h.readout(); }, 120);
+} catch (e) {
+  showErr(e && e.message ? e.message : e);
+}
+</script>
+</body>
+</html>

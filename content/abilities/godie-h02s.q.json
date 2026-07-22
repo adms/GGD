@@ -1,0 +1,33 @@
+{
+  "id": "godie-h02s.q",
+  "schema": "ability@1",
+  "name": "91-01 死亡之握",
+  "description": "[輔助]\n40秒冷卻時間\n\n駕馭周圍穢邪的能量以束縛萬物，將450距離內的目標吸引到死亡騎士面前，並強迫敵人攻擊死亡騎士，持續0.8秒。",
+  "slot": "Q",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    40.0,
+    40.0,
+    40.0,
+    40.0
+  ],
+  "manaCost": [
+    140.0,
+    180.0,
+    220.0,
+    260.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyStatus",
+      "statusId": "root",
+      "duration": 0.8,
+      "root": true
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "radius": 6.0,
+  "targetsEnemies": true
+}

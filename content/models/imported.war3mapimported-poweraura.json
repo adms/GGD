@@ -1,0 +1,15 @@
+{
+  "id": "imported.war3mapimported-poweraura",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/war3mapimported-poweraura.glb",
+  "scale": 0.2271,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Stand",
+    "attack": "Stand",
+    "cast": "Stand",
+    "hurt": "Stand",
+    "death": "Stand"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "id": "godie-hgam.r",
+  "name": "90-04 陽光烈焰",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n草系的強力招式之一，將陽光的能量慢慢聚集起來，累積成強烈的烈焰後發射，造成一直線上敵方部隊600+全能力總和*2傷害。",
+  "slot": "R",
+  "castType": "skillshot",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    200.0,
+    300.0,
+    400.0
+  ],
+  "range": 14.0,
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "imported.wave",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.cinder-ward",
+  "schema": "ability@1"
+}

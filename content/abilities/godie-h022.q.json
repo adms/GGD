@@ -1,0 +1,51 @@
+{
+  "id": "godie-h022.q",
+  "name": "82-01 雷之斧",
+  "description": "[主動攻擊]\n35秒冷卻時間\n\n雷之斧是涅吉。史普林。菲爾德父親的得意連續技之一，可以瞬間對250範圍內敵人造成210點傷害。",
+  "slot": "Q",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    35.0,
+    35.0,
+    35.0,
+    35.0
+  ],
+  "manaCost": [
+    70.0,
+    100.0,
+    130.0,
+    160.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          210.0,
+          300.0,
+          390.0,
+          480.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "burnstun",
+      "duration": 0.8,
+      "stun": true
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "radius": 3.67,
+  "schema": "ability@1"
+}

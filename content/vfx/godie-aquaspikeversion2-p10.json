@@ -1,0 +1,82 @@
+{
+  "id": "godie-aquaspikeversion2-p10",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.05,
+    "angleDeg": 7.5
+  },
+  "mode": "continuous",
+  "rate": 9.2,
+  "lifetimeSec": {
+    "min": 0.8,
+    "max": 0.8
+  },
+  "size": {
+    "start": 3.7,
+    "end": 19.335
+  },
+  "color": {
+    "start": [
+      0.416,
+      0.769,
+      1.0,
+      0.918
+    ],
+    "end": [
+      1.0,
+      1.0,
+      1.0,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        0.416,
+        0.769,
+        1.0,
+        0.918
+      ]
+    ],
+    [
+      0.4,
+      [
+        0.416,
+        0.769,
+        1.0,
+        0.588
+      ]
+    ],
+    [
+      1.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      3.7
+    ],
+    [
+      0.4,
+      9.138
+    ],
+    [
+      1,
+      19.335
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/light_02.png",
+  "speed": {
+    "min": 0.4834,
+    "max": 0.6278
+  }
+}

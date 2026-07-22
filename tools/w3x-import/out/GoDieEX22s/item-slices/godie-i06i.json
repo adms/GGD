@@ -1,0 +1,23 @@
+{
+  "contentId": "godie-i06i",
+  "nameZh": "炎神弩",
+  "gold": 7350,
+  "kind": "effect",
+  "description": "神器\r\n效能\r\n敏捷+20\r\n攻擊力+40\r\n額外(敏捷+敵我距離)*0.11穿刺傷害\r\n\r\n解說\r\n最近人口爆炸，天界感情部業績暴增，導致全球各部門的愛神邱比特出現腕關節炎等職業病症狀。有鑑於此，科技部研發了一批國產L65K2邱比特專用槍，減輕各部門邱比特手部負擔，唯時效性與準確性不佳，請多注意。",
+  "abilities": [
+    {
+      "rawcode": "A0L0",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A0HA",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    }
+  ]
+}

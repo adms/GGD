@@ -1,0 +1,36 @@
+{
+  "id": "godie-othr.e",
+  "name": "31-03 野性的呼喚",
+  "description": "[速度加成]\n60秒冷卻時間\n\n喚醒沉睡在血液中狼的野性，雖然攻擊速度上升50%和移動速度上升27%，但是將會受到額外攻擊20%傷害，持續9秒。",
+  "slot": "E",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    120.0,
+    180.0,
+    240.0,
+    300.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "flat",
+          "value": 0.4
+        }
+      ],
+      "duration": 9.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

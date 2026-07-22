@@ -1,0 +1,30 @@
+{
+  "id": "godie-ogld.ex",
+  "name": "72-002 億萬星殞落",
+  "description": "[主動攻擊]\n90秒冷卻時間\n\n黑人牙膏的最終能力，可以大範圍召喚流星進行攻擊，其規模毀天滅地，每秒造成大範圍廣域200點傷害，持續30秒。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    90.0
+  ],
+  "manaCost": [
+    600.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

@@ -1,0 +1,85 @@
+{
+  "id": "godie-lubu-p2",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.05,
+    "angleDeg": 63.5
+  },
+  "mode": "continuous",
+  "rate": 10.0,
+  "lifetimeSec": {
+    "min": 0.5,
+    "max": 0.5
+  },
+  "size": {
+    "start": 0.466,
+    "end": 0.466
+  },
+  "color": {
+    "start": [
+      0.0,
+      1.0,
+      0.0,
+      1.0
+    ],
+    "end": [
+      0.0,
+      0.247,
+      0.0,
+      1.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        0.0,
+        1.0,
+        0.0,
+        1.0
+      ]
+    ],
+    [
+      0.5,
+      [
+        0.0,
+        0.502,
+        0.0,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.0,
+        0.247,
+        0.0,
+        1.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.466
+    ],
+    [
+      0.5,
+      0.466
+    ],
+    [
+      1,
+      0.466
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/light_02.png",
+  "stretched": true,
+  "tailLength": 0.2,
+  "speed": {
+    "min": 8.1565,
+    "max": 8.6015
+  },
+  "anchorBone": "Bone_Root"
+}

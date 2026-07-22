@@ -1,0 +1,47 @@
+{
+  "id": "godie-hart.r",
+  "name": "01-04 超究武神霸斬",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n克勞德的奧義招式，連斬七次的超必殺攻擊，每一次斬擊皆造成極大傷害，總傷害630+力量*1點。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    170.0,
+    260.0,
+    350.0
+  ],
+  "range": 8.25,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          75.0,
+          75.0,
+          75.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.338
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "root",
+      "duration": 3.0,
+      "root": true
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

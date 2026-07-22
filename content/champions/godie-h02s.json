@@ -1,0 +1,204 @@
+{
+  "id": "godie-h02s",
+  "schema": "champion@1",
+  "name": "死亡騎士",
+  "description": "故事：\n詳情請參考巫妖電視王-30秒說完巫妖王歷史。\n(出自:WarCraft)\n\n推薦玩家 : 逼戰殺人\n上手度 : 中\n\n角色成長：\n力量 + 2.70\n敏捷 + 1.50\n智慧 + 1.80\n基礎跑速 315\n\n可學習的技能：\n死亡之握、疫病、碎心打擊、血魄暴噬",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "champ.thorne",
+  "baseStats": {
+    "maxHealth": 620,
+    "healthRegen": 1.5,
+    "maxMana": 292,
+    "manaRegen": 1.44,
+    "ad": 35,
+    "ap": 0,
+    "armor": 7,
+    "mr": 28,
+    "as": 0.53,
+    "ms": 5.9,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 36,
+    "healthRegen": 0.09,
+    "maxMana": 22,
+    "manaRegen": 0.07,
+    "ad": 1.8,
+    "armor": 0.5,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-h02s.q",
+      "name": "91-01 死亡之握",
+      "description": "[輔助]\n40秒冷卻時間\n\n駕馭周圍穢邪的能量以束縛萬物，將450距離內的目標吸引到死亡騎士面前，並強迫敵人攻擊死亡騎士，持續0.8秒。",
+      "slot": "Q",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        40.0,
+        40.0,
+        40.0,
+        40.0
+      ],
+      "manaCost": [
+        140.0,
+        180.0,
+        220.0,
+        260.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "root",
+          "duration": 0.8,
+          "root": true
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "radius": 6.0,
+      "targetsEnemies": true
+    },
+    "W": {
+      "id": "godie-h02s.w",
+      "name": "91-02 疫病",
+      "description": "[被動]\n0秒冷卻時間\n\n死騎掌握著各種疫病能力，能使敵人在痛苦中死亡。\nLV1：15%機率打出瘟疫打擊：使目標染上瘟疫，每秒損失30點生命，持續10秒。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": 20
+            }
+          ],
+          "duration": 8.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "E": {
+      "id": "godie-h02s.e",
+      "name": "91-03 碎心打擊",
+      "description": "[主動攻擊]\n45秒冷卻時間\n\n立即打擊目標與其周圍的盟友，對主要目標造成450點傷害，且周圍也會受到一半的傷害，並且降低部隊的移動與攻擊速度，持續2.5秒。主要目標身上每個疾病效果可使此攻擊額外造成75點的傷害。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        130.0,
+        170.0,
+        210.0,
+        250.0
+      ],
+      "range": 5.5,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              225.0,
+              300.0,
+              375.0,
+              450.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow40",
+          "duration": 1.5,
+          "moveSpeedMult": 0.6
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "radius": 3.67
+    },
+    "R": {
+      "id": "godie-h02s.r",
+      "name": "91-04 血魄暴噬",
+      "description": "[被動]\n0秒冷卻時間\n\n讓巫妖王在攻擊時給予敵人50點附加傷害。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "duration": 3.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin"
+  ],
+  "exAbility": "godie-h02s.ex"
+}

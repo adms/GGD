@@ -1,0 +1,23 @@
+{
+  "contentId": "godie-i068",
+  "nameZh": "瑪那寶石",
+  "gold": 1250,
+  "kind": "stat",
+  "description": "效能\r\n魔力+200\r\n\r\n解說\r\n這個烏鴉族的寶物傳說中擁有最閃亮純淨的能源。當烏鴉一族傾倒之後，黑龍族很快的四處收集這種美麗而威力強大的物品。",
+  "abilities": [
+    {
+      "rawcode": "A08D",
+      "name": "物品法力加成",
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "AImv",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    }
+  ]
+}

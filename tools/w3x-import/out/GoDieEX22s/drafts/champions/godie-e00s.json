@@ -1,0 +1,198 @@
+{
+  "id": "godie-e00s",
+  "schema": "champion@1",
+  "name": "白木老樹精 - 白木卡迪那",
+  "role": "marksman",
+  "attackType": "ranged",
+  "modelKey": "champ.sela",
+  "baseStats": {
+    "maxHealth": 480,
+    "healthRegen": 1.15,
+    "maxMana": 400,
+    "manaRegen": 1.8,
+    "ad": 29,
+    "ap": 0,
+    "armor": 6,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.5,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 11.0
+  },
+  "growth": {
+    "maxHealth": 37,
+    "healthRegen": 0.09,
+    "maxMana": 34,
+    "manaRegen": 0.11,
+    "ad": 1.1,
+    "armor": 0.3,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-e00s.q",
+      "name": "伸卡球",
+      "slot": "Q",
+      "castType": "skillshot",
+      "maxRank": 5,
+      "cooldown": [
+        35.0,
+        35.0,
+        35.0,
+        35.0,
+        35.0
+      ],
+      "manaCost": [
+        150.0,
+        210.0,
+        270.0,
+        270.0,
+        270.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.wave",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "perRank": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "W": {
+      "id": "godie-e00s.w",
+      "name": "大怒石",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "duration": 3.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "E": {
+      "id": "godie-e00s.e",
+      "name": "木束縛之術",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        100.0,
+        150.0,
+        150.0,
+        250.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "R": {
+      "id": "godie-e00s.r",
+      "name": "千年練成",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        70.0,
+        70.0,
+        70.0
+      ],
+      "manaCost": [
+        240.0,
+        420.0,
+        600.0
+      ],
+      "range": 14.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              75.0,
+              75.0,
+              75.0
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ]
+}

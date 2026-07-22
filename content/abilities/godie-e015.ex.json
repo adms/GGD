@@ -1,0 +1,30 @@
+{
+  "id": "godie-e015.ex",
+  "name": "94-002 歹戲拖棚",
+  "description": "[被動]\n0秒冷卻時間\n\n著名的台灣八點檔鄉土劇，總是能夠不斷編出新的狗血劇情來吸引婆婆媽媽的注意，隨便演個幾百集都不是問題，導致主要角色和觀眾疲憊不堪，為了解決這個現象，金居福要爆啦！！每一分鐘將增加金居福7點全能力，同時增加北斗爆橘拳及賣扣力量*5點傷害。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    120.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

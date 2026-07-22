@@ -1,0 +1,221 @@
+{
+  "id": "godie-u00k",
+  "schema": "champion@1",
+  "name": "邪惡意念集合體 - 死之王",
+  "description": "故事：\n所有邪惡的聚合體，從上古時代就誕生的惡魔，與飛鼠先生一戰後魂飛魄散，在此次戰役中被召喚回來。\n(出自:去死去死團的逆襲原創)\n\n角色成長：\n力量 + 1.00\n敏捷 + 2.00\n智慧 + 3.00\n基礎跑速 275\n\n可學習的技能：\n死亡隕落、靈魂吸取、厄夜靈魂、萬惡歸宗",
+  "role": "marksman",
+  "attackType": "ranged",
+  "modelKey": "champ.sela",
+  "baseStats": {
+    "maxHealth": 440,
+    "healthRegen": 1.05,
+    "maxMana": 388,
+    "manaRegen": 1.76,
+    "ad": 28,
+    "ap": 0,
+    "armor": 6,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.5,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 9.2
+  },
+  "growth": {
+    "maxHealth": 20,
+    "healthRegen": 0.05,
+    "maxMana": 36,
+    "manaRegen": 0.12,
+    "ad": 3.0,
+    "armor": 0.6,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-u00k.q",
+      "name": "71-01 死亡隕落",
+      "description": "[主動攻擊]\n45秒冷卻時間\n\n死之王可幻化成代表死亡的隕石造成敵方250點傷害。",
+      "slot": "Q",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        85.0,
+        135.0,
+        185.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              250.0,
+              400.0,
+              550.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "radius": 5.5
+    },
+    "W": {
+      "id": "godie-u00k.w",
+      "name": "71-02 靈魂吸取",
+      "description": "[被動]\n0秒冷卻時間\n\n死之王每次攻擊可造成部隊的靈魂凍結0.01秒，並於部隊死亡後20秒內增加死之王全能力1點(最高累計10次)。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "E": {
+      "id": "godie-u00k.e",
+      "name": "71-03 厄夜靈魂",
+      "description": "[主動攻擊]\n60秒冷卻時間\n抽取範圍內所有生命的泉源，造成生命8%傷害。\n\n夜間施展全地圖敵方移動速度降低",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        160.0,
+        320.0,
+        480.0,
+        640.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80.0,
+              160.0,
+              240.0,
+              320.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.96
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "R": {
+      "id": "godie-u00k.r",
+      "name": "71-04 萬惡歸宗",
+      "description": "[主動攻擊]\n60秒冷卻時間\n抽走附近敵我所有魔力，釋放出魔力總合乘上15%的魔法爆炸傷害。\n\n夜間施法傷害加成500",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        150.0,
+        250.0,
+        350.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.003
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin"
+  ],
+  "exAbility": "godie-u00k.ex"
+}

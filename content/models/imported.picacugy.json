@@ -1,0 +1,57 @@
+{
+  "id": "imported.picacugy",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/picacugy.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand 1",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Spell",
+    "hurt": "Stand 1",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Foot Left": {
+      "x": -0.076,
+      "y": 0.076,
+      "z": -0.2034
+    },
+    "Foot Right": {
+      "x": -0.076,
+      "y": 0.076,
+      "z": 0.2034
+    },
+    "Chest": {
+      "x": 0.0,
+      "y": 0.8555,
+      "z": -0.0
+    },
+    "Origin": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -0.0
+    },
+    "OverHead": {
+      "x": 0.0,
+      "y": 1.9962,
+      "z": -0.0
+    },
+    "Hand Left": {
+      "x": 0.3422,
+      "y": 0.5704,
+      "z": -0.0665
+    },
+    "Hand Right": {
+      "x": 0.0856,
+      "y": 0.5133,
+      "z": 0.1521
+    },
+    "Head": {
+      "x": 0.2091,
+      "y": 1.2167,
+      "z": -0.0
+    }
+  }
+}

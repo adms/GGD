@@ -1,0 +1,119 @@
+[
+  {
+    "id": "announcer-match-start",
+    "lang": "ja-JP",
+    "text": "ようこそ、アリーナへ！",
+    "out": "../assets/audio/announcer/retired-ja-kyoko/match-start.mp3",
+    "rate": 200,
+    "targetMeanDb": -15,
+    "peakCeilingDb": -1.5
+  },
+  {
+    "id": "announcer-round-start-1",
+    "lang": "ja-JP",
+    "text": "ラウンド、スタート！",
+    "out": "../assets/audio/announcer/retired-ja-kyoko/round-start-1.mp3",
+    "rate": 200,
+    "targetMeanDb": -15,
+    "peakCeilingDb": -1.5
+  },
+  {
+    "id": "announcer-round-start-2",
+    "lang": "ja-JP",
+    "text": "レディ、ファイト！",
+    "out": "../assets/audio/announcer/retired-ja-kyoko/round-start-2.mp3",
+    "rate": 200,
+    "targetMeanDb": -15,
+    "peakCeilingDb": -1.5
+  },
+  {
+    "id": "announcer-level-up-1",
+    "lang": "ja-JP",
+    "text": "レベルアップ！",
+    "out": "../assets/audio/announcer/retired-ja-kyoko/level-up-1.mp3",
+    "rate": 200,
+    "targetMeanDb": -15,
+    "peakCeilingDb": -1.5
+  },
+  {
+    "id": "announcer-level-up-2",
+    "lang": "ja-JP",
+    "text": "パワーアップ！",
+    "out": "../assets/audio/announcer/retired-ja-kyoko/level-up-2.mp3",
+    "rate": 200,
+    "targetMeanDb": -15,
+    "peakCeilingDb": -1.5
+  },
+  {
+    "id": "announcer-death-1",
+    "lang": "ja-JP",
+    "text": "ノックダウン！",
+    "out": "../assets/audio/announcer/retired-ja-kyoko/death-1.mp3",
+    "rate": 200,
+    "targetMeanDb": -15,
+    "peakCeilingDb": -1.5
+  },
+  {
+    "id": "announcer-death-2",
+    "lang": "ja-JP",
+    "text": "ケーオー！",
+    "out": "../assets/audio/announcer/retired-ja-kyoko/death-2.mp3",
+    "rate": 200,
+    "targetMeanDb": -15,
+    "peakCeilingDb": -1.5
+  },
+  {
+    "id": "announcer-death-3",
+    "lang": "ja-JP",
+    "text": "油断したね！",
+    "out": "../assets/audio/announcer/retired-ja-kyoko/death-3.mp3",
+    "rate": 200,
+    "targetMeanDb": -15,
+    "peakCeilingDb": -1.5
+  },
+  {
+    "id": "announcer-multi-kill-1",
+    "lang": "ja-JP",
+    "text": "連続撃破！",
+    "out": "../assets/audio/announcer/retired-ja-kyoko/multi-kill-1.mp3",
+    "rate": 200,
+    "targetMeanDb": -15,
+    "peakCeilingDb": -1.5
+  },
+  {
+    "id": "announcer-multi-kill-2",
+    "lang": "ja-JP",
+    "text": "大暴れ！",
+    "out": "../assets/audio/announcer/retired-ja-kyoko/multi-kill-2.mp3",
+    "rate": 200,
+    "targetMeanDb": -15,
+    "peakCeilingDb": -1.5
+  },
+  {
+    "id": "announcer-multi-kill-3",
+    "lang": "ja-JP",
+    "text": "誰にも止められない！",
+    "out": "../assets/audio/announcer/retired-ja-kyoko/multi-kill-3.mp3",
+    "rate": 200,
+    "targetMeanDb": -15,
+    "peakCeilingDb": -1.5
+  },
+  {
+    "id": "announcer-ally-slain",
+    "lang": "ja-JP",
+    "text": "味方のおつむ、確認したほうがいいかも！",
+    "out": "../assets/audio/announcer/retired-ja-kyoko/ally-slain.mp3",
+    "rate": 200,
+    "targetMeanDb": -15,
+    "peakCeilingDb": -1.5
+  },
+  {
+    "id": "announcer-ex-unlock",
+    "lang": "ja-JP",
+    "text": "イーエックス、解放！",
+    "out": "../assets/audio/announcer/retired-ja-kyoko/ex-unlock.mp3",
+    "rate": 200,
+    "targetMeanDb": -15,
+    "peakCeilingDb": -1.5
+  }
+]

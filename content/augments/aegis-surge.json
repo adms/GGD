@@ -1,0 +1,31 @@
+{
+  "id": "aegis-surge",
+  "schema": "augment@1",
+  "name": "Aegis Surge",
+  "description": "On ability cast, gain a shield for 8% max HP (3s cooldown).",
+  "tier": "prismatic",
+  "weight": 30,
+  "hooks": [
+    {
+      "on": "onAbilityCast",
+      "internalCooldown": 3,
+      "effects": [
+        {
+          "kind": "shield",
+          "amount": {
+            "ratios": [
+              {
+                "stat": "maxHealth",
+                "coeff": 0.08
+              }
+            ]
+          },
+          "duration": 2.5
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "defense"
+  ]
+}

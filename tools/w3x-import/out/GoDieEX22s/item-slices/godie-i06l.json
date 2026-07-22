@@ -1,0 +1,23 @@
+{
+  "contentId": "godie-i06l",
+  "nameZh": "生肉",
+  "gold": 150,
+  "kind": "effect",
+  "description": "效能\r\n可點選食用，慢慢回復225點生命和75點魔力\r\n\r\n解說\r\n食人巨魔最喜歡吃的生肉，拿去給他的話似乎會有好事情發生？",
+  "abilities": [
+    {
+      "rawcode": "AIp2",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {
+        "1": {
+          "1": 225.0
+        },
+        "2": {
+          "1": 75.0
+        }
+      }
+    }
+  ]
+}

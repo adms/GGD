@@ -1,0 +1,41 @@
+{
+  "id": "godie-hpal.r",
+  "name": "35-04 光牙",
+  "description": "[主動攻擊]\n55秒冷卻時間\n\n召喚光龍魔獸衝擊敵人，造成攻擊線地面部隊600點傷害。但是召喚魔獸將會消耗自身的生命力44%，消耗的生命力最多為925。\n\n(當佩跟八雲的距離小於300時，光牙附加(佩損失的血量*1.5)的傷害)",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    55.0,
+    55.0,
+    55.0
+  ],
+  "manaCost": [
+    100.0,
+    160.0,
+    220.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          600.0,
+          1000.0,
+          1400.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.cinder-ward",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

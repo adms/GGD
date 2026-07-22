@@ -1,0 +1,34 @@
+{
+  "id": "godie-h02z.r",
+  "schema": "ability@1",
+  "name": "91-04 血魄暴噬",
+  "description": "[被動]\n0秒冷卻時間\n\n讓巫妖王在攻擊時給予敵人50點附加傷害。",
+  "slot": "R",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    12.0,
+    12.0,
+    12.0
+  ],
+  "manaCost": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "flat",
+          "value": 0.25
+        }
+      ],
+      "duration": 3.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast"
+}

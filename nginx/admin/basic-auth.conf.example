@@ -1,0 +1,24 @@
+# nginx/admin/basic-auth.conf.example — OPTIONAL admin-console protection.
+#
+# The admin console (/admin/) is an OPERATOR tool. Locally and in the default
+# dev/prod charts it is reachable without extra auth (the base nginx.conf's
+# `include /etc/nginx/ggd-admin/*.conf;` matches nothing). To lock it down in a
+# real deployment, mount a *.conf file into /etc/nginx/ggd-admin/ — e.g. rename
+# this file to basic-auth.conf and provide an htpasswd file.
+#
+# PREFERRED: also (or instead) IP-allowlist /admin/ at your LB / ingress /
+# firewall — basic auth over the public internet is a weak second line.
+#
+# Example directives (they are valid inside the /admin/ location, where this
+# file is included):
+#
+#   auth_basic           "GGD Operations";
+#   auth_basic_user_file /etc/nginx/ggd-admin/htpasswd;
+#
+#   # or an IP allow-list:
+#   # allow 10.0.0.0/8;
+#   # allow 203.0.113.7;
+#   # deny  all;
+#
+# Generate the htpasswd file (bcrypt) with, e.g.:
+#   htpasswd -B -c htpasswd opsadmin

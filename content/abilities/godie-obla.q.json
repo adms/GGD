@@ -1,0 +1,47 @@
+{
+  "id": "godie-obla.q",
+  "name": "33-01 放山雞",
+  "description": "[召喚]\n25秒冷卻時間\n\n飼養1隻放山雞，這是一種充滿精力與致命性的食物。飼養放山雞在傷害敵人的同時，也會吃下目標的血肉，最後再孵化成兩隻健康滿點的飼養放山雞。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 5,
+  "cooldown": [
+    25.0,
+    25.0,
+    25.0,
+    25.0,
+    25.0
+  ],
+  "manaCost": [
+    35.0,
+    70.0,
+    105.0,
+    140.0,
+    140.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          80,
+          120,
+          160,
+          200,
+          240
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.72
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

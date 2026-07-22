@@ -1,0 +1,965 @@
+{
+ "summary": {
+  "total_statless": 97,
+  "by_category": {
+   "summon-active": 4,
+   "recipe": 55,
+   "active-ability": 17,
+   "no-ability": 21
+  },
+  "note": "item@1 has modifiers + passive(HookDef[]) but NO active slot; click-active items need an active-schema addition"
+ },
+ "items": [
+  {
+   "id": "godie-i001",
+   "rc": "I001",
+   "name": "出動怨念射手兵團",
+   "cat": "summon-active",
+   "abilities": [
+    "APra"
+   ],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i009",
+   "rc": "I009",
+   "name": "分手之鎚製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i00a",
+   "rc": "I00A",
+   "name": "刺針製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i00b",
+   "rc": "I00B",
+   "name": "失心匕首製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i00d",
+   "rc": "I00D",
+   "name": "出動戀愛戰士兵團",
+   "cat": "summon-active",
+   "abilities": [
+    "APra"
+   ],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i00e",
+   "rc": "I00E",
+   "name": "出動兄貴戰士兵團",
+   "cat": "summon-active",
+   "abilities": [
+    "APra"
+   ],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i00h",
+   "rc": "I00H",
+   "name": "風行天衣製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i00o",
+   "rc": "I00O",
+   "name": "金雞蛋",
+   "cat": "active-ability",
+   "abilities": [
+    "A02N"
+   ],
+   "bases": [
+    "AIgo"
+   ],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i00r",
+   "rc": "I00R",
+   "name": "山之書",
+   "cat": "active-ability",
+   "abilities": [
+    "A0E2"
+   ],
+   "bases": [
+    "ANrf"
+   ],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i00t",
+   "rc": "I00T",
+   "name": "風之書",
+   "cat": "active-ability",
+   "abilities": [
+    "A036"
+   ],
+   "bases": [
+    "APsa"
+   ],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i011",
+   "rc": "I011",
+   "name": "名刀-天狼製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i015",
+   "rc": "I015",
+   "name": "瑪那魔杖製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i017",
+   "rc": "I017",
+   "name": "祕銀鎖子甲製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i019",
+   "rc": "I019",
+   "name": "霸王槍製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i01a",
+   "rc": "I01A",
+   "name": "好像有毒的生肉",
+   "cat": "no-ability",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i01b",
+   "rc": "I01B",
+   "name": "林之書",
+   "cat": "active-ability",
+   "abilities": [
+    "A00U"
+   ],
+   "bases": [
+    "AIv1"
+   ],
+   "has_handler": true
+  },
+  {
+   "id": "godie-i01c",
+   "rc": "I01C",
+   "name": "火之書",
+   "cat": "active-ability",
+   "abilities": [
+    "A06E"
+   ],
+   "bases": [
+    "Awfb"
+   ],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i01e",
+   "rc": "I01E",
+   "name": "和道一文字製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i01h",
+   "rc": "I01H",
+   "name": "貫雷槍製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i01i",
+   "rc": "I01I",
+   "name": "雷神之鎚",
+   "cat": "active-ability",
+   "abilities": [
+    "A01M",
+    "A0AW"
+   ],
+   "bases": [
+    "AOeq",
+    "ANd1"
+   ],
+   "has_handler": true
+  },
+  {
+   "id": "godie-i01l",
+   "rc": "I01L",
+   "name": "雷神之鎚製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i01p",
+   "rc": "I01P",
+   "name": "聖誕之靴製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i01q",
+   "rc": "I01Q",
+   "name": "光魔杖製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i01r",
+   "rc": "I01R",
+   "name": "一克拉鑽戒製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i01t",
+   "rc": "I01T",
+   "name": "晨曦之光製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i01u",
+   "rc": "I01U",
+   "name": "伊娃之盾製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i01x",
+   "rc": "I01X",
+   "name": "思念的守護製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i01y",
+   "rc": "I01Y",
+   "name": "熾天使之弓製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i01z",
+   "rc": "I01Z",
+   "name": "八取武士刀製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i021",
+   "rc": "I021",
+   "name": "天叢雲劍製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i022",
+   "rc": "I022",
+   "name": "龍騎士之劍製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i023",
+   "rc": "I023",
+   "name": "妖刀村正製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i024",
+   "rc": "I024",
+   "name": "朗基努斯之槍製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i025",
+   "rc": "I025",
+   "name": "惡夢魔王碎片製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i026",
+   "rc": "I026",
+   "name": "雅典娜的驚嘆號製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i028",
+   "rc": "I028",
+   "name": "月神槍製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i029",
+   "rc": "I029",
+   "name": "斬龍刀製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i02a",
+   "rc": "I02A",
+   "name": "炎神弩製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i02b",
+   "rc": "I02B",
+   "name": "妖物碎殺牙製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i02c",
+   "rc": "I02C",
+   "name": "狂暴軒轅劍製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i02f",
+   "rc": "I02F",
+   "name": "死神裝束製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i02i",
+   "rc": "I02I",
+   "name": "泰坦之魂",
+   "cat": "no-ability",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i02j",
+   "rc": "I02J",
+   "name": "復仇之袍",
+   "cat": "active-ability",
+   "abilities": [
+    "A0XK"
+   ],
+   "bases": [
+    "ACah"
+   ],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i02l",
+   "rc": "I02L",
+   "name": "舊系服",
+   "cat": "no-ability",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i02m",
+   "rc": "I02M",
+   "name": "牛蒡男",
+   "cat": "no-ability",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i02n",
+   "rc": "I02N",
+   "name": "斯巴達圓盾",
+   "cat": "no-ability",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i02o",
+   "rc": "I02O",
+   "name": "空罐頭",
+   "cat": "no-ability",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i02q",
+   "rc": "I02Q",
+   "name": "澤之書",
+   "cat": "active-ability",
+   "abilities": [
+    "A0TE"
+   ],
+   "bases": [
+    "Arej"
+   ],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i02s",
+   "rc": "I02S",
+   "name": "奇蹟之墜製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i02t",
+   "rc": "I02T",
+   "name": "盾甲天書",
+   "cat": "active-ability",
+   "abilities": [
+    "A0JA"
+   ],
+   "bases": [
+    "Awrs"
+   ],
+   "has_handler": true
+  },
+  {
+   "id": "godie-i02u",
+   "rc": "I02U",
+   "name": "黑色魔書製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i02v",
+   "rc": "I02V",
+   "name": "黑核晶製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i02w",
+   "rc": "I02W",
+   "name": "靈魂魔石製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i02y",
+   "rc": "I02Y",
+   "name": "斬岩刃製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i02z",
+   "rc": "I02Z",
+   "name": "盾甲天書製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i030",
+   "rc": "I030",
+   "name": "黑色魔書",
+   "cat": "active-ability",
+   "abilities": [
+    "A0YJ"
+   ],
+   "bases": [
+    "AOeq"
+   ],
+   "has_handler": true
+  },
+  {
+   "id": "godie-i032",
+   "rc": "I032",
+   "name": "天生牙製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i036",
+   "rc": "I036",
+   "name": "嗜血邪書製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i037",
+   "rc": "I037",
+   "name": "隱密介紹信",
+   "cat": "no-ability",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i038",
+   "rc": "I038",
+   "name": "嗜血邪書",
+   "cat": "active-ability",
+   "abilities": [
+    "A0YZ"
+   ],
+   "bases": [
+    "ANcl"
+   ],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i03a",
+   "rc": "I03A",
+   "name": "幻之匕首製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i03e",
+   "rc": "I03E",
+   "name": "光明虎徹製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i03g",
+   "rc": "I03G",
+   "name": "甘豆腐之袍製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i03h",
+   "rc": "I03H",
+   "name": "天地崩裂魔杖",
+   "cat": "active-ability",
+   "abilities": [
+    "A03P"
+   ],
+   "bases": [
+    "ANin"
+   ],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i03i",
+   "rc": "I03I",
+   "name": "天地崩裂魔杖製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i03l",
+   "rc": "I03L",
+   "name": "我愛一條柴",
+   "cat": "active-ability",
+   "abilities": [
+    "A0C4"
+   ],
+   "bases": [
+    "Aeat"
+   ],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i03n",
+   "rc": "I03N",
+   "name": "餅乾",
+   "cat": "active-ability",
+   "abilities": [
+    "A0CW"
+   ],
+   "bases": [
+    "AIh2"
+   ],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i03o",
+   "rc": "I03O",
+   "name": "死之王長槍的碎片",
+   "cat": "no-ability",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i03p",
+   "rc": "I03P",
+   "name": "死之王意志的碎片",
+   "cat": "no-ability",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i03q",
+   "rc": "I03Q",
+   "name": "死之王神盾的碎片",
+   "cat": "no-ability",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i03x",
+   "rc": "I03X",
+   "name": "破甲槍製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i03z",
+   "rc": "I03Z",
+   "name": "螺旋劍製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i042",
+   "rc": "I042",
+   "name": "火閃電製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i044",
+   "rc": "I044",
+   "name": "寂靜刃 - 詠月製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i04a",
+   "rc": "I04A",
+   "name": "賢者之石製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i04c",
+   "rc": "I04C",
+   "name": "冰晶虎魄製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i04e",
+   "rc": "I04E",
+   "name": "冰晶虎魄 - 改製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i04g",
+   "rc": "I04G",
+   "name": "奇門遁甲製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i04h",
+   "rc": "I04H",
+   "name": "炎龍巨弩製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i04j",
+   "rc": "I04J",
+   "name": "金幣(寶箱)",
+   "cat": "active-ability",
+   "abilities": [
+    "A0O4"
+   ],
+   "bases": [
+    "AIgo"
+   ],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i04k",
+   "rc": "I04K",
+   "name": "厄夜鐮刀製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i04m",
+   "rc": "I04M",
+   "name": "殺豬刀製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i04y",
+   "rc": "I04Y",
+   "name": "兌換空罐頭",
+   "cat": "no-ability",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i051",
+   "rc": "I051",
+   "name": "兌換仙后座",
+   "cat": "no-ability",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i053",
+   "rc": "I053",
+   "name": "仙后座殘骸",
+   "cat": "no-ability",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i054",
+   "rc": "I054",
+   "name": "認領寵物",
+   "cat": "no-ability",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i055",
+   "rc": "I055",
+   "name": "兌換牛蒡男",
+   "cat": "no-ability",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i056",
+   "rc": "I056",
+   "name": "交換寵物",
+   "cat": "no-ability",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i059",
+   "rc": "I059",
+   "name": "兌換舊系服",
+   "cat": "no-ability",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i05a",
+   "rc": "I05A",
+   "name": "兌換泰坦之魂",
+   "cat": "no-ability",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i05e",
+   "rc": "I05E",
+   "name": "兌換斯巴達圓盾",
+   "cat": "no-ability",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i05g",
+   "rc": "I05G",
+   "name": "世界樹的果實",
+   "cat": "active-ability",
+   "abilities": [
+    "A0V8"
+   ],
+   "bases": [
+    "AIre"
+   ],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i05w",
+   "rc": "I05W",
+   "name": "觀音菩薩護身符",
+   "cat": "no-ability",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i05z",
+   "rc": "I05Z",
+   "name": "出動正義射手兵團",
+   "cat": "summon-active",
+   "abilities": [
+    "APra"
+   ],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i069",
+   "rc": "I069",
+   "name": "女神之淚製作書",
+   "cat": "recipe",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  },
+  {
+   "id": "godie-i06l",
+   "rc": "I06L",
+   "name": "生肉",
+   "cat": "active-ability",
+   "abilities": [
+    "AIp2"
+   ],
+   "bases": [
+    "AIp2"
+   ],
+   "has_handler": true
+  },
+  {
+   "id": "godie-i06m",
+   "rc": "I06M",
+   "name": "真知之石",
+   "cat": "no-ability",
+   "abilities": [],
+   "bases": [],
+   "has_handler": false
+  }
+ ]
+}

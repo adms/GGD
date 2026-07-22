@@ -1,0 +1,18 @@
+{
+  "id": "godie-i05v",
+  "schema": "item@1",
+  "name": "破壞王手套",
+  "description": "效能\n攻擊速度+15.4%\n\n解說\n穿戴手套打壞任何店內物品照價賠償。",
+  "cost": 300,
+  "tier": 1,
+  "modifiers": [
+    {
+      "stat": "as",
+      "op": "pctAdd",
+      "value": 0.154
+    }
+  ],
+  "tags": [
+    "wc3-import"
+  ]
+}

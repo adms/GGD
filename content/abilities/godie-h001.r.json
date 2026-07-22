@@ -1,0 +1,41 @@
+{
+  "id": "godie-h001.r",
+  "schema": "ability@1",
+  "name": "41-04 究極魔法流星雨",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n借用火龍巴拉卡斯之力，召喚出許多致命的流星隕石攻擊敵方，每顆隕石造成350點傷害，總共2顆隕石。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    230.0,
+    345.0,
+    460.0
+  ],
+  "range": 6.42,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          75.0,
+          75.0,
+          75.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.225
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true
+}

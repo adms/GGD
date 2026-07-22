@@ -1,0 +1,44 @@
+{
+  "id": "godie-orkn.e",
+  "name": "30-03 痴漢火焰",
+  "description": "[主動攻擊]\n30秒冷卻時間\n\n讓一個敵方單位身陷痴漢火焰之中，造成每秒16點的持續性的傷害，並使其無法施展法術、並降低攻擊力50%，持續7秒。",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    30.0,
+    30.0,
+    30.0,
+    30.0
+  ],
+  "manaCost": [
+    150.0,
+    175.0,
+    200.0,
+    225.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          16.0,
+          32.0,
+          48.0,
+          64.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.192
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.firestorm",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

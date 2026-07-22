@@ -1,0 +1,57 @@
+{
+  "id": "imported.lgcr",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/lgcr.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "stand ready",
+    "run": "walk",
+    "attack": "attack -1",
+    "cast": "spell",
+    "hurt": "stand",
+    "death": "death"
+  },
+  "attachPoints": {
+    "Foot Left": {
+      "x": 0.0549,
+      "y": 0.0,
+      "z": -0.1617
+    },
+    "Foot Right": {
+      "x": 0.0549,
+      "y": 0.0,
+      "z": 0.1617
+    },
+    "Head": {
+      "x": -0.0042,
+      "y": 1.4843,
+      "z": -0.0
+    },
+    "Hand Right": {
+      "x": -0.0138,
+      "y": 0.9022,
+      "z": 0.3713
+    },
+    "Hand Left": {
+      "x": -0.0138,
+      "y": 0.9022,
+      "z": -0.3713
+    },
+    "Chest": {
+      "x": -0.0042,
+      "y": 1.2362,
+      "z": -0.0
+    },
+    "Origin": {
+      "x": -0.0,
+      "y": 0.0,
+      "z": -0.0
+    },
+    "Overhead": {
+      "x": -0.0,
+      "y": 1.7124,
+      "z": -0.0
+    }
+  }
+}

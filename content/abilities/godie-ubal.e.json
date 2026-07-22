@@ -1,0 +1,44 @@
+{
+  "id": "godie-ubal.e",
+  "name": "37-02 黑核晶",
+  "description": "[主動攻擊]\n5秒冷卻時間\n\n黑核晶是長年埋在魔界地底深層的脈礦，吸收蘊藏了相當驚人的魔力，一旦被引爆釋放出來將會毀滅一切，範圍200內造成300點傷害 。\n\n戰場上最多出現7顆",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    5.0,
+    5.0,
+    5.0,
+    5.0
+  ],
+  "manaCost": [
+    100.0,
+    150.0,
+    200.0,
+    250.0
+  ],
+  "range": 7.33,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          80,
+          120,
+          160,
+          200
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

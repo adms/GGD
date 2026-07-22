@@ -1,0 +1,14 @@
+{
+  "name": "@ggd/tts-gen",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "tts-gen": "./src/generate.mjs"
+  },
+  "scripts": {
+    "gen": "node src/generate.mjs",
+    "build-champ-names": "node src/build-champ-names.mjs",
+    "typecheck": "node --check src/generate.mjs && node --check src/build-champ-names.mjs"
+  }
+}

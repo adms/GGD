@@ -1,0 +1,36 @@
+{
+  "id": "godie-e00t.q",
+  "schema": "ability@1",
+  "name": "66-01 靈體化",
+  "description": "[輔助]\n<A0I7,Cool1>秒冷卻時間\n\n貞子化為靈體隱藏身形<A0I7,Dur1>秒，同時增加移動速度<A0I7,DataB1,%>%，並且在這個狀態下第一次攻擊會造成額外<A0I7,DataC1>點傷害。",
+  "slot": "Q",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    20.0,
+    20.0,
+    20.0,
+    20.0
+  ],
+  "manaCost": [
+    56.0,
+    72.0,
+    88.0,
+    104.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ms",
+          "op": "pctAdd",
+          "value": 0.3
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast"
+}

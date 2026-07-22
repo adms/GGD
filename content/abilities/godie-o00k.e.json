@@ -1,0 +1,45 @@
+{
+  "id": "godie-o00k.e",
+  "name": "86-03 神鳴",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n皮卡娘大絕招之一，將雷電集中在手上，再放射出去，可造成前方一直線400點的傷害。",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    135.0,
+    220.0,
+    305.0,
+    390.0
+  ],
+  "range": 6.42,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          400.0,
+          650.0,
+          900.0,
+          1150.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "radius": 9.17
+}

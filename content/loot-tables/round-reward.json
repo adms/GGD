@@ -1,0 +1,22 @@
+{
+  "id": "round-reward",
+  "schema": "loot-table@1",
+  "entries": [
+    {
+      "itemId": "ember-rod",
+      "weight": 30
+    },
+    {
+      "itemId": "ironhide-vest",
+      "weight": 30
+    },
+    {
+      "itemId": "serrated-edge",
+      "weight": 25
+    },
+    {
+      "itemId": "swift-boots",
+      "weight": 15
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "contentId": "godie-i060",
+  "nameZh": "死之王的意志",
+  "gold": 7500,
+  "kind": "effect",
+  "description": "傳說\r\n技能冷卻時間：45秒\r\n效能\r\n死亡閃電，消去600魔力並給予等同傷害\r\n生命+960\r\n每秒回復生命+40\r\n\r\n解說\r\n傳說死之王曾經是一位喜歡搞笑的學生，隸屬於一個魔法學校；但是他卻殺了整個班級，原因竟然只是認為同學不喜歡她的冷笑話。",
+  "abilities": [
+    {
+      "rawcode": "A0B3",
+      "name": null,
+      "tooltip": "00-死之手指",
+      "description": null,
+      "dataColumns": {
+        "1": {
+          "1": 600.0
+        }
+      }
+    },
+    {
+      "rawcode": "A0H3",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A0E5",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    }
+  ]
+}

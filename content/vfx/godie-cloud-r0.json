@@ -1,0 +1,16 @@
+{
+  "id": "godie-cloud-r0",
+  "schema": "ribbon@1",
+  "texture": "assets/textures/particles/wc3/ribbonblur1.png",
+  "widthAbove": 0.7,
+  "widthBelow": 0.0,
+  "lifespanSec": 0.15,
+  "color": [
+    0.29,
+    0.302,
+    0.302,
+    1.0
+  ],
+  "blendMode": "additive",
+  "anchorBone": "Sword"
+}

@@ -1,0 +1,207 @@
+# tools/testrunner/suites.yaml — the suite registry (allow-list).
+#
+# One of the two sources of truth of the test harness (the other is
+# docs/todo/*.md). The runner ONLY executes commands declared here; the HTTP
+# API accepts suite/category ids, never commands. `cmd` is an argv array
+# executed directly via os/exec — there is NO shell, so no quoting/injection.
+#
+# Categories run in a fixed order (unit → integration → e2e → exception →
+# injection → security → vuln → determinism → regression); REGRESSION IS
+# ALWAYS LAST — hard-coded in the scheduler, not just in this file's layout.
+#
+# After all suites of a full run (mode=all), the runner automatically executes
+# the todo-check runtime gate (`pnpm todo:runtime <per-run coverage.ndjson>`)
+# as the very last step — AFTER regression — and folds the verdict into the
+# run-end event. See tools/testrunner/internal/runner/runner.go package doc.
+
+suites:
+  # ---------------------------------------------------------------- unit ----
+  - id: shared-unit
+    name: "packages/shared — sim + schema unit tests (vitest)"
+    category: unit
+    cwd: packages/shared
+    cmd: ["pnpm", "test"]
+    parallelSafe: true
+    enabled: true
+
+  - id: todo-check-unit
+    name: "tools/todo-check — gate parser/validator unit tests (vitest)"
+    category: unit
+    cwd: tools/todo-check
+    cmd: ["pnpm", "test"]
+    parallelSafe: true
+    enabled: true
+
+  - id: game-server-unit
+    name: "apps/game-server — match flow / driver seam / AI / HMAC (vitest)"
+    category: unit
+    cwd: apps/game-server
+    cmd: ["pnpm", "test"]
+    parallelSafe: true
+    enabled: true
+
+  - id: content-api-unit
+    name: "apps/content-api — CRUD validate/atomic-write/traversal (vitest)"
+    category: unit
+    cwd: apps/content-api
+    cmd: ["pnpm", "test"]
+    parallelSafe: true
+    enabled: true
+
+  - id: editor-unit
+    name: "apps/editor — zod form walker + preview store (vitest)"
+    category: unit
+    cwd: apps/editor
+    cmd: ["pnpm", "test"]
+    parallelSafe: true
+    enabled: true
+
+  - id: content-validate
+    name: "content/ JSON store — schema + referential integrity (contentValidate)"
+    category: integration
+    cwd: packages/shared
+    cmd: ["pnpm", "content:validate"]
+    parallelSafe: true
+    enabled: true
+
+  - id: dashboard-unit
+    name: "apps/test-dashboard — store logic smoke tests (vitest)"
+    category: unit
+    cwd: apps/test-dashboard
+    cmd: ["pnpm", "test"]
+    parallelSafe: true
+    enabled: true
+
+  - id: client-unit
+    name: "apps/client — prediction/interp/input-mapping/voxel-fallback/arch gate (vitest)"
+    category: unit
+    cwd: apps/client
+    cmd: ["pnpm", "test"]
+    parallelSafe: true
+    enabled: true
+
+  - id: admin-unit
+    name: "apps/admin — session/role guard + hub health/config + players/actions/announce (vitest)"
+    category: unit
+    cwd: apps/admin
+    cmd: ["pnpm", "test"]
+    parallelSafe: true
+    enabled: true
+
+  - id: w3x-import-unit
+    name: "tools/w3x-import — MPQ extract/explode + MDX→glTF + drafts (vitest→python)"
+    category: unit
+    cwd: tools/w3x-import
+    cmd: ["pnpm", "test"]
+    parallelSafe: true
+    enabled: true
+    comment: "shells python3 (mpyq+Pillow) against a synthetic fixture .w3x; skips fixture tests cleanly when python deps are missing"
+
+  - id: role-classify-unit
+    name: "tools/role-classify — champion role taxonomy: extraction + classifier (vitest)"
+    category: unit
+    cwd: tools/role-classify
+    cmd: ["pnpm", "test"]
+    parallelSafe: true
+    enabled: true
+    comment: "synthetic fixtures in a tmpdir, plus two read-only assertions over the real content/champions roster (calibration + role-is-not-attackType)"
+
+  - id: icon-gen-unit
+    name: "tools/icon-gen — planner drop-safety/determinism + runner money gates (vitest→python)"
+    category: unit
+    cwd: .
+    cmd: ["pnpm", "exec", "vitest", "run", "tools/icon-gen/test/icon-gen.test.ts"]
+    parallelSafe: true
+    enabled: true
+    comment: "cwd is the REPO ROOT, not tools/icon-gen: that tool deliberately has no package.json (see the import comment in its test), so there is no `pnpm test` to call there — vitest is invoked from the root by path. Shells python3 like w3x-import, but only for stdlib imports, so describe.runIf(pyOk) effectively always runs."
+
+  - id: todo-static-gate
+    name: "todo-check --static — every TODO item has unique id + test_id"
+    category: unit
+    cwd: .
+    cmd: ["pnpm", "todo:check"]
+    parallelSafe: true
+    enabled: true
+
+  - id: testrunner-go-unit
+    name: "tools/testrunner — scheduler/config/api/runner unit tests (go test)"
+    category: unit
+    cwd: tools/testrunner
+    cmd:
+      [
+        "go", "test",
+        "./internal/api/...",
+        "./internal/config/...",
+        "./internal/coverage/...",
+        "./internal/runner/...",
+        "./internal/scheduler/...",
+      ]
+    parallelSafe: true
+    enabled: true
+
+  - id: platform-go
+    name: "apps/platform — Go unit+integration tests (go test ./...)"
+    category: unit
+    cwd: apps/platform
+    cmd: ["go", "test", "./..."]
+    parallelSafe: true
+    enabled: true
+    comment: "requires Go >= 1.25 (module toolchain); uses miniredis, no external services"
+
+  # --------------------------------------------------------- integration ----
+  - id: infra-checks
+    name: "infra guards — helm render, single-writer, nginx config/routes/cache (go test)"
+    category: integration
+    cwd: tools/testrunner
+    cmd: ["go", "test", "-count=1", "./internal/infracheck/..."]
+    parallelSafe: false
+    enabled: true
+    comment: "uses helm (or dockerized helm) and docker; individual tests skip cleanly when tools are missing"
+
+  # ------------------------------------------------------------------ e2e ----
+  - id: playwright-e2e
+    name: "Playwright — register → friends → lobby → room → match → leaderboard"
+    category: e2e
+    cwd: .
+    cmd: ["pnpm", "exec", "playwright", "test"]
+    parallelSafe: false
+    enabled: false
+    comment: "placeholder: enable when the platform + client E2E slice lands (plan §Verification)"
+
+  # ----------------------------------------------------------------- vuln ----
+  - id: vuln-govulncheck
+    name: "govulncheck — Go dependency/vuln scan (platform + testrunner)"
+    category: vuln
+    cwd: tools/testrunner
+    cmd: ["govulncheck", "./..."]
+    parallelSafe: true
+    enabled: false
+    comment: "placeholder: enable once govulncheck is a pinned dev dependency in CI images"
+
+  - id: vuln-gosec
+    name: "gosec — Go static security analysis"
+    category: vuln
+    cwd: tools/testrunner
+    cmd: ["gosec", "./..."]
+    parallelSafe: true
+    enabled: false
+    comment: "placeholder: enable once gosec is installed in the CI image (SARIF output wiring TBD)"
+
+  - id: vuln-pnpm-audit
+    name: "pnpm audit — JS dependency advisories"
+    category: vuln
+    cwd: .
+    cmd: ["pnpm", "audit", "--audit-level", "high"]
+    parallelSafe: true
+    enabled: false
+    comment: "placeholder: enable once the workspace dependency set stabilizes (avoid red-herring failures mid-scaffold)"
+
+  # ------------------------------------------------------------ regression ----
+  - id: regression-golden
+    name: "regression — golden snapshots incl. TestRecovery_RedisWipedRebuildsFromJSON"
+    category: regression
+    cwd: apps/platform
+    cmd: ["go", "test", "-run", "TestRecovery", "./..."]
+    parallelSafe: false
+    enabled: false
+    comment: "placeholder: the scheduler pins this category last; enable when apps/platform recovery tests land"

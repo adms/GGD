@@ -1,0 +1,15 @@
+{
+  "id": "imported.darkraor",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/darkraor.glb",
+  "scale": 0.706,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "stand - 1",
+    "run": "stand - 1",
+    "attack": "stand - 1",
+    "cast": "stand - 1",
+    "hurt": "stand - 1",
+    "death": "Death"
+  }
+}

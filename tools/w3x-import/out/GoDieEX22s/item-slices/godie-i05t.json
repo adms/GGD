@@ -1,0 +1,16 @@
+{
+  "contentId": "godie-i05t",
+  "nameZh": "定情戒指",
+  "gold": 400,
+  "kind": "stat",
+  "description": "效能\r\n每秒回復生命+6\r\n\r\n解說\r\n號稱可以定情用的戒指，但常常出現在正妹的垃圾桶。",
+  "abilities": [
+    {
+      "rawcode": "A0RB",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    }
+  ]
+}

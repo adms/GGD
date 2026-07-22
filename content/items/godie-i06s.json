@@ -1,0 +1,39 @@
+{
+  "id": "godie-i06s",
+  "schema": "item@1",
+  "name": "龍騎士之劍",
+  "description": "武器\n效能\n攻擊力+34.5\n裝甲+3.4\n攻擊速度+23%\n17.2%機率造成2.037倍傷害\n\n解說\n佩帶這把龍騎士之劍雖然沒辦法真的當上龍騎士，但是帥氣會增加100點。",
+  "cost": 0,
+  "tier": 3,
+  "tags": [
+    "wc3-import"
+  ],
+  "modifiers": [
+    {
+      "stat": "armor",
+      "op": "flat",
+      "value": 3.4
+    },
+    {
+      "stat": "as",
+      "op": "pctAdd",
+      "value": 0.23
+    },
+    {
+      "stat": "ad",
+      "op": "flat",
+      "value": 34.5
+    },
+    {
+      "stat": "critChance",
+      "op": "flat",
+      "value": 0.172
+    },
+    {
+      "stat": "critDamage",
+      "op": "flat",
+      "value": 0.287
+    }
+  ],
+  "icon": "assets/icons/items/godie-i06s.png"
+}

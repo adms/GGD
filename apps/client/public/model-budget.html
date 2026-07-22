@@ -1,0 +1,743 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>模型預算 — 面數 / 貼圖 / 同畫面上限 (task #99)</title>
+<style>
+  :root {
+    --bg:#0c0e14; --panel:#151926; --panel2:#11151f; --line:#2a3145;
+    --fg:#e8ecf6; --dim:#98a2bd; --dim2:#6b7591;
+    --accent:#7dd3fc; --gold:#f0c674; --ok:#7bd88f; --warn:#f0c674; --over:#ff7b72;
+    --mono: ui-monospace, SFMono-Regular, Menlo, "Roboto Mono", monospace;
+  }
+  * { box-sizing:border-box; }
+  html,body { margin:0; }
+  body {
+    background:var(--bg); color:var(--fg);
+    font:14px/1.6 -apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans TC",sans-serif;
+    padding:0 0 80px;
+  }
+  a { color:var(--accent); }
+  .wrap { max-width:1360px; margin:0 auto; padding:0 18px; }
+  header { border-bottom:1px solid var(--line); background:linear-gradient(180deg,#141a29,#0c0e14); padding:26px 0 20px; margin-bottom:22px; }
+  h1 { margin:0 0 6px; font-size:22px; letter-spacing:.02em; }
+  h2 { font-size:16px; margin:34px 0 4px; letter-spacing:.02em; }
+  h2 .n { color:var(--dim2); font-family:var(--mono); font-size:12px; margin-right:8px; }
+  h3 { font-size:13px; margin:20px 0 6px; color:var(--gold); letter-spacing:.04em; }
+  p { margin:8px 0; color:var(--dim); max-width:78ch; }
+  p.lead { color:var(--fg); }
+  .sub { color:var(--dim2); font-size:12px; }
+  code, .mono { font-family:var(--mono); font-size:12px; }
+  code { background:#0009; padding:1px 5px; border-radius:4px; color:#cbd5f5; }
+  .panel { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:16px 18px; margin:14px 0; }
+  .grid { display:grid; gap:12px; }
+  .cards { grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); }
+  .pill { display:inline-block; padding:1px 8px; border-radius:999px; font-size:11px; font-weight:600;
+          letter-spacing:.04em; border:1px solid transparent; white-space:nowrap; }
+  .pill.ok   { color:var(--ok);   border-color:#2f5c3d; background:#132318; }
+  .pill.warn { color:var(--warn); border-color:#6b5522; background:#241d0e; }
+  .pill.over { color:var(--over); border-color:#6f2b2b; background:#2a1313; }
+  .pill.na   { color:var(--dim2); border-color:#2a3145; background:#141827; }
+  .banner { border-radius:12px; padding:16px 18px; border:1px solid; margin:6px 0 4px; }
+  .banner.good { border-color:#2f5c3d; background:#101d15; }
+  .banner.mixed { border-color:#6b5522; background:#1d1a10; }
+  .banner.stale { border-color:#7f2d2d; background:#2a1212; }
+  .banner b { color:var(--fg); }
+  .banner .files { font-family:var(--mono); font-size:11px; color:var(--dim); margin-top:8px; max-height:150px; overflow-y:auto; }
+  #stamp .pill { margin-left:8px; vertical-align:middle; }
+  table { border-collapse:collapse; width:100%; font-size:12.5px; }
+  th, td { padding:6px 9px; border-top:1px solid var(--line); text-align:left; vertical-align:top; }
+  th { color:var(--dim2); font-size:10px; letter-spacing:.09em; text-transform:uppercase; border-top:0;
+       position:sticky; top:0; background:var(--panel2); z-index:2; cursor:pointer; user-select:none; white-space:nowrap; }
+  th.no-sort { cursor:default; }
+  th.sorted::after { content:" ▾"; color:var(--accent); }
+  th.sorted.asc::after { content:" ▴"; }
+  td.num, th.num { text-align:right; font-family:var(--mono); }
+  tbody tr:hover { background:#1a2033; }
+  .tblwrap { overflow-x:auto; border:1px solid var(--line); border-radius:12px; background:var(--panel2); }
+  .bar { height:6px; border-radius:3px; background:#212739; position:relative; overflow:hidden; margin-top:4px; }
+  .bar > i { position:absolute; inset:0 auto 0 0; border-radius:3px; }
+  .bar > .warnmark { position:absolute; top:-2px; bottom:-2px; width:1px; background:var(--dim); opacity:.85; }
+  .metric { padding:9px 0; border-top:1px solid var(--line); }
+  .metric:first-of-type { border-top:0; }
+  .metric .top { display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
+  .metric .lbl { font-size:12px; color:var(--dim); }
+  .metric .val { font-family:var(--mono); font-size:13px; }
+  .metric .why { font-size:11px; color:var(--dim2); margin-top:5px; display:none; }
+  .metric.open .why { display:block; }
+  .toolbar { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:10px 0;
+             position:sticky; top:0; background:var(--bg); padding:10px 0; z-index:5; border-bottom:1px solid var(--line); }
+  input[type=search], select, button {
+    font:inherit; font-size:12.5px; color:var(--fg); background:#1d2334;
+    border:1px solid var(--line); border-radius:7px; padding:5px 10px;
+  }
+  input[type=search] { min-width:230px; }
+  button { cursor:pointer; }
+  button:hover { border-color:var(--accent); }
+  button[aria-pressed="true"] { background:#23507a; border-color:var(--accent); color:#fff; }
+  .used { color:var(--dim); font-size:11.5px; }
+  .used b { color:var(--fg); font-weight:600; }
+  .usedcol { max-width:340px; max-height:112px; overflow-y:auto; }
+  .usedcol .sub { white-space:normal; }
+  td { max-width:360px; }
+  details { margin:8px 0; }
+  summary { cursor:pointer; color:var(--accent); font-size:12.5px; }
+  .kv { display:grid; grid-template-columns:auto 1fr; gap:2px 14px; font-size:12px; }
+  .kv dt { color:var(--dim2); font-family:var(--mono); }
+  .kv dd { margin:0; }
+  .err { border-color:#7f2d2d; background:#2a1212; }
+  ul { color:var(--dim); max-width:78ch; }
+  li { margin:4px 0; }
+  .tag { font-size:10px; color:var(--dim2); border:1px solid var(--line); border-radius:4px; padding:0 5px; }
+  .flag { color:var(--over); }
+  footer { color:var(--dim2); font-size:11.5px; margin-top:40px; border-top:1px solid var(--line); padding-top:14px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>模型預算 — 面數、貼圖與<span style="color:var(--gold)">同一畫面</span>的上限</h1>
+    <p class="sub" id="stamp">載入量測報告中…</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+<div id="fatal" class="panel err" style="display:none">
+  <b>讀不到量測報告。</b>
+  <p>本頁不會憑空生數字。請先執行 <code>pnpm exec tsx tools/model-budget/emit_report.ts</code> 產生
+  <code>content/assets/model-budget/report.json</code>，並確認 <code>/content</code> 有被服務（dev 由 vite 直接掛 repo 的 content/）。</p>
+</div>
+
+<main id="app" style="display:none">
+
+  <!-- ── freshness: report vs the models on disk ──────────────────── -->
+  <div id="freshness"></div>
+
+  <!-- ── 0. verdict ─────────────────────────────────────────────── -->
+  <div id="verdict"></div>
+
+  <p class="lead">
+    這一頁的單位是<b>一個畫面</b>，不是整個 repo。全案 198 支 <code>.glb</code> 加起來 182,610 面
+    —— 那不是預算，那只是總和。真正會決定會不會掉幀的，是玩家盯著螢幕的那一瞬間<b>同時常駐</b>了什麼。
+    所以下面每一條線都掛在一個場景上，而每一條匯入閘門，都是那條場景線除以「這種資產最壞情況會同時出現幾份」。
+  </p>
+
+  <!-- ── 1. per-scene budgets ───────────────────────────────────── -->
+  <h2><span class="n">1</span>每個畫面的上限與警戒線</h2>
+  <p>
+    深色條 = 目前用量，細線 = 警戒線，條的滿格 = 上限。點任何一列可以展開<b>這條線是怎麼算出來的</b>。
+    戰鬥場景另外列出三種陣容：<b>最壞合法</b>（各軸各自取最壞的合法選角）、<b>中位</b>、<b>面數最輕</b>
+    —— 因為 12 個席次沒有「不可重複選角」的規則，同一支模型出現 12 份是合法的。
+  </p>
+  <div id="scenes" class="grid cards"></div>
+
+  <!-- ── 2. how the numbers were derived ────────────────────────── -->
+  <h2><span class="n">2</span>這些線是怎麼定出來的</h2>
+  <div class="panel">
+    <p class="lead" style="margin-top:0">兩個成本常數都來自這個專案自己的量測，不是教科書：</p>
+    <div id="costmodel"></div>
+    <h3>16.67 ms 怎麼分（戰鬥）</h3>
+    <div id="split"></div>
+    <p class="sub" id="derate"></p>
+  </div>
+
+  <!-- ── 3. import gates ────────────────────────────────────────── -->
+  <h2><span class="n">3</span>匯入閘門：超過這個數字就送離線批次優化</h2>
+  <p>
+    同一個面數，當英雄可以過、當 50 棵樹就不行 —— 因為閘門看的不是模型，是
+    <b>單份成本 × 最壞情況同時出現的份數</b>。貼圖一律以<b>像素邊長</b>設限，不用檔案大小：
+    25 張 1024² PNG 在磁碟上只有 384.6 KB，在 GPU 上是 133.33 MB，放大 355 倍，
+    用 MB 當閘門一個都攔不到。
+  </p>
+  <div id="gates"></div>
+
+  <!-- ── 4. the list ────────────────────────────────────────────── -->
+  <h2><span class="n">4</span>每一支模型：面數、貼圖、與<span style="color:var(--gold)">用在哪裡</span></h2>
+  <div class="toolbar">
+    <input type="search" id="q" placeholder="搜尋檔名 / 模型 id / 英雄名字…">
+    <select id="fgroup"></select>
+    <select id="frole"></select>
+    <select id="fverdict">
+      <option value="">全部狀態</option>
+      <option value="over">只看超線</option>
+      <option value="warn">只看警戒</option>
+      <option value="broken">只看壞掉的</option>
+      <option value="unused">只看沒人用的</option>
+    </select>
+    <button id="fship" aria-pressed="true">只看出貨資產</button>
+    <span class="sub" id="count"></span>
+  </div>
+  <div class="tblwrap">
+    <table id="models">
+      <thead><tr>
+        <th data-k="name">模型</th>
+        <th data-k="role">角色</th>
+        <th data-k="triangles" class="num">三角面</th>
+        <th data-k="vertices" class="num">頂點</th>
+        <th data-k="drawCalls" class="num">draw</th>
+        <th data-k="materials" class="num">材質</th>
+        <th data-k="maxTextureEdge" class="num">貼圖 px</th>
+        <th data-k="vramBytes" class="num">貼圖 VRAM</th>
+        <th data-k="textureBytes" class="num">貼圖檔</th>
+        <th data-k="animChannels" class="num">通道/幀</th>
+        <th data-k="fileBytes" class="num">檔案</th>
+        <th data-k="usedCount" class="no-sort">用在哪裡</th>
+        <th data-k="worst" class="no-sort">狀態</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- ── 5. broken ──────────────────────────────────────────────── -->
+  <h2><span class="n">5</span>壞掉的資產（不是便宜的資產）</h2>
+  <div id="broken"></div>
+
+  <!-- ── 6. what to do ──────────────────────────────────────────── -->
+  <h2><span class="n">6</span>超線之後做什麼</h2>
+  <div id="playbook"></div>
+
+  <footer id="foot"></footer>
+</main>
+</div>
+
+<script>
+const URLS = ["/content/assets/model-budget/report.json"];
+const MB = 1048576;
+const int = (n) => (n == null ? "—" : Math.round(n).toLocaleString("en-US"));
+const mb  = (n) => (n == null ? "—" : n >= MB ? (n / MB).toFixed(2) + " MB" : (n / 1024).toFixed(1) + " KB");
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const VC = { ok: "var(--ok)", warn: "var(--warn)", over: "var(--over)" };
+const VLABEL = { ok: "通過", warn: "警戒", over: "超線" };
+
+/** "3 分鐘前" / "2 小時前" / "5 天前" from an ISO timestamp. */
+function relAge(iso) {
+  const ms = Date.now() - Date.parse(iso);
+  if (!isFinite(ms)) return "時間不明";
+  const s = Math.round(ms / 1000);
+  if (s < 90) return `${Math.max(0, s)} 秒前`;
+  const m = Math.round(s / 60);
+  if (m < 90) return `${m} 分鐘前`;
+  const h = Math.round(m / 60);
+  if (h < 36) return `${h} 小時前`;
+  return `${Math.round(h / 24)} 天前`;
+}
+
+let R = null;
+
+/** one metric row inside a scene card: value, warn tick, limit, and the derivation */
+function metric(m) {
+  const frac = Math.min(1, m.value / m.limit);
+  const warnAt = Math.min(100, (m.warn / m.limit) * 100);
+  const v = m.verdict;
+  return `<div class="metric" onclick="this.classList.toggle('open')">
+    <div class="top">
+      <span class="lbl">${esc(m.label)}${m.overridden ? ' <span class="tag">本場景另訂</span>' : ""}</span>
+      <span class="val" style="color:${VC[v]}">${m.fmt(m.value)}
+        <span style="color:var(--dim2)"> / ${m.fmt(m.limit)}</span></span>
+    </div>
+    <div class="bar"><i style="width:${(frac * 100).toFixed(1)}%;background:${VC[v]}"></i>
+      <span class="warnmark" style="left:${warnAt}%"></span></div>
+    <div class="why">警戒線 ${m.fmt(m.warn)}．${esc(m.why)}</div>
+  </div>`;
+}
+
+function sceneCard(s) {
+  const fmtFor = (k) => (k === "vramBytes" ? mb : int);
+  const rows = s.limits
+    .map((l) =>
+      metric({
+        label: l.label,
+        value: s[l.key],
+        warn: l.warn,
+        limit: l.limit,
+        why: l.why,
+        overridden: l.overridden,
+        verdict: s.verdicts[l.key],
+        fmt: fmtFor(l.key),
+      }),
+    )
+    .join("");
+  const worst = Object.values(s.verdicts).includes("over")
+    ? "over"
+    : Object.values(s.verdicts).includes("warn")
+      ? "warn"
+      : "ok";
+  const variants = (s.variants || []).length
+    ? `<details><summary>其他陣容 (${s.variants.length})</summary>
+        <table><thead><tr><th class="no-sort">陣容</th><th class="num no-sort">面</th><th class="num no-sort">draw</th>
+        <th class="num no-sort">VRAM</th><th class="num no-sort">通道</th><th class="no-sort">狀態</th></tr></thead><tbody>
+        ${s.variants
+          .map(
+            (v) => `<tr><td>${esc(v.label)}</td><td class="num">${int(v.triangles)}</td>
+            <td class="num">${int(v.drawCalls)}</td><td class="num">${mb(v.vramBytes)}</td>
+            <td class="num">${int(v.animChannels)}</td>
+            <td>${Object.entries(v.verdicts)
+              .filter(([, x]) => x !== "ok")
+              .map(([k, x]) => `<span class="pill ${x}">${k}</span>`)
+              .join(" ") || '<span class="pill ok">全通過</span>'}</td></tr>`,
+          )
+          .join("")}
+        </tbody></table></details>`
+    : "";
+  const proc = (s.procedural || []).length
+    ? `<details><summary>程序生成的部分 (${s.procedural.length}) — 沒有任何匯入閘門看得到它們</summary>
+        <table><thead><tr><th class="no-sort">來源</th><th class="num no-sort">面</th><th class="num no-sort">mesh</th></tr></thead><tbody>
+        ${s.procedural
+          .map(
+            (p) =>
+              `<tr><td>${esc(p.label)}<div class="sub">${esc(p.note)}</div></td>
+               <td class="num">${int(p.triangles)}</td><td class="num">${int(p.meshes)}</td></tr>`,
+          )
+          .join("")}</tbody></table></details>`
+    : "";
+  const extras = [
+    s.extraDraws ? `<li>另計 ${s.extraDraws.count} 次 draw：${esc(s.extraDraws.why)}</li>` : "",
+    s.extraVram ? `<li>另計 ${mb(s.extraVram.bytes)} 貼圖：${esc(s.extraVram.why)}</li>` : "",
+  ].join("");
+  return `<div class="panel">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+      <b>${esc(s.label)}</b><span class="pill ${worst}">${VLABEL[worst]}</span>
+    </div>
+    <p class="sub" style="margin:6px 0 10px">${esc(s.note)}</p>
+    ${rows}
+    ${extras ? `<ul class="sub" style="margin:8px 0 0;padding-left:18px">${extras}</ul>` : ""}
+    ${variants}${proc}
+  </div>`;
+}
+
+function renderVerdict() {
+  const combat = R.screens.filter((s) => s.id.startsWith("combat-"));
+  const triOk = R.screens.every((s) => s.verdicts.triangles !== "over");
+  const worstTri = Math.max(...R.screens.map((s) => s.triangles));
+  const triLine = R.limits.find((l) => l.key === "triangles");
+  const overSet = new Set();
+  for (const s of R.screens)
+    for (const [k, v] of Object.entries(s.verdicts)) if (v === "over") overSet.add(k);
+  const shipping = R.models.filter((m) => m.shipping);
+  const overModels = shipping.filter((m) => Object.values(m.verdicts).includes("over"));
+  document.getElementById("verdict").innerHTML = `
+  <div class="banner ${triOk ? "good" : "mixed"}">
+    <b>先講結論：三角面數不是這個專案的瓶頸，而且差得很遠。</b>
+    最壞的一幀是 ${int(worstTri)} 面，上限 ${int(triLine.limit)}，用掉
+    ${((worstTri / triLine.limit) * 100).toFixed(0)}%。<b>沒有任何一個畫面在面數上超線，連警戒都沒碰到。</b>
+    如果只做一份面數預算然後宣布收工，那是把守衛放在沒有門的牆上。
+  </div>
+  <div class="banner mixed">
+    <b>真正踩線的是這三件事：</b>
+    <ul style="margin:6px 0 0">
+      <li><b>貼圖 VRAM</b> — 五個競技場有四個超線，而且<b>換誰上場都一樣超</b>，因為它跟選角無關：
+        25 支 <code>.glb</code> 各自內嵌了同一張 1024² 的 24 色調色盤，Babylon 逐支上傳，
+        一張 5.33 MB × 25 = 133.33 MB。<b>這是浪費，不是危險</b> —— 不會當掉，只是花了 6 倍冤枉錢。</li>
+      <li><b>draw call / mesh 數</b> — 只有在<b>替身陣容</b>下才超線（113 位英雄裡有 42 位穿著那 4 支 KayKit 替身，
+        所以 12 人全替身是合法的）。中位陣容下每一座競技場都過關，只有 godie 例外：
+        它用面數看是最便宜的一座（3,700），用 draw call 看是最貴的一座 —— 50 棵各 74 面的櫻花樹，
+        每棵帶著 1 根骨頭，於是 100 個無法 instance 的 draw call。</li>
+      <li><b>動畫 CPU</b> — 12 隻 KayKit = 1,476 個通道/幀，實測在 M5 Max 上就要 2.19 ms，
+        還沒畫任何一個像素。同樣 12 隻中位 imported 英雄只要 0.27 ms。<b>10 倍差距，而它們的面數只差 3.4 倍。</b></li>
+    </ul>
+  </div>
+  <p class="sub">
+    目前 ${shipping.length} 支出貨模型裡有 <b class="flag">${overModels.length}</b> 支超過匯入閘門、
+    ${shipping.filter((m) => !Object.values(m.verdicts).includes("over") && Object.values(m.verdicts).includes("warn")).length} 支在警戒帶、
+    <b class="flag">${R.totals.zeroGeometry}</b> 支零幾何（壞的）、
+    <b>${R.totals.unused}</b> 支沒有任何內容引用。
+  </p>`;
+}
+
+function renderCostModel() {
+  const rec = R.recorded;
+  document.getElementById("costmodel").innerHTML = `
+    <dl class="kv">
+      <dt>c_mesh</dt><dd>0.0083 ms / 每個常駐 mesh —— 取自 #80 的 A/B：同一個場景 279 個 mesh 是 p50 5.6 ms、713 個是 9.2 ms，兩點連線。</dd>
+      <dt>c_chan</dt><dd>0.00148 ms / 每幀每個動畫通道 —— 取自 #99 的 runtime 量測：12 隻 KayKit = 1,476 通道 = 2.19 ms（NullEngine，Apple M5 Max）。</dd>
+    </dl>
+    <h3>同一支量測工具跑出來的四組對照（${esc(rec.animCpu.method)}）</h3>
+    <div class="tblwrap"><table><thead><tr><th class="no-sort">情境</th><th class="num no-sort">p50 幀時間</th></tr></thead><tbody>
+    ${rec.animCpu.samples.map((s) => `<tr><td>${esc(s.label)}</td><td class="num">${s.ms.toFixed(2)} ms</td></tr>`).join("")}
+    </tbody></table></div>
+    <p class="sub">注意第二列：<code>ClipAnimator</code> 對每一個 clip 的每一條 animation 都設了
+    <code>enableBlending = true</code>（12 隻 KayKit 共 104,544 個），把同一幀的成本從 1.00 ms 推到 2.19 ms。
+    這是一行程式碼的差別，不是資產的差別。</p>
+    <h3>錐體剔除之後真正送出去的 draw（${esc(rec.culling.method)}）</h3>
+    <div class="tblwrap"><table><thead><tr><th class="no-sort">相機距離</th><th class="num no-sort">godie</th><th class="num no-sort">dota</th></tr></thead><tbody>
+    ${rec.culling.combat.map((c) => `<tr><td>${esc(c.at)}</td><td class="num">${c.godie}</td><td class="num">${c.dota}</td></tr>`).join("")}
+    </tbody></table></div>
+    <p class="sub">預設相機在 dolly 10（#31 的最近距離），活著時最遠 40，死亡觀戰最遠 90。
+    上面的預算用的是<b>常駐數</b>而不是剔除後的數字 —— 因為 Babylon 每一幀仍然要走訪每一個常駐 mesh 才知道要不要剔除它。</p>`;
+
+  document.getElementById("split").innerHTML = `<div class="tblwrap"><table>
+    <thead><tr><th class="no-sort">用途</th><th class="num no-sort">ms</th><th class="no-sort">有沒有畫線</th></tr></thead><tbody>
+    ${R.frameSplit
+      .map(
+        (s) =>
+          `<tr><td>${esc(s.slice)}</td><td class="num">${s.ms.toFixed(2)}</td><td>${
+            s.budgeted ? '<span class="pill ok">有</span>' : '<span class="pill na">沒有（只是記帳）</span>'
+          }</td></tr>`,
+      )
+      .join("")}</tbody></table></div>`;
+
+  document.getElementById("derate").innerHTML =
+    "唯一的<b>假設</b>：目標裝置的單執行緒速度比量測機器慢 3 倍。兩個成本常數都是在開發機上量的，" +
+    "而 client 有 mobile 畫質層、目標是 iPhone 上 60 fps（<code>render/RenderConfig.ts</code>）。" +
+    "這個 3 倍是整頁唯一沒有量測支撐的數字，所以它被單獨放在 <code>tools/model-budget/limits.ts</code> 的一行上：" +
+    "有人在真機上跑過 AdaptiveQuality 的量測之後，改那一行，所有的線就跟著動。";
+}
+
+function renderGates() {
+  document.getElementById("gates").innerHTML = `<div class="tblwrap"><table>
+    <thead><tr>
+      <th class="no-sort">資產角色</th><th class="num no-sort">最壞同時份數</th>
+      <th class="num no-sort">面數 警戒/上限</th><th class="num no-sort">draw 警戒/上限</th>
+      <th class="num no-sort">貼圖邊長 警戒/上限</th><th class="num no-sort">通道/幀 警戒/上限</th>
+    </tr></thead><tbody>
+    ${R.gates
+      .map(
+        (g) => `<tr>
+      <td><b>${esc(g.label)}</b><div class="sub">${esc(g.why)}</div></td>
+      <td class="num">${g.simultaneous}<div class="sub" style="text-align:left;font-family:inherit">${esc(g.simultaneousWhy)}</div></td>
+      <td class="num">${int(g.tris.warn)} / ${int(g.tris.limit)}</td>
+      <td class="num">${g.meshes.warn} / ${g.meshes.limit}</td>
+      <td class="num">${g.texEdge.warn}² / ${g.texEdge.limit}²</td>
+      <td class="num">${g.channels.warn} / ${g.channels.limit}</td>
+    </tr>`,
+      )
+      .join("")}
+    </tbody></table></div>
+    <p class="sub">「最壞同時份數」不是猜的：12 來自十二個席次而
+    champ select 與 <code>MatchRoom</code> 都沒有禁止重複選角；50 是 godie 的櫻花樹擺放數；
+    78 是中場 <code>grassRing()</code> 產生的草地數；2 是登入畫面的兩條龍。</p>`;
+}
+
+function renderBroken() {
+  const zero = R.models.filter((m) => m.broken === "zero-geometry");
+  const near = R.models.filter((m) => m.broken === "near-zero");
+  const nearCost = near.reduce((n, m) => n + m.drawCalls, 0);
+  const nearTris = near.reduce((n, m) => n + m.triangles, 0);
+  const nearMats = near.reduce((n, m) => n + m.materials, 0);
+  document.getElementById("broken").innerHTML = `<div class="panel">
+    <p class="lead" style="margin-top:0">
+      預算表最容易說的謊，是<b>獎勵一個什麼都沒畫的資產</b>。以下 ${zero.length + near.length} 支在任何
+      「面數越低越好」的排行榜上都會名列前茅，但它們不是便宜，它們是壞的。
+    </p>
+    <h3>零幾何 ${zero.length} 支 — mdx 粒子發射器一個都沒轉出來（#98）</h3>
+    <div class="tblwrap"><table><thead><tr><th class="no-sort">檔案</th><th class="num no-sort">primitive</th><th class="num no-sort">檔案大小</th><th class="no-sort">引用</th></tr></thead><tbody>
+    ${zero
+      .map(
+        (m) =>
+          `<tr><td class="mono">${esc(m.path.split("/").pop())}</td><td class="num">0</td>
+           <td class="num">${mb(m.fileBytes)}</td><td class="sub">${m.usedBy.length ? m.usedBy.map((u) => esc(u.label)).join("、") : "無"}</td></tr>`,
+      )
+      .join("")}</tbody></table></div>
+    <h3>近乎零幾何 ${near.length} 支 — 合計 ${int(nearTris)} 面，卻要 ${nearCost} 個 draw call 與 ${nearMats} 份材質</h3>
+    <p class="sub">
+      這才是重點：${int(nearTris)} 面在面數預算裡是四捨五入的誤差，但 ${nearCost} 個 draw call 是
+      ${((nearCost / R.limits.find((l) => l.key === "drawCalls").limit) * 100).toFixed(0)}% 的整幀 draw 預算。
+      一個只看面數的閘門會給它們全數綠燈。
+    </p>
+    <p class="sub">${near.map((m) => `<code>${esc(m.path.split("/").pop())}</code> ${m.triangles}面/${m.drawCalls}draw`).join("　")}</p>
+    <h3>沒有任何內容引用的 ${R.totals.unused} 支</h3>
+    <p class="sub">它們不佔任何一幀的預算（不會被載入），但它們仍在出貨樹裡。這是 #79「294 個匯入特效沒有被任何技能引用」的另一面。</p>
+  </div>`;
+}
+
+function renderPlaybook() {
+  const knight = R.models.find((m) => m.path.endsWith("champions/knight.glb"));
+  const cherry = R.models.find((m) => m.path.endsWith("japanesecherry.glb"));
+  const dragon = R.models.find((m) => m.path.endsWith("dragon2.glb"));
+  document.getElementById("playbook").innerHTML = `<div class="panel">
+    <p class="lead" style="margin-top:0">超線的處理順序，由便宜到昂貴。<b>「減面」排在很後面</b>，因為面數幾乎從來不是超線的原因。</p>
+    <ol>
+      <li><b>合併共用同一份材質的 primitive</b>（零視覺變化，效果最大）。
+        <code>knight.glb</code> 是 ${knight ? knight.drawCalls : 15} 個獨立蒙皮 mesh，共用
+        <b>1 份材質、1 張 1024² 貼圖、1 副 ${knight ? knight.joints : 41} 關節骨架</b> —— 可以離線合成 1 個。
+        12 隻英雄就是 ${knight ? knight.drawCalls * 12 : 180} → 12 個 draw call，整幀省下
+        ${knight ? knight.drawCalls * 12 - 12 : 168} 個，面數一個都沒少。</li>
+      <li><b>把貼圖改成像素上限，不是壓縮率</b>。那 25 張 1024² 是 24 個色塊加兩條漸層（3,918 種顏色 / 1,048,576 像素）。
+        縮到 128² 資訊完全不損（縮放誤差平均 2.15/255，而且全部落在 UV 從不取樣的色塊邊界），
+        VRAM 從 5.33 MB → 83 KB，<b>一支省 64 倍</b>。這是整頁投報率最高的一刀。</li>
+      <li><b>刪掉沒有資訊的貼圖通道</b>。<code>dragon2.glb</code> 的 specularGlossiness 是 592 KB，
+        RGB 三個通道<b>恆等於 54，標準差 0.00</b> —— 那是一個材質常數被存成了一張 1024² 貼圖。
+        改成 <code>specularFactor</code> 加一張 128² 單通道 gloss，登入畫面 VRAM 從 ${dragon ? mb(dragon.vramBytes) : "21.33 MB"} 掉到約 11 MB。</li>
+      <li><b>拔掉沒有用的骨架</b>。<code>japanesecherry.glb</code> 是一棵 ${cherry ? cherry.triangles : 74} 面的樹，
+        帶著 1 根骨頭、1 個 clip。因為它是蒙皮的，Babylon <b>永遠</b>不會硬體 instance 它
+        （<code>assetContainer.js</code>：<code>node.skeleton ⇒ canInstance = false</code>），
+        於是 50 棵樹 = 100 個真 mesh + 50 副骨架 + 50 個 AnimationGroup。拔掉骨架 → 2 個 draw call。</li>
+      <li><b>減 clip，不是減面</b>。KayKit 的每個 clip 都是 41 關節 × 位移+旋轉+縮放 = 123 條通道，
+        而它有 76 個 clip（<code>clipMap</code> 只用到其中 6 個）。非 root 關節的位移與縮放軌幾乎都是常數，
+        離線烘掉就從 123 條降到 41 條左右。中位 imported 骨架只有 17 條。</li>
+      <li><b>開 instancing</b>。<code>ArenaScene.placeInstance</code> 沒有傳 options，而 Babylon 的
+        <code>instantiateModelsToScene</code> 預設 <code>doNotInstantiate: true</code>，
+        所以「已經 instance 了」這件事從來沒有發生過。靜態擺設傳 <code>false</code>：
+        godie 100 → 2、colosseum 64 → 8、dota 56 → 11、castle 36 → 10、skeleton 26 → 6。</li>
+      <li><b>減面 / LOD 拆分</b> —— 只有在前面六項都做完、而且面數真的超線時才做。以目前的資產來說，這一項永遠不會被觸發。</li>
+      <li><b>退回匯入</b>：零幾何、沒有任何引用、或單支超過閘門兩倍以上而又沒有人能說出它用在哪裡的，直接不要進樹。</li>
+    </ol>
+    <p class="sub">前四項都是<b>離線批次</b>可以做完的：解 glb → 合併 primitive / 縮貼圖 / 烘動畫 → 重新封裝，不動任何一行遊戲程式碼。</p>
+  </div>`;
+}
+
+/* ── the model table ─────────────────────────────────────────────── */
+let sortKey = "triangles", sortAsc = false, onlyShipping = true;
+
+function worstVerdict(m) {
+  const v = Object.values(m.verdicts);
+  if (!v.length) return "na";
+  return v.includes("over") ? "over" : v.includes("warn") ? "warn" : "ok";
+}
+
+function usedCell(m) {
+  if (!m.usedBy.length) return '<span class="pill na">沒人用</span>';
+  const body = m.usedBy
+    .map((u) => {
+      const where = u.kind.startsWith("COMBAT:") ? u.kind.replace("COMBAT:arena.", "") : u.kind;
+      const detail = u.detail ? `<div class="sub">${esc(u.detail)}</div>` : "";
+      return `<div class="used"><b>${esc(u.label)}</b> <span class="tag">${esc(where)}</span> ×${u.count}${detail}</div>`;
+    })
+    .join("");
+  return `<div class="usedcol">${body}</div>`;
+}
+
+function renderModels() {
+  const q = document.getElementById("q").value.trim().toLowerCase();
+  const g = document.getElementById("fgroup").value;
+  const role = document.getElementById("frole").value;
+  const fv = document.getElementById("fverdict").value;
+  let rows = R.models.filter((m) => {
+    if (onlyShipping && !m.shipping) return false;
+    if (g && m.group !== g) return false;
+    if (role && m.role !== role) return false;
+    if (fv === "broken" && !m.broken) return false;
+    if (fv === "unused" && m.usedBy.length) return false;
+    if ((fv === "over" || fv === "warn") && worstVerdict(m) !== fv) return false;
+    if (q) {
+      const hay = (m.path + " " + m.id + " " + m.usedBy.map((u) => u.detail + u.label).join(" ")).toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+  const key = sortKey;
+  rows.sort((a, b) => {
+    const va = key === "name" ? a.path : key === "role" ? a.role : a[key] ?? 0;
+    const vb = key === "name" ? b.path : key === "role" ? b.role : b[key] ?? 0;
+    const c = typeof va === "string" ? va.localeCompare(vb) : va - vb;
+    return sortAsc ? c : -c;
+  });
+  document.getElementById("count").textContent =
+    `${rows.length} 支 · 合計 ${int(rows.reduce((n, m) => n + m.triangles, 0))} 面 · ` +
+    `貼圖 VRAM ${mb(rows.reduce((n, m) => n + m.vramBytes, 0))}（各自上傳，不去重）`;
+  const tb = document.querySelector("#models tbody");
+  tb.innerHTML = rows
+    .map((m) => {
+      const v = worstVerdict(m);
+      const bad = Object.entries(m.verdicts).filter(([, x]) => x !== "ok");
+      const cell = (k, txt) => {
+        const x = m.verdicts[k];
+        return `<td class="num"${x && x !== "ok" ? ` style="color:${VC[x]}"` : ""}>${txt}</td>`;
+      };
+      return `<tr>
+      <td><span class="mono">${esc(m.path.replace("assets/models/", "").replace("assets/blizzard-local/models/", "overlay/"))}</span>
+        ${m.id !== m.path ? `<div class="sub">${esc(m.id)}</div>` : ""}
+        ${m.broken ? `<div class="sub flag">${m.broken === "zero-geometry" ? "零幾何 · 壞的" : "近乎零幾何 · 純開銷"}</div>` : ""}
+        ${m.note && !m.broken ? `<div class="sub">${esc(m.note)}</div>` : ""}</td>
+      <td>${esc(m.role)}${m.shipping ? "" : '<div class="sub">dev only</div>'}</td>
+      ${cell("triangles", int(m.triangles))}
+      <td class="num">${int(m.vertices)}</td>
+      ${cell("drawCalls", int(m.drawCalls))}
+      <td class="num">${int(m.materials)}</td>
+      ${cell("maxTextureEdge", m.maxTextureEdge ? m.maxTextureEdge + "²" : "—")}
+      <td class="num">${m.vramBytes ? mb(m.vramBytes) : "—"}</td>
+      <td class="num">${m.textureBytes ? mb(m.textureBytes) : "—"}</td>
+      ${cell("animChannels", int(m.animChannels))}
+      <td class="num">${mb(m.fileBytes)}</td>
+      <td>${usedCell(m)}</td>
+      <td><span class="pill ${v}">${v === "na" ? "無閘門" : VLABEL[v]}</span>
+        ${bad.length ? `<div class="sub">${bad.map(([k, x]) => `${k}:${VLABEL[x]}`).join("<br>")}</div>` : ""}</td>
+    </tr>`;
+    })
+    .join("");
+  document.querySelectorAll("#models th").forEach((th) => {
+    th.classList.toggle("sorted", th.dataset.k === sortKey);
+    th.classList.toggle("asc", th.dataset.k === sortKey && sortAsc);
+  });
+}
+
+/* ── freshness: does this report still match the models on disk? ───────────
+   A static page cannot stat the filesystem, so it asks the server the only
+   question a dumb static host can answer without shipping the whole file: for
+   every shipping .glb (and the content-served source indexes) it issues a HEAD
+   and compares the Content-Length the server reports NOW against the byte size
+   this report recorded when it measured that file. A model that was re-exported,
+   swapped in place, or deleted shifts that length (or 404s); a byte-for-byte
+   match means the numbers on this page still describe the bytes on disk.
+
+   Deliberately size + existence, never mtime: a deploy resets every file's
+   mtime to deploy time (which is always AFTER this report's generatedAt), so an
+   "older than the models" timestamp test would flag a correctly-deployed build
+   as stale on every prod load. Content-Length is invariant across that.
+
+   What this CANNOT see, stated on the page: source-CODE inputs (ArenaGround.ts,
+   layout.ts, limits.ts) are not HTTP-served, and a brand-new .glb that nothing
+   references yet is not in this report to be asked about. Both are caught by
+   re-running the generator / the CI `--check` ratchet, not by the browser. */
+async function headLen(u) {
+  try {
+    const r = await fetch(u, { method: "HEAD", cache: "no-store" });
+    const cl = r.headers.get("content-length");
+    return { status: r.status, len: cl == null ? null : Number(cl) };
+  } catch {
+    return { status: 0, len: null }; // network error — server unreachable, not proof of staleness
+  }
+}
+
+async function mapLimited(items, limit, fn) {
+  const out = new Array(items.length);
+  let i = 0;
+  const worker = async () => {
+    while (i < items.length) {
+      const k = i++;
+      out[k] = await fn(items[k]);
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, worker));
+  return out;
+}
+
+async function verifyFreshness(R, reportUrl) {
+  const chip = document.getElementById("freshchip");
+  const banner = document.getElementById("freshness");
+  const targets = [];
+  for (const m of R.models)
+    if (m.shipping && m.path.startsWith("assets/models/") && typeof m.fileBytes === "number")
+      targets.push({ url: "/content/" + m.path, bytes: m.fileBytes, label: m.path });
+  for (const s of R.sources || [])
+    if (typeof s.bytes === "number" && s.path.startsWith("content/"))
+      targets.push({ url: "/" + s.path, bytes: s.bytes, label: s.path });
+  if (!targets.length) { if (chip) chip.remove(); return; }
+
+  let done = 0;
+  const results = await mapLimited(targets, 12, async (t) => {
+    const h = await headLen(t.url);
+    done++;
+    if (chip && (done % 12 === 0 || done === targets.length)) chip.textContent = `核對資產 ${done}/${targets.length}…`;
+    return { ...t, ...h };
+  });
+
+  const changed = results.filter((r) => r.status === 200 && r.len != null && r.len !== r.bytes);
+  const missing = results.filter((r) => r.status === 404);
+  const unverified = results.filter(
+    (r) => !(r.status === 200 && r.len != null) && r.status !== 404,
+  );
+  const stale = [...missing.map((r) => ({ ...r, why: "伺服器上找不到（已刪除 / 搬移）" })),
+                 ...changed.map((r) => ({ ...r, why: `位元組 ${int(r.bytes)} → ${int(r.len)}` }))];
+  const verified = results.length - unverified.length;
+
+  if (stale.length) {
+    if (chip) { chip.className = "pill over"; chip.textContent = `報告已過期 · ${stale.length} 份不符`; }
+    banner.className = "banner stale";
+    banner.innerHTML =
+      `<b>這頁的數字已經過期 —— 別照著它做決定。</b>` +
+      ` 有 <b>${stale.length}</b> 份出貨資產在磁碟上跟報告量測時不一致` +
+      `（比對伺服器現在回報的 Content-Length 與報告記下的位元組大小）。` +
+      `請重新產生報告：<code>pnpm exec tsx tools/model-budget/emit_report.ts</code>，然後重新整理。` +
+      `<div class="files">` +
+      stale.map((r) => `${esc(r.label)} — ${esc(r.why)}`).join("<br>") +
+      `</div>`;
+  } else if (verified === 0) {
+    // every HEAD failed (no Content-Length, or server unreachable) — do NOT claim fresh
+    if (chip) { chip.className = "pill warn"; chip.textContent = "無法在檢視時核對資產"; }
+    banner.className = "banner mixed";
+    banner.innerHTML =
+      `<b>無法核對報告是否過期。</b> 伺服器沒有對這些資產回應可用的 Content-Length` +
+      `（可能是以 <code>file://</code> 開啟，或 <code>/content</code> 沒有被服務）。` +
+      `報告本身仍會顯示，但這一次無法向磁碟確認它是不是最新的。`;
+    banner.style.display = "";
+  } else if (unverified.length) {
+    if (chip) { chip.className = "pill warn"; chip.textContent = `已核對 ${verified}/${results.length} 份一致`; }
+    banner.className = "";
+    banner.innerHTML = "";
+  } else {
+    if (chip) { chip.className = "pill ok"; chip.textContent = `${verified} 份資產與報告一致`; }
+    banner.className = "";
+    banner.innerHTML = "";
+  }
+}
+
+function boot(rep, url) {
+  R = rep;
+  R.frameSplit = R.frameSplit || [
+    { slice: "mesh / draw submission", ms: 6.0, budgeted: true },
+    { slice: "skinned animation + Skeleton.prepare", ms: 3.0, budgeted: true },
+    { slice: "sim tick, netcode, interpolation, React HUD", ms: 3.0, budgeted: false },
+    { slice: "fill, particles, post-FX, compositing headroom", ms: 4.67, budgeted: false },
+  ];
+  document.getElementById("app").style.display = "";
+  document.getElementById("stamp").innerHTML =
+    `量測於 ${esc(R.generatedAt)}（${esc(relAge(R.generatedAt))}）` +
+    `<span id="freshchip" class="pill na">核對資產中…</span>　·　${esc(R.generatedBy)}　·　來源 <code>${esc(url)}</code><br>` +
+    `${R.totals.files} 支 .glb（出貨 ${R.totals.shipping}）· ${int(R.totals.triangles)} 面（出貨 ${int(R.totals.shippingTriangles)}）· ` +
+    `內嵌貼圖 ${mb(R.totals.textureBytes)} 磁碟 → ${mb(R.totals.vramBytes)} VRAM`;
+  renderVerdict();
+  document.getElementById("scenes").innerHTML = R.screens.map(sceneCard).join("");
+  renderCostModel();
+  renderGates();
+  renderBroken();
+  renderPlaybook();
+
+  const groups = [...new Set(R.models.map((m) => m.group))].sort();
+  document.getElementById("fgroup").innerHTML =
+    '<option value="">全部目錄</option>' + groups.map((g) => `<option>${esc(g)}</option>`).join("");
+  const roles = [...new Set(R.models.map((m) => m.role))].sort();
+  document.getElementById("frole").innerHTML =
+    '<option value="">全部角色</option>' + roles.map((g) => `<option>${esc(g)}</option>`).join("");
+
+  document.getElementById("q").addEventListener("input", renderModels);
+  for (const id of ["fgroup", "frole", "fverdict"]) document.getElementById(id).addEventListener("change", renderModels);
+  document.getElementById("fship").addEventListener("click", (e) => {
+    onlyShipping = !onlyShipping;
+    e.currentTarget.setAttribute("aria-pressed", String(onlyShipping));
+    e.currentTarget.textContent = onlyShipping ? "只看出貨資產" : "含本機 Blizzard 覆蓋層";
+    renderModels();
+  });
+  document.querySelectorAll("#models th").forEach((th) => {
+    if (th.classList.contains("no-sort")) return;
+    th.addEventListener("click", () => {
+      if (sortKey === th.dataset.k) sortAsc = !sortAsc;
+      else { sortKey = th.dataset.k; sortAsc = false; }
+      renderModels();
+    });
+  });
+  renderModels();
+
+  document.getElementById("foot").innerHTML =
+    `重新量測：<code>pnpm exec tsx tools/model-budget/emit_report.ts</code>　·　` +
+    `CI 擋線：加上 <code>--check</code>，任何場景超線就 exit 1。<br>` +
+    `預算本身在 <code>tools/model-budget/limits.ts</code> —— 每一條線都帶著它的推導。<br>` +
+    `<b>過期檢查</b>：本頁載入後會對每一支出貨 <code>.glb</code> 發 HEAD，比對伺服器現在回報的 Content-Length ` +
+    `與報告記下的位元組大小 —— 換過、原地覆蓋、或刪除的模型都會被抓到，上方標記會轉紅。` +
+    `（用位元組大小而非 mtime：部署會把所有檔案的 mtime 重設成部署時間，用「比模型舊」來判斷會把正確部署的版本誤判成過期。）` +
+    `它看不到的兩件事 —— 程式碼輸入（<code>ArenaGround.ts</code>、<code>layout.ts</code>、<code>limits.ts</code>）不經 HTTP，` +
+    `以及還沒有任何內容引用、因此不在這份報告裡的新 <code>.glb</code> —— 由重新產生報告 / CI <code>--check</code> 把關，不是瀏覽器。<br>` +
+    `報告依據的來源檔（sha256 前 16 碼）：` +
+    R.sources.map((s) => `<code>${esc(s.path)}</code> ${esc(s.sha256)}`).join("　·　");
+
+  verifyFreshness(R, url);
+}
+
+(async () => {
+  for (const u of URLS) {
+    try {
+      const res = await fetch(u, { cache: "no-store" });
+      if (!res.ok) continue;
+      const j = await res.json();
+      if (j && Array.isArray(j.models) && j.models.length) return boot(j, u);
+    } catch (e) { /* try the next candidate */ }
+  }
+  document.getElementById("fatal").style.display = "";
+})();
+</script>
+</body>
+</html>

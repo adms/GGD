@@ -1,0 +1,8 @@
+{
+  "id": "thorne.e.thorn",
+  "schema": "projectile@1",
+  "speed": 20,
+  "maxRange": 10,
+  "hitRadius": 0.45,
+  "vfxKey": "fx.thorn"
+}

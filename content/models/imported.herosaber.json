@@ -1,0 +1,62 @@
+{
+  "id": "imported.herosaber",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/herosaber.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Spell",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Foot Right": {
+      "x": 0.0554,
+      "y": 0.1599,
+      "z": 0.0807
+    },
+    "Foot Left": {
+      "x": 0.0554,
+      "y": 0.1599,
+      "z": -0.0828
+    },
+    "Hand Right": {
+      "x": -0.0187,
+      "y": 0.9148,
+      "z": 0.2347
+    },
+    "Hand Left": {
+      "x": -0.0187,
+      "y": 0.9148,
+      "z": -0.2366
+    },
+    "Head": {
+      "x": 0.0155,
+      "y": 1.7386,
+      "z": -0.0022
+    },
+    "Chest": {
+      "x": 0.0139,
+      "y": 1.1676,
+      "z": -0.0013
+    },
+    "Origin": {
+      "x": -0.0104,
+      "y": 0.1025,
+      "z": 0.0044
+    },
+    "OverHead": {
+      "x": -0.0104,
+      "y": 2.0356,
+      "z": 0.0044
+    },
+    "Weapon": {
+      "x": 0.7947,
+      "y": 0.8915,
+      "z": 0.2264
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "contentId": "godie-i027",
+  "nameZh": "光魔杖",
+  "gold": 6700,
+  "kind": "effect",
+  "description": "神器\r\n效能\r\n智慧+24\r\n攻擊力+30\r\n25%機率發出連鎖閃電，傷害185，最多6人\r\n\r\n解說\r\n只要巴恩手上拿著光魔杖，就會有源源不斷的魔力，可以將魔力轉換為攻擊力，號稱地上最強的武器。",
+  "abilities": [
+    {
+      "rawcode": "A086",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A0RK",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    }
+  ]
+}

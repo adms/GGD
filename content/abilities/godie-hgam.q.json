@@ -1,0 +1,42 @@
+{
+  "id": "godie-hgam.q",
+  "name": "90-01 飛葉快刀",
+  "description": "[主動攻擊]\n25秒冷卻時間\n\n發出飛快的葉子進行攻擊，每秒對附近的敵人造成100點傷害，持續2秒。",
+  "slot": "Q",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    25.0,
+    25.0,
+    25.0
+  ],
+  "manaCost": [
+    70.0,
+    120.0,
+    170.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          100.0,
+          200.0,
+          300.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.9
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "radius": 4.12,
+  "schema": "ability@1"
+}

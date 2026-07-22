@@ -1,0 +1,44 @@
+{
+  "id": "godie-ubal.w",
+  "name": "37-03 災難之牆",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n釋放一道火牆，對面前所有的敵人每秒造成450點的傷害，火牆持續3秒。",
+  "slot": "W",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    50.0,
+    40.0,
+    30.0
+  ],
+  "manaCost": [
+    350.0,
+    450.0,
+    550.0,
+    650.0
+  ],
+  "range": 9.17,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.003
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

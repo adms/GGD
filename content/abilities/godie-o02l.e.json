@@ -1,0 +1,50 @@
+{
+  "id": "godie-o02l.e",
+  "name": "58-03 就決定是你了!小智",
+  "description": "[主動傷害]\n60秒冷卻時間\n\n對著敵方的部隊投出皮卡丘痛恨已久的低能小智缺，造成350傷害之後還會將對方打昏0.5秒。",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    70.0,
+    120.0,
+    170.0,
+    220.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          350.0,
+          500.0,
+          650.0,
+          800.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "burnstun",
+      "duration": 0.5,
+      "stun": true
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

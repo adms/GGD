@@ -1,0 +1,44 @@
+{
+  "contentId": "godie-i018",
+  "nameZh": "朗基努斯之槍",
+  "gold": 8050,
+  "kind": "effect",
+  "description": "神器\r\n效能\r\n10%機率淨化(法球)\r\n力量、敏捷+15\r\n攻擊力+50\r\n機率性造成等同力量之閃電傷害(敏捷越高機率越高)\r\n\r\n解說\r\n據說是沾有神之血的傳說武器，無法判定是否為真品。",
+  "abilities": [
+    {
+      "rawcode": "AIlx",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {
+        "2": {
+          "1": 15.0
+        },
+        "4": {
+          "1": 15.0
+        }
+      }
+    },
+    {
+      "rawcode": "A0VM",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A0VL",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A0HP",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    }
+  ]
+}

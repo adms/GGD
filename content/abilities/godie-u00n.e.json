@@ -1,0 +1,43 @@
+{
+  "id": "godie-u00n.e",
+  "name": "76-03 伸縮自如的槍亂打",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n利用拳頭迅速的攻擊範圍400內敵人造成暈眩1.5秒及傷害500點。",
+  "slot": "E",
+  "castType": "skillshot",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    130.0,
+    160.0,
+    190.0,
+    220.0
+  ],
+  "range": 7.33,
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "imported.wave",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

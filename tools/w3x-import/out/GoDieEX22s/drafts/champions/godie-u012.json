@@ -1,0 +1,208 @@
+{
+  "id": "godie-u012",
+  "schema": "champion@1",
+  "name": "重金屬樂團的怪物 - 克勞薩II世",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "champ.sela",
+  "baseStats": {
+    "maxHealth": 580,
+    "healthRegen": 1.4,
+    "maxMana": 292,
+    "manaRegen": 1.44,
+    "ad": 26,
+    "ap": 0,
+    "armor": 6,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 56,
+    "healthRegen": 0.14,
+    "maxMana": 22,
+    "manaRegen": 0.07,
+    "ad": 1.8,
+    "armor": 0.4,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-u012.q",
+      "name": "惡魔球",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        25.0,
+        25.0,
+        25.0,
+        25.0
+      ],
+      "manaCost": [
+        60.0,
+        70.0,
+        80.0,
+        90.0
+      ],
+      "range": 7.33,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "perRank": [
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow40",
+          "duration": 1.0,
+          "moveSpeedMult": 0.6
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "W": {
+      "id": "godie-u012.w",
+      "name": "霸獸盔甲",
+      "slot": "W",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        20.0,
+        40.0,
+        60.0,
+        80.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.wave",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "perRank": [
+                  12.0,
+                  24.0,
+                  36.0,
+                  48.0
+                ]
+              }
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "burnstun",
+              "duration": 1.2,
+              "stun": true
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "E": {
+      "id": "godie-u012.e",
+      "name": "打屁股風林火豬",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              0.0,
+              0.0,
+              0.25,
+              0.25
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.firestorm",
+      "targetsEnemies": true
+    },
+    "R": {
+      "id": "godie-u012.r",
+      "name": "瘋狂怪物",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "shield",
+          "amount": {
+            "perRank": [
+              -1.0,
+              -1.0,
+              -1.0
+            ]
+          },
+          "duration": 5.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ]
+}

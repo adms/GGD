@@ -1,0 +1,15 @@
+{
+  "id": "imported.txbbb",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/txbbb.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Attack",
+    "hurt": "Stand",
+    "death": "Death"
+  }
+}

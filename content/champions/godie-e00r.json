@@ -1,0 +1,211 @@
+{
+  "id": "godie-e00r",
+  "schema": "champion@1",
+  "name": "最終泛用人型決戰兵器 - 初號機",
+  "description": "故事：\n『汎用人型決戰兵器』EVANGELION初號機，採用半生物機械的製造，因此雖然能力強大,但是不好控制。作業系統為[J-Win95]，因此很容易發生\"應用程式錯誤\"而失控暴走 。\n\n推薦玩家 : KUSO破塔\n上手度 : 難\n\n角色成長：\n力量 + 1.75\n敏捷 + 2.90\n智慧 + 1.55\n基礎跑速 300\n\n可學習的技能：\n吞噬、高震動周波短刀、AT力場、野戰型陽電子砲",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "champ.skin.rogue",
+  "baseStats": {
+    "maxHealth": 480,
+    "healthRegen": 1.15,
+    "maxMana": 292,
+    "manaRegen": 1.44,
+    "ad": 26,
+    "ap": 0,
+    "armor": 7,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 35,
+    "healthRegen": 0.09,
+    "maxMana": 19,
+    "manaRegen": 0.06,
+    "ad": 2.9,
+    "armor": 0.9,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-e00r.q",
+      "name": "59-01 吞噬",
+      "description": "[輔助]\n60秒冷卻時間\n\n啟動吞噬狀態可讓初號機攻擊力增加20點傷害，攻擊時獲得生命回饋15%，可持續9秒",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        50.0,
+        80.0,
+        110.0,
+        140.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "heal",
+          "amount": {
+            "perRank": [
+              20.0,
+              40.0,
+              60.0,
+              80.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.24
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": false
+    },
+    "W": {
+      "id": "godie-e00r.w",
+      "name": "59-02 高週波短刀",
+      "description": "[被動]\n0秒冷卻時間\n\n高週波短刀攻擊時有10%機率增加75點破壞力，並有機會將敵人擊昏0.5秒。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "duration": 3.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "E": {
+      "id": "godie-e00r.e",
+      "name": "59-03 AT力場",
+      "description": "[被動]\n0秒冷卻時間\n\n一個被稱為神的聖域的力場，有40%降低所有施加在初號機身上的傷害35點。",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": 20
+            }
+          ],
+          "duration": 8.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "R": {
+      "id": "godie-e00r.r",
+      "name": "59-04 野戰型陽電子砲",
+      "description": "[主動攻擊]\n75秒冷卻時間\n\n集中大量能源，以求一擊必殺的陽電子砲,能夠對前方一直線的敵人造成750點傷害。",
+      "slot": "R",
+      "castType": "skillshot",
+      "maxRank": 3,
+      "cooldown": [
+        75.0,
+        75.0,
+        75.0
+      ],
+      "manaCost": [
+        250.0,
+        400.0,
+        550.0
+      ],
+      "range": 8.25,
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.wave",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "perRank": [
+                  750.0,
+                  1200.0,
+                  1650.0
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin"
+  ],
+  "exAbility": "godie-e00r.ex",
+  "icon": "assets/icons/champions/godie-e00r.png",
+  "tint": [
+    0.3922,
+    0.3922,
+    0.3922
+  ]
+}

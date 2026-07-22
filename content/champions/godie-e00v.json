@@ -1,0 +1,226 @@
+{
+  "id": "godie-e00v",
+  "schema": "champion@1",
+  "name": "百畝森林的霸主 - 維尼",
+  "description": "故事：\n小熊維尼是百畝森林裡最受歡迎的動物，約有22吋高，純真可愛，雖然有點笨拙，但心地善良。最愛吃蜂蜜，有很多好朋友。\n(出自:小熊維尼)\n\n推薦玩家 : 輔助牽制\n上手度 : 中\n\n角色成長：\n力量 + 3.00\n敏捷 + 1.60\n智慧 + 1.40\n基礎跑速 300\n\n可學習的技能：\n冷笑話、百畝森林保齡球、太太~妳的蜂蜜流出來摟、給我蜂蜜",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "champ.skin.barbarian",
+  "baseStats": {
+    "maxHealth": 720,
+    "healthRegen": 1.75,
+    "maxMana": 292,
+    "manaRegen": 1.44,
+    "ad": 40,
+    "ap": 0,
+    "armor": 6,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 60,
+    "healthRegen": 0.15,
+    "maxMana": 17,
+    "manaRegen": 0.06,
+    "ad": 1.8,
+    "armor": 0.5,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-e00v.q",
+      "name": "84-01 冷笑話",
+      "description": "[輔助]\n15秒冷卻時間\n\n說一個冷笑話，使範圍600內的敵人都被冷到無法動彈，持續0.5秒。",
+      "slot": "Q",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        75.0,
+        115.0,
+        155.0,
+        195.0
+      ],
+      "range": 0.0,
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "burnstun",
+          "duration": 0.5,
+          "stun": true
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "radius": 6.0
+    },
+    "W": {
+      "id": "godie-e00v.w",
+      "name": "84-02 保齡球",
+      "description": "[主動攻擊]\n25秒冷卻時間\n\n百畝森林裡非常流行的遊戲，以飛快的速度迴旋衝撞，彈開路徑上所有的東西，但維尼常常忘記收爪子而傷到人，造成力量*2+150點傷害。如果撞到東西停下來的話生氣的維尼會把周圍部隊都彈開，並給予50點傷害",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        25.0,
+        25.0,
+        25.0,
+        0.5,
+        0.5
+      ],
+      "manaCost": [
+        120.0,
+        150.0,
+        180.0,
+        0.0,
+        0.0
+      ],
+      "range": 7.33,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              150.0,
+              250.0,
+              350.0,
+              450.0,
+              550.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "E": {
+      "id": "godie-e00v.e",
+      "name": "84-03 蜜汁",
+      "description": "[輔助]\n50秒冷卻時間\n\n出自好心提醒對方，但不知什麼原因卻會造成目標羞愧的說不出話而禁言，降低攻擊速度30%以及移動速度50%，並且每秒減少法力60點。持續3秒。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        50.0,
+        50.0,
+        50.0,
+        50.0
+      ],
+      "manaCost": [
+        125.0,
+        175.0,
+        225.0,
+        275.0
+      ],
+      "range": 6.42,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              60.0,
+              60.0,
+              60.0,
+              60.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.18
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "R": {
+      "id": "godie-e00v.r",
+      "name": "84-04 給我蜂蜜",
+      "description": "[主動攻擊]\n60秒冷卻時間\n\n抓狂的小熊狠狠地抓住對方，接著賞他幾個熊掌吃，每次打擊給予暈眩傷害，最後一擊會將對方彈開1000距離，造成總共500+力量*1點傷害。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        200.0,
+        300.0,
+        400.0
+      ],
+      "range": 6.42,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.005
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "burnstun",
+          "duration": 3.0,
+          "stun": true
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin"
+  ],
+  "exAbility": "godie-e00v.ex",
+  "tint": [
+    1.0,
+    0.7843,
+    0.0
+  ]
+}

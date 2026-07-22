@@ -1,0 +1,28 @@
+{
+  "name": "ggd",
+  "version": "0.0.0",
+  "private": true,
+  "description": "3v3v3v3 3D voxel arena MOBA — full-stack monorepo",
+  "packageManager": "pnpm@9.15.9",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "pnpm --parallel --filter @ggd/game-server --filter @ggd/client dev",
+    "dev:editor": "pnpm --parallel --filter @ggd/content-api --filter @ggd/editor dev",
+    "dev:all": "pnpm --parallel --filter @ggd/game-server --filter @ggd/client --filter @ggd/editor --filter @ggd/content-api --filter @ggd/admin dev",
+    "build": "pnpm -r --if-present build",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "test": "pnpm -r --if-present test",
+    "lint": "pnpm -r --if-present lint",
+    "todo:check": "tsx tools/todo-check/src/cli.ts --static",
+    "todo:runtime": "tsx tools/todo-check/src/cli.ts --runtime",
+    "content:build": "pnpm --filter @ggd/shared content:build",
+    "content:validate": "pnpm --filter @ggd/shared content:validate"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.4"
+  }
+}

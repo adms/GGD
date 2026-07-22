@@ -1,0 +1,230 @@
+{
+  "id": "godie-ekee",
+  "schema": "champion@1",
+  "name": "會叫的野獸 - 傳說中的大刀",
+  "description": "故事：\n出現於世界各地，汲汲營營、毀人不倦，通常手下都有大量的菸酒生可供使喚，特技是壓榨學生&奪取實驗成果，偶爾會參與政治鬥爭。\n(出自:學期末校園大刀傳說(誤))\n\n推薦玩家 : 怨念極大\n上手度 : 難\n\n角色成長：\n力量 + 1.50\n敏捷 + 2.90\n智慧 + 1.80\n基礎跑速 315\n\n可學習的技能：\n期末報告、抽點名、這次考試很簡單、you cannot pass!",
+  "role": "marksman",
+  "attackType": "ranged",
+  "modelKey": "champ.sela",
+  "attackDamagePoint": 0.5,
+  "baseStats": {
+    "maxHealth": 440,
+    "healthRegen": 1.15,
+    "maxMana": 388,
+    "manaRegen": 1.76,
+    "ad": 43,
+    "ap": 0,
+    "armor": 6,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.9,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 9.2
+  },
+  "growth": {
+    "maxHealth": 30,
+    "healthRegen": 0.08,
+    "maxMana": 35,
+    "manaRegen": 0.12,
+    "ad": 1.8,
+    "armor": 0.5,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-ekee.q",
+      "name": "93-01 期末報告",
+      "description": "[被動]\n0秒冷卻時間\n\n攻擊目標的同時要求他期末要繳交報告，並且強制把附近的人編成同一組，讓所有人每秒受到15點傷害，持續5秒。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              15.0,
+              25.0,
+              35.0,
+              45.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.135
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "icon": "assets/icons/abilities/godie-ekee.q.png"
+    },
+    "W": {
+      "id": "godie-ekee.w",
+      "name": "93-02 抽點名",
+      "description": "[被動]\n0秒冷卻時間\n\n點名是件很無聊的事，可是不點名學生又不來，所以叫獸們發明了隨機抽點，每過15秒就對600範圍內隨機一個敵人造成140點傷害。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": 20
+            }
+          ],
+          "duration": 8.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "E": {
+      "id": "godie-ekee.e",
+      "name": "93-03 這次考試很簡單",
+      "description": "[輔助]\n50秒冷卻時間\n\n小考的時候叫獸都會跟學生說考試很簡單，讓學生放鬆戒心，導致發生致命的錯誤，暫時抽取目標現有生命及瑪那值10%，並於8秒後歸還。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        50.0,
+        60.0,
+        70.0,
+        80.0
+      ],
+      "manaCost": [
+        200.0,
+        320.0,
+        440.0,
+        560.0
+      ],
+      "range": 9.17,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              100.0,
+              200.0,
+              300.0,
+              400.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow40",
+          "duration": 8.0,
+          "moveSpeedMult": 0.6
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "radius": 1.5
+    },
+    "R": {
+      "id": "godie-ekee.r",
+      "name": "93-04 當掉",
+      "description": "[主動攻擊]\n60秒冷卻時間\n\n威力滿點的宣言，對目標造成500點精神攻擊，並使其僵直2秒。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        300.0,
+        400.0,
+        500.0
+      ],
+      "range": 7.33,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              500.0,
+              800.0,
+              1100.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "burnstun",
+          "duration": 3.0,
+          "stun": true
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin"
+  ],
+  "exAbility": "godie-ekee.ex"
+}

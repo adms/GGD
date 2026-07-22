@@ -1,0 +1,227 @@
+{
+  "id": "godie-ubal",
+  "schema": "champion@1",
+  "name": "魔界霸主 - 巴恩大魔王",
+  "description": "故事：\n巴恩為了永恆年輕的肉體，將自己精神轉移到老頭子身上，並將年輕肉體封印起來，只在重要戰役才有機會再使用，但是老邁身軀仍然擁有深不可測的智慧和魔力...。\n(出自:神龍之謎)\n\n推薦玩家 : 破塔殺人\n上手度 : 難\n\n角色成長：\n力量 + 1.80\n敏捷 + 1.95\n智慧 + 2.55\n基礎跑速 295\n\n可學習的技能：\n凱薩之鷹、黑核晶、災難之牆、魔界之王",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "champ.skin.barbarian",
+  "baseStats": {
+    "maxHealth": 440,
+    "healthRegen": 1.05,
+    "maxMana": 412,
+    "manaRegen": 1.84,
+    "ad": 37,
+    "ap": 0,
+    "armor": 8,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.7,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 36,
+    "healthRegen": 0.09,
+    "maxMana": 31,
+    "manaRegen": 0.1,
+    "ad": 2.5,
+    "armor": 0.6,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-ubal.q",
+      "name": "37-01 凱薩之鷹",
+      "description": "[主動攻擊]\n15秒冷卻時間\n\n召喚魔界火焰形成像鷹一樣的灼熱衝擊波重創敵人，是巴恩的得意技，但是在老年姿態施展會有些慢，威力也相當程度的下降，造成一直線敵人220點傷害。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        75.0,
+        105.0,
+        135.0
+      ],
+      "range": 6.42,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              220.0,
+              340.0,
+              460.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "icon": "assets/icons/abilities/godie-ubal.q.png"
+    },
+    "W": {
+      "id": "godie-ubal.w",
+      "name": "37-03 災難之牆",
+      "description": "[主動攻擊]\n60秒冷卻時間\n\n釋放一道火牆，對面前所有的敵人每秒造成450點的傷害，火牆持續3秒。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        50.0,
+        40.0,
+        30.0
+      ],
+      "manaCost": [
+        350.0,
+        450.0,
+        550.0,
+        650.0
+      ],
+      "range": 9.17,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.003
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "E": {
+      "id": "godie-ubal.e",
+      "name": "37-02 黑核晶",
+      "description": "[主動攻擊]\n5秒冷卻時間\n\n黑核晶是長年埋在魔界地底深層的脈礦，吸收蘊藏了相當驚人的魔力，一旦被引爆釋放出來將會毀滅一切，範圍200內造成300點傷害 。\n\n戰場上最多出現7顆",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        5.0,
+        5.0,
+        5.0,
+        5.0
+      ],
+      "manaCost": [
+        100.0,
+        150.0,
+        200.0,
+        250.0
+      ],
+      "range": 7.33,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "R": {
+      "id": "godie-ubal.r",
+      "name": "37-04 魔界之王",
+      "description": "[輔助]\n90秒冷卻時間\n\n召喚巴恩大魔王封印的年輕肉體並將靈魂合而為一，隨著技能等級提升可以使用的招式也將變多，變身後各方面的能力也會隨著技能等級提升而上升，持續35秒。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        90.0,
+        90.0,
+        90.0
+      ],
+      "manaCost": [
+        60.0,
+        300.0,
+        450.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.48
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin"
+  ],
+  "exAbility": "godie-ubal.ex",
+  "icon": "assets/icons/champions/godie-ubal.png",
+  "tint": [
+    1.0,
+    0.7843,
+    0.7843
+  ]
+}

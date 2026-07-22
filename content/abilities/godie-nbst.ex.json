@@ -1,0 +1,39 @@
+{
+  "id": "godie-nbst.ex",
+  "name": "24-002 來~快點吃吧",
+  "description": "[主動攻擊]\n45秒冷卻時間\n\n瘋狂假面制裁壞蛋的最終奧義，把敵人夾入跨下持續5秒，每秒受到400點傷害。",
+  "slot": "EX",
+  "castType": "targeted",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    315.0
+  ],
+  "range": 5.29,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "flat": 300,
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.9
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow40",
+      "duration": 3.0,
+      "moveSpeedMult": 0.6
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1",
+  "targetsEnemies": true
+}

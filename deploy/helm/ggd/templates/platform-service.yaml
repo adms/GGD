@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-platform
+  labels:
+    {{- include "ggd.labels" . | nindent 4 }}
+    app.kubernetes.io/name: platform
+spec:
+  type: ClusterIP
+  selector:
+    {{- include "ggd.selector" (dict "root" . "name" "platform") | nindent 4 }}
+  ports:
+    - name: http
+      port: {{ .Values.platform.port }}
+      targetPort: http

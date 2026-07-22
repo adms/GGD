@@ -1,0 +1,30 @@
+{
+  "id": "godie-hblm.ex",
+  "name": "05-002 金色巨龍",
+  "description": "[強化]\n0秒冷卻時間\n\n獲得金色魔書的賈修，將獲得力量，每秒造成小範圍內部隊400點傷害，並可召喚金色巨龍，使用巴歐的力量攻擊敵人時，若目標尚未死亡將可發動金色巨龍，將目標吞噬，並將目標剩餘魔力轉為巨龍之攻擊力，換算公式為(目標剩餘魔力/50)*50，最高可額外增加450點攻擊力，巨龍將於場上存活30秒。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    120.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

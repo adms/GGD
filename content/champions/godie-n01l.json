@@ -1,0 +1,219 @@
+{
+  "id": "godie-n01l",
+  "schema": "champion@1",
+  "name": "學姊 - 小派",
+  "description": "故事：\n\n(出自:現實的人生)\n\n角色成長：\n力量 + 1.40\n敏捷 + 2.30\n智慧 + 2.30\n基礎跑速 320\n\n可學習的技能：\n理財的習慣、平易近人的笑容、從過去中學習、自在飛翔",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "champ.skin.rogue",
+  "baseStats": {
+    "maxHealth": 420,
+    "healthRegen": 1.0,
+    "maxMana": 340,
+    "manaRegen": 1.6,
+    "ad": 32,
+    "ap": 0,
+    "armor": 8,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 28,
+    "healthRegen": 0.07,
+    "maxMana": 28,
+    "manaRegen": 0.09,
+    "ad": 2.3,
+    "armor": 0.7,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-n01l.q",
+      "name": "98-01 理財的習慣",
+      "description": "[輔助]\n0秒冷卻時間\n\n身為學姊，會一些理財的方法來增加自身的積蓄也是合情合理的，每60秒增加自身金錢及原木量1%。",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "critChance",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "duration": 6.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "W": {
+      "id": "godie-n01l.w",
+      "name": "98-02 平易近人的笑容",
+      "description": "[靈氣]\n0秒冷卻時間\n\n學姊平易近人的笑容，足以振奮人心，提升自身及週遭友軍4%攻擊力，並每隔30秒恢復週遭友軍100點生命。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ad",
+              "op": "pctAdd",
+              "value": 0.04
+            }
+          ],
+          "duration": 12.0
+        },
+        {
+          "kind": "heal",
+          "amount": {
+            "perRank": [
+              100.0,
+              200.0,
+              300.0,
+              400.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "E": {
+      "id": "godie-n01l.e",
+      "name": "98-03 從過去中學習",
+      "description": "[被動]\n0秒冷卻時間\n\n年紀越大越會從過去的經驗中記取教訓，使自身更加成長，降低10%穿刺及法術傷害。",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "pctAdd",
+              "value": 0.1
+            },
+            {
+              "stat": "mr",
+              "op": "pctAdd",
+              "value": 0.1
+            }
+          ],
+          "duration": 12.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "R": {
+      "id": "godie-n01l.r",
+      "name": "98-04 自在飛翔",
+      "description": "[輔助]\n0秒冷卻時間\n\n自在走向自己的目標，宛如飛燕般令人捉摸不定，可以提升自身20%攻速及5%跑速；受傷時有10%機率產生分身混淆敵人視線，分身持續7秒。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 0.2
+            },
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "value": 0.05
+            }
+          ],
+          "duration": 12.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin"
+  ],
+  "exAbility": "godie-n01l.ex"
+}

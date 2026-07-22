@@ -1,0 +1,30 @@
+{
+  "id": "godie-h01n.ex",
+  "name": "79-002 虛化",
+  "description": "[輔助]\n60秒冷卻時間\n\n突破死神力量極限的一種技巧，可以藉此獲的更強大的力量，期間黑崎獲得100%攻擊力提昇，每秒回復60點生命，虛化後的硬皮可在受到攻擊時有30%的機率抵免傷害，持續15秒。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    500.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

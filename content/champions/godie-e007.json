@@ -1,0 +1,235 @@
+{
+  "id": "godie-e007",
+  "schema": "champion@1",
+  "name": "龍之子 - 天地志狼",
+  "description": "故事：\n本是平凡的國中二年級學生，因為母親項鍊的神奇力量來到三國時代，而被當做龍之子，跟仙人學習仙術及武術，以拯救龍之女為目標。\n(出自:龍狼傳)\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.85\n智慧 + 1.65\n基礎跑速 300\n\n可學習的技能：\n柳術、鬥仙術、雲體風身之術、仙氣發勁",
+  "role": "marksman",
+  "attackType": "ranged",
+  "modelKey": "imported.herolingtong",
+  "missileSpeed": 22.0,
+  "baseStats": {
+    "maxHealth": 480,
+    "healthRegen": 1.15,
+    "maxMana": 292,
+    "manaRegen": 1.44,
+    "ad": 34,
+    "ap": 0,
+    "armor": 9,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 8.2
+  },
+  "growth": {
+    "maxHealth": 36,
+    "healthRegen": 0.09,
+    "maxMana": 20,
+    "manaRegen": 0.07,
+    "ad": 2.8,
+    "armor": 0.9,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-e007.q",
+      "name": "12-01 鬥仙術",
+      "description": "[主動攻擊]\n20秒冷卻時間\n\n將武道融入仙道而創出來所謂的不敗的武術，以念體攻擊敵人，造成150傷害的同時可以迷惑目標1秒。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        30.0,
+        50.0,
+        70.0,
+        90.0,
+        90.0
+      ],
+      "range": 8.34,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              150.0,
+              250.0,
+              350.0,
+              350.0,
+              350.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow25",
+          "duration": 1.0,
+          "moveSpeedMult": 0.6
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "W": {
+      "id": "godie-e007.w",
+      "name": "12-02 仙氣．採藥",
+      "description": "[輔助]\n60秒冷卻時間\n\n利用身體小周天循環恢復生命持續250點，並且除去身上任何附加法術狀態。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        50.0,
+        100.0,
+        150.0,
+        200.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "E": {
+      "id": "godie-e007.e",
+      "name": "12-03 破凰之心-徒手空破山",
+      "description": "[輔助]\n45秒冷卻時間\n\n使用破凰之力的志狼，在每次攻擊皆能施展空破山，劃出大氣之刃，造成100%的擴散傷害，持續12秒。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        60.0,
+        225.0,
+        300.0,
+        375.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "icon": "assets/icons/abilities/godie-e007.e.png"
+    },
+    "R": {
+      "id": "godie-e007.r",
+      "name": "12-04 龍氣爆發",
+      "description": "[主動傷害]\n60秒冷卻時間\n\n凝聚體內的龍氣造成550點傷害，集氣每秒增加(敏捷*5)傷害，最多集氣3秒。\n(建築傷害25%)",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        215.0,
+        280.0,
+        345.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              4.01,
+              4.01,
+              4.01
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.018
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "icon": "assets/icons/abilities/godie-e007.r.png"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ],
+  "exAbility": "godie-e007.ex",
+  "icon": "assets/icons/champions/godie-e007.png"
+}

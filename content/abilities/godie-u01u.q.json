@@ -1,0 +1,36 @@
+{
+  "id": "godie-u01u.q",
+  "name": "11-01 燒鬼斬",
+  "description": "[傷害加成]\n0秒冷卻時間\n\n在攻擊敵人時附加10點的火焰擴散傷害。",
+  "slot": "Q",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    12.0,
+    12.0,
+    12.0,
+    12.0
+  ],
+  "manaCost": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "flat",
+          "value": 0.25
+        }
+      ],
+      "duration": 3.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

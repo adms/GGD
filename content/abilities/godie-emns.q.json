@@ -1,0 +1,44 @@
+{
+  "id": "godie-emns.q",
+  "name": "44-01 死神之眼",
+  "description": "[輔助]\n20秒冷卻時間\n\n與死神暫時交換眼睛來鎖定殺人目標，相對地以自己生命75%作交換，需要搭配6級技能-火車輾過以及9級技能-心臟麻痺才能遙控殺人，鎖定目標死亡才會解除鎖定。\n被鎖定的目標會因為死神的詛咒而暫時30%攻擊失手，持續15秒。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    20.0,
+    20.0,
+    20.0,
+    20.0
+  ],
+  "manaCost": [
+    150.0,
+    200.0,
+    250.0,
+    300.0
+  ],
+  "range": 9.17,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          80,
+          120,
+          160,
+          200
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "godie-e012.w",
+  "name": "47-02 神速",
+  "description": "[輔助]\n25秒冷卻時間\n\n以瞬間移動600的距離到指定的位置。",
+  "slot": "W",
+  "castType": "dash",
+  "maxRank": 5,
+  "cooldown": [
+    25.0,
+    20.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "manaCost": [
+    40.0,
+    80.0,
+    120.0,
+    120.0,
+    120.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "dash",
+      "mode": "toPoint",
+      "speed": 30.0,
+      "maxDistance": 11.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

@@ -1,0 +1,28 @@
+{
+  "id": "godie-i004",
+  "schema": "item@1",
+  "name": "魔戒",
+  "description": "任務\n效能\n攻擊力+1.9\n生命+39\n魔力+23\n永久隱身\n(死亡後掉落)\n\n解說\n王者之戒，戴上者能夠跟黑暗之王索崙產生連結進而提昇能力。",
+  "cost": 300,
+  "tier": 1,
+  "tags": [
+    "wc3-import"
+  ],
+  "modifiers": [
+    {
+      "stat": "maxHealth",
+      "op": "flat",
+      "value": 39
+    },
+    {
+      "stat": "ad",
+      "op": "flat",
+      "value": 1.9
+    },
+    {
+      "stat": "maxMana",
+      "op": "flat",
+      "value": 23
+    }
+  ]
+}

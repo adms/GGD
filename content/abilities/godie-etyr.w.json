@@ -1,0 +1,85 @@
+{
+  "id": "godie-etyr.w",
+  "name": "14-03 魔力應援",
+  "description": "[靈氣]\n0秒冷卻時間\n\n木乃香強大的魔力使得400範圍內的友軍增加攻擊速度35%和移動速度5%。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0,
+  "effects": [],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1",
+  "passive": {
+    "name": "14-03 魔力應援",
+    "ranks": [
+      {
+        "modifiers": [
+          {
+            "stat": "as",
+            "op": "pctAdd",
+            "value": 0.35
+          },
+          {
+            "stat": "ms",
+            "op": "pctAdd",
+            "value": 0.05
+          }
+        ]
+      },
+      {
+        "modifiers": [
+          {
+            "stat": "as",
+            "op": "pctAdd",
+            "value": 0.5
+          },
+          {
+            "stat": "ms",
+            "op": "pctAdd",
+            "value": 0.1
+          }
+        ]
+      },
+      {
+        "modifiers": [
+          {
+            "stat": "as",
+            "op": "pctAdd",
+            "value": 0.65
+          },
+          {
+            "stat": "ms",
+            "op": "pctAdd",
+            "value": 0.15
+          }
+        ]
+      },
+      {
+        "modifiers": [
+          {
+            "stat": "as",
+            "op": "pctAdd",
+            "value": 0.8
+          },
+          {
+            "stat": "ms",
+            "op": "pctAdd",
+            "value": 0.2
+          }
+        ]
+      }
+    ]
+  }
+}

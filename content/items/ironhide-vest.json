@@ -1,0 +1,22 @@
+{
+  "id": "ironhide-vest",
+  "schema": "item@1",
+  "name": "Ironhide Vest",
+  "cost": 1200,
+  "tier": 2,
+  "modifiers": [
+    {
+      "stat": "armor",
+      "op": "flat",
+      "value": 36.7
+    },
+    {
+      "stat": "maxHealth",
+      "op": "flat",
+      "value": 122
+    }
+  ],
+  "tags": [
+    "tank"
+  ]
+}

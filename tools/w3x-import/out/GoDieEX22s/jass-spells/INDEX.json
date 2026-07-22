@@ -1,0 +1,693 @@
+{
+ "spells": [
+  {
+   "rawcode": "A02K",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A02K.j",
+   "abilityDoc": "content/abilities/godie-e007.w.json",
+   "championDoc": "content/champions/godie-e007.json",
+   "nameZh": "仙氣．採藥",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A04X",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A04X.j",
+   "abilityDoc": "content/abilities/godie-e007.r.json",
+   "championDoc": "content/champions/godie-e007.json",
+   "nameZh": "龍氣爆發",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0Y9",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0Y9.j",
+   "abilityDoc": "content/abilities/godie-e00j.r.json",
+   "championDoc": "content/champions/godie-e00j.json",
+   "nameZh": "藍色戰氣一百重天",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0FS",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0FS.j",
+   "abilityDoc": "content/abilities/godie-e00q.r.json",
+   "championDoc": "content/champions/godie-e00q.json",
+   "nameZh": "魔力增幅",
+   "confidence": "medium"
+  },
+  {
+   "rawcode": "A0GR",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0GR.j",
+   "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-e00s.json#abilities.E",
+   "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-e00s.json",
+   "nameZh": "木束縛之術",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0I8",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0I8.j",
+   "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-e00t.json#abilities.W",
+   "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-e00t.json",
+   "nameZh": "驚駭",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0D6",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0D6.j",
+   "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-e00v.json#abilities.E",
+   "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-e00v.json",
+   "nameZh": "蜜汁",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0UB",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0UB.j",
+   "abilityDoc": "content/abilities/godie-e00w.r.json",
+   "championDoc": "content/champions/godie-e00w.json",
+   "nameZh": "真-雷光劍",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0UB",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0UB.j",
+   "abilityDoc": "content/abilities/godie-e00x.r.json",
+   "championDoc": "content/champions/godie-e00x.json",
+   "nameZh": "真-雷光劍",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0GR",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0GR.j",
+   "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-e010.json#abilities.E",
+   "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-e010.json",
+   "nameZh": "木束縛之術",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0OV",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0OV.j",
+   "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-e015.json#abilities.Q",
+   "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-e015.json",
+   "nameZh": "北斗爆橘拳",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0QJ",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0QJ.j",
+   "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-e015.json#abilities.E",
+   "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-e015.json",
+   "nameZh": "珍奶顏射",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0BO",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0BO.j",
+   "abilityDoc": "content/abilities/godie-h00l.q.json",
+   "championDoc": "content/champions/godie-h00l.json",
+   "nameZh": "科奇利族的迴旋鏢",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0EW",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0EW.j",
+   "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-h00w.json#abilities.R",
+   "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-h00w.json",
+   "nameZh": "開天闢地‧洨者聖臨",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0LL",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0LL.j",
+   "abilityDoc": "content/abilities/godie-h01n.e.json",
+   "championDoc": "content/champions/godie-h01n.json",
+   "nameZh": "月牙天衝",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0LL",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0LL.j",
+   "abilityDoc": "content/abilities/godie-h01o.e.json",
+   "championDoc": "content/champions/godie-h01o.json",
+   "nameZh": "月牙天衝",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0N0",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0N0.j",
+   "abilityDoc": "content/abilities/godie-h01u.e.json",
+   "championDoc": "content/champions/godie-h01u.json",
+   "nameZh": "鬼神烈戟",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0TN",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0TN.j",
+   "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-h02k.json#abilities.E",
+   "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-h02k.json",
+   "nameZh": "憤怒的胸毛",
+   "confidence": "medium"
+  },
+  {
+   "rawcode": "A0Y4",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0Y4.j",
+   "abilityDoc": "content/abilities/godie-h02r.e.json",
+   "championDoc": "content/champions/godie-h02r.json",
+   "nameZh": "藤鞭",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0NE",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0NE.j",
+   "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-n00b.json#abilities.W",
+   "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-n00b.json",
+   "nameZh": "複製鏡",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0IH",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0IH.j",
+   "abilityDoc": "content/abilities/godie-n00p.e.json",
+   "championDoc": "content/champions/godie-n00p.json",
+   "nameZh": "妖狐變化",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0P7",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0P7.j",
+   "abilityDoc": "content/abilities/godie-n00p.r.json",
+   "championDoc": "content/champions/godie-n00p.json",
+   "nameZh": "億年樹",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0LZ",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0LZ.j",
+   "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-n01b.json#abilities.R",
+   "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-n01b.json",
+   "nameZh": "地獄搖滾",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A05T",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A05T.j",
+   "abilityDoc": "content/abilities/godie-n01c.w.json",
+   "championDoc": "content/champions/godie-n01c.json",
+   "nameZh": "萊丁快速劍",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0ZE",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0ZE.j",
+   "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-n01l.json#abilities.W",
+   "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-n01l.json",
+   "nameZh": "平易近人的笑容",
+   "confidence": "medium"
+  },
+  {
+   "rawcode": "A0ZI",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0ZI.j",
+   "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-n01l.json#abilities.R",
+   "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-n01l.json",
+   "nameZh": "自在飛翔",
+   "confidence": "medium"
+  },
+  {
+   "rawcode": "A0UE",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0UE.j",
+   "abilityDoc": "content/abilities/godie-o00l.r.json",
+   "championDoc": "content/champions/godie-o00l.json",
+   "nameZh": "暴爆咒",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A09E",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A09E.j",
+   "abilityDoc": "content/abilities/godie-o00x.e.json",
+   "championDoc": "content/champions/godie-o00x.json",
+   "nameZh": "超級賽亞人",
+   "confidence": "medium"
+  },
+  {
+   "rawcode": "A040",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A040.j",
+   "abilityDoc": "content/abilities/godie-o02l.r.json",
+   "championDoc": "content/champions/godie-o02l.json",
+   "nameZh": "瘋狂皮卡丘",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A116",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A116.j",
+   "abilityDoc": "content/abilities/godie-o02p.q.json",
+   "championDoc": "content/champions/godie-o02p.json",
+   "nameZh": "甩蔥歌",
+   "confidence": "medium"
+  },
+  {
+   "rawcode": "A0Y0",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0Y0.j",
+   "abilityDoc": "content/abilities/godie-o02w.e.json",
+   "championDoc": "content/champions/godie-o02w.json",
+   "nameZh": "吸星大法",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0ET",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0ET.j",
+   "abilityDoc": "content/abilities/godie-u00j.w.json",
+   "championDoc": "content/champions/godie-u00j.json",
+   "nameZh": "八刀一閃",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A08T",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A08T.j",
+   "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-u00k.json#abilities.W",
+   "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-u00k.json",
+   "nameZh": "靈魂吸取",
+   "confidence": "medium"
+  },
+  {
+   "rawcode": "A0HJ",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0HJ.j",
+   "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-u00k.json#abilities.E",
+   "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-u00k.json",
+   "nameZh": "厄夜靈魂",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0HK",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0HK.j",
+   "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-u00k.json#abilities.R",
+   "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-u00k.json",
+   "nameZh": "萬惡歸宗",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0AF",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0AF.j",
+   "abilityDoc": "content/abilities/godie-u00l.q.json",
+   "championDoc": "content/champions/godie-u00l.json",
+   "nameZh": "北斗懺悔拳",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0HW",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0HW.j",
+   "abilityDoc": "content/abilities/godie-u00l.r.json",
+   "championDoc": "content/champions/godie-u00l.json",
+   "nameZh": "ChangeDNA",
+   "confidence": "medium"
+  },
+  {
+   "rawcode": "A0OG",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0OG.j",
+   "abilityDoc": "content/abilities/godie-u010.q.json",
+   "championDoc": "content/champions/godie-u010.json",
+   "nameZh": "邪王炎殺劍",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A09K",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A09K.j",
+   "abilityDoc": "content/abilities/godie-u010.r.json",
+   "championDoc": "content/champions/godie-u010.json",
+   "nameZh": "黑龍波吸收",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0OS",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0OS.j",
+   "abilityDoc": "content/abilities/godie-u011.e.json",
+   "championDoc": "content/champions/godie-u011.json",
+   "nameZh": "打屁股風林火豬",
+   "confidence": "medium"
+  },
+  {
+   "rawcode": "A0OS",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0OS.j",
+   "abilityDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-u012.json#abilities.E",
+   "championDoc": "tools/w3x-import/out/GoDieEX22s/drafts/champions/godie-u012.json",
+   "nameZh": "打屁股風林火豬",
+   "confidence": "medium"
+  },
+  {
+   "rawcode": "A020",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A020.j",
+   "abilityDoc": "content/abilities/godie-u034.e.json",
+   "championDoc": "content/champions/godie-u034.json",
+   "nameZh": "山形修煉-強",
+   "confidence": "medium"
+  },
+  {
+   "rawcode": "A000",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A000.j",
+   "abilityDoc": "content/abilities/godie-hart.e.json",
+   "championDoc": "content/champions/godie-hart.json",
+   "nameZh": "畫龍點睛",
+   "confidence": "medium"
+  },
+  {
+   "rawcode": "A03C",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A03C.j",
+   "abilityDoc": "content/abilities/godie-hvwd.q.json",
+   "championDoc": "content/champions/godie-hvwd.json",
+   "nameZh": "破魔之箭",
+   "confidence": "medium"
+  },
+  {
+   "rawcode": "A020",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A020.j",
+   "abilityDoc": "content/abilities/godie-ucrl.e.json",
+   "championDoc": "content/champions/godie-ucrl.json",
+   "nameZh": "山形修煉-強",
+   "confidence": "medium"
+  },
+  {
+   "rawcode": "A0G2",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0G2.j",
+   "abilityDoc": "content/abilities/godie-hpb1.w.json",
+   "championDoc": "content/champions/godie-hpb1.json",
+   "nameZh": "者、皆、陣",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0G3",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0G3.j",
+   "abilityDoc": "content/abilities/godie-hpb1.e.json",
+   "championDoc": "content/champions/godie-hpb1.json",
+   "nameZh": "列、在、前",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A05T",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A05T.j",
+   "abilityDoc": "content/abilities/godie-nbbc.w.json",
+   "championDoc": "content/champions/godie-nbbc.json",
+   "nameZh": "萊丁快速劍",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A09E",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A09E.j",
+   "abilityDoc": "content/abilities/godie-ogrh.e.json",
+   "championDoc": "content/champions/godie-ogrh.json",
+   "nameZh": "超級賽亞人",
+   "confidence": "medium"
+  },
+  {
+   "rawcode": "A02K",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A02K.j",
+   "abilityDoc": "content/abilities/godie-ewar.w.json",
+   "championDoc": "content/champions/godie-ewar.json",
+   "nameZh": "仙氣．採藥",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A04X",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A04X.j",
+   "abilityDoc": "content/abilities/godie-ewar.r.json",
+   "championDoc": "content/champions/godie-ewar.json",
+   "nameZh": "龍氣爆發",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0D3",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0D3.j",
+   "abilityDoc": "content/abilities/godie-emfr.q.json",
+   "championDoc": "content/champions/godie-emfr.json",
+   "nameZh": "風精召喚",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A043",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A043.j",
+   "abilityDoc": "content/abilities/godie-nplh.e.json",
+   "championDoc": "content/champions/godie-nplh.json",
+   "nameZh": "劍之精靈",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A07M",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A07M.j",
+   "abilityDoc": "content/abilities/godie-ewrd.e.json",
+   "championDoc": "content/champions/godie-ewrd.json",
+   "nameZh": "空破圓斬",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0IH",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0IH.j",
+   "abilityDoc": "content/abilities/godie-nsjs.e.json",
+   "championDoc": "content/champions/godie-nsjs.json",
+   "nameZh": "妖狐變化",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0P7",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0P7.j",
+   "abilityDoc": "content/abilities/godie-nsjs.r.json",
+   "championDoc": "content/champions/godie-nsjs.json",
+   "nameZh": "億年樹",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0NA",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0NA.j",
+   "abilityDoc": "content/abilities/godie-ntin.q.json",
+   "championDoc": "content/champions/godie-ntin.json",
+   "nameZh": "電離光槍 - 繁星飛躍",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0AP",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0AP.j",
+   "abilityDoc": "content/abilities/godie-nbst.e.json",
+   "championDoc": "content/champions/godie-nbst.json",
+   "nameZh": "變態絕技悶絕地獄車",
+   "confidence": "medium"
+  },
+  {
+   "rawcode": "A0AF",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0AF.j",
+   "abilityDoc": "content/abilities/godie-umal.q.json",
+   "championDoc": "content/champions/godie-umal.json",
+   "nameZh": "北斗懺悔拳",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0HW",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0HW.j",
+   "abilityDoc": "content/abilities/godie-umal.r.json",
+   "championDoc": "content/champions/godie-umal.json",
+   "nameZh": "ChangeDNA",
+   "confidence": "medium"
+  },
+  {
+   "rawcode": "A0EW",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0EW.j",
+   "abilityDoc": "content/abilities/godie-harf.r.json",
+   "championDoc": "content/champions/godie-harf.json",
+   "nameZh": "開天闢地‧洨者聖臨",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A03A",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A03A.j",
+   "abilityDoc": "content/abilities/godie-naka.q.json",
+   "championDoc": "content/champions/godie-naka.json",
+   "nameZh": "忍法風魔手裡劍",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0GB",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0GB.j",
+   "abilityDoc": "content/abilities/godie-huth.q.json",
+   "championDoc": "content/champions/godie-huth.json",
+   "nameZh": "吃掉你",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A08U",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A08U.j",
+   "abilityDoc": "content/abilities/godie-huth.r.json",
+   "championDoc": "content/champions/godie-huth.json",
+   "nameZh": "破滅能量彈",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0I4",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0I4.j",
+   "abilityDoc": "content/abilities/godie-othr.q.json",
+   "championDoc": "content/champions/godie-othr.json",
+   "nameZh": "迴旋爪擊",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0I1",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0I1.j",
+   "abilityDoc": "content/abilities/godie-opgh.e.json",
+   "championDoc": "content/champions/godie-opgh.json",
+   "nameZh": "閃光龍牙",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A02L",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A02L.j",
+   "abilityDoc": "content/abilities/godie-obla.q.json",
+   "championDoc": "content/champions/godie-obla.json",
+   "nameZh": "放山雞",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A01Z",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A01Z.j",
+   "abilityDoc": "content/abilities/godie-ubal.r.json",
+   "championDoc": "content/champions/godie-ubal.json",
+   "nameZh": "魔界之王",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0OG",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0OG.j",
+   "abilityDoc": "content/abilities/godie-uvng.q.json",
+   "championDoc": "content/champions/godie-uvng.json",
+   "nameZh": "邪王炎殺劍",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A09K",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A09K.j",
+   "abilityDoc": "content/abilities/godie-uvng.r.json",
+   "championDoc": "content/champions/godie-uvng.json",
+   "nameZh": "黑龍波吸收",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0LZ",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0LZ.j",
+   "abilityDoc": "content/abilities/godie-nman.r.json",
+   "championDoc": "content/champions/godie-nman.json",
+   "nameZh": "地獄搖滾",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0IK",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0IK.j",
+   "abilityDoc": "content/abilities/godie-emns.q.json",
+   "championDoc": "content/champions/godie-emns.json",
+   "nameZh": "死神之眼",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A05I",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A05I.j",
+   "abilityDoc": "content/abilities/godie-emns.r.json",
+   "championDoc": "content/champions/godie-emns.json",
+   "nameZh": "心臟麻痺",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0IJ",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0IJ.j",
+   "abilityDoc": "content/abilities/godie-edem.e.json",
+   "championDoc": "content/champions/godie-edem.json",
+   "nameZh": "千鳥",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0U7",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0U7.j",
+   "abilityDoc": "content/abilities/godie-edem.r.json",
+   "championDoc": "content/champions/godie-edem.json",
+   "nameZh": "哥哥",
+   "confidence": "medium"
+  },
+  {
+   "rawcode": "A0RO",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0RO.j",
+   "abilityDoc": "content/abilities/godie-hvsh.q.json",
+   "championDoc": "content/champions/godie-hvsh.json",
+   "nameZh": "魔法鎖鏈",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A06C",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A06C.j",
+   "abilityDoc": "content/abilities/godie-hvsh.e.json",
+   "championDoc": "content/champions/godie-hvsh.json",
+   "nameZh": "鮮血神殿",
+   "confidence": "medium"
+  },
+  {
+   "rawcode": "A0RQ",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0RQ.j",
+   "abilityDoc": "content/abilities/godie-hvsh.r.json",
+   "championDoc": "content/champions/godie-hvsh.json",
+   "nameZh": "騎英之疆繩",
+   "confidence": "medium"
+  },
+  {
+   "rawcode": "A0BV",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0BV.j",
+   "abilityDoc": "content/abilities/godie-usyl.e.json",
+   "championDoc": "content/champions/godie-usyl.json",
+   "nameZh": "蛻變",
+   "confidence": "medium"
+  },
+  {
+   "rawcode": "A0VJ",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0VJ.j",
+   "abilityDoc": "content/abilities/godie-hapm.q.json",
+   "championDoc": "content/champions/godie-hapm.json",
+   "nameZh": "狂戰士之怒",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0U1",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0U1.j",
+   "abilityDoc": "content/abilities/godie-hapm.w.json",
+   "championDoc": "content/champions/godie-hapm.json",
+   "nameZh": "蹂躪編年史",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A040",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A040.j",
+   "abilityDoc": "content/abilities/godie-ofar.r.json",
+   "championDoc": "content/champions/godie-ofar.json",
+   "nameZh": "瘋狂皮卡丘",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0A2",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0A2.j",
+   "abilityDoc": "content/abilities/godie-ecen.q.json",
+   "championDoc": "content/champions/godie-ecen.json",
+   "nameZh": "威士忌攻擊",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0A7",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0A7.j",
+   "abilityDoc": "content/abilities/godie-ecen.w.json",
+   "championDoc": "content/champions/godie-ecen.json",
+   "nameZh": "酒釀精華",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0A3",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0A3.j",
+   "abilityDoc": "content/abilities/godie-ecen.r.json",
+   "championDoc": "content/champions/godie-ecen.json",
+   "nameZh": "魔幻浮水印",
+   "confidence": "high"
+  },
+  {
+   "rawcode": "A0Y4",
+   "sliceFile": "tools/w3x-import/out/GoDieEX22s/jass-spells/A0Y4.j",
+   "abilityDoc": "content/abilities/godie-hgam.e.json",
+   "championDoc": "content/champions/godie-hgam.json",
+   "nameZh": "藤鞭",
+   "confidence": "high"
+  }
+ ],
+ "notes": "Indexed from raw/scripts__war3map.j (protected/obfuscated; CR line endings normalized). Dispatch pattern: one trigger per spell, TriggerRegisterAnyUnitEventBJ(EVENT_PLAYER_UNIT_SPELL_EFFECT or _SPELL_CAST) + TriggerAddCondition(GetSpellAbilityId()=='XXXX') + TriggerAddAction(handler). 86 of 178 TODO-placeholder targets got JASS slices (67 unique rawcodes; shared rawcodes reuse one slice). confidence=high: spell-effect/cast trigger handler found intact, no truncation. confidence=medium: passive implemented via GetUnitAbilityLevel checks inside attack/death/damage/periodic triggers, or handler reached only through an unregistered helper (behavior may also depend on surrounding trigger context). 76 targets have NO JASS handler: rawcode appears only in AI SelectHeroSkill calls or not at all — behavior is pure w3a data (model from parsed/abilities.json, not JASS): A00D(godie-uwar.r); A00P(godie-obla.w); A00X(godie-efur.w); A013(godie-e012.q); A01I(godie-ubal.q); A01J(godie-u00l.w); A01J(godie-umal.w); A02Q(godie-e001.r); A02Q(godie-e00n.r); A02W(godie-e007.e); A02W(godie-ewar.e); A031(godie-e00q.q); A034(godie-osam.q); A03D(godie-hvwd.e); A03T(godie-huth.e); A041(godie-nplh.w); A045(godie-hvwd.w); A05G(godie-emns.w); A06H(godie-hpal.e); A06U(godie-oshd.q); A074(godie-nbst.w); A075(godie-u00b.q); A082(godie-o00x.q); A082(godie-ogrh.q); A08Z(godie-h021.q); A08Z(godie-hblm.q); A0AY(godie-h020.q); A0AY(godie-hjai.q); A0BA(godie-hapm.e); A0BH(godie-e008.w); A0BS(godie-harf.w); A0BU(godie-usyl.w); A0BZ(godie-o00k.q); A0BZ(godie-o02l.q); A0BZ(godie-ofar.q); A0DB(godie-o02n.e); A0DB(godie-o02o.e); A0F5(godie-osam.e); A0F9(godie-h00w.e); A0F9(godie-harf.e); A0GP(godie-e010.q); A0IB(godie-e00t.e); A0IO(godie-n00p.q); A0IO(godie-nsjs.q); A0JG(godie-e00w.e); A0JG(godie-e00x.e); A0ND(godie-n01b.e); A0ND(godie-nman.e); A0OY(godie-ubal.e); A0PH(godie-h001.e); A0R3(godie-usyl.r); A0SS(godie-etyr.r); A0TH(godie-opgh.w); A0WA(godie-h02u.e); A0WA(godie-h02v.e); A0Y6(godie-e00j.w); A0YG(godie-h02y.e); A0YW(godie-opgh.r); A0Z6(godie-hvwd.r); A0ZH(godie-n01l.e); ACpa(godie-ogld.w); ANab(godie-hlgr.q); ANdh(godie-o030.w); ANdh(godie-orkn.w); ANfl(godie-uwar.q); ANic(godie-h02y.q); ANmo(godie-ogld.q); ANrc(godie-ecen.e); ANso(godie-o030.e); ANso(godie-orkn.e); ANto(godie-u00b.e); AOsw(godie-e00q.w); AOvd(godie-oshd.e); Abof(godie-ekee.q); Adef(godie-h00l.e); Afae(godie-ogld.e). 16 targets have no WC3 ability at all (importer gave slot no rawcode): godie-e00u.e; godie-e00u.q; godie-e00u.r; godie-e00u.w; godie-h02n.e; godie-h02n.q; godie-h02n.r; godie-h02n.w; godie-u01f.e; godie-u01f.q; godie-u01f.r; godie-u01f.w; godie-u01q.e; godie-u01q.q; godie-u01q.r; godie-u01q.w. See GLOSSARY.md in the same dir for decoded obfuscated helper names. Slice headers carry hero, Chinese name, w3a per-level columns (cooldown/mana/dataA..F) and handler event wiring."
+}

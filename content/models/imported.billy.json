@@ -1,0 +1,57 @@
+{
+  "id": "imported.billy",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/billy.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand - 1",
+    "run": "Walk",
+    "attack": "Attack - 2",
+    "cast": "Attack - 2",
+    "hurt": "Stand - 1",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Hand Right": {
+      "x": 0.1025,
+      "y": 0.7626,
+      "z": 0.4671
+    },
+    "Head": {
+      "x": 0.0079,
+      "y": 1.5503,
+      "z": -0.0
+    },
+    "Hand Left": {
+      "x": 0.1025,
+      "y": 0.7634,
+      "z": -0.4671
+    },
+    "Chest": {
+      "x": 0.0272,
+      "y": 1.1202,
+      "z": 0.0008
+    },
+    "Foot Left": {
+      "x": 0.0518,
+      "y": 0.0456,
+      "z": -0.1803
+    },
+    "Foot Right": {
+      "x": 0.052,
+      "y": 0.045,
+      "z": 0.1803
+    },
+    "OverHead": {
+      "x": 0.0,
+      "y": 1.7289,
+      "z": -0.0
+    },
+    "Origin": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -0.0
+    }
+  }
+}

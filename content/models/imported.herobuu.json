@@ -1,0 +1,62 @@
+{
+  "id": "imported.herobuu",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/herobuu.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack -1",
+    "cast": "Spell",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Foot Left": {
+      "x": -0.058,
+      "y": 0.1205,
+      "z": -0.2881
+    },
+    "Foot Right": {
+      "x": -0.058,
+      "y": 0.1205,
+      "z": 0.2901
+    },
+    "Chest": {
+      "x": 0.0058,
+      "y": 0.9178,
+      "z": -0.0
+    },
+    "Hand Left": {
+      "x": -0.2103,
+      "y": 0.9801,
+      "z": -0.7733
+    },
+    "Hand Right": {
+      "x": -0.2103,
+      "y": 0.9801,
+      "z": 0.7767
+    },
+    "Head -": {
+      "x": -0.1251,
+      "y": 1.4224,
+      "z": -0.0
+    },
+    "Origin": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -0.0
+    },
+    "OverHead": {
+      "x": -0.1251,
+      "y": 1.4224,
+      "z": -0.0
+    },
+    "Weapon": {
+      "x": -0.2103,
+      "y": 0.9801,
+      "z": 0.7767
+    }
+  }
+}

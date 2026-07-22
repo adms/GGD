@@ -1,0 +1,62 @@
+{
+  "id": "imported.heropikachu",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/heropikachu.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand - 1",
+    "run": "Walk",
+    "attack": "Attack - 1",
+    "cast": "Spell Throw",
+    "hurt": "Stand - 1",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Head -": {
+      "x": 0.0,
+      "y": 0.9281,
+      "z": -0.0
+    },
+    "Weapon": {
+      "x": 0.1299,
+      "y": 0.7425,
+      "z": 0.2413
+    },
+    "Hand Right": {
+      "x": 0.1299,
+      "y": 0.7425,
+      "z": 0.2413
+    },
+    "Hand Left": {
+      "x": 0.1299,
+      "y": 0.7425,
+      "z": -0.2413
+    },
+    "Foot Right": {
+      "x": 0.0,
+      "y": 0.3713,
+      "z": -0.1671
+    },
+    "Foot Left": {
+      "x": 0.0,
+      "y": 0.3713,
+      "z": 0.1671
+    },
+    "Origin": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -0.0
+    },
+    "Overhead": {
+      "x": 0.0,
+      "y": 1.2994,
+      "z": -0.0
+    },
+    "Chest": {
+      "x": 0.0,
+      "y": 0.6497,
+      "z": -0.0
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "id": "godie-ubal.q",
+  "name": "37-01 凱薩之鷹",
+  "description": "[主動攻擊]\n15秒冷卻時間\n\n召喚魔界火焰形成像鷹一樣的灼熱衝擊波重創敵人，是巴恩的得意技，但是在老年姿態施展會有些慢，威力也相當程度的下降，造成一直線敵人220點傷害。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0
+  ],
+  "manaCost": [
+    75.0,
+    105.0,
+    135.0
+  ],
+  "range": 6.42,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          220.0,
+          340.0,
+          460.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/godie-ubal.q.png"
+}

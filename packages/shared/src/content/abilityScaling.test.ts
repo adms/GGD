@@ -1,0 +1,244 @@
+/**
+ * ability-scaling (docs/todo/stats-effects.md fx-15..fx-18).
+ *
+ * WC3 abilities carry no stat scaling: attribute scaling lived in JASS triggers
+ * and does not survive an object-data import. A straight import therefore left
+ * every godie-* ability a CONSTANT — `resolveScaling` only adds stat
+ * contributions via `sc.ratios`, so `ap` was a completely dead stat and no item
+ * build could improve an ability.
+ *
+ * The scaling model (applied to content + emitted by tools/w3x-import):
+ *   stat    physical damage -> ad ; magic/true damage, heal, shield -> ap
+ *   coeff   proportional to the ability's own base (0.003/point of base damage),
+ *           capped at 1.0 — every ability gains the same PERCENTAGE per point of
+ *           ap, so a nuke and a DoT tick keep their relative weight.
+ *   budget  `ap` has no base/growth on any champion, so an ap ratio is pure ITEM
+ *           upside and never inflates zero-item damage. That neutrality is what
+ *           fx-17 pins.
+ *
+ * Reads docs by DIRECT file path (same rationale as standinRoster.test.ts).
+ */
+import { describe, it, expect } from "vitest";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { readFileSync, readdirSync } from "node:fs";
+import { cover } from "../../testkit/cover";
+import { zChampionDoc, type ChampionDoc } from "./schema/champion";
+import { zItemDoc, type ItemDoc } from "./schema/item";
+import { resolveScaling, type Scaling } from "../sim/effects/effect";
+import { Stat, zeroStats } from "../sim/stats/statTypes";
+
+const HERE = dirname(fileURLToPath(import.meta.url));
+const CONTENT = join(HERE, "../../../../content");
+const RATIO_MAX = 1.0;
+
+function read<T>(dir: string, file: string): T {
+  return JSON.parse(readFileSync(join(CONTENT, dir, file), "utf8")) as T;
+}
+
+function godieChampions(): ChampionDoc[] {
+  return readdirSync(join(CONTENT, "champions"))
+    .filter((f) => f.startsWith("godie-") && f.endsWith(".json"))
+    .map((f) => read<unknown>("champions", f))
+    .filter((d): d is ChampionDoc => (d as ChampionDoc)?.schema === "champion@1")
+    .map((d) => zChampionDoc.parse(d));
+}
+
+/** Effects that carry an `amount`, paired with the ability that owns them. */
+function amountEffects(c: ChampionDoc) {
+  const out: { slot: string; kind: string; dtype?: string; amount: Scaling }[] = [];
+  for (const [slot, ab] of Object.entries(c.abilities ?? {})) {
+    for (const e of (ab?.effects ?? []) as unknown as Record<string, never>[]) {
+      const amount = e["amount"] as unknown as Scaling | undefined;
+      if (amount) {
+        out.push({
+          slot,
+          kind: e["kind"] as unknown as string,
+          dtype: e["damageType"] as unknown as string | undefined,
+          amount,
+        });
+      }
+    }
+  }
+  return out;
+}
+
+const baseOf = (a: Scaling) => (a.flat ?? 0) + Math.max(0, ...(a.perRank ?? [0]));
+
+/**
+ * Below this an ability would have no usable base to size a proportional ratio
+ * against. This guard USED to skip 62 abilities whose `amount` was a flat 0 or
+ * rounding dust like 0.01–0.4: WC3 computed their damage in a JASS trigger, so
+ * the object-data field the importer reads was empty.
+ *
+ * Those 62 have since been repaired from the UNPROTECTED source map
+ * (`src_gogodieEX227s.w3x`): 28 had real damage/heal bases recovered (12 from
+ * exact `war3map.j` formulas, the rest from per-level ubertips — the two
+ * sources agreed exactly wherever both existed), and 34 turned out not to be
+ * damage abilities at all (auras/toggles/blinks whose percentage the importer
+ * had filed as a damage amount) and were remodelled onto the effect kind they
+ * actually use. The guard is therefore expected to be VACUOUS now, which
+ * fx-19 pins — if it ever skips something again, an import defect has returned.
+ */
+const MIN_SCALABLE_BASE = 1;
+
+/**
+ * Abilities whose SOURCE formula has no ability-power-shaped term at all, so a
+ * ratio here would be an invention rather than an import (task #78 phase 3).
+ * Each was transcribed from the unprotected `war3map.j` or from `war3map.w3a`,
+ * and each formula's only variable term is a WC3 hero ATTRIBUTE:
+ *
+ *   godie-edem.Q 火遁-豪火龍之術  `skillLevel*100 + 150 + 2*AGI`   (ChoChuFireDro)
+ *   godie-h01u.E 鬼神烈戟        `150 + 200*level + 3*STR`        (skill3)
+ *   godie-o00k.R 打雷絕招        A04H 每個目標傷害 150/200/250     (w3a, flat per level)
+ *   godie-o02p.R 世界第一的公主殿下 A11E 回復 200/275/350          (w3a, flat per level)
+ *
+ * The attribute terms are DROPPED, not approximated — porting them needs the
+ * STR/AGI/INT inverse map (ledger §6 U3), which is an explicit user decision.
+ * Until then these four carry their exact flat per-level base and nothing else.
+ * Keeping them OUT of fx-15 is the point: re-adding an `ap` coefficient here
+ * would silently re-fabricate the number the fidelity pass just removed.
+ */
+const NO_NATIVE_RATIO = new Set([
+  "godie-edem.Q",
+  "godie-h01u.E",
+  "godie-o00k.R",
+  "godie-o02p.R",
+]);
+
+describe("imported ability stat scaling", () => {
+  const champs = godieChampions();
+
+  it("every imported damage/heal/shield effect with a real base scales off a stat (fx-15)", () => {
+    cover("ability-scaling-present");
+    expect(champs.length).toBeGreaterThan(100);
+
+    const unscaled: string[] = [];
+    let scaled = 0;
+    for (const c of champs) {
+      for (const e of amountEffects(c)) {
+        if (!["damage", "heal", "shield"].includes(e.kind)) continue;
+        if (baseOf(e.amount) < MIN_SCALABLE_BASE) continue;
+        if (NO_NATIVE_RATIO.has(`${c.id}.${e.slot}`)) {
+          // pinned: the exemption must stay EXACT — an exempt ability that
+          // grew a ratio back is a re-fabrication, not a fix.
+          expect(e.amount.ratios ?? []).toEqual([]);
+          continue;
+        }
+        if (e.amount.ratios?.length) scaled++;
+        else unscaled.push(`${c.id}.${e.slot}`);
+      }
+    }
+    expect(unscaled).toEqual([]);
+    expect(scaled).toBeGreaterThanOrEqual(248); // champion-embedded Q/W/E/R effects
+  });
+
+  it("ratios use the right stat and stay in band (fx-16)", () => {
+    cover("ability-scaling-band");
+    for (const c of champs) {
+      for (const e of amountEffects(c)) {
+        for (const r of e.amount.ratios ?? []) {
+          const want = e.kind === "damage" && e.dtype === "physical" ? Stat.AttackDamage : Stat.AbilityPower;
+          expect(`${c.id}.${e.slot}:${r.stat}`).toBe(`${c.id}.${e.slot}:${want}`);
+          expect(r.coeff).toBeGreaterThan(0);
+          expect(r.coeff).toBeLessThanOrEqual(RATIO_MAX);
+        }
+      }
+    }
+  });
+
+  it("ap ratios are pure item upside: zero-item damage is unchanged (fx-17)", () => {
+    cover("ability-scaling-budget-neutral");
+    // ap has no base or growth on any imported champion, so at zero items an
+    // ap ratio contributes exactly nothing — abilities cannot have been buffed.
+    for (const c of champs) {
+      expect(`${c.id}:${c.baseStats.ap}`).toBe(`${c.id}:0`);
+      expect((c.growth as Record<string, number>).ap ?? 0).toBe(0);
+    }
+
+    const lina = champs.find((c) => c.id === "godie-h020")!;
+    const noItems = zeroStats();
+    for (const e of amountEffects(lina)) {
+      if (!e.amount.ratios?.length) continue;
+      const withRatios = resolveScaling(noItems, e.amount, 1);
+      const withoutRatios = resolveScaling(noItems, { ...e.amount, ratios: [] }, 1);
+      expect(withRatios).toBe(withoutRatios);
+    }
+  });
+
+  it("buying an AP item raises ability damage (fx-18)", () => {
+    cover("ability-scaling-ap-items");
+    const wand = zItemDoc.parse(read<ItemDoc>("items", "godie-i010.json")); // 熱戀魔杖
+    const ap = (wand.modifiers ?? []).find((m) => m.stat === Stat.AbilityPower);
+    expect(ap, "熱戀魔杖 must still sell ap").toBeTruthy();
+    // The gate is that ap is BUYABLE IN QUANTITY, not that it hits a specific
+    // number. It used to assert >= 45 against the pre-#82 ember-rod (45 ap for
+    // 900g); task #82 put every item on one exchange rate — 46.15 gold per
+    // AD-equivalent point, ap at 0.2054 AEP/point — so a 300g SIMPLE item's
+    // whole budget is ~31.6 ap and 熱戀魔杖 spends part of its on mana. What
+    // must not come back is the ORIGINAL defect: raw WC3 INT points (ap 10),
+    // ~14x less gold-efficient than a native item and never worth buying.
+    expect(ap!.value).toBeGreaterThanOrEqual(20);
+    // …and the pure-ap reference item still spends its whole budget on ap.
+    const rod = zItemDoc.parse(read<ItemDoc>("items", "ember-rod.json"));
+    const rodAp = (rod.modifiers ?? []).find((m) => m.stat === Stat.AbilityPower);
+    expect(rodAp!.value).toBeGreaterThanOrEqual(30);
+
+    const lina = champs.find((c) => c.id === "godie-h020")!;
+    const stats = zeroStats();
+    const withAp = { ...zeroStats(), [Stat.AbilityPower]: ap!.value };
+
+    let before = 0;
+    let after = 0;
+    for (const e of amountEffects(lina)) {
+      if (e.kind !== "damage") continue;
+      before += resolveScaling(stats, e.amount, 1);
+      after += resolveScaling(withAp, e.amount, 1);
+    }
+    expect(before).toBeGreaterThan(0);
+    expect(after).toBeGreaterThan(before); // ap is no longer a dead stat
+  });
+
+  it("no imported effect is inert, and both copies of an ability agree (fx-19)", () => {
+    cover("ability-scaling-no-inert");
+
+    // An `amount` below MIN_SCALABLE_BASE deals ~nothing in game. Every one of
+    // those was an unrecovered JASS-scaled spell; all 62 are now repaired, so
+    // the population must stay empty in BOTH places an ability is stored.
+    const inert: string[] = [];
+    for (const c of champs) {
+      for (const e of amountEffects(c)) {
+        if (!["damage", "heal", "shield"].includes(e.kind)) continue;
+        if (baseOf(e.amount) < MIN_SCALABLE_BASE) inert.push(`${c.id}.${e.slot}:${e.kind}`);
+      }
+    }
+
+    // Every godie ability is mirrored: embedded in champion.abilities AND as a
+    // standalone abilities/<id>.json. A repair that touched only one copy would
+    // silently desync the editor from the sim, so pin that they are identical.
+    const desynced: string[] = [];
+    for (const c of champs) {
+      for (const ab of Object.values(c.abilities ?? {})) {
+        if (!ab?.id) continue;
+        let standalone: Record<string, unknown>;
+        try {
+          standalone = read<Record<string, unknown>>("abilities", `${ab.id}.json`);
+        } catch {
+          continue; // not every embedded ability is also exported standalone
+        }
+        for (const e of (standalone["effects"] ?? []) as Record<string, never>[]) {
+          const amount = e["amount"] as unknown as Scaling | undefined;
+          if (!amount) continue;
+          if (!["damage", "heal", "shield"].includes(e["kind"] as unknown as string)) continue;
+          if (baseOf(amount) < MIN_SCALABLE_BASE) inert.push(`${ab.id}(standalone):${e["kind"]}`);
+        }
+        if (JSON.stringify(standalone["effects"]) !== JSON.stringify(ab.effects)) {
+          desynced.push(ab.id);
+        }
+      }
+    }
+
+    expect(inert).toEqual([]);
+    expect(desynced).toEqual([]);
+  });
+});

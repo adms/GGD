@@ -1,0 +1,47 @@
+{
+  "id": "sela.r",
+  "schema": "ability@1",
+  "name": "Firestorm",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    110,
+    95,
+    80
+  ],
+  "manaCost": [
+    100,
+    100,
+    100
+  ],
+  "range": 10,
+  "radius": 5,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          200,
+          325,
+          450
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.9
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "burnstun",
+      "duration": 0.75,
+      "stun": true
+    }
+  ],
+  "vfxKey": "fx.firestorm"
+}

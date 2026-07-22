@@ -1,0 +1,30 @@
+{
+  "id": "godie-o00k.ex",
+  "name": "86-002 雷電萌神",
+  "description": "0秒冷卻時間\n\n皮卡娘在雷電萌神狀態，閃電大決傷害將增加為兩倍。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    120.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

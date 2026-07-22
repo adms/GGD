@@ -1,0 +1,553 @@
+{
+  "id": "audio-map",
+  "schema": "config.audio-map@1",
+  "bgm": {
+    "menu": {
+      "file": "assets/audio/bgm/menu.mp3",
+      "loop": true,
+      "gain": 0.9
+    },
+    "menuNocturne": {
+      "file": "assets/audio/bgm/menuNocturne.mp3",
+      "loop": true,
+      "gain": 0.55
+    },
+    "lobby": {
+      "file": "assets/audio/bgm/lobby.mp3",
+      "loop": true,
+      "gain": 0.9
+    },
+    "room": {
+      "file": "assets/audio/bgm/room.mp3",
+      "loop": true,
+      "gain": 0.9
+    },
+    "champSelect": {
+      "file": "assets/audio/bgm/champSelect.mp3",
+      "loop": true,
+      "gain": 0.9
+    },
+    "intermission": {
+      "file": "assets/audio/bgm/intermission.mp3",
+      "loop": true,
+      "gain": 0.85
+    },
+    "battleStart": {
+      "file": "assets/audio/bgm/battleStart.mp3",
+      "loop": false,
+      "gain": 1
+    },
+    "combat": {
+      "file": "assets/audio/bgm/combat.mp3",
+      "loop": true,
+      "gain": 0.65
+    },
+    "fireRing": {
+      "file": "assets/audio/bgm/fireRing.mp3",
+      "loop": true,
+      "gain": 0.7
+    },
+    "settlement": {
+      "file": "assets/audio/bgm/settlement.mp3",
+      "loop": true,
+      "gain": 0.85
+    },
+    "victory": {
+      "file": "assets/audio/bgm/victory.mp3",
+      "loop": false,
+      "gain": 1
+    },
+    "defeat": {
+      "file": "assets/audio/bgm/defeat.mp3",
+      "loop": false,
+      "gain": 0.95
+    }
+  },
+  "sfx": {
+    "attackWindup": {
+      "files": [
+        "assets/audio/sfx/fx/windup.wav"
+      ],
+      "gain": 0.28,
+      "cooldownMs": 130,
+      "maxConcurrent": 2
+    },
+    "basicAttack": {
+      "files": [
+        "assets/audio/sfx/fx/swing.wav"
+      ],
+      "gain": 0.55,
+      "cooldownMs": 90,
+      "maxConcurrent": 3
+    },
+    "basicAttackHit": {
+      "files": [
+        "assets/audio/sfx/fx/thud.wav"
+      ],
+      "gain": 0.85,
+      "cooldownMs": 70,
+      "maxConcurrent": 4
+    },
+    "damage": {
+      "files": [
+        "assets/audio/sfx/fx/tick.wav"
+      ],
+      "gain": 0.3,
+      "cooldownMs": 90,
+      "maxConcurrent": 3
+    },
+    "hit": {
+      "files": [
+        "assets/audio/sfx/fx/thud.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 85,
+      "maxConcurrent": 4
+    },
+    "hitMagic": {
+      "files": [
+        "assets/audio/sfx/fx/hit_magic.wav"
+      ],
+      "gain": 0.62,
+      "cooldownMs": 85,
+      "maxConcurrent": 4
+    },
+    "hitTrue": {
+      "files": [
+        "assets/audio/sfx/fx/hit_true.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 90,
+      "maxConcurrent": 3
+    },
+    "block": {
+      "files": [
+        "assets/audio/sfx/lab/block-clash.wav",
+        "assets/audio/sfx/lab/block-shield.wav"
+      ],
+      "gain": 0.63,
+      "cooldownMs": 110,
+      "maxConcurrent": 3
+    },
+    "crit": {
+      "files": [
+        "assets/audio/sfx/fx/crit.wav"
+      ],
+      "gain": 0.95,
+      "cooldownMs": 140,
+      "maxConcurrent": 2
+    },
+    "guardBreak": {
+      "files": [
+        "assets/audio/sfx/fx/guard_break.wav"
+      ],
+      "gain": 1.0,
+      "cooldownMs": 220,
+      "maxConcurrent": 2
+    },
+    "knockdown": {
+      "files": [
+        "assets/audio/sfx/fx/knockdown.wav"
+      ],
+      "gain": 0.95,
+      "cooldownMs": 250,
+      "maxConcurrent": 2
+    },
+    "whiff": {
+      "files": [
+        "assets/audio/sfx/lab/whiff-sword.wav"
+      ],
+      "gain": 0.43,
+      "cooldownMs": 120,
+      "maxConcurrent": 2
+    },
+    "footstep": {
+      "files": [
+        "assets/audio/sfx/fx/footstep.wav"
+      ],
+      "gain": 0.22,
+      "cooldownMs": 170,
+      "maxConcurrent": 2
+    },
+    "projectileSpawn": {
+      "files": [
+        "assets/audio/sfx/fx/launch.wav"
+      ],
+      "gain": 0.4,
+      "cooldownMs": 70,
+      "maxConcurrent": 4
+    },
+    "projectileHit": {
+      "files": [
+        "assets/audio/sfx/fx/impact.wav"
+      ],
+      "gain": 0.75,
+      "cooldownMs": 60,
+      "maxConcurrent": 4
+    },
+    "castBegin": {
+      "files": [
+        "assets/audio/sfx/fx/cast_begin.wav"
+      ],
+      "gain": 0.3,
+      "cooldownMs": 120,
+      "maxConcurrent": 3
+    },
+    "castEnd": {
+      "files": [
+        "assets/audio/sfx/fx/cast_end.wav"
+      ],
+      "gain": 0.5,
+      "cooldownMs": 120,
+      "maxConcurrent": 3
+    },
+    "castInterrupt": {
+      "files": [
+        "assets/audio/sfx/fx/cast_break.wav"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 150,
+      "maxConcurrent": 2
+    },
+    "abilityCast": {
+      "files": [
+        "assets/audio/sfx/moongo.mp3",
+        "assets/audio/sfx/moonjump.mp3",
+        "assets/audio/sfx/nocute.mp3"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "flowerSpawn": {
+      "files": [
+        "assets/audio/sfx/fx/chime_soft.wav"
+      ],
+      "gain": 0.45,
+      "cooldownMs": 400,
+      "maxConcurrent": 2
+    },
+    "flowerBurst": {
+      "files": [
+        "assets/audio/sfx/fx/chime_burst.wav"
+      ],
+      "gain": 0.85,
+      "cooldownMs": 250,
+      "maxConcurrent": 3
+    },
+    "levelUp": {
+      "files": [
+        "assets/audio/announcer/level-up-1.mp3",
+        "assets/audio/announcer/level-up-2.mp3"
+      ],
+      "gain": 0.85,
+      "cooldownMs": 250,
+      "maxConcurrent": 2
+    },
+    "death": {
+      "files": [
+        "assets/audio/announcer/death-1.mp3",
+        "assets/audio/announcer/death-2.mp3",
+        "assets/audio/announcer/death-3.mp3"
+      ],
+      "gain": 0.9,
+      "cooldownMs": 300,
+      "maxConcurrent": 2
+    },
+    "exUnlock": {
+      "files": [
+        "assets/audio/announcer/ex-unlock.mp3"
+      ],
+      "gain": 0.85,
+      "cooldownMs": 2500,
+      "maxConcurrent": 1
+    },
+    "kill": {
+      "files": [
+        "assets/audio/sfx/pikakill.mp3",
+        "assets/audio/sfx/dorakill.mp3",
+        "assets/audio/sfx/even.mp3",
+        "assets/audio/sfx/bads.mp3",
+        "assets/audio/sfx/dogdie.mp3",
+        "assets/audio/sfx/ringnai.mp3"
+      ],
+      "gain": 1.15,
+      "cooldownMs": 900,
+      "maxConcurrent": 1
+    },
+    "multiKill": {
+      "files": [
+        "assets/audio/announcer/multi-kill-1.mp3",
+        "assets/audio/announcer/multi-kill-2.mp3",
+        "assets/audio/announcer/multi-kill-3.mp3"
+      ],
+      "gain": 0.9,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "allySlain": {
+      "files": [
+        "assets/audio/announcer/ally-slain.mp3"
+      ],
+      "gain": 0.7,
+      "cooldownMs": 1500,
+      "maxConcurrent": 1
+    },
+    "champSelectConfirm": {
+      "files": [
+        "assets/audio/sfx/pick.mp3"
+      ],
+      "gain": 1.2,
+      "cooldownMs": 250,
+      "maxConcurrent": 1
+    },
+    "countTick": {
+      "files": [
+        "assets/audio/sfx/fx/count-tick.wav"
+      ],
+      "gain": 0.9,
+      "cooldownMs": 300,
+      "maxConcurrent": 2
+    },
+    "countFinal": {
+      "files": [
+        "assets/audio/sfx/fx/count-final.wav"
+      ],
+      "gain": 0.9,
+      "cooldownMs": 300,
+      "maxConcurrent": 2
+    },
+    "matchStart": {
+      "files": [
+        "assets/audio/announcer/match-start.mp3"
+      ],
+      "gain": 0.7,
+      "cooldownMs": 3000,
+      "maxConcurrent": 1
+    },
+    "roundStart": {
+      "files": [
+        "assets/audio/announcer/round-start-1.mp3",
+        "assets/audio/announcer/round-start-2.mp3"
+      ],
+      "gain": 0.8,
+      "cooldownMs": 3000,
+      "maxConcurrent": 1
+    },
+    "taunt": {
+      "files": [
+        "assets/audio/sfx/yooooooooooooo.mp3",
+        "assets/audio/sfx/kickme.mp3",
+        "assets/audio/sfx/nog.mp3"
+      ],
+      "gain": 0.55,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "mapFlavorIntro": {
+      "files": [
+        "assets/audio/sfx/heycharlie.mp3",
+        "assets/audio/sfx/letsgo.mp3"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 10000,
+      "maxConcurrent": 1
+    },
+    "mapFlavorAnnounce": {
+      "files": [
+        "assets/audio/sfx/up.mp3",
+        "assets/audio/sfx/die.mp3",
+        "assets/audio/sfx/4die.mp3",
+        "assets/audio/sfx/pcdie.mp3"
+      ],
+      "gain": 1.3,
+      "cooldownMs": 1500,
+      "maxConcurrent": 1
+    },
+    "dragonRoar": {
+      "files": [
+        "assets/audio/sfx/dragon-roar.mp3",
+        "assets/audio/sfx/dragon-roar2.mp3"
+      ],
+      "gain": 0.425,
+      "cooldownMs": 2000,
+      "maxConcurrent": 2
+    },
+    "dragonRoarBig": {
+      "files": [
+        "assets/audio/sfx/dragon-roar-angry.mp3"
+      ],
+      "gain": 0.5,
+      "cooldownMs": 1500,
+      "maxConcurrent": 2
+    },
+    "uiClick": {
+      "files": [
+        "assets/audio/sfx/ui-click.mp3"
+      ],
+      "gain": 0.55,
+      "cooldownMs": 60,
+      "maxConcurrent": 3
+    },
+    "uiHover": {
+      "files": [
+        "assets/audio/sfx/ui-hover.mp3"
+      ],
+      "gain": 0.3,
+      "cooldownMs": 40,
+      "maxConcurrent": 3
+    },
+    "uiType": {
+      "files": [
+        "assets/audio/sfx/ui-type.mp3"
+      ],
+      "gain": 0.25,
+      "cooldownMs": 25,
+      "maxConcurrent": 4
+    },
+    "uiDenied": {
+      "files": [
+        "assets/audio/sfx/lab/ui-denied.wav"
+      ],
+      "gain": 0.31,
+      "cooldownMs": 250,
+      "maxConcurrent": 2
+    },
+    "uiCancel": {
+      "files": [
+        "assets/audio/sfx/lab/ui-cancel.wav"
+      ],
+      "gain": 0.33,
+      "cooldownMs": 60,
+      "maxConcurrent": 3
+    },
+    "panelOpen": {
+      "files": [
+        "assets/audio/sfx/lab/panel-open.wav"
+      ],
+      "gain": 0.24,
+      "cooldownMs": 150,
+      "maxConcurrent": 2
+    },
+    "shopPurchase": {
+      "files": [
+        "assets/audio/sfx/lab/shop-purchase.wav"
+      ],
+      "gain": 0.38,
+      "cooldownMs": 250,
+      "maxConcurrent": 2
+    },
+    "goldGain": {
+      "files": [
+        "assets/audio/sfx/lab/gold-gain.wav"
+      ],
+      "gain": 1.51,
+      "cooldownMs": 300,
+      "maxConcurrent": 2
+    },
+    "lowHealth": {
+      "files": [
+        "assets/audio/sfx/lab/low-health.wav"
+      ],
+      "gain": 1.0,
+      "cooldownMs": 3000,
+      "maxConcurrent": 1
+    },
+    "abilityRankUp": {
+      "files": [
+        "assets/audio/sfx/lab/ability-rank-up.mp3"
+      ],
+      "gain": 0.24,
+      "cooldownMs": 250,
+      "maxConcurrent": 2
+    },
+    "settlementReveal": {
+      "files": [
+        "assets/audio/sfx/lab/settlement-reveal.mp3"
+      ],
+      "gain": 0.36,
+      "cooldownMs": 1000,
+      "maxConcurrent": 1
+    },
+    "vsReveal": {
+      "files": [
+        "assets/audio/sfx/lab/vs-reveal.mp3"
+      ],
+      "gain": 1.58,
+      "cooldownMs": 2000,
+      "maxConcurrent": 1
+    },
+    "matchStartGong": {
+      "files": [
+        "assets/audio/sfx/lab/match-start-gong.wav"
+      ],
+      "gain": 1.6,
+      "cooldownMs": 3000,
+      "maxConcurrent": 1
+    },
+    "matchEndGong": {
+      "files": [
+        "assets/audio/sfx/lab/match-end-gong.mp3"
+      ],
+      "gain": 1.11,
+      "cooldownMs": 3000,
+      "maxConcurrent": 1
+    },
+    "levelUpJingle": {
+      "files": [
+        "assets/audio/sfx/lab/level-up-jingle.mp3"
+      ],
+      "gain": 1.17,
+      "cooldownMs": 1000,
+      "maxConcurrent": 1
+    },
+    "exUnlockSting": {
+      "files": [
+        "assets/audio/sfx/lab/magic-holy.mp3"
+      ],
+      "gain": 1.6,
+      "cooldownMs": 2500,
+      "maxConcurrent": 1
+    },
+    "heal": {
+      "files": [
+        "assets/audio/sfx/lab/magic-heal.mp3"
+      ],
+      "gain": 0.41,
+      "cooldownMs": 400,
+      "maxConcurrent": 2
+    },
+    "buffApply": {
+      "files": [
+        "assets/audio/sfx/lab/magic-buff.mp3"
+      ],
+      "gain": 0.23,
+      "cooldownMs": 400,
+      "maxConcurrent": 2
+    },
+    "explosion": {
+      "files": [
+        "assets/audio/sfx/lab/explosion.mp3"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 300,
+      "maxConcurrent": 3
+    },
+    "uiHoverCyber": {
+      "files": [
+        "assets/audio/sfx/fx/ui-hover-cyber.wav"
+      ],
+      "gain": 0.3,
+      "cooldownMs": 55,
+      "maxConcurrent": 3
+    },
+    "draftConfirm": {
+      "files": [
+        "assets/audio/sfx/fx/draft-confirm.wav"
+      ],
+      "gain": 1.0,
+      "cooldownMs": 200,
+      "maxConcurrent": 1
+    }
+  }
+}

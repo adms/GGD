@@ -1,0 +1,22 @@
+# deploy/kind/kind-config.yaml — one-click local cluster.
+#
+# extraMounts bind the repo's ./content (RO) and ./data (RW) into the kind
+# node at /ggd/content and /ggd/data; values-local.yaml then hostPath-mounts
+# them into the pods. Host-edited content JSON is live in-cluster, and data/
+# persists across pod/cluster restarts (backup = cp -r ./data) — infra-10.
+#
+# kind requires ABSOLUTE hostPath values, so this file is a template:
+# `make up` substitutes __REPO__ with the repo root before creating the
+# cluster (sed "s|__REPO__|$(pwd)|"). Don't `kind create cluster` with this
+# file directly.
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+    extraMounts:
+      - hostPath: __REPO__/content
+        containerPath: /ggd/content
+        readOnly: true
+      - hostPath: __REPO__/data
+        containerPath: /ggd/data
+        readOnly: false

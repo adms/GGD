@@ -1,0 +1,62 @@
+{
+  "id": "imported.fox2",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/fox2.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Spell",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Foot Right": {
+      "x": 0.0779,
+      "y": 0.0593,
+      "z": 0.0847
+    },
+    "Foot Left": {
+      "x": 0.0779,
+      "y": 0.0593,
+      "z": -0.086
+    },
+    "Hand Right": {
+      "x": 0.0144,
+      "y": 0.8736,
+      "z": 0.1958
+    },
+    "Hand Left": {
+      "x": 0.0144,
+      "y": 0.8736,
+      "z": -0.1969
+    },
+    "Head": {
+      "x": 0.008,
+      "y": 1.7156,
+      "z": 0.007
+    },
+    "Chest": {
+      "x": -0.0026,
+      "y": 1.373,
+      "z": 0.0024
+    },
+    "Origin": {
+      "x": -0.0098,
+      "y": -0.0035,
+      "z": 0.0041
+    },
+    "OverHead": {
+      "x": -0.0098,
+      "y": 1.9525,
+      "z": 0.0041
+    },
+    "Weapon": {
+      "x": 0.0779,
+      "y": 0.0593,
+      "z": 0.0847
+    }
+  }
+}

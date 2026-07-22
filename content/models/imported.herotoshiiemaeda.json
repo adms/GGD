@@ -1,0 +1,62 @@
+{
+  "id": "imported.herotoshiiemaeda",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/herotoshiiemaeda.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Spell",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Hand Right": {
+      "x": -0.003,
+      "y": 0.8654,
+      "z": 0.5131
+    },
+    "Weapon": {
+      "x": 1.4364,
+      "y": 0.8335,
+      "z": 0.4875
+    },
+    "Hand Left": {
+      "x": 0.0253,
+      "y": 0.8685,
+      "z": -0.5283
+    },
+    "Head -": {
+      "x": 0.0435,
+      "y": 1.68,
+      "z": -0.0012
+    },
+    "Chest": {
+      "x": -0.0312,
+      "y": 1.0717,
+      "z": -0.0018
+    },
+    "Foot Right": {
+      "x": 0.018,
+      "y": 0.1837,
+      "z": 0.212
+    },
+    "Foot Left": {
+      "x": 0.0208,
+      "y": 0.1825,
+      "z": -0.236
+    },
+    "Origin": {
+      "x": 0.0,
+      "y": -0.002,
+      "z": 0.0
+    },
+    "Overhead": {
+      "x": 0.0036,
+      "y": 1.704,
+      "z": -0.0012
+    }
+  }
+}

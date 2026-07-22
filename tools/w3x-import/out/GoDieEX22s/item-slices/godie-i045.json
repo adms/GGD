@@ -1,0 +1,37 @@
+{
+  "contentId": "godie-i045",
+  "nameZh": "寂靜刃 - 詠月",
+  "gold": 4000,
+  "kind": "effect",
+  "description": "飾品\r\n施展需求魔力：125點\r\n技能冷卻時間：60秒\r\n\r\n效能\r\n封默刀氣\r\n魔力+300\r\n魔力回復速度+200%\r\n\r\n解說\r\n點選使用封默刀氣，指定目標無法使用技能6秒。以孤獨為象徵的劍，從鑄造完成經過了將近三個世紀才解封，寂靜的歲月讓詠月得以吸收驚人的靈力，解封後三天三夜，方圓百里的咒語都被詠月的力量所干涉封阻，因此被稱為\"寂靜刃\"。",
+  "abilities": [
+    {
+      "rawcode": "A0EP",
+      "name": "寂靜刃",
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {
+        "1": {
+          "1": 0.0
+        },
+        "3": {
+          "1": 0.0
+        }
+      }
+    },
+    {
+      "rawcode": "AIbm",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A03X",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    }
+  ]
+}

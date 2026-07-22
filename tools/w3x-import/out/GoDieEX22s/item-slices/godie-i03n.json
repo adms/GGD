@@ -1,0 +1,16 @@
+{
+  "contentId": "godie-i03n",
+  "nameZh": "餅乾",
+  "gold": 150,
+  "kind": "effect",
+  "description": "效能\r\n生命回復500\r\n\r\n解說\r\n把可憐的小生物轉變成餅乾，看起來不好吃普烏可能還會吐掉。",
+  "abilities": [
+    {
+      "rawcode": "A0CW",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    }
+  ]
+}

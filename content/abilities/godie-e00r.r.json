@@ -1,0 +1,40 @@
+{
+  "id": "godie-e00r.r",
+  "schema": "ability@1",
+  "name": "59-04 野戰型陽電子砲",
+  "description": "[主動攻擊]\n75秒冷卻時間\n\n集中大量能源，以求一擊必殺的陽電子砲,能夠對前方一直線的敵人造成750點傷害。",
+  "slot": "R",
+  "castType": "skillshot",
+  "maxRank": 3,
+  "cooldown": [
+    75.0,
+    75.0,
+    75.0
+  ],
+  "manaCost": [
+    250.0,
+    400.0,
+    550.0
+  ],
+  "range": 8.25,
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "imported.wave",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              750.0,
+              1200.0,
+              1650.0
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast"
+}

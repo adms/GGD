@@ -1,0 +1,49 @@
+{
+  "id": "godie-h001.w",
+  "schema": "ability@1",
+  "name": "41-02 地裂術",
+  "description": "[主動攻擊]\n35秒冷卻時間\n中等類型的法術，可以給予一直線敵人200點損害，並造成極短暫的暈眩。",
+  "slot": "W",
+  "castType": "skillshot",
+  "maxRank": 4,
+  "cooldown": [
+    35.0,
+    35.0,
+    35.0,
+    35.0
+  ],
+  "manaCost": [
+    80.0,
+    110.0,
+    140.0,
+    170.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "imported.wave",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              90.0,
+              90.0,
+              90.0,
+              90.0
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "burnstun",
+          "duration": 1.2,
+          "stun": true
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast"
+}

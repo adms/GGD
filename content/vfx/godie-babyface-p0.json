@@ -1,0 +1,78 @@
+{
+  "id": "godie-babyface-p0",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.05,
+    "angleDeg": 1.0
+  },
+  "mode": "continuous",
+  "rate": 50.0,
+  "lifetimeSec": {
+    "min": 0.3,
+    "max": 0.3
+  },
+  "size": {
+    "start": 1.111,
+    "end": 1.111
+  },
+  "color": {
+    "start": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "end": [
+      0.247,
+      0.0,
+      0.502,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    ],
+    [
+      0.3,
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.588
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.247,
+        0.0,
+        0.502,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      1.111
+    ],
+    [
+      0.3,
+      1.111
+    ],
+    [
+      1,
+      1.111
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/wc3/babyface.png"
+}

@@ -1,0 +1,50 @@
+{
+  "id": "godie-u00o.q",
+  "name": "76-01 伸縮自如的橡膠戰斧",
+  "description": "[主動攻擊]\n45秒冷卻時間\n\n利用橡膠果實的力量，將腿拉長，由上而下重擊敵人，造成傷害250點，並於目標落下處範圍250內，造成週遭部隊225點額外傷害。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "manaCost": [
+    80.0,
+    110.0,
+    140.0,
+    170.0
+  ],
+  "range": 5.5,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          75.0,
+          75.0,
+          75.0,
+          75.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.225
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "root",
+      "duration": 0.3,
+      "root": true
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

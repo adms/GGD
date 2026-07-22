@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-edge
+  labels:
+    {{- include "ggd.labels" . | nindent 4 }}
+    app.kubernetes.io/name: edge
+spec:
+  replicas: {{ .Values.edge.replicas }}
+  selector:
+    matchLabels:
+      {{- include "ggd.selector" (dict "root" . "name" "edge") | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "ggd.labels" . | nindent 8 }}
+        {{- include "ggd.selector" (dict "root" . "name" "edge") | nindent 8 }}
+      annotations:
+        # restart edge when the nginx config changes
+        checksum/nginx-conf: {{ .Files.Get "files/nginx.conf" | sha256sum }}
+    spec:
+      securityContext:
+        runAsNonRoot: true
+      containers:
+        - name: nginx
+          image: {{ .Values.edge.image | quote }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.edge.port }}
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 2
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          {{- with .Values.edge.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: nginx-conf
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+              readOnly: true
+            - name: content
+              mountPath: /srv/content
+              readOnly: true
+            {{- if .Values.dev.enabled }}
+            - name: dev-routes
+              mountPath: /etc/nginx/ggd-dev
+              readOnly: true
+            {{- end }}
+      volumes:
+        - name: nginx-conf
+          configMap:
+            name: {{ .Release.Name }}-edge-nginx
+        - name: content
+          {{- if .Values.content.hostPath }}
+          hostPath:
+            path: {{ .Values.content.hostPath | quote }}
+            type: Directory
+          {{- else if .Values.content.existingClaim }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.content.existingClaim | quote }}
+            readOnly: true
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+        {{- if .Values.dev.enabled }}
+        - name: dev-routes
+          configMap:
+            name: {{ .Release.Name }}-edge-dev
+        {{- end }}

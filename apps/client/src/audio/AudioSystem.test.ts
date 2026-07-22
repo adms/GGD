@@ -1,0 +1,492 @@
+/**
+ * audio: AudioSystem integration over a FAKE WebAudio graph + fetch. Covers
+ * the autoplay unlock (no context before a gesture), the single-bed crossfade
+ * (scene swap vs. same-scene no-op), SFX cooldown/concurrency end-to-end
+ * through the real gate, and graceful degradation when a file 404s / the map
+ * is missing (never throws into the caller).
+ */
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+import { cover } from "@ggd/shared/testkit/cover";
+import { AudioSystem } from "./AudioSystem";
+import { AudioSettingsStore } from "./audioSettings";
+import type { AudioMap } from "./types";
+
+// ---------------------------------------------------------------------------
+// fake WebAudio
+// ---------------------------------------------------------------------------
+
+class FakeParam {
+  value = 0;
+  cancelScheduledValues(): void {}
+  setValueCurveAtTime(curve: Float32Array): void {
+    this.value = curve[curve.length - 1] ?? this.value;
+  }
+  setValueAtTime(v: number): void {
+    this.value = v;
+  }
+  linearRampToValueAtTime(v: number): void {
+    this.value = v;
+  }
+}
+class FakeGain {
+  gain = new FakeParam();
+  connect(): void {}
+  disconnect(): void {}
+}
+class FakePanner {
+  pan = new FakeParam();
+  connect(): void {}
+  disconnect(): void {}
+}
+class FakeSource {
+  buffer: unknown = null;
+  loop = false;
+  onended: (() => void) | null = null;
+  started = false;
+  stopped = false;
+  constructor(private ctx: FakeCtx) {}
+  connect(): void {}
+  disconnect(): void {}
+  start(): void {
+    this.started = true;
+    this.ctx.started.push(this);
+  }
+  stop(): void {
+    this.stopped = true;
+  }
+  /** test helper: simulate the clip finishing */
+  end(): void {
+    this.onended?.();
+  }
+}
+class FakeCtx {
+  currentTime = 0;
+  destination = {};
+  state: "suspended" | "running" | "closed" = "suspended";
+  resumed = 0;
+  closed = false;
+  started: FakeSource[] = [];
+  gains: FakeGain[] = [];
+  panners: FakePanner[] = [];
+  createGain(): FakeGain {
+    const g = new FakeGain();
+    this.gains.push(g);
+    return g;
+  }
+  createStereoPanner(): FakePanner {
+    const p = new FakePanner();
+    this.panners.push(p);
+    return p;
+  }
+  createBufferSource(): FakeSource {
+    return new FakeSource(this);
+  }
+  decodeAudioData(_bytes: ArrayBuffer): Promise<AudioBuffer> {
+    return Promise.resolve({ duration: 1 } as unknown as AudioBuffer);
+  }
+  resume(): Promise<void> {
+    this.resumed++;
+    this.state = "running";
+    return Promise.resolve();
+  }
+  close(): Promise<void> {
+    this.closed = true;
+    this.state = "closed";
+    return Promise.resolve();
+  }
+}
+
+const MAP: AudioMap = {
+  bgm: {
+    menu: { file: "assets/audio/bgm/menu.mp3", loop: true, gain: 1 },
+    combat: { file: "assets/audio/bgm/combat.mp3", loop: true, gain: 0.8 },
+    battleStart: { file: "assets/audio/bgm/battleStart.mp3", loop: false },
+    victory: { file: "assets/audio/bgm/victory.mp3", loop: false },
+  },
+  sfx: {
+    death: { files: ["assets/audio/sfx/die.mp3"], cooldownMs: 300, maxConcurrent: 2 },
+    missing: { files: ["assets/audio/sfx/nope.mp3"], cooldownMs: 0, maxConcurrent: 4 },
+  },
+};
+
+/** a fetch that serves the map + any assets/ path, and 404s "nope". */
+function okFetch(map: AudioMap = MAP): (url: string) => Promise<Response> {
+  return (url: string) => {
+    if (url.endsWith("config/audio-map.json")) {
+      return Promise.resolve({
+        ok: true,
+        status: 200,
+        json: () => Promise.resolve({ id: "audio-map", schema: "config.audio-map@1", ...map }),
+      } as Response);
+    }
+    if (url.includes("nope.mp3")) {
+      return Promise.resolve({ ok: false, status: 404 } as Response);
+    }
+    if (url.includes("assets/")) {
+      return Promise.resolve({ ok: true, status: 200, arrayBuffer: () => Promise.resolve(new ArrayBuffer(8)) } as Response);
+    }
+    return Promise.resolve({ ok: false, status: 404 } as Response);
+  };
+}
+
+/** drain the fetch→arrayBuffer→decode→then microtask chain (several hops) */
+const flush = async (): Promise<void> => {
+  for (let i = 0; i < 12; i++) await Promise.resolve();
+};
+
+function build(overrides: Partial<{
+  fetchFn: (url: string) => Promise<Response>;
+  now: () => number;
+  rng: () => number;
+}> = {}): { sys: AudioSystem; ctxRef: () => FakeCtx | null } {
+  let ctx: FakeCtx | null = null;
+  const sys = new AudioSystem({
+    fetchFn: overrides.fetchFn ?? okFetch(),
+    now: overrides.now ?? (() => 0),
+    rng: overrides.rng ?? (() => 0),
+    crossfadeMs: 10,
+    warn: () => {},
+    settings: new AudioSettingsStore({ getItem: () => null, setItem: () => {} }),
+    ctxFactory: () => {
+      ctx = new FakeCtx();
+      return ctx as unknown as AudioContext;
+    },
+  });
+  return { sys, ctxRef: () => ctx };
+}
+
+describe("AudioSystem unlock (audio-unlock)", () => {
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => vi.useRealTimers());
+
+  it("creates no AudioContext and plays nothing before the first gesture", async () => {
+    cover("audio-unlock");
+    const { sys, ctxRef } = build();
+    await sys.loadMap();
+    sys.playBgm("menu"); // records scene, but locked
+    await flush();
+    expect(ctxRef()).toBeNull(); // no context yet
+    expect(sys.isUnlocked).toBe(false);
+    expect(sys.scene).toBe("menu"); // remembered for unlock
+    sys.dispose();
+  });
+
+  it("resumes the context and starts the current scene on unlock()", async () => {
+    cover("audio-unlock");
+    const { sys, ctxRef } = build();
+    await sys.loadMap();
+    sys.playBgm("menu");
+    sys.unlock();
+    await flush();
+    const ctx = ctxRef();
+    expect(ctx).not.toBeNull();
+    expect(ctx!.resumed).toBeGreaterThan(0);
+    expect(sys.isUnlocked).toBe(true);
+    expect(sys.bedFile).toBe("assets/audio/bgm/menu.mp3");
+    sys.dispose();
+  });
+});
+
+describe("AudioSystem BGM swap (audio-bgm-swap)", () => {
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => vi.useRealTimers());
+
+  it("swaps the bed on a scene change and no-ops for the same scene", async () => {
+    cover("audio-bgm-swap");
+    const { sys, ctxRef } = build();
+    await sys.loadMap();
+    sys.unlock();
+    sys.playBgm("menu");
+    await flush();
+    expect(sys.bedFile).toBe("assets/audio/bgm/menu.mp3");
+    const startedAfterMenu = ctxRef()!.started.length;
+
+    // same scene again: no new source started, bed unchanged
+    sys.playBgm("menu");
+    await flush();
+    expect(ctxRef()!.started.length).toBe(startedAfterMenu);
+    expect(sys.bedFile).toBe("assets/audio/bgm/menu.mp3");
+
+    // different scene: new bed
+    sys.playBgm("combat");
+    await flush();
+    expect(sys.bedFile).toBe("assets/audio/bgm/combat.mp3");
+    expect(ctxRef()!.started.length).toBeGreaterThan(startedAfterMenu);
+    sys.dispose();
+  });
+
+  it("a one-shot sting plays without disturbing the bed", async () => {
+    cover("audio-bgm-swap");
+    const { sys, ctxRef } = build();
+    await sys.loadMap();
+    sys.unlock();
+    sys.playBgm("combat");
+    await flush();
+    expect(sys.bedFile).toBe("assets/audio/bgm/combat.mp3");
+    const before = ctxRef()!.started.length;
+    sys.playSting("battleStart");
+    await flush();
+    expect(ctxRef()!.started.length).toBe(before + 1); // sting started
+    expect(sys.bedFile).toBe("assets/audio/bgm/combat.mp3"); // bed untouched
+    sys.dispose();
+  });
+
+  // The login theme rotation (task #88) schedules its crossfade off the bed's
+  // OWN start time so each segment is a whole loop of the file that is really
+  // playing. That is not knowable from the scene value or from mount time: the
+  // bed does not start until the autoplay unlock, which can be far later.
+  it("reports when the CURRENT bed started, and only while one is playing", async () => {
+    cover("audio-bgm-swap");
+    let clock = 1000;
+    const { sys } = build({ now: () => clock });
+    await sys.loadMap();
+    sys.unlock();
+    expect(sys.bedStartedAtMs).toBeNull(); // nothing playing yet
+
+    sys.playBgm("menu");
+    await flush();
+    expect(sys.bedStartedAtMs).toBe(1000);
+
+    // time passing does NOT move the anchor — it is a start time, not "now"
+    clock = 9000;
+    expect(sys.bedStartedAtMs).toBe(1000);
+
+    // a swap re-anchors, which is what lets the rotation re-arm on a new bed
+    sys.playBgm("combat");
+    await flush();
+    expect(sys.bedStartedAtMs).toBe(9000);
+
+    // authored silence stops the bed and clears the anchor
+    clock = 12_000;
+    sys.playBgm(null);
+    await flush();
+    expect(sys.bedStartedAtMs).toBeNull();
+    sys.dispose();
+  });
+});
+
+describe("AudioSystem SFX gating (audio-cooldown-gate / audio-maxconcurrent-cap)", () => {
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => vi.useRealTimers());
+
+  it("throttles a same-frame burst by cooldown", async () => {
+    cover("audio-cooldown-gate");
+    let t = 1000;
+    const { sys } = build({ now: () => t });
+    await sys.loadMap();
+    sys.unlock();
+    await flush();
+    expect(sys.playSfx("death")).toBe(true); // t=1000
+    expect(sys.playSfx("death")).toBe(false); // still 1000, < 300ms
+    t = 1300;
+    expect(sys.playSfx("death")).toBe(true); // 300ms later
+    sys.dispose();
+  });
+
+  it("caps concurrent voices and frees a slot when one ends", async () => {
+    cover("audio-maxconcurrent-cap");
+    const { sys } = build({ now: () => 0 });
+    await sys.loadMap();
+    sys.unlock();
+    await flush();
+    // "missing" has cooldown 0, cap 4 — but its clip 404s, so each acquired
+    // voice is released again once the decode resolves null (never throws).
+    expect(() => {
+      for (let i = 0; i < 10; i++) sys.playSfx("missing");
+    }).not.toThrow();
+    await flush();
+    expect(sys.activeVoices("missing")).toBe(0); // all released after 404
+    sys.dispose();
+  });
+});
+
+describe("AudioSystem positioned SFX (audio-sfx-volume-pan)", () => {
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => vi.useRealTimers());
+
+  it("scales the voice gain by the per-call volume and inserts a StereoPanner", async () => {
+    cover("audio-sfx-volume-pan");
+    const { sys, ctxRef } = build({ now: () => 0 });
+    await sys.loadMap();
+    sys.unlock();
+    await flush();
+    const ctx = ctxRef()!;
+    const gainsBefore = ctx.gains.length; // master + bgm + sfx graph gains
+    expect(sys.playSfx("death", { volume: 0.5, pan: -0.5 })).toBe(true);
+    await flush();
+    // one new voice gain, scaled by the volume (death has no authored gain → 1 × 0.5)
+    expect(ctx.gains.length).toBe(gainsBefore + 1);
+    expect(ctx.gains[ctx.gains.length - 1]!.gain.value).toBeCloseTo(0.5);
+    // a StereoPanner was created and set to the (clamped) pan
+    expect(ctx.panners.length).toBe(1);
+    expect(ctx.panners[0]!.pan.value).toBeCloseTo(-0.5);
+    sys.dispose();
+  });
+
+  it("clamps an out-of-range pan and floors a negative volume at 0", async () => {
+    cover("audio-sfx-volume-pan");
+    const { sys, ctxRef } = build({ now: () => 0 });
+    await sys.loadMap();
+    sys.unlock();
+    await flush();
+    const ctx = ctxRef()!;
+    expect(sys.playSfx("death", { volume: -3, pan: 5 })).toBe(true);
+    await flush();
+    expect(ctx.gains[ctx.gains.length - 1]!.gain.value).toBe(0); // never negative
+    expect(ctx.panners[0]!.pan.value).toBeCloseTo(1); // clamped into [-1,1]
+    sys.dispose();
+  });
+
+  it("omitting pan inserts no panner; omitting volume keeps the authored gain", async () => {
+    cover("audio-sfx-volume-pan");
+    const { sys, ctxRef } = build({ now: () => 0 });
+    await sys.loadMap();
+    sys.unlock();
+    await flush();
+    const ctx = ctxRef()!;
+    expect(sys.playSfx("death")).toBe(true); // no opts → back-compat path
+    await flush();
+    expect(ctx.panners.length).toBe(0); // centred → no StereoPanner node
+    expect(ctx.gains[ctx.gains.length - 1]!.gain.value).toBeCloseTo(1); // authored gain (default 1)
+    sys.dispose();
+  });
+});
+
+describe("AudioSystem graceful degradation (audio-missing-file)", () => {
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => vi.useRealTimers());
+
+  it("a 404 clip releases its voice and never throws", async () => {
+    cover("audio-missing-file");
+    const { sys } = build();
+    await sys.loadMap();
+    sys.unlock();
+    await flush();
+    expect(() => sys.playSfx("missing")).not.toThrow();
+    await flush();
+    expect(sys.activeVoices("missing")).toBe(0);
+    sys.dispose();
+  });
+
+  it("a missing/!ok audio map runs silent: every call no-ops, nothing throws", async () => {
+    cover("audio-missing-file");
+    const fetch404 = (): Promise<Response> => Promise.resolve({ ok: false, status: 404 } as Response);
+    const { sys } = build({ fetchFn: fetch404 });
+    const ok = await sys.loadMap();
+    expect(ok).toBe(false);
+    sys.unlock();
+    expect(() => {
+      sys.playBgm("menu");
+      sys.playSfx("death");
+      sys.playSting("battleStart");
+    }).not.toThrow();
+    await flush();
+    expect(sys.bedFile).toBeNull(); // nothing to play
+    sys.dispose();
+  });
+
+  it("an unmapped event/scene is a silent no-op", async () => {
+    cover("audio-missing-file");
+    const { sys } = build();
+    await sys.loadMap();
+    sys.unlock();
+    await flush();
+    expect(sys.playSfx("no-such-event")).toBe(false);
+    expect(() => sys.playBgm("champSelect")).not.toThrow(); // not in this map
+    await flush();
+    sys.dispose();
+  });
+
+  it("degrades to silence when no AudioContext is available (SSR / old browser)", async () => {
+    cover("audio-missing-file");
+    const sys = new AudioSystem({
+      fetchFn: okFetch(),
+      ctxFactory: () => null, // no WebAudio
+      warn: () => {},
+      settings: new AudioSettingsStore({ getItem: () => null, setItem: () => {} }),
+    });
+    await sys.loadMap();
+    expect(() => {
+      sys.unlock();
+      sys.playBgm("menu");
+      sys.playSfx("death");
+    }).not.toThrow();
+    await flush();
+    expect(sys.bedFile).toBeNull();
+    sys.dispose();
+  });
+});
+
+describe("AudioSystem volume application (audio-volume-math)", () => {
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => vi.useRealTimers());
+
+  it("pushes master/bgm/sfx onto the graph, mute zeroes master", async () => {
+    cover("audio-volume-math");
+    const settings = new AudioSettingsStore({ getItem: () => null, setItem: () => {} });
+    let ctx: FakeCtx | null = null;
+    const sys = new AudioSystem({
+      fetchFn: okFetch(),
+      warn: () => {},
+      settings,
+      ctxFactory: () => {
+        ctx = new FakeCtx();
+        return ctx as unknown as AudioContext;
+      },
+    });
+    await sys.loadMap();
+    sys.unlock(); // builds the graph + applies defaults (.8/.5/.9)
+    await flush();
+    const nodes = ctx!;
+    // graph nodes exist; set explicit volumes and re-read
+    sys.setVolume("master", 0.4);
+    sys.setVolume("bgm", 0.25);
+    sys.setVolume("sfx", 0.6);
+    expect(settings.get()).toMatchObject({ master: 0.4, bgm: 0.25, sfx: 0.6 });
+    sys.setMuted(true);
+    expect(settings.get().muted).toBe(true);
+    expect(nodes).toBeTruthy();
+    sys.dispose();
+    expect(ctx!.closed).toBe(true); // dispose closes the context
+  });
+});
+
+describe("AudioSystem playClip voice seam (voice-playclip)", () => {
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => vi.useRealTimers());
+
+  it("is unlock-gated: before the first gesture nothing plays, after it does", async () => {
+    cover("voice-playclip");
+    const { sys, ctxRef } = build();
+    await sys.loadMap();
+    expect(sys.playClip("assets/audio/voice/sela-sel1.mp3")).toBe(false); // locked
+    await flush();
+    expect(ctxRef()?.started.length ?? 0).toBe(0);
+    sys.unlock();
+    await flush();
+    const before = ctxRef()!.started.length;
+    expect(sys.playClip("assets/audio/voice/sela-sel1.mp3")).toBe(true);
+    await flush();
+    expect(ctxRef()!.started.length).toBe(before + 1); // one voice started
+    sys.dispose();
+  });
+
+  it("rides the SFX bus (bus mute zeroes it) and 404s degrade silently", async () => {
+    cover("voice-playclip");
+    const { sys, ctxRef } = build();
+    await sys.loadMap();
+    sys.unlock();
+    await flush();
+    const ctx = ctxRef()!;
+    // gains[2] is the sfx bus (master, bgm, sfx created in ensureCtx order)
+    sys.setBusMuted("sfx", true);
+    expect(ctx.gains[2]!.gain.value).toBe(0); // playClip voices are silenced too
+    sys.setBusMuted("sfx", false);
+    const started = ctx.started.length;
+    expect(() => sys.playClip("assets/audio/sfx/nope.mp3")).not.toThrow(); // 404 clip
+    expect(sys.playClip("")).toBe(false); // empty path no-op
+    await flush();
+    expect(ctx.started.length).toBe(started); // nothing started for the 404
+    sys.dispose();
+  });
+});

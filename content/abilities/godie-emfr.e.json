@@ -1,0 +1,45 @@
+{
+  "id": "godie-emfr.e",
+  "name": "15-03 雷電風暴",
+  "description": "[主動攻擊]\n45秒冷卻時間\n\n用魔法元素創造出來充滿雷元素的風暴攻擊範圍內的敵人給予400+智慧*4點的瞬間傷害，之後每秒會承受25點殘餘電流的傷害，持續2秒。",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "manaCost": [
+    275.0,
+    340.0,
+    405.0,
+    470.0
+  ],
+  "range": 8.25,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          2.0,
+          2.0,
+          2.0,
+          2.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.009
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "radius": 5.13,
+  "schema": "ability@1"
+}

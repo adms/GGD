@@ -1,0 +1,16 @@
+{
+  "id": "godie-herocloudstrife-r0",
+  "schema": "ribbon@1",
+  "texture": "assets/textures/particles/wc3/ribbonblur1.png",
+  "widthAbove": 0.571,
+  "widthBelow": 0.571,
+  "lifespanSec": 0.15,
+  "color": [
+    1.0,
+    1.0,
+    1.0,
+    0.35
+  ],
+  "blendMode": "additive",
+  "anchorBone": "Bone_Hand_R"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "basic-attack",
+  "schema": "projectile@1",
+  "speed": 20,
+  "maxRange": 16,
+  "hitRadius": 0.4,
+  "vfxKey": "fx.basic-attack",
+  "meshShape": "bolt"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "godie-opgh.r",
+  "name": "32-04 狂龍霸體",
+  "description": "[輔助]\n45秒冷卻時間\n\n將青龍之力爆發出來，可增加攻擊速度50%及移動速度12%，持續30秒。",
+  "slot": "R",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0
+  ],
+  "manaCost": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "pctAdd",
+          "value": 0.5
+        },
+        {
+          "stat": "ms",
+          "op": "pctAdd",
+          "value": 0.12
+        }
+      ],
+      "duration": 30.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/godie-opgh.r.png"
+}

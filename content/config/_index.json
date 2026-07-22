@@ -1,0 +1,72 @@
+{
+  "collection": "config",
+  "hash": "918d9ad101c0",
+  "entries": [
+    {
+      "id": "ambient-vfx",
+      "path": "config/ambient-vfx.json",
+      "hash": "00af4aa3e6f9",
+      "size": 1371
+    },
+    {
+      "id": "arena-rules",
+      "path": "config/arena-rules.json",
+      "hash": "c17263e5a22b",
+      "size": 1195
+    },
+    {
+      "id": "audio-map",
+      "path": "config/audio-map.json",
+      "hash": "8ce227c2ecbe",
+      "size": 11983
+    },
+    {
+      "id": "champion-voices",
+      "path": "config/champion-voices.json",
+      "hash": "6b05cd6f175c",
+      "size": 12072
+    },
+    {
+      "id": "combat-env",
+      "path": "config/combat-env.json",
+      "hash": "9890a8a69d0e",
+      "size": 479
+    },
+    {
+      "id": "config.match",
+      "path": "config/config.match.json",
+      "hash": "f53c37eb0238",
+      "size": 757
+    },
+    {
+      "id": "gore",
+      "path": "config/gore.json",
+      "hash": "89daaf3c38c9",
+      "size": 415
+    },
+    {
+      "id": "icon-plan",
+      "path": "config/icon-plan.json",
+      "hash": "b74eb31e900d",
+      "size": 58858
+    },
+    {
+      "id": "store",
+      "path": "config/store.json",
+      "hash": "3f285e0b0493",
+      "size": 222
+    },
+    {
+      "id": "unit-tints",
+      "path": "config/unit-tints.json",
+      "hash": "dd6ca8bb4e82",
+      "size": 25004
+    },
+    {
+      "id": "victory-taunts",
+      "path": "config/victory-taunts.json",
+      "hash": "0fccc289c0ff",
+      "size": 108780
+    }
+  ]
+}

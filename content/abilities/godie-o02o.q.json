@@ -1,0 +1,46 @@
+{
+  "id": "godie-o02o.q",
+  "schema": "ability@1",
+  "name": "87-01 大紅蓮斬",
+  "description": "[主動攻擊]\n35秒冷卻時間\n\n氣貫長槍，以電光石火之速回旋猛刺，其勢威猛，似可弒殺鬼神，造成前方敵方部隊250點傷害。",
+  "slot": "Q",
+  "castType": "skillshot",
+  "maxRank": 5,
+  "cooldown": [
+    35.0,
+    35.0,
+    35.0,
+    35.0,
+    35.0
+  ],
+  "manaCost": [
+    75.0,
+    175.0,
+    275.0,
+    275.0,
+    275.0
+  ],
+  "range": 5.5,
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "imported.wave",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              250.0,
+              550.0,
+              850.0,
+              0.0,
+              0.0
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast"
+}

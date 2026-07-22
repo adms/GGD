@@ -1,0 +1,30 @@
+{
+  "id": "godie-h02v.ex",
+  "name": "92-002 最終戈壁",
+  "description": "[輔助]\n0秒冷卻時間\n\n人人討厭的馬勒戈壁最終進化版，可以同時搶錢、搶糧、搶娘們(誤)，馬勒戈壁發動時每秒可以額外奪得75原木。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    120.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

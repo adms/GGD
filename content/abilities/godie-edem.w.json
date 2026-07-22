@@ -1,0 +1,54 @@
+{
+  "id": "godie-edem.w",
+  "name": "45-02 千鳥流",
+  "description": "[主動攻擊]\n23秒冷卻時間\n\n千鳥流就是將全身充滿千鳥的雷電，使周圍敵人受到雷電傷害75點生命值與麻痺減緩攻擊與移動速度各50%，持續1.5秒。",
+  "slot": "W",
+  "castType": "ground",
+  "maxRank": 5,
+  "cooldown": [
+    23.0,
+    23.0,
+    23.0,
+    35.0,
+    35.0
+  ],
+  "manaCost": [
+    70.0,
+    110.0,
+    150.0,
+    130.0,
+    130.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          75.0,
+          150.0,
+          225.0,
+          300.0,
+          300.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.9
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow40",
+      "duration": 1.5,
+      "moveSpeedMult": 0.5
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "radius": 7.79,
+  "schema": "ability@1"
+}

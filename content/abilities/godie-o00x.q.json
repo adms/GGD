@@ -1,0 +1,47 @@
+{
+  "id": "godie-o00x.q",
+  "name": "09-01 界王拳",
+  "description": "[輔助]\n45秒冷卻時間\n\n悟空在界王神那邊以10倍重力之下所習得的招數，可增加55點的額外傷害，但是將會每秒消耗生命10點。\n持續10秒。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 5,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0,
+    57.0
+  ],
+  "manaCost": [
+    60.0,
+    75.0,
+    100.0,
+    125.0,
+    175.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          55.0,
+          90.0,
+          125.0,
+          160.0,
+          200.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

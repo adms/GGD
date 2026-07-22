@@ -1,0 +1,30 @@
+{
+  "id": "godie-obla.ex",
+  "name": "33-001 喝了再上",
+  "description": "[輔助]\n1秒冷卻時間\n\n勞工階級間常會聽見的著名台詞，花費100元可以迅速獲得1500點生命恢復。\n\n並且可以讓動物拳法機率提升至20%",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    1.0
+  ],
+  "manaCost": [
+    120.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

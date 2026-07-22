@@ -1,0 +1,82 @@
+{
+  "id": "godie-blackhole1-p1",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.056,
+    "angleDeg": 7.5
+  },
+  "mode": "continuous",
+  "rate": 50.0,
+  "lifetimeSec": {
+    "min": 3.5,
+    "max": 3.5
+  },
+  "size": {
+    "start": 0.056,
+    "end": 0.007
+  },
+  "color": {
+    "start": [
+      1.0,
+      1.0,
+      1.0,
+      0.588
+    ],
+    "end": [
+      1.0,
+      1.0,
+      1.0,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.588
+      ]
+    ],
+    [
+      0.4,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.235
+      ]
+    ],
+    [
+      1.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.056
+    ],
+    [
+      0.4,
+      0.028
+    ],
+    [
+      1,
+      0.007
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/star_07.png",
+  "speed": {
+    "min": 0.3889,
+    "max": 0.7223
+  }
+}

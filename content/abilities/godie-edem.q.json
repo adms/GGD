@@ -1,0 +1,42 @@
+{
+  "id": "godie-edem.q",
+  "name": "45-01 火遁-豪火龍之術",
+  "description": "[傷害加成]\n35秒冷卻時間\n\n比豪火球之術更上一層的火遁忍術，將吐出的火焰轉化為龍形，給予範圍內敵人250+敏捷*2點傷害。",
+  "slot": "Q",
+  "castType": "ground",
+  "maxRank": 5,
+  "cooldown": [
+    35.0,
+    35.0,
+    35.0,
+    35.0,
+    35.0
+  ],
+  "manaCost": [
+    150.0,
+    180.0,
+    210.0,
+    240.0,
+    240.0
+  ],
+  "range": 14.67,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          250.0,
+          350.0,
+          450.0,
+          550.0,
+          650.0
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.firestorm",
+  "schema": "ability@1",
+  "radius": 6.05,
+  "targetsEnemies": true
+}

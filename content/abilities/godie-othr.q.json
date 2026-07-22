@@ -1,0 +1,47 @@
+{
+  "id": "godie-othr.q",
+  "name": "31-01 迴旋爪擊",
+  "description": "[主動攻擊]\n25秒冷卻時間\n\n傳說金鋼狼從夢X代摩天輪領悟的必殺技，以異常快的速度邊旋轉邊刺殺敵人，給予每個敵人力量*2+150點傷害。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 5,
+  "cooldown": [
+    30.0,
+    30.0,
+    30.0,
+    50.0,
+    50.0
+  ],
+  "manaCost": [
+    120.0,
+    150.0,
+    180.0,
+    275.0,
+    275.0
+  ],
+  "range": 14.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          80,
+          120,
+          160,
+          200,
+          240
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

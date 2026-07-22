@@ -1,0 +1,34 @@
+{
+  "id": "godie-hpb1.q",
+  "name": "07-01 臨、兵、鬥",
+  "description": "[輔助]\n65秒冷卻時間\n\n可抵擋對方負性魔法。",
+  "slot": "Q",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    65.0,
+    55.0,
+    45.0
+  ],
+  "manaCost": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ms",
+          "op": "pctAdd",
+          "value": 0.5
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

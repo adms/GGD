@@ -1,0 +1,226 @@
+{
+  "id": "godie-nplh",
+  "schema": "champion@1",
+  "name": "通靈人 - 麻倉葉",
+  "description": "故事：\n為了修練來到愛與和平，擁有安娜授予《超．占事略決》，得到了新的超越靈魂──阿隬陀丸in春雨in御神體之劍。\n(出自:通靈童子)\n\n推薦玩家 : 連技殺人\n上手度 : 難\n\n角色成長：\n力量 + 2.35\n敏捷 + 1.75\n智慧 + 2.00\n基礎跑速 315\n\n可學習的技能：\n超 - 占事略決、阿彌陀流真空佛陀斬、無無明亦無、劍之精靈",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "imported.ye-wuqi1",
+  "attackDamagePoint": 0.3,
+  "baseStats": {
+    "maxHealth": 420,
+    "healthRegen": 1.0,
+    "maxMana": 364,
+    "manaRegen": 1.68,
+    "ad": 37,
+    "ap": 0,
+    "armor": 10,
+    "mr": 28,
+    "as": 0.53,
+    "ms": 5.9,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 47,
+    "healthRegen": 0.12,
+    "maxMana": 24,
+    "manaRegen": 0.08,
+    "ad": 1.8,
+    "armor": 0.5,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-nplh.q",
+      "name": "16-03 無無明亦無",
+      "description": "[主動攻擊]\n40秒冷卻時間\n\n使對方瑪那無效化的招式，可以燒掉對方部隊350點瑪那。並在消耗瑪那的同時，給予目標肉體同等傷害。\n在附身合體的狀態下加倍瑪那耗損，並緩慢敵人2秒且解除目標增幅",
+      "slot": "Q",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        40.0,
+        40.0,
+        40.0,
+        40.0
+      ],
+      "manaCost": [
+        115.0,
+        165.0,
+        215.0,
+        265.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.bolt",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "perRank": [
+                  350.0,
+                  500.0,
+                  650.0,
+                  800.0
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "W": {
+      "id": "godie-nplh.w",
+      "name": "16-01 超．占事略決",
+      "description": "[魔法書]\n0秒冷卻時間\n\n內隱藏著許多失傳的法術。\n等級一可習得天雷 (主動攻擊)",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "E": {
+      "id": "godie-nplh.e",
+      "name": "16-04 劍之精靈",
+      "description": "[召喚]\n65秒冷卻時間\n\n召喚肉肉的阿彌陀丸來幫助麻倉葉，附身合體可暫時增加麻倉葉10點全能力。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        65.0,
+        65.0,
+        65.0
+      ],
+      "manaCost": [
+        100.0,
+        200.0,
+        300.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.48
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "R": {
+      "id": "godie-nplh.r",
+      "name": "16-02 阿彌陀流真空佛陀斬",
+      "description": "[主動攻擊]\n30秒冷卻時間\n\n阿彌陀流真空佛陀斬會以高超的拔刀術攻擊對方造成200點傷害並癱瘓行動1.5秒。\n在在附身合體的狀態下將會附加強化版的式神召來，給予敵人更強的傷害。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        40.0,
+        60.0,
+        80.0
+      ],
+      "range": 6.42,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              200.0,
+              300.0,
+              400.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "burnstun",
+          "duration": 1.3,
+          "stun": true
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ],
+  "exAbility": "godie-nplh.ex",
+  "icon": "assets/icons/champions/godie-nplh.png"
+}

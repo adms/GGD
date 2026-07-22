@@ -1,0 +1,249 @@
+{
+  "id": "announcer-cast",
+  "schema": "audio.announcer-cast@2",
+  "task": "#57",
+  "supersedes": "#57 first pass (novelty voices) → content/assets/audio/announcer/retired-jank-novelty/; before that #40 (uniform Kyoko), #34 (zh-TW)",
+  "direction": "惡搞 — but the JOKE IS THE LINE, NOT THE VOICE. The user's correction, verbatim: 「惡搞語音不應該是機械音 而是類似 google 語音那樣字正腔圓講話清楚但不帶感情所以嘲諷」 — the 惡搞 voice must NOT be a robot/novelty voice; it should be like Google's voice, 字正腔圓 (perfectly enunciated), clearly spoken, and emotionless, and THAT is what makes it mocking. Every voice in this pack is a real, standard, full-band system voice reading correct text in a language it actually speaks. The comedy comes entirely from the WRITING: transit-safety announcements, customer-service boilerplate, and bureaucratic sign-offs applied to a deathmatch, delivered absolutely flat. DO NOT recast this to character voices — that was tried, measured, and retired. DO NOT 'fix' the flat delivery: the flatness IS the performance.",
+  "note": "CANONICAL PAIRING TABLE. `zhText` is the Chinese display/caption text and the canonical meaning of the cue; `spoken` is what the voice actually says. They are deliberately NOT translations of each other on most lines — that gap is the joke, and pairing them here is what stops the two drifting apart. `content/audio-manifests/announcer.json` is the tts-gen input derived from this table; packages/shared/src/content/announcerVo.test.ts asserts the two stay in lockstep (same ids, text, voice, rate).",
+  "generator": "node tools/tts-gen/src/generate.mjs content/audio-manifests/announcer.json",
+  "pacing": {
+    "rate": 185,
+    "why": "UNIFORM across all four voices. Kyoko's and Tingting's `say` default is exactly 180 wpm (durations are identical at -r 180 and unset), so 185 is marginally brisker than native for every voice and identical for every voice. Evenness across the pack is itself the announcer signal — a PA system does not change tempo because the news got exciting. The previous packs' 200 was slightly hurried for 字正腔圓, and the 150 wpm outlier on multi-kill-1 (a scripted stammer) is gone with the direction that produced it."
+  },
+  "loudness": {
+    "metric": "EBU R128 gated integrated loudness (targetLufs)",
+    "targetLufs": -16,
+    "truePeakDb": -1.5,
+    "why": "NORMALISATION IS MANDATORY, NOT COSMETIC: this cast is not level-matched by Apple. Raw integrated loudness spans 9.5 dB — Kyoko -25.2 LUFS (peak -9.7), Tingting -19.6 (-4.8), Sinji -15.7, Karen -16.4. Kyoko needs +9.2 dB against 8.2 dB of peak headroom, i.e. ~1 dB of limiting, well inside tts-gen's 6 dB bound. Also: ffmpeg `volumedetect` mean_volume is UNGATED — it averages the pauses into the level, so pause-heavy and short clips measure artificially quiet and get under-gained. That measurement artefact, not a dynamics problem, is what left earlier packs at -18.2 dB on ex-unlock and the champion-name pack at -21..-27.5 dB. R128 gating ignores the pauses and matches perceived level."
+  },
+  "casting": {
+    "rejectionCriterion": "INTELLIGIBILITY (bandwidth), NOT flatness. 59 voices were auditioned by rendering one fixed announcer-register test line per language through each and measuring in numpy. Naive flatness ranking casts the WRONG voices: the novelty family measures FLATTER than the real voices (Shelley-ja 2.56 st, Flo-ja 2.58, Sandy-ja 2.68 vs Kyoko 3.49) — an artefact, because they are old MacinTalk FORMANT SYNTHESISERS that barely modulate pitch because they barely model prosody at all. The giveaway is bandwidth, and across all 59 clips the two families do not overlap on a single sample: real full-band voices (n=26) 85% rolloff 2174–4921 Hz / spectral flatness 0.096–0.269; novelty formant synths (n=33) 956–2474 Hz / 0.0104–0.0756. Consonant articulation — Mandarin /s ts tsʰ ɕ tɕ/, Japanese /s ɕ tɕ ts/, English sibilants — lives at 2–8 kHz, so a voice with no energy there PHYSICALLY CANNOT articulate it. That is the exact opposite of 字正腔圓.",
+    "rejected": {
+      "novelty-formant-synths": "Eddy / Flo / Grandma / Grandpa / Reed / Rocko / Sandy / Shelley in EVERY locale (24 measured). Rejected as measurably unintelligible — muffled and sibilant-free — not as a taste call. Rocko-ja f0 75 Hz with a 33.9-semitone range and Grandpa-ja voiced fraction 0.43 are also unsteady phonation.",
+      "character-and-singing": "Zarvox (f0 SD 6.94 st, 20 st range — a robot character), Trinoids, Whisper (voiced fraction 0.29), Albert, Bahh (8.09 st), Boing (13.92 st), Bells (9.21), Organ (10.32), Jester, Bubbles, Wobble, Superstar, and the singing voices Good News / Bad News / Cellos. All make the joke about the VOICE instead of about the LINE, which is precisely what the corrected direction forbids."
+    },
+    "cast": {
+      "Kyoko": "ja_JP. f0 237 Hz, f0 SD 3.49 st, centroid 2453 Hz, rolloff 4054 Hz — the BRIGHTEST and cleanest-articulating of all 59 voices measured. Spectral flatness 0.2275, ioi_cv 0.483. The only real Japanese voice installed, and independently the best-articulated voice in the audition.",
+      "Tingting": "zh_CN. f0 242 Hz, f0 SD 4.99 st, centroid 2226, rolloff 3946, flatness 0.1749, ioi_cv 0.423. THE MEIJIA REPLACEMENT — see `meijia` below. Critically, TINGTING READS TRADITIONAL CHINESE CORRECTLY: 「請確認你的隊友是不是白目。」 and its Simplified form render BYTE-IDENTICALLY (sha256 3d28ad0a…), as do 美白大法師/美白大法师 (3afac050…) and 被剝削的勞工階級/被剥削的劳工阶级. It normalises 繁→簡 internally and speaks it; no character is skipped or spelled out. zh-TW copy therefore loses nothing but a Mainland-standard accent.",
+      "Karen": "en_AU. f0 187 Hz, f0 SD 1.98 st — THE FLATTEST PITCH CONTOUR OF ANY INTELLIGIBLE VOICE MEASURED (next best 2.41). Rolloff 3369, flatness 0.1759, ioi_cv 0.521. Perfectly enunciated and audibly bored; the Australian accent reads as international-terminal PA rather than as a character.",
+      "Sinji": "zh_HK. f0 199 Hz, f0 SD 3.33 st, rolloff 3289, flatness 0.1763. Apple's STANDARD Cantonese voice, NOT a novelty voice — it passes the full-band gate cleanly. Kept for exactly one line so the 打完收工 register joke survives with correct pronunciation."
+    },
+    "runnersUp": "Moira (en_IE) 2.41 st with ioi_cv 0.353, the most metronomic pacing in the set (onset counts 11 vs 12, so the comparison is fair) — the best second English voice if one is ever wanted. Tessa (en_ZA) 2.58. Samantha (en_US) is the cultural reference for 'the assistant voice' but measures the MOST expressive of the four English voices at 3.49 st, so it loses on the stated criterion."
+  },
+  "voiceRules": {
+    "meijia": "DEAD, AND THE BRIEF WAS WRONG ABOUT IT. All 184 voices `say -v '?'` advertises were swept, each rendered and compared against a deliberately bogus voice name. EXACTLY ONE is a phantom: Meijia. `say -v Meijia` is byte-identical (sha256 7b4dca04…) to `say -v ZZ_BOGUS_XYZ` and to `say -v Alex` — it silently falls back to the system default (an American man) and exits 0. Every other listed voice renders distinctly. There is NO usable zh-TW voice on this machine at all; the only other zh_TW entries are the 8 novelty voices, which fail the bandwidth gate. zh-TW copy is therefore cast to Tingting (zh_CN), which reads it correctly.",
+    "neverPutEnglishInAKyokoLine": "`say -v Kyoko \"Fight\"` renders BYTE-IDENTICAL to `say -v Kyoko \"ファイト\"` (sha256 36ff5f99…). Kyoko does not speak English — it transliterates Latin script to katakana and reads Japanese. Any English written into a ja line is therefore literally one voice stumbling through another language. Corollary: write イーエックス, not 'EX' (measured 1.41 s vs 1.21 s — different renders, and only the katakana one is deterministic).",
+    "crossVoiceWithinLine": "SUPPORTED as of this task, via tts-gen's `segments: [{voice, text}]`. Every voice on this machine writes the identical container (pcm_s16be, 22050 Hz, mono), so fragments concatenate with `ffmpeg -f concat -c copy` sample-accurately — verified three times: 0.9219+0.5542+0.8259 = 2.3019 exact; 4.5427+1.1444 = 5.6871; 3.0368+1.5908 = 4.6276. Two announcer lines and a large slice of the champion-name pack depend on it.",
+    "hardFails": "Confirmed in both directions, and tts-gen's minDurationSec catches both: Tingting fed pure kana 「レディ、ファイト。」 → 0.01 s of digital silence; Karen fed 「第一回合開始」 → 0.01 s.",
+    "twCnDivergentReadings": "Tingting is a zh_CN voice, so spoken Chinese copy avoids characters whose Taiwan and Mainland readings diverge. 擊 (TW jí / CN jī) is kept OUT of all spoken copy — hence 出局 and 無人能擋 in the script, while the on-screen Chinese keeps 陣亡 and 擊倒."
+  },
+  "lines": [
+    {
+      "id": "announcer-match-start",
+      "clip": "match-start.mp3",
+      "event": "matchStart",
+      "zhText": "歡迎來到去死團競技場",
+      "spoken": "去死団アリーナ、第一試合を開始いたします。 ‖ 請站穩踏階。",
+      "lang": "ja-JP ‖ zh-TW",
+      "voice": "Kyoko ‖ Tingting",
+      "rate": 185,
+      "durationSec": 4.88,
+      "why": "SEGMENTED: Kyoko/ja 3.69s + Tingting/zh-TW 1.19s = 4.88s, concatenated sample-exact. This is the thesis line for the whole pack. Taiwan's MRT and HSR announce everything twice in two languages, and 「請站穩踏階」 (mind your footing on the escalator) is a phrase every Taipei commuter has heard ten thousand times. Bolting a real transit-safety notice onto the opening of a deathmatch, delivered by two composed announcers handing off to each other exactly as a station PA does, IS the joke — and it only works because both halves are flawless. Kyoko measured the brightest and cleanest-articulating voice of all 59, so the one line that frames the match is also the best-enunciated.",
+      "deliberate": [
+        "Japanese carries 去死団アリーナ because Kyoko reads 去死団 with correct Japanese on'yomi (kyoshidan): that is a LEGITIMATE Japanese reading of Japanese kanji — the team's Japanese name — not a mispronunciation. Do not romanise or gloss it.",
+        "Chinese carries the safety notice because the MRT cadence is untranslatable. Do not 'normalise' this line to one language: the two-language handoff is the entire structural joke.",
+        "SEGMENTED line — the voice is cast per segment in announcer.json, not on the line."
+      ]
+    },
+    {
+      "id": "announcer-round-start-1",
+      "clip": "round-start-1.mp3",
+      "event": "roundStart",
+      "zhText": "第一回合開始",
+      "spoken": "第一回合，即將開始。",
+      "lang": "zh-TW",
+      "voice": "Tingting",
+      "rate": 185,
+      "durationSec": 2.15,
+      "why": "即將開始 is departure-board Mandarin — the exact phrase a platform announcement uses before a train leaves. Chinese is the funnier language here precisely because the source map is Taiwanese: the round starting gets the same words as the 07:42 to Kaohsiung, in the same unbothered tone.",
+      "deliberate": [
+        "No 開戰, no 'Fight', no exclamation mark. The flatness is the entire delivery.",
+        "Tingting replaces the dead Meijia and reads this Traditional text correctly (verified byte-identical to the Simplified form)."
+      ]
+    },
+    {
+      "id": "announcer-round-start-2",
+      "clip": "round-start-2.mp3",
+      "event": "roundStart",
+      "zhText": "準備，開戰！",
+      "spoken": "ご準備ください。開始いたします。",
+      "lang": "ja-JP",
+      "voice": "Kyoko",
+      "rate": 185,
+      "durationSec": 2.6,
+      "why": "The sacred fighting-game 'Ready? FIGHT!' rewritten as two pieces of Japanese customer-service boilerplate: 'please prepare yourself' / 'we will now begin.' Japanese is the funnier choice because 丁寧語 has a politeness ceiling no other language in the pack can reach — the more courteous the phrasing, the wider the gap to what is about to happen.",
+      "deliberate": [
+        "Tightened from a 3.79s first draft to 2.60s so it lands BEFORE the round actually starts.",
+        "Deliberately NOT ファイト: Kyoko renders Latin 'Fight' byte-identically to ファイト anyway, and the polite verb is funnier than the shout."
+      ]
+    },
+    {
+      "id": "announcer-level-up-1",
+      "clip": "level-up-1.mp3",
+      "event": "levelUp",
+      "zhText": "升級！",
+      "spoken": "Level up. Congratulations.",
+      "lang": "en-AU",
+      "voice": "Karen",
+      "rate": 185,
+      "durationSec": 2.01,
+      "why": "Karen has the flattest pitch contour of any intelligible voice measured — 1.98 semitones SD, against 2.41 for the next best and 3.49 for Samantha. 'Congratulations.' delivered with 1.98 semitones of pitch movement and a full stop instead of an exclamation mark is the purest deadpan in the pack: the machine is contractually obliged to congratulate you and is doing the minimum. English is right here because 'Level up' is already the loanword every Taiwanese and Japanese player uses in English anyway, so it needs no translation and gets none.",
+      "deliberate": [
+        "Full stops, not exclamation marks. Do not add enthusiasm.",
+        "English text ONLY — this line alternates with a Japanese one on the same event by design."
+      ]
+    },
+    {
+      "id": "announcer-level-up-2",
+      "clip": "level-up-2.mp3",
+      "event": "levelUp",
+      "zhText": "等級提升",
+      "spoken": "レベルが上がりました。おめでとうございます。",
+      "lang": "ja-JP",
+      "voice": "Kyoko",
+      "rate": 185,
+      "durationSec": 2.78,
+      "why": "Alternates with the Karen line so levelling up sounds like it is being processed by a different department each time. おめでとうございます is the full formal congratulation — a wedding-grade phrase — spent on gaining one level. Japanese wins this line over Chinese because the polite-form verb ending (〜ました) makes the sentence a completed administrative fact rather than good news.",
+      "deliberate": [
+        "No trailing 〜, no ちゃった cutesiness. The previous pack's version made the VOICE the joke; this one makes the SENTENCE the joke."
+      ]
+    },
+    {
+      "id": "announcer-death-1",
+      "clip": "death-1.mp3",
+      "event": "death",
+      "zhText": "你被擊倒了",
+      "spoken": "戦闘不能です。しばらくお待ちください。",
+      "lang": "ja-JP",
+      "voice": "Kyoko",
+      "rate": 185,
+      "durationSec": 2.97,
+      "why": "戦闘不能 is the exact term JRPG menus use for a downed party member — clinical, bloodless, and instantly recognisable to anyone who has played a Final Fantasy. Then しばらくお待ちください: 'please wait a moment', the phrase from every hold queue and loading screen in Japan. Being killed and then put on hold about it is funnier in Japanese than any other language because both halves are real fixed phrases players already know; nothing is invented.",
+      "deliberate": [
+        "Read completely flat, no rising intonation at the end."
+      ]
+    },
+    {
+      "id": "announcer-death-2",
+      "clip": "death-2.mp3",
+      "event": "death",
+      "zhText": "K.O.",
+      "spoken": "打完收工。",
+      "lang": "zh-HK",
+      "voice": "Sinji",
+      "rate": 185,
+      "durationSec": 0.99,
+      "why": "The shortest clip, and a deliberate rhythmic break in the pack. 打完收工 is Hong Kong film-crew slang, 'that's a wrap, clocking off', which every Taiwanese player knows from HK action cinema. Cantonese is the funniest possible language for it because the phrase IS Cantonese — routing it through Mandarin or Japanese would strip the register that makes it land. Third language, third register, all three correctly pronounced.",
+      "deliberate": [
+        "Cantonese, not Mandarin. 打完收工 is not a mistranslation of K.O. — it is a register joke.",
+        "THE ONLY LINE CARRIED OVER from the retired novelty pass, because Sinji was never a novelty voice: it is Apple's standard zh_HK voice and passes the full-band gate (rolloff 3289 Hz, flatness 0.1763, 3.33 st SD). Only the exclamation mark was removed."
+      ]
+    },
+    {
+      "id": "announcer-death-3",
+      "clip": "death-3.mp3",
+      "event": "death",
+      "zhText": "陣亡",
+      "spoken": "您已出局。感謝您的參與。",
+      "lang": "zh-TW",
+      "voice": "Tingting",
+      "rate": 185,
+      "durationSec": 2.31,
+      "why": "感謝您的參與 is consolation-prize language — what a game show says to the contestant who just lost, or a form letter to a rejected applicant. Paired with the honorific 您, the machine is being scrupulously polite to someone it has just eliminated. Chinese is the right language because that specific customer-service courtesy formula is a Taiwanese daily-life sound; the same sentiment in English or Japanese would read as generic.",
+      "deliberate": [
+        "Tightened from 3.32s to 2.31s.",
+        "出局 rather than 擊倒: 擊 has divergent Taiwan/Mainland readings (jí vs jī) and Tingting is a zh_CN voice, so the SPOKEN copy avoids it while the on-screen Chinese keeps 陣亡."
+      ]
+    },
+    {
+      "id": "announcer-multi-kill-1",
+      "clip": "multi-kill-1.mp3",
+      "event": "multiKill",
+      "zhText": "連續擊破",
+      "spoken": "連続撃破を確認いたしました。",
+      "lang": "ja-JP",
+      "voice": "Kyoko",
+      "rate": 185,
+      "durationSec": 2.63,
+      "why": "The announcer keeps up perfectly and simply CONFIRMS your killstreak, like a logistics system acknowledging a shipment. 確認いたしました is humble-form bureaucratic Japanese; applying it to a rampage is the disproportion.",
+      "deliberate": [
+        "The previous version's 150 wpm rate outlier and its scripted stammer are BOTH GONE, because a commentator who cannot keep up makes the voice the joke.",
+        "Written in KANJI, not kana, precisely so Kyoko reads it fluently — the exact opposite of the old instruction."
+      ]
+    },
+    {
+      "id": "announcer-multi-kill-2",
+      "clip": "multi-kill-2.mp3",
+      "event": "multiKill",
+      "zhText": "大暴走！",
+      "spoken": "Rampage. Please maintain order.",
+      "lang": "en-AU",
+      "voice": "Karen",
+      "rate": 185,
+      "durationSec": 2.07,
+      "why": "The most aggressive word in the MOBA lexicon, followed immediately by a crowd-control request, at 1.98 semitones of pitch variation. English is the funnier language because 'Rampage' is the untranslated MOBA term of art AND 'Please maintain order' is the register of an airport gate agent — two English registers colliding inside one 2-second clip.",
+      "deliberate": [
+        "Replaces the sheep voice (Bahh). The word is the joke; the voice must not be.",
+        "English text ONLY."
+      ]
+    },
+    {
+      "id": "announcer-multi-kill-3",
+      "clip": "multi-kill-3.mp3",
+      "event": "multiKill",
+      "zhText": "沒人擋得住",
+      "spoken": "目前無人能擋。以上，報告完畢。",
+      "lang": "zh-TW",
+      "voice": "Tingting",
+      "rate": 185,
+      "durationSec": 3.12,
+      "why": "目前 ('currently') hedges the boast into a status update, and 以上，報告完畢 ('that concludes the report') is military/news sign-off language. Chinese is right because 報告完畢 is a stock Mandarin broadcast formula with no equivalent economy in Japanese or English. Someone is unstoppable and the announcer is filing paperwork about it.",
+      "deliberate": [
+        "THIS ID WAS THE OLD PACK'S DELIBERATE-MANGLING SHOWPIECE — Chinese text force-fed to a Japanese voice. That is exactly REVERSED now: the Chinese is read by the Chinese voice, correctly, and the joke is relocated into the writing. Do not restore the mangling."
+      ]
+    },
+    {
+      "id": "announcer-ally-slain",
+      "clip": "ally-slain.mp3",
+      "event": "allySlain",
+      "zhText": "請確認你的隊友是不是白目！",
+      "spoken": "請確認，您的隊友，是不是白目。 ‖ Thank you for your cooperation.",
+      "lang": "zh-TW ‖ en-AU",
+      "voice": "Tingting ‖ Karen",
+      "rate": 185,
+      "durationSec": 4.82,
+      "why": "SEGMENTED: Tingting/zh 3.16s + Karen/en 1.66s = 4.82s. The map's signature line. The honorific 您 wrapped around PTT slang 白目 is the whole gag, and it is only available in Chinese. Then the English tag: Taiwanese public announcements genuinely close in English, and 'Thank you for your cooperation' after asking you to verify whether your teammate is an idiot is the most devastatingly flat thing in the pack.",
+      "deliberate": [
+        "THE COLLISION FEAR WAS UNFOUNDED. The previous pack fled to English 'baka' via a robot voice to avoid colliding with the human original in assets/audio/sfx/pcdie.mp3. Unnecessary: the human clip SHOUTS it with 「!!」, and this one reads the IDENTICAL Chinese words as a three-clause verification procedure with comma pauses and a full stop — same text, unmistakably different object, no collision. The human quip is preserved untouched.",
+        "Stays inside the map's established friendly-insult register: aimed at a teammate, in-game, as banter.",
+        "SEGMENTED line — both fragments native-voiced, seam sample-exact."
+      ]
+    },
+    {
+      "id": "announcer-ex-unlock",
+      "clip": "ex-unlock.mp3",
+      "event": "exUnlock",
+      "zhText": "EX 解放！",
+      "spoken": "イーエックス、使用可能になりました。",
+      "lang": "ja-JP",
+      "voice": "Kyoko",
+      "rate": 185,
+      "durationSec": 2.48,
+      "why": "使用可能になりました means 'has become available for use', the phrasing of a software feature flag or a vending machine coming back online. Your ultimate is ready and the announcer is reporting a change in system state. Japanese wins because that stiff 〜可能 compound is peak Japanese officialese.",
+      "deliberate": [
+        "WRITTEN AS KATAKANA ON PURPOSE, and this is a HARD TECHNICAL REQUIREMENT, not a stylistic one: Kyoko transliterates Latin script to katakana internally (`say -v Kyoko \"Fight\"` is byte-identical to `say -v Kyoko \"ファイト\"`), so 'E X' would be a non-deterministic guess while イーエックス guarantees the crisp, correct, letter-by-letter reading — 字正腔圓 by construction.",
+        "Replaces the Grieg-singing Cellos voice; also fixes this clip's historic -18.2 dB loudness outlier via targetLufs -16."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+[
+  {
+    "id": "announcer-match-start",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "ようこそ、去死團のアリーナへ！",
+    "out": "../assets/audio/announcer/retired-jank-novelty/match-start.mp3",
+    "rate": 200,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "announcer-round-start-1",
+    "lang": "zh-TW",
+    "voice": "Shelley (中文（台灣）)",
+    "text": "第一回合，Fight！",
+    "out": "../assets/audio/announcer/retired-jank-novelty/round-start-1.mp3",
+    "rate": 200,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "announcer-round-start-2",
+    "lang": "ja-JP",
+    "voice": "Rocko (日文（日本）)",
+    "text": "レディ…ファイッ！",
+    "out": "../assets/audio/announcer/retired-jank-novelty/round-start-2.mp3",
+    "rate": 200,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "announcer-level-up-1",
+    "lang": "en-US",
+    "voice": "Good News",
+    "text": "Level up!",
+    "out": "../assets/audio/announcer/retired-jank-novelty/level-up-1.mp3",
+    "rate": 200,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "announcer-level-up-2",
+    "lang": "ja-JP",
+    "voice": "Sandy (日文（日本）)",
+    "text": "つよくなっちゃった〜",
+    "out": "../assets/audio/announcer/retired-jank-novelty/level-up-2.mp3",
+    "rate": 200,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "announcer-death-1",
+    "lang": "en-US",
+    "voice": "Bad News",
+    "text": "You died.",
+    "out": "../assets/audio/announcer/retired-jank-novelty/death-1.mp3",
+    "rate": 200,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "announcer-death-2",
+    "lang": "zh-HK",
+    "voice": "Sinji",
+    "text": "打完收工！",
+    "out": "../assets/audio/announcer/retired-jank-novelty/death-2.mp3",
+    "rate": 200,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "announcer-death-3",
+    "lang": "ja-JP",
+    "voice": "Grandma (日文（日本）)",
+    "text": "ゆだんしたね〜",
+    "out": "../assets/audio/announcer/retired-jank-novelty/death-3.mp3",
+    "rate": 200,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "announcer-multi-kill-1",
+    "lang": "ja-JP",
+    "voice": "Grandpa (日文（日本）)",
+    "text": "れ、れんぞく、げきは……",
+    "out": "../assets/audio/announcer/retired-jank-novelty/multi-kill-1.mp3",
+    "rate": 150,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "announcer-multi-kill-2",
+    "lang": "en-US",
+    "voice": "Bahh",
+    "text": "Rampage!",
+    "out": "../assets/audio/announcer/retired-jank-novelty/multi-kill-2.mp3",
+    "rate": 200,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "announcer-multi-kill-3",
+    "lang": "ja-JP",
+    "voice": "Reed (日文（日本）)",
+    "text": "無人能擋",
+    "out": "../assets/audio/announcer/retired-jank-novelty/multi-kill-3.mp3",
+    "rate": 200,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "announcer-ally-slain",
+    "lang": "en-US",
+    "voice": "Zarvox",
+    "text": "Please confirm. Your teammate. Is a baka.",
+    "out": "../assets/audio/announcer/retired-jank-novelty/ally-slain.mp3",
+    "rate": 200,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "announcer-ex-unlock",
+    "lang": "en-US",
+    "voice": "Cellos",
+    "text": "E X! Ready!",
+    "out": "../assets/audio/announcer/retired-jank-novelty/ex-unlock.mp3",
+    "rate": 200,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  }
+]

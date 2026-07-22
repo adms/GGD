@@ -1,0 +1,36 @@
+{
+  "id": "godie-ucrl.q",
+  "name": "06-01 山形修煉-放",
+  "description": "[被動]\n0秒冷卻時間\n\n攻擊敵人時，4%機率施展放出系能力，由掌心放出念彈造成一直線敵人150點傷害，並增強「猜猜拳-布」的威力為300點。",
+  "slot": "Q",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    12.0,
+    12.0,
+    12.0,
+    12.0
+  ],
+  "manaCost": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "armor",
+          "op": "flat",
+          "value": 25
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

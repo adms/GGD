@@ -1,0 +1,25 @@
+{
+  "id": "chill-touch",
+  "schema": "augment@1",
+  "name": "Chill Touch",
+  "description": "Your Q also slows enemies by 25% for 1.5s.",
+  "tier": "gold",
+  "weight": 60,
+  "hooks": [
+    {
+      "on": "onAbilityHit",
+      "abilitySlot": "Q",
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "slow25",
+          "duration": 1.5,
+          "moveSpeedMult": 0.75
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "utility"
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "id": "imported.heroichigo",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/heroichigo.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "stand",
+    "run": "Walk",
+    "attack": "Attack - 1",
+    "cast": "Attack - 1",
+    "hurt": "stand",
+    "death": "death"
+  },
+  "attachPoints": {
+    "Origin": {
+      "x": -0.039,
+      "y": 0.0302,
+      "z": -0.0058
+    },
+    "OverHead": {
+      "x": -0.0259,
+      "y": 2.0236,
+      "z": -0.0064
+    },
+    "Foot Right": {
+      "x": 0.0598,
+      "y": 0.0554,
+      "z": 0.2103
+    },
+    "Foot Left": {
+      "x": 0.0371,
+      "y": 0.0602,
+      "z": -0.2014
+    },
+    "Hand Right": {
+      "x": -0.0999,
+      "y": 1.2858,
+      "z": 0.6956
+    },
+    "Weapon": {
+      "x": 1.0127,
+      "y": 1.356,
+      "z": 0.6666
+    },
+    "Head": {
+      "x": -0.0564,
+      "y": 1.8429,
+      "z": -0.0065
+    },
+    "Hand Left": {
+      "x": -0.0912,
+      "y": 1.284,
+      "z": -0.7264
+    },
+    "Chest": {
+      "x": -0.1267,
+      "y": 1.5075,
+      "z": 0.0084
+    }
+  }
+}

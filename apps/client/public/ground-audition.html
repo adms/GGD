@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>地面確認 — 競技場地板 (task #80)</title>
+<style>
+  :root {
+    --bg:#0c0e14; --panel:#151926; --line:#2a3145;
+    --fg:#e8ecf6; --dim:#98a2bd; --accent:#7dd3fc; --gold:#f0c674;
+  }
+  * { box-sizing:border-box; }
+  html,body { margin:0; height:100%; }
+  body { background:var(--bg); color:var(--fg); overflow:hidden;
+         font:14px/1.55 -apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans TC",sans-serif; }
+  #view { position:fixed; inset:0; width:100%; height:100%; display:block; touch-action:none; }
+  .hud { position:fixed; z-index:2; background:rgba(16,20,32,.9); border:1px solid var(--line);
+         border-radius:10px; padding:12px 14px; backdrop-filter:blur(6px); }
+  #panel { top:14px; left:14px; max-width:330px; }
+  #panel h1 { margin:0 0 4px; font-size:16px; letter-spacing:.02em; }
+  #panel p { margin:6px 0 0; color:var(--dim); font-size:12.5px; }
+  .row { display:flex; gap:6px; flex-wrap:wrap; margin-top:10px; }
+  button { font:inherit; font-size:12.5px; color:var(--fg); background:#1d2334;
+           border:1px solid var(--line); border-radius:7px; padding:5px 10px; cursor:pointer; }
+  button:hover { border-color:var(--accent); }
+  button[aria-pressed="true"] { background:#23507a; border-color:var(--accent); color:#fff; }
+  .lbl { color:var(--dim); font-size:11px; text-transform:uppercase; letter-spacing:.08em;
+         margin-top:12px; }
+  #stats { bottom:14px; left:14px; font-variant-numeric:tabular-nums; color:var(--dim);
+           font-size:12px; }
+  #stats b { color:var(--fg); font-weight:600; }
+  #err { top:14px; left:14px; right:14px; max-width:640px; border-color:#7f2d2d;
+         background:#2a1212; display:none; }
+  code { background:#0009; padding:1px 5px; border-radius:4px; }
+</style>
+</head>
+<body>
+<canvas id="view"></canvas>
+
+<div id="err" class="hud">
+  <h1>載入失敗</h1>
+  <p id="errmsg"></p>
+  <p>這頁只在 <code>vite dev</code> 下可用（直接載入 <code>/src/render/*.ts</code>）。
+     請用 <code>pnpm --filter @ggd/client dev</code> 起 dev server 再開。</p>
+</div>
+
+<div id="panel" class="hud">
+  <h1>競技場地板確認 <span style="color:var(--dim);font-size:12px">task #80</span></h1>
+  <p>真的 <code>buildZoneGround</code> + 真的 <code>setupLighting</code> + 真的相機角度
+     （55°、DOLLY_MIN=10），所以這裡看到的就是進場後看到的。</p>
+  <div class="lbl">地面樣式 groundStyle</div>
+  <div class="row" id="styles"></div>
+  <div class="lbl">鏡頭</div>
+  <div class="row" id="cams"></div>
+  <div class="lbl">顯示</div>
+  <div class="row" id="toggles"></div>
+  <p style="margin-top:12px">滑鼠拖曳可繞行、滾輪縮放。灰色膠囊 = 1.7u 英雄身高參考。</p>
+</div>
+
+<div id="stats" class="hud">
+  <span id="s-cam"></span> &nbsp;·&nbsp; <b id="s-meshes">0</b> meshes ·
+  <b id="s-tris">0</b> tris · <b id="s-fps">0</b> fps
+</div>
+
+<script type="module">
+const fail = (m) => {
+  document.getElementById("err").style.display = "block";
+  document.getElementById("errmsg").textContent = String(m);
+  document.getElementById("panel").style.display = "none";
+};
+
+try {
+  // One import, resolved by Vite so Babylon's own module graph resolves too.
+  const { startGroundAudition } = await import("/src/render/groundAudition.ts");
+  const app = startGroundAudition(document.getElementById("view"));
+
+  let style = "stone";
+  let mode = "game";
+  let showRefs = true;
+
+  const mkButtons = (host, items, isOn, onPick) => {
+    host.innerHTML = "";
+    for (const [id, label] of items) {
+      const b = document.createElement("button");
+      b.textContent = label;
+      b.setAttribute("aria-pressed", String(isOn(id)));
+      b.onclick = () => { onPick(id); refresh(); };
+      host.appendChild(b);
+    }
+  };
+  const refresh = () => {
+    mkButtons(document.getElementById("styles"), [
+      ["stone", "stone 石板"], ["dirt", "dirt 泥土"],
+      ["grass", "grass 草地"], ["sand", "sand 沙地"],
+    ], (id) => id === style, (id) => { style = id; app.setStyle(id); });
+    mkButtons(document.getElementById("cams"), [
+      ["game", "遊戲內（最近）"], ["rim", "邊緣"], ["whole", "全場"],
+    ], (id) => id === mode, (id) => { mode = id; app.setPreset(id); });
+    mkButtons(document.getElementById("toggles"), [
+      ["refs", "1.7u 身高參考"],
+    ], () => showRefs, () => { showRefs = !showRefs; app.setRefsVisible(showRefs); });
+  };
+  refresh();
+
+  const canvas = document.getElementById("view");
+  let drag = null;
+  canvas.addEventListener("pointerdown", (e) => { drag = e.clientX; });
+  addEventListener("pointerup", () => { drag = null; });
+  addEventListener("pointermove", (e) => {
+    if (drag === null) return;
+    app.orbit((e.clientX - drag) * 0.006);
+    drag = e.clientX;
+  });
+  canvas.addEventListener("wheel", (e) => {
+    e.preventDefault();
+    app.zoom(1 + Math.sign(e.deltaY) * 0.08);
+  }, { passive: false });
+
+  const el = (id) => document.getElementById(id);
+  setInterval(() => {
+    const s = app.stats();
+    el("s-cam").textContent = `dolly ${s.dolly.toFixed(0)}u · yaw ${s.yawDeg.toFixed(0)}°`;
+    el("s-meshes").textContent = s.meshes;
+    el("s-tris").textContent = s.tris;
+    el("s-fps").textContent = s.fps.toFixed(0);
+  }, 250);
+} catch (e) {
+  fail(e && e.message ? e.message : e);
+}
+</script>
+</body>
+</html>

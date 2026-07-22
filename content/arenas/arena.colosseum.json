@@ -1,0 +1,858 @@
+{
+  "id": "arena.colosseum",
+  "schema": "arena@1",
+  "name": "羅馬大擂台（室外）",
+  "zones": [
+    {
+      "id": "zone-0",
+      "center": {
+        "x": -40,
+        "z": 0
+      },
+      "boundaryRadius": 24,
+      "obstacles": [
+        {
+          "kind": "circle",
+          "center": {
+            "x": -47,
+            "z": 0
+          },
+          "radius": 1.4
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": -33,
+            "z": 0
+          },
+          "radius": 1.4
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": -19,
+            "z": 0
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": -20.6,
+            "z": 5.36
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": -25.15,
+            "z": 9.9
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": -31.96,
+            "z": 12.93
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": -40,
+            "z": 14
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": -48.04,
+            "z": 12.93
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": -54.85,
+            "z": 9.9
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": -59.4,
+            "z": 5.36
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": -61,
+            "z": 0
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": -59.4,
+            "z": -5.36
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": -54.85,
+            "z": -9.9
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": -48.04,
+            "z": -12.93
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": -40,
+            "z": -14
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": -31.96,
+            "z": -12.93
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": -25.15,
+            "z": -9.9
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": -20.6,
+            "z": -5.36
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": -43,
+            "z": 9
+          },
+          "radius": 0.5
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": -37,
+            "z": -9
+          },
+          "radius": 0.7
+        }
+      ],
+      "spawns": [
+        [
+          {
+            "x": -56,
+            "z": -4
+          },
+          {
+            "x": -56,
+            "z": 0
+          },
+          {
+            "x": -56,
+            "z": 4
+          }
+        ],
+        [
+          {
+            "x": -24,
+            "z": -4
+          },
+          {
+            "x": -24,
+            "z": 0
+          },
+          {
+            "x": -24,
+            "z": 4
+          }
+        ]
+      ]
+    },
+    {
+      "id": "zone-1",
+      "center": {
+        "x": 40,
+        "z": 0
+      },
+      "boundaryRadius": 24,
+      "obstacles": [
+        {
+          "kind": "circle",
+          "center": {
+            "x": 33,
+            "z": 0
+          },
+          "radius": 1.4
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": 47,
+            "z": 0
+          },
+          "radius": 1.4
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": 61,
+            "z": 0
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": 59.4,
+            "z": 5.36
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": 54.85,
+            "z": 9.9
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": 48.04,
+            "z": 12.93
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": 40,
+            "z": 14
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": 31.96,
+            "z": 12.93
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": 25.15,
+            "z": 9.9
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": 20.6,
+            "z": 5.36
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": 19,
+            "z": 0
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": 20.6,
+            "z": -5.36
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": 25.15,
+            "z": -9.9
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": 31.96,
+            "z": -12.93
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": 40,
+            "z": -14
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": 48.04,
+            "z": -12.93
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": 54.85,
+            "z": -9.9
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": 59.4,
+            "z": -5.36
+          },
+          "radius": 2
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": 37,
+            "z": 9
+          },
+          "radius": 0.5
+        },
+        {
+          "kind": "circle",
+          "center": {
+            "x": 43,
+            "z": -9
+          },
+          "radius": 0.7
+        }
+      ],
+      "spawns": [
+        [
+          {
+            "x": 24,
+            "z": -4
+          },
+          {
+            "x": 24,
+            "z": 0
+          },
+          {
+            "x": 24,
+            "z": 4
+          }
+        ],
+        [
+          {
+            "x": 56,
+            "z": -4
+          },
+          {
+            "x": 56,
+            "z": 0
+          },
+          {
+            "x": 56,
+            "z": 4
+          }
+        ]
+      ]
+    }
+  ],
+  "decor": [
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": -47,
+      "z": 0,
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": -33,
+      "z": 0,
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": -19,
+      "z": 0,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": -20.6,
+      "z": 5.36,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": -25.15,
+      "z": 9.9,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": -31.96,
+      "z": 12.93,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": -40,
+      "z": 14,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": -48.04,
+      "z": 12.93,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": -54.85,
+      "z": 9.9,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": -59.4,
+      "z": 5.36,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": -61,
+      "z": 0,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": -59.4,
+      "z": -5.36,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": -54.85,
+      "z": -9.9,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": -48.04,
+      "z": -12.93,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": -40,
+      "z": -14,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": -31.96,
+      "z": -12.93,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": -25.15,
+      "z": -9.9,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": -20.6,
+      "z": -5.36,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "x": -21.5,
+      "z": 0,
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "x": -26.92,
+      "z": 13.08,
+      "rotQuarter": 1,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "x": -40,
+      "z": 18.5,
+      "rotQuarter": 1,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "x": -53.08,
+      "z": 13.08,
+      "rotQuarter": 2,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "x": -58.5,
+      "z": 0,
+      "rotQuarter": 2,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "x": -53.08,
+      "z": -13.08,
+      "rotQuarter": 3,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "x": -40,
+      "z": -18.5,
+      "rotQuarter": 3,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "x": -26.92,
+      "z": -13.08,
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/banner_shield_blue.glb",
+      "x": -46,
+      "z": 25.5,
+      "rotQuarter": 2,
+      "scale": 1.8
+    },
+    {
+      "model": "assets/models/props/banner_shield_red.glb",
+      "x": -34,
+      "z": 25.5,
+      "rotQuarter": 2,
+      "scale": 1.8
+    },
+    {
+      "model": "assets/models/props/banner_shield_green.glb",
+      "x": -65.9,
+      "z": 0,
+      "rotQuarter": 1,
+      "scale": 1.8
+    },
+    {
+      "model": "assets/models/props/banner_shield_yellow.glb",
+      "x": -14.1,
+      "z": 0,
+      "rotQuarter": 3,
+      "scale": 1.8
+    },
+    {
+      "model": "assets/models/props/barrel_small.glb",
+      "x": -43,
+      "z": 9,
+      "rotQuarter": 0,
+      "scale": 1.1
+    },
+    {
+      "model": "assets/models/props/crates_stacked.glb",
+      "x": -37,
+      "z": -9,
+      "rotQuarter": 1,
+      "scale": 1
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": 33,
+      "z": 0,
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": 47,
+      "z": 0,
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": 61,
+      "z": 0,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": 59.4,
+      "z": 5.36,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": 54.85,
+      "z": 9.9,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": 48.04,
+      "z": 12.93,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": 40,
+      "z": 14,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": 31.96,
+      "z": 12.93,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": 25.15,
+      "z": 9.9,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": 20.6,
+      "z": 5.36,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": 19,
+      "z": 0,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": 20.6,
+      "z": -5.36,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": 25.15,
+      "z": -9.9,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": 31.96,
+      "z": -12.93,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": 40,
+      "z": -14,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": 48.04,
+      "z": -12.93,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": 54.85,
+      "z": -9.9,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/pillar.glb",
+      "x": 59.4,
+      "z": -5.36,
+      "rotQuarter": 0,
+      "scale": 2
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "x": 58.5,
+      "z": 0,
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "x": 53.08,
+      "z": 13.08,
+      "rotQuarter": 1,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "x": 40,
+      "z": 18.5,
+      "rotQuarter": 1,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "x": 26.92,
+      "z": 13.08,
+      "rotQuarter": 2,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "x": 21.5,
+      "z": 0,
+      "rotQuarter": 2,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "x": 26.92,
+      "z": -13.08,
+      "rotQuarter": 3,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "x": 40,
+      "z": -18.5,
+      "rotQuarter": 3,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/torch_mounted.glb",
+      "x": 53.08,
+      "z": -13.08,
+      "rotQuarter": 0,
+      "scale": 1.4
+    },
+    {
+      "model": "assets/models/props/banner_shield_blue.glb",
+      "x": 46,
+      "z": 25.5,
+      "rotQuarter": 2,
+      "scale": 1.8
+    },
+    {
+      "model": "assets/models/props/banner_shield_red.glb",
+      "x": 34,
+      "z": 25.5,
+      "rotQuarter": 2,
+      "scale": 1.8
+    },
+    {
+      "model": "assets/models/props/banner_shield_green.glb",
+      "x": 14.1,
+      "z": 0,
+      "rotQuarter": 1,
+      "scale": 1.8
+    },
+    {
+      "model": "assets/models/props/banner_shield_yellow.glb",
+      "x": 65.9,
+      "z": 0,
+      "rotQuarter": 3,
+      "scale": 1.8
+    },
+    {
+      "model": "assets/models/props/barrel_small.glb",
+      "x": 37,
+      "z": 9,
+      "rotQuarter": 0,
+      "scale": 1.1
+    },
+    {
+      "model": "assets/models/props/crates_stacked.glb",
+      "x": 43,
+      "z": -9,
+      "rotQuarter": 1,
+      "scale": 1
+    }
+  ],
+  "groundStyle": "sand"
+}

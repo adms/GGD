@@ -1,0 +1,30 @@
+{
+  "id": "godie-u011.ex",
+  "name": "61-002 惡魔吉他",
+  "description": "[靈氣]\n0秒冷卻時間\n\n取得惡魔吉他的克勞薩，將化身為地獄來的魔王，每次攻擊都可將對敵人的損傷轉換為自己的生命值 3倍。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    120.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

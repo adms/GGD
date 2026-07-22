@@ -1,0 +1,41 @@
+{
+  "id": "godie-usyl.w",
+  "name": "49-02 腐蝕毒液",
+  "description": "[被動]\n0秒冷卻時間\n\n異形的每一次攻擊都能附帶些許毒性的腐蝕毒液，造成10毒傷，並且緩慢攻擊速度15%。",
+  "slot": "W",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    12.0,
+    12.0,
+    12.0
+  ],
+  "manaCost": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          10.0,
+          20.0,
+          30.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.09
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

@@ -1,0 +1,219 @@
+{
+  "id": "godie-e012",
+  "schema": "champion@1",
+  "name": "殺人劍客 - 佐佐木小次郎",
+  "description": "故事：\n。\n(出自:)\n\n推薦玩家 : 連技殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.90\n敏捷 + 2.60\n智慧 + 1.70\n基礎跑速 300\n\n可學習的技能：\n秘劍‧燕、秘劍‧返、七聲響-地之拔刀、隱秘劍‧地燕斬",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "imported.herohimurakenshin",
+  "baseStats": {
+    "maxHealth": 480,
+    "healthRegen": 1.15,
+    "maxMana": 292,
+    "manaRegen": 1.44,
+    "ad": 34,
+    "ap": 0,
+    "armor": 8,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 38,
+    "healthRegen": 0.09,
+    "maxMana": 20,
+    "manaRegen": 0.07,
+    "ad": 2.6,
+    "armor": 0.8,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-e012.q",
+      "name": "47-01 飛龍閃",
+      "description": "[主動攻擊]\n35秒冷卻時間\n\n高速拔刀使刀柄飛向對手造成150點傷害並擊暈1.0秒的牽制劍術，施展範圍400。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        35.0,
+        35.0,
+        35.0,
+        35.0
+      ],
+      "manaCost": [
+        50.0,
+        80.0,
+        110.0,
+        140.0
+      ],
+      "range": 7.33,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              150.0,
+              250.0,
+              350.0,
+              450.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "W": {
+      "id": "godie-e012.w",
+      "name": "47-02 神速",
+      "description": "[輔助]\n25秒冷卻時間\n\n以瞬間移動600的距離到指定的位置。",
+      "slot": "W",
+      "castType": "dash",
+      "maxRank": 5,
+      "cooldown": [
+        25.0,
+        20.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        40.0,
+        80.0,
+        120.0,
+        120.0,
+        120.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "dash",
+          "mode": "toPoint",
+          "speed": 30.0,
+          "maxDistance": 11.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "E": {
+      "id": "godie-e012.e",
+      "name": "47-03 九頭龍閃",
+      "description": "[主動攻擊]\n60秒冷卻時間\n\n使出飛天御劍流快速拔刀術，擊退前方範圍敵人並造成目標暫時性的速度減緩，附加連續九次共200+75*9點傷害。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        120.0,
+        180.0,
+        240.0,
+        300.0
+      ],
+      "range": 6.42,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              9.0,
+              9.0,
+              9.0,
+              9.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.027
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow25",
+          "duration": 1.5,
+          "moveSpeedMult": 0.6
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "radius": 6.0
+    },
+    "R": {
+      "id": "godie-e012.r",
+      "name": "47-04 天翔龍閃",
+      "description": "[主動攻擊]\n60秒冷卻時間\n\n施展飛天御劍流最強奧義天翔龍閃，每秒可使周圍受到500點傷害，施展期間劍心為魔法免疫狀態，持續2秒。",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        60.0,
+        350.0,
+        500.0
+      ],
+      "range": 0.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              500.0,
+              900.0,
+              1300.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "radius": 3.67
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ],
+  "icon": "assets/icons/champions/godie-e012.png"
+}

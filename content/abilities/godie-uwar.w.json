@@ -1,0 +1,36 @@
+{
+  "id": "godie-uwar.w",
+  "name": "43-02 打狗鏟",
+  "description": "[被動]\n0秒冷卻時間\n\n天下武功出少林，打狗鏟心法可以幫助在攻擊時有10%機率增加55點破壞力，並有機會將敵人震昏0.1秒。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    12.0,
+    12.0,
+    12.0,
+    12.0
+  ],
+  "manaCost": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "flat",
+          "value": 0.25
+        }
+      ],
+      "duration": 3.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

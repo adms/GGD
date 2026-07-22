@@ -1,0 +1,84 @@
+{{- /*
+Idempotent seed as a post-install/post-upgrade hook: execs /seed (the separate
+cmd/seed binary baked into the platform image), which rebuilds the Redis hot
+layer from the data/ JSON truth. Safe to re-run.
+
+NOTE the entrypoint is /seed, NOT `/platform --seed` — cmd/platform parses no
+flags, so the old contract would have started a server that never exits and
+hung the hook.
+
+seed.starterWhitelist=true additionally applies the DEMO CONTENT WHITELIST
+(apps/platform/internal/curation/starter.go) so a fresh install is playable out
+of the box. It is DEFAULT FALSE because the whitelist is deliberately
+default-empty (task #4: production must not silently enable unvetted content),
+and even when true it is a NO-OP once any champion is enabled — an operator's
+curation is never re-expanded on upgrade.
+*/ -}}
+{{- if .Values.seed.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-seed
+  labels:
+    {{- include "ggd.labels" . | nindent 4 }}
+    app.kubernetes.io/name: seed
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-weight": "1"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  backoffLimit: 2
+  template:
+    metadata:
+      labels:
+        {{- include "ggd.labels" . | nindent 8 }}
+        app.kubernetes.io/name: seed
+    spec:
+      restartPolicy: Never
+      securityContext:
+        runAsNonRoot: true
+        fsGroup: 65532
+      containers:
+        - name: seed
+          image: {{ .Values.platform.image | quote }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["/seed"]
+          {{- if .Values.seed.starterWhitelist }}
+          args: ["-starter"]
+          {{- end }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-config
+            - secretRef:
+                name: {{ .Release.Name }}-secrets
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: content
+              mountPath: /srv/content
+              readOnly: true
+      volumes:
+        - name: data
+          {{- if .Values.platform.data.hostPath }}
+          hostPath:
+            path: {{ .Values.platform.data.hostPath | quote }}
+            type: DirectoryOrCreate
+          {{- else }}
+          # RWO PVC: fine on single-node kind; on multi-node clusters the seed
+          # job schedules onto the platform's node via the same claim.
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-platform-data
+          {{- end }}
+        - name: content
+          {{- if .Values.content.hostPath }}
+          hostPath:
+            path: {{ .Values.content.hostPath | quote }}
+            type: Directory
+          {{- else if .Values.content.existingClaim }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.content.existingClaim | quote }}
+            readOnly: true
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+{{- end }}

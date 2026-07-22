@@ -1,0 +1,30 @@
+{
+  "id": "godie-hgam.ex",
+  "name": "90-002 超進化! 妙蛙花",
+  "description": "[輔助]\n75秒冷卻時間\n\n小小青蛙也會有變態的時候，小學課本都有教。超進化為妙蛙花的時候攻擊速度加快，攻擊距離上升為600，攻擊力增加50點且攻擊變成花之舞具有彈跳傷害，唯一的缺點是移動速度降低。超進化持續18秒。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    75.0
+  ],
+  "manaCost": [
+    350.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

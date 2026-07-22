@@ -1,0 +1,52 @@
+{
+  "id": "imported.charlie",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/charlie.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Attack",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Head": {
+      "x": 0.6927,
+      "y": 1.4877,
+      "z": -0.0
+    },
+    "Chest": {
+      "x": 0.0445,
+      "y": 0.9375,
+      "z": -0.0
+    },
+    "Weapon": {
+      "x": 0.8329,
+      "y": 1.6763,
+      "z": -0.0
+    },
+    "Foot Right": {
+      "x": 0.3745,
+      "y": 0.1349,
+      "z": -0.0
+    },
+    "Foot Left": {
+      "x": 0.3745,
+      "y": 0.1349,
+      "z": -0.0
+    },
+    "Origin": {
+      "x": 0.0,
+      "y": 0.0816,
+      "z": -0.0
+    },
+    "Overhead": {
+      "x": 0.0445,
+      "y": 2.1811,
+      "z": -0.0
+    }
+  }
+}

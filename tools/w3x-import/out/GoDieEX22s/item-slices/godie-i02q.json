@@ -1,0 +1,20 @@
+{
+  "contentId": "godie-i02q",
+  "nameZh": "澤之書",
+  "gold": 2785,
+  "kind": "effect",
+  "description": "施展需求魔力：200點\r\n技能冷卻時間：55秒\r\n效能\r\n自我修復\r\n\r\n解說\r\n醫療所指定的友方部隊，在5秒中回復1000點生命點數。",
+  "abilities": [
+    {
+      "rawcode": "A0TE",
+      "name": null,
+      "tooltip": "天香斷續膠 (等級1) - [D]",
+      "description": "[輔助]\r\n60秒冷卻時間\r\n\r\n來自北嶽恆山的治傷靈藥，能在10內恢復500點生命。",
+      "dataColumns": {
+        "1": {
+          "1": 1000.0
+        }
+      }
+    }
+  ]
+}

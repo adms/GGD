@@ -1,0 +1,49 @@
+{
+  "id": "godie-naka.w",
+  "name": "27-02 忍法鬼穿刺",
+  "description": "[主動攻擊]\n35秒冷卻時間\n\n忍法鬼穿刺可以攻擊一直線敵人，將其打到空中給予200點損害，落地後暈眩1秒。",
+  "slot": "W",
+  "castType": "skillshot",
+  "maxRank": 4,
+  "cooldown": [
+    35.0,
+    35.0,
+    35.0,
+    35.0
+  ],
+  "manaCost": [
+    90.0,
+    120.0,
+    150.0,
+    180.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "imported.wave",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              90.0,
+              90.0,
+              90.0,
+              90.0
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "burnstun",
+          "duration": 1.2,
+          "stun": true
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

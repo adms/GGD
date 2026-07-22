@@ -1,0 +1,30 @@
+{
+  "id": "godie-h001.ex",
+  "name": "41-002 絕對屏障",
+  "description": "[輔助]\n25秒冷卻時間\n\n在指定點展開一個小型結界，使得這個小區域的單位狀態為無敵，持續成5秒。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    25.0
+  ],
+  "manaCost": [
+    500.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "armor",
+          "op": "flat",
+          "value": 500
+        }
+      ],
+      "duration": 5.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

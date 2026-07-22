@@ -1,0 +1,30 @@
+{
+  "id": "godie-edem.ex",
+  "name": "45-002 天照",
+  "description": "[輔助攻擊]\n60秒冷卻時間\n\n擁有萬花筒寫輪眼的佐助，將可發動天照，造成週遭大範圍部隊每秒受到400點灼燒傷害，並無法施展法術，同時降低40%的攻擊力，持續10秒。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    444.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

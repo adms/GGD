@@ -1,0 +1,30 @@
+{
+  "id": "godie-ofar.ex",
+  "name": "58-002 打雷絕招",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n放出全身積蓄的電壓瘋狂電擊範圍1800距離內的敵人並使之暈眩0.5秒，每個敵人將會受到雷擊造成250點傷害並向旁邊的單位傳遞，共傳遞16次，聚集越多敵人則造成的傷害會越大。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    300.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

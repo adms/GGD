@@ -1,0 +1,44 @@
+{
+  "id": "godie-o01z.e",
+  "name": "81-03 Divine Buster Extention",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n最大射程與彈速均相當優秀的砲擊，即使經過長距離飛行其精準度和威力也不會衰退，為奈葉的主砲之一。砲擊造成一直線上的敵方400點傷害。",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    150.0,
+    220.0,
+    290.0,
+    360.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.003
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

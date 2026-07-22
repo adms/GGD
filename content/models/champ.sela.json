@@ -1,0 +1,28 @@
+{
+  "id": "champ.sela",
+  "schema": "model@1",
+  "glbPath": "assets/models/champions/mage.glb",
+  "scale": 0.7727,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "Idle",
+    "run": "Running_A",
+    "attack": "Spellcast_Shoot",
+    "cast": "Spellcast_Long",
+    "hurt": "Hit_A",
+    "death": "Death_A"
+  },
+  "attachPoints": {
+    "rightHand": {
+      "x": 0.35,
+      "y": 1.1,
+      "z": 0.1
+    },
+    "overhead": {
+      "x": 0,
+      "y": 2.2,
+      "z": 0
+    }
+  },
+  "teamTintMaterials": []
+}

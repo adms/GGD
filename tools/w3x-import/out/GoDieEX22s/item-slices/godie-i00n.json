@@ -1,0 +1,23 @@
+{
+  "contentId": "godie-i00n",
+  "nameZh": "分手之鎚",
+  "gold": 4000,
+  "kind": "effect",
+  "description": "武器\r\n效能\r\n攻擊力+25\r\n攻擊時削弱目標裝甲7點（法球）\r\n\r\n解說\r\n據說是分手的時候，想要發洩心情砸東西的好工具。",
+  "abilities": [
+    {
+      "rawcode": "A0XA",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A0O3",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    }
+  ]
+}

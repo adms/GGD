@@ -1,0 +1,48 @@
+{
+  "id": "godie-ogld.r",
+  "name": "72-04 黑化",
+  "description": "[主動攻擊]\n90秒冷卻時間\n\n黑化後的黑人牙膏將會在短時間內使出敵我皆傷的噴牙膏攻擊，對周圍所有生物造成最多智慧*9的傷害。",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    90.0,
+    90.0,
+    90.0
+  ],
+  "manaCost": [
+    250.0,
+    350.0,
+    450.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          77.0,
+          77.0,
+          77.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.347
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "burnstun",
+      "duration": 0.8,
+      "stun": true
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "radius": 3.67,
+  "schema": "ability@1"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "godie-usyl.r",
+  "name": "49-04 母體",
+  "description": "[招喚]\n70秒冷卻時間\n\n招換初級的異形母體，每7秒生出嫩嫩的小異形，持續25秒。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    70.0,
+    70.0,
+    70.0
+  ],
+  "manaCost": [
+    150.0,
+    200.0,
+    250.0
+  ],
+  "range": 6.42,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          7.0,
+          6.0,
+          6.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.021
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

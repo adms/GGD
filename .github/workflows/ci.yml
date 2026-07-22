@@ -1,0 +1,192 @@
+# GGD CI — the needs: DAG mirrors the runner's fixed category order and
+# enforces REGRESSION LAST: regression needs every other job and finishes with
+# the todo-check runtime gate over the merged coverage NDJSON.
+#
+#   setup ─┬─ unit ────────┬
+#          ├─ go-platform ─┼─► regression (todo runtime gate LAST)
+#          ├─ vuln ────────┤
+#          └─ e2e (off) ───┘
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  GO_VERSION: "1.25"   # apps/platform requires go 1.25; tools/testrunner needs >= 1.23
+
+jobs:
+  # ---- setup: install + prime the pnpm store cache ---------------------------
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+  # ---- unit: JS/TS workspaces + testrunner Go, beacons collected -------------
+  unit:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          cache-dependency-path: tools/testrunner/go.sum
+      - run: pnpm install --frozen-lockfile
+      - name: Static TODO gate
+        run: pnpm todo:check
+      - name: Typecheck
+        run: pnpm -r --if-present typecheck
+      - name: Workspace tests (vitest, coverage beacons on)
+        run: pnpm -r --if-present test
+        env:
+          GGD_COVERAGE_FILE: ${{ runner.temp }}/coverage-unit.ndjson
+      - name: testrunner go vet + unit tests
+        working-directory: tools/testrunner
+        env:
+          GGD_COVERAGE_FILE: ${{ runner.temp }}/coverage-unit.ndjson
+        run: |
+          go vet ./...
+          go test ./internal/api/... ./internal/config/... ./internal/coverage/... \
+                  ./internal/runner/... ./internal/scheduler/... ./internal/testkit/...
+      - name: Infra checks (helm render, single-writer, nginx via docker)
+        working-directory: tools/testrunner
+        env:
+          GGD_COVERAGE_FILE: ${{ runner.temp }}/coverage-unit.ndjson
+        run: go test -count=1 ./internal/infracheck/...
+      - name: Ensure coverage file exists
+        run: touch "${{ runner.temp }}/coverage-unit.ndjson"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: coverage-unit
+          path: ${{ runner.temp }}/coverage-unit.ndjson
+          if-no-files-found: error
+
+  # ---- go-platform: apps/platform tests (module is being built in parallel) --
+  go-platform:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          cache: false
+      - name: go test apps/platform (skips cleanly until the module lands)
+        run: |
+          if [ -f apps/platform/go.mod ]; then
+            cd apps/platform
+            GGD_COVERAGE_FILE="${{ runner.temp }}/coverage-platform.ndjson" go test ./...
+          else
+            echo "apps/platform not present yet (built in parallel) — skipping"
+          fi
+      - name: Ensure coverage file exists
+        run: touch "${{ runner.temp }}/coverage-platform.ndjson"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: coverage-platform
+          path: ${{ runner.temp }}/coverage-platform.ndjson
+          if-no-files-found: error
+
+  # ---- vuln: SCA/SAST — hard failures (continue-on-error only where noisy) ---
+  vuln:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          cache-dependency-path: tools/testrunner/go.sum
+      - run: pnpm install --frozen-lockfile
+      - name: govulncheck (testrunner + platform when present)
+        run: |
+          go install golang.org/x/vuln/cmd/govulncheck@latest
+          (cd tools/testrunner && govulncheck ./...)
+          if [ -f apps/platform/go.mod ]; then (cd apps/platform && govulncheck ./...); fi
+      - name: gosec
+        run: |
+          go install github.com/securego/gosec/v2/cmd/gosec@latest
+          (cd tools/testrunner && gosec -quiet ./...)
+          if [ -f apps/platform/go.mod ]; then (cd apps/platform && gosec -quiet ./...); fi
+      - name: pnpm audit (high+)
+        # advisories in transitive dev deps arrive independently of our
+        # changes; report-only until the dependency set stabilizes, then
+        # flip to a hard failure.
+        continue-on-error: true
+        run: pnpm audit --audit-level high
+
+  # ---- e2e: placeholder --------------------------------------------------------
+  e2e:
+    needs: setup
+    # Disabled until the Playwright happy-path (register → friends → lobby →
+    # room → match → leaderboard) lands with apps/platform + apps/client.
+    # Regression's `needs:` already references this job, so enabling it later
+    # keeps the DAG intact — just delete the next line.
+    if: false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "playwright e2e placeholder"
+
+  # ---- regression: ALWAYS LAST + todo runtime gate over merged coverage ------
+  regression:
+    needs: [unit, go-platform, vuln, e2e]
+    # e2e is if:false (skipped); run when everything else succeeded.
+    if: >-
+      always() &&
+      needs.unit.result == 'success' &&
+      needs.go-platform.result == 'success' &&
+      needs.vuln.result == 'success' &&
+      (needs.e2e.result == 'success' || needs.e2e.result == 'skipped')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          cache-dependency-path: tools/testrunner/go.sum
+      - run: pnpm install --frozen-lockfile
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: coverage-*
+          path: ${{ runner.temp }}/coverage
+      - name: Regression-tagged suites (runner-enforced last)
+        working-directory: tools/testrunner
+        env:
+          GGD_COVERAGE_FILE: ${{ runner.temp }}/coverage/coverage-regression.ndjson
+        # Currently exits cleanly with "no enabled suites" — the golden
+        # regression suites (incl. TestRecovery_RedisWipedRebuildsFromJSON)
+        # flip on in suites.yaml when apps/platform lands.
+        run: go run ./cmd/testrunner -once -mode category -category regression
+      - name: TODO runtime gate (the very last CI step)
+        run: |
+          find "${{ runner.temp }}/coverage" -name '*.ndjson' -exec cat {} + > "${{ runner.temp }}/coverage-merged.ndjson"
+          wc -l "${{ runner.temp }}/coverage-merged.ndjson"
+          pnpm todo:runtime "${{ runner.temp }}/coverage-merged.ndjson"

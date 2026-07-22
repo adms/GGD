@@ -1,0 +1,36 @@
+{
+  "collection": "arenas",
+  "hash": "f13643b647bc",
+  "entries": [
+    {
+      "id": "arena.castle",
+      "path": "arenas/arena.castle.json",
+      "hash": "abaa8935b275",
+      "size": 8940
+    },
+    {
+      "id": "arena.colosseum",
+      "path": "arenas/arena.colosseum.json",
+      "hash": "17e133eff0f7",
+      "size": 16382
+    },
+    {
+      "id": "arena.dota",
+      "path": "arenas/arena.dota.json",
+      "hash": "ef028f6ee393",
+      "size": 12104
+    },
+    {
+      "id": "arena.godie",
+      "path": "arenas/arena.godie.json",
+      "hash": "ec3a3c16cdb7",
+      "size": 17405
+    },
+    {
+      "id": "arena.skeleton",
+      "path": "arenas/arena.skeleton.json",
+      "hash": "ea9a2ddef29a",
+      "size": 5837
+    }
+  ]
+}

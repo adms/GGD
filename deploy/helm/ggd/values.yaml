@@ -1,0 +1,102 @@
+# deploy/helm/ggd/values.yaml — production-shaped defaults.
+# Local one-click overrides live in values-local.yaml (kind + skaffold).
+
+# Global environment name propagated to services (content-api and testrunner
+# refuse to boot when this is "production" — defense in depth on top of the
+# dev.enabled/test.enabled gates below).
+appEnv: production
+
+image:
+  # Set by skaffold at deploy time; tags here are only fallbacks.
+  pullPolicy: IfNotPresent
+
+platform:
+  image: ggd-platform:dev
+  port: 8080
+  # data/ JSON is the durable truth → SINGLE WRITER. replicas and strategy are
+  # HARD-CODED in the template (replicas: 1, strategy: Recreate) — they are
+  # deliberately NOT values so nobody can scale the writer by accident.
+  data:
+    size: 1Gi
+    storageClass: ""      # "" = cluster default
+    # when set (kind local profile), a hostPath is used INSTEAD of the PVC
+    hostPath: ""
+  resources: {}
+
+game:
+  image: ggd-game:dev
+  port: 2567
+  replicas: 1             # WS sticky: single replica + sessionAffinity ClientIP
+  resources: {}
+
+redis:
+  image: redis:7-alpine
+  port: 6379
+  storage: 1Gi
+  storageClass: ""
+
+edge:
+  image: ggd-edge:dev
+  port: 8080
+  replicas: 1
+  service:
+    type: ClusterIP
+  resources: {}
+  # The operations admin console is served at /admin/ (baked into the edge
+  # image). It is an OPERATOR tool: protect it in real production by
+  # IP-allowlisting /admin/ at your ingress/LB and/or mounting a basic-auth
+  # include into the edge at /etc/nginx/ggd-admin/ (the base nginx.conf's
+  # `include /etc/nginx/ggd-admin/*.conf;` picks it up; matches nothing by
+  # default so local/dev stay open). See nginx/admin/basic-auth.conf.example.
+
+# Read-only game content (JSON + .glb). When hostPath is set (kind local
+# profile) it is mounted from the node; otherwise an existing PVC name can be
+# given; otherwise an emptyDir placeholder is used (prod CDNs may bypass this
+# entirely).
+content:
+  hostPath: ""
+  existingClaim: ""
+
+# ---- dev-only components (NEVER enabled in prod) ---------------------------
+dev:
+  enabled: false          # content-api Deployment/Service + edge dev route
+
+test:
+  enabled: false          # testrunner Deployment/Service (dev/CI only)
+
+seed:
+  enabled: true           # post-install/post-upgrade hook Job: /seed (Redis hot layer)
+  # Apply the DEMO CONTENT WHITELIST (12 champions / 30 items / 60 abilities) on
+  # install so a fresh deployment is playable. DEFAULT FALSE: the whitelist is
+  # deliberately default-empty and production must opt in explicitly. Even when
+  # true it only ever runs on a whitelist with NO champions enabled, so it can
+  # never overwrite or re-expand an operator's curation.
+  starterWhitelist: false
+
+ingress:
+  enabled: false
+  className: ""
+  host: ggd.local
+  tls: []
+
+# Secrets are injected via env from ONE K8s Secret (never baked into images).
+# `make up` generates strong values with openssl into
+# deploy/helm/secrets.local.yaml (gitignored). These are EMPTY on purpose: the
+# secret template uses Helm `required`, so `helm template`/`helm install` FAILS
+# fast if a secret is not supplied (no weak "changeme" fallback ever ships).
+# Supply them via --set / a values file / an external secret manager;
+# values-local.yaml carries dev-only fallbacks for the local kind profile.
+secrets:
+  create: true
+  jwtSigningSecret: ""
+  platformGameSharedSecret: ""
+  redisPassword: ""
+
+# In-cluster network segmentation. OFF by default so local kind (whose default
+# CNI does NOT enforce NetworkPolicy) keeps working with no surprises. Turn ON
+# for real clusters with an enforcing CNI (Calico/Cilium/…):
+#   --set networkPolicy.enabled=true
+# When enabled, only the edge pod (public /api) and the game pod (result
+# callback) may reach the platform on its port — everything else is denied.
+networkPolicy:
+  enabled: false

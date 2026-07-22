@@ -1,0 +1,229 @@
+{
+  "id": "godie-o02w",
+  "schema": "champion@1",
+  "name": "笑傲江湖 - 令狐沖",
+  "description": "故事：\n華山劍派之首席大弟子，為人大而化之不拘小節，且不喜世俗教條之束縛，因緣際會之下習得了武林奇功「獨孤九劍」，因為心愛的小師妹跟小白臉跑了，傷心之餘加入了去死團。\n(出自:笑傲江湖)\n\n推薦玩家 : 快速單挑\n上手度 : 中易\n\n角色成長：\n力量 + 1.85\n敏捷 + 2.80\n智慧 + 1.55\n基礎跑速 305\n\n可學習的技能：\n華山劍法、混元掌、吸星大法、獨孤九劍",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "imported.hzyn",
+  "baseStats": {
+    "maxHealth": 420,
+    "healthRegen": 1.0,
+    "maxMana": 256,
+    "manaRegen": 1.32,
+    "ad": 27,
+    "ap": 0,
+    "armor": 10,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 37,
+    "healthRegen": 0.09,
+    "maxMana": 19,
+    "manaRegen": 0.06,
+    "ad": 1.9,
+    "armor": 0.8,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-o02w.q",
+      "name": "96-01 華山劍法",
+      "description": "[被動]\n0秒冷卻時間\n\n華山派的基本劍法，以速度著稱，劍式輕盈，招式多變。攻擊時有(5+敏捷/15)%機率造成額外10+敏捷*1點傷害。",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": 20
+            }
+          ],
+          "duration": 8.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "W": {
+      "id": "godie-o02w.w",
+      "name": "96-02 混元掌",
+      "description": "[主動攻擊]\n35秒冷卻時間\n\n華山派的特殊招式，於掌法內修習內勁，內外兼修。能將敵人震暈1秒並造成150點傷害。令狐沖並無心於此，故無深造。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        35.0,
+        35.0,
+        35.0,
+        35.0,
+        35.0
+      ],
+      "manaCost": [
+        50.0,
+        70.0,
+        90.0,
+        90.0,
+        90.0
+      ],
+      "range": 7.33,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              150.0,
+              250.0,
+              250.0,
+              250.0,
+              250.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.75
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "burnstun",
+          "duration": 1.0,
+          "stun": true
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "E": {
+      "id": "godie-o02w.e",
+      "name": "96-03 吸星大法",
+      "description": "[主動攻擊]\n45秒冷卻時間\n\n令狐沖被困於西湖地牢時習得的絕世武功，強制吸取目標的內力200點，降低對方100%攻速及20%跑速，持續2秒，還能將吸來的內力化為己用，但使用上需與對方接觸一段時間才能生效。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        140.0,
+        210.0,
+        280.0,
+        350.0
+      ],
+      "range": 7.33,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              1.1,
+              1.1,
+              1.1,
+              1.1
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.003
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "R": {
+      "id": "godie-o02w.r",
+      "name": "96-04 獨孤九劍",
+      "description": "[主動攻擊]\n70秒冷卻時間\n\n用極快的速度像敵人攻去，在一瞬間連續攻擊數十次使其無法招架暈眩1秒，其留下的殘影在旁人看來就有如9人同時攻擊一般。每個殘影擁有30點攻擊力，持續9秒。\n\n殘影會觸發華山劍法及易筋經",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        70.0,
+        70.0,
+        70.0
+      ],
+      "manaCost": [
+        150.0,
+        240.0,
+        330.0
+      ],
+      "range": 7.33,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.003
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "burnstun",
+          "duration": 0.3,
+          "stun": true
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ],
+  "exAbility": "godie-o02w.ex"
+}

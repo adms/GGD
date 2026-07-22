@@ -1,0 +1,28 @@
+{
+  "id": "godie-i00k",
+  "schema": "item@1",
+  "name": "女神之淚",
+  "description": "飾品\n效能\n裝甲+0.8\n生命+48\n魔力+42\n\n解說\n雖然說是女神之淚，但實質上只是充滿魔力寶石的美名。",
+  "cost": 300,
+  "tier": 1,
+  "tags": [
+    "wc3-import"
+  ],
+  "modifiers": [
+    {
+      "stat": "armor",
+      "op": "flat",
+      "value": 0.8
+    },
+    {
+      "stat": "maxMana",
+      "op": "flat",
+      "value": 42
+    },
+    {
+      "stat": "maxHealth",
+      "op": "flat",
+      "value": 48
+    }
+  ]
+}

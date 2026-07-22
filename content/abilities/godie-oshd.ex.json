@@ -1,0 +1,30 @@
+{
+  "id": "godie-oshd.ex",
+  "name": "29-002 慢著!來人餵公子吃餅",
+  "description": "[被動]\n0秒冷卻時間\n\n攻擊背對你逃走的敵人有50%機率任意變成一種畜生，以便留下來陪尚書大人吃餅。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    120.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

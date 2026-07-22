@@ -1,0 +1,36 @@
+{
+  "collection": "projectiles",
+  "hash": "985d0c0e1680",
+  "entries": [
+    {
+      "id": "basic-attack",
+      "path": "projectiles/basic-attack.json",
+      "hash": "b05f0b7fe7ac",
+      "size": 162
+    },
+    {
+      "id": "imported.bolt",
+      "path": "projectiles/imported.bolt.json",
+      "hash": "48c5d957cf82",
+      "size": 137
+    },
+    {
+      "id": "imported.wave",
+      "path": "projectiles/imported.wave.json",
+      "hash": "b1a18bed6414",
+      "size": 150
+    },
+    {
+      "id": "sela.q.bolt",
+      "path": "projectiles/sela.q.bolt.json",
+      "hash": "1599a4a85d04",
+      "size": 136
+    },
+    {
+      "id": "thorne.e.thorn",
+      "path": "projectiles/thorne.e.thorn.json",
+      "hash": "34e18d17d738",
+      "size": 135
+    }
+  ]
+}

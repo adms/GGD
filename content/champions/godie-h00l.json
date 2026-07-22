@@ -1,0 +1,235 @@
+{
+  "id": "godie-h00l",
+  "schema": "champion@1",
+  "name": "時空勇者 - 林克",
+  "description": "故事：原本在森林中被當成『永遠不會長大的科奇利族人』般的生活著，直到某天因葛諾多夫的陰謀而知道自己真正的身世，為了對抗葛諾多夫，林克成為時空勇者 。\n(出自:薩爾達傳說)\n\n推薦玩家 : 肉盾牽制\n上手度 : 易\n\n角色成長：\n力量 + 2.80\n敏捷 + 2.00\n智慧 + 1.20\n基礎跑速 295\n\n可學習的技能：\n科奇利族迴旋鏢、鎖鏈槍、海拉爾之盾的庇護、迴旋斬",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "imported.linkstik",
+  "attackDamagePoint": 0.5,
+  "baseStats": {
+    "maxHealth": 480,
+    "healthRegen": 1.15,
+    "maxMana": 316,
+    "manaRegen": 1.52,
+    "ad": 28,
+    "ap": 0,
+    "armor": 6,
+    "mr": 28,
+    "as": 0.53,
+    "ms": 5.7,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 56,
+    "healthRegen": 0.14,
+    "maxMana": 14,
+    "manaRegen": 0.05,
+    "ad": 2.8,
+    "armor": 0.6,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-h00l.q",
+      "name": "60-01 科奇利族的迴旋鏢",
+      "description": "[主動攻擊]\n15秒冷卻時間\n\n使用科奇利族的迴旋標攻擊敵人，造成150點傷害。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0,
+        7.0
+      ],
+      "manaCost": [
+        50.0,
+        85.0,
+        120.0,
+        155.0,
+        75.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              150,
+              250,
+              350,
+              450,
+              450
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "W": {
+      "id": "godie-h00l.w",
+      "name": "60-02 鎖鏈槍",
+      "description": "[輔助]\n35秒冷卻時間\n\n勾住一個單位，將他拉到身邊來，範圍300，並且給予額外傷害150。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        35.0,
+        35.0,
+        35.0,
+        35.0
+      ],
+      "manaCost": [
+        50.0,
+        75.0,
+        100.0,
+        125.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "shield",
+          "amount": {
+            "perRank": [
+              150.0,
+              150.0,
+              150.0,
+              150.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.45
+              }
+            ]
+          },
+          "duration": 5.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "E": {
+      "id": "godie-h00l.e",
+      "name": "60-03 海拉爾之盾的庇護",
+      "description": "[開關]\n0秒冷卻時間\n\n開啟後將受到的穿刺及法術傷害降低20%，但是會失去50%移動速度。",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        100.0,
+        100.0,
+        100.0,
+        100.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "pctAdd",
+              "value": 0.2
+            },
+            {
+              "stat": "mr",
+              "op": "pctAdd",
+              "value": 0.2
+            },
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "value": -0.5
+            }
+          ],
+          "duration": 12.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "R": {
+      "id": "godie-h00l.r",
+      "name": "60-04 迴旋斬",
+      "description": "[主動傷害]\n60秒冷卻時間\n\n使用迴旋斬將附近敵人砍傷450點並且彈開震暈1秒，每彈開一次附加林克力量屬性0.5倍的傷害。",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        170.0,
+        290.0,
+        410.0
+      ],
+      "range": 0.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              450.0,
+              750.0,
+              1050.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "burnstun",
+          "duration": 0.8,
+          "stun": true
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "radius": 6.0
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ],
+  "exAbility": "godie-h00l.ex",
+  "icon": "assets/icons/champions/godie-h00l.png"
+}

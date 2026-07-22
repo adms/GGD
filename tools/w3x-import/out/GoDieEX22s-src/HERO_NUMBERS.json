@@ -1,0 +1,3480 @@
+{
+ "convention": "ability display names are 'NN-XX 技能名'; NN = hero 編號",
+ "heroes_total": 127,
+ "heroes_with_numbers": 115,
+ "heroes_single_consistent_NN": 111,
+ "hero_to_number": {
+  "E001": "22",
+  "E002": "20",
+  "E007": "12",
+  "E008": "21",
+  "E00J": "95",
+  "E00K": "19",
+  "E00L": "20",
+  "E00N": "22",
+  "E00Q": "69",
+  "E00R": "59",
+  "E00S": "70",
+  "E00T": "66",
+  "E00V": "84",
+  "E00W": "77",
+  "E00X": "77",
+  "E00Z": "19",
+  "E010": "70",
+  "E012": "47",
+  "E015": "94",
+  "Ecen": "64",
+  "Edem": "45",
+  "Eevi": "47",
+  "Efur": "13",
+  "Ekee": "93",
+  "Emfr": "15",
+  "Emns": "44",
+  "Etyr": "14",
+  "Ewar": "12",
+  "Ewrd": "17",
+  "H001": "41",
+  "H00L": "60",
+  "H00W": "26",
+  "H01N": "79",
+  "H01O": "79",
+  "H01U": "80",
+  "H020": "04",
+  "H021": "05",
+  "H022": "82",
+  "H02K": "89",
+  "H02R": "90",
+  "H02S": "91",
+  "H02U": "92",
+  "H02V": "92",
+  "H02Y": "97",
+  "H02Z": "91",
+  "Hapm": "52",
+  "Harf": "26",
+  "Hart": "01",
+  "Hblm": "05",
+  "Hgam": "90",
+  "Hhkl": "43",
+  "Hjai": "04",
+  "Hlgr": "03",
+  "Hpal": "35",
+  "Hpb1": "07",
+  "Huth": "28",
+  "Hvsh": "48",
+  "Hvwd": "02",
+  "N003": "42",
+  "N00B": "57",
+  "N00P": "18",
+  "N01B": "40",
+  "N01C": "08",
+  "N01G": "42",
+  "N01L": "98",
+  "Naka": "27",
+  "Nbbc": "08",
+  "Nbst": "24",
+  "Nman": "40",
+  "Nplh": "16",
+  "Nsjs": "18",
+  "Ntin": "23",
+  "O00K": "86",
+  "O00L": "53",
+  "O00X": "09",
+  "O01Z": "81",
+  "O02L": "58",
+  "O02N": "87",
+  "O02O": "87",
+  "O02P": "99",
+  "O02S": "53",
+  "O02V": "81",
+  "O02W": "96",
+  "O030": "30",
+  "Obla": "33",
+  "Ofar": "58",
+  "Ogld": "72",
+  "Ogrh": "09",
+  "Opgh": "32",
+  "Orkn": "30",
+  "Osam": "34",
+  "Oshd": "29",
+  "Othr": "31",
+  "U00B": "75",
+  "U00H": "39",
+  "U00J": "74",
+  "U00K": "71",
+  "U00L": "25",
+  "U00N": "76",
+  "U00O": "76",
+  "U00V": "78",
+  "U010": "38",
+  "U011": "61",
+  "U012": "61",
+  "U01U": "11",
+  "U034": "06",
+  "Ubal": "37",
+  "Ucrl": "06",
+  "Udea": "65",
+  "Udre": "11",
+  "Umal": "25",
+  "Usyl": "49",
+  "Utic": "32",
+  "Uvng": "38",
+  "Uwar": "43"
+ },
+ "numbers": {
+  "01": {
+   "number": "01",
+   "heroes": [
+    {
+     "rawcode": "Hart",
+     "unit_name": "最終幻想",
+     "skills": [
+      {
+       "rawcode": "A072",
+       "name": "01-01 凶斬",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0UX",
+       "name": "01-02 隕石擊",
+       "index": "02"
+      },
+      {
+       "rawcode": "A000",
+       "name": "01-03 畫龍點睛",
+       "index": "03"
+      },
+      {
+       "rawcode": "A077",
+       "name": "01-04 超究武神霸斬",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "02": {
+   "number": "02",
+   "heroes": [
+    {
+     "rawcode": "Hvwd",
+     "unit_name": "除魔巫女",
+     "skills": [
+      {
+       "rawcode": "A0MH",
+       "name": "02-01 破魔之箭",
+       "index": "01"
+      },
+      {
+       "rawcode": "A045",
+       "name": "02-02 明鏡止水",
+       "index": "02"
+      },
+      {
+       "rawcode": "A03D",
+       "name": "02-03 魂飛魄散",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0Z6",
+       "name": "02-04 百鬼夜行",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "03": {
+   "number": "03",
+   "heroes": [
+    {
+     "rawcode": "Hlgr",
+     "unit_name": "鋼彈",
+     "skills": [
+      {
+       "rawcode": "ANab",
+       "name": "03-02 詭雷",
+       "index": "02"
+      },
+      {
+       "rawcode": "A04M",
+       "name": "03-01 磁軌砲",
+       "index": "01"
+      },
+      {
+       "rawcode": "A04L",
+       "name": "03-03 鯨式電漿光束炮",
+       "index": "03"
+      },
+      {
+       "rawcode": "A04N",
+       "name": "03-04 全彈發射",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "04": {
+   "number": "04",
+   "heroes": [
+    {
+     "rawcode": "Hjai",
+     "unit_name": "黑魔導士",
+     "skills": [
+      {
+       "rawcode": "A0AY",
+       "name": "04-01 火球術",
+       "index": "01"
+      },
+      {
+       "rawcode": "A021",
+       "name": "04-02 炸彈陣",
+       "index": "02"
+      },
+      {
+       "rawcode": "A04R",
+       "name": "04-03 龍破斬",
+       "index": "03"
+      },
+      {
+       "rawcode": "A07F",
+       "name": "04-04 神滅斬",
+       "index": "04"
+      }
+     ]
+    },
+    {
+     "rawcode": "H020",
+     "unit_name": "黑魔導士",
+     "skills": [
+      {
+       "rawcode": "A0AY",
+       "name": "04-01 火球術",
+       "index": "01"
+      },
+      {
+       "rawcode": "A021",
+       "name": "04-02 炸彈陣",
+       "index": "02"
+      },
+      {
+       "rawcode": "A04R",
+       "name": "04-03 龍破斬",
+       "index": "03"
+      },
+      {
+       "rawcode": "A07F",
+       "name": "04-04 神滅斬",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "05": {
+   "number": "05",
+   "heroes": [
+    {
+     "rawcode": "Hblm",
+     "unit_name": "慈悲的王者",
+     "skills": [
+      {
+       "rawcode": "A08Z",
+       "name": "05-01 薩喀爾",
+       "index": "01"
+      },
+      {
+       "rawcode": "A090",
+       "name": "05-02 薩喀爾嘎",
+       "index": "02"
+      },
+      {
+       "rawcode": "A091",
+       "name": "05-03 及喀爾度",
+       "index": "03"
+      },
+      {
+       "rawcode": "A092",
+       "name": "05-04 巴歐．薩喀爾嘎",
+       "index": "04"
+      }
+     ]
+    },
+    {
+     "rawcode": "H021",
+     "unit_name": "破銅爛鐵",
+     "skills": [
+      {
+       "rawcode": "A08Z",
+       "name": "05-01 薩喀爾",
+       "index": "01"
+      },
+      {
+       "rawcode": "A090",
+       "name": "05-02 薩喀爾嘎",
+       "index": "02"
+      },
+      {
+       "rawcode": "A091",
+       "name": "05-03 及喀爾度",
+       "index": "03"
+      },
+      {
+       "rawcode": "A092",
+       "name": "05-04 巴歐．薩喀爾嘎",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "06": {
+   "number": "06",
+   "heroes": [
+    {
+     "rawcode": "Ucrl",
+     "unit_name": "職業獵人",
+     "skills": [
+      {
+       "rawcode": "A08X",
+       "name": "06-01 山形修煉-放",
+       "index": "01"
+      },
+      {
+       "rawcode": "A08W",
+       "name": "06-02 山形修煉-變",
+       "index": "02"
+      },
+      {
+       "rawcode": "A020",
+       "name": "06-03 山形修煉-強",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0Y1",
+       "name": "06-04 傑桑變化",
+       "index": "04"
+      }
+     ]
+    },
+    {
+     "rawcode": "U034",
+     "unit_name": "職業獵人",
+     "skills": [
+      {
+       "rawcode": "A08X",
+       "name": "06-01 山形修煉-放",
+       "index": "01"
+      },
+      {
+       "rawcode": "A08W",
+       "name": "06-02 山形修煉-變",
+       "index": "02"
+      },
+      {
+       "rawcode": "A020",
+       "name": "06-03 山形修煉-強",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0Y1",
+       "name": "06-04 傑桑變化",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "07": {
+   "number": "07",
+   "heroes": [
+    {
+     "rawcode": "Hpb1",
+     "unit_name": "獸矛傳承使",
+     "skills": [
+      {
+       "rawcode": "A0G0",
+       "name": "07-01 臨、兵、鬥",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0G2",
+       "name": "07-02 者、皆、陣",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0G3",
+       "name": "07-03 列、在、前",
+       "index": "03"
+      },
+      {
+       "rawcode": "A02C",
+       "name": "07-04 神聖結界",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "08": {
+   "number": "08",
+   "heroes": [
+    {
+     "rawcode": "Nbbc",
+     "unit_name": "傳說的龍騎士",
+     "skills": [
+      {
+       "rawcode": "A0CF",
+       "name": "08-01 雙龍紋",
+       "index": "01"
+      },
+      {
+       "rawcode": "A05T",
+       "name": "08-02 萊丁快速劍",
+       "index": "02"
+      },
+      {
+       "rawcode": "A05J",
+       "name": "08-03 龍鬥氣砲咒文",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0EZ",
+       "name": "08-04 阿邦快速劍X",
+       "index": "04"
+      }
+     ]
+    },
+    {
+     "rawcode": "N01C",
+     "unit_name": "傳說的龍騎士",
+     "skills": [
+      {
+       "rawcode": "A0CF",
+       "name": "08-01 雙龍紋",
+       "index": "01"
+      },
+      {
+       "rawcode": "A05T",
+       "name": "08-02 萊丁快速劍",
+       "index": "02"
+      },
+      {
+       "rawcode": "A05J",
+       "name": "08-03 龍鬥氣砲咒文",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0EZ",
+       "name": "08-04 阿邦快速劍X",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "09": {
+   "number": "09",
+   "heroes": [
+    {
+     "rawcode": "Ogrh",
+     "unit_name": "賽亞人",
+     "skills": [
+      {
+       "rawcode": "A082",
+       "name": "09-01 界王拳",
+       "index": "01"
+      },
+      {
+       "rawcode": "A03Y",
+       "name": "09-02 瞬間移動",
+       "index": "02"
+      },
+      {
+       "rawcode": "A09E",
+       "name": "09-03 超級賽亞人",
+       "index": "03"
+      },
+      {
+       "rawcode": "A03S",
+       "name": "09-04 龜派氣功",
+       "index": "04"
+      }
+     ]
+    },
+    {
+     "rawcode": "O00X",
+     "unit_name": "超級賽亞人",
+     "skills": [
+      {
+       "rawcode": "A082",
+       "name": "09-01 界王拳",
+       "index": "01"
+      },
+      {
+       "rawcode": "A03Y",
+       "name": "09-02 瞬間移動",
+       "index": "02"
+      },
+      {
+       "rawcode": "A09E",
+       "name": "09-03 超級賽亞人",
+       "index": "03"
+      },
+      {
+       "rawcode": "A03S",
+       "name": "09-04 龜派氣功",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "11": {
+   "number": "11",
+   "heroes": [
+    {
+     "rawcode": "Udre",
+     "unit_name": "三刀流劍士",
+     "skills": [
+      {
+       "rawcode": "A0CC",
+       "name": "11-01 燒鬼斬",
+       "index": "01"
+      },
+      {
+       "rawcode": "A06N",
+       "name": "11-02 虎狩獵",
+       "index": "02"
+      },
+      {
+       "rawcode": "A06P",
+       "name": "11-03 鬼氣九刀流-阿修羅壹霧銀",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0MQ",
+       "name": "11-04 三千世界",
+       "index": "04"
+      }
+     ]
+    },
+    {
+     "rawcode": "U01U",
+     "unit_name": "三刀流劍士",
+     "skills": [
+      {
+       "rawcode": "A0CC",
+       "name": "11-01 燒鬼斬",
+       "index": "01"
+      },
+      {
+       "rawcode": "A06N",
+       "name": "11-02 虎狩獵",
+       "index": "02"
+      },
+      {
+       "rawcode": "A06P",
+       "name": "11-03 鬼氣九刀流-阿修羅壹霧銀",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0MQ",
+       "name": "11-04 三千世界",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "12": {
+   "number": "12",
+   "heroes": [
+    {
+     "rawcode": "Ewar",
+     "unit_name": "龍之子",
+     "skills": [
+      {
+       "rawcode": "A04Y",
+       "name": "12-01 鬥仙術",
+       "index": "01"
+      },
+      {
+       "rawcode": "A02K",
+       "name": "12-02 仙氣．採藥",
+       "index": "02"
+      },
+      {
+       "rawcode": "A02W",
+       "name": "12-03 破凰之心-徒手空破山",
+       "index": "03"
+      },
+      {
+       "rawcode": "A04X",
+       "name": "12-04 龍氣爆發",
+       "index": "04"
+      }
+     ]
+    },
+    {
+     "rawcode": "E007",
+     "unit_name": "龍之子",
+     "skills": [
+      {
+       "rawcode": "A04Y",
+       "name": "12-01 鬥仙術",
+       "index": "01"
+      },
+      {
+       "rawcode": "A02K",
+       "name": "12-02 仙氣．採藥",
+       "index": "02"
+      },
+      {
+       "rawcode": "A02W",
+       "name": "12-03 破凰之心-徒手空破山",
+       "index": "03"
+      },
+      {
+       "rawcode": "A04X",
+       "name": "12-04 龍氣爆發",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "13": {
+   "number": "13",
+   "heroes": [
+    {
+     "rawcode": "Efur",
+     "unit_name": "揍敵客大家長",
+     "skills": [
+      {
+       "rawcode": "AEer",
+       "name": "13-01 老樹盤根",
+       "index": "01"
+      },
+      {
+       "rawcode": "A00X",
+       "name": "13-02 變化念力",
+       "index": "02"
+      },
+      {
+       "rawcode": "AEtq",
+       "name": "13-03 快步",
+       "index": "03"
+      },
+      {
+       "rawcode": "A00S",
+       "name": "13-04 暗殺奧義",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "14": {
+   "number": "14",
+   "heroes": [
+    {
+     "rawcode": "Etyr",
+     "unit_name": "治癒系公主",
+     "skills": [
+      {
+       "rawcode": "A0JL",
+       "name": "14-01 東風繪扇、南風末廣",
+       "index": "01"
+      },
+      {
+       "rawcode": "AOae",
+       "name": "14-03 魔力應援",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0JM",
+       "name": "14-02 式神炸裂",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0SS",
+       "name": "14-04 聖夜降臨",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "15": {
+   "number": "15",
+   "heroes": [
+    {
+     "rawcode": "Emfr",
+     "unit_name": "魔法老師",
+     "skills": [
+      {
+       "rawcode": "A0D3",
+       "name": "15-01 風精召喚",
+       "index": "01"
+      },
+      {
+       "rawcode": "A054",
+       "name": "15-02 沉睡之霧",
+       "index": "02"
+      },
+      {
+       "rawcode": "A052",
+       "name": "15-03 雷電風暴",
+       "index": "03"
+      },
+      {
+       "rawcode": "A053",
+       "name": "15-04 千之雷",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "16": {
+   "number": "16",
+   "heroes": [
+    {
+     "rawcode": "Nplh",
+     "unit_name": "通靈人",
+     "skills": [
+      {
+       "rawcode": "A044",
+       "name": "16-03 無無明亦無",
+       "index": "03"
+      },
+      {
+       "rawcode": "A041",
+       "name": "16-01 超．占事略決",
+       "index": "01"
+      },
+      {
+       "rawcode": "A043",
+       "name": "16-04 劍之精靈",
+       "index": "04"
+      },
+      {
+       "rawcode": "A042",
+       "name": "16-02 阿彌陀流真空佛陀斬",
+       "index": "02"
+      }
+     ]
+    }
+   ]
+  },
+  "17": {
+   "number": "17",
+   "heroes": [
+    {
+     "rawcode": "Ewrd",
+     "unit_name": "天上天下",
+     "skills": [
+      {
+       "rawcode": "AHad",
+       "name": "17-01 鬼-真夜",
+       "index": "01"
+      },
+      {
+       "rawcode": "A07L",
+       "name": "17-02 殺無真空斬",
+       "index": "02"
+      },
+      {
+       "rawcode": "A07M",
+       "name": "17-03 空破圓斬",
+       "index": "03"
+      },
+      {
+       "rawcode": "A07N",
+       "name": "17-04 狂龍斬",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "18": {
+   "number": "18",
+   "heroes": [
+    {
+     "rawcode": "Nsjs",
+     "unit_name": "妖狐藏馬",
+     "skills": [
+      {
+       "rawcode": "A0IO",
+       "name": "18-01 風華圓舞陣",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0RV",
+       "name": "18-02 寄生種子",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0IH",
+       "name": "18-03 妖狐變化",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0P7",
+       "name": "18-04 億年樹",
+       "index": "04"
+      }
+     ]
+    },
+    {
+     "rawcode": "N00P",
+     "unit_name": "妖狐藏馬",
+     "skills": [
+      {
+       "rawcode": "A0IO",
+       "name": "18-01 風華圓舞陣",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0RV",
+       "name": "18-02 寄生種子",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0IH",
+       "name": "18-03 妖狐變化",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0P7",
+       "name": "18-04 億年樹",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "19": {
+   "number": "19",
+   "heroes": [
+    {
+     "rawcode": "E00K",
+     "unit_name": "戰國刺客Azumi",
+     "skills": [
+      {
+       "rawcode": "A00F",
+       "name": "19-01 斷末",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0H5",
+       "name": "19-02 迴切",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0H9",
+       "name": "19-03 瞬切百殺",
+       "index": "03"
+      },
+      {
+       "rawcode": "A02Y",
+       "name": "19-04 幻影暗殺",
+       "index": "04"
+      }
+     ]
+    },
+    {
+     "rawcode": "E00Z",
+     "unit_name": "戰國刺客Azumi",
+     "skills": [
+      {
+       "rawcode": "A00F",
+       "name": "19-01 斷末",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0H5",
+       "name": "19-02 迴切",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0H9",
+       "name": "19-03 瞬切百殺",
+       "index": "03"
+      },
+      {
+       "rawcode": "A02Y",
+       "name": "19-04 幻影暗殺",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "20": {
+   "number": "20",
+   "heroes": [
+    {
+     "rawcode": "E002",
+     "unit_name": "亞瑟王",
+     "skills": [
+      {
+       "rawcode": "A0CM",
+       "name": "20-02 感知能力",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0DZ",
+       "name": "20-01 風王結界",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0D5",
+       "name": "20-03 約束與勝利之劍",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0CT",
+       "name": "20-04 Avalon-永恆的理想鄉",
+       "index": "04"
+      }
+     ]
+    },
+    {
+     "rawcode": "E00L",
+     "unit_name": "亞瑟王",
+     "skills": [
+      {
+       "rawcode": "A0CM",
+       "name": "20-02 感知能力",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0DZ",
+       "name": "20-01 風王結界",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0D5",
+       "name": "20-03 約束與勝利之劍",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0CT",
+       "name": "20-04 Avalon-永恆的理想鄉",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "21": {
+   "number": "21",
+   "heroes": [
+    {
+     "rawcode": "E008",
+     "unit_name": "火霧戰士",
+     "skills": [
+      {
+       "rawcode": "A0BD",
+       "name": "21-02 拔焰刀",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0BH",
+       "name": "21-01 火羽",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0BF",
+       "name": "21-03 赤焰爆發",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0HB",
+       "name": "21-04 討滅封絕",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "22": {
+   "number": "22",
+   "heroes": [
+    {
+     "rawcode": "E001",
+     "unit_name": "蟬在叫人壞掉",
+     "skills": [
+      {
+       "rawcode": "A007",
+       "name": "22-01 鬼隱之擊",
+       "index": "01"
+      },
+      {
+       "rawcode": "AOcr",
+       "name": "22-02 染血的柴刀",
+       "index": "02"
+      },
+      {
+       "rawcode": "AEsh",
+       "name": "22-03 五吋釘",
+       "index": "03"
+      },
+      {
+       "rawcode": "A02Q",
+       "name": "22-04 雛見澤症候群L5",
+       "index": "04"
+      }
+     ]
+    },
+    {
+     "rawcode": "E00N",
+     "unit_name": "蟬在叫人壞掉",
+     "skills": [
+      {
+       "rawcode": "A007",
+       "name": "22-01 鬼隱之擊",
+       "index": "01"
+      },
+      {
+       "rawcode": "AOcr",
+       "name": "22-02 染血的柴刀",
+       "index": "02"
+      },
+      {
+       "rawcode": "AEsh",
+       "name": "22-03 五吋釘",
+       "index": "03"
+      },
+      {
+       "rawcode": "A02Q",
+       "name": "22-04 雛見澤症候群L5",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "23": {
+   "number": "23",
+   "heroes": [
+    {
+     "rawcode": "Ntin",
+     "unit_name": "時空管理局執務官",
+     "skills": [
+      {
+       "rawcode": "A0NA",
+       "name": "23-01 電離光槍 - 繁星飛躍",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0UD",
+       "name": "23-02 超音型態",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0SY",
+       "name": "23-03 雷牙一閃˙雷牙烈霸",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0OD",
+       "name": "23-04 雷焰聖劍",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "24": {
+   "number": "24",
+   "heroes": [
+    {
+     "rawcode": "Nbst",
+     "unit_name": "變態正義",
+     "skills": [
+      {
+       "rawcode": "A00A",
+       "name": "24-01 這是我的豆皮壽司",
+       "index": "01"
+      },
+      {
+       "rawcode": "A074",
+       "name": "24-02 變態根性",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0AP",
+       "name": "24-03 變態絕技悶絕地獄車",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0AN",
+       "name": "24-04 內褲變身",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "25": {
+   "number": "25",
+   "heroes": [
+    {
+     "rawcode": "Umal",
+     "unit_name": "北斗神拳掌門人",
+     "skills": [
+      {
+       "rawcode": "A0AF",
+       "name": "25-01 北斗懺悔拳",
+       "index": "01"
+      },
+      {
+       "rawcode": "A01J",
+       "name": "25-02 北斗神拳秘訣轉龍呼吸法",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0HV",
+       "name": "25-03 北斗百裂拳",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0HW",
+       "name": "25-04 ChangeDNA",
+       "index": "04"
+      }
+     ]
+    },
+    {
+     "rawcode": "U00L",
+     "unit_name": "北斗之鼠",
+     "skills": [
+      {
+       "rawcode": "A0AF",
+       "name": "25-01 北斗懺悔拳",
+       "index": "01"
+      },
+      {
+       "rawcode": "A01J",
+       "name": "25-02 北斗神拳秘訣轉龍呼吸法",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0HV",
+       "name": "25-03 北斗百裂拳",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0HW",
+       "name": "25-04 ChangeDNA",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "26": {
+   "number": "26",
+   "heroes": [
+    {
+     "rawcode": "Harf",
+     "unit_name": "豪洨天王",
+     "skills": [
+      {
+       "rawcode": "A00L",
+       "name": "26-01 腳底按摩",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0BS",
+       "name": "26-02 亂入",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0F9",
+       "name": "26-03 熱血",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0EW",
+       "name": "26-04 開天闢地‧洨者聖臨",
+       "index": "04"
+      }
+     ]
+    },
+    {
+     "rawcode": "H00W",
+     "unit_name": "豪洨天王",
+     "skills": [
+      {
+       "rawcode": "A00L",
+       "name": "26-01 腳底按摩",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0ER",
+       "name": "26-02 亂入",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0F9",
+       "name": "26-03 熱血",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0EW",
+       "name": "26-04 開天闢地‧洨者聖臨",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "27": {
+   "number": "27",
+   "heroes": [
+    {
+     "rawcode": "Naka",
+     "unit_name": "猿飛佐助",
+     "skills": [
+      {
+       "rawcode": "A03A",
+       "name": "27-01 忍法風魔手裡劍",
+       "index": "01"
+      },
+      {
+       "rawcode": "AUim",
+       "name": "27-02 忍法鬼穿刺",
+       "index": "02"
+      },
+      {
+       "rawcode": "A03I",
+       "name": "27-03 忍法千變萬化之刀",
+       "index": "03"
+      },
+      {
+       "rawcode": "A030",
+       "name": "27-04 忍法暗殺奧義-飛燕閃",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "28": {
+   "number": "28",
+   "heroes": [
+    {
+     "rawcode": "Huth",
+     "unit_name": "超級普烏",
+     "skills": [
+      {
+       "rawcode": "A0GB",
+       "name": "28-01 吃掉你",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0CK",
+       "name": "28-02 把你變成餅乾",
+       "index": "02"
+      },
+      {
+       "rawcode": "A03T",
+       "name": "28-03 分身",
+       "index": "03"
+      },
+      {
+       "rawcode": "A08U",
+       "name": "28-04 破滅能量彈",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "29": {
+   "number": "29",
+   "heroes": [
+    {
+     "rawcode": "Oshd",
+     "unit_name": "魔鬼筋肉人",
+     "skills": [
+      {
+       "rawcode": "A06U",
+       "name": "29-01 鐵砂掌",
+       "index": "01"
+      },
+      {
+       "rawcode": "AEsf",
+       "name": "29-02 鬼王流星雨",
+       "index": "02"
+      },
+      {
+       "rawcode": "AOvd",
+       "name": "29-03 有功夫無懦夫",
+       "index": "03"
+      },
+      {
+       "rawcode": "A00Z",
+       "name": "29-04 電光毒龍鑽",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "30": {
+   "number": "30",
+   "heroes": [
+    {
+     "rawcode": "Orkn",
+     "unit_name": "電車癡漢",
+     "skills": [
+      {
+       "rawcode": "A09L",
+       "name": "30-01 綁架",
+       "index": "01"
+      },
+      {
+       "rawcode": "ANdh",
+       "name": "30-02 酒精灌腸",
+       "index": "02"
+      },
+      {
+       "rawcode": "ANso",
+       "name": "30-03 痴漢火焰",
+       "index": "03"
+      },
+      {
+       "rawcode": "A01P",
+       "name": "30-04 電車之狼衝擊",
+       "index": "04"
+      }
+     ]
+    },
+    {
+     "rawcode": "O030",
+     "unit_name": "電車癡漢",
+     "skills": [
+      {
+       "rawcode": "A09L",
+       "name": "30-01 綁架",
+       "index": "01"
+      },
+      {
+       "rawcode": "ANdh",
+       "name": "30-02 酒精灌腸",
+       "index": "02"
+      },
+      {
+       "rawcode": "ANso",
+       "name": "30-03 痴漢火焰",
+       "index": "03"
+      },
+      {
+       "rawcode": "A01P",
+       "name": "30-04 電車之狼衝擊",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "31": {
+   "number": "31",
+   "heroes": [
+    {
+     "rawcode": "Othr",
+     "unit_name": "X戰警",
+     "skills": [
+      {
+       "rawcode": "A0I4",
+       "name": "31-01 迴旋爪擊",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0AQ",
+       "name": "31-02 重爪擊",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0I2",
+       "name": "31-03 野性的呼喚",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0ML",
+       "name": "31-04 不要踢我蛋蛋",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "32": {
+   "number": "32",
+   "heroes": [
+    {
+     "rawcode": "Opgh",
+     "unit_name": "常勝將軍",
+     "skills": [
+      {
+       "rawcode": "A049",
+       "name": "32-01 一騎槍閃",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0TH",
+       "name": "32-02 橫掃千軍",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0I1",
+       "name": "32-03 閃光龍牙",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0YW",
+       "name": "32-04 狂龍霸體",
+       "index": "04"
+      }
+     ]
+    },
+    {
+     "rawcode": "Utic",
+     "unit_name": "嗜血劍",
+     "skills": [
+      {
+       "rawcode": "A047",
+       "name": "32-03 狂經脈",
+       "index": "03"
+      }
+     ]
+    }
+   ]
+  },
+  "33": {
+   "number": "33",
+   "heroes": [
+    {
+     "rawcode": "Obla",
+     "unit_name": "被剝削的勞工階級",
+     "skills": [
+      {
+       "rawcode": "A02L",
+       "name": "33-01 放山雞",
+       "index": "01"
+      },
+      {
+       "rawcode": "A00P",
+       "name": "33-02 吃完的口香糖",
+       "index": "02"
+      },
+      {
+       "rawcode": "A07D",
+       "name": "33-03 地道突襲",
+       "index": "03"
+      },
+      {
+       "rawcode": "A09J",
+       "name": "33-04 動物拳法",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "34": {
+   "number": "34",
+   "heroes": [
+    {
+     "rawcode": "Osam",
+     "unit_name": "犬妖",
+     "skills": [
+      {
+       "rawcode": "A034",
+       "name": "34-01 風華之爪",
+       "index": "01"
+      },
+      {
+       "rawcode": "A038",
+       "name": "34-02 合氣斬",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0F5",
+       "name": "34-03 爆碎丸",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0FP",
+       "name": "34-04 奧義˙蒼龍破",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "35": {
+   "number": "35",
+   "heroes": [
+    {
+     "rawcode": "Hpal",
+     "unit_name": "不死之身-無",
+     "skills": [
+      {
+       "rawcode": "A06G",
+       "name": "35-01 土爪",
+       "index": "01"
+      },
+      {
+       "rawcode": "A06J",
+       "name": "35-02 石絲",
+       "index": "02"
+      },
+      {
+       "rawcode": "A06H",
+       "name": "35-03 鏡蠱",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0U6",
+       "name": "35-04 光牙",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "37": {
+   "number": "37",
+   "heroes": [
+    {
+     "rawcode": "Ubal",
+     "unit_name": "魔界霸主",
+     "skills": [
+      {
+       "rawcode": "A01I",
+       "name": "37-01 凱薩之鷹",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0KC",
+       "name": "37-03 災難之牆",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0OY",
+       "name": "37-02 黑核晶",
+       "index": "02"
+      },
+      {
+       "rawcode": "A01Z",
+       "name": "37-04 魔界之王",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "38": {
+   "number": "38",
+   "heroes": [
+    {
+     "rawcode": "Uvng",
+     "unit_name": "邪眼師",
+     "skills": [
+      {
+       "rawcode": "A0OG",
+       "name": "38-01 邪王炎殺劍",
+       "index": "01"
+      },
+      {
+       "rawcode": "A09H",
+       "name": "38-02 邪王炎殺煉獄焦",
+       "index": "02"
+      },
+      {
+       "rawcode": "A09I",
+       "name": "38-03 邪王炎殺黑龍波",
+       "index": "03"
+      },
+      {
+       "rawcode": "A09K",
+       "name": "38-04 黑龍波吸收",
+       "index": "04"
+      }
+     ]
+    },
+    {
+     "rawcode": "U010",
+     "unit_name": "邪眼師",
+     "skills": [
+      {
+       "rawcode": "A0OG",
+       "name": "38-01 邪王炎殺劍",
+       "index": "01"
+      },
+      {
+       "rawcode": "A09H",
+       "name": "38-02 邪王炎殺煉獄焦",
+       "index": "02"
+      },
+      {
+       "rawcode": "A09I",
+       "name": "38-03 邪王炎殺黑龍波",
+       "index": "03"
+      },
+      {
+       "rawcode": "A09K",
+       "name": "38-04 黑龍波吸收",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "39": {
+   "number": "39",
+   "heroes": [
+    {
+     "rawcode": "U00H",
+     "unit_name": "鬼畜紅王",
+     "skills": [
+      {
+       "rawcode": "A0DG",
+       "name": "39-01 無名神風流-白虎",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0Z4",
+       "name": "39-02 無名神風流-朱雀",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0DO",
+       "name": "39-03 無名神風流-蛟龍",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0DJ",
+       "name": "39-04 祕奧義．金色的神風",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "40": {
+   "number": "40",
+   "heroes": [
+    {
+     "rawcode": "Nman",
+     "unit_name": "地獄歌神",
+     "skills": [
+      {
+       "rawcode": "A070",
+       "name": "40-01 威脅之拳",
+       "index": "01"
+      },
+      {
+       "rawcode": "A07I",
+       "name": "40-02 必殺！爆熱神音！",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0ND",
+       "name": "40-03 萬解-貓王胖虎",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0LZ",
+       "name": "40-04 地獄搖滾",
+       "index": "04"
+      }
+     ]
+    },
+    {
+     "rawcode": "N01B",
+     "unit_name": "地獄歌神",
+     "skills": [
+      {
+       "rawcode": "A070",
+       "name": "40-01 威脅之拳",
+       "index": "01"
+      },
+      {
+       "rawcode": "A07I",
+       "name": "40-02 必殺！爆熱神音！",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0ND",
+       "name": "40-03 萬解-貓王胖虎",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0LZ",
+       "name": "40-04 地獄搖滾",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "41": {
+   "number": "41",
+   "heroes": [
+    {
+     "rawcode": "H001",
+     "unit_name": "地獄來襲者",
+     "skills": [
+      {
+       "rawcode": "A015",
+       "name": "41-01 吸血鬼之吻",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0Z2",
+       "name": "41-02 地裂術",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0PH",
+       "name": "41-03 召喚術",
+       "index": "03"
+      },
+      {
+       "rawcode": "ANr3",
+       "name": "41-04 究極魔法流星雨",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "42": {
+   "number": "42",
+   "heroes": [
+    {
+     "rawcode": "N003",
+     "unit_name": "黑暗福音",
+     "skills": [
+      {
+       "rawcode": "A05B",
+       "name": "42-01 凍結的大地",
+       "index": "01"
+      },
+      {
+       "rawcode": "AUdr",
+       "name": "42-02 吸血祭品",
+       "index": "02"
+      },
+      {
+       "rawcode": "A05C",
+       "name": "42-03 暗夜吹雪",
+       "index": "03"
+      },
+      {
+       "rawcode": "A05D",
+       "name": "42-04 世界終結",
+       "index": "04"
+      }
+     ]
+    },
+    {
+     "rawcode": "N01G",
+     "unit_name": "黑暗福音",
+     "skills": [
+      {
+       "rawcode": "A05B",
+       "name": "42-01 凍結的大地",
+       "index": "01"
+      },
+      {
+       "rawcode": "AUdr",
+       "name": "42-02 吸血祭品",
+       "index": "02"
+      },
+      {
+       "rawcode": "A05C",
+       "name": "42-03 暗夜吹雪",
+       "index": "03"
+      },
+      {
+       "rawcode": "A05D",
+       "name": "42-04 世界終結",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "43": {
+   "number": "43",
+   "heroes": [
+    {
+     "rawcode": "Uwar",
+     "unit_name": "食神",
+     "skills": [
+      {
+       "rawcode": "ANfl",
+       "name": "43-01 得罪了方丈還想走",
+       "index": "01"
+      },
+      {
+       "rawcode": "AHbh",
+       "name": "43-02 打狗鏟",
+       "index": "02"
+      },
+      {
+       "rawcode": "ANfd",
+       "name": "43-04 爆裂海景佛跳牆",
+       "index": "04"
+      },
+      {
+       "rawcode": "A00D",
+       "name": "43-03 少林絕學-火雲掌",
+       "index": "03"
+      }
+     ]
+    },
+    {
+     "rawcode": "Hhkl",
+     "unit_name": "超級賽亞人",
+     "skills": [
+      {
+       "rawcode": "AHbh",
+       "name": "43-02 打狗鏟",
+       "index": "02"
+      }
+     ]
+    }
+   ]
+  },
+  "44": {
+   "number": "44",
+   "heroes": [
+    {
+     "rawcode": "Emns",
+     "unit_name": "奇樂",
+     "skills": [
+      {
+       "rawcode": "A0IK",
+       "name": "44-01 死神之眼",
+       "index": "01"
+      },
+      {
+       "rawcode": "A05G",
+       "name": "44-02 死神的規則",
+       "index": "02"
+      },
+      {
+       "rawcode": "A05H",
+       "name": "44-03 火車輾過",
+       "index": "03"
+      },
+      {
+       "rawcode": "A05I",
+       "name": "44-04 心臟麻痺",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "45": {
+   "number": "45",
+   "heroes": [
+    {
+     "rawcode": "Edem",
+     "unit_name": "寫輪眼復仇者",
+     "skills": [
+      {
+       "rawcode": "A0M7",
+       "name": "45-01 火遁-豪火龍之術",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0JX",
+       "name": "45-02 千鳥流",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0IJ",
+       "name": "45-03 千鳥",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0U7",
+       "name": "45-04 哥哥",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "47": {
+   "number": "47",
+   "heroes": [
+    {
+     "rawcode": "Eevi",
+     "unit_name": "拔刀齋",
+     "skills": [
+      {
+       "rawcode": "A013",
+       "name": "47-01 飛龍閃",
+       "index": "01"
+      },
+      {
+       "rawcode": "A014",
+       "name": "47-02 神速",
+       "index": "02"
+      },
+      {
+       "rawcode": "A01B",
+       "name": "47-03 九頭龍閃",
+       "index": "03"
+      },
+      {
+       "rawcode": "A012",
+       "name": "47-04 天翔龍閃",
+       "index": "04"
+      }
+     ]
+    },
+    {
+     "rawcode": "E012",
+     "unit_name": "殺人劍客",
+     "skills": [
+      {
+       "rawcode": "A013",
+       "name": "47-01 飛龍閃",
+       "index": "01"
+      },
+      {
+       "rawcode": "A014",
+       "name": "47-02 神速",
+       "index": "02"
+      },
+      {
+       "rawcode": "A01B",
+       "name": "47-03 九頭龍閃",
+       "index": "03"
+      },
+      {
+       "rawcode": "A012",
+       "name": "47-04 天翔龍閃",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "48": {
+   "number": "48",
+   "heroes": [
+    {
+     "rawcode": "Hvsh",
+     "unit_name": "梅杜莎",
+     "skills": [
+      {
+       "rawcode": "A0RO",
+       "name": "48-01 魔法鎖鏈",
+       "index": "01"
+      },
+      {
+       "rawcode": "A069",
+       "name": "48-02 心眼",
+       "index": "02"
+      },
+      {
+       "rawcode": "A06C",
+       "name": "48-03 鮮血神殿",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0RQ",
+       "name": "48-04 騎英之疆繩",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "49": {
+   "number": "49",
+   "heroes": [
+    {
+     "rawcode": "Usyl",
+     "unit_name": "殺戮之牙",
+     "skills": [
+      {
+       "rawcode": "A0FT",
+       "name": "49-01 遮斷獵殺",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0BU",
+       "name": "49-02 腐蝕毒液",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0BV",
+       "name": "49-03 蛻變",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0R3",
+       "name": "49-04 母體",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "52": {
+   "number": "52",
+   "heroes": [
+    {
+     "rawcode": "Hapm",
+     "unit_name": "海克力斯",
+     "skills": [
+      {
+       "rawcode": "A0VJ",
+       "name": "52-01 狂戰士之怒",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0U1",
+       "name": "52-02 蹂躪編年史",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0BA",
+       "name": "52-03 無銘斧劍",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0U8",
+       "name": "52-04 巨神一擊",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "53": {
+   "number": "53",
+   "heroes": [
+    {
+     "rawcode": "O00L",
+     "unit_name": "獸神官",
+     "skills": [
+      {
+       "rawcode": "A0K1",
+       "name": "53-01 獸王牙操彈",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0DQ",
+       "name": "53-02 強化炸彈陣",
+       "index": "02"
+      },
+      {
+       "rawcode": "A07T",
+       "name": "53-03 破法對咒",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0UE",
+       "name": "53-04 暴爆咒",
+       "index": "04"
+      }
+     ]
+    },
+    {
+     "rawcode": "O02S",
+     "unit_name": "憂鬱少女",
+     "skills": [
+      {
+       "rawcode": "A0DQ",
+       "name": "53-02 強化炸彈陣",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0K1",
+       "name": "53-01 獸王牙操彈",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0DT",
+       "name": "53-04 暴爆咒",
+       "index": "04"
+      },
+      {
+       "rawcode": "A07T",
+       "name": "53-03 破法對咒",
+       "index": "03"
+      }
+     ]
+    }
+   ]
+  },
+  "57": {
+   "number": "57",
+   "heroes": [
+    {
+     "rawcode": "N00B",
+     "unit_name": "小叮噹",
+     "skills": [
+      {
+       "rawcode": "A0D0",
+       "name": "57-01 空氣砲",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0NE",
+       "name": "57-03 複製鏡",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0D2",
+       "name": "57-02 任意門",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0JN",
+       "name": "57-04 竹蜻蜓",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "58": {
+   "number": "58",
+   "heroes": [
+    {
+     "rawcode": "Ofar",
+     "unit_name": "神奇寶貝兒",
+     "skills": [
+      {
+       "rawcode": "A0BZ",
+       "name": "58-01 十萬伏特",
+       "index": "01"
+      },
+      {
+       "rawcode": "A04U",
+       "name": "58-02 鋼鐵尾巴",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0C3",
+       "name": "58-03 就決定是你了!小智",
+       "index": "03"
+      },
+      {
+       "rawcode": "A040",
+       "name": "58-04 瘋狂皮卡丘",
+       "index": "04"
+      }
+     ]
+    },
+    {
+     "rawcode": "O02L",
+     "unit_name": "神騎寶貝",
+     "skills": [
+      {
+       "rawcode": "A0BZ",
+       "name": "58-01 十萬伏特",
+       "index": "01"
+      },
+      {
+       "rawcode": "A04U",
+       "name": "58-02 鋼鐵尾巴",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0C3",
+       "name": "58-03 就決定是你了!小智",
+       "index": "03"
+      },
+      {
+       "rawcode": "A040",
+       "name": "58-04 瘋狂皮卡丘",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "59": {
+   "number": "59",
+   "heroes": [
+    {
+     "rawcode": "E00R",
+     "unit_name": "最終泛用人型決戰兵器",
+     "skills": [
+      {
+       "rawcode": "A0O5",
+       "name": "59-01 吞噬",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0GF",
+       "name": "59-02 高週波短刀",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0GH",
+       "name": "59-03 AT力場",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0GI",
+       "name": "59-04 野戰型陽電子砲",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "60": {
+   "number": "60",
+   "heroes": [
+    {
+     "rawcode": "H00L",
+     "unit_name": "時空勇者 ",
+     "skills": [
+      {
+       "rawcode": "A0BO",
+       "name": "60-01 科奇利族的迴旋鏢",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0BP",
+       "name": "60-02 鎖鏈槍",
+       "index": "02"
+      },
+      {
+       "rawcode": "Adef",
+       "name": "60-03 海拉爾之盾的庇護",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0BR",
+       "name": "60-04 迴旋斬",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "61": {
+   "number": "61",
+   "heroes": [
+    {
+     "rawcode": "U011",
+     "unit_name": "死亡老二",
+     "skills": [
+      {
+       "rawcode": "A0OQ",
+       "name": "61-02 霸獸盔甲",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0OS",
+       "name": "61-03 打屁股風林火豬",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0OR",
+       "name": "61-04 瘋狂怪物",
+       "index": "04"
+      }
+     ]
+    },
+    {
+     "rawcode": "U012",
+     "unit_name": "重金屬樂團的怪物",
+     "skills": [
+      {
+       "rawcode": "A0OQ",
+       "name": "61-02 霸獸盔甲",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0OS",
+       "name": "61-03 打屁股風林火豬",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0OR",
+       "name": "61-04 瘋狂怪物",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "64": {
+   "number": "64",
+   "heroes": [
+    {
+     "rawcode": "Ecen",
+     "unit_name": "姜窩肯",
+     "skills": [
+      {
+       "rawcode": "A0A2",
+       "name": "64-01 威士忌攻擊",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0A7",
+       "name": "64-02 酒釀精華",
+       "index": "02"
+      },
+      {
+       "rawcode": "ANrc",
+       "name": "64-03 工廠機器人",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0A3",
+       "name": "64-04 魔幻浮水印",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "65": {
+   "number": "65",
+   "heroes": [
+    {
+     "rawcode": "Udea",
+     "unit_name": "至尊學長",
+     "skills": [
+      {
+       "rawcode": "A04G",
+       "name": "65-01 神出鬼沒",
+       "index": "01"
+      },
+      {
+       "rawcode": "A05S",
+       "name": "65-02 寒冰破碎",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0CH",
+       "name": "65-03 魔法膨脹",
+       "index": "03"
+      },
+      {
+       "rawcode": "A04C",
+       "name": "65-04 天譴",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "66": {
+   "number": "66",
+   "heroes": [
+    {
+     "rawcode": "E00T",
+     "unit_name": "七夜怪談",
+     "skills": [
+      {
+       "rawcode": "A0I7",
+       "name": "66-01 靈體化",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0I8",
+       "name": "66-02 驚駭",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0IB",
+       "name": "66-03 七夜怪談",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0IC",
+       "name": "66-04  靈壓震撼",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "69": {
+   "number": "69",
+   "heroes": [
+    {
+     "rawcode": "E00Q",
+     "unit_name": "英靈-亞瑟王",
+     "skills": [
+      {
+       "rawcode": "A031",
+       "name": "69-01 力量強化",
+       "index": "01"
+      },
+      {
+       "rawcode": "AOsw",
+       "name": "69-02 黑泥召喚",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0FS",
+       "name": "69-04 魔力增幅",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "70": {
+   "number": "70",
+   "heroes": [
+    {
+     "rawcode": "E00S",
+     "unit_name": "白木老樹精",
+     "skills": [
+      {
+       "rawcode": "A0UJ",
+       "name": "70-01 伸卡球",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0GQ",
+       "name": "70-02 大怒石",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0GR",
+       "name": "70-03 木束縛之術",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0GN",
+       "name": "70-04 千年練成",
+       "index": "04"
+      }
+     ]
+    },
+    {
+     "rawcode": "E010",
+     "unit_name": "白木老樹精",
+     "skills": [
+      {
+       "rawcode": "A0GP",
+       "name": "70-01 伸卡球",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0GQ",
+       "name": "70-02 大怒石",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0GR",
+       "name": "70-03 木束縛之術",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0GN",
+       "name": "70-04 千年練成",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "71": {
+   "number": "71",
+   "heroes": [
+    {
+     "rawcode": "U00K",
+     "unit_name": "邪惡意念集合體",
+     "skills": [
+      {
+       "rawcode": "A03L",
+       "name": "71-01 死亡隕落",
+       "index": "01"
+      },
+      {
+       "rawcode": "A08T",
+       "name": "71-02 靈魂吸取",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0HJ",
+       "name": "71-03 厄夜靈魂",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0HK",
+       "name": "71-04 萬惡歸宗",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "72": {
+   "number": "72",
+   "heroes": [
+    {
+     "rawcode": "Ogld",
+     "unit_name": "美白大法師",
+     "skills": [
+      {
+       "rawcode": "ACpa",
+       "name": "72-02 黑人牙菌斑",
+       "index": "02"
+      },
+      {
+       "rawcode": "Afae",
+       "name": "72-03 超亮白",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0CO",
+       "name": "72-04 黑化",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "74": {
+   "number": "74",
+   "heroes": [
+    {
+     "rawcode": "U00J",
+     "unit_name": "神性的流失",
+     "skills": [
+      {
+       "rawcode": "A0S4",
+       "name": "74-01 獄門",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0ET",
+       "name": "74-02 八刀一閃",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0F4",
+       "name": "74-03 闇之天使",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0G5",
+       "name": "74-04 最終殞落星",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "75": {
+   "number": "75",
+   "heroes": [
+    {
+     "rawcode": "U00B",
+     "unit_name": "最M的魔法Jizz",
+     "skills": [
+      {
+       "rawcode": "A075",
+       "name": "75-01 超．祕技略決",
+       "index": "01"
+      },
+      {
+       "rawcode": "A07W",
+       "name": "75-02 幻影鬥氣",
+       "index": "02"
+      },
+      {
+       "rawcode": "ANto",
+       "name": "75-02 龍捲風",
+       "index": "02"
+      },
+      {
+       "rawcode": "A07Z",
+       "name": "75-03 暴雷無限刃",
+       "index": "03"
+      },
+      {
+       "rawcode": "A07Y",
+       "name": "75-04 無限Saber製",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "76": {
+   "number": "76",
+   "heroes": [
+    {
+     "rawcode": "U00N",
+     "unit_name": "草帽小子",
+     "skills": [
+      {
+       "rawcode": "A0IS",
+       "name": "76-01 伸縮自如的橡膠戰斧",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0IP",
+       "name": "76-02 伸縮自如的橡膠火箭砲",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0IV",
+       "name": "76-03 伸縮自如的槍亂打",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0RZ",
+       "name": "76-04 三檔.巨人迴旋彈",
+       "index": "04"
+      }
+     ]
+    },
+    {
+     "rawcode": "U00O",
+     "unit_name": "草帽小子",
+     "skills": [
+      {
+       "rawcode": "A0IS",
+       "name": "76-01 伸縮自如的橡膠戰斧",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0IP",
+       "name": "76-02 伸縮自如的橡膠火箭砲",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0IV",
+       "name": "76-03 伸縮自如的槍亂打",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0RZ",
+       "name": "76-04 三檔.巨人迴旋彈",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "77": {
+   "number": "77",
+   "heroes": [
+    {
+     "rawcode": "E00W",
+     "unit_name": "神鳴流劍士",
+     "skills": [
+      {
+       "rawcode": "A0TV",
+       "name": "77-01 百烈櫻華斬",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0TX",
+       "name": "77-02 雷鳴劍",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0JG",
+       "name": "77-03 GLADIARIA ALAT",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0UB",
+       "name": "77-04 真-雷光劍",
+       "index": "04"
+      }
+     ]
+    },
+    {
+     "rawcode": "E00X",
+     "unit_name": "神鳴流劍士",
+     "skills": [
+      {
+       "rawcode": "A0TV",
+       "name": "77-01 百烈櫻華斬",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0TX",
+       "name": "77-02 雷鳴劍",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0JG",
+       "name": "77-03 GLADIARIA ALAT",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0UB",
+       "name": "77-04 真-雷光劍",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "78": {
+   "number": "78",
+   "heroes": [
+    {
+     "rawcode": "U00V",
+     "unit_name": "黑手黨老大",
+     "skills": [
+      {
+       "rawcode": "A0L5",
+       "name": "78-01 斬鐵拳",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0L4",
+       "name": "78-02 地走龍牙破",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0L2",
+       "name": "78-03 廬山昇龍破",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0L6",
+       "name": "78-04 死亡噴射肘擊",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "79": {
+   "number": "79",
+   "heroes": [
+    {
+     "rawcode": "H01N",
+     "unit_name": "開外掛的死神",
+     "skills": [
+      {
+       "rawcode": "A0RX",
+       "name": "79-01 瞬步",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0LK",
+       "name": "79-02 斬擊",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0LL",
+       "name": "79-03 月牙天衝",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0LN",
+       "name": "79-04 卍解",
+       "index": "04"
+      }
+     ]
+    },
+    {
+     "rawcode": "H01O",
+     "unit_name": "外掛開很大的死神",
+     "skills": [
+      {
+       "rawcode": "A0RX",
+       "name": "79-01 瞬步",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0LK",
+       "name": "79-02 斬擊",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0LL",
+       "name": "79-03 月牙天衝",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0LN",
+       "name": "79-04 卍解",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "80": {
+   "number": "80",
+   "heroes": [
+    {
+     "rawcode": "H01U",
+     "unit_name": "亂世癿王者",
+     "skills": [
+      {
+       "rawcode": "A0MX",
+       "name": "80-01 天下無雙",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0MY",
+       "name": "80-02 弒鬼神",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0N0",
+       "name": "80-03 鬼神烈戟",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0MZ",
+       "name": "80-04 赤兔咆哮",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "81": {
+   "number": "81",
+   "heroes": [
+    {
+     "rawcode": "O01Z",
+     "unit_name": "魔砲少女",
+     "skills": [
+      {
+       "rawcode": "A0XG",
+       "name": "81-01 Barrel Shot",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0LB",
+       "name": "81-02 Acxel Shooter",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0XN",
+       "name": "81-03 Divine Buster Extention",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0XO",
+       "name": "81-04 Starlight Breaker Plus",
+       "index": "04"
+      }
+     ]
+    },
+    {
+     "rawcode": "O02V",
+     "unit_name": "白色惡魔",
+     "skills": [
+      {
+       "rawcode": "A0XG",
+       "name": "81-01 Barrel Shot",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0LB",
+       "name": "81-02 Acxel Shooter",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0XN",
+       "name": "81-03 Divine Buster Extention",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0XO",
+       "name": "81-04 Starlight Breaker Plus",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "82": {
+   "number": "82",
+   "heroes": [
+    {
+     "rawcode": "H022",
+     "unit_name": "白色之翼",
+     "skills": [
+      {
+       "rawcode": "A0Q4",
+       "name": "82-01 雷之斧",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0PM",
+       "name": "82-02 虛空瞬動",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0Q5",
+       "name": "82-03 雷之投擲",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0Q6",
+       "name": "82-04 闇之魔法",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "84": {
+   "number": "84",
+   "heroes": [
+    {
+     "rawcode": "E00V",
+     "unit_name": "百畝森林的霸主",
+     "skills": [
+      {
+       "rawcode": "A0CR",
+       "name": "84-01 冷笑話",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0CV",
+       "name": "84-02 保齡球",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0D6",
+       "name": "84-03 蜜汁",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0CX",
+       "name": "84-04 給我蜂蜜",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "86": {
+   "number": "86",
+   "heroes": [
+    {
+     "rawcode": "O00K",
+     "unit_name": "傲嬌電氣老鼠",
+     "skills": [
+      {
+       "rawcode": "A0BY",
+       "name": "86-02 電光一閃 ",
+       "index": "02"
+      },
+      {
+       "rawcode": "A04V",
+       "name": "86-03 神鳴",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0C0",
+       "name": "86-04 打雷絕招",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "87": {
+   "number": "87",
+   "heroes": [
+    {
+     "rawcode": "O02N",
+     "unit_name": "曹操孟德",
+     "skills": [
+      {
+       "rawcode": "A0DE",
+       "name": "87-01 大紅蓮斬",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0DD",
+       "name": "87-02 霸體",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0DB",
+       "name": "87-03 天下號令",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0C2",
+       "name": "87-04 逆我必殺",
+       "index": "04"
+      }
+     ]
+    },
+    {
+     "rawcode": "O02O",
+     "unit_name": "曹操孟德",
+     "skills": [
+      {
+       "rawcode": "A0DE",
+       "name": "87-01 大紅蓮斬",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0DD",
+       "name": "87-02 霸體",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0DB",
+       "name": "87-03 天下號令",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0C2",
+       "name": "87-04 逆我必殺",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "89": {
+   "number": "89",
+   "heroes": [
+    {
+     "rawcode": "H02K",
+     "unit_name": "國寶級的畜生",
+     "skills": [
+      {
+       "rawcode": "A0TL",
+       "name": "89-01 憤怒的頭槌",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0TK",
+       "name": "89-02 憤怒的菊花",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0TN",
+       "name": "89-03 憤怒的胸毛",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0TO",
+       "name": "89-04 憤怒的簡諧運動",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "90": {
+   "number": "90",
+   "heroes": [
+    {
+     "rawcode": "Hgam",
+     "unit_name": "種子神奇寶貝",
+     "skills": [
+      {
+       "rawcode": "AOww",
+       "name": "90-01 飛葉快刀",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0NB",
+       "name": "90-02 麻痺粉",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0Y4",
+       "name": "90-03 藤鞭",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0R4",
+       "name": "90-04 陽光烈焰",
+       "index": "04"
+      }
+     ]
+    },
+    {
+     "rawcode": "H02R",
+     "unit_name": "種子神奇寶貝",
+     "skills": [
+      {
+       "rawcode": "AOww",
+       "name": "90-01 飛葉快刀",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0NB",
+       "name": "90-02 麻痺粉",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0Y4",
+       "name": "90-03 藤鞭",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0R4",
+       "name": "90-04 陽光烈焰",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "91": {
+   "number": "91",
+   "heroes": [
+    {
+     "rawcode": "H02S",
+     "unit_name": "死亡騎士",
+     "skills": [
+      {
+       "rawcode": "A0W3",
+       "name": "91-01 死亡之握",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0W4",
+       "name": "91-02 疫病",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0W1",
+       "name": "91-03 碎心打擊",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0N1",
+       "name": "91-04 血魄暴噬",
+       "index": "04"
+      }
+     ]
+    },
+    {
+     "rawcode": "H02Z",
+     "unit_name": "不良少年",
+     "skills": [
+      {
+       "rawcode": "A0W3",
+       "name": "91-01 死亡之握",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0W4",
+       "name": "91-02 疫病",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0W1",
+       "name": "91-03 碎心打擊",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0N1",
+       "name": "91-04 血魄暴噬",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "92": {
+   "number": "92",
+   "heroes": [
+    {
+     "rawcode": "H02U",
+     "unit_name": "看似憂鬱的神獸",
+     "skills": [
+      {
+       "rawcode": "A0W9",
+       "name": "92-01 臥草泥馬",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0WB",
+       "name": "92-03 狂草泥馬",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0WA",
+       "name": "92-02 消化液",
+       "index": "02"
+      },
+      {
+       "rawcode": "A06Y",
+       "name": "92-04 馬勒戈壁",
+       "index": "04"
+      }
+     ]
+    },
+    {
+     "rawcode": "H02V",
+     "unit_name": "看似憂鬱的神獸",
+     "skills": [
+      {
+       "rawcode": "A0W9",
+       "name": "92-01 臥草泥馬",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0WB",
+       "name": "92-03 狂草泥馬",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0WA",
+       "name": "92-02 消化液",
+       "index": "02"
+      },
+      {
+       "rawcode": "A06Y",
+       "name": "92-04 馬勒戈壁",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "93": {
+   "number": "93",
+   "heroes": [
+    {
+     "rawcode": "Ekee",
+     "unit_name": "會叫的野獸",
+     "skills": [
+      {
+       "rawcode": "Abof",
+       "name": "93-01 期末報告",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0WH",
+       "name": "93-02 抽點名",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0NG",
+       "name": "93-03 這次考試很簡單",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0WJ",
+       "name": "93-04 當掉",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "94": {
+   "number": "94",
+   "heroes": [
+    {
+     "rawcode": "E015",
+     "unit_name": "夜市人生",
+     "skills": [
+      {
+       "rawcode": "A0OV",
+       "name": "94-01 北斗爆橘拳",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0QG",
+       "name": "94-02 橘山斬空破",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0QJ",
+       "name": "94-03 珍奶顏射",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0O0",
+       "name": "94-04 賣扣~~",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "95": {
+   "number": "95",
+   "heroes": [
+    {
+     "rawcode": "E00J",
+     "unit_name": "皇者",
+     "skills": [
+      {
+       "rawcode": "A0Y7",
+       "name": "95-01 謝謝指教",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0Y6",
+       "name": "95-02 大和戰氣",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0Y8",
+       "name": "95-03 皇者戰氣第五十重天",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0Y9",
+       "name": "95-04 藍色戰氣一百重天",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "96": {
+   "number": "96",
+   "heroes": [
+    {
+     "rawcode": "O02W",
+     "unit_name": "笑傲江湖",
+     "skills": [
+      {
+       "rawcode": "A0XS",
+       "name": "96-01 華山劍法",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0XU",
+       "name": "96-02 混元掌",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0Y0",
+       "name": "96-03 吸星大法",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0Y5",
+       "name": "96-04 獨孤九劍",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "97": {
+   "number": "97",
+   "heroes": [
+    {
+     "rawcode": "H02Y",
+     "unit_name": "幕末復仇狂者",
+     "skills": [
+      {
+       "rawcode": "ANic",
+       "name": "97-01 壹之秘劍-焰靈",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0YF",
+       "name": "97-02 貳之秘劍-紅蓮腕",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0YG",
+       "name": "97-03 弱肉強食",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0YH",
+       "name": "97-04 終極秘劍-火產靈神",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "98": {
+   "number": "98",
+   "heroes": [
+    {
+     "rawcode": "N01L",
+     "unit_name": "學姊",
+     "skills": [
+      {
+       "rawcode": "A0ZD",
+       "name": "98-01 理財的習慣",
+       "index": "01"
+      },
+      {
+       "rawcode": "A0ZE",
+       "name": "98-02 平易近人的笑容",
+       "index": "02"
+      },
+      {
+       "rawcode": "A0ZH",
+       "name": "98-03 從過去中學習",
+       "index": "03"
+      },
+      {
+       "rawcode": "A0ZI",
+       "name": "98-04 自在飛翔",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  },
+  "99": {
+   "number": "99",
+   "heroes": [
+    {
+     "rawcode": "O02P",
+     "unit_name": "夢幻之星",
+     "skills": [
+      {
+       "rawcode": "A116",
+       "name": "99-01 甩蔥歌",
+       "index": "01"
+      },
+      {
+       "rawcode": "A118",
+       "name": "99-02 最初的聲音",
+       "index": "02"
+      },
+      {
+       "rawcode": "A11B",
+       "name": "99-03 初音未來的消失",
+       "index": "03"
+      },
+      {
+       "rawcode": "A11C",
+       "name": "99-04 世界第一的公主殿下",
+       "index": "04"
+      }
+     ]
+    }
+   ]
+  }
+ }
+}

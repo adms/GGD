@@ -1,0 +1,82 @@
+{
+  "id": "godie-frostnova-p2",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.056,
+    "angleDeg": 90.0
+  },
+  "mode": "continuous",
+  "rate": 150.0,
+  "lifetimeSec": {
+    "min": 0.3,
+    "max": 0.3
+  },
+  "size": {
+    "start": 4.445,
+    "end": 0.0
+  },
+  "color": {
+    "start": [
+      0.659,
+      0.765,
+      0.98,
+      1.0
+    ],
+    "end": [
+      0.0,
+      0.565,
+      1.0,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        0.659,
+        0.765,
+        0.98,
+        1.0
+      ]
+    ],
+    [
+      0.5,
+      [
+        0.0,
+        0.188,
+        1.0,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.0,
+        0.565,
+        1.0,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      4.445
+    ],
+    [
+      0.5,
+      1.945
+    ],
+    [
+      1,
+      0.0
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/circle_02.png",
+  "speed": {
+    "min": 0.3334,
+    "max": 0.3334
+  }
+}

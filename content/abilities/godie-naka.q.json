@@ -1,0 +1,44 @@
+{
+  "id": "godie-naka.q",
+  "name": "27-01 忍法風魔手裡劍",
+  "description": "[主動攻擊]\n45秒冷卻時間\n\n使用兩發風魔手裡劍以華麗的軌道攻擊敵人，造成100點傷害。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "manaCost": [
+    45.0,
+    75.0,
+    105.0,
+    135.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          80,
+          120,
+          160,
+          200
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

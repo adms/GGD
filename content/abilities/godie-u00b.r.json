@@ -1,0 +1,42 @@
+{
+  "id": "godie-u00b.r",
+  "schema": "ability@1",
+  "name": "75-03 暴雷無限刃",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n將劍刃附著雷電傷害，將會隨機對附近的敵人進行斬殺，給予50傷害並且淨化，共十五次。",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    200.0,
+    300.0,
+    400.0
+  ],
+  "range": 4.58,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          50.0,
+          90.0,
+          130.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.39
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "radius": 6.0
+}

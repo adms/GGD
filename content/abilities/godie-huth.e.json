@@ -1,0 +1,44 @@
+{
+  "id": "godie-huth.e",
+  "name": "28-03 分身",
+  "description": "[輔助]\n60秒冷卻時間\n\n創造出2個普烏的實體來攻擊敵人，具有30%攻擊力，並除掉身上的所有法術效果，可持續10秒。",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    120.0,
+    180.0,
+    240.0,
+    300.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          2.0,
+          3.0,
+          4.0,
+          5.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.015
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

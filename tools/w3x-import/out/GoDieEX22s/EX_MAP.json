@@ -1,0 +1,1045 @@
+{
+  "unlockTech": "R00R",
+  "unlockLevel": 30,
+  "totalR00RAbilities": 100,
+  "championsWithEx": 102,
+  "championsWithoutEx": 9,
+  "heroes": {
+    "godie-e001": {
+      "heroRawcode": "e001",
+      "heroNameZh": "龍宮禮奈",
+      "exAbility": "A0SU",
+      "nameZh": "22-002 月光下的決鬥者",
+      "aart": "ReplaceableTextures\\PassiveButtons\\PASBTNElunesBlessing.blp",
+      "allR00R": [
+        "A0SU"
+      ]
+    },
+    "godie-e002": {
+      "heroRawcode": "e002",
+      "heroNameZh": "Saber",
+      "exAbility": "A0SP",
+      "nameZh": "20-002 解放.約束勝利劍MAX",
+      "aart": "ReplaceableTextures\\PassiveButtons\\PASBTNRegenerationAura.blp",
+      "allR00R": [
+        "A0SP"
+      ]
+    },
+    "godie-e007": {
+      "heroRawcode": "e007",
+      "heroNameZh": "天地志狼",
+      "exAbility": "A0SQ",
+      "nameZh": "12-002 仙氣發勁",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNPurge.blp",
+      "allR00R": [
+        "A0SQ"
+      ]
+    },
+    "godie-e008": {
+      "heroRawcode": "e008",
+      "heroNameZh": "夏娜",
+      "exAbility": "A0UO",
+      "nameZh": "21-002 天破壤碎",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNSelfDestructOff.blp",
+      "allR00R": [
+        "A0UO"
+      ]
+    },
+    "godie-e00j": {
+      "heroRawcode": "e00j",
+      "heroNameZh": "騜",
+      "exAbility": "A0YA",
+      "nameZh": "95-002 固有結界-和諧世界",
+      "aart": null,
+      "allR00R": [
+        "A0YA"
+      ]
+    },
+    "godie-e00k": {
+      "heroRawcode": "e00k",
+      "heroNameZh": "安云",
+      "exAbility": "A0SZ",
+      "nameZh": "19-002 紫色披風",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNPhaseShift.blp",
+      "allR00R": [
+        "A0SZ"
+      ]
+    },
+    "godie-e00l": {
+      "heroRawcode": "e00l",
+      "heroNameZh": "Saber",
+      "exAbility": "A0SP",
+      "nameZh": "20-002 解放.約束勝利劍MAX",
+      "aart": "ReplaceableTextures\\PassiveButtons\\PASBTNRegenerationAura.blp",
+      "allR00R": [
+        "A0SP"
+      ]
+    },
+    "godie-e00n": {
+      "heroRawcode": "e00n",
+      "heroNameZh": "龍宮禮奈",
+      "exAbility": "A0SV",
+      "nameZh": "22-002 月光下的決鬥者",
+      "aart": "ReplaceableTextures\\PassiveButtons\\PASBTNElunesBlessing.blp",
+      "allR00R": [
+        "A0SV"
+      ]
+    },
+    "godie-e00q": {
+      "heroRawcode": "e00q",
+      "heroNameZh": "黑化Saber",
+      "exAbility": "A0FK",
+      "nameZh": "69-002 固有結界-黑洞",
+      "aart": null,
+      "allR00R": [
+        "A0FK"
+      ]
+    },
+    "godie-e00r": {
+      "heroRawcode": "e00r",
+      "heroNameZh": "初號機",
+      "exAbility": "A0Z5",
+      "nameZh": "59-001 完全暴走",
+      "aart": "ReplaceableTextures\\PassiveButtons\\PASBTNUnholyAura.blp",
+      "allR00R": [
+        "A0Z5"
+      ]
+    },
+    "godie-e00s": {
+      "heroRawcode": "e00s",
+      "heroNameZh": "白木卡迪那",
+      "exAbility": "A0ZQ",
+      "nameZh": "70-002 樹海降臨",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNNightElfBuild.blp",
+      "allR00R": [
+        "A0ZQ"
+      ]
+    },
+    "godie-e00t": {
+      "heroRawcode": "e00t",
+      "heroNameZh": "貞子",
+      "exAbility": "A0SH",
+      "nameZh": "66-002 死亡漫延",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNDeathCoil.blp",
+      "allR00R": [
+        "A0SH"
+      ]
+    },
+    "godie-e00v": {
+      "heroRawcode": "e00v",
+      "heroNameZh": "維尼",
+      "exAbility": "A10U",
+      "nameZh": "84-002 我只想確定你在這裡",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNHeroTinker.blp",
+      "allR00R": [
+        "A10U"
+      ]
+    },
+    "godie-e00w": {
+      "heroRawcode": "e00w",
+      "heroNameZh": "櫻綻剎那",
+      "exAbility": "A10G",
+      "nameZh": "77-002 御雷劍",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNTransmute.blp",
+      "allR00R": [
+        "A10G"
+      ]
+    },
+    "godie-e00x": {
+      "heroRawcode": "e00x",
+      "heroNameZh": "櫻綻剎那",
+      "exAbility": "A10G",
+      "nameZh": "77-002 御雷劍",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNTransmute.blp",
+      "allR00R": [
+        "A10G"
+      ]
+    },
+    "godie-e00z": {
+      "heroRawcode": "e00z",
+      "heroNameZh": "安云",
+      "exAbility": "A0SZ",
+      "nameZh": "19-002 紫色披風",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNPhaseShift.blp",
+      "allR00R": [
+        "A0SZ"
+      ]
+    },
+    "godie-e015": {
+      "heroRawcode": "e015",
+      "heroNameZh": "金居福",
+      "exAbility": "A113",
+      "nameZh": "94-002 歹戲拖棚",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNSpiritOfVengeance.blp",
+      "allR00R": [
+        "A113"
+      ]
+    },
+    "godie-ecen": {
+      "heroRawcode": "ecen",
+      "heroNameZh": "?",
+      "exAbility": "A0ZR",
+      "nameZh": "64-002 魔幻嘉年華",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNHealingWard.blp",
+      "allR00R": [
+        "A0ZR"
+      ]
+    },
+    "godie-edem": {
+      "heroRawcode": "edem",
+      "heroNameZh": "?",
+      "exAbility": "A102",
+      "nameZh": "45-002 天照",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNInnerFire.blp",
+      "allR00R": [
+        "A102"
+      ]
+    },
+    "godie-efur": {
+      "heroRawcode": "efur",
+      "heroNameZh": "?",
+      "exAbility": "A10S",
+      "nameZh": "13-002 KISS ME!",
+      "aart": "ReplaceableTextures\\PassiveButtons\\PASBTNReincarnation.blp",
+      "allR00R": [
+        "A10S"
+      ]
+    },
+    "godie-ekee": {
+      "heroRawcode": "ekee",
+      "heroNameZh": "?",
+      "exAbility": "A0WN",
+      "nameZh": "93-002 二一",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNTemp.blp",
+      "allR00R": [
+        "A0WN"
+      ]
+    },
+    "godie-emfr": {
+      "heroRawcode": "emfr",
+      "heroNameZh": "?",
+      "exAbility": "A0ZU",
+      "nameZh": "15-002 風花-武裝解除",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNTornado.blp",
+      "allR00R": [
+        "A0ZU"
+      ]
+    },
+    "godie-emns": {
+      "heroRawcode": "emns",
+      "heroNameZh": "?",
+      "exAbility": "A0SA",
+      "nameZh": "44-002 交換筆記本",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNTomeOfRetraining.blp",
+      "allR00R": [
+        "A0SA"
+      ]
+    },
+    "godie-etyr": {
+      "heroRawcode": "etyr",
+      "heroNameZh": "?",
+      "exAbility": "A0ST",
+      "nameZh": "14-002 魔力激發",
+      "aart": null,
+      "allR00R": [
+        "A0ST"
+      ]
+    },
+    "godie-ewar": {
+      "heroRawcode": "ewar",
+      "heroNameZh": "?",
+      "exAbility": "A0SQ",
+      "nameZh": "12-002 仙氣發勁",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNPurge.blp",
+      "allR00R": [
+        "A0SQ"
+      ]
+    },
+    "godie-ewrd": {
+      "heroRawcode": "ewrd",
+      "heroNameZh": "?",
+      "exAbility": "A114",
+      "nameZh": "17-002 天照龍門",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNScout.blp",
+      "allR00R": [
+        "A114",
+        "A11G"
+      ]
+    },
+    "godie-h001": {
+      "heroRawcode": "h001",
+      "heroNameZh": "斑剎",
+      "exAbility": "A0SD",
+      "nameZh": "41-002 絕對屏障",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNCripple.blp",
+      "allR00R": [
+        "A0SD"
+      ]
+    },
+    "godie-h00l": {
+      "heroRawcode": "h00l",
+      "heroNameZh": "林克",
+      "exAbility": "A10P",
+      "nameZh": "60-002 絕光斬",
+      "aart": "ReplaceableTextures\\PassiveButtons\\PASBTNUnholyAura.blp",
+      "allR00R": [
+        "A10P"
+      ]
+    },
+    "godie-h01n": {
+      "heroRawcode": "h01n",
+      "heroNameZh": "黑崎一護",
+      "exAbility": "A0W5",
+      "nameZh": "79-002 虛化",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNMetamorphosis.blp",
+      "allR00R": [
+        "A0W5"
+      ]
+    },
+    "godie-h01o": {
+      "heroRawcode": "h01o",
+      "heroNameZh": "黑崎一護",
+      "exAbility": "A0W5",
+      "nameZh": "79-002 虛化",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNMetamorphosis.blp",
+      "allR00R": [
+        "A0W5"
+      ]
+    },
+    "godie-h01u": {
+      "heroRawcode": "h01u",
+      "heroNameZh": "呂布奉先",
+      "exAbility": "A109",
+      "nameZh": "80-002 戰無不勝",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNDefend.blp",
+      "allR00R": [
+        "A109",
+        "A101",
+        "A108"
+      ]
+    },
+    "godie-h020": {
+      "heroRawcode": "h020",
+      "heroNameZh": "莉娜因巴斯",
+      "exAbility": "A0OE",
+      "nameZh": "04-002 惡夢魔王的碎片",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTN3M3.blp",
+      "allR00R": [
+        "A0OE"
+      ]
+    },
+    "godie-h022": {
+      "heroRawcode": "h022",
+      "heroNameZh": "涅吉。史普林。菲爾德",
+      "exAbility": "A0Z8",
+      "nameZh": "82-001 太陰道-敵彈吸收陣",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNAntiMagicShell.blp",
+      "allR00R": [
+        "A0Z8"
+      ]
+    },
+    "godie-h02k": {
+      "heroRawcode": "h02k",
+      "heroNameZh": "熊貓",
+      "exAbility": "A0TU",
+      "nameZh": "89-002 俄羅斯輪盤",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNMagicalSentry.blp",
+      "allR00R": [
+        "A0TU"
+      ]
+    },
+    "godie-h02r": {
+      "heroRawcode": "h02r",
+      "heroNameZh": "妙蛙花",
+      "exAbility": "A0VG",
+      "nameZh": "90-002 超進化! 妙蛙花",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNSkink.blp",
+      "allR00R": [
+        "A0VG"
+      ]
+    },
+    "godie-h02s": {
+      "heroRawcode": "h02s",
+      "heroNameZh": "死亡騎士",
+      "exAbility": "A0VS",
+      "nameZh": "91-002 亡靈大軍",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNDarkSummoning.blp",
+      "allR00R": [
+        "A0VS"
+      ]
+    },
+    "godie-h02u": {
+      "heroRawcode": "h02u",
+      "heroNameZh": "草泥馬",
+      "exAbility": "A0Z9",
+      "nameZh": "92-002 最終戈壁",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNNatureTouchGrow.blp",
+      "allR00R": [
+        "A0Z9"
+      ]
+    },
+    "godie-h02v": {
+      "heroRawcode": "h02v",
+      "heroNameZh": "草泥馬",
+      "exAbility": "A0Z9",
+      "nameZh": "92-002 最終戈壁",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNNatureTouchGrow.blp",
+      "allR00R": [
+        "A0Z9"
+      ]
+    },
+    "godie-h02y": {
+      "heroRawcode": "h02y",
+      "heroNameZh": "志志雄真實",
+      "exAbility": "A0V7",
+      "nameZh": "35-002 出來吧!全部的魔獸",
+      "aart": "ReplaceableTextures\\PassiveButtons\\PASBTNReincarnation.blp",
+      "allR00R": [
+        "A0V7"
+      ]
+    },
+    "godie-h02z": {
+      "heroRawcode": "h02z",
+      "heroNameZh": "不良少年",
+      "exAbility": "A0VS",
+      "nameZh": "91-002 亡靈大軍",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNDarkSummoning.blp",
+      "allR00R": [
+        "A0VS"
+      ]
+    },
+    "godie-hapm": {
+      "heroRawcode": "hapm",
+      "heroNameZh": "?",
+      "exAbility": "A0U5",
+      "nameZh": "52-002 射殺百頭",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNOrcMeleeUpThree.blp",
+      "allR00R": [
+        "A0U5"
+      ]
+    },
+    "godie-harf": {
+      "heroRawcode": "harf",
+      "heroNameZh": "?",
+      "exAbility": "A106",
+      "nameZh": "26-002 鄉民的正義",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNHeroTinker.blp",
+      "allR00R": [
+        "A106"
+      ]
+    },
+    "godie-hart": {
+      "heroRawcode": "hart",
+      "heroNameZh": "?",
+      "exAbility": "A0DP",
+      "nameZh": "01-002 究極魔劍",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNDaggerOfEscape.blp",
+      "allR00R": [
+        "A0DP"
+      ]
+    },
+    "godie-hblm": {
+      "heroRawcode": "hblm",
+      "heroNameZh": "?",
+      "exAbility": "A0LE",
+      "nameZh": "05-002 金色巨龍",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNBronzeDragon.blp",
+      "allR00R": [
+        "A0LE"
+      ]
+    },
+    "godie-hgam": {
+      "heroRawcode": "hgam",
+      "heroNameZh": "?",
+      "exAbility": "A0VG",
+      "nameZh": "90-002 超進化! 妙蛙花",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNSkink.blp",
+      "allR00R": [
+        "A0VG"
+      ]
+    },
+    "godie-hjai": {
+      "heroRawcode": "hjai",
+      "heroNameZh": "?",
+      "exAbility": "A0OE",
+      "nameZh": "04-002 惡夢魔王的碎片",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTN3M3.blp",
+      "allR00R": [
+        "A0OE"
+      ]
+    },
+    "godie-hlgr": {
+      "heroRawcode": "hlgr",
+      "heroNameZh": "?",
+      "exAbility": "A00C",
+      "nameZh": "03-001 龍騎兵",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNColdArrows.blp",
+      "allR00R": [
+        "A00C"
+      ]
+    },
+    "godie-hpal": {
+      "heroRawcode": "hpal",
+      "heroNameZh": "?",
+      "exAbility": "A0V7",
+      "nameZh": "35-002 出來吧!全部的魔獸",
+      "aart": "ReplaceableTextures\\PassiveButtons\\PASBTNReincarnation.blp",
+      "allR00R": [
+        "A0V7"
+      ]
+    },
+    "godie-hpb1": {
+      "heroRawcode": "hpb1",
+      "heroNameZh": "?",
+      "exAbility": "A0ZA",
+      "nameZh": "07-002 獸矛持有者",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNStrengthOfTheMoon.blp",
+      "allR00R": [
+        "A0ZA"
+      ]
+    },
+    "godie-huth": {
+      "heroRawcode": "huth",
+      "heroNameZh": "?",
+      "exAbility": "A0VI",
+      "nameZh": "28-002 普烏死亡",
+      "aart": null,
+      "allR00R": [
+        "A0T5",
+        "A0VI"
+      ]
+    },
+    "godie-hvsh": {
+      "heroRawcode": "hvsh",
+      "heroNameZh": "?",
+      "exAbility": "A0SM",
+      "nameZh": "48-002 騎英之疆繩MAX",
+      "aart": "ReplaceableTextures\\PassiveButtons\\PASBTNReincarnation.blp",
+      "allR00R": [
+        "A0SM"
+      ]
+    },
+    "godie-hvwd": {
+      "heroRawcode": "hvwd",
+      "heroNameZh": "?",
+      "exAbility": "A0S6",
+      "nameZh": "02-002 神通眼",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNMagicalSentry.blp",
+      "allR00R": [
+        "A0S6"
+      ]
+    },
+    "godie-n003": {
+      "heroRawcode": "n003",
+      "heroNameZh": "依文潔琳",
+      "exAbility": "A06K",
+      "nameZh": "42-002 魔力印章",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNOrcBattleStandard.blp",
+      "allR00R": [
+        "A06K"
+      ]
+    },
+    "godie-n00b": {
+      "heroRawcode": "n00b",
+      "heroNameZh": "哆拉A夢",
+      "exAbility": "A0KO",
+      "nameZh": "57-002 時光機",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNBookOfSummoning.blp",
+      "allR00R": [
+        "A0KO"
+      ]
+    },
+    "godie-n00p": {
+      "heroRawcode": "n00p",
+      "heroNameZh": "南野秀一",
+      "exAbility": "A0SE",
+      "nameZh": "18-002 魔界吸血植物",
+      "aart": "ReplaceableTextures\\PassiveButtons\\PASBTNUnholyAura.blp",
+      "allR00R": [
+        "A0SE"
+      ]
+    },
+    "godie-n01c": {
+      "heroRawcode": "n01c",
+      "heroNameZh": "勇者小呆",
+      "exAbility": "A0T1",
+      "nameZh": "08-002 龍魔人",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNAvatar.blp",
+      "allR00R": [
+        "A0T1"
+      ]
+    },
+    "godie-n01g": {
+      "heroRawcode": "n01g",
+      "heroNameZh": "依文潔琳",
+      "exAbility": "A06K",
+      "nameZh": "42-002 魔力印章",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNOrcBattleStandard.blp",
+      "allR00R": [
+        "A06K"
+      ]
+    },
+    "godie-n01l": {
+      "heroRawcode": "n01l",
+      "heroNameZh": "小派",
+      "exAbility": "A0ZG",
+      "nameZh": "98-002 夢想前程的彼方",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNReveal.blp",
+      "allR00R": [
+        "A0ZG"
+      ]
+    },
+    "godie-naka": {
+      "heroRawcode": "naka",
+      "heroNameZh": "?",
+      "exAbility": "A08R",
+      "nameZh": "27-002 祕法-霧隱分身之術",
+      "aart": null,
+      "allR00R": [
+        "A08R"
+      ]
+    },
+    "godie-nbbc": {
+      "heroRawcode": "nbbc",
+      "heroNameZh": "?",
+      "exAbility": "A0T1",
+      "nameZh": "08-002 龍魔人",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNAvatar.blp",
+      "allR00R": [
+        "A0T1"
+      ]
+    },
+    "godie-nbst": {
+      "heroRawcode": "nbst",
+      "heroNameZh": "?",
+      "exAbility": "A0SG",
+      "nameZh": "24-002 來~快點吃吧",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNBerserk.blp",
+      "allR00R": [
+        "A0SG"
+      ]
+    },
+    "godie-nman": {
+      "heroRawcode": "nman",
+      "heroNameZh": "?",
+      "exAbility": "A10C",
+      "nameZh": "40-002 環繞音響",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNOrbOfLightning.blp",
+      "allR00R": [
+        "A10C"
+      ]
+    },
+    "godie-nplh": {
+      "heroRawcode": "nplh",
+      "heroNameZh": "?",
+      "exAbility": "A06M",
+      "nameZh": "16-002 布都御魂",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNBloodKey.blp",
+      "allR00R": [
+        "A06M"
+      ]
+    },
+    "godie-nsjs": {
+      "heroRawcode": "nsjs",
+      "heroNameZh": "?",
+      "exAbility": "A0SE",
+      "nameZh": "18-002 魔界吸血植物",
+      "aart": "ReplaceableTextures\\PassiveButtons\\PASBTNUnholyAura.blp",
+      "allR00R": [
+        "A0SE"
+      ]
+    },
+    "godie-ntin": {
+      "heroRawcode": "ntin",
+      "heroNameZh": "?",
+      "exAbility": "A0U9",
+      "nameZh": "23-002 雙刀模式",
+      "aart": "ReplaceableTextures\\PassiveButtons\\PASBTNPillage.blp",
+      "allR00R": [
+        "A0U9"
+      ]
+    },
+    "godie-o00k": {
+      "heroRawcode": "o00k",
+      "heroNameZh": "皮卡娘",
+      "exAbility": "A10X",
+      "nameZh": "86-002 雷電萌神",
+      "aart": "ReplaceableTextures\\PassiveButtons\\PASBTNUnholyAura.blp",
+      "allR00R": [
+        "A10X"
+      ]
+    },
+    "godie-o00l": {
+      "heroRawcode": "o00l",
+      "heroNameZh": "傑洛士",
+      "exAbility": "A10B",
+      "nameZh": "53-002 恐懼力量",
+      "aart": "ReplaceableTextures\\PassiveButtons\\PASBTNScatterRockets.blp",
+      "allR00R": [
+        "A10B",
+        "A10A"
+      ]
+    },
+    "godie-o00x": {
+      "heroRawcode": "o00x",
+      "heroNameZh": "悟空",
+      "exAbility": "A0O1",
+      "nameZh": "09-002 十倍龜派氣功",
+      "aart": "ReplaceableTextures\\PassiveButtons\\PASBTNUnholyAura.blp",
+      "allR00R": [
+        "A0O1"
+      ]
+    },
+    "godie-o01z": {
+      "heroRawcode": "o01z",
+      "heroNameZh": "高町奈葉",
+      "exAbility": "A0XP",
+      "nameZh": "81-002 Exellion Mode",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNDryadDispelMagic.blp",
+      "allR00R": [
+        "A0XP"
+      ]
+    },
+    "godie-o02l": {
+      "heroRawcode": "o02l",
+      "heroNameZh": "皮卡丘",
+      "exAbility": "A0SL",
+      "nameZh": "58-002 打雷絕招",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNManaFlare.blp",
+      "allR00R": [
+        "A0SL"
+      ]
+    },
+    "godie-o02p": {
+      "heroRawcode": "o02p",
+      "heroNameZh": "初音",
+      "exAbility": "A11F",
+      "nameZh": "99-002 把你給MikuMiku掉",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNAnimateDead.blp",
+      "allR00R": [
+        "A11F"
+      ]
+    },
+    "godie-o02v": {
+      "heroRawcode": "o02v",
+      "heroNameZh": "高町奈葉",
+      "exAbility": "A0XP",
+      "nameZh": "81-002 Exellion Mode",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNDryadDispelMagic.blp",
+      "allR00R": [
+        "A0XP"
+      ]
+    },
+    "godie-o02w": {
+      "heroRawcode": "o02w",
+      "heroNameZh": "令狐沖",
+      "exAbility": "A0XY",
+      "nameZh": "96-002 易筋經",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNScrollOfProtection.blp",
+      "allR00R": [
+        "A0XY"
+      ]
+    },
+    "godie-obla": {
+      "heroRawcode": "obla",
+      "heroNameZh": "?",
+      "exAbility": "A088",
+      "nameZh": "33-001 喝了再上",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNGreaterRejuvPotion.blp",
+      "allR00R": [
+        "A088"
+      ]
+    },
+    "godie-ofar": {
+      "heroRawcode": "ofar",
+      "heroNameZh": "?",
+      "exAbility": "A0SL",
+      "nameZh": "58-002 打雷絕招",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNManaFlare.blp",
+      "allR00R": [
+        "A0SL"
+      ]
+    },
+    "godie-ogld": {
+      "heroRawcode": "ogld",
+      "heroNameZh": "?",
+      "exAbility": "A09B",
+      "nameZh": "72-002 億萬星殞落",
+      "aart": null,
+      "allR00R": [
+        "A09B"
+      ]
+    },
+    "godie-ogrh": {
+      "heroRawcode": "ogrh",
+      "heroNameZh": "?",
+      "exAbility": "A0O1",
+      "nameZh": "09-002 十倍龜派氣功",
+      "aart": "ReplaceableTextures\\PassiveButtons\\PASBTNUnholyAura.blp",
+      "allR00R": [
+        "A0O1"
+      ]
+    },
+    "godie-opgh": {
+      "heroRawcode": "opgh",
+      "heroNameZh": "?",
+      "exAbility": "A111",
+      "nameZh": "32-002 見龍卸甲",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNRevenant.blp",
+      "allR00R": [
+        "A111"
+      ]
+    },
+    "godie-orkn": {
+      "heroRawcode": "orkn",
+      "heroNameZh": "?",
+      "exAbility": "A0YY",
+      "nameZh": "30-002 變態紳士",
+      "aart": "ReplaceableTextures\\PassiveButtons\\PASBTNUnholyAura.blp",
+      "allR00R": [
+        "A0YY"
+      ]
+    },
+    "godie-osam": {
+      "heroRawcode": "osam",
+      "heroNameZh": "?",
+      "exAbility": "A0MV",
+      "nameZh": "34-002 冥道殘月破",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNManaBurn.blp",
+      "allR00R": [
+        "A0MV"
+      ]
+    },
+    "godie-oshd": {
+      "heroRawcode": "oshd",
+      "heroNameZh": "?",
+      "exAbility": "A10L",
+      "nameZh": "29-002 慢著!來人餵公子吃餅",
+      "aart": "ReplaceableTextures\\PassiveButtons\\PASBTNReincarnation.blp",
+      "allR00R": [
+        "A10L"
+      ]
+    },
+    "godie-othr": {
+      "heroRawcode": "othr",
+      "heroNameZh": "?",
+      "exAbility": "A10J",
+      "nameZh": "31-002 武士之魂",
+      "aart": "ReplaceableTextures\\PassiveButtons\\PASBTNUnholyAura.blp",
+      "allR00R": [
+        "A10J"
+      ]
+    },
+    "godie-u00h": {
+      "heroRawcode": "u00h",
+      "heroNameZh": "鬼畜狂刀KYO",
+      "exAbility": "A0Z3",
+      "nameZh": "39-002-紅王",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNKYO.BLP",
+      "allR00R": [
+        "A0Z3"
+      ]
+    },
+    "godie-u00j": {
+      "heroRawcode": "u00j",
+      "heroNameZh": "賽菲洛斯",
+      "exAbility": "A0U0",
+      "nameZh": "74-002 超新星",
+      "aart": null,
+      "allR00R": [
+        "A0U0"
+      ]
+    },
+    "godie-u00k": {
+      "heroRawcode": "u00k",
+      "heroNameZh": "死之王",
+      "exAbility": "A0AV",
+      "nameZh": "71-002 夜之主",
+      "aart": null,
+      "allR00R": [
+        "A0AV"
+      ]
+    },
+    "godie-u00l": {
+      "heroRawcode": "u00l",
+      "heroNameZh": "拳四郎",
+      "exAbility": "A10Y",
+      "nameZh": "25-002 喔拉喔拉喔拉喔拉",
+      "aart": "ReplaceableTextures\\PassiveButtons\\PASBTNUnholyAura.blp",
+      "allR00R": [
+        "A10Y"
+      ]
+    },
+    "godie-u00n": {
+      "heroRawcode": "u00n",
+      "heroNameZh": "蒙其.D.魯夫",
+      "exAbility": "A0ZK",
+      "nameZh": "76-002 霸王色",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNFrostWyrm.blp",
+      "allR00R": [
+        "A0ZK"
+      ]
+    },
+    "godie-u00o": {
+      "heroRawcode": "u00o",
+      "heroNameZh": "蒙其.D.魯夫",
+      "exAbility": "A0ZK",
+      "nameZh": "76-002 霸王色",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNFrostWyrm.blp",
+      "allR00R": [
+        "A0ZK"
+      ]
+    },
+    "godie-u00v": {
+      "heroRawcode": "u00v",
+      "heroNameZh": "基廉列克",
+      "exAbility": "A10W",
+      "nameZh": "78-002 加速爆體",
+      "aart": "ReplaceableTextures\\PassiveButtons\\PASBTNReincarnation.blp",
+      "allR00R": [
+        "A10W"
+      ]
+    },
+    "godie-u010": {
+      "heroRawcode": "u010",
+      "heroNameZh": "飛影",
+      "exAbility": "A0SO",
+      "nameZh": "38-002 究極暴走黑龍波",
+      "aart": "ReplaceableTextures\\PassiveButtons\\PASBTNUnholyAura.blp",
+      "allR00R": [
+        "A0SO"
+      ]
+    },
+    "godie-u011": {
+      "heroRawcode": "u011",
+      "heroNameZh": "克勞薩先生",
+      "exAbility": "A0OA",
+      "nameZh": "61-002 惡魔吉他",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNStaffOfSilence.blp",
+      "allR00R": [
+        "A0OA"
+      ]
+    },
+    "godie-u012": {
+      "heroRawcode": "u012",
+      "heroNameZh": "克勞薩II世",
+      "exAbility": "A0OA",
+      "nameZh": "61-002 惡魔吉他",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNStaffOfSilence.blp",
+      "allR00R": [
+        "A0OA"
+      ]
+    },
+    "godie-u01u": {
+      "heroRawcode": "u01u",
+      "heroNameZh": "索隆",
+      "exAbility": "A10N",
+      "nameZh": "11-002 武裝色霸氣",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNAvatar.blp",
+      "allR00R": [
+        "A10N"
+      ]
+    },
+    "godie-u034": {
+      "heroRawcode": "u034",
+      "heroNameZh": "傑 富力士",
+      "exAbility": "A025",
+      "nameZh": "06-002 殺意",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNMetamorphosis.blp",
+      "allR00R": [
+        "A025"
+      ]
+    },
+    "godie-ubal": {
+      "heroRawcode": "ubal",
+      "heroNameZh": "?",
+      "exAbility": "A0ZV",
+      "nameZh": "37-002 真‧黑核晶",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNIceCrownObelisk.blp",
+      "allR00R": [
+        "A0ZV"
+      ]
+    },
+    "godie-ucrl": {
+      "heroRawcode": "ucrl",
+      "heroNameZh": "?",
+      "exAbility": "A025",
+      "nameZh": "06-002 殺意",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNMetamorphosis.blp",
+      "allR00R": [
+        "A025"
+      ]
+    },
+    "godie-udea": {
+      "heroRawcode": "udea",
+      "heroNameZh": "?",
+      "exAbility": "A0FF",
+      "nameZh": "65-002 永恆的愚蠢鄉",
+      "aart": null,
+      "allR00R": [
+        "A0FF"
+      ]
+    },
+    "godie-udre": {
+      "heroRawcode": "udre",
+      "heroNameZh": "?",
+      "exAbility": "A10N",
+      "nameZh": "11-002 武裝色霸氣",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNAvatar.blp",
+      "allR00R": [
+        "A10N"
+      ]
+    },
+    "godie-umal": {
+      "heroRawcode": "umal",
+      "heroNameZh": "?",
+      "exAbility": "A10Y",
+      "nameZh": "25-002 喔拉喔拉喔拉喔拉",
+      "aart": "ReplaceableTextures\\PassiveButtons\\PASBTNUnholyAura.blp",
+      "allR00R": [
+        "A10Y"
+      ]
+    },
+    "godie-usyl": {
+      "heroRawcode": "usyl",
+      "heroNameZh": "?",
+      "exAbility": "A0G4",
+      "nameZh": "49-002 產卵",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNIncinerate.blp",
+      "allR00R": [
+        "A0G4"
+      ]
+    },
+    "godie-uvng": {
+      "heroRawcode": "uvng",
+      "heroNameZh": "?",
+      "exAbility": "A0SO",
+      "nameZh": "38-002 究極暴走黑龍波",
+      "aart": "ReplaceableTextures\\PassiveButtons\\PASBTNUnholyAura.blp",
+      "allR00R": [
+        "A0SO"
+      ]
+    },
+    "godie-uwar": {
+      "heroRawcode": "uwar",
+      "heroNameZh": "?",
+      "exAbility": "A105",
+      "nameZh": "43-002 食神歸位",
+      "aart": "ReplaceableTextures\\CommandButtons\\BTNRobeOfTheMagi.blp",
+      "allR00R": [
+        "A105"
+      ]
+    }
+  },
+  "withoutEx": [
+    "godie-e00u",
+    "godie-e012",
+    "godie-h021",
+    "godie-h02n",
+    "godie-o02o",
+    "godie-o02s",
+    "godie-u00b",
+    "godie-u01f",
+    "godie-u01q"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "contentId": "godie-i06g",
+  "nameZh": "殺豬刀",
+  "gold": 10000,
+  "kind": "effect",
+  "description": "傳說\r\n技能冷卻時間：100秒\r\n效能\r\n敏捷+24\r\n專殺畜牲，7%將敵人變成食材\r\n攻擊力+60\r\n抵擋指定法術\r\n\r\n解說\r\n傳說中由上古寒鐵煉制而成，食神專用菜刀，可以隨機將敵人變成食材，而且還可以拿來擋子彈。",
+  "abilities": [
+    {
+      "rawcode": "A0WW",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A028",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A03U",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A0KW",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    }
+  ]
+}

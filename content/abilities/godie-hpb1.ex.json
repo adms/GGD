@@ -1,0 +1,30 @@
+{
+  "id": "godie-hpb1.ex",
+  "name": "07-002 獸矛持有者",
+  "description": "[強化]\n0秒冷卻時間\n\n持有獸矛的蒼月潮，在攻擊非英雄部隊時(不包含建築)，當該部隊血量低於35%將直接死亡，並有1%機率造成英雄直接死亡，連技額外傷害將加倍。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    120.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "godie-hblm.e",
+  "name": "05-03 及喀爾度",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n賈修的神秘咒語，招喚2顆磁力球，可將範圍350的對手磁化，並吸引到自己身旁的咒語。",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    75.0,
+    125.0,
+    175.0,
+    225.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "applyStatus",
+      "statusId": "root",
+      "duration": 1.5,
+      "root": true
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "radius": 6.0,
+  "schema": "ability@1"
+}

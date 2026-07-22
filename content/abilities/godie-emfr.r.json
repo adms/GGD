@@ -1,0 +1,40 @@
+{
+  "id": "godie-emfr.r",
+  "name": "15-04 千之雷",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n千之雷是涅吉。史普林，威力最強大的雷系魔法，缺點是念咒時間長，可以讓敵人850點的瑪那瞬間大量流失在電擊之中，魔力越多傷害亦越大，並造成周圍智慧*5點傷害。",
+  "slot": "R",
+  "castType": "skillshot",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    100.0,
+    180.0,
+    260.0
+  ],
+  "range": 14.0,
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "imported.bolt",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              850.0,
+              1450.0,
+              2050.0
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

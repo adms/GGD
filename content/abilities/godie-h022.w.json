@@ -1,0 +1,33 @@
+{
+  "id": "godie-h022.w",
+  "name": "82-02 虛空瞬動",
+  "description": "[輔助]\n40秒冷卻時間\n瞬動術的高級技法，可於空中不斷使用瞬動來移動，使用後在0.5秒內點按右鍵可以無條件使用短距離瞬移。",
+  "slot": "W",
+  "castType": "dash",
+  "maxRank": 5,
+  "cooldown": [
+    40.0,
+    35.0,
+    30.0,
+    30.0,
+    30.0
+  ],
+  "manaCost": [
+    150.0,
+    225.0,
+    300.0,
+    300.0,
+    300.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "dash",
+      "mode": "toPoint",
+      "speed": 34.0,
+      "maxDistance": 9.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

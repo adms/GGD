@@ -1,0 +1,54 @@
+{
+  "id": "godie-hart.w",
+  "name": "01-02 隕石擊",
+  "description": "[主動攻擊]\n35秒冷卻時間\n\n招喚隕石擊落攻擊區域內的敵人造成100傷害並且跳躍到該範圍給予斬殺造成100傷害。",
+  "slot": "W",
+  "castType": "ground",
+  "maxRank": 5,
+  "cooldown": [
+    35.0,
+    35.0,
+    35.0,
+    35.0,
+    35.0
+  ],
+  "manaCost": [
+    75.0,
+    145.0,
+    215.0,
+    215.0,
+    215.0
+  ],
+  "range": 8.25,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.003
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow25",
+      "duration": 1.5,
+      "moveSpeedMult": 0.6
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "radius": 5.5,
+  "schema": "ability@1"
+}

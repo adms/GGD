@@ -1,0 +1,43 @@
+{
+  "id": "godie-n00b.q",
+  "schema": "ability@1",
+  "name": "57-01 空氣砲",
+  "description": "[主動攻擊]\n35秒冷卻時間\n\n小叮噹的空氣砲可以造成一直線上敵方部隊250傷害並且擊退附近敵人。",
+  "slot": "Q",
+  "castType": "skillshot",
+  "maxRank": 4,
+  "cooldown": [
+    35.0,
+    35.0,
+    35.0,
+    35.0
+  ],
+  "manaCost": [
+    65.0,
+    95.0,
+    125.0,
+    155.0
+  ],
+  "range": 9.17,
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "imported.wave",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              250.0,
+              350.0,
+              450.0,
+              550.0
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast"
+}

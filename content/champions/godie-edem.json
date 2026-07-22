@@ -1,0 +1,263 @@
+{
+  "id": "godie-edem",
+  "schema": "champion@1",
+  "name": "寫輪眼復仇者 - 宇智波佐助",
+  "description": "故事：\n在忍者學校以第一名的成績畢業，是有名的\"宇智波一族\"的後代。復仇信念堅定，一心想殺了哥哥宇智波鼬。在與大蛇丸戰鬥時被施以咒印，有時會難以控制自我心性與力量。\n(出自:火影忍者)\n\n推薦玩家 : 連技殺人\n上手度 : 難\n\n角色成長：\n力量 + 1.40\n敏捷 + 2.50\n智慧 + 2.00\n基礎跑速 305\n\n可學習的技能：\n火遁-豪火龍之術、千鳥流、雷切、哥哥",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "imported.herosasuke",
+  "baseStats": {
+    "maxHealth": 460,
+    "healthRegen": 1.1,
+    "maxMana": 268,
+    "manaRegen": 1.36,
+    "ad": 37,
+    "ap": 0,
+    "armor": 12,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 28,
+    "healthRegen": 0.07,
+    "maxMana": 24,
+    "manaRegen": 0.08,
+    "ad": 2.5,
+    "armor": 0.8,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-edem.q",
+      "name": "45-01 火遁-豪火龍之術",
+      "description": "[傷害加成]\n35秒冷卻時間\n\n比豪火球之術更上一層的火遁忍術，將吐出的火焰轉化為龍形，給予範圍內敵人250+敏捷*2點傷害。",
+      "slot": "Q",
+      "castType": "ground",
+      "maxRank": 5,
+      "cooldown": [
+        35.0,
+        35.0,
+        35.0,
+        35.0,
+        35.0
+      ],
+      "manaCost": [
+        150.0,
+        180.0,
+        210.0,
+        240.0,
+        240.0
+      ],
+      "range": 14.67,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              250.0,
+              350.0,
+              450.0,
+              550.0,
+              650.0
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.firestorm",
+      "radius": 6.05,
+      "targetsEnemies": true
+    },
+    "W": {
+      "id": "godie-edem.w",
+      "name": "45-02 千鳥流",
+      "description": "[主動攻擊]\n23秒冷卻時間\n\n千鳥流就是將全身充滿千鳥的雷電，使周圍敵人受到雷電傷害75點生命值與麻痺減緩攻擊與移動速度各50%，持續1.5秒。",
+      "slot": "W",
+      "castType": "ground",
+      "maxRank": 5,
+      "cooldown": [
+        23.0,
+        23.0,
+        23.0,
+        35.0,
+        35.0
+      ],
+      "manaCost": [
+        70.0,
+        110.0,
+        150.0,
+        130.0,
+        130.0
+      ],
+      "range": 0.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              75.0,
+              150.0,
+              225.0,
+              300.0,
+              300.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.9
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow40",
+          "duration": 1.5,
+          "moveSpeedMult": 0.5
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "radius": 7.79
+    },
+    "E": {
+      "id": "godie-edem.e",
+      "name": "45-03 千鳥",
+      "description": "[主動攻擊]\n45秒冷卻時間\n\n卡卡西傳授的技術。 原理是把查克拉集中在手上, 再以高速突刺作直線式的攻擊，造成((英雄等級*20)+400)點法術傷害，由於威力過於強大，若敵方偏移瞄準地點將不會受到傷害。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        120.0,
+        185.0,
+        250.0,
+        315.0
+      ],
+      "range": 12.83,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "R": {
+      "id": "godie-edem.r",
+      "name": "45-04 哥哥",
+      "description": "[被動]\n0秒冷卻時間\n\n「我愚蠢的弟弟啊！憎恨吧！怨恨把！帶著你對我的仇恨，醜陋的苟延殘喘的活下去。」對哥哥鼬的怨念，使得佐助不斷地變強。增加12點敏捷，並且使千鳥的命中率及速度小幅度提昇；在火遁攻擊完後3秒鐘內，使用千鳥再次攻擊該目標會引發麒麟，造成目標周圍600範圍內敏捷*2點落電傷害。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "manaCost": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "range": 0,
+      "effects": [],
+      "vfxKey": "fx.ember-bolt-cast",
+      "icon": "assets/icons/abilities/godie-edem.r.png",
+      "passive": {
+        "name": "45-04 哥哥",
+        "ranks": [
+          {
+            "modifiers": [
+              {
+                "stat": "armor",
+                "op": "flat",
+                "value": 3.6
+              },
+              {
+                "stat": "as",
+                "op": "pctAdd",
+                "value": 0.24
+              }
+            ]
+          },
+          {
+            "modifiers": [
+              {
+                "stat": "armor",
+                "op": "flat",
+                "value": 7.2
+              },
+              {
+                "stat": "as",
+                "op": "pctAdd",
+                "value": 0.48
+              }
+            ]
+          },
+          {
+            "modifiers": [
+              {
+                "stat": "armor",
+                "op": "flat",
+                "value": 10.8
+              },
+              {
+                "stat": "as",
+                "op": "pctAdd",
+                "value": 0.72
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "godie-i002",
+    "serrated-edge",
+    "godie-i06k",
+    "godie-i007"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ],
+  "exAbility": "godie-edem.ex",
+  "icon": "assets/icons/champions/godie-edem.png"
+}

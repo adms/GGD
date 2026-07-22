@@ -1,0 +1,34 @@
+{
+  "id": "godie-h01o.r",
+  "name": "79-04 卍解",
+  "description": "[輔助]\n60秒冷卻時間\n\n死神中的奧義，只有踏上死神最高點才可習得的技能，黑崎的卍解是將靈氣集中於斬月上，使其爆發出最高的力量，攻擊及移動速度大幅提昇，靈壓也會隨之變強，持續8秒。",
+  "slot": "R",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    100.0,
+    200.0,
+    300.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "maxHealth",
+          "op": "flat",
+          "value": 300
+        }
+      ],
+      "duration": 3.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

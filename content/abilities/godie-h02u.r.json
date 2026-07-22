@@ -1,0 +1,34 @@
+{
+  "id": "godie-h02u.r",
+  "name": "92-04 馬勒戈壁",
+  "description": "[投影]\n75秒冷卻時間\n\n草泥馬將內心的風景投射到戰場上，改變了戰場，每秒奪取周圍英雄的黃金150並造成100傷害，持續6秒。",
+  "slot": "R",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    75.0,
+    75.0,
+    75.0
+  ],
+  "manaCost": [
+    300.0,
+    420.0,
+    540.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "flat",
+          "value": 0.25
+        }
+      ],
+      "duration": 3.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

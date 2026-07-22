@@ -1,0 +1,33 @@
+{
+  "name": "@ggd/client",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "3D voxel MOBA client — Babylon.js imperative canvas + React DOM HUD + Zustand + colyseus.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@babylonjs/core": "^7.44.0",
+    "@babylonjs/loaders": "^7.44.0",
+    "@ggd/shared": "workspace:*",
+    "colyseus.js": "^0.16.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zustand": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.3",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.11",
+    "vitest": "^2.1.4"
+  }
+}

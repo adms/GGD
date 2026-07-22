@@ -1,0 +1,44 @@
+{
+  "id": "godie-ecen.e",
+  "name": "64-03 工廠機器人",
+  "description": "[召喚]\n75秒冷卻時間\n\n約翰走路召喚2位製酒工廠中的巨大機器人LV1一同幫忙攻擊對手，持續30秒。",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    75.0,
+    75.0,
+    75.0,
+    75.0
+  ],
+  "manaCost": [
+    150.0,
+    225.0,
+    300.0,
+    375.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          80,
+          120,
+          160,
+          200
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

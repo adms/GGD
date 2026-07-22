@@ -1,0 +1,45 @@
+{
+  "id": "godie-emns.e",
+  "name": "44-03 火車輾過",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n被死神之眼鎖定的部隊身旁將會出現莫名其妙的火車撞上，使附近的敵方部隊受到650點的劇烈傷害。",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    50.0,
+    40.0,
+    30.0
+  ],
+  "manaCost": [
+    150.0,
+    200.0,
+    250.0,
+    300.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          650.0,
+          750.0,
+          850.0,
+          950.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.firestorm",
+  "targetsEnemies": true,
+  "radius": 1.5,
+  "schema": "ability@1"
+}

@@ -1,0 +1,100 @@
+:root {
+  color-scheme: dark;
+  --bg: #0f1218;
+  --panel: #171c26;
+  --line: #2a3242;
+  --fg: #d7dde8;
+  --muted: #8a94a6;
+  --pass: #2f9e64;
+  --fail: #d64550;
+  --run: #3d7dd8;
+  --warn: #c9a227;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 14px/1.45 ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+.app { max-width: 1280px; margin: 0 auto; padding: 16px; }
+
+header h1 { font-size: 18px; margin: 0 0 12px; }
+.muted { color: var(--muted); font-weight: normal; font-size: 12px; }
+
+.toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+
+button {
+  background: var(--panel);
+  color: var(--fg);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+button:hover:not(:disabled) { border-color: var(--run); }
+button:disabled { opacity: 0.45; cursor: default; }
+button.mini { padding: 1px 8px; font-size: 12px; }
+
+.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); margin-bottom: 12px; }
+.tab { border: none; border-radius: 6px 6px 0 0; background: transparent; }
+.tab.active { background: var(--panel); border: 1px solid var(--line); border-bottom-color: var(--panel); }
+
+.error { background: #3a1d22; border: 1px solid var(--fail); padding: 8px 12px; border-radius: 6px; margin-bottom: 12px; }
+.empty { color: var(--muted); padding: 24px; text-align: center; }
+
+.columns { display: grid; grid-template-columns: minmax(380px, 44%) 1fr; gap: 16px; }
+
+.runbar { margin-bottom: 10px; display: flex; gap: 8px; align-items: center; }
+
+.suites section { margin-bottom: 14px; }
+.suites h2 {
+  font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--muted); display: flex; align-items: center; gap: 8px; margin: 0 0 6px;
+}
+.badge {
+  background: var(--warn); color: #14100a; font-size: 10px;
+  padding: 1px 7px; border-radius: 9px; letter-spacing: 0.03em;
+}
+
+.suites ul { list-style: none; margin: 0; padding: 0; }
+.suite {
+  display: flex; justify-content: space-between; align-items: center; gap: 8px;
+  padding: 7px 10px; border: 1px solid var(--line); border-radius: 6px;
+  margin-bottom: 4px; background: var(--panel); cursor: pointer;
+}
+.suite.selected { border-color: var(--run); }
+.suite-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.suite-meta { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+
+.chip {
+  display: inline-block; font-size: 11px; padding: 1px 8px;
+  border-radius: 9px; border: 1px solid var(--line); background: var(--panel);
+}
+.chip-pass, .chip-status-pass { background: var(--pass); border-color: var(--pass); color: #eafff2; }
+.chip-fail, .chip-status-fail { background: var(--fail); border-color: var(--fail); color: #fff; }
+.chip-run, .chip-status-running { background: var(--run); border-color: var(--run); color: #fff; }
+.chip-status-skip, .chip-status-cancelled { background: var(--warn); border-color: var(--warn); color: #14100a; }
+.chip-status-done { background: var(--pass); border-color: var(--pass); color: #eafff2; }
+.chip-status-pending, .chip-status-idle, .chip-status-off { color: var(--muted); }
+
+.logpane { min-width: 0; }
+.logpane h2 { font-size: 13px; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; }
+.logpane pre {
+  background: #0a0d12; border: 1px solid var(--line); border-radius: 6px;
+  padding: 10px; min-height: 200px; max-height: 70vh; overflow: auto;
+  font: 12px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+  white-space: pre-wrap; word-break: break-word;
+}
+
+.coverage section { margin-bottom: 18px; }
+.coverage h3 { font-size: 13px; color: var(--muted); margin: 0 0 6px; }
+.coverage-summary { display: flex; gap: 8px; align-items: center; margin-bottom: 14px; }
+table { border-collapse: collapse; width: 100%; }
+th, td { text-align: left; padding: 5px 10px; border-bottom: 1px solid var(--line); font-size: 13px; }
+th { color: var(--muted); font-weight: 500; }
+.row-bad td { background: #2c1a1e; }
+code { background: #0a0d12; padding: 1px 5px; border-radius: 4px; font-size: 12px; }

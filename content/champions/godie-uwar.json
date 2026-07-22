@@ -1,0 +1,203 @@
+{
+  "id": "godie-uwar",
+  "schema": "champion@1",
+  "name": "食神 - 撒尿牛丸",
+  "description": "故事：\n神秘的戰士，據說是被混在一起才變成撒尿牛丸的。\n(出自:食神)\n\n推薦玩家 : 破塔殺人\n上手度 : 中\n\n角色成長：\n力量 + 1.85\n敏捷 + 2.00\n智慧 + 2.45\n基礎跑速 305\n\n可學習的技能：\n得罪了方丈還想走、打狗鏟、爆烈海景佛跳牆、火雲掌",
+  "role": "marksman",
+  "attackType": "ranged",
+  "modelKey": "champ.sela",
+  "baseStats": {
+    "maxHealth": 440,
+    "healthRegen": 1.05,
+    "maxMana": 388,
+    "manaRegen": 1.76,
+    "ad": 29,
+    "ap": 0,
+    "armor": 9,
+    "mr": 28,
+    "as": 0.45,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 8.2
+  },
+  "growth": {
+    "maxHealth": 37,
+    "healthRegen": 0.09,
+    "maxMana": 29,
+    "manaRegen": 0.1,
+    "ad": 2.5,
+    "armor": 0.6,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-uwar.q",
+      "name": "43-01 得罪了方丈還想走",
+      "description": "[主動攻擊]\n15秒冷卻時間\n\n得罪了方丈還想走，是為了追殺敵人研發的武技，召喚出扇狀的閃電，擊中3個敵人，每個敵人會受到125傷害。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        15.0,
+        15.0,
+        15.0,
+        15.0,
+        15.0
+      ],
+      "manaCost": [
+        45.0,
+        80.0,
+        115.0,
+        150.0,
+        150.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              125.0,
+              200.0,
+              275.0,
+              350.0,
+              350.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "W": {
+      "id": "godie-uwar.w",
+      "name": "43-02 打狗鏟",
+      "description": "[被動]\n0秒冷卻時間\n\n天下武功出少林，打狗鏟心法可以幫助在攻擊時有10%機率增加55點破壞力，並有機會將敵人震昏0.1秒。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "duration": 3.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "E": {
+      "id": "godie-uwar.e",
+      "name": "43-04 爆裂海景佛跳牆",
+      "description": "[主動攻擊]\n45秒冷卻時間\n\n丟出一罐內部裝著炸彈的佛跳牆，接住的人將受到爆炸波及造成700+智慧*3點的強烈傷害。",
+      "slot": "E",
+      "castType": "dash",
+      "maxRank": 3,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        160.0,
+        220.0,
+        280.0
+      ],
+      "range": 8.25,
+      "effects": [
+        {
+          "kind": "dash",
+          "mode": "toPoint",
+          "speed": 30.0,
+          "maxDistance": 8.25
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "R": {
+      "id": "godie-uwar.r",
+      "name": "43-03 少林絕學-火雲掌",
+      "description": "[主動攻擊]\n60秒冷卻時間\n\n運起深厚的內力，把地板像煎荷包蛋一樣急速加熱，讓地面震動碎裂，每秒對建築物造成每秒150點的劇烈傷害，並在有效範圍與時間之中，讓部隊行動速度降低35%，持續6秒。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        250.0,
+        300.0,
+        350.0
+      ],
+      "range": 12.83,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.48
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.firestorm",
+      "targetsEnemies": true
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin"
+  ],
+  "exAbility": "godie-uwar.ex"
+}

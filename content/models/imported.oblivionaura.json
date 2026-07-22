@@ -1,0 +1,15 @@
+{
+  "id": "imported.oblivionaura",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/oblivionaura.glb",
+  "scale": 0.6765,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Stand",
+    "attack": "Stand",
+    "cast": "Stand",
+    "hurt": "Stand",
+    "death": "Stand"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "id": "godie-u00k.e",
+  "schema": "ability@1",
+  "name": "71-03 厄夜靈魂",
+  "description": "[主動攻擊]\n60秒冷卻時間\n抽取範圍內所有生命的泉源，造成生命8%傷害。\n\n夜間施展全地圖敵方移動速度降低",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    160.0,
+    320.0,
+    480.0,
+    640.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          80.0,
+          160.0,
+          240.0,
+          320.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.96
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true
+}

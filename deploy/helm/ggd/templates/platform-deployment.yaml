@@ -1,0 +1,90 @@
+# Go platform monolith — THE single writer of data/ JSON truth.
+#
+# SINGLE-WRITER INVARIANT (plan "Load-bearing decisions" #6): every durable
+# fact lives in data/ JSON files behind in-process locks, so exactly ONE
+# platform pod may exist at any moment:
+#   - replicas: 1        (hard-coded, deliberately not a value)
+#   - strategy: Recreate (old pod fully gone before the new one starts)
+#   - data PVC is RWO    (the storage layer also refuses a second writer node)
+# Enforced by tools/testrunner/internal/infracheck TestPlatformSingleWriter
+# (docs/todo/infra.md infra-07). Multi-writer is explicitly deferred.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-platform
+  labels:
+    {{- include "ggd.labels" . | nindent 4 }}
+    app.kubernetes.io/name: platform
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      {{- include "ggd.selector" (dict "root" . "name" "platform") | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "ggd.labels" . | nindent 8 }}
+        {{- include "ggd.selector" (dict "root" . "name" "platform") | nindent 8 }}
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        fsGroup: 65532          # distroless nonroot uid/gid
+      containers:
+        - name: platform
+          image: {{ .Values.platform.image | quote }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.platform.port }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-config
+            - secretRef:
+                name: {{ .Release.Name }}-secrets
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 2
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          {{- with .Values.platform.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: content
+              mountPath: /srv/content
+              readOnly: true
+      volumes:
+        - name: data
+          {{- if .Values.platform.data.hostPath }}
+          # kind local profile: repo ./data bind-mounted into the node
+          hostPath:
+            path: {{ .Values.platform.data.hostPath | quote }}
+            type: DirectoryOrCreate
+          {{- else }}
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-platform-data
+          {{- end }}
+        - name: content
+          {{- if .Values.content.hostPath }}
+          hostPath:
+            path: {{ .Values.content.hostPath | quote }}
+            type: Directory
+          {{- else if .Values.content.existingClaim }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.content.existingClaim | quote }}
+            readOnly: true
+          {{- else }}
+          emptyDir: {}          # placeholder; prod content is CDN/PVC-provided
+          {{- end }}

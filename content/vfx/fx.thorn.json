@@ -1,0 +1,41 @@
+{
+  "id": "fx.thorn",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "point"
+  },
+  "mode": "burst",
+  "burstCount": 36,
+  "lifetimeSec": {
+    "min": 0.15,
+    "max": 0.35
+  },
+  "size": {
+    "start": 0.32,
+    "end": 0
+  },
+  "sizeStops": [
+    [0, 0.14],
+    [0.12, 0.32],
+    [1, 0]
+  ],
+  "color": {
+    "start": [1, 0.6, 0.2, 1],
+    "end": [1, 0.2, 0.05, 0]
+  },
+  "colorStops": [
+    [0, [1, 1, 1, 1]],
+    [0.15, [1, 0.6, 0.2, 1]],
+    [0.53, [0.35, 0.21, 0.07, 0.35]],
+    [1, [0, 0, 0, 0]]
+  ],
+  "speed": {
+    "min": 6,
+    "max": 12
+  },
+  "gravityY": -14,
+  "stretched": true,
+  "tailLength": 2.5,
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/spark_04.png"
+}

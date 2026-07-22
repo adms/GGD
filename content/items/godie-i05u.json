@@ -1,0 +1,18 @@
+{
+  "id": "godie-i05u",
+  "schema": "item@1",
+  "name": "熱舞之靴",
+  "description": "效能\n移動速度+0.828\n\n解說\n讓你跑的比別人快，但是拿來跳踢躂舞可能有困難。",
+  "cost": 300,
+  "tier": 1,
+  "modifiers": [
+    {
+      "stat": "ms",
+      "op": "flat",
+      "value": 0.828
+    }
+  ],
+  "tags": [
+    "wc3-import"
+  ]
+}

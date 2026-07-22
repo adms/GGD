@@ -1,0 +1,30 @@
+{
+  "id": "godie-h02y.ex",
+  "name": "97-002 終極秘劍-火產靈神",
+  "description": "[主動攻擊]\n0秒冷卻時間\n\n終極秘劍的覺醒形態。志志雄真實使自身的劍與身體纏繞著火燄，每秒對附近的敵人造成傷害，並發出多道火柱灼燒周圍，持續期間內擁有魔法免疫。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    120.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "godie-h02y.r",
+  "schema": "ability@1",
+  "name": "97-04 終極秘劍-火產靈神",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n使自己的劍與身體纏繞著火燄，每秒對自身附近的敵人造成200點傷害，並且從發出10道火柱，每一柱火燄能夠造成30點傷害，持續6秒，持續期間內擁有魔法免疫。",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    60.0,
+    350.0,
+    500.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          200.0,
+          300.0,
+          400.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.firestorm",
+  "targetsEnemies": true,
+  "radius": 3.67
+}

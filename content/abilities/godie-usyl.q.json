@@ -1,0 +1,38 @@
+{
+  "id": "godie-usyl.q",
+  "name": "49-01 遮斷獵殺",
+  "description": "[輔助]\n45秒冷卻時間\n\n異形鎖定目標後將會放慢移動速度15%而遮斷氣息的接近對手，但是會造成額外350點的背刺傷害，持續25秒。",
+  "slot": "Q",
+  "castType": "self",
+  "maxRank": 5,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    65.0,
+    75.0
+  ],
+  "manaCost": [
+    70.0,
+    120.0,
+    170.0,
+    220.0,
+    255.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ms",
+          "op": "pctAdd",
+          "value": 1.0
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

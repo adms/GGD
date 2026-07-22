@@ -1,0 +1,62 @@
+{
+  "id": "imported.herocloudstrife",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/herocloudstrife.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Spell",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Origin": {
+      "x": -0.0235,
+      "y": 0.1094,
+      "z": 0.0025
+    },
+    "OverHead": {
+      "x": -0.0116,
+      "y": 1.7547,
+      "z": 0.0019
+    },
+    "Foot Right": {
+      "x": 0.0659,
+      "y": 0.0788,
+      "z": 0.1946
+    },
+    "Foot Left": {
+      "x": 0.0453,
+      "y": 0.0828,
+      "z": -0.1699
+    },
+    "Hand Right": {
+      "x": 0.0388,
+      "y": 0.8422,
+      "z": 0.3388
+    },
+    "Head": {
+      "x": -0.0393,
+      "y": 1.5619,
+      "z": 0.0026
+    },
+    "Hand Left": {
+      "x": 0.0403,
+      "y": 0.8372,
+      "z": -0.3041
+    },
+    "Chest": {
+      "x": -0.0514,
+      "y": 1.2831,
+      "z": -0.001
+    },
+    "Weapon": {
+      "x": 1.4001,
+      "y": 0.84,
+      "z": 0.42
+    }
+  }
+}

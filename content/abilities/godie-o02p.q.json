@@ -1,0 +1,45 @@
+{
+  "id": "godie-o02p.q",
+  "name": "99-01 甩蔥歌",
+  "description": "[主動攻擊]\n25秒冷卻時間\n\n初音的成名曲之一，其電波般的旋律，會讓週遭的聽者有如全身通過電流一般；召喚一道閃電進行攻擊，給予最多6位敵人200點的傷害，每彈跳一個敵人傷害將降低10%。",
+  "slot": "Q",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    25.0,
+    25.0,
+    25.0,
+    25.0
+  ],
+  "manaCost": [
+    75.0,
+    105.0,
+    135.0,
+    165.0
+  ],
+  "range": 10.08,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          200.0,
+          275.0,
+          350.0,
+          425.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "radius": 7.33
+}

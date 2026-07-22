@@ -1,0 +1,1770 @@
+{
+  "collection": "vfx",
+  "hash": "b4a9bdb4c7e3",
+  "entries": [
+    {
+      "id": "fx.barkskin",
+      "path": "vfx/fx.barkskin.json",
+      "hash": "46a3ab901d20",
+      "size": 1077
+    },
+    {
+      "id": "fx.basic-attack",
+      "path": "vfx/fx.basic-attack.json",
+      "hash": "c8483e16d3d0",
+      "size": 709
+    },
+    {
+      "id": "fx.bramble-burst",
+      "path": "vfx/fx.bramble-burst.json",
+      "hash": "1270c040c2bb",
+      "size": 672
+    },
+    {
+      "id": "fx.cinder-ward",
+      "path": "vfx/fx.cinder-ward.json",
+      "hash": "0be321e3dce6",
+      "size": 692
+    },
+    {
+      "id": "fx.ember-bolt",
+      "path": "vfx/fx.ember-bolt.json",
+      "hash": "17fba347ad50",
+      "size": 661
+    },
+    {
+      "id": "fx.ember-bolt-cast",
+      "path": "vfx/fx.ember-bolt-cast.json",
+      "hash": "b4456922de96",
+      "size": 664
+    },
+    {
+      "id": "fx.firestorm",
+      "path": "vfx/fx.firestorm.json",
+      "hash": "6ffd435ece97",
+      "size": 697
+    },
+    {
+      "id": "fx.ribbon-slash",
+      "path": "vfx/fx.ribbon-slash.json",
+      "hash": "946eb388b126",
+      "size": 227
+    },
+    {
+      "id": "fx.root-snare",
+      "path": "vfx/fx.root-snare.json",
+      "hash": "879f106439f5",
+      "size": 1051
+    },
+    {
+      "id": "fx.scorch-ring",
+      "path": "vfx/fx.scorch-ring.json",
+      "hash": "cd96dfc1a93b",
+      "size": 680
+    },
+    {
+      "id": "fx.thorn",
+      "path": "vfx/fx.thorn.json",
+      "hash": "5c477873a40c",
+      "size": 699
+    },
+    {
+      "id": "fx.thorn-lash",
+      "path": "vfx/fx.thorn-lash.json",
+      "hash": "68b0d29cd0ac",
+      "size": 704
+    },
+    {
+      "id": "godie-1hswd-01-p0",
+      "path": "vfx/godie-1hswd-01-p0.json",
+      "hash": "cd48fd09dd01",
+      "size": 1039
+    },
+    {
+      "id": "godie-1hswd-01-p1",
+      "path": "vfx/godie-1hswd-01-p1.json",
+      "hash": "38c81473f2ed",
+      "size": 1039
+    },
+    {
+      "id": "godie-1hswd-01-p2",
+      "path": "vfx/godie-1hswd-01-p2.json",
+      "hash": "2475bafacd8c",
+      "size": 1041
+    },
+    {
+      "id": "godie-aquaspikeversion2-p0",
+      "path": "vfx/godie-aquaspikeversion2-p0.json",
+      "hash": "c038ca923d2f",
+      "size": 1056
+    },
+    {
+      "id": "godie-aquaspikeversion2-p1",
+      "path": "vfx/godie-aquaspikeversion2-p1.json",
+      "hash": "5bff4d16b375",
+      "size": 1077
+    },
+    {
+      "id": "godie-aquaspikeversion2-p10",
+      "path": "vfx/godie-aquaspikeversion2-p10.json",
+      "hash": "dd55a8846a34",
+      "size": 1010
+    },
+    {
+      "id": "godie-aquaspikeversion2-p11",
+      "path": "vfx/godie-aquaspikeversion2-p11.json",
+      "hash": "ba030d452c87",
+      "size": 1042
+    },
+    {
+      "id": "godie-aquaspikeversion2-p2",
+      "path": "vfx/godie-aquaspikeversion2-p2.json",
+      "hash": "dd494f9e9be6",
+      "size": 1076
+    },
+    {
+      "id": "godie-aquaspikeversion2-p3",
+      "path": "vfx/godie-aquaspikeversion2-p3.json",
+      "hash": "f4b39b20835c",
+      "size": 1015
+    },
+    {
+      "id": "godie-aquaspikeversion2-p4",
+      "path": "vfx/godie-aquaspikeversion2-p4.json",
+      "hash": "99c0f4e37f8e",
+      "size": 1076
+    },
+    {
+      "id": "godie-aquaspikeversion2-p5",
+      "path": "vfx/godie-aquaspikeversion2-p5.json",
+      "hash": "44965c27e928",
+      "size": 1043
+    },
+    {
+      "id": "godie-aquaspikeversion2-p6",
+      "path": "vfx/godie-aquaspikeversion2-p6.json",
+      "hash": "b1b4e2e54418",
+      "size": 1042
+    },
+    {
+      "id": "godie-aquaspikeversion2-p7",
+      "path": "vfx/godie-aquaspikeversion2-p7.json",
+      "hash": "6058d68da1b4",
+      "size": 1060
+    },
+    {
+      "id": "godie-aquaspikeversion2-p8",
+      "path": "vfx/godie-aquaspikeversion2-p8.json",
+      "hash": "faa31402f727",
+      "size": 1065
+    },
+    {
+      "id": "godie-aquaspikeversion2-p9",
+      "path": "vfx/godie-aquaspikeversion2-p9.json",
+      "hash": "5065538e66a6",
+      "size": 1037
+    },
+    {
+      "id": "godie-babyface-p0",
+      "path": "vfx/godie-babyface-p0.json",
+      "hash": "83386776e5d8",
+      "size": 944
+    },
+    {
+      "id": "godie-billy-p0",
+      "path": "vfx/godie-billy-p0.json",
+      "hash": "14ad1364ffc6",
+      "size": 991
+    },
+    {
+      "id": "godie-blackhole-p0",
+      "path": "vfx/godie-blackhole-p0.json",
+      "hash": "cb977b274561",
+      "size": 935
+    },
+    {
+      "id": "godie-blackhole-p1",
+      "path": "vfx/godie-blackhole-p1.json",
+      "hash": "12d0f0622a65",
+      "size": 930
+    },
+    {
+      "id": "godie-blackhole-p2",
+      "path": "vfx/godie-blackhole-p2.json",
+      "hash": "8a730373ba27",
+      "size": 997
+    },
+    {
+      "id": "godie-blackhole-p3",
+      "path": "vfx/godie-blackhole-p3.json",
+      "hash": "119dce4be6c0",
+      "size": 931
+    },
+    {
+      "id": "godie-blackhole-p4",
+      "path": "vfx/godie-blackhole-p4.json",
+      "hash": "ca2c345577a7",
+      "size": 934
+    },
+    {
+      "id": "godie-blackhole-p5",
+      "path": "vfx/godie-blackhole-p5.json",
+      "hash": "1871a024b770",
+      "size": 939
+    },
+    {
+      "id": "godie-blackhole-p6",
+      "path": "vfx/godie-blackhole-p6.json",
+      "hash": "0d2f44644067",
+      "size": 989
+    },
+    {
+      "id": "godie-blackhole-r0",
+      "path": "vfx/godie-blackhole-r0.json",
+      "hash": "b9ee9832f3b3",
+      "size": 294
+    },
+    {
+      "id": "godie-blackhole-r1",
+      "path": "vfx/godie-blackhole-r1.json",
+      "hash": "d66beaf8a82c",
+      "size": 294
+    },
+    {
+      "id": "godie-blackhole1-p0",
+      "path": "vfx/godie-blackhole1-p0.json",
+      "hash": "5aeaa2afdc71",
+      "size": 993
+    },
+    {
+      "id": "godie-blackhole1-p1",
+      "path": "vfx/godie-blackhole1-p1.json",
+      "hash": "6c015fcbf8ce",
+      "size": 993
+    },
+    {
+      "id": "godie-blackhole1-p2",
+      "path": "vfx/godie-blackhole1-p2.json",
+      "hash": "79978ff544c8",
+      "size": 1010
+    },
+    {
+      "id": "godie-bladestorm-swordeffect-p0",
+      "path": "vfx/godie-bladestorm-swordeffect-p0.json",
+      "hash": "58ab0918abec",
+      "size": 1016
+    },
+    {
+      "id": "godie-bloodbreathstream-p0",
+      "path": "vfx/godie-bloodbreathstream-p0.json",
+      "hash": "fffb7d79e5ff",
+      "size": 1021
+    },
+    {
+      "id": "godie-bloodbreathstream-p1",
+      "path": "vfx/godie-bloodbreathstream-p1.json",
+      "hash": "1f74cda19d0f",
+      "size": 1029
+    },
+    {
+      "id": "godie-bloodbreathstream-p2",
+      "path": "vfx/godie-bloodbreathstream-p2.json",
+      "hash": "5120d02c27bb",
+      "size": 1027
+    },
+    {
+      "id": "godie-boomnl-p0",
+      "path": "vfx/godie-boomnl-p0.json",
+      "hash": "f0cf444d1b34",
+      "size": 1001
+    },
+    {
+      "id": "godie-boomnl-p1",
+      "path": "vfx/godie-boomnl-p1.json",
+      "hash": "1810cb000934",
+      "size": 1003
+    },
+    {
+      "id": "godie-boomnl-p2",
+      "path": "vfx/godie-boomnl-p2.json",
+      "hash": "50785ad5a5f1",
+      "size": 1008
+    },
+    {
+      "id": "godie-boomnl-p3",
+      "path": "vfx/godie-boomnl-p3.json",
+      "hash": "c828829e7bb2",
+      "size": 1008
+    },
+    {
+      "id": "godie-boomnl-p4",
+      "path": "vfx/godie-boomnl-p4.json",
+      "hash": "691385604170",
+      "size": 1043
+    },
+    {
+      "id": "godie-bulbasaur-p0",
+      "path": "vfx/godie-bulbasaur-p0.json",
+      "hash": "7ce5bbd85500",
+      "size": 1067
+    },
+    {
+      "id": "godie-cloud-p0",
+      "path": "vfx/godie-cloud-p0.json",
+      "hash": "0bb0f19e9963",
+      "size": 1069
+    },
+    {
+      "id": "godie-cloud-r0",
+      "path": "vfx/godie-cloud-r0.json",
+      "hash": "5e9d68fa4fe4",
+      "size": 290
+    },
+    {
+      "id": "godie-darkbreathdamage-p0",
+      "path": "vfx/godie-darkbreathdamage-p0.json",
+      "hash": "a7eae31e861b",
+      "size": 994
+    },
+    {
+      "id": "godie-darkraor-p0",
+      "path": "vfx/godie-darkraor-p0.json",
+      "hash": "9c6bc34ef63d",
+      "size": 1032
+    },
+    {
+      "id": "godie-darkraor-p1",
+      "path": "vfx/godie-darkraor-p1.json",
+      "hash": "c57006aee892",
+      "size": 991
+    },
+    {
+      "id": "godie-darkraor-p2",
+      "path": "vfx/godie-darkraor-p2.json",
+      "hash": "3466d3c15bb8",
+      "size": 1020
+    },
+    {
+      "id": "godie-deathwave-p0",
+      "path": "vfx/godie-deathwave-p0.json",
+      "hash": "a38045cf356f",
+      "size": 1010
+    },
+    {
+      "id": "godie-deathwave-r0",
+      "path": "vfx/godie-deathwave-r0.json",
+      "hash": "5cafdab2db3f",
+      "size": 284
+    },
+    {
+      "id": "godie-deathwave-r1",
+      "path": "vfx/godie-deathwave-r1.json",
+      "hash": "e90039006da7",
+      "size": 285
+    },
+    {
+      "id": "godie-deathwave-r2",
+      "path": "vfx/godie-deathwave-r2.json",
+      "hash": "dd2e65f060c1",
+      "size": 284
+    },
+    {
+      "id": "godie-demonfilth-p0",
+      "path": "vfx/godie-demonfilth-p0.json",
+      "hash": "d9324b21256f",
+      "size": 933
+    },
+    {
+      "id": "godie-demonfilth-p1",
+      "path": "vfx/godie-demonfilth-p1.json",
+      "hash": "514f648ff9ed",
+      "size": 1002
+    },
+    {
+      "id": "godie-demonfilth-p2",
+      "path": "vfx/godie-demonfilth-p2.json",
+      "hash": "c8ce0b988774",
+      "size": 991
+    },
+    {
+      "id": "godie-demonfilth-p3",
+      "path": "vfx/godie-demonfilth-p3.json",
+      "hash": "d129d0bb2259",
+      "size": 933
+    },
+    {
+      "id": "godie-demonfilth-p4",
+      "path": "vfx/godie-demonfilth-p4.json",
+      "hash": "f31a7a3c0f7d",
+      "size": 989
+    },
+    {
+      "id": "godie-divinering-p0",
+      "path": "vfx/godie-divinering-p0.json",
+      "hash": "4d184309bcfd",
+      "size": 1032
+    },
+    {
+      "id": "godie-divinering-p1",
+      "path": "vfx/godie-divinering-p1.json",
+      "hash": "e86d4aff6eb6",
+      "size": 1032
+    },
+    {
+      "id": "godie-divinering-p10",
+      "path": "vfx/godie-divinering-p10.json",
+      "hash": "40a1cc5a1a52",
+      "size": 1092
+    },
+    {
+      "id": "godie-divinering-p11",
+      "path": "vfx/godie-divinering-p11.json",
+      "hash": "da8493875199",
+      "size": 1083
+    },
+    {
+      "id": "godie-divinering-p12",
+      "path": "vfx/godie-divinering-p12.json",
+      "hash": "d56d3cbbe107",
+      "size": 1092
+    },
+    {
+      "id": "godie-divinering-p13",
+      "path": "vfx/godie-divinering-p13.json",
+      "hash": "c1f766747a08",
+      "size": 1083
+    },
+    {
+      "id": "godie-divinering-p14",
+      "path": "vfx/godie-divinering-p14.json",
+      "hash": "45bf52d6a197",
+      "size": 1092
+    },
+    {
+      "id": "godie-divinering-p15",
+      "path": "vfx/godie-divinering-p15.json",
+      "hash": "b7ae1e3fc1be",
+      "size": 1083
+    },
+    {
+      "id": "godie-divinering-p16",
+      "path": "vfx/godie-divinering-p16.json",
+      "hash": "54e1685a5b75",
+      "size": 1092
+    },
+    {
+      "id": "godie-divinering-p17",
+      "path": "vfx/godie-divinering-p17.json",
+      "hash": "44f9b40939cc",
+      "size": 1083
+    },
+    {
+      "id": "godie-divinering-p18",
+      "path": "vfx/godie-divinering-p18.json",
+      "hash": "dc0b10ed62c6",
+      "size": 1092
+    },
+    {
+      "id": "godie-divinering-p19",
+      "path": "vfx/godie-divinering-p19.json",
+      "hash": "dce20c246646",
+      "size": 1083
+    },
+    {
+      "id": "godie-divinering-p2",
+      "path": "vfx/godie-divinering-p2.json",
+      "hash": "a02cb55d2d53",
+      "size": 1032
+    },
+    {
+      "id": "godie-divinering-p3",
+      "path": "vfx/godie-divinering-p3.json",
+      "hash": "e78100391605",
+      "size": 1032
+    },
+    {
+      "id": "godie-divinering-p4",
+      "path": "vfx/godie-divinering-p4.json",
+      "hash": "b3449bb48c04",
+      "size": 1032
+    },
+    {
+      "id": "godie-divinering-p5",
+      "path": "vfx/godie-divinering-p5.json",
+      "hash": "c6b93e809e20",
+      "size": 1041
+    },
+    {
+      "id": "godie-divinering-p6",
+      "path": "vfx/godie-divinering-p6.json",
+      "hash": "151b66026bb2",
+      "size": 1041
+    },
+    {
+      "id": "godie-divinering-p7",
+      "path": "vfx/godie-divinering-p7.json",
+      "hash": "1cca3bc454fd",
+      "size": 1041
+    },
+    {
+      "id": "godie-divinering-p8",
+      "path": "vfx/godie-divinering-p8.json",
+      "hash": "2cb45c92a387",
+      "size": 1041
+    },
+    {
+      "id": "godie-divinering-p9",
+      "path": "vfx/godie-divinering-p9.json",
+      "hash": "7575a668b7ab",
+      "size": 1041
+    },
+    {
+      "id": "godie-earthtornado2-p0",
+      "path": "vfx/godie-earthtornado2-p0.json",
+      "hash": "dcb621812957",
+      "size": 999
+    },
+    {
+      "id": "godie-earthtornado2-p1",
+      "path": "vfx/godie-earthtornado2-p1.json",
+      "hash": "773313e30cd9",
+      "size": 1050
+    },
+    {
+      "id": "godie-earthtornado2-p10",
+      "path": "vfx/godie-earthtornado2-p10.json",
+      "hash": "bc17e5d5a087",
+      "size": 1051
+    },
+    {
+      "id": "godie-earthtornado2-p11",
+      "path": "vfx/godie-earthtornado2-p11.json",
+      "hash": "24ef2a5e2937",
+      "size": 1051
+    },
+    {
+      "id": "godie-earthtornado2-p12",
+      "path": "vfx/godie-earthtornado2-p12.json",
+      "hash": "64c73d9a08bf",
+      "size": 1051
+    },
+    {
+      "id": "godie-earthtornado2-p13",
+      "path": "vfx/godie-earthtornado2-p13.json",
+      "hash": "e88e956501b4",
+      "size": 1046
+    },
+    {
+      "id": "godie-earthtornado2-p2",
+      "path": "vfx/godie-earthtornado2-p2.json",
+      "hash": "6d6efc9ab40d",
+      "size": 1040
+    },
+    {
+      "id": "godie-earthtornado2-p3",
+      "path": "vfx/godie-earthtornado2-p3.json",
+      "hash": "3fc1c47a6bb7",
+      "size": 1049
+    },
+    {
+      "id": "godie-earthtornado2-p4",
+      "path": "vfx/godie-earthtornado2-p4.json",
+      "hash": "eb33ff05ff0d",
+      "size": 1050
+    },
+    {
+      "id": "godie-earthtornado2-p5",
+      "path": "vfx/godie-earthtornado2-p5.json",
+      "hash": "e7bfe51681ed",
+      "size": 1046
+    },
+    {
+      "id": "godie-earthtornado2-p6",
+      "path": "vfx/godie-earthtornado2-p6.json",
+      "hash": "c1cd89243674",
+      "size": 1030
+    },
+    {
+      "id": "godie-earthtornado2-p7",
+      "path": "vfx/godie-earthtornado2-p7.json",
+      "hash": "456ff3b22087",
+      "size": 1051
+    },
+    {
+      "id": "godie-earthtornado2-p8",
+      "path": "vfx/godie-earthtornado2-p8.json",
+      "hash": "e8c10d7e101e",
+      "size": 1050
+    },
+    {
+      "id": "godie-earthtornado2-p9",
+      "path": "vfx/godie-earthtornado2-p9.json",
+      "hash": "a68b62269b35",
+      "size": 1027
+    },
+    {
+      "id": "godie-enchant-p0",
+      "path": "vfx/godie-enchant-p0.json",
+      "hash": "dc202e2db631",
+      "size": 1012
+    },
+    {
+      "id": "godie-enchant-p1",
+      "path": "vfx/godie-enchant-p1.json",
+      "hash": "9ece46848e21",
+      "size": 1012
+    },
+    {
+      "id": "godie-enchant-p2",
+      "path": "vfx/godie-enchant-p2.json",
+      "hash": "48edd5c4c4e1",
+      "size": 1012
+    },
+    {
+      "id": "godie-enchant-p3",
+      "path": "vfx/godie-enchant-p3.json",
+      "hash": "97888c621566",
+      "size": 1012
+    },
+    {
+      "id": "godie-enchant-p4",
+      "path": "vfx/godie-enchant-p4.json",
+      "hash": "bb65d3a88e27",
+      "size": 1012
+    },
+    {
+      "id": "godie-fireblast-p0",
+      "path": "vfx/godie-fireblast-p0.json",
+      "hash": "381ce29cab13",
+      "size": 1052
+    },
+    {
+      "id": "godie-fireblast-p1",
+      "path": "vfx/godie-fireblast-p1.json",
+      "hash": "ec82ab6e075d",
+      "size": 1066
+    },
+    {
+      "id": "godie-fireblast-p2",
+      "path": "vfx/godie-fireblast-p2.json",
+      "hash": "8a5149516a3f",
+      "size": 989
+    },
+    {
+      "id": "godie-fireblast-p3",
+      "path": "vfx/godie-fireblast-p3.json",
+      "hash": "e6bd919642b9",
+      "size": 1008
+    },
+    {
+      "id": "godie-flamessmoke-p0",
+      "path": "vfx/godie-flamessmoke-p0.json",
+      "hash": "1cda4e8bd9c3",
+      "size": 999
+    },
+    {
+      "id": "godie-flamessmoke-p1",
+      "path": "vfx/godie-flamessmoke-p1.json",
+      "hash": "d6a1113bf069",
+      "size": 1039
+    },
+    {
+      "id": "godie-flamessmoke-p2",
+      "path": "vfx/godie-flamessmoke-p2.json",
+      "hash": "ea02a2980e20",
+      "size": 1021
+    },
+    {
+      "id": "godie-flamessmoke-p3",
+      "path": "vfx/godie-flamessmoke-p3.json",
+      "hash": "7c11c528410e",
+      "size": 998
+    },
+    {
+      "id": "godie-flash-p0",
+      "path": "vfx/godie-flash-p0.json",
+      "hash": "9180767520d0",
+      "size": 1017
+    },
+    {
+      "id": "godie-flash-p1",
+      "path": "vfx/godie-flash-p1.json",
+      "hash": "cb95d8307f2f",
+      "size": 1067
+    },
+    {
+      "id": "godie-fox-p0",
+      "path": "vfx/godie-fox-p0.json",
+      "hash": "14e82fa56195",
+      "size": 1033
+    },
+    {
+      "id": "godie-fox2-p0",
+      "path": "vfx/godie-fox2-p0.json",
+      "hash": "a30dceccc784",
+      "size": 1034
+    },
+    {
+      "id": "godie-frostnova-p0",
+      "path": "vfx/godie-frostnova-p0.json",
+      "hash": "7541ffc5cd4e",
+      "size": 932
+    },
+    {
+      "id": "godie-frostnova-p1",
+      "path": "vfx/godie-frostnova-p1.json",
+      "hash": "e1ab5102ff73",
+      "size": 988
+    },
+    {
+      "id": "godie-frostnova-p2",
+      "path": "vfx/godie-frostnova-p2.json",
+      "hash": "b3987c4d6a47",
+      "size": 1002
+    },
+    {
+      "id": "godie-frostnova-p3",
+      "path": "vfx/godie-frostnova-p3.json",
+      "hash": "b372ead6d6db",
+      "size": 1046
+    },
+    {
+      "id": "godie-gumdam-p0",
+      "path": "vfx/godie-gumdam-p0.json",
+      "hash": "c3fbc0c3b0b5",
+      "size": 1044
+    },
+    {
+      "id": "godie-gumdam-p1",
+      "path": "vfx/godie-gumdam-p1.json",
+      "hash": "4a0968830c21",
+      "size": 1010
+    },
+    {
+      "id": "godie-gumdam-p2",
+      "path": "vfx/godie-gumdam-p2.json",
+      "hash": "469b157fa299",
+      "size": 1084
+    },
+    {
+      "id": "godie-gumdam-p3",
+      "path": "vfx/godie-gumdam-p3.json",
+      "hash": "551fcd4ef416",
+      "size": 1036
+    },
+    {
+      "id": "godie-gumdam-p4",
+      "path": "vfx/godie-gumdam-p4.json",
+      "hash": "a108c5974cb6",
+      "size": 1002
+    },
+    {
+      "id": "godie-gx-p0",
+      "path": "vfx/godie-gx-p0.json",
+      "hash": "9cb263051294",
+      "size": 1050
+    },
+    {
+      "id": "godie-gx-r0",
+      "path": "vfx/godie-gx-r0.json",
+      "hash": "d7b3f4d08e13",
+      "size": 259
+    },
+    {
+      "id": "godie-gxhuge-p0",
+      "path": "vfx/godie-gxhuge-p0.json",
+      "hash": "9088938083f5",
+      "size": 1054
+    },
+    {
+      "id": "godie-gxhuge-r0",
+      "path": "vfx/godie-gxhuge-r0.json",
+      "hash": "a0d6a4db1e50",
+      "size": 263
+    },
+    {
+      "id": "godie-herobuu-p0",
+      "path": "vfx/godie-herobuu-p0.json",
+      "hash": "73124b5d0a98",
+      "size": 1025
+    },
+    {
+      "id": "godie-herocloudkfksword-p0",
+      "path": "vfx/godie-herocloudkfksword-p0.json",
+      "hash": "8598ec60df19",
+      "size": 1070
+    },
+    {
+      "id": "godie-herocloudstrife-p0",
+      "path": "vfx/godie-herocloudstrife-p0.json",
+      "hash": "fe6358022afa",
+      "size": 1032
+    },
+    {
+      "id": "godie-herocloudstrife-p1",
+      "path": "vfx/godie-herocloudstrife-p1.json",
+      "hash": "73ef82538dc3",
+      "size": 1036
+    },
+    {
+      "id": "godie-herocloudstrife-r0",
+      "path": "vfx/godie-herocloudstrife-r0.json",
+      "hash": "0f19fc7d5730",
+      "size": 306
+    },
+    {
+      "id": "godie-heroeva01s2-p0",
+      "path": "vfx/godie-heroeva01s2-p0.json",
+      "hash": "8f94d2012634",
+      "size": 987
+    },
+    {
+      "id": "godie-heroeva01s2-p1",
+      "path": "vfx/godie-heroeva01s2-p1.json",
+      "hash": "e6cbaad544cf",
+      "size": 958
+    },
+    {
+      "id": "godie-herofate-p0",
+      "path": "vfx/godie-herofate-p0.json",
+      "hash": "99036f64475a",
+      "size": 1040
+    },
+    {
+      "id": "godie-herofate-p1",
+      "path": "vfx/godie-herofate-p1.json",
+      "hash": "791833701a37",
+      "size": 1058
+    },
+    {
+      "id": "godie-herofate-r0",
+      "path": "vfx/godie-herofate-r0.json",
+      "hash": "126bf14a9268",
+      "size": 279
+    },
+    {
+      "id": "godie-herogirl-r0",
+      "path": "vfx/godie-herogirl-r0.json",
+      "hash": "f7fce0c9e99b",
+      "size": 295
+    },
+    {
+      "id": "godie-herogirl-r1",
+      "path": "vfx/godie-herogirl-r1.json",
+      "hash": "3e0612ae7c33",
+      "size": 295
+    },
+    {
+      "id": "godie-herohanzouhattori-p0",
+      "path": "vfx/godie-herohanzouhattori-p0.json",
+      "hash": "b9cb7627b745",
+      "size": 1051
+    },
+    {
+      "id": "godie-herohanzouhattori-r0",
+      "path": "vfx/godie-herohanzouhattori-r0.json",
+      "hash": "ae21507d9590",
+      "size": 303
+    },
+    {
+      "id": "godie-herohehi-p0",
+      "path": "vfx/godie-herohehi-p0.json",
+      "hash": "3f493037723a",
+      "size": 1041
+    },
+    {
+      "id": "godie-herohehi-r0",
+      "path": "vfx/godie-herohehi-r0.json",
+      "hash": "2e66db5c8a02",
+      "size": 297
+    },
+    {
+      "id": "godie-herohimurakenshin-p0",
+      "path": "vfx/godie-herohimurakenshin-p0.json",
+      "hash": "90a7f65debd0",
+      "size": 1047
+    },
+    {
+      "id": "godie-herohimurakenshin-p1",
+      "path": "vfx/godie-herohimurakenshin-p1.json",
+      "hash": "68383676525c",
+      "size": 1011
+    },
+    {
+      "id": "godie-herohimurakenshin-r0",
+      "path": "vfx/godie-herohimurakenshin-r0.json",
+      "hash": "0c883a232744",
+      "size": 308
+    },
+    {
+      "id": "godie-heroichigo-p0",
+      "path": "vfx/godie-heroichigo-p0.json",
+      "hash": "4d35d3033566",
+      "size": 1047
+    },
+    {
+      "id": "godie-heroichigo-r0",
+      "path": "vfx/godie-heroichigo-r0.json",
+      "hash": "05da38ca0b24",
+      "size": 306
+    },
+    {
+      "id": "godie-heroichigo-r1",
+      "path": "vfx/godie-heroichigo-r1.json",
+      "hash": "02c17ed62c28",
+      "size": 296
+    },
+    {
+      "id": "godie-herokunoichi-r0",
+      "path": "vfx/godie-herokunoichi-r0.json",
+      "hash": "a8267ca698b5",
+      "size": 299
+    },
+    {
+      "id": "godie-herokunoichi-r1",
+      "path": "vfx/godie-herokunoichi-r1.json",
+      "hash": "876e2297584e",
+      "size": 299
+    },
+    {
+      "id": "godie-herokyo-p0",
+      "path": "vfx/godie-herokyo-p0.json",
+      "hash": "65b275526100",
+      "size": 1041
+    },
+    {
+      "id": "godie-herokyo-r0",
+      "path": "vfx/godie-herokyo-r0.json",
+      "hash": "d8383834db02",
+      "size": 294
+    },
+    {
+      "id": "godie-heroluffeattack-p0",
+      "path": "vfx/godie-heroluffeattack-p0.json",
+      "hash": "b7c8959bc88b",
+      "size": 1013
+    },
+    {
+      "id": "godie-heromiku-p0",
+      "path": "vfx/godie-heromiku-p0.json",
+      "hash": "2bb4cb176634",
+      "size": 985
+    },
+    {
+      "id": "godie-heromiku-p1",
+      "path": "vfx/godie-heromiku-p1.json",
+      "hash": "b1a24a45f734",
+      "size": 997
+    },
+    {
+      "id": "godie-heromusashimiyamoto-p0",
+      "path": "vfx/godie-heromusashimiyamoto-p0.json",
+      "hash": "c392d542d784",
+      "size": 1053
+    },
+    {
+      "id": "godie-heromusashimiyamoto-r0",
+      "path": "vfx/godie-heromusashimiyamoto-r0.json",
+      "hash": "908066ddcba6",
+      "size": 307
+    },
+    {
+      "id": "godie-heromusashimiyamoto-r1",
+      "path": "vfx/godie-heromusashimiyamoto-r1.json",
+      "hash": "2b572cab88f5",
+      "size": 307
+    },
+    {
+      "id": "godie-heronarutos4effect-p0",
+      "path": "vfx/godie-heronarutos4effect-p0.json",
+      "hash": "91cb06a4377e",
+      "size": 1038
+    },
+    {
+      "id": "godie-heronarutos4effect-p1",
+      "path": "vfx/godie-heronarutos4effect-p1.json",
+      "hash": "3665ccd17718",
+      "size": 1038
+    },
+    {
+      "id": "godie-heronarutos4effect-p2",
+      "path": "vfx/godie-heronarutos4effect-p2.json",
+      "hash": "2d2d913b43bb",
+      "size": 1038
+    },
+    {
+      "id": "godie-heronarutos4effect-p3",
+      "path": "vfx/godie-heronarutos4effect-p3.json",
+      "hash": "10b34ac309bb",
+      "size": 1038
+    },
+    {
+      "id": "godie-heronarutos4effect-p4",
+      "path": "vfx/godie-heronarutos4effect-p4.json",
+      "hash": "c986724ad0d7",
+      "size": 1038
+    },
+    {
+      "id": "godie-heronarutos4effect-p5",
+      "path": "vfx/godie-heronarutos4effect-p5.json",
+      "hash": "8ff90c47891b",
+      "size": 1054
+    },
+    {
+      "id": "godie-herooichi-p0",
+      "path": "vfx/godie-herooichi-p0.json",
+      "hash": "c99240fae437",
+      "size": 1064
+    },
+    {
+      "id": "godie-herooichi-p1",
+      "path": "vfx/godie-herooichi-p1.json",
+      "hash": "3328f2124d57",
+      "size": 1064
+    },
+    {
+      "id": "godie-heroraichus3-p0",
+      "path": "vfx/godie-heroraichus3-p0.json",
+      "hash": "da95fb27b9ee",
+      "size": 988
+    },
+    {
+      "id": "godie-heroraichus3-p1",
+      "path": "vfx/godie-heroraichus3-p1.json",
+      "hash": "b746326e1c9a",
+      "size": 1037
+    },
+    {
+      "id": "godie-herorider-p0",
+      "path": "vfx/godie-herorider-p0.json",
+      "hash": "458b80e4269d",
+      "size": 1068
+    },
+    {
+      "id": "godie-heroryuk-p0",
+      "path": "vfx/godie-heroryuk-p0.json",
+      "hash": "9453906a45ad",
+      "size": 977
+    },
+    {
+      "id": "godie-herosaber-p0",
+      "path": "vfx/godie-herosaber-p0.json",
+      "hash": "69d46ae029b9",
+      "size": 1039
+    },
+    {
+      "id": "godie-herosaber-p1",
+      "path": "vfx/godie-herosaber-p1.json",
+      "hash": "67cd28e0e229",
+      "size": 1065
+    },
+    {
+      "id": "godie-herosaber-r0",
+      "path": "vfx/godie-herosaber-r0.json",
+      "hash": "732f1159431d",
+      "size": 299
+    },
+    {
+      "id": "godie-herosasuke-p0",
+      "path": "vfx/godie-herosasuke-p0.json",
+      "hash": "d59c50711561",
+      "size": 999
+    },
+    {
+      "id": "godie-herosasuke-p1",
+      "path": "vfx/godie-herosasuke-p1.json",
+      "hash": "45c7cbc2ffd0",
+      "size": 1046
+    },
+    {
+      "id": "godie-herosasuke-p2",
+      "path": "vfx/godie-herosasuke-p2.json",
+      "hash": "3d57ce5d94ef",
+      "size": 1035
+    },
+    {
+      "id": "godie-herosasuke-p3",
+      "path": "vfx/godie-herosasuke-p3.json",
+      "hash": "785cd46a90af",
+      "size": 992
+    },
+    {
+      "id": "godie-herosasuke-r0",
+      "path": "vfx/godie-herosasuke-r0.json",
+      "hash": "29a7c89eae20",
+      "size": 306
+    },
+    {
+      "id": "godie-herosasuke-r1",
+      "path": "vfx/godie-herosasuke-r1.json",
+      "hash": "d0af7e4eab73",
+      "size": 308
+    },
+    {
+      "id": "godie-herosephiroth-p0",
+      "path": "vfx/godie-herosephiroth-p0.json",
+      "hash": "8ab571a42c51",
+      "size": 1045
+    },
+    {
+      "id": "godie-herosephiroth-r0",
+      "path": "vfx/godie-herosephiroth-r0.json",
+      "hash": "ecce04c65782",
+      "size": 300
+    },
+    {
+      "id": "godie-heroshana-p0",
+      "path": "vfx/godie-heroshana-p0.json",
+      "hash": "ee01cb8f131d",
+      "size": 1070
+    },
+    {
+      "id": "godie-heroshana-p1",
+      "path": "vfx/godie-heroshana-p1.json",
+      "hash": "97c088338c62",
+      "size": 1070
+    },
+    {
+      "id": "godie-heroshana-p2",
+      "path": "vfx/godie-heroshana-p2.json",
+      "hash": "a460bfc1511b",
+      "size": 1070
+    },
+    {
+      "id": "godie-heroshana-r0",
+      "path": "vfx/godie-heroshana-r0.json",
+      "hash": "0d0daee1f0bf",
+      "size": 306
+    },
+    {
+      "id": "godie-herotoshiiemaeda-p0",
+      "path": "vfx/godie-herotoshiiemaeda-p0.json",
+      "hash": "3679603387ef",
+      "size": 1050
+    },
+    {
+      "id": "godie-herotoshiiemaeda-r0",
+      "path": "vfx/godie-herotoshiiemaeda-r0.json",
+      "hash": "c1633f3c3647",
+      "size": 304
+    },
+    {
+      "id": "godie-heroxelloss-p0",
+      "path": "vfx/godie-heroxelloss-p0.json",
+      "hash": "fbb3edc70f46",
+      "size": 981
+    },
+    {
+      "id": "godie-heroxelloss-p1",
+      "path": "vfx/godie-heroxelloss-p1.json",
+      "hash": "b958c746a9ed",
+      "size": 964
+    },
+    {
+      "id": "godie-holyawakening-p0",
+      "path": "vfx/godie-holyawakening-p0.json",
+      "hash": "74069682ab43",
+      "size": 997
+    },
+    {
+      "id": "godie-holyawakening-p1",
+      "path": "vfx/godie-holyawakening-p1.json",
+      "hash": "822308abbfc0",
+      "size": 993
+    },
+    {
+      "id": "godie-holyawakening-p2",
+      "path": "vfx/godie-holyawakening-p2.json",
+      "hash": "7fc666be3424",
+      "size": 1047
+    },
+    {
+      "id": "godie-holyawakening-p3",
+      "path": "vfx/godie-holyawakening-p3.json",
+      "hash": "8fc975bf95fb",
+      "size": 1010
+    },
+    {
+      "id": "godie-holyawakening-p4",
+      "path": "vfx/godie-holyawakening-p4.json",
+      "hash": "268218d19cdc",
+      "size": 996
+    },
+    {
+      "id": "godie-holyawakening-p5",
+      "path": "vfx/godie-holyawakening-p5.json",
+      "hash": "19b979f308a0",
+      "size": 1001
+    },
+    {
+      "id": "godie-holyawakening-r0",
+      "path": "vfx/godie-holyawakening-r0.json",
+      "hash": "c5ad47a4e5cf",
+      "size": 298
+    },
+    {
+      "id": "godie-holyawakening-r1",
+      "path": "vfx/godie-holyawakening-r1.json",
+      "hash": "2518b5a88eaa",
+      "size": 297
+    },
+    {
+      "id": "godie-holyawakening-r2",
+      "path": "vfx/godie-holyawakening-r2.json",
+      "hash": "1e531e891b48",
+      "size": 298
+    },
+    {
+      "id": "godie-holyawakening-r3",
+      "path": "vfx/godie-holyawakening-r3.json",
+      "hash": "340dcc8adfd1",
+      "size": 298
+    },
+    {
+      "id": "godie-holyawakening-r4",
+      "path": "vfx/godie-holyawakening-r4.json",
+      "hash": "59c5ed8504ca",
+      "size": 297
+    },
+    {
+      "id": "godie-holyawakening-r5",
+      "path": "vfx/godie-holyawakening-r5.json",
+      "hash": "c5a1d11e70b6",
+      "size": 298
+    },
+    {
+      "id": "godie-holyawakening-r6",
+      "path": "vfx/godie-holyawakening-r6.json",
+      "hash": "4d09e859b182",
+      "size": 298
+    },
+    {
+      "id": "godie-holyawakening-r7",
+      "path": "vfx/godie-holyawakening-r7.json",
+      "hash": "81bfcc20ba13",
+      "size": 297
+    },
+    {
+      "id": "godie-horse-p0",
+      "path": "vfx/godie-horse-p0.json",
+      "hash": "1d722dded08e",
+      "size": 1004
+    },
+    {
+      "id": "godie-lasercannonfinalred-p0",
+      "path": "vfx/godie-lasercannonfinalred-p0.json",
+      "hash": "f8c0faabaa9f",
+      "size": 974
+    },
+    {
+      "id": "godie-lasercannonfinalred-p1",
+      "path": "vfx/godie-lasercannonfinalred-p1.json",
+      "hash": "f09721ddb456",
+      "size": 974
+    },
+    {
+      "id": "godie-lasercannonfinalred-p2",
+      "path": "vfx/godie-lasercannonfinalred-p2.json",
+      "hash": "e42e239037c5",
+      "size": 1029
+    },
+    {
+      "id": "godie-lasercannonfinalred-p3",
+      "path": "vfx/godie-lasercannonfinalred-p3.json",
+      "hash": "07ff3ff44658",
+      "size": 961
+    },
+    {
+      "id": "godie-lasercannonfinalred-p4",
+      "path": "vfx/godie-lasercannonfinalred-p4.json",
+      "hash": "817b154cbcc9",
+      "size": 1029
+    },
+    {
+      "id": "godie-lasercannonfinalred-p5",
+      "path": "vfx/godie-lasercannonfinalred-p5.json",
+      "hash": "8a5befee0513",
+      "size": 1012
+    },
+    {
+      "id": "godie-lasercannonfinalred-p6",
+      "path": "vfx/godie-lasercannonfinalred-p6.json",
+      "hash": "b168e3b882d0",
+      "size": 1014
+    },
+    {
+      "id": "godie-lasercannonfinalred-p7",
+      "path": "vfx/godie-lasercannonfinalred-p7.json",
+      "hash": "82fdec767ffd",
+      "size": 974
+    },
+    {
+      "id": "godie-lavabreathdamage-p0",
+      "path": "vfx/godie-lavabreathdamage-p0.json",
+      "hash": "cbd2f2276079",
+      "size": 1000
+    },
+    {
+      "id": "godie-lightningnova-p0",
+      "path": "vfx/godie-lightningnova-p0.json",
+      "hash": "c84d23367bff",
+      "size": 1043
+    },
+    {
+      "id": "godie-lightningnova-p1",
+      "path": "vfx/godie-lightningnova-p1.json",
+      "hash": "b610adc7dab4",
+      "size": 1041
+    },
+    {
+      "id": "godie-lightningtornado-p0",
+      "path": "vfx/godie-lightningtornado-p0.json",
+      "hash": "f1550c29f77c",
+      "size": 994
+    },
+    {
+      "id": "godie-lightningtornado-p1",
+      "path": "vfx/godie-lightningtornado-p1.json",
+      "hash": "b18e2df1f0f6",
+      "size": 1045
+    },
+    {
+      "id": "godie-lightningtornado-p10",
+      "path": "vfx/godie-lightningtornado-p10.json",
+      "hash": "64639c1c15ed",
+      "size": 1046
+    },
+    {
+      "id": "godie-lightningtornado-p11",
+      "path": "vfx/godie-lightningtornado-p11.json",
+      "hash": "57dd41a9acf7",
+      "size": 1035
+    },
+    {
+      "id": "godie-lightningtornado-p12",
+      "path": "vfx/godie-lightningtornado-p12.json",
+      "hash": "ff08b0cf0e13",
+      "size": 1046
+    },
+    {
+      "id": "godie-lightningtornado-p13",
+      "path": "vfx/godie-lightningtornado-p13.json",
+      "hash": "fb620f3afec9",
+      "size": 1031
+    },
+    {
+      "id": "godie-lightningtornado-p2",
+      "path": "vfx/godie-lightningtornado-p2.json",
+      "hash": "d1213b32bf65",
+      "size": 1043
+    },
+    {
+      "id": "godie-lightningtornado-p3",
+      "path": "vfx/godie-lightningtornado-p3.json",
+      "hash": "7e1ed6267ed9",
+      "size": 1034
+    },
+    {
+      "id": "godie-lightningtornado-p4",
+      "path": "vfx/godie-lightningtornado-p4.json",
+      "hash": "a667e6ed1520",
+      "size": 1049
+    },
+    {
+      "id": "godie-lightningtornado-p5",
+      "path": "vfx/godie-lightningtornado-p5.json",
+      "hash": "27614ad2e409",
+      "size": 1045
+    },
+    {
+      "id": "godie-lightningtornado-p6",
+      "path": "vfx/godie-lightningtornado-p6.json",
+      "hash": "80494f7fa403",
+      "size": 1033
+    },
+    {
+      "id": "godie-lightningtornado-p7",
+      "path": "vfx/godie-lightningtornado-p7.json",
+      "hash": "5d601b05f6a4",
+      "size": 1034
+    },
+    {
+      "id": "godie-lightningtornado-p8",
+      "path": "vfx/godie-lightningtornado-p8.json",
+      "hash": "b31b0c8c7406",
+      "size": 1045
+    },
+    {
+      "id": "godie-lightningtornado-p9",
+      "path": "vfx/godie-lightningtornado-p9.json",
+      "hash": "e377ca00f3a3",
+      "size": 1033
+    },
+    {
+      "id": "godie-linainvers-p0",
+      "path": "vfx/godie-linainvers-p0.json",
+      "hash": "bc11aef8e193",
+      "size": 993
+    },
+    {
+      "id": "godie-linainvers-p1",
+      "path": "vfx/godie-linainvers-p1.json",
+      "hash": "41eb1c89fa6d",
+      "size": 984
+    },
+    {
+      "id": "godie-linainvers-p2",
+      "path": "vfx/godie-linainvers-p2.json",
+      "hash": "4d0dc8d0a929",
+      "size": 992
+    },
+    {
+      "id": "godie-lubu-p0",
+      "path": "vfx/godie-lubu-p0.json",
+      "hash": "443a04acf250",
+      "size": 1058
+    },
+    {
+      "id": "godie-lubu-p1",
+      "path": "vfx/godie-lubu-p1.json",
+      "hash": "d6bd3b4b22c7",
+      "size": 1059
+    },
+    {
+      "id": "godie-lubu-p2",
+      "path": "vfx/godie-lubu-p2.json",
+      "hash": "a0b0601134af",
+      "size": 1059
+    },
+    {
+      "id": "godie-lubu-r0",
+      "path": "vfx/godie-lubu-r0.json",
+      "hash": "2f1b5b06740f",
+      "size": 291
+    },
+    {
+      "id": "godie-ma-p0",
+      "path": "vfx/godie-ma-p0.json",
+      "hash": "6c48ae0628df",
+      "size": 1018
+    },
+    {
+      "id": "godie-ma-p1",
+      "path": "vfx/godie-ma-p1.json",
+      "hash": "4da358eb33e9",
+      "size": 923
+    },
+    {
+      "id": "godie-magical-sword-p0",
+      "path": "vfx/godie-magical-sword-p0.json",
+      "hash": "92f61025a63f",
+      "size": 1041
+    },
+    {
+      "id": "godie-meteor-p0",
+      "path": "vfx/godie-meteor-p0.json",
+      "hash": "372865b6b36d",
+      "size": 1036
+    },
+    {
+      "id": "godie-meteor-p1",
+      "path": "vfx/godie-meteor-p1.json",
+      "hash": "4e259e80df2c",
+      "size": 980
+    },
+    {
+      "id": "godie-meteor-p2",
+      "path": "vfx/godie-meteor-p2.json",
+      "hash": "063ac9b8866f",
+      "size": 1035
+    },
+    {
+      "id": "godie-meteor-p3",
+      "path": "vfx/godie-meteor-p3.json",
+      "hash": "a0e337eeeaf0",
+      "size": 1007
+    },
+    {
+      "id": "godie-meteor-p4",
+      "path": "vfx/godie-meteor-p4.json",
+      "hash": "8a5152547ef1",
+      "size": 1076
+    },
+    {
+      "id": "godie-meteor-p5",
+      "path": "vfx/godie-meteor-p5.json",
+      "hash": "472dd4b0b1df",
+      "size": 1007
+    },
+    {
+      "id": "godie-meteor-p6",
+      "path": "vfx/godie-meteor-p6.json",
+      "hash": "9ee4b68c066f",
+      "size": 1032
+    },
+    {
+      "id": "godie-meteor-p7",
+      "path": "vfx/godie-meteor-p7.json",
+      "hash": "e99bf332eb19",
+      "size": 1003
+    },
+    {
+      "id": "godie-mfls-r0",
+      "path": "vfx/godie-mfls-r0.json",
+      "hash": "2d88c7e35811",
+      "size": 299
+    },
+    {
+      "id": "godie-mfls-r1",
+      "path": "vfx/godie-mfls-r1.json",
+      "hash": "9fba5119d8b6",
+      "size": 299
+    },
+    {
+      "id": "godie-minitypeflame-p0",
+      "path": "vfx/godie-minitypeflame-p0.json",
+      "hash": "ffcfaa32c9ad",
+      "size": 1023
+    },
+    {
+      "id": "godie-minitypeflame-p1",
+      "path": "vfx/godie-minitypeflame-p1.json",
+      "hash": "42e234fa7f35",
+      "size": 1007
+    },
+    {
+      "id": "godie-negi-p0",
+      "path": "vfx/godie-negi-p0.json",
+      "hash": "afe569f952c5",
+      "size": 1059
+    },
+    {
+      "id": "godie-negi-p1",
+      "path": "vfx/godie-negi-p1.json",
+      "hash": "52d08b0e1abb",
+      "size": 1059
+    },
+    {
+      "id": "godie-netherstrike-p0",
+      "path": "vfx/godie-netherstrike-p0.json",
+      "hash": "2c920857a948",
+      "size": 1035
+    },
+    {
+      "id": "godie-netherstrike-p1",
+      "path": "vfx/godie-netherstrike-p1.json",
+      "hash": "3361f2588c3c",
+      "size": 997
+    },
+    {
+      "id": "godie-netherstrike-p2",
+      "path": "vfx/godie-netherstrike-p2.json",
+      "hash": "b4c644a046cf",
+      "size": 987
+    },
+    {
+      "id": "godie-netherstrike-p3",
+      "path": "vfx/godie-netherstrike-p3.json",
+      "hash": "cd87ab5a1cbb",
+      "size": 991
+    },
+    {
+      "id": "godie-netherstrike-p4",
+      "path": "vfx/godie-netherstrike-p4.json",
+      "hash": "a3eda5957f09",
+      "size": 985
+    },
+    {
+      "id": "godie-niya-p0",
+      "path": "vfx/godie-niya-p0.json",
+      "hash": "f656e5ba5d11",
+      "size": 1034
+    },
+    {
+      "id": "godie-niya-p1",
+      "path": "vfx/godie-niya-p1.json",
+      "hash": "590ab4b7aa3e",
+      "size": 1064
+    },
+    {
+      "id": "godie-niya-r0",
+      "path": "vfx/godie-niya-r0.json",
+      "hash": "cc842d58e3b0",
+      "size": 290
+    },
+    {
+      "id": "godie-oblivionaura-p0",
+      "path": "vfx/godie-oblivionaura-p0.json",
+      "hash": "61fc5e8a2488",
+      "size": 992
+    },
+    {
+      "id": "godie-picacugy-r0",
+      "path": "vfx/godie-picacugy-r0.json",
+      "hash": "7eb2b609f262",
+      "size": 295
+    },
+    {
+      "id": "godie-renaryugu2-p0",
+      "path": "vfx/godie-renaryugu2-p0.json",
+      "hash": "dad06c5d3f4b",
+      "size": 1041
+    },
+    {
+      "id": "godie-renaryugu2-p1",
+      "path": "vfx/godie-renaryugu2-p1.json",
+      "hash": "b4368eeec362",
+      "size": 1067
+    },
+    {
+      "id": "godie-renaryugu2-r0",
+      "path": "vfx/godie-renaryugu2-r0.json",
+      "hash": "fcc9a65d2310",
+      "size": 302
+    },
+    {
+      "id": "godie-sd2-r0",
+      "path": "vfx/godie-sd2-r0.json",
+      "hash": "271e02536dfe",
+      "size": 300
+    },
+    {
+      "id": "godie-sd2-r1",
+      "path": "vfx/godie-sd2-r1.json",
+      "hash": "cdfabd8d2399",
+      "size": 267
+    },
+    {
+      "id": "godie-sd2-r2",
+      "path": "vfx/godie-sd2-r2.json",
+      "hash": "439c53a90f96",
+      "size": 267
+    },
+    {
+      "id": "godie-sd2-r3",
+      "path": "vfx/godie-sd2-r3.json",
+      "hash": "f0ad5191fba0",
+      "size": 267
+    },
+    {
+      "id": "godie-sesshomaru-p0",
+      "path": "vfx/godie-sesshomaru-p0.json",
+      "hash": "34d765fcd8a7",
+      "size": 1044
+    },
+    {
+      "id": "godie-sesshomaru-r0",
+      "path": "vfx/godie-sesshomaru-r0.json",
+      "hash": "a75ddb0cb3ef",
+      "size": 301
+    },
+    {
+      "id": "godie-sonicbreathstream-p0",
+      "path": "vfx/godie-sonicbreathstream-p0.json",
+      "hash": "f78ad1c87e6a",
+      "size": 1024
+    },
+    {
+      "id": "godie-sonicbreathstream-p1",
+      "path": "vfx/godie-sonicbreathstream-p1.json",
+      "hash": "eba58ad7a351",
+      "size": 1024
+    },
+    {
+      "id": "godie-sonicbreathstream-p2",
+      "path": "vfx/godie-sonicbreathstream-p2.json",
+      "hash": "ae8a876cb712",
+      "size": 1028
+    },
+    {
+      "id": "godie-supershinythingy-p0",
+      "path": "vfx/godie-supershinythingy-p0.json",
+      "hash": "0b4b3f940092",
+      "size": 1016
+    },
+    {
+      "id": "godie-supershinythingy-p1",
+      "path": "vfx/godie-supershinythingy-p1.json",
+      "hash": "8f074ba87585",
+      "size": 1053
+    },
+    {
+      "id": "godie-supershinythingy-p2",
+      "path": "vfx/godie-supershinythingy-p2.json",
+      "hash": "4e254f7ef8bd",
+      "size": 1047
+    },
+    {
+      "id": "godie-supershinythingy-r0",
+      "path": "vfx/godie-supershinythingy-r0.json",
+      "hash": "dcecf5a671a5",
+      "size": 295
+    },
+    {
+      "id": "godie-supershinythingy-r1",
+      "path": "vfx/godie-supershinythingy-r1.json",
+      "hash": "bf03591290e1",
+      "size": 295
+    },
+    {
+      "id": "godie-supershinythingy-r2",
+      "path": "vfx/godie-supershinythingy-r2.json",
+      "hash": "f0e1e8e10ee6",
+      "size": 295
+    },
+    {
+      "id": "godie-tectonicfury-p0",
+      "path": "vfx/godie-tectonicfury-p0.json",
+      "hash": "40b885c876da",
+      "size": 969
+    },
+    {
+      "id": "godie-tectonicfury-p1",
+      "path": "vfx/godie-tectonicfury-p1.json",
+      "hash": "157be1caf3f9",
+      "size": 1045
+    },
+    {
+      "id": "godie-windmissle-r0",
+      "path": "vfx/godie-windmissle-r0.json",
+      "hash": "180072cc9b93",
+      "size": 291
+    },
+    {
+      "id": "godie-windmissle-r1",
+      "path": "vfx/godie-windmissle-r1.json",
+      "hash": "a4dd3ddc81bc",
+      "size": 292
+    },
+    {
+      "id": "godie-windmissle-r2",
+      "path": "vfx/godie-windmissle-r2.json",
+      "hash": "736620d02606",
+      "size": 291
+    },
+    {
+      "id": "godie-ye-wuqi1-p0",
+      "path": "vfx/godie-ye-wuqi1-p0.json",
+      "hash": "742b368b01f6",
+      "size": 1031
+    },
+    {
+      "id": "godie-ye-wuqi1-p1",
+      "path": "vfx/godie-ye-wuqi1-p1.json",
+      "hash": "650a8338a88a",
+      "size": 1035
+    },
+    {
+      "id": "godie-ye-wuqi1-p2",
+      "path": "vfx/godie-ye-wuqi1-p2.json",
+      "hash": "b2563fae304e",
+      "size": 1035
+    },
+    {
+      "id": "godie-ye-wuqi1-r0",
+      "path": "vfx/godie-ye-wuqi1-r0.json",
+      "hash": "5d60f59817cd",
+      "size": 291
+    }
+  ]
+}

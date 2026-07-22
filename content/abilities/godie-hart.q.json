@@ -1,0 +1,53 @@
+{
+  "id": "godie-hart.q",
+  "name": "01-01 凶斬",
+  "description": "[主動攻擊]\n25秒冷卻時間\n\n使用大刀在敵人身上刻下凶字造成150傷害，並且使人暫時無法行動1秒。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 5,
+  "cooldown": [
+    25.0,
+    25.0,
+    25.0,
+    25.0,
+    25.0
+  ],
+  "manaCost": [
+    60.0,
+    80.0,
+    100.0,
+    120.0,
+    120.0
+  ],
+  "range": 8.25,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          150.0,
+          220.0,
+          290.0,
+          360.0,
+          360.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow25",
+      "duration": 1.0,
+      "moveSpeedMult": 0.6
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

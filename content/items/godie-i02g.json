@@ -1,0 +1,28 @@
+{
+  "id": "godie-i02g",
+  "schema": "item@1",
+  "name": "奇美拉之翼(電腦)",
+  "description": "技能冷卻時間：0秒\n\n效能\n傳送到同盟\n攻擊力+7.7\n生命+154\n魔力+93\n\n解說\n有了這項道具以後，高鐵和航空公司都陸續倒閉了。",
+  "cost": 1200,
+  "tier": 2,
+  "tags": [
+    "wc3-import"
+  ],
+  "modifiers": [
+    {
+      "stat": "maxHealth",
+      "op": "flat",
+      "value": 154
+    },
+    {
+      "stat": "ad",
+      "op": "flat",
+      "value": 7.7
+    },
+    {
+      "stat": "maxMana",
+      "op": "flat",
+      "value": 93
+    }
+  ]
+}

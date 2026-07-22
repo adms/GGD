@@ -1,0 +1,18 @@
+{
+  "id": "godie-i05t",
+  "schema": "item@1",
+  "name": "定情戒指",
+  "description": "效能\n每秒回復生命+3.28\n\n解說\n號稱可以定情用的戒指，但常常出現在正妹的垃圾桶。",
+  "cost": 300,
+  "tier": 1,
+  "tags": [
+    "wc3-import"
+  ],
+  "modifiers": [
+    {
+      "stat": "healthRegen",
+      "op": "flat",
+      "value": 3.28
+    }
+  ]
+}

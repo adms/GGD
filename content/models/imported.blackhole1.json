@@ -1,0 +1,15 @@
+{
+  "id": "imported.blackhole1",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/blackhole1.glb",
+  "scale": 5.1051,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand - 2",
+    "run": "Stand - 2",
+    "attack": "Stand - 2",
+    "cast": "Stand - 2",
+    "hurt": "Stand - 2",
+    "death": "Death"
+  }
+}

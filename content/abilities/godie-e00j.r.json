@@ -1,0 +1,41 @@
+{
+  "id": "godie-e00j.r",
+  "name": "95-04 藍色戰氣一百重天",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n人性本善，當戰氣運轉到最高時，便能驅逐人心中的邪惡，將他的心靈淨化成剛出生純真的樣子，淨化目標並給予600點傷害，同時移除目標300點法力。\n\n《龍氣》 - 揮拳同時用力踏擊地面，造成範圍暈眩0.5秒。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    140.0,
+    220.0,
+    300.0
+  ],
+  "range": 3.67,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          0.0,
+          5.0,
+          5.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.015
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

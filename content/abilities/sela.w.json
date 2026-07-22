@@ -1,0 +1,57 @@
+{
+  "id": "sela.w",
+  "schema": "ability@1",
+  "name": "Cinder Ward",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 5,
+  "cooldown": [
+    16,
+    15,
+    14,
+    13,
+    12
+  ],
+  "manaCost": [
+    60,
+    65,
+    70,
+    75,
+    80
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "shield",
+      "amount": {
+        "flat": 40,
+        "perRank": [
+          40,
+          70,
+          100,
+          130,
+          160
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.5
+          }
+        ]
+      },
+      "duration": 3
+    },
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ap",
+          "op": "flat",
+          "value": 25
+        }
+      ],
+      "duration": 3
+    }
+  ],
+  "vfxKey": "fx.cinder-ward"
+}

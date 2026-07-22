@@ -1,0 +1,47 @@
+{
+  "id": "godie-e015.q",
+  "schema": "ability@1",
+  "name": "94-01 北斗爆橘拳",
+  "description": "[主動攻擊]\n25秒冷卻時間\n\n北斗神拳奧義-北斗爆橘拳，使盡全力將橘子捏爆，讓敵人驚嚇受到自身力量*2+100傷害，而爆出來的橘子汁可以恢復生命100點。\n在恰恰狀態下傷害加成(力量*1.5)",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 5,
+  "cooldown": [
+    25.0,
+    25.0,
+    25.0,
+    25.0,
+    8.0
+  ],
+  "manaCost": [
+    50.0,
+    100.0,
+    150.0,
+    325.0,
+    85.0
+  ],
+  "range": 2.75,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          80,
+          120,
+          160,
+          200,
+          240
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true
+}

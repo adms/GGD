@@ -1,0 +1,44 @@
+{
+  "id": "godie-e012.q",
+  "name": "47-01 飛龍閃",
+  "description": "[主動攻擊]\n35秒冷卻時間\n\n高速拔刀使刀柄飛向對手造成150點傷害並擊暈1.0秒的牽制劍術，施展範圍400。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    35.0,
+    35.0,
+    35.0,
+    35.0
+  ],
+  "manaCost": [
+    50.0,
+    80.0,
+    110.0,
+    140.0
+  ],
+  "range": 7.33,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          150.0,
+          250.0,
+          350.0,
+          450.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

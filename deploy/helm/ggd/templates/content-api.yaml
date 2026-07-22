@@ -1,0 +1,74 @@
+{{- /*
+DEV ONLY — Fastify content CRUD/validate/SSE. Gated twice:
+  1. this template renders nothing unless dev.enabled=true (infra-05)
+  2. the app itself refuses to boot when APP_ENV=production (plan §2)
+*/ -}}
+{{- if .Values.dev.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-content-api
+  labels:
+    {{- include "ggd.labels" . | nindent 4 }}
+    app.kubernetes.io/name: content-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "ggd.selector" (dict "root" . "name" "content-api") | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "ggd.labels" . | nindent 8 }}
+        {{- include "ggd.selector" (dict "root" . "name" "content-api") | nindent 8 }}
+    spec:
+      securityContext:
+        runAsNonRoot: true
+      containers:
+        - name: content-api
+          image: ggd-content-api:dev
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8787
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-config
+          # content-api is the ONLY writer of content/ (dev workflow), hence RW.
+          volumeMounts:
+            - name: content
+              mountPath: /srv/content
+          readinessProbe:
+            tcpSocket:
+              port: http
+            initialDelaySeconds: 2
+            periodSeconds: 5
+      volumes:
+        - name: content
+          {{- if .Values.content.hostPath }}
+          hostPath:
+            path: {{ .Values.content.hostPath | quote }}
+            type: Directory
+          {{- else if .Values.content.existingClaim }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.content.existingClaim | quote }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-content-api
+  labels:
+    {{- include "ggd.labels" . | nindent 4 }}
+    app.kubernetes.io/name: content-api
+spec:
+  type: ClusterIP
+  selector:
+    {{- include "ggd.selector" (dict "root" . "name" "content-api") | nindent 4 }}
+  ports:
+    - name: http
+      port: 8787
+      targetPort: http
+{{- end }}

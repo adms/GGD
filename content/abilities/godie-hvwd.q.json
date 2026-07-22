@@ -1,0 +1,36 @@
+{
+  "id": "godie-hvwd.q",
+  "name": "02-01 破魔之箭",
+  "description": "[法球效應]\n0秒冷卻時間\n\n桔梗擁有極強力的淨化能力，使敵人受到25點傷害的同時流失法力。\n本技能為法球效應",
+  "slot": "Q",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    12.0,
+    12.0,
+    12.0,
+    12.0
+  ],
+  "manaCost": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "flat",
+          "value": 30
+        }
+      ],
+      "duration": 12.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

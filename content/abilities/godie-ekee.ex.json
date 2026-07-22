@@ -1,0 +1,30 @@
+{
+  "id": "godie-ekee.ex",
+  "name": "93-002 二一",
+  "description": "[主動攻擊]\n80秒冷卻時間\n\n發出毀滅性的判決 -二一退學，目標所有技能點將重置，並且降低等級3等。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    80.0
+  ],
+  "manaCost": [
+    500.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

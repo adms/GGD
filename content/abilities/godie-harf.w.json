@@ -1,0 +1,44 @@
+{
+  "id": "godie-harf.w",
+  "name": "26-02 亂入",
+  "description": "[被動]\n0秒冷卻時間\n\n攻擊時有25%機率一定會命中且附加額外50點的無言傷害。",
+  "slot": "W",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    12.0,
+    12.0,
+    12.0,
+    12.0
+  ],
+  "manaCost": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          0.0,
+          25.0,
+          25.0,
+          25.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.075
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

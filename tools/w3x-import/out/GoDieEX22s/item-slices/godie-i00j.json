@@ -1,0 +1,40 @@
+{
+  "contentId": "godie-i00j",
+  "nameZh": "奇門盾甲",
+  "gold": 6550,
+  "kind": "effect",
+  "description": "傳說\r\n效能\r\n生命+777\r\n每秒回復生命+16\r\n50%格擋100點傷害\r\n\r\n解說\r\n傳說中飛鼠先生的神秘中國老師，擅長施展高超的道術，在飛鼠先生通過仙人試練轉生以後，贈與一項奇幻的寶具，曾在一次重要戰爭中扭轉局面，但事後也被毀壞。",
+  "abilities": [
+    {
+      "rawcode": "A0MK",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A0KI",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A0US",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {
+        "1": {
+          "1": 50.0
+        },
+        "2": {
+          "1": 1.0
+        },
+        "3": {
+          "1": 100.0
+        }
+      }
+    }
+  ]
+}

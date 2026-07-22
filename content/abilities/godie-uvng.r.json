@@ -1,0 +1,39 @@
+{
+  "id": "godie-uvng.r",
+  "name": "38-04 黑龍波吸收",
+  "description": "[輔助]\n60秒冷卻時間\n\n吸收黑龍波的妖力，使支配魔界火焰的妖術師獲得爆發性的能力成長，但是會持續消耗魔力10點。\n增加100%傷害，每使用一次敏捷永久增加1點，持續10秒。",
+  "slot": "R",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    100.0,
+    200.0,
+    300.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 1.0
+        },
+        {
+          "stat": "manaRegen",
+          "op": "flat",
+          "value": -10
+        }
+      ],
+      "duration": 10.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

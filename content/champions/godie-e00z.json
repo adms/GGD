@@ -1,0 +1,198 @@
+{
+  "id": "godie-e00z",
+  "schema": "champion@1",
+  "name": "戰國刺客Azumi - 安云",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "imported.herokunoichi",
+  "baseStats": {
+    "maxHealth": 460,
+    "healthRegen": 1.1,
+    "maxMana": 304,
+    "manaRegen": 1.48,
+    "ad": 31,
+    "ap": 0,
+    "armor": 8,
+    "mr": 28,
+    "as": 0.56,
+    "ms": 8.0,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 28,
+    "healthRegen": 0.07,
+    "maxMana": 19,
+    "manaRegen": 0.06,
+    "ad": 2.9,
+    "armor": 0.9,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-e00z.q",
+      "name": "19-01 斷末",
+      "description": "[被動]\n0秒冷卻時間\n\n安云從小就被訓練一擊就能斬殺敵人不留活口，因此斬殺時有8%的機率，造成正常攻擊2.2倍。",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "critChance",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "duration": 6.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "W": {
+      "id": "godie-e00z.w",
+      "name": "19-02 迴切",
+      "description": "[輔助]\n60秒冷卻時間\n\n安云能在各種角度流利的旋轉刀身砍殺敵人，並能感知敵意抵擋負性指定法術，給予周圍敵人75點的傷害，可直接於原地施展。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        50.0,
+        70.0,
+        90.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "value": 0.5
+            }
+          ],
+          "duration": 6.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "E": {
+      "id": "godie-e00z.e",
+      "name": "19-03 瞬切百殺",
+      "description": "[主動攻擊]\n60秒冷卻時間\n\n當安云開始殺戮時，刀子動的比反射神經還快，將會對附近的敵人進行斬殺，給予(40+敏捷*1)傷害，共八次斬殺。\n\n(迴切1秒內瞬切百殺附加力量*0.5傷害)",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        75.0,
+        150.0,
+        225.0,
+        300.0
+      ],
+      "range": 8.25,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              40.0,
+              90.0,
+              140.0,
+              190.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.57
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "radius": 6.0
+    },
+    "R": {
+      "id": "godie-e00z.r",
+      "name": "19-04 幻影暗殺",
+      "description": "[被動]\n0秒冷卻時間\n\n當安云站在敵方背後攻擊的時候，能發揮刺客暗殺的實力，給予額外(敏捷*1)+100點傷害。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "critChance",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "duration": 6.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ],
+  "exAbility": "godie-e00z.ex",
+  "icon": "assets/icons/champions/godie-e00z.png"
+}

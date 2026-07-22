@@ -1,0 +1,83 @@
+{
+  "id": "godie-lightningtornado-p9",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.05,
+    "angleDeg": 90.0
+  },
+  "mode": "continuous",
+  "rate": 10.0,
+  "lifetimeSec": {
+    "min": 1.0,
+    "max": 1.0
+  },
+  "size": {
+    "start": 0.556,
+    "end": 0.556
+  },
+  "color": {
+    "start": [
+      1.0,
+      1.0,
+      1.0,
+      0.294
+    ],
+    "end": [
+      1.0,
+      1.0,
+      1.0,
+      0.294
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.294
+      ]
+    ],
+    [
+      0.3,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.843
+      ]
+    ],
+    [
+      1.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.294
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.556
+    ],
+    [
+      0.3,
+      1.111
+    ],
+    [
+      1,
+      0.556
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/spark_04.png",
+  "speed": {
+    "min": 5.4449,
+    "max": 5.6671
+  },
+  "anchorBone": "evilbox40"
+}

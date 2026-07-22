@@ -1,0 +1,15 @@
+{
+  "id": "imported.minitypeflame",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/minitypeflame.glb",
+  "scale": 1.4744,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "stand",
+    "run": "stand",
+    "attack": "stand",
+    "cast": "stand",
+    "hurt": "stand",
+    "death": "death"
+  }
+}

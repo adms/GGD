@@ -1,0 +1,34 @@
+{
+  "id": "godie-i02d",
+  "schema": "item@1",
+  "name": "消失的密室",
+  "description": "作者威能超神器\n效能\n我超強\n攻擊力+1.1\n生命+23\n魔力+14\n移動速度+0.339\n你追不到我\n你打不著我\n你轟不痛我\n我有神出鬼沒的大蟒蛇(挺\n\n解說\n傳說等級的內褲，可刺激穿戴者使速度激增。除此之外，密室裡頭神出鬼沒的大蟒蛇也會趁虛擊暈敵人，是全天下的男人都想要擁有一件的夢幻珍寶！",
+  "cost": 300,
+  "tier": 1,
+  "tags": [
+    "wc3-import"
+  ],
+  "modifiers": [
+    {
+      "stat": "maxHealth",
+      "op": "flat",
+      "value": 23
+    },
+    {
+      "stat": "ad",
+      "op": "flat",
+      "value": 1.1
+    },
+    {
+      "stat": "maxMana",
+      "op": "flat",
+      "value": 14
+    },
+    {
+      "stat": "ms",
+      "op": "flat",
+      "value": 0.339
+    }
+  ],
+  "icon": "assets/icons/items/godie-i02d.png"
+}

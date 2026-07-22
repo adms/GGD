@@ -1,0 +1,32 @@
+{
+  "id": "godie-etyr.ex",
+  "name": "14-002 魔力激發",
+  "description": "[靈氣]\n0秒冷卻時間\n\n打開魔力封印使得木乃香自身的魔力回復到達顛峰，每秒獲得7%的瑪那回復，使用東風繪扇、南風末廣有效範圍也能增加。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0.0
+  ],
+  "manaCost": [
+    0.0
+  ],
+  "range": 0,
+  "effects": [],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1",
+  "passive": {
+    "name": "14-002 魔力激發",
+    "ranks": [
+      {
+        "modifiers": [
+          {
+            "stat": "manaRegen",
+            "op": "flat",
+            "value": 0.07
+          }
+        ]
+      }
+    ]
+  }
+}

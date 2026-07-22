@@ -1,0 +1,40 @@
+{
+  "contentId": "godie-i040",
+  "nameZh": "破甲槍",
+  "gold": 8000,
+  "kind": "effect",
+  "description": "神器\r\n施展需求魔力：200點\r\n技能冷卻時間：45秒\r\n效能：\r\n使目標瞬間減少10點裝甲，持續7秒\r\n攻擊力+40\r\n攻擊時削弱目標裝甲12點(法球)\r\n\r\n歷史\r\n曾和霸王槍同為霸王破甲槍的一部分，與僅剩力量的霸王槍不同的是，破甲槍上仍然附帶著些微的風系魔法，每次攻擊都會破除對手的防禦。",
+  "abilities": [
+    {
+      "rawcode": "A0D7",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {
+        "3": {
+          "1": 10
+        },
+        "4": {
+          "1": 0.0
+        },
+        "5": {
+          "1": 0.0
+        }
+      }
+    },
+    {
+      "rawcode": "A0L0",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A0O3",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    }
+  ]
+}

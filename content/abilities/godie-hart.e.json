@@ -1,0 +1,98 @@
+{
+  "id": "godie-hart.e",
+  "name": "01-03 畫龍點睛",
+  "description": "[主動攻擊]\n45秒冷卻時間\n\n快速迴旋巨劍產生龍捲風砍殺敵人造成450點傷害，並降低目標裝甲3點，持續5秒。",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "manaCost": [
+    120.0,
+    180.0,
+    240.0,
+    300.0
+  ],
+  "range": 3.67,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          450.0,
+          600.0,
+          750.0,
+          900.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "armor",
+          "op": "flat",
+          "value": -3
+        }
+      ],
+      "duration": 5.0,
+      "perRank": [
+        {
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": -3
+            }
+          ],
+          "duration": 5.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": -6
+            }
+          ],
+          "duration": 5.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": -9
+            }
+          ],
+          "duration": 5.0
+        },
+        {
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": -12
+            }
+          ],
+          "duration": 5.0
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "radius": 6.42
+}

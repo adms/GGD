@@ -1,0 +1,62 @@
+{
+  "id": "imported.heroryuk",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/heroryuk.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand - 1",
+    "run": "Walk",
+    "attack": "Attack - 1",
+    "cast": "Spell",
+    "hurt": "Stand - 1",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Hand Right": {
+      "x": 0.1467,
+      "y": 0.9449,
+      "z": -0.3786
+    },
+    "Hand Left": {
+      "x": 0.1467,
+      "y": 0.9449,
+      "z": 0.3786
+    },
+    "Chest": {
+      "x": -0.0252,
+      "y": 1.4508,
+      "z": -0.0
+    },
+    "Foot Right": {
+      "x": 0.1774,
+      "y": 0.2279,
+      "z": -0.2212
+    },
+    "Foot Left": {
+      "x": 0.1774,
+      "y": 0.2279,
+      "z": -0.2212
+    },
+    "Origin": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": -0.0
+    },
+    "Overhead": {
+      "x": 0.2378,
+      "y": 1.8994,
+      "z": -0.0
+    },
+    "Weapon": {
+      "x": 0.0937,
+      "y": 0.7123,
+      "z": -0.3536
+    },
+    "Head -": {
+      "x": 0.2378,
+      "y": 1.5536,
+      "z": -0.0
+    }
+  }
+}

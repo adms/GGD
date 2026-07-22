@@ -1,0 +1,62 @@
+{
+  "id": "imported.herohimurakenshin",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/herohimurakenshin.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Spell",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Hand Right": {
+      "x": -0.003,
+      "y": 0.8586,
+      "z": 0.5091
+    },
+    "Weapon": {
+      "x": 1.1188,
+      "y": 0.8623,
+      "z": -0.4727
+    },
+    "Hand Left": {
+      "x": 0.0251,
+      "y": 0.8617,
+      "z": -0.5242
+    },
+    "Head -": {
+      "x": 0.0431,
+      "y": 1.6668,
+      "z": -0.0011
+    },
+    "Chest": {
+      "x": -0.031,
+      "y": 1.0633,
+      "z": -0.0018
+    },
+    "Foot Right": {
+      "x": 0.0178,
+      "y": 0.1822,
+      "z": 0.2103
+    },
+    "Foot Left": {
+      "x": 0.0206,
+      "y": 0.181,
+      "z": -0.2342
+    },
+    "Origin": {
+      "x": 0.0,
+      "y": -0.002,
+      "z": 0.0
+    },
+    "Overhead": {
+      "x": 0.0035,
+      "y": 1.6906,
+      "z": -0.0011
+    }
+  }
+}

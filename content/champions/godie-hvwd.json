@@ -1,0 +1,213 @@
+{
+  "id": "godie-hvwd",
+  "schema": "champion@1",
+  "name": "除魔巫女 - 桔梗",
+  "description": "故事：\n原本是四魂之玉的守護巫女，為了守護世界的和平，只好再度轉生修練來對抗去死團的怨念。\n(出自:犬夜叉)\n\n推薦玩家 : 牽制輔助\n上手度 : 易\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.40\n智慧 + 1.80\n基礎跑速 295\n\n可學習的技能：\n破魔之箭、明鏡止水、魂飛魄散、百鬼夜行",
+  "role": "marksman",
+  "attackType": "ranged",
+  "modelKey": "imported.kikyou",
+  "baseStats": {
+    "maxHealth": 480,
+    "healthRegen": 1.15,
+    "maxMana": 256,
+    "manaRegen": 1.32,
+    "ad": 31,
+    "ap": 0,
+    "armor": 10,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.7,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 9.2
+  },
+  "growth": {
+    "maxHealth": 36,
+    "healthRegen": 0.09,
+    "maxMana": 22,
+    "manaRegen": 0.07,
+    "ad": 1.8,
+    "armor": 0.7,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-hvwd.q",
+      "name": "02-01 破魔之箭",
+      "description": "[法球效應]\n0秒冷卻時間\n\n桔梗擁有極強力的淨化能力，使敵人受到25點傷害的同時流失法力。\n本技能為法球效應",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ad",
+              "op": "flat",
+              "value": 30
+            }
+          ],
+          "duration": 12.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "W": {
+      "id": "godie-hvwd.w",
+      "name": "02-02 明鏡止水",
+      "description": "[靈氣]\n0秒冷卻時間\n\n明鏡止水可以讓桔梗的弓箭威力有7%的遠距攻擊傷害加成。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ad",
+              "op": "pctAdd",
+              "value": 0.07
+            }
+          ],
+          "duration": 12.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "E": {
+      "id": "godie-hvwd.e",
+      "name": "02-03 魂飛魄散",
+      "description": "[主動攻擊]\n60秒冷卻時間\n\n桔梗將死魂收集的妖力爆發噴射，造成一直線上的敵人350點傷害。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        120.0,
+        185.0,
+        250.0,
+        315.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              350.0,
+              550.0,
+              750.0,
+              950.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "icon": "assets/icons/abilities/godie-hvwd.e.png"
+    },
+    "R": {
+      "id": "godie-hvwd.r",
+      "name": "02-04 百鬼夜行",
+      "description": "[主動攻擊]\n60秒冷卻時間\n\n招換6位式神，吸取附近敵軍部隊的生命能量。當他們回到身邊時，他們會將從犧牲者身上吸取的生命能量，用於補充生命值 。持續時間8秒。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        120.0,
+        210.0,
+        300.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              6.0,
+              12.0,
+              18.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.054
+              }
+            ]
+          }
+        },
+        {
+          "kind": "spawnVfx",
+          "vfxId": "godie-aquaspikeversion2-p0",
+          "at": "self"
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ],
+  "exAbility": "godie-hvwd.ex",
+  "icon": "assets/icons/champions/godie-hvwd.png"
+}

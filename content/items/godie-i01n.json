@@ -1,0 +1,28 @@
+{
+  "id": "godie-i01n",
+  "schema": "item@1",
+  "name": "天堂之劍",
+  "description": "任務\n效能\n魂藏\n生命-500\n3%機率造成50倍傷害\n\n解說\n天堂之劍可以讓持有者起死回生3次，相傳是由大同萌會的鐵拳無敵孫中山所守護著。在一次例行性的革命失敗後不知道消失到哪裡去了。",
+  "cost": 0,
+  "tier": 2,
+  "tags": [
+    "wc3-import"
+  ],
+  "modifiers": [
+    {
+      "stat": "maxHealth",
+      "op": "flat",
+      "value": -500
+    },
+    {
+      "stat": "critChance",
+      "op": "flat",
+      "value": 0.03
+    },
+    {
+      "stat": "critDamage",
+      "op": "flat",
+      "value": 48.25
+    }
+  ]
+}

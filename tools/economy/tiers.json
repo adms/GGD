@@ -1,0 +1,760 @@
+{
+  "_source": "task #82 phase 1 — PHASE1_pricing.json merged with tiers_final.json (tiers_final wins for the 63 shop SKUs; it is the later, authoritative pass and re-tiers 5 items to POWERFUL).",
+  "prices": {
+    "SIMPLE": 300,
+    "POWERFUL": 1200,
+    "LEGENDARY_ORB": 2400,
+    "STAT_TICK": 375
+  },
+  "budgets_AEP": {
+    "SIMPLE": 6.5,
+    "POWERFUL": 26.0,
+    "LEGENDARY": 52.0,
+    "STAT_TICK": 6.5
+  },
+  "rho_g_per_AEP": 46.15,
+  "items": {
+    "godie-i05t": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 11.903,
+      "phase1_lambda": 0.5460639945465497
+    },
+    "godie-i05u": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 10.673,
+      "phase1_lambda": 0.6089913145762029
+    },
+    "godie-i008": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 20.244,
+      "phase1_lambda": 0.32108824726666374
+    },
+    "godie-i05k": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 20.244,
+      "phase1_lambda": 0.32108824726666374
+    },
+    "swift-boots": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 9.418,
+      "phase1_lambda": 0.6901901565196968
+    },
+    "godie-i05v": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 12.66,
+      "phase1_lambda": 0.5134331431381144
+    },
+    "godie-i05x": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 1.91,
+      "phase1_lambda": 3.4035902058801604
+    },
+    "ember-rod": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 9.245,
+      "phase1_lambda": 0.7030698238399963
+    },
+    "godie-i002": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 5.69,
+      "phase1_lambda": 1.1423997966900161
+    },
+    "godie-i00m": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 3.058,
+      "phase1_lambda": 2.1256332070411954
+    },
+    "godie-i06h": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 16.87,
+      "phase1_lambda": 0.38530589671999643
+    },
+    "ironhide-vest": {
+      "surface": "shop",
+      "tier": "POWERFUL",
+      "price": 1200,
+      "phase1_authored_AEP": 31.922,
+      "phase1_lambda": 0.814477107936285
+    },
+    "godie-i06c": {
+      "surface": "shop",
+      "tier": "POWERFUL",
+      "price": 1200,
+      "phase1_authored_AEP": 31.592,
+      "phase1_lambda": 0.8230028551658974
+    },
+    "godie-i010": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 15.411,
+      "phase1_lambda": 0.4217834028999321
+    },
+    "serrated-edge": {
+      "surface": "shop",
+      "tier": "POWERFUL",
+      "price": 1200,
+      "phase1_authored_AEP": 49.33,
+      "phase1_lambda": 0.5270626393675248
+    },
+    "godie-i05r": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 4.883,
+      "phase1_lambda": 1.3312807751875042
+    },
+    "godie-i068": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 6.851,
+      "phase1_lambda": 0.9487495546646083
+    },
+    "godie-i033": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 18.781,
+      "phase1_lambda": 0.34609614367227914
+    },
+    "godie-i05l": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 1.911,
+      "phase1_lambda": 3.4010131312659126
+    },
+    "godie-i05m": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 1.911,
+      "phase1_lambda": 3.4010131312659126
+    },
+    "godie-i05n": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 1.911,
+      "phase1_lambda": 3.4010131312659126
+    },
+    "godie-i063": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 9.68,
+      "phase1_lambda": 0.6715031091079762
+    },
+    "godie-i066": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 1.56,
+      "phase1_lambda": 4.166666666666667
+    },
+    "godie-i06k": {
+      "surface": "shop",
+      "tier": "POWERFUL",
+      "price": 1200,
+      "phase1_authored_AEP": 30.0,
+      "phase1_lambda": 0.8666666666666667
+    },
+    "godie-i00p": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 17.369,
+      "phase1_lambda": 0.37423591037329723
+    },
+    "godie-i00g": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 20.244,
+      "phase1_lambda": 0.32108824726666374
+    },
+    "godie-i02g": {
+      "surface": "shop",
+      "tier": "POWERFUL",
+      "price": 1200,
+      "phase1_authored_AEP": 33.739,
+      "phase1_lambda": 0.7706117934399929
+    },
+    "godie-i01m": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 8.408,
+      "phase1_lambda": 0.7730717636467695
+    },
+    "godie-i06r": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 1.529,
+      "phase1_lambda": 4.251266414082391
+    },
+    "godie-i005": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 16.87,
+      "phase1_lambda": 0.38530589671999643
+    },
+    "godie-i05q": {
+      "surface": "shop",
+      "tier": "POWERFUL",
+      "price": 1200,
+      "phase1_authored_AEP": 21.1,
+      "phase1_lambda": 1.2322395435314746
+    },
+    "godie-i00k": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 1.911,
+      "phase1_lambda": 3.4010131312659126
+    },
+    "godie-i041": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 4.709,
+      "phase1_lambda": 1.3803803130393937
+    },
+    "godie-i020": {
+      "surface": "shop",
+      "tier": "POWERFUL",
+      "price": 1200,
+      "phase1_authored_AEP": 16.449,
+      "phase1_lambda": 1.580643
+    },
+    "godie-i06b": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 18.469,
+      "phase1_lambda": 0.35194746076640027
+    },
+    "godie-i013": {
+      "surface": "draft.legendary",
+      "tier": "LEGENDARY",
+      "price": 0,
+      "phase1_authored_AEP": 77.592,
+      "phase1_lambda": 0.6702
+    },
+    "godie-i01f": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 12.66,
+      "phase1_lambda": 0.5134331431381144
+    },
+    "godie-i01w": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 2.676,
+      "phase1_lambda": 2.428999
+    },
+    "godie-i007": {
+      "surface": "draft.legendary",
+      "tier": "LEGENDARY",
+      "price": 0,
+      "phase1_authored_AEP": 36.103,
+      "phase1_lambda": 1.4403
+    },
+    "godie-i012": {
+      "surface": "draft.legendary",
+      "tier": "LEGENDARY",
+      "price": 0,
+      "phase1_authored_AEP": 46.165,
+      "phase1_lambda": 1.1264
+    },
+    "godie-i06s": {
+      "surface": "draft.legendary",
+      "tier": "LEGENDARY",
+      "price": 0,
+      "phase1_authored_AEP": 5.69,
+      "phase1_lambda": 9.1392
+    },
+    "godie-i02x": {
+      "surface": "draft.legendary",
+      "tier": "LEGENDARY",
+      "price": 0,
+      "phase1_authored_AEP": 81.592,
+      "phase1_lambda": 0.6373
+    },
+    "godie-i049": {
+      "surface": "shop",
+      "tier": "POWERFUL",
+      "price": 1200,
+      "phase1_authored_AEP": 33.739,
+      "phase1_lambda": 0.7706117934399929
+    },
+    "godie-i00n": {
+      "surface": "shop",
+      "tier": "POWERFUL",
+      "price": 1200,
+      "phase1_authored_AEP": 25.0,
+      "phase1_lambda": 1.04
+    },
+    "godie-i00q": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 3.058,
+      "phase1_lambda": 2.1256332070411954
+    },
+    "godie-i00u": {
+      "surface": "draft.legendary",
+      "tier": "LEGENDARY",
+      "price": 0,
+      "phase1_authored_AEP": 12.66,
+      "phase1_lambda": 4.1075
+    },
+    "godie-i045": {
+      "surface": "draft.legendary",
+      "tier": "LEGENDARY",
+      "price": 0,
+      "phase1_authored_AEP": 12.353,
+      "phase1_lambda": 4.2097
+    },
+    "godie-i04b": {
+      "surface": "shop",
+      "tier": "POWERFUL",
+      "price": 1200,
+      "phase1_authored_AEP": 75.002,
+      "phase1_lambda": 0.34665566001245823
+    },
+    "godie-i01g": {
+      "surface": "draft.legendary",
+      "tier": "LEGENDARY",
+      "price": 0,
+      "phase1_authored_AEP": 66.178,
+      "phase1_lambda": 0.7858
+    },
+    "godie-i014": {
+      "surface": "draft.legendary",
+      "tier": "LEGENDARY",
+      "price": 0,
+      "phase1_authored_AEP": 16.87,
+      "phase1_lambda": 3.0824
+    },
+    "godie-i03d": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 16.87,
+      "phase1_lambda": 0.38530589671999643
+    },
+    "godie-i05o": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 16.87,
+      "phase1_lambda": 0.38530589671999643
+    },
+    "godie-i016": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 16.87,
+      "phase1_lambda": 0.38530589671999643
+    },
+    "godie-i01j": {
+      "surface": "shop",
+      "tier": "POWERFUL",
+      "price": 1200,
+      "phase1_authored_AEP": 71.732,
+      "phase1_lambda": 0.362459693394885
+    },
+    "godie-i01o": {
+      "surface": "shop",
+      "tier": "POWERFUL",
+      "price": 1200,
+      "phase1_authored_AEP": 46.898,
+      "phase1_lambda": 0.5543909462607501
+    },
+    "godie-i067": {
+      "surface": "shop",
+      "tier": "POWERFUL",
+      "price": 1200,
+      "phase1_authored_AEP": 22.629,
+      "phase1_lambda": 1.1489566159144071
+    },
+    "godie-i031": {
+      "surface": "shop",
+      "tier": "POWERFUL",
+      "price": 1200,
+      "phase1_authored_AEP": 94.775,
+      "phase1_lambda": 0.2743342850552991
+    },
+    "godie-i00j": {
+      "surface": "shop",
+      "tier": "POWERFUL",
+      "price": 1200,
+      "phase1_authored_AEP": 108.0,
+      "phase1_lambda": 0.24074070616311594
+    },
+    "godie-i04i": {
+      "surface": "draft.legendary",
+      "tier": "LEGENDARY",
+      "price": 0,
+      "phase1_authored_AEP": 1.557,
+      "phase1_lambda": 33.3999
+    },
+    "godie-i027": {
+      "surface": "draft.legendary",
+      "tier": "LEGENDARY",
+      "price": 0,
+      "phase1_authored_AEP": 220.781,
+      "phase1_lambda": 0.2355
+    },
+    "godie-i02r": {
+      "surface": "shop",
+      "tier": "POWERFUL",
+      "price": 1200,
+      "phase1_authored_AEP": 89.708,
+      "phase1_lambda": 0.2898299836257712
+    },
+    "godie-i00f": {
+      "surface": "draft.legendary",
+      "tier": "LEGENDARY",
+      "price": 0,
+      "phase1_authored_AEP": 193.183,
+      "phase1_lambda": 0.2692
+    },
+    "godie-i061": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 4.587,
+      "phase1_lambda": 1.4170888046941301
+    },
+    "godie-i06f": {
+      "surface": "draft.legendary",
+      "tier": "LEGENDARY",
+      "price": 0,
+      "phase1_authored_AEP": 62.941,
+      "phase1_lambda": 0.8262
+    },
+    "godie-i06i": {
+      "surface": "draft.legendary",
+      "tier": "LEGENDARY",
+      "price": 0,
+      "phase1_authored_AEP": 59.173,
+      "phase1_lambda": 0.8788
+    },
+    "godie-i006": {
+      "surface": "shop",
+      "tier": "POWERFUL",
+      "price": 1200,
+      "phase1_authored_AEP": 38.024,
+      "phase1_lambda": 0.6837833973604709
+    },
+    "godie-i00i": {
+      "surface": "draft.legendary",
+      "tier": "LEGENDARY",
+      "price": 0,
+      "phase1_authored_AEP": 83.008,
+      "phase1_lambda": 0.6264
+    },
+    "godie-i060": {
+      "surface": "shop",
+      "tier": "POWERFUL",
+      "price": 1200,
+      "phase1_authored_AEP": 173.574,
+      "phase1_lambda": 0.14979219969714425
+    },
+    "godie-i039": {
+      "surface": "shop",
+      "tier": "POWERFUL",
+      "price": 1200,
+      "phase1_authored_AEP": 21.1,
+      "phase1_lambda": 1.2322395435314746
+    },
+    "godie-i06d": {
+      "surface": "draft.legendary",
+      "tier": "LEGENDARY",
+      "price": 0,
+      "phase1_authored_AEP": 12.802,
+      "phase1_lambda": 4.0619
+    },
+    "godie-i04d": {
+      "surface": "shop",
+      "tier": "POWERFUL",
+      "price": 1200,
+      "phase1_authored_AEP": 113.504,
+      "phase1_lambda": 0.22906768082665196
+    },
+    "godie-i03f": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 3.058,
+      "phase1_lambda": 2.1256332070411954
+    },
+    "godie-i040": {
+      "surface": "shop",
+      "tier": "POWERFUL",
+      "price": 1200,
+      "phase1_authored_AEP": 40.0,
+      "phase1_lambda": 0.65
+    },
+    "godie-i05h": {
+      "surface": "shop",
+      "tier": "POWERFUL",
+      "price": 1200,
+      "phase1_authored_AEP": 21.1,
+      "phase1_lambda": 1.2322395435314746
+    },
+    "godie-i018": {
+      "surface": "draft.legendary",
+      "tier": "LEGENDARY",
+      "price": 0,
+      "phase1_authored_AEP": 111.767,
+      "phase1_lambda": 0.4653
+    },
+    "godie-i02e": {
+      "surface": "draft.legendary",
+      "tier": "LEGENDARY",
+      "price": 0,
+      "phase1_authored_AEP": 169.57,
+      "phase1_lambda": 0.3067
+    },
+    "godie-i01d": {
+      "surface": "draft.legendary",
+      "tier": "LEGENDARY",
+      "price": 0,
+      "phase1_authored_AEP": 16.87,
+      "phase1_lambda": 3.0824
+    },
+    "godie-i06a": {
+      "surface": "shop",
+      "tier": "POWERFUL",
+      "price": 1200,
+      "phase1_authored_AEP": 58.544,
+      "phase1_lambda": 0.4441073524365415
+    },
+    "godie-i01v": {
+      "surface": "draft.legendary",
+      "tier": "LEGENDARY",
+      "price": 0,
+      "phase1_authored_AEP": 16.87,
+      "phase1_lambda": 3.0824
+    },
+    "godie-i000": {
+      "surface": "draft.legendary",
+      "tier": "LEGENDARY",
+      "price": 0,
+      "phase1_authored_AEP": 144.775,
+      "phase1_lambda": 0.3592
+    },
+    "godie-i00s": {
+      "surface": "shop",
+      "tier": "POWERFUL",
+      "price": 1200,
+      "phase1_authored_AEP": 59.558,
+      "phase1_lambda": 0.43654786134591256
+    },
+    "godie-i03m": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 1.911,
+      "phase1_lambda": 3.4010131312659126
+    },
+    "godie-i06e": {
+      "surface": "draft.legendary",
+      "tier": "LEGENDARY",
+      "price": 0,
+      "phase1_authored_AEP": 17.189,
+      "phase1_lambda": 3.0251
+    },
+    "godie-i06g": {
+      "surface": "draft.legendary",
+      "tier": "LEGENDARY",
+      "price": 0,
+      "phase1_authored_AEP": 83.008,
+      "phase1_lambda": 0.6264
+    },
+    "godie-i00l": {
+      "surface": "draft.legendary",
+      "tier": "LEGENDARY",
+      "price": 0,
+      "phase1_authored_AEP": 56.103,
+      "phase1_lambda": 0.9269
+    },
+    "godie-i03c": {
+      "surface": "shop",
+      "tier": "POWERFUL",
+      "price": 1200,
+      "phase1_authored_AEP": 50.871,
+      "phase1_lambda": 0.5110936412731946
+    },
+    "godie-i06o": {
+      "surface": "shop",
+      "tier": "POWERFUL",
+      "price": 1200,
+      "phase1_authored_AEP": 246.0,
+      "phase1_lambda": 0.10569105691056911
+    },
+    "godie-i06q": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 5.734,
+      "phase1_lambda": 1.1336710437553041
+    },
+    "godie-i03b": {
+      "surface": "shop",
+      "tier": "POWERFUL",
+      "price": 1200,
+      "phase1_authored_AEP": 63.719,
+      "phase1_lambda": 0.4080423828724715
+    },
+    "godie-i02d": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 11.457,
+      "phase1_lambda": 0.5673519900464654
+    },
+    "godie-i004": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 16.87,
+      "phase1_lambda": 0.38530589671999643
+    },
+    "godie-i04v": {
+      "surface": "draft.legendary",
+      "tier": "LEGENDARY",
+      "price": 0,
+      "phase1_authored_AEP": 6.748,
+      "phase1_lambda": 7.7061
+    },
+    "godie-i00z": {
+      "surface": "draft.quest",
+      "tier": "POWERFUL",
+      "price": 0,
+      "phase1_authored_AEP": 33.739,
+      "phase1_lambda": 0.7706
+    },
+    "godie-i01k": {
+      "surface": "draft.quest",
+      "tier": "POWERFUL",
+      "price": 0,
+      "phase1_authored_AEP": 2.676,
+      "phase1_lambda": 9.7172
+    },
+    "godie-i01n": {
+      "surface": "draft.quest",
+      "tier": "POWERFUL",
+      "price": 0,
+      "phase1_authored_AEP": 275.385,
+      "phase1_lambda": 0.0944
+    },
+    "godie-i02p": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 1.529,
+      "phase1_lambda": 4.251145
+    },
+    "godie-i034": {
+      "surface": "draft.quest",
+      "tier": "POWERFUL",
+      "price": 0,
+      "phase1_authored_AEP": 2.676,
+      "phase1_lambda": 9.7172
+    },
+    "godie-i035": {
+      "surface": "draft.quest",
+      "tier": "POWERFUL",
+      "price": 0,
+      "phase1_authored_AEP": 84.814,
+      "phase1_lambda": 0.3066
+    },
+    "godie-i05s": {
+      "surface": "shop",
+      "tier": "SIMPLE",
+      "price": 300,
+      "phase1_authored_AEP": 1.038,
+      "phase1_lambda": 6.262042
+    },
+    "godie-i05y": {
+      "surface": "shop",
+      "tier": "POWERFUL",
+      "price": 1200,
+      "phase1_authored_AEP": 12.941,
+      "phase1_lambda": 2.009118
+    },
+    "godie-i06j": {
+      "surface": "draft.quest",
+      "tier": "POWERFUL",
+      "price": 0,
+      "phase1_authored_AEP": 20.0,
+      "phase1_lambda": 1.3
+    },
+    "godie-i06n": {
+      "surface": "draft.quest",
+      "tier": "POWERFUL",
+      "price": 0,
+      "phase1_authored_AEP": 47.0,
+      "phase1_lambda": 0.5532
+    }
+  },
+  "_retiered_by_tiers_final": [
+    [
+      "godie-i06k",
+      "SIMPLE",
+      "POWERFUL"
+    ],
+    [
+      "godie-i05q",
+      "SIMPLE",
+      "POWERFUL"
+    ],
+    [
+      "godie-i067",
+      "SIMPLE",
+      "POWERFUL"
+    ],
+    [
+      "godie-i039",
+      "SIMPLE",
+      "POWERFUL"
+    ],
+    [
+      "godie-i05h",
+      "SIMPLE",
+      "POWERFUL"
+    ]
+  ],
+  "_task108_retier": "task #108 curation moved 7 mis-curated items off the draft/legendary surfaces onto the shop surface. 網友手環/祕銀鎖子甲/嚇人假面 -> SIMPLE; 蜂蜜罐/瑪那魔杖/破甲槍/分手之鎚 -> POWERFUL. surface/tier/price updated here; rescale_items.py regenerates cost/tier/modifiers, regen_descriptions.py the 效能 text."
+}

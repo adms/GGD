@@ -1,0 +1,15 @@
+{
+  "id": "imported.purplecoat",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/purplecoat.glb",
+  "scale": 0.859,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand 1",
+    "run": "Walk",
+    "attack": "Stand 1",
+    "cast": "Stand 1",
+    "hurt": "Stand 1",
+    "death": "Stand 1"
+  }
+}

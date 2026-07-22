@@ -1,0 +1,46 @@
+{
+  "id": "godie-u00h.w",
+  "name": "39-02 無名神風流-朱雀",
+  "description": "[主動攻擊]\n50秒冷卻時間\n\n村正臨死前教授的真無名神風\n無明神風流-朱雀，施展時將造成對方強大的壓迫感，好似朱雀從背後襲來，給予目標150點傷害並有20%機率將目標擊退。",
+  "slot": "W",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    50.0,
+    50.0,
+    50.0,
+    50.0
+  ],
+  "manaCost": [
+    50.0,
+    80.0,
+    110.0,
+    140.0
+  ],
+  "range": 9.17,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          150.0,
+          250.0,
+          350.0,
+          450.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "radius": 3.67,
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/godie-u00h.w.png"
+}

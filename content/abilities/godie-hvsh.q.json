@@ -1,0 +1,44 @@
+{
+  "id": "godie-hvsh.q",
+  "name": "48-01 魔法鎖鏈",
+  "description": "[主動攻擊]\n25秒冷卻時間\n\n使用鎖鏈將路線上的部隊拉回自己身旁，並受到150的傷害。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    25.0,
+    25.0,
+    25.0,
+    25.0
+  ],
+  "manaCost": [
+    50.0,
+    75.0,
+    100.0,
+    125.0
+  ],
+  "range": 14.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          150.0,
+          250.0,
+          350.0,
+          450.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

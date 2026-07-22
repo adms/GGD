@@ -1,0 +1,45 @@
+{
+  "id": "godie-oshd.w",
+  "name": "29-02 鬼王流星雨",
+  "description": "[主動攻擊]\n45秒冷卻時間\n\n呼喚數波流星雨來傷害附近的敵方部隊。每一波可以造成150點傷害，可持續6秒。",
+  "slot": "W",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "manaCost": [
+    150.0,
+    200.0,
+    250.0,
+    250.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          450.0,
+          600.0,
+          750.0,
+          900.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "radius": 6.0,
+  "schema": "ability@1"
+}

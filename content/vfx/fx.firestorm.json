@@ -1,0 +1,41 @@
+{
+  "id": "fx.firestorm",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 5,
+    "angleDeg": 60
+  },
+  "mode": "burst",
+  "burstCount": 80,
+  "lifetimeSec": {
+    "min": 0.18,
+    "max": 0.6
+  },
+  "size": {
+    "start": 1.25,
+    "end": 0
+  },
+  "sizeStops": [
+    [0, 0.56],
+    [0.12, 1.25],
+    [1, 0]
+  ],
+  "color": {
+    "start": [1, 0.6, 0.2, 1],
+    "end": [1, 0.2, 0.05, 0]
+  },
+  "colorStops": [
+    [0, [1, 1, 1, 1]],
+    [0.15, [1, 0.6, 0.2, 1]],
+    [0.53, [0.35, 0.21, 0.07, 0.35]],
+    [1, [0, 0, 0, 0]]
+  ],
+  "speed": {
+    "min": 2.5,
+    "max": 6
+  },
+  "gravityY": 2.5,
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/flame_04.png"
+}

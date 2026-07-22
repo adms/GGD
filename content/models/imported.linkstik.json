@@ -1,0 +1,62 @@
+{
+  "id": "imported.linkstik",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/linkstik.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand - 1",
+    "run": "Walk",
+    "attack": "Attack - 1",
+    "cast": "Attack - 1",
+    "hurt": "Stand Hit",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Foot Left": {
+      "x": 0.0615,
+      "y": 0.0098,
+      "z": 0.1697
+    },
+    "Foot Right": {
+      "x": 0.0534,
+      "y": 0.0103,
+      "z": -0.2231
+    },
+    "Hand Right": {
+      "x": -0.0015,
+      "y": 0.6837,
+      "z": -0.4031
+    },
+    "Hand Left": {
+      "x": 0.1,
+      "y": 0.7039,
+      "z": 0.3712
+    },
+    "Weapon": {
+      "x": 0.7555,
+      "y": 0.8864,
+      "z": 0.6006
+    },
+    "Head -": {
+      "x": 0.1113,
+      "y": 1.3935,
+      "z": -0.0366
+    },
+    "Chest": {
+      "x": -0.019,
+      "y": 1.2094,
+      "z": -0.0404
+    },
+    "Origin": {
+      "x": 0.0056,
+      "y": -0.0203,
+      "z": -0.0389
+    },
+    "OverHead": {
+      "x": 0.0056,
+      "y": 1.8134,
+      "z": -0.0389
+    }
+  }
+}

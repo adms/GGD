@@ -1,0 +1,83 @@
+{
+  "id": "godie-bloodbreathstream-p1",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.194,
+    "angleDeg": 9.5
+  },
+  "mode": "continuous",
+  "rate": 80.0,
+  "lifetimeSec": {
+    "min": 0.5,
+    "max": 0.5
+  },
+  "size": {
+    "start": 0.556,
+    "end": 1.389
+  },
+  "color": {
+    "start": [
+      0.502,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "end": [
+      0.502,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        0.502,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    [
+      0.3,
+      [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.502,
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.556
+    ],
+    [
+      0.3,
+      0.833
+    ],
+    [
+      1,
+      1.389
+    ]
+  ],
+  "blendMode": "alpha",
+  "texture": "assets/textures/particles/smoke_04.png",
+  "speed": {
+    "min": 13.6122,
+    "max": 14.1678
+  },
+  "anchorBone": "Dummy02"
+}

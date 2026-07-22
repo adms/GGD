@@ -1,0 +1,30 @@
+{
+  "id": "godie-ewrd.ex",
+  "name": "17-002 天照龍門",
+  "description": "[強化]\n0秒冷卻時間\n\n棗真夜的隱藏異能，可以中和一切其他異能的能力。這樣異能使棗真夜可以擁有33%物理閃避能力及額外30點敏捷加成，並使在棗真夜週遭的敵方英雄部隊無法使用技能。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    120.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

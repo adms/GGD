@@ -1,0 +1,46 @@
+{
+  "id": "godie-o02v.w",
+  "name": "81-02 Acxel Shooter",
+  "description": "[主動攻擊]\n35秒冷卻時間\n\n「Divine Shooter」的應用型。狙擊精度、靈彈威力、貫穿力、彈速都得到了大幅度的提升。但同時，使用者將無法在移動中使用此魔法。每道靈彈造成250+智慧*3點傷害。",
+  "slot": "W",
+  "castType": "skillshot",
+  "maxRank": 5,
+  "cooldown": [
+    35.0,
+    35.0,
+    35.0,
+    35.0,
+    35.0
+  ],
+  "manaCost": [
+    180.0,
+    220.0,
+    260.0,
+    405.0,
+    405.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "imported.wave",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

@@ -1,0 +1,27 @@
+{
+  "contentId": "godie-i06b",
+  "nameZh": "思念的守護",
+  "gold": 3050,
+  "kind": "effect",
+  "description": "防具\r\n效能\r\n範圍裝甲+8\r\n智慧+10\r\n\r\n解說\r\n焠鍊米索莉護板的魔力以後，讓魔力緩緩散發出來形成類似結界的防禦效果。",
+  "abilities": [
+    {
+      "rawcode": "A032",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {
+        "1": {
+          "1": 8.0
+        }
+      }
+    },
+    {
+      "rawcode": "A03W",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    }
+  ]
+}

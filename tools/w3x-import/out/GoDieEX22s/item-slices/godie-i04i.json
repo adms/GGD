@@ -1,0 +1,27 @@
+{
+  "contentId": "godie-i04i",
+  "nameZh": "厄夜鐮刀",
+  "gold": 6590,
+  "kind": "effect",
+  "description": "神器\r\n施展需求魔力：300點\r\n技能冷卻時間：30秒\r\n效能\r\n奪取目標肉體, 短暫呈現虛空狀態\r\n魔力回復速度+150%\r\n\r\n解說\r\n點選施展將目標的靈魂放逐，使之呈現虛空狀態，無法被物理攻擊所傷害，也無法造成物理傷害，但是遭到法術攻擊時傷害將提昇為150%，持續3秒。",
+  "abilities": [
+    {
+      "rawcode": "A0B0",
+      "name": "00-00 放逐",
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {
+        "1": {
+          "1": 0.0
+        }
+      }
+    },
+    {
+      "rawcode": "A0X1",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    }
+  ]
+}

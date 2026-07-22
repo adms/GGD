@@ -1,0 +1,82 @@
+{
+  "id": "godie-holyawakening-p1",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 1.111,
+    "angleDeg": 10.0
+  },
+  "mode": "burst",
+  "burstCount": 15,
+  "lifetimeSec": {
+    "min": 1.2,
+    "max": 1.2
+  },
+  "size": {
+    "start": 1.389,
+    "end": 1.389
+  },
+  "color": {
+    "start": [
+      1.0,
+      1.0,
+      1.0,
+      0.0
+    ],
+    "end": [
+      1.0,
+      1.0,
+      1.0,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.0
+      ]
+    ],
+    [
+      0.3,
+      [
+        0.976,
+        0.988,
+        0.09,
+        0.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      1.389
+    ],
+    [
+      0.3,
+      1.389
+    ],
+    [
+      1,
+      1.389
+    ]
+  ],
+  "blendMode": "modulate",
+  "texture": "assets/textures/particles/smoke_09.png",
+  "speed": {
+    "min": 0.0,
+    "max": 11.112
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "id": "godie-e00v.ex",
+  "name": "84-002 我只想確定你在這裡",
+  "description": "[輔助]\n70秒冷卻時間\n\n小豬悄悄的走到維尼背後；維尼!小豬小聲的喊道；嗯,小豬?；沒事!小豬說，接著他握起維尼的手，我只是想確定你在這。\n招喚我方所有英雄，回復50%的生命及瑪娜，並造成周圍敵方暈眩2秒。\n另外增加給我蜂蜜力量*6傷害",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    70.0
+  ],
+  "manaCost": [
+    250.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

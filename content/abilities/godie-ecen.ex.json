@@ -1,0 +1,30 @@
+{
+  "id": "godie-ecen.ex",
+  "name": "64-002 魔幻嘉年華",
+  "description": "[輔助]\n0秒冷卻時間\n\n大家一起來參加嘉年華會吧！\n週遭600範圍內的友軍部隊將感受到魔幻嘉年華的氛圍，增加20點裝甲，同時也將具備與魔幻浮水印相同的效果。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    120.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

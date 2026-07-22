@@ -1,0 +1,30 @@
+{
+  "id": "godie-e00q.ex",
+  "name": "69-002 固有結界-黑洞",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n施展後將會產生固有結界-黑洞，在此範圍600內單位行動緩慢，降低移動速度30%及攻擊速度100%，並且防禦將會降低18點，持續8秒。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    700.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

@@ -1,0 +1,136 @@
+[
+  {
+    "id": "announcer-match-start",
+    "lang": "ja-JP ‖ zh-TW",
+    "out": "../assets/audio/announcer/match-start.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5,
+    "segments": [
+      { "lang": "ja-JP", "voice": "Kyoko", "text": "去死団アリーナ、第一試合を開始いたします。" },
+      { "lang": "zh-TW", "voice": "Tingting", "text": "請站穩踏階。" }
+    ]
+  },
+  {
+    "id": "announcer-round-start-1",
+    "lang": "zh-TW",
+    "voice": "Tingting",
+    "text": "第一回合，即將開始。",
+    "out": "../assets/audio/announcer/round-start-1.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "announcer-round-start-2",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "ご準備ください。開始いたします。",
+    "out": "../assets/audio/announcer/round-start-2.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "announcer-level-up-1",
+    "lang": "en-AU",
+    "voice": "Karen",
+    "text": "Level up. Congratulations.",
+    "out": "../assets/audio/announcer/level-up-1.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "announcer-level-up-2",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "レベルが上がりました。おめでとうございます。",
+    "out": "../assets/audio/announcer/level-up-2.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "announcer-death-1",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "戦闘不能です。しばらくお待ちください。",
+    "out": "../assets/audio/announcer/death-1.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "announcer-death-2",
+    "lang": "zh-HK",
+    "voice": "Sinji",
+    "text": "打完收工。",
+    "out": "../assets/audio/announcer/death-2.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "announcer-death-3",
+    "lang": "zh-TW",
+    "voice": "Tingting",
+    "text": "您已出局。感謝您的參與。",
+    "out": "../assets/audio/announcer/death-3.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "announcer-multi-kill-1",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "連続撃破を確認いたしました。",
+    "out": "../assets/audio/announcer/multi-kill-1.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "announcer-multi-kill-2",
+    "lang": "en-AU",
+    "voice": "Karen",
+    "text": "Rampage. Please maintain order.",
+    "out": "../assets/audio/announcer/multi-kill-2.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "announcer-multi-kill-3",
+    "lang": "zh-TW",
+    "voice": "Tingting",
+    "text": "目前無人能擋。以上，報告完畢。",
+    "out": "../assets/audio/announcer/multi-kill-3.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "announcer-ally-slain",
+    "lang": "zh-TW ‖ en-AU",
+    "out": "../assets/audio/announcer/ally-slain.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5,
+    "segments": [
+      { "lang": "zh-TW", "voice": "Tingting", "text": "請確認，您的隊友，是不是白目。" },
+      { "lang": "en-AU", "voice": "Karen", "text": "Thank you for your cooperation." }
+    ]
+  },
+  {
+    "id": "announcer-ex-unlock",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "イーエックス、使用可能になりました。",
+    "out": "../assets/audio/announcer/ex-unlock.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  }
+]

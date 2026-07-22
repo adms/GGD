@@ -1,0 +1,77 @@
+/**
+ * cursor.css — the JRPG custom cursor. Imported once (main.tsx), alongside
+ * mobile.css and buttonFx.css.
+ *
+ * This file declares NO image and NO hotspot: it only consumes the three custom
+ * properties that cursor/applyCursor.ts writes onto <html> from the size the
+ * player picked (cursor/cursorTheme.ts owns every filename and coordinate).
+ * That is what makes the size setting instant — a size change rewrites three
+ * variables and the rules below recompute, with no stylesheet swap or reload.
+ *
+ * TOUCH DEVICES (do not regress): the whole file is wrapped in
+ * `@media (hover: hover) and (pointer: fine)`. On a phone or tablet not one
+ * rule matches, so no `cursor: url()` is ever resolved and the browser never
+ * fetches a single cursor PNG — zero bytes, zero behaviour change. It also
+ * means a hybrid device starts using the cursor as soon as a mouse/trackpad is
+ * attached, with no JS listening for it.
+ *
+ * ABOUT THE `!important`s: this codebase styles components with INLINE `style`
+ * objects, and roughly twenty of them set `cursor: "pointer"` / `"default"`
+ * directly. Inline declarations outrank any selector, so the interactive
+ * variant can only win with `!important`. It is scoped to `[data-ggd-cursor]`
+ * (present only once applyCursor has armed the feature) and every rule is
+ * paired with the native keyword it replaces, so the fallback is exactly the
+ * cursor the element would otherwise have shown.
+ */
+
+@media (hover: hover) and (pointer: fine) {
+  /* Baseline: the brass blade pointer. `cursor` is inherited, so one rule on
+     <html> covers the whole document — the arena canvas, the HUD, the platform
+     screens and every overlay. */
+  :root[data-ggd-cursor="on"] {
+    cursor: var(--ggd-cursor-default), default;
+  }
+
+  /* Interactive: the lit gold blade + ▶ selector, wherever the native pointer
+     hand would appear. Kept to real controls (and the two shared button skins,
+     .ggd-btn / .ggd-tap) so plain text and panels stay on the blade. */
+  :root[data-ggd-cursor="on"] a[href],
+  :root[data-ggd-cursor="on"] summary,
+  :root[data-ggd-cursor="on"] select,
+  :root[data-ggd-cursor="on"] button:not(:disabled),
+  :root[data-ggd-cursor="on"] [role="button"]:not([aria-disabled="true"]),
+  :root[data-ggd-cursor="on"] [role="tab"]:not([aria-disabled="true"]),
+  :root[data-ggd-cursor="on"] input[type="checkbox"],
+  :root[data-ggd-cursor="on"] input[type="radio"],
+  :root[data-ggd-cursor="on"] input[type="range"],
+  :root[data-ggd-cursor="on"] .ggd-btn:not(:disabled),
+  :root[data-ggd-cursor="on"] .ggd-tap:not(:disabled) {
+    cursor: var(--ggd-cursor-pointer), pointer !important;
+  }
+
+  /* Disabled controls fall back to the plain blade — never the "clickable"
+     one. Mirrors buttonFx.css's `.ggd-btn:disabled { cursor: default }` and the
+     `disabled ? "default" : "pointer"` inline pattern in widgets.tsx. */
+  :root[data-ggd-cursor="on"] button:disabled,
+  :root[data-ggd-cursor="on"] [aria-disabled="true"],
+  :root[data-ggd-cursor="on"] .ggd-btn:disabled {
+    cursor: var(--ggd-cursor-default), default !important;
+  }
+
+  /* Text entry keeps the NATIVE I-beam: caret placement is a precision job and
+     a 96px blade would hide the very glyph being aimed at. */
+  :root[data-ggd-cursor="on"] textarea,
+  :root[data-ggd-cursor="on"] input:not([type="checkbox"]):not([type="radio"]):not(
+      [type="range"]
+    ):not([type="button"]):not([type="submit"]):not([type="reset"]) {
+    cursor: text !important;
+  }
+
+  /* In combat: an armed attack-move (A) turns the arena surface into the
+     crimson reticle. input/InputCapture sets the attribute when the order is
+     armed and clears it the moment the click resolves. Scoped to the canvas so
+     the HUD keeps its normal cursors while the order is pending. */
+  :root[data-ggd-cursor="on"][data-ggd-cursor-variant="attack"] #game-canvas {
+    cursor: var(--ggd-cursor-attack), crosshair !important;
+  }
+}

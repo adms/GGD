@@ -1,0 +1,3324 @@
+{
+  "map": "src_gogodieEX227s.w3x",
+  "map_bytes": 8299233,
+  "listfile_entries": 467,
+  "block_table_entries": 469,
+  "extracted_ok": 467,
+  "errors": 0,
+  "absent": 11,
+  "files": {
+    "war3map.w3e": {
+      "status": "ok",
+      "size": 116568,
+      "sha256": "fa97568781a4ed31f3f2715d58d979b472d36c242d895e2e10f61c44adf15bc3",
+      "file": "war3map.w3e",
+      "in_listfile": true
+    },
+    "war3map.w3i": {
+      "status": "ok",
+      "size": 802,
+      "sha256": "a2b9bd15752493154e09782654c2f23fd1c04c685a5276e79c25d4322a4f83ab",
+      "file": "war3map.w3i",
+      "in_listfile": true
+    },
+    "war3map.wtg": {
+      "status": "ok",
+      "size": 2867992,
+      "sha256": "6ed40f1bb891f38c1e1f96a7ccce3d6ed6373376d0c5ae9201a7a61b03fb97e9",
+      "file": "war3map.wtg",
+      "in_listfile": true
+    },
+    "war3map.wct": {
+      "status": "ok",
+      "size": 132157,
+      "sha256": "5f544d47e993cddca97f113d1ac1a3c057581bb5f851c18151cb04c8abbbdf28",
+      "file": "war3map.wct",
+      "in_listfile": true
+    },
+    "war3map.wts": {
+      "status": "ok",
+      "size": 2065331,
+      "sha256": "7859897689ccb07f58c26bf00f137a845b72166c9c21c8ecf833e6d718d88cf2",
+      "file": "war3map.wts",
+      "in_listfile": true
+    },
+    "war3map.j": {
+      "status": "ok",
+      "size": 2796217,
+      "sha256": "1873346babb20c93c6ebeb52e7a758aafab7c52ee6df56f7bd2a2bd6d7d0dd3b",
+      "file": "war3map.j",
+      "in_listfile": true
+    },
+    "war3map.shd": {
+      "status": "ok",
+      "size": 262144,
+      "sha256": "4f15eb7ec9a7cf3cd44cba86d294d95a2b696e61fe0cbb3d92b788b9f009abd8",
+      "file": "war3map.shd",
+      "in_listfile": true
+    },
+    "war3mapMap.blp": {
+      "status": "ok",
+      "size": 15023,
+      "sha256": "2afe8935564388490a2a7976aed1096ae48bdefa1f043bb9b634ba3bce8d576f",
+      "file": "war3mapMap.blp",
+      "in_listfile": true
+    },
+    "war3map.mmp": {
+      "status": "ok",
+      "size": 376,
+      "sha256": "80fc7c7606c084541620910f66f40b337b856f38f6f8cdecec5355a226547f9c",
+      "file": "war3map.mmp",
+      "in_listfile": true
+    },
+    "war3map.wpm": {
+      "status": "ok",
+      "size": 262160,
+      "sha256": "23c1b81d4e6de73689eff316a8c52542c5ec26d4771ff5d1905cf47188ef61a2",
+      "file": "war3map.wpm",
+      "in_listfile": true
+    },
+    "war3map.doo": {
+      "status": "ok",
+      "size": 124876,
+      "sha256": "04dc5685a731a9d5d55ced34cd91bc698a8557b6d3093d8194d894246b89f9a4",
+      "file": "war3map.doo",
+      "in_listfile": true
+    },
+    "war3mapUnits.doo": {
+      "status": "ok",
+      "size": 27338,
+      "sha256": "654c523a73f0da230d132928043d18900846a1732480cc53360213522a99232e",
+      "file": "war3mapUnits.doo",
+      "in_listfile": true
+    },
+    "war3map.w3r": {
+      "status": "ok",
+      "size": 3105,
+      "sha256": "6a2d47b92c7d01ac58598c50dc15c6a99a0318a3f02d0d889da802deaf60ba8e",
+      "file": "war3map.w3r",
+      "in_listfile": true
+    },
+    "war3map.w3c": {
+      "status": "ok",
+      "size": 365,
+      "sha256": "84acb4a5ad9141e44ae5f39103ada4dc8ef5d8b3eacfc858310740043253f000",
+      "file": "war3map.w3c",
+      "in_listfile": true
+    },
+    "war3map.w3u": {
+      "status": "ok",
+      "size": 285982,
+      "sha256": "cfcd520ca9d97930e49c867f3b7dbcd5a461cd3b0e4e7316fce10ca7ee738bf5",
+      "file": "war3map.w3u",
+      "in_listfile": true
+    },
+    "war3map.w3t": {
+      "status": "ok",
+      "size": 65878,
+      "sha256": "e9731a6cd062d1ba14b5bf8121d6c59c591428d02d047e8d50e549fa4ee499a3",
+      "file": "war3map.w3t",
+      "in_listfile": true
+    },
+    "war3map.w3b": {
+      "status": "ok",
+      "size": 195,
+      "sha256": "6ae84edff5264289c4c23332c923b2960c325407c649ba93ce92b523ce37f83d",
+      "file": "war3map.w3b",
+      "in_listfile": true
+    },
+    "war3map.w3d": {
+      "status": "ok",
+      "size": 48,
+      "sha256": "79373a6c41f43f6ee410b6576f718bf0c35677662e41b6fb04db574fdf571c67",
+      "file": "war3map.w3d",
+      "in_listfile": true
+    },
+    "war3map.w3a": {
+      "status": "ok",
+      "size": 1067490,
+      "sha256": "d798855ac2a6078a71cc21f21fee6582a5976c2cf4ae397fe2858d829c2412ab",
+      "file": "war3map.w3a",
+      "in_listfile": true
+    },
+    "war3map.w3h": {
+      "status": "ok",
+      "size": 37307,
+      "sha256": "fb4877edf807ef88ca93fa72283b0c61e074f98dc512a4cb22c1dcfa949a4948",
+      "file": "war3map.w3h",
+      "in_listfile": true
+    },
+    "war3map.w3q": {
+      "status": "ok",
+      "size": 12298,
+      "sha256": "ffce1c3d58a519717d84fd5cce9df04c0a8ab6c418795ade5b90c83a18503949",
+      "file": "war3map.w3q",
+      "in_listfile": true
+    },
+    "war3map.w3s": {
+      "status": "ok",
+      "size": 19789,
+      "sha256": "beb4d49224057c1a5e4a2543c42e67b979037b431057e3912e73a76641e199af",
+      "file": "war3map.w3s",
+      "in_listfile": true
+    },
+    "war3map.imp": {
+      "status": "ok",
+      "size": 13584,
+      "sha256": "415e3c82103006a5ca391dd610904bdd0cbbbb36b2753d15d5e7d38acf207823",
+      "file": "war3map.imp",
+      "in_listfile": true
+    },
+    "war3mapMisc.txt": {
+      "status": "ok",
+      "size": 1700,
+      "sha256": "f539b17a9c1d25ada2bc11702c1260a53efbc5d7de3702be9a33e36223b54a55",
+      "file": "war3mapMisc.txt",
+      "in_listfile": true
+    },
+    "war3mapExtra.txt": {
+      "status": "ok",
+      "size": 43,
+      "sha256": "7aebb8887fbbe39dd2439cc684e4666298c7738b83a73e6ba50b5627c81aa5cd",
+      "file": "war3mapExtra.txt",
+      "in_listfile": true
+    },
+    "Magical_Sword.mdx": {
+      "status": "ok",
+      "size": 17627,
+      "sha256": "e92e0bec06547cf519f97dd2c3e0779c27bffcc4f35bf30e57a0e5704ba55a88",
+      "file": "Magical_Sword.mdx",
+      "in_listfile": true
+    },
+    "Textures\\Hero_BloodElf.blp": {
+      "status": "ok",
+      "size": 21382,
+      "sha256": "20c1acac60b60cc46743025077a1c9f2592e734e43d34544acab1ecffdaf6fd5",
+      "file": "Textures__Hero_BloodElf.blp",
+      "in_listfile": true
+    },
+    "Skeleton4.blp": {
+      "status": "ok",
+      "size": 22083,
+      "sha256": "a0326e47898041ec0d4b38826fb9000d2363c39abc0940de02f900ec8cb7e84d",
+      "file": "Skeleton4.blp",
+      "in_listfile": true
+    },
+    "lfac2.blp": {
+      "status": "ok",
+      "size": 25568,
+      "sha256": "617cb0bcd1a5cbe867305bcf9fb593374d8b3bd344f042fe166bf79325ce512c",
+      "file": "lfac2.blp",
+      "in_listfile": true
+    },
+    "hair3.blp": {
+      "status": "ok",
+      "size": 6673,
+      "sha256": "476a03d05ca6e5948301ac6e7fdd1e53b9d9379f147942733f7ab3037ebcb862",
+      "file": "hair3.blp",
+      "in_listfile": true
+    },
+    "units\\Critters\\VillagerMan1\\VillagerMale1.blp": {
+      "status": "ok",
+      "size": 26417,
+      "sha256": "5ffa49cbf60a28d98531cea6bb3b9771e577b639d0906441d9f8850d61d23c3a",
+      "file": "units__Critters__VillagerMan1__VillagerMale1.blp",
+      "in_listfile": true
+    },
+    "Katana.mdx": {
+      "status": "ok",
+      "size": 3160,
+      "sha256": "845973829cf78691b9f96b514aee4489b375e9d0a3c2aa0774da4ae8458119e9",
+      "file": "Katana.mdx",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNWolverine.blp": {
+      "status": "ok",
+      "size": 5607,
+      "sha256": "a9730b85d43b3347c9ffcb6b27de9c21c3733aec68285a3bd3d96c5a72254205",
+      "file": "ReplaceableTextures__CommandButtons__BTNWolverine.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNWolverine.blp": {
+      "status": "ok",
+      "size": 4201,
+      "sha256": "0aa692b8aee68ceda0ae6d6527340dbae030f1727cc633901f50435a31dd5d6f",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNWolverine.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNPhoenix_Samwise.blp": {
+      "status": "ok",
+      "size": 4776,
+      "sha256": "61215db1a7ae17243629515416a18c4ef267df12b1f0d7d2cbe7dcbd9dfa0b87",
+      "file": "ReplaceableTextures__CommandButtons__BTNPhoenix_Samwise.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNPhoenix_Samwise.blp": {
+      "status": "ok",
+      "size": 3759,
+      "sha256": "3c71f1aeb3ce8d89c2d737126424532f1a927be43923bb7f7b130e394e33bc33",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNPhoenix_Samwise.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\PassiveButtons\\PASBTNPhoenix_Samwise.blp": {
+      "status": "ok",
+      "size": 6452,
+      "sha256": "c588932ab718c5e1afbb5b08ef510c0ee1680ae63074f7f4425b51c6bf24f041",
+      "file": "ReplaceableTextures__PassiveButtons__PASBTNPhoenix_Samwise.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISPASBTNPhoenix_Samwise.blp": {
+      "status": "absent",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNNinja!.blp": {
+      "status": "ok",
+      "size": 4697,
+      "sha256": "81bd61cd771221538fd70158e738bea95cc00c11f14af2a927fa24097eead327",
+      "file": "ReplaceableTextures__CommandButtons__BTNNinja!.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNNinja!.blp": {
+      "status": "ok",
+      "size": 3464,
+      "sha256": "d38c1b5e193dd2c2eace2b1c787e8455538e1f464e36d4a33f86b129c0f505ab",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNNinja!.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNMentalPrison.blp": {
+      "status": "ok",
+      "size": 5186,
+      "sha256": "5df80b43f966e8a112692352df61069225f976b1895aa23f5f575ce186889f18",
+      "file": "ReplaceableTextures__CommandButtons__BTNMentalPrison.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNMentalPrison.blp": {
+      "status": "ok",
+      "size": 3698,
+      "sha256": "f9b604bf8c0111a69089a031ad09d1200626ec9cbeb84a884f42a74c1cbe5d4a",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNMentalPrison.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\PassiveButtons\\PASBTNMentalPrison.blp": {
+      "status": "ok",
+      "size": 5648,
+      "sha256": "b445e9244626a5cc912096f6e4c11ef5440920eb7cfcb956735329afc8687bad",
+      "file": "ReplaceableTextures__PassiveButtons__PASBTNMentalPrison.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNLightningSword.blp": {
+      "status": "ok",
+      "size": 5349,
+      "sha256": "04fcef966d72eda8386077afdd01f74e724d332bc97e5606d97142509b578690",
+      "file": "ReplaceableTextures__CommandButtons__BTNLightningSword.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNLightningSword.blp": {
+      "status": "ok",
+      "size": 4104,
+      "sha256": "50a6aab7499fef2911b3bc74a5b191159e35b0fde8c78629dda45bcdd2a47c74",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNLightningSword.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNSwordofLight.blp": {
+      "status": "ok",
+      "size": 5150,
+      "sha256": "c8676850f9b36441d2916c114f780060a5c8e87af552bfec15a412582af631ff",
+      "file": "ReplaceableTextures__CommandButtons__BTNSwordofLight.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNSwordofLight.blp": {
+      "status": "ok",
+      "size": 3801,
+      "sha256": "79cb5d2318118a32f0d8a42b5170d3132b371c6c471b2360cd3b00d932833b66",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNSwordofLight.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNSalamader.blp": {
+      "status": "ok",
+      "size": 5603,
+      "sha256": "24d23d4ffdee6e476d687fe3d9ab3c4d1da1e3f0a3959af36da37d54347ed942",
+      "file": "ReplaceableTextures__CommandButtons__BTNSalamader.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNSalamader.blp": {
+      "status": "ok",
+      "size": 4151,
+      "sha256": "6db3bb81dcd5c6d6bbcbe6447aadf2551cdd5880644286ec9d1dd6ac24fc2fe2",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNSalamader.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNFrostSWORD.blp": {
+      "status": "ok",
+      "size": 5198,
+      "sha256": "038e329d2e2d641baa8fa4df7f72d505a29af679ea6939675962a38d68a03beb",
+      "file": "ReplaceableTextures__CommandButtons__BTNFrostSWORD.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNFrostSWORD.blp": {
+      "status": "ok",
+      "size": 3887,
+      "sha256": "2ce5682333a6da431487b44975f32bc944dd76623cf17e9a3df6fb990103af21",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNFrostSWORD.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNMysticSword.blp": {
+      "status": "ok",
+      "size": 5066,
+      "sha256": "b7d4640b355c4549738a96c44a0d43e1d1c52b24c66ea31e5f7e31d49e8eb66d",
+      "file": "ReplaceableTextures__CommandButtons__BTNMysticSword.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNMysticSword.blp": {
+      "status": "ok",
+      "size": 4291,
+      "sha256": "3209efc39e8e6acc41a128744c1d75adc49fc7fedcb679ff6298952374b3aead",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNMysticSword.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\PassiveButtons\\PASBTNMysticSword.blp": {
+      "status": "ok",
+      "size": 4803,
+      "sha256": "71bcc0596e9a38063f582a05d6020eacab6265e7d870d4470974e6b5930d61fb",
+      "file": "ReplaceableTextures__PassiveButtons__PASBTNMysticSword.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISPASBTNMysticSword.blp": {
+      "status": "absent",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNINV_Sword_11.blp": {
+      "status": "ok",
+      "size": 5387,
+      "sha256": "6d6cd6fcaaaa56fb3971b32b6b50a5250d835a4c3cf571b9dced581f771c0835",
+      "file": "ReplaceableTextures__CommandButtons__BTNINV_Sword_11.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNINV_Sword_11.blp": {
+      "status": "ok",
+      "size": 4107,
+      "sha256": "6ffc886c1d7ec7099a4491e90389ef140f71ca2f3ef0e66505b0e5d2f147cbcb",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNINV_Sword_11.blp",
+      "in_listfile": true
+    },
+    "SD2.MDX": {
+      "status": "ok",
+      "size": 67135,
+      "sha256": "7261f264c692d6262a966afba3ecc8c1c3817b53b8c97a58a639e4a6427db3dd",
+      "file": "SD2.MDX",
+      "in_listfile": true
+    },
+    "Textures\\RibbonBlur1.blp": {
+      "status": "ok",
+      "size": 6129,
+      "sha256": "aa0471cc3828f726c47e54a6198d8e8515e0c23e3b4a78931fe2f7a275da197a",
+      "file": "Textures__RibbonBlur1.blp",
+      "in_listfile": true
+    },
+    "Textures\\Tornado2b.blp": {
+      "status": "ok",
+      "size": 7355,
+      "sha256": "60def7402ed08e600c1b1efc988834054945b8256dd7c65c1f9606a8d6622658",
+      "file": "Textures__Tornado2b.blp",
+      "in_listfile": true
+    },
+    "Textures\\Red_Glow3.blp": {
+      "status": "ok",
+      "size": 3403,
+      "sha256": "2ba4e6336be3bc746dc63f458fe699aced049a914f19808cde70275dc221c7bf",
+      "file": "Textures__Red_Glow3.blp",
+      "in_listfile": true
+    },
+    "Textures\\TeamGlow00.blp": {
+      "status": "ok",
+      "size": 3910,
+      "sha256": "64a3a54c7f8187e175cbef97603c1fffc0c3f34298a4ad0526057362cfbd1644",
+      "file": "Textures__TeamGlow00.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNINV_Misc_Note_06.blp": {
+      "status": "ok",
+      "size": 5485,
+      "sha256": "0403c863e9e36bf237718b061da4aecf3092129a2b4011af52232ef98e0efa89",
+      "file": "ReplaceableTextures__CommandButtons__BTNINV_Misc_Note_06.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNOrbOfWater.BLP": {
+      "status": "ok",
+      "size": 5116,
+      "sha256": "6beb3e39d242a10373e04af70b2ec5afc5bcae64fc4f23761a34245d50c6edc3",
+      "file": "ReplaceableTextures__CommandButtons__BTNOrbOfWater.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNINV_Misc_Note_06.blp": {
+      "status": "ok",
+      "size": 4189,
+      "sha256": "39e77d10e9560f78e304340470006cdcfb3d8ed7886d79d1e361d5726a4f0257",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNINV_Misc_Note_06.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNOrbOfWater.BLP": {
+      "status": "ok",
+      "size": 4100,
+      "sha256": "ba35a4df0ca67adb371d10a261e9d554376f866d00539714897b5fe824e74db3",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNOrbOfWater.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNSaber.BLP": {
+      "status": "ok",
+      "size": 4546,
+      "sha256": "56eb1b826609e061d56f12aa9d69f475bba7b5107ed492ab95b67d45a8570483",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNSaber.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNSaber.BLP": {
+      "status": "ok",
+      "size": 5926,
+      "sha256": "2356a60a1cfe040834b58b4b7179838047ccfe820180eab6f1f84ac854b7666b",
+      "file": "ReplaceableTextures__CommandButtons__BTNSaber.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNCloud.BLP": {
+      "status": "ok",
+      "size": 4926,
+      "sha256": "06528534c1cecd2055ae130eaf92bd5c644351e819722f5d9463cf176b7b19c8",
+      "file": "ReplaceableTextures__CommandButtons__BTNCloud.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNMoon.BLP": {
+      "status": "ok",
+      "size": 5489,
+      "sha256": "2d6eaa05e64f986e06278f943f14917d8c8988877b85330ef6326440312dc43a",
+      "file": "ReplaceableTextures__CommandButtons__BTNMoon.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNChLon.BLP": {
+      "status": "ok",
+      "size": 5189,
+      "sha256": "3512dee3b0f0049e596fb26e4e041ac39fb15fe681de26ce7e9a1ab9248a3d76",
+      "file": "ReplaceableTextures__CommandButtons__BTNChLon.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNJoCu.BLP": {
+      "status": "ok",
+      "size": 5893,
+      "sha256": "011f88358147daeb00177b54664321b4c89bbb4d37d2c5c64a3580b22251a544",
+      "file": "ReplaceableTextures__CommandButtons__BTNJoCu.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNAzumi.BLP": {
+      "status": "ok",
+      "size": 5674,
+      "sha256": "9e8a34bd246fc2538adbcbb9777d15baa6390b808fa7aa176233524aa5fe1fa2",
+      "file": "ReplaceableTextures__CommandButtons__BTNAzumi.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNJay.BLP": {
+      "status": "ok",
+      "size": 5471,
+      "sha256": "0819283e8da60d1fce1a9b7e768c3067d8001cf1e26cfd00130de642deae6b63",
+      "file": "ReplaceableTextures__CommandButtons__BTNJay.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNJay.BLP": {
+      "status": "ok",
+      "size": 4164,
+      "sha256": "1bcac3b7f50b76505b1d103aa8f82f1bb5abf60102b71aa70bd7e346419bb631",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNJay.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNBam.BLP": {
+      "status": "ok",
+      "size": 5599,
+      "sha256": "01b82ae546dcc9ab6818f8d154bb2178b93a9d6cad9ca600ce7e6efd8ec4250c",
+      "file": "ReplaceableTextures__CommandButtons__BTNBam.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNBam.BLP": {
+      "status": "ok",
+      "size": 4101,
+      "sha256": "df563d377e9dc491ef547c0f9887fd3dab83b2fe24328a2946d83e3203f3e3c2",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNBam.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNPowo.BLP": {
+      "status": "ok",
+      "size": 5092,
+      "sha256": "ac70103de42b785bce7ceae9979e6fa4548b710684b4a4a3ac6f55eb6f87b764",
+      "file": "ReplaceableTextures__CommandButtons__BTNPowo.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNChHer.BLP": {
+      "status": "ok",
+      "size": 5370,
+      "sha256": "3de5d779c85ebbcdd29be2046f5477de3ef1efd7af347599ebb00e3aa7e571e1",
+      "file": "ReplaceableTextures__CommandButtons__BTNChHer.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNKike.BLP": {
+      "status": "ok",
+      "size": 5296,
+      "sha256": "73bec0a85e52b94e60f380e92fad75bdecbb361acb35449f4fe0d2c8020c2fc1",
+      "file": "ReplaceableTextures__CommandButtons__BTNKike.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNSnake.BLP": {
+      "status": "ok",
+      "size": 5195,
+      "sha256": "f90a8ec03413cd30c1e9f1c70bc9d1477cae649143713b37549000b7aaacdd78",
+      "file": "ReplaceableTextures__CommandButtons__BTNSnake.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNKiller.BLP": {
+      "status": "ok",
+      "size": 5688,
+      "sha256": "387213511b1542de5097bf87cb6615f46038395c1dcc4a6979583148afe2a541",
+      "file": "ReplaceableTextures__CommandButtons__BTNKiller.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNNaGi.BLP": {
+      "status": "ok",
+      "size": 5764,
+      "sha256": "ee2e2082004db5f07357e933cd61b32e14aa4e5b9e59e447d181ee259bc70d16",
+      "file": "ReplaceableTextures__CommandButtons__BTNNaGi.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNGundam.BLP": {
+      "status": "ok",
+      "size": 6313,
+      "sha256": "90acfc62c6cb400e6b002ef15e0b758d6fbde0d18f5c4b70bb800a37ade9539a",
+      "file": "ReplaceableTextures__CommandButtons__BTNGundam.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNSolo.BLP": {
+      "status": "ok",
+      "size": 5511,
+      "sha256": "618f880f179beed0184d3a4b3caaa052b319fcfa7c72e04f15ceba9e3bb453f1",
+      "file": "ReplaceableTextures__CommandButtons__BTNSolo.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNLina.BLP": {
+      "status": "ok",
+      "size": 5517,
+      "sha256": "64b0fc23fd08a51f7c83acacb53ba7d950d59749ce9a73df5bcf51362e677c9a",
+      "file": "ReplaceableTextures__CommandButtons__BTNLina.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNBoy.BLP": {
+      "status": "ok",
+      "size": 5093,
+      "sha256": "079dcfbed54587cc4e8c5fdac173dc9cc6db01c45e73ec9c3bcc305e79fbea92",
+      "file": "ReplaceableTextures__CommandButtons__BTNBoy.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNBoy.BLP": {
+      "status": "ok",
+      "size": 3938,
+      "sha256": "a08a7ddd01b31c59180be7f100b6431d52c6e4665dac8906953ae35f92b85c6e",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNBoy.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNHosilo.BLP": {
+      "status": "ok",
+      "size": 5401,
+      "sha256": "6984a4978fdfc7d9fd990e2b6e6585ffbbda26c14468505e3944eda5fef966ce",
+      "file": "ReplaceableTextures__CommandButtons__BTNHosilo.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNChama.BLP": {
+      "status": "ok",
+      "size": 5376,
+      "sha256": "143671d3234ca054e1dd3238478614808dca0f300abd3b287f48ee404b2d5335",
+      "file": "ReplaceableTextures__CommandButtons__BTNChama.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNBawind.BLP": {
+      "status": "ok",
+      "size": 5424,
+      "sha256": "de2e34c3634eb2cc1a3123d3070f95cb0baa48d1ead3c7446c25fe298310ea0b",
+      "file": "ReplaceableTextures__CommandButtons__BTNBawind.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNCaso.BLP": {
+      "status": "ok",
+      "size": 6239,
+      "sha256": "49702af99fcbc0d7b8ed778c38c66ff1e035189345f054b6a3f1fb5594fdec50",
+      "file": "ReplaceableTextures__CommandButtons__BTNCaso.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNMrChin.BLP": {
+      "status": "ok",
+      "size": 5224,
+      "sha256": "7c2064d8f22abcf20561c1272e368592c2bd6df47f59cdb614fcf3949dbe297a",
+      "file": "ReplaceableTextures__CommandButtons__BTNMrChin.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNHehi.BLP": {
+      "status": "ok",
+      "size": 5131,
+      "sha256": "cb931329d7bad92882654c78b953cf5a02c8f1b993f776f38bc2a2c7862a9f5d",
+      "file": "ReplaceableTextures__CommandButtons__BTNHehi.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNGhost2.BLP": {
+      "status": "ok",
+      "size": 5022,
+      "sha256": "bad7d90c234643c66555014f642980fa3e32d43c915c31d4e985ff7e47a0b9f7",
+      "file": "ReplaceableTextures__CommandButtons__BTNGhost2.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNLeaf.BLP": {
+      "status": "ok",
+      "size": 5422,
+      "sha256": "92767d81f8a9d30772fbb309ec292f08cf588612c05e7186f81257e72f1f02f3",
+      "file": "ReplaceableTextures__CommandButtons__BTNLeaf.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNStupid.BLP": {
+      "status": "ok",
+      "size": 6352,
+      "sha256": "a33b5b3c2dbb9ad9ede002edd6ba9467e73bb98700728a201d80d653cc51837e",
+      "file": "ReplaceableTextures__CommandButtons__BTNStupid.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNStupid.BLP": {
+      "status": "ok",
+      "size": 4818,
+      "sha256": "9d0db86e0dc18dd06905af367bca575fab8f76bd7cbfbec962317793b4134cc3",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNStupid.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNChLon.BLP": {
+      "status": "ok",
+      "size": 3929,
+      "sha256": "d5176853c12296c37df19c0501ba53559b89077ebca4890e2dd34814e3af62bb",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNChLon.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNJoCu.BLP": {
+      "status": "ok",
+      "size": 4629,
+      "sha256": "2c1d104054e682e6aeb35d01cf15e7e68205985a6cff5314873287a7475b9ee0",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNJoCu.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNAzumi.BLP": {
+      "status": "ok",
+      "size": 4089,
+      "sha256": "5bfa7bee4ece4427c420183906240acb6b769d113118c26c6b85b80826ba0c73",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNAzumi.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNCloud.BLP": {
+      "status": "ok",
+      "size": 3815,
+      "sha256": "aa627454aa83693c9efdb20aa9380c6e07cb07eaf44bb2c66468002c143b2d9f",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNCloud.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNVampire.BLP": {
+      "status": "ok",
+      "size": 6060,
+      "sha256": "d4d57a3ab11ca022032c309d570e147445f2c647ce1817dd161640d70baf775a",
+      "file": "ReplaceableTextures__CommandButtons__BTNVampire.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNVampire.BLP": {
+      "status": "ok",
+      "size": 4912,
+      "sha256": "fbce8ee41674e63cd1de21356e6c590d90b73cb9fdd405eb2faf2d6c938ba3aa",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNVampire.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNMoon.BLP": {
+      "status": "ok",
+      "size": 3943,
+      "sha256": "37d64c5c3b72def9de11e9ffce13d374b6a613c382eed0e24b656b41b6899ea2",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNMoon.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNChHer.BLP": {
+      "status": "ok",
+      "size": 4020,
+      "sha256": "667a9a3b79815cf7cd7e3b93bcb02ea146921f0526f43d60347fed5dc06ecc5b",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNChHer.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNHehi.BLP": {
+      "status": "ok",
+      "size": 3860,
+      "sha256": "9218217a3bafb598360e33a9d84aff0bd3cc0d9ca5a5bd95ab97b0ca7cef3f20",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNHehi.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNKenshro.BLP": {
+      "status": "ok",
+      "size": 6106,
+      "sha256": "e96fb3ccba611c4e4baf497306c52c590dd9ffd798ae965fe64a80e7a7b42233",
+      "file": "ReplaceableTextures__CommandButtons__BTNKenshro.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNKenshro.BLP": {
+      "status": "ok",
+      "size": 4940,
+      "sha256": "77b69b076f7e5485ea0dbca9cc3d376b64549c4d438d2777d68739f37b985be5",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNKenshro.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNKike.BLP": {
+      "status": "ok",
+      "size": 3863,
+      "sha256": "0f6ecc65a390bd0fe4452cb158c6684b265f00b28a155ab0d95ad5cf81556433",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNKike.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNNaGi.BLP": {
+      "status": "ok",
+      "size": 4135,
+      "sha256": "52f477cb7507f2ce51515f4e12ce433f806f207066146998125199324b57d5a1",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNNaGi.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNSolo.BLP": {
+      "status": "ok",
+      "size": 4021,
+      "sha256": "227fb3f4133e0aaefb06b5b1c0a1e95e49e4b7b7ca5d246d5df42b5e4fcf3b00",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNSolo.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNGhost2.BLP": {
+      "status": "ok",
+      "size": 3867,
+      "sha256": "75083e4c222fe0ebb5379a5a5d6af1a520903a744877911322e06fb83c8d043b",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNGhost2.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNSnake.BLP": {
+      "status": "ok",
+      "size": 4011,
+      "sha256": "a93f9676b1b591c324a4e866090537ef693543e3fefbc79c43434fb9b0edce10",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNSnake.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNKiller.BLP": {
+      "status": "ok",
+      "size": 4110,
+      "sha256": "d1f74d26cde5e47f4214f6d4bdb2f8b316ed41964ba6e6d5335f8b86bd57c483",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNKiller.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNLina.BLP": {
+      "status": "ok",
+      "size": 4061,
+      "sha256": "162b175984b06e0e9d13a131e9da6388de0d1f100aa7cf420fb99172d2d213a3",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNLina.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNLeaf.BLP": {
+      "status": "ok",
+      "size": 4042,
+      "sha256": "db10985cceffd3c4071638a2422a80a849ef2a65cde14f6e894d35281af52793",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNLeaf.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNPowo.BLP": {
+      "status": "ok",
+      "size": 3825,
+      "sha256": "b20d4fd3906b0b5b341c57e388b22128b0049b7b9cb0c0aa7be645d23d7c3bde",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNPowo.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNGundam.BLP": {
+      "status": "ok",
+      "size": 4759,
+      "sha256": "6fbe3b1ebc4c3c61d88f2ea45dba615a4ead2c8e68fc1299b279b06976c4b03d",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNGundam.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNCaso.BLP": {
+      "status": "ok",
+      "size": 4678,
+      "sha256": "74f0b8382940873420cc04eceef493205e6034a3ce482d01dc50efbdcfc29ebe",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNCaso.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNWildmask.BLP": {
+      "status": "ok",
+      "size": 5738,
+      "sha256": "f9a8a763d1d87896bb56f1afa167a7e87332f4c90565d5454a489deca68324ce",
+      "file": "ReplaceableTextures__CommandButtons__BTNWildmask.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNWildmask.BLP": {
+      "status": "ok",
+      "size": 4122,
+      "sha256": "3a77781f738024bd55b3a2e1eac1f65b7482cd42cbafd70e1ef7a7f169c52b13",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNWildmask.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNHosilo.BLP": {
+      "status": "ok",
+      "size": 4076,
+      "sha256": "7c6b33d0c741bfb4e51fb459cc68dccdf1b41ced53412188d24893b709e54f55",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNHosilo.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNKenshin.BLP": {
+      "status": "ok",
+      "size": 5386,
+      "sha256": "bd4fe162eed6ba608bfb553ee8b214e859b646d625a47cf5bfadaf5a08c6b5f4",
+      "file": "ReplaceableTextures__CommandButtons__BTNKenshin.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNKenshin.BLP": {
+      "status": "ok",
+      "size": 3965,
+      "sha256": "61fc7c5ec1a3d494584a0be2811807a07141b6652a4313f11f35c82e75e62e8a",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNKenshin.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNMrChin.BLP": {
+      "status": "ok",
+      "size": 3897,
+      "sha256": "bef7a45d0a19099b863c6b7d868bd83b82ccc47710cb3d70f0bd7e3a87aaf1c7",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNMrChin.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNChama.BLP": {
+      "status": "ok",
+      "size": 4063,
+      "sha256": "1edc5552ee05fa57221b5faeff3bc8d263e267b6b39b18da7a2364657ebc34bb",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNChama.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNBawind.BLP": {
+      "status": "ok",
+      "size": 4093,
+      "sha256": "79dc4d34fd7224d0e91e072baa739a00fc3457774a25f77f6a759ac4a3666dcf",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNBawind.BLP",
+      "in_listfile": true
+    },
+    "Sesshomaru.blp": {
+      "status": "ok",
+      "size": 20703,
+      "sha256": "44e9a0a240ee1322768e161d3e58bb826cab5393c1e7b4803e490f4a5289b090",
+      "file": "Sesshomaru.blp",
+      "in_listfile": true
+    },
+    "Sesshomaru.mdx": {
+      "status": "ok",
+      "size": 49743,
+      "sha256": "2805c0c472ee4f1f94b9c9130da9ea1abb78c32a22897bbed3cd3965454faecb",
+      "file": "Sesshomaru.mdx",
+      "in_listfile": true
+    },
+    "war3mapImported\\nocute.mp3": {
+      "status": "ok",
+      "size": 5642,
+      "sha256": "d8800ccdf39856dc56acd7e1ccdb87ece64bcad5c5a03cd1f34bb434f411be0d",
+      "file": "war3mapImported__nocute.mp3",
+      "in_listfile": true
+    },
+    "war3mapImported\\pikakill.mp3": {
+      "status": "ok",
+      "size": 10971,
+      "sha256": "184a8e312b68b966a82643a5ab7aecc59738b7ab8e791d0f8ba111653eb4be70",
+      "file": "war3mapImported__pikakill.mp3",
+      "in_listfile": true
+    },
+    "war3mapImported\\die.mp3": {
+      "status": "ok",
+      "size": 5642,
+      "sha256": "6068200f92104e657914a6b8269079c1b1ee40bad2d66551f3ffa6dfa86cdc78",
+      "file": "war3mapImported__die.mp3",
+      "in_listfile": true
+    },
+    "war3mapImported\\87joke.Mp3": {
+      "status": "ok",
+      "size": 28224,
+      "sha256": "f0999a6de2871297540623049b650bf5ec482ad76b9b8a38704308198203ab0f",
+      "file": "war3mapImported__87joke.Mp3",
+      "in_listfile": true
+    },
+    "war3mapImported\\4die.mp3": {
+      "status": "ok",
+      "size": 6687,
+      "sha256": "883d3f4dc8a5bc2e16063d2c02272299efeb70f5490775e3917ebc6595ff6c1b",
+      "file": "war3mapImported__4die.mp3",
+      "in_listfile": true
+    },
+    "HeroKunoichi.mdx": {
+      "status": "ok",
+      "size": 80707,
+      "sha256": "7673cbcedbfda71d85e4dbe447e8174382d63a9944af9c089a46f53d70540a32",
+      "file": "HeroKunoichi.mdx",
+      "in_listfile": true
+    },
+    "Textures\\Katana.blp": {
+      "status": "ok",
+      "size": 7156,
+      "sha256": "296d50c63ad9ca4f7855ea9e9a4232aa3b72ceda1c0fc3e4bfbe848c808b2e67",
+      "file": "Textures__Katana.blp",
+      "in_listfile": true
+    },
+    "Textures\\HeroSamanosukeAkechi.blp": {
+      "status": "ok",
+      "size": 22391,
+      "sha256": "7e3d1e1b1d61d888d5f0dce486d315ad9c132a585d733659062fdb025ba2140b",
+      "file": "Textures__HeroSamanosukeAkechi.blp",
+      "in_listfile": true
+    },
+    "Bladestorm_SwordEffect.mdx": {
+      "status": "ok",
+      "size": 20612,
+      "sha256": "98fa750e4e7acf94827d2a1c3f605c76349886e7aeefaec12132ceb26d440bed",
+      "file": "Bladestorm_SwordEffect.mdx",
+      "in_listfile": true
+    },
+    "Goku.mdx": {
+      "status": "ok",
+      "size": 51850,
+      "sha256": "8b9551e395aa9fd8a2e38f02fb27c336f713e9e812580ed4cf0eabe567540713",
+      "file": "Goku.mdx",
+      "in_listfile": true
+    },
+    "body256.blp": {
+      "status": "ok",
+      "size": 16657,
+      "sha256": "1972c79c26596f17e4c603760d253998027fdc64807ae10b71ffdb8d3a99799c",
+      "file": "body256.blp",
+      "in_listfile": true
+    },
+    "face.blp": {
+      "status": "ok",
+      "size": 10204,
+      "sha256": "40b59f2ed12ea4691cd7a4873ed005d0e68fdc6199138ac012d79ac9cf2b61f5",
+      "file": "face.blp",
+      "in_listfile": true
+    },
+    "HeroHanzouHattori.mdx": {
+      "status": "ok",
+      "size": 61878,
+      "sha256": "8cc27c3d50a1fc2e5647b7db3907d13bbfab68d50d5663e28ac70eea2d0d2b97",
+      "file": "HeroHanzouHattori.mdx",
+      "in_listfile": true
+    },
+    "Textures\\HeroHanzouHattori.blp": {
+      "status": "ok",
+      "size": 20413,
+      "sha256": "66550b827476968135ed382f2027c315834c6fa00a86afac3ac2a54ac5267316",
+      "file": "Textures__HeroHanzouHattori.blp",
+      "in_listfile": true
+    },
+    "Textures\\HeroMusashiMiyamoto.blp": {
+      "status": "ok",
+      "size": 26865,
+      "sha256": "6a27474378b2cf9fa5d0962d7235195898f785c966171baedcb3b0929058ae63",
+      "file": "Textures__HeroMusashiMiyamoto.blp",
+      "in_listfile": true
+    },
+    "HolyAwakening.mdx": {
+      "status": "ok",
+      "size": 25418,
+      "sha256": "a53fd9818a28351dedb87dade7c954809e9f5f8c1e10eb2b2e90d2f2eb49e4a9",
+      "file": "HolyAwakening.mdx",
+      "in_listfile": true
+    },
+    "Kikyou.MDX": {
+      "status": "ok",
+      "size": 57215,
+      "sha256": "767042018664951ea2d571e5310d203b459227873fc9d2fcf9e6da4d9d54d54c",
+      "file": "Kikyou.MDX",
+      "in_listfile": true
+    },
+    "kikyou.blp": {
+      "status": "ok",
+      "size": 27902,
+      "sha256": "8df3c711b2a8a3eb818d0ddc078f7c721dbe8d4497482d58ce7b8234e195b751",
+      "file": "kikyou.blp",
+      "in_listfile": true
+    },
+    "DeathWave.mdx": {
+      "status": "ok",
+      "size": 12691,
+      "sha256": "96aff8c248da1984936c73113546d2140d131183c6e47b96cc726b1098230f20",
+      "file": "DeathWave.mdx",
+      "in_listfile": true
+    },
+    "Textures\\ring.blp": {
+      "status": "ok",
+      "size": 5958,
+      "sha256": "8a2b5809d23cd1b9944f35bdaa1ae06d03b57a5814619bc982d57d18259fe954",
+      "file": "Textures__ring.blp",
+      "in_listfile": true
+    },
+    "Textures\\Blue_Glow2.blp": {
+      "status": "ok",
+      "size": 4144,
+      "sha256": "9cd2370451216e45e66c7929dedd911bbffc12d4d39b90d1ef8faa1330994ec0",
+      "file": "Textures__Blue_Glow2.blp",
+      "in_listfile": true
+    },
+    "Textures\\HeroCloth.blp": {
+      "status": "ok",
+      "size": 8963,
+      "sha256": "5b1ca6796fe4660e1e2e62d56cb5adc16b7ee541efa61b20a0efe6ce754902e8",
+      "file": "Textures__HeroCloth.blp",
+      "in_listfile": true
+    },
+    "HeroSaber.mdx": {
+      "status": "ok",
+      "size": 77996,
+      "sha256": "433579de5a805aeec2af1a78fa92deef1b2c701139d93be342dfcd9918831357",
+      "file": "HeroSaber.mdx",
+      "in_listfile": true
+    },
+    "Textures\\HeroSaber.blp": {
+      "status": "ok",
+      "size": 38136,
+      "sha256": "3e0283aae6d81adefb7983b3d122ff5e0100ebfa93545dd6f9705208f40fdf89",
+      "file": "Textures__HeroSaber.blp",
+      "in_listfile": true
+    },
+    "linkstik.mdx": {
+      "status": "ok",
+      "size": 62817,
+      "sha256": "2dead9b090da9c097266416b6be7abd2272dc8eef5b913fdd1ed2bffacdcfc01",
+      "file": "linkstik.mdx",
+      "in_listfile": true
+    },
+    "linkbody.blp": {
+      "status": "ok",
+      "size": 11712,
+      "sha256": "7bee67c3ce3983dab806f5abe81d5ff7473fb204c10e9f9225533697d613ad8b",
+      "file": "linkbody.blp",
+      "in_listfile": true
+    },
+    "linkface.blp": {
+      "status": "ok",
+      "size": 11600,
+      "sha256": "bfbd6ed8dfe34600997f284cd442d9e5a7dd240b225200bc0f02116d34ea5654",
+      "file": "linkface.blp",
+      "in_listfile": true
+    },
+    "HeroToshiieMaeda.mdx": {
+      "status": "ok",
+      "size": 76101,
+      "sha256": "b8719a239c6b5b67af12bac718d7c4987250d54e8d0e14e4f1f41f99e7b5f24e",
+      "file": "HeroToshiieMaeda.mdx",
+      "in_listfile": true
+    },
+    "Textures\\HeroToshiieMaeda.blp": {
+      "status": "ok",
+      "size": 17450,
+      "sha256": "492ad1da22c8e228e0b96d5722e8329567bf5a25454acdf77eb9e45a3a6fb7cd",
+      "file": "Textures__HeroToshiieMaeda.blp",
+      "in_listfile": true
+    },
+    "HeroGirl.mdx": {
+      "status": "ok",
+      "size": 80707,
+      "sha256": "637e393f244cd55853f6b7842849318bbdc471847112633f6c63a22b05bec16b",
+      "file": "HeroGirl.mdx",
+      "in_listfile": true
+    },
+    "HeroGirl.blp": {
+      "status": "ok",
+      "size": 31194,
+      "sha256": "ce183e4faa7b32ba1e8aaa4fa3560e28baebb2e94b2ba15a207df2952d002f20",
+      "file": "HeroGirl.blp",
+      "in_listfile": true
+    },
+    "HeroHehi.mdx": {
+      "status": "ok",
+      "size": 78078,
+      "sha256": "422275ec3e8130605959fc3dde0c323ee9a74d1fd5cc59994ae923cf4ea32357",
+      "file": "HeroHehi.mdx",
+      "in_listfile": true
+    },
+    "HeroHehi.blp": {
+      "status": "ok",
+      "size": 23859,
+      "sha256": "91ce11a6c6139a2562ed87f6336eedebff774bcfdf83bd120dfb40dc4030d7cb",
+      "file": "HeroHehi.blp",
+      "in_listfile": true
+    },
+    "FireBlast.mdx": {
+      "status": "ok",
+      "size": 13580,
+      "sha256": "6714ef7c926d86b724e15707b91b9e8429b2fe994cf6597b5ca95c7569ada2a0",
+      "file": "FireBlast.mdx",
+      "in_listfile": true
+    },
+    "GrandUndeadAura.mdx": {
+      "status": "ok",
+      "size": 8136,
+      "sha256": "f40ec0678f15dde53c2cf5a1aeb53fe27c1d7ec3128170fd0833ec8f3e9cc2b7",
+      "file": "GrandUndeadAura.mdx",
+      "in_listfile": true
+    },
+    "Textures\\Black32.blp": {
+      "status": "ok",
+      "size": 2880,
+      "sha256": "a54878ffa09e24b0a1730b4ee7979ceccb6d84e3001c542ddfd2b2535c08f022",
+      "file": "Textures__Black32.blp",
+      "in_listfile": true
+    },
+    "Meteor.mdx": {
+      "status": "ok",
+      "size": 26048,
+      "sha256": "db48946c42f95ece28e809bf4c8587149f9f7b90001c72fd0d367d8935c79760",
+      "file": "Meteor.mdx",
+      "in_listfile": true
+    },
+    "gumdam.mdx": {
+      "status": "ok",
+      "size": 84893,
+      "sha256": "acb3def2e77c278330bad43fd1566d0dd15d155a465bb5edb61ccda5912c18d7",
+      "file": "gumdam.mdx",
+      "in_listfile": true
+    },
+    "FWING.blp": {
+      "status": "ok",
+      "size": 7530,
+      "sha256": "8e170647472ca7c936957046a5261091e335b8763033b0277b1486b42b816f57",
+      "file": "FWING.blp",
+      "in_listfile": true
+    },
+    "units\\Creeps\\IronGolem\\IronGolem.blp": {
+      "status": "ok",
+      "size": 27450,
+      "sha256": "ef440cb6119c563b19d5200678c2411e716904e17cb61beac842799bdd0857e6",
+      "file": "units__Creeps__IronGolem__IronGolem.blp",
+      "in_listfile": true
+    },
+    "LightningTornado.mdx": {
+      "status": "ok",
+      "size": 21482,
+      "sha256": "3c6c541d32dab076d05f95f09c97db5a41a68199907dd84e54ffe7e525fa5c1d",
+      "file": "LightningTornado.mdx",
+      "in_listfile": true
+    },
+    "Textures\\Zap1.blp": {
+      "status": "ok",
+      "size": 6351,
+      "sha256": "4eecb1075af077b0f5aab887a217af6d364c3e425fa8345ad4ae2b15d991dc55",
+      "file": "Textures__Zap1.blp",
+      "in_listfile": true
+    },
+    "Textures\\Zap1b.blp": {
+      "status": "ok",
+      "size": 6618,
+      "sha256": "32563f22b9d4454ceab135c6b2275b121eb076d1f7f109055b3f1ba0df8b9054",
+      "file": "Textures__Zap1b.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNSana.BLP": {
+      "status": "ok",
+      "size": 5792,
+      "sha256": "4a1df5e2e86da486bb7aa64d0988f985247358567cd09d638a7c566cf8eb5d59",
+      "file": "ReplaceableTextures__CommandButtons__BTNSana.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNLink.BLP": {
+      "status": "ok",
+      "size": 5809,
+      "sha256": "6176e9f15cd7cca34364b7d2a5815d0e657eecbfccb298a6e7de33179f9f8330",
+      "file": "ReplaceableTextures__CommandButtons__BTNLink.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNGrant.BLP": {
+      "status": "ok",
+      "size": 5393,
+      "sha256": "db6990aa484f7c86a5bec6746c88521c58b5f8b7f6299404452c22bc946fce41",
+      "file": "ReplaceableTextures__CommandButtons__BTNGrant.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNZeros.BLP": {
+      "status": "ok",
+      "size": 5893,
+      "sha256": "50728c89d00dac2f8e74c154dcc3b328a93e717d0dfb0c3485b6a090e1ac274b",
+      "file": "ReplaceableTextures__CommandButtons__BTNZeros.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNNight.BLP": {
+      "status": "ok",
+      "size": 6063,
+      "sha256": "9eefc5b0f3823f289d95a9bd3aed24f1fdd290a552a361ffb468b4569cd771a4",
+      "file": "ReplaceableTextures__CommandButtons__BTNNight.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNKYO.BLP": {
+      "status": "ok",
+      "size": 4049,
+      "sha256": "e7df6afe4e8df821a844959be34e17f97ec01c16a29accca7940fd8023672890",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNKYO.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNHentai.BLP": {
+      "status": "ok",
+      "size": 5372,
+      "sha256": "01f6365f826f4da4e2b86db1d05bef45644775bc30d6b7b49069ecee69c12c8d",
+      "file": "ReplaceableTextures__CommandButtons__BTNHentai.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNGoku.BLP": {
+      "status": "ok",
+      "size": 5441,
+      "sha256": "25c9e6d955b30f884bed029715ef0700ba98d896cf189bc8c45d7a6a119cb3ef",
+      "file": "ReplaceableTextures__CommandButtons__BTNGoku.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNLink.BLP": {
+      "status": "ok",
+      "size": 4408,
+      "sha256": "1c0556f8a3c243f8b0cd4fc2c915c69b9d85527d9477d5b0603c98ac382ea786",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNLink.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNGrant.BLP": {
+      "status": "ok",
+      "size": 4031,
+      "sha256": "4d8af6404f0fd2c6bb02ca2b4087161ed7419480e6eae12e0431f6a0b4892bc9",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNGrant.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNSana.BLP": {
+      "status": "ok",
+      "size": 4317,
+      "sha256": "37588bd849887338a02acbd1ed5aeea9b7089b615803d5adee57947aa2671a76",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNSana.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNGoku.BLP": {
+      "status": "ok",
+      "size": 4014,
+      "sha256": "fdad7db37a7a12a1a92341b5719e8187eacbfbd4a9c942bc543de72f44f83d31",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNGoku.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNHentai.BLP": {
+      "status": "ok",
+      "size": 4444,
+      "sha256": "153399d2e6726f87344a251e7a7590a1e7e73393427e0cab3660688c5a4875ea",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNHentai.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNKYO.BLP": {
+      "status": "ok",
+      "size": 5548,
+      "sha256": "8539272857304d2a0c10693a1e1f984ad8317360b484a1114ce45ca164d37073",
+      "file": "ReplaceableTextures__CommandButtons__BTNKYO.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNZeros.BLP": {
+      "status": "ok",
+      "size": 4535,
+      "sha256": "27bd3d7757ccfc25dbb0be29ff579d45178b8662ab93ef4448b82dca15530ab9",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNZeros.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNNight.BLP": {
+      "status": "ok",
+      "size": 4539,
+      "sha256": "0db44a389f5b7e8520bb3e7b6fb7ca80d7e36ae2879425baa0ad2d80a9133d22",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNNight.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNBerserker.BLP": {
+      "status": "ok",
+      "size": 5920,
+      "sha256": "b4be1a41391c3b38e20f3dc921768c0739dd88840bccddbc2db710f964cb62ab",
+      "file": "ReplaceableTextures__CommandButtons__BTNBerserker.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNBerserker.BLP": {
+      "status": "ok",
+      "size": 4475,
+      "sha256": "80b1bcb1fbb1cac8583a1efdfc20408bf1f50898a86c0fc9e581569ddbc16a1a",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNBerserker.BLP",
+      "in_listfile": true
+    },
+    "SuperShinyThingy.mdx": {
+      "status": "ok",
+      "size": 20549,
+      "sha256": "0d91bb42b8df958492b79f3d83024956b90c01203168e0b9ba7e71bf0a42278e",
+      "file": "SuperShinyThingy.mdx",
+      "in_listfile": true
+    },
+    "Flash.mdx": {
+      "status": "ok",
+      "size": 5750,
+      "sha256": "4598907748379e956b539bf0e4be214597a0ab07efa73e63e97f0c367a466bfd",
+      "file": "Flash.mdx",
+      "in_listfile": true
+    },
+    "HeroSamanosukeAkechi.mdx": {
+      "status": "ok",
+      "size": 72172,
+      "sha256": "06d50768dc79550fc3e3435abd29f4380abf5d3e222efab30f2a13b8f7c8904d",
+      "file": "HeroSamanosukeAkechi.mdx",
+      "in_listfile": true
+    },
+    "HeroMusashiMiyamoto.mdx": {
+      "status": "ok",
+      "size": 79150,
+      "sha256": "299251195cbb183a57554cde12b78b0545ff553255576f20231b0e6da231bd94",
+      "file": "HeroMusashiMiyamoto.mdx",
+      "in_listfile": true
+    },
+    "war3mapPreview.tga": {
+      "status": "ok",
+      "size": 196626,
+      "sha256": "417110af4911f93111b4d679267b71aa9dbab4c0aa44612b0ab4f408f2b0aa1d",
+      "file": "war3mapPreview.tga",
+      "in_listfile": true
+    },
+    "NetherStrike.mdx": {
+      "status": "ok",
+      "size": 25940,
+      "sha256": "181ee0de22b826a6ab87837db0f12f4643d93a8890a1c2dc72ade2daa535810f",
+      "file": "NetherStrike.mdx",
+      "in_listfile": true
+    },
+    "MegaBlast2.blp": {
+      "status": "ok",
+      "size": 11929,
+      "sha256": "fe48507fa49868ad5d67536fd63b90e6fca5e3f1525af33551604fb4271a17cd",
+      "file": "MegaBlast2.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNPaladinsSword.BLP": {
+      "status": "ok",
+      "size": 5082,
+      "sha256": "f192f27136406b8f781a8396ab1525c57d150fc7070ec4649f261dfc02299d33",
+      "file": "ReplaceableTextures__CommandButtons__BTNPaladinsSword.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNPaladinsSword.BLP": {
+      "status": "ok",
+      "size": 4002,
+      "sha256": "e81c25c1b9953d41267c641a8175c6f9d0cb1f2903811e82a681c3019bcf166a",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNPaladinsSword.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNCelestrialShield.blp": {
+      "status": "ok",
+      "size": 5503,
+      "sha256": "b0820e8ea52d0ac1d44d82c2e5e4814f2272242c0783a7f017c5b5e62b9106ad",
+      "file": "ReplaceableTextures__CommandButtons__BTNCelestrialShield.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNCelestrialShield.blp": {
+      "status": "ok",
+      "size": 3758,
+      "sha256": "dc1484e9e5fdb41392ceb10bbd39e970a41c51978fc51928aebb8036d16ba3f7",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNCelestrialShield.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNWarlockCloak.BLP": {
+      "status": "ok",
+      "size": 5144,
+      "sha256": "8fd20257adbccd4c5274b4602375ee2c82f7558f457d73225a3b7521335a33f7",
+      "file": "ReplaceableTextures__CommandButtons__BTNWarlockCloak.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNWarlockCloak.BLP": {
+      "status": "ok",
+      "size": 4390,
+      "sha256": "ad98fa1d0863867f6a5d99f62b799d83945bbd23c98458f20f3264f950fa6fe7",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNWarlockCloak.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNFrostAxe.BLP": {
+      "status": "ok",
+      "size": 5643,
+      "sha256": "bee9208fa17b38789c202f491e5c76af8c2a9577e6f9494253ac5e330c165ca8",
+      "file": "ReplaceableTextures__CommandButtons__BTNFrostAxe.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNFrostAxe.BLP": {
+      "status": "ok",
+      "size": 4038,
+      "sha256": "71ca6a0f2ec3a829b3411e5e26db7bfb9fe328743635d17a3b9df1b3abbaf823",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNFrostAxe.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNFirst.BLP": {
+      "status": "ok",
+      "size": 5054,
+      "sha256": "1658de36bda5dad795d76c49ffaf1c01e38ae24b8cf698f64e74130a883bc5e3",
+      "file": "ReplaceableTextures__CommandButtons__BTNFirst.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNFirst.BLP": {
+      "status": "ok",
+      "size": 3744,
+      "sha256": "8a75b095c0a1e4d5c1d54dcffc2a96f4b4abdaf595bc97423d95fd26ffcc0cdd",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNFirst.BLP",
+      "in_listfile": true
+    },
+    "war3mapImported\\bads.mp3": {
+      "status": "ok",
+      "size": 10344,
+      "sha256": "632716616f2ec5b0b6d4104eba2f53589a67d37e38c74d298000fb2112ef82a9",
+      "file": "war3mapImported__bads.mp3",
+      "in_listfile": true
+    },
+    "war3mapImported\\PICK.mp3": {
+      "status": "ok",
+      "size": 1881,
+      "sha256": "f8b2cd08e5f47d2b7c2ecb8178d30161cfc22e7d087995ee77ee67076a628bd2",
+      "file": "war3mapImported__PICK.mp3",
+      "in_listfile": true
+    },
+    "war3mapImported\\pcdie.mp3": {
+      "status": "ok",
+      "size": 7732,
+      "sha256": "7e8e82656bcf1557f10239500bfc8a1d7a30f912221f0d283aec67b6fe8315c7",
+      "file": "war3mapImported__pcdie.mp3",
+      "in_listfile": true
+    },
+    "war3mapImported\\dogdie.mp3": {
+      "status": "ok",
+      "size": 5433,
+      "sha256": "b8483bc5942c8e9d5b209e2e58f33590cc0183021a7f352856c320f649af7397",
+      "file": "war3mapImported__dogdie.mp3",
+      "in_listfile": true
+    },
+    "war3mapImported\\moongo.mp3": {
+      "status": "ok",
+      "size": 3030,
+      "sha256": "5aabb0912972884eddec2d1ee203a27b10fecddbc79fc08e5a51a92d8a3ee234",
+      "file": "war3mapImported__moongo.mp3",
+      "in_listfile": true
+    },
+    "war3mapImported\\moonjump.mp3": {
+      "status": "ok",
+      "size": 5851,
+      "sha256": "9025f208a90f71918a215dd70283d860b3f720cd860c677435db557f4b0d78e3",
+      "file": "war3mapImported__moonjump.mp3",
+      "in_listfile": true
+    },
+    "war3mapImported\\mandie.mp3": {
+      "status": "ok",
+      "size": 5433,
+      "sha256": "9fd49ed98a11ee4b040fe1c0ba59776f4f6948b448ace601a194399d33f7dc0f",
+      "file": "war3mapImported__mandie.mp3",
+      "in_listfile": true
+    },
+    "war3mapImported\\even.mp3": {
+      "status": "ok",
+      "size": 4598,
+      "sha256": "493a34487e0b8339ab71779e540c978348d3dc405d08d15c98f9a9a4629f12f7",
+      "file": "war3mapImported__even.mp3",
+      "in_listfile": true
+    },
+    "war3mapImported\\nog.mp3": {
+      "status": "ok",
+      "size": 7314,
+      "sha256": "20b3c05367a6b2d967ff46680c7b4aee49c91fbd5a40ca68cdc89b12b2ca6241",
+      "file": "war3mapImported__nog.mp3",
+      "in_listfile": true
+    },
+    "war3mapImported\\kickme.mp3": {
+      "status": "ok",
+      "size": 8359,
+      "sha256": "6c1048cb85dd4915e6865a1c69cacd86dee2971c2d38df027a06ac8df414a027",
+      "file": "war3mapImported__kickme.mp3",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\TeamGlow\\TeamGlow06.blp": {
+      "status": "ok",
+      "size": 3409,
+      "sha256": "9ccd57f777d19798b2f38bdf803b09549be98db235166f833daadc278b17091a",
+      "file": "ReplaceableTextures__TeamGlow__TeamGlow06.blp",
+      "in_listfile": true
+    },
+    "HeroLingTong.mdx": {
+      "status": "ok",
+      "size": 72202,
+      "sha256": "1bcc2949e16c406946b52f35493b069e594c9acbac2cd9f3826a652a0fad6c64",
+      "file": "HeroLingTong.mdx",
+      "in_listfile": true
+    },
+    "HeroLingTong.blp": {
+      "status": "ok",
+      "size": 23166,
+      "sha256": "89342174b1fd28e28b20d096c4e84df7108238ee755b939a41f5454d1c7e022c",
+      "file": "HeroLingTong.blp",
+      "in_listfile": true
+    },
+    "Textures\\EredarRed.blp": {
+      "status": "ok",
+      "size": 22958,
+      "sha256": "2ee7d076999c468a24d385f1fde99f0c4d8c46137cf7f3882f742ae7c8ba3638",
+      "file": "Textures__EredarRed.blp",
+      "in_listfile": true
+    },
+    "ssjface2.blp": {
+      "status": "ok",
+      "size": 13084,
+      "sha256": "e9e668a3f4d018c63b987d1de612ec2b487624ceeb67bb051a9593e344877c7c",
+      "file": "ssjface2.blp",
+      "in_listfile": true
+    },
+    "Textures\\HeroKunoichi.blp": {
+      "status": "ok",
+      "size": 26673,
+      "sha256": "b512d101dc02eb9340af152571e24153fa4d6170677a6c07947cc5a9f1260591",
+      "file": "Textures__HeroKunoichi.blp",
+      "in_listfile": true
+    },
+    "Tectonicfury.mdx": {
+      "status": "ok",
+      "size": 9118,
+      "sha256": "a5cc2d7be17501db231a2225799b21e4b0f5d1edd5b8c24b6aba210b0fb06912",
+      "file": "Tectonicfury.mdx",
+      "in_listfile": true
+    },
+    "Abilities\\Weapons\\rocktile.blp": {
+      "status": "ok",
+      "size": 12251,
+      "sha256": "0d4f0097997d4c6aea12a72b97a7eea552b8ebcb40cae52d8307515b5a278800",
+      "file": "Abilities__Weapons__rocktile.blp",
+      "in_listfile": true
+    },
+    "Textures\\RockParticle.blp": {
+      "status": "ok",
+      "size": 2536,
+      "sha256": "630594bd3788805529129174ec36d70524faf11c09ca30e79c666ec3eac4a6de",
+      "file": "Textures__RockParticle.blp",
+      "in_listfile": true
+    },
+    "ye-wuqi1.MDX": {
+      "status": "ok",
+      "size": 77017,
+      "sha256": "39f920693119d05136eefa85d43cc4274e1d5b1263025a5e27d1f1a6ddb890b5",
+      "file": "ye-wuqi1.MDX",
+      "in_listfile": true
+    },
+    "tlwt.blp": {
+      "status": "ok",
+      "size": 25646,
+      "sha256": "8cfff2dc98c12dd67f6f3aeef4a21693ead5ec48ce83872e8202582513570c5c",
+      "file": "tlwt.blp",
+      "in_listfile": true
+    },
+    "wu-tie.blp": {
+      "status": "ok",
+      "size": 9426,
+      "sha256": "f019b4021c7b9ccd4137a893b07fda636107ccf9ff65f030bea49ba8ae9e12d3",
+      "file": "wu-tie.blp",
+      "in_listfile": true
+    },
+    "wuqi.MDX": {
+      "status": "ok",
+      "size": 8894,
+      "sha256": "b9ad20bf6d2f644d4114461b234c21c652d27d6b0b9a944bae0e608213eb0ce8",
+      "file": "wuqi.MDX",
+      "in_listfile": true
+    },
+    "HeroRider.mdx": {
+      "status": "ok",
+      "size": 72688,
+      "sha256": "c780f3f371879af52ded58103b797624e836e8327bc8467953790a4b0a578340",
+      "file": "HeroRider.mdx",
+      "in_listfile": true
+    },
+    "Textures\\HeroRider.blp": {
+      "status": "ok",
+      "size": 14093,
+      "sha256": "831a71f6a2aa12c322adb82466fdff2b8689ec0fdf2548b3d0fd839f08af383e",
+      "file": "Textures__HeroRider.blp",
+      "in_listfile": true
+    },
+    "HeroPika.mdx": {
+      "status": "ok",
+      "size": 39327,
+      "sha256": "1d20c911fa1d9cdc469347041c4d0cdf97aa82d196912a5c0561ef24023b00eb",
+      "file": "HeroPika.mdx",
+      "in_listfile": true
+    },
+    "HeroPikachu.blp": {
+      "status": "ok",
+      "size": 16040,
+      "sha256": "84e4a6afe881a9ee00917216ec0e8be909aa07d93a6f1c392ec7258b41b82110",
+      "file": "HeroPikachu.blp",
+      "in_listfile": true
+    },
+    "Pikachu_portrait.blp": {
+      "status": "ok",
+      "size": 17946,
+      "sha256": "b66b9bcb741530b169d0dfc4fde7a8c268c9d3a0909125558b9511d47c1db318",
+      "file": "Pikachu_portrait.blp",
+      "in_listfile": true
+    },
+    "war3mapImported\\dorakill.mp3": {
+      "status": "ok",
+      "size": 13536,
+      "sha256": "3cf88014871356d2edbe61e887c9e1a6f9968dffbd6ef162ff5fdd38543a800c",
+      "file": "war3mapImported__dorakill.mp3",
+      "in_listfile": true
+    },
+    "WindMissle.mdx": {
+      "status": "ok",
+      "size": 11892,
+      "sha256": "59ef3d57e8288a6d4e3d31c1567584014b151e1225961fc31530d0c23d18e79f",
+      "file": "WindMissle.mdx",
+      "in_listfile": true
+    },
+    "HeroSephiroth.mdx": {
+      "status": "ok",
+      "size": 57645,
+      "sha256": "1aaa9d852d84fdf2cc8e314c806bedb6447be6c5b6ba922788d805cfbea4734e",
+      "file": "HeroSephiroth.mdx",
+      "in_listfile": true
+    },
+    "Textures\\HeroSephiroth.blp": {
+      "status": "ok",
+      "size": 29202,
+      "sha256": "72d621803ca50b31e1f71ddda5687d860ead045070d03b4dd5af68b8da672aa0",
+      "file": "Textures__HeroSephiroth.blp",
+      "in_listfile": true
+    },
+    "SephCloth.blp": {
+      "status": "ok",
+      "size": 8041,
+      "sha256": "0b392c1291cd3631bf61b9f9132fb9f50ad779bcafc8a1aa621369f4dfb2c6d0",
+      "file": "SephCloth.blp",
+      "in_listfile": true
+    },
+    "LavaBreathDamage.mdx": {
+      "status": "ok",
+      "size": 1407,
+      "sha256": "a88e7a6ba1ac1b8a6b8af726e1e3b5e72d4a872229eff0d608fd73a08bc3185c",
+      "file": "LavaBreathDamage.mdx",
+      "in_listfile": true
+    },
+    "DarkBreathDamage.mdx": {
+      "status": "ok",
+      "size": 1407,
+      "sha256": "c6742ce8f0d9362384cc3d84143b8c049c4cf22a8e6c6dee41515ccf91d4a5bb",
+      "file": "DarkBreathDamage.mdx",
+      "in_listfile": true
+    },
+    "BloodBreathStream.mdx": {
+      "status": "ok",
+      "size": 3325,
+      "sha256": "3972e8c1fee1984b76a2a0cfd1afd7010bd890abc2d100e3502fbae7ee8f14c1",
+      "file": "BloodBreathStream.mdx",
+      "in_listfile": true
+    },
+    "SephBoom.mdx": {
+      "status": "ok",
+      "size": 6117,
+      "sha256": "d742742dc0444d19cd37af33204a5f1025b66251f70e8e3e46272f158a148420",
+      "file": "SephBoom.mdx",
+      "in_listfile": true
+    },
+    "Boomnl.mdx": {
+      "status": "ok",
+      "size": 2623,
+      "sha256": "5b3e6dd6eb4faadc223bd236b19ade62f15553369640f3d585007e5892fb8b6e",
+      "file": "Boomnl.mdx",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNSeph.blp": {
+      "status": "ok",
+      "size": 4801,
+      "sha256": "abde8a5aedfd1bd456e1b188a8c6ecf4c35455b090025490e6fdfca654181870",
+      "file": "ReplaceableTextures__CommandButtons__BTNSeph.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNSeph.blp": {
+      "status": "ok",
+      "size": 3785,
+      "sha256": "55bcd48d10eeea703f8c86e277bec74e141f5d9cf2b07f780abdbc5585e036b0",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNSeph.blp",
+      "in_listfile": true
+    },
+    "Long.MDX": {
+      "status": "ok",
+      "size": 60842,
+      "sha256": "1fbf45d7b8a6f29f4247a1200b924f218401c923b2fcaa6429faf3c72d951ef0",
+      "file": "Long.MDX",
+      "in_listfile": true
+    },
+    "long.blp": {
+      "status": "ok",
+      "size": 23046,
+      "sha256": "bbbcf7372d31371e37554bec4a8a6b611a5f9aaa751c46dcb6b1a643f4df2801",
+      "file": "long.blp",
+      "in_listfile": true
+    },
+    "GrandOrcAura.mdx": {
+      "status": "ok",
+      "size": 8136,
+      "sha256": "5fbaa0c8a6580bf3531b383f57255564cc9d0ec15cbebb8e67203df12d282dcd",
+      "file": "GrandOrcAura.mdx",
+      "in_listfile": true
+    },
+    "HeroLight.mdx": {
+      "status": "ok",
+      "size": 42762,
+      "sha256": "81cbdac265bbcbe773de72af090946c9de720e846e48f6af56137f4caabd647d",
+      "file": "HeroLight.mdx",
+      "in_listfile": true
+    },
+    "Light-tennis.blp": {
+      "status": "ok",
+      "size": 21602,
+      "sha256": "deaf14166abbc8f59c313c7bd14d87d8b2411c38ea55d73b76112974a9b985ec",
+      "file": "Light-tennis.blp",
+      "in_listfile": true
+    },
+    "fox.mdx": {
+      "status": "ok",
+      "size": 74605,
+      "sha256": "2d15dce036adf11978868b046f3b11ed1590e52ebc10dc1a5aa2dee445c4bee4",
+      "file": "fox.mdx",
+      "in_listfile": true
+    },
+    "foxhair.blp": {
+      "status": "ok",
+      "size": 3584,
+      "sha256": "515493aba627d365fa15b40e7b9a4b528b9f534258e586ceada4343f3651efb5",
+      "file": "foxhair.blp",
+      "in_listfile": true
+    },
+    "fox.blp": {
+      "status": "ok",
+      "size": 28317,
+      "sha256": "a4331053807f7861ce1bd236212ae5fe0720f7faf9e607cd9b47c76e6ccdd990",
+      "file": "fox.blp",
+      "in_listfile": true
+    },
+    "HeroShana.mdx": {
+      "status": "ok",
+      "size": 86520,
+      "sha256": "b9927cecf4a2df474694f1d009a5185dbbd6f398f9e5527728c074d0251f1fa0",
+      "file": "HeroShana.mdx",
+      "in_listfile": true
+    },
+    "HeroShana.blp": {
+      "status": "ok",
+      "size": 20019,
+      "sha256": "d08a330436508f69faaf30561ec6e2481f4cbb6889a77cd898e9271136e841d5",
+      "file": "HeroShana.blp",
+      "in_listfile": true
+    },
+    "HeroBuu.mdx": {
+      "status": "ok",
+      "size": 45756,
+      "sha256": "f904dba088fd08390aff3315bcbaa4c02e167bf21b0345ff5e7cbaddbcee11cc",
+      "file": "HeroBuu.mdx",
+      "in_listfile": true
+    },
+    "HeroBuu.blp": {
+      "status": "ok",
+      "size": 32665,
+      "sha256": "493c262501209d6061af68b2e40bf87aca976fe7b82a96a374515b37ed0f9065",
+      "file": "HeroBuu.blp",
+      "in_listfile": true
+    },
+    "Luffe.MDX": {
+      "status": "ok",
+      "size": 79478,
+      "sha256": "b36f255ce99c1546b5dce357bcb36d314c12d3abcfb2585477e8ec6cb69a16d9",
+      "file": "Luffe.MDX",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNluff.blp": {
+      "status": "ok",
+      "size": 3943,
+      "sha256": "cc020b6106c984c68ff56d593e08132c20c28cbaa9362572ce0b9e589e772d54",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNluff.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNluff.blp": {
+      "status": "ok",
+      "size": 5574,
+      "sha256": "5bfc96496898a8295afebc0d11fe719ddee2c1b064f5758bd2820a91a72cf7c8",
+      "file": "ReplaceableTextures__CommandButtons__BTNluff.blp",
+      "in_listfile": true
+    },
+    "BlackHole.mdx": {
+      "status": "ok",
+      "size": 6953,
+      "sha256": "fc887b47e129d622bdc1c47d6d1206557118923730330a44980abac95c9c764f",
+      "file": "BlackHole.mdx",
+      "in_listfile": true
+    },
+    "AquaSpikeVersion2.mdx": {
+      "status": "ok",
+      "size": 14384,
+      "sha256": "29b6b03086695dd93709a51de2f502025c0958a3ba2730c4b7a3b4f1ae717091",
+      "file": "AquaSpikeVersion2.mdx",
+      "in_listfile": true
+    },
+    "AWING.blp": {
+      "status": "ok",
+      "size": 7247,
+      "sha256": "3be627a26ec2920f89e943f40c2bc11ded1e95417c1ed5cf9a878fe3fd3dba60",
+      "file": "AWING.blp",
+      "in_listfile": true
+    },
+    "AWING.MDX": {
+      "status": "ok",
+      "size": 2896,
+      "sha256": "45441deec0d70e84c79415f81734fa551792c8e733a0161b49c8130287567cf2",
+      "file": "AWING.MDX",
+      "in_listfile": true
+    },
+    "mfls.mdx": {
+      "status": "ok",
+      "size": 88114,
+      "sha256": "c066995743754ef578763bc77b9b53d085daeb6c7d66c11bee646d145d28a83b",
+      "file": "mfls.mdx",
+      "in_listfile": true
+    },
+    "mfls.blp": {
+      "status": "ok",
+      "size": 19842,
+      "sha256": "ce13f5e1175d85e417b0b3a10c6a41da96c631ada51de4072937909b0416efaa",
+      "file": "mfls.blp",
+      "in_listfile": true
+    },
+    "EarthTornado2.mdx": {
+      "status": "ok",
+      "size": 22150,
+      "sha256": "3f8ca7fccb47721909c727c9a475b5d05333a43430b6ff7befb2fe946869c6db",
+      "file": "EarthTornado2.mdx",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNsetuna.blp": {
+      "status": "ok",
+      "size": 3933,
+      "sha256": "be45d8710c3eccffeea47740a7a1bdcf59833256217a99adb5fd85e0bdb11ffe",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNsetuna.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNsetuna.blp": {
+      "status": "ok",
+      "size": 5958,
+      "sha256": "28230e9941bc2358ac42b6c1e3abaaf033b96cd45288b2ab530ed56e0f2e1c6b",
+      "file": "ReplaceableTextures__CommandButtons__BTNsetuna.blp",
+      "in_listfile": true
+    },
+    "OblivionAura.MDX": {
+      "status": "ok",
+      "size": 6109,
+      "sha256": "559394497619b0b0a15e60c5cc3e8fb7444a4c4a19843b3d41eea0202d1cebb1",
+      "file": "OblivionAura.MDX",
+      "in_listfile": true
+    },
+    "HeroOichi.mdx": {
+      "status": "ok",
+      "size": 69680,
+      "sha256": "57b5d5299efe44535a5883ca0b62432396c9bcf19d169a7d9fc523c1fd48cc13",
+      "file": "HeroOichi.mdx",
+      "in_listfile": true
+    },
+    "Textures\\HeroOichi.blp": {
+      "status": "ok",
+      "size": 22492,
+      "sha256": "6393968c7f069335de24de82799bb2fe316077f9b2045482846f0d9943fdc3d9",
+      "file": "Textures__HeroOichi.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNMoNi.blp": {
+      "status": "ok",
+      "size": 3948,
+      "sha256": "1df20c295c9ee41b9b01a11c7e37bc768bd8f6a4b433e575d1feafd6617bc5ff",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNMoNi.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNMoNi.blp": {
+      "status": "ok",
+      "size": 5915,
+      "sha256": "fd7d67eaff79cd9450bde9875536d0cc2067cf51bee6fc74b3b79a8c20fdea3c",
+      "file": "ReplaceableTextures__CommandButtons__BTNMoNi.blp",
+      "in_listfile": true
+    },
+    "HeroLuffe.blp": {
+      "status": "ok",
+      "size": 34548,
+      "sha256": "3fd01e489ce62949aaca25dbc64f5f16bbd318dccd55688cb018d60b7f8e071f",
+      "file": "HeroLuffe.blp",
+      "in_listfile": true
+    },
+    "LOVE2.MDX": {
+      "status": "ok",
+      "size": 2292,
+      "sha256": "e19c83b422e1a775cfd8ca8144c59bbb154aaa4661cd0a6f2c9c7259d63ffd47",
+      "file": "LOVE2.MDX",
+      "in_listfile": true
+    },
+    "LOVE02.blp": {
+      "status": "ok",
+      "size": 3910,
+      "sha256": "bc5d4f6bea788333daefe7a96c8a2355bf1cdfa91783d0b0d8e4266743017009",
+      "file": "LOVE02.blp",
+      "in_listfile": true
+    },
+    "BlackHole1.mdx": {
+      "status": "ok",
+      "size": 8273,
+      "sha256": "d4c56c5598b2b816d6704f8b37b579af91274efac2a872de2c3afef7fc3f27c7",
+      "file": "BlackHole1.mdx",
+      "in_listfile": true
+    },
+    "BlackHoleSkin04-64.blp": {
+      "status": "ok",
+      "size": 12102,
+      "sha256": "25d1758a17f72c13620bb4c54accb4d52abd3700f9fad5baec2edc96dccfb38c",
+      "file": "BlackHoleSkin04-64.blp",
+      "in_listfile": true
+    },
+    "rabbit.mdx": {
+      "status": "ok",
+      "size": 48824,
+      "sha256": "db67fe12cc7e257cbd7b29b8f71fe82e968c18e1da0abdf1e6e4552efc0d22c5",
+      "file": "rabbit.mdx",
+      "in_listfile": true
+    },
+    "rabbit.blp": {
+      "status": "ok",
+      "size": 27206,
+      "sha256": "ed44d6696ce614c46d60b59c6383dd34910cb03396163e715f17d4397d0f88a9",
+      "file": "rabbit.blp",
+      "in_listfile": true
+    },
+    "negi.blp": {
+      "status": "ok",
+      "size": 20900,
+      "sha256": "a41ad8f39df691833076226dccf8b535f32461742d24cf469ed32a87938575a0",
+      "file": "negi.blp",
+      "in_listfile": true
+    },
+    "negi.mdx": {
+      "status": "ok",
+      "size": 78353,
+      "sha256": "0b624ff09af646524901a360c69bd595c638f350d97c19269af9b2b87d68e3a7",
+      "file": "negi.mdx",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNIchigo.blp": {
+      "status": "ok",
+      "size": 5786,
+      "sha256": "a9cfb51b5632866f2281cf1debbf049db6351ec4ad647ca154a3a7034427c4f0",
+      "file": "ReplaceableTextures__CommandButtons__BTNIchigo.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNPika.blp": {
+      "status": "ok",
+      "size": 5604,
+      "sha256": "575f92efc5bbe4a33d8488ecdf4e7eb8160999c6ab3c9e197e9914b2fc875467",
+      "file": "ReplaceableTextures__CommandButtons__BTNPika.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNRabbit.blp": {
+      "status": "ok",
+      "size": 5075,
+      "sha256": "f82383c82d5cb985013bdad254520bfc6a964d9fa8781cd0a4297055f4da2453",
+      "file": "ReplaceableTextures__CommandButtons__BTNRabbit.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNIchigo.blp": {
+      "status": "ok",
+      "size": 4397,
+      "sha256": "a35bd3b582d570645fbe62759d0075dc10c548b3db6bf51181dc0dafd2d65e27",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNIchigo.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNPika.blp": {
+      "status": "ok",
+      "size": 4514,
+      "sha256": "2ccd8db8ea56cec6ca01a64bd62342b6dae7cb74f695e30ef6b5fe14eda86fae",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNPika.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNRabbit.blp": {
+      "status": "ok",
+      "size": 3887,
+      "sha256": "3a64fd279c719eae46e802e0986f55fe9f5dd2e36f1eaebdf0c179df683fc36d",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNRabbit.blp",
+      "in_listfile": true
+    },
+    "pika.mdx": {
+      "status": "ok",
+      "size": 58592,
+      "sha256": "fc3da2bb40c4f5b637bb2f82e2088760849f4a59740599ffa74ad133cb024ed9",
+      "file": "pika.mdx",
+      "in_listfile": true
+    },
+    "pika.blp": {
+      "status": "ok",
+      "size": 19482,
+      "sha256": "d8d465a763884254441133c5352a5fc679ed9a5595416b588be6dc405b664bb7",
+      "file": "pika.blp",
+      "in_listfile": true
+    },
+    "Goku3head.mdx": {
+      "status": "ok",
+      "size": 48226,
+      "sha256": "b06bc673699cb983ad002a4c5f63ea4e692a2e5e24bfffedb9ae11864357c2ef",
+      "file": "Goku3head.mdx",
+      "in_listfile": true
+    },
+    "Gokuhead.mdx": {
+      "status": "ok",
+      "size": 13612,
+      "sha256": "81e1814640556c022b1b9c2165e3a9555a16dd00aa6e49ea07bd1d8234a80ff2",
+      "file": "Gokuhead.mdx",
+      "in_listfile": true
+    },
+    "LasercannonfinalRED.mdx": {
+      "status": "ok",
+      "size": 5984,
+      "sha256": "488448cf554ba53f42a4ee496ad55167db791eaae178ca4de5321e5b88c89397",
+      "file": "LasercannonfinalRED.mdx",
+      "in_listfile": true
+    },
+    "LuBu.mdx": {
+      "status": "ok",
+      "size": 101303,
+      "sha256": "865004cfbae01d502d7b13ceec04ddb295a9a6c2bb941712592f6aeac90eab19",
+      "file": "LuBu.mdx",
+      "in_listfile": true
+    },
+    "LuBu2.blp": {
+      "status": "ok",
+      "size": 17288,
+      "sha256": "5bd45b0da54379e875d150ef890a4c63a2dc8125662b5689e43e15a82f7ae386",
+      "file": "LuBu2.blp",
+      "in_listfile": true
+    },
+    "LuBu3.blp": {
+      "status": "ok",
+      "size": 49841,
+      "sha256": "0f6d301ac5eee8974e224af4614456b2cf5c3720c36baf67d83a0d30ffd56a9b",
+      "file": "LuBu3.blp",
+      "in_listfile": true
+    },
+    "HeroPikachu.mdx": {
+      "status": "ok",
+      "size": 32286,
+      "sha256": "8fe634680a6fecd7053c39b9a35e29a721f0f898ef6e335bd1dc5027dd51669b",
+      "file": "HeroPikachu.mdx",
+      "in_listfile": true
+    },
+    "Textures\\HeroPikachu.blp": {
+      "status": "ok",
+      "size": 8614,
+      "sha256": "a0e1899b3c5ee1eab2543b2bb558869f0d2ed2169f3f9bd49945eb7d22736c61",
+      "file": "Textures__HeroPikachu.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNLubu.blp": {
+      "status": "ok",
+      "size": 4416,
+      "sha256": "888854f482165a06f43af4f543144ec1c926a31b35584beb4af7c37add740ef4",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNLubu.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNLubu.blp": {
+      "status": "ok",
+      "size": 6845,
+      "sha256": "764a18c1aeb74a53e8c68fdaf5f200f513a3fdd41a5d050c50b6236cbc129e16",
+      "file": "ReplaceableTextures__CommandButtons__BTNLubu.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNLineage.blp": {
+      "status": "ok",
+      "size": 5563,
+      "sha256": "eb51a7b326983e9a510afdf6e104d5690357b9eab275ae03afe96cf74c3fc101",
+      "file": "ReplaceableTextures__CommandButtons__BTNLineage.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNLineage.blp": {
+      "status": "ok",
+      "size": 4262,
+      "sha256": "156c3a9d498fa46c0750816ab228a27aa59c7b283008037673415f3234e5f7a4",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNLineage.blp",
+      "in_listfile": true
+    },
+    "niya.mdx": {
+      "status": "ok",
+      "size": 108769,
+      "sha256": "11b2f6bbfb9222c75471ac208a6c18acb652d9cfb6a035f25bf2f0de4d86be4f",
+      "file": "niya.mdx",
+      "in_listfile": true
+    },
+    "Textures\\heronanoha.blp": {
+      "status": "ok",
+      "size": 20991,
+      "sha256": "e2bb96f113b3b1e06682678f624275cd323a1bb305047fc1cad204c73f6ca2f5",
+      "file": "Textures__heronanoha.blp",
+      "in_listfile": true
+    },
+    "Darkraor.mdx": {
+      "status": "ok",
+      "size": 23368,
+      "sha256": "7f2dd1beb088926b3e5678c12f2cc9b1b0273c28bc1de759de5113b4e6acea86",
+      "file": "Darkraor.mdx",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNNiya.blp": {
+      "status": "ok",
+      "size": 4730,
+      "sha256": "b30230713cab09977bb34a6541c69af141dd3b7d3dcaf4fa7d1d80c8166f7c80",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNNiya.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNNiya.blp": {
+      "status": "ok",
+      "size": 7818,
+      "sha256": "f045f5f58de6225cc89f6c2bcbecee31f123e928abb11753f443abc5ddbac751",
+      "file": "ReplaceableTextures__CommandButtons__BTNNiya.blp",
+      "in_listfile": true
+    },
+    "herofate.mdx": {
+      "status": "ok",
+      "size": 109980,
+      "sha256": "9c413e6766ce5ccb304ff9f6050a83388100e560e56e938e6bdc15b32165f903",
+      "file": "herofate.mdx",
+      "in_listfile": true
+    },
+    "herofate2.blp": {
+      "status": "ok",
+      "size": 21349,
+      "sha256": "626a1d1e823a4ed71b323b363296758e82a8b21716c4862b331acb4d4cf8ba72",
+      "file": "herofate2.blp",
+      "in_listfile": true
+    },
+    "RenaRyugu2.mdx": {
+      "status": "ok",
+      "size": 78036,
+      "sha256": "a735b7550dbd60ed88a450e4d477775b9f75be868d4f9b4883171755b0ff7f2d",
+      "file": "RenaRyugu2.mdx",
+      "in_listfile": true
+    },
+    "RenaRyugu2.BLP": {
+      "status": "ok",
+      "size": 47322,
+      "sha256": "cb953cfe92e1a868227840312d165b55cf980e96b02c44e3dd77f40590102321",
+      "file": "RenaRyugu2.BLP",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNLena.blp": {
+      "status": "ok",
+      "size": 4146,
+      "sha256": "2b51b7219dd0c3f04c899bc1bac9023dff22185ea15e31c3fded4b1270e8d774",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNLena.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNLena.blp": {
+      "status": "ok",
+      "size": 6014,
+      "sha256": "7a67bf2c89275e78329cd0abddf99b1e2f5f6bedf50924c5c50d0f61d24caf63",
+      "file": "ReplaceableTextures__CommandButtons__BTNLena.blp",
+      "in_listfile": true
+    },
+    "HeroFateZemberForm.mdx": {
+      "status": "ok",
+      "size": 14086,
+      "sha256": "0f7a97b4aca1f5c851c20c4c7602ad5366f053c0478e57543f4e7d7168c35a0b",
+      "file": "HeroFateZemberForm.mdx",
+      "in_listfile": true
+    },
+    "Zember.blp": {
+      "status": "ok",
+      "size": 12242,
+      "sha256": "165dc919d0ce723a34f5151be4125dac7c4682dbc96c3ef0debee4be8990124e",
+      "file": "Zember.blp",
+      "in_listfile": true
+    },
+    "LinaInvers.mdx": {
+      "status": "ok",
+      "size": 51555,
+      "sha256": "0a89124fbdeded6710c4a907f055484e17f7c29e1c0e0a0a6f88334aeec22ca9",
+      "file": "LinaInvers.mdx",
+      "in_listfile": true
+    },
+    "Lina Invers.blp": {
+      "status": "ok",
+      "size": 25571,
+      "sha256": "f130ecc3470c6bd7547e1e78551052083e0d9c87f57f0f538345bb9d8cab4e8f",
+      "file": "Lina Invers.blp",
+      "in_listfile": true
+    },
+    "xzz.mdx": {
+      "status": "ok",
+      "size": 79772,
+      "sha256": "2b288fe0f63ac841b6da07c3eaf573313cd501054cb66f06d9e26ccb004d63ec",
+      "file": "xzz.mdx",
+      "in_listfile": true
+    },
+    "zz 2.blp": {
+      "status": "ok",
+      "size": 50406,
+      "sha256": "33cc78112461ed27e3ea23273118687ff04d3cd23e532bab4201d4604236dc55",
+      "file": "zz 2.blp",
+      "in_listfile": true
+    },
+    "cb1.blp": {
+      "status": "ok",
+      "size": 36847,
+      "sha256": "58f37aa5ba3e66ab49772c6ba63a38e26721d53f7f0bded7236fb3c1466f3b75",
+      "file": "cb1.blp",
+      "in_listfile": true
+    },
+    "MidchilderNanohaAura.mdx": {
+      "status": "ok",
+      "size": 4764,
+      "sha256": "fec77510f386b85d7d37d6fe88402359219fe8b15f6b13c6552f6be73a783b79",
+      "file": "MidchilderNanohaAura.mdx",
+      "in_listfile": true
+    },
+    "MidchilderDivineA.blp": {
+      "status": "ok",
+      "size": 16074,
+      "sha256": "b0cc2090a979cc4b0f86564fd103d961cad4ebf52113284ecb1c8dfbb91f9e5e",
+      "file": "MidchilderDivineA.blp",
+      "in_listfile": true
+    },
+    "MidchilderDivineB.blp": {
+      "status": "ok",
+      "size": 10572,
+      "sha256": "0d88a5d8a795828621fbd119453c96350fd7b19c5e2a8a79f2d7c91bb7192122",
+      "file": "MidchilderDivineB.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNFate.blp": {
+      "status": "ok",
+      "size": 6445,
+      "sha256": "f6150534d0d82c08a0fabc1a44635997663eec4b131e8f5e57dffa178025d902",
+      "file": "ReplaceableTextures__CommandButtons__BTNFate.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNFate.blp": {
+      "status": "ok",
+      "size": 4228,
+      "sha256": "b8dbc0188dbdc1c17ccba7125b5a04f258dd9efc1b00f98912746e61002ea563",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNFate.blp",
+      "in_listfile": true
+    },
+    "gx.mdx": {
+      "status": "ok",
+      "size": 6931,
+      "sha256": "49ac7ee7556679563ff85cb4b7f10ced8847cc864ca753f87a0a51a0df927ca9",
+      "file": "gx.mdx",
+      "in_listfile": true
+    },
+    "gx.blp": {
+      "status": "ok",
+      "size": 3815,
+      "sha256": "cd25684962487a5478b8f0c1fa66d2176a0b14374441490e418b9c2a5924d193",
+      "file": "gx.blp",
+      "in_listfile": true
+    },
+    "HeroFateZemberFormBig.mdx": {
+      "status": "ok",
+      "size": 14086,
+      "sha256": "cc51e63357913759a59e200db467f5ca66a1b1a309fe3bb7e9dec7f1352f7a9a",
+      "file": "HeroFateZemberFormBig.mdx",
+      "in_listfile": true
+    },
+    "Lightningnova.mdx": {
+      "status": "ok",
+      "size": 10848,
+      "sha256": "9b906d325ffd0784b126828e8f5629a1cb7b8e0fdc8970056ceffb3104ee4180",
+      "file": "Lightningnova.mdx",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNWarcraft3 DMC.blp": {
+      "status": "ok",
+      "size": 7879,
+      "sha256": "26ca764ac687c304de56087fc07adca454f01a828de6022ca78403dd868acce4",
+      "file": "ReplaceableTextures__CommandButtons__BTNWarcraft3 DMC.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNWarcraft3 DMC.blp": {
+      "status": "ok",
+      "size": 6860,
+      "sha256": "c6433c5f2b04545c5100e55197d2c143a6d8f14ed1f4f85959b77b6ba5bb64b0",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNWarcraft3 DMC.blp",
+      "in_listfile": true
+    },
+    "NE_Shield.MDX": {
+      "status": "ok",
+      "size": 7418,
+      "sha256": "ab756476ca4c909a1c71d0f32554654d6fdccd936841bafa40f7eb5d8baa119f",
+      "file": "NE_Shield.MDX",
+      "in_listfile": true
+    },
+    "Textures\\HeroIchigo.blp": {
+      "status": "ok",
+      "size": 21131,
+      "sha256": "b821409b900c8f9656d62bb7204cbcd5a32d26480c321bc2c279cacc0f8fb542",
+      "file": "Textures__HeroIchigo.blp",
+      "in_listfile": true
+    },
+    "HeroIchigo.mdx": {
+      "status": "ok",
+      "size": 125665,
+      "sha256": "8d0ec78a277d40b362a5907d8020bc1cd8cc236a64f90f24c2d74a285e77dc6a",
+      "file": "HeroIchigo.mdx",
+      "in_listfile": true
+    },
+    "HeroCloudStrife.mdx": {
+      "status": "ok",
+      "size": 102987,
+      "sha256": "a1ab35040a95efb8f992633db3e5332a7cfa2cc405336d09fea90061c4f51d7e",
+      "file": "HeroCloudStrife.mdx",
+      "in_listfile": true
+    },
+    "Textures\\HeroCloudStrife.blp": {
+      "status": "ok",
+      "size": 30384,
+      "sha256": "26af27eecacef8fb320461965ba24843f6a7d9b8705fc5ff1e77f3cb3becd9b6",
+      "file": "Textures__HeroCloudStrife.blp",
+      "in_listfile": true
+    },
+    "Textures\\HeroHimuraKenshin.blp": {
+      "status": "ok",
+      "size": 22729,
+      "sha256": "b82ebd61e2903385c0cb9c3d3518a259f589c9fdc73a927f101ea33fcec325dc",
+      "file": "Textures__HeroHimuraKenshin.blp",
+      "in_listfile": true
+    },
+    "HeroHimuraKenshin.mdx": {
+      "status": "ok",
+      "size": 77161,
+      "sha256": "7b5ef040510fcf090c5c791bc542c93f2166a927ddacf21a422f36ee41bd712a",
+      "file": "HeroHimuraKenshin.mdx",
+      "in_listfile": true
+    },
+    "HeroSasuke.mdx": {
+      "status": "ok",
+      "size": 73666,
+      "sha256": "a4033396847292d24517868d4c517f40d5189e44bac12cd72d5b42f7f58bb8f7",
+      "file": "HeroSasuke.mdx",
+      "in_listfile": true
+    },
+    "Textures\\HeroSasuke.blp": {
+      "status": "ok",
+      "size": 28602,
+      "sha256": "cdef4a6797fcb3caa052389ee3827bd7ebfe26f33024be556a75bc454e7b45fd",
+      "file": "Textures__HeroSasuke.blp",
+      "in_listfile": true
+    },
+    "flamessmoke.mdx": {
+      "status": "ok",
+      "size": 3196,
+      "sha256": "02e7c1976eac83463353543e252a04a315345d33d2c3007275c7c06691af21fc",
+      "file": "flamessmoke.mdx",
+      "in_listfile": true
+    },
+    "MinitypeFlame.MDX": {
+      "status": "ok",
+      "size": 9616,
+      "sha256": "502304b3a0d5005804014a6cfd93b1f929247637c562f08e5bcbd08d693fac24",
+      "file": "MinitypeFlame.MDX",
+      "in_listfile": true
+    },
+    "HeroShanaWingSmall.mdx": {
+      "status": "ok",
+      "size": 2840,
+      "sha256": "04136e80cc438046c0628781fa5dd66acfd4f2eac0a2c1f92ebd1ccb5b01db9d",
+      "file": "HeroShanaWingSmall.mdx",
+      "in_listfile": true
+    },
+    "Textures\\HeroShanaWing.blp": {
+      "status": "ok",
+      "size": 7941,
+      "sha256": "124a45e02157bd32db1bf37839fa05bb48250b1864d5eddf78d06ef1dd68c947",
+      "file": "Textures__HeroShanaWing.blp",
+      "in_listfile": true
+    },
+    "DivineRing.mdx": {
+      "status": "ok",
+      "size": 7268,
+      "sha256": "a8382a80d80c30be1c1d87502cd161e3e90084ffaa228bcc09c58795d6dc228d",
+      "file": "DivineRing.mdx",
+      "in_listfile": true
+    },
+    "HeroNarutoS4Effect.mdx": {
+      "status": "ok",
+      "size": 5106,
+      "sha256": "2d0738341cd8f7014ff15992342b85c324577234beb2ec9de7084bc8f9a4d2a3",
+      "file": "HeroNarutoS4Effect.mdx",
+      "in_listfile": true
+    },
+    "HeroEVA01S2.mdx": {
+      "status": "ok",
+      "size": 4354,
+      "sha256": "ab7dc87ff00e13febe9c4d22409a78c6c50e56580b4c3d226ff991a34d1a0bb5",
+      "file": "HeroEVA01S2.mdx",
+      "in_listfile": true
+    },
+    "HeroEVA01Effect.blp": {
+      "status": "ok",
+      "size": 4777,
+      "sha256": "5818e4ae43522fa1e9942c66e3958b7df3a89d431c9b2a90d000ed9bf223b9c4",
+      "file": "HeroEVA01Effect.blp",
+      "in_listfile": true
+    },
+    "Demonfilth.mdx": {
+      "status": "ok",
+      "size": 3119,
+      "sha256": "67aa98e56122427a9eed11e6b0227f1e5fefa100e7f3e9ee3070525854e7f338",
+      "file": "Demonfilth.mdx",
+      "in_listfile": true
+    },
+    "SonicBreathStream.mdx": {
+      "status": "ok",
+      "size": 3325,
+      "sha256": "89a5034c7b4f4443e92f94ecd1323f5f26ac3a64992282d13231b23b75c8bf0e",
+      "file": "SonicBreathStream.mdx",
+      "in_listfile": true
+    },
+    "heroluffeattack.mdx": {
+      "status": "ok",
+      "size": 8729,
+      "sha256": "01305ea5658dee189624fb4eee235ec954f450e9c5cbe6c89587fbb8f3e171ed",
+      "file": "heroluffeattack.mdx",
+      "in_listfile": true
+    },
+    "Textures\\HeroLuffeAttack.blp": {
+      "status": "ok",
+      "size": 7589,
+      "sha256": "8d034947dfc0e34643eddd92ca3b199b0ae7eb45dac0e9f7afda3a4ee6bd65df",
+      "file": "Textures__HeroLuffeAttack.blp",
+      "in_listfile": true
+    },
+    "frostnova.mdx": {
+      "status": "ok",
+      "size": 4547,
+      "sha256": "47b7d6a5908d4fdc1da57d7339719db16b7e2d989d7421bae71caf23db0db5be",
+      "file": "frostnova.mdx",
+      "in_listfile": true
+    },
+    "Enchant.MDX": {
+      "status": "ok",
+      "size": 4215,
+      "sha256": "970df0b0a96d0ef896cbe3da84c6688607bb32e4b33ba3c7a983076d5e716965",
+      "file": "Enchant.MDX",
+      "in_listfile": true
+    },
+    "HeroCloudKFKSword.mdx": {
+      "status": "ok",
+      "size": 2827,
+      "sha256": "da73085ca34a301aaf837bd8b9d5830fb72094c136bcb6f83373e4687ddd4c68",
+      "file": "HeroCloudKFKSword.mdx",
+      "in_listfile": true
+    },
+    "Textures\\HeroCloudKFKSword.blp": {
+      "status": "ok",
+      "size": 4914,
+      "sha256": "d105e536a1d0403610dfdb9861b940e2f40453dcf6b2ec16a2f811c4cec59e0c",
+      "file": "Textures__HeroCloudKFKSword.blp",
+      "in_listfile": true
+    },
+    "Textures\\JapaneseCherry.blp": {
+      "status": "ok",
+      "size": 16050,
+      "sha256": "b804fcc002e9e86571dca0442915e04fd0f819fcad8f510833ffd59d3532ac94",
+      "file": "Textures__JapaneseCherry.blp",
+      "in_listfile": true
+    },
+    "JapaneseCherry.mdx": {
+      "status": "ok",
+      "size": 7072,
+      "sha256": "b0e328b39991d74dd4974ad494a6fca572694df5795473b7c36c084fd0c124e2",
+      "file": "JapaneseCherry.mdx",
+      "in_listfile": true
+    },
+    "HeroCloudCyd.mdx": {
+      "status": "ok",
+      "size": 2588,
+      "sha256": "aa7a4971e6e19cfc1cd63d94ce9b775d03f1b967608b9a897cd0221f2663fdf5",
+      "file": "HeroCloudCyd.mdx",
+      "in_listfile": true
+    },
+    "Textures\\HeroCloudCyd.blp": {
+      "status": "ok",
+      "size": 4641,
+      "sha256": "a1668d7ec40aab48ea5400072d0b934660bfe08afe91142410284a158b3348bc",
+      "file": "Textures__HeroCloudCyd.blp",
+      "in_listfile": true
+    },
+    "HeroRaichuS3.mdx": {
+      "status": "ok",
+      "size": 4394,
+      "sha256": "c984bd4029fd3d6ab3a976bbbe7c92f7eacd4cbfa881ea6475d6fb18f638b018",
+      "file": "HeroRaichuS3.mdx",
+      "in_listfile": true
+    },
+    "HeroRyuk.mdx": {
+      "status": "ok",
+      "size": 51684,
+      "sha256": "efe6c7e345ab498de932e423bbf42ad4cfccae229ab7bc54fc7f0eb1ae339984",
+      "file": "HeroRyuk.mdx",
+      "in_listfile": true
+    },
+    "Textures\\HeroRyuk.blp": {
+      "status": "ok",
+      "size": 20657,
+      "sha256": "ed8c315ab3b482aedf80436971291b14f0fa6dcbe90cda3dee05347d32896f8c",
+      "file": "Textures__HeroRyuk.blp",
+      "in_listfile": true
+    },
+    "Textures\\HeroRyukWing.blp": {
+      "status": "ok",
+      "size": 4607,
+      "sha256": "8049a3b1d4ff8c0ad6ac3353c5995e833b336030b2a44833ac96d4fa03a2f152",
+      "file": "Textures__HeroRyukWing.blp",
+      "in_listfile": true
+    },
+    "Textures\\FireFly.blp": {
+      "status": "ok",
+      "size": 3910,
+      "sha256": "5cf9f7df54ed39d04377967ef0ce9582ac907190cf0805790de483ca87e30f49",
+      "file": "Textures__FireFly.blp",
+      "in_listfile": true
+    },
+    "FireFly.mdx": {
+      "status": "ok",
+      "size": 8152,
+      "sha256": "dd56ccf8fee0025ec8047ab37b15372dd4c1c940c4da262c5f7735f70be9d6dc",
+      "file": "FireFly.mdx",
+      "in_listfile": true
+    },
+    "war3mapImported\\letsgo.mp3": {
+      "status": "ok",
+      "size": 20838,
+      "sha256": "27addf68e640f00d227ed71f009eb52376641f1ae32b65456b0c7c520676dd02",
+      "file": "war3mapImported__letsgo.mp3",
+      "in_listfile": true
+    },
+    "picacugy.mdx": {
+      "status": "ok",
+      "size": 53589,
+      "sha256": "c259a27ddc7bdc67be250d90314076dc3f5a2a1cea8958eea7f13c6645fe6568",
+      "file": "picacugy.mdx",
+      "in_listfile": true
+    },
+    "picacu.blp": {
+      "status": "ok",
+      "size": 50938,
+      "sha256": "6481a8a4ef4a351f75a5fb33df83e6a94a61f86937e84d16940e8558d7f51371",
+      "file": "picacu.blp",
+      "in_listfile": true
+    },
+    "crescent.mdx": {
+      "status": "ok",
+      "size": 15091,
+      "sha256": "239456bf7955209fd1d6fbb0f2e950e762f0949c94770cd5c0b82e22616ff56d",
+      "file": "crescent.mdx",
+      "in_listfile": true
+    },
+    "Herokyo.mdx": {
+      "status": "ok",
+      "size": 69961,
+      "sha256": "742f438ea6f2513072a7285a1248a0cf59a07bc0992bdd8ba23a03deddd57ee7",
+      "file": "Herokyo.mdx",
+      "in_listfile": true
+    },
+    "HeroXelloss.MDX": {
+      "status": "ok",
+      "size": 64754,
+      "sha256": "7222155425d757022470ac309b5da10e84823baa769acde8e5995db75fa1ce15",
+      "file": "HeroXelloss.MDX",
+      "in_listfile": true
+    },
+    "xellossp.blp": {
+      "status": "ok",
+      "size": 21483,
+      "sha256": "db2e6c645807535e7cb64046821426aa92fc3d442524ce07a2bcb14d249f030e",
+      "file": "xellossp.blp",
+      "in_listfile": true
+    },
+    "Textures\\Glowlong.blp": {
+      "status": "ok",
+      "size": 3910,
+      "sha256": "14eac3b0c8cd1075003abc687a34dcda1a188995962ff828a604afc97ed8b8ed",
+      "file": "Textures__Glowlong.blp",
+      "in_listfile": true
+    },
+    "Textures\\HoHov.blp": {
+      "status": "ok",
+      "size": 6339,
+      "sha256": "da054862ca0ee759344111102b0374741cb95648dbb505ebad02c89b2181e5a2",
+      "file": "Textures__HoHov.blp",
+      "in_listfile": true
+    },
+    "Textures\\HeroMitsuhideAkechi.blp": {
+      "status": "ok",
+      "size": 29082,
+      "sha256": "281bd38b1311c8b2af82afb3e4ceb89e9b48d26da44f7e37e882952a91df457b",
+      "file": "Textures__HeroMitsuhideAkechi.blp",
+      "in_listfile": true
+    },
+    "collision.mdx": {
+      "status": "ok",
+      "size": 1188,
+      "sha256": "1e4cccd559b0d56d5269292fe00fd7d7e860d9796d2782db83bb09e62c5b23c5",
+      "file": "collision.mdx",
+      "in_listfile": true
+    },
+    "Luffe punch.mdx": {
+      "status": "ok",
+      "size": 2178,
+      "sha256": "28757018a412fdcbc9e458cde70acb0ec5b13379040c436123f27635f07d5b9c",
+      "file": "Luffe punch.mdx",
+      "in_listfile": true
+    },
+    "Hero_Miku.blp": {
+      "status": "ok",
+      "size": 21487,
+      "sha256": "730d1a89ff34ab4b7decba67656c7baaaff66fd20982a76a13c01cac0eed06aa",
+      "file": "Hero_Miku.blp",
+      "in_listfile": true
+    },
+    "doom.mdx": {
+      "status": "ok",
+      "size": 2984,
+      "sha256": "7b907519d2e132b665f224470a10b5265c643bb00167f88e2261e2e4f9871c13",
+      "file": "doom.mdx",
+      "in_listfile": true
+    },
+    "doom.blp": {
+      "status": "ok",
+      "size": 6097,
+      "sha256": "f6f4e5b3d89b98b4a9d6a9c8901f55c99861aee6460d0374e365611235c19406",
+      "file": "doom.blp",
+      "in_listfile": true
+    },
+    "BWING.MDX": {
+      "status": "ok",
+      "size": 2840,
+      "sha256": "4f62f8c1371ea65fa3a0205156ec550854461d1260774c66f9e99fa5a64379dc",
+      "file": "BWING.MDX",
+      "in_listfile": true
+    },
+    "BWING.blp": {
+      "status": "ok",
+      "size": 6244,
+      "sha256": "247696b7b41659476656b2dd93d0db1c81f56ee1bd999ee493524faed9a06bfc",
+      "file": "BWING.blp",
+      "in_listfile": true
+    },
+    "gxhuge.mdx": {
+      "status": "ok",
+      "size": 6931,
+      "sha256": "617b83274338328c77a27e98204e1bb1a136c25730f32a7c19588b0e9b01bb6d",
+      "file": "gxhuge.mdx",
+      "in_listfile": true
+    },
+    "purplecoat.mdx": {
+      "status": "ok",
+      "size": 7642,
+      "sha256": "c12584b65773d968a43d28ca447147f131785fb3f462e23c87497186cb6f12f2",
+      "file": "purplecoat.mdx",
+      "in_listfile": true
+    },
+    "lgcr2.blp": {
+      "status": "ok",
+      "size": 23705,
+      "sha256": "43ba19c33f69d6509148de8e5d9f912f92f66190bafbd53e1f25950d41757afd",
+      "file": "lgcr2.blp",
+      "in_listfile": true
+    },
+    "lgcr.mdx": {
+      "status": "ok",
+      "size": 63461,
+      "sha256": "0deae0a603afd3fa71a7f5f643b33b093ebe5397c8a0cae56c6c6a1e4586962c",
+      "file": "lgcr.mdx",
+      "in_listfile": true
+    },
+    "zy.blp": {
+      "status": "ok",
+      "size": 32112,
+      "sha256": "cb3424cacc01152327d1816bb43a9ab2a8e6b53071d6603a8eb8ad99daea8866",
+      "file": "zy.blp",
+      "in_listfile": true
+    },
+    "zy3.mdx": {
+      "status": "ok",
+      "size": 122950,
+      "sha256": "b7d6dec6e13f6fbaab52973df6667d40f27b2ceefc22c50bc57c312bd77fda55",
+      "file": "zy3.mdx",
+      "in_listfile": true
+    },
+    "war3mapImported\\heycharlie.mp3": {
+      "status": "ok",
+      "size": 36361,
+      "sha256": "4064825f1d30d2f644ebcc9fdef493c68a06ac5f4e468bf80dfe9ef605d5a307",
+      "file": "war3mapImported__heycharlie.mp3",
+      "in_listfile": true
+    },
+    "war3mapImported\\up.mp3": {
+      "status": "ok",
+      "size": 7313,
+      "sha256": "bc236f99815f9d1d2f211f39933a8fb375b279f1048a0e01e6a696bfcd516a96",
+      "file": "war3mapImported__up.mp3",
+      "in_listfile": true
+    },
+    "underpants.blp": {
+      "status": "ok",
+      "size": 6752,
+      "sha256": "2ffb344b07ec8e9b1105f2b09e60ee3138231f616a2cb7887d5a1f550fe4076d",
+      "file": "underpants.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISunderpants.blp": {
+      "status": "ok",
+      "size": 5720,
+      "sha256": "8c322d10d5001bab438fea11ca1a1500a254d0cb176f34e298b384c246283c74",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISunderpants.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\Weasel.blp": {
+      "status": "ok",
+      "size": 7991,
+      "sha256": "007ef1c7f7f702ee94b95c3aeac61dfe927a83f373a1c64626f77662ac0b5219",
+      "file": "ReplaceableTextures__CommandButtons__Weasel.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISWeasel.blp": {
+      "status": "ok",
+      "size": 6413,
+      "sha256": "0d41a1b4c50e9a69a9bb7f57dcd79119b86c7216d09900141203bb1e64b20e22",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISWeasel.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNCCL.blp": {
+      "status": "ok",
+      "size": 4280,
+      "sha256": "7b80186f1348fd0168732a9155262d5b3bafd4abea2ee9cd5cb826d7cce53825",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNCCL.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNCCL.blp": {
+      "status": "ok",
+      "size": 6199,
+      "sha256": "15eecd7da5bc81c4fa22cf505dbf0951d547813bcf0eba54b504e117f4d81bca",
+      "file": "ReplaceableTextures__CommandButtons__BTNCCL.blp",
+      "in_listfile": true
+    },
+    "boxcat.mdx": {
+      "status": "ok",
+      "size": 7374,
+      "sha256": "9e3e10c24ed888f632c5b3b162e73ac71fa9dade787c8f3ecd6303a36cdb6c6e",
+      "file": "boxcat.mdx",
+      "in_listfile": true
+    },
+    "boxcat.blp": {
+      "status": "ok",
+      "size": 3628,
+      "sha256": "2e97ae25333174a49e190aef025eca2451eead4032d4a38722b5140b517b9331",
+      "file": "boxcat.blp",
+      "in_listfile": true
+    },
+    "Charlie.mdx": {
+      "status": "ok",
+      "size": 18463,
+      "sha256": "1c2410da82466afa00c0c37bcb4c8c3c5e37df89d0de74ccb1c5a95857ab8769",
+      "file": "Charlie.mdx",
+      "in_listfile": true
+    },
+    "Charlie.blp": {
+      "status": "ok",
+      "size": 52027,
+      "sha256": "f8c42d28a33ae907186f44c3bc4752c60ce742346567aa7991a256688b368f92",
+      "file": "Charlie.blp",
+      "in_listfile": true
+    },
+    "foxhair2.blp": {
+      "status": "ok",
+      "size": 3889,
+      "sha256": "bc87c1ac8a105be52eabff425199d70022a3a85497da681c2eccc100a2e425cb",
+      "file": "foxhair2.blp",
+      "in_listfile": true
+    },
+    "fox2.blp": {
+      "status": "ok",
+      "size": 34042,
+      "sha256": "47cd168e4fc36d6b7fd089627b29cd330e0db71b2bb97d3774cea4849df0d39c",
+      "file": "fox2.blp",
+      "in_listfile": true
+    },
+    "fox2.mdx": {
+      "status": "ok",
+      "size": 74605,
+      "sha256": "d381c627219526176540fc3eccb18bdbd9fc7575c56918aa22f86bc41f867c88",
+      "file": "fox2.mdx",
+      "in_listfile": true
+    },
+    "337640.blp": {
+      "status": "ok",
+      "size": 17599,
+      "sha256": "4a29cd1adb12869b3bb849a8b3168f2adeb3e568c8f7fcc4b1da517b1026ff82",
+      "file": "337640.blp",
+      "in_listfile": true
+    },
+    "337d60.blp": {
+      "status": "ok",
+      "size": 21988,
+      "sha256": "cb4f2801ada94bf80720092fc4cecccba5d59cb279ed52498687e7da100c292d",
+      "file": "337d60.blp",
+      "in_listfile": true
+    },
+    "346a60.blp": {
+      "status": "ok",
+      "size": 20213,
+      "sha256": "aa361c18eca8aa5361e2f297c4c44a9cf0d2b311ff5e5c28ecbb4a304ed66796",
+      "file": "346a60.blp",
+      "in_listfile": true
+    },
+    "5395b00.blp": {
+      "status": "ok",
+      "size": 20664,
+      "sha256": "d20832db183737260d107a3a8c639b57f569511ad35b77143926ff111691c558",
+      "file": "5395b00.blp",
+      "in_listfile": true
+    },
+    "cloud.mdx": {
+      "status": "ok",
+      "size": 247225,
+      "sha256": "daf9d3c5093d6e00491b80a3888f2c53bcf1564a380aa3cc3899aed350e99d89",
+      "file": "cloud.mdx",
+      "in_listfile": true
+    },
+    "txbbb.MDX": {
+      "status": "ok",
+      "size": 90800,
+      "sha256": "f596fa071ab1534eb57843c7ad44b62ecf6ca4e8fdd13feb6a1616f34a869e00",
+      "file": "txbbb.MDX",
+      "in_listfile": true
+    },
+    "bb4.blp": {
+      "status": "ok",
+      "size": 17605,
+      "sha256": "56fc0e5553f48250b1b3f7fd870a44e3a48503fcb6c61ab74576cb7cdbac5236",
+      "file": "bb4.blp",
+      "in_listfile": true
+    },
+    "holo.mdx": {
+      "status": "ok",
+      "size": 77191,
+      "sha256": "d1fb53d04f93f0eebb687e493c2f918e058f0d3920d812dcb586c6224112e9f5",
+      "file": "holo.mdx",
+      "in_listfile": true
+    },
+    "holo2.blp": {
+      "status": "ok",
+      "size": 19384,
+      "sha256": "6a666961717aec01c3315eb81789035fab929302c29db2d5a2e83531560f603c",
+      "file": "holo2.blp",
+      "in_listfile": true
+    },
+    "holo1.blp": {
+      "status": "ok",
+      "size": 57124,
+      "sha256": "a41d38630c4d6b458a5ef3657be14e92c2b9f27fff3a92a06b1264b2a8734516",
+      "file": "holo1.blp",
+      "in_listfile": true
+    },
+    "horse.mdx": {
+      "status": "ok",
+      "size": 54045,
+      "sha256": "379e6918b608c06d8d7d4b8ebc59b7a1f000ef998a10a21e529744cb51659221",
+      "file": "horse.mdx",
+      "in_listfile": true
+    },
+    "horsehead.mdx": {
+      "status": "ok",
+      "size": 3867,
+      "sha256": "6f94b8e815be681e194c3af46b8aff4f54debc89946882bdc3a6688b480855e7",
+      "file": "horsehead.mdx",
+      "in_listfile": true
+    },
+    "hourse.blp": {
+      "status": "ok",
+      "size": 175942,
+      "sha256": "0a419492a194512395bfb3c5e15e1968607d6b95d42854f9288fa99c565d9d4d",
+      "file": "hourse.blp",
+      "in_listfile": true
+    },
+    "Bulbasaur.mdx": {
+      "status": "ok",
+      "size": 54502,
+      "sha256": "686d409c8d4bd78b6f7709a8ebddc18d0e44c4fe640d0eb6f5dd98f9e8a5c7d3",
+      "file": "Bulbasaur.mdx",
+      "in_listfile": true
+    },
+    "emotion.blp": {
+      "status": "ok",
+      "size": 7425,
+      "sha256": "dc8cb6bf0b5d73563559769b8fe32108b18e43365d139ff7375925c62273231f",
+      "file": "emotion.blp",
+      "in_listfile": true
+    },
+    "AzuNyan.mdx": {
+      "status": "ok",
+      "size": 74882,
+      "sha256": "9f2659449f41f07acae95b4c1660eef512f4a78a29cc200d0520e9bb41e56797",
+      "file": "AzuNyan.mdx",
+      "in_listfile": true
+    },
+    "Azusa512.blp": {
+      "status": "ok",
+      "size": 61561,
+      "sha256": "07c3cc053b6d4e957465af55ab9607f3308fc70d83ccc650956294030b00a462",
+      "file": "Azusa512.blp",
+      "in_listfile": true
+    },
+    "Guitar.blp": {
+      "status": "ok",
+      "size": 40040,
+      "sha256": "cdfc49aadeb2fa74116eb1f15cb0fe4b6c7af762ef7a7ec9554779b22b0f16ae",
+      "file": "Guitar.blp",
+      "in_listfile": true
+    },
+    "KonYui.mdx": {
+      "status": "ok",
+      "size": 98567,
+      "sha256": "3a1d37309e144ed92873a42ef389c0832621b714ed0f6ed3396a35531511dab6",
+      "file": "KonYui.mdx",
+      "in_listfile": true
+    },
+    "Yui512.blp": {
+      "status": "ok",
+      "size": 51231,
+      "sha256": "2e8f945e19678e17fecb5cc926dbb6d4dad309847c18564d02c6715e74015dcc",
+      "file": "Yui512.blp",
+      "in_listfile": true
+    },
+    "Yuixd128s.blp": {
+      "status": "ok",
+      "size": 6175,
+      "sha256": "756f956b99dbd40be550d46f71abfe75d9a234ad2f045073d3d474903248b939",
+      "file": "Yuixd128s.blp",
+      "in_listfile": true
+    },
+    "Ritsu.mdx": {
+      "status": "ok",
+      "size": 70375,
+      "sha256": "766816f24416bfc60614dda0fffcc3a618c1348635fb80168ddef97d6a3c330d",
+      "file": "Ritsu.mdx",
+      "in_listfile": true
+    },
+    "RitsuUV.blp": {
+      "status": "ok",
+      "size": 56435,
+      "sha256": "9f6928b3e715e4773b582b12867f7da34053e767c8d250f8d954343bcb0d48c8",
+      "file": "RitsuUV.blp",
+      "in_listfile": true
+    },
+    "Student.blp": {
+      "status": "ok",
+      "size": 19855,
+      "sha256": "af398c9455210b6a02ab809b7f24abbe0e8362e518d29ec86383220fe3e56971",
+      "file": "Student.blp",
+      "in_listfile": true
+    },
+    "Student.mdx": {
+      "status": "ok",
+      "size": 42162,
+      "sha256": "3e0f9873a5e5d9d9fbcccfab3d89d6b0eecea3f3c1c5756a5cd06907cb4a80d0",
+      "file": "Student.mdx",
+      "in_listfile": true
+    },
+    "yellowaura.blp": {
+      "status": "ok",
+      "size": 175942,
+      "sha256": "0ba16ba81f6547f157d7ba9461a0c4d5422115d41d5b2254261a5da9ab0a8ec6",
+      "file": "yellowaura.blp",
+      "in_listfile": true
+    },
+    "war3mapImported\\poweraura.MDX": {
+      "status": "ok",
+      "size": 124580,
+      "sha256": "19690e03329740f3534270e3459ba45cf76c6d55cbe0272cc95ac6c154cce6ac",
+      "file": "war3mapImported__poweraura.MDX",
+      "in_listfile": true
+    },
+    "kmt.blp": {
+      "status": "ok",
+      "size": 22490,
+      "sha256": "519df0e856fd5e208cacc666a8faf569faf868e1efd10712837c488f4f51a366",
+      "file": "kmt.blp",
+      "in_listfile": true
+    },
+    "angel2.blp": {
+      "status": "ok",
+      "size": 84582,
+      "sha256": "3f0c2ffece0557c7aa49b130b868050019afc96cf253b89c5093204d8bc470e5",
+      "file": "angel2.blp",
+      "in_listfile": true
+    },
+    "ma.mdx": {
+      "status": "ok",
+      "size": 50645,
+      "sha256": "7bb64ffe9010236caab4969811cca8a6167435cd8e2e22a78f9f1b1651237d9f",
+      "file": "ma.mdx",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNGon.blp": {
+      "status": "ok",
+      "size": 5629,
+      "sha256": "555e721a30b758bbaa11b6d9a0c1f3d8ccf5b5b929c32286534872202aa000f0",
+      "file": "ReplaceableTextures__CommandButtons__BTNGon.blp",
+      "in_listfile": true
+    },
+    "hzyn.mdx": {
+      "status": "ok",
+      "size": 124464,
+      "sha256": "cdff4fd7af8c488699f2b258af0338935a3b5b75b54389815a1b662fa9944486",
+      "file": "hzyn.mdx",
+      "in_listfile": true
+    },
+    "hzyn.blp": {
+      "status": "ok",
+      "size": 39146,
+      "sha256": "8d873a57e7005567145d906a342276424835f68af82bb2c0e26891e1bc84c61d",
+      "file": "hzyn.blp",
+      "in_listfile": true
+    },
+    "1hswd_01.mdx": {
+      "status": "ok",
+      "size": 22381,
+      "sha256": "1d111e1236f8139aedbd90806e12963462e7e70d3e85da54a309e2b499e66751",
+      "file": "1hswd_01.mdx",
+      "in_listfile": true
+    },
+    "1hswd_01.blp": {
+      "status": "ok",
+      "size": 5664,
+      "sha256": "29a4822e8eb5c343c1b11c52882cb7f39e1bc3e6eca1ab629ae6088f6300f5b8",
+      "file": "1hswd_01.blp",
+      "in_listfile": true
+    },
+    "Hero_Turtle.mdx": {
+      "status": "ok",
+      "size": 162439,
+      "sha256": "7a76c8b3da6b8bca93532e79a8673beedf40345bf031a5b3671dcd5ebd327f6f",
+      "file": "Hero_Turtle.mdx",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNGon.blp": {
+      "status": "ok",
+      "size": 4201,
+      "sha256": "eaeff3ac11c7a1d093323033db446050224af9f43a2f443c33c2e1c948f5339a",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNGon.blp",
+      "in_listfile": true
+    },
+    "HeroBigGon.MDX": {
+      "status": "ok",
+      "size": 47576,
+      "sha256": "122c598f42892c7545cb2412edee8dd41acad3699def31a0ff9c1f796ee2c17b",
+      "file": "HeroBigGon.MDX",
+      "in_listfile": true
+    },
+    "HeroBigGon.blp": {
+      "status": "ok",
+      "size": 19472,
+      "sha256": "1b6e74faca8c6118df4b4fc0c390156e55365c67b7ca7d299e179eb196284092",
+      "file": "HeroBigGon.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNpikagirl.blp": {
+      "status": "ok",
+      "size": 5896,
+      "sha256": "5f8971441524a32113e231dee03808cbc02e9d4a5b510fd98c0bfc3038894eaa",
+      "file": "ReplaceableTextures__CommandButtons__BTNpikagirl.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNpikagirl.blp": {
+      "status": "ok",
+      "size": 4440,
+      "sha256": "ce789f850bf6560107b7f7ce188ffa5ed771af7c334c106023ca2d12386a771b",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNpikagirl.blp",
+      "in_listfile": true
+    },
+    "war3mapImported\\yooooooooooooo.mp3": {
+      "status": "ok",
+      "size": 35943,
+      "sha256": "e32fa8df52002667538a5ec30326465a5cc1448359ca02e9c74104eccf299bb3",
+      "file": "war3mapImported__yooooooooooooo.mp3",
+      "in_listfile": true
+    },
+    "war3mapImported\\ringnai.mp3": {
+      "status": "ok",
+      "size": 103698,
+      "sha256": "9e47b34e34ff5e402f3fc00cfabc8a1282edc81eee0a988eb75930849a47b2b3",
+      "file": "war3mapImported__ringnai.mp3",
+      "in_listfile": true
+    },
+    "babyface.blp": {
+      "status": "ok",
+      "size": 10233,
+      "sha256": "3c87202b41933829908b759115e5ba9e085e246818a42fdb9c7a91234ab3c79d",
+      "file": "babyface.blp",
+      "in_listfile": true
+    },
+    "babyface.mdx": {
+      "status": "ok",
+      "size": 1603,
+      "sha256": "30d462262b7987515d6f1b6641bcd6d7f13278ea8a0b63bf8af93774a8d1c8fe",
+      "file": "babyface.mdx",
+      "in_listfile": true
+    },
+    "billy3.blp": {
+      "status": "ok",
+      "size": 24934,
+      "sha256": "98a6b2535a91f836ec33a883c7f5107945b44616b2857bdcd23431e5eb8583ad",
+      "file": "billy3.blp",
+      "in_listfile": true
+    },
+    "billy.mdx": {
+      "status": "ok",
+      "size": 41343,
+      "sha256": "bc9a7cb4fe8dcc805e90e4fdfac15c73a5826988bda36616c62cc308bbdb56f6",
+      "file": "billy.mdx",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNWaterShield.blp": {
+      "status": "ok",
+      "size": 6536,
+      "sha256": "d34e0416e0aafb0497b96b0bc883068d31f08b1427ec6a039939fbdf753ee79a",
+      "file": "ReplaceableTextures__CommandButtons__BTNWaterShield.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNWaterShield.blp": {
+      "status": "ok",
+      "size": 4505,
+      "sha256": "5f13dd74c68f52b0aecd2c21391336348f6a908f1f46bbb7a4560ae41d6e5b25",
+      "file": "ReplaceableTextures__CommandButtonsDisabled__DISBTNWaterShield.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\BTNNico.blp": {
+      "status": "ok",
+      "size": 11498,
+      "sha256": "7e3dc791926f7f50144022e6ea183689e2d5caee83dda6962c6981e0bdc75c40",
+      "file": "ReplaceableTextures__CommandButtons__BTNNico.blp",
+      "in_listfile": true
+    },
+    "ReplaceableTextures\\CommandButtons\\DISBTNNico.blp": {
+      "status": "ok",
+      "size": 6822,
+      "sha256": "7cd75a77ccb3413e68d6bcc24d126c295cea2d8da66a220f2b780b7fe5c1f023",
+      "file": "ReplaceableTextures__CommandButtons__DISBTNNico.blp",
+      "in_listfile": true
+    },
+    "musicnote.blp": {
+      "status": "ok",
+      "size": 8644,
+      "sha256": "59feb5b7cef0ed34552a3b799e38c0576e50ca7d8e87e5c51d5ac14910b0d66e",
+      "file": "musicnote.blp",
+      "in_listfile": true
+    },
+    "MusicCast.mdx": {
+      "status": "ok",
+      "size": 2530,
+      "sha256": "02c6b82eaa60b1a17de457101fa87e9409b13e1df8e92c701244e882473d1100",
+      "file": "MusicCast.mdx",
+      "in_listfile": true
+    },
+    "MusicCast.blp": {
+      "status": "ok",
+      "size": 12392,
+      "sha256": "835e8ceae611685408517bb9fc0cf41c08dea605b210489e0cca78f6d8bbec3a",
+      "file": "MusicCast.blp",
+      "in_listfile": true
+    },
+    "Bahamut.mdx": {
+      "status": "ok",
+      "size": 124799,
+      "sha256": "6520bda38d794c9e11e2a828c32b98fb5f09444b7f6c1fa1a2dbb575955acda4",
+      "file": "Bahamut.mdx",
+      "in_listfile": true
+    },
+    "Bahamut.blp": {
+      "status": "ok",
+      "size": 76672,
+      "sha256": "f250c48058d92c30656ede69c014426b9ab90a91d466c38ca1c72be0566421be",
+      "file": "Bahamut.blp",
+      "in_listfile": true
+    },
+    "Miku1.blp": {
+      "status": "ok",
+      "size": 73738,
+      "sha256": "103d9a7df16990ef2aa1fac768a69f585785eba2112c96fc944fd07df40e2b10",
+      "file": "Miku1.blp",
+      "in_listfile": true
+    },
+    "Miku2.blp": {
+      "status": "ok",
+      "size": 72051,
+      "sha256": "fc56256baeab336419f5bba560913527c857f1dc96f04bc5c639f5a9d8ef802d",
+      "file": "Miku2.blp",
+      "in_listfile": true
+    },
+    "HeroMiku.MDx": {
+      "status": "ok",
+      "size": 142000,
+      "sha256": "975e08c84809d4879c38fe75bd31916ed1012875f83c36c652ec31f17f28f96a",
+      "file": "HeroMiku.MDx",
+      "in_listfile": true
+    },
+    "(listfile)": {
+      "status": "ok",
+      "size": 14241,
+      "sha256": "f24e2d347ea7c66a70b6bf411eabe3626fa7994d33aeb4b6c6eed5d7ad60d706",
+      "file": "(listfile)",
+      "in_listfile": false
+    },
+    "(attributes)": {
+      "status": "ok",
+      "size": 5636,
+      "sha256": "a208c2c28ab19a2f399723a4468b76dfb8659c9fcfa3ca08ac707a0d3436311a",
+      "file": "(attributes)",
+      "in_listfile": false
+    },
+    "(signature)": {
+      "status": "absent",
+      "in_listfile": false
+    },
+    "war3map.wai": {
+      "status": "absent",
+      "in_listfile": false
+    },
+    "war3mapImported\\war3map.j": {
+      "status": "absent",
+      "in_listfile": false
+    },
+    "war3mapMap.b00": {
+      "status": "absent",
+      "in_listfile": false
+    },
+    "war3mapMap.tga": {
+      "status": "absent",
+      "in_listfile": false
+    },
+    "war3mapPath.tga": {
+      "status": "absent",
+      "in_listfile": false
+    },
+    "war3mapSkin.txt": {
+      "status": "absent",
+      "in_listfile": false
+    },
+    "conversation.json": {
+      "status": "absent",
+      "in_listfile": false
+    },
+    "war3mapPreview.blp": {
+      "status": "absent",
+      "in_listfile": false
+    }
+  }
+}

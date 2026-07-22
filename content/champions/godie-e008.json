@@ -1,0 +1,249 @@
+{
+  "id": "godie-e008",
+  "schema": "champion@1",
+  "name": "火霧戰士 - 夏娜",
+  "description": "故事：\n身分為火霧戰士，為了存在感稀薄的人而戰。\n(出自:灼眼的夏娜)\n\n推薦玩家 : 團戰殺人\n上手度 : 難\n\n角色成長：\n力量 + 1.75\n敏捷 + 2.90\n智慧 + 1.55\n基礎跑速 310\n\n可學習的技能：\n拔焰刀、火羽、赤焰爆發、討滅封絕",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "imported.heroshana",
+  "baseStats": {
+    "maxHealth": 460,
+    "healthRegen": 1.1,
+    "maxMana": 304,
+    "manaRegen": 1.48,
+    "ad": 31,
+    "ap": 0,
+    "armor": 8,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.9,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 35,
+    "healthRegen": 0.09,
+    "maxMana": 19,
+    "manaRegen": 0.06,
+    "ad": 2.9,
+    "armor": 0.9,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-e008.q",
+      "name": "21-02 拔焰刀",
+      "description": "[主動攻擊]\n25秒冷卻時間\n\n拔抽覆蓋火焰的刀斬擊敵人造成300傷害，同時可以打昏目標0.5秒。同時熾熱的刀身能造成普攻附加額外75點火焰擴散傷害4秒。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        25.0,
+        25.0,
+        25.0
+      ],
+      "manaCost": [
+        75.0,
+        125.0,
+        175.0
+      ],
+      "range": 4.58,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              300.0,
+              400.0,
+              500.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow25",
+          "duration": 0.5,
+          "moveSpeedMult": 0.6
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "W": {
+      "id": "godie-e008.w",
+      "name": "21-01 火羽",
+      "description": "[傷害加成]\n30秒冷卻時間\n\n召喚火焰般的羽毛幫助周圍單位加速移動1.5倍，持續6秒。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        30.0,
+        60.0,
+        90.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "value": 1.5
+            }
+          ],
+          "duration": 6.0,
+          "perRank": [
+            {
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctAdd",
+                  "value": 1.5
+                }
+              ],
+              "duration": 6.0
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctAdd",
+                  "value": 1.5
+                }
+              ],
+              "duration": 12.0
+            },
+            {
+              "modifiers": [
+                {
+                  "stat": "ms",
+                  "op": "pctAdd",
+                  "value": 1.5
+                }
+              ],
+              "duration": 18.0
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.firestorm"
+    },
+    "E": {
+      "id": "godie-e008.e",
+      "name": "21-03 赤焰爆發",
+      "description": "[主動攻擊]\n45秒冷卻時間\n\n赤焰爆發可以攻擊一直線敵人，將其打到空中給予400點損害，落地後暈眩1秒。",
+      "slot": "E",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        165.0,
+        215.0,
+        265.0,
+        315.0
+      ],
+      "range": 12.83,
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.wave",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "perRank": [
+                  400.0,
+                  550.0,
+                  700.0,
+                  850.0
+                ]
+              }
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "burnstun",
+              "duration": 1.0,
+              "stun": true
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "R": {
+      "id": "godie-e008.r",
+      "name": "21-04 討滅封絕",
+      "description": "[輔助]\n75秒冷卻時間\n\n開啟封絕的結界，範圍1800敵方移動速度下降30%、攻擊速度下降100%，而夏娜在結界內每殺死一名英雄可取得存在之力，增加全能力2點並恢復所有生命及瑪那，結界持續6秒。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        75.0,
+        75.0,
+        75.0
+      ],
+      "manaCost": [
+        200.0,
+        350.0,
+        500.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "duration": 3.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "godie-i06c",
+    "serrated-edge",
+    "godie-i068",
+    "godie-i02x"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ],
+  "exAbility": "godie-e008.ex",
+  "icon": "assets/icons/champions/godie-e008.png"
+}

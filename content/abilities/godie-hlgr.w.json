@@ -1,0 +1,50 @@
+{
+  "id": "godie-hlgr.w",
+  "name": "03-01 磁軌砲",
+  "description": "[主動攻擊]\n15秒冷卻時間\n\n對著敵方部隊發射磁軌砲，造成125點傷害並讓目標昏迷0.5秒。",
+  "slot": "W",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "manaCost": [
+    35.0,
+    50.0,
+    65.0,
+    80.0
+  ],
+  "range": 8.25,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          125.0,
+          200.0,
+          275.0,
+          350.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "burnstun",
+      "duration": 0.5,
+      "stun": true
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

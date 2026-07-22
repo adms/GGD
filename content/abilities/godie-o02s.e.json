@@ -1,0 +1,54 @@
+{
+  "id": "godie-o02s.e",
+  "name": "53-04 暴爆咒",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n火系黑魔法的最高等攻擊法術，需要的魔力相當驚人，賢者等級以上才能施展的毀滅性咒文，火焰爆裂會以施術者為中心逆時針放射爆炸給予135+智慧*2.0點傷害。",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 5,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    75.0,
+    75.0
+  ],
+  "manaCost": [
+    300.0,
+    420.0,
+    540.0,
+    950.0,
+    950.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          135.0,
+          135.0,
+          135.0,
+          225.0,
+          225.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.675
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "burnstun",
+      "duration": 0.8,
+      "stun": true
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "radius": 6.0,
+  "schema": "ability@1"
+}

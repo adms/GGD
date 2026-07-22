@@ -1,0 +1,45 @@
+{
+  "id": "godie-hvwd.e",
+  "name": "02-03 魂飛魄散",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n桔梗將死魂收集的妖力爆發噴射，造成一直線上的敵人350點傷害。",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    120.0,
+    185.0,
+    250.0,
+    315.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          350.0,
+          550.0,
+          750.0,
+          950.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/godie-hvwd.e.png"
+}

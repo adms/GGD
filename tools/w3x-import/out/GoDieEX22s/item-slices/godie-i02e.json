@@ -1,0 +1,44 @@
+{
+  "contentId": "godie-i02e",
+  "nameZh": "狂暴軒轅劍",
+  "gold": 8100,
+  "kind": "effect",
+  "description": "傳說\r\n效能：\r\n攻擊力+60\r\n力量+24\r\n15%的機率增加225點傷害並暈眩0.4秒\r\n\r\n歷史\r\n傳說中的上古十大神器之ㄧ，被封為最強力量。",
+  "abilities": [
+    {
+      "rawcode": "A06Z",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "AItn",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A02R",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A0FE",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {
+        "3": {
+          "1": 225.0
+        },
+        "5": {
+          "1": 1
+        }
+      }
+    }
+  ]
+}

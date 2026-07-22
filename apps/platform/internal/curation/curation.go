@@ -1,0 +1,426 @@
+// Package curation owns the CONTENT WHITELIST: the operator-curated set of
+// champion / item / ability ids that are actually enabled in the product.
+//
+// The imported WC3 roster is far larger than what should ship enabled, so the
+// whitelist is DEFAULT-EMPTY: a fresh install has nothing turned on and an
+// operator opts content in from the admin console (or one-click applies the
+// starter set, see starter.go). Nothing here seeds content implicitly.
+//
+// This is OPERATIONAL STATE, not content: the durable truth is one JSON file
+// at data/curation/whitelist.json written through the platform jsonstore
+// (tmp+rename, single writer), and Redis only ever holds a rebuildable mirror
+// for consumers that already speak Redis. The content tree itself is never
+// mutated.
+//
+// Consumers:
+//   - game-server: filters the playable/RANDOM champion pools, the shop
+//     catalogue and the draft/loot offers, and rejects SELECT_CHAMPION for a
+//     non-whitelisted champion (see apps/game-server/src/curation/whitelist.ts).
+//   - client + admin console: render only whitelisted entries.
+package curation
+
+import (
+	"context"
+	"encoding/json"
+	"errors"
+	"log/slog"
+	"regexp"
+	"sort"
+	"strings"
+	"sync"
+	"time"
+
+	"github.com/ggd/platform/internal/admin"
+	"github.com/ggd/platform/internal/data/jsonstore"
+	"github.com/ggd/platform/internal/data/redisx"
+	"github.com/ggd/platform/internal/httpx"
+)
+
+// Storage identifiers. The document lives at data/curation/whitelist.json.
+const (
+	// Collection is the jsonstore collection (a directory under DATA_DIR).
+	Collection = "curation"
+	// DocID is the single document id inside that collection.
+	DocID = "whitelist"
+	// RedisKey mirrors the marshalled document for Redis-native consumers.
+	// It is a cache: the platform never reads it back as truth.
+	RedisKey = "curation:whitelist"
+	// SchemaVersion is the doc version written by this build.
+	SchemaVersion = 1
+)
+
+// Kinds of curated content. These are the only accepted `kind` values on the
+// bulk endpoint.
+const (
+	KindChampions = "champions"
+	KindItems     = "items"
+	KindAbilities = "abilities"
+)
+
+// MaxIDsPerKind bounds one list so a malicious/buggy admin call cannot blow up
+// the durable file. The full imported roster is ~113 champions / ~212 items /
+// ~555 abilities, so this leaves generous headroom.
+const MaxIDsPerKind = 4000
+
+// idRe is the accepted shape of a content id: champion ids look like
+// "godie-e001" / "sela", ability ids carry a dotted slot suffix
+// ("godie-e001.ex"). Deliberately strict — these ids end up in file content
+// that other services trust.
+var idRe = regexp.MustCompile(`^[a-zA-Z0-9][a-zA-Z0-9._-]{0,127}$`)
+
+// Doc is the whitelist document. Every list is ALWAYS non-nil so the JSON
+// encodes `[]` (never `null`) — clients can iterate without a nil check.
+type Doc struct {
+	Version   int       `json:"version"`
+	UpdatedAt time.Time `json:"updatedAt"`
+	Champions []string  `json:"champions"`
+	Items     []string  `json:"items"`
+	Abilities []string  `json:"abilities"`
+}
+
+// EmptyDoc is the default state of a fresh install: nothing enabled.
+func EmptyDoc() Doc {
+	return Doc{
+		Version:   SchemaVersion,
+		Champions: []string{},
+		Items:     []string{},
+		Abilities: []string{},
+	}
+}
+
+// Total counts every enabled id across the three kinds.
+func (d Doc) Total() int { return len(d.Champions) + len(d.Items) + len(d.Abilities) }
+
+// list returns a pointer to the slice for the given kind (nil for an unknown
+// kind).
+func (d *Doc) list(kind string) *[]string {
+	switch kind {
+	case KindChampions:
+		return &d.Champions
+	case KindItems:
+		return &d.Items
+	case KindAbilities:
+		return &d.Abilities
+	}
+	return nil
+}
+
+// ValidKind reports whether kind names one of the three curated lists.
+func ValidKind(kind string) bool {
+	switch kind {
+	case KindChampions, KindItems, KindAbilities:
+		return true
+	}
+	return false
+}
+
+// normalizeIDs trims, validates, de-duplicates and sorts a list of ids.
+// Empty entries are dropped; an invalid id is a 400 (never silently ignored,
+// so a typo in the admin console surfaces immediately).
+func normalizeIDs(kind string, in []string) ([]string, error) {
+	out := make([]string, 0, len(in))
+	seen := make(map[string]struct{}, len(in))
+	for _, raw := range in {
+		id := strings.TrimSpace(raw)
+		if id == "" {
+			continue
+		}
+		if !idRe.MatchString(id) {
+			return nil, httpx.BadRequest("invalid " + kind + " id: " + truncate(id, 40))
+		}
+		if _, dup := seen[id]; dup {
+			continue
+		}
+		seen[id] = struct{}{}
+		out = append(out, id)
+	}
+	if len(out) > MaxIDsPerKind {
+		return nil, httpx.BadRequest("too many " + kind + " ids")
+	}
+	sort.Strings(out)
+	return out, nil
+}
+
+func truncate(s string, n int) string {
+	if len(s) <= n {
+		return s
+	}
+	return s[:n] + "…"
+}
+
+// Repo is the durable store of the whitelist document: JSON truth via
+// jsonstore, best-effort Redis mirror.
+type Repo struct {
+	store *jsonstore.Store
+	rdb   *redisx.Client
+}
+
+// NewRepo builds the repository. rdb may be nil (no mirror).
+func NewRepo(store *jsonstore.Store, rdb *redisx.Client) *Repo {
+	return &Repo{store: store, rdb: rdb}
+}
+
+// Load reads the JSON truth. A missing file is NOT an error — it is the
+// default-empty state, reported via the second return value.
+func (r *Repo) Load() (Doc, bool, error) {
+	var d Doc
+	err := r.store.Get(Collection, DocID, &d)
+	if errors.Is(err, jsonstore.ErrNotFound) {
+		return EmptyDoc(), false, nil
+	}
+	if err != nil {
+		return EmptyDoc(), false, err
+	}
+	// Backfill hand-edited / older files: nil lists read as empty, a missing
+	// version reads as the current one.
+	if d.Champions == nil {
+		d.Champions = []string{}
+	}
+	if d.Items == nil {
+		d.Items = []string{}
+	}
+	if d.Abilities == nil {
+		d.Abilities = []string{}
+	}
+	if d.Version == 0 {
+		d.Version = SchemaVersion
+	}
+	return d, true, nil
+}
+
+// Save writes the JSON truth atomically, then mirrors into Redis. A mirror
+// failure is logged, never fatal: Redis is rebuildable, the file is the truth.
+func (r *Repo) Save(ctx context.Context, d Doc) error {
+	if err := r.store.Put(Collection, DocID, d); err != nil {
+		return err
+	}
+	r.mirror(ctx, d)
+	return nil
+}
+
+func (r *Repo) mirror(ctx context.Context, d Doc) {
+	if r.rdb == nil {
+		return
+	}
+	data, err := json.Marshal(d)
+	if err != nil {
+		return
+	}
+	if err := r.rdb.R.Set(ctx, RedisKey, string(data), 0).Err(); err != nil {
+		slog.Warn("curation: redis mirror failed (JSON truth is intact)", "err", err)
+	}
+}
+
+// Service applies whitelist policy on top of the repository. The document is
+// tiny and single-writer, so one mutex around the read-modify-write cycle is
+// all the concurrency control needed.
+type Service struct {
+	repo  *Repo
+	store *jsonstore.Store
+	mu    sync.Mutex
+	now   func() time.Time
+}
+
+// New builds the service. rdb may be nil (mirror disabled).
+func New(store *jsonstore.Store, rdb *redisx.Client) *Service {
+	return &Service{repo: NewRepo(store, rdb), store: store, now: time.Now}
+}
+
+// SetNow overrides the clock seam (tests inject a fixed clock so updatedAt is
+// deterministic).
+func (s *Service) SetNow(fn func() time.Time) { s.now = fn }
+
+// Get returns the current whitelist. On a fresh install the file does not
+// exist yet: the empty document is created LAZILY (so operators can see and
+// hand-edit it) and returned — nothing is ever seeded into it.
+func (s *Service) Get(ctx context.Context) (Doc, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	doc, existed, err := s.repo.Load()
+	if err != nil {
+		return EmptyDoc(), err
+	}
+	if !existed {
+		doc.UpdatedAt = s.now().UTC()
+		if err := s.repo.Save(ctx, doc); err != nil {
+			// A read must not fail because the lazy create failed; the empty
+			// document is still the correct answer.
+			slog.Warn("curation: lazy create of the empty whitelist failed", "err", err)
+		}
+	}
+	return doc, nil
+}
+
+// Replace overwrites the whole document (PUT semantics). Input is normalized
+// (trimmed, de-duplicated, sorted) and validated; version/updatedAt are owned
+// by the server, never by the caller.
+func (s *Service) Replace(ctx context.Context, in Doc) (Doc, error) {
+	champs, err := normalizeIDs(KindChampions, in.Champions)
+	if err != nil {
+		return EmptyDoc(), err
+	}
+	items, err := normalizeIDs(KindItems, in.Items)
+	if err != nil {
+		return EmptyDoc(), err
+	}
+	abilities, err := normalizeIDs(KindAbilities, in.Abilities)
+	if err != nil {
+		return EmptyDoc(), err
+	}
+
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	doc := Doc{
+		Version:   SchemaVersion,
+		UpdatedAt: s.now().UTC(),
+		Champions: champs,
+		Items:     items,
+		Abilities: abilities,
+	}
+	if err := s.repo.Save(ctx, doc); err != nil {
+		return EmptyDoc(), err
+	}
+	return doc, nil
+}
+
+// Bulk enables and/or disables ids of ONE kind, leaving the other kinds
+// untouched. Disable wins over enable for an id present in both lists (the
+// least surprising resolution of a contradictory request). Enabling an
+// already-enabled id is a no-op, so the call is idempotent and safe to retry.
+func (s *Service) Bulk(ctx context.Context, kind string, enable, disable []string) (Doc, error) {
+	if !ValidKind(kind) {
+		return EmptyDoc(), httpx.BadRequest(`kind must be one of "champions", "items", "abilities"`)
+	}
+	add, err := normalizeIDs(kind, enable)
+	if err != nil {
+		return EmptyDoc(), err
+	}
+	remove, err := normalizeIDs(kind, disable)
+	if err != nil {
+		return EmptyDoc(), err
+	}
+
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	doc, _, err := s.repo.Load()
+	if err != nil {
+		return EmptyDoc(), err
+	}
+	target := doc.list(kind)
+
+	removeSet := make(map[string]struct{}, len(remove))
+	for _, id := range remove {
+		removeSet[id] = struct{}{}
+	}
+	merged := make([]string, 0, len(*target)+len(add))
+	seen := make(map[string]struct{}, len(*target)+len(add))
+	for _, id := range append(append([]string{}, *target...), add...) {
+		if _, dropped := removeSet[id]; dropped {
+			continue
+		}
+		if _, dup := seen[id]; dup {
+			continue
+		}
+		seen[id] = struct{}{}
+		merged = append(merged, id)
+	}
+	if len(merged) > MaxIDsPerKind {
+		return EmptyDoc(), httpx.BadRequest("too many " + kind + " ids")
+	}
+	sort.Strings(merged)
+	*target = merged
+	doc.Version = SchemaVersion
+	doc.UpdatedAt = s.now().UTC()
+	if err := s.repo.Save(ctx, doc); err != nil {
+		return EmptyDoc(), err
+	}
+	return doc, nil
+}
+
+// ApplyStarterSet unions the built-in starter set into the whitelist (never
+// removes anything) so a fresh install is one click away from being playable.
+// Idempotent.
+func (s *Service) ApplyStarterSet(ctx context.Context) (Doc, error) {
+	starter := StarterSet()
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	doc, _, err := s.repo.Load()
+	if err != nil {
+		return EmptyDoc(), err
+	}
+	doc.Champions = union(doc.Champions, starter.Champions)
+	doc.Items = union(doc.Items, starter.Items)
+	doc.Abilities = union(doc.Abilities, starter.Abilities)
+	doc.Version = SchemaVersion
+	doc.UpdatedAt = s.now().UTC()
+	if err := s.repo.Save(ctx, doc); err != nil {
+		return EmptyDoc(), err
+	}
+	return doc, nil
+}
+
+// ApplyStarterSetIfEmpty is the AUTOMATED door (cmd/seed -starter, K8s
+// post-install, CI, a fresh dev box). It applies the starter bundle ONLY when
+// the whitelist is genuinely unset — no champions enabled — and reports
+// whether it wrote anything.
+//
+// The emptiness guard is the whole point: an operator who has already curated
+// (even down to a single champion, even by DISABLING everything the bundle
+// suggested) must never have their choices re-expanded behind their back on
+// the next restart. The check and the write share the same mutex, so a
+// concurrent admin edit cannot slip between them.
+//
+// applied=false is a normal outcome, not an error.
+func (s *Service) ApplyStarterSetIfEmpty(ctx context.Context) (doc Doc, applied bool, err error) {
+	s.mu.Lock()
+	cur, existed, loadErr := s.repo.Load()
+	s.mu.Unlock()
+	if loadErr != nil {
+		return EmptyDoc(), false, loadErr
+	}
+	// "Genuinely empty" = no champion is enabled. Items/abilities alone cannot
+	// make a match playable, but a curated champion list always means a human
+	// has been here — including the case where they deliberately pruned the
+	// bundle back down.
+	if existed && len(cur.Champions) > 0 {
+		return cur, false, nil
+	}
+	applied2, err := s.ApplyStarterSet(ctx)
+	if err != nil {
+		return EmptyDoc(), false, err
+	}
+	return applied2, true, nil
+}
+
+func union(a, b []string) []string {
+	seen := make(map[string]struct{}, len(a)+len(b))
+	out := make([]string, 0, len(a)+len(b))
+	for _, id := range append(append([]string{}, a...), b...) {
+		if id == "" {
+			continue
+		}
+		if _, dup := seen[id]; dup {
+			continue
+		}
+		seen[id] = struct{}{}
+		out = append(out, id)
+	}
+	sort.Strings(out)
+	return out
+}
+
+// Audit appends one line to the shared admin audit log so whitelist changes
+// show up in the console's audit page next to every other operator action.
+// Best-effort: a failed audit write never fails the mutation itself.
+func (s *Service) Audit(adminID, action string, detail map[string]any) {
+	entry := admin.AuditEntry{
+		AdminID:  adminID,
+		Action:   action,
+		TargetID: Collection + "/" + DocID,
+		Detail:   detail,
+		TS:       s.now().UTC(),
+	}
+	if err := s.store.AppendLine(admin.ColAudit, entry.TS.Format("2006-01-02"), entry); err != nil {
+		slog.Warn("curation: audit append failed", "action", action, "err", err)
+	}
+}

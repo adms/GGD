@@ -1,0 +1,195 @@
+{
+  "id": "godie-o02o",
+  "schema": "champion@1",
+  "name": "曹操孟德 - 阿瞞大人",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "champ.sela",
+  "baseStats": {
+    "maxHealth": 440,
+    "healthRegen": 1.15,
+    "maxMana": 292,
+    "manaRegen": 1.44,
+    "ad": 22,
+    "ap": 0,
+    "armor": 7,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 6.1,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 34,
+    "healthRegen": 0.09,
+    "maxMana": 20,
+    "manaRegen": 0.07,
+    "ad": 1.7,
+    "armor": 0.8,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-o02o.q",
+      "name": "大紅蓮斬",
+      "slot": "Q",
+      "castType": "skillshot",
+      "maxRank": 5,
+      "cooldown": [
+        35.0,
+        35.0,
+        35.0,
+        35.0,
+        35.0
+      ],
+      "manaCost": [
+        75.0,
+        175.0,
+        275.0,
+        275.0,
+        275.0
+      ],
+      "range": 5.5,
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.wave",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "perRank": [
+                  250.0,
+                  550.0,
+                  850.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "W": {
+      "id": "godie-o02o.w",
+      "name": "霸體",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": 20
+            }
+          ],
+          "duration": 8.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "E": {
+      "id": "godie-o02o.e",
+      "name": "天下號令",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        90.0,
+        180.0,
+        270.0,
+        360.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "R": {
+      "id": "godie-o02o.r",
+      "name": "逆我必殺",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        12.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        50.0,
+        80.0,
+        110.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "heal",
+          "amount": {
+            "perRank": [
+              100.0,
+              200.0,
+              300.0
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": false
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ]
+}

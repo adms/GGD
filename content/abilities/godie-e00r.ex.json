@@ -1,0 +1,30 @@
+{
+  "id": "godie-e00r.ex",
+  "name": "59-001 完全暴走",
+  "description": "[強化]\n0秒冷卻時間\n\n完全失去控制的初號機，將暴走機率提升至75%，平時提升25%的閃躲能力。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    120.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

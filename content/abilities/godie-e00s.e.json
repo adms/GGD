@@ -1,0 +1,44 @@
+{
+  "id": "godie-e00s.e",
+  "schema": "ability@1",
+  "name": "70-03 木束縛之術",
+  "description": "[輔助]\n60秒冷卻時間\n\n讓白木周圍的敵方都受到木靈束縛綑綁，持續1.5秒。",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    100.0,
+    150.0,
+    150.0,
+    250.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          80,
+          120,
+          160,
+          200
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true
+}

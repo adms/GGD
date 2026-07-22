@@ -1,0 +1,41 @@
+{
+  "contentId": "godie-i06f",
+  "nameZh": "月神槍",
+  "gold": 7200,
+  "kind": "effect",
+  "description": "飾品\r\n效能\r\n智慧+24\r\n範圍裝甲+16\r\n範圍每秒回復生命+10\r\n\r\n解說\r\n傳說來自月之海的夢幻武器，攜帶者會受到月之女神的守護。",
+  "abilities": [
+    {
+      "rawcode": "A0XE",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {
+        "1": {
+          "1": 0.0
+        },
+        "2": {
+          "1": 10.0
+        }
+      }
+    },
+    {
+      "rawcode": "A086",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A0ZL",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {
+        "1": {
+          "1": 16.0
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,4495 @@
+{
+  "meta": {
+    "generatedFor": "task #70 phase 1 — arena has NO crafting; this tree is a CLASSIFICATION TOOL and design-history record, not a spec to implement",
+    "sourceJass": "tools/w3x-import/out/GoDieEX22s/raw/scripts__war3map.j",
+    "sourceObjects": "tools/w3x-import/out/GoDieEX22s-src/OBJECTS.json",
+    "jassPattern": "EVENT_PLAYER_UNIT_PICKUP_ITEM trigger -> Condition(UnitHasItemOfTypeBJ x N) -> Action(RemoveItem x N + UnitAddItemByIdSwapped product)",
+    "rawcodeToContentId": "IXXX -> godie-ixxx (lowercase)"
+  },
+  "counts": {
+    "recipesImplementedInJass": 67,
+    "recipesDeclaredOnly": 3,
+    "recipesTotal": 70,
+    "distinctProducts": 70,
+    "distinctComponents": 118,
+    "intermediates": 21,
+    "finalProducts": 49,
+    "componentOnlyLeaves": 97,
+    "recipeBooksInContent": 55,
+    "maxDepth": 4,
+    "contentItemsTotal": 212,
+    "contentItemsUntouchedByAnyRecipe": 41,
+    "recipeBooksConsumedByImplementedRecipe": 52,
+    "recipeBooksOrphaned": 3,
+    "recipesUsingABook_implemented": 54,
+    "recipesBookless_implemented": 13,
+    "recipesGrantingATitle": 19
+  },
+  "recipes": [
+    {
+      "product": {
+        "rawcode": "I06R",
+        "contentId": "godie-i06r",
+        "name": "一克拉鑽戒",
+        "cost": 1850,
+        "modifiers": 1
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "OOv",
+      "components": [
+        {
+          "rawcode": "I01R",
+          "contentId": "godie-i01r",
+          "name": "一克拉鑽戒製作書",
+          "cost": 150,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I02P",
+          "contentId": "godie-i02p",
+          "name": "網友手環",
+          "cost": 0,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I05T",
+          "contentId": "godie-i05t",
+          "name": "定情戒指",
+          "cost": 400,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I065",
+          "contentId": "godie-i065",
+          "name": "寶石碎片",
+          "cost": 1150,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 1700
+    },
+    {
+      "product": {
+        "rawcode": "I01S",
+        "contentId": "godie-i01s",
+        "name": "仙后座",
+        "cost": 0,
+        "modifiers": 1
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "XEv",
+      "components": [
+        {
+          "rawcode": "I00G",
+          "contentId": "godie-i00g",
+          "name": "奇美拉之翼",
+          "cost": 1750,
+          "modifiers": 6,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I053",
+          "contentId": "godie-i053",
+          "name": "仙后座殘骸",
+          "cost": 0,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 1750,
+      "grantsTitle": "瞬動的"
+    },
+    {
+      "product": {
+        "rawcode": "I00Q",
+        "contentId": "godie-i00q",
+        "name": "伊娃之盾",
+        "cost": 4000,
+        "modifiers": 1
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "Onv",
+      "components": [
+        {
+          "rawcode": "I00M",
+          "contentId": "godie-i00m",
+          "name": "米索莉護板",
+          "cost": 950,
+          "modifiers": 2,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I01U",
+          "contentId": "godie-i01u",
+          "name": "伊娃之盾製作書",
+          "cost": 1500,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I05S",
+          "contentId": "godie-i05s",
+          "name": "嚇人假面",
+          "cost": 0,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I065",
+          "contentId": "godie-i065",
+          "name": "寶石碎片",
+          "cost": 1150,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 3600
+    },
+    {
+      "product": {
+        "rawcode": "I03D",
+        "contentId": "godie-i03d",
+        "name": "光明虎徹",
+        "cost": 5450,
+        "modifiers": 3
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "OTv",
+      "components": [
+        {
+          "rawcode": "I003",
+          "contentId": "godie-i003",
+          "name": "聖光石",
+          "cost": 1450,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I005",
+          "contentId": "godie-i005",
+          "name": "初心者寶石",
+          "cost": 2450,
+          "modifiers": 3,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I03E",
+          "contentId": "godie-i03e",
+          "name": "光明虎徹製作書",
+          "cost": 600,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I06M",
+          "contentId": "godie-i06m",
+          "name": "真知之石",
+          "cost": 950,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 5450
+    },
+    {
+      "product": {
+        "rawcode": "I013",
+        "contentId": "godie-i013",
+        "name": "八取武士刀",
+        "cost": 3100,
+        "modifiers": 3
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "Xkv",
+      "components": [
+        {
+          "rawcode": "I01Z",
+          "contentId": "godie-i01z",
+          "name": "八取武士刀製作書",
+          "cost": 1000,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I06C",
+          "contentId": "godie-i06c",
+          "name": "恐龍之斧",
+          "cost": 1050,
+          "modifiers": 2,
+          "qty": 2,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 3100
+    },
+    {
+      "product": {
+        "rawcode": "I04B",
+        "contentId": "godie-i04b",
+        "name": "冰晶虎魄",
+        "cost": 4150,
+        "modifiers": 4
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "Oov",
+      "components": [
+        {
+          "rawcode": "I010",
+          "contentId": "godie-i010",
+          "name": "熱戀魔杖",
+          "cost": 1100,
+          "modifiers": 2,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I04C",
+          "contentId": "godie-i04c",
+          "name": "冰晶虎魄製作書",
+          "cost": 2000,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I06C",
+          "contentId": "godie-i06c",
+          "name": "恐龍之斧",
+          "cost": 1050,
+          "modifiers": 2,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 4150
+    },
+    {
+      "product": {
+        "rawcode": "I00N",
+        "contentId": "godie-i00n",
+        "name": "分手之鎚",
+        "cost": 4000,
+        "modifiers": 1
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "X5v",
+      "components": [
+        {
+          "rawcode": "I009",
+          "contentId": "godie-i009",
+          "name": "分手之鎚製作書",
+          "cost": 1150,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I066",
+          "contentId": "godie-i066",
+          "name": "復仇之玉",
+          "cost": 1450,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I06K",
+          "contentId": "godie-i06k",
+          "name": "奧理哈魯根劍身",
+          "cost": 1600,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 4200
+    },
+    {
+      "product": {
+        "rawcode": "I05O",
+        "contentId": "godie-i05o",
+        "name": "刺針",
+        "cost": 5500,
+        "modifiers": 3
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "OWv",
+      "components": [
+        {
+          "rawcode": "I005",
+          "contentId": "godie-i005",
+          "name": "初心者寶石",
+          "cost": 2450,
+          "modifiers": 3,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I00A",
+          "contentId": "godie-i00a",
+          "name": "刺針製作書",
+          "cost": 500,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I06K",
+          "contentId": "godie-i06k",
+          "name": "奧理哈魯根劍身",
+          "cost": 1600,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I06M",
+          "contentId": "godie-i06m",
+          "name": "真知之石",
+          "cost": 950,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 5500
+    },
+    {
+      "product": {
+        "rawcode": "I04I",
+        "contentId": "godie-i04i",
+        "name": "厄夜鐮刀",
+        "cost": 6590,
+        "modifiers": 1
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "IYv",
+      "components": [
+        {
+          "rawcode": "I01B",
+          "contentId": "godie-i01b",
+          "name": "林之書",
+          "cost": 2550,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I01C",
+          "contentId": "godie-i01c",
+          "name": "火之書",
+          "cost": 2040,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I04K",
+          "contentId": "godie-i04k",
+          "name": "厄夜鐮刀製作書",
+          "cost": 2000,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 6590,
+      "grantsTitle": "劃破虛空的"
+    },
+    {
+      "product": {
+        "rawcode": "I00U",
+        "contentId": "godie-i00u",
+        "name": "名刀-天狼",
+        "cost": 4000,
+        "modifiers": 1
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "X1v",
+      "components": [
+        {
+          "rawcode": "I011",
+          "contentId": "godie-i011",
+          "name": "名刀-天狼製作書",
+          "cost": 1750,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I05V",
+          "contentId": "godie-i05v",
+          "name": "破壞王手套",
+          "cost": 650,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I06K",
+          "contentId": "godie-i06k",
+          "name": "奧理哈魯根劍身",
+          "cost": 1600,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 4000
+    },
+    {
+      "product": {
+        "rawcode": "I01F",
+        "contentId": "godie-i01f",
+        "name": "和道一文字",
+        "cost": 3100,
+        "modifiers": 1
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "O6v",
+      "components": [
+        {
+          "rawcode": "I01E",
+          "contentId": "godie-i01e",
+          "name": "和道一文字製作書",
+          "cost": 1200,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I05V",
+          "contentId": "godie-i05v",
+          "name": "破壞王手套",
+          "cost": 650,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I06P",
+          "contentId": "godie-i06p",
+          "name": "血羽之心",
+          "cost": 1250,
+          "modifiers": 2,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 3100
+    },
+    {
+      "product": {
+        "rawcode": "I038",
+        "contentId": "godie-i038",
+        "name": "嗜血邪書",
+        "cost": 7735,
+        "modifiers": 0
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "Axv",
+      "components": [
+        {
+          "rawcode": "I00T",
+          "contentId": "godie-i00t",
+          "name": "風之書",
+          "cost": 1950,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I02Q",
+          "contentId": "godie-i02q",
+          "name": "澤之書",
+          "cost": 2785,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I036",
+          "contentId": "godie-i036",
+          "name": "嗜血邪書製作書",
+          "cost": 3000,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 7735,
+      "grantsTitle": "魔界之王"
+    },
+    {
+      "product": {
+        "rawcode": "I00Z",
+        "contentId": "godie-i00z",
+        "name": "四魂之玉",
+        "cost": 0,
+        "modifiers": 6
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "Anv",
+      "components": [
+        {
+          "rawcode": "I00V",
+          "contentId": "godie-i00v",
+          "name": "四魂之玉的碎片-荒魂",
+          "cost": 0,
+          "modifiers": 2,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I00W",
+          "contentId": "godie-i00w",
+          "name": "四魂之玉的碎片-和魂",
+          "cost": 0,
+          "modifiers": 6,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I00X",
+          "contentId": "godie-i00x",
+          "name": "四魂之玉的碎片-幸魂",
+          "cost": 0,
+          "modifiers": 2,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I00Y",
+          "contentId": "godie-i00y",
+          "name": "四魂之玉的碎片-奇魂",
+          "cost": 0,
+          "modifiers": 2,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 0,
+      "grantsTitle": "邪惡的"
+    },
+    {
+      "product": {
+        "rawcode": "I034",
+        "contentId": "godie-i034",
+        "name": "大地泰坦角盔",
+        "cost": 0,
+        "modifiers": 1
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "Xev",
+      "components": [
+        {
+          "rawcode": "I00R",
+          "contentId": "godie-i00r",
+          "name": "山之書",
+          "cost": 2785,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I02I",
+          "contentId": "godie-i02i",
+          "name": "泰坦之魂",
+          "cost": 0,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 2785,
+      "grantsTitle": "嚇死人的"
+    },
+    {
+      "product": {
+        "rawcode": "I014",
+        "contentId": "godie-i014",
+        "name": "天叢雲劍",
+        "cost": 5050,
+        "modifiers": 3
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "Xwv",
+      "components": [
+        {
+          "rawcode": "I005",
+          "contentId": "godie-i005",
+          "name": "初心者寶石",
+          "cost": 2450,
+          "modifiers": 3,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I021",
+          "contentId": "godie-i021",
+          "name": "天叢雲劍製作書",
+          "cost": 1000,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I06K",
+          "contentId": "godie-i06k",
+          "name": "奧理哈魯根劍身",
+          "cost": 1600,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 5050
+    },
+    {
+      "product": {
+        "rawcode": "I03H",
+        "contentId": "godie-i03h",
+        "name": "天地崩裂魔杖",
+        "cost": 7575,
+        "modifiers": 0
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "IUv",
+      "components": [
+        {
+          "rawcode": "I00R",
+          "contentId": "godie-i00r",
+          "name": "山之書",
+          "cost": 2785,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I01C",
+          "contentId": "godie-i01c",
+          "name": "火之書",
+          "cost": 2040,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I03I",
+          "contentId": "godie-i03i",
+          "name": "天地崩裂魔杖製作書",
+          "cost": 2750,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 7575,
+      "grantsTitle": "崩裂的"
+    },
+    {
+      "product": {
+        "rawcode": "I031",
+        "contentId": "godie-i031",
+        "name": "天生牙",
+        "cost": 6400,
+        "modifiers": 1
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "I4v",
+      "components": [
+        {
+          "rawcode": "I01B",
+          "contentId": "godie-i01b",
+          "name": "林之書",
+          "cost": 2550,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I02Q",
+          "contentId": "godie-i02q",
+          "name": "澤之書",
+          "cost": 2785,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I032",
+          "contentId": "godie-i032",
+          "name": "天生牙製作書",
+          "cost": 1500,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 6835,
+      "grantsTitle": "救世的"
+    },
+    {
+      "product": {
+        "rawcode": "I02R",
+        "contentId": "godie-i02r",
+        "name": "奇蹟之墜",
+        "cost": 6700,
+        "modifiers": 3
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "O2v",
+      "components": [
+        {
+          "rawcode": "I00T",
+          "contentId": "godie-i00t",
+          "name": "風之書",
+          "cost": 1950,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I010",
+          "contentId": "godie-i010",
+          "name": "熱戀魔杖",
+          "cost": 1100,
+          "modifiers": 2,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I02S",
+          "contentId": "godie-i02s",
+          "name": "奇蹟之墜製作書",
+          "cost": 2500,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I065",
+          "contentId": "godie-i065",
+          "name": "寶石碎片",
+          "cost": 1150,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 6700
+    },
+    {
+      "product": {
+        "rawcode": "I00K",
+        "contentId": "godie-i00k",
+        "name": "女神之淚",
+        "cost": 2900,
+        "modifiers": 1
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "OCv",
+      "components": [
+        {
+          "rawcode": "I02P",
+          "contentId": "godie-i02p",
+          "name": "網友手環",
+          "cost": 0,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I065",
+          "contentId": "godie-i065",
+          "name": "寶石碎片",
+          "cost": 1150,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I068",
+          "contentId": "godie-i068",
+          "name": "瑪那寶石",
+          "cost": 1250,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I069",
+          "contentId": "godie-i069",
+          "name": "女神之淚製作書",
+          "cost": 350,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 2750
+    },
+    {
+      "product": {
+        "rawcode": "I007",
+        "contentId": "godie-i007",
+        "name": "妖刀村正",
+        "cost": 3350,
+        "modifiers": 2
+      },
+      "depth": 1,
+      "source": "declared-only",
+      "jassFunction": null,
+      "components": [
+        {
+          "rawcode": "I023",
+          "contentId": "godie-i023",
+          "name": "妖刀村正製作書",
+          "cost": 500,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I05R",
+          "contentId": "godie-i05r",
+          "name": "吸血石",
+          "cost": 1250,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I06K",
+          "contentId": "godie-i06k",
+          "name": "奧理哈魯根劍身",
+          "cost": 1600,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 3350
+    },
+    {
+      "product": {
+        "rawcode": "I02J",
+        "contentId": "godie-i02j",
+        "name": "復仇之袍",
+        "cost": 9065,
+        "modifiers": 0
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "XDv",
+      "components": [
+        {
+          "rawcode": "I02L",
+          "contentId": "godie-i02l",
+          "name": "舊系服",
+          "cost": 0,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I06H",
+          "contentId": "godie-i06h",
+          "name": "求生護腕",
+          "cost": 950,
+          "modifiers": 3,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 950,
+      "grantsTitle": "怨念的"
+    },
+    {
+      "product": {
+        "rawcode": "I06B",
+        "contentId": "godie-i06b",
+        "name": "思念的守護",
+        "cost": 3050,
+        "modifiers": 3
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "OKv",
+      "components": [
+        {
+          "rawcode": "I00M",
+          "contentId": "godie-i00m",
+          "name": "米索莉護板",
+          "cost": 950,
+          "modifiers": 2,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I010",
+          "contentId": "godie-i010",
+          "name": "熱戀魔杖",
+          "cost": 1100,
+          "modifiers": 2,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I01X",
+          "contentId": "godie-i01x",
+          "name": "思念的守護製作書",
+          "cost": 1000,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 3050
+    },
+    {
+      "product": {
+        "rawcode": "I02K",
+        "contentId": "godie-i02k",
+        "name": "惡魔吉他",
+        "cost": 9065,
+        "modifiers": 2
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "XIv",
+      "components": [
+        {
+          "rawcode": "I02M",
+          "contentId": "godie-i02m",
+          "name": "牛蒡男",
+          "cost": 0,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I05R",
+          "contentId": "godie-i05r",
+          "name": "吸血石",
+          "cost": 1250,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 1250,
+      "grantsTitle": "重金屬帝王"
+    },
+    {
+      "product": {
+        "rawcode": "I02H",
+        "contentId": "godie-i02h",
+        "name": "戰旗",
+        "cost": 9065,
+        "modifiers": 1
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "XBv",
+      "components": [
+        {
+          "rawcode": "I02N",
+          "contentId": "godie-i02n",
+          "name": "斯巴達圓盾",
+          "cost": 0,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I066",
+          "contentId": "godie-i066",
+          "name": "復仇之玉",
+          "cost": 1450,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 1450,
+      "grantsTitle": "斯巴達之"
+    },
+    {
+      "product": {
+        "rawcode": "I02X",
+        "contentId": "godie-i02x",
+        "name": "斬岩刃",
+        "cost": 3450,
+        "modifiers": 3
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "Xtv",
+      "components": [
+        {
+          "rawcode": "I02Y",
+          "contentId": "godie-i02y",
+          "name": "斬岩刃製作書",
+          "cost": 800,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I06C",
+          "contentId": "godie-i06c",
+          "name": "恐龍之斧",
+          "cost": 1050,
+          "modifiers": 2,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I06K",
+          "contentId": "godie-i06k",
+          "name": "奧理哈魯根劍身",
+          "cost": 1600,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 3450
+    },
+    {
+      "product": {
+        "rawcode": "I016",
+        "contentId": "godie-i016",
+        "name": "晨曦之光",
+        "cost": 5550,
+        "modifiers": 3
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "OZv",
+      "components": [
+        {
+          "rawcode": "I005",
+          "contentId": "godie-i005",
+          "name": "初心者寶石",
+          "cost": 2450,
+          "modifiers": 3,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I01T",
+          "contentId": "godie-i01t",
+          "name": "晨曦之光製作書",
+          "cost": 0,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I05W",
+          "contentId": "godie-i05w",
+          "name": "觀音菩薩護身符",
+          "cost": 1650,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I06M",
+          "contentId": "godie-i06m",
+          "name": "真知之石",
+          "cost": 950,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 5050
+    },
+    {
+      "product": {
+        "rawcode": "I035",
+        "contentId": "godie-i035",
+        "name": "海潮泰坦護盾",
+        "cost": 0,
+        "modifiers": 2
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "Xiv",
+      "components": [
+        {
+          "rawcode": "I02I",
+          "contentId": "godie-i02i",
+          "name": "泰坦之魂",
+          "cost": 0,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I02Q",
+          "contentId": "godie-i02q",
+          "name": "澤之書",
+          "cost": 2785,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 2785,
+      "grantsTitle": "潮到噴汁"
+    },
+    {
+      "product": {
+        "rawcode": "I02D",
+        "contentId": "godie-i02d",
+        "name": "消失的密室",
+        "cost": 40000,
+        "modifiers": 5
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "AOv",
+      "components": [
+        {
+          "rawcode": "I037",
+          "contentId": "godie-i037",
+          "name": "隱密介紹信",
+          "cost": 1000,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I05U",
+          "contentId": "godie-i05u",
+          "name": "熱舞之靴",
+          "cost": 500,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I05V",
+          "contentId": "godie-i05v",
+          "name": "破壞王手套",
+          "cost": 650,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 2150,
+      "grantsTitle": "作者威能的"
+    },
+    {
+      "product": {
+        "rawcode": "I01K",
+        "contentId": "godie-i01k",
+        "name": "火焰泰坦腰帶",
+        "cost": 0,
+        "modifiers": 1
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "E7v",
+      "components": [
+        {
+          "rawcode": "I01C",
+          "contentId": "godie-i01c",
+          "name": "火之書",
+          "cost": 2040,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I02I",
+          "contentId": "godie-i02i",
+          "name": "泰坦之魂",
+          "cost": 0,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 2040,
+      "grantsTitle": "慾火焚身"
+    },
+    {
+      "product": {
+        "rawcode": "I041",
+        "contentId": "godie-i041",
+        "name": "火閃電",
+        "cost": 2950,
+        "modifiers": 2
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "OQv",
+      "components": [
+        {
+          "rawcode": "I042",
+          "contentId": "godie-i042",
+          "name": "火閃電製作書",
+          "cost": 1500,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I05U",
+          "contentId": "godie-i05u",
+          "name": "熱舞之靴",
+          "cost": 500,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I06H",
+          "contentId": "godie-i06h",
+          "name": "求生護腕",
+          "cost": 950,
+          "modifiers": 3,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 2950
+    },
+    {
+      "product": {
+        "rawcode": "I012",
+        "contentId": "godie-i012",
+        "name": "熾天使之弓",
+        "cost": 3350,
+        "modifiers": 2
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "Xzv",
+      "components": [
+        {
+          "rawcode": "I01Y",
+          "contentId": "godie-i01y",
+          "name": "熾天使之弓製作書",
+          "cost": 500,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I06K",
+          "contentId": "godie-i06k",
+          "name": "奧理哈魯根劍身",
+          "cost": 1600,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I06P",
+          "contentId": "godie-i06p",
+          "name": "血羽之心",
+          "cost": 1250,
+          "modifiers": 2,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 3350
+    },
+    {
+      "product": {
+        "rawcode": "I020",
+        "contentId": "godie-i020",
+        "name": "瑪那魔杖",
+        "cost": 3000,
+        "modifiers": 1
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "Xqv",
+      "components": [
+        {
+          "rawcode": "I010",
+          "contentId": "godie-i010",
+          "name": "熱戀魔杖",
+          "cost": 1100,
+          "modifiers": 2,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I015",
+          "contentId": "godie-i015",
+          "name": "瑪那魔杖製作書",
+          "cost": 1500,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I05S",
+          "contentId": "godie-i05s",
+          "name": "嚇人假面",
+          "cost": 0,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 2600
+    },
+    {
+      "product": {
+        "rawcode": "I02T",
+        "contentId": "godie-i02t",
+        "name": "盾甲天書",
+        "cost": 7635,
+        "modifiers": 0
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "I8v",
+      "components": [
+        {
+          "rawcode": "I00R",
+          "contentId": "godie-i00r",
+          "name": "山之書",
+          "cost": 2785,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I02Q",
+          "contentId": "godie-i02q",
+          "name": "澤之書",
+          "cost": 2785,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I02Z",
+          "contentId": "godie-i02z",
+          "name": "盾甲天書製作書",
+          "cost": 2500,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 8070,
+      "grantsTitle": "奇門行者"
+    },
+    {
+      "product": {
+        "rawcode": "I01W",
+        "contentId": "godie-i01w",
+        "name": "祕銀鎖子甲",
+        "cost": 3100,
+        "modifiers": 1
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "OHv",
+      "components": [
+        {
+          "rawcode": "I00M",
+          "contentId": "godie-i00m",
+          "name": "米索莉護板",
+          "cost": 950,
+          "modifiers": 2,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I017",
+          "contentId": "godie-i017",
+          "name": "祕銀鎖子甲製作書",
+          "cost": 1500,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I05X",
+          "contentId": "godie-i05x",
+          "name": "辣妹護腕",
+          "cost": 650,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 3100
+    },
+    {
+      "product": {
+        "rawcode": "I00P",
+        "contentId": "godie-i00p",
+        "name": "聖誕之靴",
+        "cost": 1650,
+        "modifiers": 2
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "OMv",
+      "components": [
+        {
+          "rawcode": "I01P",
+          "contentId": "godie-i01p",
+          "name": "聖誕之靴製作書",
+          "cost": 500,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I05U",
+          "contentId": "godie-i05u",
+          "name": "熱舞之靴",
+          "cost": 500,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I05V",
+          "contentId": "godie-i05v",
+          "name": "破壞王手套",
+          "cost": 650,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 1650
+    },
+    {
+      "product": {
+        "rawcode": "I05Y",
+        "contentId": "godie-i05y",
+        "name": "蜂蜜罐",
+        "cost": 0,
+        "modifiers": 2
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "XGv",
+      "components": [
+        {
+          "rawcode": "I02O",
+          "contentId": "godie-i02o",
+          "name": "空罐頭",
+          "cost": 0,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I05G",
+          "contentId": "godie-i05g",
+          "name": "世界樹的果實",
+          "cost": 1800,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 1800,
+      "grantsTitle": "小笨熊"
+    },
+    {
+      "product": {
+        "rawcode": "I01G",
+        "contentId": "godie-i01g",
+        "name": "貫雷槍",
+        "cost": 4300,
+        "modifiers": 5
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "X9v",
+      "components": [
+        {
+          "rawcode": "I01H",
+          "contentId": "godie-i01h",
+          "name": "貫雷槍製作書",
+          "cost": 2000,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I06C",
+          "contentId": "godie-i06c",
+          "name": "恐龍之斧",
+          "cost": 1050,
+          "modifiers": 2,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I06P",
+          "contentId": "godie-i06p",
+          "name": "血羽之心",
+          "cost": 1250,
+          "modifiers": 2,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 4300
+    },
+    {
+      "product": {
+        "rawcode": "I049",
+        "contentId": "godie-i049",
+        "name": "賢者之石",
+        "cost": 3450,
+        "modifiers": 6
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "OFv",
+      "components": [
+        {
+          "rawcode": "I005",
+          "contentId": "godie-i005",
+          "name": "初心者寶石",
+          "cost": 2450,
+          "modifiers": 3,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I04A",
+          "contentId": "godie-i04a",
+          "name": "賢者之石製作書",
+          "cost": 1000,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 3450
+    },
+    {
+      "product": {
+        "rawcode": "I01I",
+        "contentId": "godie-i01i",
+        "name": "雷神之鎚",
+        "cost": 7990,
+        "modifiers": 0
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "ISv",
+      "components": [
+        {
+          "rawcode": "I00T",
+          "contentId": "godie-i00t",
+          "name": "風之書",
+          "cost": 1950,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I01C",
+          "contentId": "godie-i01c",
+          "name": "火之書",
+          "cost": 2040,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I01L",
+          "contentId": "godie-i01l",
+          "name": "雷神之鎚製作書",
+          "cost": 4000,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 7990,
+      "grantsTitle": "狂怒的"
+    },
+    {
+      "product": {
+        "rawcode": "I00C",
+        "contentId": "godie-i00c",
+        "name": "風行天衣",
+        "cost": 5500,
+        "modifiers": 1
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "IPv",
+      "components": [
+        {
+          "rawcode": "I00H",
+          "contentId": "godie-i00h",
+          "name": "風行天衣製作書",
+          "cost": 1000,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I00T",
+          "contentId": "godie-i00t",
+          "name": "風之書",
+          "cost": 1950,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I01B",
+          "contentId": "godie-i01b",
+          "name": "林之書",
+          "cost": 2550,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 5500,
+      "grantsTitle": "神出鬼沒的"
+    },
+    {
+      "product": {
+        "rawcode": "I01M",
+        "contentId": "godie-i01m",
+        "name": "黑核晶",
+        "cost": 1800,
+        "modifiers": 2
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "ONv",
+      "components": [
+        {
+          "rawcode": "I02V",
+          "contentId": "godie-i02v",
+          "name": "黑核晶製作書",
+          "cost": 150,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I05S",
+          "contentId": "godie-i05s",
+          "name": "嚇人假面",
+          "cost": 0,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I068",
+          "contentId": "godie-i068",
+          "name": "瑪那寶石",
+          "cost": 1250,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 1400
+    },
+    {
+      "product": {
+        "rawcode": "I030",
+        "contentId": "godie-i030",
+        "name": "黑色魔書",
+        "cost": 6235,
+        "modifiers": 0
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "I0v",
+      "components": [
+        {
+          "rawcode": "I00R",
+          "contentId": "godie-i00r",
+          "name": "山之書",
+          "cost": 2785,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I00T",
+          "contentId": "godie-i00t",
+          "name": "風之書",
+          "cost": 1950,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I02U",
+          "contentId": "godie-i02u",
+          "name": "黑色魔書製作書",
+          "cost": 1500,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 6235,
+      "grantsTitle": "裂地者"
+    },
+    {
+      "product": {
+        "rawcode": "I06S",
+        "contentId": "godie-i06s",
+        "name": "龍騎士之劍",
+        "cost": 3350,
+        "modifiers": 1
+      },
+      "depth": 1,
+      "source": "jass",
+      "jassFunction": "Xmv",
+      "components": [
+        {
+          "rawcode": "I002",
+          "contentId": "godie-i002",
+          "name": "武聖手鐲",
+          "cost": 950,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I022",
+          "contentId": "godie-i022",
+          "name": "龍騎士之劍製作書",
+          "cost": 800,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I06P",
+          "contentId": "godie-i06p",
+          "name": "血羽之心",
+          "cost": 1250,
+          "modifiers": 2,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 3000
+    },
+    {
+      "product": {
+        "rawcode": "I027",
+        "contentId": "godie-i027",
+        "name": "光魔杖",
+        "cost": 6700,
+        "modifiers": 3
+      },
+      "depth": 2,
+      "source": "jass",
+      "jassFunction": "Rdv",
+      "components": [
+        {
+          "rawcode": "I01Q",
+          "contentId": "godie-i01q",
+          "name": "光魔杖製作書",
+          "cost": 3700,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I020",
+          "contentId": "godie-i020",
+          "name": "瑪那魔杖",
+          "cost": 3000,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": true
+        }
+      ],
+      "componentCostSum": 6700
+    },
+    {
+      "product": {
+        "rawcode": "I04D",
+        "contentId": "godie-i04d",
+        "name": "冰晶虎魄 - 改",
+        "cost": 7900,
+        "modifiers": 4
+      },
+      "depth": 2,
+      "source": "jass",
+      "jassFunction": "Ruv",
+      "components": [
+        {
+          "rawcode": "I04B",
+          "contentId": "godie-i04b",
+          "name": "冰晶虎魄",
+          "cost": 4150,
+          "modifiers": 4,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": true
+        },
+        {
+          "rawcode": "I04E",
+          "contentId": "godie-i04e",
+          "name": "冰晶虎魄 - 改製作書",
+          "cost": 3750,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 7900
+    },
+    {
+      "product": {
+        "rawcode": "I05H",
+        "contentId": "godie-i05h",
+        "name": "失心匕首",
+        "cost": 8000,
+        "modifiers": 1
+      },
+      "depth": 2,
+      "source": "jass",
+      "jassFunction": "Rlv",
+      "components": [
+        {
+          "rawcode": "I00B",
+          "contentId": "godie-i00b",
+          "name": "失心匕首製作書",
+          "cost": 4000,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I00U",
+          "contentId": "godie-i00u",
+          "name": "名刀-天狼",
+          "cost": 4000,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": true
+        }
+      ],
+      "componentCostSum": 8000
+    },
+    {
+      "product": {
+        "rawcode": "I00J",
+        "contentId": "godie-i00j",
+        "name": "奇門盾甲",
+        "cost": 6550,
+        "modifiers": 2
+      },
+      "depth": 2,
+      "source": "jass",
+      "jassFunction": "IBv",
+      "components": [
+        {
+          "rawcode": "I04G",
+          "contentId": "godie-i04g",
+          "name": "奇門遁甲製作書",
+          "cost": 4700,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I06R",
+          "contentId": "godie-i06r",
+          "name": "一克拉鑽戒",
+          "cost": 1850,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": true
+        }
+      ],
+      "componentCostSum": 6550
+    },
+    {
+      "product": {
+        "rawcode": "I06A",
+        "contentId": "godie-i06a",
+        "name": "妖物碎殺牙",
+        "cost": 8850,
+        "modifiers": 2
+      },
+      "depth": 2,
+      "source": "declared-only",
+      "jassFunction": null,
+      "components": [
+        {
+          "rawcode": "I007",
+          "contentId": "godie-i007",
+          "name": "妖刀村正",
+          "cost": 3350,
+          "modifiers": 2,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": true
+        },
+        {
+          "rawcode": "I02B",
+          "contentId": "godie-i02b",
+          "name": "妖物碎殺牙製作書",
+          "cost": 5500,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 8850
+    },
+    {
+      "product": {
+        "rawcode": "I045",
+        "contentId": "godie-i045",
+        "name": "寂靜刃 - 詠月",
+        "cost": 4000,
+        "modifiers": 2
+      },
+      "depth": 2,
+      "source": "jass",
+      "jassFunction": "Ryv",
+      "components": [
+        {
+          "rawcode": "I01M",
+          "contentId": "godie-i01m",
+          "name": "黑核晶",
+          "cost": 1800,
+          "modifiers": 2,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": true
+        },
+        {
+          "rawcode": "I044",
+          "contentId": "godie-i044",
+          "name": "寂靜刃 - 詠月製作書",
+          "cost": 2200,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 4000
+    },
+    {
+      "product": {
+        "rawcode": "I039",
+        "contentId": "godie-i039",
+        "name": "幻之匕首",
+        "cost": 7600,
+        "modifiers": 1
+      },
+      "depth": 2,
+      "source": "jass",
+      "jassFunction": "Rvv",
+      "components": [
+        {
+          "rawcode": "I01F",
+          "contentId": "godie-i01f",
+          "name": "和道一文字",
+          "cost": 3100,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": true
+        },
+        {
+          "rawcode": "I03A",
+          "contentId": "godie-i03a",
+          "name": "幻之匕首製作書",
+          "cost": 4500,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 7600
+    },
+    {
+      "product": {
+        "rawcode": "I067",
+        "contentId": "godie-i067",
+        "name": "惡夢魔王碎片",
+        "cost": 6300,
+        "modifiers": 2
+      },
+      "depth": 2,
+      "source": "jass",
+      "jassFunction": "Iiv",
+      "components": [
+        {
+          "rawcode": "I01M",
+          "contentId": "godie-i01m",
+          "name": "黑核晶",
+          "cost": 1800,
+          "modifiers": 2,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": true
+        },
+        {
+          "rawcode": "I025",
+          "contentId": "godie-i025",
+          "name": "惡夢魔王碎片製作書",
+          "cost": 4500,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 6300
+    },
+    {
+      "product": {
+        "rawcode": "I06D",
+        "contentId": "godie-i06d",
+        "name": "斬龍刀",
+        "cost": 7850,
+        "modifiers": 1
+      },
+      "depth": 2,
+      "source": "jass",
+      "jassFunction": "Rrv",
+      "components": [
+        {
+          "rawcode": "I029",
+          "contentId": "godie-i029",
+          "name": "斬龍刀製作書",
+          "cost": 4500,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I06S",
+          "contentId": "godie-i06s",
+          "name": "龍騎士之劍",
+          "cost": 3350,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": true
+        }
+      ],
+      "componentCostSum": 7850
+    },
+    {
+      "product": {
+        "rawcode": "I06F",
+        "contentId": "godie-i06f",
+        "name": "月神槍",
+        "cost": 7200,
+        "modifiers": 4
+      },
+      "depth": 2,
+      "source": "jass",
+      "jassFunction": "R3v",
+      "components": [
+        {
+          "rawcode": "I028",
+          "contentId": "godie-i028",
+          "name": "月神槍製作書",
+          "cost": 4150,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I06B",
+          "contentId": "godie-i06b",
+          "name": "思念的守護",
+          "cost": 3050,
+          "modifiers": 3,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": true
+        }
+      ],
+      "componentCostSum": 7200
+    },
+    {
+      "product": {
+        "rawcode": "I018",
+        "contentId": "godie-i018",
+        "name": "朗基努斯之槍",
+        "cost": 8050,
+        "modifiers": 5
+      },
+      "depth": 2,
+      "source": "jass",
+      "jassFunction": "Rsv",
+      "components": [
+        {
+          "rawcode": "I01G",
+          "contentId": "godie-i01g",
+          "name": "貫雷槍",
+          "cost": 4300,
+          "modifiers": 5,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": true
+        },
+        {
+          "rawcode": "I024",
+          "contentId": "godie-i024",
+          "name": "朗基努斯之槍製作書",
+          "cost": 3750,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 8050
+    },
+    {
+      "product": {
+        "rawcode": "I060",
+        "contentId": "godie-i060",
+        "name": "死之王的意志",
+        "cost": 7500,
+        "modifiers": 2
+      },
+      "depth": 2,
+      "source": "jass",
+      "jassFunction": "IDv",
+      "components": [
+        {
+          "rawcode": "I00K",
+          "contentId": "godie-i00k",
+          "name": "女神之淚",
+          "cost": 2900,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": true
+        },
+        {
+          "rawcode": "I03P",
+          "contentId": "godie-i03p",
+          "name": "死之王意志的碎片",
+          "cost": 4600,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 7500
+    },
+    {
+      "product": {
+        "rawcode": "I061",
+        "contentId": "godie-i061",
+        "name": "死之王的神盾",
+        "cost": 7100,
+        "modifiers": 2
+      },
+      "depth": 2,
+      "source": "jass",
+      "jassFunction": "IGv",
+      "components": [
+        {
+          "rawcode": "I01W",
+          "contentId": "godie-i01w",
+          "name": "祕銀鎖子甲",
+          "cost": 3100,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": true
+        },
+        {
+          "rawcode": "I03Q",
+          "contentId": "godie-i03q",
+          "name": "死之王神盾的碎片",
+          "cost": 4000,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 7100
+    },
+    {
+      "product": {
+        "rawcode": "I01D",
+        "contentId": "godie-i01d",
+        "name": "死之王的長槍",
+        "cost": 8600,
+        "modifiers": 4
+      },
+      "depth": 2,
+      "source": "jass",
+      "jassFunction": "IJv",
+      "components": [
+        {
+          "rawcode": "I01G",
+          "contentId": "godie-i01g",
+          "name": "貫雷槍",
+          "cost": 4300,
+          "modifiers": 5,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": true
+        },
+        {
+          "rawcode": "I03O",
+          "contentId": "godie-i03o",
+          "name": "死之王長槍的碎片",
+          "cost": 4300,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 8600
+    },
+    {
+      "product": {
+        "rawcode": "I01O",
+        "contentId": "godie-i01o",
+        "name": "死神裝束",
+        "cost": 6150,
+        "modifiers": 5
+      },
+      "depth": 2,
+      "source": "jass",
+      "jassFunction": "R7v",
+      "components": [
+        {
+          "rawcode": "I00P",
+          "contentId": "godie-i00p",
+          "name": "聖誕之靴",
+          "cost": 1650,
+          "modifiers": 2,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": true
+        },
+        {
+          "rawcode": "I02F",
+          "contentId": "godie-i02f",
+          "name": "死神裝束製作書",
+          "cost": 4500,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 6150
+    },
+    {
+      "product": {
+        "rawcode": "I06G",
+        "contentId": "godie-i06g",
+        "name": "殺豬刀",
+        "cost": 10000,
+        "modifiers": 3
+      },
+      "depth": 2,
+      "source": "declared-only",
+      "jassFunction": null,
+      "components": [
+        {
+          "rawcode": "I04M",
+          "contentId": "godie-i04m",
+          "name": "殺豬刀製作書",
+          "cost": 5500,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I06S",
+          "contentId": "godie-i06s",
+          "name": "龍騎士之劍",
+          "cost": 3350,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": true
+        }
+      ],
+      "componentCostSum": 8850
+    },
+    {
+      "product": {
+        "rawcode": "I06I",
+        "contentId": "godie-i06i",
+        "name": "炎神弩",
+        "cost": 7350,
+        "modifiers": 3
+      },
+      "depth": 2,
+      "source": "jass",
+      "jassFunction": "Rjv",
+      "components": [
+        {
+          "rawcode": "I012",
+          "contentId": "godie-i012",
+          "name": "熾天使之弓",
+          "cost": 3350,
+          "modifiers": 2,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": true
+        },
+        {
+          "rawcode": "I02A",
+          "contentId": "godie-i02a",
+          "name": "炎神弩製作書",
+          "cost": 4000,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 7350
+    },
+    {
+      "product": {
+        "rawcode": "I00I",
+        "contentId": "godie-i00i",
+        "name": "炎龍巨弩",
+        "cost": 7500,
+        "modifiers": 3
+      },
+      "depth": 2,
+      "source": "jass",
+      "jassFunction": "IIv",
+      "components": [
+        {
+          "rawcode": "I012",
+          "contentId": "godie-i012",
+          "name": "熾天使之弓",
+          "cost": 3350,
+          "modifiers": 2,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": true
+        },
+        {
+          "rawcode": "I04H",
+          "contentId": "godie-i04h",
+          "name": "炎龍巨弩製作書",
+          "cost": 4150,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 7500
+    },
+    {
+      "product": {
+        "rawcode": "I02E",
+        "contentId": "godie-i02e",
+        "name": "狂暴軒轅劍",
+        "cost": 8100,
+        "modifiers": 3
+      },
+      "depth": 2,
+      "source": "jass",
+      "jassFunction": "Iev",
+      "components": [
+        {
+          "rawcode": "I013",
+          "contentId": "godie-i013",
+          "name": "八取武士刀",
+          "cost": 3100,
+          "modifiers": 3,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": true
+        },
+        {
+          "rawcode": "I02C",
+          "contentId": "godie-i02c",
+          "name": "狂暴軒轅劍製作書",
+          "cost": 5000,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 8100
+    },
+    {
+      "product": {
+        "rawcode": "I03F",
+        "contentId": "godie-i03f",
+        "name": "甘豆腐之袍",
+        "cost": 8000,
+        "modifiers": 1
+      },
+      "depth": 2,
+      "source": "jass",
+      "jassFunction": "ILv",
+      "components": [
+        {
+          "rawcode": "I00Q",
+          "contentId": "godie-i00q",
+          "name": "伊娃之盾",
+          "cost": 4000,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": true
+        },
+        {
+          "rawcode": "I03G",
+          "contentId": "godie-i03g",
+          "name": "甘豆腐之袍製作書",
+          "cost": 4000,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 8000
+    },
+    {
+      "product": {
+        "rawcode": "I040",
+        "contentId": "godie-i040",
+        "name": "破甲槍",
+        "cost": 8000,
+        "modifiers": 1
+      },
+      "depth": 2,
+      "source": "jass",
+      "jassFunction": "Rpv",
+      "components": [
+        {
+          "rawcode": "I00N",
+          "contentId": "godie-i00n",
+          "name": "分手之鎚",
+          "cost": 4000,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": true
+        },
+        {
+          "rawcode": "I03X",
+          "contentId": "godie-i03x",
+          "name": "破甲槍製作書",
+          "cost": 4000,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 8000
+    },
+    {
+      "product": {
+        "rawcode": "I01V",
+        "contentId": "godie-i01v",
+        "name": "螺旋劍",
+        "cost": 9750,
+        "modifiers": 3
+      },
+      "depth": 2,
+      "source": "jass",
+      "jassFunction": "IEv",
+      "components": [
+        {
+          "rawcode": "I014",
+          "contentId": "godie-i014",
+          "name": "天叢雲劍",
+          "cost": 5050,
+          "modifiers": 3,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": true
+        },
+        {
+          "rawcode": "I03Z",
+          "contentId": "godie-i03z",
+          "name": "螺旋劍製作書",
+          "cost": 4700,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 9750
+    },
+    {
+      "product": {
+        "rawcode": "I006",
+        "contentId": "godie-i006",
+        "name": "雅典娜的驚嘆號",
+        "cost": 7500,
+        "modifiers": 1
+      },
+      "depth": 2,
+      "source": "jass",
+      "jassFunction": "RVv",
+      "components": [
+        {
+          "rawcode": "I020",
+          "contentId": "godie-i020",
+          "name": "瑪那魔杖",
+          "cost": 3000,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": true
+        },
+        {
+          "rawcode": "I026",
+          "contentId": "godie-i026",
+          "name": "雅典娜的驚嘆號製作書",
+          "cost": 4500,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 7500
+    },
+    {
+      "product": {
+        "rawcode": "I00F",
+        "contentId": "godie-i00f",
+        "name": "霸王槍",
+        "cost": 7100,
+        "modifiers": 3
+      },
+      "depth": 2,
+      "source": "jass",
+      "jassFunction": "Rgv",
+      "components": [
+        {
+          "rawcode": "I019",
+          "contentId": "godie-i019",
+          "name": "霸王槍製作書",
+          "cost": 3650,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I02X",
+          "contentId": "godie-i02x",
+          "name": "斬岩刃",
+          "cost": 3450,
+          "modifiers": 3,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": true
+        }
+      ],
+      "componentCostSum": 7100
+    },
+    {
+      "product": {
+        "rawcode": "I01J",
+        "contentId": "godie-i01j",
+        "name": "靈魂魔石",
+        "cost": 5650,
+        "modifiers": 1
+      },
+      "depth": 2,
+      "source": "jass",
+      "jassFunction": "R_v",
+      "components": [
+        {
+          "rawcode": "I00K",
+          "contentId": "godie-i00k",
+          "name": "女神之淚",
+          "cost": 2900,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": true
+        },
+        {
+          "rawcode": "I02W",
+          "contentId": "godie-i02w",
+          "name": "靈魂魔石製作書",
+          "cost": 2750,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 5650
+    },
+    {
+      "product": {
+        "rawcode": "I03C",
+        "contentId": "godie-i03c",
+        "name": "雅典娜的驚嘆號．改",
+        "cost": 12000,
+        "modifiers": 1
+      },
+      "depth": 3,
+      "source": "jass",
+      "jassFunction": "RRv",
+      "components": [
+        {
+          "rawcode": "I006",
+          "contentId": "godie-i006",
+          "name": "雅典娜的驚嘆號",
+          "cost": 7500,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": true
+        },
+        {
+          "rawcode": "I026",
+          "contentId": "godie-i026",
+          "name": "雅典娜的驚嘆號製作書",
+          "cost": 4500,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        }
+      ],
+      "componentCostSum": 12000
+    },
+    {
+      "product": {
+        "rawcode": "I03B",
+        "contentId": "godie-i03b",
+        "name": "真．雅典娜的驚嘆號",
+        "cost": 16500,
+        "modifiers": 1
+      },
+      "depth": 4,
+      "source": "jass",
+      "jassFunction": "Rbv",
+      "components": [
+        {
+          "rawcode": "I026",
+          "contentId": "godie-i026",
+          "name": "雅典娜的驚嘆號製作書",
+          "cost": 4500,
+          "modifiers": 0,
+          "qty": 1,
+          "isRecipeBook": true,
+          "isIntermediate": false
+        },
+        {
+          "rawcode": "I03C",
+          "contentId": "godie-i03c",
+          "name": "雅典娜的驚嘆號．改",
+          "cost": 12000,
+          "modifiers": 1,
+          "qty": 1,
+          "isRecipeBook": false,
+          "isIntermediate": true
+        }
+      ],
+      "componentCostSum": 16500,
+      "grantsTitle": "秒殺的"
+    }
+  ],
+  "classification": {
+    "finalProducts": [
+      {
+        "rawcode": "I02D",
+        "contentId": "godie-i02d",
+        "name": "消失的密室",
+        "cost": 40000,
+        "modifiers": 5
+      },
+      {
+        "rawcode": "I03B",
+        "contentId": "godie-i03b",
+        "name": "真．雅典娜的驚嘆號",
+        "cost": 16500,
+        "modifiers": 1
+      },
+      {
+        "rawcode": "I06G",
+        "contentId": "godie-i06g",
+        "name": "殺豬刀",
+        "cost": 10000,
+        "modifiers": 3
+      },
+      {
+        "rawcode": "I01V",
+        "contentId": "godie-i01v",
+        "name": "螺旋劍",
+        "cost": 9750,
+        "modifiers": 3
+      },
+      {
+        "rawcode": "I02H",
+        "contentId": "godie-i02h",
+        "name": "戰旗",
+        "cost": 9065,
+        "modifiers": 1
+      },
+      {
+        "rawcode": "I02J",
+        "contentId": "godie-i02j",
+        "name": "復仇之袍",
+        "cost": 9065,
+        "modifiers": 0
+      },
+      {
+        "rawcode": "I02K",
+        "contentId": "godie-i02k",
+        "name": "惡魔吉他",
+        "cost": 9065,
+        "modifiers": 2
+      },
+      {
+        "rawcode": "I06A",
+        "contentId": "godie-i06a",
+        "name": "妖物碎殺牙",
+        "cost": 8850,
+        "modifiers": 2
+      },
+      {
+        "rawcode": "I01D",
+        "contentId": "godie-i01d",
+        "name": "死之王的長槍",
+        "cost": 8600,
+        "modifiers": 4
+      },
+      {
+        "rawcode": "I02E",
+        "contentId": "godie-i02e",
+        "name": "狂暴軒轅劍",
+        "cost": 8100,
+        "modifiers": 3
+      },
+      {
+        "rawcode": "I018",
+        "contentId": "godie-i018",
+        "name": "朗基努斯之槍",
+        "cost": 8050,
+        "modifiers": 5
+      },
+      {
+        "rawcode": "I05H",
+        "contentId": "godie-i05h",
+        "name": "失心匕首",
+        "cost": 8000,
+        "modifiers": 1
+      },
+      {
+        "rawcode": "I03F",
+        "contentId": "godie-i03f",
+        "name": "甘豆腐之袍",
+        "cost": 8000,
+        "modifiers": 1
+      },
+      {
+        "rawcode": "I040",
+        "contentId": "godie-i040",
+        "name": "破甲槍",
+        "cost": 8000,
+        "modifiers": 1
+      },
+      {
+        "rawcode": "I01I",
+        "contentId": "godie-i01i",
+        "name": "雷神之鎚",
+        "cost": 7990,
+        "modifiers": 0
+      },
+      {
+        "rawcode": "I04D",
+        "contentId": "godie-i04d",
+        "name": "冰晶虎魄 - 改",
+        "cost": 7900,
+        "modifiers": 4
+      },
+      {
+        "rawcode": "I06D",
+        "contentId": "godie-i06d",
+        "name": "斬龍刀",
+        "cost": 7850,
+        "modifiers": 1
+      },
+      {
+        "rawcode": "I038",
+        "contentId": "godie-i038",
+        "name": "嗜血邪書",
+        "cost": 7735,
+        "modifiers": 0
+      },
+      {
+        "rawcode": "I02T",
+        "contentId": "godie-i02t",
+        "name": "盾甲天書",
+        "cost": 7635,
+        "modifiers": 0
+      },
+      {
+        "rawcode": "I039",
+        "contentId": "godie-i039",
+        "name": "幻之匕首",
+        "cost": 7600,
+        "modifiers": 1
+      },
+      {
+        "rawcode": "I03H",
+        "contentId": "godie-i03h",
+        "name": "天地崩裂魔杖",
+        "cost": 7575,
+        "modifiers": 0
+      },
+      {
+        "rawcode": "I060",
+        "contentId": "godie-i060",
+        "name": "死之王的意志",
+        "cost": 7500,
+        "modifiers": 2
+      },
+      {
+        "rawcode": "I00I",
+        "contentId": "godie-i00i",
+        "name": "炎龍巨弩",
+        "cost": 7500,
+        "modifiers": 3
+      },
+      {
+        "rawcode": "I06I",
+        "contentId": "godie-i06i",
+        "name": "炎神弩",
+        "cost": 7350,
+        "modifiers": 3
+      },
+      {
+        "rawcode": "I06F",
+        "contentId": "godie-i06f",
+        "name": "月神槍",
+        "cost": 7200,
+        "modifiers": 4
+      },
+      {
+        "rawcode": "I061",
+        "contentId": "godie-i061",
+        "name": "死之王的神盾",
+        "cost": 7100,
+        "modifiers": 2
+      },
+      {
+        "rawcode": "I00F",
+        "contentId": "godie-i00f",
+        "name": "霸王槍",
+        "cost": 7100,
+        "modifiers": 3
+      },
+      {
+        "rawcode": "I02R",
+        "contentId": "godie-i02r",
+        "name": "奇蹟之墜",
+        "cost": 6700,
+        "modifiers": 3
+      },
+      {
+        "rawcode": "I027",
+        "contentId": "godie-i027",
+        "name": "光魔杖",
+        "cost": 6700,
+        "modifiers": 3
+      },
+      {
+        "rawcode": "I04I",
+        "contentId": "godie-i04i",
+        "name": "厄夜鐮刀",
+        "cost": 6590,
+        "modifiers": 1
+      },
+      {
+        "rawcode": "I00J",
+        "contentId": "godie-i00j",
+        "name": "奇門盾甲",
+        "cost": 6550,
+        "modifiers": 2
+      },
+      {
+        "rawcode": "I031",
+        "contentId": "godie-i031",
+        "name": "天生牙",
+        "cost": 6400,
+        "modifiers": 1
+      },
+      {
+        "rawcode": "I067",
+        "contentId": "godie-i067",
+        "name": "惡夢魔王碎片",
+        "cost": 6300,
+        "modifiers": 2
+      },
+      {
+        "rawcode": "I030",
+        "contentId": "godie-i030",
+        "name": "黑色魔書",
+        "cost": 6235,
+        "modifiers": 0
+      },
+      {
+        "rawcode": "I01O",
+        "contentId": "godie-i01o",
+        "name": "死神裝束",
+        "cost": 6150,
+        "modifiers": 5
+      },
+      {
+        "rawcode": "I01J",
+        "contentId": "godie-i01j",
+        "name": "靈魂魔石",
+        "cost": 5650,
+        "modifiers": 1
+      },
+      {
+        "rawcode": "I016",
+        "contentId": "godie-i016",
+        "name": "晨曦之光",
+        "cost": 5550,
+        "modifiers": 3
+      },
+      {
+        "rawcode": "I00C",
+        "contentId": "godie-i00c",
+        "name": "風行天衣",
+        "cost": 5500,
+        "modifiers": 1
+      },
+      {
+        "rawcode": "I05O",
+        "contentId": "godie-i05o",
+        "name": "刺針",
+        "cost": 5500,
+        "modifiers": 3
+      },
+      {
+        "rawcode": "I03D",
+        "contentId": "godie-i03d",
+        "name": "光明虎徹",
+        "cost": 5450,
+        "modifiers": 3
+      },
+      {
+        "rawcode": "I045",
+        "contentId": "godie-i045",
+        "name": "寂靜刃 - 詠月",
+        "cost": 4000,
+        "modifiers": 2
+      },
+      {
+        "rawcode": "I049",
+        "contentId": "godie-i049",
+        "name": "賢者之石",
+        "cost": 3450,
+        "modifiers": 6
+      },
+      {
+        "rawcode": "I041",
+        "contentId": "godie-i041",
+        "name": "火閃電",
+        "cost": 2950,
+        "modifiers": 2
+      },
+      {
+        "rawcode": "I00Z",
+        "contentId": "godie-i00z",
+        "name": "四魂之玉",
+        "cost": 0,
+        "modifiers": 6
+      },
+      {
+        "rawcode": "I01K",
+        "contentId": "godie-i01k",
+        "name": "火焰泰坦腰帶",
+        "cost": 0,
+        "modifiers": 1
+      },
+      {
+        "rawcode": "I034",
+        "contentId": "godie-i034",
+        "name": "大地泰坦角盔",
+        "cost": 0,
+        "modifiers": 1
+      },
+      {
+        "rawcode": "I035",
+        "contentId": "godie-i035",
+        "name": "海潮泰坦護盾",
+        "cost": 0,
+        "modifiers": 2
+      },
+      {
+        "rawcode": "I01S",
+        "contentId": "godie-i01s",
+        "name": "仙后座",
+        "cost": 0,
+        "modifiers": 1
+      },
+      {
+        "rawcode": "I05Y",
+        "contentId": "godie-i05y",
+        "name": "蜂蜜罐",
+        "cost": 0,
+        "modifiers": 2
+      }
+    ],
+    "intermediateProducts": [
+      {
+        "rawcode": "I03C",
+        "contentId": "godie-i03c",
+        "name": "雅典娜的驚嘆號．改",
+        "cost": 12000,
+        "modifiers": 1,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I006",
+        "contentId": "godie-i006",
+        "name": "雅典娜的驚嘆號",
+        "cost": 7500,
+        "modifiers": 1,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I014",
+        "contentId": "godie-i014",
+        "name": "天叢雲劍",
+        "cost": 5050,
+        "modifiers": 3,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I01G",
+        "contentId": "godie-i01g",
+        "name": "貫雷槍",
+        "cost": 4300,
+        "modifiers": 5,
+        "usedInRecipes": 2
+      },
+      {
+        "rawcode": "I04B",
+        "contentId": "godie-i04b",
+        "name": "冰晶虎魄",
+        "cost": 4150,
+        "modifiers": 4,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I00U",
+        "contentId": "godie-i00u",
+        "name": "名刀-天狼",
+        "cost": 4000,
+        "modifiers": 1,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I00N",
+        "contentId": "godie-i00n",
+        "name": "分手之鎚",
+        "cost": 4000,
+        "modifiers": 1,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I00Q",
+        "contentId": "godie-i00q",
+        "name": "伊娃之盾",
+        "cost": 4000,
+        "modifiers": 1,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I02X",
+        "contentId": "godie-i02x",
+        "name": "斬岩刃",
+        "cost": 3450,
+        "modifiers": 3,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I012",
+        "contentId": "godie-i012",
+        "name": "熾天使之弓",
+        "cost": 3350,
+        "modifiers": 2,
+        "usedInRecipes": 2
+      },
+      {
+        "rawcode": "I06S",
+        "contentId": "godie-i06s",
+        "name": "龍騎士之劍",
+        "cost": 3350,
+        "modifiers": 1,
+        "usedInRecipes": 2
+      },
+      {
+        "rawcode": "I007",
+        "contentId": "godie-i007",
+        "name": "妖刀村正",
+        "cost": 3350,
+        "modifiers": 2,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I01W",
+        "contentId": "godie-i01w",
+        "name": "祕銀鎖子甲",
+        "cost": 3100,
+        "modifiers": 1,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I013",
+        "contentId": "godie-i013",
+        "name": "八取武士刀",
+        "cost": 3100,
+        "modifiers": 3,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I01F",
+        "contentId": "godie-i01f",
+        "name": "和道一文字",
+        "cost": 3100,
+        "modifiers": 1,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I06B",
+        "contentId": "godie-i06b",
+        "name": "思念的守護",
+        "cost": 3050,
+        "modifiers": 3,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I020",
+        "contentId": "godie-i020",
+        "name": "瑪那魔杖",
+        "cost": 3000,
+        "modifiers": 1,
+        "usedInRecipes": 2
+      },
+      {
+        "rawcode": "I00K",
+        "contentId": "godie-i00k",
+        "name": "女神之淚",
+        "cost": 2900,
+        "modifiers": 1,
+        "usedInRecipes": 2
+      },
+      {
+        "rawcode": "I06R",
+        "contentId": "godie-i06r",
+        "name": "一克拉鑽戒",
+        "cost": 1850,
+        "modifiers": 1,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I01M",
+        "contentId": "godie-i01m",
+        "name": "黑核晶",
+        "cost": 1800,
+        "modifiers": 2,
+        "usedInRecipes": 2
+      },
+      {
+        "rawcode": "I00P",
+        "contentId": "godie-i00p",
+        "name": "聖誕之靴",
+        "cost": 1650,
+        "modifiers": 2,
+        "usedInRecipes": 1
+      }
+    ],
+    "componentOnlyRecipeBooks": [
+      {
+        "rawcode": "I04M",
+        "contentId": "godie-i04m",
+        "name": "殺豬刀製作書",
+        "cost": 5500,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I02B",
+        "contentId": "godie-i02b",
+        "name": "妖物碎殺牙製作書",
+        "cost": 5500,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I02C",
+        "contentId": "godie-i02c",
+        "name": "狂暴軒轅劍製作書",
+        "cost": 5000,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I04G",
+        "contentId": "godie-i04g",
+        "name": "奇門遁甲製作書",
+        "cost": 4700,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I03Z",
+        "contentId": "godie-i03z",
+        "name": "螺旋劍製作書",
+        "cost": 4700,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I026",
+        "contentId": "godie-i026",
+        "name": "雅典娜的驚嘆號製作書",
+        "cost": 4500,
+        "modifiers": 0,
+        "usedInRecipes": 3
+      },
+      {
+        "rawcode": "I029",
+        "contentId": "godie-i029",
+        "name": "斬龍刀製作書",
+        "cost": 4500,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I03A",
+        "contentId": "godie-i03a",
+        "name": "幻之匕首製作書",
+        "cost": 4500,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I025",
+        "contentId": "godie-i025",
+        "name": "惡夢魔王碎片製作書",
+        "cost": 4500,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I02F",
+        "contentId": "godie-i02f",
+        "name": "死神裝束製作書",
+        "cost": 4500,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I028",
+        "contentId": "godie-i028",
+        "name": "月神槍製作書",
+        "cost": 4150,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I04H",
+        "contentId": "godie-i04h",
+        "name": "炎龍巨弩製作書",
+        "cost": 4150,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I02A",
+        "contentId": "godie-i02a",
+        "name": "炎神弩製作書",
+        "cost": 4000,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I01L",
+        "contentId": "godie-i01l",
+        "name": "雷神之鎚製作書",
+        "cost": 4000,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I03X",
+        "contentId": "godie-i03x",
+        "name": "破甲槍製作書",
+        "cost": 4000,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I00B",
+        "contentId": "godie-i00b",
+        "name": "失心匕首製作書",
+        "cost": 4000,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I03G",
+        "contentId": "godie-i03g",
+        "name": "甘豆腐之袍製作書",
+        "cost": 4000,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I04E",
+        "contentId": "godie-i04e",
+        "name": "冰晶虎魄 - 改製作書",
+        "cost": 3750,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I024",
+        "contentId": "godie-i024",
+        "name": "朗基努斯之槍製作書",
+        "cost": 3750,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I01Q",
+        "contentId": "godie-i01q",
+        "name": "光魔杖製作書",
+        "cost": 3700,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I019",
+        "contentId": "godie-i019",
+        "name": "霸王槍製作書",
+        "cost": 3650,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I036",
+        "contentId": "godie-i036",
+        "name": "嗜血邪書製作書",
+        "cost": 3000,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I03I",
+        "contentId": "godie-i03i",
+        "name": "天地崩裂魔杖製作書",
+        "cost": 2750,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I02W",
+        "contentId": "godie-i02w",
+        "name": "靈魂魔石製作書",
+        "cost": 2750,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I02Z",
+        "contentId": "godie-i02z",
+        "name": "盾甲天書製作書",
+        "cost": 2500,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I02S",
+        "contentId": "godie-i02s",
+        "name": "奇蹟之墜製作書",
+        "cost": 2500,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I044",
+        "contentId": "godie-i044",
+        "name": "寂靜刃 - 詠月製作書",
+        "cost": 2200,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I04K",
+        "contentId": "godie-i04k",
+        "name": "厄夜鐮刀製作書",
+        "cost": 2000,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I01H",
+        "contentId": "godie-i01h",
+        "name": "貫雷槍製作書",
+        "cost": 2000,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I04C",
+        "contentId": "godie-i04c",
+        "name": "冰晶虎魄製作書",
+        "cost": 2000,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I011",
+        "contentId": "godie-i011",
+        "name": "名刀-天狼製作書",
+        "cost": 1750,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I042",
+        "contentId": "godie-i042",
+        "name": "火閃電製作書",
+        "cost": 1500,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I017",
+        "contentId": "godie-i017",
+        "name": "祕銀鎖子甲製作書",
+        "cost": 1500,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I015",
+        "contentId": "godie-i015",
+        "name": "瑪那魔杖製作書",
+        "cost": 1500,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I01U",
+        "contentId": "godie-i01u",
+        "name": "伊娃之盾製作書",
+        "cost": 1500,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I032",
+        "contentId": "godie-i032",
+        "name": "天生牙製作書",
+        "cost": 1500,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I02U",
+        "contentId": "godie-i02u",
+        "name": "黑色魔書製作書",
+        "cost": 1500,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I01E",
+        "contentId": "godie-i01e",
+        "name": "和道一文字製作書",
+        "cost": 1200,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I009",
+        "contentId": "godie-i009",
+        "name": "分手之鎚製作書",
+        "cost": 1150,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I00H",
+        "contentId": "godie-i00h",
+        "name": "風行天衣製作書",
+        "cost": 1000,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I021",
+        "contentId": "godie-i021",
+        "name": "天叢雲劍製作書",
+        "cost": 1000,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I04A",
+        "contentId": "godie-i04a",
+        "name": "賢者之石製作書",
+        "cost": 1000,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I01Z",
+        "contentId": "godie-i01z",
+        "name": "八取武士刀製作書",
+        "cost": 1000,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I01X",
+        "contentId": "godie-i01x",
+        "name": "思念的守護製作書",
+        "cost": 1000,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I02Y",
+        "contentId": "godie-i02y",
+        "name": "斬岩刃製作書",
+        "cost": 800,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I022",
+        "contentId": "godie-i022",
+        "name": "龍騎士之劍製作書",
+        "cost": 800,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I03E",
+        "contentId": "godie-i03e",
+        "name": "光明虎徹製作書",
+        "cost": 600,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I01Y",
+        "contentId": "godie-i01y",
+        "name": "熾天使之弓製作書",
+        "cost": 500,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I023",
+        "contentId": "godie-i023",
+        "name": "妖刀村正製作書",
+        "cost": 500,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I01P",
+        "contentId": "godie-i01p",
+        "name": "聖誕之靴製作書",
+        "cost": 500,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I00A",
+        "contentId": "godie-i00a",
+        "name": "刺針製作書",
+        "cost": 500,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I069",
+        "contentId": "godie-i069",
+        "name": "女神之淚製作書",
+        "cost": 350,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I01R",
+        "contentId": "godie-i01r",
+        "name": "一克拉鑽戒製作書",
+        "cost": 150,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I02V",
+        "contentId": "godie-i02v",
+        "name": "黑核晶製作書",
+        "cost": 150,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I01T",
+        "contentId": "godie-i01t",
+        "name": "晨曦之光製作書",
+        "cost": 0,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      }
+    ],
+    "componentOnlyBaseItems": [
+      {
+        "rawcode": "I03P",
+        "contentId": "godie-i03p",
+        "name": "死之王意志的碎片",
+        "cost": 4600,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I03O",
+        "contentId": "godie-i03o",
+        "name": "死之王長槍的碎片",
+        "cost": 4300,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I03Q",
+        "contentId": "godie-i03q",
+        "name": "死之王神盾的碎片",
+        "cost": 4000,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I02Q",
+        "contentId": "godie-i02q",
+        "name": "澤之書",
+        "cost": 2785,
+        "modifiers": 0,
+        "usedInRecipes": 4
+      },
+      {
+        "rawcode": "I00R",
+        "contentId": "godie-i00r",
+        "name": "山之書",
+        "cost": 2785,
+        "modifiers": 0,
+        "usedInRecipes": 4
+      },
+      {
+        "rawcode": "I01B",
+        "contentId": "godie-i01b",
+        "name": "林之書",
+        "cost": 2550,
+        "modifiers": 0,
+        "usedInRecipes": 3
+      },
+      {
+        "rawcode": "I005",
+        "contentId": "godie-i005",
+        "name": "初心者寶石",
+        "cost": 2450,
+        "modifiers": 3,
+        "usedInRecipes": 5
+      },
+      {
+        "rawcode": "I01C",
+        "contentId": "godie-i01c",
+        "name": "火之書",
+        "cost": 2040,
+        "modifiers": 0,
+        "usedInRecipes": 4
+      },
+      {
+        "rawcode": "I00T",
+        "contentId": "godie-i00t",
+        "name": "風之書",
+        "cost": 1950,
+        "modifiers": 0,
+        "usedInRecipes": 5
+      },
+      {
+        "rawcode": "I05G",
+        "contentId": "godie-i05g",
+        "name": "世界樹的果實",
+        "cost": 1800,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I00G",
+        "contentId": "godie-i00g",
+        "name": "奇美拉之翼",
+        "cost": 1750,
+        "modifiers": 6,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I05W",
+        "contentId": "godie-i05w",
+        "name": "觀音菩薩護身符",
+        "cost": 1650,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I06K",
+        "contentId": "godie-i06k",
+        "name": "奧理哈魯根劍身",
+        "cost": 1600,
+        "modifiers": 1,
+        "usedInRecipes": 7
+      },
+      {
+        "rawcode": "I003",
+        "contentId": "godie-i003",
+        "name": "聖光石",
+        "cost": 1450,
+        "modifiers": 1,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I066",
+        "contentId": "godie-i066",
+        "name": "復仇之玉",
+        "cost": 1450,
+        "modifiers": 0,
+        "usedInRecipes": 2
+      },
+      {
+        "rawcode": "I068",
+        "contentId": "godie-i068",
+        "name": "瑪那寶石",
+        "cost": 1250,
+        "modifiers": 1,
+        "usedInRecipes": 2
+      },
+      {
+        "rawcode": "I05R",
+        "contentId": "godie-i05r",
+        "name": "吸血石",
+        "cost": 1250,
+        "modifiers": 1,
+        "usedInRecipes": 2
+      },
+      {
+        "rawcode": "I06P",
+        "contentId": "godie-i06p",
+        "name": "血羽之心",
+        "cost": 1250,
+        "modifiers": 2,
+        "usedInRecipes": 4
+      },
+      {
+        "rawcode": "I065",
+        "contentId": "godie-i065",
+        "name": "寶石碎片",
+        "cost": 1150,
+        "modifiers": 1,
+        "usedInRecipes": 4
+      },
+      {
+        "rawcode": "I010",
+        "contentId": "godie-i010",
+        "name": "熱戀魔杖",
+        "cost": 1100,
+        "modifiers": 2,
+        "usedInRecipes": 4
+      },
+      {
+        "rawcode": "I06C",
+        "contentId": "godie-i06c",
+        "name": "恐龍之斧",
+        "cost": 1050,
+        "modifiers": 2,
+        "usedInRecipes": 5
+      },
+      {
+        "rawcode": "I037",
+        "contentId": "godie-i037",
+        "name": "隱密介紹信",
+        "cost": 1000,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I06M",
+        "contentId": "godie-i06m",
+        "name": "真知之石",
+        "cost": 950,
+        "modifiers": 0,
+        "usedInRecipes": 3
+      },
+      {
+        "rawcode": "I06H",
+        "contentId": "godie-i06h",
+        "name": "求生護腕",
+        "cost": 950,
+        "modifiers": 3,
+        "usedInRecipes": 2
+      },
+      {
+        "rawcode": "I00M",
+        "contentId": "godie-i00m",
+        "name": "米索莉護板",
+        "cost": 950,
+        "modifiers": 2,
+        "usedInRecipes": 3
+      },
+      {
+        "rawcode": "I002",
+        "contentId": "godie-i002",
+        "name": "武聖手鐲",
+        "cost": 950,
+        "modifiers": 1,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I05X",
+        "contentId": "godie-i05x",
+        "name": "辣妹護腕",
+        "cost": 650,
+        "modifiers": 1,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I05V",
+        "contentId": "godie-i05v",
+        "name": "破壞王手套",
+        "cost": 650,
+        "modifiers": 1,
+        "usedInRecipes": 4
+      },
+      {
+        "rawcode": "I05U",
+        "contentId": "godie-i05u",
+        "name": "熱舞之靴",
+        "cost": 500,
+        "modifiers": 1,
+        "usedInRecipes": 3
+      },
+      {
+        "rawcode": "I05T",
+        "contentId": "godie-i05t",
+        "name": "定情戒指",
+        "cost": 400,
+        "modifiers": 1,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I02P",
+        "contentId": "godie-i02p",
+        "name": "網友手環",
+        "cost": 0,
+        "modifiers": 1,
+        "usedInRecipes": 2
+      },
+      {
+        "rawcode": "I00X",
+        "contentId": "godie-i00x",
+        "name": "四魂之玉的碎片-幸魂",
+        "cost": 0,
+        "modifiers": 2,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I00W",
+        "contentId": "godie-i00w",
+        "name": "四魂之玉的碎片-和魂",
+        "cost": 0,
+        "modifiers": 6,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I00V",
+        "contentId": "godie-i00v",
+        "name": "四魂之玉的碎片-荒魂",
+        "cost": 0,
+        "modifiers": 2,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I02O",
+        "contentId": "godie-i02o",
+        "name": "空罐頭",
+        "cost": 0,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I053",
+        "contentId": "godie-i053",
+        "name": "仙后座殘骸",
+        "cost": 0,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I02I",
+        "contentId": "godie-i02i",
+        "name": "泰坦之魂",
+        "cost": 0,
+        "modifiers": 0,
+        "usedInRecipes": 3
+      },
+      {
+        "rawcode": "I05S",
+        "contentId": "godie-i05s",
+        "name": "嚇人假面",
+        "cost": 0,
+        "modifiers": 1,
+        "usedInRecipes": 3
+      },
+      {
+        "rawcode": "I00Y",
+        "contentId": "godie-i00y",
+        "name": "四魂之玉的碎片-奇魂",
+        "cost": 0,
+        "modifiers": 2,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I02L",
+        "contentId": "godie-i02l",
+        "name": "舊系服",
+        "cost": 0,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I02N",
+        "contentId": "godie-i02n",
+        "name": "斯巴達圓盾",
+        "cost": 0,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      },
+      {
+        "rawcode": "I02M",
+        "contentId": "godie-i02m",
+        "name": "牛蒡男",
+        "cost": 0,
+        "modifiers": 0,
+        "usedInRecipes": 1
+      }
+    ],
+    "untouchedByAnyRecipe": [
+      {
+        "rawcode": "I000",
+        "contentId": "godie-i000",
+        "name": "丈八蛇矛",
+        "cost": 10000,
+        "modifiers": 3
+      },
+      {
+        "rawcode": "I001",
+        "contentId": "godie-i001",
+        "name": "出動怨念射手兵團",
+        "cost": 1200,
+        "modifiers": 0
+      },
+      {
+        "rawcode": "I004",
+        "contentId": "godie-i004",
+        "name": "魔戒",
+        "cost": 44444,
+        "modifiers": 3
+      },
+      {
+        "rawcode": "I008",
+        "contentId": "godie-i008",
+        "name": "初級傳送捲軸",
+        "cost": 600,
+        "modifiers": 6
+      },
+      {
+        "rawcode": "I00D",
+        "contentId": "godie-i00d",
+        "name": "出動戀愛戰士兵團",
+        "cost": 1600,
+        "modifiers": 0
+      },
+      {
+        "rawcode": "I00E",
+        "contentId": "godie-i00e",
+        "name": "出動兄貴戰士兵團",
+        "cost": 1600,
+        "modifiers": 0
+      },
+      {
+        "rawcode": "I00L",
+        "contentId": "godie-i00l",
+        "name": "落魂的嗜血劍",
+        "cost": 11500,
+        "modifiers": 1
+      },
+      {
+        "rawcode": "I00O",
+        "contentId": "godie-i00o",
+        "name": "金雞蛋",
+        "cost": 0,
+        "modifiers": 0
+      },
+      {
+        "rawcode": "I00S",
+        "contentId": "godie-i00s",
+        "name": "黃金聖鬥衣",
+        "cost": 10000,
+        "modifiers": 5
+      },
+      {
+        "rawcode": "I01A",
+        "contentId": "godie-i01a",
+        "name": "好像有毒的生肉",
+        "cost": 0,
+        "modifiers": 0
+      },
+      {
+        "rawcode": "I01N",
+        "contentId": "godie-i01n",
+        "name": "天堂之劍",
+        "cost": 0,
+        "modifiers": 1
+      },
+      {
+        "rawcode": "I02G",
+        "contentId": "godie-i02g",
+        "name": "奇美拉之翼(電腦)",
+        "cost": 1750,
+        "modifiers": 6
+      },
+      {
+        "rawcode": "I033",
+        "contentId": "godie-i033",
+        "name": "初心者護腕",
+        "cost": 1400,
+        "modifiers": 4
+      },
+      {
+        "rawcode": "I03J",
+        "contentId": "godie-i03j",
+        "name": "黃昏公主的血脈",
+        "cost": 450,
+        "modifiers": 3
+      },
+      {
+        "rawcode": "I03L",
+        "contentId": "godie-i03l",
+        "name": "我愛一條柴",
+        "cost": 200,
+        "modifiers": 0
+      },
+      {
+        "rawcode": "I03M",
+        "contentId": "godie-i03m",
+        "name": "反射之盾",
+        "cost": 10000,
+        "modifiers": 1
+      },
+      {
+        "rawcode": "I03N",
+        "contentId": "godie-i03n",
+        "name": "餅乾",
+        "cost": 150,
+        "modifiers": 0
+      },
+      {
+        "rawcode": "I04J",
+        "contentId": "godie-i04j",
+        "name": "金幣(寶箱)",
+        "cost": 0,
+        "modifiers": 0
+      },
+      {
+        "rawcode": "I04V",
+        "contentId": "godie-i04v",
+        "name": "正義之杖",
+        "cost": 100000,
+        "modifiers": 3
+      },
+      {
+        "rawcode": "I04Y",
+        "contentId": "godie-i04y",
+        "name": "兌換空罐頭",
+        "cost": 0,
+        "modifiers": 0
+      },
+      {
+        "rawcode": "I051",
+        "contentId": "godie-i051",
+        "name": "兌換仙后座",
+        "cost": 0,
+        "modifiers": 0
+      },
+      {
+        "rawcode": "I054",
+        "contentId": "godie-i054",
+        "name": "認領寵物",
+        "cost": 0,
+        "modifiers": 0
+      },
+      {
+        "rawcode": "I055",
+        "contentId": "godie-i055",
+        "name": "兌換牛蒡男",
+        "cost": 0,
+        "modifiers": 0
+      },
+      {
+        "rawcode": "I056",
+        "contentId": "godie-i056",
+        "name": "交換寵物",
+        "cost": 0,
+        "modifiers": 0
+      },
+      {
+        "rawcode": "I059",
+        "contentId": "godie-i059",
+        "name": "兌換舊系服",
+        "cost": 0,
+        "modifiers": 0
+      },
+      {
+        "rawcode": "I05A",
+        "contentId": "godie-i05a",
+        "name": "兌換泰坦之魂",
+        "cost": 0,
+        "modifiers": 0
+      },
+      {
+        "rawcode": "I05E",
+        "contentId": "godie-i05e",
+        "name": "兌換斯巴達圓盾",
+        "cost": 0,
+        "modifiers": 0
+      },
+      {
+        "rawcode": "I05K",
+        "contentId": "godie-i05k",
+        "name": "打我阿笨蛋卷軸",
+        "cost": 600,
+        "modifiers": 6
+      },
+      {
+        "rawcode": "I05L",
+        "contentId": "godie-i05l",
+        "name": "力量護腕",
+        "cost": 1400,
+        "modifiers": 1
+      },
+      {
+        "rawcode": "I05M",
+        "contentId": "godie-i05m",
+        "name": "敏捷護腕",
+        "cost": 1400,
+        "modifiers": 1
+      },
+      {
+        "rawcode": "I05N",
+        "contentId": "godie-i05n",
+        "name": "智慧護腕",
+        "cost": 1400,
+        "modifiers": 1
+      },
+      {
+        "rawcode": "I05Q",
+        "contentId": "godie-i05q",
+        "name": "友情呼喚號角",
+        "cost": 2800,
+        "modifiers": 1
+      },
+      {
+        "rawcode": "I05Z",
+        "contentId": "godie-i05z",
+        "name": "出動正義射手兵團",
+        "cost": 1200,
+        "modifiers": 0
+      },
+      {
+        "rawcode": "I062",
+        "contentId": "godie-i062",
+        "name": "飛鼠跳刀",
+        "cost": 1550,
+        "modifiers": 1
+      },
+      {
+        "rawcode": "I063",
+        "contentId": "godie-i063",
+        "name": "防狼電擊棒",
+        "cost": 1400,
+        "modifiers": 2
+      },
+      {
+        "rawcode": "I06E",
+        "contentId": "godie-i06e",
+        "name": "月牙魔杖",
+        "cost": 10000,
+        "modifiers": 1
+      },
+      {
+        "rawcode": "I06J",
+        "contentId": "godie-i06j",
+        "name": "獸人船長十字鎬",
+        "cost": 0,
+        "modifiers": 1
+      },
+      {
+        "rawcode": "I06L",
+        "contentId": "godie-i06l",
+        "name": "生肉",
+        "cost": 150,
+        "modifiers": 0
+      },
+      {
+        "rawcode": "I06N",
+        "contentId": "godie-i06n",
+        "name": "老衲的棒子",
+        "cost": 0,
+        "modifiers": 1
+      },
+      {
+        "rawcode": "I06O",
+        "contentId": "godie-i06o",
+        "name": "血染八月",
+        "cost": 12000,
+        "modifiers": 1
+      },
+      {
+        "rawcode": "I06Q",
+        "contentId": "godie-i06q",
+        "name": "鍊金術之盾",
+        "cost": 15000,
+        "modifiers": 2
+      }
+    ]
+  }
+}

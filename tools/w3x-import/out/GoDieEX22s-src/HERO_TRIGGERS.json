@@ -1,0 +1,1388 @@
+{
+  "teams": {
+    "愛與和平": [
+      "妙蛙種子",
+      "小傑",
+      "瘋狂假面",
+      "安云",
+      "藏馬",
+      "賈修",
+      "真夜",
+      "小呆",
+      "索龍",
+      "天地志狼",
+      "莉娜",
+      "木乃香",
+      "菲特",
+      "麻倉葉",
+      "孫悟空",
+      "SABER",
+      "黑Saber",
+      "鋼彈",
+      "夏娜",
+      "龍宮禮奈",
+      "克勞德",
+      "桔梗",
+      "蒼月潮",
+      "法師涅吉",
+      "戰鬥涅吉",
+      "奈葉",
+      "魯夫"
+    ],
+    "去死去死": [
+      "鬼王達",
+      "臭作",
+      "黑崎一護",
+      "伊文潔琳",
+      "牛丸",
+      "鄭先生",
+      "Rider",
+      "拳四郎",
+      "殺生丸",
+      "胖虎",
+      "鬼畜狂刀",
+      "傑洛士",
+      "皮卡丘",
+      "皮卡娘",
+      "普烏",
+      "金鋼狼",
+      "風魔",
+      "宇志波佐助",
+      "夜神月",
+      "趙子龍",
+      "藤井八雲",
+      "劍心",
+      "牧太郎",
+      "飛影",
+      "巴恩",
+      "斑剎"
+    ],
+    "中立隱英及尚未分類": [
+      "令狐沖",
+      "阿福",
+      "超爆幹帥草泥馬",
+      "哆啦A夢",
+      "林克",
+      "異型",
+      "約翰走路",
+      "飛鼠先生",
+      "黑人牙膏",
+      "初號機",
+      "白木",
+      "死之王",
+      "賽菲洛斯",
+      "貞子",
+      "剎那",
+      "監獄兔",
+      "呂布",
+      "克勞薩先生",
+      "小熊維尼",
+      "berserker",
+      "熊貓",
+      "DarkKnight",
+      "叫獸",
+      "金居福"
+    ],
+    "未開放英雄": [
+      "騜",
+      "志志雄真實",
+      "火拳愛斯",
+      "初音未來",
+      "林默娘",
+      "十六夜",
+      "彗星小雞",
+      "木偶人",
+      "三本柱",
+      "愛德華",
+      "學姊",
+      "賣火柴小女孩",
+      "基紐"
+    ]
+  },
+  "heroes": {
+    "妙蛙種子": {
+      "team": "愛與和平",
+      "categoryId": 121,
+      "triggerCount": 5,
+      "triggers": [
+        "Open Skill of Frog",
+        "Parasitism Seed",
+        "Vine",
+        "SunFire pre",
+        "SunFire"
+      ]
+    },
+    "小傑": {
+      "team": "愛與和平",
+      "categoryId": 28,
+      "triggerCount": 8,
+      "triggers": [
+        "Open Skill of XHunter",
+        "XHunter2",
+        "XHunterStone pre",
+        "XHunterStone",
+        "XHunterStone Effect",
+        "XHunter",
+        "XHunterStoneX pre",
+        "XHunterStoneX"
+      ]
+    },
+    "瘋狂假面": {
+      "team": "愛與和平",
+      "categoryId": 69,
+      "triggerCount": 2,
+      "triggers": [
+        "ComeToEat",
+        "ComeToEatEffect"
+      ]
+    },
+    "安云": {
+      "team": "愛與和平",
+      "categoryId": 70,
+      "triggerCount": 9,
+      "triggers": [
+        "Open Skill of HideAzumi",
+        "FitCutExecute",
+        "HundredKill",
+        "HundredKillEffect",
+        "AzumiShadow",
+        "AzumiHit",
+        "AzumiShadowNew",
+        "AzumiATK",
+        "AzmuiJugATK"
+      ]
+    },
+    "藏馬": {
+      "team": "愛與和平",
+      "categoryId": 71,
+      "triggerCount": 7,
+      "triggers": [
+        "Open Skill of HideHorse",
+        "plant",
+        "EvilFox",
+        "OldTree",
+        "OldTreeDie",
+        "SuperOldTree",
+        "Gorama"
+      ]
+    },
+    "賈修": {
+      "team": "愛與和平",
+      "categoryId": 72,
+      "triggerCount": 5,
+      "triggers": [
+        "Open Skill of EvilChild",
+        "closeMe",
+        "GoldDrgan",
+        "GoldDrgan Effect",
+        "GoldDragonEat"
+      ]
+    },
+    "真夜": {
+      "team": "愛與和平",
+      "categoryId": 73,
+      "triggerCount": 6,
+      "triggers": [
+        "Open Skill of TrueNight",
+        "SpaceCut",
+        "WildCut",
+        "WildCut Effect",
+        "DragonEyes",
+        "DragonEyesAgi"
+      ]
+    },
+    "小呆": {
+      "team": "愛與和平",
+      "categoryId": 74,
+      "triggerCount": 5,
+      "triggers": [
+        "Open Skill of LittleDie",
+        "LightSpeed",
+        "DraBom",
+        "ABanX",
+        "DragonMan"
+      ]
+    },
+    "索龍": {
+      "team": "愛與和平",
+      "categoryId": 75,
+      "triggerCount": 7,
+      "triggers": [
+        "Open Skill of three knife",
+        "Threesword",
+        "Roaction",
+        "Romove",
+        "Learn Burn Beat",
+        "ThworldStart",
+        "ThworldMove"
+      ]
+    },
+    "天地志狼": {
+      "team": "愛與和平",
+      "categoryId": 76,
+      "triggerCount": 7,
+      "triggers": [
+        "Open Skill of SG",
+        "GodTakeMd",
+        "DragonExp",
+        "DragonChannel",
+        "DragonExpGo",
+        "PowerBack",
+        "PowerBack Effect"
+      ]
+    },
+    "莉娜": {
+      "team": "愛與和平",
+      "categoryId": 77,
+      "triggerCount": 7,
+      "triggers": [
+        "Open Skill of Lina",
+        "LinaS",
+        "LinaS Effect",
+        "Fire NOVA",
+        "DragonSlaveSet",
+        "DragonSlaveMove",
+        "GigaSlave"
+      ]
+    },
+    "木乃香": {
+      "team": "愛與和平",
+      "categoryId": 78,
+      "triggerCount": 16,
+      "triggers": [
+        "MoveSlaveOrder",
+        "MoveSlaveStart",
+        "Wind Effect",
+        "MagicFan",
+        "Wind CloseEffect",
+        "SlaveExp",
+        "AKT start",
+        "AKT stop",
+        "AKT 1",
+        "AKT 1 Effect",
+        "AKT 2",
+        "AKT 3",
+        "AKT 4",
+        "AKT 4 Effect",
+        "AKT Effect",
+        "AKT CloseEffect"
+      ]
+    },
+    "菲特": {
+      "team": "愛與和平",
+      "categoryId": 79,
+      "triggerCount": 6,
+      "triggers": [
+        "Open Skill of Fate",
+        "LightLancer",
+        "LightLancerEffect",
+        "Gas to Stop Tower",
+        "HolySword",
+        "LigtingExp"
+      ]
+    },
+    "麻倉葉": {
+      "team": "愛與和平",
+      "categoryId": 80,
+      "triggerCount": 13,
+      "triggers": [
+        "Open Skill of GosofKing",
+        "式神招來",
+        "Soul Shock",
+        "附身合體",
+        "GosIn",
+        "無無明亦無",
+        "Empty",
+        "真空佛陀斬",
+        "GDD",
+        "阿彌陀丸",
+        "MU",
+        "EX",
+        "ComOne"
+      ]
+    },
+    "孫悟空": {
+      "team": "愛與和平",
+      "categoryId": 81,
+      "triggerCount": 5,
+      "triggers": [
+        "Open Skill of Goku",
+        "SSJ Affect",
+        "SSJ",
+        "Goku",
+        "Turtle Power"
+      ]
+    },
+    "SABER": {
+      "team": "愛與和平",
+      "categoryId": 82,
+      "triggerCount": 10,
+      "triggers": [
+        "Open Skill of Saber",
+        "saber",
+        "Air",
+        "Air value deal",
+        "Air Attack",
+        "Air MagicBook",
+        "Excalibur",
+        "avalonReady",
+        "avalonStart",
+        "ExcaliburMAX"
+      ]
+    },
+    "黑Saber": {
+      "team": "愛與和平",
+      "categoryId": 119,
+      "triggerCount": 4,
+      "triggers": [
+        "Open Skill of DarkSaber",
+        "ManaIcrease",
+        "InSpace",
+        "MudAttackCP"
+      ]
+    },
+    "鋼彈": {
+      "team": "愛與和平",
+      "categoryId": 83,
+      "triggerCount": 2,
+      "triggers": [
+        "Open Skill of Gundam",
+        "Allbullet"
+      ]
+    },
+    "夏娜": {
+      "team": "愛與和平",
+      "categoryId": 84,
+      "triggerCount": 6,
+      "triggers": [
+        "Open Skill of ShaNa",
+        "FireSwordSkill",
+        "CloseDest",
+        "CloseDestAddAb",
+        "CloseDestEffect",
+        "SpaceBreaker"
+      ]
+    },
+    "龍宮禮奈": {
+      "team": "愛與和平",
+      "categoryId": 85,
+      "triggerCount": 3,
+      "triggers": [
+        "Open Skill of WoSoDA",
+        "KillPowerEX",
+        "KillPower"
+      ]
+    },
+    "克勞德": {
+      "team": "愛與和平",
+      "categoryId": 86,
+      "triggerCount": 9,
+      "triggers": [
+        "Open Skill of Cloud",
+        "Super Sword",
+        "Toro",
+        "XFight",
+        "Toro Rotation",
+        "BreakLight",
+        "StoJump Start",
+        "StoJump Effect",
+        "SuperFF7"
+      ]
+    },
+    "桔梗": {
+      "team": "愛與和平",
+      "categoryId": 87,
+      "triggerCount": 7,
+      "triggers": [
+        "Open Skill of Hiun",
+        "Learn FeedBack",
+        "FeedBack Effect",
+        "FeedBack",
+        "FinalShotting",
+        "FinalShottingMove",
+        "HudGhosts"
+      ]
+    },
+    "蒼月潮": {
+      "team": "愛與和平",
+      "categoryId": 24,
+      "triggerCount": 6,
+      "triggers": [
+        "Open Skill of Moon",
+        "order123",
+        "Jump Start",
+        "Jump Effect",
+        "MoonKnock",
+        "Beast Spear"
+      ]
+    },
+    "法師涅吉": {
+      "team": "愛與和平",
+      "categoryId": 48,
+      "triggerCount": 13,
+      "triggers": [
+        "Open Skill of MT",
+        "Sleep Air",
+        "LiteningWind",
+        "ThTh",
+        "暫定契約",
+        "AgreementTarget",
+        "AgreementStart",
+        "AgreementJudg",
+        "風精召喚",
+        "WindWizard",
+        "風花-武裝解除",
+        "WindFlowerStart",
+        "WindFlower"
+      ]
+    },
+    "戰鬥涅吉": {
+      "team": "愛與和平",
+      "categoryId": 42,
+      "triggerCount": 28,
+      "triggers": [
+        "Open Skill of Negi",
+        "NegiAccJudg",
+        "KillUnit",
+        "崩拳系列",
+        "NegiAttack",
+        "NegiAttJudg",
+        "fist",
+        "光箭",
+        "LightArrow",
+        "LightFire",
+        "MoveLightPoint",
+        "LightDam",
+        "縮地",
+        "MoveStart",
+        "MoveInst",
+        "雷之投擲",
+        "ThunderLance",
+        "ThunderCreate",
+        "ThunderMove",
+        "ThunderFist",
+        "闇之魔法",
+        "DarkMagic",
+        "WindThunder",
+        "HellFire",
+        "太陰道",
+        "absorpStart",
+        "absorp",
+        "KillGodMove"
+      ]
+    },
+    "奈葉": {
+      "team": "愛與和平",
+      "categoryId": 89,
+      "triggerCount": 5,
+      "triggers": [
+        "Open Skill of Nanoha",
+        "AcxelShooter",
+        "BarrelShot",
+        "DivineBusterEx",
+        "StarlightBreakerPlus"
+      ]
+    },
+    "魯夫": {
+      "team": "愛與和平",
+      "categoryId": 102,
+      "triggerCount": 12,
+      "triggers": [
+        "Open Skill of Luffe",
+        "Luf died",
+        "Luf Axe",
+        "Luf Axe Effect",
+        "Luf gun",
+        "Luf two Effect",
+        "Luf RockFire D8",
+        "Luf RockFire Effect D8",
+        "Luf Three",
+        "Luf Three Effect",
+        "霸王色",
+        "KingColor"
+      ]
+    },
+    "鬼王達": {
+      "team": "去死去死",
+      "categoryId": 126,
+      "triggerCount": 1,
+      "triggers": [
+        "GhostDaEX"
+      ]
+    },
+    "臭作": {
+      "team": "去死去死",
+      "categoryId": 125,
+      "triggerCount": 2,
+      "triggers": [
+        "Open Skill of Henti",
+        "HentiEX"
+      ]
+    },
+    "黑崎一護": {
+      "team": "去死去死",
+      "categoryId": 47,
+      "triggerCount": 13,
+      "triggers": [
+        "----------黑崎一護",
+        "Open Skill of Bleach",
+        "瞬步",
+        "Bleach Rush",
+        "斬擊",
+        "Bleach Strike",
+        "月牙天衝",
+        "Bleach Moon",
+        "Bleach Moon Effect",
+        "虛化",
+        "Bleach Null start",
+        "Bleach Null close",
+        "Bleach Null"
+      ]
+    },
+    "伊文潔琳": {
+      "team": "去死去死",
+      "categoryId": 17,
+      "triggerCount": 7,
+      "triggers": [
+        "Open Skill of EVN",
+        "The End ofWorld",
+        "The End ofWorldStart",
+        "The End ofWorldCasting",
+        "The End ofWorldCasting EX",
+        "MagicStamp",
+        "MagicAttackPoint"
+      ]
+    },
+    "牛丸": {
+      "team": "去死去死",
+      "categoryId": 19,
+      "triggerCount": 3,
+      "triggers": [
+        "Open Skill of CowBall",
+        "godJumpWall",
+        "godback"
+      ]
+    },
+    "鄭先生": {
+      "team": "去死去死",
+      "categoryId": 20,
+      "triggerCount": 3,
+      "triggers": [
+        "Open Skill of EatSon",
+        "Open World",
+        "Ptt Judge"
+      ]
+    },
+    "Rider": {
+      "team": "去死去死",
+      "categoryId": 26,
+      "triggerCount": 13,
+      "triggers": [
+        "Open Skill of Rider",
+        "Riderspell",
+        "link",
+        "linkmove",
+        "linkback",
+        "RiderSprint",
+        "Ridermoveline",
+        "Ridermovecir",
+        "RidermovelineDam",
+        "Maga Arm",
+        "Blood Cast",
+        "Blood",
+        "BloodKill"
+      ]
+    },
+    "拳四郎": {
+      "team": "去死去死",
+      "categoryId": 30,
+      "triggerCount": 5,
+      "triggers": [
+        "Open Skill of NG",
+        "YouDie",
+        "ChangeDNA",
+        "LightAttack",
+        "HunrThum"
+      ]
+    },
+    "殺生丸": {
+      "team": "去死去死",
+      "categoryId": 34,
+      "triggerCount": 7,
+      "triggers": [
+        "Open Skill of Dog",
+        "BlueDragonWave",
+        "lzfs",
+        "lzfsEffect",
+        "EX 冥道殘月破",
+        "newlzfs",
+        "newlzfsmove"
+      ]
+    },
+    "胖虎": {
+      "team": "去死去死",
+      "categoryId": 52,
+      "triggerCount": 13,
+      "triggers": [
+        "GrantSound",
+        "Micphone",
+        "Hell Rock",
+        "Hell Rock Move",
+        "Hell Timer1",
+        "Hell Timer2",
+        "Hell Timer3",
+        "Hell Timer4",
+        "Hell Timer5",
+        "Hell Timer6",
+        "Hell Timer7",
+        "Hell Timer8",
+        "Hell Timer9"
+      ]
+    },
+    "鬼畜狂刀": {
+      "team": "去死去死",
+      "categoryId": 53,
+      "triggerCount": 6,
+      "triggers": [
+        "Open Skill of CrzGos",
+        "TrueBody",
+        "FireBird",
+        "ShanWindDragon",
+        "ShanWindDragonMove",
+        "GodWind"
+      ]
+    },
+    "傑洛士": {
+      "team": "去死去死",
+      "categoryId": 54,
+      "triggerCount": 6,
+      "triggers": [
+        "Open Skill of Zeros",
+        "DefMagic",
+        "AnKiMagic",
+        "AnKiMagic Effect",
+        "KaoLight",
+        "Get Magic EX"
+      ]
+    },
+    "皮卡丘": {
+      "team": "去死去死",
+      "categoryId": 55,
+      "triggerCount": 5,
+      "triggers": [
+        "Open Skill of Pikachu",
+        "Sadosi",
+        "LightningSpread",
+        "WildPika",
+        "WildPikaAttacked"
+      ]
+    },
+    "皮卡娘": {
+      "team": "去死去死",
+      "categoryId": 120,
+      "triggerCount": 3,
+      "triggers": [
+        "Open Skill of Pikachu Copy",
+        "NoCute",
+        "PIKACHU"
+      ]
+    },
+    "普烏": {
+      "team": "去死去死",
+      "categoryId": 56,
+      "triggerCount": 6,
+      "triggers": [
+        "Open Skill of pu",
+        "Cookie",
+        "Eat",
+        "NO Eat",
+        "EarthBoom",
+        "EarthBoomCheck"
+      ]
+    },
+    "金鋼狼": {
+      "team": "去死去死",
+      "categoryId": 57,
+      "triggerCount": 6,
+      "triggers": [
+        "Open Skill of wo",
+        "Wolf EX",
+        "Legendary Strike",
+        "WolfStrike",
+        "WolfStrikeEffect",
+        "Dontkick"
+      ]
+    },
+    "風魔": {
+      "team": "去死去死",
+      "categoryId": 58,
+      "triggerCount": 8,
+      "triggers": [
+        "Open Skill of Nija",
+        "Visiable",
+        "Initiate Fan Toss",
+        "Fan Movement",
+        "Set Charges",
+        "Elemental Buff Attempt",
+        "Deal Elemental Effect",
+        "FlySwallow"
+      ]
+    },
+    "宇志波佐助": {
+      "team": "去死去死",
+      "categoryId": 59,
+      "triggerCount": 10,
+      "triggers": [
+        "Open Skill of ChoChu",
+        "Row Eye Set",
+        "Spell Mark",
+        "ThuBird",
+        "LightCut",
+        "LightCutRun",
+        "Kylin",
+        "Kylin2",
+        "ChoChuFireDro",
+        "ImbaEye"
+      ]
+    },
+    "夜神月": {
+      "team": "去死去死",
+      "categoryId": 60,
+      "triggerCount": 6,
+      "triggers": [
+        "Open Skill of Light",
+        "DeathEye",
+        "DeathTrain",
+        "DeathHeart",
+        "DeathHeartBuff",
+        "ChangeNote"
+      ]
+    },
+    "趙子龍": {
+      "team": "去死去死",
+      "categoryId": 61,
+      "triggerCount": 10,
+      "triggers": [
+        "Voice",
+        "Open Skill of Snow",
+        "KnockBack",
+        "KnockBack Effect",
+        "KniSkill",
+        "KniSkillEffect",
+        "DefStartC",
+        "DefEndC",
+        "SevenOut",
+        "SevenIn"
+      ]
+    },
+    "藤井八雲": {
+      "team": "去死去死",
+      "categoryId": 62,
+      "triggerCount": 6,
+      "triggers": [
+        "Open Skill of 3X3EYES",
+        "CallPay",
+        "PayDie",
+        "EightCloud",
+        "Light",
+        "LightMove"
+      ]
+    },
+    "劍心": {
+      "team": "去死去死",
+      "categoryId": 63,
+      "triggerCount": 4,
+      "triggers": [
+        "Open Skill of Kenshine",
+        "SkySlash",
+        "NineSlash",
+        "NineSlashEffect"
+      ]
+    },
+    "牧太郎": {
+      "team": "去死去死",
+      "categoryId": 64,
+      "triggerCount": 6,
+      "triggers": [
+        "Open Skill of Tai",
+        "chieken",
+        "farmer",
+        "GaiaAngre",
+        "animal",
+        "goagain"
+      ]
+    },
+    "飛影": {
+      "team": "去死去死",
+      "categoryId": 65,
+      "triggerCount": 9,
+      "triggers": [
+        "Open Skill of Hehi",
+        "FireSword",
+        "FireSwordAdded",
+        "HehiSword",
+        "HehiSwordEffect",
+        "BlackDragon",
+        "EatDragon",
+        "DarkDragonEX",
+        "DarkDragonEXMove"
+      ]
+    },
+    "巴恩": {
+      "team": "去死去死",
+      "categoryId": 66,
+      "triggerCount": 8,
+      "triggers": [
+        "Open Skill of BaM",
+        "EvilEye",
+        "CombineOne",
+        "HolyShit",
+        "DestWall",
+        "BlackBoom",
+        "真黑核晶",
+        "TrueBlackBoom"
+      ]
+    },
+    "斑剎": {
+      "team": "去死去死",
+      "categoryId": 67,
+      "triggerCount": 2,
+      "triggers": [
+        "Open Skill of Lineage",
+        "AbsoluteDefence"
+      ]
+    },
+    "令狐沖": {
+      "team": "中立隱英及尚未分類",
+      "categoryId": 112,
+      "triggerCount": 6,
+      "triggers": [
+        "Open Skill of LHC",
+        "HuashanSword",
+        "StarSucking",
+        "NineSwords",
+        "NineSwords LVup",
+        "NineSwords counter"
+      ]
+    },
+    "阿福": {
+      "team": "中立隱英及尚未分類",
+      "categoryId": 68,
+      "triggerCount": 5,
+      "triggers": [
+        "Open Skill of AFu",
+        "fastStep",
+        "fastStepGo",
+        "BeDragon Target",
+        "BeDragon"
+      ]
+    },
+    "超爆幹帥草泥馬": {
+      "team": "中立隱英及尚未分類",
+      "categoryId": 50,
+      "triggerCount": 17,
+      "triggers": [
+        "Open Skill of Horse",
+        "憂鬱的眼神",
+        "UnhappyEyes",
+        "臥草泥馬",
+        "SecHorse",
+        "狂草泥馬",
+        "TrdHorse",
+        "TrdHorseAtk",
+        "TrdHorseJugATK",
+        "TrdHorseDamNew",
+        "TrdHorseDam",
+        "NewTrdHorse",
+        "固有-馬勒戈壁",
+        "MLGBTemp",
+        "MLGBTempSteal",
+        "MLGB",
+        "MLGBDam"
+      ]
+    },
+    "哆啦A夢": {
+      "team": "中立隱英及尚未分類",
+      "categoryId": 13,
+      "triggerCount": 9,
+      "triggers": [
+        "Open Skill of Dora",
+        "PacketItem",
+        "Wohoo",
+        "JumpsDamage",
+        "CutUHead",
+        "CutUHead effect",
+        "Copy",
+        "TimeMachine",
+        "TimeMachineRev"
+      ]
+    },
+    "林克": {
+      "team": "中立隱英及尚未分類",
+      "categoryId": 90,
+      "triggerCount": 8,
+      "triggers": [
+        "Open Skill of Link",
+        "Initiate Fan Toss 2",
+        "Fan Movement 2",
+        "CircleCut",
+        "CircleCut Moving",
+        "DefStart",
+        "DefEnd",
+        "DeathSlashEX"
+      ]
+    },
+    "異型": {
+      "team": "中立隱英及尚未分類",
+      "categoryId": 91,
+      "triggerCount": 5,
+      "triggers": [
+        "Open Skill of Hydralisk",
+        "LearnReTurn",
+        "ReTurn",
+        "撲殺爪擊",
+        "KillAtk"
+      ]
+    },
+    "約翰走路": {
+      "team": "中立隱英及尚未分類",
+      "categoryId": 92,
+      "triggerCount": 6,
+      "triggers": [
+        "Open Skill of John",
+        "Whisky",
+        "Wine Extract Initiate",
+        "Wine Timer",
+        "Initiate Mark",
+        "Marking"
+      ]
+    },
+    "飛鼠先生": {
+      "team": "中立隱英及尚未分類",
+      "categoryId": 93,
+      "triggerCount": 10,
+      "triggers": [
+        "Open Skill of Moriya",
+        "Run",
+        "Run Effect",
+        "MagicUp",
+        "MoriyaBYEBYE",
+        "HeroCome",
+        "StupidReady",
+        "stupidStart",
+        "MoriyaShadow",
+        "InfniLight"
+      ]
+    },
+    "黑人牙膏": {
+      "team": "中立隱英及尚未分類",
+      "categoryId": 94,
+      "triggerCount": 3,
+      "triggers": [
+        "Open Skill of BP",
+        "BlackTooth",
+        "ManyStar"
+      ]
+    },
+    "初號機": {
+      "team": "中立隱英及尚未分類",
+      "categoryId": 96,
+      "triggerCount": 5,
+      "triggers": [
+        "Open Skill of First",
+        "EVA Complete",
+        "FirstDie",
+        "EVA ON",
+        "ElecPower"
+      ]
+    },
+    "白木": {
+      "team": "中立隱英及尚未分類",
+      "categoryId": 97,
+      "triggerCount": 4,
+      "triggers": [
+        "Open Skill of WhiteTree",
+        "TreeSea",
+        "whiterOldTree",
+        "WoodStone"
+      ]
+    },
+    "死之王": {
+      "team": "中立隱英及尚未分類",
+      "categoryId": 98,
+      "triggerCount": 8,
+      "triggers": [
+        "Open Skill of KOD",
+        "NightMaster",
+        "NightContract",
+        "MagicReturn",
+        "DeathMeteo",
+        "BadNightSoul",
+        "AllSinReturn",
+        "SAIadd"
+      ]
+    },
+    "賽菲洛斯": {
+      "team": "中立隱英及尚未分類",
+      "categoryId": 100,
+      "triggerCount": 7,
+      "triggers": [
+        "Open Skill of Seph",
+        "OneCut",
+        "OneCutMove",
+        "EndBurn",
+        "FinalBolide",
+        "Supernova",
+        "Hell Gate"
+      ]
+    },
+    "貞子": {
+      "team": "中立隱英及尚未分類",
+      "categoryId": 101,
+      "triggerCount": 8,
+      "triggers": [
+        "Open Skill of ButtyGhost",
+        "ButtyAfraid",
+        "ButtyGhost Afraid",
+        "ButtyGhost Scare",
+        "ButtyGhost SoulDash Level",
+        "ButtyGhost SoulDash Cast",
+        "ButtyGhost SoulDash Stop",
+        "DeathSpread"
+      ]
+    },
+    "剎那": {
+      "team": "中立隱英及尚未分類",
+      "categoryId": 103,
+      "triggerCount": 20,
+      "triggers": [
+        "Open Skill of Setsuna",
+        "AngleRdDam",
+        "SaKu",
+        "SaKuSpaNew",
+        "Control Light",
+        "LightATK",
+        "Cloud ready",
+        "Cloud move",
+        "Cloud reset",
+        "Light Judg",
+        "Light Final",
+        "Light Final Dam",
+        "Light Fight",
+        "Flow",
+        "SizeChange",
+        "InshouATK",
+        "InshouJugATK",
+        "GLADIARIA ALAT",
+        "Light sword",
+        "Light sword move"
+      ]
+    },
+    "監獄兔": {
+      "team": "中立隱英及尚未分類",
+      "categoryId": 104,
+      "triggerCount": 6,
+      "triggers": [
+        "Open Skill of Rabbit",
+        "GroundAttack",
+        "HoLuKen",
+        "PowerKnockBack",
+        "PowerKnockBack Effect",
+        "TwoPowerEX"
+      ]
+    },
+    "呂布": {
+      "team": "中立隱英及尚未分類",
+      "categoryId": 105,
+      "triggerCount": 9,
+      "triggers": [
+        "Open Skill of LuBu",
+        "FlyHeroAch",
+        "skill1",
+        "skill3",
+        "skill4end",
+        "skill4",
+        "skill4eff",
+        "RabbitYell",
+        "Get Rabbit EX"
+      ]
+    },
+    "克勞薩先生": {
+      "team": "中立隱英及尚未分類",
+      "categoryId": 106,
+      "triggerCount": 9,
+      "triggers": [
+        "Open Skill of DMC",
+        "DMC Dead",
+        "DMC Deadagain",
+        "DMC Revive",
+        "DMC Ass",
+        "DMC Forst",
+        "DMC Pig",
+        "DMC Evilball",
+        "DMC Kill"
+      ]
+    },
+    "小熊維尼": {
+      "team": "中立隱英及尚未分類",
+      "categoryId": 31,
+      "triggerCount": 9,
+      "triggers": [
+        "Open Skill of Bear",
+        "FindyouEX",
+        "GiveMeHoney",
+        "GiveMeHoney Effect",
+        "GiveMeHoney KB",
+        "Sugoi",
+        "ColdJoke",
+        "Bowling",
+        "BowlingEffect"
+      ]
+    },
+    "berserker": {
+      "team": "中立隱英及尚未分類",
+      "categoryId": 43,
+      "triggerCount": 17,
+      "triggers": [
+        "Open Skill of WildHqlis",
+        "狂暴化",
+        "berserker",
+        "berserker 2",
+        "蹂躪編年史",
+        "Trample Start",
+        "Trample Effect",
+        "Trample Effect2",
+        "巨神一擊",
+        "Gigantomakhia 0",
+        "Gigantomakhia 1",
+        "Gigantomakhia 2",
+        "獵殺百頭",
+        "Nine Lives EX",
+        "Nine Lives Hits",
+        "Nine Lives out",
+        "Nine Lives clear"
+      ]
+    },
+    "熊貓": {
+      "team": "中立隱英及尚未分類",
+      "categoryId": 49,
+      "triggerCount": 13,
+      "triggers": [
+        "Open Skill of Panda",
+        "----------Panda",
+        "PandaParty",
+        "Saber_in_panda",
+        "Saber_in_pandaClose",
+        "Saber_in_panda Copy",
+        "Saber_in_pandaLVUp",
+        "Saber_in_pandaDie",
+        "Saber_in_pandaChrysanthemum",
+        "Saber_in_pandaJizz",
+        "Saber_in_pandaDecrease",
+        "Saber_in_pandaEX",
+        "Saber_in_pandaTree"
+      ]
+    },
+    "DarkKnight": {
+      "team": "中立隱英及尚未分類",
+      "categoryId": 25,
+      "triggerCount": 16,
+      "triggers": [
+        "Open Skill of DarkKnight",
+        "墮落十字軍符文",
+        "CrusadeRune",
+        "CrusadeRune close",
+        "死亡之握",
+        "DeathGrip",
+        "DeathGrip effect",
+        "疫病",
+        "PlagueLV",
+        "PlagueStrike",
+        "IcyTouch",
+        "DeathStrike",
+        "碎心打擊",
+        "HeartStrike",
+        "亡靈大軍",
+        "ArmyOfTheDead"
+      ]
+    },
+    "叫獸": {
+      "team": "中立隱英及尚未分類",
+      "categoryId": 51,
+      "triggerCount": 12,
+      "triggers": [
+        "Open Skill of professor",
+        "小考",
+        "quiz",
+        "隨機抽點",
+        "attendance",
+        "attendance effect",
+        "這次考試很簡單",
+        "TestsoEasy",
+        "TestsoEasyEff",
+        "二ㄧ",
+        "flunkOut",
+        "flunkOutEff"
+      ]
+    },
+    "金居福": {
+      "team": "中立隱英及尚未分類",
+      "categoryId": 108,
+      "triggerCount": 15,
+      "triggers": [
+        "Open Skill of NightMarket",
+        "恰恰",
+        "chacha",
+        "北斗爆橘拳",
+        "Oran",
+        "橘山斬空破",
+        "OranMon",
+        "珍奶顏射",
+        "MilkTea",
+        "賣扣",
+        "Mic",
+        "MicEff",
+        "MicTimer",
+        "歹戲拖棚",
+        "TooLong"
+      ]
+    },
+    "騜": {
+      "team": "未開放英雄",
+      "categoryId": 35,
+      "triggerCount": 15,
+      "triggers": [
+        "Open Skill of HE",
+        "紅色龍氣",
+        "RedDragon",
+        "謝謝指教",
+        "Thankyou",
+        "Thankyou Effect",
+        "五十重天",
+        "Fifty Sky",
+        "Fifty Sky Effect",
+        "一百重天",
+        "Hundred Sky",
+        "和諧世界",
+        "FriendComeBack",
+        "Crab World",
+        "Crab World Effect"
+      ]
+    },
+    "志志雄真實": {
+      "team": "未開放英雄",
+      "categoryId": 123,
+      "triggerCount": 0,
+      "triggers": []
+    },
+    "火拳愛斯": {
+      "team": "未開放英雄",
+      "categoryId": 122,
+      "triggerCount": 0,
+      "triggers": []
+    },
+    "初音未來": {
+      "team": "未開放英雄",
+      "categoryId": 116,
+      "triggerCount": 9,
+      "triggers": [
+        "Open Skill of Miku",
+        "初音未來的消失",
+        "MikuDisappear",
+        "MikuDisappearEffect",
+        "世界第一的公主殿下",
+        "MikuNo1",
+        "MikuNo1Effect",
+        "把你給MikuMiku掉",
+        "MikuEX"
+      ]
+    },
+    "林默娘": {
+      "team": "未開放英雄",
+      "categoryId": 117,
+      "triggerCount": 0,
+      "triggers": []
+    },
+    "十六夜": {
+      "team": "未開放英雄",
+      "categoryId": 95,
+      "triggerCount": 4,
+      "triggers": [
+        "Open Skill of Sakuya",
+        "Sakuya SpaceMagic",
+        "Sakuya StopKnife",
+        "Untitled Trigger 003"
+      ]
+    },
+    "彗星小雞": {
+      "team": "未開放英雄",
+      "categoryId": 99,
+      "triggerCount": 9,
+      "triggers": [
+        "Open Skill of Chicken",
+        "Chicken Grow Int",
+        "Chicken Attack SW",
+        "Chicken Attack Action",
+        "Chicken Attack Damage",
+        "Chicken Attack Grow",
+        "Chicken LaLaShell",
+        "Chicken LaLaShell Damage",
+        "Chicken Insnare"
+      ]
+    },
+    "木偶人": {
+      "team": "未開放英雄",
+      "categoryId": 111,
+      "triggerCount": 0,
+      "triggers": []
+    },
+    "三本柱": {
+      "team": "未開放英雄",
+      "categoryId": 113,
+      "triggerCount": 0,
+      "triggers": []
+    },
+    "愛德華": {
+      "team": "未開放英雄",
+      "categoryId": 114,
+      "triggerCount": 0,
+      "triggers": []
+    },
+    "學姊": {
+      "team": "未開放英雄",
+      "categoryId": 115,
+      "triggerCount": 12,
+      "triggers": [
+        "Open Skill of Mentor",
+        "正妹優勢",
+        "Advantage",
+        "理財",
+        "GoldWood",
+        "平易近人的笑容",
+        "Smile",
+        "分身",
+        "FlyAway",
+        "夢想前程的彼方",
+        "FutureDream",
+        "BeginFutureDream"
+      ]
+    },
+    "賣火柴小女孩": {
+      "team": "未開放英雄",
+      "categoryId": 118,
+      "triggerCount": 0,
+      "triggers": []
+    },
+    "基紐": {
+      "team": "未開放英雄",
+      "categoryId": 88,
+      "triggerCount": 4,
+      "triggers": [
+        "ChangeBody",
+        "cleanunit",
+        "PoisWalkPre",
+        "PoisWalkEffect"
+      ]
+    }
+  }
+}

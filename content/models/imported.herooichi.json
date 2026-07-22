@@ -1,0 +1,62 @@
+{
+  "id": "imported.herooichi",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/herooichi.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand",
+    "run": "Walk",
+    "attack": "Attack",
+    "cast": "Spell",
+    "hurt": "Stand",
+    "death": "Death"
+  },
+  "attachPoints": {
+    "Foot Right": {
+      "x": -0.0305,
+      "y": 0.0656,
+      "z": 0.1057
+    },
+    "Foot Left": {
+      "x": -0.0278,
+      "y": 0.069,
+      "z": -0.108
+    },
+    "Hand Right": {
+      "x": 0.0897,
+      "y": 0.9789,
+      "z": 0.2233
+    },
+    "Hand Left": {
+      "x": 0.0897,
+      "y": 0.9789,
+      "z": -0.224
+    },
+    "Head": {
+      "x": 0.0082,
+      "y": 1.7853,
+      "z": 0.0071
+    },
+    "Chest": {
+      "x": -0.0027,
+      "y": 1.4345,
+      "z": 0.0025
+    },
+    "Origin": {
+      "x": -0.0101,
+      "y": 0.0247,
+      "z": 0.0042
+    },
+    "OverHead": {
+      "x": -0.0101,
+      "y": 2.028,
+      "z": 0.0042
+    },
+    "Weapon": {
+      "x": 0.0897,
+      "y": 0.9789,
+      "z": 0.2233
+    }
+  }
+}

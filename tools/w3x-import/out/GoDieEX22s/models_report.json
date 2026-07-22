@@ -1,0 +1,8989 @@
+[
+ {
+  "source": "1hswd_01.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand"
+  ],
+  "missing_textures": [
+   "Textures\\Green_Glow3.blp",
+   "Units\\Undead\\SkeletonMage\\smoke_1.blp"
+  ],
+  "raw_height": 19.58,
+  "scale_factor": 0.02778,
+  "name": "1hswd-01",
+  "glb": "1hswd-01.glb",
+  "glb_size": 41524,
+  "height": 0.544,
+  "anim_names": [
+   "Stand"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "mat1: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: GEOA,PRE2,PREM"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Stand"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 3.125,
+  "effective_height": 1.7
+ },
+ {
+  "source": "AWING.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand"
+  ],
+  "raw_height": 182.83,
+  "scale_factor": 0.02778,
+  "name": "awing",
+  "glb": "awing.glb",
+  "glb_size": 20540,
+  "height": 5.079,
+  "anim_names": [
+   "Stand"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "mat0: additive glow w/o alpha → dropped"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Stand"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.3347,
+  "effective_height": 1.7
+ },
+ {
+  "source": "AquaSpikeVersion2.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Birth"
+  ],
+  "missing_textures": [
+   "Textures\\GenericGlow2b.blp",
+   "Textures\\Wirlwinds.blp",
+   "Textures\\Dust3x.blp",
+   "Textures\\WaterWake3.blp",
+   "Textures\\White_64_Foam1.blp",
+   "Textures\\Clouds8x8.blp",
+   "Textures\\RibbonNE1_blue.blp"
+  ],
+  "raw_height": 598.59,
+  "scale_factor": 0.02778,
+  "name": "aquaspikeversion2",
+  "glb": "aquaspikeversion2.glb",
+  "glb_size": 13292,
+  "height": 16.627,
+  "anim_names": [
+   "Birth"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "skipped MDX chunks: EVTS,GEOA,GLBS,LITE,PRE2,PREM"
+  ],
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.1022,
+  "effective_height": 1.7
+ },
+ {
+  "source": "AzuNyan.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand",
+   "Walk",
+   "Stand Ready",
+   "Stand - 2",
+   "Attack",
+   "Attack - 2",
+   "Attack Slam",
+   "Spell",
+   "Death",
+   "Dissipate"
+  ],
+  "raw_height": 109.74,
+  "scale_factor": 0.01549,
+  "name": "azunyan",
+  "glb": "azunyan.glb",
+  "glb_size": 440928,
+  "height": 1.7,
+  "anim_names": [
+   "Stand",
+   "Walk",
+   "Stand Ready",
+   "Stand - 2",
+   "Attack",
+   "Attack - 2",
+   "Attack Slam",
+   "Spell",
+   "Death",
+   "Dissipate"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {
+   "Foot Right": {
+    "x": -0.0,
+    "y": 0.0476,
+    "z": 0.0678
+   },
+   "Foot Left": {
+    "x": -0.0,
+    "y": 0.0476,
+    "z": -0.0678
+   },
+   "Chest": {
+    "x": 0.0397,
+    "y": 0.8728,
+    "z": -0.0005
+   },
+   "Hand Right": {
+    "x": -0.0434,
+    "y": 0.7227,
+    "z": 0.4033
+   },
+   "Hand Left": {
+    "x": -0.0434,
+    "y": 0.7227,
+    "z": -0.4033
+   },
+   "Head": {
+    "x": -0.0,
+    "y": 1.5806,
+    "z": -0.0
+   },
+   "Origin": {
+    "x": -0.0,
+    "y": 0.0465,
+    "z": -0.0
+   },
+   "Overhead": {
+    "x": -0.0,
+    "y": 2.0204,
+    "z": -0.0
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "BWING.MDX",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand"
+  ],
+  "raw_height": 182.83,
+  "scale_factor": 0.02778,
+  "name": "bwing",
+  "glb": "bwing.glb",
+  "glb_size": 20392,
+  "height": 5.079,
+  "anim_names": [
+   "Stand"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "mat0: additive glow w/o alpha → dropped"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Stand"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.3347,
+  "effective_height": 1.7
+ },
+ {
+  "source": "Bahamut.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand 1",
+   "Attack 1",
+   "Attack 2",
+   "Spell",
+   "Spell Channel",
+   "Walk",
+   "Death",
+   "Dissipate"
+  ],
+  "raw_height": 128.64,
+  "scale_factor": 0.01322,
+  "name": "bahamut",
+  "glb": "bahamut.glb",
+  "glb_size": 429708,
+  "height": 1.7,
+  "anim_names": [
+   "Stand 1",
+   "Attack 1",
+   "Attack 2",
+   "Spell",
+   "Spell Channel",
+   "Walk",
+   "Death",
+   "Dissipate"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow1"
+  ],
+  "attach_points": {
+   "Chest": {
+    "x": 0.0,
+    "y": 1.2282,
+    "z": -0.0
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": -0.0
+   },
+   "Hand Right": {
+    "x": 0.0,
+    "y": 1.0209,
+    "z": 0.3531
+   },
+   "Hand Left": {
+    "x": 0.0,
+    "y": 1.0209,
+    "z": -0.3147
+   },
+   "Head": {
+    "x": 0.3377,
+    "y": 1.3356,
+    "z": -0.0
+   },
+   "Overhead": {
+    "x": 0.3224,
+    "y": 1.7809,
+    "z": -0.0
+   },
+   "Weapon Right": {
+    "x": 0.0,
+    "y": 1.8806,
+    "z": 0.8674
+   },
+   "Weapon Left": {
+    "x": 0.0,
+    "y": 1.8883,
+    "z": -0.7369
+   }
+  },
+  "notes": [],
+  "clip_map": {
+   "idle": "Stand 1",
+   "run": "Walk",
+   "attack": "Attack 1",
+   "cast": "Spell",
+   "hurt": "Stand 1",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "BlackHole.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand",
+   "Death"
+  ],
+  "missing_textures": [
+   "Textures\\ShockwaveWater1.blp",
+   "Textures\\GenericGlowX_Mod2.blp",
+   "Textures\\Clouds8x8Fire.blp",
+   "Textures\\ShockwaveWater1Black.blp"
+  ],
+  "raw_height": 0.0,
+  "scale_factor": 0.02778,
+  "name": "blackhole",
+  "glb": "blackhole.glb",
+  "glb_size": 5848,
+  "height": 0.0,
+  "anim_names": [
+   "Stand",
+   "Death"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "skipped MDX chunks: GLBS,LITE,PRE2,PREM,RIBB"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "BlackHole1.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand - 2",
+   "Stand - 1",
+   "Birth",
+   "Death"
+  ],
+  "missing_textures": [
+   "Textures\\GenericGlow64.blp",
+   "Textures\\star5tga.blp",
+   "Textures\\star2.blp"
+  ],
+  "raw_height": 12.0,
+  "scale_factor": 0.02778,
+  "name": "blackhole1",
+  "glb": "blackhole1.glb",
+  "glb_size": 33652,
+  "height": 0.333,
+  "anim_names": [
+   "Stand - 2",
+   "Stand - 1",
+   "Birth",
+   "Death"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "mat2: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: CAMS,GEOA,PRE2"
+  ],
+  "clip_map": {
+   "idle": "Stand - 2",
+   "run": "Stand - 2",
+   "attack": "Stand - 2",
+   "cast": "Stand - 2",
+   "hurt": "Stand - 2",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 5.1051,
+  "effective_height": 1.7
+ },
+ {
+  "source": "Bladestorm_SwordEffect.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Death",
+   "Birth",
+   "Stand"
+  ],
+  "missing_textures": [
+   "Textures\\GenericGlow2c.blp",
+   "units\\Creeps\\FirePandarenBrewmaster\\HeroBladeMaster.blp"
+  ],
+  "raw_height": 329.73,
+  "scale_factor": 0.02778,
+  "name": "bladestorm-swordeffect",
+  "glb": "bladestorm-swordeffect.glb",
+  "glb_size": 35164,
+  "height": 9.159,
+  "anim_names": [
+   "Death",
+   "Birth",
+   "Stand"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {
+   "Foot Left": {
+    "x": -0.0707,
+    "y": 0.211,
+    "z": -0.8163
+   },
+   "Foot Right": {
+    "x": -0.0707,
+    "y": 0.2122,
+    "z": 0.6721
+   },
+   "Hand Right": {
+    "x": -0.565,
+    "y": 1.5017,
+    "z": 1.6943
+   },
+   "Weapon R": {
+    "x": 2.2374,
+    "y": 1.3082,
+    "z": 1.597
+   },
+   "Head": {
+    "x": 0.033,
+    "y": 3.7783,
+    "z": -0.0052
+   },
+   "Chest": {
+    "x": -0.0564,
+    "y": 2.8718,
+    "z": 0.0003
+   },
+   "Weapon L": {
+    "x": 2.2374,
+    "y": 1.3082,
+    "z": -1.6045
+   },
+   "Hand Left": {
+    "x": -0.3601,
+    "y": 1.4858,
+    "z": -1.8093
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": 0.1416,
+    "z": 0.0001
+   },
+   "OverHead": {
+    "x": 0.0,
+    "y": 5.7177,
+    "z": 0.0001
+   }
+  },
+  "notes": [
+   "mat1: additive glow w/o alpha → dropped",
+   "mat2: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: EVTS,GEOA,GLBS,PRE2"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.1856,
+  "effective_height": 1.7
+ },
+ {
+  "source": "BloodBreathStream.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Attack"
+  ],
+  "missing_textures": [
+   "Textures\\BloodWhiteSmall.blp"
+  ],
+  "raw_height": 63.28,
+  "scale_factor": 0.02778,
+  "name": "bloodbreathstream",
+  "glb": "bloodbreathstream.glb",
+  "glb_size": 3236,
+  "height": 1.758,
+  "anim_names": [
+   "Attack"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "skipped MDX chunks: GEOA,GLBS,LITE,PRE2,PREM"
+  ],
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.967,
+  "effective_height": 1.7
+ },
+ {
+  "source": "Boomnl.mdx",
+  "kind": "prop",
+  "sequences": [
+   "Stand"
+  ],
+  "missing_textures": [
+   "Textures\\Clouds8x8Fire.blp"
+  ],
+  "raw_height": 0.0,
+  "scale_factor": 0.02778,
+  "name": "boomnl",
+  "glb": "boomnl.glb",
+  "glb_size": 288,
+  "height": 0.0,
+  "anim_names": [],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "skipped MDX chunks: LITE,PRE2,PREM"
+  ],
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "Bulbasaur.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand",
+   "Stand - 2",
+   "Walk",
+   "Attack",
+   "spell",
+   "spell channel",
+   "death",
+   "attack - 2"
+  ],
+  "missing_textures": [
+   "textures\\FelwoodNatural.blp",
+   "textures\\citynatural.blp",
+   "textures\\star2.blp"
+  ],
+  "raw_height": 34.77,
+  "scale_factor": 0.04889,
+  "name": "bulbasaur",
+  "glb": "bulbasaur.glb",
+  "glb_size": 205900,
+  "height": 1.7,
+  "anim_names": [
+   "Stand",
+   "Stand - 2",
+   "Walk",
+   "Attack",
+   "spell",
+   "spell channel",
+   "death",
+   "attack - 2"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {
+   "Head": {
+    "x": 1.748,
+    "y": 0.9708,
+    "z": -0.0
+   },
+   "OverHead": {
+    "x": 1.4624,
+    "y": 3.3808,
+    "z": -0.0
+   },
+   "Chest": {
+    "x": 0.8957,
+    "y": 0.9852,
+    "z": -0.0
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": -0.0
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,GEOA,GLBS,PRE2,PREM"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "spell",
+   "hurt": "Stand",
+   "death": "death"
+  },
+  "status": "ok",
+  "usca": 3.0,
+  "doc_scale": 1.7647,
+  "effective_height": 3.0
+ },
+ {
+  "source": "Charlie.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand",
+   "Walk",
+   "Death",
+   "Attack"
+  ],
+  "raw_height": 153.97,
+  "scale_factor": 0.01104,
+  "name": "charlie",
+  "glb": "charlie.glb",
+  "glb_size": 208800,
+  "height": 1.7,
+  "anim_names": [
+   "Stand",
+   "Walk",
+   "Death",
+   "Attack"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {
+   "Head": {
+    "x": 0.6927,
+    "y": 1.4877,
+    "z": -0.0
+   },
+   "Chest": {
+    "x": 0.0445,
+    "y": 0.9375,
+    "z": -0.0
+   },
+   "Weapon": {
+    "x": 0.8329,
+    "y": 1.6763,
+    "z": -0.0
+   },
+   "Foot Right": {
+    "x": 0.3745,
+    "y": 0.1349,
+    "z": -0.0
+   },
+   "Foot Left": {
+    "x": 0.3745,
+    "y": 0.1349,
+    "z": -0.0
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": 0.0816,
+    "z": -0.0
+   },
+   "Overhead": {
+    "x": 0.0445,
+    "y": 2.1811,
+    "z": -0.0
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Attack",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "DarkBreathDamage.mdx",
+  "kind": "prop",
+  "sequences": [
+   "Stand",
+   "Birth",
+   "Death"
+  ],
+  "missing_textures": [
+   "Textures\\Clouds8x8Mod.blp"
+  ],
+  "raw_height": 0.0,
+  "scale_factor": 0.02778,
+  "name": "darkbreathdamage",
+  "glb": "darkbreathdamage.glb",
+  "glb_size": 288,
+  "height": 0.0,
+  "anim_names": [],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "skipped MDX chunks: PRE2,PREM"
+  ],
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "Darkraor.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "stand - 1",
+   "stand - 2",
+   "stand - 3",
+   "stand - 4",
+   "stand - 5",
+   "stand - 6",
+   "stand - 7",
+   "stand - 8",
+   "stand - 9",
+   "stand - 10",
+   "Death",
+   "Death",
+   "Death"
+  ],
+  "missing_textures": [
+   "Textures\\Clouds8x8Fade.blp",
+   "ReplaceableTextures\\Weather\\Clouds8x8.blp",
+   "Textures\\BloodSplash.blp",
+   "Textures\\Tj_BloodSput.blp",
+   "Textures\\BloodWhiteSmall.blp",
+   "Textures\\Red_star3.blp"
+  ],
+  "raw_height": 86.7,
+  "scale_factor": 0.02778,
+  "name": "darkraor",
+  "glb": "darkraor.glb",
+  "glb_size": 48860,
+  "height": 2.408,
+  "anim_names": [
+   "stand - 1",
+   "stand - 2",
+   "stand - 3",
+   "stand - 4",
+   "stand - 5",
+   "stand - 6",
+   "stand - 7",
+   "stand - 8",
+   "stand - 9",
+   "stand - 10",
+   "Death",
+   "Death_",
+   "Death__"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "mat2: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: EVTS,GEOA,PRE2,PREM"
+  ],
+  "clip_map": {
+   "idle": "stand - 1",
+   "run": "stand - 1",
+   "attack": "stand - 1",
+   "cast": "stand - 1",
+   "hurt": "stand - 1",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.706,
+  "effective_height": 1.7
+ },
+ {
+  "source": "DeathWave.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Birth",
+   "stand",
+   "Death"
+  ],
+  "missing_textures": [
+   "Textures\\GenericGlow2b.blp",
+   "Textures\\White_64_Foam1.blp"
+  ],
+  "raw_height": 154.7,
+  "scale_factor": 0.02778,
+  "name": "deathwave",
+  "glb": "deathwave.glb",
+  "glb_size": 22800,
+  "height": 4.297,
+  "anim_names": [
+   "Birth",
+   "stand",
+   "Death"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "mat0: additive glow w/o alpha → dropped",
+   "mat1: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: EVTS,GEOA,GLBS,PRE2,RIBB"
+  ],
+  "clip_map": {
+   "idle": "stand",
+   "run": "stand",
+   "attack": "stand",
+   "cast": "stand",
+   "hurt": "stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.3956,
+  "effective_height": 1.7
+ },
+ {
+  "source": "Demonfilth.mdx",
+  "kind": "prop",
+  "sequences": [
+   "death",
+   "stand"
+  ],
+  "missing_textures": [
+   "Doodads\\Cinematic\\EyeOfSargeras\\Demon_Rune2.blp",
+   "Textures\\Clouds8x8Fade.blp",
+   "Textures\\AuraRune7Green.blp"
+  ],
+  "raw_height": 0.0,
+  "scale_factor": 0.02778,
+  "name": "demonfilth",
+  "glb": "demonfilth.glb",
+  "glb_size": 288,
+  "height": 0.0,
+  "anim_names": [],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "skipped MDX chunks: PRE2,PREM"
+  ],
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "DivineRing.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand"
+  ],
+  "missing_textures": [
+   "Textures\\firering6.blp",
+   "Textures\\GenericGlowX.blp",
+   "Textures\\Yellow_Glow.blp"
+  ],
+  "raw_height": 0.0,
+  "scale_factor": 0.02778,
+  "name": "divinering",
+  "glb": "divinering.glb",
+  "glb_size": 1020,
+  "height": 0.0,
+  "anim_names": [
+   "Stand"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "skipped MDX chunks: GLBS,PRE2"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Stand"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "EarthTornado2.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Death",
+   "Birth",
+   "Stand"
+  ],
+  "missing_textures": [
+   "Textures\\GenericGlow2c.blp",
+   "Textures\\CloudSingle.blp",
+   "ReplaceableTextures\\Weather\\Clouds8x8.blp",
+   "Textures\\Leaf.blp",
+   "Textures\\Green_Star.blp",
+   "SharedModels\\TjLeaves.blp"
+  ],
+  "raw_height": 329.73,
+  "scale_factor": 0.02778,
+  "name": "earthtornado2",
+  "glb": "earthtornado2.glb",
+  "glb_size": 28868,
+  "height": 9.159,
+  "anim_names": [
+   "Death",
+   "Birth",
+   "Stand"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {
+   "Foot Left": {
+    "x": -0.0707,
+    "y": 0.211,
+    "z": -0.8163
+   },
+   "Foot Right": {
+    "x": -0.0707,
+    "y": 0.2122,
+    "z": 0.6721
+   },
+   "Hand Right": {
+    "x": -0.565,
+    "y": 1.5017,
+    "z": 1.6943
+   },
+   "Weapon R": {
+    "x": 2.2374,
+    "y": 1.3082,
+    "z": 1.597
+   },
+   "Head": {
+    "x": 0.033,
+    "y": 3.7783,
+    "z": -0.0052
+   },
+   "Chest": {
+    "x": -0.0564,
+    "y": 2.8718,
+    "z": 0.0003
+   },
+   "Weapon L": {
+    "x": 2.2374,
+    "y": 1.3082,
+    "z": -1.6045
+   },
+   "Hand Left": {
+    "x": -0.3601,
+    "y": 1.4858,
+    "z": -1.8093
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": 0.1416,
+    "z": 0.0001
+   },
+   "OverHead": {
+    "x": 0.0,
+    "y": 5.7177,
+    "z": 0.0001
+   }
+  },
+  "notes": [
+   "mat1: additive glow w/o alpha → dropped",
+   "mat2: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: EVTS,GEOA,GLBS,PRE2,PREM"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.1856,
+  "effective_height": 1.7
+ },
+ {
+  "source": "Enchant.MDX",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand"
+  ],
+  "missing_textures": [
+   "Textures\\Flame4.blp"
+  ],
+  "raw_height": 0.0,
+  "scale_factor": 0.02778,
+  "name": "enchant",
+  "glb": "enchant.glb",
+  "glb_size": 5536,
+  "height": 0.0,
+  "anim_names": [
+   "Stand"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "skipped MDX chunks: PRE2"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Stand"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "FireBlast.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand",
+   "Birth",
+   "Death"
+  ],
+  "missing_textures": [
+   "Textures\\LavaLump2.blp",
+   "Textures\\star4_32.blp",
+   "Textures\\Star8b.blp",
+   "Textures\\ShockwaveWater1.blp"
+  ],
+  "raw_height": 96.21,
+  "scale_factor": 0.02778,
+  "name": "fireblast",
+  "glb": "fireblast.glb",
+  "glb_size": 18900,
+  "height": 2.672,
+  "anim_names": [
+   "Stand",
+   "Birth",
+   "Death"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "mat0: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: EVTS,GEOA,PRE2"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.6362,
+  "effective_height": 1.7
+ },
+ {
+  "source": "FireFly.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "stand",
+   "birth",
+   "death",
+   "stand - 2",
+   "stand - 3",
+   "Stand - 4"
+  ],
+  "raw_height": 20.0,
+  "scale_factor": 0.02778,
+  "name": "firefly",
+  "glb": "firefly.glb",
+  "glb_size": 32896,
+  "height": 0.556,
+  "anim_names": [
+   "stand",
+   "birth",
+   "death",
+   "stand - 2",
+   "stand - 3",
+   "Stand - 4"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "skipped MDX chunks: GEOA"
+  ],
+  "clip_map": {
+   "idle": "stand",
+   "run": "stand",
+   "attack": "stand",
+   "cast": "stand",
+   "hurt": "stand",
+   "death": "death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 3.0576,
+  "effective_height": 1.7
+ },
+ {
+  "source": "Flash.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Birth"
+  ],
+  "missing_textures": [
+   "Textures\\GenericGlowX.blp",
+   "abilities\\Spells\\NightElf\\Blink\\Star11d.blp",
+   "Textures\\Shockwave10.blp",
+   "Textures\\Yellow_Star.blp",
+   "Textures\\star8.blp"
+  ],
+  "raw_height": 125.68,
+  "scale_factor": 0.02778,
+  "name": "flash",
+  "glb": "flash.glb",
+  "glb_size": 7224,
+  "height": 3.491,
+  "anim_names": [
+   "Birth"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "mat0: additive glow w/o alpha → dropped",
+   "mat1: additive glow w/o alpha → dropped",
+   "mat2: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: EVTS,GEOA,GLBS,LITE,PRE2"
+  ],
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.487,
+  "effective_height": 1.7
+ },
+ {
+  "source": "Goku3head.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand"
+  ],
+  "raw_height": 102.11,
+  "scale_factor": 0.02778,
+  "name": "goku3head",
+  "glb": "goku3head.glb",
+  "glb_size": 118544,
+  "height": 2.836,
+  "anim_names": [
+   "Stand"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Stand"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.5994,
+  "effective_height": 1.7
+ },
+ {
+  "source": "Gokuhead.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand"
+  ],
+  "raw_height": 42.25,
+  "scale_factor": 0.02778,
+  "name": "gokuhead",
+  "glb": "gokuhead.glb",
+  "glb_size": 42064,
+  "height": 1.174,
+  "anim_names": [
+   "Stand"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Stand"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.448,
+  "effective_height": 1.7
+ },
+ {
+  "source": "GrandOrcAura.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand",
+   "Death"
+  ],
+  "missing_textures": [
+   "abilities\\Spells\\Orc\\Voodoo\\AuraRune11.blp",
+   "ReplaceableTextures\\Selection\\SpellAreaofEffect_Orc.blp",
+   "Textures\\AuraRune8.blp"
+  ],
+  "raw_height": 0.0,
+  "scale_factor": 0.02778,
+  "name": "grandorcaura",
+  "glb": "grandorcaura.glb",
+  "glb_size": 14288,
+  "height": 0.0,
+  "anim_names": [
+   "Stand",
+   "Death"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "mat0: additive glow w/o alpha → dropped",
+   "mat1: additive glow w/o alpha → dropped",
+   "mat2: additive glow w/o alpha → dropped",
+   "mat3: additive glow w/o alpha → dropped"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "GrandUndeadAura.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand",
+   "Death"
+  ],
+  "missing_textures": [
+   "Textures\\AuraRune7Green.blp",
+   "ReplaceableTextures\\Splats\\DarkSummonSpecial.blp",
+   "ReplaceableTextures\\Splats\\DarkSummonSpecial.blp"
+  ],
+  "raw_height": 0.0,
+  "scale_factor": 0.02778,
+  "name": "grandundeadaura",
+  "glb": "grandundeadaura.glb",
+  "glb_size": 14288,
+  "height": 0.0,
+  "anim_names": [
+   "Stand",
+   "Death"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "mat0: additive glow w/o alpha → dropped",
+   "mat1: additive glow w/o alpha → dropped",
+   "mat2: additive glow w/o alpha → dropped",
+   "mat3: additive glow w/o alpha → dropped"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "HeroBigGon.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Walk",
+   "Stand - 1",
+   "Attack - 2",
+   "Stand Ready",
+   "Attack - 1",
+   "Attack - 1",
+   "Death",
+   "Dissipate",
+   "Spell",
+   "Portrait Talk",
+   "Portrait",
+   "Stand - 1"
+  ],
+  "raw_height": 1308.75,
+  "scale_factor": 0.02778,
+  "name": "herobiggon",
+  "glb": "herobiggon.glb",
+  "glb_size": 193220,
+  "height": 36.354,
+  "anim_names": [
+   "Walk",
+   "Stand - 1",
+   "Attack - 2",
+   "Stand Ready",
+   "Attack - 1",
+   "Attack - 1_",
+   "Death",
+   "Dissipate",
+   "Spell",
+   "Portrait Talk",
+   "Portrait",
+   "Stand - 1_"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow1"
+  ],
+  "attach_points": {
+   "Hand Right": {
+    "x": 0.2635,
+    "y": 1.9603,
+    "z": 1.2007
+   },
+   "Head": {
+    "x": 0.0204,
+    "y": 3.9851,
+    "z": -0.0
+   },
+   "Hand Left": {
+    "x": 0.2635,
+    "y": 1.9624,
+    "z": -1.2007
+   },
+   "Chest": {
+    "x": 0.0699,
+    "y": 2.8796,
+    "z": 0.0022
+   },
+   "Foot Left": {
+    "x": 0.1333,
+    "y": 0.1173,
+    "z": -0.4634
+   },
+   "Foot Right": {
+    "x": 0.1337,
+    "y": 0.1156,
+    "z": 0.4634
+   },
+   "OverHead": {
+    "x": -0.0,
+    "y": 4.4444,
+    "z": -0.0
+   },
+   "Origin": {
+    "x": -0.0,
+    "y": 0.0,
+    "z": -0.0
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,EVTS,GLBS"
+  ],
+  "clip_map": {
+   "idle": "Stand - 1",
+   "run": "Walk",
+   "attack": "Attack - 2",
+   "cast": "Spell",
+   "hurt": "Stand - 1",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.3,
+  "doc_scale": 0.0608,
+  "effective_height": 2.21
+ },
+ {
+  "source": "HeroBuu.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand",
+   "Attack -1",
+   "Attack -2",
+   "Death",
+   "Walk",
+   "Spell",
+   "Spell Slam",
+   "Stand Ready",
+   "Attack Slam"
+  ],
+  "missing_textures": [
+   "Textures\\GenericGlow64.blp"
+  ],
+  "raw_height": 166.83,
+  "scale_factor": 0.01019,
+  "name": "herobuu",
+  "glb": "herobuu.glb",
+  "glb_size": 216392,
+  "height": 1.7,
+  "anim_names": [
+   "Stand",
+   "Attack -1",
+   "Attack -2",
+   "Death",
+   "Walk",
+   "Spell",
+   "Spell Slam",
+   "Stand Ready",
+   "Attack Slam"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow1"
+  ],
+  "attach_points": {
+   "Foot Left": {
+    "x": -0.058,
+    "y": 0.1205,
+    "z": -0.2881
+   },
+   "Foot Right": {
+    "x": -0.058,
+    "y": 0.1205,
+    "z": 0.2901
+   },
+   "Chest": {
+    "x": 0.0058,
+    "y": 0.9178,
+    "z": -0.0
+   },
+   "Hand Left": {
+    "x": -0.2103,
+    "y": 0.9801,
+    "z": -0.7733
+   },
+   "Hand Right": {
+    "x": -0.2103,
+    "y": 0.9801,
+    "z": 0.7767
+   },
+   "Head -": {
+    "x": -0.1251,
+    "y": 1.4224,
+    "z": -0.0
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": -0.0
+   },
+   "OverHead": {
+    "x": -0.1251,
+    "y": 1.4224,
+    "z": -0.0
+   },
+   "Weapon": {
+    "x": -0.2103,
+    "y": 0.9801,
+    "z": 0.7767
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,EVTS,PRE2,PREM"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack -1",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "HeroCloudCyd.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand"
+  ],
+  "raw_height": 303.75,
+  "scale_factor": 0.02778,
+  "name": "herocloudcyd",
+  "glb": "herocloudcyd.glb",
+  "glb_size": 11372,
+  "height": 8.438,
+  "anim_names": [
+   "Stand"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "skipped MDX chunks: GEOA"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Stand"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.2015,
+  "effective_height": 1.7
+ },
+ {
+  "source": "HeroCloudKFKSword.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand"
+  ],
+  "raw_height": 208.75,
+  "scale_factor": 0.02778,
+  "name": "herocloudkfksword",
+  "glb": "herocloudkfksword.glb",
+  "glb_size": 13328,
+  "height": 5.799,
+  "anim_names": [
+   "Stand"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "skipped MDX chunks: GEOA,PRE2,PREM"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Stand"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.2932,
+  "effective_height": 1.7
+ },
+ {
+  "source": "HeroCloudStrife.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand Ready",
+   "Attack",
+   "Attack 2",
+   "Spell",
+   "Walk",
+   "Attack Slam",
+   "Death",
+   "Dissipate",
+   "Stand"
+  ],
+  "missing_textures": [
+   "Textures\\Yellow_Star.blp",
+   "Textures\\star6.blp"
+  ],
+  "raw_height": 121.42,
+  "scale_factor": 0.014,
+  "name": "herocloudstrife",
+  "glb": "herocloudstrife.glb",
+  "glb_size": 376016,
+  "height": 1.7,
+  "anim_names": [
+   "Stand Ready",
+   "Attack",
+   "Attack 2",
+   "Spell",
+   "Walk",
+   "Attack Slam",
+   "Death",
+   "Dissipate",
+   "Stand"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow1"
+  ],
+  "attach_points": {
+   "Origin": {
+    "x": -0.0235,
+    "y": 0.1094,
+    "z": 0.0025
+   },
+   "OverHead": {
+    "x": -0.0116,
+    "y": 1.7547,
+    "z": 0.0019
+   },
+   "Foot Right": {
+    "x": 0.0659,
+    "y": 0.0788,
+    "z": 0.1946
+   },
+   "Foot Left": {
+    "x": 0.0453,
+    "y": 0.0828,
+    "z": -0.1699
+   },
+   "Hand Right": {
+    "x": 0.0388,
+    "y": 0.8422,
+    "z": 0.3388
+   },
+   "Head": {
+    "x": -0.0393,
+    "y": 1.5619,
+    "z": 0.0026
+   },
+   "Hand Left": {
+    "x": 0.0403,
+    "y": 0.8372,
+    "z": -0.3041
+   },
+   "Chest": {
+    "x": -0.0514,
+    "y": 1.2831,
+    "z": -0.001
+   },
+   "Weapon": {
+    "x": 1.4001,
+    "y": 0.84,
+    "z": 0.42
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,GLBS,PRE2,PREM,RIBB"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "HeroEVA01S2.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand",
+   "Death"
+  ],
+  "missing_textures": [
+   "abilities\\Weapons\\RocketMissile\\RibbonBlur1d.blp",
+   "Textures\\Dust3.blp",
+   "Textures\\CloudSingle.blp"
+  ],
+  "raw_height": 0.47,
+  "scale_factor": 0.02778,
+  "name": "heroeva01s2",
+  "glb": "heroeva01s2.glb",
+  "glb_size": 5384,
+  "height": 0.013,
+  "anim_names": [
+   "Stand",
+   "Death"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow0"
+  ],
+  "attach_points": {},
+  "notes": [
+   "mat2: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: GEOA,PRE2,PREM"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 130.7692,
+  "effective_height": 1.7
+ },
+ {
+  "source": "HeroFateZemberForm.mdx",
+  "kind": "prop",
+  "sequences": [],
+  "missing_textures": [
+   "textures\\yellow_glow.blp"
+  ],
+  "raw_height": 30.15,
+  "scale_factor": 0.02778,
+  "name": "herofatezemberform",
+  "glb": "herofatezemberform.glb",
+  "glb_size": 49880,
+  "height": 0.838,
+  "anim_names": [],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "mat1: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: GEOA"
+  ],
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 2.0286,
+  "effective_height": 1.7
+ },
+ {
+  "source": "HeroFateZemberFormBig.mdx",
+  "kind": "prop",
+  "sequences": [],
+  "missing_textures": [
+   "textures\\yellow_glow.blp"
+  ],
+  "raw_height": 265.01,
+  "scale_factor": 0.02778,
+  "name": "herofatezemberformbig",
+  "glb": "herofatezemberformbig.glb",
+  "glb_size": 49880,
+  "height": 7.361,
+  "anim_names": [],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "mat1: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: GEOA"
+  ],
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.2309,
+  "effective_height": 1.7
+ },
+ {
+  "source": "HeroGirl.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand 2",
+   "Death",
+   "Spell",
+   "Stand",
+   "Stand Ready",
+   "Attack",
+   "Attack Slam",
+   "Walk",
+   "Attack 2",
+   "Stand 3",
+   "Dissipate",
+   "Spell Slam"
+  ],
+  "raw_height": 136.99,
+  "scale_factor": 0.01241,
+  "name": "herogirl",
+  "glb": "herogirl.glb",
+  "glb_size": 270296,
+  "height": 1.7,
+  "anim_names": [
+   "Stand 2",
+   "Death",
+   "Spell",
+   "Stand",
+   "Stand Ready",
+   "Attack",
+   "Attack Slam",
+   "Walk",
+   "Attack 2",
+   "Stand 3",
+   "Dissipate",
+   "Spell Slam"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow2"
+  ],
+  "attach_points": {
+   "foot Right": {
+    "x": -0.0267,
+    "y": 0.0327,
+    "z": 0.0926
+   },
+   "foot Left": {
+    "x": -0.0243,
+    "y": 0.0357,
+    "z": -0.0946
+   },
+   "Hand Right": {
+    "x": 0.1009,
+    "y": 0.8035,
+    "z": 0.1846
+   },
+   "Hand Left": {
+    "x": 0.0773,
+    "y": 0.8058,
+    "z": -0.1924
+   },
+   "Head": {
+    "x": 0.0072,
+    "y": 1.54,
+    "z": 0.0062
+   },
+   "Chest": {
+    "x": -0.0024,
+    "y": 1.2325,
+    "z": 0.0022
+   },
+   "Origin": {
+    "x": -0.0088,
+    "y": -0.0031,
+    "z": 0.0037
+   },
+   "OverHead": {
+    "x": -0.0088,
+    "y": 1.7527,
+    "z": 0.0037
+   },
+   "Weapon": {
+    "x": 0.963,
+    "y": 0.8141,
+    "z": 0.1846
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CLID,EVTS,GEOA,RIBB"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.01,
+  "doc_scale": 1.01,
+  "effective_height": 1.717
+ },
+ {
+  "source": "HeroHanzouHattori.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand",
+   "Stand - 2",
+   "Stand - 3",
+   "Spell",
+   "Death",
+   "Dissipate",
+   "Stand Ready",
+   "Attack",
+   "Attack 2",
+   "Attack Slam",
+   "Walk"
+  ],
+  "missing_textures": [
+   "Textures\\Flame4.blp"
+  ],
+  "raw_height": 137.04,
+  "scale_factor": 0.0124,
+  "name": "herohanzouhattori",
+  "glb": "herohanzouhattori.glb",
+  "glb_size": 261676,
+  "height": 1.7,
+  "anim_names": [
+   "Stand",
+   "Stand - 2",
+   "Stand - 3",
+   "Spell",
+   "Death",
+   "Dissipate",
+   "Stand Ready",
+   "Attack",
+   "Attack 2",
+   "Attack Slam",
+   "Walk"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow2"
+  ],
+  "attach_points": {
+   "Foot Right": {
+    "x": -0.0077,
+    "y": 0.087,
+    "z": 0.1443
+   },
+   "Foot Left": {
+    "x": -0.0002,
+    "y": 0.085,
+    "z": -0.1479
+   },
+   "Hand Left": {
+    "x": 0.0036,
+    "y": 0.7467,
+    "z": -0.4086
+   },
+   "Head -": {
+    "x": -0.0714,
+    "y": 1.5503,
+    "z": 0.0007
+   },
+   "Hand Right": {
+    "x": -0.133,
+    "y": 0.7452,
+    "z": 0.4008
+   },
+   "Chest": {
+    "x": -0.1695,
+    "y": 1.3755,
+    "z": 0.005
+   },
+   "Weapon": {
+    "x": 0.8494,
+    "y": 0.7968,
+    "z": 0.3331
+   },
+   "OverHead": {
+    "x": 0.0,
+    "y": 1.872,
+    "z": 0.0
+   },
+   "Origin": {
+    "x": -0.0505,
+    "y": 0.0046,
+    "z": 0.0109
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,EVTS,GEOA,PRE2,PREM,RIBB"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "HeroHehi.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Spell",
+   "Death",
+   "Walk",
+   "Dissipate",
+   "Stand",
+   "Stand 2",
+   "Stand Ready",
+   "Attack",
+   "Attack Slam"
+  ],
+  "missing_textures": [
+   "Textures\\Flame4.blp"
+  ],
+  "raw_height": 147.67,
+  "scale_factor": 0.01151,
+  "name": "herohehi",
+  "glb": "herohehi.glb",
+  "glb_size": 236348,
+  "height": 1.7,
+  "anim_names": [
+   "Spell",
+   "Death",
+   "Walk",
+   "Dissipate",
+   "Stand",
+   "Stand 2",
+   "Stand Ready",
+   "Attack",
+   "Attack Slam"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow2"
+  ],
+  "attach_points": {
+   "Hand Right": {
+    "x": -0.0076,
+    "y": 0.7921,
+    "z": 0.4031
+   },
+   "Weapon": {
+    "x": 0.8539,
+    "y": 0.7847,
+    "z": 0.4336
+   },
+   "Hand Left": {
+    "x": -0.0076,
+    "y": 0.7921,
+    "z": -0.4037
+   },
+   "Head -": {
+    "x": 0.0394,
+    "y": 1.5217,
+    "z": -0.001
+   },
+   "Chest": {
+    "x": -0.0283,
+    "y": 0.9707,
+    "z": -0.0016
+   },
+   "Foot Right": {
+    "x": 0.0195,
+    "y": 0.1317,
+    "z": 0.1414
+   },
+   "Foot Left": {
+    "x": 0.0195,
+    "y": 0.1317,
+    "z": -0.142
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": -0.0018,
+    "z": 0.0
+   },
+   "Overhead": {
+    "x": 0.0032,
+    "y": 1.5434,
+    "z": -0.001
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CLID,EVTS,GEOA,PRE2,PREM,RIBB"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 0.85,
+  "doc_scale": 0.85,
+  "effective_height": 1.445
+ },
+ {
+  "source": "HeroHimuraKenshin.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Attack",
+   "Attack Slam",
+   "Death",
+   "Walk",
+   "Stand",
+   "Attack 2",
+   "Stand Ready",
+   "Dissipate",
+   "Attack Walk Stand Spin",
+   "Spell",
+   "Spell Slam",
+   "Portrait"
+  ],
+  "missing_textures": [
+   "Textures\\Flame4.blp",
+   "Textures\\GenericGlow2c.blp"
+  ],
+  "raw_height": 127.72,
+  "scale_factor": 0.01331,
+  "name": "herohimurakenshin",
+  "glb": "herohimurakenshin.glb",
+  "glb_size": 299704,
+  "height": 1.7,
+  "anim_names": [
+   "Attack",
+   "Attack Slam",
+   "Death",
+   "Walk",
+   "Stand",
+   "Attack 2",
+   "Stand Ready",
+   "Dissipate",
+   "Attack Walk Stand Spin",
+   "Spell",
+   "Spell Slam",
+   "Portrait"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow1"
+  ],
+  "attach_points": {
+   "Hand Right": {
+    "x": -0.003,
+    "y": 0.8586,
+    "z": 0.5091
+   },
+   "Weapon": {
+    "x": 1.1188,
+    "y": 0.8623,
+    "z": -0.4727
+   },
+   "Hand Left": {
+    "x": 0.0251,
+    "y": 0.8617,
+    "z": -0.5242
+   },
+   "Head -": {
+    "x": 0.0431,
+    "y": 1.6668,
+    "z": -0.0011
+   },
+   "Chest": {
+    "x": -0.031,
+    "y": 1.0633,
+    "z": -0.0018
+   },
+   "Foot Right": {
+    "x": 0.0178,
+    "y": 0.1822,
+    "z": 0.2103
+   },
+   "Foot Left": {
+    "x": 0.0206,
+    "y": 0.181,
+    "z": -0.2342
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": -0.002,
+    "z": 0.0
+   },
+   "Overhead": {
+    "x": 0.0035,
+    "y": 1.6906,
+    "z": -0.0011
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,EVTS,PRE2,PREM,RIBB"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "HeroIchigo.mdx",
+  "kind": "hero",
+  "sequences": [
+   "stand ready",
+   "Attack - 1",
+   "Attack - 2",
+   "Attack Slam",
+   "Walk",
+   "death",
+   "dissipate",
+   "stand",
+   "stand 2",
+   "Morph",
+   "stand ready alternate",
+   "Attack alternate - 1",
+   "Attack alternate - 2",
+   "Attack Slam alternate",
+   "Walk alternate",
+   "death alternate",
+   "dissipate alternate",
+   "stand alternate",
+   "stand alternate 2"
+  ],
+  "missing_textures": [
+   "Abilities\\Weapons\\AvengerMissile\\Ghost1Mod.blp",
+   "Textures\\Dust3_Thunder.blp"
+  ],
+  "raw_height": 195.94,
+  "scale_factor": 0.00868,
+  "name": "heroichigo",
+  "glb": "heroichigo.glb",
+  "glb_size": 384260,
+  "height": 1.7,
+  "anim_names": [
+   "stand ready",
+   "Attack - 1",
+   "Attack - 2",
+   "Attack Slam",
+   "Walk",
+   "death",
+   "dissipate",
+   "stand",
+   "stand 2",
+   "Morph",
+   "stand ready alternate",
+   "Attack alternate - 1",
+   "Attack alternate - 2",
+   "Attack Slam alternate",
+   "Walk alternate",
+   "death alternate",
+   "dissipate alternate",
+   "stand alternate",
+   "stand alternate 2"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow3"
+  ],
+  "attach_points": {
+   "Origin": {
+    "x": -0.039,
+    "y": 0.0302,
+    "z": -0.0058
+   },
+   "OverHead": {
+    "x": -0.0259,
+    "y": 2.0236,
+    "z": -0.0064
+   },
+   "Foot Right": {
+    "x": 0.0598,
+    "y": 0.0554,
+    "z": 0.2103
+   },
+   "Foot Left": {
+    "x": 0.0371,
+    "y": 0.0602,
+    "z": -0.2014
+   },
+   "Hand Right": {
+    "x": -0.0999,
+    "y": 1.2858,
+    "z": 0.6956
+   },
+   "Weapon": {
+    "x": 1.0127,
+    "y": 1.356,
+    "z": 0.6666
+   },
+   "Head": {
+    "x": -0.0564,
+    "y": 1.8429,
+    "z": -0.0065
+   },
+   "Hand Left": {
+    "x": -0.0912,
+    "y": 1.284,
+    "z": -0.7264
+   },
+   "Chest": {
+    "x": -0.1267,
+    "y": 1.5075,
+    "z": 0.0084
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,GEOA,GLBS,PRE2,PREM,RIBB"
+  ],
+  "clip_map": {
+   "idle": "stand",
+   "run": "Walk",
+   "attack": "Attack - 1",
+   "cast": "Attack - 1",
+   "hurt": "stand",
+   "death": "death"
+  },
+  "status": "ok",
+  "usca": 0.7,
+  "doc_scale": 0.7,
+  "effective_height": 1.19
+ },
+ {
+  "source": "HeroKunoichi.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand 2",
+   "Death",
+   "Spell",
+   "Stand",
+   "Stand Ready",
+   "Attack",
+   "Attack Slam",
+   "Walk",
+   "Attack 2",
+   "Stand 3",
+   "Dissipate",
+   "Spell Slam"
+  ],
+  "raw_height": 136.99,
+  "scale_factor": 0.01241,
+  "name": "herokunoichi",
+  "glb": "herokunoichi.glb",
+  "glb_size": 263416,
+  "height": 1.7,
+  "anim_names": [
+   "Stand 2",
+   "Death",
+   "Spell",
+   "Stand",
+   "Stand Ready",
+   "Attack",
+   "Attack Slam",
+   "Walk",
+   "Attack 2",
+   "Stand 3",
+   "Dissipate",
+   "Spell Slam"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow2"
+  ],
+  "attach_points": {
+   "foot Right": {
+    "x": -0.0267,
+    "y": 0.0327,
+    "z": 0.0926
+   },
+   "foot Left": {
+    "x": -0.0243,
+    "y": 0.0357,
+    "z": -0.0946
+   },
+   "Hand Right": {
+    "x": 0.1009,
+    "y": 0.8035,
+    "z": 0.1846
+   },
+   "Hand Left": {
+    "x": 0.0773,
+    "y": 0.8058,
+    "z": -0.1924
+   },
+   "Head": {
+    "x": 0.0072,
+    "y": 1.54,
+    "z": 0.0062
+   },
+   "Chest": {
+    "x": -0.0024,
+    "y": 1.2325,
+    "z": 0.0022
+   },
+   "Origin": {
+    "x": -0.0088,
+    "y": -0.0031,
+    "z": 0.0037
+   },
+   "OverHead": {
+    "x": -0.0088,
+    "y": 1.7527,
+    "z": 0.0037
+   },
+   "Weapon": {
+    "x": 0.963,
+    "y": 0.8141,
+    "z": 0.1846
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CLID,EVTS,GEOA,RIBB"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "HeroLight.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand - 2",
+   "Attack",
+   "Death",
+   "Walk",
+   "Stand",
+   "Dissipate",
+   "Spell"
+  ],
+  "raw_height": 145.54,
+  "scale_factor": 0.01168,
+  "name": "herolight",
+  "glb": "herolight.glb",
+  "glb_size": 141740,
+  "height": 1.7,
+  "anim_names": [
+   "Stand - 2",
+   "Attack",
+   "Death",
+   "Walk",
+   "Stand",
+   "Dissipate",
+   "Spell"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow0"
+  ],
+  "attach_points": {
+   "Weapon": {
+    "x": 1.0908,
+    "y": 0.8408,
+    "z": -0.4609
+   },
+   "Hand Right": {
+    "x": -0.0029,
+    "y": 0.8372,
+    "z": 0.4964
+   },
+   "Hand Left": {
+    "x": 0.0244,
+    "y": 0.8402,
+    "z": -0.5111
+   },
+   "Head -": {
+    "x": 0.0421,
+    "y": 1.6252,
+    "z": -0.0011
+   },
+   "Chest": {
+    "x": -0.0302,
+    "y": 1.0367,
+    "z": -0.0017
+   },
+   "Foot Right": {
+    "x": 0.0174,
+    "y": 0.1777,
+    "z": 0.2051
+   },
+   "Foot Left": {
+    "x": 0.0201,
+    "y": 0.1765,
+    "z": -0.2283
+   },
+   "Overhead": {
+    "x": 0.0034,
+    "y": 1.6484,
+    "z": -0.0011
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": -0.0019,
+    "z": 0.0
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,EVTS,GEOA"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "HeroLingTong.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Walk",
+   "Death",
+   "Spell",
+   "Dissipate",
+   "Stand Ready",
+   "Attack",
+   "Attack 2",
+   "Attack Slam",
+   "Stand",
+   "Stand 2",
+   "Morph",
+   "Morph Alternate"
+  ],
+  "raw_height": 161.85,
+  "scale_factor": 0.0105,
+  "name": "herolingtong",
+  "glb": "herolingtong.glb",
+  "glb_size": 277040,
+  "height": 1.7,
+  "anim_names": [
+   "Walk",
+   "Death",
+   "Spell",
+   "Dissipate",
+   "Stand Ready",
+   "Attack",
+   "Attack 2",
+   "Attack Slam",
+   "Stand",
+   "Stand 2",
+   "Morph",
+   "Morph Alternate"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow2"
+  ],
+  "attach_points": {
+   "Foot Right": {
+    "x": -0.0214,
+    "y": 0.141,
+    "z": 0.1838
+   },
+   "Foot Left": {
+    "x": -0.0297,
+    "y": 0.1386,
+    "z": -0.1736
+   },
+   "Hand Left": {
+    "x": -0.0481,
+    "y": 0.7538,
+    "z": -0.3417
+   },
+   "Hand Right": {
+    "x": -0.0483,
+    "y": 0.7594,
+    "z": 0.3519
+   },
+   "Head -": {
+    "x": 0.0035,
+    "y": 1.4083,
+    "z": 0.0056
+   },
+   "Chest": {
+    "x": 0.0,
+    "y": 1.1108,
+    "z": -0.0
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": -0.0
+   },
+   "OverHead": {
+    "x": 0.0035,
+    "y": 1.4083,
+    "z": 0.0056
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,EVTS"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "HeroMiku.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Spell Throw",
+   "Stand",
+   "Spell Two",
+   "Spell One",
+   "Death",
+   "Dissipate",
+   "Spell Slam",
+   "Spell Clannel",
+   "Birth",
+   "Attack - 2",
+   "Attack - 1",
+   "Walk",
+   "Spell",
+   "Attack Walk Stand Spin",
+   "Attack - 3",
+   "Attack Slam",
+   "Portrait",
+   "Portrait Talk",
+   "Portrait Talk - 2"
+  ],
+  "missing_textures": [
+   "Textures\\Shockwave4.blp",
+   "Textures\\Sparkle_Anim.blp",
+   "Textures\\Tornado1.blp"
+  ],
+  "raw_height": 119.65,
+  "scale_factor": 0.01421,
+  "name": "heromiku",
+  "glb": "heromiku.glb",
+  "glb_size": 552904,
+  "height": 1.7,
+  "anim_names": [
+   "Spell Throw",
+   "Stand",
+   "Spell Two",
+   "Spell One",
+   "Death",
+   "Dissipate",
+   "Spell Slam",
+   "Spell Clannel",
+   "Birth",
+   "Attack - 2",
+   "Attack - 1",
+   "Walk",
+   "Spell",
+   "Attack Walk Stand Spin",
+   "Attack - 3",
+   "Attack Slam",
+   "Portrait",
+   "Portrait Talk",
+   "Portrait Talk - 2"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow3"
+  ],
+  "attach_points": {
+   "Weapon": {
+    "x": 0.5718,
+    "y": 0.8731,
+    "z": 0.3767
+   },
+   "Hand Right": {
+    "x": 0.0026,
+    "y": 0.8696,
+    "z": 0.3369
+   },
+   "Head": {
+    "x": 0.0323,
+    "y": 1.8437,
+    "z": -0.003
+   },
+   "Hand Left": {
+    "x": 0.0059,
+    "y": 0.87,
+    "z": -0.3453
+   },
+   "Chest": {
+    "x": 0.0966,
+    "y": 1.5098,
+    "z": -0.0075
+   },
+   "Foot Right": {
+    "x": 0.0644,
+    "y": 0.0153,
+    "z": 0.1374
+   },
+   "Foot Left": {
+    "x": 0.0693,
+    "y": 0.013,
+    "z": -0.1647
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": -0.0
+   },
+   "OverHead": {
+    "x": 0.0,
+    "y": 2.5249,
+    "z": 0.0
+   }
+  },
+  "notes": [
+   "mat4: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: CAMS,CLID,EVTS,GEOA,PRE2"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack - 2",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "HeroMusashiMiyamoto.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Spell",
+   "Death",
+   "Walk",
+   "Dissipate",
+   "Attack Walk Stand Spin",
+   "Stand",
+   "Stand 2",
+   "Stand Ready",
+   "Attack",
+   "Attack Slam",
+   "Attack 2",
+   "Spell Slam"
+  ],
+  "missing_textures": [
+   "Textures\\Flame4.blp"
+  ],
+  "raw_height": 145.52,
+  "scale_factor": 0.01168,
+  "name": "heromusashimiyamoto",
+  "glb": "heromusashimiyamoto.glb",
+  "glb_size": 272704,
+  "height": 1.7,
+  "anim_names": [
+   "Spell",
+   "Death",
+   "Walk",
+   "Dissipate",
+   "Attack Walk Stand Spin",
+   "Stand",
+   "Stand 2",
+   "Stand Ready",
+   "Attack",
+   "Attack Slam",
+   "Attack 2",
+   "Spell Slam"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow2"
+  ],
+  "attach_points": {
+   "Hand Right": {
+    "x": -0.0077,
+    "y": 0.8039,
+    "z": 0.4091
+   },
+   "Weapon": {
+    "x": 0.8665,
+    "y": 0.7963,
+    "z": 0.44
+   },
+   "Hand Left": {
+    "x": -0.0077,
+    "y": 0.8039,
+    "z": -0.4097
+   },
+   "Head -": {
+    "x": 0.04,
+    "y": 1.5442,
+    "z": -0.0011
+   },
+   "Chest": {
+    "x": -0.0287,
+    "y": 0.9851,
+    "z": -0.0016
+   },
+   "Foot Right": {
+    "x": 0.0198,
+    "y": 0.1337,
+    "z": 0.1435
+   },
+   "Foot Left": {
+    "x": 0.0198,
+    "y": 0.1337,
+    "z": -0.1441
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": -0.0019,
+    "z": 0.0
+   },
+   "Overhead": {
+    "x": 0.0033,
+    "y": 1.5662,
+    "z": -0.0011
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,EVTS,GEOA,PRE2,PREM,RIBB"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "HeroNarutoS4Effect.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand",
+   "Stand Alternate",
+   "Death"
+  ],
+  "missing_textures": [
+   "Textures\\sun.blp",
+   "Textures\\Shockwave10.blp",
+   "Textures\\Shockwave_Ice1.blp"
+  ],
+  "raw_height": 0.0,
+  "scale_factor": 0.02778,
+  "name": "heronarutos4effect",
+  "glb": "heronarutos4effect.glb",
+  "glb_size": 1916,
+  "height": 0.0,
+  "anim_names": [
+   "Stand",
+   "Stand Alternate",
+   "Death"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "skipped MDX chunks: CAMS,PRE2,PREM"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "HeroOichi.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand",
+   "Stand 2",
+   "Death",
+   "Attack",
+   "Attack 2",
+   "Walk",
+   "Dissipate",
+   "Stand Ready",
+   "Spell",
+   "Spell Channel"
+  ],
+  "missing_textures": [
+   "Textures\\Yellow_Star_Dim.blp"
+  ],
+  "raw_height": 120.07,
+  "scale_factor": 0.01416,
+  "name": "herooichi",
+  "glb": "herooichi.glb",
+  "glb_size": 232140,
+  "height": 1.7,
+  "anim_names": [
+   "Stand",
+   "Stand 2",
+   "Death",
+   "Attack",
+   "Attack 2",
+   "Walk",
+   "Dissipate",
+   "Stand Ready",
+   "Spell",
+   "Spell Channel"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow1"
+  ],
+  "attach_points": {
+   "Foot Right": {
+    "x": -0.0305,
+    "y": 0.0656,
+    "z": 0.1057
+   },
+   "Foot Left": {
+    "x": -0.0278,
+    "y": 0.069,
+    "z": -0.108
+   },
+   "Hand Right": {
+    "x": 0.0897,
+    "y": 0.9789,
+    "z": 0.2233
+   },
+   "Hand Left": {
+    "x": 0.0897,
+    "y": 0.9789,
+    "z": -0.224
+   },
+   "Head": {
+    "x": 0.0082,
+    "y": 1.7853,
+    "z": 0.0071
+   },
+   "Chest": {
+    "x": -0.0027,
+    "y": 1.4345,
+    "z": 0.0025
+   },
+   "Origin": {
+    "x": -0.0101,
+    "y": 0.0247,
+    "z": 0.0042
+   },
+   "OverHead": {
+    "x": -0.0101,
+    "y": 2.028,
+    "z": 0.0042
+   },
+   "Weapon": {
+    "x": 0.0897,
+    "y": 0.9789,
+    "z": 0.2233
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,EVTS,GEOA,PRE2,PREM"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.1,
+  "doc_scale": 1.1,
+  "effective_height": 1.87
+ },
+ {
+  "source": "HeroPika.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand",
+   "Stand - 2",
+   "Walk",
+   "Spell",
+   "Attack",
+   "Spell Fast",
+   "Death",
+   "Decay Flesh"
+  ],
+  "raw_height": 116.58,
+  "scale_factor": 0.01458,
+  "name": "heropika",
+  "glb": "heropika.glb",
+  "glb_size": 261532,
+  "height": 1.7,
+  "anim_names": [
+   "Stand",
+   "Stand - 2",
+   "Walk",
+   "Spell",
+   "Attack",
+   "Spell Fast",
+   "Death",
+   "Decay Flesh"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow1"
+  ],
+  "attach_points": {},
+  "notes": [
+   "skipped MDX chunks: CAMS"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "HeroPikachu.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand - 1",
+   "Walk",
+   "Attack - 1",
+   "Spell Throw",
+   "Attack - 2",
+   "Death",
+   "Dissipate"
+  ],
+  "raw_height": 91.58,
+  "scale_factor": 0.01856,
+  "name": "heropikachu",
+  "glb": "heropikachu.glb",
+  "glb_size": 73844,
+  "height": 1.7,
+  "anim_names": [
+   "Stand - 1",
+   "Walk",
+   "Attack - 1",
+   "Spell Throw",
+   "Attack - 2",
+   "Death",
+   "Dissipate"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow1"
+  ],
+  "attach_points": {
+   "Head -": {
+    "x": 0.0,
+    "y": 0.9281,
+    "z": -0.0
+   },
+   "Weapon": {
+    "x": 0.1299,
+    "y": 0.7425,
+    "z": 0.2413
+   },
+   "Hand Right": {
+    "x": 0.1299,
+    "y": 0.7425,
+    "z": 0.2413
+   },
+   "Hand Left": {
+    "x": 0.1299,
+    "y": 0.7425,
+    "z": -0.2413
+   },
+   "Foot Right": {
+    "x": 0.0,
+    "y": 0.3713,
+    "z": -0.1671
+   },
+   "Foot Left": {
+    "x": 0.0,
+    "y": 0.3713,
+    "z": 0.1671
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": -0.0
+   },
+   "Overhead": {
+    "x": 0.0,
+    "y": 1.2994,
+    "z": -0.0
+   },
+   "Chest": {
+    "x": 0.0,
+    "y": 0.6497,
+    "z": -0.0
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,GEOA"
+  ],
+  "clip_map": {
+   "idle": "Stand - 1",
+   "run": "Walk",
+   "attack": "Attack - 1",
+   "cast": "Spell Throw",
+   "hurt": "Stand - 1",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 2.0,
+  "doc_scale": 1.7647,
+  "effective_height": 3.0
+ },
+ {
+  "source": "HeroRaichuS3.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand",
+   "Death"
+  ],
+  "missing_textures": [
+   "abilities\\Weapons\\RocketMissile\\RibbonBlur1d.blp",
+   "Textures\\Dust3.blp",
+   "Textures\\CloudSingle.blp",
+   "Textures\\LightningBall.blp"
+  ],
+  "raw_height": 0.47,
+  "scale_factor": 0.02778,
+  "name": "heroraichus3",
+  "glb": "heroraichus3.glb",
+  "glb_size": 5384,
+  "height": 0.013,
+  "anim_names": [
+   "Stand",
+   "Death"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow0"
+  ],
+  "attach_points": {},
+  "notes": [
+   "mat2: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: GEOA,PRE2,PREM"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 130.7692,
+  "effective_height": 1.7
+ },
+ {
+  "source": "HeroRider.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Spell",
+   "Death",
+   "Dissipate",
+   "Stand Ready",
+   "Attack",
+   "Attack 2",
+   "Attack Slam",
+   "Walk",
+   "Stand"
+  ],
+  "missing_textures": [
+   "Textures\\gutz.blp",
+   "Textures\\CampaignOrcHair.blp"
+  ],
+  "raw_height": 112.3,
+  "scale_factor": 0.01514,
+  "name": "herorider",
+  "glb": "herorider.glb",
+  "glb_size": 186564,
+  "height": 1.7,
+  "anim_names": [
+   "Spell",
+   "Death",
+   "Dissipate",
+   "Stand Ready",
+   "Attack",
+   "Attack 2",
+   "Attack Slam",
+   "Walk",
+   "Stand"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow4"
+  ],
+  "attach_points": {
+   "foot Right": {
+    "x": -0.0271,
+    "y": 0.0332,
+    "z": 0.0942
+   },
+   "foot Left": {
+    "x": -0.0247,
+    "y": 0.0363,
+    "z": -0.0962
+   },
+   "Hand Right": {
+    "x": 0.0775,
+    "y": 0.8297,
+    "z": 0.2176
+   },
+   "Hand Left": {
+    "x": 0.0751,
+    "y": 0.8296,
+    "z": -0.2178
+   },
+   "Head": {
+    "x": 0.0073,
+    "y": 1.5655,
+    "z": 0.0063
+   },
+   "Chest": {
+    "x": -0.0024,
+    "y": 1.2529,
+    "z": 0.0022
+   },
+   "Origin": {
+    "x": -0.009,
+    "y": -0.0032,
+    "z": 0.0038
+   },
+   "OverHead": {
+    "x": -0.009,
+    "y": 1.7817,
+    "z": 0.0038
+   },
+   "Weapon": {
+    "x": 0.2271,
+    "y": 0.6055,
+    "z": 0.2176
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,EVTS,GEOA,PRE2,PREM"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.4,
+  "doc_scale": 1.4,
+  "effective_height": 2.38
+ },
+ {
+  "source": "HeroRyuk.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Walk",
+   "Stand - 1",
+   "Attack - 1",
+   "Spell",
+   "Spell Slam",
+   "Death"
+  ],
+  "missing_textures": [
+   "Units\\Critters\\Vulture\\BloodSplash4tga.blp",
+   "Textures\\Dust5ABlack.blp"
+  ],
+  "raw_height": 111.88,
+  "scale_factor": 0.0152,
+  "name": "heroryuk",
+  "glb": "heroryuk.glb",
+  "glb_size": 189724,
+  "height": 1.7,
+  "anim_names": [
+   "Walk",
+   "Stand - 1",
+   "Attack - 1",
+   "Spell",
+   "Spell Slam",
+   "Death"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow3"
+  ],
+  "attach_points": {
+   "Hand Right": {
+    "x": 0.1467,
+    "y": 0.9449,
+    "z": -0.3786
+   },
+   "Hand Left": {
+    "x": 0.1467,
+    "y": 0.9449,
+    "z": 0.3786
+   },
+   "Chest": {
+    "x": -0.0252,
+    "y": 1.4508,
+    "z": -0.0
+   },
+   "Foot Right": {
+    "x": 0.1774,
+    "y": 0.2279,
+    "z": -0.2212
+   },
+   "Foot Left": {
+    "x": 0.1774,
+    "y": 0.2279,
+    "z": -0.2212
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": -0.0
+   },
+   "Overhead": {
+    "x": 0.2378,
+    "y": 1.8994,
+    "z": -0.0
+   },
+   "Weapon": {
+    "x": 0.0937,
+    "y": 0.7123,
+    "z": -0.3536
+   },
+   "Head -": {
+    "x": 0.2378,
+    "y": 1.5536,
+    "z": -0.0
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,GEOA,PRE2,PREM"
+  ],
+  "clip_map": {
+   "idle": "Stand - 1",
+   "run": "Walk",
+   "attack": "Attack - 1",
+   "cast": "Spell",
+   "hurt": "Stand - 1",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "HeroSaber.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand 2",
+   "Attack",
+   "Attack Slam",
+   "Death",
+   "Walk",
+   "Stand",
+   "Attack 2",
+   "Stand Ready",
+   "Dissipate",
+   "Portrait",
+   "Portrait 2",
+   "Portrait Talk",
+   "Portrait Talk 2",
+   "Spell"
+  ],
+  "missing_textures": [
+   "Textures\\Flame4.blp",
+   "Textures\\Flare.blp"
+  ],
+  "raw_height": 128.07,
+  "scale_factor": 0.01327,
+  "name": "herosaber",
+  "glb": "herosaber.glb",
+  "glb_size": 264544,
+  "height": 1.7,
+  "anim_names": [
+   "Stand 2",
+   "Attack",
+   "Attack Slam",
+   "Death",
+   "Walk",
+   "Stand",
+   "Attack 2",
+   "Stand Ready",
+   "Dissipate",
+   "Portrait",
+   "Portrait 2",
+   "Portrait Talk",
+   "Portrait Talk 2",
+   "Spell"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow2"
+  ],
+  "attach_points": {
+   "Foot Right": {
+    "x": 0.0554,
+    "y": 0.1599,
+    "z": 0.0807
+   },
+   "Foot Left": {
+    "x": 0.0554,
+    "y": 0.1599,
+    "z": -0.0828
+   },
+   "Hand Right": {
+    "x": -0.0187,
+    "y": 0.9148,
+    "z": 0.2347
+   },
+   "Hand Left": {
+    "x": -0.0187,
+    "y": 0.9148,
+    "z": -0.2366
+   },
+   "Head": {
+    "x": 0.0155,
+    "y": 1.7386,
+    "z": -0.0022
+   },
+   "Chest": {
+    "x": 0.0139,
+    "y": 1.1676,
+    "z": -0.0013
+   },
+   "Origin": {
+    "x": -0.0104,
+    "y": 0.1025,
+    "z": 0.0044
+   },
+   "OverHead": {
+    "x": -0.0104,
+    "y": 2.0356,
+    "z": 0.0044
+   },
+   "Weapon": {
+    "x": 0.7947,
+    "y": 0.8915,
+    "z": 0.2264
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,EVTS,GEOA,PRE2,RIBB"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.1,
+  "doc_scale": 1.1,
+  "effective_height": 1.87
+ },
+ {
+  "source": "HeroSasuke.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Portrait",
+   "Walk",
+   "Stand",
+   "Stand Ready",
+   "Death",
+   "Attack",
+   "Stand Channel",
+   "Spell Throw",
+   "Attack Defend",
+   "Spell Slam",
+   "Spell Channel",
+   "Spell"
+  ],
+  "missing_textures": [
+   "Textures\\LightningBall.blp",
+   "Textures\\Clouds8x8Fade.blp"
+  ],
+  "raw_height": 239.8,
+  "scale_factor": 0.00709,
+  "name": "herosasuke",
+  "glb": "herosasuke.glb",
+  "glb_size": 272708,
+  "height": 1.7,
+  "anim_names": [
+   "Portrait",
+   "Walk",
+   "Stand",
+   "Stand Ready",
+   "Death",
+   "Attack",
+   "Stand Channel",
+   "Spell Throw",
+   "Attack Defend",
+   "Spell Slam",
+   "Spell Channel",
+   "Spell"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow1"
+  ],
+  "attach_points": {
+   "Origin": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": -0.0
+   },
+   "Overhead": {
+    "x": 0.0,
+    "y": 1.9141,
+    "z": -0.0
+   },
+   "Hand Left": {
+    "x": 0.0,
+    "y": 0.7089,
+    "z": -0.2127
+   },
+   "Hand Right": {
+    "x": 0.0,
+    "y": 0.7089,
+    "z": 0.2127
+   },
+   "Foot Right": {
+    "x": 0.0354,
+    "y": 0.0354,
+    "z": 0.1418
+   },
+   "Foot Left": {
+    "x": 0.0354,
+    "y": 0.0354,
+    "z": -0.1418
+   },
+   "Weapon": {
+    "x": -0.0946,
+    "y": 0.638,
+    "z": -0.3545
+   },
+   "Chest": {
+    "x": 0.0,
+    "y": 1.1343,
+    "z": -0.0
+   },
+   "Head -": {
+    "x": 0.0,
+    "y": 1.4887,
+    "z": -0.0
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,PRE2,PREM,RIBB"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 0.7,
+  "doc_scale": 0.7,
+  "effective_height": 1.19
+ },
+ {
+  "source": "HeroSephiroth.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand - 2",
+   "Attack",
+   "Attack Slam",
+   "Death",
+   "Walk",
+   "Stand",
+   "Attack 2",
+   "Stand Ready",
+   "Dissipate",
+   "Spell",
+   "Spell Channel"
+  ],
+  "missing_textures": [
+   "Textures\\Flame4.blp"
+  ],
+  "raw_height": 159.35,
+  "scale_factor": 0.01067,
+  "name": "herosephiroth",
+  "glb": "herosephiroth.glb",
+  "glb_size": 266744,
+  "height": 1.7,
+  "anim_names": [
+   "Stand - 2",
+   "Attack",
+   "Attack Slam",
+   "Death",
+   "Walk",
+   "Stand",
+   "Attack 2",
+   "Stand Ready",
+   "Dissipate",
+   "Spell",
+   "Spell Channel"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow1"
+  ],
+  "attach_points": {
+   "Hand Right": {
+    "x": -0.0025,
+    "y": 0.8971,
+    "z": 0.4307
+   },
+   "Weapon": {
+    "x": 0.7913,
+    "y": 0.8979,
+    "z": 0.4018
+   },
+   "Hand Left": {
+    "x": 0.0212,
+    "y": 0.8997,
+    "z": -0.4435
+   },
+   "Head -": {
+    "x": 0.0365,
+    "y": 1.5808,
+    "z": -0.001
+   },
+   "Chest": {
+    "x": -0.0262,
+    "y": 1.0702,
+    "z": -0.0015
+   },
+   "Foot Right": {
+    "x": 0.0151,
+    "y": 0.3249,
+    "z": 0.178
+   },
+   "Foot Left": {
+    "x": 0.0174,
+    "y": 0.3238,
+    "z": -0.1981
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": 0.169,
+    "z": -0.0
+   },
+   "Overhead": {
+    "x": 0.003,
+    "y": 1.6009,
+    "z": -0.001
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CLID,EVTS,GEOA,PRE2,PREM,RIBB"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "HeroShana.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand 2",
+   "Attack",
+   "Attack Slam",
+   "Death",
+   "Walk",
+   "Stand",
+   "Attack 2",
+   "Stand Ready",
+   "Dissipate",
+   "Spell"
+  ],
+  "missing_textures": [
+   "ReplaceableTextures\\Weather\\Clouds8x8.blp"
+  ],
+  "raw_height": 94.59,
+  "scale_factor": 0.01797,
+  "name": "heroshana",
+  "glb": "heroshana.glb",
+  "glb_size": 237756,
+  "height": 1.7,
+  "anim_names": [
+   "Stand 2",
+   "Attack",
+   "Attack Slam",
+   "Death",
+   "Walk",
+   "Stand",
+   "Attack 2",
+   "Stand Ready",
+   "Dissipate",
+   "Spell"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow2"
+  ],
+  "attach_points": {
+   "Hand Right": {
+    "x": -0.0899,
+    "y": 0.8447,
+    "z": 0.2336
+   },
+   "Hand Left": {
+    "x": -0.0899,
+    "y": 0.8447,
+    "z": -0.2336
+   },
+   "Chest": {
+    "x": -0.0899,
+    "y": 0.9885,
+    "z": -0.0
+   },
+   "Foot Right": {
+    "x": -0.0192,
+    "y": 0.0,
+    "z": 0.1089
+   },
+   "Foot Left": {
+    "x": -0.0192,
+    "y": 0.0,
+    "z": -0.0983
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": -0.0
+   },
+   "Overhead": {
+    "x": -0.0899,
+    "y": 1.7973,
+    "z": -0.0
+   },
+   "Head -": {
+    "x": -0.0899,
+    "y": 1.348,
+    "z": -0.0
+   },
+   "Weapon": {
+    "x": 0.8088,
+    "y": 0.8447,
+    "z": 0.2516
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,EVTS,PRE2,RIBB"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.25,
+  "doc_scale": 1.25,
+  "effective_height": 2.125
+ },
+ {
+  "source": "HeroShanaWingSmall.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand"
+  ],
+  "raw_height": 114.75,
+  "scale_factor": 0.02778,
+  "name": "heroshanawingsmall",
+  "glb": "heroshanawingsmall.glb",
+  "glb_size": 28292,
+  "height": 3.188,
+  "anim_names": [
+   "Stand"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Stand"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.5332,
+  "effective_height": 1.7
+ },
+ {
+  "source": "HeroToshiieMaeda.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Attack",
+   "Attack Slam",
+   "Stand 2",
+   "Death",
+   "Walk",
+   "Stand",
+   "Attack 2",
+   "Stand Ready",
+   "Dissipate",
+   "Spell",
+   "Spell Throw",
+   "Spell Slam"
+  ],
+  "missing_textures": [
+   "Textures\\Flame4.blp"
+  ],
+  "raw_height": 133.75,
+  "scale_factor": 0.01271,
+  "name": "herotoshiiemaeda",
+  "glb": "herotoshiiemaeda.glb",
+  "glb_size": 244636,
+  "height": 1.7,
+  "anim_names": [
+   "Attack",
+   "Attack Slam",
+   "Stand 2",
+   "Death",
+   "Walk",
+   "Stand",
+   "Attack 2",
+   "Stand Ready",
+   "Dissipate",
+   "Spell",
+   "Spell Throw",
+   "Spell Slam"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow1"
+  ],
+  "attach_points": {
+   "Hand Right": {
+    "x": -0.003,
+    "y": 0.8654,
+    "z": 0.5131
+   },
+   "Weapon": {
+    "x": 1.4364,
+    "y": 0.8335,
+    "z": 0.4875
+   },
+   "Hand Left": {
+    "x": 0.0253,
+    "y": 0.8685,
+    "z": -0.5283
+   },
+   "Head -": {
+    "x": 0.0435,
+    "y": 1.68,
+    "z": -0.0012
+   },
+   "Chest": {
+    "x": -0.0312,
+    "y": 1.0717,
+    "z": -0.0018
+   },
+   "Foot Right": {
+    "x": 0.018,
+    "y": 0.1837,
+    "z": 0.212
+   },
+   "Foot Left": {
+    "x": 0.0208,
+    "y": 0.1825,
+    "z": -0.236
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": -0.002,
+    "z": 0.0
+   },
+   "Overhead": {
+    "x": 0.0036,
+    "y": 1.704,
+    "z": -0.0012
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CLID,EVTS,GEOA,PRE2,PREM,RIBB"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "HeroXelloss.mdx",
+  "kind": "hero",
+  "sequences": [
+   "stand - 1",
+   "stand - 2",
+   "walk",
+   "stand - 3",
+   "stand ready",
+   "attack 1",
+   "attack 2",
+   "spell",
+   "death",
+   "portrait",
+   "portrait talk"
+  ],
+  "missing_textures": [
+   "Textures\\clouds_anim1_bw.blp",
+   "Textures\\LightningBall.blp"
+  ],
+  "raw_height": 160.47,
+  "scale_factor": 0.01059,
+  "name": "heroxelloss",
+  "glb": "heroxelloss.glb",
+  "glb_size": 231572,
+  "height": 1.7,
+  "anim_names": [
+   "stand - 1",
+   "stand - 2",
+   "walk",
+   "stand - 3",
+   "stand ready",
+   "attack 1",
+   "attack 2",
+   "spell",
+   "death",
+   "portrait",
+   "portrait talk"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow1"
+  ],
+  "attach_points": {
+   "chest": {
+    "x": 0.1059,
+    "y": 1.2977,
+    "z": -0.0
+   },
+   "overhead": {
+    "x": 0.0,
+    "y": 1.8009,
+    "z": -0.0
+   },
+   "head": {
+    "x": 0.0,
+    "y": 1.5255,
+    "z": -0.0
+   },
+   "origin": {
+    "x": 0.0,
+    "y": 0.0106,
+    "z": -0.0
+   },
+   "hand right": {
+    "x": 0.0318,
+    "y": 0.8793,
+    "z": 0.2754
+   },
+   "weapon": {
+    "x": 0.0318,
+    "y": 0.8793,
+    "z": 0.2754
+   },
+   "hand left": {
+    "x": -0.0212,
+    "y": 0.8899,
+    "z": -0.286
+   },
+   "foot right": {
+    "x": -0.0106,
+    "y": 0.0106,
+    "z": 0.1059
+   },
+   "foot left": {
+    "x": -0.0106,
+    "y": 0.0106,
+    "z": -0.1059
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,EVTS,PRE2,PREM"
+  ],
+  "clip_map": {
+   "idle": "stand - 1",
+   "run": "walk",
+   "attack": "attack 1",
+   "cast": "spell",
+   "hurt": "stand - 1",
+   "death": "death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "Hero_Turtle.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Walk",
+   "Stand",
+   "Death",
+   "Attack upgrade",
+   "Attack spell",
+   "StandHit",
+   "Decay Flesh",
+   "Decay Bone"
+  ],
+  "missing_textures": [
+   "Textures\\GiantSeaTurtle.blp",
+   "Textures\\gutz.blp"
+  ],
+  "raw_height": 115.0,
+  "scale_factor": 0.01478,
+  "name": "hero-turtle",
+  "glb": "hero-turtle.glb",
+  "glb_size": 258668,
+  "height": 1.7,
+  "anim_names": [
+   "Walk",
+   "Stand",
+   "Death",
+   "Attack upgrade",
+   "Attack spell",
+   "StandHit",
+   "Decay Flesh",
+   "Decay Bone"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {
+   "Head -": {
+    "x": 0.6233,
+    "y": 1.3623,
+    "z": -0.0021
+   },
+   "Hand Left": {
+    "x": 0.0647,
+    "y": 0.7179,
+    "z": -0.7718
+   },
+   "Weapon Left": {
+    "x": 0.0079,
+    "y": 0.6919,
+    "z": -0.7473
+   },
+   "Hand Right": {
+    "x": -0.009,
+    "y": 0.6866,
+    "z": 0.7608
+   },
+   "Weapon Right": {
+    "x": -0.061,
+    "y": 0.6479,
+    "z": 0.7432
+   },
+   "Chest": {
+    "x": -0.03,
+    "y": 1.189,
+    "z": 0.0001
+   },
+   "Foot Left": {
+    "x": 0.0728,
+    "y": -0.0578,
+    "z": -0.4038
+   },
+   "Foot Right": {
+    "x": 0.0686,
+    "y": -0.0567,
+    "z": 0.4025
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": -0.0028,
+    "z": 0.0
+   },
+   "OverHead": {
+    "x": 0.0,
+    "y": 2.2695,
+    "z": 0.0
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CLID,EVTS,GEOA"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack spell",
+   "cast": "Attack spell",
+   "hurt": "StandHit",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "Herokyo.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand - 2",
+   "Attack",
+   "Attack Slam",
+   "Death",
+   "Walk",
+   "Stand",
+   "Attack 2",
+   "Stand Ready",
+   "Dissipate",
+   "Spell",
+   "Spell Channel"
+  ],
+  "missing_textures": [
+   "Textures\\Flame4.blp"
+  ],
+  "raw_height": 131.11,
+  "scale_factor": 0.01297,
+  "name": "herokyo",
+  "glb": "herokyo.glb",
+  "glb_size": 261768,
+  "height": 1.7,
+  "anim_names": [
+   "Stand - 2",
+   "Attack",
+   "Attack Slam",
+   "Death",
+   "Walk",
+   "Stand",
+   "Attack 2",
+   "Stand Ready",
+   "Dissipate",
+   "Spell",
+   "Spell Channel"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow1"
+  ],
+  "attach_points": {
+   "Hand Right": {
+    "x": -0.0031,
+    "y": 0.8828,
+    "z": 0.5235
+   },
+   "Weapon": {
+    "x": 0.9617,
+    "y": 0.8838,
+    "z": 0.4884
+   },
+   "Hand Left": {
+    "x": 0.0258,
+    "y": 0.886,
+    "z": -0.539
+   },
+   "Head -": {
+    "x": 0.0444,
+    "y": 1.7139,
+    "z": -0.0012
+   },
+   "Chest": {
+    "x": -0.0318,
+    "y": 1.0933,
+    "z": -0.0018
+   },
+   "Foot Right": {
+    "x": 0.0183,
+    "y": 0.1874,
+    "z": 0.2163
+   },
+   "Foot Left": {
+    "x": 0.0212,
+    "y": 0.1861,
+    "z": -0.2408
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": -0.0021,
+    "z": 0.0
+   },
+   "Overhead": {
+    "x": 0.0036,
+    "y": 1.7383,
+    "z": -0.0012
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,EVTS,GEOA,PRE2,PREM,RIBB"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "HolyAwakening.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Birth"
+  ],
+  "missing_textures": [
+   "Textures\\GenericGlow2b.blp",
+   "Textures\\Clouds8x8Mod.blp",
+   "Textures\\star6.blp",
+   "Textures\\CartoonCloud.blp",
+   "Textures\\Yellow_Glow.blp",
+   "Textures\\Shockwave1.blp",
+   "Textures\\GenericGlowFaded.blp",
+   "Textures\\firering1A.blp"
+  ],
+  "raw_height": 7.87,
+  "scale_factor": 0.02778,
+  "name": "holyawakening",
+  "glb": "holyawakening.glb",
+  "glb_size": 20484,
+  "height": 0.219,
+  "anim_names": [
+   "Birth"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "mat1: additive glow w/o alpha → dropped",
+   "mat2: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: EVTS,GEOA,GLBS,LITE,PRE2,RIBB"
+  ],
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 7.7626,
+  "effective_height": 1.7
+ },
+ {
+  "source": "JapaneseCherry.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand"
+  ],
+  "missing_textures": [
+   "Textures\\BarrensTree01.blp"
+  ],
+  "raw_height": 390.0,
+  "scale_factor": 0.02778,
+  "name": "japanesecherry",
+  "glb": "japanesecherry.glb",
+  "glb_size": 57364,
+  "height": 10.833,
+  "anim_names": [
+   "Stand"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Stand"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.1569,
+  "effective_height": 1.7
+ },
+ {
+  "source": "Katana.mdx",
+  "kind": "prop",
+  "sequences": [],
+  "missing_textures": [
+   "UI\\Glues\\SinglePlayer\\Undead3D_Exp\\Frostmorne.blp"
+  ],
+  "raw_height": 11.02,
+  "scale_factor": 0.02778,
+  "name": "katana",
+  "glb": "katana.glb",
+  "glb_size": 5268,
+  "height": 0.306,
+  "anim_names": [],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [],
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 5.5556,
+  "effective_height": 1.7
+ },
+ {
+  "source": "Kikyou.mdx",
+  "kind": "hero",
+  "sequences": [
+   "stand",
+   "Stand - 2",
+   "Spell",
+   "death",
+   "attack - 1",
+   "attack 2",
+   "walk",
+   "stand ready",
+   "dissipate"
+  ],
+  "raw_height": 131.49,
+  "scale_factor": 0.01293,
+  "name": "kikyou",
+  "glb": "kikyou.glb",
+  "glb_size": 193952,
+  "height": 1.7,
+  "anim_names": [
+   "stand",
+   "Stand - 2",
+   "Spell",
+   "death",
+   "attack - 1",
+   "attack 2",
+   "walk",
+   "stand ready",
+   "dissipate"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow1"
+  ],
+  "attach_points": {
+   "foot Right": {
+    "x": 0.0457,
+    "y": 0.0507,
+    "z": 0.1945
+   },
+   "foot Left": {
+    "x": 0.0425,
+    "y": 0.0493,
+    "z": -0.2053
+   },
+   "Hand Left": {
+    "x": -0.051,
+    "y": 0.7738,
+    "z": -0.3289
+   },
+   "Weapon": {
+    "x": -0.0391,
+    "y": 0.7846,
+    "z": -0.3266
+   },
+   "Head": {
+    "x": 0.0061,
+    "y": 1.4943,
+    "z": -0.0042
+   },
+   "Hand Right": {
+    "x": -0.0531,
+    "y": 0.7723,
+    "z": 0.3205
+   },
+   "Chest": {
+    "x": 0.0336,
+    "y": 1.172,
+    "z": -0.0041
+   },
+   "Origin": {
+    "x": -0.007,
+    "y": -0.0025,
+    "z": 0.0029
+   },
+   "OverHead": {
+    "x": -0.007,
+    "y": 2.0261,
+    "z": 0.0029
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,EVTS,GEOA,GLBS"
+  ],
+  "clip_map": {
+   "idle": "stand",
+   "run": "walk",
+   "attack": "attack - 1",
+   "cast": "Spell",
+   "hurt": "stand",
+   "death": "death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "KonYui.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand",
+   "Walk",
+   "Spell",
+   "Attack",
+   "Stand  Ready",
+   "Death",
+   "Dissipate"
+  ],
+  "raw_height": 111.07,
+  "scale_factor": 0.01531,
+  "name": "konyui",
+  "glb": "konyui.glb",
+  "glb_size": 356364,
+  "height": 1.7,
+  "anim_names": [
+   "Stand",
+   "Walk",
+   "Spell",
+   "Attack",
+   "Stand  Ready",
+   "Death",
+   "Dissipate"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {
+   "Origin": {
+    "x": 0.0558,
+    "y": 0.0911,
+    "z": -0.0033
+   },
+   "Overhead": {
+    "x": 0.0558,
+    "y": 3.8436,
+    "z": -0.0033
+   },
+   "Foot Right": {
+    "x": 0.0225,
+    "y": 0.04,
+    "z": -0.0
+   },
+   "Foot Left": {
+    "x": 0.0225,
+    "y": 0.04,
+    "z": -0.0
+   },
+   "Head": {
+    "x": 0.0295,
+    "y": 1.623,
+    "z": -0.0017
+   },
+   "Hand Left": {
+    "x": 0.0,
+    "y": 0.6293,
+    "z": -0.0
+   },
+   "Hand Right": {
+    "x": 0.0,
+    "y": 0.6293,
+    "z": -0.0
+   },
+   "Chest": {
+    "x": 0.0295,
+    "y": 0.7313,
+    "z": -0.0017
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,GEOA"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "LOVE2.MDX",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand"
+  ],
+  "raw_height": 146.19,
+  "scale_factor": 0.02778,
+  "name": "love2",
+  "glb": "love2.glb",
+  "glb_size": 4788,
+  "height": 4.061,
+  "anim_names": [
+   "Stand"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "mat0: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: GLBS"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Stand"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.4186,
+  "effective_height": 1.7
+ },
+ {
+  "source": "LasercannonfinalRED.mdx",
+  "kind": "prop",
+  "sequences": [
+   "birth"
+  ],
+  "missing_textures": [
+   "Textures\\GenericGlow64.blp",
+   "Textures\\Shockwave10.blp",
+   "Textures\\Shockwave1White.blp",
+   "Textures\\Flare.blp",
+   "Textures\\Energy1.blp",
+   "Textures\\White_64_Foam1.blp"
+  ],
+  "raw_height": 0.0,
+  "scale_factor": 0.02778,
+  "name": "lasercannonfinalred",
+  "glb": "lasercannonfinalred.glb",
+  "glb_size": 288,
+  "height": 0.0,
+  "anim_names": [],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "skipped MDX chunks: EVTS,GLBS,PRE2,PREM,TXAN"
+  ],
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "LavaBreathDamage.mdx",
+  "kind": "prop",
+  "sequences": [
+   "Stand",
+   "Birth",
+   "Death"
+  ],
+  "missing_textures": [
+   "Textures\\LavaLump2.blp"
+  ],
+  "raw_height": 0.0,
+  "scale_factor": 0.02778,
+  "name": "lavabreathdamage",
+  "glb": "lavabreathdamage.glb",
+  "glb_size": 288,
+  "height": 0.0,
+  "anim_names": [],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "skipped MDX chunks: PRE2,PREM"
+  ],
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "LightningTornado.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Death",
+   "Birth"
+  ],
+  "missing_textures": [
+   "ReplaceableTextures\\Weather\\Clouds8x8.blp",
+   "Textures\\LightningBall.blp"
+  ],
+  "raw_height": 329.73,
+  "scale_factor": 0.02778,
+  "name": "lightningtornado",
+  "glb": "lightningtornado.glb",
+  "glb_size": 42928,
+  "height": 9.159,
+  "anim_names": [
+   "Death",
+   "Birth"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {
+   "Foot Left": {
+    "x": -0.0707,
+    "y": 0.211,
+    "z": -0.8163
+   },
+   "Foot Right": {
+    "x": -0.0707,
+    "y": 0.2122,
+    "z": 0.6721
+   },
+   "Hand Right": {
+    "x": -0.565,
+    "y": 1.5017,
+    "z": 1.6943
+   },
+   "Weapon R": {
+    "x": 2.2374,
+    "y": 1.3082,
+    "z": 1.597
+   },
+   "Head": {
+    "x": 0.033,
+    "y": 3.7783,
+    "z": -0.0052
+   },
+   "Chest": {
+    "x": -0.0564,
+    "y": 2.8718,
+    "z": 0.0003
+   },
+   "Weapon L": {
+    "x": 2.2374,
+    "y": 1.3082,
+    "z": -1.6045
+   },
+   "Hand Left": {
+    "x": -0.3601,
+    "y": 1.4858,
+    "z": -1.8093
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": 0.1416,
+    "z": 0.0001
+   },
+   "OverHead": {
+    "x": 0.0,
+    "y": 5.7177,
+    "z": 0.0001
+   }
+  },
+  "notes": [
+   "mat1: additive glow w/o alpha → dropped",
+   "mat2: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: EVTS,GEOA,GLBS,PRE2,PREM"
+  ],
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.1856,
+  "effective_height": 1.7
+ },
+ {
+  "source": "Lightningnova.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Birth"
+  ],
+  "missing_textures": [
+   "Textures\\LightningBall.blp",
+   "Textures\\Dust5A.blp",
+   "abilities\\Spells\\Demon\\DarkPortal\\DemonRune1backup.blp",
+   "ReplaceableTextures\\Weather\\LightningForked.blp",
+   "Abilities\\Spells\\Other\\Monsoon\\HitBase.blp",
+   "ReplaceableTextures\\Weather\\Lightning.blp"
+  ],
+  "raw_height": 1.69,
+  "scale_factor": 0.02778,
+  "name": "lightningnova",
+  "glb": "lightningnova.glb",
+  "glb_size": 18260,
+  "height": 0.047,
+  "anim_names": [
+   "Birth"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "mat0: additive glow w/o alpha → dropped",
+   "mat1: additive glow w/o alpha → dropped",
+   "mat2: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: EVTS,GEOA,PRE2,PREM"
+  ],
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 36.1702,
+  "effective_height": 1.7
+ },
+ {
+  "source": "LinaInvers.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand - 1",
+   "walk",
+   "Attack - 1",
+   "death",
+   "Dissipate",
+   "Portrait - 1"
+  ],
+  "missing_textures": [
+   "Textures\\Clouds8x8Fire.blp",
+   "Textures\\Energy1.blp"
+  ],
+  "raw_height": 136.97,
+  "scale_factor": 0.01241,
+  "name": "linainvers",
+  "glb": "linainvers.glb",
+  "glb_size": 219000,
+  "height": 1.7,
+  "anim_names": [
+   "Stand - 1",
+   "walk",
+   "Attack - 1",
+   "death",
+   "Dissipate",
+   "Portrait - 1"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow2"
+  ],
+  "attach_points": {
+   "origin": {
+    "x": 0.0,
+    "y": 0.0124,
+    "z": -0.0
+   },
+   "head": {
+    "x": -0.0372,
+    "y": 1.6755,
+    "z": -0.0
+   },
+   "overhead": {
+    "x": 0.0,
+    "y": 1.8617,
+    "z": -0.0
+   },
+   "chest": {
+    "x": 0.0,
+    "y": 1.2411,
+    "z": -0.0
+   },
+   "hand right": {
+    "x": 0.0,
+    "y": 0.9184,
+    "z": 0.2482
+   },
+   "weapon": {
+    "x": 0.0,
+    "y": 0.9184,
+    "z": 0.2482
+   },
+   "hand left": {
+    "x": 0.0124,
+    "y": 0.9184,
+    "z": -0.2482
+   },
+   "foot left": {
+    "x": 0.0,
+    "y": 0.0124,
+    "z": -0.0869
+   },
+   "foot right": {
+    "x": 0.0,
+    "y": 0.0124,
+    "z": 0.0869
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,EVTS,PRE2"
+  ],
+  "clip_map": {
+   "idle": "Stand - 1",
+   "run": "walk",
+   "attack": "Attack - 1",
+   "cast": "Attack - 1",
+   "hurt": "Stand - 1",
+   "death": "death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "Long.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Attack",
+   "Attack 2",
+   "Attack Slam",
+   "Spell",
+   "Stand",
+   "Stand 2",
+   "Stand Ready",
+   "Walk",
+   "Death",
+   "Dissipate"
+  ],
+  "raw_height": 158.78,
+  "scale_factor": 0.01071,
+  "name": "long",
+  "glb": "long.glb",
+  "glb_size": 221748,
+  "height": 1.7,
+  "anim_names": [
+   "Attack",
+   "Attack 2",
+   "Attack Slam",
+   "Spell",
+   "Stand",
+   "Stand 2",
+   "Stand Ready",
+   "Walk",
+   "Death",
+   "Dissipate"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow0"
+  ],
+  "attach_points": {
+   "Origin": {
+    "x": -0.0,
+    "y": 0.0247,
+    "z": -0.0
+   },
+   "Chest": {
+    "x": 0.011,
+    "y": 1.0211,
+    "z": -0.0
+   },
+   "Hand Right": {
+    "x": -0.0125,
+    "y": 1.1663,
+    "z": 0.7314
+   },
+   "Hand Left": {
+    "x": -0.0125,
+    "y": 1.1663,
+    "z": -0.7314
+   },
+   "Head": {
+    "x": -0.0192,
+    "y": 1.3483,
+    "z": -0.0
+   },
+   "Foot Right": {
+    "x": 0.1905,
+    "y": 0.0395,
+    "z": 0.1047
+   },
+   "Foot Left": {
+    "x": 0.1906,
+    "y": 0.0395,
+    "z": -0.1031
+   },
+   "OverHead": {
+    "x": 0.0522,
+    "y": 1.7213,
+    "z": -0.0
+   },
+   "Weapon": {
+    "x": -0.0128,
+    "y": 1.1563,
+    "z": 0.728
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 0.7,
+  "doc_scale": 0.7,
+  "effective_height": 1.19
+ },
+ {
+  "source": "LuBu.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand 2",
+   "Attack",
+   "Attack Slam",
+   "Death",
+   "Stand",
+   "Attack 2",
+   "Stand Ready",
+   "Dissipate",
+   "Spell",
+   "Walk",
+   "Spell Slam"
+  ],
+  "missing_textures": [
+   "Textures\\Ghost1.blp",
+   "Textures\\DeathScream.blp",
+   "Textures\\Shockwave10.blp"
+  ],
+  "raw_height": 182.54,
+  "scale_factor": 0.00931,
+  "name": "lubu",
+  "glb": "lubu.glb",
+  "glb_size": 574960,
+  "height": 1.7,
+  "anim_names": [
+   "Stand 2",
+   "Attack",
+   "Attack Slam",
+   "Death",
+   "Stand",
+   "Attack 2",
+   "Stand Ready",
+   "Dissipate",
+   "Spell",
+   "Walk",
+   "Spell Slam"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow0"
+  ],
+  "attach_points": {
+   "Hand Right": {
+    "x": 0.0,
+    "y": 0.7754,
+    "z": 0.3982
+   },
+   "Sword": {
+    "x": 0.6873,
+    "y": 0.6942,
+    "z": 0.4003
+   },
+   "Hand Left": {
+    "x": 0.0,
+    "y": 0.7725,
+    "z": -0.4005
+   },
+   "Head -": {
+    "x": -0.0488,
+    "y": 1.3131,
+    "z": -0.0
+   },
+   "Chest": {
+    "x": 0.0,
+    "y": 0.956,
+    "z": 0.0022
+   },
+   "Foot Right": {
+    "x": 0.0159,
+    "y": 0.1279,
+    "z": 0.1813
+   },
+   "Foot Left": {
+    "x": 0.0248,
+    "y": 0.1265,
+    "z": -0.1837
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": -0.0
+   },
+   "Overhead": {
+    "x": -0.0488,
+    "y": 1.3131,
+    "z": -0.0
+   },
+   "Pelvis": {
+    "x": 0.0,
+    "y": 0.9551,
+    "z": 0.0022
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,EVTS,PRE2,PREM,RIBB"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "Luffe punch.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Spell"
+  ],
+  "missing_textures": [
+   "units\\Human\\HeroArchMage\\HeroArchmage.blp"
+  ],
+  "raw_height": 75.64,
+  "scale_factor": 0.02778,
+  "name": "luffe-punch",
+  "glb": "luffe-punch.glb",
+  "glb_size": 3992,
+  "height": 2.101,
+  "anim_names": [
+   "Spell"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [],
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.8091,
+  "effective_height": 1.7
+ },
+ {
+  "source": "Luffe.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Attack",
+   "Spell",
+   "Attack Slam",
+   "Spell 2",
+   "Stand",
+   "Stand 2",
+   "Stand Ready",
+   "Walk",
+   "Death",
+   "Dissipate"
+  ],
+  "raw_height": 145.45,
+  "scale_factor": 0.01169,
+  "name": "luffe",
+  "glb": "luffe.glb",
+  "glb_size": 295800,
+  "height": 1.7,
+  "anim_names": [
+   "Attack",
+   "Spell",
+   "Attack Slam",
+   "Spell 2",
+   "Stand",
+   "Stand 2",
+   "Stand Ready",
+   "Walk",
+   "Death",
+   "Dissipate"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow0"
+  ],
+  "attach_points": {
+   "Hand Left": {
+    "x": 0.0199,
+    "y": 1.1558,
+    "z": -0.7222
+   },
+   "Hand Right": {
+    "x": 0.0199,
+    "y": 1.1558,
+    "z": 0.7221
+   },
+   "Weapon": {
+    "x": 0.0428,
+    "y": 1.1397,
+    "z": 0.8015
+   },
+   "Head": {
+    "x": -0.0302,
+    "y": 1.5048,
+    "z": -0.0
+   },
+   "Foot Right": {
+    "x": 0.188,
+    "y": 0.0735,
+    "z": 0.3401
+   },
+   "Foot Left": {
+    "x": 0.188,
+    "y": 0.0735,
+    "z": -0.3401
+   },
+   "Chest": {
+    "x": -0.019,
+    "y": 0.9601,
+    "z": -0.0038
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": 0.0269,
+    "z": -0.0
+   },
+   "OverHead": {
+    "x": 0.0,
+    "y": 1.7705,
+    "z": -0.0
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,EVTS"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.1,
+  "doc_scale": 1.1,
+  "effective_height": 1.87
+ },
+ {
+  "source": "Magical_Sword.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand"
+  ],
+  "missing_textures": [
+   "Textures\\FrostMorne.blp",
+   "ui\\Glues\\SinglePlayer\\Undead3D_Exp\\Sword.blp",
+   "Textures\\Yellow_Star_Dim.blp"
+  ],
+  "raw_height": 42.16,
+  "scale_factor": 0.02778,
+  "name": "magical-sword",
+  "glb": "magical-sword.glb",
+  "glb_size": 26704,
+  "height": 1.171,
+  "anim_names": [
+   "Stand"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "skipped MDX chunks: PRE2"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Stand"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.4518,
+  "effective_height": 1.7
+ },
+ {
+  "source": "Meteor.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Birth"
+  ],
+  "missing_textures": [
+   "units\\Demon\\Infernal\\Infernal.blp",
+   "Textures\\star32.blp",
+   "ReplaceableTextures\\Weather\\Clouds8x8.blp",
+   "Textures\\Clouds8x8Mod.blp",
+   "Textures\\clouds_anim1_bw.blp",
+   "Textures\\Dust3.blp",
+   "Textures\\Dust5A.blp",
+   "Textures\\rock64.blp",
+   "Textures\\Shockwave10.blp",
+   "Textures\\grad2b.blp"
+  ],
+  "raw_height": 981.31,
+  "scale_factor": 0.02778,
+  "name": "meteor",
+  "glb": "meteor.glb",
+  "glb_size": 41456,
+  "height": 27.259,
+  "anim_names": [
+   "Birth"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {
+   "Origin": {
+    "x": -0.0197,
+    "y": 0.1409,
+    "z": 0.0014
+   },
+   "OverHead": {
+    "x": -0.0197,
+    "y": 6.8126,
+    "z": 0.0014
+   },
+   "Hand Right": {
+    "x": 0.1323,
+    "y": -3.3963,
+    "z": 2.596
+   },
+   "Hand Left": {
+    "x": -0.0018,
+    "y": -3.5983,
+    "z": -2.3176
+   },
+   "Head": {
+    "x": 0.2391,
+    "y": -0.0022,
+    "z": -0.1107
+   },
+   "Chest": {
+    "x": 0.1572,
+    "y": -1.6248,
+    "z": -0.0417
+   },
+   "Foot Right": {
+    "x": 0.1107,
+    "y": -5.6741,
+    "z": 1.1627
+   },
+   "Foot Left": {
+    "x": 0.1107,
+    "y": -5.6741,
+    "z": -1.3334
+   }
+  },
+  "notes": [
+   "mat1: additive glow w/o alpha → dropped",
+   "mat2: additive glow w/o alpha → dropped",
+   "mat3: additive glow w/o alpha → dropped",
+   "mat4: additive glow w/o alpha → dropped",
+   "mat5: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: EVTS,GEOA,GLBS,LITE,PRE2,PREM,TXAN"
+  ],
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.0624,
+  "effective_height": 1.7
+ },
+ {
+  "source": "MidchilderNanohaAura.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "stand"
+  ],
+  "raw_height": 0.0,
+  "scale_factor": 0.02778,
+  "name": "midchildernanohaaura",
+  "glb": "midchildernanohaaura.glb",
+  "glb_size": 135356,
+  "height": 0.0,
+  "anim_names": [
+   "stand"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "mat0: additive glow w/o alpha → dropped",
+   "mat1: additive glow w/o alpha → dropped"
+  ],
+  "clip_map": {
+   "idle": "stand",
+   "run": "stand",
+   "attack": "stand",
+   "cast": "stand",
+   "hurt": "stand",
+   "death": "stand"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "MinitypeFlame.MDX",
+  "kind": "animated-prop",
+  "sequences": [
+   "Birth",
+   "stand",
+   "death"
+  ],
+  "missing_textures": [
+   "Textures\\Clouds8x8.blp",
+   "Abilities\\Weapons\\FlamingArrow\\fire10022.blp",
+   "Textures\\GenericGlow64.blp",
+   "Textures\\Shockwave10.blp"
+  ],
+  "raw_height": 41.5,
+  "scale_factor": 0.02778,
+  "name": "minitypeflame",
+  "glb": "minitypeflame.glb",
+  "glb_size": 19356,
+  "height": 1.153,
+  "anim_names": [
+   "Birth",
+   "stand",
+   "death"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "mat0: additive glow w/o alpha → dropped",
+   "mat2: additive glow w/o alpha → dropped",
+   "mat1: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: GEOA,GLBS,PRE2"
+  ],
+  "clip_map": {
+   "idle": "stand",
+   "run": "stand",
+   "attack": "stand",
+   "cast": "stand",
+   "hurt": "stand",
+   "death": "death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.4744,
+  "effective_height": 1.7
+ },
+ {
+  "source": "NE_Shield.MDX",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand"
+  ],
+  "missing_textures": [
+   "Textures\\Ballista.blp"
+  ],
+  "raw_height": 78.61,
+  "scale_factor": 0.02778,
+  "name": "ne-shield",
+  "glb": "ne-shield.glb",
+  "glb_size": 11220,
+  "height": 2.184,
+  "anim_names": [
+   "Stand"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Stand"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.7784,
+  "effective_height": 1.7
+ },
+ {
+  "source": "NetherStrike.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "stand"
+  ],
+  "missing_textures": [
+   "Textures\\Shockwave1.blp",
+   "Textures\\ShockwaveWater1Black.blp",
+   "Textures\\Clouds8x8Mod.blp",
+   "Textures\\GenericGlowX_Mod2.blp"
+  ],
+  "raw_height": 1105.59,
+  "scale_factor": 0.02778,
+  "name": "netherstrike",
+  "glb": "netherstrike.glb",
+  "glb_size": 113360,
+  "height": 30.711,
+  "anim_names": [
+   "stand"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "mat0: additive glow w/o alpha → dropped",
+   "mat1: additive glow w/o alpha → dropped",
+   "mat2: additive glow w/o alpha → dropped",
+   "mat3: additive glow w/o alpha → dropped",
+   "mat4: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: EVTS,GEOA,GLBS,PRE2,PREM,TXAN"
+  ],
+  "clip_map": {
+   "idle": "stand",
+   "run": "stand",
+   "attack": "stand",
+   "cast": "stand",
+   "hurt": "stand",
+   "death": "stand"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.0554,
+  "effective_height": 1.7
+ },
+ {
+  "source": "OblivionAura.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand"
+  ],
+  "missing_textures": [
+   "Abilities\\Spells\\Other\\HowlOfTerror\\Skull1.blp",
+   "Textures\\Purple_Star.blp",
+   "Abilities\\Spells\\Undead\\RegenerationAura\\DarkSummon.blp"
+  ],
+  "raw_height": 90.46,
+  "scale_factor": 0.02778,
+  "name": "oblivionaura",
+  "glb": "oblivionaura.glb",
+  "glb_size": 25224,
+  "height": 2.513,
+  "anim_names": [
+   "Stand"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "mat0: additive glow w/o alpha → dropped",
+   "mat1: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: GEOA,PRE2"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Stand"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.6765,
+  "effective_height": 1.7
+ },
+ {
+  "source": "RenaRyugu2.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand 2",
+   "Attack",
+   "Attack Slam",
+   "Death",
+   "Walk",
+   "Stand",
+   "Attack 2",
+   "Stand Ready",
+   "Dissipate",
+   "Portrait",
+   "Portrait 2",
+   "Portrait Talk",
+   "Portrait Talk 2",
+   "Spell"
+  ],
+  "missing_textures": [
+   "Textures\\Flame4.blp",
+   "Textures\\Flare.blp"
+  ],
+  "raw_height": 122.29,
+  "scale_factor": 0.0139,
+  "name": "renaryugu2",
+  "glb": "renaryugu2.glb",
+  "glb_size": 229788,
+  "height": 1.7,
+  "anim_names": [
+   "Stand 2",
+   "Attack",
+   "Attack Slam",
+   "Death",
+   "Walk",
+   "Stand",
+   "Attack 2",
+   "Stand Ready",
+   "Dissipate",
+   "Portrait",
+   "Portrait 2",
+   "Portrait Talk",
+   "Portrait Talk 2",
+   "Spell"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow2"
+  ],
+  "attach_points": {
+   "Foot Right": {
+    "x": 0.058,
+    "y": 0.1675,
+    "z": 0.0845
+   },
+   "Foot Left": {
+    "x": 0.058,
+    "y": 0.1675,
+    "z": -0.0867
+   },
+   "Hand Right": {
+    "x": -0.0196,
+    "y": 0.9581,
+    "z": 0.2458
+   },
+   "Hand Left": {
+    "x": -0.0196,
+    "y": 0.9581,
+    "z": -0.2478
+   },
+   "Head": {
+    "x": 0.0163,
+    "y": 1.8208,
+    "z": -0.0024
+   },
+   "Chest": {
+    "x": 0.0146,
+    "y": 1.2228,
+    "z": -0.0014
+   },
+   "Origin": {
+    "x": -0.0109,
+    "y": 0.1073,
+    "z": 0.0046
+   },
+   "OverHead": {
+    "x": -0.0109,
+    "y": 2.1318,
+    "z": 0.0046
+   },
+   "Weapon": {
+    "x": 0.8323,
+    "y": 0.9336,
+    "z": 0.2371
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,EVTS,GEOA,PRE2,PREM,RIBB"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "Ritsu.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand",
+   "Stand - 2",
+   "Death",
+   "Dissipate",
+   "Stand Ready",
+   "Attack",
+   "Attack - 2",
+   "Attack Slam",
+   "Spell",
+   "Walk"
+  ],
+  "raw_height": 107.2,
+  "scale_factor": 0.01586,
+  "name": "ritsu",
+  "glb": "ritsu.glb",
+  "glb_size": 339132,
+  "height": 1.7,
+  "anim_names": [
+   "Stand",
+   "Stand - 2",
+   "Death",
+   "Dissipate",
+   "Stand Ready",
+   "Attack",
+   "Attack - 2",
+   "Attack Slam",
+   "Spell",
+   "Walk"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {
+   "hand right": {
+    "x": -0.005,
+    "y": 0.7174,
+    "z": 0.4023
+   },
+   "weapon": {
+    "x": 0.4993,
+    "y": 0.7174,
+    "z": 0.3989
+   },
+   "head": {
+    "x": -0.019,
+    "y": 1.6626,
+    "z": -0.0
+   },
+   "hand left": {
+    "x": -0.005,
+    "y": 0.7174,
+    "z": -0.4023
+   },
+   "chest": {
+    "x": 0.029,
+    "y": 0.8357,
+    "z": -0.0
+   },
+   "foot right": {
+    "x": 0.0295,
+    "y": 0.0834,
+    "z": 0.1041
+   },
+   "foot left": {
+    "x": 0.0295,
+    "y": 0.0834,
+    "z": -0.1041
+   },
+   "origin": {
+    "x": 0.0,
+    "y": 0.1574,
+    "z": -0.0
+   },
+   "overhead": {
+    "x": 0.0,
+    "y": 2.1407,
+    "z": -0.0
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "SD2.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Walk",
+   "Stand Ready",
+   "Attack - 1",
+   "Stand - 1",
+   "Attack - 2",
+   "Death",
+   "Spell",
+   "Attack Slam"
+  ],
+  "raw_height": 107.36,
+  "scale_factor": 0.01584,
+  "name": "sd2",
+  "glb": "sd2.glb",
+  "glb_size": 264416,
+  "height": 1.7,
+  "anim_names": [
+   "Walk",
+   "Stand Ready",
+   "Attack - 1",
+   "Stand - 1",
+   "Attack - 2",
+   "Death",
+   "Spell",
+   "Attack Slam"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {
+   "Hand Left": {
+    "x": -0.0302,
+    "y": 0.7574,
+    "z": -0.3615
+   },
+   "Hand Right": {
+    "x": -0.0302,
+    "y": 0.7574,
+    "z": 0.3908
+   },
+   "Chest": {
+    "x": -0.0302,
+    "y": 1.384,
+    "z": -0.0071
+   },
+   "Weapon": {
+    "x": 0.607,
+    "y": 0.5089,
+    "z": 0.9124
+   },
+   "Head -": {
+    "x": -0.0302,
+    "y": 1.5876,
+    "z": -0.0071
+   },
+   "Foot Left": {
+    "x": -0.0302,
+    "y": -0.0052,
+    "z": -0.3023
+   },
+   "Foot Right": {
+    "x": -0.0302,
+    "y": -0.0052,
+    "z": 0.2262
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": -0.0
+   },
+   "OverHead": {
+    "x": 0.0,
+    "y": 1.8014,
+    "z": -0.0
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,GEOA,RIBB"
+  ],
+  "clip_map": {
+   "idle": "Stand - 1",
+   "run": "Walk",
+   "attack": "Attack - 1",
+   "cast": "Spell",
+   "hurt": "Stand - 1",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.1,
+  "doc_scale": 1.1,
+  "effective_height": 1.87
+ },
+ {
+  "source": "Sesshomaru.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand - 2",
+   "Attack",
+   "Attack Slam",
+   "Death",
+   "Walk",
+   "Stand",
+   "Attack 2",
+   "Dissipate"
+  ],
+  "missing_textures": [
+   "Units\\Creeps\\WhiteWolf\\WhiteWolf.blp",
+   "Textures\\Flame4.blp"
+  ],
+  "raw_height": 140.35,
+  "scale_factor": 0.01211,
+  "name": "sesshomaru",
+  "glb": "sesshomaru.glb",
+  "glb_size": 240964,
+  "height": 1.7,
+  "anim_names": [
+   "Stand - 2",
+   "Attack",
+   "Attack Slam",
+   "Death",
+   "Walk",
+   "Stand",
+   "Attack 2",
+   "Dissipate"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow0"
+  ],
+  "attach_points": {
+   "Hand Right": {
+    "x": 0.0009,
+    "y": 0.8726,
+    "z": 0.4423
+   },
+   "Weapon": {
+    "x": 0.6951,
+    "y": 0.8544,
+    "z": 0.4444
+   },
+   "Head -": {
+    "x": 0.029,
+    "y": 1.6291,
+    "z": -0.0021
+   },
+   "Hand Left": {
+    "x": -0.3135,
+    "y": 1.0998,
+    "z": -0.537
+   },
+   "Chest": {
+    "x": -0.0036,
+    "y": 1.3198,
+    "z": -0.0019
+   },
+   "Foot Right": {
+    "x": -0.065,
+    "y": 0.1534,
+    "z": 0.1809
+   },
+   "Foot Left": {
+    "x": -0.0652,
+    "y": 0.1532,
+    "z": -0.1823
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": -0.0
+   },
+   "Overhead": {
+    "x": 0.0,
+    "y": 1.7094,
+    "z": -0.0
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,EVTS,PRE2,PREM,RIBB"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Attack",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.1,
+  "doc_scale": 1.1,
+  "effective_height": 1.87
+ },
+ {
+  "source": "SonicBreathStream.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Attack"
+  ],
+  "missing_textures": [
+   "UI\\MiniMap\\ping4.blp"
+  ],
+  "raw_height": 253.12,
+  "scale_factor": 0.02778,
+  "name": "sonicbreathstream",
+  "glb": "sonicbreathstream.glb",
+  "glb_size": 3420,
+  "height": 7.031,
+  "anim_names": [
+   "Attack"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "mat0: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: GEOA,GLBS,LITE,PRE2,PREM"
+  ],
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.2418,
+  "effective_height": 1.7
+ },
+ {
+  "source": "Student.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand",
+   "Walk",
+   "Stand Ready",
+   "Attack",
+   "Spell",
+   "Death"
+  ],
+  "raw_height": 108.42,
+  "scale_factor": 0.01568,
+  "name": "student",
+  "glb": "student.glb",
+  "glb_size": 151000,
+  "height": 1.7,
+  "anim_names": [
+   "Stand",
+   "Walk",
+   "Stand Ready",
+   "Attack",
+   "Spell",
+   "Death"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {
+   "Hand Right": {
+    "x": 0.0249,
+    "y": 1.0415,
+    "z": 0.4969
+   },
+   "Hand Left": {
+    "x": 0.0249,
+    "y": 1.0415,
+    "z": -0.4969
+   },
+   "Head": {
+    "x": 0.0249,
+    "y": 1.665,
+    "z": -0.0
+   },
+   "Chest": {
+    "x": 0.0249,
+    "y": 0.9179,
+    "z": -0.0
+   },
+   "Foot Right": {
+    "x": 0.0943,
+    "y": 0.1348,
+    "z": 0.0756
+   },
+   "Foot Left": {
+    "x": 0.0943,
+    "y": 0.1348,
+    "z": -0.0756
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": 0.2119,
+    "z": -0.0
+   },
+   "Overhead": {
+    "x": 0.0,
+    "y": 2.0072,
+    "z": -0.0
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "SuperShinyThingy.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand"
+  ],
+  "missing_textures": [
+   "Textures\\GenericGlow2c.blp",
+   "Textures\\GenericGlow64.blp",
+   "Textures\\star5tga.blp",
+   "Textures\\pixies1.blp",
+   "Textures\\Shockwave4white.blp",
+   "UI\\Glues\\SinglePlayer\\NightElfCampaign3D\\NightElfFemaleEyeGlow1.blp"
+  ],
+  "raw_height": 288.39,
+  "scale_factor": 0.02778,
+  "name": "supershinythingy",
+  "glb": "supershinythingy.glb",
+  "glb_size": 50580,
+  "height": 8.011,
+  "anim_names": [
+   "Stand"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "mat0: additive glow w/o alpha → dropped",
+   "mat1: additive glow w/o alpha → dropped",
+   "mat2: additive glow w/o alpha → dropped",
+   "mat3: additive glow w/o alpha → dropped",
+   "mat4: additive glow w/o alpha → dropped",
+   "mat5: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: EVTS,GEOA,GLBS,PRE2,PREM,RIBB"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Stand"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.2122,
+  "effective_height": 1.7
+ },
+ {
+  "source": "Tectonicfury.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Birth",
+   "stand",
+   "Death"
+  ],
+  "missing_textures": [
+   "Textures\\Clouds8x8Grey.blp",
+   "Abilities\\Spells\\Other\\Volcano\\Lavaball.blp",
+   "Abilities\\Weapons\\RockBoltMissile\\rocktile.blp"
+  ],
+  "raw_height": 185.64,
+  "scale_factor": 0.02778,
+  "name": "tectonicfury",
+  "glb": "tectonicfury.glb",
+  "glb_size": 12360,
+  "height": 5.157,
+  "anim_names": [
+   "Birth",
+   "stand",
+   "Death"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "mat1: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: EVTS,GEOA,GLBS,PRE2,PREM"
+  ],
+  "clip_map": {
+   "idle": "stand",
+   "run": "stand",
+   "attack": "stand",
+   "cast": "stand",
+   "hurt": "stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.3296,
+  "effective_height": 1.7
+ },
+ {
+  "source": "WindMissle.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "stand",
+   "Birth",
+   "Death"
+  ],
+  "missing_textures": [
+   "Textures\\firering1A.blp",
+   "Textures\\GenericGlow2b.blp"
+  ],
+  "raw_height": 154.7,
+  "scale_factor": 0.02778,
+  "name": "windmissle",
+  "glb": "windmissle.glb",
+  "glb_size": 16772,
+  "height": 4.297,
+  "anim_names": [
+   "stand",
+   "Birth",
+   "Death"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "mat0: additive glow w/o alpha → dropped",
+   "mat1: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: EVTS,GEOA,GLBS,RIBB"
+  ],
+  "clip_map": {
+   "idle": "stand",
+   "run": "stand",
+   "attack": "stand",
+   "cast": "stand",
+   "hurt": "stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.3956,
+  "effective_height": 1.7
+ },
+ {
+  "source": "babyface.mdx",
+  "kind": "prop",
+  "sequences": [
+   "Stand",
+   "Death",
+   "Birth"
+  ],
+  "raw_height": 0.0,
+  "scale_factor": 0.02778,
+  "name": "babyface",
+  "glb": "babyface.glb",
+  "glb_size": 288,
+  "height": 0.0,
+  "anim_names": [],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "skipped MDX chunks: EVTS,PRE2,PREM"
+  ],
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "billy.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Walk",
+   "Stand - 1",
+   "Attack - 2",
+   "Stand - 2",
+   "Stand - 3",
+   "Stand Ready",
+   "Death",
+   "Dissipate",
+   "Portrait Talk",
+   "Portrait"
+  ],
+  "missing_textures": [
+   "Textures\\Blue_Star2.blp"
+  ],
+  "raw_height": 157.32,
+  "scale_factor": 0.01081,
+  "name": "billy",
+  "glb": "billy.glb",
+  "glb_size": 204340,
+  "height": 1.7,
+  "anim_names": [
+   "Walk",
+   "Stand - 1",
+   "Attack - 2",
+   "Stand - 2",
+   "Stand - 3",
+   "Stand Ready",
+   "Death",
+   "Dissipate",
+   "Portrait Talk",
+   "Portrait"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow1"
+  ],
+  "attach_points": {
+   "Hand Right": {
+    "x": 0.1025,
+    "y": 0.7626,
+    "z": 0.4671
+   },
+   "Head": {
+    "x": 0.0079,
+    "y": 1.5503,
+    "z": -0.0
+   },
+   "Hand Left": {
+    "x": 0.1025,
+    "y": 0.7634,
+    "z": -0.4671
+   },
+   "Chest": {
+    "x": 0.0272,
+    "y": 1.1202,
+    "z": 0.0008
+   },
+   "Foot Left": {
+    "x": 0.0518,
+    "y": 0.0456,
+    "z": -0.1803
+   },
+   "Foot Right": {
+    "x": 0.052,
+    "y": 0.045,
+    "z": 0.1803
+   },
+   "OverHead": {
+    "x": 0.0,
+    "y": 1.7289,
+    "z": -0.0
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": -0.0
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,EVTS,GLBS,PRE2,PREM"
+  ],
+  "clip_map": {
+   "idle": "Stand - 1",
+   "run": "Walk",
+   "attack": "Attack - 2",
+   "cast": "Attack - 2",
+   "hurt": "Stand - 1",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "boxcat.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Spell",
+   "Stand Alternate",
+   "Spell Alternate",
+   "Stand"
+  ],
+  "missing_textures": [
+   "Textures\\GoblinAmmoDump.blp"
+  ],
+  "raw_height": 7.99,
+  "scale_factor": 0.02778,
+  "name": "boxcat",
+  "glb": "boxcat.glb",
+  "glb_size": 18696,
+  "height": 0.222,
+  "anim_names": [
+   "Spell",
+   "Stand Alternate",
+   "Spell Alternate",
+   "Stand"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Stand"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 7.6577,
+  "effective_height": 1.7
+ },
+ {
+  "source": "cloud.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Attack",
+   "Death",
+   "Stand",
+   "Dissipate",
+   "Attack 2",
+   "Portrait",
+   "Portrait 2",
+   "Portrait Talk",
+   "Stand Ready",
+   "Walk",
+   "Spell",
+   "Attack Slam",
+   "Spell Slam"
+  ],
+  "missing_textures": [
+   "Textures\\Flame4.blp"
+  ],
+  "raw_height": 129.73,
+  "scale_factor": 0.0131,
+  "name": "cloud",
+  "glb": "cloud.glb",
+  "glb_size": 757132,
+  "height": 1.7,
+  "anim_names": [
+   "Attack",
+   "Death",
+   "Stand",
+   "Dissipate",
+   "Attack 2",
+   "Portrait",
+   "Portrait 2",
+   "Portrait Talk",
+   "Stand Ready",
+   "Walk",
+   "Spell",
+   "Attack Slam",
+   "Spell Slam"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow0",
+   "TeamGlow1"
+  ],
+  "attach_points": {
+   "Weapon": {
+    "x": -0.0175,
+    "y": 1.0136,
+    "z": 0.4102
+   },
+   "Hand Right": {
+    "x": -0.0105,
+    "y": 1.0221,
+    "z": 0.3931
+   },
+   "Hand Left": {
+    "x": -0.0105,
+    "y": 1.0221,
+    "z": -0.3931
+   },
+   "Head -": {
+    "x": 0.0448,
+    "y": 1.8107,
+    "z": -0.0012
+   },
+   "Foot Right": {
+    "x": -0.0551,
+    "y": 0.0917,
+    "z": 0.1074
+   },
+   "Foot Left": {
+    "x": -0.0554,
+    "y": 0.0917,
+    "z": -0.1502
+   },
+   "Chest": {
+    "x": -0.0322,
+    "y": 1.1049,
+    "z": -0.0018
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+   },
+   "Overhead": {
+    "x": 0.0037,
+    "y": 1.9664,
+    "z": -0.0012
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,EVTS,GEOA,PRE2,PREM,RIBB"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "collision.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand"
+  ],
+  "raw_height": 0.0,
+  "scale_factor": 0.02778,
+  "name": "collision",
+  "glb": "collision.glb",
+  "glb_size": 1148,
+  "height": 0.0,
+  "anim_names": [
+   "Stand"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {
+   "Origin": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": -0.0
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CLID"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Stand"
+  },
+  "status": "ok",
+  "usca": 1.5,
+  "doc_scale": 1.5,
+  "effective_height": 2.55
+ },
+ {
+  "source": "crescent.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand",
+   "Death"
+  ],
+  "missing_textures": [
+   "Textures\\Energy1Color.blp",
+   "abilities\\Spells\\Items\\WandOfNeutralization\\HeroDemonHunter.blp",
+   "Textures\\Yellow_Glow3.blp",
+   "Textures\\star32.blp"
+  ],
+  "raw_height": 119.78,
+  "scale_factor": 0.02778,
+  "name": "crescent",
+  "glb": "crescent.glb",
+  "glb_size": 21732,
+  "height": 3.327,
+  "anim_names": [
+   "Stand",
+   "Death"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "mat0: additive glow w/o alpha → dropped",
+   "mat1: additive glow w/o alpha → dropped",
+   "mat2: additive glow w/o alpha → dropped",
+   "mat3: additive glow w/o alpha → dropped",
+   "mat4: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: EVTS,GEOA,GLBS"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.511,
+  "effective_height": 1.7
+ },
+ {
+  "source": "doom.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand"
+  ],
+  "missing_textures": [
+   "ReplaceableTextures\\Weather\\Clouds8x8.blp"
+  ],
+  "raw_height": 138.76,
+  "scale_factor": 0.02778,
+  "name": "doom",
+  "glb": "doom.glb",
+  "glb_size": 18308,
+  "height": 3.854,
+  "anim_names": [
+   "Stand"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Stand"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.4411,
+  "effective_height": 1.7
+ },
+ {
+  "source": "flamessmoke.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand"
+  ],
+  "missing_textures": [
+   "Textures\\Clouds8x8Fade.blp",
+   "Textures\\Flare.blp"
+  ],
+  "raw_height": 343.0,
+  "scale_factor": 0.02778,
+  "name": "flamessmoke",
+  "glb": "flamessmoke.glb",
+  "glb_size": 3224,
+  "height": 9.528,
+  "anim_names": [
+   "Stand"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "mat0: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: GEOA,LITE,PRE2"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Stand"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.1784,
+  "effective_height": 1.7
+ },
+ {
+  "source": "fox.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand",
+   "Stand 2",
+   "Walk",
+   "Death",
+   "Spell",
+   "Attack",
+   "Dissipate"
+  ],
+  "missing_textures": [
+   "Textures\\Star8.blp"
+  ],
+  "raw_height": 135.26,
+  "scale_factor": 0.01257,
+  "name": "fox",
+  "glb": "fox.glb",
+  "glb_size": 202840,
+  "height": 1.7,
+  "anim_names": [
+   "Stand",
+   "Stand 2",
+   "Walk",
+   "Death",
+   "Spell",
+   "Attack",
+   "Dissipate"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow2"
+  ],
+  "attach_points": {
+   "Foot Right": {
+    "x": 0.0779,
+    "y": 0.0593,
+    "z": 0.0847
+   },
+   "Foot Left": {
+    "x": 0.0779,
+    "y": 0.0593,
+    "z": -0.086
+   },
+   "Hand Right": {
+    "x": 0.0144,
+    "y": 0.8736,
+    "z": 0.1958
+   },
+   "Hand Left": {
+    "x": 0.0144,
+    "y": 0.8736,
+    "z": -0.1969
+   },
+   "Head": {
+    "x": 0.008,
+    "y": 1.7156,
+    "z": 0.007
+   },
+   "Chest": {
+    "x": -0.0026,
+    "y": 1.373,
+    "z": 0.0024
+   },
+   "Origin": {
+    "x": -0.0098,
+    "y": -0.0035,
+    "z": 0.0041
+   },
+   "OverHead": {
+    "x": -0.0098,
+    "y": 1.9525,
+    "z": 0.0041
+   },
+   "Weapon": {
+    "x": 0.0779,
+    "y": 0.0593,
+    "z": 0.0847
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,EVTS,GEOA,PRE2,PREM"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.15,
+  "doc_scale": 1.15,
+  "effective_height": 1.955
+ },
+ {
+  "source": "fox2.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand",
+   "Stand 2",
+   "Walk",
+   "Death",
+   "Spell",
+   "Attack",
+   "Dissipate"
+  ],
+  "missing_textures": [
+   "Textures\\Star8.blp"
+  ],
+  "raw_height": 135.26,
+  "scale_factor": 0.01257,
+  "name": "fox2",
+  "glb": "fox2.glb",
+  "glb_size": 217464,
+  "height": 1.7,
+  "anim_names": [
+   "Stand",
+   "Stand 2",
+   "Walk",
+   "Death",
+   "Spell",
+   "Attack",
+   "Dissipate"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow2"
+  ],
+  "attach_points": {
+   "Foot Right": {
+    "x": 0.0779,
+    "y": 0.0593,
+    "z": 0.0847
+   },
+   "Foot Left": {
+    "x": 0.0779,
+    "y": 0.0593,
+    "z": -0.086
+   },
+   "Hand Right": {
+    "x": 0.0144,
+    "y": 0.8736,
+    "z": 0.1958
+   },
+   "Hand Left": {
+    "x": 0.0144,
+    "y": 0.8736,
+    "z": -0.1969
+   },
+   "Head": {
+    "x": 0.008,
+    "y": 1.7156,
+    "z": 0.007
+   },
+   "Chest": {
+    "x": -0.0026,
+    "y": 1.373,
+    "z": 0.0024
+   },
+   "Origin": {
+    "x": -0.0098,
+    "y": -0.0035,
+    "z": 0.0041
+   },
+   "OverHead": {
+    "x": -0.0098,
+    "y": 1.9525,
+    "z": 0.0041
+   },
+   "Weapon": {
+    "x": 0.0779,
+    "y": 0.0593,
+    "z": 0.0847
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,EVTS,GEOA,PRE2,PREM"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.05,
+  "doc_scale": 1.05,
+  "effective_height": 1.785
+ },
+ {
+  "source": "frostnova.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand"
+  ],
+  "missing_textures": [
+   "Textures\\ManaDrainIn.blp",
+   "Abilities\\Spells\\Human\\Brilliance\\TjShockwave2.blp",
+   "ReplaceableTextures\\Selection\\SpellAreaOfEffect.blp",
+   "Textures\\ShockwaveWater1.blp",
+   "Textures\\Star8c.blp"
+  ],
+  "raw_height": 0.0,
+  "scale_factor": 0.02778,
+  "name": "frostnova",
+  "glb": "frostnova.glb",
+  "glb_size": 3492,
+  "height": 0.0,
+  "anim_names": [
+   "Stand"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "mat0: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: GEOA,PRE2,PREM"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Stand"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "goku.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Walk",
+   "Stand",
+   "Attack",
+   "Attack",
+   "Stand Ready",
+   "Spell",
+   "Death",
+   "Spell Channel"
+  ],
+  "raw_height": 147.11,
+  "scale_factor": 0.01156,
+  "name": "goku",
+  "glb": "goku.glb",
+  "glb_size": 212488,
+  "height": 1.7,
+  "anim_names": [
+   "Walk",
+   "Stand",
+   "Attack",
+   "Attack_",
+   "Stand Ready",
+   "Spell",
+   "Death",
+   "Spell Channel"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow2"
+  ],
+  "attach_points": {
+   "hand right": {
+    "x": 0.1317,
+    "y": 0.9593,
+    "z": 0.315
+   },
+   "hand left": {
+    "x": 0.1317,
+    "y": 0.9593,
+    "z": -0.3221
+   },
+   "Origin": {
+    "x": -0.0026,
+    "y": -0.005,
+    "z": -0.006
+   },
+   "OverHead": {
+    "x": 0.0257,
+    "y": 1.9183,
+    "z": 0.0052
+   },
+   "Foot Left": {
+    "x": 0.039,
+    "y": 0.0737,
+    "z": 0.2929
+   },
+   "Foot Right": {
+    "x": 0.039,
+    "y": 0.0737,
+    "z": -0.2929
+   },
+   "Weapon": {
+    "x": 0.1317,
+    "y": 0.9591,
+    "z": 0.315
+   },
+   "Head -": {
+    "x": 0.0257,
+    "y": 1.9067,
+    "z": 0.0052
+   },
+   "Chest": {
+    "x": 0.0755,
+    "y": 1.4481,
+    "z": 0.0052
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CLID,EVTS"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "gumdam.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand",
+   "Attack",
+   "Walk",
+   "Death"
+  ],
+  "missing_textures": [
+   "Textures\\Clouds8x8Grey.blp",
+   "Textures\\Green_Glow2.blp",
+   "Textures\\Dust5A.blp",
+   "Textures\\Flame4.blp",
+   "Textures\\Dust3x.blp",
+   "Textures\\Clouds8x8Black.blp"
+  ],
+  "raw_height": 256.1,
+  "scale_factor": 0.00664,
+  "name": "gumdam",
+  "glb": "gumdam.glb",
+  "glb_size": 246404,
+  "height": 1.7,
+  "anim_names": [
+   "Stand",
+   "Attack",
+   "Walk",
+   "Death"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {
+   "Hand Right": {
+    "x": 0.2743,
+    "y": 0.557,
+    "z": 0.3853
+   },
+   "Weapon": {
+    "x": 0.2966,
+    "y": 0.5708,
+    "z": 0.3776
+   },
+   "Hand Left": {
+    "x": 0.2743,
+    "y": 0.557,
+    "z": -0.3701
+   },
+   "Head -": {
+    "x": 0.0014,
+    "y": 0.9206,
+    "z": -0.0055
+   },
+   "Chest": {
+    "x": -0.0038,
+    "y": 0.6577,
+    "z": 0.0009
+   },
+   "Foot Left": {
+    "x": 0.0745,
+    "y": 0.0425,
+    "z": -0.1929
+   },
+   "Foot Right": {
+    "x": 0.0504,
+    "y": 0.0335,
+    "z": 0.1876
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": -0.0011,
+    "z": 0.0
+   },
+   "OverHead": {
+    "x": -0.0107,
+    "y": 1.0773,
+    "z": 0.0
+   }
+  },
+  "notes": [
+   "mat2: additive glow w/o alpha → dropped",
+   "mat3: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: CAMS,CLID,EVTS,GEOA,GLBS,PRE2,PREM"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Attack",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "gx.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Birth",
+   "Stand",
+   "Death"
+  ],
+  "raw_height": 142.02,
+  "scale_factor": 0.02778,
+  "name": "gx",
+  "glb": "gx.glb",
+  "glb_size": 13968,
+  "height": 3.945,
+  "anim_names": [
+   "Birth",
+   "Stand",
+   "Death"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "mat0: additive glow w/o alpha → dropped",
+   "mat1: additive glow w/o alpha → dropped",
+   "mat2: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: EVTS,GEOA,GLBS,LITE,PRE2,PREM,RIBB"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.4309,
+  "effective_height": 1.7
+ },
+ {
+  "source": "gxhuge.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Birth",
+   "Stand",
+   "Death"
+  ],
+  "raw_height": 2840.32,
+  "scale_factor": 0.02778,
+  "name": "gxhuge",
+  "glb": "gxhuge.glb",
+  "glb_size": 13980,
+  "height": 78.898,
+  "anim_names": [
+   "Birth",
+   "Stand",
+   "Death"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "mat0: additive glow w/o alpha → dropped",
+   "mat1: additive glow w/o alpha → dropped",
+   "mat2: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: EVTS,GEOA,GLBS,LITE,PRE2,PREM,RIBB"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.0215,
+  "effective_height": 1.7
+ },
+ {
+  "source": "herofate.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand 2",
+   "Attack",
+   "Attack Slam",
+   "Death",
+   "Walk",
+   "Stand",
+   "Attack 2",
+   "Stand Ready",
+   "Dissipate",
+   "Portrait",
+   "Portrait 2",
+   "Portrait Talk",
+   "Portrait Talk 2",
+   "Spell"
+  ],
+  "missing_textures": [
+   "Textures\\Flame4.blp",
+   "Textures\\Flare.blp",
+   "abilities\\Weapons\\AvengerMissile\\Ghost1Mod.blp",
+   "Textures\\ShockwaveWater1Black.blp"
+  ],
+  "raw_height": 96.63,
+  "scale_factor": 0.01759,
+  "name": "herofate",
+  "glb": "herofate.glb",
+  "glb_size": 285116,
+  "height": 1.7,
+  "anim_names": [
+   "Stand 2",
+   "Attack",
+   "Attack Slam",
+   "Death",
+   "Walk",
+   "Stand",
+   "Attack 2",
+   "Stand Ready",
+   "Dissipate",
+   "Portrait",
+   "Portrait 2",
+   "Portrait Talk",
+   "Portrait Talk 2",
+   "Spell"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {
+   "Foot Right": {
+    "x": 0.0734,
+    "y": 0.212,
+    "z": 0.1897
+   },
+   "Foot Left": {
+    "x": 0.0651,
+    "y": 0.212,
+    "z": -0.1966
+   },
+   "Hand Right": {
+    "x": -0.0248,
+    "y": 1.1378,
+    "z": 0.291
+   },
+   "Hand Left": {
+    "x": -0.0248,
+    "y": 1.1806,
+    "z": -0.2773
+   },
+   "Head": {
+    "x": 0.0206,
+    "y": 2.1877,
+    "z": -0.003
+   },
+   "Chest": {
+    "x": 0.0185,
+    "y": 1.2777,
+    "z": -0.0018
+   },
+   "Origin": {
+    "x": -0.0138,
+    "y": 0.1358,
+    "z": 0.0058
+   },
+   "OverHead": {
+    "x": -0.0138,
+    "y": 2.698,
+    "z": 0.0058
+   },
+   "Weapon": {
+    "x": 1.0533,
+    "y": 1.1272,
+    "z": 0.2718
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,EVTS,PRE2,PREM,RIBB"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "heroluffeattack.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand",
+   "Birth",
+   "Death"
+  ],
+  "missing_textures": [
+   "Textures\\LightningBall.blp"
+  ],
+  "raw_height": 152.5,
+  "scale_factor": 0.02778,
+  "name": "heroluffeattack",
+  "glb": "heroluffeattack.glb",
+  "glb_size": 40664,
+  "height": 4.236,
+  "anim_names": [
+   "Stand",
+   "Birth",
+   "Death"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "mat0: additive glow w/o alpha → dropped",
+   "mat1: additive glow w/o alpha → dropped",
+   "mat2: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: GEOA,PRE2,PREM"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.4013,
+  "effective_height": 1.7
+ },
+ {
+  "source": "holo.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand"
+  ],
+  "raw_height": 244.86,
+  "scale_factor": 0.02778,
+  "name": "holo",
+  "glb": "holo.glb",
+  "glb_size": 445952,
+  "height": 6.802,
+  "anim_names": [
+   "Stand"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Stand"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.2499,
+  "effective_height": 1.7
+ },
+ {
+  "source": "horse.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Walk",
+   "Stand -1",
+   "Stand -2",
+   "Stand -3",
+   "Attack -1",
+   "Attack -2",
+   "Death",
+   "TempWalk",
+   "Stand Hit",
+   "Stand Victory"
+  ],
+  "missing_textures": [
+   "Textures\\Dust3x.blp"
+  ],
+  "raw_height": 163.4,
+  "scale_factor": 0.0104,
+  "name": "horse",
+  "glb": "horse.glb",
+  "glb_size": 259272,
+  "height": 1.7,
+  "anim_names": [
+   "Walk",
+   "Stand -1",
+   "Stand -2",
+   "Stand -3",
+   "Attack -1",
+   "Attack -2",
+   "Death",
+   "TempWalk",
+   "Stand Hit",
+   "Stand Victory"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {
+   "Head": {
+    "x": 0.4981,
+    "y": 1.5179,
+    "z": 0.0047
+   },
+   "Foot Right": {
+    "x": 0.2196,
+    "y": 0.026,
+    "z": 0.1428
+   },
+   "Foot Left": {
+    "x": 0.2194,
+    "y": 0.0259,
+    "z": -0.137
+   },
+   "Chest Mount": {
+    "x": 0.3799,
+    "y": 0.8684,
+    "z": 0.001
+   },
+   "Foot Left Rear": {
+    "x": -0.2702,
+    "y": 0.036,
+    "z": -0.1513
+   },
+   "Foot Right Rear": {
+    "x": -0.2702,
+    "y": 0.036,
+    "z": 0.1511
+   },
+   "Mount Rear": {
+    "x": -0.3143,
+    "y": 0.8882,
+    "z": 0.001
+   },
+   "Chest Mount Right": {
+    "x": 0.1788,
+    "y": 0.9304,
+    "z": 0.1242
+   },
+   "Chest Mount Left": {
+    "x": 0.1782,
+    "y": 0.9305,
+    "z": -0.1249
+   },
+   "OverHead": {
+    "x": 0.0,
+    "y": 1.8229,
+    "z": -0.0
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": -0.0
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,EVTS,PRE2,PREM"
+  ],
+  "clip_map": {
+   "idle": "Stand -1",
+   "run": "Walk",
+   "attack": "Attack -1",
+   "cast": "Attack -1",
+   "hurt": "Stand Hit",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "horsehead.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Walk",
+   "Stand -1",
+   "Stand -2",
+   "Stand -3",
+   "Attack -1",
+   "Attack -2",
+   "Death",
+   "TempWalk",
+   "Stand Hit",
+   "Stand Victory"
+  ],
+  "raw_height": 191.43,
+  "scale_factor": 0.00888,
+  "name": "horsehead",
+  "glb": "horsehead.glb",
+  "glb_size": 108052,
+  "height": 1.7,
+  "anim_names": [
+   "Walk",
+   "Stand -1",
+   "Stand -2",
+   "Stand -3",
+   "Attack -1",
+   "Attack -2",
+   "Death",
+   "TempWalk",
+   "Stand Hit",
+   "Stand Victory"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [],
+  "clip_map": {
+   "idle": "Stand -1",
+   "run": "Walk",
+   "attack": "Attack -1",
+   "cast": "Attack -1",
+   "hurt": "Stand Hit",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "hzyn.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Attack",
+   "Death",
+   "Attack 2",
+   "Dissipate",
+   "Channel",
+   "Stand Channel",
+   "Stand",
+   "Stand 2",
+   "Walk",
+   "Attack 3",
+   "Portrait 1",
+   "Stand Ready"
+  ],
+  "raw_height": 143.19,
+  "scale_factor": 0.01187,
+  "name": "hzyn",
+  "glb": "hzyn.glb",
+  "glb_size": 354584,
+  "height": 1.7,
+  "anim_names": [
+   "Attack",
+   "Death",
+   "Attack 2",
+   "Dissipate",
+   "Channel",
+   "Stand Channel",
+   "Stand",
+   "Stand 2",
+   "Walk",
+   "Attack 3",
+   "Portrait 1",
+   "Stand Ready"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {
+   "Foot Right": {
+    "x": -0.0188,
+    "y": 0.0897,
+    "z": 0.137
+   },
+   "Foot Left": {
+    "x": -0.0188,
+    "y": 0.0897,
+    "z": -0.1285
+   },
+   "Hand Left": {
+    "x": 0.0034,
+    "y": 0.8977,
+    "z": -0.3704
+   },
+   "Overhead": {
+    "x": -0.0188,
+    "y": 1.6929,
+    "z": 0.0019
+   },
+   "Head": {
+    "x": -0.0188,
+    "y": 1.5017,
+    "z": 0.0019
+   },
+   "Weapon": {
+    "x": 1.0949,
+    "y": 0.8603,
+    "z": 0.3558
+   },
+   "Hand Right": {
+    "x": 0.0034,
+    "y": 0.8977,
+    "z": 0.3558
+   },
+   "Chest": {
+    "x": -0.0188,
+    "y": 1.2528,
+    "z": 0.0019
+   },
+   "feet": {
+    "x": -0.0188,
+    "y": 0.0897,
+    "z": 0.0019
+   },
+   "Origin": {
+    "x": -0.0188,
+    "y": 0.0188,
+    "z": 0.0019
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Stand Channel",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.1,
+  "doc_scale": 1.1,
+  "effective_height": 1.87
+ },
+ {
+  "source": "lgcr.mdx",
+  "kind": "hero",
+  "sequences": [
+   "stand",
+   "stand ready",
+   "attack -1",
+   "spell",
+   "death",
+   "walk"
+  ],
+  "raw_height": 196.26,
+  "scale_factor": 0.00866,
+  "name": "lgcr",
+  "glb": "lgcr.glb",
+  "glb_size": 197304,
+  "height": 1.7,
+  "anim_names": [
+   "stand",
+   "stand ready",
+   "attack -1",
+   "spell",
+   "death",
+   "walk"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {
+   "Foot Left": {
+    "x": 0.0549,
+    "y": 0.0,
+    "z": -0.1617
+   },
+   "Foot Right": {
+    "x": 0.0549,
+    "y": 0.0,
+    "z": 0.1617
+   },
+   "Head": {
+    "x": -0.0042,
+    "y": 1.4843,
+    "z": -0.0
+   },
+   "Hand Right": {
+    "x": -0.0138,
+    "y": 0.9022,
+    "z": 0.3713
+   },
+   "Hand Left": {
+    "x": -0.0138,
+    "y": 0.9022,
+    "z": -0.3713
+   },
+   "Chest": {
+    "x": -0.0042,
+    "y": 1.2362,
+    "z": -0.0
+   },
+   "Origin": {
+    "x": -0.0,
+    "y": 0.0,
+    "z": -0.0
+   },
+   "Overhead": {
+    "x": -0.0,
+    "y": 1.7124,
+    "z": -0.0
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CLID"
+  ],
+  "clip_map": {
+   "idle": "stand",
+   "run": "walk",
+   "attack": "attack -1",
+   "cast": "spell",
+   "hurt": "stand",
+   "death": "death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "linkstik.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand - 1",
+   "Stand - 2",
+   "Stand Victory",
+   "Attack - 1",
+   "Attack - 2",
+   "Walk",
+   "Death",
+   "Decay Flesh",
+   "Stand Hit",
+   "Decay Bone"
+  ],
+  "missing_textures": [
+   "Textures\\gutz.blp",
+   "textures\\footman.blp"
+  ],
+  "raw_height": 64.47,
+  "scale_factor": 0.02637,
+  "name": "linkstik",
+  "glb": "linkstik.glb",
+  "glb_size": 197048,
+  "height": 1.7,
+  "anim_names": [
+   "Stand - 1",
+   "Stand - 2",
+   "Stand Victory",
+   "Attack - 1",
+   "Attack - 2",
+   "Walk",
+   "Death",
+   "Decay Flesh",
+   "Stand Hit",
+   "Decay Bone"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {
+   "Foot Left": {
+    "x": 0.1005,
+    "y": 0.0161,
+    "z": 0.2774
+   },
+   "Foot Right": {
+    "x": 0.0873,
+    "y": 0.0168,
+    "z": -0.3648
+   },
+   "Hand Right": {
+    "x": -0.0024,
+    "y": 1.1178,
+    "z": -0.6591
+   },
+   "Hand Left": {
+    "x": 0.1635,
+    "y": 1.1509,
+    "z": 0.607
+   },
+   "Weapon": {
+    "x": 1.2353,
+    "y": 1.4493,
+    "z": 0.9821
+   },
+   "Head -": {
+    "x": 0.1819,
+    "y": 2.2784,
+    "z": -0.0599
+   },
+   "Chest": {
+    "x": -0.0311,
+    "y": 1.9773,
+    "z": -0.066
+   },
+   "Origin": {
+    "x": 0.0091,
+    "y": -0.0332,
+    "z": -0.0636
+   },
+   "OverHead": {
+    "x": 0.0091,
+    "y": 2.9649,
+    "z": -0.0636
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,EVTS,GEOA"
+  ],
+  "clip_map": {
+   "idle": "Stand - 1",
+   "run": "Walk",
+   "attack": "Attack - 1",
+   "cast": "Attack - 1",
+   "hurt": "Stand Hit",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 0.9,
+  "doc_scale": 0.9,
+  "effective_height": 1.53
+ },
+ {
+  "source": "ma.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand -1",
+   "Spell First",
+   "Walk Fast",
+   "Walk",
+   "Attack -1",
+   "Attack -2",
+   "Spell Second",
+   "Spell Third",
+   "Spell Fourth",
+   "Death",
+   "Portrait -1",
+   "Portrait -2",
+   "Dissipate"
+  ],
+  "missing_textures": [
+   "Textures\\GenericGlow2b.blp"
+  ],
+  "raw_height": 189.08,
+  "scale_factor": 0.00899,
+  "name": "ma",
+  "glb": "ma.glb",
+  "glb_size": 309060,
+  "height": 1.7,
+  "anim_names": [
+   "Stand -1",
+   "Spell First",
+   "Walk Fast",
+   "Walk",
+   "Attack -1",
+   "Attack -2",
+   "Spell Second",
+   "Spell Third",
+   "Spell Fourth",
+   "Death",
+   "Portrait -1",
+   "Portrait -2",
+   "Dissipate"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {
+   "Foot Left": {
+    "x": 0.0684,
+    "y": 0.7567,
+    "z": -0.1101
+   },
+   "Foot Right": {
+    "x": 0.0686,
+    "y": 0.7562,
+    "z": 0.1041
+   },
+   "Hand Right": {
+    "x": 0.0324,
+    "y": 1.3436,
+    "z": 0.2151
+   },
+   "Weapon": {
+    "x": 0.0324,
+    "y": 1.3336,
+    "z": 0.2151
+   },
+   "Hand Left": {
+    "x": 0.0323,
+    "y": 1.3442,
+    "z": -0.2181
+   },
+   "Head -": {
+    "x": 0.0155,
+    "y": 1.9835,
+    "z": -0.0001
+   },
+   "Chest": {
+    "x": 0.0314,
+    "y": 1.75,
+    "z": 0.0
+   },
+   "OverHead": {
+    "x": 0.0,
+    "y": 2.2477,
+    "z": -0.0
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": -0.0
+   }
+  },
+  "notes": [
+   "mat2: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: CAMS,CLID,EVTS,GEOA,PRE2,PREM"
+  ],
+  "clip_map": {
+   "idle": "Stand -1",
+   "run": "Walk",
+   "attack": "Attack -1",
+   "cast": "Spell First",
+   "hurt": "Stand -1",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "mfls.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand 2",
+   "Death",
+   "Spell",
+   "Stand",
+   "Stand Ready",
+   "Attack",
+   "Attack Slam",
+   "Walk",
+   "Attack 2",
+   "Stand 3",
+   "Dissipate",
+   "Spell Slam"
+  ],
+  "raw_height": 142.61,
+  "scale_factor": 0.01192,
+  "name": "mfls",
+  "glb": "mfls.glb",
+  "glb_size": 260648,
+  "height": 1.7,
+  "anim_names": [
+   "Stand 2",
+   "Death",
+   "Spell",
+   "Stand",
+   "Stand Ready",
+   "Attack",
+   "Attack Slam",
+   "Walk",
+   "Attack 2",
+   "Stand 3",
+   "Dissipate",
+   "Spell Slam"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow1"
+  ],
+  "attach_points": {
+   "Foot Right": {
+    "x": -0.0367,
+    "y": 0.0747,
+    "z": 0.0958
+   },
+   "Foot Left": {
+    "x": -0.0367,
+    "y": 0.0747,
+    "z": -0.0919
+   },
+   "Hand Right": {
+    "x": 0.0385,
+    "y": 0.8467,
+    "z": 0.1888
+   },
+   "Weapon Left": {
+    "x": -0.4199,
+    "y": 0.7752,
+    "z": -0.1951
+   },
+   "Hand Left": {
+    "x": 0.0385,
+    "y": 0.8467,
+    "z": -0.1951
+   },
+   "Head": {
+    "x": 0.0425,
+    "y": 1.5031,
+    "z": -0.0001
+   },
+   "Overhead": {
+    "x": 0.0207,
+    "y": 1.7022,
+    "z": -0.0
+   },
+   "Chest": {
+    "x": 0.0007,
+    "y": 1.2279,
+    "z": -0.0001
+   },
+   "Origin": {
+    "x": 0.0218,
+    "y": 0.0101,
+    "z": -0.0001
+   },
+   "feet": {
+    "x": 0.0218,
+    "y": 0.0965,
+    "z": -0.0001
+   },
+   "Weapon Right": {
+    "x": 0.4795,
+    "y": 0.7752,
+    "z": 0.1888
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,EVTS,RIBB"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "negi.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand",
+   "Stand - 3",
+   "Walk",
+   "Attack",
+   "Attack - 1",
+   "Spell - 1",
+   "Attack - 3",
+   "Death",
+   "Dissipate",
+   "Spell - 2"
+  ],
+  "missing_textures": [
+   "Textures\\star3.blp",
+   "Textures\\Star9.blp",
+   "Textures\\Yellow_Star_Dim.blp"
+  ],
+  "raw_height": 150.01,
+  "scale_factor": 0.01133,
+  "name": "negi",
+  "glb": "negi.glb",
+  "glb_size": 243316,
+  "height": 1.7,
+  "anim_names": [
+   "Stand",
+   "Stand - 3",
+   "Walk",
+   "Attack",
+   "Attack - 1",
+   "Spell - 1",
+   "Attack - 3",
+   "Death",
+   "Dissipate",
+   "Spell - 2"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow4"
+  ],
+  "attach_points": {
+   "Hand Right": {
+    "x": 0.0,
+    "y": 0.7706,
+    "z": 0.34
+   },
+   "Hand Left": {
+    "x": 0.0,
+    "y": 0.7706,
+    "z": -0.34
+   },
+   "Head -": {
+    "x": 0.0,
+    "y": 1.5865,
+    "z": -0.0
+   },
+   "Chest": {
+    "x": 0.0,
+    "y": 1.2466,
+    "z": -0.0
+   },
+   "Foot Right": {
+    "x": -0.0227,
+    "y": 0.136,
+    "z": 0.1473
+   },
+   "Foot Left": {
+    "x": -0.0227,
+    "y": 0.136,
+    "z": -0.1473
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": -0.0
+   },
+   "Overhead": {
+    "x": 0.0,
+    "y": 2.0965,
+    "z": -0.0
+   }
+  },
+  "notes": [
+   "mat1: additive glow w/o alpha → dropped",
+   "mat2: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: CAMS,CLID,EVTS,GEOA,PRE2,PREM"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell - 1",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 0.9,
+  "doc_scale": 0.9,
+  "effective_height": 1.53
+ },
+ {
+  "source": "niya.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand 2",
+   "Attack",
+   "Attack Slam",
+   "Death",
+   "Walk",
+   "Stand",
+   "Attack 2",
+   "Stand Ready",
+   "Dissipate",
+   "Portrait",
+   "Portrait 2",
+   "Portrait Talk",
+   "Portrait Talk 2",
+   "Spell"
+  ],
+  "missing_textures": [
+   "Textures\\Flame4.blp",
+   "Textures\\Flare.blp"
+  ],
+  "raw_height": 21.29,
+  "scale_factor": 0.07985,
+  "name": "niya",
+  "glb": "niya.glb",
+  "glb_size": 295076,
+  "height": 1.7,
+  "anim_names": [
+   "Stand 2",
+   "Attack",
+   "Attack Slam",
+   "Death",
+   "Walk",
+   "Stand",
+   "Attack 2",
+   "Stand Ready",
+   "Dissipate",
+   "Portrait",
+   "Portrait 2",
+   "Portrait Talk",
+   "Portrait Talk 2",
+   "Spell"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow2"
+  ],
+  "attach_points": {
+   "Foot Right": {
+    "x": 0.3332,
+    "y": 0.962,
+    "z": 0.4856
+   },
+   "Foot Left": {
+    "x": 0.3332,
+    "y": 0.962,
+    "z": -0.4982
+   },
+   "Hand Right": {
+    "x": -0.1127,
+    "y": 5.503,
+    "z": 1.4117
+   },
+   "Hand Left": {
+    "x": -0.1127,
+    "y": 5.503,
+    "z": -1.4232
+   },
+   "Head": {
+    "x": 0.0935,
+    "y": 10.4583,
+    "z": -0.0135
+   },
+   "Chest": {
+    "x": 0.0839,
+    "y": 7.0236,
+    "z": -0.008
+   },
+   "Origin": {
+    "x": -0.0625,
+    "y": 0.6165,
+    "z": 0.0262
+   },
+   "OverHead": {
+    "x": -0.0625,
+    "y": 12.2445,
+    "z": 0.0262
+   },
+   "Weapon": {
+    "x": 4.7802,
+    "y": 5.3623,
+    "z": 1.3621
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,EVTS,GEOA,PRE2,RIBB"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "picacugy.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand 1",
+   "Stand 2",
+   "Stand 3",
+   "Stand 4",
+   "Stand 5",
+   "Attack",
+   "Walk",
+   "Death",
+   "Spell"
+  ],
+  "missing_textures": [
+   "Textures\\firering4.blp",
+   "Textures\\LightningBall.blp"
+  ],
+  "raw_height": 89.42,
+  "scale_factor": 0.01901,
+  "name": "picacugy",
+  "glb": "picacugy.glb",
+  "glb_size": 171312,
+  "height": 1.7,
+  "anim_names": [
+   "Stand 1",
+   "Stand 2",
+   "Stand 3",
+   "Stand 4",
+   "Stand 5",
+   "Attack",
+   "Walk",
+   "Death",
+   "Spell"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow2"
+  ],
+  "attach_points": {
+   "Foot Left": {
+    "x": -0.076,
+    "y": 0.076,
+    "z": -0.2034
+   },
+   "Foot Right": {
+    "x": -0.076,
+    "y": 0.076,
+    "z": 0.2034
+   },
+   "Chest": {
+    "x": 0.0,
+    "y": 0.8555,
+    "z": -0.0
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": -0.0
+   },
+   "OverHead": {
+    "x": 0.0,
+    "y": 1.9962,
+    "z": -0.0
+   },
+   "Hand Left": {
+    "x": 0.3422,
+    "y": 0.5704,
+    "z": -0.0665
+   },
+   "Hand Right": {
+    "x": 0.0856,
+    "y": 0.5133,
+    "z": 0.1521
+   },
+   "Head": {
+    "x": 0.2091,
+    "y": 1.2167,
+    "z": -0.0
+   }
+  },
+  "notes": [
+   "mat1: additive glow w/o alpha → dropped",
+   "mat3: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: CAMS,CLID,EVTS,GEOA,RIBB"
+  ],
+  "clip_map": {
+   "idle": "Stand 1",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand 1",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.8,
+  "doc_scale": 1.7647,
+  "effective_height": 3.0
+ },
+ {
+  "source": "pika.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand - 1",
+   "Stand - 2",
+   "Walk",
+   "Death",
+   "Dissipate",
+   "Attack - 1",
+   "Attack - 2",
+   "Attack - 3",
+   "Attack - 4"
+  ],
+  "missing_textures": [
+   "Textures\\LightningBall.blp",
+   "Textures\\Star3.blp"
+  ],
+  "raw_height": 135.6,
+  "scale_factor": 0.01254,
+  "name": "pika",
+  "glb": "pika.glb",
+  "glb_size": 278524,
+  "height": 1.7,
+  "anim_names": [
+   "Stand - 1",
+   "Stand - 2",
+   "Walk",
+   "Death",
+   "Dissipate",
+   "Attack - 1",
+   "Attack - 2",
+   "Attack - 3",
+   "Attack - 4"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow0"
+  ],
+  "attach_points": {
+   "Head -": {
+    "x": 0.0,
+    "y": 1.4417,
+    "z": -0.0
+   },
+   "Hand Right": {
+    "x": -0.0627,
+    "y": 0.7773,
+    "z": 0.2181
+   },
+   "Hand Left": {
+    "x": -0.0627,
+    "y": 0.7773,
+    "z": -0.2257
+   },
+   "Foot Left": {
+    "x": 0.0163,
+    "y": 0.0439,
+    "z": -0.0577
+   },
+   "Foot Right": {
+    "x": 0.0169,
+    "y": 0.0439,
+    "z": 0.0564
+   },
+   "Chest": {
+    "x": 0.0,
+    "y": 1.1659,
+    "z": -0.0
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": -0.0
+   },
+   "Overhead": {
+    "x": 0.0,
+    "y": 1.7552,
+    "z": -0.0
+   }
+  },
+  "notes": [
+   "mat2: additive glow w/o alpha → dropped",
+   "mat1: additive glow w/o alpha → dropped",
+   "skipped MDX chunks: CAMS,CLID,EVTS,GEOA"
+  ],
+  "clip_map": {
+   "idle": "Stand - 1",
+   "run": "Walk",
+   "attack": "Attack - 1",
+   "cast": "Attack - 1",
+   "hurt": "Stand - 1",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.2,
+  "doc_scale": 1.2,
+  "effective_height": 2.04
+ },
+ {
+  "source": "purplecoat.mdx",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand 1",
+   "Walk"
+  ],
+  "missing_textures": [
+   "units\\Critters\\VillagerWoman\\VillagerWoman.blp"
+  ],
+  "raw_height": 71.26,
+  "scale_factor": 0.02778,
+  "name": "purplecoat",
+  "glb": "purplecoat.glb",
+  "glb_size": 16176,
+  "height": 1.979,
+  "anim_names": [
+   "Stand 1",
+   "Walk"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "skipped MDX chunks: GEOA"
+  ],
+  "clip_map": {
+   "idle": "Stand 1",
+   "run": "Walk",
+   "attack": "Stand 1",
+   "cast": "Stand 1",
+   "hurt": "Stand 1",
+   "death": "Stand 1"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.859,
+  "effective_height": 1.7
+ },
+ {
+  "source": "rabbit.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand",
+   "Stand - 3",
+   "Stand - 4",
+   "Attack",
+   "Spell",
+   "Walk",
+   "Death",
+   "Stand Ready"
+  ],
+  "raw_height": 148.91,
+  "scale_factor": 0.01142,
+  "name": "rabbit",
+  "glb": "rabbit.glb",
+  "glb_size": 160096,
+  "height": 1.7,
+  "anim_names": [
+   "Stand",
+   "Stand - 3",
+   "Stand - 4",
+   "Attack",
+   "Spell",
+   "Walk",
+   "Death",
+   "Stand Ready"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow1"
+  ],
+  "attach_points": {
+   "Head -": {
+    "x": 0.0,
+    "y": 1.2101,
+    "z": -0.0
+   },
+   "Foot Right": {
+    "x": 0.0799,
+    "y": 0.0457,
+    "z": 0.1142
+   },
+   "Foot Left": {
+    "x": 0.0799,
+    "y": 0.0457,
+    "z": -0.1142
+   },
+   "Hand Right": {
+    "x": 0.0228,
+    "y": 0.5137,
+    "z": 0.4452
+   },
+   "Hand Left": {
+    "x": 0.0228,
+    "y": 0.5137,
+    "z": -0.4452
+   },
+   "Chest": {
+    "x": 0.0,
+    "y": 0.7421,
+    "z": -0.0
+   },
+   "Origin": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": -0.0
+   },
+   "Overhead": {
+    "x": 0.0,
+    "y": 1.8837,
+    "z": -0.0
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,EVTS"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "txbbb.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Death",
+   "Attack",
+   "Attack 2",
+   "Walk",
+   "Stand"
+  ],
+  "raw_height": 192.9,
+  "scale_factor": 0.00881,
+  "name": "txbbb",
+  "glb": "txbbb.glb",
+  "glb_size": 156208,
+  "height": 1.7,
+  "anim_names": [
+   "Death",
+   "Attack",
+   "Attack 2",
+   "Walk",
+   "Stand"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "skipped MDX chunks: CAMS"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Attack",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "war3mapImported__poweraura.MDX",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand"
+  ],
+  "raw_height": 269.46,
+  "scale_factor": 0.02778,
+  "name": "war3mapimported-poweraura",
+  "glb": "war3mapimported-poweraura.glb",
+  "glb_size": 268524,
+  "height": 7.485,
+  "anim_names": [
+   "Stand"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Stand"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.2271,
+  "effective_height": 1.7
+ },
+ {
+  "source": "wuqi.MDX",
+  "kind": "animated-prop",
+  "sequences": [
+   "Stand"
+  ],
+  "missing_textures": [
+   "Doodads\\Cinematic\\GlowingRunes\\GLowColors.blp"
+  ],
+  "raw_height": 163.24,
+  "scale_factor": 0.02778,
+  "name": "wuqi",
+  "glb": "wuqi.glb",
+  "glb_size": 37624,
+  "height": 4.534,
+  "anim_names": [
+   "Stand"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [],
+  "attach_points": {},
+  "notes": [
+   "mat1: additive glow w/o alpha → dropped"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Stand",
+   "attack": "Stand",
+   "cast": "Stand",
+   "hurt": "Stand",
+   "death": "Stand"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 0.3749,
+  "effective_height": 1.7
+ },
+ {
+  "source": "xzz.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Walk 2",
+   "Walk",
+   "Stand",
+   "Stand Ready",
+   "Attack",
+   "Spell",
+   "Death"
+  ],
+  "raw_height": 249.11,
+  "scale_factor": 0.00682,
+  "name": "xzz",
+  "glb": "xzz.glb",
+  "glb_size": 541384,
+  "height": 1.7,
+  "anim_names": [
+   "Walk 2",
+   "Walk",
+   "Stand",
+   "Stand Ready",
+   "Attack",
+   "Spell",
+   "Death"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow2"
+  ],
+  "attach_points": {
+   "Overhead": {
+    "x": -0.0,
+    "y": 1.7315,
+    "z": -0.0
+   },
+   "Head": {
+    "x": -0.0,
+    "y": 1.7137,
+    "z": -0.0
+   },
+   "Hand Right": {
+    "x": -0.0,
+    "y": 0.7127,
+    "z": 0.2175
+   },
+   "Weapon": {
+    "x": -0.0,
+    "y": 0.6799,
+    "z": 0.2131
+   },
+   "Hand Left": {
+    "x": -0.0,
+    "y": 0.7127,
+    "z": -0.2187
+   },
+   "Foot Right": {
+    "x": -0.0,
+    "y": 0.0,
+    "z": 0.0972
+   },
+   "Foot Left": {
+    "x": -0.0,
+    "y": 0.0,
+    "z": -0.1057
+   },
+   "Chest": {
+    "x": -0.0,
+    "y": 1.1715,
+    "z": -0.0
+   },
+   "Origin": {
+    "x": -0.0,
+    "y": 0.0,
+    "z": -0.0
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ },
+ {
+  "source": "ye-wuqi1.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Stand - 1",
+   "stand ready",
+   "stand-2",
+   "Attack",
+   "death",
+   "Attack-2",
+   "Attack-3",
+   "walk",
+   "spell"
+  ],
+  "missing_textures": [
+   "Textures\\TeamGlow01.blp"
+  ],
+  "raw_height": 221.25,
+  "scale_factor": 0.00768,
+  "name": "ye-wuqi1",
+  "glb": "ye-wuqi1.glb",
+  "glb_size": 213892,
+  "height": 1.7,
+  "anim_names": [
+   "Stand - 1",
+   "stand ready",
+   "stand-2",
+   "Attack",
+   "death",
+   "Attack-2",
+   "Attack-3",
+   "walk",
+   "spell"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow2"
+  ],
+  "attach_points": {
+   "Head": {
+    "x": 0.066,
+    "y": 1.5468,
+    "z": 0.0062
+   },
+   "Hand Left": {
+    "x": 0.066,
+    "y": 0.7151,
+    "z": -0.2823
+   },
+   "Chest": {
+    "x": 0.066,
+    "y": 1.2077,
+    "z": 0.0062
+   },
+   "Foot Right": {
+    "x": 0.066,
+    "y": 0.0275,
+    "z": 0.144
+   },
+   "Foot Left": {
+    "x": 0.066,
+    "y": 0.0275,
+    "z": -0.1189
+   },
+   "OverHead": {
+    "x": 0.035,
+    "y": 1.752,
+    "z": 0.0062
+   },
+   "Origin": {
+    "x": 0.066,
+    "y": -0.0002,
+    "z": -0.0041
+   },
+   "Hand Right": {
+    "x": 0.066,
+    "y": 0.7151,
+    "z": 0.3052
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID,EVTS,PRE2,PREM,RIBB"
+  ],
+  "clip_map": {
+   "idle": "Stand - 1",
+   "run": "walk",
+   "attack": "Attack",
+   "cast": "spell",
+   "hurt": "stand-2",
+   "death": "death"
+  },
+  "status": "ok",
+  "usca": 0.7,
+  "doc_scale": 0.7,
+  "effective_height": 1.19
+ },
+ {
+  "source": "zy3.mdx",
+  "kind": "hero",
+  "sequences": [
+   "Attack",
+   "Attack Defend 5",
+   "Death",
+   "Walk",
+   "Attack 2",
+   "Stand Defend",
+   "Dissipate",
+   "Channel",
+   "Stand Channel",
+   "Attack Walk Stand Spin",
+   "Stand Ready Defend",
+   "Stand",
+   "Stand 2",
+   "Walk Defend",
+   "Attack Defend 4",
+   "Attack Defend 6",
+   "Attack 3",
+   "Stand Defend 2",
+   "Portrait 1",
+   "Attack Defend 3",
+   "Attack Defend",
+   "Spell",
+   "Attack Defend 2",
+   "Stand Ready"
+  ],
+  "raw_height": 142.3,
+  "scale_factor": 0.01195,
+  "name": "zy3",
+  "glb": "zy3.glb",
+  "glb_size": 438992,
+  "height": 1.7,
+  "anim_names": [
+   "Attack",
+   "Attack Defend 5",
+   "Death",
+   "Walk",
+   "Attack 2",
+   "Stand Defend",
+   "Dissipate",
+   "Channel",
+   "Stand Channel",
+   "Attack Walk Stand Spin",
+   "Stand Ready Defend",
+   "Stand",
+   "Stand 2",
+   "Walk Defend",
+   "Attack Defend 4",
+   "Attack Defend 6",
+   "Attack 3",
+   "Stand Defend 2",
+   "Portrait 1",
+   "Attack Defend 3",
+   "Attack Defend",
+   "Spell",
+   "Attack Defend 2",
+   "Stand Ready"
+  ],
+  "team_color_materials": [],
+  "dropped_glow_materials": [
+   "TeamGlow0"
+  ],
+  "attach_points": {
+   "Foot Right": {
+    "x": -0.0189,
+    "y": 0.0903,
+    "z": 0.2056
+   },
+   "Foot Left": {
+    "x": -0.0189,
+    "y": 0.0903,
+    "z": -0.1769
+   },
+   "Hand Left": {
+    "x": 0.0034,
+    "y": 0.9033,
+    "z": -0.4851
+   },
+   "Weapon": {
+    "x": 1.1018,
+    "y": 0.9033,
+    "z": 0.4786
+   },
+   "Hand Right": {
+    "x": 0.0034,
+    "y": 0.9033,
+    "z": 0.4786
+   },
+   "Overhead": {
+    "x": -0.0189,
+    "y": 1.7035,
+    "z": 0.0019
+   },
+   "Head": {
+    "x": -0.0189,
+    "y": 1.5111,
+    "z": 0.0019
+   },
+   "Chest": {
+    "x": -0.0189,
+    "y": 1.2607,
+    "z": 0.0019
+   },
+   "Origin": {
+    "x": -0.0189,
+    "y": 0.0189,
+    "z": 0.0019
+   },
+   "feet": {
+    "x": -0.0189,
+    "y": 0.0903,
+    "z": 0.0019
+   }
+  },
+  "notes": [
+   "skipped MDX chunks: CAMS,CLID"
+  ],
+  "clip_map": {
+   "idle": "Stand",
+   "run": "Walk",
+   "attack": "Attack",
+   "cast": "Spell",
+   "hurt": "Stand",
+   "death": "Death"
+  },
+  "status": "ok",
+  "usca": 1.0,
+  "doc_scale": 1.0,
+  "effective_height": 1.7
+ }
+]

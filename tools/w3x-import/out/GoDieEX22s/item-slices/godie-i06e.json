@@ -1,0 +1,50 @@
+{
+  "contentId": "godie-i06e",
+  "nameZh": "月牙魔杖",
+  "gold": 10000,
+  "kind": "effect",
+  "description": "夢幻\r\n效能\r\n每秒造成範圍流星傷害160（距離越遠流星傷害越低）\r\n減少魔法傷害50%\r\n\r\n解說\r\n眾神黃昏之戰裡，月神為了抵抗火星人特別為飛鼠先生鑄造的神器，是月之海裡最高等級的武器。",
+  "abilities": [
+    {
+      "rawcode": "A05W",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {
+        "1": {
+          "1": 85.0
+        },
+        "2": {
+          "1": 225.0
+        },
+        "3": {
+          "1": 115.0
+        },
+        "4": {
+          "1": 128.0
+        },
+        "5": {
+          "1": 160.0
+        }
+      }
+    },
+    {
+      "rawcode": "A0F2",
+      "name": "月牙翅膀",
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A05X",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {
+        "2": {
+          "1": 0.5
+        }
+      }
+    }
+  ]
+}

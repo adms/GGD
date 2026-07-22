@@ -1,0 +1,42 @@
+{
+  "id": "godie-e007.r",
+  "name": "12-04 龍氣爆發",
+  "description": "[主動傷害]\n60秒冷卻時間\n\n凝聚體內的龍氣造成550點傷害，集氣每秒增加(敏捷*5)傷害，最多集氣3秒。\n(建築傷害25%)",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    215.0,
+    280.0,
+    345.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          4.01,
+          4.01,
+          4.01
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.018
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/godie-e007.r.png"
+}

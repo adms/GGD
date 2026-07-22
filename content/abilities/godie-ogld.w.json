@@ -1,0 +1,41 @@
+{
+  "id": "godie-ogld.w",
+  "name": "72-02 黑人牙菌斑",
+  "description": "[主動]\n15秒冷卻時間\n\n釋放黑人牙菌斑病毒，被感染的部隊會每秒受到20點傷害並減緩攻擊移動速度30%，持續10秒。死亡後會釋放出1隻成熟的牙菌斑並聽從黑人控制，持續60秒。",
+  "slot": "W",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0
+  ],
+  "manaCost": [
+    60.0,
+    80.0,
+    110.0
+  ],
+  "range": 14.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          20.0,
+          30.0,
+          40.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.12
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

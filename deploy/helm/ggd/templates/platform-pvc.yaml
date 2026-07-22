@@ -1,0 +1,22 @@
+{{- /*
+RWO claim for data/ JSON truth — part of the single-writer invariant
+(skipped in the kind local profile where a hostPath is bound instead).
+*/ -}}
+{{- if not .Values.platform.data.hostPath }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-platform-data
+  labels:
+    {{- include "ggd.labels" . | nindent 4 }}
+    app.kubernetes.io/name: platform
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.platform.data.size }}
+  {{- with .Values.platform.data.storageClass }}
+  storageClassName: {{ . | quote }}
+  {{- end }}
+{{- end }}

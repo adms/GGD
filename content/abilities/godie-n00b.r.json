@@ -1,0 +1,47 @@
+{
+  "id": "godie-n00b.r",
+  "schema": "ability@1",
+  "name": "57-04 竹蜻蜓",
+  "description": "[輔助]\n55秒冷卻時間\n\n給目標帶上竹蜻蜓，而四周會產生共12道龍捲風每個龍捲風都有著150點傷害。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    55.0,
+    55.0,
+    55.0
+  ],
+  "manaCost": [
+    300.0,
+    500.0,
+    700.0
+  ],
+  "range": 6.42,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          75.0,
+          75.0,
+          75.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.225
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "root",
+      "duration": 1.0,
+      "root": true
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true
+}

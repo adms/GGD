@@ -1,0 +1,23 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["node"],
+    "skipLibCheck": true
+  },
+  "include": [
+    "limits.ts",
+    "emit_report.ts",
+    "glb.ts",
+    "roles.ts",
+    "rig.ts",
+    "guard.ts",
+    "optimize.ts",
+    "limits.test.ts",
+    "report.test.ts",
+    "glb.test.ts",
+    "guard.test.ts",
+    "optimize.test.ts"
+  ]
+}

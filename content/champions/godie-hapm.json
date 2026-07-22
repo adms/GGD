@@ -1,0 +1,239 @@
+{
+  "id": "godie-hapm",
+  "schema": "champion@1",
+  "name": "海克力斯 - Berserker",
+  "description": "故事：\nBerserker是希臘神話中著名的英雄海格力斯(Hercules) ，血統為半神半人，力大無窮，曾在聖杯戰爭中被召喚為SENVENT與嬌小的Master依利亞並肩作戰。\n(第一屆去死團大賽獎勵角色 出自:Fate/stay night)\n\n推薦玩家 : 衝鋒殺人\n上手度 : 中\n\n角色成長：\n力量 + 2.80\n敏捷 + 1.40\n智慧 + 1.70\n基礎跑速 300\n\n可學習的技能：\n狂戰士之怒、蹂躪編年史、無銘斧劍、巨神一擊",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "champ.thorne",
+  "baseStats": {
+    "maxHealth": 660,
+    "healthRegen": 1.7,
+    "maxMana": 168,
+    "manaRegen": 1.36,
+    "ad": 35,
+    "ap": 0,
+    "armor": 5,
+    "mr": 28,
+    "as": 0.53,
+    "ms": 5.8,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 56,
+    "healthRegen": 0.14,
+    "maxMana": 20,
+    "manaRegen": 0.07,
+    "ad": 2.8,
+    "armor": 0.4,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-hapm.q",
+      "name": "52-01 狂戰士之怒",
+      "description": "[輔助]\n35秒冷卻時間\n\n進入狂戰士的狀態，可增加40點的額外傷害及裝甲4點，但是會降低攻擊速度20%。持續12秒。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        35.0,
+        35.0,
+        35.0,
+        35.0,
+        57.0
+      ],
+      "manaCost": [
+        60.0,
+        110.0,
+        160.0,
+        210.0,
+        175.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              40.0,
+              80.0,
+              120.0,
+              160.0,
+              200.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "W": {
+      "id": "godie-hapm.w",
+      "name": "52-02 蹂躪編年史",
+      "description": "[主動攻擊]\n45秒冷卻時間\n\n迅速將目標抓回再暴力的丟出去，使之撞擊前方400距離處的敵人造成350傷害。",
+      "slot": "W",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        60.0,
+        155.0,
+        190.0,
+        225.0
+      ],
+      "range": 5.5,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "E": {
+      "id": "godie-hapm.e",
+      "name": "52-03 無銘斧劍",
+      "description": "[被動]\n0秒冷卻時間\n\n由希臘神殿石柱打造出來的斧劍，只有BARSERKER的怪力才能揮動它，被攻擊者接下攻擊後會受到額外50點傷害且行動暫時麻痺，遲緩攻擊速度40%，持續0.6秒。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              50.0,
+              70.0,
+              90.0,
+              110.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.33
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "R": {
+      "id": "godie-hapm.r",
+      "name": "52-04 巨神一擊",
+      "description": "[主動攻擊]\n60秒冷卻時間\n\n燃燒巨斧向前衝刺400距離後揮出致命的一擊，對周圍400內的敵人造成600點傷害。",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        200.0,
+        360.0,
+        520.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              3.0,
+              3.0,
+              3.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.009
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow25",
+          "duration": 1.5,
+          "moveSpeedMult": 0.6
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "radius": 6.0
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin"
+  ],
+  "exAbility": "godie-hapm.ex",
+  "icon": "assets/icons/champions/godie-hapm.png",
+  "tint": [
+    0.3137,
+    0.3137,
+    0.3137
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "id": "godie-ecen.q",
+  "name": "64-01 威士忌攻擊",
+  "description": "[主動傷害]\n25秒冷卻時間\n\n約翰走路藉由獨家調配的奇異威士忌發動神秘的攻擊，造成100點傷害並且緩慢對手移動速度25%，持續6秒。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    25.0,
+    25.0,
+    25.0
+  ],
+  "manaCost": [
+    75.0,
+    105.0,
+    135.0
+  ],
+  "range": 9.17,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          100.0,
+          200.0,
+          300.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.9
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow25",
+      "duration": 6.0,
+      "moveSpeedMult": 0.75
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

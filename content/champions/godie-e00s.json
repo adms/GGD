@@ -1,0 +1,222 @@
+{
+  "id": "godie-e00s",
+  "schema": "champion@1",
+  "name": "白木老樹精 - 白木卡迪那",
+  "description": "故事：\n白木家族是捍衛世界樹種族之一，與黃金龍族不同的是，通常處於被動守護狀態而不像黃金龍族常巡邏出擊，白木家族擅長控制自然元素牽制敵人。卡迪那本來是一顆瀕臨枯死的老樹精，受到飛鼠先生的祝福之後重生也得到了異常的魔法能量。\n(出自:去死團逆襲原創)\n\n推薦玩家 : 團戰殺人\n上手度 : 易\n\n角色成長：\n力量 + 1.85\n敏捷 + 1.10\n智慧 + 2.80\n基礎跑速 250\n\n可學習的技能：\n伸卡球、大怒石、木束縛之術、千年練成",
+  "role": "marksman",
+  "attackType": "ranged",
+  "modelKey": "champ.sela",
+  "baseStats": {
+    "maxHealth": 480,
+    "healthRegen": 1.15,
+    "maxMana": 400,
+    "manaRegen": 1.8,
+    "ad": 29,
+    "ap": 0,
+    "armor": 6,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.5,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 11.0
+  },
+  "growth": {
+    "maxHealth": 37,
+    "healthRegen": 0.09,
+    "maxMana": 34,
+    "manaRegen": 0.11,
+    "ad": 1.1,
+    "armor": 0.3,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-e00s.q",
+      "name": "70-01 伸卡球",
+      "description": "[主動攻擊]\n35秒冷卻時間\n\n某天卡迪納吃著洋芋片從MLB某球員領悟的球技，變化為必殺技後有意想不到的傷害，造成範圍敵人150+力量*3點傷害。",
+      "slot": "Q",
+      "castType": "skillshot",
+      "maxRank": 5,
+      "cooldown": [
+        35.0,
+        35.0,
+        35.0,
+        35.0,
+        35.0
+      ],
+      "manaCost": [
+        150.0,
+        210.0,
+        270.0,
+        270.0,
+        270.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.wave",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "perRank": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "W": {
+      "id": "godie-e00s.w",
+      "name": "70-02 大怒石",
+      "description": "[被動]\n0秒冷卻時間\n\n白木具有大聯盟實力的投擲攻擊有8%機率增加50點破壞力，並敵人觸身擊暈0.4秒。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "duration": 3.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "E": {
+      "id": "godie-e00s.e",
+      "name": "70-03 木束縛之術",
+      "description": "[輔助]\n60秒冷卻時間\n\n讓白木周圍的敵方都受到木靈束縛綑綁，持續1.5秒。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        100.0,
+        150.0,
+        150.0,
+        250.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "R": {
+      "id": "godie-e00s.r",
+      "name": "70-04 千年練成",
+      "description": "[主動攻擊]\n70秒冷卻時間\n\n在指定範圍內招喚樹精並且在短時間練成千年的魔力，總共4棵樹精，每棵樹精誕生時可以造成180點傷害。",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        70.0,
+        70.0,
+        70.0
+      ],
+      "manaCost": [
+        240.0,
+        420.0,
+        600.0
+      ],
+      "range": 14.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              75.0,
+              75.0,
+              75.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.225
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin"
+  ],
+  "exAbility": "godie-e00s.ex",
+  "tint": [
+    1.0,
+    0.7843,
+    1.0
+  ]
+}

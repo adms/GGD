@@ -1,0 +1,36 @@
+{
+  "id": "godie-e00x.w",
+  "name": "77-02 雷鳴劍",
+  "description": "[被動]\n0秒冷卻時間\n\n攻擊時有10%的機率可以使出會心一擊造成1.5倍的傷害，並且有10%的機率掉下一條落雷，造成範圍內部隊50點傷害。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    12.0,
+    12.0,
+    12.0,
+    12.0
+  ],
+  "manaCost": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "critChance",
+          "op": "flat",
+          "value": 0.25
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

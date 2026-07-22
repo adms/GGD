@@ -1,0 +1,43 @@
+# deps
+node_modules/
+.pnpm-store/
+
+# build output
+dist/
+build/
+*.tsbuildinfo
+
+# go
+apps/platform/bin/
+tools/testrunner/bin/
+
+# runtime durable store (keep structure, ignore contents)
+/data/**
+!/data/
+!/data/.gitkeep
+
+# test / coverage
+coverage/
+test-results/
+playwright-report/
+*.ndjson
+
+# env & secrets
+.env
+.env.*
+!.env.example
+deploy/**/secrets*.yaml
+
+# whole-tree snapshots background tasks drop in-repo (see vitest.config.ts)
+.backup*/
+backup-*/
+
+# copyrighted upstream Warcraft III archives + source maps — importer INPUTS only,
+# never redistributed, and ~850 MB. The extracted/derived content under content/ is
+# what the project ships (gated behind the copyright overlay); the raw archives are not.
+*.mpq
+*.w3x
+
+# misc
+.DS_Store
+*.log

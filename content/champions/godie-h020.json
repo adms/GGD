@@ -1,0 +1,247 @@
+{
+  "id": "godie-h020",
+  "schema": "champion@1",
+  "name": "黑魔導士 - 莉娜因巴斯",
+  "description": "故事：\n自稱天才美少女魔導士的莉娜，加入愛與和平純粹只是為了可以獲得賞金，正如同她的綽號\"盜賊殺手\"一樣，惡徒是沒有人權的。\n(出自:秀逗魔導士)\n\n推薦玩家 : 團戰殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.60\n敏捷 + 1.70\n智慧 + 3.00\n基礎跑速 290\n\n可學習的技能：\n火球術、炸彈陣、龍破斬、神滅斬、重破斬(需要惡夢魔王碎片)",
+  "role": "marksman",
+  "attackType": "ranged",
+  "modelKey": "imported.linainvers",
+  "missileSpeed": 18.3,
+  "baseStats": {
+    "maxHealth": 440,
+    "healthRegen": 1.05,
+    "maxMana": 6524,
+    "manaRegen": 5.88,
+    "ad": 26,
+    "ap": 0,
+    "armor": 6,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.7,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 8.2
+  },
+  "growth": {
+    "maxHealth": 32,
+    "healthRegen": 0.08,
+    "maxMana": 36,
+    "manaRegen": 0.12,
+    "ad": 1.6,
+    "armor": 0.5,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-h020.q",
+      "name": "04-01 火球術",
+      "description": "[主動攻擊]\n18秒冷卻時間\n\n使用火球來攻擊敵人造成170點傷害，並附帶暈眩1.50秒的效果。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        18.0,
+        18.0,
+        18.0,
+        18.0
+      ],
+      "manaCost": [
+        35.0,
+        45.0,
+        55.0,
+        65.0
+      ],
+      "range": 11.92,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              170,
+              220,
+              270,
+              320
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.96
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "burnstun",
+          "duration": 1.5,
+          "stun": true
+        }
+      ],
+      "vfxKey": "fx.firestorm",
+      "targetsEnemies": true
+    },
+    "W": {
+      "id": "godie-h020.w",
+      "name": "04-02 炸彈陣",
+      "description": "[主動攻擊]\n25秒冷卻時間\n\n施展火焰爆裂魔法傷害敵方部隊，每秒可以燒傷55點並持續5秒的時間。在火柱消散之後，在火焰中的部隊仍然會持續受到10點的傷害，持續5秒。",
+      "slot": "W",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        25.0,
+        25.0,
+        25.0,
+        25.0
+      ],
+      "manaCost": [
+        55.0,
+        85.0,
+        115.0,
+        145.0
+      ],
+      "range": 14.67,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              110.0,
+              170.0,
+              230.0,
+              290.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.87
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "radius": 5.5
+    },
+    "E": {
+      "id": "godie-h020.e",
+      "name": "04-03 龍破斬",
+      "description": "[主動攻擊]\n60秒冷卻時間\n\n藉由赤眼魔王沙布蘭尼古之力使用的咒文，以範圍廣和強大的破壞力自誇，具有一擊可殺死巨龍及毀滅一個小鎮的威力。給予範圍內的敵人最多700點傷害。\n\n(對建築傷害*50%)\n\n點選惡夢魔王碎片增幅後，可增加威力(智慧*7)",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        230.0,
+        395.0,
+        560.0,
+        725.0
+      ],
+      "range": 14.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              700.0,
+              1200.0,
+              1700.0,
+              2200.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow25",
+          "duration": 1.5,
+          "moveSpeedMult": 0.6
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "radius": 8.25
+    },
+    "R": {
+      "id": "godie-h020.r",
+      "name": "04-04 神滅斬",
+      "description": "[主動攻擊]\n60秒冷卻時間\n\n是藉金色魔王之力使出的強力咒文。將魔力化為黑色的光刀，力量強勁到似乎可以斬斷一切。造成敵方單體600+智慧*5點傷害並暈眩2秒。\n\n點選惡夢魔王碎片增幅後，可增加威力(智慧*7)",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        150.0,
+        250.0,
+        350.0
+      ],
+      "range": 5.04,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              600.0,
+              1100.0,
+              1600.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow25",
+          "duration": 2.0,
+          "moveSpeedMult": 0.6
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "godie-i05x",
+    "godie-i06h",
+    "godie-i003",
+    "godie-i04b"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ],
+  "exAbility": "godie-h020.ex",
+  "icon": "assets/icons/champions/godie-h020.png"
+}

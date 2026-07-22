@@ -1,0 +1,84 @@
+{
+  "id": "godie-e00q.r",
+  "name": "69-04 魔力增幅",
+  "description": "[被動]\n0秒冷卻時間\n\n打開魔術迴路，永久性的增加法力500點以及生命再生8點。",
+  "slot": "R",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0,
+  "effects": [],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1",
+  "passive": {
+    "name": "69-04 魔力增幅",
+    "ranks": [
+      {
+        "modifiers": [
+          {
+            "stat": "maxMana",
+            "op": "flat",
+            "value": 500.0
+          },
+          {
+            "stat": "manaRegen",
+            "op": "flat",
+            "value": 0.2
+          },
+          {
+            "stat": "healthRegen",
+            "op": "flat",
+            "value": 8.0
+          }
+        ]
+      },
+      {
+        "modifiers": [
+          {
+            "stat": "maxMana",
+            "op": "flat",
+            "value": 1000.0
+          },
+          {
+            "stat": "manaRegen",
+            "op": "flat",
+            "value": 0.4
+          },
+          {
+            "stat": "healthRegen",
+            "op": "flat",
+            "value": 16.0
+          }
+        ]
+      },
+      {
+        "modifiers": [
+          {
+            "stat": "maxMana",
+            "op": "flat",
+            "value": 1500.0
+          },
+          {
+            "stat": "manaRegen",
+            "op": "flat",
+            "value": 0.6
+          },
+          {
+            "stat": "healthRegen",
+            "op": "flat",
+            "value": 24.0
+          }
+        ]
+      }
+    ]
+  }
+}

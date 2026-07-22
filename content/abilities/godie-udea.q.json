@@ -1,0 +1,31 @@
+{
+  "id": "godie-udea.q",
+  "name": "65-01 神出鬼沒",
+  "description": "[輔助]\n25秒冷卻時間\n\n飛鼠先生可以瞬間移動3300的距離到指定的位置。",
+  "slot": "Q",
+  "castType": "dash",
+  "maxRank": 4,
+  "cooldown": [
+    25.0,
+    25.0,
+    25.0,
+    25.0
+  ],
+  "manaCost": [
+    150.0,
+    250.0,
+    350.0,
+    450.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "dash",
+      "mode": "toPoint",
+      "speed": 30.0,
+      "maxDistance": 11.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

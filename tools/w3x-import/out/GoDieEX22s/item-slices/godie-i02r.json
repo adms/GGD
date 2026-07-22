@@ -1,0 +1,30 @@
+{
+  "contentId": "godie-i02r",
+  "nameZh": "奇蹟之墜",
+  "gold": 6700,
+  "kind": "effect",
+  "description": "飾品\r\n施展需求魔力：150點\r\n技能冷卻時間：60秒\r\n效能\r\n範圍移動速度增加\r\n智慧+20\r\n生命+600\r\n\r\n解說\r\n傳說中龍王身上的吊飾，可以讓持有者擁有媲美飛龍一般的速度。",
+  "abilities": [
+    {
+      "rawcode": "A036",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A0WZ",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A0EK",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    }
+  ]
+}

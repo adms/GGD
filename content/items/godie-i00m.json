@@ -1,0 +1,18 @@
+{
+  "id": "godie-i00m",
+  "schema": "item@1",
+  "name": "米索莉護板",
+  "description": "效能\n裝甲+17\n\n解說\n雖然外表很普通，但是實用的裝備。",
+  "cost": 300,
+  "tier": 1,
+  "tags": [
+    "wc3-import"
+  ],
+  "modifiers": [
+    {
+      "stat": "armor",
+      "op": "flat",
+      "value": 17
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "id": "godie-e008.q",
+  "name": "21-02 拔焰刀",
+  "description": "[主動攻擊]\n25秒冷卻時間\n\n拔抽覆蓋火焰的刀斬擊敵人造成300傷害，同時可以打昏目標0.5秒。同時熾熱的刀身能造成普攻附加額外75點火焰擴散傷害4秒。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    25.0,
+    25.0,
+    25.0
+  ],
+  "manaCost": [
+    75.0,
+    125.0,
+    175.0
+  ],
+  "range": 4.58,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          300.0,
+          400.0,
+          500.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow25",
+      "duration": 0.5,
+      "moveSpeedMult": 0.6
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

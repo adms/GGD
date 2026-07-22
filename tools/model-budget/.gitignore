@@ -1,0 +1,8 @@
+# Isolated geometry-decimation deps (installed by optimize/bootstrap-geometry.sh).
+# NOT a workspace member, NOT in pnpm-lock.yaml — see the bootstrap script.
+.optvendor/
+optimize/node_modules
+
+# Review tree the offline optimiser writes to (--apply). Never shipping content;
+# adoption is a manual copy after review.
+optimized-out/

@@ -1,0 +1,17 @@
+# Non-secret runtime configuration shared by platform + game.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-config
+  labels:
+    {{- include "ggd.labels" . | nindent 4 }}
+data:
+  APP_ENV: {{ .Values.appEnv | quote }}
+  HTTP_ADDR: {{ printf ":%d" (int .Values.platform.port) | quote }}
+  REDIS_ADDR: {{ printf "%s-redis:%d" .Release.Name (int .Values.redis.port) | quote }}
+  DATA_DIR: "/data"
+  CONTENT_DIR: "/srv/content"
+  # Go→Colyseus seat reservation goes server-to-server, never via the edge.
+  GAME_INTERNAL_URL: {{ printf "http://%s-game:%d" .Release.Name (int .Values.game.port) | quote }}
+  # Result callback target (game → platform), same HMAC seam.
+  PLATFORM_INTERNAL_URL: {{ printf "http://%s-platform:%d" .Release.Name (int .Values.platform.port) | quote }}

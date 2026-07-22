@@ -1,0 +1,53 @@
+{
+  "id": "godie-e00j.q",
+  "name": "95-01 謝謝指教",
+  "description": "[主動傷害]\n25秒冷卻時間\n\n左手是謝謝，右手是指教，談笑間將目標擊飛，每滑行50距離便會受到30點傷害，最遠距離400。被打中的人不會有任何的怨恨，眼神只會透露出如火一般的尊敬。\n\n《龍氣》 - 擊飛的同時將勁力打入目標體內，若因撞到物體而停止時勁力將會爆發，造成範圍傷害80點。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 5,
+  "cooldown": [
+    25.0,
+    25.0,
+    25.0,
+    25.0,
+    25.0
+  ],
+  "manaCost": [
+    70.0,
+    110.0,
+    150.0,
+    190.0,
+    190.0
+  ],
+  "range": 3.67,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.003
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow25",
+      "duration": 0.3,
+      "moveSpeedMult": 0.6
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

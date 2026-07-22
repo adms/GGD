@@ -1,0 +1,39 @@
+{
+  "id": "godie-n01l.r",
+  "schema": "ability@1",
+  "name": "98-04 自在飛翔",
+  "description": "[輔助]\n0秒冷卻時間\n\n自在走向自己的目標，宛如飛燕般令人捉摸不定，可以提升自身20%攻速及5%跑速；受傷時有10%機率產生分身混淆敵人視線，分身持續7秒。",
+  "slot": "R",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    12.0,
+    12.0,
+    12.0
+  ],
+  "manaCost": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "pctAdd",
+          "value": 0.2
+        },
+        {
+          "stat": "ms",
+          "op": "pctAdd",
+          "value": 0.05
+        }
+      ],
+      "duration": 12.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast"
+}

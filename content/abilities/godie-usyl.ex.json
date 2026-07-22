@@ -1,0 +1,33 @@
+{
+  "id": "godie-usyl.ex",
+  "name": "49-002 產卵",
+  "description": "[主動]\n60秒冷卻時間\n\n將卵產至目標身體內使目標每秒受到100點傷害，並減緩50%攻擊速度，於目標被殺死時將產生一隻異形皇后於40秒內協助戰鬥，產卵效果持續10秒。",
+  "slot": "EX",
+  "castType": "targeted",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    250.0
+  ],
+  "range": 9.41,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "flat": 300,
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.9
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1",
+  "targetsEnemies": true
+}

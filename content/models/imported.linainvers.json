@@ -1,0 +1,62 @@
+{
+  "id": "imported.linainvers",
+  "schema": "model@1",
+  "glbPath": "assets/models/imported/linainvers.glb",
+  "scale": 1.0,
+  "collisionRadius": 0.55,
+  "clipMap": {
+    "idle": "Stand - 1",
+    "run": "walk",
+    "attack": "Attack - 1",
+    "cast": "Attack - 1",
+    "hurt": "Stand - 1",
+    "death": "death"
+  },
+  "attachPoints": {
+    "origin": {
+      "x": 0.0,
+      "y": 0.0124,
+      "z": -0.0
+    },
+    "head": {
+      "x": -0.0372,
+      "y": 1.6755,
+      "z": -0.0
+    },
+    "overhead": {
+      "x": 0.0,
+      "y": 1.8617,
+      "z": -0.0
+    },
+    "chest": {
+      "x": 0.0,
+      "y": 1.2411,
+      "z": -0.0
+    },
+    "hand right": {
+      "x": 0.0,
+      "y": 0.9184,
+      "z": 0.2482
+    },
+    "weapon": {
+      "x": 0.0,
+      "y": 0.9184,
+      "z": 0.2482
+    },
+    "hand left": {
+      "x": 0.0124,
+      "y": 0.9184,
+      "z": -0.2482
+    },
+    "foot left": {
+      "x": 0.0,
+      "y": 0.0124,
+      "z": -0.0869
+    },
+    "foot right": {
+      "x": 0.0,
+      "y": 0.0124,
+      "z": 0.0869
+    }
+  }
+}

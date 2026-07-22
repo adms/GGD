@@ -1,0 +1,38 @@
+# deploy/helm/ggd/values-local.yaml — one-click local profile (kind + skaffold).
+#
+# deploy/kind/kind-config.yaml mounts the repo's ./content (RO) and ./data (RW)
+# into the kind node at /ggd/content and /ggd/data; the hostPath values below
+# make host-edited JSON live inside the cluster and persist data/ across
+# restarts (backup = cp -r ./data).
+
+appEnv: development
+
+platform:
+  data:
+    hostPath: /ggd/data
+
+content:
+  hostPath: /ggd/content
+
+dev:
+  enabled: true           # content-api + edge /content-api/ route
+
+test:
+  enabled: false          # flip on to run the test dashboard in-cluster
+
+seed:
+  enabled: true
+  # LOCAL ONLY: a `make up` box should be immediately playable. Still a no-op
+  # once anything is curated, so it never fights an operator's edits.
+  starterWhitelist: true
+
+ingress:
+  enabled: false          # local access = `make up` port-forward
+
+# Dev-only fallback secrets (make up overrides these with generated ones in
+# deploy/helm/secrets.local.yaml — gitignored).
+secrets:
+  create: true
+  jwtSigningSecret: dev-insecure-jwt-secret
+  platformGameSharedSecret: dev-insecure-seam-secret
+  redisPassword: dev-insecure-redis-password

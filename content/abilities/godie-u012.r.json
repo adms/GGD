@@ -1,0 +1,34 @@
+{
+  "id": "godie-u012.r",
+  "schema": "ability@1",
+  "name": "61-04 瘋狂怪物",
+  "description": "[開關]\n0秒冷卻時間\n\n從地獄來的瘋狂怪物什麼都吃!!\n開啟時若受到傷害，可以把8%的傷害吸收轉變成魔力。",
+  "slot": "R",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    0.5,
+    0.5,
+    0.5
+  ],
+  "manaCost": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "mr",
+          "op": "pctAdd",
+          "value": 0.08
+        }
+      ],
+      "duration": 12.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast"
+}

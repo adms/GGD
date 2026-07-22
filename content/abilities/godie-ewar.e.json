@@ -1,0 +1,45 @@
+{
+  "id": "godie-ewar.e",
+  "name": "12-03 破凰之心-徒手空破山",
+  "description": "[輔助]\n45秒冷卻時間\n\n使用破凰之力的志狼，在每次攻擊皆能施展空破山，劃出大氣之刃，造成100%的擴散傷害，持續12秒。",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "manaCost": [
+    60.0,
+    225.0,
+    300.0,
+    375.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          80,
+          120,
+          160,
+          200
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1",
+  "icon": "assets/icons/abilities/godie-ewar.e.png"
+}

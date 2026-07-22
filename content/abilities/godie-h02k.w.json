@@ -1,0 +1,36 @@
+{
+  "id": "godie-h02k.w",
+  "schema": "ability@1",
+  "name": "89-02 憤怒的菊花",
+  "description": "[被動]\n0秒冷卻時間\n\n當敵人攻擊熊貓的時候，有3%機率會讓熊貓想起四川地震牠剛好在撇條的痛苦，會胡亂噴放排泄物使敵人造成癱瘓，累積到一定次數會讓臉色難看的熊貓一洩千里。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    12.0,
+    12.0,
+    12.0,
+    12.0
+  ],
+  "manaCost": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "flat",
+          "value": 0.25
+        }
+      ],
+      "duration": 3.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast"
+}

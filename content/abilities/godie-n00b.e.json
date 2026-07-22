@@ -1,0 +1,33 @@
+{
+  "id": "godie-n00b.e",
+  "schema": "ability@1",
+  "name": "57-02 任意門",
+  "description": "[輔助]\n80秒冷卻時間\n\n使用任意門可以傳送到地圖探索過的任何一點，準備時間為3秒。",
+  "slot": "E",
+  "castType": "dash",
+  "maxRank": 5,
+  "cooldown": [
+    80.0,
+    60.0,
+    40.0,
+    16.0,
+    16.0
+  ],
+  "manaCost": [
+    225.0,
+    225.0,
+    225.0,
+    100.0,
+    100.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "dash",
+      "mode": "toPoint",
+      "speed": 30.0,
+      "maxDistance": 11.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast"
+}

@@ -1,0 +1,205 @@
+{
+  "id": "godie-h02u",
+  "schema": "champion@1",
+  "name": "看似憂鬱的神獸 - 草泥馬",
+  "description": "故事：\n草泥馬是中國網民惡搞的十大神獸之一，被《紐約時報》等媒體認為是中國網民對於中國大陸網路審查制度的調侃。但具體的起源尚不明確。包括草泥馬在內的十大神獸最初發佈於百度百科，之後迅速躥紅，在聊天室、論壇中廣為流傳。關於「草泥馬」的視頻、卡通和商品也成為世界範圍關注的對象。\n(出自:中國大陸)\n\n角色成長：\n力量 + 1.50\n敏捷 + 2.50\n智慧 + 2.00\n基礎跑速 320\n\n技能：\n憂鬱的眼神、臥槽泥馬、狂槽泥馬、消化液、固有結界-馬勒戈壁",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "imported.horse",
+  "baseStats": {
+    "maxHealth": 440,
+    "healthRegen": 1.05,
+    "maxMana": 352,
+    "manaRegen": 1.64,
+    "ad": 29,
+    "ap": 0,
+    "armor": 9,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.5,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 30,
+    "healthRegen": 0.08,
+    "maxMana": 24,
+    "manaRegen": 0.08,
+    "ad": 1.5,
+    "armor": 0.8,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-h02u.q",
+      "name": "92-01 臥草泥馬",
+      "description": "[輔助]\n40秒冷卻時間\n\n這是較高等級的草泥馬才有的稱號，優秀的牠們被允許躺在朝尼族的水槽邊休息恢復體力，每秒恢復3%體力，持續10秒，於臥草泥馬期間無法移動。",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        40.0,
+        40.0,
+        20.0,
+        20.0
+      ],
+      "manaCost": [
+        160.0,
+        160.0,
+        160.0,
+        160.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "maxHealth",
+              "op": "flat",
+              "value": 300
+            }
+          ],
+          "duration": 3.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "W": {
+      "id": "godie-h02u.w",
+      "name": "92-03 狂草泥馬",
+      "description": "[主動攻擊]\n60秒冷卻時間\n\n草泥馬中最上等的一隻，是草泥馬中的馬王，要朝尼族騎術最好的人才能獲得，對500範圍內敵人造成(現有金錢*0.1)點傷害，最大傷害不超過400點，並增加攻速50%，增加跑速10%，持續12秒。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        90.0,
+        120.0,
+        150.0,
+        180.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "flat",
+              "value": 0.4
+            }
+          ],
+          "duration": 8.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "E": {
+      "id": "godie-h02u.e",
+      "name": "92-02 消化液",
+      "description": "[主動攻擊]\n40秒冷卻時間\n\n羊駝在驚嚇或憤怒的時候，會從嘴巴裡噴出消化液攻擊敵人，造成範圍內敵人減少3點防禦、20%攻速、5%跑速，每秒受到20點傷害，持續7秒。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        40.0,
+        40.0,
+        40.0,
+        40.0
+      ],
+      "manaCost": [
+        150.0,
+        200.0,
+        250.0,
+        300.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              20.0,
+              30.0,
+              40.0,
+              50.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.15
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow40",
+          "duration": 7.0,
+          "moveSpeedMult": 0.8
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "R": {
+      "id": "godie-h02u.r",
+      "name": "92-04 馬勒戈壁",
+      "description": "[投影]\n75秒冷卻時間\n\n草泥馬將內心的風景投射到戰場上，改變了戰場，每秒奪取周圍英雄的黃金150並造成100傷害，持續6秒。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        75.0,
+        75.0,
+        75.0
+      ],
+      "manaCost": [
+        300.0,
+        420.0,
+        540.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "flat",
+              "value": 0.25
+            }
+          ],
+          "duration": 3.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ],
+  "exAbility": "godie-h02u.ex"
+}

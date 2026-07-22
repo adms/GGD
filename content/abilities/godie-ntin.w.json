@@ -1,0 +1,36 @@
+{
+  "id": "godie-ntin.w",
+  "name": "23-02 超音型態",
+  "description": "[輔助]\n25秒冷卻時間\n\n由雷光戰斧重新構築的防護服。以高機動的輔助功能強化攻擊速度15%及移動速度13%，可以持續10秒。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    25.0,
+    25.0,
+    25.0,
+    25.0
+  ],
+  "manaCost": [
+    30.0,
+    45.0,
+    60.0,
+    75.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "flat",
+          "value": 0.4
+        }
+      ],
+      "duration": 10.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

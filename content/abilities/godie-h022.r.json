@@ -1,0 +1,49 @@
+{
+  "id": "godie-h022.r",
+  "name": "82-04 闇之魔法",
+  "description": "[輔助]\n60秒冷卻時間\n黑暗福音所創之招式，吸收負面的魔法能量，犧牲肉體及心靈，在時間內增強10點全能力，並且有20%造成目標暈眩0.01秒及額外88點傷害，但會減少自身生命最大值500點，於天生法術書中將會出現術式兵裝之技能，持續15秒。",
+  "slot": "R",
+  "castType": "self",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    250.0,
+    350.0,
+    450.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "flat",
+          "value": 10
+        },
+        {
+          "stat": "ap",
+          "op": "flat",
+          "value": 10
+        },
+        {
+          "stat": "armor",
+          "op": "flat",
+          "value": 10
+        },
+        {
+          "stat": "maxHealth",
+          "op": "flat",
+          "value": -500
+        }
+      ],
+      "duration": 15.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

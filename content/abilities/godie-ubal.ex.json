@@ -1,0 +1,35 @@
+{
+  "id": "godie-ubal.ex",
+  "name": "37-002 真‧黑核晶",
+  "description": "[主動攻擊]\n20秒冷卻時間\n\n巴恩大魔王拿出真正的黑核晶進行設置，可以造成毀滅性的區域傷害，最高可造成範圍內2400點傷害。",
+  "slot": "EX",
+  "castType": "ground",
+  "maxRank": 1,
+  "cooldown": [
+    20.0
+  ],
+  "manaCost": [
+    600.0
+  ],
+  "range": 7.06,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "flat": 300,
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.9
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1",
+  "radius": 9.41,
+  "targetsEnemies": true,
+  "castTimeSec": 0.35
+}

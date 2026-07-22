@@ -1,0 +1,33 @@
+{
+  "id": "godie-e00v.q",
+  "schema": "ability@1",
+  "name": "84-01 冷笑話",
+  "description": "[輔助]\n15秒冷卻時間\n\n說一個冷笑話，使範圍600內的敵人都被冷到無法動彈，持續0.5秒。",
+  "slot": "Q",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    15.0,
+    15.0,
+    15.0,
+    15.0
+  ],
+  "manaCost": [
+    75.0,
+    115.0,
+    155.0,
+    195.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "applyStatus",
+      "statusId": "burnstun",
+      "duration": 0.5,
+      "stun": true
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "radius": 6.0
+}

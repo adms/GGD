@@ -1,0 +1,30 @@
+{
+  "id": "godie-u00j.ex",
+  "name": "74-002 超新星",
+  "description": "[被動]\n0秒冷卻時間\n\n在八刀一閃施展後瞬間施展獄門，將會招喚超新星造成巨大的範圍1200傷害。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    120.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

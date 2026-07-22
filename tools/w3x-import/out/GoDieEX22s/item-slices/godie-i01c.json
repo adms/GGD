@@ -1,0 +1,20 @@
+{
+  "contentId": "godie-i01c",
+  "nameZh": "火之書",
+  "gold": 2040,
+  "kind": "effect",
+  "description": "施展需求魔力：100點\r\n技能冷卻時間：60秒\r\n效能\r\n暈眩火焰彈\r\n\r\n解說\r\n點選施展強力火焰彈傷害敵人，可暈眩1.5秒，施法範圍800。",
+  "abilities": [
+    {
+      "rawcode": "A06E",
+      "name": "火之書",
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {
+        "1": {
+          "1": 0.0
+        }
+      }
+    }
+  ]
+}

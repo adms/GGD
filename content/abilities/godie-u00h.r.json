@@ -1,0 +1,48 @@
+{
+  "id": "godie-u00h.r",
+  "name": "39-04 祕奧義．金色的神風",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n同時召喚出四神時所同時發動的最終奧義，將帶給接近鬼眼狂刀的人333+敏捷*1傷害並暈眩1秒，並且招換四神造成各120傷害。",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    175.0,
+    275.0,
+    375.0
+  ],
+  "range": 0.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          333.0,
+          555.0,
+          777.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "burnstun",
+      "duration": 0.8,
+      "stun": true
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "radius": 6.0,
+  "schema": "ability@1"
+}

@@ -1,0 +1,40 @@
+{
+  "contentId": "godie-i063",
+  "nameZh": "防狼電擊棒",
+  "gold": 1400,
+  "kind": "effect",
+  "description": "施展需求魔力：75點\r\n技能冷卻時間：25秒\r\n效能\r\n魔力+275\r\n魔力回復速度+25%\r\n防狼電擊，傷害275，最多4人\r\n\r\n解說\r\n近距離電擊圖謀不軌的壞人，根據電弧效應在旁邊以及後方的敵人也會受到波及。",
+  "abilities": [
+    {
+      "rawcode": "A0MR",
+      "name": "宙斯之怒",
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {
+        "1": {
+          "1": 275.0
+        },
+        "2": {
+          "1": 4
+        },
+        "4": {
+          "1": 450.0
+        }
+      }
+    },
+    {
+      "rawcode": "A0X7",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "AIrn",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    }
+  ]
+}

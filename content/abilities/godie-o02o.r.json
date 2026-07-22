@@ -1,0 +1,40 @@
+{
+  "id": "godie-o02o.r",
+  "schema": "ability@1",
+  "name": "87-04 逆我必殺",
+  "description": "[輔助]\n60秒冷卻時間\n\n殺！增加100點傷害，攻擊時獲得生命回饋80%，可持續9秒",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    12.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    50.0,
+    80.0,
+    110.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "heal",
+      "amount": {
+        "perRank": [
+          100.0,
+          200.0,
+          300.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.9
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": false
+}

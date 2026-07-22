@@ -1,0 +1,30 @@
+{
+  "contentId": "godie-i06a",
+  "nameZh": "妖物碎殺牙",
+  "gold": 8850,
+  "kind": "effect",
+  "description": "神器\r\n效能\r\n攻擊力+50\r\n吸血35%（法球）\r\n6%機率造成255穿刺傷害\r\n\r\n解說\r\n碎殺牙一開始只是矮人族為了開發強力的武器，將吸血礦石不斷鍛造的傑作，但是這把武器卻被大量訂購的黑暗妖精拿來屠殺矮人，形成強烈的諷刺，此後才冠上妖物之名。",
+  "abilities": [
+    {
+      "rawcode": "A0QN",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A06Z",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A064",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    }
+  ]
+}

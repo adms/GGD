@@ -1,0 +1,11 @@
+/** Debounce a changing value (used to throttle form-edit -> 3D rebuilds). */
+import { useEffect, useState } from "react";
+
+export function useDebounced<T>(value: T, ms: number): T {
+  const [debounced, setDebounced] = useState(value);
+  useEffect(() => {
+    const t = setTimeout(() => setDebounced(value), ms);
+    return () => clearTimeout(t);
+  }, [value, ms]);
+  return debounced;
+}

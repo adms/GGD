@@ -1,0 +1,44 @@
+{
+  "id": "godie-oshd.q",
+  "name": "29-01 鐵砂掌",
+  "description": "[主動攻擊]\n20秒冷卻時間\n\n源於泗水鐵掌幫，威力無窮，任何人被擊中，五臟俱碎而導致送醫途中不治。減少護甲3點；對主要目標造成每秒25點的傷害；對附近目標造成較輕的5點傷害，持續8秒。",
+  "slot": "Q",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    20.0,
+    20.0,
+    20.0,
+    20.0
+  ],
+  "manaCost": [
+    45.0,
+    90.0,
+    135.0,
+    180.0
+  ],
+  "range": 14.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          80,
+          120,
+          160,
+          200
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

@@ -1,0 +1,30 @@
+{
+  "id": "godie-udea.ex",
+  "name": "65-002 永恆的愚蠢鄉",
+  "description": "[輔助]\n60秒冷卻時間\n\n使飛鼠先生在一定時間內受到技能攻擊時，能夠給予對手強大的反擊，威力基礎為自身等級*200，承受時間6秒。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    90.0
+  ],
+  "manaCost": [
+    350.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

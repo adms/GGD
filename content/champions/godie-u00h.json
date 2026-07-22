@@ -1,0 +1,247 @@
+{
+  "id": "godie-u00h",
+  "schema": "champion@1",
+  "name": "鬼畜紅王 - 鬼畜狂刀KYO",
+  "description": "故事：\n關原之戰後四年千人斬傳說復活！\n手拿五尺大刀，背上有太極圖徽紋\n臉上有如鬼般的深紅雙眼！\n懸賞一百萬兩的通緝犯\n江湖上稱他為鬼畜狂刀。\n(出自:鬼眼狂刀KYO)\n\n推薦玩家 : 團戰殺手\n上手度 : 中\n\n角色成長：\n力量 + 1.70\n敏捷 + 2.40\n智慧 + 1.65\n基礎跑速 310\n\n可學習的技能：\n無名神風流-白虎 、無名神風流-朱雀、無明神風流-蛟龍、四神召喚 金色神風",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "imported.herokyo",
+  "attackDamagePoint": 0.3,
+  "baseStats": {
+    "maxHealth": 420,
+    "healthRegen": 1.0,
+    "maxMana": 268,
+    "manaRegen": 1.36,
+    "ad": 36,
+    "ap": 0,
+    "armor": 10,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 5.9,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 34,
+    "healthRegen": 0.09,
+    "maxMana": 20,
+    "manaRegen": 0.07,
+    "ad": 1.6,
+    "armor": 0.7,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-u00h.q",
+      "name": "39-01 無名神風流-白虎",
+      "description": "[主動攻擊]\n35秒冷卻時間\n\n村正臨死前教授的真無名神風\n無明神風流-白虎，以疾快的速度和力道造成強大的風壓撲向對方，造成100點傷害的同時可以打昏目標1秒。",
+      "slot": "Q",
+      "castType": "targeted",
+      "maxRank": 5,
+      "cooldown": [
+        25.0,
+        25.0,
+        25.0,
+        25.0,
+        25.0
+      ],
+      "manaCost": [
+        35.0,
+        55.0,
+        55.0,
+        95.0,
+        95.0
+      ],
+      "range": 9.17,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              75.0,
+              175.0,
+              250.0,
+              325.0,
+              325.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.975
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow25",
+          "duration": 1.0,
+          "moveSpeedMult": 0.6
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true
+    },
+    "W": {
+      "id": "godie-u00h.w",
+      "name": "39-02 無名神風流-朱雀",
+      "description": "[主動攻擊]\n50秒冷卻時間\n\n村正臨死前教授的真無名神風\n無明神風流-朱雀，施展時將造成對方強大的壓迫感，好似朱雀從背後襲來，給予目標150點傷害並有20%機率將目標擊退。",
+      "slot": "W",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        50.0,
+        50.0,
+        50.0,
+        50.0
+      ],
+      "manaCost": [
+        50.0,
+        80.0,
+        110.0,
+        140.0
+      ],
+      "range": 9.17,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              150.0,
+              250.0,
+              350.0,
+              450.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "radius": 3.67,
+      "icon": "assets/icons/abilities/godie-u00h.w.png"
+    },
+    "E": {
+      "id": "godie-u00h.e",
+      "name": "39-03 無名神風流-蛟龍",
+      "description": "[主動攻擊]\n45秒冷卻時間\n\n你聽到神風的清響聲了嗎?\n使用神風流殺人劍術，使前方直線敵人受到傷害350+敏捷*3點。",
+      "slot": "E",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        215.0,
+        245.0,
+        275.0,
+        305.0
+      ],
+      "range": 14.0,
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.wave",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "perRank": [
+                  90.0,
+                  90.0,
+                  90.0,
+                  90.0
+                ]
+              }
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "burnstun",
+              "duration": 1.2,
+              "stun": true
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "R": {
+      "id": "godie-u00h.r",
+      "name": "39-04 祕奧義．金色的神風",
+      "description": "[主動攻擊]\n60秒冷卻時間\n\n同時召喚出四神時所同時發動的最終奧義，將帶給接近鬼眼狂刀的人333+敏捷*1傷害並暈眩1秒，並且招換四神造成各120傷害。",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        175.0,
+        275.0,
+        375.0
+      ],
+      "range": 0.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              333.0,
+              555.0,
+              777.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "burnstun",
+          "duration": 0.8,
+          "stun": true
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "radius": 6.0
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ],
+  "exAbility": "godie-u00h.ex",
+  "icon": "assets/icons/champions/godie-u00h.png"
+}

@@ -1,0 +1,44 @@
+{
+  "contentId": "godie-i02x",
+  "nameZh": "斬岩刃",
+  "gold": 3450,
+  "kind": "effect",
+  "description": "武器\r\n效能\r\n30%機率造成100點範圍傷害\r\n攻擊力+20\r\n力量+10\r\n\r\n解說\r\n據說是遠古時知名刀匠所打造的不可褻瀆之刀。",
+  "abilities": [
+    {
+      "rawcode": "A0HO",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "A0XD",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {
+        "1": {
+          "1": 30.0
+        },
+        "2": {
+          "1": 100.0
+        }
+      }
+    },
+    {
+      "rawcode": "A02S",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    },
+    {
+      "rawcode": "AItx",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    }
+  ]
+}

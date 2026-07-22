@@ -1,0 +1,61 @@
+{
+  "id": "arena-rules",
+  "schema": "config.arena-rules@1",
+  "ultUnlockRound": 3,
+  "exUnlockRound": 5,
+  "offerCount": 3,
+  "rounds": {
+    "1": {
+      "grantLevels": 2,
+      "autoLearn": ["Q", "W", "E"]
+    },
+    "2": {
+      "grantLevels": 1,
+      "grantGold": 750,
+      "weaponLootTable": "quest-rewards"
+    },
+    "3": {
+      "grantLevels": 1,
+      "grantGold": 2500
+    },
+    "4": {
+      "grantLevels": 1,
+      "grantGold": 1000
+    },
+    "5": {
+      "grantLevels": 1,
+      "grantGold": 1250,
+      "weaponLootTable": "legendary-weapons"
+    },
+    "6": {
+      "grantLevels": 1,
+      "grantGold": 1500
+    }
+  },
+  "overflow": {
+    "grantLevels": 1,
+    "grantGold": 1500,
+    "grantGoldPerRound": 250
+  },
+  "flowers": {
+    "firstSpawnSec": 15,
+    "respawnSec": 25,
+    "maxAlivePerZone": 1,
+    "hp": 60,
+    "healPctMax": 0.18,
+    "manaPctMax": 0.18,
+    "burstRadius": 6
+  },
+  "reviveCircles": {
+    "channelSec": 3.0,
+    "lifetimeSec": 6.0,
+    "radius": 2.0,
+    "decayMult": 2.0,
+    "revivesPerTeamPerRound": 1,
+    "reviveHpPctMax": 0.5,
+    "reviveManaPctMax": 0.5,
+    "contestPauses": true,
+    "damageInterrupts": false,
+    "ccInterrupts": true
+  }
+}

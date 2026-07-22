@@ -1,0 +1,9 @@
+apiVersion: v2
+name: ggd
+description: >-
+  GGD — 3v3v3v3 voxel arena MOBA umbrella chart: Go platform (single-writer
+  JSON truth), Colyseus game server, Redis hot layer, Nginx edge, plus
+  dev-gated content-api and test-gated testrunner.
+type: application
+version: 0.1.0
+appVersion: "0.1.0"

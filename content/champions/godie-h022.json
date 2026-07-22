@@ -1,0 +1,226 @@
+{
+  "id": "godie-h022",
+  "schema": "champion@1",
+  "name": "白色之翼 - 涅吉。史普林。菲爾德",
+  "description": "故事：\n在魔法世界裡經父親以前的夥伴拉坎的協助，學會了依文潔琳百年前用的禁忌之術──「黑暗魔法」，戰鬥方式也隨之改變。\n(出自:魔法老師)\n\n推薦玩家 : 游擊牽制\n上手度 : 難\n\n角色成長：\n力量 + 1.90\n敏捷 + 1.90\n智慧 + 2.00\n基礎跑速 310\n\n可學習的技能：\n雷之斧、虛空瞬動、雷之投擲、闇之魔法",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "imported.negi",
+  "baseStats": {
+    "maxHealth": 480,
+    "healthRegen": 1.15,
+    "maxMana": 340,
+    "manaRegen": 1.6,
+    "ad": 30,
+    "ap": 0,
+    "armor": 7,
+    "mr": 28,
+    "as": 0.53,
+    "ms": 5.9,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 38,
+    "healthRegen": 0.09,
+    "maxMana": 24,
+    "manaRegen": 0.08,
+    "ad": 1.9,
+    "armor": 0.6,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-h022.q",
+      "name": "82-01 雷之斧",
+      "description": "[主動攻擊]\n35秒冷卻時間\n\n雷之斧是涅吉。史普林。菲爾德父親的得意連續技之一，可以瞬間對250範圍內敵人造成210點傷害。",
+      "slot": "Q",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        35.0,
+        35.0,
+        35.0,
+        35.0
+      ],
+      "manaCost": [
+        70.0,
+        100.0,
+        130.0,
+        160.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              210.0,
+              300.0,
+              390.0,
+              480.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "burnstun",
+          "duration": 0.8,
+          "stun": true
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast",
+      "targetsEnemies": true,
+      "radius": 3.67
+    },
+    "W": {
+      "id": "godie-h022.w",
+      "name": "82-02 虛空瞬動",
+      "description": "[輔助]\n40秒冷卻時間\n瞬動術的高級技法，可於空中不斷使用瞬動來移動，使用後在0.5秒內點按右鍵可以無條件使用短距離瞬移。",
+      "slot": "W",
+      "castType": "dash",
+      "maxRank": 5,
+      "cooldown": [
+        40.0,
+        35.0,
+        30.0,
+        30.0,
+        30.0
+      ],
+      "manaCost": [
+        150.0,
+        225.0,
+        300.0,
+        300.0,
+        300.0
+      ],
+      "range": 0.0,
+      "effects": [
+        {
+          "kind": "dash",
+          "mode": "toPoint",
+          "speed": 34.0,
+          "maxDistance": 9.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "E": {
+      "id": "godie-h022.e",
+      "name": "82-03 雷之投擲",
+      "description": "[主動攻擊]\n45秒冷卻時間\n以雷創造出的魔法之槍，急速落下給予隨機範圍內敵人(350+智慧*3)點傷害，若是於闇之魔法型態下攻擊即會施放造成直線範圍內敵人(250+智慧*1)*次數點傷害。(可點選自身累積，最多3次)",
+      "slot": "E",
+      "castType": "skillshot",
+      "maxRank": 4,
+      "cooldown": [
+        45.0,
+        45.0,
+        45.0,
+        45.0
+      ],
+      "manaCost": [
+        150.0,
+        210.0,
+        270.0,
+        330.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.wave",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "perRank": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    },
+    "R": {
+      "id": "godie-h022.r",
+      "name": "82-04 闇之魔法",
+      "description": "[輔助]\n60秒冷卻時間\n黑暗福音所創之招式，吸收負面的魔法能量，犧牲肉體及心靈，在時間內增強10點全能力，並且有20%造成目標暈眩0.01秒及額外88點傷害，但會減少自身生命最大值500點，於天生法術書中將會出現術式兵裝之技能，持續15秒。",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        250.0,
+        350.0,
+        450.0
+      ],
+      "range": 0.0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "ad",
+              "op": "flat",
+              "value": 10
+            },
+            {
+              "stat": "ap",
+              "op": "flat",
+              "value": 10
+            },
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": 10
+            },
+            {
+              "stat": "maxHealth",
+              "op": "flat",
+              "value": -500
+            }
+          ],
+          "duration": 15.0
+        }
+      ],
+      "vfxKey": "fx.ember-bolt-cast"
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie"
+  ],
+  "exAbility": "godie-h022.ex",
+  "icon": "assets/icons/champions/godie-h022.png"
+}

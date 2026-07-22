@@ -1,0 +1,23 @@
+{
+  "id": "godie-i06r",
+  "schema": "item@1",
+  "name": "一克拉鑽戒",
+  "description": "飾品\n效能\n裝甲+0.8\n生命+63\n\n解說\n鑽石恆久遠，一顆就破產。",
+  "cost": 300,
+  "tier": 1,
+  "tags": [
+    "wc3-import"
+  ],
+  "modifiers": [
+    {
+      "stat": "armor",
+      "op": "flat",
+      "value": 0.8
+    },
+    {
+      "stat": "maxHealth",
+      "op": "flat",
+      "value": 63
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "id": "godie-u00k.r",
+  "schema": "ability@1",
+  "name": "71-04 萬惡歸宗",
+  "description": "[主動攻擊]\n60秒冷卻時間\n抽走附近敵我所有魔力，釋放出魔力總合乘上15%的魔法爆炸傷害。\n\n夜間施法傷害加成500",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    150.0,
+    250.0,
+    350.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.003
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true
+}

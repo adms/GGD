@@ -1,0 +1,47 @@
+{
+  "id": "godie-ntin.r",
+  "name": "23-04 雷焰聖劍",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n解放所有的魔力，在雷霆型態下將雷劍巨大化，作出的大型斬擊攻擊，使敵人受到900點傷害，並且獲得200點攻擊力，持續4秒。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    160.0,
+    290.0,
+    420.0
+  ],
+  "range": 9.17,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          75.0,
+          75.0,
+          75.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.225
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "root",
+      "duration": 1.0,
+      "root": true
+    }
+  ],
+  "vfxKey": "fx.cinder-ward",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

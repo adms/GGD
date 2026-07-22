@@ -1,0 +1,43 @@
+{
+  "id": "godie-n01g.e",
+  "name": "42-03 暗夜吹雪",
+  "description": "[主動攻擊]\n45秒冷卻時間\n\n依文潔琳的得意技之一，使用高等冰系黑魔法造成一直線敵方500點傷害。",
+  "slot": "E",
+  "castType": "skillshot",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "manaCost": [
+    160.0,
+    280.0,
+    400.0,
+    520.0
+  ],
+  "range": 10.08,
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "imported.wave",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              500.0,
+              850.0,
+              1200.0,
+              1550.0
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-edge
+  labels:
+    {{- include "ggd.labels" . | nindent 4 }}
+    app.kubernetes.io/name: edge
+spec:
+  type: {{ .Values.edge.service.type }}
+  selector:
+    {{- include "ggd.selector" (dict "root" . "name" "edge") | nindent 4 }}
+  ports:
+    - name: http
+      port: {{ .Values.edge.port }}
+      targetPort: http

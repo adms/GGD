@@ -1,0 +1,30 @@
+{
+  "contentId": "godie-i06o",
+  "nameZh": "血染八月",
+  "gold": 12000,
+  "kind": "effect",
+  "description": "夢幻\r\n效能\r\n攻擊力+158\r\n50%攻擊附帶暈眩0.01秒及88傷害\r\n\r\n解說\r\n眾神黃昏(Ragnarok)之戰中，飛鼠先生對上了當時最強的黑暗精靈族，飛鼠先生手持聖劍經過三個多星期的血戰，終於將黑暗精靈擊退，此劍被後人以血戰的八月命名為血染八月",
+  "abilities": [
+    {
+      "rawcode": "A0EG",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {
+        "1": {
+          "1": 50.0
+        },
+        "3": {
+          "1": 88.0
+        }
+      }
+    },
+    {
+      "rawcode": "A0AH",
+      "name": null,
+      "tooltip": null,
+      "description": null,
+      "dataColumns": {}
+    }
+  ]
+}

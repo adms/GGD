@@ -1,0 +1,49 @@
+{
+  "id": "godie-u00h.e",
+  "name": "39-03 無名神風流-蛟龍",
+  "description": "[主動攻擊]\n45秒冷卻時間\n\n你聽到神風的清響聲了嗎?\n使用神風流殺人劍術，使前方直線敵人受到傷害350+敏捷*3點。",
+  "slot": "E",
+  "castType": "skillshot",
+  "maxRank": 4,
+  "cooldown": [
+    45.0,
+    45.0,
+    45.0,
+    45.0
+  ],
+  "manaCost": [
+    215.0,
+    245.0,
+    275.0,
+    305.0
+  ],
+  "range": 14.0,
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "imported.wave",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              90.0,
+              90.0,
+              90.0,
+              90.0
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "burnstun",
+          "duration": 1.2,
+          "stun": true
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

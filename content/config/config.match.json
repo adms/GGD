@@ -1,0 +1,42 @@
+{
+  "id": "config.match",
+  "schema": "config@1",
+  "tick": {
+    "tickHz": 30,
+    "snapshotHz": 20
+  },
+  "match": {
+    "teamCount": 4,
+    "teamSize": 3,
+    "startingTeamLives": 8,
+    "champSelectSec": 60,
+    "intermissionSec": 60,
+    "combatMaxSec": 90,
+    "resolutionSec": 6
+  },
+  "economy": {
+    "startingGold": 600,
+    "killGold": 150,
+    "assistGold": 75,
+    "roundWinGold": 300,
+    "roundLoseGold": 150,
+    "sellRefund": 0.4,
+    "inventorySlots": 6
+  },
+  "progression": {
+    "levelCap": 18,
+    "xpBase": 100,
+    "xpPerLevel": 80,
+    "xpKill": 120,
+    "xpAssist": 60,
+    "xpRoundSurvive": 100
+  },
+  "draft": {
+    "offerCount": 3,
+    "tierSchedule": {
+      "1": "silver",
+      "3": "gold",
+      "5": "prismatic"
+    }
+  }
+}

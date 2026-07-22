@@ -1,0 +1,47 @@
+{
+  "id": "thorne.r",
+  "schema": "ability@1",
+  "name": "Bramble Burst",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    100,
+    85,
+    70
+  ],
+  "manaCost": [
+    100,
+    100,
+    100
+  ],
+  "range": 1,
+  "radius": 4.5,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "physical",
+      "amount": {
+        "perRank": [
+          150,
+          250,
+          350
+        ],
+        "ratios": [
+          {
+            "stat": "ad",
+            "coeff": 0.8
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow40",
+      "duration": 2,
+      "moveSpeedMult": 0.6
+    }
+  ],
+  "vfxKey": "fx.bramble-burst"
+}

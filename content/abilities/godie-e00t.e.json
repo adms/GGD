@@ -1,0 +1,44 @@
+{
+  "id": "godie-e00t.e",
+  "schema": "ability@1",
+  "name": "66-03 七夜怪談",
+  "description": "[主動傷害]\n<A0IB,Cool1>秒冷卻時間\n\n招來<A0IB,DataA1>隻鬼魂，每隻鬼魂會自動鎖定周圍的敵人，衝撞自爆造成160點法術傷害。",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    180.0,
+    250.0,
+    320.0,
+    390.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          7.0,
+          12.0,
+          17.0,
+          22.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.066
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true
+}

@@ -1,0 +1,45 @@
+{
+  "id": "godie-umal.e",
+  "name": "25-03 北斗百裂拳",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n拳四郎得意絕技之一，以連續拳頭攻擊區域內的敵人造成單體攻擊300+力量*2傷害。",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    165.0,
+    240.0,
+    315.0,
+    390.0
+  ],
+  "range": 2.75,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          300.0,
+          550.0,
+          800.0,
+          1050.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "radius": 6.0,
+  "schema": "ability@1"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "godie-n003.r",
+  "name": "42-04 世界終結",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n由暗系永遠的黑暗以及冰系魔法永遠的冰河混合成的超強力魔法,有著足以將上古鬼神一擊殺的恐怖力量，給予隨機12次區域傷害150點以及一次智慧*4點傷害，區域內移動和攻擊速度將會下降50%。",
+  "slot": "R",
+  "castType": "skillshot",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    500.0,
+    730.0,
+    960.0
+  ],
+  "range": 8.25,
+  "effects": [
+    {
+      "kind": "spawnProjectile",
+      "projectileId": "imported.wave",
+      "onHit": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

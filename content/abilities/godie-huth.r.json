@@ -1,0 +1,47 @@
+{
+  "id": "godie-huth.r",
+  "name": "28-04 破滅能量彈",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n指定一區域給予強大的重力能量彈，造成該區域單位行動速度降低35%，並且每秒受到300點傷害，持續5秒。",
+  "slot": "R",
+  "castType": "targeted",
+  "maxRank": 3,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    280.0,
+    430.0,
+    580.0
+  ],
+  "range": 8.25,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          300.0,
+          400.0,
+          500.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow40",
+      "duration": 5.0,
+      "moveSpeedMult": 0.65
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "targetsEnemies": true,
+  "schema": "ability@1"
+}

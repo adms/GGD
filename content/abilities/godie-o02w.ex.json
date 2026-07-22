@@ -1,0 +1,30 @@
+{
+  "id": "godie-o02w.ex",
+  "name": "96-002 易筋經",
+  "description": "[被動]\n0秒冷卻時間\n\n令狐沖在習得吸星大法之後，產生了嚴重的併發症，承得「風清揚師叔所傳達的內功心法」，情況才逐漸好轉。實際上那套內功便是少林派的易筋經內功，攻擊時有30%機率產生300點範圍傷害。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    120.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.35
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

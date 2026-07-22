@@ -1,0 +1,36 @@
+{
+  "id": "godie-opgh.w",
+  "name": "32-02 橫掃千軍",
+  "description": "[被動]\n0秒冷卻時間\n\n疾風鶴唳的長槍可同時掃蕩傷害周圍敵人，造成10%擴散傷害。",
+  "slot": "W",
+  "castType": "self",
+  "maxRank": 4,
+  "cooldown": [
+    12.0,
+    12.0,
+    12.0,
+    12.0
+  ],
+  "manaCost": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.1
+        }
+      ],
+      "duration": 12.0
+    }
+  ],
+  "vfxKey": "fx.ember-bolt-cast",
+  "schema": "ability@1"
+}

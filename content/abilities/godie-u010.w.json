@@ -1,0 +1,54 @@
+{
+  "id": "godie-u010.w",
+  "name": "38-02 邪王炎殺煉獄焦",
+  "description": "[主動攻擊]\n25秒冷卻時間\n\n將火燄集中於拳頭上，以連續拳頭攻擊區域內的敵人造成250傷害。\n\n邪眼發動期間，可增加威力(敏捷*2)",
+  "slot": "W",
+  "castType": "ground",
+  "maxRank": 5,
+  "cooldown": [
+    25.0,
+    25.0,
+    25.0,
+    25.0,
+    25.0
+  ],
+  "manaCost": [
+    75.0,
+    125.0,
+    175.0,
+    175.0,
+    175.0
+  ],
+  "range": 8.25,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.005
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow25",
+      "duration": 1.5,
+      "moveSpeedMult": 0.6
+    }
+  ],
+  "vfxKey": "fx.firestorm",
+  "targetsEnemies": true,
+  "radius": 6.0,
+  "schema": "ability@1"
+}
