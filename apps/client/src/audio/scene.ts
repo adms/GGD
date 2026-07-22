@@ -73,3 +73,21 @@ export function sceneForMatch(s: MatchAudioState): AudioScene | null {
 export function isCombatStart(prev: string | null, next: string): boolean {
   return next === "combat" && prev !== "combat";
 }
+
+/**
+ * Phase-continuous resume offset (SECONDS) for a LOOPING bed re-entering a scene
+ * it has played before (task #109). `elapsedMs` is that scene's ACCUMULATED
+ * playback time across every prior visit; the bed restarts at
+ * `(elapsed mod duration)` so the extended B-section of the loop keeps advancing
+ * from round to round instead of snapping back to bar 0 on every re-entry.
+ *
+ * Pure so it is unit-tested without WebAudio. Every degenerate input — no prior
+ * play, a zero/unknown/NaN duration, a negative clock — collapses to 0, i.e.
+ * "play from the top", which is exactly the first-visit and one-shot behaviour.
+ */
+export function loopResumeOffsetSec(elapsedMs: number, durationSec: number): number {
+  if (!Number.isFinite(elapsedMs) || elapsedMs <= 0) return 0;
+  if (!Number.isFinite(durationSec) || durationSec <= 0) return 0;
+  const off = (elapsedMs / 1000) % durationSec;
+  return off > 0 ? off : 0;
+}

@@ -2,6 +2,12 @@
 node_modules/
 .pnpm-store/
 
+# local AI image generation (tools/icon-gen/local): python venv + multi-GB model
+# weights + HF cache + generated raw output. NEVER commit weights (2-6 GB each).
+tools/**/.venv/
+tools/icon-gen/models/
+tools/icon-gen/out/
+
 # build output
 dist/
 build/

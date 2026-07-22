@@ -244,6 +244,18 @@ function Badge({ text, color }: { text: string; color: string }): React.JSX.Elem
   );
 }
 
+/**
+ * Prefer the task #114 role markup (`descriptionRoles`) off the raw doc so the
+ * row tooltip renders the colour-normalised text; fall back to the flat
+ * `description` for docs the importer has not re-run over. Read defensively —
+ * the field is additive and codexTypes does not normalise it.
+ */
+function rowTooltipBody(entry: CodexEntry): string | undefined {
+  const roles = (entry.doc as { descriptionRoles?: unknown }).descriptionRoles;
+  if (typeof roles === "string" && roles.length > 0) return roles;
+  return entry.description ?? undefined;
+}
+
 function RowButton({
   entry,
   selected,
@@ -258,7 +270,7 @@ function RowButton({
   return (
     <Tooltip
       title={entry.name}
-      body={entry.description ?? undefined}
+      body={rowTooltipBody(entry)}
       meta={[{ label: "id", value: entry.id }]}
       style={{ display: "block" }}
     >

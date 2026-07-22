@@ -1,15 +1,24 @@
 package ai_test
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
+	"log/slog"
 	"net/http"
+	"net/http/httptest"
+	"strings"
+	"sync/atomic"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
 	"github.com/ggd/platform/internal/account"
 	"github.com/ggd/platform/internal/admin"
+	"github.com/ggd/platform/internal/ai"
+	"github.com/ggd/platform/internal/data/jsonstore"
 	"github.com/ggd/platform/internal/testutil"
 	"github.com/ggd/platform/pkg/testkit"
 )
@@ -274,4 +283,232 @@ func TestAPIConfigPartialSaveKeepsOmittedFields(t *testing.T) {
 	assert.Equal(t, "", r.Body["ttsModel"])
 	assert.Equal(t, true, r.Body["musicReady"], "…without touching the other capabilities")
 	assert.Equal(t, true, r.Body["imageReady"])
+}
+
+// ai-music-async-poll: a REPLICATE-STYLE async music provider (selected off a
+// base URL containing "replicate") is driven end to end against a fake httptest
+// server: the create POST returns a job id + poll URL, the poll GET goes pending
+// → succeeded with an output audio URL, and the delivery host hands back the MP3
+// bytes. GenerateMusic still returns FINISHED bytes (handlers/client untouched).
+// The server-side key is attached to create + poll (Bearer), NEVER sent to the
+// delivery host, and NEVER logged; the music client carries a LONGER deadline
+// than the shared 60s providerTimeout.
+func TestMusicProviderAsyncReplicate(t *testing.T) {
+	testkit.Cover(t, "ai-music-async-poll")
+	svc, _, _ := newSvc(t)
+	svc.SetMusicPollInterval(time.Millisecond) // don't sleep for real
+	ctx := context.Background()
+
+	// The music path must get a LONGER deadline than the shared 60s call budget.
+	assert.Greater(t, svc.MusicClientTimeout(), 60*time.Second,
+		"the music client must have a longer deadline than the shared providerTimeout")
+
+	var logs bytes.Buffer
+	prev := slog.Default()
+	slog.SetDefault(slog.New(slog.NewTextHandler(&logs, nil)))
+	t.Cleanup(func() { slog.SetDefault(prev) })
+
+	fakeMP3 := append([]byte("ID3"), bytes.Repeat([]byte{0x5A}, 128)...)
+	var createAuth, pollAuth, audioAuth string
+	var createBody map[string]any
+	var polls int32
+	var srv *httptest.Server
+	srv = httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch {
+		case r.Method == http.MethodPost && strings.HasSuffix(r.URL.Path, "/predictions"):
+			createAuth = r.Header.Get("Authorization")
+			_ = json.NewDecoder(r.Body).Decode(&createBody)
+			_ = json.NewEncoder(w).Encode(map[string]any{
+				"id":     "pred-123",
+				"status": "starting",
+				"urls":   map[string]any{"get": srv.URL + "/replicate/predictions/pred-123"},
+			})
+		case r.Method == http.MethodGet && strings.HasSuffix(r.URL.Path, "/predictions/pred-123"):
+			pollAuth = r.Header.Get("Authorization")
+			if atomic.AddInt32(&polls, 1) < 2 {
+				_ = json.NewEncoder(w).Encode(map[string]any{"status": "processing"})
+				return
+			}
+			_ = json.NewEncoder(w).Encode(map[string]any{
+				"status": "succeeded",
+				"output": []string{srv.URL + "/files/track.mp3"},
+			})
+		case r.Method == http.MethodGet && strings.HasSuffix(r.URL.Path, "/files/track.mp3"):
+			audioAuth = r.Header.Get("Authorization")
+			w.Header().Set("Content-Type", "audio/mpeg")
+			_, _ = w.Write(fakeMP3)
+		default:
+			http.Error(w, "not found", http.StatusNotFound)
+		}
+	}))
+	t.Cleanup(srv.Close)
+
+	pub, err := svc.SaveConfig(ai.Update{
+		Enabled:      ptr(true),
+		MusicBaseURL: ptr(srv.URL + "/replicate"),
+		MusicModel:   ptr("stability-ai/stable-audio:abc123"),
+		APIKey:       ptr(testKey),
+	})
+	require.NoError(t, err)
+	require.True(t, pub.MusicReady)
+
+	res, err := svc.GenerateMusic(ctx, "acct-1", ai.MusicRequest{
+		Prompt: "relentless arena combat theme", Scene: "combat", DurationSec: 60, Instrumental: true,
+	})
+	require.NoError(t, err)
+	assert.False(t, res.Stub)
+	assert.Equal(t, fakeMP3, res.Audio, "the async adapter returns the finished MP3 bytes")
+	assert.Equal(t, "audio/mpeg", res.MIME)
+	assert.GreaterOrEqual(t, atomic.LoadInt32(&polls), int32(2), "the pending→succeeded poll loop actually ran")
+
+	// Key attached to the API host (create + poll) but NEVER to the delivery host.
+	assert.Equal(t, "Bearer "+testKey, createAuth, "the key is attached to the create call")
+	assert.Equal(t, "Bearer "+testKey, pollAuth, "the key is attached to the poll call")
+	assert.Empty(t, audioAuth, "the key must never be sent to the audio delivery host")
+
+	// The create body carried the shaped prompt through the Replicate `input`.
+	input, _ := createBody["input"].(map[string]any)
+	require.NotNil(t, input, "replicate create wraps params under input")
+	prompt, _ := input["prompt"].(string)
+	assert.Contains(t, prompt, "relentless arena combat theme")
+	assert.Contains(t, prompt, "loopable", "BGM must be asked for loopable")
+
+	assert.NotContains(t, logs.String(), testKey, "the API key must never be logged, even on the async path")
+}
+
+// ai-music-async-suno: a SUNO-STYLE async provider (base URL containing "suno")
+// is driven against a fake server: create POST /generate returns a job id, the
+// poll GET /feed/{id} goes processing → complete with an audio_url, and the
+// delivery host returns the bytes. GenerateMusic returns finished bytes; the key
+// is attached to create + poll but not the delivery host, and never logged.
+func TestMusicProviderAsyncSuno(t *testing.T) {
+	testkit.Cover(t, "ai-music-async-suno")
+	svc, _, _ := newSvc(t)
+	svc.SetMusicPollInterval(time.Millisecond)
+	ctx := context.Background()
+
+	var logs bytes.Buffer
+	prev := slog.Default()
+	slog.SetDefault(slog.New(slog.NewTextHandler(&logs, nil)))
+	t.Cleanup(func() { slog.SetDefault(prev) })
+
+	fakeMP3 := append([]byte("ID3"), bytes.Repeat([]byte{0x33}, 96)...)
+	var createAuth, pollAuth, audioAuth, sawFeedPath string
+	var createBody map[string]any
+	var polls int32
+	var srv *httptest.Server
+	srv = httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch {
+		case r.Method == http.MethodPost && strings.HasSuffix(r.URL.Path, "/generate"):
+			createAuth = r.Header.Get("Authorization")
+			_ = json.NewDecoder(r.Body).Decode(&createBody)
+			_ = json.NewEncoder(w).Encode(map[string]any{"id": "job-777", "status": "submitted"})
+		case r.Method == http.MethodGet && strings.Contains(r.URL.Path, "/feed/"):
+			pollAuth = r.Header.Get("Authorization")
+			sawFeedPath = r.URL.Path
+			if atomic.AddInt32(&polls, 1) < 2 {
+				_ = json.NewEncoder(w).Encode([]map[string]any{{"status": "queued"}})
+				return
+			}
+			_ = json.NewEncoder(w).Encode([]map[string]any{
+				{"status": "complete", "audio_url": srv.URL + "/cdn/job-777.mp3"},
+			})
+		case r.Method == http.MethodGet && strings.HasSuffix(r.URL.Path, "/cdn/job-777.mp3"):
+			audioAuth = r.Header.Get("Authorization")
+			w.Header().Set("Content-Type", "audio/mpeg")
+			_, _ = w.Write(fakeMP3)
+		default:
+			http.Error(w, "not found", http.StatusNotFound)
+		}
+	}))
+	t.Cleanup(srv.Close)
+
+	_, err := svc.SaveConfig(ai.Update{
+		Enabled:      ptr(true),
+		MusicBaseURL: ptr(srv.URL + "/suno/v1"),
+		MusicModel:   ptr("chirp-v3"),
+		APIKey:       ptr(testKey),
+	})
+	require.NoError(t, err)
+
+	res, err := svc.GenerateMusic(ctx, "acct-1", ai.MusicRequest{
+		Prompt: "victory fanfare sting", Scene: "victory", DurationSec: 12, Instrumental: true,
+	})
+	require.NoError(t, err)
+	assert.False(t, res.Stub)
+	assert.Equal(t, fakeMP3, res.Audio, "the suno adapter returns the finished MP3 bytes")
+	assert.Contains(t, sawFeedPath, "/feed/job-777", "the job id from create drives the poll URL")
+	assert.Equal(t, "Bearer "+testKey, createAuth)
+	assert.Equal(t, "Bearer "+testKey, pollAuth)
+	assert.Empty(t, audioAuth, "the key must never be sent to the audio delivery host")
+	assert.Equal(t, true, createBody["make_instrumental"], "instrumental intent forwarded to suno")
+
+	assert.NotContains(t, logs.String(), testKey, "the API key must never be logged, even on the async path")
+}
+
+// ai-music-oneclick-pack: the one-click BGM pack loops the eleven scenes through
+// GenerateMusic against a configured provider and returns a finished track per
+// scene; unconfigured it reports Stub with no tracks. A distinct fake-server
+// service (no Redis, so the tight music budget does not gate the batch) proves
+// the whole pack generates, and the key is never logged.
+func TestGenerateBGMPack(t *testing.T) {
+	testkit.Cover(t, "ai-music-oneclick-pack")
+	ctx := context.Background()
+
+	// Unconfigured → the whole pack is stub (caller renders locally instead).
+	stubSvc, _, _ := newSvc(t)
+	pack, err := stubSvc.GenerateBGMPack(ctx, "acct-1")
+	require.NoError(t, err)
+	assert.True(t, pack.Stub, "no provider configured → the pack is stub")
+	assert.Empty(t, pack.Tracks, "a stub pack produces no tracks")
+
+	// Configured provider: build a service with NO Redis so the tight per-account
+	// music budget does not gate an eleven-track operator batch.
+	dir := t.TempDir()
+	store, err := jsonstore.New(dir)
+	require.NoError(t, err)
+	svc := ai.New(store, nil)
+
+	var logs bytes.Buffer
+	prev := slog.Default()
+	slog.SetDefault(slog.New(slog.NewTextHandler(&logs, nil)))
+	t.Cleanup(func() { slog.SetDefault(prev) })
+
+	fakeMP3 := append([]byte("ID3"), bytes.Repeat([]byte{0x77}, 64)...)
+	var seenScenes int32
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		assert.Equal(t, "Bearer "+testKey, r.Header.Get("Authorization"), "every pack call attaches the key")
+		assert.True(t, strings.HasSuffix(r.URL.Path, "/audio/music"), "sync music path: %s", r.URL.Path)
+		atomic.AddInt32(&seenScenes, 1)
+		w.Header().Set("Content-Type", "audio/mpeg")
+		_, _ = w.Write(fakeMP3)
+	}))
+	t.Cleanup(srv.Close)
+
+	_, err = svc.SaveConfig(ai.Update{
+		Enabled:      ptr(true),
+		MusicBaseURL: ptr(srv.URL + "/v1"),
+		MusicModel:   ptr("music-1"),
+		APIKey:       ptr(testKey),
+	})
+	require.NoError(t, err)
+
+	pack, err = svc.GenerateBGMPack(ctx, "operator")
+	require.NoError(t, err)
+	assert.False(t, pack.Stub)
+	require.Len(t, pack.Tracks, 11, "the pack covers all eleven BGM scenes")
+	assert.EqualValues(t, 11, atomic.LoadInt32(&seenScenes), "one provider call per scene")
+
+	seen := map[string]bool{}
+	for _, tr := range pack.Tracks {
+		assert.Empty(t, tr.Err, "scene %q generated without error", tr.Scene)
+		assert.Equal(t, fakeMP3, tr.Audio, "scene %q got finished MP3 bytes", tr.Scene)
+		assert.Equal(t, "audio/mpeg", tr.MIME)
+		seen[tr.Scene] = true
+	}
+	for _, want := range []string{"menu", "combat", "victory", "defeat", "intermission"} {
+		assert.True(t, seen[want], "pack includes the %q scene", want)
+	}
+
+	assert.NotContains(t, logs.String(), testKey, "the API key must never be logged during a pack run")
 }

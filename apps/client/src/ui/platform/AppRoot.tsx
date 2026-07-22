@@ -22,6 +22,7 @@ import { cheatsAvailable } from "../cheats";
 import { CodexRoute } from "../codex/CodexRoute";
 import { AssetConsoleRoute } from "../assets/AssetConsoleRoute";
 import { CreditsRoute } from "./CreditsRoute";
+import { VersionBadge } from "../VersionBadge";
 import { useHud } from "../../net/RoomStore";
 import { Btn } from "./widgets";
 import { PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
@@ -111,6 +112,10 @@ export function AppRoot(): React.JSX.Element {
           the licence text over the artwork. Same hash-overlay mechanism as the
           codex, so it opens from any screen and is deep-linkable. */}
       <CreditsRoute />
+      {/* Build-stamp (#66): one fixed, bottom-pinned, click-through badge above
+          the screen switch, so it shows on login AND in-match — every
+          screenshot is traceable to the build it was taken on. */}
+      <VersionBadge />
     </>
   );
 }

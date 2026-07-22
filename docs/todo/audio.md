@@ -67,6 +67,8 @@ audio touches the per-frame path.
 | au-25 | Once-per-second guard: re-renders, 20 Hz snapshot repeats and backwards timer jitter never double-fire; the guard rearms on phase change / clock reset; mute + the unlock gate still silence it | audio-countdown-guard | unit | done |
 | au-26 | `countTick`/`countFinal` are authored as two DISTINCT single-clip pools with a sub-second cooldown and a tiny voice cap | audio-countdown-map | unit | done |
 | au-27 | Pressing Ready silences the four nagging ticks and keeps ONLY the final "brace" cue; a suppressed second is consumed, not queued; champ select is not commitable | audio-countdown-committed | unit | done |
+| au-28 | Looping bed re-entering a scene resumes in phase (source starts at elapsed mod duration) so the extended B-section plays across rounds instead of restarting bar 0; one-shot stings + first visits start at 0; authored silence still advances the scene clock | audio-bgm-loop-resume | unit | done |
+| au-29 | Test-mode force-silence gate (VITE_GGD_SILENT / window.__GGD_SILENT__ / ?silent), read once at construction: AudioContext never created (contextState null, playSfx/playBgm/playClip/playSting no-op) and nameVoice's out-of-graph HTMLAudioElement never created; unset = unchanged | audio-test-silence | unit | done |
 
 The seven **system/announcer broadcast** events (`matchStart`, `roundStart`,
 `levelUp`, `death`, `multiKill`, `allySlain`, `exUnlock`) are bound here but are

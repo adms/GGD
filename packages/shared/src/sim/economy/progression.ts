@@ -5,7 +5,15 @@ import { recordGold, recordXp } from "../stats/matchStats";
 
 export const LEVEL_CAP = 18;
 export const XP_REWARDS = { kill: 120, assist: 60, roundSurvive: 100 };
-export const GOLD_REWARDS = { kill: 150, assist: 75, roundWin: 300, roundLose: 150 };
+/**
+ * `killBounty` (task #90) is a ONE-TIME premium paid on top of `kill` the FIRST
+ * time each enemy champion dies — extra reward for drawing first blood on a
+ * player. A revived-then-rekilled victim pays base `kill` only (DeathSystem
+ * tracks paid victims on `world.bountyPaid`). It rides on TOP of the ~7,600g
+ * deterministic match income the price ladder is derived against, so it never
+ * disturbs the stat-path arithmetic (which is about deterministic income only).
+ */
+export const GOLD_REWARDS = { kill: 150, assist: 75, roundWin: 300, roundLose: 150, killBounty: 100 };
 
 /**
  * Gold every champion spawns with — the turn-1 shop purse.

@@ -8,6 +8,7 @@ import { cover } from "@ggd/shared/testkit/cover";
 import {
   FIRE_RING_SEC,
   isCombatStart,
+  loopResumeOffsetSec,
   sceneForMatch,
   sceneForPlatform,
 } from "./scene";
@@ -61,5 +62,26 @@ describe("combat-start sting edge (audio-scene-map)", () => {
     expect(isCombatStart(null, "combat")).toBe(true);
     expect(isCombatStart("combat", "combat")).toBe(false); // already in combat
     expect(isCombatStart("combat", "resolution")).toBe(false);
+  });
+});
+
+describe("loop resume offset (audio-bgm-loop-resume)", () => {
+  it("returns (elapsed mod duration) in seconds, wrapping past a whole loop", () => {
+    cover("audio-bgm-loop-resume");
+    // 3 s played into an 8 s loop → 3 s in
+    expect(loopResumeOffsetSec(3000, 8)).toBeCloseTo(3);
+    // 5 s played into a 2 s loop → wraps to 1 s in
+    expect(loopResumeOffsetSec(5000, 2)).toBeCloseTo(1);
+    // exactly one full loop lands back at the top
+    expect(loopResumeOffsetSec(2000, 2)).toBe(0);
+  });
+
+  it("collapses every degenerate input to 0 (play from the top)", () => {
+    cover("audio-bgm-loop-resume");
+    expect(loopResumeOffsetSec(0, 8)).toBe(0); // first visit
+    expect(loopResumeOffsetSec(-100, 8)).toBe(0); // negative clock
+    expect(loopResumeOffsetSec(3000, 0)).toBe(0); // unknown duration
+    expect(loopResumeOffsetSec(Number.NaN, 8)).toBe(0);
+    expect(loopResumeOffsetSec(3000, Number.NaN)).toBe(0);
   });
 });

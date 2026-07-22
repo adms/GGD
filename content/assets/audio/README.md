@@ -813,7 +813,7 @@ voice-jp/     6 voice + MANIFEST.json,  voice-jp/candidates/ 2 more (quarantined
 
 **Licence — read `content/assets/CREDITS.md` before touching these.** Free for
 commercial use, credit **optional** (so this is a COURTESY credit, filed with the
-CC0 art, *not* with the mandatory 魔王魂/CC-BY rows) — but copyright is **not**
+CC0 art, *not* with the mandatory CC-BY dragon row) — but copyright is **not**
 waived, and three prohibitions bite in GGD: no soundboard/sound-test screen for
 this directory, **no AI training / voice cloning**, and the voice actress's lines
 must be **played whole**, never re-cut into a sentence she did not record.

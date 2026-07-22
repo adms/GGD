@@ -88,6 +88,17 @@ export class SimWorld {
   readonly killTracking = new Map<EntityId, { lastKillTick: number; streak: number }>();
 
   /**
+   * Victims (champion entity ids) whose KILL BOUNTY has already been paid (task
+   * #90). The one-time bounty is paid to the killer the FIRST time each enemy
+   * champion dies; a revived-then-rekilled victim (same entity id across the
+   * whole match) is already in this set, so it yields base kill gold but never
+   * the bounty again. Deterministic bookkeeping keyed by ascending entity id —
+   * like killTracking / recentDamagers its observable effect (goldEarned) is
+   * already in the digest, so the set itself stays out of it.
+   */
+  readonly bountyPaid = new Set<EntityId>();
+
+  /**
    * True only while a combat round is live. Gates time-alive accumulation (and
    * marks the window in which the scoreboard is meaningful). Set by the match
    * host on combat entry/exit; false during champ-select/intermission/settlement.
@@ -149,6 +160,17 @@ export class SimWorld {
    * it true once the configured unlock round is reached (LoL-Arena style).
    */
   ultGateOverride = false;
+
+  /**
+   * Current 1-based MATCH ROUND, host-set at each intermission entry from the
+   * deterministic phase round (task #104). 0 (default) = NO round tracking —
+   * unit tests and the client's prediction shadow world — which the stat-path
+   * capstone round-gate treats as "ungated", so those call sites behave exactly
+   * as before. Host state like ultGateOverride: assigned identically on every
+   * replica from a deterministic source, never mutated by a system, so it stays
+   * out of digest().
+   */
+  round = 0;
 
   /**
    * Healing-flower rules (ticks). null = flowers disabled (legacy behavior,
@@ -228,6 +250,7 @@ export class SimWorld {
     this.matchStats.delete(id);
     this.recentDamagers.delete(id);
     this.killTracking.delete(id);
+    this.bountyPaid.delete(id);
   }
 
   emit(type: string, data: Record<string, unknown>): void {

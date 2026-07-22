@@ -17,6 +17,7 @@
   "economy": {
     "startingGold": 600,
     "killGold": 150,
+    "killBounty": 100,
     "assistGold": 75,
     "roundWinGold": 300,
     "roundLoseGold": 150,

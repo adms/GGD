@@ -15,6 +15,7 @@
 import { useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { computeTooltipPlacement, type TooltipSide } from "./tooltipPlacement";
+import { parseRoleMarkup, ROLE_COLOR } from "./abilityText";
 import { PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
 
 /** above AudioToggle's Z_TOP (2147483000) menu — the tooltip tops everything. */
@@ -132,7 +133,13 @@ export function Tooltip({
                   whiteSpace: "pre-wrap",
                 }}
               >
-                {body}
+                {/* task #114: render `[c=role]…[/c]` role markup as normalised
+                    coloured runs; a plain string yields one uncoloured run. */}
+                {parseRoleMarkup(body).map((seg, i) => (
+                  <span key={i} style={seg.role ? { color: ROLE_COLOR[seg.role] } : undefined}>
+                    {seg.text}
+                  </span>
+                ))}
               </div>
             )}
           </div>,

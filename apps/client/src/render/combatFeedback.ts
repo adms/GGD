@@ -41,6 +41,19 @@ export function flashColorFor(dmgType: string | undefined): [number, number, num
   return dmgType === "magic" ? [1, 0.35, 0.9] : [1, 0.15, 0.15];
 }
 
+/**
+ * ATTACKER (source) flash on a LANDED hit — a brief WHITE impact pop on the
+ * body that dealt the blow (task #69). The victim's red flash reads "I'm being
+ * hit"; the attacker needs the complementary "I connected" beat, which melee
+ * autos were missing entirely. White (not red) so it never reads as the
+ * attacker taking damage, and short so back-to-back autos don't strobe. Drawn
+ * through the same per-mesh renderOverlay channel as the victim flash, so it
+ * likewise never mutates a shared .glb material.
+ */
+export const ATTACKER_FLASH_RGB: readonly [number, number, number] = [1, 1, 1];
+/** Attacker impact-pop duration (ms) — shorter than the victim flash. */
+export const ATTACKER_FLASH_MS = 70;
+
 /** Overlay strength of the hit flash (0..1). */
 export const FLASH_ALPHA = 0.6;
 /**

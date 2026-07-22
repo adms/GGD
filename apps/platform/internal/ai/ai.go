@@ -94,6 +94,23 @@ const musicRateLimit int64 = 4
 // providerTimeout bounds one outbound provider call.
 const providerTimeout = 60 * time.Second
 
+// Music generation is a DIFFERENT latency class: a real track is minutes of
+// provider compute, and the async services (Suno/Replicate) are polled over that
+// whole window. So the music path uses its own per-provider client with a much
+// longer deadline than the shared 60s providerTimeout, plus a bounded poll loop.
+const (
+	// musicProviderTimeout bounds ONE outbound music request (create, one poll,
+	// or the final audio fetch). It is far longer than providerTimeout because a
+	// slow synchronous music endpoint can legitimately take minutes to answer.
+	musicProviderTimeout = 10 * time.Minute
+	// defaultMusicPoll is the wait between async job-status polls when a provider
+	// reports the job is still running. Tests shrink it via SetMusicPollInterval.
+	defaultMusicPoll = 3 * time.Second
+	// maxMusicPolls bounds the async poll loop so a stuck job cannot spin forever
+	// (maxMusicPolls × defaultMusicPoll ≈ musicProviderTimeout).
+	maxMusicPolls = 200
+)
+
 // Config is the DURABLE, server-side provider configuration. It is the truth
 // written to disk; it is NEVER serialized to a client (the APIKey would leak) —
 // handlers return a Public view instead.
@@ -268,6 +285,9 @@ type Service struct {
 	http  *http.Client
 	mu    sync.Mutex
 	now   func() time.Time
+	// musicPoll is the wait between async music job polls; 0 means defaultMusicPoll.
+	// Tests shrink it via SetMusicPollInterval so the poll loop runs instantly.
+	musicPoll time.Duration
 }
 
 // New builds the service. rdb may be nil (rate limiting then no-ops open).
@@ -288,6 +308,10 @@ func (s *Service) SetNow(fn func() time.Time) { s.now = fn }
 // SetHTTPClient overrides the outbound provider HTTP client (tests point it at
 // a fake provider server).
 func (s *Service) SetHTTPClient(c *http.Client) { s.http = c }
+
+// SetMusicPollInterval overrides the wait between async music job polls. Tests
+// set it to a few milliseconds so the poll loop does not sleep for real.
+func (s *Service) SetMusicPollInterval(d time.Duration) { s.musicPoll = d }
 
 // GetConfig returns the current provider config as the masked Public view.
 func (s *Service) GetConfig() (Public, error) {

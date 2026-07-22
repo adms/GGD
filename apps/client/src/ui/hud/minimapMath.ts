@@ -169,6 +169,75 @@ export function clampToZones(
 }
 
 // ---------------------------------------------------------------------------
+// local-zone scoping (task #67)
+// ---------------------------------------------------------------------------
+
+/**
+ * Index of the duel zone a world point belongs to: the disc that CONTAINS it,
+ * or — when the point sits in the padding between/around the discs — the
+ * NEAREST zone by gap to the rim (the same tie-break `clampToZones` uses, so a
+ * point is never assigned to a different zone than an order to it would clamp
+ * into). Null when no zones are known. This is how the minimap decides which
+ * single 3v3 belongs to the local player: feed it the local champion's world
+ * position.
+ */
+export function zoneIndexAt(
+  p: WorldPoint,
+  zones: readonly ArenaZoneCircle[] | null,
+): number | null {
+  if (!zones || zones.length === 0) return null;
+  let best: number | null = null;
+  let bestGap = Infinity;
+  for (let i = 0; i < zones.length; i++) {
+    const z = zones[i]!;
+    if (!(z.r > 0)) continue;
+    const d = Math.hypot(p.x - z.x, p.z - z.z);
+    if (d <= z.r) return i; // strictly inside this disc — decided
+    const gap = d - z.r;
+    if (gap < bestGap) {
+      bestGap = gap;
+      best = i;
+    }
+  }
+  return best;
+}
+
+/**
+ * Bounds of the LOCAL player's OWN duel zone (task #67): the padded box of the
+ * single zone `zoneIndex`. With no local zone (spectating, or the id/position
+ * isn't known yet) or an out-of-range index it falls back to the whole-arena
+ * union box — so the map degrades to "show everything" rather than to nothing.
+ */
+export function boundsForZone(
+  zones: readonly ArenaZoneCircle[] | null,
+  zoneIndex: number | null,
+  pad = 2,
+): MapBounds | null {
+  if (zoneIndex === null) return boundsFromZones(zones, pad);
+  const z = zones?.[zoneIndex];
+  if (!z) return boundsFromZones(zones, pad);
+  return boundsFromZones([z], pad);
+}
+
+/**
+ * Entity filter for the zone-scoped map (task #67): does an entity at (wx,wz)
+ * belong to the local player's duel zone? A `localZone` of null means "no zone
+ * to scope to" (spectator / unknown) and EVERYTHING passes — matching
+ * `boundsForZone`'s whole-arena fallback so the bounds and the filter never
+ * disagree. Zone membership is by the same nearest-disc rule the bounds use, so
+ * a marker that passes is always inside the disc the map is drawing.
+ */
+export function inLocalZone(
+  wx: number,
+  wz: number,
+  zones: readonly ArenaZoneCircle[] | null,
+  localZone: number | null,
+): boolean {
+  if (localZone === null) return true;
+  return zoneIndexAt({ x: wx, z: wz }, zones) === localZone;
+}
+
+// ---------------------------------------------------------------------------
 // camera viewport box
 // ---------------------------------------------------------------------------
 

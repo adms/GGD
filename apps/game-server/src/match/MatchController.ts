@@ -302,6 +302,11 @@ export class MatchController {
     this.world.combatActive = false; // scoreboard time-alive pauses between rounds
     for (const seat of this.seats.values()) seat.ready = false;
     const round = this.phase.round;
+    // Project the deterministic round into the sim so the stat-path capstone
+    // round-gate (task #104) can withhold 傳說·萬象強化 before 「大約是第五場
+    // 之後」. Shop buys happen during this intermission, so setting it here — the
+    // one place `round` is already read — is the right seam and timing.
+    this.world.round = round;
 
     // arena rules: once the ult unlock round is reached, R ranks at any level
     if (this.rules.ultUnlockRound !== null && round >= this.rules.ultUnlockRound) {

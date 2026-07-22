@@ -84,6 +84,9 @@ guard SFX/spark, a greyed "guard" number, a bigger break pop).
 | cj-c07 | Per-frame combat SFX key selection (物理/魔法/防禦/破防, crit/whiff/knockdown, passthrough, tally/timing silence) | juice-sfx-key | unit | done |
 | cj-c08 | Footstep cadence: one step per stride, silent while idle, teleport re-baselines | juice-footstep | unit | done |
 | cj-c09 | Quality-tier gating disables heavy post-fx (mobile off / desktop on); camera shake scales down on mobile | juice-quality-gate | unit | done |
+| cj-c10 | Hit flash tints the LOADED .glb child meshes (per-mesh renderOverlay), not only the procedural voxel fallback, then clears after the window (task #64) | juice-flash-glb | unit | done |
+| cj-c11 | A landed hit AND a basicAttack flash the ATTACKER (source) view — a brief white impact pop — in addition to the victim's red flash; melee autos had no attacker flash (task #69) | juice-attacker-flash | unit | done |
+| cj-c12 | A champion whose model is an empty (0-mesh) glb — `imported.collision` (godie-u011) — keeps the procedural voxel figure and its attack gesture instead of vanishing with a "Stand"-only clip (task #69) | client-empty-glb-fallback | unit | done |
 
 ## Sim half — what landed
 

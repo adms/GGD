@@ -39,6 +39,7 @@ import {
   type Rng,
 } from "./audioSelect";
 import { audioSettings, type AudioSettingsStore } from "./audioSettings";
+import { loopResumeOffsetSec } from "./scene";
 import { EMPTY_AUDIO_MAP, audioMapFromDoc, type AudioMap, type AudioScene } from "./types";
 
 /**
@@ -54,6 +55,62 @@ export const AUDIO_CONTENT_BASE = "/content/";
 /** Path of the authored map, fetched directly so it works pre-reindex. */
 export const AUDIO_MAP_PATH = "config/audio-map.json";
 
+/**
+ * TEST-MODE SILENCE GATE (task #62). Background agents, CI runs and headless
+ * screenshot captures must never make sound on the user's machine. This is read
+ * ONCE at construction — by both the AudioSystem (which then hands back a null
+ * AudioContext, so the whole WebAudio graph is never built and every `play*`
+ * short-circuits) and the out-of-graph name-VO layer (whose `new Audio()`
+ * element is never created) — from, in precedence order:
+ *
+ *   1. `import.meta.env.VITE_GGD_SILENT` — a build/.env flag (Vite)
+ *   2. `window.__GGD_SILENT__`           — a runtime global set before boot
+ *   3. a `?silent=` URL query            — an opt-in on the page URL
+ *
+ * Any truthy source forces silence; absent / `0` / `false` / `off` / `no` leave
+ * audio fully enabled. `window` IS `globalThis` in the browser, so a node/vitest
+ * process flips the same switch with `globalThis.__GGD_SILENT__ = true`.
+ */
+export function shouldSilenceAudio(): boolean {
+  // 1) Vite env flag. `import.meta.env` can be absent in a bare node process, so
+  //    guard the access — a throw here must never take the mixer down.
+  try {
+    const env = (import.meta as unknown as { env?: Record<string, unknown> }).env;
+    if (env && isSilentFlag(env.VITE_GGD_SILENT)) return true;
+  } catch {
+    /* import.meta.env unavailable */
+  }
+  const g = globalThis as unknown as {
+    __GGD_SILENT__?: unknown;
+    location?: { search?: unknown };
+  };
+  // 2) runtime global (window === globalThis in the browser)
+  if (isSilentFlag(g.__GGD_SILENT__)) return true;
+  // 3) ?silent= query opt-in (a bare `?silent` counts; `?silent=0` does not)
+  const search = typeof g.location?.search === "string" ? g.location.search : "";
+  if (search) {
+    try {
+      const params = new URLSearchParams(search);
+      if (params.has("silent")) {
+        const raw = params.get("silent");
+        if (raw === null || raw === "" || isSilentFlag(raw)) return true;
+      }
+    } catch {
+      /* malformed search string */
+    }
+  }
+  return false;
+}
+
+/** Read a silence flag from any source: truthy AND not an explicit "off". */
+function isSilentFlag(v: unknown): boolean {
+  if (v === undefined || v === null) return false;
+  if (typeof v === "boolean") return v;
+  if (typeof v === "number") return Number.isFinite(v) && v !== 0;
+  const s = String(v).trim().toLowerCase();
+  return s !== "" && s !== "0" && s !== "false" && s !== "off" && s !== "no";
+}
+
 export interface AudioSystemOptions {
   /** content mount base, default "/content/" */
   baseUrl?: string;
@@ -68,6 +125,13 @@ export interface AudioSystemOptions {
   /** decoded BGM buffers kept in memory (they are large: ~14 MB per 40 s) */
   maxBgmBuffers?: number;
   warn?: (msg: string, err?: unknown) => void;
+  /**
+   * Force test-mode silence (task #62). When omitted the gate is read from the
+   * environment via `shouldSilenceAudio()`; pass `true`/`false` to override
+   * (tests, or an explicit host decision). Silent ⇒ the AudioContext factory
+   * returns null, so the graph is never built and every play() no-ops.
+   */
+  silent?: boolean;
 }
 
 interface Bed {
@@ -77,6 +141,8 @@ interface Bed {
   peak: number;
   scene: string;
   file: string;
+  /** whether this bed loops — only looping beds accrue per-scene resume time */
+  loop: boolean;
 }
 
 /** Per-call options for a one-off SFX (positioned / attenuated). */
@@ -115,6 +181,8 @@ export class AudioSystem {
   private readonly crossfadeMs: number;
   private readonly maxBgmBuffers: number;
   private readonly warn: (msg: string, err?: unknown) => void;
+  /** test-mode silence gate (task #62): read once at construction, never sound */
+  private readonly silent: boolean;
 
   private ctx: AudioContext | null = null;
   private master: GainNode | null = null;
@@ -132,6 +200,13 @@ export class AudioSystem {
   private bed: Bed | null = null;
   /** `now()` at which the current bed was started; null when nothing is playing */
   private bedStartMs: number | null = null;
+  /**
+   * Per-scene ACCUMULATED looping-bed playback (ms), for the phase-continuous
+   * resume (task #109). Each time a looping bed is swapped out its just-played
+   * span is folded in here, so re-entering that scene restarts the source at
+   * `(elapsed mod duration)` instead of snapping back to bar 0 every round.
+   */
+  private readonly sceneElapsedMs = new Map<string, number>();
   private currentScene: AudioScene | null = null;
   private pendingSting: AudioScene | null = null;
   private unlocked = false;
@@ -143,7 +218,10 @@ export class AudioSystem {
   constructor(opts: AudioSystemOptions = {}) {
     this.baseUrl = opts.baseUrl ?? AUDIO_CONTENT_BASE;
     this.fetchFn = opts.fetchFn ?? defaultFetch;
-    this.ctxFactory = opts.ctxFactory ?? defaultCtxFactory;
+    // task #62: force-silence wins over any injected factory — a silent mixer
+    // hands back a null context, so the graph is never built and nothing sounds.
+    this.silent = opts.silent ?? shouldSilenceAudio();
+    this.ctxFactory = this.silent ? () => null : (opts.ctxFactory ?? defaultCtxFactory);
     this.settings = opts.settings ?? audioSettings;
     this.rng = opts.rng ?? Math.random;
     this.now = opts.now ?? (() => (typeof performance !== "undefined" ? performance.now() : Date.now()));
@@ -302,6 +380,11 @@ export class AudioSystem {
     return this.ctx?.state ?? null;
   }
 
+  /** True when the test-mode silence gate is active (task #62): no ctx, no sound. */
+  get isSilenced(): boolean {
+    return this.silent;
+  }
+
   // -------------------------------------------------------------------------
   // BGM
   // -------------------------------------------------------------------------
@@ -387,6 +470,9 @@ export class AudioSystem {
     const bus = this.bgmBus;
     if (!ctx || !bus) return;
     const prev = this.bed;
+    // Fold the outgoing looping bed's just-played span into its per-scene total
+    // BEFORE the anchor moves, so a later return to that scene resumes in phase.
+    this.accumulateBedElapsed(prev);
     try {
       const gain = ctx.createGain();
       gain.gain.value = 0;
@@ -399,8 +485,14 @@ export class AudioSystem {
       const curves = crossfadeCurves(prev?.peak ?? 0, peak);
       const durSec = this.crossfadeMs / 1000;
       this.rampCurve(gain.gain, curves.in, durSec);
-      src.start();
-      this.bed = { src, gain, peak, scene, file };
+      // task #109: a looping bed re-entering a scene it has already played starts
+      // at (elapsed mod duration) so its extended B-section keeps advancing across
+      // rounds; a first visit or a one-shot sting resolves to 0 (play from bar 0).
+      const offsetSec = loop
+        ? loopResumeOffsetSec(this.sceneElapsedMs.get(scene) ?? 0, buffer.duration)
+        : 0;
+      src.start(ctx.currentTime, offsetSec);
+      this.bed = { src, gain, peak, scene, file, loop };
       this.bedStartMs = this.now();
       if (!loop) {
         src.onended = (): void => {
@@ -420,10 +512,26 @@ export class AudioSystem {
   private stopBed(): void {
     const prev = this.bed;
     if (!prev) return;
+    // authored silence still advances the scene's clock, so re-entering it later
+    // resumes in phase rather than at bar 0 (task #109).
+    this.accumulateBedElapsed(prev);
     this.bed = null;
     this.bedStartMs = null;
     const curves = crossfadeCurves(prev.peak, 0);
     this.fadeOutAndStop(prev, curves.out, this.crossfadeMs / 1000);
+  }
+
+  /**
+   * Add a just-ended LOOPING bed's played span to its per-scene total (task
+   * #109). No-op for a one-shot bed or when nothing is playing. Reads the CURRENT
+   * `bedStartMs` anchor, so it MUST run before that anchor is reassigned/cleared.
+   */
+  private accumulateBedElapsed(bed: Bed | null): void {
+    if (!bed || !bed.loop || this.bedStartMs === null) return;
+    const played = this.now() - this.bedStartMs;
+    if (played <= 0) return;
+    const prior = this.sceneElapsedMs.get(bed.scene) ?? 0;
+    this.sceneElapsedMs.set(bed.scene, prior + played);
   }
 
   private fadeOutAndStop(bed: Bed, curve: number[], durSec: number): void {

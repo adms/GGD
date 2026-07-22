@@ -23,7 +23,9 @@ import { recomputeStats } from "../stats/statPipeline";
 import { Stat } from "../stats/statTypes";
 import { asSeatId, asTeamId, type ChampionId, type EntityId, type ItemId } from "../../ids";
 import { buyItem, grantItemFree } from "./shop";
-import { buyStatUpgrade, grantCapstone, statPathLive, statTicksRemaining } from "./statPath";
+import { buyStatUpgrade, grantCapstone, statPathLive, statTicksRemaining, CAPSTONE_ROUND_GATE } from "./statPath";
+import { deathSystem } from "../systems/DeathSystem";
+import { GOLD_REWARDS } from "./progression";
 import {
   LEGENDARY_ORB_ITEM_ID,
   LEGENDARY_ORB_PRICE,
@@ -247,6 +249,80 @@ describe("「隨機出現加強 10~100%能力屬性強化傳說道具」 — the
     for (let i = 0; i < 25; i++) tick(world, id);
     expect(world.champion.get(id)!.statStacks).toBe(25);
     expect(statTicksRemaining(world, id)).toBe(0);
+  });
+
+  it("WAITS for round 6 — 20 stacks banked early stay capstone-less until 「大約是第五場之後」", () => {
+    cover("statpath-capstone-round-gate");
+    const { world, id } = makeWorld();
+    // a winning streak buys the 20th tick a round early (round 5)
+    world.round = CAPSTONE_ROUND_GATE - 1;
+    for (let i = 0; i < STAT_TICK_TARGET; i++) tick(world, id);
+    expect(world.champion.get(id)!.statStacks).toBe(STAT_TICK_TARGET);
+    // 20 stacks, but pre-round-6: the legendary is WITHHELD
+    expect(world.champion.get(id)!.statCapstonePct).toBe(0);
+    expect(world.events.some((e) => e.type === "statCapstoneGranted")).toBe(false);
+
+    // reach the round-6 shop and buy one more tick — now it lands
+    world.round = CAPSTONE_ROUND_GATE;
+    world.events.length = 0;
+    const out = buyStatUpgrade(world, id);
+    expect(out.stacks).toBe(STAT_TICK_TARGET + 1);
+    expect(out.capstonePct).toBeGreaterThan(0);
+    expect(world.champion.get(id)!.statCapstonePct).toBeGreaterThan(0);
+    expect(world.events.some((e) => e.type === "statCapstoneGranted")).toBe(true);
+  });
+});
+
+describe("kill bounty (task #90) — a one-time premium per enemy", () => {
+  it("pays base+bounty on the first kill, base only after a revive, and is deterministic", () => {
+    cover("eco-kill-bounty");
+    const run = (seed: number): { afterFirst: number; afterSecond: number } => {
+      const world = new SimWorld(SKELETON_ARENA, seed);
+      const c = SKELETON_ARENA.zones[0]!.center;
+      const killer = spawnChampion(world, {
+        championId: "sela" as ChampionId,
+        seatId: asSeatId(0),
+        teamId: asTeamId(0),
+        pos: { x: c.x, z: c.z },
+        zone: 0,
+      });
+      const victim = spawnChampion(world, {
+        championId: "thorne" as ChampionId,
+        seatId: asSeatId(1),
+        teamId: asTeamId(1),
+        pos: { x: c.x + 2, z: c.z },
+        zone: 0,
+      });
+      world.champion.get(killer)!.gold = 0;
+      const vhp = world.health.get(victim)!;
+
+      // drive ONE death through the real system: a damage event names the source,
+      // then deathSystem awards kill gold (+ bounty on the first).
+      const killOnce = (): void => {
+        vhp.hp = 0;
+        vhp.alive = true;
+        world.events.length = 0;
+        world.emit("damage", { target: victim, source: killer });
+        deathSystem(world);
+      };
+
+      killOnce();
+      const afterFirst = world.champion.get(killer)!.gold;
+      // revive the SAME entity (revive keeps the entity id) and kill it again
+      vhp.hp = vhp.maxHp;
+      vhp.alive = true;
+      killOnce();
+      const afterSecond = world.champion.get(killer)!.gold;
+      return { afterFirst, afterSecond };
+    };
+
+    const a = run(7);
+    // first kill: base kill gold PLUS the one-time bounty
+    expect(a.afterFirst).toBe(GOLD_REWARDS.kill + GOLD_REWARDS.killBounty);
+    // rekill after a revive: base kill gold ONLY — the bounty is not paid twice
+    expect(a.afterSecond).toBe(a.afterFirst + GOLD_REWARDS.kill);
+    // same seed → identical gold trail (deterministic bookkeeping)
+    expect(run(7)).toEqual(a);
   });
 });
 

@@ -301,3 +301,142 @@ describe("ChampionView.dispose animation groups", () => {
     for (const g of container.animationGroups) expect(g.targetedAnimations).toHaveLength(1);
   });
 });
+
+describe("ChampionView hit flash on the LOADED model (juice-flash-glb, task #64)", () => {
+  /** A container with real GEOMETRY + clips — the normal loaded-champion case. */
+  const makeMeshContainer = (clipNames: string[]): AssetContainer => {
+    const container = new AssetContainer(scene);
+    const mesh = MeshBuilder.CreateBox("glb-body", { size: 1 }, scene);
+    container.meshes.push(mesh);
+    container.rootNodes.push(mesh);
+    for (const name of clipNames) {
+      const group = new AnimationGroup(name, scene);
+      const anim = new Animation(`${name}-y`, "position.y", 60, Animation.ANIMATIONTYPE_FLOAT);
+      anim.setKeys([
+        { frame: 0, value: 0 },
+        { frame: 30, value: 1 },
+      ]);
+      group.addTargetedAnimation(anim, mesh);
+      container.animationGroups.push(group);
+    }
+    container.removeAllFromScene();
+    return container;
+  };
+
+  const MESH_DOC = {
+    id: "model.mesh",
+    schema: "model@1",
+    glbPath: "assets/models/champions/mage.glb",
+    scale: 1,
+    collisionRadius: 0.5,
+    clipMap: {
+      idle: "Idle",
+      run: "Running_A",
+      attack: "Attack_A",
+      cast: "Cast_A",
+      hurt: "Hit_A",
+      death: "Death_A",
+    },
+  } as ModelDoc;
+
+  it("flash() tints the .glb child meshes, then clears — not only the voxel fallback", async () => {
+    cover("juice-flash-glb");
+    const container = makeMeshContainer(["Idle", "Running_A", "Attack_A", "Cast_A", "Hit_A", "Death_A"]);
+    const assets = { load: (): Promise<AssetContainer> => Promise.resolve(container) } as unknown as AssetManager;
+
+    const view = new ChampionView(scene, 770, "champ.sela", 1);
+    view.setPose(0, 0, 0, 1);
+    view.tryUpgradeToGlb(assets, MESH_DOC);
+    await Promise.resolve();
+    await Promise.resolve();
+    expect(view.hasGlb).toBe(true);
+
+    // the LOADED model's mesh (cloned as "<id>-glb-body"), not a procedural box
+    const glbMesh = view.root.getChildMeshes(false).find((m) => m.name.endsWith("glb-body"))!;
+    expect(glbMesh).toBeTruthy();
+
+    view.update("idle", 100, 16); // settle — no flash yet
+    expect(glbMesh.renderOverlay).toBeFalsy();
+
+    view.flash([1, 0.15, 0.15], 100); // a landed hit
+    view.update("idle", 110, 16);
+    expect(glbMesh.renderOverlay).toBe(true); // the 3D model paints, not just the voxels
+    expect(glbMesh.overlayAlpha).toBeCloseTo(FLASH_ALPHA, 5);
+
+    view.update("idle", 100 + FLASH_MS + 20, 16); // past the window → cleared
+    expect(glbMesh.renderOverlay).toBe(false);
+
+    view.dispose();
+  });
+});
+
+describe("ChampionView empty-glb procedural fallback (client-empty-glb-fallback, task #69)", () => {
+  /**
+   * Reproduces `imported.collision` (godie-u011's model): a geometry-LESS WC3
+   * dummy — 0 meshes, one static "Stand" clip. Adopting it hid the voxel figure
+   * and left the champion invisible with an attack that resolved to "Stand".
+   */
+  const makeEmptyContainer = (clipNames: string[]): AssetContainer => {
+    const container = new AssetContainer(scene);
+    const bone = new TransformNode("collision-root", scene);
+    container.transformNodes.push(bone);
+    container.rootNodes.push(bone);
+    for (const name of clipNames) {
+      const group = new AnimationGroup(name, scene);
+      const anim = new Animation(`${name}-y`, "position.y", 60, Animation.ANIMATIONTYPE_FLOAT);
+      anim.setKeys([
+        { frame: 0, value: 0 },
+        { frame: 30, value: 1 },
+      ]);
+      group.addTargetedAnimation(anim, bone);
+      container.animationGroups.push(group);
+    }
+    container.removeAllFromScene();
+    return container;
+  };
+
+  const EMPTY_DOC = {
+    id: "imported.collision",
+    schema: "model@1",
+    glbPath: "assets/models/imported/collision.glb",
+    scale: 1.5,
+    collisionRadius: 0.55,
+    clipMap: {
+      idle: "Stand",
+      run: "Stand",
+      attack: "Stand",
+      cast: "Stand",
+      hurt: "Stand",
+      death: "Stand",
+    },
+  } as ModelDoc;
+
+  it("keeps the procedural figure (visible + attack-animated) instead of a 0-mesh glb", async () => {
+    cover("client-empty-glb-fallback");
+    const baseline = scene.animationGroups.length;
+    const container = makeEmptyContainer(["Stand"]);
+    const assets = { load: (): Promise<AssetContainer> => Promise.resolve(container) } as unknown as AssetManager;
+
+    const view = new ChampionView(scene, 611, "imported.collision", 0);
+    view.setPose(0, 0, 0, 1);
+    const torso = view.root.getChildMeshes(false).find((m) => m.name === "champ-611-torso")!;
+    expect(torso).toBeTruthy();
+
+    view.tryUpgradeToGlb(assets, EMPTY_DOC);
+    await Promise.resolve();
+    await Promise.resolve();
+
+    // the geometry-less glb is NOT adopted — the champion stays the voxel figure
+    expect(view.hasGlb).toBe(false);
+    expect(torso.isEnabled()).toBe(true);
+    // ...and it did not strand the cloned "Stand" animation group in the scene
+    expect(scene.animationGroups.length).toBe(baseline);
+
+    // the procedural ATTACK gesture actually drives the limbs (armR → raised strike)
+    const armR = view.root.getChildTransformNodes(false).find((n) => n.name.endsWith("-armR-pivot"))!;
+    for (let i = 0; i < 80; i++) view.update("attack", 100 + i * 16, 16);
+    expect(Math.abs(armR.rotation.x)).toBeGreaterThan(1); // eases toward the -2.0 strike pose
+
+    view.dispose();
+  });
+});

@@ -48,6 +48,26 @@ import {
 
 export type StatTickResult = "ok" | "no-gold" | "no-champion";
 
+/**
+ * THE ROUND GATE (task #104). Even at {@link STAT_TICK_TARGET} stacks the
+ * capstone is WITHHELD until the match reaches this round, so 傳說·萬象強化 can
+ * never land before 「大約是第五場之後」 — the pacing the 375g tick price was
+ * tuned to. itemTiers.ts shows the 20th tick lands in the round-6 shop on every
+ * deterministic income path, but a winning streak's extra kill/round gold could
+ * otherwise buy the 20th tick a round or two early; this gate makes the pacing a
+ * guarantee rather than an arithmetic accident.
+ */
+export const CAPSTONE_ROUND_GATE = 6;
+
+/**
+ * Whether the match has reached the capstone's unlock round. `world.round === 0`
+ * (unit tests / the client's prediction shadow — no round tracking) is treated
+ * as ungated, exactly like the pre-#104 behaviour.
+ */
+export function capstoneRoundReached(world: SimWorld): boolean {
+  return world.round === 0 || world.round >= CAPSTONE_ROUND_GATE;
+}
+
 export interface StatTickOutcome {
   result: StatTickResult;
   /** stack count AFTER the purchase (unchanged on failure) */
@@ -120,7 +140,10 @@ export function statTicksRemaining(world: SimWorld, id: EntityId): number {
  * the 25% price premium rents.
  *
  * On the {@link STAT_TICK_TARGET}-th consecutive tick it also grants the
- * capstone, once per champion.
+ * capstone, once per champion — but never before {@link CAPSTONE_ROUND_GATE}
+ * (task #104): a player who banks a winning streak to 20 stacks early still
+ * waits for the round-6 shop, so the tick re-checks the gate and lands the
+ * capstone on the first qualifying purchase at or after that round.
  */
 export function buyStatUpgrade(world: SimWorld, id: EntityId): StatTickOutcome {
   const champ = world.champion.get(id);
@@ -149,7 +172,11 @@ export function buyStatUpgrade(world: SimWorld, id: EntityId): StatTickOutcome {
   });
 
   let capstonePct = 0;
-  if (champ.statStacks >= STAT_TICK_TARGET && champ.statCapstonePct === 0) {
+  if (
+    champ.statStacks >= STAT_TICK_TARGET &&
+    champ.statCapstonePct === 0 &&
+    capstoneRoundReached(world)
+  ) {
     capstonePct = grantCapstone(world, id);
   }
   return { result: "ok", stacks: champ.statStacks, roll, capstonePct };

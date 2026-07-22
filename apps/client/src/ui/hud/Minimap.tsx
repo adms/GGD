@@ -37,20 +37,22 @@
 import { useEffect, useRef } from "react";
 import type { Order } from "@ggd/shared/sim/intents";
 import { useHud, hudStore } from "../../net/RoomStore";
-import { frameBus } from "../../frameBus";
+import { frameBus, type ArenaZoneCircle } from "../../frameBus";
 import { FIRE_RING_SEC } from "../../audio/scene";
 import { hudActions } from "../actions";
 import { HudSlot, hudTouch } from "./HudSlot";
 import { hudSlotHeight, hudSlotWidth } from "./hudLayout";
 import { PANEL_BG, PANEL_BORDER, teamCss } from "../theme";
 import {
-  boundsFromZones,
+  boundsForZone,
   cameraGroundQuad,
   clampToZones,
   dotColorFor,
+  inLocalZone,
   mapToWorld,
   markerSpecFor,
   worldToMap,
+  zoneIndexAt,
   CAMERA_YAW_RAD,
   type MapBounds,
 } from "./minimapMath";
@@ -115,6 +117,7 @@ function drawDangerRim(
   sizePx: number,
   yaw: number,
   nowMs: number,
+  onlyZone: number | null,
 ): void {
   const hud = hudStore.getState();
   if (hud.phase !== "combat") return;
@@ -129,13 +132,14 @@ function drawDangerRim(
   ctx.globalAlpha = Math.max(0, Math.min(1, pulse));
   ctx.strokeStyle = DANGER_RIM;
   ctx.lineWidth = 2 + 2 * urgency;
-  for (const z of zones) {
-    if (!(z.r > 0)) continue;
+  zones.forEach((z, i) => {
+    if (!(z.r > 0)) return;
+    if (onlyZone !== null && i !== onlyZone) return; // local duel zone only (task #67)
     const c = worldToMap(z.x, z.z, bounds, sizePx, yaw);
     ctx.beginPath();
     ctx.arc(c.x, c.y, z.r * s, 0, Math.PI * 2);
     ctx.stroke();
-  }
+  });
   ctx.restore();
 }
 
@@ -256,6 +260,22 @@ function drawReviveCircles(
   }
 }
 
+/**
+ * The duel zone the LOCAL champion currently stands in (task #67) — the map
+ * shows ONLY this one 3v3, never the whole four-zone arena. Derived from the
+ * live anchor position (not a fixed seat→zone table) so it stays correct even
+ * if a mode ever moves a player between zones. Null when there is no local
+ * champion resolved yet (pre-spawn / spectating / before the entity id lands),
+ * and the callers then fall back to the whole-arena view.
+ */
+function localZoneIndex(zones: ArenaZoneCircle[] | null): number | null {
+  const localEntityId = hudStore.getState().localEntityId;
+  if (localEntityId === null || !zones) return null;
+  const me = frameBus.champions.get(localEntityId);
+  if (!me) return null;
+  return zoneIndexAt({ x: me.worldX, z: me.worldZ }, zones);
+}
+
 /** One throttled frame: terrain blit → danger rim → camera box → markers. */
 function drawFrame(
   ctx: CanvasRenderingContext2D,
@@ -267,15 +287,22 @@ function drawFrame(
 ): void {
   ctx.clearRect(0, 0, sizePx, sizePx);
   const zones = frameBus.arenaZones;
-  const bounds = boundsFromZones(zones);
+  // task #67: narrow the whole map to the LOCAL player's own duel zone. Bounds,
+  // terrain, markers and the danger rim are all scoped to it; a null zone
+  // (spectating / pre-spawn) degrades to the whole-arena view.
+  const localZone = localZoneIndex(zones);
+  const bounds = boundsForZone(zones, localZone);
   if (!zones || !bounds) return;
   // orientation: the rig's measured yaw, else the derived fixed-rig constant
   const yaw = frameBus.cameraView?.yawRad ?? CAMERA_YAW_RAD;
+  // terrain bakes only the zone(s) the map actually shows — a single disc when
+  // scoped, so the other three 3v3s never bleed into the baked background
+  const shownZones = localZone !== null && zones[localZone] ? [zones[localZone]!] : zones;
 
   // --- 1) baked terrain background -----------------------------------------
   const image = terrain.imageFor({
-    key: terrainKey(frameBus.arenaId, zones, sizePx, dpr, yaw),
-    zones,
+    key: terrainKey(frameBus.arenaId, shownZones, sizePx, dpr, yaw),
+    zones: shownZones,
     bounds,
     sizePx,
     dpr,
@@ -283,15 +310,18 @@ function drawFrame(
   });
   if (image) ctx.drawImage(image, 0, 0, sizePx, sizePx);
 
-  drawDangerRim(ctx, bounds, sizePx, yaw, nowMs);
+  drawDangerRim(ctx, bounds, sizePx, yaw, nowMs, localZone);
 
   // --- 2) entities ---------------------------------------------------------
   const localEntityId = hudStore.getState().localEntityId;
   const scale = sizePx / REFERENCE_SIZE;
   // revive circles paint UNDER the champion markers (a ring must never hide
-  // the teammate who is standing in it)
-  drawReviveCircles(ctx, bounds, sizePx, yaw, scale, null);
+  // the teammate who is standing in it) — scoped to the local zone (task #67)
+  drawReviveCircles(ctx, bounds, sizePx, yaw, scale, localZone);
   for (const a of frameBus.champions.values()) {
+    // task #67: only the local player's own duel zone is on the map — a
+    // champion (or flower) fighting in another 3v3 is filtered out entirely
+    if (!inLocalZone(a.worldX, a.worldZ, zones, localZone)) continue;
     const p = worldToMap(a.worldX, a.worldZ, bounds, sizePx, yaw);
     if (a.teamId < 0) {
       // neutral healing flower (task #22) — a small glowing green pip
@@ -387,7 +417,10 @@ export function Minimap(): React.JSX.Element | null {
   /** Canvas-relative click → world point (exact inverse of the projection). */
   const worldAt = (ev: React.PointerEvent | React.MouseEvent): { x: number; z: number } | null => {
     const zones = frameBus.arenaZones;
-    const bounds = boundsFromZones(zones);
+    // MUST match drawFrame's zone scoping (task #67): the map draws the local
+    // player's own zone, so a click has to invert against the SAME single-zone
+    // bounds or it would resolve to the wrong world point.
+    const bounds = boundsForZone(zones, localZoneIndex(zones));
     if (!bounds) return null;
     const rect = (ev.currentTarget as HTMLElement).getBoundingClientRect();
     if (rect.width <= 0) return null;

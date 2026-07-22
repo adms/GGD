@@ -107,9 +107,12 @@ explosion flares behind them**, while the epic vista still shows around the card
 
 **Home-page footer (`ui/platform/HomeFooter.tsx`).** © 2026 Moriyamouse/Adms
 糟糕騎士團 · the 「討論區」 forum link (facebook group, `target=_blank
-rel=noopener noreferrer`) · the mandatory 音楽：魔王魂 (https://maou.audio/)
-license credit. `pointer-events:none` container (links re-enable) so it never
-blocks the form; wraps + respects the bottom safe-area inset.
+rel=noopener noreferrer`) · a 「版權聲明」 link to the `#credits` page, which carries
+the one mandatory attribution that remains — the CC-BY 4.0 login dragon. (The footer
+used to print the 音楽：魔王魂 BGM credit inline; that credit is gone — no such music
+ships any more, task #91 — and the dragon's obligation moved to the linked page
+instead of a wall of text over the art.) `pointer-events:none` container (links
+re-enable) so it never blocks the form; wraps + respects the bottom safe-area inset.
 
 **Photosensitivity / a11y.** `prefers-reduced-motion` still skips the engine
 entirely (AuthScreen → static dark gradient, no canvas, no strobing FX);
@@ -134,7 +137,7 @@ fps-cap / dt-clamp / pause-on-hidden guards from #12 are retained.
 | ls-26 | CombatFlashController: one capped sprite per point; allocation-free per frame; disposes clean | login-fx-flash | integration | done |
 | ls-27 | LoginScene: pumping many frames grows nothing (hot loop allocation-free with all FX live) | login-fx-alloc-free | integration | done |
 | ls-28 | Calm mode (epicFx:false) omits the strobing dragon/beam/explosion/flash FX; epic build creates them | login-calm-mode | integration | done |
-| ls-29 | HomeFooter renders the © line, the exact 討論區 forum href (blank/noopener), and the 魔王魂 maou.audio credit; container is pointer-events:none | login-footer | unit | done |
+| ls-29 | HomeFooter renders the © line, the exact 討論區 forum href (blank/noopener), and the 「版權聲明」 link to the #credits page (the mandatory CC-BY dragon credit lives there; the old 魔王魂 credit is asserted GONE); container is pointer-events:none | login-footer | unit | done |
 
 ## Task #20 — login immersion: dragon roars, UI/typing SFX + keystroke FX, ride-onto-island enter transition
 

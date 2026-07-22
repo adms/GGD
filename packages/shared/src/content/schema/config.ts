@@ -41,6 +41,14 @@ export const zConfigMatchDoc = z
       .object({
         startingGold: z.number().int().min(0),
         killGold: z.number().int().min(0),
+        /**
+         * One-time bounty paid on TOP of killGold the first time each enemy
+         * champion dies (task #90). OPTIONAL + additive: a config doc without it
+         * (older exports, the editor's new-doc template) still validates, and the
+         * sim reads its own GOLD_REWARDS.killBounty default — this key is the
+         * operator override for that value.
+         */
+        killBounty: z.number().int().min(0).optional(),
         assistGold: z.number().int().min(0),
         roundWinGold: z.number().int().min(0),
         roundLoseGold: z.number().int().min(0),

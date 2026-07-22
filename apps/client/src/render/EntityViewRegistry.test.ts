@@ -192,3 +192,47 @@ describe("EntityViewRegistry (client-06)", () => {
     registry.dispose();
   });
 });
+
+describe("EntityViewRegistry attacker flash (juice-attacker-flash, task #69)", () => {
+  const spawnTwo = (registry: EntityViewRegistry): void =>
+    registry.sync({
+      entities: [champ(20, 0, 0), champ(21, 2, 0)], // 20 = attacker, 21 = victim
+      poseFor: passthrough,
+      nowMs: 0,
+      dtMs: 16,
+      loadModels: false,
+    });
+
+  it("a basicAttack flashes the ATTACKER (source) view, not only the victim", () => {
+    cover("juice-attacker-flash");
+    const registry = new EntityViewRegistry(scene, new AssetManager(scene));
+    spawnTwo(registry);
+    const source = registry.getChampionView(20)!;
+    const spy = vi.spyOn(source, "flash");
+
+    registry.handleEvent({ type: "basicAttack", data: { source: 20, target: 21 } } as never, 100);
+
+    // the melee swing now pops the attacker (the fix); before #69 it flashed no one
+    expect(spy).toHaveBeenCalledTimes(1);
+    registry.dispose();
+  });
+
+  it("a landed hit flashes BOTH the victim (red) and the attacker (source)", () => {
+    cover("juice-attacker-flash");
+    const registry = new EntityViewRegistry(scene, new AssetManager(scene));
+    spawnTwo(registry);
+    const source = registry.getChampionView(20)!;
+    const target = registry.getChampionView(21)!;
+    const sFlash = vi.spyOn(source, "flash");
+    const tFlash = vi.spyOn(target, "flash");
+
+    registry.handleEvent(
+      { type: "damage", data: { source: 20, target: 21, amount: 40, dmgType: "physical" } } as never,
+      100,
+    );
+
+    expect(sFlash).toHaveBeenCalled(); // attacker: the new "I connected" pop
+    expect(tFlash).toHaveBeenCalled(); // victim: the existing red flash preserved
+    registry.dispose();
+  });
+});

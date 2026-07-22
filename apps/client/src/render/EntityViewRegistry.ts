@@ -19,7 +19,12 @@ import { FlowerView } from "./views/FlowerView";
 import { ReviveCircleView } from "./views/ReviveCircleView";
 import { applyModelTint, releaseModelTint, type ModelTint } from "./views/modelTint";
 import type { AssetManager } from "./AssetManager";
-import { flashColorFor, hitstopMsForDamage } from "./combatFeedback";
+import {
+  ATTACKER_FLASH_MS,
+  ATTACKER_FLASH_RGB,
+  flashColorFor,
+  hitstopMsForDamage,
+} from "./combatFeedback";
 import { TELEPORT_STEP_UNITS } from "./math/motion";
 
 /** Per-champion vertex-tint bookkeeping (task #49). */
@@ -196,8 +201,15 @@ export class EntityViewRegistry {
       // would visibly reset the swing mid-strike.
       case "basicAttack": {
         const source = ev.data.source as number | undefined;
-        if (source !== undefined)
-          this.champions.get(source)?.pulse("attack", nowMs, { restartClip: false });
+        if (source !== undefined) {
+          const view = this.champions.get(source);
+          // ATTACKER FLASH (task #69): the swing connects → a brief white impact
+          // pop on the attacker. Melee autos never flashed the attacker before,
+          // so the strike read only on the victim. `[...]` copies the readonly
+          // tunable into the mutable tuple `flash` expects.
+          view?.pulse("attack", nowMs, { restartClip: false });
+          view?.flash([...ATTACKER_FLASH_RGB], nowMs, ATTACKER_FLASH_MS);
+        }
         break;
       }
       // damage → hurt flinch + HIT FLASH (red; magenta on magic) +
@@ -216,8 +228,14 @@ export class EntityViewRegistry {
             view.setHitstop(hitstopMs, nowMs);
           }
         }
-        // freeze the attacker's swing at the impact frame too
-        if (source !== undefined) this.champions.get(source)?.setHitstop(hitstopMs, nowMs);
+        // freeze the attacker's swing at the impact frame too, and flash the
+        // attacker white (task #69 — the "I connected" beat that mirrors the
+        // victim's red flash; melee autos had none).
+        if (source !== undefined) {
+          const sourceView = this.champions.get(source);
+          sourceView?.setHitstop(hitstopMs, nowMs);
+          sourceView?.flash([...ATTACKER_FLASH_RGB], nowMs, ATTACKER_FLASH_MS);
+        }
         break;
       }
       // unblocked heavy hit → KNOCKDOWN: a longer prone/getup flinch on the victim.

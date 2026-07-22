@@ -30,16 +30,17 @@
  * for as though it were exact.
  */
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Items } from "@ggd/shared/sim/content/registry";
+import { Champions, Items } from "@ggd/shared/sim/content/registry";
 import { SELL_REFUND, INVENTORY_SLOTS } from "@ggd/shared/sim/economy/shop";
 import { itemHasEffect, isShopService, shopServicePrice } from "@ggd/shared/sim/economy/itemTiers";
 import { parseCombatEnvJson } from "@ggd/shared/sim/combatEnv";
 import { Stat, type StatBlock } from "@ggd/shared/sim/stats/statTypes";
-import type { ItemId } from "@ggd/shared/ids";
+import type { ChampionId, ItemId } from "@ggd/shared/ids";
 import { useHud, type SeatView } from "../../net/RoomStore";
 import { audioSystem } from "../../audio";
 import { hudActions } from "../actions";
 import { GlyphTile } from "../components/GlyphTile";
+import { championIconUrl } from "../icons";
 import { SfxButton } from "../SfxButton";
 import { GOLD, PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
 import { shopCatalogue } from "./champSelectFilter";
@@ -76,6 +77,21 @@ type Tab = "goods" | "skills";
 type Density = "detail" | "compact";
 const DENSITY_KEY = "ggd.shop.density";
 
+/**
+ * Shop tabs (#122). The LEAD tab is the hero's 屬性 (attribute) panel: it is
+ * default-selected, so opening the shop answers "what am I right now" before
+ * "what's for sale". 技能 keeps the per-slot skill detail. Only the LABEL moved
+ * 商品→屬性 — the tab KEY stays "goods" because the attribute panel has always
+ * led that view (the catalogue simply sits below it), so none of the `goods`
+ * content wiring has to change.
+ */
+export const SHOP_TABS: readonly [{ key: Tab; label: string }, { key: Tab; label: string }] = [
+  { key: "goods", label: "屬性" },
+  { key: "skills", label: "技能" },
+];
+/** The tab the shop opens on — the lead (屬性) tab. */
+export const DEFAULT_SHOP_TAB: Tab = SHOP_TABS[0].key;
+
 export function MerchantShop(): React.JSX.Element | null {
   const phase = useHud((s) => s.phase);
   const alive = useHud((s) => s.localAlive);
@@ -91,7 +107,7 @@ export function MerchantShop(): React.JSX.Element | null {
   const { whitelist } = useWhitelist();
 
   const [open, setOpen] = useState(false);
-  const [tab, setTab] = useState<Tab>("goods");
+  const [tab, setTab] = useState<Tab>(DEFAULT_SHOP_TAB);
   const [toast, setToast] = useState<ShopToast | null>(null);
   const [focused, setFocused] = useState<string | null>(null);
   const [density, setDensity] = useState<Density>(() => readDensity());
@@ -105,7 +121,7 @@ export function MerchantShop(): React.JSX.Element | null {
     prevPhase.current = phase;
     if (shouldAutoOpen(prev, phase)) {
       setOpen(true);
-      setTab("goods");
+      setTab(DEFAULT_SHOP_TAB);
       setFocused(null);
       audioSystem.playSfx(OPEN_SFX);
     }
@@ -207,6 +223,9 @@ export function MerchantShop(): React.JSX.Element | null {
   const items = shopCatalogue(Items.all(), whitelist);
   const whitelistEmptied = whitelist.enforced && items.length === 0;
 
+  // The hero you're shopping FOR — its portrait rides the tab row (#122).
+  const champName = Champions.tryGet(seat.championId as ChampionId)?.name ?? seat.displayName ?? seat.championId;
+
   return (
     <div
       style={{
@@ -253,31 +272,29 @@ export function MerchantShop(): React.JSX.Element | null {
           : "本回合已陣亡 · 回合結束前仍可採購"}
       </div>
 
-      {/* ---- tabs ---- */}
-      <div style={{ display: "flex", gap: 6, margin: "10px 0 8px" }}>
-        {(
-          [
-            ["goods", "商品"],
-            ["skills", "技能"],
-          ] as const
-        ).map(([key, label]) => (
-          <SfxButton
-            key={key}
-            kind="subdued"
-            sfxVolume={0.5}
-            onClick={() => setTab(key)}
-            style={{
-              padding: "5px 16px",
-              borderRadius: 7,
-              border: `1px solid ${tab === key ? ACCENT : "#2a3040"}`,
-              background: tab === key ? "rgba(60, 42, 18, 0.9)" : "transparent",
-              color: tab === key ? ACCENT : TEXT_DIM,
-              fontSize: 13,
-            }}
-          >
-            {label}
-          </SfxButton>
-        ))}
+      {/* ---- hero portrait + tabs (#122) ---- */}
+      <div style={{ display: "flex", alignItems: "center", gap: 10, margin: "10px 0 8px" }}>
+        <ShopHeroPortrait championId={seat.championId} name={champName} />
+        <div style={{ display: "flex", gap: 6 }}>
+          {SHOP_TABS.map(({ key, label }) => (
+            <SfxButton
+              key={key}
+              kind="subdued"
+              sfxVolume={0.5}
+              onClick={() => setTab(key)}
+              style={{
+                padding: "5px 16px",
+                borderRadius: 7,
+                border: `1px solid ${tab === key ? ACCENT : "#2a3040"}`,
+                background: tab === key ? "rgba(60, 42, 18, 0.9)" : "transparent",
+                color: tab === key ? ACCENT : TEXT_DIM,
+                fontSize: 13,
+              }}
+            >
+              {label}
+            </SfxButton>
+          ))}
+        </div>
       </div>
 
       <div style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column" }}>
@@ -318,6 +335,30 @@ export function MerchantShop(): React.JSX.Element | null {
         )}
       </div>
     </div>
+  );
+}
+
+/**
+ * The champion's portrait, shown beside the shop tabs (#122). Reuses the shared
+ * GlyphTile so a hero whose WC3 art was Blizzard-stock still gets a seeded glyph;
+ * when the champion HAS an extracted icon, a real <img> renders over it — the
+ * same "img over glyph" contract the codex and ability bar already rely on.
+ */
+export function ShopHeroPortrait(props: {
+  championId: string;
+  name: string;
+  size?: number;
+}): React.JSX.Element {
+  const { championId, name, size = 34 } = props;
+  return (
+    <GlyphTile
+      seed={championId || name}
+      src={championIconUrl(championId)}
+      label={name}
+      size={size}
+      accent={ACCENT}
+      radius={8}
+    />
   );
 }
 

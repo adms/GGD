@@ -7,7 +7,7 @@
  */
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
-import { AudioSystem } from "./AudioSystem";
+import { AudioSystem, shouldSilenceAudio } from "./AudioSystem";
 import { AudioSettingsStore } from "./audioSettings";
 import type { AudioMap } from "./types";
 
@@ -44,11 +44,16 @@ class FakeSource {
   onended: (() => void) | null = null;
   started = false;
   stopped = false;
+  /** captured args of start(when, offset) — the task #109 phase-resume seam */
+  startWhen = 0;
+  startOffset = 0;
   constructor(private ctx: FakeCtx) {}
   connect(): void {}
   disconnect(): void {}
-  start(): void {
+  start(when = 0, offset = 0): void {
     this.started = true;
+    this.startWhen = when;
+    this.startOffset = offset;
     this.ctx.started.push(this);
   }
   stop(): void {
@@ -68,6 +73,8 @@ class FakeCtx {
   started: FakeSource[] = [];
   gains: FakeGain[] = [];
   panners: FakePanner[] = [];
+  /** decoded-buffer duration (seconds) — parametrised for the loop-resume test */
+  constructor(readonly bufferDuration = 1) {}
   createGain(): FakeGain {
     const g = new FakeGain();
     this.gains.push(g);
@@ -82,7 +89,7 @@ class FakeCtx {
     return new FakeSource(this);
   }
   decodeAudioData(_bytes: ArrayBuffer): Promise<AudioBuffer> {
-    return Promise.resolve({ duration: 1 } as unknown as AudioBuffer);
+    return Promise.resolve({ duration: this.bufferDuration } as unknown as AudioBuffer);
   }
   resume(): Promise<void> {
     this.resumed++;
@@ -100,6 +107,7 @@ const MAP: AudioMap = {
   bgm: {
     menu: { file: "assets/audio/bgm/menu.mp3", loop: true, gain: 1 },
     combat: { file: "assets/audio/bgm/combat.mp3", loop: true, gain: 0.8 },
+    fireRing: { file: "assets/audio/bgm/fireRing.mp3", loop: true, gain: 0.9 },
     battleStart: { file: "assets/audio/bgm/battleStart.mp3", loop: false },
     victory: { file: "assets/audio/bgm/victory.mp3", loop: false },
   },
@@ -138,6 +146,10 @@ function build(overrides: Partial<{
   fetchFn: (url: string) => Promise<Response>;
   now: () => number;
   rng: () => number;
+  /** decoded-buffer duration (seconds) the FakeCtx reports — loop-resume math */
+  bufferDuration: number;
+  /** force test-mode silence (task #62); omitted = read from the environment */
+  silent: boolean;
 }> = {}): { sys: AudioSystem; ctxRef: () => FakeCtx | null } {
   let ctx: FakeCtx | null = null;
   const sys = new AudioSystem({
@@ -146,9 +158,10 @@ function build(overrides: Partial<{
     rng: overrides.rng ?? (() => 0),
     crossfadeMs: 10,
     warn: () => {},
+    silent: overrides.silent,
     settings: new AudioSettingsStore({ getItem: () => null, setItem: () => {} }),
     ctxFactory: () => {
-      ctx = new FakeCtx();
+      ctx = new FakeCtx(overrides.bufferDuration ?? 1);
       return ctx as unknown as AudioContext;
     },
   });
@@ -487,6 +500,152 @@ describe("AudioSystem playClip voice seam (voice-playclip)", () => {
     expect(sys.playClip("")).toBe(false); // empty path no-op
     await flush();
     expect(ctx.started.length).toBe(started); // nothing started for the 404
+    sys.dispose();
+  });
+});
+
+// task #109: the extended B-section of a looping bed only plays if re-entering
+// its scene RESUMES the loop instead of restarting bar 0. Each scene accrues its
+// own played time and the source restarts at (elapsed mod duration).
+describe("AudioSystem loop resume (audio-bgm-loop-resume)", () => {
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => vi.useRealTimers());
+
+  it("re-entering a scene resumes in phase instead of restarting bar 0", async () => {
+    cover("audio-bgm-loop-resume");
+    let clock = 0;
+    const { sys, ctxRef } = build({ now: () => clock, bufferDuration: 8 });
+    await sys.loadMap();
+    sys.unlock();
+
+    clock = 1000;
+    sys.playBgm("combat"); // first entry: from the top of the loop
+    await flush();
+    const ctx = ctxRef()!;
+    expect(ctx.started[ctx.started.length - 1]!.startOffset).toBeCloseTo(0);
+
+    // 3 s of combat, then the last-seconds tension bed takes over
+    clock = 4000;
+    sys.playBgm("fireRing");
+    await flush();
+    expect(ctx.started[ctx.started.length - 1]!.startOffset).toBeCloseTo(0); // fireRing's own first entry
+
+    // combat resumes 3 s later — NOT at bar 0: 3 s played, 8 s loop → offset 3
+    clock = 7000;
+    sys.playBgm("combat");
+    await flush();
+    const resumed = ctx.started[ctx.started.length - 1]!;
+    expect(resumed.startOffset).toBeGreaterThan(0);
+    expect(resumed.startOffset).toBeCloseTo(3);
+    expect(sys.bedFile).toBe("assets/audio/bgm/combat.mp3");
+    sys.dispose();
+  });
+
+  it("wraps the resume offset by the loop duration (mod); one-shots always start at 0", async () => {
+    cover("audio-bgm-loop-resume");
+    let clock = 0;
+    const { sys, ctxRef } = build({ now: () => clock, bufferDuration: 2 });
+    await sys.loadMap();
+    sys.unlock();
+
+    sys.playBgm("combat"); // clock 0
+    await flush();
+    // play 5 s (> the 2 s loop), swap away and back
+    clock = 5000;
+    sys.playBgm("menu");
+    await flush();
+    clock = 6000;
+    sys.playBgm("combat");
+    await flush();
+    const ctx = ctxRef()!;
+    // 5 s played mod 2 s loop = 1 s in
+    expect(ctx.started[ctx.started.length - 1]!.startOffset).toBeCloseTo(1);
+
+    // a one-shot sting bed (victory, loop:false) ignores accrued time
+    clock = 9000;
+    sys.playBgm("victory");
+    await flush();
+    expect(ctx.started[ctx.started.length - 1]!.startOffset).toBe(0);
+    sys.dispose();
+  });
+
+  it("authored silence (scene → null) still advances the scene clock", async () => {
+    cover("audio-bgm-loop-resume");
+    let clock = 0;
+    const { sys, ctxRef } = build({ now: () => clock, bufferDuration: 10 });
+    await sys.loadMap();
+    sys.unlock();
+
+    sys.playBgm("combat"); // clock 0
+    await flush();
+    clock = 4000;
+    sys.playBgm(null); // fade to silence — but combat's clock keeps ticking
+    await flush();
+    clock = 9000;
+    sys.playBgm("combat"); // returns after the gap
+    await flush();
+    const ctx = ctxRef()!;
+    // combat had played 4 s before the stop; 10 s loop → resume at offset 4
+    expect(ctx.started[ctx.started.length - 1]!.startOffset).toBeCloseTo(4);
+    sys.dispose();
+  });
+});
+
+// task #62: a background agent, CI run or headless capture must make NO sound.
+// A single force-silence gate (VITE_GGD_SILENT / window.__GGD_SILENT__ / ?silent)
+// is read once at construction; when set the AudioContext is never created and
+// every play() no-ops.
+describe("AudioSystem test-mode silence (audio-test-silence)", () => {
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => vi.useRealTimers());
+
+  it("forced silent: no context is ever created and every play no-ops", async () => {
+    cover("audio-test-silence");
+    const { sys, ctxRef } = build({ silent: true });
+    await sys.loadMap();
+    sys.unlock(); // would normally build the graph — but the factory is forced to null
+    sys.playBgm("menu");
+    expect(sys.playSfx("death")).toBe(false);
+    expect(sys.playClip("assets/audio/voice/x.mp3")).toBe(false);
+    expect(() => sys.playSting("battleStart")).not.toThrow();
+    await flush();
+    expect(sys.isSilenced).toBe(true);
+    expect(ctxRef()).toBeNull(); // the injected factory never even ran
+    expect(sys.contextState).toBeNull();
+    expect(sys.isUnlocked).toBe(false);
+    expect(sys.bedFile).toBeNull();
+    sys.dispose();
+  });
+
+  it("reads window.__GGD_SILENT__ at construction; clearing it restores audio", async () => {
+    cover("audio-test-silence");
+    const g = globalThis as unknown as { __GGD_SILENT__?: unknown };
+    try {
+      g.__GGD_SILENT__ = true;
+      expect(shouldSilenceAudio()).toBe(true);
+      const { sys, ctxRef } = build(); // silent option omitted → reads the global
+      await sys.loadMap();
+      sys.unlock();
+      sys.playBgm("menu");
+      await flush();
+      expect(sys.isSilenced).toBe(true);
+      expect(ctxRef()).toBeNull();
+      expect(sys.bedFile).toBeNull();
+      sys.dispose();
+    } finally {
+      delete g.__GGD_SILENT__;
+    }
+
+    // with the flag cleared a fresh system builds its graph and plays normally
+    expect(shouldSilenceAudio()).toBe(false);
+    const { sys, ctxRef } = build();
+    await sys.loadMap();
+    sys.unlock();
+    sys.playBgm("menu");
+    await flush();
+    expect(sys.isSilenced).toBe(false);
+    expect(ctxRef()).not.toBeNull();
+    expect(sys.bedFile).toBe("assets/audio/bgm/menu.mp3");
     sys.dispose();
   });
 });

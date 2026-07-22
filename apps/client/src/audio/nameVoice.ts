@@ -33,7 +33,7 @@
  * muted → the same champion inside the ~1 s double-fire guard. Any of them is a
  * silent `false`; the mute gate deliberately does NOT burn the guard.
  */
-import { AUDIO_CONTENT_BASE, audioSystem } from "./AudioSystem";
+import { AUDIO_CONTENT_BASE, audioSystem, shouldSilenceAudio } from "./AudioSystem";
 import { effectiveGain, type VolumeState } from "./audioSelect";
 
 /** Path of the generated name-VO manifest, relative to the content mount. */
@@ -173,6 +173,12 @@ export interface ChampionNameVoiceOptions {
   gain?: number;
   createAudio?: () => NameVoiceElement | null;
   warn?: (msg: string, err?: unknown) => void;
+  /**
+   * Force test-mode silence (task #62). When omitted the gate is read from the
+   * environment via `shouldSilenceAudio()`. Silent ⇒ the reused `new Audio()`
+   * element is never created, so `play()` no-ops exactly like the no-DOM path.
+   */
+  silent?: boolean;
 }
 
 export class ChampionNameVoice {
@@ -184,6 +190,8 @@ export class ChampionNameVoice {
   private readonly gain: number;
   private readonly createAudio: () => NameVoiceElement | null;
   private readonly warn: (msg: string, err?: unknown) => void;
+  /** test-mode silence gate (task #62): read once at construction, never sound */
+  private readonly silent: boolean;
 
   private manifestPromise: Promise<ChampionNamesManifest | null> | null = null;
   private el: NameVoiceElement | null = null;
@@ -199,7 +207,10 @@ export class ChampionNameVoice {
       opts.now ?? (() => (typeof performance !== "undefined" ? performance.now() : Date.now()));
     this.guardMs = opts.guardMs ?? NAME_VO_GUARD_MS;
     this.gain = opts.gain ?? NAME_VO_GAIN;
-    this.createAudio = opts.createAudio ?? defaultCreateAudio;
+    // task #62: force-silence wins over any injected factory — the out-of-graph
+    // `new Audio()` element is never created, so play() no-ops like the no-DOM path.
+    this.silent = opts.silent ?? shouldSilenceAudio();
+    this.createAudio = this.silent ? () => null : (opts.createAudio ?? defaultCreateAudio);
     this.warn = opts.warn ?? ((msg, err) => console.warn(`[nameVo] ${msg}`, err ?? ""));
   }
 

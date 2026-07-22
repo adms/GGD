@@ -255,4 +255,24 @@ describe("ChampionNameVoice.play", () => {
     });
     expect(await vo.play("godie-o02l")).toBe(false);
   });
+
+  // task #62: the out-of-graph name call-out must also honour the force-silence
+  // gate — the reused `new Audio()` element is never created, so nothing plays
+  // even when the mixer is unlocked, unmuted and a real element factory is given.
+  it("is silent in test mode: the HTMLAudioElement is never created", async () => {
+    cover("audio-test-silence");
+    const mix = mixer();
+    const el = element();
+    const vo = new ChampionNameVoice({
+      audio: mix.audio,
+      silent: true, // force-silence wins over the provided createAudio
+      fetchFn: () =>
+        Promise.resolve({ ok: true, json: () => Promise.resolve(MANIFEST) } as unknown as Response),
+      createAudio: () => el,
+      warn: () => {},
+    });
+    expect(await vo.play("godie-o02l")).toBe(false);
+    expect(el.plays).toEqual([]);
+    expect(el.pauses).toBe(0);
+  });
 });

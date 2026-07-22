@@ -1,6 +1,7 @@
 /// <reference types="vitest/config" />
 import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
+import { execSync } from "node:child_process";
 import { createReadStream, existsSync, statSync } from "node:fs";
 import { extname, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -157,11 +158,42 @@ function contentApiGuard(): Plugin {
   };
 }
 
+/**
+ * BUILD STAMP (task #66). Computed ONCE here, at config-evaluation time on the
+ * build machine — never at runtime in the browser — and handed to the client as
+ * `import.meta.env.VITE_BUILD_STAMP` via `define` below, so the bottom-pinned
+ * VersionBadge makes every screenshot traceable to a build. git is the only
+ * source consulted; when it is absent (no repo / git not installed / a shallow
+ * export) the whole stamp degrades to "dev" rather than throwing.
+ */
+function computeBuildStamp(): string {
+  try {
+    const sha = execSync("git rev-parse --short HEAD", {
+      stdio: ["ignore", "pipe", "ignore"],
+      timeout: 2000,
+    })
+      .toString()
+      .trim();
+    if (!sha) return "dev";
+    const date = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+    return `${sha} ${date}`;
+  } catch {
+    return "dev";
+  }
+}
+
+const BUILD_STAMP = computeBuildStamp();
+
 // The voxel game client. In dev the client talks to the local game-server
 // directly (ws://localhost:2567, override with VITE_GAME_WS); the /colyseus
 // proxy below covers the platform-style same-origin path as well.
 export default defineConfig({
   base: "/",
+  // Bake the build stamp into the bundle as a literal (see computeBuildStamp).
+  // The VersionBadge reads this; there is deliberately no runtime git call.
+  define: {
+    "import.meta.env.VITE_BUILD_STAMP": JSON.stringify(BUILD_STAMP),
+  },
   // contentApiGuard FIRST: it must decide before vite's proxy middleware runs.
   // serveBlizzardOverlay before serveContent: it owns the longer
   // /content/assets/blizzard-local prefix. (serveContent would `next()` on those

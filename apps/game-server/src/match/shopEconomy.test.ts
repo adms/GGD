@@ -278,6 +278,9 @@ describe("the stat path, through the controller's own economy", () => {
     const { entity, buy } = humanBuyer(ctl);
     const champ = ctl.world.champion.get(entity)!;
     champ.gold = STAT_TICK_PRICE * STAT_TICK_TARGET;
+    // #104: the capstone is now withheld until round >= 6 (「大約是第五場之後」),
+    // so exercise the grant at an eligible round rather than round 1.
+    ctl.world.round = 6;
 
     // through the REAL command path: CommandSystem -> shopAccess -> buyItem
     for (let i = 0; i < STAT_TICK_TARGET; i++) buy(STAT_TICK_ITEM_ID);

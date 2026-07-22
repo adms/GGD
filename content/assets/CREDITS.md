@@ -100,9 +100,9 @@ it (the `ModelDragonController` falls back to a procedural mesh, not to any file
 > a license obligation, not courtesy.
 >
 > Note for task #13: this used to be one of *two* mandatory in-game credits, the other
-> being the 魔王魂 BGM. **The BGM one is going away** — all eleven tracks are now our own
-> work (see "Background music" below, pending user approval), so this dragon is the
-> mandatory display credit that remains.
+> being the BGM. **That BGM credit is now gone (task #91)** — all eleven tracks are our
+> own work (see "Background music" below), so this dragon is the one mandatory display
+> credit that remains.
 
 **Animated Dragon Three Motion Loops** by **LasquetiSpice** — semi-realistic Western dragon
 - Source (original): https://sketchfab.com/3d-models/animated-dragon-three-motion-loops-eca98cf6cd084c1596cecf716e110c29
@@ -517,28 +517,25 @@ nothing is model-generated, so no licence attaches. `bgm/MANIFEST.json` is the
 live record — every entry now has `"source": "bgm-gen"` and
 `generator.stillThirdParty` is empty.
 
-> ### ⏸ STATUS: PENDING USER APPROVAL (task #52)
+> ### ✅ STATUS: APPROVED — the self-made pack is the live BGM (tasks #52, #91)
 >
-> The pack has **not** been signed off yet. Audition it at
+> The pack ships. Audition it at
 > **`http://localhost:39527/bgm-audition.html`** (client dev server; the page is
 > `apps/client/public/bgm-audition.html`, regenerate with
 > `python3 tools/bgm-gen/src/audition.py`).
 >
-> **`content/config/audio-map.json` was NOT edited, and needs no edit.** Its 11
+> **`content/config/audio-map.json` needs no edit.** Its 11
 > `bgm` keys already point at `assets/audio/bgm/<scene>.mp3` — which is exactly
-> where `render.py` writes. So there is no path swap left to perform.
+> where `render.py` writes. There is no path swap left to perform.
 >
-> **⚠ The 魔王魂 files are already gone.** Because the render target is the same
-> path the 魔王魂 files occupied, rendering **overwrote them in place**, and this
-> repo has no VCS history to restore from. Restoring the old pack would require
-> re-downloading it from maou.audio — a decision for the user, not something to
-> be done automatically.
+> **The old third-party files are gone.** Because the render target is the same
+> path they occupied, rendering **overwrote them in place**, and this repo has no
+> VCS history to restore from.
 >
-> **Follow-ons still pending approval:**
-> 1. Delete the mandatory 「音楽：魔王魂」 credit line (below) from this file.
->    Check no other asset class still needs it first.
-> 2. **Task #13's obligation shrinks**: 魔王魂 no longer has to be surfaced on the
->    in-game credits/settings screen on account of BGM. The **CC-BY 4.0 dragon
+> **Follow-ons — done (task #91):**
+> 1. The mandatory BGM credit line has been **removed** from this file (see below).
+> 2. **Task #13's obligation shrank**: the BGM no longer has to be surfaced on the
+>    in-game credits/settings screen. The **CC-BY 4.0 dragon
 >    model still must be** — that requirement is untouched.
 
 ### What this replaced, and why the difference matters
@@ -556,13 +553,12 @@ prior notification — but it is **not** CC0 and it is **not** attribution-free:
 | Redistribution as music | **Forbidden** (streaming platforms, NFTs) | Unrestricted |
 | Reproducible | No — opaque MP3s | Yes — byte-for-byte from a seed |
 
-> **CREDIT LINE — still present, pending the approval above.** While the 魔王魂
-> line is still considered required by any asset class, it reads:
->
-> **音楽：魔王魂 (https://maou.audio/)**  *(the word 音楽 may be replaced with BGM)*
->
-> For BGM specifically this is **no longer a licence requirement**, because no
-> 魔王魂 music ships any more.
+> **CREDIT LINE — REMOVED (task #91).** No 魔王魂 music ships any more, so the
+> mandatory in-game credit it used to require — 「音楽：魔王魂 (https://maou.audio/)」 —
+> is no longer a licence requirement and has been struck from every surface: this
+> file, the client credits page (`apps/client/src/ui/platform/creditsData.ts`) and
+> the login footer (`HomeFooter.tsx`). It is recorded here only as what was removed,
+> not as a live obligation.
 
 ### The eleven tracks
 

@@ -6,15 +6,18 @@
 import { describe, it, expect } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
 import {
+  boundsForZone,
   boundsFromZones,
   cameraGroundQuad,
   clampToZones,
+  inLocalZone,
   mapScale,
   mapToWorld,
   markerSpecFor,
   worldToMap,
   dotColorFor,
   isSelfMarker,
+  zoneIndexAt,
   CAMERA_FORWARD_XZ,
   CAMERA_YAW_RAD,
   CAMERA_QUAD_MAX_DISTANCE,
@@ -325,5 +328,67 @@ describe("minimap champion markers (hud-minimap-markers)", () => {
     )!;
     expect(flower.color).toBe(NEUTRAL_BAR_COLOR);
     expect(TEAM_CSS).not.toContain(flower.color);
+  });
+});
+
+/**
+ * client-27 (task #67): the minimap is scoped to the LOCAL player's OWN duel
+ * zone — one 3v3 disc, not the whole four-zone arena. The bounds narrow to that
+ * single zone and only its champions pass the entity filter; with no local zone
+ * (spectating / pre-spawn) both degrade to the whole-arena view.
+ */
+describe("minimap local-zone scoping (hud-minimap-zone)", () => {
+  // a four-zone arena: two 3v3 pairs, laid out 2×2 (the map keeps ONE of them)
+  const fourZones = [
+    { x: -40, z: -40, r: 24 },
+    { x: 40, z: -40, r: 24 },
+    { x: -40, z: 40, r: 24 },
+    { x: 40, z: 40, r: 24 },
+  ];
+
+  it("zoneIndexAt: a point picks its containing disc, else the nearest one", () => {
+    cover("hud-minimap-zone");
+    // dead-centre of each disc → that disc's index
+    fourZones.forEach((z, i) => {
+      expect(zoneIndexAt({ x: z.x, z: z.z }, fourZones)).toBe(i);
+    });
+    // outside every disc, in the void → the NEAREST by rim gap (zone 0 here)
+    expect(zoneIndexAt({ x: -40, z: -10 }, fourZones)).toBe(0);
+    // no zones known → null
+    expect(zoneIndexAt({ x: 0, z: 0 }, null)).toBeNull();
+    expect(zoneIndexAt({ x: 0, z: 0 }, [])).toBeNull();
+  });
+
+  it("bounds scope to the single local zone; null falls back to the whole arena", () => {
+    cover("hud-minimap-zone");
+    const all = boundsFromZones(fourZones)!;
+    for (let k = 0; k < fourZones.length; k++) {
+      // the map's bounds for localZone=k are EXACTLY the single zone-k box…
+      expect(boundsForZone(fourZones, k)).toEqual(boundsFromZones([fourZones[k]!]));
+      // …and strictly smaller than the whole four-zone union on both axes
+      const single = boundsForZone(fourZones, k)!;
+      expect(single.maxX - single.minX).toBeLessThan(all.maxX - all.minX);
+      expect(single.maxZ - single.minZ).toBeLessThan(all.maxZ - all.minZ);
+    }
+    // no local zone (spectator / pre-spawn) → the whole arena, not nothing
+    expect(boundsForZone(fourZones, null)).toEqual(all);
+    // an out-of-range index also degrades to the whole arena
+    expect(boundsForZone(fourZones, 9)).toEqual(all);
+  });
+
+  it("only the local zone's champions pass the filter; null localZone shows all", () => {
+    cover("hud-minimap-zone");
+    // one champion parked in the centre of each zone
+    const champs = fourZones.map((z) => ({ x: z.x, z: z.z }));
+    for (let k = 0; k < fourZones.length; k++) {
+      champs.forEach((c, i) => {
+        // exactly the zone-k champion passes when localZone = k
+        expect(inLocalZone(c.x, c.z, fourZones, k)).toBe(i === k);
+      });
+    }
+    // null localZone → every champion passes (whole-arena fallback)
+    for (const c of champs) {
+      expect(inLocalZone(c.x, c.z, fourZones, null)).toBe(true);
+    }
   });
 });

@@ -86,3 +86,18 @@ The prices, budgets, roll pool and capstone spec live in
 | stat-09 | 20 ticks are affordable inside the 7600g deterministic match income with 100g to spare, and land in the ROUND-6 shop — reachable, but only just | econ-stat-path-reachable | unit | done |
 | stat-10 | End to end through the controller: 20 ticks via the real command path earn the capstone, cost the whole purse, and leave the inventory empty | econ-stat-path-e2e | integration | done |
 | stat-11 | The shop-facing view exposes N/20, whether the path is live, and how many stacks a purchase would destroy | econ-stat-path-view | unit | done |
+| stat-12 | Capstone round-gate (task #104): 20 stacks banked before round 6 stay capstone-less; the first tick bought at/after round 6 lands 傳說·萬象強化, protecting 「大約是第五場之後」 | statpath-capstone-round-gate | unit | done |
+
+## Kill bounty (task #90)
+
+`「殺敵獎勵：擊殺敵人給額外的錢，每個敵人只給一次——復活後再被殺不再給」`. A one-time
+premium paid to the killer on TOP of base kill gold the FIRST time each enemy champion
+dies; a revived-then-rekilled victim (same entity id for the whole match) yields base kill
+gold only. Tracked on `world.bountyPaid` (a per-victim set); the reward value is
+`GOLD_REWARDS.killBounty` (economy/progression.ts), mirrored by the optional
+`economy.killBounty` config key. It rides on top of the deterministic ~7,600g match income,
+so it never disturbs the stat-path arithmetic.
+
+| ID | Item | Test ID | Category | Status |
+| --- | --- | --- | --- | --- |
+| bounty-01 | The killer gets base kill gold + a one-time bounty the first time an enemy dies; a revived-then-rekilled victim pays base kill gold only, and the same seed produces an identical gold trail | eco-kill-bounty | unit | done |

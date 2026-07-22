@@ -281,3 +281,43 @@ export function validateForm(form: AiConfigForm): FormErrors {
 export function formValid(form: AiConfigForm): boolean {
   return Object.keys(validateForm(form)).length === 0;
 }
+
+// -------------------------------------------------------- one-click pack ----
+
+/**
+ * The eleven audio-map BGM scenes the "one-click BGM pack" fills in a single
+ * action (the provider-backed twin of `tools/bgm-gen --all`). Kept in step with
+ * the platform's `bgmPackScenes` so the admin page can name what the button will
+ * generate. `menuNocturne` (a later login alternate) is intentionally excluded,
+ * matching the server batch.
+ */
+export const BGM_PACK_SCENES: readonly string[] = [
+  "menu",
+  "lobby",
+  "room",
+  "champSelect",
+  "intermission",
+  "battleStart",
+  "combat",
+  "fireRing",
+  "settlement",
+  "victory",
+  "defeat",
+];
+
+/**
+ * Whether the one-click BGM pack can run right now: only when the MUSIC
+ * capability is fully live (enabled + key + endpoint + model). An unconfigured
+ * provider would just return a stub for every scene, so the button stays gated.
+ */
+export function bgmPackAvailable(cfg: AiConfigMasked): boolean {
+  return cfg.musicReady;
+}
+
+/** zh-Hant one-liner for the pack button's state (ready, or why it's gated). */
+export function bgmPackReason(cfg: AiConfigMasked): string {
+  if (cfg.musicReady) {
+    return `可一鍵生成整套 BGM（共 ${BGM_PACK_SCENES.length} 個場景）。`;
+  }
+  return "音樂供應商尚未設定完成 — 填入端點、模型與 API 金鑰並啟用後才能一鍵生成 BGM。";
+}

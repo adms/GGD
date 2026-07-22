@@ -149,6 +149,7 @@ honest sentence and no number — which is also why `combat` is still not in `CO
 | int-28 | SIGHTLINE: rays from the composed eye to the merchant and the champion at head/chest/feet hit ZERO market geometry — cast against the shipped .glb triangles, not the recorded footprints | intermission-sightline | regression | done |
 | int-29 | Purchase reaction — the clip is resolved by PREFERENCE ORDER over the .glb's real group names (victory → attack → cast), never an idle/walk/death/hurt pose; empty / idle-only inventories return null so the caller can degrade | intermission-champion-reaction-pick | unit | done |
 | int-30 | A completed purchase makes the hero react and return to rest: a rig with a reaction clip plays it (no pop), a rig with NONE gets a procedural squash-pop that springs back to its resting scale and never sticks; no champion in frame is a silent no-op | intermission-champion-reaction | unit | done |
+| int-31 | Shop tabs LEAD with the hero's 屬性 (attribute) panel — the default-selected tab is 屬性 (label moved 商品→屬性), 技能 is kept, and the hero's portrait renders a real `<img>` beside the tabs when the champion has an extracted icon | shop-tab-attributes-portrait | unit | done |
 
 ## The purchase reaction (task #111)
 

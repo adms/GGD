@@ -419,7 +419,22 @@ export class ChampionView {
         // need a different offset than native/KayKit ones.
         glbRoot.rotation.y = glbYawOffset(doc.glbPath, this.modelKey);
         for (const node of inst.rootNodes) node.parent = glbRoot;
-        for (const mesh of glbRoot.getChildMeshes(false)) {
+        const glbMeshes = glbRoot.getChildMeshes(false);
+        // EMPTY-GLB → KEEP THE PROCEDURAL FALLBACK (task #69). A few imported
+        // "models" are geometry-less WC3 dummies — e.g. `imported.collision`, a
+        // 0-mesh bone-only unit whose only clip is a static "Stand" (godie-u011
+        // is mapped to it, intentionally, as the procedural-fallback case the
+        // model-scale/bbox/texture guards document). Adopting it anyway hid the
+        // voxel figure AND installed a ClipAnimator whose "attack" resolved to
+        // "Stand" — an INVISIBLE champion that never animates a swing. Discard
+        // the empty instance and let the procedural figure (which DOES animate
+        // attack/hurt/run) stand in. `upgradeStarted` stays true, so no retry.
+        if (glbMeshes.length === 0) {
+          inst.dispose(); // frees the cloned nodes + skeletons + animation groups
+          glbRoot.dispose(false, false);
+          return;
+        }
+        for (const mesh of glbMeshes) {
           mesh.isPickable = false;
           this.flashMeshes.push(mesh); // .glb meshes flash via per-mesh overlay
         }

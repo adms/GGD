@@ -10,7 +10,7 @@ import { ModOp } from "./stats/modifiers";
 import { attachSource, detachSource, recomputeStats } from "./stats/statPipeline";
 import { buyItem, sellItem, rollItemReward } from "./economy/shop";
 import { offerAugments, applyAugmentPick } from "./economy/draft";
-import { grantXp, xpToNext } from "./economy/progression";
+import { grantXp, xpToNext, GOLD_REWARDS } from "./economy/progression";
 import { castAbility, rankUpAbility } from "./abilities/abilitySystem";
 import type { IntentFrame } from "./intents";
 import * as V from "./math/vec2";
@@ -409,7 +409,8 @@ describe("abilities", () => {
     expect(attacks).toBeGreaterThan(1);
     expect(died).toBe(true);
     expect(world.health.get(thorne)!.alive).toBe(false);
-    expect(world.champion.get(sela)!.gold).toBe(goldBefore + 150);
+    // first kill of Thorne pays base kill gold + the one-time kill bounty (#90)
+    expect(world.champion.get(sela)!.gold).toBe(goldBefore + GOLD_REWARDS.kill + GOLD_REWARDS.killBounty);
     const xpAfter = world.champion.get(sela)!.xp + world.champion.get(sela)!.level * 1000;
     expect(xpAfter).toBeGreaterThan(xpBefore);
   });

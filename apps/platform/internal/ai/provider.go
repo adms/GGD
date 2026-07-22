@@ -32,6 +32,42 @@ func isAnthropic(baseURL string) bool {
 	return strings.Contains(strings.ToLower(baseURL), "anthropic")
 }
 
+// musicKind is the outbound MUSIC provider dialect, selected off the music base
+// URL exactly the way isAnthropic selects the text/audio shape. The default is
+// the synchronous OpenAI-compatible /audio/music POST; the real generative-music
+// services (Suno, Replicate) are ASYNC — a create call returns a job id and the
+// finished audio is fetched by polling — so they get their own dialect here.
+type musicKind int
+
+const (
+	// musicKindSync is the synchronous OpenAI-compatible shape: one POST returns
+	// the encoded track in the response body.
+	musicKindSync musicKind = iota
+	// musicKindReplicate is the Replicate predictions shape: POST /predictions
+	// returns {id,status,urls.get}; poll urls.get until status=="succeeded" and
+	// fetch the `output` audio URL.
+	musicKindReplicate
+	// musicKindSuno is the Suno-style shape: POST /generate returns a job id;
+	// poll /feed/{id} until a clip reports status=="complete" with an audio_url.
+	musicKindSuno
+)
+
+// musicProviderKind classifies the configured music base URL. Keyed off the URL
+// like isAnthropic so a handler/GenerateMusic never has to know which service is
+// behind the seam. Any host that is not obviously Suno/Replicate is treated as
+// the synchronous OpenAI-compatible shape (what musicBaseUrl/musicModel document).
+func musicProviderKind(baseURL string) musicKind {
+	u := strings.ToLower(baseURL)
+	switch {
+	case strings.Contains(u, "replicate"):
+		return musicKindReplicate
+	case strings.Contains(u, "suno"):
+		return musicKindSuno
+	default:
+		return musicKindSync
+	}
+}
+
 // joinURL joins a base URL and a path, tolerating a trailing slash on the base
 // and a base that already includes the path suffix.
 func joinURL(base, suffix string) string {
@@ -86,6 +122,13 @@ func (s *Service) doJSON(ctx context.Context, url string, cfg Config, anthropic 
 // doBinary posts body to url with the provider auth headers and returns the raw
 // response bytes (audio, etc.). A non-2xx or empty body is a clean providerError.
 func (s *Service) doBinary(ctx context.Context, url string, cfg Config, anthropic bool, body any) ([]byte, error) {
+	return s.doBinaryClient(ctx, s.http, url, cfg, anthropic, body)
+}
+
+// doBinaryClient is doBinary with an EXPLICIT client, so the music path can use
+// its own longer-deadline client (see musicClient) while the shared 60s s.http
+// stays the injection point every other call — and the tests — use.
+func (s *Service) doBinaryClient(ctx context.Context, client *http.Client, url string, cfg Config, anthropic bool, body any) ([]byte, error) {
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, provErr("encode request: %v", err)
@@ -95,7 +138,7 @@ func (s *Service) doBinary(ctx context.Context, url string, cfg Config, anthropi
 		return nil, provErr("build request: %v", err)
 	}
 	authHeaders(req, cfg, anthropic)
-	resp, err := s.http.Do(req)
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, provErr("provider unreachable")
 	}
@@ -108,6 +151,76 @@ func (s *Service) doBinary(ctx context.Context, url string, cfg Config, anthropi
 		return nil, provErr("provider returned empty body")
 	}
 	return respBody, nil
+}
+
+// postRaw POSTs body with the provider auth headers and returns the raw response
+// bytes (JSON, typically a job-create envelope). Used by the async music
+// adapters where the response is parsed provider-specifically by the caller.
+func (s *Service) postRaw(ctx context.Context, client *http.Client, url string, cfg Config, anthropic bool, body any) ([]byte, error) {
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, provErr("encode request: %v", err)
+	}
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, bytes.NewReader(buf))
+	if err != nil {
+		return nil, provErr("build request: %v", err)
+	}
+	authHeaders(req, cfg, anthropic)
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, provErr("provider unreachable")
+	}
+	defer resp.Body.Close()
+	respBody, _ := io.ReadAll(io.LimitReader(resp.Body, 1<<20)) // cap 1MiB (job envelope)
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		return nil, provErr("provider returned %d", resp.StatusCode)
+	}
+	return respBody, nil
+}
+
+// getRaw GETs url WITH the provider auth headers and returns the raw response
+// bytes. Async music providers require the key on the poll endpoint (it is the
+// same API host as create); the key is attached here and never logged.
+func (s *Service) getRaw(ctx context.Context, client *http.Client, url string, cfg Config, anthropic bool) ([]byte, error) {
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
+	if err != nil {
+		return nil, provErr("build request: %v", err)
+	}
+	authHeaders(req, cfg, anthropic)
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, provErr("provider unreachable")
+	}
+	defer resp.Body.Close()
+	respBody, _ := io.ReadAll(io.LimitReader(resp.Body, 1<<20)) // cap 1MiB (job status)
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		return nil, provErr("provider returned %d", resp.StatusCode)
+	}
+	return respBody, nil
+}
+
+// fetchAudioBytes GETs the finished track a provider returned by reference. Like
+// fetchImageBytes it attaches NO auth header: this is a pre-signed delivery URL
+// from the provider's own JSON, not an API call, and the key must never leave
+// the provider host.
+func (s *Service) fetchAudioBytes(ctx context.Context, client *http.Client, url string) ([]byte, error) {
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
+	if err != nil {
+		return nil, provErr("build audio fetch: %v", err)
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, provErr("audio host unreachable")
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		return nil, provErr("audio host returned %d", resp.StatusCode)
+	}
+	raw, err := io.ReadAll(io.LimitReader(resp.Body, 32<<20)) // cap 32MiB (a full track)
+	if err != nil || len(raw) == 0 {
+		return nil, provErr("audio host returned no bytes")
+	}
+	return raw, nil
 }
 
 // ---- image generation -------------------------------------------------------

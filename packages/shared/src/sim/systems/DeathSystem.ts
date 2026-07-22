@@ -35,6 +35,15 @@ export function deathSystem(world: SimWorld): void {
       if (killer !== null && world.champion.has(killer)) {
         grantXp(world, killer, XP_REWARDS.kill);
         grantGold(world, killer, GOLD_REWARDS.kill);
+        // Kill BOUNTY (task #90): a one-time premium the FIRST time THIS enemy
+        // champion is killed. Marked paid by victim entity id (stable across a
+        // revive), so a revived-then-rekilled victim yields base kill gold only
+        // and never the bounty again. A no-killer death never consumes it —
+        // the bounty is only ever spent when a killer actually collects it.
+        if (!world.bountyPaid.has(id)) {
+          world.bountyPaid.add(id);
+          grantGold(world, killer, GOLD_REWARDS.killBounty);
+        }
         fireHooks(world, killer, "onKill", id);
       }
     }
