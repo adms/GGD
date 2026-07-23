@@ -125,3 +125,92 @@ describe("match-end settlement payload (settle-08)", () => {
     expect(run()).toBe(run());
   });
 });
+
+/**
+ * The per-ROUND K/D tallies behind the round-end winner presentation (the #143
+ * model + #142 VO). The bug they fix: the client used to present the leading
+ * team's LOWEST-SEATID champion, and seat↔champion is fixed for a whole match,
+ * so every round showed the same hero. The tallies must therefore be per-round
+ * (a cumulative one would just re-pin the match's best killer) and they must be
+ * on the wire, because a reconnecting client's own death-event tally is partial.
+ */
+describe("per-ROUND kill/death tallies (round-mvp-tally)", () => {
+  /** Tick until the phase is `target` (or the guard trips). */
+  const tickUntil = (ctl: MatchController, target: string, guard = 60000): void => {
+    let n = 0;
+    while (ctl.phase.phase !== target && ctl.phase.phase !== "matchEnd" && n < guard) {
+      ctl.tick();
+      n++;
+    }
+  };
+
+  it("zeroes at every combat entry and equals THAT round's cumulative delta", () => {
+    cover("round-mvp-tally");
+    const ctl = new MatchController("mvp", 4242, allBots(), FAST);
+    const state = new MatchState();
+    const seatIds = [...ctl.seats.keys()];
+    let sawRoundKills = false;
+    let rounds = 0;
+
+    while (ctl.phase.phase !== "matchEnd" && rounds < 6) {
+      tickUntil(ctl, "combat");
+      if (ctl.phase.phase !== "combat") break;
+      rounds++;
+
+      // combat entry: every seat starts the round on a clean sheet
+      for (const seatId of seatIds) {
+        expect(ctl.roundKills.get(seatId)).toBe(0);
+        expect(ctl.roundDeaths.get(seatId)).toBe(0);
+      }
+      const kBefore = new Map(seatIds.map((s) => [s, ctl.kills.get(s) ?? 0]));
+      const dBefore = new Map(seatIds.map((s) => [s, ctl.deaths.get(s) ?? 0]));
+
+      // …and at the round-end beat (the `resolution` edge the presentation
+      // fires on) it holds exactly what happened THIS round — never the match
+      // total, which is what would freeze one champion on screen forever.
+      tickUntil(ctl, "resolution");
+      for (const seatId of seatIds) {
+        expect(ctl.roundKills.get(seatId)).toBe((ctl.kills.get(seatId) ?? 0) - kBefore.get(seatId)!);
+        expect(ctl.roundDeaths.get(seatId)).toBe((ctl.deaths.get(seatId) ?? 0) - dBefore.get(seatId)!);
+      }
+      if (seatIds.some((s) => (ctl.roundKills.get(s) ?? 0) > 0)) sawRoundKills = true;
+
+      // the snapshot carries the same numbers, so every client (including one
+      // that joined mid-match) ranks the round identically
+      projectSnapshot(ctl, state, new Map());
+      for (const seatId of seatIds) {
+        const ss = state.seats.get(String(seatId))!;
+        expect(ss.roundKills).toBe(ctl.roundKills.get(seatId));
+        expect(ss.roundDeaths).toBe(ctl.roundDeaths.get(seatId));
+      }
+    }
+
+    expect(rounds).toBeGreaterThan(1); // more than one round actually ran
+    expect(sawRoundKills).toBe(true); // and rounds were decided by kills
+    // the cumulative tally still accrues across the whole match
+    expect(seatIds.reduce((s, id) => s + (ctl.kills.get(id) ?? 0), 0)).toBeGreaterThan(0);
+  });
+
+  it("survives the whole resolution beat, then clears on the next round", () => {
+    cover("round-mvp-tally");
+    const ctl = new MatchController("mvp2", 4242, allBots(), FAST);
+    const seatIds = [...ctl.seats.keys()];
+    tickUntil(ctl, "combat");
+    tickUntil(ctl, "resolution");
+    const atRoundEnd = seatIds.map((s) => ctl.roundKills.get(s) ?? 0);
+    expect(atRoundEnd.some((k) => k > 0)).toBe(true);
+
+    // the winner presentation reads these all through `resolution` — the reset
+    // is at COMBAT ENTRY, not at concludeCombat, so they must not blank here
+    while (ctl.phase.phase === "resolution") {
+      ctl.tick();
+      expect(seatIds.map((s) => ctl.roundKills.get(s) ?? 0)).toEqual(atRoundEnd);
+    }
+    // …and the shop intermission still shows the finished round's numbers
+    if (ctl.phase.phase === "intermission") {
+      expect(seatIds.map((s) => ctl.roundKills.get(s) ?? 0)).toEqual(atRoundEnd);
+      tickUntil(ctl, "combat");
+      expect(seatIds.map((s) => ctl.roundKills.get(s) ?? 0)).toEqual(seatIds.map(() => 0));
+    }
+  });
+});
