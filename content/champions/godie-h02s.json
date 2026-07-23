@@ -63,7 +63,7 @@
           "root": true
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.void.nova",
       "radius": 6.0,
       "targetsEnemies": true,
       "castTimeSec": 0.5
@@ -101,7 +101,7 @@
           "duration": 8.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.nature.pulse-sm",
       "castTimeSec": 0.3
     },
     "E": {
@@ -150,7 +150,7 @@
           "moveSpeedMult": 0.6
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.arcane.nova",
       "targetsEnemies": true,
       "radius": 3.67,
       "castTimeSec": 0.5
@@ -186,7 +186,7 @@
           "duration": 3.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.blood.pulse-lg",
       "castTimeSec": 0.3
     }
   },

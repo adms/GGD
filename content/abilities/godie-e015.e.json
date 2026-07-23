@@ -45,7 +45,7 @@
       "stun": true
     }
   ],
-  "vfxKey": "fx.ember-bolt-cast",
+  "vfxKey": "fx.prim.physical.bolt",
   "targetsEnemies": true,
   "castTimeSec": 0.3
 }

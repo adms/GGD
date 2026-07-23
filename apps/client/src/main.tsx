@@ -17,7 +17,7 @@ import { bindGoreToSettings } from "./vfx/goreSettings";
 import { perfBus } from "./perfBus";
 import { ensureContentLoaded, isContentReady } from "./content/bootContent";
 import { initCursor } from "./cursor";
-import { ReplayApp, parseReplayHash } from "./replay/ReplayApp";
+import { ReplayApp, parseReplayHash } from "./ui/replay/ReplayApp";
 import "./ui/mobile.css";
 import "./ui/buttonFx.css"; // shared JRPG + cyber-glow button skin (one import for the app)
 import "./cursor/cursor.css"; // JRPG cursor set (task #54a); gated to fine pointers

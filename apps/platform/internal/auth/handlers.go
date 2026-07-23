@@ -20,6 +20,12 @@ func NewHandlers(svc *Service) *Handlers { return &Handlers{svc: svc} }
 // Mount registers /auth/* and /me on the router. r is the /api/v1 subrouter.
 func (h *Handlers) Mount(r chi.Router) {
 	r.Post("/auth/register", h.register)
+	// Public, unauthenticated: reports ONLY whether this deploy still needs its
+	// first owner (and whether that claim needs the one-time token), so the
+	// register UI can switch into first-owner mode instead of telling the person
+	// who is meant to BECOME the admin to "ask an admin". Reveals no token and no
+	// account — see Service.OwnerlessState.
+	r.Get("/auth/bootstrap-state", h.bootstrapState)
 	r.Post("/auth/login", h.login)
 	r.Post("/auth/refresh", h.refresh)
 	r.Post("/auth/logout", h.logout)
@@ -66,6 +72,21 @@ func (h *Handlers) register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	httpx.WriteJSON(w, http.StatusCreated, sessionResp{Account: a.Public(), Tokens: pair})
+}
+
+// bootstrapStateResp is the first-owner probe the register UI reads on load.
+type bootstrapStateResp struct {
+	// NeedsOwner is true only while this deploy has no administrator — the
+	// window in which the next registration claims ownership.
+	NeedsOwner bool `json:"needsOwner"`
+	// RequireToken is true when that claim must present the one-time owner token
+	// (GGD_OWNER_BOOTSTRAP_TOKEN=1), so the UI knows to demand the token field.
+	RequireToken bool `json:"requireToken"`
+}
+
+func (h *Handlers) bootstrapState(w http.ResponseWriter, r *http.Request) {
+	needsOwner, requireToken := h.svc.OwnerlessState(r.Context())
+	httpx.WriteJSON(w, http.StatusOK, bootstrapStateResp{NeedsOwner: needsOwner, RequireToken: requireToken})
 }
 
 type loginReq struct {

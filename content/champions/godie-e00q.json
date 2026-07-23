@@ -58,7 +58,7 @@
       ],
       "range": 0,
       "effects": [],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "passive": {
         "name": "69-01 力量強化",
         "ranks": [
@@ -178,7 +178,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.void.summon",
       "targetsEnemies": true
     },
     "E": {
@@ -221,7 +221,7 @@
           ]
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.holy.slash",
       "castTimeSec": 0.5
     },
     "R": {
@@ -243,7 +243,7 @@
       ],
       "range": 0,
       "effects": [],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.arcane.pulse-lg",
       "passive": {
         "name": "69-04 魔力增幅",
         "ranks": [

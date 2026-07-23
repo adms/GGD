@@ -316,3 +316,79 @@ describe("AmbientVfx weapon-trail swing gate (ambient-swing-gate)", () => {
     ambient.dispose();
   });
 });
+
+/**
+ * ambient-orphan-guard (task #131) — the REPRODUCED "persistent bright-white
+ * particle burst stuck in a corner". A pooled ambient emitter mesh hangs off a
+ * champion joint (or the view root). When the model is swapped (procedural→glb
+ * adoption, LOD-tier swap) or the view is torn down before detach()/sweep()
+ * reaches AmbientVfx, that anchor is disposed out from under the emitter, and
+ * Babylon reparents the orphaned child into WORLD space at its local (0,0,0). A
+ * CONTINUOUS emitter left running there paints a permanent additive white burst
+ * at the arena origin — fixed in a screen corner all match under the
+ * zone-following camera. A finite-position check can't catch it: (0,0,0) is
+ * finite. tick() must assert the anchor is alive every frame instead. Driven
+ * loop on NullEngine — no screenshot.
+ */
+describe("AmbientVfx orphan guard (ambient-orphan-guard)", () => {
+  function firstEmitter(): Mesh {
+    const em = scene.meshes.find((m) => m.name.startsWith("ambient-"));
+    expect(em).toBeDefined();
+    return em as Mesh;
+  }
+
+  it("re-homes an orphaned continuous emitter to the live root, never emitting at world origin", () => {
+    cover("ability-vfx-131");
+    const ambient = new AmbientVfx(scene, hooks({ "champ.x": [{ vfx: GLOW_DOC.id }] }), {
+      getScale: () => 1,
+    });
+    const { root, chest } = makeRig(true);
+    root.position.set(6, 0, 8); // the champion is nowhere near the arena origin
+    ambient.attach(1, "champ.x", root);
+    const emitter = firstEmitter();
+    expect(emitter.parent).toBe(chest);
+
+    // GLB adoption / LOD swap disposes the joint out from under the emitter,
+    // WITHOUT a detach() reaching us. Reproduce the exact state the live scene
+    // showed: the emitter mesh survives, its parent is gone, Babylon left it at
+    // its local (0,0,0) → world origin.
+    emitter.parent = null;
+    emitter.position.setAll(0);
+    chest!.dispose(true); // the joint is gone
+
+    // WITHOUT the guard this emitter keeps emitting at (0,0,0) forever. The guard
+    // must re-anchor it to the still-live root on the very next frame.
+    ambient.tick(16, 16);
+    root.computeWorldMatrix(true);
+    emitter.computeWorldMatrix(true);
+    const wp = emitter.getAbsolutePosition();
+    expect(emitter.parent).not.toBeNull();
+    expect(emitter.isDisposed()).toBe(false);
+    expect(Math.hypot(wp.x, wp.y, wp.z)).toBeGreaterThan(1); // never at the arena origin
+    ambient.dispose();
+  });
+
+  it("drops the attachment when the whole view root is disposed, without pooling a corpse emitter", () => {
+    cover("ability-vfx-131");
+    const ambient = new AmbientVfx(scene, hooks({ "champ.x": [{ vfx: GLOW_DOC.id }] }), {
+      getScale: () => 1,
+    });
+    const { root } = makeRig(true);
+    ambient.attach(1, "champ.x", root);
+    expect(ambient.has(1)).toBe(true);
+    expect(scene.particleSystems.filter((p) => p.name.includes(GLOW_DOC.id))).toHaveLength(1);
+
+    // the champion view is torn down (round transition) before a sweep runs —
+    // this disposes the emitter mesh with it.
+    root.dispose();
+    ambient.tick(16, 16);
+
+    expect(ambient.has(1)).toBe(false); // guard dropped the dead attachment
+    // its PS was disposed, not pooled as a corpse that would resurrect at origin
+    expect(scene.particleSystems.filter((p) => p.name.includes(GLOW_DOC.id))).toHaveLength(0);
+    // a fresh champion still binds cleanly afterwards
+    ambient.attach(2, "champ.x", makeRig(true).root);
+    expect(ambient.has(2)).toBe(true);
+    ambient.dispose();
+  });
+});

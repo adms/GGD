@@ -212,11 +212,14 @@ function impactSparkColor(dmgType: "physical" | "magic" | "true"): [number, numb
 }
 
 /**
- * FIX #131 — a NON-finite world position (NaN/Infinity from a mid-despawn
- * entity, an un-interpolated pose, or a corrupt event) parks a pooled additive
- * ParticleSystem at a bad emitter position, which the GPU clamps to a screen
- * corner → the "persistent bright-white burst stuck in the top-right" defect.
- * Every spawn site gates on this so no emitter is ever placed off the world.
+ * DEFENSIVE finite-position guard for the pooled-emitter spawn sites. NOTE: this
+ * is NOT the fix for task #131 — the reproduced "persistent bright-white burst
+ * stuck in a corner" was an orphaned CONTINUOUS ambient emitter left running at
+ * world origin (0,0,0), a perfectly-FINITE position a check like this can never
+ * catch (root cause + fix live in AmbientVfx.tick()'s orphan guard). This guard
+ * stays as belt-and-braces: a NaN/Infinity emitter (a mid-despawn entity, an
+ * un-interpolated pose, a corrupt event) would still get GPU-clamped to a screen
+ * corner, so no spawn site here is allowed to place an emitter off the world.
  */
 function isFinitePos(p: { x: number; z: number } | null): p is { x: number; z: number } {
   return p !== null && Number.isFinite(p.x) && Number.isFinite(p.z);

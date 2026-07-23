@@ -79,7 +79,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.blood.summon",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
@@ -111,7 +111,7 @@
           "root": true
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
@@ -155,7 +155,7 @@
           ]
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.arcane.bolt",
       "castTimeSec": 0.3
     },
     "R": {
@@ -189,7 +189,7 @@
           "duration": 6.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.holy.pulse-lg",
       "castTimeSec": 0.3
     }
   },

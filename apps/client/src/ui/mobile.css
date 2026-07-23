@@ -146,3 +146,74 @@
     height: 22px;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Login / register on a SHORT viewport — task #151 / playtest PT-2.
+
+   A landscape phone is ~375px TALL. AuthScreen (ui/platform/AuthScreen.tsx) is
+   a vertically-centered flex column with the champion marquee
+   (ui/platform/ChampionMarquee.tsx) and the footer (ui/platform/HomeFooter.tsx)
+   ABSOLUTELY pinned to the bottom. At full height that reads as three tidy
+   bands; on a short viewport the centered form and the bottom-pinned decor
+   COLLIDE — the 英雄陣容 marquee paints directly over the Sign-in button, and
+   the map-select / offline row is buried under the footer + version badge. A
+   family member holding the phone sideways literally cannot find the button.
+
+   On a short viewport we therefore:
+     • let the whole column SCROLL (flex-start + overflow-y:auto) so every
+       control is reachable via one vertical scroll — the same single-scroll
+       pattern champ-select and the shop already use for short height;
+     • DROP the decorative marquee — the form and its buttons always win;
+     • fold the footer into the scroll flow (position:static) instead of
+       floating it over the offline row;
+     • shrink the title and tighten the vertical rhythm so more fits, and pad
+       the top so the title clears the fixed top-right audio cluster.
+
+   Scoped purely by HEIGHT, so desktop (1280x720) and portrait phone (375x812)
+   — both tall — are completely untouched. !important is required only because
+   AuthScreen carries these properties as inline styles. The safe-area insets
+   reuse the same env() contract the rest of the mobile layer uses (#107).
+   --------------------------------------------------------------------------- */
+@media (max-height: 520px) {
+  .ggd-auth-root {
+    justify-content: flex-start !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    padding: calc(env(safe-area-inset-top, 0px) + 10px)
+      env(safe-area-inset-right, 0px)
+      calc(env(safe-area-inset-bottom, 0px) + 10px)
+      env(safe-area-inset-left, 0px) !important;
+  }
+  /* Keep every child at its NATURAL height so the column scrolls instead of
+     shrinking. Without this the flex column compresses the form card and its
+     overflow:hidden CLIPS the Sign-in button's bottom edge. The absolutely-
+     positioned background layers are out of flow, so this is a no-op for them. */
+  .ggd-auth-root > * {
+    flex-shrink: 0 !important;
+  }
+  .ggd-auth-title {
+    margin-bottom: 12px !important;
+  }
+  .ggd-auth-title-main {
+    font-size: 28px !important;
+    letter-spacing: 2px !important;
+  }
+  .ggd-auth-subtitle {
+    font-size: 12px !important;
+    letter-spacing: 2px !important;
+  }
+  .ggd-auth-offline {
+    margin-top: 12px !important;
+  }
+  /* the decorative roster strip never sits over the form on a short viewport */
+  .ggd-login-marquee {
+    display: none !important;
+  }
+  /* footer joins the scroll flow instead of covering the offline row */
+  .ggd-login-footer {
+    position: static !important;
+    margin-top: 14px !important;
+    flex: 0 0 auto;
+  }
+}

@@ -20,6 +20,7 @@ import { ContentLoader, registerAll } from "@ggd/shared/content";
 import { FsContentSource } from "@ggd/shared/content/node";
 import { Items, LootTables } from "@ggd/shared/sim/content/registry";
 import { buyItem, SELL_REFUND } from "@ggd/shared/sim/economy/shop";
+import { legendaryPool } from "@ggd/shared/sim/economy/legendaryOrb";
 import { statPathView } from "@ggd/shared/sim/economy/statPath";
 import {
   ITEM_TIER_PRICE,
@@ -280,6 +281,48 @@ describe("no legendary is directly purchasable, whatever the surface says", () =
 
     expect(champ.gold, "an item with no effect took gold").toBe(100_000);
     expect(champ.items.every((s) => s === null), "an item with no effect took a slot").toBe(true);
+  });
+});
+
+/**
+ * TASK #70 REOPENED — the two doors rule 1 (「只有最終合成武器才能上架可直接購買」)
+ * has to close, verified against the REAL content tree, not a fixture.
+ */
+describe("rule 1 covers every gold route, not just the shop shelf", () => {
+  it("the 傳說寶玉 pool can never surface a recipe component (the reported second door)", () => {
+    cover("econ-orb-no-component");
+    const ctl = spawnedMatch(9);
+    const { entity } = humanBuyer(ctl);
+    // The pool as the orb would actually roll it, with the whitelist off so this
+    // proves the SIM guard, not a curation accident.
+    ctl.world.itemEligible = null;
+    const pool = legendaryPool(ctl.world, entity);
+    expect(pool.length, "the orb pool went empty — that would silently disable the orb").toBeGreaterThan(0);
+    for (const id of pool) {
+      const role = Items.get(id).craftRole;
+      expect(role, `${id} (${Items.get(id).name}) is offerable by the orb but is a ${role}`).not.toBe("component");
+      expect(role).not.toBe("token");
+      expect(role).not.toBe("service");
+    }
+    // and the loot table DOES still declare components — so the guard, not an
+    // empty table, is what keeps them out.
+    const declared = LootTables.get(LEGENDARY_POOL_TABLE).entries.map((e) => Items.get(e.itemId).craftRole);
+    expect(declared, "test is vacuous — put a component back in legendary-weapons.json").toContain("component");
+  });
+
+  it("a priced, effectful recipe component is refused with gold — even if whitelisted", () => {
+    cover("econ-component-not-purchasable");
+    const ctl = spawnedMatch(3);
+    const { entity } = humanBuyer(ctl);
+    ctl.world.champion.get(entity)!.gold = 100_000;
+    const component = Items.all().find(
+      (d) => d.craftRole === "component" && d.cost > 0 && ((d.modifiers?.length ?? 0) > 0 || (d.passive?.length ?? 0) > 0),
+    );
+    expect(component, "no priced+effectful component in the tree — test is vacuous").toBeDefined();
+    // This is exactly the id the client shop hides but a raw buyItem call did not:
+    // priced, has stats, passes every OTHER gate — refused only by the role backstop.
+    expect(buyItem(ctl.world, entity, component!.id)).toBe("not-purchasable");
+    expect(ctl.world.champion.get(entity)!.gold, "a component took gold").toBe(100_000);
   });
 });
 

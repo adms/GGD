@@ -80,7 +80,7 @@
           "stun": true
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.lightning.nova",
       "targetsEnemies": true,
       "radius": 3.67,
       "castTimeSec": 0.6
@@ -115,7 +115,7 @@
           "maxDistance": 9.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.arcane.dash",
       "castTimeSec": 0.3
     },
     "E": {
@@ -158,7 +158,7 @@
           ]
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.lightning.bolt",
       "castTimeSec": 0.3
     },
     "R": {
@@ -207,7 +207,7 @@
           "duration": 15.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.void.pulse-lg",
       "castTimeSec": 0.4
     }
   },

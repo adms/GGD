@@ -143,6 +143,31 @@ func (s *Service) PrepareOwnerBootstrap(ctx context.Context) error {
 	return nil
 }
 
+// OwnerlessState reports whether this deploy still needs its first owner, so the
+// register UI can switch into "首位管理員設定" mode and offer the owner-token
+// field. It reveals ONLY two booleans — never the token, never account
+// existence — and both are things the boot log already shouts, so it is not a
+// meaningful probe surface: needsOwner is true solely during the ownerless
+// window, and even while it is true a networked deploy still requires the 0600
+// token to actually claim (requireToken), so advertising the window weakens
+// nothing. (This is deliberately narrower than advertising the invite gate,
+// which the client never does: whether a deploy is gated is a different signal.)
+//
+// It FAILS CLOSED: bootstrap disabled, or an unreadable store, both report
+// needsOwner=false, so the UI never invites a first-owner claim on a deploy that
+// is already owned or that cannot be read.
+func (s *Service) OwnerlessState(ctx context.Context) (needsOwner, requireToken bool) {
+	if !s.ownerBootstrap.Enabled {
+		return false, false
+	}
+	admins, err := s.accounts.Admins(ctx)
+	if err != nil {
+		slog.Error("auth: could not read admins for the bootstrap-state probe; reporting owned", "err", err)
+		return false, false
+	}
+	return len(admins) == 0, s.ownerBootstrap.RequireToken
+}
+
 // ensureOwnerToken returns the existing token, minting one if absent.
 func (s *Service) ensureOwnerToken() (string, error) {
 	path := OwnerTokenPath(s.ownerBootstrap.DataDir)

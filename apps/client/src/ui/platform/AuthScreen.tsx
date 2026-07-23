@@ -7,6 +7,14 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useApp, appStore } from "./store";
 import { validateRegistration, validateUsername, validatePassword, type RegisterErrors } from "./validation";
+import {
+  OWNER_SETUP_TITLE,
+  OWNER_SETUP_HELP,
+  OWNER_TOKEN_LABEL,
+  INVITE_HELP,
+  OFFLINE_PLATFORM_NOTE,
+  registerArgs,
+} from "./firstOwner";
 import { ErrorToast } from "./LobbyScreen";
 import { Btn, TextInput, FieldError, Panel, ACCENT } from "./widgets";
 import { ARENA_OPTIONS, DEFAULT_MAP_ID } from "./maps";
@@ -56,12 +64,22 @@ export function AuthScreen(): React.JSX.Element {
    * gate is the server; this box is UX.
    */
   const [inviteCode, setInviteCode] = useState("");
+  /**
+   * First-owner (站長) one-time token (T0 / #180). Distinct from inviteCode: it
+   * is lowercase hex read off the host, so it is NOT uppercased, and it is only
+   * shown when the deploy reports it still needs an owner. Sent as
+   * bootstrapToken; never sent alongside an invite code (see registerArgs).
+   */
+  const [ownerToken, setOwnerToken] = useState("");
   const [offlineMap, setOfflineMap] = useState(DEFAULT_MAP_ID);
   const [fieldErrors, setFieldErrors] = useState<RegisterErrors>({});
   const authBusy = useApp((s) => s.authBusy);
   const authError = useApp((s) => s.authError);
   const doLogin = useApp((s) => s.doLogin);
   const doRegister = useApp((s) => s.doRegister);
+  // First-owner state (T0 / #180): true only on a brand-new gated deploy with no
+  // admin yet — flips the register form into "首位管理員設定" mode.
+  const firstOwner = useApp((s) => s.bootstrapNeedsOwner);
   // login→battle handoff (task #74): stage the offline launch behind the >=1s
   // loading bar (requesting the roar fade) instead of jumping straight to match
   const beginOfflineLoading = useApp((s) => s.beginOfflineLoading);
@@ -284,7 +302,13 @@ export function AuthScreen(): React.JSX.Element {
       const errs = validateRegistration(username, email, password);
       setFieldErrors(errs);
       if (Object.keys(errs).length > 0) return;
-      runEnterAuth(() => doRegister(username.trim(), email.trim(), password, inviteCode.trim()));
+      // In first-owner mode the typed code is the host owner token (→
+      // bootstrapToken); otherwise it is the invite code. Exactly one is sent,
+      // so the owner path is never a second door for a stranger.
+      const args = registerArgs(firstOwner, firstOwner ? ownerToken : inviteCode);
+      runEnterAuth(() =>
+        doRegister(username.trim(), email.trim(), password, args.inviteCode, args.bootstrapToken),
+      );
     } else {
       const errs: RegisterErrors = {};
       const u = validateUsername(username.trim());
@@ -324,6 +348,12 @@ export function AuthScreen(): React.JSX.Element {
 
   return (
     <div
+      // ggd-auth-root: on a SHORT viewport (landscape phone, ~375px tall — task
+      // #151) mobile.css flips this centered/clipped column into a scrollable
+      // flex-start column so every control stays reachable and the decorative
+      // marquee/footer stop colliding with the form. Height-scoped, so desktop
+      // and portrait phone are untouched.
+      className="ggd-auth-root"
       style={{
         position: "absolute",
         inset: 0,
@@ -397,8 +427,12 @@ export function AuthScreen(): React.JSX.Element {
         }}
       />
 
-      <div style={{ position: "relative", zIndex: 1, marginBottom: 26, textAlign: "center" }}>
+      <div
+        className="ggd-auth-title"
+        style={{ position: "relative", zIndex: 1, marginBottom: 26, textAlign: "center" }}
+      >
         <div
+          className="ggd-auth-title-main"
           style={{
             fontSize: 44,
             fontWeight: 900,
@@ -410,6 +444,7 @@ export function AuthScreen(): React.JSX.Element {
           去死團的逆襲
         </div>
         <div
+          className="ggd-auth-subtitle"
           style={{
             fontSize: 15,
             color: "#d5ddf2",
@@ -463,26 +498,58 @@ export function AuthScreen(): React.JSX.Element {
               <FieldError text={fieldErrors.email} />
             </div>
           )}
-          {mode === "register" && (
-            <div onMouseEnter={playHover}>
-              <div style={{ position: "relative" }}>
-                <TextInput
-                  value={inviteCode}
-                  // uppercase as you type — the codes are minted uppercase, and
-                  // seeing them line up is how you catch a mistyped character.
-                  // Cosmetic only: the server normalises case, spaces and
-                  // hyphens itself.
-                  onChange={onType((v) => setInviteCode(v.toUpperCase()), inviteSparkRef)}
-                  placeholder="邀請碼 invite code (GGD-XXXX-XXXX)"
-                  onEnter={submit}
-                />
-                {!reducedMotion && <span ref={inviteSparkRef} aria-hidden className="ggd-key-spark" />}
+          {/* FIRST-OWNER vs FAMILY are two VISIBLY DIFFERENT register states
+              (T0 / #180). On a brand-new gated deploy (bootstrapNeedsOwner) the
+              person here is the admin-to-be: show the 站長 banner + a host-token
+              field, NEVER "ask an admin who does not exist yet". Otherwise show
+              the normal invite field. */}
+          {mode === "register" &&
+            (firstOwner ? (
+              <div onMouseEnter={playHover}>
+                <div
+                  style={{
+                    background: "rgba(90,130,255,0.10)",
+                    border: `1px solid ${ACCENT}`,
+                    borderRadius: 8,
+                    padding: "8px 10px",
+                    marginBottom: 8,
+                  }}
+                >
+                  <div style={{ fontSize: 13, fontWeight: 700, color: TEXT_MAIN, marginBottom: 3 }}>
+                    {OWNER_SETUP_TITLE}
+                  </div>
+                  <div style={{ fontSize: 11, color: TEXT_DIM, lineHeight: 1.55 }}>{OWNER_SETUP_HELP}</div>
+                </div>
+                <div style={{ position: "relative" }}>
+                  <TextInput
+                    value={ownerToken}
+                    // The owner token is lowercase hex read off the host — do
+                    // NOT uppercase it (unlike the invite code).
+                    onChange={onType(setOwnerToken, inviteSparkRef)}
+                    placeholder={OWNER_TOKEN_LABEL}
+                    onEnter={submit}
+                  />
+                  {!reducedMotion && <span ref={inviteSparkRef} aria-hidden className="ggd-key-spark" />}
+                </div>
               </div>
-              <div style={{ fontSize: 11, color: TEXT_DIM, marginTop: 4, lineHeight: 1.5 }}>
-                內測期間需要邀請碼才能註冊，請向管理員索取。
+            ) : (
+              <div onMouseEnter={playHover}>
+                <div style={{ position: "relative" }}>
+                  <TextInput
+                    value={inviteCode}
+                    // uppercase as you type — the codes are minted uppercase, and
+                    // seeing them line up is how you catch a mistyped character.
+                    // Cosmetic only: the server normalises case, spaces and
+                    // hyphens itself.
+                    onChange={onType((v) => setInviteCode(v.toUpperCase()), inviteSparkRef)}
+                    placeholder="邀請碼 invite code (GGD-XXXX-XXXX)"
+                    onEnter={submit}
+                  />
+                  {!reducedMotion && <span ref={inviteSparkRef} aria-hidden className="ggd-key-spark" />}
+                </div>
+                <div style={{ fontSize: 11, color: TEXT_DIM, marginTop: 4, lineHeight: 1.5 }}>{INVITE_HELP}</div>
               </div>
-            </div>
-          )}
+            ))}
           <div onMouseEnter={playHover}>
             <div style={{ position: "relative" }}>
               <TextInput
@@ -526,7 +593,10 @@ export function AuthScreen(): React.JSX.Element {
         </div>
       </Panel>
 
-      <div style={{ position: "relative", zIndex: 1, marginTop: 22, textAlign: "center" }}>
+      <div
+        className="ggd-auth-offline"
+        style={{ position: "relative", zIndex: 1, marginTop: 22, textAlign: "center" }}
+      >
         <div style={{ display: "flex", gap: 8, justifyContent: "center", alignItems: "center" }}>
           <select
             value={offlineMap}
@@ -572,6 +642,21 @@ export function AuthScreen(): React.JSX.Element {
           }}
         >
           no account needed — jumps straight into a bot match
+        </div>
+        {/* Honest on every deploy: offline direct-join is a local-test path; a
+            real secured host refuses client-initiated match creation by design
+            (game-server MatchRoom.ts) — there you play via login → lobby. Stops
+            the raw "restricted to the platform reservation flow" error from ever
+            being the owner's only explanation. */}
+        <div
+          style={{
+            fontSize: 11,
+            color: "#8b95ad",
+            marginTop: 4,
+            textShadow: "0 1px 6px rgba(0,0,0,0.85)",
+          }}
+        >
+          {OFFLINE_PLATFORM_NOTE}
         </div>
       </div>
       {/* Roster showcase: a display-only, auto-scrolling strip of champion

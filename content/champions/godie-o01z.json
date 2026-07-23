@@ -81,7 +81,7 @@
           "moveSpeedMult": 0.2
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.ki.nova",
       "targetsEnemies": true,
       "radius": 5.5,
       "castTimeSec": 0.5
@@ -129,7 +129,7 @@
           ]
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.void.bolt",
       "castTimeSec": 0.3
     },
     "E": {
@@ -172,7 +172,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.holy.nova",
       "targetsEnemies": true,
       "castTimeSec": 0.5
     },

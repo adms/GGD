@@ -68,7 +68,7 @@
           "duration": 3.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.fire.pulse-sm",
       "castTimeSec": 0.3
     },
     "W": {
@@ -117,7 +117,7 @@
           "stun": true
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.physical.nova",
       "targetsEnemies": true,
       "radius": 3.67,
       "castTimeSec": 0.6
@@ -168,7 +168,7 @@
           "stun": true
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.void.slash",
       "targetsEnemies": true,
       "castTimeSec": 0.6
     },
@@ -203,7 +203,7 @@
           "duration": 3.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.wind.pulse-lg",
       "castTimeSec": 0.4
     }
   },

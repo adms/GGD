@@ -181,13 +181,21 @@ export class AmbientVfx {
     for (const item of att.items) {
       if (item.emitter && item.vfxDoc) {
         item.emitter.ps.stop();
-        item.emitter.emitterMesh.parent = null;
-        let list = this.psPool.get(item.vfxDoc.id);
-        if (!list) {
-          list = [];
-          this.psPool.set(item.vfxDoc.id, list);
+        // The emitter MESH can already be dead when the anchor root it hung off
+        // was disposed out from under us (glb adoption / LOD swap / view
+        // teardown — see the orphan guard in tick()). Never pool a corpse: a
+        // reused disposed emitter would resurrect at world origin (task #131).
+        if (item.emitter.emitterMesh.isDisposed()) {
+          item.emitter.ps.dispose();
+        } else {
+          item.emitter.emitterMesh.parent = null;
+          let list = this.psPool.get(item.vfxDoc.id);
+          if (!list) {
+            list = [];
+            this.psPool.set(item.vfxDoc.id, list);
+          }
+          list.push(item.emitter);
         }
-        list.push(item.emitter);
       }
       if (item.ribbon) {
         item.ribbon.detach();
@@ -212,8 +220,36 @@ export class AmbientVfx {
   /** Per-frame: late bone resolution, ambient burst cycles, ribbon sampling. */
   tick(nowMs: number, dtMs: number): void {
     if (this.disposed) return;
-    for (const att of this.attachments.values()) {
+    let dead: number[] | null = null; // attachment roots disposed out from under us
+    for (const [entityId, att] of this.attachments) {
+      // ORPHAN GUARD — the actual root cause of task #131 (the "persistent
+      // bright-white burst stuck in a corner"). The node a pooled emitter mesh
+      // hangs off — a glb joint or the view root — can be disposed out from
+      // under us when the champion's model is swapped (procedural→glb adoption,
+      // LOD-tier swap) or its view is torn down before detach()/sweep() reaches
+      // us. Babylon reparents the orphaned child into WORLD space at its local
+      // (0,0,0), and a CONTINUOUS emitter left running there paints a permanent
+      // additive white burst at the arena origin (0,0,0) — which, under the
+      // zone-following combat camera, sits fixed in a screen corner the whole
+      // match. A finite-position check can't catch it: (0,0,0) is perfectly
+      // finite. So we assert the anchor is alive every frame instead: drop the
+      // whole attachment if its root died; otherwise re-home any orphaned
+      // emitter back onto the live root so it can never emit off its champion.
+      if (att.root.isDisposed()) {
+        (dead ??= []).push(entityId);
+        continue;
+      }
       for (const item of att.items) {
+        const em = item.emitter?.emitterMesh;
+        if (em && !em.isDisposed()) {
+          const parent = em.parent;
+          if (parent === null || parent.isDisposed()) {
+            em.parent = att.root; // re-anchor to the live root...
+            em.position.setAll(0); // ...at its origin, exactly as attach() does
+            item.boneResolved = item.anchorBone === undefined; // re-find the joint
+            item.nextScanMs = 0;
+          }
+        }
         if (item.giveUpMs === Infinity) item.giveUpMs = nowMs + BONE_RESCAN_MAX_MS;
         // the .glb (and its joints) streams in async — keep re-searching
         if (!item.boneResolved && item.anchorBone !== undefined && nowMs >= item.nextScanMs) {
@@ -238,6 +274,8 @@ export class AmbientVfx {
         item.ribbon?.tick(nowMs, dtMs);
       }
     }
+    // detach() mutates the attachments map — do it after the walk, not during.
+    if (dead) for (const id of dead) this.detach(id);
   }
 
   dispose(): void {

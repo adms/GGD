@@ -63,7 +63,7 @@
           "stun": true
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.arcane.nova",
       "targetsEnemies": true,
       "radius": 6.0,
       "castTimeSec": 0.4
@@ -111,7 +111,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.nature.nova",
       "targetsEnemies": true
     },
     "E": {
@@ -154,7 +154,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.physical.pulse-sm",
       "targetsEnemies": true,
       "castTimeSec": 0.3
     },
@@ -201,7 +201,7 @@
           "stun": true
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.physical.nova-lg",
       "targetsEnemies": true,
       "castTimeSec": 0.8
     }

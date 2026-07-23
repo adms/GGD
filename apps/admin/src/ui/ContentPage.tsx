@@ -71,8 +71,34 @@ import {
 } from "./theme";
 
 // 三選一強化 (augments) are the DRAFT abilities — editable as their OWN tab,
-// distinct from champion 技能, per the owner (task #70 rule 3).
-const TABS: readonly EditCollection[] = ["champions", "abilities", "items", "augments"];
+// distinct from champion 技能, per the owner (task #70 rule 3). 三選一抽獎池
+// (loot-tables) are the ITEM draft POOLS (quest-rewards + legendary-weapons):
+// the owner curates which items the weapon 3-choose-1 offers from here.
+const TABS: readonly EditCollection[] = ["champions", "abilities", "items", "augments", "loot-tables"];
+
+// Collections the owner may ADD to / REMOVE from via the console (task #70
+// rule 3: 「隨機三選一的技能應該也要在後台單獨被編輯」 — editing the fixed set is
+// not enough, he must be able to change WHICH augments exist). Only augments
+// qualify: champions/abilities/items are the imported WC3 tree (not authored
+// here) and a loot-table is REFERENCED by arena-rules, so deleting one would
+// silently empty a draft round — those stay edit-only.
+const CREATABLE: ReadonlySet<EditCollection> = new Set<EditCollection>(["augments"]);
+
+/** A blank, schema-valid skeleton for a freshly-created document. */
+function skeletonDoc(collection: EditCollection, id: string): Record<string, unknown> {
+  if (collection === "augments") {
+    return {
+      id,
+      schema: "augment@1",
+      name: id,
+      description: "（請填寫說明）",
+      tier: "silver",
+      weight: 10,
+      tags: [],
+    };
+  }
+  return { id };
+}
 
 interface Draft {
   /** path → parsed JSON value (undefined = remove the key) */
@@ -125,6 +151,9 @@ export function ContentPage({ api }: ContentPageProps): React.JSX.Element {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [apiUp, setApiUp] = useState<boolean | null>(null);
   const [cv, setCv] = useState<string | null>(null);
+  const [newId, setNewId] = useState("");
+  const [createMsg, setCreateMsg] = useState<{ text: string; tone: Tone } | null>(null);
+  const [creating, setCreating] = useState(false);
 
   // ---- the browse list -----------------------------------------------------
   // Read through the STATIC /content mount, not the content-api: the list must
@@ -146,6 +175,8 @@ export function ContentPage({ api }: ContentPageProps): React.JSX.Element {
   useEffect(() => {
     reloadList(tab);
     setSelectedId(null);
+    setNewId("");
+    setCreateMsg(null);
   }, [tab, reloadList]);
 
   const refreshStatus = useCallback(() => {
@@ -160,6 +191,32 @@ export function ContentPage({ api }: ContentPageProps): React.JSX.Element {
     if (q === "") return rows;
     return rows.filter((r) => r.id.toLowerCase().includes(q) || r.name.toLowerCase().includes(q));
   }, [rows, query]);
+
+  // ---- create a NEW document (augments) ------------------------------------
+  const createNew = useCallback(() => {
+    const id = newId.trim();
+    if (id === "") return;
+    if (rows.some((r) => r.id === id)) {
+      setCreateMsg({ text: `已經有一個叫 ${id} 的了，換個 id。`, tone: "err" });
+      return;
+    }
+    setCreating(true);
+    setCreateMsg(null);
+    void (async () => {
+      const r = await api.create(tab, id, skeletonDoc(tab, id));
+      setCreating(false);
+      if (!r.ok) {
+        const detail = r.issues.length > 0 ? r.issues.map((i) => `${i.path} ${i.message}`).join("；") : r.error;
+        setCreateMsg({ text: `新增失敗：${detail ?? "未知錯誤"}`, tone: "err" });
+        return;
+      }
+      setCreateMsg({ text: `已新增 ${id}，右邊直接編輯。`, tone: "ok" });
+      setNewId("");
+      reloadList(tab);
+      refreshStatus();
+      setSelectedId(id);
+    })();
+  }, [api, tab, newId, rows, reloadList, refreshStatus]);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 14, height: "100%" }}>
@@ -186,6 +243,26 @@ export function ContentPage({ api }: ContentPageProps): React.JSX.Element {
       <div style={{ display: "grid", gridTemplateColumns: "300px 1fr", gap: 14, minHeight: 0, flex: 1 }}>
         <Panel title={`${COLLECTION_LABEL[tab]} 清單`} style={{ minHeight: 0, display: "flex", flexDirection: "column" }}>
           <TextInput value={query} onChange={setQuery} placeholder="搜尋 id 或名稱…" />
+          {CREATABLE.has(tab) && api.enabled && (
+            <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 6 }}>
+              <div style={{ display: "flex", gap: 6 }}>
+                <TextInput value={newId} onChange={setNewId} placeholder={`新${COLLECTION_LABEL[tab]} id`} />
+                <Btn small kind="primary" onClick={createNew} disabled={creating || newId.trim() === ""}>
+                  ＋新增
+                </Btn>
+              </div>
+              {createMsg !== null && (
+                <div
+                  style={{
+                    fontSize: 11,
+                    color: createMsg.tone === "ok" ? OK : createMsg.tone === "warn" ? WARN : DANGER,
+                  }}
+                >
+                  {createMsg.text}
+                </div>
+              )}
+            </div>
+          )}
           <div style={{ fontSize: 11, color: TEXT_DIM, margin: "8px 0" }}>
             {loading ? "載入中…" : `${filtered.length} / ${rows.length}`}
           </div>
@@ -214,7 +291,13 @@ export function ContentPage({ api }: ContentPageProps): React.JSX.Element {
               api={api}
               collection={tab}
               id={selectedId}
+              canDelete={CREATABLE.has(tab)}
               onSaved={() => {
+                reloadList(tab);
+                refreshStatus();
+              }}
+              onDeleted={() => {
+                setSelectedId(null);
                 reloadList(tab);
                 refreshStatus();
               }}
@@ -310,9 +393,12 @@ function DocEditor(props: {
   api: ContentEditApi;
   collection: EditCollection;
   id: string;
+  canDelete: boolean;
   onSaved: () => void;
+  onDeleted: () => void;
 }): React.JSX.Element {
   const { api, collection, id } = props;
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const [doc, setDoc] = useState<Record<string, unknown> | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [draft, setDraft] = useState<Draft>(EMPTY_DRAFT);
@@ -526,6 +612,24 @@ function DocEditor(props: {
     [api, collection, id, props, reload],
   );
 
+  const deleteThis = useCallback(() => {
+    setBusy(true);
+    void (async () => {
+      const r = await api.remove(collection, id);
+      if (!alive.current) return;
+      setBusy(false);
+      setConfirmDelete(false);
+      if (!r.ok) {
+        setStatus({ text: r.error ?? "刪除失敗", tone: "err" });
+        return;
+      }
+      // deleted — the parent clears the selection and reloads the list. The
+      // server snapshotted the bytes first, so this is recoverable from the
+      // 備份／復原 panel of any sibling doc if it was a mistake.
+      props.onDeleted();
+    })();
+  }, [api, collection, id, props]);
+
   if (loadError !== null && doc === null) {
     return (
       <Panel title={id}>
@@ -573,6 +677,22 @@ function DocEditor(props: {
           <Btn small kind="primary" onClick={preview} disabled={busy || !dirty || hasParseErrors || !api.enabled}>
             檢查並預覽
           </Btn>
+          {props.canDelete && api.enabled && (
+            confirmDelete ? (
+              <>
+                <Btn small kind="danger" onClick={deleteThis} disabled={busy}>
+                  確認刪除
+                </Btn>
+                <Btn small onClick={() => setConfirmDelete(false)} disabled={busy}>
+                  取消
+                </Btn>
+              </>
+            ) : (
+              <Btn small kind="danger" onClick={() => setConfirmDelete(true)} disabled={busy}>
+                刪除
+              </Btn>
+            )
+          )}
         </div>
 
         {hasParseErrors && (

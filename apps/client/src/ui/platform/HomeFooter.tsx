@@ -42,6 +42,10 @@ export function HomeFooter(): React.JSX.Element {
   return (
     <footer
       aria-label="site credits"
+      // ggd-login-footer: on a short viewport (landscape phone, ~375px tall —
+      // task #151) mobile.css folds this into the scroll flow (position:static)
+      // instead of pinning it over the offline row / version badge.
+      className="ggd-login-footer"
       style={{
         position: "absolute",
         left: 0,

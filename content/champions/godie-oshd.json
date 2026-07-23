@@ -74,7 +74,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.nature.slash",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
@@ -118,7 +118,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.void.nova",
       "targetsEnemies": true,
       "radius": 6.0,
       "castTimeSec": 0.6
@@ -163,7 +163,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.holy.pulse-sm",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },

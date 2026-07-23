@@ -74,7 +74,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.fire.pulse-sm",
       "targetsEnemies": true,
       "castTimeSec": 0.3
     },
@@ -124,7 +124,7 @@
           "stun": true
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.fire.slash",
       "castTimeSec": 0.5
     },
     "E": {
@@ -160,7 +160,7 @@
           "duration": 12.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "castTimeSec": 0.3
     },
     "R": {

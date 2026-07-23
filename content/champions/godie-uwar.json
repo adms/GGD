@@ -78,7 +78,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.lightning.nova",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
@@ -115,7 +115,7 @@
           "duration": 3.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "castTimeSec": 0.3
     },
     "E": {
@@ -144,7 +144,7 @@
           "maxDistance": 8.25
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.arcane.dash",
       "castTimeSec": 0.3
     },
     "R": {

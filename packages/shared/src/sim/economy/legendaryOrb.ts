@@ -5,9 +5,11 @@
  * THE SHAPE OF THE MECHANIC. You never buy a legendary. You buy the GACHA
  * TOKEN, and the token immediately opens the same 3-choose-1 card the round-5
  * draft opens, rolled from the same `legendary-weapons` table. The orb is
- * consumed on use, occupies no inventory slot, and is never a recipe component
- * — it respects the standing no-crafting decision by construction, because
- * there is no combine STEP anywhere in it.
+ * consumed on use and occupies no inventory slot. What it can ROLL is gated by
+ * {@link orbEligible}, which excludes recipe components, 兌換 tokens and shop
+ * services — so buying the orb can never hand out a raw crafting COMPONENT
+ * (task #70, the reported second door). It respects the standing no-crafting
+ * decision by construction too: there is no combine STEP anywhere in it.
  *
  * WHY IT IS PRICED AT RATE. 2400g for a 52-AEP legendary is exactly the
  * economy's uniform 46.15 g/AEP. The orb therefore buys you no gold efficiency
@@ -33,8 +35,8 @@
  */
 import type { EntityId, ItemId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
-import { LootTables } from "../content/registry";
-import { LEGENDARY_ORB_PRICE, LEGENDARY_POOL_TABLE } from "./itemTiers";
+import { Items, LootTables } from "../content/registry";
+import { LEGENDARY_ORB_PRICE, LEGENDARY_POOL_TABLE, itemHasEffect } from "./itemTiers";
 
 export type OrbResult =
   | "ok"
@@ -92,7 +94,33 @@ export function legendaryPool(world: SimWorld, id: EntityId): ItemId[] {
   const eligible = world.itemEligible;
   return table.entries
     .map((e) => e.itemId)
-    .filter((itemId) => !owned.has(itemId) && (eligible === null || eligible(itemId)));
+    .filter((itemId) => !owned.has(itemId) && (eligible === null || eligible(itemId)) && orbEligible(itemId));
+}
+
+/**
+ * THE SECOND-DOOR GUARD (task #70, reopened). The report found that buying the
+ * 2400g orb could hand the player a raw recipe COMPONENT (天叢雲劍/貫雷槍/名刀-
+ * 天狼/斬岩刃/熾天使之弓/龍騎士之劍/八取武士刀), because the pool was filtered by
+ * ownership + whitelist ALONE — a rule-1 violation through a different door.
+ * This closes it STRUCTURALLY: a component (or a 兌換 token, or a shop service)
+ * can NEVER be rolled by the orb, whatever the loot table or the whitelist hold.
+ *
+ * WHY NOT "finals only". The orb is explicitly NOT a direct purchase of a
+ * weapon — 「購買也可傳說寶玉觸發而非直接購買」 — so rule 1's shelf rule
+ * (`buyItem` = finals only) does not govern it; the confirmed VIOLATION was
+ * components, and this excludes exactly those (plus tokens/services, which are
+ * inert or nonsensical in a reward pool). The 7 direct-buy 神器 that remain in
+ * content/loot-tables/legendary-weapons.json — a pool the owner has not re-
+ * endorsed — are task #108's to keep or cut; this guard does not pre-empt that
+ * decision, it only stops the component leak. A doc with no role marker is
+ * legacy/skeleton and passes. Everything offered must still DO something.
+ */
+const ORB_EXCLUDED_ROLES: ReadonlySet<string> = new Set(["component", "token", "service"]);
+function orbEligible(itemId: ItemId): boolean {
+  const def = Items.tryGet(itemId);
+  if (!def) return false;
+  if (def.craftRole !== undefined && ORB_EXCLUDED_ROLES.has(def.craftRole)) return false;
+  return itemHasEffect(def);
 }
 
 /**

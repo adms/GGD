@@ -112,7 +112,7 @@
           "duration": 10.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.sound.pulse-sm",
       "castTimeSec": 0.3
     },
     "E": {
@@ -155,7 +155,7 @@
           ]
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.lightning.slash",
       "castTimeSec": 0.6
     },
     "R": {

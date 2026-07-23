@@ -75,7 +75,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.fire.bolt",
       "targetsEnemies": true,
       "radius": 3.69,
       "castTimeSec": 0.6
@@ -120,7 +120,7 @@
           ]
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.holy.pulse-sm",
       "castTimeSec": 0.3
     },
     "E": {
@@ -172,7 +172,7 @@
           "stun": true
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.arcane.nova",
       "targetsEnemies": true,
       "radius": 6.0,
       "castTimeSec": 0.6
@@ -214,7 +214,7 @@
           "duration": 6.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.arcane.nova-lg",
       "targetsEnemies": false,
       "radius": 1.5,
       "castTimeSec": 0.3

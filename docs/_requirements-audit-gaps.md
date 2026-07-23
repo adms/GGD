@@ -1094,3 +1094,56 @@ overlay 沒到位是 10 隻角色長得像通用人偶；白名單沒到位是**
 **owner 的部署該跑**：`GGD_REQUIRE_INVITE=1 GGD_OWNER_BOOTSTRAP_TOKEN=1 GGD_REGISTER_RATE_LIMIT=20`
 （`GGD_REQUIRE_APPROVAL` 保持關閉 — 邀請碼本身就是審核）。
 launch.json 新增 `platform-invite` entry = 這個 posture，獨立 `DATA_DIR=/Users/Takuro/GGD/data-invite`。
+
+---
+
+## 2026-07-23 · 首場區網試玩的第一手回饋（最高優先）
+> 「請你將技能特效、粒子特效、3d model 等項目提高優先權，因為目前玩起來根本不知道哪招是哪招」
+
+**這是最重要的一條 playtest 回饋。** 遊戲已可區網玩，但技能在戰場上**無法辨識** ——
+「根本不知道哪招是哪招」。優先權重排到最高。根因（依影響排序）：
+
+1. **#79 — 285/554 技能仍共用同一團火佔位**（registry shadow 修復後 460→285）。
+   這是主因：一半技能在畫面上噴同一種火。
+2. **#123 — 共用 VFX primitive 庫**（`render/vfx/primitives.ts` 已有 PRIMITIVES 骨架）。
+   #79 要綁到「不同」的效果，前提是那些效果以可重用 primitive 存在 → **#123 是 #79 的相依前置**。
+3. **#178 — 516 技能沒有 icon**：連 HUD 技能鍵也是佔位，按鈕上也分不出哪招是哪招。
+4. **#131 — 右上角白色粒子**（跑中）+ 一般粒子雜訊。
+5. **#98 — 11 個零幾何特效模型**：匯入的 mdx 粒子發射器沒轉出來。
+6. 3D model：#77 stand-in、#113 疑似重複角色。
+
+### 併同裁決的事實（本次實跑確認）
+- **#100 回合後殘留戰鬥 → SETTLED，可關閉。** beta 探測 8 seeds/37 回合實測：
+  回合判定後戰鬥 tick=0、傷害事件=0、詠唱=0。之前「combatActive flip 後 0 傷害」的證明
+  是**空的**（同 tick 設 false，構造上必為 0），這次量的是真的。**#85 死亡去飽和的相依已解除。**
+- **#128 量尺仍失準**：`castabilitySweep.test.ts:74` `WINDOW = 26`，CT 已推到 0.9s=27 tick。
+- **⚠️ 手機直向登入路徑不可發現**（beta 探測）：家人用手機加入，橫向登入畫面破版，
+  正解「轉直向登入再轉回」沒人猜得到 → 直接說「壞了」就放棄。家人多半用手機 → 這條要進批次。
+
+---
+
+## 2026-07-23 · 我自己實際遊玩的第一手記錄（螢幕實測，非讀碼）
+
+在跑中的 LAN stack（localhost:39527）親自操作，逐個畫面截圖確認：
+
+### 🔴 PT-1 「Play offline vs bots」按鈕壞掉（onboarding 死路）
+登入頁大字寫「no account needed — jumps straight into a bot match」，
+點下去卻跳 `could not join the match: match creation is restricted to the platform reservation flow`。
+根因：game-server 帶 secret → client 自建房被擋（MatchRoom.ts:146）。**localhost 和主機都一樣壞。**
+owner 和每個家人都會先點這顆、然後卡死。→ 併入 #180（隱藏或改成「請由登入→大廳」）。
+
+### 🔴 PT-2 手機橫向登入破版（#151，實測確認）
+812×375 橫向：標題壓到頂端蓋住音訊鈕、表單被切、**「Sign in」按鈕整個被英雄陣容跑馬燈蓋住點不到**。
+家人手機一轉橫就登不了。**直向 375×812 正常**，只有橫向壞。beta 探測的警告屬實。
+
+### 🟠 PT-3 角色圖示大多是「文字色塊」佔位（#178 現形）
+登入跑馬燈與（推測）選角格，大部分角色沒有 icon，退成一個色塊+單字（亂國腦死看不海最慈種黑鋼／地時／獸魔夢笑被神美賽常電犬）。
+只有 3 隻有真頭像。這是「根本不知道哪招/哪角是哪個」的 HUD 面向。→ #178 需要那 ~20 行管線橋 + 516 張技能圖的本機 SD run（吃 GPU，排在試玩外）。
+
+### ⚪ PT-4 回放 UI 目前有 live 語法錯誤（暫時性）
+console：`[hmr] Failed to reload /src/replay/ReplayApp.tsx / ReplayControls.tsx`。
+是回放工作流（#175）正在改檔的中間狀態，非真 bug，落地後會消失。
+
+### 未能親測的部分
+戰鬥內 VFX / 模型 / 打擊感因為 offline 壞掉 + 不輸入密碼（硬規則）無法親自進場；
+這部分由「技能可辨識性」工作流的逐幀戰鬥截圖負責，不重複。

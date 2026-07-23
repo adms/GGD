@@ -45,7 +45,7 @@
       "moveSpeedMult": 0.6
     }
   ],
-  "vfxKey": "fx.ember-bolt-cast",
+  "vfxKey": "fx.prim.physical.slash",
   "targetsEnemies": true,
   "radius": 6.0,
   "castTimeSec": 0.6

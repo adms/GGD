@@ -76,7 +76,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "targetsEnemies": true,
       "icon": "assets/icons/abilities/godie-ekee.q.png"
     },
@@ -113,7 +113,7 @@
           "duration": 8.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "castTimeSec": 0.3
     },
     "E": {
@@ -162,7 +162,7 @@
           "moveSpeedMult": 0.6
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.arcane.nova",
       "targetsEnemies": true,
       "radius": 1.5,
       "castTimeSec": 0.5
@@ -210,7 +210,7 @@
           "stun": true
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.holy.nova-lg",
       "targetsEnemies": true,
       "castTimeSec": 0.8
     }

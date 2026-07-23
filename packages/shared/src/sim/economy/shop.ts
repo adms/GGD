@@ -93,8 +93,21 @@ export function buyItem(world: SimWorld, id: EntityId, itemId: ItemId): BuyResul
   if (def.cost <= 0) return "not-purchasable";
   // Both halves of "you may never be charged for nothing". The two SERVICES
   // are legitimately payload-free and are dispatched by id above, so they
-  // never reach this line.
+  // never reach this line. Checked BEFORE the role backstop so an inert item
+  // keeps its specific `no-effect` reason (the HUD says WHY it is greyed).
   if (!itemHasEffect(def)) return "no-effect";
+  // RULE 1 SERVER-SIDE BACKSTOP (owner, task #70): 「只有最終合成武器才能上架可
+  // 直接購買」. The client `shopCatalogue` already keeps non-finals off the shelf,
+  // but that is a LISTING rule, not an invariant — a modified client, a future
+  // caller, or a whitelist that (as today) enables components as items could
+  // still name an effectful component id here (e.g. 熱戀魔杖, 300g). The role
+  // marker was recovered from the source-map triggers (see defs.ts /
+  // extract_item_roles.py), so this is the one authoritative gate: only a
+  // `final` may be bought with gold. Services are dispatched by id ABOVE; quest
+  // items are 0g and already rejected as `not-purchasable`; a legacy doc with
+  // no marker is left alone. A component/token/direct/none is refused here even
+  // when priced, effectful and whitelisted.
+  if (def.craftRole !== undefined && def.craftRole !== "final") return "not-purchasable";
   if (def.unique && champ.items.includes(itemId)) return "unique-owned";
   // A slot held by an unpicked 傳說寶玉 card is NOT available to buy into: the
   // orb was paid for and its legendary has to have somewhere to land. Without

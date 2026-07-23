@@ -223,8 +223,13 @@ function findBoneNode(root: TransformNode, bone: string): TransformNode | null {
  * with MAX_ACTIVE_WHIRLWINDS = 6 that is at most six short chains per frame.
  */
 function followAnchor(pivot: TransformNode, anchor: TransformNode, yOffset: number): void {
+  // Sibling of task #131: the anchor joint can be disposed out from under us on
+  // a model/LOD swap. Following a dead node would read a stale/origin matrix and
+  // snap the funnel into a corner — freeze at the last good pose instead.
+  if (anchor.isDisposed()) return;
   anchor.computeWorldMatrix(true);
   const p = anchor.getAbsolutePosition();
+  if (!(Number.isFinite(p.x) && Number.isFinite(p.y) && Number.isFinite(p.z))) return;
   if (pivot.parent) pivot.parent = null; // world space, always
   pivot.rotationQuaternion = null; // drop any quaternion the pool left behind
   pivot.rotation.set(0, 0, 0);

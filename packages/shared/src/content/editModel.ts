@@ -37,12 +37,24 @@
  * content-api already validates/saves them (they are in the shared COLLECTIONS
  * registry); this only surfaces them in the console.
  */
-export type EditCollection = "items" | "champions" | "abilities" | "augments";
+export type EditCollection = "items" | "champions" | "abilities" | "augments" | "loot-tables";
 
-export const EDIT_COLLECTIONS: readonly EditCollection[] = ["champions", "abilities", "items", "augments"];
+export const EDIT_COLLECTIONS: readonly EditCollection[] = [
+  "champions",
+  "abilities",
+  "items",
+  "augments",
+  "loot-tables",
+];
 
 export function isEditCollection(v: unknown): v is EditCollection {
-  return v === "items" || v === "champions" || v === "abilities" || v === "augments";
+  return (
+    v === "items" ||
+    v === "champions" ||
+    v === "abilities" ||
+    v === "augments" ||
+    v === "loot-tables"
+  );
 }
 
 /** Dev content-api mount (same-origin: the admin vite dev server proxies it). */

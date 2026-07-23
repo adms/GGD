@@ -52,6 +52,11 @@ describe("the field spec", () => {
       abilities: "技能",
       items: "武器道具",
       augments: "三選一強化",
+      // 三選一抽獎池 (loot-tables) — the ITEM draft pools, curatable from the
+      // backend (task #70 rule 2/3). An array doc, so it has only the identity
+      // group + a raw-JSON entries editor, hence it is NOT in the form-rich
+      // COLLECTIONS list below that asserts >3 editable fields.
+      "loot-tables": "三選一抽獎池",
     });
     for (const c of COLLECTIONS) {
       expect(fieldGroups(c).length, c).toBeGreaterThan(0);

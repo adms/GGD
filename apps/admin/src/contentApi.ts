@@ -387,6 +387,74 @@ export async function restoreBackup(
   }
 }
 
+export interface CreateOutcome {
+  readonly ok: boolean;
+  readonly issues: readonly EditIssue[];
+  readonly error: string | null;
+  readonly contentVersion: string | null;
+}
+
+/**
+ * CREATE a brand-new document (task #70 rule 3 — the owner must be able to ADD
+ * a 三選一 augment / draft-pool entry from the console, not only re-tune the
+ * fixed set). POSTs to the create verb (201), which refuses to clobber an
+ * existing id. Validated first with the same shared schema the game loader uses,
+ * so a malformed skeleton never reaches disk.
+ */
+export async function createDoc(
+  collection: EditCollection,
+  id: string,
+  doc: Record<string, unknown>,
+  opts: ContentApiOptions = {},
+): Promise<CreateOutcome> {
+  if (!ENABLED) return { ok: false, issues: [], error: OFF_MESSAGE, contentVersion: null };
+  const fetchFn = opts.fetchFn ?? defaultFetch;
+  const vurl = docUrl(collection, id, "validate");
+  try {
+    const v = await send(fetchFn, vurl, "POST", doc);
+    if (v.status === 422) return { ok: false, issues: issuesOf(v.body), error: null, contentVersion: null };
+    if (v.status !== 200) return { ok: false, issues: [], error: errorOf(v.body, v.status, vurl), contentVersion: null };
+    const url = docUrl(collection, id);
+    const res = await send(fetchFn, url, "POST", doc);
+    if (res.status !== 201 && res.status !== 200) {
+      return { ok: false, issues: issuesOf(res.body), error: errorOf(res.body, res.status, url), contentVersion: null };
+    }
+    const cv = (res.body as { contentVersion?: unknown } | null)?.contentVersion;
+    return { ok: true, issues: [], error: null, contentVersion: typeof cv === "string" ? cv : null };
+  } catch (e) {
+    return { ok: false, issues: [], error: e instanceof Error ? e.message : String(e), contentVersion: null };
+  }
+}
+
+/**
+ * DELETE a document (task #70 rule 3 — REMOVE a 三選一 augment / pool from the
+ * draft entirely). The content-api snapshots the bytes before unlinking, so
+ * `restore` can bring it back — this is a recoverable delete, not a shred.
+ */
+export async function deleteDoc(
+  collection: EditCollection,
+  id: string,
+  opts: ContentApiOptions = {},
+): Promise<{ ok: boolean; error: string | null; contentVersion: string | null; backup: string | null }> {
+  if (!ENABLED) return { ok: false, error: OFF_MESSAGE, contentVersion: null, backup: null };
+  const url = docUrl(collection, id);
+  try {
+    const res = await send(opts.fetchFn ?? defaultFetch, url, "DELETE");
+    if (res.status !== 200) {
+      return { ok: false, error: errorOf(res.body, res.status, url), contentVersion: null, backup: null };
+    }
+    const body = res.body as { contentVersion?: unknown; backup?: unknown } | null;
+    return {
+      ok: true,
+      error: null,
+      contentVersion: typeof body?.contentVersion === "string" ? body.contentVersion : null,
+      backup: typeof body?.backup === "string" ? body.backup : null,
+    };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : String(e), contentVersion: null, backup: null };
+  }
+}
+
 // ---------------------------------------------------------------------------
 
 export interface ContentEditApi {
@@ -401,6 +469,8 @@ export interface ContentEditApi {
   readonly backups: typeof listBackups;
   readonly restore: typeof restoreBackup;
   readonly plan: typeof writePlan;
+  readonly create: typeof createDoc;
+  readonly remove: typeof deleteDoc;
 }
 
 /**
@@ -420,5 +490,7 @@ export function createContentEditApi(): ContentEditApi {
     backups: listBackups,
     restore: restoreBackup,
     plan: writePlan,
+    create: createDoc,
+    remove: deleteDoc,
   };
 }

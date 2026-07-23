@@ -154,7 +154,7 @@ describe("content bundle — emission", () => {
       }
       total += index.entries.length;
     }
-    expect(total).toBe(1441);
+    expect(total).toBe(1488);
   });
 
   it("two builds of identical content are byte-identical", () => {
@@ -248,7 +248,7 @@ describe("content bundle — consumption", () => {
       }
     }
     // and the per-doc path really did cost 1 + 12 + 1,441 reads
-    expect(perDocSource.reads).toBe(1454);
+    expect(perDocSource.reads).toBe(1501);
   });
 
   it("costs exactly ONE request", async () => {
@@ -288,7 +288,7 @@ describe("content bundle — fallback", () => {
     const { res, fb, fs } = await load(fakeFetch(null, 404));
     expect(fb.didFallback).toBe(true);
     expect(fb.fallbackReason).toMatch(/404/);
-    expect(fs.reads).toBe(1454);
+    expect(fs.reads).toBe(1501);
     expect(res.store.ids("champions").length).toBeGreaterThan(100);
   });
 

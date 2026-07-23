@@ -207,7 +207,9 @@ describe("C: the write module is dev-build gated", () => {
     // the surface really exists — a rename must not quietly empty this test
     expect(exported.sort()).toEqual(
       [
+        "createDoc",
         "currentContentVersion",
+        "deleteDoc",
         "fetchDoc",
         "listBackups",
         "probeContentApi",

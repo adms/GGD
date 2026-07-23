@@ -38,20 +38,53 @@ export const api = new ApiClient();
  *
  * The GATE IS THE SERVER. Omitting this argument does not open anything; it
  * just produces a 403 `invite_required` the caller shows.
+ *
+ * `bootstrapToken` is the FIRST-OWNER claim (T0 / #180). On a brand-new gated
+ * deploy the server has no admin yet and no code can exist, so the first owner
+ * instead presents the one-time token printed to the boot log and written to
+ * DATA_DIR/owner-setup-token. It is ignored in every other case (an established
+ * deploy has an admin, so claimOwnership refuses regardless), which is why an
+ * ordinary family registration never sends it. Without this the browser could
+ * not bootstrap the owner at all — the byte the server needs was never on the
+ * wire.
  */
 export function register(
   username: string,
   email: string,
   password: string,
   inviteCode = "",
+  bootstrapToken = "",
 ): Promise<SessionResp> {
-  const body: { username: string; email: string; password: string; inviteCode?: string } = {
+  const body: {
+    username: string;
+    email: string;
+    password: string;
+    inviteCode?: string;
+    bootstrapToken?: string;
+  } = {
     username,
     email,
     password,
   };
   if (inviteCode.trim() !== "") body.inviteCode = inviteCode.trim();
+  if (bootstrapToken.trim() !== "") body.bootstrapToken = bootstrapToken.trim();
   return api.request<SessionResp>("/auth/register", { body, auth: false });
+}
+
+/**
+ * Reported by the public GET /auth/bootstrap-state. `needsOwner` is true only
+ * while this deploy has no administrator (the first-owner window); `requireToken`
+ * is true when claiming ownership must present the one-time owner token. Reveals
+ * nothing else — never the token, never whether any account exists.
+ */
+export interface BootstrapState {
+  needsOwner: boolean;
+  requireToken: boolean;
+}
+
+/** GET /auth/bootstrap-state — lets the register UI switch into first-owner mode. */
+export function bootstrapState(): Promise<BootstrapState> {
+  return api.request<BootstrapState>("/auth/bootstrap-state", { auth: false });
 }
 
 export function login(username: string, password: string): Promise<SessionResp> {

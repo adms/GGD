@@ -12,7 +12,8 @@
  * http://127.0.0.1:60721/admin/ too. `fetchFn` is injectable so all of this is
  * unit-testable under node.
  */
-import type { ContentRow, Kind } from "./curation";
+import type { EditCollection } from "@ggd/shared/content/editModel";
+import type { ContentRow } from "./curation";
 
 /** Default content mount (same-origin in dev and prod). */
 export const CONTENT_BASE = "/content";
@@ -92,7 +93,7 @@ async function getJson(fetchFn: typeof fetch, url: string): Promise<unknown> {
  * the index itself is unreachable (nothing to show); individual doc failures
  * just leave that row as its id.
  */
-export async function loadCollection(kind: Kind, opts: LoadOptions = {}): Promise<ContentRow[]> {
+export async function loadCollection(kind: EditCollection, opts: LoadOptions = {}): Promise<ContentRow[]> {
   const fetchFn = opts.fetchFn ?? ((...args: Parameters<typeof fetch>) => fetch(...args));
   const base = opts.base ?? CONTENT_BASE;
   const concurrency = Math.max(1, opts.concurrency ?? 16);

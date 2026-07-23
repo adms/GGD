@@ -30,6 +30,7 @@ import {
   type PurchaseState,
 } from "./purchase";
 import { buildSkinOverrides } from "./catalog";
+import { isPlatformRestrictedError, OFFLINE_RESTRICTED_MESSAGE } from "./firstOwner";
 import { restartAction, ONLINE_RESTART_NOTE } from "./restart";
 import { connectedPadIndices } from "../../input/GamepadInput";
 import { appendPage, hasMore, nextOffset, PAGE_SIZE } from "./ranking";
@@ -98,6 +99,15 @@ export interface AppState {
   account: AccountPublic | null;
   authBusy: boolean;
   authError: string | null;
+  /**
+   * First-owner state (T0 / #180). `bootstrapNeedsOwner` is true only while this
+   * deploy has no administrator, from GET /auth/bootstrap-state — it flips the
+   * register form into "首位管理員設定" mode (owner-token field instead of the
+   * invite field). `bootstrapRequireToken` says whether that claim must present
+   * the one-time token. Both default false so an ungated/dev deploy is unchanged.
+   */
+  bootstrapNeedsOwner: boolean;
+  bootstrapRequireToken: boolean;
 
   friends: FriendsList | null;
   rooms: OpenRoom[];
@@ -146,7 +156,15 @@ export interface AppState {
    * SERVER on a gated deploy, ignored on an open one. Optional here so the
    * offline/dev flow is unchanged.
    */
-  doRegister(username: string, email: string, password: string, inviteCode?: string): Promise<void>;
+  doRegister(
+    username: string,
+    email: string,
+    password: string,
+    inviteCode?: string,
+    bootstrapToken?: string,
+  ): Promise<void>;
+  /** Fetch first-owner state (best-effort) so the register form can pick its mode. */
+  refreshBootstrapState(): Promise<void>;
   doLogout(): Promise<void>;
   playOffline(mapId?: string): void;
   /**
@@ -331,6 +349,8 @@ export const appStore = createStore<AppState>()((set, get) => {
     account: null,
     authBusy: false,
     authError: null,
+    bootstrapNeedsOwner: false,
+    bootstrapRequireToken: false,
     friends: null,
     rooms: [],
     room: null,
@@ -362,6 +382,10 @@ export const appStore = createStore<AppState>()((set, get) => {
     async boot() {
       if (!api.hasSession) {
         set({ screen: "auth" });
+        // Best-effort: learn whether this is a fresh gated deploy needing its
+        // first owner, so AuthScreen can offer the 站長 path instead of the
+        // dead-end "ask an admin" invite copy. Never blocks first paint.
+        void get().refreshBootstrapState();
         return;
       }
       try {
@@ -370,6 +394,17 @@ export const appStore = createStore<AppState>()((set, get) => {
       } catch {
         api.setTokens(null);
         set({ screen: "auth" });
+        void get().refreshBootstrapState();
+      }
+    },
+
+    async refreshBootstrapState() {
+      try {
+        const st = await apiFns.bootstrapState();
+        set({ bootstrapNeedsOwner: st.needsOwner, bootstrapRequireToken: st.requireToken });
+      } catch {
+        // endpoint missing (older platform) or transient — leave defaults
+        // (needsOwner=false), so the normal invite flow is shown.
       }
     },
 
@@ -384,14 +419,18 @@ export const appStore = createStore<AppState>()((set, get) => {
       }
     },
 
-    async doRegister(username, email, password, inviteCode = "") {
+    async doRegister(username, email, password, inviteCode = "", bootstrapToken = "") {
       set({ authBusy: true, authError: null });
       try {
-        const resp = await apiFns.register(username, email, password, inviteCode);
+        const resp = await apiFns.register(username, email, password, inviteCode, bootstrapToken);
         api.setTokens(resp.tokens);
         await enterLobby(resp.account);
       } catch (err) {
         set({ authBusy: false, authError: errText(err) });
+        // A failed first-owner claim (token consumed by a racing owner, or
+        // someone else won) may mean this deploy now HAS an owner — re-probe so
+        // the form falls back to the invite flow instead of the token field.
+        if (get().bootstrapNeedsOwner) void get().refreshBootstrapState();
       }
     },
 
@@ -815,10 +854,16 @@ export const appStore = createStore<AppState>()((set, get) => {
 
     matchJoinFailed(message) {
       const s = get();
+      // A secured host refuses client-initiated (offline) match creation by
+      // design (game-server MatchRoom.ts). Surface that as guidance — play via
+      // login → lobby — not the raw technical string the owner hit.
+      const friendly = isPlatformRestrictedError(message)
+        ? OFFLINE_RESTRICTED_MESSAGE
+        : `could not join the match: ${message}`;
       set({
         screen: s.account ? "lobby" : "auth",
         match: null,
-        lastError: `could not join the match: ${message}`,
+        lastError: friendly,
       });
     },
 

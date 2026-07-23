@@ -44,7 +44,7 @@
       "stun": true
     }
   ],
-  "vfxKey": "fx.ember-bolt-cast",
+  "vfxKey": "fx.prim.arcane.nova",
   "targetsEnemies": true,
   "schema": "ability@1",
   "castTimeSec": 0.5

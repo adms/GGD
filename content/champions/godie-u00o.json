@@ -80,7 +80,7 @@
           "root": true
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.physical.nova",
       "targetsEnemies": true,
       "castTimeSec": 0.3
     },
@@ -174,7 +174,7 @@
           ]
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.arcane.bolt",
       "castTimeSec": 0.3
     },
     "R": {
@@ -220,7 +220,7 @@
           "stun": true
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.ki.bolt-lg",
       "targetsEnemies": true,
       "radius": 3.67,
       "castTimeSec": 0.9

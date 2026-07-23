@@ -27,11 +27,33 @@ afterAll(() => {
 const COLD = [0.4, 0.75, 1] as const;
 
 describe("primitive library: schema-valid, renderable, parameterised (ability-vfx-primitives)", () => {
-  it("exposes the six named WC3 archetypes plus slash/pulse", () => {
+  it("exposes the named WC3 archetypes plus bolt/dash/summon/slash/pulse", () => {
     cover("ability-vfx-primitives");
     expect(new Set(PRIMITIVE_KINDS)).toEqual(
-      new Set(["nova", "explosion", "shockwave", "tornado", "beam", "swarm", "slash", "pulse"]),
+      new Set([
+        "nova",
+        "explosion",
+        "shockwave",
+        "tornado",
+        "beam",
+        "bolt",
+        "dash",
+        "swarm",
+        "summon",
+        "slash",
+        "pulse",
+      ]),
     );
+  });
+
+  it("bolt and dash are directed, stretched, travelling shapes (task #123 archetype cells)", () => {
+    cover("ability-vfx-primitives");
+    for (const kind of ["bolt", "dash"] as const) {
+      const doc = PRIMITIVES[kind]({ id: `fx.test.${kind}`, color: COLD });
+      expect(doc.stretched).toBe(true);
+      expect(doc.emitter.shape).toBe("cone");
+      expect(doc.tailLength!).toBeGreaterThan(1);
+    }
   });
 
   it.each(PRIMITIVE_KINDS)("%s builds a schema-valid doc and renders on Babylon", (kind: PrimitiveKind) => {

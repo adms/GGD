@@ -84,7 +84,7 @@
           "stun": true
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.ki.nova",
       "targetsEnemies": true,
       "castTimeSec": 0.6
     },
@@ -121,7 +121,7 @@
           "duration": 12.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.wind.pulse-sm",
       "castTimeSec": 0.3
     },
     "E": {
@@ -204,7 +204,7 @@
           "duration": 30.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.arcane.pulse-lg",
       "icon": "assets/icons/abilities/godie-opgh.r.png",
       "castTimeSec": 0.4
     }

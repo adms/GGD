@@ -74,7 +74,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.physical.nova",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
@@ -108,7 +108,7 @@
           "maxDistance": 11.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.holy.dash",
       "castTimeSec": 0.3
     },
     "E": {
@@ -157,7 +157,7 @@
           "moveSpeedMult": 0.6
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.physical.nova",
       "targetsEnemies": true,
       "radius": 6.0,
       "castTimeSec": 0.5
@@ -199,7 +199,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.arcane.nova-lg",
       "targetsEnemies": true,
       "radius": 3.67,
       "castTimeSec": 0.7

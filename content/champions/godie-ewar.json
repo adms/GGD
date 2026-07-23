@@ -83,7 +83,7 @@
           "moveSpeedMult": 0.6
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.ki.nova",
       "targetsEnemies": true,
       "castTimeSec": 0.3
     },
@@ -127,7 +127,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.ki.pulse-sm",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
@@ -171,7 +171,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.ki.pulse-sm",
       "targetsEnemies": true,
       "icon": "assets/icons/abilities/godie-ewar.e.png",
       "castTimeSec": 0.4
@@ -213,7 +213,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.ki.nova-lg",
       "targetsEnemies": true,
       "icon": "assets/icons/abilities/godie-ewar.r.png",
       "castTimeSec": 0.4

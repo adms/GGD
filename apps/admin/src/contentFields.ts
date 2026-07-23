@@ -169,11 +169,24 @@ const AUGMENT_GROUPS: readonly FieldGroup[] = [
   },
 ];
 
+/**
+ * 抽獎池 — loot-tables/<id>.json. These are the 3-choose-1 ITEM DRAFT pools:
+ * `quest-rewards` is the weapon-draft pool (owner rule 2 — the quest set) and
+ * `legendary-weapons` is the 傳說寶玉 pool. The owner asked to curate the draft
+ * from the backend (task #70); a loot table is `{id, entries:[{itemId,weight}]}`,
+ * an ARRAY doc with no scalar fields to label, so `entries` is edited through
+ * the raw-JSON escape hatch (uncoveredKeys names it) under the same
+ * `loot-table@1` schema the game loader validates against. Add/remove a whole
+ * pool with 新增/刪除.
+ */
+const LOOT_GROUPS: readonly FieldGroup[] = [{ title: "識別", fields: IDENTITY }];
+
 const GROUPS: Record<EditCollection, readonly FieldGroup[]> = {
   champions: CHAMPION_GROUPS,
   abilities: ABILITY_GROUPS,
   items: ITEM_GROUPS,
   augments: AUGMENT_GROUPS,
+  "loot-tables": LOOT_GROUPS,
 };
 
 export function fieldGroups(collection: EditCollection): readonly FieldGroup[] {
@@ -216,6 +229,7 @@ export const COLLECTION_LABEL: Record<EditCollection, string> = {
   abilities: "技能",
   items: "武器道具",
   augments: "三選一強化",
+  "loot-tables": "三選一抽獎池",
 };
 
 /** The `_index.json` / `/content` mount directory for a collection. */
@@ -224,4 +238,5 @@ export const COLLECTION_DIR: Record<EditCollection, string> = {
   abilities: "abilities",
   items: "items",
   augments: "augments",
+  "loot-tables": "loot-tables",
 };

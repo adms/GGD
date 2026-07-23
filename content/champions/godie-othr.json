@@ -77,7 +77,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.physical.slash",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
@@ -148,7 +148,7 @@
           "moveSpeedMult": 0.7
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.physical.slash",
       "targetsEnemies": true,
       "castTimeSec": 0.5
     },
@@ -185,7 +185,7 @@
           "duration": 9.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.blood.pulse-sm",
       "castTimeSec": 0.3
     },
     "R": {
@@ -219,7 +219,7 @@
           "duration": 10.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.blood.pulse-lg",
       "castTimeSec": 0.4
     }
   },

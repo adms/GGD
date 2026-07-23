@@ -84,7 +84,7 @@
           "moveSpeedMult": 0.6
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.fire.nova",
       "targetsEnemies": true,
       "castTimeSec": 0.3
     },
@@ -128,7 +128,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.ki.pulse-sm",
       "targetsEnemies": true,
       "castTimeSec": 0.3
     },
@@ -172,7 +172,7 @@
           ]
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.ki.bolt",
       "castTimeSec": 0.3
     },
     "R": {
@@ -212,7 +212,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.ki.nova-lg",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     }

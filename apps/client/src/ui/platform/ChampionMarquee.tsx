@@ -219,6 +219,11 @@ export function ChampionMarquee(): React.JSX.Element | null {
   return (
     <div
       aria-hidden
+      // ggd-login-marquee: this decorative band is DROPPED on a short viewport
+      // (landscape phone, ~375px tall — task #151) by mobile.css, where the
+      // bottom-pinned strip would otherwise paint over the login form's
+      // Sign-in button. The form always wins.
+      className="ggd-login-marquee"
       style={{
         position: "absolute",
         left: 0,

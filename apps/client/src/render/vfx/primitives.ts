@@ -32,14 +32,23 @@ import type { VfxDoc, VfxBlendMode } from "@ggd/shared/content";
 export type Rgb = readonly [number, number, number];
 export type Rgba = readonly [number, number, number, number];
 
-/** The eight primitive archetypes the roster binds against. */
+/** The primitive archetypes the roster binds against — one per readable SHAPE.
+ *  nova/explosion/shockwave/tornado = point-blank AoE variants; beam = sustained
+ *  line; bolt = a discrete travelling projectile; dash = a mobility afterimage
+ *  streak; slash = a melee arc; pulse = a self-aura; swarm = many motes; summon
+ *  = a conjure puff. bolt/dash/summon (task #123) close the two empty archetype
+ *  cells — a travelling projectile and a mobility streak — that left ~113
+ *  abilities unbindable, plus a real summon spawn distinct from the swarm proxy. */
 export type PrimitiveKind =
   | "nova"
   | "explosion"
   | "shockwave"
   | "tornado"
   | "beam"
+  | "bolt"
+  | "dash"
   | "swarm"
+  | "summon"
   | "slash"
   | "pulse";
 
@@ -262,6 +271,47 @@ export function beam(p: PrimitiveParams): VfxDoc {
   });
 }
 
+/** BOLT — a single travelling projectile: a bright stretched head with a short
+ *  trail, launched forward from the caster. Magic missiles, energy bullets,
+ *  loosed arrows, thrown 彈/砲. Distinct from BEAM (a sustained lance): a bolt
+ *  is a fatter, discrete round-headed shot with a shorter tail. Fills the
+ *  travelling-projectile archetype cell (task #123). */
+export function bolt(p: PrimitiveParams): VfxDoc {
+  return build("bolt", p, {
+    emitter: { shape: "cone", radius: 0.14, angleDeg: 6 },
+    count: 18,
+    lifetime: { min: 0.18, max: 0.46 },
+    speed: { min: 9, max: 15 },
+    size: 0.62,
+    gravityY: 0,
+    blend: "additive",
+    texture: "spark_04.png",
+    stretched: true,
+    tailLength: 2,
+    peakT: 0.12,
+  });
+}
+
+/** DASH — a mobility afterimage streak: a fast, low fan of stretched billboards
+ *  smearing behind the caster along the movement line, gone in a blink. Blinks,
+ *  charges, 突進/瞬移/飛踢, gear-second lunges. Fills the dash/mobility archetype
+ *  cell (task #123); distinct from BEAM by being wider, lower, and fading fast. */
+export function dash(p: PrimitiveParams): VfxDoc {
+  return build("dash", p, {
+    emitter: { shape: "cone", radius: 0.22, angleDeg: 22 },
+    count: 22,
+    lifetime: { min: 0.1, max: 0.28 },
+    speed: { min: 6, max: 12 },
+    size: 0.5,
+    gravityY: 0,
+    blend: "additive",
+    texture: "trace_05.png",
+    stretched: true,
+    tailLength: 3,
+    peakT: 0.08,
+  });
+}
+
 /** SWARM — many small erratic motes. Locust swarms, spores, soul flurries,
  *  clones, gatling-punch flurries. */
 export function locustSwarm(p: PrimitiveParams): VfxDoc {
@@ -296,6 +346,24 @@ export function slash(p: PrimitiveParams): VfxDoc {
   });
 }
 
+/** SUMMON — a conjure puff: an upward bloom of motes + smoke as something is
+ *  spawned onto the field. Beast/clone/spirit summons, 召喚/招喚. A real spawn
+ *  burst distinct from the SWARM proxy (many drifting motes) and PULSE (a calm
+ *  self-aura): summon rises fast off the ground and settles. */
+export function summon(p: PrimitiveParams): VfxDoc {
+  return build("summon", p, {
+    emitter: { shape: "sphere", radius: 0.45 },
+    count: 42,
+    lifetime: { min: 0.28, max: 0.66 },
+    speed: { min: 3, max: 7 },
+    size: 0.6,
+    gravityY: 5, // the conjured form rises off the ground
+    blend: "additive",
+    texture: "magic_05.png",
+    peakT: 0.16,
+  });
+}
+
 /** PULSE — a gentle rising self-aura. Buffs, transformations, passive "on"
  *  states (passive == self-buff, per the content convention). */
 export function pulse(p: PrimitiveParams): VfxDoc {
@@ -320,7 +388,10 @@ export const PRIMITIVES: Record<PrimitiveKind, (p: PrimitiveParams) => VfxDoc> =
   shockwave,
   tornado,
   beam,
+  bolt,
+  dash,
   swarm: locustSwarm,
+  summon,
   slash,
   pulse,
 };

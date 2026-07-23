@@ -78,7 +78,7 @@
           "moveSpeedMult": 0.75
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.holy.nova",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
@@ -122,7 +122,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.holy.nova",
       "targetsEnemies": true,
       "castTimeSec": 0.3
     },
@@ -166,7 +166,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.arcane.summon",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
@@ -207,7 +207,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.arcane.pulse-lg",
       "targetsEnemies": true,
       "castTimeSec": 0.3
     }
