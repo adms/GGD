@@ -1,25 +1,25 @@
 {
  "schema": "model-budget@1",
- "generatedAt": "2026-07-22T13:58:53.562Z",
+ "generatedAt": "2026-07-23T09:15:04.187Z",
  "generatedBy": "tools/model-budget/emit_report.ts (task #99)",
  "sources": [
   {
    "path": "content/models/_index.json",
-   "sha256": "a435a1e59a5abd89",
-   "bytes": 16674,
-   "mtime": "2026-07-22T13:58:28.069Z"
+   "sha256": "535656db7f26a52a",
+   "bytes": 16807,
+   "mtime": "2026-07-23T08:34:35.281Z"
   },
   {
    "path": "content/arenas/_index.json",
    "sha256": "662c794f19e83f36",
    "bytes": 741,
-   "mtime": "2026-07-22T13:58:28.058Z"
+   "mtime": "2026-07-23T08:34:35.271Z"
   },
   {
    "path": "content/champions/_index.json",
-   "sha256": "5fc455cf145d2a1a",
+   "sha256": "5a9739e7b2e1ec28",
    "bytes": 14861,
-   "mtime": "2026-07-22T13:58:28.003Z"
+   "mtime": "2026-07-23T08:34:35.221Z"
   },
   {
    "path": "apps/client/src/render/ArenaGround.ts",
@@ -29,9 +29,9 @@
   },
   {
    "path": "apps/client/src/render/intermission/layout.ts",
-   "sha256": "b0e6f36ce7887cbd",
-   "bytes": 21579,
-   "mtime": "2026-07-22T09:50:26.408Z"
+   "sha256": "65be502cdda6269d",
+   "bytes": 23363,
+   "mtime": "2026-07-22T18:21:31.418Z"
   },
   {
    "path": "tools/model-budget/limits.ts",
@@ -320,19 +320,19 @@
   {
    "id": "champ-select",
    "label": "選角畫面",
-   "note": "沒有任何 3D，沒有 Babylon。整頁只有 <img> 的 64² 圖示，是全遊戲最便宜的一頁 —— 列在這裡是為了證明它被量過，而不是被忘記。",
+   "note": "沒有任何 3D，沒有 Babylon。整頁只有 <img> 圖示，是全遊戲最便宜的一頁 —— 列在這裡是為了證明它被量過，而不是被忘記。",
    "models": [],
    "procedural": [],
    "extraDraws": null,
    "extraVram": {
-    "bytes": 2468523,
-    "why": "113 張 64² PNG 圖示（英雄/技能/道具），瀏覽器解成 RGBA8。"
+    "bytes": 16973824,
+    "why": "279 張圖示（英雄/技能/道具）：166 張 128² WEBP + 113 張 64² PNG，瀏覽器解成 RGBA8。"
    },
    "triangles": 0,
    "drawCalls": 0,
    "animChannels": 0,
    "textureBytes": 0,
-   "vramBytes": 2468523,
+   "vramBytes": 16973824,
    "limits": [
     {
      "key": "triangles",
@@ -590,7 +590,7 @@
    "drawCalls": 237,
    "animChannels": 1476,
    "textureBytes": 156318,
-   "vramBytes": 87752693,
+   "vramBytes": 87665312,
    "limits": [
     {
      "key": "triangles",
@@ -639,8 +639,8 @@
     {
      "id": "median",
      "label": "中位陣容（12 隻 herosasuke —— 名冊面數中位數）",
-     "triangles": 46634,
-     "drawCalls": 93,
+     "triangles": 46514,
+     "drawCalls": 69,
      "animChannels": 204,
      "textureBytes": 246061,
      "vramBytes": 56273575,
@@ -742,7 +742,7 @@
    "drawCalls": 261,
    "animChannels": 1476,
    "textureBytes": 140524,
-   "vramBytes": 82160288,
+   "vramBytes": 82072907,
    "limits": [
     {
      "key": "triangles",
@@ -791,8 +791,8 @@
     {
      "id": "median",
      "label": "中位陣容（12 隻 herosasuke —— 名冊面數中位數）",
-     "triangles": 54296,
-     "drawCalls": 117,
+     "triangles": 54176,
+     "drawCalls": 93,
      "animChannels": 204,
      "textureBytes": 230267,
      "vramBytes": 50681170,
@@ -898,7 +898,7 @@
    "drawCalls": 273,
    "animChannels": 1476,
    "textureBytes": 156219,
-   "vramBytes": 87752693,
+   "vramBytes": 87665312,
    "limits": [
     {
      "key": "triangles",
@@ -947,8 +947,8 @@
     {
      "id": "median",
      "label": "中位陣容（12 隻 herosasuke —— 名冊面數中位數）",
-     "triangles": 66936,
-     "drawCalls": 129,
+     "triangles": 66816,
+     "drawCalls": 105,
      "animChannels": 204,
      "textureBytes": 245962,
      "vramBytes": 56273575,
@@ -1022,7 +1022,7 @@
    "drawCalls": 352,
    "animChannels": 1526,
    "textureBytes": 102771,
-   "vramBytes": 37683192,
+   "vramBytes": 37595811,
    "limits": [
     {
      "key": "triangles",
@@ -1071,8 +1071,8 @@
     {
      "id": "median",
      "label": "中位陣容（12 隻 herosasuke —— 名冊面數中位數）",
-     "triangles": 43784,
-     "drawCalls": 208,
+     "triangles": 43664,
+     "drawCalls": 184,
      "animChannels": 254,
      "textureBytes": 192514,
      "vramBytes": 6204074,
@@ -1166,7 +1166,7 @@
    "drawCalls": 223,
    "animChannels": 1476,
    "textureBytes": 108936,
-   "vramBytes": 70975478,
+   "vramBytes": 70888097,
    "limits": [
     {
      "key": "triangles",
@@ -1215,8 +1215,8 @@
     {
      "id": "median",
      "label": "中位陣容（12 隻 herosasuke —— 名冊面數中位數）",
-     "triangles": 38272,
-     "drawCalls": 79,
+     "triangles": 38152,
+     "drawCalls": 55,
      "animChannels": 204,
      "textureBytes": 198679,
      "vramBytes": 39496360,
@@ -1322,7 +1322,7 @@
    "drawCalls": 273,
    "animChannels": 1476,
    "textureBytes": 156219,
-   "vramBytes": 87752693,
+   "vramBytes": 87665312,
    "limits": [
     {
      "key": "triangles",
@@ -1383,7 +1383,7 @@
    "materials": 1,
    "skins": 1,
    "joints": 41,
-   "clips": 76,
+   "clips": 16,
    "animChannels": 123,
    "textureCount": 1,
    "textureBytes": 15089,
@@ -1397,7 +1397,7 @@
      "diskBytes": 15089
     }
    ],
-   "fileBytes": 3613268,
+   "fileBytes": 1057940,
    "worstCount": 12,
    "usedBy": [
     {
@@ -1434,7 +1434,7 @@
    "materials": 1,
    "skins": 1,
    "joints": 41,
-   "clips": 76,
+   "clips": 16,
    "animChannels": 123,
    "textureCount": 1,
    "textureBytes": 14172,
@@ -1448,7 +1448,7 @@
      "diskBytes": 14172
     }
    ],
-   "fileBytes": 3659532,
+   "fileBytes": 1103872,
    "worstCount": 12,
    "usedBy": [
     {
@@ -1479,7 +1479,7 @@
    "materials": 1,
    "skins": 1,
    "joints": 41,
-   "clips": 76,
+   "clips": 16,
    "animChannels": 123,
    "textureCount": 1,
    "textureBytes": 16311,
@@ -1493,7 +1493,7 @@
      "diskBytes": 16311
     }
    ],
-   "fileBytes": 3589240,
+   "fileBytes": 1034320,
    "worstCount": 12,
    "usedBy": [
     {
@@ -1524,7 +1524,7 @@
    "materials": 1,
    "skins": 1,
    "joints": 41,
-   "clips": 76,
+   "clips": 16,
    "animChannels": 123,
    "textureCount": 1,
    "textureBytes": 16670,
@@ -1538,7 +1538,7 @@
      "diskBytes": 16670
     }
    ],
-   "fileBytes": 3616284,
+   "fileBytes": 1060924,
    "worstCount": 12,
    "usedBy": [
     {
@@ -1590,7 +1590,7 @@
    "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
-   "id": "assets/models/guardians/guardian_stone.glb",
+   "id": "prop.guardian",
    "path": "assets/models/guardians/guardian_stone.glb",
    "group": "guardians",
    "shipping": true,
@@ -2695,10 +2695,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 3280,
-   "vertices": 5806,
-   "drawCalls": 5,
-   "materials": 5,
+   "triangles": 3270,
+   "vertices": 5786,
+   "drawCalls": 4,
+   "materials": 4,
    "skins": 1,
    "joints": 28,
    "clips": 13,
@@ -2733,7 +2733,7 @@
      "diskBytes": 78981
     }
    ],
-   "fileBytes": 713708,
+   "fileBytes": 711880,
    "worstCount": 12,
    "usedBy": [
     {
@@ -3251,10 +3251,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 2205,
-   "vertices": 888,
-   "drawCalls": 5,
-   "materials": 5,
+   "triangles": 2199,
+   "vertices": 876,
+   "drawCalls": 4,
+   "materials": 4,
    "skins": 1,
    "joints": 26,
    "clips": 7,
@@ -3277,7 +3277,7 @@
      "diskBytes": 280
     }
    ],
-   "fileBytes": 206588,
+   "fileBytes": 204752,
    "worstCount": 12,
    "usedBy": [
     {
@@ -3302,10 +3302,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 2205,
-   "vertices": 888,
-   "drawCalls": 5,
-   "materials": 5,
+   "triangles": 2199,
+   "vertices": 876,
+   "drawCalls": 4,
+   "materials": 4,
    "skins": 1,
    "joints": 26,
    "clips": 7,
@@ -3328,7 +3328,7 @@
      "diskBytes": 1715
     }
    ],
-   "fileBytes": 221212,
+   "fileBytes": 219376,
    "worstCount": 12,
    "usedBy": [
     {
@@ -3386,10 +3386,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 924,
-   "vertices": 866,
-   "drawCalls": 3,
-   "materials": 3,
+   "triangles": 918,
+   "vertices": 854,
+   "drawCalls": 2,
+   "materials": 2,
    "skins": 1,
    "joints": 27,
    "clips": 8,
@@ -3412,7 +3412,7 @@
      "diskBytes": 22734
     }
    ],
-   "fileBytes": 235332,
+   "fileBytes": 233496,
    "worstCount": 12,
    "usedBy": [
     {
@@ -3773,10 +3773,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 570,
-   "vertices": 476,
-   "drawCalls": 2,
-   "materials": 2,
+   "triangles": 564,
+   "vertices": 464,
+   "drawCalls": 1,
+   "materials": 1,
    "skins": 1,
    "joints": 30,
    "clips": 12,
@@ -3793,7 +3793,7 @@
      "diskBytes": 76082
     }
    ],
-   "fileBytes": 219400,
+   "fileBytes": 217568,
    "worstCount": 12,
    "usedBy": [
     {
@@ -3818,10 +3818,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 596,
-   "vertices": 461,
-   "drawCalls": 2,
-   "materials": 2,
+   "triangles": 590,
+   "vertices": 449,
+   "drawCalls": 1,
+   "materials": 1,
    "skins": 1,
    "joints": 27,
    "clips": 9,
@@ -3838,7 +3838,7 @@
      "diskBytes": 113516
     }
    ],
-   "fileBytes": 228752,
+   "fileBytes": 226920,
    "worstCount": 12,
    "usedBy": [
     {
@@ -4015,7 +4015,7 @@
      "diskBytes": 69791
     }
    ],
-   "fileBytes": 330788,
+   "fileBytes": 330916,
    "worstCount": 12,
    "usedBy": [
     {
@@ -4118,10 +4118,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 1411,
-   "vertices": 1069,
-   "drawCalls": 4,
-   "materials": 4,
+   "triangles": 1397,
+   "vertices": 1041,
+   "drawCalls": 3,
+   "materials": 3,
    "skins": 1,
    "joints": 28,
    "clips": 12,
@@ -4144,7 +4144,7 @@
      "diskBytes": 11910
     }
    ],
-   "fileBytes": 275172,
+   "fileBytes": 272392,
    "worstCount": 12,
    "usedBy": [
     {
@@ -4157,7 +4157,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "warn",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -4169,10 +4169,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 729,
-   "vertices": 585,
-   "drawCalls": 5,
-   "materials": 5,
+   "triangles": 719,
+   "vertices": 565,
+   "drawCalls": 4,
+   "materials": 4,
    "skins": 1,
    "joints": 27,
    "clips": 11,
@@ -4195,7 +4195,7 @@
      "diskBytes": 11910
     }
    ],
-   "fileBytes": 265044,
+   "fileBytes": 262864,
    "worstCount": 12,
    "usedBy": [
     {
@@ -4220,17 +4220,17 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 1320,
-   "vertices": 927,
-   "drawCalls": 5,
-   "materials": 5,
+   "triangles": 1296,
+   "vertices": 879,
+   "drawCalls": 3,
+   "materials": 3,
    "skins": 1,
    "joints": 28,
    "clips": 9,
    "animChannels": 18,
-   "textureCount": 3,
-   "textureBytes": 92307,
-   "vramBytes": 524287,
+   "textureCount": 2,
+   "textureBytes": 82302,
+   "vramBytes": 436906,
    "maxTextureEdge": 256,
    "textures": [
     {
@@ -4244,15 +4244,9 @@
      "h": 128,
      "format": "png",
      "diskBytes": 11910
-    },
-    {
-     "w": 128,
-     "h": 128,
-     "format": "png",
-     "diskBytes": 10005
     }
    ],
-   "fileBytes": 241596,
+   "fileBytes": 226252,
    "worstCount": 12,
    "usedBy": [
     {
@@ -4265,7 +4259,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "warn",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -4277,10 +4271,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 596,
-   "vertices": 591,
-   "drawCalls": 6,
-   "materials": 6,
+   "triangles": 590,
+   "vertices": 579,
+   "drawCalls": 5,
+   "materials": 5,
    "skins": 1,
    "joints": 37,
    "clips": 12,
@@ -4315,7 +4309,7 @@
      "diskBytes": 11910
     }
    ],
-   "fileBytes": 347480,
+   "fileBytes": 345644,
    "worstCount": 12,
    "usedBy": [
     {
@@ -4328,7 +4322,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "over",
+    "drawCalls": "warn",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -4340,10 +4334,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 2075,
-   "vertices": 1868,
-   "drawCalls": 8,
-   "materials": 3,
+   "triangles": 2061,
+   "vertices": 1836,
+   "drawCalls": 5,
+   "materials": 2,
    "skins": 1,
    "joints": 60,
    "clips": 19,
@@ -4360,7 +4354,7 @@
      "diskBytes": 80776
     }
    ],
-   "fileBytes": 484932,
+   "fileBytes": 479956,
    "worstCount": 12,
    "usedBy": [
     {
@@ -4373,7 +4367,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "over",
+    "drawCalls": "warn",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -4385,10 +4379,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 1411,
-   "vertices": 1069,
-   "drawCalls": 4,
-   "materials": 4,
+   "triangles": 1397,
+   "vertices": 1041,
+   "drawCalls": 3,
+   "materials": 3,
    "skins": 1,
    "joints": 28,
    "clips": 12,
@@ -4411,7 +4405,7 @@
      "diskBytes": 11910
     }
    ],
-   "fileBytes": 268292,
+   "fileBytes": 265512,
    "worstCount": 12,
    "usedBy": [
     {
@@ -4424,7 +4418,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "warn",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -4436,10 +4430,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 836,
-   "vertices": 710,
-   "drawCalls": 4,
-   "materials": 4,
+   "triangles": 826,
+   "vertices": 690,
+   "drawCalls": 3,
+   "materials": 3,
    "skins": 1,
    "joints": 30,
    "clips": 11,
@@ -4468,7 +4462,7 @@
      "diskBytes": 15599
     }
    ],
-   "fileBytes": 265896,
+   "fileBytes": 263584,
    "worstCount": 12,
    "usedBy": [
     {
@@ -4481,7 +4475,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "warn",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -4493,10 +4487,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 500,
-   "vertices": 482,
-   "drawCalls": 4,
-   "materials": 3,
+   "triangles": 490,
+   "vertices": 458,
+   "drawCalls": 3,
+   "materials": 2,
    "skins": 1,
    "joints": 31,
    "clips": 7,
@@ -4513,7 +4507,7 @@
      "diskBytes": 44160
     }
    ],
-   "fileBytes": 150668,
+   "fileBytes": 148276,
    "worstCount": 12,
    "usedBy": [
     {
@@ -4526,7 +4520,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "warn",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -4538,10 +4532,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 688,
-   "vertices": 734,
-   "drawCalls": 3,
-   "materials": 3,
+   "triangles": 682,
+   "vertices": 722,
+   "drawCalls": 2,
+   "materials": 2,
    "skins": 1,
    "joints": 28,
    "clips": 12,
@@ -4558,7 +4552,7 @@
      "diskBytes": 120278
     }
    ],
-   "fileBytes": 282660,
+   "fileBytes": 280824,
    "worstCount": 12,
    "usedBy": [
     {
@@ -4667,10 +4661,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 1310,
-   "vertices": 907,
-   "drawCalls": 4,
-   "materials": 4,
+   "triangles": 1296,
+   "vertices": 879,
+   "drawCalls": 3,
+   "materials": 3,
    "skins": 1,
    "joints": 29,
    "clips": 12,
@@ -4693,7 +4687,7 @@
      "diskBytes": 11910
     }
    ],
-   "fileBytes": 266888,
+   "fileBytes": 264104,
    "worstCount": 12,
    "usedBy": [
     {
@@ -4706,7 +4700,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "warn",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -4744,10 +4738,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 1664,
-   "vertices": 926,
-   "drawCalls": 3,
-   "materials": 3,
+   "triangles": 1650,
+   "vertices": 898,
+   "drawCalls": 2,
+   "materials": 2,
    "skins": 1,
    "joints": 28,
    "clips": 10,
@@ -4764,7 +4758,7 @@
      "diskBytes": 88565
     }
    ],
-   "fileBytes": 241140,
+   "fileBytes": 238616,
    "worstCount": 12,
    "usedBy": [
     {
@@ -4840,10 +4834,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 422,
-   "vertices": 394,
-   "drawCalls": 2,
-   "materials": 2,
+   "triangles": 416,
+   "vertices": 382,
+   "drawCalls": 1,
+   "materials": 1,
    "skins": 1,
    "joints": 19,
    "clips": 7,
@@ -4860,7 +4854,7 @@
      "diskBytes": 7174
     }
    ],
-   "fileBytes": 82588,
+   "fileBytes": 80760,
    "worstCount": 12,
    "usedBy": [
     {
@@ -4918,10 +4912,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 1211,
-   "vertices": 1055,
-   "drawCalls": 4,
-   "materials": 4,
+   "triangles": 1205,
+   "vertices": 1043,
+   "drawCalls": 3,
+   "materials": 3,
    "skins": 1,
    "joints": 27,
    "clips": 9,
@@ -4938,7 +4932,7 @@
      "diskBytes": 41992
     }
    ],
-   "fileBytes": 188440,
+   "fileBytes": 186736,
    "worstCount": 12,
    "usedBy": [
     {
@@ -4951,7 +4945,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "warn",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -5008,10 +5002,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 1696,
-   "vertices": 772,
-   "drawCalls": 4,
-   "materials": 2,
+   "triangles": 1690,
+   "vertices": 760,
+   "drawCalls": 3,
+   "materials": 1,
    "skins": 1,
    "joints": 34,
    "clips": 14,
@@ -5028,7 +5022,7 @@
      "diskBytes": 96422
     }
    ],
-   "fileBytes": 253616,
+   "fileBytes": 252312,
    "worstCount": 12,
    "usedBy": [
     {
@@ -5041,7 +5035,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "warn",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -5053,10 +5047,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 998,
-   "vertices": 854,
-   "drawCalls": 3,
-   "materials": 2,
+   "triangles": 988,
+   "vertices": 832,
+   "drawCalls": 1,
+   "materials": 1,
    "skins": 1,
    "joints": 24,
    "clips": 12,
@@ -5073,7 +5067,7 @@
      "diskBytes": 103915
     }
    ],
-   "fileBytes": 289476,
+   "fileBytes": 286084,
    "worstCount": 12,
    "usedBy": [
     {
@@ -5098,10 +5092,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 664,
-   "vertices": 554,
-   "drawCalls": 4,
-   "materials": 4,
+   "triangles": 654,
+   "vertices": 534,
+   "drawCalls": 3,
+   "materials": 3,
    "skins": 1,
    "joints": 30,
    "clips": 11,
@@ -5130,7 +5124,7 @@
      "diskBytes": 19402
     }
    ],
-   "fileBytes": 275368,
+   "fileBytes": 273060,
    "worstCount": 12,
    "usedBy": [
     {
@@ -5143,7 +5137,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "warn",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -5155,10 +5149,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 1504,
-   "vertices": 1375,
-   "drawCalls": 3,
-   "materials": 3,
+   "triangles": 1498,
+   "vertices": 1363,
+   "drawCalls": 2,
+   "materials": 2,
    "skins": 1,
    "joints": 27,
    "clips": 10,
@@ -5181,7 +5175,7 @@
      "diskBytes": 11910
     }
    ],
-   "fileBytes": 242628,
+   "fileBytes": 240920,
    "worstCount": 12,
    "usedBy": [
     {
@@ -5251,10 +5245,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 1151,
-   "vertices": 916,
-   "drawCalls": 4,
-   "materials": 4,
+   "triangles": 1125,
+   "vertices": 864,
+   "drawCalls": 3,
+   "materials": 3,
    "skins": 1,
    "joints": 28,
    "clips": 12,
@@ -5277,7 +5271,7 @@
      "diskBytes": 11910
     }
    ],
-   "fileBytes": 256608,
+   "fileBytes": 252412,
    "worstCount": 12,
    "usedBy": [
     {
@@ -5290,7 +5284,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "warn",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -5302,10 +5296,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 947,
-   "vertices": 1014,
-   "drawCalls": 3,
-   "materials": 2,
+   "triangles": 941,
+   "vertices": 1002,
+   "drawCalls": 2,
+   "materials": 1,
    "skins": 1,
    "joints": 30,
    "clips": 11,
@@ -5322,7 +5316,7 @@
      "diskBytes": 69974
     }
    ],
-   "fileBytes": 240544,
+   "fileBytes": 238712,
    "worstCount": 12,
    "usedBy": [
     {
@@ -5644,10 +5638,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 728,
-   "vertices": 603,
-   "drawCalls": 3,
-   "materials": 2,
+   "triangles": 722,
+   "vertices": 591,
+   "drawCalls": 2,
+   "materials": 1,
    "skins": 1,
    "joints": 29,
    "clips": 9,
@@ -5664,7 +5658,7 @@
      "diskBytes": 76841
     }
    ],
-   "fileBytes": 207376,
+   "fileBytes": 205672,
    "worstCount": 12,
    "usedBy": [
     {
@@ -5903,10 +5897,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 812,
-   "vertices": 858,
-   "drawCalls": 3,
-   "materials": 3,
+   "triangles": 808,
+   "vertices": 850,
+   "drawCalls": 2,
+   "materials": 2,
    "skins": 1,
    "joints": 30,
    "clips": 6,
@@ -5923,7 +5917,7 @@
      "diskBytes": 113975
     }
    ],
-   "fileBytes": 230600,
+   "fileBytes": 229008,
    "worstCount": 12,
    "usedBy": [
     {
@@ -5948,17 +5942,17 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 404,
-   "vertices": 557,
-   "drawCalls": 7,
-   "materials": 5,
+   "triangles": 380,
+   "vertices": 516,
+   "drawCalls": 6,
+   "materials": 4,
    "skins": 1,
    "joints": 39,
    "clips": 10,
    "animChannels": 18,
-   "textureCount": 4,
-   "textureBytes": 127519,
-   "vramBytes": 1135956,
+   "textureCount": 3,
+   "textureBytes": 78395,
+   "vramBytes": 1048575,
    "maxTextureEdge": 256,
    "textures": [
     {
@@ -5974,19 +5968,13 @@
      "diskBytes": 27646
     },
     {
-     "w": 128,
-     "h": 128,
-     "format": "png",
-     "diskBytes": 49124
-    },
-    {
      "w": 256,
      "h": 256,
      "format": "png",
      "diskBytes": 23103
     }
    ],
-   "fileBytes": 259208,
+   "fileBytes": 206392,
    "worstCount": 12,
    "usedBy": [
     {
@@ -6011,10 +5999,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 824,
-   "vertices": 826,
-   "drawCalls": 2,
-   "materials": 2,
+   "triangles": 818,
+   "vertices": 814,
+   "drawCalls": 1,
+   "materials": 1,
    "skins": 1,
    "joints": 25,
    "clips": 10,
@@ -6031,7 +6019,7 @@
      "diskBytes": 66509
     }
    ],
-   "fileBytes": 230388,
+   "fileBytes": 228556,
    "worstCount": 12,
    "usedBy": [
     {
@@ -6089,10 +6077,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 1547,
-   "vertices": 1552,
-   "drawCalls": 3,
-   "materials": 3,
+   "triangles": 1525,
+   "vertices": 1506,
+   "drawCalls": 2,
+   "materials": 2,
    "skins": 1,
    "joints": 30,
    "clips": 11,
@@ -6115,7 +6103,7 @@
      "diskBytes": 84729
     }
    ],
-   "fileBytes": 581320,
+   "fileBytes": 577624,
    "worstCount": 12,
    "usedBy": [
     {
@@ -6173,10 +6161,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 1895,
-   "vertices": 1428,
-   "drawCalls": 2,
-   "materials": 2,
+   "triangles": 1889,
+   "vertices": 1416,
+   "drawCalls": 1,
+   "materials": 1,
    "skins": 1,
    "joints": 25,
    "clips": 10,
@@ -6193,7 +6181,7 @@
      "diskBytes": 133274
     }
    ],
-   "fileBytes": 316072,
+   "fileBytes": 314236,
    "worstCount": 12,
    "usedBy": [
     {
@@ -6238,7 +6226,7 @@
      "diskBytes": 148220
     }
    ],
-   "fileBytes": 269232,
+   "fileBytes": 269500,
    "worstCount": 12,
    "usedBy": [
     {
@@ -6353,10 +6341,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 1606,
-   "vertices": 1334,
-   "drawCalls": 2,
-   "materials": 2,
+   "triangles": 1604,
+   "vertices": 1330,
+   "drawCalls": 1,
+   "materials": 1,
    "skins": 1,
    "joints": 27,
    "clips": 12,
@@ -6373,7 +6361,7 @@
      "diskBytes": 77297
     }
    ],
-   "fileBytes": 261396,
+   "fileBytes": 260044,
    "worstCount": 12,
    "usedBy": [
     {
@@ -6515,10 +6503,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 861,
-   "vertices": 669,
-   "drawCalls": 8,
-   "materials": 6,
+   "triangles": 855,
+   "vertices": 657,
+   "drawCalls": 7,
+   "materials": 5,
    "skins": 1,
    "joints": 37,
    "clips": 10,
@@ -6547,7 +6535,7 @@
      "diskBytes": 8786
     }
    ],
-   "fileBytes": 325828,
+   "fileBytes": 323992,
    "worstCount": 12,
    "usedBy": [
     {
@@ -6625,7 +6613,7 @@
      "diskBytes": 78715
     }
    ],
-   "fileBytes": 338420,
+   "fileBytes": 338552,
    "worstCount": 12,
    "usedBy": [
     {
@@ -6772,7 +6760,7 @@
      "diskBytes": 69796
     }
    ],
-   "fileBytes": 315688,
+   "fileBytes": 315848,
    "worstCount": 12,
    "usedBy": [
     {
@@ -6830,10 +6818,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 526,
-   "vertices": 436,
-   "drawCalls": 2,
-   "materials": 2,
+   "triangles": 520,
+   "vertices": 424,
+   "drawCalls": 1,
+   "materials": 1,
    "skins": 1,
    "joints": 25,
    "clips": 8,
@@ -6850,7 +6838,7 @@
      "diskBytes": 53462
     }
    ],
-   "fileBytes": 173872,
+   "fileBytes": 172036,
    "worstCount": 12,
    "usedBy": [
     {
@@ -6895,7 +6883,7 @@
      "diskBytes": 61689
     }
    ],
-   "fileBytes": 217400,
+   "fileBytes": 217528,
    "worstCount": 12,
    "usedBy": [
     {
@@ -6979,7 +6967,7 @@
      "diskBytes": 22734
     }
    ],
-   "fileBytes": 264788,
+   "fileBytes": 265128,
    "worstCount": 12,
    "usedBy": [
     {
@@ -7004,10 +6992,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 576,
-   "vertices": 516,
-   "drawCalls": 4,
-   "materials": 4,
+   "triangles": 566,
+   "vertices": 492,
+   "drawCalls": 3,
+   "materials": 3,
    "skins": 1,
    "joints": 26,
    "clips": 8,
@@ -7036,7 +7024,7 @@
      "diskBytes": 75327
     }
    ],
-   "fileBytes": 335944,
+   "fileBytes": 333424,
    "worstCount": 12,
    "usedBy": [
     {
@@ -7049,7 +7037,7 @@
    "broken": "",
    "verdicts": {
     "triangles": "ok",
-    "drawCalls": "warn",
+    "drawCalls": "ok",
     "maxTextureEdge": "ok",
     "animChannels": "ok"
    },
@@ -7400,10 +7388,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 890,
-   "vertices": 1564,
-   "drawCalls": 2,
-   "materials": 2,
+   "triangles": 884,
+   "vertices": 1552,
+   "drawCalls": 1,
+   "materials": 1,
    "skins": 1,
    "joints": 24,
    "clips": 9,
@@ -7420,7 +7408,7 @@
      "diskBytes": 62290
     }
    ],
-   "fileBytes": 223612,
+   "fileBytes": 221780,
    "worstCount": 12,
    "usedBy": [
     {
@@ -7445,10 +7433,10 @@
    "group": "imported",
    "shipping": true,
    "role": "champion",
-   "triangles": 1345,
-   "vertices": 1388,
-   "drawCalls": 2,
-   "materials": 2,
+   "triangles": 1335,
+   "vertices": 1366,
+   "drawCalls": 1,
+   "materials": 1,
    "skins": 1,
    "joints": 27,
    "clips": 24,
@@ -7465,7 +7453,7 @@
      "diskBytes": 152021
     }
    ],
-   "fileBytes": 449852,
+   "fileBytes": 447428,
    "worstCount": 12,
    "usedBy": [
     {
@@ -10461,10 +10449,10 @@
  "totals": {
   "files": 203,
   "shipping": 163,
-  "triangles": 194018,
-  "shippingTriangles": 169902,
-  "textureBytes": 19225460,
-  "vramBytes": 242044173,
+  "triangles": 193658,
+  "shippingTriangles": 169542,
+  "textureBytes": 19166331,
+  "vramBytes": 241869411,
   "zeroGeometry": 11,
   "nearZero": 25,
   "unused": 80

@@ -13,8 +13,10 @@
  *   • CameraRig      — queues shake impulses, decays them via shakeDecayEnvelope
  *   • EntityViewRegistry — on `hitImpact`, calls planImpactFeedback and DISPATCHES
  *       the freeze + victim flash + attacker flash it returns onto the two views
- *   • GameApp        — impactShakeAmp per event, the two quality-tier gates; a
- *       LATER camera wave consumes the plan's `shake` REQUEST
+ *   • GameApp        — drives `planCameraReaction` (below) with EVERY drained
+ *       event and hands what comes back to CameraRig.addShake / exPunchIn; that
+ *       is the camera wave that CONSUMES the plan's `shake` REQUEST (the
+ *       directional kick) and fires the EX 特寫 punch-in.
  *
  * AUTHORITATIVE HITSTOP (client only): the sim owns the freeze — a deterministic
  * tick freeze of the two involved entities carried on `ImpactProfile.hitstopTicks`
@@ -82,6 +84,15 @@ export const FLASH_MS = 130;
  * STAGE-1 contract — do not diverge the field set.
  */
 export type ImpactTier = "light" | "medium" | "heavy" | "crit";
+/** Camera-shake character: aimed along the hit vector, or a radial ring. */
+export type ShakeStyle = "directional" | "omni";
+/**
+ * Which hit-spark identity the client plays (mirrors the sim's SparkKind). The
+ * client maps each to a distinct tint + intensity so a counter reads RED, a
+ * block cool-white, an ice hit icy, etc. — the "distinct per profile.sparkKind"
+ * contract. `ice` is content-opt-in only (the sim never defaults to it).
+ */
+export type SparkKind = "hit" | "heavy" | "counter" | "block" | "magic" | "ice";
 export interface ImpactProfile {
   tier: ImpactTier;
   /** authoritative freeze ticks applied to BOTH fighters (crit/guardBreak-emphasised). */
@@ -95,7 +106,34 @@ export interface ImpactProfile {
   isEX: boolean;
   isBlock: boolean;
   isCounter?: boolean;
+  // ---- COSMETIC hints (client channels; damage-derived default, hitFeel-overridable) ----
+  // Kept verbatim in step with the sim's ImpactProfile (sim/combat/damage.ts +
+  // sim/combat/hitFeel.ts). `asImpactProfile` fills each with a tier-derived
+  // default when a pre-#133 replay omits it, so downstream code never sees undefined.
+  /** camera shake amplitude hint (0..~1.4). */
+  shakeMag: number;
+  /** shake character: aimed along the hit vector, or a radial ring. */
+  shakeStyle: ShakeStyle;
+  /** hit-spark identity the client plays (contact-point spark selection). */
+  sparkKind: SparkKind;
+  /** victim body-flash colour [r,g,b] 0..1. */
+  flashColor: [number, number, number];
+  /** victim body-flash duration (ms). */
+  flashMs: number;
+  /** one-shot directional camera kick magnitude. */
+  camKick: number;
+  /** cosmetic client-side EX freeze ticks (0 = none). */
+  exFreeze: number;
 }
+
+// ---- client mirror of the sim's damage-derived cosmetic DEFAULT curve ---------
+// (sim/combat/hitFeel.ts). Only used to backfill a pre-#133 wire payload that
+// predates the cosmetic fields, so an old replay still reads coherently.
+const SHAKE_BY_TIER: Record<ImpactTier, number> = { light: 0.35, medium: 0.6, heavy: 0.85, crit: 1.0 };
+const FLASHMS_BY_TIER: Record<ImpactTier, number> = { light: 90, medium: 120, heavy: 160, crit: 200 };
+const CAMKICK_BY_TIER: Record<ImpactTier, number> = { light: 0.15, medium: 0.3, heavy: 0.5, crit: 0.65 };
+const DEFAULT_FLASH_RGB: [number, number, number] = [1, 0.25, 0.2];
+const EX_FREEZE_DEFAULT_TICKS = 8;
 
 /**
  * Narrow an untyped `hitImpact.data.profile` into an ImpactProfile, or null when
@@ -103,12 +141,16 @@ export interface ImpactProfile {
  * the client must never throw on a wire payload it doesn't recognise.
  */
 export function asImpactProfile(v: unknown): ImpactProfile | null {
-  if (typeof v !== "object" || v === null) return null;
-  const p = v as Record<string, unknown>;
+  if (!hasImpactProfile(v)) return null;
+  const p = v as Record<string, unknown> & { tier: ImpactTier; hitstopTicks: number };
   const tier = p.tier;
-  if (tier !== "light" && tier !== "medium" && tier !== "heavy" && tier !== "crit") return null;
-  if (typeof p.hitstopTicks !== "number") return null;
   const dir = p.knockbackDir as { x?: unknown; z?: unknown } | undefined;
+  const isEX = Boolean(p.isEX);
+  const rgb = p.flashColor as unknown;
+  const flashColor: [number, number, number] =
+    Array.isArray(rgb) && rgb.length >= 3 && rgb.every((c) => typeof c === "number")
+      ? [rgb[0] as number, rgb[1] as number, rgb[2] as number]
+      : [...DEFAULT_FLASH_RGB];
   return {
     tier,
     hitstopTicks: p.hitstopTicks,
@@ -118,10 +160,45 @@ export function asImpactProfile(v: unknown): ImpactProfile | null {
       z: typeof dir?.z === "number" ? dir.z : 0,
     },
     knockbackMag: typeof p.knockbackMag === "number" ? p.knockbackMag : 0,
-    isEX: Boolean(p.isEX),
+    isEX,
     isBlock: Boolean(p.isBlock),
     isCounter: p.isCounter === undefined ? undefined : Boolean(p.isCounter),
+    // COSMETIC fields — narrow when present, else backfill the tier-derived
+    // default so a pre-#133 replay (which omits them) still reads coherently.
+    shakeMag: typeof p.shakeMag === "number" ? p.shakeMag : SHAKE_BY_TIER[tier],
+    shakeStyle: p.shakeStyle === "omni" || p.shakeStyle === "directional" ? p.shakeStyle : tier === "crit" || isEX ? "omni" : "directional",
+    sparkKind: isSparkKind(p.sparkKind) ? p.sparkKind : "hit",
+    flashColor,
+    flashMs: typeof p.flashMs === "number" ? p.flashMs : FLASHMS_BY_TIER[tier],
+    camKick: typeof p.camKick === "number" ? p.camKick : CAMKICK_BY_TIER[tier],
+    exFreeze: typeof p.exFreeze === "number" ? p.exFreeze : isEX ? EX_FREEZE_DEFAULT_TICKS : 0,
   };
+}
+
+/**
+ * ALLOCATION-FREE probe: does this untyped `hitImpact.data.profile` carry a
+ * usable ImpactProfile? Exactly the acceptance test `asImpactProfile` applies,
+ * without building the narrowed object — so the per-frame event drain can ask
+ * "does this batch speak #133?" (see `batchCarriesImpactProfile`) for the price
+ * of two property reads.
+ */
+export function hasImpactProfile(
+  v: unknown,
+): v is { tier: ImpactTier; hitstopTicks: number } {
+  if (typeof v !== "object" || v === null) return false;
+  const p = v as { tier?: unknown; hitstopTicks?: unknown };
+  const t = p.tier;
+  return (
+    (t === "light" || t === "medium" || t === "heavy" || t === "crit") &&
+    typeof p.hitstopTicks === "number"
+  );
+}
+
+/** Type guard for the SparkKind union off an untyped wire field. */
+function isSparkKind(v: unknown): v is SparkKind {
+  return (
+    v === "hit" || v === "heavy" || v === "counter" || v === "block" || v === "magic" || v === "ice"
+  );
 }
 
 // ---------------------------------------------------------------------------
@@ -170,15 +247,24 @@ export interface FlashSpec {
 
 /**
  * A camera-shake REQUEST (not an applied shake). combatFeedback is the single
- * authority for how hard a tier shakes; the CAMERA wave (GameApp/CameraRig)
- * consumes this and layers on the local-perspective (taken vs self) + quality
- * multipliers it alone knows. `dir` is the knockback vector, reserved for the
- * future directional camera kick (audit P1). `amp` is the pre-multiplier base.
+ * authority for how hard a tier shakes; the CAMERA wave consumes this through
+ * `resolveCameraKick` (below), which layers on the local-perspective (taken vs
+ * self) + quality/reduced-motion + teamfight-crowding multipliers the shell
+ * alone knows. `dir` is the knockback vector — the hit direction the camera
+ * kicks ALONG (audit P1 directional kick). `amp` is the pre-multiplier base.
  */
 export interface ShakeRequest {
   amp: number;
   durationMs: number;
   dir: { x: number; z: number };
+  /** shake character: aimed along `dir` (directional) or a radial ring (omni). */
+  style: ShakeStyle;
+  /**
+   * One-shot translational camera KICK magnitude (tier/EX-scaled, block-softened)
+   * — the hard directional shove on the contact frame the camera wave layers on
+   * top of the ringing jitter. 0 = no kick. Consumed by CameraRig.addShake(dir…).
+   */
+  camKick: number;
 }
 
 /**
@@ -203,7 +289,8 @@ export interface ImpactFeedbackPlan {
   // ----- reserved hook / request points (a LATER wave consumes them) --------
   // SPARKS  : VfxSystem already reads `profile` off the same hitImpact event;
   //           it should switch its spark heaviness to `tier` (do NOT spawn here).
-  // CAMERA  : consume `shake` (amp + dir) — a directional kick is a follow-up.
+  // CAMERA  : DONE — `shake` (amp + dir + camKick) is consumed by
+  //           resolveCameraKick → GameApp → CameraRig.addShake(dir…).
   // SFX     : combatSfx should pick a light/med/heavy variant off `tier` (audit
   //           "SFX weight tiering") — do NOT play audio here.
   // NUMBER  : the floating damage number (#92) already emphasises crit/kill; it
@@ -223,7 +310,10 @@ export function planImpactFeedback(
   ctx: { dmgType?: string; tickMs: number },
 ): ImpactFeedbackPlan {
   const fx = TIER_FX[profile.tier];
-  const amp = Math.min(SHAKE_MAX_AMP, fx.weight * SHAKE_MAX_AMP);
+  // shake amplitude follows the profile's (hitFeel-overridable) cosmetic
+  // `shakeMag` scaled into world units, clamped to the impulse cap. The camera
+  // wave layers the local-perspective + quality multipliers on top of this base.
+  const amp = Math.min(SHAKE_MAX_AMP, Math.max(0, profile.shakeMag) * SHAKE_MAX_AMP);
   return {
     tier: profile.tier,
     isBlock: profile.isBlock,
@@ -232,7 +322,13 @@ export function planImpactFeedback(
     freezeMs: Math.max(0, profile.hitstopTicks) * ctx.tickMs,
     victimFlash: { rgb: flashColorFor(ctx.dmgType), alpha: fx.flashAlpha, ms: fx.flashMs },
     attackerFlash: { rgb: [...ATTACKER_FLASH_RGB], alpha: fx.attackerAlpha, ms: fx.attackerMs },
-    shake: { amp, durationMs: shakeDurationMs(amp), dir: { ...profile.knockbackDir } },
+    shake: {
+      amp,
+      durationMs: shakeDurationMs(amp),
+      dir: { ...profile.knockbackDir },
+      style: profile.shakeStyle,
+      camKick: Math.max(0, profile.camKick),
+    },
   };
 }
 
@@ -274,22 +370,68 @@ export function impactShakeAmp(input: ImpactShakeInput): number {
   return Math.min(SHAKE_MAX_AMP, amp);
 }
 
-/** Shake impulse duration (ms): a bigger hit rings out a little longer. */
+/**
+ * Shake impulse duration (ms). Retuned CRISP (收尾精準): a heavy hit rings for
+ * ≤260 ms instead of the old 460 ms wool, so the frame settles fast after the
+ * 破碎 shove. A light hit clears in ~120 ms.
+ */
 export function shakeDurationMs(amp: number): number {
   const a = Math.max(0, Math.min(SHAKE_MAX_AMP, amp));
-  return 160 + (a / SHAKE_MAX_AMP) * 300; // 160..460 ms
+  return 120 + (a / SHAKE_MAX_AMP) * 140; // 120..260 ms (was 160..460)
 }
 
 /**
  * Decaying envelope of a shake impulse over its life: 1 at birth, 0 at (and
- * past) `durationMs`, quadratic ease-out in between so the shake dies smoothly
- * instead of cutting off. Pure; the sole "shake impulse decay math".
+ * past) `durationMs`. CUBIC ease-out (was quadratic) so the tail dies HARDER —
+ * at 70% of the window a cubic tail is ~2.7% vs the quadratic ~9%, the crisp
+ * snap-to-rest a Capcom impact settles with instead of a woolly ring. Pure; the
+ * sole "shake impulse decay math".
  */
 export function shakeDecayEnvelope(ageMs: number, durationMs: number): number {
   if (!(durationMs > 0) || ageMs <= 0) return ageMs <= 0 ? 1 : 0;
   if (ageMs >= durationMs) return 0;
   const t = 1 - ageMs / durationMs;
-  return t * t;
+  return t * t * t;
+}
+
+// ---------------------------------------------------------------------------
+// hitstop micro-jitter (ChampionView) — the 破碎 "buzz" on the frozen views
+// ---------------------------------------------------------------------------
+
+/**
+ * Peak amplitude (world units) of the client-only shiver applied to the two
+ * frozen fighter bodies during the hitstop window. ~0.02u reads as a 1–2px
+ * buzz at the default closest dolly without ever dragging the body off its
+ * frozen pose. Purely cosmetic (never touches the sim / the world transform).
+ */
+export const HITSTOP_SHIVER_AMP = 0.02;
+/** Shiver oscillation rate (rad/ms) — a fast ~19 Hz buzz, not a wobble. */
+const SHIVER_FREQ = 0.12;
+
+/**
+ * The tiny positional shiver offset for a body FROZEN by hitstop, at wall-clock
+ * `nowMs`. High-frequency, sub-pixel-to-1px, and — crucially for 收尾精準 — it
+ * only exists WHILE the caller is frozen (the caller stops applying it the
+ * instant the window ends, so there is zero settle tail). `phase` decorrelates
+ * the two fighters so attacker + victim don't buzz in lock-step. Amplitude eases
+ * DOWN over the last `HITSTOP_SHIVER_TAPER_MS` of the window for a clean release.
+ * Pure — no rng, no allocation on the hot path beyond the returned literal.
+ */
+export const HITSTOP_SHIVER_TAPER_MS = 60;
+export function hitstopShiver(
+  nowMs: number,
+  freezeEndMs: number,
+  phase: number,
+): { x: number; z: number } {
+  const remainMs = freezeEndMs - nowMs;
+  if (remainMs <= 0) return { x: 0, z: 0 };
+  // taper the last slice so the buzz fades to nothing right as the freeze lifts
+  const taper = remainMs >= HITSTOP_SHIVER_TAPER_MS ? 1 : remainMs / HITSTOP_SHIVER_TAPER_MS;
+  const a = HITSTOP_SHIVER_AMP * taper;
+  return {
+    x: a * Math.sin(nowMs * SHIVER_FREQ + phase),
+    z: a * Math.cos(nowMs * SHIVER_FREQ * 1.31 + phase),
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -306,7 +448,260 @@ export function heavyPostFxEnabled(quality: Quality): boolean {
   return quality === "desktop";
 }
 
-/** Camera-shake amplitude multiplier per tier (gently reduced on mobile). */
-export function cameraShakeScaleFor(quality: Quality): number {
+/**
+ * Camera-shake amplitude multiplier per tier (gently reduced on mobile), and the
+ * ACCESSIBILITY kill-switch: under `prefers-reduced-motion` it returns 0, which
+ * zeroes every camera reaction downstream — the ring jitter, the directional
+ * kick AND the EX punch-in (they all gate on `scale > 0`). Motion-sensitive
+ * players keep the flash/spark/sfx/hitstop channels, which do not move the view.
+ */
+export function cameraShakeScaleFor(quality: Quality, reducedMotion = false): number {
+  if (reducedMotion) return 0;
   return quality === "mobile" ? 0.5 : 1;
+}
+
+// ---------------------------------------------------------------------------
+// camera REACTION — the ONE event→camera dispatcher (audit P1: directional
+// kick + EX 特寫). This is the wave the ShakeRequest was computed for: without
+// it CameraRig.addShake(opts) and CameraRig.exPunchIn have no runtime caller
+// and the camera only rattles undirected off the legacy scalar path.
+// ---------------------------------------------------------------------------
+
+/**
+ * Hard cap on the one-shot translational shove handed to CameraRig (kick
+ * magnitude, pre-KICK_GAIN). A crit EX taken to the face resolves to ~0.9
+ * un-capped; 0.6 (≈0.54 world units of eye travel) is the point past which the
+ * lurch starts throwing the framing off the fight instead of selling the blow.
+ */
+export const KICK_MAX_MAG = 0.6;
+
+/** At most this many camera impulses out of ONE drained batch reach the rig. */
+export const SHAKE_MAX_PER_FRAME = 3;
+
+/**
+ * Diminishing multiplier for the Nth camera impulse inside ONE drained batch —
+ * the TEAMFIGHT guard. The rig SUMS its live impulses, so five simultaneous AoE
+ * ticks would otherwise stack into a screen-quake. The first hit lands at full
+ * strength, the 2nd/3rd are halved and thirded, the 4th and beyond are dropped:
+ * a crowded frame still reads as "I'm getting hammered" without the nausea.
+ */
+export function shakeCrowdingScale(indexInFrame: number): number {
+  if (!(indexInFrame > 0)) return 1;
+  if (indexInFrame >= SHAKE_MAX_PER_FRAME) return 0;
+  return 1 / (1 + indexInFrame);
+}
+
+/** A RESOLVED camera impulse — literally the arguments CameraRig.addShake takes. */
+export interface CameraKick {
+  amp: number;
+  durationMs: number;
+  /** UNIT hit vector the eye is shoved along ({0,0} on an omni ring). */
+  dir: { x: number; z: number };
+  style: ShakeStyle;
+  /** one-shot translational kick magnitude (0 = ring jitter only). */
+  kick: number;
+}
+
+export interface CameraKickCtx {
+  /** true = the local player is the victim; false = the local player's own hit. */
+  taken: boolean;
+  /** quality × reduced-motion multiplier (0 = no camera motion at all). */
+  scale: number;
+  /** how many impulses already fired this drained batch (crowding guard). */
+  crowdIndex?: number;
+}
+
+/**
+ * Turn combatFeedback's tier-authored `ShakeRequest` into the concrete impulse
+ * the rig takes, layering the three multipliers the shell owns: local
+ * PERSPECTIVE (taking a hit shakes harder than landing one — the same
+ * SHAKE_TAKEN/SELF_MULT the legacy scalar path uses, so the two paths stay in
+ * tune), QUALITY/reduced-motion, and TEAMFIGHT crowding. Both amplitude and
+ * kick are clamped, so the ceiling is identical to the legacy path's.
+ *
+ * Returns null when nothing should fire — the caller must then NOT count it
+ * against its crowd budget.
+ */
+export function resolveCameraKick(req: ShakeRequest, ctx: CameraKickCtx): CameraKick | null {
+  const perspective = ctx.taken ? SHAKE_TAKEN_MULT : SHAKE_SELF_MULT;
+  const scale = Math.max(0, ctx.scale) * perspective * shakeCrowdingScale(ctx.crowdIndex ?? 0);
+  if (!(scale > 0)) return null;
+  const amp = Math.min(SHAKE_MAX_AMP, Math.max(0, req.amp) * scale);
+  if (!(amp > 0)) return null;
+  // A directional request needs a real vector: a {0,0} knockbackDir (chip hit,
+  // no shove resolved) degrades to the radial ring rather than a NaN direction.
+  const len = Math.hypot(req.dir.x, req.dir.z);
+  const directional = req.style === "directional" && len > 1e-6;
+  return {
+    amp,
+    durationMs: shakeDurationMs(amp),
+    dir: directional ? { x: req.dir.x / len, z: req.dir.z / len } : { x: 0, z: 0 },
+    style: directional ? "directional" : "omni",
+    kick: directional ? Math.min(KICK_MAX_MAG, Math.max(0, req.camKick) * scale) : 0,
+  };
+}
+
+// ---- EX cinematic punch-in (audit P1 特寫) ---------------------------------
+
+/** How far the EX punch-in dollies the eye toward the fight (world units). */
+export const EX_PUNCH_DEPTH = 2.2;
+/** Punch-in beat length (ms): in fast, brief hold, crisp cubic ease back out. */
+export const EX_PUNCH_MS = 300;
+/**
+ * Floor on the gap between two punch-ins. The rig's punch is a single scalar so
+ * it can never STACK, but a re-fire would restart the beat; this keeps one EX =
+ * one push-in even if the wire ever repeats the cast event.
+ */
+export const EX_PUNCH_MIN_INTERVAL_MS = 500;
+
+/** Minimal shape of a drained wire event (structurally an EventMessage). */
+export interface CombatEventLike {
+  type: string;
+  data: Record<string, unknown>;
+}
+
+export interface CameraReactionCtx {
+  /** local champion's entity id (null before the seat resolves). */
+  localId: number | null;
+  /** quality × reduced-motion multiplier — 0 disables EVERY camera reaction. */
+  scale: number;
+  /** impulses already fired this drained batch (teamfight crowding guard). */
+  crowdIndex: number;
+  /**
+   * True when the CURRENT drained batch carries at least one profiled
+   * `hitImpact` (see `batchCarriesImpactProfile`). The sim emits `damage` and
+   * `hitImpact` back-to-back for the SAME landed hit, so without this the
+   * legacy scalar shake and the new directional kick would BOTH fire — one hit,
+   * two shakes. When set, the legacy path stands down and the profiled kick is
+   * the only one that reaches the rig; a pre-#133 batch (no profiles anywhere)
+   * still gets the legacy shake, so old replays keep their feel.
+   */
+  batchProfiled: boolean;
+  /** ms since the last EX punch-in fired (Infinity when none yet). */
+  sinceExPunchMs: number;
+  /** sim tick length (ms) — freeze-window maths inside planImpactFeedback. */
+  tickMs: number;
+}
+
+/** What ONE drained event asks the camera to do. */
+export interface CameraReaction {
+  /** a shake/kick impulse to hand CameraRig.addShake, or null. */
+  kick: CameraKick | null;
+  /** fire CameraRig.exPunchIn (the EX 特寫). */
+  exPunch: boolean;
+}
+
+/** Shared "this event moves no camera" result — frozen, never mutated. */
+const NO_REACTION: CameraReaction = Object.freeze({ kick: null, exPunch: false });
+
+/**
+ * Does this drained batch speak #133? Scanned ONCE per frame, before the events
+ * are dispatched, because `damage` arrives BEFORE its `hitImpact` twin and the
+ * legacy path has to know to stand down at the moment it sees the damage.
+ */
+export function batchCarriesImpactProfile(events: readonly CombatEventLike[]): boolean {
+  for (const ev of events) {
+    if (ev.type === "hitImpact" && hasImpactProfile(ev.data.profile)) return true;
+  }
+  return false;
+}
+
+/**
+ * THE dispatcher: one drained event in, the camera reactions it warrants out.
+ * Pure — it moves nothing itself; the shell (GameApp) applies what it returns to
+ * CameraRig and bumps its crowd index / EX clock accordingly.
+ *
+ *   hitImpact (profiled) → the DIRECTIONAL kick off the unified ImpactProfile
+ *   damage               → the legacy scalar ring, ONLY on a pre-#133 batch
+ *   abilityCast (EX)     → the cinematic punch-in, once per cast
+ */
+export function planCameraReaction(ev: CombatEventLike, ctx: CameraReactionCtx): CameraReaction {
+  if (!(ctx.scale > 0)) return NO_REACTION; // reduced motion / shake disabled
+  switch (ev.type) {
+    case "hitImpact": {
+      const kick = impactCameraKick(ev, ctx);
+      return kick ? { kick, exPunch: false } : NO_REACTION;
+    }
+    case "damage": {
+      if (ctx.batchProfiled) return NO_REACTION; // the profiled kick owns this hit
+      const kick = legacyCameraKick(ev, ctx);
+      return kick ? { kick, exPunch: false } : NO_REACTION;
+    }
+    case "abilityCast":
+      return wantsExPunch(ev, ctx) ? { kick: null, exPunch: true } : NO_REACTION;
+    default:
+      return NO_REACTION;
+  }
+}
+
+/** Numeric wire field, or null when absent/malformed. */
+function numOf(v: unknown): number | null {
+  return typeof v === "number" ? v : null;
+}
+
+/**
+ * Which side of the hit the local player is on, or null when they are not
+ * involved — a third party's exchange must never move your camera.
+ */
+function localPerspective(
+  data: Record<string, unknown>,
+  localId: number | null,
+): { taken: boolean } | null {
+  if (localId === null) return null;
+  if (numOf(data.target) === localId) return { taken: true };
+  if (numOf(data.source) === localId) return { taken: false };
+  return null;
+}
+
+/** The DIRECTIONAL kick for a profiled `hitImpact` (the #133 path). */
+function impactCameraKick(ev: CombatEventLike, ctx: CameraReactionCtx): CameraKick | null {
+  const profile = asImpactProfile(ev.data.profile);
+  if (!profile) return null; // pre-profile replay → the legacy path covers it
+  const side = localPerspective(ev.data, ctx.localId);
+  if (!side) return null;
+  const dmgType = (ev.data.dmgType ?? ev.data.type) as string | undefined;
+  const plan = planImpactFeedback(profile, { dmgType, tickMs: ctx.tickMs });
+  return resolveCameraKick(plan.shake, {
+    taken: side.taken,
+    scale: ctx.scale,
+    crowdIndex: ctx.crowdIndex,
+  });
+}
+
+/**
+ * The LEGACY undirected ring off the rich `damage` payload — kept verbatim for
+ * pre-#133 servers/replays that never emit a profile. Suppressed batch-wide the
+ * moment a profiled hitImpact is present (see CameraReactionCtx.batchProfiled).
+ */
+function legacyCameraKick(ev: CombatEventLike, ctx: CameraReactionCtx): CameraKick | null {
+  const amount = numOf(ev.data.amount) ?? 0;
+  if (amount <= 0) return null;
+  const side = localPerspective(ev.data, ctx.localId);
+  if (!side) return null;
+  // impactShakeAmp already folds in the taken/self perspective — do NOT layer
+  // resolveCameraKick's perspective multiplier on top of it a second time.
+  const raw =
+    impactShakeAmp({
+      amount,
+      crit: Boolean(ev.data.crit),
+      killingBlow: Boolean(ev.data.killingBlow),
+      taken: side.taken,
+    }) *
+    Math.max(0, ctx.scale) *
+    shakeCrowdingScale(ctx.crowdIndex);
+  const amp = Math.min(SHAKE_MAX_AMP, raw);
+  if (!(amp > 0)) return null;
+  return { amp, durationMs: shakeDurationMs(amp), dir: { x: 0, z: 0 }, style: "omni", kick: 0 };
+}
+
+/**
+ * Should this `abilityCast` fire the EX 特寫? ONLY the local player's own EX
+ * slot, and only once per beat. Deliberately keyed off the CAST (one event per
+ * super) rather than the EX's hitImpacts — a multi-tick EX would otherwise
+ * punch in on every damage tick.
+ */
+function wantsExPunch(ev: CombatEventLike, ctx: CameraReactionCtx): boolean {
+  if (ev.data.slot !== "EX") return false; // Q/W/E/R never punch in
+  if (ctx.localId === null || numOf(ev.data.caster) !== ctx.localId) return false;
+  return ctx.sinceExPunchMs >= EX_PUNCH_MIN_INTERVAL_MS;
 }

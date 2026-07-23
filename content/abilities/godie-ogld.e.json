@@ -29,13 +29,13 @@
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 0.054
+            "coeff": 0.6
           }
         ]
       }
     }
   ],
-  "vfxKey": "fx.ember-bolt-cast",
+  "vfxKey": "fx.prim.holy.nova",
   "targetsEnemies": true,
   "schema": "ability@1"
 }

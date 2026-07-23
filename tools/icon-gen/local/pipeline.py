@@ -46,6 +46,7 @@ NATIVE = 512
 
 _lock = threading.Lock()
 _pipe = None
+_i2i_pipe = None
 _loaded_model = None
 
 
@@ -100,6 +101,29 @@ def load_pipeline():
         _pipe = pipe
         _loaded_model = model
         return _pipe
+
+
+def load_img2img_pipeline():
+    """The IMG2IMG half of the two-pass method (PASS 2 — style).
+
+    Built from the ALREADY-loaded text2img pipe's components, so the UNet / VAE /
+    text-encoder weights are shared, NOT loaded a second time (zero extra memory,
+    instant). PASS 1 renders a clear, recognisable subject with a plain prompt;
+    PASS 2 runs that image back through the SAME model with the game-icon anime
+    STYLE prompt at a moderate denoise strength, so the subject's shape and colour
+    survive while the Japanese-anime finish is applied. A heavy style prompt in a
+    single text2img pass smothered the subject into an abstract blob — that is the
+    bug this two-pass split fixes."""
+    global _i2i_pipe
+    base = load_pipeline()
+    with _lock:
+        if _i2i_pipe is not None:
+            return _i2i_pipe
+        from diffusers import StableDiffusionImg2ImgPipeline
+        i2i = StableDiffusionImg2ImgPipeline(**base.components)
+        i2i.set_progress_bar_config(disable=True)
+        _i2i_pipe = i2i
+        return _i2i_pipe
 
 
 def _encode_long(pipe, prompt: str, negative: str):
@@ -165,6 +189,42 @@ def generate(prompt: str, negative: str = "", size: int = NATIVE,
         negative_prompt_embeds=negative_embeds,
         width=NATIVE,
         height=NATIVE,
+        num_inference_steps=int(steps),
+        guidance_scale=float(guidance),
+        generator=generator,
+    ).images[0]
+
+    if size != NATIVE:
+        image = image.resize((int(size), int(size)), Image.LANCZOS)
+    return image
+
+
+def stylize(init_image, prompt: str, negative: str = "", strength: float = 0.45,
+            steps: int = 30, guidance: float = 8.0, size: int = NATIVE,
+            seed: int | None = None):
+    """PASS 2: img2img the PASS-1 subject with the anime STYLE prompt.
+
+    `strength` is the denoise fraction: how far the model is allowed to repaint
+    the init image. ~0.4-0.55 keeps the pass-1 subject's silhouette and colour
+    while applying the Japanese-anime finish. Higher drifts back toward an
+    abstract blob; lower barely styles it. Deterministic when seeded."""
+    import torch
+    from PIL import Image
+
+    pipe = load_img2img_pipeline()
+    device = pipe.device.type
+    generator = None
+    if seed is not None:
+        generator = torch.Generator(device="cpu" if device == "mps" else device)
+        generator.manual_seed(int(seed))
+
+    init = init_image.convert("RGB").resize((NATIVE, NATIVE), Image.LANCZOS)
+    prompt_embeds, negative_embeds = _encode_long(pipe, prompt, negative)
+    image = pipe(
+        prompt_embeds=prompt_embeds,
+        negative_prompt_embeds=negative_embeds,
+        image=init,
+        strength=float(strength),
         num_inference_steps=int(steps),
         guidance_scale=float(guidance),
         generator=generator,

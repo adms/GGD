@@ -20,11 +20,15 @@ with a reason surfaced to the client. Dev bypass: `GGD_WHITELIST_BYPASS=1`.
 **Empty-state UX**: zero playable champions → champ-select shows an ACTIONABLE recovery path
 (`/admin/` → 內容白名單 → ⭐ 啟用示範組合 → 儲存, or `make seed-demo`), never a broken empty grid.
 
-**Demo starter set** (task #47): a named, reviewable bundle of 12 champions / 30 items / 60
+**Starter set / first open roster** (task #47; roster expanded to the user's 48 picks): a named,
+reviewable bundle of **48 champions** (the FIRST OPEN ROSTER / 對戰可選名單) / 104 items / 240
 abilities in `apps/platform/internal/curation/starter.go`, applied only by an explicit human
 action (console button, `make seed-demo`) or by the opt-in `/seed -starter` which is a NO-OP
-unless the whitelist is genuinely empty. Recovery runbook:
-[`docs/runbooks/content-whitelist.md`](../runbooks/content-whitelist.md).
+unless the whitelist is genuinely empty. The 48 are one canonical id per requested name (test /
+placeholder / duplicate-reskin candidates dropped — see 附錄A of
+[`docs/hero-popularity-ranking.md`](../hero-popularity-ranking.md)); pinned id-for-id by
+`TestFirstOpenRoster`. Applying the bundle makes champ-select show exactly these 48. Recovery
+runbook: [`docs/runbooks/content-whitelist.md`](../runbooks/content-whitelist.md).
 
 Ports (user-pinned): client dev `39527`, admin dev `60721`.
 
@@ -68,8 +72,8 @@ filters its catalogue.
 `internal/curation`: a `Service`/`Repo` over the jsonstore (`data/curation/whitelist.json`, atomic
 tmp+rename, single-writer mutex) with an optional Redis mirror; default-empty (the file is created
 lazily on first read but never seeded); `Replace` (PUT), `Bulk` (enable/disable one kind), and a
-one-click `ApplyStarterSet` (~10 icon champions + 12 stat-bearing items + the starter EX
-abilities). Handlers: public cacheable `GET` + admin-gated `PUT`/`bulk`/`starter` (the admin
+one-click `ApplyStarterSet` (the 48 first-open-roster champions + the shop/draft/legendary items +
+the starter EX abilities). Handlers: public cacheable `GET` + admin-gated `PUT`/`bulk`/`starter` (the admin
 `AdminOnly` middleware, audited on every write). Wired in `internal/server/server.go`.
 
 | ID | Item | Test ID | Category | Status |
@@ -83,16 +87,17 @@ abilities). Handlers: public cacheable `GET` + admin-gated `PUT`/`bulk`/`starter
 | wl-plat-07 | Starter set: non-empty, additive union (never removes), idempotent | whitelist-starter | unit | done |
 | wl-plat-08 | Save mirrors into Redis; a Redis wipe leaves the JSON truth intact (cache, not authority) | whitelist-redis-mirror | regression | done |
 | wl-plat-09 | Hand-edited file with null/missing lists reads back as empty; missing version backfills | whitelist-nil-backfill | unit | done |
-| wl-plat-10 | Demo starter set re-verified against the real content tree: ids resolve, icons on disk, own+textured+in-band model, resolvable clips, hero-number-consistent complete kits, buildPriority tolerance (≥4 purchasable rungs), the SHOP gates S1–S4 + the DRAFT gates D1–D4, and ≥1 enabled entry in BOTH weapon tables | whitelist-starter-content | integration | done |
+| wl-plat-10 | Starter set re-verified against the real content tree: every id resolves; CHAMPION roster-integrity gates R1–R4 (no test/placeholder hero, complete hero-number-consistent Q/W/E/R+EX kit with all five docs, no half-enabled champion, no two picks the SAME character); the SHOP gates S1–S4 + SERVICES SV1–SV3 + LEGENDARY L1–L3 + DRAFT D1–D4; and ≥1 enabled entry in BOTH weapon tables. (Retired the demo-showcase visual gates — icon-on-disk / unique+textured+in-band mesh / clip resolution / buildPriority ≥4 — because the 48-champion roster deliberately includes mesh-sharing and portrait-less heroes.) | whitelist-starter-content | integration | done |
 | wl-plat-11 | GET is public + cacheable, returns the empty doc on a fresh install (+ starter preview) | whitelist-api-public-read | integration | done |
 | wl-plat-12 | Writes require the admin role: no token → 401, normal user → 403, admin → 200 + durable + public read reflects it | whitelist-api-admin-write | security | done |
 | wl-plat-13 | Admin bulk endpoint enables/disables a kind; unknown kind → 400 | whitelist-api-bulk | integration | done |
 | wl-plat-14 | Admin one-click starter applies the bundle, lands on the public read, and is audited | whitelist-api-starter | integration | done |
 | wl-plat-15 | Bundle shape is self-consistent without the content tree: sorted, deduped, abilities exactly mirror champions × {q,w,e,r,ex} | whitelist-starter-shape | unit | done |
-| wl-plat-16 | Empty store → automated seed applies the demo set (12 champs / ≥24 items / full kits, no half-enabled champion) and persists; a second run is a no-op | whitelist-seed-empty | integration | done |
+| wl-plat-16 | Empty store → automated seed applies the demo set (48 champs / ≥24 items / full kits, no half-enabled champion) and persists; a second run is a no-op | whitelist-seed-empty | integration | done |
 | wl-plat-17 | The lazily-created EMPTY doc still counts as a fresh install (opening the console once must not block the seed) | whitelist-seed-lazy-empty | unit | done |
 | wl-plat-18 | Already-curated store is NEVER overwritten or re-expanded by the automated seed; the explicit admin door still unions | whitelist-seed-preserves-curation | security | done |
 | wl-plat-19 | The bundle is a suggestion, not a floor: after an operator prunes it, a restart does not resurrect it; disabling everything returns to empty | whitelist-seed-prune-sticks | regression | done |
+| wl-plat-20 | The seeded enabled champion set is EXACTLY the 48 canonical first-open-roster ids (對戰可選名單) — count == 48, no dupes, id-for-id equal to the pinned list; hermetic (no content tree needed) | whitelist-first-open-roster | unit | done |
 
 ## Game-server — authoritative enforcement (`apps/game-server/src/curation`)
 
@@ -118,3 +123,14 @@ whitelist, and `selectChampion` returns a typed rejection reason surfaced to the
 | wl-game-10 | Enforced empty whitelist: bots fall back so the match runs, humans are rejected | wl-empty | integration | done |
 | wl-game-11 | Ability whitelist gates the per-hero EX unlock: EX unlocks only when its ability id is whitelisted | wl-ex-gate | integration | done |
 | wl-game-12 | The demo starter set (parsed from `starter.go`, one source of truth) resolves in the real registry, filters the roster/catalogue to EXACTLY the seeded ids, spawns every seat, unlocks every seeded EX, and leaves BOTH the quest-rewards (round 2) and legendary-weapons (round 5) drafts rollable | wl-starter-playable | integration | done |
+
+## Task #48 — dev-env fail-safe (platform URL resolution)
+
+The k8s service host `platform:8080` never resolves on a dev box, so `fetchWhitelist`
+always failed. The base URL now resolves via `apps/game-server/src/config/platformUrl.ts`
+(`GGD_PLATFORM_URL` env with a `http://localhost:8080` dev fallback) and the fail-safe
+allow-all degradation logs once per condition (`warnOnce`), instead of per match creation.
+
+| ID | Item | Test ID | Category | Status |
+| --- | --- | --- | --- | --- |
+| pu-04 | Unreachable platform (shipped default URL) → curation degrades to a NON-EMPTY allow-set (allow-all), never the empty roster, logged once | platformurl-curation-failsafe | exception | done |

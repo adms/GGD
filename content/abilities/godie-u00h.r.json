@@ -19,7 +19,7 @@
   "effects": [
     {
       "kind": "damage",
-      "damageType": "magic",
+      "damageType": "physical",
       "amount": {
         "perRank": [
           333.0,
@@ -28,8 +28,8 @@
         ],
         "ratios": [
           {
-            "stat": "ap",
-            "coeff": 1.0
+            "stat": "ad",
+            "coeff": 0.6
           }
         ]
       }
@@ -41,7 +41,7 @@
       "stun": true
     }
   ],
-  "vfxKey": "fx.ember-bolt-cast",
+  "vfxKey": "fx.prim.holy.tornado-lg",
   "targetsEnemies": true,
   "radius": 6.0,
   "schema": "ability@1"

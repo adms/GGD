@@ -26,16 +26,16 @@
       "damageType": "magic",
       "amount": {
         "perRank": [
-          1.0,
-          1.0,
-          1.0,
-          1.0,
-          1.0
+          200,
+          400,
+          600,
+          800,
+          800
         ],
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 0.003
+            "coeff": 0.6
           }
         ]
       }
@@ -47,7 +47,7 @@
       "moveSpeedMult": 0.6
     }
   ],
-  "vfxKey": "fx.ember-bolt-cast",
+  "vfxKey": "fx.prim.arcane.explosion",
   "targetsEnemies": true,
   "schema": "ability@1"
 }

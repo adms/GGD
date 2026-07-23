@@ -9,6 +9,8 @@
  */
 import type { CastType } from "@ggd/shared/sim/content/defs";
 import type { TooltipMeta } from "./Tooltip";
+import { envFactor, getDisplayEnv } from "../displayFinal";
+import type { CombatEnvMultipliers } from "@ggd/shared/sim/combatEnv";
 
 /** Leading "<hero>-<skill> " number tag (hero 1-3 digits, skill 2-3 digits). */
 const ABILITY_NUMBER_PREFIX = /^\d{1,3}-\d{2,3}\s+/;
@@ -220,4 +222,188 @@ export function abilityMetaChips(input: AbilityMetaInput): TooltipMeta[] {
     meta.push({ label: "魔力", value: `${input.manaCost}` });
   }
   return meta;
+}
+
+// ---------------------------------------------------------------------------
+// ability PROSE rescale (說明數值最終化)
+//
+// The flat `description` prose bakes BASE WC3 numbers into the sentence
+// ("60秒冷卻時間", "造成650傷害"), while the structured meta chips beside it
+// already show the post-combat-env FINAL via displayFinal. That contradiction —
+// a "15s" chip next to "60秒冷卻" prose, or "325 real" damage shown as "650" — is
+// the reported bug.
+//
+// `rescaleAbilityProse` rewrites the LITERALS that a combat-env multiplier
+// actually scales to their final, reading each factor from the SAME env table
+// displayFinal/useDisplayEnv resolve against (never a hard-coded number, so it
+// tracks a live combat-env edit), and appends "（WC3原 …）" so the source stays
+// visible. TWO factors are applied, each independently and only when non-neutral:
+//   • cooldown literals  ×envFactor("cooldown")     → "60秒冷卻時間" → "15秒…（WC3原 60秒）"
+//   • damage literals    ×envFactor("damageDealt")  → "造成650傷害" → "造成325傷害（WC3原 650）"
+// Every OTHER number — heal / shield / mana / duration / stat — is left
+// byte-for-byte untouched (those factors are ×1.0). The two passes anchor on
+// disjoint keywords (冷卻/cooldown vs 傷害/damage), so a cooldown number is never
+// re-read as damage and vice-versa; the shared "（WC3原" guard keeps it
+// idempotent across repeated calls. Only flat numeric literals are touched —
+// formula damage ("力量*3額外傷害", "(40+敏捷*1)傷害") has no bare number directly
+// against 傷害 and is deliberately skipped.
+// ---------------------------------------------------------------------------
+
+/** Dim disclaimer for a prose block whose residual literals are WC3 originals. */
+export const WC3_PROSE_CAPTION = "數值以介面標示為準（WC3 原文）";
+
+/**
+ * The cooldown-literal shapes we rewrite. Four alternatives, each capturing the
+ * NUMBER in its own group so the replacer knows which matched:
+ *   1. `NN秒冷卻[時間]`  — "60秒冷卻時間", "0.5 秒冷卻"   → (num, suffix)
+ *   2. `冷卻[時間]NN秒`  — "冷卻時間30秒", "冷卻30秒"     → (prefix, num, 秒)
+ *   3. `NNs cooldown`    — "3s cooldown"                  → (num, suffix)
+ *   4. `cooldown NNs`    — "cooldown 3s"                  → (prefix, num, s)
+ * NN is an integer or decimal; incidental whitespace between the number and the
+ * unit is tolerated (the map's "0.5 秒冷卻" carries a space). Case-insensitive
+ * for the English shapes; the trailing negative lookahead stops a "N seconds"
+ * from being mis-read as "N s".
+ */
+const COOLDOWN_PROSE_RE = new RegExp(
+  [
+    "(\\d+(?:\\.\\d+)?)(\\s*秒\\s*冷卻(?:時間)?)", // 1: NN + 秒冷卻[時間]
+    "(冷卻(?:時間)?\\s*)(\\d+(?:\\.\\d+)?)(\\s*秒)", // 2: 冷卻[時間] + NN + 秒
+    "(\\d+(?:\\.\\d+)?)(\\s*s\\s+cooldown)", // 3: NNs cooldown
+    "(cooldown\\s+)(\\d+(?:\\.\\d+)?)(\\s*s)(?![a-z])", // 4: cooldown NNs
+  ].join("|"),
+  "gi",
+);
+
+/** Round a numeric literal string by a combat-env factor (integer result). */
+function scaleProseLiteral(literal: string, factor: number): string {
+  return String(Math.round(Number(literal) * factor));
+}
+
+/**
+ * The damage-literal shapes we rewrite. Each alternative captures the NUMBER in
+ * its own group so the replacer knows which matched, and every alternative
+ * anchors on the 傷害 / damage keyword directly against the number so a cooldown
+ * number ("60秒…") is never mistaken for damage, and a formula multiplier
+ * ("力量*3額外傷害", "(40+敏捷*1)傷害") — which has no bare number touching 傷害 —
+ * is left alone:
+ *   1. `造成NNN[點]傷害`  — "造成650傷害", "造成550點傷害" → (prefix, num, suffix)
+ *   2. `NNN[ ]點傷害`     — "650點傷害", "650 點傷害"       → (num, suffix)
+ *   3. `[deal ]NNN damage` — "deal 650 damage", "650 damage" → (num, suffix)
+ * NN is an integer or decimal; incidental whitespace is tolerated. The English
+ * shape is case-insensitive. NOTE: 損害 (a synonym the map uses for "200點損害")
+ * is intentionally NOT matched — only the 傷害 / damage phrasings are in scope.
+ */
+const DAMAGE_PROSE_RE = new RegExp(
+  [
+    "(造成\\s*)(\\d+(?:\\.\\d+)?)(\\s*(?:點\\s*)?傷害)", // 1: 造成 NNN [點]傷害
+    "(\\d+(?:\\.\\d+)?)(\\s*點\\s*傷害)", // 2: NNN 點傷害
+    "(\\d+(?:\\.\\d+)?)(\\s+damage)", // 3: [deal] NNN damage
+  ].join("|"),
+  "gi",
+);
+
+/** Rewrite every cooldown literal in `description` by the (non-neutral) factor. */
+function rescaleCooldownLiterals(description: string, factor: number): string {
+  return description.replace(
+    COOLDOWN_PROSE_RE,
+    (
+      _m: string,
+      g1?: string,
+      g2?: string,
+      g3?: string,
+      g4?: string,
+      g5?: string,
+      g6?: string,
+      g7?: string,
+      g8?: string,
+      g9?: string,
+      g10?: string,
+    ): string => {
+      let orig: string;
+      let rebuilt: string;
+      if (g1 !== undefined) {
+        orig = g1;
+        rebuilt = scaleProseLiteral(g1, factor) + g2!;
+      } else if (g4 !== undefined) {
+        orig = g4;
+        rebuilt = g3! + scaleProseLiteral(g4, factor) + g5!;
+      } else if (g6 !== undefined) {
+        orig = g6;
+        rebuilt = scaleProseLiteral(g6, factor) + g7!;
+      } else {
+        orig = g9!;
+        rebuilt = g8! + scaleProseLiteral(g9!, factor) + g10!;
+      }
+      return `${rebuilt}（WC3原 ${orig}秒）`;
+    },
+  );
+}
+
+/** Rewrite every damage literal in `description` by the (non-neutral) factor. */
+function rescaleDamageLiterals(description: string, factor: number): string {
+  return description.replace(
+    DAMAGE_PROSE_RE,
+    (
+      _m: string,
+      g1?: string,
+      g2?: string,
+      g3?: string,
+      g4?: string,
+      g5?: string,
+      g6?: string,
+      g7?: string,
+    ): string => {
+      let orig: string;
+      let rebuilt: string;
+      if (g2 !== undefined) {
+        // 1: 造成 NNN [點]傷害
+        orig = g2;
+        rebuilt = g1! + scaleProseLiteral(g2, factor) + g3!;
+      } else if (g4 !== undefined) {
+        // 2: NNN 點傷害
+        orig = g4;
+        rebuilt = scaleProseLiteral(g4, factor) + g5!;
+      } else {
+        // 3: [deal] NNN damage
+        orig = g6!;
+        rebuilt = scaleProseLiteral(g6!, factor) + g7!;
+      }
+      return `${rebuilt}（WC3原 ${orig}）`;
+    },
+  );
+}
+
+/**
+ * Rewrite the combat-env-scaled LITERALS in a description to their post-combat-
+ * env finals, reading each factor off `env` (defaults to the ambient displayFinal
+ * table). Applies TWO independent passes, each a no-op when its factor is neutral:
+ *   • cooldown ×envFactor("cooldown")    — "60秒冷卻時間" → "15秒冷卻時間（WC3原 60秒）"
+ *   • damage   ×envFactor("damageDealt") — "造成650傷害" → "造成325傷害（WC3原 650）"
+ * Returns the string unchanged when nothing scaled matches, when both factors are
+ * neutral (1.0 — base already equals final), or when it has already been
+ * annotated. Heal / shield / mana / duration / stat numbers are never touched.
+ * Pure and node-testable: pass the env table explicitly.
+ */
+export function rescaleAbilityProse(
+  description: string,
+  env: CombatEnvMultipliers = getDisplayEnv(),
+): string {
+  if (!description) return description;
+  // defensive against a double pass — never annotate an already-annotated string
+  if (description.includes("（WC3原")) return description;
+  let out = description;
+  // cooldown pass — skip the rewrite (and its "（WC3原 …）" note) under a neutral
+  // or rejected factor, where base already equals final.
+  const cooldownFactor = envFactor("cooldown", env);
+  if (Number.isFinite(cooldownFactor) && cooldownFactor !== 1) {
+    out = rescaleCooldownLiterals(out, cooldownFactor);
+  }
+  // damage pass — same neutrality guard, keyed on the SAME env the sim scales
+  // damage by (damageDealt). Runs after cooldown; the passes anchor on disjoint
+  // keywords so neither re-reads the other's number.
+  const damageFactor = envFactor("damageDealt", env);
+  if (Number.isFinite(damageFactor) && damageFactor !== 1) {
+    out = rescaleDamageLiterals(out, damageFactor);
+  }
+  return out;
 }

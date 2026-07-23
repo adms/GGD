@@ -8,7 +8,7 @@ import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
-import { CameraRig, DOLLY_DEFAULT, DOLLY_MIN } from "./CameraRig";
+import { CameraRig, DOLLY_DEFAULT, DOLLY_MIN, CAMERA_PITCH_RAD } from "./CameraRig";
 
 let engine: NullEngine;
 let scene: Scene;
@@ -91,6 +91,43 @@ describe("death spectator camera", () => {
     rig.setDead(false, { x: 0, z: 0 }); // respawn still re-locks
     expect(rig.followLock).toBe(true);
     expect(rig.spectating).toBe(false);
+  });
+});
+
+describe("combat camera pitch (camera-pitch-topdown)", () => {
+  it("pins a steep, top-down-but-not-overhead pitch (raised from the old 55°)", () => {
+    const deg = (CAMERA_PITCH_RAD * 180) / Math.PI;
+    expect(deg).toBeCloseTo(68, 5);
+    // clearly steeper than the old 55° flat cam, but well short of a 90° overhead map
+    expect(deg).toBeGreaterThan(60);
+    expect(deg).toBeLessThan(75);
+  });
+
+  it("derives a finite, sane eye-height / standoff at the closest (worst-case) zoom", () => {
+    const eyeHeight = DOLLY_MIN * Math.sin(CAMERA_PITCH_RAD);
+    const standoff = DOLLY_MIN * Math.cos(CAMERA_PITCH_RAD);
+    expect(Number.isFinite(eyeHeight)).toBe(true);
+    expect(Number.isFinite(standoff)).toBe(true);
+    // steeper pitch lifts the eye and shortens the standoff vs the old 55° cam
+    // (eye 8.19u→9.27u, standoff 5.74u→3.75u)
+    expect(eyeHeight).toBeGreaterThan(8.19); // above the old 55° eye height
+    expect(eyeHeight).toBeLessThan(11);
+    expect(standoff).toBeGreaterThan(2);
+    expect(standoff).toBeLessThan(5.74); // below the old 55° standoff → more overhead
+    // eye sits far above the 2.4u prop-height cap → occluders can't hide heroes (#29/#103)
+    expect(eyeHeight).toBeGreaterThan(2.4 * 2);
+  });
+
+  it("places the rest camera on the pitch, unchanged framing distance", () => {
+    const rig = new CameraRig(scene, { x: 0, z: 0 });
+    applyFrame(rig);
+    // eye = dolly·sin(pitch) up, dolly·cos(pitch) south (−Z) of the target
+    expect(rig.camera.position.y).toBeCloseTo(DOLLY_DEFAULT * Math.sin(CAMERA_PITCH_RAD), 5);
+    expect(rig.camera.position.z).toBeCloseTo(-DOLLY_DEFAULT * Math.cos(CAMERA_PITCH_RAD), 5);
+    // the eye→target distance is exactly `dolly` for ANY pitch — steepening the
+    // angle keeps champion size and the visible ground patch constant
+    const dist = Math.hypot(rig.camera.position.y, rig.camera.position.z);
+    expect(dist).toBeCloseTo(DOLLY_DEFAULT, 5);
   });
 });
 
@@ -212,5 +249,106 @@ describe("camera shake (juice-camera-shake)", () => {
     applyFrame(rig);
     expect(rig.camera.position.x).toBeCloseTo(rest.x, 5);
     expect(rig.camera.position.y).toBeCloseTo(rest.y, 5);
+  });
+
+  it("a DIRECTIONAL shake kicks the eye along the ground-plane hit vector, then settles", () => {
+    cover("juice-camera-directional");
+    const rest = restPosition();
+    const rig = new CameraRig(scene, { x: 0, z: 0 });
+    applyFrame(rig);
+    // a hit from -Z: knockback vector points +Z → the eye should lurch in Z
+    rig.addShake(0.7, 260, { dir: { x: 0, z: 1 }, style: "directional", kick: 0.7 });
+    rig.update({ dtMs: 16, localPos: null, cursor: null, panKeys: null, viewportWidth: 800, viewportHeight: 600 });
+    // the ground-plane (Z) component moved — the directional kick, not just the ring
+    expect(Math.abs(rig.camera.position.z - rest.z)).toBeGreaterThan(1e-2);
+    // crisp settle: fully back to rest after the impulse window
+    for (let t = 0; t < 30; t++) {
+      rig.update({ dtMs: 16, localPos: null, cursor: null, panKeys: null, viewportWidth: 800, viewportHeight: 600 });
+    }
+    expect(rig.camera.position.z).toBeCloseTo(rest.z, 5);
+    expect(rig.camera.position.x).toBeCloseTo(rest.x, 5);
+  });
+
+  it("an OMNI shake does not add a directional ground kick (radial ring only)", () => {
+    cover("juice-camera-directional");
+    const rig = new CameraRig(scene, { x: 0, z: 0 });
+    applyFrame(rig);
+    const restZ = rig.camera.position.z;
+    // omni style with a dir present → the dir is ignored, no persistent Z lurch
+    rig.addShake(0.7, 260, { dir: { x: 0, z: 1 }, style: "omni" });
+    // average the Z offset across the ring — a pure radial jitter has none on Z
+    let sumZ = 0;
+    for (let t = 0; t < 8; t++) {
+      rig.update({ dtMs: 16, localPos: null, cursor: null, panKeys: null, viewportWidth: 800, viewportHeight: 600 });
+      sumZ += rig.camera.position.z - restZ;
+    }
+    expect(Math.abs(sumZ)).toBeLessThan(1e-6); // Z is untouched by an omni shake
+  });
+
+  it("clamps the SUMMED offset so a pile-up cannot become a screen-quake", () => {
+    cover("juice-camera-directional");
+    const rest = restPosition();
+    const rig = new CameraRig(scene, { x: 0, z: 0 });
+    applyFrame(rig);
+    // fill the whole impulse pool with max-strength kicks on the same frame
+    for (let i = 0; i < 6; i++) {
+      rig.addShake(0.85, 260, { dir: { x: 1, z: 0 }, style: "directional", kick: 0.6 });
+    }
+    let peak = 0;
+    for (let t = 0; t < 20; t++) {
+      rig.update({ dtMs: 16, localPos: null, cursor: null, panKeys: null, viewportWidth: 800, viewportHeight: 600 });
+      peak = Math.max(
+        peak,
+        Math.hypot(
+          rig.camera.position.x - rest.x,
+          rig.camera.position.y - rest.y,
+          rig.camera.position.z - rest.z,
+        ),
+      );
+    }
+    // six unclamped max impulses would displace the eye by >5u; the rig caps it
+    expect(peak).toBeGreaterThan(0.5); // still reads as a heavy hit
+    expect(peak).toBeLessThan(2); // …but never as a quake
+    // a LONE max impulse is below the cap, so single hits are untouched
+    const solo = new CameraRig(scene, { x: 0, z: 0 });
+    applyFrame(solo);
+    solo.addShake(0.85, 260, { dir: { x: 1, z: 0 }, style: "directional", kick: 0.6 });
+    let soloPeak = 0;
+    for (let t = 0; t < 20; t++) {
+      solo.update({ dtMs: 16, localPos: null, cursor: null, panKeys: null, viewportWidth: 800, viewportHeight: 600 });
+      soloPeak = Math.max(
+        soloPeak,
+        Math.hypot(
+          solo.camera.position.x - rest.x,
+          solo.camera.position.y - rest.y,
+          solo.camera.position.z - rest.z,
+        ),
+      );
+    }
+    expect(soloPeak).toBeLessThan(peak); // the pile-up is still the bigger read
+    // and everything settles back to rest
+    for (let t = 0; t < 30; t++) {
+      rig.update({ dtMs: 16, localPos: null, cursor: null, panKeys: null, viewportWidth: 800, viewportHeight: 600 });
+    }
+    expect(rig.camera.position.x).toBeCloseTo(rest.x, 5);
+    expect(rig.camera.position.z).toBeCloseTo(rest.z, 5);
+  });
+
+  it("exPunchIn dollies the eye toward the target then eases back crisp (EX 特寫)", () => {
+    cover("juice-camera-expunch");
+    const rest = restPosition();
+    const rig = new CameraRig(scene, { x: 0, z: 0 });
+    applyFrame(rig);
+    rig.exPunchIn(2.5, 200);
+    rig.update({ dtMs: 16, localPos: null, cursor: null, panKeys: null, viewportWidth: 800, viewportHeight: 600 });
+    // pulling the eye toward the target lowers it (up = dolly·sin pitch shrinks)
+    expect(rig.camera.position.y).toBeLessThan(rest.y - 1e-3);
+    // never dives past the closest allowed dolly
+    expect(rig.camera.position.y).toBeGreaterThan(0);
+    // recovers fully once the beat ends
+    for (let t = 0; t < 20; t++) {
+      rig.update({ dtMs: 16, localPos: null, cursor: null, panKeys: null, viewportWidth: 800, viewportHeight: 600 });
+    }
+    expect(rig.camera.position.y).toBeCloseTo(rest.y, 4);
   });
 });

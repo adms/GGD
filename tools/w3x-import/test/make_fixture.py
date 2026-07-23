@@ -394,19 +394,36 @@ def main(out_path: str) -> None:
            "STRING 3\r\n{\r\n測試道具\r\n}\r\n\r\n"
            "STRING 4\r\n{\r\n測試原始英雄\r\n}\r\n\r\n"
            "STRING 5\r\n{\r\n小玉\r\n}\r\n").encode("utf-8")
+    hero_mods = [
+        ("unam", 3, 0, 0, "TRIGSTR_1"),        # title  (稱號)
+        ("upro", 3, 0, 0, "TRIGSTR_5"),        # proper name (名字)
+        ("usca", 2, 0, 0, 1.5),                # Scaling Value → model scale
+        ("umdl", 3, 0, 0, "fixhero.mdx"),
+        ("uhab", 3, 0, 0, "A001,Aamk"),
+        ("uhpm", 0, 0, 0, 200), ("umpm", 0, 0, 0, 150),
+        ("ustr", 0, 0, 0, 20), ("uagi", 0, 0, 0, 15),
+        ("uint", 0, 0, 0, 18), ("umvs", 0, 0, 0, 300),
+        ("ua1c", 2, 0, 0, 2.0), ("ua1d", 0, 0, 0, 4),
+        ("ua1s", 0, 0, 0, 6), ("ua1r", 0, 0, 0, 128),
+    ]
+    # -- rawMods passthrough fixture (task #56) --------------------------------
+    # The importer whitelists ~27 unit field codes; historically every OTHER
+    # code was silently dropped (a real GoDie w3u object carries up to 70 codes,
+    # the union across the map is 180). Pad this hero out to 180 DISTINCT codes,
+    # all UNKNOWN to the whitelist, so the passthrough test can prove 180/180
+    # survive (typed ∪ rawMods) instead of the old ~30/180. Codes are synthetic
+    # 'xNNN' tags, disjoint from the whitelist and from the real codes above.
+    _present = {m[0] for m in hero_mods}
+    _i = 0
+    while len(_present) < 180:
+        _code = f"x{_i:03d}"
+        _i += 1
+        if _code in _present:
+            continue
+        hero_mods.append((_code, 0, 0, 0, 1000 + _i))
+        _present.add(_code)
     w3u = obj_file([
-        ("Hpal", "H001", [
-            ("unam", 3, 0, 0, "TRIGSTR_1"),        # title  (稱號)
-            ("upro", 3, 0, 0, "TRIGSTR_5"),        # proper name (名字)
-            ("usca", 2, 0, 0, 1.5),                # Scaling Value → model scale
-            ("umdl", 3, 0, 0, "fixhero.mdx"),
-            ("uhab", 3, 0, 0, "A001,Aamk"),
-            ("uhpm", 0, 0, 0, 200), ("umpm", 0, 0, 0, 150),
-            ("ustr", 0, 0, 0, 20), ("uagi", 0, 0, 0, 15),
-            ("uint", 0, 0, 0, 18), ("umvs", 0, 0, 0, 300),
-            ("ua1c", 2, 0, 0, 2.0), ("ua1d", 0, 0, 0, 4),
-            ("ua1s", 0, 0, 0, 6), ("ua1r", 0, 0, 0, 128),
-        ]),
+        ("Hpal", "H001", hero_mods),
     ], False, original=[
         # ORIGINAL-table hero: standard rawcode modified in place (no new id,
         # no umdl → Blizzard stock model → stand-in path in the importer).
@@ -436,6 +453,9 @@ def main(out_path: str) -> None:
             ("unam", 3, 0, 0, "TRIGSTR_3"),
             ("igol", 0, 0, 0, 750),
             ("iabi", 3, 0, 0, ""),
+            # 'ilev' has no typed field in the stats.py item reader → must be
+            # carried through under the item's rawMods (task #56 passthrough).
+            ("ilev", 0, 0, 0, 3),
         ]),
     ], False)
     doo = b"W3do" + struct.pack("<III", 8, 11, 0) + struct.pack("<I", 0)

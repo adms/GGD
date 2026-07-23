@@ -2,6 +2,7 @@
   "id": "godie-uwar",
   "schema": "champion@1",
   "name": "食神 - 撒尿牛丸",
+  "icon": "assets/icons/champions/godie-uwar.webp",
   "description": "故事：\n神秘的戰士，據說是被混在一起才變成撒尿牛丸的。\n(出自:食神)\n\n推薦玩家 : 破塔殺人\n上手度 : 中\n\n角色成長：\n力量 + 1.85\n敏捷 + 2.00\n智慧 + 2.45\n基礎跑速 305\n\n可學習的技能：\n得罪了方丈還想走、打狗鏟、爆烈海景佛跳牆、火雲掌",
   "role": "marksman",
   "attackType": "ranged",
@@ -16,7 +17,7 @@
     "armor": 9,
     "mr": 28,
     "as": 0.45,
-    "ms": 5.8,
+    "ms": 5.9,
     "critChance": 0,
     "critDamage": 1.75,
     "cdr": 0,
@@ -71,7 +72,7 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 1.0
+                "coeff": 0.6
               }
             ]
           }
@@ -174,7 +175,7 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 0.48
+                "coeff": 0.7
               }
             ]
           }

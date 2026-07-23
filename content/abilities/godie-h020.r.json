@@ -29,7 +29,7 @@
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 1.0
+            "coeff": 0.7
           }
         ]
       }
@@ -41,7 +41,7 @@
       "moveSpeedMult": 0.6
     }
   ],
-  "vfxKey": "fx.ember-bolt-cast",
+  "vfxKey": "fx.prim.void.explosion-lg",
   "targetsEnemies": true,
   "schema": "ability@1"
 }

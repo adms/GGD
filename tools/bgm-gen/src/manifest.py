@@ -117,6 +117,67 @@ PENDING_SWAP = {
 }
 
 
+# The Samantha-James rotating variants (task #137). These are a SECOND, optional
+# arrangement of every scene, rendered to `<scene>.samantha.mp3`. They live under
+# a SEPARATE manifest key (`samanthaVariants`), NOT in `tracks`: the authored
+# `content/config/audio-map.json` is a `.strict()` schema doc that must have
+# exactly the 12 base scene keys, and packages/shared/…/audioAssets.test.ts
+# iterates `tracks` asserting every entry has a matching audio-map bgm key — so a
+# variant in `tracks` (scene "combat.samantha") would fail that test. Keeping them
+# in their own array leaves `tracks` and the audio-map untouched while still
+# giving the audition page (audition.py) the full 12+12.
+VARIANT_SUFFIX = ".samantha"
+VARIANT_STYLE = "samantha-james-deep-house"
+
+
+def variant_entry_from_meta(m: dict) -> dict:
+    base = m["scene"][: -len(VARIANT_SUFFIX)] if m["scene"].endswith(VARIANT_SUFFIX) else m["scene"]
+    e = entry_from_meta(m)
+    e["variantOf"] = base
+    e["variantStyle"] = VARIANT_STYLE
+    e["license"] = OWN_LICENSE
+    return e
+
+
+def add_variants() -> int:
+    """Merge `build/<scene>.samantha.meta.json` into MANIFEST.json under the
+    `samanthaVariants` key WITHOUT touching `tracks`, the schemaNote or the
+    generator block. Append-only: base entries stay byte-identical."""
+    with open(MANIFEST) as f:
+        man = json.load(f)
+    have = {v.get("scene"): v for v in man.get("samanthaVariants", [])}
+    found: list[str] = []
+    for slot in SLOTS:
+        vid = f"{slot}{VARIANT_SUFFIX}"
+        p = os.path.join(BUILD, f"{vid}.meta.json")
+        if not os.path.exists(p):
+            continue
+        with open(p) as f:
+            have[vid] = variant_entry_from_meta(json.load(f))
+        found.append(vid)
+    ordered = [have[f"{s}{VARIANT_SUFFIX}"] for s in SLOTS if f"{s}{VARIANT_SUFFIX}" in have]
+    man["samanthaVariants"] = ordered
+    gen = man.get("generator")
+    if isinstance(gen, dict):
+        gen["samanthaVariants"] = [v["scene"] for v in ordered]
+        gen["samanthaVariantNote"] = (
+            "Task #137: a nu-jazz / deep-house 'Samantha James' reimagining of every "
+            "scene, rendered by tools/bgm-gen to <scene>.samantha.mp3 (~120 bpm, "
+            "four-on-the-floor, jazzy Rhodes 7th/9th, breathy female-vocal pad/hook). "
+            "Kept OUT of `tracks` and out of audio-map.json (that doc's .strict() "
+            "schema + audioAssets.test.ts forbid extra bgm keys); the client rotates "
+            "original<->variant per scene entry via apps/client/src/audio/bgmVariants.ts "
+            "(login `menu` stays single-theme, #134). 12 originals + 12 variants = 12+12."
+        )
+    with open(MANIFEST, "w") as f:
+        json.dump(man, f, indent=2, ensure_ascii=False)
+        f.write("\n")
+    print(f"variants merged: {', '.join(found) or '(none)'}")
+    print(f"wrote {MANIFEST} — tracks[{len(man.get('tracks', []))}] + "
+          f"samanthaVariants[{len(ordered)}]")
+    return 0
+
+
 def entry_from_meta(m: dict) -> dict:
     return {
         "scene": m["scene"],
@@ -148,7 +209,13 @@ def entry_from_meta(m: dict) -> dict:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true")
+    ap.add_argument("--variants", action="store_true",
+                    help="task #137: append the samantha variants under their own "
+                         "manifest key, leaving tracks/schemaNote/generator intact")
     a = ap.parse_args()
+
+    if a.variants:
+        return add_variants()
 
     with open(MANIFEST) as f:
         old = json.load(f)

@@ -30,13 +30,13 @@
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 1.0
+            "coeff": 0.6
           }
         ]
       }
     }
   ],
-  "vfxKey": "fx.ember-bolt-cast",
+  "vfxKey": "fx.prim.void.explosion",
   "targetsEnemies": true,
   "radius": 5.5
 }

@@ -15,6 +15,23 @@ export { ContentStore } from "./store";
 export { ContentLoader, validateDoc, type LoadResult } from "./loader";
 export { HttpContentSource, type HttpContentSourceOptions } from "./sources/HttpContentSource";
 export {
+  BundleContentSource,
+  type BundleContentSourceOptions,
+} from "./sources/BundleContentSource";
+export { FallbackContentSource } from "./sources/FallbackContentSource";
+export {
+  CONTENT_BUNDLE_SCHEMA,
+  CONTENT_BUNDLE_FILE,
+  buildContentBundle,
+  serializeContentBundle,
+  parseContentBundle,
+  manifestFromBundle,
+  indexFromBundle,
+  type ContentBundle,
+  type BundleCollection,
+  type BundleEntry,
+} from "./bundle";
+export {
   REFERENCES,
   extractRefs,
   validateReferences,

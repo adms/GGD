@@ -55,6 +55,27 @@ class ObjEntry:
         return out
 
 
+def _data_col_of(m: Mod, numeric_only: bool = False) -> int | None:
+    """The 1-based data column of a mod, or None if it is not a data column.
+
+    Factored out of data_columns() so raw_mods() can recognise the EXACT same
+    mods and avoid echoing them into the passthrough (they already have a typed
+    home in the `data` view). `data_col` from the file header is authoritative
+    when set; otherwise the legacy 4th-char-digit fallback for non-'a' codes.
+    """
+    if numeric_only and m.var_type not in (0, 1, 2):
+        return None
+    col = m.data_col
+    if col < 1:
+        # legacy fallback: infer from the code's 4th char. The `a****`
+        # codes are the generic per-ability fields (anam/acdn/aran/...),
+        # never data columns.
+        if len(m.code) == 4 and m.code[3].isdigit() and not m.code.startswith("a"):
+            return int(m.code[3])
+        return None
+    return col
+
+
 def data_columns(entry: ObjEntry, numeric_only: bool = False) -> dict[int, dict[int, object]]:
     """An ability's data columns as {column: {level: value}}, 1-based columns.
 
@@ -77,19 +98,50 @@ def data_columns(entry: ObjEntry, numeric_only: bool = False) -> dict[int, dict[
     """
     cols: dict[int, dict[int, object]] = {}
     for m in entry.mods:
-        if numeric_only and m.var_type not in (0, 1, 2):
+        col = _data_col_of(m, numeric_only)
+        if col is None:
             continue
-        col = m.data_col
-        if col < 1:
-            # legacy fallback: infer from the code's 4th char. The `a****`
-            # codes are the generic per-ability fields (anam/acdn/aran/...),
-            # never data columns.
-            if len(m.code) == 4 and m.code[3].isdigit() and not m.code.startswith("a"):
-                col = int(m.code[3])
-            else:
-                continue
         cols.setdefault(col, {})[m.level] = m.value
     return cols
+
+
+def raw_mods(entry: ObjEntry, known, resolve=None,
+             skip_data_columns: bool = False, numeric_only: bool = False) -> dict:
+    """Every field code on `entry` that has NO dedicated typed field — the
+    passthrough that stops the record builders from silently dropping data.
+
+    The builders (w3xlib/stats.py, src_objects.py) read a fixed WHITELIST of
+    4-char codes into named fields; historically every OTHER code vanished. In
+    the GoDieEX22s map the w3u carries 180 distinct field codes but only 27 had
+    a typed home, so 153 were dropped per object. This returns the remainder,
+    keyed by the raw 4-char code, so nothing is lost:
+
+      - a code seen only at level 0 (non-leveled w3u/w3t) -> its scalar value
+      - a code seen across levels (w3a)                    -> {str(level): value}
+
+    `known` is the builder's whitelist; those codes are skipped (they already
+    map to a typed field). `skip_data_columns` additionally skips mods the file
+    marks as ability data columns — they are captured in the typed `data` view,
+    so echoing them here would just duplicate them. `resolve` (optional) is
+    applied to every value, e.g. to expand TRIGSTR string references.
+    """
+    if resolve is None:
+        def resolve(v):  # noqa: E731 — identity default
+            return v
+    seen: dict[str, dict[int, object]] = {}
+    for m in entry.mods:
+        if m.code in known:
+            continue
+        if skip_data_columns and _data_col_of(m, numeric_only) is not None:
+            continue
+        seen.setdefault(m.code, {})[m.level] = resolve(m.value)
+    out: dict[str, object] = {}
+    for code, levels in seen.items():
+        if set(levels) == {0}:
+            out[code] = levels[0]
+        else:
+            out[code] = {str(lv): v for lv, v in sorted(levels.items())}
+    return out
 
 
 def _rawcode(b: bytes) -> str:

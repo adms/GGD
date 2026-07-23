@@ -10,10 +10,12 @@ import { TouchControls } from "./TouchControls";
 import { hudTouch } from "./hud/HudSlot";
 import { hudSlotHeight, hudSlotStyle } from "./hud/hudLayout";
 import { useHudSlotHidden } from "./hud/useHudPanels";
+import { EquipmentBar } from "./hud/EquipmentBar";
 import { CouchHudGrid } from "./components/CouchHudGrid";
 import { AbilityBar } from "./components/AbilityBar";
 import { ExUnlockToast } from "./components/ExUnlockToast";
 import { ResourceBars } from "./components/ResourceBars";
+import { EnemyTeamPanel } from "./components/EnemyTeamPanel";
 import { GoldLevel } from "./components/GoldLevel";
 import { PhaseTimer } from "./components/PhaseTimer";
 import { TeamLivesBar } from "./components/TeamLivesBar";
@@ -26,6 +28,7 @@ import { PrepClock } from "./panels/PrepClock";
 import { ReadyButton } from "./panels/ReadyButton";
 import { MatchEndPanel } from "./panels/MatchEndPanel";
 import { IntermissionStage } from "./IntermissionStage";
+import { RoundEndVoice } from "./RoundEndVoice";
 import { PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "./theme";
 
 /**
@@ -127,6 +130,8 @@ export function HudRoot(): React.JSX.Element {
   return (
     <>
       <WorldAnchorLayer />
+      {/* task #139 — round-end (moment 3) champion-quote VO trigger (headless) */}
+      <RoundEndVoice />
       <PhaseTimer />
       <TeamLivesBar />
       {/* revive circles (task #84): mounted for LIVING and DEAD players alike —
@@ -138,7 +143,13 @@ export function HudRoot(): React.JSX.Element {
         <>
           {!touchControls && <AbilityBar />}
           <ResourceBars />
+          {/* top-left panel: the current duel's 3 enemies (HP/MP + level). Claims
+              the "enemy-team" slot (ui/hud/hudLayout); self-gates to combat. */}
+          <EnemyTeamPanel />
           <GoldLevel />
+          {/* persistent equipment bar (task #44): claims the "equipment" HUD
+              slot (bottom-right desktop / top-right touch, task #107). */}
+          <EquipmentBar />
           <SpectatorHint />
           <ExUnlockToast />
         </>

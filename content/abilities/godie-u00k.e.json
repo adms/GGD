@@ -33,12 +33,12 @@
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 0.96
+            "coeff": 0.6
           }
         ]
       }
     }
   ],
-  "vfxKey": "fx.ember-bolt-cast",
+  "vfxKey": "fx.prim.void.swarm",
   "targetsEnemies": true
 }

@@ -21,18 +21,18 @@
   "effects": [
     {
       "kind": "damage",
-      "damageType": "magic",
+      "damageType": "physical",
       "amount": {
         "perRank": [
-          1.0,
-          1.0,
-          1.0,
-          1.0
+          350,
+          450,
+          550,
+          650
         ],
         "ratios": [
           {
-            "stat": "ap",
-            "coeff": 0.003
+            "stat": "ad",
+            "coeff": 0.5
           }
         ]
       }
@@ -44,7 +44,7 @@
       "stun": true
     }
   ],
-  "vfxKey": "fx.ember-bolt-cast",
+  "vfxKey": "fx.prim.void.pulse-sm",
   "targetsEnemies": true,
   "radius": 1.5,
   "schema": "ability@1"

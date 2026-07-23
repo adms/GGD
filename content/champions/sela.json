@@ -1,6 +1,7 @@
 {
   "id": "sela",
   "name": "Sela, the Ember Sage",
+  "icon": "assets/icons/champions/sela.webp",
   "role": "mage",
   "attackType": "ranged",
   "modelKey": "champ.sela",

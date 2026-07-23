@@ -15,7 +15,7 @@ import { initSettings } from "./settings";
 import { qualityController } from "./render/QualityController";
 import { bindGoreToSettings } from "./vfx/goreSettings";
 import { perfBus } from "./perfBus";
-import { ensureContentLoaded } from "./content/bootContent";
+import { ensureContentLoaded, isContentReady } from "./content/bootContent";
 import { initCursor } from "./cursor";
 import "./ui/mobile.css";
 import "./ui/buttonFx.css"; // shared JRPG + cyber-glow button skin (one import for the app)
@@ -47,35 +47,16 @@ const hudEl = document.getElementById("hud-root")!;
 const rootHost = window as unknown as { __ggdRoot?: ReturnType<typeof createRoot> };
 const root = rootHost.__ggdRoot ?? (rootHost.__ggdRoot = createRoot(hudEl));
 
-/** Minimal boot placeholder shown while the full content set is fetched. */
-function ContentLoadingScreen(): React.JSX.Element {
-  return (
-    <div
-      style={{
-        position: "absolute",
-        left: "50%",
-        top: "50%",
-        transform: "translate(-50%, -50%)",
-        padding: "14px 28px",
-        borderRadius: 10,
-        background: "#141824",
-        border: "1px solid #2c3448",
-        color: "#e6e9f0",
-        font: "14px system-ui, sans-serif",
-        textAlign: "center",
-      }}
-    >
-      Loading content…
-      <div style={{ fontSize: 11, color: "#8a93a6", marginTop: 6 }}>fetching champions</div>
-    </div>
-  );
-}
-
 let app: GameApp | null = null;
 
 function startMatch(): void {
   const { match } = appStore.getState();
   if (!match || app) return;
+  // Never start the sim/render against a half-populated registry. If the
+  // background content load has not finished yet, this no-ops; the
+  // ensureContentLoaded().then callback below re-invokes startMatch the moment
+  // the registries are ready (ScreenBody shows MatchContentGate meanwhile).
+  if (!isContentReady()) return;
   resetHudStore();
   const platform = match.mode === "platform" && match.endpoint && match.seatTokens;
   app = new GameApp(canvas, {
@@ -103,23 +84,24 @@ function stopMatch(): void {
   resetHudStore();
 }
 
-// Boot: load the FULL content set (93+ champions) into the sim/content
-// registries BEFORE any champ-select UI renders or any match sim/prediction
-// runs, so imported champions are selectable, predictable, and rendered. Fall
-// back to the sela/thorne skeleton (with a warning) if the mount is unreachable.
-async function boot(): Promise<void> {
-  root.render(<ContentLoadingScreen />);
-  const res = await ensureContentLoaded();
-  if (res.ok) {
-    console.info(
-      `[client] content loaded: ${res.championCount} champions (${res.contentVersion})`,
-    );
-  } else {
-    console.warn(
-      `[client] content load failed (${res.error}); falling back to skeleton (${res.championCount} champions)`,
-    );
-  }
-
+// Boot ordering (login-speed pass): the login/auth screen needs NO game
+// content, so it must NOT wait on the 1441-doc content load. We therefore:
+//   1. wire the GameApp lifecycle to the platform store's `screen`,
+//   2. paint the app shell (AuthScreen / lobby) IMMEDIATELY — first paint no
+//      longer blocks on content,
+//   3. load the FULL content set (93+ champions) in the BACKGROUND. Only the
+//      content-dependent flow (entering a match) is gated on readiness:
+//      startMatch defers until the registries are populated, and ScreenBody
+//      shows MatchContentGate meanwhile. By the time a user logs in and clicks
+//      play the ~190KB load is almost always already done, so the gate is
+//      usually invisible.
+// On load failure loadAllContent registers the sela/thorne skeleton so the game
+// still boots; we surface that as a non-fatal warning here (never a first-paint
+// blocker).
+function boot(): void {
+  // Registered BEFORE the first render so a later match transition is never
+  // missed. main.tsx's subscription fires ahead of React's own store
+  // subscription, so GameApp is created before the HUD mounts (unchanged).
   appStore.subscribe((state, prev) => {
     if (state.screen === "match" && prev.screen !== "match") startMatch();
     else if (state.screen !== "match" && prev.screen === "match") stopMatch();
@@ -131,7 +113,29 @@ async function boot(): Promise<void> {
     }
   });
 
+  // Paint the shell now — AuthScreen (or, for a returning session, the lobby)
+  // is interactive on first paint, without awaiting any content.
   root.render(<AppRoot />);
+
+  // Fire-and-track the content load. The readiness signal (content/bootContent)
+  // flips when it settles; ScreenBody + startMatch observe it.
+  void ensureContentLoaded().then((res) => {
+    if (res.ok) {
+      // transport is load-bearing telemetry: "per-doc" means content/bundle.json
+      // was missing/stale, so this boot paid 1,454 requests instead of 1.
+      console.info(
+        `[client] content loaded: ${res.championCount} champions (${res.contentVersion}) via ${res.transport ?? "?"}` +
+          (res.transportReason ? ` — bundle unavailable: ${res.transportReason}` : ""),
+      );
+    } else {
+      console.warn(
+        `[client] content load failed (${res.error}); falling back to skeleton (${res.championCount} champions)`,
+      );
+    }
+    // If the player already reached the match screen while content was still
+    // loading, launch the deferred match now that the registries are populated.
+    startMatch();
+  });
 }
 
-void boot();
+boot();

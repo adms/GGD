@@ -10,14 +10,22 @@ import { cover } from "@ggd/shared/testkit/cover";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
+import { Color3 } from "@babylonjs/core/Maths/math.color";
+import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
+import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
+import { AnimationGroup } from "@babylonjs/core/Animations/animationGroup";
+import { Animation } from "@babylonjs/core/Animations/animation";
+import { AssetContainer } from "@babylonjs/core/assetContainer";
 import type { DynamicTexture } from "@babylonjs/core/Materials/Textures/dynamicTexture";
 import { makeSoftDotTexture } from "./sprites";
 import {
   DragonController,
+  ModelDragonController,
   BeamController,
   ExplosionController,
   CombatFlashController,
   type FxController,
+  type DragonContainerLoader,
 } from "./fx";
 import type { BeamPhaseConfig, ExplosionPhaseConfig, FlashPhaseConfig, DragonPathConfig } from "./math";
 
@@ -178,5 +186,88 @@ describe("CombatFlashController", () => {
 
     ctrl.dispose();
     expect(scene.meshes.filter((m) => m.name.startsWith("login-flash")).length).toBe(0);
+  });
+});
+
+describe("ModelDragonController (shared glb template)", () => {
+  /** A minimal stand-in for the loaded dragon2.glb: one skinned box + a Flying clip. */
+  const makeDragonTemplate = (): AssetContainer => {
+    const container = new AssetContainer(scene);
+    const mesh = MeshBuilder.CreateBox("dragon-body", { size: 1 }, scene);
+    const mat = new StandardMaterial("dragon-skin", scene);
+    mat.emissiveColor = new Color3(0, 0, 0); // molten emissive is applied per-instance
+    mesh.material = mat;
+    container.meshes.push(mesh);
+    container.materials.push(mat);
+    container.rootNodes.push(mesh);
+    const group = new AnimationGroup("Fast_Flying", scene);
+    const anim = new Animation("flap", "rotation.y", 60, Animation.ANIMATIONTYPE_FLOAT);
+    anim.setKeys([
+      { frame: 0, value: 0 },
+      { frame: 30, value: 1 },
+    ]);
+    group.addTargetedAnimation(anim, mesh);
+    container.animationGroups.push(group);
+    // a real LoadAssetContainerAsync leaves nothing of its own in the scene
+    container.removeAllFromScene();
+    return container;
+  };
+
+  /** let the async load().then() chains (acquire → instantiate) land */
+  const flush = async (): Promise<void> => {
+    for (let i = 0; i < 6; i++) await Promise.resolve();
+  };
+
+  const mkOpts = (phase: number, loadContainer: DragonContainerLoader) => ({
+    path: { ...DRAGON_PATH, phase },
+    url: "/content/assets/models/menu/dragon2.glb",
+    scale: 2,
+    loadContainer,
+  });
+
+  const roots = (): unknown[] => scene.transformNodes.filter((n) => n.name === "login-model-dragon");
+
+  it("two dragons sharing a url load the template ONCE, cloned independently", async () => {
+    const template = makeDragonTemplate();
+    let loads = 0;
+    const loadContainer: DragonContainerLoader = () => {
+      loads++;
+      return Promise.resolve(template);
+    };
+
+    const a = new ModelDragonController(scene, dotTex, mkOpts(0, loadContainer));
+    const b = new ModelDragonController(scene, dotTex, mkOpts(Math.PI, loadContainer));
+    await flush();
+
+    // THE DEDUP: one fetch+parse feeds both dragons (previously two ~4.3 MB loads).
+    expect(loads).toBe(1);
+    // each dragon instantiated its own model root
+    expect(roots().length).toBe(2);
+
+    // cloneMaterials: the SHARED template material is never mutated (stays black),
+    // while each instance gets its own molten emissive → independent shimmer.
+    expect((template.materials[0] as StandardMaterial).emissiveColor.r).toBe(0);
+    const molten = scene.materials.filter(
+      (m) => m instanceof StandardMaterial && m.emissiveColor.r > 1,
+    );
+    expect(molten.length).toBe(2);
+
+    a.dispose();
+    b.dispose();
+    expect(roots().length).toBe(0); // both clones torn down
+    // fallback procedural dragon is gone too (retired once the model took over)
+    expect(scene.meshes.filter((m) => m.name.startsWith("login-dragon")).length).toBe(0);
+  });
+
+  it("a dispose that races the async load leaks nothing", async () => {
+    const template = makeDragonTemplate();
+    const loadContainer: DragonContainerLoader = () => Promise.resolve(template);
+
+    const ctrl = new ModelDragonController(scene, dotTex, mkOpts(0, loadContainer));
+    ctrl.dispose(); // tear down BEFORE the load().then instantiation lands
+    await flush();
+
+    expect(roots().length).toBe(0);
+    expect(scene.meshes.filter((m) => m.name.startsWith("login-dragon")).length).toBe(0);
   });
 });

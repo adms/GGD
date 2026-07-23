@@ -1,5 +1,6 @@
-/** Shop (道具購買), item gacha (道具抽卡), and inventory. */
+/** Shop (道具購買), item gacha (道具抽卡), inventory, and buy/sell undo. */
 import type { EntityId, ItemId } from "../../ids";
+import type { ShopTxn } from "../components";
 import type { SimWorld } from "../SimWorld";
 import { Items, LootTables } from "../content/registry";
 import { attachSource, detachSource } from "../stats/statPipeline";
@@ -71,12 +72,19 @@ export function buyItem(world: SimWorld, id: EntityId, itemId: ItemId): BuyResul
 
   if (itemId === STAT_TICK_ITEM_ID) {
     const outcome = buyStatUpgrade(world, id);
+    // A committed stat tick is not a reversible weapon buy, and it mutates the
+    // very stat-streak an item-buy undo would restore — so it COMMITS the
+    // session, closing the undo history (task #121). Only on success.
+    if (outcome.result === "ok") champ.undoStack.length = 0;
     return outcome.result === "ok" ? "ok" : outcome.result === "no-gold" ? "no-gold" : "unknown-item";
   }
   if (itemId === LEGENDARY_ORB_ITEM_ID) {
     const roll = buyLegendaryOrb(world, id);
     if (roll.result !== "ok") return roll.result === "no-champion" ? "unknown-item" : roll.result;
     resetStatPath(world, id, itemId);
+    // the orb reserves a slot + rolls a host-side card — not cleanly reversible,
+    // so it commits the session too (task #121).
+    champ.undoStack.length = 0;
     return "ok";
   }
 
@@ -96,6 +104,9 @@ export function buyItem(world: SimWorld, id: EntityId, itemId: ItemId): BuyResul
   if (slot < 0 || purchasableSlots(champ) < 1) return "no-slot";
   if (champ.gold < def.cost) return "no-gold";
 
+  // Capture the stat-streak BEFORE resetStatPath zeroes it, so an undo of this
+  // buy can restore it EXACTLY (task #121).
+  const statStacksBefore = champ.statStacks;
   champ.gold -= def.cost;
   champ.items[slot] = itemId;
   attachSource(world, id, {
@@ -105,6 +116,9 @@ export function buyItem(world: SimWorld, id: EntityId, itemId: ItemId): BuyResul
     hooks: def.passive,
   });
   resetStatPath(world, id, itemId);
+  // Record the exact reversal for the undo button. goldDelta is NEGATIVE (gold
+  // spent); undo does `gold -= goldDelta` to refund precisely what was charged.
+  champ.undoStack.push({ kind: "buy", itemId, slot, goldDelta: -def.cost, statStacksBefore });
   world.emit("itemBought", { id, itemId, slot, gold: champ.gold });
   return "ok";
 }
@@ -115,11 +129,87 @@ export function sellItem(world: SimWorld, id: EntityId, slot: number): boolean {
   const itemId = champ.items[slot];
   if (!itemId) return false;
   const def = Items.get(itemId);
-  champ.gold += Math.floor(def.cost * SELL_REFUND);
+  // The REFUND that is actually applied — a floored 40% (SELL_REFUND). The undo
+  // reverses THIS figure, never a re-derived one, so a floor rounding can never
+  // leak or burn a coin across a buy→sell→undo cycle (task #121).
+  const refund = Math.floor(def.cost * SELL_REFUND);
+  champ.gold += refund;
   champ.items[slot] = null;
   detachSource(world, id, `item:${itemId}#${slot}`);
+  // goldDelta is POSITIVE (refund received); undo does `gold -= goldDelta`.
+  champ.undoStack.push({ kind: "sell", itemId, slot, goldDelta: refund, statStacksBefore: 0 });
   world.emit("itemSold", { id, itemId, slot, gold: champ.gold });
   return true;
+}
+
+/**
+ * Result of an {@link undoShopAction}. `ok` reversed the top transaction;
+ * `nothing-to-undo` means the session's undo history is empty (you cannot undo
+ * more than you did, so a second undo of the same action is impossible); `stale`
+ * means the recorded slot no longer holds what the reversal expects and the undo
+ * was refused rather than clobber inventory (defensive — the commit rules below
+ * keep this from arising in normal play).
+ */
+export type UndoResult = "ok" | "nothing-to-undo" | "stale" | "no-champion";
+
+/**
+ * Undo the most recent buy/sell of the current shopping session (task #121).
+ *
+ * THE NO-ARBITRAGE INVARIANT. Every entry stores the gold delta that was
+ * actually applied, so an undo is the exact inverse — `gold -= goldDelta` —
+ * and a buy→sell (a real −60% loss) followed by undo→undo returns to the precise
+ * starting gold and inventory, never a coin more. The entry is POPPED, so no
+ * action is ever undone twice; the stack is cleared when combat commits the
+ * round (enterCombat) and the command gate refuses undo once the shop closes, so
+ * there is no way to repeat any buy→sell→undo cycle to manufacture gold.
+ */
+export function undoShopAction(world: SimWorld, id: EntityId): UndoResult {
+  const champ = world.champion.get(id);
+  if (!champ) return "no-champion";
+  const txn: ShopTxn | undefined = champ.undoStack[champ.undoStack.length - 1];
+  if (!txn) return "nothing-to-undo";
+
+  if (txn.kind === "buy") {
+    // reversing a buy: the item must still sit where it landed
+    if (champ.items[txn.slot] !== txn.itemId) return "stale";
+    champ.items[txn.slot] = null;
+    detachSource(world, id, `item:${txn.itemId}#${txn.slot}`);
+    champ.gold -= txn.goldDelta; // goldDelta < 0 → refund the exact cost
+    champ.statStacks = txn.statStacksBefore; // restore the streak the buy 歸零'd
+  } else {
+    // reversing a sell: the slot must still be empty for the item to return
+    if (champ.items[txn.slot] !== null) return "stale";
+    const def = Items.get(txn.itemId);
+    champ.items[txn.slot] = txn.itemId;
+    attachSource(world, id, {
+      id: `item:${txn.itemId}#${txn.slot}`,
+      kind: "item",
+      modifiers: def.modifiers,
+      hooks: def.passive,
+    });
+    champ.gold -= txn.goldDelta; // goldDelta > 0 → take the exact refund back
+  }
+
+  champ.undoStack.pop(); // consumed — the same action can never be undone twice
+  world.emit("shopUndone", {
+    id,
+    kind: txn.kind,
+    itemId: txn.itemId,
+    slot: txn.slot,
+    gold: champ.gold,
+  });
+  return "ok";
+}
+
+/**
+ * Commit the current shopping session — drop the undo history so nothing bought
+ * this round can be reversed once combat starts (task #121). Called by the
+ * MatchController at enterCombat; keeping it here means the shop owns its own
+ * lifecycle and a stray cross-round undo can never manufacture a free refund.
+ */
+export function commitShopSession(world: SimWorld, id: EntityId): void {
+  const champ = world.champion.get(id);
+  if (champ) champ.undoStack.length = 0;
 }
 
 /**

@@ -524,11 +524,20 @@ export const IMPACT_TINTS = {
   magic: [0.68, 0.5, 1],
   true: [1, 1, 1],
   guardBreak: [0.9, 0.95, 1],
+  /** COUNTER-hit / crush: a saturated RED so a punish reads instantly (audit P1). */
+  counter: [1, 0.2, 0.15],
+  /** ICE spark: an opt-in icy cyan-white for cold abilities (content hitFeel). */
+  ice: [0.6, 0.85, 1],
 } as const satisfies Record<string, Rgb>;
 
 /** Per-intensity tuning: counts/lifetimes/sizes per the AAA-target ranges. */
 const IMPACT_TUNING = {
-  light: { flashN: 2, flashSize: 0.9, flashLife: 0.04, sparkN: 24, sparkLife: 0.28, sparkSize: 0.12, sparkSpeed: 8.5, smokeN: 6, smokeSize: 0.55, smokeAlpha: 0.28, ring: undefined as RingSpec | undefined },
+  // light = the plain melee auto, the MOST COMMON hit. Retuned brighter/bigger
+  // (task #147): the playtest read basic hits as having no spark at all. The
+  // white-hot flare now pops to 1.15u for 2–3 frames and 30 stretched sparks
+  // fan off the contact point, so a clean hit lands visibly — still well inside
+  // the perf bands (sparkN ≤ 80, flash ≤ 3 frames) and below the heavy tier.
+  light: { flashN: 3, flashSize: 1.15, flashLife: 0.045, sparkN: 30, sparkLife: 0.3, sparkSize: 0.14, sparkSpeed: 10, smokeN: 7, smokeSize: 0.6, smokeAlpha: 0.3, ring: undefined as RingSpec | undefined },
   heavy: { flashN: 3, flashSize: 1.3, flashLife: 0.045, sparkN: 36, sparkLife: 0.32, sparkSize: 0.15, sparkSpeed: 10, smokeN: 10, smokeSize: 0.75, smokeAlpha: 0.33, ring: { startRadius: 0.3, endRadius: 1.7, lifeMs: 240, alpha: 0.8 } as RingSpec },
   ex: { flashN: 4, flashSize: 1.8, flashLife: 0.05, sparkN: 56, sparkLife: 0.35, sparkSize: 0.18, sparkSpeed: 12, smokeN: 14, smokeSize: 0.95, smokeAlpha: 0.38, ring: { startRadius: 0.4, endRadius: 2.6, lifeMs: 320, alpha: 0.9 } as RingSpec },
 } as const;

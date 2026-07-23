@@ -26,16 +26,16 @@
       "damageType": "magic",
       "amount": {
         "perRank": [
-          1.0,
-          1.0,
-          1.0,
-          1.0,
-          1.0
+          250,
+          400,
+          550,
+          700,
+          850
         ],
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 0.005
+            "coeff": 0.6
           }
         ]
       }
@@ -47,7 +47,7 @@
       "moveSpeedMult": 0.6
     }
   ],
-  "vfxKey": "fx.firestorm",
+  "vfxKey": "fx.prim.fire.explosion",
   "targetsEnemies": true,
   "radius": 6.0,
   "schema": "ability@1"

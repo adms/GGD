@@ -31,10 +31,20 @@ import {
   gradeHeadline,
   isWinner,
   localSettlementCard,
+  localWinQuoteChampion,
   formatKda,
   reflectionHints,
   sortSettlementRanking,
 } from "./settlementModel";
+import { playChampionQuote } from "../../audio/nameVoice";
+import { cancelVictoryTaunt, playMatchTaunt } from "../../audio/victoryTaunt";
+import {
+  MATCH_PANEL_HOLD_MS,
+  MATCH_QUOTE_DELAY_MS,
+  MATCH_WASH_SETTLE_MS,
+  matchCardHeld,
+  victoryPresentation,
+} from "../../render/victoryPresentation";
 import {
   AUTO_SCROLL_HIGHLIGHT_CSS,
   highlightClass,
@@ -298,6 +308,12 @@ export function MatchEndPanel(): React.JSX.Element {
   const returnToLobby = useApp((s) => s.returnToLobby);
 
   const hasPayload = settlement !== null && settlement.perPlayer.length > 0;
+  const players = hasPayload ? settlement.perPlayer : [];
+  const local = localSettlementCard(players, localSeatId);
+  // Did MY team take the match? Resolved from the authoritative settlement
+  // payload (winnerTeam vs my card's team), so the celebration is never a local
+  // tally — and a loser is never celebrated at.
+  const wonMatch = hasPayload && isWinner(settlement.winnerTeam, local?.teamId ?? null);
 
   // auto-advance to the leaderboard delta screen after a grace period. The
   // countdown updater stays pure (no navigation side-effect inside setState); a
@@ -313,18 +329,87 @@ export function MatchEndPanel(): React.JSX.Element {
     if (hasPayload && secsLeft === 0) viewRankChange();
   }, [hasPayload, secsLeft, viewRankChange]);
 
-  const players = hasPayload ? settlement.perPlayer : [];
-  const local = localSettlementCard(players, localSeatId);
+  // task #93 — 暗色底 + 巨大烤雞煙火. The giant roast-chicken shell launches on the
+  // very frame the match is decided, which is the same frame this panel mounts —
+  // so the scoreboard would sit on top of the joke. Withhold the CARD (never the
+  // dark wash, which IS the 暗色底 the beat asks for) for exactly the shell's
+  // launch+expand+hold, then let it fade in over the droop. Winner-only, and a
+  // plain fail-open timer: if the firework is skipped or never fires, the score
+  // still appears on schedule.
+  //
+  // DERIVED, not stored: `cardHeld` must be true on the very FIRST render that
+  // has a winning payload. Storing it and setting it from an effect renders the
+  // card at full opacity for one commit before snapping it away (a visible
+  // flash of the scoreboard over the launching shell) and arms/re-arms the #36
+  // auto-scroll on that same commit. Only the "hold is OVER" edge needs state.
+  const [holdDone, setHoldDone] = useState(false);
+  const cardHeld = matchCardHeld(wonMatch, holdDone ? MATCH_PANEL_HOLD_MS : 0);
+  useEffect(() => {
+    setHoldDone(false);
+    if (!wonMatch) return;
+    const t = setTimeout(() => setHoldDone(true), MATCH_PANEL_HOLD_MS);
+    return () => clearTimeout(t);
+  }, [wonMatch]);
+
+  // task #93 — the SAVAGE 吃雞 VO. Picked deterministically from the replicated
+  // match id + winning team (audio/victoryTaunt), so every winner hears the same
+  // line; scheduled onto the shell break so it lands with the bird. The subtitle
+  // renders even when the mixer is muted or still autoplay-locked.
+  const matchId = hasPayload ? settlement.matchId : "";
+  const winnerTeam = hasPayload ? settlement.winnerTeam : -1;
+  const [tauntText, setTauntText] = useState("");
+  useEffect(() => {
+    if (!wonMatch) {
+      setTauntText("");
+      return;
+    }
+    let live = true;
+    const spec = victoryPresentation("match");
+    // The subtitle rides `onSpeak`, not the promise: the promise settles as soon
+    // as the LINE IS CHOSEN, so subtitling from it would print the punchline
+    // before the bird has even broken and before the voice says a word.
+    void playMatchTaunt(matchId || "offline", winnerTeam, {
+      delayMs: spec.voiceDelayMs,
+      onSpeak: (line) => {
+        if (live && line.text) setTauntText(line.text);
+      },
+    }).catch(() => {});
+    return () => {
+      live = false;
+      cancelVictoryTaunt(); // leaving settlement drops a taunt still queued
+    };
+  }, [wonMatch, matchId, winnerTeam]);
+
+  // task #139 — on a VICTORY settlement the LOCAL player's champion speaks its
+  // famous quote (名言). Win-only + local-only (each client plays only its own
+  // champion; nothing is broadcast). The pure resolver is null until the payload
+  // arrives AND the local team won, so this fires exactly once per winning match;
+  // a champion with no quote clip is a silent skip inside playChampionQuote.
+  // task #93 DEFERS it past the savage taunt: two VO clips on one beat is the
+  // likeliest defect here, and the joke rides the bird, so the 名言 follows once
+  // the card is revealed rather than talking over it.
+  const winQuoteChamp = localWinQuoteChampion(settlement, localSeatId);
+  useEffect(() => {
+    if (!winQuoteChamp) return;
+    const t = setTimeout(() => {
+      void playChampionQuote(winQuoteChamp).catch(() => {});
+    }, MATCH_QUOTE_DELAY_MS);
+    return () => clearTimeout(t);
+  }, [winQuoteChamp]);
+
   // Arm the ranking auto-scroll once per match — only when there IS a local row
-  // to reveal (spectators / a missing seat leave the list untouched). Hooks must
-  // run before the fallback early-return below.
+  // to reveal (spectators / a missing seat leave the list untouched), and not
+  // while the card is withheld for the chicken (task #36's reveal must happen
+  // where the player can actually see it). Hooks must run before the fallback
+  // early-return below.
   const scroll = useAutoScrollToRow<HTMLDivElement, HTMLDivElement>({
-    runKey: local ? `settle-${settlement?.matchId || "offline"}` : null,
+    runKey: local && !cardHeld ? `settle-${settlement?.matchId || "offline"}` : null,
   });
 
   if (!hasPayload) return <TeamPlacementFallback />;
 
-  const won = isWinner(settlement.winnerTeam, local?.teamId ?? null);
+  const won = wonMatch;
+  const victory = victoryPresentation("match");
   const nameForSeat = (seatId: number): string =>
     seats.find((s) => s.seatId === seatId)?.displayName || `Seat ${seatId}`;
 
@@ -336,14 +421,45 @@ export function MatchEndPanel(): React.JSX.Element {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "radial-gradient(ellipse at 50% 40%, rgba(10,14,24,0.55) 0%, rgba(6,8,14,0.86) 70%)",
-        pointerEvents: "auto",
+        // 暗色底 (task #93). While the card is HELD for the giant chicken the
+        // wash runs at its light variant — the full 0.86-alpha near-black plus
+        // brightness(0.55) would dim the very firework the hold exists to show.
+        // It settles into the real 暗色底 on the same curve the card fades in on.
+        background: cardHeld ? victory.backgroundHeld : victory.background,
+        backdropFilter: cardHeld ? victory.backdropFilterHeld : victory.backdropFilter,
+        WebkitBackdropFilter: cardHeld ? victory.backdropFilterHeld : victory.backdropFilter,
+        transition: `background ${MATCH_WASH_SETTLE_MS}ms ease-out, backdrop-filter ${MATCH_WASH_SETTLE_MS}ms ease-out`,
+        pointerEvents: cardHeld ? "none" : "auto",
         padding: 16,
         boxSizing: "border-box",
       }}
     >
+      {cardHeld && tauntText ? (
+        <div
+          style={{
+            position: "absolute",
+            left: "50%",
+            bottom: "18%",
+            transform: "translateX(-50%)",
+            maxWidth: "min(78vw, 720px)",
+            textAlign: "center",
+            fontSize: "clamp(16px, 2.4vh, 24px)",
+            fontWeight: 800,
+            lineHeight: 1.5,
+            color: "#f6e7c8",
+            textShadow: "0 2px 12px rgba(0,0,0,0.9)",
+            pointerEvents: "none",
+          }}
+        >
+          {tauntText}
+        </div>
+      ) : null}
       <div
         style={{
+          // held: transparent + click-through so the giant chicken reads; the
+          // card stays MOUNTED (refs alive) so nothing below has to re-arm.
+          opacity: cardHeld ? 0 : 1,
+          transition: "opacity 420ms ease-out",
           width: "min(760px, 96vw)",
           maxHeight: "92vh",
           overflowY: "auto",

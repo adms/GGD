@@ -34,18 +34,43 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, "..", ".."))
 GLB_DIR = os.path.join(REPO, "content", "assets", "models", "imported")
 
-# glb file -> {primitive index (== MDX geoset order among SHIPPED prims): why}
+# glb file -> {primitive index (== MDX geoset order among SHIPPED prims):
+#              (expected vertex count, why)}
 #
 # Each entry was verified against the source MDX's GEOA/KGAO track: the geoset
 # is alpha-0 in every sequence the clipMap can reach. See the task #59 scan
 # (tools/w3x-import/geoset_alpha_report.py) for the full census.
-JOBS: dict[str, dict[int, str]] = {
+#
+# Indices are relative to the FRESHLY-IMPORTED glb (pre-strip). The expected
+# vertex count makes the job self-checking: `main()` refuses to drop a prim whose
+# count does not match, so running against an already-stripped glb SKIPS safely
+# instead of nuking whatever geometry now sits at that index (idempotent re-run).
+JOBS: dict[str, dict[int, tuple[int, str]]] = {
     # 三刀流劍士 索隆 — Textures\Tornado2b.blp, 20v/10tri, half-width 223 WC3u
     # (~5.2u across a 1.7u hero). KGAO alpha is 1.0 ONLY inside the
     # "Attack Walk Stand Spin" sequence, which the clipMap never plays.
     # Re-added as a real rotating VFX at the model's `whirlWindDummy` node.
     "heromusashimiyamoto.glb": {
-        3: "Tornado2b whirlwind — WC3 showed it only in 'Attack Walk Stand Spin'",
+        3: (20, "Tornado2b whirlwind — WC3 showed it only in 'Attack Walk Stand Spin'"),
+    },
+    # 邪眼師 飛影 (godie-u010 / godie-uvng, imported.herohehi) — the SAME katana
+    # rig as 索隆 above (shares the `whirlWindDummy` node). Textures\Tornado2b.blp,
+    # 20v/10tri, half-width 223 WC3u (2.57u around a 1.7u hero). Its KGAO alpha is
+    # 0.0 in EVERY sequence (always-off in WC3) yet it ships permanently-ON because
+    # the importer drops GEOA — the user-reported stationary whirlwind (task #73).
+    # The whirlwind belongs to 飛影's 邪王炎殺黑龍波 / 黑龍 cast; strip the always-on
+    # artifact now, and it can be re-added later as a cast-gated VFX at
+    # `whirlWindDummy` exactly like apps/client/src/vfx/WhirlwindFx.ts did for 索隆.
+    "herohehi.glb": {
+        2: (20, "Tornado2b whirlwind — always-off in WC3 KGAO, ships permanently-on (GEOA dropped)"),
+    },
+    # 時空勇者 林克 (imported.linkstik) — Textures\gutz.blp, 41v/24tri, a wide flat
+    # ground-gore splat (half-width 1.05u at y 0.04–0.26). WC3 showed it ONLY in the
+    # post-death "Decay Flesh"/"Decay Bone" sequences, which the clipMap NEVER plays
+    # (death→"Death"); GEOA is dropped, so the gore ships stuck to Link's feet at all
+    # times. Pure effect texture, never legitimately visible — no re-add needed.
+    "linkstik.glb": {
+        2: (41, "gutz.blp decay-gore splat — WC3 showed it only in never-played 'Decay Flesh/Bone'"),
     },
 }
 
@@ -264,12 +289,33 @@ def main() -> int:
     only = None
     if "--only" in sys.argv:
         only = sys.argv[sys.argv.index("--only") + 1]
-    for name, drop in JOBS.items():
+    for name, spec in JOBS.items():
         if only and name != only:
             continue
         path = os.path.join(GLB_DIR, name)
         before = os.path.getsize(path)
         gltf, binary = read_glb(path)
+        # self-check: verify each target index still holds the expected effect
+        # prim (by vertex count) BEFORE stripping. On an already-stripped glb the
+        # count won't match — skip the file rather than delete real geometry.
+        prims = gltf.get("meshes", [{}])[0].get("primitives", [])
+        drop: dict[int, str] = {}
+        skip = False
+        for idx, (want_verts, reason) in spec.items():
+            if idx >= len(prims):
+                print(f"-- {name}: prim[{idx}] out of range ({len(prims)} prims) — "
+                      f"already stripped? skipping")
+                skip = True
+                break
+            got = gltf["accessors"][prims[idx]["attributes"]["POSITION"]]["count"]
+            if got != want_verts:
+                print(f"-- {name}: prim[{idx}] has {got}v, expected {want_verts}v — "
+                      f"already stripped / wrong index, refusing to strip")
+                skip = True
+                break
+            drop[idx] = reason
+        if skip:
+            continue
         gltf, new_bin, removed = strip(gltf, binary, drop)
         if dry:
             print(f"[dry] {name}: would remove {len(removed)} prim(s)")

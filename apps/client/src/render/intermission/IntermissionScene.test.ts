@@ -21,6 +21,7 @@ import { cover } from "@ggd/shared/testkit/cover";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import type { Engine } from "@babylonjs/core/Engines/engine";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
+import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
 import { AnimationGroup } from "@babylonjs/core/Animations/animationGroup";
 import { IntermissionScene, type IntermissionSceneOptions } from "./IntermissionScene";
 import { CAMERA_FOV, CAMERA_POSE, CAMERA_POSITION, CAMERA_TARGET } from "./layout";
@@ -222,6 +223,33 @@ describe("IntermissionScene", () => {
     expect(priv.championPulse).toBeNull();
     expect(root.scaling.x).toBeCloseTo(base, 6);
     expect(root.position.y).toBeCloseTo(0, 6);
+    s.dispose();
+  });
+
+  /**
+   * STANCE (task #111): the champion stands ON the floor, not sunk into it —
+   * the user saw 皮卡丘「face-down on the floor」. `setChampion` grounds the
+   * placed model (min.y → 0), the same per-model root-transform StorePreview
+   * applies (#129). Headless can't FETCH a .glb, so grounding is exercised
+   * directly on a real mesh whose bind box dips below the origin.
+   */
+  it("grounds the mounted champion so its feet sit on the floor, not below it", () => {
+    cover("intermission-champion-grounded");
+    const s = makeScene();
+    // a body whose lowest point is 0.6u BELOW the origin — placed at y=0 it
+    // would sink half into the paving (the "lying on the floor" look)
+    const root = new TransformNode("im-champion", s.scene);
+    const body = MeshBuilder.CreateBox("body", { width: 0.5, height: 1.7, depth: 0.5 }, s.scene);
+    body.parent = root;
+    body.position.y = 0.25; // box centre → spans y∈[-0.6, 1.1] under the root
+
+    const before = root.getHierarchyBoundingVectors(true);
+    expect(before.min.y).toBeLessThan(-0.1); // starts buried
+
+    (s as unknown as { groundChampion(r: TransformNode): void }).groundChampion(root);
+
+    const after = root.getHierarchyBoundingVectors(true);
+    expect(after.min.y).toBeCloseTo(0, 5); // feet now ON the floor, upright
     s.dispose();
   });
 

@@ -1,6 +1,6 @@
 /** App shell — boot → login → console with a left nav rail. */
 import { useEffect, useState } from "react";
-import { useApp, type Page } from "../store";
+import { pageRequiresSession, useApp, type Page } from "../store";
 import { LoginScreen } from "./LoginScreen";
 import { ConsoleHub } from "./ConsoleHub";
 import { PlayersPage } from "./PlayersPage";
@@ -11,8 +11,10 @@ import { CombatEnvPage } from "./CombatEnvPage";
 import { AiSettingsPage } from "./AiSettingsPage";
 import { ModelBudgetPage } from "./ModelBudgetPage";
 import { IconTrackingPage } from "./IconTrackingPage";
+import { MCoinGrantPage } from "./MCoinGrantPage";
 import { AuditPage } from "./AuditPage";
-import { Btn } from "./widgets";
+import { ChangePasswordDialog } from "./ChangePasswordDialog";
+import { Btn, Panel } from "./widgets";
 import { ACCENT, BG, PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "./theme";
 
 const NAV: { page: Page; label: string; emoji: string }[] = [
@@ -27,6 +29,7 @@ const NAV: { page: Page; label: string; emoji: string }[] = [
   // #99 (models) and #97/#101 (icons); neither counts anything itself.
   { page: "modelBudget", label: "模型預算", emoji: "📐" },
   { page: "iconTracking", label: "ICON 生成追蹤", emoji: "🖼️" },
+  { page: "mcoinGrant", label: "M幣 發放", emoji: "🪙" },
   { page: "audit", label: "Audit log", emoji: "📜" },
 ];
 
@@ -95,11 +98,20 @@ function Console(): React.JSX.Element {
   const navigate = useApp((s) => s.navigate);
   const account = useApp((s) => s.account);
   const doLogout = useApp((s) => s.doLogout);
+  const showLogin = useApp((s) => s.showLogin);
   const contentAdmin = useContentAdminPage();
+  // 變更密碼 lives on the LOGGED-IN side only: the platform route needs both a
+  // session and the current password, so there is nothing to show without one.
+  const [changingPassword, setChangingPassword] = useState(false);
   // the entry exists only when the dev-only chunk actually loaded, and its
   // label comes FROM that chunk (see useContentAdminPage)
   const nav =
     contentAdmin === null ? NAV : [...NAV.slice(0, 5), contentAdmin.nav, ...NAV.slice(5)];
+
+  // THE SPLIT GATE (task #102): a page whose data lives on the Go platform admin
+  // API needs a real operator session; the content editor + local consoles do
+  // not. With no session those player-ops pages show a 需登入 state instead.
+  const gated = account === null && pageRequiresSession(page);
 
   return (
     <div style={{ minHeight: "100vh", display: "grid", gridTemplateColumns: "220px 1fr", background: BG }}>
@@ -109,10 +121,12 @@ function Console(): React.JSX.Element {
         <nav style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1 }}>
           {nav.map((n) => {
             const active = n.page === page;
+            const locked = account === null && pageRequiresSession(n.page);
             return (
               <button
                 key={n.page}
                 onClick={() => navigate(n.page)}
+                title={locked ? "需登入（平台管理 API）" : undefined}
                 style={{
                   textAlign: "left",
                   padding: "9px 12px",
@@ -123,34 +137,89 @@ function Console(): React.JSX.Element {
                   cursor: "pointer",
                   fontSize: 13,
                   fontWeight: 600,
+                  display: "flex",
+                  alignItems: "center",
                 }}
               >
                 <span style={{ marginRight: 8 }}>{n.emoji}</span>
-                {n.label}
+                <span style={{ flex: 1 }}>{n.label}</span>
+                {locked && <span style={{ marginLeft: 6, fontSize: 11, opacity: 0.7 }}>🔒</span>}
               </button>
             );
           })}
         </nav>
         <div style={{ marginTop: 16, borderTop: PANEL_BORDER, paddingTop: 12 }}>
-          <div style={{ fontSize: 12, color: TEXT_MAIN, marginBottom: 8 }}>{account?.username}</div>
-          <Btn small onClick={() => void doLogout()} style={{ width: "100%" }}>
-            Sign out
-          </Btn>
+          {account ? (
+            <>
+              <div style={{ fontSize: 12, color: TEXT_MAIN, marginBottom: 8 }}>{account.username}</div>
+              <Btn small onClick={() => setChangingPassword(true)} style={{ width: "100%", marginBottom: 6 }}>
+                變更密碼 Change password
+              </Btn>
+              <Btn small onClick={() => void doLogout()} style={{ width: "100%" }}>
+                Sign out
+              </Btn>
+            </>
+          ) : (
+            <>
+              <div style={{ fontSize: 11, color: TEXT_DIM, marginBottom: 8, lineHeight: 1.5 }}>
+                內容編輯免登入 · 玩家管理需登入
+              </div>
+              <Btn small kind="primary" onClick={() => showLogin()} style={{ width: "100%" }}>
+                登入 Sign in
+              </Btn>
+            </>
+          )}
         </div>
       </aside>
       <main style={{ padding: 20, overflow: "auto", maxHeight: "100vh" }}>
-        {page === "hub" && <ConsoleHub />}
-        {page === "players" && <PlayersPage />}
-        {page === "matches" && <MatchesPage />}
-        {page === "announcements" && <AnnouncementsPage />}
-        {page === "curation" && <CurationPage />}
-        {page === "content" && contentAdmin !== null && <contentAdmin.Page />}
-        {page === "combatEnv" && <CombatEnvPage />}
-        {page === "ai" && <AiSettingsPage />}
-        {page === "modelBudget" && <ModelBudgetPage />}
-        {page === "iconTracking" && <IconTrackingPage />}
-        {page === "audit" && <AuditPage />}
+        {gated ? (
+          <SessionRequired onLogin={() => showLogin()} />
+        ) : (
+          <>
+            {page === "hub" && <ConsoleHub />}
+            {page === "players" && <PlayersPage />}
+            {page === "matches" && <MatchesPage />}
+            {page === "announcements" && <AnnouncementsPage />}
+            {page === "curation" && <CurationPage />}
+            {page === "content" && contentAdmin !== null && <contentAdmin.Page />}
+            {page === "content" && contentAdmin === null && (
+              <div style={{ color: TEXT_DIM, padding: 8 }}>載入編輯器…</div>
+            )}
+            {page === "combatEnv" && <CombatEnvPage />}
+            {page === "ai" && <AiSettingsPage />}
+            {page === "modelBudget" && <ModelBudgetPage />}
+            {page === "iconTracking" && <IconTrackingPage />}
+            {page === "mcoinGrant" && <MCoinGrantPage />}
+            {page === "audit" && <AuditPage />}
+          </>
+        )}
       </main>
+      {changingPassword && account && <ChangePasswordDialog onClose={() => setChangingPassword(false)} />}
+    </div>
+  );
+}
+
+/**
+ * The 需登入 state shown in place of a player-ops page when there is no operator
+ * session. The page's data lives on the Go platform admin API, which rejects an
+ * unauthenticated caller regardless — this makes that honest instead of showing
+ * a page full of errors.
+ */
+function SessionRequired(props: { onLogin: () => void }): React.JSX.Element {
+  return (
+    <div style={{ maxWidth: 520 }}>
+      <Panel title="需登入 · Operator sign-in required">
+        <div style={{ fontSize: 13, color: TEXT_DIM, lineHeight: 1.8, marginBottom: 16 }}>
+          此頁面為玩家 / 營運管理功能，資料由平台 admin API 提供，需要管理員登入才能使用。
+          英雄 / 技能 / 道具的內容編輯不需登入即可使用。
+          <br />
+          This page is backed by the platform admin API and requires an operator sign-in. Content
+          editing (heroes / skills / items) needs no login.
+        </div>
+        <Btn kind="primary" onClick={props.onLogin}>
+          登入 Sign in
+        </Btn>
+      </Panel>
     </div>
   );
 }

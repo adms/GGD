@@ -17,12 +17,17 @@ import { useModelBudget } from "../assets/useModelBudget";
 import {
   BUDGET_CANDIDATE_URLS,
   ageText,
+  buildOptimiseWorklist,
   budgetHealth,
   fmtBytes,
   fmtInt,
+  isOverThreshold,
   limitFor,
+  overThresholdModels,
+  sortModelsHeavyToLight,
   verdictFor,
   type BudgetLimit,
+  type BudgetModelRow,
   type BudgetScreen,
   type BudgetVerdict,
   type HealthLevel,
@@ -91,8 +96,10 @@ function MetricCell(props: {
   value: number | null;
   limit: BudgetLimit | undefined;
   format: (n: number | null) => string;
+  /** the report's OWN verdict for this axis — authoritative over the coarse line */
+  verdict?: BudgetVerdict;
 }): React.JSX.Element {
-  const v = verdictFor(props.value, props.limit);
+  const v = props.verdict && props.verdict !== "unknown" ? props.verdict : verdictFor(props.value, props.limit);
   const limitText =
     props.limit === undefined
       ? "無上限"
@@ -170,6 +177,53 @@ function ScreenCard(props: {
   );
 }
 
+const OVER_METRIC_LABEL: Record<string, string> = {
+  triangles: "三角面",
+  drawCalls: "Draw call",
+  maxTextureEdge: "貼圖邊長",
+  animChannels: "動畫通道",
+};
+
+/** One over-threshold asset: what it breached, and whether the offline optimiser
+ *  can shrink it (texture/geometry) or it needs re-authoring (draw calls / anim). */
+function OverRow(props: { row: BudgetModelRow; queued: boolean }): React.JSX.Element {
+  const { row } = props;
+  const over = Object.entries(row.verdicts)
+    .filter(([, v]) => v === "over")
+    .map(([k]) => k);
+  return (
+    <tr>
+      <Cell>
+        <span style={{ fontFamily: MONO, color: TEXT_MAIN }}>{row.id}</span>
+        {row.worstCount !== null && row.worstCount > 1 && (
+          <span style={{ marginLeft: 6, fontSize: 10, color: TEXT_DIM }}>×{row.worstCount} 同框</span>
+        )}
+      </Cell>
+      <Cell dim>{row.role || "—"}</Cell>
+      <Cell align="right">{fmtBytes(row.vramBytes)}</Cell>
+      <Cell align="right">{fmtInt(row.triangles)}</Cell>
+      <Cell>
+        <span style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
+          {over.map((k) => (
+            <Badge key={k} color={DANGER}>
+              {OVER_METRIC_LABEL[k] ?? k}
+            </Badge>
+          ))}
+        </span>
+      </Cell>
+      <Cell>
+        {props.queued ? (
+          <Badge color={OK}>已可最佳化</Badge>
+        ) : (
+          <span title="只超在 draw call 或動畫通道上，減面／縮圖無法處理，需重製模型">
+            <Badge color={WARN}>需重製</Badge>
+          </span>
+        )}
+      </Cell>
+    </tr>
+  );
+}
+
 export function ModelBudgetPage(): React.JSX.Element {
   const {
     report,
@@ -198,11 +252,18 @@ export function ModelBudgetPage(): React.JSX.Element {
         ? "unknown"
         : "ok";
 
-  /** Rows to render: the report's measurements, or the live inventory unmeasured. */
+  /**
+   * Rows to render, HEAVY → LIGHT. Measured models lead, sorted by the cost that
+   * actually fills a frame (VRAM, then triangles); live docs the report never
+   * measured trail behind, alphabetical, each marked 未量測. A budget table that
+   * buried the heaviest asset in an alphabetical list would hide the one row an
+   * operator opened the page to find.
+   */
   const rows = useMemo(() => {
     const byId = new Map(report?.models.map((m) => [m.id, m]) ?? []);
-    const base = live.length > 0 ? live.map((m) => m.id) : [...byId.keys()];
-    const ids = [...new Set([...base, ...byId.keys()])].sort();
+    const measured = report ? sortModelsHeavyToLight(report.models).map((m) => m.id) : [];
+    const unmeasured = live.map((m) => m.id).filter((id) => !byId.has(id)).sort();
+    const ids = [...measured, ...unmeasured];
     const q = filter.trim().toLowerCase();
     return ids
       .filter((id) => q === "" || id.toLowerCase().includes(q))
@@ -221,6 +282,34 @@ export function ModelBudgetPage(): React.JSX.Element {
       vramBytes: sum((m) => m.vramBytes),
     };
   }, [report]);
+
+  // ---- the offline-optimise worklist ----
+  const overModels = useMemo(() => overThresholdModels(report), [report]);
+  const worklist = useMemo(() => buildOptimiseWorklist(report), [report]);
+  const queuedIds = useMemo(() => new Set(worklist.items.map((i) => i.id)), [worklist]);
+  const brokenCount = useMemo(() => (report?.models.filter((m) => m.broken !== "").length ?? 0), [report]);
+  const [queuedAt, setQueuedAt] = useState<{ n: number; at: number } | null>(null);
+
+  /**
+   * Produce the optimise worklist and hand it to the operator as a file. The
+   * console cannot (and must not) write into the content tree or run a
+   * destructive pass — it PRODUCES the worklist; the offline optimiser (#115)
+   * consumes it. tools/model-budget/worklist.ts writes the identical schema, so
+   * either the downloaded file or a fresh CLI run drives the same optimiser.
+   */
+  const queueOptimise = (): void => {
+    const wl = buildOptimiseWorklist(report);
+    const blob = new Blob([JSON.stringify(wl, null, 2) + "\n"], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "optimize-worklist.json";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    setQueuedAt({ n: wl.totals.queued, at: Date.now() });
+  };
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16, maxWidth: 1180 }}>
@@ -337,6 +426,86 @@ export function ModelBudgetPage(): React.JSX.Element {
         )}
       </Panel>
 
+      {/* ---- 超出門檻的資產 · 離線最佳化 ---- */}
+      <Panel
+        title="超出門檻的資產 · 離線最佳化"
+        right={
+          <Btn
+            small
+            kind="primary"
+            onClick={queueOptimise}
+            disabled={worklist.items.length === 0}
+            title={
+              worklist.items.length === 0
+                ? "沒有可由離線最佳化處理的資產"
+                : `產生 optimize-worklist.json（${worklist.items.length} 個資產）`
+            }
+          >
+            ⬇ 排入離線最佳化（{worklist.items.length}）
+          </Btn>
+        }
+      >
+        {report === null ? (
+          <div style={{ fontSize: 12, color: TEXT_DIM, lineHeight: 1.8 }}>
+            報告尚未發布，因此無法判斷哪些資產超出門檻，也就沒有可排入的最佳化清單。
+          </div>
+        ) : (
+          <>
+            <div style={{ fontSize: 11, color: TEXT_DIM, marginBottom: 12, display: "flex", gap: 16, flexWrap: "wrap" }}>
+              <span>
+                超出硬上限 <b style={{ color: overModels.length > 0 ? DANGER : OK, fontFamily: MONO }}>{overModels.length}</b>
+              </span>
+              <span>
+                可離線最佳化 <b style={{ color: TEXT_MAIN, fontFamily: MONO }}>{worklist.items.length}</b>
+              </span>
+              <span>
+                預估可省 VRAM <b style={{ color: GOLD, fontFamily: MONO }}>{fmtBytes(worklist.totals.estVramSavedBytes)}</b>
+              </span>
+              {brokenCount > 0 && <span style={{ color: WARN }}>破圖／零面 {brokenCount}（無法最佳化，需重製）</span>}
+            </div>
+
+            <div style={{ fontSize: 12, color: TEXT_DIM, lineHeight: 1.7, marginBottom: 12 }}>
+              「排入離線最佳化」只<strong style={{ color: TEXT_MAIN }}>產生一份工作清單</strong>
+              （<code>optimize-worklist.json</code>，schema <code>{worklist.schema}</code>），本頁不改動任何內容、也不執行破壞性流程。
+              真正的貼圖縮放與減面由離線最佳化工具（#115）在獨立產出樹進行，原始檔永不就地覆寫。清單只排入「工具真的能縮小的」資產
+              —— 只超在 draw call 或動畫通道上的資產無法自動處理，另外標為需重製。
+              {queuedAt !== null && (
+                <div style={{ color: OK, marginTop: 6 }}>
+                  ✓ 已產生 worklist（{queuedAt.n} 個資產），於 {new Date(queuedAt.at).toLocaleTimeString()} 下載。
+                </div>
+              )}
+              <div style={{ fontSize: 11, color: TEXT_DIM, marginTop: 6, fontFamily: MONO }}>
+                離線執行：pnpm --filter @ggd/model-budget budget:worklist --optimize
+              </div>
+            </div>
+
+            {overModels.length === 0 ? (
+              <div style={{ fontSize: 12, color: OK }}>目前沒有任何資產超出硬上限。</div>
+            ) : (
+              <div style={{ overflowX: "auto" }}>
+                <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 640 }}>
+                  <thead>
+                    <tr>
+                      <Th>資產</Th>
+                      <Th>角色</Th>
+                      <Th align="right">VRAM</Th>
+                      <Th align="right">三角面</Th>
+                      <Th>超出項目</Th>
+                      <Th>離線最佳化</Th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {overModels.map((m) => (
+                      <OverRow key={m.id} row={m} queued={queuedIds.has(m.id)} />
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </>
+        )}
+      </Panel>
+
       {/* ---- 每個模型 ---- */}
       <Panel
         title={`每個模型（${recon.measured.length} / ${recon.liveTotal} 已量測）`}
@@ -408,6 +577,7 @@ export function ModelBudgetPage(): React.JSX.Element {
                         value={row.triangles}
                         limit={limitFor(report, null, "triangles")}
                         format={fmtInt}
+                        verdict={row.verdicts.triangles}
                       />
                       <Cell align="right" dim>
                         {fmtInt(row.vertices)}
@@ -429,6 +599,7 @@ export function ModelBudgetPage(): React.JSX.Element {
                         value={row.drawCalls}
                         limit={limitFor(report, null, "drawCalls")}
                         format={fmtInt}
+                        verdict={row.verdicts.drawCalls}
                       />
                       <Cell dim>
                         {row.usedBy.length === 0 ? (

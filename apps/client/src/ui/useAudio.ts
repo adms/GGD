@@ -10,6 +10,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import {
   audioSettings,
   audioSystem,
+  bgmOverride,
   stepLoginRotation,
   LOGIN_ROTATION_INITIAL,
   LOGIN_THEMES,
@@ -47,19 +48,45 @@ export function useAudioScene(scene: AudioScene | null): void {
 }
 
 /**
- * The login screen's rotating theme: the epic title bed, then the nocturne,
- * then back (task #88, 「第二首輪播」).
- *
- * ALL the rule lives in the pure `stepLoginRotation` (audio/loginRotation) —
- * including the two things that are easy to get wrong and impossible to see in
- * a browser: timing the swap off the BED's own start rather than mount, and
- * refusing to re-arm until the bed anchor actually CHANGES. This hook is only
- * the timer shell around it, which is why the rotation is covered headlessly.
+ * Declare that THIS screen wants a specific background bed while it is mounted
+ * (task #134: the ranked ladder → the serene `menuNocturne`). Pushes a request
+ * onto the shared override registry on mount and drops it on unmount, so the
+ * AudioDirector — the single owner of the bed — layers it over the scene it
+ * computes from store state, and the previous bed returns when the screen leaves.
+ * `null` opts out (declares nothing), so a caller can bind it to a condition.
+ */
+export function useBgmSceneOverride(scene: AudioScene | null): void {
+  useEffect(() => {
+    if (scene === null) return undefined;
+    const token = bgmOverride.request(scene);
+    return () => bgmOverride.release(token);
+  }, [scene]);
+}
+
+/**
+ * The bed a mounted screen has requested via {@link useBgmSceneOverride}, or
+ * null when none is active. Read by the AudioDirector, which prefers it over the
+ * scene it derives from discrete store state.
+ */
+export function useBgmOverride(): AudioScene | null {
+  return useSyncExternalStore(
+    (cb) => bgmOverride.subscribe(cb),
+    () => bgmOverride.current(),
+    () => bgmOverride.current(),
+  );
+}
+
+/**
+ * The login screen's theme. SINGLE-THEME since task #134 — the serene nocturne
+ * moved to the ranked ladder, so this always resolves to the epic `menu` bed.
+ * The pure `stepLoginRotation` machine (audio/loginRotation) is kept and simply
+ * holds `menu`; this hook is the timer shell around it, unchanged, so a future
+ * second login theme needs no new wiring here.
  *
  * `active` false parks the rotation and resets it, so leaving the login screen
- * and coming back always opens on LOGIN_THEMES[0] rather than mid-cycle. That
- * reset is also what keeps the scripted angry roar off the nocturne — see
- * audio/loginAmbience.
+ * and coming back always opens on LOGIN_THEMES[0] (= `menu`) rather than
+ * mid-cycle. That reset is also why the scripted return-intro roar always lands
+ * on `menu` and is never calmed — see audio/loginAmbience (now dormant).
  */
 export function useLoginTheme(active: boolean): AudioScene {
   const [theme, setTheme] = useState<AudioScene>(LOGIN_THEMES[0]!);

@@ -57,18 +57,18 @@
       "effects": [
         {
           "kind": "damage",
-          "damageType": "magic",
+          "damageType": "physical",
           "amount": {
             "perRank": [
-              1.0,
-              1.0,
-              1.0,
-              1.0
+              350,
+              450,
+              550,
+              650
             ],
             "ratios": [
               {
-                "stat": "ap",
-                "coeff": 0.003
+                "stat": "ad",
+                "coeff": 0.5
               }
             ]
           }
@@ -109,19 +109,19 @@
       "effects": [
         {
           "kind": "damage",
-          "damageType": "magic",
+          "damageType": "physical",
           "amount": {
             "perRank": [
-              80,
-              120,
-              160,
-              200,
-              240
+              150,
+              250,
+              350,
+              450,
+              550
             ],
             "ratios": [
               {
-                "stat": "ap",
-                "coeff": 1.0
+                "stat": "ad",
+                "coeff": 0.5
               }
             ]
           }
@@ -153,18 +153,18 @@
       "effects": [
         {
           "kind": "damage",
-          "damageType": "magic",
+          "damageType": "physical",
           "amount": {
             "perRank": [
-              2.0,
-              2.0,
-              2.0,
-              2.0
+              150,
+              250,
+              350,
+              450
             ],
             "ratios": [
               {
-                "stat": "ap",
-                "coeff": 0.006
+                "stat": "ad",
+                "coeff": 0.5
               }
             ]
           }
@@ -195,7 +195,7 @@
       "effects": [
         {
           "kind": "damage",
-          "damageType": "magic",
+          "damageType": "physical",
           "amount": {
             "perRank": [
               75.0,
@@ -204,8 +204,8 @@
             ],
             "ratios": [
               {
-                "stat": "ap",
-                "coeff": 0.225
+                "stat": "ad",
+                "coeff": 0.6
               }
             ]
           }

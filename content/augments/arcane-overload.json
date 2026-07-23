@@ -1,0 +1,33 @@
+{
+  "id": "arcane-overload",
+  "schema": "augment@1",
+  "name": "奧能超載",
+  "description": "技能命中時，額外造成 60(+50% 法術強度) 法術傷害（每秒最多觸發一次）。",
+  "tier": "prismatic",
+  "weight": 25,
+  "hooks": [
+    {
+      "on": "onAbilityHit",
+      "internalCooldown": 1,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "flat": 60,
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.5
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "on-hit",
+    "offense"
+  ]
+}

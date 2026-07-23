@@ -24,7 +24,7 @@ export const AUDIO_SETTINGS_VERSION = 1;
  */
 export const DEFAULT_AUDIO_VOLUMES: AudioVolumes = {
   master: 0.8,
-  bgm: 0.5,
+  bgm: 0.4,
   sfx: 0.9,
   muted: false,
   bgmMuted: false,

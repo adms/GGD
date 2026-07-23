@@ -36,6 +36,8 @@ export type Command =
   | { kind: "recall" }
   | { kind: "buyItem"; itemId: string }
   | { kind: "sellItem"; itemSlot: number }
+  /** revert the most recent buy/sell of this shopping session (task #121) */
+  | { kind: "undoLastShopStep" }
   | { kind: "pickOffer"; offerId: string }
   | { kind: "rankUpAbility"; slot: AbilitySlot }
   | { kind: "ready" };

@@ -1,6 +1,6 @@
 {
   "collection": "models",
-  "hash": "1d3ac9b3098b",
+  "hash": "44710197170d",
   "entries": [
     {
       "id": "champ.sela",
@@ -697,6 +697,12 @@
       "path": "models/prop.flower.json",
       "hash": "704441b70a3a",
       "size": 378
+    },
+    {
+      "id": "prop.guardian",
+      "path": "models/prop.guardian.json",
+      "hash": "82f99757cbbc",
+      "size": 385
     }
   ]
 }

@@ -178,6 +178,40 @@ func (s *Store) List(collection string) ([]string, error) {
 	return ids, nil
 }
 
+// Scan returns the sorted ids of the object files that ACTUALLY EXIST on disk,
+// by listing the collection directory rather than reading _index.json.
+//
+// List is the fast path and is correct in normal operation, but it is derived
+// state: _index.json is a separate file, and a missing index reads as "empty
+// collection" (see readIndex). That fail-OPEN direction is fine for a rebuild
+// loop and dangerous for a security decision — anything that must answer "does
+// an object exist at all?" has to look at the objects. A missing collection
+// directory still lists as empty (a genuinely fresh deploy), but any OTHER
+// error is returned rather than swallowed, so a caller can fail closed.
+func (s *Store) Scan(collection string) ([]string, error) {
+	if !validCollection(collection) {
+		return nil, fmt.Errorf("%w: %q", ErrInvalidKey, collection)
+	}
+	dir := filepath.Join(s.root, filepath.FromSlash(collection))
+	entries, err := os.ReadDir(dir)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return []string{}, nil
+		}
+		return nil, err
+	}
+	ids := make([]string, 0, len(entries))
+	for _, e := range entries {
+		name := e.Name()
+		if e.IsDir() || name == "_index.json" || !strings.HasSuffix(name, ".json") {
+			continue
+		}
+		ids = append(ids, strings.TrimSuffix(name, ".json"))
+	}
+	sort.Strings(ids)
+	return ids, nil
+}
+
 // AppendLine appends v as one NDJSON line to <collection>/<id>.jsonl.
 // Used for per-account match history.
 func (s *Store) AppendLine(collection, id string, v any) error {

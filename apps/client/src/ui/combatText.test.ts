@@ -408,16 +408,45 @@ describe("combat text legibility treatment (ct-c05)", () => {
     );
   });
 
-  it("without background-clip support the fill stays a SOLID colour, never transparent", () => {
+  it("the fill ALWAYS resolves to a visible hue — a transparent glyph is impossible", () => {
     cover("combat-text-legibility");
-    const st = combatTextStyle("taken");
-    const withGradient = combatTextCss(st, true);
-    const fallback = combatTextCss(st, false);
-    expect(withGradient).toContain("background-clip:text");
-    expect(withGradient).toContain("color:transparent");
-    // an invisible number is the worst possible failure for a legibility feature
-    expect(fallback).not.toContain("color:transparent");
-    expect(fallback).toContain(`color:${st.color}`);
+    // The reported bug: a text-clipped gradient that does not paint (a
+    // false-positive feature-detect, or a WKWebView / in-app browser dropping
+    // background-clip:text) left the glyph fill transparent, so only the black
+    // ring showed and the number read as BLACK. The CSS builder must make that
+    // outcome unreachable, on BOTH paths and for EVERY category.
+    for (const c of COMBAT_TEXT_CATEGORIES) {
+      const st = combatTextStyle(c);
+      const withGradient = combatTextCss(st, true);
+      const fallback = combatTextCss(st, false);
+
+      // (1) the solid category hue is the base fill in BOTH paths — so if the
+      // engine ignores the gradient/clip the glyph still paints its own colour.
+      expect(withGradient).toContain(`color:${st.color}`);
+      expect(fallback).toContain(`color:${st.color}`);
+
+      // (2) the bare `color` property is NEVER set transparent, on either path.
+      // (a declaration-boundary match, so it does not trip on the substring
+      // inside `-webkit-text-fill-color:transparent`.)
+      const bareColorTransparent = /(^|;)color:\s*transparent/;
+      expect(bareColorTransparent.test(withGradient)).toBe(false);
+      expect(bareColorTransparent.test(fallback)).toBe(false);
+
+      // (3) the ONLY transparent-fill declaration is -webkit-text-fill-color, and
+      // it appears ONLY together with the gradient + clip that reveal it. No
+      // transparent fill is ever left standing without a painting gradient.
+      expect(fallback).not.toContain("-webkit-text-fill-color:transparent");
+      if (withGradient.includes("-webkit-text-fill-color:transparent")) {
+        expect(withGradient).toContain("background-clip:text");
+        expect(withGradient).toContain("linear-gradient(");
+      }
+    }
+
+    // and the gradient path is still the RO digit-sprite highlight when it paints
+    const taken = combatTextCss(combatTextStyle("taken"), true);
+    expect(taken).toContain("-webkit-background-clip:text");
+    expect(taken).toContain("background-clip:text");
+    expect(taken).toContain(`linear-gradient(180deg,${combatTextStyle("taken").tint}`);
   });
 
   it("the ring thickens with the glyph so a crit is not left unoutlined", () => {

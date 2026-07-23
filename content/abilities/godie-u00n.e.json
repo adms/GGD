@@ -28,16 +28,22 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              1.0,
-              1.0,
-              1.0,
-              1.0
+              500,
+              600,
+              800,
+              1000
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
             ]
           }
         }
       ]
     }
   ],
-  "vfxKey": "fx.ember-bolt-cast",
+  "vfxKey": "fx.prim.physical.swarm",
   "schema": "ability@1"
 }

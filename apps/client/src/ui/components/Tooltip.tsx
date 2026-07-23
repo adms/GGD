@@ -15,7 +15,7 @@
 import { useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { computeTooltipPlacement, type TooltipSide } from "./tooltipPlacement";
-import { parseRoleMarkup, ROLE_COLOR } from "./abilityText";
+import { parseRoleMarkup, rescaleAbilityProse, ROLE_COLOR, WC3_PROSE_CAPTION } from "./abilityText";
 import { displayFinalText, useDisplayEnv, type DisplayFactor } from "../displayFinal";
 import type { CombatEnvMultipliers } from "@ggd/shared/sim/combatEnv";
 import { PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
@@ -152,22 +152,26 @@ export function Tooltip({
               </div>
             )}
             {body && (
-              <div
-                style={{
-                  marginTop: 6,
-                  fontSize: 11.5,
-                  color: "#c8d0e0",
-                  whiteSpace: "pre-wrap",
-                }}
-              >
-                {/* task #114: render `[c=role]…[/c]` role markup as normalised
-                    coloured runs; a plain string yields one uncoloured run. */}
-                {parseRoleMarkup(body).map((seg, i) => (
-                  <span key={i} style={seg.role ? { color: ROLE_COLOR[seg.role] } : undefined}>
-                    {seg.text}
-                  </span>
-                ))}
-              </div>
+              <>
+                <div
+                  style={{
+                    marginTop: 6,
+                    fontSize: 11.5,
+                    color: "#c8d0e0",
+                    whiteSpace: "pre-wrap",
+                  }}
+                >
+                  {/* cooldown literals rescaled to the live combat-env final
+                      (說明數值最終化); task #114: `[c=role]…[/c]` role markup
+                      renders as normalised coloured runs, plain text as one run. */}
+                  {parseRoleMarkup(rescaleAbilityProse(body, env)).map((seg, i) => (
+                    <span key={i} style={seg.role ? { color: ROLE_COLOR[seg.role] } : undefined}>
+                      {seg.text}
+                    </span>
+                  ))}
+                </div>
+                <div style={{ marginTop: 4, fontSize: 10, color: TEXT_DIM }}>{WC3_PROSE_CAPTION}</div>
+              </>
             )}
           </div>,
           document.body,

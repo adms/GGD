@@ -10,12 +10,13 @@
  */
 import type { Scene } from "@babylonjs/core/scene";
 import type { ParticleSystem } from "@babylonjs/core/Particles/particleSystem";
-import { BurstPool, setBurstDirection, type PresetSystemOptions, type Rgb } from "./vfxPresets";
+import { BurstPool, setBurstDirection, type BurstSpec, type PresetSystemOptions, type Rgb } from "./vfxPresets";
 import { sprayCone, type Vec2 } from "./bloodPresets";
 import {
   blockRecipe,
   landingDustRecipe,
   muzzleRecipe,
+  walkDustRecipe,
   MUZZLE_TINTS,
   type BlockRecipe,
   type DustRecipe,
@@ -39,6 +40,8 @@ export class CombatFeedbackFx {
   private readonly muzzles = new Map<string, MuzzleRecipe>();
   private readonly dusts = new Map<number, DustRecipe>();
   private readonly blocks = new Map<number, BlockRecipe>();
+  /** the one walking-dust spec (memoized: it takes no parameters) */
+  private walkSpec: BurstSpec | null = null;
 
   constructor(scene: Scene, opts: PresetSystemOptions = {}) {
     this.pool = new BurstPool(scene, opts);
@@ -105,6 +108,16 @@ export class CombatFeedbackFx {
   }
 
   /**
+   * WALKING DUST: a small soft puff kicked up under a moving foot (grows +
+   * rises + fades — see walkDustRecipe). `y` is forced near the floor. The
+   * caller velocity-gates this per entity, so here it is a plain one-shot.
+   */
+  walkDust(args: { x: number; z: number; scale?: number; nowMs: number }): ParticleSystem {
+    if (!this.walkSpec) this.walkSpec = walkDustRecipe();
+    return this.pool.fireAt("walkdust", this.walkSpec, args.x, args.z, 0.05, args.nowMs, args.scale ?? 1);
+  }
+
+  /**
    * BLOCK / PARRY clink. `dir` is the INCOMING damage vector; the sparks are
    * fanned back along its negation, so the guard visibly deflects the hit.
    */
@@ -143,5 +156,6 @@ export class CombatFeedbackFx {
     this.muzzles.clear();
     this.dusts.clear();
     this.blocks.clear();
+    this.walkSpec = null;
   }
 }

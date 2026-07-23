@@ -1,19 +1,15 @@
 /**
- * The login rotation STATE MACHINE (task #88). The two ways this feature fails
- * are both silent in a browser and both deterministic headlessly, so they get
- * named tests:
+ * The login rotation STATE MACHINE. SINGLE-THEME since task #134: the serene
+ * nocturne left the login screen for the ranked ladder, so the machine now only
+ * ever hands back `menu`. It is kept (not deleted) because its two hard-won
+ * guards are exactly what a re-added second login theme would need, and because
+ * a degenerate single-theme rotation must still behave — never runaway, never
+ * blank the bed. So the tests assert the SHAPE that survives:
  *
- *   1. "THE SECOND TRACK NEVER PLAYS" — the rotation is armed off a bed that
- *      never starts (autoplay lock), or off mount instead of the bed, so the
- *      player sits on the epic theme forever and the nocturne is dead content.
- *   2. "BOTH TRACKS PLAY AT ONCE" — the machine re-arms against a stale anchor,
- *      computes ~0 ms remaining and flips every tick, asking the mixer for a new
- *      bed faster than it can crossfade.
- *
- * The first block drives the pure machine directly. The second drives a REAL
- * AudioSystem over a fake WebAudio graph through several whole segments and
- * asserts on the actual sources: the nocturne really becomes the bed, and there
- * is never more than one bed playing.
+ *   1. it holds `menu` across whole segments and never invents a second track;
+ *   2. it never flips off a stale anchor (no runaway asking the mixer to swap);
+ *   3. end-to-end over the real mixer it drives EXACTLY ONE bed, `menu`, and
+ *      never the nocturne (which login no longer asks for at all).
  */
 import { describe, it, expect, vi } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
@@ -53,23 +49,26 @@ function drive(
 }
 
 describe("login rotation state machine", () => {
-  it("FAILURE 1 — the second track must actually play", () => {
-    cover("login-rotation-second-track");
+  it("holds `menu` across whole segments — there is no second track to reach", () => {
+    cover("login-rotation-single-theme");
     // a bed that starts at t=0 and loops forever (the mixer re-anchors on each
-    // swap, which is what bedStartedAtMs reports)
+    // segment, which is what bedStartedAtMs reports)
     let bedStart = 0;
     const r = drive(LOGIN_SEGMENT_MS * 4 + 1000, (now) => {
-      // the mixer swaps the bed ~immediately after the machine asks for it
       if (now >= bedStart + LOGIN_SEGMENT_MS) bedStart = now;
       return bedStart;
     });
-    expect(r.themes).toEqual(["menuNocturne", "menu", "menuNocturne", "menu", "menuNocturne"]);
+    // the theme never changes — only `menu`, ever
+    expect(r.themes).toEqual(["menu"]);
+    // ...but the machine is genuinely cycling segments (armed + advanced), not
+    // frozen: the free-running index has walked several whole segments forward.
+    expect(r.state.index).toBeGreaterThanOrEqual(4);
   });
 
-  it("FAILURE 1 — a bed that never starts holds theme 0 and keeps polling", () => {
+  it("a bed that never starts holds `menu` and keeps polling", () => {
     // autoplay never unlocked: bedStartedAtMs stays null forever
     const r = drive(LOGIN_SEGMENT_MS * 3, () => null);
-    expect(r.themes).toEqual(["menuNocturne"]); // never advances past the first theme
+    expect(r.themes).toEqual(["menu"]);
     // ...but it also never gives up: it is still polling at the poll interval
     const { step } = stepLoginRotation(r.state, { bedStartedAtMs: null, nowMs: 1e6 });
     expect(step.armed).toBe(false);
@@ -78,9 +77,10 @@ describe("login rotation state machine", () => {
     const armed = stepLoginRotation(r.state, { bedStartedAtMs: 1e6, nowMs: 1e6 });
     expect(armed.step.armed).toBe(true);
     expect(armed.step.waitMs).toBe(LOGIN_SEGMENT_MS);
+    expect(armed.step.theme).toBe("menu");
   });
 
-  it("FAILURE 2 — a stale anchor must not flip the theme every tick", () => {
+  it("a stale anchor must not flip / re-swap the bed every tick", () => {
     cover("login-rotation-no-runaway");
     // The pathological case: the segment expires but the bed has NOT been
     // replaced (React has not re-rendered / the buffer is still decoding), so
@@ -96,33 +96,33 @@ describe("login rotation state machine", () => {
       }
       return bedStart;
     });
-    // exactly one advance per segment — NOT one per poll
-    expect(r.themes).toEqual(["menuNocturne", "menu", "menuNocturne"]);
-    // and while stuck it polled rather than re-armed: bounded step count
+    // still only `menu`, and while stuck it polled rather than re-armed every
+    // tick: bounded step count (NOT one arm per poll)
+    expect(r.themes).toEqual(["menu"]);
     expect(r.steps).toBeLessThan(3 + (3 * STUCK_MS) / LOGIN_ROTATION_POLL_MS + 10);
   });
 
-  it("FAILURE 2 — re-arming needs a DIFFERENT anchor, never the same one", () => {
+  it("re-arming needs a DIFFERENT anchor, never the same one", () => {
     const armed = stepLoginRotation(LOGIN_ROTATION_INITIAL, {
       bedStartedAtMs: 1000,
       nowMs: 1000,
     });
     expect(armed.step.armed).toBe(true);
-    // the hold expires but the bed is unchanged → advance the theme ONCE, then
-    // poll (waitMs is a poll, not a zero-length segment)
+    // the hold expires but the bed is unchanged → advance the segment ONCE, then
+    // poll (waitMs is a poll, not a zero-length segment) — theme stays `menu`
     const after = stepLoginRotation(armed.next, { bedStartedAtMs: 1000, nowMs: 1000 + LOGIN_SEGMENT_MS });
     expect(after.step.theme).toBe("menu");
     expect(after.step.armed).toBe(false);
     expect(after.step.waitMs).toBe(LOGIN_ROTATION_POLL_MS);
-    // polling again on the same anchor does NOT advance any further
+    // polling again on the same anchor does NOT re-arm
     const again = stepLoginRotation(after.next, { bedStartedAtMs: 1000, nowMs: 2e6 });
     expect(again.step.theme).toBe("menu");
     expect(again.step.armed).toBe(false);
   });
 
-  it("a late unlock still gives the nocturne a WHOLE loop, not a remainder", () => {
-    // the player clicks 40 s after the screen appeared: the bed starts then,
-    // and the first segment must run a full LOGIN_SEGMENT_MS from THAT point
+  it("a late unlock still gives the theme a WHOLE loop, not a remainder", () => {
+    // the player clicks 40 s after the screen appeared: the bed starts then, and
+    // the first segment must run a full LOGIN_SEGMENT_MS from THAT point
     const UNLOCK = 40_000;
     let s = LOGIN_ROTATION_INITIAL;
     let r = stepLoginRotation(s, { bedStartedAtMs: null, nowMs: 0 });
@@ -131,7 +131,7 @@ describe("login rotation state machine", () => {
     r = stepLoginRotation(s, { bedStartedAtMs: UNLOCK, nowMs: UNLOCK });
     expect(r.step.armed).toBe(true);
     expect(r.step.waitMs).toBe(LOGIN_SEGMENT_MS); // a whole loop, not 45 s
-    expect(r.step.theme).toBe("menuNocturne");
+    expect(r.step.theme).toBe("menu");
   });
 
   it("a suspended tab fires immediately instead of scheduling in the past", () => {
@@ -211,6 +211,7 @@ class FakeCtx {
 const MAP: AudioMap = {
   bgm: {
     menu: { file: "assets/audio/bgm/menu.mp3", loop: true, gain: 0.9 },
+    // still authored (it is the ranked-ladder bed now); login just never asks.
     menuNocturne: { file: "assets/audio/bgm/menuNocturne.mp3", loop: true, gain: 0.55 },
   },
   sfx: {},
@@ -262,7 +263,7 @@ function build(clock: () => number): { sys: AudioSystem; ctxRef: () => FakeCtx }
 }
 
 describe("login rotation end-to-end through the real mixer", () => {
-  it("plays BOTH tracks, and never two at the same time", async () => {
+  it("plays ONLY `menu`, never the nocturne, and never two beds at once", async () => {
     cover("login-rotation-single-bed");
     vi.useFakeTimers();
     let now = 0;
@@ -288,22 +289,21 @@ describe("login rotation end-to-end through the real mixer", () => {
       now += Math.max(step.waitMs, 1);
     }
 
-    // FAILURE 1: the nocturne is genuinely reached, more than once
-    expect(bedFiles).toContain("assets/audio/bgm/menuNocturne.mp3");
-    expect(bedFiles.filter((f) => f.includes("menuNocturne")).length).toBeGreaterThanOrEqual(2);
-    expect(bedFiles.filter((f) => f.includes("menu.mp3")).length).toBeGreaterThanOrEqual(2);
-    // and it alternates rather than sticking
-    for (let i = 1; i < bedFiles.length; i++) expect(bedFiles[i]).not.toBe(bedFiles[i - 1]);
+    // the ONLY bed ever reached is `menu`; the nocturne is never requested
+    expect(bedFiles).toContain("assets/audio/bgm/menu.mp3");
+    expect(bedFiles.every((f) => f.includes("menu.mp3"))).toBe(true);
+    expect(bedFiles.some((f) => f.includes("menuNocturne"))).toBe(false);
+    // and a same-scene playBgm is a no-op, so the bed is swapped exactly once
+    expect(bedFiles).toEqual(["assets/audio/bgm/menu.mp3"]);
 
-    // FAILURE 2: once each crossfade has settled there is EXACTLY ONE bed
-    // sounding — never a second track layered under the first.
+    // there is EXACTLY ONE bed sounding — never a second track layered under it
     expect(Math.max(...concurrency)).toBe(1);
 
     sys.dispose();
     vi.useRealTimers();
   });
 
-  it("holds ONE bed and never advances while autoplay stays locked", async () => {
+  it("holds NO bed while autoplay stays locked, and only ever asks for `menu`", async () => {
     vi.useFakeTimers();
     let now = 0;
     const { sys } = build(() => now);
@@ -323,7 +323,7 @@ describe("login rotation end-to-end through the real mixer", () => {
       await settle();
       now += step.waitMs;
     }
-    expect([...themes]).toEqual(["menuNocturne"]); // parked on the identity theme
+    expect([...themes]).toEqual(["menu"]); // parked on the single identity theme
     expect(sys.bedFile).toBeNull(); // and nothing is playing at all
     sys.dispose();
     vi.useRealTimers();

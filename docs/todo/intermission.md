@@ -136,7 +136,7 @@ honest sentence and no number — which is also why `combat` is still not in `CO
 | int-15 | Skill detail per slot incl. passive + EX, rank-scaled numbers, EX hidden until unlocked | shop-skill-details | unit | done |
 | int-16 | Merchant set renders at the MEASURED heights; the awning clears his head; the cart is the landmark | intermission-scale | unit | done |
 | int-17 | Staging: merchant behind his counter, cart overlapping the stall, hero's back to camera looking at him | intermission-staging | unit | done |
-| int-18 | Fixed shot: breathes ±0.02 rad, never orbits, keeps the cast inside the free left 55% at 4:3/16:9/21:9 | intermission-camera | unit | done |
+| int-18 | Fixed shot: breathes ±0.02 rad, never orbits, keeps the cast inside the free 55% the LEFT-docked card leaves — the RIGHT half, keyed on `SHOP_CARD_SIDE` (task #94) — at 4:3/16:9/21:9 | intermission-camera | unit | done |
 | int-19 | Ground: 2 u paving grid on the plaza disc, grass ring outside it, silhouettes at 9–13 u, all shipped CC0 models | intermission-ground | unit | done |
 | int-20 | Mood is the anti-arena: fogged, gently bloomed, nothing strobes | intermission-mood | unit | done |
 | int-21 | Scene lifecycle: own engine/scene/camera, no eager loop, no user orbit, survives unloadable models, idempotent dispose | intermission-scene-lifecycle | integration | done |
@@ -150,6 +150,9 @@ honest sentence and no number — which is also why `combat` is still not in `CO
 | int-29 | Purchase reaction — the clip is resolved by PREFERENCE ORDER over the .glb's real group names (victory → attack → cast), never an idle/walk/death/hurt pose; empty / idle-only inventories return null so the caller can degrade | intermission-champion-reaction-pick | unit | done |
 | int-30 | A completed purchase makes the hero react and return to rest: a rig with a reaction clip plays it (no pop), a rig with NONE gets a procedural squash-pop that springs back to its resting scale and never sticks; no champion in frame is a silent no-op | intermission-champion-reaction | unit | done |
 | int-31 | Shop tabs LEAD with the hero's 屬性 (attribute) panel — the default-selected tab is 屬性 (label moved 商品→屬性), 技能 is kept, and the hero's portrait renders a real `<img>` beside the tabs when the champion has an extracted icon | shop-tab-attributes-portrait | unit | done |
+| int-32 | STANCE: the mounted champion is GROUNDED — `setChampion` measures the placed model and lifts its feet onto the floor (min.y → 0), the same per-model root-transform StorePreview applies (#129), so an imported rig whose bind box dips below the origin no longer sits half-buried; empty/bone-only box is a no-op | intermission-champion-grounded | unit | done |
+| int-33 | LEFT DOCK (task #94): the shop card docks on the LEFT, reading the SAME `SHOP_CARD_SIDE` the intermission scene mirrors the 3D market around — one source of truth, so the panel and the merchant/店員 stage can never share a half (`shopDockAnchor` is the pure geometry the panel renders from, and the mirrored scene keeps the clerk in the free RIGHT 55% per the #103 sightline) | shop-left-dock | unit | done |
+| int-34 | The shelves show the ACTUAL purchasable stock: the `Items` registry → `shopCatalogue` → `groupCatalogue` pipeline the panel renders, so a registered priced whitelisted item lands on a real shelf with its real id/cost (offence for +ad), and every shelved row is a genuine registered item — not a decorative placeholder | shop-shelves-real-stock | unit | done |
 
 ## The purchase reaction (task #111)
 
@@ -167,20 +170,25 @@ the six-key `clipMap` (which has no "victory" key). A hero with no legible clip
 still reacts: a short procedural squash-and-hop that springs back to rest.
 Nothing freezes on a non-looping clip or throws.
 
-## The hero's resting POSE is NOT fixed here (handed to task #68)
+## The hero is GROUNDED here (task #111); the per-clip ROTATION audit is #68's
 
-皮卡丘 stands face-down in the shop because `imported.heropikachu` bakes a **99.7°
-root-bone rotation into its idle ("Stand - 1") clip** — and this scene is simply
-the first place one champion is shown large, still and close, so a defect that
-reads as jitter in a fight reads as "lying on the floor" here.
+Two distinct defects both read as 「face-down on the floor」 when a champion is
+shown large, still and close for the first time:
 
-This was NOT patched in the scene, by design: the rotation is **baked per-clip
-and differs between clips** (heropikachu: Stand 99.7° / Attack 0° / others
-260°/360°), so **no single scene transform can correct it** — a static
-counter-rotation that fixes idle breaks attack. It is a model-data defect that
-must be fixed at the model/exporter level, which is task #68's mandate. A full
-per-model, per-clip audit + measured angles is in the #68 hand-off. `int-30`
-above pins that `playChampionReaction` does NOT rotate the champion.
+1. **Sinking / floating (fixed here, int-32).** The intermission mount placed
+   the hero at `position.y = 0` with no grounding, so an imported rig whose bind
+   box dips below the origin (`imported.picacugy` spans y∈[-0.58, 1.71]) sat
+   half-buried in the paving. `setChampion` now measures the placed model and
+   lifts its feet onto the floor (`stance.groundShiftY` = `-min.y`) — the SAME
+   per-model root-transform StorePreview applies (#129), ported to this mount.
+
+2. **Baked per-clip root rotation (still #68's).** A subset of imports bake a
+   root-bone rotation that differs **between clips** (heropikachu: Stand 99.7° /
+   Attack 0° / others 260°/360°), so **no single scene transform can correct
+   it** — a static counter-rotation that fixes idle breaks attack. That is a
+   model/exporter-level defect and remains task #68's mandate; the grounding
+   above does NOT rotate the champion, and `int-30` pins that
+   `playChampionReaction` does not either.
 
 ## Not done here
 

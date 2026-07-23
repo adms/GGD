@@ -7,6 +7,8 @@ import (
 	"sort"
 
 	"github.com/ggd/platform/internal/account"
+	"github.com/ggd/platform/internal/data/jsonstore"
+	"github.com/ggd/platform/internal/data/keyedmutex"
 	"github.com/ggd/platform/internal/data/redisx"
 	"github.com/ggd/platform/internal/httpx"
 )
@@ -18,11 +20,21 @@ const (
 )
 
 // Wallet is the API-facing wallet projection of one account.
+//
+// M COIN (MCoin) is the ADMIN-GRANTED cosmetic currency (task #118 / #126:
+// there is no third-party payment — operators grant it, players spend it on
+// skins/cosmetics). Crystal (水晶) is the free soft currency earned every match
+// and spent to UNLOCK champions. Favourites are the champion ids a player has
+// pinned to the top of champ-select. Crystal + Favourites live in the wallet's
+// own "walletmeta" collection (NOT on the account struct, which a parallel wave
+// owns); Get overlays them onto every response.
 type Wallet struct {
 	MCoin          int               `json:"mcoin"`
+	Crystal        int               `json:"crystal"`
 	OwnedChampions []string          `json:"ownedChampions"`
 	OwnedSkins     []string          `json:"ownedSkins"`
 	EquippedSkins  map[string]string `json:"equippedSkins"`
+	Favourites     []string          `json:"favourites"`
 }
 
 // Service owns wallet state: the account JSON is the truth, Redis mirrors a
@@ -31,12 +43,25 @@ type Wallet struct {
 type Service struct {
 	accounts *account.Repo
 	rdb      *redisx.Client
+	store    *jsonstore.Store
 	cat      Catalog
+
+	metaLocks   *keyedmutex.M
+	crystalRoll func() int
 }
 
-// New builds the wallet service around the loaded content catalog.
-func New(accounts *account.Repo, rdb *redisx.Client, cat Catalog) *Service {
-	return &Service{accounts: accounts, rdb: rdb, cat: cat}
+// New builds the wallet service around the loaded content catalog. store is
+// used for the meta-progression collection (crystals + favourites); it may be
+// nil in narrow unit tests that never touch meta.
+func New(accounts *account.Repo, rdb *redisx.Client, store *jsonstore.Store, cat Catalog) *Service {
+	return &Service{
+		accounts:    accounts,
+		rdb:         rdb,
+		store:       store,
+		cat:         cat,
+		metaLocks:   keyedmutex.New(),
+		crystalRoll: defaultCrystalRoll,
+	}
 }
 
 // Catalog exposes the loaded content catalog (settlement rewards, tests).
@@ -73,6 +98,9 @@ func toWallet(a account.Account) Wallet {
 	if w.EquippedSkins == nil {
 		w.EquippedSkins = map[string]string{}
 	}
+	if w.Favourites == nil {
+		w.Favourites = []string{}
+	}
 	return w
 }
 
@@ -87,26 +115,27 @@ func (s *Service) cache(ctx context.Context, accountID string, w Wallet) {
 // to (and re-warming from) the account JSON truth. First read seeds starter
 // champions (all championPrices == 0 entries) and persists the seed.
 func (s *Service) Get(ctx context.Context, accountID string) (Wallet, error) {
-	if data, err := s.rdb.R.Get(ctx, redisx.KeyWallet(accountID)).Bytes(); err == nil {
-		var w Wallet
-		if json.Unmarshal(data, &w) == nil {
-			return w, nil
-		}
-	}
-	a, err := s.accounts.GetByID(ctx, accountID)
-	if err != nil {
-		return Wallet{}, err
-	}
-	if a.OwnedChampions == nil { // unseeded: persist the starter roster once
-		a, err = s.accounts.Update(ctx, accountID, func(ac *account.Account) error {
-			s.seed(ac)
-			return nil
-		})
+	var w Wallet
+	if data, err := s.rdb.R.Get(ctx, redisx.KeyWallet(accountID)).Bytes(); err == nil && json.Unmarshal(data, &w) == nil {
+		// Cache hit for the account-derived part. Crystal/favourites are always
+		// re-overlaid from their own truth below, so a stale value here is fine.
+	} else {
+		a, err := s.accounts.GetByID(ctx, accountID)
 		if err != nil {
 			return Wallet{}, err
 		}
+		if a.OwnedChampions == nil { // unseeded: persist the starter roster once
+			a, err = s.accounts.Update(ctx, accountID, func(ac *account.Account) error {
+				s.seed(ac)
+				return nil
+			})
+			if err != nil {
+				return Wallet{}, err
+			}
+		}
+		w = toWallet(a)
 	}
-	w := toWallet(a)
+	s.overlayMeta(ctx, accountID, &w)
 	s.cache(ctx, accountID, w)
 	return w, nil
 }
@@ -122,6 +151,7 @@ func (s *Service) mutate(ctx context.Context, accountID string, fn func(*account
 		return Wallet{}, err
 	}
 	w := toWallet(a)
+	s.overlayMeta(ctx, accountID, &w)
 	s.cache(ctx, accountID, w)
 	return w, nil
 }

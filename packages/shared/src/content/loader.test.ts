@@ -52,11 +52,12 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
     expect(Champions.ids()).toEqual(expect.arrayContaining(["sela", "thorne"]));
     expect(Abilities.ids().length).toBeGreaterThanOrEqual(8);
     expect(Items.ids().length).toBeGreaterThanOrEqual(4);
-    // augment pool = the skeleton 3 only (one per tier). The pseudo-EX draft
-    // cards were removed — "EX 技能" is now a per-hero ability (champion.exAbility
-    // + slot "EX"), NOT a generic augment draft. See ex-skills.test.ts.
+    // augment pool: task #149 expanded it to 21 (silver 6 / gold 8 / prismatic 7)
+    // and task #157 re-enabled the per-round 3-choose-1 draft. The original
+    // skeleton 3 remain within the pool. EX is still a per-hero ability
+    // (champion.exAbility + slot "EX"), NOT an augment. See ex-skills.test.ts.
     expect(Augments.ids()).toEqual(expect.arrayContaining(["bloodlust", "chill-touch", "aegis-surge"]));
-    expect(Augments.ids().length).toBe(3);
+    expect(Augments.ids().length).toBe(21);
     expect(Projectiles.ids().length).toBeGreaterThanOrEqual(2);
     expect(LootTables.get("round-reward").entries).toHaveLength(4);
 

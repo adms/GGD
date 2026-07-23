@@ -3,45 +3,99 @@
   "name": "44-02 死神的規則",
   "description": "[被動]\n0秒冷卻時間\n\n夜神月越了解死神界和筆記本的規則，越能掌控全局，將這份知識化為智慧7點。",
   "slot": "W",
-  "castType": "targeted",
+  "castType": "self",
   "maxRank": 5,
   "cooldown": [
-    12.0,
-    12.0,
-    12.0,
-    12.0,
-    12.0
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
   "manaCost": [
-    60.0,
-    60.0,
-    60.0,
-    60.0,
-    60.0
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
   ],
-  "range": 11.0,
-  "effects": [
-    {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
-        "perRank": [
-          80,
-          120,
-          160,
-          200,
-          240
-        ],
-        "ratios": [
+  "range": 0,
+  "effects": [],
+  "vfxKey": "fx.prim.void.pulse",
+  "schema": "ability@1",
+  "passive": {
+    "name": "44-02 死神的規則",
+    "ranks": [
+      {
+        "modifiers": [
           {
             "stat": "ap",
-            "coeff": 0.72
+            "op": "flat",
+            "value": 35
+          },
+          {
+            "stat": "maxMana",
+            "op": "flat",
+            "value": 105
+          }
+        ]
+      },
+      {
+        "modifiers": [
+          {
+            "stat": "ap",
+            "op": "flat",
+            "value": 35
+          },
+          {
+            "stat": "maxMana",
+            "op": "flat",
+            "value": 105
+          }
+        ]
+      },
+      {
+        "modifiers": [
+          {
+            "stat": "ap",
+            "op": "flat",
+            "value": 35
+          },
+          {
+            "stat": "maxMana",
+            "op": "flat",
+            "value": 105
+          }
+        ]
+      },
+      {
+        "modifiers": [
+          {
+            "stat": "ap",
+            "op": "flat",
+            "value": 35
+          },
+          {
+            "stat": "maxMana",
+            "op": "flat",
+            "value": 105
+          }
+        ]
+      },
+      {
+        "modifiers": [
+          {
+            "stat": "ap",
+            "op": "flat",
+            "value": 35
+          },
+          {
+            "stat": "maxMana",
+            "op": "flat",
+            "value": 105
           }
         ]
       }
-    }
-  ],
-  "vfxKey": "fx.ember-bolt-cast",
-  "targetsEnemies": true,
-  "schema": "ability@1"
+    ]
+  }
 }

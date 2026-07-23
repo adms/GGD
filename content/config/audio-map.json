@@ -122,10 +122,10 @@
     },
     "block": {
       "files": [
-        "assets/audio/sfx/lab/block-clash.wav",
-        "assets/audio/sfx/lab/block-shield.wav"
+        "assets/audio/sfx/fx/guard.wav",
+        "assets/audio/sfx/fx/block-hit.wav"
       ],
-      "gain": 0.63,
+      "gain": 0.7,
       "cooldownMs": 110,
       "maxConcurrent": 3
     },
@@ -152,6 +152,46 @@
       "gain": 0.95,
       "cooldownMs": 250,
       "maxConcurrent": 2
+    },
+    "hit-light": {
+      "files": [
+        "assets/audio/sfx/fx/hit-light.wav"
+      ],
+      "gain": 0.55,
+      "cooldownMs": 70,
+      "maxConcurrent": 4
+    },
+    "hit-medium": {
+      "files": [
+        "assets/audio/sfx/fx/hit-medium.wav"
+      ],
+      "gain": 0.72,
+      "cooldownMs": 75,
+      "maxConcurrent": 4
+    },
+    "hit-heavy": {
+      "files": [
+        "assets/audio/sfx/fx/hit-heavy.wav"
+      ],
+      "gain": 0.95,
+      "cooldownMs": 85,
+      "maxConcurrent": 3
+    },
+    "hit-crit": {
+      "files": [
+        "assets/audio/sfx/fx/hit-crit.wav"
+      ],
+      "gain": 1.0,
+      "cooldownMs": 90,
+      "maxConcurrent": 3
+    },
+    "block-hit": {
+      "files": [
+        "assets/audio/sfx/fx/block-hit.wav"
+      ],
+      "gain": 0.7,
+      "cooldownMs": 90,
+      "maxConcurrent": 3
     },
     "whiff": {
       "files": [

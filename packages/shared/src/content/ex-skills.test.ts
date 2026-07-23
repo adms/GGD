@@ -74,13 +74,13 @@ describe("EX 技能 per-hero ability (ex-skills)", () => {
     expect(withEx + exmap.withoutEx.length).toBe(total);
   });
 
-  it("pseudo-EX augment cards removed; skeleton 3 remain (ex-augments-removed)", () => {
+  it("pseudo-EX augment cards removed; the closed 21-augment pool stays (ex-augments-removed)", () => {
     cover("ex-augments-removed");
     const ids = new Set<string>(Augments.ids());
     for (const id of SKELETON_KEEP) expect(ids.has(id)).toBe(true);
     // no augment id begins with "ex-" any more — EX is not an augment draft
     expect(Augments.ids().filter((id) => id.startsWith("ex-"))).toEqual([]);
-    expect(Augments.ids().length).toBe(3);
+    expect(Augments.ids().length).toBe(21); // #149 pool (silver 6 / gold 8 / prismatic 7)
     expect(result.warnings).toEqual([]); // content tree stays closed
   });
 

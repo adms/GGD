@@ -203,6 +203,11 @@ export interface TouchAimFrame {
 export type AimIndicatorState =
   | { kind: "line"; fromX: number; fromZ: number; dirX: number; dirZ: number; length: number }
   | { kind: "disc"; x: number; z: number; radius: number }
+  // hold-to-preview (task #152): a dashed cast-RANGE ring + AoE disc centred on
+  // the caster while an ability button is PRESSED-AND-HELD (touch finger or
+  // desktop mouse). `range`/`radius` are already post-#136 `abilityRange`; a null
+  // `radius` = the ability has no AoE, so the disc is skipped.
+  | { kind: "range"; x: number; z: number; range: number; radius: number | null }
   | null;
 
 export interface TouchFrame {

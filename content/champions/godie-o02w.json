@@ -2,6 +2,7 @@
   "id": "godie-o02w",
   "schema": "champion@1",
   "name": "笑傲江湖 - 令狐沖",
+  "icon": "assets/icons/champions/godie-o02w.webp",
   "description": "故事：\n華山劍派之首席大弟子，為人大而化之不拘小節，且不喜世俗教條之束縛，因緣際會之下習得了武林奇功「獨孤九劍」，因為心愛的小師妹跟小白臉跑了，傷心之餘加入了去死團。\n(出自:笑傲江湖)\n\n推薦玩家 : 快速單挑\n上手度 : 中易\n\n角色成長：\n力量 + 1.85\n敏捷 + 2.80\n智慧 + 1.55\n基礎跑速 305\n\n可學習的技能：\n華山劍法、混元掌、吸星大法、獨孤九劍",
   "role": "fighter",
   "attackType": "melee",
@@ -16,7 +17,7 @@
     "armor": 10,
     "mr": 28,
     "as": 0.5,
-    "ms": 5.8,
+    "ms": 5.9,
     "critChance": 0,
     "critDamage": 1.75,
     "cdr": 0,
@@ -106,7 +107,7 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 0.75
+                "coeff": 0.6
               }
             ]
           }
@@ -143,22 +144,21 @@
       "range": 7.33,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "perRank": [
-              1.1,
-              1.1,
-              1.1,
-              1.1
-            ],
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.003
-              }
-            ]
-          }
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctMult",
+              "value": -1.0
+            }
+          ],
+          "duration": 3.0
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow40",
+          "duration": 3.0,
+          "moveSpeedMult": 0.8
         }
       ],
       "vfxKey": "fx.ember-bolt-cast",
@@ -184,26 +184,9 @@
       "range": 7.33,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "perRank": [
-              1.0,
-              1.0,
-              1.0
-            ],
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.003
-              }
-            ]
-          }
-        },
-        {
           "kind": "applyStatus",
           "statusId": "burnstun",
-          "duration": 0.3,
+          "duration": 1.0,
           "stun": true
         }
       ],

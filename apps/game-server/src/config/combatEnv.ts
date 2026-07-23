@@ -27,7 +27,7 @@ import {
   type CombatEnvMultipliers,
 } from "@ggd/shared/sim/combatEnv";
 import { Configs, type ConfigCombatEnvDoc } from "@ggd/shared/content";
-import { PLATFORM_URL } from "../curation/whitelist";
+import { PLATFORM_URL, warnOnce } from "./platformUrl";
 
 /** Process-wide bypass: skip the platform fetch (local dev/testing). */
 export const COMBAT_ENV_BYPASS = process.env.GGD_COMBAT_ENV_BYPASS === "1";
@@ -103,7 +103,8 @@ export async function fetchCombatEnv(
   try {
     const res = await doFetch(url, { signal: controller.signal });
     if (!res.ok) {
-      console.error(
+      warnOnce(
+        "combat-env-status",
         `[combat-env] platform returned ${res.status} for ${url} — FAILING SAFE to content ` +
           `defaults (admin 戰鬥系統 override NOT applied to this match). Fix the platform or ` +
           `set GGD_COMBAT_ENV_BYPASS=1.`,
@@ -112,7 +113,8 @@ export async function fetchCombatEnv(
     }
     const admin = parseCombatEnvDoc(await res.json());
     if (!admin) {
-      console.error(
+      warnOnce(
+        "combat-env-malformed",
         `[combat-env] malformed combat-env body from ${url} — FAILING SAFE to content defaults.`,
       );
       return normalizeCombatEnv(content);
@@ -120,7 +122,8 @@ export async function fetchCombatEnv(
     // Admin override beats the content default, key by key.
     return normalizeCombatEnv({ ...content, ...admin });
   } catch (err) {
-    console.error(
+    warnOnce(
+      "combat-env-unreachable",
       `[combat-env] could not reach the platform at ${url} — FAILING SAFE to content defaults ` +
         `(admin 戰鬥系統 override NOT applied to this match).`,
       err,

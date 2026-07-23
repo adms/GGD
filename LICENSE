@@ -1,0 +1,49 @@
+GGD — All Rights Reserved / 版權所有，保留一切權利
+
+Copyright (c) 2026 Adms. All rights reserved.
+
+A private project, kept under version control for the author's own use. Not open
+source; no licence is granted to anyone.
+
+本專案為私人專案，僅供作者自行版本控管使用。非開源，未授予任何人任何授權。
+
+
+=== The author's own work ==================================================
+
+  * All source code in this repository.
+  * The Warcraft III custom map this game is ported from — its design, systems,
+    triggers and balance — and the content derived from it (champions,
+    abilities, items, strings, stats).
+  * The character models, textures and reskins authored for that map.
+  * The 21 Chinese voice quips recorded for the map.
+  * All eleven background-music tracks, synthesised from scratch by
+    tools/bgm-gen — every waveform computed from numpy arrays, no sample and no
+    audio file read as input.
+  * The arena ground textures and cursor art, generated procedurally by this
+    repo's own scripts — byte-reproducible from a seed.
+
+
+=== Third-party components =================================================
+
+  * CC0 art — models and textures from KayKit (Kay Lousberg), Quaternius,
+    Kenney Vleugels and mastjie. Public domain; credited in
+    content/assets/CREDITS.md out of courtesy.
+
+  * CC BY 4.0 — the login-screen dragon,
+    content/assets/models/menu/dragon2.glb. Attribution required:
+
+      "Animated Dragon Three Motion Loops"
+      (https://sketchfab.com/3d-models/animated-dragon-three-motion-loops-eca98cf6cd084c1596cecf716e110c29)
+      by LasquetiSpice (https://sketchfab.com/LasquetiSpice)
+      licensed under CC-BY 4.0 (https://creativecommons.org/licenses/by/4.0/)
+
+  * 効果音ラボ (Sound Effect Lab), https://soundeffect-lab.info/ — 40 clips under
+    content/assets/audio/sfx/lab/ and audio/voice-jp/. Free to use, credit
+    optional, copyright retained by 効果音ラボ. Not CC0.
+
+  * Character names, titles and likenesses in the roster belong to their
+    respective rights holders.
+
+content/assets/CREDITS.md holds the full provenance record; docs/asset-debt.md
+tracks the local-only Warcraft III development overlay, which is excluded from
+version control by .gitignore.

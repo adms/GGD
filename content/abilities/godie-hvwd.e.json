@@ -32,13 +32,13 @@
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 1.0
+            "coeff": 0.6
           }
         ]
       }
     }
   ],
-  "vfxKey": "fx.ember-bolt-cast",
+  "vfxKey": "fx.prim.void.nova",
   "targetsEnemies": true,
   "schema": "ability@1",
   "icon": "assets/icons/abilities/godie-hvwd.e.png"

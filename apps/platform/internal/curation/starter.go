@@ -2,15 +2,17 @@ package curation
 
 import "sort"
 
-// The DEMO STARTER SET — the named, reviewable "make a fresh install playable"
-// bundle (task #47).
+// The STARTER SET — the named, reviewable "make a fresh install playable"
+// bundle (task #47). Its champion half is the FIRST OPEN ROSTER (對戰可選名單):
+// the 48 champions the user hand-picked to be selectable in champ-select on a
+// fresh install.
 //
 // WHY IT EXISTS. The whitelist ships EMPTY on purpose (task #4): the imported
 // WC3 tree carries 113 champions / 212 items / 554 abilities and none of it is
 // vetted, so production must never enable content behind an operator's back.
 // Correct, but hostile: a brand-new install has zero playable champions and
 // champ-select shows nothing but an empty-state. This bundle is the answer —
-// a SMALL, HAND-PICKED, DOCUMENTED set that a human applies on purpose.
+// a HAND-PICKED, DOCUMENTED set that a human applies on purpose.
 //
 // SECURITY CONTRACT (do not weaken):
 //   - Nothing here is ever applied implicitly. Service.Get() still lazily
@@ -35,55 +37,66 @@ import "sort"
 // TestStarterSetMatchesContentTree against the real content tree — the bundle
 // cannot silently rot when content is re-imported):
 //
-// CHAMPIONS (13) — 113 candidates in, 13 out:
+// CHAMPIONS (48) — the FIRST OPEN ROSTER (對戰可選名單). 113 candidates in, the
+// user's 48 hand-picked names out. This is NOT the old 13-tile demo showcase:
+// it is the whole selectable roster a fresh install offers in champ-select, so
+// the gates are about ROSTER INTEGRITY (a real, complete, distinct champion),
+// NOT about a pretty demo grid.
 //
-//	G1 not a test/placeholder hero (測試/範例/範本).
-//	G2 the champion declares an icon AND the PNG exists on disk.
-//	G3 the glb is genuinely TEXTURED: the body primitive paints with an image
-//	   larger than the exporter's 8x8 grey placeholder, and the glb embeds no
-//	   placeholder at all.
-//	G4 silhouette in band: glb bbox height x model scale lands in 1.5–2.1u
-//	   (the roster median is 1.745u), so the fixed camera and HUD read right.
-//	G5 its OWN imported w3x model — 80 of 113 champions share one of four CC0
-//	   stand-ins (champ.sela alone is worn by 18); no two picks share a model.
-//	G6 every clipMap entry (idle/run/attack/cast/hurt/death) resolves to a real
-//	   animation in the glb.
-//	G7 ability set is COMPLETE and follows the task #11 hero-number convention:
-//	   Q/W/E/R carry the 2-digit xx-0N prefix, the EX carries xx-00N, all five
-//	   share ONE hero number, and all five standalone docs exist.
-//	G8 the champion HAS an EX — the EX is the only ability the whitelist
-//	   actually gates (MatchController.learnEx), so a champion without one
-//	   would demo a dead hotkey.
-//	G9 no two picks are the SAME CHARACTER, decided by the one shared IDENTITY
+// ONE CANONICAL ID PER NAME. ~20 of the 48 wanted names matched several content
+// docs (re-skins, blank-story twins, a 測試 stand-in). Each name resolves to ONE
+// canonical id, chosen by: reject anything whose name carries 測試/範例/範本 or
+// whose story is a blank placeholder; then prefer the entry with a real 稱號, a
+// non-empty 描述 and a complete Q/W/E/R + EX kit. Ties follow 附錄A of
+// docs/hero-popularity-ranking.md (the documented 重複換皮 keep/drop table). The
+// per-entry choices are annotated inline on the slice below; the known trap
+// 測試英雄-索隆 (godie-u01q) is rejected in favour of godie-u01u.
+//
+//	R1 not a test/placeholder hero (測試/範例/範本 in the display name).
+//	R2 COMPLETE, hero-number-consistent kit (task #11 convention): Q/W/E/R carry
+//	   the 2-digit xx-0N prefix, the EX carries xx-00N, all five share ONE hero
+//	   number, exAbility == "<id>.ex", and all five standalone docs exist. The
+//	   EX matters because it is the only ability the whitelist actually gates
+//	   (MatchController.learnEx), so a champion without one would ship a dead
+//	   hotkey.
+//	R3 no HALF-ENABLED champion: all five ability ids are in the bundle.
+//	R4 no two picks are the SAME CHARACTER, decided by the one shared IDENTITY
 //	   RULE — the task #11 hero 編號 carried by the ability names, plus the
 //	   display name. Source of truth:
-//	   packages/shared/src/content/championIdentity.ts (ported for this gate in
-//	   heroidentity_test.go and asserted by TestChampionIdentityRule).
+//	   packages/shared/src/content/championIdentity.ts (ported in
+//	   heroidentity_test.go, asserted by TestChampionIdentityRule). The 48 carry
+//	   48 DISTINCT hero 編號, so no pair can collide.
+//	R5 the roster is EXACTLY these 48 canonical ids — pinned id-for-id by
+//	   TestFirstOpenRoster so a re-import or a careless edit cannot silently add,
+//	   drop or swap a champion.
 //
-//	   IDENTITY IS **NOT** THE MODEL AND **NOT** THE PORTRAIT. 80 of 113
-//	   champions wear one of four CC0 stand-in meshes because their WC3 model
-//	   was a Blizzard built-in (champ.sela alone is worn by 18 unrelated
-//	   heroes), and w3x icon extraction handed the same PNG to several heroes
-//	   (曹操孟德 wears 皮卡丘's). Treating either as "same hero" is what erased
-//	   英靈-亞瑟王-黑化Saber (hero 69, its own 黑泥 kit) as a supposed duplicate
-//	   of 亞瑟王-Saber (hero 20). G5 above still forbids two picks sharing a
-//	   MESH, but for a presentation reason (the demo grid should not show the
-//	   same body twice) — never as an identity claim.
+// WHAT IS DELIBERATELY **NOT** GATED (and why the old showcase gates G2–G6 are
+// gone). A 48-champion selectable roster is a different thing from a 13-tile
+// demo grid, and the visual/uniqueness gates that made the grid pretty would
+// now DELETE champions the user explicitly asked for:
 //
-//	   The rule leans lenient per the user's ruling
-//	   「遇到疑慮一律判斷寬鬆為多英雄」: merging needs positive evidence, because
-//	   a wrongly-merged champion vanishes with its kit while a wrongly-kept
-//	   duplicate is cosmetic. Concretely for this bundle: e00n / n01g / hjai are
-//	   excluded as genuine duplicate ENTRIES of e001 / n003 / h020, while u00l
-//	   (hero 25 北斗之鼠-拳四郎) is excluded only by G5 — it wears the same
-//	   imported.heropikachu mesh as the pick ofar. It is a real, distinct,
-//	   curatable champion, just not a good second demo tile.
-//
-//	Spread is by KIT ARCHETYPE, not by the `role` field: the imported roster
-//	only ever says fighter (79) or marksman (32), so a true role spread is
-//	impossible today (filed as a follow-up). 7 melee / 5 ranged, covering
-//	assassin, duelist, bruiser, tank, skirmisher, marksman, burst mage,
-//	durable caster and support.
+//   - ICON on disk. 妙蛙花 (h02r) ships no portrait (stock art), the client
+//     already treats `icon` as optional ("absent for stock-art heroes"), and a
+//     parallel batch is still writing icon fields — so the seed must not depend
+//     on a PNG being present.
+//   - OWN / UNIQUE mesh. 80 of 113 champions wear one of four CC0 stand-in
+//     meshes because their WC3 model was a Blizzard built-in (champ.sela alone
+//     is worn by 18 unrelated heroes); the roster intentionally includes
+//     several that share a mesh (champ.sela: n00b/orkn/ogld/u00k;
+//     champ.skin.barbarian: ubal/hpal/h02k; champ.thorne: hapm/udea). A shared
+//     mesh means "art is missing", NOT "same hero" — treating it as identity is
+//     exactly what once erased 黑化Saber. Uniqueness was a demo-grid nicety, not
+//     a roster rule.
+//   - TEXTURED body / silhouette height band / animation count. Presentation
+//     gates for the fixed-camera demo tiles; irrelevant to whether a champion
+//     is pickable.
+//   - buildPriority LADDER. Most of the 48 carry only a 2-item buildPriority,
+//     and the AIDriver already TOLERATES a non-purchasable rung (it skips it
+//     rather than stalling), so a "≥4 purchasable rungs" gate would reject real
+//     champions for a problem the bot no longer has.
+//   - copy quality. 魔人普烏 (huth) ships an empty EX description in content this
+//     package does not own; the roster gates a champion's IDENTITY and
+//     COMPLETENESS, not its flavour text.
 //
 // ITEMS (104) — 212 in, 104 out, split across FOUR surfaces (task #70 drew the
 // first two; task #82 split the third out of the shop and added the fourth;
@@ -207,37 +220,72 @@ import "sort"
 //	orb. The aboveCeiling ledger in the test is therefore EMPTY, and the gate
 //	now asserts it stays empty.
 //
-// ABILITIES (65) — 13 champions x {q,w,e,r,ex}:
+// ABILITIES (240) — 48 champions x {q,w,e,r,ex}:
 //
 //	Only `.ex` is enforced today (a champion's Q/W/E/R are embedded in the
 //	champion doc and ungated), but listing all five makes the bundle
 //	self-describing and future-proofs it if gating widens. It also means there
 //	is no such thing as a HALF-ENABLED champion in this set.
 var (
-	// 13 champions — 8 melee / 5 ranged, one archetype each.
+	// The FIRST OPEN ROSTER — 48 canonical champion ids, one per user-picked
+	// name (對戰可選名單). Sorted; ApplyStarterSet unions this into the whitelist,
+	// which the client champ-select and the game-server both read. Inline
+	// annotations record the display name, hero 編號, and — for the ~20 names
+	// that matched several docs — which candidate was kept and why (see the
+	// SELECTION RULES above and 附錄A of docs/hero-popularity-ranking.md).
+	//
+	// NOTE: keep this declared as `starterChampions = []string{` with one
+	// quoted id per line — apps/game-server/.../whitelist.test.ts parses this
+	// exact block as the single source of truth for the seeded roster.
 	starterChampions = []string{
-		"godie-e001", // 蟬在叫人壞掉 - 龍宮禮奈  melee  assassin (stealth opener, voice)
-		"godie-e008", // 火霧戰士 - 夏娜          melee  duelist (mid-stat control champion)
-		"godie-edem", // 寫輪眼復仇者 - 宇智波佐助 melee  burst assassin (longest melee reach)
-		"godie-h01u", // 亂世癿王者 - 呂布奉先     melee  bruiser (stat-trade passive + damage aura)
-		"godie-hart", // 最終幻想 - 克勞德         melee  heavy skirmisher (top of the height band)
-		"godie-hpb1", // 獸矛傳承使 - 蒼月潮       melee  tank / juggernaut (640 HP, 50% DR barrier, voice)
-		"godie-o02p", // 夢幻之星 - 初音           melee  enchanter (chain heal, team buff, 19 clips)
-		"godie-etyr", // 治癒系公主 - 木乃香       ranged support / healer (cleanse, aura, 式神)
-		"godie-h020", // 黑魔導士 - 莉娜因巴斯     ranged burst mage (the INT-scaling demo)
-		"godie-n003", // 黑暗福音 - 依文潔琳       ranged durable dark caster (voice)
-		"godie-o00k", // 傲嬌電氣老鼠 - 皮卡娘     ranged mobile burst caster (600u blink, voice)
-		"godie-ofar", // 神奇寶貝兒 - 皮卡丘       ranged transform marksman (R flips ranged→melee, voice)
-		// hero 69 — 英靈-亞瑟王 - 黑化Saber. Added by task #55 after the identity
-		// rule was corrected. The OLD heuristics erased her twice over: she shares
-		// imported.herosaber with hero 20 (Saber), and her portrait is byte-identical
-		// to Saber's, so both the model-based and the icon-hash-based dedup folded
-		// her away as a "duplicate". She is not one — she carries her own kit
-		// (69-01 力量強化 / 69-02 黑泥召喚 / 69-03 約束與勝利之劍 / 69-04 魔力增幅 +
-		// EX 69-002 固有結界-黑洞), and task #49's vertex tint renders her BLACK,
-		// which is what distinguishes her on screen. Identity is the hero 編號, never
-		// the model or the icon bytes. Passes all of G1-G9 + I7; displaces nothing.
-		"godie-e00q", // 英靈-亞瑟王 - 黑化Saber   melee  STR bruiser (black-tinted Saber, own kit)
+		"godie-e001", // 龍宮禮奈 - 蟬在叫人壞掉  #22
+		"godie-e002", // Saber - 亞瑟王  #20  — 選 e002（e00l 劇情空白）
+		"godie-e007", // 天地志狼 - 龍之子  #12  — 選 e007（附錄A 保留；剔 ewar）
+		"godie-e008", // 夏娜 - 火霧戰士  #21
+		"godie-e00k", // 安云 - 戰國刺客Azumi  #19  — 選 e00k（e00z 劇情空白）
+		"godie-e00r", // 初號機 - 最終泛用人型決戰兵器  #59
+		"godie-e00w", // 櫻綻剎那 - 神鳴流劍士  #77  — 選 e00w（剔 e00x）
+		"godie-edem", // 宇智波佐助 - 寫輪眼復仇者  #45
+		"godie-emfr", // 涅吉。史普林。菲爾德 - 魔法老師  #15  — 選 #15 emfr（#82 h022 為另一獨立英雄）
+		"godie-emns", // 夜神月 - 奇樂  #44
+		"godie-etyr", // 木乃香 - 治癒系公主  #14
+		"godie-h00l", // 林克 - 時空勇者  #60
+		"godie-h01n", // 黑崎一護 - 開外掛的死神  #79  — 選 h01n（h01o 劇情空白）
+		"godie-h01u", // 呂布奉先 - 亂世癿王者  #80
+		"godie-h020", // 莉娜因巴斯 - 黑魔導士  #04  — 選 h020（剔 hjai）
+		"godie-h02k", // 熊貓 - 國寶級的畜生  #89
+		"godie-h02r", // 妙蛙花 - 種子神奇寶貝  #90  — 注意：無 icon（stock 美術）
+		"godie-h02u", // 草泥馬 - 看似憂鬱的神獸  #92  — 選 h02u（剔 h02v）
+		"godie-hapm", // Berserker - 海克力斯  #52
+		"godie-hart", // 克勞德 - 最終幻想  #01
+		"godie-hpal", // 藤井八雲 - 不死之身-無  #35
+		"godie-hpb1", // 蒼月潮 - 獸矛傳承使  #07
+		"godie-huth", // 魔人普烏 - 超級普烏  #28  — 注意：EX 描述為空（不影響可選性）
+		"godie-hvsh", // Rider - 梅杜莎  #48
+		"godie-hvwd", // 桔梗 - 除魔巫女  #02
+		"godie-n003", // 依文潔琳 - 黑暗福音  #42  — 選 n003（剔 n01g）
+		"godie-n00b", // 哆拉A夢 - 小叮噹  #57
+		"godie-n00p", // 南野秀一 - 妖狐藏馬  #18  — 選 n00p（剔 nsjs）
+		"godie-n01c", // 勇者小呆 - 傳說的龍騎士  #08  — 選 n01c（剔 nbbc）
+		"godie-nplh", // 麻倉葉 - 通靈人  #16
+		"godie-o00k", // 皮卡娘 - 傲嬌電氣老鼠  #86
+		"godie-o00l", // 傑洛士 - 獸神官  #53
+		"godie-o00x", // 悟空 - 超級賽亞人  #09  — 選 SSJ o00x（剔 base ogrh）
+		"godie-o02p", // 初音 - 夢幻之星  #99
+		"godie-ofar", // 皮卡丘 - 神奇寶貝兒  #58  — 選 ofar（o02l 劇情空白）
+		"godie-ogld", // 黑人牙膏 - 美白大法師  #72
+		"godie-orkn", // 臭作 - 電車癡漢  #30
+		"godie-osam", // 殺生丸 - 犬妖  #34
+		"godie-u00h", // 鬼畜狂刀KYO - 鬼畜紅王  #39
+		"godie-u00j", // 賽菲洛斯 - 神性的流失  #74
+		"godie-u00k", // 死之王 - 邪惡意念集合體  #71
+		"godie-u00l", // 拳四郎 - 北斗之鼠  #25  — 選 u00l（剔 umal）
+		"godie-u00n", // 蒙其.D.魯夫 - 草帽小子  #76  — 選 u00n（剔 u00o）
+		"godie-u00v", // 基廉列克 - 黑手黨老大  #78
+		"godie-u010", // 飛影 - 邪眼師  #38  — 選 u010（剔 uvng）
+		"godie-u01u", // 索隆 - 三刀流劍士  #11  — 選 u01u（reject 測試 u01q；剔 udre）
+		"godie-ubal", // 巴恩大魔王 - 魔界霸主  #37
+		"godie-udea", // 飛鼠先生 - 至尊學長  #65
 	}
 
 	// 70 SHOP items — every content item that is priced, named and actually

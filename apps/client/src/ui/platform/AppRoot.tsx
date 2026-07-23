@@ -12,6 +12,8 @@ import { LobbyScreen } from "./LobbyScreen";
 import { AudioDirector } from "../AudioDirector";
 import { AudioToggle } from "../AudioToggle";
 import { HudRoot } from "../HudRoot";
+import { hudTouch } from "../hud/HudSlot";
+import { hudSlotStyle } from "../hud/hudLayout";
 import { Minimap } from "../hud/Minimap";
 import { RotateOverlay } from "../RotateOverlay";
 import { SettingsCorner } from "../SettingsCorner";
@@ -24,6 +26,7 @@ import { AssetConsoleRoute } from "../assets/AssetConsoleRoute";
 import { CreditsRoute } from "./CreditsRoute";
 import { VersionBadge } from "../VersionBadge";
 import { useHud } from "../../net/RoomStore";
+import { useContentReady, MatchContentGate } from "./ContentGate";
 import { Btn } from "./widgets";
 import { PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
 
@@ -50,7 +53,13 @@ function MatchOverlay(): React.JSX.Element {
           owns navigation (查看戰績變化 / 返回大廳); we only show the small "Leave"
           control during live play. */}
       {!ended && (
-        <div style={{ position: "absolute", right: 10, top: 10, pointerEvents: "auto" }}>
+        // slot 0 of the top-right stack (ui/hud/hudLayout, tasks #42/#107):
+        // DECLARED, not hard-coded, so the scoreboard and the <body>-portaled
+        // audio cluster below it stack off the height this reserves.
+        <div
+          data-hud-slot="leave"
+          style={{ ...hudSlotStyle("leave", hudTouch()), pointerEvents: "auto" }}
+        >
           <Btn small title="leave the match" onClick={() => void returnToLobby()} style={{ opacity: 0.75 }}>
             Leave
           </Btn>
@@ -121,9 +130,15 @@ export function AppRoot(): React.JSX.Element {
 }
 
 function ScreenBody({ screen }: { screen: string }): React.JSX.Element {
+  // Entering a match is the ONE transition that truly needs the full content
+  // set. Content streams in the background from first paint, so by the time a
+  // user logs in and clicks play it is almost always ready; if not, hold a
+  // lightweight placeholder here rather than mounting the HUD/sim (main.tsx
+  // likewise defers GameApp creation until this is ready).
+  const contentReady = useContentReady();
   switch (screen) {
     case "match":
-      return <MatchOverlay />;
+      return contentReady ? <MatchOverlay /> : <MatchContentGate />;
     case "boot":
     case "auth":
     case "lobby":

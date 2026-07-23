@@ -177,3 +177,48 @@ func TestAPIPublicRead(t *testing.T) {
 	assert.Equal(t, 1.5, m["moveSpeed"])
 	assert.Equal(t, 1.0, m["cooldown"])
 }
+
+// combatenv-api-unconfigured: an UNCONFIGURED platform must serve an EMPTY
+// multipliers map on the public read, not the defaults-filled neutral table.
+//
+// Why this is not cosmetic: the game-server merges this body OVER the content
+// defaults with admin keys winning PER KEY. A defaults-filled body therefore
+// carries 17 explicit 1.0s that beat every content-authored multiplier — the
+// content tree's cooldown 0.25 / damageDealt 0.5 / maxHealth 8.0 /
+// abilityRange 0.6 would all silently revert to neutral as soon as a
+// game-server could reach a fresh platform. Nothing in the tuning is lost on
+// disk; it just stops applying, which is the worst kind of failure to notice.
+//
+// The ADMIN read keeps the full table — the console needs every key present to
+// render the editor — and once an operator saves, the full table ships on the
+// public read too, because at that point 1.0 is a deliberate choice (PUT
+// semantics: omitted keys reset to neutral).
+func TestAPIPublicReadUnconfigured(t *testing.T) {
+	testkit.Cover(t, "combatenv-api-unconfigured")
+	ts := testutil.New(t)
+	boss := ts.Register("boss")
+	grantAdmin(t, ts, boss.ID)
+
+	// Nothing saved yet: the public read must carry NO opinion.
+	r := ts.Do(http.MethodGet, "/api/v1/combat-env", "", nil)
+	require.Equal(t, http.StatusOK, r.Status, "%s", string(r.Raw))
+	assert.Empty(t, multipliers(t, r),
+		"an unconfigured platform must not override content defaults")
+
+	// The admin read still gets the full editable table.
+	r = ts.Do(http.MethodGet, "/api/v1/admin/combat-env", boss.Access, nil)
+	require.Equal(t, http.StatusOK, r.Status, "%s", string(r.Raw))
+	assert.Len(t, multipliers(t, r), len(combatenv.Keys))
+
+	// After a save the public read carries the operator's full, deliberate table.
+	r = ts.Do(http.MethodPut, "/api/v1/admin/combat-env", boss.Access, map[string]any{
+		"multipliers": map[string]any{"moveSpeed": 1.5},
+	})
+	require.Equal(t, http.StatusOK, r.Status)
+
+	r = ts.Do(http.MethodGet, "/api/v1/combat-env", "", nil)
+	require.Equal(t, http.StatusOK, r.Status, "%s", string(r.Raw))
+	m := multipliers(t, r)
+	assert.Len(t, m, len(combatenv.Keys))
+	assert.Equal(t, 1.5, m["moveSpeed"])
+}

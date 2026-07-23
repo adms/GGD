@@ -1,5 +1,5 @@
 /**
- * CameraRig — angled top-down MOBA camera (~55° pitch). Follow-lock on the
+ * CameraRig — steep top-down MOBA camera (~68° pitch). Follow-lock on the
  * local champion (Space toggles), edge-pan when the cursor hugs the viewport
  * border, arrow-key pan, wheel dolly with clamps. Also owns screenToGround:
  * a picking ray built by Babylon intersected with the mathematical y=0 plane
@@ -15,10 +15,28 @@ import type { AnchorPose, CameraGroundView } from "../frameBus";
 import { shakeDecayEnvelope } from "./combatFeedback";
 import { settlementCameraPose } from "./settlementCamera";
 
-/** Camera pitch from horizontal — exported so sightline math (ArenaScene's
- *  occluder audit) derives its height cap from the SAME angle. */
-export const CAMERA_PITCH_RAD = (55 * Math.PI) / 180;
+/**
+ * Camera pitch from horizontal — exported so sightline math (ArenaScene's
+ * occluder audit) derives its height cap from the SAME angle.
+ *
+ * Raised 55° → 68° (#combat-cam-topdown): the old 55° read as too low/flat
+ * ("太低"). 68° is clearly more top-down without becoming a flat overhead map
+ * — the eye lifts and looks steeper down, yet the framing distance is unchanged
+ * (see below), so it does NOT reveal more of the arena ("不用一次看一半地圖").
+ *
+ * Trig sanity-check at the closest/worst-case zoom (dolly = DOLLY_MIN = 10):
+ *   eyeHeight = 10·sin(68°) ≈ 9.27u   (was 10·sin(55°) ≈ 8.19u — a bit higher)
+ *   standoff  = 10·cos(68°) ≈ 3.75u   (was 10·cos(55°) ≈ 5.74u — more overhead)
+ * The eye→target distance stays exactly `dolly` (=√(back²+up²)), so on-screen
+ * champion size and the visible ground patch are unchanged — only the ANGLE is
+ * steeper. Occluder safety (#29/#103) IMPROVES: with the 2.4u prop-height cap,
+ * the worst-case full-hide band shrinks from (2.4−1.7)·5.74/(8.19−2.4)≈0.69u to
+ * (2.4−1.7)·3.75/(9.27−2.4)≈0.38u, and the eye stays far above the 2.4u cap.
+ */
+export const CAMERA_PITCH_RAD = (68 * Math.PI) / 180;
 export const DOLLY_MIN = 10;
+/** Closest the EX cinematic punch-in may dolly (below the user's DOLLY_MIN). */
+const EX_PUNCH_MIN_DOLLY = 5;
 const DOLLY_MAX = 40;
 /** while spectating (dead), allow a much wider zoom-out to watch the whole fight */
 const DOLLY_MAX_DEAD = 90;
@@ -33,8 +51,30 @@ const FOLLOW_LERP_HALFLIFE_MS = 90;
 
 /** Max simultaneous shake impulses (pre-allocated; allocation-free hot path). */
 const MAX_SHAKES = 6;
-/** Shake oscillation rate (rad/ms) — ~8–10 Hz jitter. */
-const SHAKE_FREQ = 0.052;
+/**
+ * Shake oscillation rate (rad/ms). Raised to ~12.4 Hz (was ~8.3 Hz) for a
+ * sharper, snappier ring that reads as impact rather than a slow wobble —
+ * paired with the crisper cubic decay in `shakeDecayEnvelope` (收尾精準).
+ */
+const SHAKE_FREQ = 0.078;
+/**
+ * Directional-KICK window (ms): the one-shot translational shove along the hit
+ * vector rides a MUCH shorter, front-loaded decay than the ring jitter, so the
+ * camera lurches on the contact frame and snaps back crisply.
+ */
+const KICK_DURATION_MS = 120;
+/** How far (world units per unit of kick magnitude) the directional shove pushes. */
+const KICK_GAIN = 0.9;
+/**
+ * Absolute cap on the SUMMED offset of all live impulses (world units). The pool
+ * adds its impulses together, so an AoE frame that lands three hits at once would
+ * otherwise displace the eye by their sum — a screen-quake. A single max impulse
+ * (SHAKE_MAX_AMP ring + a capped kick) peaks just under this, so a lone hit is
+ * never touched; only genuine pile-ups are reined in. GameApp additionally
+ * thins per-frame impulses upstream (combatFeedback.shakeCrowdingScale) — this
+ * is the last line of defence inside the rig itself.
+ */
+const SHAKE_SUM_MAX = 1.8;
 
 interface ShakeImpulse {
   active: boolean;
@@ -42,6 +82,21 @@ interface ShakeImpulse {
   ageMs: number;
   durationMs: number;
   phase: number;
+  /** unit hit-vector for a DIRECTIONAL impulse ({0,0} = radial/omni only). */
+  dirX: number;
+  dirZ: number;
+  /** one-shot translational kick magnitude along dir (0 = ring jitter only). */
+  kickMag: number;
+}
+
+/** Options for a directional camera shake (audit P1 directional kick). */
+export interface ShakeOptions {
+  /** hit vector (victim away from source); need not be unit — normalized here. */
+  dir?: { x: number; z: number };
+  /** directional / omni. Omni keeps a pure radial ring (crit/EX). */
+  style?: "directional" | "omni";
+  /** one-shot translational kick magnitude along `dir` (defaults to `amp`). */
+  kick?: number;
 }
 
 export interface CameraUpdateArgs {
@@ -75,10 +130,20 @@ export class CameraRig {
     ageMs: 0,
     durationMs: 0,
     phase: 0,
+    dirX: 0,
+    dirZ: 0,
+    kickMag: 0,
   }));
   private shakePhaseSeed = 0;
   private shakeX = 0;
   private shakeY = 0;
+  /** ground-plane (world-Z) component of the summed shake offset. */
+  private shakeZ = 0;
+  /** transient EX punch-in dolly delta (world units, eased back to 0). */
+  private punchDolly = 0;
+  private punchAgeMs = Infinity;
+  private punchDurationMs = 0;
+  private punchDepth = 0;
 
   /**
    * Ground-plane description of the LAST APPLIED transform (see
@@ -258,7 +323,7 @@ export class CameraRig {
    * pool slot; when all are busy the weakest (lowest remaining amplitude) is
    * stolen. Fire-and-forget from the event drain — the decay runs in `update`.
    */
-  addShake(amp: number, durationMs: number): void {
+  addShake(amp: number, durationMs: number, opts?: ShakeOptions): void {
     if (!(amp > 0) || !(durationMs > 0)) return;
     let slot = this.shakes.find((s) => !s.active);
     if (!slot) {
@@ -275,14 +340,55 @@ export class CameraRig {
     slot.amp = amp;
     slot.ageMs = 0;
     slot.durationMs = durationMs;
+    // DIRECTIONAL kick (audit P1): a hit vector aligns the shove + biases the
+    // ring; omni style (crit/EX) keeps the radial jitter with no directional
+    // lurch. Normalize defensively so a raw knockback vector need not be unit.
+    const dir = opts?.dir;
+    const style = opts?.style ?? (dir ? "directional" : "omni");
+    if (dir && style === "directional") {
+      const len = Math.hypot(dir.x, dir.z);
+      if (len > 1e-6) {
+        slot.dirX = dir.x / len;
+        slot.dirZ = dir.z / len;
+        slot.kickMag = Math.max(0, opts?.kick ?? amp);
+      } else {
+        slot.dirX = slot.dirZ = slot.kickMag = 0;
+      }
+    } else {
+      slot.dirX = slot.dirZ = slot.kickMag = 0;
+    }
     this.shakePhaseSeed += 1.7; // decorrelate successive shakes (no rng needed)
     slot.phase = this.shakePhaseSeed;
+  }
+
+  /**
+   * EX / super cinematic PUNCH-IN (audit P1 特寫): dolly the eye toward the
+   * target by `depth` world units, hold briefly, then ease back CRISP. Clamped
+   * so it can never dive past the closest allowed dolly. Pairs with the sim's
+   * cosmetic EX freeze; the screen darken is a post-fx concern (CombatPostFx),
+   * not the rig's.
+   *
+   * CANNOT STACK by construction: the beat is a single (depth, age, duration)
+   * triple, so a second call REPLACES the first rather than adding to it, and
+   * `advancePunch` always eases the one live beat back to 0. GameApp fires it
+   * from the local player's EX `abilityCast` (combatFeedback.planCameraReaction),
+   * once per super — never per damage tick — with an additional
+   * EX_PUNCH_MIN_INTERVAL_MS floor so a repeated cast event can't restart it.
+   */
+  exPunchIn(depth = 2.5, durationMs = 260): void {
+    if (!(depth > 0) || !(durationMs > 0)) return;
+    // A cinematic override may push CLOSER than the user's closest zoom (the
+    // whole point of the 特寫), but never inside EX_PUNCH_MIN_DOLLY.
+    this.punchDepth = Math.min(depth, Math.max(0, this.dolly - EX_PUNCH_MIN_DOLLY));
+    this.punchDurationMs = durationMs;
+    this.punchAgeMs = 0;
   }
 
   /** Advance every live shake impulse and re-sum the current camera offset. */
   private advanceShake(dtMs: number): void {
     let ox = 0;
     let oy = 0;
+    let oz = 0;
     for (const s of this.shakes) {
       if (!s.active) continue;
       s.ageMs += dtMs;
@@ -292,11 +398,45 @@ export class CameraRig {
         continue;
       }
       const mag = s.amp * env;
+      // radial ring jitter (screen-plane wobble) — the omni component
       ox += mag * Math.sin(s.ageMs * SHAKE_FREQ + s.phase);
       oy += mag * Math.cos(s.ageMs * SHAKE_FREQ * 1.3 + s.phase);
+      // DIRECTIONAL kick: a hard, front-loaded shove along the hit vector on the
+      // ground plane that snaps back within KICK_DURATION_MS (much faster than
+      // the ring), so contact leads with a lurch then settles crisp.
+      if (s.kickMag > 0) {
+        const kickEnv = shakeDecayEnvelope(s.ageMs, Math.min(s.durationMs, KICK_DURATION_MS));
+        const k = s.kickMag * KICK_GAIN * kickEnv;
+        ox += s.dirX * k;
+        oz += s.dirZ * k;
+      }
+    }
+    // teamfight clamp: scale the SUMMED offset back under SHAKE_SUM_MAX rather
+    // than clamping each axis, so a pile-up loses magnitude but keeps its
+    // direction (a capped kick still reads as "the blow came from THERE").
+    const sum = Math.hypot(ox, oy, oz);
+    if (sum > SHAKE_SUM_MAX) {
+      const k = SHAKE_SUM_MAX / sum;
+      ox *= k;
+      oy *= k;
+      oz *= k;
     }
     this.shakeX = ox;
     this.shakeY = oy;
+    this.shakeZ = oz;
+  }
+
+  /** Advance the transient EX punch-in dolly (eased in fast, out crisp). */
+  private advancePunch(dtMs: number): void {
+    if (this.punchAgeMs >= this.punchDurationMs) {
+      this.punchDolly = 0;
+      return;
+    }
+    this.punchAgeMs += dtMs;
+    const t = Math.min(1, this.punchAgeMs / this.punchDurationMs);
+    // in fast (first ~25%), hold, then cubic ease-out back to rest
+    const shape = t < 0.25 ? t / 0.25 : 1 - Math.pow((t - 0.25) / 0.75, 3);
+    this.punchDolly = this.punchDepth * Math.max(0, shape);
   }
 
   update(args: CameraUpdateArgs): void {
@@ -309,6 +449,7 @@ export class CameraRig {
     }
 
     this.advanceShake(args.dtMs);
+    this.advancePunch(args.dtMs);
     const dt = Math.min(args.dtMs, 100) / 1000;
 
     if (this.followLock && args.localPos) {
@@ -382,13 +523,17 @@ export class CameraRig {
   }
 
   private apply(): void {
-    const back = this.dolly * Math.cos(CAMERA_PITCH_RAD);
-    const up = this.dolly * Math.sin(CAMERA_PITCH_RAD);
+    // EX punch-in pulls the eye toward the target — allowed to go closer than
+    // the user's DOLLY_MIN (a cinematic override), but never inside the fighters.
+    const effDolly = Math.max(EX_PUNCH_MIN_DOLLY, this.dolly - this.punchDolly);
+    const back = effDolly * Math.cos(CAMERA_PITCH_RAD);
+    const up = effDolly * Math.sin(CAMERA_PITCH_RAD);
     // shake jitters the camera POSITION only (target held) → a subtle angular
     // wobble that reads as impact without dragging the framing off the fight.
+    // shakeZ is the ground-plane directional-kick component (audit P1).
     const eyeX = this.target.x + this.shakeX;
     const eyeY = up + this.shakeY;
-    const eyeZ = this.target.z - back;
+    const eyeZ = this.target.z - back + this.shakeZ;
     this.camera.position.set(eyeX, eyeY, eyeZ);
     this.camera.setTarget(new Vector3(this.target.x, 0, this.target.z));
     this.recordSightline(eyeX, eyeY, eyeZ, this.target.x, 0, this.target.z);

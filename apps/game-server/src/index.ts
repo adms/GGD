@@ -15,6 +15,9 @@ import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
 import { Champions, Items, Augments, LootTables } from "@ggd/shared/sim/content/registry";
 import { MatchRoom } from "./rooms/MatchRoom";
 import { verify, mintTicket } from "./auth/hmac";
+import { mintCreateToken } from "./rooms/createGate";
+import { sanitizeDisplayName } from "./net/sanitizeText";
+import { secretConfigError } from "./config/secretGuard";
 
 const PORT = Number(process.env.GAME_PORT ?? 2567);
 /** content tree root — defaults to the monorepo's content/ next to apps/ */
@@ -22,6 +25,16 @@ const CONTENT_DIR =
   process.env.CONTENT_DIR ?? join(dirname(fileURLToPath(import.meta.url)), "../../../content");
 const SHARED_SECRET = process.env.PLATFORM_GAME_SHARED_SECRET ?? "";
 const PUBLIC_ENDPOINT = process.env.GAME_PUBLIC_ENDPOINT ?? `ws://localhost:${PORT}`;
+
+// FAIL-CLOSED boot guard (mirrors the platform's #126 checkRequiredSecrets): a
+// production deploy MUST carry PLATFORM_GAME_SHARED_SECRET. Without it the
+// server would boot fail-open — unauthenticated joins, client-spoofable
+// identity, cheats on — so refuse to start rather than serve that quietly.
+const bootErr = secretConfigError(process.env.APP_ENV, process.env.NODE_ENV, SHARED_SECRET);
+if (bootErr) {
+  console.error(`[game-server] FATAL: ${bootErr}`);
+  process.exit(1);
+}
 
 interface InternalMatchRequest {
   matchId: string;
@@ -64,7 +77,11 @@ async function handleInternalMatches(req: IncomingMessage, res: ServerResponse, 
       seatId: s.team * 3 + s.slot,
       teamId: s.team,
       accountId: s.accountId,
-      displayName: s.displayName,
+      // XSS backstop — never trust the caller's displayName even on the
+      // HMAC-authed path (defense-in-depth over the platform username rule).
+      // Only real strings are sanitized; an absent name stays undefined so the
+      // downstream seat-name fallback is preserved.
+      displayName: typeof s.displayName === "string" ? sanitizeDisplayName(s.displayName) : s.displayName,
       championId: s.champion,
     }));
 
@@ -74,6 +91,9 @@ async function handleInternalMatches(req: IncomingMessage, res: ServerResponse, 
     mapId: body.mapId,
     seats: humanSeats,
     callbackUrl: body.callbackUrl,
+    // Server-only proof that THIS create came from the /_internal path; the
+    // room's onCreate rejects a client-initiated create that lacks it (prod).
+    createToken: mintCreateToken(SHARED_SECRET),
   });
 
   const reservations = [];
@@ -126,7 +146,10 @@ const httpServer = createServer((req, res) => {
 });
 
 const gameServer = new Server({
-  transport: new WebSocketTransport({ server: httpServer }),
+  // Cap the WS frame size (DoS): a client cannot force megabytes of JSON to be
+  // deserialized per message. 64 KiB comfortably fits a legit INPUT batch while
+  // bounding the work behind the input validator + mailbox caps.
+  transport: new WebSocketTransport({ server: httpServer, maxPayload: 64 * 1024 }),
 });
 
 gameServer.define("match", MatchRoom);

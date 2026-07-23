@@ -29,7 +29,7 @@
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 0.347
+            "coeff": 0.7
           }
         ]
       }
@@ -41,7 +41,7 @@
       "stun": true
     }
   ],
-  "vfxKey": "fx.ember-bolt-cast",
+  "vfxKey": "fx.prim.void.explosion-lg",
   "targetsEnemies": true,
   "radius": 3.67,
   "schema": "ability@1"

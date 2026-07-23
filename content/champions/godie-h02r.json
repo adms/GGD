@@ -15,7 +15,7 @@
     "armor": 8,
     "mr": 28,
     "as": 0.83,
-    "ms": 5.5,
+    "ms": 4.6,
     "critChance": 0,
     "critDamage": 1.75,
     "cdr": 0,
@@ -64,7 +64,7 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 0.9
+                "coeff": 0.6
               }
             ]
           }
@@ -96,28 +96,10 @@
       "range": 0.0,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "perRank": [
-              1.0,
-              1.0,
-              1.0,
-              1.0
-            ],
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.003
-              }
-            ]
-          }
-        },
-        {
           "kind": "applyStatus",
           "statusId": "slow40",
-          "duration": 1.5,
-          "moveSpeedMult": 0.6
+          "duration": 4.0,
+          "moveSpeedMult": 0.4
         }
       ],
       "vfxKey": "fx.ember-bolt-cast",
@@ -158,7 +140,7 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 1.0
+                "coeff": 0.6
               }
             ]
           }

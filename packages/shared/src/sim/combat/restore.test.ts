@@ -69,6 +69,7 @@ function spawnDummy(
     statStacks: 0,
     statCapstonePct: 0,
     pendingOrbSlots: 0,
+    undoStack: [],
   });
   world.matchStats.set(id, createMatchStats());
   return id;

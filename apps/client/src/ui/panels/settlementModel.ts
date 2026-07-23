@@ -13,9 +13,10 @@
  * everything numeric/textual lives here so it is deterministic + testable.
  */
 import { TICK_HZ } from "@ggd/shared/constants";
+import { ROUND_OUTCOME } from "@ggd/shared/protocol/schema";
 import type { PlayerMatchStats } from "@ggd/shared/sim/stats/matchStats";
 import type { Grade } from "@ggd/shared/sim/stats/rating";
-import type { SettlementPlayer } from "@ggd/shared/protocol/messages";
+import type { MatchSettlement, SettlementPlayer } from "@ggd/shared/protocol/messages";
 
 // ------------------------------------------------------------------ grade ---
 
@@ -258,4 +259,192 @@ export function localSettlementCard(
 /** Whether the given team placed first (won). winnerTeam === -1 ⇒ undecided. */
 export function isWinner(winnerTeam: number, teamId: number | null): boolean {
   return teamId !== null && winnerTeam >= 0 && winnerTeam === teamId;
+}
+
+// --------------------------------------------------------------- quote VO ----
+// task #139 — the champion whose famous-quote (名言) clip speaks at the two
+// post-match beats. All decisions are PURE + schema-authoritative so the client
+// shells (MatchEndPanel / RoundEndVoice) stay thin and every branch unit-tests.
+
+/**
+ * The champion whose quote plays on the LOCAL player's MATCH-victory settlement
+ * (moment 2). Local-only + win-only: returns the local champion's id ONLY when
+ * the local seat's team WON; null otherwise (loss, spectator, missing seat, no
+ * payload, or an empty champ). Each client resolves its OWN champion and nothing
+ * is broadcast, so nobody ever hears another player's line at the settlement.
+ */
+export function localWinQuoteChampion(
+  settlement: MatchSettlement | null,
+  localSeatId: number | null,
+): string | null {
+  if (!settlement || settlement.perPlayer.length === 0) return null;
+  const local = localSettlementCard(settlement.perPlayer, localSeatId);
+  if (!local) return null;
+  return isWinner(settlement.winnerTeam, local.teamId) ? local.champ || null : null;
+}
+
+/** The seat fields the round-leader ranking reads (a RoomStore SeatView satisfies it). */
+export interface RoundSeatView {
+  seatId: number;
+  teamId: number;
+  championId: string;
+  /**
+   * Is this seat's champion STILL STANDING as the round resolves? Projected from
+   * the authoritative entity snapshot (EntityState.alive), which the server does
+   * not touch again between concludeCombat and the next enterCombat — so during
+   * the round-end beat it means exactly "survived this round". This is the GATE
+   * on the round MVP: 回合表現最好的人的底線門檻是必須最後還活著.
+   * NOT `roundDeaths === 0`: a champion who was rescued by a revive circle (#84)
+   * died this round yet is standing at the end, and is eligible.
+   */
+  alive: boolean;
+  /**
+   * Kills/deaths scored by this seat IN THE ROUND THAT JUST ENDED — the
+   * server-authoritative per-round tallies (SeatState.roundKills/roundDeaths,
+   * zeroed at every combat entry). Cumulative totals would present the match's
+   * overall best killer every single round, which is the bug this replaced.
+   */
+  roundKills: number;
+  roundDeaths: number;
+}
+
+/** The team fields the round-leader ranking reads (a RoomStore TeamView satisfies it). */
+export interface RoundTeamView {
+  teamId: number;
+  lives: number;
+  eliminated: boolean;
+  placement: number;
+  /**
+   * What this team DID in the round that just ended — a protocol ROUND_OUTCOME
+   * value (TeamState.roundOutcome), server-authoritative and reset at every
+   * combat entry. NONE means it did not fight: it drew the BYE, it is
+   * eliminated, or the round is not settled yet.
+   *
+   * The round-end presentation cannot derive this from anything else on the
+   * snapshot: enterCombat parks a bye team's seats dead without ever emitting a
+   * death, so a bye team reads alive:false / roundKills:0 / roundDeaths:0 on
+   * every seat — byte-identical to a team that was instantly wiped.
+   */
+  roundOutcome: number;
+}
+
+/**
+ * Is the MATCH decided (≤1 team still alive)? The round that eliminates the
+ * penultimate team is a round-end that IS the match end — that beat belongs to
+ * the settlement's local-win quote (moment 2), not the round-leader quote.
+ */
+export function matchDecided(teams: readonly RoundTeamView[]): boolean {
+  return teams.filter((t) => !t.eliminated).length <= 1;
+}
+
+/** Standing comparator: the better-placed team sorts first (see roundLeaderChampion). */
+function compareTeamStanding(a: RoundTeamView, b: RoundTeamView): number {
+  // an alive team always outranks an eliminated one
+  if (a.eliminated !== b.eliminated) return a.eliminated ? 1 : -1;
+  if (a.eliminated) {
+    // both out: the one that survived longer (lower placement number) ranks first
+    if (a.placement !== b.placement) return a.placement - b.placement;
+    return a.teamId - b.teamId;
+  }
+  // both alive: more lives first, ties to the lower teamId
+  if (a.lives !== b.lives) return b.lives - a.lives;
+  return a.teamId - b.teamId;
+}
+
+/**
+ * Round-MVP comparator: the better performer OF THIS ROUND sorts first.
+ * The chain is total and made only of authoritative integers, so it can never be
+ * ambiguous and every client orders the roster identically:
+ *   1. most round-kills
+ *   2. fewest round-deaths   (survived the round better)
+ *   3. lowest seatId         (final, always-decisive stable tiebreak)
+ */
+function compareRoundMvp(a: RoundSeatView, b: RoundSeatView): number {
+  if (a.roundKills !== b.roundKills) return b.roundKills - a.roundKills;
+  if (a.roundDeaths !== b.roundDeaths) return a.roundDeaths - b.roundDeaths;
+  return a.seatId - b.seatId;
+}
+
+/**
+ * The champion presented at the round-end beat: the ROUND MVP of the best-placed
+ * team that ACTUALLY FOUGHT this round. Reads ONLY authoritative schema state
+ * (roundOutcome / lives / eliminated / placement / teamId / seatId / alive /
+ * per-round K/D), so every client computes the SAME champion, shows the SAME
+ * model and plays the SAME clip — genuinely per-round, because the inputs change
+ * every round.
+ *
+ * Three stages, not one ranking:
+ *   CANDIDATES — teams that WON a duel this round; failing that, teams that at
+ *          least FOUGHT; failing that, every team. A team that drew the BYE won
+ *          nothing that round, so it must never be the subject of a round-WIN
+ *          presentation — and it is the case that broke this selector before:
+ *          a bye team is parked dead with an all-zero tally, so the alive gate
+ *          found no survivors, the ranking degenerated to the lowest seatId, and
+ *          「每回合都是同一個英雄」 came back for that round. Preferring winners
+ *          also stops the round's LOSER being presented, which standings alone
+ *          permit (settleRound has already deducted lives by the time the client
+ *          reads the snapshot, so a loser at 3→2 outranks a winner at 1).
+ *          The ladder ENDS at `teams` on purpose: pre-combat, legacy and
+ *          fault-path snapshots are all-NONE, and there the answer must stay
+ *          exactly what it was before this stage existed rather than vanish.
+ *   GATE — 回合表現最好的人的底線門檻是必須最後還活著: only seats still ALIVE as
+ *          the round resolves are eligible, however many kills a dead one got.
+ *          If the chosen team was wiped too (mutual wipe / fire-ring / timeout
+ *          win), the gate opens to the whole roster rather than presenting
+ *          nobody.
+ *   RANK — compareRoundMvp over the eligible seats.
+ *
+ * A zero-kill round therefore still resolves (fewest deaths, then lowest seat).
+ * The GATE/RANK stages are retried down the ranking, so a candidate whose seats
+ * have no championId yet hands the beat to the next-best team rather than
+ * blanking it. Returns null ONLY when no team anywhere has a champion locked in.
+ */
+export function roundLeaderChampion(
+  seats: readonly RoundSeatView[],
+  teams: readonly RoundTeamView[],
+): string | null {
+  if (teams.length === 0 || seats.length === 0) return null;
+  // MEMBERSHIP, never `!== NONE`: an inequality also accepts `undefined` and any
+  // out-of-range value, so a RoundTeamView built by some future producer (a
+  // replay/spectator projection, a hand-built fixture) would classify a BYE team
+  // as a participant — the exact failure this selector exists to prevent.
+  const won = (t: RoundTeamView): boolean => t.roundOutcome === ROUND_OUTCOME.WON;
+  const fought = (t: RoundTeamView): boolean =>
+    t.roundOutcome === ROUND_OUTCOME.FOUGHT ||
+    t.roundOutcome === ROUND_OUTCOME.LOST ||
+    won(t);
+  const winners = teams.filter(won);
+  const participants = teams.filter(fought);
+  const candidates = winners.length > 0 ? winners : participants.length > 0 ? participants : teams;
+  // Walk the ranking rather than indexing [0]: "never blank the presentation"
+  // is only true if a candidate with NO champion locked in (the #130 shape, or a
+  // seat list that has not caught up with the team list) falls through to the
+  // next-best team instead of silencing the whole beat. The `teams` tail means
+  // null now says "no champion anywhere", which is the only case that should.
+  const ordered = [...candidates].sort(compareTeamStanding);
+  const fallback = [...teams].sort(compareTeamStanding);
+  for (const team of [...ordered, ...fallback]) {
+    const roster = seats.filter((s) => s.teamId === team.teamId && s.championId);
+    if (roster.length === 0) continue;
+    const survivors = roster.filter((s) => s.alive);
+    const eligible = survivors.length > 0 ? survivors : roster;
+    return [...eligible].sort(compareRoundMvp)[0]!.championId;
+  }
+  return null;
+}
+
+/**
+ * The champion whose quote plays at a ROUND-end settlement (moment 3): the
+ * round's MVP (roundLeaderChampion), EXCEPT on the match-deciding round (whose
+ * beat is the settlement's local-win quote). Null ⇒ silent (no round-end quote
+ * this round). The round-winner MODEL (#143, GameApp.updateRoundWinner) resolves
+ * through this very function, so the hero on screen and the voice you hear are
+ * always the same champion — do not fork the selection.
+ */
+export function roundEndQuoteChampion(
+  seats: readonly RoundSeatView[],
+  teams: readonly RoundTeamView[],
+): string | null {
+  if (matchDecided(teams)) return null;
+  return roundLeaderChampion(seats, teams);
 }

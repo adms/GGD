@@ -62,3 +62,14 @@ shrinks `SHARED_PORTRAIT_GROUPS` (its test fails until the stale entry is delete
 | ident-09 | Login marquee keeps 黑化Saber on its own tile (tinted) while still folding the real Saber twin; a shared-portrait champion is hidden from the STRIP only, never from the roster | champ-marquee-saber-alter | regression | done |
 | ident-10 | `SHARED_PORTRAIT_GROUPS` equals the byte-identical portrait groups actually on disk — no stale entries, and fixing an icon shrinks the table | champ-marquee-portrait-groups | unit | done |
 | ident-11 | Re-extract the mis-assigned champion portraits so the 9 remaining shared-PNG groups disappear (曹操孟德 wearing 皮卡丘's icon, 志志雄 wearing 初音's, …) | champion-identity-icon-reextract | integration | pending |
+
+**#113 investigation (2026-07-23) — 14 same-name doc pairs → all DEDUP, no doc removed.**
+See `docs/_champion-dedup-113.md`. All 14 pairs resolve to `isSameCharacter = true`
+(same hero 編號 + identical name + identical kit), so none is a #55 "distinct heroes /
+shared mesh" case. Pairs 4 (妖狐藏馬 fox/fox2) and 8 (傑富力士 herobiggon/champ.thorne
+stand-in) are the same character on a different mesh; the rest share the exact mesh with
+minor stat drift. **Action: report only** — the runtime (`distinctCharacters` +
+`SHARED_PORTRAIT_GROUPS`) already folds every pair, `apps/admin/curation.ts` intentionally
+keeps every doc listable, and both ids of each pair are pinned by off-limits
+apps/packages tests, so hand-deleting a doc is unsafe and unnecessary. Left for the user
+to decide if physical pruning is ever wanted.

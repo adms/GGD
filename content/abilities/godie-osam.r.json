@@ -6,9 +6,9 @@
   "castType": "targeted",
   "maxRank": 3,
   "cooldown": [
-    60.0,
-    60.0,
-    60.0
+    45.0,
+    45.0,
+    45.0
   ],
   "manaCost": [
     200.0,
@@ -29,13 +29,13 @@
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 1.0
+            "coeff": 0.7
           }
         ]
       }
     }
   ],
-  "vfxKey": "fx.ember-bolt-cast",
+  "vfxKey": "fx.prim.ki.beam-lg",
   "targetsEnemies": true,
   "schema": "ability@1"
 }

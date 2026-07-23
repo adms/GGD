@@ -117,6 +117,8 @@ export class HitSpark {
     _lifeMs = 220,
     /** dmgType tint; the ramp stays white-hot → THIS color → cooled dark */
     color?: readonly [number, number, number],
+    /** impact height (world y) — the CONTACT surface, defaults to torso ~1.0 */
+    y = 1.0,
   ) {
     this.bornMs = nowMs;
     this.kit = kitFor(scene);
@@ -124,7 +126,7 @@ export class HitSpark {
     const tint: Rgb = color ?? (this.intensity === "light" ? LIGHT_TINT : HEAVY_TINT);
     // live particle-density setting (0–1) → quality-tier particle budget
     const scale = particleBudgetScale(qualityController.getParams().particleDensity);
-    this.systems = this.kit.composer.fire(this.intensity, x, z, nowMs, { tint, scale });
+    this.systems = this.kit.composer.fire(this.intensity, x, z, nowMs, { tint, y, scale });
     const recipe = impactRecipe(this.intensity, tint);
     this.doneAfterMs = Math.max(recipe.smoke.lifetimeSec.max * 1000, recipe.ring?.lifeMs ?? 0);
   }

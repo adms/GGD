@@ -11,7 +11,7 @@ import type { SimWorld } from "../SimWorld";
 import { Abilities } from "../content/registry";
 import { runEffects } from "../effects/effectRunner";
 import { fireHooks } from "../effects/hooks";
-import { enemiesInCircle } from "../abilities/abilitySystem";
+import { enemiesInCircle, resolveAbilityRadius } from "../abilities/abilitySystem";
 
 export function castResolveSystem(world: SimWorld): void {
   for (const [id, ab] of world.abilities) {
@@ -52,7 +52,8 @@ export function castResolveSystem(world: SimWorld): void {
     // target: those are locked at cast-begin by design.
     const targets =
       def.castType === "ground" && cast.point
-        ? enemiesInCircle(world, id, cast.point, def.radius ?? 1)
+        ? // combat-env `abilityRange` (task #136) shrinks the resolve-time AoE too
+          enemiesInCircle(world, id, cast.point, resolveAbilityRadius(world, def.radius ?? 1))
         : cast.targets;
     runEffects(def.effects, {
       world,

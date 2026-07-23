@@ -2,6 +2,7 @@
   "id": "godie-hgam",
   "schema": "champion@1",
   "name": "種子神奇寶貝 - 妙蛙種子",
+  "icon": "assets/icons/champions/godie-hgam.webp",
   "description": "故事：\n一出生背上就負著不可思議的種子。背上的種子裡面，擁有大量的營養 ，種子會跟著身體一起長大。\n(出自:神奇寶貝)\n\n推薦玩家 : 牽制會戰\n上手度 : 中\n\n角色成長：\n力量 + 1.50\n敏捷 + 2.00\n智慧 + 2.30\n基礎跑速 300\n\n可學習的技能：\n飛葉快刀、麻痺粉、藤鞭、陽光烈焰",
   "role": "fighter",
   "attackType": "melee",
@@ -65,7 +66,7 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 0.9
+                "coeff": 0.6
               }
             ]
           }
@@ -97,28 +98,10 @@
       "range": 0.0,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "perRank": [
-              1.0,
-              1.0,
-              1.0,
-              1.0
-            ],
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.003
-              }
-            ]
-          }
-        },
-        {
           "kind": "applyStatus",
           "statusId": "slow40",
-          "duration": 1.5,
-          "moveSpeedMult": 0.6
+          "duration": 4.0,
+          "moveSpeedMult": 0.4
         }
       ],
       "vfxKey": "fx.ember-bolt-cast",
@@ -159,7 +142,7 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 1.0
+                "coeff": 0.6
               }
             ]
           }

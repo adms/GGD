@@ -20,22 +20,21 @@
   "range": 7.33,
   "effects": [
     {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
-        "perRank": [
-          1.1,
-          1.1,
-          1.1,
-          1.1
-        ],
-        "ratios": [
-          {
-            "stat": "ap",
-            "coeff": 0.003
-          }
-        ]
-      }
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "pctMult",
+          "value": -1.0
+        }
+      ],
+      "duration": 3.0
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow40",
+      "duration": 3.0,
+      "moveSpeedMult": 0.8
     }
   ],
   "vfxKey": "fx.ember-bolt-cast",

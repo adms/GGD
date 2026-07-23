@@ -50,6 +50,22 @@ describe("displayFinal (hud-display-final)", () => {
     expect(displayFinal(200, "damage", half)).toBe(400);
   });
 
+  it("scales ability range + AoE by the abilityRange factor — 12 @0.6 → 7.2 (task #136)", () => {
+    cover("hud-display-final");
+    const RANGE_60 = normalizeCombatEnv({ abilityRange: 0.6 });
+    // the task's worked example: a 12-range ability displays 7.2 (0.6 is not
+    // binary-exact, so 12×0.6 = 7.199…; the formatter rounds it back to "7.2")
+    expect(displayFinal(12, "abilityRange", RANGE_60)).toBeCloseTo(7.2, 6);
+    // friendly UI aliases all resolve onto the same env key
+    expect(resolveFactorKey("range")).toBe("abilityRange");
+    expect(resolveFactorKey("radius")).toBe("abilityRange");
+    expect(resolveFactorKey("aoe")).toBe("abilityRange");
+    expect(displayFinal(8, "radius", RANGE_60)).toBeCloseTo(4.8, 6);
+    expect(displayFinalText(12, "range", { env: RANGE_60 })).toBe("7.2");
+    // neutral table leaves the base untouched
+    expect(displayFinal(12, "abilityRange", DEFAULT_COMBAT_ENV)).toBe(12);
+  });
+
   it("treats 'none' / unknown factor as unscaled (base passes through)", () => {
     cover("hud-display-final");
     expect(resolveFactorKey("none")).toBeNull();

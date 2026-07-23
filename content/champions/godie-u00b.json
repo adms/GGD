@@ -15,7 +15,7 @@
     "armor": 7,
     "mr": 28,
     "as": 0.77,
-    "ms": 8.0,
+    "ms": 10.1,
     "critChance": 0,
     "critDamage": 1.75,
     "cdr": 0,
@@ -70,7 +70,7 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 0.72
+                "coeff": 0.6
               }
             ]
           }
@@ -188,7 +188,7 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 0.39
+                "coeff": 0.7
               }
             ]
           }

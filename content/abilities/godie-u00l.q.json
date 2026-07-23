@@ -23,25 +23,25 @@
   "effects": [
     {
       "kind": "damage",
-      "damageType": "magic",
+      "damageType": "physical",
       "amount": {
         "perRank": [
-          80,
-          120,
-          160,
-          200,
-          240
+          150,
+          300,
+          450,
+          600,
+          750
         ],
         "ratios": [
           {
-            "stat": "ap",
-            "coeff": 1.0
+            "stat": "ad",
+            "coeff": 0.5
           }
         ]
       }
     }
   ],
-  "vfxKey": "fx.ember-bolt-cast",
+  "vfxKey": "fx.prim.physical.beam",
   "targetsEnemies": true,
   "schema": "ability@1"
 }

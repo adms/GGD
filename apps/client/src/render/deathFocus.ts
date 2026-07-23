@@ -13,12 +13,25 @@
  * WHY POOLS AND NOT A SILHOUETTE MASK. A render-list mask needs its own depth
  * buffer, so it either draws teammates THROUGH walls or costs a second
  * near-full scene pass per dead viewport (up to 4 in couch play) on an engine
- * whose one existing full-screen pass is already tier-gated off on mobile. It
- * also answers the wrong question: a coloured body in a grey void tells you
- * where your teammate is (the nameplate and minimap already do, in colour) but
- * not how the fight around them is going. A pool keeps the teammate AND their
- * immediate fight — the enemy on them, the telegraph under their feet — in
- * colour, and costs one texture fetch.
+ * whose one existing full-screen pass is already tier-gated off on mobile. A
+ * world-anchored radial pool approximates the silhouette for one texture fetch
+ * and no extra geometry pass.
+ *
+ * THE POOLS HUG THE BODY, NOT THE FIGHT. The requirement is "只有自己的隊友保持
+ * 有顏色" — teammates keep colour, ENEMIES DESATURATE. So each pool is sized to
+ * the champion's own silhouette (ALLY_RADIUS_FULL covers a TARGET_HEIGHT=1.8
+ * body of radius 0.6 anchored at the chest, with margin for the deliberately
+ * oversized champions of #150) and fades out just past it. An earlier tuning
+ * used 4u/11u to keep "the teammate AND their immediate fight" in colour, but
+ * in a zone of boundaryRadius 24 that fully exempted every enemy within 4u and
+ * left an enemy at 6u still ~80% coloured — the scene barely read as drained.
+ *
+ * RESIDUAL LIMIT, ON PURPOSE. A circle cannot separate two bodies in melee
+ * CONTACT (centres ~1.2u apart at body radius 0.6), so an enemy actually
+ * touching your teammate keeps some colour. Everything beyond arm's reach —
+ * ranged attackers, the rest of the duel, the other duel — goes grey. Removing
+ * that last case needs a real silhouette mask sampled by the shader, which
+ * lives in vfx/DeathFocusFx.ts.
  *
  * WHAT "DEAD IN COMBAT" MEANS. `alive === false` alone is four different
  * situations: champ-select (no entity), the whole 60 s intermission (nothing
@@ -57,22 +70,49 @@ export const FOCUS_IDLE_EPS = 1e-4;
 /** Colour pools per viewport (self/revive + up to 3 teammates). */
 export const FOCUS_MAX_SOURCES = 4;
 
-// --- pool geometry (world units; a duel zone is ~24u across) ---------------
+// --- pool geometry (world units; a duel zone is boundaryRadius 24, 48u across) ---
 
-/** Fully-coloured radius around a living teammate — a skirmish bubble. */
-export const ALLY_RADIUS_FULL = 4;
-/** Radius at which that pool has faded fully to grey. */
-export const ALLY_RADIUS_FADE = 11;
+/**
+ * Fully-coloured radius around a living teammate. Sized to the champion
+ * SILHOUETTE, not to their fight: anchored at the chest (ALLY_ANCHOR_Y) a
+ * TARGET_HEIGHT=1.8 body of radius 0.6 reaches 1.1 down to the feet and ~1.25
+ * to a foot corner, so 1.5 contains the whole body plus margin for the
+ * deliberately oversized champions of task #150.
+ */
+export const ALLY_RADIUS_FULL = 1.5;
+/**
+ * Radius at which that pool has faded fully to grey — one body-width of soft
+ * halo past the silhouette, so the teammate reads as lit rather than cut out,
+ * while an enemy at 3u or beyond is fully desaturated.
+ */
+export const ALLY_RADIUS_FADE = 3;
 /** Chest height: the pool is centred on the body, not on the shadow. */
 export const ALLY_ANCHOR_Y = 1.1;
 export const ALLY_WEIGHT = 1;
 
-/** Revive circle: tight, and only as long as the circle is actually there. */
+/**
+ * Revive circle: tight, and only as long as the circle is actually there. The
+ * fade margin stays close to the ring so the pool reads as the OBJECTIVE (a lit
+ * ring on the ground) rather than as a bubble that re-colours whoever is
+ * standing near your corpse.
+ *
+ * These margins are on the SAME silhouette scale as the ally pools above, and
+ * for the same reason. On the schema's default ring radius 2 the old 0.75/2.75
+ * pair produced rFull 2.75 / rFade 4.75 — a fully-coloured core almost twice a
+ * whole teammate's, and an enemy standing 3u from your corpse left 81% coloured
+ * where the same enemy 3u from a living teammate is 0. The revive circle is
+ * exactly where enemies camp, so that was the largest remaining hole in
+ * 「敵人去飽和」. At 0.25/1.25 the same enemy is 13% coloured.
+ */
 export const REVIVE_ANCHOR_Y = 0.35;
-export const REVIVE_FULL_MARGIN = 0.75;
-export const REVIVE_FADE_MARGIN = 4.5;
-/** A teammate channelling your revive widens the pool — the moment reads. */
-export const REVIVE_FADE_MARGIN_CHANNEL = 8;
+export const REVIVE_FULL_MARGIN = 0.25;
+export const REVIVE_FADE_MARGIN = 1.25;
+/**
+ * A teammate channelling your revive widens the pool — the moment reads. Kept
+ * proportional to the retuned base margin (1.8x, as 4.5 was to 2.75) so the
+ * channel still visibly opens up without re-becoming a bubble.
+ */
+export const REVIVE_FADE_MARGIN_CHANNEL = 2.25;
 /** Dimmer than a living teammate: it is an objective, not a fighter. */
 export const REVIVE_WEIGHT = 0.85;
 /** Ring radius used when the authoritative one is missing (schema default 2). */
@@ -360,6 +400,40 @@ export function buildFocusSources(
 
   for (let i = count; i < cap; i++) out[i]!.weight = 0;
   return count;
+}
+
+// ---------------------------------------------------------------------------
+// pool falloff (a TS mirror of the shader, so the LOOK is testable headlessly)
+// ---------------------------------------------------------------------------
+
+/** GLSL `smoothstep`. Undefined for edge0 >= edge1, exactly like the real one. */
+export function smoothstep(edge0: number, edge1: number, x: number): number {
+  const t = Math.min(1, Math.max(0, (x - edge0) / (edge1 - edge0)));
+  return t * t * (3 - 2 * t);
+}
+
+/**
+ * How much ORIGINAL COLOUR a pool retains at distance `dist` from its centre —
+ * the `m` term of the fragment shader, where 1 = untouched and 0 = fully
+ * desaturated. A deliberate mirror of `pool()` in vfx/DeathFocusFx.ts:
+ *
+ *     return w * (1.0 - smoothstep(s.z, s.w, length(d)));
+ *
+ * The two must stay in sync; this exists because it is the ONLY way to assert
+ * the requirement "enemies desaturate" without a GPU. It is valid in WORLD
+ * units even though the shader works in UV: `projectFocusSource` scales the
+ * centre distance and both radii by the same factor `k`, so the ratio the
+ * smoothstep depends on is unchanged by the projection (and therefore by task
+ * #43's live resolution rescaling).
+ */
+export function poolColourAt(
+  dist: number,
+  rFull: number,
+  rFade: number,
+  weight = 1,
+): number {
+  if (weight <= 0) return 0;
+  return weight * (1 - smoothstep(rFull, rFade, dist));
 }
 
 // ---------------------------------------------------------------------------

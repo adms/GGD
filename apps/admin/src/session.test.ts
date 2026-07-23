@@ -67,6 +67,30 @@ describe("session refresh + role guard (adminui-session-guard)", () => {
     await expect(verifyAdmin(api)).rejects.toBeInstanceOf(ApiError);
   });
 
+  // /account/password opts out of the retry: a 401 there means "that current
+  // password was wrong", not "your token expired". Retrying would replay the
+  // guess against the server's brute-force budget and, worse, a failed refresh
+  // would sign the operator out over a typo.
+  it("refreshOn401:false sends the request ONCE and never touches /auth/refresh", async () => {
+    cover("adminui-change-password");
+    const storage = memStorage(TOKENS);
+    const calls: string[] = [];
+    const fetchFn = vi.fn(async (url: RequestInfo | URL) => {
+      calls.push(String(url));
+      return jsonRes(401, { error: { code: "unauthorized", message: "invalid credentials" } });
+    });
+    const expired = vi.fn();
+    const api = new ApiClient({ fetchFn: fetchFn as unknown as typeof fetch, storage, onSessionExpired: expired });
+
+    await expect(
+      api.request("/account/password", { body: { currentPassword: "x", newPassword: "y" }, refreshOn401: false }),
+    ).rejects.toMatchObject({ status: 401 });
+
+    expect(calls).toEqual(["/api/v1/account/password"]);
+    expect(storage.current).toEqual(TOKENS); // still signed in after a typo
+    expect(expired).not.toHaveBeenCalled();
+  });
+
   it("a rejected refresh clears the session and fires onSessionExpired", async () => {
     cover("adminui-session-guard");
     const storage = memStorage(TOKENS);

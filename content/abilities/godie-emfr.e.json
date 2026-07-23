@@ -24,21 +24,21 @@
       "damageType": "magic",
       "amount": {
         "perRank": [
-          2.0,
-          2.0,
-          2.0,
-          2.0
+          400,
+          600,
+          800,
+          1000
         ],
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 0.009
+            "coeff": 0.6
           }
         ]
       }
     }
   ],
-  "vfxKey": "fx.ember-bolt-cast",
+  "vfxKey": "fx.prim.lightning.nova",
   "targetsEnemies": true,
   "radius": 5.13,
   "schema": "ability@1"

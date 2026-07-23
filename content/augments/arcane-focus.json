@@ -1,0 +1,24 @@
+{
+  "id": "arcane-focus",
+  "schema": "augment@1",
+  "name": "奧術專注",
+  "description": "法術強度 +40，冷卻縮減 +8%。",
+  "tier": "silver",
+  "weight": 95,
+  "modifiers": [
+    {
+      "stat": "ap",
+      "op": "flat",
+      "value": 40
+    },
+    {
+      "stat": "cdr",
+      "op": "flat",
+      "value": 0.08
+    }
+  ],
+  "tags": [
+    "ap",
+    "offense"
+  ]
+}

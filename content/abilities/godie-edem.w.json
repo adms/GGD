@@ -35,7 +35,7 @@
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 0.9
+            "coeff": 0.6
           }
         ]
       }
@@ -47,7 +47,7 @@
       "moveSpeedMult": 0.5
     }
   ],
-  "vfxKey": "fx.ember-bolt-cast",
+  "vfxKey": "fx.prim.lightning.beam",
   "targetsEnemies": true,
   "radius": 7.79,
   "schema": "ability@1"

@@ -13,6 +13,7 @@ import { ARENA_OPTIONS, DEFAULT_MAP_ID } from "./maps";
 import { TEXT_DIM, TEXT_MAIN } from "../theme";
 import { HomeFooter } from "./HomeFooter";
 import { ChampionMarquee } from "./ChampionMarquee";
+import { MatchLoadingOverlay } from "./MatchLoadingOverlay";
 import {
   audioSettings,
   audioSystem,
@@ -52,7 +53,9 @@ export function AuthScreen(): React.JSX.Element {
   const authError = useApp((s) => s.authError);
   const doLogin = useApp((s) => s.doLogin);
   const doRegister = useApp((s) => s.doRegister);
-  const playOffline = useApp((s) => s.playOffline);
+  // login→battle handoff (task #74): stage the offline launch behind the >=1s
+  // loading bar (requesting the roar fade) instead of jumping straight to match
+  const beginOfflineLoading = useApp((s) => s.beginOfflineLoading);
 
   // Animated 3D background. Mounted here, disposed on unmount — so when the
   // screen switches to lobby/match (AuthScreen unmounts) the menu Babylon
@@ -93,6 +96,11 @@ export function AuthScreen(): React.JSX.Element {
    * the dragons keep the level the scene was tuned at (#14 / #54).
    */
   const emitRoar = (ev: { volume: number; pan: number; big: boolean }): void => {
+    // login→battle handoff (task #74): once the roar fade is requested (the
+    // player is entering a match) stop layering NEW roars — the loading bar is
+    // now covering the tail of the roar already playing, and a fresh roar here
+    // would carry straight into the combat scene's voices.
+    if (appStore.getState().matchLoading?.roarFadeRequested) return;
     const { decision, next } = stepCalmRoar(calmRoarRef.current, ev, {
       scene: audioSystem.scene,
       bgmAudible: effectiveGain(audioSettings.get(), "bgm") > 0,
@@ -514,9 +522,11 @@ export function AuthScreen(): React.JSX.Element {
             <Btn
               onClick={() => {
                 playClick();
-                // no async gate — the transition plays, then the switch happens
-                // in onComplete (playOffline just flips screen → match).
-                runEnter(() => playOffline(offlineMap));
+                // The enter cinematic plays, then in its onComplete we STAGE the
+                // launch behind the >=1s loading bar (beginOfflineLoading) rather
+                // than flipping straight to match — so the login roar fades out
+                // behind the bar before the combat scene's voices start (#74).
+                runEnter(() => beginOfflineLoading(offlineMap));
               }}
             >
               Play offline vs bots
@@ -569,6 +579,12 @@ export function AuthScreen(): React.JSX.Element {
           opacity: 0,
         }}
       />
+
+      {/* login→battle handoff (task #74): the >=1s loading bar. Renders only
+          while a launch is staged (matchLoading set); holds this screen — and
+          its still-running login scene — until the roar has faded behind the
+          bar, then flips to the match. */}
+      <MatchLoadingOverlay />
     </div>
   );
 }

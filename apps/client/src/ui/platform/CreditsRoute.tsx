@@ -62,7 +62,13 @@ export function CreditsPage(props: { onClose: () => void }): React.JSX.Element {
       style={{
         position: "fixed",
         inset: 0,
-        // above AudioToggle's Z_TOP (2147483000) so the ✕ is actually clickable
+        // THE REAL "關閉不掉" CAUSE: this modal renders inside #hud-root, which is
+        // `pointer-events: none` (see index.html), so without re-enabling events
+        // the whole overlay — ✕ button AND backdrop — is click-through and every
+        // click falls to the login page below (elementFromPoint proved it). The
+        // earlier z-index bump only fixed painting order, not hit-testing.
+        pointerEvents: "auto",
+        // and stays painted above the AudioToggle's Z_TOP (2147483000).
         zIndex: 2147483600,
         overflowY: "auto",
         background: "rgba(8, 10, 20, 0.94)",

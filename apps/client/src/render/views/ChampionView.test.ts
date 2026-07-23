@@ -17,7 +17,7 @@ import { AssetContainer } from "@babylonjs/core/assetContainer";
 import { AnimationGroup } from "@babylonjs/core/Animations/animationGroup";
 import { Animation } from "@babylonjs/core/Animations/animation";
 import type { ModelDoc } from "@ggd/shared/content";
-import { ChampionView } from "./ChampionView";
+import { ChampionView, TARGET_HEIGHT } from "./ChampionView";
 import type { AssetManager } from "../AssetManager";
 import { FLASH_ALPHA, FLASH_MS } from "../combatFeedback";
 
@@ -437,6 +437,203 @@ describe("ChampionView empty-glb procedural fallback (client-empty-glb-fallback,
     for (let i = 0; i < 80; i++) view.update("attack", 100 + i * 16, 16);
     expect(Math.abs(armR.rotation.x)).toBeGreaterThan(1); // eases toward the -2.0 strike pose
 
+    view.dispose();
+  });
+});
+
+describe("ChampionView grounds + preserves declared scale (task #61 flying / #77)", () => {
+  /**
+   * A container whose single mesh's feet sit at world y=`footY` (an imported rig
+   * bakes its feet at an arbitrary local Y — `imported.ma` floats 0.72u, others
+   * dip below the origin). tryUpgradeToGlb must lift the model so its lowest
+   * vertex lands on the arena floor (y≈0), the same shift StorePreview/#129 and
+   * the intermission mount/#111 apply — otherwise the champion floats or sinks.
+   */
+  const makeFloatingContainer = (footY: number): AssetContainer => {
+    const container = new AssetContainer(scene);
+    const mesh = MeshBuilder.CreateBox("kaykit-body", { size: 1 }, scene);
+    mesh.position.y = footY + 0.5; // a unit box: feet (min.y) = footY
+    container.meshes.push(mesh);
+    container.rootNodes.push(mesh);
+    const group = new AnimationGroup("Idle", scene);
+    const anim = new Animation("Idle-y", "rotation.y", 60, Animation.ANIMATIONTYPE_FLOAT);
+    anim.setKeys([{ frame: 0, value: 0 }, { frame: 30, value: 0 }]);
+    group.addTargetedAnimation(anim, mesh);
+    container.animationGroups.push(group);
+    container.removeAllFromScene();
+    return container;
+  };
+
+  const DOC = (scale: number): ModelDoc => ({
+    id: "model.test",
+    schema: "model@1",
+    glbPath: "assets/models/champions/mage.glb",
+    scale,
+    collisionRadius: 0.5,
+    clipMap: { idle: "Idle", run: "Idle", attack: "Idle", cast: "Idle", hurt: "Idle", death: "Idle" },
+  } as ModelDoc);
+
+  const worldMinY = (view: ChampionView): number => {
+    let min = Infinity;
+    for (const m of view.root.getChildMeshes(false)) {
+      if (!m.isEnabled()) continue;
+      if (m.name.includes("shadow") || m.name.includes("teamring")) continue;
+      m.computeWorldMatrix(true);
+      const y = m.getBoundingInfo().boundingBox.minimumWorld.y;
+      if (y < min) min = y;
+    }
+    return min;
+  };
+
+  it("lifts a floating rig so its feet sit on the arena floor (y≈0)", async () => {
+    cover("client-model-grounded");
+    const container = makeFloatingContainer(0.72); // feet 0.72u above the origin
+    const assets = { load: (): Promise<AssetContainer> => Promise.resolve(container) } as unknown as AssetManager;
+    const view = new ChampionView(scene, 720, "champ.sela", 0);
+    view.setPose(0, 0, 0, 1);
+    view.tryUpgradeToGlb(assets, DOC(1));
+    await Promise.resolve();
+    await Promise.resolve();
+    expect(view.hasGlb).toBe(true);
+    expect(worldMinY(view)).toBeCloseTo(0, 1); // no longer floats
+    view.dispose();
+  });
+
+  it("lifts a sunk rig (feet below the origin) up onto the floor too", async () => {
+    const container = makeFloatingContainer(-0.6); // half-buried below the origin
+    const assets = { load: (): Promise<AssetContainer> => Promise.resolve(container) } as unknown as AssetManager;
+    const view = new ChampionView(scene, 721, "champ.sela", 0);
+    view.setPose(0, 0, 0, 1);
+    view.tryUpgradeToGlb(assets, DOC(1));
+    await Promise.resolve();
+    await Promise.resolve();
+    expect(worldMinY(view)).toBeCloseTo(0, 1); // lifted out of the ground
+    view.dispose();
+  });
+
+  it("reports a DETERMINED render scale, never a silent default — #77/#150", async () => {
+    cover("client-declared-scale");
+    // makeFloatingContainer's body is a unit box → native height 1u, so the
+    // #150 height-normalization factor is exactly TARGET_HEIGHT / 1.
+    const container = makeFloatingContainer(0);
+    const assets = { load: (): Promise<AssetContainer> => Promise.resolve(container) } as unknown as AssetManager;
+    // before any doc, the champion is on its procedural stand-in (no declared scale)
+    const view = new ChampionView(scene, 722, "champ.sela", 0);
+    expect(view.declaredScale).toBeNull();
+    // the doc's raw scale (0.6) is NO LONGER the render size (task #150): the glb
+    // is normalized to the target height instead of applied as an absolute.
+    view.tryUpgradeToGlb(assets, DOC(0.6));
+    await Promise.resolve();
+    await Promise.resolve();
+    expect(view.hasGlb).toBe(true);
+    expect(view.declaredScale).toBeCloseTo(TARGET_HEIGHT, 5); // normalized, not 0.6
+    view.dispose();
+  });
+});
+
+describe("ChampionView height-normalization (task #150)", () => {
+  /**
+   * A container whose body is a single box of arbitrary native HEIGHT `h` (feet
+   * at y=0) — stands in for champions whose glbs have wildly different native
+   * mesh heights (the roster measured 1.70u..2.32u rendered before #150).
+   */
+  const makeBoxContainer = (h: number): AssetContainer => {
+    const container = new AssetContainer(scene);
+    const mesh = MeshBuilder.CreateBox("kaykit-body", { width: 0.5, height: h, depth: 0.5 }, scene);
+    mesh.position.y = h / 2; // feet at y=0, head at y=h → native height = h
+    container.meshes.push(mesh);
+    container.rootNodes.push(mesh);
+    const group = new AnimationGroup("Idle", scene);
+    const anim = new Animation("Idle-y", "rotation.y", 60, Animation.ANIMATIONTYPE_FLOAT);
+    anim.setKeys([{ frame: 0, value: 0 }, { frame: 30, value: 0 }]);
+    group.addTargetedAnimation(anim, mesh);
+    container.animationGroups.push(group);
+    container.removeAllFromScene();
+    return container;
+  };
+
+  const NORM_DOC = {
+    id: "model.norm",
+    schema: "model@1",
+    glbPath: "assets/models/champions/mage.glb",
+    scale: 1, // #150 ignores this for sizing — normalization sets the render scale
+    collisionRadius: 0.5,
+    clipMap: { idle: "Idle", run: "Idle", attack: "Idle", cast: "Idle", hurt: "Idle", death: "Idle" },
+  } as ModelDoc;
+
+  /** Rendered full-silhouette height of the loaded glb (world space, minus ring/shadow). */
+  const renderedHeight = (view: ChampionView): number => {
+    let min = Infinity, max = -Infinity;
+    for (const m of view.root.getChildMeshes(false)) {
+      if (!m.isEnabled()) continue;
+      if (m.name.includes("shadow") || m.name.includes("teamring")) continue;
+      m.computeWorldMatrix(true);
+      const bb = m.getBoundingInfo().boundingBox;
+      if (bb.minimumWorld.y < min) min = bb.minimumWorld.y;
+      if (bb.maximumWorld.y > max) max = bb.maximumWorld.y;
+    }
+    return max - min;
+  };
+
+  const load = async (view: ChampionView, container: AssetContainer, rel?: number): Promise<void> => {
+    const assets = { load: (): Promise<AssetContainer> => Promise.resolve(container) } as unknown as AssetManager;
+    view.setPose(0, 0, 0, 1);
+    view.tryUpgradeToGlb(assets, NORM_DOC, rel);
+    await Promise.resolve();
+    await Promise.resolve();
+  };
+
+  it("two champions with very different native sizes render to the same target height", async () => {
+    cover("client-model-normalized");
+    // champion A: a SHORT native mesh (1u); champion B: a TALL one (4u) — a 4×
+    // native spread, the pre-#150 root cause of inconsistent on-screen sizes.
+    const small = new ChampionView(scene, 810, "imported.a", 0);
+    const big = new ChampionView(scene, 811, "imported.b", 1);
+    await load(small, makeBoxContainer(1));
+    await load(big, makeBoxContainer(4));
+    expect(small.hasGlb).toBe(true);
+    expect(big.hasGlb).toBe(true);
+
+    const hSmall = renderedHeight(small);
+    const hBig = renderedHeight(big);
+    // both land within tolerance of the common target despite 4× native spread
+    expect(hSmall).toBeCloseTo(TARGET_HEIGHT, 1);
+    expect(hBig).toBeCloseTo(TARGET_HEIGHT, 1);
+    expect(Math.abs(hSmall - hBig)).toBeLessThan(0.1); // consistent with each other
+    small.dispose();
+    big.dispose();
+  });
+
+  it("a relativeScale override renders a champion DELIBERATELY smaller than the target", async () => {
+    cover("client-model-normalized");
+    const normal = new ChampionView(scene, 812, "imported.a", 0);
+    const tiny = new ChampionView(scene, 813, "imported.a", 1);
+    await load(normal, makeBoxContainer(1)); // default relativeScale 1.0
+    await load(tiny, makeBoxContainer(1), 0.6); // intentional small creature
+
+    const hNormal = renderedHeight(normal);
+    const hTiny = renderedHeight(tiny);
+    expect(hNormal).toBeCloseTo(TARGET_HEIGHT, 1);
+    expect(hTiny).toBeCloseTo(TARGET_HEIGHT * 0.6, 1); // ~1.08u, the override size
+    expect(hTiny).toBeLessThan(hNormal * 0.75); // clearly, deliberately smaller
+    normal.dispose();
+    tiny.dispose();
+  });
+
+  it("falls back to the doc's declared scale for a degenerate (unmeasurable) glb", async () => {
+    cover("client-model-normalized");
+    // a near-zero-height body (below MIN_NATIVE_HEIGHT) can't yield a sane
+    // normalization factor → honor the doc's declared scale instead of dividing
+    // the target by ~0 and exploding the model.
+    const view = new ChampionView(scene, 814, "imported.degenerate", 0);
+    const doc = { ...NORM_DOC, scale: 1.23 } as ModelDoc;
+    const assets = { load: (): Promise<AssetContainer> => Promise.resolve(makeBoxContainer(0.001)) } as unknown as AssetManager;
+    view.setPose(0, 0, 0, 1);
+    view.tryUpgradeToGlb(assets, doc);
+    await Promise.resolve();
+    await Promise.resolve();
+    expect(view.hasGlb).toBe(true);
+    expect(view.declaredScale).toBe(1.23); // fell back to the declared scale
     view.dispose();
   });
 });

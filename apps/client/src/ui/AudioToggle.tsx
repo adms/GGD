@@ -45,8 +45,18 @@
  * every overlay (SettingsScreen, PauseMenu, touch controls). The container is
  * pointer-events:none — only the controls are tappable — so it never blocks
  * gameplay input. Mobile safe-area insets are respected.
+ *
+ * AND BECAUSE IT RIDES ABOVE EVERYTHING, IT PUBLISHES ITS OWN RECT (task #107,
+ * ./chromeReserve). Riding above every screen means every screen has to know
+ * where it is: the lobby header laid its ⚙ Settings / Logout buttons out in
+ * normal flow all the way to the right edge and they ended up UNDERNEATH this
+ * cluster. So the persistent button group is measured with a ResizeObserver
+ * and its gutter written to --ggd-chrome-top-right-w/-h on :root, which every
+ * screen with its own top-right chrome reserves. The tray is deliberately
+ * OUTSIDE the measured group — it is a transient popover, not persistent
+ * chrome, and reserving room for it would reflow headers on every 🎚 tap.
  */
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { audioSettings, audioSystem, type AudioBus } from "../audio";
 import { CURSOR_SIZE_OPTIONS } from "../cursor";
@@ -60,11 +70,13 @@ import {
   AUDIO_CELL_GAP,
   AUDIO_CELL_W,
   AUDIO_CLUSTER_BUTTONS,
+  AUDIO_MENU_TOP,
   AUDIO_TRAY_BORDER,
   AUDIO_TRAY_GAP,
   AUDIO_TRAY_PAD,
   audioButtonsWidth,
 } from "./audioClusterLayout";
+import { browserChromeEnv, observeChromeReserve } from "./chromeReserve";
 import { useApp } from "./platform/store";
 import { TEXT_DIM, TEXT_MAIN } from "./theme";
 
@@ -72,7 +84,7 @@ import { TEXT_DIM, TEXT_MAIN } from "./theme";
 const Z_TOP = 2147483000;
 
 /** Menu screens have no HUD stack, so the cluster hugs the corner there. */
-const MENU_TOP = 12;
+const MENU_TOP = AUDIO_MENU_TOP;
 
 interface BusButtonProps {
   bus: AudioBus;
@@ -247,6 +259,7 @@ export function AudioToggleView({
   topPx = MENU_TOP,
   rightPx = HUD_EDGE,
   heightPx = AUDIO_BTN_SIZE,
+  groupRef,
 }: {
   bgmMuted: boolean;
   sfxMuted: boolean;
@@ -259,6 +272,11 @@ export function AudioToggleView({
   topPx?: number;
   rightPx?: number;
   heightPx?: number;
+  /**
+   * Handle on the PERSISTENT button group — the box `ui/chromeReserve`
+   * measures and publishes so every screen's top-right chrome can reserve it.
+   */
+  groupRef?: React.Ref<HTMLDivElement>;
 }): React.JSX.Element {
   const open = expanded && cells.length > 0;
   // The tray may never wrap to a second row (that would leave the declared HUD
@@ -317,26 +335,44 @@ export function AudioToggleView({
           ))}
         </div>
       )}
-      <button
-        type="button"
-        className="ggd-tap"
-        data-ggd-audio-expand=""
-        aria-expanded={open}
-        aria-controls="ggd-audio-tray"
-        aria-label={open ? "Hide volume and cursor size" : "Show volume and cursor size"}
-        title={open ? "hide the sliders" : "volume + cursor size"}
-        onClick={() => onToggleExpanded?.()}
+      {/* THE PUBLISHED RECT (task #107). The buttons are wrapped in their own
+          group so the measured box is the PERSISTENT chrome only — the tray
+          above is a transient popover, and reserving room for it would reflow
+          every screen's header the instant a player tapped 🎚. Its gap equals
+          AUDIO_TRAY_GAP, so this wrapper is layout-identical to the flat row
+          it replaced. `ui/chromeReserve` observes it and writes
+          --ggd-chrome-top-right-w/-h onto :root. */}
+      <div
+        ref={groupRef}
+        data-ggd-chrome="top-right"
         style={{
-          ...BTN_BASE,
-          background: open ? "rgba(44, 63, 107, 0.86)" : "rgba(12, 16, 26, 0.62)",
-          color: open ? "#cfe0ff" : "#aeb8cc",
-          opacity: 0.9,
+          display: "flex",
+          alignItems: "center",
+          gap: AUDIO_BTN_GAP,
+          pointerEvents: "none",
         }}
       >
-        <span aria-hidden="true">🎚</span>
-      </button>
-      <BusButton bus="bgm" muted={bgmMuted} icon="🎵" label="Music" onToggle={onToggle} />
-      <BusButton bus="sfx" muted={sfxMuted} icon="🔊" label="Sound effects" onToggle={onToggle} />
+        <button
+          type="button"
+          className="ggd-tap"
+          data-ggd-audio-expand=""
+          aria-expanded={open}
+          aria-controls="ggd-audio-tray"
+          aria-label={open ? "Hide volume and cursor size" : "Show volume and cursor size"}
+          title={open ? "hide the sliders" : "volume + cursor size"}
+          onClick={() => onToggleExpanded?.()}
+          style={{
+            ...BTN_BASE,
+            background: open ? "rgba(44, 63, 107, 0.86)" : "rgba(12, 16, 26, 0.62)",
+            color: open ? "#cfe0ff" : "#aeb8cc",
+            opacity: 0.9,
+          }}
+        >
+          <span aria-hidden="true">🎚</span>
+        </button>
+        <BusButton bus="bgm" muted={bgmMuted} icon="🎵" label="Music" onToggle={onToggle} />
+        <BusButton bus="sfx" muted={sfxMuted} icon="🔊" label="Sound effects" onToggle={onToggle} />
+      </div>
     </div>
   );
 }
@@ -453,6 +489,18 @@ export function AudioToggle(): React.JSX.Element {
     audioSystem.setVolume(bus, v); // → audioSettings → live bus gain, this frame
   };
 
+  // PUBLISH the box this cluster occupies (task #107, ui/chromeReserve), so
+  // every screen that draws its OWN top-right chrome can reserve exactly the
+  // gutter we really use — measured, never a constant, so a cluster that gains
+  // or loses a button cannot silently start covering a header again.
+  // Re-runs when `inMatch`/`touch` change the cluster's top offset: that moves
+  // it without resizing it, which a ResizeObserver alone would never report.
+  const groupRef = useRef<HTMLDivElement | null>(null);
+  useEffect(
+    () => observeChromeReserve(groupRef.current, browserChromeEnv()),
+    [inMatch, touch, matchTop, bandHeight],
+  );
+
   const cursorIndex = Math.max(
     0,
     cursor.options.findIndex((o) => o.value === cursor.size),
@@ -490,6 +538,7 @@ export function AudioToggle(): React.JSX.Element {
       onCollapse={() => setExpanded(false)}
       topPx={inMatch ? matchTop : MENU_TOP}
       heightPx={inMatch ? bandHeight : AUDIO_BTN_SIZE}
+      groupRef={groupRef}
     />
   );
 

@@ -24,15 +24,15 @@
       "damageType": "magic",
       "amount": {
         "perRank": [
-          1.0,
-          1.0,
-          1.0,
-          1.0
+          400,
+          600,
+          800,
+          1000
         ],
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 0.003
+            "coeff": 0.6
           }
         ]
       }

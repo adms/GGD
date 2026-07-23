@@ -17,7 +17,7 @@
     "armor": 6,
     "mr": 28,
     "as": 0.53,
-    "ms": 5.9,
+    "ms": 6.1,
     "critChance": 0,
     "critDamage": 1.75,
     "cdr": 0,
@@ -58,7 +58,7 @@
       "effects": [
         {
           "kind": "damage",
-          "damageType": "magic",
+          "damageType": "physical",
           "amount": {
             "perRank": [
               75.0,
@@ -68,8 +68,8 @@
             ],
             "ratios": [
               {
-                "stat": "ap",
-                "coeff": 0.225
+                "stat": "ad",
+                "coeff": 0.5
               }
             ]
           }
@@ -107,7 +107,7 @@
       "effects": [
         {
           "kind": "damage",
-          "damageType": "magic",
+          "damageType": "physical",
           "amount": {
             "perRank": [
               200.0,
@@ -117,8 +117,8 @@
             ],
             "ratios": [
               {
-                "stat": "ap",
-                "coeff": 1.0
+                "stat": "ad",
+                "coeff": 0.5
               }
             ]
           }
@@ -163,10 +163,16 @@
               "damageType": "magic",
               "amount": {
                 "perRank": [
-                  1.0,
-                  1.0,
-                  1.0,
-                  1.0
+                  500,
+                  600,
+                  800,
+                  1000
+                ],
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 1.0
+                  }
                 ]
               }
             }
@@ -196,7 +202,7 @@
       "effects": [
         {
           "kind": "damage",
-          "damageType": "magic",
+          "damageType": "physical",
           "amount": {
             "perRank": [
               600.0,
@@ -205,8 +211,8 @@
             ],
             "ratios": [
               {
-                "stat": "ap",
-                "coeff": 1.0
+                "stat": "ad",
+                "coeff": 0.6
               }
             ]
           }

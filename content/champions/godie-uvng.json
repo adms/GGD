@@ -17,7 +17,7 @@
     "armor": 12,
     "mr": 28,
     "as": 0.5,
-    "ms": 5.9,
+    "ms": 6.0,
     "critChance": 0,
     "critDamage": 1.75,
     "cdr": 0,
@@ -72,7 +72,7 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 1.0
+                "coeff": 0.6
               }
             ]
           }
@@ -109,16 +109,16 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              1.0,
-              1.0,
-              1.0,
-              1.0,
-              1.0
+              250,
+              400,
+              550,
+              700,
+              850
             ],
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 0.005
+                "coeff": 0.6
               }
             ]
           }

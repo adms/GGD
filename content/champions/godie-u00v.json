@@ -136,7 +136,7 @@
       "effects": [
         {
           "kind": "damage",
-          "damageType": "magic",
+          "damageType": "physical",
           "amount": {
             "perRank": [
               450.0,
@@ -146,8 +146,8 @@
             ],
             "ratios": [
               {
-                "stat": "ap",
-                "coeff": 1.0
+                "stat": "ad",
+                "coeff": 0.5
               }
             ]
           }
@@ -184,7 +184,7 @@
       "effects": [
         {
           "kind": "damage",
-          "damageType": "magic",
+          "damageType": "physical",
           "amount": {
             "perRank": [
               450.0,
@@ -193,8 +193,8 @@
             ],
             "ratios": [
               {
-                "stat": "ap",
-                "coeff": 1.0
+                "stat": "ad",
+                "coeff": 0.6
               }
             ]
           }

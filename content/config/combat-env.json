@@ -4,11 +4,11 @@
   "version": 1,
   "multipliers": {
     "cooldown": 0.25,
-    "damageDealt": 1.0,
+    "damageDealt": 0.5,
     "defense": 1.0,
     "attackDamage": 1.0,
     "abilityPower": 1.0,
-    "maxHealth": 1.0,
+    "maxHealth": 8.0,
     "healthRegen": 1.0,
     "maxMana": 1.0,
     "manaRegen": 1.0,
@@ -19,6 +19,7 @@
     "critChance": 1.0,
     "critDamage": 1.0,
     "lifesteal": 1.0,
-    "attackRange": 1.0
+    "attackRange": 1.0,
+    "abilityRange": 0.6
   }
 }

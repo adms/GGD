@@ -43,10 +43,26 @@ type Service struct {
 	refreshTTL time.Duration
 	params     *argon2id.Params
 	dummyHash  string // verified against on unknown-user login (constant-shape failure)
+
+	// auditor is the append-only audit sink used by ChangePassword. nil means
+	// "no audit log wired" (a bare service in a unit test). See password.go.
+	auditor Auditor
+
+	// requireApproval turns on the private-deploy gate (#126): new registrations
+	// are stamped pending and receive NO tokens, and login/refresh refuse any
+	// non-approved account. When false (dev/CI default) registration approves
+	// immediately, preserving the open-signup flow the rest of the suite assumes.
+	requireApproval bool
+
+	// ownerBootstrap is the first-account owner policy. The zero value disables
+	// it (an established deploy, or a bare service in a unit test). See
+	// bootstrap.go.
+	ownerBootstrap OwnerBootstrap
 }
 
-// New builds the auth service. params may be nil for defaults.
-func New(accounts *account.Repo, rdb *redisx.Client, jwtSecret string, accessTTL, refreshTTL time.Duration, params *argon2id.Params) (*Service, error) {
+// New builds the auth service. params may be nil for defaults. requireApproval
+// enables the private-deploy approval gate.
+func New(accounts *account.Repo, rdb *redisx.Client, jwtSecret string, accessTTL, refreshTTL time.Duration, params *argon2id.Params, requireApproval bool) (*Service, error) {
 	if params == nil {
 		params = DefaultParams
 	}
@@ -55,13 +71,14 @@ func New(accounts *account.Repo, rdb *redisx.Client, jwtSecret string, accessTTL
 		return nil, err
 	}
 	return &Service{
-		accounts:   accounts,
-		rdb:        rdb,
-		jwtSecret:  []byte(jwtSecret),
-		accessTTL:  accessTTL,
-		refreshTTL: refreshTTL,
-		params:     params,
-		dummyHash:  dummy,
+		accounts:        accounts,
+		rdb:             rdb,
+		jwtSecret:       []byte(jwtSecret),
+		accessTTL:       accessTTL,
+		refreshTTL:      refreshTTL,
+		params:          params,
+		dummyHash:       dummy,
+		requireApproval: requireApproval,
 	}, nil
 }
 
@@ -81,10 +98,47 @@ func hasControl(s string) bool {
 	return false
 }
 
+// ValidatePassword is the platform's ONE password policy. Registration and the
+// self-service change-password flow both go through this function so a password
+// that would be refused at sign-up can never be installed later (and so the two
+// can never drift apart into two policies).
+func ValidatePassword(password string) error {
+	if hasControl(password) {
+		return httpx.BadRequest("control characters are not allowed")
+	}
+	if len(password) < 8 || len(password) > 128 {
+		return httpx.BadRequest("password must be 8-128 characters")
+	}
+	return nil
+}
+
+// HashPassword is the platform's ONE password-hashing entry point: it applies
+// ValidatePassword and then argon2id with `params`, where nil means the
+// registration parameters (DefaultParams) exactly as auth.New reads it.
+//
+// It is exported because the hashing cost is a SECURITY PARAMETER and this repo
+// now has a second writer of password hashes — cmd/ownerreset, the host-side
+// recovery command, which runs in its own process and so cannot reach a
+// Service's private params field. Copying `argon2id.CreateHash(pw, someParams)`
+// into that command would create a second, silently divergent cost setting: the
+// day DefaultParams is raised, accounts rescued by the CLI would keep being
+// written at the old cost and nothing would say so. Register and ChangePassword
+// both go through here, so "the parameters registration uses" is a fact about
+// one function rather than a claim about three call sites.
+func HashPassword(password string, params *argon2id.Params) (string, error) {
+	if err := ValidatePassword(password); err != nil {
+		return "", err
+	}
+	if params == nil {
+		params = DefaultParams
+	}
+	return argon2id.CreateHash(password, params)
+}
+
 // ValidateRegistration checks username/email/password shape without touching
-// any store.
+// any store. The password half is ValidatePassword — see there.
 func ValidateRegistration(username, email, password string) error {
-	if hasControl(username) || hasControl(email) || hasControl(password) {
+	if hasControl(username) || hasControl(email) {
 		return httpx.BadRequest("control characters are not allowed")
 	}
 	if !usernameRe.MatchString(username) {
@@ -93,21 +147,43 @@ func ValidateRegistration(username, email, password string) error {
 	if len(email) > 254 || !emailRe.MatchString(email) {
 		return httpx.BadRequest("invalid email address")
 	}
-	if len(password) < 8 || len(password) > 128 {
-		return httpx.BadRequest("password must be 8-128 characters")
-	}
-	return nil
+	return ValidatePassword(password)
 }
+
+// RegisterOptions carries the parts of a registration that are not credentials.
+type RegisterOptions struct {
+	// BootstrapToken is the one-time owner token from DATA_DIR/owner-setup-token
+	// (printed in the boot log). It is only consulted on a deploy that has no
+	// administrator AND has GGD_OWNER_BOOTSTRAP_TOKEN turned on. Empty otherwise.
+	BootstrapToken string
+}
+
+// registerSideworkTimeout bounds the Redis work Register does on a context that
+// deliberately outlives the caller's request (see the WithoutCancel note below).
+const registerSideworkTimeout = 5 * time.Second
 
 // Register creates an account, enforcing uniqueness atomically via Redis
 // SETNX before the JSON write.
-func (s *Service) Register(ctx context.Context, username, email, password string) (account.Account, TokenPair, error) {
+//
+// CONTEXT NOTE. Every store/Redis step below runs on a context DETACHED from
+// the caller's request. Registration is a multi-step write — reserve username,
+// reserve email, hash (~100ms of argon2id), decide ownership, create, issue
+// tokens — and the JSON store takes no context at all, so it cannot be
+// cancelled halfway. If the Redis half honoured the request context while the
+// file half did not, a client that hung up mid-hash (an aborted fetch, a
+// navigation, a short client timeout) would leave the reservations un-rolled-
+// back and the ownership decision unevaluated while the account still landed.
+// Detaching makes the whole sequence complete or fail as one, on its own clock.
+func (s *Service) Register(ctx context.Context, username, email, password string, opt RegisterOptions) (account.Account, TokenPair, error) {
 	username = strings.TrimSpace(username)
 	email = strings.TrimSpace(strings.ToLower(email))
 	if err := ValidateRegistration(username, email, password); err != nil {
 		return account.Account{}, TokenPair{}, err
 	}
 	id := account.NewID()
+
+	ctx, cancel := context.WithTimeout(context.WithoutCancel(ctx), registerSideworkTimeout)
+	defer cancel()
 
 	okUser, err := s.rdb.SetNX(ctx, redisx.KeyIdxUsername(username), id, 0)
 	if err != nil {
@@ -126,22 +202,72 @@ func (s *Service) Register(ctx context.Context, username, email, password string
 		return account.Account{}, TokenPair{}, httpx.Conflict("email is already registered")
 	}
 
-	hash, err := argon2id.CreateHash(password, s.params)
+	hash, err := HashPassword(password, s.params)
 	if err != nil {
 		return account.Account{}, TokenPair{}, err
 	}
 	now := time.Now()
+	// Private-deploy gate: a gated deploy stamps new accounts pending (an admin
+	// must approve before they can play); otherwise they are approved on sight.
+	status := account.StatusApproved
+	if s.requireApproval {
+		status = account.StatusPending
+	}
+	// First-account owner bootstrap: while a deploy has NO administrator, a
+	// registration claims ownership. The grant is written into the account's
+	// first persisted state (not a create-then-promote follow-up), so there is
+	// no window in which it exists un-promoted and the value returned below
+	// already reflects it. It also FORCES approved: under the #126 gate a
+	// pending owner could never be approved — nobody exists to approve it —
+	// which would brick the deploy permanently. See bootstrap.go.
+	owner, releaseClaim := s.claimOwnership(ctx, id, opt.BootstrapToken)
+	defer releaseClaim()
+	var roles []string
+	if owner {
+		roles = []string{account.RoleAdmin}
+		status = account.StatusApproved
+	}
 	a := account.Account{
 		ID: id, Username: username, Email: email, PasswordHash: hash,
-		MMR: startingMMR, CreatedAt: now, UpdatedAt: now,
+		MMR: startingMMR, Status: status, Roles: roles, CreatedAt: now, UpdatedAt: now,
 	}
 	if err := s.accounts.Create(ctx, a); err != nil {
-		// Roll the reservations back so a retry can succeed.
+		// Roll the reservations back so a retry can succeed. The owner claim is
+		// released by the deferred call above — and because the gate is "does an
+		// admin exist" rather than "was a claim ever taken", a failed create
+		// costs this deploy nothing: the retry can still become the owner.
 		s.rdb.R.Del(ctx, redisx.KeyIdxUsername(username), redisx.KeyIdxEmail(email))
+		if errors.Is(err, account.ErrUsernameTaken) {
+			return account.Account{}, TokenPair{}, httpx.Conflict("username is already taken")
+		}
+		if errors.Is(err, account.ErrEmailTaken) {
+			return account.Account{}, TokenPair{}, httpx.Conflict("email is already registered")
+		}
 		return account.Account{}, TokenPair{}, err
+	}
+	if owner {
+		s.consumeOwnerToken()
+		logFirstOwner(a)
+	}
+	// A pending account gets NO session — issuing a token here would hand it the
+	// very access the gate exists to withhold. The caller returns the account
+	// (Status "pending") with an empty token pair, which the client reads as the
+	// "awaiting approval" state.
+	if !a.IsApproved() {
+		return a, TokenPair{}, nil
 	}
 	pair, err := s.issueTokens(ctx, a)
 	return a, pair, err
+}
+
+// ErrNotApproved is the 403 returned when an account with valid credentials is
+// not yet playable under the private-deploy gate. The code distinguishes the
+// still-pending case from a terminal denial so the client can message each.
+func ErrNotApproved(status string) *httpx.E {
+	if status == account.StatusDenied {
+		return httpx.Err(http.StatusForbidden, "account_denied", "this account's registration was declined")
+	}
+	return httpx.Err(http.StatusForbidden, "account_pending", "your account is awaiting admin approval")
 }
 
 // ErrInvalidCredentials is the single failure surface of Login — identical for
@@ -202,6 +328,11 @@ func (s *Service) Login(ctx context.Context, usernameOrEmail, password, ip strin
 	if a.Banned {
 		return account.Account{}, TokenPair{}, ErrBanned(a.BanReason)
 	}
+	// Private-deploy gate: a pending/denied account cannot log in to play until
+	// an admin approves it. Grandfathered (zero-status) accounts pass.
+	if !a.IsApproved() {
+		return account.Account{}, TokenPair{}, ErrNotApproved(a.Status)
+	}
 	pair, err := s.issueTokens(ctx, a)
 	return a, pair, err
 }
@@ -228,6 +359,11 @@ func (s *Service) Refresh(ctx context.Context, refreshToken string) (TokenPair, 
 	// lingering refresh token cannot resurrect a banned session.
 	if a.Banned {
 		return TokenPair{}, ErrBanned(a.BanReason)
+	}
+	// Likewise a denial applied after login (an admin revoking an approval)
+	// cannot be outlived by a still-valid refresh token.
+	if !a.IsApproved() {
+		return TokenPair{}, ErrNotApproved(a.Status)
 	}
 	return s.issueTokens(ctx, a)
 }

@@ -1,0 +1,41 @@
+{
+  "id": "conqueror",
+  "schema": "augment@1",
+  "name": "征服者",
+  "description": "擊殺敵人後 8 秒內，攻擊力與法術強度 +35%、攻擊速度 +25%。",
+  "tier": "prismatic",
+  "weight": 22,
+  "hooks": [
+    {
+      "on": "onKill",
+      "target": "self",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "duration": 8,
+          "modifiers": [
+            {
+              "stat": "ad",
+              "op": "pctAdd",
+              "value": 0.35
+            },
+            {
+              "stat": "ap",
+              "op": "pctAdd",
+              "value": 0.35
+            },
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 0.25
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "snowball",
+    "offense"
+  ]
+}

@@ -15,14 +15,19 @@ import { describe, it, expect } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
 import {
   BUDGET_CANDIDATE_URLS,
+  OPTIMISE_WORKLIST_SCHEMA,
   ageText,
+  buildOptimiseWorklist,
   budgetHealth,
   fmtBytes,
   fmtInt,
+  isOverThreshold,
   limitFor,
+  overThresholdModels,
   parseBudgetReport,
   parseModelIndex,
   reconcile,
+  sortModelsHeavyToLight,
   verdictFor,
   type BudgetReport,
 } from "./modelBudget";
@@ -205,5 +210,92 @@ describe("adminui-model-budget-limits", () => {
     expect(verdictFor(screen.triangles, limitFor(r, screen, "triangles"))).toBe("ok");
     expect(verdictFor(screen.triangles, limitFor(r, null, "triangles"))).toBe("over");
     cover("adminui-model-budget-limits");
+  });
+});
+
+// A report carrying the report's OWN per-model verdicts, roles and gates — the
+// shape #99 actually publishes and the over-threshold panel + queue button read.
+const SCORED = {
+  schema: "model-budget@1",
+  generatedAt: "2026-07-22T09:00:00Z",
+  gates: [
+    { role: "champion", tris: { warn: 16000, limit: 28000 }, texEdge: { warn: 512, limit: 1024 } },
+    { role: "arena-decor", tris: { warn: 4000, limit: 8000 }, texEdge: { warn: 512, limit: 1024 } },
+  ],
+  screens: [{ id: "combat", label: "戰鬥", triangles: 1, verdicts: { drawCalls: "over" } }],
+  models: [
+    // heavy champion: texture at warn (queued) + over on draw calls/anim (manual)
+    { id: "champ.big", path: "champions/big.glb", role: "champion", triangles: 6000, vramBytes: 5_592_405,
+      drawCalls: 13, animChannels: 120, maxTextureEdge: 1024, worstCount: 12,
+      verdicts: { triangles: "ok", drawCalls: "over", maxTextureEdge: "warn", animChannels: "over" } },
+    // decor with too much geometry (queued for decimation), lighter VRAM
+    { id: "decor.tower", path: "hex/tower.glb", role: "arena-decor", triangles: 5659, vramBytes: 1_000_000,
+      drawCalls: 1, maxTextureEdge: 256, worstCount: 2,
+      verdicts: { triangles: "over", drawCalls: "ok", maxTextureEdge: "ok" } },
+    // over ONLY on draw calls — not queueable, but still over threshold
+    { id: "champ.busy", path: "champions/busy.glb", role: "champion", triangles: 5000, vramBytes: 800_000,
+      drawCalls: 20, maxTextureEdge: 256, worstCount: 12,
+      verdicts: { triangles: "ok", drawCalls: "over", maxTextureEdge: "ok" } },
+    // broken emitter — never queued
+    { id: "vfx.spark", path: "vfx/spark.glb", role: "vfx-model", triangles: 0, vramBytes: 0, broken: "zero-geometry",
+      verdicts: {} },
+    // unmeasured metrics stay null and sink to the bottom of a heavy→light sort
+    { id: "prop.mystery", path: "props/mystery.glb", role: "arena-decor" },
+  ],
+};
+
+describe("adminui-model-budget-optimise", () => {
+  it("sorts heavy→light with unmeasured models sinking to the bottom", () => {
+    const r = parseBudgetReport(SCORED, "/s.json") as BudgetReport;
+    const order = sortModelsHeavyToLight(r.models).map((m) => m.id);
+    expect(order[0]).toBe("champ.big"); // 5.3 MB VRAM
+    expect(order[order.length - 1]).toBe("prop.mystery"); // both metrics null → last
+    // strictly non-increasing VRAM among the measured ones
+    const vrams = sortModelsHeavyToLight(r.models).map((m) => m.vramBytes ?? -1);
+    for (let i = 1; i < vrams.length; i++) expect(vrams[i - 1]).toBeGreaterThanOrEqual(vrams[i]!);
+    cover("adminui-model-budget-optimise");
+  });
+
+  it("lists over-threshold assets from the report's OWN verdicts, not a re-score", () => {
+    const r = parseBudgetReport(SCORED, "/s.json") as BudgetReport;
+    expect(isOverThreshold(r.models.find((m) => m.id === "champ.big")!)).toBe(true);
+    const over = overThresholdModels(r).map((m) => m.id);
+    // every asset the report scored `over` on any axis, heaviest first
+    // (champ.big 5.3 MB > decor.tower 1.0 MB > champ.busy 0.8 MB)
+    expect(over).toEqual(["champ.big", "decor.tower", "champ.busy"]);
+    cover("adminui-model-budget-optimise");
+  });
+
+  it("queues only what the optimiser can shrink, and names manual work separately", () => {
+    const r = parseBudgetReport(SCORED, "/s.json") as BudgetReport;
+    const wl = buildOptimiseWorklist(r, { now: "2026-07-22T10:00:00Z" });
+    expect(wl.schema).toBe(OPTIMISE_WORKLIST_SCHEMA);
+    // champion (texture) + decor (geometry) queue; draw-call-only + broken do not
+    expect(wl.items.map((i) => i.id)).toEqual(["champ.big", "decor.tower"]);
+
+    const champ = wl.items[0]!;
+    expect(champ.actions[0]).toMatchObject({ kind: "texture-resize", fromEdge: 1024, targetEdge: 512 });
+    expect((champ.actions[0] as { estVramSavedBytes: number }).estVramSavedBytes).toBe(Math.round(5_592_405 * 0.75));
+    expect([...champ.manual].sort()).toEqual(["animChannels", "drawCalls"]);
+
+    const decor = wl.items[1]!;
+    expect(decor.actions[0]).toMatchObject({ kind: "geometry-decimate", fromTris: 5659, targetTris: 4000 });
+    expect(wl.totals.queued).toBe(2);
+    expect(wl.totals.estVramSavedBytes).toBe(Math.round(5_592_405 * 0.75));
+    expect(wl.source).toMatchObject({ generatedAt: "2026-07-22T09:00:00Z", schema: "model-budget@1" });
+    cover("adminui-model-budget-optimise");
+  });
+
+  it("--over-only drops warning-line textures, and an id filter narrows the queue", () => {
+    const r = parseBudgetReport(SCORED, "/s.json") as BudgetReport;
+    // champion texture was WARN → gone under over-only; decor geometry was over → stays
+    expect(buildOptimiseWorklist(r, { threshold: "over" }).items.map((i) => i.id)).toEqual(["decor.tower"]);
+    // an explicit selection queues only the chosen model
+    expect(buildOptimiseWorklist(r, { ids: ["champ.big"] }).items.map((i) => i.id)).toEqual(["champ.big"]);
+    // a null report yields an empty, still-valid worklist (page never crashes)
+    const empty = buildOptimiseWorklist(null);
+    expect(empty.items).toHaveLength(0);
+    expect(empty.schema).toBe(OPTIMISE_WORKLIST_SCHEMA);
+    cover("adminui-model-budget-optimise");
   });
 });

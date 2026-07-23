@@ -1,0 +1,91 @@
+{
+  "id": "fx.prim.arcane.nova-lg",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "sphere",
+    "radius": 0.825
+  },
+  "mode": "burst",
+  "burstCount": 40,
+  "lifetimeSec": {
+    "min": 0.18,
+    "max": 0.5
+  },
+  "size": {
+    "start": 0.441,
+    "end": 0
+  },
+  "color": {
+    "start": [
+      0.9532,
+      0.901,
+      1,
+      1
+    ],
+    "end": [
+      0.1332,
+      0.081,
+      0.18,
+      0
+    ]
+  },
+  "sizeStops": [
+    [
+      0,
+      0.441
+    ],
+    [
+      0.14,
+      1.05
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "colorStops": [
+    [
+      0,
+      [
+        0.9532,
+        0.901,
+        1,
+        1
+      ]
+    ],
+    [
+      0.2,
+      [
+        0.74,
+        0.45,
+        1,
+        1
+      ]
+    ],
+    [
+      0.6,
+      [
+        0.37,
+        0.225,
+        0.5,
+        0.42
+      ]
+    ],
+    [
+      1,
+      [
+        0.1332,
+        0.081,
+        0.18,
+        0
+      ]
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": 0,
+  "speed": {
+    "min": 4,
+    "max": 9
+  },
+  "texture": "assets/textures/particles/light_01.png"
+}

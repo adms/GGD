@@ -1,0 +1,23 @@
+{
+  "id": "iron-bulwark",
+  "schema": "augment@1",
+  "name": "鐵壁護甲",
+  "description": "最大生命 +18%，護甲 +20。",
+  "tier": "silver",
+  "weight": 100,
+  "modifiers": [
+    {
+      "stat": "maxHealth",
+      "op": "pctAdd",
+      "value": 0.18
+    },
+    {
+      "stat": "armor",
+      "op": "flat",
+      "value": 20
+    }
+  ],
+  "tags": [
+    "defense"
+  ]
+}

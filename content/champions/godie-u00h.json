@@ -17,7 +17,7 @@
     "armor": 10,
     "mr": 28,
     "as": 0.5,
-    "ms": 5.9,
+    "ms": 6.0,
     "critChance": 0,
     "critDamage": 1.75,
     "cdr": 0,
@@ -60,7 +60,7 @@
       "effects": [
         {
           "kind": "damage",
-          "damageType": "magic",
+          "damageType": "physical",
           "amount": {
             "perRank": [
               75.0,
@@ -71,8 +71,8 @@
             ],
             "ratios": [
               {
-                "stat": "ap",
-                "coeff": 0.975
+                "stat": "ad",
+                "coeff": 0.5
               }
             ]
           }
@@ -110,7 +110,7 @@
       "effects": [
         {
           "kind": "damage",
-          "damageType": "magic",
+          "damageType": "physical",
           "amount": {
             "perRank": [
               150.0,
@@ -120,8 +120,8 @@
             ],
             "ratios": [
               {
-                "stat": "ap",
-                "coeff": 1.0
+                "stat": "ad",
+                "coeff": 0.5
               }
             ]
           }
@@ -201,7 +201,7 @@
       "effects": [
         {
           "kind": "damage",
-          "damageType": "magic",
+          "damageType": "physical",
           "amount": {
             "perRank": [
               333.0,
@@ -210,8 +210,8 @@
             ],
             "ratios": [
               {
-                "stat": "ap",
-                "coeff": 1.0
+                "stat": "ad",
+                "coeff": 0.6
               }
             ]
           }

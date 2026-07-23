@@ -172,6 +172,73 @@ synth footstep \
   -af "lowpass=f=900,afade=t=in:st=0:d=0.003,afade=t=out:st=0.008:d=0.062:curve=exp"
 
 # ===========================================================================
+# WEIGHT-TIERED HIT VOICES (hit-feel audit P1: the audible 收尾精準).
+# One ImpactProfile.tier drives every impact channel; the SFX channel needs a
+# matching light / medium / heavy / crit voice so a 12-dmg jab and a 400-dmg
+# smash do NOT play the identical thud (audit finding: "one identical thud for
+# every physical hit"). The client channel agent plays these by the key
+# convention hit-light / hit-medium / hit-heavy / hit-crit / block-hit.
+#
+# The recipe grammar is the reference `thud` envelope (a descending sine BODY +
+# a band-passed noise TRANSIENT, both exp-decayed): the SHARED shape keeps the
+# four tiers reading as one family, while three knobs scale the WEIGHT:
+#   1. body fundamental drops with weight (220 -> 155 -> 120 Hz): heavier = lower.
+#   2. sub-150 Hz energy grows (light none, heavy adds a 62 Hz octave-down layer).
+#   3. length + snap darkness grow, but the exp tail always dies to silence well
+#      before the file ends — a hit is a POP, never a ring (收尾精準, tail < ~0.35s).
+# crit is the medium body plus a bright up-chirp "shing" so a lucky hit reads as
+# sharper, not merely louder. seeds 51-55 (unused elsewhere) keep this det.
+
+# hit-light: quick jab — high body, no sub, thin bright snap (~0.14s)
+synth hit-light \
+  -f lavfi -i "aevalsrc='sin(2*PI*(220*t-380*t*t))':d=0.14:s=44100" \
+  -f lavfi -i "anoisesrc=r=44100:c=pink:d=0.04:a=0.5:seed=51" \
+  -filter_complex "[0:a]afade=t=in:st=0:d=0.002,afade=t=out:st=0.003:d=0.137:curve=exp[body];\
+[1:a]highpass=f=1200,lowpass=f=5200,afade=t=out:st=0:d=0.04:curve=exp[snap];\
+[body][snap]amix=inputs=2:duration=longest:normalize=0[a]" -map "[a]"
+
+# hit-medium: solid connect — mid body + fuller snap (~0.20s)
+synth hit-medium \
+  -f lavfi -i "aevalsrc='sin(2*PI*(155*t-300*t*t))':d=0.20:s=44100" \
+  -f lavfi -i "anoisesrc=r=44100:c=pink:d=0.05:a=0.55:seed=52" \
+  -filter_complex "[0:a]afade=t=in:st=0:d=0.003,afade=t=out:st=0.004:d=0.196:curve=exp[body];\
+[1:a]highpass=f=950,lowpass=f=4600,afade=t=out:st=0:d=0.05:curve=exp[snap];\
+[body][snap]amix=inputs=2:duration=longest:normalize=0[a]" -map "[a]"
+
+# hit-heavy: 破碎 smash — low body + a 62 Hz sub power layer + dark snap (~0.30s,
+# tail exp-dead by ~60%). The one tier that carries real sub-150 Hz weight.
+synth hit-heavy \
+  -f lavfi -i "aevalsrc='sin(2*PI*(120*t-150*t*t))':d=0.30:s=44100" \
+  -f lavfi -i "aevalsrc='0.6*sin(2*PI*(62*t-40*t*t))':d=0.30:s=44100" \
+  -f lavfi -i "anoisesrc=r=44100:c=pink:d=0.06:a=0.5:seed=53" \
+  -filter_complex "[0:a]afade=t=in:st=0:d=0.003,afade=t=out:st=0.006:d=0.294:curve=exp[body];\
+[1:a]afade=t=in:st=0:d=0.004,afade=t=out:st=0.006:d=0.294:curve=exp[sub];\
+[2:a]highpass=f=750,lowpass=f=4000,afade=t=out:st=0:d=0.06:curve=exp[snap];\
+[body][sub][snap]amix=inputs=3:duration=longest:normalize=0[a]" -map "[a]"
+
+# hit-crit: sharp read — medium body + a bright up-chirp shing + hi transient
+# (~0.24s). Distinct from heavy by BRIGHTNESS, not weight.
+synth hit-crit \
+  -f lavfi -i "aevalsrc='sin(2*PI*(150*t-220*t*t))':d=0.24:s=44100" \
+  -f lavfi -i "aevalsrc='0.5*sin(2*PI*(900*t+2600*t*t))':d=0.20:s=44100" \
+  -f lavfi -i "anoisesrc=r=44100:c=white:d=0.04:a=0.4:seed=54" \
+  -filter_complex "[0:a]afade=t=in:st=0:d=0.003,afade=t=out:st=0.005:d=0.235:curve=exp[body];\
+[1:a]afade=t=in:st=0:d=0.003,afade=t=out:st=0.04:d=0.16:curve=exp[shing];\
+[2:a]highpass=f=3000,afade=t=out:st=0:d=0.04:curve=exp[snap];\
+[body][shing][snap]amix=inputs=3:duration=longest:normalize=0[a]" -map "[a]"
+
+# block-hit: CRISP guard clank — front-loaded metal transient + a fast-dying mid
+# ring (~0.12s). Re-cut of the audit's RINGING block voice (lab/block-clash +
+# block-shield lingered to ~0.5-0.66s): here the peak is in the first ~1% and the
+# whole clip is silent by ~0.12s — a clean deflect, NOT mush (收尾精準).
+synth block-hit \
+  -f lavfi -i "anoisesrc=r=44100:c=white:d=0.10:a=0.85:seed=55" \
+  -f lavfi -i "aevalsrc='0.42*sin(2*PI*560*t)+0.26*sin(2*PI*840*t)':d=0.10:s=44100" \
+  -filter_complex "[0:a]highpass=f=1400,lowpass=f=6800,afade=t=in:st=0:d=0.001,afade=t=out:st=0.006:d=0.094:curve=exp[n];\
+[1:a]afade=t=in:st=0:d=0.001,afade=t=out:st=0:d=0.08:curve=exp[ring];\
+[n][ring]amix=inputs=2:duration=longest:normalize=0[a]" -map "[a]"
+
+# ===========================================================================
 # CHAMP-SELECT COUNTDOWN clips (task #30): the last-5-seconds ticks and the
 # final-second cue. These fire OVER the champSelect BGM bed, so both are
 # deliberately narrow-band and tonal (a noise transient would be swallowed by

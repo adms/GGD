@@ -30,7 +30,7 @@
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 0.225
+            "coeff": 0.7
           }
         ]
       }
@@ -42,6 +42,6 @@
       "root": true
     }
   ],
-  "vfxKey": "fx.ember-bolt-cast",
+  "vfxKey": "fx.prim.wind.tornado-lg",
   "targetsEnemies": true
 }

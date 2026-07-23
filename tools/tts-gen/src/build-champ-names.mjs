@@ -12,16 +12,32 @@
 //
 // This script is the single source of truth for the pack. It reads the authored
 // champion names from content/champions/*.json, splits "稱號 - 全名" on " - ",
-// joins each id to its CASTING below, and writes BOTH:
+// joins each id to its CASTING below, and writes:
 //
-//   content/audio-manifests/champ-names.ja-JP.json   (tts-gen input)
-//   content/assets/audio/voices/names/MANIFEST.json  (canonical mapping + client)
+//   content/audio-manifests/champ-names.ja-JP.json      (canonical pack tts-gen input)
+//   content/assets/audio/voices/names/MANIFEST.json     (canonical mapping + client)
+//   content/assets/audio/voices/names/_tts-mixlang.json (task #120 tts-gen input)
 //
-// Writing both from one table is what stops the display text and the spoken text
+// Writing them from one table is what stops the display text and the spoken text
 // drifting apart — the failure this pack has had twice.
+//
+// ── task #120 — the deliberately mixed-language CONFIRM call-out ─────────────
+// On top of the canonical pack this ALSO emits, per champion, TWO extra clips
+// for a bilingual gag the user asked for by name: the 稱號 read by a CHINESE
+// voice and the 全名 read by a JAPANESE voice (「[火霧戰士|中文語音] + [夏娜|日
+// 文語音]」). Both halves are the ORIGINAL Traditional-Chinese display text — the
+// joke is a Japanese voice reading the Chinese name back with Japanese kana
+// readings, right after a Mandarin voice announced the title. These are separate
+// per-half clips (<id>.title.mp3 / <id>.name.mp3) recorded on each entry's
+// `voSegments`, and the client (nameVoice.ts) plays them 稱號→全名 in order.
+//
+// This is ADDITIVE: the canonical single-clip pack (<id>.mp3, spokenLine, jaName,
+// …) is untouched, so the pack's structural gate keeps passing; the mixed-
+// language clips live alongside it under new names.
 //
 // Usage:  node tools/tts-gen/src/build-champ-names.mjs
 // Then:   node tools/tts-gen/src/generate.mjs content/audio-manifests/champ-names.ja-JP.json
+//         node tools/tts-gen/src/generate.mjs content/assets/audio/voices/names/_tts-mixlang.json
 
 import fs from "node:fs";
 import path from "node:path";
@@ -48,6 +64,28 @@ const RATE_OVERRIDE = {
 };
 const TARGET_LUFS = -16;
 const TRUE_PEAK_DB = -1.5;
+
+// ── task #120: the mixed-language CONFIRM call-out (稱號 zh + 全名 ja) ────────
+/**
+ * The 稱號 goes to a CHINESE voice, the 全名 to Kyoko. Meijia (zh_TW) — the
+ * Traditional/Taiwan Mandarin voice — is a PHANTOM on macOS (`say -v Meijia`
+ * renders BYTE-IDENTICAL to an unknown voice name, i.e. the silent fallback), so
+ * the 稱號 is cast to Tingting (zh_CN Mandarin) instead. Tingting is verified to
+ * read TRADITIONAL characters correctly — the canonical pack already leans on
+ * exactly that for its Mandarin 稱號 fragments — so no character is dropped.
+ */
+const MIX_ZH_VOICE = "Tingting";
+/** The 稱號 text is Traditional Chinese; the explicit voice bypasses the (absent) zh-TW default. */
+const MIX_ZH_LANG = "zh-TW";
+const MIX_JA_VOICE = "Kyoko";
+const MIX_JA_LANG = "ja-JP";
+/**
+ * The mixed-language tts-gen input lives INSIDE the names dir (an owned asset
+ * folder), so its relative `out` paths resolve straight into it and it never has
+ * to reach into content/audio-manifests/. Leading underscore keeps it visually
+ * apart from the champion clips it sits next to.
+ */
+const MIX_TTS_MANIFEST = "_tts-mixlang.json";
 
 /** The test/placeholder hero that gets no clip. */
 const SKIPPED = [
@@ -258,6 +296,8 @@ const problems = [];
 
 const champions = {};
 const ttsLines = [];
+/** task #120 — one tts-gen line per mixed-language half-clip (稱號 zh, 全名 ja). */
+const mixLines = [];
 
 for (const [id, zhName] of champs) {
   if (skippedIds.has(id)) continue;
@@ -277,6 +317,41 @@ for (const [id, zhName] of champs) {
   const clip = `${NAMES_DIR}/${id}.mp3`;
   const outRel = `../${clip}`;
 
+  // task #120 — the deliberately mixed-language CONFIRM call-out. Both halves are
+  // the ORIGINAL Traditional-Chinese text (splitName above), NOT the katakana the
+  // canonical pack restores: the gag is Kyoko reading the Chinese 全名 back with
+  // Japanese kana readings straight after Tingting announces the 稱號. Titleless
+  // champions (godie-h02s/h02z, sela, thorne) get the 全名 segment alone.
+  const voSegments = [];
+  if (zhTitle) {
+    voSegments.push({
+      part: "title",
+      lang: MIX_ZH_LANG,
+      voice: MIX_ZH_VOICE,
+      text: zhTitle,
+      clip: `${NAMES_DIR}/${id}.title.mp3`,
+    });
+  }
+  voSegments.push({
+    part: "name",
+    lang: MIX_JA_LANG,
+    voice: MIX_JA_VOICE,
+    text: zhFullName,
+    clip: `${NAMES_DIR}/${id}.name.mp3`,
+  });
+  for (const seg of voSegments) {
+    mixLines.push({
+      id: `vo-${seg.part}-${id}`,
+      lang: seg.lang,
+      voice: seg.voice,
+      text: seg.text,
+      out: `${id}.${seg.part}.mp3`, // relative to MIX_TTS_MANIFEST (the names dir)
+      rate: RATE,
+      targetLufs: TARGET_LUFS,
+      truePeakDb: TRUE_PEAK_DB,
+    });
+  }
+
   const base = {
     zhName,
     zhTitle,
@@ -294,6 +369,9 @@ for (const [id, zhName] of champs) {
     confidence: CONFIDENCE[id] ?? "high",
     evidence: EVIDENCE[mode],
     clip,
+    // task #120 — ordered clips the client plays 稱號→全名 for the mixed-language
+    // call-out. Separate from `clip` (the canonical single call-out) on purpose.
+    voSegments,
   };
 
   if (mode === "ja") {
@@ -389,14 +467,33 @@ const manifest = {
     truePeakDb: TRUE_PEAK_DB,
     note: "The pack previously shipped at -21..-27.5 dB, 6-12 dB under the announcer. Short name clips are exactly the case the ungated `volumedetect` mean gets wrong, so the gated R128 metric is used; R128's gate needs a 400 ms block and real clips here are under that, so tts-gen measures on silence-padded audio. Same target as the announcer pack, so a call-out and a broadcast sit at one level.",
   },
+  voMixlang: {
+    what: "task #120 — the deliberately MIXED-LANGUAGE champ-select CONFIRM call-out. Per champion, `voSegments` lists the 稱號 clip (a CHINESE voice) then the 全名 clip (Kyoko), which the client plays in order. Both halves speak the ORIGINAL Traditional-Chinese display text: the gag is a Japanese voice reading the Chinese 全名 back with Japanese kana readings straight after a Mandarin voice announced the 稱號 — 「[火霧戰士|中文語音] + [夏娜|日文語音]」.",
+    zhVoice: MIX_ZH_VOICE,
+    jaVoice: MIX_JA_VOICE,
+    zhVoiceNote:
+      "Meijia (zh_TW, the Traditional/Taiwan Mandarin voice) is a PHANTOM on this macOS — `say -v Meijia` renders BYTE-IDENTICAL to an unknown voice name (the silent fallback), so it is NOT installed. Fell back to Tingting (zh_CN Mandarin), verified to read Traditional characters correctly.",
+    ttsManifest: `${NAMES_DIR}/${MIX_TTS_MANIFEST}`,
+    clips: "<id>.title.mp3 (稱號, Chinese voice) + <id>.name.mp3 (全名, Kyoko). Titleless champions get the name clip only. A half that a voice cannot pronounce (e.g. Kyoko on the rare kanji 騜) simply does not render, and the client degrades to the half that exists.",
+    fields: {
+      voSegments:
+        "ordered [{part:'title'|'name', lang, voice, text, clip}] — the client plays each `clip` 稱號→全名. `text` is the Traditional-Chinese half spoken by `voice`.",
+    },
+  },
   skipped: SKIPPED,
   champions,
 };
 
 fs.writeFileSync(path.join(CONTENT, NAMES_DIR, "MANIFEST.json"), `${JSON.stringify(manifest, null, 2)}\n`);
 fs.writeFileSync(path.join(CONTENT, "audio-manifests/champ-names.ja-JP.json"), `${JSON.stringify(ttsLines, null, 2)}\n`);
+fs.writeFileSync(path.join(CONTENT, NAMES_DIR, MIX_TTS_MANIFEST), `${JSON.stringify(mixLines, null, 2)}\n`);
 
 const byMode = {};
 for (const e of Object.values(champions)) byMode[e.voice] = (byMode[e.voice] ?? 0) + 1;
 console.log(`build-champ-names: ${Object.keys(champions).length} champions, ${SKIPPED.length} skipped`);
 for (const [v, n] of Object.entries(byMode).sort((a, b) => b[1] - a[1])) console.log(`  ${n.toString().padStart(3)}  ${v}`);
+const titleClips = mixLines.filter((l) => l.id.startsWith("vo-title-")).length;
+const nameClips = mixLines.filter((l) => l.id.startsWith("vo-name-")).length;
+console.log(
+  `build-champ-names: mixed-language pack → ${mixLines.length} clips (${titleClips} 稱號 via ${MIX_ZH_VOICE}, ${nameClips} 全名 via ${MIX_JA_VOICE}) → ${NAMES_DIR}/${MIX_TTS_MANIFEST}`,
+);

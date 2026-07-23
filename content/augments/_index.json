@@ -1,12 +1,42 @@
 {
   "collection": "augments",
-  "hash": "f904b944bc69",
+  "hash": "c5af1fe05bc1",
   "entries": [
     {
       "id": "aegis-surge",
       "path": "augments/aegis-surge.json",
-      "hash": "28d393e70014",
-      "size": 587
+      "hash": "842218751bbc",
+      "size": 611
+    },
+    {
+      "id": "arcane-focus",
+      "path": "augments/arcane-focus.json",
+      "hash": "7637d23d09df",
+      "size": 380
+    },
+    {
+      "id": "arcane-haste",
+      "path": "augments/arcane-haste.json",
+      "hash": "9a189d83ee0c",
+      "size": 701
+    },
+    {
+      "id": "arcane-overload",
+      "path": "augments/arcane-overload.json",
+      "hash": "7a1ee12a0481",
+      "size": 666
+    },
+    {
+      "id": "berserkers-fury",
+      "path": "augments/berserkers-fury.json",
+      "hash": "2184a9fbcc9f",
+      "size": 395
+    },
+    {
+      "id": "blood-tyrant",
+      "path": "augments/blood-tyrant.json",
+      "hash": "72ba16649f6c",
+      "size": 498
     },
     {
       "id": "bloodlust",
@@ -15,10 +45,88 @@
       "size": 384
     },
     {
+      "id": "bone-splitter",
+      "path": "augments/bone-splitter.json",
+      "hash": "60affe1a017b",
+      "size": 585
+    },
+    {
       "id": "chill-touch",
       "path": "augments/chill-touch.json",
       "hash": "1ae68e6d7e65",
       "size": 459
+    },
+    {
+      "id": "conqueror",
+      "path": "augments/conqueror.json",
+      "hash": "bbbf8d220358",
+      "size": 818
+    },
+    {
+      "id": "frost-shatter",
+      "path": "augments/frost-shatter.json",
+      "hash": "14f2eed5bd8e",
+      "size": 450
+    },
+    {
+      "id": "guardian-ward",
+      "path": "augments/guardian-ward.json",
+      "hash": "19cb16eea1ec",
+      "size": 641
+    },
+    {
+      "id": "hunters-instinct",
+      "path": "augments/hunters-instinct.json",
+      "hash": "f2c4bc359d45",
+      "size": 391
+    },
+    {
+      "id": "immortal-bulwark",
+      "path": "augments/immortal-bulwark.json",
+      "hash": "cbdccf535073",
+      "size": 472
+    },
+    {
+      "id": "iron-bulwark",
+      "path": "augments/iron-bulwark.json",
+      "hash": "52865becb3d5",
+      "size": 377
+    },
+    {
+      "id": "overdrive-engine",
+      "path": "augments/overdrive-engine.json",
+      "hash": "0345ad2c239e",
+      "size": 489
+    },
+    {
+      "id": "soul-reaver",
+      "path": "augments/soul-reaver.json",
+      "hash": "027f6828c7ad",
+      "size": 381
+    },
+    {
+      "id": "spell-blade",
+      "path": "augments/spell-blade.json",
+      "hash": "787482c7bb24",
+      "size": 760
+    },
+    {
+      "id": "storm-arrow",
+      "path": "augments/storm-arrow.json",
+      "hash": "f73f1c66759c",
+      "size": 916
+    },
+    {
+      "id": "swift-strikes",
+      "path": "augments/swift-strikes.json",
+      "hash": "374eb68b3a45",
+      "size": 398
+    },
+    {
+      "id": "vital-surge",
+      "path": "augments/vital-surge.json",
+      "hash": "17f13db6692b",
+      "size": 408
     }
   ]
 }

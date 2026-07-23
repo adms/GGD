@@ -21,7 +21,7 @@
   "effects": [
     {
       "kind": "damage",
-      "damageType": "magic",
+      "damageType": "physical",
       "amount": {
         "perRank": [
           50.0,
@@ -31,14 +31,14 @@
         ],
         "ratios": [
           {
-            "stat": "ap",
-            "coeff": 0.33
+            "stat": "ad",
+            "coeff": 0.5
           }
         ]
       }
     }
   ],
-  "vfxKey": "fx.ember-bolt-cast",
+  "vfxKey": "fx.prim.physical.slash",
   "targetsEnemies": true,
   "schema": "ability@1"
 }

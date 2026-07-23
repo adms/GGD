@@ -25,7 +25,7 @@ track any louder or busier in the mids.
 sits in the same rotation as every other looping track.
 """
 
-from ggd import music
+from ggd import intro, music
 from ggd.score import Score
 
 
@@ -51,6 +51,14 @@ def build() -> Score:
                    "Bb", "F", "C", "Dm"])
     s.gain(choir=0.92, keys=1.10, strings=0.85, pad=0.90, drums=0.70,
            perc=0.85)
+
+    # ---------------------------------------------------- SIGNATURE INTRO (#135)
+    # A soft CELESTA shimmer DESCENDING to rest (D5-A4-F4) over a 'tally' motif —
+    # soft high ticks that ritardando and STOP, like a scoreboard counting up and
+    # settling — before the choir Hook-B enters. The only 'counting' intro, and
+    # the softest, slowest head in the pack. Vs lobby's music box (which rises),
+    # settlement's chime descends and slows. See ggd/intro.py.
+    s.custom("keys", intro.settlement)
 
     # the thread — the same piano figure as menu, never stopping, so the loop
     # point never reads as a restart

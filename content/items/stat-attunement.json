@@ -2,6 +2,7 @@
   "id": "stat-attunement",
   "schema": "item@1",
   "name": "能力屬性強化",
+  "icon": "assets/icons/items/stat-attunement.webp",
   "description": "效能\n隨機強化一項能力屬性（不佔背包格，可重複購買）\n累積購買 20 次且期間未購買任何道具時，額外獲得傳說「萬象強化」\n\n解說\n把錢全砸在自己身上而不是裝備上。買任何一件道具都會讓累積次數歸零 —— 這是一條要走到底的路。",
   "cost": 375,
   "tier": 1,

@@ -11,9 +11,20 @@ import { recordChampionDeath, recordFlowerEaten } from "../stats/matchStats";
 export function deathSystem(world: SimWorld): void {
   // last damage source per target this tick (events are ordered)
   const lastDamager = new Map<EntityId, EntityId>();
+  // TRUE killing-blow source per target: the packet that CROSSED zero. combat/
+  // damage.ts sets `killingBlow` only when `hpBefore > 0 && hp.hp <= 0`, so at
+  // most one packet per death can carry it (task #89 §7.2). Preferring it fixes
+  // the case where an overkill packet queued LATER in the same tick (a slower
+  // auto/projectile) overwrites `lastDamager` and steals credit from the nuke
+  // that actually killed. No behavioural change when the killing blow IS the
+  // last packet — the overwhelming majority — but it makes the guardian's
+  // 打死最後一下的人 reward rule (and correct kill credit generally) implementable.
+  const killingBlowSource = new Map<EntityId, EntityId>();
   for (const ev of world.events) {
-    if (ev.type === "damage") {
-      lastDamager.set(ev.data.target as EntityId, ev.data.source as EntityId);
+    if (ev.type !== "damage") continue;
+    lastDamager.set(ev.data.target as EntityId, ev.data.source as EntityId);
+    if (ev.data.killingBlow === true) {
+      killingBlowSource.set(ev.data.target as EntityId, ev.data.source as EntityId);
     }
   }
 
@@ -21,7 +32,7 @@ export function deathSystem(world: SimWorld): void {
     if (!hp.alive || hp.hp > 0) continue;
     hp.hp = 0;
     hp.alive = false;
-    const killer = lastDamager.get(id) ?? null;
+    const killer = killingBlowSource.get(id) ?? lastDamager.get(id) ?? null;
     world.emit("death", { id, killer });
 
     if (world.flower.has(id)) {

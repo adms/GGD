@@ -23,7 +23,7 @@ import { Color3, Color4 } from "@babylonjs/core/Maths/math.color";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { ParticleSystem } from "@babylonjs/core/Particles/particleSystem";
 import { LoadAssetContainerAsync } from "@babylonjs/core/Loading/sceneLoader";
-import type { AssetContainer } from "@babylonjs/core/assetContainer";
+import type { AssetContainer, InstantiatedEntries } from "@babylonjs/core/assetContainer";
 import {
   writeDragonPoint,
   writeBeamState,
@@ -198,6 +198,53 @@ const DRAGON_MAX_PITCH = 0.6;
 /** playback rate of the wing-flap clip — <1 for majestic, slow, powerful beats */
 const DRAGON_FLAP_RATE = 0.6;
 
+/** Loads a glb into an AssetContainer TEMPLATE (never added to the scene). */
+export type DragonContainerLoader = (scene: Scene, url: string) => Promise<AssetContainer | null>;
+
+/**
+ * SHARED per-(scene, url) glb template cache — the login vista mounts TWO
+ * `ModelDragonController`s that both stream the SAME `dragon2.glb` (~4.3 MB). Each
+ * used to call `LoadAssetContainerAsync` itself, so the file was FETCHED AND
+ * PARSED TWICE at login (two concurrent 4.3 MB downloads). Now the first request
+ * for a url wins the load and both dragons INSTANTIATE from the one cached
+ * container — halving the login glb payload with no visual change (each instance
+ * clones its own materials + animation groups, so they still flap and shimmer
+ * independently). Keyed by Scene via a WeakMap, so a disposed LoginScene never
+ * reuses a stale container and the entry is GC'd with the scene (the container's
+ * GPU buffers are freed by the scene's `engine.dispose()`; the template is a pure
+ * off-scene template, exactly like AssetManager's champion-glb cache).
+ */
+const dragonTemplates = new WeakMap<Scene, Map<string, Promise<AssetContainer | null>>>();
+
+/** Real loader: register the glTF plugin on demand, then parse into a container. */
+const realDragonLoader: DragonContainerLoader = async (scene, url) => {
+  try {
+    await import("@babylonjs/loaders/glTF");
+    return await LoadAssetContainerAsync(url, scene);
+  } catch {
+    return null; // caller keeps its procedural fallback
+  }
+};
+
+/** Resolve the shared template for (scene, url), loading it at most once. */
+function acquireDragonTemplate(
+  scene: Scene,
+  url: string,
+  loader: DragonContainerLoader,
+): Promise<AssetContainer | null> {
+  let byUrl = dragonTemplates.get(scene);
+  if (!byUrl) {
+    byUrl = new Map();
+    dragonTemplates.set(scene, byUrl);
+  }
+  let pending = byUrl.get(url);
+  if (!pending) {
+    pending = loader(scene, url);
+    byUrl.set(url, pending);
+  }
+  return pending;
+}
+
 export interface ModelDragonOptions extends DragonOptions {
   /** content-relative url, e.g. "/content/assets/models/menu/dragon2.glb" */
   url: string;
@@ -205,6 +252,12 @@ export interface ModelDragonOptions extends DragonOptions {
   scale?: number;
   /** extra yaw (rad) so the model's forward axis aligns with the flight tangent */
   yawOffset?: number;
+  /**
+   * Test seam: override how the glb TEMPLATE is loaded (default: the real,
+   * per-scene-cached glTF loader). Two controllers sharing a scene+url still hit
+   * the shared cache, so the loader runs at most once regardless of this override.
+   */
+  loadContainer?: DragonContainerLoader;
   /**
    * Fires ONCE at the start of each breath/roar cycle (login-immersion #20):
    * the scene turns it into a panned, near/far dragon-roar SFX. `worldPos` is
@@ -218,7 +271,8 @@ export interface ModelDragonOptions extends DragonOptions {
 
 export class ModelDragonController implements FxController {
   private fallback: FxController | null;
-  private container: AssetContainer | null = null;
+  /** THIS controller's clone of the shared template (its nodes/materials/clips). */
+  private instance: InstantiatedEntries | null = null;
   private root: TransformNode | null = null;
   private trail: ParticleSystem | null = null;
   private fire: ParticleSystem | null = null;
@@ -232,6 +286,7 @@ export class ModelDragonController implements FxController {
   private readonly breathDuration: number;
   private readonly breathOffset: number;
   private readonly onRoar?: (worldPos: Vec3Like, scale: number) => void;
+  private readonly loader: DragonContainerLoader;
   /** roar edge latch: true while inside the current breath window (fired once) */
   private roared = false;
   private disposed = false;
@@ -250,6 +305,7 @@ export class ModelDragonController implements FxController {
     this.breathDuration = opts.breathDuration ?? 1.6;
     this.breathOffset = opts.breathOffset ?? 0;
     this.onRoar = opts.onRoar;
+    this.loader = opts.loadContainer ?? realDragonLoader;
     // procedural dragon renders immediately; swapped out once the model loads
     this.fallback = new DragonController(scene, dotTex, opts);
     void this.load(opts.url);
@@ -257,13 +313,19 @@ export class ModelDragonController implements FxController {
 
   private async load(url: string): Promise<void> {
     try {
-      await import("@babylonjs/loaders/glTF");
-      const container = await LoadAssetContainerAsync(url, this.scene);
-      if (this.disposed) {
-        container.dispose();
-        return;
-      }
-      container.addAllToScene();
+      // ONE fetch+parse per (scene, url): both login dragons share this template
+      // and INSTANTIATE their own clone from it (see acquireDragonTemplate).
+      const template = await acquireDragonTemplate(this.scene, url, this.loader);
+      if (!template || this.disposed) return; // keep the procedural fallback
+
+      // Clone the template INTO the scene: cloneMaterials so each dragon's molten
+      // emissive pulses independently; doNotInstantiate so the rigged mesh clones
+      // (not hardware instances) and its "Flying" clip animates per-dragon. The
+      // template itself is never added to the scene — it stays an off-scene
+      // source both controllers clone from.
+      const inst = template.instantiateModelsToScene((n) => n, true, { doNotInstantiate: true });
+      this.instance = inst;
+
       // root (position/orientation/scale) → inner (static re-pivot to body centre)
       // → the model. Re-pivoting means bank/pitch rotate about the torso, so the
       // dragon rolls cleanly around its own spine instead of swinging its whole
@@ -272,13 +334,14 @@ export class ModelDragonController implements FxController {
       const inner = new TransformNode("login-model-dragon-pivot", this.scene);
       inner.parent = root;
       inner.position.set(0, -DRAGON_CENTER_Y, -DRAGON_CENTER_Z);
-      for (const node of container.rootNodes) node.parent = inner;
-      for (const m of container.meshes) m.isPickable = false;
+      for (const node of inst.rootNodes) node.parent = inner;
+      const meshes = root.getChildMeshes(false);
+      for (const m of meshes) m.isPickable = false;
       root.scaling.setAll(this.scale);
 
       // loop the real baked wing-flap ("Flying") — one continuous flap cycle that
       // loops cleanly; play it slow for majestic, powerful wingbeats.
-      const groups = container.animationGroups;
+      const groups = inst.animationGroups;
       const fly =
         groups.find((g) => /fast[_ ]?flying/i.test(g.name)) ??
         groups.find((g) => /fly/i.test(g.name)) ??
@@ -289,8 +352,14 @@ export class ModelDragonController implements FxController {
       // molten 炎龍 look: a hot orange emissive over the PBR skin so it reads as
       // a fire dragon and blows out under the bloom — kept moderate so the scaled
       // reptilian skin/wings still show through (not a solid orange blob). Refs
-      // are pulsed each frame for a breathing-ember shimmer.
-      for (const mat of container.materials) {
+      // are pulsed each frame for a breathing-ember shimmer. These are the
+      // INSTANCE's cloned materials, so mutating them never touches the shared
+      // template or the other dragon (dedup-safe).
+      const seenMats = new Set<unknown>();
+      for (const mesh of meshes) {
+        const mat = mesh.material;
+        if (!mat || seenMats.has(mat)) continue;
+        seenMats.add(mat);
         const m = mat as unknown as {
           emissiveColor?: Color3;
           emissiveIntensity?: number;
@@ -356,16 +425,36 @@ export class ModelDragonController implements FxController {
       fire.blendMode = ParticleSystem.BLENDMODE_ADD;
       fire.start();
 
-      this.container = container;
       this.root = root;
       this.trail = trail;
       this.fire = fire;
+      // A dispose that raced the async load (screen switched out mid-load) already
+      // set `disposed` AND ran with no instance to tear down — honour it now.
+      if (this.disposed) {
+        this.teardownModel();
+        return;
+      }
       // model has taken over — retire the procedural stand-in
       this.fallback?.dispose();
       this.fallback = null;
     } catch {
       // keep the procedural fallback rendering
     }
+  }
+
+  /** Dispose THIS controller's model clone + its particles (never the template). */
+  private teardownModel(): void {
+    this.trail?.dispose();
+    this.trail = null;
+    this.fire?.dispose();
+    this.fire = null;
+    this.emissives.length = 0;
+    this.root?.dispose();
+    this.root = null;
+    // free the clone's nodes, cloned materials + animation groups; the shared
+    // template stays cached for the scene lifetime (freed by engine.dispose()).
+    this.instance?.dispose();
+    this.instance = null;
   }
 
   update(t: number, dt: number): number {
@@ -455,15 +544,7 @@ export class ModelDragonController implements FxController {
     this.disposed = true;
     this.fallback?.dispose();
     this.fallback = null;
-    this.trail?.dispose();
-    this.trail = null;
-    this.fire?.dispose();
-    this.fire = null;
-    this.emissives.length = 0;
-    this.root?.dispose();
-    this.root = null;
-    this.container?.dispose();
-    this.container = null;
+    this.teardownModel();
   }
 }
 

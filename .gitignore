@@ -37,6 +37,8 @@ deploy/**/secrets*.yaml
 # whole-tree snapshots background tasks drop in-repo (see vitest.config.ts)
 .backup*/
 backup-*/
+# agent scratch written to the repo root by mistake (the real scratch is the session dir)
+/scratchpad/
 
 # copyrighted upstream Warcraft III archives + source maps — importer INPUTS only,
 # never redistributed, and ~850 MB. The extracted/derived content under content/ is
@@ -47,3 +49,7 @@ backup-*/
 # misc
 .DS_Store
 *.log
+
+# python bytecode (agent tools drop these in-repo)
+__pycache__/
+*.pyc

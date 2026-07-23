@@ -24,7 +24,7 @@ Shape (16 bars = 42.667 s, seamless):
                           turnaround is a breath rather than a restart
 """
 
-from ggd import music
+from ggd import intro, music
 from ggd.score import Score
 
 # The pack's home cadence rotated to begin on the relative major:
@@ -63,11 +63,18 @@ def build() -> Score:
            perc=0.65, sub=0.85)
     s.verb(keys=0.34, pad=0.42, strings=0.48)
 
+    # ---------------------------------------------------- SIGNATURE INTRO (#135)
+    # A warm music-box chime (F4-A4-D5-A4) tracing the hook cell in the relative
+    # major, rubato, drenched in the hall, over a lit-room air bed. The ONLY
+    # music-box and the ONLY F-major opening in the pack. See ggd/intro.py.
+    s.custom("keys", intro.lobby)
+
     # ---------------------------------------------------------- the constant
     # The hook cell's contour (5th, root, 3rd, root) an octave under the sung
-    # register, in even eighths — the shape, not the quote. Runs all 16 bars,
-    # which is what stops the loop point reading as a restart.
-    s.ostinato((0, 16), voice="piano", shape=(2, 3, 4, 3), subdiv=8,
+    # register, in even eighths — the shape, not the quote. HELD BACK to bar 2
+    # so the music box, not the ostinato, is the first sound; the bass and the
+    # "oo" pad carry the loop-point continuity in its place.
+    s.ostinato((2, 16), voice="piano", shape=(2, 3, 4, 3), subdiv=8,
                octave=0, gain=0.36, pan=-0.16)
     s.bass((0, 16), "X.......X.......", octave=-2, style="sub", gain=0.46)
     # one drum, far away, every second bar

@@ -352,3 +352,66 @@ describe("SSE hub (capi-06)", () => {
     expect(seen.join("")).toContain('"id":"ember-rod"');
   });
 });
+
+/**
+ * The content bundle (content/bundle.json) is a WHOLE-TREE artifact produced by
+ * `pnpm content:build`. This service rewrites ONE doc at a time, so any bundle
+ * on disk goes stale the instant a write lands — and a stale bundle is worse
+ * than no bundle: the client would hydrate old docs AND an old contentVersion,
+ * so the version gate would not even fire, while the game-server (which reads
+ * the filesystem directly) already has the new ones. Every mutating verb must
+ * therefore delete it, dropping the client back to the always-fresh per-doc path.
+ */
+describe("content bundle staleness guard", () => {
+  const bundleFile = (): string => join(root, "bundle.json");
+
+  it("PUT deletes a stale bundle", async () => {
+    expect(existsSync(bundleFile())).toBe(true); // rebuildAllIndexes emitted it
+    const res = await app.inject({
+      method: "PUT",
+      url: "/content-api/items/ember-rod",
+      payload: { ...ITEM, cost: 1000 },
+    });
+    expect(res.statusCode).toBe(200);
+    expect(existsSync(bundleFile())).toBe(false);
+  });
+
+  it("POST (create) deletes a stale bundle", async () => {
+    expect(existsSync(bundleFile())).toBe(true);
+    const res = await app.inject({
+      method: "POST",
+      url: "/content-api/items/frost-rod",
+      payload: { ...ITEM, id: "frost-rod", name: "Frost Rod" },
+    });
+    expect(res.statusCode).toBe(201);
+    expect(existsSync(bundleFile())).toBe(false);
+  });
+
+  it("DELETE deletes a stale bundle", async () => {
+    expect(existsSync(bundleFile())).toBe(true);
+    const res = await app.inject({
+      method: "DELETE",
+      url: "/content-api/items/ember-rod",
+    });
+    expect(res.statusCode).toBe(200);
+    expect(existsSync(bundleFile())).toBe(false);
+  });
+
+  it("a REJECTED write leaves the bundle alone (nothing became stale)", async () => {
+    expect(existsSync(bundleFile())).toBe(true);
+    const res = await app.inject({
+      method: "PUT",
+      url: "/content-api/items/ember-rod",
+      payload: { ...ITEM, cost: "free" },
+    });
+    expect(res.statusCode).toBe(422);
+    expect(existsSync(bundleFile())).toBe(true);
+  });
+
+  it("reads never touch the bundle", async () => {
+    await app.inject({ url: "/content-api/manifest" });
+    await app.inject({ url: "/content-api/items/_index" });
+    await app.inject({ url: "/content-api/items/ember-rod" });
+    expect(existsSync(bundleFile())).toBe(true);
+  });
+});

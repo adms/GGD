@@ -15,19 +15,19 @@
   "effects": [
     {
       "kind": "damage",
-      "damageType": "magic",
+      "damageType": "physical",
       "amount": {
         "flat": 300,
         "ratios": [
           {
-            "stat": "ap",
-            "coeff": 1.0
+            "stat": "ad",
+            "coeff": 0.6
           }
         ]
       }
     }
   ],
-  "vfxKey": "fx.ember-bolt-cast",
+  "vfxKey": "fx.prim.fire.explosion-lg",
   "schema": "ability@1",
   "targetsEnemies": true
 }

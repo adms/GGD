@@ -38,6 +38,8 @@ BUSES AND THE PUMP
 from __future__ import annotations
 
 import hashlib
+import os
+import subprocess
 from dataclasses import dataclass, field
 from typing import Callable
 
@@ -47,6 +49,53 @@ from . import choir as choir_mod
 from . import dsp, music, voices
 from .dsp import SR
 from .music import bar_samples, hz, note
+
+
+# ---------------------------------------------------------------- the TTS gate
+#
+# The one exception to "no samples": a scene may drop a spoken/rapped line into
+# its intro via macOS `say`. It is OFF by default so the deterministic pure-synth
+# pipeline (and every probe/test) never depends on `say` being installed and
+# never spawns a subprocess. render.py turns it ON for the shipped pack (`--tts`
+# / GGD_BGM_TTS=1). `say` is only ever invoked with `-o <file>` — it writes to a
+# file and makes NO audible sound, so it is safe under the background-agent
+# silence rule (task #62). Voice + rate + text are pinned, so on a given machine
+# the output is stable; the rap layers are marked EXPERIMENTAL in the audition.
+
+
+class _TTSGate:
+    enabled = bool(os.environ.get("GGD_BGM_TTS"))
+
+
+_TTS = _TTSGate()
+_TTS_TMP = os.path.join(os.environ.get("TMPDIR", "/tmp"), "ggd-bgm-say")
+
+# macOS `say` voices tools/tts-gen already uses; keep the rap in this set.
+SAY_VOICES = {"Kyoko", "Meijia", "Sinji", "Tingting"}
+
+
+def _say_to_mono(voice: str, rate: int, text: str) -> np.ndarray | None:
+    """Render one `say` line to a mono float array at SR, cached by content.
+    Returns None (silent) if TTS is disabled or `say` is unavailable."""
+    if not _TTS.enabled:
+        return None
+    os.makedirs(_TTS_TMP, exist_ok=True)
+    key = hashlib.sha256(f"{voice}|{rate}|{text}".encode()).hexdigest()[:16]
+    wav = os.path.join(_TTS_TMP, f"{key}.wav")
+    if not os.path.exists(wav):
+        aiff = os.path.join(_TTS_TMP, f"{key}.aiff")
+        try:
+            subprocess.run(["say", "-v", voice, "-r", str(rate), "-o", aiff, text],
+                           check=True, capture_output=True)
+            subprocess.run(["ffmpeg", "-y", "-v", "error", "-nostdin", "-i", aiff,
+                            "-ar", str(SR), "-ac", "1", "-c:a", "pcm_s16le", wav],
+                           check=True)
+        except Exception:
+            return None
+    from .audio import read_wav
+    x, _ = read_wav(wav)
+    m = x[0] if x.ndim > 1 else x
+    return m / (np.max(np.abs(m)) or 1.0)
 
 BUSES = ("choir", "lead", "pad", "keys", "strings", "gtr", "bass", "sub",
          "drums", "perc", "fx")
@@ -483,6 +532,33 @@ class Score:
             x = voices.make(kind, n, r, **kw)
             ctx.add("fx", x * gain, at_bar * 4, pan)
         self.layers.append(Layer("fx", fn, f"fx:{kind}"))
+        return self
+
+    def say_line(self, at_sec: float, voice: str, text: str, rate: int = 180,
+                 gain: float = 0.9, pan: float = 0.0, bus: str = "fx",
+                 verb: float = 0.0) -> "Score":
+        """EXPERIMENTAL rap/VO layer via macOS `say`, placed at `at_sec` seconds.
+
+        No-op unless the TTS gate is enabled (render.py --tts / GGD_BGM_TTS=1),
+        so the deterministic pure-synth render and all probes are unaffected. The
+        line is high-passed to sit above the bed and given a touch of the target
+        reverb send so it lives in the same room as the mix."""
+        if voice not in SAY_VOICES:
+            raise ValueError(f"unknown say voice {voice!r}; have {sorted(SAY_VOICES)}")
+
+        def fn(ctx: RenderCtx) -> None:
+            m = _say_to_mono(voice, rate, text)
+            if m is None:
+                return
+            m = dsp.highpass(m, 220.0, 2)
+            if verb > 0:
+                m = dsp.reverb_send(m, dsp.make_ir(
+                    1.4, ctx.sub_rng("say" + text), predelay=0.02, decay_hf=0.7,
+                    tone_hz=5000.0, early=False), verb)[0]
+            at = int(at_sec * SR)
+            dsp.fit(ctx.buses[bus], dsp.pan(m, pan) * gain, at)
+
+        self.layers.append(Layer(bus, fn, f"say:{voice}"))
         return self
 
 

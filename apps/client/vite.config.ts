@@ -2,13 +2,19 @@
 import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import { execSync } from "node:child_process";
-import { createReadStream, existsSync, statSync } from "node:fs";
+import { createReadStream, existsSync, statSync, type Stats } from "node:fs";
 import { extname, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
+import { createGzip } from "node:zlib";
 import type { IncomingMessage, ServerResponse } from "node:http";
 // task #101: live digests of the icon style-spec sources, so the asset console
 // can prove its one snapshotted section is current (dev/preview only).
 import { serveIconConsoleStamp } from "./dev/iconConsoleStamp";
+// task #127: the ONE authoritative environment-tier classifier (loopback | lan
+// | public). This dev/LAN server is deliberately published to the wifi
+// (`client-lan --host 0.0.0.0`), so the copyright-restricted mounts must be
+// served to a loopback/LAN peer and refused to a genuinely public one.
+import { classifyEnvTier, mayServeRestrictedContent } from "@ggd/shared/envTier";
 
 const CONTENT_DIR = fileURLToPath(new URL("../../content", import.meta.url));
 
@@ -26,6 +32,11 @@ const BLIZZARD_OVERLAY_MOUNT = "/content/assets/blizzard-local";
 const CONTENT_MIME: Record<string, string> = {
   ".glb": "model/gltf-binary",
   ".png": "image/png",
+  // The AI-generated icon set ships as 128² WebP (tools/icon-gen/convert-webp.mjs).
+  // Prod nginx picks image/webp up from the stock mime.types; this dev server has
+  // no such table, so without this entry every icon is served as
+  // application/octet-stream over `client-lan` — the path the owner actually plays on.
+  ".webp": "image/webp",
   ".json": "application/json",
   ".wav": "audio/wav",
   // BGM is MP3. Web Audio's decodeAudioData ignores the content type, so the
@@ -36,6 +47,84 @@ const CONTENT_MIME: Record<string, string> = {
   ".ogg": "audio/ogg",
 };
 
+/**
+ * ---- DEV/PREVIEW COMPRESSION (the LAN path the owner actually plays on) ------
+ *
+ * vite has NO compression in the dev server at all — `compression()` exists only
+ * inside `preview()` (vite 5.4.21, dist/node/chunks/dep-*.js), and even in
+ * preview it is registered AFTER this plugin's middleware, so /content/** would
+ * never reach it. Verified live against the running :39527 dev server:
+ * a champion .glb came back at its full uncompressed size with no
+ * Content-Encoding even though the request advertised `gzip, deflate, br, zstd`.
+ *
+ * So the negotiation lives here, in the handler that actually serves the bytes.
+ * MEASURED on this repo: 163 .glb 36,525,948 → 19,518,292 B (gzip -9 sidecars);
+ * live against this very handler, knight.glb 1,103,872 → 391,665 B on the fly
+ * and the 279 app source modules 6,762,605 → 2,410,119 B. Over wifi that is the
+ * whole game's load time.
+ *
+ * Extensions NOT listed here are already-compressed containers (mp3, ogg, png,
+ * webp) — measured on this repo's own files, gzip buys 1.0 % on mp3 and 0.4 %
+ * on png, and one png actually got BIGGER. Compressing them is pure CPU.
+ */
+const COMPRESSIBLE_EXT = new Set([".glb", ".gltf", ".json", ".wav", ".svg", ".txt", ".wasm"]);
+/** Below this, the gzip header costs more than the saving (measured: 22 content docs under 256 B went 3,924 → 3,704 B, 9 of them GREW). */
+const COMPRESS_MIN_BYTES = 256;
+/** On-the-fly level. -6 is the point where extra CPU stops buying bytes on glb. */
+const GZIP_LEVEL = 6;
+/** Do not hold a >16 MB source in memory to compress it; stream it raw instead. */
+const COMPRESS_MAX_SOURCE_BYTES = 16 * 1024 * 1024;
+/** Compressed-body cache: a champion glb costs ~120 ms of CPU to gzip, and a match re-requests the same handful of models constantly. */
+const COMPRESSED_CACHE_MAX_BYTES = 64 * 1024 * 1024;
+
+type CachedBody = { body: Buffer; mtimeMs: number; size: number };
+const compressedCache = new Map<string, CachedBody>();
+let compressedCacheBytes = 0;
+
+function rememberCompressed(file: string, stat: Stats, body: Buffer): void {
+  if (body.length > COMPRESSED_CACHE_MAX_BYTES) return;
+  // FIFO eviction — Map preserves insertion order. Good enough: the working set
+  // is a few dozen models, not an unbounded stream of distinct URLs.
+  while (compressedCacheBytes + body.length > COMPRESSED_CACHE_MAX_BYTES) {
+    const oldest = compressedCache.keys().next();
+    if (oldest.done === true) break;
+    const evicted = compressedCache.get(oldest.value);
+    compressedCache.delete(oldest.value);
+    compressedCacheBytes -= evicted?.body.length ?? 0;
+  }
+  compressedCache.set(file, { body, mtimeMs: stat.mtimeMs, size: stat.size });
+  compressedCacheBytes += body.length;
+}
+
+/** Encodings the client will accept, honouring an explicit `;q=0` refusal. */
+function acceptedEncodings(req: IncomingMessage): Set<string> {
+  const accepted = new Set<string>();
+  for (const part of String(req.headers["accept-encoding"] ?? "").split(",")) {
+    const [token, ...params] = part.trim().split(";");
+    const name = (token ?? "").toLowerCase();
+    if (name === "") continue;
+    const q = params.map((p) => p.trim()).find((p) => p.startsWith("q="));
+    if (q !== undefined && Number(q.slice(2)) === 0) continue;
+    accepted.add(name);
+  }
+  return accepted;
+}
+
+/**
+ * A precompressed sidecar written by nginx/precompress.sh, IF it is not stale.
+ * The mtime check is the whole point: a regenerated .glb next to a stale
+ * .glb.gz would otherwise serve the OLD model to every gzip-capable client and
+ * the new one only to clients that refuse gzip — a divergence that is very hard
+ * to see. Stale ⇒ ignored, and we fall back to compressing on the fly.
+ */
+function freshSidecar(file: string, suffix: string, stat: Stats): { path: string; size: number } | null {
+  const path = file + suffix;
+  if (!existsSync(path)) return null;
+  const side = statSync(path);
+  if (!side.isFile() || side.mtimeMs < stat.mtimeMs) return null;
+  return { path, size: side.size };
+}
+
 /** GET/HEAD static file handler rooted at `rootDir` (path-traversal safe). */
 function staticHandler(rootDir: string) {
   return (req: IncomingMessage, res: ServerResponse, next: () => void): void => {
@@ -45,13 +134,164 @@ function staticHandler(rootDir: string) {
     if (!file.startsWith(rootDir + sep) || !existsSync(file) || !statSync(file).isFile()) {
       return next();
     }
+    const stat = statSync(file);
     res.setHeader("Content-Type", CONTENT_MIME[extname(file)] ?? "application/octet-stream");
-    res.setHeader("Content-Length", statSync(file).size);
+    // The IDENTITY size, always, whatever encoding we end up negotiating below.
+    // apps/client/public/model-budget.html verifies its own freshness by HEADing
+    // every shipping asset and comparing the served length against the bytes the
+    // report recorded from disk. Once a response is compressed, Content-Length is
+    // the COMPRESSED size and that comparison silently turns into ~163 false
+    // "this report is stale" alarms (measured: knight.glb sidecar reports 391,665
+    // against a recorded 1,103,872). Stating the raw size out of band keeps the
+    // check meaningful instead of forcing the page to give up on it.
+    res.setHeader("X-Raw-Length", String(stat.size));
+
+    const compressible = COMPRESSIBLE_EXT.has(extname(file)) && stat.size >= COMPRESS_MIN_BYTES;
+    // Vary goes on every compressible response, compressed or not, so a shared
+    // cache never hands a gzip body to a client that asked for identity.
+    if (compressible) res.setHeader("Vary", "Accept-Encoding");
+    const accepted = compressible ? acceptedEncodings(req) : new Set<string>();
+
+    // 1) Precompressed sidecar — zero CPU, best ratio (gzip -9 / brotli -11).
+    //    Same artifacts nginx serves via gzip_static / brotli_static in prod.
+    for (const [encoding, suffix] of [
+      ["br", ".br"],
+      ["gzip", ".gz"],
+    ] as const) {
+      if (!accepted.has(encoding)) continue;
+      const sidecar = freshSidecar(file, suffix, stat);
+      if (sidecar === null) continue;
+      res.setHeader("Content-Encoding", encoding);
+      res.setHeader("Content-Length", sidecar.size);
+      if (req.method === "HEAD") {
+        res.end();
+        return;
+      }
+      createReadStream(sidecar.path).pipe(res);
+      return;
+    }
+
+    // 2) Compress on the fly. GET only: HEAD is used solely as an existence
+    //    probe here (render/AssetManager.ts checks `res.ok`, never the length),
+    //    so it is not worth spending CPU to answer one.
+    if (compressible && req.method === "GET" && accepted.has("gzip") && stat.size <= COMPRESS_MAX_SOURCE_BYTES) {
+      res.setHeader("Content-Encoding", "gzip");
+      const hit = compressedCache.get(file);
+      if (hit !== undefined && hit.mtimeMs === stat.mtimeMs && hit.size === stat.size) {
+        res.setHeader("Content-Length", hit.body.length);
+        res.end(hit.body);
+        return;
+      }
+      const gzipStream = createGzip({ level: GZIP_LEVEL });
+      const chunks: Buffer[] = [];
+      gzipStream.on("data", (chunk: Buffer) => chunks.push(chunk));
+      gzipStream.on("end", () => rememberCompressed(file, stat, Buffer.concat(chunks)));
+      gzipStream.pipe(res);
+      createReadStream(file).pipe(gzipStream);
+      return;
+    }
+
+    // 3) Identity — already-compressed formats, HEAD, and clients without gzip.
+    res.setHeader("Content-Length", stat.size);
     if (req.method === "HEAD") {
       res.end();
       return;
     }
     createReadStream(file).pipe(res);
+  };
+}
+
+/**
+ * Compress the JS/CSS modules VITE ITSELF serves (dev only).
+ *
+ * staticHandler above owns /content/**; this owns the other half of a cold LAN
+ * load — the transformed source modules and the prebundled deps, which vite
+ * sends completely uncompressed (verified: /src/main.tsx → 16,638 B, no
+ * Content-Encoding). vite's own `compression()` exists only in `preview()`.
+ *
+ * MOUNTS, not a global wrapper. These five prefixes are the ones vite's
+ * transform / raw-fs / static middlewares answer, and none of them is proxied
+ * (/api and /colyseus go to the platform and Colyseus and must never be touched
+ * — a wrapped proxy response would break the lobby WebSocket and any streaming
+ * body). Registration order is what makes this work at all: vite runs
+ * `configureServer` hooks BEFORE it installs transformMiddleware
+ * (dist/node/chunks/dep-BK3b2jBa.js:63337 vs :63375), so patching the response
+ * here happens upstream of the code that writes it.
+ */
+const DEV_COMPRESS_MOUNTS = ["/src", "/@fs", "/@id", "/@vite", "/node_modules"] as const;
+/** Only these content types. Everything else — images, audio, fonts — passes through untouched. */
+const DEV_COMPRESS_TYPE = /\b(javascript|json|css|html|plain|svg\+xml|wasm)\b/;
+
+function compressDevModules(): Plugin {
+  const middleware = (req: IncomingMessage, res: ServerResponse, next: () => void): void => {
+    if (!acceptedEncodings(req).has("gzip")) return next();
+
+    const rawWriteHead = res.writeHead.bind(res);
+    const rawWrite = res.write.bind(res);
+    const rawEnd = res.end.bind(res);
+    let gzipStream: ReturnType<typeof createGzip> | null = null;
+    let decided = false;
+
+    /** Called at the last moment before the first byte, when the headers are final. */
+    const decide = (): void => {
+      if (decided) return;
+      decided = true;
+      const type = String(res.getHeader("Content-Type") ?? "");
+      const declared = Number(res.getHeader("Content-Length") ?? "0");
+      if (
+        res.statusCode !== 200 || // 204/304/errors have no body worth touching
+        res.getHeader("Content-Encoding") !== undefined || // never double-encode
+        res.getHeader("Content-Range") !== undefined || // range responses must stay byte-exact
+        !DEV_COMPRESS_TYPE.test(type) ||
+        (declared > 0 && declared < COMPRESS_MIN_BYTES)
+      ) {
+        return;
+      }
+      res.removeHeader("Content-Length"); // length changes → chunked
+      res.setHeader("Content-Encoding", "gzip");
+      res.setHeader("Vary", "Accept-Encoding");
+      gzipStream = createGzip({ level: GZIP_LEVEL });
+      gzipStream.on("data", (chunk: Buffer) => rawWrite(chunk));
+      gzipStream.on("end", () => rawEnd());
+    };
+
+    res.writeHead = ((status: number, ...rest: unknown[]) => {
+      // writeHead(status, [reason], [headers]) — stage any inline headers onto
+      // the response so decide() sees the real Content-Type, then flush.
+      const headers = rest.find((r) => typeof r === "object" && r !== null);
+      if (headers !== undefined) {
+        for (const [key, value] of Object.entries(headers as Record<string, number | string | string[]>)) {
+          res.setHeader(key, value);
+        }
+      }
+      res.statusCode = status;
+      decide();
+      return rawWriteHead(status);
+    }) as typeof res.writeHead;
+
+    res.write = ((chunk: unknown, ...rest: unknown[]) => {
+      decide();
+      if (gzipStream === null) return (rawWrite as (...a: unknown[]) => boolean)(chunk, ...rest);
+      return gzipStream.write(chunk as Buffer);
+    }) as typeof res.write;
+
+    res.end = ((chunk?: unknown, ...rest: unknown[]) => {
+      decide();
+      if (gzipStream === null) return (rawEnd as (...a: unknown[]) => ServerResponse)(chunk, ...rest);
+      if (chunk !== undefined && typeof chunk !== "function") gzipStream.end(chunk as Buffer);
+      else gzipStream.end();
+      return res;
+    }) as typeof res.end;
+
+    next();
+  };
+
+  return {
+    name: "ggd-compress-dev-modules",
+    apply: "serve", // dev only: `vite preview` already runs vite's own compression()
+    configureServer(server) {
+      for (const mount of DEV_COMPRESS_MOUNTS) server.middlewares.use(mount, middleware);
+    },
   };
 }
 
@@ -86,6 +326,63 @@ function serveBlizzardOverlay(): Plugin {
     },
     configurePreviewServer(server) {
       server.middlewares.use(BLIZZARD_OVERLAY_MOUNT, handler);
+    },
+  };
+}
+
+/**
+ * COPYRIGHT / ENVIRONMENT-TIER GATE (task #127). The mounts below carry
+ * content that a genuinely PUBLIC deploy must not serve:
+ *   - /content/assets/models/imported — the imported champion GLBs (anime /
+ *     game-ripped models); these live INSIDE the deployable content/ tree, so
+ *     without this gate the general serveContent() handler would hand them to
+ *     anyone.
+ *   - /content/assets/blizzard-local  — the dev-only Blizzard overlay mount
+ *     (serveBlizzardOverlay above). Belt-and-suspenders: refuse it to a public
+ *     peer even where the overlay store happens to exist.
+ */
+const COPYRIGHT_RESTRICTED_MOUNTS = [
+  "/content/assets/models/imported",
+  BLIZZARD_OVERLAY_MOUNT,
+] as const;
+
+/**
+ * Refuse the copyright-restricted mounts to a genuinely PUBLIC peer, while
+ * serving loopback + LAN unchanged (a phone on the wifi keeps working — this is
+ * the LAN-published server). Classified off the SOCKET peer only
+ * (req.socket.remoteAddress), never a forwarded header — see @ggd/shared/envTier
+ * and the contentApiGuard note below on why a header cannot be trusted here.
+ *
+ * Registered BEFORE serveBlizzardOverlay + serveContent so connect runs it
+ * first: a served tier falls through (next()) to the real static handlers; a
+ * public tier gets a terminal 403 and the file is never read. The decision is
+ * exactly `mayServeRestrictedContent(classifyEnvTier(peer))`, unit-pinned in
+ * packages/shared/src/envTier.test.ts.
+ */
+function copyrightTierGate(): Plugin {
+  const guard = (req: IncomingMessage, res: ServerResponse, next: () => void): void => {
+    const tier = classifyEnvTier(req.socket.remoteAddress);
+    if (mayServeRestrictedContent(tier)) return next();
+    res.statusCode = 403;
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    res.setHeader("Cache-Control", "no-store");
+    res.setHeader("X-Robots-Tag", "noindex, nofollow");
+    res.end(
+      `copyright-restricted content is not served to a public host (env tier: ${tier}). ` +
+        "The imported champion models and the Blizzard overlay are available only to a " +
+        "loopback or LAN client (task #127).",
+    );
+  };
+  const register = (server: { middlewares: { use: (path: string, fn: typeof guard) => void } }): void => {
+    for (const mount of COPYRIGHT_RESTRICTED_MOUNTS) server.middlewares.use(mount, guard);
+  };
+  return {
+    name: "ggd-copyright-tier-gate",
+    configureServer(server) {
+      register(server);
+    },
+    configurePreviewServer(server) {
+      register(server);
     },
   };
 }
@@ -195,13 +492,20 @@ export default defineConfig({
     "import.meta.env.VITE_BUILD_STAMP": JSON.stringify(BUILD_STAMP),
   },
   // contentApiGuard FIRST: it must decide before vite's proxy middleware runs.
+  // copyrightTierGate before the two content servers: it must refuse a public
+  // peer before serveBlizzardOverlay / serveContent can read a restricted file.
   // serveBlizzardOverlay before serveContent: it owns the longer
   // /content/assets/blizzard-local prefix. (serveContent would `next()` on those
   // URLs anyway — the files are not in content/ — but the order documents it.)
   plugins: [
     react(),
     contentApiGuard(),
+    copyrightTierGate(),
     serveIconConsoleStamp(),
+    // compressDevModules only wraps the /src, /@fs, /@id, /@vite and
+    // /node_modules mounts, so it is independent of the ordering above; the
+    // /content handlers do their own negotiation inside staticHandler.
+    compressDevModules(),
     serveBlizzardOverlay(),
     serveContent(),
   ],

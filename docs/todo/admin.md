@@ -13,9 +13,94 @@ Account mutations reuse the existing locked read-modify-write paths
 `ranking.Add`), so they stay single-writer safe. Timestamps come from a clock
 seam (no wall-clock in the audit/announcement paths).
 
-**First admin:** register an account normally, set `ADMIN_BOOTSTRAP_USERNAME=<that
-username>`, and restart the platform — boot grants it the `admin` role
-idempotently. (Or grant the role on the account JSON directly.)
+**First admin — nothing to configure.** While a deploy has NO administrator, a
+registration claims ownership: that account is granted the `admin` role and
+forced to `approved` status in the same write that creates it, and the register
+response already carries both (see `internal/auth/bootstrap.go`, tests
+`auth-13`..`auth-21`). Whoever installs the platform simply registers first and
+picks their own password — no default credential ships in this repo, and there
+is no forced-change window to get wrong. The window shuts by itself the moment
+an admin exists.
+
+**The gate is "does any account carry the `admin` role?"**, read from the
+account FILES (a directory scan, not `_index.json`, and not Redis). It is
+deliberately NOT "the store is empty": every way an account can land without a
+promotion — a half-failed create, a client that hung up, a concurrent loser
+winning the race to disk — would make that rule terminal, leaving a deploy with
+accounts, no admin, and no way to ever get one. Under this rule those cases
+simply retry. The Redis `bootstrap:owner` key is only a short-TTL mutex that
+serialises simultaneous first registrations; it is released either way and can
+never decide the outcome, so a Redis flush cannot mint a second owner and a
+crash cannot block the first.
+
+**Hardening (`GGD_OWNER_BOOTSTRAP_TOKEN=1`).** The open claim is a footrace on a
+public endpoint: on a network the operator does not control, a stranger could
+register first. With this set, boot mints a one-time token into the log and
+`DATA_DIR/owner-setup-token` (0600), and only a registration presenting it (as
+`bootstrapToken` in the register body) may claim ownership. Registrations
+without it still succeed as ordinary players, so nothing bricks. A loopback
+check is NOT used and must not be added: the LAN-published vite dev server
+proxies remote clients to this binary, so every one of them arrives as
+127.0.0.1 — see `internal/server/devsurface_test.go`.
+
+**Recovery — the ROLE:** `ADMIN_BOOTSTRAP_USERNAME=<username>` still works — set
+it and restart, and boot makes that (already registered) account a USABLE admin
+idempotently: it grants the role, forces `approved` and clears any ban. All
+three matter, because a rescued account that is pending (under the #126 gate) or
+banned (by a squatter who won the claim) cannot obtain a token, and a rescue
+that cannot log in is not a rescue. Once in, `POST
+/api/v1/admin/accounts/{id}/role` grants or revokes the role on any account
+(audited; it refuses to remove the last admin who can still sign in), so a wrong
+grant is fixable in the product rather than by hand-editing account JSON.
+
+**Recovery — the PASSWORD (`cmd/ownerreset`).** The line above rescues a ROLE and
+cannot touch a credential, which left the actual lockout unaddressed: a
+single-owner deploy whose owner forgot the password they picked had no in-product
+way back, and hand-editing `data/accounts/<id>.json` does not help either — the
+field holds an argon2id hash nobody can type. `apps/platform/cmd/ownerreset` is
+that path:
+
+```
+go -C apps/platform run ./cmd/ownerreset -list                 # who are the admins?
+go -C apps/platform run ./cmd/ownerreset -username <name>      # prompts twice, echo off
+go -C apps/platform run ./cmd/ownerreset -username <name> -generate
+```
+
+It writes the durable store + Redis directly, so it works whether or not the
+platform is up, and **no restart is needed** when it is: every credential read is
+an `os.ReadFile` of the account file (`jsonstore` caches nothing; Login,
+`auth.Middleware` and `AdminOnly` all re-read per request). It revokes every live
+refresh token through the seam ban/deny use, forces `approved`, clears any ban,
+re-hashes through the SAME `auth.HashPassword` registration uses, and writes an
+audit line (`owner_password_reset`, actor `host:ownerreset`) with no secret in it.
+Redis must be reachable — refresh tokens live nowhere else, so a reset that
+could not revoke them would silently leave every stolen session alive; it refuses
+up front instead. Already-minted ACCESS tokens still expire on their own clock
+(≤ `AccessTokenTTL`, 15m), which is the platform's normal revocation latency.
+
+**WHY IT IS A COMMAND AND NOT AN ENDPOINT.** The authorisation is proof of HOST
+ACCESS — the same currency `GGD_OWNER_BOOTSTRAP_TOKEN`'s 0600 file trades in,
+except a process the operator started needs no token to prove where it runs. A
+loopback-gated endpoint was rejected: the LAN-published vite dev server proxies
+every phone on the wifi into this binary as 127.0.0.1, so "loopback" here means
+"anyone on the network", and it would hand out the administrator's password.
+`internal/ownerreset/surface_test.go` pins that nothing serving HTTP even LINKS
+the package (no route to find, not merely a guarded one) and that neither it nor
+its command reads a caller address; `internal/server/devsurface_test.go` keeps
+the same ban over `internal/{auth,admin,server}`. The password is never a flag —
+argv is world-readable via `ps` and lands in shell history — so it comes from a
+no-echo TTY prompt or `-generate`, and a `-password …`-shaped argument is refused
+with an explanation *before* `flag.Parse`.
+
+⚠ `DATA_DIR` defaults to a RELATIVE path. Run the command with the SAME
+`DATA_DIR` the platform runs with, or it opens an empty store beside the real one
+and reports "no administrator". It prints the directory it opened at startup for
+exactly this reason.
+
+⚠ NOT IN THE CONTAINER IMAGE YET. `docker/platform.Dockerfile` builds `/platform`
+and `/seed` only, so on a k8s deploy this command is reachable only from a
+checkout, not via `kubectl exec`. Adding `-o /out/ownerreset ./cmd/ownerreset`
+alongside the existing two lines is all it needs (see `admin-40`).
 
 ## Backend (`apps/platform/internal/admin`)
 
@@ -39,6 +124,7 @@ idempotently. (Or grant the role on the account JSON directly.)
 | admin-16 | Mutations append audit entries (newest first) with the acting admin id | admin-audit-append | integration | done |
 | admin-17 | `ADMIN_BOOTSTRAP_USERNAME` grants the admin role idempotently on boot | admin-bootstrap-grant | integration | done |
 | admin-18 | Settled matches are listable/gettable and filterable by account | admin-match-history | integration | done |
+| admin-40 | Ship `/ownerreset` in the platform container image so a k8s deploy can `kubectl exec` it — `docker/platform.Dockerfile` builds `/platform` and `/seed` only, leaving cluster installs recoverable from a checkout only. Owned by whoever owns `docker/`; the Go command itself is done (`auth-26`..`auth-33`) | ownerreset-in-image | integration | pending |
 
 ## Admin console SPA (`apps/admin`, `@ggd/admin`)
 
@@ -50,6 +136,7 @@ idempotently. (Or grant the role on the account JSON directly.)
 | admin-22 | Players table filter (substring, case-insensitive) | adminui-players-filter | unit | done |
 | admin-23 | Ban / M COIN action state machines (success/403/404 via mock fetch) | adminui-action-machines | unit | done |
 | admin-24 | Announcement form validation + active toggle | adminui-announcement-form | unit | done |
+| admin-39 | The login screen carries a 「忘記密碼 / 無法登入」 runbook (Traditional Chinese) naming the exact `cmd/ownerreset` commands, the machine to run them on, and the `DATA_DIR` trap — and it is GUIDANCE: the module imports nothing, calls nothing, names no API path, and the screen adds no reset request or token field | adminui-login-recovery | security | done |
 
 ## 內容管理 — content CRUD in the console (task #102)
 

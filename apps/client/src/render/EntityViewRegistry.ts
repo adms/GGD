@@ -86,6 +86,65 @@ export interface ViewContentHooks {
    * untinted.
    */
   championTintFor?(e: EntityViewState): ModelTint | null | undefined;
+  /**
+   * Per-champion model/scale OVERRIDE (task #77). A stand-in champion shares one
+   * of the four CC0 meshes via its `modelKey`, so `modelDocFor` (keyed only by
+   * modelKey) cannot give it the size the MAP declared — e.g. 小叮噹/哆啦A夢
+   * (godie-n00b) should render at ~0.6 scale, not the shared mage's 0.77, and 18
+   * champions on `champ.sela` otherwise render identically sized. Because the
+   * championId lives behind the seat table that render/** is walled off from
+   * (client-08), the composition root (GameApp) resolves the override and injects
+   * it here; the registry then applies it to the resolved doc so the fallback
+   * PRESERVES the declared model+scale instead of dropping to the generic
+   * stand-in size. Returns null/undefined for champions with no override (the
+   * common case) — behaviour is then exactly as before.
+   */
+  modelOverrideFor?(e: EntityViewState): ModelDocOverride | null | undefined;
+}
+
+/**
+ * A champion-specific override of the shared stand-in's model doc (task #77/#150).
+ *
+ * `relativeScale` (task #150) is the per-champion INTENTIONAL size multiplier on
+ * top of ChampionView's height-normalization: 1.0 = the common target height,
+ * <1 = deliberately smaller, >1 = bigger. It is the size-exception knob (small
+ * creatures / large giants) and threads to `ChampionView.tryUpgradeToGlb`.
+ *
+ * The optional `glbPath`/`clipMap` swap in a genuinely different model when one
+ * exists. `scale` is the LEGACY (pre-#150) absolute render scale — retained only
+ * so `applyModelOverride` can still carry a swapped model's own declared scale
+ * into the doc; it no longer sets the on-screen SIZE (normalization does). Any
+ * omitted field keeps the doc's.
+ */
+export interface ModelDocOverride {
+  scale?: number;
+  relativeScale?: number;
+  glbPath?: string;
+  clipMap?: ModelDoc["clipMap"];
+}
+
+/**
+ * The per-champion relative size multiplier from an override (task #150), or 1.0
+ * when there is none / it is non-positive. Prefers the #150 `relativeScale`; a
+ * legacy override that only carries `scale` is treated as normal-sized (1.0), so
+ * an old absolute scale is never mistaken for a relative multiplier.
+ */
+export function relativeScaleOf(override: ModelDocOverride | null | undefined): number {
+  const r = override?.relativeScale;
+  return typeof r === "number" && r > 0 ? r : 1;
+}
+
+/** Apply a per-champion override to a resolved model doc (task #77). */
+export function applyModelOverride(
+  doc: ModelDoc | null,
+  override: ModelDocOverride | null | undefined,
+): ModelDoc | null {
+  if (!doc || !override) return doc;
+  const next: ModelDoc = { ...doc };
+  if (typeof override.scale === "number" && override.scale > 0) next.scale = override.scale;
+  if (override.glbPath) next.glbPath = override.glbPath;
+  if (override.clipMap) next.clipMap = override.clipMap;
+  return next;
 }
 
 export interface SyncArgs {
@@ -359,9 +418,16 @@ export class EntityViewRegistry {
         view = new ChampionView(this.scene, e.id, e.key, e.teamId);
         this.champions.set(e.id, view);
       }
-      // idempotent: no-ops once started or while no model doc is available
+      // idempotent: no-ops once started or while no model doc is available.
+      // A per-champion override (task #77) preserves the map's declared model
+      // (glbPath/clipMap) over the shared stand-in doc; its `relativeScale`
+      // (task #150) is threaded through as the intentional size multiplier on top
+      // of ChampionView's height-normalization, before the glb is adopted.
       if (args.loadModels !== false && !view.upgradeAttempted) {
-        view.tryUpgradeToGlb(this.assets, this.content.modelDocFor?.(e.key, e.seatId) ?? null);
+        const override = this.content.modelOverrideFor?.(e);
+        const baseDoc = this.content.modelDocFor?.(e.key, e.seatId) ?? null;
+        const doc = applyModelOverride(baseDoc, override);
+        view.tryUpgradeToGlb(this.assets, doc, relativeScaleOf(override));
       }
       this.applyTint(e, view);
       const pose = args.poseFor(e);

@@ -39,6 +39,7 @@
 import { useMemo, useState } from "react";
 import { GOLD, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
 import { HUD_Z } from "../hud/hudLayout";
+import { topRightReserve } from "../chromeReserve";
 import { Btn } from "../platform/widgets";
 import { Tooltip } from "../components/Tooltip";
 import { IconCoverageBar } from "../codex/IconCoverageBar";
@@ -923,6 +924,10 @@ export function AssetConsolePage({ onClose }: { onClose: () => void }): React.JS
           alignItems: "center",
           gap: 12,
           padding: "10px 16px",
+          // task #107: the <body>-portaled audio cluster rides above this page
+          // too; reserve the gutter it publishes so 關閉 / ↻ 重新載入內容 can
+          // never end up underneath it (ui/chromeReserve).
+          paddingRight: topRightReserve({ min: 16 }),
           borderBottom: PANEL_BORDER,
           flexWrap: "wrap",
         }}

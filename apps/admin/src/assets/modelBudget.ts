@@ -90,25 +90,65 @@ const K_TEX_BYTES = ["textureBytes", "texBytes", "textureSize", "texturesBytes"]
 const K_TEX_COUNT = ["textureCount", "textures", "texCount"] as const;
 const K_VRAM = ["vramBytes", "vram", "vramCost", "gpuBytes"] as const;
 const K_DRAWS = ["drawCalls", "draws", "submeshes", "meshCount"] as const;
+const K_CHANNELS = ["animChannels", "channels", "channelsPerFrame"] as const;
+const K_TEX_EDGE = ["maxTextureEdge", "texEdge", "maxEdge"] as const;
+const K_WORST = ["worstCount", "simultaneous", "worst"] as const;
 const K_FILE_BYTES = ["fileBytes", "bytes", "size", "glbBytes"] as const;
 const K_USED_BY = ["usedBy", "usage", "users", "referencedBy"] as const;
+
+const VERDICTS: readonly BudgetVerdict[] = ["over", "warn", "ok", "unknown"];
+/** Read the report's `verdicts` object, keeping only real verdict strings. */
+function readVerdicts(raw: unknown): Record<string, BudgetVerdict> {
+  const d = rec(raw);
+  if (!d) return {};
+  const out: Record<string, BudgetVerdict> = {};
+  for (const [k, v] of Object.entries(d)) {
+    if (typeof v === "string" && (VERDICTS as readonly string[]).includes(v)) out[k] = v as BudgetVerdict;
+  }
+  return out;
+}
+
+/** How one measured value sits against its gate, as SCORED BY THE REPORT. */
+export type BudgetVerdict = "over" | "warn" | "ok" | "unknown";
 
 /** One row of #99's per-model measurement. Every metric may be null. */
 export interface BudgetModelRow {
   readonly id: string;
   /** the .glb this row measured, as recorded by the report */
   readonly path: string;
+  /** the role gate the report scored this model against (champion, arena-decor…) */
+  readonly role: string;
   readonly triangles: number | null;
   readonly vertices: number | null;
   readonly textureBytes: number | null;
   readonly textureCount: number | null;
   readonly vramBytes: number | null;
   readonly drawCalls: number | null;
+  readonly animChannels: number | null;
+  /** largest texture edge in pixels — the axis the optimiser resizes */
+  readonly maxTextureEdge: number | null;
   readonly fileBytes: number | null;
+  /** worst-case simultaneous copies on one screen (12 seats, 50 trees…) */
+  readonly worstCount: number | null;
   /** WHERE IT IS USED — traced by #99, rendered here as-is */
   readonly usedBy: readonly string[];
+  /**
+   * The report's OWN verdict per gated axis. This is authoritative: the page
+   * shows "over threshold" from here rather than re-scoring against a coarse
+   * report-level limit that would call every champion green.
+   */
+  readonly verdicts: Readonly<Record<string, BudgetVerdict>>;
+  /** non-empty when the report flagged the geometry as broken (zero/near-zero) */
+  readonly broken: string;
   /** anything the report flagged about this model */
   readonly note: string;
+}
+
+/** A per-role gate as published by the report — the target for the optimiser. */
+export interface BudgetGate {
+  readonly role: string;
+  readonly texEdgeWarn: number | null;
+  readonly trisWarn: number | null;
 }
 
 /** A budget line: the limit and the warning line that go with a metric. */
@@ -151,6 +191,8 @@ export interface BudgetReport {
   readonly limits: readonly BudgetLimit[];
   readonly screens: readonly BudgetScreen[];
   readonly models: readonly BudgetModelRow[];
+  /** per-role gates (optimise targets); empty when the report omits them */
+  readonly gates: readonly BudgetGate[];
   /** the URL that actually answered — printed on the page */
   readonly url: string;
 }
@@ -222,6 +264,7 @@ function readModel(raw: unknown): BudgetModelRow | null {
   return {
     id: id || path,
     path,
+    role: pickStr(d, ["role", "gate", "kind"]),
     triangles: pickNum(d, K_TRIANGLES),
     vertices: pickNum(d, K_VERTICES),
     textureBytes: pickNum(d, K_TEX_BYTES),
@@ -229,9 +272,29 @@ function readModel(raw: unknown): BudgetModelRow | null {
     textureCount: pickNum(d, K_TEX_COUNT) ?? (Array.isArray(d["textures"]) ? d["textures"].length : null),
     vramBytes: pickNum(d, K_VRAM),
     drawCalls: pickNum(d, K_DRAWS),
+    animChannels: pickNum(d, K_CHANNELS),
+    maxTextureEdge: pickNum(d, K_TEX_EDGE),
     fileBytes: pickNum(d, K_FILE_BYTES),
+    worstCount: pickNum(d, K_WORST),
     usedBy: readUsedBy(K_USED_BY.map((k) => d[k]).find((v) => Array.isArray(v))),
+    verdicts: readVerdicts(d["verdicts"]),
+    broken: pickStr(d, ["broken"]),
     note: pickStr(d, ["note", "notes", "warning", "flag"]),
+  };
+}
+
+/** Read the report's role gates; the optimiser targets the `warn` edges. */
+function readGate(raw: unknown): BudgetGate | null {
+  const d = rec(raw);
+  if (!d) return null;
+  const role = pickStr(d, ["role", "id", "name"]);
+  if (role === "") return null;
+  const texEdge = rec(d["texEdge"]);
+  const tris = rec(d["tris"]);
+  return {
+    role,
+    texEdgeWarn: texEdge ? pickNum(texEdge, ["warn"]) : pickNum(d, ["texEdgeWarn"]),
+    trisWarn: tris ? pickNum(tris, ["warn"]) : pickNum(d, ["trisWarn"]),
   };
 }
 
@@ -306,6 +369,7 @@ export function parseBudgetReport(raw: unknown, url: string): BudgetReport | nul
       .map(readScreen)
       .filter((s): s is BudgetScreen => s !== null),
     models,
+    gates: arr(d["gates"]).map(readGate).filter((g): g is BudgetGate => g !== null),
     url,
   };
 }
@@ -475,8 +539,6 @@ export function budgetHealth(input: BudgetHealthInput): HealthNote[] {
 
 // ----------------------------------------------------------- budget math ----
 
-export type BudgetVerdict = "over" | "warn" | "ok" | "unknown";
-
 /**
  * Where one measured value sits against its limit. `unknown` when either side
  * is missing — a missing limit must never render as "within budget".
@@ -498,6 +560,166 @@ export function limitFor(
   return (
     screen?.limits.find((l) => l.key === key) ?? report?.limits.find((l) => l.key === key)
   );
+}
+
+/** The report's own verdict for one model axis (over/warn/ok), or unknown. */
+export function modelVerdict(row: BudgetModelRow, key: string): BudgetVerdict {
+  return row.verdicts[key] ?? "unknown";
+}
+/** True when the report scored ANY axis of this model over its hard limit. */
+export function isOverThreshold(row: BudgetModelRow): boolean {
+  return Object.values(row.verdicts).some((v) => v === "over");
+}
+
+/**
+ * Order models heaviest-first — the ask is a table sorted heavy→light. VRAM is
+ * the dimension that actually fills a frame, so it leads; triangles break ties;
+ * an UNMEASURED model (both null) always sinks to the bottom, never floats up as
+ * if it were free.
+ */
+export function sortModelsHeavyToLight(models: readonly BudgetModelRow[]): BudgetModelRow[] {
+  const weight = (m: BudgetModelRow): [number, number] => [m.vramBytes ?? -1, m.triangles ?? -1];
+  return [...models].sort((a, b) => {
+    const [av, at] = weight(a);
+    const [bv, bt] = weight(b);
+    return bv - av || bt - at || a.id.localeCompare(b.id);
+  });
+}
+
+/** Models the report scored over a hard limit, heaviest first. */
+export function overThresholdModels(report: BudgetReport | null): BudgetModelRow[] {
+  if (!report) return [];
+  return sortModelsHeavyToLight(report.models.filter(isOverThreshold));
+}
+
+// ------------------------------------------------ offline optimise worklist --
+
+/**
+ * The worklist the 「排入離線最佳化」button hands to task #99's offline optimiser
+ * (tools/model-budget/worklist.ts writes the SAME schema from the same report,
+ * so the console and the CLI agree by construction). The page only PRODUCES this
+ * list — the actual decimation is #115's optimiser, run offline, never here.
+ */
+export const OPTIMISE_WORKLIST_SCHEMA = "model-budget/optimise-worklist@1";
+
+export type OptimiseAction =
+  | { readonly kind: "texture-resize"; readonly fromEdge: number; readonly targetEdge: number; readonly estVramSavedBytes: number }
+  | { readonly kind: "geometry-decimate"; readonly fromTris: number; readonly targetTris: number; readonly requires: string };
+
+export interface OptimiseItem {
+  readonly id: string;
+  readonly path: string;
+  readonly role: string;
+  readonly worstCount: number;
+  readonly vramBytes: number | null;
+  readonly triangles: number | null;
+  readonly actions: readonly OptimiseAction[];
+  /** breached axes no automated pass fixes (draw calls / anim channels) */
+  readonly manual: readonly string[];
+}
+
+export interface OptimiseWorklist {
+  readonly schema: string;
+  readonly generatedAt: string;
+  readonly generatedBy: string;
+  readonly threshold: "warn" | "over";
+  readonly source: { readonly report: string; readonly generatedAt: string; readonly schema: string };
+  readonly items: readonly OptimiseItem[];
+  readonly totals: { readonly queued: number; readonly estVramSavedBytes: number };
+}
+
+const floorPow2 = (n: number): number => (n < 1 ? 1 : 1 << Math.floor(Math.log2(n)));
+
+/** Which report verdict keys the offline optimiser can act on, and how. */
+const OPTIMISABLE: Record<string, "texture" | "geometry"> = {
+  maxTextureEdge: "texture",
+  triangles: "geometry",
+};
+/** Axes no automated pass fixes — carried as manual re-authoring work. */
+const MANUAL_AXES = ["drawCalls", "animChannels"] as const;
+
+/**
+ * Classify the report into the optimiser's actionable queue. Candidacy is the
+ * WARNING LINE by default (matching "a warning line, and optimise anything over
+ * the threshold"); a model is queued only when the optimiser can actually shrink
+ * it (oversized texture or excess geometry). A model that is over budget only on
+ * draw calls or animation channels is NOT queued — decimating a texture cannot
+ * remove a mesh, and pretending otherwise is the silent lie the whole console
+ * exists to avoid.
+ *
+ * Pure and deterministic: the same report yields the same worklist as
+ * tools/model-budget/worklist.ts.
+ */
+export function buildOptimiseWorklist(
+  report: BudgetReport | null,
+  opts: { threshold?: "warn" | "over"; ids?: readonly string[]; now?: string } = {},
+): OptimiseWorklist {
+  const threshold = opts.threshold ?? "warn";
+  const meets = (v: BudgetVerdict): boolean => v === "over" || (v === "warn" && threshold === "warn");
+  const gateOf = new Map(report?.gates.map((g) => [g.role, g]) ?? []);
+  const pick = opts.ids ? new Set(opts.ids) : null;
+
+  const items: OptimiseItem[] = [];
+  for (const m of report?.models ?? []) {
+    if (m.broken !== "") continue;
+    if (pick && !pick.has(m.id)) continue;
+    const gate = gateOf.get(m.role);
+    const actions: OptimiseAction[] = [];
+    for (const [axis, fix] of Object.entries(OPTIMISABLE)) {
+      if (!meets(modelVerdict(m, axis))) continue;
+      if (fix === "texture" && gate?.texEdgeWarn != null && m.maxTextureEdge != null) {
+        const targetEdge = floorPow2(gate.texEdgeWarn);
+        if (m.maxTextureEdge > targetEdge) {
+          const ratio = (targetEdge / m.maxTextureEdge) ** 2;
+          actions.push({
+            kind: "texture-resize",
+            fromEdge: m.maxTextureEdge,
+            targetEdge,
+            estVramSavedBytes: Math.max(0, Math.round((m.vramBytes ?? 0) * (1 - ratio))),
+          });
+        }
+      } else if (fix === "geometry" && gate?.trisWarn != null && m.triangles != null && m.triangles > gate.trisWarn) {
+        actions.push({
+          kind: "geometry-decimate",
+          fromTris: m.triangles,
+          targetTris: gate.trisWarn,
+          requires: "geometry deps (#115)",
+        });
+      }
+    }
+    if (actions.length === 0) continue;
+    items.push({
+      id: m.id,
+      path: m.path,
+      role: m.role,
+      worstCount: m.worstCount ?? 1,
+      vramBytes: m.vramBytes,
+      triangles: m.triangles,
+      actions,
+      manual: MANUAL_AXES.filter((a) => meets(modelVerdict(m, a))),
+    });
+  }
+  items.sort((a, b) => (b.vramBytes ?? 0) - (a.vramBytes ?? 0) || (b.triangles ?? 0) - (a.triangles ?? 0));
+
+  return {
+    schema: OPTIMISE_WORKLIST_SCHEMA,
+    generatedAt: opts.now ?? new Date().toISOString(),
+    generatedBy: "apps/admin 模型預算 (queue offline optimise)",
+    threshold,
+    source: {
+      report: report?.url ?? "",
+      generatedAt: report?.generatedAt ?? "",
+      schema: report?.schema ?? "",
+    },
+    items,
+    totals: {
+      queued: items.length,
+      estVramSavedBytes: items.reduce(
+        (n, it) => n + it.actions.reduce((s, a) => s + (a.kind === "texture-resize" ? a.estVramSavedBytes : 0), 0),
+        0,
+      ),
+    },
+  };
 }
 
 // ---------------------------------------------------------- formatting ------

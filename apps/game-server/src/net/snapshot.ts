@@ -4,7 +4,7 @@
  * later without touching anything else.
  */
 import type { ArraySchema } from "@colyseus/schema";
-import { ENTITY_FLAG, ENTITY_KIND, EntityState, MatchState, OfferState, SeatState, TeamState } from "@ggd/shared/protocol/schema";
+import { ENTITY_FLAG, ENTITY_KIND, EntityState, MatchState, OfferState, ROUND_OUTCOME, SeatState, TeamState } from "@ggd/shared/protocol/schema";
 import { Champions } from "@ggd/shared/sim/content/registry";
 import { FLOWER_MODEL_KEY } from "@ggd/shared/sim/flowers";
 import { REVIVE_CIRCLE_MODEL_KEY } from "@ggd/shared/sim/revive";
@@ -24,6 +24,12 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
   const world = ctl.world;
   state.phase = ctl.phase.phase;
   state.round = ctl.phase.round;
+  // The ACTIVE arena for the current round (task #145). Set here every tick (not
+  // once at onCreate) so the per-round rotation reaches every client: the id
+  // changes when the controller swaps arenas at combat entry, and the client-
+  // render agent re-renders the scene on the change. Server-authoritative +
+  // deterministic, so every client agrees on the round's map.
+  state.mapId = ctl.arena.id;
   state.tick = world.tick;
   state.phaseTicksLeft = ctl.phase.ticksLeft;
   // match decided -> client disables input + starts the settlement front-view
@@ -38,6 +44,15 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
     ts.lives = lives;
     ts.eliminated = lives <= 0;
     ts.placement = ctl.placements.get(teamId) ?? 0;
+    // PER-ROUND participation + duel result (reset at each combat entry). The
+    // round-end presentation needs it because a BYE team is parked dead and
+    // scores nothing, so `alive` + per-round K/D alone cannot tell 「輪空」 from
+    // 「被團滅」 — and celebrating a team that sat the round out is the #173 bug.
+    ts.roundOutcome = ctl.roundOutcome.get(teamId) ?? ROUND_OUTCOME.NONE;
+    // MATCH-lifetime duels won. The client's victory gate (vfx/victoryTrigger)
+    // fires the small round-win firework on this counter RISING, so it must be
+    // projected every patch and must never be reset mid-match (#93).
+    ts.roundWins = ctl.roundWins.get(teamId) ?? 0;
     ti++;
   }
 
@@ -58,6 +73,12 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
     ss.championId = seat.championId;
     ss.ready = seat.ready;
     ss.lastAckSeq = humanDrivers.get(seatId)?.mailbox.lastSeq ?? 0;
+    // PER-ROUND K/D (reset at each combat entry, never cumulative). The round-end
+    // winner model (#143) + quote VO (#142) rank the leading team's seats by these
+    // to name THAT round's MVP, so the presented champion changes with the round.
+    // Clamped to the uint8 wire field.
+    ss.roundKills = Math.min(ctl.roundKills.get(seatId) ?? 0, 255);
+    ss.roundDeaths = Math.min(ctl.roundDeaths.get(seatId) ?? 0, 255);
 
     if (seat.entityId !== null) {
       ss.entityId = seat.entityId;
@@ -74,6 +95,9 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
         // it needs so a player can never destroy 19 stacks unknowingly.
         ss.statStacks = Math.min(champ.statStacks, 255);
         ss.statCapstonePct = champ.statCapstonePct;
+        // buy/sell undo depth (task #121) — the client shows 「↩ 復原上一步」
+        // exactly when > 0. Clamped to the uint8 wire field.
+        ss.undoDepth = Math.min(champ.undoStack.length, 255);
       }
       if (ab) {
         ss.unspentPoints = ab.unspentPoints;

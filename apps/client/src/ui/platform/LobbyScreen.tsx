@@ -2,6 +2,12 @@
  * LobbyScreen — the post-auth hub: header (wallet / identity / store /
  * logout), friends panel, room browser or room view, leaderboard, plus the
  * live invite prompts pushed over the lobby WS.
+ *
+ * TOP-RIGHT SAFE AREA (task #107): the header runs to the right edge, and the
+ * persistent audio cluster is <body>-portaled above every screen — so ⚙
+ * Settings / Logout used to render UNDERNEATH it. The header now RESERVES the
+ * gutter the cluster publishes (`../chromeReserve`) instead of hard-coding a
+ * width, and wraps rather than compressing into it.
  */
 import { useState } from "react";
 import { useApp } from "./store";
@@ -12,9 +18,13 @@ import { RoomListPanel } from "./RoomListPanel";
 import { RoomView } from "./RoomView";
 import { StoreScreen } from "./StoreScreen";
 import { openCodex } from "../codex/CodexRoute";
+import { topRightClear, topRightReserve } from "../chromeReserve";
 import { Btn, MCoin, Panel, ACCENT, OK, DANGER } from "./widgets";
 import { ARENA_OPTIONS, DEFAULT_MAP_ID } from "./maps";
 import { GOLD, TEXT_DIM, TEXT_MAIN } from "../theme";
+
+/** The lobby shell's own edge padding — also the header's `outerInset`. */
+const LOBBY_PAD = 16;
 
 function InviteToasts(): React.JSX.Element | null {
   const invites = useApp((s) => s.ws.invites);
@@ -22,7 +32,19 @@ function InviteToasts(): React.JSX.Element | null {
   const dismissInvite = useApp((s) => s.dismissInvite);
   if (invites.length === 0) return null;
   return (
-    <div style={{ position: "absolute", right: 16, top: 64, zIndex: 50, width: 280, pointerEvents: "auto" }}>
+    // right-aligned toasts pass UNDER the audio cluster rather than beside it
+    // (they are 280px wide — reserving the gutter would squeeze them), so they
+    // consume the published HEIGHT instead of the width.
+    <div
+      style={{
+        position: "absolute",
+        right: LOBBY_PAD,
+        top: topRightClear({ min: 64, gap: 8 }),
+        zIndex: 50,
+        width: 280,
+        pointerEvents: "auto",
+      }}
+    >
       {invites.map((inv) => (
         <Panel key={inv.token} style={{ marginBottom: 8, border: `1px solid ${ACCENT}` }}>
           <div style={{ fontSize: 13, color: TEXT_MAIN, marginBottom: 8 }}>
@@ -91,13 +113,24 @@ export function LobbyScreen(): React.JSX.Element {
         flexDirection: "column",
         pointerEvents: "auto",
         background: "radial-gradient(ellipse at 50% 0%, #131a2c 0%, #0b0e14 65%)",
-        padding: 16,
+        padding: LOBBY_PAD,
         boxSizing: "border-box",
         gap: 12,
       }}
     >
-      {/* header */}
-      <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+      {/* header — reserves the audio cluster's PUBLISHED gutter (task #107) and
+          wraps into a second row instead of sliding underneath it. */}
+      <div
+        data-ggd-lobby-header=""
+        style={{
+          display: "flex",
+          alignItems: "center",
+          flexWrap: "wrap",
+          gap: "8px 14px",
+          boxSizing: "border-box",
+          paddingRight: topRightReserve({ outerInset: LOBBY_PAD }),
+        }}
+      >
         <div style={{ fontSize: 22, fontWeight: 900, letterSpacing: 2, color: TEXT_MAIN }}>去死團的逆襲</div>
         <div style={{ fontSize: 11, color: TEXT_DIM }}>
           <span

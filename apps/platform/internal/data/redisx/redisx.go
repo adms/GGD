@@ -49,6 +49,17 @@ func KeyMatchDone(mid string) string            { return "match:result:done:" + 
 func KeyMatchPending(mid string) string         { return "match:pending:" + mid }
 func KeyMatchesPending() string                 { return "matches:pending" }
 
+// KeyBootstrapOwner is the short-lived MUTEX that serialises simultaneous
+// first-owner registrations: a SETNX with a TTL, released as soon as the
+// registration finishes either way.
+//
+// It is deliberately NOT the gate. Whether a deploy may still mint an owner is
+// decided from the account files on disk ("does any account carry the admin
+// role?"), because Redis is a rebuildable cache: a permanent claim here would
+// be lost by a flush and outlive a crash, so it could both hand out a second
+// ownership and block the first one forever. See internal/auth/bootstrap.go.
+func KeyBootstrapOwner() string { return "bootstrap:owner" }
+
 func ChanPresence() string        { return "chan:presence" }
 func ChanLobby(aid string) string { return "chan:lobby:" + aid }
 func ChanRoom(rid string) string  { return "chan:room:" + rid }
@@ -167,9 +178,16 @@ func (c *Client) RevokeAllRefresh(ctx context.Context, accountID string) error {
 	return err
 }
 
+// CountLiveRefresh returns how many refresh tokens the account still has.
+// Used to REPORT a revocation ("3 sessions were killed") rather than to decide
+// anything — the revocation itself is unconditional.
+func (c *Client) CountLiveRefresh(ctx context.Context, accountID string) (int64, error) {
+	return c.R.SCard(ctx, KeyRefreshSet(accountID)).Result()
+}
+
 // HasLiveRefresh reports whether the account still has live refresh tokens.
 func (c *Client) HasLiveRefresh(ctx context.Context, accountID string) (bool, error) {
-	n, err := c.R.SCard(ctx, KeyRefreshSet(accountID)).Result()
+	n, err := c.CountLiveRefresh(ctx, accountID)
 	return n > 0, err
 }
 

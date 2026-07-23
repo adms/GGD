@@ -2,7 +2,8 @@
  * reactionClip — the purchase-reaction preference order, unit-tested against the
  * REAL clip inventories the roster ships (measured from the .glbs):
  *
- *   • KayKit stand-ins: 76 clips incl. "Cheer" → victory (the user's 1st choice)
+ *   • KayKit stand-ins: 16 clips after the trim (76 upstream) incl. "Cheer"
+ *     → victory (the user's 1st choice)
  *   • heropikachu / herosasuke / heroryuk: no cheer, an "Attack …" → attack
  *   • an import with only an idle (task #69): nothing legible → null (caller pops)
  *

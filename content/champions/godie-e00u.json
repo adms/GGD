@@ -2,6 +2,7 @@
   "id": "godie-e00u",
   "schema": "champion@1",
   "name": "完全而瀟灑的女僕 - 十六夜Sakuya",
+  "icon": "assets/icons/champions/godie-e00u.webp",
   "description": "故事：\n(出自:東方Project)\n\n推薦玩家 : --\n上手度 : --\n\n角色成長：\n力量 + 1.40\n敏捷 + 2.80\n智慧 + 1.70\n基礎跑速 300\n\n可學習的技能：\n離間之劍、千刃‧聚華、血染的銀匕首、夜霧的殺人鬼",
   "role": "marksman",
   "attackType": "ranged",
@@ -58,7 +59,7 @@
       "effects": [
         {
           "kind": "damage",
-          "damageType": "magic",
+          "damageType": "physical",
           "amount": {
             "perRank": [
               80,
@@ -69,8 +70,8 @@
             ],
             "ratios": [
               {
-                "stat": "ap",
-                "coeff": 0.72
+                "stat": "ad",
+                "coeff": 0.5
               }
             ]
           }
@@ -103,7 +104,7 @@
       "effects": [
         {
           "kind": "damage",
-          "damageType": "magic",
+          "damageType": "physical",
           "amount": {
             "perRank": [
               80,
@@ -114,8 +115,8 @@
             ],
             "ratios": [
               {
-                "stat": "ap",
-                "coeff": 0.72
+                "stat": "ad",
+                "coeff": 0.5
               }
             ]
           }
@@ -148,7 +149,7 @@
       "effects": [
         {
           "kind": "damage",
-          "damageType": "magic",
+          "damageType": "physical",
           "amount": {
             "perRank": [
               80,
@@ -159,8 +160,8 @@
             ],
             "ratios": [
               {
-                "stat": "ap",
-                "coeff": 0.72
+                "stat": "ad",
+                "coeff": 0.5
               }
             ]
           }
@@ -189,7 +190,7 @@
       "effects": [
         {
           "kind": "damage",
-          "damageType": "magic",
+          "damageType": "physical",
           "amount": {
             "perRank": [
               80,
@@ -198,8 +199,8 @@
             ],
             "ratios": [
               {
-                "stat": "ap",
-                "coeff": 0.48
+                "stat": "ad",
+                "coeff": 0.6
               }
             ]
           }

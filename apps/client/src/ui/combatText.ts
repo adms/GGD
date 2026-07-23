@@ -748,16 +748,35 @@ export function combatTextShadow(outlinePx: number, haloPx: number): string {
 }
 
 /**
- * Full inline style for one node. `gradient` is the feature-detected
- * `background-clip: text` support — without it the fill must stay a solid
- * colour, because a transparent fill with no gradient is an invisible number.
- * The flat colour is the gradient's own bottom stop, so the fallback is the
- * same hue, just without the highlight.
+ * Full inline style for one node. `gradient` is the RUNTIME-PROBED
+ * `background-clip: text` capability (WorldAnchorLayer.probeTextGradientPaints) —
+ * true only when the renderer was proven to actually PAINT a text-clipped
+ * gradient, never just "recognises the property". That distinction is the whole
+ * bug: an in-app browser / iOS WKWebView that reports support via `CSS.supports`
+ * but does not paint the clip leaves a glyph whose fill is transparent and whose
+ * only ink is the black ring — a number that reads as BLACK.
+ *
+ * The invariant this builder guarantees, so that failure can never recur:
+ *
+ *   · the SOLID category hue (`style.color`) is emitted as the base fill in
+ *     BOTH paths. In the fallback it is the entire fill; in the gradient path it
+ *     is what the glyph falls back to if the engine drops `-webkit-text-fill-color`
+ *     — so even a mistaken `gradient:true` on a non-WebKit engine cannot blank it.
+ *   · `color:transparent` is NEVER emitted. Only `-webkit-text-fill-color:transparent`
+ *     makes the clipped gradient show, and it is emitted ONLY alongside the
+ *     `linear-gradient(...)` + `background-clip:text` that it reveals. A
+ *     transparent fill with no gradient behind it — the invisible number — is
+ *     therefore impossible to produce.
+ *
+ * The gradient is the RO digit-sprite highlight (light top → saturated bottom);
+ * the fallback is the same hue, just without the highlight, and the black ring
+ * carries legibility in both (see the module doc).
  */
 export function combatTextCss(style: CombatTextStyle, gradient: boolean): string {
   const fill = gradient
-    ? `background-image:linear-gradient(180deg,${style.tint} 0%,${style.tint} 24%,${style.color} 78%,${style.color} 100%);` +
-      "-webkit-background-clip:text;background-clip:text;color:transparent;" +
+    ? `color:${style.color};` +
+      `background-image:linear-gradient(180deg,${style.tint} 0%,${style.tint} 24%,${style.color} 78%,${style.color} 100%);` +
+      "-webkit-background-clip:text;background-clip:text;" +
       "-webkit-text-fill-color:transparent;"
     : `color:${style.color};`;
   return (

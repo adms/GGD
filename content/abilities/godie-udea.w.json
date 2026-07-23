@@ -35,13 +35,13 @@
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 1.0
+            "coeff": 0.6
           }
         ]
       }
     }
   ],
-  "vfxKey": "fx.scorch-ring",
+  "vfxKey": "fx.prim.ice.nova",
   "targetsEnemies": true,
   "schema": "ability@1"
 }

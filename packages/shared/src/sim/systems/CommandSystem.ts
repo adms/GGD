@@ -16,7 +16,7 @@ import type { SeatId, EntityId, ItemId } from "../../ids";
 import type { IntentFrame } from "../intents";
 import type { SimWorld } from "../SimWorld";
 import { castAbility, rankUpAbility, tickCooldowns } from "../abilities/abilitySystem";
-import { buyItem, sellItem } from "../economy/shop";
+import { buyItem, sellItem, undoShopAction } from "../economy/shop";
 import { shopAccess } from "../economy/shopAccess";
 
 export function commandSystem(world: SimWorld, intents: ReadonlyMap<SeatId, IntentFrame>): void {
@@ -66,6 +66,21 @@ export function commandSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Inte
           }
           if (!sellItem(world, entity, cmd.itemSlot)) {
             world.emit("sellRejected", { entity, seatId, itemSlot: cmd.itemSlot, reason: "empty-slot" });
+          }
+          break;
+        }
+        case "undoLastShopStep": {
+          // Gated by the SAME rule as buy/sell — the undo cannot be replayed
+          // once the shop closes (resolution / match end), which is what stops
+          // any cross-round buy→sell→undo cycle from netting gold (task #121).
+          const access = shopAccess(world, entity);
+          if (!access.open) {
+            world.emit("undoRejected", { entity, seatId, reason: access.reason });
+            break;
+          }
+          const result = undoShopAction(world, entity);
+          if (result !== "ok") {
+            world.emit("undoRejected", { entity, seatId, reason: result });
           }
           break;
         }

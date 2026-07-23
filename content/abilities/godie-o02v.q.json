@@ -24,15 +24,15 @@
       "damageType": "magic",
       "amount": {
         "perRank": [
-          3.0,
-          3.0,
-          3.0,
-          3.0
+          80,
+          120,
+          160,
+          200
         ],
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 0.009
+            "coeff": 0.6
           }
         ]
       }
@@ -41,7 +41,7 @@
       "kind": "applyStatus",
       "statusId": "slow25",
       "duration": 1.5,
-      "moveSpeedMult": 0.6
+      "moveSpeedMult": 0.2
     }
   ],
   "vfxKey": "fx.ember-bolt-cast",

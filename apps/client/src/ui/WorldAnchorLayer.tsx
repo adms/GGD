@@ -64,16 +64,61 @@ const CAST_COLOR = "#54b0f0"; // ability channel — blue
 const WINDUP_COLOR = "#f0a840"; // basic-attack wind-up — orange
 
 /**
- * Does this browser support `background-clip: text`? Without it the gradient
- * fill would leave `color: transparent` on a plain element — an invisible
- * number, which is the worst possible failure for a legibility feature — so the
- * pure CSS builder falls back to the gradient's own bottom stop.
+ * Does `background-clip: text` genuinely PAINT in this renderer — not merely
+ * "is the property name recognised"?
+ *
+ * The old check was `CSS.supports("-webkit-background-clip","text")`. That is a
+ * false positive on the exact targets this client runs in: an in-app browser /
+ * iOS WKWebView can report the property as supported yet fail to paint the
+ * clipped gradient on the actual element. When it does, the combat-text CSS is
+ * left with a transparent fill and nothing behind it — only the black outline
+ * ring shows, so every damage/heal/mana number reads as BLACK. That false
+ * positive is the reported bug.
+ *
+ * This is a REAL element-level probe, not a capability-string lookup: it stamps
+ * the ACTUAL gradient CSS this layer emits onto a throwaway node, hangs it in
+ * the document, and reads back the COMPUTED values. The treatment is only taken
+ * to have painted when the engine kept all three of it — the background clips to
+ * `text`, the text fill resolved to fully transparent, and the background is a
+ * gradient. If the engine silently dropped any of them (the WKWebView / in-app
+ * case), the probe returns false and combatTextCss uses the solid category hue,
+ * which the black ring already makes fully legible (the documented fallback).
+ *
+ * Any doubt resolves to false → solid: no DOM (SSR / the node unit env), a
+ * thrown error, or a value the engine refused. The deps are injectable so both
+ * branches are unit-testable where there is no real `document`.
  */
-function supportsTextGradient(): boolean {
-  if (typeof CSS === "undefined" || typeof CSS.supports !== "function") return false;
-  return (
-    CSS.supports("-webkit-background-clip", "text") || CSS.supports("background-clip", "text")
-  );
+export function probeTextGradientPaints(
+  doc: Document | undefined = typeof document !== "undefined" ? document : undefined,
+  computeStyle: ((el: Element) => CSSStyleDeclaration) | undefined =
+    typeof getComputedStyle !== "undefined" ? getComputedStyle : undefined,
+): boolean {
+  if (!doc || typeof doc.createElement !== "function" || !computeStyle) return false;
+  let probe: HTMLElement | null = null;
+  try {
+    probe = doc.createElement("span");
+    // the EXACT fill the renderer would apply, parked far off-screen
+    probe.style.cssText =
+      "position:absolute;left:-9999px;top:-9999px;pointer-events:none;" +
+      combatTextCss(combatTextStyle("taken"), true);
+    probe.textContent = "0";
+    (doc.body ?? doc.documentElement)?.appendChild(probe);
+    const cs = computeStyle(probe);
+    const clip = `${cs.getPropertyValue("-webkit-background-clip")} ${cs.getPropertyValue(
+      "background-clip",
+    )}`;
+    const fillColor = cs.getPropertyValue("-webkit-text-fill-color");
+    const bgImage = cs.getPropertyValue("background-image");
+    const clipsToText = /(^|\s)text(\s|$)/.test(clip);
+    // transparent resolves to rgba(0,0,0,0) in a computed style
+    const fillIsTransparent = /rgba\(\s*0\s*,\s*0\s*,\s*0\s*,\s*0\s*\)|transparent/i.test(fillColor);
+    const hasGradient = /gradient/i.test(bgImage);
+    return clipsToText && fillIsTransparent && hasGradient;
+  } catch {
+    return false;
+  } finally {
+    probe?.remove();
+  }
 }
 
 export function WorldAnchorLayer(): React.JSX.Element {
@@ -87,7 +132,11 @@ export function WorldAnchorLayer(): React.JSX.Element {
     let raf = 0;
 
     // ---- combat-text node pool: allocated ONCE, reused for the session ----
-    const gradient = supportsTextGradient();
+    // Probe the LIVE renderer once (a real element, not `CSS.supports`): only a
+    // proven-painting background-clip:text turns the gradient fill on, so an
+    // in-app browser / WKWebView that fakes support falls back to the solid hue
+    // instead of rendering black numbers.
+    const gradient = probeTextGradientPaints();
     const ctNodes: HTMLDivElement[] = [];
     const ctStyleKey: string[] = [];
     const ctEntryId: number[] = [];

@@ -202,16 +202,18 @@ export function movementSystem(world: SimWorld): void {
       if (!o || o.zone !== t.zone) continue;
       const oHp = world.health.get(otherId);
       if (oHp && !oHp.alive) continue;
-      // Flowers are STATIC props: units are pushed out of them (like a soft
-      // pillar) but the flower itself never moves.
-      const aFlower = world.flower.has(id);
-      const bFlower = world.flower.has(otherId);
-      if (aFlower && bFlower) continue;
-      if (aFlower || bFlower) {
-        const anchor = aFlower ? t : o;
-        const mover = aFlower ? { pos: o.pos, radius: o.radius } : { pos: t.pos, radius: t.radius };
+      // STATIC props (flowers + neutral guardians, task #89): units are pushed
+      // out of them like a soft pillar but the prop itself never moves. A
+      // guardian is authoritative terrain placed at the zone centre by
+      // GuardianSystem — it must stay put even when a champion body overlaps it.
+      const aStatic = world.flower.has(id) || world.structure.has(id);
+      const bStatic = world.flower.has(otherId) || world.structure.has(otherId);
+      if (aStatic && bStatic) continue;
+      if (aStatic || bStatic) {
+        const anchor = aStatic ? t : o;
+        const mover = aStatic ? { pos: o.pos, radius: o.radius } : { pos: t.pos, radius: t.radius };
         pushOutOfObstacle(mover, { kind: "circle", center: anchor.pos, radius: anchor.radius });
-        if (aFlower) o.pos = mover.pos;
+        if (aStatic) o.pos = mover.pos;
         else t.pos = mover.pos;
         continue;
       }
@@ -227,6 +229,11 @@ export function movementSystem(world: SimWorld): void {
   for (const [id, t] of world.transform) {
     if (world.projectile.has(id)) continue;
     if (world.reviveCircle.has(id)) continue; // stays exactly on the corpse
+    // Neutral guardians (task #89) are authoritative fixed terrain: never shove
+    // them out of an obstacle or clamp them — GuardianSystem places one at the
+    // zone CENTRE, which legitimately coincides with the centre pillar, and a
+    // push-out would eject it ~one body-width off its post every combat tick.
+    if (world.structure.has(id)) continue;
     const zone = world.arena.zones[t.zone] ?? world.arena.zones[0]!;
     const body = { pos: t.pos, radius: t.radius };
     for (const ob of zone.obstacles) pushOutOfObstacle(body, ob);

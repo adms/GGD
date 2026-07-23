@@ -64,6 +64,7 @@ const FIXTURE_IDS = [
   "w3x-alpha-material",
   "w3x-attach-bake",
   "w3x-effect-geoset-guard",
+  "w3x-rawmods-passthrough",
 ] as const;
 
 describe.runIf(pyOk)("w3x importer — synthetic fixture pipeline", () => {
@@ -228,5 +229,48 @@ describe("w3x importer — real imported content", () => {
       }
     }
     cover("w3x-item-data-column");
+  });
+
+  // Task #144: every champion appeared to walk at the same speed. The importer's
+  // old AFFINE move-speed map — ms = 5.5 + (clamp(raw,270,522)-270)*2.5/252 —
+  // squashed relative differences (its +5.5 offset turned WC3 295-vs-315, a real
+  // 6.8% gap, into 5.75-vs-5.95) and floored every slow unit at 270, so 78% of
+  // the roster (87/111) landed in the 5.7-5.9 band. The PROPORTIONAL map
+  // (ms = raw * 5.8/300, anchored on the shop's WC3-300 == 5.8) restores the
+  // source spread: a WC3 320 unit is now faster than a 270 one, the 522-cap
+  // heroes reach ~10.1 and the 240-250 heroes drop to ~4.6-4.8. Anchored to the
+  // shipped docs and the OBJECTS.json source so a re-flattening fails here.
+  it.runIf(hasImports)("champion move speeds carry the source's real spread", () => {
+    const champs = readdirSync(join(contentDir, "champions")).filter((f) =>
+      f.startsWith("godie-"),
+    );
+    const ms = champs.map(
+      (f) =>
+        JSON.parse(readFileSync(join(contentDir, "champions", f), "utf-8"))
+          .baseStats.ms as number,
+    );
+    const distinct = new Set(ms.map((v) => v.toFixed(1)));
+    const min = Math.min(...ms);
+    const max = Math.max(...ms);
+    // Not flattened: many distinct tiers and a real span, unlike the old cram.
+    expect(distinct.size).toBeGreaterThanOrEqual(10);
+    expect(max - min).toBeGreaterThanOrEqual(3);
+    expect(max / min).toBeGreaterThanOrEqual(1.6);
+    // No single 0.3-wide band swallows the roster (the old map put 78% in one).
+    const inBand = ms.filter((v) => v >= 5.7 && v <= 5.9).length;
+    expect(inBand / ms.length).toBeLessThan(0.7);
+
+    // Source-anchored spot-checks — OBJECTS.json move_speed -> baseStats.ms:
+    //   300 龍宮禮奈  godie-e001 -> 5.8  (the shop-scale anchor, 「基礎跑速 300」)
+    //   522 神鳴流劍士 godie-e00x -> ~10.1 (WC3 cap, the roster's fastest)
+    //   240 種子神奇寶貝 godie-h02r -> ~4.6 (among the slowest)
+    const msOf = (id: string) =>
+      JSON.parse(
+        readFileSync(join(contentDir, "champions", `${id}.json`), "utf-8"),
+      ).baseStats.ms as number;
+    expect(msOf("godie-e001")).toBe(5.8);
+    expect(msOf("godie-e00x")).toBeGreaterThan(msOf("godie-e001"));
+    expect(msOf("godie-h02r")).toBeLessThan(msOf("godie-e001"));
+    cover("w3x-champion-move-speed-spread");
   });
 });

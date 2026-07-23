@@ -102,6 +102,109 @@ guard SFX/spark, a greyed "guard" number, a bigger break pop).
 | cj-c13 | `combatFeedback.planImpactFeedback` is the ONE orchestrator: from a single `ImpactProfile` it produces freeze + victim flash + attacker flash + a camera-shake REQUEST all scaled by the SAME tier (flash strength/duration + shake amp monotonic light→crit, flashes stay <200 ms), victim flash colour follows dmgType, and it leaves documented request/hook points for sparks + camera + sfx + damage-number that a LATER wave consumes | juice-orchestrator | unit | done |
 | cj-c14 | `asImpactProfile` narrows the untyped `hitImpact.data.profile` wire payload (valid tier + numeric hitstopTicks) and returns null on absent/malformed input without throwing (older replays); a missing knockbackDir defaults to {0,0} | juice-profile | unit | done |
 
+## Client stage 2 — hit-feel channels (sparks / camera / shiver + #131) — task #133 client
+
+Consumes the EXPANDED `ImpactProfile` (the 7 cosmetic hints the sim now rides on
+`hitImpact.data.profile`: `shakeMag/shakeStyle/sparkKind/flashColor/flashMs/
+camKick/exFreeze`). All additive, client-only cosmetics; deterministic sim
+untouched. Owned files: `render/combatFeedback.ts`, `vfx/VfxSystem.ts`,
+`vfx/vfxPresets.ts`, `vfx/HitSpark.ts`, `render/views/ChampionView.ts`,
+`render/CameraRig.ts`.
+
+- **Client `ImpactProfile` mirror EXPANDED** (`render/combatFeedback.ts`): the
+  mirror + `asImpactProfile` now narrow all 7 cosmetic fields, backfilling a
+  pre-#133 replay from tier-derived defaults so downstream code never sees
+  `undefined`. `SparkKind`/`ShakeStyle` unions exported for the channels.
+- **Contact-point sparks, DISTINCT per `sparkKind`** (`vfx/VfxSystem.ts` +
+  `vfx/vfxPresets.ts`): the `hitImpact` spark is now bloomed at the CONTACT
+  surface facing the attacker (not the victim's centre) and tinted by
+  `profile.sparkKind` — white/yellow `hit`, cool-white `block` (+ rebound fan, no
+  blood), **RED** `counter` (max layers), arcane `magic`, icy `ice`, `heavy`
+  (+ring). New `IMPACT_TINTS.counter`/`.ice`; `HitSpark` gained a contact-height
+  `y`. Pre-#133 replays fall back to the legacy blocked/heavy/type read.
+- **FIX #131** (`vfx/VfxSystem.ts`): every spawn site (posFromEvent / play() /
+  the raw-x-z spark spawns) now gates on a finite world position, so a
+  NaN/Infinity coordinate (mid-despawn entity, un-interpolated pose, corrupt
+  event) can never park a pooled additive system off-world — the cause of the
+  persistent bright-white burst clamped to the arena's top-right corner.
+- **Directional camera shake + translational KICK + crisp settle**
+  (`render/CameraRig.ts` + `render/combatFeedback.ts`): `addShake` takes an
+  optional hit vector — a directional impulse now lurches the eye along the
+  ground plane (new `shakeZ`) with a fast front-loaded kick that snaps back
+  within `KICK_DURATION_MS`, layered on the ring; omni (crit/EX) stays radial.
+  Decay is now CUBIC and the duration retuned to 120–260 ms (was 160–460) with a
+  ~12.4 Hz ring for a crisp Capcom settle (收尾精準). `plan.shake` carries
+  `style` + `camKick` for the wave that dispatches it.
+- **EX cinematic punch-in** (`render/CameraRig.ts`): `exPunchIn` transiently
+  dollies the eye toward the target (allowed CLOSER than the user's DOLLY_MIN,
+  floored at EX_PUNCH_MIN_DOLLY) and eases back crisp — the 特寫 half of the EX
+  read (screen darken stays a post-fx concern, out of the rig).
+- **Hitstop micro-jitter** (`render/views/ChampionView.ts` + pure
+  `hitstopShiver` in `render/combatFeedback.ts`): while a body is frozen by
+  hitstop it buzzes with a ~1–2px high-frequency shiver on `bodyRoot` (never the
+  world transform, so knockback still slides), phase-decorrelated per entity, and
+  snapping to zero the instant the freeze lifts (no settle tail). The 破碎 buzz.
+
+Wiring note: the directional-shake `dir`/`camKick` and `exPunchIn` are
+capabilities + `plan.shake` fields; the final one-line dispatch from the GameApp
+event drain (which owns the `damage`→`addShake` call) lights them in-game — the
+crisp-settle retune, contact-point sparks, #131 guard and hitstop shiver are all
+self-wired through existing call paths and live now.
+
+| ID | Item | Test ID | Category | Status |
+|----|------|---------|----------|--------|
+| cj-c15 | Client `ImpactProfile` mirror narrows the 7 cosmetic hints and backfills a pre-#133 payload from tier-derived defaults (never undefined); a bogus sparkKind falls to the safe default | juice-profile-cosmetics | unit | done |
+| cj-c16 | `hitImpact` sparks are DISTINCT per `sparkKind` (hit/heavy/counter=RED/block=cool-white/magic/ice) with the matching layered intensity, bloomed at the contact surface facing the attacker, and fall back to the legacy read with no profile | vfx-spark-kind | unit | done |
+| cj-c17 | FIX #131: a non-finite world position spawns nothing — `play()` refuses it and `hitImpact` with a NaN entity pos fires no spark, so no pooled additive system is ever parked off-world | vfx-spark-nonfinite | unit | done |
+| cj-c18 | Camera shake retuned CRISP: cubic decay dies harder than the old quadratic, duration bounded 120–260 ms; `plan.shake` carries style + a tier-scaled camKick | juice-shake / juice-shake-directional | unit | done |
+| cj-c19 | A DIRECTIONAL shake kicks the eye along the ground-plane hit vector then settles to rest; an omni shake adds no directional ground kick | juice-camera-directional | unit | done |
+| cj-c20 | `exPunchIn` dollies the eye toward the target (closer than the user's DOLLY_MIN, floored) then eases back crisp | juice-camera-expunch | unit | done |
+| cj-c21 | `hitstopShiver`: a sub-1px buzz WHILE frozen, phase-decorrelated per entity, tapering to and snapping to zero at the window end (no settle tail) | juice-hitstop-shiver | unit | done |
+
+## Client stage 3 — the ground-follow juice the playtest flagged (task #147)
+
+A playtest read the live combat scene as still missing five presentation beats.
+Two already existed but under-read; three were absent. All additive, client-only
+presentation — no sim change, quality-scaled + pooled. Owned files:
+`render/shadows/**` (NEW), `vfx/VfxSystem.ts`, `vfx/vfxPresets.ts`,
+`vfx/feedbackPresets.ts`, `vfx/CombatFeedbackFx.ts`.
+
+- **Hit-flash sparks — STRENGTHENED** (`vfx/vfxPresets.ts`): the contact-point
+  spark kit (stage 2) already fired per `sparkKind` at the strike surface, but
+  the LIGHT tier — the plain melee auto, the most common hit — read as nearly
+  nothing. `IMPACT_TUNING.light` is retuned to a brighter/bigger white-hot
+  additive flash (peak 1.15u, 3 pulses) + 30 stretched contact sparks, still
+  ≤ 3 frames and still below the heavy tier.
+- **Blood splatter — VERIFIED present** (`vfx/BloodFx.ts`, unchanged): the 濺血
+  directional spray already fires on every non-blocked `hitImpact`, gated by the
+  gore config which DEFAULTS to `blood`@0.85 for a fresh player. Left as-is; the
+  playtest gap here was the missing spark read above, not the blood.
+- **Blob shadows — NEW** (`render/shadows/**`): a self-contained layer draws one
+  soft dark disc under every live body and follows it. It reads NOTHING itself —
+  `VfxSystem.update` walks `frameBus.champions` (the live-body list the render
+  layer already publishes), takes each body's FRESH rendered position via
+  `ctx.entityPos` (champion views are synced earlier in the frame), and hands the
+  layer a plain `{id,x,z,radius}` list. So it never imports/mutates ChampionView.
+  Pooled per entity id (a body that dies/despawns frees its disc for reuse),
+  footprint-scaled (champion vs flower), hard-capped.
+- **Walking dust — NEW** (`vfx/feedbackPresets.ts` + `CombatFeedbackFx.ts` +
+  the same `VfxSystem` ground pass): a small soft puff kicked up behind a moving
+  foot that GROWS + RISES + fades (size climbs, positive gravity, alpha → 0).
+  Stride-gated per entity (a still body never accumulates the stride distance,
+  so it is silent while idle) and paced by a min interval, frame-rate
+  independent; a teleport/respawn jump re-baselines without emitting.
+- **Cast-ground marks — NEW** (`vfx/feedbackPresets.ts` + `VfxSystem` abilityCast):
+  an ability stamps a fading dark scorch decal at its land point (the ground
+  `point` when it targets the floor) or under the caster, via the pooled +
+  hard-capped `GroundDecalPool` (same fade discipline as the blood splats).
+
+| ID | Item | Test ID | Category | Status |
+|----|------|---------|----------|--------|
+| cj-c22 | Blob shadow: one soft disc follows every live body (champion/flower), footprint-scaled and sitting just above the floor; a body that dies/despawns frees its disc (reused, not re-allocated); pool hard-capped; a non-finite position parks nothing; dispose tears every disc down. Positions come from `frameBus` + `ctx.entityPos`, never ChampionView | vfx-shadow | unit | done |
+| cj-c23 | Walking dust is velocity/stride-gated: silent while standing still, fires once the body strides > the stride distance, and a teleport/respawn jump emits nothing; the puff GROWS (size climbs, never pop-shrinks), RISES (positive gravity) and fades to full transparency | vfx-walk-dust | unit | done |
+| cj-c24 | An ability cast stamps a fading dark ground scorch at its land `point`, falling back to the caster position when it targets no ground point; pooled + hard-capped (a mesh, not a particle system, so the abilityCast particle-count contract is unchanged) | vfx-cast-decal | unit | done |
+| cj-c25 | The LIGHT impact tier reads as a real hit — a bright, big-enough (peak ≥ 1.0u) additive flash + ≥ 30 stretched contact sparks — while staying ≤ 3 frames, under the overdraw ceiling, and BELOW the heavy tier (which keeps its ground ring) | vfx-spark-read | unit | done |
+
 ## Sim half — what landed
 
 Deterministic, tick-based, balance-neutral (no damage number or cooldown changed;
@@ -215,3 +318,40 @@ additive, deterministic (integer/branch only — purity gate green), balance-neu
 | cj-s29 | Hitstun release: the victim swings again once the action-lock ends | cj-hitstun-release | unit | done |
 | cj-s30 | Hitstun pauses an in-progress cast without interrupting or refunding it | cj-hitstun-gate-cast | unit | done |
 | cj-s31 | A real medium hit locks the victim LONGER than the attacker (frame advantage) | cj-hitstun-frameadv | unit | done |
+
+## Parameterized hit-feel — per-champion / per-ability overrides (task #133)
+
+Builds on the unified ImpactProfile: every field now has a DAMAGE-DERIVED
+DEFAULT (scaled by tier/impact), and a champion basic-attack or an ability may
+ship an OPTIONAL, all-optional `hitFeel` block that overrides individual fields;
+unset → default. Deterministic (content is a fixed input — no rng/wall-clock).
+Additive & balance-neutral (no damage number / cooldown changes).
+
+- **Expanded `ImpactProfile`** (`sim/combat/damage.ts`): keeps the gameplay
+  fields (tier/hitstopTicks/hitstunTicks/knockbackDir/knockbackMag/isEX/isBlock/
+  isCounter?) and ADDS cosmetic hints the client channels consume, each with a
+  tier/impact-derived default: `shakeMag`, `shakeStyle` ("directional"|"omni"),
+  `sparkKind` ("hit"|"heavy"|"counter"|"block"|"magic"|"ice"), `flashColor`
+  ([r,g,b]), `flashMs`, `camKick`, `exFreeze`.
+- **Default curve** (`sim/combat/hitFeel.ts`): shake/flashMs/camKick step up per
+  tier (light<medium<heavy<crit); sparkKind + flashColor derive from damage
+  type / block / EX (block→cool-white flash + "block" spark; magic→"magic";
+  heavy/crit→"heavy"); EX bumps shake, floors camKick, arms an `exFreeze`.
+- **Optional content `hitFeel`** (`content/schema/ability.ts` `zHitFeel`, added to
+  ability + champion basic-attack): all fields optional, bounds match the sim
+  override caps. Mirrors `HitFeelInput` in `sim/combat/hitFeel.ts`.
+- **Merge in `applyImpact`**: the firing source's hitFeel (looked up from the
+  damage `origin` — "basic"→champion, "ability:<id>"→ability) overrides the
+  GAMEPLAY defaults (hitstop/hitstun/knockbackMag, clamped) and the cosmetic
+  hints, then the merged profile rides on `hitImpact`. Hitstun override can never
+  drop below the shared hitstop (frame-advantage invariant preserved).
+
+| ID | Item | Test ID | Category | Status |
+|----|------|---------|----------|--------|
+| cj-s32 | Default cosmetic curve scales shake / flashMs / camKick with the damage tier | cj-hf-default-scales | unit | done |
+| cj-s33 | Default spark identity + flash colour derive from damage type / block / EX | cj-hf-default-derive | unit | done |
+| cj-s34 | `mergeCosmetics` overrides only the provided fields, else identity | cj-hf-merge | unit | done |
+| cj-s35 | An ability with explicit `hitFeel` overrides the damage-derived default (hitstop/shake/spark/…) | cj-hf-ability-override | unit | done |
+| cj-s36 | A champion basic-attack `hitFeel` overrides the default on origin "basic" | cj-hf-basic-override | unit | done |
+| cj-s37 | Without `hitFeel` the profile falls back to the damage-derived default | cj-hf-default-fallback | unit | done |
+| cj-s38 | Same seed + inputs replay a byte-identical profile (determinism) | cj-hf-determinism | unit | done |

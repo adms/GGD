@@ -4,7 +4,7 @@
  * DISCRETE store transitions into BGM scene changes and one-shot SFX:
  *
  *   platform screen (auth/lobby/room)  → menu / lobby / room beds
- *   auth screen, every 85.333 s        → rotate menu ⇄ menuNocturne
+ *   ranked-ladder panel, while shown   → menuNocturne (a mounted-screen override)
  *   match phase                        → champSelect/intermission/combat/
  *                                        fireRing/settlement/victory/defeat
  *   → combat                           → battleStart sting + combat bed under it
@@ -37,7 +37,7 @@ import {
   type CountdownState,
   type TallySnapshot,
 } from "../audio";
-import { useAudioBoot, useAudioScene, useLoginTheme } from "./useAudio";
+import { useAudioBoot, useAudioScene, useBgmOverride, useLoginTheme } from "./useAudio";
 
 export function AudioDirector(): null {
   useAudioBoot();
@@ -90,17 +90,22 @@ export function AudioDirector(): null {
   // platform screen does. sceneForPlatform returns null while screen==="match",
   // so the two sources never overlap.
   const platformScene = screen === "match" ? null : sceneForPlatform({ screen, inRoom });
-  // The login screen has TWO themes and alternates them every whole loop (#88).
-  // sceneForPlatform still owns "which screen is this" and answers "menu" for
-  // auth; the rotation only chooses WHICH login bed that means, so the screen
-  // mapping stays a pure function of discrete state and the clock lives here.
+  // Login is a SINGLE theme now (task #134 moved the nocturne to the ladder), so
+  // sceneForPlatform's "menu" is the whole answer; the rotation is kept as a
+  // trivial holder of `menu` (see audio/loginRotation) and still owns its clock.
   const loginTheme = useLoginTheme(platformScene === "menu");
-  const scene =
+  const derivedScene =
     screen === "match"
       ? sceneForMatch({ phase, phaseSecondsLeft, placement })
       : platformScene === "menu"
         ? loginTheme
         : platformScene;
+  // A mounted screen (the ranked ladder → menuNocturne) can request a bespoke
+  // bed; it wins over the derived scene while it is up and releases on unmount,
+  // at which point derivedScene takes back over. The ladder only ever mounts in
+  // the lobby, so this never collides with a match scene. (task #134)
+  const override = useBgmOverride();
+  const scene = override ?? derivedScene;
   useAudioScene(scene);
 
   // matchStart greeting on the shell → match entry (fires once per match).

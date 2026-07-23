@@ -77,3 +77,12 @@ export {
   type FlowerConfigLike,
 } from "./flowers";
 export { flowerSystem } from "./systems/FlowerSystem";
+export {
+  fireRingRulesFromConfig,
+  fireRingRatePerSec,
+  beginCombatFireRing,
+  endCombatFireRing,
+  type FireRingRules,
+  type FireRingConfigLike,
+} from "./fireRing";
+export { fireRingSystem } from "./systems/FireRingSystem";

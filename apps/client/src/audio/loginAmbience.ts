@@ -1,6 +1,17 @@
 /**
- * audio/loginAmbience — PURE rule for what the login rotation's SERENE theme
- * does to the login scene's dragons (task #88, the dragon clash).
+ * audio/loginAmbience — PURE rule for what a SERENE login bed would do to the
+ * login scene's dragons (task #88, the dragon clash).
+ *
+ * ⚠ DORMANT SINCE TASK #134. This rule only ever fired when the serene nocturne
+ * was one of the LOGIN rotation's beds. Task #134 moved `menuNocturne` off the
+ * login screen (it is the ranked-ladder bed now), so the login bed is always the
+ * epic `menu`, `isCalmLoginTheme` never matches a live login scene, and
+ * `stepCalmRoar` passes every login roar through untouched. The rule is left
+ * INTACT rather than deleted: it is still correct (a pure function of the scene
+ * it is handed), still wired at the one funnel in AuthScreen, and would light
+ * back up verbatim the day a serene bed returns to `CALM_LOGIN_THEMES`. Nothing
+ * below runs in production today; the tests exercise it by naming the scene
+ * directly. Everything after this banner is the ORIGINAL task #88 rationale.
  *
  * THE PROBLEM, MEASURED. The auth screen alternates an epic theme with a
  * nocturne (./loginRotation) while two dragons circle the vista and cry on
@@ -66,8 +77,11 @@
 import type { AudioScene } from "./types";
 
 /**
- * Login themes that ask the scene to hush. A third serene theme would only be
- * added here — the rule itself never names a track.
+ * Login beds that ask the scene to hush. EMPTY IN PRACTICE since task #134: the
+ * nocturne left the login rotation, so no login bed is calm any more and
+ * `isCalmLoginTheme` never matches a live login scene. Kept naming `menuNocturne`
+ * so the rule (and its tests) still describe what a serene login bed WOULD do —
+ * a re-added serene login theme is a one-line entry here, nothing else changes.
  */
 export const CALM_LOGIN_THEMES: readonly AudioScene[] = ["menuNocturne"];
 
@@ -148,10 +162,11 @@ export function stepCalmRoar(
     return { decision: { volume, calmed: false }, next: state };
   }
   if (ev.big) {
-    // A big scripted roar (the enter/return transition) landing on the serene
-    // nocturne — which the rotation now OPENS on (task #88) — must not blast
-    // over the stillness. Duck it to the ceiling, but never DROP it (it is a
-    // scripted beat, not ambient spam) and do not advance the spacing clock.
+    // A big scripted roar (the enter/return transition) landing on a serene bed
+    // must not blast over the stillness. Duck it to the ceiling, but never DROP
+    // it (it is a scripted beat, not ambient spam) and do not advance the
+    // spacing clock. Dormant on login since task #134 (no calm login bed), but
+    // correct for any future serene login theme.
     return {
       decision: { volume: Math.min(volume, CALM_ROAR_CEILING) * CALM_ROAR_DUCK, calmed: true },
       next: state,

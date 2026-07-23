@@ -1,0 +1,262 @@
+/**
+ * 說明數值最終化 — the DESCRIPTION prose must show the post-combat-env FINAL
+ * numbers, not the base WC3 numbers baked into the sentence. The reported bug:
+ * a "15s" cooldown chip sat next to "60秒冷卻時間" prose (cooldown runs at ×0.25),
+ * and a "造成650傷害" line while damage now runs at ×0.5 (real 325).
+ *
+ * These pin the pure seams (node-testable, no DOM/React):
+ *   • rescaleAbilityProse rewrites the LITERALS a combat-env factor scales — the
+ *     cooldown literal by the live `cooldown` factor and the damage literal by the
+ *     live `damageDealt` factor — appending "（WC3原 …）", while leaving every
+ *     OTHER number (heal / shield / mana / duration / stat) byte-for-byte
+ *     untouched (those factors are ×1.0);
+ *   • displayFinal(460,'health') === 3680 (maxHealth ×8) and the damage factor is
+ *     0.5 (so prose damage must be rewritten to its final);
+ *   • real ability docs carry NO role markup, so a role-rescale would be a no-op
+ *     — this pins that fact so nobody re-adds one.
+ * Both factors are read from the SAME combat-env source displayFinal uses; the
+ * live table is loaded straight off content/config/combat-env.json so the test
+ * tracks the shipped config, never hard-coded factors.
+ */
+import { describe, it, expect } from "vitest";
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { cover } from "@ggd/shared/testkit/cover";
+import {
+  normalizeCombatEnv,
+  DEFAULT_COMBAT_ENV,
+  type CombatEnvMultipliers,
+} from "@ggd/shared/sim/combatEnv";
+import {
+  docDescription,
+  parseRoleMarkup,
+  rescaleAbilityProse,
+  WC3_PROSE_CAPTION,
+} from "./abilityText";
+import { displayFinal, envFactor, statDisplayFactor } from "../displayFinal";
+
+const HERE = dirname(fileURLToPath(import.meta.url));
+const CONTENT = join(HERE, "../../../../../content");
+
+/** The shipped live combat-env (cooldown 0.25, damageDealt 0.5, maxHealth 8…). */
+const LIVE_CONFIG = JSON.parse(
+  readFileSync(join(CONTENT, "config/combat-env.json"), "utf8"),
+) as { multipliers: Partial<Record<string, number>> };
+const LIVE: CombatEnvMultipliers = normalizeCombatEnv(
+  LIVE_CONFIG.multipliers as Partial<Record<never, number>>,
+);
+
+/** A minimal quarter-cooldown table (damageDealt defaults to 1.0 → damage no-op). */
+const CD_QUARTER = normalizeCombatEnv({ cooldown: 0.25 });
+/** A minimal half-damage table (cooldown defaults to 1.0 → cooldown no-op). */
+const DMG_HALF = normalizeCombatEnv({ damageDealt: 0.5 });
+
+/** Five REAL abilities whose prose bakes a "NN秒冷卻時間" cooldown literal. */
+const REAL_IDS = ["godie-uvng.e", "godie-h001.w", "godie-hapm.w", "godie-hblm.r", "godie-e00k.e"];
+function loadAbility(id: string): Record<string, unknown> {
+  return JSON.parse(readFileSync(join(CONTENT, "abilities", `${id}.json`), "utf8"));
+}
+
+describe("rescaleAbilityProse cooldown pass (hud-display-final)", () => {
+  it("rewrites the cooldown literal to the final and annotates the WC3 original", () => {
+    cover("hud-display-final");
+    // the exact reported case: 60秒 base, combat runs it at 15s (×0.25)
+    expect(rescaleAbilityProse("60秒冷卻時間", CD_QUARTER)).toBe("15秒冷卻時間（WC3原 60秒）");
+    // and via the shipped live table (also cooldown ×0.25) — same result
+    expect(rescaleAbilityProse("60秒冷卻時間", LIVE)).toBe("15秒冷卻時間（WC3原 60秒）");
+    // rounds to an integer: 35 × 0.25 = 8.75 → 9
+    expect(rescaleAbilityProse("35秒冷卻時間", CD_QUARTER)).toBe("9秒冷卻時間（WC3原 35秒）");
+  });
+
+  it("handles the prefix (冷卻[時間]NN秒) shapes", () => {
+    cover("hud-display-final");
+    // 30 × 0.25 = 7.5 → 8
+    expect(rescaleAbilityProse("冷卻時間30秒", CD_QUARTER)).toBe("冷卻時間8秒（WC3原 30秒）");
+    expect(rescaleAbilityProse("冷卻30秒", CD_QUARTER)).toBe("冷卻8秒（WC3原 30秒）");
+  });
+
+  it("handles decimals and incidental whitespace (map prose carries a space)", () => {
+    cover("hud-display-final");
+    // 1.5 × 0.25 = 0.375 → 0
+    expect(rescaleAbilityProse("1.5秒冷卻", CD_QUARTER)).toBe("0秒冷卻（WC3原 1.5秒）");
+    // the real storm-arrow augment shape "0.5 秒冷卻" (space before 秒). Damage is
+    // ×1.0 under CD_QUARTER, so the "40 法術傷害" number is left alone.
+    expect(rescaleAbilityProse("造成 40 法術傷害（0.5 秒冷卻）。", CD_QUARTER)).toBe(
+      "造成 40 法術傷害（0 秒冷卻（WC3原 0.5秒））。",
+    );
+  });
+
+  it("handles the English shapes and never eats 'N seconds'", () => {
+    cover("hud-display-final");
+    // 3 × 0.25 = 0.75 → 1
+    expect(rescaleAbilityProse("gain a shield (3s cooldown).", CD_QUARTER)).toBe(
+      "gain a shield (1s cooldown（WC3原 3秒）).",
+    );
+    expect(rescaleAbilityProse("cooldown 3s", CD_QUARTER)).toBe("cooldown 1s（WC3原 3秒）");
+    // "3 seconds" must NOT be read as "3 s" — the negative lookahead guards it
+    expect(rescaleAbilityProse("cooldown 3 seconds", CD_QUARTER)).toBe("cooldown 3 seconds");
+  });
+});
+
+describe("rescaleAbilityProse damage pass (hud-display-final)", () => {
+  it("rewrites the damage literal by the damageDealt factor and annotates it", () => {
+    cover("hud-display-final");
+    // the reported case: 650 base, combat runs it at 325 (×0.5)
+    expect(rescaleAbilityProse("造成650傷害", DMG_HALF)).toBe("造成325傷害（WC3原 650）");
+    // and via the shipped live table (also damageDealt ×0.5) — same result
+    expect(rescaleAbilityProse("造成650傷害", LIVE)).toBe("造成325傷害（WC3原 650）");
+    // 造成 NNN 點傷害 (the 賈修 ultimate shape): 550 × 0.5 = 275
+    expect(rescaleAbilityProse("造成550點傷害", DMG_HALF)).toBe("造成275點傷害（WC3原 550）");
+    // NNN[ ]點傷害 with no 造成 prefix
+    expect(rescaleAbilityProse("200點傷害", DMG_HALF)).toBe("100點傷害（WC3原 200）");
+    expect(rescaleAbilityProse("200 點傷害", DMG_HALF)).toBe("100 點傷害（WC3原 200）");
+    // English "deal NNN damage" and bare "NNN damage" (case-insensitive)
+    expect(rescaleAbilityProse("deal 650 damage", DMG_HALF)).toBe("deal 325 damage（WC3原 650）");
+    expect(rescaleAbilityProse("650 damage", DMG_HALF)).toBe("325 damage（WC3原 650）");
+  });
+
+  it("leaves heal / shield / mana / duration and formula damage untouched", () => {
+    cover("hud-display-final");
+    // heal 生命 is ×1.0 — must stay byte-for-byte identical under damage ×0.5
+    expect(rescaleAbilityProse("恢復650生命", DMG_HALF)).toBe("恢復650生命");
+    // shield / mana / duration numbers are not damage — untouched
+    expect(rescaleAbilityProse("獲得300護盾", DMG_HALF)).toBe("獲得300護盾");
+    expect(rescaleAbilityProse("消耗80魔力", DMG_HALF)).toBe("消耗80魔力");
+    expect(rescaleAbilityProse("暈眩1.5秒", DMG_HALF)).toBe("暈眩1.5秒");
+    // formula damage (multiplier expression) has no bare number against 傷害 — skip
+    expect(rescaleAbilityProse("受到力量*3額外傷害", DMG_HALF)).toBe("受到力量*3額外傷害");
+    expect(rescaleAbilityProse("給予(40+敏捷*1)傷害", DMG_HALF)).toBe("給予(40+敏捷*1)傷害");
+    // 損害 (a synonym) is intentionally out of the matched phrasing set
+    expect(rescaleAbilityProse("給予200點損害", DMG_HALF)).toBe("給予200點損害");
+  });
+
+  it("is a no-op when damageDealt is 1.0 (prose damage already matches)", () => {
+    cover("hud-display-final");
+    // CD_QUARTER carries damageDealt 1.0 → the damage number is left as-is
+    expect(rescaleAbilityProse("造成650傷害", CD_QUARTER)).toBe("造成650傷害");
+    expect(rescaleAbilityProse("造成550點傷害", CD_QUARTER)).toBe("造成550點傷害");
+    // and the fully-neutral table changes nothing at all
+    expect(rescaleAbilityProse("造成650傷害", DEFAULT_COMBAT_ENV)).toBe("造成650傷害");
+  });
+});
+
+describe("rescaleAbilityProse cooldown + damage together (hud-display-final)", () => {
+  it("rewrites BOTH literals in one pass, each by its own factor", () => {
+    cover("hud-display-final");
+    // LIVE: cooldown ×0.25 AND damage ×0.5 — disjoint keyword anchors, so the
+    // cooldown number is never re-read as damage or vice-versa.
+    expect(rescaleAbilityProse("60秒冷卻時間\n造成650傷害", LIVE)).toBe(
+      "15秒冷卻時間（WC3原 60秒）\n造成325傷害（WC3原 650）",
+    );
+  });
+
+  it("is a no-op under a neutral table and idempotent under repeat calls", () => {
+    cover("hud-display-final");
+    // neutral factors → base already equals final; no rewrite / no noise
+    expect(rescaleAbilityProse("60秒冷卻時間\n造成650傷害", DEFAULT_COMBAT_ENV)).toBe(
+      "60秒冷卻時間\n造成650傷害",
+    );
+    // idempotent: a second pass never double-annotates either literal
+    const once = rescaleAbilityProse("60秒冷卻時間\n造成650傷害", LIVE);
+    expect(rescaleAbilityProse(once, LIVE)).toBe(once);
+  });
+
+  it("rewrites cooldown AND flat damage over ≥5 real ability descriptions", () => {
+    cover("hud-display-final");
+    // Re-derive the expectation from the live desc + the live factors (never a
+    // hard-coded number), so the assertion tracks BOTH the shipped config and the
+    // real text. Mirrors the helper for exactly the shapes these 5 descriptions
+    // carry: one "NN秒冷卻時間" cooldown literal and "造成 NNN [點]傷害" flat damage.
+    const cd = envFactor("cooldown", LIVE); // 0.25
+    const dmg = envFactor("damageDealt", LIVE); // 0.5
+    const expectedFor = (desc: string): string => {
+      let e = desc.replace(
+        /(\d+)秒冷卻時間/,
+        (_m, n: string) => `${Math.round(Number(n) * cd)}秒冷卻時間（WC3原 ${n}秒）`,
+      );
+      e = e.replace(
+        /(造成\s*)(\d+)(\s*(?:點\s*)?傷害)/g,
+        (_m, p: string, n: string, s: string) =>
+          `${p}${Math.round(Number(n) * dmg)}${s}（WC3原 ${n}）`,
+      );
+      return e;
+    };
+
+    let checked = 0;
+    let damageRewrites = 0;
+    for (const id of REAL_IDS) {
+      const desc = docDescription(loadAbility(id));
+      expect(desc, `${id} has a description`).toBeDefined();
+      expect(desc!.match(/(\d+)秒冷卻時間/), `${id} carries a NN秒冷卻時間 literal`).not.toBeNull();
+
+      const out = rescaleAbilityProse(desc!, LIVE);
+      expect(out, `${id} rescales cooldown + flat damage to their finals`).toBe(expectedFor(desc!));
+      expect(out).toContain("（WC3原 ");
+      // idempotent over the real text too
+      expect(rescaleAbilityProse(out, LIVE), `${id} is idempotent`).toBe(out);
+      if (/造成\s*\d+\s*(?:點\s*)?傷害/.test(desc!)) damageRewrites += 1;
+      checked += 1;
+    }
+    expect(checked).toBeGreaterThanOrEqual(5);
+    // uvng (650), hapm (350) and hblm (550) all carry a flat 造成…傷害 literal
+    expect(damageRewrites).toBeGreaterThanOrEqual(3);
+  });
+
+  it("leaves the 損害 / formula damage in real descriptions untouched", () => {
+    cover("hud-display-final");
+    // godie-h001.w uses 損害 (synonym, out of scope) and godie-e00k.e uses formula
+    // damage — both must survive verbatim even as their cooldown is rescaled.
+    const h001 = rescaleAbilityProse(docDescription(loadAbility("godie-h001.w"))!, LIVE);
+    expect(h001).toContain("200點損害");
+    const e00k = rescaleAbilityProse(docDescription(loadAbility("godie-e00k.e"))!, LIVE);
+    expect(e00k).toContain("(40+敏捷*1)傷害");
+    expect(e00k).toContain("力量*0.5傷害");
+    // hblm's flat 550 is rescaled, but its formula 額外傷害 term is preserved
+    const hblm = rescaleAbilityProse(docDescription(loadAbility("godie-hblm.r"))!, LIVE);
+    expect(hblm).toContain("造成275點傷害（WC3原 550）");
+    expect(hblm).toContain("力量*3額外傷害");
+  });
+
+  it("exposes a dim WC3 caption for the residual-literal disclaimer", () => {
+    cover("hud-display-final");
+    expect(WC3_PROSE_CAPTION).toContain("WC3");
+    expect(WC3_PROSE_CAPTION.length).toBeGreaterThan(0);
+  });
+});
+
+describe("displayFinal HP final + damage factor (hud-display-final)", () => {
+  it("champion maxHealth shows the ×8 battle value — 460 → 3680", () => {
+    cover("hud-display-final");
+    // the user named HP: base 460 fights at 3680 under maxHealth ×8
+    expect(displayFinal(460, "health", LIVE)).toBe(3680);
+    // the champ stat-doc key resolves to the maxHealth factor (NOT ability range)
+    expect(statDisplayFactor("maxHealth")).toBe("maxHealth");
+    expect(displayFinal(460, statDisplayFactor("maxHealth"), LIVE)).toBe(3680);
+  });
+
+  it("the shipped live table scales damage ×0.5 (prose damage must be rewritten)", () => {
+    cover("hud-display-final");
+    expect(LIVE_CONFIG.multipliers.damageDealt).toBe(0.5);
+    expect(LIVE_CONFIG.multipliers.cooldown).toBe(0.25);
+    expect(LIVE_CONFIG.multipliers.maxHealth).toBe(8.0);
+    // so the display factor for damage is a real ×0.5 (650 → 325)
+    expect(envFactor("damage", LIVE)).toBe(0.5);
+    expect(displayFinal(650, "damage", LIVE)).toBe(325);
+    // champ ATTACK range must NOT ride the ability-range ×0.6 alias
+    expect(statDisplayFactor("range")).toBe("attackRange");
+    expect(displayFinal(6, statDisplayFactor("range"), LIVE)).toBe(6);
+  });
+});
+
+describe("real ability descriptions carry no role markup (hud-desc-role-colour)", () => {
+  it("parseRoleMarkup(docDescription(real)) is a single plain segment", () => {
+    cover("hud-desc-role-colour");
+    // pins the no-markup fact: a role-rescale would be a no-op, so none is added.
+    for (const id of REAL_IDS) {
+      const desc = docDescription(loadAbility(id));
+      expect(desc, `${id} has a description`).toBeDefined();
+      expect(parseRoleMarkup(desc!).length, `${id} has no [c=role] markup`).toBe(1);
+    }
+  });
+});

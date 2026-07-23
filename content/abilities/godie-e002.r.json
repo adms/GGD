@@ -6,7 +6,7 @@
   "castType": "ground",
   "maxRank": 3,
   "cooldown": [
-    12.0,
+    60.0,
     60.0,
     60.0
   ],
@@ -19,7 +19,7 @@
   "effects": [
     {
       "kind": "damage",
-      "damageType": "magic",
+      "damageType": "physical",
       "amount": {
         "perRank": [
           250.0,
@@ -28,14 +28,14 @@
         ],
         "ratios": [
           {
-            "stat": "ap",
-            "coeff": 1.0
+            "stat": "ad",
+            "coeff": 0.6
           }
         ]
       }
     }
   ],
-  "vfxKey": "fx.ember-bolt-cast",
+  "vfxKey": "fx.prim.holy.nova-lg",
   "targetsEnemies": true,
   "radius": 3.67,
   "schema": "ability@1"

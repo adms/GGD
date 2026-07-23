@@ -69,6 +69,8 @@ audio touches the per-frame path.
 | au-27 | Pressing Ready silences the four nagging ticks and keeps ONLY the final "brace" cue; a suppressed second is consumed, not queued; champ select is not commitable | audio-countdown-committed | unit | done |
 | au-28 | Looping bed re-entering a scene resumes in phase (source starts at elapsed mod duration) so the extended B-section plays across rounds instead of restarting bar 0; one-shot stings + first visits start at 0; authored silence still advances the scene clock | audio-bgm-loop-resume | unit | done |
 | au-29 | Test-mode force-silence gate (VITE_GGD_SILENT / window.__GGD_SILENT__ / ?silent), read once at construction: AudioContext never created (contextState null, playSfx/playBgm/playClip/playSting no-op) and nameVoice's out-of-graph HTMLAudioElement never created; unset = unchanged | audio-test-silence | unit | done |
+| au-30 | Hit-feel P1 weight tiers: hit-light/medium/heavy/crit + block-hit bound to distinct single, throttled clips (own fx/*.wav); the ringing lab block samples are no longer any clip's block voice | audio-map-hit-tiers | unit | done |
+| au-31 | SFX load PER SCENE (task #63): boot fetches ZERO sfx (down from the whole ~80-clip / ~2.5 MB set); a small always-on UI core warms on unlock; each BGM scene warms only its own subset on entry (`sfxManifest` → `preloadSceneSfx`); preload never creates the AudioContext before the gesture and never gates — an unlisted / not-yet-warmed cue still lazy-loads on first `playSfx`. Manifest events all resolve in the shipped audio-map | audio-sfx-scene-preload | integration | done |
 
 The seven **system/announcer broadcast** events (`matchStart`, `roundStart`,
 `levelUp`, `death`, `multiKill`, `allySlain`, `exUnlock`) are bound here but are
@@ -171,4 +173,5 @@ the code half of task #20 (alongside the ride-dragon enter transition). The
 assets, map bindings, and event names are in place; those are one-line
 `playSfx(...)` calls once the menu gets an unlocked audio seam. Login-screen
 audio must respect the same first-gesture `AudioContext` unlock as the rest of
-the mixer (buffers can prefetch; nothing sounds before a user gesture).
+the mixer (buffers warm per scene from the unlock onward — see au-31; nothing
+sounds before a user gesture).

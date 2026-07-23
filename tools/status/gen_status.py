@@ -151,6 +151,11 @@ TASKS = [
     (125,"ui",      "pending","所有顯示數值=倍率計算後最終值(冷卻已設 25%)"),
     (126,"infra",  "pending","私人發佈閘：註冊→pending→管理員核准才能玩 + 上線硬化"),
     (127,"infra",  "pending","環境分級閘：版權物/單機只在 localhost/LAN 開放"),
+    # ── 2026-07-23 整合波（#128-#171 補列仍是既有的 live-page sync 缺口）──────
+    (85, "models", "done",   "死亡觀戰整個畫面去飽和，只有自己的隊友保持有顏色（復活圈色池已收到剪影尺度）"),
+    (93, "models", "flight", "勝利演出：回合=灰底+小煙火+英雄嘲諷 / 決賽=暗底+巨大烤雞煙火+嗆聲 VO"),
+    (143,"models", "flight", "回合勝利：贏家 3D 模型置中 + 語音（與 #93 灰底同一拍）"),
+    (173,"combat", "done",   "回合 MVP 輪空殘留：TeamState.roundOutcome 參戰訊號 + 優先勝方的選擇器"),
 ]
 
 DOMAINS = [
@@ -164,7 +169,10 @@ DOMAINS = [
 MARK = {"done": "✅", "flight": "🔄", "stalled": "⏸", "designed": "📐", "pending": "⬜", "blocked": "⛔"}
 LABEL = {"done": "已完成", "flight": "進行中", "stalled": "做中·待續跑(花費上限中斷)",
          "designed": "已設計未實作", "pending": "待辦", "blocked": "受阻"}
-ORDER = ["stalled", "blocked", "designed", "pending", "done"]
+# NOTE: "flight" was in MARK/LABEL but missing here, so the first in-progress
+# row ever added would crash the generator with a ValueError. Every key of MARK
+# must appear in ORDER.
+ORDER = ["stalled", "flight", "blocked", "designed", "pending", "done"]
 
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 OUT = os.path.join(REPO, "docs", "requirements-status.md")

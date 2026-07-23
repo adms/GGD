@@ -34,6 +34,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { GOLD, PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
 import { HUD_Z } from "../hud/hudLayout";
+import { topRightReserve } from "../chromeReserve";
 import { Tooltip } from "../components/Tooltip";
 import { Btn } from "../platform/widgets";
 import { CodexIcon } from "./CodexIcon";
@@ -711,10 +712,13 @@ function Header({
         alignItems: "center",
         gap: 12,
         flexWrap: "wrap",
-        // the global audio cluster + settings corner are portaled to <body> at
-        // a z-index above everything (ui/AudioToggle, ui/SettingsCorner); keep
-        // the codex's own controls clear of that top-right block.
-        padding: "10px 220px 10px 16px",
+        // The global audio cluster is portaled to <body> above everything
+        // (ui/AudioToggle). This used to be a hard-coded `220px` right pad —
+        // the exact constant task #107 exists to delete: it is wrong the
+        // moment the cluster gains or loses a control. Reserve the gutter the
+        // cluster MEASURES and publishes instead (ui/chromeReserve).
+        padding: "10px 16px",
+        paddingRight: topRightReserve({ min: 16 }),
         borderBottom: PANEL_BORDER,
         background: PANEL_BG,
       }}

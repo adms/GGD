@@ -151,6 +151,11 @@ is worse than the oversized model it replaced.
 > Verified end to end: `knight.glb` 6952 → 4033 tris with 41 joints / 76 clips /
 > 8712 channels unchanged, loading cleanly through the repo's own
 > `tools/w3x-import/validate_glb.mts` Babylon loader.
+>
+> Those clip/channel figures are PRE-TRIM. `trimClips.ts` has since cut
+> `knight.glb` to 16 clips / 1,873 channels; the decimation result above is
+> unaffected (it is a triangle-count claim), but do not quote 76/8712 as the
+> file's current shape.
 
 ### What the current tree looks like through this tool
 

@@ -27,11 +27,11 @@ function fakeStorage(seed: Record<string, string> = {}): {
 }
 
 describe("audio settings persistence (audio-volume-persistence)", () => {
-  it("defaults are master .8 / bgm .5 / sfx .9, unmuted", () => {
+  it("defaults are master .8 / bgm .4 / sfx .9, unmuted", () => {
     cover("audio-volume-persistence");
     expect(DEFAULT_AUDIO_VOLUMES).toEqual({
       master: 0.8,
-      bgm: 0.5,
+      bgm: 0.4,
       sfx: 0.9,
       muted: false,
       bgmMuted: false,

@@ -25,6 +25,23 @@ COPY apps/editor/ apps/editor/
 COPY apps/admin/ apps/admin/
 RUN pnpm --filter "@ggd/client" build && pnpm --filter "@ggd/editor" build && pnpm --filter "@ggd/admin" build
 
+# ---- precompress the SPA bundles -------------------------------------------
+# nginx serves these with `gzip_static on` (and `brotli_static on` in the
+# brotli image, docker/edge-brotli.Dockerfile), so a request costs ZERO
+# compression CPU and gets a better ratio than the runtime gzip_comp_level 5:
+# the client entry chunk goes 2,653,924 B raw → 745,023 at runtime gzip -5 →
+# 735,649 at gzip -9 → 585,768 at brotli -11. The .br sidecars are emitted
+# unconditionally; without the module they are simply never read, which is what
+# makes switching to the brotli image a one-step change.
+#
+# NOT DONE HERE: /srv/content. Game content is a read-only runtime mount, never
+# baked into this image, so its sidecars must be produced by whatever pipeline
+# publishes content/ — run nginx/precompress.sh there.
+COPY nginx/precompress.sh nginx/
+RUN apk add --no-cache brotli \
+    && sh nginx/precompress.sh \
+        /repo/apps/client/dist /repo/apps/editor/dist /repo/apps/admin/dist
+
 # Unprivileged nginx: uid 101, listens 8080, pid/temp under /tmp.
 FROM nginxinc/nginx-unprivileged:alpine
 # Our full config replaces the stock one (source of truth: nginx/nginx.conf).

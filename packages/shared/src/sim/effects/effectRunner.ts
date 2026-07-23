@@ -13,6 +13,7 @@ import { healTarget, restoreMana } from "../combat/restore";
 import { recordCc } from "../stats/matchStats";
 import { startDash } from "../systems/MovementSystem";
 import { Projectiles } from "../content/registry";
+import { resolveAbilityRange } from "../abilities/abilitySystem";
 import { normalize, sub } from "../math/vec2";
 
 export function runEffects(effects: readonly EffectDef[], ctx: EffectContext): void {
@@ -180,7 +181,13 @@ function applyEffect(e: EffectDef, ctx: EffectContext): void {
         ownerId: ctx.caster,
         dir,
         speed: def.speed,
-        remainingRange: def.maxRange,
+        // combat-env `abilityRange` (task #136) scales an ability skillshot's
+        // TRAVEL range through the SAME seam as its cast range / AoE radius /
+        // hit radius (resolveAbilityRange), so the distance the missile flies
+        // matches the ×abilityRange number the client tooltip shows — displayed
+        // == actual. Basic-attack missiles are spawned in BasicAttackSystem and
+        // never pass through here, so their reach (attackRange) is untouched.
+        remainingRange: resolveAbilityRange(world, def.maxRange),
         hitRadius: def.hitRadius,
         pierce: def.pierce ?? false,
         hitSet: new Set(),

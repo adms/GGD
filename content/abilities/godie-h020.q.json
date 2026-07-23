@@ -32,7 +32,7 @@
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 0.96
+            "coeff": 0.6
           }
         ]
       }
@@ -44,7 +44,7 @@
       "stun": true
     }
   ],
-  "vfxKey": "fx.firestorm",
+  "vfxKey": "fx.prim.fire.explosion",
   "targetsEnemies": true,
   "schema": "ability@1"
 }

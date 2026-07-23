@@ -21,7 +21,23 @@ import {
   shakeDecayEnvelope,
   heavyPostFxEnabled,
   cameraShakeScaleFor,
+  hitstopShiver,
+  HITSTOP_SHIVER_AMP,
+  HITSTOP_SHIVER_TAPER_MS,
+  hasImpactProfile,
+  batchCarriesImpactProfile,
+  planCameraReaction,
+  shakeCrowdingScale,
+  SHAKE_MAX_PER_FRAME,
+  KICK_MAX_MAG,
+  EX_PUNCH_MIN_INTERVAL_MS,
+  type CameraReactionCtx,
 } from "./combatFeedback";
+
+/** Client mirror of the sim's per-tier cosmetic defaults (test helper). */
+const SHAKE_BY_TIER: Record<ImpactTier, number> = { light: 0.35, medium: 0.6, heavy: 0.85, crit: 1.0 };
+const CAMKICK_BY_TIER: Record<ImpactTier, number> = { light: 0.15, medium: 0.3, heavy: 0.5, crit: 0.65 };
+const FLASHMS_BY_TIER: Record<ImpactTier, number> = { light: 90, medium: 120, heavy: 160, crit: 200 };
 
 /** A minimal well-formed profile for a given tier + hitstop (test helper). */
 const profileOf = (tier: ImpactTier, hitstopTicks: number, over: Partial<ImpactProfile> = {}): ImpactProfile => ({
@@ -32,6 +48,13 @@ const profileOf = (tier: ImpactTier, hitstopTicks: number, over: Partial<ImpactP
   knockbackMag: 0,
   isEX: false,
   isBlock: false,
+  shakeMag: SHAKE_BY_TIER[tier],
+  shakeStyle: tier === "crit" ? "omni" : "directional",
+  sparkKind: tier === "heavy" || tier === "crit" ? "heavy" : "hit",
+  flashColor: [1, 0.25, 0.2],
+  flashMs: FLASHMS_BY_TIER[tier],
+  camKick: CAMKICK_BY_TIER[tier],
+  exFreeze: 0,
   ...over,
 });
 
@@ -76,12 +99,20 @@ describe("shake impulse decay math (juice-shake)", () => {
     expect(impactShakeAmp({ amount: 0, taken: true })).toBe(0);
   });
 
-  it("shakeDurationMs grows with amplitude and stays bounded", () => {
+  it("shakeDurationMs grows with amplitude and stays CRISP-bounded (收尾精準)", () => {
     cover("juice-shake");
-    expect(shakeDurationMs(0)).toBeCloseTo(160, 0);
-    expect(shakeDurationMs(SHAKE_MAX_AMP)).toBeCloseTo(460, 0);
-    expect(shakeDurationMs(2)).toBeLessThanOrEqual(460); // clamps beyond max amp
+    // retuned crisp: a heavy hit rings ≤260ms (was 460), a light ~120ms
+    expect(shakeDurationMs(0)).toBeCloseTo(120, 0);
+    expect(shakeDurationMs(SHAKE_MAX_AMP)).toBeCloseTo(260, 0);
+    expect(shakeDurationMs(2)).toBeLessThanOrEqual(260); // clamps beyond max amp
     expect(shakeDurationMs(SHAKE_MAX_AMP / 2)).toBeGreaterThan(shakeDurationMs(0));
+  });
+
+  it("cubic decay dies HARDER than the old quadratic tail (crisp settle)", () => {
+    cover("juice-shake");
+    // at 70% of the window the cubic tail is ~2.7%, well under the old ~9%
+    expect(shakeDecayEnvelope(210, 300)).toBeCloseTo(0.3 ** 3, 6);
+    expect(shakeDecayEnvelope(210, 300)).toBeLessThan(0.3 ** 2); // strictly harder than quadratic
   });
 });
 
@@ -111,6 +142,89 @@ describe("impact profile narrowing (juice-profile)", () => {
     // a missing knockbackDir defaults to {0,0} rather than throwing
     const q = asImpactProfile({ tier: "light", hitstopTicks: 2 })!;
     expect(q.knockbackDir).toEqual({ x: 0, z: 0 });
+  });
+
+  it("narrows the 7 cosmetic hints, and backfills a pre-#133 payload from the tier", () => {
+    cover("juice-profile-cosmetics");
+    // present → carried verbatim (the client mirror consumes them for spark/camera)
+    const full = asImpactProfile({
+      tier: "crit",
+      hitstopTicks: 8,
+      shakeMag: 1.3,
+      shakeStyle: "omni",
+      sparkKind: "counter",
+      flashColor: [1, 0.2, 0.15],
+      flashMs: 200,
+      camKick: 0.7,
+      exFreeze: 8,
+      isEX: true,
+    })!;
+    expect(full.shakeMag).toBe(1.3);
+    expect(full.shakeStyle).toBe("omni");
+    expect(full.sparkKind).toBe("counter");
+    expect(full.flashColor).toEqual([1, 0.2, 0.15]);
+    expect(full.camKick).toBe(0.7);
+    expect(full.exFreeze).toBe(8);
+
+    // ABSENT (old replay) → tier-derived defaults, never undefined
+    const old = asImpactProfile({ tier: "heavy", hitstopTicks: 5 })!;
+    expect(old.shakeMag).toBe(0.85); // heavy default
+    expect(old.shakeStyle).toBe("directional");
+    expect(old.sparkKind).toBe("hit");
+    expect(old.flashMs).toBe(160);
+    expect(old.camKick).toBe(0.5);
+    expect(old.exFreeze).toBe(0);
+    // a bogus sparkKind is rejected to the safe default, not passed through
+    expect(asImpactProfile({ tier: "light", hitstopTicks: 2, sparkKind: "sword" })!.sparkKind).toBe("hit");
+    // EX with no explicit fields defaults to omni + a cosmetic freeze
+    const ex = asImpactProfile({ tier: "medium", hitstopTicks: 3, isEX: true })!;
+    expect(ex.shakeStyle).toBe("omni");
+    expect(ex.exFreeze).toBeGreaterThan(0);
+  });
+});
+
+describe("shake request carries the directional-kick cosmetics (juice-shake-directional)", () => {
+  it("plan.shake exposes amp (from shakeMag), style, kb dir + a tier-scaled camKick", () => {
+    cover("juice-shake-directional");
+    const heavy = planImpactFeedback(
+      profileOf("heavy", 5, { shakeMag: 0.85, shakeStyle: "directional", camKick: 0.5, knockbackDir: { x: 0, z: -1 } }),
+      { tickMs: 33.3 },
+    );
+    expect(heavy.shake.style).toBe("directional");
+    expect(heavy.shake.camKick).toBeCloseTo(0.5, 6);
+    expect(heavy.shake.dir).toEqual({ x: 0, z: -1 });
+    // amp follows shakeMag (× the world-unit cap), clamped
+    expect(heavy.shake.amp).toBeGreaterThan(0);
+    expect(heavy.shake.amp).toBeLessThanOrEqual(SHAKE_MAX_AMP);
+    // an EX/crit omni hit reports omni + a bigger kick than a light hit
+    const omni = planImpactFeedback(profileOf("crit", 8, { shakeStyle: "omni", camKick: 0.65 }), { tickMs: 33.3 });
+    expect(omni.shake.style).toBe("omni");
+    expect(omni.shake.camKick).toBeGreaterThan(
+      planImpactFeedback(profileOf("light", 2, { camKick: 0.15 }), { tickMs: 33.3 }).shake.camKick,
+    );
+  });
+});
+
+describe("hitstop micro-jitter math (juice-hitstop-shiver)", () => {
+  it("buzzes WHILE frozen, is sub-1px, snaps to zero at the window end (收尾精準)", () => {
+    cover("juice-hitstop-shiver");
+    const end = 10_000;
+    // inside the window → a small non-zero offset, bounded by the peak amp
+    const s = hitstopShiver(9_800, end, 0);
+    expect(Math.hypot(s.x, s.z)).toBeGreaterThan(0);
+    expect(Math.abs(s.x)).toBeLessThanOrEqual(HITSTOP_SHIVER_AMP + 1e-9);
+    expect(Math.abs(s.z)).toBeLessThanOrEqual(HITSTOP_SHIVER_AMP + 1e-9);
+    // at / past the end there is ZERO offset — no lingering settle tail
+    expect(hitstopShiver(end, end, 0)).toEqual({ x: 0, z: 0 });
+    expect(hitstopShiver(end + 5, end, 0)).toEqual({ x: 0, z: 0 });
+    // amplitude tapers DOWN over the last slice so the release is clean: at
+    // half the taper window (remain = TAPER/2) each axis is capped at HALF the
+    // peak, so the vector magnitude cannot exceed (0.5·amp)·√2.
+    const halfTaper = hitstopShiver(end - HITSTOP_SHIVER_TAPER_MS / 2, end, 0.3);
+    expect(Math.abs(halfTaper.x)).toBeLessThanOrEqual(HITSTOP_SHIVER_AMP * 0.5 + 1e-9);
+    expect(Math.abs(halfTaper.z)).toBeLessThanOrEqual(HITSTOP_SHIVER_AMP * 0.5 + 1e-9);
+    // two different phases don't move in lock-step
+    expect(hitstopShiver(9_800, end, 0)).not.toEqual(hitstopShiver(9_800, end, 1.5));
   });
 });
 
@@ -243,5 +357,246 @@ describe("quality-tier gating disables heavy fx (juice-quality-gate)", () => {
     expect(cameraShakeScaleFor("desktop")).toBe(1);
     expect(cameraShakeScaleFor("mobile")).toBeGreaterThan(0);
     expect(cameraShakeScaleFor("mobile")).toBeLessThan(1);
+  });
+
+  it("prefers-reduced-motion zeroes the scale on EVERY tier", () => {
+    cover("juice-quality-gate");
+    expect(cameraShakeScaleFor("desktop", true)).toBe(0);
+    expect(cameraShakeScaleFor("mobile", true)).toBe(0);
+    // and the default stays "motion allowed" so no existing caller changes
+    expect(cameraShakeScaleFor("desktop")).toBe(1);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// the CAMERA WAVE — planCameraReaction / resolveCameraKick. These are the
+// tests that prove the ShakeRequest is CONSUMED (it used to be computed and
+// dropped) and that a profiled hit reaches the rig exactly once.
+// ---------------------------------------------------------------------------
+
+const LOCAL = 7;
+const ENEMY = 9;
+
+/** A wire-shaped hitImpact carrying a real ImpactProfile. */
+const hitImpactEv = (over: Partial<ImpactProfile> = {}, data: Record<string, unknown> = {}) => ({
+  type: "hitImpact",
+  data: {
+    source: ENEMY,
+    target: LOCAL,
+    dmgType: "physical",
+    amount: 80,
+    profile: profileOf("medium", 4, over) as unknown as Record<string, unknown>,
+    ...data,
+  },
+});
+
+const damageEv = (data: Record<string, unknown> = {}) => ({
+  type: "damage",
+  data: { source: ENEMY, target: LOCAL, amount: 80, dmgType: "physical", ...data },
+});
+
+const castEv = (data: Record<string, unknown> = {}) => ({
+  type: "abilityCast",
+  data: { caster: LOCAL, slot: "EX", abilityId: "ex.demo", ...data },
+});
+
+const ctxOf = (over: Partial<CameraReactionCtx> = {}): CameraReactionCtx => ({
+  localId: LOCAL,
+  scale: 1,
+  crowdIndex: 0,
+  batchProfiled: true,
+  sinceExPunchMs: Infinity,
+  tickMs: 33.3,
+  ...over,
+});
+
+describe("directional camera kick wiring (juice-camera-directional)", () => {
+  it("a profiled hitImpact on the local player resolves a DIRECTIONAL kick along the hit vector", () => {
+    cover("juice-camera-directional");
+    const r = planCameraReaction(
+      hitImpactEv({ knockbackDir: { x: 0, z: 1 }, shakeStyle: "directional" }),
+      ctxOf(),
+    );
+    expect(r.exPunch).toBe(false);
+    const kick = r.kick!;
+    expect(kick).not.toBeNull();
+    expect(kick.style).toBe("directional");
+    // the ShakeRequest's dir survives to the rig, normalized
+    expect(kick.dir).toEqual({ x: 0, z: 1 });
+    expect(kick.kick).toBeGreaterThan(0);
+    expect(kick.amp).toBeGreaterThan(0);
+    expect(kick.amp).toBeLessThanOrEqual(SHAKE_MAX_AMP);
+    expect(kick.durationMs).toBe(shakeDurationMs(kick.amp));
+  });
+
+  it("normalizes a non-unit knockback vector and keeps its bearing", () => {
+    cover("juice-camera-directional");
+    const kick = planCameraReaction(
+      hitImpactEv({ knockbackDir: { x: 3, z: 4 }, shakeStyle: "directional" }),
+      ctxOf(),
+    ).kick!;
+    expect(Math.hypot(kick.dir.x, kick.dir.z)).toBeCloseTo(1, 6);
+    expect(kick.dir.x).toBeCloseTo(0.6, 6);
+    expect(kick.dir.z).toBeCloseTo(0.8, 6);
+  });
+
+  it("an OMNI profile (crit/EX) drops the ground kick and rings radially", () => {
+    cover("juice-camera-directional");
+    const kick = planCameraReaction(
+      hitImpactEv({ shakeStyle: "omni", knockbackDir: { x: 0, z: 1 } }),
+      ctxOf(),
+    ).kick!;
+    expect(kick.style).toBe("omni");
+    expect(kick.kick).toBe(0);
+    expect(kick.dir).toEqual({ x: 0, z: 0 });
+  });
+
+  it("a directional profile with NO shove resolved degrades to the radial ring (never NaN)", () => {
+    cover("juice-camera-directional");
+    const kick = planCameraReaction(
+      hitImpactEv({ shakeStyle: "directional", knockbackDir: { x: 0, z: 0 } }),
+      ctxOf(),
+    ).kick!;
+    expect(kick.style).toBe("omni");
+    expect(Number.isFinite(kick.dir.x)).toBe(true);
+    expect(Number.isFinite(kick.dir.z)).toBe(true);
+    expect(kick.kick).toBe(0);
+  });
+
+  it("TAKING a hit kicks harder than LANDING the same hit", () => {
+    cover("juice-camera-directional");
+    const taken = planCameraReaction(hitImpactEv(), ctxOf()).kick!;
+    const dealt = planCameraReaction(
+      hitImpactEv({}, { source: LOCAL, target: ENEMY }),
+      ctxOf(),
+    ).kick!;
+    expect(taken.amp).toBeGreaterThan(dealt.amp);
+    expect(taken.kick).toBeGreaterThan(dealt.kick);
+  });
+
+  it("a THIRD PARTY's hit never moves the local camera", () => {
+    cover("juice-camera-directional");
+    const r = planCameraReaction(hitImpactEv({}, { source: 20, target: 21 }), ctxOf());
+    expect(r.kick).toBeNull();
+    // …and neither does any hit before the local seat resolves
+    expect(planCameraReaction(hitImpactEv(), ctxOf({ localId: null })).kick).toBeNull();
+  });
+
+  it("a malformed / pre-#133 hitImpact yields no kick instead of throwing", () => {
+    cover("juice-camera-directional");
+    expect(
+      planCameraReaction({ type: "hitImpact", data: { source: ENEMY, target: LOCAL } }, ctxOf())
+        .kick,
+    ).toBeNull();
+    expect(hasImpactProfile(undefined)).toBe(false);
+    expect(hasImpactProfile({ tier: "heavy", hitstopTicks: 3 })).toBe(true);
+    expect(hasImpactProfile({ tier: "bogus", hitstopTicks: 3 })).toBe(false);
+  });
+
+  it("clamps the kick and the amplitude so the biggest hit still respects the ceiling", () => {
+    cover("juice-camera-directional");
+    const kick = planCameraReaction(
+      hitImpactEv({ tier: "crit", shakeMag: 9, camKick: 9, shakeStyle: "directional" }),
+      ctxOf(),
+    ).kick!;
+    expect(kick.amp).toBe(SHAKE_MAX_AMP);
+    expect(kick.kick).toBe(KICK_MAX_MAG);
+  });
+});
+
+describe("no double-shake: the legacy scalar path stands down (juice-camera-directional)", () => {
+  it("SUPPRESSES the legacy `damage` shake on a batch that carries profiles", () => {
+    cover("juice-camera-directional");
+    // the sim emits damage + hitImpact for the SAME hit; only one may shake
+    const batch = [damageEv(), hitImpactEv()];
+    expect(batchCarriesImpactProfile(batch)).toBe(true);
+    const ctx = ctxOf({ batchProfiled: true });
+    const fired = batch.map((ev) => planCameraReaction(ev, ctx)).filter((r) => r.kick !== null);
+    expect(fired).toHaveLength(1); // exactly one shake for one hit
+    expect(fired[0]!.kick!.style).toBe("directional"); // and it is the profiled one
+  });
+
+  it("KEEPS the legacy shake for a pre-#133 batch with no profile anywhere", () => {
+    cover("juice-camera-directional");
+    const batch = [damageEv()];
+    expect(batchCarriesImpactProfile(batch)).toBe(false);
+    const kick = planCameraReaction(batch[0]!, ctxOf({ batchProfiled: false })).kick!;
+    expect(kick).not.toBeNull();
+    expect(kick.style).toBe("omni"); // undirected — the old feel, unchanged
+    expect(kick.kick).toBe(0);
+  });
+
+  it("a hitImpact whose profile failed to parse does not arm the batch suppression", () => {
+    cover("juice-camera-directional");
+    expect(batchCarriesImpactProfile([{ type: "hitImpact", data: { profile: { tier: "x" } } }])).toBe(
+      false,
+    );
+  });
+});
+
+describe("teamfight crowding guard (juice-camera-directional)", () => {
+  it("thins the 2nd/3rd impulse of a batch and drops the rest", () => {
+    cover("juice-camera-directional");
+    expect(shakeCrowdingScale(0)).toBe(1);
+    expect(shakeCrowdingScale(1)).toBeLessThan(1);
+    expect(shakeCrowdingScale(2)).toBeLessThan(shakeCrowdingScale(1));
+    expect(shakeCrowdingScale(SHAKE_MAX_PER_FRAME)).toBe(0);
+    const amps = [0, 1, 2, 3].map(
+      (crowdIndex) => planCameraReaction(hitImpactEv(), ctxOf({ crowdIndex })).kick?.amp ?? 0,
+    );
+    expect(amps[0]).toBeGreaterThan(amps[1]!);
+    expect(amps[1]).toBeGreaterThan(amps[2]!);
+    expect(amps[3]).toBe(0); // the 4th simultaneous hit never reaches the rig
+  });
+});
+
+describe("EX cinematic punch-in trigger (juice-camera-expunch)", () => {
+  it("the LOCAL player's EX cast asks for the punch-in — exactly once", () => {
+    cover("juice-camera-expunch");
+    const r = planCameraReaction(castEv(), ctxOf());
+    expect(r.exPunch).toBe(true);
+    expect(r.kick).toBeNull(); // the cast itself never shakes
+    // a second cast inside the guard window does NOT restart the beat
+    expect(planCameraReaction(castEv(), ctxOf({ sinceExPunchMs: 10 })).exPunch).toBe(false);
+    expect(
+      planCameraReaction(castEv(), ctxOf({ sinceExPunchMs: EX_PUNCH_MIN_INTERVAL_MS })).exPunch,
+    ).toBe(true);
+  });
+
+  it("a NORMAL ability never punches in, and neither does someone else's EX", () => {
+    cover("juice-camera-expunch");
+    for (const slot of ["Q", "W", "E", "R"]) {
+      expect(planCameraReaction(castEv({ slot }), ctxOf()).exPunch).toBe(false);
+    }
+    expect(planCameraReaction(castEv({ caster: ENEMY }), ctxOf()).exPunch).toBe(false);
+    expect(planCameraReaction(castEv(), ctxOf({ localId: null })).exPunch).toBe(false);
+  });
+
+  it("EX damage TICKS never punch in — only the cast does", () => {
+    cover("juice-camera-expunch");
+    // three hitImpacts from one EX: they kick the camera, none punches in
+    for (let i = 0; i < 3; i++) {
+      const r = planCameraReaction(hitImpactEv({ isEX: true }), ctxOf({ crowdIndex: 0 }));
+      expect(r.exPunch).toBe(false);
+    }
+  });
+});
+
+describe("prefers-reduced-motion suppresses the whole camera wave (juice-quality-gate)", () => {
+  it("scale 0 kills the kick, the legacy shake AND the EX punch-in", () => {
+    cover("juice-quality-gate");
+    const reduced = ctxOf({ scale: cameraShakeScaleFor("desktop", true) });
+    expect(reduced.scale).toBe(0);
+    expect(planCameraReaction(hitImpactEv(), reduced).kick).toBeNull();
+    expect(planCameraReaction(damageEv(), ctxOf({ scale: 0, batchProfiled: false })).kick).toBeNull();
+    expect(planCameraReaction(castEv(), reduced).exPunch).toBe(false);
+  });
+
+  it("the mobile tier still kicks, just softer than desktop", () => {
+    cover("juice-quality-gate");
+    const desktop = planCameraReaction(hitImpactEv(), ctxOf({ scale: cameraShakeScaleFor("desktop") })).kick!;
+    const mobile = planCameraReaction(hitImpactEv(), ctxOf({ scale: cameraShakeScaleFor("mobile") })).kick!;
+    expect(mobile.amp).toBeGreaterThan(0);
+    expect(mobile.amp).toBeLessThan(desktop.amp);
   });
 });

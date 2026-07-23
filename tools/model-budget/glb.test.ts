@@ -29,7 +29,11 @@ describe("measureGlb reproduces the cross-checked numbers", () => {
     expect(m.vramBytes).toBe(5592405); // 1024² RGBA8 × 4/3
     expect(m.skins).toBe(1);
     expect(m.joints).toBe(41);
-    expect(m.clips).toBe(76);
+    // 16, not the upstream 76: trimClips.ts pruned the 60 clips no consumer
+    // asks for (3,659,532 B → 1,103,872 B). Geometry/rig/texture above are the
+    // SAME numbers as before the trim — that is the invariant the prune promises,
+    // and trimClips.test pins the keep-set that made it safe.
+    expect(m.clips).toBe(16);
   });
 
   it("shipping triangle total across content/assets/models matches the baseline", () => {

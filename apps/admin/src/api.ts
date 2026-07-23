@@ -14,6 +14,7 @@ import type {
   MatchRecord,
   Profile,
   SessionResp,
+  TokenPair,
 } from "./types";
 
 /** The app-wide client instance. */
@@ -33,6 +34,38 @@ export function me(): Promise<{ account: { id: string; username: string } }> {
   return api.request<{ account: { id: string; username: string } }>("/me");
 }
 
+/** What POST /account/password returns on success. */
+export interface ChangePasswordResp {
+  status: string;
+  tokens: TokenPair;
+  sessionsRevoked: boolean;
+}
+
+/**
+ * 變更密碼 — rotate the SIGNED-IN operator's own password.
+ *
+ * Session-gated AND current-password-gated: the platform refuses to change a
+ * password from a session alone, so a stolen token cannot lock the owner out.
+ * A successful change revokes every refresh token of the account — this
+ * console's included — and returns a fresh pair, which is swapped in here so
+ * the operator stays signed in while every other device is signed out.
+ *
+ * `refreshOn401: false` because a 401 from this route means "wrong current
+ * password", not "expired token": retrying it would double-spend the server's
+ * brute-force budget and could sign the operator out over a typo.
+ */
+export async function changePassword(
+  currentPassword: string,
+  newPassword: string,
+): Promise<ChangePasswordResp> {
+  const resp = await api.request<ChangePasswordResp>("/account/password", {
+    body: { currentPassword, newPassword },
+    refreshOn401: false,
+  });
+  if (resp?.tokens?.accessToken && resp?.tokens?.refreshToken) api.setTokens(resp.tokens);
+  return resp;
+}
+
 // ---- accounts ---------------------------------------------------------------
 
 export function searchAccounts(query: string, page = 1, pageSize = 20): Promise<AccountSearch> {
@@ -47,6 +80,17 @@ export function getProfile(id: string): Promise<Profile> {
 export function adjustMCoin(id: string, delta: number, reason: string): Promise<{ mcoin: number }> {
   return api.request<{ mcoin: number }>(`/admin/accounts/${encodeURIComponent(id)}/mcoin`, {
     body: { delta, reason },
+  });
+}
+
+/**
+ * Grant (or deduct) admin-issued M幣 / M COIN via the wallet meta endpoint
+ * (task #118). Role-gated server-side; a non-admin caller is a 403. Returns the
+ * target account's resulting balance.
+ */
+export function grantMCoin(accountId: string, amount: number): Promise<{ accountId: string; mcoin: number }> {
+  return api.request<{ accountId: string; mcoin: number }>("/wallet/admin/grant-mcoin", {
+    body: { accountId, amount },
   });
 }
 

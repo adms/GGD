@@ -58,7 +58,10 @@ export type DisplayFactorAlias =
   | "mana"
   | "regen"
   | "ad"
-  | "ap";
+  | "ap"
+  | "range"
+  | "radius"
+  | "aoe";
 
 /** Friendly alias → canonical env key. */
 const FACTOR_ALIAS: Record<DisplayFactorAlias, CombatEnvKey | null> = {
@@ -70,9 +73,44 @@ const FACTOR_ALIAS: Record<DisplayFactorAlias, CombatEnvKey | null> = {
   regen: "healthRegen",
   ad: "attackDamage",
   ap: "abilityPower",
+  // task #136: ability cast RANGE and AoE RADIUS share the `abilityRange` factor
+  // (0.6 = shown range shrinks to 60%, matching the sim's read seams).
+  range: "abilityRange",
+  radius: "abilityRange",
+  aoe: "abilityRange",
 };
 
 const ENV_KEY_SET: ReadonlySet<string> = new Set(COMBAT_ENV_KEYS);
+
+/**
+ * Map a CHAMPION stat-doc key (`maxHealth`, `ad`, `armor`, `mr`, `range`…) to
+ * the display factor that scales it, so a stats table can show the post-combat-
+ * env "戰鬥實際" value beside the authored base (maxHealth ×16 → 460 shows 7360).
+ * NOTE the champ `range` is ATTACK range (`attackRange`, ×1.0 by default), NOT
+ * the ability `range`/`abilityRange` alias — do not route it through "range".
+ * Keys with no env multiplier (e.g. `cdr`) fall to "none" (unscaled).
+ */
+const STAT_DISPLAY_FACTOR: Record<string, DisplayFactor> = {
+  maxHealth: "maxHealth",
+  healthRegen: "healthRegen",
+  maxMana: "maxMana",
+  manaRegen: "manaRegen",
+  ad: "attackDamage",
+  ap: "abilityPower",
+  armor: "defense",
+  mr: "defense",
+  as: "attackSpeed",
+  ms: "moveSpeed",
+  critChance: "critChance",
+  critDamage: "critDamage",
+  lifesteal: "lifesteal",
+  range: "attackRange",
+};
+
+/** The display factor that scales a champion stat-doc key ("none" if unscaled). */
+export function statDisplayFactor(key: string): DisplayFactor {
+  return STAT_DISPLAY_FACTOR[key] ?? "none";
+}
 
 /**
  * Resolve a display factor to the env key that scales it, or `null` when the

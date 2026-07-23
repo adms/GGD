@@ -14,6 +14,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { cover } from "../../packages/shared/testkit/cover";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "../..");
@@ -70,6 +71,7 @@ describe("the same-screen budget is per-frame, not per-repository", () => {
         expect(["ok", "warn", "over"]).toContain(s.verdicts[k]);
       }
     }
+    cover("mbudget-same-screen");
   });
   it("combat scenes carry median/best draft variants (the roster spread is 7×)", () => {
     const combat = report.screens.filter((s: any) => s.id.startsWith("combat-"));
@@ -101,6 +103,7 @@ describe("WHERE IT IS USED is traced, not guessed", () => {
     const godie = report.screens.find((s: any) => s.id === "combat-godie");
     const ground = godie.procedural.find((p: any) => p.label.includes("地板"));
     expect(ground.triangles).toBe(14868); // 2 zones, derived from ArenaGround
+    cover("mbudget-where-used");
   });
 });
 

@@ -56,6 +56,14 @@ export const AUDIO_CELL_GAP = 6;
 /** Buttons in the collapsed cluster: 🎚 expand, 🎵 music mute, 🔊 SFX mute. */
 export const AUDIO_CLUSTER_BUTTONS = 3;
 
+/**
+ * Top offset on a MENU screen (auth / lobby / codex …), where there is no HUD
+ * corner stack for the cluster to sit in and it hugs the corner instead. Lives
+ * here rather than in the component so `ui/chromeReserve` can DERIVE its
+ * pre-measurement fallback height from the real geometry.
+ */
+export const AUDIO_MENU_TOP = 12;
+
 /** Width of the collapsed button group. */
 export function audioButtonsWidth(buttons: number = AUDIO_CLUSTER_BUTTONS): number {
   const n = Math.max(0, Math.floor(buttons));

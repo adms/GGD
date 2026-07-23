@@ -15,9 +15,14 @@
  *
  * Perf: the menu doesn't need retina. We cap the render buffer at ~1.25× device
  * pixels (setHardwareScalingLevel), soft-cap the loop near 60 fps, clamp dt, and
- * pause rendering entirely while the tab is hidden. Everything is procedural
- * (Babylon DynamicTexture / mesh builders); no image or model files are fetched.
- * The hot loop is allocation-free (reused pose/scratch objects, in-place mutation).
+ * pause rendering entirely while the tab is hidden. The vista is otherwise
+ * procedural (Babylon DynamicTexture / mesh builders); the ONE streamed asset is
+ * `dragon2.glb`, which the two boss-dragons SHARE — it is fetched + parsed exactly
+ * once and both dragons instantiate from that single template (see
+ * ModelDragonController), so it never double-downloads at login. Each dragon shows
+ * its procedural stand-in immediately and swaps to the model when it resolves, so
+ * the glb never blocks the login card. The hot loop is allocation-free (reused
+ * pose/scratch objects, in-place mutation).
  */
 import { Engine } from "@babylonjs/core/Engines/engine";
 import { Scene } from "@babylonjs/core/scene";

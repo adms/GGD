@@ -100,7 +100,7 @@ swallowed downbeat, which is what the previous cut measured (-2.1 dB at
 NO CYMBAL. Not here, not anywhere in the pack.
 """
 
-from ggd import music
+from ggd import intro, music
 from ggd.score import Score
 
 # 12 bars: the old PROG_DARK stated twice, then the turn it never had.
@@ -129,6 +129,13 @@ def build() -> Score:
     s.gain(choir=1.05, keys=0.90, lead=0.80, strings=0.70, gtr=1.10,
            perc=1.30, drums=1.05)
     s.verb(choir=0.42, perc=0.20, gtr=0.10)   # drier than the sacred cues
+
+    # ---------------------------------------------------- SIGNATURE INTRO (#135)
+    # A FIRE-CRACKLE bed swelling up with a low two-tone hazard KLAXON over it,
+    # resolving onto the war-drum PULL. The only intro with crackle AND a pulsing
+    # alarm — dark, ominous, rising menace: 'danger closing in' the moment the
+    # bed swaps at 30 s left. It swells from silence, so no mirror duplication.
+    s.custom("fx", intro.fireRing)
 
     # ======================================================= ACT I  bars 0-7
     # 30.0 -> 15.8 s left. The spine and nothing else. Everything that will

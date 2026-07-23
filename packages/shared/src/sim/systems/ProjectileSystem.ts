@@ -9,6 +9,7 @@ import { sweptCircleVsCircle } from "../collision/intersect";
 import { runEffects } from "../effects/effectRunner";
 import { fireHooks } from "../effects/hooks";
 import { recordAbilityHit, recordAbilityWhiff } from "../stats/matchStats";
+import { resolveAbilityRadius } from "../abilities/abilitySystem";
 
 export function projectileSystem(world: SimWorld): void {
   const toDestroy: EntityId[] = [];
@@ -19,12 +20,17 @@ export function projectileSystem(world: SimWorld): void {
     const stepLen = Math.min(proj.speed * world.dt, proj.remainingRange);
     const delta = scale(proj.dir, stepLen);
 
+    // combat-env `abilityRange` (task #136) shrinks an ABILITY skillshot's hit
+    // radius (its effective AoE width). Basic-attack missiles keep their reach —
+    // those answer to `attackRange`, not the ability factor.
+    const hitRadius = proj.basic ? proj.hitRadius : resolveAbilityRadius(world, proj.hitRadius);
+
     // Collect candidate victims along the sweep (broad-phase around the path).
     const owner = proj.ownerId;
     const ownerTeam = world.team.get(owner);
     const candidates = world.grid.queryCircle(
       { x: t.pos.x + delta.x / 2, z: t.pos.z + delta.z / 2 },
-      stepLen / 2 + proj.hitRadius + 2,
+      stepLen / 2 + hitRadius + 2,
     );
 
     // earliest hit wins (ties broken by lower entity id — candidates sorted)
@@ -39,7 +45,7 @@ export function projectileSystem(world: SimWorld): void {
       if (!ct || !chp?.alive || ct.zone !== t.zone) continue;
       const cteam = world.team.get(cid);
       if (cteam && ownerTeam && cteam.teamId === ownerTeam.teamId) continue; // no friendly fire
-      const hitT = sweptCircleVsCircle(t.pos, delta, proj.hitRadius, {
+      const hitT = sweptCircleVsCircle(t.pos, delta, hitRadius, {
         kind: "circle",
         center: ct.pos,
         radius: ct.radius,

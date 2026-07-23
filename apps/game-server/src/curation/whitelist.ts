@@ -20,6 +20,11 @@
  * force allow-all for local testing.
  */
 import type { ItemId } from "@ggd/shared/ids";
+import { PLATFORM_URL, warnOnce } from "../config/platformUrl";
+
+// Re-exported for existing importers (combat-env, MatchController); the actual
+// env resolution + localhost dev fallback lives in config/platformUrl.ts.
+export { PLATFORM_URL };
 
 /** The wire shape served by GET /api/v1/curation/whitelist. */
 export interface WhitelistDoc {
@@ -32,9 +37,6 @@ export interface WhitelistDoc {
 
 /** Process-wide bypass: disables all filtering (local dev/testing). */
 export const WHITELIST_BYPASS = process.env.GGD_WHITELIST_BYPASS === "1";
-
-/** Base URL of the platform, used to read the public whitelist endpoint. */
-export const PLATFORM_URL = process.env.GGD_PLATFORM_URL ?? "http://platform:8080";
 
 /** Short cache TTL so a burst of match creations shares one fetch. */
 const DEFAULT_TTL_MS = 5_000;
@@ -141,7 +143,8 @@ export async function fetchWhitelist(baseUrl: string, opts: FetchOpts = {}): Pro
   try {
     const res = await doFetch(url, { signal: controller.signal });
     if (!res.ok) {
-      console.error(
+      warnOnce(
+        "whitelist-status",
         `[whitelist] platform returned ${res.status} for ${url} — FAILING SAFE to allow-all ` +
           `(content filtering DISABLED for this match). Fix the platform or set GGD_WHITELIST_BYPASS=1.`,
       );
@@ -149,7 +152,10 @@ export async function fetchWhitelist(baseUrl: string, opts: FetchOpts = {}): Pro
     }
     const doc = parseDoc(await res.json());
     if (!doc) {
-      console.error(`[whitelist] malformed whitelist body from ${url} — FAILING SAFE to allow-all.`);
+      warnOnce(
+        "whitelist-malformed",
+        `[whitelist] malformed whitelist body from ${url} — FAILING SAFE to allow-all.`,
+      );
       return Whitelist.allowAll();
     }
     if (doc.champions.length === 0) {
@@ -161,7 +167,8 @@ export async function fetchWhitelist(baseUrl: string, opts: FetchOpts = {}): Pro
     }
     return new Whitelist(doc, false);
   } catch (err) {
-    console.error(
+    warnOnce(
+      "whitelist-unreachable",
       `[whitelist] could not reach the platform at ${url} — FAILING SAFE to allow-all ` +
         `(content filtering DISABLED for this match).`,
       err,

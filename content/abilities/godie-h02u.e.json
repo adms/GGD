@@ -32,7 +32,7 @@
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 0.15
+            "coeff": 0.6
           }
         ]
       }
@@ -44,7 +44,7 @@
       "moveSpeedMult": 0.8
     }
   ],
-  "vfxKey": "fx.ember-bolt-cast",
+  "vfxKey": "fx.prim.nature.nova",
   "targetsEnemies": true,
   "schema": "ability@1"
 }
