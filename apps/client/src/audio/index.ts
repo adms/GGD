@@ -11,6 +11,9 @@
  *   scene         pure app-state → BGM scene mapping
  *   loginRotation pure (now single-theme) rotation for the auth screen (`menu`)
  *   bgmOverride   registry for a mounted screen to request a bespoke bed (#134)
+ *   matchEndBed   pure rule handing the bed to 主題曲·寧靜女聲 once the WIN
+ *                 sting has played itself out (driven by onBedEnded, never a
+ *                 hardcoded clip length)
  *   bgmVariants   Samantha-James rotating-BGM registry + rotation store (#137)
  *   loginAmbience DORMANT calm-roar gate (its serene login bed moved to #134)
  *   countdownCue  pure last-5s tick for champ select + the prep window
@@ -27,6 +30,7 @@ export * from "./audioSettings";
 export * from "./scene";
 export * from "./loginRotation";
 export * from "./bgmOverride";
+export * from "./matchEndBed";
 export * from "./bgmVariants";
 export * from "./loginAmbience";
 export * from "./sfxEdges";
@@ -34,4 +38,4 @@ export * from "./countdownCue";
 export * from "./championVoice";
 export * from "./sfxManifest";
 export { AudioSystem, audioSystem, AUDIO_CONTENT_BASE, AUDIO_MAP_PATH, VOLUME_RAMP_MS } from "./AudioSystem";
-export type { AudioSystemOptions, SfxPlayOptions } from "./AudioSystem";
+export type { AudioSystemOptions, BedEndedEvent, SfxPlayOptions } from "./AudioSystem";

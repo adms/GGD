@@ -38,6 +38,8 @@ import {
 } from "./settlementModel";
 import { playChampionQuote } from "../../audio/nameVoice";
 import { cancelVictoryTaunt, playMatchTaunt } from "../../audio/victoryTaunt";
+import { MATCH_WIN_STING, matchEndBedScene } from "../../audio/matchEndBed";
+import { useBedEnded, useBgmSceneOverride } from "../useAudio";
 import {
   MATCH_PANEL_HOLD_MS,
   MATCH_QUOTE_DELAY_MS,
@@ -314,6 +316,22 @@ export function MatchEndPanel(): React.JSX.Element {
   // payload (winnerTeam vs my card's team), so the celebration is never a local
   // tally — and a loser is never celebrated at.
   const wonMatch = hasPayload && isWinner(settlement.winnerTeam, local?.teamId ?? null);
+
+  // 主題曲 · 寧靜女聲 (task #134, landing on #93's screen). The winner's bed is the
+  // `victory` ONE-SHOT: it plays, it stops, and the player is then left reading
+  // the grade, the breakdown and the auto-scrolling ranking in silence. So once
+  // that sting has played itself out, the serene looping nocturne takes the bed
+  // for as long as this screen is up, and the ref-counted override releases on
+  // unmount — the director's derived scene takes back over on the way to the
+  // lobby. No timing constant anywhere, deliberately: the sting has no single
+  // length (the #137 rotation alternates the authored file with a shorter
+  // Samantha variant, and bgm-gen can re-render either), so `useBedEnded`
+  // reports the NATURAL end of whichever file actually played. That is also why
+  // the handover cannot land early on the chicken beat or the savage 吃雞 VO —
+  // both finish seconds before any version of the sting does. A LOSS declares
+  // nothing: it keeps its own sting. Durations live in audio/matchEndBed.
+  const winStingEnded = useBedEnded(wonMatch ? MATCH_WIN_STING : null);
+  useBgmSceneOverride(matchEndBedScene(wonMatch, winStingEnded));
 
   // auto-advance to the leaderboard delta screen after a grace period. The
   // countdown updater stays pure (no navigation side-effect inside setState); a

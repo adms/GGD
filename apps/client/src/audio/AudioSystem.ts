@@ -155,6 +155,32 @@ interface Bed {
   loop: boolean;
 }
 
+/**
+ * A NON-LOOPING bed that reached its own NATURAL end: the file played all the
+ * way through while it was still the live bed. Deliberately NOT emitted when the
+ * bed was crossfaded away, replaced by another scene, stopped early, or torn
+ * down by `dispose()` — in every one of those cases `onended` still fires on the
+ * source node, but the bed is no longer ours, so "the track finished" would be a
+ * lie. The guard is identity: the node that ended must still BE `this.bed.src`.
+ *
+ * WHY THIS EXISTS. The victory/defeat stings are one-shots, and a caller that
+ * wants to do something when one of them is over (task #134/#93: hand the bed to
+ * the serene `menuNocturne` once the win sting has played itself out) would
+ * otherwise have to hardcode the clip's length. It is not a constant: `victory`
+ * is 18.34 s but the task-#137 rotation alternates it with a 14.52 s Samantha
+ * variant, and `tools/bgm-gen` can re-render either at any time. The system is
+ * the only thing that knows which file actually played and how long it was, so
+ * it is the thing that says when it ended.
+ */
+export interface BedEndedEvent {
+  /** the scene whose bed just finished (e.g. "victory") */
+  scene: string;
+  /** the file that ACTUALLY played — original or Samantha variant (task #137) */
+  file: string;
+  /** that buffer's decoded length in seconds (informational; never hardcode it) */
+  durationSec: number;
+}
+
 /** Per-call options for a one-off SFX (positioned / attenuated). */
 export interface SfxPlayOptions {
   /** multiply the authored per-clip gain (default 1; clamped ≥ 0) */
@@ -222,6 +248,8 @@ export class AudioSystem {
    */
   private readonly sceneElapsedMs = new Map<string, number>();
   private currentScene: AudioScene | null = null;
+  /** subscribers to "a non-looping bed played itself out" — see BedEndedEvent */
+  private readonly bedEndListeners = new Set<(ev: BedEndedEvent) => void>();
   private pendingSting: AudioScene | null = null;
   private unlocked = false;
   private disposed = false;
@@ -589,16 +617,48 @@ export class AudioSystem {
       this.bedStartMs = this.now();
       if (!loop) {
         src.onended = (): void => {
-          if (this.bed?.src === src) {
-            this.safeDisconnect(src, gain);
-            this.bed = null;
-            this.bedStartMs = null;
-          }
+          // IDENTITY GUARD. `onended` also fires for a bed that was crossfaded
+          // away, replaced, stopped early or disposed — every one of those paths
+          // reassigns/clears `this.bed` FIRST, so a node that is no longer the
+          // live bed is not a natural end and must neither clean up here nor
+          // notify. Only the clip finishing on its own reaches this branch.
+          if (this.bed?.src !== src) return;
+          this.safeDisconnect(src, gain);
+          this.bed = null;
+          this.bedStartMs = null;
+          // Emitted AFTER the bed state is cleared, so a listener that reacts by
+          // asking for another bed (the whole point) sees a settled system.
+          this.emitBedEnded({ scene, file, durationSec: buffer.duration });
         };
       }
       if (prev) this.fadeOutAndStop(prev, curves.out, durSec);
     } catch (err) {
       this.warn(`bgm ${scene} failed to start`, err);
+    }
+  }
+
+  /**
+   * Subscribe to "a NON-LOOPING bed just played itself all the way out"; returns
+   * an unsubscriber. See {@link BedEndedEvent} for the exact (deliberately
+   * narrow) meaning — a crossfade, a replacement, an early stop and `dispose()`
+   * all stay silent. Framework-free, same pub/sub shape as `audioSettings` and
+   * `bgmOverride`; `ui/useAudio`'s `useBedEnded` is the React adapter.
+   */
+  onBedEnded(cb: (ev: BedEndedEvent) => void): () => void {
+    this.bedEndListeners.add(cb);
+    return () => {
+      this.bedEndListeners.delete(cb);
+    };
+  }
+
+  /** Fan out a natural end; one throwing listener never stops the others. */
+  private emitBedEnded(ev: BedEndedEvent): void {
+    for (const cb of [...this.bedEndListeners]) {
+      try {
+        cb(ev);
+      } catch (err) {
+        this.warn(`bed-end listener threw for ${ev.scene}`, err);
+      }
     }
   }
 
@@ -1048,6 +1108,9 @@ export class AudioSystem {
       }
       this.safeDisconnect(bed.src, bed.gain);
     }
+    // `this.bed` was cleared above, so the stop() below cannot look like a
+    // natural end; dropping the subscribers as well makes that structural.
+    this.bedEndListeners.clear();
     this.gate.reset();
     this.rotation.reset();
     this.buffers.clear();

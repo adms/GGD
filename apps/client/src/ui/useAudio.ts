@@ -64,6 +64,33 @@ export function useBgmSceneOverride(scene: AudioScene | null): void {
 }
 
 /**
+ * True once the NON-LOOPING bed for `scene` has played itself ALL THE WAY OUT
+ * while this component was mounted; false until then, and false forever while
+ * `scene` is null (the disarmed form, so a caller can bind it to a condition).
+ *
+ * The point is that nobody has to know how long the clip is. The victory sting
+ * is 18.34 s today, 14.52 s whenever the task-#137 rotation picks the Samantha
+ * variant, and whatever `tools/bgm-gen` renders next after that; the system
+ * reports the natural end of the file it actually played instead
+ * (`AudioSystem.onBedEnded`), and deliberately stays quiet when the bed was
+ * crossfaded away, replaced or stopped early — so this never flips true for a
+ * track the player did not actually hear finish.
+ *
+ * Resets to false whenever `scene` changes, so re-arming is just a re-render.
+ */
+export function useBedEnded(scene: AudioScene | null): boolean {
+  const [ended, setEnded] = useState(false);
+  useEffect(() => {
+    setEnded(false);
+    if (scene === null) return undefined;
+    return audioSystem.onBedEnded((ev) => {
+      if (ev.scene === scene) setEnded(true);
+    });
+  }, [scene]);
+  return ended;
+}
+
+/**
  * The bed a mounted screen has requested via {@link useBgmSceneOverride}, or
  * null when none is active. Read by the AudioDirector, which prefers it over the
  * scene it derives from discrete store state.

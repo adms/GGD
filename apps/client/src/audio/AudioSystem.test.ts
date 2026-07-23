@@ -7,7 +7,7 @@
  */
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
-import { AudioSystem, shouldSilenceAudio } from "./AudioSystem";
+import { AudioSystem, shouldSilenceAudio, type BedEndedEvent } from "./AudioSystem";
 import { AudioSettingsStore } from "./audioSettings";
 import type { AudioMap } from "./types";
 
@@ -704,6 +704,166 @@ describe("AudioSystem loop resume (audio-bgm-loop-resume)", () => {
     const ctx = ctxRef()!;
     // combat had played 4 s before the stop; 10 s loop → resume at offset 4
     expect(ctx.started[ctx.started.length - 1]!.startOffset).toBeCloseTo(4);
+    sys.dispose();
+  });
+});
+
+/**
+ * The NATURAL end of a non-looping bed (`onBedEnded`) — the seam that lets the
+ * match-end screen hand the bed to 主題曲·寧靜女聲 when the victory sting is over
+ * without anyone hardcoding how long that sting is.
+ *
+ * The subtle half is everything it must NOT report. `AudioBufferSourceNode`
+ * fires `onended` for a stop() too, so a crossfade, a scene replacement, an
+ * early stop and dispose() would all look identical to "the track finished" if
+ * the identity guard were wrong — and the player would get the nocturne over a
+ * bed they never heard end. Each of those paths is pinned below.
+ */
+describe("AudioSystem bed natural end (audio-bed-natural-end)", () => {
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => vi.useRealTimers());
+
+  /** Start `scene` as the bed and hand back its source node + an event log. */
+  async function playBedAndWatch(
+    sys: AudioSystem,
+    ctxRef: () => FakeCtx | null,
+    scene: "victory" | "menu" | "combat",
+  ): Promise<{ src: FakeSource; ends: BedEndedEvent[]; off: () => void }> {
+    const ends: BedEndedEvent[] = [];
+    const off = sys.onBedEnded((ev) => ends.push(ev));
+    sys.playBgm(scene);
+    await flush();
+    const started = ctxRef()!.started;
+    return { src: started[started.length - 1]!, ends, off };
+  }
+
+  it("reports a one-shot bed that played itself out, with the file and duration", async () => {
+    cover("audio-bed-natural-end");
+    const { sys, ctxRef } = build({ bufferDuration: 18.34 });
+    await sys.loadMap();
+    sys.unlock();
+    const { src, ends } = await playBedAndWatch(sys, ctxRef, "victory");
+    expect(ends).toEqual([]); // still playing — nothing announced yet
+    expect(sys.bedFile).toBe("assets/audio/bgm/victory.mp3");
+
+    src.end(); // the clip reaches its end on its own
+    expect(ends).toEqual([
+      { scene: "victory", file: "assets/audio/bgm/victory.mp3", durationSec: 18.34 },
+    ]);
+    // the bed really is gone by the time listeners run, so a listener that asks
+    // for another bed (the whole point) is not fighting a phantom.
+    expect(sys.bedFile).toBeNull();
+    expect(sys.bedStartedAtMs).toBeNull();
+
+    // a stray second `onended` on the same dead node announces nothing
+    src.end();
+    expect(ends.length).toBe(1);
+    sys.dispose();
+  });
+
+  it("does NOT report a bed that was CROSSFADED AWAY by another scene", async () => {
+    cover("audio-bed-natural-end");
+    const { sys, ctxRef } = build({ bufferDuration: 18.34 });
+    await sys.loadMap();
+    sys.unlock();
+    const { src, ends } = await playBedAndWatch(sys, ctxRef, "victory");
+
+    sys.playBgm("menu"); // the sting is replaced part-way through
+    await flush();
+    expect(sys.bedFile).toBe("assets/audio/bgm/menu.mp3");
+    // fadeOutAndStop stops the old node, which fires onended exactly as a
+    // natural end would. It is NOT one: the player never heard the sting finish.
+    src.end();
+    vi.advanceTimersByTime(1000); // let the real fade-out stop() land too
+    expect(ends).toEqual([]);
+    sys.dispose();
+  });
+
+  it("does NOT report a bed that was STOPPED EARLY (authored silence)", async () => {
+    cover("audio-bed-natural-end");
+    const { sys, ctxRef } = build({ bufferDuration: 18.34 });
+    await sys.loadMap();
+    sys.unlock();
+    const { src, ends } = await playBedAndWatch(sys, ctxRef, "victory");
+
+    sys.playBgm(null); // scene → silence: stopBed() clears the bed first
+    await flush();
+    src.end();
+    vi.advanceTimersByTime(1000);
+    expect(ends).toEqual([]);
+    sys.dispose();
+  });
+
+  it("does NOT report a LOOPING bed — a loop has no natural end", async () => {
+    cover("audio-bed-natural-end");
+    const { sys, ctxRef } = build({ bufferDuration: 42.6 });
+    await sys.loadMap();
+    sys.unlock();
+    const { src, ends } = await playBedAndWatch(sys, ctxRef, "menu");
+    expect(src.loop).toBe(true);
+
+    src.end(); // no handler is even installed for a looping bed
+    expect(ends).toEqual([]);
+    expect(sys.bedFile).toBe("assets/audio/bgm/menu.mp3"); // and it keeps playing
+    sys.dispose();
+  });
+
+  it("does NOT report a one-shot STING — that is not the bed", async () => {
+    cover("audio-bed-natural-end");
+    const { sys, ctxRef } = build();
+    await sys.loadMap();
+    sys.unlock();
+    const { ends } = await playBedAndWatch(sys, ctxRef, "combat");
+    const before = ctxRef()!.started.length;
+
+    sys.playSting("battleStart"); // rides the BGM bus, but is not a bed
+    await flush();
+    const stingSrc = ctxRef()!.started[before]!;
+    stingSrc.end();
+    expect(ends).toEqual([]);
+    expect(sys.bedFile).toBe("assets/audio/bgm/combat.mp3");
+    sys.dispose();
+  });
+
+  it("does NOT report a bed torn down by dispose(), and drops its subscribers", async () => {
+    cover("audio-bed-natural-end");
+    const { sys, ctxRef } = build({ bufferDuration: 18.34 });
+    await sys.loadMap();
+    sys.unlock();
+    const { src, ends } = await playBedAndWatch(sys, ctxRef, "victory");
+
+    sys.dispose();
+    src.end();
+    expect(ends).toEqual([]);
+  });
+
+  it("stops delivering after the unsubscriber runs", async () => {
+    cover("audio-bed-natural-end");
+    const { sys, ctxRef } = build({ bufferDuration: 18.34 });
+    await sys.loadMap();
+    sys.unlock();
+    const { src, ends, off } = await playBedAndWatch(sys, ctxRef, "victory");
+    off();
+    src.end();
+    expect(ends).toEqual([]);
+    sys.dispose();
+  });
+
+  it("one throwing listener never starves the others", async () => {
+    cover("audio-bed-natural-end");
+    const { sys, ctxRef } = build({ bufferDuration: 18.34 });
+    await sys.loadMap();
+    sys.unlock();
+    const seen: string[] = [];
+    sys.onBedEnded(() => {
+      throw new Error("listener blew up");
+    });
+    sys.onBedEnded((ev) => seen.push(ev.scene));
+    sys.playBgm("victory");
+    await flush();
+    const started = ctxRef()!.started;
+    expect(() => started[started.length - 1]!.end()).not.toThrow();
+    expect(seen).toEqual(["victory"]);
     sys.dispose();
   });
 });
