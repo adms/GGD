@@ -2,7 +2,7 @@
   "id": "legendary-orb",
   "schema": "item@1",
   "name": "傳說寶玉",
-  "icon": "assets/icons/items/legendary-orb.png",
+  "icon": "assets/icons/items/legendary-orb.webp",
   "description": "效能\n開啟傳說武器三選一\n\n解說\n傳說的武器道具不能直接購買，只能從三選一的卡片中挑走一件。這顆寶玉就是那張卡片的門票：買下它，立刻從傳說武器池抽出三件供你挑選，寶玉本身隨即碎裂，不佔背包格。",
   "cost": 2400,
   "tier": 3,

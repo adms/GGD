@@ -33,8 +33,22 @@ const FLOOR = { champions: 85, abilities: 13, items: 15 } as const;
 /** Pruned duplicate champions — must never get icon PNGs resurrected. */
 const PRUNED_IDS = ["godie-e010", "godie-o02n", "godie-h00w", "godie-n01b", "godie-o030"];
 
-const ICON_RE = /^assets\/icons\/(champions|abilities|items)\/[a-z0-9.-]+\.png$/;
+const ICON_RE = /^assets\/icons\/(champions|abilities|items)\/[a-z0-9.-]+\.(png|webp)$/;
 const PNG_MAGIC = Buffer.from([0x89, 0x50, 0x4e, 0x47]);
+
+/** Extensions an icon may ship as: legacy w3x extracts are 64² PNG, the
+ *  AI-generated set is 128² WebP (tools/icon-gen/convert-webp.mjs). */
+const ICON_EXTS = [".png", ".webp"] as const;
+
+/** True when `file` really is the image format its extension claims. */
+function magicOk(file: string, buf: Buffer): boolean {
+  if (file.endsWith(".png")) return buf.subarray(0, 4).equals(PNG_MAGIC);
+  // WebP is a RIFF container: "RIFF" <u32 size> "WEBP".
+  return (
+    buf.subarray(0, 4).toString("latin1") === "RIFF" &&
+    buf.subarray(8, 12).toString("latin1") === "WEBP"
+  );
+}
 
 function docs(collection: string): Array<{ file: string; doc: Record<string, unknown> }> {
   return readdirSync(join(CONTENT_DIR, collection))
@@ -48,12 +62,13 @@ function docs(collection: string): Array<{ file: string; doc: Record<string, unk
     }));
 }
 
-function pngIds(kind: string): string[] {
+/** On-disk icon files for a kind as `{ id, file }` (file = basename with ext). */
+function iconFiles(kind: string): Array<{ id: string; file: string }> {
   const dir = join(ICON_DIR, kind);
   if (!existsSync(dir)) return [];
   return readdirSync(dir)
-    .filter((f) => f.endsWith(".png"))
-    .map((f) => f.slice(0, -4));
+    .filter((f) => ICON_EXTS.some((e) => f.endsWith(e)))
+    .map((f) => ({ id: f.slice(0, f.lastIndexOf(".")), file: f }));
 }
 
 /** Every `icon` value found anywhere in the content tree (value -> referrers). */
@@ -94,23 +109,60 @@ describe("w3x original icons (icons)", () => {
     }
   });
 
-  it("every icon ref resolves to a real PNG on disk (icon-refs-resolve)", () => {
+  it("every icon ref resolves to a real image on disk (icon-refs-resolve)", () => {
     cover("icon-refs-resolve");
     const refs = allIconRefs();
     expect(refs.size).toBeGreaterThan(0);
     for (const [icon, from] of refs) {
       const abs = join(CONTENT_DIR, icon);
       expect(existsSync(abs), `${icon} (from ${from[0]})`).toBe(true);
-      const head = readFileSync(abs).subarray(0, 4);
-      expect(head.equals(PNG_MAGIC), `${icon} PNG magic`).toBe(true);
+      expect(magicOk(icon, readFileSync(abs)), `${icon} magic bytes`).toBe(true);
     }
+  });
+
+  /**
+   * The whole-set 404 guard (task: AI icons -> WebP). The rename that moved 169
+   * icons from .png to .webp lived entirely in string literals inside content
+   * docs, so nothing in the type system could have caught a half-finished
+   * migration — every icon would simply have 404'd at runtime. This pins the
+   * round trip the client actually performs: doc `icon` field -> the URL
+   * contentAssetUrl() builds -> a file that exists under content/.
+   *
+   * It asserts the count too: a rewrite that silently dropped icon fields would
+   * otherwise pass an "all refs resolve" check vacuously.
+   */
+  it("every doc icon id resolves through the client's URL rule to a file (icon-url-roundtrip)", () => {
+    cover("icon-url-roundtrip");
+    // Mirrors apps/client/src/content/ContentDb.ts contentAssetUrl() and the
+    // independent copy in apps/admin/src/content.ts: prefix check, no suffix logic.
+    const contentAssetUrl = (p: string): string | null =>
+      p.startsWith("assets/") ? `/content/${p}` : null;
+
+    const refs = allIconRefs();
+    expect(refs.size).toBeGreaterThanOrEqual(279);
+
+    const byExt: Record<string, number> = {};
+    for (const [icon, from] of refs) {
+      const url = contentAssetUrl(icon);
+      expect(url, `${icon} (from ${from[0]}) must resolve to a URL`).not.toBeNull();
+      // Strip the /content/ mount back to a repo path — what nginx and the vite
+      // ggd-serve-content middleware both do to find the file.
+      const abs = join(CONTENT_DIR, url!.slice("/content/".length));
+      expect(existsSync(abs), `${icon} -> ${url} is a 404 (from ${from[0]})`).toBe(true);
+      const ext = icon.slice(icon.lastIndexOf("."));
+      expect(ICON_EXTS, `${icon} unknown icon extension`).toContain(ext);
+      byExt[ext] = (byExt[ext] ?? 0) + 1;
+    }
+    // The AI set is WebP and must stay that way — a regenerated batch that
+    // silently reverted to PNG would blow the 16 MB back into the tree.
+    expect(byExt[".webp"] ?? 0).toBeGreaterThanOrEqual(166);
   });
 
   it("extraction coverage floors hold per kind (icon-coverage-floor)", () => {
     cover("icon-coverage-floor");
-    expect(pngIds("champions").length).toBeGreaterThanOrEqual(FLOOR.champions);
-    expect(pngIds("abilities").length).toBeGreaterThanOrEqual(FLOOR.abilities);
-    expect(pngIds("items").length).toBeGreaterThanOrEqual(FLOOR.items);
+    expect(iconFiles("champions").length).toBeGreaterThanOrEqual(FLOOR.champions);
+    expect(iconFiles("abilities").length).toBeGreaterThanOrEqual(FLOOR.abilities);
+    expect(iconFiles("items").length).toBeGreaterThanOrEqual(FLOOR.items);
   });
 
   it("embedded Q/W/E/R icons agree with their standalone twins (icon-embed-standalone-agree)", () => {
@@ -136,9 +188,9 @@ describe("w3x original icons (icons)", () => {
       const exDocPath = join(CONTENT_DIR, "abilities", `${ex}.json`);
       expect(existsSync(exDocPath), `${ex} doc`).toBe(true);
       const exDoc = JSON.parse(readFileSync(exDocPath, "utf-8")) as { icon?: string };
-      const png = join(ICON_DIR, "abilities", `${ex}.png`);
-      if (existsSync(png)) {
-        expect(exDoc.icon, `${ex} icon field`).toBe(`assets/icons/abilities/${ex}.png`);
+      const ext = ICON_EXTS.find((e) => existsSync(join(ICON_DIR, "abilities", `${ex}${e}`)));
+      if (ext !== undefined) {
+        expect(exDoc.icon, `${ex} icon field`).toBe(`assets/icons/abilities/${ex}${ext}`);
         exWithIcon += 1;
       } else {
         expect(exDoc.icon, `${ex} must not fabricate an icon`).toBeUndefined();
@@ -151,8 +203,8 @@ describe("w3x original icons (icons)", () => {
     cover("icon-no-orphans");
     const referenced = new Set(allIconRefs().keys());
     for (const kind of ["champions", "abilities", "items"] as const) {
-      for (const id of pngIds(kind)) {
-        expect(referenced.has(`assets/icons/${kind}/${id}.png`), `${kind}/${id}.png`).toBe(true);
+      for (const { id, file } of iconFiles(kind)) {
+        expect(referenced.has(`assets/icons/${kind}/${file}`), `${kind}/${file}`).toBe(true);
         for (const pruned of PRUNED_IDS) {
           expect(id === pruned || id.startsWith(`${pruned}.`), `${id} pruned champion`).toBe(false);
         }

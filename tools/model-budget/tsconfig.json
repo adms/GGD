@@ -14,12 +14,14 @@
     "rig.ts",
     "guard.ts",
     "optimize.ts",
+    "trimClips.ts",
     "worklist.ts",
     "limits.test.ts",
     "report.test.ts",
     "glb.test.ts",
     "guard.test.ts",
     "optimize.test.ts",
+    "trimClips.test.ts",
     "worklist.test.ts"
   ]
 }

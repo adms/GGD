@@ -191,6 +191,19 @@ def main() -> None:
         if png is None:
             row["resolution"] = "convert-failed"
             return None
+        # DO NOT overwrite a doc that already points at a better, hand-made or
+        # AI-generated icon. This importer only ever produces legacy 64² PNG
+        # extracts, but the AI icon set ships as 128² WebP
+        # (tools/icon-gen/convert-webp.mjs) and its .png originals are DELETED.
+        # Without this guard a re-run would repoint such a doc at a
+        # `<id>.png` that does not exist, i.e. reintroduce the exact broken
+        # reference the WebP migration had to clean up — and it would do it
+        # silently, because this function writes the file it names.
+        for better in (".webp",):
+            if os.path.exists(os.path.join(CONTENT, f"assets/icons/{kind}/{doc_id}{better}")):
+                row["resolution"] = "kept-existing"
+                row["icon"] = f"assets/icons/{kind}/{doc_id}{better}"
+                return row["icon"]
         rel = f"assets/icons/{kind}/{doc_id}.png"
         dest = os.path.join(CONTENT, rel)
         if not (os.path.exists(dest) and open(dest, "rb").read() == png):

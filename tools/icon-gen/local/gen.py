@@ -51,8 +51,8 @@ def main() -> None:
     g.add_argument("--doc", help="content doc as 'family/id' (subject derived via prompt.py)")
     g.add_argument("--subject", help="a subject clause; wrapped in the pinned PREFIX/NEGATIVE")
     g.add_argument("--prompt", help="a complete prompt string (as the platform would send)")
-    ap.add_argument("--out", required=True, help="output PNG path")
-    ap.add_argument("--size", type=int, default=256, help="output edge in px (default 256)")
+    ap.add_argument("--out", required=True, help="output icon path (.webp)")
+    ap.add_argument("--size", type=int, default=128, help="output edge in px (default 128)")
     ap.add_argument("--steps", type=int, default=24)
     ap.add_argument("--guidance", type=float, default=7.0)
     ap.add_argument("--seed", type=int, default=None)
@@ -80,7 +80,12 @@ def main() -> None:
     dt = time.time() - t0
 
     os.makedirs(os.path.dirname(os.path.abspath(args.out)), exist_ok=True)
-    img.save(args.out, "PNG", optimize=True)
+    # Shipped format is WebP (tools/icon-gen/convert-webp.mjs); these icons
+    # are opaque, so RGB keeps the alpha channel from costing bytes.
+    if args.out.lower().endswith(".webp"):
+        img.convert("RGB").save(args.out, "WEBP", quality=90, method=6)
+    else:
+        img.save(args.out, "PNG", optimize=True)
     nbytes = os.path.getsize(args.out)
     print(f"gen: wrote {args.out}  {img.size[0]}x{img.size[1]}  {nbytes} bytes  in {dt:.1f}s")
     # Cheap non-blank sanity check: a solid/failed image has ~1 colour.

@@ -46,8 +46,8 @@ $GGD_PLATFORM_TOKEN, never written to disk and never logged.
 ────────────────────────────────────────────────────────────────────────────
 WHAT IT WRITES
 ────────────────────────────────────────────────────────────────────────────
-  content/assets/icons/<family>/<id>.png       the shipped icon, downscaled
-  content/assets/icons/<family>/<id>.png.hash  the idempotence sidecar
+  content/assets/icons/<family>/<id>.webp      the shipped icon, downscaled
+  content/assets/icons/<family>/<id>.webp.hash the idempotence sidecar
   tools/icon-gen/out/raw/<id>.png              the provider's full-size image
   tools/icon-gen/out/ledger.jsonl              one line per BILLED call
 
@@ -98,6 +98,10 @@ DEFAULT_RPM = 24
 # Shipped edge in pixels. The extracted map icons are 64x64 and the largest
 # on-screen tile is 52px, so 128 is one full hi-dpi step of headroom and no more.
 DEFAULT_EDGE = 128
+# Shipped icon format. See tools/icon-gen/convert-webp.mjs for the measurement
+# that drove the PNG -> WebP switch (16.07 MB -> 0.79 MB across 169 icons).
+ICON_EXT = ".webp"
+ICON_QUALITY = 90
 
 
 def fail(msg: str) -> None:
@@ -168,21 +172,27 @@ def patch_icon_field(family: str, doc_id: str, rel: str) -> bool:
     return True
 
 
-def downscale_png(data: bytes, edge: int) -> bytes:
-    """Provider image -> the shipped square. Pillow is already a dependency of
-    the w3x importer. Without it the raw image ships unchanged (and says so)."""
+def downscale_icon(data: bytes, edge: int) -> bytes:
+    """Provider image -> the shipped square, encoded as WebP.
+
+    WebP at edge=128/q90 is ~5% of the equivalent PNG and gzip is provably
+    useless on PNG, so this is the only lever that exists on icon bytes. These
+    icons are opaque, so RGB is used rather than RGBA — the alpha channel would
+    be pure padding. Pillow is already a dependency of the w3x importer; without
+    it the raw image ships unchanged (and says so).
+    """
     try:
         from PIL import Image
     except ImportError:
         return data
     img = Image.open(io.BytesIO(data))
     img.load()
-    if img.mode != "RGBA":
-        img = img.convert("RGBA")
+    if img.mode != "RGB":
+        img = img.convert("RGB")
     if img.size != (edge, edge):
         img = img.resize((edge, edge), Image.LANCZOS)
     buf = io.BytesIO()
-    img.save(buf, "PNG", optimize=True)
+    img.save(buf, "WEBP", quality=ICON_QUALITY, method=6)
     return buf.getvalue()
 
 
@@ -346,11 +356,11 @@ def main() -> None:
 
     todo, skipped = [], 0
     for job in jobs:
-        out_png = os.path.join(CONTENT, "assets", "icons", job["family"], f"{job['id']}.png")
-        job["out"] = out_png
-        job["rel"] = f"assets/icons/{job['family']}/{job['id']}.png"
+        out_icon = os.path.join(CONTENT, "assets", "icons", job["family"], f"{job['id']}{ICON_EXT}")
+        job["out"] = out_icon
+        job["rel"] = f"assets/icons/{job['family']}/{job['id']}{ICON_EXT}"
         job["hash"] = content_hash(job)
-        if not args.force and up_to_date(out_png, job["hash"]):
+        if not args.force and up_to_date(out_icon, job["hash"]):
             skipped += 1
             continue
         todo.append(job)
@@ -461,7 +471,7 @@ def main() -> None:
             if not args.no_keep_raw:
                 with open(os.path.join(RAW_DIR, f"{job['id']}.png"), "wb") as fh:
                     fh.write(raw)
-            shipped = downscale_png(raw, job["edge"])
+            shipped = downscale_icon(raw, job["edge"])
             os.makedirs(os.path.dirname(job["out"]), exist_ok=True)
             with open(job["out"], "wb") as fh:
                 fh.write(shipped)

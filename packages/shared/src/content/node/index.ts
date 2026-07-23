@@ -12,4 +12,7 @@ export {
   rebuildCollectionIndex,
   rebuildManifest,
   rebuildAllIndexes,
+  bundlePath,
+  writeContentBundle,
+  deleteContentBundle,
 } from "./fsStore";

@@ -466,9 +466,10 @@ function renderPlaybook() {
         帶著 1 根骨頭、1 個 clip。因為它是蒙皮的，Babylon <b>永遠</b>不會硬體 instance 它
         （<code>assetContainer.js</code>：<code>node.skeleton ⇒ canInstance = false</code>），
         於是 50 棵樹 = 100 個真 mesh + 50 副骨架 + 50 個 AnimationGroup。拔掉骨架 → 2 個 draw call。</li>
-      <li><b>減 clip，不是減面</b>。KayKit 的每個 clip 都是 41 關節 × 位移+旋轉+縮放 = 123 條通道，
-        而它有 76 個 clip（<code>clipMap</code> 只用到其中 6 個）。非 root 關節的位移與縮放軌幾乎都是常數，
-        離線烘掉就從 123 條降到 41 條左右。中位 imported 骨架只有 17 條。</li>
+      <li><b>減 clip，不是減面</b>（<span style="opacity:.75">已執行</span>）。KayKit 的每個 clip 都是 41 關節 × 位移+旋轉+縮放 = 123 條通道，
+        原本有 76 個 clip，現已由 <code>tools/model-budget/trimClips.ts</code> 修剪為
+        ${knight ? knight.clips : 16} 個（四支英雄 glb 共 14,478,324 → 4,257,056 B，−70.6%）。
+        剩下的路是：非 root 關節的位移與縮放軌幾乎都是常數，離線烘掉就從 123 條降到 41 條左右。中位 imported 骨架只有 17 條。</li>
       <li><b>開 instancing</b>。<code>ArenaScene.placeInstance</code> 沒有傳 options，而 Babylon 的
         <code>instantiateModelsToScene</code> 預設 <code>doNotInstantiate: true</code>，
         所以「已經 instance 了」這件事從來沒有發生過。靜態擺設傳 <code>false</code>：
@@ -583,9 +584,32 @@ function renderModels() {
    layout.ts, limits.ts) are not HTTP-served, and a brand-new .glb that nothing
    references yet is not in this report to be asked about. Both are caught by
    re-running the generator / the CI `--check` ratchet, not by the browser. */
+/* COMPRESSION, and why `Content-Length` alone is not safe to compare.
+   A compressed response's Content-Length is the size of the COMPRESSED body,
+   which has nothing to do with the bytes this report recorded from disk.
+   Measured on the real nginx image: `HEAD knight.glb` with a `.gz` sidecar
+   present reported Content-Length 388867 against a recorded 1103872 — i.e.
+   every compressed asset would be flagged "changed" and the page would scream
+   that 163 files are stale when nothing had moved. Browsers always send
+   `Accept-Encoding: gzip` and it is a forbidden header name, so the page cannot
+   opt out from JS.
+   Two defences, in order of preference:
+     1. `X-Raw-Length` — the identity size, stated explicitly by the server.
+        The vite dev server sets it on every static response
+        (apps/client/vite.config.ts staticHandler), so dev/LAN verifies even
+        when sidecars exist.
+     2. `Content-Length` on an UNCOMPRESSED response. Prod nginx turns gzip off
+        for HEAD (it has no body to compress anyway — see the /content/
+        locations in nginx/nginx.conf), which restores the identity length.
+   If a response is compressed and carries no X-Raw-Length, the size is
+   UNKNOWABLE — report it as unverifiable, never as "changed". */
 async function headLen(u) {
   try {
     const r = await fetch(u, { method: "HEAD", cache: "no-store" });
+    const raw = r.headers.get("x-raw-length");
+    if (raw != null && raw !== "") return { status: r.status, len: Number(raw) };
+    // A compressed body's length is not the disk length — unverifiable, not changed.
+    if (r.headers.get("content-encoding")) return { status: r.status, len: null, enc: true };
     const cl = r.headers.get("content-length");
     return { status: r.status, len: cl == null ? null : Number(cl) };
   } catch {
@@ -647,13 +671,20 @@ async function verifyFreshness(R, reportUrl) {
       stale.map((r) => `${esc(r.label)} — ${esc(r.why)}`).join("<br>") +
       `</div>`;
   } else if (verified === 0) {
-    // every HEAD failed (no Content-Length, or server unreachable) — do NOT claim fresh
+    // every HEAD failed (compressed, no Content-Length, or server unreachable)
+    // — do NOT claim fresh, and do NOT claim stale either.
+    const encCount = results.filter((r) => r.enc).length;
     if (chip) { chip.className = "pill warn"; chip.textContent = "無法在檢視時核對資產"; }
     banner.className = "banner mixed";
     banner.innerHTML =
-      `<b>無法核對報告是否過期。</b> 伺服器沒有對這些資產回應可用的 Content-Length` +
-      `（可能是以 <code>file://</code> 開啟，或 <code>/content</code> 沒有被服務）。` +
-      `報告本身仍會顯示，但這一次無法向磁碟確認它是不是最新的。`;
+      `<b>無法核對報告是否過期。</b> ` +
+      (encCount > 0
+        ? `伺服器把這 ${encCount} 份資產壓縮後才回應，回報的長度是壓縮後的大小，` +
+          `跟報告記下的磁碟位元組不能比。`
+        : `伺服器沒有對這些資產回應可用的 Content-Length` +
+          `（可能是以 <code>file://</code> 開啟，或 <code>/content</code> 沒有被服務）。`) +
+      `報告本身仍會顯示，但這一次無法向磁碟確認它是不是最新的 —— ` +
+      `要確定的話跑 <code>pnpm exec tsx tools/model-budget/emit_report.ts --check</code>。`;
     banner.style.display = "";
   } else if (unverified.length) {
     if (chip) { chip.className = "pill warn"; chip.textContent = `已核對 ${verified}/${results.length} 份一致`; }

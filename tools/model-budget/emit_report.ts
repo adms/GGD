@@ -536,20 +536,46 @@ function main(): void {
     ],
   });
 
-  const iconBytes = ["champions", "abilities", "items"]
-    .map((d) => path.join(CONTENT, "assets/icons", d))
-    .filter((d) => fs.existsSync(d))
-    .flatMap((d) => fs.readdirSync(d).filter((f) => f.endsWith(".png")))
-    .length;
+  // The icon set is TWO populations with DIFFERENT decoded sizes, and VRAM is
+  // driven by pixels, not by file bytes:
+  //   - legacy w3x extracts, 64² PNG   (tools/w3x-import/extract_icons.py)
+  //   - AI-generated set,   128² WebP  (tools/icon-gen/convert-webp.mjs)
+  // Counting only `.png` — as this did before the WebP migration — silently
+  // dropped the entire AI set from the budget and understated this scene by
+  // 169 icons. Counting them all at 64² would understate it again, because a
+  // 128² image decodes to 4× the RGBA8 of a 64² one however small the file is.
+  // So: count each extension at its real edge. `.filter(Boolean)` is not enough
+  // here — an unknown extension must not be silently priced at zero, so anything
+  // that is neither .png nor .webp is left out of the count AND out of the prose.
+  const ICON_EDGE: Record<string, number> = { ".png": 64, ".webp": 128 };
+  const iconCounts = new Map<string, number>();
+  for (const dir of ["champions", "abilities", "items"]) {
+    const d = path.join(CONTENT, "assets/icons", dir);
+    if (!fs.existsSync(d)) continue;
+    for (const f of fs.readdirSync(d)) {
+      const ext = path.extname(f).toLowerCase();
+      if (ICON_EDGE[ext] === undefined) continue;
+      iconCounts.set(ext, (iconCounts.get(ext) ?? 0) + 1);
+    }
+  }
+  const iconCount = [...iconCounts.values()].reduce((a, b) => a + b, 0);
+  // ×4/3 for the mip chain, same convention as every other texture in this report.
+  const iconVram = Math.round(
+    [...iconCounts].reduce((sum, [ext, n]) => sum + n * ICON_EDGE[ext] ** 2 * 4, 0) * (4 / 3),
+  );
+  const iconBreakdown = [...iconCounts]
+    .sort((a, b) => b[1] - a[1])
+    .map(([ext, n]) => `${n} 張 ${ICON_EDGE[ext]}² ${ext.slice(1).toUpperCase()}`)
+    .join(" + ");
   scenes.push({
     id: "champ-select",
     label: "選角畫面",
-    note: "沒有任何 3D，沒有 Babylon。整頁只有 <img> 的 64² 圖示，是全遊戲最便宜的一頁 —— 列在這裡是為了證明它被量過，而不是被忘記。",
+    note: "沒有任何 3D，沒有 Babylon。整頁只有 <img> 圖示，是全遊戲最便宜的一頁 —— 列在這裡是為了證明它被量過，而不是被忘記。",
     models: [],
     procedural: [],
     extraVram: {
-      bytes: Math.round(iconBytes * 64 * 64 * 4 * (4 / 3)),
-      why: `${iconBytes} 張 64² PNG 圖示（英雄/技能/道具），瀏覽器解成 RGBA8。`,
+      bytes: iconVram,
+      why: `${iconCount} 張圖示（英雄/技能/道具）：${iconBreakdown}，瀏覽器解成 RGBA8。`,
     },
   });
 

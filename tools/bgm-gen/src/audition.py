@@ -30,6 +30,9 @@ OUT = os.path.join(ROOT, "apps", "client", "public", "bgm-audition.html")
 QUOTES = os.path.join(CONTENT, "assets", "audio", "voices", "quotes", "quotes.json")
 CHAMPIONS_CSV = os.path.join(ROOT, "docs", "champions.csv")
 ICONS_DIR = os.path.join(CONTENT, "assets", "icons", "champions")
+# Shipping icon extensions, in preference order. The AI-generated set is 128²
+# WebP; the legacy 64² w3x extracts are still PNG. Never hard-code one of these.
+ICON_EXTS = (".webp", ".png")
 
 # The two theme tracks lead the list; the rest follow in play order.
 THEME = ["menu", "menuNocturne"]
@@ -174,7 +177,16 @@ def voiceline_rows() -> list[dict]:
     for cid in sorted(quotes):
         q = quotes[cid] or {}
         m = meta.get(cid, {})
-        has_icon = os.path.exists(os.path.join(ICONS_DIR, f"{cid}.png"))
+        # Probe EVERY shipping icon extension, not just .png. The AI-generated
+        # icon set was converted to 128² WebP (tools/icon-gen/convert-webp.mjs)
+        # and the .png originals deleted; the legacy 64² w3x extracts stay PNG.
+        # Probing ".png" alone silently dropped 24 champions to the "♪"
+        # placeholder — and before that, hard-coding ".png" in the URL shipped
+        # 24 dead <img> links on this page. Extension order = preference order.
+        ext = next(
+            (e for e in ICON_EXTS if os.path.exists(os.path.join(ICONS_DIR, f"{cid}{e}"))),
+            None,
+        )
         clip_rel = q.get("clip") or f"assets/audio/voices/quotes/{cid}.mp3"
         rows.append({
             "id": cid,
@@ -185,7 +197,7 @@ def voiceline_rows() -> list[dict]:
             "jp": q.get("jpQuote") or (m.get("名言") or ""),
             "romaji": q.get("romaji", ""),
             "gloss": q.get("zhGloss", ""),
-            "icon": url_for(f"assets/icons/champions/{cid}.png") if has_icon else "",
+            "icon": url_for(f"assets/icons/champions/{cid}{ext}") if ext else "",
             "url": url_for(clip_rel),
         })
     return rows

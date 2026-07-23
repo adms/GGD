@@ -8,7 +8,59 @@ required (credits kept here out of courtesy and for provenance).
 **KayKit — Character Pack: Adventurers (1.0)** by Kay Lousberg (kaylousberg.com)
 - Source: https://github.com/KayKit-Game-Assets/KayKit-Character-Pack-Adventures-1.0
 - License: CC0 (see pack's LICENSE.txt)
-- Files: `mage.glb`, `knight.glb`, `barbarian.glb`, `rogue.glb` — rigged, 76 animation clips each.
+- Files: `mage.glb`, `knight.glb`, `barbarian.glb`, `rogue.glb` — rigged to one shared
+  **41-bone `Rig`**, one **1024×1024 baked albedo PNG** each, **5,683–6,952 tris**.
+
+**MODIFIED — animation set trimmed from 76 clips to 16.** Same operation as
+`guardian_skeleton.glb` below, same guarantee: **geometry, rig, materials and texture are
+byte-unchanged**; only animation samplers (and the accessor / bufferView tables that exist
+solely to serve them) were removed. **No new attribution obligation** — the pack is CC0 and
+already credited here; the mandatory-attribution list stays at exactly one entry (the CC BY
+4.0 login dragon).
+
+| file | upstream bytes | shipped bytes | saved | clips |
+|---|---:|---:|---:|---:|
+| `knight.glb` | 3,659,532 | **1,103,872** | 2,555,660 (69.84%) | 76 → 16 |
+| `rogue.glb` | 3,616,284 | **1,060,924** | 2,555,360 (70.66%) | 76 → 16 |
+| `barbarian.glb` | 3,613,268 | **1,057,940** | 2,555,328 (70.72%) | 76 → 16 |
+| `mage.glb` | 3,589,240 | **1,034,320** | 2,554,920 (71.18%) | 76 → 16 |
+| **total** | **14,478,324** | **4,257,056** | **10,221,268 (70.60%)** | |
+
+- **Why animation and not polygons.** Measured composition of `knight.glb` before the trim:
+  animation **3,279,235 B (89.61%)**, geometry **339,000 B (9.26%)**, texture **14,172 B
+  (0.39%)**, skin inverse-bind matrices **2,624 B (0.07%)**. The meshes are already low-poly
+  and pass the champion gate (`tools/model-budget/limits.ts`, warn 16,000 tris) with 2.3×
+  headroom, so decimating all four by 75% would have recovered only 899,420 B (6.21%) while
+  visibly degrading models **42 of 114 champions wear**. 99.2% of the 8,839 accessors and
+  8,840 bufferViews existed only to serve animation samplers.
+- **The 16 kept clips** (identical roster in all four files, because they share one rig and
+  are swapped between freely): `Idle`, `Running_A`, `Walking_A`, `2H_Melee_Idle`,
+  `1H_Melee_Attack_Slice_Diagonal`, `2H_Melee_Attack_Spin`, `Spellcast_Shoot`,
+  `Spellcast_Long`, `Hit_A`, `Hit_B`, `Death_A`, `Death_B`, `Death_A_Pose`, `Cheer`,
+  `Interact`, `Use_Item`.
+- **The keep-set is DERIVED, not hand-listed** — `tools/model-budget/trimClips.ts` takes the
+  union of (a) every `clipMap` value in the model docs that point at each file
+  (`champ.thorne` → knight, `champ.sela` → mage, `champ.skin.barbarian`, `champ.skin.rogue`)
+  and (b) whatever `pickReactionClip` (`apps/client/src/render/intermission/reactionClip.ts`,
+  which deliberately ignores `clipMap` and regex-matches raw group names) returns over the
+  file's real clip list — that is `Cheer`, the shop-purchase celebration. Plus a scoped
+  reserved table for the `arena.castle` 空鎧 reuse below. `trimClips.test.ts` re-derives the
+  set and fails if a shipped file no longer satisfies it, so a future `clipMap` edit cannot
+  silently ship a champion whose attack animation is missing.
+- **Verified two independent ways.** The repo's own parser (`measureGlb`) reports tris, verts,
+  meshes, materials, skins, joints, `maxTextureEdge`, `textureDiskBytes` and `vramBytes`
+  **unchanged on every file**, and every geometry / skin-IBM accessor and every image
+  bufferView compares **byte-identical**. Loaded through the exact Babylon the client ships
+  (**7.54.3 `NullEngine` + `LoadAssetContainerAsync`**): meshes, triangles, vertices,
+  skeletons (1), bones (41) and materials (1) all match the untrimmed originals, `Idle` still
+  runs `0 → 64.00000333786011` with **123 targeted animations**, and all 16 expected clip
+  names are present.
+- **Compressed, for the record:** the four together are **4,566,810 B → 1,493,701 B** gzip-9
+  and **3,757,517 B → 1,231,757 B** brotli-11, so the trim keeps ~2/3 of its value even once
+  `.glb` compression is configured at the edge.
+- **Recoverable:** the untrimmed originals are in git history, and the upstream pack is the
+  public CC0 GitHub repo linked above. Re-run `trimClips.ts` with a wider reserved table to
+  restore any clip a future feature needs.
 
 ## Environment props (`models/props/*.glb`)
 
@@ -444,7 +496,10 @@ unchanged: no new mandatory attribution** (the CC-BY login dragon stays the only
 - **Height / scale.** #89 §14 Q4 family target **~3.4 u** (「只比人高一倍」, 2× the 1.7 u hero) →
   uniform **scale 1.377** (3.4 / 2.4688), rendered footprint **1.62 × 1.90 u**, well inside the
   guardian's 2.5 u radius. Wake/death are the §9.2/§9.4 **procedural** states over baked
-  `2H_Melee_Idle` / `Hit_A`/`Hit_B` / `Death_A`/`Death_B` clips (72 baked in the shared file).
+  `2H_Melee_Idle` / `Hit_A`/`Hit_B` / `Death_A`/`Death_B` clips. The shared file now carries
+  **16** clips, not the upstream 76 (see *Characters* above) — **all five named here are in
+  the kept set**, held there by `trimClips.ts`'s scoped reserved table, which cites this
+  section as the consumer.
 
 > **#29 35-ray sweep — RUN, not deferred (this is the technical crux of #105 for this face).**
 > Staged at each `zone.center` of `arena.castle` (replacing the centre pillar the guardian *is*, §2),

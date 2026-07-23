@@ -42,6 +42,7 @@ import {
   type FieldIssue,
 } from "@ggd/shared/content";
 import {
+  deleteContentBundle,
   deleteDocFile,
   docPath,
   rebuildCollectionIndex,
@@ -142,10 +143,30 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
     return { collection: p.collection, id: p.id, file };
   }
 
-  /** incremental reindex after a write/delete: one collection + manifest. */
+  /**
+   * Incremental reindex after a write/delete: one collection + manifest.
+   *
+   * ALSO DELETES content/bundle.json. The bundle is a whole-tree artifact built
+   * by `pnpm content:build`; this endpoint rewrites ONE doc, so any bundle on
+   * disk is now stale. A stale bundle is worse than none — the client would
+   * hydrate OLD docs (and the old contentVersion, so the mismatch gate would
+   * not even fire) while the game-server, which reads the filesystem directly,
+   * has the new ones. Deleting it makes the client's FallbackContentSource
+   * drop straight back to per-doc fetching, which is always fresh.
+   *
+   * Rebuilding the whole bundle here is the alternative, and the honest reason
+   * not to is NOT cost: measured on this tree, read+parse of all 1,441 docs is
+   * 52 ms and stringifying the bundle is 20 ms — ~80 ms, on an endpoint that
+   * already re-hashes an entire collection. The real reasons are that (a)
+   * `content/bundle.json` is a COMMITTED artifact and a dev CRUD endpoint
+   * should not be silently authoring one, and (b) deleting fails safe while
+   * rebuilding fails dangerous — a rebuild that goes wrong leaves a
+   * confidently-wrong bundle, whereas a missing one just costs requests.
+   */
   function reindex(collection: CollectionName): { collectionHash: string; contentVersion: string } {
     const index = rebuildCollectionIndex(root, collection);
     const manifest = rebuildManifest(root, { indexes: { [collection]: index } });
+    deleteContentBundle(root);
     return { collectionHash: index.hash, contentVersion: manifest.contentVersion };
   }
 

@@ -4,7 +4,7 @@
  * loader.test.ts but through a mocked HttpContentSource), and falls back to the
  * sela/thorne skeleton when the mount is unreachable.
  */
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
 import { HttpContentSource } from "@ggd/shared/content";
 import {
@@ -210,5 +210,153 @@ describe("content boot", () => {
     const after = calls;
     await ensureContentLoaded({ source });
     expect(calls).toBe(after); // a later call re-uses the cached promise
+  });
+});
+
+/**
+ * The transport change (Item 4): boot fetches ONE /content/bundle.json instead
+ * of 1 manifest + 12 `_index.json` + 1,441 docs. These tests drive the REAL
+ * production wiring — no injected ContentSource — by stubbing global fetch, so
+ * they exercise exactly what main.tsx runs.
+ */
+describe("content boot — one-request bundle transport", () => {
+  /** the same mock content set, expressed as a bundle */
+  const BUNDLE = {
+    schema: "content-bundle@1",
+    contentVersion: "cv_test00000000",
+    collections: {
+      champions: { hash: HASH, entries: [{ id: "mockchamp", hash: HASH, doc: CHAMPION }] },
+      abilities: {
+        hash: HASH,
+        entries: (["q", "w", "e", "r"] as const).map((s) => ({
+          id: `mockchamp.${s}`,
+          hash: HASH,
+          doc: { ...ability(s.toUpperCase() as "Q" | "W" | "E" | "R"), schema: "ability@1" },
+        })),
+      },
+      models: { hash: HASH, entries: [{ id: "mock.model", hash: HASH, doc: MODEL }] },
+    },
+  };
+
+  /** global-fetch stub: serves the bundle (or not) plus the per-doc FILES. */
+  function stubGlobalFetch(bundleBody: string | null, status = 200): { calls: string[] } {
+    const calls: string[] = [];
+    const perDoc = mockFetch(FILES);
+    globalThis.fetch = ((input: unknown, init?: unknown) => {
+      const url = String(input);
+      calls.push(url);
+      if (url.split("?")[0] === "/content/bundle.json") {
+        return Promise.resolve({
+          ok: status >= 200 && status < 300,
+          status,
+          text: async () => bundleBody ?? "",
+          json: async () => JSON.parse(bundleBody ?? "null") as unknown,
+        } as unknown as Response);
+      }
+      return (perDoc as unknown as (i: unknown, x?: unknown) => Promise<Response>)(input, init);
+    }) as unknown as typeof fetch;
+    return { calls };
+  }
+
+  const realFetch = globalThis.fetch;
+  afterEach(() => {
+    globalThis.fetch = realFetch;
+  });
+
+  it("hydrates the registries from the bundle in exactly ONE request", async () => {
+    cover("client-content-boot");
+    const { calls } = stubGlobalFetch(JSON.stringify(BUNDLE));
+    const res = await loadAllContent();
+
+    expect(res.ok).toBe(true);
+    expect(res.transport).toBe("bundle");
+    expect(res.contentVersion).toBe("cv_test00000000");
+    expect(calls).toEqual(["/content/bundle.json"]);
+    // ...and the SAME registry state the per-doc path produces
+    expect(Champions.get("mockchamp" as ChampionId).name).toBe("模擬英雄");
+    expect(Abilities.get("mockchamp.q" as AbilityId).slot).toBe("Q");
+    expect(Models.get("mock.model").glbPath).toBe("assets/models/mock.glb");
+  });
+
+  it("bundle and per-doc hydrate IDENTICAL registry state", async () => {
+    cover("client-content-boot");
+    const snapshot = () => ({
+      champions: Champions.ids().slice().sort(),
+      abilities: Abilities.ids().slice().sort(),
+      models: Models.ids().slice().sort(),
+      champion: JSON.stringify(Champions.get("mockchamp" as ChampionId)),
+      abilityQ: JSON.stringify(Abilities.get("mockchamp.q" as AbilityId)),
+      model: JSON.stringify(Models.get("mock.model")),
+    });
+
+    stubGlobalFetch(JSON.stringify(BUNDLE));
+    const viaBundle = await loadAllContent();
+    const fromBundle = snapshot();
+
+    clearRegistries();
+    __resetContentBoot();
+
+    // force the legacy path through the very same public entry point
+    stubGlobalFetch(null, 404);
+    const viaPerDoc = await loadAllContent({ disableBundle: true });
+    const fromPerDoc = snapshot();
+
+    expect(viaBundle.ok).toBe(true);
+    expect(viaPerDoc.ok).toBe(true);
+    expect(viaPerDoc.transport).toBe("per-doc");
+    expect(fromBundle).toEqual(fromPerDoc);
+    expect(viaBundle.contentVersion).toBe(viaPerDoc.contentVersion);
+  });
+
+  it("a 404 bundle falls back to per-doc fetching — a stale deploy cannot brick the client", async () => {
+    cover("client-content-fallback");
+    const { calls } = stubGlobalFetch(null, 404);
+    const res = await loadAllContent();
+
+    expect(res.ok).toBe(true); // NOT the skeleton fallback — the full set loaded
+    expect(res.transport).toBe("per-doc");
+    expect(res.transportReason).toMatch(/404/);
+    expect(calls[0]).toBe("/content/bundle.json");
+    expect(calls.length).toBeGreaterThan(1); // it really went back to per-doc
+    expect(Champions.get("mockchamp" as ChampionId).name).toBe("模擬英雄");
+  });
+
+  it("a CORRUPT bundle also falls back (parse failure, not just HTTP status)", async () => {
+    cover("client-content-fallback");
+    // truncated body: a status-only check would sail past this and take the
+    // whole content set down with it.
+    stubGlobalFetch(JSON.stringify(BUNDLE).slice(0, -10));
+    const corrupt = await loadAllContent();
+    expect(corrupt.ok).toBe(true);
+    expect(corrupt.transport).toBe("per-doc");
+    expect(Champions.get("mockchamp" as ChampionId).name).toBe("模擬英雄");
+  });
+
+  it("valid JSON of the wrong shape also falls back", async () => {
+    cover("client-content-fallback");
+    stubGlobalFetch(JSON.stringify({ hello: "world" }));
+    const res = await loadAllContent();
+    expect(res.ok).toBe(true);
+    expect(res.transport).toBe("per-doc");
+    expect(res.transportReason).toMatch(/schema/);
+    expect(Champions.get("mockchamp" as ChampionId).name).toBe("模擬英雄");
+  });
+
+  it("when BOTH transports are gone, it still degrades (never throws)", async () => {
+    cover("client-content-fallback");
+    globalThis.fetch = (() =>
+      Promise.resolve({
+        ok: false,
+        status: 404,
+        text: async () => "",
+        json: async () => ({}),
+      } as unknown as Response)) as unknown as typeof fetch;
+    const res = await loadAllContent();
+    // the skeleton fallback path — registerSkeletonContent() is latched
+    // module-wide, so assert the CONTRACT (never throws, reports the failure)
+    // rather than re-asserting sela/thorne, which the test above already owns.
+    expect(res.ok).toBe(false);
+    expect(res.error).toBeTruthy();
+    expect(res.transportReason).toMatch(/404/);
   });
 });

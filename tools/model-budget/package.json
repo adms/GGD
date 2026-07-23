@@ -9,6 +9,7 @@
     "budget:guard": "tsx guard.ts",
     "budget:worklist": "tsx worklist.ts",
     "budget:optimize": "tsx optimize.ts",
+    "budget:trim-clips": "tsx trimClips.ts",
     "budget:optimize:setup-geometry": "bash optimize/bootstrap-geometry.sh",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "vitest run"

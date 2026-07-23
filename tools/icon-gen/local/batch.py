@@ -3,10 +3,11 @@
 
 Generates the MANDATORY missing icons on-device (Apple-Silicon MPS) with a
 TWO-PASS method and saves each to the content path the app already serves,
-setting that doc's `icon` field (champions / items). IDEMPOTENT + RESUMABLE:
-every finished icon carries a `ggd_iconmethod` marker inside the PNG, so a
-re-run skips anything already produced by the CURRENT method and can be stopped
-and resumed freely.
+setting that doc's `icon` field (champions / items). Icons ship as 128x128 WebP
+(see ICON_EXT below and tools/icon-gen/convert-webp.mjs). IDEMPOTENT + RESUMABLE:
+every finished icon carries a `ggd_iconmethod` marker in a `<icon>.method`
+sidecar, so a re-run skips anything already produced by the CURRENT method and
+can be stopped and resumed freely.
 
 ────────────────────────────────────────────────────────────────────────────
 WHY TWO PASSES
@@ -44,7 +45,7 @@ SCOPE (the #72 rescope) — read from the committed content/config/icon-plan.jso
 
 Flags: --category champions|items|abilities|all, --limit N, --contact-sheet,
        --dry-run, --force (ignore the method marker), --strength F (img2img
-       denoise, default 0.45), --no-blocked-champions, --size PX (default 256),
+       denoise, default 0.45), --no-blocked-champions, --size PX (default 128),
        --seed N (else a stable per-id seed), --no-write-icon-field.
 """
 from __future__ import annotations
@@ -75,15 +76,31 @@ CONTACT_SHEET = os.path.join(ROOT, "docs", "_icon-contact-sheet.png")
 FAMILY_DIR = {"champions": "champions", "items": "items", "augments": "augments"}
 MARKER_KEY = "ggd_iconmethod"
 
+# Shipped icon format. WebP at 128² is ~5% of the 256² PNG it replaced and is
+# still oversampled for every surface in the app (largest is the 54 CSS px login
+# marquee portrait = 108 device px at DPR 2). See tools/icon-gen/convert-webp.mjs.
+ICON_EXT = ".webp"
+ICON_QUALITY = 90
+
 
 # --------------------------------------------------------------- worklist ----
 
 def _icon_rel(family: str, doc_id: str) -> str:
-    return f"assets/icons/{FAMILY_DIR[family]}/{doc_id}.png"
+    return f"assets/icons/{FAMILY_DIR[family]}/{doc_id}{ICON_EXT}"
 
 
 def _icon_abs(family: str, doc_id: str) -> str:
-    return os.path.join(ICONS_DIR, FAMILY_DIR[family], f"{doc_id}.png")
+    return os.path.join(ICONS_DIR, FAMILY_DIR[family], f"{doc_id}{ICON_EXT}")
+
+
+def _marker_path(icon_path: str) -> str:
+    """Sidecar holding the method version for `icon_path`.
+
+    The marker used to live in a PNG tEXt chunk, but Pillow cannot round-trip an
+    arbitrary text key through WebP, so it moved to a sidecar — the same
+    format-neutral convention tools/icon-gen/src/generate.py already uses.
+    """
+    return icon_path + ".method"
 
 
 def _stable_seed(doc_id: str) -> int:
@@ -136,15 +153,32 @@ def build_worklist(category: str, include_blocked: bool) -> list[dict]:
 
 
 def _is_done(path: str) -> bool:
-    """True iff a PNG produced by the CURRENT method is already on disk."""
+    """True iff an icon produced by the CURRENT method is already on disk."""
     if not os.path.exists(path):
         return False
+    marker = _marker_path(path)
+    if os.path.exists(marker):
+        try:
+            with open(marker, encoding="utf-8") as fh:
+                return fh.read().strip() == keywords.METHOD_VERSION
+        except Exception:
+            return False
+    # Back-compat: icons written before the sidecar switch carry the marker in a
+    # PNG tEXt chunk. Read it and adopt the sidecar so this runs once per file.
     try:
         from PIL import Image
         with Image.open(path) as im:
-            return im.info.get(MARKER_KEY) == keywords.METHOD_VERSION
+            done = im.info.get(MARKER_KEY) == keywords.METHOD_VERSION
     except Exception:
         return False
+    if done:
+        _write_marker(path)
+    return done
+
+
+def _write_marker(icon_path: str) -> None:
+    with open(_marker_path(icon_path), "w", encoding="utf-8") as fh:
+        fh.write(keywords.METHOD_VERSION + "\n")
 
 
 # --------------------------------------------------------------- doc edit ----
@@ -178,11 +212,13 @@ def set_icon_field(family: str, doc_id: str, rel_path: str) -> bool:
 # ---------------------------------------------------------------- render -----
 
 def _save(img, path: str) -> None:
-    from PIL import PngImagePlugin
-    meta = PngImagePlugin.PngInfo()
-    meta.add_text(MARKER_KEY, keywords.METHOD_VERSION)
+    """Write the shipped icon as WebP + its method sidecar.
+
+    These icons are opaque RGB; keeping an alpha channel would only cost bytes.
+    """
     os.makedirs(os.path.dirname(path), exist_ok=True)
-    img.save(path, "PNG", pnginfo=meta, optimize=True)
+    img.convert("RGB").save(path, "WEBP", quality=ICON_QUALITY, method=6)
+    _write_marker(path)
 
 
 def render_two_pass(item: dict, args):
@@ -255,7 +291,7 @@ def run_batch(work: list[dict], args) -> dict:
 
 def contact_sheet(args) -> None:
     """~20 final (two-pass) icons across champions + items + draft abilities into
-    one labelled grid at docs/_icon-contact-sheet.png. Writes the real icon PNGs
+    one labelled grid at docs/_icon-contact-sheet.png. Writes the real icon files
     (idempotent cache) but touches NO doc field or index — look before committing."""
     from PIL import Image, ImageDraw
 
@@ -319,12 +355,12 @@ def main() -> None:
     ap.add_argument("--contact-sheet", action="store_true")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--force", action="store_true",
-                    help="re-render even if a current-method PNG exists")
+                    help="re-render even if a current-method icon exists")
     ap.add_argument("--no-blocked-champions", action="store_true")
     ap.add_argument("--no-write-icon-field", action="store_true")
     ap.add_argument("--strength", type=float, default=0.45,
                     help="PASS-2 img2img denoise strength (0.4-0.55)")
-    ap.add_argument("--size", type=int, default=256)
+    ap.add_argument("--size", type=int, default=128)
     ap.add_argument("--pass1-steps", type=int, default=26)
     ap.add_argument("--pass1-guidance", type=float, default=7.5)
     ap.add_argument("--pass2-steps", type=int, default=30)

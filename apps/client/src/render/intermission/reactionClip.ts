@@ -5,7 +5,10 @@
  * 或攻擊動作」 — a victory OR an attack. But the clip inventories differ wildly
  * across the roster and there is no single canonical name:
  *
- *   • KayKit stand-ins carry 76 clips, celebration included ("Cheer").
+ *   • KayKit stand-ins carry 16 clips after the trim (76 upstream, cut by
+ *     tools/model-budget/trimClips.ts), celebration still included ("Cheer").
+ *     "Cheer" is RESERVED in that tool precisely because this module reaches
+ *     for it by regex, not through a clipMap — see RESERVED_CLIPS.
  *   • w3x-imported heroes carry 1–24, named "Attack - 1", "Spell Throw", …
  *   • some imports have NO attack clip at all (task #69).
  *

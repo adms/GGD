@@ -1,25 +1,25 @@
 {
  "schema": "model-budget@1",
- "generatedAt": "2026-07-23T05:18:50.082Z",
+ "generatedAt": "2026-07-23T09:15:04.187Z",
  "generatedBy": "tools/model-budget/emit_report.ts (task #99)",
  "sources": [
   {
    "path": "content/models/_index.json",
    "sha256": "535656db7f26a52a",
    "bytes": 16807,
-   "mtime": "2026-07-23T04:00:48.682Z"
+   "mtime": "2026-07-23T08:34:35.281Z"
   },
   {
    "path": "content/arenas/_index.json",
    "sha256": "662c794f19e83f36",
    "bytes": 741,
-   "mtime": "2026-07-23T04:00:48.674Z"
+   "mtime": "2026-07-23T08:34:35.271Z"
   },
   {
    "path": "content/champions/_index.json",
-   "sha256": "69acfd5ffa29afee",
+   "sha256": "5a9739e7b2e1ec28",
    "bytes": 14861,
-   "mtime": "2026-07-23T04:00:48.628Z"
+   "mtime": "2026-07-23T08:34:35.221Z"
   },
   {
    "path": "apps/client/src/render/ArenaGround.ts",
@@ -320,19 +320,19 @@
   {
    "id": "champ-select",
    "label": "選角畫面",
-   "note": "沒有任何 3D，沒有 Babylon。整頁只有 <img> 的 64² 圖示，是全遊戲最便宜的一頁 —— 列在這裡是為了證明它被量過，而不是被忘記。",
+   "note": "沒有任何 3D，沒有 Babylon。整頁只有 <img> 圖示，是全遊戲最便宜的一頁 —— 列在這裡是為了證明它被量過，而不是被忘記。",
    "models": [],
    "procedural": [],
    "extraDraws": null,
    "extraVram": {
-    "bytes": 6094848,
-    "why": "279 張 64² PNG 圖示（英雄/技能/道具），瀏覽器解成 RGBA8。"
+    "bytes": 16973824,
+    "why": "279 張圖示（英雄/技能/道具）：166 張 128² WEBP + 113 張 64² PNG，瀏覽器解成 RGBA8。"
    },
    "triangles": 0,
    "drawCalls": 0,
    "animChannels": 0,
    "textureBytes": 0,
-   "vramBytes": 6094848,
+   "vramBytes": 16973824,
    "limits": [
     {
      "key": "triangles",
@@ -1383,7 +1383,7 @@
    "materials": 1,
    "skins": 1,
    "joints": 41,
-   "clips": 76,
+   "clips": 16,
    "animChannels": 123,
    "textureCount": 1,
    "textureBytes": 15089,
@@ -1397,7 +1397,7 @@
      "diskBytes": 15089
     }
    ],
-   "fileBytes": 3613268,
+   "fileBytes": 1057940,
    "worstCount": 12,
    "usedBy": [
     {
@@ -1434,7 +1434,7 @@
    "materials": 1,
    "skins": 1,
    "joints": 41,
-   "clips": 76,
+   "clips": 16,
    "animChannels": 123,
    "textureCount": 1,
    "textureBytes": 14172,
@@ -1448,7 +1448,7 @@
      "diskBytes": 14172
     }
    ],
-   "fileBytes": 3659532,
+   "fileBytes": 1103872,
    "worstCount": 12,
    "usedBy": [
     {
@@ -1479,7 +1479,7 @@
    "materials": 1,
    "skins": 1,
    "joints": 41,
-   "clips": 76,
+   "clips": 16,
    "animChannels": 123,
    "textureCount": 1,
    "textureBytes": 16311,
@@ -1493,7 +1493,7 @@
      "diskBytes": 16311
     }
    ],
-   "fileBytes": 3589240,
+   "fileBytes": 1034320,
    "worstCount": 12,
    "usedBy": [
     {
@@ -1524,7 +1524,7 @@
    "materials": 1,
    "skins": 1,
    "joints": 41,
-   "clips": 76,
+   "clips": 16,
    "animChannels": 123,
    "textureCount": 1,
    "textureBytes": 16670,
@@ -1538,7 +1538,7 @@
      "diskBytes": 16670
     }
    ],
-   "fileBytes": 3616284,
+   "fileBytes": 1060924,
    "worstCount": 12,
    "usedBy": [
     {

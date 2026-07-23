@@ -121,8 +121,11 @@ function boot(): void {
   // flips when it settles; ScreenBody + startMatch observe it.
   void ensureContentLoaded().then((res) => {
     if (res.ok) {
+      // transport is load-bearing telemetry: "per-doc" means content/bundle.json
+      // was missing/stale, so this boot paid 1,454 requests instead of 1.
       console.info(
-        `[client] content loaded: ${res.championCount} champions (${res.contentVersion})`,
+        `[client] content loaded: ${res.championCount} champions (${res.contentVersion}) via ${res.transport ?? "?"}` +
+          (res.transportReason ? ` — bundle unavailable: ${res.transportReason}` : ""),
       );
     } else {
       console.warn(
