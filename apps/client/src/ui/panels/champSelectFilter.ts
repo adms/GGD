@@ -3,7 +3,7 @@
  * (Chinese/CJK names included — plain substring, no locale casing tricks) and
  * uniform-random pick. No React / registry imports so it unit-tests cleanly.
  */
-import { isShopService } from "@ggd/shared/sim/economy/itemTiers";
+import { isShopService, itemHasEffect } from "@ggd/shared/sim/economy/itemTiers";
 
 export interface RosterChampion {
   id: string;
@@ -139,11 +139,16 @@ export function applyItemWhitelist<T extends { id: string }>(items: readonly T[]
  * further, but can never WIDEN it past the final/service rule: a mis-curated
  * whitelist cannot resurrect the old "every priced item" shop.
  */
-export function shopCatalogue<T extends { id: string; cost?: number; craftRole?: string }>(
-  items: readonly T[],
-  wl: Whitelist,
-): T[] {
-  const buyable = items.filter((i) => i.craftRole === "final" || isShopService(i.id));
+export function shopCatalogue<
+  T extends { id: string; cost?: number; craftRole?: string; modifiers?: unknown; passive?: unknown },
+>(items: readonly T[], wl: Whitelist): T[] {
+  // A final crafted weapon is buyable only when it does SOMETHING the sim can
+  // apply. Six finals (雷神之鎚/黑色魔書/…) carry only an active ability item@1
+  // cannot express yet (blocked on #56); the sim refuses to sell them, so
+  // listing one is a dead 1200g button. They stay classified `final` but off
+  // the shelf until the schema grows — exactly the shop's S3 gate.
+  const isFinal = (i: T) => i.craftRole === "final" && itemHasEffect(i as never);
+  const buyable = items.filter((i) => isFinal(i) || isShopService(i.id));
   if (wl.enforced) return applyItemWhitelist(buyable, wl);
   // Unenforced / offline dev is where the shop actually gets played, and the
   // final/service rule holds there too. The ONLY concession is the bare

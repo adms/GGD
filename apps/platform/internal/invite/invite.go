@@ -163,8 +163,15 @@ type Doc struct {
 // except that an unredeemed code past its expiry reads as expired. Expiry is
 // evaluated here and nowhere else, so the console and the gate can never
 // disagree about whether a code is live.
+//
+// FAIL CLOSED ON A MISSING EXPIRY. Every code Mint produces carries an
+// ExpiresAt, so a stored-active doc with the zero time is not a legitimately
+// minted code — it is a truncated/tampered/forward-migrated document. Treating
+// it as never-expiring would make it a code that lives forever and grants a
+// registration, so an active doc without an expiry reads as EXPIRED (i.e.
+// unusable), the same safe direction Redeem takes when it cannot read the store.
 func (d Doc) EffectiveStatus(now time.Time) string {
-	if d.Status == StatusActive && !d.ExpiresAt.IsZero() && now.After(d.ExpiresAt) {
+	if d.Status == StatusActive && (d.ExpiresAt.IsZero() || now.After(d.ExpiresAt)) {
 		return StatusExpired
 	}
 	return d.Status
@@ -181,38 +188,130 @@ type Row struct {
 
 // Normalize maps whatever a human typed onto the document id.
 //
-// It uppercases, drops every character that is not in the alphabet (spaces,
-// hyphens, full-width forms a phone keyboard produces, stray punctuation), and
-// keeps the result only if it is exactly the shape this package mints. So
-// "ggd 7k2m 9qxa", "GGD-7K2M-9QXA" and "ggd7k2m9qxa" are the same code, and
-// anything else normalises to "" (which the caller treats as invalid without
-// ever touching the store).
+// It uppercases, folds the full-width forms a mobile IME emits, and then LOCATES
+// the branded code inside the input rather than requiring the whole string to be
+// nothing but the code. So "ggd 7k2m 9qxa", "GGD-7K2M-9QXA" and "ggd7k2m9qxa"
+// are the same code — and so is the whole LINE message the console's
+// 複製邀請訊息 button produces ("邀請碼：GGD-7K2M-9QXA\n有效期限…"), because a
+// family member who pastes that entire message into the code box was, before
+// this scan, told their perfectly good code was invalid. That "correct-but-
+// untidy code rejected" case is the single most likely support call, so it is
+// handled here.
 //
-// The normalised form is also a legal jsonstore id — uppercase alphanumerics
-// only — so it can name a file as-is with no escaping.
+// The permissiveness is BOUNDED so it never guesses. A match requires all of:
+//   - the literal prefix "GGD" preceded by a boundary (start of input, or any
+//     non-alphanumeric — a colon, a space, a CJK character), so an embedded
+//     "MYGGDACCOUNT" is not read as a code;
+//   - exactly codeBodyLen symbols from codeAlphabet, where only spaces and
+//     hyphen/dash forms may sit BETWEEN them (a stray alphabet-adjacent
+//     character mid-body is a mistype, not formatting — it rejects, so an
+//     ambiguous I/O/L/U/0/1 in the body is never silently skipped);
+//   - a boundary AFTER the eighth symbol: the code cannot be glued to more
+//     alphanumerics ("GGD…B2BNX" stays invalid), only followed by a separator,
+//     other text, or end of input.
+//
+// Anything that does not match normalises to "" (which the caller treats as
+// invalid without ever touching the store). The normalised form is a legal
+// jsonstore id — uppercase alphanumerics only — so it names a file with no
+// escaping.
 func Normalize(raw string) string {
-	var b strings.Builder
-	for _, r := range strings.ToUpper(strings.TrimSpace(raw)) {
-		// fold the full-width ASCII block a mobile IME can emit
-		if r >= 0xFF21 && r <= 0xFF3A {
-			r -= 0xFEE0
-		} else if r >= 0xFF10 && r <= 0xFF19 {
-			r -= 0xFEE0
+	runes := []rune(strings.ToUpper(strings.TrimSpace(raw)))
+	for i := range runes {
+		runes[i] = foldFullWidth(runes[i])
+	}
+	for i := 0; i+len(codePrefix) <= len(runes); i++ {
+		if !hasPrefixAt(runes, i) {
+			continue
 		}
-		if strings.ContainsRune(codeAlphabet, r) || (r >= 'A' && r <= 'Z') || (r >= '0' && r <= '9') {
-			b.WriteRune(r)
+		// A "GGD" glued to the tail of an alphanumeric run (…5GGD…) is not a
+		// code boundary — skip it.
+		if i > 0 && isAlnum(runes[i-1]) {
+			continue
+		}
+		body, end, ok := readCodeBody(runes, i+len(codePrefix))
+		if !ok {
+			continue
+		}
+		// The body cannot be immediately followed by another alphanumeric, or
+		// the caller typed a longer string than a code (…B2BNX). A separator,
+		// other text or end-of-input is fine.
+		if end < len(runes) && isAlnum(runes[end]) {
+			continue
+		}
+		return codePrefix + body
+	}
+	return ""
+}
+
+// foldFullWidth maps the full-width ASCII letters/digits a mobile IME can emit
+// back onto their ASCII forms; everything else passes through.
+func foldFullWidth(r rune) rune {
+	if (r >= 0xFF21 && r <= 0xFF3A) || (r >= 0xFF10 && r <= 0xFF19) {
+		return r - 0xFEE0
+	}
+	return r
+}
+
+// hasPrefixAt reports whether codePrefix begins at runes[i].
+func hasPrefixAt(runes []rune, i int) bool {
+	if i+len(codePrefix) > len(runes) {
+		return false
+	}
+	for j := 0; j < len(codePrefix); j++ {
+		if runes[i+j] != rune(codePrefix[j]) {
+			return false
 		}
 	}
-	s := b.String()
-	if len(s) != len(codePrefix)+codeBodyLen || !strings.HasPrefix(s, codePrefix) {
-		return ""
+	return true
+}
+
+// isAlnum reports whether r is an ASCII letter or digit — the set that, glued to
+// the code, means "this is a longer string than a code" rather than formatting.
+func isAlnum(r rune) bool {
+	return (r >= 'A' && r <= 'Z') || (r >= 'a' && r <= 'z') || (r >= '0' && r <= '9')
+}
+
+// isCodeSeparator reports whether r is a formatting character allowed to sit
+// between the body symbols: spaces and every hyphen/dash/zero-width form a copy
+// or a mobile keyboard can slip in.
+func isCodeSeparator(r rune) bool {
+	if unicode.IsSpace(r) {
+		return true
 	}
-	for _, r := range s[len(codePrefix):] {
-		if !strings.ContainsRune(codeAlphabet, r) {
-			return ""
+	switch r {
+	case '-', '‐', '‑', '‒', '–', '—', '―', '−', // hyphens & dashes
+		'－',                     // full-width hyphen-minus
+		'​', '‌', '‍', // zero-width
+		'﻿': // BOM / zero-width no-break space
+		return true
+	}
+	return false
+}
+
+// readCodeBody reads exactly codeBodyLen alphabet symbols starting at runes[start],
+// skipping separators between them. It returns the body, the index just past the
+// last symbol read, and whether a full body was collected. A significant
+// non-alphabet character before the body is complete (a mistyped ambiguous
+// character, a CJK glyph) fails the read rather than being skipped.
+func readCodeBody(runes []rune, start int) (string, int, bool) {
+	body := make([]rune, 0, codeBodyLen)
+	i := start
+	for i < len(runes) && len(body) < codeBodyLen {
+		r := runes[i]
+		switch {
+		case strings.ContainsRune(codeAlphabet, r):
+			body = append(body, r)
+		case isCodeSeparator(r):
+			// formatting between groups — ignore
+		default:
+			return "", i, false
 		}
+		i++
 	}
-	return s
+	if len(body) < codeBodyLen {
+		return "", i, false
+	}
+	return string(body), i, true
 }
 
 // display renders a normalised id back as GGD-XXXX-XXXX.

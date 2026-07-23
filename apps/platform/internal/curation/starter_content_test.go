@@ -54,6 +54,7 @@ type itemDoc struct {
 	Name      string          `json:"name"`
 	Cost      int             `json:"cost"`
 	Tier      int             `json:"tier"`
+	CraftRole string          `json:"craftRole"`
 	Modifiers []itemModifier  `json:"modifiers"`
 	Passive   json.RawMessage `json:"passive"`
 }
@@ -260,7 +261,7 @@ func TestStarterSetMatchesContentTree(t *testing.T) {
 	draft := curation.StarterDraftItems()
 	services := curation.StarterServiceItems()
 	legendary := curation.StarterLegendaryItems()
-	require.GreaterOrEqual(t, len(shop), 60, "the shop surface must be a real catalogue")
+	require.GreaterOrEqual(t, len(shop), 20, "the shop surface must be a real catalogue of final weapons")
 	require.GreaterOrEqual(t, len(draft), 6, "the draft surface must be able to fill a 3-choose-1 twice")
 	require.GreaterOrEqual(t, len(legendary), 6, "the legendary pool must be able to fill a 3-choose-1 twice")
 	require.Len(t, services, 2, "the shop services are exactly 傳說寶玉 + 能力屬性強化")
@@ -284,14 +285,21 @@ func TestStarterSetMatchesContentTree(t *testing.T) {
 		}
 	}
 
-	// S1–S4 — every SHOP item is named, carries ONE OF THE TWO PRICES, is
-	// effective and is sane.
+	// S1–S5 — every SHOP item is a FINAL crafted weapon (owner rule 1, task
+	// #70), carries ONE OF THE TWO PRICES, is effective and is sane. S5 is the
+	// new structural gate: the shop is derived from `craftRole == "final"`, not
+	// from price — which is what stops a priced component or a priced quest item
+	// (魔戒 at 300g was the reopening's smoking gun) from ever reaching the shelf.
 	affordableAtStart, simpleCount, powerfulCount := 0, 0, 0
 	for _, id := range shop {
 		item := readJSON[itemDoc](t, filepath.Join(root, "items", id+".json"))
 		assert.NotEqualf(t, id, item.Name, "S1: shop item %q has no display name", id)
+		assert.Equalf(t, "final", item.CraftRole,
+			"S5: shop item %q has craftRole %q, not \"final\" — 「只有最終合成武器才能上架可直接購買」. "+
+				"The shop is the set of final crafted weapons, recovered from the source-map triggers "+
+				"by tools/w3x-import/extract_item_roles.py, NOT the set of priced items.", id, item.CraftRole)
 		// S2, the 統一化 gate: exactly one of the two prices, nothing between,
-		// nothing above. This is the assertion the whole redesign exists to make.
+		// nothing above.
 		assert.Containsf(t, []int{priceSimple, pricePowerful}, item.Cost,
 			"S2: shop item %q costs %dg — the shop has exactly TWO prices, %d (SIMPLE) and %d "+
 				"(POWERFUL). See packages/shared/src/sim/economy/itemTiers.ts",
@@ -315,14 +323,14 @@ func TestStarterSetMatchesContentTree(t *testing.T) {
 				"above-ceiling band entirely, so this is a regression, not a known exception",
 			id, item.Cost, matchGoldCeiling)
 	}
-	// Turn 1 must be a real decision: the 600g purse buys TWO 300g items out of
-	// a wide shelf, not one item out of three. Before task #82 there were five
-	// sub-600g listings and only three distinct stat mixes among them.
-	assert.GreaterOrEqualf(t, affordableAtStart, 20,
-		"only %d shop items are buyable on the %dg starting purse — turn 1 is not a real choice",
-		affordableAtStart, startingGold)
-	assert.GreaterOrEqualf(t, simpleCount, 20, "only %d SIMPLE listings", simpleCount)
-	assert.GreaterOrEqualf(t, powerfulCount, 10, "only %d POWERFUL listings", powerfulCount)
+	// The shop is now the FINAL weapons only, so it is a smaller, sharper shelf
+	// than the old cost-filtered 70. It still has to give turn 1 a real choice
+	// (at least one SIMPLE final is buyable on the 600g purse) and a real late
+	// game (a body of POWERFUL finals).
+	assert.GreaterOrEqualf(t, affordableAtStart, 1,
+		"no shop item is buyable on the %dg starting purse — turn 1 has nothing", startingGold)
+	assert.GreaterOrEqualf(t, simpleCount, 1, "only %d SIMPLE finals", simpleCount)
+	assert.GreaterOrEqualf(t, powerfulCount, 10, "only %d POWERFUL finals", powerfulCount)
 
 	// SV1–SV3 — the shop services. No modifiers by design (their payload is
 	// code), so S3 is deliberately not applied; instead the id must be one the
@@ -362,19 +370,30 @@ func TestStarterSetMatchesContentTree(t *testing.T) {
 		"20 stat ticks cost only %dg of a %dg match — the stat path is supposed to cost you the "+
 			"WHOLE match, not leave room to also buy items", tickCost*20, matchGoldCeiling)
 
-	// D1–D3 — every DRAFT item is a named, FREE, effective quest reward. (D4,
-	// "no 四魂之玉 shards", is a policy call asserted separately below.)
+	// D1–D5 — every DRAFT item is a named, FREE, effective QUEST reward (owner
+	// rule 2, task #70). D5 is the structural gate: the draft is the set of
+	// `craftRole == "quest"` items, recovered from the source-map quest triggers
+	// — so nothing that is not a quest item can appear here, which is the half
+	// of the owner's rule 「不要放這些任務道具以外的東西」 most likely to be dropped.
+	// (D4, "no 四魂之玉 shards", is a policy call asserted separately below.)
 	for _, id := range draft {
 		item := readJSON[itemDoc](t, filepath.Join(root, "items", id+".json"))
 		assert.NotEqualf(t, id, item.Name, "D1: draft item %q has no display name", id)
-		assert.Zerof(t, item.Cost, "D2: draft item %q costs %dg — it belongs in the shop", id, item.Cost)
-		assert.Truef(t, item.hasEffect(),
-			"D3: draft item %q has no modifier and no passive — the card would grant NOTHING", id)
+		assert.Zerof(t, item.Cost, "D2: draft item %q costs %dg — a draft reward is free", id, item.Cost)
+		// D3 is DELIBERATELY NOT an effect gate here (unlike the shop's S3).
+		// 仙后座/戰旗/復仇之袍/惡魔吉他 are quest items the owner named or implied,
+		// but their whole payload is an active/aura ability item@1 cannot express
+		// yet (blocked on #56), so they carry no modifiers. Owner rule 2 is
+		// 「所有任務道具」 — ALL quest items — so they belong in the draft anyway;
+		// dropping them for lacking ported stats is how 仙后座 went missing before.
 		assert.Emptyf(t, item.insaneModifiers(),
 			"draft item %q carries impossible values %v", id, item.insaneModifiers())
 		assert.NotContainsf(t, item.Name, "四魂之玉的碎片",
 			"D4: %q (%s) is a 四魂之玉 shard — shards are dropped, only the assembled jewel is drafted",
 			id, item.Name)
+		assert.Equalf(t, "quest", item.CraftRole,
+			"D5: draft item %q has craftRole %q, not \"quest\" — 「隨機三選一…不要放這些任務道具以外的"+
+				"東西」. The draft is EXACTLY the quest set from the source-map triggers.", id, item.CraftRole)
 	}
 
 	// LOOT CLOSURE, both tables. MatchController filters a weapon offer to the
@@ -419,6 +438,110 @@ func TestStarterSetMatchesContentTree(t *testing.T) {
 			"no %s entry is enabled — that weapon-draft round would silently grant nothing (%d entries in the table)",
 			table, len(loot.Entries))
 	}
+}
+
+// allItemDocs reads every shippable content/items/*.json (skipping the _index
+// and the collection helpers) so a guard can be stated over the WHOLE tree, not
+// just the curated bundle — the only way to catch an item that SHOULD be on a
+// surface but was left off it.
+func allItemDocs(t *testing.T) map[string]itemDoc {
+	t.Helper()
+	dir := filepath.Join(contentRoot(), "items")
+	entries, err := os.ReadDir(dir)
+	require.NoError(t, err)
+	out := map[string]itemDoc{}
+	for _, e := range entries {
+		if e.IsDir() || !strings.HasSuffix(e.Name(), ".json") || strings.HasPrefix(e.Name(), "_") {
+			continue
+		}
+		id := strings.TrimSuffix(e.Name(), ".json")
+		out[id] = readJSON[itemDoc](t, filepath.Join(dir, e.Name()))
+	}
+	return out
+}
+
+// TestStarterShopIsFinalWeapons — THE guard the owner asked for, shop half
+// (task #70, reopened twice). It fails if a non-final item reaches the shop OR
+// a final crafted weapon is missing from it. Derived from the craftRole marker
+// over the whole content tree, so neither half can rot: the inclusion half (a
+// new final must be listed) is checked as strictly as the exclusion half (a
+// component/quest/token must NOT be), and it is the EXCLUSION half — 「只有最終
+// 合成武器才能上架」 — that the previous cost-based filter silently dropped.
+func TestStarterShopIsFinalWeapons(t *testing.T) {
+	testkit.Cover(t, "whitelist-shop-final-only")
+	docs := allItemDocs(t)
+	shop := map[string]struct{}{}
+	for _, id := range curation.StarterShopItems() {
+		shop[id] = struct{}{}
+	}
+
+	// EXCLUSION: nothing on the shelf may be anything but a final crafted weapon.
+	for id := range shop {
+		d := docs[id]
+		assert.Equalf(t, "final", d.CraftRole,
+			"shop item %q (%s) has craftRole %q — the shop is FINAL crafted weapons only "+
+				"(owner rule 1). A priced component or quest item must never reach the shelf.",
+			id, d.Name, d.CraftRole)
+	}
+	// INCLUSION: every final crafted weapon that CAN be sold (has an expressible
+	// payload) must be on the shelf. A final with no effect is blocked on the
+	// item@1 active schema (#56) and is legitimately absent.
+	for id, d := range docs {
+		if d.CraftRole != "final" || !d.hasEffect() {
+			continue
+		}
+		_, listed := shop[id]
+		assert.Truef(t, listed,
+			"final crafted weapon %q (%s) is NOT in the shop — 「最終合成武器…可直接購買」 requires it "+
+				"to be buyable. Add it to starterShopItems, or explain the exclusion.", id, d.Name)
+	}
+}
+
+// TestStarterDraftIsQuestSet — THE guard the owner asked for, draft half. It
+// fails if a non-quest item reaches the 3-choose-1 OR a quest item is missing
+// from it. The EXCLUSION half is 「不要放這些任務道具以外的東西」; the INCLUSION
+// half is 「所有任務道具」. Both are checked against the craftRole marker AND the
+// loot table the running match actually rolls, so the guard covers the whitelist
+// bundle and content/loot-tables/quest-rewards.json together.
+func TestStarterDraftIsQuestSet(t *testing.T) {
+	testkit.Cover(t, "whitelist-draft-quest-only")
+	docs := allItemDocs(t)
+
+	wantQuest := map[string]struct{}{}
+	for id, d := range docs {
+		if d.CraftRole == "quest" {
+			wantQuest[id] = struct{}{}
+		}
+	}
+	require.GreaterOrEqual(t, len(wantQuest), 6, "the content tree must carry the quest set")
+
+	check := func(surface string, ids []string) {
+		got := map[string]struct{}{}
+		for _, id := range ids {
+			got[id] = struct{}{}
+			assert.Equalf(t, "quest", docs[id].CraftRole,
+				"%s offers %q (%s), craftRole %q — 「不要放這些任務道具以外的東西」: only quest items "+
+					"may be drafted.", surface, id, docs[id].Name, docs[id].CraftRole)
+		}
+		for id, d := range docs {
+			if d.CraftRole != "quest" {
+				continue
+			}
+			_, ok := got[id]
+			assert.Truef(t, ok,
+				"%s is MISSING quest item %q (%s) — 「隨機三選一才能選到所有任務道具」 requires every "+
+					"quest item to be draftable.", surface, id, d.Name)
+		}
+	}
+
+	check("the draft whitelist surface", curation.StarterDraftItems())
+
+	table := readJSON[lootTable](t, filepath.Join(contentRoot(), "loot-tables", "quest-rewards.json"))
+	tableIDs := make([]string, 0, len(table.Entries))
+	for _, e := range table.Entries {
+		tableIDs = append(tableIDs, e.ItemID)
+	}
+	check("content/loot-tables/quest-rewards.json", tableIDs)
 }
 
 // firstOpenRoster is the user's 48 hand-picked champions — the FIRST OPEN

@@ -44,6 +44,12 @@ export type Page =
    * so it is session-gated below and NOT reachable through the loopback drop-in.
    */
   | "invites"
+  /**
+   * 對戰回放 (task #175) — the owner's playtest feedback channel. Lists match
+   * recordings and opens them in the reused game renderer. Platform-admin-backed
+   * (recordings carry player names), so session-gated below.
+   */
+  | "replays"
   | "audit";
 
 export interface AdminAccount {
@@ -103,6 +109,7 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "serverOps",
   "mcoinGrant",
   "invites",
+  "replays",
   "audit",
 ]);
 

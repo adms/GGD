@@ -288,84 +288,66 @@ var (
 		"godie-udea", // 飛鼠先生 - 至尊學長  #65
 	}
 
-	// 70 SHOP items — every content item that is priced, named and actually
-	// does something (S1-S4), MINUS the 25 that the round-5 legendary card
-	// owns. Grouped by the ONLY two prices that exist (task #82's 統一化):
-	// SIMPLE 300g and POWERFUL 1200g. Within a group the order is the phase-1
-	// value ranking, which is now the only ranking there is.
+	// SHOP items — the FINAL CRAFTED WEAPONS, and nothing else (owner rule 1,
+	// task #70 reopened twice: 「只有最終合成武器才能上架可直接購買 (有製作書的)」).
+	// This list is now DERIVED, not curated: it is exactly the content items
+	// whose `craftRole == "final"` AND that carry an expressible payload
+	// (modifiers/passive). The role marker was recovered from the source-map
+	// TRIGGERS by tools/w3x-import/extract_item_roles.py — a "final" is a recipe
+	// SINK whose own recipe consumes a 製作書 — so this is 「有製作書的最終合成
+	// 武器」 read literally off the map, not inferred from price or name.
+	//
+	// WHY THE OLD 70-ITEM LIST WAS THE BUG. It was filtered on `cost ∈ {300,
+	// 1200}`, which is task #82's PRICE tier, not a craft stage. That admitted
+	// 96 recipe components (初心者寶石/女神之淚/黑核晶/…) and every priced
+	// stat-stick, and it put the quest reward 魔戒 on sale for 300g — because
+	// `cost` encodes neither crafting stage nor quest provenance. The owner had
+	// to restate the rule; this is the structural fix that lets it be expressed.
+	//
+	// Six more finals (雷神之鎚/黑色魔書/盾甲天書/嗜血邪書/天地崩裂魔杖/風行天衣)
+	// are `craftRole == "final"` too but carry NO expressible payload (their
+	// power is an active ability item@1 cannot hold yet — blocked on #56), so
+	// they are held off the shelf by the same S3/hasEffect gate the client and
+	// the sim use, and are NOT whitelisted here. They rejoin the moment item@1
+	// grows an active slot; the content docs already carry craftRole "final".
+	//
+	// TestStarterShopIsFinalWeapons pins this to the marker: it fails if any id
+	// here is not a `final` with an effect, or if a `final` with an effect is
+	// missing. Prices: SIMPLE 300 / POWERFUL 1200 (task #82's 統一化), stamped
+	// onto every final by tools/w3x-import/apply_item_roles.py.
 	starterShopItems = []string{
-		// ---- SIMPLE, 300g (42). TWO of these are the whole 600g turn-1 purse.
-		"ember-rod",   // Ember Rod  ap 31.6
-		"godie-i002",  // 武聖手鐲  critChance 0.171 / critDamage 0.286
-		"godie-i004",  // 魔戒  maxHealth 39 / ad 1.9 / maxMana 23
-		"godie-i005",  // 初心者寶石  maxHealth 39 / ad 1.9 / maxMana 23
-		"godie-i008",  // 初級傳送捲軸  maxHealth 32 / ad 1.6 / maxMana 19 / maxHealth 6 / ad 0.3 / maxMana 4
-		"godie-i00g",  // 奇美拉之翼  maxHealth 32 / ad 1.6 / maxMana 19 / maxHealth 6 / ad 0.3 / maxMana 4
-		"godie-i00k",  // 女神之淚  armor 17
-		"godie-i00m",  // 米索莉護板  armor 2.1 / armor 14.9
-		"godie-i00p",  // 聖誕之靴  ms 0.225 / as% 0.112
-		"godie-i00q",  // 伊娃之盾  armor 17
-		"godie-i010",  // 熱戀魔杖  ap 21.1 / maxMana 63
-		"godie-i016",  // 晨曦之光  maxHealth 39 / ad 1.9 / maxMana 23
-		"godie-i01f",  // 和道一文字  as% 0.154
-		"godie-i01m",  // 黑核晶  maxMana 155 / manaRegen% 1.16
-		"godie-i01w",  // 祕銀鎖子甲  armor 17  (task #108: demoted from LEGENDARY — mithril chainmail, defensive gear not a legendary weapon)
-		"godie-i02d",  // 消失的密室  maxHealth 23 / ad 1.1 / maxMana 14 / ms 0.34
-		"godie-i02p",  // 網友手環  armor 17  (task #108: demoted from DRAFT — a +4 armor meetup-token trinket)
-		"godie-i033",  // 初心者護腕  armor 1.7 / maxHealth 35 / ad 1.7 / maxMana 21
-		"godie-i03d",  // 光明虎徹  maxHealth 39 / ad 1.9 / maxMana 23
-		"godie-i03f",  // 甘豆腐之袍  armor 17
-		"godie-i03m",  // 反射之盾  armor 17
-		"godie-i041",  // 火閃電  ms 0.828
-		"godie-i05k",  // 打我阿笨蛋卷軸  maxHealth 6 / ad 0.3 / maxMana 4 / maxHealth 32 / ad 1.6 / maxMana 19
-		"godie-i05l",  // 力量護腕  armor 17
-		"godie-i05m",  // 敏捷護腕  armor 17
-		"godie-i05n",  // 智慧護腕  armor 17
-		"godie-i05o",  // 刺針  maxHealth 39 / ad 1.9 / maxMana 23
-		"godie-i05r",  // 吸血石  lifesteal 0.266
-		"godie-i05s",  // 嚇人假面  manaRegen% 3.0  (task #108: demoted from DRAFT — plain mana-regen mask; caps at 48% of SIMPLE)
-		"godie-i05t",  // 定情戒指  healthRegen 3.3
-		"godie-i05u",  // 熱舞之靴  ms 0.828
-		"godie-i05v",  // 破壞王手套  as% 0.154
-		"godie-i05x",  // 辣妹護腕  mr 37.8
-		"godie-i061",  // 死之王的神盾  armor 14.2 / armor 2.8
-		"godie-i063",  // 防狼電擊棒  maxMana 185 / manaRegen% 0.168
-		"godie-i066",  // 復仇之玉  +passive
-		"godie-i068",  // 瑪那寶石  maxMana 190
-		"godie-i06b",  // 思念的守護  armor 2.8 / ap 17.6 / maxMana 53
-		"godie-i06h",  // 求生護腕  maxHealth 39 / ad 1.9 / maxMana 23
-		"godie-i06q",  // 鍊金術之盾  armor 11.3 / armor 5.7
-		"godie-i06r",  // 一克拉鑽戒  armor 17
-		"swift-boots", // Swift Boots  ms 0.828
-		// ---- POWERFUL, 1200g (28). Worth exactly 4 SIMPLE items, in ONE slot.
-		"godie-i006",    // 雅典娜的驚嘆號  ap 82.1 / maxMana 246 / manaRegen% 0.684
-		"godie-i00j",    // 奇門盾甲  maxHealth 187 / healthRegen 3.9
-		"godie-i00n",    // 分手之鎚  ad 26 +passive armor-shred  (task #108: demoted from LEGENDARY — a mundane-joke armor-shred hammer)
-		"godie-i00s",    // 黃金聖鬥衣  ms 0.262 / maxHealth 44 / ad 2.2 / maxMana 26 / as% 0.393
-		"godie-i01j",    // 靈魂魔石  maxHealth 218 / maxMana 136
-		"godie-i01o",    // 死神裝束  maxHealth 55 / ad 2.8 / maxMana 33 / ms 0.333 / as% 0.333
-		"godie-i020",    // 瑪那魔杖  ap 79 / maxMana 237 / manaRegen% 1.581  (task #108: demoted from LEGENDARY — generic caster stat-stick + chain-lightning active)
-		"godie-i02g",    // 奇美拉之翼(電腦)  maxHealth 77 / ad 3.9 / maxMana 46 / maxHealth 77 / ad 3.9 / maxMana 46
-		"godie-i02r",    // 奇蹟之墜  ap 29 / maxMana 87 / maxHealth 174
-		"godie-i031",    // 天生牙  ad 8.2 / maxHealth 181
-		"godie-i039",    // 幻之匕首  as% 0.616
-		"godie-i03b",    // 真．雅典娜的驚嘆號  ap 81.6 / maxMana 245 / manaRegen% 0.816
-		"godie-i03c",    // 雅典娜的驚嘆號．改  ap 81.8 / maxMana 245 / manaRegen% 0.767
-		"godie-i040",    // 破甲槍  ad 26 +passive armor-shred  (task #108: demoted from LEGENDARY — identity is a stat function, armor-shred)
-		"godie-i049",    // 賢者之石  maxHealth 77 / ad 3.9 / maxMana 46 / maxHealth 77 / ad 3.9 / maxMana 46
-		"godie-i04b",    // 冰晶虎魄  ad 12.1 / maxHealth 76 / ap 17.3 / maxMana 52 +passive
-		"godie-i04d",    // 冰晶虎魄 - 改  ad 12.6 / maxHealth 76 / ap 17.2 / maxMana 52 +passive
-		"godie-i05h",    // 失心匕首  as% 0.616
-		"godie-i05q",    // 友情呼喚號角  as% 0.616
-		"godie-i05y",    // 蜂蜜罐  healthRegen 12.06 / manaRegen% 2.002 + 1500-HP heal active  (task #108: demoted from DRAFT — a fine POWERFUL consumable, a deflating legendary)
-		"godie-i060",    // 死之王的意志  maxHealth 144 / healthRegen 6
-		"godie-i067",    // 惡夢魔王碎片  maxMana 688 / manaRegen% 2.296
-		"godie-i06a",    // 妖物碎殺牙  ad 22.2 / lifesteal 0.155
-		"godie-i06c",    // 恐龍之斧  maxHealth 181 / ad 8.2
-		"godie-i06k",    // 奧理哈魯根劍身  ad 26
-		"godie-i06o",    // 血染八月  ad 16.7 +passive
-		"ironhide-vest", // Ironhide Vest  armor 36.7 / maxHealth 122
-		"serrated-edge", // Serrated Edge  ad 18.4 +passive
+		// ---- SIMPLE, 300g (5)
+		"godie-i016", // 晨曦之光
+		"godie-i03d", // 光明虎徹
+		"godie-i03f", // 甘豆腐之袍
+		"godie-i041", // 火閃電
+		"godie-i05o", // 刺針
+		// ---- POWERFUL, 1200g (23). Includes the 11 finals task #82 had zeroed
+		// into the legendary pool — 霸王槍/光魔杖/狂暴軒轅劍/… — that rule 1 says
+		// belong here, on the shelf.
+		"godie-i00f", // 霸王槍
+		"godie-i00i", // 炎龍巨弩
+		"godie-i00j", // 奇門盾甲
+		"godie-i018", // 朗基努斯之槍
+		"godie-i01j", // 靈魂魔石
+		"godie-i01o", // 死神裝束
+		"godie-i01v", // 螺旋劍
+		"godie-i027", // 光魔杖
+		"godie-i02e", // 狂暴軒轅劍
+		"godie-i02r", // 奇蹟之墜
+		"godie-i031", // 天生牙
+		"godie-i039", // 幻之匕首
+		"godie-i03b", // 真．雅典娜的驚嘆號
+		"godie-i040", // 破甲槍
+		"godie-i045", // 寂靜刃 - 詠月
+		"godie-i049", // 賢者之石
+		"godie-i04d", // 冰晶虎魄 - 改
+		"godie-i04i", // 厄夜鐮刀
+		"godie-i05h", // 失心匕首
+		"godie-i067", // 惡夢魔王碎片
+		"godie-i06d", // 斬龍刀
+		"godie-i06f", // 月神槍
+		"godie-i06i", // 炎神弩
 	}
 
 	// 2 SHOP SERVICES — listings that take gold but never occupy a slot. They
@@ -382,62 +364,62 @@ var (
 		"stat-attunement", // 能力屬性強化 375g — the repeatable stat tick
 	}
 
-	// 25 LEGENDARY items — the round-5 3-choose-1 card and the 傳說寶玉 pool.
-	// 「傳說的武器道具，只能隨機三選一」: NONE of these may be bought directly,
-	// which is why they are a separate surface rather than part of the shop.
-	// They stay WHITELISTED (a legendary the operator has not enabled is
-	// silently never offered — task #47's loot-closure rule), they just stop
-	// being purchasable. This list is exactly the entries of
-	// content/loot-tables/legendary-weapons.json; the two must not drift.
+	// LEGENDARY items — the 傳說寶玉 (legendary-orb) gacha pool ONLY. The round-5
+	// 3-choose-1 no longer rolls this table: under the owner's two-surface model
+	// (task #70) every item 3-choose-1 offers ONLY quest items, so round 5 now
+	// rolls `quest-rewards` like round 2. This surface is therefore just the orb.
 	//
-	// TASK #108 removed 4 mis-curated entries to the shop (surface change, not a
-	// deletion): 破甲槍/分手之鎚 (armor-shred stat-sticks) and 瑪那魔杖 (a caster
-	// stat-stick) → POWERFUL; 祕銀鎖子甲 (mithril chainmail, defensive gear) →
-	// SIMPLE. Each reads as a shop item in a 3-choose-1, not a mythic weapon.
+	// The 11 book-finals task #82 had zeroed into this pool (霸王槍/光魔杖/…) have
+	// MOVED to the shop, where rule 1 puts them, so this list is exactly the 14
+	// non-final entries that remain in content/loot-tables/legendary-weapons.json.
+	// They are 7 recipe components (名刀-天狼/熾天使之弓/…) and 7 direct-buy 神器
+	// (丈八蛇矛/落魂的嗜血劍/…) — a pool the owner has NOT re-endorsed and that the
+	// in-flight task #108 owns; this task leaves it to #108 rather than redesign
+	// the orb. See the report for the boundary.
 	starterLegendaryItems = []string{
 		"godie-i000", // 丈八蛇矛
-		"godie-i00f", // 霸王槍
-		"godie-i00i", // 炎龍巨弩
 		"godie-i00l", // 落魂的嗜血劍
 		"godie-i00u", // 名刀-天狼
 		"godie-i007", // 妖刀村正
 		"godie-i012", // 熾天使之弓
 		"godie-i013", // 八取武士刀
 		"godie-i014", // 天叢雲劍
-		"godie-i018", // 朗基努斯之槍
 		"godie-i01d", // 死之王的長槍
 		"godie-i01g", // 貫雷槍
-		"godie-i01v", // 螺旋劍
-		"godie-i027", // 光魔杖
-		"godie-i02e", // 狂暴軒轅劍
 		"godie-i02x", // 斬岩刃
-		"godie-i045", // 寂靜刃 - 詠月
-		"godie-i04i", // 厄夜鐮刀
 		"godie-i04v", // 正義之杖
-		"godie-i06d", // 斬龍刀
 		"godie-i06e", // 月牙魔杖
-		"godie-i06f", // 月神槍
 		"godie-i06g", // 殺豬刀
-		"godie-i06i", // 炎神弩
 		"godie-i06s", // 龍騎士之劍
 	}
 
-	// 7 DRAFT items — the 0g WC3 quest/score rewards (D1-D4). These are the
-	// ONLY items the shop cannot sell you, which is what makes the round-2
-	// 3-choose-1 card worth anything. content/loot-tables/quest-rewards.json is
-	// this same set; both must stay in sync or the card rolls nothing.
-	//
-	// TASK #108 removed 3 mis-curated entries to the shop: 網友手環 (a +4 armor
-	// "meetup token") and 嚇人假面 (a plain mana-regen mask) → SIMPLE; 蜂蜜罐 (a
-	// fine 1500-HP heal jar) → POWERFUL. What remains reads as a real prize card.
+	// DRAFT items — EXACTLY the quest set, and nothing else (owner rule 2, task
+	// #70: 「隨機三選一才能選到 所有任務道具 … 不要放這些任務道具以外的東西」).
+	// DERIVED, not curated: exactly the content items whose `craftRole == "quest"`,
+	// recovered from the source-map quest TRIGGERS (boss drops, CreateItemLoc in
+	// a 「完成…任務」 handler, and the MissionScore 兌換 chains) by
+	// tools/w3x-import/extract_item_roles.py. The owner's 「等」 (etc.) is honoured
+	// by tracing every chain of the same shape, not just his five named items —
+	// so 仙后座/戰旗/復仇之袍/惡魔吉他/蜂蜜罐 and the three Titan finals are here too.
+	// These are 0g (draft-only; the sim refuses to sell a 0g item), which is what
+	// makes the free 3-choose-1 card the ONLY way to obtain them.
+	// content/loot-tables/quest-rewards.json is this same set; both must stay in
+	// sync. TestStarterDraftIsQuestSet pins this to the marker — it fails if a
+	// non-quest item appears here OR a quest item is missing (BOTH halves).
 	starterDraftItems = []string{
-		"godie-i00z", // 四魂之玉  maxHealth 100 / ad 5 / maxMana 60 …
-		"godie-i035", // 海潮泰坦護盾  armor 7 / ad 26 / maxHealth 572
-		"godie-i01k", // 火焰泰坦腰帶  armor 7
-		"godie-i01n", // 天堂之劍  critChance 0.03
-		"godie-i034", // 大地泰坦角盔  armor 7
-		"godie-i06j", // 獸人船長十字鎬  ad 20
-		"godie-i06n", // 老衲的棒子  ad 44 +passive
+		"godie-i004", // 魔戒 — was ON SALE for 300g; the clearest inversion
+		"godie-i00z", // 四魂之玉
+		"godie-i01k", // 火焰泰坦腰帶
+		"godie-i01n", // 天堂之劍
+		"godie-i01s", // 仙后座
+		"godie-i02h", // 戰旗
+		"godie-i02j", // 復仇之袍
+		"godie-i02k", // 惡魔吉他
+		"godie-i034", // 大地泰坦角盔
+		"godie-i035", // 海潮泰坦護盾
+		"godie-i05y", // 蜂蜜罐
+		"godie-i06j", // 獸人船長十字鎬
+		"godie-i06n", // 老衲的棒子
 	}
 
 	// The whitelist gates every surface with ONE item list, so the bundle is the

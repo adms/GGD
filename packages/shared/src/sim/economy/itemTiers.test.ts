@@ -94,20 +94,27 @@ const TIER_PRICES: number[] = [ITEM_TIER_PRICE.SIMPLE, ITEM_TIER_PRICE.POWERFUL]
 describe("the two prices (統一化)", () => {
   it("every purchasable weapon carries EXACTLY one of the two tier prices", () => {
     cover("econ-two-prices");
-    // The shop surface is derivable without the curation list: a weapon is
-    // buyable iff it is priced at a tier AND actually does something (three
-    // effect-less WC3 recipe books happen to sit at 1200g and are excluded by
-    // the same S3 rule the curation layer uses).
-    const shop = items.filter((d) => TIER_PRICES.includes(d.cost) && hasEffect(d));
+    // THE SHOP IS THE FINAL CRAFTED WEAPONS (owner rule 1, task #70 reopened):
+    // 「只有最終合成武器才能上架可直接購買 (有製作書的)」. It is derived from the
+    // `craftRole` marker recovered from the source-map triggers, NOT from price
+    // — the old `cost ∈ tier` derivation was the bug, because it swept in every
+    // priced recipe component and put the quest reward 魔戒 on sale for 300g.
+    // A final with no expressible payload (its power is an active item@1 cannot
+    // hold — #56) is excluded by the same S3/hasEffect rule the client shop uses.
+    const shop = items.filter((d) => d.craftRole === "final" && hasEffect(d));
     const simple = shop.filter((d) => d.cost === ITEM_TIER_PRICE.SIMPLE);
     const powerful = shop.filter((d) => d.cost === ITEM_TIER_PRICE.POWERFUL);
 
-    // Task #108 re-curated 7 mis-placed items onto the shop surface (63 -> 70):
-    // +3 SIMPLE (網友手環/嚇人假面/祕銀鎖子甲) and +4 POWERFUL (蜂蜜罐/瑪那魔杖/
-    // 破甲槍/分手之鎚). See apps/platform/internal/curation/starter.go.
-    expect(shop.length).toBe(70);
-    expect(simple.length).toBe(42);
-    expect(powerful.length).toBe(28);
+    // 28 finals-with-effect: 5 SIMPLE + 23 POWERFUL. The 23 include the 11 that
+    // task #82 had zeroed into the legendary pool (霸王槍/光魔杖/…), which rule 1
+    // moves back onto the shelf.
+    expect(shop.length).toBe(28);
+    expect(simple.length).toBe(5);
+    expect(powerful.length).toBe(23);
+    // Every shop item must carry one of the two tier prices, nothing off-ladder.
+    for (const d of shop) {
+      expect(TIER_PRICES, `${d.id} (${d.name}) is a shop final priced ${d.cost}g`).toContain(d.cost);
+    }
     // A price and a tier number that disagree would make the shop sort wrong
     // and the codex lie, so they are pinned to each other.
     for (const d of simple) expect(d.tier, `${d.id} price/tier disagree`).toBe(1);

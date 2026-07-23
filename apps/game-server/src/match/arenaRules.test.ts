@@ -72,11 +72,13 @@ describe("config doc + rules resolution (arena-06)", () => {
     expect([...ARENA.rounds.values()].every((g) => g.augmentTier !== undefined)).toBe(true);
     expect(ARENA.rounds.get(3)?.augmentTier).toBe("gold");
     expect(ARENA.rounds.get(5)?.augmentTier).toBe("prismatic");
-    // task #70: round 2 drafts the 0g QUEST REWARDS (items the shop cannot
-    // sell), round 5 drafts a legendary weapon. Ascending power, and neither
-    // card duplicates what the player could already have bought that round.
+    // task #70 (reopened): EVERY item 3-choose-1 offers ONLY quest items
+    // (「隨機三選一…不要放這些任務道具以外的東西」). Both weapon-draft rounds roll
+    // `quest-rewards`; there is no longer a round that drafts a non-quest item.
+    // The legendary weapons moved to the shop (rule 1); legendary-weapons.json
+    // survives only as the 傳說寶玉 gacha pool, which is not a 3-choose-1 card.
     expect(ARENA.rounds.get(2)).toMatchObject({ grantLevels: 1, weaponLootTable: "quest-rewards" });
-    expect(ARENA.rounds.get(5)).toMatchObject({ grantLevels: 1, weaponLootTable: "legendary-weapons" });
+    expect(ARENA.rounds.get(5)).toMatchObject({ grantLevels: 1, weaponLootTable: "quest-rewards" });
     expect(ARENA.rounds.get(3)).toMatchObject({ grantLevels: 1, grantGold: 2500 });
     expect(ARENA.gacha).toBeNull(); // weapon offers replace the legacy gacha
     // overflow escalation past the table — augment offers continue (#157)

@@ -36,6 +36,39 @@ HAND_AUTHORED = {
     "swift-boots": "none",
 }
 
+# task #82's two shop prices. A final crafted weapon is now DIRECTLY BUYABLE
+# (owner rule 1), so it must carry one of these; a quest reward is DRAFT-ONLY
+# (owner rule 2), so it must be 0g or the sim would let a player buy it.
+SIMPLE, POWERFUL = 300, 1200
+
+
+def has_effect(doc: dict) -> bool:
+    return bool(doc.get("modifiers")) or bool(doc.get("passive"))
+
+
+def reprice(role: str, doc: dict):
+    """Return (cost, tier) the role requires, or None to leave the doc's price
+    untouched. Only the two surfaces the owner named are repriced; components,
+    tokens, direct-buy 神器 and services keep whatever task #82/#108 set."""
+    if role == "final":
+        # Final crafted weapon -> shop. Keep a SIMPLE price if it already had
+        # one (a cheap final), otherwise POWERFUL. The 11 finals that task #82
+        # zeroed into the legendary pool (霸王槍/光魔杖/狂暴軒轅劍/…) and the 6
+        # raw-priced 之書 finals are all normalised onto the tier ladder here.
+        if has_effect(doc):
+            return (SIMPLE, 1) if doc.get("cost") == SIMPLE else (POWERFUL, 2)
+        # No expressible payload yet (its power is an active ability item@1
+        # cannot hold — blocked on #56). Ladder-clean so it is ready, but the
+        # shop's hasEffect gate keeps it off the shelf and the sim refuses to
+        # sell a no-effect item, so it is inert until the schema grows.
+        return (POWERFUL, 2)
+    if role == "quest":
+        # Quest reward -> the free 3-choose-1 draft ONLY. 0g makes that a SIM
+        # invariant (buyItem refuses 0g), not merely a listing rule: even a dev
+        # box with the whitelist off cannot sell 魔戒.
+        return (0, doc.get("tier", 1))
+    return None
+
 
 def main() -> int:
     roles_doc = json.load(open(ROLES, encoding="utf-8"))
@@ -64,6 +97,9 @@ def main() -> int:
 
         before = json.dumps(doc, ensure_ascii=False, sort_keys=True)
         doc["craftRole"] = role
+        priced = reprice(role, doc)
+        if priced is not None:
+            doc["cost"], doc["tier"] = priced
         if role == "final" and recipe and recipe.get("components") is not None:
             r = {"components": recipe["components"]}
             if recipe.get("book"):

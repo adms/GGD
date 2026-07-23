@@ -55,6 +55,7 @@ interface ItemFacts {
   id: string;
   name: string;
   cost: number;
+  role: string;
   effective: boolean;
   insane: string[];
 }
@@ -80,6 +81,7 @@ function factsOf(id: string): ItemFacts {
     id,
     name: def.name,
     cost: def.cost,
+    role: (def as { craftRole?: string }).craftRole ?? "none",
     effective: mods.length > 0 || def.passive !== undefined,
     insane,
   };
@@ -107,35 +109,46 @@ beforeAll(async () => {
 // ---------------------------------------------------------------------------
 
 describe("the two surfaces are exactly what the gates say (item-01)", () => {
-  it("SHOP = every named, priced, effective, sane item — no more, no less", () => {
+  it("SHOP = every FINAL crafted weapon with an effect — no more, no less", () => {
     cover("arena-item-surfaces");
+    // Owner rule 1 (task #70, reopened): 「只有最終合成武器才能上架可直接購買
+    // (有製作書的)」. The shop is derived from the craftRole marker (recovered
+    // from the source-map triggers), NOT from price — the old `cost > 0`
+    // derivation is the bug that put components and the quest reward 魔戒 on the
+    // shelf. A final with no expressible payload is held off by the S3/effect
+    // gate (its power is an active item@1 cannot hold — #56).
     const want = allItems
       .filter((id) => {
         const f = factsOf(id);
-        return f.name !== id && f.cost > 0 && f.effective && f.insane.length === 0;
+        return f.name !== id && f.role === "final" && f.effective && f.insane.length === 0;
       })
       .sort();
     expect(
       [...shop].sort(),
-      "starter.go's shop list has drifted from what the content tree actually justifies",
+      "starter.go's shop list has drifted from the FINAL-weapon set the content tree justifies",
     ).toEqual(want);
-    expect(shop.length).toBeGreaterThanOrEqual(60);
+    expect(shop.length).toBeGreaterThanOrEqual(20);
+    // EXCLUSION: nothing but a final may be on the shelf.
+    for (const id of shop) {
+      expect(factsOf(id).role, `shop item ${id} is not a final crafted weapon`).toBe("final");
+    }
   });
 
-  it("the FREE surfaces are every named, effective 0g item, minus the 四魂之玉 shards", () => {
+  it("DRAFT = exactly the QUEST set, both halves (item-01)", () => {
     cover("arena-item-surfaces");
-    // Task #82 split this population in two. A 0g item used to mean exactly
-    // "quest reward"; now it also means "legendary", because 「傳說的武器道具，
-    // 只能隨機三選一」 took the price OFF all 29 legendaries. So the gate is
-    // stated over the union and the split is asserted separately below.
-    const want = allItems
-      .filter((id) => {
-        const f = factsOf(id);
-        return f.name !== id && f.cost === 0 && f.effective && f.insane.length === 0 && !isJewelShard(f);
-      })
-      .sort();
-    expect([...draft, ...legendary].sort()).toEqual(want);
+    // Owner rule 2: 「隨機三選一才能選到 所有任務道具 … 不要放這些任務道具以外的
+    // 東西」. The draft is derived from craftRole == "quest" — and crucially the
+    // effect gate is NOT applied, because four quest items (仙后座/戰旗/復仇之袍/
+    // 惡魔吉他) carry only an active/aura item@1 cannot express yet (#56) and the
+    // owner still wants them draftable. INCLUSION and EXCLUSION are both pinned.
+    const wantQuest = allItems.filter((id) => factsOf(id).role === "quest").sort();
+    expect([...draft].sort(), "the draft surface has drifted from the quest set").toEqual(wantQuest);
     expect(draft.length).toBeGreaterThanOrEqual(6);
+    for (const id of draft) {
+      expect(factsOf(id).role, `draft item ${id} is not a quest item`).toBe("quest");
+    }
+    // The legendary/orb pool is a SEPARATE surface (not a 3-choose-1 draft); it
+    // is asserted for its own closure below.
     expect(legendary.length).toBeGreaterThanOrEqual(6);
   });
 
@@ -190,16 +203,20 @@ describe("nothing that cannot work is reachable (item-02)", () => {
     }
   });
 
-  it("no zero-effect item is reachable, and none was deleted either", () => {
+  it("no zero-effect item is in the SHOP, and none was deleted from content", () => {
     cover("arena-item-noop-unreachable");
     const dead = allItems.filter((id) => !factsOf(id).effective);
-    // These are excluded from the LISTS, never from the content tree: their
-    // payload is an active ability item@1 cannot express yet (task #56), and
-    // all of them come back the moment the schema grows an active slot.
+    // A no-effect item may never be SOLD (the shop's S3 gate). It MAY be drafted
+    // if it is a quest item: 仙后座/戰旗/復仇之袍/惡魔吉他 are quest rewards the
+    // owner named/implied whose whole payload is an active item@1 cannot express
+    // yet (#56). Owner rule 2 is 「所有任務道具」, so they are draftable regardless
+    // — dropping them for lacking ported stats is how 仙后座 went missing before.
     expect(dead.length).toBeGreaterThan(50);
     for (const id of dead) {
-      expect(shop).not.toContain(id);
-      expect(draft).not.toContain(id);
+      expect(shop, `no-effect item ${id} is on the shop shelf`).not.toContain(id);
+      if (factsOf(id).role !== "quest") {
+        expect(draft, `no-effect non-quest item ${id} is draftable`).not.toContain(id);
+      }
       expect(Items.tryGet(id as ItemId), `${id} must still exist as content`).toBeDefined();
     }
   });
@@ -265,7 +282,10 @@ describe("the shop is a shop, not a museum (item-04)", () => {
     // are reachable, and nothing sits anywhere else.
     expect([...new Set(costs)].sort((a, b) => a - b)).toEqual([300, 1200]);
     const openers = costs.filter((c) => c <= START).length;
-    expect(openers, `only ${openers} items are buyable at turn 1`).toBeGreaterThanOrEqual(20);
+    // The shop is FINAL weapons only now (owner rule 1), a sharper shelf than
+    // the old cost-filtered 70. Turn 1 must still offer a real choice (a SIMPLE
+    // final buyable on the 600g purse) and the late game a body of POWERFUL ones.
+    expect(openers, `only ${openers} finals are buyable at turn 1`).toBeGreaterThanOrEqual(1);
     expect(costs.filter((c) => c === 1200).length).toBeGreaterThanOrEqual(10);
     expect(Math.max(...costs), "nothing in the shop may be unreachable").toBeLessThanOrEqual(CEILING);
     // The 600g purse buys exactly TWO of the cheap tier and none of the dear

@@ -29,10 +29,18 @@ seed:
 ingress:
   enabled: false          # local access = `make up` port-forward
 
-# Dev-only fallback secrets (make up overrides these with generated ones in
-# deploy/helm/secrets.local.yaml — gitignored).
+# Secrets are NOT carried here as working literals anymore (#176). They used to
+# be `dev-insecure-jwt-secret` / `-seam-secret` / `-redis-password` — real,
+# usable values sitting in a tracked file, which is exactly what a deployed
+# process must never be able to read. They are now blank, so secret.yaml's Helm
+# `required` FAILS FAST on any render that does not supply them, the same
+# fail-closed direction as values.yaml. `make up` supplies generated values via
+# deploy/helm/secrets.local.yaml (gitignored); the infracheck suite supplies
+# dummy `--set` values. And even if a blank slipped through, the platform's own
+# boot guard rejects these three names as known dev values
+# (apps/platform/internal/config, packages/shared/src/deploySecrets.ts).
 secrets:
   create: true
-  jwtSigningSecret: dev-insecure-jwt-secret
-  platformGameSharedSecret: dev-insecure-seam-secret
-  redisPassword: dev-insecure-redis-password
+  jwtSigningSecret: ""
+  platformGameSharedSecret: ""
+  redisPassword: ""

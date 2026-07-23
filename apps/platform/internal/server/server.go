@@ -346,6 +346,10 @@ func (s *Server) buildRouter(templates *room.Templates) {
 			opsenv.NewHandlers(s.OpsEnv, s.Admin.AdminOnly).Mount(pr)
 			// /ai/icon + /ai/text authed; /admin/ai/config AdminOnly inside
 			ai.NewHandlers(s.AI, s.Admin.AdminOnly).Mount(pr)
+			// /admin/replays — the match-replay browser (task #175). Proxies the
+			// game server's private recording API through the admin gate, because
+			// recordings carry player names. AdminOnly inside.
+			gamelink.NewReplayHandlers(s.Gamelink, s.Admin.AdminOnly).Mount(pr)
 		})
 
 		// #126 private-deploy: admin account-approval gate. Registered as its own

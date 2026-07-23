@@ -5,6 +5,7 @@ import { LoginScreen } from "./LoginScreen";
 import { ConsoleHub } from "./ConsoleHub";
 import { PlayersPage } from "./PlayersPage";
 import { MatchesPage } from "./MatchesPage";
+import { ReplaysPage } from "./ReplaysPage";
 import { AnnouncementsPage } from "./AnnouncementsPage";
 import { CurationPage } from "./CurationPage";
 import { CombatEnvPage } from "./CombatEnvPage";
@@ -23,6 +24,7 @@ const NAV: { page: Page; label: string; emoji: string }[] = [
   { page: "hub", label: "Console Hub", emoji: "🗂️" },
   { page: "players", label: "Players", emoji: "👤" },
   { page: "matches", label: "Matches", emoji: "⚔️" },
+  { page: "replays", label: "對戰回放", emoji: "🎞️" },
   { page: "announcements", label: "Announcements", emoji: "📢" },
   { page: "curation", label: "內容白名單", emoji: "✅" },
   { page: "combatEnv", label: "戰鬥系統", emoji: "⚖️" },
@@ -184,6 +186,7 @@ function Console(): React.JSX.Element {
             {page === "hub" && <ConsoleHub />}
             {page === "players" && <PlayersPage />}
             {page === "matches" && <MatchesPage />}
+            {page === "replays" && <ReplaysPage />}
             {page === "announcements" && <AnnouncementsPage />}
             {page === "curation" && <CurationPage />}
             {page === "content" && contentAdmin !== null && <contentAdmin.Page />}
