@@ -519,9 +519,9 @@ describe("HUD corner sources (client-19)", () => {
     cover("hud-corner-layout");
     /** files that legitimately still pin themselves — each RESERVED in the registry */
     const ALLOW = new Map<string, string>([
-      // Leave button — match-screen composition, owned by another task; its
-      // pin already matches the reserved top-right slot 0.
-      ["platform/AppRoot.tsx", "leave"],
+      // (platform/AppRoot.tsx's Leave button used to sit here; the safe-area
+      // contract work for #107 re-homed it onto hudSlotStyle("leave"), so the
+      // exception is gone and the guard now covers that file for real.)
       // bottom-right: GoldLevel is hand-pinned until the minimap task re-homes
       // that corner (the minimap itself pins with calc()/safe-area strings, so
       // the literal scan never sees it — its slot is reserved in the registry).

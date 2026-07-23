@@ -268,8 +268,8 @@ const SLOTS = [
     height: 26,
     width: 80,
     owner: "ui/platform/AppRoot.tsx",
-    managed: false,
-    note: "RESERVED: the Leave button hard-codes right:10/top:10 in the match-screen composition (owned by another task). Its pin already matches this slot; re-home it when that file is free.",
+    managed: true,
+    note: "the in-match Leave control; re-homed off its hard-coded right:10/top:10 when the safe-area contract (#107) reached the platform screens",
   },
   {
     id: "scoreboard",

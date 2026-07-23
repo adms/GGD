@@ -34,6 +34,7 @@ import { IconImg } from "../components/IconImg";
 import { SfxButton } from "../SfxButton";
 import { isTouchDevice, readTouchEnv } from "../../input/mobileDetect";
 import { hudSlotBand } from "../hud/hudLayout";
+import { topRightReserve } from "../chromeReserve";
 import { GOLD, PANEL_BG, PANEL_BORDER, teamCss, TEXT_DIM, TEXT_MAIN } from "../theme";
 import {
   applyChampionWhitelist,
@@ -181,7 +182,13 @@ export function ChampSelectPanel(): React.JSX.Element {
         paddingTop: topInset,
         paddingBottom: 12,
         paddingLeft: 16,
-        paddingRight: 16,
+        // task #107: the card is only CENTRED, not narrow — at 1280px its right
+        // edge lands 4px inside the <body>-portaled audio cluster, and on a
+        // phone-landscape viewport it runs straight under it. Reserve the
+        // cluster's PUBLISHED gutter (ui/chromeReserve) so the card shifts left
+        // instead. Deliberately the horizontal axis and not extra paddingTop:
+        // task #151 already has iPhone landscape at 390px of height to spend.
+        paddingRight: topRightReserve({ min: 16 }),
       }}
     >
       <div
