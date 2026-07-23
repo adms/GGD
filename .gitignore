@@ -24,6 +24,10 @@ tools/testrunner/bin/
 
 # test / coverage
 coverage/
+# ...but NOT the Go package that happens to be named `coverage`. The blanket
+# rule above silently excluded real source: tools/testrunner/internal/api
+# imports this package, so testrunner could not build in a fresh checkout.
+!tools/testrunner/internal/coverage/
 test-results/
 playwright-report/
 *.ndjson
