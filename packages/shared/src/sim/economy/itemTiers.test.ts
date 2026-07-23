@@ -16,6 +16,10 @@
  * apps/platform/internal/curation/starter_content_test.go — this file asserts
  * the properties the SIM depends on, which is why it can be stated without
  * knowing the surface lists at all.
+ *
+ * The last block is not a price assertion but rides the same harness: it is a
+ * structural check on every item's modifier array, and this is the only place
+ * in `packages/shared` that already loads all of them from the real tree.
  */
 import { describe, it, expect, beforeAll } from "vitest";
 import { join, dirname } from "node:path";
@@ -280,5 +284,81 @@ describe("reachability against the real gold curve", () => {
     expect(TIER_AEP_BUDGET.LEGENDARY / TIER_AEP_BUDGET.SIMPLE).toBe(8);
     expect(ITEM_TIER_PRICE.SIMPLE / TIER_AEP_BUDGET.SIMPLE).toBeCloseTo(GOLD_PER_AEP, 1);
     expect(ITEM_TIER_PRICE.POWERFUL / TIER_AEP_BUDGET.POWERFUL).toBeCloseTo(GOLD_PER_AEP, 1);
+  });
+});
+
+type ItemModifiers = NonNullable<ItemDoc["modifiers"]>;
+
+/** The identity of a modifier ENTRY — two entries with the same key are the same stat line. */
+const modKey = (m: ItemModifiers[number]): string => `${m.stat} ${m.op} ${m.value}`;
+
+/**
+ * The literal shape of the w3x-22 bug: some contiguous run of entries is
+ * immediately followed by an identical run — `[A,B,C]` imported as `[A,B,C,A,B,C]`.
+ * Returns a human-readable description of the first such run, or null.
+ * Arrays are ≤6 entries, so the O(n³) scan is free.
+ */
+function duplicatedBlock(mods: ItemModifiers): string | null {
+  const keys = mods.map(modKey);
+  for (let k = 1; k * 2 <= keys.length; k++) {
+    for (let i = 0; i + 2 * k <= keys.length; i++) {
+      if (keys.slice(i, i + k).every((key, j) => key === keys[i + k + j])) {
+        return `[${keys.slice(i, i + k).join(" / ")}] repeats at index ${i} and ${i + k}`;
+      }
+    }
+  }
+  return null;
+}
+
+describe("no item ships a modifier array concatenated with itself", () => {
+  it("no modifier entry is repeated, contiguously or otherwise", () => {
+    cover("w3x-item-no-doubled-modifier");
+    // Task #83 / w3x-22: the importer emitted a few items' stat block TWICE,
+    // doubling them. Three of the four (godie-i00z/i02g/i049) were invisibly
+    // absorbed by #82's rescale-to-tier-budget — they land on budget either
+    // way — so the only one that showed up as a wrong number in the game was
+    // godie-i00w, a cost-0 fragment #82 never touched. That is why this is a
+    // STRUCTURAL check and not a numeric one: the doubling is silent wherever
+    // a later pass renormalizes, and it can only be caught in the shape.
+    //
+    // Two statements, weakest last. Entry-level uniqueness is the stronger of
+    // the two (a repeated block implies a repeated entry), but the block scan
+    // names the offending run, which is what makes a failure actionable.
+    const repeatedEntry: string[] = [];
+    const repeatedBlock: string[] = [];
+    for (const d of items) {
+      const mods = d.modifiers ?? [];
+      const seen = new Set<string>();
+      for (const m of mods) {
+        const key = modKey(m);
+        if (seen.has(key)) repeatedEntry.push(`${d.id} ${d.name}: ${key}`);
+        seen.add(key);
+      }
+      const block = duplicatedBlock(mods);
+      if (block) repeatedBlock.push(`${d.id} ${d.name}: ${block}`);
+    }
+    // An item wanting the same stat twice should carry one merged entry, so a
+    // repeat here is always an import artifact rather than authored intent.
+    expect(repeatedEntry).toEqual([]);
+    expect(repeatedBlock).toEqual([]);
+  });
+
+  it("detects the doubled block the importer actually produced", () => {
+    // The guard above is a no-op assertion on a clean tree, so pin its teeth to
+    // the real pre-fix payload: godie-i00w's `AIx2` (All+2) listed twice.
+    const doubled: ItemModifiers = [
+      { stat: Stat.MaxHealth, op: ModOp.Flat, value: 40 },
+      { stat: Stat.AttackDamage, op: ModOp.Flat, value: 2 },
+      { stat: Stat.MaxMana, op: ModOp.Flat, value: 24 },
+      { stat: Stat.MaxHealth, op: ModOp.Flat, value: 40 },
+      { stat: Stat.AttackDamage, op: ModOp.Flat, value: 2 },
+      { stat: Stat.MaxMana, op: ModOp.Flat, value: 24 },
+    ];
+    expect(duplicatedBlock(doubled)).toContain("index 0 and 3");
+    expect(duplicatedBlock(doubled.slice(0, 3))).toBeNull();
+    // The SUMMED form godie-i00w actually shipped ([80,4,48]) is invisible to
+    // any structural check — it is one clean entry per stat. Only the raw
+    // concatenation is catchable, which is what the importer emits.
+    expect(duplicatedBlock([{ stat: Stat.MaxHealth, op: ModOp.Flat, value: 80 }])).toBeNull();
   });
 });
