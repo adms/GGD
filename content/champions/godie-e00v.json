@@ -92,7 +92,7 @@
       "effects": [
         {
           "kind": "damage",
-          "damageType": "magic",
+          "damageType": "physical",
           "amount": {
             "perRank": [
               150.0,
@@ -103,8 +103,8 @@
             ],
             "ratios": [
               {
-                "stat": "ap",
-                "coeff": 1.0
+                "stat": "ad",
+                "coeff": 0.5
               }
             ]
           }
@@ -136,7 +136,7 @@
       "effects": [
         {
           "kind": "damage",
-          "damageType": "magic",
+          "damageType": "physical",
           "amount": {
             "perRank": [
               60.0,
@@ -146,8 +146,8 @@
             ],
             "ratios": [
               {
-                "stat": "ap",
-                "coeff": 0.18
+                "stat": "ad",
+                "coeff": 0.5
               }
             ]
           }
@@ -177,17 +177,17 @@
       "effects": [
         {
           "kind": "damage",
-          "damageType": "magic",
+          "damageType": "physical",
           "amount": {
             "perRank": [
-              1.0,
-              1.0,
-              1.0
+              500,
+              800,
+              1100
             ],
             "ratios": [
               {
-                "stat": "ap",
-                "coeff": 0.005
+                "stat": "ad",
+                "coeff": 0.6
               }
             ]
           }

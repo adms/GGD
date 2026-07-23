@@ -49,3 +49,7 @@ backup-*/
 # misc
 .DS_Store
 *.log
+
+# python bytecode (agent tools drop these in-repo)
+__pycache__/
+*.pyc

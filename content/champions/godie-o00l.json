@@ -111,7 +111,7 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 1.0
+                "coeff": 0.6
               }
             ]
           }
@@ -143,32 +143,26 @@
       "range": 0.0,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "magic",
+          "kind": "shield",
           "amount": {
             "perRank": [
-              1.0,
-              1.0,
-              1.0,
-              1.0
+              650,
+              1300,
+              1950,
+              2600
             ],
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 0.003
+                "coeff": 0.6
               }
             ]
-          }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "slow40",
-          "duration": 1.5,
-          "moveSpeedMult": 0.6
+          },
+          "duration": 6.0
         }
       ],
       "vfxKey": "fx.ember-bolt-cast",
-      "targetsEnemies": true,
+      "targetsEnemies": false,
       "radius": 1.5
     },
     "R": {
@@ -202,7 +196,7 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 0.72
+                "coeff": 0.7
               }
             ]
           }

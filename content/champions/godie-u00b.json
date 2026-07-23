@@ -70,7 +70,7 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 0.72
+                "coeff": 0.6
               }
             ]
           }
@@ -188,7 +188,7 @@
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 0.39
+                "coeff": 0.7
               }
             ]
           }

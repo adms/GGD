@@ -10,7 +10,15 @@ import { SimWorld } from "./SimWorld";
 import { SKELETON_ARENA } from "./world/ArenaDef";
 import { registerSkeletonContent } from "./content/skeleton";
 import { spawnChampion } from "./spawnChampion";
-import { asSeatId, asTeamId, type AbilityId, type ChampionId, type EntityId, type SeatId } from "../ids";
+import {
+  asSeatId,
+  asTeamId,
+  type AbilityId,
+  type ChampionId,
+  type EntityId,
+  type ProjectileId,
+  type SeatId,
+} from "../ids";
 import { Stat, STAT_CLAMPS } from "./stats/statTypes";
 import { ModOp } from "./stats/modifiers";
 import { attachSource, recomputeStats } from "./stats/statPipeline";
@@ -21,6 +29,7 @@ import {
 } from "./abilities/abilitySystem";
 import { Abilities } from "./content/registry";
 import { runEffects } from "./effects/effectRunner";
+import { projectileSystem } from "./systems/ProjectileSystem";
 import { flowerRulesFromConfig, spawnFlower } from "./flowers";
 import type { IntentFrame } from "./intents";
 import {
@@ -317,6 +326,66 @@ describe("combat-env abilityRange (task #136)", () => {
     };
     expect(tryCast()).toBe("ok"); // neutral: 10 ≤ 12
     expect(tryCast(env({ abilityRange: 0.6 }))).toBe("out-of-range"); // 10 > 7.2
+  });
+
+  it("scales an ability skillshot's TRAVEL range through the same seam (displayed == actual)", () => {
+    cover("combat-env-ability-range");
+    // sela.q.bolt is the skeleton skillshot: authored maxRange 14. The spawn
+    // site must route that through resolveAbilityRange, the SAME factor the
+    // client tooltip applies via displayFinal(range, "abilityRange").
+    const spawnRemaining = (table?: CombatEnvMultipliers): number => {
+      const w = makeWorld(42, table);
+      const { sela } = duel(w, 6);
+      runEffects([{ kind: "spawnProjectile", projectileId: "sela.q.bolt" as ProjectileId, onHit: [] }], {
+        world: w,
+        caster: sela,
+        rank: 1,
+        targets: [],
+        direction: { x: 0, z: 1 }, // fire away from the enemy so nothing is hit
+        origin: "ability:sela.q",
+        rng: w.rng,
+      });
+      return [...w.projectile.values()][0]!.remainingRange;
+    };
+    // neutral table: the missile keeps its authored 14-unit reach (unchanged)
+    expect(spawnRemaining()).toBe(14);
+    // 0.6: travel range now 14 × 0.6 = 8.4 — matching the ×0.6 the tooltip shows
+    expect(spawnRemaining(env({ abilityRange: 0.6 }))).toBeCloseTo(8.4, 6);
+  });
+
+  it("the skillshot actually STOPS at the scaled range (0.6 → flies 8.4, not 14)", () => {
+    cover("combat-env-ability-range");
+    const w = makeWorld(77, env({ abilityRange: 0.6 }));
+    const c = SKELETON_ARENA.zones[0]!.center;
+    const caster = spawnChampion(w, {
+      championId: "sela" as ChampionId,
+      seatId: asSeatId(0),
+      teamId: asTeamId(0),
+      pos: { x: c.x - 4, z: c.z },
+      zone: 0,
+    });
+    const start = { ...w.transform.get(caster)!.pos };
+    runEffects([{ kind: "spawnProjectile", projectileId: "sela.q.bolt" as ProjectileId, onHit: [] }], {
+      world: w,
+      caster,
+      rank: 1,
+      targets: [], // lone caster: nothing to hit, no boundary within reach
+      direction: { x: 0, z: 1 },
+      origin: "ability:sela.q",
+      rng: w.rng,
+    });
+    const pid = [...w.projectile.keys()][0]!;
+    // advance ONLY the projectile system (deterministic; no champion AI) until
+    // the missile expires; it carries its END POINT in the projectileEnd event.
+    for (let k = 0; k < 200 && w.projectile.has(pid); k++) projectileSystem(w);
+    const end = w.events.filter((e) => e.type === "projectileEnd").at(-1);
+    expect(end).toBeDefined();
+    const traveled = Math.hypot(
+      (end!.data.x as number) - start.x,
+      (end!.data.z as number) - start.z,
+    );
+    expect(traveled).toBeCloseTo(8.4, 4); // scaled 14×0.6, NOT the base 14
+    expect(traveled).toBeLessThan(14 - 1);
   });
 });
 

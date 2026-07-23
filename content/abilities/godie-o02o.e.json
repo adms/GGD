@@ -22,7 +22,7 @@
   "effects": [
     {
       "kind": "damage",
-      "damageType": "magic",
+      "damageType": "physical",
       "amount": {
         "perRank": [
           80,
@@ -32,8 +32,8 @@
         ],
         "ratios": [
           {
-            "stat": "ap",
-            "coeff": 0.6
+            "stat": "ad",
+            "coeff": 0.5
           }
         ]
       }

@@ -22,23 +22,10 @@
   "range": 0,
   "effects": [
     {
-      "kind": "shield",
-      "amount": {
-        "perRank": [
-          1.0,
-          1.0,
-          1.0,
-          1.0,
-          1.0
-        ],
-        "ratios": [
-          {
-            "stat": "ap",
-            "coeff": 0.003
-          }
-        ]
-      },
-      "duration": 5.0
+      "kind": "applyStatus",
+      "statusId": "root",
+      "duration": 1.0,
+      "root": true
     }
   ],
   "vfxKey": "fx.prim.void.pulse-sm",
