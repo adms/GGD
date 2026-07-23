@@ -125,7 +125,13 @@ export function CreditsPage(props: { onClose: () => void }): React.JSX.Element {
               )}
             </div>
             <div style={{ fontSize: 13, color: "#c3cbdd", marginTop: 2 }}>
-              {c.author}
+              {c.authorUrl ? (
+                <a href={c.authorUrl} target="_blank" rel="noopener noreferrer" style={LINK}>
+                  {c.author}
+                </a>
+              ) : (
+                c.author
+              )}
               {" · "}
               {c.licenseUrl ? (
                 <a href={c.licenseUrl} target="_blank" rel="noopener noreferrer" style={LINK}>

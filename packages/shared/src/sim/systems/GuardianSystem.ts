@@ -47,10 +47,41 @@ import type { SimWorld } from "../SimWorld";
 import { grantGold } from "../economy/progression";
 import { healTarget, restoreMana } from "../combat/restore";
 import { queryOverlap } from "../collision/queries";
+import { resolveAbilityRadius } from "../abilities/abilitySystem";
 import type { DamageType } from "../effects/effect";
 
-/** EntityState.key / model doc id used for a guardian on the wire. */
-export const GUARDIAN_MODEL_KEY = "prop.guardian";
+/**
+ * EntityState.key / model doc id used for a guardian on the wire. The three
+ * PER-ARENA faces (#105 — one mechanic, several identities): 石頭人 (stone,
+ * the legacy default doc), 巨獸人 (beast), 樹人 (treant / nature). Each resolves
+ * client-side through the SAME modelDocFor seam ChampionView / FlowerView use;
+ * the .glb assets live under content/assets/models/guardians/.
+ */
+export const GUARDIAN_MODEL_KEY = "prop.guardian"; // 石頭人 (stone) — default/back-compat
+export const GUARDIAN_MODEL_STONE = "prop.guardian";
+export const GUARDIAN_MODEL_BEAST = "prop.guardian.beast"; // 巨獸人
+export const GUARDIAN_MODEL_TREANT = "prop.guardian.treant"; // 樹人
+
+/**
+ * The guardian FACE for an arena (#105). A pure, total function of the arena id
+ * so it is deterministic and needs no content field on the arena doc: the arena
+ * picks WHICH identity stands at its duel-zone centre, but the MECHANIC is one.
+ * Unknown / skeleton arenas fall back to the stone golem (the doc that already
+ * shipped). Every one of the three faces appears on at least one shipped arena.
+ */
+export function guardianModelKeyForArena(arenaId: string): string {
+  switch (arenaId) {
+    case "arena.colosseum": // gladiator pit → 巨獸人
+    case "arena.godie": // the EX boss map → 巨獸人
+      return GUARDIAN_MODEL_BEAST;
+    case "arena.dota": // forest lanes → 樹人
+    case "arena.castle": // ruins reclaimed by nature → 樹人
+      return GUARDIAN_MODEL_TREANT;
+    case "arena.skeleton": // built-in → 石頭人
+    default:
+      return GUARDIAN_MODEL_STONE;
+  }
+}
 
 /**
  * The neutral guardian marker + all of its per-round runtime state. Stored in
@@ -62,6 +93,13 @@ export interface StructureComp {
   zone: number;
   /** match round it was spawned in — drives HP + volley damage scaling */
   round: number;
+  /**
+   * PER-ARENA model doc id (#105) — 樹人 / 石頭人 / 巨獸人. Presentation only
+   * (it is a pure function of the active arena via `guardianModelKeyForArena`),
+   * so it is deliberately NOT folded into `SimWorld.digest()`. Emitted as
+   * `EntityState.key` from snapshot so the client resolves the right .glb.
+   */
+  modelKey: string;
 
   // ---- mitigation knobs. Read by combat/damage.ts `mitigateStructure` (a
   //      guardian has no StatsComp, so these ARE its armor/MR). ----
@@ -234,6 +272,7 @@ export function spawnGuardian(
   world.structure.set(id, {
     zone,
     round,
+    modelKey: guardianModelKeyForArena(world.arena.id),
     armor: rules.armor,
     magicResist: rules.magicResist,
     maxHitPctMaxHp: rules.maxHitPctMaxHp,

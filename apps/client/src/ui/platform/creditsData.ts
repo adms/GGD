@@ -32,6 +32,8 @@ export interface CreditEntry {
   readonly what: string;
   readonly title: string;
   readonly author: string;
+  /** Author profile / homepage. Part of the verbatim credit for CC-BY works. */
+  readonly authorUrl?: string;
   readonly license: string;
   readonly licenseUrl?: string;
   readonly sourceUrl?: string;
@@ -48,6 +50,7 @@ export const CREDITS: readonly CreditEntry[] = [
     what: "登入畫面 巨龍",
     title: "Animated Dragon Three Motion Loops",
     author: "LasquetiSpice",
+    authorUrl: "https://sketchfab.com/LasquetiSpice",
     license: "CC-BY 4.0",
     licenseUrl: "https://creativecommons.org/licenses/by/4.0/",
     sourceUrl:

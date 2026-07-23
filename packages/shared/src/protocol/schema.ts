@@ -230,7 +230,7 @@ defineTypes(TeamState, {
 
 export class EntityState extends Schema {
   declare id: number;
-  declare kind: number; // 0 champion, 1 projectile, 2 flower, 3 revive circle (ENTITY_KIND)
+  declare kind: number; // 0 champion, 1 projectile, 2 flower, 3 revive circle, 4 guardian (ENTITY_KIND)
   declare seatId: number;
   /** visual key: champion modelKey or projectileId */
   declare key: string;
@@ -374,12 +374,26 @@ defineTypes(MatchState, {
  *
  * They are server entities, interpolated like flowers and NEVER predicted; a
  * circle carries no health component sim-side, so nothing here implies one.
+ *
+ * GUARDIANS (kind 4, task #89/#105) are the NEUTRAL duel-zone objective. Like
+ * flowers they are team-less server entities carrying only transform + health +
+ * a StructureComp, but they are a DISTINCT kind so the client stops treating
+ * them as a fall-through champion (kind 0 = grey untinted humanoid, seatId -1 →
+ * team-0 tint). seatId is -1 (neutral: no team owns it, so #85's death-spectator
+ * desaturation never keeps it in colour as a teammate and all four teams may
+ * target it); hp/maxHp ride along so a neutral health bar renders; `key` is the
+ * PER-ARENA model doc id (#105) — 樹人 / 石頭人 / 巨獸人 — resolved through the
+ * same modelDocFor seam ChampionView/FlowerView use. Interpolated like flowers,
+ * never predicted.
  */
 export const ENTITY_KIND = {
   CHAMPION: 0,
   PROJECTILE: 1,
   FLOWER: 2,
   REVIVE_CIRCLE: 3,
+  // APPEND-ONLY: the wire encodes kind by value; never renumber an existing
+  // kind (a running client would desync). New kinds get the next integer.
+  GUARDIAN: 4,
 } as const;
 
 export const ENTITY_FLAG = {
