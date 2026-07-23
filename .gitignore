@@ -24,6 +24,9 @@ tools/testrunner/bin/
 
 # test / coverage
 coverage/
+# ...but this one is a real Go package, not coverage output. Unanchored
+# `coverage/` matches at any depth, and it swallowed it silently.
+!tools/testrunner/internal/coverage/
 test-results/
 playwright-report/
 *.ndjson
