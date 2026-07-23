@@ -561,7 +561,9 @@ function main(): void {
   const iconCount = [...iconCounts.values()].reduce((a, b) => a + b, 0);
   // ×4/3 for the mip chain, same convention as every other texture in this report.
   const iconVram = Math.round(
-    [...iconCounts].reduce((sum, [ext, n]) => sum + n * ICON_EDGE[ext] ** 2 * 4, 0) * (4 / 3),
+    // `!` is sound: line 557 only admits an ext into iconCounts once ICON_EDGE
+    // has an entry for it, which TS cannot narrow across the Map.
+    [...iconCounts].reduce((sum, [ext, n]) => sum + n * ICON_EDGE[ext]! ** 2 * 4, 0) * (4 / 3),
   );
   const iconBreakdown = [...iconCounts]
     .sort((a, b) => b[1] - a[1])
