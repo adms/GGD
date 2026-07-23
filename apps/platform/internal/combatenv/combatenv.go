@@ -206,13 +206,27 @@ func (s *Service) SetNow(fn func() time.Time) { s.now = fn }
 // nothing has ever been saved (no lazy create: the neutral table needs no
 // file to be correct).
 func (s *Service) Get() (Doc, error) {
+	doc, _, err := s.GetStored()
+	return doc, err
+}
+
+// GetStored is Get plus whether the document actually exists on disk. The
+// distinction matters to exactly one caller — the PUBLIC read the game-server
+// consumes — because that read is MERGED OVER the content defaults with admin
+// keys winning per key (see apps/game-server/src/config/combatEnv.ts). Serving
+// the defaults-filled table when no operator has ever saved one therefore
+// silently overwrites every content-authored multiplier with 1.0: the content
+// tree's cooldown 0.25 / damageDealt 0.5 / maxHealth 8.0 / abilityRange 0.6
+// would all revert the moment a game-server could reach a fresh platform.
+// "Never configured" must stay distinguishable from "configured to neutral".
+func (s *Service) GetStored() (Doc, bool, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
-	doc, _, err := s.repo.Load()
+	doc, stored, err := s.repo.Load()
 	if err != nil {
-		return DefaultDoc(), err
+		return DefaultDoc(), false, err
 	}
-	return doc, nil
+	return doc, stored, nil
 }
 
 // Replace overwrites the whole table (PUT semantics). The input may be SPARSE:

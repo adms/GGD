@@ -54,11 +54,22 @@ func (h *Handlers) Mount(r chi.Router) {
 	})
 }
 
+// getPublic serves the table the game-server merges OVER the content defaults,
+// admin keys winning per key. So an UNCONFIGURED platform must say "I have no
+// opinion" — an empty multipliers map — and NOT the defaults-filled neutral
+// table, which would silently reset every content-authored multiplier to 1.0.
+// Once an operator saves anything the full table ships, because at that point
+// the neutral values are a deliberate choice (PUT semantics: omitted keys
+// reset to 1.0). Empty map, never nil: the game-server's parse rejects a null
+// multipliers object as malformed.
 func (h *Handlers) getPublic(w http.ResponseWriter, r *http.Request) {
-	doc, err := h.svc.Get()
+	doc, stored, err := h.svc.GetStored()
 	if err != nil {
 		httpx.WriteError(w, err)
 		return
+	}
+	if !stored {
+		doc.Multipliers = map[string]float64{}
 	}
 	w.Header().Set("Cache-Control", "public, max-age="+publicMaxAgeSeconds)
 	httpx.WriteJSON(w, http.StatusOK, doc)
