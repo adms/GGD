@@ -369,3 +369,181 @@ Genuinely-incomplete / deferred requirements surfaced during the ~1920-file bran
 - `RoundWinnerStage` 與 `MatchEndPanel` 共用同一個 process-wide `victoryTaunts`，回合舞台的 `clear()` 會無條件 `cancel()`。
   審查建議讓回合舞台自己 new 一個 player——**沒有採納**：共用實例正是「永遠不會兩個聲音同時講話」的保證來源，
   拆開反而會製造更糟的 bug。目前安全性由「決賽回合 `roundEndQuoteChampion` 回傳 null」保證，已在此記錄這條隱性耦合。
+
+## 2026-07-23 — CT 起手時間 / 起手預告（telegraph）：**確認為真缺口**（僅偵查＋設計，未改任何程式碼）
+
+- **需求（原話）**：「**CT (起手時間) 很重要，並且一定要有對應的動畫特效等，讓玩家有機會閃躲**」。
+- **判讀**：這是**公平性契約**，不是拋光。成立需要三條同時為真——
+  **TIME**（扣掉延遲後真的來得及反應）、**SIGNAL**（**受害者**看得見，而且看得出**打哪裡**）、
+  **AGENCY**（那段時間內有事可做）。**看不見的起手時間不是閃躲窗，只是延遲。**
+- **設計文件**：`docs/design/cast-telegraph.md`（契約／五級分類／wire schema／視覺／數字／守護者／公平性規則／分階段計畫）。
+
+### 🔴 真缺口 1：起手時間在**內容**裡幾乎不存在（不是程式問題）
+
+- 對**真實載入登錄表**（`ContentLoader` + `registerAll`，與 `apps/game-server/src/index.ts:165-166` 同路徑）實測：
+  **554 個技能中 544 個 `castTimeSec = 0`（98.2%）**；造成傷害的 342 個裡 **332 個瞬發**；
+  全遊戲最長起手 **0.60 s**，最常見 0.35 s。10 個有起手時間的技能裡 **7 個是 EX（第 5 回合才解鎖）、2 個是 R（第 3 回合）**
+  → **第 1、2 回合全遊戲只有 1 個技能有起手時間**（`godie-h01u.e`）。其中 2 個（`sela.r`/`thorne.r`）還是 TS 骨架示範英雄。
+- **這 8 個值有 6 個是憑空發明的**：`tools/w3x-import/gen_ex_content.py:118` 寫死
+  `doc["castTime"] = 0.35  # AoE nukes get a wind-up (exercises cast time)`，
+  且與原始碼地圖矛盾（`91-002 亡靈大軍` 來源 `acas = 1.0`，出貨 0.35）。
+- **⚠ 擁有者其實早就填過這些數字，是匯入管線丟掉的**：`src_gogodieEX227s.w3x` 的 `war3map.w3a` 有
+  **130 個技能帶 `acas`（Casting Time），128 個非零**（眾數 0.3 / 0.5 / 1.0 s，尾巴到 1.6 s，394 筆逐級記錄）；
+  `war3map.w3u` 另有 **`ucpt` 164 / `ucbs` 174**（單位施法點／收招），其中 **47 個對得上出貨英雄**。
+  `acas` / `ucpt` / `ucbs` **都不在 `tools/w3x-import/src_objects.py` 與 `w3xlib/stats.py` 的白名單裡**，
+  且磁碟上的 `OBJECTS.json` / `parsed/abilities.json` 早於 #56 的 rawMods 直通，**rawMods 筆數 0**。
+  名稱比對後 **126 個擁有者親手計時的技能現在是瞬發**：龜派氣功 1.0→無、龍破斬 1.2→無、世界終結 1.6→無、
+  千之雷 1.5→無、超究武神霸斬 0.8→無、月牙天衝 0.5→無、千鳥 0.3→無、天翔龍閃 0.4→無。
+  → **這件事與 #56 直接相關**：修法是**還原原始數值**，不是重新發明。
+  ⚠ 三個離群值需人工判讀，不可盲目匯入：`A0ZG 98-002` 720.0、`A0AQ 31-02` rank2 5.0、`A10U 84-002` 4.0。
+
+### 🔴 真缺口 2：受害者永遠不知道「打哪裡」（幾何沒上線）
+
+- `castBegin` 實測 payload 就是 `{caster, slot, abilityId, ticks, castTimeSec}`——**沒有 point、沒有 radius、沒有 direction**。
+  頭上施法條（`CastTracker` + `GameApp.ts:1638-1640` + `WorldAnchorLayer.tsx:183-192`）**確實對每個英雄（含敵人）畫**，
+  這條線是活的、是對的，但它只回答「有人在放招」，永遠不回答「打哪裡」。
+- **地面 Telegraph 目前是「命中回執」偽裝成「警告」，而且會說謊**：
+  `VfxSystem.ts:612` 在 `abilityCast`（**起手當下、瞬發技能等同傷害當下**）生成 `Telegraph`，
+  只給 5 個引數 → `Telegraph.ts:166-167` 的 `fillMs = 300` / `holdMs = 150` **預設值生效，與 `castTimeSec` 完全無關**。
+  544 個瞬發技能的「填充中」動畫**整段畫在傷害之後**；0.6 s 的技能在 300 ms 就放「打在這裡了」的 resolve pop，**早了 300 ms**。
+  更糟：它用**未縮放**的 `def.radius`，而 sim 用 `radius × combatEnv.abilityRange (0.6)` →
+  **畫出來的圈比真正命中的圈大 1.667 倍**（`godie-h01u.e` 畫 9.72、實打 5.83）。**照著圈做決策會死。**
+- **#152 的虛線 range/AoE 預覽確認是 CASTER-ONLY**（本題直接問的那一項）：
+  由 `getHeldAbility()`（本機按住的鍵）或 `touchFrame.indicator` 驅動、以 `localSelfPos()` 為圓心
+  （`GameApp.ts:869-876, 1232-1246`；`AimIndicator.ts` 沒有任何網路輸入），**放招瞬間消失**。
+  它是**瞄準輔助，不是預告**，對受害者的貢獻是零。（設計文件重用它的 `dashedRing()` **幾何**，不重用它的資料流。）
+
+### 🔴 真缺口 3：#89 守護者——唯一把公平契約做對的系統，100% 被丟在伺服器行程內
+
+- sim 端**已經完整實作**：`fireVolley` 依威脅表蓋下 **不追蹤** 的標記
+  （原始碼註解：*NON-TRACKING telegraph point（walking out of it is a decision）*），
+  `GuardianMark{x,z,impactTick,amount}` 傷害在蓋章當下凍結，`applyMark` 在 `impactTick` **重新查詢**命中名單。
+  實測節奏：起手 24 tick = **0.800 s**，週期 4.0 s，3 標記，半徑 3.0，第 1 回合實打 97 傷害 = 460 HP 的 **21%**（第 5 回合＋ramp ~47%）。
+- **然後全部消失**：`grep -rn "guardian" apps/game-server/src/rooms/MatchRoom.ts apps/game-server/src/net/snapshot.ts apps/client/src` → **零命中**。
+  8 個 `guardian*` 事件都不在廣播白名單；`snapshot.ts` 沒有 `world.structure` 分支 →
+  守護者掉進 `else`，編碼成 `kind = 0`（英雄）、`seatId = -1`、`key = ""` →
+  client `teamBySeat.get(-1) ?? 0` = **藍隊**、名字 `#<entityId>`、模型退回**程序化體素人形**。
+  **它不是看不見，是偽裝成一個沒名字的藍隊玩家站在區域中央。** 且 `MatchController.ts:726` 在正式比賽中確實武裝它。
+- **鎮守之力（heir pulse）是第三個無聲 AoE，而且掛在玩家身上**：`heirPulsePct 0.25 × volleyDamage`，
+  半徑 2.5、每 4 s、持續 25 s，`guardianHeirPulse` 不廣播、無任何光環、無標記。
+
+### 🔴 真缺口 4：#132 火圈——三條全滅，且**無法只靠預告修好**
+
+- `FireRingSystem` **沒有任何幾何**：遍歷 `world.champion` 燒**所有區域**的所有活人，與位置無關 → **沒有安全區可以走**。
+- 繞過 `damageQueue`（`hp.hp -= dmg`）→ **不產生 `damage` 事件** → 無跳字、無紅閃、無音效，血條無故下降。
+- 3 個 `fireRing*` 事件不在白名單。唯一的 client 提示（BGM bed + minimap rim）由相位時鐘猜、在戰鬥第 **210** 秒才開，
+  但滿血英雄第 **194.9** 秒就被燒死 → **在每一個真的由火圈決勝的回合，提示永遠不會播**。
+
+### 📐 數字（本次計算的核心，設計文件第 4 節）
+
+- 逃離距離 `d = radius × 0.6 + 0.6`（碰撞半徑 0.6，`abilityRange = 0.6`）。85 個帶半徑技能：中位 `d = 4.13u`、最大 `6.43u`。
+- 移速實測：最慢 4.0 / 中位 5.9 / 最快 10.1 u/s（`MovementSystem` 無加速度）。
+- 延遲預算 `L`：**初稿寫 0.40 s，第二／三輪覆核後改為 0.45 s（蓋章式）／0.55 s（附身式）**
+  （廣播對齊 8 + 單程 30 + 下一幀 8 + 遠端插值 0／100 + **人類反應 300**（需求方指定 250–300 取上界）
+  + 輸入合併 17 + 回程 30 + 伺服器 tick 對齊 17 + **加速度爬升損失 33**（`ACCEL_TICKS = 3`，剛好損失整整一個 tick））。
+  ⚠ 人類反應是文獻估計、非本專案量測；其餘為 shipped 常數。
+  ⚠ **「蓋章式」的 100 ms 插值延遲是拿得回來的**——幾何是世界靜態座標 + 絕對 `impactTick`，本機英雄又是 client 預測跑在當下。
+- **`T_min = L + d / v`，參考速度取 `v_ref = 5.6`（p10，公平地板要對九成英雄成立，不是對一半）
+  → 90% 英雄 × 中位 AoE（`d = 4.13u`）= **1.19 s**（蓋章）／1.29 s（附身）；最慢英雄 × 最大 AoE = 2.06 s。**
+  母體：帶 `radius > 0` 的技能共 **85 個且全部是 `ground`**（其中 9 個不造成傷害）；
+  若只取「造成傷害」的 76 個子集，中位 5.88 → 5.69、門檻 → 1.17 s（**兩種母體只差 0.02 s，結論不變**）。
+- **🔴 全遊戲最長起手 0.60 s = 最低門檻（1.19 s）的 50%。** 端到端驗證：對三個有起手時間的 ground AoE，
+  讓一個**零反應、零延遲、施法那一 tick 就開跑**的中位移速受害者逃跑 → **三個全中**（223 / 260 / 223）。
+  **這個遊戲裡沒有任何技能的起手時間長到足以走出它自己的爆炸半徑。**
+- 守護者：`d = 3.6u`（`volleyRadius` **原值**傳入 `applyMark`（`GuardianSystem.ts:352`），不吃 ×0.6）
+  → 需 **1.09 s**（`v_ref` 5.6）/ **1.35 s**（最慢 4.0），**現值 0.8 s 不夠**。
+  提案：`volleyWindupSec 0.8→**1.25**`、`volleyRadius 3.0→2.5`
+  （驗算 `d = 3.1u`：`v_ref` 需 1.00 s、最慢者需 **1.225 s ≤ 1.25** ✅ ⇒ **113 個英雄全數躲得掉**），傷害不動。
+  ⚠ 初稿寫的 1.2 s 是用舊 `L = 0.40` 算的；在修正後的預算下對最慢英雄差 25 ms＝**差一個 tick**，故改 1.25。
+- 授權公式（設計文件 4.4，**拆成兩段**，因為 ×0.25 的 CD 乘數讓「1.2 秒定身」變成懲罰施法者）：
+  `T_warn = 0.45 + (radius × abilityRange + 0.6) / 5.6`；
+  `castTimeSec = clamp(0.45, 0.60, round_0.05(T_warn × 0.45))`（施法者被鎖的那一段）；
+  `impactDelaySec = ceil_0.05(T_warn − castTimeSec)`（蓋章已畫好、施法者已自由）。
+  ⇒ **施法者最多只被鎖 0.60 s，受害者最多拿到 1.60 s 的地面警告。**
+- **`cooldown` 乘數 0.25** 把上述所有未預警傷害的**量放大四倍**，授權時必須一併重審。
+
+### ⛔ 結構性問題（加起手時間也救不了）
+
+- **211 個 `targeted` 技能靠走位永遠閃不掉**：`CastResolveSystem.ts:52-57` 明文只有 `ground` 在結算時重查，
+  其餘在起手當下鎖定。→ 提案 `AbilityDef.resolveRecheck: "lock" | "range"`，
+  `"range"` 直接沿用 `BasicAttackSystem.ts:96-113`（目標離開距離就作廢）**已驗證可用**的規則。
+- **113 個英雄只有 12 個有位移技**（13 個 dash；`maxDistance` **不吃** ×0.6 縮放，7.33–11u > 最大逃離 6.43u）
+  → **有位移＝全躲得掉，沒位移＝全躲不掉**，89% 的英雄只能用走的。
+
+### 🧟 「已實作但實際不會發生」——本次新增 4 例（同 #93 roundWins / taunt ctx / #79 的同一個病）
+
+1. **`ENTITY_FLAG.CASTING` / `WINDUP`**：`snapshot.ts:222-224` **每 tick 寫入**，
+   但 `apps/client/src` 對 `es.flags` 的窮舉 grep 只找到 `CHANNELLING` / `CONTESTED`（皆復活圈專用）→ **零消費者**。
+2. **`StatusAuraFx` 整套（#39 的暈眩／定身／減速／衝刺身體光環）**：`VfxSystem.ts:390-399` 有實例、有 accessor、
+   註解還寫著呼叫方式，但 `vfx.statusFx.set(...)` **沒有任何 production caller**，`statusesFrom()` 只有測試在用
+   → **被暈眩的英雄看起來跟健康的一模一樣**，正是那個檔案宣稱已修好的 bug。
+3. **8 個 `guardian*` 事件**：sim 發出，不在白名單，client 零引用。
+4. **3 個 `fireRing*` 事件**：同上。
+
+> **教訓（與前三例完全相同）**：綠色測試斷言的是**記憶體中的表**，不是**載入後的登錄表**，
+> 也不是**跨過網路邊界的事件**。設計文件裡每一階段的驗收都刻意寫成 **runtime 驗收**（真的開房間、真的看 client 收到什麼）。
+
+### ⚠ 授權時會靜默失效的陷阱（#79 就是這樣死的）
+
+`packages/shared/src/content/registries.ts:70-71` **先**註冊獨立技能文件、**再**跑 `registerChampion(d)`，
+而 `sim/content/registry.ts:41-46` 會用**英雄文件內嵌的 Q/W/E/R 副本覆蓋**掉獨立文件。
+→ **只改 `content/abilities/*.json` 的 Q/W/E/R，runtime 會被完全丟棄**（EX 與 passive 安全，`registerChampion` 只走 QWER）。
+已驗證現有 8 個非零值逐位元存活（`sela.r`/`thorne.r` 正是**從英雄文件內嵌副本**取得 0.5/0.4）。
+
+### ✅ 已存在、必須重用而不是重寫
+
+`CastResolveSystem`（延後結算／中斷／定身／**地面 AoE 結算時重查命中名單**——全專案最好的一段公平性程式碼）、
+`GuardianSystem` 的標記相位、`castBegin/castEnd/castInterrupt/attackWindup` 廣播、
+每個英雄（含敵人）的頭上施法條、`Telegraph.ts`（`fillMs`/`holdMs` **建構子參數早就在，只是沒人傳**）、
+`AimIndicator.dashedRing()` 幾何、`GroundDecalPool`、`content/vfx/fx.prim.*`（**95 份元素 × primitive**）＋
+`render/vfx/primitives.ts` / `elements.ts`、`EntityViewRegistry.ts:221-232` 的 `clipWindowMs` 施法 clip 拉伸
+（⚠ **117 個模型的 `clipMap` 只有 `idle/run/attack/cast/hurt/death` 六個 key**，不可發明新 clip 名稱）、
+`sfxManifest.ts` 已列的 `castBegin/castEnd/castInterrupt` cue（⚠ `GameApp.ts:803-804` 呼叫 `playSfx` **不帶 `{volume,pan}`**，
+四個對戰區的施法音以同樣音量疊在一起）。
+
+**四件「接一根線就會活過來」的事**：① `Telegraph` 傳真實 `fillMs`；② 半徑改用伺服器算好的 `castR`（已 ×0.6）；
+③ 每幀呼叫 `vfx.statusFx.set(es.id, es.flags, …)`；④ `MatchRoom` 白名單加 11 個 `guardian*` / `fireRing*` 事件。
+
+### 交界
+
+- **與 #79**：預告能說「**何時**」，但真實登錄表 **460/554 個技能的 `vfxKey` 仍是同一顆 `fx.ember-bolt-cast`** →
+  在 #79 完成前永遠說不出「**是什麼**」。兩者互補，不可互相取代。
+- **與 #56**：本需求的正解是**還原 `acas`/`ucpt`/`ucbs`**，而不是重新發明數值 → 直接依賴 rawMods 直通與重跑匯入。
+- **與 #85**：`DeathFocusFx` 是**攝影機後製**，場景內的預告 mesh 會被一起抽色 →
+  **急迫度不可只走色相**，必須同時走亮度（0.55→1.00）、線寬（0.10→0.22u）、脈動頻率（0→6 Hz）。順帶對色弱友善。
+- **與 #93**：`ROUND_WASH_FILTER`（`grayscale(0.88)` + 0.76 alpha 灰漸層）是 **DOM 層蓋在 canvas 上**，會壓平任何場景內預告 →
+  規則只能是**時序**：**勝利演出擁有畫面時不得有傷害發生**。
+- **⛔ 與 #100 直接衝突**：#100（回合判定後英雄還打了 ~66 秒）未修之前，上面那條時序規則**無法成立**，記錄為已知破口。
+- **與 #105**：守護者拿到 `ENTITY_KIND.GUARDIAN = 4` 與真模型 key 之後，樹人／石頭人／巨獸人的身分才有地方掛。
+
+### 仍未做（明講）
+
+- 本輪**只做偵查與設計，一行程式碼都沒改，沒有 commit**。設計文件的每一階段都還沒有人認領。
+- 火圈（#132）的兩條路（給真幾何 vs 誠實改名為全域流血＋倒數）是**設計決策，需 owner 拍板**，未在文件中代為決定。
+- 匯入來源的名稱比對是**用技能名**而非 rawcode，同名技能可能誤配；嚴謹版本應改走 `EX_MAP.json` / `HERO_NUMBERS.json` 的 rawcode 鍵。
+- **🔴 第三輪補上 owner 已拍板但前兩輪完全沒寫進設計的架構決定**：
+  「**要把渲染跟傷害判斷時間兩個邏輯分開**……這跟**快打旋風**之類的格鬥遊戲是類似做法，**動作幀跟碰撞幀是分開的**」。
+  設計文件新增 **0.5 節（幀資料模型 STARTUP / ACTIVE / RECOVERY，以 sim tick 為權威）**，
+  並明訂「**sim 擁有傷害 tick，渲染器只能把動畫對齊上去；換服裝不會改變 frame data**」為決定性要求
+  （否則命中時間會繼承 frame rate、LOD 切換 #115、glb 是否載完 → 同 seed 重播不再逐位元相同）。
+  此模型**延伸** #133 的 `ImpactProfile`（`sim/combat/damage.ts:103`，管「打中之後」的 hitstop/hitstun/knockback）
+  與 `hitFeel.ts` 的「damage-derived 預設 + 內容可選覆寫」模式，**不另立平行詞彙**。
+- **🔴 由此抓出一個前兩輪漏掉的機制缺口：`RECOVERY`（後搖）今天完全不存在。**
+  `CastResolveSystem` 在結算那一 tick 就解除定身，施法者當場自由 →
+  **成功閃掉一發大招的收益是 0，對手不付任何代價**。前兩輪把 AGENCY 判為「唯一做對的一隻腳」只對了一半：
+  「走出去真的有效」為真，「閃掉之後能反打」從未實作。提案 `recoverySec`（B 0.30 / C 0.47 / D 0.60 / L 0.47 s；
+  鎖施法與普攻、**不鎖移動**，刻意偏離 SF，理由見設計文件 0.5.3），並要求後搖狀態**在 snapshot 上可見**
+  （新 `ENTITY_FLAG.RECOVERING`）——懲罰窗看不見等於不存在。
+- 一併修正設計文件內部矛盾：階段 4 原寫「火圈兩條路都要改走 `damageQueue`」，
+  與 5.5 已推翻該建議的結論相反，已改為 ⛔ 不得改走。
+- **第三輪覆算（同日，獨立探針重跑登錄表）**：頭條數字 **1.19 s 完全重現**；同時抓到兩處表格錯誤並已修正——
+  ① 設計文件 4.1 的母體標成「76 個造成傷害的 ground」，實際那些數字屬於 **n=85（帶 radius 的技能，且 85 個全部是 ground）**；
+  ② p90 列重現不出來（原寫 raw 6.42 / `d` 4.45 / `T` 1.25，實為 raw **6.05** / `d` **4.23** / `T` **1.21**）。
+  本節上方的 `L`、`T_min`、守護者三組數字亦已由初稿的 0.40 / 1.10 / 1.2 同步更新為 0.45 / 1.19 / 1.25。
+  覆算另逐條確認為真：`EntityState` 16 欄（Colyseus 上限 64，加 7 欄安全）、`ENTITY_FLAG` 256 以上全空、
+  `apps/game-server/src` 無任何 `setPatchRate`（確為預設 20 Hz patch）、117 個 `clipMap` 恰好六個 key、
+  `castType` 分佈 211/194/51/85/13、`castTimeSec>0` 為 10/554 最大 0.60、
+  `GuardianSystem.ts:352` 確實傳原值 `volleyRadius`、`fireRingDamage` 確實已帶 `{id,amount,dmgType,origin,x,z}`、
+  `resolveHoldPreview` 有乘 `abilityRange` 而 `VfxSystem.ts:612` 沒有（1.667× 落差成立）。
+- 未實際開 client 目視驗證守護者的渲染樣貌；守護者主張建立在「白名單 grep 為零」＋「`snapshot.ts:203` 的 else 分支」上
+  （與抓到 `roundWins` / taunt 兩案同一級的證據，但**真實對局才是最終定論**）。
