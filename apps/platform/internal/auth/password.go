@@ -126,8 +126,10 @@ func (s *Service) ChangePassword(ctx context.Context, accountID, currentPassword
 	}
 
 	// 5. Re-hash with the registration parameters and persist through the
-	//    account store's locked read-modify-write path.
-	hash, err := argon2id.CreateHash(newPassword, s.params)
+	//    account store's locked read-modify-write path. HashPassword is the one
+	//    hashing entry point — cmd/ownerreset writes hashes through it too, so
+	//    the CLI recovery path and this one cannot drift apart on cost.
+	hash, err := HashPassword(newPassword, s.params)
 	if err != nil {
 		return TokenPair{}, err
 	}

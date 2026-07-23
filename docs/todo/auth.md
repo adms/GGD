@@ -31,3 +31,11 @@ the backend never auto-fills.
 | auth-23 | Admin role is revocable via `/admin/accounts/{id}/role`, and the last usable admin cannot remove itself | auth-admin-role-revoke | security | done |
 | auth-24 | A store-unkeyable e-mail (`user+tag@…`) creates ONE complete account, never a half-written one | auth-create-unkeyable-email | security | done |
 | auth-25 | Username/e-mail uniqueness is enforced by the durable store, so a Redis wipe cannot repoint an existing name | auth-create-durable-uniqueness | security | done |
+| auth-26 | Host-side reset (`cmd/ownerreset`) replaces the stored hash: the old password stops working and the new one logs in, with the platform still running and un-restarted | ownerreset-resets-password | integration | done |
+| auth-27 | The reset kills EVERY live refresh token of that account (and no other account's), and refuses to run at all when Redis is unreachable rather than leaving stolen sessions alive | ownerreset-revokes-sessions | security | done |
+| auth-28 | A banned + pending administrator comes back USABLE — role kept, ban cleared, forced approved — and can actually sign in | ownerreset-rescues-locked-out-admin | regression | done |
+| auth-29 | The password reaches no log line, no audit field, no file under `DATA_DIR`, and no flag: a password-shaped argument is refused with an explanation before `flag.Parse` | ownerreset-no-password-leak | security | done |
+| auth-30 | A target with no `admin` role is refused (and nothing is written) unless `-allow-non-admin` is passed explicitly | ownerreset-non-admin-guarded | security | done |
+| auth-31 | The reset is recorded in the SAME append-only audit log the console renders, actor `host:ownerreset`, with no credential material in it | ownerreset-audited | integration | done |
+| auth-32 | The CLI re-hashes with the parameters REGISTRATION uses (one `auth.HashPassword`, not a second cost setting) | ownerreset-registration-params | regression | done |
+| auth-33 | The reset is NOT an endpoint: nothing that serves HTTP links the package, and neither it nor its command reads a caller address | ownerreset-not-an-endpoint | security | done |

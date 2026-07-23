@@ -131,13 +131,55 @@ func getenvFloat(key string, def float64) float64 {
 	return def
 }
 
+// Storage is the subset of configuration needed to REACH the platform's state:
+// the durable JSON truth (DATA_DIR) and the Redis hot layer. It deliberately
+// carries no secrets.
+//
+// It exists so an offline maintenance command — cmd/ownerreset, run by the
+// operator on the host — can open exactly the same store and Redis the running
+// platform uses WITHOUT JWT_SIGNING_SECRET / PLATFORM_GAME_SHARED_SECRET being
+// set. Those two are required to MINT tokens; a command that only rewrites a
+// password hash and deletes refresh tokens mints nothing, and demanding them
+// would mean an operator recovering a locked-out deploy has to reconstruct
+// signing secrets first. Load() is built on top of this, so there is one
+// definition of the DATA_DIR default and its absolute-path resolution.
+type Storage struct {
+	// DataDir is the absolute root of the durable JSON truth.
+	DataDir string
+	// RedisAddr is the Redis host:port.
+	RedisAddr string
+	// RedisPassword is optional.
+	RedisPassword string
+}
+
+// LoadStorage reads DATA_DIR / REDIS_ADDR / REDIS_PASSWORD with the same
+// defaults Load applies, and resolves DATA_DIR to an absolute path (see the
+// note in Load for why that resolution is load-bearing).
+func LoadStorage() (Storage, error) {
+	st := Storage{
+		DataDir:       getenv("DATA_DIR", "./data"),
+		RedisAddr:     getenv("REDIS_ADDR", "127.0.0.1:6379"),
+		RedisPassword: os.Getenv("REDIS_PASSWORD"),
+	}
+	abs, err := filepath.Abs(st.DataDir)
+	if err != nil {
+		return st, fmt.Errorf("config: DATA_DIR %q: %w", st.DataDir, err)
+	}
+	st.DataDir = abs
+	return st, nil
+}
+
 // Load reads configuration from the environment, applying defaults.
 func Load() (Config, error) {
+	store, err := LoadStorage()
+	if err != nil {
+		return Config{}, err
+	}
 	cfg := Config{
 		Addr:                   getenv("PLATFORM_ADDR", ":8080"),
-		RedisAddr:              getenv("REDIS_ADDR", "127.0.0.1:6379"),
-		RedisPassword:          os.Getenv("REDIS_PASSWORD"),
-		DataDir:                getenv("DATA_DIR", "./data"),
+		RedisAddr:              store.RedisAddr,
+		RedisPassword:          store.RedisPassword,
+		DataDir:                store.DataDir,
 		ContentDir:             getenv("CONTENT_DIR", "../../content"),
 		JWTSecret:              os.Getenv("JWT_SIGNING_SECRET"),
 		GameSharedSecret:       os.Getenv("PLATFORM_GAME_SHARED_SECRET"),
@@ -168,13 +210,8 @@ func Load() (Config, error) {
 	// whose volume did not mount all silently open an EMPTY store next to a full
 	// one. That is not merely lost data — an empty store reads as "this deploy
 	// has no administrator", which is the one condition that opens the
-	// first-owner claim. Resolving once, here, at least makes the path the
-	// operator sees in the log the path that is actually used.
-	abs, err := filepath.Abs(cfg.DataDir)
-	if err != nil {
-		return cfg, fmt.Errorf("config: DATA_DIR %q: %w", cfg.DataDir, err)
-	}
-	cfg.DataDir = abs
+	// first-owner claim. LoadStorage resolves it once, above; logging it here
+	// makes the path the operator sees the path that is actually used.
 	slog.Info("config: data directory resolved", "dataDir", cfg.DataDir)
 	return cfg, nil
 }

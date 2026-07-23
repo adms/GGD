@@ -178,9 +178,16 @@ func (c *Client) RevokeAllRefresh(ctx context.Context, accountID string) error {
 	return err
 }
 
+// CountLiveRefresh returns how many refresh tokens the account still has.
+// Used to REPORT a revocation ("3 sessions were killed") rather than to decide
+// anything — the revocation itself is unconditional.
+func (c *Client) CountLiveRefresh(ctx context.Context, accountID string) (int64, error) {
+	return c.R.SCard(ctx, KeyRefreshSet(accountID)).Result()
+}
+
 // HasLiveRefresh reports whether the account still has live refresh tokens.
 func (c *Client) HasLiveRefresh(ctx context.Context, accountID string) (bool, error) {
-	n, err := c.R.SCard(ctx, KeyRefreshSet(accountID)).Result()
+	n, err := c.CountLiveRefresh(ctx, accountID)
 	return n > 0, err
 }
 

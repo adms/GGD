@@ -112,6 +112,29 @@ func ValidatePassword(password string) error {
 	return nil
 }
 
+// HashPassword is the platform's ONE password-hashing entry point: it applies
+// ValidatePassword and then argon2id with `params`, where nil means the
+// registration parameters (DefaultParams) exactly as auth.New reads it.
+//
+// It is exported because the hashing cost is a SECURITY PARAMETER and this repo
+// now has a second writer of password hashes — cmd/ownerreset, the host-side
+// recovery command, which runs in its own process and so cannot reach a
+// Service's private params field. Copying `argon2id.CreateHash(pw, someParams)`
+// into that command would create a second, silently divergent cost setting: the
+// day DefaultParams is raised, accounts rescued by the CLI would keep being
+// written at the old cost and nothing would say so. Register and ChangePassword
+// both go through here, so "the parameters registration uses" is a fact about
+// one function rather than a claim about three call sites.
+func HashPassword(password string, params *argon2id.Params) (string, error) {
+	if err := ValidatePassword(password); err != nil {
+		return "", err
+	}
+	if params == nil {
+		params = DefaultParams
+	}
+	return argon2id.CreateHash(password, params)
+}
+
 // ValidateRegistration checks username/email/password shape without touching
 // any store. The password half is ValidatePassword — see there.
 func ValidateRegistration(username, email, password string) error {
@@ -179,7 +202,7 @@ func (s *Service) Register(ctx context.Context, username, email, password string
 		return account.Account{}, TokenPair{}, httpx.Conflict("email is already registered")
 	}
 
-	hash, err := argon2id.CreateHash(password, s.params)
+	hash, err := HashPassword(password, s.params)
 	if err != nil {
 		return account.Account{}, TokenPair{}, err
 	}
