@@ -38,5 +38,6 @@
   "vfxKey": "fx.prim.ki.explosion-lg",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "icon": "assets/icons/abilities/godie-e007.r.png"
+  "icon": "assets/icons/abilities/godie-e007.r.png",
+  "castTimeSec": 0.4
 }

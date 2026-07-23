@@ -21,7 +21,7 @@
  * Interpolate, don't extrapolate — and why: blending prev→cur renders the local
  * hero at most one tick (33 ms) in the past, which is far below the perceptual
  * threshold for click-to-move and is exactly what remote entities already do
- * (they render 100 ms in the past via InterpolationBuffer). Extrapolating the
+ * (they render INTERP_DELAY_MS in the past via InterpolationBuffer). Extrapolating the
  * current tick FORWARD by alpha·velocity would keep input latency at zero but
  * overshoots on every direction change and pushes the hero through walls that
  * the shared collision step has already resolved — i.e. it would invent
@@ -92,7 +92,7 @@ export class LocalPrediction {
    * Render alpha the last `renderPose` call used. `reconcile` re-anchors the
    * error offset at this same blend phase so a correction cannot silently eat
    * (or double) the one-tick interpolation lag; without it the lag would be
-   * folded into `err` on every snapshot (~20 Hz) and accumulate.
+   * folded into `err` on every snapshot (SNAPSHOT_HZ) and accumulate.
    */
   private lastAlpha = 1;
 

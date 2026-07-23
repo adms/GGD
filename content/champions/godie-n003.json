@@ -83,7 +83,8 @@
       ],
       "vfxKey": "fx.ember-bolt-cast",
       "targetsEnemies": true,
-      "radius": 5.5
+      "radius": 5.5,
+      "castTimeSec": 0.5
     },
     "W": {
       "id": "godie-n003.w",
@@ -124,7 +125,8 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast"
+      "vfxKey": "fx.ember-bolt-cast",
+      "castTimeSec": 0.3
     },
     "E": {
       "id": "godie-n003.e",
@@ -166,7 +168,8 @@
           ]
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast"
+      "vfxKey": "fx.ember-bolt-cast",
+      "castTimeSec": 0.6
     },
     "R": {
       "id": "godie-n003.r",
@@ -205,7 +208,8 @@
           ]
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast"
+      "vfxKey": "fx.ember-bolt-cast",
+      "castTimeSec": 0.4
     }
   },
   "skillOrder": [

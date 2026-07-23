@@ -73,7 +73,9 @@ ICONS_DIR = os.path.join(CONTENT, "assets", "icons")
 PLAN_PATH = os.path.join(CONTENT, "config", "icon-plan.json")
 CONTACT_SHEET = os.path.join(ROOT, "docs", "_icon-contact-sheet.png")
 
-FAMILY_DIR = {"champions": "champions", "items": "items", "augments": "augments"}
+FAMILY_DIR = {"champions": "champions", "items": "items", "augments": "augments",
+              "abilities": "abilities"}
+WHITELIST_PATH = os.path.join(ROOT, "data", "curation", "whitelist.json")
 MARKER_KEY = "ggd_iconmethod"
 
 # Shipped icon format. WebP at 128² is ~5% of the 256² PNG it replaced and is
@@ -115,6 +117,31 @@ def _load_doc(family: str, doc_id: str) -> dict | None:
         return json.load(fh)
 
 
+def _dedupe(ids: list[str]) -> list[str]:
+    seen, out = set(), []
+    for i in ids:
+        if i not in seen:
+            seen.add(i)
+            out.append(i)
+    return out
+
+
+def _still_missing(family: str) -> list[str]:
+    """Doc ids in `family` that carry no `icon` field at all."""
+    out = []
+    for path in sorted(glob.glob(os.path.join(CONTENT, FAMILY_DIR[family], "*.json"))):
+        if os.path.basename(path).startswith("_"):
+            continue
+        try:
+            with open(path, encoding="utf-8") as fh:
+                doc = json.load(fh)
+        except Exception:
+            continue
+        if isinstance(doc, dict) and doc.get("id") and not doc.get("icon"):
+            out.append(doc["id"])
+    return out
+
+
 def build_worklist(category: str, include_blocked: bool) -> list[dict]:
     """-> ordered list of {family, id, doc}. Scope comes from the COMMITTED
     icon-plan.json so it does not drift as this driver writes `icon` fields."""
@@ -127,20 +154,25 @@ def build_worklist(category: str, include_blocked: bool) -> list[dict]:
         ids = [g["id"] for g in gen if g["family"] == "champions"]
         if include_blocked:
             ids += plan.get("blocked", {}).get("third-party-ip", {}).get("ids", [])
-        for doc_id in ids:
+        # …plus any champion still without an icon: these show up in champ select
+        # and the login marquee, where a placeholder is the most visible bug there is.
+        ids += _still_missing("champions")
+        for doc_id in _dedupe(ids):
             doc = _load_doc("champions", doc_id)
             if doc:
                 work.append({"family": "champions", "id": doc_id, "doc": doc})
 
     if category in ("all", "items"):
-        for g in gen:
-            if g["family"] != "items":
-                continue
-            doc = _load_doc("items", g["id"])
-            if doc:
-                work.append({"family": "items", "id": g["id"], "doc": doc})
+        ids = [g["id"] for g in gen if g["family"] == "items"] + _still_missing("items")
+        for doc_id in _dedupe(ids):
+            doc = _load_doc("items", doc_id)
+            if doc and (doc.get("name") or "").strip() not in ("", doc_id):
+                work.append({"family": "items", "id": doc_id, "doc": doc})
 
-    if category in ("all", "abilities", "augments"):
+    if category in ("all", "abilities"):
+        work += ability_worklist()
+
+    if category in ("all", "augments"):
         for path in sorted(glob.glob(os.path.join(CONTENT, "augments", "*.json"))):
             if os.path.basename(path) == "_index.json":
                 continue
@@ -149,6 +181,66 @@ def build_worklist(category: str, include_blocked: bool) -> list[dict]:
             if isinstance(doc, dict) and doc.get("id"):
                 work.append({"family": "augments", "id": doc["id"], "doc": doc})
 
+    return work
+
+
+def _placeholder_ability(doc: dict) -> bool:
+    """`name` is literally "none" and the description is empty — the map author's
+    empty slot. There is no subject to draw, so it is never queued."""
+    name = (doc.get("name") or "").strip().lower()
+    return name in ("", "none") and not (doc.get("description") or "").strip()
+
+
+def ability_worklist() -> list[dict]:
+    """Every ability doc that still needs an icon, ORDERED BY WHAT A PLAYER SEES.
+
+    The plan's `generate` list is the mandatory core (516); the handful of
+    plan-`dropped` kits are appended so `--category abilities` really is "all the
+    abilities", and the 8 literal placeholders are excluded (no subject).
+    Ordering: the QWER/EX of whitelisted champions -> whitelisted abilities ->
+    the long tail, so an interrupted run still leaves the ability bar covered.
+    """
+    with open(PLAN_PATH, encoding="utf-8") as fh:
+        plan = json.load(fh)
+    planned = [g["id"] for g in plan["generate"]["tier1"] + plan["generate"]["tier2"]
+               if g["family"] == "abilities"]
+
+    first: list[str] = []
+    second: set[str] = set()
+    try:
+        with open(WHITELIST_PATH, encoding="utf-8") as fh:
+            wl = json.load(fh)
+        second = set(wl.get("abilities") or [])
+        for cid in wl.get("champions") or []:
+            cdoc = _load_doc("champions", cid)
+            for slot in ("Q", "W", "E", "R", "EX"):
+                a = ((cdoc or {}).get("abilities") or {}).get(slot)
+                if isinstance(a, dict) and a.get("id"):
+                    first.append(a["id"])
+    except FileNotFoundError:
+        pass
+
+    every = sorted(
+        os.path.basename(p)[:-5]
+        for p in glob.glob(os.path.join(CONTENT, "abilities", "*.json"))
+        if not os.path.basename(p).startswith("_"))
+
+    def rank(doc_id: str) -> int:
+        if doc_id in first_set:
+            return 0
+        if doc_id in second:
+            return 1
+        return 2 if doc_id in planned_set else 3
+
+    first_set, planned_set = set(first), set(planned)
+    ordered = sorted(set(planned) | set(every), key=lambda i: (rank(i), i))
+
+    work = []
+    for doc_id in ordered:
+        doc = _load_doc("abilities", doc_id)
+        if not doc or _placeholder_ability(doc):
+            continue
+        work.append({"family": "abilities", "id": doc_id, "doc": doc})
     return work
 
 
@@ -249,6 +341,13 @@ def run_batch(work: list[dict], args) -> dict:
         fam, doc_id = item["family"], item["id"]
         out = _icon_abs(fam, doc_id)
         rel = _icon_rel(fam, doc_id)
+        # NEVER overwrite art that is already shipping. A doc whose `icon` points
+        # at a file that exists is done even when that file is one of the older
+        # extracted 64px PNGs — those are the author's own map art.
+        have = (item["doc"].get("icon") or "").strip()
+        if have and not args.force and os.path.exists(os.path.join(CONTENT, have)):
+            skipped += 1
+            continue
         if _is_done(out) and not args.force:
             skipped += 1
             if not args.no_write_icon_field and set_icon_field(fam, doc_id, rel):
@@ -349,7 +448,8 @@ def contact_sheet(args) -> None:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description="resumable local two-pass icon driver")
-    ap.add_argument("--category", choices=["all", "champions", "items", "abilities"],
+    ap.add_argument("--category",
+                    choices=["all", "champions", "items", "abilities", "augments"],
                     default="all")
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--contact-sheet", action="store_true")
@@ -381,7 +481,8 @@ def main() -> None:
         by = Counter(w["family"] for w in pending)
         print(f"dry-run: {len(pending)} pending / {len(work)} in scope "
               f"(champions {by['champions']}, items {by['items']}, "
-              f"augments {by['augments']}); category={args.category}")
+              f"abilities {by['abilities']}, augments {by['augments']}); "
+              f"category={args.category}")
         for w in pending:
             print(f"  {w['family']}/{w['id']}")
         return

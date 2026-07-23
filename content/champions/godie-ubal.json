@@ -73,7 +73,8 @@
       ],
       "vfxKey": "fx.ember-bolt-cast",
       "targetsEnemies": true,
-      "icon": "assets/icons/abilities/godie-ubal.q.png"
+      "icon": "assets/icons/abilities/godie-ubal.q.png",
+      "castTimeSec": 0.4
     },
     "W": {
       "id": "godie-ubal.w",
@@ -116,7 +117,8 @@
         }
       ],
       "vfxKey": "fx.ember-bolt-cast",
-      "targetsEnemies": true
+      "targetsEnemies": true,
+      "castTimeSec": 0.4
     },
     "E": {
       "id": "godie-ubal.e",
@@ -199,7 +201,8 @@
         }
       ],
       "vfxKey": "fx.ember-bolt-cast",
-      "targetsEnemies": true
+      "targetsEnemies": true,
+      "castTimeSec": 0.4
     }
   },
   "skillOrder": [

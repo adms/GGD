@@ -75,7 +75,8 @@
         }
       ],
       "vfxKey": "fx.ember-bolt-cast",
-      "targetsEnemies": true
+      "targetsEnemies": true,
+      "castTimeSec": 0.4
     },
     "W": {
       "id": "godie-oshd.w",
@@ -119,7 +120,8 @@
       ],
       "vfxKey": "fx.ember-bolt-cast",
       "targetsEnemies": true,
-      "radius": 6.0
+      "radius": 6.0,
+      "castTimeSec": 0.6
     },
     "E": {
       "id": "godie-oshd.e",
@@ -162,7 +164,8 @@
         }
       ],
       "vfxKey": "fx.ember-bolt-cast",
-      "targetsEnemies": true
+      "targetsEnemies": true,
+      "castTimeSec": 0.4
     },
     "R": {
       "id": "godie-oshd.r",
@@ -209,7 +212,8 @@
       ],
       "vfxKey": "fx.cinder-ward",
       "targetsEnemies": true,
-      "radius": 4.58
+      "radius": 4.58,
+      "castTimeSec": 0.7
     }
   },
   "skillOrder": [

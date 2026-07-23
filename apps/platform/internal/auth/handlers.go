@@ -41,6 +41,11 @@ type registerReq struct {
 	// and was started with GGD_OWNER_BOOTSTRAP_TOKEN=1. Ignored in every other
 	// case, so an ordinary client never has to send it. See bootstrap.go.
 	BootstrapToken string `json:"bootstrapToken,omitempty"`
+	// InviteCode is the registration invite code (#174), as the user typed it
+	// (case / spaces / hyphens are normalised server-side). Required on a gated
+	// deploy for every registration except the first-owner claim; ignored when
+	// the gate is off. See internal/invite.
+	InviteCode string `json:"inviteCode,omitempty"`
 }
 
 type sessionResp struct {
@@ -55,7 +60,7 @@ func (h *Handlers) register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	a, pair, err := h.svc.Register(r.Context(), req.Username, req.Email, req.Password,
-		RegisterOptions{BootstrapToken: req.BootstrapToken})
+		RegisterOptions{BootstrapToken: req.BootstrapToken, InviteCode: req.InviteCode})
 	if err != nil {
 		httpx.WriteError(w, err)
 		return

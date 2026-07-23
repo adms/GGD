@@ -31,5 +31,6 @@
   ],
   "vfxKey": "fx.ember-bolt-cast",
   "schema": "ability@1",
-  "icon": "assets/icons/abilities/godie-ucrl.r.png"
+  "icon": "assets/icons/abilities/godie-ucrl.r.png",
+  "castTimeSec": 0.4
 }

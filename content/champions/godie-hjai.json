@@ -82,7 +82,8 @@
         }
       ],
       "vfxKey": "fx.firestorm",
-      "targetsEnemies": true
+      "targetsEnemies": true,
+      "castTimeSec": 0.5
     },
     "W": {
       "id": "godie-hjai.w",
@@ -126,7 +127,8 @@
       ],
       "vfxKey": "fx.ember-bolt-cast",
       "targetsEnemies": true,
-      "radius": 5.5
+      "radius": 5.5,
+      "castTimeSec": 0.5
     },
     "E": {
       "id": "godie-hjai.e",
@@ -176,7 +178,8 @@
       ],
       "vfxKey": "fx.ember-bolt-cast",
       "targetsEnemies": true,
-      "radius": 6.0
+      "radius": 6.0,
+      "castTimeSec": 0.8
     },
     "R": {
       "id": "godie-hjai.r",
@@ -222,7 +225,8 @@
         }
       ],
       "vfxKey": "fx.ember-bolt-cast",
-      "targetsEnemies": true
+      "targetsEnemies": true,
+      "castTimeSec": 0.7
     }
   },
   "skillOrder": [

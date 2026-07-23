@@ -215,19 +215,24 @@ export class EntityViewRegistry {
   /** Event fanout → animation pulses on the affected views. */
   handleEvent(ev: EventMessage, nowMs: number): void {
     switch (ev.type) {
-      // castBegin carries the real cast duration: hold the cast pose for it
-      // and stretch/squeeze the cast clip to span it. abilityCast (instant
-      // abilities) keeps the short default pulse.
+      // castBegin carries the real cast STARTUP: the sim resolves the ability
+      // exactly that long from now. `beginCast` plans the clip so its release
+      // frame lands ON that damage tick (see views/ChampionView + anim/castStrike)
+      // instead of spanning the clip across the startup, which threw the move
+      // ~0.24 s early on a 0.6 s cast. abilityCast (instant abilities, ct = 0)
+      // keeps the short default pulse — there is no wind-up to align to.
+      //
+      // `ticks` is the authority when both are present: it is the integer tick
+      // count CastResolveSystem actually counts down (`round(castTimeSec / dt)`),
+      // so it already carries the sim's rounding. castTimeSec is the fallback for
+      // an older/partial payload.
       case "castBegin": {
         const caster = ev.data.caster as number | undefined;
         if (caster === undefined) break;
         const secs = typeof ev.data.castTimeSec === "number" ? ev.data.castTimeSec : 0;
         const ticks = typeof ev.data.ticks === "number" ? ev.data.ticks : 0;
-        const durMs = Math.max(1, secs > 0 ? secs * 1000 : ticks * TICK_MS);
-        this.champions.get(caster)?.pulse("cast", nowMs, {
-          windowMs: durMs,
-          clipWindowMs: durMs,
-        });
+        const startupMs = Math.max(1, ticks > 0 ? ticks * TICK_MS : secs * 1000);
+        this.champions.get(caster)?.beginCast(startupMs, nowMs);
         break;
       }
       case "abilityCast": {
@@ -235,7 +240,17 @@ export class EntityViewRegistry {
         if (caster !== undefined) this.champions.get(caster)?.pulse("cast", nowMs);
         break;
       }
-      case "castEnd":
+      // castEnd and castInterrupt are NOT the same moment and must not share a
+      // branch any more. castEnd = the sim resolved the ability, so the release
+      // frame is playing right now and the follow-through has to finish (cutting
+      // it here reintroduces the lie from the other side). castInterrupt = the
+      // cast was BROKEN by a stun/knockdown/death, so the move never comes out
+      // and the pose is cut.
+      case "castEnd": {
+        const caster = ev.data.caster as number | undefined;
+        if (caster !== undefined) this.champions.get(caster)?.releaseCast(nowMs);
+        break;
+      }
       case "castInterrupt": {
         const caster = ev.data.caster as number | undefined;
         if (caster !== undefined) this.champions.get(caster)?.endCast();

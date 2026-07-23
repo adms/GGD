@@ -21,5 +21,6 @@
   ],
   "vfxKey": "fx.prim.sound.swarm-lg",
   "schema": "ability@1",
-  "targetsEnemies": false
+  "targetsEnemies": false,
+  "castTimeSec": 0.3
 }

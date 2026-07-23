@@ -43,5 +43,6 @@
       "stun": true
     }
   ],
-  "vfxKey": "fx.firestorm"
+  "vfxKey": "fx.firestorm",
+  "castTimeSec": 0.7
 }

@@ -160,7 +160,7 @@ export function AudioDirector(): null {
   // tick louder each second, the last second is the distinct countFinal at full
   // volume. The once-per-second guard (and its rearm on phase change / clock
   // reset) lives in the pure `stepCountdown`, so a React re-render or a repeated
-  // 20 Hz snapshot can never double-fire.
+  // a snapshot repeat can never double-fire.
   //
   // COMMITTED (#95): once you press Ready the prep window is no longer YOUR
   // deadline — it is only still running because someone else has not answered.

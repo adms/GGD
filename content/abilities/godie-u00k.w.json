@@ -40,5 +40,6 @@
     }
   ],
   "vfxKey": "fx.prim.void.beam",
-  "targetsEnemies": true
+  "targetsEnemies": true,
+  "castTimeSec": 0.3
 }

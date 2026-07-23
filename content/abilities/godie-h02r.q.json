@@ -38,5 +38,6 @@
   "vfxKey": "fx.prim.nature.slash",
   "targetsEnemies": true,
   "radius": 4.12,
-  "schema": "ability@1"
+  "schema": "ability@1",
+  "castTimeSec": 0.5
 }

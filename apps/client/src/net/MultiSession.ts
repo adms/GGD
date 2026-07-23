@@ -8,7 +8,7 @@
  *    render it once);
  *  - inputs + lastAckSeq are PER connection, but client-side prediction runs
  *    only for player 0's champion — players 2..4 render server-authoritative
- *    (~100 ms interpolation; fine on a couch).
+ *    (INTERP_DELAY_MS of interpolation; fine on a couch).
  *
  * Connections + senders exist from construction (GameApp wires input sinks
  * before any socket opens); connect*() opens the sockets.

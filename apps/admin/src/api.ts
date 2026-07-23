@@ -6,6 +6,10 @@ import { normalizeAiConfig } from "./ai";
 import type { AiConfigMasked, AiConfigSave } from "./ai";
 import { normalizeCombatEnvDoc } from "./combatEnv";
 import type { CombatEnvDoc, CombatEnvSave } from "./combatEnv";
+import { normalizeOpsPayload } from "./serverOps";
+import type { OpsPayload, OpsSave } from "./serverOps";
+import { normalizeInvitePayload } from "./invites";
+import type { InvitePayload } from "./invites";
 import type {
   AccountSearch,
   Announcement,
@@ -274,4 +278,49 @@ export function putCombatEnv(body: CombatEnvSave): Promise<CombatEnvDoc> {
   return api
     .request<unknown>("/admin/combat-env", { method: "PUT", body })
     .then(normalizeCombatEnvDoc);
+}
+
+// ---- 系統運維 server-ops ----------------------------------------------------
+// Both admin-only. PUT-replace: the body is the COMPLETE desired table (an
+// omitted key resets to the COMPILED default, not to zero). The game-server
+// reads the same document from the PUBLIC `/server-ops` endpoint at match
+// creation, so 同時對戰上限 is live at the next create attempt while 快照頻率
+// applies from the NEXT match — running matches keep their snapshot.
+//
+// The GET carries the knob DESCRIPTORS (bounds, units, safety class, zh-Hant
+// copy) and the read-only inventory, so the bounds live on the server only and
+// this console cannot render a range the validator does not enforce.
+
+export function getServerOps(): Promise<OpsPayload> {
+  return api.request<unknown>("/admin/server-ops").then(normalizeOpsPayload);
+}
+
+export function putServerOps(body: OpsSave): Promise<OpsPayload> {
+  return api
+    .request<unknown>("/admin/server-ops", { method: "PUT", body })
+    .then(normalizeOpsPayload);
+}
+
+// ---- 邀請碼 registration invite codes (task #174) ----------------------------
+// ALL admin-only. There is deliberately no public read and no "is this code
+// valid?" endpoint — an invite code is a credential, and a validity endpoint
+// would be a free guessing oracle. The only way to test a code is to attempt a
+// registration, which burns it. See apps/platform/internal/invite.
+
+export function getInvites(): Promise<InvitePayload> {
+  return api.request<unknown>("/admin/invites").then(normalizeInvitePayload);
+}
+
+/** Mint `count` single-use codes for one 備註. Returns the new codes + the refreshed list. */
+export function mintInvites(note: string, count: number, ttlDays: number): Promise<InvitePayload> {
+  return api
+    .request<unknown>("/admin/invites", { body: { note, count, ttlDays } })
+    .then(normalizeInvitePayload);
+}
+
+/** Kill an unredeemed code. Irreversible — mint a new one instead of un-revoking. */
+export function revokeInvite(code: string): Promise<InvitePayload> {
+  return api
+    .request<unknown>(`/admin/invites/${encodeURIComponent(code)}/revoke`, { body: {} })
+    .then(normalizeInvitePayload);
 }

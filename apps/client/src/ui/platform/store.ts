@@ -141,7 +141,12 @@ export interface AppState {
   // ------------------------------------------------------------ actions --
   boot(): Promise<void>;
   doLogin(username: string, password: string): Promise<void>;
-  doRegister(username: string, email: string, password: string): Promise<void>;
+  /**
+   * Register. `inviteCode` is the private-deploy gate (#174) — required by the
+   * SERVER on a gated deploy, ignored on an open one. Optional here so the
+   * offline/dev flow is unchanged.
+   */
+  doRegister(username: string, email: string, password: string, inviteCode?: string): Promise<void>;
   doLogout(): Promise<void>;
   playOffline(mapId?: string): void;
   /**
@@ -379,10 +384,10 @@ export const appStore = createStore<AppState>()((set, get) => {
       }
     },
 
-    async doRegister(username, email, password) {
+    async doRegister(username, email, password, inviteCode = "") {
       set({ authBusy: true, authError: null });
       try {
-        const resp = await apiFns.register(username, email, password);
+        const resp = await apiFns.register(username, email, password, inviteCode);
         api.setTokens(resp.tokens);
         await enterLobby(resp.account);
       } catch (err) {

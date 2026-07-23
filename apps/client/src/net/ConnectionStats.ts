@@ -5,6 +5,7 @@
  * measure now − sentAt(ackSeq). Snapshot jitter is the mean absolute deviation
  * of patch inter-arrival gaps. No Babylon / network imports — unit-testable.
  */
+import { SNAPSHOT_MS } from "@ggd/shared/constants";
 import type { ConnectionQuality } from "../perfBus";
 
 export interface ConnectionSample {
@@ -65,8 +66,13 @@ export class ConnectionStats {
   noteSnapshot(nowMs: number): void {
     if (Number.isFinite(this.lastSnapshotMs)) {
       const gap = nowMs - this.lastSnapshotMs;
-      // deviation from the nominal 20 Hz snapshot cadence (50 ms)
-      const dev = Math.abs(gap - 50);
+      // Deviation from the NOMINAL snapshot cadence. This must track
+      // SNAPSHOT_MS: it used to be the literal 50, and against a 30 Hz (33.3 ms)
+      // broadcast a perfectly steady connection would have scored a constant
+      // |33.3 - 50| = 16.7 ms of "jitter" — permanently above the 15 ms "good"
+      // threshold in classifyConnection, so every player would have been pinned
+      // at the "fair" chip forever with no network problem at all.
+      const dev = Math.abs(gap - SNAPSHOT_MS);
       this.jitter = this.jitter + (dev - this.jitter) * EMA;
     }
     this.lastSnapshotMs = nowMs;

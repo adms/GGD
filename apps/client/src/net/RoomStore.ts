@@ -217,7 +217,7 @@ export function useHud<T>(selector: (s: HudState) => T): T {
 }
 
 // ---------------------------------------------------------------------------
-// schema → store projection (called from room.onStateChange, ~20 Hz)
+// schema → store projection (called from room.onStateChange, at SNAPSHOT_HZ)
 // ---------------------------------------------------------------------------
 
 let seatsCacheKey = "";

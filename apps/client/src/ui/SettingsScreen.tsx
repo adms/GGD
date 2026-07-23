@@ -7,9 +7,12 @@
  * the in-match pause button; mobile-friendly (existing ui/mobile.css targets).
  */
 import { useEffect, useState } from "react";
+import { SNAPSHOT_MS } from "@ggd/shared/constants";
 import {
   settingsStore,
   detectEnv,
+  INTERP_MIN_DELAY_MS,
+  INTERP_MAX_DELAY_MS,
   type CombatTextScope,
   type FpsCap,
   type QualityPreset,
@@ -362,10 +365,15 @@ export function SettingsScreen({ onClose }: { onClose: () => void }): React.JSX.
           <Slider
             text="Interpolation delay"
             value={n.interpolationDelayMs}
-            min={60}
-            max={200}
+            // bounds are DERIVED from the snapshot rate, not literals: the floor
+            // is two snapshot intervals, below which one late packet freezes
+            // remotes (InterpolationBuffer clamps, it never extrapolates).
+            min={INTERP_MIN_DELAY_MS}
+            max={INTERP_MAX_DELAY_MS}
             step={10}
-            fmt={(v) => `${v} ms`}
+            // show the headroom, not just the milliseconds — the interval count
+            // is the number that actually predicts stutter
+            fmt={(v) => `${v} ms · ${(v / SNAPSHOT_MS).toFixed(1)}× snapshot`}
             onChange={(v) => store.patchNetwork({ interpolationDelayMs: v })}
           />
           <Toggle

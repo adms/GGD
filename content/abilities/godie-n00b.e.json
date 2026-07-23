@@ -29,5 +29,6 @@
       "maxDistance": 11.0
     }
   ],
-  "vfxKey": "fx.prim.arcane.pulse-sm"
+  "vfxKey": "fx.prim.arcane.pulse-sm",
+  "castTimeSec": 0.3
 }

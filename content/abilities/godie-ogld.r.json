@@ -44,5 +44,6 @@
   "vfxKey": "fx.prim.void.explosion-lg",
   "targetsEnemies": true,
   "radius": 3.67,
-  "schema": "ability@1"
+  "schema": "ability@1",
+  "castTimeSec": 0.6
 }

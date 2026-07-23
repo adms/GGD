@@ -24,6 +24,11 @@ export type Page =
    */
   | "content"
   | "combatEnv"
+  /**
+   * 系統運維 (server ops) — the operational numbers: 同時對戰上限 + 快照頻率
+   * writable, everything else visible and read-only with its safety class.
+   */
+  | "serverOps"
   | "ai"
   /**
    * The two asset consoles (task #102). Both READ measurements published by
@@ -33,6 +38,12 @@ export type Page =
   | "iconTracking"
   /** M幣 發放 (task #118) — admin-granted M COIN via /wallet/admin/grant-mcoin. */
   | "mcoinGrant"
+  /**
+   * 邀請碼 (task #174) — mint / list / revoke the single-use registration invite
+   * codes that are the private deploy's only front door. Platform-admin-backed,
+   * so it is session-gated below and NOT reachable through the loopback drop-in.
+   */
+  | "invites"
   | "audit";
 
 export interface AdminAccount {
@@ -89,7 +100,9 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "curation",
   "ai",
   "combatEnv",
+  "serverOps",
   "mcoinGrant",
+  "invites",
   "audit",
 ]);
 

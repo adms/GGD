@@ -42,5 +42,6 @@
   "targetsEnemies": true,
   "radius": 3.67,
   "schema": "ability@1",
-  "icon": "assets/icons/abilities/godie-u00h.w.png"
+  "icon": "assets/icons/abilities/godie-u00h.w.png",
+  "castTimeSec": 0.5
 }

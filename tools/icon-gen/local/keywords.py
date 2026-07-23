@@ -103,6 +103,20 @@ CHAMPION_SUBJECT: dict[str, tuple[str, str]] = {
                    "black and steel grey"),
     "godie-uwar": ("a cheerful anime chef holding up a giant golden meatball on "
                    "a skewer, apron and toque", "golden brown and white"),
+    # the last 4 champions without art. Their `description` is empty, so the NAME
+    # is the only signal the doc has — curated here rather than left to the role
+    # fallback, because these render in champ select and the login marquee.
+    "godie-h02r": ("a friendly green dinosaur-toad creature with a large pink "
+                   "flower and broad green leaves growing from its back",
+                   "leaf green and pink"),
+    "godie-u01f": ("a fierce bearded Chinese general in blackened lacquer armour, "
+                   "wild glaring eyes, a serpent-headed spear",
+                   "black and crimson"),
+    "godie-h02n": ("a goofy grinning brawler with both fists raised in a taunt, "
+                   "a dented helmet and a bandaged arm", "dull bronze and green"),
+    "godie-u00b": ("a burly barbarian with a flying-squirrel gliding membrane "
+                   "cape spread wide, big front teeth, a grin",
+                   "warm brown and cream"),
 }
 
 # Fallback morpheme map for any champion not curated above (kept small; the
@@ -278,11 +292,168 @@ def augment_keywords(doc: dict) -> tuple[str, str, str]:
     return "a glowing heraldic power sigil", "cyan", "fallback"
 
 
+# ───────────────────────────────────────────────────────────── ABILITIES ──
+# 516 of the 602 missing icons are abilities, so PASS 0 for this family is the
+# whole job. The lexicon that already exists in ../src/prompt.py (NAME_NOUN /
+# ELEMENT_HUE, written against these very docs) is the base; ABILITY_NOUN_EXTRA
+# below only WIDENS it, because on the real corpus 86 abilities matched nothing
+# and would all have prompted the same "a burst of focused energy".
+#
+# Signal order, strongest first: the ability's own NAME -> its DESCRIPTION ->
+# its damage type. Nothing generic is used while a real signal is available.
+import prompt as _prompt  # ../src is already on sys.path (batch.py inserts it)
+
+ABILITY_NOUN_EXTRA: list[tuple[str, str]] = [
+    # multi-character, most specific first
+    ("草泥馬", "a spitting alpaca"), ("羊駝", "a spitting alpaca"),
+    ("壽司", "a piece of nigiri sushi"), ("豆皮", "a piece of nigiri sushi"),
+    ("餅乾", "a round biscuit cookie"), ("料理", "a steaming cooked dish"),
+    ("便當", "a packed lunch box"), ("肉", "a roasted meat haunch"),
+    ("靈壓", "a crushing wave of spirit pressure"),
+    ("屏障", "a hexagonal energy barrier"), ("結界", "a hexagonal energy barrier"),
+    ("護盾", "a raised shield"), ("障壁", "a hexagonal energy barrier"),
+    ("地裂", "a cracked splitting earth fissure"),
+    ("大地", "a cracked splitting earth fissure"),
+    ("岩", "a jagged boulder"), ("石", "a jagged boulder"),
+    ("土", "a heaved mound of earth"), ("砂", "a swirl of sand"),
+    ("沙", "a swirl of sand"),
+    ("鋼", "a bar of gleaming steel"), ("鐵", "a bar of gleaming steel"),
+    ("尾", "a lashing tail"), ("鞭", "a cracking whip"),
+    ("藤", "a snaking thorned vine"), ("荊", "a knot of thorned briar"),
+    ("棘", "a knot of thorned briar"), ("刺", "a row of driven spikes"),
+    ("釘", "a row of driven spikes"), ("樹", "a gnarled tree"),
+    ("根", "a mass of grasping roots"), ("木", "a gnarled tree"),
+    ("種", "a seed pod"), ("草", "a tuft of grass blades"),
+    ("束縛", "a tangle of binding cords"), ("縛", "a tangle of binding cords"),
+    ("鎖鏈", "a length of chain"), ("纏", "a tangle of binding cords"),
+    ("死亡", "a grinning skull"), ("亡", "a grinning skull"),
+    ("死", "a grinning skull"), ("屍", "a grinning skull"),
+    ("獄", "a barred hell gate"), ("地獄", "a barred hell gate"),
+    ("握", "a clutching skeletal hand"), ("掌", "an open striking palm"),
+    ("指", "a pointing finger of force"),
+    ("吞", "a set of gaping jaws"), ("噬", "a set of gaping jaws"),
+    ("吃", "a set of gaping jaws"), ("食", "a set of gaping jaws"),
+    ("口", "a set of gaping jaws"),
+    ("分身", "a row of identical ghosted duplicates"),
+    ("幻影", "a ghosted after-image silhouette"),
+    ("幻", "a ghosted after-image silhouette"),
+    ("虛空", "a tear of empty void"), ("空", "a tear of empty void"),
+    ("消失", "a figure dissolving into motes"),
+    ("暴走", "a berserk figure wreathed in raging aura"),
+    ("怒", "a berserk figure wreathed in raging aura"),
+    ("狂", "a berserk figure wreathed in raging aura"),
+    ("恐懼", "a screaming spectral face"), ("驚", "a screaming spectral face"),
+    ("懼", "a screaming spectral face"),
+    ("門", "an opening portal doorway"), ("界", "an opening portal doorway"),
+    ("絲", "a spun web of silk"), ("網", "a spun web of silk"),
+    ("丸", "a compressed sphere of energy"), ("彈丸", "a compressed sphere of energy"),
+    ("環", "a closing ring of energy"), ("圈", "a closing ring of energy"),
+    ("陣", "a drawn magic circle"), ("印", "a glowing seal sigil"),
+    ("封", "a glowing seal sigil"), ("咒", "a glowing curse sigil"),
+    ("力量", "a flexed muscular arm"), ("強化", "an upward power aura"),
+    ("必殺", "a finishing strike burst"), ("殺", "a finishing strike burst"),
+    ("斬擊", "a slashing blade arc"), ("擊", "an impact shockwave"),
+    ("撞", "an impact shockwave"), ("震", "an impact shockwave"),
+    ("爆", "a bursting explosion"), ("裂", "a splitting crack"),
+    ("步", "streaking motion lines"), ("走", "streaking motion lines"),
+    ("跳", "a leaping silhouette"), ("躍", "a leaping silhouette"),
+    ("鎧甲", "a plated cuirass"), ("裝甲", "a plated cuirass"),
+    ("旗", "a battle standard banner"), ("鼓", "a war drum"),
+    ("歌", "floating musical notes"), ("音", "floating musical notes"),
+    ("聲", "concentric sound rings"), ("吼", "a roaring open maw"),
+    ("笑", "a mocking grinning mask"), ("淚", "a falling teardrop"),
+    ("愛", "a glowing heart"), ("心", "a beating heart"),
+    ("吻", "a glowing lip mark"),
+    ("錢", "a stack of coins"), ("賭", "a pair of dice"),
+    ("命", "a flickering life flame"), ("運", "a spinning fortune wheel"),
+    ("時", "an hourglass"), ("鐘", "a clock face"),
+    ("速", "streaking motion lines"),
+    ("弱肉強食", "a set of gaping jaws"),
+    ("學習", "an open study book"), ("點名", "a checked name roster"),
+    ("母體", "a pulsing organic core"),
+    # hand-authored English docs
+    ("barkskin", "a shell of thick tree bark"), ("bulwark", "a raised shield"),
+    ("thorn", "a knot of thorned briar"), ("bramble", "a knot of thorned briar"),
+    ("lash", "a cracking whip"), ("snare", "a tangle of binding cords"),
+    ("root", "a mass of grasping roots"), ("scorch", "a scorched ring of fire"),
+    ("firestorm", "a swirling firestorm"), ("ember", "a smouldering ember"),
+    ("bolt", "a hurled energy bolt"), ("burst", "a bursting explosion"),
+    ("ring", "a closing ring of energy"), ("ward", "a protective ward ring"),
+]
+
+ABILITY_HUE_EXTRA: list[tuple[str, str]] = [
+    ("石", "earthen brown"), ("岩", "earthen brown"), ("土", "earthen brown"),
+    ("地裂", "earthen brown"), ("砂", "sandy ochre"), ("沙", "sandy ochre"),
+    ("鋼", "steel grey"), ("鐵", "steel grey"), ("刃", "steel grey"),
+    ("藤", "verdant green"), ("荊", "verdant green"), ("棘", "verdant green"),
+    ("樹", "verdant green"), ("根", "verdant green"), ("草", "verdant green"),
+    ("死", "bone white and violet"), ("亡", "bone white and violet"),
+    ("屍", "bone white and violet"), ("獄", "hellish red-black"),
+    ("靈", "spectral pale cyan"), ("魂", "spectral pale cyan"),
+    ("幻", "spectral pale cyan"), ("虛空", "void violet-black"),
+    ("愛", "rose pink"), ("心", "rose pink"), ("吻", "rose pink"),
+    ("金", "warm gold"), ("錢", "warm gold"), ("寶", "warm gold"),
+    ("毒", "sickly green"), ("酸", "sickly green"),
+    ("音", "luminous magenta"), ("歌", "luminous magenta"),
+    ("怒", "furious red"), ("狂", "furious red"), ("暴", "furious red"),
+]
+
+# Last resort: the doc's own damage type. Still doc-derived, never a constant.
+DAMAGE_HUE = {"magic": "arcane violet", "physical": "steel and crimson",
+              "true": "radiant white-gold"}
+SLOT_FALLBACK_NOUN = {
+    "Q": "a forward energy strike", "W": "a swirling energy sigil",
+    "E": "a rising aura of power", "R": "an overwhelming ultimate energy burst",
+    "EX": "a searing ultimate power crest",
+}
+
+
+def _ability_damage_type(doc: dict) -> str:
+    for eff in doc.get("effects") or []:
+        if eff.get("kind") == "damage" and eff.get("damageType"):
+            return eff["damageType"]
+    return ""
+
+
+def ability_keywords(doc: dict) -> tuple[str, str, str]:
+    """-> (english subject, dominant colour, signal).
+
+    NAME beats DESCRIPTION beats damage type — the ability's own words decide
+    what is drawn, so the icon depicts THAT ability, not a house sigil.
+    """
+    name = _prompt.strip_hero_number(doc.get("name") or "")
+    body = _prompt.clean_body(doc.get("description") or "")
+
+    def pick(table, text):
+        return _prompt._pick(table, text)
+
+    def pick_ci(table, text):
+        return pick(table, text) or pick(table, (text or "").lower())
+
+    noun = (pick_ci(ABILITY_NOUN_EXTRA, name) or pick(_prompt.NAME_NOUN, name)
+            or pick(_prompt.NAME_NOUN_EN, name.lower()))
+    signal = "name"
+    if not noun:
+        noun = pick_ci(ABILITY_NOUN_EXTRA, body) or pick(_prompt.NAME_NOUN, body)
+        signal = "body" if noun else signal
+    hue = (pick(_prompt.ELEMENT_HUE, name) or pick_ci(ABILITY_HUE_EXTRA, name)
+           or pick(_prompt.ELEMENT_HUE_EN, name.lower())
+           or pick(_prompt.ELEMENT_HUE, body) or pick(ABILITY_HUE_EXTRA, body))
+    if not noun:
+        slot = (doc.get("slot") or "").upper()
+        noun = SLOT_FALLBACK_NOUN.get(slot, "a burst of focused energy")
+        signal = "slot"
+    if not hue:
+        hue = DAMAGE_HUE.get(_ability_damage_type(doc), "cyan")
+    return noun, hue, signal
+
+
 # ────────────────────────────────────────────────── prompt assembly ──────
 DERIVERS = {
     "champions": champion_keywords,
     "items": item_keywords,
     "augments": augment_keywords,
+    "abilities": ability_keywords,
 }
 
 
@@ -294,6 +465,12 @@ def pass1_prompt(family: str, doc: dict) -> tuple[str, str, str]:
         pos = (f"anime character, {subject}, {hue} colour scheme, upper body "
                f"portrait, front view, centred, single character, simple plain "
                f"background, clear detailed face, full subject in frame")
+    elif family == "abilities":
+        # An ability is an EFFECT, not a product on a table — same PASS-1 rules
+        # (one clear centred subject, plain background), different framing.
+        pos = (f"{subject}, glowing magical skill effect, {hue} colour scheme, "
+               f"centred, one single subject, plain dark background, clear sharp "
+               f"silhouette, full subject in frame")
     else:
         pos = (f"a single {subject}, {hue} colour scheme, centred, one object, "
                f"studio product shot, plain background, clear sharp silhouette, "

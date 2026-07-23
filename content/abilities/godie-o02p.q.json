@@ -41,5 +41,6 @@
   "vfxKey": "fx.prim.sound.nova",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "radius": 7.33
+  "radius": 7.33,
+  "castTimeSec": 0.5
 }

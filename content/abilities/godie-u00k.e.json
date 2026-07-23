@@ -40,5 +40,6 @@
     }
   ],
   "vfxKey": "fx.prim.void.swarm",
-  "targetsEnemies": true
+  "targetsEnemies": true,
+  "castTimeSec": 0.4
 }

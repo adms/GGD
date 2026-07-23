@@ -26,5 +26,6 @@
     }
   ],
   "vfxKey": "fx.prim.arcane.pulse-lg",
-  "schema": "ability@1"
+  "schema": "ability@1",
+  "castTimeSec": 0.4
 }

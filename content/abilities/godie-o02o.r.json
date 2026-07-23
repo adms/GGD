@@ -36,5 +36,6 @@
     }
   ],
   "vfxKey": "fx.ember-bolt-cast",
-  "targetsEnemies": false
+  "targetsEnemies": false,
+  "castTimeSec": 0.3
 }

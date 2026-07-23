@@ -36,5 +36,6 @@
       ]
     }
   ],
-  "vfxKey": "fx.prim.ki.beam-lg"
+  "vfxKey": "fx.prim.ki.beam-lg",
+  "castTimeSec": 0.7
 }

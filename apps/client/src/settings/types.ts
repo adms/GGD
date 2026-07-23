@@ -5,6 +5,7 @@
  * RenderConfig / QualityController are the consumers that map these values
  * onto the Babylon engine + vfx budgets.
  */
+import { INTERP_DELAY_MS, SNAPSHOT_MS } from "@ggd/shared/constants";
 
 /** Top-level graphics selector. "auto" hands quality to the adaptive manager. */
 export type QualityPreset = "low" | "medium" | "high" | "auto";
@@ -61,7 +62,13 @@ export interface GraphicsSettings {
 }
 
 export interface NetworkSettings {
-  /** 60–200 ms — feeds InterpolationBuffer render delay. */
+  /**
+   * INTERP_MIN_DELAY_MS–200 ms — feeds InterpolationBuffer render delay.
+   * This is the value GameApp ACTUALLY passes to TimeSync.renderTick; the
+   * shared INTERP_DELAY_MS constant is only the default seeded below and
+   * TimeSync's unused fallback parameter. Changing the constant without
+   * changing this default would leave every existing player on the old delay.
+   */
   interpolationDelayMs: number;
   showPerfOverlay: boolean;
   showPing: boolean;
@@ -76,7 +83,31 @@ export interface Settings {
 }
 
 /** Bump when the persisted shape changes; migrateSettings deep-merges forward. */
-export const SETTINGS_VERSION = 2;
+export const SETTINGS_VERSION = 3;
+
+/**
+ * Floor for the interpolation-delay slider, DERIVED from the snapshot rate.
+ *
+ * The InterpolationBuffer clamps (freezes) rather than extrapolates when the
+ * render clock outruns the newest sample, so the delay must cover at least two
+ * snapshot intervals for a single late/dropped packet to pass unnoticed.
+ * Math.floor keeps this at 66 for a 30 Hz snapshot rate, matching the shipped
+ * INTERP_DELAY_MS exactly instead of clamping it up to 67.
+ *
+ * The old hardcoded floor was 60 ms, which at the old 20 Hz rate was 1.2
+ * intervals — the slider's minimum was itself a stutter setting.
+ */
+export const INTERP_MIN_DELAY_MS = Math.floor(2 * SNAPSHOT_MS);
+/** Ceiling for the interpolation-delay slider (unchanged). */
+export const INTERP_MAX_DELAY_MS = 200;
+
+/**
+ * The interpolation delay shipped BEFORE the 30 Hz snapshot change. A persisted
+ * blob still carrying exactly this value was never touched by the player, so
+ * migrateSettings adopts the new default for it; anything else is a deliberate
+ * tuning and is preserved.
+ */
+const LEGACY_INTERP_DELAY_MS = 100;
 
 export const DEFAULT_GRAPHICS: GraphicsSettings = {
   qualityPreset: "high",
@@ -94,7 +125,9 @@ export const DEFAULT_GRAPHICS: GraphicsSettings = {
 };
 
 export const DEFAULT_NETWORK: NetworkSettings = {
-  interpolationDelayMs: 100,
+  // derived, never a literal — it must track SNAPSHOT_MS to keep the buffer's
+  // two-interval headroom (see INTERP_DELAY_MS in @ggd/shared/constants)
+  interpolationDelayMs: INTERP_DELAY_MS,
   showPerfOverlay: false,
   showPing: true,
   adaptiveJitterBuffer: false,
@@ -146,7 +179,9 @@ export function clampGraphics(g: GraphicsSettings): GraphicsSettings {
 /** Clamp/normalize network values into their valid ranges. */
 export function clampNetwork(n: NetworkSettings): NetworkSettings {
   return {
-    interpolationDelayMs: Math.round(clamp(n.interpolationDelayMs, 60, 200)),
+    interpolationDelayMs: Math.round(
+      clamp(n.interpolationDelayMs, INTERP_MIN_DELAY_MS, INTERP_MAX_DELAY_MS),
+    ),
     showPerfOverlay: Boolean(n.showPerfOverlay),
     showPing: Boolean(n.showPing),
     adaptiveJitterBuffer: Boolean(n.adaptiveJitterBuffer),
@@ -160,7 +195,17 @@ export function clampNetwork(n: NetworkSettings): NetworkSettings {
 export function migrateSettings(raw: unknown): Settings {
   const obj = (raw ?? {}) as Partial<Settings>;
   const g = (obj.graphics ?? {}) as Partial<GraphicsSettings>;
-  const n = (obj.network ?? {}) as Partial<NetworkSettings>;
+  const n = { ...((obj.network ?? {}) as Partial<NetworkSettings>) };
+  // v2 → v3: the snapshot rate went 20 → 30 Hz and the interpolation delay
+  // 100 → 66 ms. A returning player's persisted 100 would otherwise pin them to
+  // the OLD latency forever — the change would ship and they would never feel
+  // it. Only the untouched legacy DEFAULT is adopted forward; a player who
+  // deliberately moved the slider keeps their value (clampNetwork still raises
+  // anything below the new two-interval floor).
+  const priorVersion = typeof obj.version === "number" ? obj.version : 0;
+  if (priorVersion < 3 && n.interpolationDelayMs === LEGACY_INTERP_DELAY_MS) {
+    n.interpolationDelayMs = DEFAULT_NETWORK.interpolationDelayMs;
+  }
   return {
     version: SETTINGS_VERSION,
     graphics: clampGraphics({ ...DEFAULT_GRAPHICS, ...g }),

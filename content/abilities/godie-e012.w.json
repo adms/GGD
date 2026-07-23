@@ -29,5 +29,6 @@
     }
   ],
   "vfxKey": "fx.ember-bolt-cast",
-  "schema": "ability@1"
+  "schema": "ability@1",
+  "castTimeSec": 0.3
 }

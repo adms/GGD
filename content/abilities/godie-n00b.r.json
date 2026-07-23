@@ -43,5 +43,6 @@
     }
   ],
   "vfxKey": "fx.prim.wind.tornado-lg",
-  "targetsEnemies": true
+  "targetsEnemies": true,
+  "castTimeSec": 0.5
 }

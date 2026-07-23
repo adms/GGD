@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>施法 frame data 確認 — 出手幀對齊傷害 tick</title>
+<style>
+  :root {
+    --bg:#0c0e14; --panel:#151926; --line:#2a3145;
+    --fg:#e8ecf6; --dim:#98a2bd; --accent:#7dd3fc; --gold:#f0c674; --bad:#e2564a; --ok:#5fca8a;
+  }
+  * { box-sizing:border-box; }
+  html,body { margin:0; }
+  body { background:var(--bg); color:var(--fg); padding:20px 16px 60px;
+         font:14px/1.55 -apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans TC",sans-serif; }
+  .wrap { max-width:1180px; margin:0 auto; }
+  h1 { font-size:19px; margin:0 0 4px; }
+  .sub { color:var(--dim); font-size:12.5px; margin:0 0 16px; max-width:88ch; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:10px;
+          padding:12px 14px; margin-bottom:14px; }
+  .row { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+  .lbl { color:var(--dim); font-size:11px; text-transform:uppercase; letter-spacing:.08em; }
+  button { font:inherit; font-size:12.5px; color:var(--fg); background:#1d2334;
+           border:1px solid var(--line); border-radius:7px; padding:5px 10px; cursor:pointer; }
+  button:hover { border-color:var(--accent); }
+  button[aria-pressed="true"] { background:#23507a; border-color:var(--accent); color:#fff; }
+  input[type=number] { font:inherit; width:82px; background:#1d2334; color:var(--fg);
+                       border:1px solid var(--line); border-radius:7px; padding:5px 8px; }
+  input[type=range] { width:280px; }
+  table { width:100%; border-collapse:collapse; font-size:12.5px;
+          font-variant-numeric:tabular-nums; }
+  th,td { text-align:right; padding:4px 7px; border-bottom:1px solid #1e2334; white-space:nowrap; }
+  th { color:var(--dim); font-weight:600; font-size:11px; text-transform:uppercase;
+       letter-spacing:.05em; position:sticky; top:0; background:var(--panel); }
+  td.l, th.l { text-align:left; }
+  tbody tr { cursor:pointer; }
+  tbody tr:hover { background:#1b2133; }
+  tbody tr[aria-selected="true"] { background:#23507a; }
+  .flag { color:var(--bad); font-weight:700; }
+  .good { color:var(--ok); }
+  .scroll { max-height:52vh; overflow:auto; }
+  canvas { width:100%; height:220px; display:block; border-radius:8px; }
+  code { background:#0009; padding:1px 5px; border-radius:4px; }
+  #err { border-color:#7f2d2d; background:#2a1212; display:none; }
+  .kv { display:flex; gap:18px; flex-wrap:wrap; color:var(--dim); font-size:12px; margin-top:8px; }
+  .kv b { color:var(--fg); font-weight:600; }
+  .paste { font-family:ui-monospace,Menlo,monospace; font-size:12px; color:var(--gold);
+           background:#0009; padding:6px 9px; border-radius:6px; display:inline-block; margin-top:8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>施法 frame data 確認 <span style="color:var(--dim);font-size:12px">cast telegraph — LANE C</span></h1>
+<p class="sub">
+  模擬端決定「傷害什麼時候發生」（<code>CastResolveSystem</code> 在 <code>castBegin</code> 之後正好
+  <code>round(castTimeSec / dt)</code> tick 結算），渲染端只能對齊、不能帶頭。這頁把每個英雄
+  <b>真正的</b> cast 動畫長度（直接讀 .glb 的 glTF chunk）丟進<b>真正的</b>
+  <code>alignPulseClip</code>，畫在<b>真正的</b> 30Hz tick 尺上，看出手幀（strike frame）
+  離傷害 tick 有多遠。BEFORE = 這次修改前的做法（把整段 clip 拉滿起手時間）。
+</p>
+
+<div id="err" class="card">
+  <b>載入失敗</b> <span id="errmsg"></span><br>
+  這頁只在 <code>vite dev</code> 下可用（直接載入 <code>/src/render/*.ts</code>）。
+  請用 <code>pnpm --filter @ggd/client dev</code> 起 dev server 再開。
+</div>
+
+<div class="card">
+  <div class="row">
+    <span class="lbl">起手時間 startup</span>
+    <input type="number" id="startup" value="600" min="33" max="4000" step="10"> ms
+    <button data-startup="600">0.6s（未設定的預設）</button>
+    <button data-startup="650">0.65s</button>
+    <button data-startup="900">0.9s（原 0.6 + 0.3）</button>
+    <button data-startup="333">10 tick</button>
+    <span style="flex:1"></span>
+    <button id="measure">重新量測全部</button>
+  </div>
+  <div class="kv" id="summary"></div>
+</div>
+
+<div class="card">
+  <div class="scroll">
+    <table>
+      <thead><tr>
+        <th class="l">model</th><th class="l">cast clip</th><th>clip 長</th>
+        <th>f</th><th>rate</th><th>hold</th><th>skip</th>
+        <th>BEFORE 誤差</th><th>AFTER 誤差</th><th class="l">狀況</th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="card" id="detail" style="display:none">
+  <div class="row">
+    <b id="d-name"></b>
+    <span style="flex:1"></span>
+    <span class="lbl">strike fraction</span>
+    <input type="range" id="frac" min="0.05" max="0.95" step="0.01" value="0.6">
+    <b id="d-frac">0.60</b>
+    <button id="verify">用 Babylon 對照</button>
+    <button id="probe">跑真的 castBegin</button>
+  </div>
+  <canvas id="tl"></canvas>
+  <div class="kv" id="d-kv"></div>
+  <div class="paste" id="d-paste"></div>
+</div>
+
+</div>
+<script type="module">
+const $ = (id) => document.getElementById(id);
+const fail = (m) => { $("err").style.display = "block"; $("errmsg").textContent = String(m); };
+
+try {
+  const M = await import("/src/render/frameDataAudition.ts");
+
+  // ?select=<modelId>&startup=<ms> — deep-links one champion's detail panel.
+  // Not decoration: it is the only way to reach the timeline canvas without a
+  // click, so a headless render can prove the detail half of this page works
+  // (the table half is provable from the DOM alone).
+  const params = new URLSearchParams(location.search);
+  let docs = [];
+  let rows = [];
+  let sel = params.get("select");
+  let fracOverride = undefined;
+  if (params.get("startup")) $("startup").value = params.get("startup");
+
+  const startupMs = () => Math.max(33, Number($("startup").value) || 600);
+
+  const fmtErr = (ms) => {
+    const s = ms >= 0 ? "+" : "";
+    return `${s}${ms.toFixed(0)}ms`;
+  };
+
+  const render = () => {
+    const s = startupMs();
+    const plans = rows.map((r) => M.planRow(r, s, undefined));
+    plans.sort((a, b) => Math.abs(b.naiveErrorMs) - Math.abs(a.naiveErrorMs));
+
+    const flagged = plans.filter(M.isFlagged).length;
+    const early = plans.filter((p) => p.naiveErrorMs < -1).length;
+    const worst = plans.reduce((m, p) => Math.max(m, Math.abs(p.naiveErrorMs)), 0);
+    const worstAfter = plans.reduce((m, p) => Math.max(m, Math.abs(p.alignedErrorMs)), 0);
+    $("summary").innerHTML =
+      `<span>模型 <b>${plans.length}</b></span>` +
+      `<span>BEFORE 出手偏早 <b>${early}</b> 個</span>` +
+      `<span>BEFORE 最大誤差 <b>${worst.toFixed(0)}ms</b></span>` +
+      `<span>AFTER 最大誤差 <b class="good">${worstAfter.toFixed(1)}ms</b></span>` +
+      `<span>需要補償（被 rate 夾住 / 無 cast clip） <b class="flag">${flagged}</b> 個</span>`;
+
+    const tb = $("rows");
+    tb.innerHTML = "";
+    for (const p of plans) {
+      const tr = document.createElement("tr");
+      const reason = M.flagReason(p);
+      const bad = M.isFlagged(p);
+      tr.setAttribute("aria-selected", String(sel === p.row.modelId));
+      tr.innerHTML =
+        `<td class="l">${p.row.modelId}</td>` +
+        `<td class="l">${p.row.castClip ? p.row.castClip.name : "—"}</td>` +
+        `<td>${p.row.castClip ? p.row.castClip.durationSec.toFixed(3) : "—"}s</td>` +
+        `<td>${p.strikeFraction.toFixed(2)}</td>` +
+        `<td>${p.plan.rate.toFixed(2)}x</td>` +
+        `<td>${(p.plan.delaySec * 1000).toFixed(0)}ms</td>` +
+        `<td>${(p.plan.skipSec * 1000).toFixed(0)}ms</td>` +
+        `<td class="${p.naiveErrorMs < -1 ? "flag" : ""}">${fmtErr(p.naiveErrorMs)}</td>` +
+        `<td class="${Math.abs(p.alignedErrorMs) > 1 ? "flag" : "good"}">${fmtErr(p.alignedErrorMs)}</td>` +
+        `<td class="l ${bad ? "flag" : ""}">${reason || "對齊"}</td>`;
+      tr.onclick = () => { sel = p.row.modelId; fracOverride = undefined; render(); };
+      tb.appendChild(tr);
+    }
+
+    const row = rows.find((r) => r.modelId === sel);
+    if (!row) { $("detail").style.display = "none"; return; }
+    $("detail").style.display = "";
+    const p = M.planRow(row, s, fracOverride);
+    $("d-name").textContent = `${row.modelId} — ${row.glbPath}`;
+    $("frac").value = String(p.strikeFraction);
+    $("d-frac").textContent = p.strikeFraction.toFixed(2);
+    M.drawTimeline($("tl"), p, s);
+    $("d-kv").innerHTML =
+      `<span>clip <b>${row.castClip ? row.castClip.name : "—"}</b></span>` +
+      `<span>長度 <b>${row.castClip ? row.castClip.durationSec.toFixed(3) : "—"}s</b></span>` +
+      `<span>clipStrike <b>${(p.clipStrikeSec * 1000).toFixed(0)}ms</b>（clip 時間）</span>` +
+      `<span>startup <b>${s}ms</b> = <b>${(s / M.TICK_MS).toFixed(1)}</b> tick</span>` +
+      `<span>clipStrike − startup（BEFORE）<b class="${p.naiveErrorMs < -1 ? "flag" : ""}">${fmtErr(p.naiveErrorMs)}</b></span>` +
+      `<span>AFTER <b class="good">${fmtErr(p.alignedErrorMs)}</b></span>` +
+      `<span id="v-out"></span>`;
+    $("d-paste").textContent =
+      "// anim/castStrike.ts → CAST_STRIKE_FRACTION_BY_MODEL\n" +
+      M.overrideSnippet(row.modelId, p.strikeFraction);
+  };
+
+  $("frac").oninput = (e) => { fracOverride = Number(e.target.value); render(); };
+  $("startup").oninput = render;
+  for (const b of document.querySelectorAll("button[data-startup]")) {
+    b.onclick = () => { $("startup").value = b.dataset.startup; render(); };
+  }
+  $("verify").onclick = async () => {
+    const doc = docs.find((d) => d.id === sel);
+    if (!doc) return;
+    const out = $("v-out");
+    out.textContent = "Babylon 載入中…";
+    try {
+      const v = await M.verifyWithBabylon(doc);
+      const row = rows.find((r) => r.modelId === sel);
+      const fast = row?.castClip?.durationSec ?? 0;
+      if (!v) { out.innerHTML = "Babylon: <b class='flag'>載入失敗</b>"; return; }
+      const agree = Math.abs(v.durationSec - fast) < 0.02;
+      out.innerHTML = `Babylon 實測 <b>${v.durationSec.toFixed(3)}s</b> ` +
+        (agree ? "<b class='good'>與表格一致</b>" : "<b class='flag'>與表格不符 — 表格不可信</b>");
+    } catch (e) {
+      out.innerHTML = `Babylon: <b class='flag'>${String(e && e.message || e)}</b>`;
+    }
+  };
+
+  $("probe").onclick = async () => {
+    const doc = docs.find((d) => d.id === sel);
+    if (!doc) return;
+    const out = $("v-out");
+    const s = startupMs();
+    out.textContent = "跑真的 EntityViewRegistry + ChampionView…";
+    try {
+      const r = await M.probeRealCast(doc, s);
+      if (!r) { out.innerHTML = "真跑: <b class='flag'>glb 載不起來</b>"; return; }
+      const row = rows.find((x) => x.modelId === sel);
+      const expect = M.planRow(row, s, undefined);
+      const same = r.plan
+        && Math.abs(r.plan.rate - expect.plan.rate) < 1e-6
+        && Math.abs(r.plan.delaySec - expect.plan.delaySec) < 1e-6
+        && Math.abs(r.plan.skipSec - expect.plan.skipSec) < 1e-6;
+      out.innerHTML =
+        `真跑 anim=<b>${r.animState}</b> f=<b>${r.strikeFraction}</b> ` +
+        `clip=<b>${r.clipDurationSec.toFixed(3)}s</b> ` +
+        `rate=<b>${r.plan ? r.plan.rate.toFixed(3) : "—"}</b> ` +
+        `hold=<b>${r.plan ? (r.plan.delaySec * 1000).toFixed(0) : "—"}ms</b> ` +
+        `skip=<b>${r.plan ? (r.plan.skipSec * 1000).toFixed(0) : "—"}ms</b> ` +
+        (same ? "<b class='good'>與表格一致</b>" : "<b class='flag'>與表格不符</b>");
+    } catch (e) {
+      out.innerHTML = `真跑: <b class='flag'>${String(e && e.message || e)}</b>`;
+    }
+  };
+
+  const measure = async () => {
+    $("summary").textContent = "量測中…";
+    docs = await M.loadModelDocs();
+    rows = await M.measureAll(docs, (done, total) => {
+      $("summary").textContent = `量測中… ${done}/${total}`;
+    });
+    render();
+  };
+  $("measure").onclick = measure;
+  await measure();
+} catch (e) {
+  fail(e && e.message ? e.message : e);
+}
+</script>
+</body>
+</html>

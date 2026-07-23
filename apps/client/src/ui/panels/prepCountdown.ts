@@ -145,7 +145,7 @@ export interface PrepClockView {
   pulse: boolean;
   /**
    * Re-mount key for the pulsing number. Changing it once per whole second is
-   * what restarts the CSS animation exactly once per tick — a 20 Hz snapshot
+   * what restarts the CSS animation exactly once per tick — a snapshot-rate
    * repeat or a React re-render keeps the same key and never re-pops.
    */
   beat: number;

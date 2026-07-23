@@ -53,7 +53,18 @@ func main() {
 		_ = httpSrv.Shutdown(shutdownCtx)
 	}()
 
-	slog.Info("platform listening", "addr", cfg.Addr, "season", cfg.Season, "dataDir", cfg.DataDir, "deployTier", cfg.DeployTier)
+	slog.Info("platform listening", "addr", cfg.Addr, "season", cfg.Season, "dataDir", cfg.DataDir, "deployTier", cfg.DeployTier, "fullAssets", cfg.FullAssets)
+	// #176(A): the family tier is a PROMISE about bytes the platform does not
+	// itself serve, so the one thing it can do is say out loud which promise
+	// this process is making. When the edge and the platform disagree the two
+	// boot logs disagree too, which is the difference between "a third of the
+	// roster is wrong and nobody noticed all evening" and "grep the logs".
+	if cfg.FullAssets {
+		slog.Warn("deploy tier FAMILY — this deploy promises FULL ASSETS to every peer: " +
+			"the Blizzard overlay (556 files / 87,403,869 B) must be mounted at the edge and the client " +
+			"must be built with VITE_GGD_FULL_ASSETS=1. The edge refuses to boot without it (see " +
+			"nginx/assert-full-assets.sh); if you reached this line and the edge is up, the assets are there.")
+	}
 	if err := httpSrv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 		slog.Error("serve", "err", err)
 		os.Exit(1)

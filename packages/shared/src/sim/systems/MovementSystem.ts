@@ -102,7 +102,13 @@ export function movementSystem(world: SimWorld): void {
       }
     }
     // Casting an ability with cast time roots the caster (channel lock).
-    if (world.abilities.get(id)?.cast?.rooted) rooted = true;
+    const abComp = world.abilities.get(id);
+    if (abComp?.cast?.rooted) rooted = true;
+    // Post-resolve RECOVERY roots ONLY when the ability opted in
+    // (`recoveryRoots: true`). The default deliberately leaves footwork free —
+    // startup already hard-roots, and stacking a second root on every ability
+    // press reads as a frozen game. See abilities/abilityRecovery.ts DECISION 2.
+    if (abComp?.recovery && abComp.recovery.roots && abComp.recovery.ticksLeft > 0) rooted = true;
     // Knockdown (prone): rooted like a hard CC. The knockback override is
     // evaluated below BEFORE normal steering, so the victim still slides out,
     // then lies grounded until the getup. Turning is frozen too (stunned).

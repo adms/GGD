@@ -15,6 +15,7 @@ import { queryOverlap } from "../collision/queries";
 import { circle } from "../collision/shapes";
 import { normalize, sub, distSq, clampLen, add } from "../math/vec2";
 import { isPassiveOnly, syncAbilityPassives } from "./abilityPassives";
+import { armRecovery } from "./abilityRecovery";
 
 /**
  * Enemies of `caster` currently standing inside a ground-AoE circle.
@@ -71,7 +72,14 @@ export type CastResult =
   | "out-of-range"
   | "bad-target"
   /** the ability is a PERMANENT passive (WC3 Cool=0) — there is nothing to cast */
-  | "passive";
+  | "passive"
+  /**
+   * still committed to the RECOVERY of a previous ability that WHIFFED
+   * (abilityRecovery.ts). Distinct from "cooldown" on purpose: the HUD should
+   * be able to say "you missed and you're still recovering", which is the whole
+   * feedback loop that teaches the hit-cancel rule.
+   */
+  | "recovery";
 
 export function castAbility(
   world: SimWorld,
@@ -106,6 +114,21 @@ export function castAbility(
   if (isPassiveOnly(def)) return "passive";
   const mana = def.manaCost[inst.rank - 1] ?? 0;
   if (hp.mana < mana) return "no-mana";
+
+  // Still committed to the RECOVERY of a previous ability that WHIFFED. A
+  // landed hit would already have cleared this on the tick it connected, so
+  // reaching here means the last ability missed — this is the punish window
+  // (abilities/abilityRecovery.ts).
+  //
+  // ORDER: every check above is a pure predicate that pays no cost, so their
+  // relative order is purely a question of WHICH REASON IS REPORTED, never of
+  // what is allowed. Recovery is placed LAST on purpose: when the button is
+  // also on cooldown or you also lack the mana, those are the older, longer and
+  // more actionable answers, and "recovery" would just be a confusing new name
+  // for the same dead button. The case recovery exists to govern is a COMBO —
+  // a DIFFERENT ability, off cooldown, mana in hand, right after the first one
+  // — and that case reaches exactly this line.
+  if ((ab.recovery?.ticksLeft ?? 0) > 0) return "recovery";
 
   // ---- resolve targeting ----
   let targets: EntityId[] = [];
@@ -224,6 +247,11 @@ export function castAbility(
   for (const hitId of targets) {
     if (hitId !== caster) fireHooks(world, caster, "onAbilityHit", hitId, slot);
   }
+  // RECOVERY starts at the END of startup. For an instant cast startup is zero
+  // ticks long, so "end of startup" IS this moment. Effects above only QUEUED
+  // their damage (combatResolveSystem drains it at step 8 of this same tick), so
+  // the hit-cancel still lands on the same tick if it connects.
+  armRecovery(world, caster, slot, def, targets);
   return "ok";
 }
 

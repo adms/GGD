@@ -80,7 +80,8 @@
         }
       ],
       "vfxKey": "fx.ember-bolt-cast",
-      "targetsEnemies": true
+      "targetsEnemies": true,
+      "castTimeSec": 0.5
     },
     "W": {
       "id": "godie-u011.w",
@@ -128,7 +129,8 @@
           ]
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast"
+      "vfxKey": "fx.ember-bolt-cast",
+      "castTimeSec": 0.3
     },
     "E": {
       "id": "godie-u011.e",
@@ -163,7 +165,8 @@
           "duration": 12.0
         }
       ],
-      "vfxKey": "fx.firestorm"
+      "vfxKey": "fx.firestorm",
+      "castTimeSec": 0.3
     },
     "R": {
       "id": "godie-u011.r",

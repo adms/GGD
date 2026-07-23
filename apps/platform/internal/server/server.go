@@ -30,7 +30,9 @@ import (
 	"github.com/ggd/platform/internal/friend"
 	"github.com/ggd/platform/internal/gamelink"
 	"github.com/ggd/platform/internal/httpx"
+	"github.com/ggd/platform/internal/invite"
 	"github.com/ggd/platform/internal/lobby"
+	"github.com/ggd/platform/internal/opsenv"
 	"github.com/ggd/platform/internal/presence"
 	"github.com/ggd/platform/internal/ranking"
 	"github.com/ggd/platform/internal/room"
@@ -54,6 +56,8 @@ type Server struct {
 	Admin     *admin.Service
 	Curation  *curation.Service
 	CombatEnv *combatenv.Service
+	OpsEnv    *opsenv.Service
+	Invites   *invite.Service
 	AI        *ai.Service
 	Hub       *lobby.Hub
 	Sessions  *lobby.Sessions
@@ -76,6 +80,11 @@ type Options struct {
 	// RequireApproval forces the private-deploy approval gate on (#126)
 	// regardless of the environment. It is OR-ed with GGD_REQUIRE_APPROVAL.
 	RequireApproval bool
+	// RequireInvite forces the registration invite-code gate on (#174)
+	// regardless of the environment. It is OR-ed with cfg.RequireInvite, which
+	// config.Load resolves from GGD_REQUIRE_INVITE / the listen address. Tests
+	// that boot a platform without it get the pre-#174 open-signup flow.
+	RequireInvite bool
 	// DisableOwnerBootstrap turns the first-account owner grant off for this
 	// instance. Real deploys never set it — the grant closes itself as soon as
 	// an admin exists (see internal/auth/bootstrap.go). It exists so a test
@@ -198,7 +207,25 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 	adminSvc := admin.New(accounts, walletSvc, rank, friends, store, rdb, cfg.AdminBootstrapUsername)
 	curationSvc := curation.New(store, rdb)
 	combatEnvSvc := combatenv.New(store, rdb, cfg.ContentDir)
+	opsEnvSvc := opsenv.New(store, rdb)
+	inviteSvc := invite.New(store)
 	aiSvc := ai.New(store, rdb)
+
+	// Registration invite-code gate (#174). Installed ONLY when required, so a
+	// dev/CI platform keeps the open-signup flow the rest of the suite assumes
+	// (auth.Service treats a nil gate as "off"). The resolved value is logged on
+	// every boot — this is the only thing keeping strangers off the family
+	// deploy, so it must never be a quiet decision. See config.resolveRequireInvite.
+	if opts.RequireInvite || cfg.RequireInvite {
+		authSvc.SetInviteGate(inviteSvc)
+		slog.Info("auth: registration REQUIRES an invite code — mint them in the admin console (邀請碼)",
+			"addr", cfg.Addr, "override", "GGD_REQUIRE_INVITE")
+	} else {
+		slog.Warn("auth: registration is OPEN — anyone who can reach this platform can create an account",
+			"addr", cfg.Addr,
+			"why", "GGD_REQUIRE_INVITE is off, or unset with a loopback-only listen address",
+			"harden", "set GGD_REQUIRE_INVITE=1 if anything (nginx, a tunnel, a proxy) forwards to this platform from outside")
+	}
 
 	hub := lobby.NewHub(rdb, friends)
 	sessions := lobby.NewSessions(hub, authSvc, pres, rooms, rdb)
@@ -207,7 +234,8 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 		Cfg: cfg, Rdb: rdb, Store: store, Journal: journal, Accounts: accounts,
 		Auth: authSvc, Friends: friends, Presence: pres, Rooms: rooms,
 		Ranking: rank, Gamelink: glink, Wallet: walletSvc, Admin: adminSvc,
-		Curation: curationSvc, CombatEnv: combatEnvSvc, AI: aiSvc, Hub: hub, Sessions: sessions,
+		Curation: curationSvc, CombatEnv: combatEnvSvc, OpsEnv: opsEnvSvc, Invites: inviteSvc,
+		AI: aiSvc, Hub: hub, Sessions: sessions,
 		registerRateLimit: envInt("GGD_REGISTER_RATE_LIMIT", 0),
 	}
 	s.buildRouter(templates)
@@ -288,6 +316,9 @@ func (s *Server) buildRouter(templates *room.Templates) {
 		curation.NewHandlers(s.Curation, s.Admin.AdminOnly).MountPublic(api)
 		// combat-env table: public read (game-server per-match snapshot)
 		combatenv.NewHandlers(s.CombatEnv, s.Admin.AdminOnly).MountPublic(api)
+		// server-ops table: public read (game-server resolves maxRooms +
+		// snapshotHz at match creation, no token — same reason as combat-env)
+		opsenv.NewHandlers(s.OpsEnv, s.Admin.AdminOnly).MountPublic(api)
 		// AI provider READINESS only (booleans; loopback also gets the model,
 		// the endpoint host and the operator's next action). No key material —
 		// the masked config stays admin-gated on the authed router below. The
@@ -311,6 +342,8 @@ func (s *Server) buildRouter(templates *room.Templates) {
 			curation.NewHandlers(s.Curation, s.Admin.AdminOnly).Mount(pr)
 			// /admin/combat-env — AdminOnly inside
 			combatenv.NewHandlers(s.CombatEnv, s.Admin.AdminOnly).Mount(pr)
+			// /admin/server-ops — AdminOnly inside
+			opsenv.NewHandlers(s.OpsEnv, s.Admin.AdminOnly).Mount(pr)
 			// /ai/icon + /ai/text authed; /admin/ai/config AdminOnly inside
 			ai.NewHandlers(s.AI, s.Admin.AdminOnly).Mount(pr)
 		})
@@ -331,6 +364,17 @@ func (s *Server) buildRouter(templates *room.Templates) {
 				// take a role back was hand-editing account JSON.
 				ar.Post("/admin/accounts/{id}/role", s.setAccountRole)
 			})
+		})
+
+		// #174 invite codes: mint / list / revoke. Its own authed group (the
+		// package puts AdminOnly around its own routes) so the diff is additive
+		// and does not touch the groups above. There is NO public route here on
+		// purpose — an invite code is a credential, so nothing about it is
+		// readable, or even testable, without an operator session. See
+		// internal/invite's package header.
+		api.Group(func(pr chi.Router) {
+			pr.Use(s.Auth.Middleware)
+			invite.NewHandlers(s.Invites, s.Admin.AdminOnly).Mount(pr)
 		})
 	})
 

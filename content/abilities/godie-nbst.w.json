@@ -43,5 +43,6 @@
   ],
   "vfxKey": "fx.root-snare",
   "targetsEnemies": true,
-  "schema": "ability@1"
+  "schema": "ability@1",
+  "castTimeSec": 0.3
 }

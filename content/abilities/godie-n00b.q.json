@@ -39,5 +39,6 @@
       ]
     }
   ],
-  "vfxKey": "fx.prim.wind.beam"
+  "vfxKey": "fx.prim.wind.beam",
+  "castTimeSec": 0.4
 }

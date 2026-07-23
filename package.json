@@ -21,7 +21,10 @@
     "content:validate": "pnpm --filter @ggd/shared content:validate",
     "docs:reference": "python3 tools/reference/gen_reference.py",
     "docs:readme": "python3 tools/reference/gen_readme_lists.py",
-    "docs:readme:check": "python3 tools/reference/gen_readme_lists.py --check"
+    "docs:readme:check": "python3 tools/reference/gen_readme_lists.py --check",
+    "docs:status": "python3 tools/status/gen_status.py",
+    "docs:status:check": "python3 tools/status/gen_status.py --check",
+    "docs:status:test": "python3 tools/status/test_gen_status.py"
   },
   "devDependencies": {
     "tsx": "^4.19.2",

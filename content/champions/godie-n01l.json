@@ -68,7 +68,8 @@
           "duration": 6.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast"
+      "vfxKey": "fx.ember-bolt-cast",
+      "castTimeSec": 0.3
     },
     "W": {
       "id": "godie-n01l.w",
@@ -120,7 +121,8 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast"
+      "vfxKey": "fx.ember-bolt-cast",
+      "castTimeSec": 0.3
     },
     "E": {
       "id": "godie-n01l.e",
@@ -160,7 +162,8 @@
           "duration": 12.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast"
+      "vfxKey": "fx.ember-bolt-cast",
+      "castTimeSec": 0.3
     },
     "R": {
       "id": "godie-n01l.r",
@@ -198,7 +201,8 @@
           "duration": 12.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast"
+      "vfxKey": "fx.ember-bolt-cast",
+      "castTimeSec": 0.3
     }
   },
   "skillOrder": [

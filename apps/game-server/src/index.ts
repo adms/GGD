@@ -18,6 +18,13 @@ import { verify, mintTicket } from "./auth/hmac";
 import { mintCreateToken } from "./rooms/createGate";
 import { sanitizeDisplayName } from "./net/sanitizeText";
 import { secretConfigError } from "./config/secretGuard";
+import { deployTierBootLine } from "./config/deployTier";
+import { roomRegistry } from "./rooms/roomRegistry";
+import { ReplayRoom } from "./rooms/ReplayRoom";
+import { handleInternalReplays } from "./replay/http";
+import { setActiveContentVersion } from "./replay/Player";
+import { liveRecordingIds } from "./replay/Recorder";
+import { pruneReplays, replayDir } from "./replay/store";
 
 const PORT = Number(process.env.GAME_PORT ?? 2567);
 /** content tree root — defaults to the monorepo's content/ next to apps/ */
@@ -35,6 +42,13 @@ if (bootErr) {
   console.error(`[game-server] FATAL: ${bootErr}`);
   process.exit(1);
 }
+
+// #176: say which tier this process thinks it is. The platform prints the same
+// fact (cmd/platform/main.go) and the edge refuses to boot if it disagrees with
+// what is on disk — three independent statements of one declaration, so a
+// half-configured deploy is visible in the logs instead of visible only in
+// "why is everyone a wizard" three hours into the playtest.
+console.log(deployTierBootLine());
 
 interface InternalMatchRequest {
   matchId: string;
@@ -120,7 +134,12 @@ async function handleInternalMatches(req: IncomingMessage, res: ServerResponse, 
 const httpServer = createServer((req, res) => {
   if (req.url === "/healthz") {
     res.writeHead(200, { "content-type": "application/json" });
-    res.end(JSON.stringify({ ok: true }));
+    // `rooms` is the ONLY place the live admission state is observable. It
+    // matters when an operator lowers maxRooms below the running count: the
+    // shard is not broken, it is DRAINING — {active: 63, capacity: 50,
+    // draining: true} means no new match starts until 13 finish. Without this
+    // the refusals look like an outage.
+    res.end(JSON.stringify({ ok: true, rooms: roomRegistry.stats() }));
     return;
   }
   if (req.url === "/_internal/matches" && req.method === "POST") {
@@ -132,6 +151,28 @@ const httpServer = createServer((req, res) => {
     req.on("end", () => {
       handleInternalMatches(req, res, raw).catch((err) => {
         console.error("internal/matches error", err);
+        if (!res.headersSent) {
+          res.writeHead(500, { "content-type": "application/json" });
+          res.end(JSON.stringify({ error: { code: "internal", message: "error" } }));
+        }
+      });
+    });
+    return;
+  }
+  // MATCH REPLAYS (task #175). Deliberately under /_internal, not a public
+  // route: recordings carry the display name of everyone who played. The path
+  // is HMAC-signed exactly like /_internal/matches, is not proxied by the public
+  // edge, and the admin console reaches it only through the platform's
+  // admin-authenticated proxy.
+  if (req.url?.startsWith("/_internal/replays")) {
+    let raw = "";
+    req.on("data", (c: Buffer) => {
+      raw += c.toString("utf8");
+      if (raw.length > 100_000) req.destroy();
+    });
+    req.on("end", () => {
+      handleInternalReplays(req, res, raw, SHARED_SECRET).catch((err) => {
+        console.error("internal/replays error", err);
         if (!res.headersSent) {
           res.writeHead(500, { "content-type": "application/json" });
           res.end(JSON.stringify({ error: { code: "internal", message: "error" } }));
@@ -153,6 +194,10 @@ const gameServer = new Server({
 });
 
 gameServer.define("match", MatchRoom);
+// Replay playback (task #175). Same schema as "match", so the client renders a
+// recorded match with the renderer it already has; the room registers no input
+// handler, so a viewer can never influence what is being replayed.
+gameServer.define("replay", ReplayRoom);
 
 /**
  * Load the full content tree (93 champions, items, augments, loot tables,
@@ -164,6 +209,13 @@ async function loadContent(): Promise<void> {
   try {
     const result = await new ContentLoader(new FsContentSource(CONTENT_DIR)).load();
     registerAll(result.store);
+    // THE CONTENT VERSION NOW GOES SOMEWHERE. It was logged on this line and
+    // thrown away, while `MatchState.contentVersion` — declared and replicated
+    // since the protocol was written — stayed the empty string on every room.
+    // It is the primary key of a replay (a recording made on cv_A must never be
+    // played on cv_B), so it is published here for MatchRoom and the replay
+    // compatibility check to read.
+    setActiveContentVersion(result.manifest.contentVersion);
     const arenaRules = Configs.tryGet("arena-rules") ? "arena-rules ACTIVE" : "arena-rules absent (legacy rules)";
     console.log(
       `[game-server] content loaded from ${CONTENT_DIR} (${result.manifest.contentVersion}): ` +
@@ -178,6 +230,10 @@ async function loadContent(): Promise<void> {
       err,
     );
     registerSkeletonContent();
+    // A skeleton boot has NO manifest, so there is no cv_ to record. Leaving it
+    // empty is honest: every recording made in this state carries "" and will
+    // only replay against another skeleton boot.
+    setActiveContentVersion("");
   }
 }
 
@@ -185,4 +241,16 @@ loadContent()
   .then(() => gameServer.listen(PORT))
   .then(() => {
     console.log(`[game-server] listening on :${PORT} (secret=${SHARED_SECRET ? "set" : "DEV MODE"})`);
+    // Retention runs at boot as well as after each match, so a shard that was
+    // restarted mid-season still converges on the ceiling instead of only ever
+    // pruning while matches happen to be finishing. Fire-and-forget: nothing
+    // waits on it and a failure only logs.
+    void pruneReplays(liveRecordingIds())
+      .then((deleted) => {
+        console.log(
+          `[replay] recordings in ${replayDir()}` +
+            (deleted.length > 0 ? `; retention pruned ${deleted.length} at boot` : ""),
+        );
+      })
+      .catch((err) => console.error("[replay] boot retention prune failed", err));
   });

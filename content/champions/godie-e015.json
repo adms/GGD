@@ -128,7 +128,8 @@
       ],
       "vfxKey": "fx.ember-bolt-cast",
       "targetsEnemies": true,
-      "radius": 6.0
+      "radius": 6.0,
+      "castTimeSec": 0.6
     },
     "E": {
       "id": "godie-e015.e",
@@ -177,7 +178,8 @@
         }
       ],
       "vfxKey": "fx.ember-bolt-cast",
-      "targetsEnemies": true
+      "targetsEnemies": true,
+      "castTimeSec": 0.3
     },
     "R": {
       "id": "godie-e015.r",
@@ -223,7 +225,8 @@
         }
       ],
       "vfxKey": "fx.ember-bolt-cast",
-      "targetsEnemies": true
+      "targetsEnemies": true,
+      "castTimeSec": 0.7
     }
   },
   "skillOrder": [

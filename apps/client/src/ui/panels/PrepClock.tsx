@@ -70,7 +70,7 @@ export function PrepClock(): React.JSX.Element | null {
       <style>{PREP_CSS}</style>
       <div
         // the key IS the beat: a new whole second re-mounts the node and so
-        // restarts the pop exactly once — 20 Hz snapshot repeats keep the same
+        // restarts the pop exactly once — snapshot-rate repeats keep the same
         // key and stay still.
         key={view.beat}
         style={{

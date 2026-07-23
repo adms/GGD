@@ -57,3 +57,24 @@ export function elementStyle(el: Element): ElementStyle {
   if (!s) throw new Error(`unknown vfx element: ${el}`);
   return s;
 }
+
+/** The prefix `vfxKeyFor` (bindings.ts) stamps on every curated primitive doc. */
+export const PRIM_VFX_PREFIX = "fx.prim.";
+
+/**
+ * Read the ELEMENT back out of a curated vfxKey.
+ *
+ * `vfxKeyFor` builds `fx.prim.<element>.<primitive>[-size]`, so the element an
+ * ability was bound to in task #79 is recoverable at runtime from nothing but
+ * its `vfxKey` — no second lookup table to drift out of sync with the first.
+ * Anything else (an imported WC3 doc id, `fx.ember-bolt-cast`, undefined)
+ * returns null and the caller falls back to the doc's own colour.
+ */
+export function elementFromVfxKey(key: string | undefined): Element | null {
+  if (!key || !key.startsWith(PRIM_VFX_PREFIX)) return null;
+  const rest = key.slice(PRIM_VFX_PREFIX.length);
+  const dot = rest.indexOf(".");
+  if (dot <= 0) return null;
+  const name = rest.slice(0, dot);
+  return name in ELEMENTS ? (name as Element) : null;
+}

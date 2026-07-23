@@ -9,10 +9,20 @@
 # Build context is the REPO ROOT: docker build -f docker/game.Dockerfile .
 
 FROM node:22-alpine AS build
+# git is REQUIRED, not optional: pnpm-lock.yaml resolves uWebSockets.js from a
+# codeload tarball URL and pnpm shells out to `git ls-remote` while resolving
+# it. node:22-alpine ships no git, so `docker compose build game` FAILED
+# OUTRIGHT before #176 with
+#   ENOENT Command failed with ENOENT: git ls-remote --refs \
+#     https://github.com/uNetworking/uWebSockets.js.git
+# Measured, not theorised. Build-stage only — the runtime image below is
+# untouched and still has no git, no shell tools, nothing extra.
+RUN apk add --no-cache git
 RUN corepack enable
 WORKDIR /repo
 # Workspace manifests first for layer caching.
-COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
+# tsconfig.base.json: every app tsconfig `extends` it (see edge.Dockerfile).
+COPY pnpm-workspace.yaml package.json pnpm-lock.yaml tsconfig.base.json ./
 COPY packages/shared/package.json packages/shared/
 COPY apps/game-server/package.json apps/game-server/
 RUN pnpm install --frozen-lockfile --filter "@ggd/game-server..."

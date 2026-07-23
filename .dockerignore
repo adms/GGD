@@ -1,0 +1,67 @@
+# .dockerignore — the compose build context is the REPO ROOT, and this repo is
+# 5.8 GB. Without this file every `docker build` uploads (or, with BuildKit's
+# lazy context, is at least willing to walk) 860 MB of War3*.mpq / *.w3x source
+# archives, 338 MB of node_modules, 3.0 GB of tools/ ML model weights and a
+# 116 MB .git. BuildKit's laziness is what kept the platform image at 14.5 s
+# before this file existed — i.e. the cost was latent, one non-BuildKit build
+# away from being real. Added in #176 alongside the two Dockerfile fixes that
+# made `docker compose build` work at all.
+#
+# WHAT MUST NOT BE ADDED HERE, and why each one is load-bearing:
+#   tsconfig.base.json  every app tsconfig `extends` it; excluding it breaks
+#                       the client/editor/admin builds outright.
+#   pnpm-lock.yaml      --frozen-lockfile.
+#   nginx/, tools/deploy/ggd-assets.sh, docker/edge-entrypoint.d/
+#                       COPYd by edge.Dockerfile.
+# data/ IS excluded: it is a RUNTIME MOUNT, never baked. That is deliberate and
+# is the whole reason data/blizzard-overlay needs `make family-ship` — see
+# docs/family-deploy.md.
+
+# --- version control / editor ------------------------------------------------
+.git
+.gitignore
+.claude
+**/.DS_Store
+*.swp
+
+# --- installed / built artefacts ---------------------------------------------
+node_modules
+**/node_modules
+**/dist
+**/.vite
+**/.turbo
+**/coverage
+**/*.tsbuildinfo
+
+# --- Warcraft III source archives (860 MB, importer input only) ---------------
+*.mpq
+*.MPQ
+*.w3x
+*.w3u
+*.w3a
+
+# --- offline tooling: ML weights, venvs, generated output (3.0 GB) ------------
+tools/icon-gen/models
+tools/icon-gen/out
+tools/**/.venv
+tools/**/__pycache__
+tools/bgm-gen/out
+tools/tts-gen/out
+tools/lod-gen/out
+
+# --- runtime state: mounted, never baked --------------------------------------
+data
+scratchpad
+
+# --- secrets: must never enter an image layer ---------------------------------
+.env
+**/.env
+docker/.env
+deploy/helm/secrets.local.yaml
+deploy/helm/**/secrets*.yaml
+**/*.htpasswd
+
+# --- docs / reports -----------------------------------------------------------
+docs
+*.md
+!content/**/*.md

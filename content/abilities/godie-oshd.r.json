@@ -44,5 +44,6 @@
   "vfxKey": "fx.cinder-ward",
   "targetsEnemies": true,
   "radius": 4.58,
-  "schema": "ability@1"
+  "schema": "ability@1",
+  "castTimeSec": 0.7
 }

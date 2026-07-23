@@ -21,6 +21,10 @@ tools/testrunner/bin/
 /data/**
 !/data/
 !/data/.gitkeep
+# the invite-gated platform posture (.claude/launch.json `platform-invite`, #174)
+# keeps its own store so exercising the registration gate never writes into the
+# dev one. Same rule: never committed.
+/data-invite/
 
 # test / coverage
 coverage/

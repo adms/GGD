@@ -120,7 +120,8 @@
           "duration": 3
         }
       ],
-      "vfxKey": "fx.barkskin"
+      "vfxKey": "fx.barkskin",
+      "castTimeSec": 0.3
     },
     "E": {
       "id": "thorne.e",
@@ -198,7 +199,7 @@
       "range": 1,
       "radius": 4.5,
       "targetsEnemies": true,
-      "castTimeSec": 0.4,
+      "castTimeSec": 0.6,
       "effects": [
         {
           "kind": "damage",

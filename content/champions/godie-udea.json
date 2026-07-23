@@ -64,7 +64,8 @@
           "maxDistance": 11.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast"
+      "vfxKey": "fx.ember-bolt-cast",
+      "castTimeSec": 0.3
     },
     "W": {
       "id": "godie-udea.w",
@@ -110,7 +111,8 @@
         }
       ],
       "vfxKey": "fx.scorch-ring",
-      "targetsEnemies": true
+      "targetsEnemies": true,
+      "castTimeSec": 0.4
     },
     "E": {
       "id": "godie-udea.e",
@@ -162,7 +164,8 @@
         }
       ],
       "vfxKey": "fx.ember-bolt-cast",
-      "targetsEnemies": true
+      "targetsEnemies": true,
+      "castTimeSec": 0.5
     },
     "R": {
       "id": "godie-udea.r",
@@ -190,7 +193,8 @@
           "maxDistance": 8.25
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast"
+      "vfxKey": "fx.ember-bolt-cast",
+      "castTimeSec": 0.3
     }
   },
   "skillOrder": [

@@ -35,6 +35,7 @@ import {
 } from "../math/motion";
 import { FLASH_ALPHA, FLASH_MS, hitstopShiver } from "../combatFeedback";
 import { glbYawOffset } from "./glbFacing";
+import { castFollowThroughMs, castStrikeFractionFor } from "../anim/castStrike";
 
 /**
  * Yaw turn rate (per second) for visual rotation smoothing. The rendered model
@@ -124,6 +125,8 @@ export class ChampionView {
   private flashActive = false;
   /** hitstop: freeze this model's animation until this time (sim-synced). */
   private hitstopUntilMs = 0;
+  /** follow-through span of the in-flight cast (set by `beginCast`). */
+  private castTailMs = 0;
   /** true while the body is offset by the hitstop micro-shiver (needs a reset). */
   private shiverActive = false;
   private disposed = false;
@@ -295,6 +298,44 @@ export class ChampionView {
     }
   }
 
+  /**
+   * The fraction of this model's cast clip that has played at the release
+   * frame — the strike fraction the whole cast alignment is built on. Per-model
+   * (see anim/castStrike), so a rig whose clip throws early/late can be tuned
+   * without touching content/** or the sim.
+   */
+  get castStrikeFraction(): number {
+    return castStrikeFractionFor(this.modelKey);
+  }
+
+  /**
+   * CAST WIND-UP — the honest version (task: "stop the body lying").
+   *
+   * `startupMs` is the sim's authoritative wind-up: `castBegin` fires now and
+   * `CastResolveSystem` runs the effects exactly that long afterwards. The clip
+   * is planned so its RELEASE FRAME lands on that damage tick, with the
+   * anticipation before it and the follow-through after — the same treatment
+   * `attackWindup` already gives basic attacks. The state window is the whole
+   * span (startup + tail), not just the startup, so the follow-through has
+   * somewhere to play.
+   *
+   * The old call spanned the clip across `startupMs` itself, which threw the
+   * move ~(1 - f) × startup EARLY — 240 ms on a 0.6 s cast at f = 0.6.
+   */
+  beginCast(startupMs: number, nowMs: number): void {
+    const f = this.castStrikeFraction;
+    const startup = Math.max(1, startupMs);
+    this.castTailMs = castFollowThroughMs(startup, f);
+    this.anim.trigger("cast", nowMs, startup + this.castTailMs);
+    if (this.clipAnimator) {
+      this.clipAnimator.setPulseAlignment("cast", {
+        startupSec: startup / 1000,
+        strikeFraction: f,
+      });
+      this.clipAnimator.restart("cast");
+    }
+  }
+
   triggerHurt(nowMs: number): void {
     this.pulse("hurt", nowMs);
   }
@@ -333,11 +374,34 @@ export class ChampionView {
    */
   setHitstop(ms: number, nowMs: number): void {
     if (!(ms > 0)) return;
-    this.hitstopUntilMs = Math.max(this.hitstopUntilMs, nowMs + ms);
+    const prevEnd = this.hitstopUntilMs;
+    this.hitstopUntilMs = Math.max(prevEnd, nowMs + ms);
+    // A mid-cast hit freezes the CLIP (ClipAnimator.setFrozen) and the sim
+    // freezes the cast wind-up with it (CastResolveSystem skips a tick while
+    // world.hitstop > 0). The pulse WINDOW is wall-clock, though, so without
+    // this it would expire while the frozen clip still has frames to play and
+    // the body would snap to idle before the move came out. Grow it by exactly
+    // the freeze the model actually gained.
+    const gained = this.hitstopUntilMs - Math.max(prevEnd, nowMs);
+    if (gained > 0) this.anim.extendPulse("cast", gained);
   }
 
-  /** End an in-flight cast pulse early (castEnd / castInterrupt). */
+  /**
+   * The sim RESOLVED the cast (castEnd) — the damage has landed on this exact
+   * frame. Do NOT cut the clip here: the release frame is playing right now and
+   * the follow-through is what sells it. Re-anchor the tail on the real event
+   * instead of the predicted one, because hitstop/hitstun legitimately push
+   * `castEnd` past `castTimeSec`. The tail is movement-interruptible (the sim
+   * has already dropped the cast root).
+   */
+  releaseCast(nowMs: number): void {
+    this.anim.release("cast", nowMs, this.castTailMs);
+    this.castTailMs = 0;
+  }
+
+  /** The cast was BROKEN (castInterrupt: stun/knockdown/death) — cut the pose. */
   endCast(): void {
+    this.castTailMs = 0;
     this.anim.cancel("cast");
   }
 
@@ -351,6 +415,10 @@ export class ChampionView {
       if (!frozen) {
         this.clipAnimator.setLocomotionSpeed(speedUnitsPerSec); // foot-slide fix
         this.clipAnimator.play(state);
+        // release a HELD clip start (a cast clip too short to fill its window
+        // waits on its opening frame so the strike still lands on the tick).
+        // Inside the !frozen branch on purpose: hitstop must pause the hold.
+        this.clipAnimator.advance(dtMs);
       }
       // keep the team ring readable but dim it for the dead
       const dead = state === "death";
@@ -458,6 +526,18 @@ export class ChampionView {
 
   get hasGlb(): boolean {
     return this.glbRoot !== null;
+  }
+
+  /**
+   * The live clip animator, or null while the champion is still on its
+   * procedural stand-in. READ-ONLY DIAGNOSTICS: the /frame-data audition page
+   * uses it to read back the plan a real `beginCast` produced on a real .glb,
+   * so the page proves the RENDERER's timing rather than re-deriving it.
+   * Nothing in the game should drive animation through this — go through
+   * `pulse`/`beginCast`/`update`.
+   */
+  get animator(): ClipAnimator | null {
+    return this.clipAnimator;
   }
 
   /**

@@ -35,6 +35,7 @@
  */
 import type { ModelDoc } from "@ggd/shared/content";
 import { BLIZZARD_LOCAL_GLB_PREFIX } from "./glbFacing";
+import { fullAssetsEnabled } from "../../config/fullAssets";
 
 /** Manifest path relative to the content mount (same doc as championVoice). */
 export const BLIZZARD_OVERLAY_MANIFEST_PATH = "assets/blizzard-local/MANIFEST.json";
@@ -144,14 +145,18 @@ export function overlayModelDoc(unit: BlizzardOverlayUnit): ModelDoc {
   };
 }
 
-/** Vite dev flag, guarded so plain node (vitest) never throws. */
-function isDevBuild(): boolean {
-  try {
-    return Boolean((import.meta as unknown as { env?: { DEV?: boolean } }).env?.DEV);
-  } catch {
-    return false;
-  }
-}
+/**
+ * Is this bundle allowed to look for the overlay at all?
+ *
+ * WAS `import.meta.env.DEV` — which constant-folds to `false` in every
+ * `vite build` output, so a deployed client never issued the manifest request
+ * no matter how many bytes were mounted behind nginx. #176 replaced it with an
+ * explicit build flag that still DEFAULTS to `import.meta.env.DEV`, so local
+ * development is unchanged and a family deploy can opt in with
+ * VITE_GGD_FULL_ASSETS=1. See apps/client/src/config/fullAssets.ts for why this
+ * is the layer that decides the outcome.
+ */
+const isDevBuild = fullAssetsEnabled;
 
 function defaultFetch(url: string): Promise<Response> {
   if (typeof fetch !== "function") return Promise.reject(new Error("no fetch"));

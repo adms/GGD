@@ -79,7 +79,8 @@
         }
       ],
       "vfxKey": "fx.ember-bolt-cast",
-      "targetsEnemies": true
+      "targetsEnemies": true,
+      "castTimeSec": 0.4
     },
     "W": {
       "id": "godie-uwar.w",
@@ -114,7 +115,8 @@
           "duration": 3.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast"
+      "vfxKey": "fx.ember-bolt-cast",
+      "castTimeSec": 0.3
     },
     "E": {
       "id": "godie-uwar.e",
@@ -142,7 +144,8 @@
           "maxDistance": 8.25
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast"
+      "vfxKey": "fx.ember-bolt-cast",
+      "castTimeSec": 0.3
     },
     "R": {
       "id": "godie-uwar.r",
@@ -182,7 +185,8 @@
         }
       ],
       "vfxKey": "fx.firestorm",
-      "targetsEnemies": true
+      "targetsEnemies": true,
+      "castTimeSec": 0.4
     }
   },
   "skillOrder": [

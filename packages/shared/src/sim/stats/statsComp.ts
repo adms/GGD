@@ -40,6 +40,27 @@ export interface CastState {
 }
 
 /**
+ * The caster's post-resolve COMMITMENT (後搖) — armed at the END of startup by
+ * `armRecovery`, aged by `recoveryDecaySystem`, and CANCELLED the moment the
+ * ability lands a hit on an enemy (`noteAbilityConnect`). That hit-cancel is the
+ * whole combo system: hit and you flow, whiff and you are committed.
+ *
+ * Blocks casting a new ability and starting a basic attack. Movement is only
+ * blocked when `roots` (per-ability `recoveryRoots: true`) — see the long
+ * rationale in abilities/abilityRecovery.ts.
+ */
+export interface RecoveryState {
+  slot: AbilitySlot;
+  /** which ability's recovery this is — a hit from THIS ability cancels it. */
+  abilityId: AbilityId;
+  ticksLeft: number;
+  /** armed length, so a client/HUD can draw a 0..1 progress without guessing. */
+  totalTicks: number;
+  /** caster is rooted for the recovery (default false — output lock only). */
+  roots: boolean;
+}
+
+/**
  * An in-progress basic-attack wind-up. The swing "damage point" lands when
  * `ticksLeft` reaches 0 (melee applies damage; ranged launches a projectile).
  * Interrupted by stun/death/target-loss/leaving range (LoL cancels on move).
@@ -63,4 +84,10 @@ export interface AbilitiesComp {
   cast?: CastState | null;
   /** active basic-attack wind-up; null/undefined when not winding up */
   windup?: AttackWindup | null;
+  /**
+   * Post-resolve COMMITMENT after an ability whiffed (see `RecoveryState`).
+   * null/undefined when free to act — which is also what a LANDED hit produces,
+   * because the hit cancels it.
+   */
+  recovery?: RecoveryState | null;
 }

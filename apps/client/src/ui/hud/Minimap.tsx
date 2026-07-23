@@ -60,7 +60,11 @@ import { TerrainCache, terrainKey } from "./minimapTerrain";
 import { portraitCache } from "./minimapIcons";
 
 /**
- * Redraw interval (~20 Hz, the snapshot rate). The old map redrew at 12 Hz,
+ * Redraw interval (20 Hz). DELIBERATELY NOT tied to the snapshot rate: this is
+ * a CPU budget for a canvas blit, not a data cadence. It was described as "the
+ * snapshot rate" back when both happened to be 20 Hz; the broadcast is now
+ * 30 Hz and the map still redraws at 20, which is the right call on the
+ * owner's phone. The old map redrew at 12 Hz,
  * which was fine for dots but visibly steps the camera BOX while panning —
  * that box moves continuously, unlike the entities. One blit plus a few dozen
  * shapes is cheap enough to afford the extra 8 frames a second.

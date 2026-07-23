@@ -70,6 +70,69 @@
       "port": 8080
     },
     {
+      "name": "platform-invite",
+      "runtimeExecutable": "env",
+      "runtimeArgs": [
+        "DATA_DIR=/Users/Takuro/GGD/data-invite",
+        "CONTENT_DIR=/Users/Takuro/GGD/content",
+        "REDIS_ADDR=127.0.0.1:6379",
+        "PLATFORM_ADDR=127.0.0.1:8080",
+        "JWT_SIGNING_SECRET=devsecret",
+        "PLATFORM_GAME_SHARED_SECRET=devseam",
+        "GAME_SERVER_ADDR=http://127.0.0.1:2567",
+        "PLATFORM_INTERNAL_URL=http://127.0.0.1:8080",
+        "GGD_DEPLOY_TIER=private",
+        "GGD_REQUIRE_INVITE=1",
+        "GGD_REGISTER_RATE_LIMIT=20",
+        "go",
+        "-C",
+        "apps/platform",
+        "run",
+        "./cmd/platform"
+      ],
+      "port": 8080,
+      "comment": "task #174: the FAMILY-BUILD posture of the same platform — registration requires an invite code minted in the admin console (邀請碼). The plain `platform` entry stays open because it binds loopback (see config.resolveRequireInvite); this entry is what the deploy actually runs. Its own DATA_DIR so exercising the gate never writes into the dev store. Add GGD_OWNER_BOOTSTRAP_TOKEN=1 on a real deploy to close the first-account window too."
+    },
+    {
+      "name": "redis-attack",
+      "runtimeExecutable": "redis-server",
+      "runtimeArgs": [
+        "--port",
+        "6390",
+        "--bind",
+        "127.0.0.1",
+        "--save",
+        "",
+        "--appendonly",
+        "no"
+      ],
+      "port": 6390,
+      "comment": "#174 ADVERSARIAL REVIEW ONLY. A throwaway loopback-bound Redis so an attack instance of the platform cannot collide with (or pollute) the shared dev platform's keyspace on 6379 — idx:username / bootstrap:owner are global, and the review has to race the first-account window. Never used by a real deploy."
+    },
+    {
+      "name": "platform-invite-attack",
+      "runtimeExecutable": "env",
+      "runtimeArgs": [
+        "DATA_DIR=/Users/Takuro/GGD/data-invite-attack",
+        "CONTENT_DIR=/Users/Takuro/GGD/content",
+        "REDIS_ADDR=127.0.0.1:6390",
+        "REDIS_PASSWORD=d41d8cd98f00b204e9800998ecf8427e5a1b2c3d4e5f60718293a4b5c6d7e8f9",
+        "PLATFORM_ADDR=0.0.0.0:8091",
+        "JWT_SIGNING_SECRET=a7f3c1e9d24b8065fe1a3c7b90d5e2846bb17c40aa93d5e6f80217c4d3b9e51a",
+        "PLATFORM_GAME_SHARED_SECRET=8c1d0f2ab649e3577d0c9b1e4a86f2350ed7c9b1a24f68d035ce7a19b4620fd8",
+        "GAME_SERVER_ADDR=http://127.0.0.1:2567",
+        "PLATFORM_INTERNAL_URL=http://127.0.0.1:8091",
+        "GGD_DEPLOY_TIER=private",
+        "go",
+        "-C",
+        "apps/platform",
+        "run",
+        "./cmd/platform"
+      ],
+      "port": 8091,
+      "comment": "#174 ADVERSARIAL REVIEW ONLY. Gated posture on its own port + DATA_DIR + Redis so the attack run never touches the shared dev platform another agent is using on 8080. GGD_REQUIRE_INVITE is deliberately UNSET and the bind is 0.0.0.0 — the run therefore exercises the DEFAULT derivation (non-loopback ⇒ gated), which is the posture a real deploy would land in. Rate limit is off so a throttle cannot be mistaken for the gate holding. Real (non-dev) secrets because the deployed-secret guard refuses to boot a non-loopback bind on dev defaults."
+    },
+    {
       "name": "client",
       "runtimeExecutable": "pnpm",
       "runtimeArgs": [

@@ -71,7 +71,8 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast"
+      "vfxKey": "fx.ember-bolt-cast",
+      "castTimeSec": 0.3
     },
     "W": {
       "id": "godie-etyr.w",
@@ -199,7 +200,8 @@
       ],
       "vfxKey": "fx.ember-bolt-cast",
       "targetsEnemies": true,
-      "radius": 1.5
+      "radius": 1.5,
+      "castTimeSec": 0.5
     },
     "R": {
       "id": "godie-etyr.r",

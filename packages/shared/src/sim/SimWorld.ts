@@ -33,6 +33,7 @@ import { movementSystem } from "./systems/MovementSystem";
 import { statRecomputeSystem, buffExpirySystem } from "./stats/statPipeline";
 import { commandSystem } from "./systems/CommandSystem";
 import { castResolveSystem } from "./systems/CastResolveSystem";
+import { recoveryDecaySystem } from "./systems/RecoverySystem";
 import { basicAttackSystem } from "./systems/BasicAttackSystem";
 import { projectileSystem } from "./systems/ProjectileSystem";
 import { combatResolveSystem } from "./combat/damage";
@@ -366,7 +367,12 @@ export class SimWorld {
     statRecomputeSystem(this); // 1. recompute dirty stats
     buffExpirySystem(this); //    1b. expire timed buff sources
     statusExpirySystem(this); // 2. expire statuses (slows/roots/stuns)
+    recoveryDecaySystem(this); // 2a. age the post-resolve RECOVERY commitment.
+    //                             BEFORE castResolve so nothing armed this tick
+    //                             is aged this tick -> a recovery of N ticks
+    //                             blocks exactly N (see RecoverySystem.ts).
     castResolveSystem(this); //   2b. resolve elapsing ability casts (cast time)
+    //                             — and ARM recovery at the end of startup
     commandSystem(this, intents); // 3. cast / buy / pick / rank commands
     orderSystem(this, intents); // 4. orders -> nav targets
     movementSystem(this); // 5. integrate + collide
@@ -428,6 +434,12 @@ export class SimWorld {
       mix(this.hitstop.get(id) ?? 0);
       mix(this.knockdown.get(id) ?? 0);
       mix(this.hitstun.get(id) ?? 0);
+      // Post-resolve RECOVERY (後搖) is authoritative world state — it gates
+      // casts, autos and (when `roots`) movement, so a replica that cancelled it
+      // on a hit the other did not must surface here rather than as a silent
+      // divergence three ticks later. 0 when free, which is the overwhelmingly
+      // common case, so a pre-feature world hashes identically.
+      mix(this.abilities.get(id)?.recovery?.ticksLeft ?? 0);
     }
     // match scoreboard is authoritative world state — a desync here (a counter
     // that fired on one run but not the other) surfaces as a digest mismatch.

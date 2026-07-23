@@ -86,6 +86,8 @@ export function TextInput(props: {
   type?: string;
   onEnter?: () => void;
   autoFocus?: boolean;
+  /** Renders read-only and visually dimmed (e.g. a knob whose range admits one value). */
+  disabled?: boolean;
   style?: React.CSSProperties;
 }): React.JSX.Element {
   return (
@@ -94,6 +96,7 @@ export function TextInput(props: {
       type={props.type ?? "text"}
       placeholder={props.placeholder}
       autoFocus={props.autoFocus}
+      disabled={props.disabled}
       onChange={(e) => props.onChange(e.target.value)}
       onKeyDown={(e) => {
         if (e.key === "Enter") props.onEnter?.();
@@ -102,8 +105,9 @@ export function TextInput(props: {
         padding: "8px 10px",
         borderRadius: 8,
         border: "1px solid #2c3448",
-        background: "#10141f",
+        background: props.disabled ? "#0b0e16" : "#10141f",
         color: TEXT_MAIN,
+        opacity: props.disabled ? 0.55 : 1,
         fontSize: 13,
         outline: "none",
         width: "100%",

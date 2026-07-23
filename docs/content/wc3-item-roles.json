@@ -1,0 +1,2933 @@
+{
+  "generated_by": "tools/w3x-import/extract_item_roles.py",
+  "source_map": "src_gogodieEX227s.w3x",
+  "source_script": "tools/w3x-import/out/GoDieEX22s-src/raw/war3map.j",
+  "cheat_triggers_excluded": [
+    "Trig_GoldWoodUp",
+    "Trig_d8246505_2",
+    "Trig_testMoriya"
+  ],
+  "counts": {
+    "recipes": 70,
+    "component": 116,
+    "final": 34,
+    "none": 74,
+    "quest": 13,
+    "token": 8
+  },
+  "recipes": [
+    {
+      "trigger": "Trig_Blood_Wave",
+      "product": "godie-i04r",
+      "productName": "I04R",
+      "components": [
+        "godie-rump"
+      ],
+      "componentNames": [
+        "rump"
+      ]
+    },
+    {
+      "trigger": "Trig_First_Greed",
+      "product": "godie-i04s",
+      "productName": "I04S",
+      "components": [
+        "godie-thle"
+      ],
+      "componentNames": [
+        "龍之血"
+      ]
+    },
+    {
+      "trigger": "Trig_FourSoul",
+      "product": "godie-i00z",
+      "productName": "四魂之玉",
+      "components": [
+        "godie-i00w",
+        "godie-i00y",
+        "godie-i00x",
+        "godie-i00v"
+      ],
+      "componentNames": [
+        "四魂之玉的碎片-和魂",
+        "四魂之玉的碎片-奇魂",
+        "四魂之玉的碎片-幸魂",
+        "四魂之玉的碎片-荒魂"
+      ]
+    },
+    {
+      "trigger": "Trig_Item1100",
+      "product": "godie-i013",
+      "productName": "八取武士刀",
+      "components": [
+        "godie-i06c",
+        "godie-i01z"
+      ],
+      "componentNames": [
+        "恐龍之斧",
+        "八取武士刀製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item1101",
+      "product": "godie-i06s",
+      "productName": "龍騎士之劍",
+      "components": [
+        "godie-i06p",
+        "godie-i002",
+        "godie-i022"
+      ],
+      "componentNames": [
+        "I06P",
+        "武聖手鐲",
+        "龍騎士之劍製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item1102",
+      "product": "godie-i020",
+      "productName": "瑪那魔杖",
+      "components": [
+        "godie-i010",
+        "godie-i05s",
+        "godie-i015"
+      ],
+      "componentNames": [
+        "熱戀魔杖",
+        "嚇人假面",
+        "瑪那魔杖製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item1103",
+      "product": "godie-i02x",
+      "productName": "斬岩刃",
+      "components": [
+        "godie-i06c",
+        "godie-i06k",
+        "godie-i02y"
+      ],
+      "componentNames": [
+        "恐龍之斧",
+        "奧理哈魯根劍身",
+        "斬岩刃製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item1104",
+      "product": "godie-i014",
+      "productName": "天叢雲劍",
+      "components": [
+        "godie-i005",
+        "godie-i06k",
+        "godie-i021"
+      ],
+      "componentNames": [
+        "初心者寶石",
+        "奧理哈魯根劍身",
+        "天叢雲劍製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item1105",
+      "product": "godie-i012",
+      "productName": "熾天使之弓",
+      "components": [
+        "godie-i06p",
+        "godie-i06k",
+        "godie-i01y"
+      ],
+      "componentNames": [
+        "I06P",
+        "奧理哈魯根劍身",
+        "熾天使之弓製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item1106",
+      "product": "godie-i00u",
+      "productName": "名刀-天狼",
+      "components": [
+        "godie-i06k",
+        "godie-i05v",
+        "godie-i011"
+      ],
+      "componentNames": [
+        "奧理哈魯根劍身",
+        "破壞王手套",
+        "名刀-天狼製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item1108",
+      "product": "godie-i00n",
+      "productName": "分手之鎚",
+      "components": [
+        "godie-i066",
+        "godie-i06k",
+        "godie-i009"
+      ],
+      "componentNames": [
+        "復仇之玉",
+        "奧理哈魯根劍身",
+        "分手之鎚製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item1109",
+      "product": "godie-i01g",
+      "productName": "貫雷槍",
+      "components": [
+        "godie-i06c",
+        "godie-i06p",
+        "godie-i01h"
+      ],
+      "componentNames": [
+        "恐龍之斧",
+        "I06P",
+        "貫雷槍製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item1110",
+      "product": "godie-i04b",
+      "productName": "冰晶虎魄",
+      "components": [
+        "godie-i06c",
+        "godie-i010",
+        "godie-i04c"
+      ],
+      "componentNames": [
+        "恐龍之斧",
+        "熱戀魔杖",
+        "冰晶虎魄製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item1111",
+      "product": "godie-i00q",
+      "productName": "伊娃之盾",
+      "components": [
+        "godie-i01u",
+        "godie-i05s",
+        "godie-i065",
+        "godie-i00m"
+      ],
+      "componentNames": [
+        "伊娃之盾製作書",
+        "嚇人假面",
+        "I065",
+        "米索莉護板"
+      ]
+    },
+    {
+      "trigger": "Trig_Item1200",
+      "product": "godie-i039",
+      "productName": "幻之匕首",
+      "components": [
+        "godie-i03a",
+        "godie-i01f"
+      ],
+      "componentNames": [
+        "幻之匕首製作書",
+        "和道一文字"
+      ]
+    },
+    {
+      "trigger": "Trig_Item1201",
+      "product": "godie-i06d",
+      "productName": "斬龍刀",
+      "components": [
+        "godie-i06s",
+        "godie-i029"
+      ],
+      "componentNames": [
+        "龍騎士之劍",
+        "斬龍刀製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item1202",
+      "product": "godie-i006",
+      "productName": "雅典娜的驚嘆號",
+      "components": [
+        "godie-i020",
+        "godie-i026"
+      ],
+      "componentNames": [
+        "瑪那魔杖",
+        "雅典娜的驚嘆號製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item1203",
+      "product": "godie-i03c",
+      "productName": "雅典娜的驚嘆號．改",
+      "components": [
+        "godie-i006",
+        "godie-i026"
+      ],
+      "componentNames": [
+        "雅典娜的驚嘆號",
+        "雅典娜的驚嘆號製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item1204",
+      "product": "godie-i03b",
+      "productName": "真．雅典娜的驚嘆號",
+      "components": [
+        "godie-i03c",
+        "godie-i026"
+      ],
+      "componentNames": [
+        "雅典娜的驚嘆號．改",
+        "雅典娜的驚嘆號製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item1205",
+      "product": "godie-i027",
+      "productName": "光魔杖",
+      "components": [
+        "godie-i020",
+        "godie-i01q"
+      ],
+      "componentNames": [
+        "瑪那魔杖",
+        "光魔杖製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item1206",
+      "product": "godie-i00f",
+      "productName": "霸王槍",
+      "components": [
+        "godie-i019",
+        "godie-i02x"
+      ],
+      "componentNames": [
+        "霸王槍製作書",
+        "斬岩刃"
+      ]
+    },
+    {
+      "trigger": "Trig_Item1207",
+      "product": "godie-i06i",
+      "productName": "炎神弩",
+      "components": [
+        "godie-i02a",
+        "godie-i012"
+      ],
+      "componentNames": [
+        "炎神弩製作書",
+        "熾天使之弓"
+      ]
+    },
+    {
+      "trigger": "Trig_Item1208",
+      "product": "godie-i05h",
+      "productName": "失心匕首",
+      "components": [
+        "godie-i00u",
+        "godie-i00b"
+      ],
+      "componentNames": [
+        "名刀-天狼",
+        "失心匕首製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item1210",
+      "product": "godie-i040",
+      "productName": "破甲槍",
+      "components": [
+        "godie-i00n",
+        "godie-i03x"
+      ],
+      "componentNames": [
+        "分手之鎚",
+        "破甲槍製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item1211",
+      "product": "godie-i018",
+      "productName": "朗基努斯之槍",
+      "components": [
+        "godie-i01g",
+        "godie-i024"
+      ],
+      "componentNames": [
+        "貫雷槍",
+        "朗基努斯之槍製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item1212",
+      "product": "godie-i04d",
+      "productName": "冰晶虎魄 - 改",
+      "components": [
+        "godie-i04b",
+        "godie-i04e"
+      ],
+      "componentNames": [
+        "冰晶虎魄",
+        "冰晶虎魄 - 改製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item2100",
+      "product": "godie-i06r",
+      "productName": "一克拉鑽戒",
+      "components": [
+        "godie-i05t",
+        "godie-i065",
+        "godie-i02p",
+        "godie-i01r"
+      ],
+      "componentNames": [
+        "定情戒指",
+        "I065",
+        "網友手環",
+        "一克拉鑽戒製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item2101",
+      "product": "godie-i01m",
+      "productName": "黑核晶",
+      "components": [
+        "godie-i05s",
+        "godie-i068",
+        "godie-i02v"
+      ],
+      "componentNames": [
+        "嚇人假面",
+        "瑪那寶石",
+        "黑核晶製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item2102",
+      "product": "godie-i00k",
+      "productName": "女神之淚",
+      "components": [
+        "godie-i068",
+        "godie-i065",
+        "godie-i02p",
+        "godie-i069"
+      ],
+      "componentNames": [
+        "瑪那寶石",
+        "I065",
+        "網友手環",
+        "女神之淚製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item2103",
+      "product": "godie-i049",
+      "productName": "賢者之石",
+      "components": [
+        "godie-i005",
+        "godie-i04a"
+      ],
+      "componentNames": [
+        "初心者寶石",
+        "賢者之石製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item2104",
+      "product": "godie-i01w",
+      "productName": "祕銀鎖子甲",
+      "components": [
+        "godie-i05x",
+        "godie-i00m",
+        "godie-i017"
+      ],
+      "componentNames": [
+        "辣妹護腕",
+        "米索莉護板",
+        "祕銀鎖子甲製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item2105",
+      "product": "godie-i06b",
+      "productName": "思念的守護",
+      "components": [
+        "godie-i010",
+        "godie-i00m",
+        "godie-i01x"
+      ],
+      "componentNames": [
+        "熱戀魔杖",
+        "米索莉護板",
+        "思念的守護製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item2106",
+      "product": "godie-i00p",
+      "productName": "聖誕之靴",
+      "components": [
+        "godie-i05u",
+        "godie-i05v",
+        "godie-i01p"
+      ],
+      "componentNames": [
+        "熱舞之靴",
+        "破壞王手套",
+        "聖誕之靴製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item2107",
+      "product": "godie-i041",
+      "productName": "火閃電",
+      "components": [
+        "godie-i05u",
+        "godie-i06h",
+        "godie-i042"
+      ],
+      "componentNames": [
+        "熱舞之靴",
+        "求生護腕",
+        "火閃電製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item2108",
+      "product": "godie-i03d",
+      "productName": "光明虎徹",
+      "components": [
+        "godie-i06m",
+        "godie-i005",
+        "godie-i003",
+        "godie-i03e"
+      ],
+      "componentNames": [
+        "真知之石",
+        "初心者寶石",
+        "聖光石",
+        "光明虎徹製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item2109",
+      "product": "godie-i05o",
+      "productName": "刺針",
+      "components": [
+        "godie-i06m",
+        "godie-i005",
+        "godie-i06k",
+        "godie-i00a"
+      ],
+      "componentNames": [
+        "真知之石",
+        "初心者寶石",
+        "奧理哈魯根劍身",
+        "刺針製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item2110",
+      "product": "godie-i016",
+      "productName": "晨曦之光",
+      "components": [
+        "godie-i06m",
+        "godie-i005",
+        "godie-i05w",
+        "godie-i01t"
+      ],
+      "componentNames": [
+        "真知之石",
+        "初心者寶石",
+        "觀音菩薩護身符",
+        "晨曦之光製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item2111",
+      "product": "godie-i02r",
+      "productName": "奇蹟之墜",
+      "components": [
+        "godie-i00t",
+        "godie-i065",
+        "godie-i010",
+        "godie-i02s"
+      ],
+      "componentNames": [
+        "風之書",
+        "I065",
+        "熱戀魔杖",
+        "奇蹟之墜製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item2112",
+      "product": "godie-i01f",
+      "productName": "和道一文字",
+      "components": [
+        "godie-i06p",
+        "godie-i05v",
+        "godie-i01e"
+      ],
+      "componentNames": [
+        "I06P",
+        "破壞王手套",
+        "和道一文字製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item2201",
+      "product": "godie-i045",
+      "productName": "寂靜刃 - 詠月",
+      "components": [
+        "godie-i044",
+        "godie-i01m"
+      ],
+      "componentNames": [
+        "寂靜刃 - 詠月製作書",
+        "黑核晶"
+      ]
+    },
+    {
+      "trigger": "Trig_Item2202",
+      "product": "godie-i01j",
+      "productName": "靈魂魔石",
+      "components": [
+        "godie-i00k",
+        "godie-i02w"
+      ],
+      "componentNames": [
+        "女神之淚",
+        "靈魂魔石製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item2203",
+      "product": "godie-i06f",
+      "productName": "月神槍",
+      "components": [
+        "godie-i028",
+        "godie-i06b"
+      ],
+      "componentNames": [
+        "月神槍製作書",
+        "思念的守護"
+      ]
+    },
+    {
+      "trigger": "Trig_Item2204",
+      "product": "godie-i01o",
+      "productName": "死神裝束",
+      "components": [
+        "godie-i00p",
+        "godie-i02f"
+      ],
+      "componentNames": [
+        "聖誕之靴",
+        "死神裝束製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item3000",
+      "product": "godie-i02e",
+      "productName": "狂暴軒轅劍",
+      "components": [
+        "godie-i02c",
+        "godie-i013"
+      ],
+      "componentNames": [
+        "狂暴軒轅劍製作書",
+        "八取武士刀"
+      ]
+    },
+    {
+      "trigger": "Trig_Item3002",
+      "product": "godie-i067",
+      "productName": "惡夢魔王碎片",
+      "components": [
+        "godie-i01m",
+        "godie-i025"
+      ],
+      "componentNames": [
+        "黑核晶",
+        "惡夢魔王碎片製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item3003",
+      "product": "godie-i01v",
+      "productName": "螺旋劍",
+      "components": [
+        "godie-i014",
+        "godie-i03z"
+      ],
+      "componentNames": [
+        "天叢雲劍",
+        "螺旋劍製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item3004",
+      "product": "godie-i00i",
+      "productName": "炎龍巨弩",
+      "components": [
+        "godie-i04h",
+        "godie-i012"
+      ],
+      "componentNames": [
+        "炎龍巨弩製作書",
+        "熾天使之弓"
+      ]
+    },
+    {
+      "trigger": "Trig_Item3005",
+      "product": "godie-i00j",
+      "productName": "奇門盾甲",
+      "components": [
+        "godie-i04g",
+        "godie-i06r"
+      ],
+      "componentNames": [
+        "奇門遁甲製作書",
+        "一克拉鑽戒"
+      ]
+    },
+    {
+      "trigger": "Trig_Item3006",
+      "product": "godie-i060",
+      "productName": "死之王的意志",
+      "components": [
+        "godie-i03p",
+        "godie-i00k"
+      ],
+      "componentNames": [
+        "死之王意志的碎片",
+        "女神之淚"
+      ]
+    },
+    {
+      "trigger": "Trig_Item3007",
+      "product": "godie-i061",
+      "productName": "死之王的神盾",
+      "components": [
+        "godie-i03q",
+        "godie-i01w"
+      ],
+      "componentNames": [
+        "死之王神盾的碎片",
+        "祕銀鎖子甲"
+      ]
+    },
+    {
+      "trigger": "Trig_Item3008",
+      "product": "godie-i01d",
+      "productName": "死之王的長槍",
+      "components": [
+        "godie-i03o",
+        "godie-i01g"
+      ],
+      "componentNames": [
+        "死之王長槍的碎片",
+        "貫雷槍"
+      ]
+    },
+    {
+      "trigger": "Trig_Item3009",
+      "product": "godie-i03f",
+      "productName": "甘豆腐之袍",
+      "components": [
+        "godie-i00q",
+        "godie-i03g"
+      ],
+      "componentNames": [
+        "伊娃之盾",
+        "甘豆腐之袍製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item4000",
+      "product": "godie-i00c",
+      "productName": "風行天衣",
+      "components": [
+        "godie-i00h",
+        "godie-i00t",
+        "godie-i01b"
+      ],
+      "componentNames": [
+        "風行天衣製作書",
+        "風之書",
+        "林之書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item4001",
+      "product": "godie-i01i",
+      "productName": "雷神之鎚",
+      "components": [
+        "godie-i01l",
+        "godie-i00t",
+        "godie-i01c"
+      ],
+      "componentNames": [
+        "雷神之鎚製作書",
+        "風之書",
+        "火之書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item4002",
+      "product": "godie-i03h",
+      "productName": "天地崩裂魔杖",
+      "components": [
+        "godie-i00r",
+        "godie-i01c",
+        "godie-i03i"
+      ],
+      "componentNames": [
+        "山之書",
+        "火之書",
+        "天地崩裂魔杖製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item4003",
+      "product": "godie-i04i",
+      "productName": "厄夜鐮刀",
+      "components": [
+        "godie-i01b",
+        "godie-i01c",
+        "godie-i04k"
+      ],
+      "componentNames": [
+        "林之書",
+        "火之書",
+        "厄夜鐮刀製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item4004",
+      "product": "godie-i030",
+      "productName": "黑色魔書",
+      "components": [
+        "godie-i00r",
+        "godie-i00t",
+        "godie-i02u"
+      ],
+      "componentNames": [
+        "山之書",
+        "風之書",
+        "黑色魔書製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item4005",
+      "product": "godie-i031",
+      "productName": "天生牙",
+      "components": [
+        "godie-i01b",
+        "godie-i02q",
+        "godie-i032"
+      ],
+      "componentNames": [
+        "林之書",
+        "澤之書",
+        "天生牙製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item4006",
+      "product": "godie-i02t",
+      "productName": "盾甲天書",
+      "components": [
+        "godie-i00r",
+        "godie-i02q",
+        "godie-i02z"
+      ],
+      "componentNames": [
+        "山之書",
+        "澤之書",
+        "盾甲天書製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item4007",
+      "product": "godie-i038",
+      "productName": "嗜血邪書",
+      "components": [
+        "godie-i02q",
+        "godie-i00t",
+        "godie-i036"
+      ],
+      "componentNames": [
+        "澤之書",
+        "風之書",
+        "嗜血邪書製作書"
+      ]
+    },
+    {
+      "trigger": "Trig_Item5000",
+      "product": "godie-i01k",
+      "productName": "火焰泰坦腰帶",
+      "components": [
+        "godie-i01c",
+        "godie-i02i"
+      ],
+      "componentNames": [
+        "火之書",
+        "泰坦之魂"
+      ]
+    },
+    {
+      "trigger": "Trig_Item5001",
+      "product": "godie-i034",
+      "productName": "大地泰坦角盔",
+      "components": [
+        "godie-i00r",
+        "godie-i02i"
+      ],
+      "componentNames": [
+        "山之書",
+        "泰坦之魂"
+      ]
+    },
+    {
+      "trigger": "Trig_Item5002",
+      "product": "godie-i035",
+      "productName": "海潮泰坦護盾",
+      "components": [
+        "godie-i02q",
+        "godie-i02i"
+      ],
+      "componentNames": [
+        "澤之書",
+        "泰坦之魂"
+      ]
+    },
+    {
+      "trigger": "Trig_Item5004",
+      "product": "godie-i01s",
+      "productName": "仙后座",
+      "components": [
+        "godie-i00g",
+        "godie-i053"
+      ],
+      "componentNames": [
+        "奇美拉之翼",
+        "仙后座殘骸"
+      ]
+    },
+    {
+      "trigger": "Trig_Item5005",
+      "product": "godie-i02k",
+      "productName": "惡魔吉他",
+      "components": [
+        "godie-i05r",
+        "godie-i02m"
+      ],
+      "componentNames": [
+        "吸血石",
+        "牛蒡男"
+      ]
+    },
+    {
+      "trigger": "Trig_Item5006",
+      "product": "godie-i02h",
+      "productName": "戰旗",
+      "components": [
+        "godie-i02n",
+        "godie-i066"
+      ],
+      "componentNames": [
+        "斯巴達圓盾",
+        "復仇之玉"
+      ]
+    },
+    {
+      "trigger": "Trig_Item5007",
+      "product": "godie-i02j",
+      "productName": "復仇之袍",
+      "components": [
+        "godie-i06h",
+        "godie-i02l"
+      ],
+      "componentNames": [
+        "求生護腕",
+        "舊系服"
+      ]
+    },
+    {
+      "trigger": "Trig_Item5008",
+      "product": "godie-i05y",
+      "productName": "蜂蜜罐",
+      "components": [
+        "godie-i02o",
+        "godie-i05g"
+      ],
+      "componentNames": [
+        "空罐頭",
+        "世界樹的果實"
+      ]
+    },
+    {
+      "trigger": "Trig_juidam",
+      "product": "godie-i05d",
+      "productName": "I05D",
+      "components": [
+        "godie-i00p"
+      ],
+      "componentNames": [
+        "聖誕之靴"
+      ]
+    },
+    {
+      "trigger": "Trig_secretroom",
+      "product": "godie-i02d",
+      "productName": "消失的密室",
+      "components": [
+        "godie-i037",
+        "godie-i05u",
+        "godie-i05v"
+      ],
+      "componentNames": [
+        "隱密介紹信",
+        "熱舞之靴",
+        "破壞王手套"
+      ]
+    }
+  ],
+  "roles": {
+    "godie-i000": {
+      "name": "丈八蛇矛",
+      "w3xId": "I000",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i001": {
+      "name": "出動怨念射手兵團",
+      "w3xId": "I001",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i002": {
+      "name": "武聖手鐲",
+      "w3xId": "I002",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1101"
+    },
+    "godie-i003": {
+      "name": "聖光石",
+      "w3xId": "I003",
+      "role": "component",
+      "evidence": "consumed by Trig_Item2108"
+    },
+    "godie-i004": {
+      "name": "魔戒",
+      "w3xId": "I004",
+      "role": "quest",
+      "evidence": "Trig_ZombKing_Actions, 1-in-20 drop at the zombie-king boss site. Tooltip-tagged 任務 (全能力+12 / 永久隱身 / 死亡後掉落). THIS IS THE ITEM THAT WAS ON SALE FOR 300g — the clearest instance of the rule inverted."
+    },
+    "godie-i005": {
+      "name": "初心者寶石",
+      "w3xId": "I005",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1104, Trig_Item2103, Trig_Item2108, Trig_Item2109, Trig_Item2110"
+    },
+    "godie-i006": {
+      "name": "雅典娜的驚嘆號",
+      "w3xId": "I006",
+      "role": "component",
+      "evidence": "Trig_Item1202: consumes 瑪那魔杖 + 雅典娜的驚嘆號製作書 -> 雅典娜的驚嘆號; itself consumed by another recipe, so it is an intermediate, not a final",
+      "recipe": {
+        "components": [
+          "godie-i020"
+        ],
+        "book": "godie-i026"
+      }
+    },
+    "godie-i007": {
+      "name": "妖刀村正",
+      "w3xId": "I007",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i008": {
+      "name": "初級傳送捲軸",
+      "w3xId": "I008",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i009": {
+      "name": "分手之鎚製作書",
+      "w3xId": "I009",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1108"
+    },
+    "godie-i00a": {
+      "name": "刺針製作書",
+      "w3xId": "I00A",
+      "role": "component",
+      "evidence": "consumed by Trig_Item2109"
+    },
+    "godie-i00b": {
+      "name": "失心匕首製作書",
+      "w3xId": "I00B",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1208"
+    },
+    "godie-i00c": {
+      "name": "風行天衣",
+      "w3xId": "I00C",
+      "role": "final",
+      "evidence": "Trig_Item4000: consumes 風行天衣製作書 + 風之書 + 林之書 -> 風行天衣",
+      "recipe": {
+        "components": [
+          "godie-i00t",
+          "godie-i01b"
+        ],
+        "book": "godie-i00h"
+      }
+    },
+    "godie-i00d": {
+      "name": "出動戀愛戰士兵團",
+      "w3xId": "I00D",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i00e": {
+      "name": "出動兄貴戰士兵團",
+      "w3xId": "I00E",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i00f": {
+      "name": "霸王槍",
+      "w3xId": "I00F",
+      "role": "final",
+      "evidence": "Trig_Item1206: consumes 霸王槍製作書 + 斬岩刃 -> 霸王槍",
+      "recipe": {
+        "components": [
+          "godie-i02x"
+        ],
+        "book": "godie-i019"
+      }
+    },
+    "godie-i00g": {
+      "name": "奇美拉之翼",
+      "w3xId": "I00G",
+      "role": "component",
+      "evidence": "consumed by Trig_Item5004"
+    },
+    "godie-i00h": {
+      "name": "風行天衣製作書",
+      "w3xId": "I00H",
+      "role": "component",
+      "evidence": "consumed by Trig_Item4000"
+    },
+    "godie-i00i": {
+      "name": "炎龍巨弩",
+      "w3xId": "I00I",
+      "role": "final",
+      "evidence": "Trig_Item3004: consumes 炎龍巨弩製作書 + 熾天使之弓 -> 炎龍巨弩",
+      "recipe": {
+        "components": [
+          "godie-i012"
+        ],
+        "book": "godie-i04h"
+      }
+    },
+    "godie-i00j": {
+      "name": "奇門盾甲",
+      "w3xId": "I00J",
+      "role": "final",
+      "evidence": "Trig_Item3005: consumes 奇門遁甲製作書 + 一克拉鑽戒 -> 奇門盾甲",
+      "recipe": {
+        "components": [
+          "godie-i06r"
+        ],
+        "book": "godie-i04g"
+      }
+    },
+    "godie-i00k": {
+      "name": "女神之淚",
+      "w3xId": "I00K",
+      "role": "component",
+      "evidence": "Trig_Item2102: consumes 瑪那寶石 + I065 + 網友手環 + 女神之淚製作書 -> 女神之淚; itself consumed by another recipe, so it is an intermediate, not a final",
+      "recipe": {
+        "components": [
+          "godie-i068",
+          "godie-i065",
+          "godie-i02p"
+        ],
+        "book": "godie-i069"
+      }
+    },
+    "godie-i00l": {
+      "name": "落魂的嗜血劍",
+      "w3xId": "I00L",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i00m": {
+      "name": "米索莉護板",
+      "w3xId": "I00M",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1111, Trig_Item2104, Trig_Item2105"
+    },
+    "godie-i00n": {
+      "name": "分手之鎚",
+      "w3xId": "I00N",
+      "role": "component",
+      "evidence": "Trig_Item1108: consumes 復仇之玉 + 奧理哈魯根劍身 + 分手之鎚製作書 -> 分手之鎚; itself consumed by another recipe, so it is an intermediate, not a final",
+      "recipe": {
+        "components": [
+          "godie-i066",
+          "godie-i06k"
+        ],
+        "book": "godie-i009"
+      }
+    },
+    "godie-i00o": {
+      "name": "金雞蛋",
+      "w3xId": "I00O",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i00p": {
+      "name": "聖誕之靴",
+      "w3xId": "I00P",
+      "role": "component",
+      "evidence": "Trig_Item2106: consumes 熱舞之靴 + 破壞王手套 + 聖誕之靴製作書 -> 聖誕之靴; itself consumed by another recipe, so it is an intermediate, not a final",
+      "recipe": {
+        "components": [
+          "godie-i05u",
+          "godie-i05v"
+        ],
+        "book": "godie-i01p"
+      }
+    },
+    "godie-i00q": {
+      "name": "伊娃之盾",
+      "w3xId": "I00Q",
+      "role": "component",
+      "evidence": "Trig_Item1111: consumes 伊娃之盾製作書 + 嚇人假面 + I065 + 米索莉護板 -> 伊娃之盾; itself consumed by another recipe, so it is an intermediate, not a final",
+      "recipe": {
+        "components": [
+          "godie-i05s",
+          "godie-i065",
+          "godie-i00m"
+        ],
+        "book": "godie-i01u"
+      }
+    },
+    "godie-i00r": {
+      "name": "山之書",
+      "w3xId": "I00R",
+      "role": "component",
+      "evidence": "consumed by Trig_Item4002, Trig_Item4004, Trig_Item4006, Trig_Item5001"
+    },
+    "godie-i00s": {
+      "name": "黃金聖鬥衣",
+      "w3xId": "I00S",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i00t": {
+      "name": "風之書",
+      "w3xId": "I00T",
+      "role": "component",
+      "evidence": "consumed by Trig_Item2111, Trig_Item4000, Trig_Item4001, Trig_Item4004, Trig_Item4007"
+    },
+    "godie-i00u": {
+      "name": "名刀-天狼",
+      "w3xId": "I00U",
+      "role": "component",
+      "evidence": "Trig_Item1106: consumes 奧理哈魯根劍身 + 破壞王手套 + 名刀-天狼製作書 -> 名刀-天狼; itself consumed by another recipe, so it is an intermediate, not a final",
+      "recipe": {
+        "components": [
+          "godie-i06k",
+          "godie-i05v"
+        ],
+        "book": "godie-i011"
+      }
+    },
+    "godie-i00v": {
+      "name": "四魂之玉的碎片-荒魂",
+      "w3xId": "I00V",
+      "role": "component",
+      "evidence": "consumed by Trig_FourSoul"
+    },
+    "godie-i00w": {
+      "name": "四魂之玉的碎片-和魂",
+      "w3xId": "I00W",
+      "role": "component",
+      "evidence": "consumed by Trig_FourSoul"
+    },
+    "godie-i00x": {
+      "name": "四魂之玉的碎片-幸魂",
+      "w3xId": "I00X",
+      "role": "component",
+      "evidence": "consumed by Trig_FourSoul"
+    },
+    "godie-i00y": {
+      "name": "四魂之玉的碎片-奇魂",
+      "w3xId": "I00Y",
+      "role": "component",
+      "evidence": "consumed by Trig_FourSoul"
+    },
+    "godie-i00z": {
+      "name": "四魂之玉",
+      "w3xId": "I00Z",
+      "role": "quest",
+      "evidence": "Trig_FourSoul assembles it from the four shards, which are themselves quest drops (Trig_Hidden_Treasure + a 100% boss drop). The assembled jewel is the quest final; the four shards stay OUT as components.",
+      "recipe": {
+        "components": [
+          "godie-i00w",
+          "godie-i00y",
+          "godie-i00x",
+          "godie-i00v"
+        ]
+      }
+    },
+    "godie-i010": {
+      "name": "熱戀魔杖",
+      "w3xId": "I010",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1102, Trig_Item1110, Trig_Item2105, Trig_Item2111"
+    },
+    "godie-i011": {
+      "name": "名刀-天狼製作書",
+      "w3xId": "I011",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1106"
+    },
+    "godie-i012": {
+      "name": "熾天使之弓",
+      "w3xId": "I012",
+      "role": "component",
+      "evidence": "Trig_Item1105: consumes I06P + 奧理哈魯根劍身 + 熾天使之弓製作書 -> 熾天使之弓; itself consumed by another recipe, so it is an intermediate, not a final",
+      "recipe": {
+        "components": [
+          "godie-i06p",
+          "godie-i06k"
+        ],
+        "book": "godie-i01y"
+      }
+    },
+    "godie-i013": {
+      "name": "八取武士刀",
+      "w3xId": "I013",
+      "role": "component",
+      "evidence": "Trig_Item1100: consumes 恐龍之斧 + 八取武士刀製作書 -> 八取武士刀; itself consumed by another recipe, so it is an intermediate, not a final",
+      "recipe": {
+        "components": [
+          "godie-i06c"
+        ],
+        "book": "godie-i01z"
+      }
+    },
+    "godie-i014": {
+      "name": "天叢雲劍",
+      "w3xId": "I014",
+      "role": "component",
+      "evidence": "Trig_Item1104: consumes 初心者寶石 + 奧理哈魯根劍身 + 天叢雲劍製作書 -> 天叢雲劍; itself consumed by another recipe, so it is an intermediate, not a final",
+      "recipe": {
+        "components": [
+          "godie-i005",
+          "godie-i06k"
+        ],
+        "book": "godie-i021"
+      }
+    },
+    "godie-i015": {
+      "name": "瑪那魔杖製作書",
+      "w3xId": "I015",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1102"
+    },
+    "godie-i016": {
+      "name": "晨曦之光",
+      "w3xId": "I016",
+      "role": "final",
+      "evidence": "Trig_Item2110: consumes 真知之石 + 初心者寶石 + 觀音菩薩護身符 + 晨曦之光製作書 -> 晨曦之光",
+      "recipe": {
+        "components": [
+          "godie-i06m",
+          "godie-i005",
+          "godie-i05w"
+        ],
+        "book": "godie-i01t"
+      }
+    },
+    "godie-i017": {
+      "name": "祕銀鎖子甲製作書",
+      "w3xId": "I017",
+      "role": "component",
+      "evidence": "consumed by Trig_Item2104"
+    },
+    "godie-i018": {
+      "name": "朗基努斯之槍",
+      "w3xId": "I018",
+      "role": "final",
+      "evidence": "Trig_Item1211: consumes 貫雷槍 + 朗基努斯之槍製作書 -> 朗基努斯之槍",
+      "recipe": {
+        "components": [
+          "godie-i01g"
+        ],
+        "book": "godie-i024"
+      }
+    },
+    "godie-i019": {
+      "name": "霸王槍製作書",
+      "w3xId": "I019",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1206"
+    },
+    "godie-i01a": {
+      "name": "好像有毒的生肉",
+      "w3xId": "I01A",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i01b": {
+      "name": "林之書",
+      "w3xId": "I01B",
+      "role": "component",
+      "evidence": "consumed by Trig_Item4000, Trig_Item4003, Trig_Item4005"
+    },
+    "godie-i01c": {
+      "name": "火之書",
+      "w3xId": "I01C",
+      "role": "component",
+      "evidence": "consumed by Trig_Item4001, Trig_Item4002, Trig_Item4003, Trig_Item5000"
+    },
+    "godie-i01d": {
+      "name": "死之王的長槍",
+      "w3xId": "I01D",
+      "role": "none",
+      "evidence": "Trig_Item3008: consumes 死之王長槍的碎片 + 貫雷槍 -> 死之王的長槍",
+      "recipe": {
+        "components": [
+          "godie-i03o",
+          "godie-i01g"
+        ]
+      }
+    },
+    "godie-i01e": {
+      "name": "和道一文字製作書",
+      "w3xId": "I01E",
+      "role": "component",
+      "evidence": "consumed by Trig_Item2112"
+    },
+    "godie-i01f": {
+      "name": "和道一文字",
+      "w3xId": "I01F",
+      "role": "component",
+      "evidence": "Trig_Item2112: consumes I06P + 破壞王手套 + 和道一文字製作書 -> 和道一文字; itself consumed by another recipe, so it is an intermediate, not a final",
+      "recipe": {
+        "components": [
+          "godie-i06p",
+          "godie-i05v"
+        ],
+        "book": "godie-i01e"
+      }
+    },
+    "godie-i01g": {
+      "name": "貫雷槍",
+      "w3xId": "I01G",
+      "role": "component",
+      "evidence": "Trig_Item1109: consumes 恐龍之斧 + I06P + 貫雷槍製作書 -> 貫雷槍; itself consumed by another recipe, so it is an intermediate, not a final",
+      "recipe": {
+        "components": [
+          "godie-i06c",
+          "godie-i06p"
+        ],
+        "book": "godie-i01h"
+      }
+    },
+    "godie-i01h": {
+      "name": "貫雷槍製作書",
+      "w3xId": "I01H",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1109"
+    },
+    "godie-i01i": {
+      "name": "雷神之鎚",
+      "w3xId": "I01I",
+      "role": "final",
+      "evidence": "Trig_Item4001: consumes 雷神之鎚製作書 + 風之書 + 火之書 -> 雷神之鎚",
+      "recipe": {
+        "components": [
+          "godie-i00t",
+          "godie-i01c"
+        ],
+        "book": "godie-i01l"
+      }
+    },
+    "godie-i01j": {
+      "name": "靈魂魔石",
+      "w3xId": "I01J",
+      "role": "final",
+      "evidence": "Trig_Item2202: consumes 女神之淚 + 靈魂魔石製作書 -> 靈魂魔石",
+      "recipe": {
+        "components": [
+          "godie-i00k"
+        ],
+        "book": "godie-i02w"
+      }
+    },
+    "godie-i01k": {
+      "name": "火焰泰坦腰帶",
+      "w3xId": "I01K",
+      "role": "quest",
+      "evidence": "泰坦之魂 (I02I) + 火之書. The 兌換泰坦之魂 token enters stock from exactly one call site — Trig_TanataiDeath_Actions, right after 「完成泰坦的腰帶任務」 — so the whole Titan branch is quest-gated. No 製作書.",
+      "recipe": {
+        "components": [
+          "godie-i01c",
+          "godie-i02i"
+        ]
+      }
+    },
+    "godie-i01l": {
+      "name": "雷神之鎚製作書",
+      "w3xId": "I01L",
+      "role": "component",
+      "evidence": "consumed by Trig_Item4001"
+    },
+    "godie-i01m": {
+      "name": "黑核晶",
+      "w3xId": "I01M",
+      "role": "component",
+      "evidence": "Trig_Item2101: consumes 嚇人假面 + 瑪那寶石 + 黑核晶製作書 -> 黑核晶; itself consumed by another recipe, so it is an intermediate, not a final",
+      "recipe": {
+        "components": [
+          "godie-i05s",
+          "godie-i068"
+        ],
+        "book": "godie-i02v"
+      }
+    },
+    "godie-i01n": {
+      "name": "天堂之劍",
+      "w3xId": "I01N",
+      "role": "quest",
+      "evidence": "100% drop from the preplaced boss killed by Trig_HeavenSword, which broadcasts 「完成天堂之劍任務」. Also carries the |cffff8c00任務|r tag."
+    },
+    "godie-i01o": {
+      "name": "死神裝束",
+      "w3xId": "I01O",
+      "role": "final",
+      "evidence": "Trig_Item2204: consumes 聖誕之靴 + 死神裝束製作書 -> 死神裝束",
+      "recipe": {
+        "components": [
+          "godie-i00p"
+        ],
+        "book": "godie-i02f"
+      }
+    },
+    "godie-i01p": {
+      "name": "聖誕之靴製作書",
+      "w3xId": "I01P",
+      "role": "component",
+      "evidence": "consumed by Trig_Item2106"
+    },
+    "godie-i01q": {
+      "name": "光魔杖製作書",
+      "w3xId": "I01Q",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1205"
+    },
+    "godie-i01r": {
+      "name": "一克拉鑽戒製作書",
+      "w3xId": "I01R",
+      "role": "component",
+      "evidence": "consumed by Trig_Item2100"
+    },
+    "godie-i01s": {
+      "name": "仙后座",
+      "w3xId": "I01S",
+      "role": "quest",
+      "evidence": "The 仙后座 TRIO resolved: I051 兌換仙后座 is a shop token, I053 仙后座殘骸 is a component, and I01S is the reward. Trig_CassiopeiaWreckage requires udg_MissionScore >= 40 to turn the token into the wreckage; Trig_Item5004 then consumes wreckage + 奇美拉之翼 to grant I01S with the title 「(瞬動的)」.",
+      "recipe": {
+        "components": [
+          "godie-i00g",
+          "godie-i053"
+        ]
+      }
+    },
+    "godie-i01t": {
+      "name": "晨曦之光製作書",
+      "w3xId": "I01T",
+      "role": "component",
+      "evidence": "consumed by Trig_Item2110"
+    },
+    "godie-i01u": {
+      "name": "伊娃之盾製作書",
+      "w3xId": "I01U",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1111"
+    },
+    "godie-i01v": {
+      "name": "螺旋劍",
+      "w3xId": "I01V",
+      "role": "final",
+      "evidence": "Trig_Item3003: consumes 天叢雲劍 + 螺旋劍製作書 -> 螺旋劍",
+      "recipe": {
+        "components": [
+          "godie-i014"
+        ],
+        "book": "godie-i03z"
+      }
+    },
+    "godie-i01w": {
+      "name": "祕銀鎖子甲",
+      "w3xId": "I01W",
+      "role": "component",
+      "evidence": "Trig_Item2104: consumes 辣妹護腕 + 米索莉護板 + 祕銀鎖子甲製作書 -> 祕銀鎖子甲; itself consumed by another recipe, so it is an intermediate, not a final",
+      "recipe": {
+        "components": [
+          "godie-i05x",
+          "godie-i00m"
+        ],
+        "book": "godie-i017"
+      }
+    },
+    "godie-i01x": {
+      "name": "思念的守護製作書",
+      "w3xId": "I01X",
+      "role": "component",
+      "evidence": "consumed by Trig_Item2105"
+    },
+    "godie-i01y": {
+      "name": "熾天使之弓製作書",
+      "w3xId": "I01Y",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1105"
+    },
+    "godie-i01z": {
+      "name": "八取武士刀製作書",
+      "w3xId": "I01Z",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1100"
+    },
+    "godie-i020": {
+      "name": "瑪那魔杖",
+      "w3xId": "I020",
+      "role": "component",
+      "evidence": "Trig_Item1102: consumes 熱戀魔杖 + 嚇人假面 + 瑪那魔杖製作書 -> 瑪那魔杖; itself consumed by another recipe, so it is an intermediate, not a final",
+      "recipe": {
+        "components": [
+          "godie-i010",
+          "godie-i05s"
+        ],
+        "book": "godie-i015"
+      }
+    },
+    "godie-i021": {
+      "name": "天叢雲劍製作書",
+      "w3xId": "I021",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1104"
+    },
+    "godie-i022": {
+      "name": "龍騎士之劍製作書",
+      "w3xId": "I022",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1101"
+    },
+    "godie-i023": {
+      "name": "妖刀村正製作書",
+      "w3xId": "I023",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i024": {
+      "name": "朗基努斯之槍製作書",
+      "w3xId": "I024",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1211"
+    },
+    "godie-i025": {
+      "name": "惡夢魔王碎片製作書",
+      "w3xId": "I025",
+      "role": "component",
+      "evidence": "consumed by Trig_Item3002"
+    },
+    "godie-i026": {
+      "name": "雅典娜的驚嘆號製作書",
+      "w3xId": "I026",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1202, Trig_Item1203, Trig_Item1204"
+    },
+    "godie-i027": {
+      "name": "光魔杖",
+      "w3xId": "I027",
+      "role": "final",
+      "evidence": "Trig_Item1205: consumes 瑪那魔杖 + 光魔杖製作書 -> 光魔杖",
+      "recipe": {
+        "components": [
+          "godie-i020"
+        ],
+        "book": "godie-i01q"
+      }
+    },
+    "godie-i028": {
+      "name": "月神槍製作書",
+      "w3xId": "I028",
+      "role": "component",
+      "evidence": "consumed by Trig_Item2203"
+    },
+    "godie-i029": {
+      "name": "斬龍刀製作書",
+      "w3xId": "I029",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1201"
+    },
+    "godie-i02a": {
+      "name": "炎神弩製作書",
+      "w3xId": "I02A",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1207"
+    },
+    "godie-i02b": {
+      "name": "妖物碎殺牙製作書",
+      "w3xId": "I02B",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i02c": {
+      "name": "狂暴軒轅劍製作書",
+      "w3xId": "I02C",
+      "role": "component",
+      "evidence": "consumed by Trig_Item3000"
+    },
+    "godie-i02d": {
+      "name": "消失的密室",
+      "w3xId": "I02D",
+      "role": "none",
+      "evidence": "Trig_secretroom: consumes 隱密介紹信 + 熱舞之靴 + 破壞王手套 -> 消失的密室",
+      "recipe": {
+        "components": [
+          "godie-i037",
+          "godie-i05u",
+          "godie-i05v"
+        ]
+      }
+    },
+    "godie-i02e": {
+      "name": "狂暴軒轅劍",
+      "w3xId": "I02E",
+      "role": "final",
+      "evidence": "Trig_Item3000: consumes 狂暴軒轅劍製作書 + 八取武士刀 -> 狂暴軒轅劍",
+      "recipe": {
+        "components": [
+          "godie-i013"
+        ],
+        "book": "godie-i02c"
+      }
+    },
+    "godie-i02f": {
+      "name": "死神裝束製作書",
+      "w3xId": "I02F",
+      "role": "component",
+      "evidence": "consumed by Trig_Item2204"
+    },
+    "godie-i02g": {
+      "name": "奇美拉之翼(電腦)",
+      "w3xId": "I02G",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i02h": {
+      "name": "戰旗",
+      "w3xId": "I02H",
+      "role": "quest",
+      "evidence": "MissionScore chain: 兌換斯巴達圓盾 (I05E) -> 斯巴達圓盾 (I02N) -> + 復仇之玉 -> I02H.",
+      "recipe": {
+        "components": [
+          "godie-i02n",
+          "godie-i066"
+        ]
+      }
+    },
+    "godie-i02i": {
+      "name": "泰坦之魂",
+      "w3xId": "I02I",
+      "role": "component",
+      "evidence": "consumed by Trig_Item5000, Trig_Item5001, Trig_Item5002"
+    },
+    "godie-i02j": {
+      "name": "復仇之袍",
+      "w3xId": "I02J",
+      "role": "quest",
+      "evidence": "MissionScore chain: 兌換舊系服 (I059) -> 舊系服 (I02L) -> + 求生護腕 -> I02J.",
+      "recipe": {
+        "components": [
+          "godie-i06h",
+          "godie-i02l"
+        ]
+      }
+    },
+    "godie-i02k": {
+      "name": "惡魔吉他",
+      "w3xId": "I02K",
+      "role": "quest",
+      "evidence": "MissionScore chain: 兌換牛蒡男 (I055) -> 牛蒡男 (I02M) -> + 吸血石 -> I02K.",
+      "recipe": {
+        "components": [
+          "godie-i05r",
+          "godie-i02m"
+        ]
+      }
+    },
+    "godie-i02l": {
+      "name": "舊系服",
+      "w3xId": "I02L",
+      "role": "component",
+      "evidence": "consumed by Trig_Item5007"
+    },
+    "godie-i02m": {
+      "name": "牛蒡男",
+      "w3xId": "I02M",
+      "role": "component",
+      "evidence": "consumed by Trig_Item5005"
+    },
+    "godie-i02n": {
+      "name": "斯巴達圓盾",
+      "w3xId": "I02N",
+      "role": "component",
+      "evidence": "consumed by Trig_Item5006"
+    },
+    "godie-i02o": {
+      "name": "空罐頭",
+      "w3xId": "I02O",
+      "role": "component",
+      "evidence": "consumed by Trig_Item5008"
+    },
+    "godie-i02p": {
+      "name": "網友手環",
+      "w3xId": "I02P",
+      "role": "component",
+      "evidence": "consumed by Trig_Item2100, Trig_Item2102"
+    },
+    "godie-i02q": {
+      "name": "澤之書",
+      "w3xId": "I02Q",
+      "role": "component",
+      "evidence": "consumed by Trig_Item4005, Trig_Item4006, Trig_Item4007, Trig_Item5002"
+    },
+    "godie-i02r": {
+      "name": "奇蹟之墜",
+      "w3xId": "I02R",
+      "role": "final",
+      "evidence": "Trig_Item2111: consumes 風之書 + I065 + 熱戀魔杖 + 奇蹟之墜製作書 -> 奇蹟之墜",
+      "recipe": {
+        "components": [
+          "godie-i00t",
+          "godie-i065",
+          "godie-i010"
+        ],
+        "book": "godie-i02s"
+      }
+    },
+    "godie-i02s": {
+      "name": "奇蹟之墜製作書",
+      "w3xId": "I02S",
+      "role": "component",
+      "evidence": "consumed by Trig_Item2111"
+    },
+    "godie-i02t": {
+      "name": "盾甲天書",
+      "w3xId": "I02T",
+      "role": "final",
+      "evidence": "Trig_Item4006: consumes 山之書 + 澤之書 + 盾甲天書製作書 -> 盾甲天書",
+      "recipe": {
+        "components": [
+          "godie-i00r",
+          "godie-i02q"
+        ],
+        "book": "godie-i02z"
+      }
+    },
+    "godie-i02u": {
+      "name": "黑色魔書製作書",
+      "w3xId": "I02U",
+      "role": "component",
+      "evidence": "consumed by Trig_Item4004"
+    },
+    "godie-i02v": {
+      "name": "黑核晶製作書",
+      "w3xId": "I02V",
+      "role": "component",
+      "evidence": "consumed by Trig_Item2101"
+    },
+    "godie-i02w": {
+      "name": "靈魂魔石製作書",
+      "w3xId": "I02W",
+      "role": "component",
+      "evidence": "consumed by Trig_Item2202"
+    },
+    "godie-i02x": {
+      "name": "斬岩刃",
+      "w3xId": "I02X",
+      "role": "component",
+      "evidence": "Trig_Item1103: consumes 恐龍之斧 + 奧理哈魯根劍身 + 斬岩刃製作書 -> 斬岩刃; itself consumed by another recipe, so it is an intermediate, not a final",
+      "recipe": {
+        "components": [
+          "godie-i06c",
+          "godie-i06k"
+        ],
+        "book": "godie-i02y"
+      }
+    },
+    "godie-i02y": {
+      "name": "斬岩刃製作書",
+      "w3xId": "I02Y",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1103"
+    },
+    "godie-i02z": {
+      "name": "盾甲天書製作書",
+      "w3xId": "I02Z",
+      "role": "component",
+      "evidence": "consumed by Trig_Item4006"
+    },
+    "godie-i030": {
+      "name": "黑色魔書",
+      "w3xId": "I030",
+      "role": "final",
+      "evidence": "Trig_Item4004: consumes 山之書 + 風之書 + 黑色魔書製作書 -> 黑色魔書",
+      "recipe": {
+        "components": [
+          "godie-i00r",
+          "godie-i00t"
+        ],
+        "book": "godie-i02u"
+      }
+    },
+    "godie-i031": {
+      "name": "天生牙",
+      "w3xId": "I031",
+      "role": "final",
+      "evidence": "Trig_Item4005: consumes 林之書 + 澤之書 + 天生牙製作書 -> 天生牙",
+      "recipe": {
+        "components": [
+          "godie-i01b",
+          "godie-i02q"
+        ],
+        "book": "godie-i032"
+      }
+    },
+    "godie-i032": {
+      "name": "天生牙製作書",
+      "w3xId": "I032",
+      "role": "component",
+      "evidence": "consumed by Trig_Item4005"
+    },
+    "godie-i033": {
+      "name": "初心者護腕",
+      "w3xId": "I033",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i034": {
+      "name": "大地泰坦角盔",
+      "w3xId": "I034",
+      "role": "quest",
+      "evidence": "泰坦之魂 (I02I) + 山之書, same quest gate as 火焰泰坦腰帶. No 製作書.",
+      "recipe": {
+        "components": [
+          "godie-i00r",
+          "godie-i02i"
+        ]
+      }
+    },
+    "godie-i035": {
+      "name": "海潮泰坦護盾",
+      "w3xId": "I035",
+      "role": "quest",
+      "evidence": "泰坦之魂 (I02I) + 澤之書, same quest gate. No 製作書.",
+      "recipe": {
+        "components": [
+          "godie-i02q",
+          "godie-i02i"
+        ]
+      }
+    },
+    "godie-i036": {
+      "name": "嗜血邪書製作書",
+      "w3xId": "I036",
+      "role": "component",
+      "evidence": "consumed by Trig_Item4007"
+    },
+    "godie-i037": {
+      "name": "隱密介紹信",
+      "w3xId": "I037",
+      "role": "component",
+      "evidence": "consumed by Trig_secretroom"
+    },
+    "godie-i038": {
+      "name": "嗜血邪書",
+      "w3xId": "I038",
+      "role": "final",
+      "evidence": "Trig_Item4007: consumes 澤之書 + 風之書 + 嗜血邪書製作書 -> 嗜血邪書",
+      "recipe": {
+        "components": [
+          "godie-i02q",
+          "godie-i00t"
+        ],
+        "book": "godie-i036"
+      }
+    },
+    "godie-i039": {
+      "name": "幻之匕首",
+      "w3xId": "I039",
+      "role": "final",
+      "evidence": "Trig_Item1200: consumes 幻之匕首製作書 + 和道一文字 -> 幻之匕首",
+      "recipe": {
+        "components": [
+          "godie-i01f"
+        ],
+        "book": "godie-i03a"
+      }
+    },
+    "godie-i03a": {
+      "name": "幻之匕首製作書",
+      "w3xId": "I03A",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1200"
+    },
+    "godie-i03b": {
+      "name": "真．雅典娜的驚嘆號",
+      "w3xId": "I03B",
+      "role": "final",
+      "evidence": "Trig_Item1204: consumes 雅典娜的驚嘆號．改 + 雅典娜的驚嘆號製作書 -> 真．雅典娜的驚嘆號",
+      "recipe": {
+        "components": [
+          "godie-i03c"
+        ],
+        "book": "godie-i026"
+      }
+    },
+    "godie-i03c": {
+      "name": "雅典娜的驚嘆號．改",
+      "w3xId": "I03C",
+      "role": "component",
+      "evidence": "Trig_Item1203: consumes 雅典娜的驚嘆號 + 雅典娜的驚嘆號製作書 -> 雅典娜的驚嘆號．改; itself consumed by another recipe, so it is an intermediate, not a final",
+      "recipe": {
+        "components": [
+          "godie-i006"
+        ],
+        "book": "godie-i026"
+      }
+    },
+    "godie-i03d": {
+      "name": "光明虎徹",
+      "w3xId": "I03D",
+      "role": "final",
+      "evidence": "Trig_Item2108: consumes 真知之石 + 初心者寶石 + 聖光石 + 光明虎徹製作書 -> 光明虎徹",
+      "recipe": {
+        "components": [
+          "godie-i06m",
+          "godie-i005",
+          "godie-i003"
+        ],
+        "book": "godie-i03e"
+      }
+    },
+    "godie-i03e": {
+      "name": "光明虎徹製作書",
+      "w3xId": "I03E",
+      "role": "component",
+      "evidence": "consumed by Trig_Item2108"
+    },
+    "godie-i03f": {
+      "name": "甘豆腐之袍",
+      "w3xId": "I03F",
+      "role": "final",
+      "evidence": "Trig_Item3009: consumes 伊娃之盾 + 甘豆腐之袍製作書 -> 甘豆腐之袍",
+      "recipe": {
+        "components": [
+          "godie-i00q"
+        ],
+        "book": "godie-i03g"
+      }
+    },
+    "godie-i03g": {
+      "name": "甘豆腐之袍製作書",
+      "w3xId": "I03G",
+      "role": "component",
+      "evidence": "consumed by Trig_Item3009"
+    },
+    "godie-i03h": {
+      "name": "天地崩裂魔杖",
+      "w3xId": "I03H",
+      "role": "final",
+      "evidence": "Trig_Item4002: consumes 山之書 + 火之書 + 天地崩裂魔杖製作書 -> 天地崩裂魔杖",
+      "recipe": {
+        "components": [
+          "godie-i00r",
+          "godie-i01c"
+        ],
+        "book": "godie-i03i"
+      }
+    },
+    "godie-i03i": {
+      "name": "天地崩裂魔杖製作書",
+      "w3xId": "I03I",
+      "role": "component",
+      "evidence": "consumed by Trig_Item4002"
+    },
+    "godie-i03j": {
+      "name": "黃昏公主的血脈",
+      "w3xId": "I03J",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i03l": {
+      "name": "我愛一條柴",
+      "w3xId": "I03L",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i03m": {
+      "name": "反射之盾",
+      "w3xId": "I03M",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i03n": {
+      "name": "餅乾",
+      "w3xId": "I03N",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i03o": {
+      "name": "死之王長槍的碎片",
+      "w3xId": "I03O",
+      "role": "component",
+      "evidence": "consumed by Trig_Item3008"
+    },
+    "godie-i03p": {
+      "name": "死之王意志的碎片",
+      "w3xId": "I03P",
+      "role": "component",
+      "evidence": "consumed by Trig_Item3006"
+    },
+    "godie-i03q": {
+      "name": "死之王神盾的碎片",
+      "w3xId": "I03Q",
+      "role": "component",
+      "evidence": "consumed by Trig_Item3007"
+    },
+    "godie-i03x": {
+      "name": "破甲槍製作書",
+      "w3xId": "I03X",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1210"
+    },
+    "godie-i03z": {
+      "name": "螺旋劍製作書",
+      "w3xId": "I03Z",
+      "role": "component",
+      "evidence": "consumed by Trig_Item3003"
+    },
+    "godie-i040": {
+      "name": "破甲槍",
+      "w3xId": "I040",
+      "role": "final",
+      "evidence": "Trig_Item1210: consumes 分手之鎚 + 破甲槍製作書 -> 破甲槍",
+      "recipe": {
+        "components": [
+          "godie-i00n"
+        ],
+        "book": "godie-i03x"
+      }
+    },
+    "godie-i041": {
+      "name": "火閃電",
+      "w3xId": "I041",
+      "role": "final",
+      "evidence": "Trig_Item2107: consumes 熱舞之靴 + 求生護腕 + 火閃電製作書 -> 火閃電",
+      "recipe": {
+        "components": [
+          "godie-i05u",
+          "godie-i06h"
+        ],
+        "book": "godie-i042"
+      }
+    },
+    "godie-i042": {
+      "name": "火閃電製作書",
+      "w3xId": "I042",
+      "role": "component",
+      "evidence": "consumed by Trig_Item2107"
+    },
+    "godie-i044": {
+      "name": "寂靜刃 - 詠月製作書",
+      "w3xId": "I044",
+      "role": "component",
+      "evidence": "consumed by Trig_Item2201"
+    },
+    "godie-i045": {
+      "name": "寂靜刃 - 詠月",
+      "w3xId": "I045",
+      "role": "final",
+      "evidence": "Trig_Item2201: consumes 寂靜刃 - 詠月製作書 + 黑核晶 -> 寂靜刃 - 詠月",
+      "recipe": {
+        "components": [
+          "godie-i01m"
+        ],
+        "book": "godie-i044"
+      }
+    },
+    "godie-i049": {
+      "name": "賢者之石",
+      "w3xId": "I049",
+      "role": "final",
+      "evidence": "Trig_Item2103: consumes 初心者寶石 + 賢者之石製作書 -> 賢者之石",
+      "recipe": {
+        "components": [
+          "godie-i005"
+        ],
+        "book": "godie-i04a"
+      }
+    },
+    "godie-i04a": {
+      "name": "賢者之石製作書",
+      "w3xId": "I04A",
+      "role": "component",
+      "evidence": "consumed by Trig_Item2103"
+    },
+    "godie-i04b": {
+      "name": "冰晶虎魄",
+      "w3xId": "I04B",
+      "role": "component",
+      "evidence": "Trig_Item1110: consumes 恐龍之斧 + 熱戀魔杖 + 冰晶虎魄製作書 -> 冰晶虎魄; itself consumed by another recipe, so it is an intermediate, not a final",
+      "recipe": {
+        "components": [
+          "godie-i06c",
+          "godie-i010"
+        ],
+        "book": "godie-i04c"
+      }
+    },
+    "godie-i04c": {
+      "name": "冰晶虎魄製作書",
+      "w3xId": "I04C",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1110"
+    },
+    "godie-i04d": {
+      "name": "冰晶虎魄 - 改",
+      "w3xId": "I04D",
+      "role": "final",
+      "evidence": "Trig_Item1212: consumes 冰晶虎魄 + 冰晶虎魄 - 改製作書 -> 冰晶虎魄 - 改",
+      "recipe": {
+        "components": [
+          "godie-i04b"
+        ],
+        "book": "godie-i04e"
+      }
+    },
+    "godie-i04e": {
+      "name": "冰晶虎魄 - 改製作書",
+      "w3xId": "I04E",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1212"
+    },
+    "godie-i04g": {
+      "name": "奇門遁甲製作書",
+      "w3xId": "I04G",
+      "role": "component",
+      "evidence": "consumed by Trig_Item3005"
+    },
+    "godie-i04h": {
+      "name": "炎龍巨弩製作書",
+      "w3xId": "I04H",
+      "role": "component",
+      "evidence": "consumed by Trig_Item3004"
+    },
+    "godie-i04i": {
+      "name": "厄夜鐮刀",
+      "w3xId": "I04I",
+      "role": "final",
+      "evidence": "Trig_Item4003: consumes 林之書 + 火之書 + 厄夜鐮刀製作書 -> 厄夜鐮刀",
+      "recipe": {
+        "components": [
+          "godie-i01b",
+          "godie-i01c"
+        ],
+        "book": "godie-i04k"
+      }
+    },
+    "godie-i04j": {
+      "name": "金幣(寶箱)",
+      "w3xId": "I04J",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i04k": {
+      "name": "厄夜鐮刀製作書",
+      "w3xId": "I04K",
+      "role": "component",
+      "evidence": "consumed by Trig_Item4003"
+    },
+    "godie-i04m": {
+      "name": "殺豬刀製作書",
+      "w3xId": "I04M",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i04r": {
+      "name": "I04R",
+      "w3xId": "I04R",
+      "role": "none",
+      "evidence": "Trig_Blood_Wave: consumes rump -> I04R",
+      "recipe": {
+        "components": [
+          "godie-rump"
+        ]
+      }
+    },
+    "godie-i04s": {
+      "name": "I04S",
+      "w3xId": "I04S",
+      "role": "none",
+      "evidence": "Trig_First_Greed: consumes 龍之血 -> I04S",
+      "recipe": {
+        "components": [
+          "godie-thle"
+        ]
+      }
+    },
+    "godie-i04v": {
+      "name": "正義之杖",
+      "w3xId": "I04V",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i04y": {
+      "name": "兌換空罐頭",
+      "w3xId": "I04Y",
+      "role": "token",
+      "evidence": "exchange token (兌換空罐頭); grants a component, is not one"
+    },
+    "godie-i051": {
+      "name": "兌換仙后座",
+      "w3xId": "I051",
+      "role": "token",
+      "evidence": "exchange token (兌換仙后座); grants a component, is not one"
+    },
+    "godie-i053": {
+      "name": "仙后座殘骸",
+      "w3xId": "I053",
+      "role": "component",
+      "evidence": "consumed by Trig_Item5004"
+    },
+    "godie-i054": {
+      "name": "認領寵物",
+      "w3xId": "I054",
+      "role": "token",
+      "evidence": "exchange token (認領寵物); grants a component, is not one"
+    },
+    "godie-i055": {
+      "name": "兌換牛蒡男",
+      "w3xId": "I055",
+      "role": "token",
+      "evidence": "exchange token (兌換牛蒡男); grants a component, is not one"
+    },
+    "godie-i056": {
+      "name": "交換寵物",
+      "w3xId": "I056",
+      "role": "token",
+      "evidence": "exchange token (交換寵物); grants a component, is not one"
+    },
+    "godie-i059": {
+      "name": "兌換舊系服",
+      "w3xId": "I059",
+      "role": "token",
+      "evidence": "exchange token (兌換舊系服); grants a component, is not one"
+    },
+    "godie-i05a": {
+      "name": "兌換泰坦之魂",
+      "w3xId": "I05A",
+      "role": "token",
+      "evidence": "exchange token (兌換泰坦之魂); grants a component, is not one"
+    },
+    "godie-i05d": {
+      "name": "I05D",
+      "w3xId": "I05D",
+      "role": "none",
+      "evidence": "Trig_juidam: consumes 聖誕之靴 -> I05D",
+      "recipe": {
+        "components": [
+          "godie-i00p"
+        ]
+      }
+    },
+    "godie-i05e": {
+      "name": "兌換斯巴達圓盾",
+      "w3xId": "I05E",
+      "role": "token",
+      "evidence": "exchange token (兌換斯巴達圓盾); grants a component, is not one"
+    },
+    "godie-i05g": {
+      "name": "世界樹的果實",
+      "w3xId": "I05G",
+      "role": "component",
+      "evidence": "consumed by Trig_Item5008"
+    },
+    "godie-i05h": {
+      "name": "失心匕首",
+      "w3xId": "I05H",
+      "role": "final",
+      "evidence": "Trig_Item1208: consumes 名刀-天狼 + 失心匕首製作書 -> 失心匕首",
+      "recipe": {
+        "components": [
+          "godie-i00u"
+        ],
+        "book": "godie-i00b"
+      }
+    },
+    "godie-i05k": {
+      "name": "打我阿笨蛋卷軸",
+      "w3xId": "I05K",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i05l": {
+      "name": "力量護腕",
+      "w3xId": "I05L",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i05m": {
+      "name": "敏捷護腕",
+      "w3xId": "I05M",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i05n": {
+      "name": "智慧護腕",
+      "w3xId": "I05N",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i05o": {
+      "name": "刺針",
+      "w3xId": "I05O",
+      "role": "final",
+      "evidence": "Trig_Item2109: consumes 真知之石 + 初心者寶石 + 奧理哈魯根劍身 + 刺針製作書 -> 刺針",
+      "recipe": {
+        "components": [
+          "godie-i06m",
+          "godie-i005",
+          "godie-i06k"
+        ],
+        "book": "godie-i00a"
+      }
+    },
+    "godie-i05q": {
+      "name": "友情呼喚號角",
+      "w3xId": "I05Q",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i05r": {
+      "name": "吸血石",
+      "w3xId": "I05R",
+      "role": "component",
+      "evidence": "consumed by Trig_Item5005"
+    },
+    "godie-i05s": {
+      "name": "嚇人假面",
+      "w3xId": "I05S",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1102, Trig_Item1111, Trig_Item2101"
+    },
+    "godie-i05t": {
+      "name": "定情戒指",
+      "w3xId": "I05T",
+      "role": "component",
+      "evidence": "consumed by Trig_Item2100"
+    },
+    "godie-i05u": {
+      "name": "熱舞之靴",
+      "w3xId": "I05U",
+      "role": "component",
+      "evidence": "consumed by Trig_Item2106, Trig_Item2107, Trig_secretroom"
+    },
+    "godie-i05v": {
+      "name": "破壞王手套",
+      "w3xId": "I05V",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1106, Trig_Item2106, Trig_Item2112, Trig_secretroom"
+    },
+    "godie-i05w": {
+      "name": "觀音菩薩護身符",
+      "w3xId": "I05W",
+      "role": "component",
+      "evidence": "consumed by Trig_Item2110"
+    },
+    "godie-i05x": {
+      "name": "辣妹護腕",
+      "w3xId": "I05X",
+      "role": "component",
+      "evidence": "consumed by Trig_Item2104"
+    },
+    "godie-i05y": {
+      "name": "蜂蜜罐",
+      "w3xId": "I05Y",
+      "role": "quest",
+      "evidence": "MissionScore chain: 兌換空罐頭 (I04Y) -> 空罐頭 (I02O) -> + 世界樹的果實 -> I05Y. No 製作書 anywhere in the chain.",
+      "recipe": {
+        "components": [
+          "godie-i02o",
+          "godie-i05g"
+        ]
+      }
+    },
+    "godie-i05z": {
+      "name": "出動正義射手兵團",
+      "w3xId": "I05Z",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i060": {
+      "name": "死之王的意志",
+      "w3xId": "I060",
+      "role": "none",
+      "evidence": "Trig_Item3006: consumes 死之王意志的碎片 + 女神之淚 -> 死之王的意志",
+      "recipe": {
+        "components": [
+          "godie-i03p",
+          "godie-i00k"
+        ]
+      }
+    },
+    "godie-i061": {
+      "name": "死之王的神盾",
+      "w3xId": "I061",
+      "role": "none",
+      "evidence": "Trig_Item3007: consumes 死之王神盾的碎片 + 祕銀鎖子甲 -> 死之王的神盾",
+      "recipe": {
+        "components": [
+          "godie-i03q",
+          "godie-i01w"
+        ]
+      }
+    },
+    "godie-i062": {
+      "name": "飛鼠跳刀",
+      "w3xId": "I062",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i063": {
+      "name": "防狼電擊棒",
+      "w3xId": "I063",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i065": {
+      "name": "I065",
+      "w3xId": "I065",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1111, Trig_Item2100, Trig_Item2102, Trig_Item2111"
+    },
+    "godie-i066": {
+      "name": "復仇之玉",
+      "w3xId": "I066",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1108, Trig_Item5006"
+    },
+    "godie-i067": {
+      "name": "惡夢魔王碎片",
+      "w3xId": "I067",
+      "role": "final",
+      "evidence": "Trig_Item3002: consumes 黑核晶 + 惡夢魔王碎片製作書 -> 惡夢魔王碎片",
+      "recipe": {
+        "components": [
+          "godie-i01m"
+        ],
+        "book": "godie-i025"
+      }
+    },
+    "godie-i068": {
+      "name": "瑪那寶石",
+      "w3xId": "I068",
+      "role": "component",
+      "evidence": "consumed by Trig_Item2101, Trig_Item2102"
+    },
+    "godie-i069": {
+      "name": "女神之淚製作書",
+      "w3xId": "I069",
+      "role": "component",
+      "evidence": "consumed by Trig_Item2102"
+    },
+    "godie-i06a": {
+      "name": "妖物碎殺牙",
+      "w3xId": "I06A",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i06b": {
+      "name": "思念的守護",
+      "w3xId": "I06B",
+      "role": "component",
+      "evidence": "Trig_Item2105: consumes 熱戀魔杖 + 米索莉護板 + 思念的守護製作書 -> 思念的守護; itself consumed by another recipe, so it is an intermediate, not a final",
+      "recipe": {
+        "components": [
+          "godie-i010",
+          "godie-i00m"
+        ],
+        "book": "godie-i01x"
+      }
+    },
+    "godie-i06c": {
+      "name": "恐龍之斧",
+      "w3xId": "I06C",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1100, Trig_Item1103, Trig_Item1109, Trig_Item1110"
+    },
+    "godie-i06d": {
+      "name": "斬龍刀",
+      "w3xId": "I06D",
+      "role": "final",
+      "evidence": "Trig_Item1201: consumes 龍騎士之劍 + 斬龍刀製作書 -> 斬龍刀",
+      "recipe": {
+        "components": [
+          "godie-i06s"
+        ],
+        "book": "godie-i029"
+      }
+    },
+    "godie-i06e": {
+      "name": "月牙魔杖",
+      "w3xId": "I06E",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i06f": {
+      "name": "月神槍",
+      "w3xId": "I06F",
+      "role": "final",
+      "evidence": "Trig_Item2203: consumes 月神槍製作書 + 思念的守護 -> 月神槍",
+      "recipe": {
+        "components": [
+          "godie-i06b"
+        ],
+        "book": "godie-i028"
+      }
+    },
+    "godie-i06g": {
+      "name": "殺豬刀",
+      "w3xId": "I06G",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i06h": {
+      "name": "求生護腕",
+      "w3xId": "I06H",
+      "role": "component",
+      "evidence": "consumed by Trig_Item2107, Trig_Item5007"
+    },
+    "godie-i06i": {
+      "name": "炎神弩",
+      "w3xId": "I06I",
+      "role": "final",
+      "evidence": "Trig_Item1207: consumes 炎神弩製作書 + 熾天使之弓 -> 炎神弩",
+      "recipe": {
+        "components": [
+          "godie-i012"
+        ],
+        "book": "godie-i02a"
+      }
+    },
+    "godie-i06j": {
+      "name": "獸人船長十字鎬",
+      "w3xId": "I06J",
+      "role": "quest",
+      "evidence": "Trig_tenCow_Normal_Actions creates it immediately before 「完成獸人的船難任務」, gated on udg_TenWeaMission."
+    },
+    "godie-i06k": {
+      "name": "奧理哈魯根劍身",
+      "w3xId": "I06K",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1103, Trig_Item1104, Trig_Item1105, Trig_Item1106, Trig_Item1108, Trig_Item2109"
+    },
+    "godie-i06l": {
+      "name": "生肉",
+      "w3xId": "I06L",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i06m": {
+      "name": "真知之石",
+      "w3xId": "I06M",
+      "role": "component",
+      "evidence": "consumed by Trig_Item2108, Trig_Item2109, Trig_Item2110"
+    },
+    "godie-i06n": {
+      "name": "老衲的棒子",
+      "w3xId": "I06N",
+      "role": "quest",
+      "evidence": "Trig_EatMan_Actions grants it on handing 好像有毒的生肉 to the ogre, with 「完成食人魔戰帥任務」 + the title 「(基佬的)」."
+    },
+    "godie-i06o": {
+      "name": "血染八月",
+      "w3xId": "I06O",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i06p": {
+      "name": "I06P",
+      "w3xId": "I06P",
+      "role": "component",
+      "evidence": "consumed by Trig_Item1101, Trig_Item1105, Trig_Item1109, Trig_Item2112"
+    },
+    "godie-i06q": {
+      "name": "鍊金術之盾",
+      "w3xId": "I06Q",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-i06r": {
+      "name": "一克拉鑽戒",
+      "w3xId": "I06R",
+      "role": "component",
+      "evidence": "Trig_Item2100: consumes 定情戒指 + I065 + 網友手環 + 一克拉鑽戒製作書 -> 一克拉鑽戒; itself consumed by another recipe, so it is an intermediate, not a final",
+      "recipe": {
+        "components": [
+          "godie-i05t",
+          "godie-i065",
+          "godie-i02p"
+        ],
+        "book": "godie-i01r"
+      }
+    },
+    "godie-i06s": {
+      "name": "龍騎士之劍",
+      "w3xId": "I06S",
+      "role": "component",
+      "evidence": "Trig_Item1101: consumes I06P + 武聖手鐲 + 龍騎士之劍製作書 -> 龍騎士之劍; itself consumed by another recipe, so it is an intermediate, not a final",
+      "recipe": {
+        "components": [
+          "godie-i06p",
+          "godie-i002"
+        ],
+        "book": "godie-i022"
+      }
+    },
+    "godie-ankh": {
+      "name": "起死回生的草藥",
+      "w3xId": "ankh",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-azhr": {
+      "name": "飛鼠先生之心",
+      "w3xId": "azhr",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-bfhr": {
+      "name": "血羽之心（內建）",
+      "w3xId": "bfhr",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-cnhn": {
+      "name": "龍之眼",
+      "w3xId": "cnhn",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-fgfh": {
+      "name": "奶油犬捲軸",
+      "w3xId": "fgfh",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-gobm": {
+      "name": "地雷",
+      "w3xId": "gobm",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-hslv": {
+      "name": "狗皮藥膏",
+      "w3xId": "hslv",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-jdrn": {
+      "name": "青玉戒指（內建）",
+      "w3xId": "jdrn",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-lmbr": {
+      "name": "lmbr",
+      "w3xId": "lmbr",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-manh": {
+      "name": "manh",
+      "w3xId": "manh",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-mgtk": {
+      "name": "龍之淚",
+      "w3xId": "mgtk",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-pclr": {
+      "name": "輸跑",
+      "w3xId": "pclr",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-pghe": {
+      "name": "千士可樂",
+      "w3xId": "pghe",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-pgma": {
+      "name": "雪斃",
+      "w3xId": "pgma",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-phea": {
+      "name": "可樂隨手包",
+      "w3xId": "phea",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-pman": {
+      "name": "雪斃隨手包",
+      "w3xId": "pman",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-pres": {
+      "name": "蠻牛",
+      "w3xId": "pres",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-rhe2": {
+      "name": "rhe2",
+      "w3xId": "rhe2",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-rres": {
+      "name": "積分10點",
+      "w3xId": "rres",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-rump": {
+      "name": "rump",
+      "w3xId": "rump",
+      "role": "component",
+      "evidence": "consumed by Trig_Blood_Wave"
+    },
+    "godie-sehr": {
+      "name": "龍之心",
+      "w3xId": "sehr",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-tdex": {
+      "name": "靈敏藥丸",
+      "w3xId": "tdex",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-tdx2": {
+      "name": "靈敏藥丸+2",
+      "w3xId": "tdx2",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-texp": {
+      "name": "texp",
+      "w3xId": "texp",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-thle": {
+      "name": "龍之血",
+      "w3xId": "thle",
+      "role": "component",
+      "evidence": "consumed by Trig_First_Greed"
+    },
+    "godie-tin2": {
+      "name": "智慧藥丸+2",
+      "w3xId": "tin2",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-tint": {
+      "name": "智慧藥丸",
+      "w3xId": "tint",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-tpow": {
+      "name": "全能藥丸",
+      "w3xId": "tpow",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-tst2": {
+      "name": "力量藥丸+2",
+      "w3xId": "tst2",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-tstr": {
+      "name": "力量藥丸",
+      "w3xId": "tstr",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-vamp": {
+      "name": "純吃茶",
+      "w3xId": "vamp",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-whwd": {
+      "name": "歐噴醬娃娃",
+      "w3xId": "whwd",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-will": {
+      "name": "will",
+      "w3xId": "will",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    },
+    "godie-wswd": {
+      "name": "針孔攝影機",
+      "w3xId": "wswd",
+      "role": "none",
+      "evidence": "referenced by no recipe, shop or quest trigger"
+    }
+  }
+}

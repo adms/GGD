@@ -30,5 +30,6 @@
       "duration": 8.0
     }
   ],
-  "vfxKey": "fx.ember-bolt-cast"
+  "vfxKey": "fx.ember-bolt-cast",
+  "castTimeSec": 0.3
 }

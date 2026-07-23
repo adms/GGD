@@ -722,7 +722,7 @@ export class GameApp {
 
   // ------------------------------------------------------------- network --
 
-  /** Runs on every schema patch (~20 Hz): feed clocks/buffers/HUD store. */
+  /** Runs on every schema patch (SNAPSHOT_HZ): feed clocks/buffers/HUD store. */
   private onStatePatch(state: MatchState): void {
     // reflection-based state may not be materialized before the first patch
     if (!state?.seats || !state.entities) return;

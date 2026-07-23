@@ -43,5 +43,6 @@
       "moveSpeedMult": 0.6
     }
   ],
-  "vfxKey": "fx.bramble-burst"
+  "vfxKey": "fx.bramble-burst",
+  "castTimeSec": 0.6
 }

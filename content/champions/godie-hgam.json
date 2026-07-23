@@ -74,7 +74,8 @@
       ],
       "vfxKey": "fx.ember-bolt-cast",
       "targetsEnemies": true,
-      "radius": 4.12
+      "radius": 4.12,
+      "castTimeSec": 0.5
     },
     "W": {
       "id": "godie-hgam.w",
@@ -106,7 +107,8 @@
       ],
       "vfxKey": "fx.ember-bolt-cast",
       "targetsEnemies": true,
-      "radius": 6.0
+      "radius": 6.0,
+      "castTimeSec": 0.5
     },
     "E": {
       "id": "godie-hgam.e",
@@ -149,7 +151,8 @@
         }
       ],
       "vfxKey": "fx.root-snare",
-      "targetsEnemies": true
+      "targetsEnemies": true,
+      "castTimeSec": 0.5
     },
     "R": {
       "id": "godie-hgam.r",
@@ -188,7 +191,8 @@
           ]
         }
       ],
-      "vfxKey": "fx.cinder-ward"
+      "vfxKey": "fx.cinder-ward",
+      "castTimeSec": 0.4
     }
   },
   "skillOrder": [

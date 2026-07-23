@@ -47,6 +47,15 @@ export function AuthScreen(): React.JSX.Element {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  /**
+   * 邀請碼 — the private-deploy gate (task #174). It is NOT validated here on
+   * purpose: the CLIENT CANNOT KNOW whether this platform is gated (a dev
+   * platform is not, and the gate is deliberately not advertised by an
+   * endpoint — that would be a probe surface). So the field is always offered,
+   * never blocks submit, and the server's 403 is what the player sees. The
+   * gate is the server; this box is UX.
+   */
+  const [inviteCode, setInviteCode] = useState("");
   const [offlineMap, setOfflineMap] = useState(DEFAULT_MAP_ID);
   const [fieldErrors, setFieldErrors] = useState<RegisterErrors>({});
   const authBusy = useApp((s) => s.authBusy);
@@ -70,6 +79,7 @@ export function AuthScreen(): React.JSX.Element {
   const unameSparkRef = useRef<HTMLSpanElement | null>(null);
   const emailSparkRef = useRef<HTMLSpanElement | null>(null);
   const pwSparkRef = useRef<HTMLSpanElement | null>(null);
+  const inviteSparkRef = useRef<HTMLSpanElement | null>(null);
   // guards a single in-flight enter transition (double-submit / double-click safe)
   const enteringRef = useRef(false);
   // Rolling spacing state for the serene theme's dragon gate (#88). A ref, not
@@ -274,7 +284,7 @@ export function AuthScreen(): React.JSX.Element {
       const errs = validateRegistration(username, email, password);
       setFieldErrors(errs);
       if (Object.keys(errs).length > 0) return;
-      runEnterAuth(() => doRegister(username.trim(), email.trim(), password));
+      runEnterAuth(() => doRegister(username.trim(), email.trim(), password, inviteCode.trim()));
     } else {
       const errs: RegisterErrors = {};
       const u = validateUsername(username.trim());
@@ -451,6 +461,26 @@ export function AuthScreen(): React.JSX.Element {
                 {!reducedMotion && <span ref={emailSparkRef} aria-hidden className="ggd-key-spark" />}
               </div>
               <FieldError text={fieldErrors.email} />
+            </div>
+          )}
+          {mode === "register" && (
+            <div onMouseEnter={playHover}>
+              <div style={{ position: "relative" }}>
+                <TextInput
+                  value={inviteCode}
+                  // uppercase as you type — the codes are minted uppercase, and
+                  // seeing them line up is how you catch a mistyped character.
+                  // Cosmetic only: the server normalises case, spaces and
+                  // hyphens itself.
+                  onChange={onType((v) => setInviteCode(v.toUpperCase()), inviteSparkRef)}
+                  placeholder="邀請碼 invite code (GGD-XXXX-XXXX)"
+                  onEnter={submit}
+                />
+                {!reducedMotion && <span ref={inviteSparkRef} aria-hidden className="ggd-key-spark" />}
+              </div>
+              <div style={{ fontSize: 11, color: TEXT_DIM, marginTop: 4, lineHeight: 1.5 }}>
+                內測期間需要邀請碼才能註冊，請向管理員索取。
+              </div>
             </div>
           )}
           <div onMouseEnter={playHover}>

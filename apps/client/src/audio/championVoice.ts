@@ -22,6 +22,7 @@
  */
 import { AUDIO_CONTENT_BASE, audioSystem, type SfxPlayOptions } from "./AudioSystem";
 import type { Rng } from "./audioSelect";
+import { fullAssetsEnabled } from "../config/fullAssets";
 
 /** Path of the authored voice config, relative to the content mount. */
 export const CHAMPION_VOICES_PATH = "config/champion-voices.json";
@@ -135,14 +136,16 @@ export interface VoiceAudioPort {
   playClip(path: string, opts?: SfxPlayOptions): boolean;
 }
 
-/** Vite dev flag, guarded so plain node (vitest) never throws. */
-function isDevBuild(): boolean {
-  try {
-    return Boolean((import.meta as unknown as { env?: { DEV?: boolean } }).env?.DEV);
-  } catch {
-    return false;
-  }
-}
+/**
+ * Is this bundle allowed to fall back to the local-only Blizzard soundsets?
+ *
+ * WAS `import.meta.env.DEV`. 97 of 113 champions have NO authored select quip
+ * (champion-voices.json `source: "none"`) and depend entirely on this fallback,
+ * so in a deployed bundle clicking your hero did nothing at all — silently, for
+ * 86% of the roster. #176 replaced the flag with an explicit build switch that
+ * still defaults to `import.meta.env.DEV`. See apps/client/src/config/fullAssets.ts.
+ */
+const isDevBuild = fullAssetsEnabled;
 
 function defaultFetch(url: string): Promise<Response> {
   if (typeof fetch !== "function") return Promise.reject(new Error("no fetch"));

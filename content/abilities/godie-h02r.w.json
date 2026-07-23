@@ -29,5 +29,6 @@
   "vfxKey": "fx.prim.nature.swarm",
   "targetsEnemies": true,
   "radius": 6.0,
-  "schema": "ability@1"
+  "schema": "ability@1",
+  "castTimeSec": 0.5
 }

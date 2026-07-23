@@ -2,7 +2,7 @@
  * audio/countdownCue — PURE decision for the "last 5 seconds" countdown that
  * plays at the end of a TIMED PREP PHASE. The HUD store already publishes a
  * whole-second, change-guarded `phaseSecondsLeft` (RoomStore derives it from
- * `phaseTicksLeft`), but it is republished at snapshot rate (~20 Hz) and React
+ * `phaseTicksLeft`), but it is republished at snapshot rate (SNAPSHOT_HZ) and React
  * re-renders whenever ANY selected field changes — so "seconds left is 3" is
  * seen many times per second. This module owns the once-per-second guard so the
  * AudioDirector can stay a two-line imperative shell (like sfxEdges / footsteps).
@@ -22,7 +22,7 @@
  *    normalised to -3 dBFS on disk (content/assets/audio/sfx/fx/MANIFEST.json).
  *  - a cue fires only when the clock has STRICTLY DESCENDED past the last
  *    second we fired for. That single rule kills every double-fire source at
- *    once: React re-renders, 20 Hz snapshot repeats, and timer jitter that
+ *    once: React re-renders, snapshot-rate repeats, and timer jitter that
  *    bounces 3 → 4 → 3. It also makes the volume sequence monotonically
  *    increasing by construction.
  *  - the guard REARMS whenever the countdown is not running — a phase outside

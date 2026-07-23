@@ -69,14 +69,45 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
     expect(StatusEffects.ids().sort()).toEqual(["burnstun", "root", "slow25", "slow30", "slow40"]);
   });
 
-  it("the JSON round-trip reproduces the TS literals exactly", () => {
+  /**
+   * `castTimeSec` is the ONE field where content/ and the TS skeleton are
+   * ALLOWED to disagree, so it is stripped before the structural comparison.
+   *
+   * Why they diverge: the owner's telegraph rule assigns every ability a cast
+   * time derived from `castTimeFormula.ts` (damage / CC / AoE / slot, clipped
+   * by the ability's own cooldown and effect duration), and that pass rewrites
+   * content/ only — `sim/content/skeleton.ts` is a hand-written fixture whose
+   * job is to prove the loader, not to carry balance data. Pinned explicitly
+   * below so the divergence stays deliberate rather than becoming drift.
+   */
+  const stripCastTime = (v: unknown): Record<string, unknown> =>
+    JSON.parse(
+      JSON.stringify(v, (k, val: unknown) => (k === "castTimeSec" ? undefined : val)),
+    ) as Record<string, unknown>;
+
+  it("the JSON round-trip reproduces the TS literals exactly (bar castTimeSec)", () => {
     // registered defs came from JSON; they must match the sim's literals
-    expect(Champions.get(SELA.id)).toMatchObject(JSON.parse(JSON.stringify(SELA)));
-    expect(Champions.get(THORNE.id)).toMatchObject(JSON.parse(JSON.stringify(THORNE)));
-    expect(Abilities.get(SELA.abilities.Q.id)).toMatchObject(
-      JSON.parse(JSON.stringify(SELA.abilities.Q)),
+    expect(stripCastTime(Champions.get(SELA.id))).toMatchObject(stripCastTime(SELA));
+    expect(stripCastTime(Champions.get(THORNE.id))).toMatchObject(stripCastTime(THORNE));
+    expect(stripCastTime(Abilities.get(SELA.abilities.Q.id))).toMatchObject(
+      stripCastTime(SELA.abilities.Q),
     );
     expect(Arenas.get(SKELETON_ARENA.id)).toMatchObject(JSON.parse(JSON.stringify(SKELETON_ARENA)));
+  });
+
+  it("castTimeSec is the one authorised divergence: content follows the tiered rule", () => {
+    // sela.q Ember Bolt: 4 s cooldown -> 1 s after the x0.25 multiplier, so the
+    // cooldown ceiling puts it below the 0.3 s floor and it stays INSTANT.
+    expect(Abilities.get(SELA.abilities.Q.id).castTimeSec).toBeUndefined();
+    // sela.r Firestorm: 450 dmg + a 0.75 s stun + radius 5 -> 0.7 s, clipped by
+    // its own stun duration. thorne.r -> 0.6 s. Both were re-derived, NOT the
+    // superseded "authored value + 0.3".
+    expect(Abilities.get(SELA.abilities.R.id).castTimeSec).toBeCloseTo(0.7, 6);
+    expect(Abilities.get(THORNE.abilities.R.id).castTimeSec).toBeCloseTo(0.6, 6);
+    // …while the TS skeleton still carries the original hand-written values.
+    expect(SELA.abilities.Q.castTimeSec).toBeUndefined();
+    expect(SELA.abilities.R.castTimeSec).toBe(0.5);
+    expect(THORNE.abilities.R.castTimeSec).toBe(0.4);
   });
 
   it("has zero hard-ref errors and reports soft warnings explicitly", () => {

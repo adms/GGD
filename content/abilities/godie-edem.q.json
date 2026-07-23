@@ -38,5 +38,6 @@
   "vfxKey": "fx.prim.fire.explosion",
   "schema": "ability@1",
   "radius": 6.05,
-  "targetsEnemies": true
+  "targetsEnemies": true,
+  "castTimeSec": 0.6
 }

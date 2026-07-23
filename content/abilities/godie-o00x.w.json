@@ -27,5 +27,6 @@
     }
   ],
   "vfxKey": "fx.prim.ki.pulse-sm",
-  "schema": "ability@1"
+  "schema": "ability@1",
+  "castTimeSec": 0.3
 }

@@ -7,6 +7,7 @@ import (
 	"crypto/rand"
 	"encoding/hex"
 	"errors"
+	"log/slog"
 	"net/http"
 	"regexp"
 	"strings"
@@ -58,7 +59,29 @@ type Service struct {
 	// it (an established deploy, or a bare service in a unit test). See
 	// bootstrap.go.
 	ownerBootstrap OwnerBootstrap
+
+	// invites is the registration invite-code gate (#174). nil means the gate
+	// is OFF — the dev/CI default and what every existing test sees. When it is
+	// set, a registration that is not the first-owner claim must burn a valid
+	// code (see Register). Injected as an interface because internal/invite
+	// imports internal/admin which imports this package: auth can never import
+	// invite, so the composition root hands it in (SetInviteGate), exactly like
+	// SetAuditor / SetOwnerBootstrap.
+	invites InviteGate
 }
+
+// InviteGate is the invite-code half of registration, implemented by
+// internal/invite. Redeem BURNS a code for accountID or returns the 403 the
+// client shows; Release gives a burned code back when the account it was burned
+// for never landed. See invite.Service for the ordering rationale.
+type InviteGate interface {
+	Redeem(ctx context.Context, code, accountID, username string) error
+	Release(ctx context.Context, code, accountID string) error
+}
+
+// SetInviteGate installs the invite-code gate (composition root only). nil
+// disables it.
+func (s *Service) SetInviteGate(g InviteGate) { s.invites = g }
 
 // New builds the auth service. params may be nil for defaults. requireApproval
 // enables the private-deploy approval gate.
@@ -156,6 +179,11 @@ type RegisterOptions struct {
 	// (printed in the boot log). It is only consulted on a deploy that has no
 	// administrator AND has GGD_OWNER_BOOTSTRAP_TOKEN turned on. Empty otherwise.
 	BootstrapToken string
+	// InviteCode is the registration invite code (#174), as typed. The service
+	// normalises it (case, spaces, hyphens) — see invite.Normalize. Only
+	// consulted when an invite gate is installed AND this registration is not
+	// the first-owner claim.
+	InviteCode string
 }
 
 // registerSideworkTimeout bounds the Redis work Register does on a context that
@@ -202,8 +230,76 @@ func (s *Service) Register(ctx context.Context, username, email, password string
 		return account.Account{}, TokenPair{}, httpx.Conflict("email is already registered")
 	}
 
+	// First-account owner bootstrap: while a deploy has NO administrator, a
+	// registration claims ownership. The grant is written into the account's
+	// first persisted state (not a create-then-promote follow-up), so there is
+	// no window in which it exists un-promoted and the value returned below
+	// already reflects it. It also FORCES approved: under the #126 gate a
+	// pending owner could never be approved — nobody exists to approve it —
+	// which would brick the deploy permanently. See bootstrap.go.
+	//
+	// It is evaluated HERE, before the invite gate and before the ~100 ms hash,
+	// because the invite exemption below keys off its answer: "is this deploy
+	// still ownerless" must be ONE evaluation, not two that can drift.
+	owner, releaseClaim := s.claimOwnership(ctx, id, opt.BootstrapToken)
+	defer releaseClaim()
+
+	// ---------------------------------------------------------- INVITE GATE --
+	//
+	// THE FIRST ACCOUNT IS EXEMPT, keyed off the SAME predicate the owner
+	// bootstrap just answered. Four reasons, in order of importance:
+	//
+	//  1. Requiring a code for the first account is a DEADLOCK, structurally
+	//     identical to the one bootstrap.go documents for the approval gate:
+	//     only an admin can mint a code, and a fresh deploy has no admin. A
+	//     deploy that demanded one would be bricked before the owner reached it.
+	//  2. Exempting it WIDENS NOTHING. The window it opens is the *same* window
+	//     that already hands out platform ownership. An attacker who wins that
+	//     footrace does not need a code — they get the admin role and can mint
+	//     codes for themselves. An invite gate layered on top of a window that
+	//     already grants admin cannot be stronger than that window.
+	//  3. It CLOSES ITSELF. The instant the owner's account file lands,
+	//     Admins() is non-empty, claimOwnership returns false for everyone, and
+	//     every subsequent registration needs a code — no restart, no action.
+	//  4. It FAILS CLOSED. claimOwnership returns false when it cannot read the
+	//     store, so an unreadable store means "assume an admin exists" ⇒ a code
+	//     is REQUIRED. (Opposite direction to the ownership grant, same meaning.)
+	//
+	// The residual exposure — a stranger registering in the seconds before the
+	// owner does, on a deploy already reachable from outside — is closed by an
+	// existing switch and no new code: GGD_OWNER_BOOTSTRAP_TOKEN=1 makes even
+	// the first registration present the 0600 DATA_DIR/owner-setup-token, so the
+	// unauthenticated window is zero-width. That is the recommended env for the
+	// family build.
+	//
+	// ATOMICITY (the create_integrity scar): BURN FIRST, CREATE SECOND, release
+	// on every failure. Creating first and burning after would mean a crash in
+	// between leaves a LIVE code that has already produced an account — the gate
+	// silently leaking a registration, which is unacceptable when it is the only
+	// thing keeping strangers out. Burning first fails the other way (a spent
+	// code with no account), which is recoverable by minting another.
+	inviteBurned := false
+	created := false
+	if s.invites != nil && !owner {
+		if err := s.invites.Redeem(ctx, opt.InviteCode, id, username); err != nil {
+			s.rdb.R.Del(ctx, redisx.KeyIdxUsername(username), redisx.KeyIdxEmail(email))
+			return account.Account{}, TokenPair{}, err
+		}
+		inviteBurned = true
+	}
+	defer func() {
+		if !inviteBurned || created {
+			return
+		}
+		if err := s.invites.Release(ctx, opt.InviteCode, id); err != nil {
+			slog.Error("auth: could not release the invite code after a failed registration; the operator must mint a new one",
+				"err", err, "accountId", id)
+		}
+	}()
+
 	hash, err := HashPassword(password, s.params)
 	if err != nil {
+		s.rdb.R.Del(ctx, redisx.KeyIdxUsername(username), redisx.KeyIdxEmail(email))
 		return account.Account{}, TokenPair{}, err
 	}
 	now := time.Now()
@@ -213,15 +309,6 @@ func (s *Service) Register(ctx context.Context, username, email, password string
 	if s.requireApproval {
 		status = account.StatusPending
 	}
-	// First-account owner bootstrap: while a deploy has NO administrator, a
-	// registration claims ownership. The grant is written into the account's
-	// first persisted state (not a create-then-promote follow-up), so there is
-	// no window in which it exists un-promoted and the value returned below
-	// already reflects it. It also FORCES approved: under the #126 gate a
-	// pending owner could never be approved — nobody exists to approve it —
-	// which would brick the deploy permanently. See bootstrap.go.
-	owner, releaseClaim := s.claimOwnership(ctx, id, opt.BootstrapToken)
-	defer releaseClaim()
 	var roles []string
 	if owner {
 		roles = []string{account.RoleAdmin}
@@ -245,6 +332,9 @@ func (s *Service) Register(ctx context.Context, username, email, password string
 		}
 		return account.Account{}, TokenPair{}, err
 	}
+	// The account file has landed. From here the invite code stays burned: the
+	// deferred release above is now a no-op.
+	created = true
 	if owner {
 		s.consumeOwnerToken()
 		logFirstOwner(a)

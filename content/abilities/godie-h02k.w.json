@@ -32,5 +32,6 @@
       "duration": 3.0
     }
   ],
-  "vfxKey": "fx.prim.nature.explosion"
+  "vfxKey": "fx.prim.nature.explosion",
+  "castTimeSec": 0.3
 }

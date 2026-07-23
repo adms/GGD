@@ -1,0 +1,656 @@
+{
+  "_doc": [
+    "顯示用中介資料（domain 分類 + 可選的中文標題覆寫）。",
+    "這裡「不是」任務清單 —— 任務清單一律來自任務帳本（見 gen_status.py 的 resolve_ledger）。",
+    "只在帳本裡出現的 id 才會被畫出來；這裡多餘的 id 會被忽略。",
+    "label 省略時，直接使用帳本裡的 subject（永遠跟著帳本走，不會過期）。",
+    "domain 省略時，由 gen_status.py 的關鍵字規則自動分類，分不出來就落到「其他」區。"
+  ],
+  "tasks": {
+    "1": {
+      "domain": "models",
+      "label": "模型朝向 + 全英雄縮放稽核"
+    },
+    "2": {
+      "domain": "audio",
+      "label": "11 場景 BGM + SFX 接上遊戲事件"
+    },
+    "3": {
+      "domain": "combat",
+      "label": "打擊回饋（震動/閃白/擊退/停頓）"
+    },
+    "4": {
+      "domain": "content",
+      "label": "內容白名單（後台啟用）"
+    },
+    "5": {
+      "domain": "infra",
+      "label": "固定連接埠 39527 / 60721"
+    },
+    "6": {
+      "domain": "infra",
+      "label": "排位天梯"
+    },
+    "7": {
+      "domain": "combat",
+      "label": "花朵整合驗證 + 完整測試 + 實測"
+    },
+    "8": {
+      "domain": "content",
+      "label": "從未加密源地圖重新匯入"
+    },
+    "9": {
+      "domain": "models",
+      "label": "WC3 虛擬特效單位 → VFX/環境"
+    },
+    "10": {
+      "domain": "infra",
+      "label": "抽取 Blizzard 模型 + 音效（本機限定）"
+    },
+    "11": {
+      "domain": "content",
+      "label": "英雄編號技能命名規則"
+    },
+    "12": {
+      "domain": "ui",
+      "label": "程序化 isekai 登入背景"
+    },
+    "13": {
+      "domain": "ui",
+      "label": "遊戲內致謝 + 授權標示"
+    },
+    "14": {
+      "domain": "audio",
+      "label": "每個畫面頂層音樂/音效開關"
+    },
+    "15": {
+      "domain": "ui",
+      "label": "登入頁重設計（暗黑史詩）"
+    },
+    "16": {
+      "domain": "models",
+      "label": "登入 CC0 龍模型"
+    },
+    "17": {
+      "domain": "models",
+      "label": "移除模型內多餘大特效網格"
+    },
+    "18": {
+      "domain": "ui",
+      "label": "登入英雄頭像跑馬燈"
+    },
+    "19": {
+      "domain": "ui",
+      "label": "三語 UI 框架"
+    },
+    "20": {
+      "domain": "audio",
+      "label": "登入雙龍遠近吼聲 + 打字音效 + 騎龍進場"
+    },
+    "21": {
+      "domain": "ui",
+      "label": "戰鬥 HUD 技能提示 + EX 快捷 F"
+    },
+    "22": {
+      "domain": "models",
+      "label": "治療花朵可見化"
+    },
+    "23": {
+      "domain": "ui",
+      "label": "編輯器 AI 圖示生成 + 後台供應商設定"
+    },
+    "24": {
+      "domain": "audio",
+      "label": "所有按鈕 hover+click 音效 + 按壓特效"
+    },
+    "25": {
+      "domain": "ui",
+      "label": "勝利結算 S+/A 評分 + 排行榜"
+    },
+    "26": {
+      "domain": "audio",
+      "label": "憤怒動作吼 vs 環境長吟 區分"
+    },
+    "27": {
+      "domain": "audio",
+      "label": "點角色播該英雄語音"
+    },
+    "28": {
+      "domain": "combat",
+      "label": "戰鬥環境倍率表 + 後台動態設定"
+    },
+    "29": {
+      "domain": "combat",
+      "label": "固定視角無遮擋物稽核"
+    },
+    "30": {
+      "domain": "audio",
+      "label": "選英雄倒數最後 5 秒漸強 + 獨立結尾音"
+    },
+    "31": {
+      "domain": "ui",
+      "label": "預設最近視角 + 隊色小地圖"
+    },
+    "32": {
+      "domain": "models",
+      "label": "妙蛙種子模型修正"
+    },
+    "33": {
+      "domain": "combat",
+      "label": "戰鬥粒子特效大改"
+    },
+    "34": {
+      "domain": "audio",
+      "label": "系統廣播旁白 VO"
+    },
+    "35": {
+      "domain": "audio",
+      "label": "選英雄唸全名（日文女聲）"
+    },
+    "36": {
+      "domain": "ui",
+      "label": "結算排名自動捲動到自己"
+    },
+    "37": {
+      "domain": "models",
+      "label": "刀光殘影 ≤0.25s"
+    },
+    "38": {
+      "domain": "ui",
+      "label": "中場中央商店 + JRPG 旅行商人"
+    },
+    "39": {
+      "domain": "combat",
+      "label": "濺血/塵土/槍口閃光等回饋特效"
+    },
+    "40": {
+      "domain": "audio",
+      "label": "系統旁白統一日文女聲 Kyoko"
+    },
+    "41": {
+      "domain": "ui",
+      "label": "選英雄 hover 觸發稱號+全名語音"
+    },
+    "42": {
+      "domain": "ui",
+      "label": "HUD 左上角碰撞修正"
+    },
+    "43": {
+      "domain": "combat",
+      "label": "走路抖動根因（補間 + 動態解析度）"
+    },
+    "44": {
+      "domain": "ui",
+      "label": "HUD 常駐裝備列 + 格位規則"
+    },
+    "46": {
+      "domain": "combat",
+      "label": "戰鬥中 sim 偶爾停止 tick（已升級）"
+    },
+    "47": {
+      "domain": "content",
+      "label": "示範英雄組合"
+    },
+    "48": {
+      "domain": "infra",
+      "label": "遊戲伺服器寫死 k8s 主機名"
+    },
+    "49": {
+      "domain": "models",
+      "label": "移植模型頂點色/透明度"
+    },
+    "50": {
+      "domain": "models",
+      "label": "移植虛擬特效單位逐次參數"
+    },
+    "51": {
+      "domain": "audio",
+      "label": "整合効果音ラボ 免費商用音效"
+    },
+    "52": {
+      "domain": "audio",
+      "label": "自製 BGM 取代魔王魂"
+    },
+    "53": {
+      "domain": "audio",
+      "label": "真 AI 音樂供應商"
+    },
+    "54": {
+      "domain": "audio",
+      "label": "音量滑桿 + 自訂游標"
+    },
+    "55": {
+      "domain": "content",
+      "label": "英雄身分＝編號非模型（黑化Saber）"
+    },
+    "56": {
+      "domain": "content",
+      "label": "匯入器丟掉 150/180 欄位"
+    },
+    "57": {
+      "domain": "audio",
+      "label": "惡搞路線 VO（中英日）"
+    },
+    "58": {
+      "domain": "ui",
+      "label": "小地圖 LoL 規格"
+    },
+    "59": {
+      "domain": "models",
+      "label": "索隆龍捲風只在特定動作出現"
+    },
+    "60": {
+      "domain": "combat",
+      "label": "攻擊動作/受傷變紅/遠程飛行物"
+    },
+    "61": {
+      "domain": "models",
+      "label": "全模型稽核只修壞的"
+    },
+    "62": {
+      "domain": "audio",
+      "label": "背景任務靜音保證"
+    },
+    "63": {
+      "domain": "audio",
+      "label": "音效分場景預載"
+    },
+    "64": {
+      "domain": "models",
+      "label": "受傷變紅畫在方塊而非 3D 模型"
+    },
+    "65": {
+      "domain": "infra",
+      "label": "git init（整個專案沒有版控）"
+    },
+    "66": {
+      "domain": "ui",
+      "label": "版號置底每個畫面"
+    },
+    "67": {
+      "domain": "ui",
+      "label": "小地圖只顯示自己對戰區"
+    },
+    "68": {
+      "domain": "models",
+      "label": "26 模型根骨旋轉錯誤"
+    },
+    "69": {
+      "domain": "models",
+      "label": "補完近戰攻擊閃光 + 一角色無攻擊動作"
+    },
+    "70": {
+      "domain": "content",
+      "label": "只有最終道具進商店，任務進三選一"
+    },
+    "71": {
+      "domain": "ui",
+      "label": "內容圖鑑動態頁"
+    },
+    "72": {
+      "domain": "content",
+      "label": "AI 圖示：0 張，卡在 #112 + 供應商金鑰"
+    },
+    "73": {
+      "domain": "models",
+      "label": "全模型掃描：未合併的球體/蝗蟲群附件幾何（孫悟空沒頭只是其中一例）"
+    },
+    "74": {
+      "domain": "ui",
+      "label": "登入→戰鬥載入橋接 + 己方發光"
+    },
+    "75": {
+      "domain": "audio",
+      "label": "龍吟重配到縮短錨點 + 加殘響"
+    },
+    "76": {
+      "domain": "ui",
+      "label": "60 秒選英雄 + 前 10 秒規則說明 + 英雄詳介"
+    },
+    "77": {
+      "domain": "models",
+      "label": "替身 fallback 丟失真模型與縮放"
+    },
+    "78": {
+      "domain": "content",
+      "label": "1:1 技能+道具對照帳(全專案最大保真缺口，長期任務，未完成)"
+    },
+    "79": {
+      "domain": "models",
+      "label": "92% 技能共用一個火焰佔位特效"
+    },
+    "80": {
+      "domain": "models",
+      "label": "競技場地面重建"
+    },
+    "81": {
+      "domain": "content",
+      "label": "清理 Blizzard 資產債"
+    },
+    "82": {
+      "domain": "combat",
+      "label": "三價經濟 + 傳說寶玉 + 20 次屬性路線"
+    },
+    "83": {
+      "domain": "content",
+      "label": "4 個道具數值被匯入器加倍"
+    },
+    "84": {
+      "domain": "combat",
+      "label": "死亡火圈 + 隊友引導復活一次"
+    },
+    "85": {
+      "domain": "models",
+      "label": "死亡觀戰整個畫面去飽和，只有自己的隊友保持有顏色（復活圈色池已收到剪影尺度）"
+    },
+    "86": {
+      "domain": "audio",
+      "label": "賽博 hover 改成咻咻電流(非低頻鼓聲)"
+    },
+    "87": {
+      "domain": "audio",
+      "label": "BGM loop 加長 + 新轉折 B 段"
+    },
+    "88": {
+      "domain": "audio",
+      "label": "登入第二首寧靜女聲 nocturne 輪播"
+    },
+    "89": {
+      "domain": "combat",
+      "label": "守護塔（樹人/石頭人…）打塔獎勵"
+    },
+    "90": {
+      "domain": "combat",
+      "label": "擊殺賞金 300g，復活的不再多給"
+    },
+    "91": {
+      "domain": "content",
+      "label": "清掉殘留魔王魂文字"
+    },
+    "92": {
+      "domain": "combat",
+      "label": "RO 風格傷害/補血/補魔數字"
+    },
+    "93": {
+      "domain": "models",
+      "label": "勝利演出：回合=灰底+小煙火+英雄嘲諷 / 決賽=暗底+巨大烤雞煙火+嗆聲 VO"
+    },
+    "94": {
+      "domain": "ui",
+      "label": "商店移左半邊 + 功能分群貨架"
+    },
+    "95": {
+      "domain": "ui",
+      "label": "商店限時倒數 + 音效"
+    },
+    "96": {
+      "domain": "ui",
+      "label": "localhost 免登入編輯圖鑑"
+    },
+    "97": {
+      "domain": "ui",
+      "label": "圖示覆蓋率即時進度條"
+    },
+    "98": {
+      "domain": "models",
+      "label": "11 個零幾何特效模型"
+    },
+    "99": {
+      "domain": "ui",
+      "label": "資產預算頁 + 離線批次優化"
+    },
+    "100": {
+      "domain": "combat",
+      "label": "回合結束後角色還會打 66 秒"
+    },
+    "101": {
+      "domain": "ui",
+      "label": "圖示生成頁 + 資產主控台整併"
+    },
+    "102": {
+      "domain": "ui",
+      "label": "後台管理整併（loopback=admin）"
+    },
+    "103": {
+      "domain": "models",
+      "label": "店員被自己攤位擋住（sightline 測試）"
+    },
+    "104": {
+      "domain": "combat",
+      "label": "20 次強化閘門移到第 6 回合"
+    },
+    "105": {
+      "domain": "models",
+      "label": "守護塔各地圖不同形象"
+    },
+    "106": {
+      "domain": "ui",
+      "label": "商品內聯說明 + 六格上限 + 即時屬性預覽"
+    },
+    "107": {
+      "domain": "ui",
+      "label": "介面邊界契約（FPS 不再擋商店）"
+    },
+    "108": {
+      "domain": "content",
+      "label": "傳說池誤放修正 + 說明對數值稽核"
+    },
+    "109": {
+      "domain": "audio",
+      "label": "BGM 每回合從 bar 0 重播，後半段聽不到"
+    },
+    "110": {
+      "domain": "ui",
+      "label": "三選一卡片炫彩流光 + 必含 icon + 科技音"
+    },
+    "111": {
+      "domain": "models",
+      "label": "皮卡丘倒地 + 購買時勝利動作"
+    },
+    "112": {
+      "domain": "infra",
+      "label": "AI 圖片路徑壞掉（金鑰也修不了）"
+    },
+    "113": {
+      "domain": "content",
+      "label": "14 對同名英雄查重複或獨立"
+    },
+    "114": {
+      "domain": "ui",
+      "label": "w3x 描述色碼 → 語意角色（遊戲/後台/圖鑑）"
+    },
+    "115": {
+      "domain": "models",
+      "label": "模型 LOD 分級（-mid/-small）讓畫質設定真的換檔案"
+    },
+    "116": {
+      "domain": "models",
+      "label": "版權模型替換：Sketchfab 逐項搜尋＋自己捏"
+    },
+    "117": {
+      "domain": "infra",
+      "label": "關閉 LAN 曝露的無密碼 redis（token 竊取路徑）"
+    },
+    "118": {
+      "domain": "content",
+      "label": "水晶/M幣 meta 養成：打場解鎖英雄+喜愛置頂+造型（稽核找到的真缺口）"
+    },
+    "119": {
+      "domain": "combat",
+      "label": "英雄變身/形態切換系統：每回合或計時自動變回（真缺口）"
+    },
+    "120": {
+      "domain": "audio",
+      "label": "選英雄語音：稱號中文+全名日文混搭(更有喜感)"
+    },
+    "121": {
+      "domain": "ui",
+      "label": "商店賣出可還原(反沖 40% 退款、算對錢)"
+    },
+    "122": {
+      "domain": "ui",
+      "label": "商店分頁改 屬性|技能 + 顯示英雄頭圖"
+    },
+    "123": {
+      "domain": "models",
+      "label": "共用特效 primitive 庫(龍捲風/衝擊波/爆炸/蝗蟲群…) 一個服務多技能"
+    },
+    "124": {
+      "domain": "audio",
+      "label": "中場改編成下課打鐘開心歡樂風(需先加 bell 音色)"
+    },
+    "125": {
+      "domain": "ui",
+      "label": "所有顯示數值=倍率計算後最終值(冷卻已設 25%)"
+    },
+    "126": {
+      "domain": "infra",
+      "label": "私人發佈閘：註冊→pending→管理員核准才能玩 + 上線硬化"
+    },
+    "127": {
+      "domain": "infra",
+      "label": "環境分級閘：版權物/單機只在 localhost/LAN 開放"
+    },
+    "128": {
+      "domain": "content",
+      "label": "全英雄技能/道具 in-game 可施放覆蓋掃描：每個 QWER+EX 按下去真的有效（pass/fail 矩陣，非 #78 保真、非 #79 特效）"
+    },
+    "129": {
+      "domain": "ui"
+    },
+    "130": {
+      "domain": "combat"
+    },
+    "131": {
+      "domain": "models"
+    },
+    "132": {
+      "domain": "combat"
+    },
+    "133": {
+      "domain": "combat"
+    },
+    "134": {
+      "domain": "audio"
+    },
+    "135": {
+      "domain": "audio"
+    },
+    "136": {
+      "domain": "combat"
+    },
+    "137": {
+      "domain": "audio"
+    },
+    "138": {
+      "domain": "content"
+    },
+    "139": {
+      "domain": "audio"
+    },
+    "140": {
+      "domain": "ui"
+    },
+    "141": {
+      "domain": "ui"
+    },
+    "142": {
+      "domain": "audio"
+    },
+    "143": {
+      "domain": "models",
+      "label": "回合勝利：贏家 3D 模型置中 + 語音（與 #93 灰底同一拍）"
+    },
+    "144": {
+      "domain": "content"
+    },
+    "145": {
+      "domain": "combat"
+    },
+    "146": {
+      "domain": "models"
+    },
+    "147": {
+      "domain": "combat"
+    },
+    "148": {
+      "domain": "ui"
+    },
+    "149": {
+      "domain": "content"
+    },
+    "150": {
+      "domain": "models"
+    },
+    "151": {
+      "domain": "ui"
+    },
+    "152": {
+      "domain": "ui"
+    },
+    "153": {
+      "domain": "combat"
+    },
+    "154": {
+      "domain": "infra"
+    },
+    "155": {
+      "domain": "audio"
+    },
+    "156": {
+      "domain": "infra"
+    },
+    "157": {
+      "domain": "combat"
+    },
+    "158": {
+      "domain": "infra"
+    },
+    "159": {
+      "domain": "ui"
+    },
+    "160": {
+      "domain": "ui"
+    },
+    "161": {
+      "domain": "ui"
+    },
+    "162": {
+      "domain": "infra"
+    },
+    "163": {
+      "domain": "combat"
+    },
+    "164": {
+      "domain": "combat"
+    },
+    "165": {
+      "domain": "ui"
+    },
+    "166": {
+      "domain": "ui"
+    },
+    "167": {
+      "domain": "ui"
+    },
+    "168": {
+      "domain": "models"
+    },
+    "169": {
+      "domain": "combat"
+    },
+    "170": {
+      "domain": "ui"
+    },
+    "171": {
+      "domain": "infra"
+    },
+    "172": {
+      "domain": "infra"
+    },
+    "173": {
+      "domain": "combat",
+      "label": "回合 MVP 輪空殘留：TeamState.roundOutcome 參戰訊號 + 優先勝方的選擇器"
+    }
+  }
+}

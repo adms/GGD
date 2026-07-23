@@ -42,6 +42,7 @@ import type { EventMessage } from "@ggd/shared/protocol/messages";
 import { Abilities, Projectiles } from "@ggd/shared/sim/content/registry";
 import type { AbilityId, ProjectileId } from "@ggd/shared/ids";
 import type { VfxDoc } from "@ggd/shared/content";
+import { TICK_MS } from "@ggd/shared/constants";
 import { frameBus, pushCombatText } from "../frameBus";
 import type { CombatTextRelation } from "../ui/combatText";
 import { particleBudgetScale } from "../render/RenderConfig";
@@ -62,6 +63,8 @@ import { CombatFeedbackFx } from "./CombatFeedbackFx";
 import { GroundDecalPool } from "./GroundDecalPool";
 import { castScorchSpec } from "./feedbackPresets";
 import { StatusAuraFx } from "./StatusAuraFx";
+import { CastPillarFx } from "./CastPillarFx";
+import { pillarPalette, pillarTintFromRamp, type PillarPalette } from "./castPillar";
 import { severityForHit, sprayDirection, damageScale, type Vec2 } from "./bloodPresets";
 import { goreConfig, resolveGore } from "./goreConfig";
 
@@ -367,6 +370,10 @@ export class VfxSystem {
   private readonly shadows: ShadowLayer;
   /** fading ground scorch where an ability lands/casts (task #147) */
   private readonly castDecals: GroundDecalPool;
+  /** 0.6s cast-telegraph light pillar, driven by the real castBegin window */
+  private readonly pillars: CastPillarFx;
+  /** vfxKey → resolved pillar palette (so a cast allocates nothing) */
+  private readonly pillarPalettes = new Map<string, PillarPalette>();
   /** entityId → last walking-dust EMIT baseline {x,z} + time (task #147) */
   private readonly walkTrail = new Map<number, { ex: number; ez: number; lastMs: number }>();
   /** reused per-frame scratch for the shadow inputs (no per-frame alloc) */
@@ -383,6 +390,11 @@ export class VfxSystem {
     this.status = new StatusAuraFx(scene);
     this.shadows = new ShadowLayer(scene);
     this.castDecals = new GroundDecalPool(scene, { maxDecals: MAX_CAST_DECALS });
+    this.pillars = new CastPillarFx(
+      scene,
+      { entityPos: (id) => this.ctx.entityPos(id) },
+      { getScale: () => this.budgetScale() },
+    );
   }
 
   /**
@@ -417,6 +429,44 @@ export class VfxSystem {
   /** Live cast-scorch decals on the floor (test/observability seam). */
   get castDecalCount(): number {
     return this.castDecals.activeCount;
+  }
+
+  /** The cast-telegraph pillar layer (test/observability seam). */
+  get castPillarFx(): CastPillarFx {
+    return this.pillars;
+  }
+
+  /**
+   * The pillar palette for an ability, memoized by vfxKey.
+   *
+   * The element comes from the ability's OWN `fx.prim.<element>.…` binding
+   * (task #79) so an ice spell erupts in white-blue and a fire spell in
+   * white-gold — 依文潔琳's ice reading as orange fire is precisely the
+   * mismatch the owner has rejected before. Imported docs with no element in
+   * their id fall back to the doc's own colour RAMP, and only then to the FF7
+   * limit-break gold. Memoized because this fires on EVERY cast now.
+   *
+   * The ramp, NOT `tintOfDoc`. `tintOfDoc` returns `colorStops[0]`, which is
+   * correct for a particle system (the birth colour) and wrong for a light
+   * column: every imported WC3 flame doc is authored white-hot → hue → black,
+   * so stop 0 is `[1,1,1]`. Measured in a live match, that made 297 of 554
+   * abilities (53.6%, incl. all 285 still on the `fx.ember-bolt-cast`
+   * placeholder) erupt as a colourless white column. `pillarTintFromRamp`
+   * scans the whole ramp for the most chromatic stop instead — for
+   * `fx.ember-bolt-cast` that is `[1,0.6,0.2]`, the flame gold the doc was
+   * always describing.
+   */
+  private pillarPaletteFor(abilityId: string | undefined): PillarPalette {
+    const def = abilityId ? Abilities.tryGet(abilityId as AbilityId) : undefined;
+    const key = def?.vfxKey;
+    const cacheKey = key ?? "";
+    let p = this.pillarPalettes.get(cacheKey);
+    if (!p) {
+      const doc = this.doc(key);
+      p = pillarPalette(key, doc ? pillarTintFromRamp(doc.colorStops, doc.color.start) : null);
+      this.pillarPalettes.set(cacheKey, p);
+    }
+    return p;
   }
 
   /** Memoized impact-first shape of a doc (gradients are baked per system). */
@@ -609,7 +659,23 @@ export class VfxSystem {
         const def = abilityId ? Abilities.tryGet(abilityId as AbilityId) : undefined;
         const point = ev.data.point as { x: number; z: number } | undefined;
         if (point) {
-          this.telegraphs.push(new Telegraph(this.scene, point.x, point.z, def?.radius ?? 1.2, nowMs));
+          // The ground ring must FILL over the ability's real cast window, not
+          // over Telegraph's 300 ms default. With the owner's cast times in
+          // content, a 0.6 s cast used to pop its "it fires NOW" resolve flash
+          // 300 ms before the damage actually landed — a telegraph that lies
+          // about HOW LONG is worse than none, and it would also have
+          // contradicted the light pillar standing next to it.
+          const ctMs = (def?.castTimeSec ?? 0) * 1000;
+          this.telegraphs.push(
+            new Telegraph(
+              this.scene,
+              point.x,
+              point.z,
+              def?.radius ?? 1.2,
+              nowMs,
+              ctMs > 0 ? ctMs : undefined,
+            ),
+          );
         }
         const caster = ev.data.caster as number | undefined;
         const pos = caster !== undefined ? this.ctx.entityPos(caster) : null;
@@ -635,6 +701,42 @@ export class VfxSystem {
         const markX = point && isFinitePos(point) ? point.x : pos.x;
         const markZ = point && isFinitePos(point) ? point.z : pos.z;
         this.castDecals.spawn(markX, markZ, castScorchSpec(def?.radius ?? CAST_SCORCH_RADIUS), nowMs);
+        break;
+      }
+      // ---- CAST TELEGRAPH: the 0.6 s light pillar ------------------------
+      // 「施展技能的時候都要帶一段 0.6秒的施展光柱光芒來提示」. Driven by the
+      // AUTHORITATIVE cast window, never a timer of our own: `castBegin`
+      // carries the sim's `castTimeSec` (and its exact tick count as the
+      // fallback), so the column rises and intensifies across the REAL window
+      // for any cast length. MatchRoom fans these three events out to every
+      // client — the same stream the overhead cast bar rides — so the pillar
+      // appears for EVERY champion, which is the whole point: the victim is
+      // the one who has to see it.
+      //
+      // An ability with NO cast time emits no `castBegin` at all and therefore
+      // gets no pillar. That is deliberate: a telegraph for a window that does
+      // not exist would be a lie about a dodge the victim cannot make.
+      case "castBegin": {
+        const caster = ev.data.caster as number | undefined;
+        if (typeof caster !== "number") break;
+        const secs = typeof ev.data.castTimeSec === "number" ? ev.data.castTimeSec : 0;
+        const ticks = typeof ev.data.ticks === "number" ? ev.data.ticks : 0;
+        const durationMs = secs > 0 ? secs * 1000 : ticks * TICK_MS;
+        if (!(durationMs > 0)) break;
+        this.pillars.begin(caster, durationMs, this.pillarPaletteFor(ev.data.abilityId as string | undefined), nowMs);
+        break;
+      }
+      // resolved → a short outward release flash on the frame the effects land
+      case "castEnd": {
+        const caster = ev.data.caster as number | undefined;
+        if (typeof caster === "number") this.pillars.finish(caster, nowMs);
+        break;
+      }
+      // stunned / knocked down / killed mid-cast → snuffed, never a flash.
+      // A pillar that keeps burning after an interrupt is a lie.
+      case "castInterrupt": {
+        const caster = ev.data.caster as number | undefined;
+        if (typeof caster === "number") this.pillars.interrupt(caster, nowMs);
         break;
       }
       // `basicAttackHit` is the RANGED AUTO's impact — the same shape as an
@@ -821,6 +923,10 @@ export class VfxSystem {
         if (id !== undefined) {
           this.aim.delete(id); // aim memory dies with the entity
           this.status.forget(id); // …and so does any CC aura it was wearing
+          // dying mid-cast snuffs the column even if the sim's castInterrupt
+          // is dropped on the wire — a pillar over a corpse is the worst lie
+          // of all (it says "still coming" about damage that never will)
+          this.pillars.interrupt(id, nowMs);
         }
         const pos = id !== undefined ? this.ctx.entityPos(id) : null;
         if (!isFinitePos(pos)) break; // #131
@@ -968,6 +1074,7 @@ export class VfxSystem {
     // ground-follow layer (task #147): shadows + walking dust + cast-scorch fades
     this.syncGroundEntities(nowMs);
     this.castDecals.update(nowMs);
+    this.pillars.update(nowMs);
   }
 
   dispose(): void {
@@ -979,6 +1086,7 @@ export class VfxSystem {
     this.status.dispose();
     this.shadows.dispose();
     this.castDecals.dispose();
+    this.pillars.dispose();
     this.telegraphs = [];
     this.sparks = [];
     this.pool.clear();

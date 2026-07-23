@@ -45,5 +45,6 @@
     }
   ],
   "vfxKey": "fx.prim.physical.swarm",
-  "schema": "ability@1"
+  "schema": "ability@1",
+  "castTimeSec": 0.5
 }

@@ -87,6 +87,29 @@ function stats(world: SimWorld, id: EntityId): Record<Stat, number> {
   return world.stats.get(id)!.final;
 }
 
+/**
+ * Step out an in-progress cast's 起手 (wind-up) and return the ticks it took.
+ *
+ * Since the owner's telegraph rule every ability carries a `castTimeSec`
+ * (unset -> 0.6 s, previously-set +0.3 s), so effects no longer run inside
+ * `castAbility` — they DEFER into `ab.cast` and fire from `CastResolveSystem`
+ * when the wind-up elapses. A test that casts and then steps a fixed 1-3 ticks
+ * is therefore asserting on a spell that has not gone off yet. This waits for
+ * the real thing rather than hard-coding a tick count, so the assertions below
+ * keep testing WHAT HAPPENED (the point of this file) and stay correct if a
+ * cast time is retuned again.
+ */
+function windUp(world: SimWorld, id: EntityId, maxTicks = 120): number {
+  const ab = world.abilities.get(id)!;
+  let n = 0;
+  while (ab.cast && n < maxTicks) {
+    world.step(NO_INTENTS);
+    n++;
+  }
+  expect(ab.cast, "cast never resolved — interrupted, or maxTicks too low").toBeNull();
+  return n;
+}
+
 /** Step the world once and return the `damage` events it produced. */
 function stepDamage(world: SimWorld): { target: EntityId; amount: number; crit: boolean; origin: string }[] {
   world.step(NO_INTENTS);
@@ -329,6 +352,7 @@ describe("multi-target natives resolve as areas, not single targets", () => {
     expect(
       castAbility(world, pika, "Q", { type: "point", point: { x: P.x, z: P.z } }),
     ).toBe("ok");
+    windUp(world, pika);
     for (let i = 0; i < 3; i++) world.step(NO_INTENTS);
 
     // all three inside take damage — the old doc hit exactly one of them
@@ -350,6 +374,7 @@ describe("multi-target natives resolve as areas, not single targets", () => {
     expect(
       castAbility(world, sasuke, "Q", { type: "point", point: { x: P.x, z: P.z } }),
     ).toBe("ok");
+    windUp(world, sasuke);
     for (let i = 0; i < 3; i++) world.step(NO_INTENTS);
     // Trig_ChoChuFireDro: skillLevel*100 + 150 = 250 at rank 1, magic, r330u
     expect(before[0]! - world.health.get(a)!.hp).toBeGreaterThan(50);
@@ -370,8 +395,9 @@ describe("multi-target natives resolve as areas, not single targets", () => {
     expect(castAbility(world, lubu, "E", { type: "point", point: { x: P.x, z: P.z } })).toBe(
       "ok",
     );
-    // 施法前搖 0.6 s then the area resolves
-    for (let i = 0; i < 25; i++) world.step(NO_INTENTS);
+    // 施法前搖 (0.9 s since the +0.3 pass) then the area resolves
+    windUp(world, lubu);
+    for (let i = 0; i < 3; i++) world.step(NO_INTENTS);
     expect(world.health.get(v1)!.hp).toBeLessThan(hp0[0]!);
     expect(world.health.get(v2)!.hp).toBeLessThan(hp0[1]!);
     // w3a 增加防禦 -3 for 持續 3 s
@@ -400,6 +426,7 @@ describe("abilities that heal no longer damage", () => {
     expect(world.health.get(foe)!.hp).toBe(world.health.get(foe)!.maxHp);
 
     expect(castAbility(world, miku, "EX", { type: "entity", entityId: ally })).toBe("ok");
+    windUp(world, miku);
     for (let i = 0; i < 3; i++) world.step(NO_INTENTS);
     expect(ahp.hp).toBeCloseTo(ahp.maxHp, 3); // SetUnitLifePercentBJ(target,100)
     expect(ahp.mana).toBeCloseTo(ahp.maxMana, 3); // SetUnitManaPercentBJ(target,100)
@@ -417,6 +444,7 @@ describe("abilities that heal no longer damage", () => {
     const foeHp = world.health.get(foe)!.hp;
 
     expect(castAbility(world, miku, "R", { type: "self" })).toBe("ok");
+    windUp(world, miku);
     for (let i = 0; i < 3; i++) world.step(NO_INTENTS);
     expect(mhp.hp).toBeGreaterThan(10); // A11E 回復 200 at rank 1
     expect(world.health.get(foe)!.hp).toBe(foeHp); // and nobody is damaged
@@ -434,7 +462,10 @@ describe("per-rank buff columns reach the game", () => {
       topUpMana(world, rena);
       const base = stats(world, rena)[Stat.MoveSpeed];
       expect(castAbility(world, rena, "Q", { type: "self" })).toBe("ok");
-      world.step(NO_INTENTS);
+      // windUp's LAST step is the one that resolves the cast and attaches the
+      // buff, so it has already had the pipeline run on it — an extra step here
+      // would read the duration one tick short.
+      windUp(world, rena);
       return { world, rena, base, boosted: stats(world, rena)[Stat.MoveSpeed] };
     };
 
@@ -459,6 +490,7 @@ describe("per-rank buff columns reach the game", () => {
       topUpMana(world, ushio); // 魔耗 150/300/450 outruns his own pool at rank 3
       const base = stats(world, ushio)[Stat.Armor];
       expect(castAbility(world, ushio, "R", { type: "self" })).toBe("ok");
+      windUp(world, ushio);
       world.step(NO_INTENTS);
       expect(stats(world, ushio)[Stat.Armor]).toBeGreaterThan(base);
       // one tick BEFORE expiry it is still up; after it, gone

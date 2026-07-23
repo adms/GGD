@@ -47,5 +47,6 @@
   ],
   "vfxKey": "fx.ember-bolt-cast",
   "targetsEnemies": true,
-  "radius": 3.67
+  "radius": 3.67,
+  "castTimeSec": 0.5
 }

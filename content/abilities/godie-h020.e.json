@@ -47,5 +47,6 @@
   "vfxKey": "fx.prim.fire.beam",
   "targetsEnemies": true,
   "radius": 8.25,
-  "schema": "ability@1"
+  "schema": "ability@1",
+  "castTimeSec": 0.8
 }

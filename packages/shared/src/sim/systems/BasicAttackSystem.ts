@@ -63,6 +63,15 @@ export function basicAttackSystem(world: SimWorld): void {
       continue;
     }
 
+    // RECOVERY (後搖) also locks OUTPUT: an ability that WHIFFED commits the
+    // caster out of autos as well as casts, which is the whole punish window
+    // (a landed hit would already have cancelled it). Movement is NOT blocked
+    // here — see abilities/abilityRecovery.ts DECISION 2.
+    if ((ab.recovery?.ticksLeft ?? 0) > 0) {
+      ab.windup = null;
+      continue;
+    }
+
     // Stun cancels any wind-up and blocks starting a new swing.
     const st = world.status.get(id);
     if (st?.effects.some((e) => e.stun && e.expiresAtTick > world.tick)) {

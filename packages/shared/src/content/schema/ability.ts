@@ -93,6 +93,25 @@ export const zAbilityDef = z
     /** root the caster for the cast duration (default true) */
     rootWhileCasting: z.boolean().optional(),
     /**
+     * RECOVERY (後搖) — seconds of commitment AFTER the ability resolves, during
+     * which the caster may not cast or basic-attack. Absent = the sim's
+     * `DEFAULT_RECOVERY_SEC` (0.6 s), NOT zero — see sim/abilities/
+     * abilityRecovery.ts for why the default is live rather than opt-in.
+     *
+     * A LANDED HIT CANCELS IT: damage on >= 1 enemy from this ability frees the
+     * caster on the same tick, so combos flow off a connect and a whiff is the
+     * only thing that costs. Abilities that cannot whiff (self-casts, dashes)
+     * never observe it. Capped at MAX_RECOVERY_SEC (2 s) by the sim.
+     */
+    recoverySec: z.number().min(0).max(2).optional(),
+    /**
+     * Whether the recovery also ROOTS the caster (default false). Startup
+     * already hard-roots, so the default deliberately locks OUTPUT only (the
+     * DOTA/LoL cast-backswing shape): the opponent buys "he can't answer",
+     * not "he's a statue". A heavy ultimate can opt into the full lock.
+     */
+    recoveryRoots: z.boolean().optional(),
+    /**
      * w3x button icon extracted from the map archive (task #33), path relative
      * to content/, e.g. "assets/icons/abilities/godie-e001.q.png". Absent =
      * the source used Blizzard STOCK art — client keeps its letter-tile

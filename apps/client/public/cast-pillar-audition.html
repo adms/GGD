@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>施法光柱確認 — 0.6 秒起手預告 (CT lane B)</title>
+<style>
+  :root { --bg:#07080c; --panel:#12161f; --line:#2a3145; --fg:#e8ecf6; --dim:#98a2bd;
+          --accent:#7dd3fc; --gold:#f0c674; }
+  * { box-sizing:border-box; }
+  html,body { margin:0; height:100%; }
+  body { background:var(--bg); color:var(--fg); overflow:hidden;
+         font:14px/1.55 -apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans TC",sans-serif; }
+  #view { position:fixed; inset:0; width:100%; height:100%; display:block; touch-action:none; }
+  .hud { position:fixed; z-index:2; background:rgba(14,18,28,.88); border:1px solid var(--line);
+         border-radius:10px; padding:12px 14px; backdrop-filter:blur(6px); }
+  #panel { top:14px; left:14px; max-width:360px; max-height:calc(100vh - 90px); overflow:auto; }
+  #panel h1 { margin:0 0 4px; font-size:16px; letter-spacing:.02em; }
+  #panel p { margin:6px 0 0; color:var(--dim); font-size:12.5px; }
+  .row { display:flex; gap:6px; flex-wrap:wrap; margin-top:9px; }
+  button { font:inherit; font-size:12.5px; color:var(--fg); background:#1d2334;
+           border:1px solid var(--line); border-radius:7px; padding:5px 10px; cursor:pointer; }
+  button:hover { border-color:var(--accent); }
+  button.on { border-color:var(--gold); background:#2a2211; color:var(--gold); }
+  .lbl { color:var(--dim); font-size:11px; text-transform:uppercase; letter-spacing:.08em;
+         margin-top:12px; }
+  #stats { bottom:14px; left:14px; right:14px; font-variant-numeric:tabular-nums;
+           color:var(--dim); font-size:12px; }
+  #err { top:14px; left:14px; right:14px; max-width:660px; border-color:#7f2d2d;
+         background:#2a1212; display:none; }
+  code { background:#0009; padding:1px 5px; border-radius:4px; }
+  input[type=range] { width:100%; }
+</style>
+</head>
+<body>
+<canvas id="view"></canvas>
+
+<div id="err" class="hud">
+  <h1>載入失敗</h1>
+  <p id="errmsg"></p>
+  <p>這頁只在 <code>vite dev</code> 下可用（直接載入 <code>/src/vfx/*.ts</code>）。</p>
+</div>
+
+<div id="panel" class="hud">
+  <h1>施法光柱確認 <span style="color:var(--dim);font-size:12px">CT 起手預告</span></h1>
+  <p>真的 <code>CastPillarFx</code>、真的 <code>Telegraph</code>、真的相機角度。
+     這裡看到的就是對局裡看到的。參考：FF7 極限技的光柱 — 中心黃白熾光、外圈橘紅火焰、能量向上聚攏、
+     人物在光柱裡呈剪影。</p>
+
+  <div class="lbl">元素（技能自己的 vfxKey 決定，冰不會噴橘火）</div>
+  <div class="row" id="elements"></div>
+
+  <div class="lbl">同時施法人數（3v3v3v3 最壞情況 = 12）</div>
+  <div class="row" id="counts"></div>
+
+  <div class="lbl">起手長度</div>
+  <div class="row" id="cts"></div>
+
+  <div class="lbl">播放 / 結束方式</div>
+  <div class="row">
+    <button id="play">▶ 重播</button>
+    <button id="resolve">結算（釋放閃光）</button>
+    <button id="interrupt">被打斷（熄滅，不閃）</button>
+  </div>
+
+  <div class="lbl">凍結在某個時間點（截圖用）</div>
+  <div class="row" id="pins"></div>
+  <input type="range" id="scrub" min="0" max="1200" step="10" value="0">
+</div>
+
+<div id="stats" class="hud"><span id="readout">—</span></div>
+
+<script type="module">
+const errBox = document.getElementById("err");
+const showErr = (m) => {
+  document.getElementById("errmsg").textContent = String(m);
+  errBox.style.display = "block";
+};
+window.addEventListener("error", (e) => showErr(e.message));
+
+try {
+  const { startCastPillarAudition, AUDITION_ELEMENTS } =
+    await import("/src/vfx/castPillarAudition.ts");
+  const h = startCastPillarAudition(document.getElementById("view"));
+  window.__pillar = h; // screenshot automation seam
+
+  const q = new URLSearchParams(location.search);
+  let element = q.get("element") === "none" ? null : (q.get("element") ?? "fire");
+  let count = Number(q.get("casters") ?? 1);
+  let castMs = Number(q.get("ct") ?? 600);
+
+  const mkRow = (host, items, get, set) => {
+    const render = () => {
+      host.innerHTML = "";
+      for (const [label, value] of items) {
+        const b = document.createElement("button");
+        b.textContent = label;
+        if (get() === value) b.classList.add("on");
+        b.onclick = () => { set(value); render(); play(); };
+        host.appendChild(b);
+      }
+    };
+    render();
+    return render;
+  };
+
+  const play = () => h.play(element, count, castMs);
+
+  const reElements = mkRow(
+    document.getElementById("elements"),
+    AUDITION_ELEMENTS.map((e) => [e ?? "（無元素·FF7 金）", e]),
+    () => element,
+    (v) => { element = v; },
+  );
+  const reCounts = mkRow(
+    document.getElementById("counts"),
+    [1, 2, 4, 8, 12, 16].map((n) => [`${n} 人`, n]),
+    () => count,
+    (v) => { count = v; },
+  );
+  const reCts = mkRow(
+    document.getElementById("cts"),
+    [[ "0.35s", 350 ], [ "0.6s（預設）", 600 ], [ "0.9s", 900 ], [ "2.0s", 2000 ]],
+    () => castMs,
+    (v) => { castMs = v; document.getElementById("scrub").max = String(v + 400); },
+  );
+
+  document.getElementById("play").onclick = () => play();
+  document.getElementById("resolve").onclick = () => h.resolveAll();
+  document.getElementById("interrupt").onclick = () => h.interruptAll();
+
+  const pins = document.getElementById("pins");
+  const scrub = document.getElementById("scrub");
+  for (const [label, frac] of [["起 0.05", 0.05], ["0.3", 0.3], ["0.6", 0.6], ["蓄滿 1.0", 1.0], ["即時", null]]) {
+    const b = document.createElement("button");
+    b.textContent = label;
+    b.onclick = () => {
+      if (frac === null) { h.pin(null); return; }
+      const ms = Math.round(castMs * frac);
+      scrub.value = String(ms);
+      h.pin(ms);
+    };
+    pins.appendChild(b);
+  }
+  scrub.oninput = () => h.pin(Number(scrub.value));
+
+  const readout = document.getElementById("readout");
+  setInterval(() => {
+    const s = h.stats();
+    readout.textContent =
+      `元素 ${element ?? "（無）"} · 同時 ${count} 柱 · 起手 ${castMs}ms | ` +
+      `live ${s.active} · slots ${s.slots} · meshes ${s.meshes} · systems ${s.systems} · t=${s.clockMs}ms`;
+  }, 120);
+
+  play();
+} catch (err) {
+  showErr(err && err.message ? err.message : err);
+}
+</script>
+</body>
+</html>

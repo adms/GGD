@@ -55,6 +55,14 @@ export * from "./effects/effect";
 export { runEffects } from "./effects/effectRunner";
 export { fireHooks } from "./effects/hooks";
 export { castAbility, rankUpAbility, type CastResult } from "./abilities/abilitySystem";
+export {
+  DEFAULT_RECOVERY_SEC,
+  MAX_RECOVERY_SEC,
+  connectRuleOf,
+  recoveryTicksFor,
+  isRecovering,
+  type ConnectRule,
+} from "./abilities/abilityRecovery";
 export { addShield, type DamagePacket } from "./combat/damage";
 export * from "./economy/shop";
 export * from "./economy/draft";

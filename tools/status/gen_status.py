@@ -1,162 +1,60 @@
 #!/usr/bin/env python3
-"""gen_status.py — regenerate docs/requirements-status.md from the task ledger.
+"""gen_status.py — regenerate docs/requirements-status.md from THE TASK LEDGER.
 
 The user asked for a live status file they can keep open
-(「請你將地毯式搜索的結果及進度動態更新到一個 md 檔上供我查看」). This is the
-generator: the single TASKS table below is the source of truth, and one run
-rewrites the md with a fresh timestamp. Update a status here, re-run, done —
-that is the "dynamic" the user wants without a database.
+(「請你將地毯式搜索的結果及進度動態更新到一個 md 檔上供我查看」).
 
-status codes:
-  done     ✅ shipped + verified
-  flight   🔄 a background workflow is implementing it right now
-  designed 📐 full spec written, not yet built
-  pending  ⬜ not started
-  blocked  ⛔ waiting on something outside our control (e.g. an operator key)
+⚠ 這支程式以前把任務清單**手抄**在原始碼裡。手抄的那份停在 131 筆（而且 #85 / #93
+各被抄了兩次，實際只有 129 個不重複任務），帳本當時已經有 172 筆 —— 也就是說整整
+43 個任務從來沒出現在這頁上，而分母卻看起來很「完成」。**手抄清單一定會漂移，只是
+早晚而已。** 所以現在改成：任務清單在**產生的當下**從帳本讀出來，程式碼裡一個任務
+都不留。帳本加一筆，重跑就多一筆，不用改這支 .py。
+
+帳本（ledger）＝ 任務系統的落地檔：一個目錄，裡面每個任務一個 `<id>.json`，
+欄位至少有 `id` / `subject` / `status`（status ∈ pending | in_progress | completed）。
+解析順序見 `resolve_ledger()`；**找不到或解析失敗一律非零退出**，絕不安靜地少印幾筆
+—— 安靜地少印，正是這頁漂到 131 沒人發現的原因。
+
+用法
+  python3 tools/status/gen_status.py                # 產生 docs/requirements-status.md
+  python3 tools/status/gen_status.py --check        # 只驗證：頁面是否與帳本一致（CI/test）
+  python3 tools/status/gen_status.py --ledger PATH  # 指定帳本（目錄或 json 陣列檔）
+  GGD_TASK_LEDGER=PATH python3 tools/status/gen_status.py
+
+檔案
+  docs/requirements-status.md   輸出頁（本工具唯一的產出）
+  docs/_task-ledger.json        每次成功產生時寫下的**帳本快照**：進版控、可 review，
+                                也是 CI（帳本目錄不存在的機器）唯一的資料來源。
+  tools/status/task_meta.json   顯示用中介資料（分類 + 可選標題覆寫），不是任務清單。
+
+status codes（頁面顯示用；由帳本狀態直接映射，不做任何推測）
+  done     ✅ ledger: completed
+  flight   🔄 ledger: in_progress
+  pending  ⬜ ledger: pending
 """
-import datetime, os, collections
+import argparse
+import collections
+import datetime
+import glob
+import json
+import os
+import re
+import sys
 
-# (id, domain, status, zh one-liner)
-TASKS = [
-    # ── audio ──────────────────────────────────────────────────────────────
-    (2,  "audio", "done",    "11 場景 BGM + SFX 接上遊戲事件"),
-    (14, "audio", "done",    "每個畫面頂層音樂/音效開關"),
-    (20, "audio", "done",    "登入雙龍遠近吼聲 + 打字音效 + 騎龍進場"),
-    (24, "audio", "done",    "所有按鈕 hover+click 音效 + 按壓特效"),
-    (26, "audio", "done",    "憤怒動作吼 vs 環境長吟 區分"),
-    (27, "audio", "done",    "點角色播該英雄語音"),
-    (30, "audio", "done",    "選英雄倒數最後 5 秒漸強 + 獨立結尾音"),
-    (34, "audio", "done",    "系統廣播旁白 VO"),
-    (35, "audio", "done",    "選英雄唸全名（日文女聲）"),
-    (40, "audio", "done",    "系統旁白統一日文女聲 Kyoko"),
-    (51, "audio", "done",    "整合効果音ラボ 免費商用音效"),
-    (52, "audio", "done",    "自製 BGM 取代魔王魂"),
-    (54, "audio", "done",    "音量滑桿 + 自訂游標"),
-    (57, "audio", "done",    "惡搞路線 VO（中英日）"),
-    (87, "audio", "done",    "BGM loop 加長 + 新轉折 B 段"),
-    (88, "audio", "done",    "登入第二首寧靜女聲 nocturne 輪播"),
-    (86, "audio", "done",    "賽博 hover 改成咻咻電流(非低頻鼓聲)"),
-    (75, "audio", "pending", "龍吟重配到縮短錨點 + 加殘響"),
-    (62, "audio", "pending", "背景任務靜音保證"),
-    (63, "audio", "pending", "音效分場景預載"),
-    (109,"audio", "pending", "BGM 每回合從 bar 0 重播，後半段聽不到"),
-    (53, "audio", "pending", "真 AI 音樂供應商"),
-    # ── ui ─────────────────────────────────────────────────────────────────
-    (12, "ui", "done",    "程序化 isekai 登入背景"),
-    (15, "ui", "done",    "登入頁重設計（暗黑史詩）"),
-    (18, "ui", "done",    "登入英雄頭像跑馬燈"),
-    (21, "ui", "done",    "戰鬥 HUD 技能提示 + EX 快捷 F"),
-    (23, "ui", "done",    "編輯器 AI 圖示生成 + 後台供應商設定"),
-    (25, "ui", "done",    "勝利結算 S+/A 評分 + 排行榜"),
-    (31, "ui", "done",    "預設最近視角 + 隊色小地圖"),
-    (36, "ui", "done",    "結算排名自動捲動到自己"),
-    (42, "ui", "done",    "HUD 左上角碰撞修正"),
-    (58, "ui", "done",    "小地圖 LoL 規格"),
-    (71, "ui", "done",    "內容圖鑑動態頁"),
-    (38, "ui", "done",    "中場中央商店 + JRPG 旅行商人"),
-    (95, "ui", "done",    "商店限時倒數 + 音效"),
-    (96, "ui", "done",    "localhost 免登入編輯圖鑑"),
-    (97, "ui", "done",    "圖示覆蓋率即時進度條"),
-    (101,"ui", "done",    "圖示生成頁 + 資產主控台整併"),
-    (94, "ui", "done",    "商店移左半邊 + 功能分群貨架"),
-    (106,"ui", "done",    "商品內聯說明 + 六格上限 + 即時屬性預覽"),
-    (107,"ui", "stalled",  "介面邊界契約（FPS 不再擋商店）"),
-    (110,"ui", "stalled",  "三選一卡片炫彩流光 + 必含 icon + 科技音"),
-    (76, "ui", "stalled",  "60 秒選英雄 + 前 10 秒規則說明 + 英雄詳介"),
-    (102,"ui", "stalled",  "後台管理整併（loopback=admin）"),
-    (99, "ui", "stalled",  "資產預算頁 + 離線批次優化"),
-    (114,"ui", "stalled",  "w3x 描述色碼 → 語意角色（遊戲/後台/圖鑑）"),
-    (115,"models","stalled", "模型 LOD 分級（-mid/-small）讓畫質設定真的換檔案"),
-    (116,"models","stalled", "版權模型替換：Sketchfab 逐項搜尋＋自己捏"),
-    (13, "ui", "pending", "遊戲內致謝 + 授權標示"),
-    (19, "ui", "pending", "三語 UI 框架"),
-    (41, "ui", "pending", "選英雄 hover 觸發稱號+全名語音"),
-    (44, "ui", "pending", "HUD 常駐裝備列 + 格位規則"),
-    (66, "ui", "pending", "版號置底每個畫面"),
-    (67, "ui", "pending", "小地圖只顯示自己對戰區"),
-    (74, "ui", "pending", "登入→戰鬥載入橋接 + 己方發光"),
-    # ── combat ─────────────────────────────────────────────────────────────
-    (3,  "combat", "done",    "打擊回饋（震動/閃白/擊退/停頓）"),
-    (28, "combat", "done",    "戰鬥環境倍率表 + 後台動態設定"),
-    (29, "combat", "done",    "固定視角無遮擋物稽核"),
-    (33, "combat", "done",    "戰鬥粒子特效大改"),
-    (39, "combat", "done",    "濺血/塵土/槍口閃光等回饋特效"),
-    (43, "combat", "done",    "走路抖動根因（補間 + 動態解析度）"),
-    (60, "combat", "done",    "攻擊動作/受傷變紅/遠程飛行物"),
-    (84, "combat", "done",    "死亡火圈 + 隊友引導復活一次"),
-    (82, "combat", "done",    "三價經濟 + 傳說寶玉 + 20 次屬性路線"),
-    (93, "combat", "stalled",  "勝利表演（灰+煙火+嘲諷 / 吃雞烤雞煙火）"),
-    (92, "combat", "done",    "RO 風格傷害/補血/補魔數字"),
-    (85, "combat", "pending", "死亡灰階只留隊友色（被 #100 擋著）"),
-    (89, "combat", "designed","守護塔（樹人/石頭人…）打塔獎勵"),
-    (90, "combat", "designed","擊殺賞金 300g，復活的不再多給"),
-    (100,"combat", "pending", "回合結束後角色還會打 66 秒"),
-    (104,"combat", "pending", "20 次強化閘門移到第 6 回合"),
-    (46, "combat", "pending", "戰鬥中 sim 偶爾停止 tick（已升級）"),
-    (7,  "combat", "pending", "花朵整合驗證 + 完整測試 + 實測"),
-    # ── models ─────────────────────────────────────────────────────────────
-    (1,  "models", "done",    "模型朝向 + 全英雄縮放稽核"),
-    (9,  "models", "done",    "WC3 虛擬特效單位 → VFX/環境"),
-    (16, "models", "done",    "登入 CC0 龍模型"),
-    (17, "models", "done",    "移除模型內多餘大特效網格"),
-    (22, "models", "done",    "治療花朵可見化"),
-    (32, "models", "done",    "妙蛙種子模型修正"),
-    (37, "models", "done",    "刀光殘影 ≤0.25s"),
-    (49, "models", "done",    "移植模型頂點色/透明度"),
-    (59, "models", "done",    "索隆龍捲風只在特定動作出現"),
-    (80, "models", "done",    "競技場地面重建"),
-    (105,"models", "stalled",  "守護塔各地圖不同形象"),
-    (103,"models", "done",    "店員被自己攤位擋住（sightline 測試）"),
-    (111,"models", "stalled",  "皮卡丘倒地 + 購買時勝利動作"),
-    (68, "models", "pending", "26 模型根骨旋轉錯誤"),
-    (73, "models", "pending", "全模型掃描：未合併的球體/蝗蟲群附件幾何（孫悟空沒頭只是其中一例）"),
-    (77, "models", "pending", "替身 fallback 丟失真模型與縮放"),
-    (79, "models", "pending", "92% 技能共用一個火焰佔位特效"),
-    (98, "models", "pending", "11 個零幾何特效模型"),
-    (50, "models", "pending", "移植虛擬特效單位逐次參數"),
-    (61, "models", "pending", "全模型稽核只修壞的"),
-    (64, "models", "pending", "受傷變紅畫在方塊而非 3D 模型"),
-    (69, "models", "pending", "補完近戰攻擊閃光 + 一角色無攻擊動作"),
-    # ── content ────────────────────────────────────────────────────────────
-    (4,  "content", "done",    "內容白名單（後台啟用）"),
-    (8,  "content", "done",    "從未加密源地圖重新匯入"),
-    (11, "content", "done",    "英雄編號技能命名規則"),
-    (47, "content", "done",    "示範英雄組合"),
-    (55, "content", "done",    "英雄身分＝編號非模型（黑化Saber）"),
-    (70, "content", "done",    "只有最終道具進商店，任務進三選一"),
-    (78, "content", "stalled", "1:1 技能+道具對照帳(全專案最大保真缺口，長期任務，未完成)"),
-    (128,"content", "pending", "全英雄技能/道具 in-game 可施放覆蓋掃描：每個 QWER+EX 按下去真的有效（pass/fail 矩陣，非 #78 保真、非 #79 特效）"),
-    (72, "content", "blocked", "AI 圖示：0 張，卡在 #112 + 供應商金鑰"),
-    (108,"content", "stalled",  "傳說池誤放修正 + 說明對數值稽核"),
-    (113,"content", "pending", "14 對同名英雄查重複或獨立"),
-    (56, "content", "pending", "匯入器丟掉 150/180 欄位"),
-    (83, "content", "pending", "4 個道具數值被匯入器加倍"),
-    (81, "content", "pending", "清理 Blizzard 資產債"),
-    (91, "content", "pending", "清掉殘留魔王魂文字"),
-    # ── infra ──────────────────────────────────────────────────────────────
-    (5,  "infra", "done",    "固定連接埠 39527 / 60721"),
-    (6,  "infra", "done",    "排位天梯"),
-    (10, "infra", "done",    "抽取 Blizzard 模型 + 音效（本機限定）"),
-    (65, "infra", "pending", "git init（整個專案沒有版控）"),
-    (112,"infra", "blocked", "AI 圖片路徑壞掉（金鑰也修不了）"),
-    (48, "infra", "pending", "遊戲伺服器寫死 k8s 主機名"),
-    (118,"content","pending","水晶/M幣 meta 養成：打場解鎖英雄+喜愛置頂+造型（稽核找到的真缺口）"),
-    (119,"combat", "pending","英雄變身/形態切換系統：每回合或計時自動變回（真缺口）"),
-    (117,"infra", "done",    "關閉 LAN 曝露的無密碼 redis（token 竊取路徑）"),
-    (120,"audio",  "pending","選英雄語音：稱號中文+全名日文混搭(更有喜感)"),
-    (121,"ui",      "pending","商店賣出可還原(反沖 40% 退款、算對錢)"),
-    (122,"ui",      "pending","商店分頁改 屬性|技能 + 顯示英雄頭圖"),
-    (123,"models",  "pending","共用特效 primitive 庫(龍捲風/衝擊波/爆炸/蝗蟲群…) 一個服務多技能"),
-    (124,"audio",  "pending","中場改編成下課打鐘開心歡樂風(需先加 bell 音色)"),
-    (125,"ui",      "pending","所有顯示數值=倍率計算後最終值(冷卻已設 25%)"),
-    (126,"infra",  "pending","私人發佈閘：註冊→pending→管理員核准才能玩 + 上線硬化"),
-    (127,"infra",  "pending","環境分級閘：版權物/單機只在 localhost/LAN 開放"),
-    # ── 2026-07-23 整合波（#128-#171 補列仍是既有的 live-page sync 缺口）──────
-    (85, "models", "done",   "死亡觀戰整個畫面去飽和，只有自己的隊友保持有顏色（復活圈色池已收到剪影尺度）"),
-    (93, "models", "flight", "勝利演出：回合=灰底+小煙火+英雄嘲諷 / 決賽=暗底+巨大烤雞煙火+嗆聲 VO"),
-    (143,"models", "flight", "回合勝利：贏家 3D 模型置中 + 語音（與 #93 灰底同一拍）"),
-    (173,"combat", "done",   "回合 MVP 輪空殘留：TeamState.roundOutcome 參戰訊號 + 優先勝方的選擇器"),
-]
+REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+OUT = os.path.join(REPO, "docs", "requirements-status.md")
+MIRROR = os.path.join(REPO, "docs", "_task-ledger.json")
+META_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "task_meta.json")
+
+# deep-audit block: a plain file the carpet-search writes when it lands.
+AUDIT_FILE = os.path.join(REPO, "docs", "_requirements-audit-gaps.md")
+
+# where the task system keeps its per-session ledger directories
+HOME_LEDGER_GLOB = os.path.join(os.path.expanduser("~"), ".claude", "tasks", "*")
+
+# ledger status -> page status. Unknown ledger statuses are a hard error: a new
+# status silently collapsing into "pending" would be the 131-bug all over again.
+STATUS_MAP = {"completed": "done", "in_progress": "flight", "pending": "pending"}
 
 DOMAINS = [
     ("audio",   "🎵 音樂 / 音效"),
@@ -165,31 +63,261 @@ DOMAINS = [
     ("models",  "🎭 模型 / 特效"),
     ("content", "📦 內容 / 經濟 / 資料"),
     ("infra",   "🔧 基礎建設 / 技術債"),
+    ("misc",    "🧩 其他 / 未分類"),   # only rendered when non-empty
 ]
+DOMAIN_KEYS = {d for d, _ in DOMAINS}
+
 MARK = {"done": "✅", "flight": "🔄", "stalled": "⏸", "designed": "📐", "pending": "⬜", "blocked": "⛔"}
 LABEL = {"done": "已完成", "flight": "進行中", "stalled": "做中·待續跑(花費上限中斷)",
          "designed": "已設計未實作", "pending": "待辦", "blocked": "受阻"}
-# NOTE: "flight" was in MARK/LABEL but missing here, so the first in-progress
-# row ever added would crash the generator with a ValueError. Every key of MARK
-# must appear in ORDER.
+LEGEND = {"done": "已完成並驗證", "flight": "背景任務實作中", "stalled": "做中·待續跑",
+          "designed": "已設計未實作", "pending": "待辦", "blocked": "受阻（等外部條件，如供應商金鑰）"}
+# every key of MARK must appear in ORDER, or a row of that status would raise
+# ValueError in the per-domain sort.
 ORDER = ["stalled", "flight", "blocked", "designed", "pending", "done"]
 
-REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-OUT = os.path.join(REPO, "docs", "requirements-status.md")
+# fallback classifier for ledger tasks that task_meta.json says nothing about,
+# so a brand-new task lands in a sensible section without editing this file.
+# first matching domain wins; order matters.
+DOMAIN_RULES = [
+    ("audio",   r"\bbgm\b|\bsfx\b|\bvo\b|voice|audio|sound|music|roar|音效|音樂|語音|旁白|配音|主題曲|名言"),
+    ("models",  r"\bmodel\b|\bglb\b|\bmdx\b|\bvfx\b|particle|animation|\banim\b|mesh|geometry|模型|動畫|粒子|特效"),
+    ("ui",      r"\bhud\b|\bui\b|screen|panel|button|minimap|shop|tooltip|layout|mobile|iphone|codex|editor|"
+                r"介面|畫面|按鈕|商店|小地圖|圖鑑|編輯器|排版"),
+    ("combat",  r"combat|match|round|damage|ability|cast|kill|bounty|arena|camera|bot\b|tick|"
+                r"戰鬥|回合|傷害|技能|競技場|擊殺"),
+    ("content", r"\bitem\b|champion|roster|import|w3x|whitelist|economy|augment|draft|"
+                r"道具|英雄|名冊|匯入|經濟|內容"),
+    ("infra",   r"server|deploy|docker|k8s|redis|security|auth|password|port\b|\bci\b|test|loading|network|"
+                r"regist|invite|account|admin|backup|replay|"
+                r"伺服器|部署|安全|登入|註冊|測試|載入|備份"),
+]
 
-# deep-audit block: a plain file the carpet-search writes when it lands.
-AUDIT_FILE = os.path.join(REPO, "docs", "_requirements-audit-gaps.md")
+# 最該優先 callouts. Hand-written prose (the ledger has no priority field), but
+# an item whose ledger status is `completed` is dropped automatically — a
+# priority list that still shouts about finished work is how a status page
+# starts lying again.
+CALLOUTS = [
+    (65,  "**#65 git init** — 整個專案沒有版控，已因此永久遺失過檔案。每個任務都在裸奔。"),
+    (100, "**#100 戰鬥不停** — 回合結束後角色還打 66 秒，正擋著 #85 死亡灰階看不到效果。"),
+    (112, "**#112 + 供應商金鑰** — AI 圖示 0 張；我修圖片路徑，你在後台設金鑰，才跑得動。"),
+]
 
 
-def main():
-    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
-    counts = collections.Counter(s for _, _, s, _ in TASKS)
-    total = len(TASKS)
+class LedgerError(Exception):
+    """The ledger could not be located, read, or trusted. Always fatal."""
+
+
+# ---------------------------------------------------------------------------
+# ledger
+
+
+def _task_from_obj(obj, where):
+    for field in ("id", "subject", "status"):
+        if field not in obj:
+            raise LedgerError(f"{where}: task is missing required field `{field}` — {obj!r:.160}")
+    try:
+        tid = int(str(obj["id"]).strip())
+    except ValueError:
+        raise LedgerError(f"{where}: task id {obj['id']!r} is not an integer")
+    status = str(obj["status"]).strip()
+    if status not in STATUS_MAP:
+        raise LedgerError(
+            f"{where}: task #{tid} has unknown status {status!r}; "
+            f"known statuses are {sorted(STATUS_MAP)}. Refusing to guess — add the "
+            f"mapping to STATUS_MAP in {os.path.relpath(__file__, REPO)} instead."
+        )
+    subject = str(obj["subject"]).strip()
+    if not subject:
+        raise LedgerError(f"{where}: task #{tid} has an empty subject")
+    return {"id": tid, "subject": subject, "status": status}
+
+
+def load_ledger_dir(path):
+    """A task-system ledger directory: one <id>.json per task."""
+    files = sorted(glob.glob(os.path.join(path, "*.json")))
+    if not files:
+        raise LedgerError(f"{path}: no *.json task files found")
+    tasks, seen = [], {}
+    for f in files:
+        try:
+            with open(f, encoding="utf-8") as fh:
+                obj = json.load(fh)
+        except (OSError, json.JSONDecodeError) as e:
+            raise LedgerError(f"{f}: cannot read/parse task file — {e}")
+        if not isinstance(obj, dict):
+            raise LedgerError(f"{f}: expected a task object, got {type(obj).__name__}")
+        t = _task_from_obj(obj, f)
+        if t["id"] in seen:
+            raise LedgerError(f"{f}: duplicate task id #{t['id']} (also in {seen[t['id']]})")
+        seen[t["id"]] = f
+        tasks.append(t)
+    return tasks
+
+
+def load_ledger_json(path):
+    """A snapshot file: {"tasks": [...]} or a bare [...] array."""
+    try:
+        with open(path, encoding="utf-8") as fh:
+            obj = json.load(fh)
+    except (OSError, json.JSONDecodeError) as e:
+        raise LedgerError(f"{path}: cannot read/parse ledger snapshot — {e}")
+    rows = obj.get("tasks") if isinstance(obj, dict) else obj
+    if not isinstance(rows, list) or not rows:
+        raise LedgerError(f"{path}: snapshot has no `tasks` array (or it is empty)")
+    tasks, seen = [], set()
+    for i, row in enumerate(rows):
+        if not isinstance(row, dict):
+            raise LedgerError(f"{path}[{i}]: expected an object, got {type(row).__name__}")
+        t = _task_from_obj(row, f"{path}[{i}]")
+        if t["id"] in seen:
+            raise LedgerError(f"{path}: duplicate task id #{t['id']}")
+        seen.add(t["id"])
+        tasks.append(t)
+    return tasks
+
+
+def _score_dir(path):
+    return len(glob.glob(os.path.join(path, "*.json")))
+
+
+def display_source(path):
+    """Machine-independent name for a ledger path.
+
+    The page prints where its numbers came from, so this string has to be the
+    SAME on every machine — otherwise a CI box reading the snapshot would render
+    a different header and --check would scream "stale" forever.
+    """
+    if path.startswith(REPO):
+        return os.path.relpath(path, REPO)
+    home = os.path.expanduser("~")
+    return path.replace(home, "~", 1) if path.startswith(home) else path
+
+
+def recorded_source(path):
+    """The origin a snapshot remembers (so CI reports the real ledger, not the mirror)."""
+    try:
+        with open(path, encoding="utf-8") as f:
+            obj = json.load(f)
+        if isinstance(obj, dict) and obj.get("source"):
+            return str(obj["source"])
+    except (OSError, json.JSONDecodeError):
+        pass
+    return display_source(path)
+
+
+def resolve_ledger(explicit=None):
+    """Return (tasks, source_label, source_kind). Raises LedgerError — never returns short.
+
+    Order: --ledger / $GGD_TASK_LEDGER → the task-system ledger dirs under
+    ~/.claude/tasks/* (the one holding the most tasks; ties → most recent) →
+    the committed snapshot docs/_task-ledger.json (what CI has).
+    """
+    picked = explicit or os.environ.get("GGD_TASK_LEDGER")
+    if picked:
+        picked = os.path.expanduser(picked)
+        if os.path.isdir(picked):
+            return load_ledger_dir(picked), display_source(picked), "dir"
+        if os.path.isfile(picked):
+            return load_ledger_json(picked), recorded_source(picked), "snapshot"
+        raise LedgerError(f"{picked}: ledger path does not exist (from --ledger/$GGD_TASK_LEDGER)")
+
+    dirs = [d for d in glob.glob(HOME_LEDGER_GLOB) if os.path.isdir(d) and _score_dir(d)]
+    if dirs:
+        dirs.sort(key=lambda d: (_score_dir(d), os.path.getmtime(d)), reverse=True)
+        return load_ledger_dir(dirs[0]), display_source(dirs[0]), "dir"
+
+    if os.path.exists(MIRROR):
+        return load_ledger_json(MIRROR), recorded_source(MIRROR), "snapshot"
+
+    raise LedgerError(
+        "no task ledger found. Looked at: --ledger/$GGD_TASK_LEDGER, "
+        f"{HOME_LEDGER_GLOB}, {os.path.relpath(MIRROR, REPO)}. "
+        "Refusing to emit a status page without one."
+    )
+
+
+def snapshot_count():
+    """Task count of the committed snapshot, or None when there is no snapshot."""
+    try:
+        return len(load_ledger_json(MIRROR))
+    except LedgerError:
+        return None
+
+
+def write_snapshot(tasks, source):
+    payload = {
+        "_doc": "帳本快照，由 tools/status/gen_status.py 產生。手改無效（下次執行就被覆蓋），"
+                "要改請改任務帳本本身。CI 上沒有帳本目錄時，這份就是 --check 的資料來源。",
+        "generated": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
+        "source": source,   # already machine-independent (see display_source)
+        "count": len(tasks),
+        "tasks": sorted(tasks, key=lambda t: t["id"]),
+    }
+    with open(MIRROR, "w", encoding="utf-8") as f:
+        json.dump(payload, f, ensure_ascii=False, indent=2)
+        f.write("\n")
+
+
+# ---------------------------------------------------------------------------
+# display metadata
+
+
+def load_meta():
+    try:
+        with open(META_FILE, encoding="utf-8") as f:
+            obj = json.load(f)
+    except (OSError, json.JSONDecodeError) as e:
+        raise LedgerError(f"{META_FILE}: cannot read/parse display metadata — {e}")
+    rows = obj.get("tasks", obj)
+    meta = {}
+    for k, v in rows.items():
+        if k.startswith("_"):
+            continue
+        dom = (v or {}).get("domain")
+        if dom is not None and dom not in DOMAIN_KEYS:
+            raise LedgerError(f"{META_FILE}: task {k} has unknown domain {dom!r}; known: {sorted(DOMAIN_KEYS)}")
+        meta[int(k)] = v or {}
+    return meta
+
+
+def classify(subject):
+    s = subject.lower()
+    for dom, pattern in DOMAIN_RULES:
+        if re.search(pattern, s):
+            return dom
+    return "misc"
+
+
+def decorate(tasks, meta):
+    """ledger tasks + display metadata -> (id, domain, page_status, label) rows."""
+    rows = []
+    for t in tasks:
+        m = meta.get(t["id"], {})
+        rows.append((
+            t["id"],
+            m.get("domain") or classify(t["subject"]),
+            STATUS_MAP[t["status"]],
+            m.get("label") or t["subject"],
+        ))
+    return rows
+
+
+# ---------------------------------------------------------------------------
+# render
+
+STAMP_RE = re.compile(r"^> 最後更新 .*$", re.M)
+
+
+def render(rows, now, source, count):
+    counts = collections.Counter(s for _, _, s, _ in rows)
+    total = len(rows)
     L = []
     L.append("# 去死團的逆襲 — 需求完成狀況")
     L.append("")
     L.append(f"> 最後更新 **{now}** · 由 `tools/status/gen_status.py` 產生。")
     L.append("> 這份檔案是動態的：每當有任務狀態改變，重跑一次就會刷新。")
+    L.append(f"> 任務清單於產生當下由**任務帳本**讀出（{count} 筆 · `{source}`），非手抄；狀態直接取自帳本。")
     L.append("")
     L.append("| 狀態 | 數量 |")
     L.append("|---|---|")
@@ -197,54 +325,138 @@ def main():
         if counts[s]:
             L.append(f"| {MARK[s]} {LABEL[s]} | {counts[s]} |")
     L.append(f"| **合計** | **{total}** |")
-    pct = round(100 * counts["done"] / total)
+    pct = round(100 * counts["done"] / total) if total else 0
     L.append("")
     L.append(f"**完成度：{counts['done']}/{total} ≈ {pct}%**（進行中 {counts['flight']} 項正在跑背景任務）")
     L.append("")
-    L.append("圖例：✅ 已完成並驗證　🔄 背景任務實作中　📐 已設計未實作　⬜ 待辦　⛔ 受阻（等外部條件，如供應商金鑰）")
+    # legend lists only statuses that actually occur — a legend advertising a
+    # status the ledger cannot produce is another small lie on a page whose
+    # whole job is to be true.
+    legend = "　".join(f"{MARK[s]} {LEGEND[s]}" for s in ORDER if counts[s])
+    L.append(f"圖例：{legend}")
     L.append("")
 
     for dkey, dtitle in DOMAINS:
-        rows = [t for t in TASKS if t[1] == dkey]
-        rows.sort(key=lambda t: (ORDER.index(t[2]), t[0]))
-        d = collections.Counter(s for _, _, s, _ in rows)
+        drows = [t for t in rows if t[1] == dkey]
+        if not drows:
+            continue
+        drows.sort(key=lambda t: (ORDER.index(t[2]), t[0]))
+        d = collections.Counter(s for _, _, s, _ in drows)
         head = " · ".join(f"{MARK[s]}{d[s]}" for s in ORDER if d[s])
         L.append(f"## {dtitle}　<sub>{head}</sub>")
         L.append("")
         L.append("| | # | 需求 |")
         L.append("|---|---|---|")
-        for tid, _, st, zh in rows:
+        for tid, _, st, zh in drows:
             L.append(f"| {MARK[st]} | {tid} | {zh} |")
         L.append("")
 
-    # highest-priority callouts
-    L.append("## 🔺 最該優先")
-    L.append("")
-    L.append("1. **#65 git init** — 整個專案沒有版控，已因此永久遺失過檔案。每個任務都在裸奔。")
-    L.append("2. **#100 戰鬥不停** — 回合結束後角色還打 66 秒，正擋著 #85 死亡灰階看不到效果。")
-    L.append("3. **#112 + 供應商金鑰** — AI 圖示 0 張；我修圖片路徑，你在後台設金鑰，才跑得動。")
-    L.append("")
+    # highest-priority callouts (completed ones drop out on their own)
+    done_ids = {tid for tid, _, st, _ in rows if st == "done"}
+    live = [text for tid, text in CALLOUTS if tid not in done_ids]
+    if live:
+        L.append("## 🔺 最該優先")
+        L.append("")
+        for i, text in enumerate(live, 1):
+            L.append(f"{i}. {text}")
+        L.append("")
 
     # append the carpet-search gaps if the audit has written them
+    L.append("---")
+    L.append("")
     if os.path.exists(AUDIT_FILE):
-        L.append("---")
-        L.append("")
         with open(AUDIT_FILE, encoding="utf-8") as f:
             L.append(f.read().rstrip())
         L.append("")
     else:
-        L.append("---")
-        L.append("")
         L.append("## 🔎 地毯式搜索（進行中）")
         L.append("")
         L.append("156 條使用者發言已抽取，正在逐域比對程式碼找出**尚未進追蹤清單**的漏項。")
         L.append("完成後這一段會自動換成漏項清單（寫入 `docs/_requirements-audit-gaps.md`，重跑本工具即併入）。")
         L.append("")
 
+    return "\n".join(L), counts, total
+
+
+def build(explicit_ledger=None, now=None):
+    tasks, source, kind = resolve_ledger(explicit_ledger)
+    meta = load_meta()
+    rows = decorate(tasks, meta)
+    now = now or datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+    text, counts, total = render(rows, now, source, len(tasks))
+    return {"tasks": tasks, "rows": rows, "text": text, "counts": counts,
+            "total": total, "source": source, "kind": kind}
+
+
+# ---------------------------------------------------------------------------
+# entry points
+
+TOTAL_RE = re.compile(r"^\| \*\*合計\*\* \| \*\*(\d+)\*\* \|$", re.M)
+
+
+def do_check(explicit_ledger):
+    res = build(explicit_ledger)
+    if not os.path.exists(OUT):
+        sys.exit(f"gen_status --check: {os.path.relpath(OUT, REPO)} does not exist — run "
+                 f"`python3 tools/status/gen_status.py`")
+    with open(OUT, encoding="utf-8") as f:
+        current = f.read()
+
+    m = TOTAL_RE.search(current)
+    if not m:
+        sys.exit("gen_status --check: cannot find the 合計 row in the status page — it was not "
+                 "produced by this generator")
+    page_total = int(m.group(1))
+    if page_total != res["total"]:
+        sys.exit(f"gen_status --check: STATUS PAGE UNDERCOUNTS. page says {page_total} tasks, "
+                 f"the ledger has {res['total']} ({res['source']}). This is exactly the drift the "
+                 f"generator exists to prevent — re-run `python3 tools/status/gen_status.py`.")
+
+    # ignore only the timestamp line: everything else must match byte-for-byte
+    if STAMP_RE.sub("", current) != STAMP_RE.sub("", res["text"]):
+        sys.exit("gen_status --check: docs/requirements-status.md is stale versus the ledger — "
+                 "re-run `python3 tools/status/gen_status.py`")
+
+    c = res["counts"]
+    print(f"gen_status --check: OK — {res['total']} tasks "
+          f"(✅{c['done']} 🔄{c['flight']} ⬜{c['pending']}) from {res['source']}")
+
+
+def main(argv=None):
+    ap = argparse.ArgumentParser(description="regenerate docs/requirements-status.md from the task ledger")
+    ap.add_argument("--ledger", help="ledger directory (<id>.json per task) or snapshot json")
+    ap.add_argument("--check", action="store_true", help="verify the page matches the ledger; non-zero on drift")
+    ap.add_argument("--allow-shrink", action="store_true",
+                    help="permit a ledger with FEWER tasks than the last snapshot (tasks really were deleted)")
+    args = ap.parse_args(argv)
+
+    try:
+        if args.check:
+            do_check(args.ledger)
+            return 0
+        res = build(args.ledger)
+    except LedgerError as e:
+        sys.exit(f"gen_status: LEDGER ERROR — {e}")
+
+    prev = snapshot_count()
+    if prev is not None and res["total"] < prev and not args.allow_shrink:
+        sys.exit(f"gen_status: LEDGER SHRANK — {res['source']} has {res['total']} tasks, the last "
+                 f"snapshot had {prev}. Refusing to publish a smaller denominator by accident; "
+                 f"pass --allow-shrink if tasks were genuinely deleted.")
+
     with open(OUT, "w", encoding="utf-8") as f:
-        f.write("\n".join(L))
-    print(f"wrote {OUT} — {total} tasks, {counts['done']} done ({pct}%)")
+        f.write(res["text"])
+    write_snapshot(res["tasks"], res["source"])
+
+    c, total = res["counts"], res["total"]
+    pct = round(100 * c["done"] / total) if total else 0
+    misc = sum(1 for _, d, _, _ in res["rows"] if d == "misc")
+    print(f"wrote {OUT} — {total} tasks, {c['done']} done ({pct}%)")
+    print(f"  ledger   {res['source']} [{res['kind']}]")
+    print(f"  statuses ✅ completed {c['done']} · 🔄 in_progress {c['flight']} · ⬜ pending {c['pending']}")
+    print(f"  snapshot {os.path.relpath(MIRROR, REPO)}" + (f" · {misc} unclassified" if misc else ""))
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

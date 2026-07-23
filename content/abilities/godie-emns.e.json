@@ -41,5 +41,6 @@
   "vfxKey": "fx.prim.physical.shockwave",
   "targetsEnemies": true,
   "radius": 1.5,
-  "schema": "ability@1"
+  "schema": "ability@1",
+  "castTimeSec": 0.6
 }

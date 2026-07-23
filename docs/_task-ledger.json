@@ -1,0 +1,883 @@
+{
+  "_doc": "帳本快照，由 tools/status/gen_status.py 產生。手改無效（下次執行就被覆蓋），要改請改任務帳本本身。CI 上沒有帳本目錄時，這份就是 --check 的資料來源。",
+  "generated": "2026-07-23 20:55",
+  "source": "~/.claude/tasks/1fc1e42e-e26b-4bec-88ef-ca25238c0f4c",
+  "count": 175,
+  "tasks": [
+    {
+      "id": 1,
+      "subject": "Fix model facing 90° + full champion scale audit (incl. non-w3x models)",
+      "status": "completed"
+    },
+    {
+      "id": 2,
+      "subject": "Audio: wire BGM (11 scenes) + SFX to gameplay events",
+      "status": "completed"
+    },
+    {
+      "id": 3,
+      "subject": "Combat juice: Capcom-style hit feedback (shake/flash/knockback/hitstop)",
+      "status": "completed"
+    },
+    {
+      "id": 4,
+      "subject": "Content whitelist: default-empty, admin-curated champion/item/ability enablement",
+      "status": "completed"
+    },
+    {
+      "id": 5,
+      "subject": "Fixed ports: game 39527, admin backend 60721 (+ resume #43 edge hardening)",
+      "status": "completed"
+    },
+    {
+      "id": 6,
+      "subject": "Resume ranked ladder (backend + UI) — prior run died at session limit",
+      "status": "completed"
+    },
+    {
+      "id": 7,
+      "subject": "Verify flowers integration + full make test + live playtest sweep",
+      "status": "pending"
+    },
+    {
+      "id": 8,
+      "subject": "Re-import from UNPROTECTED source map: triggers, full strings, listfile, gap-fill",
+      "status": "completed"
+    },
+    {
+      "id": 9,
+      "subject": "Recognize WC3 dummy-effect-units + orb/attachment abilities → route to VFX/ambient (化繁為簡)",
+      "status": "completed"
+    },
+    {
+      "id": 10,
+      "subject": "Extract Blizzard MPQ models + BOUND SOUNDSETS — LOCAL-ONLY overlay (copyright-gated)",
+      "status": "completed"
+    },
+    {
+      "id": 11,
+      "subject": "Enforce hero-number ability convention: restore xx-0X names + verify/correct slot mapping",
+      "status": "completed"
+    },
+    {
+      "id": 12,
+      "subject": "Animated isekai-anime 3D login background (Babylon, fully procedural)",
+      "status": "completed"
+    },
+    {
+      "id": 13,
+      "subject": "In-game credits & required attributions (CC-BY 4.0 dragon is now the ONLY mandatory one + © notice + CC0 courtesy)",
+      "status": "pending"
+    },
+    {
+      "id": 14,
+      "subject": "Global top-layer audio toggle (music + SFX) on every screen",
+      "status": "completed"
+    },
+    {
+      "id": 15,
+      "subject": "Login scene REDESIGN: dark-epic isekai, glowing arena islands, fix text contrast",
+      "status": "completed"
+    },
+    {
+      "id": 16,
+      "subject": "Real CC0 dragon model for login boss scene (source + integrate)",
+      "status": "completed"
+    },
+    {
+      "id": 17,
+      "subject": "Systematic fix: strip stray oversized effect meshes baked into champion glbs (Nanoha giant beam + others)",
+      "status": "completed"
+    },
+    {
+      "id": 18,
+      "subject": "Login page champion portrait marquee (auto-scrolling hero showcase)",
+      "status": "completed"
+    },
+    {
+      "id": 19,
+      "subject": "i18n framework + trilingual UI CHROME (en/zh/ja) — content names stay Chinese",
+      "status": "pending"
+    },
+    {
+      "id": 20,
+      "subject": "Login immersion: 2 dragons + roars (near/far), UI/typing SFX, keystroke FX, ride-dragon enter transition",
+      "status": "completed"
+    },
+    {
+      "id": 21,
+      "subject": "In-game HUD: ability tooltips (no number, cursor-safe), EX hotkey F, draft/shop use w3x icons",
+      "status": "completed"
+    },
+    {
+      "id": 22,
+      "subject": "Make healing flower actually VISIBLE in combat (renders as a 0.137u flat disc)",
+      "status": "completed"
+    },
+    {
+      "id": 23,
+      "subject": "Editor AI icon generation + admin AI provider config + generic AI form-fill",
+      "status": "completed"
+    },
+    {
+      "id": 24,
+      "subject": "ALL buttons: hover+click SFX + press FX + JRPG-style cyber flowing-glow visual redesign",
+      "status": "completed"
+    },
+    {
+      "id": 25,
+      "subject": "Victory settlement: front-view + no control, S+/A/C rating from combat stats, per-match ranking → leaderboard",
+      "status": "completed"
+    },
+    {
+      "id": 26,
+      "subject": "Reverse exit transition + distinct ANGRY loud action-roar vs ambient long-howl",
+      "status": "completed"
+    },
+    {
+      "id": 27,
+      "subject": "Battle: clicking your hero plays that champion's voice (map quips + soundset fallback)",
+      "status": "completed"
+    },
+    {
+      "id": 28,
+      "subject": "Global combat-env multiplier table (cooldown/damage/stats/regen…) + admin 戰鬥系統 dynamic config",
+      "status": "completed"
+    },
+    {
+      "id": 29,
+      "subject": "Fixed-view occluder audit: no pillars/props hiding characters from the camera",
+      "status": "completed"
+    },
+    {
+      "id": 30,
+      "subject": "Champ-select countdown: last-5s ticks, each louder + distinct final cue",
+      "status": "completed"
+    },
+    {
+      "id": 31,
+      "subject": "Default camera at closest-zoom + team-colored minimap for global awareness",
+      "status": "completed"
+    },
+    {
+      "id": 32,
+      "subject": "Fix 妙蛙種子 (Bulbasaur) model: wrong size + missing textures",
+      "status": "completed"
+    },
+    {
+      "id": 33,
+      "subject": "Combat VFX overhaul: dense, layered, punchy particles per AAA best practices",
+      "status": "completed"
+    },
+    {
+      "id": 34,
+      "subject": "AI-generated announcer VO for system broadcast lines (請確認你的隊友是不是白目!! etc.)",
+      "status": "completed"
+    },
+    {
+      "id": 35,
+      "subject": "Japanese VO: champ-select confirm speaks the champion's full name (Kyoko TTS)",
+      "status": "completed"
+    },
+    {
+      "id": 36,
+      "subject": "Settlement ranking auto-scrolls from rank 1 down to the player's own row",
+      "status": "completed"
+    },
+    {
+      "id": 37,
+      "subject": "Weapon swing trails read as 刀光殘影: fade ≤0.25s, no lingering light pollution",
+      "status": "completed"
+    },
+    {
+      "id": 38,
+      "subject": "Intermission redesign: centre-stage shop (auto-open + re-openable) with a JRPG travelling-merchant stall",
+      "status": "completed"
+    },
+    {
+      "id": 39,
+      "subject": "Missing generic combat feedback VFX: blood/impact debris, dust, muzzle flash, status visuals",
+      "status": "completed"
+    },
+    {
+      "id": 40,
+      "subject": "ALL system announcer VO → Japanese female (Kyoko); purge zh map-quips from system pools",
+      "status": "completed"
+    },
+    {
+      "id": 41,
+      "subject": "Champ-select: trigger the title+name call-out on hover (the VO content itself is now in #57)",
+      "status": "pending"
+    },
+    {
+      "id": 42,
+      "subject": "In-match HUD top-left collision: menu ☰ / FPS overlay / team colors all hard-code the same corner",
+      "status": "completed"
+    },
+    {
+      "id": 43,
+      "subject": "Root-cause walking jitter/blur: no render interpolation between 30Hz sim ticks (+ adaptive resolution)",
+      "status": "completed"
+    },
+    {
+      "id": 44,
+      "subject": "Persistent equipment bar in HUD + LoL-style item rules (slot cap, no duplicates)",
+      "status": "completed"
+    },
+    {
+      "id": 46,
+      "subject": "ESCALATED: sim intermittently STOPS TICKING mid-match (renderer stays 60fps) — 3 independent sightings",
+      "status": "completed"
+    },
+    {
+      "id": 47,
+      "subject": "Demo/test starter set: seed a curated default roster + abilities + weapons (fixes empty-whitelist blocker)",
+      "status": "completed"
+    },
+    {
+      "id": 48,
+      "subject": "Dev-env bug: game-server hardcodes k8s hostname for platform → curation + combat-env ALWAYS fail-safe locally",
+      "status": "pending"
+    },
+    {
+      "id": 49,
+      "subject": "Port dropped model VERTEX COLOR (tint) + alpha from the w3x — Berserker renders in original Paladin colors",
+      "status": "completed"
+    },
+    {
+      "id": 50,
+      "subject": "Port per-invocation art params for dummy-effect units + special effects (scale/facing/tint/alpha/height/timeScale)",
+      "status": "pending"
+    },
+    {
+      "id": 51,
+      "subject": "Integrate 効果音ラボ (soundeffect-lab.info) free commercial SFX: UI / voice / skills / weapons + usage ledger",
+      "status": "completed"
+    },
+    {
+      "id": 52,
+      "subject": "Replace 魔王魂 BGM with self-generated JRPG/anime-style tracks + audition page for approval",
+      "status": "completed"
+    },
+    {
+      "id": 53,
+      "subject": "Real AI music providers (Suno/Stability/Replicate) behind /ai/music + one-click BGM pack generation",
+      "status": "completed"
+    },
+    {
+      "id": 54,
+      "subject": "JRPG custom cursor (size-adjustable) + real-time volume sliders in the top audio cluster",
+      "status": "completed"
+    },
+    {
+      "id": 55,
+      "subject": "Fix champion IDENTITY rule: hero-number, not model — 黑化Saber is a distinct character",
+      "status": "completed"
+    },
+    {
+      "id": 56,
+      "subject": "Importer drops ~150 of 180 w3u field codes — stop whitelisting, add a raw mods passthrough",
+      "status": "pending"
+    },
+    {
+      "id": 57,
+      "subject": "Recast ALL synthesized VO as deliberate 惡搞 jank — trilingual zh/en/ja chaos, novelty voices",
+      "status": "completed"
+    },
+    {
+      "id": 58,
+      "subject": "Minimap redesign to LoL spec: terrain background, champion portraits, camera viewport box",
+      "status": "completed"
+    },
+    {
+      "id": 59,
+      "subject": "mdx→glb conversion loses geoset visibility animation — Zoro's tornado is permanently baked on",
+      "status": "completed"
+    },
+    {
+      "id": 60,
+      "subject": "Combat legibility: attack anims/flash, victim red flash, ranged projectile visuals, range+AoE audit",
+      "status": "completed"
+    },
+    {
+      "id": 61,
+      "subject": "AUDIT every imported model and fix only the defective ones (no blanket re-convert)",
+      "status": "pending"
+    },
+    {
+      "id": 62,
+      "subject": "Test-mode audio silencing: background agents must never make sound on the user's machine",
+      "status": "completed"
+    },
+    {
+      "id": 63,
+      "subject": "Scene-scoped SFX preloading — stop pulling all 77 clips at boot",
+      "status": "pending"
+    },
+    {
+      "id": 64,
+      "subject": "Hit flash paints the procedural voxel figure, not the loaded 3D model",
+      "status": "completed"
+    },
+    {
+      "id": 65,
+      "subject": "BETA PREREQ: git init + first commit — the project has NO version control",
+      "status": "completed"
+    },
+    {
+      "id": 66,
+      "subject": "Build-stamped version badge pinned to the bottom of EVERY screen (screenshot-traceable)",
+      "status": "completed"
+    },
+    {
+      "id": 67,
+      "subject": "Minimap shows ONLY the player's own duel zone — drop the other 3v3",
+      "status": "completed"
+    },
+    {
+      "id": 68,
+      "subject": "Per-model, per-animation orientation audit: EVERY champion, EVERY clip — no tilted/flying/face-down (user can't check manually)",
+      "status": "completed"
+    },
+    {
+      "id": 69,
+      "subject": "Finish #60: melee attacks have NO attacker flash; one champion still silently has no attack anim",
+      "status": "completed"
+    },
+    {
+      "id": 70,
+      "subject": "Arena item model: only FINAL crafted items in the shop, quest rewards into the 3-choose-1 draft",
+      "status": "completed"
+    },
+    {
+      "id": 71,
+      "subject": "Content codex: one live page listing every item / champion / ability with full detail",
+      "status": "completed"
+    },
+    {
+      "id": 72,
+      "subject": "Icon coverage: extract map-custom, AI-generate shippable replacements for the 695 Blizzard-stock + 168 orphans",
+      "status": "in_progress"
+    },
+    {
+      "id": 73,
+      "subject": "Sweep ALL models for un-merged sphere/orb + locust-swarm attachment geometry (孫悟空 headless is ONE case, not the whole task)",
+      "status": "completed"
+    },
+    {
+      "id": 74,
+      "subject": "Login→battle handoff: fade out the roar behind a ≥1s loading bar; own-champion team-colour glow",
+      "status": "pending"
+    },
+    {
+      "id": 75,
+      "subject": "Re-match the ambient cries to the SHORTENED anchor + deepen their reverb",
+      "status": "pending"
+    },
+    {
+      "id": 76,
+      "subject": "Champ select: ≥60s timer + full champion profile panel (parse the fields the map already has)",
+      "status": "in_progress"
+    },
+    {
+      "id": 77,
+      "subject": "Stand-in fallback silently discards the map's real model AND its scale — 小叮噹 should be a 0.6-scale blue panda",
+      "status": "pending"
+    },
+    {
+      "id": 78,
+      "subject": "1:1 fidelity pass: reconcile every ability + item against WC3 native effects AND the JASS",
+      "status": "completed"
+    },
+    {
+      "id": 79,
+      "subject": "Ability VFX binding: 92% share one fire placeholder — bind real imported effects; 依文潔琳's ice spells have no ice",
+      "status": "pending"
+    },
+    {
+      "id": 80,
+      "subject": "Arena ground is untextured flat discs + a square tile grid clipped to a circle — rebuild it properly",
+      "status": "completed"
+    },
+    {
+      "id": 81,
+      "subject": "Retire the Blizzard asset debt: 26 models + 511 voice clips + 863 icons → AI-generated shippable replacements",
+      "status": "pending"
+    },
+    {
+      "id": 82,
+      "subject": "Redesign the item economy to 3 unified price tiers + legendary-orb gacha + the 20-stack stat path",
+      "status": "completed"
+    },
+    {
+      "id": 83,
+      "subject": "Importer duplicates modifier arrays — 4 items ship with doubled stats",
+      "status": "pending"
+    },
+    {
+      "id": 84,
+      "subject": "Death drops a team-coloured revive circle; a teammate channels in it to bring you back once",
+      "status": "completed"
+    },
+    {
+      "id": 85,
+      "subject": "Death spectator: desaturate the whole scene, keep only your own teammates in colour",
+      "status": "completed"
+    },
+    {
+      "id": 86,
+      "subject": "Redo the cyber hover SFX: low-frequency craft flyby, not a light bubbly chirp",
+      "status": "completed"
+    },
+    {
+      "id": 87,
+      "subject": "BGM loops are too short and get stale — extend combat + theme with a real B section",
+      "status": "completed"
+    },
+    {
+      "id": 88,
+      "subject": "Login page: a second, serene high-soprano nocturne in rotation with the epic theme",
+      "status": "completed"
+    },
+    {
+      "id": 89,
+      "subject": "Neutral guardian tower at each duel-zone centre: last-hit reward, AoE punish, gives siege heroes a role",
+      "status": "pending"
+    },
+    {
+      "id": 90,
+      "subject": "Kill bounty: extra gold for killing an enemy, paid once per enemy — a revived player pays nothing more",
+      "status": "completed"
+    },
+    {
+      "id": 91,
+      "subject": "Purge the remaining 魔王魂 attribution from docs and manifests (footer already swapped)",
+      "status": "completed"
+    },
+    {
+      "id": 92,
+      "subject": "RO-style floating combat text: coloured damage / heal / MP numbers with pop-arc-fade",
+      "status": "completed"
+    },
+    {
+      "id": 93,
+      "subject": "Victory presentation: round win = grey + small fireworks + champion-flavoured taunt; match win = dark + giant roast-chicken firework + savage VO",
+      "status": "completed"
+    },
+    {
+      "id": 94,
+      "subject": "Re-apply if lost: shop card moved LEFT (with mirrored scene) + functional shelves",
+      "status": "pending"
+    },
+    {
+      "id": 95,
+      "subject": "Shop phase is timed too: countdown display + escalating audio cues on entry",
+      "status": "completed"
+    },
+    {
+      "id": 96,
+      "subject": "Codex becomes an editor on localhost: edit + save champions, abilities, items, combat multipliers",
+      "status": "completed"
+    },
+    {
+      "id": 97,
+      "subject": "Live icon-coverage progress bar so generation progress is visible, not a black box",
+      "status": "completed"
+    },
+    {
+      "id": 98,
+      "subject": "11 imported effect models have ZERO geometry — the mdx particle emitters never converted",
+      "status": "pending"
+    },
+    {
+      "id": 99,
+      "subject": "Asset budget page: per-model tris + texture + WHERE IT IS USED, with same-screen caps and an offline batch optimiser",
+      "status": "in_progress"
+    },
+    {
+      "id": 100,
+      "subject": "Champions keep fighting for ~66s after the round is settled — combat never actually stops",
+      "status": "pending"
+    },
+    {
+      "id": 101,
+      "subject": "Icon generation becomes a live page: style spec, prompts, provider status, contact sheet — and consolidate the asset pages",
+      "status": "completed"
+    },
+    {
+      "id": 102,
+      "subject": "Consolidate into 後台管理: content CRUD for heroes/skills/items + model budget + icon tracking, loopback = admin",
+      "status": "in_progress"
+    },
+    {
+      "id": 103,
+      "subject": "The 店員 is occluded by his own stall — nothing tests sightlines in the intermission scene",
+      "status": "completed"
+    },
+    {
+      "id": 104,
+      "subject": "Move #82's capstone gate to `statStacks >= 20 && round >= 6` — one line, protects 「大約是第五場之後」",
+      "status": "completed"
+    },
+    {
+      "id": 105,
+      "subject": "Guardian gets a per-arena identity: 樹人 / 石頭人 / 巨獸人 — one mechanic, five faces",
+      "status": "in_progress"
+    },
+    {
+      "id": 106,
+      "subject": "Shop rebuild: inline descriptions, visible 6-slot cap, and a live stat preview that must not lie",
+      "status": "completed"
+    },
+    {
+      "id": 107,
+      "subject": "Safe-area contract: every panel declares its edges, and no persistent chrome may be covered",
+      "status": "in_progress"
+    },
+    {
+      "id": 108,
+      "subject": "Legendary pool is mis-curated (網友手環, 蜂蜜罐) — and the descriptions disagree with the modifiers",
+      "status": "in_progress"
+    },
+    {
+      "id": 109,
+      "subject": "BGM restarts at bar 0 every round — so the second half of the extended loops never plays",
+      "status": "completed"
+    },
+    {
+      "id": 110,
+      "subject": "3-choose-1 draft cards: LoL-Arena flourish, mandatory icons, and a tech confirm sound",
+      "status": "completed"
+    },
+    {
+      "id": 111,
+      "subject": "Shop champion stands wrong: 皮卡丘 is face-down on the floor, and buying should trigger a reaction",
+      "status": "completed"
+    },
+    {
+      "id": 112,
+      "subject": "The AI image path is code-broken against every current provider — a key alone would not fix it",
+      "status": "pending"
+    },
+    {
+      "id": 113,
+      "subject": "Investigate 14 champion doc pairs with byte-identical names/model/stats — dedup or distinct-hero?",
+      "status": "pending"
+    },
+    {
+      "id": 114,
+      "subject": "Port the w3x description colour markup into game/admin/codex as semantic roles, and normalise the inconsistent number colouring",
+      "status": "completed"
+    },
+    {
+      "id": 115,
+      "subject": "Model LOD tiers: generate xxx-mid / xxx-small decimations and make the quality setting actually swap the file loaded",
+      "status": "in_progress"
+    },
+    {
+      "id": 116,
+      "subject": "Blizzard model replacement: source per-item from Sketchfab (or AI/procedural 自己捏), with LOD variants and per-model licence proof",
+      "status": "in_progress"
+    },
+    {
+      "id": 117,
+      "subject": "CRITICAL: orphaned ggd-redis-e2e exposes un-authenticated admin session store to the whole LAN",
+      "status": "completed"
+    },
+    {
+      "id": 118,
+      "subject": "Meta 養成：水晶（打場免費賺）解鎖英雄 + 喜愛置頂 + M幣改由「後台發放」的造型幣（非購買）",
+      "status": "completed"
+    },
+    {
+      "id": 119,
+      "subject": "Champion transform/form-swap system: switch forms, reset to base per round or auto-revert on the map's own timer",
+      "status": "pending"
+    },
+    {
+      "id": 120,
+      "subject": "Champ-select confirm VO: speak 稱號 in Chinese + 全名 in Japanese (mixed-language for comic effect)",
+      "status": "completed"
+    },
+    {
+      "id": 121,
+      "subject": "Shop: undo an accidental sell (restore item, reverse the 40%-refund gold exactly)",
+      "status": "pending"
+    },
+    {
+      "id": 122,
+      "subject": "Shop tabs: rename 商品→屬性 (lead with the hero attribute panel) and show the hero's portrait icon",
+      "status": "completed"
+    },
+    {
+      "id": 123,
+      "subject": "Shared VFX-primitive library: rebuild the common reusable WC3 effects (tornado / shockwave / explosion / locust-swarm / nova / beam) that many abilities transform-reuse",
+      "status": "pending"
+    },
+    {
+      "id": 124,
+      "subject": "Re-arrange 中場「合間 / Between the Bells」 into a cheerful 下課打鐘 school-recess style (needs a new bell voice)",
+      "status": "pending"
+    },
+    {
+      "id": 125,
+      "subject": "Every displayed number = post-multiplier final value (cooldown/damage/HP/mana/…), not the base — apply combat-env everywhere it's shown",
+      "status": "completed"
+    },
+    {
+      "id": 126,
+      "subject": "Private-deploy gate: registration → pending → admin-approved before play; + go-live security hardening (friends-only, no monetization)",
+      "status": "pending"
+    },
+    {
+      "id": 127,
+      "subject": "環境分級內容閘:localhost/127.0.0.1/LAN 才開放單機 + 版權物,對外環境不服務",
+      "status": "completed"
+    },
+    {
+      "id": 128,
+      "subject": "Ability + item IN-GAME castability coverage sweep: every pickable champion, every slot actually fires (pass/fail matrix)",
+      "status": "completed"
+    },
+    {
+      "id": 129,
+      "subject": "Champ-select 3D model preview renders blank/black (no model on hover/select)",
+      "status": "completed"
+    },
+    {
+      "id": 130,
+      "subject": "Onboarding trap: not locking a champion → spawn dead/spectator in round 1 (0 HP, 觀戰中)",
+      "status": "completed"
+    },
+    {
+      "id": 131,
+      "subject": "Combat: persistent bright-white particle burst stuck in top-right of the arena view",
+      "status": "pending"
+    },
+    {
+      "id": 132,
+      "subject": "Round pacing: combat ~3 min baseline, then fire-ring closes in to accelerate the finish",
+      "status": "completed"
+    },
+    {
+      "id": 133,
+      "subject": "Parameterize hit-feel (hitstop/hitstun/shake/spark/flash) per champion basic-attack + per ability, damage-scaled default when unset",
+      "status": "completed"
+    },
+    {
+      "id": 134,
+      "subject": "Move 主題曲·寧靜女聲 (menuNocturne) out of the login rotation → play it on the leaderboard/ranked-ladder screen only",
+      "status": "completed"
+    },
+    {
+      "id": 135,
+      "subject": "Distinctive 5–10s signature intros per non-theme BGM (context-fitting, identifiable, optional rap) — fix \"the openings all sound alike\"",
+      "status": "pending"
+    },
+    {
+      "id": 136,
+      "subject": "Ability range/AoE as a 60% system multiplier (abilityRange in combat-env) + flow into displayFinal so shown range = post-multiplier",
+      "status": "completed"
+    },
+    {
+      "id": 137,
+      "subject": "Additional rotating BGM variant per scene — a \"Samantha James, fast\" nu-jazz/deep-house alternate that rotates with each existing track",
+      "status": "completed"
+    },
+    {
+      "id": 138,
+      "subject": "First open roster = user's 48 named champions (canonical ids) + PRIORITIZE skill/VFX porting for this batch",
+      "status": "completed"
+    },
+    {
+      "id": 139,
+      "subject": "Per-champion famous quote (名言): show in champ-select profile + speak it in gender-appropriate Japanese VO on confirm",
+      "status": "pending"
+    },
+    {
+      "id": 140,
+      "subject": "裝備欄 slots show FULL item detail (effect + stats + lore) on hover, not just name+refund",
+      "status": "completed"
+    },
+    {
+      "id": 141,
+      "subject": "Collaborative visual VFX/hero/skill editor for delegation (design → MVP build)",
+      "status": "pending"
+    },
+    {
+      "id": 142,
+      "subject": "Champion 名言 VO: all-113 gendered JP voice + 3 playback moments",
+      "status": "pending"
+    },
+    {
+      "id": 143,
+      "subject": "Round-win: winner's 3D model center-screen + VO",
+      "status": "pending"
+    },
+    {
+      "id": 144,
+      "subject": "Per-champion w3x stats: movement/attack speed + regen from source",
+      "status": "pending"
+    },
+    {
+      "id": 145,
+      "subject": "Random arena each combat round",
+      "status": "pending"
+    },
+    {
+      "id": 146,
+      "subject": "Shop scene: merchant 3D model center + player model right + merchant head icon",
+      "status": "pending"
+    },
+    {
+      "id": 147,
+      "subject": "Combat juice VFX: shadows, walking dust, cast decals, hit sparks, blood",
+      "status": "pending"
+    },
+    {
+      "id": 148,
+      "subject": "Merchant rotating tips during intermission (rules/tips/weapon recs, 5s each)",
+      "status": "pending"
+    },
+    {
+      "id": 149,
+      "subject": "Expand + power-up the augment pool so the 3-choose-1 draft can swing games",
+      "status": "pending"
+    },
+    {
+      "id": 150,
+      "subject": "Champion model SIZE normalization: uniform on-screen height + intentional exceptions",
+      "status": "completed"
+    },
+    {
+      "id": 151,
+      "subject": "iPhone landscape (short-height) menu layout overlaps — login/champ-select don't fit 390px height",
+      "status": "pending"
+    },
+    {
+      "id": 152,
+      "subject": "Ability buttons: name on button (all platforms) + hold→description-at-top + range/AoE dashed floor preview",
+      "status": "completed"
+    },
+    {
+      "id": 153,
+      "subject": "HP/TTK experiment: find maxHealth for ≥2min min / ~3min avg round length",
+      "status": "completed"
+    },
+    {
+      "id": 154,
+      "subject": "Security: injection + DoS/DDoS audit, detection/prevention, and a test suite",
+      "status": "completed"
+    },
+    {
+      "id": 155,
+      "subject": "Render 名言 section on bgm-audition.html (icons + text + playback)",
+      "status": "completed"
+    },
+    {
+      "id": 156,
+      "subject": "Fix: human player's own seat shows \"Bot 0\" (dev/LAN join never sets displayName)",
+      "status": "completed"
+    },
+    {
+      "id": 157,
+      "subject": "Fix: per-round augment 3-choose-1 never triggers (arena-rules schedules no augmentTier)",
+      "status": "completed"
+    },
+    {
+      "id": 158,
+      "subject": "Loading optimization: audio 128k/44k ceiling + lazy audio/model load",
+      "status": "completed"
+    },
+    {
+      "id": 159,
+      "subject": "Mobile: champ-select profile + shop catalogue invisible on phone",
+      "status": "completed"
+    },
+    {
+      "id": 160,
+      "subject": "Ability buttons: press SFX + feedback on QWER/EX (all input methods)",
+      "status": "completed"
+    },
+    {
+      "id": 161,
+      "subject": "Raise combat camera pitch (55° too low)",
+      "status": "completed"
+    },
+    {
+      "id": 162,
+      "subject": "Admin console: no-login on loopback (localhost=admin)",
+      "status": "completed"
+    },
+    {
+      "id": 163,
+      "subject": "Ranged champions attack from range + bots kite",
+      "status": "completed"
+    },
+    {
+      "id": 164,
+      "subject": "Floating damage numbers render black (transparent gradient fill)",
+      "status": "completed"
+    },
+    {
+      "id": 165,
+      "subject": "Top-left enemy trio HP/MP + basic-stats panel",
+      "status": "completed"
+    },
+    {
+      "id": 166,
+      "subject": "Passive ability buttons get a dashed border",
+      "status": "completed"
+    },
+    {
+      "id": 167,
+      "subject": "Champ-select: lock-in picked champion (+ shorten to 40s)",
+      "status": "completed"
+    },
+    {
+      "id": 168,
+      "subject": "Models float up when idle (黑崎一護 heroichigo + roster sweep)",
+      "status": "completed"
+    },
+    {
+      "id": 169,
+      "subject": "RECONCILE: extend prose-rescale to damage (damageDealt now 0.5) + fix scope-lock test",
+      "status": "completed"
+    },
+    {
+      "id": 170,
+      "subject": "Login speed: render auth screen before the 1441-doc content load (defer the boot gate)",
+      "status": "completed"
+    },
+    {
+      "id": 171,
+      "subject": "Review the working-tree diff file-by-file; judge each change, pop up on doubts",
+      "status": "completed"
+    },
+    {
+      "id": 172,
+      "subject": "Self-service change-password: platform endpoint + admin console UI",
+      "status": "completed"
+    },
+    {
+      "id": 173,
+      "subject": "Round-MVP bye-round residual: leading team with a bye has no survivors",
+      "status": "completed"
+    },
+    {
+      "id": 174,
+      "subject": "Invite-code registration gate: admin mints codes, only invited can register",
+      "status": "pending"
+    },
+    {
+      "id": 175,
+      "subject": "Match replay: record seed + inputs, play any match back — the playtest feedback channel",
+      "status": "pending"
+    },
+    {
+      "id": 176,
+      "subject": "Family deploy: serve ALL assets (no tiering) + secrets hardening on the deploy path",
+      "status": "pending"
+    }
+  ]
+}

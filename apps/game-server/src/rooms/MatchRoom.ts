@@ -24,11 +24,15 @@ import { projectSnapshot } from "../net/snapshot";
 import { sign, verifyTicket } from "../auth/hmac";
 import { Whitelist, WHITELIST_BYPASS, sharedWhitelistCache } from "../curation/whitelist";
 import { sharedCombatEnvCache } from "../config/combatEnv";
+import { resolveServerOps, type ServerOps } from "../config/serverOps";
 import { sanitizeInputMessage } from "../net/validateInput";
 import { MessageRateLimiter } from "../net/messageRateLimiter";
 import { sanitizeDisplayName } from "../net/sanitizeText";
 import { roomRegistry } from "./roomRegistry";
 import { verifyCreateToken } from "./createGate";
+import { MatchRecorder } from "../replay/Recorder";
+import { buildHeader } from "../replay/headerCodec";
+import { activeContentVersion } from "../replay/Player";
 
 export interface MatchRoomOptions {
   matchId?: string;
@@ -69,6 +73,20 @@ export interface MatchRoomOptions {
    * defaults — see config/combatEnv.ts).
    */
   combatEnv?: Partial<Record<CombatEnvKey, number>>;
+  /**
+   * NOTE — there is deliberately NO `serverOps` field here.
+   *
+   * Everything in this bag arrives from whoever created the room, which in a
+   * deploy without a shared secret means any client (that is precisely why
+   * `createToken` above has to be verified). The ops table carries `maxRooms`,
+   * which is not per-match state: it moves the PROCESS-WIDE admission ceiling
+   * and outlives the room that set it, so a client-supplied value would let one
+   * join pin the whole shard at one concurrent match, or raise the ceiling to
+   * 500 and delete the DoS guard, for everybody. The table is resolved through
+   * config/serverOps.ts `resolveServerOps()` instead — platform, then env, then
+   * compiled defaults — and tests override it with the module-level
+   * `setServerOpsForTests`, which nothing on the wire can reach.
+   */
 }
 
 const SHARED_SECRET = process.env.PLATFORM_GAME_SHARED_SECRET ?? "";
@@ -97,6 +115,13 @@ export class MatchRoom extends Room<MatchState> {
   private readonly rateLimiter = new MessageRateLimiter();
   /** true once this room holds a process-wide concurrent-room slot. */
   private acquiredRoomSlot = false;
+  /**
+   * MATCH RECORDER (task #175) — every match is recorded by default, because the
+   * replay IS the playtest feedback channel and a match nobody thought to record
+   * is a match the owner cannot be told about. null when recording could not be
+   * opened; a broken recording never breaks a game.
+   */
+  private recorder: MatchRecorder | null = null;
 
   override async onAuth(client: Client, options: Record<string, unknown>): Promise<boolean> {
     // Defense-in-depth: when a shared secret is configured, joins must carry a
@@ -119,16 +144,47 @@ export class MatchRoom extends Room<MatchState> {
     if (SHARED_SECRET && !verifyCreateToken(SHARED_SECRET, options.createToken)) {
       throw new Error("match creation is restricted to the platform reservation flow");
     }
+    // OPERATIONAL SETTINGS (admin 系統運維). Resolved HERE, at the top of
+    // onCreate, because both knobs are consumed a few lines below: maxRooms by
+    // the admission gate and snapshotHz by patchRate. The create path is the
+    // only reader of either, which is precisely why no polling loop exists —
+    // refreshing at the create attempt IS "live" for maxRooms, and snapshotHz
+    // gets combat-env semantics for free (a running match keeps what it started
+    // with). Fails safe to the last-known-good table, then to the compiled/env
+    // defaults.
+    //
+    // NOT from `options`: see MatchRoomOptions. maxRooms is process-wide state,
+    // and this bag is client-controlled whenever no shared secret is set.
+    const ops: ServerOps = await resolveServerOps();
+
     // PROCESS-WIDE CONCURRENT-ROOM CAP (DoS). Refuse — before allocating the sim
     // — once the shard is already running the maximum number of ticking matches.
+    //
+    // The ceiling is pushed in immediately before the gate so an operator's edit
+    // takes effect on the very next create attempt (within the 5 s cache TTL).
+    // Lowering it below the live count does NOT end any match: setCapacity only
+    // moves the admission line, so the process drains — `active` stays where it
+    // is, every new match is refused, and admission resumes as running matches
+    // finish and release their slots (see rooms/roomRegistry.ts).
+    roomRegistry.setCapacity(ops.maxRooms);
     if (!roomRegistry.tryAcquire()) {
-      throw new Error("game-server at capacity: max concurrent matches reached");
+      throw new Error(
+        `game-server at capacity: ${roomRegistry.active} match(es) running, ceiling ${roomRegistry.capacity}`,
+      );
     }
     this.acquiredRoomSlot = true;
     // Per-room client cap (join-flood) + autoDispose (no zombie rooms). A match
     // never has more than SEAT_COUNT human clients, so cap the room there.
     this.maxClients = SEAT_COUNT;
     this.autoDispose = true;
+    // SNAPSHOT BROADCAST RATE. Must be assigned explicitly: Colyseus defaults
+    // Room.patchRate to 1000/20, and before this line nothing in the repo ever
+    // set it — so SNAPSHOT_HZ was a constant with no consumer and the 20 Hz on
+    // the wire was the library default, not our choice. Transport only; the sim
+    // still steps at TICK_HZ and stays byte-identical (see config/snapshotRate).
+    // Resolved from the ops table (env value as the floor) and frozen for this
+    // match — an admin save applies from the NEXT match.
+    this.patchRate = 1000 / ops.snapshotHz;
 
     const matchId = options.matchId ?? `dev-${Math.random().toString(36).slice(2, 10)}`;
     const seed = options.seed ?? (Date.now() & 0xffffffff);
@@ -184,20 +240,29 @@ export class MatchRoom extends Room<MatchState> {
     // PHASE DURATIONS come from the config.match@1 doc (task #38) — the prep
     // window is content, not a constant. Resolved ONCE here and frozen for the
     // match, so a mid-match content reload cannot retime a running phase.
+    //
+    // Resolved into locals rather than inline because the replay header records
+    // the same three tables (task #175): a recording that stored a re-resolved
+    // copy could disagree with what the match actually ran on if content reloaded
+    // between the two calls, and the whole point of the header is that it cannot.
+    const phaseCfg = resolvePhaseConfig();
+    // Round-pacing fire ring (task #132): resolved from the SAME config.match@1
+    // doc as the phase durations, so `match.fireRing.startSec` is the single
+    // round-length source of truth. null (absent block) leaves the ring off.
+    const fireRing = resolveFireRing();
+    const arenaRules = resolveArenaRules();
+    const startingLives = 3;
     this.ctl = new MatchController(
       matchId,
       seed,
       specs,
-      resolvePhaseConfig(),
-      3,
-      resolveArenaRules(),
+      phaseCfg,
+      startingLives,
+      arenaRules,
       arena,
       whitelist,
       combatEnv,
-      // Round-pacing fire ring (task #132): resolved from the SAME config.match@1
-      // doc as the phase durations, so `match.fireRing.startSec` is the single
-      // round-length source of truth. null (absent block) leaves the ring off.
-      resolveFireRing(),
+      fireRing,
       // Per-round arena rotation pool (task #145).
       arenaPool,
     );
@@ -211,6 +276,42 @@ export class MatchRoom extends Room<MatchState> {
     this.state.seed = seed;
     // ACTIVE multiplier snapshot -> clients (prediction parity; set once)
     this.state.combatEnvJson = JSON.stringify(combatEnv);
+    // CONTENT VERSION. The schema field has existed (and been replicated) since
+    // the protocol was written, and until task #175 nothing ever assigned it —
+    // the wire value was the empty string on every room, while the one process
+    // that knows the value logged it at boot and threw it away. It is the single
+    // most important key a replay carries (content changes constantly here, and
+    // a replay recorded on cv_A and played on cv_B is a different game), so it is
+    // now published to clients as well as written into every recording.
+    this.state.contentVersion = activeContentVersion();
+
+    // Open the recording BEFORE the tick loop starts, so tick 0 is captured.
+    // Awaiting here is free: Colyseus does not accept joins until onCreate
+    // resolves, and nothing after this point is on the tick path.
+    this.recorder = await MatchRecorder.open(
+      matchId,
+      buildHeader({
+        matchId,
+        seed,
+        contentVersion: activeContentVersion(),
+        seats: this.ctl.seats,
+        specIsBot: (seatId) => specs.find((s) => s.seatId === seatId)?.isBot ?? true,
+        startingLives,
+        arena,
+        arenaPool,
+        combatEnv,
+        phaseConfig: phaseCfg,
+        fireRing,
+        arenaRules,
+        whitelist,
+        env: {
+          whitelistBypass: WHITELIST_BYPASS,
+          combatEnvBypass: process.env.GGD_COMBAT_ENV_BYPASS === "1",
+          devCheats: DEV_CHEATS,
+        },
+      }),
+    );
+    this.ctl.recorder = this.recorder;
 
     this.onMessage(MSG.INPUT, (client, raw: unknown) => {
       // Per-session rate limit (DoS: message-flood). A sustained flood is
@@ -234,6 +335,12 @@ export class MatchRoom extends Room<MatchState> {
       const seatId = this.seatBySession.get(client.sessionId);
       if (seatId === undefined || !msg?.championId) return;
       const res = this.ctl.selectChampion(seatId, String(msg.championId));
+      // Recorded only when it TOOK EFFECT (a rejected pick changed nothing), and
+      // stamped with `world.tick` — the tick about to run, which is the tick
+      // playback re-applies it just before. There is no tick on the wire and
+      // there cannot be: message arrival is wall-clock, so only the server knows
+      // which tick an input landed on.
+      if (res.ok) this.recorder?.recordChampionSelect(this.ctl.world.tick, seatId, String(msg.championId));
       if (!res.ok) {
         // surface WHY (not-whitelisted / unknown-champion / wrong-phase) so
         // champ-select can explain the rejection instead of silently ignoring.
@@ -247,7 +354,12 @@ export class MatchRoom extends Room<MatchState> {
       if (this.rateLimiter.check(client.sessionId) !== "ok") return;
       const seatId = this.seatBySession.get(client.sessionId);
       if (seatId === undefined || !msg?.cheat) return;
-      this.ctl.applyCheat(seatId, msg.cheat);
+      // Cheats mutate hp/gold/levels/items/cooldowns and can swap champions or
+      // force-advance a phase, so a replay that did not carry them would diverge
+      // on the very next tick. Recorded even though they are dev-only.
+      if (this.ctl.applyCheat(seatId, msg.cheat)) {
+        this.recorder?.recordCheat(this.ctl.world.tick, seatId, msg.cheat);
+      }
     });
 
     // fixed-tick accumulator loop
@@ -458,12 +570,34 @@ export class MatchRoom extends Room<MatchState> {
       roomRegistry.release();
       this.acquiredRoomSlot = false;
     }
+    // A room disposed without reaching matchEnd (everyone left, the shard is
+    // shutting down) still leaves a recording — footer-less, and therefore
+    // marked 未完成 in the list, but playable up to its last complete line.
+    // finishMatch() has already closed the recorder on the normal path.
+    const rec = this.recorder;
+    this.recorder = null;
+    this.ctl.recorder = null;
+    void rec?.abandon();
   }
 
   private async finishMatch(): Promise<void> {
     if (this.resultSent || !this.ctl.result) return;
     this.resultSent = true;
     projectSnapshot(this.ctl, this.state, this.humanDrivers);
+
+    // Seal the recording FIRST: write the footer, compress, prune. Detaching the
+    // sink before the await stops any further tick from writing into a closing
+    // stream, and everything here is off the tick path (the room is done).
+    const rec = this.recorder;
+    this.recorder = null;
+    this.ctl.recorder = null;
+    if (rec) {
+      try {
+        await rec.finish(this.ctl);
+      } catch (err) {
+        console.error(`[replay] failed to seal the recording for ${this.ctl.matchId}`, err);
+      }
+    }
 
     // victory settlement → clients (per-player scoreboard + grade + rank +
     // winner). Rides the MSG.EVENT channel; the client renders the settlement

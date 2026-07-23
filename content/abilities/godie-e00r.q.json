@@ -39,5 +39,6 @@
     }
   ],
   "vfxKey": "fx.prim.void.explosion",
-  "targetsEnemies": false
+  "targetsEnemies": false,
+  "castTimeSec": 0.3
 }

@@ -42,5 +42,6 @@
       "duration": 12.0
     }
   ],
-  "vfxKey": "fx.prim.physical.swarm"
+  "vfxKey": "fx.prim.physical.swarm",
+  "castTimeSec": 0.3
 }

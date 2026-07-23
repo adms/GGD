@@ -1,6 +1,8 @@
 /**
- * client-03 (client-interp): remote entities interpolate ~100 ms behind the
- * newest authoritative tick, lerping between bracketing snapshot samples.
+ * client-03 (client-interp): remote entities interpolate INTERP_DELAY_MS behind
+ * the newest authoritative tick, lerping between bracketing snapshot samples.
+ * The delay is imported, never written as a literal, so this suite keeps
+ * passing (and keeps MEANING the same thing) when the latency budget moves.
  * roster-10 (client-teleport-snap): a discontinuous sample (respawn / round
  * reset / blink) is SNAPPED across, not glided across — and it must not poison
  * the Catmull-Rom tangents of the neighbouring brackets either.
@@ -28,7 +30,9 @@ describe("InterpolationBuffer + TimeSync (client-03)", () => {
   it("lerps between the two bracketing samples", () => {
     cover("client-interp");
     const buf = new InterpolationBuffer();
-    // entity moving +1 x per tick (snapshots every other tick, like 20 Hz vs 30 Hz)
+    // entity moving +1 x per tick, sampled every other tick — deliberately a
+    // SPARSER cadence than the live 30/30 one, so the bracket maths is still
+    // exercised for gaps > 1 tick (a dropped patch produces exactly that)
     buf.push(7, { tick: 10, x: 10, z: 0, fx: 1, fz: 0 });
     buf.push(7, { tick: 12, x: 12, z: 2, fx: 0, fz: 1 });
     buf.push(7, { tick: 14, x: 14, z: 4, fx: 0, fz: 1 });
@@ -127,7 +131,7 @@ describe("InterpolationBuffer + TimeSync (client-03)", () => {
     expect(buf.sample(6, 13)!.x).toBeCloseTo(3, 9);
   });
 
-  it("end-to-end: sampling at the render tick trails the entity by ~100 ms", () => {
+  it("end-to-end: sampling at the render tick trails the entity by INTERP_DELAY_MS", () => {
     cover("client-interp");
     const ts = new TimeSync();
     const buf = new InterpolationBuffer();
@@ -138,7 +142,7 @@ describe("InterpolationBuffer + TimeSync (client-03)", () => {
     }
     const nowMs = 60 * TICK_MS;
     const pose = buf.sample(9, ts.renderTick(nowMs))!;
-    // entity is at x=60 "now"; rendered ~100ms behind → x ≈ 60 - 3 ticks
+    // entity is at x=60 "now"; rendered INTERP_DELAY_MS behind → x ≈ 60 - delayTicks
     expect(pose.x).toBeCloseTo(60 - INTERP_DELAY_MS / TICK_MS, 1);
   });
 });

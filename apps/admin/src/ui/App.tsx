@@ -8,10 +8,12 @@ import { MatchesPage } from "./MatchesPage";
 import { AnnouncementsPage } from "./AnnouncementsPage";
 import { CurationPage } from "./CurationPage";
 import { CombatEnvPage } from "./CombatEnvPage";
+import { ServerOpsPage } from "./ServerOpsPage";
 import { AiSettingsPage } from "./AiSettingsPage";
 import { ModelBudgetPage } from "./ModelBudgetPage";
 import { IconTrackingPage } from "./IconTrackingPage";
 import { MCoinGrantPage } from "./MCoinGrantPage";
+import { InvitesPage } from "./InvitesPage";
 import { AuditPage } from "./AuditPage";
 import { ChangePasswordDialog } from "./ChangePasswordDialog";
 import { Btn, Panel } from "./widgets";
@@ -24,12 +26,15 @@ const NAV: { page: Page; label: string; emoji: string }[] = [
   { page: "announcements", label: "Announcements", emoji: "📢" },
   { page: "curation", label: "內容白名單", emoji: "✅" },
   { page: "combatEnv", label: "戰鬥系統", emoji: "⚖️" },
+  { page: "serverOps", label: "系統運維", emoji: "🛠️" },
   { page: "ai", label: "AI 生成設定", emoji: "🤖" },
   // The two asset consoles (task #102). They RENDER measurements published by
   // #99 (models) and #97/#101 (icons); neither counts anything itself.
   { page: "modelBudget", label: "模型預算", emoji: "📐" },
   { page: "iconTracking", label: "ICON 生成追蹤", emoji: "🖼️" },
   { page: "mcoinGrant", label: "M幣 發放", emoji: "🪙" },
+  // #174: the private deploy's front door — mint a code, see who used it.
+  { page: "invites", label: "邀請碼", emoji: "🎟️" },
   { page: "audit", label: "Audit log", emoji: "📜" },
 ];
 
@@ -186,10 +191,12 @@ function Console(): React.JSX.Element {
               <div style={{ color: TEXT_DIM, padding: 8 }}>載入編輯器…</div>
             )}
             {page === "combatEnv" && <CombatEnvPage />}
+            {page === "serverOps" && <ServerOpsPage />}
             {page === "ai" && <AiSettingsPage />}
             {page === "modelBudget" && <ModelBudgetPage />}
             {page === "iconTracking" && <IconTrackingPage />}
             {page === "mcoinGrant" && <MCoinGrantPage />}
+            {page === "invites" && <InvitesPage />}
             {page === "audit" && <AuditPage />}
           </>
         )}

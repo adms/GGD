@@ -29,8 +29,29 @@ export const api = new ApiClient();
 
 // ---------------------------------------------------------------- auth ----
 
-export function register(username: string, email: string, password: string): Promise<SessionResp> {
-  return api.request<SessionResp>("/auth/register", { body: { username, email, password }, auth: false });
+/**
+ * Register. `inviteCode` is the private-deploy gate (task #174): on a gated
+ * platform every registration except the deploy's very first must burn a code
+ * an admin minted. It is sent as typed — the server normalises case, spaces and
+ * hyphens — and simply ignored when the gate is off, so the same call works on
+ * a dev platform with no code at all.
+ *
+ * The GATE IS THE SERVER. Omitting this argument does not open anything; it
+ * just produces a 403 `invite_required` the caller shows.
+ */
+export function register(
+  username: string,
+  email: string,
+  password: string,
+  inviteCode = "",
+): Promise<SessionResp> {
+  const body: { username: string; email: string; password: string; inviteCode?: string } = {
+    username,
+    email,
+    password,
+  };
+  if (inviteCode.trim() !== "") body.inviteCode = inviteCode.trim();
+  return api.request<SessionResp>("/auth/register", { body, auth: false });
 }
 
 export function login(username: string, password: string): Promise<SessionResp> {

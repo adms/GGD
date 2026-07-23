@@ -34,5 +34,6 @@
       "duration": 3.0
     }
   ],
-  "vfxKey": "fx.prim.physical.shockwave"
+  "vfxKey": "fx.prim.physical.shockwave",
+  "castTimeSec": 0.3
 }

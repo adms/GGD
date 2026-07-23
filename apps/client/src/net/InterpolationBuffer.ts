@@ -131,7 +131,9 @@ export class InterpolationBuffer {
 
 /**
  * Is `cur` a teleport relative to `prev`? The budget scales with the tick gap
- * (snapshots arrive ~20 Hz against a 30 Hz sim, so brackets span >1 tick).
+ * (snapshots arrive at SNAPSHOT_HZ against a TICK_HZ sim; at the current 30/30
+ * a bracket spans exactly 1 tick, but the scaling keeps this correct if the
+ * broadcast rate is ever dropped below the sim rate again).
  * The first sample of a buffer has no predecessor and is never a jump.
  */
 function isSnap(prev: InterpSample | undefined, cur: InterpSample): boolean {

@@ -101,6 +101,27 @@ export class Whitelist {
   get itemCount(): number {
     return this.items.size;
   }
+
+  /**
+   * The enabled id sets, for the MATCH REPLAY header (task #175).
+   *
+   * The whitelist is a first-class sim input, not just a UI filter: it reaches
+   * the sim as `world.itemEligible` and is consulted BEFORE an rng roll
+   * (economy/legendaryOrb.ts), so a different whitelist shifts the random stream
+   * and desyncs everything after it. It is also fail-safe — an unreachable
+   * platform yields allow-all — so "same server, same seed" does NOT determine a
+   * match on its own. A recording therefore stores the resolved sets verbatim
+   * and playback rebuilds this exact object from them.
+   */
+  snapshotChampions(): string[] {
+    return [...this.champions];
+  }
+  snapshotItems(): string[] {
+    return [...this.items];
+  }
+  snapshotAbilities(): string[] {
+    return [...this.abilities];
+  }
 }
 
 /** Parse an unknown JSON body into a WhitelistDoc, tolerating missing lists. */

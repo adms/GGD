@@ -109,7 +109,21 @@ func WriteContentFixture(t *testing.T) string {
 // Use NewFreshDeploy to exercise the bootstrap itself.
 func New(t *testing.T, mutate ...func(*config.Config)) *TS {
 	t.Helper()
-	return newTS(t, false, mutate...)
+	return newTS(t, false, false, mutate...)
+}
+
+// NewInviteGated boots the platform with the #174 registration invite-code gate
+// ON. freshDeploy chooses which side of the first-account interaction is under
+// test: false = an ESTABLISHED deploy (an admin exists, so EVERY registration
+// needs a code — the family-build posture), true = a BRAND-NEW deploy (no
+// admin, so the first registration is invite-exempt and claims ownership).
+//
+// The gate is switched on at the composition root (server.Options) rather than
+// through the environment, so a gated test cannot leak the setting into a
+// parallel one.
+func NewInviteGated(t *testing.T, freshDeploy bool, mutate ...func(*config.Config)) *TS {
+	t.Helper()
+	return newTS(t, freshDeploy, true, mutate...)
 }
 
 // NewFreshDeploy boots the platform as a BRAND-NEW deploy: no account carries
@@ -117,10 +131,10 @@ func New(t *testing.T, mutate ...func(*config.Config)) *TS {
 // approved status). See internal/auth/bootstrap.go.
 func NewFreshDeploy(t *testing.T, mutate ...func(*config.Config)) *TS {
 	t.Helper()
-	return newTS(t, true, mutate...)
+	return newTS(t, true, false, mutate...)
 }
 
-func newTS(t *testing.T, ownerBootstrap bool, mutate ...func(*config.Config)) *TS {
+func newTS(t *testing.T, ownerBootstrap, requireInvite bool, mutate ...func(*config.Config)) *TS {
 	t.Helper()
 	mr := miniredis.RunT(t)
 	node := gamelinktest.New(GameSecret)
@@ -149,6 +163,7 @@ func newTS(t *testing.T, ownerBootstrap bool, mutate ...func(*config.Config)) *T
 	srv, err := server.New(cfg, server.Options{
 		Argon2Params:          LightArgon2,
 		DisableOwnerBootstrap: !ownerBootstrap,
+		RequireInvite:         requireInvite,
 	})
 	require.NoError(t, err)
 	srv.Start(context.Background())
@@ -213,12 +228,34 @@ type User struct {
 	Refresh  string
 }
 
+// RegisterRaw POSTs a registration with the standard credentials for u plus any
+// extra body fields (inviteCode, bootstrapToken) and returns the RAW response,
+// so a test can assert a rejection instead of requiring success.
+func (ts *TS) RegisterRaw(u string, extra map[string]string) Resp {
+	ts.T.Helper()
+	body := map[string]string{
+		"username": u, "email": u + "@example.com", "password": "correct-horse-" + u,
+	}
+	for k, v := range extra {
+		body[k] = v
+	}
+	return ts.Do(http.MethodPost, "/api/v1/auth/register", "", body)
+}
+
+// RegisterWithCode registers u presenting an invite code, and requires success.
+func (ts *TS) RegisterWithCode(u, code string) User {
+	ts.T.Helper()
+	return ts.userFrom(u, ts.RegisterRaw(u, map[string]string{"inviteCode": code}))
+}
+
 // Register creates an account named u (password derived) and returns tokens.
 func (ts *TS) Register(u string) User {
 	ts.T.Helper()
-	r := ts.Do(http.MethodPost, "/api/v1/auth/register", "", map[string]string{
-		"username": u, "email": u + "@example.com", "password": "correct-horse-" + u,
-	})
+	return ts.userFrom(u, ts.RegisterRaw(u, nil))
+}
+
+func (ts *TS) userFrom(u string, r Resp) User {
+	ts.T.Helper()
 	require.Equal(ts.T, http.StatusCreated, r.Status, "register %s: %s", u, string(r.Raw))
 	acc := r.Body["account"].(map[string]any)
 	tok := r.Body["tokens"].(map[string]any)

@@ -42,6 +42,13 @@ export class AnimationStateMachine {
   private pulse: AnimPulse | null = null;
   private pulseEndMs = 0;
   private lastMovingMs = -Infinity;
+  /**
+   * True once the pulse has passed its ACTION frame and is only playing its
+   * follow-through (see `release`). Recovery is movement-interruptible: the sim
+   * has already un-rooted the caster, so holding the cast pose over a run input
+   * would make the character feel stuck for the length of the tail.
+   */
+  private recovery = false;
   state: AnimState = "idle";
 
   /**
@@ -56,20 +63,55 @@ export class AnimationStateMachine {
     }
     this.pulse = kind;
     this.pulseEndMs = end;
+    this.recovery = false;
   }
 
-  /** End a pulse early (castEnd / castInterrupt events). */
+  /** End a pulse early (castInterrupt: the cast was BROKEN, cut the pose). */
   cancel(kind: AnimPulse): void {
     if (this.pulse === kind) {
       this.pulse = null;
       this.pulseEndMs = 0;
+      this.recovery = false;
     }
+  }
+
+  /**
+   * The pulse's ACTION frame just happened for real (castEnd = the sim resolved
+   * the ability): keep the state alive for `tailMs` of follow-through, then let
+   * it end. Unlike `cancel` this does not cut the animation at the release
+   * frame — the body finishes throwing the move — but the tail is marked
+   * RECOVERY so movement can break out of it immediately.
+   *
+   * Re-anchoring on the real event (rather than trusting the window set at
+   * `trigger`) is what keeps the tail correct when the sim's wind-up ran long:
+   * hitstop and hitstun both PAUSE a cast in CastResolveSystem, so `castEnd`
+   * legitimately arrives later than `castTimeSec` predicted.
+   */
+  release(kind: AnimPulse, nowMs: number, tailMs: number): void {
+    if (this.pulse !== kind) return;
+    this.pulseEndMs = nowMs + Math.max(0, tailMs);
+    this.recovery = true;
+  }
+
+  /**
+   * Push a live pulse's end out by `ms` — used when hitstop freezes the model:
+   * the clip is frozen for that long, so its window has to grow by the same
+   * amount or the state would expire while the clip is still mid-swing.
+   */
+  extendPulse(kind: AnimPulse, ms: number): void {
+    if (this.pulse === kind && ms > 0) this.pulseEndMs += ms;
+  }
+
+  /** True while the current pulse is past its action frame (see `release`). */
+  get inRecovery(): boolean {
+    return this.pulse !== null && this.recovery;
   }
 
   /** Recompute the state from authoritative flags; returns the new state. */
   update(inputs: AnimInputs, nowMs: number): AnimState {
     if (!inputs.alive) {
       this.pulse = null;
+      this.recovery = false;
       this.lastMovingMs = -Infinity;
       this.state = "death";
       return this.state;
@@ -78,9 +120,13 @@ export class AnimationStateMachine {
     // run-exit hysteresis: moving now, or moved within the linger window
     const moving = inputs.moving || nowMs - this.lastMovingMs < RUN_LINGER_MS;
     if (this.pulse && nowMs < this.pulseEndMs) {
-      // hurt is non-interrupting for locomotion — drop it while moving
-      if (this.pulse === "hurt" && moving) {
+      // hurt is non-interrupting for locomotion — drop it while moving. So is a
+      // pulse's RECOVERY tail: once the action frame has fired the sim has
+      // un-rooted the caster, so a move input must break out of the
+      // follow-through instead of locking the body for the rest of it.
+      if (moving && (this.pulse === "hurt" || this.recovery)) {
         this.pulse = null;
+        this.recovery = false;
       } else {
         this.state = this.pulse;
         return this.state;

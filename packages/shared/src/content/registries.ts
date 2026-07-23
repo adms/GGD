@@ -61,10 +61,76 @@ export const RibbonDefs = new ContentRegistry<RibbonDoc>();
 export const StatusEffects = new ContentRegistry<StatusEffectDoc>();
 export const Skins = new ContentRegistry<SkinDoc>();
 
+/** One field where a champion's embedded ability copy disagrees with the standalone doc. */
+export interface AbilityMirrorDrift {
+  readonly championId: string;
+  readonly slot: "Q" | "W" | "E" | "R";
+  readonly abilityId: string;
+  readonly field: string;
+  /** value in content/abilities/<id>.json — the one that now wins at runtime */
+  readonly standalone: unknown;
+  /** value in content/champions/<id>.json `abilities[slot]` — ignored unless the standalone omits it */
+  readonly embedded: unknown;
+}
+
 /**
- * Register every loaded doc. Leaf collections first; champions go through
- * `registerChampion` so their embedded abilities land in the Abilities
- * registry exactly as the TS-literal path did.
+ * Find every field where a champion's embedded ability copy disagrees with the
+ * standalone ability doc (the MIRROR RULE the content editor enforces on save,
+ * and that any hand edit to one file alone breaks).
+ *
+ * Since `registerChampion` made the standalone doc authoritative this no longer
+ * changes what the sim does — but it is still worth shouting about, because the
+ * embedded copy is what a stale champion doc will keep showing anywhere that
+ * reads `Champions.get(id).abilities[slot]` off a doc that never went through
+ * registration (raw-doc consumers: the codex browser, the admin content page).
+ *
+ * Pure: takes the store, mutates nothing.
+ */
+export function auditAbilityMirrorDrift(store: ContentStore): AbilityMirrorDrift[] {
+  const standalone = new Map<string, Record<string, unknown>>();
+  for (const d of store.all<AbilityDef>("abilities")) {
+    standalone.set(d.id, d as unknown as Record<string, unknown>);
+  }
+
+  const out: AbilityMirrorDrift[] = [];
+  for (const champ of store.all<ChampionDef>("champions")) {
+    for (const slot of ["Q", "W", "E", "R"] as const) {
+      const emb = champ.abilities[slot] as unknown as Record<string, unknown> | undefined;
+      if (!emb) continue;
+      const std = standalone.get(champ.abilities[slot]!.id);
+      if (!std) continue; // embedded-only ability: nothing to disagree with
+      for (const field of [...new Set([...Object.keys(std), ...Object.keys(emb)])].sort()) {
+        if (field === "schema") continue; // only the standalone doc carries a schema tag
+        const a = std[field];
+        const b = emb[field];
+        if (a === b || stable(a) === stable(b)) continue;
+        out.push({
+          championId: champ.id,
+          slot,
+          abilityId: champ.abilities[slot]!.id,
+          field,
+          standalone: a,
+          embedded: b,
+        });
+      }
+    }
+  }
+  return out;
+}
+
+/** Order-insensitive-enough structural compare for drift detection. */
+function stable(v: unknown): string {
+  return JSON.stringify(v) ?? "undefined";
+}
+
+/**
+ * Register every loaded doc.
+ *
+ * ORDER IS LOAD-BEARING: standalone `abilities` go in BEFORE `champions`, and
+ * `registerChampion` will not overwrite an ability that is already registered
+ * (it only fills fields the standalone doc omits). That is what makes
+ * `content/abilities/<id>.json` the source of truth rather than the
+ * denormalised copy embedded in the champion doc. See `registerChampion`.
  */
 export function registerAll(store: ContentStore): void {
   for (const d of store.all<ProjectileDef>("projectiles")) Projectiles.register(d.id, d);

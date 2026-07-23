@@ -32,5 +32,6 @@
       "duration": 8.0
     }
   ],
-  "vfxKey": "fx.prim.ki.nova"
+  "vfxKey": "fx.prim.ki.nova",
+  "castTimeSec": 0.3
 }

@@ -39,3 +39,12 @@ the backend never auto-fills.
 | auth-31 | The reset is recorded in the SAME append-only audit log the console renders, actor `host:ownerreset`, with no credential material in it | ownerreset-audited | integration | done |
 | auth-32 | The CLI re-hashes with the parameters REGISTRATION uses (one `auth.HashPassword`, not a second cost setting) | ownerreset-registration-params | regression | done |
 | auth-33 | The reset is NOT an endpoint: nothing that serves HTTP links the package, and neither it nor its command reads a caller address | ownerreset-not-an-endpoint | security | done |
+| auth-34 | 邀請碼 happy path: admin mints a code in the console, a family member registers with it, and the console shows WHO redeemed it and when | invite-happy-path | integration | done |
+| auth-35 | FIRST ACCOUNT is invite-EXEMPT on an ownerless deploy (else the deploy is bricked: only an admin can mint, and there is no admin) — and the exemption closes itself the instant that account file lands | invite-first-account | security | done |
+| auth-36 | With no owner claim available (established deploy / unreadable store) EVERY registration needs a code — the gate fails CLOSED | invite-fails-closed | security | done |
+| auth-37 | Every rejection reason over HTTP: missing → `invite_required`; unknown, malformed and REVOKED → one identical `invite_invalid`; spent → `invite_used` (the only distinction a family member needs) | invite-reject-http | security | done |
+| auth-38 | Concurrent redemption of one single-use code produces EXACTLY one account, and the document names the winner (service level) | invite-redeem-race | security | done |
+| auth-39 | Same race over real HTTP through the register handler: N simultaneous registrations, one 201, the rest `invite_used` | invite-redeem-race-http | security | done |
+| auth-40 | A spent code stays spent across a platform restart AND a full Redis flush — the truth is DATA_DIR, and this package adds no Redis key at all | invite-durable | security | done |
+| auth-41 | Mint / list / revoke are 401 unauthenticated and 403 for an authenticated non-admin — an invite code is a credential, so nothing about it is readable without an operator session | invite-admin-only | security | done |
+| auth-42 | Unknown / expired / revoked / already-used are distinguished only as far as the UX needs (service level), and a malformed code is answered without touching the store | invite-reject-reasons | security | done |

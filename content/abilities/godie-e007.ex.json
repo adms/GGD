@@ -35,5 +35,6 @@
   ],
   "vfxKey": "fx.prim.ki.pulse-lg",
   "schema": "ability@1",
-  "targetsEnemies": true
+  "targetsEnemies": true,
+  "castTimeSec": 0.6
 }

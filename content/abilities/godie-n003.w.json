@@ -38,5 +38,6 @@
     }
   ],
   "vfxKey": "fx.prim.blood.nova",
-  "schema": "ability@1"
+  "schema": "ability@1",
+  "castTimeSec": 0.3
 }

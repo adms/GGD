@@ -52,9 +52,41 @@ let shaderRegistered = false;
 /**
  * Desaturation look. RESIDUAL_SAT keeps a whisper of hue so the grey reads as
  * drained rather than as a broken renderer; TINT darkens and cools it, which
- * separates "you are dead" from a plain black-and-white filter. The pools are
- * combined with max(), never a sum, so two adjacent teammates merge into one
- * bubble instead of blowing out to a hard-edged blob.
+ * separates "you are dead" from a plain black-and-white filter.
+ *
+ * Exported and interpolated INTO the shader (rather than duplicated as GLSL
+ * literals) so anything that has to survive this wash — the cast-telegraph
+ * pillar has to stay readable while you spectate — can be checked against the
+ * real numbers instead of a copy that can silently drift.
+ */
+export const DEATH_FOCUS_RESIDUAL_SAT = 0.12;
+export const DEATH_FOCUS_LUMA: readonly [number, number, number] = [0.2126, 0.7152, 0.0722];
+export const DEATH_FOCUS_TINT: readonly [number, number, number] = [0.72, 0.76, 0.86];
+
+/**
+ * The desaturation the shader applies to one colour, at `strength` 0..1 and
+ * outside every colour pool. Pure — same formula as `main()` below.
+ */
+export function deathFocusGrey(
+  rgb: readonly [number, number, number],
+  strength = 1,
+): [number, number, number] {
+  const [lr, lg, lb] = DEATH_FOCUS_LUMA;
+  const luma = rgb[0] * lr + rgb[1] * lg + rgb[2] * lb;
+  const s0 = Math.max(0, Math.min(1, strength));
+  const s = s0 * s0 * (3 - 2 * s0); // smoothstep ease, exactly as in the shader
+  const out: [number, number, number] = [0, 0, 0];
+  for (let i = 0; i < 3; i++) {
+    const c = rgb[i] as number;
+    const grey = (luma + (c - luma) * DEATH_FOCUS_RESIDUAL_SAT) * (DEATH_FOCUS_TINT[i] as number);
+    out[i] = c + (grey - c) * s;
+  }
+  return out;
+}
+
+/**
+ * The pools are combined with max(), never a sum, so two adjacent teammates
+ * merge into one bubble instead of blowing out to a hard-edged blob.
  */
 function registerShader(): void {
   if (shaderRegistered) return;
@@ -71,9 +103,9 @@ uniform vec4 uSrc2;
 uniform vec4 uSrc3;
 uniform vec4 uWeights;
 
-const float RESIDUAL_SAT = 0.12;
-const vec3 LUMA = vec3(0.2126, 0.7152, 0.0722);
-const vec3 TINT = vec3(0.72, 0.76, 0.86);
+const float RESIDUAL_SAT = ${DEATH_FOCUS_RESIDUAL_SAT.toFixed(4)};
+const vec3 LUMA = vec3(${DEATH_FOCUS_LUMA.map((v) => v.toFixed(4)).join(", ")});
+const vec3 TINT = vec3(${DEATH_FOCUS_TINT.map((v) => v.toFixed(4)).join(", ")});
 
 float pool(vec4 s, float w, vec2 uv) {
   if (w <= 0.0) return 0.0;

@@ -4,7 +4,15 @@
 import { describe, it, expect } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
 import { SettingsStore } from "./SettingsStore";
-import { SETTINGS_STORAGE_KEY, SETTINGS_VERSION, migrateSettings, type Settings } from "./types";
+import { SNAPSHOT_MS, INTERP_DELAY_MS } from "@ggd/shared/constants";
+import {
+  SETTINGS_STORAGE_KEY,
+  SETTINGS_VERSION,
+  DEFAULT_NETWORK,
+  INTERP_MIN_DELAY_MS,
+  migrateSettings,
+  type Settings,
+} from "./types";
 import { PRESET_PARAMS } from "./presets";
 
 function fakeStorage(seed: Record<string, string> = {}): {
@@ -59,6 +67,36 @@ describe("settings persistence (settings-perf)", () => {
     const store = new SettingsStore(storage);
     expect(store.graphics().resolutionScale).toBe(1);
     expect(store.network().interpolationDelayMs).toBe(200);
+  });
+
+  it("v2→v3 adopts the new interpolation delay only for an untouched default", () => {
+    cover("settings-persistence");
+    // The snapshot rate went 20 → 30 Hz and INTERP_DELAY_MS 100 → 66. A v2 blob
+    // still carrying exactly the old default was never touched by the player,
+    // so it must move forward — otherwise a returning player is pinned to the
+    // OLD latency and never feels the change ship.
+    const untouched = migrateSettings({ version: 2, network: { interpolationDelayMs: 100 } });
+    expect(untouched.network.interpolationDelayMs).toBe(DEFAULT_NETWORK.interpolationDelayMs);
+    expect(untouched.network.interpolationDelayMs).toBe(INTERP_DELAY_MS);
+
+    // ...but a DELIBERATE tuning is the player's, not ours, and survives.
+    const tuned = migrateSettings({ version: 2, network: { interpolationDelayMs: 150 } });
+    expect(tuned.network.interpolationDelayMs).toBe(150);
+
+    // and a v3 blob that legitimately holds 100 is left alone (no re-migration)
+    const alreadyV3 = migrateSettings({ version: 3, network: { interpolationDelayMs: 100 } });
+    expect(alreadyV3.network.interpolationDelayMs).toBe(100);
+  });
+
+  it("the interpolation-delay floor is two snapshot intervals, not a literal 60", () => {
+    cover("settings-persistence");
+    // Below two intervals a single late packet freezes remotes (the buffer
+    // clamps, it never extrapolates). The old floor of 60 ms was 1.2 intervals
+    // at 20 Hz — the slider minimum was itself a stutter setting.
+    expect(INTERP_MIN_DELAY_MS).toBe(Math.floor(2 * SNAPSHOT_MS));
+    const tooLow = migrateSettings({ version: 3, network: { interpolationDelayMs: 10 } });
+    expect(tooLow.network.interpolationDelayMs).toBe(INTERP_MIN_DELAY_MS);
+    expect(tooLow.network.interpolationDelayMs / SNAPSHOT_MS).toBeGreaterThanOrEqual(1.95);
   });
 
   it("setPreset writes concrete fixed-preset values", () => {

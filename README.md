@@ -137,7 +137,7 @@ DATA_DIR=./data REDIS_ADDR=127.0.0.1:6379 PLATFORM_ADDR=127.0.0.1:8080 JWT_SIGNI
 | `GGD_DEPLOY_TIER` | | 未設 ＝ **public**（版權閘的 fail-safe 方向） |
 | `GGD_REQUIRE_APPROVAL` / `GGD_REGISTER_RATE_LIMIT` | | off / `0`（`internal/server/server.go` 的 `New()`：`envEnabled("GGD_REQUIRE_APPROVAL")` / `envInt("GGD_REGISTER_RATE_LIMIT", 0)`） |
 
-**game-server**（`apps/game-server/src/index.ts:22-27` 等）：`GAME_PORT`=2567、`CONTENT_DIR`=repo `content/`、`PLATFORM_GAME_SHARED_SECRET`=空（production 才強制）、`GAME_PUBLIC_ENDPOINT`=`ws://localhost:<PORT>`、`GGD_PLATFORM_URL`=`http://localhost:8080`、`GGD_WHITELIST_BYPASS`、`GGD_COMBAT_ENV_BYPASS`、`GGD_DEV_CHEATS`（設 `"0"` 才關）、`GGD_MAX_ROOMS`=200。
+**game-server**（`apps/game-server/src/index.ts:22-27` 等）：`GAME_PORT`=2567、`CONTENT_DIR`=repo `content/`、`PLATFORM_GAME_SHARED_SECRET`=空（production 才強制）、`GAME_PUBLIC_ENDPOINT`=`ws://localhost:<PORT>`、`GGD_PLATFORM_URL`=`http://localhost:8080`、`GGD_WHITELIST_BYPASS`、`GGD_COMBAT_ENV_BYPASS`、`GGD_DEV_CHEATS`（設 `"0"` 才關）、`GGD_MAX_ROOMS`=50（出貨預設；平台後台「系統運維」可覆寫，1～500）、`GGD_SNAPSHOT_HZ`=30（同上）、`GGD_SERVER_OPS_BYPASS`（設 `1` 跳過平台讀取）。
 
 **content-api**：`PORT`=8787、`HOST`=127.0.0.1（**非 loopback 直接 exit**）、`GGD_CONTENT_DIR`、`GGD_CONTENT_BACKUP_DIR`=`data/content-backups`；`NODE_ENV=production` 一律拒絕啟動。
 
@@ -2248,7 +2248,9 @@ sequenceDiagram
   RN->>RN: scene.render() 60–144Hz
 ```
 
-`projectSnapshot()` 在每個有推進的 frame 執行；schema patch 的實際下發由 Colyseus 自己的 patch interval 決定。`SNAPSHOT_HZ`(=20) 只被同檔的 `SNAPSHOT_MS` 用到（`packages/shared/src/constants.ts:8,10`），而 `SNAPSHOT_MS` **全 repo 沒有任何消費者**，也沒有任何地方設 `patchRate` —— 所以不要把「20Hz 快照」當成本 repo 真的設定過的值。
+`projectSnapshot()` 在每個有推進的 frame 執行；schema patch 的實際下發由 Colyseus 的 patch interval 決定。
+
+**（已修正）** 這裡以前寫著 `SNAPSHOT_MS` 全 repo 沒有消費者、也沒有任何地方設 `patchRate` —— 那個描述當時是**正確**的，而那正是 bug：20Hz 是 Colyseus 自己的 `DEFAULT_PATCH_RATE`(=1000/20)，不是本 repo 設定過的值，所以改 `SNAPSHOT_HZ` 不會影響線上任何東西。現在 `MatchRoom.onCreate` 會實際指派 `this.patchRate`（經 `config/serverOps.ts` → `config/snapshotRate.ts`），常數才真的具有權威性。目前 `SNAPSHOT_HZ = 30`（= `TICK_HZ`，每個 tick 都下發），`INTERP_DELAY_MS = 66`（= 2 個快照間隔的緩衝）。
 
 本機英雄另外走 `apps/client/src/predict/LocalPrediction.ts`：一個只裝自己實體的迷你 `SimWorld`，用**同一套** `orderSystem` + `movementSystem` 推進；每次收到權威更新就 snap → 重放未 ack 的輸入，視覺誤差以約 100ms 半衰期衰減。
 
@@ -2260,7 +2262,7 @@ sequenceDiagram
 - **Curation 白名單**：預設**全空**的營運狀態。真相是 `data/curation/whitelist.json`，Redis 只是可重建的鏡像，**內容樹本身永不被改**。公開讀 `GET /api/v1/curation/whitelist`，寫入 admin-only。game-server 在**建房當下**抓取（5 秒行程快取）並據以過濾可選英雄／RANDOM 池／商店／draft，並拒絕非白名單的 `SELECT_CHAMPION`。平台不可達時**刻意 fail-safe 成 allow-all** 並大聲記 log。
 - **combat-env**：content 預設 + 平台 admin 覆寫（同 key admin 勝出），在建房時 normalize 一次並**凍結整場**，快照寫進 `MatchState.combatEnvJson` 給客戶端預測對齊；改設定從**下一場**生效。
 - **共用密鑰**：`PLATFORM_GAME_SHARED_SECRET`。雙向都是 `hex(HMAC_SHA256(secret, ts + "." + body))`，帶在 `X-Internal-Timestamp` / `X-Internal-Auth`，常數時間比對 + 時鐘偏移守衛。平台 `POST {gameAddr}/_internal/matches` 開房並取得 12 個席位 reservation，打完回呼 `/api/v1/internal/matches/{id}/result`。沒有密鑰時 game-server 在 production **拒絕啟動**；有密鑰時 `onCreate` 會驗 server-only 的 `createToken`，客戶端無法自行開房。
-- **DoS 邊界**：WS frame 上限 64 KiB；每 session 的 INPUT 有限流（超量 drop / 以 WS close code 4290 斷線）；`GGD_MAX_ROOMS` 上限 200。
+- **DoS 邊界**：WS frame 上限 64 KiB；每 session 的 INPUT 有限流（超量 drop / 以 WS close code 4290 斷線）；`GGD_MAX_ROOMS` 上限 50（後台「系統運維」可即時調整，範圍 1～500；調低不會結束進行中的對戰，只是不再開新場）。
 
 ### 環境分級閘（#127）
 

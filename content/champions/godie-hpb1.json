@@ -65,7 +65,8 @@
           "duration": 6.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast"
+      "vfxKey": "fx.ember-bolt-cast",
+      "castTimeSec": 0.3
     },
     "W": {
       "id": "godie-hpb1.w",
@@ -111,7 +112,8 @@
         }
       ],
       "vfxKey": "fx.ember-bolt-cast",
-      "targetsEnemies": true
+      "targetsEnemies": true,
+      "castTimeSec": 0.4
     },
     "E": {
       "id": "godie-hpb1.e",
@@ -154,7 +156,8 @@
         }
       ],
       "vfxKey": "fx.ember-bolt-cast",
-      "targetsEnemies": true
+      "targetsEnemies": true,
+      "castTimeSec": 0.4
     },
     "R": {
       "id": "godie-hpb1.r",
@@ -219,7 +222,8 @@
           ]
         }
       ],
-      "vfxKey": "fx.cinder-ward"
+      "vfxKey": "fx.cinder-ward",
+      "castTimeSec": 0.4
     }
   },
   "skillOrder": [

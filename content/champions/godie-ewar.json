@@ -84,7 +84,8 @@
         }
       ],
       "vfxKey": "fx.ember-bolt-cast",
-      "targetsEnemies": true
+      "targetsEnemies": true,
+      "castTimeSec": 0.3
     },
     "W": {
       "id": "godie-ewar.w",
@@ -127,7 +128,8 @@
         }
       ],
       "vfxKey": "fx.ember-bolt-cast",
-      "targetsEnemies": true
+      "targetsEnemies": true,
+      "castTimeSec": 0.4
     },
     "E": {
       "id": "godie-ewar.e",
@@ -171,7 +173,8 @@
       ],
       "vfxKey": "fx.ember-bolt-cast",
       "targetsEnemies": true,
-      "icon": "assets/icons/abilities/godie-ewar.e.png"
+      "icon": "assets/icons/abilities/godie-ewar.e.png",
+      "castTimeSec": 0.4
     },
     "R": {
       "id": "godie-ewar.r",
@@ -212,7 +215,8 @@
       ],
       "vfxKey": "fx.ember-bolt-cast",
       "targetsEnemies": true,
-      "icon": "assets/icons/abilities/godie-ewar.r.png"
+      "icon": "assets/icons/abilities/godie-ewar.r.png",
+      "castTimeSec": 0.4
     }
   },
   "skillOrder": [

@@ -107,6 +107,29 @@ export interface SeatSpec {
 }
 
 /**
+ * The match RECORDER seam (task #175). A recorder is attached by MatchRoom and
+ * observes the three things a replay cannot re-derive:
+ *
+ *   - the raw per-seat intent frame, captured BEFORE `sanitizeIntent` and
+ *     `freezeCombatIntent` — both of those are pure functions of the frame plus
+ *     recorded state, so playback re-applies them itself and re-recording their
+ *     output would double-apply the freeze;
+ *   - driver swaps at the tick they are APPLIED, because `driverKind` is read by
+ *     the intermission offer auto-pick and therefore changes the match;
+ *   - a per-tick digest checkpoint, so playback can name the first divergent
+ *     tick instead of discovering the problem at the end.
+ *
+ * The interface is deliberately narrow and the field is optional: with no
+ * recorder attached every call site below is one `?.` on a null, and the sim
+ * path is byte-identical to before this feature existed.
+ */
+export interface MatchRecorderSink {
+  onIntent(tick: number, seatId: SeatId, frame: IntentFrame): void;
+  onDriverSwap(tick: number, seatId: SeatId, kind: "human" | "ai"): void;
+  onTickEnd(ctl: MatchController): void;
+}
+
+/**
  * Outcome of a SELECT_CHAMPION. On rejection the `reason` is surfaced to the
  * client so champ-select can explain WHY (wrong phase / unknown champion /
  * not on the content whitelist), never a silent no-op.
@@ -225,6 +248,12 @@ export class MatchController {
    */
   private readonly godModeSeats = new Set<SeatId>();
   private readonly zeroCdSeats = new Set<SeatId>();
+
+  /**
+   * Replay recorder, or null when this match is not being recorded (unit tests,
+   * playback itself). See {@link MatchRecorderSink}.
+   */
+  recorder: MatchRecorderSink | null = null;
 
   private specs = new Map<SeatId, SeatSpec>();
   private duelWinners = new Map<number, TeamId>(); // zone -> winner this round
@@ -1044,7 +1073,12 @@ export class MatchController {
   /** Advance one tick. Returns the current phase after the tick. */
   tick(): MatchPhase {
     // 1) driver swaps land at the tick boundary
-    for (const seat of this.seats.values()) seat.applyPendingDriver();
+    for (const seat of this.seats.values()) {
+      // A swap is recorded at the tick it is APPLIED, not requested: that is the
+      // tick from which the new driver's `driverKind` is visible to the offer
+      // auto-pick, so it is the tick playback must re-apply it on.
+      if (seat.applyPendingDriver()) this.recorder?.onDriverSwap(this.world.tick, seat.seatId, seat.driverKind);
+    }
 
     // 2) phase timer — ADVANCED FIRST, before any fallible work, so the visible
     //    countdown can never freeze even if the sim step or a phase transition
@@ -1077,6 +1111,12 @@ export class MatchController {
       this.onTickFault("phase-transition", err);
       if (expired) this.forceAdvanceOnFault();
     }
+
+    // 6) replay checkpoint, LAST — so the digest covers the sim step AND the
+    //    phase transition that ran on this tick (lives, placements and round
+    //    tallies all move in step 5, and they are host state the sim digest
+    //    cannot see).
+    this.recorder?.onTickEnd(this);
     return this.phase.phase;
   }
 
@@ -1096,7 +1136,13 @@ export class MatchController {
     // (freezeControls) when the outcome latched, so the empty map keeps them put.
     if (!this.outcomeDecided && this.phase.phase !== "champSelect" && this.phase.phase !== "matchEnd") {
       for (const [seatId, seat] of this.seats) {
-        let frame = this.sanitizeIntent(seat.produceIntent(this.world, this.world.tick));
+        // RECORD THE RAW FRAME, before either derived transform below. Both
+        // `sanitizeIntent` (whitelist filter — the whitelist is in the replay
+        // header) and `freezeCombatIntent` (a pure function of the frame and
+        // `world.combatActive`) are re-applied identically during playback.
+        const raw = seat.produceIntent(this.world, this.world.tick);
+        this.recorder?.onIntent(this.world.tick, seatId, raw);
+        let frame = this.sanitizeIntent(raw);
         // ROUND-SETTLE FREEZE (#100): `combatActive` is the single "a duel is
         // LIVE" flag, but nothing on the combat path or this seam ever consulted
         // it — so the sim kept stepping attacks/casts/movement in EVERY phase.

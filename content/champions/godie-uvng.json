@@ -79,7 +79,8 @@
         }
       ],
       "vfxKey": "fx.firestorm",
-      "targetsEnemies": true
+      "targetsEnemies": true,
+      "castTimeSec": 0.4
     },
     "W": {
       "id": "godie-uvng.w",
@@ -132,7 +133,8 @@
       ],
       "vfxKey": "fx.firestorm",
       "targetsEnemies": true,
-      "radius": 6.0
+      "radius": 6.0,
+      "castTimeSec": 0.7
     },
     "E": {
       "id": "godie-uvng.e",
@@ -174,7 +176,8 @@
           ]
         }
       ],
-      "vfxKey": "fx.firestorm"
+      "vfxKey": "fx.firestorm",
+      "castTimeSec": 0.3
     },
     "R": {
       "id": "godie-uvng.r",
@@ -212,7 +215,8 @@
           "duration": 10.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast"
+      "vfxKey": "fx.ember-bolt-cast",
+      "castTimeSec": 0.4
     }
   },
   "skillOrder": [

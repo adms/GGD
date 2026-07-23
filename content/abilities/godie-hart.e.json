@@ -94,5 +94,6 @@
   "vfxKey": "fx.prim.physical.beam",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "radius": 6.42
+  "radius": 6.42,
+  "castTimeSec": 0.6
 }

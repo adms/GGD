@@ -547,3 +547,550 @@ Genuinely-incomplete / deferred requirements surfaced during the ~1920-file bran
   `resolveHoldPreview` 有乘 `abilityRange` 而 `VfxSystem.ts:612` 沒有（1.667× 落差成立）。
 - 未實際開 client 目視驗證守護者的渲染樣貌；守護者主張建立在「白名單 grep 為零」＋「`snapshot.ts:203` 的 else 分支」上
   （與抓到 `roundWins` / taunt 兩案同一級的證據，但**真實對局才是最終定論**）。
+
+## 2026-07-23 — CT 起手時間 **LANE A：owner 規則已落地到內容**（554 技能全掃，實測登錄表）
+
+> owner 原話：「castTimeSec 沒有設定 的預設都要改成 0.6s，原本有設定的都 +0.3s，
+> 所以施展技能的時候都要帶一段 0.6 秒的施展光柱光芒來提示」
+
+- **規則已套用**：`content/abilities/*.json`（權威）＋ `content/champions/*.json` 內嵌 Q/W/E/R 副本（MIRROR RULE）同步改寫。
+  554 個技能中 **545 個可施放技能全部拿到 castTimeSec**，9 個純被動豁免。
+  contentVersion `cv_6c0d23e1c545` → **`cv_8b91ac43fbdb`**。
+- **實測登錄表分佈**（`scripts/probeCastTelegraph.ts`，走 game-server 開機同一條 `ContentLoader`+`registerAll`）：
+
+  | | 之前 | 之後 |
+  |---|---|---|
+  | 未設定 | 544 | **9**（全部是純被動） |
+  | 0.60 | 3 | **535** |
+  | 0.65 | 0 | **5**（0.35 + 0.3） |
+  | 0.70 | 0 | **1**（thorne.r 0.4 + 0.3） |
+  | 0.80 | 0 | **1**（sela.r 0.5 + 0.3） |
+  | 0.90 | 0 | **3**（0.6 + 0.3） |
+  | 0.35 / 0.40 / 0.50 | 5 / 1 / 1 | 0 |
+
+  英雄 doc 內嵌副本 452 筆，castTimeSec **0 筆不一致**（codex／後台讀原始 doc，不同步就會顯示對局不採用的數字）。
+- **唯一豁免：9 個純被動**（`passive` 有值且 `effects` 為空）。理由是機制性的，不是判斷：
+  `abilitySystem.ts` 的 `activateAbility` 在走到起手分支之前就 `return "passive"`，
+  這 9 個技能的 castTimeSec 在 sim 裡**永遠讀不到**，寫上去只會讓 codex 對一顆按不下去的按鈕標「0.6 秒詠唱」。
+  名單：`godie-e001.w` `godie-e00q.q` `godie-e00q.r` `godie-edem.r` `godie-emns.w`
+  `godie-etyr.ex` `godie-etyr.w` `godie-h01u.q` `godie-ofar.w`。
+  ⚠ 順帶更正一個長期誤解：**「xx-00 = 被動槽」的命名慣例在出貨內容裡並不存在**。
+  實際是 `xx-01..04` = QWER、`xx-002`（少數 `xx-001`）= EX，**沒有任何技能名字是 `xx-00`**；
+  被動由 `passive` 欄位表示，而且只有 9 個是真正不可施放的。
+- **🔴 沒有豁免、但 owner 應該在試玩時親自感受的四類**（規則照套，刻意不偷偷網開一面）：
+  1. **位移技 13 個**（`castType: "dash"`）。0.6 秒硬定身之後才位移 → 逃生技變成預告後的逃生技。
+     `godie-e012.w` `godie-efur.e` `godie-h021.w` `godie-h022.w` `godie-hblm.w` `godie-n00b.e`
+     `godie-o00k.w` `godie-o00x.w` `godie-ogrh.w` `godie-udea.q` `godie-udea.r` `godie-uwar.e` `thorne.q`。
+     全遊戲 113 個英雄只有 12 個有位移技（設計文件 4.5(b)），所以這 13 個的手感權重遠高於數量。
+  2. **護盾 5 個**（`godie-h00l.w` `godie-o00l.e` `godie-o02s.r` `sela.w` `thorne.w`）
+     與**治療 12 個**：救命鍵慢 0.6 秒 = 在 TTK 內可能就是救不到。
+  3. **自我增益 184 個**（`castType: "self"`、不造成傷害）。其中 **87 個是 w3x tooltip 標 `[被動]`／`[靈氣]`
+     卻被匯入成「可施放的 self + applyBuff」**——這是 #78 沒清完的殘留。
+     正解是把它們改成 `passive` 欄位（順便自動落入上面的豁免），**不是**替它們開後門。
+  4. **🔴🔴 自我定身鎖 6 個（真的會壞，不是手感問題）**：冷卻 × `combatEnv.cooldown = 0.25` 之後**比自己的起手時間還短**，
+     所以按著不放就永遠出不了施法狀態。`content:validate` 每次都會列印這張表。
+
+     | 技能 | 冷卻 ×0.25 | 起手 |
+     |---|---|---|
+     | `godie-e00v.w` 84-02 保齡球 | 0.125 s | 0.6 s |
+     | `godie-ekee.q` 93-01 期末報告 | 0.125 s | 0.6 s |
+     | `godie-etyr.r` 14-04 聖夜降臨 | 0.125 s | 0.6 s |
+     | `godie-u011.r` 61-04 瘋狂怪物（w3x tooltip 標 `[開關]`／「0秒冷卻時間」） | 0.125 s | 0.6 s |
+     | `godie-u012.r` 61-04 瘋狂怪物（同上，重複 doc） | 0.125 s | 0.6 s |
+     | `godie-obla.ex` 33-001 喝了再上 | 0.250 s | 0.6 s |
+
+     **真實 SimWorld 實測**（模仿 `Tier0Brain` 每 tick 施放任何就緒技能，300 tick = 10 秒）：
+     `godie-u011.r` 定身 **284/300 tick = 94.7%**（改動前 0%）。**英雄 61 在 bot 手上等於一尊雕像。**
+     三條路（未代為決定）：(a) 把這 6 個的冷卻改成 ≥ 起手；(b) 給它們 `rootWhileCasting: false`；
+     (c) 把 `[開關]` 類技能改成 `passive`（最忠於 w3x）。
+- **新增守門規則**（`scripts/contentValidate.ts`）：
+  ① 可施放技能缺 castTimeSec **= 建置失敗**（這正是 #79「內容改了、執行期沒變」的同一種漂移）；
+  ② 純被動帶 castTimeSec **= 建置失敗**；
+  ③ 自我定身鎖清單每次列印（不致命）。
+- **未做／待接手**：`packages/shared/src/sim/content/skeleton.ts` 的 SELA/THORNE TS 字面值**刻意沒有套用規則**——
+  它是「沒有 content 目錄」時的 fixture，`combatTiming.test.ts` 的 ct-04（「ct=0 仍然瞬發」）需要一個 0 起手的技能才驗得到。
+  這個分歧現在由 `content/loader.test.ts` 明文斷言，不是默默放過。遊戲本體不受影響（game-server 一律載 `content/`）。
+
+## 2026-07-23 — 主題曲·寧靜女聲（`menuNocturne`）落在「破關」畫面：機制已做，但**被 18 秒自動跳轉卡死**
+
+**已做**（`apps/client/src/audio/**` + `MatchEndPanel.tsx` + `ui/useAudio.ts`）：
+勝利結算的床是 `victory`（`loop:false` 的一次性 sting），放完就沒了，玩家接著在**靜音**中看成績與
+自動捲動排行榜（#25/#36）。現在 sting **自然播完**的那一刻，`menuNocturne`（85.33 s、循環、gain 0.55）
+接手當床，離開結算畫面時 ref-counted 的 `bgmOverride` 自動釋放。**只有贏才有**；輸的一方維持
+`defeat` sting 之後靜音（是否也該給床＝**未代為決定**）。
+
+沒有寫死任何秒數：`AudioSystem.onBedEnded` 只在「非循環床自己播到底」時通知，
+被 crossfade 換掉／被取代／提早停止／`dispose()` 都**不會**發（以 `this.bed.src === src` 的身分守衛判定）。
+
+**🔴 真缺口（未代為決定，需要 owner 拍板）**：`MatchEndPanel.AUTO_ADVANCE_SEC = 18`，
+但 `victory.mp3` 是 **18.34 s**——結算畫面會在 sting 播完前 0.34 s 就自動跳去大廳，
+sting 因此是「被 crossfade 掉」而非自然結束，`onBedEnded` 正確地不發，**寧靜女聲一秒都聽不到**。
+task #137 的輪替讓情況更微妙：`victory.samantha.mp3` 只有 **14.52 s**，
+所以「每個 session 的第 1 場勝利」（原版）完全聽不到，「第 2 場」（Samantha 版）只聽得到約 3.5 秒。
+
+| 檔案 | 長度 | 對上 18 s 自動跳轉 |
+|---|---|---|
+| `victory.mp3`（輪替第 1 次進場） | 18.340 s | 來不及，0 秒寧靜女聲 |
+| `victory.samantha.mp3`（第 2 次） | 14.520 s | 約 3.5 秒寧靜女聲 |
+
+三條路（未代為決定）：(a) 把 `AUTO_ADVANCE_SEC` 拉長到足以聽完整段（例如 30 s）；
+(b) 讓自動跳轉倒數從「sting 播完」才起算；(c) 維持現狀，接受這首曲子只在 Samantha 輪替那一場短暫出現。
+
+## 2026-07-23 — CT 起手時間 **LANE B：0.6 秒施法光柱已上線**（實測 sim→事件→訂閱者全鏈）
+
+> owner 原話同上，本段負責的是後半句：「**所以施展技能的時候都要帶一段 0.6 秒的施展光柱光芒來提示**」。
+> 參考圖：FF7 極限技光柱（中心黃白熾光／外圈橘紅火焰／能量向上聚攏／人物在光柱裡成剪影）。
+
+- **由權威施法窗驅動，不是固定計時器**。`apps/client/src/vfx/CastPillarFx.ts` 只認三個事件：
+  `castBegin{caster, ticks, castTimeSec}` 升柱、`castEnd` 釋放閃光、`castInterrupt` 熄滅。
+  純曲線模組 `castPillar.ts` 裡**沒有 0.6 這個數字**——形狀是「窗內進度 u」的函數，
+  所以 0.35s 與 2.0s 走完全同一條曲線（單元測試直接斷言兩者輸出相等）。
+  LANE A 改了內容 → 光柱自動跟著改，不需要再動渲染。
+- **每個英雄都有**：MatchRoom 早就把這三個事件廣播給所有 client（跟頭上施法條同一條流），
+  `GameApp` 又把每一顆 drain 出來的事件餵給 `VfxSystem.handleEvent`，所以不需要新的接線
+  ——這正是 StatusAuraFx 當年「引擎做好、少一行接線 → 永遠沒亮過」的坑，這次刻意不留。
+- **實測全鏈**（`apps/client/scripts/probeCastPillar.ts`，contentVersion `cv_8b91ac43fbdb`）：
+  `ContentLoader`+`registerAll` → 真的 `Abilities` → 真的 `SimWorld` 逐 tick → 真的事件 → 真的 `VfxSystem`：
+
+  ```
+  [1] 有施法窗（會升柱）的技能：545 / 554（98.4%）；另外 9 個是純被動（按不下去，沒有窗）
+  [3] godie-e001 Q（ct 0.6s, vfxKey fx.prim.void.pulse-sm）
+      tick 2   castBegin  → pillar=cast     alpha 0.000
+      tick 3              → pillar=cast     alpha 0.219
+      tick 5              → pillar=cast     alpha 0.575
+      tick 20  castEnd    → pillar=release  alpha 1.125（釋放閃光）
+      tick 26             → pillar=none     alpha 0.000（乾淨收乾）
+  ```
+- **不可洗白畫面**：`crowdAlphaScale(n) = max(0.4, 1/(1+0.11(n-1)))`。
+  12 人同時施法 → 每柱 ×0.452，**總亮度 5.43 柱份而不是 12 柱份**；光點數同步節流
+  （12 柱時 3 顆/脈衝、≤168 顆同時存在）。1 柱時仍是完整的 FF7 光柱。
+- **不可蓋掉地面預告**：地面光暈 alpha 0.42 < `Telegraph.BASE_ALPHA` 0.85、半徑 0.95 < 最小 AoE 1.2
+  （直接 import Telegraph 匯出的常數斷言，不抄字面值）。順手修掉一個**會說謊的預告**：
+  `VfxSystem` 過去用 `Telegraph` 的預設 `fillMs = 300` 畫地面圈，
+  LANE A 之後 0.6 秒的技能會在**傷害落地前 300ms** 就播「現在炸」的 resolve pop——
+  現在改成用技能自己的 `castTimeSec`，地面圈與光柱同時結算。
+- **元素正確（依文潔琳的冰不會噴橘火）**：顏色取自技能自己的 `fx.prim.<element>.…` vfxKey，
+  其次是 doc 自己的色，最後才是 FF7 金。554 個技能實測分佈：240 個有真元素
+  （void 51／physical 49／holy 27／fire 23／lightning 18／nature 16／arcane 14／ki 13／wind 11／ice 6／blood 5／sound 4／earth 3），
+  其餘 314 走 doc 色／FF7 金退路（那是 #79 還沒綁完的內容債，不是本 lane 的缺陷）。
+  ⚠ **實測踩到一個會讓這件事變成死碼的 Babylon 行為**：`StandardMaterial` 一旦綁 `emissiveTexture`，
+  shader 就**用貼圖的 rgb 取代 `emissiveColor`**——在確認頁上量到 fire/ice/void/nature/holy
+  的像素貢獻全是同一種灰 `[97,97,93]`。現在顏色**同時**寫進 `emissiveColor` 與**頂點色**
+  （頂點色在替換之後才乘上去，是貼圖吃不掉的通道），並有單元測試鎖住。
+- **預算**：暖機後每次施法 **0 mesh / 0 material / 0 particle system**（16 柱 × 3 mesh 一次配置、永久重用；
+  光點走既有 `BurstPool`、以元素為 key 共用）。柱數硬上限 16，超過時回收**最接近結束**的那一柱
+  （它本來就要收了），而不是最新的（那支預告還沒人看到）。
+- **確認頁**：`apps/client/public/cast-pillar-audition.html`（+ `src/vfx/castPillarAudition.ts`）。
+  owner 給的是一張圖，數字表格對照不了一張圖，所以做了跟 #93 煙火同規格的確認頁：
+  真的 `CastPillarFx`／真的 `Telegraph`／真的相機，可切元素、同時人數（1–16）、起手長度，
+  並支援凍結時間點截圖。
+- **未做／待確認**：headless 分頁的 rAF 是凍結的、canvas 尺寸也不穩，
+  所以「像不像 FF7」這件事**只做到量化驗證（升起曲線、亮度、群聚衰減、去色後仍可讀），
+  沒有人眼定案**。請在真的瀏覽器開確認頁看一眼再決定要不要調 `SHELL_PEAK_ALPHA` /
+  `CORE_PEAK_ALPHA` / `CORE_WHITEN` 這三顆旋鈕。
+
+### 追加（同日，複驗）：探針原本在量自己，不是在量遊戲；以及 #93 罩色缺一條驗收
+
+- **修掉探針的假數字**。`probeCastPillar.ts` 的顏色普查原本呼叫 `pillarPalette(vfxKey, null)`
+  ——**docTint 傳 null**，等於把 doc 色退路整條關掉。但出貨路徑是
+  `GameApp.ts` 的 `vfxDoc: (key) => contentDb.vfxFor(key)`（＝註冊後的 `VfxDefs.tryGet`），
+  所以那份「314 走 doc 色／FF7 金」其實是**探針自己的行為，不是遊戲的行為**。
+  接上真的 vfx doc 之後的實測：**FF7 金退路 0 個（0.0%）**，314 個全部真的取到 doc 色ramp；
+  但**其中 298 個（53.8%）落在同一個橘色 `#ff9933`**（`fx.ember-bolt-cast` 的 ramp 色），
+  全場只有 **17 種不同的柱色**。結論不變但更精確：**這是 #79 的內容債，不是本 lane 的缺陷**，
+  只是「有 314 個走退路」聽起來像分散，實際是「超過半數的技能升起同一根橘柱」。
+- **依文潔琳（owner 點名的那個例子）用登錄表複驗 → 已經是冰的**：
+  `godie-n003` Q/E/R = `fx.prim.ice.{shockwave,nova,explosion-lg}` → 柱色 `#9ed9ff` 冰藍。
+  ⚠ 過程中我一度「讀 `content/champions/godie-n003.json` 原始檔」得到 `fx.ember-bolt-cast`
+  而誤判成 bug——**那正是任務簡報警告的那個坑**：內嵌副本仍是舊的（磁碟上 194 筆 mirror drift），
+  standalone doc 才是 shadowing 修好後對局真正採用的來源。**要看登錄表，不要看 JSON。**
+  這條複驗已固化成探針的 `[2c]`，避免下一個人重犯。
+- **但同名的 `godie-n01g`（#113 的重複英雄 doc）四招全是 `fx.ember-bolt-cast` → `#ff9933` 橘柱**。
+  也就是說：**選到哪一份依文潔琳，決定她的冰會不會噴橘火**。
+  這是 #79 ×#113 的交集，本 lane 不能修（`bindings.ts` 的 ROSTER 沒有 n01g，
+  而且 ROSTER 只被自己的測試消費，改它不會改變執行期 vfxKey——要動 content/）。
+- **補上 #93 勝利罩色的驗收（ct-b8，原本只驗了 #85）**。兩者機制不同：#85 是 Babylon
+  post-process，#93 是 DOM 的 `backdrop-filter` + 半透明漸層——**過得了 shader 不代表過得了漸層**，
+  而 #100「結算後還在打」表示罩色亮著時真的還有人在施法。新測試直接 import
+  `victoryPresentation` 匯出的 filter／漸層常數，用 Filter Effects 規範的矩陣算真值，
+  取漸層裡最不透明那一段當最壞情況：**round 灰罩最嚴，光柱仍有罩後地板的 1.92 倍亮度**
+  （門檻設 1.25 倍，留 35% 餘裕），且三種罩色都不會全通道爆白。
+
+---
+
+## 2026-07-23 — LANE 4 量測：ability shadowing 修好之後,#79 到底走到哪裡(純量測,未改任何原始碼)
+
+**做法**：完全照 `apps/game-server/src/index.ts` 開機路徑跑一次真實載入
+（`new ContentLoader(new FsContentSource(content)).load()` → `registerAll(store)`），
+然後列舉**真的 `Abilities.all()`**。不看 JSON、不看單元測試——只認註冊完的登錄表。
+（探針放 scratchpad，未寫進 repo；`contentVersion cv_8b91ac43fbdb`，113 英雄 / 554 技能 / 554 個 ability doc。）
+
+### 三個數字（before 為稽核當時，after 為現在的執行期實測）
+
+| 量測 | before | after | 判定 |
+|---|---:|---:|---|
+| `Abilities.all()` 裡仍是 `fx.ember-bolt-cast` | **460 / 554** | **285 / 554**（51.4%） | ✅ 少 175 |
+| 48 名冊 × QWER = 192 格仍是佔位火焰 | **175 / 192** | **0 / 192** | ✅ 歸零 |
+| 94 個 `fx.prim.*` doc 能被登錄表的 `vfxKey` 走到 | **25 / 94** | **94 / 94** | ✅ 全通 |
+
+**歸因（重點，不要誤記成內容功勞）**：把 HEAD 的**已提交內容**重新跑一次兩種註冊語意，
+舊的「embedded 覆蓋 standalone」得到 **460 / 175 / 25**——與稽核數字**逐一吻合**；
+同一份 HEAD 內容改用新的「standalone 為準」得到 **285 / 0 / 94**。
+也就是說 **460→285 這 175 個技能，100% 是 `registerChampion` 那個修正換來的**，不是內容再編輯換來的。
+
+⚠ **副作用（下一個人一定要知道）**：工作區裡 113 個 champion doc 的 embedded 副本**也被同步改成新的 vfxKey**，
+所以「以現在的工作區內容」跑反事實模擬，兩種語意都得到 285——**遮蔽現象目前被內容蓋住了、量不出來**。
+唯一還在守這條保證的是 `packages/shared/src/content/abilityShadowing.test.ts`（7 tests 綠）。
+別因為「兩邊數字一樣」就以為那個修正沒用途——它是下一次只改 standalone doc 時的唯一保險。
+
+### 附帶驗到的兩件事
+- 登錄表側與 `Champions.get(id).abilities[slot]` 側（HUD 技能列 / tooltip / icon / bot 腦讀這一側）
+  **192 格 0 分歧**——影子沒有只是搬家。
+- 102 個 distinct vfxKey **全部**在已載入的 vfx doc 裡找得到，**0 dangling**（不會靜默退回預設）。
+
+### owner 驗收案：依文潔琳
+- `godie-n003`（**在 48 名冊內**）：Q `fx.prim.ice.shockwave` / E `fx.prim.ice.nova` / R `fx.prim.ice.explosion-lg` /
+  EX `fx.prim.ice.pulse-lg`——**冰的是冰**。W 是 `fx.prim.blood.nova`，對照技能名 `42-02 吸血祭品` 屬性正確，不是漏綁。
+- `godie-n01g`（**第二份文件、不在名冊、不可選**）：Q/W/E/R/EX **五個全都還是 `fx.ember-bolt-cast`**，
+  standalone 與 champion doc 兩邊都是火。她的冰在 n003 修好了，n01g 沒動——這筆掛在 #113（重複英雄文件）底下，
+  一旦白名單放寬、n01g 變成可選，冰法師會噴橘火。
+
+### 結論
+- **#79 = PARTIAL（名冊範圍 DONE，全庫未完）**。
+  可選的 48 名英雄、240 個技能（QWER + EX + 被動）**0 個佔位火焰**，owner 的驗收條件成立。
+  剩 **285 個技能仍是佔位**，全部屬於**名冊外的 64 位英雄**（含 n01g）。
+  真正的完成定義若是「554 全綁」，還差 285；若是「可玩內容全綁」，已達成。
+- **#98 = 名冊範圍已不成立為缺陷，但底層 11 個模型仍是壞的（PARTIAL）**。
+  `content/assets/model-budget/report.json`（generatedAt 2026-07-23T09:15Z）203 筆裡 11 筆 `triangles=0`。
+  用真登錄表逐一掃 48 名冊的 champion doc / ability doc / 其 vfxKey 指到的 vfx doc：
+  **roster 可達的零幾何引用 = 0**。全內容樹掃描也證實 **沒有任何 ability / vfx doc 引用這 11 個模型**——
+  它們現在只被自己的 model doc 引用，`role=unused` ×10。
+  **唯一的真實引用是 `imported.collision`**（`role=champion`）：`godie-u011 死亡老二 - 克勞薩先生` 的 `modelKey`，
+  **該英雄不在 48 名冊**。所以「#98 的 roster 範圍靠 #79 re-point 解掉」這個說法**成立且已驗證**；
+  但那 11 個 glb 本身沒被修（mdx 粒子發射器仍未轉出幾何），u011 一旦進名冊就是個隱形英雄。
+
+**驗證**：`pnpm --filter @ggd/shared exec vitest run src/content/{abilityShadowing,loader,vfxParticles,castTimeCoverage,refs}.test.ts`
+→ 5 files / 25 tests 全綠；`pnpm --filter @ggd/shared typecheck` → 0 error。本 lane **未改任何原始碼、未 commit**。
+
+---
+
+## 驗收 lane — 0.6s 施展光柱 + 全域詠唱時間（runtime 驗證，非測試）
+
+需求原話：「castTimeSec 沒有設定 的預設都要改成 0.6s，原本有設定的都 +0.3s，
+所以施展技能的時候都要帶一段 0.6秒的施展光柱光芒來提示」
+
+### 1. 詠唱時間確實進到真實對局（登錄表，不是檔案）
+用 game-server 開機那一組（`new ContentLoader(new FsContentSource(content)).load()` → `registerAll`）
+獨立重跑一份 probe（`scratchpad/verifyCastRuntime.mts`，沒有沿用 lane A 的 probe）：
+
+- contentVersion `cv_8b91ac43fbdb`，113 champions / 554 abilities
+- castTimeSec 分佈：**未設 9（全部是 passive-only）/ 0.60 ×535 / 0.65 ×5 / 0.70 ×1 / 0.80 ×1 / 0.90 ×3**
+- 違規（可施放卻沒有 castTimeSec）**0**；超出 [0.6, 1.0] **0**；passive 誤帶 castTimeSec **0**
+- `Champions.get(id).abilities[slot]` 452 格 vs 登錄表 **0 分歧**
+- `content/abilities/*.json` 原始檔 554 份 vs 登錄表 **0 分歧**（影子問題確實已死）
+
+### 2. 真實 SimWorld 的延遲結算（Q/W/E/R/EX 五槽各一）
+`world.step()` 全流程、出貨 combat-env。**castTime 是真的延遲，不是裝飾**：
+
+| 槽 | 技能 | ct | 期望 tick | castBegin.ticks | 施放當下有傷害？ | castEnd@tick | 傷害@tick |
+|---|---|---|---|---|---|---|---|
+| Q | godie-e007.q | 0.6s | 18 | 18 | 否 | 18 | 18 |
+| W | godie-e002.w | 0.6s | 18 | 18 | 否 | 18 | 18 |
+| E | godie-e001.e | 0.6s | 18 | 18 | 否 | 18 | 18 |
+| R | godie-e002.r | 0.6s | 18 | 18 | 否 | 18 | — |
+| EX | godie-e007.ex | 0.6s | 18 | 18 | 否 | 18 | 18 |
+
+地面 AoE 走出去真的躲得掉：`godie-e002.w` 站著吃 **90.6** 傷害，詠唱中走開 **0.0**。
+
+### 3. 光柱 END-TO-END（每一跳都有 file:line）
+1. sim 送出 — `packages/shared/src/sim/abilities/abilitySystem.ts:200` `world.emit("castBegin", …)`
+2. 房間轉播 — `apps/game-server/src/rooms/MatchRoom.ts:304` 過濾 → `:348` `this.broadcast(MSG.EVENT, …)`
+3. 前端收 — `apps/client/src/net/RoomConnection.ts:101` `room.onMessage(MSG.EVENT, …)` 入佇列
+4. 每幀取出 — `apps/client/src/GameApp.ts:798` `drainEvents()` → `:799` `this.vfx.handleEvent(ev, nowMs)`
+5. 分派 — `apps/client/src/vfx/VfxSystem.ts:709` `case "castBegin"` → `this.pillars.begin(...)`
+6. 真 mesh — `apps/client/src/vfx/CastPillarFx.ts:274` `slot.pivot.setEnabled(true)`
+7. 每幀推進 — `apps/client/src/GameApp.ts:950` `this.vfx.update(nowMs)` → `VfxSystem.ts:1067` `this.pillars.update(nowMs)`
+
+**沒有斷點**。在真的 bot 對局裡從瀏覽器讀 `__ggdScene.meshes`：
+`cast-pillar-shell / -core / -base` 實際存在並隨真實施放開關，單幀最多同時 **11 根**（上限 16）。
+
+### 4. 已修：光柱在真實對局裡是「白色的」（本 lane 找到並修掉）
+`VfxSystem.pillarPaletteFor` 原本用 `tintOfDoc(doc)`，而 `tintOfDoc` 取 `colorStops[0]`。
+所有匯入的火焰 vfx doc 都是「白熱 → 有色 → 黑」的作法，第 0 stop 就是 `[1,1,1,1]`：
+
+```
+fx.ember-bolt-cast  colorStops = [ [0,[1,1,1,1]], [0.15,[1,0.6,0.2,1]], [0.53,[0.35,0.21,0.07,0.35]], [1,[0,0,0,0]] ]
+```
+
+`brighten()` 只擋「近黑」，不擋「無彩度」，所以白被正規化成白 →
+**554 個技能有 297 個（53.6%）的光柱是純白**，包含全部 285 個還掛在 `fx.ember-bolt-cast` 的。
+在真的對局裡量到：每一根活著的光柱 `emissiveColor` 與 vertex colour **都是 [1,1,1]**。
+FF7 的金色 fallback 永遠碰不到，因為 doc tint「有值」——只是那個值是白的。
+
+修法（`apps/client/src/vfx/castPillar.ts`）：
+- 新增 `chromaOf()` 與 `TINT_MIN_CHROMA = 0.12`，`pillarPalette` 的 doc-tint 分支加彩度門檻；
+- 新增 `pillarTintFromRamp(stops, legacyStart)`：掃過**整條** colour ramp 取彩度最高的一段，
+  `fx.ember-bolt-cast` → `[1, 0.6, 0.2]`（doc 一直在描述的火焰金）。
+- `VfxSystem.pillarPaletteFor` 改用它。
+
+修完（離線把 554 個技能全部重算一次）：
+`element 191 / doc 自己的色 314 / FF7 金 fallback 0 / 無彩度 49`，
+剩下的 49 全部是 **element = physical** 的白鋼色（那是刻意的 element 配色，不是 fallback）。
+真對局複驗：同一幀同時出現 6 種色 —
+`[1,0.94,0.62] 聖 / [0.5,0.9,0.4] 自然 / [1,0.6,0.2] 火焰金 / [0.6,0.32,0.82] 虛空 / [0.74,0.45,1] 秘術 / [1,0.86,0.42]`，
+**[1,1,1] 出現 0 次**。
+
+### 5. 節奏代價（真 MatchController、12 bot、同一 seed 的 A/B）
+`scratchpad/verifyTempo.mts`：把登錄表的 castTimeSec 全歸零跑一次，再用出貨值跑一次。
+
+| | ct=0（規則前） | 出貨值 | 差 |
+|---|---|---|---|
+| 總戰鬥時間 | 900.0s | 815.0s | −9.4%（回合都撞 180s 上限，不是 TTK 變化） |
+| 成功施放 | 272 | 260 | −4.4% |
+| 場上 dps | 184 | 184 | +0.1% |
+| root 佔比 | 0.0% | **1.7%** | — |
+
+**bot 幾乎感覺不到**（Tier0Brain 施放頻率極低：12 人 815 秒只放 260 次）。
+真正會痛的是**人類玩家**。以「技能一好就按」計，用真登錄表 × 出貨 cooldown ×0.25：
+
+- 545 個可施放技能的**真實** cooldown：p10 **3s** / 中位 **11.25s** / p90 15s
+- 113 位英雄站著不動的時間佔比：**平均 41.7%、中位 34.7%**
+- **≥100%（永遠站著）7 位**：godie-e00v 維尼、godie-ekee 傳說中的大刀、godie-etyr 木乃香、
+  godie-u011 克勞薩先生、godie-u012 克勞薩II世、sela、thorne
+- **≥50% 有 25 位；≥25% 有 91 位**
+- 最靈活的是 godie-ofar 皮卡丘 15%、godie-hpb1 蒼月潮 19%
+
+### 6. 其他實測到的副作用
+- **位移技變慢且被預告**：13 個 dash 全部 0.6s。真 sim 逐 tick 量 `godie-o00x.w / godie-udea.q /
+  godie-n00b.e`：位移在 tick 18（=0.6s）之後才開始長，總位移 14.1u。逃生鍵現在是「先站 0.6 秒再逃」。
+- **效果比詠唱還短的 15 個**（站著的時間比效果久）：
+  `godie-e015.e 珍奶顏射` 0.6s 詠唱 / 0.1s 效果、`godie-e00j.q 謝謝指教` 0.6/0.3、
+  `godie-u00n.q 伸縮自如的橡膠戰斧` 0.6/0.3、`sela.r Firestorm` 0.8/0.75 … 這類是規則的直接受害者。
+- lane A 留下的 6 個 SELF-ROOT-LOCK 仍在 `content:validate` 每次輸出。
+
+### 驗證
+`@ggd/shared` 66 files / 654 tests、`@ggd/game-server` 34 / 244（含 same-seed byte-identical replay）、
+`@ggd/client` 193 / 2020 + 1 skipped，全綠。`content:validate` OK（1441 docs, cv_8b91ac43fbdb）。
+`todo:check` 1169 items OK。tsc：shared / game-server / admin / editor 全 0 error；
+apps/client 只剩 2 個 error，都在**別的 lane 正在改的** `src/render/AssetManager.ts`，與本 lane 無關。
+本 lane **未 commit**。
+
+
+---
+
+## 起手時間 LANE A（修訂版）：**分級 CT 取代平坦 0.6 秒** — 2026-07-23
+
+> owner 修訂原話：「castTimeSec **0.3 – 0.6 秒**，依技能有多兇殘決定，**最兇的封頂 0.9 秒**。」
+> 上一節記錄的**平坦 0.6 秒已作廢**；它造成的五組傷害全部在本節被量測著修掉。
+
+### 1. 做法：公式，不是 554 個手寫數字
+`packages/shared/src/content/castTimeFormula.ts` 是唯一真相來源，content 是它的衍生資料；
+`packages/shared/scripts/deriveCastTimes.ts [--write]` 推導並寫入（同時寫**標準文件與英雄內嵌副本**，MIRROR RULE）；
+`castTimeCoverage.test.ts` 把 554 支全部重推一次，跟 content 不一致就紅。
+輸入全部是 `ability@1` 既有欄位：傷害 .35 / 硬控 .20（**再乘上控制實際秒數**）/ 半徑 .15 / 欄位 .20 / 投放 .10，
+對映到 0.3–0.9 的七階（每階都是整數 tick：9/12/15/18/21/24/27）。
+
+### 2. 五組傷害，前 → 後（全部用**同一支**量測腳本 `scratchpad/verifyHumanTempo.mts`）
+
+| 指標 | 平坦 0.6 s | 分級後 |
+|---|---|---|
+| 人類 root 佔比 平均 / 中位 | 41.7 % / 34.7 % | **22.0 % / 21.6 %** |
+| ≥50 % 的英雄 | 25 / 113 | **0** |
+| ≥25 % 的英雄 | 91 / 113 | **29** |
+| 雕像（CD < 自身起手） | **7** | **0** |
+| 位移技開始位移的 tick | 18 | **9**（真 sim 逐 tick，`scratchpad/verifyDash.mts`） |
+| 起手長過自身效果 | 15 支 | **1 支**（效果比 0.3 s 地板還短的那一支） |
+
+### 3. 雕像不變量
+`ct <= 自身後乘冷卻 / 8` ⇒ 單技定身 ≤12.5 % ⇒ 四格全開 ≤50 %，**由構造保證**。
+天花板掉到 0.3 s 地板以下（後乘冷卻 < 2.4 s）時該技能改為**瞬發**，不硬塞做不到的值。
+
+### 4. 例外（逐條交代，見 docs/design/cast-telegraph.md §0.0.3）
+passive-only 9（欄位缺席，sim 讀不到）／ rapid-fire 17（瞬發）／ mobility 12（0.3 地板）／
+defensive 17（0.3 地板）／ scored 499。**普攻不在此列**（`BasicAttackSystem` 是另一套，未動）。
+全庫**沒有** toggle / counter castType，所以那條疑慮不存在。
+
+### 5. 出貨分布（真實登錄表，`scripts/probeCastTelegraph.ts`）
+```
+contentVersion cv_d4c9a235c135   554 abilities
+ (unset) 26 | 0.30 172 | 0.40 198 | 0.50 73 | 0.60 42 | 0.70 29 | 0.80 12 | 0.90 2
+ 會施法 528 支：平均 0.425 s、中位 0.400 s
+ Champions.get(id).abilities[slot] 452 筆，0 筆不一致
+ SELF-ROOT-LOCK 0（上一版是 6）
+```
+審計基線 `[undefined 544, 0.35×5, 0.6×3, 0.5×1, 0.4×1]` → 上表。
+
+### 6. 仍待 playtest 用身體確認（刻意套規則、大聲標記，不偷偷豁免）
+- **位移技 0.3 s（9 tick）**：選地板而非瞬發，因為 owner 的視覺需求是「每一次施法都要有光柱」。
+  若實戰仍逃不掉，改成瞬發是一行。
+- **175 支純自我增益**沒有豁免，分數 0 → 落 0.3 地板。若「開大」變鈍，調 slot 權重而非逐支例外。
+- `godie-e015.e 珍奶顏射` 起手 0.3 s > 效果 0.1 s：0.3 s 是 owner 自己訂的地板，地板贏。
+
+### 7. 未做 / 別的 lane
+- `combatEnv.cooldown` 若被改，**整條曲線必須重推**（兩道天花板都是對後乘冷卻算的）。
+  `castTimeCoverage.test.ts` 釘住 0.25，改了會紅。
+- 瞬發的 26 支沒有起手窗，**光柱要怎麼演**是 client lane 的事（本 lane 一行都沒碰 apps/client）。
+
+---
+
+## 2026-07-23 · 測試版 code cut 的四個擋路石 —— owner 逐條裁決
+
+背景：owner 問「我什麼時候能 code cut 釋出測試版找朋友一起玩個幾次收集意見」。
+探測後提出四個真擋路石（A 內容分級／B 註冊沒門／C dev 密鑰／D 意見收不回來），
+owner 逐條裁決如下。**四條都是需求，不是建議。**
+
+### A → 任務 #176 上半：全開資源，不做分級
+> 「我只找家人玩，不用分級，請全開資源」
+
+部署出去的畫面必須跟 owner 在 localhost 看到的**完全一樣**。
+`GGD_DEPLOY_TIER`（`apps/platform/internal/config/config.go` +
+`apps/game-server/src/config/serverOps.ts`）不得在家用部署下扣掉任何素材。
+
+**已知硬障礙（不是設定問題，是物流問題）**：`data/blizzard-overlay` 84 MB 被
+`.gitignore:21` 的 `/data/**` 擋住，**永遠不會跟著 git 到主機**。
+「全開」必須附帶一條 out-of-band 的素材投遞路徑，否則家人看到的是無貼圖占位人偶，
+而 owner 這邊好好的 —— 那整晚的意見會歪掉，且歪得很難察覺。
+
+### B → 任務 #174：邀請碼（取代 #126 的審核佇列）
+> 「註冊可以輸入邀請碼做驗證，後台產出邀請碼來限制只有我邀請的才能註冊成功」
+
+後台鑄碼 → 家人拿碼註冊 → 沒碼註冊不成功。**不做** pending/approved 佇列。
+這是唯一擋住陌生人的東西，所以驗證必須在**伺服器端**，不是表單。
+
+### C → 任務 #176 下半：密鑰加固
+> 「請做好」
+
+已知現況比預期好：`config.go:202` 缺 `JWT_SIGNING_SECRET` 會直接 error，
+`docker/compose.yaml:52` 用 `${JWT_SIGNING_SECRET:?...}` 未設就不啟動。
+仍要逐條掃完部署路徑，特別是 **loopback 自動 admin（#162）在真主機上不成立**，
+owner 必須有一組能用的密碼登入，否則他自己也進不了後台。
+
+### D → 任務 #175：回放重播就是意見蒐集管道
+> 「用回放重播的方式即可」
+
+不做回報按鈕、不做錯誤上報。sim 是確定性的（無 `Math.random`／`Date.now`，
+同 seed 重播 byte 相同，`SimWorld.digest()`），所以錄 seed + 輸入流就能**原封重播**
+家人那一場。必須附帶 digest 檢查：內容在底下被改過導致重播分歧時要**吵**，
+不能默默播出一場不一樣的比賽 —— 那比沒有回放更糟。
+
+### E → 延遲調整：SNAPSHOT_HZ 20→30 + INTERP_DELAY_MS 100→66
+
+> owner 已核准。兩個常數是**一組**，不可只改其中一個。
+
+**發現的真正 bug（比要求本身更重要）**：`SNAPSHOT_HZ` 在此之前**完全沒有消費者**，
+`MatchRoom` 從未指派 `Room.patchRate`，線上那個 20Hz 是 Colyseus 的
+`DEFAULT_PATCH_RATE`(=1000/20)。也就是說，只改常數等於**什麼都沒改**。
+現在 `onCreate` 實際指派 patchRate（`config/snapshotRate.ts`，可用
+`GGD_SNAPSHOT_HZ` 或後台 `serverOps.snapshotHz` 調整，免重新建置）。
+
+**第二個 bug**：`ConnectionStats.noteSnapshot()` 寫死 `50` 當作標稱間隔。
+在 30Hz(33.3ms) 下完美連線會固定算出 |33.3−50| = 16.7ms 的「抖動」，
+超過 `classifyConnection` 的 15ms good 門檻 —— 每個玩家的連線品質標籤會
+**永遠停在 fair**，而網路其實毫無問題。已改為由 `SNAPSHOT_MS` 推導。
+
+**第三個**：`settings/types.ts` 的 `DEFAULT_NETWORK.interpolationDelayMs` 才是
+runtime 真正在用的值（`GameApp` 傳 `renderParams.interpolationDelayMs`），
+不是 `INTERP_DELAY_MS`。舊玩家 localStorage 存著 100，不做 migration 就
+**永遠感受不到這次改動**。已 bump SETTINGS_VERSION 2→3，只把「未被玩家動過的
+舊預設值 100」搬到新值，玩家自己調過的保留。
+
+緩衝算術（對照真實 `InterpolationBuffer`）：buffer **不外插**，
+`renderTick >= last.tick` 時 clamp 在最新 sample → 遠端**凍結**在原地，
+下個 patch 到才續播。所以 delay 必須 ≥ 2 個快照間隔。
+before 100/50 = 2.00；after 66/33.3 = 1.98（精確 2.0 是 66.67）。
+`INTERP_INTERVALS_OF_HEADROOM` 由常數推導，`constants.test.ts` 斷言 ≥1.95。
+
+**實測頻寬**（12 席 bot、固定 seed 20260723、130s combat、單一 client 實際
+WebSocket 到達位元組）：patch 4,362.5 → 6,148.4 B/s（**+40.9%**）；
+線上總量 9,618.6 → 11,405 B/s（**+18.6%**，約 +14 kbit/s）。
+patch 幾乎沒有變小（220.8 → 217.9 B），所以 patch 那條**接近**天真的 +50%；
+真正省下來的是 event 串流（damage/cast/death，由 tick 驅動）完全不動，
+它佔 20Hz 時 55% 的頻寬。兩次跑的 event 位元組 5,256.1 vs 5,256.6 B/s
+（差 0.01%）—— 同時也證明了同 seed 的 sim 完全一致。
+
+---
+
+## 2026-07-23 · 道具上架規則（owner 第二次重申）+ icon 補完
+
+owner 說「我發現道具你沒有照我的方式上架，我再重複一次規則」—— **第二次講了，#70 標 completed 是錯的。**
+
+### 規則 1：商店只上架「最終合成武器」（有製作書的）
+可直接購買的清單 = 有製作書的最終合成品。半成品、材料、任務道具**都不該出現在商店**。
+
+### 規則 2：隨機三選一 = 恰好所有任務道具，不多不少
+owner 點名：四魂之玉、老衲的棒子、天堂之劍、仙后座、獸人船長十字鎬「等」。
+**「不要放這些任務道具以外的東西」** —— 這是排他條款，不只是包含條款。
+
+### 規則 3：三選一的「技能」要能在後台單獨編輯
+理由是 owner 自己給的：**「因為他不是角色預設技能」**。目前後台只編得到角色技能。
+
+### 現況：資料層根本表達不出這三條規則
+```
+content/items 214 份 · tier 1–5 · tags 208/214 全是 "wc3-import"
+沒有 recipe 欄位、沒有 quest 欄位、沒有任何結構化標記
+owner 點名的 5 件全部 cost = 0（唯一可用的間接訊號，但不可靠）
+```
+
+### 但地圖是 ground truth，而且標好了
+`tools/w3x-import/out/GoDieEX22s/parsed/items.json`（208 筆）：
+- **`製作書` 出現 165 次** —— 合成關係就在描述裡
+- **`任務` 出現 5 次**，而且是彩色標籤格式 `|cffff8c00任務|r`，例：
+  `I004 魔戒` → `"|cffff8c00任務|r\r\n|cffffcc00效能|r\r\n全能力+12..."`
+
+⚠️ **但 tooltip 不是最終答案**：w3x 標 任務 的 5 件是 天堂之劍/老衲的棒子/魔戒/四魂之玉/獸人船長十字鎬 ——
+owner 點名的 **仙后座沒有這個標記**（而且它有三個變體：仙后座殘骸 / 仙后座 / 兌換仙后座，
+「兌換」聞起來是任務鏈）。依 `[[ggd-source-map-recovery]]` 的規矩：**JASS > tooltip，禁止 proximity-grep**。
+
+### icon 補完（owner：現行兩段式生成法不錯且省 token）
+> 「先特徵後風格兩次生成再符合解析度跟檔案格式轉檔」
+
+現況缺口 **602 張**：
+```
+champions  109/113  (缺 4)
+abilities   13/554  (缺 541)  ← 主要缺口
+items      157/214  (缺 57)
+content/assets/icons 實際檔案 451 個
+```
+
+### 追加（同日）：白名單與戰鬥數值也要一起搬
+> 「白名單也要一起搬 調過的戰鬥數值（combat-env 的 admin override）也一起帶上主機」
+
+`/data/**` 這一條 ignore 擋掉的**不只是 overlay**，而是整個營運狀態：
+
+| 目錄 | 內容 | 少了會怎樣 |
+|---|---|---|
+| `data/blizzard-overlay` | 84 M | 10 隻開放角色變通用人偶 + 語音消失 |
+| `data/curation/whitelist.json` | **48 角色 / 30 道具 / 240 技能** | **空白名單 → 每隻角色回 `not-whitelisted` → 沒人能開始遊戲** |
+| combat-env admin override | owner 手調的戰鬥倍率 | 回到內容預設，他調的手感全部消失 |
+
+`apps/platform/internal/curation/curation.go:7` 明寫 **“Nothing here seeds content implicitly.”**
+內建 starter bundle（`starter.go:240`）是示範組、不是 owner 挑的 48 隻，而且要 admin 明確 POST 才套用。
+
+**優先序：白名單 > combat-env > overlay。**
+overlay 沒到位是 10 隻角色長得像通用人偶；白名單沒到位是**沒有人能開始遊戲**。
+
+---
+
+## #174 邀請碼註冊閘（invite-code registration gate）— 已實作
+
+> owner：「註冊可以輸入邀請碼做驗證，後台產出邀請碼來限制只有我邀請的才能註冊成功」
+
+取代 #126 的 pending/approved 審核佇列（**不做**審核佇列）。閘門在**伺服器端**：
+`apps/platform/internal/auth/service.go` 的 `Register` 內，寫入帳號之前呼叫
+`invite.Service.Redeem`。React 表單上的欄位只是 UX。
+
+| 面向 | 決定 | 理由 |
+|---|---|---|
+| 儲存 | `DATA_DIR/invites/<CODE>.json`，**完全不用 Redis** | Redis 是可重建快取；「這組用過了」放 Redis 會被 FLUSHALL 復活，而且 #117 的 orphaned redis 就會變成發帳號的管道 |
+| 原子性 | **先燒碼、後建帳號**，任何失敗路徑 `Release` 退回 | 反過來（先建帳號後燒碼）一旦中間掛掉，會留下**已經生出帳號的有效碼** → 閘門靜默漏一個註冊。先燒碼的失敗方向是「碼沒了但沒帳號」，重發一組即可 |
+| 競態 | 每組碼一把 keyed mutex，check-and-burn 在同一個臨界區 | 兩個親戚同時貼同一組碼 → 剛好一個成功，另一個看到「已被使用」 |
+| 第一個帳號 | **豁免**，且用的是 owner bootstrap **同一個** predicate（`claimOwnership` 的回傳值） | 要碼就是死結（只有 admin 能發碼，但還沒有 admin）。豁免也**沒有放寬任何東西**——那個視窗本來就在發 admin 權限，贏得那場賽跑的人根本不需要邀請碼。視窗會自己關（帳號檔一落地 `Admins()` 就非空）。真的不能接受這幾秒 → `GGD_OWNER_BOOTSTRAP_TOKEN=1`（既有開關，零新程式碼） |
+| 開關預設 | `GGD_REQUIRE_INVITE` 未設定時**由 listen address 推導**：只有明確綁 loopback（`.claude/launch.json` 的 `platform`）才關，其餘一律**開** | 忘記設定的後果是「表哥要跟我要碼」，不是「全世界都能註冊」。看的是**自己的 bind address**（開機時 operator 選的），不是 caller address——後者會被 LAN vite proxy 洗成 127.0.0.1（`devsurface_test.go` 明令禁止） |
+| 看不到的那個 case | nginx 對外、platform 綁 loopback | 只能靠 operator 設 `GGD_REQUIRE_INVITE=1`。因此 `server.New` **每次開機**都把解析結果印出來（WARN 帶 remediation），不靜默決定 |
+| 錯誤面 | `invite_required` / `invite_invalid`（未知＝過期＝已撤銷）/ `invite_used` | 只多洩漏「這組碼存在且被用掉了」，正好是電話那頭需要分辨的「打錯了」vs「被用掉了」 |
+| 碼格式 | `GGD-XXXX-XXXX`，字母表 `23456789ABCDEFGHJKMNPQRSTVWXYZ`（30 字元，去掉 I/L/O/U/0/1） | 唸電話、看截圖重打都不會混淆。~39 bits，前面還有 `GGD_REGISTER_RATE_LIMIT` |
+| 沒有的東西 | 沒有 public read、沒有「驗證這組碼」端點 | 驗證端點＝免費的猜碼 oracle。唯一測試碼的方法是嘗試註冊，而註冊會燒掉它 |
+
+**owner 的部署該跑**：`GGD_REQUIRE_INVITE=1 GGD_OWNER_BOOTSTRAP_TOKEN=1 GGD_REGISTER_RATE_LIMIT=20`
+（`GGD_REQUIRE_APPROVAL` 保持關閉 — 邀請碼本身就是審核）。
+launch.json 新增 `platform-invite` entry = 這個 posture，獨立 `DATA_DIR=/Users/Takuro/GGD/data-invite`。

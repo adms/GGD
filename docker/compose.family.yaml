@@ -1,0 +1,108 @@
+# docker/compose.family.yaml — THE FAMILY DEPLOY OVERLAY (task #176).
+#
+#   docker compose -f docker/compose.yaml -f docker/compose.family.yaml \
+#     --env-file docker/.env up --build -d
+#
+# or, the way the owner actually runs it:  make family-up
+#
+# WHAT THIS OVERLAY IS FOR
+# ------------------------
+# 「我只找家人玩，不用分級，請全開資源」— family only, no content tiering, serve
+# every asset. This file is the ONLY place that opens the copyright gate, and it
+# does it in four coordinated places, because opening any three of them produces
+# a deploy that looks fine and is not:
+#
+#   1. GGD_DEPLOY_TIER=family        the declaration (logged by platform + game)
+#   2. nginx/tier/family/ mounted    the serving gate (geo catch-all → lan)
+#   3. VITE_GGD_FULL_ASSETS=1        the CLIENT BUILD — without this the bundle
+#                                    never even REQUESTS the overlay, and 1+2+4
+#                                    are dead weight. This is the one that gets
+#                                    forgotten; see apps/client/src/config/fullAssets.ts.
+#   4. data/blizzard-overlay mounted the 84 MB of bytes git cannot carry
+#
+# and the edge asserts 2+4 agree at boot (docker/edge-entrypoint.d/) so a
+# half-configured deploy refuses to serve instead of quietly serving stand-ins.
+#
+# NETWORK EXPOSURE — READ BEFORE EDITING PORTS (#117)
+# --------------------------------------------------
+# The base compose pins EVERY published port to 127.0.0.1. Letting the family in
+# means publishing exactly ONE port to the network, and the obvious way to do
+# that — deleting the `127.0.0.1:` prefixes — would republish REDIS to the LAN
+# at the same time. That is precisely #117: an orphaned redis exposing an
+# un-authenticated admin session store to the whole network. So this file
+# re-states the loopback pin on redis, platform and game EXPLICITLY, and opens
+# only `edge`. If you need to change exposure, change it here, and change only
+# the edge entry.
+#
+# TLS: none. The edge speaks plain HTTP. Put it behind a tunnel that terminates
+# TLS (cloudflared / tailscale funnel / ssh -R) or keep it on the LAN. Family
+# passwords travel over that hop.
+
+name: ggd
+
+services:
+  redis:
+    # EXPLICIT re-pin. Do not remove. See the exposure note above (#117).
+    ports:
+      - "127.0.0.1:6379:6379"
+
+  platform:
+    environment:
+      # --- the declaration -------------------------------------------------
+      GGD_DEPLOY_TIER: "family"
+      APP_ENV: production
+      # --- registration posture (the invite gate is #174's; we only declare) --
+      # The address heuristic in config.go cannot see a reverse proxy in front
+      # of a loopback-bound platform, and the author says so at config.go's
+      # resolveRequireInvite. A deploy the family reaches must say it out loud.
+      GGD_REQUIRE_INVITE: "1"
+      GGD_REQUIRE_APPROVAL: "1"
+      # --- first-owner claim ------------------------------------------------
+      # Without this the first registration on a fresh data/ is an open
+      # footrace on a public endpoint. With it the platform mints a one-time
+      # token at /data/owner-setup-token (0600) and only a registration
+      # presenting that token may claim ownership:
+      #   docker compose exec platform cat /data/owner-setup-token
+      GGD_OWNER_BOOTSTRAP_TOKEN: "1"
+    ports:
+      - "127.0.0.1:8080:8080"
+
+  game:
+    environment:
+      GGD_DEPLOY_TIER: "family"
+      # NOT development. The base compose sets NODE_ENV=development, which made
+      # apps/game-server/src/config/secretGuard.ts inert on the one deploy path
+      # that matters and left match/cheatGate.ts relying on a non-empty secret
+      # alone. #176 inverted that guard's polarity; this makes the intent
+      # explicit on both variables.
+      APP_ENV: production
+      NODE_ENV: production
+    ports:
+      - "127.0.0.1:2567:2567"
+
+  edge:
+    build:
+      context: ..
+      dockerfile: docker/edge.Dockerfile
+      args:
+        # THE ONE THAT DECIDES THE OUTCOME. See the header, item 3.
+        VITE_GGD_FULL_ASSETS: "1"
+    # THE ONLY PORT REACHABLE FROM THE NETWORK.
+    # GGD_BIND=127.0.0.1 keeps it local; 0.0.0.0 opens it to the LAN/tunnel.
+    ports:
+      - "${GGD_BIND:-0.0.0.0}:${GGD_PORT:-8088}:8080"
+    volumes:
+      - ../content:/srv/content:ro
+      # The family tier's nginx fragments: a geo catch-all that reclassifies
+      # every peer into the served tier, plus the blizzard-local location.
+      # Mounting this directory IS the tier switch; omit it and the edge is
+      # gated exactly as before.
+      - ../nginx/tier/family:/etc/nginx/ggd-tier:ro
+      # The 84 MB git cannot carry. On a REMOTE host this path is whatever
+      # `make family-ship HOST=…` rsynced to; override with GGD_OVERLAY_SRC.
+      - ${GGD_OVERLAY_SRC:-../data/blizzard-overlay}:/srv/blizzard-overlay:ro
+    # DO NOT change to `unless-stopped`. The boot assertion exits 1 when the
+    # overlay is missing or short; a restart policy would turn that single loud
+    # failure into a crash-loop nobody reads, which is the silent-degradation
+    # failure mode this whole task exists to remove.
+    restart: "no"

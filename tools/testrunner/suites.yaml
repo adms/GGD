@@ -115,6 +115,15 @@ suites:
     enabled: true
     comment: "cwd is the REPO ROOT, not tools/icon-gen: that tool deliberately has no package.json (see the import comment in its test), so there is no `pnpm test` to call there — vitest is invoked from the root by path. Shells python3 like w3x-import, but only for stdlib imports, so describe.runIf(pyOk) effectively always runs."
 
+  - id: status-page-ledger-gate
+    name: "tools/status — status page task count == task ledger (anti-drift, python unittest)"
+    category: unit
+    cwd: .
+    cmd: ["python3", "tools/status/test_gen_status.py"]
+    parallelSafe: true
+    enabled: true
+    comment: "the page's task list used to be hand-transcribed and silently stopped at 131 while the ledger held 172. Stdlib-only unittest: fixture ledgers in a tmpdir + `gen_status.py --check` against the real docs/requirements-status.md. Falls back to the committed snapshot docs/_task-ledger.json on machines without the ~/.claude/tasks ledger dir."
+
   - id: todo-static-gate
     name: "todo-check --static — every TODO item has unique id + test_id"
     category: unit

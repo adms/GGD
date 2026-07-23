@@ -71,6 +71,15 @@ export interface AbilityDef {
   /** Root the caster for the cast duration (default true). */
   rootWhileCasting?: boolean;
   /**
+   * RECOVERY (後搖) — seconds of post-resolve commitment (no cast, no basic
+   * attack). Absent = `DEFAULT_RECOVERY_SEC` (0.6 s), not 0. A landed hit on an
+   * enemy CANCELS it, which is the whole combo rule. See
+   * `sim/abilities/abilityRecovery.ts`.
+   */
+  recoverySec?: number;
+  /** Whether the recovery also roots (default false: output lock only). */
+  recoveryRoots?: boolean;
+  /**
    * Icon path relative to content/ ("assets/icons/abilities/<id>.png",
    * w3x BLP→PNG). Absent = client falls back to letter-tile rendering.
    */

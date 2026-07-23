@@ -34,7 +34,12 @@ const SPIN_RAD_PER_MS = 0.0012;
 /** Telegraph identity colors (kept from the pre-retune look). */
 const RING_TINT: Rgb = [0.95, 0.45, 0.2];
 const FILL_TINT: Rgb = [1.0, 0.55, 0.25];
-const BASE_ALPHA = 0.85;
+/**
+ * Exported so the cast-telegraph PILLAR can be asserted against the real
+ * number rather than a copied literal: the ground ring is the "where does it
+ * land" contract and the column at the caster's feet may never out-shout it.
+ */
+export const BASE_ALPHA = 0.85;
 
 /** Resolve-pop shockwave life (ms) — a punch accent, not a second telegraph. */
 export const SHOCKWAVE_MS = 280;

@@ -292,9 +292,16 @@ export function ChampionProfile({
           padding: 24,
         }}
       >
-        把游標移到英雄上查看詳情
+        {/* 「滑鼠點選才載入」 (champselect/previewGate): hovering a card only
+            highlights it — CLICKING is what loads the 3D model and this panel.
+            The copy has to say so, or the empty stage reads as broken. */}
+        點選英雄查看詳情與 3D 模型
         <br />
-        <span style={{ fontSize: 11 }}>hover a champion to see its profile</span>
+        <span style={{ fontSize: 11 }}>click a champion to load its profile &amp; 3D model</span>
+        <br />
+        <span style={{ fontSize: 10.5, marginTop: 6, display: "inline-block", opacity: 0.75 }}>
+          （選擇可隨時更改，直到你按下 🔒 鎖定）
+        </span>
       </div>
     );
   }

@@ -41,5 +41,6 @@
   "vfxKey": "fx.ember-bolt-cast",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "icon": "assets/icons/abilities/godie-ewar.e.png"
+  "icon": "assets/icons/abilities/godie-ewar.e.png",
+  "castTimeSec": 0.4
 }

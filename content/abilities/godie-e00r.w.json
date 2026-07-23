@@ -32,5 +32,6 @@
       "duration": 3.0
     }
   ],
-  "vfxKey": "fx.prim.physical.slash"
+  "vfxKey": "fx.prim.physical.slash",
+  "castTimeSec": 0.3
 }

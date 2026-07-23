@@ -13,7 +13,13 @@
 FROM node:22-alpine AS build
 RUN corepack enable
 WORKDIR /repo
-COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
+# tsconfig.base.json is REQUIRED at build time, not merely nice to have: every
+# app tsconfig starts with `"extends": "../../tsconfig.base.json"`, and without
+# it `pnpm --filter @ggd/client build` dies with
+#   [vite:esbuild] failed to resolve "extends":"../../tsconfig.base.json"
+# — i.e. `docker compose build edge` FAILED OUTRIGHT before #176. Measured, not
+# theorised: that is the error this line fixes.
+COPY pnpm-workspace.yaml package.json pnpm-lock.yaml tsconfig.base.json ./
 COPY packages/shared/package.json packages/shared/
 COPY apps/client/package.json apps/client/
 COPY apps/editor/package.json apps/editor/
@@ -23,7 +29,18 @@ COPY packages/shared/ packages/shared/
 COPY apps/client/ apps/client/
 COPY apps/editor/ apps/editor/
 COPY apps/admin/ apps/admin/
-RUN pnpm --filter "@ggd/client" build && pnpm --filter "@ggd/editor" build && pnpm --filter "@ggd/admin" build
+# ---- THE FULL-ASSET BUILD FLAG (task #176) ---------------------------------
+# apps/client/src/config/fullAssets.ts reads VITE_GGD_FULL_ASSETS and falls back
+# to import.meta.env.DEV, which is constant-folded to `false` in every
+# `vite build` output. Unset (the default here) the produced bundle NEVER ASKS
+# for the local-only overlay — mounting the 84 MB and opening the nginx location
+# would still show generic stand-ins for 40 of 113 champions.
+# docker/compose.family.yaml passes VITE_GGD_FULL_ASSETS=1 so the family image
+# actually issues the request. Read that file's header before changing this.
+ARG VITE_GGD_FULL_ASSETS=""
+ENV VITE_GGD_FULL_ASSETS=$VITE_GGD_FULL_ASSETS
+RUN echo "edge build: VITE_GGD_FULL_ASSETS='${VITE_GGD_FULL_ASSETS}'" \
+ && pnpm --filter "@ggd/client" build && pnpm --filter "@ggd/editor" build && pnpm --filter "@ggd/admin" build
 
 # ---- precompress the SPA bundles -------------------------------------------
 # nginx serves these with `gzip_static on` (and `brotli_static on` in the
@@ -52,6 +69,17 @@ COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY --from=build /repo/apps/client/dist/ /usr/share/nginx/html/client/
 COPY --from=build /repo/apps/editor/dist/ /usr/share/nginx/html/editor/
 COPY --from=build /repo/apps/admin/dist/ /usr/share/nginx/html/admin/
+# ---- full-asset boot assertion (task #176) ---------------------------------
+# The official nginx entrypoint runs /docker-entrypoint.d/*.sh under `set -e`
+# before starting nginx, so a non-zero exit here keeps the server DOWN. The
+# script is a no-op unless /etc/nginx/ggd-tier/00-full-assets.geo.conf is
+# mounted (i.e. unless this deploy declared itself full-asset), so the gated
+# image is byte-for-byte unaffected in behaviour.
+COPY tools/deploy/ggd-assets.sh /usr/local/bin/ggd-assets.sh
+COPY docker/edge-entrypoint.d/20-ggd-assert-full-assets.sh /docker-entrypoint.d/20-ggd-assert-full-assets.sh
+USER root
+RUN chmod +x /usr/local/bin/ggd-assets.sh /docker-entrypoint.d/20-ggd-assert-full-assets.sh
+USER 101
 # NOTE: the admin console is an operator tool. It is baked here for same-origin
 # convenience but SHOULD be IP-allowlisted / basic-auth protected in real prod
 # (see the /admin/ location + /etc/nginx/ggd-admin include in nginx/nginx.conf).

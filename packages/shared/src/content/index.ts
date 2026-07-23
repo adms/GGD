@@ -46,6 +46,8 @@ export {
   RibbonDefs,
   StatusEffects,
   registerAll,
+  auditAbilityMirrorDrift,
+  type AbilityMirrorDrift,
 } from "./registries";
 export {
   HERO_NUMBER_RE,

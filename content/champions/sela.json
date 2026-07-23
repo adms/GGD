@@ -140,7 +140,8 @@
           "duration": 3
         }
       ],
-      "vfxKey": "fx.cinder-ward"
+      "vfxKey": "fx.cinder-ward",
+      "castTimeSec": 0.3
     },
     "E": {
       "id": "sela.e",
@@ -214,7 +215,7 @@
       "range": 10,
       "radius": 5,
       "targetsEnemies": true,
-      "castTimeSec": 0.5,
+      "castTimeSec": 0.7,
       "effects": [
         {
           "kind": "damage",

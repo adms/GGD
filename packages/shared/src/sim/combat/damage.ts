@@ -13,6 +13,7 @@ import { recordDamage } from "../stats/matchStats";
 import { healTarget } from "./restore";
 import { normalize, sub, lenSq } from "../math/vec2";
 import { Abilities, Champions } from "../content/registry";
+import { noteAbilityConnect } from "../abilities/abilityRecovery";
 import {
   deriveCosmetics,
   mergeCosmetics,
@@ -566,6 +567,14 @@ export function combatResolveSystem(world: SimWorld): void {
         killingBlow,
         origin: pkt.origin,
       });
+
+      // THE HIT-CANCEL (LANE D): this ability CONNECTED, so the caster's
+      // post-resolve recovery is cancelled on the very tick the damage lands
+      // and they may act immediately — that is the whole combo rule. A whiff
+      // never reaches here, so a whiff eats the full recovery.
+      // Placed before applyImpact only so the free-to-act state is settled
+      // before the impact reactions read the world; neither depends on the other.
+      noteAbilityConnect(world, pkt.source, pkt.target, pkt.origin);
 
       // on-impact reactions (hitstop/knockback/knockdown/guardBreak/hitImpact)
       applyImpact(world, pkt.source, pkt.target, impact, pkt.type, blocked, guardBreak, pkt.crit, killingBlow, pkt.origin);

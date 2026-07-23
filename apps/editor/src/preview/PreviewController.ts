@@ -76,7 +76,12 @@ export interface PreviewController {
 
 /** Sandbox world + champion, going through the REAL registries/spawn/statPipeline. */
 function sandbox(def: ChampionDef, level: number): { world: SimWorld; id: EntityId } {
-  registerChampion(def); // sandbox registries: latest edited doc wins
+  // Sandbox registries: the latest edited doc wins. `overrideAbilities` is
+  // REQUIRED here — registerChampion now defaults to letting the standalone
+  // content/abilities/<id>.json doc win (it is the source of truth at boot), so
+  // without this flag the champion being edited would preview the copy loaded
+  // from disk instead of the one on screen.
+  registerChampion(def, { overrideAbilities: true });
   const world = new SimWorld(SKELETON_ARENA, 0xc0ffee);
   const id = spawnChampion(world, {
     championId: def.id,

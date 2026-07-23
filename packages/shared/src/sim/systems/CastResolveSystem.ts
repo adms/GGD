@@ -12,6 +12,7 @@ import { Abilities } from "../content/registry";
 import { runEffects } from "../effects/effectRunner";
 import { fireHooks } from "../effects/hooks";
 import { enemiesInCircle, resolveAbilityRadius } from "../abilities/abilitySystem";
+import { armRecovery } from "../abilities/abilityRecovery";
 
 export function castResolveSystem(world: SimWorld): void {
   for (const [id, ab] of world.abilities) {
@@ -71,5 +72,9 @@ export function castResolveSystem(world: SimWorld): void {
       if (hitId !== id) fireHooks(world, id, "onAbilityHit", hitId, cast.slot);
     }
     world.emit("castEnd", { caster: id, slot: cast.slot, abilityId: cast.abilityId });
+    // RECOVERY begins at the END of startup — this tick, never later. Effects
+    // above only QUEUED their damage; combatResolveSystem drains it later in
+    // the SAME tick (step 8), so a connect cancels this recovery immediately.
+    armRecovery(world, id, cast.slot, def, targets);
   }
 }
