@@ -397,6 +397,36 @@ func checkDeploySecrets(cfg Config) error {
 	return nil
 }
 
+// FirstOwnerExposureError refuses to boot the ONE posture where the #174 invite
+// gate is defeated at its own root: a NETWORKED bind, with the gate ON, but the
+// first-owner claim left open because GGD_OWNER_BOOTSTRAP_TOKEN is off.
+//
+// WHY THIS IS FATAL, NOT A WARNING. On a fresh deploy the first registration is
+// invite-EXEMPT and is granted the admin role (auth/bootstrap.go — the exemption
+// is necessary; requiring a code nobody can mint yet is a deadlock). On a
+// loopback-only dev box that footrace has no remote runner and is fine. But the
+// instant the deploy is reachable off-box — which is exactly the condition that
+// turns the invite gate ON — that same window lets a stranger who reaches the
+// URL before the owner does seize PLATFORM OWNERSHIP, mint their own codes, and
+// lock the real owner out. The gate keeps strangers from making a PLAYER
+// account while leaving the door to an ADMIN account wide open. The one switch
+// that closes it, GGD_OWNER_BOOTSTRAP_TOKEN=1, reads like an optional "harden"
+// step and is easy to forget — so a networked gated deploy that has not set it
+// must not come up at all. Same fail-closed-on-a-networked-bind discipline as
+// checkDeploySecrets, and, like it, deliberately NO env var switches it off:
+// the owner sets the token (it is already in the recommended deploy command),
+// the platform prints it, and he registers with it. On a loopback bind this
+// returns nil, so .claude/launch.json is untouched.
+func FirstOwnerExposureError(addr string, requireInvite, ownerTokenRequired bool) error {
+	if loopbackOnlyAddr(addr) || !requireInvite || ownerTokenRequired {
+		return nil
+	}
+	return fmt.Errorf("config: this deploy is networked (PLATFORM_ADDR=%q) with the invite gate ON but the "+
+		"first-owner claim OPEN — a stranger who registers before you do would seize admin. Refusing to boot. "+
+		"Set GGD_OWNER_BOOTSTRAP_TOKEN=1 so the first account must present the one-time owner token "+
+		"(printed in this log and written to DATA_DIR/owner-setup-token)", addr)
+}
+
 // Load reads configuration from the environment, applying defaults.
 func Load() (Config, error) {
 	store, err := LoadStorage()

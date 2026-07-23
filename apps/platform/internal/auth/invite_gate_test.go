@@ -250,6 +250,46 @@ func TestInviteAdminRoutesRejectEveryoneElse(t *testing.T) {
 	}
 }
 
+// THE ENUMERATION ORACLE, closed. An un-invited stranger must not be able to
+// read the 409-vs-403 split to learn which family usernames/emails exist: the
+// invite gate is evaluated BEFORE the username/email reservation, so a caller
+// with no valid code is refused with invite_required whether the identity they
+// tried is taken or free. A registration WITH a valid code still reports the
+// real conflict — and, because burn-first releases on failure, does not eat the
+// code (verified via the console: the code stays 未使用).
+func TestNoCodeCannotEnumerateExistingAccounts(t *testing.T) {
+	ts := testutil.NewInviteGated(t, true)
+	owner := ts.Register("owner")
+	code := mintCodes(t, ts, owner.Access, "表哥", 1)[0]
+	ts.RegisterWithCode("biaoge", code) // now "biaoge" exists
+
+	// An existing username, no code → invite_required, NOT 409. The 403/409
+	// split that used to leak existence is gone.
+	existing := ts.RegisterRaw("biaoge", nil)
+	assert.Equal(t, http.StatusForbidden, existing.Status, "body: %s", string(existing.Raw))
+	assert.Equal(t, "invite_required", existing.ErrCode(), "an existing username with no code must look identical to a free one")
+
+	// A free username, no code → also invite_required. Indistinguishable.
+	free := ts.RegisterRaw("nobody-here", nil)
+	assert.Equal(t, http.StatusForbidden, free.Status)
+	assert.Equal(t, "invite_required", free.ErrCode())
+
+	// A VALID code but a duplicate username still surfaces the real 409 — and the
+	// code is released, not consumed, so the family member can reuse it.
+	dupCode := mintCodes(t, ts, owner.Access, "再一組", 1)[0]
+	dup := ts.RegisterRaw("biaoge", map[string]string{"inviteCode": dupCode})
+	assert.Equal(t, http.StatusConflict, dup.Status, "body: %s", string(dup.Raw))
+
+	list := ts.Do(http.MethodGet, "/api/v1/admin/invites", owner.Access, nil)
+	require.Equal(t, http.StatusOK, list.Status)
+	for _, raw := range list.Body["invites"].([]any) {
+		row := raw.(map[string]any)
+		if row["code"] == dupCode {
+			assert.Equal(t, "active", row["effectiveStatus"], "a failed create must release the code, not burn it")
+		}
+	}
+}
+
 // With the gate OFF (the dev/CI default, and every pre-#174 test), registration
 // is untouched: no field, no code, no change.
 func TestGateOffLeavesRegistrationOpen(t *testing.T) {

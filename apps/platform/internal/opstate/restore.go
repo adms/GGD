@@ -152,6 +152,27 @@ func Restore(b *Bundle, opts RestoreOptions) (*RestoreReport, error) {
 		rep.warn("bundle carries no checksum — integrity was not verified.")
 	}
 
+	// STRICT PRE-FLIGHT. Under -strict a bundle that names content this tree no
+	// longer defines is a hard failure — and it must fail BEFORE anything is
+	// written. The dead-id check used to run at the END of Restore, after the
+	// sanitized whitelist had already been saved, so a strict restore against a
+	// drifted content tree left a 46-of-48 whitelist on disk and THEN exited 1.
+	// That violates the one thing an operator assumes about a failed strict run:
+	// the target is untouched. Compute dead ids up front and bail with nothing
+	// written. (Only curation carries verifiable ids; the config parts do not.)
+	if opts.Strict && cat.Loaded && b.Curation != nil {
+		_, dead := VerifyWhitelist(b.Curation.Doc.Champions, b.Curation.Doc.Items, b.Curation.Doc.Abilities, cat)
+		if !dead.Empty() {
+			rep.Dead = dead
+			for _, line := range dead.Lines() {
+				rep.warn("whitelist: %s", line)
+			}
+			rep.warn("whitelist: -strict and the tree is missing %d id(s) — refusing to write ANY part, "+
+				"so the target is left exactly as it was. Re-export against this tree, drop -strict to enable the surviving ids, or run with -dry-run to preview.", dead.Total())
+			return rep, fmt.Errorf("%w: %s", ErrDeadIDs, strings.Join(dead.Lines(), "; "))
+		}
+	}
+
 	for _, part := range selected {
 		switch part {
 		case PartCuration:

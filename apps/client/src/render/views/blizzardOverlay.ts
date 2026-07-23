@@ -1,15 +1,20 @@
 /**
- * blizzardOverlay — DEV-ONLY champion model fallback.
+ * blizzardOverlay — champion model fallback, gated on the full-asset flag.
  *
- * COPYRIGHT GATE (content/assets/blizzard-local/README.md): the original
- * Warcraft III unit models are Blizzard-owned. They are extracted from the
- * developer's own MPQ archives into the git-ignored runtime store
- * `data/blizzard-overlay/`, which lives OUTSIDE the deployable `content/` tree
- * and is served ONLY by the vite dev middleware (`serveBlizzardOverlay()` in
- * apps/client/vite.config.ts) / the optional dev nginx include
- * (nginx/dev/blizzard-overlay.conf), both under the stable URL prefix
- * `/content/assets/blizzard-local/`. In any deployed build those URLs 404 and
- * this module resolves to exactly what it resolved to before it existed.
+ * The original Warcraft III unit models are extracted from the developer's own
+ * MPQ archives into the git-ignored runtime store `data/blizzard-overlay/`,
+ * which lives OUTSIDE the deployable `content/` tree. It is served under the
+ * stable URL prefix `/content/assets/blizzard-local/` by:
+ *   • dev: the vite middleware `serveBlizzardOverlay()` (apps/client/vite.config.ts)
+ *     / the dev nginx include (nginx/dev/blizzard-overlay.conf);
+ *   • family deploy: nginx/tier/family/10-blizzard-overlay.server.conf, mounted
+ *     only by docker/compose.family.yaml (task #177).
+ *
+ * WHETHER THIS MODULE FETCHES is decided by `fullAssetsEnabled()` (see below),
+ * NOT by the build mode. It defaults to `import.meta.env.DEV`, so a plain
+ * `vite build` still resolves to exactly what it resolved to before the overlay
+ * existed and never issues the manifest request; a family build sets
+ * VITE_GGD_FULL_ASSETS=1 and DOES fetch, and the deployed URLs serve 200.
  *
  * WHAT IT DOES
  * ------------
@@ -23,7 +28,7 @@
  *
  * DEGRADATION CONTRACT (unchanged behavior when the overlay is absent)
  * -------------------------------------------------------------------
- *   • probe disabled (any non-dev build) → the shipped doc, no fetch at all;
+ *   • probe disabled (fullAssetsEnabled() false) → the shipped doc, no fetch;
  *   • probe in flight, champion has no dedicated model → `null`, i.e. "not yet"
  *     — ChampionView keeps its procedural voxel figure and retries next frame
  *     (exactly what it does before ContentDb resolves), so a slow overlay can

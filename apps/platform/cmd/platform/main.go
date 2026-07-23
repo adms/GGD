@@ -36,6 +36,14 @@ func main() {
 		slog.Error("config", "err", err)
 		os.Exit(1)
 	}
+	// #174 hardening: a networked deploy with the invite gate on must also close
+	// the first-owner claim (GGD_OWNER_BOOTSTRAP_TOKEN=1), or a stranger who
+	// reaches the URL before the owner registers could seize admin. Fail closed
+	// here rather than serve that window quietly. See FirstOwnerExposureError.
+	if err := config.FirstOwnerExposureError(cfg.Addr, cfg.RequireInvite, envTruthy("GGD_OWNER_BOOTSTRAP_TOKEN")); err != nil {
+		slog.Error("config", "err", err)
+		os.Exit(1)
+	}
 	srv, err := server.New(cfg, server.Options{})
 	if err != nil {
 		slog.Error("wire", "err", err)

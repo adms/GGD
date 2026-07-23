@@ -45,8 +45,15 @@ services:
     # EXPLICIT re-pin. Do not remove. See the exposure note above (#117).
     ports:
       - "127.0.0.1:6379:6379"
+    # A redis crash drops the session store and logs everyone out; bring it back
+    # automatically for the evening. (edge is the ONLY service left on "no", by
+    # design — see its block.)
+    restart: unless-stopped
 
   platform:
+    # Auto-recover from a crash so a mid-evening blip doesn't strand the family
+    # at the login wall. `unless-stopped` keeps it down after `make family-down`.
+    restart: unless-stopped
     environment:
       # --- the declaration -------------------------------------------------
       GGD_DEPLOY_TIER: "family"
@@ -68,8 +75,17 @@ services:
       - "127.0.0.1:8080:8080"
 
   game:
+    # Auto-recover from a crash — a dead game server strands every family member
+    # at champ-select/in-match with no way to start or finish a round.
+    restart: unless-stopped
     environment:
       GGD_DEPLOY_TIER: "family"
+      # Match replay recording (#175) is the whole POINT of the family playtest —
+      # the feedback channel. The recorder writes to GGD_REPLAY_DIR (else
+      # <repo>/data/replays, which in this image resolves to a NON-writable /data
+      # and made every match fail to record with a silent EACCES). Point it at the
+      # writable bind mount below so replays actually land and survive restarts.
+      GGD_REPLAY_DIR: /data/replays
       # NOT development. The base compose sets NODE_ENV=development, which made
       # apps/game-server/src/config/secretGuard.ts inert on the one deploy path
       # that matters and left match/cheatGate.ts relying on a non-empty secret
@@ -79,6 +95,10 @@ services:
       NODE_ENV: production
     ports:
       - "127.0.0.1:2567:2567"
+    volumes:
+      # Writable replay sink (see GGD_REPLAY_DIR above). Host-side data/replays so
+      # the owner can pull .jsonl.gz recordings off the box after the evening.
+      - ../data/replays:/data/replays
 
   edge:
     build:
@@ -89,7 +109,14 @@ services:
         VITE_GGD_FULL_ASSETS: "1"
     # THE ONLY PORT REACHABLE FROM THE NETWORK.
     # GGD_BIND=127.0.0.1 keeps it local; 0.0.0.0 opens it to the LAN/tunnel.
-    ports:
+    #
+    # `!override` REPLACES the base list rather than appending to it. Compose
+    # merges `ports` additively, so without this the base compose's
+    # `127.0.0.1:8088:8080` and this `0.0.0.0:8088:8080` would BOTH be published
+    # on host port 8088 — two bind attempts on the same port, and the edge fails
+    # to start with "address already in use". The override collapses it to the
+    # single family mapping.
+    ports: !override
       - "${GGD_BIND:-0.0.0.0}:${GGD_PORT:-8088}:8080"
     volumes:
       - ../content:/srv/content:ro

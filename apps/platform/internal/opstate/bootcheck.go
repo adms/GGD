@@ -94,6 +94,7 @@ func PlayableBootCheck(in BootCheckInput) (PlayableBootCheckResult, error) {
 	}
 	res.Fatal = true
 	res.Message = strings.Join([]string{
+		"啟動已中止：這是對外／家人部署，但白名單沒有啟用任何英雄——家人會看到「空白的選角畫面」。請用下面任一種方式修好後再啟動。",
 		"boot REFUSED: this deploy is player-facing but the content whitelist enables NO champion.",
 		"Every champion pick would be rejected and your players would see an empty champion select.",
 		fmt.Sprintf("  DATA_DIR = %s", store.Root()),

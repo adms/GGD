@@ -118,10 +118,14 @@ describe("weapon-draft loot tables (arena-07)", () => {
     return (def.modifiers?.length ?? 0) > 0 || def.passive !== undefined;
   };
 
-  it("legendary-weapons: imported GoGoDie weapons only, all effective (round 5)", () => {
+  it("legendary-weapons: the 傳說寶玉 orb pool, all effective and unbuyable", () => {
     cover("arena-loot-table");
+    // No longer a 3-choose-1 draft pool (task #70 reopened: every draft offers
+    // ONLY quest items). This table now backs the 傳說寶玉 gacha only; the 11
+    // book-finals it used to hold moved to the shop (rule 1), leaving the 14
+    // non-final entries task #108 owns.
     const table = LootTables.get("legendary-weapons");
-    expect(table.entries.length).toBeGreaterThanOrEqual(20);
+    expect(table.entries.length).toBeGreaterThanOrEqual(6);
     for (const e of table.entries) {
       expect(Items.tryGet(e.itemId), `item ${e.itemId} must exist`).toBeDefined();
       expect(e.weight).toBeGreaterThan(0);
@@ -151,7 +155,10 @@ describe("weapon-draft loot tables (arena-07)", () => {
       expect(e.weight).toBeGreaterThan(0);
       // THE defining property of this surface: the shop cannot sell it to you.
       expect(def!.cost, `${e.itemId} is buyable — it belongs in the shop`).toBe(0);
-      expect(doesSomething(e.itemId), `${e.itemId} would grant NOTHING`).toBe(true);
+      // NB: no doesSomething() gate here. Four quest items (仙后座/戰旗/復仇之袍/
+      // 惡魔吉他) carry only an active/aura item@1 cannot express yet (#56); owner
+      // rule 2 「所有任務道具」 still requires them draftable. See arenaItemModel.
+      expect(def!.craftRole, `${e.itemId} is not a quest item`).toBe("quest");
       expect(
         def!.name.includes("四魂之玉的碎片"),
         `${e.itemId} is a 四魂之玉 shard — shards are dropped, only the assembled jewel is drafted`,

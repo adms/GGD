@@ -279,10 +279,11 @@ func isCodeSeparator(r rune) bool {
 		return true
 	}
 	switch r {
-	case '-', '‐', '‑', '‒', '–', '—', '―', '−', // hyphens & dashes
-		'－',                     // full-width hyphen-minus
-		'​', '‌', '‍', // zero-width
-		'﻿': // BOM / zero-width no-break space
+	case '-', // ASCII hyphen-minus
+		0x2010, 0x2011, 0x2012, 0x2013, 0x2014, 0x2015, // hyphen, non-breaking hyphen, figure/en/em dashes, horizontal bar
+		0x2212,                         // minus sign
+		0xFF0D,                         // full-width hyphen-minus
+		0x200B, 0x200C, 0x200D, 0xFEFF: // zero-width space / non-joiner / joiner / BOM
 		return true
 	}
 	return false

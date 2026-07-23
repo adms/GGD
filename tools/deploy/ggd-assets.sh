@@ -178,9 +178,13 @@ cmd_verify() {
          fi ) > "$hashlog" 2>&1; then
       rm -f "$hashlog"
     else
-      n_bad=$(grep -c -v ': OK$' "$hashlog" 2>/dev/null || echo 0)
+      # Count only the per-file failures. sha256sum -c also writes ONE trailing
+      # "WARNING: N computed checksum(s) did NOT match" summary to the log (both
+      # busybox and GNU do); matching ': FAILED' — the per-file verdict both emit
+      # — excludes that summary so the tally is the real file count, not N+1.
+      n_bad=$(grep -c ': FAILED' "$hashlog" 2>/dev/null || echo 0)
       echo "$SELF: FAIL — '$set_name' is CORRUPT, not merely short: $n_bad of $got_files files do not match their recorded hash." >&2
-      grep -v ': OK$' "$hashlog" 2>/dev/null | head -n 10 | sed 's/^/  /' >&2
+      grep ': FAILED' "$hashlog" 2>/dev/null | head -n 10 | sed 's/^/  /' >&2
       [ "$n_bad" -gt 10 ] && echo "  … and $((n_bad - 10)) more" >&2
       rm -f "$hashlog"
       return 1

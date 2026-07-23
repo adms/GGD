@@ -290,10 +290,24 @@ family-up:
 	@docker info >/dev/null 2>&1 || { echo "✗ docker daemon is not running"; exit 1; }
 	@$(MAKE) --no-print-directory family-secrets
 	@$(MAKE) --no-print-directory family-ship
-	@echo "→ building (the client is built with VITE_GGD_FULL_ASSETS=1 — that flag is what makes the overlay actually load)"
-	docker compose $(FAMILY_COMPOSE) --env-file $(FAMILY_ENV) up --build -d
-	@echo "→ seeding the starter roster if nothing is enabled yet (idempotent)"
-	-@docker compose $(FAMILY_COMPOSE) --env-file $(FAMILY_ENV) exec -T platform /seed -starter
+	@echo "→ building images (the client is built with VITE_GGD_FULL_ASSETS=1 — that flag is what makes the overlay actually load)"
+	docker compose $(FAMILY_COMPOSE) --env-file $(FAMILY_ENV) build
+	@echo "→ starting the datastore"
+	docker compose $(FAMILY_COMPOSE) --env-file $(FAMILY_ENV) up -d redis
+	@echo "→ seeding the starter roster into /data if nothing is enabled yet (idempotent)"
+	@echo "   VIRGIN-HOST ORDER MATTERS: on a fresh host data/ holds only .gitkeep, so the"
+	@echo "   platform's boot check would REFUSE to start player-facing with an empty whitelist."
+	@echo "   Seeding runs in a THROWAWAY container (which does not run that check) so the roster"
+	@echo "   exists in /data BEFORE the long-running platform asserts one — otherwise the deploy"
+	@echo "   comes up DOWN and 'exec /seed' cannot reach a stopped container."
+	@# --entrypoint /seed is REQUIRED: the platform image's ENTRYPOINT is /platform,
+	@# so `run platform /seed -starter` would exec `/platform /seed -starter` — the
+	@# SERVER (which ignores those args and then hits the empty-whitelist boot check
+	@# and exits 1), seeding NOTHING. Override the entrypoint so the seeder runs.
+	docker compose $(FAMILY_COMPOSE) --env-file $(FAMILY_ENV) run --rm -T --entrypoint /seed platform -starter
+	@echo "→ bringing the full stack up (platform now boots with a non-empty whitelist and passes the boot check)"
+	docker compose $(FAMILY_COMPOSE) --env-file $(FAMILY_ENV) up -d
+	@echo "→ (optional) personalise: put HIS exact roster + combat-env on the host with  make family-restore"
 	@$(MAKE) --no-print-directory family-status
 
 .PHONY: family-status
@@ -326,8 +340,20 @@ family-logs:
 # targets are the whole recovery path.
 .PHONY: family-token
 family-token:
-	@docker compose $(FAMILY_COMPOSE) --env-file $(FAMILY_ENV) exec -T platform cat /data/owner-setup-token 2>/dev/null \
-	  || echo "(no token — the owner account has already been claimed. Use: make family-admin-reset USER=<name>)"
+	@# The platform image is distroless (no shell, no `cat`), so `exec cat` can
+	@# never work — it exits non-zero and the old `|| echo` fired even when the
+	@# token DID exist, telling the owner (falsely) it was already claimed. Copy the
+	@# file out through the docker API instead (`compose cp`, no in-container binary
+	@# needed); it reads even a distroless container's filesystem.
+	@tmp=$$(mktemp); \
+	if docker compose $(FAMILY_COMPOSE) --env-file $(FAMILY_ENV) cp platform:/data/owner-setup-token "$$tmp" 2>/dev/null && [ -s "$$tmp" ]; then \
+	  echo "一次性 owner 認領碼 (在 register 頁面填入以取得管理員身份):"; \
+	  cat "$$tmp"; echo; \
+	else \
+	  echo "(沒有認領碼 — 平台可能還沒啟動，或 owner 帳號已被認領。)"; \
+	  echo "  已被認領、要重設密碼:  make family-admin-reset USER_NAME=<你的管理員帳號>"; \
+	fi; \
+	rm -f "$$tmp"
 
 .PHONY: family-admin-reset
 family-admin-reset:
@@ -369,8 +395,11 @@ opstate-restore:
 
 # Restore INTO the running family platform container. The bundle is streamed
 # over stdin so the host filesystem is never touched, and /data + /srv/content
-# are the same paths the server reads. Run it after `make family-up`; the boot
-# check will already have refused to start empty, so this is how you make it not.
+# are the same paths the server reads. `make family-up` already brings the host
+# up PLAYABLE on the built-in demo roster (it seeds before the platform's boot
+# check runs); this replaces that demo roster with HIS exact whitelist — and,
+# if he ever configured one, his 戰鬥系統 override — and verifies every id against
+# the host's content tree. A running platform picks the new whitelist up in ~5s.
 .PHONY: family-restore
 family-restore:
 	@test -f $(BUNDLE) || { echo "✗ no bundle at $(BUNDLE) — export one on your laptop first: make opstate-export"; exit 1; }

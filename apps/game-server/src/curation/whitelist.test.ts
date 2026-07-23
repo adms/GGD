@@ -414,7 +414,9 @@ describe("demo starter set is playable (wl-starter-playable)", () => {
   it("every starter champion + item resolves in the real content registry", () => {
     cover("wl-starter-playable");
     expect(starterChampions.length).toBeGreaterThanOrEqual(12);
-    expect(starterShopItems.length).toBeGreaterThanOrEqual(60);
+    // The shop is FINAL crafted weapons only now (owner rule 1, task #70),
+    // a sharper shelf than the old cost-filtered 70.
+    expect(starterShopItems.length).toBeGreaterThanOrEqual(20);
     expect(starterDraftItems.length).toBeGreaterThanOrEqual(6);
     expect(starterItems.length).toBe(
       starterShopItems.length +
@@ -504,10 +506,14 @@ describe("demo starter set is playable (wl-starter-playable)", () => {
     for (const id of starterDraftItems) {
       const def = Items.get(id as ItemId);
       expect(def.cost, `${id} (${def.name}) is buyable — it belongs in the shop`).toBe(0);
+      // A draft item is a QUEST item (owner rule 2), not "an item with stats".
+      // Four quest items (仙后座/戰旗/復仇之袍/惡魔吉他) carry only an active item@1
+      // cannot express yet (#56); 「所有任務道具」 still requires them draftable,
+      // so no effect gate here — the craftRole marker IS the membership rule.
       expect(
-        (def.modifiers?.length ?? 0) > 0 || def.passive !== undefined,
-        `${id} (${def.name}) would grant NOTHING when drafted`,
-      ).toBe(true);
+        (def as { craftRole?: string }).craftRole,
+        `${id} (${def.name}) is not a quest item`,
+      ).toBe("quest");
       expect(starterShopItems, `${id} is on both surfaces`).not.toContain(id);
     }
   });

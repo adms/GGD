@@ -213,23 +213,6 @@ func (s *Service) Register(ctx context.Context, username, email, password string
 	ctx, cancel := context.WithTimeout(context.WithoutCancel(ctx), registerSideworkTimeout)
 	defer cancel()
 
-	okUser, err := s.rdb.SetNX(ctx, redisx.KeyIdxUsername(username), id, 0)
-	if err != nil {
-		return account.Account{}, TokenPair{}, err
-	}
-	if !okUser {
-		return account.Account{}, TokenPair{}, httpx.Conflict("username is already taken")
-	}
-	okMail, err := s.rdb.SetNX(ctx, redisx.KeyIdxEmail(email), id, 0)
-	if err != nil {
-		s.rdb.R.Del(ctx, redisx.KeyIdxUsername(username))
-		return account.Account{}, TokenPair{}, err
-	}
-	if !okMail {
-		s.rdb.R.Del(ctx, redisx.KeyIdxUsername(username))
-		return account.Account{}, TokenPair{}, httpx.Conflict("email is already registered")
-	}
-
 	// First-account owner bootstrap: while a deploy has NO administrator, a
 	// registration claims ownership. The grant is written into the account's
 	// first persisted state (not a create-then-promote follow-up), so there is
@@ -238,9 +221,10 @@ func (s *Service) Register(ctx context.Context, username, email, password string
 	// pending owner could never be approved — nobody exists to approve it —
 	// which would brick the deploy permanently. See bootstrap.go.
 	//
-	// It is evaluated HERE, before the invite gate and before the ~100 ms hash,
-	// because the invite exemption below keys off its answer: "is this deploy
-	// still ownerless" must be ONE evaluation, not two that can drift.
+	// It is evaluated HERE, before the invite gate, the uniqueness reservation
+	// and the ~100 ms hash, because the invite exemption below keys off its
+	// answer: "is this deploy still ownerless" must be ONE evaluation, not two
+	// that can drift.
 	owner, releaseClaim := s.claimOwnership(ctx, id, opt.BootstrapToken)
 	defer releaseClaim()
 
@@ -257,7 +241,10 @@ func (s *Service) Register(ctx context.Context, username, email, password string
 	//     that already hands out platform ownership. An attacker who wins that
 	//     footrace does not need a code — they get the admin role and can mint
 	//     codes for themselves. An invite gate layered on top of a window that
-	//     already grants admin cannot be stronger than that window.
+	//     already grants admin cannot be stronger than that window. (A networked
+	//     gated deploy refuses to boot without GGD_OWNER_BOOTSTRAP_TOKEN=1, which
+	//     makes even this first registration present the 0600 owner token — see
+	//     config.FirstOwnerExposureError — so the window is not a footrace there.)
 	//  3. It CLOSES ITSELF. The instant the owner's account file lands,
 	//     Admins() is non-empty, claimOwnership returns false for everyone, and
 	//     every subsequent registration needs a code — no restart, no action.
@@ -265,24 +252,27 @@ func (s *Service) Register(ctx context.Context, username, email, password string
 	//     store, so an unreadable store means "assume an admin exists" ⇒ a code
 	//     is REQUIRED. (Opposite direction to the ownership grant, same meaning.)
 	//
-	// The residual exposure — a stranger registering in the seconds before the
-	// owner does, on a deploy already reachable from outside — is closed by an
-	// existing switch and no new code: GGD_OWNER_BOOTSTRAP_TOKEN=1 makes even
-	// the first registration present the 0600 DATA_DIR/owner-setup-token, so the
-	// unauthenticated window is zero-width. That is the recommended env for the
-	// family build.
+	// IT RUNS BEFORE THE USERNAME/EMAIL RESERVATION, deliberately. If the
+	// uniqueness reservation ran first, an un-invited stranger could read the
+	// 409-"already taken" vs 403-"invite required" split as an ORACLE telling
+	// them which family usernames and emails exist. Gating first means a caller
+	// without a valid code is refused having reserved — and revealed — nothing,
+	// and it also keeps the ~100 ms argon2 hash below the gate.
 	//
 	// ATOMICITY (the create_integrity scar): BURN FIRST, CREATE SECOND, release
 	// on every failure. Creating first and burning after would mean a crash in
 	// between leaves a LIVE code that has already produced an account — the gate
 	// silently leaking a registration, which is unacceptable when it is the only
 	// thing keeping strangers out. Burning first fails the other way (a spent
-	// code with no account), which is recoverable by minting another.
+	// code with no account), which is recoverable by minting another. The
+	// deferred Release below also gives the code back when a later step (a
+	// name/email collision, a store error) stops the account from landing, so a
+	// family member who picks a taken name does not lose their invite.
 	inviteBurned := false
 	created := false
 	if s.invites != nil && !owner {
 		if err := s.invites.Redeem(ctx, opt.InviteCode, id, username); err != nil {
-			s.rdb.R.Del(ctx, redisx.KeyIdxUsername(username), redisx.KeyIdxEmail(email))
+			// Nothing reserved yet — refuse without touching the index.
 			return account.Account{}, TokenPair{}, err
 		}
 		inviteBurned = true
@@ -296,6 +286,23 @@ func (s *Service) Register(ctx context.Context, username, email, password string
 				"err", err, "accountId", id)
 		}
 	}()
+
+	okUser, err := s.rdb.SetNX(ctx, redisx.KeyIdxUsername(username), id, 0)
+	if err != nil {
+		return account.Account{}, TokenPair{}, err
+	}
+	if !okUser {
+		return account.Account{}, TokenPair{}, httpx.Conflict("username is already taken")
+	}
+	okMail, err := s.rdb.SetNX(ctx, redisx.KeyIdxEmail(email), id, 0)
+	if err != nil {
+		s.rdb.R.Del(ctx, redisx.KeyIdxUsername(username))
+		return account.Account{}, TokenPair{}, err
+	}
+	if !okMail {
+		s.rdb.R.Del(ctx, redisx.KeyIdxUsername(username))
+		return account.Account{}, TokenPair{}, httpx.Conflict("email is already registered")
+	}
 
 	hash, err := HashPassword(password, s.params)
 	if err != nil {

@@ -257,6 +257,42 @@ func TestDeadIDsReported(t *testing.T) {
 	}
 }
 
+// A -strict failure must be ATOMIC: when the target tree is missing ids, the
+// restore fails BEFORE writing, leaving the target exactly as it was. The bug
+// this guards: the dead-id check used to run after restoreCuration had already
+// saved a sanitized (dropped-id) whitelist, so a strict failure still left a
+// 46-of-48 roster on disk that an operator re-running after "fixing" the tree
+// would never notice.
+func TestStrictRestoreIsAtomic(t *testing.T) {
+	src := t.TempDir()
+	writeWhitelist(t, src, []string{"godie-e001", "godie-e002"}, []string{"i-live"}, nil, fixedNow())
+	srcContent := contentTree(t, []string{"godie-e001", "godie-e002"}, []string{"i-live"}, nil, "cv_old")
+	bundle, _, err := Export(ExportOptions{DataDir: src, ContentDir: srcContent, Now: fixedNow})
+	if err != nil {
+		t.Fatalf("export: %v", err)
+	}
+
+	// Target tree dropped godie-e002.
+	dstContent := contentTree(t, []string{"godie-e001"}, []string{"i-live"}, nil, "cv_new")
+	dst := t.TempDir()
+	rep, err := Restore(bundle, RestoreOptions{DataDir: dst, ContentDir: dstContent, Strict: true})
+	if err == nil {
+		t.Fatal("expected -strict to fail against a drifted tree")
+	}
+	// NOTHING may have been written: a virgin target must still be empty.
+	got := readWhitelist(t, dst)
+	if len(got.Champions) != 0 {
+		t.Fatalf("strict failure must not write any whitelist; found %d champions on disk: %v", len(got.Champions), got.Champions)
+	}
+	// It must still have NAMED the missing id in the report.
+	if !containsID(rep.Dead.Champions, "godie-e002") {
+		t.Fatalf("strict pre-flight must name the missing id, got %+v", rep.Dead)
+	}
+	if actionHasResult(rep, PartCuration, ResultWritten) {
+		t.Fatal("curation must not report Written under a strict pre-flight failure")
+	}
+}
+
 // ---- 5. idempotency --------------------------------------------------------
 
 func TestRestoreIdempotent(t *testing.T) {
