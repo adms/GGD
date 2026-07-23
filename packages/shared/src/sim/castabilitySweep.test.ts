@@ -34,7 +34,7 @@
 import { describe, it, expect, beforeAll } from "vitest";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { cover } from "../../testkit/cover";
 import { ContentLoader } from "../content/loader";
 import { FsContentSource } from "../content/node/FsContentSource";
@@ -100,12 +100,37 @@ interface ChampResult {
 let roster: string[] = [];
 const results: ChampResult[] = [];
 
+/**
+ * The sweep runs against the OPERATOR'S curation state, which is deliberately
+ * not in git: `.gitignore` excludes `/data/**` because the whitelist is live
+ * operational state, not a program constant (see README 開放名單). So the file
+ * exists on a working machine and never in a fresh checkout — including CI,
+ * where an unguarded read failed the whole suite at collection time with ENOENT.
+ *
+ * Falling back to a committed snapshot rather than skipping, because the TODO
+ * runtime gate (`pnpm todo:runtime`) fails any `done` row whose beacon never
+ * fires, and cast128-01 is done — a skipped sweep turns a red `unit` into a red
+ * `regression`. The sweep is a SIM assertion (every champion spawns, every slot
+ * fires), so a representative roster exercises exactly what it is there to
+ * catch; the real whitelist still wins wherever it exists.
+ */
+const ROSTER_FIXTURE = join(HERE, "castabilityRoster.fixture.json");
+
+const rosterSource = (): { champions: string[]; from: string } => {
+  const [file, from] = existsSync(WHITELIST)
+    ? [WHITELIST, "curation whitelist"]
+    : [ROSTER_FIXTURE, "committed fixture"];
+  return { champions: JSON.parse(readFileSync(file, "utf8")).champions as string[], from };
+};
+
 beforeAll(async () => {
   for (const r of [Champions, Abilities, Items, Augments, Projectiles, LootTables]) r.clear();
   for (const r of [Arenas, Configs, Models, VfxDefs, StatusEffects]) r.clear();
   const res = await new ContentLoader(new FsContentSource(CONTENT_DIR)).load();
   registerAll(res.store);
-  roster = JSON.parse(readFileSync(WHITELIST, "utf8")).champions as string[];
+  const src = rosterSource();
+  roster = src.champions;
+  console.log(`castability sweep: ${roster.length} champions from the ${src.from}`);
 });
 
 // --------------------------------------------------------------------- helpers
