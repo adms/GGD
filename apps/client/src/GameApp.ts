@@ -104,11 +104,14 @@ import { combatSfxKey } from "./audio/combatSfx";
 import { FootstepCadence } from "./audio/footsteps";
 import { effectiveQuality, onQualityChange } from "./render/RenderConfig";
 import {
-  impactShakeAmp,
-  shakeDurationMs,
   heavyPostFxEnabled,
   cameraShakeScaleFor,
+  batchCarriesImpactProfile,
+  planCameraReaction,
+  EX_PUNCH_DEPTH,
+  EX_PUNCH_MS,
 } from "./render/combatFeedback";
+import { prefersReducedMotion } from "./ui/buttonSfx";
 import { SETTLEMENT_EVENT } from "@ggd/shared/protocol/messages";
 import type { EventMessage, MatchSettlement } from "@ggd/shared/protocol/messages";
 import { roundEndQuoteChampion } from "./ui/panels/settlementModel";
@@ -204,9 +207,33 @@ export class GameApp {
   private roundWinnerUntilMs = 0;
   /** local-champion footstep cadence (subtle walk/run cue). */
   private readonly footstep = new FootstepCadence();
-  /** camera-shake amplitude multiplier for the current quality tier. */
+  /**
+   * OS `prefers-reduced-motion`, read ONCE at construction (it is stable for the
+   * life of a match, and the drain path must not touch matchMedia per event).
+   * Folded into `shakeScale`, which every camera reaction gates on — so under
+   * reduced motion the ring jitter, the directional kick and the EX punch-in all
+   * stand down while flash/spark/sfx/hitstop keep playing.
+   */
+  private readonly reducedMotion = prefersReducedMotion();
+  /** camera-shake amplitude multiplier: quality tier × reduced-motion. */
   private shakeScale = 1;
   private offQuality: (() => void) | null = null;
+  /**
+   * Camera impulses already fired in the CURRENT drained batch — the teamfight
+   * crowding index (combatFeedback.shakeCrowdingScale thins the 2nd/3rd and
+   * drops the rest, so an AoE frame cannot stack into a screen-quake).
+   */
+  private frameKicks = 0;
+  /**
+   * Whether the CURRENT drained batch carries #133 ImpactProfiles. The sim emits
+   * `damage` immediately followed by `hitImpact` for the same landed hit, so the
+   * batch is scanned ONCE up-front (`damage` arrives first and must already know
+   * to stand down) and the legacy scalar shake is suppressed for the whole
+   * batch — a profiled hit shakes exactly once, through the directional path.
+   */
+  private batchProfiled = false;
+  /** performance.now() of the last EX punch-in (guards against a restart). */
+  private lastExPunchMs = -Infinity;
   /** reused scratch: champion ids seen this frame (ambient sweep) */
   private readonly ambientSeen = new Set<number>();
   private readonly sessions: MultiSession;
@@ -371,10 +398,10 @@ export class GameApp {
     // mobile. Both react live to a quality-tier override.
     this.postFx = new CombatPostFx(this.renderer.scene, () => this.viewports.primary.camera);
     const q0 = effectiveQuality();
-    this.shakeScale = cameraShakeScaleFor(q0);
+    this.shakeScale = cameraShakeScaleFor(q0, this.reducedMotion);
     this.postFx.setEnabled(heavyPostFxEnabled(q0));
     this.offQuality = onQualityChange((q) => {
-      this.shakeScale = cameraShakeScaleFor(q);
+      this.shakeScale = cameraShakeScaleFor(q, this.reducedMotion);
       this.postFx.setEnabled(heavyPostFxEnabled(q));
     });
 
@@ -758,11 +785,19 @@ export class GameApp {
 
     // 1) drain network events (queued by socket callbacks)
     const localId = hudStore.getState().localEntityId;
-    for (const ev of this.conn.drainEvents()) {
+    const events = this.conn.drainEvents();
+    // Camera-wave per-batch state, settled BEFORE anything is dispatched:
+    //   • batchProfiled — `damage` arrives before its `hitImpact` twin, so the
+    //     legacy scalar shake has to know up-front that the directional kick is
+    //     coming and stand down (else one hit shakes twice);
+    //   • frameKicks — the teamfight crowding index, reset each batch.
+    this.batchProfiled = batchCarriesImpactProfile(events);
+    this.frameKicks = 0;
+    for (const ev of events) {
       this.vfx.handleEvent(ev, nowMs); // particles + damage numbers
       this.views.handleEvent(ev, nowMs); // anim pulses + hit flash + hitstop
       this.casts.handleEvent(ev, nowMs); // cast/windup timing → cast bars
-      this.applyCombatFeedback(ev, localId); // camera shake + vignette + ripple
+      this.applyCombatFeedback(ev, localId, nowMs); // camera kick/punch-in + vignette + ripple
       const sfxKey = combatSfxKey(ev); // per-frame combat SFX (fire-and-forget)
       if (sfxKey) audioSystem.playSfx(sfxKey);
       if (ev.type === "death" && state) {
@@ -1106,30 +1141,56 @@ export class GameApp {
   }
 
   /**
-   * Screen-space combat feedback for one drained event (camera shake, red
-   * vignette, ripple). Driven by the rich `damage` payload:
-   *   • CAMERA SHAKE when the local player is involved — a small kick on your
-   *     own landed hit, stronger when you TAKE damage, bigger on crit/kill.
+   * Screen-space combat feedback for one drained event.
+   *
+   * CAMERA (the wave that consumes the #133 ImpactProfile — audit P1). Every
+   * event goes through combatFeedback.planCameraReaction, the single authority
+   * on what the camera does, and whatever it returns is applied here:
+   *   • a profiled `hitImpact` involving the local player → a DIRECTIONAL kick:
+   *     CameraRig.addShake(amp, ms, {dir, style, kick}) shoves the eye ALONG the
+   *     hit vector on the contact frame, so a blow reads as "it came from THERE"
+   *     instead of an undirected rattle. Perspective/quality/reduced-motion and
+   *     teamfight crowding are all folded in by the planner.
+   *   • the local player's own EX `abilityCast` → CameraRig.exPunchIn, the
+   *     cinematic 特寫 push-in. Fired off the CAST (one per super), never off the
+   *     EX's damage ticks, and never twice inside EX_PUNCH_MIN_INTERVAL_MS.
+   *   • the LEGACY scalar `damage` shake survives only for pre-#133 batches that
+   *     carry no profile at all (old replays); `batchProfiled` suppresses it
+   *     otherwise, so a profiled hit can never shake twice.
+   *
+   * POST-FX stays on the rich `damage` payload:
    *   • RED VIGNETTE only when the LOCAL player takes damage, intensity by the
    *     fraction of max-hp lost.
    *   • RIPPLE / heat-distortion on any heavy hit (crit/kill or ≥ HEAVY_HIT_DMG),
    *     matching beams/explosions. All post-fx are tier-gated inside CombatPostFx.
    */
-  private applyCombatFeedback(ev: EventMessage, localId: number | null): void {
+  private applyCombatFeedback(ev: EventMessage, localId: number | null, nowMs: number): void {
+    const reaction = planCameraReaction(ev, {
+      localId,
+      scale: this.shakeScale,
+      crowdIndex: this.frameKicks,
+      batchProfiled: this.batchProfiled,
+      sinceExPunchMs: nowMs - this.lastExPunchMs,
+      tickMs: TICK_MS,
+    });
+    if (reaction.kick) {
+      const k = reaction.kick;
+      this.frameKicks++; // only a kick that actually fired spends crowd budget
+      this.cameraRig.addShake(k.amp, k.durationMs, { dir: k.dir, style: k.style, kick: k.kick });
+    }
+    if (reaction.exPunch) {
+      this.lastExPunchMs = nowMs;
+      this.cameraRig.exPunchIn(EX_PUNCH_DEPTH, EX_PUNCH_MS);
+    }
+
     if (ev.type !== "damage") return;
     const amount = typeof ev.data.amount === "number" ? ev.data.amount : 0;
     if (amount <= 0) return;
     const crit = Boolean(ev.data.crit);
     const killingBlow = Boolean(ev.data.killingBlow);
     const target = ev.data.target as number | undefined;
-    const source = ev.data.source as number | undefined;
     const taken = localId !== null && target === localId;
-    const selfHit = localId !== null && source === localId && !taken;
 
-    if (taken || selfHit) {
-      const amp = impactShakeAmp({ amount, crit, killingBlow, taken }) * this.shakeScale;
-      if (amp > 0) this.cameraRig.addShake(amp, shakeDurationMs(amp));
-    }
     if (taken) {
       const maxHp = this.localMaxHp();
       this.postFx.addVignette(maxHp > 0 ? amount / maxHp : 0);

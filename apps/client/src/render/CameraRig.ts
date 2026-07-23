@@ -65,6 +65,16 @@ const SHAKE_FREQ = 0.078;
 const KICK_DURATION_MS = 120;
 /** How far (world units per unit of kick magnitude) the directional shove pushes. */
 const KICK_GAIN = 0.9;
+/**
+ * Absolute cap on the SUMMED offset of all live impulses (world units). The pool
+ * adds its impulses together, so an AoE frame that lands three hits at once would
+ * otherwise displace the eye by their sum — a screen-quake. A single max impulse
+ * (SHAKE_MAX_AMP ring + a capped kick) peaks just under this, so a lone hit is
+ * never touched; only genuine pile-ups are reined in. GameApp additionally
+ * thins per-frame impulses upstream (combatFeedback.shakeCrowdingScale) — this
+ * is the last line of defence inside the rig itself.
+ */
+const SHAKE_SUM_MAX = 1.8;
 
 interface ShakeImpulse {
   active: boolean;
@@ -356,7 +366,14 @@ export class CameraRig {
    * target by `depth` world units, hold briefly, then ease back CRISP. Clamped
    * so it can never dive past the closest allowed dolly. Pairs with the sim's
    * cosmetic EX freeze; the screen darken is a post-fx concern (CombatPostFx),
-   * not the rig's. Idempotent-ish: a fresh call restarts the beat.
+   * not the rig's.
+   *
+   * CANNOT STACK by construction: the beat is a single (depth, age, duration)
+   * triple, so a second call REPLACES the first rather than adding to it, and
+   * `advancePunch` always eases the one live beat back to 0. GameApp fires it
+   * from the local player's EX `abilityCast` (combatFeedback.planCameraReaction),
+   * once per super — never per damage tick — with an additional
+   * EX_PUNCH_MIN_INTERVAL_MS floor so a repeated cast event can't restart it.
    */
   exPunchIn(depth = 2.5, durationMs = 260): void {
     if (!(depth > 0) || !(durationMs > 0)) return;
@@ -393,6 +410,16 @@ export class CameraRig {
         ox += s.dirX * k;
         oz += s.dirZ * k;
       }
+    }
+    // teamfight clamp: scale the SUMMED offset back under SHAKE_SUM_MAX rather
+    // than clamping each axis, so a pile-up loses magnitude but keeps its
+    // direction (a capped kick still reads as "the blow came from THERE").
+    const sum = Math.hypot(ox, oy, oz);
+    if (sum > SHAKE_SUM_MAX) {
+      const k = SHAKE_SUM_MAX / sum;
+      ox *= k;
+      oy *= k;
+      oz *= k;
     }
     this.shakeX = ox;
     this.shakeY = oy;

@@ -25,6 +25,7 @@ import {
   type GuardianRules,
 } from "./GuardianSystem";
 import { DEFAULT_GUARDIAN_TOWER_CONFIG } from "../../content/schema/config";
+import { Stat } from "../stats/statTypes";
 import type { DamageType } from "../effects/effect";
 
 beforeAll(() => registerSkeletonContent());
@@ -86,6 +87,16 @@ function hit(
   origin = "ability:test",
 ): void {
   w.damageQueue.push({ source, target, amount, type, crit: false, origin });
+}
+
+/**
+ * Land a guaranteed KILLING blow. The per-packet clamp (§5.3 `maxHitPctMaxHp`)
+ * caps ONE packet at 15% of maxHp, so no single burst can ever delete the tower
+ * — soften it to its last hit point first, then queue the finishing packet.
+ */
+function lastHit(w: SimWorld, source: EntityId, gid: EntityId): void {
+  w.health.get(gid)!.hp = 1;
+  hit(w, source, gid, 500);
 }
 
 /** The single alive guardian in zone 0. */
@@ -238,6 +249,102 @@ describe("guardian wake / sleep / volley AoE (#89)", () => {
   });
 });
 
+// A structure has NO StatsComp, so `mitigate()` used to find no resist on it and
+// hand the guardian FULL damage "exactly like the flower". It now reads the
+// armor / magicResist / maxHitPctMaxHp carried on StructureComp (§5.1 / §5.3).
+describe("guardian mitigation + per-packet cap (#89 §5.1/§5.3)", () => {
+  /** The SHIPPED numbers: armor 0, MR 17.65, maxHitPctMaxHp 0.15, hpBase 1450. */
+  const SHIPPED = guardianRulesFromConfig(DEFAULT_GUARDIAN_TOWER_CONFIG, 1 / 30);
+
+  function armedGuardian(w: SimWorld): EntityId {
+    beginCombatGuardians(w, SHIPPED, [0], 1);
+    return theGuardian(w);
+  }
+
+  it("physical into armor 0 is unmitigated; magic into MR 17.65 is ×0.85", () => {
+    cover("guardian-mitigation-physical");
+    cover("guardian-mitigation-magic");
+    const w = new SimWorld(SKELETON_ARENA, 21);
+    const a = champAt(w, 0, 0, -38, 0);
+    const gid = armedGuardian(w);
+    const hp = w.health.get(gid)!;
+    expect(hp.maxHp).toBe(1450); // round 1 shipped HP (cap = 217.5, both hits are under it)
+
+    const beforePhys = hp.hp;
+    hit(w, a, gid, 100, "physical");
+    step(w);
+    expect(beforePhys - hp.hp).toBeCloseTo(100, 6); // armor 0 → the siege lane is free
+
+    const beforeMagic = hp.hp;
+    hit(w, a, gid, 100, "magic");
+    step(w);
+    expect(beforeMagic - hp.hp).toBeCloseTo(100 * (100 / 117.65), 4); // the A0C1 0.85
+
+    // true damage bypasses armour/MR exactly as it does on a champion
+    const beforeTrue = hp.hp;
+    hit(w, a, gid, 100, "true");
+    step(w);
+    expect(beforeTrue - hp.hp).toBeCloseTo(100, 6);
+  });
+
+  it("caps ONE packet at maxHitPctMaxHp × maxHp — a burst cannot delete the tower", () => {
+    cover("guardian-cap-single-packet");
+    const w = new SimWorld(SKELETON_ARENA, 22);
+    const a = champAt(w, 0, 0, -38, 0);
+    const gid = armedGuardian(w);
+    const hp = w.health.get(gid)!;
+    const cap = hp.maxHp * DEFAULT_GUARDIAN_TOWER_CONFIG.maxHitPctMaxHp; // 0.15 × 1450 = 217.5
+
+    const before = hp.hp;
+    hit(w, a, gid, 5000, "physical"); // a nuke that would one-shot it uncapped
+    step(w);
+    expect(before - hp.hp).toBeCloseTo(cap, 6);
+    expect(hp.alive).toBe(true);
+    // the CLAMPED value is what the threat table (and the client `damage` event) saw
+    expect(w.structure.get(gid)!.threat.get(a)).toBeCloseTo(cap, 6);
+
+    // the cap is post-mitigation and UNCONDITIONAL — true damage is capped too
+    const beforeTrue = hp.hp;
+    hit(w, a, gid, 5000, "true");
+    step(w);
+    expect(beforeTrue - hp.hp).toBeCloseTo(cap, 6);
+  });
+
+  it("a guardian can never die in fewer than 7 packets", () => {
+    cover("guardian-cap-min-packets");
+    const w = new SimWorld(SKELETON_ARENA, 23);
+    const a = champAt(w, 0, 0, -38, 0);
+    const gid = armedGuardian(w);
+    let packets = 0;
+    while (w.health.get(gid)?.alive && packets < 20) {
+      hit(w, a, gid, 999999, "true"); // the biggest possible single blow
+      packets++;
+      step(w);
+    }
+    expect(w.structure.has(gid)).toBe(false); // it did eventually die
+    expect(packets).toBeGreaterThanOrEqual(7); // 1 / 0.15 = 6.67 → 7
+  });
+
+  it("a CHAMPION's mitigation is untouched: StatsComp armor, and no cap", () => {
+    cover("guardian-cap-champions-untouched");
+    const w = new SimWorld(SKELETON_ARENA, 24);
+    const a = champAt(w, 0, 0, -38, 0);
+    const v = champAt(w, 1, 1, -34, 0);
+    beginCombatGuardians(w, SHIPPED, [0], 1); // guardians armed, but irrelevant here
+    const hp = w.health.get(v)!;
+    const armor = w.stats.get(v)!.final[Stat.Armor];
+    // 400 physical is FAR above 15% of a champion's bar — if the structure cap
+    // leaked onto champions this would be clamped. It must not be. (Read the
+    // resolved packet off the `damage` event: hp itself also regenerates.)
+    hit(w, a, v, 400, "physical");
+    step(w);
+    const dealt = w.events.find((e) => e.type === "damage" && e.data.target === v)!.data
+      .amount as number;
+    expect(dealt).toBeCloseTo(400 * (100 / (100 + armor)), 6);
+    expect(dealt).toBeGreaterThan(hp.maxHp * 0.15);
+  });
+});
+
 describe("guardian last-hit reward (#89)", () => {
   it("last hit grants gold + full HP&MP + 鎮守之力, exactly once", () => {
     cover("guardian-reward-values");
@@ -249,7 +356,7 @@ describe("guardian last-hit reward (#89)", () => {
     kh.hp = 5; // hurt, to prove the restore
     kh.mana = 0;
     const goldBefore = w.champion.get(k)!.gold;
-    hit(w, k, gid, 500); // one packet ≥ 300 hp → killing blow
+    lastHit(w, k, gid); // the finishing packet (see lastHit: the §5.3 cap)
     step(w);
     // guardian gone, paid once
     expect(w.structure.size).toBe(0);
@@ -273,7 +380,7 @@ describe("guardian last-hit reward (#89)", () => {
     const ms = w.matchStats.get(k)!;
     const xpBefore = ms.xp;
     const goldEarnedBefore = ms.goldEarned;
-    hit(w, k, gid, 500);
+    lastHit(w, k, gid);
     step(w);
     // only the guardian reward (150), never GOLD_REWARDS.kill(150)+bounty(100) on top
     expect(ms.goldEarned).toBe(goldEarnedBefore + 150);
@@ -289,8 +396,8 @@ describe("guardian last-hit reward (#89)", () => {
     beginCombatGuardians(w, RULES, [0], 1);
     const gid = theGuardian(w);
     // both queued this tick; nuker first (crosses zero → killingBlow), slowpoke after
-    hit(w, nuker, gid, 500);
-    hit(w, slowpoke, gid, 500);
+    lastHit(w, nuker, gid); // crosses zero → killingBlow
+    hit(w, slowpoke, gid, 500); // queued after, lands on an already-dead tower
     const nukerGold = w.champion.get(nuker)!.gold;
     const slowGold = w.champion.get(slowpoke)!.gold;
     step(w);
@@ -304,7 +411,7 @@ describe("guardian last-hit reward (#89)", () => {
     const summon = w.spawn(); // a bare entity, not a champion
     beginCombatGuardians(w, RULES, [0], 1);
     const gid = theGuardian(w);
-    hit(w, summon, gid, 500);
+    lastHit(w, summon, gid);
     step(w);
     expect(w.structure.size).toBe(0); // guardian despawned
     expect(w.guardianBuffs.size).toBe(0); // no buff granted
@@ -319,7 +426,7 @@ describe("guardian last-hit reward (#89)", () => {
     beginCombatGuardians(w, RULES, [0], 1);
     const gid = theGuardian(w);
     // kill the killer in the same tick: its own health crosses zero too
-    hit(w, k, gid, 500);
+    lastHit(w, k, gid);
     w.health.get(k)!.hp = 0; // dead before deathSystem flips alive=false
     step(w);
     expect(w.structure.size).toBe(0);
@@ -338,7 +445,7 @@ describe("guardian 鎮守之力 inherited pulse (#89)", () => {
     const ally = champAt(w, 2, 0, -34, -1.8); // same team → never pulsed
     beginCombatGuardians(w, RULES, [0], 1);
     const gid = theGuardian(w);
-    hit(w, k, gid, 500); // k takes the last hit → gains the buff
+    lastHit(w, k, gid); // k takes the last hit → gains the buff
     step(w);
     expect(w.guardianBuffs.has(k)).toBe(true);
     const enemyMax = w.health.get(enemy)!.maxHp;
@@ -399,7 +506,7 @@ describe("guardian determinism + tick source (#89)", () => {
     hit(w, k, gid, 20);
     step(w);
     expect(w.structure.get(gid)!.wakeTick).toBeGreaterThanOrEqual(0);
-    hit(w, k, gid, 500);
+    lastHit(w, k, gid);
     step(w);
     expect(w.structure.size).toBe(0);
     expect(w.champion.get(k)!.gold).toBe(150); // paid despite no flower clock

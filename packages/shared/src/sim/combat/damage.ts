@@ -6,6 +6,7 @@
 import type { AbilityId, ChampionId, EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import type { DamageType } from "../effects/effect";
+import type { StructureComp } from "../systems/GuardianSystem";
 import { Stat } from "../stats/statTypes";
 import { fireHooks } from "../effects/hooks";
 import { recordDamage } from "../stats/matchStats";
@@ -138,14 +139,68 @@ function deriveTier(impact: number, crit: boolean, guardBreak: boolean): ImpactT
 }
 
 /**
- * Whether this packet is an EX / super. Detected from a damage-origin marker so
- * no extra field has to thread through the un-owned effect runner. Populating it
- * needs the EX-origin tagging follow-up (audit P2) in the ability/cast layer;
- * until then no content produces the marker and this stays false — the FIELD is
- * on the contract now so the client stage can consume it verbatim.
+ * The ability id carried by an `ability:<id>` damage origin (undefined for
+ * "basic" / DoTs / item+augment procs / guardian packets). Every ability path
+ * stamps this shape — instant cast (abilitySystem), delayed cast
+ * (CastResolveSystem) and projectile onHit (which carries the spawning
+ * ability's origin verbatim) — so it is the one place origin is parsed.
  */
-function originIsEX(origin: string): boolean {
-  return origin.startsWith("ex:") || origin.includes(":ex:");
+function abilityIdOfOrigin(origin: string): string | undefined {
+  const ix = origin.indexOf("ability:");
+  if (ix < 0) return undefined;
+  return origin.slice(ix + "ability:".length);
+}
+
+/** Authored doc-id suffix of a hero's EX ability (`<hero>.ex`; QWER are .q/.w/.e/.r). */
+const EX_ABILITY_SUFFIX = ".ex";
+
+/**
+ * Whether this packet is an EX / super hit (task #133) — the flag that arms the
+ * omni shake + cosmetic `exFreeze` on the ImpactProfile.
+ *
+ * Derived from TWO real signals, no new packet field and no content marker:
+ *
+ *  1. RUNTIME (authoritative): the firing entity's own EX slot holds exactly the
+ *     ability this damage came from. `castAbility` puts the EX ability in
+ *     `AbilitiesComp.exSlot` (slot "EX" is the only way to fire it), and every
+ *     ability damage path stamps `origin = "ability:<abilityId>"`, so comparing
+ *     the two identifies an EX hit for instant casts, cast-time casts and
+ *     ability projectiles alike (a projectile's `caster` is its owner).
+ *  2. CONTENT (fallback): the authored `.ex` doc-id suffix. `champion.exAbility`
+ *     is always `<hero>.ex` (content/abilities/*.ex.json), so a hit whose source
+ *     entity no longer carries the abilities comp (a summon/proc re-emitting the
+ *     ability's origin, a dead caster, content-level tests) still reads as EX.
+ *
+ * Both are pure reads of fixed world/content state — no rng, no wall-clock.
+ */
+function originIsEX(world: SimWorld, source: EntityId, origin: string): boolean {
+  const abilityId = abilityIdOfOrigin(origin);
+  if (abilityId === undefined) return false;
+  const ex = world.abilities.get(source)?.exSlot;
+  if (ex && ex.abilityId === abilityId) return true;
+  return abilityId.endsWith(EX_ABILITY_SUFFIX);
+}
+
+/**
+ * COUNTER HIT (task #133) — the canonical fighting-game read: the blow landed
+ * while the VICTIM was itself committed to an action it could not take back.
+ *
+ * The sim already models exactly two such commitment windows, both on the
+ * victim's `AbilitiesComp`:
+ *   · `windup` — an in-progress basic-attack wind-up (the swing's startup, before
+ *     its damage point; BasicAttackSystem clears it the moment the hit lands or
+ *     the swing is cancelled), and
+ *   · `cast`   — an in-progress ability cast time (animation-locked; the caster
+ *     is usually rooted for it, see CastResolveSystem).
+ *
+ * Two map lookups, no allocation, no rng: same inputs → same flag on every
+ * replica. Cosmetic only — it selects the `counter` spark identity; it changes
+ * no damage number and no freeze/knockback, so replay digests are untouched.
+ */
+function isCounterHit(world: SimWorld, target: EntityId): boolean {
+  const ab = world.abilities.get(target);
+  if (!ab) return false;
+  return !!ab.windup || !!ab.cast;
 }
 
 /** Knockback only for meaningful blows (autos/DoTs stay put; abilities shove). */
@@ -185,9 +240,8 @@ function lookupHitFeel(world: SimWorld, source: EntityId, origin: string): HitFe
       | undefined;
     return cdef?.hitFeel;
   }
-  const ix = origin.indexOf("ability:");
-  if (ix >= 0) {
-    const abilityId = origin.slice(ix + "ability:".length);
+  const abilityId = abilityIdOfOrigin(origin);
+  if (abilityId !== undefined) {
     const adef = Abilities.tryGet(abilityId as AbilityId) as { hitFeel?: HitFeelInput } | undefined;
     return adef?.hitFeel;
   }
@@ -222,7 +276,7 @@ function applyImpact(
   const nav = world.nav.get(target);
   const x = tt?.pos.x ?? 0;
   const z = tt?.pos.z ?? 0;
-  const isEX = originIsEX(origin);
+  const isEX = originIsEX(world, source, origin);
 
   // ---- hit-feel override (task #133): the firing champion basic-attack /
   // ability may carry an optional `hitFeel` block that overrides individual
@@ -297,7 +351,8 @@ function applyImpact(
   }
 
   const tier = deriveTier(impact, crit, guardBreak);
-  const isCounter = false; // reserved: no counter-hit detection yet (see contract)
+  // COUNTER: the victim was mid-swing / mid-cast when this landed (see above).
+  const isCounter = isCounterHit(world, target);
   // COSMETIC half: damage-derived default (scaled by tier/type/flags), then any
   // explicit hitFeel cosmetic overrides layered on top.
   const cosmetics: ImpactCosmetics = mergeCosmetics(
@@ -313,6 +368,7 @@ function applyImpact(
     knockbackMag: kbMag,
     isEX,
     isBlock: blocked,
+    isCounter,
     ...cosmetics,
   };
 
@@ -368,7 +424,46 @@ function hasDamageReductionBuff(world: SimWorld, target: EntityId): boolean {
   return false;
 }
 
+/**
+ * STRUCTURE mitigation (task #89 §5.1/§5.3). A guardian is deliberately NOT a
+ * champion: it carries transform + health + `StructureComp` and NO `StatsComp`,
+ * so the champion path above (which reads `stats.final[Armor|MagicResist]`)
+ * finds nothing and used to hand it FULL damage "exactly like the flower".
+ * Its own armor / magicResist live on the marker, applied through the identical
+ * 100/(100+resist) curve, followed by the per-packet cap.
+ *
+ * `maxHitPctMaxHp` clamps ONE packet, POST-mitigation and UNCONDITIONALLY —
+ * `true` damage bypasses armour/MR as always but is still capped (§7.3 case 11),
+ * because the cap exists to convert the objective from a burst check into a DPS
+ * check (1/0.15 = 6.67 → a guardian survives a minimum of 7 packets, i.e. seven
+ * moments at which the last hit can be stolen). The clamped value is what hits
+ * HP, what `recordDamage` scores and what `applyImpact` reacts to.
+ *
+ * Reached ONLY when the target carries a `StructureComp`; a champion never does,
+ * so champion-vs-champion mitigation is byte-identical to before.
+ */
+function mitigateStructure(
+  world: SimWorld,
+  pkt: DamagePacket,
+  sc: StructureComp,
+): number {
+  let dmg = pkt.amount;
+  if (pkt.type !== "true") {
+    const resist = pkt.type === "physical" ? sc.armor : sc.magicResist;
+    dmg *= 100 / (100 + Math.max(0, resist));
+  }
+  const hp = world.health.get(pkt.target);
+  if (hp && sc.maxHitPctMaxHp > 0) {
+    const cap = hp.maxHp * sc.maxHitPctMaxHp;
+    if (dmg > cap) dmg = cap;
+  }
+  return dmg;
+}
+
 function mitigate(world: SimWorld, pkt: DamagePacket): number {
+  // structures answer to their OWN armor/MR + per-packet cap (never a StatsComp)
+  const structure = world.structure.get(pkt.target);
+  if (structure) return mitigateStructure(world, pkt, structure);
   if (pkt.type === "true") return pkt.amount;
   const targetStats = world.stats.get(pkt.target);
   const resist = targetStats

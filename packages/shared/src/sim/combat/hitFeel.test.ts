@@ -16,6 +16,8 @@ import { SKELETON_ARENA } from "../world/ArenaDef";
 import { registerSkeletonContent } from "../content/skeleton";
 import { Abilities, Champions } from "../content/registry";
 import type { AbilityDef, ChampionDef } from "../content/defs";
+import type { AbilityInstance } from "../stats/statsComp";
+import { spawnChampion } from "../spawnChampion";
 import { asSeatId, asTeamId, type AbilityId, type ChampionId, type EntityId, type SeatId } from "../../ids";
 import type { DamageType } from "../effects/effect";
 import type { IntentFrame } from "../intents";
@@ -33,6 +35,13 @@ const empty = (): Map<SeatId, IntentFrame> => new Map();
 const HF_ABILITY_ID = "hf-test.ability" as AbilityId;
 const PLAIN_ABILITY_ID = "hf-test.plain" as AbilityId;
 const HF_CHAMPION_ID = "hf-test.hero" as ChampionId;
+/**
+ * An EX ability whose id deliberately does NOT end in ".ex", so only the RUNTIME
+ * signal (it sits in the source's `exSlot`) can identify it as an EX hit.
+ */
+const EX_SLOT_ABILITY_ID = "hf-test.super" as AbilityId;
+/** The authored EX doc-id shape every shipped hero uses (`champion.exAbility`). */
+const EX_SUFFIX_ABILITY_ID = "hf-test.hero.ex" as AbilityId;
 
 const OVERRIDE: HitFeelInput = {
   hitstopTicks: 9,
@@ -84,6 +93,27 @@ function spawnDummy(
   // only `championId` is read by the basic-attack hitFeel lookup
   if (championId) world.champion.set(id, { championId } as never);
   return id;
+}
+
+/**
+ * Give a dummy an AbilitiesComp, optionally with an ability sitting in its EX
+ * slot — the same shape `spawnChampion` builds and `castAbility` fires from when
+ * `slot === "EX"`. This is the RUNTIME signal `isEX` is derived from.
+ */
+function giveAbilities(world: SimWorld, id: EntityId, exAbilityId?: AbilityId): void {
+  const inst = (abilityId: string): AbilityInstance => ({
+    abilityId: abilityId as AbilityId,
+    rank: 1,
+    cooldownRemainingTicks: 0,
+  });
+  world.abilities.set(id, {
+    slots: { Q: inst("hf-test.q"), W: inst("hf-test.w"), E: inst("hf-test.e"), R: inst("hf-test.r") },
+    exSlot: exAbilityId ? { abilityId: exAbilityId, rank: 1, cooldownRemainingTicks: 0 } : null,
+    basicAttackCdTicks: 0,
+    unspentPoints: 0,
+    cast: null,
+    windup: null,
+  });
 }
 
 function profileOf(world: SimWorld, target: EntityId): Record<string, unknown> {
@@ -217,5 +247,135 @@ describe("per-ability / per-champion hitFeel override (end to end)", () => {
       return pushAndStep(world, a, b, 90, `ability:${HF_ABILITY_ID}`);
     };
     expect(JSON.stringify(run())).toBe(JSON.stringify(run()));
+  });
+});
+
+// ------------------------------------------------------------- EX / SUPER HIT --
+// `isEX` used to be read off an `ex:` origin marker that NO content ever emits,
+// so the EX branch of the profile (omni shake, floored camKick, cosmetic
+// exFreeze) was dead code. It is now derived from two REAL signals: the source's
+// own `exSlot` (what castAbility fires for slot "EX") and the authored `.ex`
+// doc-id suffix.
+describe("EX / super hit-feel fires on a real EX cast (#133)", () => {
+  it("an ability in the source's EX slot arms exFreeze + omni shake", () => {
+    cover("cj-hf-ex-runtime-signal");
+    const world = makeWorld();
+    const a = spawnDummy(world, 0, 0, { x: ZC.x, z: Y });
+    const b = spawnDummy(world, 1, 1, { x: ZC.x + 3, z: Y });
+    giveAbilities(world, a, EX_SLOT_ABILITY_ID);
+
+    const ex = pushAndStep(world, a, b, 50, `ability:${EX_SLOT_ABILITY_ID}`);
+    expect(ex.isEX).toBe(true);
+    expect(ex.exFreeze).toBeGreaterThan(0); // the EX freeze the client holds on
+    expect(ex.shakeStyle).toBe("omni"); // radial ring, not a directional nudge
+    expect(ex.camKick).toBeGreaterThanOrEqual(0.7); // EX floors the kick
+
+    // CONTROL: same source, same damage, a Q from the same hero → plain hit.
+    const plain = pushAndStep(world, a, b, 50, `ability:hf-test.q`);
+    expect(plain.isEX).toBe(false);
+    expect(plain.exFreeze).toBe(0);
+    expect(plain.shakeStyle).toBe("directional");
+    expect(ex.shakeMag as number).toBeGreaterThan(plain.shakeMag as number);
+    expect(ex.camKick as number).toBeGreaterThan(plain.camKick as number);
+  });
+
+  it("the authored `.ex` doc-id suffix also reads as EX (content signal)", () => {
+    cover("cj-hf-ex-content-signal");
+    const world = makeWorld();
+    const a = spawnDummy(world, 0, 0, { x: ZC.x, z: Y }); // no abilities comp at all
+    const b = spawnDummy(world, 1, 1, { x: ZC.x + 3, z: Y });
+    const ex = pushAndStep(world, a, b, 50, `ability:${EX_SUFFIX_ABILITY_ID}`);
+    expect(ex.isEX).toBe(true);
+    expect(ex.exFreeze).toBeGreaterThan(0);
+  });
+
+  it("basics / DoTs / items / a hero's OTHER abilities are never EX", () => {
+    cover("cj-hf-ex-negative");
+    const world = makeWorld();
+    const a = spawnDummy(world, 0, 0, { x: ZC.x, z: Y });
+    const b = spawnDummy(world, 1, 1, { x: ZC.x + 3, z: Y });
+    giveAbilities(world, a, EX_SLOT_ABILITY_ID);
+    for (const origin of ["basic", "item:blade", "aug:burn", `ability:${PLAIN_ABILITY_ID}`]) {
+      const p = pushAndStep(world, a, b, 50, origin);
+      expect(p.isEX).toBe(false);
+      expect(p.exFreeze).toBe(0);
+    }
+  });
+});
+
+// ------------------------------------------------------------- COUNTER HIT --
+// `isCounter` was hardcoded `false`, so the `counter` spark could never play. It
+// now comes from the victim's own committed action: an in-progress basic-attack
+// wind-up or an in-progress ability cast.
+describe("counter hit fires on a committed victim (#133)", () => {
+  const champ = (world: SimWorld, seat: number, team: number, x: number): EntityId =>
+    spawnChampion(world, {
+      championId: "thorne" as ChampionId,
+      seatId: asSeatId(seat),
+      teamId: asTeamId(team),
+      pos: { x, z: Y },
+      zone: 0,
+    });
+
+  it("hitting a target mid basic-attack WIND-UP is a counter; an idle one is not", () => {
+    cover("cj-hf-counter-windup");
+    const world = makeWorld();
+    const a = champ(world, 0, 0, ZC.x);
+    const b = champ(world, 1, 1, ZC.x + 1.3);
+
+    // CONTROL: b is idle (no wind-up, no cast) → a normal hit.
+    const idle = pushAndStep(world, a, b, 50, "basic");
+    expect(idle.isCounter).toBe(false);
+    expect(idle.sparkKind).toBe("hit");
+
+    // b commits to a swing of its own, then eats the blow mid-startup.
+    world.abilities.get(b)!.windup = { target: a, ticksLeft: 5 };
+    const counter = pushAndStep(world, a, b, 50, "basic");
+    expect(counter.isCounter).toBe(true);
+    expect(counter.sparkKind).toBe("counter"); // the distinct punish spark
+    expect(world.abilities.get(b)!.windup).not.toBeNull(); // really still committed
+  });
+
+  it("hitting a target mid ability CAST is a counter too", () => {
+    cover("cj-hf-counter-cast");
+    const world = makeWorld();
+    const a = spawnDummy(world, 0, 0, { x: ZC.x, z: Y });
+    const b = spawnDummy(world, 1, 1, { x: ZC.x + 3, z: Y });
+    giveAbilities(world, b);
+    world.abilities.get(b)!.cast = {
+      slot: "Q",
+      abilityId: PLAIN_ABILITY_ID,
+      rank: 1,
+      ticksLeft: 5,
+      targets: [a],
+      rooted: true,
+    };
+    const p = pushAndStep(world, a, b, 50, "basic");
+    expect(p.isCounter).toBe(true);
+    expect(p.sparkKind).toBe("counter");
+  });
+
+  it("a BLOCKED counter still reads as a block (block spark wins)", () => {
+    cover("cj-hf-counter-blocked");
+    const world = makeWorld();
+    const a = spawnDummy(world, 0, 0, { x: ZC.x, z: Y });
+    const b = spawnDummy(world, 1, 1, { x: ZC.x + 3, z: Y });
+    giveAbilities(world, b);
+    world.abilities.get(b)!.cast = {
+      slot: "Q",
+      abilityId: PLAIN_ABILITY_ID,
+      rank: 1,
+      ticksLeft: 5,
+      targets: [a],
+      rooted: true,
+    };
+    world.health.get(b)!.shields.push({
+      amount: 1000,
+      expiresAtTick: world.tick + 100,
+      sourceId: "t",
+    });
+    const p = pushAndStep(world, a, b, 50, "basic");
+    expect(p.isCounter).toBe(true); // the flag is still true on the wire
+    expect(p.sparkKind).toBe("block"); // ...but a guarded hit reads as a guard
   });
 });

@@ -186,6 +186,11 @@ describe("guardian wired into the combat lifecycle (#89)", () => {
     expect(killer).not.toBeNull();
     const goldBefore = ctl.world.champion.get(killer!)!.gold;
 
+    // The per-packet clamp (§5.3 `maxHitPctMaxHp`) caps ONE packet at 15% of the
+    // guardian's maxHp, so no single burst — not even 100000 — can delete the
+    // tower: soften it to its last hit point first, then land the finishing blow.
+    ctl.world.health.get(guardianId)!.hp = 1;
+
     // queue a lethal packet from the champion, then step: combatResolve applies
     // it, deathSystem drops the guardian, guardianSystem pays the last-hitter.
     ctl.world.damageQueue.push({

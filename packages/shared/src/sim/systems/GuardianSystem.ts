@@ -28,16 +28,19 @@
  * same convention as flowerRules / reviveRules. The match host arms it with
  * `beginCombatGuardians` on combat entry and `endCombatGuardians` on combat exit.
  *
+ * MITIGATION lives in `combat/damage.ts`. A guardian has no `StatsComp`, so
+ * `mitigate()` reads the `armor` / `magicResist` carried on this marker through
+ * the same 100/(100+resist) curve champions use, then clamps the packet to
+ * `maxHitPctMaxHp × maxHp` (§5.3 — post-mitigation and unconditional, so even a
+ * `true`-damage nuke cannot delete the tower in one button). See
+ * `mitigateStructure` there.
+ *
  * SEAMS LEFT OPEN (deliberately not built here):
  *  · Per-arena identity 樹人 / 石頭人 / 巨獸人 (task #105): every guardian ships as
  *    the one neutral `prop.guardian` model; the 5 faces are #105's to pick from
  *    `spawnGuardian` by zone/arena.
- *  · Structure MITIGATION (`armor` / `magicResist`) and the per-packet
- *    `maxHitPctMaxHp` clamp: `combat/damage.ts` is owned by the parallel combat
- *    wave. The fields are carried on `StructureComp` (and in the config) so that
- *    file can read them with zero further schema change; until it does, a
- *    guardian takes UNMITIGATED damage exactly like the flower.
- *  · The `vsStructure` siege scalar (§1.4): also a `combat/damage.ts` seam.
+ *  · The `vsStructure` siege scalar (§1.4): a `combat/damage.ts` seam that also
+ *    needs new content fields (AbilityDef / ItemDef / ChampionDef).
  */
 import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
@@ -60,12 +63,11 @@ export interface StructureComp {
   /** match round it was spawned in — drives HP + volley damage scaling */
   round: number;
 
-  // ---- mitigation knobs (SEAM: read by combat/damage.ts when that file gains
-  //      the structure-fallback; unused here, so a guardian currently takes
-  //      unmitigated damage like the flower). ----
+  // ---- mitigation knobs. Read by combat/damage.ts `mitigateStructure` (a
+  //      guardian has no StatsComp, so these ARE its armor/MR). ----
   armor: number;
   magicResist: number;
-  /** hard cap on a single packet, as a fraction of maxHp (§5.3 clamp seam) */
+  /** hard cap on a single POST-mitigation packet, as a fraction of maxHp (§5.3) */
   maxHitPctMaxHp: number;
 
   // ---- volley state (all ABSOLUTE world.tick) ----
