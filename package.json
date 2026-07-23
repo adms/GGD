@@ -18,7 +18,10 @@
     "todo:check": "tsx tools/todo-check/src/cli.ts --static",
     "todo:runtime": "tsx tools/todo-check/src/cli.ts --runtime",
     "content:build": "pnpm --filter @ggd/shared content:build",
-    "content:validate": "pnpm --filter @ggd/shared content:validate"
+    "content:validate": "pnpm --filter @ggd/shared content:validate",
+    "docs:reference": "python3 tools/reference/gen_reference.py",
+    "docs:readme": "python3 tools/reference/gen_readme_lists.py",
+    "docs:readme:check": "python3 tools/reference/gen_readme_lists.py --check"
   },
   "devDependencies": {
     "tsx": "^4.19.2",
