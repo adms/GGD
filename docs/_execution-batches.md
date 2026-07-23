@@ -1,412 +1,543 @@
 # GGD 執行批次計畫（Execution Batches）
 
 > 這不是進度日誌，也不是流水帳。這是一張**照這個順序交辦下去**的作戰表。
-> 每一批 = 一個可以整批丟出去、丟完可以走開的波次；批內切成**檔案領域互斥的平行 lane**，好幾個 agent 同時跑不會撞檔。
+> 每一批 = 一個可以整批丟出去、丟完可以走開的波次；批內切成**檔案領域互斥的 lane**，好幾個 agent 同時跑不會撞檔。
 >
-> 改寫日期 2026-07-23 · 取代前一版五批計畫（前一版的完成度欄位已被證實**雙向失真**，見〈訂正區〉）
-> 依據：對 branch `campaign/complete-tasks` @ `0c47fce` 的實地查核 —— 每一條宣稱都拿程式碼、`pnpm content:validate`、或用 repo 自己的 `ContentLoader + registerAll` 實跑驗過，文件與程式碼衝突時**一律以程式碼為準**。
+> 改寫日期 2026-07-23 · 取代前一版八批計畫
+> 依據：對 `campaign/complete-tasks` @ `c153304` **加上當前 dirty working tree（680 modified / 16 untracked）** 的實地查核。
+> 凡是能實跑的都實跑過 —— 用 repo 自己的 `ContentLoader + FsContentSource + registerAll` 讀**註冊表**（不是讀 JSON 檔），
+> 用真的 `MatchController` + 真的 `projectSnapshot()` 驗守護者上線與戰鬥收尾，用 repo 自己的 sweep 測試重跑 #128。
+> **文件與程式碼衝突時一律以程式碼為準；綠燈測試不算證據。**
 
 ## 這份檔案的使用規則
 
-1. **相依 = 同批，沒有例外。** 兩件事碰同一份檔案，或一件需要另一件的 schema／資料，就是同一批。跨批只允許一種關係：**前批的產出被後批消費**（圖中虛線）。
-2. **Lane 是檔案領域，不是主題。** 每個 lane 標明它**獨佔哪些路徑**。lane 之間不共用任何一個檔案。批內若有先後，會在 lane 描述裡寫明「等 X 落地才能開第二步」。
-3. **排序依據是「使用者按下去會不會覺得被騙」**，不是內部整潔度 —— 唯一的例外是**衛生工作解鎖了整個叢集**時（例如註冊表權威、VFX 產生器），那種衛生工作會被提到最前面。
+1. **相依 = 同批，沒有例外。** 兩件事碰同一份檔案，或一件需要另一件的 schema／資料，就是同一批。跨批只允許一種關係：**前批的產出被後批消費**。
+2. **Lane 是檔案領域，不是主題。** 每個 lane 標明它**獨佔哪些路徑**，lane 之間不共用任何一個檔案。批內若有先後（例如 B 要等 A 的常數），會在描述裡寫明。
+3. **排序依據是「玩家按下去會不會覺得被騙」**。唯一的例外是**衛生工作解鎖整個叢集**時（單一寫者、產生器、活頁報表），那種會被提到最前面。
 4. **規模**：S ≤ 半天 · M ≈ 1–2 天 · L ≈ 3–5 天 · XL = 自成一波。
 5. 每批收工，回寫 `docs/_requirements-audit-gaps.md`、三張活頁、以及本檔的〈附錄：已驗證完成〉。
 
 ---
 
-## 覆核紀錄 · 第二輪（2026-07-23，對本檔自身的對抗性審查）
+## 這個專案一直在犯的同一個錯（先讀這段，再讀批次）
 
-本檔第一版寫完後做了一次**專門找相依錯排與 lane 撞檔**的覆核。以下 11 項已直接改進本檔，列在這裡是為了讓下一個讀者知道**哪些結論是被推翻過的**。
+到今天為止有 **八個**確認案例：功能寫完了、測試全綠、但**在執行期不可能發生**。
 
-| # | 發現 | 種類 | 已如何修 |
-|---|---|---|---|
-| 1 | **1A-1 的方案 (a) 會製造新的謊言。** 有 6 個執行期呼叫點繞過註冊表直讀 `champion.abilities[slot]`（tooltip／技能圖示／射程預覽／champ-select／**bot AI**），拿掉重註冊只會讓 sim 與 UI 各說各話；且其中 `GameApp.ts` 是 Lane B 獨佔 → **跨 lane 撞檔** | 相依 + lane 衝突 | 裁決走 (b)，Lane A 寫入面收斂到 `content/champions/*.json`；1A-3 加第二條斷言 |
-| 2 | **1A-2 的規模被高估。** 實測 452 份內嵌副本 194 份不一致，欄位只有 `vfxKey`(192) + `castTimeSec`(2)，`perRank`/`coeff`/`cooldown`/`maxRange` **零分歧** | 證據不支持 | 1A-2 由 M 降 S，驗收改成實測數字 |
-| 3 | **Lane C 漏掉 `render/overheadAnchors.ts`** —— 守護者血條的顏色／高度／`hasOverheadBar` 全在那支純函式 | 漏檔 | 補進 Lane C 獨佔路徑，並註明因此不必碰 Lane B 的 `WorldAnchorLayer` |
-| 4 | **1E-1 的實機簽收需要 #48，而 #48 排在批次 8。** platform 沒起來時 curation → allow-all、combat-env → bundled 預設，**在 fail-safe 環境簽收「畫面顯示的就是實際發生的」是自欺** | **相依錯排（跨 6 批）** | #48 殘留前移為 **1E-0**，成為簽收局的前置 |
-| 5 | **1E-1 只抄了 11 項，gap-log:70 列的是 16 項。** 漏掉 #93 的 6 細節、#3 的 4 細項、#90、#82、#85 | 靜默漏項 | 全部補回 1E-1 |
-| 6 | **舊 2A 與 2B 都獨佔 `tools/w3x-import`**（`descriptionRoles` 的輸出端就在匯入器裡），且 2B 的內容是 2A 產出的 | lane 衝突 + 相依 | 2B 併入 2A 成序列末步，lane 重新編號 |
-| 7 | **舊 3A/3B/3C 三個 lane 都寫 `content/abilities/*.json`。** JSON 是整檔寫入，「我只碰某個欄位」在檔案系統層級不成立 | lane 衝突 | 改為「單一寫者 + 兩張補丁表」，這本來就是 #123 的目的 |
-| 8 | **3C 的輸入（#50 的 per-invocation 參數）宣稱由批次 2 產出，但 2A 的內容清單裡沒有那一步** | 相依斷鏈 | 補成 2A ⑤，與 #78 道具半共用同一次 JASS 重讀 |
-| 9 | **舊 4B 與 4C 都寫英雄／道具文件**，且 `buildPriority` 其實是英雄欄位不是道具欄位（實測 champions 113/113、items 0） | lane 衝突 + 事實錯誤 | 併進 4B 序列尾；4C 縮成純程式的閘門復原 |
-| 10 | **舊 5E 必然要改 5A 獨佔的 `settlementModel.ts`**；且 5A 的路徑寫成 `ui/hud/settlementModel.ts`（**該檔案不存在**，實際在 `ui/panels/`） | lane 衝突 + 路徑錯誤 | 5E 併入 5A，路徑更正 |
-| 11 | **舊 6A 宣稱 `models/imported/**`、6E 宣稱 `models/**`（後者包含前者）**，兩個 XL lane 平行；且順序只寫了 6C 沒寫 6E。**7C 宣稱 `apps/client/src/**`，包住 7E 與 7F 的路徑** | lane 衝突 | 批次 6 改為序列波（6E-a → 6A → 6C → 6E-b）並建議把 6E-b 切成批次 6′；7C 路徑收斂並從 7F 明確挖掉 `session.ts` |
+| 形狀 | 案例 |
+|---|---|
+| **accessor 沒有呼叫者** | `StatusAuraFx`（`VfxSystem.ts:407` 的註解把缺的那一行原字寫出來）、`loadVictoryTaunts()`（351 支 taunt / 5.28 MB 因此在必須發聲的當下才冷抓） |
+| **權威欄位沒有讀者** | `SeatState.undoDepth`（每 tick 廣播，client 0 讀者）、`ENTITY_FLAG.CASTING`（每 tick 寫，沒人讀） |
+| **事件沒有訂閱者** | 8 個 `guardian*` + 3 個 `fireRing*` 事件全部死在 server process 內 |
+| **註解活得比事實久** | `ChampionMarquee.tsx` 檔頭斷言「registry 在 mount 前已載入」—— #170 讓這句話變成假的，登入頁跑馬燈永久空白 |
+| **模組被出貨內容遮蔽** | #79：champion 文件的內嵌 QWER 副本蓋掉 standalone 文件，460/554 技能落回火焰 placeholder |
+| **正確綁定但抵達不了** | menuNocturne 劫持 `lobby.mp3`（已修） |
 
-**遺漏盤點（in / out）：** 對照帳本 173 件與兩份稽核清單逐一 grep，**唯一完全沒出現在任何批次的 pending 帳本項是 #75（龍吼環境音重新對齊 + 加深殘響，8 個細節）** → 已排進 2E。另有 **#143 已完成卻全檔 0 次提及** → 補進附錄（1E-4）。其餘 outstanding 項目（含 content-07 / content-10 / #85 量測代理 / #139 的 46 支非名冊 VO）皆已各自歸位。
+> **⛔ 本計畫自己踩到同一個坑，已訂正（留著當教訓）。**
+> 前一稿把 `frameDataAudition.ts` 列為「第八個案例：364 行、0 個 import」。**那是錯的，而且錯法正是本節在警告的形狀 —— 用 grep 找不到就宣告死亡。**
+> 實際上 `apps/client/public/frame-data.html:117` 有 `await import("/src/render/frameDataAudition.ts")`：一個**字串裡的動態 import**，
+> 任何以模組名做的 identifier grep 都看不到它。檔案是 **534 行不是 364 行**，且它的檔頭第 27-29 行**明講**「`public/*.html` 不是 build entry，所以永遠不進 bundle」——
+> **不進 bundle 是設計，不是缺陷。** 把它掛成 AppRoot 路由會把 `NullEngine` + glb 解析拉進正式包。
+> **教訓：宣告死碼之前，要對「呼叫點可能是字串」的路徑（動態 import、`public/**`、HTML、設定檔）各查一次。**
 
-**覆核後被我自己否決的懷疑（列出來，免得下一輪再查一次）：**
-- 「1B-1 狀態光環要改 `VfxSystem.ts`」→ **否決**：`statusFx` getter 與 `StatusAuraFx` 都已就緒，只缺 `GameApp` 的呼叫，不跨 lane。
-- 「1B-3 要改 `render/deathFocus.ts`」→ **否決**：從 `GameApp` 的來源端修 `teamId` 就夠，`buildFocusSources` 只是消費者。
-- 「批次 3 的 #79 非名冊重綁會與批次 1 撞檔」→ **否決**：批次 1 只寫 `content/champions`，批次 3 寫 `content/abilities`，且是前批產出被後批消費的合法關係。
-- 「#145 的三個投機分支其實是活的」→ **否決**：`snapshot.ts:32` 每回合寫 `state.mapId = ctl.arena.id`，`roundArenaId`/`roundMapId`/`arenaId` 三個欄位在協定中不存在，1D-3 刪得對。
-- 「#121 的 `undoDepth` 其實有人讀」→ **否決**：全 repo grep 只有 schema 宣告與 `snapshot.ts:100` 的寫入，client 0 個讀者，`MerchantShop.tsx:119` 確實是 last-event 啟發式。
+**驗收方法論的結論：任何一項「完成」都必須有一個執行期證據 —— 實跑註冊表、實跑 snapshot、或一張截圖。**
+本計畫每一條驗收標準都照這個標準寫。
 
 ---
 
-## 批次 0 · 已在飛行中（不要重排、但要接它們的產出）
+## 批次 0 · 飛行中（不要重排，但**必須接**它們的產出）
 
-四個背景 workflow 正在跑，會在批次 1 期間陸續落地。**它們不是待辦，是待接。**
+### 0-1 · CAST-PILLAR 程式（多 lane workflow，Lane 0 已完成但**尚未 commit**）
 
-| workflow | 內容 | 落地後解鎖什麼 |
+> ⛔ **最高優先的單一動作：把 `packages/shared/src/sim/content/registry.ts` commit 掉。**
+> `git show HEAD:packages/shared/src/sim/content/registry.ts | grep -c 'overrideAbilities'` = **0**，工作樹裡是 **4**。
+> 這一個未提交的檔案，是 #79 從 460/554 火焰降到 285/554 的**全部**原因（內容檔對 HEAD 位元相同，改善 100% 來自這支程式）。
+> **它一旦掉了，#79 直接回到 83% 火焰，而且沒有任何測試會變紅**（`bindings.test.ts:41-43` 只斷言記憶體裡的 ROSTER 表）。
+
+| lane | 狀態 | 落地後解鎖 |
 |---|---|---|
-| **A · 載入最佳化** | `.glb` gzip + brotli、AI icon → WebP 128×128、1441 份 content 文件合併成單一請求、4 個泛用英雄 glb（13.81 MB）瘦身、`docs/_audio-load-analysis.md` | 讓 #63 的「模型／語音 per-scene warm set」有真實 payload 尺寸可以對；與 #115 / #81 / #99 / #158 重疊，**批次 6 的模型工程必須以 A 的輸出為起點**，不要重壓一次 |
-| **B · README + 產生器** | 事實查核過的 README，附一支維護名冊／技能／道具表格的產生器 | 建立「表格由程式產生、不手抄」的樣板 —— 批次 8 的三張活頁改成執行期計算時直接沿用 |
-| **C · 平台首位管理員** | 首個註冊帳號自動成為管理員，取代三步 `ADMIN_BOOTSTRAP` | 解除 `apps/platform/internal/auth/service.go` 的寫入鎖。**批次 7 的 sec-154 平台鏈與 #126 核准閘門在 C 落地前一律不能開工**（同一支註冊函式） |
-| **D · 場景資產稽核** | 逐場景實測 eager-byte 數字 | #63 擴充的 warm set **就是** D 產出的 scene→asset 對照表。批次 6 照著填，不要用猜的填一次再修一次 |
+| **Lane 0 · 解除 champion-doc 遮蔽** | 程式已寫（`registerChampion` 改成 fillGaps，standalone 勝出並寫回 `Champions.register`），**未 commit** | **#79 名冊半（192/192 QWER 槽已離開火焰，依文潔琳 Q→`fx.prim.ice.shockwave` 實測通過）、#98 全案、#123 的 94 primitives 可達**。也讓「改 `content/abilities/*.json` 有沒有用」從否變成是 —— 批次 2 的整條寫入鏈以此為前提 |
+| **Lane · castTimeSec 分級** | 進行中；目前工作樹是**均一 0.6**（535/554），分級公式尚未落地 | 批次 3 的 CT-3 內容授權以此為輸入。⚠ 已造成一個回歸，見下 |
+| **Lane · 光柱 telegraph / castStrikeFraction / recovery** | 進行中，`castPillar.ts` / `CastPillarFx.ts` / `render/anim/castStrike.ts` / `frameDataAudition.ts` 為 untracked | 批次 3 的 CT-2 / CT-2.5 接在後面 |
 
-> ⚠️ 本批期間受其他 agent 獨佔、任何人不得改：`README.md`、`docs/_audio-load-analysis.md`、`nginx/`、`content/assets/`、`apps/platform/`、`packages/shared/src/content/`。
+> **⚠ 這條 lane 已經製造了一個回歸，要在分級落地前修掉：**
+> `packages/shared/src/sim/castabilitySweep.test.ts:74` 硬寫 `const WINDOW = 26`（0.867 s），文件寫的假設是「>最長前搖 0.6s=18 tick」。
+> cast 程式已把 3 個技能推到 0.9 s（27 tick），實跑 #128 sweep 從出貨文件的 **281 PASS / 0 FAIL 掉到 279 PASS / 2 FAIL**（`godie-h01u` E、`godie-u010` EX）。
+> 這**不是遊戲壞掉，是量尺壞掉**：分級一鋪開，會有越來越多技能被標 ❌，理由與技能本身無關。→ 排進 **2B-4**，且必須在分級落地前。
+
+### 0-2 · 已 commit、玩家看得到、需要一眼簽收
+
+| commit | 內容 | 接什麼 |
+|---|---|---|
+| `f035bc3` | 首個註冊帳號自動成為 owner-administrator | 解除 `apps/platform/internal/auth/service.go` 寫入鎖 → **批次 7** 的 sec-154 平台鏈與 #126 核准佇列才能開工 |
+| `669c1aa` | combat-env console 改成**編輯內容之上的 delta**；補上遺漏的 `abilityRange` | #28 的自我打結（存一格滑桿壓平整張表）已解。**批次 8 的平衡凍結以此為基準** |
+| `7b85cbe` | `cmd/ownerreset` 主機端密碼重設（刻意不做 loopback 閘，因為 LAN proxy 會把手機請求洗成 127.0.0.1） | 批次 7 的 `sec-154-05` trusted-proxy 必須模擬的正是這個洗白路徑；`admin-40`（Dockerfile 沒 build 這支）同批 |
+| `d0f643a` | glb+wav 壓縮、AI icon → WebP 128（17.2 MB → 1.93 MB）、content bundle 1462 → 1 請求、四個泛用 stand-in 14.48 → 4.26 MB | **批次 4** 從這裡起跳，不要重壓一次；四個 stand-in 的剩餘空間已從 LOD 轉成 clip pruning，改寫 **批次 6** 的 #115 價值定位 |
+| `b8780d9` | chrome-reserve 契約：音訊叢集發布自己的框，每個畫面都保留 | #107 主體完成。殘留兩處硬寫座標 + `AuthScreen`/`SettingsScreen` 未消費 → **1C-5 / 批次 5** |
+| `4663e57` `b287a13` `c153304` | lobby.mp3 可達 · 寧靜女聲接在 match-win sting 之後 · **auto-advance 改成 sting 結束才起算，`AUTO_ADVANCE_SEC` 18 → 12** | **前一版計畫警告的 C4 常數對撞已經解除。** 結算三件事（sting 完整播完 / 寧靜女聲聽得到 / 自動跳戰績）現在互相相容，只欠一次實機簽收 → 附錄 |
+
+> ⚠ 本批期間受其他 agent 獨佔、任何人不得改：`docs/design/cast-telegraph.md`、`README.md`、`content/**`、`apps/client/src/render`、`apps/client/src/vfx`、`packages/shared/src/sim`、`apps/client/src/audio`。
+> **批次 1 的 Lane 1B 與 Lane 1A 的 sim 半，必須等 cast-pillar lane 交還這些路徑才開工。** 這是批內排序，不是跨批。
 
 ---
 
-## 訂正區 · 假完成與死碼（本計畫價值最高的一段）
+## 訂正區 · 死碼與假完成（本計畫價值最高的一段）
 
-這一節單獨存在的理由：以下每一項在某張活頁上都被標成「完成」，但**實跑起來是假的**。它們不是新需求，是已經付過錢卻沒拿到貨的工作。全部被排回真實批次。
+以下每一項在某張活頁上都是「完成」，實跑起來是假的。**它們不是新需求，是已經付過錢沒拿到貨的工作。**
+按「玩家損失」排序，全部排進真實批次。
 
-### 一個根因解釋三個最嚴重的發現
-
-`packages/shared/src/content/registries.ts:73-74` 先註冊 standalone ability 文件、**再**註冊 champion；而 `packages/shared/src/sim/content/registry.ts:41-46` 的 `registerChampion` 會把 champion 文件裡**內嵌的 Q/W/E/R 副本重新蓋回去**。
-
-因此：**任何寫進 `content/abilities/*.json` 的 QWER 修改，在執行期是看不見的。**
-
-- 實跑證據（用 repo 自己的 `ContentLoader + registerAll` 跑 tsx 讀註冊表，非 grep 推論）：`godie-n003.q/.e/.r` → `fx.ember-bolt-cast`；只有 `godie-n003.ex` → `fx.prim.ice.pulse-lg`，因為 EX 沒有被內嵌進 champion 文件所以活了下來。
-- 全域：**460 / 554 個技能在註冊表裡解析成 `fx.ember-bolt-cast`（83%）**；名冊 192 個 QWER 槽有 **175 個還是火焰 placeholder**；452 份內嵌副本有 **192 份與 standalone 文件不一致**。
-- 消費端 `apps/client/src/vfx/VfxSystem.ts:609` 讀的正是被蓋掉的那張表。
-- 綠燈測試 `apps/client/src/render/vfx/bindings.test.ts:41-43` **只斷言記憶體裡的 ROSTER 表**，從不碰出貨內容與註冊表 —— 這正是 #93 讓使用者被燒過的同一種失效形狀。
-
-> **⚠ 覆核補正（2026-07-23 二次查核）：內嵌副本有第二條消費路徑，所以「拿掉重註冊」單獨不成立。**
->
-> 前一版把 1A-1 寫成「(a) 拿掉 `registry.ts:41-46` 的重註冊 或 (b) 反向傳播進內嵌副本，二擇一」。**(a) 單獨做會製造一個更難查的謊言**：有六個執行期呼叫點**繞過 `Abilities` 註冊表、直接讀 `champion.abilities[slot]`** ——
-> `apps/client/src/GameApp.ts:1262`（施放派送／射程預覽）、`apps/client/src/ui/panels/skillDetails.ts:108`（tooltip 的冷卻／魔耗／說明）、`apps/client/src/ui/abilityHold.ts:122`、`apps/client/src/ui/icons.ts:35`（技能圖示）、`apps/client/src/ui/panels/champselect/playstyle.ts:99`、以及 **`apps/game-server/src/ai/Tier0Brain.ts:304`（bot 的 manaCost / castType 判斷）**。
-> 只做 (a)，sim 會照 standalone 文件跑，而 **tooltip、圖示、射程預覽與 bot AI 仍照舊的內嵌副本走** —— 顯示的和實際發生的再次不一致，正是本批要消滅的病。
-> 而且 `GameApp.ts` 是 **Lane B 獨佔路徑**，(a) 需要 Lane A 進去改它 → 直接撞 lane。
->
-> **裁決：1A-1 走 (b)。** 內嵌副本是唯一權威來源，standalone 文件的 `vfxKey` 反向傳播進 champion 文件；`registry.ts` 的重註冊**保留不動**（它現在是正確行為）。這讓 Lane A 的寫入面收斂成 `content/champions/*.json` 一處，與 Lane B 完全不相交。
->
-> **實測差異規模（本次親自跑過，取代前一版的估計）：** 452 份內嵌 QWER 副本中 **194 份**與 standalone 不一致，而不一致的欄位幾乎全部是 `vfxKey`（192 份）**加上 `castTimeSec` 兩份** —— **沒有任何一份 `perRank` / `coeff` / `cooldown` / `maxRange` 不一致**。前一版擔心的「換權威會一次偷改 192 個技能的數值」**不成立**，1A-2 因此從 M 降為 S：要裁決的只有那 2 格 `castTimeSec`。
-> 名冊範圍：192 個 QWER 槽，**standalone 已 0 個是火、內嵌 175 個是火**。全註冊表範圍：452 個 QWER 槽，standalone 231 火 / 內嵌 406 火。
-
-| 帳本 | 活頁怎麼說 | 真實狀態 | 排到哪 |
+| # | 活頁怎麼說 | 實測真相 | 排到 |
 |---|---|---|---|
-| **#79** | gap-log:23 / 舊 B3-09 都寫「名冊 240 個技能已重綁，依文潔琳的冰藍是驗收案例」 | **死碼** —— 重綁確實寫進 `content/abilities/*.json`，但在註冊時被 champion 內嵌副本蓋掉。使用者的驗收案例在遊戲裡**依然是火** | **批次 1 · Lane A**（vfxKey 傳播進內嵌副本）+ **批次 3**（非名冊） |
-| **#98** | gap-log:23「名冊範圍 ✅」 | **死碼** —— 該宣稱完全建立在 #79 的重綁上，而重綁沒到執行期。替代表本身是對的（`docs/todo/ability-vfx.md:40-56`） | **批次 1 · Lane A** 後即成立；刪空 GLB 在**批次 3** |
-| **#123** | gap-log:20「✅」 | **部分** —— 94 份 `fx.prim.*` 文件與 `render/vfx/{primitives,elements,artParams,bindings}.ts` 都是真的，但 94 份裡**只有 25 份**能被註冊表解析到（其餘被 QWER 覆寫擋住）；`curatedDocs()` / `rosterBindings()`（`bindings.ts:178,188`）除了自己的測試外**沒有任何 import**，執行期與 `content:build` 都不呼叫 → 模組與出貨文件會靜默分歧 | **批次 3 · Lane A**（產生器 + 漂移守門） |
-| **#89** | 帳本 pending、`gen_status.py:91` 標 📐「只有設計」 | **反過來的死碼：機制已在正式環境上線，但完全沒有 client。** `content/config/arena-rules.json` 出貨了完整 guardianTower 區塊（hpBase 1450 / volleyDamageBase 108 / radius 2.5），`MatchController.ts:725-731` 每次進戰鬥都武裝它，`roundPacing.test.ts:120-143` 證明每個活躍對決區都會生一座。但 `apps/game-server/src/net/snapshot.ts:144-215` 沒有 `world.structure` 分支 → 守護者掉進最後的 else，被編碼成 **kind 0（champion）、seatId -1、key ""**；`protocol/schema.ts:378-382` 沒有 GUARDIAN kind；`apps/client/src` 全域 grep「guardian」只有一句過期註解。**玩家現在面對的是每個對決區中央一顆看不見的 1450 HP 物件，會放沒有預告的 AoE 齊射。** | **批次 1 · Lane C**（視為線上可玩性 bug，不是功能缺口） |
-| **#105** | 帳本 in_progress、`gen_status.py:108` 標 ⏸「11/12 agent 完成」 | **未開始** —— 只有美術落地（4 個 guardian glb，7/22）。`content/models` 只有一份 `prop.guardian.json` 硬指 `guardian_stone.glb`，五份 arena 文件都沒有 guardian 欄位，`spawnGuardian`（`GuardianSystem.ts:216-250`）根本不寫 model key | **批次 1 · Lane C**（與 #89 同一條 entity view 縫） |
-| **狀態光環** | #133 標完成、#147 標 pending | **死碼** —— `VfxSystem.ts:395-398` 的註解直接把缺的那一行寫出來了：`vfx.statusFx.set(es.id, es.flags, pos.x, pos.z, nowMs)`。`StatusAuraFx.ts` + 測試都在，全 client grep `statusFx` 只有 getter 與那句註解。**暈眩／定身／緩速現在完全看不見** | **批次 1 · Lane B** |
-| **花 / 守護者選取** | 舊 B1-09「server 端已可被打，client 選不到」 | **部分** —— `apps/client/src/GameApp.ts:1309` 的 `if (es.kind !== 0 || !es.alive) return;` 把 kind 2（花）與守護者結構從**每一張選取清單**濾掉（pickEnemyAt:1318、觸控最近敵人:539、攻擊移動:511）。中立血條顏色反而已經做好了（`overheadAnchors.ts:38`） | **批次 1 · Lane B** |
-| **`useItem`** | 帳本 #128 completed，標題寫「技能 + 道具 IN-GAME 可施放性」 | **死碼** —— `packages/shared/src/sim/systems/CommandSystem.ts:98-100`：`case "recall": case "useItem": // deferred features — accepted but inert`。上游 intent／驗證／replay 過濾整條都通。#128 的 288 格矩陣**只涵蓋 48×6 技能槽，道具半完全沒被測過因為根本用不了** | **批次 2 · Lane C** |
-| **`recall`** | 舊 B4-12 | **死碼** —— 螢幕上一顆按鈕（`TouchControls.tsx:402`）、手把 LB（`GamepadInput.ts:151`）、鍵盤 B（`InputCapture.ts:49`），按下去什麼都不發生 | **批次 2 · Lane C**（實作或刪掉，二選一） |
-| **`hitFeel` 內容** | 帳本 #133 completed | **死碼** —— `grep -rl hitFeel content/` = **0 份**。每一次命中都還在吃「由傷害推導」的預設值，「每個技能手感不同」尚未兌現 | **批次 3 · Lane B** |
-| **`descriptionRoles`** | 帳本 #114 completed | **死碼** —— `grep -rl descriptionRoles content/` = **0 份**。讀取端 `abilityText.ts:47-52` 全部就緒，所有 tooltip 都是死白字 | **批次 2 · Lane B** |
-| **`canCrit` / `spriteSheet` / `gacha`** | 各自「模型已建好」 | **未開始（內容 0 筆）** —— 沒有任何技能 opt-in 暴擊（暴擊裝備只影響普攻）；1441 份文件 0 份帶 `spriteSheet`（每顆粒子都是靜態圖）；`arena-rules.json` 沒有 `gacha` 區塊，`round-reward.json` 是孤兒 | **批次 2 · Lane D / 批次 3 · Lane A** |
-| **`undoDepth`** | schema 註解宣稱已接線 | **部分** —— `snapshot.ts:100` 每 tick 廣播，client 端 **0 個讀者**；`MerchantShop.tsx:119` 用 last-event 啟發式自己猜 | **批次 1 · Lane D** |
-| **gore 設定** | 舊 B2-16 | **死碼** —— store 欄位、夾限、持久化、即時傳播全通過測試，`SettingsScreen.tsx` grep gore = 0 命中。**玩家關不掉血** | **批次 1 · Lane D** |
-| **孤兒音效** | gap-log:258 | **死碼** —— `mapFlavor*` / `settlementReveal` / `matchEndGong` / `vsReveal` 在 `audio-map.json:504,512,528` 授權了，`sfxManifest.ts:44-45` 明說「故意不列，因為沒有東西會觸發」 | **批次 5 · Lane A**（呈現層 pass 順手安置） |
-| **teamId `?? 0`** | 未被任何文件記錄 | **部分** —— `GameApp.ts:1033` 與 `:1613` 用 `?? 0`，`:1656`／`:1298`／`:1300` 用 `?? -1`。**team 0 是真的隊伍** → 尚未到達的席位會被畫成藍隊、拿到友軍血條色，還會被當隊友餵進 #85 的 `buildFocusSources` | **批次 1 · Lane B** |
-| **#114 ↔ #125 地雷** | gap-log:256「潛在衝突」 | **未爆** —— `abilityText.ts:255-262,288-296` 的 `rescaleAbilityProse` 錨定在「數字緊鄰 傷害／秒冷卻／damage」上，而角色標記會把 `[/c]` 插進兩者之間。**只要 `descriptionRoles` 一有內容，所有 tooltip 立刻退回顯示未乘倍率的數字，而且不會有任何測試變紅** | **批次 2 · Lane B，必須是同一個 commit** |
+| **#89 守護者** | `gen_status.py:91` 標 📐「只有設計」 | **反過來的死碼：機制已在正式環境上線，client 一行都沒有。** 實跑 `MatchController` + 真 `projectSnapshot()`：2 座守護者（entity 13/14）確實生成，在網路上編碼成 `kind=0 seatId=-1 key="" hp=1450/1450`。`snapshot.ts:203` 沒有 `world.structure` 分支，`schema.ts:378-383` 的 `ENTITY_KIND` 只到 `REVIVE_CIRCLE: 3`。client 端 `EntityViewRegistry.ts:431` 因此替它蓋了一個 **ChampionView**，`modelDocFor("")` 回 null → 玩家看到的是**場中央一具沒上色的程序化人形**，會放**沒有預告的 AoE 齊射**。`GuardianSystem.ts` 的 **9 個事件 0 個訂閱者**（`apps/client/src` grep「guardian」只有 2 句過期註解）| **1A** |
+| **#105 守護者身分** | 帳本 in_progress、`gen_status.py:108`「11/12 agent 完成」 | **未開始。** 只有美術：4 個 glb 在 `content/assets/models/`（beast 309684 B / stone 301924 B / treant 兩件），`content/models` 只有一份 `prop.guardian.json`，`GuardianSystem.ts:53` 硬寫 `GUARDIAN_MODEL_KEY = "prop.guardian"`，**0 / 5 份 arena 文件帶 guardian 欄位**。`spawnGuardian` 根本不寫 model key | **1A**（同一條 entity-view 縫，不能拆） |
+| **狀態光環** | #133 完成、#147 pending | **死碼，且原封不動。** `apps/client/src` 全域 grep `statusFx` = 剛好 2 行：`VfxSystem.ts:407`（把缺的呼叫原字寫在註解裡）與 `:410`（getter）。`StatusAuraFx.ts:72` 實作完整、測試齊全、**生產呼叫者 0**。**暈眩／定身／緩速的角色看起來跟健康的一模一樣** | **1B-1**（一行） |
+| **登入跑馬燈** | #18 完成 | **死碼，而且是兩個已完成任務相乘出來的。** `main.tsx:118` 先 `root.render(<AppRoot/>)`，`:122` 才 `ensureContentLoaded()`（#170 刻意的）。`AuthScreen.tsx:550` 在第一幀就掛 `<ChampionMarquee/>`，`ChampionMarquee.tsx:111` 用 **空相依 useMemo** 快照 `Champions.all()`，`:136` `tiles.length === 0 → return null`。它**沒有訂閱 `useContentReady()`** —— 其他每一個吃內容的畫面都用那個訊號。**登入頁的英雄展示永久空白** | **1C-3** |
+| **gore 設定** | 舊 B2-16「store／夾限／持久化／即時傳播全過測試」 | **死碼。** `grep -c gore apps/client/src/ui/SettingsScreen.tsx` = **0**。管線是真的（`vfx/goreSettings.ts`、`VfxSystem.ts:622` 的 `if (gore.style === 'off') return;` 是個會動的開關），但 `SettingsScreen` 只露出畫質預設／戰鬥文字範圍／FPS 上限。**玩家關不掉血** | **1C-1**（一個控制項） |
+| **`undoDepth`** | `schema.ts:78-82` 註解宣稱 client 有讀 | **權威欄位沒有讀者。** `snapshot.ts:100` 每 tick 廣播，全 repo client 讀者 **0**；`MerchantShop.tsx:119` 用 last-event 啟發式自己猜（多步 undo 或封包亂序就會誤報） | **1C-2** |
+| **telegraph 誠實性** | 「telegraph 已經有了」 | **半修好。** cast agent 已在工作樹把 `fillMs` 接上真實 `castTimeSec`（`VfxSystem.ts:653-667`），但**半徑仍是未縮放的 `def?.radius ?? 1.2`**，而 sim 端會乘 `combatEnv.abilityRange = 0.6` → `godie-h01u.e` **畫 9.72、實際打 5.83（1.667×）**。地面圈是收據不是預告的另一半已解，**畫錯大小這一半還在** | **1B-3** |
+| **`useItem`** | 帳本 #128 completed，標題寫「技能 **+ 道具** in-game 可施放性」 | **死碼。** `CommandSystem.ts:98-100`：`case "recall": case "useItem": // deferred features — accepted but inert`。上游 intent／驗證／replay 過濾整條都通。**#128 的 288 格矩陣 = 48 英雄 × 6 技能槽，道具半一格都沒測過，因為根本用不了** | **2B-1** |
+| **`recall`** | 舊 B4-12 | **死碼，而且有三條輸入路徑。** `TouchControls.tsx:402`（螢幕按鈕）、`GamepadInput.ts:151`（手把 LB）、`InputCapture.ts:49`（鍵盤 B）。按下去什麼都不發生，也沒有拒絕回饋 | **2B-1**（實作或連按鈕一起刪） |
+| **`hitFeel` 內容** | 帳本 #133 completed | **死碼。** `grep -rl hitFeel content/` = **0 份**；註冊表實跑 554 個技能 **0 個帶 hitFeel**。每次命中還在吃「由傷害推導」的預設。**「每個技能手感不同」尚未兌現** | **2A-6** |
+| **`descriptionRoles`** | 帳本 #114 completed | **死碼。** `grep -rl descriptionRoles content/` = **0 份**。讀取端 `abilityText.ts:47-52` 全部就緒，**所有 tooltip 都是死白字** | **2A-7**，**必須與 #125 地雷同一個 commit** |
+| **#114 ↔ #125 地雷** | gap-log:256「潛在衝突」 | **未爆但已上膛。** `abilityText.ts:255-262,288-296` 的 `rescaleAbilityProse` 錨定在「數字**緊鄰** 傷害／秒冷卻／damage」，角色標記會把 `[/c]` 插進兩者之間 → **`descriptionRoles` 一有內容，所有 tooltip 立刻退回未乘倍率的數字，而且沒有任何測試會變紅** | **2A-7**（同一 commit） |
+| **`canCrit` / `spriteSheet` / `gacha`** | 各自「模型已建好」 | **內容 0 筆。** 註冊表 554 技能 0 個 opt-in 暴擊（暴擊裝備只影響普攻）；1441 份文件 0 份帶 `spriteSheet`（每顆粒子都是靜態圖）；`arena-rules.json` 沒有 `gacha` 區塊、`round-reward.json` 是孤兒 | **2A-8 / 批次 8** |
+| **`loadVictoryTaunts()`** | 「回合勝利 taunt 已接線」 | **accessor 沒有呼叫者（第七例）。** 專門為了預熱 taunt 而寫，**0 個生產呼叫者** → 351 支 clip / 5.28 MB 在**必須發聲的那一瞬間**才做兩次串接的冷抓 | **4-2** |
+| **`frameDataAudition.ts`** | 前一稿誤判為「0 個 import 的第八個死碼案例」 | **❌ 誤判，已撤回。** 534 行（不是 364），且 `apps/client/public/frame-data.html:117` 的 `await import("/src/render/frameDataAudition.ts")` 就是它的呼叫者 —— **字串裡的動態 import，identifier grep 看不到**。兩個檔案都是 cast-pillar agent 這一波的 untracked 產出（`git status` 兩者皆 `??`）。**批次 3 的 CT-0D 驗收方法已經存在，不需要新建** | **1D-2 降級成「開 dev server 目視一次」**（不是掛路由；掛路由會破壞它刻意不進 bundle 的設計）|
+| **`teamId ?? 0`** | 附錄前一稿寫「全檔已無 `?? 0`」| **❌ 該證據不成立，實查有兩處。** `GameApp.ts:1033` `e.teamId = this.teamBySeat.get(es.seatId) ?? 0` 與 `:1613` `teamId: isFlower ? -1 : (… ?? 0)`。前一稿查的是 `:1298`/`:1300`（那兩處確實已是 `?? -1`），**但沒查完整支檔**。後果：任何**沒有席位的 entity 都被畫成 0 號隊（藍隊）** —— 而 1A 讓守護者上線之後，`seatId = -1` 的守護者會拿到 `teamBySeat.get(-1) → undefined → 0`，**變成一隻藍隊守護者**，還會被餵進 #85 死亡去飽和的「我方」名單 | **1B-5**（與守護者同批，否則 1A 一落地就製造新的視覺錯誤）|
+| **#127 對外分級殘留** | #127 completed | **服務層閘門是真的且已驗（loopback/LAN 200、對外 403），但兩件事沒做：** (a) 對外分級仍然**顯示單機入口**（UI 隱藏當初排在範圍外）；(b) 129 個匯入 GLB **仍實體存在於對外映像**，閘門只是不服務它們。另外雲端 LB 之後 `$remote_addr` 是 LB 的私網位址，IP 分級會整個失效 | **7A**（與 sec-154-05 trusted-proxy 同一個根因，同批）|
+| **`spriteSheet`** | 「模型已建好」| 1441 份文件 **0 份帶 `spriteSheet`** → 每顆粒子都是靜態圖，WC3 的 flipbook 動畫從未移植。**它的來源是 mdx→vfx 匯入器**，不是手寫內容 | **2A-2**（與 #56 同一次匯入器改動，不是獨立任務）|
+| **#94 可用貨架** | #94 pending | 卡片靠左半**已出貨**（見附錄），**只剩「功能性貨架」沒有任何批次認領**。它改的是 `render/intermission/layout.ts`，那條路徑在前一稿裡沒有任何 lane 宣告 | **5D**（新 lane）|
+| **`mdl-150d` 矛盾** | 附錄說 #77/#150 已接線（`contentDb → EntityViewRegistry.ts:427`）、`docs/todo/models.md:71` 說 composition-root 那一步還沒做 | **兩份文件互相矛盾，沒有人裁決過。** 高度正規化是活的，有風險的只有**刻意例外**（小叮噹 0.65 / 皮卡丘 0.6 / 初號機 1.55）。這正是 `modelOverrideFor` 那條路徑，而 1A-3 要在**同一支 `EntityViewRegistry.ts`** 裡加守護者分支 | **1A-3 順手判定**（開同一支檔，別為它單開一波）|
+| **孤兒 SFX** | `audio-map.json:504,512,528` 已授權 | **死碼。** `sfxManifest.ts:44-47` 自己註明「故意不列，因為沒有東西會觸發」：`mapFlavor*` / `lab` / `settlementReveal` / `matchEndGong` / `vsReveal` | **批次 3**（呈現層 pass 順手安置或退役） |
+| **`gen_status.py`** | 「這份檔案是動態的」 | **分母是錯的。** TASKS 陣列 131 筆、涵蓋 1–128（缺 #45）之後只有 #143 與 #173 → **#129–#142、#144–#172 共 44 個 id 結構性缺席**。`requirements-status.md` 的「合計 131」「完成度 68/131 ≈ 52%」**是對 173 件帳本算出來的假百分比**；另有 #85／#93 重複列且狀態不一致 | **1D-1**（提前，因為每一批的簽收都要讀這張頁；順便回寫 #124「已被取代」與 #104 的雙態）|
 
-### 反向漂移：活頁說沒做、其實做完了
+### 假 pending（活頁說沒做、實測做完了）—— **不得再排工**
 
-以下 11 件被帳本或狀態頁標成 pending／stalled，實測**已端到端出貨**。全部收進〈附錄〉，**不得再排工**：#100、#63、#107、#110、#121、#128（技能半）、#131、#142、#145、#147、#148。細節與證據見附錄。
-
-另有 6 條 gap-log 條目已被 `13afaf9` / `0c47fce` 修掉而未回寫：#78 的 `perRank [1,1,1]` / `coeff 0.003` 殘留（實測 0 份）、#136 投射物射程縮放、#89 的 structure 傷害減免、#133 的 EX／counter-hit stub、方向性運鏡 kick + EX punch-in（`GameApp.ts:1181,1185` 已有呼叫者）、`content:validate` 紅燈（實跑：`content OK: 1441 docs, cv_31aca38e2fb6`）。
-
----
-
-## 現在就要問使用者的三個決策（不要等排到才問）
-
-這三個答案卡在關鍵路徑上，全部應該在**批次 1 開工的同一天**丟出去：
-
-1. **Civitai API token（#112 / #72）** —— 本機 M 系列管線已經能跑（≈5s/張、$0，已產出 282 張 icon），但使用者指定的 Civitai 模型沒有 token 會 401。這一個 token 擋住**整個批次 4**。
-2. **重複英雄文件要不要實體刪除（#113）** —— 14 對 byte-identical、`isSameCharacter` 已判定，執行期也已折疊。刪或不刪決定 icon 要寫進哪份文件、`baseAttackTime` 要回填幾份。擋住批次 2 與批次 4 的寫入順序。
-3. **`uhpr` / `umpr` 回復值要不要匯入（#144）** —— 原始值被 WC3 預設值汙染，硬匯入反而會把角色差異壓平。擋住批次 2 的尾巴，因此也擋住批次 2 的 TTK 簽收。
+`#100`、`#131`、`#142`、`#173`、`#143`、`#85`、`#93`、`#145`、`#147`、`#148`、`#110`、`#121`、`#107`、`#118`、`#162`、`#128`（技能半）、`#63`（SFX 半）、`#94`（卡片靠左半）、`#136`、`#133`（機制半）、`#89`（sim 半）、`#98`。
+證據逐條收在〈附錄〉。**重排這些是這裡第二貴的錯誤；最貴的是把綠燈測試當成功能能發生的證據。**
 
 ---
 
-## 批次 1 · 讓畫面說實話
+## 開工當天就要問使用者的四個決策
 
-> **為什麼是這一批。** 使用者現在坐下來打一場，會遇到四件遊戲在對他說謊的事：依文潔琳放出來的是火（他親口指定的驗收案例）、對決區中央有一顆看不見的 1450 HP 砲台在放無預告 AoE、被暈住跟沒被暈住長得一模一樣、花跟守護者點不到。這些**沒有一件是新功能** —— 產生端全部已經上線，只是消費端從來沒接上。這批的每一項都是「把已經付過錢的東西接出來」。
-> **解鎖：** 一個可信的手測環境。批次 2 之後所有的手感／數值調校都建立在「畫面顯示的就是實際發生的」這個前提上。
+排到才問就會卡住整條鏈。
 
-### Lane A · 內容權威修正（解 #79 / #98 / #123 的共同根因）
+| # | 問題 | 卡住什麼 |
+|---|---|---|
+| **D1** | **Civitai API token** —— 沒有 token 供應商回 401 | 整個圖示批（#112 → #72 → #146 商人頭像）。本機 M 系列管線約 5 s/張、已產出 282 張，但補完需要供應商 |
+| **D2** | **14 對位元相同的英雄文件要不要實體刪掉？**（#113） | 決定**哪一份文件收圖示、哪一份收 `baseAttackTime`**。它是整條內容寫入鏈的根，批次 2 第一步 |
+| **D3** | **要不要匯入 `uhpr` / `umpr` 回復數值？**（#144） | 來源值被 WC3 預設值污染，盲目匯入會**壓平英雄差異**；同時會移動 cast-telegraph 的 `v_ref = 5.6`，連動 #153 TTK 重測 |
+| **D4** | **火圈（#132）：給它真實幾何，還是誠實改名成「全域流血 + 可見倒數」？** | `FireRingSystem` 現在**不分位置燒每個活人**（沒有安全地面），且繞過 `damageQueue`（`hp.hp -= dmg`）→ 沒有傷害事件、沒有數字、沒有紅閃、沒有聲音。⛔ **無論哪個選項都不可以改走 `damageQueue`**（那會重新開放護甲／護盾／吸血／擊殺歸屬） |
 
-**獨佔路徑：** `content/champions/*.json` · 新測試 `packages/shared/src/content/abilityAuthority.test.ts` · `packages/shared/src/content/registries.ts`（僅在需要加註解時）
-（註：`packages/shared/src/content` 目前被批次 0 的 agent 佔用，本 lane 的測試檔在其釋出後才寫；**內容寫入（`content/champions/*.json`）不受該鎖影響，可立即開工**。
-**不碰** `packages/shared/src/sim/content/registry.ts`、**不碰** `apps/client/src/GameApp.ts`（Lane B 獨佔）—— 見上方〈覆核補正〉，走 (b) 就是為了讓這條界線成立。）
-
-| # | 任務 | 使用者原話 / 為什麼在這批 | 驗收準則 | 規模 |
-|---|---|---|---|---|
-| **1A-1** | **把 standalone 文件的 `vfxKey` 反向傳播進 champion 內嵌 QWER 副本**（方案 b）。`registerChampion` 的重註冊**保留不動** | 「依文潔琳的冰要是冰」。這是整份計畫裡**單一改動解鎖最多既有工作**的一項：它同時讓 #79 的名冊半、#98 的名冊宣稱、#123 的 69 份被擱置 primitive 一次生效。**必須走 (b)**：另有六個呼叫點直接讀內嵌副本（tooltip／圖示／射程預覽／bot AI，清單見〈覆核補正〉），拿掉重註冊只會讓 sim 與 UI 各說各話 | 用真的 `ContentLoader + registerAll` 跑起來後：`Abilities.get("godie-n003.q").vfxKey === "fx.prim.ice.shockwave"`；**名冊 192 個 QWER 槽 0 個是火焰 placeholder**（現況內嵌 175 火）；全 452 個 QWER 槽解析成 `fx.ember-bolt-cast` 的數量從 **406 降到 231**（其餘 231 是非名冊，批次 3 處理）；`skillDetails` / `icons` / `Tier0Brain` 讀到的是同一份值 | M |
-| **1A-2** | **與 1A-1 同一個 commit**：embedded ↔ standalone 逐欄差異稽核並附在 commit 訊息裡 | 換權威前必須先看差異表，否則等於在使用者不知情下偷改數值。**已實測：194 份不一致，欄位只有 `vfxKey`（192）與 `castTimeSec`（2），`perRank` / `coeff` / `cooldown` / `maxRange` 完全沒有分歧** —— 所以真正要人裁決的只有那 2 格 | 差異表落在 commit；2 格 `castTimeSec` 各有明確裁決；套用後 `pnpm content:validate` 綠燈 | S |
-| **1A-3** | 補一支**會抓到這種失效**的測試：載入真實 content → `registerAll` → 斷言 `Abilities.get(id).vfxKey`，**並且**斷言 `Champions.get(cid).abilities[slot].vfxKey` 與它一致（把兩條消費路徑一起釘死） | 現有的 `bindings.test.ts:41-43` 綠燈綠了整段時間卻沒抓到 83% 的技能是火。只釘註冊表不夠 —— tooltip／圖示／bot AI 走的是另一條路 | 刻意把一份 champion 內嵌副本改回 `fx.ember-bolt-cast`，測試必須紅；刻意只改 standalone 而不改內嵌，測試也必須紅 | S |
-| **1A-4** | `godie-n01g`（第二份依文潔琳）不在 `ROSTER` 內、兩份檔案都還是火 | 交棒給批次 2 的 #113 正典 id 決策，本批只要確保它不會出現在名冊 | 名冊解析結果不含 `godie-n01g` | S |
-
-### Lane B · client 一行接線波
-
-**獨佔路徑：** `apps/client/src/GameApp.ts` · `apps/client/src/ui/WorldAnchorLayer.tsx`
-（`apps/client/src/vfx/VfxSystem.ts` **不需要改** —— `statusFx` getter 與 `StatusAuraFx` 都已就緒，缺的只是 `GameApp` 的呼叫。`render/deathFocus.ts` 也不需要改，1B-3 從來源端修就夠。）
-
-| # | 任務 | 使用者原話 / 為什麼在這批 | 驗收準則 | 規模 |
-|---|---|---|---|---|
-| **1B-1** | 狀態光環解碼接線：在 entity sync 迴圈加 `vfx.statusFx.set(es.id, es.flags, pos.x, pos.z, nowMs)` | `VfxSystem.ts:395-398` 的註解**直接把缺的那一行寫出來了**。bitmask 從協定寫好那天就在線上飛，client 從來沒讀過 → CC 完全隱形。順帶白送衝刺揚塵 | 暈眩／定身／緩速／衝刺四種 flag 在畫面上各有可辨識光環；新增測試斷言 sync 迴圈確實呼叫 `statusFx.set` | S |
-| **1B-2** | `enemyUnitsFor` 放寬到可攻擊中立物：花（kind 2）與守護者（structure），各自 pick radius | `GameApp.ts:1309` 那**一個 `es.kind !== 0` 濾網同時擋掉兩個功能**的選取。server 端花早就能被打，玩家點不到 | 右鍵能點到花並開始攻擊；攻擊移動與觸控最近敵人也吃得到；守護者可被指定（**此步等 Lane C 的 entity kind 落地**，花的部分可立即開工） | S |
-| **1B-3** | `teamId` 統一成 `-1 = 未知`（`:1033`、`:1613` 目前是 `?? 0`） | team 0 是**真的隊伍**。尚未進 snapshot 的席位會被畫成藍隊、拿到友軍血條色，還會被當隊友餵進 #85 的 `buildFocusSources`（未知實體周圍出現一圈彩色池） | 未知席位不再取得任何隊伍顏色；`deathFocus` 的來源清單不含未知席位 | S |
-| **1B-4** | 🔀 **F-06 / sec-154-06**：`makeChampionNode` 改用 `textContent` + `element.style`，停止字串拼 HTML | **跨主題但必須同批**：與 1B-2 的中立血條是同一個函式，一次開檔兩處改，分批等於同一段程式改兩次。也是唯一一個 high 等級的 client 安全洞（displayName 直接進 `innerHTML`，DOM/stored XSS） | 把 displayName 設成 `<img src=x onerror=...>`，畫面顯示為純文字且沒有任何 script 執行 | S |
-
-### Lane C · 守護者上線（#89 client 半 + #105）
-
-**獨佔路徑：** `packages/shared/src/protocol/schema.ts` · `apps/game-server/src/net/snapshot.ts` · `apps/client/src/render/EntityViewRegistry.ts` · **`apps/client/src/render/overheadAnchors.ts`** · `packages/shared/src/sim/systems/GuardianSystem.ts` · `content/models/prop.guardian*.json` · `content/arenas/*.json` · `apps/client/src/ui/panels/champselect/briefingContent.ts`
-
-> **前一版漏掉 `overheadAnchors.ts`。** 守護者的血條走的是這支純函式（`KIND_*` 常數、`hasOverheadBar()`、`anchorColorFor()`、`anchorHeightFor()`，目前只認得 champion 0 / flower 2 / reviveCircle 3），新增 `KIND_GUARDIAN` 必須改它。好消息是**改完就不用碰 `WorldAnchorLayer.tsx`（Lane B 獨佔）** —— 顏色與高度都是從這裡取的。若最後仍需要動 `WorldAnchorLayer`，必須排在 1B-4 之後，不得平行。
-
-| # | 任務 | 使用者原話 / 為什麼在這批 | 驗收準則 | 規模 |
-|---|---|---|---|---|
-| **1C-1** | 新增 `ENTITY_KIND.GUARDIAN` + `snapshot.ts` 的 `world.structure` 分支，帶 model key / hp / maxHp | **這是本次掃描找到最高的可玩性風險，不是功能缺口。** 機制已經在正式路徑上跑（`arena-rules.json` 出貨 hpBase 1450、`MatchController.ts:725-731` 每次進戰鬥武裝、`roundPacing.test.ts` 證明生成），但沒有任何 client 半 → 現在被編碼成 kind 0 / seatId -1 / key ""，畫成一隻沒染色的程序化 voxel 英雄還帶血條 | 守護者在 snapshot 中以自己的 kind 出現，攜帶 model key 與 hp；`snapshot.test` 覆蓋 | M |
-| **1C-2** | `EntityViewRegistry` 守護者 view（中立血條色）+ **齊射地面預告** | 沒有預告的 AoE 對玩家而言就是「莫名其妙被打」 | 進入戰鬥回合後每個活躍對決區中央看得到守護者本體；被打會掉血；每次齊射前地面有可見預告 | M |
-| **1C-3** | **#105** 每場地身份：`spawnGuardian`（`GuardianSystem.ts:216-250`）寫入 model key，改由 arena 文件的 `guardian` 欄位決定；補 5 份 model 文件（樹人／石頭人／巨獸人） | 美術已在磁碟上（`guardian_stone` / `guardian_beast` / `guardian_treant_trunk` / `guardian_treant_roots`），程式碼卻硬編 `GUARDIAN_MODEL_KEY = "prop.guardian"`（`GuardianSystem.ts:50`）。**跟 1C-1/1C-2 是同一條 entity view 縫，分批等於開兩次** | 每回合換場地時守護者的臉跟著換；缺 `guardian` 欄位的場地退回 stone 且不報錯 | M |
-| **1C-4** | 刪掉 `briefingContent.ts:9` 那句對玩家說守護者「NOT BUILT YET」的字串 | server 每回合都在生它，選角簡報卻告訴玩家還沒做 | 簡報文字描述真實行為 | S |
-
-### Lane D · 產出已上線、消費端從沒接
-
-**獨佔路徑：** `apps/client/src/ui/SettingsScreen.tsx` · `apps/client/src/ui/panels/MerchantShop.tsx` · `apps/client/src/render/arenaSelect.ts`
-
-| # | 任務 | 使用者原話 / 為什麼在這批 | 驗收準則 | 規模 |
-|---|---|---|---|---|
-| **1D-1** | 血腥風格／強度控制項進設定頁 | `settings/types.ts:57-60,92-93,139-142` 的 store、夾限、持久化、per-champion 覆寫、即時傳播**全部做完並測過**，`main.tsx:16` 也綁好了 —— 只差一個 UI 控制項。**玩家現在關不掉血** | 設定頁能切風格與強度、能關到 0、重開仍保留 | S |
-| **1D-2** | `MerchantShop` 改讀權威的 `SeatState.undoDepth`，取代 `:119` 的 last-event 啟發式 | 欄位每 tick 廣播、client 0 個讀者。啟發式在多步撤銷或封包順序異常時會給錯的按鈕狀態 | 復原按鈕的顯示條件直接由 `undoDepth > 0` 決定；grep `undoDepth` 在 client 有讀者 | S |
-| **1D-3** | **#145 client 清理**：刪掉 `arenaSelect.ts:23-29` 三個不存在的協定欄位分支（`roundArenaId` / `roundMapId` / `arenaId`），只留 `mapId` | 每回合換場地**整條已經是通的**（server `MatchController.ts:582-587` 決定性選場、`snapshot.ts:32` 廣播、client `GameApp.ts:733-734` → `applyArena` 重建），這三個投機分支只會讓下一個讀這段程式的人以為它壞了 | 換場地行為不變；`arenaRotation.test.ts` 仍綠 | S |
-
-### Lane E · 實機簽收與活頁對帳
-
-**獨佔路徑：** `tools/status/gen_status.py` · `docs/requirements-status.md` · `docs/_requirements-audit-gaps.md` · `apps/game-server/src/curation/whitelist.ts`（僅 1E-0 的 fail-safe 可見度）
-
-| # | 任務 | 為什麼在這批 | 驗收準則 | 規模 |
-|---|---|---|---|---|
-| **1E-0** | 🔺 **從批次 8 前移的前置：#48 殘留。** 開簽收局之前，先確認本機 platform 真的起著、而且 **curation 白名單與 combat-env 都不在 fail-safe 路徑上**；若在，簽收局量到的是 fail-safe 的數字不是出貨內容 | **前一版把 #48 排在批次 8，但 1E-1 需要它。** URL 解析本身已修好（`config/platformUrl.ts` 有 `http://localhost:8080` fallback），殘留的是「platform 沒起來時整場靜默走 fail-safe」：curation → allow-all、combat-env → bundled 預設。**這正是最近才修掉的那個 bug 的同一種形狀**（未設定的 platform 送出一張全 1.0 的表，靜默覆蓋掉每一個內容作者寫的倍率）。在這種環境下簽收「畫面顯示的就是實際發生的」是自欺 | 開局時 HUD／log 能一眼看出兩條 fetch 是「真的拿到 platform 資料」還是 fail-safe；簽收局在**非 fail-safe** 狀態下進行 | S |
-| **1E-1** | **一場實機僵局回合**，用既有的零冷卻 / 清場 cheat（`CheatConsole.tsx:256,263`）逐項簽收「已完成但從來沒被眼睛看過」的工作：#100 回合結算凍結、#131 白爆點、#110 抽牌卡、#121 商店復原、#145 換場地、#147 打擊感、#148 商人提示、#142 名言 VO、#107 安全區（回報症狀是 FPS pill 蓋住商店）、#164 傷害數字顏色、#166 被動虛線框、**#85 死亡去飽和**、**#93 勝利呈現的 6 個細節**、**#3 Capcom 手感的 4 個細項**、**#90 復活不重複發賞金**、**#82 雙公式模擬** | **這是整份計畫裡每小時信心增益最高的一件事。** 程式與測試都綠，沒有一件被眼睛看過 —— 而 #93 的教訓正是綠燈測試可以整段時間都在斷言錯的東西。**後 5 項是前一版漏掉的**：gap-log:70 明白列出「仍需人工逐項細看而非只是 grep」的清單（#93 的 6、#75 的 8、#3 的 4、#90、#82），前一版只抄了 11 項就收尾 | 逐項 pass/fail 簽收表（含子細節層級）；fail 的項目當場開成批次 2 的列 | M |
-| **1E-2** | 修 `gen_status.py` 的三處自相矛盾：#85 重複列（combat ⬜ / models ✅）、#93 重複列（combat ⏸ / models 🔄）、`:128` 仍把 #128 標 pending | 現在任何人拿 `requirements-status.md` 規劃都在讀小說（頁面日期 07-22、統計 131 件 vs 帳本 173 件） | 重跑 `gen_status.py` 後無重複 id、無與本檔訂正區衝突的狀態 | S |
-| **1E-3** | 回寫 gap-log：6 條已被 `13afaf9`／`0c47fce` 修掉的 status-drift 條目關掉；#79/#98 那兩個**自己是錯的** ✅ 改成本檔的判定 | 滾動紀錄紀律。gap-log 整體比另外兩張活頁準，唯獨 #79/#98 反了 | gap-log 與本檔訂正區一致 | S |
-| **1E-4** | 把 **#143**（回合勝利者 3D model + VO，已於 `2031f7a` 落地）與 **#172 / #173** 補進本檔〈附錄〉 | 前一版全檔 0 次提及 #143 —— 一件已經做完的工作既不在批次也不在附錄，下一個規劃者會把它當新工作重排 | 三者都在附錄且標明證據 | S |
-
-**批次 1 的完成定義：** 使用者在**確認不是 fail-safe** 的環境開一場，看得到守護者、看得到 CC、點得到花、依文潔琳放的是冰、能關掉血，而且手上有一張 16 項（含子細節）的實機簽收表。
-
----
-
-## 批次 2 · 數值鏈、道具語意、手感表面
-
-> **為什麼是這一批。** 三條互相獨立、但**內部絕不能拆**的鏈子。(1) 匯入器 → 每角色數值 → TTK → 增幅簽收：分開做等於後面每一步都會推翻前一步的結論。(2) 道具語意：`useItem` 是死碼，所以「主動效果道具」這整類 w3x 內容做不出來，#128 的道具半也無法測。(3) BGM 與手機佈局是兩個**完全互斥的檔案領域**，正好塞進來當平行 lane，而且 BGM 需要使用者聽了才算數 —— 越早問越好。
-> **解鎖：** 數值凍結。批次 3、4 的內容量產才不會建立在會變的數字上。
-> **🔺 跨批硬約束（前一版沒寫）：2A 會重跑匯入器並重寫 `content/champions/*.json` —— 那正是批次 1 Lane A 寫入 `vfxKey` 的同一批檔案。** 匯入器若原樣覆蓋，會**靜默回退整個批次 1 的成果**（而且沒有任何測試會紅，因為 `bindings.test.ts` 只看記憶體表）。**2A 的收工條件之一是 `abilityAuthority.test.ts` 仍然綠**，且匯入器對已存在的 `vfxKey` 採保留語意（或重跑後立即以 1A 的傳播腳本補寫）。
-
-> **🔧 覆核修正：前一版的 2A 與 2B 宣稱互斥，實際上都獨佔 `tools/w3x-import`。** 2B 的 `descriptionRoles` **輸出端就在匯入器裡**（2A 的路徑），而且 #114 的內容又是 2A 的 `#56 rawMods` 透傳產出的。兩個 agent 平行進去必撞。**已合併：2B 併入 2A，成為批內序列的最後一步**，並保留「#114 + #125 必須同一個 commit」的硬規則。以下 lane 已重新編號。
-
-| Lane | 獨佔路徑 | 內容 | 規模 |
-|---|---|---|---|
-| **2A · 匯入器 → 數值 → tooltip 語意（單寫者，批內序列）** | `tools/w3x-import/**` · `content/champions/*.json` · `content/items/*.json` · `content/abilities/*.json` · `apps/client/src/ui/components/abilityText.ts` | **① #113 正典 id 定案**（先做，決定後面所有寫入的目標檔）→ **② #56** `rawMods` 透傳（`umvs`／攻擊冷卻＋後搖／`uhpr`／`umpr`／`\|cAARRGGBB` 全部從這裡出來）→ **③ #144** `baseAttackTime` 回填 113 份（目前全吃 1.0s 預設；移動速度已落地，18 級距 4.0–10.1，只需複驗）→ **④ #78 道具半的 1:1 覆核**（技能半已驗淨，道具半從未被任何 commit 提及）→ **⑤ #50 的 per-invocation 美術參數抽取**（dummy-effect／special-effect 呼叫點的 scale／tint／alpha／count／timeScale —— **同一次 JASS 重讀，兩個消費者；不在這裡抽，批次 3C 就沒有值可以填**）→ **⑥ #83 w3x-22 守門** + **legend-01 守門** + **#108 說明↔modifier 逐項複驗** → **⑦ #114 `descriptionRoles` 輸出 + #125 rescale 錨點修正（必須是同一個 commit）**：`rescaleAbilityProse`（`abilityText.ts:255-262,288-296`）錨定在數字緊鄰「傷害／秒冷卻」，角色標記會把 `[/c]` 插進中間 → 一旦有內容，所有 tooltip 靜默退回未乘倍率的數字，**而且不會有任何測試變紅** | XL |
-| **2B · 道具語意** | `packages/shared/src/sim/systems/CommandSystem.ts` · `packages/shared/src/sim/effects/**` · `apps/client/src/ui/TouchControls.tsx` · `apps/client/src/input/**` | **`useItem` 實作**（sim 端 + 商店 UI 派送）→ **`recall` 決策**（實作自我傳送回泉水／商店，或刪掉按鈕＋手把＋鍵盤綁定；螢幕上一顆按不動的按鈕對玩家就是 bug）→ **#128 道具半掃描**（技能半 288 格已 281 PASS / 7 被動 / 0 FAIL，道具半在 `useItem` 之前無從測起）→ 使用者親手做的**遠程 vs 近戰操作差異**測試（指定／地面／skillshot，headless 掃描代替不了） | L |
-| **2C · 平衡拍板** | `content/augments/*.json` · `content/config/arena-rules.json` · `content/loot-tables/round-reward.json` | **TTK 重測**（#153 的 `TTK ≈ 13.8×maxHealth−4` 是在攻速還沒差異化前量的，必須等 2A ③）→ **#149 增幅池擴充**（現在銀 6／金 8／稜彩 7；不重複抽牌 + 排除已持有 → 每回合都抽的人約第 10 回合把稜彩池抽乾，`MatchController.ts:487` 之後就**靜默不再發牌**）→ **gacha 決策**（`arenaRules.ts:47,68` 的 legacy 預設有 `gacha`，出貨的 `arena-rules.json` 沒有 → 開它或刪 `round-reward.json`）→ **`canCrit` 授權政策**（目前 0 份內容 opt-in，暴擊裝備只影響普攻；**政策在這裡拍板、內容在批次 3 由單一寫者落**） | M |
-| **2D · 手機與安全區** | `apps/client/src/ui/hud/hudLayout.ts` · `apps/client/src/ui/hud/**` | **#151 iPhone 橫向（390px 高）選單重疊** + **#107 最後兩個硬編碼**（`:272` Leave 按鈕 right:10/top:10、`:376` 計分板差 4px）。兩者改同一批常數，分開做會逐行相撞，而且共用同一場真機 session。戰鬥強制橫向 = 玩家實際待著的方向 | M |
-| **2E · 音訊硬序列（單寫者）** | `tools/bgm-gen/**` · `content/assets/audio/bgm/**` · `content/assets/audio/sfx/ambient/**` | `bgm-gen` 一次只能跑一軌、每個 job 都改寫同一份 `audition.py`，**兩個 agent 進來會互相毀掉頁面**。序列：**#135** 每場景 signature intro 的 rap/VO 層目前預設關閉（只有 `--tts` 才烘）→ 使用者 audition 簽收 → **火圈 intro 重寫**（遠方空襲警報 + 嘲諷中文 rap → 爆炸，crescendo 縮短，gap-log:162，**從未有帳本編號**）→ **控制室整軌改寫**（教堂／福音、神父 rap intro、中段嘲諷 rap，gap-log:163，**從未有帳本編號**）→ **🔺 #75 龍吼環境音**（把 ambient cries 重新對齊**縮短後的 anchor**、加深殘響 —— **前一版全檔 0 次提及，是本次覆核找到唯一被完全遺漏的 pending 帳本項**；使用者列了 8 個細節，逐項對、不要 grep）→ **#137 12 支變奏檔上架驗證**（audition 擴到 24）→ **#142 audition 頁「英雄名言」區** | L |
-
----
-
-## 批次 3 · VFX 生成鏈與技能表現
-
-> **為什麼在這裡。** 批次 1 把註冊表打通之後，`content/abilities` 才第一次真的是可見的；批次 2 的 JASS 重讀順手產出 #50 需要的 per-invocation 參數表。這批是**量產**，不是設計。
-> **🔧 覆核修正：前一版把 3A / 3B / 3C 並列成「平行 lane」，但三者都直接寫 `content/abilities/*.json`（555 份）。** JSON 是**整檔寫入**，不是欄位寫入 —— 宣稱「我只碰 `vfxKey` 欄位、他只碰 `hitFeel` 欄位」在檔案系統層級不成立，三個 agent 平行跑會互相覆蓋，`content:build` 也會三方打架。
-> **已改為「單一寫者 + 三張輸入表」：** 3A 先把 `render/vfx` 做成建置期真理來源（#123），**同一支產生器順勢成為 `content/abilities` 的唯一寫入者**；3B / 3C **不直接改 JSON**，各自產出一張以 ability id 為 key 的**欄位補丁表**（`hitFeel` 表、`artParams` 表），由 3A 的產生器一次套用、一次 `content:build`。這樣三條工作流仍然平行，衝突面收斂成一個寫入點 —— 而且這本來就是 #123「模組是真理來源」的目的。
-> **硬約束不變：** 這四個 lane 必須同一批。
-
-| Lane | 獨佔路徑 | 內容 | 規模 |
-|---|---|---|---|
-| **3A · 產生器與唯一寫入者** | `apps/client/src/render/vfx/**` · `content/vfx/**` · **`content/abilities/*.json`（本批唯一的寫入者）** | **#123** 讓 `render/vfx` 成為 94 份 `fx.prim.*.json` 的**建置期真理來源**：`curatedDocs()`／`rosterBindings()` 加 CLI/npm script + 漂移守門測試（目前執行期與 `content:build` 都沒有任何 import → 模組與出貨文件可以靜默分歧）→ 擴成能套用 3B/3C 補丁表的 **content 產生器** → **#79** 非名冊重綁（實測：批次 1 之後仍有 **231 個 QWER 槽 + 非 QWER 技能**指向 `fx.ember-bolt-cast`）→ **#98** 非名冊引用改指原生 primitive 並把 **11 個零幾何 GLB 從 `model-budget/report.json` 刪掉** → **`spriteSheet`**：mdx→vfx 匯入器輸出 WC3 翻頁動畫（1441 份文件 0 命中，每顆粒子都是靜態圖） | XL |
-| **3B · 手感內容授權（產出補丁表，不寫 JSON）** | `content/_patches/hitFeel.json`（新）· `packages/shared/src/content/schema/ability.ts` 的既有欄位 | **`hitFeel` 授權 pass**：per-champion / per-ability 旋鈕目前 content 內 0 筆，每次命中都吃傷害推導的預設值 —— 「每個技能手感不同」的真正兌現在這裡。順帶落 **2C 拍板**的 `canCrit` opt-in。**交付物是補丁表 + 一支驗證它涵蓋率的測試，套用由 3A 執行** | L |
-| **3C · 美術參數資料半（產出補丁表，不寫 JSON）** | `apps/client/src/render/vfx/artParams.ts` · `content/_patches/artParams.json`（新） | **#50**：地圖 dummy-effect／special-effect 呼叫點的真實 scale／tint／alpha／count／timeScale。轉換與測試都在，缺的是值 —— **值來自批次 2A ⑤ 的 JASS 重讀**（前一版說「批次 2 會產出」但 2A 的內容清單裡根本沒有這一步，已補上）。**交付物是補丁表，套用由 3A 執行** | L |
-| **3D · 陰影殘留** | `apps/client/src/render/Lighting.ts` | **#147 殘留**：目前沒有真正的 shadow-map pass（`Lighting.ts:1-7` 自己寫明），`setShadowsEnabled` 只調整平行光強度 0.9 ↔ 0.25。blob 影子已足夠支撐 gameplay 判讀，但**標著「陰影」的品質選項並不會切換 ShadowGenerator**。這是本批唯一真正無關的檔案領域，可完全平行 | M |
-
----
-
-## 批次 4 · 圖像管線與美術補完
-
-> **為什麼在這裡。** 整批**卡在單一外部輸入**（Civitai token），而且必須跟在批次 2 的 #113 正典 id 決策後面 —— 否則 icon 欄位會被寫進之後要刪掉的文件。
-> **注意：** `apps/platform` 在批次 0 的 workflow C 落地前不得開工。
-
-| Lane | 獨佔路徑 | 內容 | 規模 |
-|---|---|---|---|
-| **4A · provider + SSRF（同檔案，必須同批）** | `apps/platform/internal/**/provider.go` · `music.go` | **#112** provider 設定（真正的根因是沒設定 provider，不是程式壞了；本機 M 系列管線已產出 282 張 icon）**＋🔀 sec-154-08 SSRF 白名單**（限 https、擋 loopback／link-local／RFC1918／169.254.169.254、限定 provider 網域、絕不把 API key 送到外部主機）。兩件改的是同一段 fetch，分批等於同一支函式改兩次 | M |
-| **4B · 英雄／道具文件的唯一寫入者（icon + 出裝梯子）** | `content/assets/icons/**` · `content/champions/*.json` · `content/items/*.json` | **① #72 殘留範圍**（現況：champions 109、items 157、**augments 只有 3 張對 22 份文件**、abilities 13 —— 活頁上「0 張」的說法是過期的）。抽牌是使用者指名的「不要盲猜」表面，優先補 augments → **② #146** 商人頭像單張 PNG（`layout.ts:88` 指著 `assets/icons/shop/traveling-merchant.png`，該目錄不存在，`MerchantTipBox.tsx:79` 永遠退化成字母 glyph）→ **③ ident-11** 9 張錯配頭像重抽（曹操掛皮卡丘的圖）→ **④ 名冊首發缺件**（妙蛙花沒有頭像、魔人普烏 EX 說明是空的 —— `starter.go:78-100` 明白記錄「為了讓 48 名先出貨而拿掉 icon 與文案閘門」）→ **⑤ `buildPriority` 回填**（多數名冊角色只有 2 階梯子，直接影響 bot 出裝品質與商店推薦） | L |
-| **4C · 策展閘門（程式，不碰內容）** | `apps/platform/internal/curation/**` | 把 `starter.go:93-100` 被拿掉的 **≥4 階出裝閘門**與 icon／文案閘門**裝回去**，讓 4B ④⑤ 的缺件無法再靜默出貨。**不寫任何 content 文件** | S |
-
-> **🔧 覆核修正。** 前一版的 4C 宣稱獨佔 `content/items/*.json`，但 **`buildPriority` 是英雄欄位不是道具欄位**（實測：`content/champions` 113 份全部帶 `buildPriority`，`content/items` 0 份），而且 4B 同時在寫同一批英雄文件 → 兩個 lane 平行必撞。已把 `buildPriority` 回填併入 4B 的序列尾，4C 縮成純程式的閘門復原。
-
----
-
-## 批次 5 · 選角、呈現層、登入場景
-
-> **為什麼在這裡。** 這批是「回合結束到底誰贏」「按下確認角色有沒有反應」那一類**每一場都會經過**的表面。放在批次 4 之後，是因為選角檔案面板要展示的正是批次 4 產出的頭像。
-
-| Lane | 獨佔路徑 | 內容 | 規模 |
-|---|---|---|---|
-| **5A · 呈現層收尾（含 #142 權威第一名）** | `apps/client/src/ui/panels/MatchEndPanel.tsx` · `apps/client/src/ui/RoundEndVoice.tsx` · **`apps/client/src/ui/panels/settlementModel.ts`**（前一版寫成 `ui/hud/`，該路徑不存在）· `apps/game-server/src/match/MatchController.ts` · `packages/shared/src/protocol/schema.ts` | **#93 殘留**：卡片停留、savage VO、名言全部從**面板掛載**計時，不是從煙火發射計時（`MatchEndPanel.tsx:332-337` 自承「假設兩者同一幀」）→ 改成錨在煙火的 launch callback，保留現有計時器當 fail-open → **孤兒音效安置**（`mapFlavor*`／`settlementReveal`／`matchEndGong`／`vsReveal`）→ **結算自動跳戰績**（目前是按鈕，使用者要的是自動）→ **#173 bye-round 簽收**（優先慶祝「贏了對決」的隊伍，導致一般四隊回合裡生命數領先但輸掉對決的隊伍永遠不被慶祝 —— 需要使用者在實機看一次拍板）→ **🔀 併入的前 5E：#142 權威第一名**。回合結束第一名目前由 client 從共享 schema 推導（`settlementModel.ts:411` 讀 `roundOutcome`）。#173 已加進權威的每回合 K/D（`TeamState.roundOutcome`、`SeatState.roundKills/roundDeaths`），升級成廣播欄位很便宜 —— 剩一個使用者決策：接受推導值，還是要真 MVP | L |
-| **5B · 選角畫面** | `apps/client/src/ui/panels/champselect/**` · `apps/client/src/audio/nameVoice.ts` | **#76** 角色檔案面板 → **#41** hover 觸發 title+name 呼叫語（VO 內容已存在，缺的只是 handler，且它從 #76 正在做的面板觸發）→ **#139** Codex 英雄頁顯示名言（113 句都在 `quotes.json`，使用者明確要求 codex 也要看得到）→ **#167 選角鎖定改 server 權威**（目前純 client，`lockGate.ts:13-24`；改造過的 client 鎖完還能換，其他席也看不到鎖定） | M |
-| **5C · 登入場景** | `apps/client/src/ui/platform/AuthScreen.tsx` | **#74** 登入→戰鬥交接（龍吼淡出的 gate 已在 `:99-103`，缺 ≥1s 載入條與自己英雄的隊伍輝光）→ **逐字打字火花**（打字音效已接在 `:188`，視覺沒有）→（選配）AnalyserNode 讓魔法陣隨音樂呼吸 | M |
-| **5D · 商店場景** | `apps/client/src/render/intermission/layout.ts` · `apps/client/src/ui/panels/MerchantShop.tsx` | **#94** 商店卡片靠左 —— 同一份 composition 已被 #146 重新對準過（商人置中、`CHAMPION_STAND +0.15`）並被 `layout.test.ts` 與 #103 視線測試釘住，**移動卡片必須在同一次編輯裡重新滿足那兩條斷言** | S |
-> **🔧 覆核修正：前一版的 5E 已併入 5A。** 「把第一名改成伺服器廣播」必然要改 `settlementModel.ts` 的推導端（`:411` 的 `roundOutcome` 判定就是那段推導），而那是 5A 的獨佔檔案 —— 兩個 lane 平行會逐行相撞，而且 5A 的 RoundEndVoice／MatchEndPanel 正是這個值的唯一消費者。**同一個資料流，同一個 lane。**
-> 另補：**#139 的 46 句非名冊名言仍沒有 VO 音檔**（名冊 113 句已齊）。若使用者要 codex 上每個角色都能播，這 46 支要排進批次 2E 的 TTS 佇列，不要留在 5B 當隱形殘留。
-
----
-
-## 批次 6 · 模型工程與變身系統
-
-> **為什麼在這裡。** 這批**只能一次做完**：每一項都改寫 `content/assets/models/imported/**.glb` 的位元組，並讓 `packages/shared/src/content/modelScale.fixture.json` 與 mdl-01..08／mdl-61..65／mdl-150a-c 整套回歸失效 —— 那份 fixture 每次匯出只能重生一次。同時它必須跟在批次 0 的 workflow A（glb 瘦身／壓縮）與 D（實測 eager bytes）之後，否則等於壓縮兩次、量測兩次。
->
-> **🔧 覆核修正：這批不是「五個平行 lane」，是一條序列 + 兩條平行支線。** 前一版讓 6A 宣稱 `content/assets/models/imported/**` 而 6E 宣稱 `content/assets/models/**` —— **後者包含前者**，兩個 XL lane 平行跑會互相覆蓋位元組。而且順序邏輯前一版只寫了一半（寫了「6C 排在 6A 之後」，沒寫 6E）。
->
-> **本批的正確執行序：**
-> **① 6E-a 存活清單裁決**（129 個 imported GLB 哪些要換掉、哪些留下）→ **② 6A 全量重匯**（只對存活者做 mdl-06 基準烘焙 / #61 / #73，一次重生 fixture）→ **③ 6C 減面**（對定案後的網格）→ **④ 6E-b 替換件回到 6A 的匯出管線**。
-> 對這條序列做任何顛倒都是白工：對即將被換掉的模型重匯或減面，成果直接丟掉。
-> **真正可平行的只有兩條：6B（變身系統，`packages/shared/src/sim/**`）與 6D（載入，`AssetManager` / `audio`）。**
-> 因為這條序列本身就是一個波，**建議把 6E-b（129 件替換素材的取得與授權舉證）獨立成批次 6′**，否則這一批無法一次交辦出去。
-
-| Lane | 獨佔路徑 | 內容 | 規模 |
-|---|---|---|---|
-| **6A · 匯出與稽核（批內序列）** | `tools/w3x-import/w3xlib/gltf.py` · `content/assets/models/imported/**` · `packages/shared/src/content/modelScale.fixture.json` | **mdl-06** 把 +90° 基準旋轉烘進匯出器並全量重匯 → **#61** 補回被丟掉的可見度軌與幾何 → **#73** 掛件幾何合併（悟空沒頭那一類）→ **#68 交付物是一張表**：使用者要的是**每角色 × 每片段動畫的 pass/fail**，不要他自己一個個看 113 個模型（他點名的案例：血輪眼左助飛行、皮卡丘 idle 翻轉、桔梗 walk） | XL |
-| **6B · 變身系統** | `packages/shared/src/sim/**`（form-swap 新模組）· `content/champions/*.json` | **#119**：`grep -rn 'formSwap\|revertForm\|transformInto' packages/shared/src` = **0 命中**，全 repo 只有兩件工作是真正的零。**必須與 6A 同批**：mdl-73-03 那批被保守留下的 geoset 正是 heroichigo 的 TRANSFORM-BODY 組 —— 沒有 #119 就沒有 gate 可綁，而剝掉它們就是刪掉 #119 將來要用的變身美術 | L |
-| **6C · 資產工程** | `tools/lod-gen/**` · `content/assets/model-budget/**` | **#115 LOD**（`tools/lod-gen` 目前只有一個 `node_modules` symlink，零份原始碼 —— 帳本標 in_progress 是錯的）→ mb-07 骨架感知簡化 + 綁定存活驗證 → **#99 資產預算頁**（三角數／貼圖／使用處，依專案慣例做成**執行期計算的站內活頁**）。**必須排在 6A 之後**：對即將被 #116/#81 換掉的 129 個 glb 做減面等於白做 | L |
-| **6D · 場景範圍載入擴充** | `apps/client/src/render/AssetManager.ts` · `apps/client/src/audio/**` | **#63 擴充**：SFX 半已完成（`AudioSystem.ts:257-266,403-405,467-471`），模型與語音沒有 per-scene warm set。使用者原話是「只載入戰鬥必要素材」。**warm set 就是 workflow D 量出來的 scene→asset 對照表**，照著填，不要先猜再修。順帶補 #63 規格漏掉的兩項：champSelect 對戰鬥集合的 LOOKAHEAD 預熱（否則回合第一次命中仍可能冷抓）、以及前後 byte／延遲對照報告 | M |
-| **6E-a · 存活清單裁決（本批第一步，序列）** | `content/assets/model-budget/**`（清單文件） | **#81 / #116 的前半**：逐一裁決 129 個 imported GLB「換掉 / 留下」，產出存活清單。**6A 與 6C 都以這份清單為輸入** | M |
-| **6E-b · 暴雪素材債替換（建議獨立成批次 6′）** | `content/assets/models/replacements/**` → 完成後才進 `imported/**` | **#81 / #116 的後半**：實際取得 129 件替換素材 + 逐件授權舉證，再走 6A 的匯出管線。這是版權層的**永久解**（批次 8 的環境分層只是把它擋住不出貨）。**與 6A 共享 `content/assets/models/**`，絕不可與 6A 平行** | XL |
-
----
-
-## 批次 7 · 平台安全、測試基礎建設、編輯器
-
-> **為什麼在這裡。** 這批不改變「現在好不好玩」，只決定「以後改動會不會壞」與「敢不敢把網址給別人」。放在內容之後是因為 E2E 要有穩定畫面才錄得起來。
-> **前置：** 7A 必須等批次 0 的 workflow C 落地（同一支 `service.go` 註冊函式）。
-
-| Lane | 獨佔路徑 | 內容 | 規模 |
-|---|---|---|---|
-| **7A · 遊戲伺服器入口硬化** | `apps/game-server/src/net/validateInput.ts` · `apps/game-server/src/match/MatchRoom.ts` | **sec-154-01 + sec-154-04 必須同批**（同一個 mailbox 接縫）：INPUT 白名單化（未知 kind 丟棄、slot ∈ {Q,W,E,R,EX}、itemSlot 範圍內整數、座標有限）+ `commands[]` 上限與每 session 速率限制。**F-01 一則訊息就能讓 `Registry.get(undefined)` 拋錯 → tick catch 把整個房間踢線**；#46 的 try/catch 不是緩解，它只是把拋錯換成全房斷線。這兩件與 F-04 是**唯二能被單一封包用來殺掉一場正在打的比賽**的洞 → 加上 sec-154-03（onCreate 需 server-only 證明）、sec-154-07（displayName 清洗、拒絕 client 給的 `options.seats`）、sec-154-14（`PLATFORM_GAME_SHARED_SECRET` 開機守門，目前密鑰為空時 **fail-OPEN**） | M |
-| **7B · 平台安全鏈（硬序列）** | `apps/platform/internal/{auth,httpx,server}/**` | **sec-154-05 可信代理 ClientIP 是這條鏈的根**：限流器 key 在可偽造的 `X-Real-Ip` 上（`middleware.go:35-44`），繞過邊緣直連就完全失效 → sec-154-02 註冊 per-IP 限流 + argon2 併發信號量 → **#126 核准閘門** → sec-154-11 未核准帳號上限與 TTL 回收（**無界成長正是核准閘門造成的**，SetNX ttl 0）→ sec-154-18 註冊衝突回應統一 + 時序對齊。加上 sec-154-09/10/12/19 四項平台硬化 | L |
-| **7C · client 安全與傳輸** | `apps/client/vite.config.ts` · `apps/client/index.html` · **`apps/client/src/ui/platform/session.ts`（明確從 7F 的宣稱中挖掉）** · `apps/client/src/*.html`（audition/debug） | sec-154-15 真正的 CSP（目前 prod 只有 `frame-ancestors 'none'`，零 XSS 緩解）→ sec-154-21 refresh token 改 httpOnly+Secure+SameSite=Strict cookie、access token 只放記憶體 → sec-154-16 prod build 排除 audition/debug HTML（**目前打包進 prod 並公開提供**，約 20 個 innerHTML sink；注意 `bgm-audition.html` 是使用者現役簽收工具，排除不能弄壞本機使用）→ sec-154-17 / 22 vite staticHandler `realpathSync` + `nosniff` | L |
-| **7D · 測試 beacon 總開關** | `tools/testrunner/**` · 新 playwright 套件 · `apps/client/src/render/deathFocus.test.ts` | **建起 `playwright-e2e` 套件本體**（`suites.yaml:162-169` 目前 `enabled: false`，註解寫「placeholder」）。**一次做完解鎖七列**：webui-11/12、client-09/10、couch-16、roster-08、rankui-11 —— 除 client-10（斷線寬限重連）之外全部手動驗過，只缺自動 beacon。加 col-11 + sim-07（碰撞 replay 一致性只有在系統順序被釘死之後才有意義）+ **content-07 / content-10** + **🔺 #85 的量測代理修正**（`deathFocus.test.ts:357-385` 用**世界空間**面積比 7.8% < 8% 當「畫面讀起來是灰的」的守門，但使用者的需求是**螢幕**；靠近鏡頭的色池佔的螢幕面積遠大於它的地面佔比 → 改成投影面積指標，或在測試裡寫明這個代理的極限） | L |
-| **7E · 編輯器與協作** | `apps/admin/**` · `apps/client/src/ui/editor/**` | editor-04 RefSelect 選項來自目標集合索引 → editor-05/content-11 BabylonPreview 走真渲染器而非 mock → **#141 站內 VFX 編輯器 Tier-1 MVP**（`fx-compose@1`、1–3 層 primitive、5 個核心旋鈕）—— **primitive 函式庫就是編輯器的調色盤，批次 3 讓它成為建置期真理來源之前沒有東西可以選** → editor-06 地圖編輯器 → **#102 後台整併**（比賽詳情 drill-in、一鍵套用 starter set，兩支 API 都是孤兒；順帶驗收 hitFeel 倍率能在後台即時調） | L |
-| **7F · 平台功能殘留** | `apps/client/src/ui/platform/**` **（不含 `session.ts` —— 那是 7C 的）** · `apps/platform/internal/wallet/**` | `removeFriend()`（`api.ts:66` 端點與型別都在，0 個呼叫者；好友清單就是 #126 私密部署的門禁面）→ 沙發同樂債（`RoomListPanel.tsx:75-83` 的人數輸入被 `min=1 max=1` 永久鎖死，讀起來像 bug）→ **#118 只做 UI 複驗，不重建**（前一版把 #118 同時列在附錄「已完成」和這裡當待辦 —— `wallet/{wallet,meta,handlers}.go` + client `walletMeta.ts` / `ChampMetaControls.tsx` 都在磁碟上，這裡只欠一次眼睛） | M |
-
----
-
-## 批次 8 · 上線收尾
-
-> **為什麼在最後。** 這批不改遊戲，改的是「敢不敢把網址給別人」。全部排在功能凍結之後，因為它們一旦提前落地就會被新程式碼推翻。
-
-| Lane | 獨佔路徑 | 內容 | 規模 |
-|---|---|---|---|
-| **8A · 三張活頁改成執行期計算** | `apps/client/src/ui/routes/**` · `tools/status/**` | 依專案慣例，`requirements-status.md` / 缺口稽核 / hit-feel 稽核**應該是站內即時計算的活頁，不是靜態文件**（現在 `gen_status.py` 的 TASKS 陣列停在 #127 只手加了 4 列，#129–#142 與 #144–#173 完全不在）。沿用批次 0 workflow B 的產生器樣板。順帶補寫七份從未撰寫的 todo 檔（champions / items / augments / map-editor / vfx-editor / model-inspector / ai-bots，`docs/todo/_index.md:77` 標 Planned） | M |
-| **8B · 基礎建設 beacon** | `infra/**` · `docs/todo/security-infra.md` | sec-infra-01..04 的 `cover()` beacon（四項都已實作並手動驗證，卡在 beacon 需要 helm-render + 真 nginx 容器 harness —— 那個 harness 也是 7C 要的）→ `make up` 在 kind 叢集起完整堆疊 → `data/` 跨重啟持久化 → sec-154-20 弱密鑰拒絕 + 四支 CI 守門 | L |
-| **8C · 版權與掛名** | `apps/client/**` · 部署設定 | **#127 殘留**：(a) client 在 public tier 隱藏單人入口 (b) 真正的公開部署**實體排除 129 個 imported GLB**（雲端 LB 之後 `$remote_addr` 是 LB 私網位址，IP 判斷不可靠）→ **#13** 致謝／出處頁（素材、TTS、字體、原地圖作者）→ **#19** i18n chrome | L |
-| **8D · 上線閘門** | — | **#7 完整驗收掃描**（完整堆疊 + 真機 + 多人打完一場）→ 拿著批次 2 的可施放性矩陣與批次 1 的實機簽收表**逐項簽名**。這不是「再玩一次」，是拿著矩陣簽字。（**#48 已前移至 1E-0** —— 它是批次 1 簽收局的前置，不是收尾工作：在 fail-safe 環境下做的任何簽收都不算數） | M |
+次要但也要問：**六個「冷卻比自己前搖短」的技能**怎麼處理（見 2A-9）；**gacha 開還是刪 `round-reward.json`**；**輸的一方要不要也有 bed**；
+**回合「第一名」目前是 client 端從 `roundOutcome` 推導的**（`settlementModel.ts:411`），要不要升成 server 權威的 MVP 欄位（#173 已經有權威的每回合 K/D，升級很便宜）→ 排 **8-4** 一起裁決。
 
 ---
 
 ## 批次相依圖
 
-> 只畫**真正的阻塞邊**。批次之間的實線 = 時間順序；虛線 = 前批的資料／能力被後批消費。
-
 ```mermaid
-graph TD
-  subgraph B0["批次 0 · 飛行中"]
-    WA["A 載入最佳化"]
-    WB["B README 產生器"]
-    WC["C 平台首位管理員"]
-    WD["D 場景資產稽核"]
-  end
-
-  subgraph B1["批次 1 · 讓畫面說實話"]
-    REG["1A vfxKey 傳播進內嵌副本（#79 根因）"]
-    WIRE["1B statusFx / 選取 / teamId / F-06"]
-    GRD["1C 守護者上線 #89+#105"]
-    DEAD["1D gore UI / undoDepth / #145 清理"]
-    PRE["1E-0 #48 非 fail-safe 前置"]
-    SIGN["1E 16 項實機簽收"]
-    GRD -->|entity kind| WIRE
-    PRE --> SIGN
-  end
-
-  subgraph B2["批次 2 · 數值鏈與道具語意"]
-    IMP["2A #113→#56→#144→#78道具→#50抽參數→守門→#114+#125"]
-    ITEM["2B useItem / recall / #128 道具半"]
-    BAL["2C TTK 重測 → #149 → gacha → canCrit 政策"]
-    MOB["2D #151 + #107"]
-    BGM["2E 音訊硬序列（含 #75）"]
-    IMP --> BAL
-    ITEM --> BAL
-  end
-
-  subgraph B3["批次 3 · VFX 生成鏈"]
-    GEN["3A #123 產生器＝content/abilities 唯一寫入者"]
-    HF["3B hitFeel 補丁表"]
-    ART["3C #50 artParams 補丁表"]
-    HF -->|補丁表| GEN
-    ART -->|補丁表| GEN
-  end
-
-  subgraph B4["批次 4 · 圖像管線"]
-    PRV["4A #112 provider ⊕ F-08 SSRF"]
-    ICON["4B icon 量產 + #146 頭像"]
-    PRV --> ICON
-  end
-
-  B0 ==> B1 ==> B2 ==> B3 ==> B4
-  B4 ==> B5["批次 5 · 選角/呈現/登入"] ==> B6["批次 6 · 模型工程 + #119（序列波）"]
-  B6 ==> B6P["批次 6′ · 129 件替換素材"] ==> B7["批次 7 · 安全/E2E/編輯器"] ==> B8["批次 8 · 上線收尾"]
-
-  REG -.內嵌副本可見.-> GEN
-  REG -.重跑匯入器不得回退.-> IMP
-  IMP -.JASS 重讀產出的參數表.-> ART
-  BAL -.數值凍結.-> HF
-  WA -.實測 payload.-> B6
-  WD -.scene→asset 對照表.-> B6
-  WC -.釋出 service.go.-> B7
-  ICON -.商人頭像 PNG.-> B5
-  SIGN -.簽收表.-> B8
-  ITEM -.道具矩陣.-> B8
+graph LR
+  B0["批次 0<br/>飛行中<br/>⛔ commit registry.ts"] --> B1
+  B0 --> B2
+  B1["批次 1 · 看得見的正確性<br/>守護者上線 · 死碼一行修 · 活頁報表"] --> B3
+  B1 --> B5
+  B1 -. "#48 非 fail-safe" .-> B8
+  B1 -. "gen_status + 審聽頁" .-> B8
+  B2["批次 2 · 內容單一寫者<br/>序列鏈，不可內部平行"] --> B3
+  B2 --> B8
+  B3["批次 3 · 施法與手感<br/>CT-2 / 2.5 / 3"] --> B8
+  B4["批次 4 · 載入與抓取<br/>（與 1/2/3/6 完全平行）"]
+  B1 --> B5
+  B1 --> B7
+  B5["批次 5 · 登入／選角／行動裝置／商店場景<br/>5A·5C 等 1C；5B·5D 可平行"]
+  B6["批次 6 · 模型管線<br/>序列波，不可內部平行"] --> B8
+  B7["批次 7 · 平台安全與私有部署<br/>7B·7C 等批次 1"] --> B8
+  B8["批次 8 · 平衡凍結 + #7 實機簽收"]
+  B2 --> B9
+  B9["批次 9 · 編輯器與後台工具<br/>不擋 #7"]
+  BA["支線 A · 圖示管線<br/>卡在 D1 token"] -.-> B5
+  BA -.-> B6
+  BB["支線 B · BGM 創作佇列<br/>序列單一寫者 · 全程平行"] -.-> B8
 ```
+
+**⚠ 前一稿在這裡寫「批次 1 / 4 / 5 / 7 彼此不共用任何檔案」—— 逐檔查過，那是假的。** 實際的檔案衝突有五處，全部在後面的 lane 標題用「（X 交還後）」偷偷承認了，
+但那個寫法**違反本檔第 1 條規則**（跨批只允許「前批產出被後批消費」，不允許「同時開跑再交還檔案」）。訂正如下：
+
+| 衝突檔案 | 誰先 | 誰後 | 處置 |
+|---|---|---|---|
+| `apps/client/src/ui/platform/**`（`AuthScreen.tsx` / `CreditsRoute.tsx`）| **1C**（1C-3/1C-4/1C-5）| 5A（#74）、5C（#13）| **批次 5 的 5A/5C 不可與批次 1 同時開跑**，等 1C 收工 |
+| `apps/client/src/ui/WorldAnchorLayer.tsx` | **1B** | 7C（F-06 XSS）| 批次 7 的 7C 等批次 1 收工 |
+| `apps/client/src/ui/panels/MerchantShop.tsx` | **1C-2** | 2B-2（`useItem` 派送）| **2B-2 排到批次 1 之後**（正當的跨批消費：它消費 1C-2 修好的 undo 讀取路徑）|
+| `apps/game-server/src/rooms/MatchRoom.ts` | **1A-2** | 7B（F-01/F-04 mailbox）| 批次 7 的 7B 等批次 1 收工 |
+| `nginx/nginx.conf` | **4-4** | 7C（CSP）| 批次 7 的 7C 等批次 4 的 4-4 收工 |
+
+**真正互斥、可以完全同時開跑的：批次 1 / 批次 4 / 批次 2 / 批次 6 / 支線 B（BGM）** —— 這五條互相不碰任何檔案。
+**批次 5 與批次 7 是「批次 1 的下游」**，不是它的平行組。
+**必須自己序列跑的：** 批次 2（`content/**` 是整檔寫入）與批次 6（`content/assets/models/**` 是同一片位元組空間）—— 這兩條**彼此獨立**，可以當兩條平行的序列鏈。
 
 ---
 
-## 附錄 · 已驗證完成（不得重排）
+# 批次 1 · 玩家立刻看得見的正確性
 
-以下每一項都以**程式碼證據**確認端到端出貨。帳本／狀態頁上任何相反的標記以本表為準。
+**這一批的一句話：把「玩家正在被一個看不見的東西射」修掉，順手把九個一行就能救的死碼點亮，並且把驗收用的活頁修對。**
 
-| 帳本 | 結論 | 證據 |
+為什麼是這一批：#89 的 sim 半**已經是正確的、已經在正式環境跑**，缺的 100% 是傳輸與呈現；設計文件稱它為「全遊戲 CP 值最高的修正」。其餘各項全是**已付款未取貨**的一行修，而且分佈在互斥的檔案領域，可以四個 agent 同時跑。批次 1 同時把 `gen_status.py` 修對 —— 後面每一批的簽收都要讀那張頁，晚做等於每批各自欺騙自己一次。
+
+> **批內唯一的硬順序：`1A-1`（鑄出 `ENTITY_KIND.GUARDIAN`）→ `1B-2` 的守護者半 / `1B-5`；`1A-8`（產出 fail-safe 欄位）→ `1C-6`（顯示徽章）。**
+> 其他所有項目彼此無相依，四條 lane 可以同一天全部發出去。
+
+## Lane 1A · 守護者上線（#89 + #105，同一條 entity-view 縫）
+
+**獨佔路徑**
+`packages/shared/src/protocol/schema.ts` · `packages/shared/src/content/schema/config.ts`（守護者預設值就在這裡：`:331 DEFAULT_GUARDIAN_TOWER_CONFIG`、`:339 volleyWindupSec 0.8`、`:341 volleyRadius 3.0`）·
+`apps/game-server/src/net/snapshot.ts` · `apps/game-server/src/rooms/MatchRoom.ts` · `apps/game-server/src/curation/whitelist.ts`（1A-8 的 fail-safe 來源）·
+`apps/client/src/render/EntityViewRegistry.ts` · `apps/client/src/render/overheadAnchors.ts` ·
+`packages/shared/src/sim/systems/GuardianSystem.ts`（**等 cast lane 交還 `packages/shared/src/sim`**）·
+`content/arenas/*.json` · `content/models/prop.guardian*.json` · `content/config/arena-rules.json`（**等批次 0 交還 `content/**`**）
+
+> ⚠ **前一稿的 lane 邊界有一個實查出來的破洞，已訂正。** 它宣稱「守護者的血條只要改純函式 `overheadAnchors.ts`，就不必碰 Lane 1B 獨佔的檔案」。
+> 逐行讀過 `GameApp.ts:1602-1640` 之後，那句話不成立：血條迴圈裡有三個以 `isFlower`（`es.kind === KIND_FLOWER`）為鍵的分支 ——
+> `:1612` 名字、`:1613` **`teamId: isFlower ? -1 : (this.teamBySeat.get(es.seatId) ?? 0)`**、`:1630` championId。
+> 守護者的 `seatId` 是 **-1**，`teamBySeat.get(-1)` 回 `undefined` → `?? 0` → **一隻藍隊守護者**。
+> `overheadAnchors.anchorColorFor()` 只決定顏色，決定不了隊伍歸屬。
+> **→ 守護者在 `GameApp.ts` 的消費點全部歸 Lane 1B（新增 1B-5），批內順序 `1A-1 → 1B-5`。**
+> 這不是把工作搬家，是把一個**會讓 1A 落地當天就產生新視覺錯誤**的相依寫進計畫裡。
+
+| # | 是什麼（使用者原話）| 為什麼在這批 | 驗收 | 規模 |
+|---|---|---|---|---|
+| **1A-1** | 「每個對決區中央一座中立守護塔：補刀給獎勵、會 AoE 懲罰、讓攻城型英雄有角色」 —— 的**傳輸半** | 沒有 `ENTITY_KIND.GUARDIAN` 就沒有地方掛 view、掛血條、掛選取、掛 #105 的 model key。它是本 lane 其他每一項的前置 | `ENTITY_KIND.GUARDIAN = 4` 存在；`snapshot.ts` 有 `world.structure` 分支；**實跑** `MatchController` + `projectSnapshot()`，兩座守護者編碼成 `kind=4`、`key="prop.guardian.*"`、`hp=1450/1450`，**不再是 `kind=0 seatId=-1 key=""`** | S |
+| **1A-2** | 「AoE 齊射要有預告」 | `MatchRoom.ts:293+` 是一條**手寫的 ~30 條 `ev.type ===` if-chain**，8 個 `guardian*` 事件與 3 個 `fireRing*` 事件都不在裡面 → 全部死在 server process。這是所有 telegraph 階段共用的唯一咽喉，**不能當平行 lane** | `guardianSpawn/Wake/Sleep/Mark/Impact/HeirPulse/Slain` 全部進白名單；client 端接到並印出 log；`grep -rni guardian apps/client/src` 從 2 句過期註解變成真實訂閱者 | S |
+| **1A-3** | 「玩家要看得到那座塔」 | `EntityViewRegistry.ts:431` 現在替它蓋 `ChampionView` + `modelDocFor("")→null` = 一具沒上色的程序化人形。這是**現在螢幕上最糟的東西**。⚠ **同一支檔開著的時候順手裁決 `mdl-150d`**：附錄說 `contentDb → EntityViewRegistry.ts:427` 的 `modelOverrideFor` 已接線、`docs/todo/models.md:71` 說 composition-root 那步還沒做 —— 兩份文件矛盾，實跑一次 boot 看 `modelOverrideFor` 回不回東西即可結案 | 開一場，對決區中央站的是 `guardian_*.glb`，不是人形；`prop.guardian` 之外的 model key 由 snapshot 帶下來；`modelOverrideFor` 的裁決寫回 `docs/todo/models.md` | M |
+| **1A-4** | 血條的**純函式半** | `overheadAnchors.ts`（`hasOverheadBar` / `anchorColorFor` / `anchorHeightFor` 全以 `KIND_*` 為鍵）。**⚠ 這只是一半** —— 呼叫端 `GameApp.ts:1602-1640` 的 `isFlower` 三分支決定名字／隊伍／championId，那支檔是 Lane 1B 獨佔，**歸 1B-5，批內順序 1A-1 → 1A-4 → 1B-5** | `KIND_GUARDIAN` 有中立色血條、高度合理；`overheadAnchors.test.ts` 新增守護者案例 | S |
+| **1A-5** | 「一個機制，五張臉：樹人 / 石頭人 / 巨獸人」（#105）| 美術已在硬碟上（4 個 glb），但 `GUARDIAN_MODEL_KEY` 是硬寫的常數、arena 文件沒有欄位可填 —— **在 1A-1 的 model key 上線前，#105 沒有地方放它的答案** | 5 份 arena 文件各帶 `guardian` 欄位；跑三張不同地圖，中央的塔是三種不同模型；`prop.guardian.beast/stone/treant` 三份 model 文件出貨 | M |
+| **1A-6** | 「最慢的英雄也要走得出去」 | 齊射 windup 0.8 s 在幾何上太短：`GuardianSystem.ts:352` 傳的是**未經 `abilityRange 0.6` 縮放的原始 `volleyRadius`**，d = 3.6u 在 `v_ref` 5.6 需要 1.09 s、最慢的 4.0 u/s 需要 1.35 s。**修 1A-1/1A-3 讓它變得看得見的同一刻，就要讓它變得躲得掉**，否則只是把不公平變成看得見的不公平 | `volleyWindupSec 0.8 → 1.25`、`volleyRadius 3.0 → 2.5`（傷害不動）；用 113 個英雄的移動速度跑一支表格測試，**全部逃得出去** | S |
+| **1A-7** | 「鎮守之力」heir pulse | 第三個無聲 AoE，而且**掛在玩家身上**（`heirPulsePct 0.25 × volleyDamage`、半徑 2.5、每 4 s 共 25 s）。事件不廣播、沒有光環、沒有標記 —— 隊友完全不知道該不該靠近 | 持有者身上有可見光環；每次 pulse 有地面標記；事件在 1A-2 的白名單裡 | S |
+| **1A-8** | 「畫面顯示的就是實際發生的」的前置（#48 傳輸半）| platform 連不上時 curation → allow-all（`curation/whitelist.ts:137-148` 已經 log 得很大聲，但**只 log 給 server 的 stdout**）、combat-env → bundled 預設。**在 fail-safe 狀態下簽收任何東西都是自欺** → 必須在批次 1 就有，不能等批次 8。它的檔案（schema / snapshot / MatchRoom / whitelist.ts）就是本 lane 已經開著的那幾個。**`MatchState` 已經有 `combatEnvJson` 這個先例欄位（`schema.ts:311`），照著加即可** | `MatchState` 帶 `curationSource` 與 `combatEnvSource`（`live` / `failsafe`）；拔掉 platform 開一場，兩個欄位都回 `failsafe` | S |
+
+## Lane 1B · client entity-sync 縫（五個小修，全在同三支檔案裡）
+
+**獨佔路徑** `apps/client/src/GameApp.ts` · `apps/client/src/vfx/VfxSystem.ts` · `apps/client/src/ui/WorldAnchorLayer.tsx`
+> ⏳ **開工條件：等批次 0 的 cast lane 交還 `apps/client/src/vfx`。** 這兩支檔案現在是 dirty 的。
+
+| # | 是什麼 | 為什麼在這批 | 驗收 | 規模 |
+|---|---|---|---|---|
+| **1B-1** | 「暈眩／定身／緩速要看得見」 | 全 repo 最乾淨的死碼：`VfxSystem.ts:407` 的註解**把缺的那一行原字寫出來**，`StatusAuraFx` 實作與測試都在，生產呼叫者 0。一行 | `GameApp` 的逐幀 entity loop 呼叫 `vfx.statusFx.set(...)`；被暈的角色腳下有光環；**新增一支斷言呼叫點存在的測試**（不是斷言 `StatusAuraFx` 內部行為 —— 那已經綠了三個月而功能不存在） | S |
+| **1B-2** | 「server 端花可以打，client 選不到」+ 守護者同病 | `GameApp.ts:1309`（連同 `:1076` / `:1113` / `:1500`）的 `if (es.kind !== 0 …) return;` 把花與守護者從**每一張**選取清單濾掉：點選、`pickEnemyAt`、觸控最近敵人、攻擊移動。花的半現在就能做，**守護者半要等 1A-1 的 `ENTITY_KIND.GUARDIAN`（同批，寫明順序）** —— 同一支函式，不做在一起就要開兩次檔 | 點得到花；1A-1 落地後點得到守護者；攻擊移動會把守護者當合法目標 | S |
+| **1B-3** | 「地面圈畫的大小要等於實際打到的大小」 | cast agent 已經修好 `fillMs`（時間對了），**半徑還是錯的**：傳未縮放的 `def.radius`，sim 端乘 `abilityRange 0.6` → `godie-h01u.e` 畫 9.72 打 5.83。**一個畫錯大小的預告比沒有預告更糟**，而且它現在就站在新的光柱旁邊自打嘴巴 | `VfxSystem.ts` 的 `Telegraph` 用 server 權威的 castR（或本地乘上同一個倍率）；挑三個技能量地面圈直徑 == 實際命中直徑 | S |
+| **1B-4** | 「四個對決區的施法聲不該疊在一起」 | `GameApp.ts:803-804` 呼叫 `playSfx` **沒帶 `{volume, pan}`** → 四區的施法聲以相同音量堆在中央。這是 cast-telegraph stage 0-C，且與 1B-1 是同一個 loop | 施法聲依對決區距離做 pan/衰減；隔壁區的施法明顯比自己區小聲 | S |
+| **1B-5** | 守護者在 `GameApp.ts` 的**三個消費點** + `teamId ?? 0` 正規化 | **這一項是 1A 的落地條件，不是加分題。** 實查：`:1033` `e.teamId = this.teamBySeat.get(es.seatId) ?? 0`、`:1613` `teamId: isFlower ? -1 : (… ?? 0)`、`:1612` 名字、`:1630` championId 全部以 `isFlower` 為鍵。守護者 `seatId = -1` → `teamBySeat.get(-1)` = `undefined` → `?? 0` → **一隻藍隊守護者**，而且會被 #85 死亡去飽和當成「我方」保留顏色。前一稿的附錄寫「全檔已無 `?? 0`」是錯的（它只查了 `:1298`/`:1300`）。**同一次編輯把「未知席位 = -1」訂為全檔不變式** | 全檔 `grep 'teamId.*?? 0'` = 0；守護者的血條是中立色、名字不是 `#13`、不進 #85 的我方名單；新增一支「未知 seatId 不得映射到任何真實隊伍」的測試 | S |
+
+**Lane 1B 批內順序：** `1B-1` / `1B-3` / `1B-4` 之間無相依，可任意穿插；**`1B-2` 的守護者半與 `1B-5` 都要等 `1A-1` 的 `ENTITY_KIND.GUARDIAN` 落地**（`1B-2` 的花半可以先做）。
+
+## Lane 1C · 玩家關得掉、按得到、看得到的 UI（純 React，完全互斥）
+
+**獨佔路徑** `apps/client/src/ui/SettingsScreen.tsx` · `apps/client/src/ui/panels/MerchantShop.tsx` ·
+`apps/client/src/ui/platform/ChampionMarquee.tsx` · `apps/client/src/ui/platform/CreditsRoute.tsx` · `apps/client/src/ui/platform/AuthScreen.tsx` ·
+**`apps/client/src/net/RoomStore.ts`**（前一稿漏了：`1C-2` 的 `undoDepth` 與 `1C-6` 的 fail-safe 徽章都要先在這裡解碼進 `hudStore`，
+`RoomStore.ts` 是**逐欄位手寫映射**的，`combatEnvJson` 就是先例；它不屬於 1A/1B/1D 任何一條 lane，不指定就是沒有人做）
+
+| # | 是什麼 | 為什麼在這批 | 驗收 | 規模 |
+|---|---|---|---|---|
+| **1C-1** | 「玩家要關得掉血」 | 整套 gore 管線（store／夾限／持久化／即時傳播／`style === 'off'` 的真開關）都通過測試，**唯獨少一個控制項**。`grep -c gore SettingsScreen.tsx` = 0 | 設定畫面有 style + intensity（可到 0）；切 off 後開一場，畫面 0 個血特效 | S |
+| **1C-2** | 「賣錯東西要救得回來」的權威半（#121 殘留）| 整個 undo 迴圈是真的（按鈕 → 指令 → `undoShopAction`），但 UI 用 last-event 啟發式猜「還能不能 undo」，而**權威 `undoDepth` 每 tick 廣播、0 個讀者**。多步 undo 或封包亂序就會誤報 | `MerchantShop.tsx` 讀 `undoDepth > 0`；連按三次賣出後連按三次復原，按鈕在第四次正確變灰 | S |
+| **1C-3** | 「登入頁的英雄跑馬燈」（#18）| **現在是永久空白**，而且是 #18 與 #170 相乘的結果 —— 不是跑馬燈的 bug，是它把契約寫在註解裡而不是寫在相依陣列裡 | 訂閱 `useContentReady()` 並放進 deps；**開新分頁進登入頁，跑馬燈在內容載完後自己出現**（不是靠打字觸發 re-render） | S |
+| **1C-4** | 「常駐 chrome 不可以被蓋住」（#14／#107 契約）| `CreditsRoute.tsx:72` 的 `zIndex 2147483600` > `AudioToggle` 的 `Z_TOP 2147483000`，蓋掉常駐音訊叢集。`hudLayout.ts:79-82` 白紙黑字寫著只有**阻擋式 modal** 才可以高過 `Z_TOP` | 開版權頁，音訊叢集仍可點；或改成 reserve 它的框 | S |
+| **1C-5** | 兩個畫面在 chrome-reserve 契約之外 | `AuthScreen.tsx` 與 `SettingsScreen.tsx` 對 `topRightReserve`/`chromeReserve` **0 次引用**（`LobbyScreen`／`ChampSelectPanel`／`CodexPage`／`AssetConsolePage` 都有）。1C-1 與 1C-3 已經要開這兩支檔 | 兩個畫面都消費契約；`chromeReserve.test.ts` 增加對應斷言 | S |
+| **1C-6** | #48 的顯示半 | 消費 **1A-8** 產出的 `curationSource` / `combatEnvSource`（批內相依，寫明順序）。**沒有這個徽章，批次 8 的 16 項實機簽收全部不可信** | fail-safe 時 HUD／設定頁出現明確標示；platform 正常時不出現 | S |
+
+## Lane 1D · 活頁報表（衛生工作，但它解鎖每一批的簽收）
+
+**獨佔路徑** `tools/status/**` · `docs/requirements-status.md` · `apps/client/public/frame-data.html`
+> ⚠ 前一稿寫的 `apps/client/src/AppRoot.tsx` 與 `apps/client/src/ui/dev/**` **兩條路徑都不存在**（AppRoot 實際在 `apps/client/src/ui/platform/AppRoot.tsx`，而那是 Lane 1C／批次 5 的檔案領域）。已改。
+
+| # | 是什麼 | 為什麼在這批 | 驗收 | 規模 |
+|---|---|---|---|---|
+| **1D-1** | 「狀態頁要是動態的」 | `gen_status.py` 的 TASKS 是**手抄的** 131 筆，#129–#142、#144–#172 共 44 個 id 結構性缺席 → 狀態頁的每一個百分比都是**對錯誤分母算的**，而且 #85/#93 重複列、狀態互相矛盾。**後面七批的收工回寫全部要寫進這張頁**，晚修等於每批各騙一次 | TASKS **改成從帳本產生**（沿用 `e20081b` README 產生器的樣板），不再手抄；頁面顯示 173/173；重複列消失 | M |
+| **1D-2** | castStrikeFraction 驗收頁的**目視確認**（規模已從 M 降到 S）| **⚠ 前一稿把這件事排錯了，因為證據是錯的。** 它寫「`frameDataAudition.ts` 0 個 import → 要掛成 `/frame-data` 路由」。實查：`apps/client/public/frame-data.html:117` 就是呼叫者（`await import("/src/render/frameDataAudition.ts")` —— **字串裡的動態 import**），兩支檔都是 cast-pillar agent 這一波的 untracked 產出。**這是飛行中 agent 已經做完的工作。** 而且模組檔頭 `:27-29` 明講它刻意不進 bundle；**掛成 AppRoot 路由會把 `NullEngine` + glb 解析拉進正式包，是把對的設計改壞**。（⚠ 117 份 clipMap 剛好六個鍵 idle/run/attack/cast/hurt/death，不可以發明新 clip 名）| 起 dev server 開 `/frame-data.html`，確認它真的列出 117 個模型、strike 標記畫得出來、貼得出 `castStrike.ts` 的那一行 —— **只要能看，批次 3 的 CT-0D 就有驗收方法**。若它跑不起來才升級成修繕任務 | S |
+
+**批次 1 的完成長相：** 開一場，場中央站著一隻依地圖不同的守護者 —— **它是中立色，不是藍隊的**；它要出手前地上有 1.25 s 的預告圈、**圈的大小等於真的會打到的大小**，跑得掉；你點得到它，補刀拿得到獎勵；被暈的角色腳下有光環；隔壁對決區的施法聲比自己區小聲；設定裡關得掉血；商店的復原按鈕不再亂猜；版權頁蓋不住音訊叢集；登入頁的跑馬燈在轉；平台掛掉時螢幕會告訴你「你現在看到的數值是 fail-safe」。狀態頁的分母是 173 不是 131。
+
+---
+
+### 🔄 2026-07-23 晚間 · 批次 1 逐項複驗（每一條都是實跑 grep/probe，不是讀計畫）
+
+| 項目 | 複驗結果 |
+|---|---|
+| **1C-3 登入跑馬燈** | ✅ **已完成並提交**（`93bacb5`）。`ChampionMarquee.tsx` 現在訂閱 content-ready，實機 66 個 `<img>` / 33 張頭像，**這個功能史上第一次真的渲染出來**。 |
+| 1A-1 `ENTITY_KIND.GUARDIAN` | ❌ 仍不存在於 `protocol/schema.ts`。 |
+| 1A-2 守護者事件廣播 | ❌ `grep -c guardian apps/game-server/src/rooms/MatchRoom.ts` = **0**。8 個事件仍死在 server process。 |
+| 1B-1 `statusFx.set` 生產呼叫者 | ❌ 唯一命中是 `VfxSystem.ts:407` **那行說明該怎麼呼叫的註解本身**。仍是死碼。 |
+| 1C-1 血特效開關 | ❌ `grep -c gore SettingsScreen.tsx` = **0**。管線在 `settings/types.ts` 與 `VfxSystem.ts`，就是沒有控制項。 |
+| 1C-2 `undoDepth` 讀者 | ❌ `MerchantShop.tsx` = **0**。權威欄位仍每 tick 廣播給 0 個讀者。 |
+| 1C-4 版權頁 z-index | ❌ 仍是 `zIndex: 2147483600` > `Z_TOP 2147483000`。 |
+| 1D-1 `gen_status.py` TASKS | ❌ 仍是**手抄 131 筆**（需 173）。 |
+
+**結論：批次 1 除了跑馬燈之外原封不動有效，不需要重排。** 批次 4（載入）已大幅落地，見 `93bacb5`。
+
+
+# 批次 2 · 內容單一寫者波（序列鏈，**不可以內部平行**）
+
+**為什麼整批只能一個寫者：** 三件事互相加乘 ——
+(1) JSON 是**整檔寫入**，「我只碰 vfxKey 這個欄位」在檔案系統層級不成立；
+(2) **鏡像規則**：每個 QWER 改動要同時落在 `content/abilities/<id>.json` 與 `content/champions/<cid>.json`，否則 codex 與後台會與對戰不一致（`contentValidate.ts:114-135` 已報 194 對漂移）；
+(3) `contentValidate.ts:137-170` 是一道 **`process.exit(1)` 的閘門** —— 每個可施放技能都必須有 `castTimeSec`、每個純被動都不可以有。**匯入器重跑若不保留 `castTimeSec`，會一次讓 545 個技能建置失敗。**
+
+> ⚠ 開工條件：批次 0 的 cast lane 交還 `content/**`，且 `registry.ts` 已 commit。
+
+**Lane 2A（唯一寫者，序列）** —— 獨佔 `content/abilities/**` · `content/champions/**` · `content/items/**` · `tools/w3x-import/**` · `scripts/content*`
+
+| 序 | 內容 | 備註 |
 |---|---|---|
-| **#100** 回合結算後戰鬥要真的停 | **完成**（只欠實機看一眼） | `MatchController.ts:1199-1203` 在 `checkCombatEnd`(760-781) 回報全部配對結束的同一 tick 呼叫 `concludeCombat`(841-857)，設 `world.combatActive=false` 並 `freezeControls()`（清 nav order／moveTarget／attackTarget／override、in-flight cast 與 swing、歸零動量）；`:1112` 之後每一幀都 `freezeCombatIntent`，只留商店／準備／offer；`FireRingSystem.ts:28`、`matchStats.ts:282` 同旗標。**三張活頁仍把它列為 #85 的阻塞者 —— 那是錯的** |
-| **#63** 場景範圍 SFX 預載 | **完成（SFX 半）** | `AudioSystem.ts:257-266` boot 不抓任何 SFX；`unlock()` 只暖 SFX_CORE + 當前場景(403-405)；`playBgm/setScene` 暖進入的場景(467-471)；`sfxManifest.ts` 持有 per-scene 表；`AudioDirector.tsx:109 → useAudio.ts:44 → setScene` 全線活的。**未做：LOOKAHEAD 預熱、前後對照報告 → 併入 6D** |
-| **#107** 安全區契約 | **完成**（只欠截圖驗證） | `hudLayout.ts:565-620` 的 `HudPanelSpec` 詞彙（edge/size/covers/phases/z/providesExit/managed）疊在 #42 slot 登記表上；`useHudPanels.ts` 被 PerfOverlay／PauseMenu／SettingsCorner／CheatConsole／TeamLivesBar／ReviveBanner／EnemyTeamPanel／HudRoot 消費；`hudLayout.test.ts:430,499,518` 三條守門（含「沒有任何 HUD 檔案硬編角落位置」）。**回報症狀 FPS pill 蓋住商店已由 `useHudSlotHidden` 讓位** |
-| **#110** 三選一抽牌卡 | **完成** | `AugmentDraftPanel.tsx` 三件齊備（`SfxButton kind='card'` cyber-glow + tier 染色 `--ggd-card-glow`／`GlyphTile` fallback 保證沒有空洞卡／`DRAFT_CONFIRM_SFX`），掛在 `HudRoot.tsx:169`；抽牌真的會發生（`arena-rules.json` r1-6 + overflow 的 #157 修正、`MatchController.ts:484-495` 建 offer） |
-| **#121** 商店賣出復原 | **完成** | `shop.ts:121,140` push `ShopTxn`；`undoShopAction`(167-203) 還原道具/槽位並 `gold -= txn.goldDelta`（精確反向）、pop 掉避免二次復原；`commitShopSession`(211-213) 在 `MatchController.ts:618` 進戰鬥時清空堆疊（關掉跨回合套利）；`CommandSystem.ts:72`＋`validateInput.ts:134`；`snapshot.ts:98-100` 投影 `undoDepth`；`MerchantShop.tsx:103-117,398` 渲染「↩ 復原上一步」。**殘留：client 沒讀權威欄位 → 1D-2** |
-| **#128** 可施放性掃描（技能半） | **完成** | `castabilitySweep.test.ts` 用真的 content tree（`FsContentSource + registerAll`）在真 `SimWorld` 逐槽施放；`docs/_castability-128.md` 記 288 格（48×6）、**281 PASS / 7 永久被動 / 0 FAIL**，觸發通道直方圖（damage 180、buff 70、projectile 14、heal 8、dash 5、shield 2、status 2）證明不是橡皮圖章。**`gen_status.py:128` 仍標 pending → 1E-2 修** |
-| **#131** 右上角卡住的白色爆點 | **完成** | 根因寫在 `docs/todo/ability-vfx.md`（EX `layeredPop` 接受了 truthy 的 `{x:NaN}` caster 位置，而 `play()` 已經擋掉）；`VfxSystem.ts:218` 的 `isFinitePos` 現在守住每一條生成路徑（503,505,619,635-636,647,665,733,826），回歸測試 `topRightBurst.test.ts` |
-| **#142** 113 句性別正確日文名言 VO | **完成** | `quotes.json` 113 筆，coverage {ids:113, real:82, original:31}，**真的分性別**：Otoya (Enhanced) 72 / Kyoko 41，對上 gender {male 72, female 28, neutral 13}，113 支 mp3 在旁；三個播放時機全接：選角確認第三段（`nameVoice.ts:386`、`ProfileBlock.tsx:203-227`）、結算本地勝利（`MatchEndPanel.tsx:384-387` via `settlementModel.ts:270`）、回合結束第一名（`RoundEndVoice.tsx` ← `HudRoot.tsx:133` via `settlementModel.ts:437`）。**舊 B3-19「男聲靜默退回 Kyoko」的擔憂與 manifest 不符** |
-| **#145** 每回合隨機場地 | **完成** | `arenaSelect.ts:30-60` 固定順序輪替池；`MatchRoom.ts:183` 注入；`MatchController.ts:582-587` `selectRoundArena` 由 `enterCombat`(615) 呼叫，**在任何人被放置之前**用 matchSeed 決定性選場；`snapshot.ts:32` 廣播；client `GameApp.ts:733-734` → `applyArena`(684-719) 重建並去重。`arenaRotation.test.ts` 覆蓋不重複性質 |
-| **#147** 戰鬥打擊感 VFX | **完成（五項全上）** | blob 影子 + 速度閘門走路揚塵：`VfxSystem.ts:223`、`ShadowLayer` 建於 384／同步於 917、`emitWalkDust` 932-956（步幅／間隔／傳送閘門）；施法地面印記 `GroundDecalPool` 369/385，每次 `abilityCast` 於 637 蓋章；命中火花 `HitSpark` 651-652；噴血 `BloodFx` 591。**殘留：沒有真 shadow-map pass → 3D** |
-| **#148** 商人輪播提示 | **完成** | `merchantTips.ts` 13 則分類提示（rule／tip／weapon-rec，例：「兩場 3v3 同時開打」「買錯了？點『↩ 復原上一步』」）；`MerchantTipBox.tsx:38-48` 5000ms 輪替 + 不重複 `nextTipIndex`；掛在 `IntermissionStage.tsx:94` ← `HudRoot.tsx:162`（phase === 'intermission'） |
-| **#146** 商店 3D 構圖 | **部分完成（版面已好）** | `render/intermission/{IntermissionScene,layout}.ts` 有實測過的商人／推車／攤位比例(37-46)，並明白實作了要求的取景（209-216 英雄四分之三背向、353-354 直接引用「旅行商人…3D model 在中央，玩家 model 在右方」），掛在 `IntermissionStage.tsx` ← `HudRoot.tsx:162`。**缺的只有頭像 PNG → 4B** |
-| **#77 / #150** 每角色尺寸例外 | **完成** | `GameApp.ts:374-377,606-617` 的 `modelOverrideFor` 經 `contentDb` 讀 `content/models/_standin-overrides.json`，於 `EntityViewRegistry.ts:427` 消費。舊 B1-08 可關 |
-| **#78** 「大絕造成 1 點傷害」stub | **技能半完成** | `grep -rl '"perRank": [1, 1, 1]' content/abilities` → 0；`grep -rl 0.003 content/abilities` → 0（由 `0c47fce` 修掉）。**道具 1:1 從未被 commit 提及 → 重新界定為 2A 的一部分** |
-| **#89** sim 半 + 傷害減免 | **完成** | `combat/damage.ts:9` import `StructureComp`；`:442-466` `mitigateStructure()` 在 `StatsComp` 路徑之前分岔（armor／magicResist／maxHitPctMaxHp） |
-| **#136** 投射物射程縮放 | **完成** | `effectRunner.ts:190` `remainingRange: resolveAbilityRange(world, def.maxRange)` |
-| **#133** EX / counter-hit | **完成（機制半）** | `damage.ts:176-182` `originIsEX` 經 `AbilitiesComp.exSlot` + EX 後綴解析；`:200-204` `isCounterHit` 讀受害者 windup/cast；於 `:279,:355` 消費。**內容半 0 筆 → 3B** |
-| 方向性運鏡 kick / EX punch-in | **完成** | `GameApp.ts:1181` `cameraRig.addShake(k.amp, k.durationMs, {dir, style, kick})`、`:1185` `exPunchIn(EX_PUNCH_DEPTH, EX_PUNCH_MS)` |
-| `content:validate` 紅燈 | **已綠** | 實跑：`content OK: 1441 docs, contentVersion cv_31aca38e2fb6`。舊 B1-03 不要佔批次名額 |
-| **#124** 下課鐘 BGM | **關帳** | 方向已被使用者否決並整軌改寫成 city-pop，無工作殘留 |
-| **#137** Samantha James 變奏 | **完成（待上架複驗）** | `bgmVariants.ts` 存在且 menu 為 ROTATION_LOCKED；12 支 `<scene>.samantha.mp3` 需在 2F 順手確認在磁碟上並出現在 audition 頁（共 24） |
-| **#118 / #162** | **完成** | `apps/platform/internal/wallet/{wallet,meta,handlers}.go` + client `walletMeta.ts` / `ChampMetaControls.tsx` |
-| **#68** 動畫方向 | **⚠️ 降級為「單一軸向無缺陷」，不是全項完成** | mdl-68-01 掃描只證明一件事：43 個 imported 英雄全部在 **Z 軸側向分裂**。**它沒有涵蓋使用者點名的三個 per-clip 案例**（血輪眼左助飛行、皮卡丘 idle 翻轉、桔梗 walk），也沒有產出他要的「每角色 × 每片段 pass/fail」表 —— 那正是批次 6A 還排著 #68 的原因。前一版把它寫進「已驗證完成」與批次 6 同時列工，自相矛盾；**以此列為準：未完成** |
-| **#83 / #108** | **#83 資料已修；#108 未逐項複驗** | #83：四個 modifier 重複的道具已在內容中去重，只欠一支回歸守門 → 2A ⑥。**#108（傳說池策展 + 說明↔modifier 不一致）沒有等價證據** —— 抽驗的 `godie-i02p`（網友手環）說明與 modifier 一致且 tier 1，但 22 份傳說候選沒有逐項比對過。帳本標 in_progress 是對的 → 逐項複驗排在 2A ⑥ |
-| **#143** 回合勝利者 3D model + VO | **完成** | 已於 `2031f7a` 落地：選角器挑出真正的每回合 MVP 並以「仍存活」為條件。**前一版全檔 0 次提及 #143** —— 補進此表以免下一輪規劃把它當新工作重排 |
-| **#172 / #173** | **完成** | #172 自助改密碼（platform endpoint + admin UI）；#173 bye-round 每回合 MVP 殘留（`TeamState.roundOutcome` + 三段式選角器）。**#173 的呈現面殘留（永遠不慶祝「輸掉對決但生命領先」的隊伍）需使用者實機拍板 → 5A** |
-| **#144** 移動速度 | **完成** | `extract_unit_stats.py` 比例映射（WC3 300 == 5.8，clamp [4.0,11.0]），實際 18 級距 4.0 / 5.9 / 10.1。**`baseAttackTime` 仍未填 → 2A** |
-| **#72** icon 現況 | **部分（活頁的「0 張」是過期的）** | `content/assets/icons`：champions 109、items 157、augments 3、abilities 13，共 282 檔 |
+| 2A-1 | **#113 正規 id 裁決**（決策 D2）| 整條鏈的根：決定圖示與 `baseAttackTime` 寫進哪一份文件。`godie-n01g`（第二個依文潔琳）在 ROSTER 之外，兩份都還綁火 |
+| 2A-2 | **#56 匯入器：停止白名單、加 raw mods passthrough** + **`castTimeSec` preserve 語義** + **`spriteSheet` 產出** | ~150/180 個 w3u 欄位被丟掉，包含 `acas`/`ucpt`/`ucbs` —— **使用者自己手寫的施法時間**（w3a 130 個技能帶 `acas`、128 個非零）。126 個被使用者定過時間的技能現在是瞬發（龜派氣功 1.0、龍破斬 1.2、世界終結 1.6、千之雷 1.5）。⚠ 三個離群值需人工判斷、不可批次匯入：`A0ZG 98-002 = 720.0`、`A0AQ 31-02 rank2 = 5.0`、`A10U 84-002 = 4.0`。**`spriteSheet` 也掛在這裡**：1441 份文件 0 份帶它（每顆粒子都是靜態圖、WC3 的 flipbook 從未移植），來源是 mdx→vfx 匯入器而不是手寫內容 —— 前一稿只在訂正表提過它，沒有給它任何批次歸屬 |
+| 2A-3 | **#144 `baseAttackTime` 回填**（+ 決策 D3 的 `uhpr`/`umpr`）| 113 個英雄全部還在吃 1.0 s 預設。移動速度已落地（18 種值） |
+| 2A-4 | **#79 非名冊重綁 + #98 空 GLB 退役** | 名冊半已被 Lane 0 修好（實測 192/192 QWER 槽離開火焰）。**剩下非名冊 231 個 QWER 槽 + 29 個非 QWER 仍是火**。由 **2C 的產生器**產出，不是 285 次手改。#98 的 11 個零幾何 glb（6 個 288 B）確認**沒有任何技能引用**，是孤兒資產債 |
+| 2A-5 | **#50 per-invocation 美術參數** | 與 2A-2 **共用同一次 JASS/w3u 重讀** —— 不排明就會變成沒有輸入的任務 |
+| 2A-6 | **`hitFeel` 內容授權** | 0 份 → 兌現「每個技能手感不同」 |
+| 2A-7 | **`descriptionRoles` 授權 + #114↔#125 地雷拆除** | **必須同一個 commit。** 先讓 `rescaleAbilityProse` 對角色標記免疫，再寫內容 |
+| 2A-8 | **`canCrit` 政策 + 內容** | 目前 0 個技能 opt-in，暴擊裝備只影響普攻 |
+| 2A-9 | **#78 殘留：87 個誤匯入的被動** + **6 個自鎖技能** | 87 個 w3x tooltip 寫 `[被動]`/`[靈氣]` 卻被匯成可施放 self+applyBuff → 改成 `passive` 會**自動豁免** `castTimeSec` 閘門並移除 87 個假的「0.6s 詠唱」標籤。6 個技能冷卻 ×0.25 後**短於自己的前搖**（`godie-u011.r` 實跑 284/300 tick 被定住 = 94.7%）→ 決策：冷卻 ≥ 前搖 / `rootWhileCasting:false` / 把 `[開關]` 改成被動（**最忠於 w3x**）|
+| 2A-10 | **#83 重複修飾詞守門 + #108 傳說池逐項比對** | #83 內容已修但**沒有回歸守門**；#108 只抽驗過 `godie-i02p`，22 個傳說候選從未逐行比對 |
+| 2A-11 | **#78 道具半** | 全專案最大保真缺口，**沒有任何 commit 碰過**。技能半已由 `0c47fce` 驗乾淨 |
+
+**Lane 2B（sim / 測試，與內容互斥）** —— 獨佔 `packages/shared/src/sim/systems/CommandSystem.ts` · `packages/shared/src/sim/castabilitySweep.test.ts`
+
+> ⚠ **`apps/client/src/ui/panels/MerchantShop.tsx` 不屬於本 lane。** 那是 Lane 1C（1C-2）獨佔的檔案。
+> 前一稿寫「（1C 交還後）」，等於讓兩個**可以同時開跑**的批次共用一支檔 —— 違反本檔第 1 條規則。
+> **訂正：`2B-2` 是批次 1 的下游**（它消費 1C-2 修好的 `undoDepth` 讀取路徑），不與批次 1 同時進行。`2B-1`／`2B-3`／`2B-4` 不碰 client，照常平行。
+
+- **2B-1 `useItem` + `recall`**：實作或連三條輸入路徑一起刪。沒有它，**整個「主動效果道具」類的 w3x 內容不可能存在**，#128 的道具半也永遠測不了。
+- **2B-2** 商店／裝備欄的 `useItem` 派送。**⏳ 等批次 1 的 1C-2 收工**（同一支 `MerchantShop.tsx`）。
+- **2B-3** #128 道具矩陣（消費 2B-1）。
+- **2B-4** **`WINDOW` 改成從各技能自己的 `castTimeSec` 推導**，取代硬寫的 26 —— **必須在 cast 分級鋪開前**，否則 #128 矩陣變成雜訊。
+
+**Lane 2C（產生器，純程式）** —— 獨佔 `apps/client/src/render/vfx/**` · `scripts/vfx-gen*`
+
+- **2C-1 #123 收尾**：`curatedDocs()` / `rosterBindings()` 現在**除了自己的測試沒有任何 import**，模組與 94 份出貨文件可以靜默分歧。做成 CLI／npm 產生器 + 漂移守門測試，**讓它成為 `content/abilities` 的建置期唯一寫者** —— 這才是 2A-4 能用產生的方式而不是手改 285 份的原因，也是 #141 VFX 編輯器的調色盤前置。
+
+---
+
+# 批次 3 · 施法、預告與手感（cast-telegraph stage 2 → 3）
+
+接批次 0 的光柱／castStrike 與批次 1 的事件白名單、批次 2 的內容授權能力。
+
+- **Lane 3A · 幾何上線** — 獨佔 `packages/shared/src/protocol/schema.ts`、`apps/game-server/src/net/snapshot.ts`、`apps/game-server/src/rooms/MatchRoom.ts`
+  - **CT-2**：`castBegin` 現在的酬載只有 `{caster, slot, abilityId, ticks, castTimeSec}` → **受害者永遠學不到「會打到哪裡」**。頭頂施法條是對的但只回答「有人在施法」；#152 的虛線預覽是**施法者專屬**且在施放瞬間消失。補 point / radius / direction。
+  - **CT-2.5-B** 泛用 hazard 戳記（把 `GuardianSystem` 的 `sc.marks` + `impactTick` + `applyMark` 一般化成 `world.hazards` + `HazardSystem`）—— 守護者已經證明這個 pattern 是決定性的。設計文件列為三大高價值項之一。
+  - **CT-2.5-E 後搖（recovery）**：現在躲掉大絕**什麼都賺不到**，施法者也**什麼都不賠**。使用者選的是格鬥遊戲的 frame data 模型（打中取消後搖、揮空吃滿）。⚠ **必須配一個看得見的 `ENTITY_FLAG.RECOVERING`** —— 看不見的懲罰視窗等於不存在（這正好順手消費掉 `ENTITY_FLAG.CASTING` 這個沒人讀的欄位）。
+  - **CT-targeted**：211 個指向型技能**移動躲不掉**（`CastResolveSystem.ts:52-57` 只有 `ground` 會重查）。提案 `AbilityDef.resolveRecheck: "lock" | "range"`，重用 `BasicAttackSystem.ts:96-113` 已驗證的規則。
+- **Lane 3B · 呈現** — 獨佔 `apps/client/src/vfx/**`、`apps/client/src/render/anim/**`
+  - **CT-0D castStrikeFraction 對齊**（用批次 1 的 **1D-2** 審聽頁簽收，不是用單元測試）。
+  - **#147 陰影誠實化**：「陰影」畫質選項**不會切換任何 ShadowGenerator**，只是把方向光 0.9 ↔ 0.25（`Lighting.ts:1-7` 自己承認）。真的做一個 pass，或把標籤改誠實。
+  - 孤兒 SFX 安置或退役。
+- **Lane 3C · 火圈（#132，等決策 D4）** — 獨佔 `packages/shared/src/sim/systems/FireRingSystem.ts` + `content/config/arena-rules.json`
+  - 現況：**不分位置燒每個活人（沒有安全地面）**、繞過 `damageQueue` 所以沒有傷害事件／數字／紅閃／聲音、3 個事件不在白名單、唯一的 client 提示是**猜**在戰鬥第 210 秒，而滿血英雄在 194.9 秒就死了。⛔ 無論 D4 選哪一邊，都不可以改走 `damageQueue`。
+- **Lane 3D · CT-3 內容授權** —— **必須排在批次 2 之後**，因為它寫 `content/abilities` + `content/champions`（單一寫者面）。分級的 `castTimeSec`、`recoverySec`（B 0.30 / C 0.47 / D 0.60 / L 0.47）、`impactDelaySec`。⚠ 四類需要使用者**親手感覺過**才凍結：13 個位移技能現在**先定身 0.6 s 再位移**（全服只有 12/113 英雄有位移）、5 個護盾、12 個治療、184 個自我增益。
+
+---
+
+# 批次 4 · 載入與執行期抓取（與批次 1／2／6／支線 B 完全平行）
+
+接 `d0f643a` 的成果起跳，**不要重壓一次**。全部落在同兩支檔案，所以是一個 lane 一個 agent。
+
+**獨佔路徑** `apps/client/src/render/AssetManager.ts` · `apps/client/src/content/ContentDb.ts` · `apps/client/src/render/intermission/IntermissionScene.ts` · `apps/client/src/audio/*Warm*` · `nginx/nginx.conf`
+
+| # | 內容 | 實測 |
+|---|---|---|
+| 4-1 | **#63 模型／語音 per-scene warm set** | SFX 半已完成（boot 抓 0 支、warm `SFX_CORE` + 當前場景、換場景再 warm）。使用者的原話是「只載入戰鬥必要素材」→ 模型與語音**完全沒有 warm set**；另欠 champ-select 的 LOOKAHEAD 預熱（否則第一回合第一次命中仍冷抓）與一份 before/after 位元組＋延遲報告 |
+| 4-2 | **`loadVictoryTaunts()` 接線** | 0 個生產呼叫者 → 351 支 clip / 5.28 MB 在必須發聲的瞬間串接冷抓 |
+| 4-3 | **ContentDb 每場重抓 505 份文件** | `ContentDb.ts:99-115` → `fetchCollection('models')` 117 + `fetchCollection('vfx')` 388，**每個 entry 一個請求**，而 `bundle.json`（1,306,171 B）在 boot 已經抓過也 parse 過 |
+| 4-4 | **資產 URL 沒有 `?h=`** | nginx 因此送 `no-cache`（`nginx.conf:277,299`），每次重載重抓一遍。修完順手把那兩個 location 翻成 immutable（也解 `content-10`）|
+| 4-5 | **每個 glb GET 前先 await 一次 HEAD** | `AssetManager.ts:42`，每個模型多一次 round trip。改成在 GET 上處理 404 |
+| 4-6 | **champ-select hover 無 debounce** | 游標掃過名冊一次可下載 **24.9 MB** 模型 |
+| 4-7 | **codex 圖示 hash 掃描把每張圖完整下載來算 SHA-256** | ~282 張 / 16.9 MB。改成 server 端算或出貨 digest manifest |
+| 4-8 | **IntermissionScene 每回合重建 AssetManager** | `IntermissionScene.ts:243`，回合之間丟掉整個 glb 快取（`GameApp.ts:359` 早就有一個可以共用）|
+
+---
+
+# 批次 5 · 登入 / 選角 / 行動裝置 / 版權頁 / 商店場景
+
+> ⛔ **開工條件（前一稿沒寫，是它把批次 5 誤列為批次 1 的平行組的原因）：批次 1 的 Lane 1C 必須先收工。**
+> 5A 的 #74 改 `AuthScreen.tsx`、5C 的 #13 改 `CreditsRoute.tsx`，**兩支都是 1C 獨佔的檔案**。
+> 5B（`hudLayout.ts` / `TouchControls.tsx`）與 5D（`render/intermission/**`）不碰 1C，**可以與批次 1 同時開跑**。
+
+**Lane 5A · 登入與選角** — 獨佔 `apps/client/src/ui/platform/**`（**批次 1 收工後**）· `apps/client/src/ui/panels/champselect/**`
+- **#74** 登入→戰鬥交接：≥1 s 載入條 + 自己英雄的隊色光暈（`AuthScreen.tsx:99-103` 的咆哮淡出閘已經在了）；順帶補「每次按鍵的**視覺**火花」（打字 SFX 在 `:188` 已接，視覺從未接）。
+- **#76** 選角 ≥60 s + 完整檔案面板；**#41** hover 稱號＋名字 call-out（VO 內容 #57/#120 已存在，**只欠一個 handler，而且它從 #76 正在做的面板觸發**）。
+- **#139** codex 英雄頁顯示名言（champ-select 已接、codex 從未接）+ **46 支非名冊名言沒有 VO**（進 TTS 佇列，不要留成隱形殘留）。
+- **#142 男聲脆弱性**：`resolveMaleVoice()` 在沒有乾淨日文男聲的機器上會**靜默掉 72 支男聲** → 改成大聲失敗。
+- **#167** champ-select 鎖定現在是 **client-only**（`lockGate.ts:13-24`）—— 改過的 client 仍可換角，其他席位也看不到鎖。需要 server 端 `locked` 席位旗標。
+
+**Lane 5B · 行動裝置與 HUD 殘留** — 獨佔 `apps/client/src/ui/hud/hudLayout.ts` · `apps/client/src/ui/TouchControls.tsx`
+- **#151** iPhone **橫向**選單重疊（使用者用真機測過；直向沒事，而**戰鬥強制橫向，玩家實際上住在橫向**）。測 844×390 / 780×360 / 390×844。
+- **#107 殘留**兩處硬寫（`hudLayout.ts:272` Leave 按鈕、`:376` 記分板 4 px）—— **同一組常數，必須跟 #151 同一次真機 session**，不是兩件事。
+- **#152 桌機**：技能名被 w3x 圖示蓋掉（`AbilityBar.tsx:172,177` 觸控有名字、桌機圖示 `inset:0` 蓋滿）—— 使用者說的是「**所有平台**」。
+
+**Lane 5C · 版權與語言** — 獨佔 `apps/client/src/ui/platform/CreditsRoute.tsx`（**批次 1 收工後**）· `apps/client/src/i18n/**`
+- **#13 是授權義務，不是 polish**：CC-BY 4.0 的龍是**強制**署名，加上 TTS／字型／原始地圖作者。
+- **#19** 三語 UI chrome（en/zh/ja），內容名稱維持中文。
+
+**Lane 5D · 商店場景（新增；前一稿把它整個漏掉了）** — 獨佔 `apps/client/src/render/intermission/layout.ts` · `apps/client/src/ui/MerchantTipBox.tsx`
+（**刻意不含 `IntermissionScene.ts`** —— 那支檔是批次 4 的 `4-8` 獨佔，兩條 lane 因此完全不共檔）
+- **#94 的「功能性貨架」** —— 卡片靠左半**已出貨**（`layout.ts:123 SHOP_CARD_SIDE = "left"` + `mirrorPoint()` + `CHAMPION_STAND`），
+  **只剩貨架，而前一稿只在附錄提了一句「只剩可用貨架」，沒有任何批次認領它**。
+  ⚠ 任何貨架幾何移動**必須在同一次編輯裡重新滿足** `layout.test.ts` 與 `sightline.test.ts`（後者編碼了 #103 實測的 `multiPickWithRay` 遮擋）。
+- **#146 商人頭像的消費端**：`layout.ts:88` 指向 `assets/icons/shop/traveling-merchant.png`、**那個目錄不存在**，`MerchantTipBox.tsx:79` 永遠降級成字母方塊。
+  圖檔本身由**支線 A（圖示管線）**產出；本 lane 負責它到位之後的接線與 fallback 驗收。
+
+---
+
+# 批次 6 · 模型管線（序列波，**不可以內部平行**）
+
+每一位成員都改寫 `content/assets/models/**` 的位元組並讓 `modelScale.fixture.json` 失效，而那份 fixture **一次匯出只能重新產生一次**。順序反了就是白做。
+
+```
+6-a 存活清單裁決（#81/#116：129 個匯入模型哪些留）
+  → 6-b 只對存活者做完整重匯出（#61 / #73 / mdl-06 烘焙 +90° / 可見度軌 / 掛點幾何）
+      + #68 的「**逐英雄 × 逐 clip 的 pass/fail 表格**」——
+        ⚠ 已完成的 mdl-68-01 掃描只證明了一件事（43 個匯入英雄都在 Z 軸分裂），
+        **沒有涵蓋使用者親自點名的三個案例**（血輪眼左助飛行、皮卡丘 idle 翻面、桔梗 walk），也沒有產出表格。
+        使用者要的重點就是「不必自己手動檢查 113 個模型」→ **交付物是表格，不是掃描**
+  → 6-c #115 LOD（`tools/lod-gen/` 目前只有一個 node_modules symlink、**零行原始碼**，帳本標 in_progress 是錯的；
+        四個泛用 stand-in 已被 `d0f643a` 處理過，剩餘價值集中在 6-a 可能刪掉的那 129 個）
+  → 6-d #116 替代資產，**走同一條匯出管線**
+  → 6-e #99 資產預算頁（tris + 貼圖 + **用在哪裡**）—— 依專案慣例做成**執行期計算的活頁**，排在最後才讀到最終位元組
+```
+
+**#119 變身／形態切換必須搭同一波車** —— 全 repo 只有兩個真正零程式碼的需求之一（`grep -rn 'formSwap|revertForm|transformInto' packages/shared/src` = 0）。理由是硬的：**mdl-73-03 保守保留下來的 geoset 就是 heroichigo 的 TRANSFORM-BODY 群組**，先剝掉就刪掉了 #119 需要的美術，先做 #119 又沒有閘門可以綁。
+唯一真正與本波平行的是批次 4 的載入工作與 #119 的 sim 側模組。
+
+---
+
+# 批次 7 · 平台安全與私有部署（硬序列鏈）
+
+**Lane 7A · 平台（序列）** — 獨佔 `apps/platform/**` · `apps/admin/**`
+`sec-154-05 trusted-proxy ClientIP` → `sec-154-02 註冊限流` → `#126 核准佇列 UI` → `sec-154-11 pending 帳號上限 + TTL` → `sec-154-18`
+- **05 是整條鏈的根**：每個限流都對一個**可偽造的 `X-Real-Ip`** 取鍵，在它之前加的限流一律可繞過。而且這個問題現在就是活的 —— LAN proxy 會把手機請求洗成 127.0.0.1（`ownerreset` 刻意不做 loopback 閘的原因）。
+- **#126 的 server 半比帳本說的完整得多**：`requireApproval`、pending 戳記、`claimOwnership`、force-approve 路徑都在 `auth/service.go` 與 `admin.go`。**缺的是後台核准佇列 UI**（`apps/admin/src/ui/` 沒有這頁，全域 grep `approve` = 0）。
+- **11 必須與 #126 同批**：核准閘門本身**製造**無上限的 pending 帳號成長（`service.go:120-152` SetNX、ttl 0、無限流）—— 閘門開之前做沒意義，開之後才做就是磁碟／Redis DoS。
+
+**Lane 7B · game-server** — 獨佔 `apps/game-server/src/net/InputMailbox.ts` · `rooms/MatchRoom.ts`（1A 交還後）· `cheatGate.ts`
+- **F-01 + F-04 同一條 mailbox 縫，必須同批**：一個 prototype 名稱的 slot 讓 `Registry.get(undefined)` 丟例外 → tick 的 catch **把整個房間斷線**；`commands[]` 無上限（#46 的 tick clamp 限的是 tick **數量**，不是每 tick 的工作量）。
+- **F-03** `create("match")` flood 在 `onAuth` 之前就建好 12 席 sim + 60 Hz loop。
+- **F-14** 空的 `PLATFORM_GAME_SHARED_SECRET` **fail open**。
+
+**Lane 7C · client 安全** — 獨佔 `apps/client/src/ui/WorldAnchorLayer.tsx`（1B 交還後）· `nginx/nginx.conf`（4-4 交還後）
+- **F-06**：玩家 `displayName` 進血條的 `innerHTML`（`:40-58`），配上 localStorage token 與**沒有真正的 CSP**（只有 `frame-ancestors`）= 完整帳號接管。**與中立血條顏色改動是同一支函式，一次開檔兩件事一起做。**
+
+**Lane 7D · 測試骨架** — 獨佔 `tools/testrunner/**` · `playwright/**`
+- playwright 套件是**停用的佔位**（`suites.yaml:162-169 enabled: false`），**一支就擋住 7 個 todo 列**（webui-11/12、client-09/10、couch-16、roster-08、rankui-11）。順帶 `col-11`、`sim-07`、`content-07/10/11`、`capi-07`、`vtint-07`、`mobile-15`、以及 **#85 的量測代理修正**（死亡去飽和的驗收量的是**世界空間**地面面積比，而 shader 推理的是**螢幕空間** —— 近鏡頭的色塊佔的螢幕遠大於地面）。
+- 基礎建設 beacon（`sec-infra-01..04`、`09..11`）與 `infra-01/04/08/09/10` **共用同一套 helm-render + 真 nginx 的 harness，不要蓋兩次**。`admin-40`（`docker/platform.Dockerfile` 沒 build `cmd/ownerreset`）也在這裡。
+
+---
+
+# 批次 8 · 平衡凍結 + 實機簽收（#7）
+
+**排在最後的理由是硬的**：TTK 曲線在 545 個技能剛被加上前搖、`hitFeel` 內容還是 0 份的當下已經過期；而 `#48` 沒修完之前，任何簽收都可能是在 fail-safe 環境裡自欺。
+
+- **8-1 平衡凍結**（必須在**任何**大規模內容授權之前定案，否則授權是對會變動的值做的）：**#153 TTK 重測**（現行 `TTK ≈ 13.8×maxHealth − 4` 早於 #144、早於 0.6 s 前搖）、**#149 增強池**（21 份已正確分層抽取，但**無重複抽 + 排除已有 → 每回合都選的玩家約第 10 回合抽乾 prismatic 之後靜默不再發牌**，需要空池 fallback + 使用者的「能不能翻盤」簽收）、**#82 gacha 開或刪**、`canCrit` 政策。
+- **8-2 十六項實機簽收**（gap-log:70 + 批次列表的合集）：#93 的 6 個細節、#3 的 4 細項、#90、#82、#100、#131、#110、#121、#145、#147、#148、#142、#107、#164、#166、#85。
+  ⚠ **前置是 1C-6 的 fail-safe 徽章。**
+  ⚠ **訂正：`#75` 已從這份清單移出。** 它不是「看一眼簽字」，是要重新對齊龍吼錨點＋加深殘響的**動手工作**（8 個細節）→ 移到 **支線 B 的 B-1**。
+  把工作寫進簽收清單，等於保證它在簽收當天才被發現還沒做。
+- **8-3 #7 全面驗收**：全端 + 真機 + **一場打完的多人對戰**，對著矩陣簽字 —— 「這不是再玩一次，是簽一張矩陣」。消費 #128 的完整矩陣（技能半 + 2B-3 的道具半）。
+- **8-4 #173 行為變更裁決**：回合 MVP 現在**偏好對決勝方**，所以「命數領先但輸掉這場對決」的隊伍永遠不會被表揚。這是使用者沒要求過的行為變更，已刻意記錄以免 playtest 誤判為回歸 —— 需要使用者看一回合後裁決。
+- **8-5 缺席的 todo 檔**：`champions.md` / `items.md` / `augments.md` / `map-editor.md` / `vfx-editor.md` / `model-inspector.md` / `ai-bots.md` 從未撰寫，而其中好幾個功能已經在飛 → test-id 閘門對它們**沒有任何覆蓋列**。
+
+> ⚠ **前一稿的 `8-5 剩餘編輯器工具` 已獨立成批次 9。** 理由：那一項是「#141 VFX 編輯器 MVP + `editor-04/05/06` + `content-11` + `ai-editor-01/02/03` + #102 後台整併」——
+> 至少 L～XL 的一波建置工作，**而且不是 #7 簽收的前置**（沒有編輯器一樣打得完一場）。把一整波建置塞進簽收批，會讓批次 8 大到交不出去，也會讓 #7 被編輯器進度綁架。
+
+---
+
+# 批次 9 · 編輯器與後台工具（自成一波，不擋 #7 簽收）
+
+**獨佔** `apps/editor/**` · `apps/admin/**`（批次 7 收工後）· `apps/client/src/ui/codex/**`
+
+- **#141 VFX 編輯器 Tier-1 MVP** —— ⛔ **前置是 2C-1**：調色盤就是那個 primitive library，library 沒成為建置期唯一寫者之前，編輯器沒有權威的東西可以給。
+- **`editor-04/05/06`**（RefSelect 選項、真渲染器預覽、地圖編輯器）、**`content-11`**（用真 driver 而非 mock 做預覽）。
+- **`ai-editor-01/02/03`**（AI 圖示產生 / AI 填表 / 供應商未設定時的優雅狀態）—— 隨 **D1** 的供應商設定一起。
+- **#102 後台整併**：比賽 drill-in 與一鍵套用起始集**都是沒有呼叫者的孤兒 API**；順便驗證 戰鬥系統 頁能不能即時調 #133 的手感倍率（使用者明確要過）。
+
+---
+
+## 支線 B · BGM／環境音創作佇列（**前一稿整條漏掉**，序列單一寫者，與所有批次平行）
+
+獨佔 `tools/bgm-gen/**` · `content/assets/audio/bgm/**` · `apps/client/public/bgm-audition.html`
+
+> **為什麼要獨立成一條線：** 前一稿把使用者的 BGM 需求全部弄丟了 —— #135 一次都沒出現，火環 intro 改寫與控室整首重寫**連提都沒提**，
+> #75 被塞進「8-2 十六項實機簽收」，可是它是**要動手做的工作**（重新對齊龍吼環境音到縮短後的錨點、加深殘響，共 8 個細節），不是簽字。
+> 而且 bgm-gen 是**硬性單一寫者**：每一份工作都會重寫 `audition.py`，一次只能做一首。它不碰任何其他批次的檔案，所以**全程平行、但內部序列**。
+> **每一首都是創作類 → 交付物是「渲染完成 + 更新試聽頁 + 等使用者上試聽頁核准」，不是「測試綠」。**
+
+| 序 | 內容 | 實測 |
+|---|---|---|
+| B-1 | **#75 龍吼環境音**（8 個細節：重新對齊到縮短後的錨點、加深殘響…）| 前一版計畫裡它是**唯一一個沒出現在任何批次的 pending 帳本項**；這一版一度被誤放進簽收清單。要逐項對著使用者的原話做 |
+| B-2 | **火環 intro 改寫**（`intro.fireRing`）：遠處微弱**空襲警報** + **嘲諷逃跑者的中文 rap** → **爆炸** → 接現有火焰旋律，且**原本的漸強太久要縮短** | gap-log:162。**從來沒有帳本編號**，因此在任何以 `#` 編號盤點的清單裡都是隱形的 |
+| B-3 | **控室整首重寫**（`scores/room.py`，現況是冷機械嗡鳴）：教堂／福音感，**黑人神父的小 rap 開場**，中後段嘲諷 rap 穿插旋律高潮轉折 | gap-log:163。**也沒有帳本編號**。規模等同 intermission 那次整首重做（L）|
+| B-4 | **#135 各場景招牌 intro 的 rap/VO 層** | `tools/bgm-gen/src/audition.py:60` `SCENE_RAP` —— say-based 的 rap 層**預設關閉**，只有 `--tts` 才會烘進去，所以**出貨的 intro 全是純合成器**。使用者要的識別度只做了一半 |
+| B-5 | **#137 試聽頁對帳**（S）| 12 支 `<scene>.samantha.mp3` **實查在硬碟上**（battleStart/champSelect/combat/defeat/fireRing/intermission/lobby/menu/menuNocturne/room/settlement/victory），但 `bgm-audition.html` 全檔 `grep samantha` 只有 **1 筆** → **試聽頁幾乎確定沒有列出 12 首變體**（應該是 12 原曲 + 12 變體 = 24）。開頁看一次就知道 |
+
+> ✅ **#124 已被取代，不要重排**：使用者後來否決了「下課鐘 intro」（突兀、沒融入），改要求整首 city-pop 慵懶→女聲爆發 EDM，
+> 該重寫**已完成並客觀驗證**（`scores/intermission.py`，`intro.intermission` 改為柔和 Rhodes swell）。#124 的「打鐘窗」硬限制隨舊設計一併退役。
+> 帳本上 #124 仍是 pending，**這是帳本沒回寫，不是工作沒做** → 由 1D-1 一併訂正。
+
+---
+
+## 支線 A · 圖示管線（卡在決策 D1，token 一到隨時可插隊）
+
+獨佔 `apps/platform/internal/ai/**` · `content/assets/icons/**` · `tools/icon-gen/**`
+**#112**（根因是**沒有設定供應商**，不是程式壞了；本機 M 系列管線約 5 s/張、已產 282 張）→ **#72**（實測覆蓋：英雄 109 = 85 png + 24 webp、道具 157 = 15 png + 142 webp、**增強只有 3 張對 22 份文件**、技能 13 —— 狀態頁寫的「0 張」是過期的）→ `ident-11` 的 9 張錯置頭像（曹操戴著皮卡丘的圖示）→ **#146 的商人頭像**（`layout.ts:88` 指 `assets/icons/shop/traveling-merchant.png`，**那個目錄不存在**，`MerchantTipBox.tsx:79` 永遠降級成字母方塊）。
+⚠ 兩個耦合：SSRF 白名單改的是**同一支 fetch 函式**（同一個 commit）；圖示欄位寫進英雄文件 → **必須以補丁表交給批次 2 的單一寫者套用**，不可直接寫檔。
+另有 `starter.go` 的兩個已知缺口（妙蛙花 `godie-h02r` 無頭像、魔人普烏 `godie-huth` EX 說明空白）與 `buildPriority` 的 2 階梯降級（為了讓 48 人名冊出得去，`≥4` 階閘門被刻意拿掉）—— 補完後**要把閘門裝回去**。
+
+---
+
+# 附錄 · 已驗證完成（帶證據，**不得重排**）
+
+> 這一節與死碼區同等重要。**重排已完成的工作是這裡第二貴的錯誤。**
+> 每一條都附「怎麼驗的」，下一個讀者不必再驗一次。
+
+| # | 證據（實跑 > 讀碼）|
+|---|---|
+| **#100 戰鬥收尾** | **實跑驗證**：真的 12-bot `MatchController` 跑到 `combatActive` 翻 false（1419 tick = 47.3 s，phase → resolution），快照全員 HP，再跑 **90 個模擬秒（2700 tick）**：**0 個事件、12 人中 5 人 HP 上升（回復）、0 人下降**。⚠ **並且它不是 #85 的阻擋者 —— 三張活頁都寫錯了** |
+| **#89 sim 半** | `arena-rules.json` 出貨完整 guardianTower（hpBase 1450 / volleyDamageBase 108），`MatchController.ts:725-731` 每回合武裝，`roundPacing.test.ts:120-143` 證明每個活躍對決區生一座。**sim 是對的，缺的 100% 是 client** |
+| **#98** | 11 個 key 逐一探測：`grep -rl 'godie-blackhole\|godie-boomnl' content/abilities content/champions` = **0**，唯一引用在 `_index.json`／`bundle.json`／預算報告。**空 glb 是孤兒，不是壞掉的綁定**（資產債仍在，排 2A-4）|
+| **#123** | 註冊表探測：**94 個 `fx.prim.*` key 可達**（原本 25），覆蓋 240 個技能；`elements.ts:36` 覆蓋所有用到的元素、`primitives.ts:318-325` 匯出全部 8 種形狀。**只剩產生器漂移守門**（2C-1）|
+| **#79 名冊半** | 用 repo 自己的 loader 讀**註冊表**：`bindings.ts:54` ROSTER 的 48 個英雄 **0/192 QWER 槽是火**（原本 175）。驗收案例 `godie-n003` 依文潔琳 Q→`fx.prim.ice.shockwave` / W→`fx.prim.blood.nova` / E→`fx.prim.ice.nova` / R→`fx.prim.ice.explosion-lg`。⚠ **依賴未 commit 的 `registry.ts`** |
+| **#131** | `VfxSystem.ts` 有 12 個 `isFinitePos` 守衛覆蓋每條生成路徑；`topRightBurst.test.ts` 3 測全過 |
+| **#142** | `quotes.json` 113 筆（real 82 / original 31），gender 男 72 / 女 28 / 中性 13，voice map 女+中性 Kyoko、男 Otoya（已安裝）；113 支 mp3 齊全、**0 筆缺檔**。三個播放點都活：`nameVoice.ts:58`、`settlementModel` → `MatchEndPanel`、`RoundEndVoice.tsx:33` ← `HudRoot.tsx:134` |
+| **#173** | 端到端無斷鏈：server 寫（`snapshot.ts:51`）→ client 解碼（`RoomStore.ts:116,341`）→ **生產消費**（`settlementModel.ts:411-414` 的 `won`/`fought`）→ `RoundEndVoice.tsx:33` / `GameApp.ts:1420`。（我自己在 sweep 中途一度誤判它是死碼，是 grep 被截斷所致，已更正）|
+| **#143 / #85 / #93** | #143 `RoundWinnerStage` 建於 `GameApp.ts:436`、`:1426` 帶 MVP model doc 顯示、`:1432` 清除。#93 `VictoryFireworks` 建於 `:428`、`MatchEndPanel.tsx:385,430` 消費。#85 `DeathFocusFx` 建於 `:415`、`:957` 逐幀餵、`:812` 死亡邊緣。<br>❌ **本行前一稿寫的「全檔已無 `?? 0`」是錯的，已撤回。** `:1298`/`:1300` 確實是 `?? -1`，**但整支檔還有兩處**：`:1033` 與 `:1613`。無席位 entity 仍被畫成 0 號隊 → **排 1B-5**。這一條正好示範了本檔開頭那段方法論：**抽樣兩行不是「全檔已無」的證據。** |
+| **#145** | `MatchController.ts:582` `selectRoundArena` → `pickRoundArena(arenaPool, matchSeed, round)`，`enterCombat:616` 在放置前呼叫，`snapshot.ts:32` 廣播 |
+| **#147（五件）** | `VfxSystem.ts` 全在：ShadowLayer(:51,:391)、HitSpark(:57,:358)、BloodFx(:61,:388)、GroundDecalPool(:63,:372)、走路揚塵。（⚠ 「陰影」畫質選項是假的 → 排 3B）|
+| **#148 / #110 / #146 版面** | `merchantTips.ts` → `MerchantTipBox.tsx:38` → `IntermissionStage.tsx:94`；`AugmentDraftPanel` 掛於 `HudRoot.tsx:169` + `draftCardStyle.ts` 分層光暈；`IntermissionScene` 掛於 `IntermissionStage.tsx:48` |
+| **#94 卡片靠左半** | `layout.ts:123` `SHOP_CARD_SIDE = "left"` + `mirrorPoint()` + `CHAMPION_STAND`(:227) + `SHOP_CARD_WIDTH_FRACTION 0.45`(:371) **已出貨**。只剩「可用貨架」，且任何貨架移動**必須在同一次編輯裡重新滿足** `layout.test.ts` 與 `sightline.test.ts`（後者編碼了 #103 實測的 `multiPickWithRay` 遮擋） |
+| **#107 主體** | `chromeReserve.ts` 發布音訊叢集框（`AudioToggle.tsx:492`）；`chromeReserve.test.ts` 21/21、`hudLayout.test.ts` 39/39 全綠。（殘留 → 1C-5 / 5B）|
+| **#121 迴圈** | `MerchantShop.tsx:378` 「↩ 復原上一步」→ `sendUndoLastStep()` → `CommandSystem.ts:72-83` 用與買賣相同的存取規則把關 → `undoShopAction()`。（權威欄位沒讀 → 1C-2）|
+| **#128 技能半** | `docs/_castability-128.md` 288 格 = 48 × 6。⚠ **重跑後是 279 PASS / 2 FAIL，不是出貨文件寫的 281/0**，且原因是量尺（→ 2B-4）不是遊戲 |
+| **#63 SFX 半** | `AudioSystem.ts:257-266` boot 抓 0 支、`:403-405` warm `SFX_CORE` + 當前場景、`:467-471` 換場景再 warm |
+| **#118 / #162** | `apps/platform/internal/wallet/{wallet,meta,handlers}.go` + client `walletMeta.ts` / `ChampMetaControls.tsx` 兩側都在硬碟上。**只欠一次目視，不要重建** |
+| **#126 server 半** | `auth/service.go:51-55` `requireApproval`、`:210-213` pending 戳記、`:216-223` `claimOwnership`，加上 `private_deploy_test.go` / `account/status_test.go` / `admin.go` force-approve。**缺的只有後台核准佇列 UI** |
+| **#136 / #133 機制半 / 方向性運鏡 kick + EX punch-in / `content:validate`** | 已由 `13afaf9` / `0c47fce` 修掉而未回寫活頁。`content:validate` 實跑：`content OK: 1441 docs` |
+| **結算三件事（`4663e57` / `b287a13` / `c153304`）** | `lobby.mp3` 可達（`LeaderboardPanel` 不再無條件請求 menuNocturne）；寧靜女聲接在 match-win sting 之後（`useBedEnded(MATCH_WIN_STING)` + `matchEndBedScene`）；`AUTO_ADVANCE_SEC` **18 → 12 且改由 sting 結束起算** —— **前一版計畫警告的「in-flight agent 與 planned task 搶同一個常數」已解除** |
+
+## 附錄 B · 進出清單盤點（這一次改寫加了什麼、退回了什麼）
+
+**盤點來源**：兩份實地查核報告合計 **100 個 outstanding 項目**（第一份 22 項 · 第二份 91 項，重疊 13 項）。
+
+| | 數 | 內容 |
+|---|---|---|
+| **前一稿已排進批次** | **89 / 100** | 略 |
+| **前一稿漏掉、本次補進來** | **11 / 100** | ① `teamId ?? 0`（→ 1B-5）② #135 BGM rap/VO 層（→ B-4）③ 火環 intro 改寫（→ B-2，**無帳本編號**）④ 控室整首重寫（→ B-3，**無帳本編號**）⑤ #137 試聽頁對帳（→ B-5）⑥ #127 對外分級殘留（→ 7A）⑦ `mdl-150d` 文件矛盾（→ 1A-3 順手判定）⑧ #94 功能性貨架（→ 5D，新 lane）⑨ `spriteSheet` 內容（→ 2A-2）⑩ 回合第一名是否升成 server 權威（→ 8-4 決策）⑪ #75 被誤放進簽收清單（→ B-1，改成實作工作）|
+| **本次從計畫退回（做過或誤判）** | **2** | ① `frameDataAudition.ts` 不是死碼：`public/frame-data.html:117` 的動態 import 就是呼叫者，且兩支檔都是飛行中 agent 的 untracked 產出 → 1D-2 從 M 降成 S 目視 ② #124 已被 city-pop 重寫取代並完成，帳本沒回寫而已 → 交給 1D-1 |
+| **本次修掉的結構錯誤** | **6** | ① Lane 1A 的血條有一半在 Lane 1B 的檔案裡（`GameApp.ts:1602-1640`）② 1C-6 需要 `RoomStore.ts`，前一稿沒有任何 lane 擁有它 ③ 「批次 1/4/5/7 彼此不共用檔案」是假的（五處衝突）④ Lane 1D 的兩條路徑不存在 ⑤ 2B-2 與 1C-2 共用 `MerchantShop.tsx` 卻被排成平行 ⑥ 批次 8 混了一整波編輯器建置 → 拆成批次 9 |
+
+**淨結果：100 個 outstanding 項目全部有歸屬，0 個落地。** 批次數 8 → 9，支線 1 → 2。
+
+## 刻意保留、不要「修」的東西
+
+| 項目 | 為什麼 |
+|---|---|
+| SELA / THORNE 的 TS fixture 保持 `castTimeSec 0` | `combatTiming.test.ts` 的 `ct-04` 需要一個零前搖技能；這個分歧在 `content/loader.test.ts` 裡被**明確斷言**。game-server 永遠載 `content/` |
+| `RoundWinnerStage` 與 `MatchEndPanel` 共用同一個 process-wide `victoryTaunts` player | 共用實例**正是**兩個聲音不會疊在一起的保證。安全性目前靠 `roundEndQuoteChampion` 在最終回合回 null —— **要拆之前必須先換一個等價保證** |
+| `hitImpact` 沒有 profile 時完全沒有模型反應 | `EntityViewRegistry.ts:279-281` 刻意的防禦性 no-op；已記錄以免被重新「發現」一次 |
