@@ -561,7 +561,13 @@ function main(): void {
   const iconCount = [...iconCounts.values()].reduce((a, b) => a + b, 0);
   // ×4/3 for the mip chain, same convention as every other texture in this report.
   const iconVram = Math.round(
-    [...iconCounts].reduce((sum, [ext, n]) => sum + n * ICON_EDGE[ext] ** 2 * 4, 0) * (4 / 3),
+    [...iconCounts].reduce((sum, [ext, n]) => {
+      // Unreachable — the loop above only admits an ext ICON_EDGE has an edge for.
+      // Written as a skip rather than `?? 0` because zero-pricing an unknown
+      // extension is exactly what the note above forbids.
+      const edge = ICON_EDGE[ext];
+      return edge === undefined ? sum : sum + n * edge ** 2 * 4;
+    }, 0) * (4 / 3),
   );
   const iconBreakdown = [...iconCounts]
     .sort((a, b) => b[1] - a[1])
