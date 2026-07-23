@@ -27,6 +27,8 @@ import (
 	"errors"
 	"log/slog"
 	"math"
+	"os"
+	"path/filepath"
 	"sort"
 	"strconv"
 	"sync"
@@ -80,6 +82,10 @@ var Keys = []string{
 	"critDamage",
 	"lifesteal",
 	"attackRange",
+	// abilityRange scales ability reach/AoE (task #136). It was added to
+	// packages/shared and to the content tree but not here, so the console could
+	// not see or edit it — see the drift guard in keysync_test.go.
+	"abilityRange",
 }
 
 var known = func() map[string]struct{} {
@@ -106,13 +112,96 @@ type Doc struct {
 }
 
 // DefaultDoc is the neutral table: every factor 1.0, byte-identical legacy
-// combat behavior.
+// combat behavior. It is the floor, NOT what an operator should be shown —
+// see contentDefaults and Service.baseDoc.
 func DefaultDoc() Doc {
 	m := make(map[string]float64, len(Keys))
 	for _, k := range Keys {
 		m[k] = 1.0
 	}
 	return Doc{Version: SchemaVersion, Multipliers: m}
+}
+
+// contentDoc is the shape of content/config/combat-env.json.
+type contentDoc struct {
+	Schema      string             `json:"schema"`
+	Multipliers map[string]float64 `json:"multipliers"`
+}
+
+// loadContentDefaults reads the CONTENT-AUTHORED multiplier table from
+// <contentDir>/config/combat-env.json — the same document the game-server
+// applies as its base layer (apps/game-server/src/config/combatEnv.ts).
+//
+// Why the platform needs it: this table is a MERGE of content defaults and the
+// operator override, and the console edits the override. Before this, the
+// platform only knew the neutral 1.0 table, so the 戰鬥系統 page rendered every
+// slider at 1.0 no matter what the content tree actually said — and because a
+// PUT is complete-desired-state (omitted keys reset to the base), saving any
+// single change wrote 1.0 over EVERY content-authored value. An operator who
+// nudged one number silently destroyed the whole tuning. Seeding from content
+// makes the page show what is really in effect and makes a save preserve it.
+//
+// Never fatal: an unreadable or malformed file leaves the neutral table, which
+// is exactly the behaviour that existed before, and is logged once.
+func loadContentDefaults(contentDir string) map[string]float64 {
+	out := make(map[string]float64, len(Keys))
+	if contentDir == "" {
+		return out
+	}
+	path := filepath.Join(contentDir, "config", "combat-env.json")
+	raw, err := os.ReadFile(path)
+	if err != nil {
+		if !errors.Is(err, os.ErrNotExist) {
+			slog.Warn("combatenv: could not read content defaults; falling back to the neutral table",
+				"path", path, "err", err)
+		}
+		return out
+	}
+	var d contentDoc
+	if err := json.Unmarshal(raw, &d); err != nil {
+		slog.Warn("combatenv: malformed content defaults; falling back to the neutral table",
+			"path", path, "err", err)
+		return out
+	}
+	for _, k := range Keys {
+		if v, ok := d.Multipliers[k]; ok && !math.IsNaN(v) && !math.IsInf(v, 0) {
+			out[k] = v
+		}
+	}
+	return out
+}
+
+// baseDoc is the table an operator starts from: content-authored values where
+// the content tree has an opinion, 1.0 everywhere else.
+func (s *Service) baseDoc() Doc {
+	doc := DefaultDoc()
+	for k, v := range s.contentDefaults {
+		doc.Multipliers[k] = v
+	}
+	return doc
+}
+
+// sanitize backfills missing keys from base, drops unknown keys, and replaces
+// non-finite values — tolerance for hand-edited / older files. It never
+// rejects: the durable file was already validated at write time. base carries
+// the content-authored values so a doc written before a key existed picks up
+// the content value rather than a bare 1.0.
+func (d *Doc) sanitizeFrom(base map[string]float64) {
+	out := make(map[string]float64, len(Keys))
+	for _, k := range Keys {
+		v, ok := d.Multipliers[k]
+		if !ok || math.IsNaN(v) || math.IsInf(v, 0) {
+			v = 1.0
+			if bv, has := base[k]; has {
+				v = bv
+			}
+		}
+		out[k] = v
+	}
+	d.Multipliers = out
+	if d.Version == 0 {
+		d.Version = SchemaVersion
+	}
 }
 
 // sanitize backfills missing keys with 1.0, drops unknown keys, and replaces
@@ -145,18 +234,20 @@ func NewRepo(store *jsonstore.Store, rdb *redisx.Client) *Repo {
 	return &Repo{store: store, rdb: rdb}
 }
 
-// Load reads the JSON truth. A missing file is NOT an error — it is the
-// shipped neutral table, reported via the second return value.
-func (r *Repo) Load() (Doc, bool, error) {
+// Load reads the JSON truth. A missing file is NOT an error — it means no
+// operator has ever saved, reported via the second return value, and the
+// caller substitutes its base table. base supplies the content-authored values
+// used to backfill a doc that predates a key.
+func (r *Repo) Load(base Doc) (Doc, bool, error) {
 	var d Doc
 	err := r.store.Get(Collection, DocID, &d)
 	if errors.Is(err, jsonstore.ErrNotFound) {
-		return DefaultDoc(), false, nil
+		return base, false, nil
 	}
 	if err != nil {
-		return DefaultDoc(), false, err
+		return base, false, err
 	}
-	d.sanitize()
+	d.sanitizeFrom(base.Multipliers)
 	return d, true, nil
 }
 
@@ -191,11 +282,22 @@ type Service struct {
 	store *jsonstore.Store
 	mu    sync.Mutex
 	now   func() time.Time
+	// contentDefaults is the content-authored table (see loadContentDefaults).
+	// It is the base an operator edits FROM, so a save preserves whatever the
+	// content tree set rather than flattening it to 1.0.
+	contentDefaults map[string]float64
 }
 
-// New builds the service. rdb may be nil (mirror disabled).
-func New(store *jsonstore.Store, rdb *redisx.Client) *Service {
-	return &Service{repo: NewRepo(store, rdb), store: store, now: time.Now}
+// New builds the service. rdb may be nil (mirror disabled). contentDir points
+// at the read-only content/ tree; an empty or unreadable one just means the
+// neutral table is the base.
+func New(store *jsonstore.Store, rdb *redisx.Client, contentDir string) *Service {
+	return &Service{
+		repo:            NewRepo(store, rdb),
+		store:           store,
+		now:             time.Now,
+		contentDefaults: loadContentDefaults(contentDir),
+	}
 }
 
 // SetNow overrides the clock seam (tests inject a fixed clock so updatedAt is
@@ -222,18 +324,33 @@ func (s *Service) Get() (Doc, error) {
 func (s *Service) GetStored() (Doc, bool, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
-	doc, stored, err := s.repo.Load()
+	base := s.baseDoc()
+	doc, stored, err := s.repo.Load(base)
 	if err != nil {
-		return DefaultDoc(), false, err
+		return base, false, err
 	}
 	return doc, stored, nil
 }
 
+// ContentDefaults exposes the content-authored base table (a copy) so tests and
+// callers can assert what an operator is editing FROM.
+func (s *Service) ContentDefaults() map[string]float64 {
+	out := make(map[string]float64, len(s.contentDefaults))
+	for k, v := range s.contentDefaults {
+		out[k] = v
+	}
+	return out
+}
+
 // Replace overwrites the whole table (PUT semantics). The input may be SPARSE:
-// omitted keys reset to the neutral 1.0 (the payload is the complete desired
-// state, mirroring curation.Replace). Every present key must be a known
-// quantity and every factor within [MinFactor, MaxFactor] — anything else is
-// a 400, never silently dropped. version/updatedAt are server-owned.
+// omitted keys reset to the CONTENT-AUTHORED value (1.0 only where content has
+// no opinion) — the payload is the complete desired state, mirroring
+// curation.Replace. Resetting to the content value rather than to a bare 1.0
+// is what stops a one-slider edit in the console from flattening the whole
+// tuning: the operator is editing a DELTA over content, not authoring the
+// table from nothing. Every present key must be a known quantity and every
+// factor within [MinFactor, MaxFactor] — anything else is a 400, never
+// silently dropped. version/updatedAt are server-owned.
 func (s *Service) Replace(ctx context.Context, in map[string]float64) (Doc, error) {
 	for k, v := range in {
 		if !KnownKey(k) {
@@ -252,14 +369,16 @@ func (s *Service) Replace(ctx context.Context, in map[string]float64) (Doc, erro
 
 	s.mu.Lock()
 	defer s.mu.Unlock()
-	doc := DefaultDoc()
+	// Start from the CONTENT-authored table, not the neutral one: an omitted
+	// key means "leave it as content set it", not "flatten it to 1.0".
+	doc := s.baseDoc()
 	for k, v := range in {
 		doc.Multipliers[k] = v
 	}
 	doc.Version = SchemaVersion
 	doc.UpdatedAt = s.now().UTC()
 	if err := s.repo.Save(ctx, doc); err != nil {
-		return DefaultDoc(), err
+		return s.baseDoc(), err
 	}
 	return doc, nil
 }

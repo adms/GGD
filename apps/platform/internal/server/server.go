@@ -197,7 +197,7 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 
 	adminSvc := admin.New(accounts, walletSvc, rank, friends, store, rdb, cfg.AdminBootstrapUsername)
 	curationSvc := curation.New(store, rdb)
-	combatEnvSvc := combatenv.New(store, rdb)
+	combatEnvSvc := combatenv.New(store, rdb, cfg.ContentDir)
 	aiSvc := ai.New(store, rdb)
 
 	hub := lobby.NewHub(rdb, friends)
