@@ -8,5 +8,13 @@
   "tier": 5,
   "tags": [
     "wc3-import"
-  ]
+  ],
+  "craftRole": "final",
+  "recipe": {
+    "components": [
+      "godie-i00r",
+      "godie-i02q"
+    ],
+    "book": "godie-i02z"
+  }
 }

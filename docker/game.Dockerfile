@@ -1,12 +1,21 @@
 # docker/game.Dockerfile — Colyseus authoritative game server (Node/TS).
 #
-# CONTRACT NOTE: apps/game-server is being built in parallel by another
-# engineer. This Dockerfile is written to the planned contract (plan §1):
-#   - pnpm workspace package @ggd/game-server at apps/game-server
-#   - depends on @ggd/shared (packages/shared)
-#   - `pnpm --filter @ggd/game-server build` emits dist/index.js
-#   - listens on :2567 (Colyseus WS + private /_internal/matches admin route)
-# Build context is the REPO ROOT: docker build -f docker/game.Dockerfile .
+# CONTRACT NOTE: apps/game-server is a pnpm workspace package that depends on
+# @ggd/shared (packages/shared) and listens on :2567 (Colyseus WS + private
+# /_internal/matches admin route). Build context is the REPO ROOT:
+#   docker build -f docker/game.Dockerfile .
+#
+# HOW THIS APP ACTUALLY RUNS (#176). The original Dockerfile was written to a
+# planned contract — `pnpm --filter @ggd/game-server build` emits dist/index.js,
+# runtime is `node dist/index.js` — that was NEVER implemented. The package has
+# no `build` script (only dev/start/typecheck/test), and both dev and start run
+# it through `tsx` straight from TypeScript source; @ggd/shared's package "main"
+# is likewise ./src/index.ts, uncompiled. So the built image ran `node
+# dist/index.js` against a dist/ that did not exist and crash-looped with
+#   Error: Cannot find module '/app/dist/index.js'
+# — i.e. a family deploy came up with the platform and edge healthy and the game
+# server DOWN. This file now ships the app the way it runs: tsx over source.
+# When the game server grows a real bundler step, revert to node dist/index.js.
 
 FROM node:22-alpine AS build
 # git is REQUIRED, not optional: pnpm-lock.yaml resolves uWebSockets.js from a
@@ -28,13 +37,21 @@ COPY apps/game-server/package.json apps/game-server/
 RUN pnpm install --frozen-lockfile --filter "@ggd/game-server..."
 COPY packages/shared/ packages/shared/
 COPY apps/game-server/ apps/game-server/
-RUN pnpm --filter "@ggd/game-server" build \
- && pnpm --filter "@ggd/game-server" deploy --prod /out
+# NOT --prod: the app is executed by tsx, which is a devDependency. A --prod
+# deploy would strip the one binary the runtime needs. deploy bundles the
+# package plus its workspace dep @ggd/shared (source, since shared has no build)
+# into a self-contained /out.
+RUN pnpm --filter "@ggd/game-server" deploy /out
 
 FROM node:22-alpine
 # tini: PID-1 signal handling so Colyseus shuts down gracefully on SIGTERM.
 RUN apk add --no-cache tini
-ENV NODE_ENV=production
+# NODE_ENV stays development here on purpose: the secret guard's fail-closed
+# behaviour keys on the ENV LABEL, and the family compose overlay sets
+# APP_ENV=production / NODE_ENV=production explicitly (docker/compose.family.yaml).
+# A bare `docker compose up` (dev) must keep working, so the image default is
+# development and the deploy overlay is what hardens it — see secretGuard.ts.
+ENV NODE_ENV=development
 WORKDIR /app
 COPY --from=build /out/ ./
 
@@ -43,4 +60,6 @@ COPY --from=build /out/ ./
 EXPOSE 2567
 USER node
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["node", "dist/index.js"]
+# tsx over source — see the header. `node_modules/.bin/tsx` is present because
+# the deploy above was not --prod.
+CMD ["node_modules/.bin/tsx", "src/index.ts"]

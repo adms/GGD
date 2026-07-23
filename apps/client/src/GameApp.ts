@@ -21,6 +21,7 @@ import {
 import type { ModelDoc } from "@ggd/shared/content";
 import type { AbilityId, ChampionId, ItemId, ProjectileId } from "@ggd/shared/ids";
 import type { AbilitySlot } from "@ggd/shared/sim/intents";
+import type { Room } from "colyseus.js";
 import type { MatchState } from "@ggd/shared/protocol/schema";
 import { ENTITY_FLAG } from "@ggd/shared/protocol/schema";
 import type { Vec2 } from "@ggd/shared/sim/math/vec2";
@@ -554,6 +555,21 @@ export class GameApp {
     setLocalAccounts(this.sessions.localAccountIds());
     room.onStateChange((state) => this.onStatePatch(state));
     this.onStatePatch(room.state);
+  }
+
+  /**
+   * REPLAY flow (task #175): bind the renderer to a "replay" room. The state
+   * patch path is IDENTICAL to a live match because the replay room speaks the
+   * same schema — this method exists only to open the right room; every frame
+   * after that is the ordinary render loop. Returns the room so the replay
+   * controls overlay can send transport messages on it.
+   */
+  async connectReplay(replayId: string, ticket: string): Promise<Room<MatchState>> {
+    const room = await this.sessions.connectReplay(replayId, ticket);
+    setLocalAccounts(this.sessions.localAccountIds());
+    room.onStateChange((state) => this.onStatePatch(state));
+    this.onStatePatch(room.state);
+    return room;
   }
 
   /** Champ-select pad picking: A cycles through the roster for that player. */

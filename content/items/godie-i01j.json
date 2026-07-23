@@ -20,5 +20,12 @@
       "op": "flat",
       "value": 136
     }
-  ]
+  ],
+  "craftRole": "final",
+  "recipe": {
+    "components": [
+      "godie-i00k"
+    ],
+    "book": "godie-i02w"
+  }
 }

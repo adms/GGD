@@ -25,5 +25,14 @@
   ],
   "tags": [
     "wc3-import"
-  ]
+  ],
+  "craftRole": "final",
+  "recipe": {
+    "components": [
+      "godie-i00t",
+      "godie-i065",
+      "godie-i010"
+    ],
+    "book": "godie-i02s"
+  }
 }

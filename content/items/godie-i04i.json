@@ -15,5 +15,13 @@
       "op": "pctAdd",
       "value": 3
     }
-  ]
+  ],
+  "craftRole": "final",
+  "recipe": {
+    "components": [
+      "godie-i01b",
+      "godie-i01c"
+    ],
+    "book": "godie-i04k"
+  }
 }

@@ -98,6 +98,16 @@ export class MultiSession {
     return room;
   }
 
+  /**
+   * REPLAY flow (task #175): the PRIMARY connection joins a "replay" room. There
+   * are no couch guests and no senders in a replay — nobody controls the match —
+   * so only connection 0 is used; the rest stay idle. Returns the primary room
+   * so GameApp binds its renderer to the same schema stream a live match uses.
+   */
+  async connectReplay(replayId: string, ticket: string): Promise<Room<MatchState>> {
+    return this.connections[0]!.connectReplay(replayId, ticket);
+  }
+
   sendSelectChampion(player: number, championId: string): void {
     this.connections[player]?.sendSelectChampion(championId);
   }

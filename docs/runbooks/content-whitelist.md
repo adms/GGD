@@ -198,8 +198,75 @@ apply the demo bundle, which always ships complete kits.
 
 ---
 
+## 6. Operator-state migration — moving HIS whitelist to another host (task #179)
+
+**The problem this solves.** `.gitignore` excludes `/data/**` (correct — accounts,
+session tokens and logs must never be committed). That same rule strips
+`data/curation/whitelist.json`, so a **freshly-cloned family host boots REACHABLE and
+WELL-FORMED with an EMPTY whitelist**: the game-server's fail-safe does *not* engage (that
+is only for an *unreachable* platform), every `SELECT_CHAMPION` is rejected
+`not-whitelisted`, and champ-select renders zero cards. Every test stays green. Nobody
+can play.
+
+`make seed-demo` / `/seed -starter` recovers a *demo* 48 — but that is not necessarily
+**his** curation (e.g. his 30-item list enables 聖光石 + 黃昏公主的血脈, which the demo bundle
+does not). The migration tool moves exactly what he curated.
+
+**Two safety nets are now always on**, independent of how the whitelist got there:
+
+- The platform **refuses to boot** a player-facing deploy (networked bind, family tier, or
+  invite gate on) whose whitelist enables no champion — it names the fix instead of greeting
+  the family with an empty select. A loopback-only dev box stays frictionless;
+  `GGD_ALLOW_EMPTY_WHITELIST=1` is the deliberate "boot empty and curate in the console" escape.
+- The bundle records **"combat-env was never configured" as ABSENCE** and restore writes
+  nothing for it, so a future content re-tune is never silently frozen. (Exporting the
+  content-seeded admin table and writing it back is the mirror-image of the reset bug
+  「我改過應該要記得」 — this tool refuses to do it.)
+
+### The two commands
+
+```bash
+# On the laptop — snapshot what makes this HIS game (whitelist + any combat-env override):
+make opstate-export                 # writes ggd-operator-state.json
+
+# On the family host, after `make family-up` — put it back, verified, into the container:
+make family-restore                 # streams the bundle over stdin into /opstate
+
+# After playtest one, bring his ON-HOST console edits home (same tool, other direction):
+#   scp the host's bundle back, then:
+make opstate-restore DATA=./data    # laptop-side; add FORCE=1 only to discard local edits
+```
+
+`make family-restore` is a drop-in line in the deploy — it slots in right after
+`make family-up`. A running platform picks the restored whitelist up within ~5 s (the
+game-server's 5 s cache TTL); no restart needed.
+
+### What it guarantees
+
+| Property | How |
+| --- | --- |
+| **Only real content is enabled** | every id is checked against the target's `content/`; ids the tree no longer defines are **named** and dropped, never imported as dead entries. `-strict` turns a drop into a hard failure. |
+| **combat-env never-configured ≠ configured-to-1.0** | `configured:false` carries no document; restore writes no `data/config/combat-env.json`, so content tuning + future re-tunes stay live. A stored all-neutral table *is* carried, because that is a deliberate choice. |
+| **Idempotent** | restoring the same bundle twice reports `unchanged` and writes nothing (compared on content, not timestamp). |
+| **Never clobbers newer host state** | if the host whitelist was edited *after* the bundle was exported, restore **refuses** (exit non-zero) unless `FORCE=1`. An empty lazily-created host whitelist is never treated as "newer". |
+| **Integrity** | the bundle is sha256-sealed; a truncated `scp` or a hand-edit is caught on restore. |
+
+Inspect a bundle without touching anything: `go -C apps/platform run ./cmd/opstate inspect -in ggd-operator-state.json`.
+
+**What it deliberately does NOT carry:** the AI provider key (`config/ai-provider.json`,
+plaintext secret — re-enter it in the console on the host), invite codes (credentials),
+and accounts (opt-in via `-parts accounts`; a fresh host's first registration becomes the
+owner, so starting clean is safe until playtest one records real MMR — decide before
+session two). The 84 MB Blizzard overlay is task #177's `make family-ship`, not this.
+
+Code: `apps/platform/internal/opstate/`, CLI `apps/platform/cmd/opstate/`, boot check wired
+in `apps/platform/cmd/platform/main.go`.
+
+---
+
 ## Related
 
+- Operator-state migrator: `apps/platform/internal/opstate/` · CLI `cmd/opstate`
 - Selection rationale + gates: `apps/platform/internal/curation/starter.go`
 - Storage / API / policy: `apps/platform/internal/curation/curation.go`
 - Enforcement + fail-safe: `apps/game-server/src/curation/whitelist.ts`

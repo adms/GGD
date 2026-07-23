@@ -155,6 +155,48 @@ export interface ItemDef {
    */
   icon?: string;
   tags: string[];
+  /**
+   * Crafting/provenance role, recovered from the source map's TRIGGERS by
+   * tools/w3x-import/extract_item_roles.py — NOT inferred from cost or name at
+   * runtime (task #70, reopened twice). This is the field the owner's two
+   * rules are read off:
+   *   - "final"     a crafted end product WITH a 製作書 — the ONLY thing the
+   *                 shop may list (rule 1: 只有最終合成武器才能上架, 有製作書的).
+   *   - "quest"     obtained by completing a quest — the ONLY thing the
+   *                 3-choose-1 draft may offer (rule 2: 隨機三選一…所有任務道具).
+   *   - "component" consumed by some recipe (every 製作書 is one). Never sold,
+   *                 never drafted.
+   *   - "token"     a 兌換/認領/交換 shop token — grants a component, is not one.
+   *   - "direct"    sold for gold in the source map, never crafted, never a
+   *                 quest reward (the 神器/mercenary shelf).
+   *   - "service"   a shop MECHANIC (orb roll / stat tick), payload is code.
+   *   - "none"      referenced by no recipe, shop or quest trigger.
+   * Absent on legacy docs; treated as "none" everywhere it gates a surface.
+   */
+  craftRole?: ItemCraftRole;
+  /**
+   * For a "final" item, the recipe its own trigger implements: the 製作書 that
+   * unlocks it and the component items it consumes. Present so the classifier
+   * is auditable off the doc and a re-import can reconstruct it. The sim never
+   * combines — GGD has no craft step — this is provenance, not mechanics.
+   */
+  recipe?: ItemRecipe;
+}
+
+export type ItemCraftRole =
+  | "final"
+  | "component"
+  | "quest"
+  | "token"
+  | "direct"
+  | "service"
+  | "none";
+
+export interface ItemRecipe {
+  /** The 製作書 (recipe book) item, when the recipe uses one. */
+  book?: ItemId;
+  /** The component items the recipe consumes (excluding the book). */
+  components: ItemId[];
 }
 
 export type AugmentTier = "silver" | "gold" | "prismatic";

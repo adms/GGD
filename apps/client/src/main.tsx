@@ -17,6 +17,7 @@ import { bindGoreToSettings } from "./vfx/goreSettings";
 import { perfBus } from "./perfBus";
 import { ensureContentLoaded, isContentReady } from "./content/bootContent";
 import { initCursor } from "./cursor";
+import { ReplayApp, parseReplayHash } from "./replay/ReplayApp";
 import "./ui/mobile.css";
 import "./ui/buttonFx.css"; // shared JRPG + cyber-glow button skin (one import for the app)
 import "./cursor/cursor.css"; // JRPG cursor set (task #54a); gated to fine pointers
@@ -138,4 +139,14 @@ function boot(): void {
   });
 }
 
-boot();
+// REPLAY VIEWER ENTRY (task #175). When the URL carries `#replay=<id>`, this is
+// the owner following a 觀看回放 link from the admin console. Boot ONLY the
+// replay viewer — which reuses GameApp's renderer against the "replay" room —
+// instead of the normal login→lobby→match app, so the transport controls own
+// the page and none of the platform boot flow runs.
+const replayParams = parseReplayHash(typeof location !== "undefined" ? location.hash : "");
+if (replayParams) {
+  root.render(<ReplayApp id={replayParams.id} ticket={replayParams.ticket} />);
+} else {
+  boot();
+}

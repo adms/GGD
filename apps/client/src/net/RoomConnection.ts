@@ -96,6 +96,25 @@ export class RoomConnection {
     return room;
   }
 
+  /**
+   * REPLAY flow (task #175): join a "replay" room instead of "match". The replay
+   * room re-runs a recorded match and projects it through the SAME MatchState
+   * schema, so binding it here means the whole existing renderer + interpolation
+   * + HUD path renders a replay with zero changes — a replay is, to everything
+   * downstream of this seam, just a match nobody is controlling. `replayId` is
+   * the recording id; `ticket` is the admin-minted view proof (empty in dev).
+   */
+  async connectReplay(
+    replayId: string,
+    ticket: string,
+    endpoint: string = defaultEndpoint(),
+  ): Promise<Room<MatchState>> {
+    const client = new Client(endpoint);
+    const room = await client.joinOrCreate<MatchState>("replay", { replayId, ticket });
+    this.bind(room);
+    return room;
+  }
+
   private bind(room: Room<MatchState>): void {
     this.room = room;
     room.onMessage(MSG.EVENT, (ev: EventMessage) => {

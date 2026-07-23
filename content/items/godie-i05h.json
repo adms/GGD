@@ -20,5 +20,12 @@
       "op": "pctAdd",
       "value": 0.282
     }
-  ]
+  ],
+  "craftRole": "final",
+  "recipe": {
+    "components": [
+      "godie-i00u"
+    ],
+    "book": "godie-i00b"
+  }
 }

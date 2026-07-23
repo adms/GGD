@@ -122,32 +122,39 @@ export function applyItemWhitelist<T extends { id: string }>(items: readonly T[]
 /**
  * The shop catalogue for one match.
  *
- * When the whitelist is ENFORCED it is the whole policy — the operator's list
- * is the catalogue, and nothing else may narrow it. The `godie-` prefix rule
- * below is a fallback for the UNENFORCED case only (offline / bare `pnpm dev`
- * / unit tests), where it hides the self-created skeleton demo items
- * (ember-rod/…) once a real imported catalogue is loaded.
+ * RULE 1 (owner, task #70, stated twice): 只有最終合成武器才能上架可直接購買
+ * (有製作書的) — the shop lists ONLY final crafted weapons. This is now read
+ * off the `craftRole` marker recovered from the source-map triggers, NOT from
+ * cost or name. The previous pass filtered on `cost > 0`, which let 96 recipe
+ * components and 54 no-op recipe books onto the shelf and put the quest item
+ * 魔戒 on sale for 300g — because cost encodes neither craft stage nor quest
+ * provenance. See tools/w3x-import/extract_item_roles.py for how the marker is
+ * derived, and packages/shared/src/sim/content/defs.ts for the role vocabulary.
  *
- * Applying the prefix rule underneath an enforced whitelist is what broke the
- * demo bundle: `swift-boots` and `serrated-edge` are whitelisted but carry no
- * `godie-` prefix, so the shop silently dropped them — while the AI kept
- * buying them off `buildPriority`, i.e. bots bought items no human could see.
+ * Buyable = `craftRole === "final"` OR a shop SERVICE (傳說寶玉 / 能力屬性強化,
+ * which are mechanics, not weapons). Nothing else — no components, no books, no
+ * quest items, no direct/token/none items — may ever be listed.
+ *
+ * When the whitelist is ENFORCED the operator's list narrows the buyable set
+ * further, but can never WIDEN it past the final/service rule: a mis-curated
+ * whitelist cannot resurrect the old "every priced item" shop.
  */
-export function shopCatalogue<T extends { id: string; cost?: number }>(items: readonly T[], wl: Whitelist): T[] {
-  // A 0g item is NOT a shop entry (task #82): the draft/legendary surfaces are
-  // whitelisted so the round-2/round-5 cards can offer them, so they arrive
-  // here on the enforced path too — and the sim refuses to sell them. Listing
-  // them would show 29 legendaries at "0 g" next to a dead button.
-  items = items.filter((i) => i.cost === undefined || i.cost > 0);
-  if (wl.enforced) return applyItemWhitelist(items, wl);
-  // The two SHOP SERVICES (傳說寶玉 / 能力屬性強化) are MECHANICS, not imported
-  // content, so the `godie-` fallback would hide them exactly where they are
-  // most needed — offline dev, which is where the shop gets played. They are
-  // re-admitted explicitly rather than by loosening the prefix rule, which
-  // would let the skeleton demo items back in with them.
+export function shopCatalogue<T extends { id: string; cost?: number; craftRole?: string }>(
+  items: readonly T[],
+  wl: Whitelist,
+): T[] {
+  const buyable = items.filter((i) => i.craftRole === "final" || isShopService(i.id));
+  if (wl.enforced) return applyItemWhitelist(buyable, wl);
+  // Unenforced / offline dev is where the shop actually gets played, and the
+  // final/service rule holds there too. The ONLY concession is the bare
+  // skeleton box (unit tests, `pnpm dev` with no imported content): if not a
+  // single final-role item is loaded, fall back to the demo stat sticks so the
+  // shop is not an empty grid. Real matches always load the 34 map finals, so
+  // this branch never runs in the product.
+  if (buyable.some((i) => i.craftRole === "final")) return buyable;
   const services = items.filter((i) => isShopService(i.id));
-  const imported = items.filter((i) => i.id.startsWith("godie-"));
-  return imported.length > 0 ? [...services, ...imported] : [...items];
+  const demo = items.filter((i) => (i.cost ?? 0) > 0 && !isShopService(i.id));
+  return demo.length > 0 ? [...services, ...demo] : [...items];
 }
 
 /**

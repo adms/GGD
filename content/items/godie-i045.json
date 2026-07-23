@@ -20,5 +20,12 @@
   "tags": [
     "wc3-import"
   ],
-  "icon": "assets/icons/items/godie-i045.png"
+  "icon": "assets/icons/items/godie-i045.png",
+  "craftRole": "final",
+  "recipe": {
+    "components": [
+      "godie-i01m"
+    ],
+    "book": "godie-i044"
+  }
 }

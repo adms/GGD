@@ -40,5 +40,12 @@
         }
       ]
     }
-  ]
+  ],
+  "craftRole": "final",
+  "recipe": {
+    "components": [
+      "godie-i020"
+    ],
+    "book": "godie-i01q"
+  }
 }

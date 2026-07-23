@@ -35,5 +35,12 @@
       "value": 32.9
     }
   ],
-  "icon": "assets/icons/items/godie-i06d.png"
+  "icon": "assets/icons/items/godie-i06d.png",
+  "craftRole": "final",
+  "recipe": {
+    "components": [
+      "godie-i06s"
+    ],
+    "book": "godie-i029"
+  }
 }

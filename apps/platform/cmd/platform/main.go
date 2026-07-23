@@ -10,12 +10,23 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 	"time"
 
 	"github.com/ggd/platform/internal/config"
+	"github.com/ggd/platform/internal/opstate"
 	"github.com/ggd/platform/internal/server"
 )
+
+// envTruthy reports whether an env var is set to a truthy value.
+func envTruthy(key string) bool {
+	switch strings.ToLower(strings.TrimSpace(os.Getenv(key))) {
+	case "1", "true", "yes", "on":
+		return true
+	}
+	return false
+}
 
 func main() {
 	slog.SetDefault(slog.New(slog.NewJSONHandler(os.Stdout, nil)))
@@ -39,6 +50,34 @@ func main() {
 		slog.Error("boot rebuild", "err", err)
 		os.Exit(1)
 	}
+
+	// Refuse to bring up a PLAYER-FACING deploy whose content whitelist enables
+	// no champion — the silent failure where every test is green and the family
+	// still meets an empty champion select. A loopback-only dev bind is exempt
+	// (that empty state is a normal starting point); GGD_ALLOW_EMPTY_WHITELIST=1
+	// is the deliberate "boot empty and curate in the console" escape.
+	bc, err := opstate.PlayableBootCheck(opstate.BootCheckInput{
+		DataDir:            cfg.DataDir,
+		Addr:               cfg.Addr,
+		FamilyTier:         cfg.FullAssets,
+		RequireInvite:      cfg.RequireInvite,
+		AllowEmptyOverride: envTruthy("GGD_ALLOW_EMPTY_WHITELIST"),
+	})
+	if err != nil {
+		slog.Error("boot check", "err", err)
+		os.Exit(1)
+	}
+	if bc.Fatal {
+		slog.Error("boot check FAILED — refusing to start with an empty whitelist on a player-facing deploy",
+			"detail", bc.Message)
+		os.Exit(1)
+	}
+	if bc.ChampionCount == 0 {
+		slog.Warn(bc.Message, "playerFacing", bc.PlayerFacing)
+	} else {
+		slog.Info(bc.Message, "champions", bc.ChampionCount)
+	}
+
 	srv.Start(ctx)
 
 	httpSrv := &http.Server{

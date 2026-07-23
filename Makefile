@@ -205,8 +205,11 @@ lan-probe:
 #   make family-admin-reset USER_NAME=<name>   reset an admin password on the host
 #     (USER_NAME, not USER — `USER` is already set in every shell, so make would
 #      silently reset whoever you are logged in as)
+#   make opstate-export        snapshot HIS whitelist + combat-env → a bundle (laptop)
+#   make family-restore        restore that bundle into the host platform (task #179)
 #
 # Full runbook (繁體中文): docs/family-deploy.md
+# Operator-state migration: docs/runbooks/content-whitelist.md § operator-state
 # =============================================================================
 
 FAMILY_COMPOSE := -f docker/compose.yaml -f docker/compose.family.yaml
@@ -330,3 +333,48 @@ family-token:
 family-admin-reset:
 	@test -n "$(USER_NAME)" || { echo "usage: make family-admin-reset USER_NAME=<your admin username>"; exit 1; }
 	docker compose $(FAMILY_COMPOSE) --env-file $(FAMILY_ENV) exec -T platform /ownerreset -username "$(USER_NAME)" -generate
+
+# ---- operator-state migration (task #179) ----------------------------------
+# The VERIFIED path for moving the owner's hand-curated content whitelist (and,
+# if he ever sets one, the 戰鬥系統 combat-env override) between deploys. This is
+# what carries HIS 48 champions — .gitignore excludes /data/**, so the whitelist
+# never ships in git and a fresh host would otherwise serve an EMPTY champion
+# select (the platform now REFUSES to boot player-facing in that state).
+#
+# Two directions, same file:
+#   make opstate-export                       # on the laptop → BUNDLE (default ggd-operator-state.json)
+#   make family-restore                       # on the host, into the running platform's /data
+#   make family-restore FORCE=1               # ...even over newer host state (discards host edits)
+#   make opstate-restore                      # laptop→laptop or into any DATA_DIR (needs Go)
+#
+# The bundle records "combat-env was never configured" as ABSENCE, and restore
+# writes nothing for it — so a future content re-tune is never silently masked.
+# It verifies every id against the target content tree and NAMES any that no
+# longer exist; it is idempotent; it refuses to clobber newer host state unless
+# FORCE=1. See docs/runbooks/content-whitelist.md § operator-state migration.
+BUNDLE ?= ggd-operator-state.json
+
+.PHONY: opstate-export
+opstate-export:
+	$(call need,go,brew install go   # Go 1.23+)
+	go -C apps/platform run ./cmd/opstate export \
+		-data $(abspath data) -content $(abspath content) -out $(abspath $(BUNDLE))
+
+.PHONY: opstate-restore
+opstate-restore:
+	$(call need,go,brew install go   # Go 1.23+)
+	@test -n "$(DATA)" || { echo "usage: make opstate-restore DATA=<target DATA_DIR> [BUNDLE=…] [FORCE=1]"; exit 1; }
+	go -C apps/platform run ./cmd/opstate restore \
+		-in $(abspath $(BUNDLE)) -data $(DATA) -content $(abspath content) $(if $(FORCE),-force,)
+
+# Restore INTO the running family platform container. The bundle is streamed
+# over stdin so the host filesystem is never touched, and /data + /srv/content
+# are the same paths the server reads. Run it after `make family-up`; the boot
+# check will already have refused to start empty, so this is how you make it not.
+.PHONY: family-restore
+family-restore:
+	@test -f $(BUNDLE) || { echo "✗ no bundle at $(BUNDLE) — export one on your laptop first: make opstate-export"; exit 1; }
+	@echo "→ restoring operator state from $(BUNDLE) into the platform container"
+	docker compose $(FAMILY_COMPOSE) --env-file $(FAMILY_ENV) exec -T platform \
+		/opstate restore -in - -data /data -content /srv/content $(if $(FORCE),-force,) < $(BUNDLE)
+	@echo "  (a running platform picks the new whitelist up within ~5s; no restart needed)"

@@ -16,7 +16,35 @@ with a TODO marker in the returned report (never silently).
 
 from __future__ import annotations
 
+import json
+import os
 import re
+
+# Crafting/provenance roles recovered from the source-map TRIGGERS by
+# tools/w3x-import/extract_item_roles.py. A re-import MUST carry these across or
+# the shop/draft classification silently resets to "everything" — the exact
+# regression that reopened task #70 twice. Loaded once, lazily.
+_ROLES_PATH = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
+    "docs", "content", "wc3-item-roles.json")
+_ROLES_CACHE: dict | None = None
+
+
+def _item_roles() -> dict:
+    global _ROLES_CACHE
+    if _ROLES_CACHE is None:
+        try:
+            with open(_ROLES_PATH, encoding="utf-8") as f:
+                _ROLES_CACHE = json.load(f).get("roles", {})
+        except FileNotFoundError:
+            # Run extract_item_roles.py first. Absence is not silently benign:
+            # every item would import as unclassified, so we surface it loudly
+            # rather than shipping a shop with no gate.
+            print("WARNING: docs/content/wc3-item-roles.json missing — items "
+                  "will import WITHOUT a craftRole. Run extract_item_roles.py.")
+            _ROLES_CACHE = {}
+    return _ROLES_CACHE
+
 
 DIST = 11.0 / 600.0
 # Ability stat scaling. WC3 attribute scaling lived in JASS triggers and does not
@@ -902,4 +930,16 @@ def item_to_draft(item: dict, abilities: dict, item_id: str,
     }
     if mods:
         doc["modifiers"] = mods
+    # Preserve the trigger-derived crafting role so a re-import does not erase
+    # the shop/draft classification (task #70). The recipe is provenance only —
+    # the sim has no combine step.
+    role_rec = _item_roles().get(item_id)
+    if role_rec:
+        doc["craftRole"] = role_rec["role"]
+        recipe = role_rec.get("recipe")
+        if role_rec["role"] == "final" and recipe and recipe.get("components"):
+            r = {"components": recipe["components"]}
+            if recipe.get("book"):
+                r["book"] = recipe["book"]
+            doc["recipe"] = r
     return doc
