@@ -2,49 +2,90 @@ GGD — All Rights Reserved / 版權所有，保留一切權利
 
 Copyright (c) 2026 Adms. All rights reserved.
 
-This is a PRIVATE project, kept under version control for the author's own
-use. It is not open source. No licence, express or implied, is granted to
-anyone. No permission is given to use, copy, modify, publish, distribute,
-sublicense, or sell any part of this repository.
+This is a PRIVATE project, kept under version control for the author's own use.
+It is not open source. No licence, express or implied, is granted to anyone. No
+permission is given to use, copy, modify, publish, distribute, sublicense, or
+sell any part of this repository.
 
 本專案為私人專案，僅供作者自行版本控管使用。非開源，未授予任何人任何授權。
 
 
-=== IMPORTANT: this repository is not wholly the author's work ==============
+=== What in here is the author's own work ==================================
 
-The notice above covers only the parts the author wrote. The repository also
-contains material derived from third parties, kept here solely for private,
-local, non-commercial development and play. The author does not own it, cannot
-license it, and no one may redistribute it:
+Substantially all of this project is original work by the author:
 
-  * Anime characters, names, likenesses, quotes and related material, owned by
-    their respective rights holders (Shueisha, Shogakukan, Nintendo / The
-    Pokémon Company, and others).
+  * All source code in this repository.
+  * The Warcraft III custom map this game is ported from — its design, systems,
+    triggers and balance — and the content derived from it (champions,
+    abilities, items, strings, stats).
+  * The character models, textures and reskins authored for that map (for
+    example the self-made sakura tree, and the unit repaints recorded in
+    docs/asset-debt.md as `user-reskin` — the mesh may be stock, the texture is
+    the author's).
+  * The 21 Chinese voice quips recorded for the map.
+  * All eleven background-music tracks, synthesised from scratch by
+    tools/bgm-gen — every waveform computed from numpy arrays, with no sample
+    and no audio file of any kind read as input.
+  * The arena ground textures and the cursor art, generated procedurally by this
+    repo's own scripts — no image read as input, byte-reproducible from a seed.
 
-  * Content derived from an unauthorized Warcraft III custom map, which is
-    itself an unlicensed derivative work by an unknown author — so two
-    separate layers of other people's rights apply to it.
+content/assets/CREDITS.md is the detailed provenance record for the above.
 
-  * Assets extracted from Warcraft III, © Blizzard Entertainment, Inc.
-    Blizzard's terms prohibit redistributing them. In this project they are
-    gated to loopback/LAN environments and are not served publicly.
 
-  * Third-party licensed assets that carry their own terms and attribution
-    requirements (including a CC BY 4.0 model that requires visible credit,
-    and sound effects with use restrictions). Required credits are being
-    tracked separately as an open task; they are an obligation regardless of
-    this repository staying private.
+=== What in here is NOT the author's =======================================
 
-Consequences that follow from the above, stated plainly:
+  * ANIME CHARACTER IDENTITIES. The roster borrows the names, titles,
+    likenesses and catchphrases of characters owned by their respective rights
+    holders (Shueisha, Shogakukan, Nintendo / The Pokémon Company, and others).
+    The models, textures, code and audio are the author's; the characters are
+    not. Authoring an original model of someone else's character does not make
+    the character the author's.
 
-  * Do not make this repository public.
+  * THIRD-PARTY CC0 ART. Models and textures from KayKit (Kay Lousberg),
+    Quaternius, Kenney Vleugels and mastjie. Public domain — credited in
+    content/assets/CREDITS.md out of courtesy, with no obligation attached.
+
+  * ONE CC BY 4.0 MODEL — ATTRIBUTION IS MANDATORY. The login-screen dragon,
+    content/assets/models/menu/dragon2.glb, is not CC0. Its credit must be
+    displayed:
+
+      "Animated Dragon Three Motion Loops"
+      (https://sketchfab.com/3d-models/animated-dragon-three-motion-loops-eca98cf6cd084c1596cecf716e110c29)
+      by LasquetiSpice (https://sketchfab.com/LasquetiSpice)
+      licensed under CC-BY 4.0 (https://creativecommons.org/licenses/by/4.0/)
+
+    This obligation exists whether or not the project stays private.
+
+  * 効果音ラボ (Sound Effect Lab) SOUND EFFECTS — https://soundeffect-lab.info/ —
+    40 clips under content/assets/audio/sfx/lab/ and audio/voice-jp/. Free for
+    commercial use and credit is optional, but copyright is expressly retained
+    by 効果音ラボ and the pack's prohibitions apply. It is NOT public domain and
+    must not be treated as CC0. See content/assets/CREDITS.md for the verified
+    terms.
+
+
+=== Blizzard assets are NOT in this repository =============================
+
+A local Warcraft III asset overlay (data/blizzard-overlay/, ~84 MB) is used
+during development so the map can be viewed as it originally looked. It is
+extracted from the author's own installed copy of the game, it is © Blizzard
+Entertainment, Inc., and it is EXCLUDED from version control by .gitignore
+(/data/**). Keep it that way: never commit it, never ship it, never serve it
+publicly. Every asset in it is registered as debt to be replaced —
+see docs/asset-debt.md.
+
+
+=== Practical consequences =================================================
+
+  * Do not make this repository public. The code and art are the author's, but
+    the anime character identities are third-party IP regardless of who
+    authored the art.
   * Do not deploy it on a publicly reachable network.
-  * Do not publish releases, builds, or asset packs from it.
-
-Any of those would distribute the third-party material listed above.
+  * Do not commit data/blizzard-overlay/.
+  * Keep the CC BY 4.0 dragon credit displayed.
 
 If you were given access to contribute: you are working on someone else's
-private project. Contributions are made for use within this project only, and
-nothing here grants you rights over the third-party material.
+private project. Nothing here grants you rights over the third-party material
+named above.
 
 This file records intent and provenance. It is not legal advice.
