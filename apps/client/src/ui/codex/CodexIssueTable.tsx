@@ -116,10 +116,20 @@ function Group({ group, onJump }: { group: CodexIssueGroup; onJump: (ref: CodexR
 export interface CodexIssueTableProps {
   groups: readonly CodexIssueGroup[];
   iconScan: IconScanState;
+  /** how many icon files the scan will download — stated on the button. */
+  iconScanFileCount: number;
+  /** start the duplicate-art content hash (see useCodex: it is NOT automatic). */
+  onStartIconScan: () => void;
   onJump: (ref: CodexRef) => void;
 }
 
-export function CodexIssueTable({ groups, iconScan, onJump }: CodexIssueTableProps): React.JSX.Element {
+export function CodexIssueTable({
+  groups,
+  iconScan,
+  iconScanFileCount,
+  onStartIconScan,
+  onJump,
+}: CodexIssueTableProps): React.JSX.Element {
   return (
     <section id="codex-issues" style={{ marginTop: 26 }}>
       <div
@@ -138,9 +148,31 @@ export function CodexIssueTable({ groups, iconScan, onJump }: CodexIssueTablePro
         <span style={{ fontSize: 11, color: TEXT_DIM }}>
           僅供額外參考 — 不屬於上面的瀏覽內容，上方三區保持乾淨不加警告標記。
         </span>
-        {iconScan !== "done" && (
+        {/* The duplicate-art scan must DOWNLOAD every declared icon in full to
+            hash it, so it is opt-in and states its price first. It used to fire
+            automatically 2 s after every codex open — see useCodex's header. */}
+        {iconScan === "idle" && (
+          <button
+            type="button"
+            onClick={onStartIconScan}
+            disabled={iconScanFileCount === 0}
+            title="下載並雜湊每個圖示的位元組，找出被指派到多個項目的同一張圖。這是本頁唯一會大量下載的動作。"
+            style={{
+              fontSize: 11,
+              padding: "3px 9px",
+              borderRadius: 6,
+              cursor: iconScanFileCount === 0 ? "default" : "pointer",
+              background: "#1b2233",
+              border: "1px solid #3a4560",
+              color: "#c6d0e4",
+            }}
+          >
+            掃描圖示位元組（{iconScanFileCount} 檔）— 找重複圖
+          </button>
+        )}
+        {iconScan === "running" && (
           <span style={{ fontSize: 11, color: "#8d97ad" }}>
-            {iconScan === "running" ? "（圖示位元組掃描中…重複圖示分組稍後補上）" : "（尚未掃描圖示位元組）"}
+            （圖示位元組掃描中…重複圖示分組稍後補上）
           </span>
         )}
       </div>

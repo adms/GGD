@@ -20,6 +20,7 @@
  * floor comes from it and is therefore unique per position, while the only
  * repeating content is too fine-grained to fingerprint.
  */
+import { withContentVersion } from "../content/assetVersion";
 
 /** Where the generated sets are served from (vite dev + prod nginx both map
  *  /content onto the repo `content/` directory). */
@@ -64,13 +65,20 @@ export interface GroundTextureUrls {
   macro: string;
 }
 
+/**
+ * The four map URLs for a ground set, stamped with the content cache key.
+ * `?h=<contentVersion>` is what flips nginx from `no-cache` to `public,
+ * max-age=31536000, immutable` (nginx.conf `map $arg_h $content_cache`); the
+ * ground sets are 2,940,212 B across 17 files and are re-fetched on every arena
+ * build without it. A no-op before the content manifest lands.
+ */
 export function groundTextureUrls(set: GroundTextureSet): GroundTextureUrls {
   const dir = `${GROUND_TEXTURE_BASE}/${set}`;
   return {
-    albedo: `${dir}/albedo.png`,
-    normal: `${dir}/normal.png`,
-    orm: `${dir}/orm.png`,
-    macro: `${dir}/macro.png`,
+    albedo: withContentVersion(`${dir}/albedo.png`),
+    normal: withContentVersion(`${dir}/normal.png`),
+    orm: withContentVersion(`${dir}/orm.png`),
+    macro: withContentVersion(`${dir}/macro.png`),
   };
 }
 

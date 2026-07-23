@@ -24,6 +24,7 @@ import {
 } from "@ggd/shared/content";
 import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
 import { Champions } from "@ggd/shared/sim/content/registry";
+import { setContentAssetVersion } from "./assetVersion";
 
 /** Default content mount — nginx serves it in prod; the vite plugin in dev. */
 export const CONTENT_BASE_URL = "/content";
@@ -109,6 +110,11 @@ export async function loadAllContent(opts: ContentBootOptions = {}): Promise<Con
   try {
     const { store, manifest } = await new ContentLoader(source).load();
     registerAll(store);
+    // Publish the tree's cache key. Every content ASSET url (glb / mp3 / icon)
+    // is stamped `?h=<contentVersion>` from here on, which is the ONLY thing that
+    // flips nginx from `no-cache` to `immutable` for those files. Set after the
+    // load succeeds — a version we could not fully load must not pin assets.
+    setContentAssetVersion(manifest.contentVersion);
     if (fallback) transport = fallback.didFallback ? "per-doc" : "bundle";
     return {
       ok: true,
@@ -193,5 +199,6 @@ export function ensureContentLoaded(opts: ContentBootOptions = {}): Promise<Cont
 /** Test-only: forget the single-flight promise + reset the signal to loading. */
 export function __resetContentBoot(): void {
   bootPromise = null;
+  setContentAssetVersion(null); // asset URLs return to the bare/revalidating form
   publishBootSnapshot({ phase: "loading", result: null });
 }

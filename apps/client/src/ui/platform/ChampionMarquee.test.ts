@@ -28,6 +28,7 @@ import {
   withoutDuplicatePortraits,
   type MarqueeChampion,
 } from "./marqueeRoster";
+import { revealedPortraitCount } from "./ChampionMarquee";
 
 const ICONED: MarqueeChampion = {
   id: "godie-e001",
@@ -275,5 +276,78 @@ describe("SHARED_PORTRAIT_GROUPS matches the PNG bytes on disk", () => {
     for (const group of SHARED_PORTRAIT_GROUPS) {
       for (const id of group) expect(known.has(id), `${id} exists`).toBe(true);
     }
+  });
+});
+
+// ---------------------------------------------------------------------------
+// THE REGRESSION THAT MADE TASK #18 NEVER ACTUALLY HAPPEN
+// ---------------------------------------------------------------------------
+// The band read the champion registry once inside `useMemo(…, [])`. AuthScreen
+// mounts ~50 ms into boot, long before the background content load populates
+// that registry, so the memo captured [] and the component returned null for
+// the whole page session — zero <img> in a real browser, forever. These cases
+// render the ACTUAL component (react-dom/server, same trick AudioToggle.test
+// uses) against an empty and then a populated registry, so "renders portraits
+// once content arrives" is asserted, not assumed.
+describe("ChampionMarquee renders once the registry fills (#18)", () => {
+  it("renders nothing on an empty registry and portraits on a full one", async () => {
+    cover("champ-marquee-subscribes-to-content-ready");
+    const { createElement } = await import("react");
+    const { renderToStaticMarkup } = await import("react-dom/server");
+    const { Champions } = await import("@ggd/shared/sim/content/registry");
+    const { ensureContentLoaded } = await import("../../content/bootContent");
+    const { ChampionMarquee } = await import("./ChampionMarquee");
+
+    // BEFORE: this is the state AuthScreen actually mounts in.
+    Champions.clear();
+    expect(renderToStaticMarkup(createElement(ChampionMarquee))).toBe("");
+
+    // Settle the content-boot signal (no server here → the skeleton fallback
+    // path, which still flips the phase to "ready" — that flip is the fix's
+    // dependency), then put a real roster in the registry.
+    await ensureContentLoaded();
+    Champions.clear();
+    for (let i = 0; i < 40; i++) {
+      Champions.register(`fix-${i}` as never, {
+        id: `fix-${i}`,
+        name: `英雄${i}`,
+        icon: `assets/icons/champions/godie-e001.png`,
+        tags: ["godie"],
+        modelKey: `model-${i}`,
+        abilities: { Q: { name: `${i}-01 技` } },
+      } as never);
+    }
+
+    const html = renderToStaticMarkup(createElement(ChampionMarquee));
+    const imgs = html.match(/<img /g) ?? [];
+    expect(imgs.length).toBeGreaterThan(0);
+    // …and NOT all 40: the reveal window is what keeps the login screen from
+    // pulling every portrait at once (see revealedPortraitCount below).
+    expect(imgs.length).toBeLessThan(80);
+  });
+
+  it("reveals portraits in scroll order instead of all at once", () => {
+    cover("champ-marquee-progressive-reveal");
+    // 81 portraits × ~9 KB. A 1280px window at 78px/tile with a 240px
+    // lookahead reaches 20 tiles up front, and the strip's own 26 px/s adds
+    // one roughly every 3 s — so a 15 s login costs ~25, not 81.
+    const at = (elapsedSec: number): number =>
+      revealedPortraitCount({ elapsedSec, viewportPx: 1280, stepPx: 78, pxPerSec: 26 });
+    expect(at(0)).toBe(20);
+    expect(at(15)).toBe(25);
+    expect(at(0)).toBeLessThan(81);
+    // monotonic, and it does eventually cover the whole roster
+    expect(at(600)).toBeGreaterThan(81);
+    expect(at(30)).toBeGreaterThanOrEqual(at(0));
+    // degenerate inputs never produce 0 (that would blank the band again)
+    expect(
+      revealedPortraitCount({
+        elapsedSec: -5,
+        viewportPx: 0,
+        stepPx: 0,
+        pxPerSec: -10,
+        lookaheadPx: 0,
+      }),
+    ).toBe(1);
   });
 });

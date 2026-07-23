@@ -43,6 +43,7 @@ import { BgmRotationStore, SAMANTHA_VARIANTS, type BgmVariantMap } from "./bgmVa
 import { loopResumeOffsetSec } from "./scene";
 import { SFX_CORE, sfxEventsForScene } from "./sfxManifest";
 import { EMPTY_AUDIO_MAP, audioMapFromDoc, type AudioMap, type AudioScene } from "./types";
+import { withContentVersion } from "../content/assetVersion";
 
 /**
  * Slider→bus-gain smoothing. A drag emits an edit per `input` event (dozens a
@@ -1033,8 +1034,17 @@ export class AudioSystem {
     }
   }
 
+  /**
+   * Clip URL, stamped with the content cache key. `?h=<contentVersion>` is the
+   * only thing that flips nginx from `no-cache` to `public, max-age=31536000,
+   * immutable` (nginx.conf `map $arg_h $content_cache`); without it all 995
+   * shipped clips (mp3 + wav, 32,276,677 B) revalidated on every visit.
+   * `withContentVersion` is a no-op until the content manifest lands, so an
+   * injected test baseUrl and any pre-boot clip are unchanged.
+   */
   private urlFor(path: string): string {
-    return this.baseUrl.endsWith("/") ? this.baseUrl + path : `${this.baseUrl}/${path}`;
+    const url = this.baseUrl.endsWith("/") ? this.baseUrl + path : `${this.baseUrl}/${path}`;
+    return withContentVersion(url);
   }
 
   // -------------------------------------------------------------------------

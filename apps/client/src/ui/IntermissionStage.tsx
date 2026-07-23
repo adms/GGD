@@ -41,6 +41,20 @@ export function IntermissionStage(): React.JSX.Element | null {
   const purchaseSeq = useHud((s) => (s.shopEvent?.kind === "bought" ? s.shopEvent.seq : 0));
 
   // ---- scene lifecycle (once per mount = once per intermission) ------------
+  // A FRESH SCENE PER ROUND IS DELIBERATE. Re-opening the market used to
+  // re-download its 13 prop .glbs (2,228,424 B, merchant.glb alone 1,598,564 B)
+  // plus the team banner every single round; that waste now lives in
+  // AssetManager's shared byte cache, so round 2+ rebuild with ZERO requests
+  // (proved in render/intermission/assetReuse.test.ts) while everything below
+  // still gets the clean slate it assumes.
+  //
+  // DO NOT "optimise" this into a long-lived scene without moving the entry
+  // beat with it: `playEnterTransition` is what starts the camera ease AND the
+  // merchant's wave, and the `reveal` timer below only makes sense because the
+  // black cover starts opaque on a scene that has never been shown. A kept-alive
+  // scene would also pin a second WebGL context, engine, shadow map and
+  // post-process pipeline for the whole match — far more expensive than the
+  // parse it saves.
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;

@@ -48,6 +48,11 @@ import { ChampionProfile } from "./champselect/ProfileBlock";
 import { RulesBriefing } from "./champselect/RulesBriefing";
 import { observeBriefing, dismissCurrentBriefing } from "./champselect/briefingGate";
 import { champSelectStage, champSelectProfileLayout, profileSubjectId } from "./champselect/championProfile";
+import {
+  INITIAL_PREVIEW_STATE,
+  modelLoadSubject,
+  previewReducer,
+} from "./champselect/previewGate";
 import { useWalletMeta, sortFavouritesFirst } from "./champselect/walletMeta";
 import { CrystalBadge, ChampMetaOverlay } from "./champselect/ChampMetaControls";
 import { observeLock, lockCurrentPick, pickAllowed, pickToCommitOnLock } from "./champselect/lockGate";
@@ -73,7 +78,11 @@ export function ChampSelectPanel(): React.JSX.Element {
   const myPick = seats.find((s) => s.seatId === localSeatId)?.championId ?? "";
 
   const [query, setQuery] = useState("");
-  const [hoveredId, setHoveredId] = useState<string | null>(null);
+  // 「滑鼠點選才載入」 — hover only highlights; CLICK is what loads the model.
+  // See champselect/previewGate for why (a sweep used to pull up to 17.56 MB).
+  // No `locked` argument is needed here: while locked the panel simply never
+  // dispatches a "click" (commit() returns early), and hover costs nothing.
+  const [preview, dispatchPreview] = useReducer(previewReducer, INITIAL_PREVIEW_STATE);
   const [, forceRender] = useReducer((n: number) => n + 1, 0);
 
   // operator content whitelist for this match (fetched once; NO_FILTER offline)
@@ -120,21 +129,29 @@ export function ChampSelectPanel(): React.JSX.Element {
   // explicit 鎖定 forces one re-render to reflect the frozen state.
   const locked = observeLock({ phase, secondsLeft, matchId });
 
-  // the champion the profile is looking at (hover previews, else the pick). Once
-  // locked the hover preview is dropped so the profile stays on the frozen pick.
-  const subjectId = profileSubjectId(locked ? null : hoveredId, myPick || null);
+  // The champion the profile (and its 3D stage) is looking at: the CLICKED
+  // preview, else the committed pick. Once locked the preview is dropped so the
+  // profile stays on the frozen pick. HOVER IS NOT AN INPUT HERE — that is the
+  // 「滑鼠點選才載入」 fix; see champselect/previewGate.
+  const subjectId = profileSubjectId(
+    locked ? null : modelLoadSubject(preview, null),
+    myPick || null,
+  );
 
-  // Hover is STICKY: the last-previewed champion stays on the stage until
-  // another is hovered or the pick changes (like LoL). Not clearing on
-  // mouse-leave keeps the 3D stage from flickering to the empty prompt — and its
-  // Babylon engine from churning — as the cursor crosses the grid.
-  const focus = (id: string): void => {
-    setHoveredId(id);
+  // Hover: highlight only. Costs zero bytes, so a cursor sweep across the whole
+  // grid downloads nothing. It still counts as a roster interaction, which is
+  // what dismisses the briefing.
+  const hover = (id: string): void => {
+    dispatchPreview({ type: "hover", id });
     dismissBriefing(); // first roster interaction skips the briefing
   };
+  const unhover = (): void => dispatchPreview({ type: "leave" });
   const commit = (id: string): void => {
     if (!pickAllowed(locked)) return; // frozen after lock — the roster can no longer switch
     dismissBriefing();
+    // A click is BOTH the pick and the preview: the stage/tabs switch instantly
+    // and locally, without waiting for the server to echo the seat back.
+    dispatchPreview({ type: "click", id });
     hudActions.selectChampion(id); // normal SELECT_CHAMPION (+ name call-out, confirm SFX)
   };
 
@@ -476,6 +493,8 @@ export function ChampSelectPanel(): React.JSX.Element {
                 {ordered.map((c) => {
                   const picked = myPick === c.id;
                   const focused = subjectId === c.id;
+                  // pure highlight — hovering costs nothing and loads nothing
+                  const hovered = !locked && preview.hoveredId === c.id && !focused;
                   // once locked the whole roster is frozen; the locked pick stays
                   // highlighted (with a 🔒), every other card is disabled + dimmed.
                   const frozenOther = locked && !picked;
@@ -487,8 +506,13 @@ export function ChampSelectPanel(): React.JSX.Element {
                       <SfxButton
                         onClick={() => commit(c.id)}
                         disabled={locked}
-                        onPointerEnter={locked ? undefined : () => focus(c.id)}
-                        onFocus={locked ? undefined : () => focus(c.id)}
+                        // hover/keyboard-focus = HIGHLIGHT ONLY (「滑鼠點選才載入」).
+                        // These handlers cannot reach a fetch: the 3D stage
+                        // follows `preview.clickedId`, which only onClick sets.
+                        onPointerEnter={locked ? undefined : () => hover(c.id)}
+                        onPointerLeave={locked ? undefined : unhover}
+                        onFocus={locked ? undefined : () => hover(c.id)}
+                        onBlur={locked ? undefined : unhover}
                         style={{
                           width: "100%",
                           minHeight: 44,
@@ -498,14 +522,22 @@ export function ChampSelectPanel(): React.JSX.Element {
                           boxSizing: "border-box",
                           cursor: locked ? "not-allowed" : "pointer",
                           textAlign: "left",
-                          background: picked ? "#2c3f6b" : focused ? "#1d2740" : "#171d2b",
+                          background: picked
+                            ? "#2c3f6b"
+                            : focused
+                              ? "#1d2740"
+                              : hovered
+                                ? "#1a2233"
+                                : "#171d2b",
                           border: picked
                             ? locked
                               ? "2px solid #57c98a"
                               : "2px solid #6f8fe0"
                             : focused
                               ? "1px solid #4a6099"
-                              : "1px solid #2c3448",
+                              : hovered
+                                ? "1px solid #3d4d74"
+                                : "1px solid #2c3448",
                           color: TEXT_MAIN,
                           opacity: frozenOther ? 0.45 : 1,
                           display: "flex",

@@ -240,6 +240,13 @@ export class IntermissionScene {
     // whole scene is mirrored to match the card's side (see layout.ts /
     // layout.test.ts, keyed on SHOP_CARD_SIDE).
 
+    // A fresh AssetManager per scene is REQUIRED, not sloppy: an AssetContainer
+    // belongs to the Scene that created it and dies with it, so its cache can
+    // never outlive `this.scene`. What DOES survive is the raw .glb bytes —
+    // AssetManager keeps those in a module-level cache shared by every
+    // instance, so re-opening the market on round 2 re-parses from memory and
+    // downloads nothing (2,283,528 B / 14 requests saved per round; measured in
+    // intermission/assetReuse.test.ts).
     this.assets = new AssetManager(this.scene);
     this.stage = new TransformNode("intermission-stage", this.scene);
 

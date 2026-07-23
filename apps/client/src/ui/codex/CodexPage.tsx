@@ -331,7 +331,8 @@ export interface CodexPageProps {
 }
 
 export function CodexPage({ onClose }: CodexPageProps): React.JSX.Element {
-  const { data, loading, error, icons, iconScan, plan, reload } = useCodex();
+  const { data, loading, error, icons, iconScan, iconScanFileCount, startIconScan, plan, reload } =
+    useCodex();
   const [itemF, setItemF] = useState<ItemFilter>(EMPTY_ITEM_FILTER);
   const [champF, setChampF] = useState<ChampionFilter>(EMPTY_CHAMPION_FILTER);
   const [abilF, setAbilF] = useState<AbilityFilter>(EMPTY_ABILITY_FILTER);
@@ -638,7 +639,13 @@ export function CodexPage({ onClose }: CodexPageProps): React.JSX.Element {
                 </SectionShell>
               </div>
 
-              <CodexIssueTable groups={issues} iconScan={iconScan} onJump={jump} />
+              <CodexIssueTable
+                groups={issues}
+                iconScan={iconScan}
+                iconScanFileCount={iconScanFileCount}
+                onStartIconScan={startIconScan}
+                onJump={jump}
+              />
             </>
           )}
         </div>
@@ -762,7 +769,7 @@ function Header({
           }}
           style={{ fontSize: 11, color: "#f0b088", textDecoration: "none" }}
         >
-          破損資料 {issueCount} 筆 ↓{iconScan !== "done" ? "（掃描中）" : ""}
+          破損資料 {issueCount} 筆 ↓{iconScan === "running" ? "（掃描中）" : ""}
         </a>
       )}
       <Btn small onClick={onReload} title="重新從 /content 讀取（不需重整整頁）">

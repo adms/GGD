@@ -17,7 +17,10 @@ import type {
   ConfigGoreDoc,
   AmbientVfxBinding,
 } from "@ggd/shared/content";
+import { Arenas, Configs, Models, RibbonDefs, VfxDefs } from "@ggd/shared/content";
 import { applyGoreDoc } from "../vfx/goreConfig";
+import { ensureContentLoaded } from "./bootContent";
+import { withContentVersion } from "./assetVersion";
 
 interface IndexFile {
   entries?: { id: string; path: string }[];
@@ -62,7 +65,10 @@ const NO_BINDINGS: readonly AmbientVfxBinding[] = [];
  */
 export function contentAssetUrl(path: string | null | undefined): string | null {
   if (!path || !path.startsWith("assets/")) return null;
-  return BASE + path;
+  // `?h=<contentVersion>` is what flips nginx from `no-cache` to
+  // `immutable` for this URL (see assetVersion.ts). Before the manifest lands
+  // it is a no-op and the bare URL revalidates, exactly as it always did.
+  return withContentVersion(BASE + path);
 }
 
 async function fetchJson<T>(path: string): Promise<T | null> {
@@ -88,45 +94,53 @@ async function fetchCollection<T extends { id: string }>(collection: string): Pr
 }
 
 export class ContentDb {
+  /**
+   * true = every doc lookup reads the shared registries the ContentLoader
+   * hydrated at boot (the normal path — zero per-match doc requests). false =
+   * the degraded self-fetch path below, used only when the content boot failed
+   * and fell back to the skeleton registry.
+   */
+  private fromRegistries = false;
+  /** degraded path only: docs this db fetched itself (empty when registry-backed). */
   private models = new Map<string, ModelDoc>();
   private vfx = new Map<string, VfxDoc>();
   private ribbons = new Map<string, RibbonDoc>();
+  private fetchedConfigs = new Map<string, { schema?: string }>();
   private ambientVfx: ConfigAmbientVfxDoc | null = null;
   private arenaDoc: ArenaDoc | null = null;
   private standInOverrides = new Map<string, StandInOverride>();
   private loaded = false;
 
-  /** Kick off all fetches; resolves when everything settled (never rejects). */
+  /**
+   * Populate the db; resolves when everything settled (never rejects).
+   *
+   * REGISTRY-FIRST (was: 507 HTTP requests / 516,392 B on EVERY match entry).
+   * The 117 model docs, the 388 vfx/ribbon docs, the arenas and the config docs
+   * are ALL loaded, schema-validated and registered by the shared ContentLoader
+   * at client boot (bootContent → registerAll), long before `screen` can become
+   * "match". Re-fetching them here downloaded the same bytes a second time. We
+   * now await the single-flight boot (already settled by this point — no network)
+   * and read the registries.
+   *
+   * THE GATE IS DELIBERATELY KEPT. `modelFor()` returning null is what stops
+   * `ChampionView.tryUpgradeToGlb` from latching (`upgradeStarted`) before the
+   * per-champion size override is resolvable — the override sidecar is NOT in the
+   * models index (leading "_"), so it is still a direct-path fetch, and a champion
+   * that adopted its glb one frame early would keep relativeScale 1.0 FOREVER
+   * (小叮噹 at 1.8u instead of 1.17u). So `this.loaded` stays an explicit gate and
+   * every accessor honours it: models become visible in the SAME step the
+   * overrides do, exactly as before. That costs the one sidecar request.
+   */
   async load(arenaId = "arena.skeleton"): Promise<void> {
-    const [models, vfxDocs, ambient, gore, arena, standin] = await Promise.all([
-      fetchCollection<ModelDoc>("models"),
-      // the vfx collection mixes vfx@1 particle docs and ribbon@1 trail docs
-      fetchCollection<VfxDoc | RibbonDoc>("vfx"),
-      // fetched by direct path (works even before content:build re-indexes it)
-      fetchJson<ConfigAmbientVfxDoc>("config/ambient-vfx.json"),
-      fetchJson<ConfigGoreDoc>("config/gore.json"),
-      fetchJson<ArenaDoc>(`arenas/${arenaId}.json`),
+    const [boot, standin] = await Promise.all([
+      // single-flight; at match entry this is an already-resolved promise (0 requests)
+      ensureContentLoaded(),
       // per-champion model-SIZE overrides (task #77/#150). Direct-path fetch: the
       // "_"-prefixed sidecar is intentionally excluded from the models _index.json,
-      // so it is loaded here alongside the model docs it complements. Loading it in
-      // the SAME pass as the model collection guarantees the override is resolvable
-      // the instant modelFor() first returns a doc (the frame the glb upgrade runs).
+      // so the ContentLoader never sees it. Resolving it in the SAME step as the
+      // model docs is the invariant described above.
       fetchJson<StandInOverridesFile>("models/_standin-overrides.json"),
     ]);
-    this.models = models;
-    this.vfx = new Map();
-    this.ribbons = new Map();
-    for (const doc of vfxDocs.values()) {
-      if (doc.schema === "ribbon@1") this.ribbons.set(doc.id, doc);
-      else this.vfx.set(doc.id, doc);
-    }
-    this.ambientVfx =
-      ambient?.schema === "config.ambient-vfx@1" && ambient.bindings ? ambient : null;
-    // 濺血 style knob (task #39): push the art-directed baseline + per-champion
-    // overrides into the vfx layer. A missing/404 doc leaves the shipped
-    // default (blood @ 0.85) — the player's own setting still wins over both.
-    applyGoreDoc(gore?.schema === "config.gore@1" ? gore : null);
-    this.arenaDoc = arena;
     // per-champion render-size overrides (task #77/#150). Guarded by schema so a
     // stale/foreign file is ignored; a missing/404 file leaves the map empty and
     // every champion renders at the normalized default (relativeScale 1.0).
@@ -136,16 +150,80 @@ export class ContentDb {
         if (ov && typeof ov === "object") this.standInOverrides.set(championId, ov);
       }
     }
+
+    if (boot.ok) {
+      this.fromRegistries = true;
+      this.arenaDoc = Arenas.tryGet(arenaId) ?? this.arenaDoc;
+    } else {
+      // Content boot fell back to the skeleton (a doc failed schema/ref
+      // validation, or the mount is broken): the registries hold 2 champions and
+      // NO model/vfx docs. The old tolerant per-doc path is kept for exactly this
+      // case — it does no schema validation, so a single bad doc cannot cost the
+      // whole match its models. This is the ONLY path that still fetches the
+      // collections.
+      this.fromRegistries = false;
+      await this.loadByFetch(arenaId);
+    }
+    this.ambientVfx = this.configDoc<ConfigAmbientVfxDoc>("ambient-vfx", "config.ambient-vfx@1");
+    // 濺血 style knob (task #39): push the art-directed baseline + per-champion
+    // overrides into the vfx layer. A missing doc leaves the shipped default
+    // (blood @ 0.85) — the player's own setting still wins over both.
+    applyGoreDoc(this.configDoc<ConfigGoreDoc>("gore", "config.gore@1"));
     this.loaded = true;
   }
 
+  /** Registry-or-fetched config doc, narrowed by `schema` (null when absent). */
+  private configDoc<T extends { schema: string }>(id: string, schema: string): T | null {
+    const doc = this.fromRegistries
+      ? (Configs.tryGet(id) as unknown)
+      : (this.fetchedConfigs.get(id) as unknown);
+    return (doc as T | undefined)?.schema === schema ? (doc as T) : null;
+  }
+
   /**
-   * Fetch a single arena doc by id (used when the match's mapId is known/
-   * changes). Independent of `load()` — resolves null on any failure so the
-   * caller can fall back to the skeleton geometry.
+   * DEGRADED path only (see `load`): the original 507-request per-doc fetch.
+   * Reached solely when the shared content boot failed and fell back to the
+   * skeleton registry.
+   */
+  private async loadByFetch(arenaId = "arena.skeleton"): Promise<void> {
+    const [models, vfxDocs, ambient, gore, arena] = await Promise.all([
+      fetchCollection<ModelDoc>("models"),
+      // the vfx collection mixes vfx@1 particle docs and ribbon@1 trail docs
+      fetchCollection<VfxDoc | RibbonDoc>("vfx"),
+      // fetched by direct path (works even before content:build re-indexes it)
+      fetchJson<ConfigAmbientVfxDoc>("config/ambient-vfx.json"),
+      fetchJson<ConfigGoreDoc>("config/gore.json"),
+      fetchJson<ArenaDoc>(`arenas/${arenaId}.json`),
+    ]);
+    this.models = models;
+    this.vfx = new Map();
+    this.ribbons = new Map();
+    for (const doc of vfxDocs.values()) {
+      if (doc.schema === "ribbon@1") this.ribbons.set(doc.id, doc);
+      else this.vfx.set(doc.id, doc);
+    }
+    this.fetchedConfigs.clear();
+    if (ambient) this.fetchedConfigs.set("ambient-vfx", ambient);
+    if (gore) this.fetchedConfigs.set("gore", gore);
+    this.arenaDoc = arena;
+  }
+
+  /**
+   * Arena doc by id (used when the match's mapId is known/changes). Served from
+   * the registry the ContentLoader already populated — the 5 arena docs are part
+   * of the boot load, so this is a synchronous lookup wearing an async signature
+   * (the caller is a `.then()` chain in GameApp.applyArena). Falls back to a
+   * direct fetch only in the degraded no-registry case. Resolves null on any
+   * failure so the caller can fall back to the skeleton geometry.
    */
   async loadArena(arenaId: string): Promise<ArenaDoc | null> {
-    const doc = await fetchJson<ArenaDoc>(`arenas/${arenaId}.json`);
+    // awaited (not `this.fromRegistries`) because GameApp calls applyArena in the
+    // same tick as load(), before that flag is decided. Single-flight, already
+    // settled at match entry → no request either way.
+    const boot = await ensureContentLoaded();
+    const doc = boot.ok
+      ? (Arenas.tryGet(arenaId) ?? null)
+      : await fetchJson<ArenaDoc>(`arenas/${arenaId}.json`);
     this.arenaDoc = doc ?? this.arenaDoc;
     return doc;
   }
@@ -154,7 +232,18 @@ export class ContentDb {
     return this.loaded;
   }
 
+  /**
+   * Model doc for a modelKey, or null until `load()` settles.
+   *
+   * The `!this.loaded` guard is LOAD-BEARING, not defensive tidiness: it is the
+   * gate that keeps `ChampionView.tryUpgradeToGlb` from latching `upgradeStarted`
+   * before `modelOverrideFor` can answer. Reading the registry unguarded would
+   * hand out a doc on frame 0 and permanently strip the per-champion size
+   * override from any champion whose entity exists that frame. See `load()`.
+   */
   modelFor(modelKey: string): ModelDoc | null {
+    if (!this.loaded) return null;
+    if (this.fromRegistries) return Models.tryGet(modelKey) ?? null;
     return this.models.get(modelKey) ?? null;
   }
 
@@ -173,10 +262,12 @@ export class ContentDb {
   }
 
   vfxFor(vfxKey: string): VfxDoc | null {
+    if (this.fromRegistries) return VfxDefs.tryGet(vfxKey) ?? null;
     return this.vfx.get(vfxKey) ?? null;
   }
 
   ribbonFor(ribbonKey: string): RibbonDoc | null {
+    if (this.fromRegistries) return RibbonDefs.tryGet(ribbonKey) ?? null;
     return this.ribbons.get(ribbonKey) ?? null;
   }
 
