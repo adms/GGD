@@ -55,8 +55,21 @@ import {
 } from "../scroll/useAutoScrollToRow";
 import { PANEL_BG, PANEL_BORDER, teamCss, TEXT_DIM, TEXT_MAIN } from "../theme";
 
-/** Seconds on the settlement screen before it auto-advances to the leaderboard. */
-const AUTO_ADVANCE_SEC = 18;
+/**
+ * Seconds on the settlement screen before it auto-advances to the leaderboard.
+ *
+ * On a WIN this is counted from the moment the victory sting ENDS, not from
+ * mount — because the sting's length is not a constant this file may assume.
+ * #137 rotates the sting per scene entry and tools/bgm-gen can re-render it at
+ * any time. Counting from mount against a fixed value meant the screen could
+ * leave BEFORE the longer sting finished, so 主題曲·寧靜女聲 — the whole point
+ * of the 破關 handover — was crossfaded away unheard.
+ *
+ * Counting from the sting's end makes the calm tail the same length whichever
+ * variant played, and stays correct if the music is ever re-rendered. That is
+ * also why no sting duration may be written down here; a test enforces it.
+ */
+const AUTO_ADVANCE_SEC = 12;
 
 /**
  * Height of the ranking list's own scroll window. Bounded (rather than letting
@@ -336,13 +349,17 @@ export function MatchEndPanel(): React.JSX.Element {
   // auto-advance to the leaderboard delta screen after a grace period. The
   // countdown updater stays pure (no navigation side-effect inside setState); a
   // separate effect fires the transition exactly once when it reaches 0.
+  // On a win the clock does not start until the victory sting has ended (see
+  // AUTO_ADVANCE_SEC); on a loss there is no sting to wait for, so it starts at
+  // mount as before.
+  const advanceArmed = hasPayload && (!wonMatch || winStingEnded);
   const [secsLeft, setSecsLeft] = useState(AUTO_ADVANCE_SEC);
   useEffect(() => {
-    if (!hasPayload) return;
+    if (!advanceArmed) return;
     setSecsLeft(AUTO_ADVANCE_SEC);
     const iv = setInterval(() => setSecsLeft((s) => (s <= 0 ? 0 : s - 1)), 1000);
     return () => clearInterval(iv);
-  }, [hasPayload]);
+  }, [advanceArmed]);
   useEffect(() => {
     if (hasPayload && secsLeft === 0) viewRankChange();
   }, [hasPayload, secsLeft, viewRankChange]);
