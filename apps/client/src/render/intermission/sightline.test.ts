@@ -371,13 +371,17 @@ function marketOccluders(): PlacedGroup[] {
  * z −0.7 and the eye at z −5.4, so he is strictly BEHIND the subject — asserted
  * below rather than assumed.
  *
- * The champion could in principle occlude the merchant, and today he nearly
- * does: the eye→merchant ray passes his centre line at x −0.87 against his
- * stand at x −1.15, i.e. 0.28 u clear — inside a hero's own silhouette width.
- * #38's live pick found no `im-champion` hit, so it is not part of THIS defect,
- * and modelling it would mean inventing a capsule for a champion model that
- * changes every match. It is called out here so the next person moving the
- * merchant sideways knows which way he must NOT go.
+ * The champion could in principle occlude the merchant, so where he stands is
+ * load-bearing. After task #146 re-centred the merchant and put the hero on his
+ * RIGHT, the eye→merchant ray crosses x −0.74 at the hero's depth while the hero
+ * stands at x +0.15 — 0.89 u to the +x side of the ray, well outside a hero's
+ * own silhouette width, so he is nowhere near the shopkeeper's sightline. (Under
+ * the pre-#146 staging he sat at x −1.15, 0.41 u to the −x side; the hero has
+ * simply crossed to the far side of the ray.) Modelling him as an occluder would
+ * mean inventing a capsule for a champion model that changes every match, so the
+ * cast is still left out of the set; this is called out so the next person
+ * nudging the hero back toward x −0.74 knows that is the one direction he MUST
+ * NOT go.
  */
 const CAST = {
   merchant: { label: "merchant", x: MERCHANT.x, z: MERCHANT.z },

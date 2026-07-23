@@ -1,10 +1,46 @@
 /** ability@1 — mirrors `AbilityDef` in sim/content/defs.ts. */
 import { z } from "zod";
 import type { AbilityId } from "../../ids";
-import { zAbilitySlot, zIdFor, zRef } from "./common";
+import { zAbilitySlot, zIdFor, zRef, zTintRgb } from "./common";
 import { zAbilityPassive, zEffectDef } from "./effect";
 
 export const zCastType = z.enum(["targeted", "skillshot", "ground", "self", "dash"]);
+
+/**
+ * Optional per-source HIT-FEEL override (task #133). Additive & ALL-OPTIONAL:
+ * a champion basic-attack or an ability may set any subset to override the
+ * damage-derived default that `applyImpact` (sim/combat/damage.ts) otherwise
+ * computes for that hit; unset fields fall back to the default (scaled by the
+ * hit's damage tier). MIRRORS `HitFeelInput` in `sim/combat/hitFeel.ts` — keep
+ * the two in sync (same discipline as defs.ts mirroring the schemas). The
+ * gameplay trio (hitstop/hitstun/knockbackMag) tunes the deterministic sim
+ * reaction; the rest are cosmetic hints the client consumes. Bounds match the
+ * sim's override caps so authored content can't stall the match.
+ */
+export const zHitFeel = z
+  .object({
+    /** freeze ticks for BOTH fighters (default: impact-derived). */
+    hitstopTicks: z.number().int().min(0).max(20).optional(),
+    /** victim-only action-lock ticks (clamped >= the resolved hitstop). */
+    hitstunTicks: z.number().int().min(0).max(30).optional(),
+    /** push distance in GGD units (default: impact/type-derived). */
+    knockbackMag: z.number().min(0).max(8).optional(),
+    /** camera shake amplitude hint (default scales with tier). */
+    shakeMag: z.number().min(0).max(2).optional(),
+    /** shake character (default: directional, omni on crit/EX). */
+    shakeStyle: z.enum(["directional", "omni"]).optional(),
+    /** hit-spark identity (default derived from tier/type/block). */
+    sparkKind: z.enum(["hit", "heavy", "counter", "block", "magic", "ice"]).optional(),
+    /** victim body-flash colour [r,g,b] 0..1 (default by damage type / block). */
+    flashColor: zTintRgb.optional(),
+    /** victim body-flash duration ms (default scales with tier). */
+    flashMs: z.number().min(0).max(1000).optional(),
+    /** one-shot directional camera kick magnitude (default scales with tier). */
+    camKick: z.number().min(0).max(2).optional(),
+    /** cosmetic client-side EX freeze ticks (default: EX hits only). */
+    exFreeze: z.number().int().min(0).max(30).optional(),
+  })
+  .strict();
 
 /** Embedded form (champion.abilities[slot]) — no schema discriminator. */
 export const zAbilityDef = z
@@ -63,6 +99,11 @@ export const zAbilityDef = z
      * fallback rendering. Applies embedded (Q/W/E/R) AND standalone (.ex).
      */
     icon: z.string().regex(/^assets\//, "icon must be relative to content/ and start with assets/").optional(),
+    /**
+     * Optional per-ability hit-feel override (task #133). Absent = the sim's
+     * damage-derived default. Applies to every hit this ability lands.
+     */
+    hitFeel: zHitFeel.optional(),
   })
   .strict();
 

@@ -1,0 +1,28 @@
+{
+  "id": "immortal-bulwark",
+  "schema": "augment@1",
+  "name": "不朽壁壘",
+  "description": "最大生命 +30%，護甲 +40，魔法抗性 +40。",
+  "tier": "prismatic",
+  "weight": 28,
+  "modifiers": [
+    {
+      "stat": "maxHealth",
+      "op": "pctAdd",
+      "value": 0.3
+    },
+    {
+      "stat": "armor",
+      "op": "flat",
+      "value": 40
+    },
+    {
+      "stat": "mr",
+      "op": "flat",
+      "value": 40
+    }
+  ],
+  "tags": [
+    "defense"
+  ]
+}

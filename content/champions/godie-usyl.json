@@ -2,6 +2,7 @@
   "id": "godie-usyl",
   "schema": "champion@1",
   "name": "殺戮之牙 - 異形",
+  "icon": "assets/icons/champions/godie-usyl.png",
   "description": "故事：\n傳說中外太空的邪惡生物，殺戮是他們的天性，難以對付的敵人。\n(出自:異形)\n\n推薦玩家 : 追擊暗殺\n上手度 : 難\n\n角色成長：\n力量 + 1.80\n敏捷 + 2.25\n智慧 + 1.40\n基礎跑速 320\n\n可學習的技能：\n遮斷獵殺、腐蝕毒液、蛻變、母體",
   "role": "marksman",
   "attackType": "ranged",

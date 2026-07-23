@@ -138,6 +138,7 @@ fps-cap / dt-clamp / pause-on-hidden guards from #12 are retained.
 | ls-27 | LoginScene: pumping many frames grows nothing (hot loop allocation-free with all FX live) | login-fx-alloc-free | integration | done |
 | ls-28 | Calm mode (epicFx:false) omits the strobing dragon/beam/explosion/flash FX; epic build creates them | login-calm-mode | integration | done |
 | ls-29 | HomeFooter renders the © line, the exact 討論區 forum href (blank/noopener), and the 「版權聲明」 link to the #credits page (the mandatory CC-BY dragon credit lives there; the old 魔王魂 credit is asserted GONE); container is pointer-events:none | login-footer | unit | done |
+| ls-30 | creditsData (#13): exactly ONE mandatory entry — the CC-BY 4.0 dragon, accurate (title/author/licence/url + 署名 condition); © 2026 Moriyamouse/Adms line; CC0 KayKit + 効果音ラボ terms (AI/re-cut) + self-made BGM (無須署名) as courtesy; de-duplicated; no stale 魔王魂/maou.audio | credits-data | unit | done |
 
 ## Task #20 — login immersion: dragon roars, UI/typing SFX + keystroke FX, ride-onto-island enter transition
 
@@ -230,6 +231,17 @@ Two changes layered onto #20 (no rebuild):
 
 ## Task #88 — two-track login rotation (epic ⇄ nocturne) + the dragon clash
 
+> **SUPERSEDED IN PART BY TASK #134 (主題曲 · 寧靜女聲 → 排行榜天梯).** The user moved
+> the serene nocturne OFF the login screen: it is now the ranked-ladder bed
+> (requested by `ui/platform/LeaderboardPanel` via `audio/bgmOverride`, layered
+> over the derived scene in `AudioDirector`), and login plays ONLY the epic
+> `menu`. So the login rotation is **single-theme** now (`LOGIN_THEMES = ["menu"]`)
+> and the dragon-clash calm rule is **dormant on login** (`isCalmLoginTheme`
+> never matches a live login bed — the login bed is always `menu`). The rotation
+> machine and the calm rule are kept intact (they cost nothing and would relight
+> verbatim for a future serene login bed); the table below is updated to the new
+> reality. The prose that follows is the ORIGINAL #88 rationale, kept for history.
+
 The auth screen alternates the epic title theme with a serene high-soprano
 nocturne (`menuNocturne`, 「夕凪 / Evening Calm」). Both beds are exactly
 3 763 200 samples = 85.333 s — the pack's loop grid ×2 — so ONE constant is
@@ -260,19 +272,44 @@ bed than the cry already is over the epic theme. The scripted ANGRY roar is
 deliberately untouched: it only fires on the two screen transitions, and the
 rotation reset guarantees the return-intro one lands on the epic theme.
 
+Single-theme table (task #134); the nocturne's own bed is covered by the
+ranked-ladder row `rank-ui-nocturne-bgm` in [ranking-ui.md](ranking-ui.md):
+
 | id | item | test_id | kind | status |
 | --- | --- | --- | --- | --- |
-| lr-01 | Rotation reaches the SECOND track: a looping bed advances epic → nocturne → epic every whole segment | login-rotation-second-track | unit | done |
-| lr-02 | A bed that never starts (autoplay locked) holds theme 0 and keeps polling — it never advances on a dead clock | login-rotation-second-track | unit | done |
-| lr-03 | A stale bed anchor must not flip the theme every tick; re-arming requires a DIFFERENT anchor | login-rotation-no-runaway | unit | done |
-| lr-04 | End-to-end over the real mixer: both files become the bed, alternating, and EXACTLY ONE bed sounds at a time | login-rotation-single-bed | integration | done |
-| lr-05 | A late unlock still gives the first theme a whole loop; a suspended tab fires at 0 ms, never negative | login-rotation-second-track | unit | done |
-| lc-01 | Epic-theme cries pass through byte-identical — the calm rule is scoped to the serene theme only | login-calm-epic-untouched | unit | done |
-| lc-02 | Nocturne cries are clamped to the far-distance level then ducked (>18 dB down); an already-quiet cry keeps its shape | login-calm-ambient-ducked | unit | done |
-| lc-03 | The scripted `big` angry roar is NEVER calmed on either theme, and does not consume the ambient spacing budget | login-calm-big-roar-exempt | unit | done |
-| lc-04 | Spacing thins a real ~5.9 s cry cadence to ≤4 per segment while the epic theme keeps them all | login-calm-spacing | unit | done |
+| lr-01 | Single-theme since #134: the machine holds `menu` across whole segments — there is no second track to reach — while still arming + advancing real segments | login-rotation-single-theme | unit | done |
+| lr-03 | A stale bed anchor must not flip / re-swap the bed every tick; re-arming requires a DIFFERENT anchor (kept for a future 2nd login bed) | login-rotation-no-runaway | unit | done |
+| lr-04 | End-to-end over the real mixer: login drives EXACTLY ONE bed, `menu`, and never the nocturne (which login no longer asks for) | login-rotation-single-bed | integration | done |
+| lc-01 | Epic-theme cries pass through byte-identical — the calm rule is scoped to a serene bed only | login-calm-epic-untouched | unit | done |
+| lc-02 | Serene-bed cries are clamped to the far-distance level then ducked (>18 dB down); an already-quiet cry keeps its shape | login-calm-ambient-ducked | unit | done |
+| lc-03 | The scripted `big` angry roar is ducked on a serene bed, untouched on epic, and never consumes the ambient spacing budget | login-calm-big-roar-exempt | unit | done |
+| lc-04 | Spacing thins a real ~5.9 s cry cadence to ≤4 per serene segment while the epic theme keeps them all | login-calm-spacing | unit | done |
 | lc-05 | Calm lifts when the BGM bus is inaudible (muted / slider at 0) — the rule only ever scales a volume, never bypasses the mixer | login-calm-respects-mixer | unit | done |
-| lc-06 | A fresh visit opens on the epic theme, so the return-intro angry roar can never land on the nocturne | login-calm-return-intro-epic | unit | done |
+| lc-06 | DORMANT ON LOGIN (#134): login opens on `menu`, so `isCalmLoginTheme(loginThemeAt(0))` is false and neither ambient nor big login roars are ever calmed | login-calm-dormant-on-login | unit | done |
+
+## Task #74 — login→battle handoff: fade the roar behind a >=1s loading bar
+
+When the player presses "Play offline" the long login dragon roar used to carry
+straight into the combat scene's voices, because the store flipped
+`screen → "match"` the instant the button fired and main.tsx boots the GameApp
+(and its voices) on that flip. The handoff now goes through a loading transition:
+
+- **Staged launch.** `beginOfflineLoading` builds the offline `MatchLaunch` and
+  parks it in `matchLoading` instead of jumping to the match; `screen` stays
+  `"auth"`, so AuthScreen — and the still-running login scene that owns the
+  roar — remain mounted. `commitMatchLaunch` performs the actual flip.
+- **Roar fade requested.** Staging sets `matchLoading.roarFadeRequested`
+  immediately; AuthScreen's `emitRoar` reads it and stops layering NEW roars, so
+  nothing fresh fires into the match while the roar already playing tails off.
+- **>=1s loading bar.** `MatchLoadingOverlay` renders a team-colour (blue,
+  `TEAM_CSS[0]` — the own-champion "this is you" cue) fill that animates for
+  `MATCH_LOADING_MIN_MS` (1000ms, the minimum hold), then calls
+  `commitMatchLaunch`. The in-COMBAT own-champion glow itself is a render-side
+  concern (the blue team-ring); this task owns only the transition + roar fade.
+
+| ID | Item | Test ID | Category | Status |
+| --- | --- | --- | --- | --- |
+| li-20 | Entering a match stages the launch behind a >=1s loading bar and requests the roar fade instead of jumping straight to "match"; commit flips to the match, cancel aborts, and the overlay renders the >=1s bar only while staged | login-match-loading | unit | done |
 
 ## Verification
 

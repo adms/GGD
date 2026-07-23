@@ -60,15 +60,15 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              1.0,
-              1.0,
-              1.0,
-              1.0
+              350,
+              450,
+              550,
+              650
             ],
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 0.003
+                "coeff": 1.0
               }
             ]
           }
@@ -112,11 +112,11 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              80,
-              120,
-              160,
-              200,
-              240
+              150,
+              250,
+              350,
+              450,
+              550
             ],
             "ratios": [
               {
@@ -156,15 +156,15 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              2.0,
-              2.0,
-              2.0,
-              2.0
+              150,
+              250,
+              350,
+              450
             ],
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 0.006
+                "coeff": 1.0
               }
             ]
           }

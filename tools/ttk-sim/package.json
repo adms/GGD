@@ -1,0 +1,21 @@
+{
+  "name": "@ggd/ttk-sim",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Headless time-to-kill (TTK) harness — sweep world.combatEnv.maxHealth against real bot-vs-bot combat to find the round-length multiplier (task #153).",
+  "scripts": {
+    "ttk:sweep": "tsx src/sweep.ts",
+    "ttk:retune": "tsx src/retune.ts",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@ggd/game-server": "workspace:*",
+    "@ggd/shared": "workspace:*",
+    "@types/node": "^22.9.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.4"
+  }
+}

@@ -50,6 +50,17 @@ export function adjustMCoin(id: string, delta: number, reason: string): Promise<
   });
 }
 
+/**
+ * Grant (or deduct) admin-issued M幣 / M COIN via the wallet meta endpoint
+ * (task #118). Role-gated server-side; a non-admin caller is a 403. Returns the
+ * target account's resulting balance.
+ */
+export function grantMCoin(accountId: string, amount: number): Promise<{ accountId: string; mcoin: number }> {
+  return api.request<{ accountId: string; mcoin: number }>("/wallet/admin/grant-mcoin", {
+    body: { accountId, amount },
+  });
+}
+
 export function setMMR(id: string, mmr: number, reason: string): Promise<{ mmr: number }> {
   return api.request<{ mmr: number }>(`/admin/accounts/${encodeURIComponent(id)}/mmr`, {
     body: { mmr, reason },

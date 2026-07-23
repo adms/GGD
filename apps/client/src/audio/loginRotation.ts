@@ -1,20 +1,23 @@
 /**
- * audio/loginRotation — PURE rotation rule for the login screen's two themes.
+ * audio/loginRotation — the login screen's background theme.
  *
- * 「登入頁主題曲可以有第二首輪播」(task #88). The auth screen alternates between
- * the epic title theme and a serene high-soprano nocturne. The two are
- * deliberately opposite — grandeur, then stillness — so the rotation is the
- * point, not a way of hiding repetition.
+ * HISTORY. Task #88 gave the auth screen a TWO-track rotation — the epic title
+ * theme and a serene high-soprano nocturne (`menuNocturne`) alternating every
+ * whole loop. Task #134 moved the nocturne OFF the login screen (it is now the
+ * ranked-ladder bed — see ui/platform/LeaderboardPanel + audio/bgmOverride), so
+ * login plays ONLY the epic `menu` theme again.
  *
- * WHY A FIXED SEGMENT AND NOT "PLAY EACH FILE ONCE THROUGH":
- * both login beds are exactly 3 763 200 samples = 85.333 s (the pack's
- * 1 881 600-sample loop GRID x 2 — see tools/bgm-gen/src/ggd/music.py), so ONE
- * constant is simultaneously one whole loop of `menu` and one whole loop of
- * `menuNocturne`. Timing the swap off the bed's own start therefore always
- * lands it on a loop boundary of whichever track is playing, which is the one
- * moment in either file that was written to be cut (both are seamless
- * self-joins there). No file needs to announce its own length, and no per-track
- * table can drift out of sync with the renders.
+ * The rotation is therefore now SINGLE-THEME. Rather than tear the machine out
+ * — and with it the two hard-won failure guards below, which a re-added theme
+ * would need again — it is kept and degenerates trivially: `LOGIN_THEMES` holds
+ * one entry, so every step hands back `menu` and no swap ever fires. The mixer's
+ * same-scene `playBgm` is a no-op, so a single-theme rotation costs nothing.
+ *
+ * WHY THE SEGMENT ARITHMETIC STILL HOLDS: `menu` is 3 763 200 samples =
+ * 85.333 s (the pack's 1 881 600-sample loop GRID x 2 — see
+ * tools/bgm-gen/src/ggd/music.py). `LOGIN_SEGMENT_MS` is one whole loop of it,
+ * which is the point that was written to be cut. With one theme nothing is cut,
+ * but the constant stays honest for the day a second login theme returns.
  *
  * Kept free of React and WebAudio like the rest of audio/: the shell that owns
  * the timer is ui/useAudio's `useLoginTheme`.
@@ -22,25 +25,28 @@
 import type { AudioScene } from "./types";
 
 /**
- * The login rotation, in play order. Index 0 is what a fresh visit opens on:
- * the serene nocturne (寧靜女聲) opens, then the epic title theme answers it —
- * stillness first, then grandeur, per the user (「主題曲 · 寧靜女聲 作為第一首
- * 再輪替第二首」). Extending this array is all a third login theme would need.
+ * The login rotation, in play order. SINGLE-THEME since task #134: the epic
+ * title theme is the game's identity and the only login bed. Index 0 is what a
+ * fresh visit opens on. Re-adding a second login theme is a one-line push here
+ * (the machine below already handles ≥2 entries) — but the serene nocturne is
+ * deliberately NOT one of them any more; it belongs to the leaderboard.
  */
-export const LOGIN_THEMES: readonly AudioScene[] = ["menuNocturne", "menu"];
+export const LOGIN_THEMES: readonly AudioScene[] = ["menu"];
 
 /**
  * How long each theme holds the screen, in ms. 85 333 ms = 3 763 200 samples at
- * 44.1 kHz = exactly one loop of BOTH login beds. Changing a login track's
- * length without changing this would put the crossfade in the middle of a
- * phrase, so the two are a pair.
+ * 44.1 kHz = exactly one loop of the `menu` bed. With a single theme this only
+ * bounds how long the machine waits before a no-op re-check; it stays exact so a
+ * future second login track (which must match the loop grid) lands its crossfade
+ * on the loop join rather than mid-phrase.
  */
 export const LOGIN_SEGMENT_MS = 85_333;
 
 /**
  * Which theme is playing on the `index`-th segment. Wraps, and tolerates a
  * negative or non-finite index (a clock that went backwards must not blank the
- * bed), so callers can hold a free-running counter.
+ * bed), so callers can hold a free-running counter. With a single theme this is
+ * constant `menu`, but the wrap arithmetic is retained for the multi-theme case.
  */
 export function loginThemeAt(index: number): AudioScene {
   const n = LOGIN_THEMES.length;
@@ -62,7 +68,7 @@ export function loginSegmentRemainingMs(startedAtMs: number, nowMs: number): num
   return Math.min(LOGIN_SEGMENT_MS, Math.max(0, LOGIN_SEGMENT_MS - elapsed));
 }
 
-/** Whether a scene is one of the login rotation's themes. */
+/** Whether a scene is one of the login rotation's themes (now just `menu`). */
 export function isLoginTheme(scene: string | null): boolean {
   return scene !== null && (LOGIN_THEMES as readonly string[]).includes(scene);
 }
@@ -111,24 +117,21 @@ export interface LoginRotationStep {
  * Advance the login rotation. PURE: the caller owns the timer and passes in the
  * bed anchor + clock, so the whole rule is testable without WebAudio or React.
  *
- * THE TWO FAILURE MODES THIS SHAPE EXISTS TO PREVENT:
+ * SINGLE-THEME NOW (task #134): every `theme` handed back is `menu` — the index
+ * still advances one segment at a time, but `loginThemeAt` wraps a one-element
+ * array, so nothing ever swaps. The two guards below therefore no longer protect
+ * an audible transition; they are retained because they cost nothing and are
+ * exactly what a re-added second theme would need:
  *
  * 1. "THE SECOND TRACK NEVER PLAYS." The segment is measured from
  *    `bedStartedAtMs` — when the file that is ACTUALLY PLAYING started — not
- *    from mount. The bed does not start until the first pointer/key gesture
- *    unlocks the AudioContext, which can be many seconds after the auth screen
- *    appears; timing off mount would put the first swap somewhere in the middle
- *    of track one and, worse, would fire while nothing was playing at all.
- *    Until a bed exists the machine returns un-armed polls and holds theme 0.
+ *    from mount. Until a bed exists the machine returns un-armed polls and holds
+ *    theme 0.
  *
  * 2. "BOTH TRACKS PLAY AT ONCE." A step that is armed records the anchor it
- *    armed against. When the hold expires the bed has NOT been replaced yet
- *    (React has not re-rendered and the new buffer may still be decoding), so
- *    an unguarded re-arm would read the OLD start time, compute ~0 ms remaining
- *    and flip again immediately — a runaway that asks the mixer for a new bed
- *    every tick. Requiring a DIFFERENT anchor before arming again is what makes
- *    the machine advance exactly ONE theme per segment. (The mixer's own
- *    single-bed crossfade is the second line of defence; this is the first.)
+ *    armed against, and refuses to re-arm until the anchor CHANGES, so the
+ *    machine advances exactly ONE theme per segment rather than flipping every
+ *    tick off a stale start time.
  */
 export function stepLoginRotation(
   state: LoginRotationState,

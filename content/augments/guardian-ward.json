@@ -1,0 +1,32 @@
+{
+  "id": "guardian-ward",
+  "schema": "augment@1",
+  "name": "守護結界",
+  "description": "受到傷害時，獲得相當於 6% 最大生命的護盾，持續 3 秒（4 秒冷卻）。",
+  "tier": "gold",
+  "weight": 50,
+  "hooks": [
+    {
+      "on": "onDamageTaken",
+      "target": "self",
+      "internalCooldown": 4,
+      "effects": [
+        {
+          "kind": "shield",
+          "amount": {
+            "ratios": [
+              {
+                "stat": "maxHealth",
+                "coeff": 0.06
+              }
+            ]
+          },
+          "duration": 3
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "defense"
+  ]
+}

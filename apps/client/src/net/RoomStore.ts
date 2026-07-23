@@ -51,6 +51,21 @@ export interface SeatView {
   level: number;
   gold: number;
   xp: number;
+  /**
+   * Vitals of THIS seat's champion entity, derived from the snapshot entities
+   * map (the same source the overhead HP bars read) — NOT a separate schema
+   * field. 0 / false / -1 while the seat has no live entity (champ-select,
+   * pre-spawn). Snapshot-rate, same as `cooldowns`; the top-left enemy panel
+   * (EnemyTeamPanel) reads them so it needs no server change.
+   */
+  hp: number;
+  maxHp: number;
+  mana: number;
+  maxMana: number;
+  shield: number;
+  alive: boolean;
+  /** duel zone of this seat's entity (-1 = no entity); duel enemies share the local seat's zone */
+  zone: number;
   ready: boolean;
   unspentPoints: number;
   items: string[];
@@ -229,6 +244,28 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
       localSeatId = ss.seatId;
       localEntityId = ss.entityId > 0 ? ss.entityId : null;
     }
+    // vitals from the entity snapshot (same map the overhead HP bars use); a
+    // DEAD champion stays in the map with hp 0 / alive false, so the enemy
+    // panel greys it out rather than losing the row.
+    let hp = 0;
+    let maxHp = 0;
+    let mana = 0;
+    let maxMana = 0;
+    let shield = 0;
+    let alive = false;
+    let zone = -1;
+    if (ss.entityId > 0) {
+      const es = state.entities.get(String(ss.entityId));
+      if (es) {
+        hp = Math.round(es.hp);
+        maxHp = Math.round(es.maxHp);
+        mana = Math.round(es.mana);
+        maxMana = Math.round(es.maxMana);
+        shield = Math.round(es.shield);
+        alive = es.alive;
+        zone = es.zone;
+      }
+    }
     seats.push({
       seatId: ss.seatId,
       teamId: ss.teamId,
@@ -240,6 +277,13 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
       level: ss.level,
       gold: ss.gold,
       xp: ss.xp,
+      hp,
+      maxHp,
+      mana,
+      maxMana,
+      shield,
+      alive,
+      zone,
       ready: ss.ready,
       unspentPoints: ss.unspentPoints,
       items: [...ss.items],

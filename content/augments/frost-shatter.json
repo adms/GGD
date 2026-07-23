@@ -1,0 +1,25 @@
+{
+  "id": "frost-shatter",
+  "schema": "augment@1",
+  "name": "霜寒爆裂",
+  "description": "技能命中使敵人減速 40%，持續 2 秒。",
+  "tier": "gold",
+  "weight": 60,
+  "hooks": [
+    {
+      "on": "onAbilityHit",
+      "effects": [
+        {
+          "kind": "applyStatus",
+          "statusId": "slow40",
+          "duration": 2,
+          "moveSpeedMult": 0.6
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "utility",
+    "cc"
+  ]
+}

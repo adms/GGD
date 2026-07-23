@@ -14,10 +14,12 @@
     "rig.ts",
     "guard.ts",
     "optimize.ts",
+    "worklist.ts",
     "limits.test.ts",
     "report.test.ts",
     "glb.test.ts",
     "guard.test.ts",
-    "optimize.test.ts"
+    "optimize.test.ts",
+    "worklist.test.ts"
   ]
 }

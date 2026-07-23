@@ -1,13 +1,14 @@
 /**
- * The login screen's two-theme rotation (task #88). Pure module, so these are
- * plain assertions with no timers, no WebAudio and no React.
+ * The login screen's background theme. SINGLE-THEME since task #134 (the serene
+ * nocturne moved to the ranked ladder — see bgmOverride.test.ts), so the rule is
+ * now "login always plays the epic `menu` bed". Pure module → plain assertions,
+ * no timers, no WebAudio, no React.
  *
- * The load-bearing claim is the ARITHMETIC: LOGIN_SEGMENT_MS must be one whole
- * loop of BOTH login beds, because that is what puts the crossfade on a loop
- * join instead of in the middle of a phrase. Both files are 3 763 200 samples
- * at 44.1 kHz (the pack's loop grid x 2 — tools/bgm-gen/src/ggd/music.py), and
- * that is asserted here from the sample count so a re-render at a different
- * length fails this test rather than quietly detuning the rotation.
+ * The still-load-bearing claim is the ARITHMETIC: LOGIN_SEGMENT_MS is one whole
+ * loop of the `menu` bed (3 763 200 samples at 44.1 kHz — the pack's loop grid
+ * ×2, tools/bgm-gen/src/ggd/music.py), asserted from the sample count so a
+ * re-render at a different length fails this test. It no longer times a crossfade
+ * (there is nothing to swap to) but stays honest for a future second login bed.
  */
 import { describe, it, expect } from "vitest";
 import {
@@ -19,47 +20,50 @@ import {
 } from "./loginRotation";
 import { AUDIO_SCENES } from "./types";
 
-/** Both login beds: 24 bars @67.5 and 32 bars @90 are the same sample count. */
+/** The `menu` bed: 24 bars @67.5 / 32 bars @90 is this sample count. */
 const LOOP_SAMPLES = 3_763_200;
 const SR = 44_100;
 
 describe("login theme rotation", () => {
-  it("opens on the serene nocturne and answers it with the epic theme", () => {
-    // Order flipped per the user (「主題曲 · 寧靜女聲 作為第一首再輪替第二首」):
-    // stillness opens, grandeur answers.
-    expect(LOGIN_THEMES).toEqual(["menuNocturne", "menu"]);
-    expect(loginThemeAt(0)).toBe("menuNocturne");
+  it("is a single theme: the epic `menu` bed, and only that", () => {
+    // task #134: the serene nocturne left the login screen for the ranked ladder,
+    // so login plays ONLY the game's identity theme.
+    expect(LOGIN_THEMES).toEqual(["menu"]);
+    expect(loginThemeAt(0)).toBe("menu");
     expect(loginThemeAt(1)).toBe("menu");
-    expect(loginThemeAt(2)).toBe("menuNocturne");
-    expect(loginThemeAt(3)).toBe("menu");
+    expect(loginThemeAt(2)).toBe("menu");
+    // the nocturne is explicitly NOT a login theme any more
+    expect(LOGIN_THEMES).not.toContain("menuNocturne");
   });
 
-  it("holds each theme for exactly one whole loop of both login beds", () => {
+  it("holds the theme for exactly one whole loop of the `menu` bed", () => {
     const loopMs = (LOOP_SAMPLES / SR) * 1000; // 85 333.33...
     // rounded to whole ms, which is the resolution setTimeout works in
     expect(LOGIN_SEGMENT_MS).toBe(Math.floor(loopMs));
     // and it is under a third of a millisecond off a true loop, i.e. ~15
-    // samples — far below the 600 ms crossfade it schedules
+    // samples — far below the 600 ms crossfade it would schedule
     expect(Math.abs(loopMs - LOGIN_SEGMENT_MS)).toBeLessThan(1);
   });
 
-  it("every rotation theme is a scene the client knows how to ask for", () => {
+  it("the rotation theme is a scene the client knows how to ask for", () => {
     for (const t of LOGIN_THEMES) expect(AUDIO_SCENES).toContain(t);
     expect(isLoginTheme("menu")).toBe(true);
-    expect(isLoginTheme("menuNocturne")).toBe(true);
+    // the nocturne is a real scene, but no longer a LOGIN scene
+    expect(AUDIO_SCENES).toContain("menuNocturne");
+    expect(isLoginTheme("menuNocturne")).toBe(false);
     expect(isLoginTheme("lobby")).toBe(false);
     expect(isLoginTheme(null)).toBe(false);
   });
 
-  it("wraps a free-running index, including a negative or bad one", () => {
-    expect(loginThemeAt(10)).toBe("menuNocturne");
+  it("wraps a free-running index to the single theme, including a bad one", () => {
+    expect(loginThemeAt(10)).toBe("menu");
     expect(loginThemeAt(11)).toBe("menu");
-    // a backwards clock must not blank the bed (index -1 wraps to slot 1 = menu)
+    // a backwards clock must not blank the bed
     expect(loginThemeAt(-1)).toBe("menu");
-    expect(loginThemeAt(-2)).toBe("menuNocturne");
-    // a non-finite index falls back to slot 0, which is now the nocturne
-    expect(loginThemeAt(Number.NaN)).toBe("menuNocturne");
-    expect(loginThemeAt(Number.POSITIVE_INFINITY)).toBe("menuNocturne");
+    expect(loginThemeAt(-2)).toBe("menu");
+    // a non-finite index falls back to slot 0, which is `menu`
+    expect(loginThemeAt(Number.NaN)).toBe("menu");
+    expect(loginThemeAt(Number.POSITIVE_INFINITY)).toBe("menu");
   });
 
   it("counts the remaining segment down from when the BED started", () => {

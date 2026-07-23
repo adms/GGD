@@ -19,7 +19,7 @@ import { cover } from "../../../../packages/shared/testkit/cover";
 import { ContentLoader, registerAll } from "@ggd/shared/content";
 import { FsContentSource } from "@ggd/shared/content/node";
 import { Items, LootTables } from "@ggd/shared/sim/content/registry";
-import { buyItem } from "@ggd/shared/sim/economy/shop";
+import { buyItem, SELL_REFUND } from "@ggd/shared/sim/economy/shop";
 import { statPathView } from "@ggd/shared/sim/economy/statPath";
 import {
   ITEM_TIER_PRICE,
@@ -72,6 +72,8 @@ const firstEntity = (ctl: MatchController): EntityId =>
 function humanBuyer(ctl: MatchController): {
   entity: EntityId;
   buy: (itemId: string) => void;
+  sell: (itemSlot: number) => void;
+  undo: () => void;
   pick: (offerId: string) => void;
 } {
   const seat = ctl.seats.get(asSeatId(0))!;
@@ -83,6 +85,16 @@ function humanBuyer(ctl: MatchController): {
     entity: seat.entityId as EntityId,
     buy: (itemId: string) => {
       driver.mailbox.push({ seq: ++seq, commands: [{ kind: "buyItem", itemId }] });
+      ctl.tick();
+    },
+    // sell / undo ride the SAME command channel a real client sends, so the
+    // controller's own drain + shop-access gate is what the test exercises
+    sell: (itemSlot: number) => {
+      driver.mailbox.push({ seq: ++seq, commands: [{ kind: "sellItem", itemSlot }] });
+      ctl.tick();
+    },
+    undo: () => {
+      driver.mailbox.push({ seq: ++seq, commands: [{ kind: "undoLastShopStep" }] });
       ctl.tick();
     },
     // picks ride the same `pickOffer` command a real client sends, so the
@@ -315,5 +327,111 @@ describe("the stat path, through the controller's own economy", () => {
     expect(statPathView(champ.statStacks, champ.statCapstonePct).stacks).toBe(0);
     // the destruction is ANNOUNCED, so a HUD can say "19 stacks lost"
     expect(ctl.world.events.some((e) => e.type === "statPathReset" && e.data.lost === 19)).toBe(true);
+  });
+});
+
+/**
+ * NO BUY/SELL MONEY EXPLOIT, end to end (task #121). The unit tests in
+ * packages/shared/src/sim/economy/shopUndo.test.ts pin the reversal arithmetic;
+ * this file pins the WIRING — the real command channel, the shop-access gate
+ * that closes undo when the shop closes, and the enterCombat commit that stops a
+ * purchase being reversed across rounds.
+ */
+describe("shop undo has no money exploit, through the real command path (task #121)", () => {
+  it("buy → sell → undo → undo returns to the EXACT starting gold + inventory", () => {
+    cover("econ-undo-roundtrip-e2e");
+    const ctl = spawnedMatch(51);
+    const { entity, buy, sell, undo } = humanBuyer(ctl);
+    const champ = ctl.world.champion.get(entity)!;
+    champ.gold = 10_000;
+    const item = "ember-rod";
+    const cost = Items.get(item as ItemId).cost;
+    const start = { gold: champ.gold, items: JSON.stringify(champ.items) };
+
+    buy(item);
+    const slot = champ.items.indexOf(item as ItemId);
+    expect(slot).toBeGreaterThanOrEqual(0);
+    expect(champ.gold).toBe(start.gold - cost);
+
+    sell(slot);
+    expect(champ.gold).toBe(start.gold - cost + Math.floor(cost * SELL_REFUND));
+    expect(champ.gold, "buy→sell must be a net loss, never a gain").toBeLessThan(start.gold);
+    expect(champ.items[slot]).toBeNull();
+
+    undo(); // reverse the sell
+    expect(champ.gold).toBe(start.gold - cost);
+    expect(champ.items[slot]).toBe(item);
+
+    undo(); // reverse the buy
+    expect(champ.gold, "a full round-trip returns to the exact starting gold").toBe(start.gold);
+    expect(JSON.stringify(champ.items)).toBe(start.items);
+    // the reversal rides the same channel the HUD reads
+    expect(ctl.world.events.some((e) => e.type === "shopUndone")).toBe(true);
+  });
+
+  it("N buy→sell→undo→undo cycles never let gold climb above the start", () => {
+    cover("econ-undo-nocycle-e2e");
+    // A LONG intermission so all 12 cycles stay inside one open shop — otherwise
+    // the FAST 30-tick prep window would end mid-loop and enterCombat would
+    // (correctly) commit the session, which a separate test already covers.
+    const LONG = { champSelectTicks: 5, intermissionTicks: 100_000, combatMaxTicks: 1200, resolutionTicks: 5 };
+    const ctl = new MatchController("econ-cycle", 52, allBots(), LONG, 3, DEFAULT_ARENA_RULES);
+    let g = 0;
+    while (ctl.phase.phase !== "intermission" && g++ < 500) ctl.tick();
+    expect(ctl.phase.phase).toBe("intermission");
+    const { entity, buy, sell, undo } = humanBuyer(ctl);
+    const champ = ctl.world.champion.get(entity)!;
+    champ.gold = 10_000;
+    const item = "ember-rod";
+    const start = champ.gold;
+    let peak = start;
+
+    for (let n = 0; n < 12; n++) {
+      buy(item);
+      peak = Math.max(peak, champ.gold);
+      const slot = champ.items.indexOf(item as ItemId);
+      sell(slot);
+      peak = Math.max(peak, champ.gold);
+      undo(); // reverse sell
+      peak = Math.max(peak, champ.gold);
+      undo(); // reverse buy
+      peak = Math.max(peak, champ.gold);
+      expect(champ.gold).toBe(start); // exact reset each cycle
+    }
+    expect(peak, "no cycle ever manufactured a single coin").toBe(start);
+  });
+
+  it("cannot undo once combat starts — the purchase is committed, the gate refuses", () => {
+    cover("econ-undo-closed-e2e");
+    const ctl = spawnedMatch(53);
+    const { entity, buy, undo } = humanBuyer(ctl);
+    const champ = ctl.world.champion.get(entity)!;
+    champ.gold = 10_000;
+    const item = "ember-rod";
+
+    buy(item);
+    const slot = champ.items.indexOf(item as ItemId);
+    const goldAfterBuy = champ.gold;
+    expect(slot).toBeGreaterThanOrEqual(0);
+
+    // advance into round-1 combat (enterCombat COMMITS the shop session). With 4
+    // teams there is no bye, so every fighter — seat 0 included — is alive here.
+    let n = 0;
+    while (ctl.phase.phase !== "combat" && n++ < 2000) ctl.tick();
+    expect(ctl.phase.phase).toBe("combat");
+    expect(ctl.world.health.get(entity)!.alive, "seat 0 should be a live fighter this round").toBe(true);
+
+    // a LIVING champion cannot shop during combat — the undo rides the same gate
+    // as buy/sell, so it is refused and nothing is reversed (undo() pushes the
+    // command and ticks once, so world.events holds only that tick's events).
+    undo();
+
+    const undone = ctl.world.events.filter((e) => e.type === "shopUndone" && e.data.id === entity);
+    const rejected = ctl.world.events.filter((e) => e.type === "undoRejected" && e.data.seatId === 0);
+    expect(undone, "combat undo must NOT reverse anything").toHaveLength(0);
+    expect(rejected.map((e) => e.data.reason)).toContain("combat-alive");
+    // the item bought in the shop is committed: still owned, gold not refunded
+    expect(champ.items[slot]).toBe(item);
+    expect(champ.gold).toBe(goldAfterBuy);
   });
 });

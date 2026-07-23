@@ -43,10 +43,17 @@ type Service struct {
 	refreshTTL time.Duration
 	params     *argon2id.Params
 	dummyHash  string // verified against on unknown-user login (constant-shape failure)
+
+	// requireApproval turns on the private-deploy gate (#126): new registrations
+	// are stamped pending and receive NO tokens, and login/refresh refuse any
+	// non-approved account. When false (dev/CI default) registration approves
+	// immediately, preserving the open-signup flow the rest of the suite assumes.
+	requireApproval bool
 }
 
-// New builds the auth service. params may be nil for defaults.
-func New(accounts *account.Repo, rdb *redisx.Client, jwtSecret string, accessTTL, refreshTTL time.Duration, params *argon2id.Params) (*Service, error) {
+// New builds the auth service. params may be nil for defaults. requireApproval
+// enables the private-deploy approval gate.
+func New(accounts *account.Repo, rdb *redisx.Client, jwtSecret string, accessTTL, refreshTTL time.Duration, params *argon2id.Params, requireApproval bool) (*Service, error) {
 	if params == nil {
 		params = DefaultParams
 	}
@@ -55,13 +62,14 @@ func New(accounts *account.Repo, rdb *redisx.Client, jwtSecret string, accessTTL
 		return nil, err
 	}
 	return &Service{
-		accounts:   accounts,
-		rdb:        rdb,
-		jwtSecret:  []byte(jwtSecret),
-		accessTTL:  accessTTL,
-		refreshTTL: refreshTTL,
-		params:     params,
-		dummyHash:  dummy,
+		accounts:        accounts,
+		rdb:             rdb,
+		jwtSecret:       []byte(jwtSecret),
+		accessTTL:       accessTTL,
+		refreshTTL:      refreshTTL,
+		params:          params,
+		dummyHash:       dummy,
+		requireApproval: requireApproval,
 	}, nil
 }
 
@@ -131,17 +139,40 @@ func (s *Service) Register(ctx context.Context, username, email, password string
 		return account.Account{}, TokenPair{}, err
 	}
 	now := time.Now()
+	// Private-deploy gate: a gated deploy stamps new accounts pending (an admin
+	// must approve before they can play); otherwise they are approved on sight.
+	status := account.StatusApproved
+	if s.requireApproval {
+		status = account.StatusPending
+	}
 	a := account.Account{
 		ID: id, Username: username, Email: email, PasswordHash: hash,
-		MMR: startingMMR, CreatedAt: now, UpdatedAt: now,
+		MMR: startingMMR, Status: status, CreatedAt: now, UpdatedAt: now,
 	}
 	if err := s.accounts.Create(ctx, a); err != nil {
 		// Roll the reservations back so a retry can succeed.
 		s.rdb.R.Del(ctx, redisx.KeyIdxUsername(username), redisx.KeyIdxEmail(email))
 		return account.Account{}, TokenPair{}, err
 	}
+	// A pending account gets NO session — issuing a token here would hand it the
+	// very access the gate exists to withhold. The caller returns the account
+	// (Status "pending") with an empty token pair, which the client reads as the
+	// "awaiting approval" state.
+	if !a.IsApproved() {
+		return a, TokenPair{}, nil
+	}
 	pair, err := s.issueTokens(ctx, a)
 	return a, pair, err
+}
+
+// ErrNotApproved is the 403 returned when an account with valid credentials is
+// not yet playable under the private-deploy gate. The code distinguishes the
+// still-pending case from a terminal denial so the client can message each.
+func ErrNotApproved(status string) *httpx.E {
+	if status == account.StatusDenied {
+		return httpx.Err(http.StatusForbidden, "account_denied", "this account's registration was declined")
+	}
+	return httpx.Err(http.StatusForbidden, "account_pending", "your account is awaiting admin approval")
 }
 
 // ErrInvalidCredentials is the single failure surface of Login — identical for
@@ -202,6 +233,11 @@ func (s *Service) Login(ctx context.Context, usernameOrEmail, password, ip strin
 	if a.Banned {
 		return account.Account{}, TokenPair{}, ErrBanned(a.BanReason)
 	}
+	// Private-deploy gate: a pending/denied account cannot log in to play until
+	// an admin approves it. Grandfathered (zero-status) accounts pass.
+	if !a.IsApproved() {
+		return account.Account{}, TokenPair{}, ErrNotApproved(a.Status)
+	}
 	pair, err := s.issueTokens(ctx, a)
 	return a, pair, err
 }
@@ -228,6 +264,11 @@ func (s *Service) Refresh(ctx context.Context, refreshToken string) (TokenPair, 
 	// lingering refresh token cannot resurrect a banned session.
 	if a.Banned {
 		return TokenPair{}, ErrBanned(a.BanReason)
+	}
+	// Likewise a denial applied after login (an admin revoking an approval)
+	// cannot be outlived by a still-valid refresh token.
+	if !a.IsApproved() {
+		return TokenPair{}, ErrNotApproved(a.Status)
 	}
 	return s.issueTokens(ctx, a)
 }

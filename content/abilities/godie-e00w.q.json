@@ -44,7 +44,7 @@
       "stun": true
     }
   ],
-  "vfxKey": "fx.ember-bolt-cast",
+  "vfxKey": "fx.prim.physical.slash",
   "targetsEnemies": true,
   "radius": 6.0,
   "schema": "ability@1"

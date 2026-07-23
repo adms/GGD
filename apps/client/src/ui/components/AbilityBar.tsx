@@ -6,12 +6,17 @@
  */
 import { useEffect, useRef } from "react";
 import { TICK_HZ } from "@ggd/shared/constants";
-import { Champions } from "@ggd/shared/sim/content/registry";
-import type { ChampionId } from "@ggd/shared/ids";
-import type { CoreAbilitySlot } from "@ggd/shared/sim/intents";
+import { Abilities, Champions } from "@ggd/shared/sim/content/registry";
+import { isPassiveOnly } from "@ggd/shared/sim/abilities/abilityPassives";
+import type { AbilityId, ChampionId } from "@ggd/shared/ids";
+import type { AbilitySlot, CoreAbilitySlot } from "@ggd/shared/sim/intents";
 import { useHud } from "../../net/RoomStore";
 import { frameBus } from "../../frameBus";
 import { hudActions } from "../actions";
+import { setHeldAbility } from "../abilityHold";
+import { abilityActivationCue } from "../abilityCue";
+import { prefersReducedMotion } from "../buttonSfx";
+import { AbilityDescriptionOverlay } from "../AbilityDescriptionOverlay";
 import { exSlotView } from "../exSlot";
 import { iconSrc } from "../icons";
 import { IconImg } from "./IconImg";
@@ -22,6 +27,54 @@ import { GOLD, PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
 
 const SLOTS: CoreAbilitySlot[] = ["Q", "W", "E", "R"];
 const EX_ACCENT = "#f2a13c"; // distinct amber for the EX slot
+
+/** Quick scale-down + brightness flash on press (skipped under reduced-motion). */
+function pressVisualDown(el: HTMLElement): void {
+  if (prefersReducedMotion()) return;
+  el.style.transform = "scale(0.9)";
+  el.style.filter = "brightness(1.35)";
+}
+function pressVisualClear(el: HTMLElement): void {
+  el.style.transform = "";
+  el.style.filter = "";
+}
+
+/**
+ * Mouse-hold → floor + top-of-screen preview (task #152): press latches the slot
+ * onto the ui/abilityHold seam; release / leaving the tile clears it. Covers
+ * mouse via pointer events; the touch bar wires the same seam with touch events.
+ *
+ * The press ALSO gives button feedback the sim cast never did on desktop: a
+ * click cue (abilityCue — de-duped so it can't double with the keyboard
+ * shortcut) plus a scale/flash press animation. The cue options tune the sound:
+ * `denied` → refusal on an unlearned / cooling-down tile; `passive` → a soft
+ * neutral tick for a passive-only tile (pressing it does nothing). Every press
+ * still answers with SOME feedback.
+ */
+function holdProps(
+  slot: AbilitySlot,
+  cue: { denied?: boolean; passive?: boolean },
+): React.DOMAttributes<HTMLDivElement> {
+  return {
+    onPointerDown: (e) => {
+      setHeldAbility(slot);
+      abilityActivationCue(slot, cue);
+      pressVisualDown(e.currentTarget);
+    },
+    onPointerUp: (e) => {
+      setHeldAbility(null);
+      pressVisualClear(e.currentTarget);
+    },
+    onPointerLeave: (e) => {
+      setHeldAbility(null);
+      pressVisualClear(e.currentTarget);
+    },
+    onPointerCancel: (e) => {
+      setHeldAbility(null);
+      pressVisualClear(e.currentTarget);
+    },
+  };
+}
 const CAST_FILL = "rgba(84,176,240,0.45)"; // ability channel — blue
 const WINDUP_FILL = "rgba(240,168,64,0.45)"; // basic-attack wind-up — orange
 
@@ -58,6 +111,9 @@ export function AbilityBar(): React.JSX.Element | null {
   if (!def) return null;
 
   return (
+    <>
+    {/* held-button description panel across the top of the screen (task #152) */}
+    <AbilityDescriptionOverlay />
     <div
       ref={rootRef}
       style={{
@@ -82,6 +138,8 @@ export function AbilityBar(): React.JSX.Element | null {
         const maxCdSecs = rank > 0 ? (ability.cooldown[rank - 1] ?? 1) : 1;
         const sweep = rank > 0 && cdSecs > 0 ? Math.min(1, cdSecs / maxCdSecs) : 0;
         const learned = rank > 0;
+        // passive-only skill (no castable effects) — dashed tile + soft cue
+        const passive = isPassiveOnly(ability);
         // rank-scaled numbers (rank-1 values before the ability is learned)
         const cdMeta = ability.cooldown[Math.max(0, rank - 1)] ?? ability.cooldown[0] ?? 0;
         const manaMeta = ability.manaCost[Math.max(0, rank - 1)] ?? ability.manaCost[0] ?? 0;
@@ -94,6 +152,7 @@ export function AbilityBar(): React.JSX.Element | null {
           <div key={slot} style={{ position: "relative", width: 52, textAlign: "center" }}>
             <Tooltip title={ability.name} body={docDescription(ability)} meta={meta} style={{ display: "block" }}>
             <div
+              {...holdProps(slot, { denied: !learned || sweep > 0, passive })}
               style={{
                 position: "relative",
                 width: 52,
@@ -101,8 +160,11 @@ export function AbilityBar(): React.JSX.Element | null {
                 borderRadius: 6,
                 overflow: "hidden",
                 background: learned ? "#243252" : "#161b26",
-                border: `1px solid ${learned ? "#51649b" : "#2a3040"}`,
+                // passive skills read as a DASHED outline so they're easy to
+                // tell apart from active/castable tiles (虛線外框)
+                border: `1px ${passive ? "dashed" : "solid"} ${learned ? "#51649b" : "#2a3040"}`,
                 color: learned ? TEXT_MAIN : TEXT_DIM,
+                transition: "transform 80ms ease, filter 80ms ease",
               }}
             >
               <div style={{ fontSize: 18, fontWeight: "bold", marginTop: 6 }}>{slot}</div>
@@ -209,6 +271,9 @@ export function AbilityBar(): React.JSX.Element | null {
         const ex = exSlotView(seat);
         if (!ex) return null;
         const { cdSecs, sweep } = ex;
+        // EX can (rarely) be a passive-only skill → dashed tile + soft cue
+        const exDef = Abilities.tryGet(seat.exAbilityId as AbilityId);
+        const exPassive = exDef ? isPassiveOnly(exDef) : false;
         const exMeta: TooltipMeta[] = [
           { label: "EX 技能", value: castTypeLabel(ex.castType) },
           { label: "冷卻", base: ex.cooldownSec, factor: "cooldown", unit: "s" },
@@ -219,6 +284,7 @@ export function AbilityBar(): React.JSX.Element | null {
           <div style={{ position: "relative", width: 52, textAlign: "center" }}>
             <Tooltip title={ex.name} body={ex.description} meta={exMeta} style={{ display: "block" }}>
             <div
+              {...holdProps("EX", { denied: sweep > 0, passive: exPassive })}
               style={{
                 position: "relative",
                 width: 52,
@@ -226,9 +292,10 @@ export function AbilityBar(): React.JSX.Element | null {
                 borderRadius: 6,
                 overflow: "hidden",
                 background: "#3a2a12",
-                border: `2px solid ${EX_ACCENT}`,
+                border: `2px ${exPassive ? "dashed" : "solid"} ${EX_ACCENT}`,
                 boxShadow: `0 0 8px ${EX_ACCENT}88`,
                 color: TEXT_MAIN,
+                transition: "transform 80ms ease, filter 80ms ease",
               }}
             >
               <div style={{ fontSize: 15, fontWeight: "bold", marginTop: 7, color: EX_ACCENT }}>EX</div>
@@ -284,5 +351,6 @@ export function AbilityBar(): React.JSX.Element | null {
         );
       })()}
     </div>
+    </>
   );
 }

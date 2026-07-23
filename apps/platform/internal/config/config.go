@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -52,6 +53,22 @@ type Config struct {
 	// empty = no bootstrap). Create the first admin by registering this
 	// username normally, setting the env, and restarting.
 	AdminBootstrapUsername string
+	// DeployTier is the declared serving environment for the copyright /
+	// single-player content gate (#127): "public" (outward-facing — the
+	// copyright-restricted and single-player content must NOT be served) or
+	// "private" (loopback/LAN — full content). Read from GGD_DEPLOY_TIER and
+	// DEFAULTS TO "public" so an outward deploy is safe by omission (any value
+	// other than an explicit private marker is treated as public).
+	//
+	// The AUTHORITATIVE enforcement is at the content-serving layer — the vite
+	// dev middleware and nginx (apps/client/vite.config.ts, nginx/**), which
+	// classify each request's SOCKET peer with the same loopback|lan|public
+	// rule (packages/shared/src/envTier.ts). The platform serves no
+	// copyright-restricted content itself; it only records the operator's
+	// declared tier so it is logged at boot and can be surfaced. A friends-only
+	// LAN deploy sets GGD_DEPLOY_TIER=private (alongside GGD_REQUIRE_APPROVAL).
+	// See docs/copyright-content-gate.md.
+	DeployTier string
 
 	// AccessTokenTTL is the JWT access-token lifetime.
 	AccessTokenTTL time.Duration
@@ -86,6 +103,21 @@ func getenvInt(key string, def int) int {
 	return def
 }
 
+// normalizeDeployTier maps GGD_DEPLOY_TIER to "private" or "public" for the
+// #127 content gate. An explicit private marker (private|loopback|lan) selects
+// "private"; ANYTHING ELSE — including an empty/unset value — is "public". That
+// is the fail-safe direction for a copyright gate: an outward deploy that
+// forgets to declare a tier defaults to refusing the restricted content, never
+// to leaking it.
+func normalizeDeployTier(v string) string {
+	switch strings.ToLower(strings.TrimSpace(v)) {
+	case "private", "loopback", "lan":
+		return "private"
+	default:
+		return "public"
+	}
+}
+
 // getenvFloat reads a non-negative float env var, falling back to def on
 // absence or a parse error.
 func getenvFloat(key string, def float64) float64 {
@@ -114,6 +146,7 @@ func Load() (Config, error) {
 		GrandmasterFrac:        getenvFloat("RANKED_GRANDMASTER_FRAC", 0.10),
 		MinApexGames:           getenvInt("RANKED_MIN_APEX_GAMES", 10),
 		AdminBootstrapUsername: os.Getenv("ADMIN_BOOTSTRAP_USERNAME"),
+		DeployTier:             normalizeDeployTier(os.Getenv("GGD_DEPLOY_TIER")),
 		AccessTokenTTL:         15 * time.Minute,
 		RefreshTokenTTL:        30 * 24 * time.Hour,
 		PresenceTTL:            60 * time.Second,

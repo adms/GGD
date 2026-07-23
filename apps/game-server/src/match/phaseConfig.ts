@@ -27,7 +27,7 @@
  */
 import { TICK_HZ } from "@ggd/shared/constants";
 import { Configs } from "@ggd/shared/content";
-import type { ConfigMatchDoc } from "@ggd/shared/content";
+import type { ConfigMatchDoc, FireRingConfig } from "@ggd/shared/content";
 import { DEFAULT_PHASE_CONFIG, type PhaseConfig } from "./PhaseMachine";
 
 /** The seconds block of `config.match@1` this module consumes. */
@@ -74,4 +74,24 @@ export function resolvePhaseConfig(): PhaseConfig {
   const doc = Configs.tryGet("config.match") as unknown as ConfigMatchDoc | undefined;
   if (!doc || doc.schema !== "config@1" || !doc.match) return DEFAULT_PHASE_CONFIG;
   return phaseConfigFromSeconds(doc.match);
+}
+
+/**
+ * The ACTIVE fire-ring schedule (task #132) — the round-pacing accelerator that
+ * lives in `config.match@1`'s `match.fireRing` block, next to `combatMaxSec`
+ * (its single source of truth for round length: `startSec` is the intended
+ * round length and the schema forbids it exceeding `combatMaxSec`). Resolved
+ * ONCE per match at room creation and handed to the MatchController, which arms
+ * it on combat entry via `beginCombatFireRing`.
+ *
+ * Returns null when the doc / block is absent (unit tests, a skeleton boot, or
+ * an operator who authored no ring): the MatchController then never arms the
+ * ring, exactly the legacy behavior. Kept SEPARATE from resolvePhaseConfig so
+ * the ring is a pure additive: a match with fire-ring config still resolves its
+ * phase durations identically.
+ */
+export function resolveFireRing(): FireRingConfig | null {
+  const doc = Configs.tryGet("config.match") as unknown as ConfigMatchDoc | undefined;
+  if (!doc || doc.schema !== "config@1" || !doc.match?.fireRing) return null;
+  return doc.match.fireRing;
 }

@@ -1,12 +1,15 @@
 /**
- * The dragon clash (task #88): the serene login theme must keep the login
- * scene's dragons distant, WITHOUT muting the scripted transition roars and
- * without second-guessing the player's own mixer.
+ * The dragon clash (task #88): a SERENE login bed must keep the login scene's
+ * dragons distant, WITHOUT muting the scripted transition roars and without
+ * second-guessing the player's own mixer.
  *
- * The levels asserted here were chosen from a measured mix (see the module
- * docstring in ./loginAmbience) — this file pins the RULE, not the taste: that
- * the ceiling/duck/spacing actually apply, that they apply to exactly the right
- * roars, and that the mixer stays in charge.
+ * DORMANT ON LOGIN SINCE TASK #134. The nocturne left the login rotation for the
+ * ranked ladder, so the login bed is always the epic `menu` and this rule never
+ * fires on the live login screen (`isCalmLoginTheme(loginThemeAt(0))` is false —
+ * pinned below). The rule itself is INTACT and still correct: these tests drive
+ * it by naming the serene scene directly, so it stays honest for the day a
+ * serene login bed returns. What changed is the coupling to the rotation — the
+ * rotation no longer reaches the nocturne, and the tests assert exactly that.
  */
 import { describe, it, expect } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
@@ -29,14 +32,15 @@ const QUIETEST_CRY = 0.373;
 const epic = { scene: "menu", bgmAudible: true, nowMs: 0 };
 const calm = { scene: "menuNocturne", bgmAudible: true, nowMs: 0 };
 
-describe("login ambience — the serene theme hushes the dragons", () => {
-  it("only the nocturne is a calm theme, and it is one of the rotation's own", () => {
+describe("login ambience — a serene bed hushes the dragons", () => {
+  it("recognises the serene nocturne as calm, and the epic theme as not", () => {
     expect(isCalmLoginTheme("menuNocturne")).toBe(true);
     expect(isCalmLoginTheme("menu")).toBe(false);
     expect(isCalmLoginTheme("combat")).toBe(false);
     expect(isCalmLoginTheme(null)).toBe(false);
-    // a calm theme must be a theme the rotation can actually reach
-    expect(LOGIN_THEMES).toContain("menuNocturne");
+    // task #134: the calm bed is NO LONGER one the login rotation can reach —
+    // the rule is dormant on the login screen, correct only for a future bed.
+    expect(LOGIN_THEMES).not.toContain("menuNocturne");
   });
 
   it("leaves the epic theme's cries EXACTLY as the scene emitted them", () => {
@@ -63,14 +67,14 @@ describe("login ambience — the serene theme hushes the dragons", () => {
     expect(quiet.decision.volume!).toBeLessThan(decision.volume!);
   });
 
-  it("ducks a big roar on the calm nocturne, leaves it untouched on epic (task #88)", () => {
+  it("ducks a big roar on the serene bed, leaves it untouched on epic", () => {
     cover("login-calm-big-roar-exempt");
     // epic theme: the big transition roar plays at its full designed level.
     const onEpic = stepCalmRoar(CALM_ROAR_INITIAL, { volume: 1.5, big: true }, epic);
     expect(onEpic.decision.volume).toBe(1.5);
     expect(onEpic.decision.calmed).toBe(false);
-    // calm nocturne (now the OPENING theme): the roar is ducked to the ceiling
-    // so it never blasts over the stillness — but it is never dropped.
+    // serene bed: the roar is ducked to the ceiling so it never blasts over the
+    // stillness — but it is never dropped.
     const onCalm = stepCalmRoar(CALM_ROAR_INITIAL, { volume: 1.5, big: true }, calm);
     expect(onCalm.decision.calmed).toBe(true);
     expect(onCalm.decision.volume).not.toBeNull();
@@ -85,7 +89,7 @@ describe("login ambience — the serene theme hushes the dragons", () => {
     expect(ambient.decision.volume).not.toBeNull();
   });
 
-  it("spaces the cries: at most 4 in a whole nocturne segment", () => {
+  it("spaces the cries: at most 4 in a whole serene segment", () => {
     cover("login-calm-spacing");
     // the real scene emits a cry every ~5.9 s; feed exactly that
     let state: CalmRoarState = CALM_ROAR_INITIAL;
@@ -134,8 +138,8 @@ describe("login ambience — the serene theme hushes the dragons", () => {
     expect(decision.volume).not.toBeNull();
   });
 
-  it("an epic-theme cry does not eat into the nocturne's first quiet window", () => {
-    // loud cries during the epic segment must not leave the nocturne's opening
+  it("an epic-theme cry does not eat into a serene bed's first quiet window", () => {
+    // loud cries during the epic segment must not leave the serene bed's opening
     // gated shut — the spacing clock only advances on cries it actually calmed
     let state: CalmRoarState = CALM_ROAR_INITIAL;
     for (let t = 0; t < LOGIN_SEGMENT_MS; t += 6_000) {
@@ -192,24 +196,32 @@ describe("login ambience — the serene theme hushes the dragons", () => {
   });
 });
 
-describe("the scripted angry roar is ducked when it opens on the nocturne", () => {
-  it("the rotation opens on the calm nocturne, and a big roar there is ducked (task #88)", () => {
-    cover("login-calm-return-intro-epic");
-    // task #88: a fresh visit now OPENS on the serene nocturne (index 0);
-    // useLoginTheme resets the rotation on every visit, and AuthScreen fires
-    // the return-from-app roar at MOUNT — so the big roar can land on the calm.
-    expect(loginThemeAt(0)).toBe("menuNocturne");
-    expect(isCalmLoginTheme(loginThemeAt(0))).toBe(true);
-    // the test's old tripwire said "if this flips, the big roar needs its own
-    // rule": it now HAS one — a big roar on the calm bed is ducked to the
-    // ceiling (never blasted at full over the stillness), but never dropped.
-    const { decision } = stepCalmRoar(
-      { lastCalmRoarMs: null },
+describe("the calm rule is dormant on the login screen (task #134)", () => {
+  it("login opens on the epic `menu`, so no login roar is ever calmed", () => {
+    cover("login-calm-dormant-on-login");
+    // The nocturne left the login rotation for the ranked ladder, so the login
+    // bed is always `menu`. The calm gate keys off the LIVE bed (AuthScreen
+    // passes audioSystem.scene), which on login can only be `menu` →
+    // isCalmLoginTheme is false → the ambient AND the scripted big roar both pass
+    // through untouched. This is what makes the return-intro angry roar safe
+    // without any special-casing: it lands on `menu`, not a serene bed.
+    expect(loginThemeAt(0)).toBe("menu");
+    expect(isCalmLoginTheme(loginThemeAt(0))).toBe(false);
+
+    const ambient = stepCalmRoar(
+      CALM_ROAR_INITIAL,
+      { volume: 1, big: false },
+      { scene: loginThemeAt(0), bgmAudible: true, nowMs: 0 },
+    );
+    expect(ambient.decision.calmed).toBe(false);
+    expect(ambient.decision.volume).toBe(1);
+
+    const big = stepCalmRoar(
+      CALM_ROAR_INITIAL,
       { volume: 1, big: true },
       { scene: loginThemeAt(0), bgmAudible: true, nowMs: 0 },
     );
-    expect(decision.calmed).toBe(true);
-    expect(decision.volume).not.toBeNull();
-    expect(decision.volume!).toBeLessThan(1);
+    expect(big.decision.calmed).toBe(false);
+    expect(big.decision.volume).toBe(1);
   });
 });

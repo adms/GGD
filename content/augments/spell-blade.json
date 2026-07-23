@@ -1,0 +1,37 @@
+{
+  "id": "spell-blade",
+  "schema": "augment@1",
+  "name": "咒刃",
+  "description": "技能命中時，額外造成 30(+25% 法術強度 +15% 攻擊力) 法術傷害（每秒最多觸發一次）。",
+  "tier": "gold",
+  "weight": 55,
+  "hooks": [
+    {
+      "on": "onAbilityHit",
+      "internalCooldown": 1,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "flat": 30,
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.25
+              },
+              {
+                "stat": "ad",
+                "coeff": 0.15
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "on-hit",
+    "offense"
+  ]
+}

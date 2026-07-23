@@ -21,6 +21,8 @@
  */
 import { Fragment, useState } from "react";
 import { GOLD, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
+import { displayFinal, isScaled, statDisplayFactor, useDisplayEnv } from "../displayFinal";
+import { rescaleAbilityProse, WC3_PROSE_CAPTION } from "../components/abilityText";
 import { CodexIcon } from "./CodexIcon";
 // The ONLY editor-related runtime import: a createContext(null) + useContext.
 // The editor itself (CodexEditPanel → codexEdit → codexEditModel) arrives as a
@@ -233,12 +235,15 @@ function StatTable({
   growth: Readonly<Record<string, number>>;
 }): React.JSX.Element {
   const edit = useDetailEdit();
+  const env = useDisplayEnv();
   const keys = [...new Set([...Object.keys(base), ...Object.keys(growth)])];
   return (
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: edit ? "1fr 96px 96px" : "1fr auto auto",
+        // 說明數值最終化: read-only view gains a 戰鬥實際 column (base × combat-env);
+        // the dev-only edit grid keeps its two input columns unchanged.
+        gridTemplateColumns: edit ? "1fr 96px 96px" : "1fr auto auto auto",
         gap: "2px 10px",
         fontSize: 12,
         alignItems: "start",
@@ -246,10 +251,13 @@ function StatTable({
     >
       <div style={{ color: TEXT_DIM, fontSize: 10 }}>屬性</div>
       <div style={{ color: TEXT_DIM, fontSize: 10, textAlign: edit ? "left" : "right" }}>基礎</div>
+      {!edit && <div style={{ color: TEXT_DIM, fontSize: 10, textAlign: "right" }}>戰鬥實際</div>}
       <div style={{ color: TEXT_DIM, fontSize: 10, textAlign: edit ? "left" : "right" }}>每級成長</div>
       {keys.map((k) => {
         const b = base[k];
         const g = growth[k];
+        const factor = statDisplayFactor(k);
+        const showFinal = b !== undefined && isScaled(factor, env);
         return (
           <Fragment key={k}>
             <div style={{ color: TEXT_DIM }}>{statLabel(k)}</div>
@@ -257,6 +265,11 @@ function StatTable({
               edit.renderField(`baseStats.${k}`, "number")
             ) : (
               <div style={{ textAlign: "right", color: TEXT_MAIN }}>{b === undefined ? "—" : num(b)}</div>
+            )}
+            {!edit && (
+              <div style={{ textAlign: "right", color: showFinal ? "#6fd3a8" : TEXT_DIM }}>
+                {showFinal ? num(displayFinal(b, factor, env)) : "—"}
+              </div>
             )}
             {edit ? (
               edit.renderField(`growth.${k}`, "number")
@@ -466,6 +479,7 @@ function ChampionBody({ champ, data, onNavigate }: { champ: CodexChampion; data:
 }
 
 function AbilityBody({ ability, data, onNavigate }: { ability: CodexAbility; data: CodexData; onNavigate: (r: CodexRef) => void }): React.JSX.Element {
+  const env = useDisplayEnv();
   const owner = data.champions.find((c) => c.id === ability.championId) ?? null;
   const siblings = owner
     ? data.abilities.filter((a) => a.championId === owner.id && a.id !== ability.id)
@@ -525,9 +539,13 @@ function AbilityBody({ ability, data, onNavigate }: { ability: CodexAbility; dat
         </Row>
       </Section>
       <Section title="說明">
+        {/* 說明數值最終化: cooldown literals rescaled to the live combat-env final */}
         <Editable path="description" kind="multiline">
-          <Description text={ability.description} />
+          <Description
+            text={ability.description ? rescaleAbilityProse(ability.description, env) : ability.description}
+          />
         </Editable>
+        <div style={{ fontSize: 9.5, color: TEXT_DIM, marginTop: 4 }}>{WC3_PROSE_CAPTION}</div>
       </Section>
       <Section title="擁有者">
         <Link

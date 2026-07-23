@@ -1,0 +1,94 @@
+{
+  "id": "fx.prim.holy.tornado-lg",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.42,
+    "angleDeg": 34
+  },
+  "mode": "burst",
+  "burstCount": 44,
+  "lifetimeSec": {
+    "min": 0.3,
+    "max": 0.72
+  },
+  "size": {
+    "start": 0.347,
+    "end": 0
+  },
+  "color": {
+    "start": [
+      1,
+      0.9892,
+      0.9316,
+      1
+    ],
+    "end": [
+      0.18,
+      0.1692,
+      0.1116,
+      0
+    ]
+  },
+  "sizeStops": [
+    [
+      0,
+      0.347
+    ],
+    [
+      0.1,
+      0.825
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        0.9892,
+        0.9316,
+        1
+      ]
+    ],
+    [
+      0.2,
+      [
+        1,
+        0.94,
+        0.62,
+        1
+      ]
+    ],
+    [
+      0.6,
+      [
+        0.5,
+        0.47,
+        0.31,
+        0.42
+      ]
+    ],
+    [
+      1,
+      [
+        0.18,
+        0.1692,
+        0.1116,
+        0
+      ]
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": 4.2,
+  "speed": {
+    "min": 3,
+    "max": 7
+  },
+  "texture": "assets/textures/particles/smoke_03.png",
+  "stretched": true,
+  "tailLength": 2
+}

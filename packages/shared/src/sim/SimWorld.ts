@@ -18,6 +18,7 @@ import type {
   ReviveCircleComp,
 } from "./components";
 import type { FlowerRules } from "./flowers";
+import type { FireRingRules } from "./fireRing";
 import type { ReviveRules } from "./revive";
 import { DEFAULT_COMBAT_ENV, type CombatEnvMultipliers } from "./combatEnv";
 import type { StatsComp, AbilitiesComp } from "./stats/statsComp";
@@ -36,11 +37,18 @@ import { basicAttackSystem } from "./systems/BasicAttackSystem";
 import { projectileSystem } from "./systems/ProjectileSystem";
 import { combatResolveSystem } from "./combat/damage";
 import { deathSystem } from "./systems/DeathSystem";
+import { fireRingSystem } from "./systems/FireRingSystem";
 import { flowerSystem } from "./systems/FlowerSystem";
 import { reviveSystem } from "./systems/ReviveSystem";
 import { regenSystem } from "./systems/RegenSystem";
 import { statusExpirySystem } from "./systems/StatusSystem";
 import { hitstopDecaySystem } from "./systems/HitstopSystem";
+import {
+  guardianSystem,
+  type StructureComp,
+  type GuardianBuff,
+  type GuardianRules,
+} from "./systems/GuardianSystem";
 
 export interface SimEvent {
   type: string;
@@ -68,6 +76,24 @@ export class SimWorld {
   readonly abilities = new Map<EntityId, AbilitiesComp>();
   readonly flower = new Map<EntityId, FlowerComp>();
   readonly reviveCircle = new Map<EntityId, ReviveCircleComp>();
+
+  /**
+   * Neutral duel-zone GUARDIANS (task #89). A structure carries transform +
+   * health + this marker ONLY — no TeamComp/seat/nav/stats/champion — so every
+   * team/champion iteration is blind to it by construction (see FlowerComp). It
+   * IS in the broad-phase grid (rebuildGrid), so it is a legal ability/auto
+   * target. Managed entirely by GuardianSystem; empty unless the host armed the
+   * mechanic (`guardianRules !== null`).
+   */
+  readonly structure = new Map<EntityId, StructureComp>();
+
+  /**
+   * Active 鎮守之力 buffs (task #89 §8.3): killer entity -> the inherited-volley
+   * pulse state. A flat, non-scaling aura, so it lives in its own map rather
+   * than as a stat ModifierSource (it changes no stat). Pulsed + expired by
+   * GuardianSystem; folded into digest() so a desync surfaces.
+   */
+  readonly guardianBuffs = new Map<EntityId, GuardianBuff>();
 
   /**
    * Per-player match scoreboard (see stats/matchStats.ts). Part of world state
@@ -186,6 +212,24 @@ export class SimWorld {
   flowerRules: FlowerRules | null = null;
 
   /**
+   * Fire-ring rules (ticks), task #132. null = the round-pacing hazard is OFF
+   * (legacy behavior, unit tests, the client's prediction shadow world). The
+   * match host arms these via beginCombatFireRing/endCombatFireRing (see
+   * fireRing.ts). While armed AND `combatActive`, fireRingSystem burns every
+   * living champion with the escalating %-HP true-damage ramp.
+   */
+  fireRingRules: FireRingRules | null = null;
+
+  /**
+   * Combat-elapsed ticks for the fire ring. -1 = not armed (fireRingSystem
+   * idles). Set to 0 by beginCombatFireRing and incremented by fireRingSystem
+   * each LIVE-combat tick, so ignition + the ramp are deterministic world state.
+   * Kept SEPARATE from `combatTicks` (which only advances while flowers are
+   * armed) so the ring's schedule never depends on whether flowers are enabled.
+   */
+  fireRingTicks = -1;
+
+  /**
    * Global combat-environment multiplier table (see combatEnv.ts for the
    * per-key formula sites). Host-armed WORLD STATE like ultGateOverride /
    * flowerRules: the match host assigns it once BEFORE tick 0 and never
@@ -220,6 +264,16 @@ export class SimWorld {
   reviveRules: ReviveRules | null = null;
 
   /**
+   * Guardian rules (ticks), task #89. null (default) = the mechanic is OFF
+   * (skeleton boot, unit tests, the client's prediction shadow world) and
+   * `guardianSystem` is a strict no-op. The match host arms these via
+   * `beginCombatGuardians` / `endCombatGuardians` (see systems/GuardianSystem.ts).
+   * Host-armed WORLD STATE like flowerRules: assigned once on combat entry on
+   * every replica, never mutated by a system, so determinism holds automatically.
+   */
+  guardianRules: GuardianRules | null = null;
+
+  /**
    * Remaining revive charges this ROUND, per team. Armed to
    * `revivesPerTeamPerRound` on combat entry, spent on a COMPLETED revive
    * (never on spawn), cleared on combat exit. One per team is the largest
@@ -228,11 +282,28 @@ export class SimWorld {
    */
   readonly reviveCharges = new Map<TeamId, number>();
 
-  constructor(
-    public readonly arena: ArenaDef,
-    seed: number,
-  ) {
+  /**
+   * The active map geometry (collision truth). Read by MovementSystem /
+   * ProjectileSystem / flowers / guardians / revives every step. NOT readonly:
+   * the match host swaps it BETWEEN rounds via {@link setArena} for the per-round
+   * arena rotation (task #145). The swap only ever happens outside `step()`, at a
+   * deterministic seam driven by the round number, so every replica changes it
+   * identically and determinism holds.
+   */
+  arena: ArenaDef;
+
+  constructor(arena: ArenaDef, seed: number) {
+    this.arena = arena;
     this.rng = new Rng(seed);
+  }
+
+  /**
+   * Swap the active arena between rounds (task #145). Host-driven and
+   * deterministic (the caller picks it from the seed + round); never called
+   * mid-step, so collision geometry is stable for the whole tick.
+   */
+  setArena(arena: ArenaDef): void {
+    this.arena = arena;
   }
 
   spawn(): EntityId {
@@ -251,6 +322,8 @@ export class SimWorld {
     this.abilities.delete(id);
     this.flower.delete(id);
     this.reviveCircle.delete(id);
+    this.structure.delete(id);
+    this.guardianBuffs.delete(id);
     this.hitstop.delete(id);
     this.knockdown.delete(id);
     this.hitstun.delete(id);
@@ -305,10 +378,17 @@ export class SimWorld {
     //                             T+1..T+N (see SimWorld.hitstop docs).
     combatResolveSystem(this); // 8. drain damage queue (mitigation/shields/hooks
     //                             + combat-juice: hitstop/knockback/knockdown)
+    fireRingSystem(this); //  8b. round-pacing fire ring: escalating %-HP true burn
+    //                             (no-op unless armed + combatActive); runs BEFORE
+    //                             deathSystem so its kills resolve THIS tick (#132)
     deathSystem(this); // 9. deaths, kill credit, xp/gold
     flowerSystem(this); //   9b. flower burst on death + spawn cadence (no-op unless armed)
     reviveSystem(this); //   9c. revive circles: drop on death, channel, revive/expire
     //                             (no-op unless armed; consumes this tick's deaths)
+    guardianSystem(this); // 9d. neutral guardian: threat/wake, AoE volley, last-hit
+    //                             payout (no-op unless armed). Runs AFTER deathSystem
+    //                             (sees this tick's `death`) and reviveSystem (killer's
+    //                             final alive-state is settled before payout).
     regenSystem(this); // 10. hp/mana regen
     statRecomputeSystem(this); // 11. late recompute for same-tick attaches
     accumulateTimeAlive(this); // 12. match-stat time-alive (combat-gated)
@@ -386,6 +466,27 @@ export class SimWorld {
     for (const [teamId, charges] of this.reviveCharges) {
       mix(teamId);
       mix(charges);
+    }
+    // guardians (task #89) are authoritative world state: a wake/volley/threat
+    // that advanced on one replica but not another must surface here as a
+    // mismatch. When the mechanic is off both maps are empty and the digest is
+    // byte-identical to a pre-feature world.
+    for (const [id, sc] of this.structure) {
+      mix(id);
+      mix(sc.wakeTick);
+      mix(sc.nextVolleyTick);
+      mix(sc.lastDamagedTick);
+      mix(sc.volleysFired);
+      mix(sc.marks.length);
+      let tsum = 0;
+      for (const v of sc.threat.values()) tsum += v;
+      mix(tsum);
+    }
+    for (const [id, b] of this.guardianBuffs) {
+      mix(id);
+      mix(b.expiresAtTick);
+      mix(b.nextPulseTick);
+      mix(b.round);
     }
     mix(this.rng.state);
     mix(this.tick);

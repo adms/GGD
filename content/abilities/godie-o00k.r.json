@@ -35,7 +35,7 @@
       "stun": true
     }
   ],
-  "vfxKey": "fx.ember-bolt-cast",
+  "vfxKey": "fx.prim.lightning.beam-lg",
   "targetsEnemies": true,
   "radius": 5.5,
   "schema": "ability@1"

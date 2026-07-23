@@ -41,16 +41,18 @@ describe("rotQuarterToRadians", () => {
   });
 });
 
-describe("sightline math (55° pitch, worst-case dolly 10)", () => {
+describe("sightline math (68° pitch, worst-case dolly 10)", () => {
   it("derives the worst-case eye geometry from the camera angle", () => {
-    // eye = 10·sin55 ≈ 8.19u, standoff = 10·cos55 ≈ 5.74u
-    expect(SIGHTLINE_EYE_HEIGHT).toBeCloseTo(8.19, 2);
-    expect(SIGHTLINE_STANDOFF).toBeCloseTo(5.74, 2);
+    // pitch raised 55°→68° (#combat-cam-topdown): the eye lifts and looks
+    // steeper down — eye = 10·sin68 ≈ 9.27u, standoff = 10·cos68 ≈ 3.75u.
+    expect(SIGHTLINE_EYE_HEIGHT).toBeCloseTo(9.27, 2);
+    expect(SIGHTLINE_STANDOFF).toBeCloseTo(3.75, 2);
   });
 
   it("keeps the full-hide band at the cap under a contact band (<0.75u)", () => {
-    // (2.4 − 1.7)·5.74/(8.19 − 2.4) ≈ 0.69u — a hero only vanishes while
-    // physically pressed against the prop's north face.
+    // (2.4 − 1.7)·3.75/(9.27 − 2.4) ≈ 0.38u — steepening the pitch SHRINKS the
+    // band (was ≈0.69u at 55°); a hero only vanishes while physically pressed
+    // against the prop's north face.
     const band = fullHideReach(SIGHTLINE_HEIGHT_CAP);
     expect(band).toBeGreaterThan(0);
     expect(band).toBeLessThan(0.75);
@@ -77,8 +79,8 @@ describe("minFullHideWidth", () => {
   });
 
   it("asks for NO width once reach + depth spans the standoff", () => {
-    // the edge-on rim banner: 3.57u deep, top 5.96u ⇒ 10.98u of reach, against
-    // a 5.74u standoff. Somewhere along that band the rays converge to a point,
+    // the edge-on rim banner: 3.57u deep, top 5.96u ⇒ ≈4.83u of reach, against
+    // a 3.75u standoff. Somewhere along that band the rays converge to a point,
     // so a 0.6u sliver hides a hero just as completely as a wall would.
     expect(minFullHideWidth(3.57, 5.96)).toBe(0);
   });
@@ -393,7 +395,7 @@ describe("authored arena content", () => {
     // they are the one family kept at full height rather than lowered. That
     // only holds while they stand OUTSIDE the boundary circle: turning one
     // edge-on does not make it safe (see minFullHideWidth — its 3.6u of depth
-    // screens a long strip of ground down the 55° sightline), which is exactly
+    // screens a long strip of ground down the 68° sightline), which is exactly
     // what a `width < 1u` exemption used to get wrong at the lane ends.
     let seen = 0;
     for (const [file, doc] of docs) {

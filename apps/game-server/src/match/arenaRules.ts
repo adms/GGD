@@ -11,7 +11,12 @@ import type { CoreAbilitySlot } from "@ggd/shared/sim/intents";
 import type { AugmentTier } from "@ggd/shared/sim/content/defs";
 import { AUGMENT_TIER_SCHEDULE } from "@ggd/shared/sim/economy/draft";
 import { Configs } from "@ggd/shared/content";
-import type { ConfigArenaRulesDoc, FlowerConfig, ReviveCircleConfig } from "@ggd/shared/content";
+import type {
+  ConfigArenaRulesDoc,
+  FlowerConfig,
+  ReviveCircleConfig,
+  GuardianTowerConfig,
+} from "@ggd/shared/content";
 
 export interface RoundGrant {
   grantLevels?: number;
@@ -31,13 +36,21 @@ export interface ArenaRules {
   /** round number -> grants applied at that round's intermission entry */
   rounds: ReadonlyMap<number, RoundGrant>;
   /** grants for every round past the highest `rounds` key (escalating gold) */
-  overflow: { grantLevels: number; grantGold: number; grantGoldPerRound: number } | null;
+  overflow: {
+    grantLevels: number;
+    grantGold: number;
+    grantGoldPerRound: number;
+    /** augment tier offered on overflow rounds (so "every round" stays literal) */
+    augmentTier?: AugmentTier;
+  } | null;
   /** legacy per-round free item gacha; null = disabled */
   gacha: { fromRound: number; lootTable: string } | null;
   /** healing-flower rules (combat-phase plants); null = no flowers (legacy) */
   flowers: FlowerConfig | null;
   /** revive-circle rules (task #84); null = mechanic off (legacy) */
   reviveCircles: ReviveCircleConfig | null;
+  /** neutral duel-zone guardian rules (task #89); null = mechanic off (legacy) */
+  guardianTower: GuardianTowerConfig | null;
 }
 
 /** Legacy behavior: augment tiers per AUGMENT_TIER_SCHEDULE + round-2+ gacha. */
@@ -55,6 +68,7 @@ export const DEFAULT_ARENA_RULES: ArenaRules = {
   gacha: { fromRound: 2, lootTable: "round-reward" },
   flowers: null,
   reviveCircles: null,
+  guardianTower: null,
 };
 
 /** Convert a parsed config.arena-rules@1 doc into the controller's rule table. */
@@ -79,6 +93,7 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
     gacha: doc.gacha ?? null,
     flowers: doc.flowers ?? null,
     reviveCircles: doc.reviveCircles ?? null,
+    guardianTower: doc.guardianTower ?? null,
   };
 }
 
@@ -92,6 +107,7 @@ export function grantForRound(rules: ArenaRules, round: number): RoundGrant | nu
   return {
     grantLevels: rules.overflow.grantLevels,
     grantGold: rules.overflow.grantGold + rules.overflow.grantGoldPerRound * (round - maxRound - 1),
+    augmentTier: rules.overflow.augmentTier,
   };
 }
 

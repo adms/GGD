@@ -22,6 +22,7 @@
 import { asEntityId } from "@ggd/shared/ids";
 import type { AbilitySlot, Command, Order } from "@ggd/shared/sim/intents";
 import type { Vec2 } from "@ggd/shared/sim/math/vec2";
+import { abilityActivationCue } from "../ui/abilityCue";
 import { buildCastCommand, type AimAbility } from "./AimResolver";
 
 export const GAMEPAD_DEADZONE = 0.15;
@@ -300,7 +301,11 @@ export class GamepadSystem {
     if (frame.aim) this.lastAimDir = frame.aim;
     if (intent.order) this.sinks.onOrder(intent.order);
     if (intent.aim) this.sinks.onAim(intent.aim);
-    for (const cmd of intent.commands) this.sinks.onCommand(cmd);
+    for (const cmd of intent.commands) {
+      // pad A/B/X/Y/Back cast → same button click cue as tile/key (de-duped)
+      if (cmd.kind === "castAbility") abilityActivationCue(cmd.slot);
+      this.sinks.onCommand(cmd);
+    }
   }
 }
 
@@ -374,7 +379,11 @@ export class MultiGamepadSystem {
       if (frame.aim) this.lastAim.set(player, frame.aim);
       if (intent.order) this.sinks.onOrder(player, intent.order);
       if (intent.aim) this.sinks.onAim(player, intent.aim);
-      for (const cmd of intent.commands) this.sinks.onCommand(player, cmd);
+      for (const cmd of intent.commands) {
+        // pad cast → the shared button click cue (de-duped per slot)
+        if (cmd.kind === "castAbility") abilityActivationCue(cmd.slot);
+        this.sinks.onCommand(player, cmd);
+      }
     }
   }
 }

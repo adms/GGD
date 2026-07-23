@@ -31,11 +31,18 @@ export type Page =
    */
   | "modelBudget"
   | "iconTracking"
+  /** M幣 發放 (task #118) — admin-granted M COIN via /wallet/admin/grant-mcoin. */
+  | "mcoinGrant"
   | "audit";
 
 export interface AdminAccount {
   id: string;
   username: string;
+}
+
+export interface BootOptions {
+  /** override the dev drop-in decision (tests); defaults to the vite DEV flag */
+  devDropIn?: boolean;
 }
 
 export interface AppState {
@@ -46,11 +53,64 @@ export interface AppState {
   authError: string | null;
   /** set when a valid login is authenticated but lacks the admin role */
   notAuthorized: boolean;
+  /**
+   * DEV drop-in (task #102). When true the console opens STRAIGHT INTO the
+   * content/codex editor with NO login, and only the platform-backed player-ops
+   * pages are gated (see pageRequiresSession). In a production build vite folds
+   * `import.meta.env.DEV` to false → the original hard login wall is restored,
+   * and the content editor chunk does not even exist to drop into.
+   */
+  devDropIn: boolean;
 
-  boot(): Promise<void>;
+  boot(opts?: BootOptions): Promise<void>;
   doLogin(username: string, password: string): Promise<void>;
   doLogout(): Promise<void>;
+  /** raise the operator login screen (e.g. from a gated page's 登入 button) */
+  showLogin(): void;
+  /** dev-only: dismiss the login screen back to the console (content editor) */
+  cancelLogin(): void;
   navigate(page: Page): void;
+}
+
+/**
+ * Pages backed by the Go PLATFORM admin API (argon2id + JWT + AdminOnly). These
+ * are the player-ops / operations surfaces: they mutate accounts, wallets, MMR,
+ * announcements, the content whitelist, the AI proxy config and the global
+ * combat-env table. They CANNOT function without a real admin session — the
+ * platform rejects an unauthenticated caller — so they stay gated even in the
+ * dev drop-in. Everything NOT in this set is served over loopback with no
+ * platform session: the content/codex editor (champions/abilities/items via the
+ * content-api) and the read-only local consoles (hub, model-budget, icon-track).
+ */
+const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
+  "players",
+  "matches",
+  "announcements",
+  "curation",
+  "ai",
+  "combatEnv",
+  "mcoinGrant",
+  "audit",
+]);
+
+/** True when `page` needs a real platform admin session to do anything. */
+export function pageRequiresSession(page: Page): boolean {
+  return SESSION_REQUIRED_PAGES.has(page);
+}
+
+/**
+ * The dev drop-in flag, read through the repo's guarded `import.meta.env.DEV`
+ * shape so plain-node vitest never throws. This is the SAME statically
+ * substitutable signal the content editor's own gate uses (contentApi.ts) — no
+ * runtime hostname / localStorage sniffing — so a production build folds the
+ * whole no-login path away rather than deciding it at runtime.
+ */
+export function contentEditorDropInEnabled(): boolean {
+  try {
+    return Boolean((import.meta as unknown as { env?: { DEV?: boolean } }).env?.DEV);
+  } catch {
+    return false;
+  }
 }
 
 function errText(err: unknown): string {
@@ -66,23 +126,38 @@ export const appStore = createStore<AppState>()((set, get) => ({
   authBusy: false,
   authError: null,
   notAuthorized: false,
+  devDropIn: false,
 
-  async boot() {
+  async boot(opts) {
+    const devDropIn = opts?.devDropIn ?? contentEditorDropInEnabled();
+    // Where a session-less console lands: the content editor in dev, otherwise
+    // the hub (only reached post-login in a production build).
+    const landing: Page = devDropIn ? "content" : "hub";
+    set({ devDropIn });
+
     if (!api.hasSession) {
-      set({ screen: "login" });
+      // No session. In dev, drop straight into the content editor with the
+      // player-ops pages gated; in prod, keep the hard login wall.
+      if (devDropIn) set({ screen: "console", page: landing, account: null, notAuthorized: false });
+      else set({ screen: "login" });
       return;
     }
     try {
       const { account } = await apiMe();
       const isAdmin = await verifyAdmin(api);
       if (!isAdmin) {
-        set({ screen: "login", notAuthorized: true, account: null });
+        // Authenticated but not an operator. Content editing is a loopback
+        // capability, not a role — so in dev we still open the console (account
+        // stays null ⇒ player-ops stays gated); in prod, back to the wall.
+        if (devDropIn) set({ screen: "console", page: landing, account: null, notAuthorized: true });
+        else set({ screen: "login", notAuthorized: true, account: null });
         return;
       }
       set({ screen: "console", page: "hub", account, notAuthorized: false });
     } catch {
       api.setTokens(null);
-      set({ screen: "login" });
+      if (devDropIn) set({ screen: "console", page: landing, account: null, notAuthorized: false });
+      else set({ screen: "login" });
     }
   },
 
@@ -118,7 +193,23 @@ export const appStore = createStore<AppState>()((set, get) => ({
       /* best effort */
     }
     api.setTokens(null);
-    set({ screen: "login", account: null, page: "hub", notAuthorized: false });
+    // In dev, sign-out returns to the no-login content editor (not a wall);
+    // in prod it drops back to the login screen as before.
+    if (get().devDropIn) {
+      set({ screen: "console", account: null, page: "content", notAuthorized: false });
+    } else {
+      set({ screen: "login", account: null, page: "hub", notAuthorized: false });
+    }
+  },
+
+  showLogin() {
+    set({ screen: "login", authError: null });
+  },
+
+  cancelLogin() {
+    // Only meaningful in the dev drop-in, where a console exists behind the
+    // login screen to return to. In prod the login screen is a hard wall.
+    if (get().devDropIn) set({ screen: "console", authError: null, notAuthorized: false });
   },
 
   navigate(page) {

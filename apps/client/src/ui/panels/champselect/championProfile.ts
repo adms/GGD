@@ -81,6 +81,51 @@ export function champSelectStage(input: StageInput): StageView {
 }
 
 // ---------------------------------------------------------------------------
+// responsive layout (mobile champ-select fix)
+// ---------------------------------------------------------------------------
+
+export interface ChampProfileLayout {
+  /**
+   * true on phones: the profile block FLOWS at its natural height inside an
+   * OUTER scroll container (no inner tab-body scroll of its own) and the two
+   * columns STACK vertically. Desktop keeps the fixed two-column layout with
+   * each column scrolling internally.
+   */
+  compact: boolean;
+  /** stack the profile above the roster (single outer scroll) vs side-by-side. */
+  stacked: boolean;
+  /**
+   * px height of the 3D stage. On a phone-landscape viewport (~390px tall) the
+   * desktop 300px stage is taller than the whole clipped panel, so it pushed the
+   * tabs + text detail out of view — it is shrunk here so the intro stays
+   * readable. Desktop is unchanged (300).
+   */
+  stageHeight: number;
+}
+
+/**
+ * The champ-select profile layout for the current device. Pure so the "phones
+ * stack + shrink the stage, desktop is untouched" contract is a testable fact
+ * rather than a literal buried in the panel's style objects.
+ *
+ * On touch the whole picker becomes a single vertical scroll (profile over
+ * roster) with a shrunk 3D stage, so the tabbed introduction is always reachable
+ * even on the ~260px of content height a phone-landscape viewport leaves once the
+ * persistent top chrome is cleared (#107). Desktop keeps the side-by-side,
+ * internally-scrolling two-column layout with the full-size stage.
+ */
+export function champSelectProfileLayout(opts: {
+  touch: boolean;
+  viewportHeight: number;
+}): ChampProfileLayout {
+  if (!opts.touch) return { compact: false, stacked: false, stageHeight: 300 };
+  // phone: a shorter stage on the shortest (landscape) viewports so more of the
+  // intro text is above the fold before any scroll.
+  const stageHeight = opts.viewportHeight < 480 ? 168 : 220;
+  return { compact: true, stacked: true, stageHeight };
+}
+
+// ---------------------------------------------------------------------------
 // a champ-select seat for skillRows (no entity yet → rank-1 preview values)
 // ---------------------------------------------------------------------------
 

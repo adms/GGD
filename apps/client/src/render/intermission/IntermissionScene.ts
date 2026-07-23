@@ -60,6 +60,7 @@ import "@babylonjs/core/Rendering/depthRendererSceneComponent";
 import { AssetManager } from "../AssetManager";
 import { glbYawOffset } from "../views/glbFacing";
 import { pickReactionClip } from "./reactionClip";
+import { groundShiftY } from "./stance";
 import { writeCameraDrift } from "../menu/procedural/math";
 import { enterCameraPose } from "../menu/procedural/transition";
 import { makeSoftDotTexture } from "../menu/procedural/sprites";
@@ -235,7 +236,9 @@ export class IntermissionScene {
     this.camera.fov = CAMERA_FOV;
     // NO attachControl: this is a COMPOSED shot, not a viewer. Letting the user
     // orbit would break the guarantee that merchant/cart/hero stay in the free
-    // left 55% the shop card does not cover (see layout.test.ts).
+    // 55% the LEFT-docked shop card does not cover — the RIGHT half, since the
+    // whole scene is mirrored to match the card's side (see layout.ts /
+    // layout.test.ts, keyed on SHOP_CARD_SIDE).
 
     this.assets = new AssetManager(this.scene);
     this.stage = new TransformNode("intermission-stage", this.scene);
@@ -591,6 +594,13 @@ export class IntermissionScene {
     for (const child of root.getChildren()) {
       if (child instanceof TransformNode) child.rotation.y += offset;
     }
+    // GROUND the hero (task #111): measure the placed model and lift its feet
+    // onto the paving, exactly as StorePreview does (#129). Without this an
+    // imported rig whose bind box dips below the origin (皮卡丘 spans
+    // y∈[-0.58, 1.71]) sits half-buried at position.y = 0 and reads as "lying
+    // on the floor". A per-model root-transform, so it costs nothing on a rig
+    // already grounded at 0.
+    this.groundChampion(root);
     // loop an idle clip when the .glb ships one — a hero frozen in its bind
     // pose at a market stall looks broken, and every rig names it differently,
     // so this is a tolerant substring match that degrades to "stands still".
@@ -601,6 +611,19 @@ export class IntermissionScene {
     this.championGroups = groups;
     this.championIdle = idle ?? null;
     this.championBaseScale = scale;
+  }
+
+  /**
+   * Lift the champion root so its lowest mesh sits on the floor (y = 0),
+   * mirroring StorePreview's grounding (#129). Measures the world bounding box
+   * after the yaw offset is applied; a bone-only hierarchy (non-finite box)
+   * leaves the model where it is. Safe headless — `getHierarchyBoundingVectors`
+   * works under a NullEngine.
+   */
+  private groundChampion(root: TransformNode): void {
+    root.computeWorldMatrix(true);
+    const { min, max } = root.getHierarchyBoundingVectors(true);
+    root.position.y += groundShiftY(min, max);
   }
 
   /**

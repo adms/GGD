@@ -1,0 +1,24 @@
+{
+  "id": "hunters-instinct",
+  "schema": "augment@1",
+  "name": "獵手直覺",
+  "description": "暴擊率 +20%，攻擊力 +10%。",
+  "tier": "silver",
+  "weight": 90,
+  "modifiers": [
+    {
+      "stat": "critChance",
+      "op": "flat",
+      "value": 0.2
+    },
+    {
+      "stat": "ad",
+      "op": "pctAdd",
+      "value": 0.1
+    }
+  ],
+  "tags": [
+    "crit",
+    "offense"
+  ]
+}

@@ -11,7 +11,7 @@ import {
   zTintRgb,
 } from "./common";
 import { zHookDef } from "./effect";
-import { zAbilityDef } from "./ability";
+import { zAbilityDef, zHitFeel } from "./ability";
 
 export const zChampionDef = z
   .object({
@@ -36,6 +36,13 @@ export const zChampionDef = z
     attackDamagePoint: z.number().min(0).optional(),
     /** base attack-cadence multiplier (default 1.0) */
     baseAttackTime: z.number().positive().optional(),
+    /**
+     * Optional BASIC-ATTACK hit-feel override (task #133). Applies to every
+     * auto this champion lands (origin "basic"); absent = the sim's
+     * damage-derived default. Per-ability feel lives on each ability's own
+     * `hitFeel`. Additive & all-optional — see `zHitFeel`.
+     */
+    hitFeel: zHitFeel.optional(),
     abilities: z
       .object({ Q: zAbilityDef, W: zAbilityDef, E: zAbilityDef, R: zAbilityDef })
       .strict(),

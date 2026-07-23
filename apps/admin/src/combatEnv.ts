@@ -115,6 +115,7 @@ export const COMBAT_ENV_LABELS: Record<CombatEnvKey, CombatEnvLabel> = {
   critDamage: { zh: "暴擊傷害", note: "暴擊倍率" },
   lifesteal: { zh: "生命偷取", note: "普攻吸血比例（夾制前）" },
   attackRange: { zh: "攻擊距離", note: "普攻射程" },
+  abilityRange: { zh: "技能範圍", note: "技能施放距離與 AoE 半徑（不含普攻）" },
 };
 
 /** A titled block of rows — the page renders one table section per group. */
@@ -128,7 +129,7 @@ export interface CombatEnvGroup {
  * `groupsCoverAllKeys`, unit-tested) so the page can never drop a multiplier.
  */
 export const COMBAT_ENV_GROUPS: CombatEnvGroup[] = [
-  { title: "輸出 · 傷害與技能", keys: ["damageDealt", "cooldown", "attackDamage", "abilityPower"] },
+  { title: "輸出 · 傷害與技能", keys: ["damageDealt", "cooldown", "attackDamage", "abilityPower", "abilityRange"] },
   { title: "生存 · 防禦與回復", keys: ["maxHealth", "healthRegen", "defense", "shield", "healing", "lifesteal"] },
   { title: "機動 · 位移與攻擊", keys: ["moveSpeed", "attackSpeed", "attackRange"] },
   { title: "暴擊", keys: ["critChance", "critDamage"] },

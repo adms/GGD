@@ -29,8 +29,26 @@ if HERE not in sys.path:
     sys.path.insert(0, HERE)
 
 from w3xlib.mpq import W3XArchive
-from w3xlib.objdata import parse_object_file, data_columns, ObjEntry
+from w3xlib.objdata import parse_object_file, data_columns, raw_mods, ObjEntry
 from src_text import parse_wts_full, resolve, strip_codes
+
+# 4-char codes each record reads into a TYPED field; every OTHER code is carried
+# through under `rawMods` (see objdata.raw_mods) instead of being dropped. Mirror
+# the `_r`/`_rs`/`e.get(...)`/`_levels_*` reads in build_objects below.
+_ABILITY_CODES = frozenset({
+    "anam", "ansf", "atp1", "aub1", "aret", "arut", "aart", "alev",
+    "acdn", "amcs", "aran", "aare", "adur", "ahdu", "atar", "abuf",
+})  # ability data columns handled separately (skip_data_columns, numeric_only)
+_UNIT_CODES = frozenset({
+    "unam", "upro", "utip", "utub", "umdl", "uico", "usca",
+    "uhpm", "umpm", "uhpr", "umpr", "umvs", "udef",
+    "ua1r", "ua1c", "ua1b", "ua1d", "ua1s",
+    "ustr", "uagi", "uint", "ustp", "uagp", "uinp", "upra", "ugol",
+    "uabi", "uhab",
+})
+_ITEM_CODES = frozenset({
+    "unam", "utip", "utub", "ides", "igol", "ilum", "ilev", "icla", "iico", "iabi",
+})
 
 SRC_MAP = "/Users/Takuro/GGD/src_gogodieEX227s.w3x"
 OUT_DIR = os.path.join(HERE, "out", "GoDieEX22s-src")
@@ -106,6 +124,11 @@ def build_objects(arc: W3XArchive, strings: dict) -> dict:
                 "targets_allowed": _levels_num(e, "atar"),
                 "buffs": _levels_num(e, "abuf"),
                 "data": {str(c): v for c, v in sorted(data_cols.items())},
+                # every w3a field the reads above do not name, kept verbatim
+                # (data columns already live in `data`, so they are skipped)
+                "rawMods": raw_mods(e, _ABILITY_CODES,
+                                    resolve=lambda v: resolve(v, strings),
+                                    skip_data_columns=True, numeric_only=True),
             }
 
     def unit_rec(e: ObjEntry, table: str, is_hero: bool) -> dict:
@@ -147,6 +170,8 @@ def build_objects(arc: W3XArchive, strings: dict) -> dict:
             "hero_abilities": [
                 a.strip() for a in str(e.get("uhab") or "").split(",") if a.strip()
             ],
+            # every unit field the reads above do not name, kept verbatim
+            "rawMods": raw_mods(e, _UNIT_CODES, resolve=lambda v: resolve(v, strings)),
         }
 
     units: dict[str, dict] = {}
@@ -178,6 +203,8 @@ def build_objects(arc: W3XArchive, strings: dict) -> dict:
                     for a in str(e.get("iabi") or "").split(",")
                     if a.strip()
                 ],
+                # every item field the reads above do not name, kept verbatim
+                "rawMods": raw_mods(e, _ITEM_CODES, resolve=lambda v: resolve(v, strings)),
             }
 
     return {

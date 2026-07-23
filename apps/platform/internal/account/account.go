@@ -23,6 +23,21 @@ const (
 	ColByEmail    = "accounts/by-email"
 )
 
+// Approval statuses for the private-deploy gate (#126). A friends-only deploy
+// registers new accounts as StatusPending; an admin must approve them before
+// they may log in to play. StatusDenied is a terminal rejection.
+//
+// The zero value ("") is intentional: accounts written before the gate existed
+// — and every account created while the gate is DISABLED — lack the field and
+// are grandfathered as playable (see IsApproved). The gate therefore only ever
+// blocks accounts that were explicitly stamped pending/denied, so turning it on
+// never strands the bootstrap admin or existing players.
+const (
+	StatusPending  = "pending"
+	StatusApproved = "approved"
+	StatusDenied   = "denied"
+)
+
 // Account is the durable truth for one player. PasswordHash is an encoded
 // argon2id string and is never serialized to API responses (see Public).
 //
@@ -71,6 +86,19 @@ type Account struct {
 	Banned bool `json:"banned,omitempty"`
 	// BanReason is the operator-supplied reason surfaced on the 403.
 	BanReason string `json:"banReason,omitempty"`
+
+	// Status is the private-deploy approval state (#126): "" (grandfathered),
+	// "pending", "approved" or "denied". See the Status* constants and
+	// IsApproved. Additive: files written before the gate lack it (zero value).
+	Status string `json:"status,omitempty"`
+}
+
+// IsApproved reports whether the account may log in to play. The zero-value
+// status ("") is grandfathered as approved so the private-deploy gate only
+// blocks accounts that were explicitly stamped pending or denied — a legacy
+// account, or one created while the gate was disabled, is always playable.
+func (a Account) IsApproved() bool {
+	return a.Status == "" || a.Status == StatusApproved
 }
 
 // HasRole reports whether the account carries the given authorization role.
@@ -91,11 +119,15 @@ type Public struct {
 	Games     int       `json:"games"`
 	Wins      int       `json:"wins"`
 	CreatedAt time.Time `json:"createdAt"`
+	// Status surfaces the private-deploy approval state on the register/login/me
+	// responses so the client can show a "pending review" screen. Omitted (zero
+	// value) when the gate is disabled or the account predates it.
+	Status string `json:"status,omitempty"`
 }
 
 // Public returns the API-safe projection.
 func (a Account) Public() Public {
-	return Public{ID: a.ID, Username: a.Username, MMR: a.MMR, Games: a.Games, Wins: a.Wins, CreatedAt: a.CreatedAt}
+	return Public{ID: a.ID, Username: a.Username, MMR: a.MMR, Games: a.Games, Wins: a.Wins, CreatedAt: a.CreatedAt, Status: a.Status}
 }
 
 // ErrNotFound is returned when an account does not exist.
@@ -204,6 +236,25 @@ func (r *Repo) SetSeasonPoints(ctx context.Context, id string, seasonPoints int,
 	}
 	a.UpdatedAt = time.Now()
 	return r.store.Put(ColAccounts, a.ID, a)
+}
+
+// ErrInvalidStatus is returned by SetStatus for an unknown status value.
+var ErrInvalidStatus = errors.New("account: invalid status")
+
+// SetStatus flips the private-deploy approval status (#126) on one account via
+// the locked read-modify-write path and returns the updated account. Only the
+// three Status* constants are accepted. Idempotent: re-approving an approved
+// account is a no-op write.
+func (r *Repo) SetStatus(ctx context.Context, id, status string) (Account, error) {
+	switch status {
+	case StatusPending, StatusApproved, StatusDenied:
+	default:
+		return Account{}, ErrInvalidStatus
+	}
+	return r.Update(ctx, id, func(a *Account) error {
+		a.Status = status
+		return nil
+	})
 }
 
 // Update runs a locked read-modify-write on one account: fn mutates the

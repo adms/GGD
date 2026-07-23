@@ -51,6 +51,31 @@ import type {
 export type Screen = "boot" | "auth" | "lobby" | "match";
 export type LobbyView = "play" | "store";
 
+/**
+ * Minimum time the login→battle loading bar is shown before the match scene
+ * boots (task #74). The long login dragon roar plays on the SFX bus and the
+ * combat scene's voices start the instant `screen` flips to "match"; holding
+ * the launch behind a >=1s loading transition lets the roar fade out first so
+ * the two never overlap. >=1000ms is load-bearing — do not shorten it.
+ */
+export const MATCH_LOADING_MIN_MS = 1000;
+
+/**
+ * A match launch staged behind the loading transition (task #74). While this is
+ * non-null the loading bar is on screen; `screen` stays where it was (still
+ * "auth" for the Play-offline handoff) so the roar's own scene keeps running
+ * and no combat voice has started yet. `commitMatchLaunch` flips to "match".
+ */
+export interface MatchLoading {
+  launch: MatchLaunch;
+  /**
+   * True once the login-roar fade-out has been requested. Set the moment the
+   * transition begins so the roar starts receding behind the bar; observed by
+   * AuthScreen (which owns the roar emit seam) to stop layering new roars.
+   */
+  roarFadeRequested: boolean;
+}
+
 export interface MatchLaunch {
   mode: "platform" | "offline";
   matchId: string;
@@ -107,6 +132,8 @@ export interface AppState {
   purchase: PurchaseState;
 
   match: MatchLaunch | null;
+  /** login→battle handoff (task #74): a launch held behind the loading bar */
+  matchLoading: MatchLoading | null;
   /** bumped to force a clean GameApp teardown+recreate (offline Restart) */
   matchEpoch: number;
   lastError: string | null;
@@ -117,6 +144,17 @@ export interface AppState {
   doRegister(username: string, email: string, password: string): Promise<void>;
   doLogout(): Promise<void>;
   playOffline(mapId?: string): void;
+  /**
+   * login→battle handoff (task #74): stage an offline launch behind the >=1s
+   * loading transition and request the login-roar fade — instead of jumping
+   * straight to "match". `commitMatchLaunch` performs the actual screen flip
+   * once the loading bar has run its minimum.
+   */
+  beginOfflineLoading(mapId?: string): void;
+  /** Flip to the staged match once the loading transition has run (task #74). */
+  commitMatchLaunch(): void;
+  /** Abort a staged loading transition without launching (task #74). */
+  cancelMatchLoading(): void;
   returnToLobby(): Promise<void>;
   /** clear battlefield & restart round 1 (offline) / return to lobby (online) */
   restartMatch(): void;
@@ -234,6 +272,27 @@ export const appStore = createStore<AppState>()((set, get) => {
     ]);
   }
 
+  /** Compute the launch payload for an offline (dev direct-join) match. */
+  function offlineLaunch(mapId?: string): MatchLaunch {
+    // equipped skins still apply offline when a platform session exists
+    const { wallet, catalog, account } = get();
+    const skinOverrides =
+      wallet && catalog ? buildSkinOverrides(wallet, catalog.skins, championModelKey) : new Map<string, string>();
+    // couch dev mode: every connected pad becomes a local player (split-screen)
+    const pads = connectedPadIndices().length;
+    return {
+      mode: "offline",
+      matchId: "",
+      endpoint: null,
+      seatToken: null,
+      seatTokens: null,
+      localPlayers: Math.min(4, Math.max(1, pads)),
+      accountId: account?.id ?? null,
+      skinOverrides,
+      mapId: mapId ?? null,
+    };
+  }
+
   /** Compute the launch payload for a platform match. */
   function platformLaunch(
     matchId: string,
@@ -289,6 +348,7 @@ export const appStore = createStore<AppState>()((set, get) => {
     skinDocs: new Map(),
     purchase: purchaseIdle,
     match: null,
+    matchLoading: null,
     matchEpoch: 0,
     lastError: null,
 
@@ -370,33 +430,43 @@ export const appStore = createStore<AppState>()((set, get) => {
         catalog: null,
         purchase: purchaseIdle,
         match: null,
+        matchLoading: null,
       });
     },
 
     playOffline(mapId?: string) {
-      // equipped skins still apply offline when a platform session exists
-      const { wallet, catalog, account } = get();
-      const skinOverrides =
-        wallet && catalog ? buildSkinOverrides(wallet, catalog.skins, championModelKey) : new Map<string, string>();
-      // couch dev mode: every connected pad becomes a local player (split-screen)
-      const pads = connectedPadIndices().length;
       set({
         screen: "match",
         // snapshot the pre-match standing for the post-match rank-delta screen
         rankBefore: get().myStanding,
         showRankChange: false,
-        match: {
-          mode: "offline",
-          matchId: "",
-          endpoint: null,
-          seatToken: null,
-          seatTokens: null,
-          localPlayers: Math.min(4, Math.max(1, pads)),
-          accountId: account?.id ?? null,
-          skinOverrides,
-          mapId: mapId ?? null,
-        },
+        matchLoading: null,
+        match: offlineLaunch(mapId),
       });
+    },
+
+    beginOfflineLoading(mapId?: string) {
+      // Stage the launch and request the roar fade NOW; the loading bar
+      // (MatchLoadingOverlay) shows for >=MATCH_LOADING_MIN_MS, then calls
+      // commitMatchLaunch. `screen` stays "auth" meanwhile, so AuthScreen (and
+      // its login scene) remain mounted and no combat voice has started yet.
+      set({ matchLoading: { launch: offlineLaunch(mapId), roarFadeRequested: true } });
+    },
+
+    commitMatchLaunch() {
+      const ml = get().matchLoading;
+      if (!ml) return;
+      set({
+        screen: "match",
+        rankBefore: get().myStanding,
+        showRankChange: false,
+        match: ml.launch,
+        matchLoading: null,
+      });
+    },
+
+    cancelMatchLoading() {
+      set({ matchLoading: null });
     },
 
     async returnToLobby() {

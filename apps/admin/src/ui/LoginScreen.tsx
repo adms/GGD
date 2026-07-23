@@ -10,6 +10,8 @@ export function LoginScreen(): React.JSX.Element {
   const busy = useApp((s) => s.authBusy);
   const error = useApp((s) => s.authError);
   const notAuthorized = useApp((s) => s.notAuthorized);
+  const devDropIn = useApp((s) => s.devDropIn);
+  const cancelLogin = useApp((s) => s.cancelLogin);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -46,6 +48,23 @@ export function LoginScreen(): React.JSX.Element {
             <ErrorBanner text={error} />
           </div>
         </Panel>
+        {devDropIn && (
+          <div style={{ textAlign: "center", marginTop: 14 }}>
+            <button
+              onClick={() => cancelLogin()}
+              style={{
+                background: "none",
+                border: "none",
+                color: TEXT_DIM,
+                fontSize: 12,
+                cursor: "pointer",
+                textDecoration: "underline",
+              }}
+            >
+              ← 返回內容編輯（免登入）
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

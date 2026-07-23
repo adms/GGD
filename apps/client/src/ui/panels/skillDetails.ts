@@ -49,6 +49,14 @@ export interface SkillRow {
   readonly cooldownSec?: number;
   /** mana cost at the current rank; omitted when free */
   readonly manaCost?: number;
+  /**
+   * BASE cast range in world units (pre combat-env). The view multiplies it by
+   * the live `abilityRange` factor via displayFinal (task #136), exactly as it
+   * does the cooldown — so the panel shows the shrunk final, not the raw base.
+   */
+  readonly range?: number;
+  /** BASE AoE radius / skillshot width (pre combat-env); omitted when the ability has none. */
+  readonly radius?: number;
   /** 施法方式 label (鎖定 / 技能預測 / 地面指定 / 自身 / 位移) */
   readonly castLabel?: string;
   /** remaining cooldown in seconds right now (0 = ready) */
@@ -119,6 +127,9 @@ export function skillRows(seat: SkillDetailSeat): SkillRow[] {
       ...row,
       ...(cd !== undefined ? { cooldownSec: cd } : {}),
       ...(mana !== undefined && mana > 0 ? { manaCost: mana } : {}),
+      // BASE range/radius; the view applies the combat-env `abilityRange` factor
+      ...(ability.range > 0 ? { range: ability.range } : {}),
+      ...(ability.radius !== undefined && ability.radius > 0 ? { radius: ability.radius } : {}),
       ...(docDescription(ability) !== undefined ? { description: docDescription(ability) } : {}),
       ...(ability.icon !== undefined ? { icon: ability.icon } : {}),
     });

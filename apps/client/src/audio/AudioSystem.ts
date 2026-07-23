@@ -39,7 +39,9 @@ import {
   type Rng,
 } from "./audioSelect";
 import { audioSettings, type AudioSettingsStore } from "./audioSettings";
+import { BgmRotationStore, SAMANTHA_VARIANTS, type BgmVariantMap } from "./bgmVariants";
 import { loopResumeOffsetSec } from "./scene";
+import { SFX_CORE, sfxEventsForScene } from "./sfxManifest";
 import { EMPTY_AUDIO_MAP, audioMapFromDoc, type AudioMap, type AudioScene } from "./types";
 
 /**
@@ -132,6 +134,14 @@ export interface AudioSystemOptions {
    * returns null, so the graph is never built and every play() no-ops.
    */
   silent?: boolean;
+  /**
+   * Samantha-James rotating-BGM variants (task #137): scene → variant content
+   * path. On each scene ENTRY the bed alternates original → variant → …. Omitted
+   * (or `{}`) ⇒ no rotation: every scene always plays its authored `file`, which
+   * is the behaviour every existing caller and test relies on. The process-wide
+   * `audioSystem` singleton wires the real `SAMANTHA_VARIANTS`.
+   */
+  bgmVariants?: BgmVariantMap;
 }
 
 interface Bed {
@@ -197,6 +207,10 @@ export class AudioSystem {
   private readonly bgmLoadOrder: string[] = [];
 
   private readonly gate = new SfxGate();
+  /** Per-scene original↔Samantha rotation (task #137). Empty ⇒ never rotates. */
+  private readonly rotation: BgmRotationStore;
+  /** The rotation-chosen file for the CURRENT scene (resolved once on entry). */
+  private currentBgmFile: string | null = null;
   private bed: Bed | null = null;
   /** `now()` at which the current bed was started; null when nothing is playing */
   private bedStartMs: number | null = null;
@@ -228,6 +242,7 @@ export class AudioSystem {
     this.crossfadeMs = opts.crossfadeMs ?? CROSSFADE_MS;
     this.maxBgmBuffers = Math.max(1, opts.maxBgmBuffers ?? 4);
     this.warn = opts.warn ?? ((msg, err) => console.warn(`[audio] ${msg}`, err ?? ""));
+    this.rotation = new BgmRotationStore(opts.bgmVariants ?? {});
     this.unsubSettings = this.settings.subscribe(() => this.applyVolumes());
   }
 
@@ -236,18 +251,22 @@ export class AudioSystem {
   // -------------------------------------------------------------------------
 
   /**
-   * Fetch the authored map, attach the first-gesture unlock listeners and warm
-   * the SFX buffers. Single-flight + idempotent: safe from any/every boot path
-   * (React StrictMode double-effects, HMR, a second screen mounting).
+   * Fetch the authored map and attach the first-gesture unlock listeners.
+   * Single-flight + idempotent: safe from any/every boot path (React StrictMode
+   * double-effects, HMR, a second screen mounting).
+   *
+   * NOTE (task #63): boot no longer fetches ANY SFX. The always-on UI core is
+   * warmed on the autoplay unlock and every other cue loads per scene (see
+   * `preloadSceneSfx`), so a player on the login screen never pays for the combat
+   * / shop / settlement SFX set. Nothing needs a buffer before the unlock anyway
+   * — `playSfx` no-ops while locked — so deferring the fetch to the unlock gesture
+   * (which also creates the AudioContext) costs nothing and keeps boot lean.
    */
   init(target?: EventTarget | null): Promise<boolean> {
     if (this.disposed) return Promise.resolve(false);
     this.attachUnlockGestures(target);
     if (!this.bootPromise) {
-      this.bootPromise = this.loadMap().then((ok) => {
-        if (ok) this.prefetchSfx();
-        return ok;
-      });
+      this.bootPromise = this.loadMap();
     }
     return this.bootPromise;
   }
@@ -283,9 +302,48 @@ export class AudioSystem {
     }
   }
 
-  /** Warm every SFX clip (they are short; BGM stays lazy — beds are huge). */
+  /**
+   * Warm EVERY SFX clip. This is the old eager path (task #63 unwired it from
+   * boot); kept as an explicit escape hatch for a caller that truly wants the
+   * whole set warm up front. The normal path is `prefetchCoreSfx` +
+   * `preloadSceneSfx`. Creates the AudioContext if none exists yet.
+   */
   prefetchSfx(): void {
     for (const entry of Object.values(this.map.sfx)) {
+      for (const file of entry.files) void this.loadBuffer(file);
+    }
+  }
+
+  /**
+   * Warm ONLY the always-on UI core (click/hover/type — the cues every screen
+   * shares). Called on the unlock gesture; the rest of the SFX load per scene.
+   */
+  prefetchCoreSfx(): void {
+    this.warmSfxEvents(SFX_CORE);
+  }
+
+  /**
+   * Warm the SFX a scene actually uses, on scene entry (task #63). Deduped by
+   * the buffer cache, so re-entering a scene re-fetches nothing. A NO-OP until
+   * the AudioContext exists (pre-unlock): the unlock gesture warms whatever
+   * scene is current, and every later scene change warms itself here. Never a
+   * gate — anything this manifest omits still lazy-loads through `playSfx`.
+   */
+  preloadSceneSfx(scene: AudioScene | null): void {
+    if (!scene) return;
+    this.warmSfxEvents(sfxEventsForScene(scene));
+  }
+
+  /**
+   * Fetch+decode the clips of a set of events into the buffer cache. Deliberately
+   * will NOT create the AudioContext: preloading must never bring the graph up
+   * before the autoplay unlock (the "no context before a gesture" contract).
+   */
+  private warmSfxEvents(events: Iterable<string>): void {
+    if (!this.ctx) return; // no graph yet — unlock will warm the current scene
+    for (const event of events) {
+      const entry = sfxEntryFor(this.map, event);
+      if (!entry) continue;
       for (const file of entry.files) void this.loadBuffer(file);
     }
   }
@@ -340,6 +398,10 @@ export class AudioSystem {
     } catch {
       /* already running / not supported */
     }
+    // task #63: warm the always-on UI core + whatever scene we're already on,
+    // now that a graph exists. Everything else loads on future scene changes.
+    this.prefetchCoreSfx();
+    this.preloadSceneSfx(this.currentScene);
     if (this.currentScene) this.startScene(this.currentScene);
     if (this.pendingSting) {
       const s = this.pendingSting;
@@ -398,6 +460,13 @@ export class AudioSystem {
     if (this.disposed) return;
     if (!needsSceneChange(this.currentScene, scene)) return;
     this.currentScene = scene;
+    // task #137: choose this scene's bed (original ↔ Samantha variant) ONCE, on
+    // entry, so unlock() and any live map reload reuse the same choice and the
+    // rotation advances exactly once per scene entry.
+    this.currentBgmFile = this.chooseBgmFile(scene);
+    // task #63: warm this scene's SFX subset on entry. A no-op until unlock (no
+    // graph yet); the unlock gesture then warms whatever scene is current.
+    this.preloadSceneSfx(scene);
     if (!this.unlocked) return;
     this.startScene(scene);
   }
@@ -442,6 +511,17 @@ export class AudioSystem {
     });
   }
 
+  /**
+   * Resolve which file a scene entry plays (original ↔ Samantha variant, task
+   * #137) and ADVANCE the rotation. Null when the scene is unmapped. Called once
+   * per scene entry from `playBgm`; `startScene` reuses the stored choice.
+   */
+  private chooseBgmFile(scene: AudioScene | null): string | null {
+    if (!scene) return null;
+    const track = bgmTrackFor(this.map, scene);
+    return track ? this.rotation.next(scene, track.file) : null;
+  }
+
   private startScene(scene: AudioScene | null): void {
     const ctx = this.ensureCtx();
     if (!ctx || !this.bgmBus) return;
@@ -451,11 +531,24 @@ export class AudioSystem {
       this.stopBed();
       return;
     }
-    if (this.bed && this.bed.file === track.file) return; // same file, keep playing
-    void this.loadBuffer(track.file).then((buffer) => {
+    // The rotation choice is normally made in playBgm; resolve it here if the map
+    // was not loaded then (the first bed can be installed by setMap after the
+    // unlock) — choosing now still advances the rotation exactly once per entry.
+    let file = this.currentBgmFile;
+    if (!file) {
+      file = this.chooseBgmFile(scene);
+      this.currentBgmFile = file;
+    }
+    if (!file) {
+      this.stopBed();
+      return;
+    }
+    const chosen: string = file;
+    if (this.bed && this.bed.file === chosen) return; // same file, keep playing
+    void this.loadBuffer(chosen).then((buffer) => {
       if (this.disposed || this.currentScene !== scene) return; // scene raced ahead
       if (!buffer) return; // 404/decode failure: keep whatever is playing
-      this.swapBed(buffer, track.gain ?? 1, track.loop, scene ?? "", track.file);
+      this.swapBed(buffer, track.gain ?? 1, track.loop, scene ?? "", chosen);
     });
   }
 
@@ -956,9 +1049,11 @@ export class AudioSystem {
       this.safeDisconnect(bed.src, bed.gain);
     }
     this.gate.reset();
+    this.rotation.reset();
     this.buffers.clear();
     this.bgmLoadOrder.length = 0;
     this.currentScene = null;
+    this.currentBgmFile = null;
     this.unlocked = false;
     const ctx = this.ctx;
     this.ctx = null;
@@ -977,6 +1072,9 @@ export class AudioSystem {
 /**
  * Process-wide mixer. Constructing it is side-effect free (no AudioContext is
  * created until the first sound or the unlock gesture), so importing this
- * module from anywhere — including tests — is safe.
+ * module from anywhere — including tests — is safe. It wires the real
+ * Samantha-James variant map (task #137) so every non-`menu` scene alternates
+ * original ↔ deep-house variant on entry; a bare `new AudioSystem()` (tests)
+ * gets no variants and never rotates.
  */
-export const audioSystem = new AudioSystem();
+export const audioSystem = new AudioSystem({ bgmVariants: SAMANTHA_VARIANTS });

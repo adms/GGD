@@ -31,10 +31,12 @@ import {
   gradeHeadline,
   isWinner,
   localSettlementCard,
+  localWinQuoteChampion,
   formatKda,
   reflectionHints,
   sortSettlementRanking,
 } from "./settlementModel";
+import { playChampionQuote } from "../../audio/nameVoice";
 import {
   AUTO_SCROLL_HIGHLIGHT_CSS,
   highlightClass,
@@ -312,6 +314,16 @@ export function MatchEndPanel(): React.JSX.Element {
   useEffect(() => {
     if (hasPayload && secsLeft === 0) viewRankChange();
   }, [hasPayload, secsLeft, viewRankChange]);
+
+  // task #139 — on a VICTORY settlement the LOCAL player's champion speaks its
+  // famous quote (名言). Win-only + local-only (each client plays only its own
+  // champion; nothing is broadcast). The pure resolver is null until the payload
+  // arrives AND the local team won, so this fires exactly once per winning match;
+  // a champion with no quote clip is a silent skip inside playChampionQuote.
+  const winQuoteChamp = localWinQuoteChampion(settlement, localSeatId);
+  useEffect(() => {
+    if (winQuoteChamp) void playChampionQuote(winQuoteChamp).catch(() => {});
+  }, [winQuoteChamp]);
 
   const players = hasPayload ? settlement.perPlayer : [];
   const local = localSettlementCard(players, localSeatId);

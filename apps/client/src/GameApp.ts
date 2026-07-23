@@ -47,15 +47,26 @@ import { MultiGamepadSystem, BTN } from "./input/GamepadInput";
 import { pickUnit, pickNearestUnit, type PickableUnit } from "./input/Picking";
 import type { AimAbility } from "./input/AimResolver";
 import { isTouchDevice, readTouchEnv } from "./input/mobileDetect";
-import { TouchController, registerTouchController, touchFrame } from "./input/TouchInput";
+import {
+  TouchController,
+  registerTouchController,
+  touchFrame,
+  type AimIndicatorState,
+} from "./input/TouchInput";
 import { Renderer } from "./render/Renderer";
 import { AimIndicator } from "./render/AimIndicator";
 import { setupLighting, type LightingHandle } from "./render/Lighting";
 import { buildArena, dressArena, disposeArena, type ArenaHandles } from "./render/ArenaScene";
+import { resolveArenaId, type ArenaIdSource } from "./render/arenaSelect";
+import { RoundWinnerStage } from "./render/RoundWinnerStage";
 import type { CameraRig } from "./render/CameraRig";
 import { ViewportManager } from "./render/ViewportManager";
 import { AssetManager } from "./render/AssetManager";
-import { EntityViewRegistry, type EntityViewState } from "./render/EntityViewRegistry";
+import {
+  EntityViewRegistry,
+  type EntityViewState,
+  type ModelDocOverride,
+} from "./render/EntityViewRegistry";
 import { blizzardOverlayModels } from "./render/views/blizzardOverlay";
 import { championTintForId } from "./render/views/championTint";
 import {
@@ -85,6 +96,8 @@ import { perfBus } from "./perfBus";
 import { ConnectionStats } from "./net/ConnectionStats";
 import { CastTracker } from "./CastTracker";
 import { registerHudActions } from "./ui/actions";
+import { getHeldAbility } from "./ui/abilityHold";
+import { envFactor, setDisplayEnvJson } from "./ui/displayFinal";
 import { audioSystem } from "./audio";
 import { loadChampionVoices, playChampionSelectVoice } from "./audio/championVoice";
 import { combatSfxKey } from "./audio/combatSfx";
@@ -98,6 +111,7 @@ import {
 } from "./render/combatFeedback";
 import { SETTLEMENT_EVENT } from "@ggd/shared/protocol/messages";
 import type { EventMessage, MatchSettlement } from "@ggd/shared/protocol/messages";
+import { roundEndQuoteChampion } from "./ui/panels/settlementModel";
 
 const SLOT_INDEX: Record<AbilitySlot, number> = { Q: 0, W: 1, E: 2, R: 3, EX: 4 };
 /** authoritative error beyond which we treat the correction as a teleport */
@@ -109,6 +123,8 @@ const CAP_SLACK_MS = 3;
 const DRAW_DISTANCE_MAX = 300;
 /** damage at/above which a hit is "heavy" enough to trigger the ripple post-fx. */
 const HEAVY_HIT_DMG = 120;
+/** how long the round-end winner model stands centre-screen (task #143), ms. */
+const ROUND_WINNER_PRESENT_MS = 3600;
 
 interface PendingAuth {
   entityId: number;
@@ -174,6 +190,18 @@ export class GameApp {
    * and the taunt VO are the umbrella task's, wired via its callbacks.
    */
   private readonly victoryFx: VictoryFireworks;
+  /**
+   * Round-end winner presentation (task #143): stands the round WINNER's
+   * champion model centre-screen for a few seconds at each round-end, reusing
+   * the champ-select/store model viewer (#129) on its own overlay canvas. The
+   * TRIGGER lives in updateRoundWinner (phase edge into `resolution`); this just
+   * owns the stage.
+   */
+  private readonly roundWinner: RoundWinnerStage;
+  /** previous phase seen by the round-winner edge detector. */
+  private roundWinnerPhase = "";
+  /** performance.now() deadline after which the winner model clears. */
+  private roundWinnerUntilMs = 0;
   /** local-champion footstep cadence (subtle walk/run cue). */
   private readonly footstep = new FootstepCadence();
   /** camera-shake amplitude multiplier for the current quality tier. */
@@ -311,6 +339,13 @@ export class GameApp {
       // render/** may not read it (client-08), so the entity → champion step
       // happens here — the same `championIdForSeat` the model resolve uses.
       championTintFor: (e) => championTintForId(this.championIdForSeat(e.seatId)),
+      // per-champion model-SIZE override (task #77/#150). SAME entity→championId
+      // seam as modelDocFor/championTintFor above — render/** is walled off from
+      // the seat table (client-08), so the composition root resolves championId and
+      // reads content/models/_standin-overrides.json here; the registry applies its
+      // `relativeScale` ON TOP of ChampionView's height-normalization (default 1.0 →
+      // the normalized target for the ~105 champions with no override).
+      modelOverrideFor: (e) => this.modelOverrideFor(e),
     });
     this.vfx = new VfxSystem(this.renderer.scene, {
       entityPos: (id) => this.views.posOf(id) ?? this.schemaPos(id),
@@ -364,6 +399,13 @@ export class GameApp {
     this.victoryFx = new VictoryFireworks(this.renderer.scene, {
       cameraFor: () => this.viewports.rigFor(0).camera,
       scale: this.renderParams.particleDensity,
+    });
+
+    // Round-end winner stage (task #143): mounts a centred overlay canvas over
+    // the arena when a round is won. Lazy — no canvas / WebGL context exists
+    // until the first winner is shown — so it costs nothing mid-round.
+    this.roundWinner = new RoundWinnerStage({
+      host: typeof document !== "undefined" ? document.body : null,
     });
 
     // authored content (model docs / vfx docs) — async, optional
@@ -526,6 +568,26 @@ export class GameApp {
     return overrides.get(key) ?? key;
   }
 
+  /**
+   * Per-champion model-SIZE override (task #77/#150) for a champion entity — the
+   * composition-root seam mdl-64/mdl-150d left to wire. render/**
+   * (EntityViewRegistry/ChampionView) is walled off from the seat table
+   * (client-08), so — exactly like modelDocFor / championTintFor — the entity →
+   * championId step happens here and the override is injected. The map lives in
+   * content/models/_standin-overrides.json (schema@2, keyed by championId) and is
+   * loaded by ContentDb; the registry applies the override's `relativeScale` ON TOP
+   * of ChampionView's height-normalization (never replacing it, PRESERVING #150's
+   * normalization + #77's grounding). Returns null for the common case (no
+   * override) so the render layer's relativeScaleOf defaults to 1.0 — an unlisted
+   * champion keeps the normalized target size (~1.8u), while the 8 curated
+   * exceptions (小叮噹 0.65 → ~1.17u … 初號機 1.55 → ~2.79u) reach the renderer.
+   */
+  private modelOverrideFor(e: EntityViewState): ModelDocOverride | null {
+    const championId = this.championIdForSeat(e.seatId);
+    if (!championId) return null;
+    return this.contentDb.modelOverrideFor(championId);
+  }
+
   start(): void {
     this.input.attach();
     this.touch?.attach(this.canvas);
@@ -562,6 +624,7 @@ export class GameApp {
     this.postFx.dispose();
     this.deathFocus.dispose(); // detaches every viewport's greyscale pass
     this.victoryFx.dispose(); // disposes the chicken mesh + both firework pools
+    this.roundWinner.dispose(); // tears down the round-end winner overlay canvas
     this.footstep.reset();
     this.views.dispose();
     this.renderer.dispose(); // stops + disposes the Babylon engine/scene
@@ -634,8 +697,13 @@ export class GameApp {
   private onStatePatch(state: MatchState): void {
     // reflection-based state may not be materialized before the first patch
     if (!state?.seats || !state.entities) return;
-    // the authoritative map — (re)build the rendered arena when it changes
-    if (state.mapId) this.applyArena(state.mapId);
+    // the authoritative arena — (re)build the rendered map when it changes. The
+    // arena is now per-round (task #145): the sim picks a new arena each round
+    // and broadcasts its id, so prefer that per-round id and fall back to the
+    // match-level mapId while the sim field is still landing. applyArena dedupes
+    // + supersedes, so feeding it every patch only rebuilds on an actual change.
+    const arenaId = resolveArenaId(state as unknown as ArenaIdSource);
+    if (arenaId) this.applyArena(arenaId);
     const nowMs = performance.now();
     this.connStats.noteSnapshot(nowMs); // snapshot cadence → jitter / gap
     if (state.tick > 0) this.timeSync.noteServerTick(state.tick, nowMs);
@@ -758,9 +826,17 @@ export class GameApp {
     // to hold the hero exactly on the authoritative pose instead of a tick behind.
     const renderAlpha = frozen ? 1 : Math.min(1, Math.max(0, this.predAccumMs / TICK_MS));
     this.gamepads.poll(); // pads → per-player orders/aim/commands before the flush
-    if (this.touch) {
-      this.touch.poll(); // joystick → move orders + aim state onto touchFrame
-      this.aimIndicator.update(touchFrame.indicator);
+    if (this.touch) this.touch.poll(); // joystick → move orders + aim state onto touchFrame
+    // Ground aim/preview telegraph, both platforms (task #152): a live touch
+    // drag-aim wins; otherwise a PRESSED-AND-HELD ability button (touch finger or
+    // desktop mouse — the ui/abilityHold seam) shows its dashed range + AoE.
+    {
+      let indicator: AimIndicatorState = this.touch ? touchFrame.indicator : null;
+      if (indicator === null) {
+        const held = getHeldAbility();
+        if (held !== null) indicator = this.resolveHoldPreview(held);
+      }
+      this.aimIndicator.update(indicator);
     }
     // freeze mirrors the server: stop flushing intents so a held move order can't
     // steer the frozen hero (the server ignores them anyway — this keeps the
@@ -848,6 +924,10 @@ export class GameApp {
     // team, and fires the matching tier. Costs nothing until an edge fires.
     if (state) this.victoryFx.sync(this.victoryInput(state), nowMs);
     this.victoryFx.update(nowMs);
+
+    // round-end winner presentation (task #143): the round WINNER's champion
+    // stands centre-screen for a few seconds at each round-end, then clears.
+    this.updateRoundWinner(state, nowMs);
 
     // 7) world-anchored DOM data + render
     if (state) this.updateFrameBus(state, nowMs);
@@ -1079,6 +1159,30 @@ export class GameApp {
     return this.abilityForSeat(hudStore.getState().localSeatId, slot);
   }
 
+  /**
+   * Hold-to-preview ground telegraph (task #152): the dashed cast-RANGE ring +
+   * AoE disc for a PRESSED-AND-HELD ability button, centred on the local hero.
+   * Range AND radius are scaled by the live combat-env `abilityRange` factor
+   * (post-#136) so the ring matches the reach the sim will actually cast at.
+   * Null when the ability isn't learned/unlocked (localAbility gate) or the hero
+   * has no position yet — nothing to draw.
+   */
+  private resolveHoldPreview(slot: AbilitySlot): AimIndicatorState {
+    const ability = this.localAbility(slot);
+    const self = this.localSelfPos();
+    if (!ability || !self) return null;
+    // keep the imperative displayFinal singleton in sync with the live wire table
+    // (idempotent — early-returns when the JSON is unchanged) so the multiplier is
+    // correct regardless of which React panels happen to be mounted.
+    setDisplayEnvJson(hudStore.getState().combatEnvJson);
+    const mult = envFactor("abilityRange");
+    const range = ability.range * mult;
+    const rawRadius = (ability as { radius?: number }).radius ?? 0;
+    const radius = rawRadius > 0 ? rawRadius * mult : null;
+    if (range <= 0.1 && radius === null) return null;
+    return { kind: "range", x: self.x, z: self.z, range, radius };
+  }
+
   private abilityForSeat(seatId: number | null, slot: AbilitySlot): AimAbility | null {
     if (seatId === null) return null;
     const seat = hudStore.getState().seats.find((s) => s.seatId === seatId);
@@ -1228,6 +1332,56 @@ export class GameApp {
       myRoundWins,
       myPlacement,
     };
+  }
+
+  /**
+   * Round-end winner presentation (task #143). On the phase EDGE into
+   * `resolution` — the SAME "Round over" beat the #142 round-end VO fires on —
+   * stand the round WINNER's champion model centre-screen for a few seconds,
+   * then clear. The winner is the round's rank-1 champion resolved from the SAME
+   * authoritative seats/teams the VO uses (roundEndQuoteChampion in
+   * ui/panels/settlementModel), so the model on screen and the voice you hear are
+   * always the same champion. That selector returns null on the match-DECIDING
+   * round, whose beat is the match-win settlement front-view (#93/#25) — so this
+   * never double-presents on the final round. Pure presentation: it only reads
+   * the discrete HUD projection and hands a model doc to the stage.
+   */
+  private updateRoundWinner(state: MatchState | null, nowMs: number): void {
+    const phase = state?.phase ?? "";
+    const prev = this.roundWinnerPhase;
+    this.roundWinnerPhase = phase;
+
+    // edge into the round-end phase → present the round winner (if resolvable)
+    if (state && phase === "resolution" && prev !== "resolution") {
+      const hud = hudStore.getState();
+      const champ = roundEndQuoteChampion(hud.seats, hud.teams);
+      const doc = champ ? this.roundWinnerModelDoc(champ, hud.seats) : null;
+      if (doc) {
+        this.roundWinner.show(doc);
+        this.roundWinnerUntilMs = nowMs + ROUND_WINNER_PRESENT_MS;
+      }
+    }
+
+    // clear when the beat elapses OR as soon as we leave the resolution phase
+    if (this.roundWinner.active && (phase !== "resolution" || nowMs >= this.roundWinnerUntilMs)) {
+      this.roundWinner.clear();
+    }
+  }
+
+  /**
+   * The round winner's model doc, resolved through the SAME `modelDocFor` seam
+   * the arena ChampionView uses — so the dev-only Blizzard overlay and vertex
+   * tint apply exactly as they do in-world. null before the content DB has the
+   * doc (then the stage simply shows nothing; the VO still plays).
+   */
+  private roundWinnerModelDoc(
+    championId: string,
+    seats: readonly { seatId: number; championId: string }[],
+  ): ModelDoc | null {
+    const def = Champions.tryGet(championId as ChampionId);
+    if (!def) return null;
+    const seatId = seats.find((s) => s.championId === championId)?.seatId;
+    return this.modelDocFor(def.modelKey, seatId);
   }
 
   private deathFocusFrame(state: MatchState): DeathFocusFrame {

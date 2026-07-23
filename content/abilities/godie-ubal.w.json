@@ -24,21 +24,21 @@
       "damageType": "magic",
       "amount": {
         "perRank": [
-          1.0,
-          1.0,
-          1.0,
-          1.0
+          450,
+          450,
+          450,
+          450
         ],
         "ratios": [
           {
             "stat": "ap",
-            "coeff": 0.003
+            "coeff": 1.0
           }
         ]
       }
     }
   ],
-  "vfxKey": "fx.ember-bolt-cast",
+  "vfxKey": "fx.prim.void.shockwave",
   "targetsEnemies": true,
   "schema": "ability@1"
 }

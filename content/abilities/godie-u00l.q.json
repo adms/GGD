@@ -26,11 +26,11 @@
       "damageType": "magic",
       "amount": {
         "perRank": [
-          80,
-          120,
-          160,
-          200,
-          240
+          150,
+          300,
+          450,
+          600,
+          750
         ],
         "ratios": [
           {
@@ -41,7 +41,7 @@
       }
     }
   ],
-  "vfxKey": "fx.ember-bolt-cast",
+  "vfxKey": "fx.prim.physical.beam",
   "targetsEnemies": true,
   "schema": "ability@1"
 }

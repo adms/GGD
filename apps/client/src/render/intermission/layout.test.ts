@@ -226,6 +226,25 @@ describe("intermission camera", () => {
     expect(heroFeet.y).toBeGreaterThan(heroHead.y);
   });
 
+  it("puts the merchant in the CENTRE and the player's hero on the RIGHT (#146)", () => {
+    cover("intermission-camera");
+    // The user's ask 「旅行商人…3D model 在中央,玩家 model 在右方」: the merchant is
+    // the centred focal point, the hero reads clearly to his right. Checked at
+    // three aspect ratios because the horizontal field is what a window reshapes.
+    // This is what the re-aim (CAMERA_TARGET) + the hero move (CHAMPION_STAND)
+    // buy, so a future nudge to either cannot silently drift back to the old
+    // "hero left of a centre-right merchant" framing the user complained about.
+    for (const aspect of [16 / 9, 4 / 3, 21 / 9]) {
+      const project = screenProjector(aspect);
+      const merchant = project({ x: MERCHANT.x, y: 1.75, z: MERCHANT.z });
+      const hero = project({ x: CHAMPION_STAND.x, y: 1.7, z: CHAMPION_STAND.z });
+      // the merchant sits at screen CENTRE (within 10 % of dead-centre)…
+      expect(Math.abs(merchant.x - 0.5), `merchant @${aspect.toFixed(2)} at ${(merchant.x * 100).toFixed(1)}%`).toBeLessThan(0.1);
+      // …and the hero is clearly to his RIGHT (a comfortable margin, not a tie)
+      expect(hero.x - merchant.x, `hero−merchant @${aspect.toFixed(2)}`).toBeGreaterThan(0.08);
+    }
+  });
+
   it("enters from further back and higher, then settles on the resting pose", () => {
     cover("intermission-camera");
     expect(CAMERA_ENTER_POSE.radius).toBeGreaterThan(CAMERA_POSE.radius);

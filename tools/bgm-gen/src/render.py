@@ -118,8 +118,15 @@ def main() -> int:
     ap.add_argument("--all", action="store_true")
     ap.add_argument("--keep-wav", action="store_true")
     ap.add_argument("--analyze", action="store_true")
+    ap.add_argument("--tts", action="store_true",
+                    help="bake the experimental say/rap intro layers (macOS `say`)")
     ap.add_argument("--out-dir", default=OUT_DIR)
     a = ap.parse_args()
+
+    if a.tts:
+        # Turn on the say gate for THIS process only; probes never do this, so
+        # the pure-synth render stays deterministic and say-free.
+        score_mod._TTS.enabled = True
 
     ids = a.tracks
     if a.all or not ids:

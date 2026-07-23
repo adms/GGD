@@ -155,8 +155,44 @@
    "durationSec": 0.605,
    "meanDb": "-18.7 dB",
    "recipe": "The 3-choose-1 card LOCK-IN (task #110): a 厲害的科技音效, a heavy tech mechanism seating. Three layers strike together at t=0 — a brown-noise CONTACT chunk (150-1300 Hz, loudest so the onset is a machined strike), a WEIGHT body (sub sine 140->55 Hz + octave-down 70->28 Hz power), and a descending detuned resonator LOCK (520->300, 660->380 Hz + a fast metallic 1560 Hz partial; descending = terminal/confirm). One 55 ms echo tap + dark master (hp 42, lp 5000). Measured against the cues it must never be mistaken for: HARD 6.0 ms onset vs the #86 cyber-hover SWELL of ~30 ms; LOW 405 Hz spectral centroid vs the hover's 1948 Hz and count-final's 2678 Hz; 0.605 s — decisive, about half count-tick (1.20 s) / count-final (1.05 s) / hover (1.55 s). The #86 hover is now ALSO low-band (~0.96 under 500 Hz vs this clip's 0.85): that shared low world is deliberate — the confirm sits in it rather than fighting it, and is separated from the hover instead by the hard onset, the darker centroid and the short length (NOT by weight). Those axes ARE the 'weighty mechanical, not bright/bubbly' brief — see GATE-draft-confirm.py, which rejects the real hover and both bells; keep the centroid low and the onset hard on any re-cut."
+  },
+  {
+   "file": "hit-light.wav",
+   "event": "hit-light (ImpactProfile tier 'light')",
+   "durationSec": 0.14,
+   "meanDb": -18.5,
+   "recipe": "hit-feel audit P1 weight tier 1/4. Descending 220 Hz sine body (no sub) + a thin 1.2-5.2 kHz pink-noise snap, both exp-decayed. Peak at 2.5%, silent by ~40% of the clip. The lightest voice: bright, quick, almost no low-freq body (2.5% under 150 Hz) — a jab, not a smash."
+  },
+  {
+   "file": "hit-medium.wav",
+   "event": "hit-medium (ImpactProfile tier 'medium')",
+   "durationSec": 0.2,
+   "meanDb": -18.6,
+   "recipe": "hit-feel audit P1 weight tier 2/4. Descending 155 Hz sine body + a fuller 0.95-4.6 kHz pink-noise snap. Same family shape as hit-light but lower fundamental and ~59% energy under 150 Hz — a solid connect. Peak at 2.4%, silent by ~40%."
+  },
+  {
+   "file": "hit-heavy.wav",
+   "event": "hit-heavy (ImpactProfile tier 'heavy')",
+   "durationSec": 0.3,
+   "meanDb": -17.7,
+   "recipe": "hit-feel audit P1 weight tier 3/4 — the 破碎 smash. Descending 120 Hz body PLUS a 62 Hz octave-down sub power layer + a dark 0.75-4 kHz snap. The only tier carrying real sub-150 weight (~96% under 150 Hz, centroid 459 Hz). Longest at 0.30 s but exp-dead by ~40% — heavy, never a ring (收尾精準)."
+  },
+  {
+   "file": "hit-crit.wav",
+   "event": "hit-crit (ImpactProfile tier 'crit')",
+   "durationSec": 0.24,
+   "meanDb": -15.9,
+   "recipe": "hit-feel audit P1 weight tier 4/4. Medium 150 Hz body + a bright 900->~1400 Hz up-chirp 'shing' + a 3 kHz+ transient. Distinct from heavy by BRIGHTNESS (centroid 4442 Hz), not weight — a lucky hit reads sharper, not merely louder. Peak at 2.1%, silent by ~40%."
+  },
+  {
+   "file": "block-hit.wav",
+   "event": "block-hit (guard/block impact — re-cut of the RINGING lab block voice)",
+   "durationSec": 0.1,
+   "meanDb": -23.7,
+   "recipe": "hit-feel audit P1 fix: the previous block voice (lab/block-clash + block-shield) had a slow onset (peak at 13-14%) and RANG out to ~0.5-0.66 s, violating 收尾精準. This re-cut is a front-loaded 1.4-6.8 kHz metal-noise transient + a fast-dying 560/840 Hz mid ring, no body (0% under 150 Hz). Peak at 3.2%, whole clip silent by ~0.03 s past the transient (30% of a 0.10 s file) — a crisp deflect, not mush."
   }
  ],
  "combatJuiceNote": "The nine clips from hit_magic.wav onward were added for task #3 (combat juice): distinct 物理/魔法/防禦/破防 + crit/whiff/knockdown/footstep voices for the per-frame combat-feedback layer. The type-differentiated HIT voice (物理 reuses thud.wav; 魔法/true have their own clips) is driven by the enriched `damage` event; block/guardBreak map the sim's shield/damage-reduction path. Same deterministic ffmpeg-lavfi synthesis as the originals — own work, effectively CC0, no third-party audio.",
+ "hitTierNote": "hit-light / hit-medium / hit-heavy / hit-crit / block-hit were added for the hit-feel audit P1 (the audible 收尾精準). One ImpactProfile.tier drives every impact channel; the SFX channel plays these by that key convention (client channel agent). All share the reference thud envelope (descending sine BODY + band-passed noise TRANSIENT, both exp-decayed) so the tiers read as one family; WEIGHT is scaled by dropping the body fundamental (220->155->120 Hz) and growing sub-150 Hz energy (light 2.5% -> medium 59% -> heavy 96%). crit is spectrally bright (centroid 4442 Hz) not heavier; block-hit re-cuts the audit's RINGING lab block voice into a 0.10 s crisp clank (peak 3.2%, silent by ~30%). Every clip peaks in the first ~3% and decays to silence by ~40% — a hit is a POP, tail < 0.35 s, no ring.",
  "countdownNote": "count-tick.wav / count-final.wav were added for task #30 (champ-select last-5-seconds countdown). They are the only clips in the set authored to be heard OVER a music bed (champSelect BGM), which is why both are narrow-band tonal rather than noise-transient. Both are peak-normalised to -3.0 dBFS exactly like the rest: the REQUIRED rising loudness across 5→2 s is the per-call `volume` option on playSfx (0.45/0.60/0.75/0.90, then 1.0 for the final second), never a differently-rendered file — see apps/client/src/audio/countdownCue.ts."
 }

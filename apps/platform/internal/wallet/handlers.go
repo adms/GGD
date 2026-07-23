@@ -25,6 +25,13 @@ func (h *Handlers) Mount(r chi.Router) {
 	r.Get("/store/catalog", h.catalog)
 	r.Post("/store/buy", h.buy)
 	r.Post("/store/equip", h.equip)
+
+	// Meta progression (task #118): free crystal drip, crystal-unlock, the
+	// favourite pin, and the admin-only M COIN grant.
+	r.Post("/wallet/crystals/earn", h.earnCrystals)
+	r.Post("/wallet/champions/unlock", h.unlockChampion)
+	r.Post("/wallet/favourites", h.favourite)
+	r.Post("/wallet/admin/grant-mcoin", h.grantMCoin)
 }
 
 func (h *Handlers) wallet(w http.ResponseWriter, r *http.Request) {
@@ -100,4 +107,90 @@ func (h *Handlers) equip(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	httpx.WriteJSON(w, http.StatusOK, wal)
+}
+
+// earnCrystals grants the authenticated account one match's worth of crystals.
+func (h *Handlers) earnCrystals(w http.ResponseWriter, r *http.Request) {
+	me := auth.MustIdentity(r.Context())
+	wal, err := h.svc.EarnMatchCrystals(r.Context(), me.AccountID)
+	if err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	httpx.WriteJSON(w, http.StatusOK, wal)
+}
+
+type unlockReq struct {
+	Champion string `json:"champion"`
+}
+
+// unlockChampion spends crystals to unlock a champion for the caller.
+func (h *Handlers) unlockChampion(w http.ResponseWriter, r *http.Request) {
+	me := auth.MustIdentity(r.Context())
+	var req unlockReq
+	if err := httpx.DecodeJSON(r, &req); err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	if req.Champion == "" {
+		httpx.WriteError(w, httpx.BadRequest("champion is required"))
+		return
+	}
+	wal, err := h.svc.UnlockChampion(r.Context(), me.AccountID, req.Champion)
+	if err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	httpx.WriteJSON(w, http.StatusOK, wal)
+}
+
+type favouriteReq struct {
+	Champion  string `json:"champion"`
+	Favourite bool   `json:"favourite"`
+}
+
+// favourite pins/unpins a champion to the top of the caller's champ-select.
+func (h *Handlers) favourite(w http.ResponseWriter, r *http.Request) {
+	me := auth.MustIdentity(r.Context())
+	var req favouriteReq
+	if err := httpx.DecodeJSON(r, &req); err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	if req.Champion == "" {
+		httpx.WriteError(w, httpx.BadRequest("champion is required"))
+		return
+	}
+	wal, err := h.svc.ToggleFavourite(r.Context(), me.AccountID, req.Champion, req.Favourite)
+	if err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	httpx.WriteJSON(w, http.StatusOK, wal)
+}
+
+type grantMCoinReq struct {
+	AccountID string `json:"accountId"`
+	Amount    int    `json:"amount"`
+}
+
+// grantMCoin adds admin-granted M COIN to a target account. Admin-gated inside
+// the service (the caller's role is checked); a non-admin caller is a 403.
+func (h *Handlers) grantMCoin(w http.ResponseWriter, r *http.Request) {
+	me := auth.MustIdentity(r.Context())
+	var req grantMCoinReq
+	if err := httpx.DecodeJSON(r, &req); err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	if req.AccountID == "" {
+		httpx.WriteError(w, httpx.BadRequest("accountId is required"))
+		return
+	}
+	balance, err := h.svc.GrantMCoin(r.Context(), me.AccountID, req.AccountID, req.Amount)
+	if err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	httpx.WriteJSON(w, http.StatusOK, map[string]any{"accountId": req.AccountID, "mcoin": balance})
 }

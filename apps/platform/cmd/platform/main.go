@@ -53,7 +53,7 @@ func main() {
 		_ = httpSrv.Shutdown(shutdownCtx)
 	}()
 
-	slog.Info("platform listening", "addr", cfg.Addr, "season", cfg.Season, "dataDir", cfg.DataDir)
+	slog.Info("platform listening", "addr", cfg.Addr, "season", cfg.Season, "dataDir", cfg.DataDir, "deployTier", cfg.DeployTier)
 	if err := httpSrv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 		slog.Error("serve", "err", err)
 		os.Exit(1)

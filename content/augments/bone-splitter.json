@@ -1,0 +1,32 @@
+{
+  "id": "bone-splitter",
+  "schema": "augment@1",
+  "name": "碎骨",
+  "description": "每次普攻額外造成 25(+10% 攻擊力) 真實傷害。",
+  "tier": "gold",
+  "weight": 55,
+  "hooks": [
+    {
+      "on": "onBasicAttack",
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "true",
+          "amount": {
+            "flat": 25,
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.1
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "on-hit",
+    "offense"
+  ]
+}

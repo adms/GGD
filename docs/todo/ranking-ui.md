@@ -41,6 +41,16 @@ assertions in the spirit of `architecture.test.ts` / `mobilePwa.test.ts`.
 | rankui-09 | 我的英雄 sorted by points desc, ties broken deterministically (rank then championId), input not mutated | rank-ui-mychamps-sort | unit | done |
 | rankui-10 | Mobile/touch: crest scales, tabs + champion tiles stay ≥44px, picker drops to one column, lobby columns stack on a narrow viewport | rank-ui-mobile | unit | done |
 | rankui-11 | Live browser verify: both boards against the real platform API (points move after a ranked settlement, tier badge updates) | rank-ui-e2e-live | e2e | pending |
+| rankui-12 | 主題曲 · 寧靜女聲 (task #134): the ranked-ladder panel requests the serene `menuNocturne` bed while mounted (ref-counted `bgmOverride` registry, last-request-wins) and the AudioDirector prefers it over the derived scene, restoring on unmount | rank-ui-nocturne-bgm | unit | done |
 
 `rankui-11` stays `pending` until the backend half of task #37 is deployed and an automated
 run emits its beacon — same convention as `webui-11` / `couch-16` / `mobile-15`.
+
+**BGM (task #134).** The user moved the serene female-voice nocturne 「主題曲 · 寧靜女聲」 off the
+login theme rotation onto the ranked ladder. While `LeaderboardPanel` is mounted it calls
+`useBgmSceneOverride("menuNocturne")` (`ui/useAudio.ts`), which pushes onto the framework-free
+`audio/bgmOverride` registry; the `AudioDirector` — the single owner of the one bed — reads the
+registry via `useBgmOverride` and plays `override ?? derivedScene`, so the nocturne sounds
+throughout the lobby's ladder view and the derived lobby/room bed returns the moment the panel
+unmounts (opening the store, or leaving for a match). The mixer + `content/config/audio-map.json`
+`menuNocturne` bed are untouched; wiring is entirely at the director/component level.

@@ -72,6 +72,14 @@ export class SeatState extends Schema {
    */
   declare statStacks: number;
   declare statCapstonePct: number;
+  /**
+   * How many buy/sell steps of THIS shopping session can still be undone (task
+   * #121) — the depth of the champion's undo stack. The client shows the
+   * 「↩ 復原上一步」 button exactly when this is > 0, so its visibility is exact
+   * (never a heuristic off the last shop event). Resets to 0 when combat commits
+   * the session.
+   */
+  declare undoDepth: number;
 
   constructor() {
     super();
@@ -99,6 +107,7 @@ export class SeatState extends Schema {
     this.exCooldown = 0;
     this.statStacks = 0;
     this.statCapstonePct = 0;
+    this.undoDepth = 0;
   }
 }
 defineTypes(SeatState, {
@@ -126,6 +135,7 @@ defineTypes(SeatState, {
   exCooldown: "uint16",
   statStacks: "uint8",
   statCapstonePct: "uint8",
+  undoDepth: "uint8",
 });
 
 export class TeamState extends Schema {

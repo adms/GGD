@@ -149,7 +149,7 @@ a strictly smaller share of the track, and it is kept OUT of the turn, which
 belongs to the guitar. NO CYMBAL ANYWHERE, at any gain.
 """
 
-from ggd import music
+from ggd import intro, music
 from ggd.score import Score
 
 N = music.note
@@ -243,6 +243,14 @@ def build() -> Score:
     s.progression(PROG)
     s.gain(choir=1.05, keys=1.05, lead=1.05, strings=1.15, gtr=1.25, pad=1.15,
            perc=1.10)
+
+    # ---------------------------------------------------- SIGNATURE INTRO (#135)
+    # A single bright STEEL blade-ring on the pickup — a flash, not a phrase,
+    # ringing into bar 0's first kick. Deliberately tiny (<=0.5 s): bars 0-3 are
+    # the most-heard music in the game and restart ~7x/match, so the signature
+    # must not fatigue on the 7th replay. Bar 0's bed is untouched, so the loop
+    # join stays mirror-safe. The only bright-steel zing in the pack. intro.py.
+    s.custom("fx", intro.combat)
 
     # ======================================================= THE PIANO THREAD
     # Present for 40 of the 48 bars, and its two absences are the two structural

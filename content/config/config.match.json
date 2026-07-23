@@ -9,9 +9,15 @@
     "teamCount": 4,
     "teamSize": 3,
     "startingTeamLives": 8,
-    "champSelectSec": 60,
-    "intermissionSec": 60,
-    "combatMaxSec": 90,
+    "champSelectSec": 40,
+    "intermissionSec": 40,
+    "combatMaxSec": 240,
+    "fireRing": {
+      "startSec": 180,
+      "stepSec": 1,
+      "pctPerStep": 0.01,
+      "maxPctPerSec": 1
+    },
     "resolutionSec": 6
   },
   "economy": {

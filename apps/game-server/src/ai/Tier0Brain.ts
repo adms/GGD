@@ -12,6 +12,7 @@ import type { Command, IntentFrame, Order } from "@ggd/shared/sim/intents";
 import type { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { Champions, Items } from "@ggd/shared/sim/content/registry";
 import { distSq } from "@ggd/shared/sim/math/vec2";
+import { Stat } from "@ggd/shared/sim/stats/statTypes";
 import type { Seat, SeatDriver } from "../seat/Seat";
 
 /** Below this HP fraction the bot prefers an in-zone healing flower. */
@@ -33,6 +34,74 @@ const FLOWER_SEEK_RANGE = 12;
  * would never once be revived.
  */
 const REVIVE_SEEK_RANGE = 18;
+
+/**
+ * KITING (ranged bots only). A ranged bot fights from its ATTACK RANGE and
+ * backs off when an enemy closes inside a safety margin, then re-engages once it
+ * has restored the gap. A melee bot is unaffected — it keeps closing to contact.
+ *
+ * The two fractions form a HYSTERESIS band so the bot cannot flip between
+ * retreat and hold on consecutive replans (jitter): it STARTS kiting only when
+ * the enemy is inside ENGAGE·range, and STOPS only once the distance has
+ * recovered past REENGAGE·range. REENGAGE > ENGAGE by a wide margin, so an enemy
+ * sitting in the band leaves the state untouched. REENGAGE also sits just below
+ * OrderSystem's own hold point (0.9·range), so on re-engage the attackTarget
+ * order settles the bot in range without a visible re-approach hop.
+ */
+const KITE_ENGAGE_FRACTION = 0.6; // enemy within 0.6·range -> start backing off
+const KITE_REENGAGE_FRACTION = 0.85; // gap restored past 0.85·range -> hold & fire
+
+/**
+ * Ranged-vs-melee classification FALLBACK for a fighter with no champion doc
+ * (the deterministic sim-test probes). Real champions are classified by their
+ * doc's `attackType` (authoritative, the same field BasicAttackSystem reads);
+ * this threshold only applies when no doc exists. Melee reach is ~1.6 and ranged
+ * ~6–12 (task #128), so 4 cleanly splits the two.
+ */
+const RANGED_ATTACK_RANGE = 4;
+
+/**
+ * Ranged if the champion doc says so (authoritative), else inferred from the
+ * unit's attack reach. Pure — used by the Tier-0 kiting decision.
+ */
+export function isRangedAttacker(
+  attackType: "melee" | "ranged" | undefined,
+  attackRange: number,
+): boolean {
+  if (attackType === "ranged") return true;
+  if (attackType === "melee") return false;
+  return attackRange >= RANGED_ATTACK_RANGE;
+}
+
+/**
+ * Where a kiting ranged bot retreats to: a point one full attack range from the
+ * enemy, directly behind the bot (i.e. away from the enemy). Walking there
+ * restores the bot to its own attack range. Deterministic — a pure function of
+ * the two positions plus the bot's facing (used only as the overlap fallback);
+ * no RNG, no time, and Math.sqrt only (matching the sim's math helpers).
+ */
+export function kiteRetreatTarget(
+  self: { x: number; z: number },
+  enemy: { x: number; z: number },
+  range: number,
+  facing: { x: number; z: number },
+): { x: number; z: number } {
+  let ax = self.x - enemy.x;
+  let az = self.z - enemy.z;
+  let l = Math.sqrt(ax * ax + az * az);
+  if (l < 1e-6) {
+    // exactly overlapping: fall back to the bot's facing, then a fixed axis.
+    ax = facing.x;
+    az = facing.z;
+    l = Math.sqrt(ax * ax + az * az);
+    if (l < 1e-6) {
+      ax = 1;
+      az = 0;
+      l = 1;
+    }
+  }
+  return { x: enemy.x + (ax / l) * range, z: enemy.z + (az / l) * range };
+}
 
 /**
  * The next item to buy off a build path: the first entry we do not already own,
@@ -83,6 +152,12 @@ export class AIDriver implements SeatDriver {
   readonly kind = "ai" as const;
   private plan: { order?: Order; commands: Command[] } = { commands: [] };
   private didReady = false;
+  /**
+   * Kiting hysteresis latch (ranged bots): true while backing off, false while
+   * holding at range. Persisted across replans so the ENGAGE/REENGAGE band works
+   * — it is pure sim-state-derived, so a same-seed replay latches identically.
+   */
+  private kiting = false;
 
   /**
    * @param buyable optional purchasability predicate (the match's content
@@ -92,10 +167,12 @@ export class AIDriver implements SeatDriver {
 
   onAttach(_seat: Seat): void {
     this.plan = { commands: [] };
+    this.kiting = false;
   }
 
   onDetach(): void {
     this.plan = { commands: [] };
+    this.kiting = false;
   }
 
   produceIntent(seat: Seat, world: SimWorld, tick: number): IntentFrame {
@@ -188,12 +265,38 @@ export class AIDriver implements SeatDriver {
       }
     }
 
+    // ----- kiting: ranged bots hold at range and back off when crowded -----
+    // Classify by the champion doc's attackType (authoritative; what
+    // BasicAttackSystem reads) and fall back to the attack reach for doc-less
+    // probes. Then update the retreat/hold hysteresis latch from the live gap.
+    const champC = world.champion.get(id);
+    const sc = world.stats.get(id);
+    const myRange = sc?.final[Stat.AttackRange] ?? 0;
+    const myAttackType = champC ? Champions.tryGet(champC.championId)?.attackType : undefined;
+    const ranged = isRangedAttacker(myAttackType, myRange);
+    if (ranged && nearest !== null && myRange > 0) {
+      const d = Math.sqrt(nearestD2);
+      if (this.kiting) {
+        if (d > myRange * KITE_REENGAGE_FRACTION) this.kiting = false;
+      } else if (d < myRange * KITE_ENGAGE_FRACTION) {
+        this.kiting = true;
+      }
+    } else {
+      this.kiting = false;
+    }
+
     let order: Order | undefined;
     if (nearest !== null) {
-      order = { kind: "attackTarget", entity: nearest };
-      // cast any ready, learned ability
-      const ab = world.abilities.get(id);
+      // KITE (ranged, enemy inside the safety margin): retreat to restore the
+      // gap. Otherwise attack-target it — OrderSystem walks a ranged unit up to
+      // 0.9·range and holds, so autos/casts already fire from range, not melee.
       const tgtT = world.transform.get(nearest)!;
+      order = this.kiting
+        ? { kind: "move", point: kiteRetreatTarget(t.pos, tgtT.pos, myRange, t.facing) }
+        : { kind: "attackTarget", entity: nearest };
+      // cast any ready, learned ability (still fires while kiting: attack from
+      // range, keep backing off)
+      const ab = world.abilities.get(id);
       if (ab) {
         for (const slot of ["Q", "W", "E", "R"] as const) {
           const inst = ab.slots[slot];

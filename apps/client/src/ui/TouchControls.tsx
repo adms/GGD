@@ -9,8 +9,9 @@
  */
 import { useEffect, useRef } from "react";
 import { TICK_HZ } from "@ggd/shared/constants";
-import { Champions } from "@ggd/shared/sim/content/registry";
-import type { ChampionId } from "@ggd/shared/ids";
+import { Abilities, Champions } from "@ggd/shared/sim/content/registry";
+import { isPassiveOnly } from "@ggd/shared/sim/abilities/abilityPassives";
+import type { AbilityId, ChampionId } from "@ggd/shared/ids";
 import type { CoreAbilitySlot } from "@ggd/shared/sim/intents";
 import {
   activeTouchController,
@@ -21,6 +22,11 @@ import {
 import { useHud } from "../net/RoomStore";
 import { hudActions } from "./actions";
 import { exSlotView } from "./exSlot";
+import { setHeldAbility } from "./abilityHold";
+import { abilityActivationCue } from "./abilityCue";
+import { prefersReducedMotion } from "./buttonSfx";
+import { AbilityDescriptionOverlay } from "./AbilityDescriptionOverlay";
+import { stripAbilityNumber } from "./components/abilityText";
 import { SfxButton } from "./SfxButton";
 import { GOLD, PANEL_BG, TEXT_DIM, TEXT_MAIN } from "./theme";
 
@@ -53,6 +59,19 @@ function pressHandler(button: TouchButton): (e: React.TouchEvent) => void {
       clientY: t.clientY,
     });
   };
+}
+
+// Press-visual: a quick scale-down + brightness flash (skipped under
+// reduced-motion). Uses transform/filter only — the per-frame aim-highlight
+// rAF owns `boxShadow` on the same tile, so touching it here would fight.
+function pressVisualDown(el: HTMLElement): void {
+  if (prefersReducedMotion()) return;
+  el.style.transform = "scale(0.9)";
+  el.style.filter = "brightness(1.4)";
+}
+function pressVisualClear(el: HTMLElement): void {
+  el.style.transform = "";
+  el.style.filter = "";
 }
 
 const circleBase: React.CSSProperties = {
@@ -118,6 +137,8 @@ export function TouchControls(): React.JSX.Element | null {
 
   return (
     <div ref={rootRef} style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 20 }}>
+      {/* held-button description panel across the top of the screen (task #152) */}
+      <AbilityDescriptionOverlay />
       {/* floating joystick chrome (left half; input is captured on the canvas) */}
       <div
         data-role="joy-base"
@@ -180,6 +201,8 @@ export function TouchControls(): React.JSX.Element | null {
         const cdSecs = (seat.cooldowns[i] ?? 0) / TICK_HZ;
         const maxCd = learned ? (ability.cooldown[rank - 1] ?? 1) : 1;
         const sweep = learned && cdSecs > 0 ? Math.min(1, cdSecs / maxCd) : 0;
+        // passive-only skill (no castable effects) — dashed tile + soft cue
+        const passive = isPassiveOnly(ability);
         const { right, bottom } = arcCenter(i);
         return (
           <div
@@ -195,16 +218,55 @@ export function TouchControls(): React.JSX.Element | null {
           >
             <div
               data-touch-slot={slot}
-              onTouchStart={learned ? pressHandler(slot) : undefined}
+              // tap/drag still casts (pressHandler); the press ALSO latches the
+              // hold-preview seam (task #152) so a held finger shows the name
+              // panel + floor range, cleared on lift. Every press now answers
+              // with a click cue (or the refusal cue when cooling down),
+              // haptic pulse, and a scale/flash — even an unlearned tile.
+              onTouchStart={(e) => {
+                pressVisualDown(e.currentTarget);
+                if (learned) {
+                  pressHandler(slot)(e);
+                  setHeldAbility(slot);
+                  abilityActivationCue(slot, { denied: cdSecs > 0, passive });
+                } else {
+                  abilityActivationCue(slot, { denied: true, passive });
+                }
+              }}
+              onTouchEnd={(e) => {
+                pressVisualClear(e.currentTarget);
+                if (learned) setHeldAbility(null);
+              }}
+              onTouchCancel={(e) => {
+                pressVisualClear(e.currentTarget);
+                if (learned) setHeldAbility(null);
+              }}
               style={{
                 ...circleBase,
                 inset: 0,
                 background: learned ? "rgba(36, 50, 82, 0.9)" : "rgba(22, 27, 38, 0.75)",
-                border: `2px solid ${learned ? "#51649b" : "#2a3040"}`,
+                // passive skills read as a DASHED outline (虛線外框) vs solid actives
+                border: `2px ${passive ? "dashed" : "solid"} ${learned ? "#51649b" : "#2a3040"}`,
                 color: learned ? TEXT_MAIN : TEXT_DIM,
+                transition: "transform 80ms ease, filter 80ms ease",
               }}
             >
-              <div style={{ fontSize: 19, fontWeight: "bold" }}>{slot}</div>
+              {/* slot letter as a small badge, ability NAME under it (task #152) */}
+              <div style={{ fontSize: 13, fontWeight: "bold", lineHeight: 1 }}>{slot}</div>
+              <div
+                style={{
+                  marginTop: 2,
+                  maxWidth: ABILITY_SIZE - 12,
+                  fontSize: 9,
+                  lineHeight: 1.1,
+                  overflow: "hidden",
+                  whiteSpace: "nowrap",
+                  textOverflow: "ellipsis",
+                  color: learned ? TEXT_MAIN : TEXT_DIM,
+                }}
+              >
+                {stripAbilityNumber(ability.name)}
+              </div>
               {sweep > 0 && (
                 <div
                   style={{
@@ -269,10 +331,26 @@ export function TouchControls(): React.JSX.Element | null {
         const ex = exSlotView(seat);
         if (!ex) return null;
         const sweep = ex.sweep;
+        // EX can (rarely) be a passive-only skill → dashed tile + soft cue
+        const exDef = Abilities.tryGet(seat.exAbilityId as AbilityId);
+        const exPassive = exDef ? isPassiveOnly(exDef) : false;
         return (
           <div
             data-touch-slot="EX"
-            onTouchStart={pressHandler("EX")}
+            onTouchStart={(e) => {
+              pressVisualDown(e.currentTarget);
+              pressHandler("EX")(e);
+              setHeldAbility("EX");
+              abilityActivationCue("EX", { denied: sweep > 0, passive: exPassive });
+            }}
+            onTouchEnd={(e) => {
+              pressVisualClear(e.currentTarget);
+              setHeldAbility(null);
+            }}
+            onTouchCancel={(e) => {
+              pressVisualClear(e.currentTarget);
+              setHeldAbility(null);
+            }}
             style={{
               ...circleBase,
               right: ATTACK_CENTER + ARC_RADIUS - ABILITY_SIZE / 2,
@@ -280,14 +358,29 @@ export function TouchControls(): React.JSX.Element | null {
               width: ABILITY_SIZE,
               height: ABILITY_SIZE,
               background: "rgba(58, 42, 18, 0.92)",
-              border: `2px solid ${EX_ACCENT}`,
+              border: `2px ${exPassive ? "dashed" : "solid"} ${EX_ACCENT}`,
               boxShadow: `0 0 8px ${EX_ACCENT}88`,
               color: EX_ACCENT,
-              fontSize: 18,
               fontWeight: "bold",
+              transition: "transform 80ms ease, filter 80ms ease",
             }}
           >
-            EX
+            {/* EX badge + ability NAME under it (task #152) */}
+            <div style={{ fontSize: 14, fontWeight: "bold", lineHeight: 1 }}>EX</div>
+            <div
+              style={{
+                marginTop: 2,
+                maxWidth: ABILITY_SIZE - 12,
+                fontSize: 9,
+                lineHeight: 1.1,
+                overflow: "hidden",
+                whiteSpace: "nowrap",
+                textOverflow: "ellipsis",
+                color: EX_ACCENT,
+              }}
+            >
+              {stripAbilityNumber(ex.name)}
+            </div>
             {sweep > 0 && (
               <div
                 style={{

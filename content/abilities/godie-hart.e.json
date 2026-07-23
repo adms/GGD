@@ -91,7 +91,7 @@
       ]
     }
   ],
-  "vfxKey": "fx.ember-bolt-cast",
+  "vfxKey": "fx.prim.physical.beam",
   "targetsEnemies": true,
   "schema": "ability@1",
   "radius": 6.42

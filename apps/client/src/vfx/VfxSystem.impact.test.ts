@@ -32,7 +32,7 @@ import type { AbilityDef } from "@ggd/shared/sim/content/defs";
 import type { AbilityId } from "@ggd/shared/ids";
 import { impactComposerFor } from "./HitSpark";
 import { colorStopsFor, sizeStopsFor } from "./particleFactory";
-import { stopsAscending } from "./vfxPresets";
+import { stopsAscending, IMPACT_TINTS } from "./vfxPresets";
 import {
   VfxSystem,
   clampOneShotLife,
@@ -285,6 +285,113 @@ describe("layered event hooks (vfx-impact-first)", () => {
     expect(psEx).not.toBe(psQ);
     expect(psEx.manualEmitCount).toBe(Math.round(qBurst * EX_BURST_BOOST));
     fire.mockRestore();
+    vfx.dispose();
+  });
+});
+
+describe("contact-point sparks by profile.sparkKind (vfx-spark-kind)", () => {
+  // entityPos: source(1)→(1,0), victim(2)→(2,0), so the hit vector points +x
+  const POS_CTX = { entityPos: (id: number): { x: number; z: number } => ({ x: id, z: 0 }) };
+  const hit = (
+    sparkKind: string,
+    over: Record<string, unknown> = {},
+  ): EventMessage =>
+    ev("hitImpact", {
+      target: 2,
+      source: 1,
+      dmgType: "physical",
+      amount: 50,
+      profile: { tier: "medium", hitstopTicks: 3, sparkKind, ...over },
+    });
+
+  it("each sparkKind picks a DISTINCT tint + layered intensity", () => {
+    cover("vfx-spark-kind");
+    const vfx = new VfxSystem(scene, POS_CTX);
+    const fire = vi.spyOn(impactComposerFor(scene), "fire");
+    const tintOf = (i: number): readonly number[] => fire.mock.calls[i]![4]!.tint as readonly number[];
+    const intensityOf = (i: number): string => fire.mock.calls[i]![0] as string;
+
+    vfx.handleEvent(hit("hit"), 1000);
+    expect(intensityOf(0)).toBe("light");
+    expect(tintOf(0)).toEqual([...IMPACT_TINTS.physical]);
+
+    vfx.handleEvent(hit("counter"), 1100);
+    expect(intensityOf(1)).toBe("ex"); // a punish gets the max flash…
+    expect(tintOf(1)).toEqual([...IMPACT_TINTS.counter]); // …in RED
+
+    vfx.handleEvent(hit("magic"), 1200);
+    expect(tintOf(2)).toEqual([...IMPACT_TINTS.magic]);
+
+    vfx.handleEvent(hit("ice"), 1300);
+    expect(tintOf(3)).toEqual([...IMPACT_TINTS.ice]);
+
+    vfx.handleEvent(hit("heavy"), 1400);
+    expect(intensityOf(4)).toBe("heavy");
+
+    fire.mockRestore();
+    vfx.dispose();
+  });
+
+  it("blooms the spark at the CONTACT surface facing the attacker, not the victim centre", () => {
+    cover("vfx-spark-kind");
+    const vfx = new VfxSystem(scene, POS_CTX);
+    const fire = vi.spyOn(impactComposerFor(scene), "fire");
+    vfx.handleEvent(hit("hit"), 1000);
+    // victim is at x=2; the hit vector is +x, so the contact point is pulled
+    // BACK toward the attacker (x < 2) and lifted to torso height (y ~1)
+    const [, x, z, , opts] = fire.mock.calls[0]!;
+    expect(x as number).toBeLessThan(2);
+    expect(x as number).toBeGreaterThan(1); // but not all the way to the attacker
+    expect(z as number).toBeCloseTo(0, 6);
+    expect((opts as { y?: number }).y).toBeCloseTo(1.0, 6);
+    fire.mockRestore();
+    vfx.dispose();
+  });
+
+  it("a BLOCK spark is cool-white + rebound fan, and draws NO blood", () => {
+    cover("vfx-spark-kind");
+    const vfx = new VfxSystem(scene, POS_CTX);
+    const fire = vi.spyOn(impactComposerFor(scene), "fire");
+    const block = vi.spyOn(vfx.feedbackFx, "block");
+    const blood = vi.spyOn(vfx.bloodFx, "fire");
+    vfx.handleEvent(hit("block", { isBlock: true }), 1000);
+    expect(fire.mock.calls[0]![4]!.tint).toEqual([...IMPACT_TINTS.guardBreak]);
+    expect(block).toHaveBeenCalledTimes(1); // rebound fan at the attacker
+    expect(blood).not.toHaveBeenCalled(); // a guard never bleeds
+    fire.mockRestore();
+    vfx.dispose();
+  });
+
+  it("falls back to the legacy read when a pre-#133 replay carries no profile", () => {
+    cover("vfx-spark-kind");
+    const vfx = new VfxSystem(scene, POS_CTX);
+    const fire = vi.spyOn(impactComposerFor(scene), "fire");
+    // no profile, crit flag → heavy read; magic dmgType → magic spark
+    vfx.handleEvent(ev("hitImpact", { target: 2, source: 1, dmgType: "magic", amount: 80 }), 1000);
+    expect(fire.mock.calls[0]![4]!.tint).toEqual([...IMPACT_TINTS.magic]);
+    fire.mockRestore();
+    vfx.dispose();
+  });
+});
+
+describe("FIX #131 — no emitter parked at a non-finite world position (vfx-spark-kind)", () => {
+  it("a hitImpact whose entity position is NaN spawns nothing", () => {
+    cover("vfx-spark-kind");
+    const vfx = new VfxSystem(scene, { entityPos: (): { x: number; z: number } => ({ x: NaN, z: 0 }) });
+    const fire = vi.spyOn(impactComposerFor(scene), "fire");
+    vfx.handleEvent(ev("hitImpact", { target: 2, source: 1, amount: 40, profile: { tier: "light", hitstopTicks: 2 } }), 1000);
+    expect(fire).not.toHaveBeenCalled(); // no spark parked off-world
+    fire.mockRestore();
+    vfx.dispose();
+  });
+
+  it("play() refuses a non-finite position (never parks a pooled system off-world)", () => {
+    cover("vfx-spark-kind");
+    const vfx = new VfxSystem(scene, CTX);
+    expect(vfx.play(streamDoc(), NaN, 0, 1000)).toBeNull();
+    expect(vfx.play(streamDoc(), 0, Infinity, 1000)).toBeNull();
+    expect(vfx.play(streamDoc(), 1, 2, 1000, NaN)).toBeNull(); // bad y too
+    expect(vfx.play(streamDoc(), 1, 2, 1000)).not.toBeNull(); // finite still works
     vfx.dispose();
   });
 });

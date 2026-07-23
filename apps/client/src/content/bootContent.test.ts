@@ -23,7 +23,14 @@ import {
   Projectiles,
 } from "@ggd/shared/sim/content/registry";
 import type { AbilityId, ChampionId } from "@ggd/shared/ids";
-import { loadAllContent, ensureContentLoaded, __resetContentBoot } from "./bootContent";
+import {
+  loadAllContent,
+  ensureContentLoaded,
+  __resetContentBoot,
+  isContentReady,
+  getContentBootSnapshot,
+  subscribeContentBoot,
+} from "./bootContent";
 
 // ---- a minimal, self-consistent content set (1 champion, 4 abilities, 1 model) ----
 const HASH = "aaaaaaaaaaaa";
@@ -135,6 +142,54 @@ describe("content boot", () => {
     expect(Champions.tryGet("sela" as ChampionId)).toBeTruthy();
     expect(Champions.tryGet("thorne" as ChampionId)).toBeTruthy();
     expect(res.championCount).toBeGreaterThanOrEqual(2);
+  });
+
+  it("readiness signal: loading until the background load settles, then ready (non-blocking)", async () => {
+    cover("client-content-boot");
+    // At boot the shell paints while content is still loading — the signal must
+    // start "loading" so nothing gates first paint on it.
+    expect(getContentBootSnapshot().phase).toBe("loading");
+    expect(getContentBootSnapshot().result).toBeNull();
+    expect(isContentReady()).toBe(false);
+
+    let notified = 0;
+    const unsub = subscribeContentBoot(() => {
+      notified++;
+    });
+
+    const source = new HttpContentSource({ baseUrl: "/content", fetchFn: mockFetch(FILES) });
+    const p = ensureContentLoaded({ source });
+    // fire-and-track: kicking the load off does NOT synchronously flip readiness
+    // (the caller renders the app shell immediately, without awaiting).
+    expect(isContentReady()).toBe(false);
+
+    const res = await p;
+    expect(res.ok).toBe(true);
+    expect(isContentReady()).toBe(true);
+    expect(getContentBootSnapshot().phase).toBe("ready");
+    expect(getContentBootSnapshot().result).toBe(res);
+    expect(notified).toBeGreaterThanOrEqual(1);
+    unsub();
+  });
+
+  it("readiness signal: skeleton fallback still flips ready (registry usable)", async () => {
+    cover("client-content-fallback");
+    // mount unreachable → skeleton fallback → still "ready" so the match-start
+    // gate can proceed (the game boots on the sela/thorne skeleton).
+    const source = new HttpContentSource({ baseUrl: "/content", fetchFn: mockFetch({}) });
+    const res = await ensureContentLoaded({ source });
+    expect(res.ok).toBe(false);
+    expect(isContentReady()).toBe(true);
+    expect(getContentBootSnapshot().result?.ok).toBe(false);
+  });
+
+  it("__resetContentBoot returns the signal to loading (test isolation)", async () => {
+    cover("client-content-boot");
+    await ensureContentLoaded({ source: new HttpContentSource({ baseUrl: "/content", fetchFn: mockFetch(FILES) }) });
+    expect(isContentReady()).toBe(true);
+    __resetContentBoot();
+    expect(isContentReady()).toBe(false);
+    expect(getContentBootSnapshot().phase).toBe("loading");
   });
 
   it("ensureContentLoaded is single-flight (loads once)", async () => {

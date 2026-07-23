@@ -8,6 +8,7 @@
   "hooks": [
     {
       "on": "onAbilityCast",
+      "target": "self",
       "internalCooldown": 3,
       "effects": [
         {

@@ -23,6 +23,63 @@ follows for its config-level secret guard. Flip to `done` when the beacon lands.
 | sec-infra-03 | Opt-in NetworkPolicy lets only the edge and game pods reach the platform port (in-cluster segmentation) | sec-infra-netpol | security | pending |
 | sec-infra-04 | Edge abuse limits: per-IP WS connection cap, auth login/register rate limit, HSTS, explicit 1m body cap | sec-infra-edge-limits | security | pending |
 
+## Private-deploy gate + Go-layer go-live hardening (#126)
+
+Friends-only, no-monetization go-live. Registration is gated behind admin
+approval and the achievable edge/app hardening lives in the Go platform. No
+real-money/payment code — the M coin store stays admin-granted (#118).
+
+| ID | Item | Test ID | Category | Status |
+| --- | --- | --- | --- | --- |
+| sec-infra-05 | Private-deploy approval gate: a new account is `pending` and receives NO session; `login`/`refresh` refuse any non-approved account; admin `POST /admin/accounts/{id}/approve` or `/deny` flips it. Env-gated by `GGD_REQUIRE_APPROVAL` (default off = open signup for dev/CI). Grandfathers zero-status accounts. | sec-infra-approval-gate, sec-infra-approval-requires-admin | security | done |
+| sec-infra-06 | No weak default secrets in the app: `server.New` refuses to boot when `JWT_SIGNING_SECRET` or `PLATFORM_GAME_SHARED_SECRET` is empty (second guard beyond `config.Load`, covering direct-Config callers). | sec-infra-boot-secret | security | done |
+| sec-infra-07 | Go-edge hardening middleware: HSTS on every response, an explicit 1 MiB request-body cap, and an app-layer global registration throttle (`GGD_REGISTER_RATE_LIMIT`, 0 = off) backstopping the edge's per-IP register limit. The per-IP login limit already lives in `auth.Service.Login`. | sec-infra-edge-headers, sec-infra-register-throttle | security | done |
+
+**Why per-IP *register* limiting is edge-owned, not app-owned.** The
+`admin`/`auth`/`server` packages are forbidden from reading a caller address —
+`internal/server/devsurface_test.go` fails the build if any of them references
+`httpx.ClientIP`, `RemoteAddr` or an `X-Forwarded-For`/`X-Real-Ip` header, and
+pins the single sanctioned `httpx.ClientIP` call to the login rate-limit key in
+`auth/handlers.go`. So per-IP *register* throttling belongs to nginx
+(sec-infra-04); the app enforces the per-IP *login* limit plus an
+address-free global registration cap.
+
+Owned files: `internal/account/**` (status model), `internal/auth/service.go`
+(login/refresh gate + pending registration), `internal/server/server.go`
+(middleware + admin approval routes + boot secret guard). The #118 wallet route
+group was not touched.
+
+## Environment-tier content gate (copyright / single-player) (#127)
+
+Grade the serving environment into `loopback | lan | public` and refuse the
+copyright-restricted / single-player content to a genuinely public host while
+keeping the LAN-plays-fine behaviour (a phone on the wifi is `lan` → served).
+One authoritative classifier off the **socket peer** (never a forwarded header),
+enforced at the content-serving layer (vite dev middleware + nginx). Full policy:
+[`docs/copyright-content-gate.md`](../copyright-content-gate.md).
+
+| ID | Item | Test ID | Category | Status |
+| --- | --- | --- | --- | --- |
+| sec-infra-08 | Environment-tier classifier (`loopback`/`lan`/`public`) — one shared util `@ggd/shared/envTier`, table-tested (46 cases); reuses the loopback rule + adds the private-IP ranges (`10./172.16-31./192.168./169.254.`, IPv6 ULA/link-local, `*.local`); fail-safe `unknown → public`. | copyright-env-tier | unit | done |
+| sec-infra-09 | Vite dev/preview middleware (`copyrightTierGate`) refuses the restricted mounts (`/content/assets/models/imported`, `/content/assets/blizzard-local`) to a public peer (403) and serves loopback+LAN; runs before `serveContent`/`serveBlizzardOverlay`; leaves the `/content-api` tripwire's 404 intact. | copyright-vite-gate | security | pending |
+| sec-infra-10 | Nginx edge gates the same mounts by `$remote_addr` tier (`geo`+`map`, `if ($ggd_deny_copyright) { return 403; }`): loopback/LAN 200, public 403; `nginx -t` clean; `make helm-sync-nginx` keeps `deploy/helm/ggd/files/nginx.conf` in sync. | copyright-nginx-gate | security | pending |
+| sec-infra-11 | Platform declares its serving tier via `GGD_DEPLOY_TIER` (`private` or `public`, default **public** = deny by omission), logged at boot. Informational — the byte-serving gate is the content layer. | copyright-deploy-tier | security | pending |
+
+Why sec-infra-09/10/11 stay `pending`: same convention as sec-infra-01..04 —
+their automated beacons belong in a config/container harness
+(`tools/testrunner/internal/infracheck` for the real-nginx guard; a vite
+middleware integration harness) outside this change's ownership. The decision
+they all enforce is fully covered by sec-infra-08's unit table (the gate's whole
+verdict is `mayServeRestrictedContent(classifyEnvTier(peer))`). Flip to `done`
+when the beacons land.
+
+Owned files: `packages/shared/src/envTier.ts` (+ `.test.ts`),
+`apps/client/vite.config.ts`, `nginx/nginx.conf` + `nginx/dev/blizzard-overlay.conf`
+(+ synced `deploy/helm/ggd/files/nginx.conf`), `apps/platform/internal/config/config.go`
++ `cmd/platform/main.go`, `docs/copyright-content-gate.md`. Did NOT touch
+`apps/game-server/**`, `packages/shared/sim`, `content/**`, or client
+`ui`/`render`.
+
 ## What changed
 
 - `deploy/helm/ggd/templates/secret.yaml` — `| default "changeme-*"` → Helm
@@ -80,3 +137,25 @@ Run from the repo root; helm v4 + a local nginx binary + docker CLI are assumed.
   by other active agents.
 - The per-IP WS cap (20) and auth rate (10r/m) are conservative defaults; raise
   them for deployments fronting many users behind a shared NAT/egress IP.
+
+### Deploy-config follow-ups for #126 (FLAGGED — pure k8s/helm/nginx, out of the
+### Go platform's ownership; not implemented in this change)
+
+These four items are the private-deploy hardening that cannot live in the Go
+binary; they belong to `deploy/**`, `nginx/**`, `docker/**`:
+
+1. **helm required-secrets** — chart `required`/compose `${VAR:?}` so a render
+   fails when `JWT_SIGNING_SECRET` / `PLATFORM_GAME_SHARED_SECRET` /
+   `REDIS_PASSWORD` are unset (sec-infra-01). The app now also fails boot
+   (sec-infra-06), but the manifest guard stops a bad deploy earlier.
+2. **NetworkPolicy** — only the edge + game pods may reach the platform port
+   (sec-infra-03).
+3. **Edge denies `/api/v1/internal/**`** — the result-callback route is never
+   reachable from the public internet (sec-infra-02).
+4. **Per-IP auth login/register rate limit at nginx** (sec-infra-04) — the edge
+   owns per-IP register throttling (the Go auth/server packages may not read a
+   caller address; see the #126 section above).
+
+For a friends-only private deploy the operator additionally sets
+`GGD_REQUIRE_APPROVAL=1` (approval gate on) and may set
+`GGD_REGISTER_RATE_LIMIT` (global registration cap).

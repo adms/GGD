@@ -1,0 +1,22 @@
+{
+  "id": "prop.guardian",
+  "schema": "model@1",
+  "glbPath": "assets/models/guardians/guardian_stone.glb",
+  "scale": 2.0,
+  "collisionRadius": 2.5,
+  "clipMap": {
+    "idle": "idle",
+    "run": "idle",
+    "attack": "idle",
+    "cast": "idle",
+    "hurt": "idle",
+    "death": "idle"
+  },
+  "attachPoints": {
+    "overhead": {
+      "x": 0,
+      "y": 2.8,
+      "z": 0
+    }
+  }
+}

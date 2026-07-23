@@ -1,0 +1,24 @@
+{
+  "id": "vital-surge",
+  "schema": "augment@1",
+  "name": "生命湧動",
+  "description": "最大生命 +12%，每秒生命回復 +25。",
+  "tier": "silver",
+  "weight": 95,
+  "modifiers": [
+    {
+      "stat": "maxHealth",
+      "op": "pctAdd",
+      "value": 0.12
+    },
+    {
+      "stat": "healthRegen",
+      "op": "flat",
+      "value": 25
+    }
+  ],
+  "tags": [
+    "sustain",
+    "defense"
+  ]
+}

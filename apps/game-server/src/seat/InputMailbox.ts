@@ -7,6 +7,16 @@ import type { Order, Command } from "@ggd/shared/sim/intents";
 import type { Vec2 } from "@ggd/shared/sim/math/vec2";
 import type { InputMessage } from "@ggd/shared/protocol/messages";
 
+/**
+ * Hard ceiling on commands buffered between drains. drain() hands the ENTIRE
+ * accumulated array to one synchronous ctl.tick(), so an unbounded buffer is
+ * both an O(N)-per-tick event-loop stall and a memory-growth vector if the room
+ * is between drains or stalled. Excess commands past this cap are dropped. The
+ * network ingress already validates + caps each message (net/validateInput.ts);
+ * this is the defense-in-depth accumulation cap across many messages per tick.
+ */
+export const MAX_BUFFERED_COMMANDS = 256;
+
 export class InputMailbox {
   private latestOrder: Order | undefined;
   private latestAim: Vec2 | undefined;
@@ -22,7 +32,15 @@ export class InputMailbox {
     }
     if (msg.order) this.latestOrder = msg.order;
     if (msg.aim) this.latestAim = msg.aim;
-    if (msg.commands?.length) this.commands.push(...msg.commands);
+    if (msg.commands?.length) {
+      // Never buffer past the cap: take only what still fits, drop the rest.
+      const room = MAX_BUFFERED_COMMANDS - this.commands.length;
+      if (room > 0) {
+        const incoming =
+          msg.commands.length > room ? msg.commands.slice(0, room) : msg.commands;
+        this.commands.push(...incoming);
+      }
+    }
   }
 
   /** Drain into an IntentFrame for this tick. */

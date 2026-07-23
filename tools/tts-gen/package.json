@@ -9,6 +9,7 @@
   "scripts": {
     "gen": "node src/generate.mjs",
     "build-champ-names": "node src/build-champ-names.mjs",
-    "typecheck": "node --check src/generate.mjs && node --check src/build-champ-names.mjs"
+    "build-champ-quotes": "node src/build-champ-quotes.mjs",
+    "typecheck": "node --check src/generate.mjs && node --check src/build-champ-names.mjs && node --check src/build-champ-quotes.mjs"
   }
 }

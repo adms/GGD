@@ -13,6 +13,37 @@ import { zAlpha, zCoreAbilitySlot, zId, zRef, zTintRgb } from "./common";
 import { zAugmentTier } from "./augment";
 import { COMBAT_ENV_KEYS, type CombatEnvKey } from "../../sim/combatEnv";
 
+/**
+ * Fire-ring (火圈 / 火環) schedule — the round-pacing hazard (task #132). Lives
+ * inside `config.match@1`'s `match` block next to `combatMaxSec`. Percentages
+ * are fractions of each victim's OWN maxHealth; the burn ignores armor/MR (it
+ * is TRUE damage) and the combat-env damage knob. `startSec` doubles as the
+ * intended round length (single source of truth) — see the field on the match
+ * object. Optional + additive: absent = no ring (legacy behavior).
+ */
+export const zFireRingConfig = z
+  .object({
+    /** combat-elapsed seconds until the ring ignites (== intended round length) */
+    startSec: z.number().positive(),
+    /** ramp step length — the "per second" of the 1%/s, 2%/s … escalation */
+    stepSec: z.number().positive(),
+    /** maxHealth fraction ADDED to the per-second burn rate each step (0.01 = +1%/s) */
+    pctPerStep: z.number().min(0).max(1),
+    /** safety cap on the per-second burn rate (fraction of maxHealth); absent = uncapped */
+    maxPctPerSec: z.number().min(0).max(1).optional(),
+  })
+  .strict();
+
+export type FireRingConfig = z.infer<typeof zFireRingConfig>;
+
+/** Contract defaults for the fireRing block (dev cheats / fallbacks). */
+export const DEFAULT_FIRE_RING_CONFIG: FireRingConfig = {
+  startSec: 180,
+  stepSec: 1,
+  pctPerStep: 0.01,
+  maxPctPerSec: 1,
+};
+
 export const zConfigMatchDoc = z
   .object({
     id: zId,
@@ -33,10 +64,32 @@ export const zConfigMatchDoc = z
         startingTeamLives: z.number().int().positive(),
         champSelectSec: z.number().positive(),
         intermissionSec: z.number().positive(),
+        /**
+         * HARD combat backstop: the phase force-ends here (PhaseMachine). It is
+         * NOT the intended round length — the fire ring (below) closes in first
+         * and settles a stalemate well before this cap. Must be >= the ring
+         * start so the ring always has room to do its work (refine below).
+         */
         combatMaxSec: z.number().positive(),
+        /**
+         * Fire ring (火圈 / 火環, task #132) — the round-pacing accelerator.
+         * `startSec` is the SINGLE SOURCE OF TRUTH for round length: at that
+         * combat-elapsed time the ring closes in and burns every living
+         * champion with an escalating, defence-ignoring %-HP true-damage ramp
+         * (1%/s at t+1s, 2%/s at t+2s …), so a normal round settles by ~3-4 min
+         * and stalemates are punished. Optional + additive: an absent block =
+         * no ring (legacy behavior). Consumed by the sim via
+         * `fireRingRulesFromConfig` → `beginCombatFireRing`.
+         */
+        fireRing: zFireRingConfig.optional(),
         resolutionSec: z.number().positive(),
       })
-      .strict(),
+      .strict()
+      .refine((m) => !m.fireRing || m.fireRing.startSec <= m.combatMaxSec, {
+        message:
+          "match.fireRing.startSec must be <= match.combatMaxSec (the ring must ignite before the hard combat backstop)",
+        path: ["fireRing", "startSec"],
+      }),
     economy: z
       .object({
         startingGold: z.number().int().min(0),
@@ -208,6 +261,97 @@ export const DEFAULT_REVIVE_CIRCLE_CONFIG: ReviveCircleConfig = {
   ccInterrupts: true,
 };
 
+/**
+ * Neutral duel-zone GUARDIAN (守護塔 / 守護石碑, task #89). During Combat one
+ * neutral attackable guardian stands at each ACTIVE duel zone's centre; anyone
+ * may attack it, the LAST-HIT killer is paid (full HP+MP, gold, 鎮守之力), and
+ * while awake it fires a telegraphed AoE volley at its top damagers. Optional +
+ * additive: an absent block means the mechanic is simply OFF (same legacy-compat
+ * convention as `flowers` / `reviveCircles`). Seconds in the doc, ticks in the
+ * sim (converted once by `guardianRulesFromConfig`). See docs/guardian-tower.md
+ * §5 for the derivation of every number.
+ *
+ * SEAM: `armor` / `magicResist` (structure mitigation) and `maxHitPctMaxHp`
+ * (the per-packet clamp) are consumed by `combat/damage.ts` — owned by the
+ * parallel combat wave — and are carried here + on StructureComp so that file
+ * needs no further schema change. Until it wires them, a guardian takes
+ * unmitigated damage exactly like the flower.
+ */
+export const zGuardianTowerConfig = z
+  .object({
+    /** base HP at round 1 */
+    hpBase: z.number().positive(),
+    /** HP scales by (1 + hpGrowthPerRound*(round-1)) */
+    hpGrowthPerRound: z.number().min(0),
+    /** structure armour (SEAM: read by combat/damage.ts) */
+    armor: z.number().min(0),
+    /** structure magic resist (SEAM: read by combat/damage.ts) */
+    magicResist: z.number().min(0),
+    /** body / collision radius (GGD units) */
+    radius: z.number().positive(),
+    /** hard cap on a single packet, as a fraction of maxHp (SEAM: combat/damage.ts) */
+    maxHitPctMaxHp: z.number().min(0).max(1),
+
+    /** seconds between volleys while awake */
+    volleyPeriodSec: z.number().positive(),
+    /** telegraph wind-up before a volley lands */
+    volleyWindupSec: z.number().positive(),
+    /** number of top-damagers marked per volley */
+    volleyMarks: z.number().int().min(1),
+    /** AoE radius around each stamped mark */
+    volleyRadius: z.number().positive(),
+    /** base per-mark damage at round 1 */
+    volleyDamageBase: z.number().positive(),
+    /** volley damage scales by (1 + growth*(round-1)) */
+    volleyDamageGrowthPerRound: z.number().min(0),
+    /** anti-stall ramp: volley n deals base × min(rampMax, 1 + rampPct*(n-1)) */
+    volleyRampPct: z.number().min(0),
+    volleyRampMax: z.number().min(1),
+    /** seconds untouched before the guardian sleeps (threat + ramp reset) */
+    dormancySec: z.number().positive(),
+
+    /** gold paid to the last-hit killer */
+    rewardGold: z.number().int().min(0),
+    /** fraction of the killer's OWN maxHealth restored (0..1) — 滿血 = 1 */
+    restoreHpPct: z.number().min(0).max(1),
+    /** fraction of the killer's OWN maxMana restored (0..1) — 滿魔 = 1 */
+    restoreManaPct: z.number().min(0).max(1),
+    /** seconds the 鎮守之力 inherited-volley buff lasts */
+    buffDurationSec: z.number().positive(),
+    /** 鎮守之力 pulse damage as a fraction of the guardian's volley damage */
+    heirPulsePct: z.number().min(0),
+    /** 鎮守之力 pulse radius around the bearer */
+    heirPulseRadius: z.number().positive(),
+  })
+  .strict();
+
+export type GuardianTowerConfig = z.infer<typeof zGuardianTowerConfig>;
+
+/** Contract defaults for the guardianTower block (dev cheats / fallbacks). */
+export const DEFAULT_GUARDIAN_TOWER_CONFIG: GuardianTowerConfig = {
+  hpBase: 1450,
+  hpGrowthPerRound: 0.28,
+  armor: 0,
+  magicResist: 17.65,
+  radius: 2.5,
+  maxHitPctMaxHp: 0.15,
+  volleyPeriodSec: 4.0,
+  volleyWindupSec: 0.8,
+  volleyMarks: 3,
+  volleyRadius: 3.0,
+  volleyDamageBase: 108,
+  volleyDamageGrowthPerRound: 0.14,
+  volleyRampPct: 0.15,
+  volleyRampMax: 2.0,
+  dormancySec: 6.0,
+  rewardGold: 150,
+  restoreHpPct: 1.0,
+  restoreManaPct: 1.0,
+  buffDurationSec: 25,
+  heirPulsePct: 0.25,
+  heirPulseRadius: 2.5,
+};
+
 export const zConfigArenaRulesDoc = z
   .object({
     id: zId,
@@ -231,6 +375,8 @@ export const zConfigArenaRulesDoc = z
         grantGold: z.number().int().min(0),
         /** extra gold per round beyond the table (escalates the late game) */
         grantGoldPerRound: z.number().int().min(0),
+        /** augment offer tier on every overflow round (keeps 隨機三選一 literal) */
+        augmentTier: zAugmentTier.optional(),
       })
       .strict()
       .optional(),
@@ -246,6 +392,8 @@ export const zConfigArenaRulesDoc = z
     flowers: zFlowerConfig.optional(),
     /** revive-circle rules; omit = no revive circles (legacy behavior) */
     reviveCircles: zReviveCircleConfig.optional(),
+    /** neutral guardian-tower rules; omit = no guardian (legacy behavior) */
+    guardianTower: zGuardianTowerConfig.optional(),
   })
   .strict();
 

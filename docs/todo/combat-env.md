@@ -2,7 +2,7 @@
 
 Task #28. ONE global table of multiplicative factors that scales every combat
 quantity in the sim — 冷卻 / 傷害 / 防禦 / 攻擊 / 法強 / 生命 / 回復 / 魔力 /
-速度 / 攻速 / 治療 / 護盾 / 暴擊率 / 暴傷 / 吸血 / 射程 (17 keys). `1.0` is
+速度 / 攻速 / 治療 / 護盾 / 暴擊率 / 暴傷 / 吸血 / 射程 / 技能範圍 (18 keys). `1.0` is
 neutral: the default table leaves every formula **byte-identical** to the
 pre-multiplier sim, so existing tests and the client's prediction shadow world
 are unchanged.
@@ -29,7 +29,19 @@ wire decoder).
 (× cooldown seconds, Q/W/E/R + EX) · `combat/damage.combatResolveSystem`
 (× every DamagePacket amount pre-mitigation, once per packet; lifesteal restore
 × healing) · `effects/effectRunner` (heal × healing, shield × shield) ·
-`systems/FlowerSystem` (burst hp+mana × healing).
+`systems/FlowerSystem` (burst hp+mana × healing) · `abilityRange`
+(task #136) × ability CAST RANGE + AoE RADIUS, read through
+`resolveAbilityRange`/`resolveAbilityRadius`: the out-of-range + ground clamp/AoE
+in `abilitySystem.castAbility`, the resolve-time AoE re-query in
+`CastResolveSystem`, and the ability-skillshot hit radius in `ProjectileSystem`
+(basic-attack missiles are exempt — those answer to `attackRange`).
+
+**Display (task #136, #125 seam).** Any shown ability range/AoE is the
+post-multiplier final: `displayFinal(base, "abilityRange")` (aliases
+`range`/`radius`/`aoe`) applies the live `abilityRange` factor, so the
+champ-select skill panel shows 射程/範圍 at ×0.6 and updates the instant an
+operator retunes the table — exactly as the cooldown chip does. The codex keeps
+the AUTHORED base (it is the editable source-of-truth view).
 
 **Contract (endpoints).**
 - `GET /api/v1/combat-env` → `{version, updatedAt, multipliers}` — **public**,
@@ -68,6 +80,7 @@ that doc is absent too) and logs loudly. Dev bypass: `GGD_COMBAT_ENV_BYPASS=1`.
 | env-12 | Same seed + same non-default table → identical digest; a different table changes the outcome (purity: the table is world state, never a global) | combat-env-determinism | determinism | done |
 | env-14 | `normalizeCombatEnv` merges a sparse table onto all-1.0, drops unknown keys and rejects NaN / non-finite / negative factors | combat-env-normalize | exception | done |
 | env-15 | `parseCombatEnvJson` round-trips the wire form and fails safe to the neutral table on ""/malformed/non-object input (a client must never throw while decoding a snapshot) | combat-env-parse-json | exception | done |
+| env-42 | `abilityRange` (task #136, default 0.6) shrinks the effective ability CAST RANGE + AoE RADIUS via `resolveAbilityRange`/`resolveAbilityRadius` (12-range → 7.2); the out-of-range seam rejects a target inside the base reach but outside the shrunk one; the neutral 1.0 table is a byte-for-byte no-op (determinism preserved) | combat-env-ability-range | unit | done |
 
 ## Protocol + controller injection (`apps/game-server`, `packages/shared/protocol`)
 
@@ -120,3 +133,20 @@ presentation only.
 | --- | --- | --- | --- | --- |
 | env-40 | Tolerant doc parse (bare / envelope / garbage / partial → neutral backfill, junk values and unknown keys dropped), exhaustive zh-Hant labels + groups over the SIM's key list, form seeding, per-row + global reset, ±0.05 step with clamping, dirty / non-neutral summaries | adminui-combatenv | unit | done |
 | env-41 | Field validation mirrors the platform's `[0.1, 10]` 400 bounds and gates Save; the PUT body is ALWAYS the complete table (reset rows sent explicitly as 1.0); API round-trip re-seeds from server truth and a rejected save surfaces the platform's message while keeping the edits; the 「下一場對戰生效」 note is present | adminui-combatenv-save | unit | done |
+
+## Task #48 — dev-env fail-safe (platform URL resolution)
+
+The game-server reached the platform through the k8s service host `platform:8080`,
+which never resolves on a dev box — so both the whitelist and combat-env fetches
+would always fail. Now the base URL is resolved in the shared
+`apps/game-server/src/config/platformUrl.ts` module from `GGD_PLATFORM_URL` with a
+**localhost** dev fallback (`http://localhost:8080`; k8s sets the env var to
+`http://platform:8080` explicitly), and the loud fail-safe degradation logs are
+collapsed to a single clear line per condition via `warnOnce`.
+
+| ID | Item | Test ID | Category | Status |
+| --- | --- | --- | --- | --- |
+| pu-01 | Platform URL falls back to `http://localhost:8080` (never the old k8s `platform:8080`) when `GGD_PLATFORM_URL` is unset/blank | platformurl-fallback | unit | done |
+| pu-02 | `GGD_PLATFORM_URL` overrides the fallback and is trimmed (k8s sets `http://platform:8080`) | platformurl-env-override | unit | done |
+| pu-03 | `warnOnce` logs a distinct key exactly once; keys independent; `resetWarnOnce` re-arms | platformurl-warn-once | unit | done |
+| pu-05 | Unreachable platform (shipped default URL) → combat-env fails SAFE to the bundled content defaults, logged once | platformurl-combatenv-failsafe | exception | done |

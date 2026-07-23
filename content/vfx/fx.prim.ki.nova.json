@@ -1,0 +1,91 @@
+{
+  "id": "fx.prim.ki.nova",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "sphere",
+    "radius": 0.55
+  },
+  "mode": "burst",
+  "burstCount": 40,
+  "lifetimeSec": {
+    "min": 0.18,
+    "max": 0.5
+  },
+  "size": {
+    "start": 0.294,
+    "end": 0
+  },
+  "color": {
+    "start": [
+      1,
+      0.9748,
+      0.8956,
+      1
+    ],
+    "end": [
+      0.18,
+      0.1548,
+      0.0756,
+      0
+    ]
+  },
+  "sizeStops": [
+    [
+      0,
+      0.294
+    ],
+    [
+      0.14,
+      0.7
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        0.9748,
+        0.8956,
+        1
+      ]
+    ],
+    [
+      0.2,
+      [
+        1,
+        0.86,
+        0.42,
+        1
+      ]
+    ],
+    [
+      0.6,
+      [
+        0.5,
+        0.43,
+        0.21,
+        0.42
+      ]
+    ],
+    [
+      1,
+      [
+        0.18,
+        0.1548,
+        0.0756,
+        0
+      ]
+    ]
+  ],
+  "blendMode": "additive",
+  "gravityY": 0,
+  "speed": {
+    "min": 4,
+    "max": 9
+  },
+  "texture": "assets/textures/particles/light_01.png"
+}

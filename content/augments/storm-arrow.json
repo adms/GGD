@@ -1,0 +1,41 @@
+{
+  "id": "storm-arrow",
+  "schema": "augment@1",
+  "name": "風暴之矢",
+  "description": "普攻時朝面向射出一道穿透風刃，對沿途每個敵人造成 40(+30% 法術強度) 法術傷害（0.5 秒冷卻）。",
+  "tier": "prismatic",
+  "weight": 24,
+  "hooks": [
+    {
+      "on": "onBasicAttack",
+      "target": "self",
+      "internalCooldown": 0.5,
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.wave",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "flat": 40,
+                "ratios": [
+                  {
+                    "stat": "ap",
+                    "coeff": 0.3
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "on-hit",
+    "aoe",
+    "offense"
+  ]
+}

@@ -10,8 +10,28 @@ from __future__ import annotations
 import json
 import os
 
-from .objdata import parse_object_file, all_entries, data_columns, ObjEntry
+from .objdata import parse_object_file, all_entries, data_columns, raw_mods, ObjEntry
 from .wts import parse_wts, resolve
+
+# The 4-char field codes each record reads into a TYPED field. Every code NOT
+# in these sets used to be dropped; it is now carried through under `rawMods`
+# (see objdata.raw_mods). Keep each set in sync with the `e.get(...)` reads in
+# the matching builder below — a code here that is not read just stays absent
+# (harmless), a read code missing here merely gets duplicated into rawMods.
+ABILITY_FIELD_CODES = frozenset({
+    "anam", "atp1", "aub1", "arut", "alev",
+    "acdn", "amcs", "aran", "aare", "adur", "ahdu",
+})  # ability data columns are handled separately (skip_data_columns=True)
+UNIT_FIELD_CODES = frozenset({
+    "unam", "upro", "utip", "utub", "umdl",
+    "uhpm", "umpm", "uhpr", "umpr", "umvs", "usca", "udef",
+    "ua1r", "ua1c", "ua1b", "ua1d", "ua1s",
+    "ustr", "uagi", "uint", "ustp", "uagp", "uinp", "upra",
+    "uabi", "uhab", "ugol",
+})
+ITEM_FIELD_CODES = frozenset({
+    "unam", "utip", "utub", "ides", "igol", "ilum", "iabi", "iico",
+})
 
 
 def _res(entry: ObjEntry, code: str, wts: dict, level: int | None = None):
@@ -53,6 +73,11 @@ def parse_all(raw_dir: str) -> dict:
             "hero_duration": _levels(e, "ahdu", wts),
             "data": {str(c): {str(l): v for l, v in lv.items()}
                      for c, lv in sorted(data_cols.items())},
+            # everything the whitelist above does not name, kept verbatim so no
+            # w3a field is lost (data columns already live in `data`, skipped)
+            "rawMods": raw_mods(e, ABILITY_FIELD_CODES,
+                                resolve=lambda v: resolve(v, wts),
+                                skip_data_columns=True),
         }
 
     def unit_rec(e: ObjEntry) -> dict:
@@ -89,6 +114,10 @@ def parse_all(raw_dir: str) -> dict:
                 a.strip() for a in str(e.get("uhab") or "").split(",") if a.strip()
             ],
             "gold_cost": e.get("ugol"),
+            # every unit field the whitelist above does not name, kept verbatim
+            # (in this map ~150 of 180 w3u codes have no typed field)
+            "rawMods": raw_mods(e, UNIT_FIELD_CODES,
+                                resolve=lambda v: resolve(v, wts)),
         }
 
     units = {}
@@ -121,6 +150,9 @@ def parse_all(raw_dir: str) -> dict:
                 a.strip() for a in str(e.get("iabi") or "").split(",") if a.strip()
             ],
             "icon": e.get("iico"),
+            # every item field the whitelist above does not name, kept verbatim
+            "rawMods": raw_mods(e, ITEM_FIELD_CODES,
+                                resolve=lambda v: resolve(v, wts)),
         }
 
     return {

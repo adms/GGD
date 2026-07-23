@@ -1,5 +1,5 @@
 /**
- * MerchantShop — the 中場 shop, CENTRE STAGE (task #38), rebuilt for #106:
+ * MerchantShop — the 中場 shop, LEFT-docked (task #38/#94), rebuilt for #106:
  * inline descriptions, a visible 6-slot cap, and a live stat preview that must
  * not lie.
  *
@@ -35,8 +35,11 @@ import { SELL_REFUND, INVENTORY_SLOTS } from "@ggd/shared/sim/economy/shop";
 import { itemHasEffect, isShopService, shopServicePrice } from "@ggd/shared/sim/economy/itemTiers";
 import { parseCombatEnvJson } from "@ggd/shared/sim/combatEnv";
 import { Stat, type StatBlock } from "@ggd/shared/sim/stats/statTypes";
+import type { Command } from "@ggd/shared/sim/intents";
 import type { ChampionId, ItemId } from "@ggd/shared/ids";
 import { useHud, type SeatView } from "../../net/RoomStore";
+import { isTouchDevice, readTouchEnv } from "../../input/mobileDetect";
+import { SHOP_CARD_SIDE } from "../../render/intermission/layout";
 import { audioSystem } from "../../audio";
 import { hudActions } from "../actions";
 import { GlyphTile } from "../components/GlyphTile";
@@ -52,6 +55,8 @@ import { skillRows, slotLabel } from "./skillDetails";
 import { displayFinalText, useDisplayEnv } from "../displayFinal";
 import { STAT_META, formatStatValue, formatStatDelta, isVisibleDelta } from "./statDisplay";
 import { buildItemRow, type RowItem } from "./itemStats";
+import { Tooltip } from "../components/Tooltip";
+import { rescaleAbilityProse, WC3_PROSE_CAPTION } from "../components/abilityText";
 import {
   computeStatBlock,
   previewItem,
@@ -74,9 +79,95 @@ const CARD_WIDTH = "min(45vw, 560px)";
 const ACCENT = "#f2a13c";
 const GOOD = "#7fe0a0";
 
+/**
+ * Which screen edge the shop card hugs (task #94). Read STRAIGHT from the
+ * intermission scene's `SHOP_CARD_SIDE` — the same constant `layout.ts` mirrors
+ * the whole 3D market around — so the card and the merchant/店員 stage can never
+ * disagree about which half is the card's and which is the free stage: flip
+ * `SHOP_CARD_SIDE` and BOTH the panel and the mirrored scene move together.
+ * Today that is the LEFT edge, so the market (and the clerk the #103 sightline
+ * test keeps un-occluded) plays out in the free RIGHT 55 %.
+ */
+export const SHOP_DOCK_SIDE: "left" | "right" = SHOP_CARD_SIDE;
+
+/**
+ * ── UNDO (task #121, UI half) ───────────────────────────────────────────────
+ * The kind string of the "undo the last buy/sell" command. The COMMAND itself
+ * and the no-arbitrage gold reversal (賣出退 40% → undo 必須精準反向沖回, and
+ * 反覆 買→賣→undo 不能刷錢) are the SIM half's job — shared `intents.ts` + the
+ * economy. This UI half only DISPATCHES it and shows the button when a step is
+ * undoable, and NEVER touches the gold math. The kind is the contract between
+ * the two halves; when the shared `Command` union gains it, the single cast at
+ * the dispatch site below collapses to a plain literal.
+ */
+export const UNDO_SHOP_COMMAND_KIND = "undoLastShopStep";
+
+/** Dispatch the undo command through the same seam every shop command uses. */
+function sendUndoLastStep(): void {
+  // cast: the kind is owned by the parallel SIM half and not yet in the shared
+  // `Command` union in this working tree (see UNDO_SHOP_COMMAND_KIND).
+  hudActions.sendCommand({ kind: UNDO_SHOP_COMMAND_KIND } as unknown as Command);
+}
+
+/**
+ * Whether the prominent undo button should show (task #121: 「只在有可還原時顯示」).
+ * Pure so it can be pinned by a test: a successful buy or sell is on record AND
+ * the shop is currently interactable. Rejections and an empty history show
+ * nothing; the SIM caps an over-eager repeat undo to a no-op, so leaving the
+ * button up for multi-step 復原 is safe.
+ */
+export function canUndoShopStep(lastEvent: { kind: string } | null, shopOpen: boolean): boolean {
+  if (!shopOpen || !lastEvent) return false;
+  return lastEvent.kind === "bought" || lastEvent.kind === "sold";
+}
+
+/** The card's dock anchoring for the open panel and the collapsed rail. */
+export interface ShopDock {
+  /** the screen edge the card hugs */
+  side: "left" | "right";
+  /** px inset from that edge — 0 flush for the open card, 18 for the rail */
+  offset: number;
+  /** the panel border rides its INNER edge (away from the screen edge) */
+  borderSide: "borderLeft" | "borderRight";
+}
+
+/**
+ * Pure dock geometry, so "the shop is left-anchored" is a testable fact rather
+ * than a literal buried in a style object (task #94). `open` picks the flush
+ * card (0) vs the collapsed rail (18); everything is derived from
+ * {@link SHOP_DOCK_SIDE}.
+ */
+export function shopDockAnchor(open: boolean): ShopDock {
+  return {
+    side: SHOP_DOCK_SIDE,
+    offset: open ? 0 : 18,
+    borderSide: SHOP_DOCK_SIDE === "left" ? "borderRight" : "borderLeft",
+  };
+}
+
 type Tab = "goods" | "skills";
 type Density = "detail" | "compact";
 const DENSITY_KEY = "ggd.shop.density";
+
+/** Min interactive target on coarse pointers (Apple HIG) — shop rows/buttons. */
+const TOUCH_TARGET = 44;
+
+/**
+ * Whether the goods body scrolls as ONE column (attributes → inventory →
+ * catalogue) instead of pinning a fixed summary above an independently-scrolling
+ * catalogue.
+ *
+ * THE BUG (mobile): the full-height card is only ~390px on a phone-landscape
+ * viewport. The fixed 15-stat panel + 6-slot inventory + header/tabs consumed
+ * almost the whole card, so the catalogue — a `flex:1 minHeight:0 overflowY:auto`
+ * child — collapsed to a sliver and the buyable items were effectively invisible.
+ * On phones / very short viewports the whole body scrolls together so every item
+ * is reachable. Desktop keeps the two-region layout (fixed summary + scrolling
+ * catalogue) unchanged. Pure, so the breakpoint is a testable fact.
+ */
+export function shopGoodsSingleScroll(opts: { touch: boolean; viewportHeight: number }): boolean {
+  return opts.touch || opts.viewportHeight < 560;
+}
 
 /**
  * Shop tabs (#122). The LEAD tab is the hero's 屬性 (attribute) panel: it is
@@ -169,11 +260,12 @@ export function MerchantShop(): React.JSX.Element | null {
   const clock = shopClockChip({ phase, secondsLeft, ready: seat.ready });
 
   if (!open) {
+    const rail = shopDockAnchor(false);
     return (
       <div
         style={{
           position: "absolute",
-          left: 18,
+          ...(rail.side === "left" ? { left: rail.offset } : { right: rail.offset }),
           top: "50%",
           transform: "translateY(-50%)",
           display: "flex",
@@ -224,14 +316,19 @@ export function MerchantShop(): React.JSX.Element | null {
   const items = shopCatalogue(Items.all(), whitelist);
   const whitelistEmptied = whitelist.enforced && items.length === 0;
 
+  // Mobile: scroll the goods body as one column + grow the buy/row tap targets.
+  const touch = isTouchDevice(readTouchEnv());
+  const viewportHeight = typeof window !== "undefined" ? window.innerHeight : 800;
+  const singleScroll = shopGoodsSingleScroll({ touch, viewportHeight });
+
   // The hero you're shopping FOR — its portrait rides the tab row (#122).
   const champName = Champions.tryGet(seat.championId as ChampionId)?.name ?? seat.displayName ?? seat.championId;
 
+  const dock = shopDockAnchor(true);
   return (
     <div
       style={{
         position: "absolute",
-        left: 0,
         top: 0,
         bottom: 0,
         width: CARD_WIDTH,
@@ -240,10 +337,12 @@ export function MerchantShop(): React.JSX.Element | null {
         boxSizing: "border-box",
         padding: "14px 16px",
         background: PANEL_BG,
-        borderRight: PANEL_BORDER,
         color: TEXT_MAIN,
         pointerEvents: "auto",
         fontSize: 13,
+        ...(dock.side === "left"
+          ? { left: dock.offset, borderRight: PANEL_BORDER }
+          : { right: dock.offset, borderLeft: PANEL_BORDER }),
       }}
     >
       {/* ---- header ---- */}
@@ -272,6 +371,34 @@ export function MerchantShop(): React.JSX.Element | null {
           ? "戰鬥尚未開始 · 買完按 Ready 可提前開打"
           : "本回合已陣亡 · 回合結束前仍可採購"}
       </div>
+
+      {/* ---- prominent UNDO (task #121): only shown when a buy/sell is on record.
+              The command + the exact gold reversal are the sim half's job; this
+              button just makes 復原 obvious and dispatches it. ---- */}
+      {canUndoShopStep(shopEvent, gate.open) && (
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 8 }}>
+          <SfxButton
+            kind="primary"
+            onClick={sendUndoLastStep}
+            title="還原上一筆買賣（金幣精準沖回）"
+            style={{
+              flex: 1,
+              padding: "8px 14px",
+              borderRadius: 8,
+              border: "1px solid #ffcf7a",
+              background: "#f2a13c",
+              color: "#201509",
+              fontSize: 14,
+              fontWeight: "bold",
+              letterSpacing: 1,
+              boxShadow: "0 0 0 1px rgba(242,161,60,0.35), 0 2px 8px rgba(0,0,0,0.35)",
+              cursor: "pointer",
+            }}
+          >
+            ↩ 復原上一步
+          </SfxButton>
+        </div>
+      )}
 
       {/* ---- hero portrait + tabs (#122) ---- */}
       <div style={{ display: "flex", alignItems: "center", gap: 10, margin: "10px 0 8px" }}>
@@ -312,6 +439,8 @@ export function MerchantShop(): React.JSX.Element | null {
             onDensity={setDensityPersist}
             focused={focused}
             onFocus={setFocused}
+            singleScroll={singleScroll}
+            touch={touch}
           />
         ) : (
           <SkillsTab seat={seat} />
@@ -403,10 +532,14 @@ interface GoodsProps {
   onDensity: (d: Density) => void;
   focused: string | null;
   onFocus: (id: string | null) => void;
+  /** phone/short viewport: scroll the whole body as one column (see shopGoodsSingleScroll). */
+  singleScroll: boolean;
+  /** coarse pointer: grow row + buy-button tap targets to >=44px. */
+  touch: boolean;
 }
 
 function GoodsTab(props: GoodsProps): React.JSX.Element {
-  const { catalogue, seat, emptied, canBuy, density, onDensity, focused, onFocus } = props;
+  const { catalogue, seat, emptied, canBuy, density, onDensity, focused, onFocus, singleScroll, touch } = props;
 
   // A stable signature of everything the pipeline reads, so the (world-building)
   // stat computes only re-run when the champion or the env actually changes.
@@ -449,7 +582,19 @@ function GoodsTab(props: GoodsProps): React.JSX.Element {
   const filled = seat.items.filter((s) => s !== "").length;
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", minHeight: 0, flex: 1 }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        minHeight: 0,
+        flex: 1,
+        // phone: the whole body scrolls together, so the catalogue is never
+        // squeezed to nothing by the fixed attribute panel + inventory above it.
+        ...(singleScroll
+          ? { overflowY: "auto", overflowX: "hidden", WebkitOverflowScrolling: "touch" }
+          : {}),
+      }}
+    >
       {/* ===== stat panel — persistent, never reorders, never changes height ===== */}
       {panelBlock && (
         <StatPanel
@@ -490,7 +635,9 @@ function GoodsTab(props: GoodsProps): React.JSX.Element {
       </div>
 
       {/* ===== the catalogue: shelves, cheapest first ===== */}
-      <div style={{ flex: 1, minHeight: 0, overflowY: "auto", paddingRight: 4 }}>
+      {/* phone: flow at natural height (outer body scrolls); desktop: the
+          catalogue is its own scroll region under the fixed summary. */}
+      <div style={singleScroll ? { paddingRight: 4 } : { flex: 1, minHeight: 0, overflowY: "auto", paddingRight: 4 }}>
         {emptied && (
           <div style={{ color: TEXT_DIM, fontSize: 11, marginBottom: 8, lineHeight: 1.6 }}>
             尚未啟用任何道具（後台白名單為空）。
@@ -509,6 +656,7 @@ function GoodsTab(props: GoodsProps): React.JSX.Element {
             focused={focused}
             onFocus={onFocus}
             preview={preview}
+            touch={touch}
           />
         ))}
       </div>
@@ -636,37 +784,55 @@ function InventoryGrid(props: { seat: SeatView; filled: number }): React.JSX.Ele
             );
           }
           const def = Items.tryGet(itemId as ItemId);
+          // #140: an equipped slot shows the FULL item detail on hover — the same
+          // ✦ effect line + WC3 claim lines + lore the shop shelf shows (buildItemRow),
+          // not just the name+refund the native title used to carry.
+          const row = def ? buildItemRow(def as unknown as RowItem, null) : null;
+          const detailBody = [
+            row?.effect ? `✦ ${row.effect}` : "",
+            row?.claims && row.claims.length > 0 ? row.claims.join(" · ") : "",
+            row?.lore ?? "",
+          ]
+            .filter(Boolean)
+            .join("\n");
           return (
-            <button
+            <Tooltip
               key={slot}
-              onClick={() => hudActions.sendCommand({ kind: "sellItem", itemSlot: slot })}
-              title={`賣出 ${def?.name ?? itemId} (+${refundOf(itemId)} g)`}
-              style={{
-                position: "relative",
-                aspectRatio: "1",
-                borderRadius: 7,
-                border: "1px solid #63463a",
-                background: "#2b2018",
-                padding: 0,
-                cursor: "pointer",
-                overflow: "hidden",
-              }}
+              title={def?.name ?? itemId}
+              body={detailBody || undefined}
+              meta={[{ label: "點擊賣出", value: `+${refundOf(itemId)} g` }]}
+              style={{ display: "block" }}
             >
-              <GlyphTile seed={itemId} icon={def?.icon ?? null} label={def?.name ?? itemId} size={38} />
-              <span
+              <button
+                onClick={() => hudActions.sendCommand({ kind: "sellItem", itemSlot: slot })}
                 style={{
-                  position: "absolute",
-                  bottom: 0,
-                  right: 2,
-                  fontSize: 8,
-                  color: "#e0a878",
-                  fontVariantNumeric: "tabular-nums",
-                  textShadow: "0 0 3px #000",
+                  position: "relative",
+                  width: "100%",
+                  aspectRatio: "1",
+                  borderRadius: 7,
+                  border: "1px solid #63463a",
+                  background: "#2b2018",
+                  padding: 0,
+                  cursor: "pointer",
+                  overflow: "hidden",
                 }}
               >
-                {refundOf(itemId)}g
-              </span>
-            </button>
+                <GlyphTile seed={itemId} icon={def?.icon ?? null} label={def?.name ?? itemId} size={38} />
+                <span
+                  style={{
+                    position: "absolute",
+                    bottom: 0,
+                    right: 2,
+                    fontSize: 8,
+                    color: "#e0a878",
+                    fontVariantNumeric: "tabular-nums",
+                    textShadow: "0 0 3px #000",
+                  }}
+                >
+                  {refundOf(itemId)}g
+                </span>
+              </button>
+            </Tooltip>
           );
         })}
       </div>
@@ -686,8 +852,9 @@ function ShelfBlock(props: {
   focused: string | null;
   onFocus: (id: string | null) => void;
   preview: ItemPreview | null;
+  touch: boolean;
 }): React.JSX.Element {
-  const { shelf, seat, canBuy, density, focused, onFocus, preview } = props;
+  const { shelf, seat, canBuy, density, focused, onFocus, preview, touch } = props;
   const full = seat.items.every((s) => s !== "");
   return (
     <div style={{ marginBottom: 8 }}>
@@ -719,6 +886,7 @@ function ShelfBlock(props: {
             expanded={focused === item.id}
             onToggle={() => onFocus(focused === item.id ? null : item.id)}
             preview={focused === item.id ? preview : null}
+            touch={touch}
           />
         );
       })}
@@ -740,8 +908,9 @@ function CatalogueRow(props: {
   expanded: boolean;
   onToggle: () => void;
   preview: ItemPreview | null;
+  touch: boolean;
 }): React.JSX.Element {
-  const { item, anchorStat, seat, full, canBuy, density, expanded, onToggle, preview } = props;
+  const { item, anchorStat, seat, full, canBuy, density, expanded, onToggle, preview, touch } = props;
 
   const price = priceOf(item);
   const service = isShopService(item.id);
@@ -782,7 +951,8 @@ function CatalogueRow(props: {
           gridTemplateColumns: "30px 1fr 56px 72px",
           alignItems: "center",
           gap: 8,
-          padding: "4px 4px",
+          padding: touch ? "8px 4px" : "4px 4px",
+          minHeight: touch ? TOUCH_TARGET : undefined, // >=44px finger target
           cursor: "pointer",
         }}
       >
@@ -841,7 +1011,8 @@ function CatalogueRow(props: {
           disabled={!!blocked}
           title={blocked || `購買 ${item.name}`}
           style={{
-            padding: "5px 6px",
+            padding: touch ? "10px 6px" : "5px 6px",
+            minHeight: touch ? TOUCH_TARGET : undefined, // >=44px finger target
             borderRadius: 6,
             border: `1px solid ${blocked ? "#39405a" : "#6a5a2a"}`,
             background: blocked ? "#151a26" : "#3a2f14",
@@ -957,7 +1128,13 @@ function SkillsTab(props: { seat: Parameters<typeof skillRows>[0] }): React.JSX.
               {!row.learned && <span style={{ fontSize: 11, color: TEXT_DIM }}>尚未學習</span>}
             </div>
             {row.description && (
-              <div style={{ fontSize: 12, color: "#c3cbdd", marginTop: 3, lineHeight: 1.55 }}>{row.description}</div>
+              <>
+                {/* 說明數值最終化: cooldown literals rescaled to the live combat-env final */}
+                <div style={{ fontSize: 12, color: "#c3cbdd", marginTop: 3, lineHeight: 1.55 }}>
+                  {rescaleAbilityProse(row.description, env)}
+                </div>
+                <div style={{ fontSize: 9.5, color: "#8b93a6", marginTop: 2 }}>{WC3_PROSE_CAPTION}</div>
+              </>
             )}
             <div style={{ display: "flex", flexWrap: "wrap", gap: 10, fontSize: 11, color: TEXT_DIM, marginTop: 4 }}>
               {row.castLabel && <span>施法：{row.castLabel}</span>}

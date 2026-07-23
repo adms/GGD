@@ -33,7 +33,7 @@ import {
   TELEPORT_STEP_UNITS,
   type Facing2,
 } from "../math/motion";
-import { FLASH_ALPHA, FLASH_MS } from "../combatFeedback";
+import { FLASH_ALPHA, FLASH_MS, hitstopShiver } from "../combatFeedback";
 import { glbYawOffset } from "./glbFacing";
 
 /**
@@ -60,6 +60,31 @@ const ACCENTS: Record<string, [number, number, number]> = {
 
 const PX = 1.8 / 32; // 32 voxel-pixels tall → 1.8 world units
 
+/**
+ * HEIGHT-NORMALIZATION target (task #150). Every loaded champion .glb is scaled
+ * so its full silhouette stands ≈ this many world units tall, REGARDLESS of the
+ * glb's native mesh height — which varies wildly per champion (measured 1.70u to
+ * 2.32u rendered across the roster; the four shared CC0 stand-in meshes are the
+ * oversized group, champ.sela renders 2.32u, while imported.heroshana renders
+ * 1.70u and reads small next to them). Before #150 the render scale was the model
+ * doc's raw `scale` applied as an ABSOLUTE — so consistency depended on every
+ * doc.scale being hand-tuned per glb (fragile: any new/un-tuned import renders
+ * wrong). Normalizing here makes size CONSISTENT by construction. A per-champion
+ * RELATIVE multiplier (see tryUpgradeToGlb's `relativeScale`, from
+ * content/models/_standin-overrides.json) then intentionally shrinks lore-small
+ * creatures / enlarges giants. ~1.8u ≈ a standing human (夏娜 = the normal case).
+ */
+export const TARGET_HEIGHT = 1.8;
+
+/**
+ * A glb whose measured native height is below this (world units at scale 1) is
+ * treated as unmeasurable — a degenerate / geometry-less rig — and falls back to
+ * the model doc's declared `scale` rather than producing an absurd normalization
+ * factor (dividing the target by a near-zero height). Real champions measure
+ * >1u; this only trips on broken geometry.
+ */
+const MIN_NATIVE_HEIGHT = 0.05;
+
 export class ChampionView {
   readonly root: TransformNode;
   readonly anim = new AnimationStateMachine();
@@ -84,6 +109,9 @@ export class ChampionView {
 
   private clipAnimator: ClipAnimator | null = null;
   private glbRoot: TransformNode | null = null;
+  /** The render scale actually applied to the adopted .glb — the height-normalized
+   *  factor × the per-champion relative multiplier (task #150; #77 declared scale). */
+  private declaredScaleValue: number | null = null;
   private upgradeStarted = false;
   private walkPhase = 0;
   private lastPose = { x: 0, z: 0 };
@@ -96,6 +124,8 @@ export class ChampionView {
   private flashActive = false;
   /** hitstop: freeze this model's animation until this time (sim-synced). */
   private hitstopUntilMs = 0;
+  /** true while the body is offset by the hitstop micro-shiver (needs a reset). */
+  private shiverActive = false;
   private disposed = false;
   /** smoothed facing state (unit vectors); yaw eases cur→target every frame */
   private curFacing: Facing2 = { x: 0, z: 1 };
@@ -315,6 +345,7 @@ export class ChampionView {
   update(state: AnimState, nowMs: number, dtMs: number, speedUnitsPerSec = 0): void {
     this.stepFacing(dtMs); // yaw smoothing — model-source independent
     const frozen = nowMs < this.hitstopUntilMs; // hitstop window
+    this.applyHitstopShiver(nowMs, frozen); // 破碎 buzz on the frozen body
     if (this.clipAnimator?.hasClips) {
       this.clipAnimator.setFrozen(frozen); // freeze/unfreeze the clip
       if (!frozen) {
@@ -383,6 +414,31 @@ export class ChampionView {
   }
 
   /**
+   * HITSTOP MICRO-JITTER (audit strong-P2 / 破碎 buzz): while the body is frozen
+   * on contact, offset it by a tiny high-frequency shiver (~1–2px) so the freeze
+   * BUZZES with impact energy instead of reading as a dead pause. Client-only and
+   * cosmetic — it moves `bodyRoot` (the visual body), never the `root` world
+   * transform (position/ring/shadow keep flowing, so knockback still slides), and
+   * it snaps to zero the instant the freeze lifts (收尾精準, no settle tail).
+   * Edge-guarded: costs nothing outside the hitstop window.
+   */
+  private applyHitstopShiver(nowMs: number, frozen: boolean): void {
+    if (!frozen) {
+      if (this.shiverActive) {
+        this.bodyRoot.position.x = 0;
+        this.bodyRoot.position.z = 0;
+        this.shiverActive = false;
+      }
+      return;
+    }
+    // phase off the entity id so attacker + victim don't buzz in lock-step
+    const s = hitstopShiver(nowMs, this.hitstopUntilMs, this.entityId * 0.7);
+    this.bodyRoot.position.x = s.x;
+    this.bodyRoot.position.z = s.z;
+    this.shiverActive = true;
+  }
+
+  /**
    * Drive the hit-flash render overlay. Edge-guarded: writes every frame while
    * lit (colour is stable + cheap), clears once on the trailing edge, and does
    * nothing while idle — no per-frame cost outside the ~80 ms flash window.
@@ -404,6 +460,19 @@ export class ChampionView {
     return this.glbRoot !== null;
   }
 
+  /**
+   * The render scale actually applied to the adopted .glb, or null while the
+   * champion is still on its procedural stand-in. As of task #150 this is the
+   * HEIGHT-NORMALIZED factor (TARGET_HEIGHT ÷ the glb's native height) times the
+   * per-champion `relativeScale` multiplier — NOT the model doc's raw `scale`
+   * (which is now only a fallback for a degenerate glb). It never silently
+   * substitutes a generic default (task #77): the procedural voxel figure stands
+   * in only when there is genuinely no renderable model.
+   */
+  get declaredScale(): number | null {
+    return this.declaredScaleValue;
+  }
+
   get upgradeAttempted(): boolean {
     return this.upgradeStarted;
   }
@@ -411,8 +480,15 @@ export class ChampionView {
   /**
    * Swap in the model doc's .glb (async). Idempotent — safe to call every
    * frame until a doc is available; only the first call with a doc loads.
+   *
+   * `relativeScale` (task #150, default 1.0) is the per-champion INTENTIONAL size
+   * multiplier applied on top of height-normalization: 1.0 renders at the common
+   * TARGET_HEIGHT, <1 deliberately smaller (lore-small creatures/mascots), >1
+   * bigger (giants/mecha). It comes from content/models/_standin-overrides.json
+   * via EntityViewRegistry.modelOverrideFor and is the ONLY size-exception knob —
+   * the doc's raw `scale` no longer sets the on-screen size.
    */
-  tryUpgradeToGlb(assets: AssetManager, doc: ModelDoc | null): void {
+  tryUpgradeToGlb(assets: AssetManager, doc: ModelDoc | null, relativeScale = 1): void {
     if (!doc || this.upgradeStarted || this.disposed) return;
     this.upgradeStarted = true;
     void assets
@@ -424,9 +500,12 @@ export class ChampionView {
         });
         const glbRoot = new TransformNode(`champ-${this.entityId}-glb`, this.root.getScene());
         glbRoot.parent = this.root;
-        glbRoot.scaling.setAll(doc.scale);
+        // Measure at the NATIVE scale first (task #150): normalization needs the
+        // glb's own height before any scaling is applied.
+        glbRoot.scaling.setAll(1);
         // facing convention lives in one place (glbFacing); imported .glbs
-        // need a different offset than native/KayKit ones.
+        // need a different offset than native/KayKit ones. Yaw is about Y, so it
+        // does not affect the vertical bounding measure below.
         glbRoot.rotation.y = glbYawOffset(doc.glbPath, this.modelKey);
         for (const node of inst.rootNodes) node.parent = glbRoot;
         const glbMeshes = glbRoot.getChildMeshes(false);
@@ -448,7 +527,35 @@ export class ChampionView {
           mesh.isPickable = false;
           this.flashMeshes.push(mesh); // .glb meshes flash via per-mesh overlay
         }
+        // HEIGHT-NORMALIZE (task #150): scale the glb so its full silhouette
+        // stands ≈ TARGET_HEIGHT tall, then apply the champion's relative
+        // multiplier — REPLACING the old raw-doc.scale-as-absolute so every
+        // champion reads a consistent size regardless of its native mesh height.
+        // A degenerate/geometry-less glb (native height unmeasurable) falls back
+        // to the doc's declared scale rather than a nonsense normalization factor.
+        glbRoot.computeWorldMatrix(true);
+        const native = glbRoot.getHierarchyBoundingVectors(true);
+        const nativeH = native.max.y - native.min.y;
+        const rel = relativeScale > 0 ? relativeScale : 1;
+        const baseScale =
+          Number.isFinite(nativeH) && nativeH > MIN_NATIVE_HEIGHT
+            ? TARGET_HEIGHT / nativeH
+            : doc.scale;
+        const finalScale = baseScale * rel;
+        glbRoot.scaling.setAll(finalScale);
+        // GROUND (task #61 "flying"/"sinking" fix): lift the model so its lowest
+        // vertex sits on the arena floor (y=0). Imported rigs bake their feet at
+        // an arbitrary local Y — `imported.ma` floats 0.72u above the origin,
+        // `imported.picacugy`/`gumdam` dip ~0.6u below it (half-buried). This is
+        // the SAME per-model root shift StorePreview (#129) and the intermission
+        // mount (#111 int-32) apply, ported to the in-arena view so every
+        // champion stands ON the ground, not above or sunk into it. Runs after
+        // the FINAL scaling so the shift is in the rendered (scaled) frame.
+        glbRoot.computeWorldMatrix(true);
+        const { min } = glbRoot.getHierarchyBoundingVectors(true);
+        if (Number.isFinite(min.y)) glbRoot.position.y = -min.y;
         this.glbRoot = glbRoot;
+        this.declaredScaleValue = finalScale; // the render scale actually applied
         this.clipAnimator = new ClipAnimator(inst.animationGroups, doc.clipMap);
         // hide the procedural fallback
         for (const p of this.proceduralParts) p.setEnabled(false);

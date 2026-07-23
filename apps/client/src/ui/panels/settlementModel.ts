@@ -15,7 +15,7 @@
 import { TICK_HZ } from "@ggd/shared/constants";
 import type { PlayerMatchStats } from "@ggd/shared/sim/stats/matchStats";
 import type { Grade } from "@ggd/shared/sim/stats/rating";
-import type { SettlementPlayer } from "@ggd/shared/protocol/messages";
+import type { MatchSettlement, SettlementPlayer } from "@ggd/shared/protocol/messages";
 
 // ------------------------------------------------------------------ grade ---
 
@@ -258,4 +258,96 @@ export function localSettlementCard(
 /** Whether the given team placed first (won). winnerTeam === -1 ⇒ undecided. */
 export function isWinner(winnerTeam: number, teamId: number | null): boolean {
   return teamId !== null && winnerTeam >= 0 && winnerTeam === teamId;
+}
+
+// --------------------------------------------------------------- quote VO ----
+// task #139 — the champion whose famous-quote (名言) clip speaks at the two
+// post-match beats. All decisions are PURE + schema-authoritative so the client
+// shells (MatchEndPanel / RoundEndVoice) stay thin and every branch unit-tests.
+
+/**
+ * The champion whose quote plays on the LOCAL player's MATCH-victory settlement
+ * (moment 2). Local-only + win-only: returns the local champion's id ONLY when
+ * the local seat's team WON; null otherwise (loss, spectator, missing seat, no
+ * payload, or an empty champ). Each client resolves its OWN champion and nothing
+ * is broadcast, so nobody ever hears another player's line at the settlement.
+ */
+export function localWinQuoteChampion(
+  settlement: MatchSettlement | null,
+  localSeatId: number | null,
+): string | null {
+  if (!settlement || settlement.perPlayer.length === 0) return null;
+  const local = localSettlementCard(settlement.perPlayer, localSeatId);
+  if (!local) return null;
+  return isWinner(settlement.winnerTeam, local.teamId) ? local.champ || null : null;
+}
+
+/** The seat fields the round-leader ranking reads (a RoomStore SeatView satisfies it). */
+export interface RoundSeatView {
+  seatId: number;
+  teamId: number;
+  championId: string;
+}
+
+/** The team fields the round-leader ranking reads (a RoomStore TeamView satisfies it). */
+export interface RoundTeamView {
+  teamId: number;
+  lives: number;
+  eliminated: boolean;
+  placement: number;
+}
+
+/**
+ * Is the MATCH decided (≤1 team still alive)? The round that eliminates the
+ * penultimate team is a round-end that IS the match end — that beat belongs to
+ * the settlement's local-win quote (moment 2), not the round-leader quote.
+ */
+export function matchDecided(teams: readonly RoundTeamView[]): boolean {
+  return teams.filter((t) => !t.eliminated).length <= 1;
+}
+
+/** Standing comparator: the better-placed team sorts first (see roundLeaderChampion). */
+function compareTeamStanding(a: RoundTeamView, b: RoundTeamView): number {
+  // an alive team always outranks an eliminated one
+  if (a.eliminated !== b.eliminated) return a.eliminated ? 1 : -1;
+  if (a.eliminated) {
+    // both out: the one that survived longer (lower placement number) ranks first
+    if (a.placement !== b.placement) return a.placement - b.placement;
+    return a.teamId - b.teamId;
+  }
+  // both alive: more lives first, ties to the lower teamId
+  if (a.lives !== b.lives) return b.lives - a.lives;
+  return a.teamId - b.teamId;
+}
+
+/**
+ * The champion currently in FIRST PLACE by team standing — the round's rank-1
+ * player. Reads ONLY authoritative schema fields (lives / eliminated / placement
+ * / teamId / seatId), so every client computes the SAME champion and plays the
+ * SAME clip. The leading team's representative is its lowest-seatId champion.
+ * Returns null when there are no teams/seats or the leader has no champion.
+ */
+export function roundLeaderChampion(
+  seats: readonly RoundSeatView[],
+  teams: readonly RoundTeamView[],
+): string | null {
+  if (teams.length === 0 || seats.length === 0) return null;
+  const leader = [...teams].sort(compareTeamStanding)[0]!;
+  const champs = seats
+    .filter((s) => s.teamId === leader.teamId && s.championId)
+    .sort((a, b) => a.seatId - b.seatId);
+  return champs[0]?.championId ?? null;
+}
+
+/**
+ * The champion whose quote plays at a ROUND-end settlement (moment 3): the
+ * round's rank-1 champion, EXCEPT on the match-deciding round (whose beat is the
+ * settlement's local-win quote). Null ⇒ silent (no round-end quote this round).
+ */
+export function roundEndQuoteChampion(
+  seats: readonly RoundSeatView[],
+  teams: readonly RoundTeamView[],
+): string | null {
+  if (matchDecided(teams)) return null;
+  return roundLeaderChampion(seats, teams);
 }

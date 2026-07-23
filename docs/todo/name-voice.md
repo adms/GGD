@@ -131,7 +131,7 @@ only) so the first confirm doesn't pay the fetch.
 | nv-06 | Tolerant manifest parse: junk docs rejected, entries with no reading skipped, unknown confidence downgraded | name-vo-manifest-tolerant | exception | done |
 | nv-07 | Manifest parse derives a clip path when the doc omits one | name-vo-manifest-shape | unit | done |
 | nv-08 | Clip paths normalize onto the content mount; an unmapped champion resolves to null | name-vo-clip-path | unit | done |
-| nv-09 | One confirm plays exactly one clip; the manifest fetch is cached across confirms | name-vo-confirm-plays-once | unit | done |
+| nv-09 | One confirm plays exactly one call-out sequence, honouring the ~1 s guard; the manifest fetch is cached across confirms | name-vo-confirm-plays-once | unit | done |
 | nv-10 | The double-fire guard is reserved synchronously — concurrent confirms cannot start two clips | name-vo-guard-sync | exception | done |
 | nv-11 | Switching pick replaces the previous call-out on the shared element instead of overlapping | name-vo-single-voice | unit | done |
 | nv-12 | Master mute and SFX mute both suppress the VO, fetch nothing, and do not burn the guard | name-vo-mute-suppresses | unit | done |
@@ -146,6 +146,42 @@ only) so the first confirm doesn't pay the fetch.
 | nv-21 | Only the approved Kyoko/Tingting/Karen cast is used; no novelty/formant voice is cast anywhere in the pack | name-vo-no-novelty-voices | unit | done |
 | nv-22 | The pack normalises into the announcer's loudness band (-16 LUFS / -1.5 dBTP) and no line renders below the 185 wpm floor | name-vo-loudness-band | unit | done |
 | nv-23 | By-value spot check: 7 unmistakable entries (both 皮卡丘 → ピカチュウ, 夏娜 → フレイムヘイズ・シャナ。, both 悟空 → スーパーサイヤジン/サイヤジン・ソンゴクウ, both 黑崎一護 → クロサキイチゴ) keep their exact jaTitle/jaName/spokenLine — the structural tests would not notice a mangled or swapped reading | name-vo-known-readings | regression | done |
+| nv-24 | Task #120: CONFIRM speaks the 稱號 (Chinese voice) then the 全名 (Kyoko) in order — 稱號 first — on the single reused element; a titleless champion speaks the 全名 alone | name-vo-mixlang-sequence | integration | done |
+| nv-25 | A mixed-language half whose clip will not play (404 / autoplay-blocked) is skipped and the sequence still speaks the half that exists — never a throw | name-vo-mixlang-degrade | exception | done |
+| nv-26 | The generated MANIFEST carries, per champion, `voSegments` = a Chinese-voiced 稱號 clip (`<id>.title.mp3`) then a Kyoko 全名 clip (`<id>.name.mp3`) speaking the original Traditional-Chinese text; titleless champions carry the 全名 clip only | name-vo-mixlang-manifest | integration | done |
+
+## The mixed-language CONFIRM call-out (task #120)
+
+The user asked for a deliberately BILINGUAL confirm gag — 「[火霧戰士|中文語音] +
+[夏娜|日文語音]」: the **稱號** read by a **Chinese** voice, then the **全名** read by
+a **Japanese** voice (Kyoko), back-to-back. Both halves speak the ORIGINAL
+Traditional-Chinese display text (split with the same `splitChampionName`
+convention the codex uses); the joke is Kyoko reading the Chinese 全名 back with
+Japanese kana readings straight after a Mandarin voice announced the 稱號.
+
+This is **additive**: the canonical single-clip pack (`<id>.mp3`, `spokenLine`,
+`jaName`, …) and its gate (`championNamesJa.test.ts`) are untouched. `build-champ-names.mjs`
+ALSO emits, per champion, two extra clips — `<id>.title.mp3` (稱號, a Chinese
+voice) and `<id>.name.mp3` (全名, Kyoko) — recorded on each entry's `voSegments`,
+from the new tts-gen manifest `content/assets/audio/voices/names/_tts-mixlang.json`:
+
+```sh
+node tools/tts-gen/src/build-champ-names.mjs
+node tools/tts-gen/src/generate.mjs content/assets/audio/voices/names/_tts-mixlang.json
+```
+
+**Chinese voice: Tingting (zh_CN Mandarin).** Meijia (zh_TW, the Traditional/Taiwan
+Mandarin voice) is a **phantom** on this macOS — `say -v Meijia` renders
+byte-identical to an unknown voice name (the silent fallback), i.e. it is not
+installed — so the 稱號 falls back to Tingting, which is verified to read
+Traditional characters correctly. A half a voice cannot pronounce (e.g. Kyoko on
+the rare kanji 騜, `godie-e00j`) simply does not render, and the client degrades
+to the half that exists.
+
+`nameVoice.ts` plays `voSegments` in order on its single reused element (chaining
+each half to the next on `onended`); a new confirm bumps a sequence id so the 稱號
+of one champion can never be followed by the 全名 of another. When a manifest
+predates #120 (no `voSegments`) it falls back to the single `clip`.
 
 ## Notes / follow-ups
 
@@ -163,3 +199,51 @@ only) so the first confirm doesn't pay the fetch.
   `audio.champion-names-ja@2` — casting rationale now lives in the per-entry
   `evidence` string plus the mode's rule. Any consumer still reading
   `confidence` will get `undefined`.
+
+## Task #139 — the famous-quote (名言) THIRD segment
+
+On CONFIRM the champion's signature line now plays **after** the 稱號→全名 call-out
+as a third segment on the same reused element: 蒙其·D·魯夫 →「海賊王に、俺はなる！」,
+拳四郎 →「お前はもう死んでいる」, 夜神月 →「計画通り」. The champ-select **profile
+panel** (`ProfileBlock.tsx`) also displays the Japanese line + a Chinese gloss as a
+pull-quote, flagging `原創台詞` for the coined/惡搞 lines.
+
+**Pack (content).** `content/assets/audio/voices/quotes/` — `quotes.json`
+(`audio.champion-quotes-ja@1`, keyed by champion **id**) + one MP3 per id, plus
+`_tts-quotes.json` (the tts-gen input). Built by
+**`tools/tts-gen/src/build-champ-quotes.mjs`** (`pnpm --filter @ggd/tts-gen
+build-champ-quotes`), whose `QUOTES` (research, keyed by display name) + `ROSTER`
+(the open roster's name→candidate-id map, task #138) tables are the source of
+truth. The quote is applied to **every** candidate id for a name, so it survives
+whichever duplicate the roster seats. Lives under `content/assets/` for the same
+reason the names pack does — served verbatim, **not** part of `content:validate`;
+the client's tolerant parser + `nameVoice.test.ts` validate it.
+
+**Coverage.** 48 named champions → **67 champion ids** (55 real franchise quotes,
+12 coined `original` lines by id; 39 real / 9 original by name).
+
+**Voice (gender-appropriate).** female/neutral → **Kyoko**; male → a **clean**
+Japanese male voice (`Otoya`/`Hattori`) *when installed*. On this macOS those are
+**phantoms** (`say -v Otoya` renders byte-identical to the silent fallback), and
+the only real ja male voices are the novelty formant synths the pack direction
+forbids — so male quotes **fall back to Kyoko**. The resolver in the build script
+re-picks a real male voice automatically on a machine that has one; each id's
+resolved `voice` is recorded in `quotes.json`. Loudness matches the names pack
+(EBU R128, -16 LUFS / -1.5 dBTP), so call-out and quote sit level.
+
+**Client.** `nameVoice.ts` loads the quote pack single-flight alongside the name
+manifest (both fetched in one `Promise.all` on CONFIRM; the profile warms the
+quote pack on hover), then **appends the quote clip to `voSegments`** as the final
+segment — reusing the existing sequence + degrade machinery (missing quote ⇒
+unchanged call-out; a quote-only champion still speaks). All existing gates hold:
+the #62 silence gate, master/SFX mute, the ~1 s double-fire guard, and the
+new-call-out-supersedes-previous-chain rule.
+
+## Notes / follow-ups (quotes)
+
+- **Otoya on this Mac is a phantom** — install a clean ja male voice (System
+  Settings → Accessibility → Spoken Content → Voices) and re-run
+  `build-champ-quotes` + `generate` to upgrade the 30-odd male clips from Kyoko.
+- `content:validate` is currently red from an **unrelated** stale-index drift in
+  the `champions`/`items`/`config` collections (a concurrent icon batch); the
+  quote pack is under `content/assets/` and adds **zero** index drift.

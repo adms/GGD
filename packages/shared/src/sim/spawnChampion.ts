@@ -42,6 +42,7 @@ export function spawnChampion(world: SimWorld, args: SpawnChampionArgs): EntityI
     statStacks: 0,
     statCapstonePct: 0,
     pendingOrbSlots: 0,
+    undoStack: [],
   });
   world.abilities.set(id, {
     slots: {

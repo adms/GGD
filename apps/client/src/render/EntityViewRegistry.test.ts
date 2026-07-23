@@ -8,8 +8,18 @@ import { describe, it, expect, beforeAll, afterAll, vi } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
-import { EntityViewRegistry, type EntityViewState } from "./EntityViewRegistry";
-import { ChampionView } from "./views/ChampionView";
+import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
+import { AssetContainer } from "@babylonjs/core/assetContainer";
+import { AnimationGroup } from "@babylonjs/core/Animations/animationGroup";
+import { Animation } from "@babylonjs/core/Animations/animation";
+import type { ModelDoc } from "@ggd/shared/content";
+import {
+  EntityViewRegistry,
+  applyModelOverride,
+  relativeScaleOf,
+  type EntityViewState,
+} from "./EntityViewRegistry";
+import { ChampionView, TARGET_HEIGHT } from "./views/ChampionView";
 import { AssetManager } from "./AssetManager";
 
 let engine: NullEngine;
@@ -334,6 +344,86 @@ describe("EntityViewRegistry authoritative hitstop (juice-hitstop)", () => {
       registry.handleEvent({ type: "hitImpact", data: { source: 20, target: 21 } } as never, 100),
     ).not.toThrow();
     expect(tHit).not.toHaveBeenCalled();
+    registry.dispose();
+  });
+});
+
+describe("stand-in model/scale override (client-standin-override, task #77)", () => {
+  const BASE_DOC: ModelDoc = {
+    id: "champ.sela",
+    schema: "model@1",
+    glbPath: "assets/models/champions/mage.glb",
+    scale: 0.77, // the SHARED stand-in size — wrong for a small champion
+    collisionRadius: 0.6,
+    clipMap: { idle: "Idle", run: "Idle", attack: "Idle", cast: "Idle", hurt: "Idle", death: "Idle" },
+  } as ModelDoc;
+
+  it("applyModelOverride: null override is a pass-through; scale/glb/clipMap win", () => {
+    cover("client-standin-override");
+    expect(applyModelOverride(BASE_DOC, null)).toBe(BASE_DOC);
+    expect(applyModelOverride(null, { scale: 0.6 })).toBeNull();
+    const scaled = applyModelOverride(BASE_DOC, { scale: 0.6 })!;
+    expect(scaled.scale).toBe(0.6); // a swapped model's own declared scale is preserved
+    expect(scaled.glbPath).toBe(BASE_DOC.glbPath); // untouched fields kept
+    expect(BASE_DOC.scale).toBe(0.77); // pure — the base doc is not mutated
+    // a non-positive scale is ignored (never lets a bad override zero a champion)
+    expect(applyModelOverride(BASE_DOC, { scale: 0 })!.scale).toBe(0.77);
+  });
+
+  it("relativeScaleOf: the #150 size multiplier, defaulting to 1.0", () => {
+    cover("client-standin-override");
+    expect(relativeScaleOf(null)).toBe(1);
+    expect(relativeScaleOf(undefined)).toBe(1);
+    expect(relativeScaleOf({})).toBe(1);
+    expect(relativeScaleOf({ relativeScale: 0.65 })).toBe(0.65); // small creature
+    expect(relativeScaleOf({ relativeScale: 1.55 })).toBe(1.55); // giant
+    expect(relativeScaleOf({ relativeScale: 0 })).toBe(1); // non-positive ignored
+    // a legacy override carrying only an absolute `scale` is treated as normal-
+    // sized — an old absolute scale is never mistaken for a relative multiplier.
+    expect(relativeScaleOf({ scale: 0.6 })).toBe(1);
+  });
+
+  it("the registry renders a champion at its OVERRIDE relativeScale, smaller than the normalized default", async () => {
+    // stand-in mesh containers the AssetManager 'loads' — a fresh one per champion
+    const makeContainer = (): AssetContainer => {
+      const container = new AssetContainer(scene);
+      const mesh = MeshBuilder.CreateBox("kaykit-body", { size: 1 }, scene);
+      container.meshes.push(mesh);
+      container.rootNodes.push(mesh);
+      const g = new AnimationGroup("Idle", scene);
+      const a = new Animation("Idle-y", "rotation.y", 60, Animation.ANIMATIONTYPE_FLOAT);
+      a.setKeys([{ frame: 0, value: 0 }, { frame: 1, value: 0 }]);
+      g.addTargetedAnimation(a, mesh);
+      container.animationGroups.push(g);
+      container.removeAllFromScene();
+      return container;
+    };
+
+    const assets = { load: () => Promise.resolve(makeContainer()) } as unknown as AssetManager;
+    const registry = new EntityViewRegistry(scene, assets, {
+      modelDocFor: () => BASE_DOC,
+      // GameApp resolves championId→override from content/models/_standin-overrides.json;
+      // here 小叮噹/哆啦A夢 (godie-n00b, entity 900) declares its intentional small
+      // size 0.65; entity 901 is a normal champion (no override).
+      modelOverrideFor: (e) => (e.id === 900 ? { relativeScale: 0.65 } : null),
+    });
+
+    registry.sync({
+      entities: [champ(900, 0, 0), champ(901, 4, 0)],
+      poseFor: passthrough,
+      nowMs: 0,
+      dtMs: 16,
+    });
+    await Promise.resolve();
+    await Promise.resolve();
+    // BASE_DOC's body is a unit box (native height 1) → normalization factor is
+    // TARGET_HEIGHT; the normal champion renders at exactly that, the override one
+    // at TARGET_HEIGHT × 0.65 — DELIBERATELY smaller, not the shared default size.
+    const normal = registry.getChampionView(901)!.declaredScale!;
+    const small = registry.getChampionView(900)!.declaredScale!;
+    expect(normal).toBeCloseTo(TARGET_HEIGHT, 5);
+    expect(small).toBeCloseTo(TARGET_HEIGHT * 0.65, 5);
+    expect(small).toBeLessThan(normal * 0.75);
     registry.dispose();
   });
 });

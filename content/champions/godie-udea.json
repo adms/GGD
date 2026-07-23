@@ -2,6 +2,7 @@
   "id": "godie-udea",
   "schema": "champion@1",
   "name": "至尊學長 - 飛鼠先生",
+  "icon": "assets/icons/champions/godie-udea.png",
   "description": "故事：\n神秘的英雄，擅長以各種KUSO手法襲擊對手並加以推倒。\n(出自:去死去死團的逆襲原創)\n\n角色成長：\n力量 + 1.00\n敏捷 + 1.00\n智慧 + 4.00\n基礎跑速 320\n\n可學習的技能：\n神出鬼沒、寒冰破碎、魔法膨脹、天譴、永恆的愚蠢鄉",
   "role": "fighter",
   "attackType": "melee",

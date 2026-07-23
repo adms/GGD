@@ -24,7 +24,12 @@
  *   critChance    × Stat.CritChance          (statPipeline, before the [0,1] clamp)
  *   critDamage    × Stat.CritDamage          (statPipeline)
  *   lifesteal     × Stat.Lifesteal           (statPipeline, before the [0,0.8] clamp)
- *   attackRange   × Stat.AttackRange         (statPipeline)
+ *   attackRange   × Stat.AttackRange         (statPipeline; BASIC-attack reach only)
+ *   abilityRange  × ability CAST RANGE + AoE RADIUS (task #136; abilities ONLY,
+ *                   never basics — the read seams are abilitySystem.castAbility
+ *                   out-of-range + ground clamp/AoE, CastResolveSystem's AoE
+ *                   re-query, and the ability projectile hit radius in
+ *                   ProjectileSystem, all via resolveAbilityRange/Radius)
  *
  * PURITY: the table is part of SimWorld state (`world.combatEnv`), injected by
  * the host BEFORE tick 0 and never read from globals/config/fetch inside the
@@ -53,6 +58,7 @@ export const COMBAT_ENV_KEYS = [
   "critDamage",
   "lifesteal",
   "attackRange",
+  "abilityRange",
 ] as const;
 
 export type CombatEnvKey = (typeof COMBAT_ENV_KEYS)[number];

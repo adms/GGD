@@ -1,0 +1,24 @@
+{
+  "id": "berserkers-fury",
+  "schema": "augment@1",
+  "name": "狂戰之怒",
+  "description": "攻擊速度 +35%，攻擊力 +15%。",
+  "tier": "gold",
+  "weight": 55,
+  "modifiers": [
+    {
+      "stat": "as",
+      "op": "pctAdd",
+      "value": 0.35
+    },
+    {
+      "stat": "ad",
+      "op": "pctAdd",
+      "value": 0.15
+    }
+  ],
+  "tags": [
+    "attack-speed",
+    "offense"
+  ]
+}

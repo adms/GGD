@@ -31,6 +31,7 @@ Regression suites always run **last** (enforced by the runner scheduler and the 
 | Arena round rules & roster | [arena-rules.md](arena-rules.md) | game + content |
 | Healing flowers (LoL-Arena plants) | [flowers.md](flowers.md) | game + content + client |
 | Revive circles (復活小火圈, once per team per round) | [revive-circles.md](revive-circles.md) | game + content + client |
+| Neutral duel-zone guardian (守護塔, last-hit reward + AoE punish) | [guardian.md](guardian.md) | game + content |
 | WC3 dummy-effect-units + orbs → spawnVfx/ambient (化繁為簡) | [dummy-orb.md](dummy-orb.md) | game + content + client |
 | Themed arenas + map select + cast bar | [arenas.md](arenas.md) | client + game + content |
 | Sim determinism | [sim-determinism.md](sim-determinism.md) | game |
@@ -39,6 +40,7 @@ Regression suites always run **last** (enforced by the runner scheduler and the 
 | 中場 intermission scene + centre-stage shop | [intermission.md](intermission.md) | game + client + content |
 | Combat timing v2 (cast time + basic-attack overhaul) | [combat-timing.md](combat-timing.md) | game + content |
 | 戰鬥系統 global multipliers + admin dynamic config | [combat-env.md](combat-env.md) | game + platform + admin |
+| TTK tuning — maxHealth for round length (≥120s min, ~180s avg) | [ttk-tuning.md](ttk-tuning.md) | game + content |
 | Planar collision | [collision.md](collision.md) | game |
 | Content pipeline | [content-pipeline.md](content-pipeline.md) | content |
 | EX 技能 per-hero ultimate (lvl-30 gate) | [ex-skills.md](ex-skills.md) | content + game + client |
@@ -68,6 +70,7 @@ Regression suites always run **last** (enforced by the runner scheduler and the 
 | 打擊感 combat juice (shake/flash/hitstop/knockback) | [combat-juice.md](combat-juice.md) | game + client |
 | RO-style floating combat text (傷害/補血/補魔 numbers) | [combat-text.md](combat-text.md) | game + client |
 | WC3 vertex colour (tint) + alpha port | [vertex-tint.md](vertex-tint.md) | content + client |
+| In-game castability sweep (#128 pass/fail matrix) | [castability.md](castability.md) | game + content |
 
 ## Planned (author the TODO file when the feature is started)
 

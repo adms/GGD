@@ -1,0 +1,23 @@
+{
+  "id": "soul-reaver",
+  "schema": "augment@1",
+  "name": "噬魂",
+  "description": "擊殺敵人時，回復 15% 最大生命。",
+  "tier": "gold",
+  "weight": 45,
+  "hooks": [
+    {
+      "on": "onKill",
+      "target": "self",
+      "effects": [
+        {
+          "kind": "restore",
+          "healthPct": 0.15
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "sustain"
+  ]
+}

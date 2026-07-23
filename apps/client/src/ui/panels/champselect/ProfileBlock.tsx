@@ -13,9 +13,15 @@
  * This module only OWNS the composition; the selectors and their formatting are
  * shared, so a number here can never disagree with the sim or the codex.
  */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Abilities, Champions } from "@ggd/shared/sim/content/registry";
 import type { AbilityId, ChampionId } from "@ggd/shared/ids";
+import {
+  loadChampionQuotes,
+  quoteEntryFor,
+  type ChampionQuoteEntry,
+  type ChampionQuotesManifest,
+} from "../../../audio/nameVoice";
 import { StorePreviewCanvas } from "../../platform/StorePreviewCanvas";
 import { IconImg } from "../../components/IconImg";
 import { iconSrc } from "../../icons";
@@ -23,7 +29,8 @@ import { GOLD, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../../theme";
 import { splitChampionName } from "../../codex/codexData";
 import { attackTypeLabel, num, SLOT_COLOR, statLabel } from "../../codex/codexLabels";
 import { skillRows, slotLabel, type SkillRow, type SkillRowSlot } from "../skillDetails";
-import { displayFinalText, useDisplayEnv } from "../../displayFinal";
+import { displayFinal, displayFinalText, isScaled, statDisplayFactor, useDisplayEnv } from "../../displayFinal";
+import { rescaleAbilityProse, WC3_PROSE_CAPTION } from "../../components/abilityText";
 import {
   champSelectSkillSeat,
   championDescription,
@@ -56,6 +63,12 @@ function SkillRowView({ row }: { row: SkillRow }): React.JSX.Element {
   if (row.cooldownSec !== undefined && row.cooldownSec > 0)
     meta.push(`冷卻 ${displayFinalText(row.cooldownSec, "cooldown", { env })} 秒`);
   if (row.manaCost !== undefined) meta.push(`魔力 ${num(row.manaCost)}`);
+  // #136: cast range + AoE shown as the post-`abilityRange` final (base ×0.6),
+  // tracked live off the same combat-env table as the cooldown.
+  if (row.range !== undefined && row.range > 0)
+    meta.push(`射程 ${displayFinalText(row.range, "abilityRange", { env })}`);
+  if (row.radius !== undefined && row.radius > 0)
+    meta.push(`範圍 ${displayFinalText(row.radius, "abilityRange", { env })}`);
   if (row.maxRank > 1) meta.push(`最大 ${row.maxRank} 級`);
   return (
     <div style={{ display: "flex", gap: 10, padding: "8px 0", borderBottom: "1px solid #1b2233" }}>
@@ -89,32 +102,47 @@ function SkillRowView({ row }: { row: SkillRow }): React.JSX.Element {
         </div>
         {meta.length > 0 && <div style={{ fontSize: 10.5, color: TEXT_DIM, marginTop: 2 }}>{meta.join(" · ")}</div>}
         {row.description !== undefined && (
-          <div style={{ fontSize: 11.5, color: "#c1cadd", lineHeight: 1.55, marginTop: 4, whiteSpace: "pre-wrap" }}>
-            {row.description}
-          </div>
+          <>
+            {/* 說明數值最終化: cooldown literals rescaled to the live combat-env final */}
+            <div style={{ fontSize: 11.5, color: "#c1cadd", lineHeight: 1.55, marginTop: 4, whiteSpace: "pre-wrap" }}>
+              {rescaleAbilityProse(row.description, env)}
+            </div>
+            <div style={{ fontSize: 9.5, color: TEXT_DIM, marginTop: 2 }}>{WC3_PROSE_CAPTION}</div>
+          </>
         )}
       </div>
     </div>
   );
 }
 
+/** Accent for the ADDED 戰鬥實際 column — the post-combat-env final stat. */
+const BATTLE_FINAL_COLOR = "#6fd3a8";
+
 function StatsTab({ championId }: { championId: ChampionId }): React.JSX.Element {
   const def = Champions.get(championId);
+  const env = useDisplayEnv();
   const base = def.baseStats as Record<string, number | undefined>;
   const growth = def.growth as Record<string, number | undefined>;
   const keys = [...new Set([...Object.keys(base), ...Object.keys(growth)])];
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr auto auto", gap: "2px 16px", fontSize: 12 }}>
+    <div style={{ display: "grid", gridTemplateColumns: "1fr auto auto auto", gap: "2px 16px", fontSize: 12 }}>
       <div style={{ color: TEXT_DIM, fontSize: 10 }}>屬性</div>
       <div style={{ color: TEXT_DIM, fontSize: 10, textAlign: "right" }}>基礎</div>
+      {/* 說明數值最終化: base × combat-env multiplier (maxHealth ×16 → 460 = 7360) */}
+      <div style={{ color: TEXT_DIM, fontSize: 10, textAlign: "right" }}>戰鬥實際</div>
       <div style={{ color: TEXT_DIM, fontSize: 10, textAlign: "right" }}>每級成長</div>
       {keys.map((k) => {
         const b = base[k];
         const g = growth[k];
+        const factor = statDisplayFactor(k);
+        const showFinal = b !== undefined && isScaled(factor, env);
         return (
           <div key={k} style={{ display: "contents" }}>
             <div style={{ color: TEXT_DIM }}>{statLabel(k)}</div>
             <div style={{ textAlign: "right", color: TEXT_MAIN }}>{b === undefined ? "—" : num(b)}</div>
+            <div style={{ textAlign: "right", color: showFinal ? BATTLE_FINAL_COLOR : TEXT_DIM }}>
+              {showFinal ? num(displayFinal(b, factor, env)) : "—"}
+            </div>
             <div style={{ textAlign: "right", color: g ? GOLD : TEXT_DIM }}>
               {g === undefined || g === 0 ? "—" : `+${num(g)}`}
             </div>
@@ -171,16 +199,88 @@ function LoreTab({ championId }: { championId: ChampionId }): React.JSX.Element 
   );
 }
 
-export function ChampionProfile({ championId }: { championId: string | null }): React.JSX.Element {
+/**
+ * Load the famous-quote pack (task #139) once, cached single-flight in the audio
+ * layer. Warming it here also spares the first champ-select CONFIRM the fetch.
+ * A missing pack (404) resolves to null → no quote shown, no error.
+ */
+function useChampionQuotes(): ChampionQuotesManifest | null {
+  const [quotes, setQuotes] = useState<ChampionQuotesManifest | null>(null);
+  useEffect(() => {
+    let live = true;
+    void loadChampionQuotes()
+      .then((m) => {
+        if (live) setQuotes(m);
+      })
+      .catch(() => {
+        /* pack not generated — the profile simply shows no quote */
+      });
+    return () => {
+      live = false;
+    };
+  }, []);
+  return quotes;
+}
+
+/**
+ * The champion's famous line (task #139): the Japanese quote spoken on CONFIRM,
+ * styled as a pull-quote, with the Chinese gloss beneath. An `original` (coined /
+ * 惡搞) line is flagged so it never masquerades as a canonical quote.
+ */
+function QuoteBlock({ entry }: { entry: ChampionQuoteEntry }): React.JSX.Element {
+  return (
+    <div
+      style={{
+        marginTop: 8,
+        padding: "8px 10px",
+        borderLeft: `2px solid ${GOLD}`,
+        borderRadius: "0 6px 6px 0",
+        background: "rgba(224, 168, 120, 0.06)",
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
+        <span aria-hidden style={{ color: GOLD, fontSize: 13, lineHeight: 1 }}>
+          「
+        </span>
+        <span style={{ fontSize: 14, fontWeight: 600, color: TEXT_MAIN, lineHeight: 1.45 }}>
+          {entry.jpQuote}
+        </span>
+      </div>
+      {entry.zhGloss && (
+        <div style={{ fontSize: 11, color: TEXT_DIM, marginTop: 3, paddingLeft: 14 }}>
+          {entry.zhGloss}
+        </div>
+      )}
+      {!entry.real && (
+        <div style={{ fontSize: 9.5, color: "#e0a878", marginTop: 3, paddingLeft: 14, letterSpacing: 0.5 }}>
+          原創台詞 <span style={{ color: TEXT_DIM }}>· 非官方名言</span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function ChampionProfile({
+  championId,
+  compact = false,
+  stageHeight = 300,
+}: {
+  championId: string | null;
+  /** phone layout: flow at natural height (outer scroll owns the scrolling). */
+  compact?: boolean;
+  /** 3D stage height — shrunk on phones so the tabbed intro is not clipped. */
+  stageHeight?: number;
+}): React.JSX.Element {
   const [tab, setTab] = useState<Tab>("skills");
+  const quotes = useChampionQuotes();
   const def = championId ? Champions.tryGet(championId as ChampionId) : undefined;
 
   if (!def) {
     return (
       <div
         style={{
-          height: "100%",
-          minHeight: 320,
+          height: compact ? "auto" : "100%",
+          minHeight: compact ? 200 : 320,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -202,11 +302,20 @@ export function ChampionProfile({ championId }: { championId: string | null }): 
   const { title, fullName } = splitChampionName(def.name);
   const standIn = isStandInModel(def.modelKey);
   const rows = skillRows(champSelectSkillSeat(def));
+  const quote = quoteEntryFor(quotes, def.id);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100%", minHeight: 0 }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        // compact (phone): flow at natural height so the OUTER container scrolls;
+        // desktop: fill the fixed-height card and scroll the tab body internally.
+        ...(compact ? {} : { height: "100%", minHeight: 0 }),
+      }}
+    >
       {/* ── 3D stage ─────────────────────────────────────────────────────── */}
-      <div style={{ position: "relative", height: 300, flexShrink: 0 }}>
+      <div style={{ position: "relative", height: stageHeight, flexShrink: 0 }}>
         {/* NOT keyed: StorePreviewCanvas swaps the model in the SAME Babylon
             engine on a modelKey change, so a hover preview never re-creates the
             WebGL context (only the model reloads). */}
@@ -236,6 +345,7 @@ export function ChampionProfile({ championId }: { championId: string | null }): 
         {title && <div style={{ fontSize: 11, color: GOLD, letterSpacing: 1 }}>{title}</div>}
         <div style={{ fontSize: 19, fontWeight: 700, color: TEXT_MAIN, lineHeight: 1.2 }}>{fullName}</div>
         <div style={{ fontSize: 11, color: TEXT_DIM, marginTop: 3 }}>{attackTypeLabel(def.attackType)}</div>
+        {quote && <QuoteBlock entry={quote} />}
       </div>
 
       {/* ── tabs ─────────────────────────────────────────────────────────── */}
@@ -261,8 +371,10 @@ export function ChampionProfile({ championId }: { championId: string | null }): 
         ))}
       </div>
 
-      {/* ── tab body (scrolls) ───────────────────────────────────────────── */}
-      <div style={{ flex: 1, minHeight: 0, overflowY: "auto", paddingRight: 4 }}>
+      {/* ── tab body ─────────────────────────────────────────────────────── */}
+      {/* compact (phone): flow at natural height, the outer panel scrolls;
+          desktop: a bounded, internally-scrolling region under the fixed stage. */}
+      <div style={compact ? { paddingRight: 4 } : { flex: 1, minHeight: 0, overflowY: "auto", paddingRight: 4 }}>
         {tab === "skills" &&
           (rows.length === 0 ? (
             <div style={{ fontSize: 12, color: TEXT_DIM }}>此英雄沒有技能資料</div>

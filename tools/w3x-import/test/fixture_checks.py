@@ -199,6 +199,54 @@ def main(fixture: str, workdir: str) -> int:
     assert items["cost"] == 750 and items["name"] == "測試道具"
     print("PASS w3x-import-pipeline")
 
+    # -- rawMods passthrough: no field code is dropped (task #56) -------------
+    # The record builders read a WHITELIST of ~27 unit / ~11 ability / ~8 item
+    # codes into typed fields; historically every OTHER code silently vanished
+    # (in the real GoDie w3u only 27 of 180 distinct codes had a typed home, so
+    # 153 were dropped per object). They are now carried through verbatim under
+    # `rawMods`, keyed by the raw 4-char code. Assert the WHOLE set survives.
+    from w3xlib.stats import (  # noqa: E402
+        UNIT_FIELD_CODES, ABILITY_FIELD_CODES, ITEM_FIELD_CODES,
+    )
+    from w3xlib.objdata import _data_col_of  # noqa: E402
+
+    heroes = json.load(open(os.path.join(out, "parsed", "heroes.json")))
+    hrec = heroes["H001"]
+    hraw = hrec["rawMods"]
+    hero_codes = {m.code for m in hero.mods}
+    # count-based: EVERY code on the object is retained (typed OR rawMods), i.e.
+    # 180/180 — not the ~30/180 the whitelist alone kept.
+    retained = set(hraw) | (UNIT_FIELD_CODES & hero_codes)
+    assert retained == hero_codes, ("dropped w3u codes", hero_codes - retained)
+    assert len(hero_codes) >= 180, ("fixture must be representative", len(hero_codes))
+    assert not (set(hraw) & UNIT_FIELD_CODES), "typed codes leaked into rawMods"
+    # the previously-dropped majority is now the bulk of what survives
+    assert len(hraw) >= 150, ("rawMods should carry the unknown majority", len(hraw))
+    # a MIX of known + unknown on one object: known keep their TYPED home ...
+    assert hrec["hp"] == 200 and hrec["str"] == 20          # uhpm / ustr typed
+    assert hrec["model"] == "fixhero.mdx"                    # umdl typed
+    # ... unknown codes land in rawMods with their value intact, not duplicated
+    assert hraw.get("x000") == 1001, hraw.get("x000")
+    assert "usca" not in hraw and "uhpm" not in hraw
+
+    # abilities: an unknown non-data code is kept; a DATA-COLUMN code is not
+    # echoed into rawMods (it already lives in the typed `data` view).
+    abilities = json.load(open(os.path.join(out, "parsed", "abilities.json")))
+    arec = abilities["A001"]
+    araw = arec["rawMods"]
+    assert araw.get("areq") == "R00R", araw                 # unknown field kept
+    assert "Htb1" not in araw, "data column leaked into ability rawMods"
+    assert arec["data"].get("1"), "data column lost from typed view"
+    assert not (set(araw) & ABILITY_FIELD_CODES)
+    assert any(_data_col_of(m) for m in ab.mods if m.code == "Htb1")
+
+    # items: an unknown code (ilev has no typed field here) is kept
+    items_parsed = json.load(open(os.path.join(out, "parsed", "items.json")))
+    iraw = items_parsed["I001"]["rawMods"]
+    assert iraw.get("ilev") == 3, iraw
+    assert not (set(iraw) & ITEM_FIELD_CODES)
+    print("PASS w3x-rawmods-passthrough")
+
     # -- random-hero pool extraction + original-table champion ---------------
     pool = json.load(open(os.path.join(out, "parsed", "random_pool.json")))
     # hex index $3 must land in order; unknown rawcode 'Hxyz' stays listed

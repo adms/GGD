@@ -142,6 +142,42 @@ const flush = async (): Promise<void> => {
   for (let i = 0; i < 12; i++) await Promise.resolve();
 };
 
+/**
+ * task #63: a map whose SFX keys line up with the scene manifest, so a scene
+ * change warms a known subset. `uiClick` is core; `champSelectConfirm` belongs
+ * to champSelect; `hit`/`death` belong to combat.
+ */
+const SCENE_MAP: AudioMap = {
+  bgm: {
+    champSelect: { file: "assets/audio/bgm/champSelect.mp3", loop: true },
+    combat: { file: "assets/audio/bgm/combat.mp3", loop: true },
+  },
+  sfx: {
+    uiClick: { files: ["assets/audio/sfx/ui-click.mp3"] }, // always-on core
+    champSelectConfirm: { files: ["assets/audio/sfx/pick.mp3"] }, // champSelect scene
+    hit: { files: ["assets/audio/sfx/fx/thud.wav"] }, // combat scene
+    death: { files: ["assets/audio/sfx/die.mp3"], cooldownMs: 0, maxConcurrent: 4 }, // combat tally
+  },
+};
+
+/** A fetch that records which `assets/` files were requested (preload probe). */
+function recordingFetch(map: AudioMap): {
+  fetchFn: (url: string) => Promise<Response>;
+  requested: (file: string) => boolean;
+  reset: () => void;
+} {
+  const seen = new Set<string>();
+  const base = okFetch(map);
+  return {
+    fetchFn: (url: string) => {
+      if (url.includes("assets/")) seen.add(url);
+      return base(url);
+    },
+    requested: (file: string) => [...seen].some((u) => u.includes(file)),
+    reset: () => seen.clear(),
+  };
+}
+
 function build(overrides: Partial<{
   fetchFn: (url: string) => Promise<Response>;
   now: () => number;
@@ -500,6 +536,87 @@ describe("AudioSystem playClip voice seam (voice-playclip)", () => {
     expect(sys.playClip("")).toBe(false); // empty path no-op
     await flush();
     expect(ctx.started.length).toBe(started); // nothing started for the 404
+    sys.dispose();
+  });
+});
+
+// task #63: SFX load PER SCENE, not all at boot. A small UI core is warmed on
+// unlock; each scene warms its own subset on entry; anything unlisted still
+// lazy-loads on first play (a preload manifest, never a gate).
+describe("AudioSystem scene-scoped SFX preloading (audio-sfx-scene-preload)", () => {
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => vi.useRealTimers());
+
+  it("boot fetches NO sfx; unlock warms only the UI core, not the whole set", async () => {
+    cover("audio-sfx-scene-preload");
+    const rec = recordingFetch(SCENE_MAP);
+    const { sys } = build({ fetchFn: rec.fetchFn });
+    await sys.init(null); // loadMap only — the real boot path
+    await flush();
+    // boot pulled the map, but not a single SFX clip
+    expect(rec.requested("ui-click.mp3")).toBe(false);
+    expect(rec.requested("thud.wav")).toBe(false);
+
+    sys.unlock(); // first gesture: warm the core (no scene set yet)
+    await flush();
+    expect(rec.requested("ui-click.mp3")).toBe(true); // core is warm
+    expect(rec.requested("pick.mp3")).toBe(false); // champSelect subset: not yet
+    expect(rec.requested("thud.wav")).toBe(false); // combat subset: not yet
+    sys.dispose();
+  });
+
+  it("entering a scene warms only that scene's SFX subset", async () => {
+    cover("audio-sfx-scene-preload");
+    const rec = recordingFetch(SCENE_MAP);
+    const { sys } = build({ fetchFn: rec.fetchFn });
+    await sys.loadMap();
+    sys.unlock();
+    await flush();
+    rec.reset(); // ignore the core warmed at unlock
+
+    sys.playBgm("champSelect");
+    await flush();
+    expect(rec.requested("pick.mp3")).toBe(true); // champSelect's own cue
+    expect(rec.requested("thud.wav")).toBe(false); // combat is NOT dragged in
+
+    sys.playBgm("combat");
+    await flush();
+    expect(rec.requested("thud.wav")).toBe(true); // combat warms on entry
+    sys.dispose();
+  });
+
+  it("a cue whose scene never preloaded it still plays via lazy fetch", async () => {
+    cover("audio-sfx-scene-preload");
+    const rec = recordingFetch(SCENE_MAP);
+    const { sys } = build({ fetchFn: rec.fetchFn });
+    await sys.loadMap();
+    sys.unlock();
+    sys.playBgm("champSelect"); // does NOT warm the combat `death` cue
+    await flush();
+    expect(rec.requested("die.mp3")).toBe(false); // never preloaded on this scene
+
+    // firing it anyway still works — the map lookup + lazy fetch/decode path
+    expect(sys.playSfx("death")).toBe(true);
+    await flush();
+    expect(rec.requested("die.mp3")).toBe(true); // fetched on demand
+    sys.dispose();
+  });
+
+  it("preloading NEVER brings up the AudioContext before the unlock gesture", async () => {
+    cover("audio-sfx-scene-preload");
+    const rec = recordingFetch(SCENE_MAP);
+    const { sys, ctxRef } = build({ fetchFn: rec.fetchFn });
+    await sys.loadMap();
+    // a scene change while still locked records the scene but must not fetch or
+    // build the graph (the "no context before a gesture" contract holds)
+    sys.playBgm("combat");
+    await flush();
+    expect(ctxRef()).toBeNull();
+    expect(rec.requested("thud.wav")).toBe(false);
+    // …then the unlock warms exactly that current scene
+    sys.unlock();
+    await flush();
+    expect(rec.requested("thud.wav")).toBe(true);
     sys.dispose();
   });
 });

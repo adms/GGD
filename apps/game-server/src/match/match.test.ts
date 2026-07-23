@@ -135,6 +135,84 @@ describe("full bot match (match-04, match-09, match-10)", () => {
   });
 });
 
+describe("round settle freezes combat (#100, match-settle-freeze)", () => {
+  it("combat ACTUALLY STOPS at settle — no attacks/casts/damage through resolution + intermission", () => {
+    cover("match-settle-freeze");
+    // Long combat window so the round only ends when WE settle it (not a wipe or
+    // the timer), and a LONG resolution so we can watch the whole frozen scene
+    // without the next round's combat re-arming (a fresh enterCombat is the only
+    // thing that legitimately un-freezes the fighters).
+    const cfg = { champSelectTicks: 1, intermissionTicks: 400, combatMaxTicks: 3000, resolutionTicks: 300 };
+    const ctl = new MatchController("settle", 9182, allBots(), cfg);
+
+    // into round-1 combat
+    while (ctl.phase.phase !== "combat") ctl.tick();
+
+    const champIds = [...ctl.seats.values()].filter((s) => s.entityId !== null).map((s) => s.entityId!);
+    const anyHurt = (): boolean =>
+      champIds.some((id) => {
+        const hp = ctl.world.health.get(id)!;
+        return hp.hp < hp.maxHp;
+      });
+
+    // let the duels actually engage: run until a champion has taken damage, so
+    // the fighters are adjacent & mid-brawl (a NON-freeze would keep dealing it).
+    let guard = 0;
+    while (!anyHurt() && ctl.phase.phase === "combat" && guard++ < 8000) ctl.tick();
+    expect(ctl.phase.phase).toBe("combat");
+    expect(anyHurt()).toBe(true);
+
+    // SETTLE the round with everyone still alive (timer-style HP% decision, no
+    // wipe): skipPhase in combat runs checkCombatEnd(true) + concludeCombat +
+    // advance. This is the exact seam where, before #100, the phase moved on but
+    // the bots kept trading blows for ~65s.
+    expect(ctl.applyCheat(asSeatId(0), { kind: "skipPhase" })).toBe(true);
+    expect(ctl.phase.phase).toBe("resolution");
+    expect(ctl.world.combatActive).toBe(false);
+
+    // freeze latched instantly: nobody is mid-swing / mid-cast / chasing
+    for (const id of champIds) {
+      const ab = ctl.world.abilities.get(id)!;
+      expect(ab.cast).toBeNull();
+      expect(ab.windup).toBeNull();
+      expect(ctl.world.nav.get(id)!.attackTarget).toBeNull();
+    }
+
+    // Watch ~200 ticks (well inside the 300-tick resolution). Combat must never
+    // re-arm: no champion may enter a wind-up or a cast or re-acquire a target,
+    // and the running damage total must not climb once any in-flight projectile
+    // (launched BEFORE the settle) has landed.
+    let dmgFloor = -1;
+    for (let i = 0; i < 200; i++) {
+      ctl.tick();
+      expect(ctl.phase.phase).toBe("resolution"); // still the settle beat
+      expect(ctl.world.combatActive).toBe(false);
+      for (const id of champIds) {
+        const ab = ctl.world.abilities.get(id)!;
+        expect(ab.windup).toBeNull(); // no new basic attack ever starts
+        expect(ab.cast).toBeNull(); //   no new ability cast ever starts
+        expect(ctl.world.nav.get(id)!.attackTarget).toBeNull(); // no re-engage
+      }
+      const dmg = [...ctl.world.matchStats.values()].reduce((a, s) => a + s.damageDealt, 0);
+      // after ~2s any projectile still airborne at settle has resolved; from
+      // there the total is FROZEN (nothing new is ever fired).
+      if (i >= 60) {
+        if (dmgFloor < 0) dmgFloor = dmg;
+        else expect(dmg).toBe(dmgFloor);
+      }
+    }
+    expect(dmgFloor).toBeGreaterThanOrEqual(0); // the damage-floor assertion ran
+
+    // The intermission that follows also stays frozen — and its shop is LIVE
+    // (economy intents were NOT stripped): drive to the next intermission and
+    // confirm combat is still off while the economy has re-opened.
+    while ((ctl.phase.phase as string) === "resolution") ctl.tick();
+    expect(ctl.phase.phase).toBe("intermission");
+    expect(ctl.world.combatActive).toBe(false);
+    expect(ctl.world.economyOpen).toBe(true);
+  });
+});
+
 describe("driver seam (match-05, match-06)", () => {
   it("swapping AI->Human->AI at tick boundaries preserves entity state", () => {
     cover("driver-swap-seam");

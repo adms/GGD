@@ -4,8 +4,14 @@ package server
 
 import (
 	"context"
+	"errors"
+	"fmt"
 	"log/slog"
 	"net/http"
+	"os"
+	"strconv"
+	"strings"
+	"time"
 
 	"github.com/alexedwards/argon2id"
 	"github.com/go-chi/chi/v5"
@@ -33,24 +39,31 @@ import (
 
 // Server bundles every wired component.
 type Server struct {
-	Cfg      config.Config
-	Rdb      *redisx.Client
-	Store    *jsonstore.Store
-	Journal  *wal.WAL
-	Accounts *account.Repo
-	Auth     *auth.Service
-	Friends  *friend.Service
-	Presence *presence.Service
-	Rooms    *room.Service
-	Ranking  *ranking.Service
-	Gamelink *gamelink.Service
-	Wallet   *wallet.Service
+	Cfg       config.Config
+	Rdb       *redisx.Client
+	Store     *jsonstore.Store
+	Journal   *wal.WAL
+	Accounts  *account.Repo
+	Auth      *auth.Service
+	Friends   *friend.Service
+	Presence  *presence.Service
+	Rooms     *room.Service
+	Ranking   *ranking.Service
+	Gamelink  *gamelink.Service
+	Wallet    *wallet.Service
 	Admin     *admin.Service
 	Curation  *curation.Service
 	CombatEnv *combatenv.Service
 	AI        *ai.Service
-	Hub      *lobby.Hub
-	Sessions *lobby.Sessions
+	Hub       *lobby.Hub
+	Sessions  *lobby.Sessions
+
+	// registerRateLimit is the max /auth/register calls allowed per minute
+	// server-wide (0 = disabled). This is an app-layer backstop to the edge's
+	// per-IP register throttle (the auth/server packages may not read a caller
+	// address — see internal/server/devsurface_test.go — so per-IP register
+	// limiting is owned by nginx; this global cap needs no address).
+	registerRateLimit int
 
 	router chi.Router
 	cancel context.CancelFunc
@@ -60,11 +73,57 @@ type Server struct {
 type Options struct {
 	// Argon2Params overrides hashing cost (tests use light params).
 	Argon2Params *argon2id.Params
+	// RequireApproval forces the private-deploy approval gate on (#126)
+	// regardless of the environment. It is OR-ed with GGD_REQUIRE_APPROVAL.
+	RequireApproval bool
+}
+
+// requiredSecrets are the secrets that MUST be supplied from the environment;
+// booting with any of them empty is a hard error rather than a silent weak
+// default. config.Load already guards the real binary — this second guard
+// covers server.New callers (tests, embedders) that build a Config directly.
+func checkRequiredSecrets(cfg config.Config) error {
+	missing := []string{}
+	if strings.TrimSpace(cfg.JWTSecret) == "" {
+		missing = append(missing, "JWT_SIGNING_SECRET")
+	}
+	if strings.TrimSpace(cfg.GameSharedSecret) == "" {
+		missing = append(missing, "PLATFORM_GAME_SHARED_SECRET")
+	}
+	if len(missing) > 0 {
+		return fmt.Errorf("server: required secret(s) unset: %s — refusing to boot with a weak/empty default", strings.Join(missing, ", "))
+	}
+	return nil
+}
+
+// envEnabled reports whether an env var is set to a truthy value.
+func envEnabled(key string) bool {
+	switch strings.ToLower(strings.TrimSpace(os.Getenv(key))) {
+	case "1", "true", "yes", "on":
+		return true
+	}
+	return false
+}
+
+// envInt reads a non-negative int env var, falling back to def on absence or a
+// parse error.
+func envInt(key string, def int) int {
+	if v := strings.TrimSpace(os.Getenv(key)); v != "" {
+		if n, err := strconv.Atoi(v); err == nil && n >= 0 {
+			return n
+		}
+	}
+	return def
 }
 
 // New wires everything. Call Start to run background loops, Router for the
 // HTTP handler and Close on shutdown.
 func New(cfg config.Config, opts Options) (*Server, error) {
+	// Fail fast on a missing required secret — no weak defaults reach a live
+	// listener (#126 go-live hardening).
+	if err := checkRequiredSecrets(cfg); err != nil {
+		return nil, err
+	}
 	store, err := jsonstore.New(cfg.DataDir)
 	if err != nil {
 		return nil, err
@@ -76,7 +135,9 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 	rdb := redisx.New(cfg.RedisAddr, cfg.RedisPassword)
 	accounts := account.NewRepo(store, rdb)
 
-	authSvc, err := auth.New(accounts, rdb, cfg.JWTSecret, cfg.AccessTokenTTL, cfg.RefreshTokenTTL, opts.Argon2Params)
+	// Private-deploy gate (#126): enabled by Options or GGD_REQUIRE_APPROVAL.
+	requireApproval := opts.RequireApproval || envEnabled("GGD_REQUIRE_APPROVAL")
+	authSvc, err := auth.New(accounts, rdb, cfg.JWTSecret, cfg.AccessTokenTTL, cfg.RefreshTokenTTL, opts.Argon2Params, requireApproval)
 	if err != nil {
 		return nil, err
 	}
@@ -106,7 +167,7 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 		slog.Warn("wallet: no store catalog loaded — store empty, matches grant 0 M COIN",
 			"contentDir", cfg.ContentDir)
 	}
-	walletSvc := wallet.New(accounts, rdb, cat)
+	walletSvc := wallet.New(accounts, rdb, store, cat)
 
 	settler := gamelink.NewSettler(store, rdb, accounts, pres, rank, rooms, walletSvc)
 	glink := gamelink.New(rdb, accounts, pres, rank, journal, settler, cat,
@@ -128,14 +189,62 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 		Auth: authSvc, Friends: friends, Presence: pres, Rooms: rooms,
 		Ranking: rank, Gamelink: glink, Wallet: walletSvc, Admin: adminSvc,
 		Curation: curationSvc, CombatEnv: combatEnvSvc, AI: aiSvc, Hub: hub, Sessions: sessions,
+		registerRateLimit: envInt("GGD_REGISTER_RATE_LIMIT", 0),
 	}
 	s.buildRouter(templates)
 	return s, nil
 }
 
+// maxRequestBodyBytes is the explicit request-body cap applied to every route
+// (#126 go-live hardening). It matches httpx.DecodeJSON's own cap, so nothing
+// that works today is affected; it additionally protects any route that reads
+// the raw body without DecodeJSON.
+const maxRequestBodyBytes int64 = 1 << 20 // 1 MiB
+
+// hstsHeader sets HTTP Strict-Transport-Security on every response. TLS
+// terminates upstream of this binary, but the header travels with the app so
+// the guarantee holds if the edge ever becomes the TLS hop.
+func hstsHeader(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Strict-Transport-Security", "max-age=63072000; includeSubDomains")
+		next.ServeHTTP(w, r)
+	})
+}
+
+// capRequestBody wraps every request body in a MaxBytesReader so an oversized
+// upload is rejected instead of buffered.
+func capRequestBody(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Body != nil {
+			r.Body = http.MaxBytesReader(w, r.Body, maxRequestBodyBytes)
+		}
+		next.ServeHTTP(w, r)
+	})
+}
+
+// throttleRegister applies the app-layer global registration cap (0 = off). It
+// keys on a fixed bucket, never on a caller address — per-IP register limiting
+// is the edge's job (see the registerRateLimit field comment).
+func (s *Server) throttleRegister(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if s.registerRateLimit > 0 && r.Method == http.MethodPost &&
+			strings.HasSuffix(r.URL.Path, "/auth/register") {
+			ok, err := s.Rdb.RateAllow(r.Context(), "register", "global", int64(s.registerRateLimit), time.Minute)
+			if err == nil && !ok {
+				httpx.WriteError(w, httpx.RateLimited("too many registrations right now, please try again shortly"))
+				return
+			}
+		}
+		next.ServeHTTP(w, r)
+	})
+}
+
 func (s *Server) buildRouter(templates *room.Templates) {
 	r := chi.NewRouter()
 	r.Use(httpx.Recoverer, httpx.RequestLogger)
+	// #126 go-live hardening: HSTS, an explicit body cap and the register
+	// throttle wrap every route beneath the loggers.
+	r.Use(hstsHeader, capRequestBody, s.throttleRegister)
 
 	r.Route("/api/v1", func(api chi.Router) {
 		api.Get("/healthz", func(w http.ResponseWriter, r *http.Request) {
@@ -176,6 +285,19 @@ func (s *Server) buildRouter(templates *room.Templates) {
 			// /ai/icon + /ai/text authed; /admin/ai/config AdminOnly inside
 			ai.NewHandlers(s.AI, s.Admin.AdminOnly).Mount(pr)
 		})
+
+		// #126 private-deploy: admin account-approval gate. Registered as its own
+		// authed+AdminOnly group so it does NOT touch the #118 wallet route group
+		// above. New paths under /admin/accounts/{id}/... — the specific routes
+		// win over the mounted /admin subrouter's catch-all.
+		api.Group(func(pr chi.Router) {
+			pr.Use(s.Auth.Middleware)
+			pr.Group(func(ar chi.Router) {
+				ar.Use(s.Admin.AdminOnly)
+				ar.Post("/admin/accounts/{id}/approve", s.approveAccount)
+				ar.Post("/admin/accounts/{id}/deny", s.denyAccount)
+			})
+		})
 	})
 
 	r.NotFound(func(w http.ResponseWriter, r *http.Request) {
@@ -186,6 +308,37 @@ func (s *Server) buildRouter(templates *room.Templates) {
 
 // Router returns the HTTP handler.
 func (s *Server) Router() http.Handler { return s.router }
+
+// approveAccount flips a pending account to approved so it may log in to play
+// (#126). AdminOnly-gated.
+func (s *Server) approveAccount(w http.ResponseWriter, r *http.Request) {
+	s.setAccountStatus(w, r, account.StatusApproved)
+}
+
+// denyAccount marks an account's registration declined and revokes any live
+// session, so a previously-approved account is kicked immediately. AdminOnly.
+func (s *Server) denyAccount(w http.ResponseWriter, r *http.Request) {
+	s.setAccountStatus(w, r, account.StatusDenied)
+}
+
+func (s *Server) setAccountStatus(w http.ResponseWriter, r *http.Request, status string) {
+	id := chi.URLParam(r, "id")
+	a, err := s.Accounts.SetStatus(r.Context(), id, status)
+	if err != nil {
+		if errors.Is(err, account.ErrNotFound) {
+			httpx.WriteError(w, httpx.NotFound("account not found"))
+			return
+		}
+		httpx.WriteError(w, err)
+		return
+	}
+	if status == account.StatusDenied {
+		// Best effort — the login/refresh approval guard is authoritative even if
+		// this revoke races or fails.
+		_ = s.Rdb.RevokeAllRefresh(r.Context(), id)
+	}
+	httpx.WriteJSON(w, http.StatusOK, map[string]account.Public{"account": a.Public()})
+}
 
 // Boot rebuilds the Redis hot layer from the JSON truth (WAL replay,
 // uniqueness indexes, leaderboard) and grants the bootstrap admin role.

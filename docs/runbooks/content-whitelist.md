@@ -51,10 +51,12 @@ and rejects `SELECT_CHAMPION` for a non-whitelisted champion.
 A named, hand-picked, reviewable bundle lives in
 **`apps/platform/internal/curation/starter.go`** — read that file for the per-pick rationale.
 
-- **12 champions** — each with its own imported w3x model (no shared stand-ins, no twins), a
-  real icon, a fully textured glb, a 1.5–2.1u silhouette, complete animations, and a complete
-  `xx-01..04` + `xx-002` ability set. 7 melee / 5 ranged across assassin / duelist / bruiser /
-  tank / skirmisher / marksman / burst mage / durable caster / support.
+- **48 champions — the FIRST OPEN ROSTER (對戰可選名單)**: the user's 48 hand-picked names, one
+  canonical id each (test/placeholder and duplicate-reskin candidates dropped; see 附錄A of
+  `docs/hero-popularity-ranking.md`). Each has a complete, hero-number-consistent
+  `xx-01..04` + `xx-002` kit; the roster deliberately includes heroes that share a CC0 stand-in
+  mesh and heroes with no portrait, so the old demo-showcase visual gates (unique/textured/in-band
+  model, icon-on-disk) do NOT apply. Pinned id-for-id by `TestFirstOpenRoster`.
 - **104 items — the whole shippable catalogue, split across the arena's four acquisition
   surfaces** (task #70 drew the first two, task #82 the other two; the arena has NO crafting,
   so every item is complete when you get it):

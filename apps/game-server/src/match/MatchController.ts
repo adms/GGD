@@ -12,7 +12,7 @@ import {
 import { asSeatId, asTeamId, type AugmentId, type ChampionId, type EntityId, type ItemId, type SeatId, type TeamId } from "@ggd/shared/ids";
 import { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { DEFAULT_COMBAT_ENV, type CombatEnvMultipliers } from "@ggd/shared/sim/combatEnv";
-import { SKELETON_ARENA, type ArenaDef } from "@ggd/shared/sim/world/ArenaDef";
+import { SKELETON_ARENA, pickRoundArena, type ArenaDef } from "@ggd/shared/sim/world/ArenaDef";
 import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
 import { Champions, Abilities, LootTables } from "@ggd/shared/sim/content/registry";
 import { Models } from "@ggd/shared/content";
@@ -32,7 +32,17 @@ import {
   endCombatRevives,
   reviveRulesFromConfig,
 } from "@ggd/shared/sim/revive";
-import { DEFAULT_FLOWER_CONFIG } from "@ggd/shared/content";
+import {
+  beginCombatFireRing,
+  endCombatFireRing,
+  fireRingRulesFromConfig,
+} from "@ggd/shared/sim/fireRing";
+import {
+  beginCombatGuardians,
+  endCombatGuardians,
+  guardianRulesFromConfig,
+} from "@ggd/shared/sim/systems/GuardianSystem";
+import { DEFAULT_FLOWER_CONFIG, type FireRingConfig } from "@ggd/shared/content";
 import type { IntentFrame, AbilitySlot } from "@ggd/shared/sim/intents";
 import type { Cheat } from "@ggd/shared/protocol/messages";
 import {
@@ -44,7 +54,7 @@ import {
   type AugmentOffer,
   type ItemOffer,
 } from "@ggd/shared/sim/economy/draft";
-import { rollItemReward, grantItemFree } from "@ggd/shared/sim/economy/shop";
+import { rollItemReward, grantItemFree, commitShopSession } from "@ggd/shared/sim/economy/shop";
 import { releaseOrbSlot } from "@ggd/shared/sim/economy/legendaryOrb";
 import { rankUpAbility, learnEx } from "@ggd/shared/sim/abilities/abilitySystem";
 import {
@@ -62,6 +72,29 @@ import { Whitelist } from "../curation/whitelist";
 import { PhaseMachine, type MatchPhase, type PhaseConfig, DEFAULT_PHASE_CONFIG } from "./PhaseMachine";
 import { pairTeams, livesLost, type DuelPairing } from "./PairedDuels";
 import { DEFAULT_ARENA_RULES, grantForRound, type ArenaRules } from "./arenaRules";
+
+/**
+ * Strip the FIGHTING half of a produced intent while combat is not live, so a
+ * champion cannot move-to-engage, attack or cast between the moment a round
+ * settles and the moment the next round's combat is armed (#100). The economy
+ * half — buy / sell / rank / ready / offer picks / recall — is preserved so the
+ * intermission shop keeps working with the fighters standing still.
+ *
+ * Pure and deterministic (a function only of the frame): the caller gates it on
+ * `world.combatActive`, host state that flips on combat entry/exit identically
+ * on every replica, so client prediction replays the freeze byte-for-byte.
+ */
+function freezeCombatIntent(frame: IntentFrame): IntentFrame {
+  return {
+    // An explicit `stop` (not merely a dropped order) so any sticky nav target
+    // that survived the settling tick is re-cleared EVERY frame — the OrderSystem
+    // chase loop re-derives movement from a persisting attackTarget, so leaving
+    // the order undefined would let a champion keep closing on its last foe.
+    order: { kind: "stop" },
+    // aim intentionally dropped: no need to keep re-facing a corpse.
+    commands: frame.commands.filter((c) => c.kind !== "castAbility" && c.kind !== "useItem"),
+  };
+}
 
 export interface SeatSpec {
   seatId: number;
@@ -154,6 +187,15 @@ export class MatchController {
   private specs = new Map<SeatId, SeatSpec>();
   private duelWinners = new Map<number, TeamId>(); // zone -> winner this round
 
+  /**
+   * The match seed, captured for the DETERMINISTIC per-round arena pick (task
+   * #145). Deliberately NOT `world.rng.state` — that advances every tick, so it
+   * is not a stable function of (seed, round); the raw seed is. Arena selection
+   * hashes (seed, round) independently of world.rng, so it perturbs no sim
+   * randomness and same-seed replay stays byte-identical.
+   */
+  private readonly matchSeed: number;
+
   constructor(
     public readonly matchId: string,
     seed: number,
@@ -162,8 +204,14 @@ export class MatchController {
     public readonly startingLives = 3,
     /** round-rules table; DEFAULT_ARENA_RULES = exact legacy behavior */
     public readonly rules: ArenaRules = DEFAULT_ARENA_RULES,
-    /** map geometry (collision truth); default = built-in skeleton */
-    public readonly arena: ArenaDef = SKELETON_ARENA,
+    /**
+     * ACTIVE map geometry (collision truth); default = built-in skeleton. NOT
+     * readonly: when `arenaPool` is non-empty this is swapped each combat round
+     * to the deterministically-chosen arena (task #145). The champ-select /
+     * first-intermission spawn uses whatever is passed here; combat rounds
+     * rotate.
+     */
+    public arena: ArenaDef = SKELETON_ARENA,
     /**
      * Content whitelist snapshot resolved at match creation. Default =
      * allow-all, so every existing call site and unit test is unchanged; the
@@ -179,7 +227,30 @@ export class MatchController {
      * site and unit test byte-identical.
      */
     public readonly combatEnv: CombatEnvMultipliers = DEFAULT_COMBAT_ENV,
+    /**
+     * Round-pacing FIRE RING schedule (task #132), resolved BY THE CALLER from
+     * `config.match@1`'s `match.fireRing` block (MatchRoom → resolveFireRing()).
+     * `startSec` is the SINGLE SOURCE OF TRUTH for round length — the ring
+     * closes in at that combat-elapsed time and burns every living champion with
+     * an escalating %-HP true-damage ramp so a stalemate settles by ~3-4 min.
+     * null (the default: unit tests, skeleton boot, an operator who authored no
+     * ring) leaves the mechanic OFF — enterCombat never arms it, so behavior is
+     * byte-identical to the pre-ring sim. Armed on combat entry / disarmed on
+     * exit exactly like the flowers; the LIVE-combat gate in FireRingSystem
+     * makes it stop the instant a round settles (coordinates with task #100).
+     */
+    public readonly fireRing: FireRingConfig | null = null,
+    /**
+     * The per-round arena ROTATION pool (task #145). Empty (the default: unit
+     * tests, skeleton boot, any caller that wants a fixed map) leaves the arena
+     * pinned to `arena` for the whole match — byte-identical to the pre-#145
+     * behaviour. When non-empty, each combat round deterministically selects a
+     * map from this pool (see selectRoundArena); the chosen id rides the snapshot
+     * so every client agrees. MatchRoom passes the full loaded pool.
+     */
+    public readonly arenaPool: readonly ArenaDef[] = [],
   ) {
+    this.matchSeed = seed;
     registerSkeletonContent();
     this.world = new SimWorld(arena, seed);
     this.world.combatEnv = combatEnv;
@@ -443,11 +514,48 @@ export class MatchController {
     grantItemFree(this.world, entity, picked);
   }
 
+  /**
+   * Choose THIS combat round's arena deterministically from the rotation pool
+   * (task #145) and make it active for both the controller (spawn placement) and
+   * the sim (collision). Seeded off (matchSeed, round) via a pure hash that never
+   * touches world.rng, so:
+   *   • server-authoritative + reproducible — every client/replica computes the
+   *     same id, and a same-seed replay is byte-identical,
+   *   • stable within a round (picked once here, at combat entry — never re-picked
+   *     mid-round),
+   *   • it varies across rounds (consecutive rounds never repeat; see
+   *     pickRoundArena).
+   * An empty/singleton pool is a no-op, so a match without rotation keeps its
+   * fixed `arena` exactly as before. The chosen id is exposed on the broadcast
+   * state as `mapId` (projectSnapshot reads ctl.arena.id), which the client-render
+   * agent watches to swap the scene; per-arena guardian identities (#105) and the
+   * fire-ring/flower arming below all key off this same active arena.
+   */
+  private selectRoundArena(): void {
+    const picked = pickRoundArena(this.arenaPool, this.matchSeed, this.phase.round);
+    if (!picked) return; // empty pool → keep the current (fixed) arena
+    this.arena = picked;
+    this.world.setArena(picked);
+  }
+
   private enterCombat(): void {
     this.world.economyOpen = false;
     this.world.combatActive = true; // scoreboard time-alive accrues during combat
     this.offers.clear();
     this.duelWinners.clear();
+
+    // Per-round arena rotation (task #145): pick THIS round's map deterministically
+    // from the pool BEFORE anyone is placed, so fighters spawn into it and the
+    // guardian / fire-ring / flower arming below all read the same geometry.
+    this.selectRoundArena();
+
+    // COMMIT the shopping session: drop every champion's buy/sell undo history so
+    // a purchase made this round can no longer be reversed once combat starts
+    // (task #121) — this is the seam that makes a cross-round buy→sell→undo cycle
+    // impossible to exploit for gold.
+    for (const seat of this.seats.values()) {
+      if (seat.entityId !== null) commitShopSession(this.world, seat.entityId);
+    }
 
     const { pairings, bye } = pairTeams(this.aliveTeams(), this.phase.round);
     this.pairings = pairings;
@@ -521,6 +629,36 @@ export class MatchController {
       );
     } else {
       endCombatRevives(this.world);
+    }
+
+    // arm the ROUND-PACING FIRE RING (task #132). Its combat-elapsed counter
+    // starts at 0 here and the ring stays dormant until `startSec` — the single
+    // source of truth for round length — then closes in with the escalating
+    // %-HP true burn. FireRingSystem gates every burn on `world.combatActive`,
+    // so the instant a round settles (task #100 flips it false in concludeCombat)
+    // the ring stops: a LIVE-combat finish accelerator, never a post-settle
+    // grinder. Absent config = OFF, exactly like the flowers' legacy-compat rule.
+    if (this.fireRing) {
+      beginCombatFireRing(this.world, fireRingRulesFromConfig(this.fireRing, this.world.dt));
+    } else {
+      endCombatFireRing(this.world);
+    }
+
+    // arm the neutral duel-zone GUARDIANS (task #89): one per ACTIVE duel zone
+    // (the bye has no pairing, so no guardian). `round` scales guardian HP +
+    // volley damage. Cleared by concludeCombat so no post-round PvE farming.
+    // Absent config = OFF (same legacy-compat rule as flowers/revives). The
+    // guardian is a neutral structure (no team/seat/nav/stats) so duel
+    // resolution, team lives, placement and the scoreboard stay blind to it.
+    if (this.rules.guardianTower) {
+      beginCombatGuardians(
+        this.world,
+        guardianRulesFromConfig(this.rules.guardianTower, this.world.dt),
+        this.pairings.map((p) => p.zone),
+        this.phase.round,
+      );
+    } else {
+      endCombatGuardians(this.world);
     }
   }
 
@@ -619,20 +757,31 @@ export class MatchController {
   private concludeCombat(): void {
     endCombatFlowers(this.world); // round over: all flowers despawn
     endCombatRevives(this.world); // …and every circle + in-flight channel dies
+    endCombatFireRing(this.world); // …and the round-pacing fire ring re-idles (#132)
+    endCombatGuardians(this.world); // …and every neutral guardian despawns (no post-round farming, #89)
     this.settleRound();
     this.world.combatActive = false;
+    // The round is SETTLED: halt every champion RIGHT NOW (#100) — clear the
+    // in-flight swing/cast, sticky nav targets and residual momentum — so the
+    // scene freezes for the round-win / settlement beat instead of letting the
+    // bots keep trading blows through `resolution` and the next shop. From here
+    // the intent seam (freezeCombatIntent, gated on combatActive) keeps them
+    // frozen until enterCombat re-parks and re-arms combat next round.
+    this.freezeControls();
     if (this.aliveTeams().length <= 1) {
       this.outcomeDecided = true;
-      this.freezeControls();
     }
   }
 
   /**
    * Halt every champion: clear nav orders/targets/overrides and any in-progress
-   * cast / basic-attack wind-up. Combined with tick() skipping intent gathering
-   * while outcomeDecided is set, this pins each champion idle in place for the
-   * victory settlement (still hero, no drift/casts). Deterministic — mutates
-   * only world state the sim already owns.
+   * cast / basic-attack wind-up, and zero residual momentum. Called at EVERY
+   * round settle (concludeCombat) and again at matchEnd (maybeFinish). Combined
+   * with the intent seam refusing to feed combat orders while combat is not live
+   * (freezeCombatIntent, gated on world.combatActive) — and, at match end,
+   * skipping intent gathering entirely while outcomeDecided is set — this pins
+   * each champion idle for the round-win / victory settlement beat (still hero,
+   * no drift/casts). Deterministic — mutates only world state the sim already owns.
    */
   private freezeControls(): void {
     for (const seat of this.seats.values()) {
@@ -813,11 +962,49 @@ export class MatchController {
     // 1) driver swaps land at the tick boundary
     for (const seat of this.seats.values()) seat.applyPendingDriver();
 
-    // 2) phase timer
+    // 2) phase timer — ADVANCED FIRST, before any fallible work, so the visible
+    //    countdown can never freeze even if the sim step or a phase transition
+    //    below throws. Task #46: an intermittently throwing/stalling tick used to
+    //    stop the clock dead — and, after the room-hardening wave, take the whole
+    //    room down with it (MatchRoom disconnected the room on a thrown tick), so
+    //    a single bad tick permanently froze the match. The clock now moves
+    //    regardless of what happens further down the tick.
     const expired = this.phase.tickTimer();
 
-    // 3) gather intents + step the sim (sim runs in every phase; combat rules
-    //    only differ by economyOpen and by who is alive)
+    // 3+4) intents → sim step → event drain → cheat sustain, CONTAINED. A throw
+    //    here (a sim edge case, an input that slipped validation, a fire-ring /
+    //    flower / guardian corner) must NOT wedge the match: log + recover, then
+    //    still run the phase transition below so the round can settle. A single
+    //    bad tick is skipped, not fatal; a persistent one keeps the clock moving.
+    try {
+      this.stepSim();
+    } catch (err) {
+      this.onTickFault("sim-step", err);
+    }
+
+    // 5) phase transitions, CONTAINED with a force-advance failsafe. The normal
+    //    path reads only guarded world state so it survives a corrupt/stale sim;
+    //    if it ever throws (e.g. enterCombat on a bad arena geometry) we still
+    //    push the phase forward on timer expiry, so a persistently faulting match
+    //    marches to matchEnd rather than hanging in one phase forever.
+    try {
+      this.advancePhase(expired);
+    } catch (err) {
+      this.onTickFault("phase-transition", err);
+      if (expired) this.forceAdvanceOnFault();
+    }
+    return this.phase.phase;
+  }
+
+  /**
+   * Steps 3–4 of a tick: gather seat intents, advance the deterministic sim one
+   * fixed step, drain the sim events the controller must act on, and sustain any
+   * dev cheats. Extracted so tick() can CONTAIN a throw here (task #46) and still
+   * run the phase transition, keeping the match clock alive.
+   */
+  private stepSim(): void {
+    // gather intents + step the sim (sim runs in every phase; combat rules
+    // only differ by economyOpen and by who is alive)
     const intents = new Map<SeatId, IntentFrame>();
     // FREEZE: once the match outcome is decided, stop gathering seat intents
     // (human AND AI) so champions idle through the resolution/matchEnd settlement
@@ -825,7 +1012,21 @@ export class MatchController {
     // (freezeControls) when the outcome latched, so the empty map keeps them put.
     if (!this.outcomeDecided && this.phase.phase !== "champSelect" && this.phase.phase !== "matchEnd") {
       for (const [seatId, seat] of this.seats) {
-        intents.set(seatId, this.sanitizeIntent(seat.produceIntent(this.world, this.world.tick)));
+        let frame = this.sanitizeIntent(seat.produceIntent(this.world, this.world.tick));
+        // ROUND-SETTLE FREEZE (#100): `combatActive` is the single "a duel is
+        // LIVE" flag, but nothing on the combat path or this seam ever consulted
+        // it — so the sim kept stepping attacks/casts/movement in EVERY phase.
+        // A round settles (checkCombatEnd → concludeCombat) while both teams in a
+        // timer-decided duel are still alive and adjacent, so the bots brawled on
+        // through `resolution` and the next `intermission` (up to ~65s) until
+        // enterCombat re-parked them. While combat is not live we strip the
+        // FIGHTING half of every produced intent (the move/attack order + any
+        // cast / active-item command) and keep the economy half (shop / rank /
+        // ready / offer picks), so champions ACTUALLY STOP for the settlement beat
+        // yet the intermission shop still works. Deterministic: a pure function
+        // of the frame + world.combatActive (host state set on combat entry/exit).
+        if (!this.world.combatActive) frame = freezeCombatIntent(frame);
+        intents.set(seatId, frame);
       }
     }
     this.world.step(intents);
@@ -871,8 +1072,15 @@ export class MatchController {
     // 4b) sustain dev cheats AFTER the sim step (god mode / 0-CD). Dev-only and
     //     off by default, so this branch is dead weight in normal play.
     if (this.godModeSeats.size > 0 || this.zeroCdSeats.size > 0) this.sustainCheats();
+  }
 
-    // 5) phase transitions
+  /**
+   * Step 5 of a tick: the phase state-machine transitions. Reads only guarded
+   * world state (optional chaining throughout checkCombatEnd / teamAliveCount),
+   * so it survives a corrupt or stale sim; tick() still wraps it and force-
+   * advances on expiry if it ever throws, so the match can never wedge in a phase.
+   */
+  private advancePhase(expired: boolean): void {
     switch (this.phase.phase) {
       case "champSelect":
         if (expired) {
@@ -915,7 +1123,102 @@ export class MatchController {
       case "matchEnd":
         break;
     }
-    return this.phase.phase;
+  }
+
+  /**
+   * Force the phase machine forward when the NORMAL transition threw (task #46
+   * failsafe). Uses ONLY host state — the phase machine, team lives, placements
+   * and the rng — never the possibly-corrupt sim world, so a match whose sim or
+   * enterCombat keeps throwing still converges to matchEnd instead of freezing
+   * the countdown. The combat branch charges one life to a deterministically-
+   * chosen alive team, so lives strictly decrease across rounds and the match
+   * can never cycle phases forever without ending.
+   */
+  private forceAdvanceOnFault(): void {
+    switch (this.phase.phase) {
+      case "champSelect":
+        try {
+          this.autoPickAndSpawn();
+        } catch (err) {
+          this.onTickFault("auto-pick", err);
+        }
+        this.phase.advance();
+        try {
+          this.enterIntermission();
+        } catch (err) {
+          this.onTickFault("enter-intermission", err);
+        }
+        break;
+      case "intermission":
+        this.phase.advance();
+        try {
+          this.enterCombat();
+        } catch (err) {
+          this.onTickFault("enter-combat", err);
+        }
+        break;
+      case "combat": {
+        // We could not compute the duel outcome; charge one life to a
+        // deterministically-chosen alive team so lives still fall and the match
+        // converges instead of cycling combat rounds forever.
+        const alive = this.aliveTeams();
+        if (alive.length > 1) {
+          const loser = alive[this.world.rng.int(alive.length)]!;
+          this.lives.set(loser, Math.max(0, (this.lives.get(loser) ?? 0) - 1));
+          if ((this.lives.get(loser) ?? 0) <= 0 && !this.placements.has(loser)) {
+            this.placements.set(loser, this.aliveTeams().length + 1);
+          }
+        }
+        this.phase.advance(); // -> resolution
+        break;
+      }
+      case "resolution": {
+        let finished = false;
+        try {
+          finished = this.maybeFinish();
+        } catch (err) {
+          this.onTickFault("maybe-finish", err);
+        }
+        if (!finished) {
+          this.phase.advance();
+          try {
+            this.enterIntermission();
+          } catch (err) {
+            this.onTickFault("enter-intermission", err);
+          }
+        }
+        break;
+      }
+      case "matchEnd":
+        break;
+    }
+  }
+
+  /** Total contained tick faults (sim-step / phase-transition) — health telemetry. */
+  get faultCount(): number {
+    return this.tickFaults;
+  }
+
+  private tickFaults = 0;
+  private loggedTickFaults = 0;
+
+  /**
+   * Record + throttle-log a contained tick fault. The first few faults are
+   * logged in full; thereafter only every 300th (~10s at 30Hz), so a
+   * DETERMINISTIC fault repeating every tick leaves a clear trail in the log
+   * without flooding it.
+   */
+  private onTickFault(where: string, err: unknown): void {
+    this.tickFaults++;
+    if (this.loggedTickFaults < 5 || this.tickFaults % 300 === 0) {
+      this.loggedTickFaults++;
+      console.error(
+        `[match ${this.matchId}] contained a ${where} fault in phase ${this.phase.phase} at sim tick ` +
+          `${this.world.tick} (fault #${this.tickFaults}); the phase clock keeps advancing so the round ` +
+          `can still settle`,
+        err,
+      );
+    }
   }
 
   // ---------- dev cheats (offline testing) ----------

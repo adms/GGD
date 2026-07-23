@@ -24,7 +24,7 @@ canonical pairing table is `announcer.cast.json` (`audio.announcer-cast@2`),
 which carries per-line `zhText` (the Chinese display/caption text and canonical
 meaning) beside `spoken` (what the voice actually says). **On most lines those
 two are deliberately NOT translations of each other — that gap IS the joke**,
-and there is no generator deriving one from the other, so `av-08` is the only
+and there is no generator deriving one from the other, so `avo-08` is the only
 thing preventing them drifting apart. Render with:
 
 ```sh
@@ -68,23 +68,23 @@ to its own archive directory so a rerun cannot overwrite the live pack:
 | `announcer.ja-JP-kyoko-retired.json` | `retired-ja-kyoko/` | superseded, not wrong — #57 recast the WRITING; a single voice reading straight Japanese carries none of it |
 | `announcer.jank-novelty-retired.json` | `retired-jank-novelty/` | #57's first pass read "jank" as novelty voices (sheep/robot/singing synths); retired by the user's correction above |
 
-Each archive keeps a `NOTE.md` recording the rationale. `av-12` pins both halves:
+Each archive keeps a `NOTE.md` recording the rationale. `avo-12` pins both halves:
 the `out` paths stay inside the archive dirs, and the NOTEs stay on disk.
 
 | ID | Item | Test ID | Category | Status |
 | --- | --- | --- | --- | --- |
-| av-01 | All 7 system/announcer events are bound to at least one `announcer/` clip | audio-announcer-bound | unit | done |
-| av-02 | System events pool announcer VO **only** — no Chinese map quip is left in a system pool (a broadcast is the machine talking) | audio-announcer-system-vo-only | regression | done |
-| av-03 | Every `announcer/` path referenced anywhere in the audio-map exists on disk | audio-announcer-files-exist | integration | done |
-| av-04 | All 13 generated clips are bound and staged as real, non-empty MP3s (ID3/frame-sync header, >1 KB) | audio-announcer-real-mp3 | unit | done |
-| av-05 | The quips displaced from system pools are preserved, not deleted: the 6 map quips stay pooled in map-flavour, and the 2 CHARACTER quips (`mandie`→初音, `87joke`→飛影) moved to `champion-voices.json` instead — never back into map flavour | audio-announcer-quips-kept | regression | done |
-| av-06 | Map-flavour pools are split by LENGTH — both capped at 1 voice with a cooldown, and the long set-piece pool out-cools the short-stab pool, so an 8.8 s quip can never drown the match-start VO | audio-announcer-flavor-split | regression | done |
-| av-07 | `announcer.json` renders all 13 cues to the live `announcer/` paths with unique ids; a line is either whole-line cast or split into ≥2 non-empty, individually-voiced segments — never both | audio-announcer-manifest-live | unit | done |
-| av-08 | The cast table and the generator manifest stay in lockstep (same ids, clip, rate, spoken text, voice) so display text and spoken text cannot drift apart | audio-announcer-cast-in-sync | regression | done |
-| av-09 | The whole pack paces at ONE rate (185 wpm) — a rate outlier reads as a character doing a bit, which is the register this pack rejects | audio-announcer-uniform-rate | unit | done |
-| av-10 | Only the approved Kyoko/Tingting/Sinji/Karen cast is used; no novelty, character or singing synth is cast anywhere (they have no energy above ~2.5 kHz and cannot articulate these languages) | audio-announcer-no-novelty-voices | unit | done |
-| av-11 | No Latin script in any Kyoko fragment — she transliterates it to katakana internally, so Latin text renders as a non-deterministic guess rather than a reading (hence イーエックス, not "EX") | audio-announcer-no-latin-in-kyoko | regression | done |
-| av-12 | Every retired manifest stays retargeted to its own archive dir and never writes a live `announcer/` path, and each archive keeps the `NOTE.md` recording why it was superseded | audio-announcer-manifest-retired | regression | done |
+| avo-01 | All 7 system/announcer events are bound to at least one `announcer/` clip | audio-announcer-bound | unit | done |
+| avo-02 | System events pool announcer VO **only** — no Chinese map quip is left in a system pool (a broadcast is the machine talking) | audio-announcer-system-vo-only | regression | done |
+| avo-03 | Every `announcer/` path referenced anywhere in the audio-map exists on disk | audio-announcer-files-exist | integration | done |
+| avo-04 | All 13 generated clips are bound and staged as real, non-empty MP3s (ID3/frame-sync header, >1 KB) | audio-announcer-real-mp3 | unit | done |
+| avo-05 | The quips displaced from system pools are preserved, not deleted: the 6 map quips stay pooled in map-flavour, and the 2 CHARACTER quips (`mandie`→初音, `87joke`→飛影) moved to `champion-voices.json` instead — never back into map flavour | audio-announcer-quips-kept | regression | done |
+| avo-06 | Map-flavour pools are split by LENGTH — both capped at 1 voice with a cooldown, and the long set-piece pool out-cools the short-stab pool, so an 8.8 s quip can never drown the match-start VO | audio-announcer-flavor-split | regression | done |
+| avo-07 | `announcer.json` renders all 13 cues to the live `announcer/` paths with unique ids; a line is either whole-line cast or split into ≥2 non-empty, individually-voiced segments — never both | audio-announcer-manifest-live | unit | done |
+| avo-08 | The cast table and the generator manifest stay in lockstep (same ids, clip, rate, spoken text, voice) so display text and spoken text cannot drift apart | audio-announcer-cast-in-sync | regression | done |
+| avo-09 | The whole pack paces at ONE rate (185 wpm) — a rate outlier reads as a character doing a bit, which is the register this pack rejects | audio-announcer-uniform-rate | unit | done |
+| avo-10 | Only the approved Kyoko/Tingting/Sinji/Karen cast is used; no novelty, character or singing synth is cast anywhere (they have no energy above ~2.5 kHz and cannot articulate these languages) | audio-announcer-no-novelty-voices | unit | done |
+| avo-11 | No Latin script in any Kyoko fragment — she transliterates it to katakana internally, so Latin text renders as a non-deterministic guess rather than a reading (hence イーエックス, not "EX") | audio-announcer-no-latin-in-kyoko | regression | done |
+| avo-12 | Every retired manifest stays retargeted to its own archive dir and never writes a live `announcer/` path, and each archive keeps the `NOTE.md` recording why it was superseded | audio-announcer-manifest-retired | regression | done |
 
 ## Notes / follow-ups
 
@@ -97,7 +97,7 @@ the `out` paths stay inside the archive dirs, and the NOTEs stay on disk.
 - **No `build-announcer.mjs`.** Unlike the champion-name pack, which generates
   both its outputs from one `CASTING` table in
   `tools/tts-gen/src/build-champ-names.mjs`, `announcer.json` and
-  `announcer.cast.json` are both hand-maintained. `av-08` is the substitute for
+  `announcer.cast.json` are both hand-maintained. `avo-08` is the substitute for
   that single-source-of-truth guarantee — if the two ever grow a generator, it
   should replace the duplication rather than sit beside it.
 - Same production story as the champion-name pack: these are **Apple-TTS machine

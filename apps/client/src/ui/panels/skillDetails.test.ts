@@ -48,6 +48,19 @@ describe("skill detail rows", () => {
     else expect(q.manaCost).toBeUndefined();
   });
 
+  it("carries the BASE cast range / AoE radius for the view to scale (task #136)", () => {
+    cover("shop-skill-details");
+    const rows = skillRows(seatOf());
+    const q = rows.find((r) => r.slot === "Q")!;
+    const def = Champions.get("sela" as ChampionId);
+    // the row holds the AUTHORED base — the combat-env `abilityRange` factor is
+    // applied at display time (ProfileBlock via displayFinal), exactly as for the
+    // cooldown — so a number here can never disagree with the sim's read seam.
+    if (def.abilities.Q.range > 0) expect(q.range).toBe(def.abilities.Q.range);
+    if (def.abilities.Q.radius !== undefined && def.abilities.Q.radius > 0)
+      expect(q.radius).toBe(def.abilities.Q.radius);
+  });
+
   it("shows RANK-1 numbers for an unlearned skill so it can be compared first", () => {
     cover("shop-skill-details");
     const rows = skillRows(seatOf({ abilityRanks: [0, 0, 0, 0] }));

@@ -82,6 +82,15 @@ export const FLASH_MS = 130;
  * STAGE-1 contract — do not diverge the field set.
  */
 export type ImpactTier = "light" | "medium" | "heavy" | "crit";
+/** Camera-shake character: aimed along the hit vector, or a radial ring. */
+export type ShakeStyle = "directional" | "omni";
+/**
+ * Which hit-spark identity the client plays (mirrors the sim's SparkKind). The
+ * client maps each to a distinct tint + intensity so a counter reads RED, a
+ * block cool-white, an ice hit icy, etc. — the "distinct per profile.sparkKind"
+ * contract. `ice` is content-opt-in only (the sim never defaults to it).
+ */
+export type SparkKind = "hit" | "heavy" | "counter" | "block" | "magic" | "ice";
 export interface ImpactProfile {
   tier: ImpactTier;
   /** authoritative freeze ticks applied to BOTH fighters (crit/guardBreak-emphasised). */
@@ -95,7 +104,34 @@ export interface ImpactProfile {
   isEX: boolean;
   isBlock: boolean;
   isCounter?: boolean;
+  // ---- COSMETIC hints (client channels; damage-derived default, hitFeel-overridable) ----
+  // Kept verbatim in step with the sim's ImpactProfile (sim/combat/damage.ts +
+  // sim/combat/hitFeel.ts). `asImpactProfile` fills each with a tier-derived
+  // default when a pre-#133 replay omits it, so downstream code never sees undefined.
+  /** camera shake amplitude hint (0..~1.4). */
+  shakeMag: number;
+  /** shake character: aimed along the hit vector, or a radial ring. */
+  shakeStyle: ShakeStyle;
+  /** hit-spark identity the client plays (contact-point spark selection). */
+  sparkKind: SparkKind;
+  /** victim body-flash colour [r,g,b] 0..1. */
+  flashColor: [number, number, number];
+  /** victim body-flash duration (ms). */
+  flashMs: number;
+  /** one-shot directional camera kick magnitude. */
+  camKick: number;
+  /** cosmetic client-side EX freeze ticks (0 = none). */
+  exFreeze: number;
 }
+
+// ---- client mirror of the sim's damage-derived cosmetic DEFAULT curve ---------
+// (sim/combat/hitFeel.ts). Only used to backfill a pre-#133 wire payload that
+// predates the cosmetic fields, so an old replay still reads coherently.
+const SHAKE_BY_TIER: Record<ImpactTier, number> = { light: 0.35, medium: 0.6, heavy: 0.85, crit: 1.0 };
+const FLASHMS_BY_TIER: Record<ImpactTier, number> = { light: 90, medium: 120, heavy: 160, crit: 200 };
+const CAMKICK_BY_TIER: Record<ImpactTier, number> = { light: 0.15, medium: 0.3, heavy: 0.5, crit: 0.65 };
+const DEFAULT_FLASH_RGB: [number, number, number] = [1, 0.25, 0.2];
+const EX_FREEZE_DEFAULT_TICKS = 8;
 
 /**
  * Narrow an untyped `hitImpact.data.profile` into an ImpactProfile, or null when
@@ -109,6 +145,12 @@ export function asImpactProfile(v: unknown): ImpactProfile | null {
   if (tier !== "light" && tier !== "medium" && tier !== "heavy" && tier !== "crit") return null;
   if (typeof p.hitstopTicks !== "number") return null;
   const dir = p.knockbackDir as { x?: unknown; z?: unknown } | undefined;
+  const isEX = Boolean(p.isEX);
+  const rgb = p.flashColor as unknown;
+  const flashColor: [number, number, number] =
+    Array.isArray(rgb) && rgb.length >= 3 && rgb.every((c) => typeof c === "number")
+      ? [rgb[0] as number, rgb[1] as number, rgb[2] as number]
+      : [...DEFAULT_FLASH_RGB];
   return {
     tier,
     hitstopTicks: p.hitstopTicks,
@@ -118,10 +160,26 @@ export function asImpactProfile(v: unknown): ImpactProfile | null {
       z: typeof dir?.z === "number" ? dir.z : 0,
     },
     knockbackMag: typeof p.knockbackMag === "number" ? p.knockbackMag : 0,
-    isEX: Boolean(p.isEX),
+    isEX,
     isBlock: Boolean(p.isBlock),
     isCounter: p.isCounter === undefined ? undefined : Boolean(p.isCounter),
+    // COSMETIC fields — narrow when present, else backfill the tier-derived
+    // default so a pre-#133 replay (which omits them) still reads coherently.
+    shakeMag: typeof p.shakeMag === "number" ? p.shakeMag : SHAKE_BY_TIER[tier],
+    shakeStyle: p.shakeStyle === "omni" || p.shakeStyle === "directional" ? p.shakeStyle : tier === "crit" || isEX ? "omni" : "directional",
+    sparkKind: isSparkKind(p.sparkKind) ? p.sparkKind : "hit",
+    flashColor,
+    flashMs: typeof p.flashMs === "number" ? p.flashMs : FLASHMS_BY_TIER[tier],
+    camKick: typeof p.camKick === "number" ? p.camKick : CAMKICK_BY_TIER[tier],
+    exFreeze: typeof p.exFreeze === "number" ? p.exFreeze : isEX ? EX_FREEZE_DEFAULT_TICKS : 0,
   };
+}
+
+/** Type guard for the SparkKind union off an untyped wire field. */
+function isSparkKind(v: unknown): v is SparkKind {
+  return (
+    v === "hit" || v === "heavy" || v === "counter" || v === "block" || v === "magic" || v === "ice"
+  );
 }
 
 // ---------------------------------------------------------------------------
@@ -179,6 +237,14 @@ export interface ShakeRequest {
   amp: number;
   durationMs: number;
   dir: { x: number; z: number };
+  /** shake character: aimed along `dir` (directional) or a radial ring (omni). */
+  style: ShakeStyle;
+  /**
+   * One-shot translational camera KICK magnitude (tier/EX-scaled, block-softened)
+   * — the hard directional shove on the contact frame the camera wave layers on
+   * top of the ringing jitter. 0 = no kick. Consumed by CameraRig.addShake(dir…).
+   */
+  camKick: number;
 }
 
 /**
@@ -223,7 +289,10 @@ export function planImpactFeedback(
   ctx: { dmgType?: string; tickMs: number },
 ): ImpactFeedbackPlan {
   const fx = TIER_FX[profile.tier];
-  const amp = Math.min(SHAKE_MAX_AMP, fx.weight * SHAKE_MAX_AMP);
+  // shake amplitude follows the profile's (hitFeel-overridable) cosmetic
+  // `shakeMag` scaled into world units, clamped to the impulse cap. The camera
+  // wave layers the local-perspective + quality multipliers on top of this base.
+  const amp = Math.min(SHAKE_MAX_AMP, Math.max(0, profile.shakeMag) * SHAKE_MAX_AMP);
   return {
     tier: profile.tier,
     isBlock: profile.isBlock,
@@ -232,7 +301,13 @@ export function planImpactFeedback(
     freezeMs: Math.max(0, profile.hitstopTicks) * ctx.tickMs,
     victimFlash: { rgb: flashColorFor(ctx.dmgType), alpha: fx.flashAlpha, ms: fx.flashMs },
     attackerFlash: { rgb: [...ATTACKER_FLASH_RGB], alpha: fx.attackerAlpha, ms: fx.attackerMs },
-    shake: { amp, durationMs: shakeDurationMs(amp), dir: { ...profile.knockbackDir } },
+    shake: {
+      amp,
+      durationMs: shakeDurationMs(amp),
+      dir: { ...profile.knockbackDir },
+      style: profile.shakeStyle,
+      camKick: Math.max(0, profile.camKick),
+    },
   };
 }
 
@@ -274,22 +349,68 @@ export function impactShakeAmp(input: ImpactShakeInput): number {
   return Math.min(SHAKE_MAX_AMP, amp);
 }
 
-/** Shake impulse duration (ms): a bigger hit rings out a little longer. */
+/**
+ * Shake impulse duration (ms). Retuned CRISP (收尾精準): a heavy hit rings for
+ * ≤260 ms instead of the old 460 ms wool, so the frame settles fast after the
+ * 破碎 shove. A light hit clears in ~120 ms.
+ */
 export function shakeDurationMs(amp: number): number {
   const a = Math.max(0, Math.min(SHAKE_MAX_AMP, amp));
-  return 160 + (a / SHAKE_MAX_AMP) * 300; // 160..460 ms
+  return 120 + (a / SHAKE_MAX_AMP) * 140; // 120..260 ms (was 160..460)
 }
 
 /**
  * Decaying envelope of a shake impulse over its life: 1 at birth, 0 at (and
- * past) `durationMs`, quadratic ease-out in between so the shake dies smoothly
- * instead of cutting off. Pure; the sole "shake impulse decay math".
+ * past) `durationMs`. CUBIC ease-out (was quadratic) so the tail dies HARDER —
+ * at 70% of the window a cubic tail is ~2.7% vs the quadratic ~9%, the crisp
+ * snap-to-rest a Capcom impact settles with instead of a woolly ring. Pure; the
+ * sole "shake impulse decay math".
  */
 export function shakeDecayEnvelope(ageMs: number, durationMs: number): number {
   if (!(durationMs > 0) || ageMs <= 0) return ageMs <= 0 ? 1 : 0;
   if (ageMs >= durationMs) return 0;
   const t = 1 - ageMs / durationMs;
-  return t * t;
+  return t * t * t;
+}
+
+// ---------------------------------------------------------------------------
+// hitstop micro-jitter (ChampionView) — the 破碎 "buzz" on the frozen views
+// ---------------------------------------------------------------------------
+
+/**
+ * Peak amplitude (world units) of the client-only shiver applied to the two
+ * frozen fighter bodies during the hitstop window. ~0.02u reads as a 1–2px
+ * buzz at the default closest dolly without ever dragging the body off its
+ * frozen pose. Purely cosmetic (never touches the sim / the world transform).
+ */
+export const HITSTOP_SHIVER_AMP = 0.02;
+/** Shiver oscillation rate (rad/ms) — a fast ~19 Hz buzz, not a wobble. */
+const SHIVER_FREQ = 0.12;
+
+/**
+ * The tiny positional shiver offset for a body FROZEN by hitstop, at wall-clock
+ * `nowMs`. High-frequency, sub-pixel-to-1px, and — crucially for 收尾精準 — it
+ * only exists WHILE the caller is frozen (the caller stops applying it the
+ * instant the window ends, so there is zero settle tail). `phase` decorrelates
+ * the two fighters so attacker + victim don't buzz in lock-step. Amplitude eases
+ * DOWN over the last `HITSTOP_SHIVER_TAPER_MS` of the window for a clean release.
+ * Pure — no rng, no allocation on the hot path beyond the returned literal.
+ */
+export const HITSTOP_SHIVER_TAPER_MS = 60;
+export function hitstopShiver(
+  nowMs: number,
+  freezeEndMs: number,
+  phase: number,
+): { x: number; z: number } {
+  const remainMs = freezeEndMs - nowMs;
+  if (remainMs <= 0) return { x: 0, z: 0 };
+  // taper the last slice so the buzz fades to nothing right as the freeze lifts
+  const taper = remainMs >= HITSTOP_SHIVER_TAPER_MS ? 1 : remainMs / HITSTOP_SHIVER_TAPER_MS;
+  const a = HITSTOP_SHIVER_AMP * taper;
+  return {
+    x: a * Math.sin(nowMs * SHIVER_FREQ + phase),
+    z: a * Math.cos(nowMs * SHIVER_FREQ * 1.31 + phase),
+  };
 }
 
 // ---------------------------------------------------------------------------

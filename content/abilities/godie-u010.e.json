@@ -28,16 +28,22 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              1.0,
-              1.0,
-              1.0,
-              1.0
+              650,
+              900,
+              1150,
+              1400
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
             ]
           }
         }
       ]
     }
   ],
-  "vfxKey": "fx.firestorm",
+  "vfxKey": "fx.prim.void.beam",
   "schema": "ability@1"
 }

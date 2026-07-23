@@ -75,7 +75,10 @@ export function rebuildCollectionIndex(
   const entries: IndexEntry[] = [];
   if (existsSync(dir)) {
     for (const name of readdirSync(dir).sort()) {
-      if (!name.endsWith(".json") || name === "_index.json" || name.endsWith(".tmp")) continue;
+      // Skip non-docs: the generated _index.json, any other underscore-prefixed
+      // meta/config sidecar (e.g. models/_standin-overrides.json — a render-side
+      // override map, not a content doc; doc ids never start with "_"), and tmp.
+      if (!name.endsWith(".json") || name.startsWith("_") || name.endsWith(".tmp")) continue;
       const id = name.slice(0, -".json".length);
       const full = join(dir, name);
       const raw = readFileSync(full, "utf8");

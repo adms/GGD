@@ -14,6 +14,7 @@ import { asEntityId } from "@ggd/shared/ids";
 import type { AbilitySlot, Command, Order } from "@ggd/shared/sim/intents";
 import type { Vec2 } from "@ggd/shared/sim/math/vec2";
 import { setCursorVariant } from "../cursor";
+import { abilityActivationCue } from "../ui/abilityCue";
 import { buildCastCommand, type AimAbility } from "./AimResolver";
 
 /** Right-click: attack the hovered enemy, otherwise move to the point. */
@@ -195,6 +196,11 @@ export class InputCapture {
         });
         if (cmd) this.deps.onCommand(cmd);
       }
+      // Button feedback for the KEY press: a click cue (de-duped so the same
+      // activation can't double with an on-screen tile press), refusal-toned
+      // when the slot isn't a learned/available ability. Sound only — no visual
+      // (the key has no on-screen face); haptic is a mobile no-op on desktop.
+      abilityActivationCue(slot, { denied: !ability });
     }
 
     switch (ev.code) {

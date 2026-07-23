@@ -13,6 +13,10 @@
  * — the same hold → ease → pulse rules as the settlement board (../scroll/
  * autoScroll), just with a longer duration cap since this page can be very long.
  * Any manual scroll cancels it, and it runs at most once per visit.
+ *
+ * BGM (task #134): while this panel is mounted it requests the serene
+ * `menuNocturne` bed (`useBgmSceneOverride`) — 主題曲 · 寧靜女聲, once the login
+ * screen's second theme, now the ranked-ladder ambience.
  */
 import { useEffect, useMemo, useReducer, useState } from "react";
 import { Champions } from "@ggd/shared/sim/content/registry";
@@ -44,6 +48,7 @@ import {
   useAutoScrollToRow,
   type RowHighlight,
 } from "../scroll/useAutoScrollToRow";
+import { useBgmSceneOverride } from "../useAudio";
 import { TierBadge } from "../components/TierBadge";
 import { formatRank } from "../components/tier";
 import { GlyphTile } from "../components/GlyphTile";
@@ -555,6 +560,12 @@ function RankChangeBanner(): React.JSX.Element | null {
 // ---------------------------------------------------------------- panel
 
 export function LeaderboardPanel(): React.JSX.Element {
+  // 主題曲 · 寧靜女聲 (task #134): while the ranked ladder is on screen, ask the
+  // AudioDirector for the serene `menuNocturne` bed — the nocturne that used to
+  // be the login screen's second theme. Released automatically on unmount (the
+  // player leaves the lobby, or opens the store), restoring the derived scene.
+  useBgmSceneOverride("menuNocturne");
+
   const meId = useApp((s) => s.account?.id ?? null);
   const loggedIn = useApp((s) => !!s.account);
   const season = useApp((s) => s.leaderboard?.season ?? s.myRank?.season ?? null);

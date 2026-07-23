@@ -1,0 +1,39 @@
+{
+  "schema": "standin-overrides@2",
+  "note": "Task #150 — per-CHAMPION render-size overrides. As of #150 ChampionView HEIGHT-NORMALIZES every loaded champion glb to a common target height (render/views/ChampionView.ts TARGET_HEIGHT ≈ 1.8u) instead of applying each model doc's raw `scale` as an absolute — so by DEFAULT every champion reads the same on-screen size regardless of its glb's wildly-varying native mesh height (the #61 audit only checked the 2.5u ceiling, never relative consistency; measured spread was 1.70u..2.32u, with the four shared CC0 stand-in meshes — champ.sela renders 2.32u — the oversized group, and 夏娜/imported.heroshana at 1.70u reading small next to them). `relativeScale` is the per-champion RELATIVE multiplier on top of that normalization (1.0 = the normalized target height; <1 = deliberately smaller, >1 = bigger) — the ONLY knob for INTENTIONAL size exceptions (lore-small creatures/mascots, lore-large giants/mecha). Absent champions default to 1.0 (normal human = 夏娜). Keyed by championId. The optional `glbPath`/`clipMap` still swap in a genuinely different model (task #77). Files under content/models beginning with _ are NOT model@1 docs (like _index.json) and are skipped by the content validators/index builder. The composition root (GameApp) loads this map and feeds EntityViewRegistry.modelOverrideFor -> applyModelOverride (`relativeScale` threads to ChampionView.tryUpgradeToGlb); wiring that championId->override lookup in GameApp is the remaining composition-root step (owned by the GameApp wave, see docs/todo/models.md mdl-64). Height-normalization itself needs NO wiring and is live for every champion. Legacy note: pre-#150 this field was `scale` (an ABSOLUTE render scale, e.g. 小叮噹 0.6); it is now `relativeScale` with the new meaning. See docs/_model-size-audit-150.md.",
+  "target": 1.8,
+  "overrides": {
+    "godie-n00b": {
+      "relativeScale": 0.65,
+      "note": "小叮噹 / 哆啦A夢 (Doraemon) — a small ~1.3m robot cat; on the shared champ.sela mesh it was the OVERSIZED case (rendered 2.32u, the user's '小叮噹 too big'). Normalization brings it to target; 0.65 restores the intended small, rounded silhouette."
+    },
+    "godie-ofar": {
+      "relativeScale": 0.6,
+      "note": "神奇寶貝兒 - 皮卡丘 (Pikachu, imported.pika) — a ~0.4m electric mouse. 0.6 reads as a small creature beside human champions."
+    },
+    "godie-hgam": {
+      "relativeScale": 0.62,
+      "note": "種子神奇寶貝 - 妙蛙種子 (Bulbasaur) — a small ~0.7m starter Pokémon. Its evolved form 妙蛙花 (godie-h02r) stays full-size."
+    },
+    "godie-h02k": {
+      "relativeScale": 0.8,
+      "note": "國寶級的畜生 - 熊貓 (Panda) — a short, round quadruped mascot; reads shorter than a standing human without being tiny."
+    },
+    "godie-h02u": {
+      "relativeScale": 0.85,
+      "note": "看似憂鬱的神獸 - 草泥馬 (grass-mud alpaca) — a stubby meme-mascot creature, a touch under human height."
+    },
+    "godie-h02v": {
+      "relativeScale": 0.85,
+      "note": "看似憂鬱的神獸 - 草泥馬 (alpaca mascot, alt id) — same creature as godie-h02u."
+    },
+    "godie-e00r": {
+      "relativeScale": 1.55,
+      "note": "最終泛用人型決戰兵器 - 初號機 (EVA Unit-01) — a giant combat mecha; should tower over human champions. 1.55 keeps it inside the arena-camera framing while reading clearly large."
+    },
+    "godie-ubal": {
+      "relativeScale": 1.3,
+      "note": "魔界霸主 - 巴恩大魔王 (Vearn, the demon lord) — a large boss-scale antagonist, rendered taller than a human champion."
+    }
+  }
+}

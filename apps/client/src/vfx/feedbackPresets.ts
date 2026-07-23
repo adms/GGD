@@ -24,6 +24,7 @@ import {
   type BurstSpec,
   type Rgb,
 } from "./vfxPresets";
+import type { DecalSpec } from "./bloodPresets";
 
 // ---------------------------------------------------------------------------
 // Muzzle flash
@@ -149,6 +150,66 @@ export interface BlockRecipe {
 
 /** Rebound fan half-width — wide, sparks scatter off a guard. */
 export const BLOCK_SPREAD = 0.7;
+
+// ---------------------------------------------------------------------------
+// Walking dust (task #147) — velocity-gated foot puffs
+// ---------------------------------------------------------------------------
+
+/** Kicked-up arena dust behind a moving foot (warm gray-tan, desaturated). */
+export const WALK_DUST_TINT: Rgb = [0.66, 0.62, 0.54];
+
+/**
+ * A small soft puff kicked up as a champion moves — the "walk" beat the
+ * playtest flagged as missing. Unlike the landing-dust ring, this one GROWS and
+ * FADES: it is born small, EXPANDS over its life (sizeStops climb, not
+ * pop-shrink), RISES on a gentle positive gravity, and goes fully transparent.
+ * STANDARD blend (additive dust reads as smoke the moment two overlap) and a
+ * tiny particle count — it fires every stride, so it must stay cheap.
+ */
+export function walkDustRecipe(): BurstSpec {
+  return {
+    count: 3,
+    lifetimeSec: { min: 0.32, max: 0.5 },
+    speed: { min: 0.35, max: 1.1 },
+    // grow, don't shrink: small → mid → wide as it dissipates
+    sizeStops: [
+      [0, 0.12],
+      [0.35, 0.34],
+      [1, 0.6],
+    ],
+    colorStops: softBodyColorStops(WALK_DUST_TINT, 0.26),
+    blend: "alpha",
+    gravityY: 0.7, // rises as it expands
+    drag: 0.9,
+    flatRing: { radius: 0.14, height: 0.05 }, // low kick, hugging the ground
+    texture: "assets/textures/particles/smoke_05.png",
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Cast-ground scorch (task #147) — a fading mark where an ability lands/casts
+// ---------------------------------------------------------------------------
+
+/** Dark scorched-earth tint for an ability's ground mark. */
+export const SCORCH_TINT: Rgb = [0.16, 0.12, 0.1];
+/** Cast scorch lingers a touch longer than a blood pool — an ability scars. */
+export const SCORCH_LIFE_MS = 2600;
+
+/**
+ * The fading ground decal an ability stamps at its cast/land point (scorched /
+ * cracked earth). Reuses the pooled `GroundDecalPool` (same hard cap + fade as
+ * the blood splats). `radius` is the ability footprint; the mark sits a little
+ * under it so it reads as ground damage, not a halo.
+ */
+export function castScorchSpec(radius: number): DecalSpec {
+  return {
+    radius: Math.min(3, Math.max(0.4, radius)),
+    lifeMs: SCORCH_LIFE_MS,
+    alpha: 0.5,
+    tint: SCORCH_TINT,
+    texture: "assets/textures/particles/scorch_01.png",
+  };
+}
 
 /**
  * Guard clink. The sparks are aimed BACK toward the attacker by the caller

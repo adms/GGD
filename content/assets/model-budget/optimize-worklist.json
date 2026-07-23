@@ -1,0 +1,1464 @@
+{
+  "schema": "model-budget/optimise-worklist@1",
+  "generatedAt": "2026-07-22T16:00:33.998Z",
+  "generatedBy": "tools/model-budget/worklist.ts (task #99)",
+  "threshold": "warn",
+  "source": {
+    "report": "content/assets/model-budget/report.json",
+    "generatedAt": "2026-07-22T16:00:14.797Z",
+    "schema": "model-budget@1"
+  },
+  "items": [
+    {
+      "id": "champ.thorne",
+      "path": "assets/models/champions/knight.glb",
+      "role": "champion",
+      "worstCount": 12,
+      "vramBytes": 5592405,
+      "triangles": 6952,
+      "breaches": [
+        {
+          "metric": "drawCalls",
+          "tier": "over",
+          "value": 15,
+          "warn": 3,
+          "limit": 5
+        },
+        {
+          "metric": "maxTextureEdge",
+          "tier": "warn",
+          "value": 1024,
+          "warn": 512,
+          "limit": 1024
+        },
+        {
+          "metric": "animChannels",
+          "tier": "over",
+          "value": 123,
+          "warn": 35,
+          "limit": 55
+        }
+      ],
+      "actions": [
+        {
+          "kind": "texture-resize",
+          "fromEdge": 1024,
+          "targetEdge": 512,
+          "estVramSavedBytes": 4194304
+        }
+      ],
+      "manual": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "champ.skin.barbarian",
+      "path": "assets/models/champions/barbarian.glb",
+      "role": "champion",
+      "worstCount": 12,
+      "vramBytes": 5592405,
+      "triangles": 6543,
+      "breaches": [
+        {
+          "metric": "drawCalls",
+          "tier": "over",
+          "value": 13,
+          "warn": 3,
+          "limit": 5
+        },
+        {
+          "metric": "maxTextureEdge",
+          "tier": "warn",
+          "value": 1024,
+          "warn": 512,
+          "limit": 1024
+        },
+        {
+          "metric": "animChannels",
+          "tier": "over",
+          "value": 123,
+          "warn": 35,
+          "limit": 55
+        }
+      ],
+      "actions": [
+        {
+          "kind": "texture-resize",
+          "fromEdge": 1024,
+          "targetEdge": 512,
+          "estVramSavedBytes": 4194304
+        }
+      ],
+      "manual": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "champ.skin.rogue",
+      "path": "assets/models/champions/rogue.glb",
+      "role": "champion",
+      "worstCount": 12,
+      "vramBytes": 5592405,
+      "triangles": 6377,
+      "breaches": [
+        {
+          "metric": "drawCalls",
+          "tier": "over",
+          "value": 12,
+          "warn": 3,
+          "limit": 5
+        },
+        {
+          "metric": "maxTextureEdge",
+          "tier": "warn",
+          "value": 1024,
+          "warn": 512,
+          "limit": 1024
+        },
+        {
+          "metric": "animChannels",
+          "tier": "over",
+          "value": 123,
+          "warn": 35,
+          "limit": 55
+        }
+      ],
+      "actions": [
+        {
+          "kind": "texture-resize",
+          "fromEdge": 1024,
+          "targetEdge": 512,
+          "estVramSavedBytes": 4194304
+        }
+      ],
+      "manual": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "champ.sela",
+      "path": "assets/models/champions/mage.glb",
+      "role": "champion",
+      "worstCount": 12,
+      "vramBytes": 5592405,
+      "triangles": 5683,
+      "breaches": [
+        {
+          "metric": "drawCalls",
+          "tier": "over",
+          "value": 12,
+          "warn": 3,
+          "limit": 5
+        },
+        {
+          "metric": "maxTextureEdge",
+          "tier": "warn",
+          "value": 1024,
+          "warn": 512,
+          "limit": 1024
+        },
+        {
+          "metric": "animChannels",
+          "tier": "over",
+          "value": 123,
+          "warn": 35,
+          "limit": 55
+        }
+      ],
+      "actions": [
+        {
+          "kind": "texture-resize",
+          "fromEdge": 1024,
+          "targetEdge": 512,
+          "estVramSavedBytes": 4194304
+        }
+      ],
+      "manual": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "assets/models/hex/tower_blue.glb",
+      "path": "assets/models/hex/tower_blue.glb",
+      "role": "arena-decor",
+      "worstCount": 2,
+      "vramBytes": 5592405,
+      "triangles": 5659,
+      "breaches": [
+        {
+          "metric": "triangles",
+          "tier": "warn",
+          "value": 5659,
+          "warn": 4000,
+          "limit": 8000
+        },
+        {
+          "metric": "maxTextureEdge",
+          "tier": "warn",
+          "value": 1024,
+          "warn": 512,
+          "limit": 1024
+        }
+      ],
+      "actions": [
+        {
+          "kind": "geometry-decimate",
+          "fromTris": 5659,
+          "targetTris": 4000,
+          "requires": "geometry deps (#115) — tools/model-budget/optimize/bootstrap-geometry.sh"
+        },
+        {
+          "kind": "texture-resize",
+          "fromEdge": 1024,
+          "targetEdge": 512,
+          "estVramSavedBytes": 4194304
+        }
+      ],
+      "manual": []
+    },
+    {
+      "id": "assets/models/hex/tower_red.glb",
+      "path": "assets/models/hex/tower_red.glb",
+      "role": "arena-decor",
+      "worstCount": 2,
+      "vramBytes": 5592405,
+      "triangles": 5659,
+      "breaches": [
+        {
+          "metric": "triangles",
+          "tier": "warn",
+          "value": 5659,
+          "warn": 4000,
+          "limit": 8000
+        },
+        {
+          "metric": "maxTextureEdge",
+          "tier": "warn",
+          "value": 1024,
+          "warn": 512,
+          "limit": 1024
+        }
+      ],
+      "actions": [
+        {
+          "kind": "geometry-decimate",
+          "fromTris": 5659,
+          "targetTris": 4000,
+          "requires": "geometry deps (#115) — tools/model-budget/optimize/bootstrap-geometry.sh"
+        },
+        {
+          "kind": "texture-resize",
+          "fromEdge": 1024,
+          "targetEdge": 512,
+          "estVramSavedBytes": 4194304
+        }
+      ],
+      "manual": []
+    },
+    {
+      "id": "assets/models/props/crates_stacked.glb",
+      "path": "assets/models/props/crates_stacked.glb",
+      "role": "arena-decor",
+      "worstCount": 4,
+      "vramBytes": 5592405,
+      "triangles": 1331,
+      "breaches": [
+        {
+          "metric": "maxTextureEdge",
+          "tier": "warn",
+          "value": 1024,
+          "warn": 512,
+          "limit": 1024
+        }
+      ],
+      "actions": [
+        {
+          "kind": "texture-resize",
+          "fromEdge": 1024,
+          "targetEdge": 512,
+          "estVramSavedBytes": 4194304
+        }
+      ],
+      "manual": []
+    },
+    {
+      "id": "assets/models/hex/trees_large.glb",
+      "path": "assets/models/hex/trees_large.glb",
+      "role": "arena-decor",
+      "worstCount": 4,
+      "vramBytes": 5592405,
+      "triangles": 864,
+      "breaches": [
+        {
+          "metric": "maxTextureEdge",
+          "tier": "warn",
+          "value": 1024,
+          "warn": 512,
+          "limit": 1024
+        }
+      ],
+      "actions": [
+        {
+          "kind": "texture-resize",
+          "fromEdge": 1024,
+          "targetEdge": 512,
+          "estVramSavedBytes": 4194304
+        }
+      ],
+      "manual": []
+    },
+    {
+      "id": "assets/models/props/chest.glb",
+      "path": "assets/models/props/chest.glb",
+      "role": "arena-decor",
+      "worstCount": 2,
+      "vramBytes": 5592405,
+      "triangles": 728,
+      "breaches": [
+        {
+          "metric": "drawCalls",
+          "tier": "warn",
+          "value": 2,
+          "warn": 1,
+          "limit": 2
+        },
+        {
+          "metric": "maxTextureEdge",
+          "tier": "warn",
+          "value": 1024,
+          "warn": 512,
+          "limit": 1024
+        }
+      ],
+      "actions": [
+        {
+          "kind": "texture-resize",
+          "fromEdge": 1024,
+          "targetEdge": 512,
+          "estVramSavedBytes": 4194304
+        }
+      ],
+      "manual": [
+        "drawCalls"
+      ]
+    },
+    {
+      "id": "assets/models/props/banner_shield_blue.glb",
+      "path": "assets/models/props/banner_shield_blue.glb",
+      "role": "arena-decor",
+      "worstCount": 2,
+      "vramBytes": 5592405,
+      "triangles": 639,
+      "breaches": [
+        {
+          "metric": "maxTextureEdge",
+          "tier": "warn",
+          "value": 1024,
+          "warn": 512,
+          "limit": 1024
+        }
+      ],
+      "actions": [
+        {
+          "kind": "texture-resize",
+          "fromEdge": 1024,
+          "targetEdge": 512,
+          "estVramSavedBytes": 4194304
+        }
+      ],
+      "manual": []
+    },
+    {
+      "id": "assets/models/props/banner_shield_green.glb",
+      "path": "assets/models/props/banner_shield_green.glb",
+      "role": "arena-decor",
+      "worstCount": 2,
+      "vramBytes": 5592405,
+      "triangles": 639,
+      "breaches": [
+        {
+          "metric": "maxTextureEdge",
+          "tier": "warn",
+          "value": 1024,
+          "warn": 512,
+          "limit": 1024
+        }
+      ],
+      "actions": [
+        {
+          "kind": "texture-resize",
+          "fromEdge": 1024,
+          "targetEdge": 512,
+          "estVramSavedBytes": 4194304
+        }
+      ],
+      "manual": []
+    },
+    {
+      "id": "assets/models/props/banner_shield_red.glb",
+      "path": "assets/models/props/banner_shield_red.glb",
+      "role": "arena-decor",
+      "worstCount": 2,
+      "vramBytes": 5592405,
+      "triangles": 639,
+      "breaches": [
+        {
+          "metric": "maxTextureEdge",
+          "tier": "warn",
+          "value": 1024,
+          "warn": 512,
+          "limit": 1024
+        }
+      ],
+      "actions": [
+        {
+          "kind": "texture-resize",
+          "fromEdge": 1024,
+          "targetEdge": 512,
+          "estVramSavedBytes": 4194304
+        }
+      ],
+      "manual": []
+    },
+    {
+      "id": "assets/models/props/banner_shield_yellow.glb",
+      "path": "assets/models/props/banner_shield_yellow.glb",
+      "role": "arena-decor",
+      "worstCount": 2,
+      "vramBytes": 5592405,
+      "triangles": 639,
+      "breaches": [
+        {
+          "metric": "maxTextureEdge",
+          "tier": "warn",
+          "value": 1024,
+          "warn": 512,
+          "limit": 1024
+        }
+      ],
+      "actions": [
+        {
+          "kind": "texture-resize",
+          "fromEdge": 1024,
+          "targetEdge": 512,
+          "estVramSavedBytes": 4194304
+        }
+      ],
+      "manual": []
+    },
+    {
+      "id": "assets/models/hex/trees_medium.glb",
+      "path": "assets/models/hex/trees_medium.glb",
+      "role": "arena-decor",
+      "worstCount": 4,
+      "vramBytes": 5592405,
+      "triangles": 480,
+      "breaches": [
+        {
+          "metric": "maxTextureEdge",
+          "tier": "warn",
+          "value": 1024,
+          "warn": 512,
+          "limit": 1024
+        }
+      ],
+      "actions": [
+        {
+          "kind": "texture-resize",
+          "fromEdge": 1024,
+          "targetEdge": 512,
+          "estVramSavedBytes": 4194304
+        }
+      ],
+      "manual": []
+    },
+    {
+      "id": "assets/models/props/torch_mounted.glb",
+      "path": "assets/models/props/torch_mounted.glb",
+      "role": "arena-decor",
+      "worstCount": 16,
+      "vramBytes": 5592405,
+      "triangles": 278,
+      "breaches": [
+        {
+          "metric": "maxTextureEdge",
+          "tier": "warn",
+          "value": 1024,
+          "warn": 512,
+          "limit": 1024
+        }
+      ],
+      "actions": [
+        {
+          "kind": "texture-resize",
+          "fromEdge": 1024,
+          "targetEdge": 512,
+          "estVramSavedBytes": 4194304
+        }
+      ],
+      "manual": []
+    },
+    {
+      "id": "assets/models/props/torch.glb",
+      "path": "assets/models/props/torch.glb",
+      "role": "arena-decor",
+      "worstCount": 16,
+      "vramBytes": 5592405,
+      "triangles": 216,
+      "breaches": [
+        {
+          "metric": "maxTextureEdge",
+          "tier": "warn",
+          "value": 1024,
+          "warn": 512,
+          "limit": 1024
+        }
+      ],
+      "actions": [
+        {
+          "kind": "texture-resize",
+          "fromEdge": 1024,
+          "targetEdge": 512,
+          "estVramSavedBytes": 4194304
+        }
+      ],
+      "manual": []
+    },
+    {
+      "id": "assets/models/props/barrel_small.glb",
+      "path": "assets/models/props/barrel_small.glb",
+      "role": "arena-decor",
+      "worstCount": 2,
+      "vramBytes": 5592405,
+      "triangles": 207,
+      "breaches": [
+        {
+          "metric": "maxTextureEdge",
+          "tier": "warn",
+          "value": 1024,
+          "warn": 512,
+          "limit": 1024
+        }
+      ],
+      "actions": [
+        {
+          "kind": "texture-resize",
+          "fromEdge": 1024,
+          "targetEdge": 512,
+          "estVramSavedBytes": 4194304
+        }
+      ],
+      "manual": []
+    },
+    {
+      "id": "assets/models/props/floor_tile_large.glb",
+      "path": "assets/models/props/floor_tile_large.glb",
+      "role": "intermission-prop",
+      "worstCount": 49,
+      "vramBytes": 5592405,
+      "triangles": 188,
+      "breaches": [
+        {
+          "metric": "maxTextureEdge",
+          "tier": "over",
+          "value": 1024,
+          "warn": 256,
+          "limit": 512
+        }
+      ],
+      "actions": [
+        {
+          "kind": "texture-resize",
+          "fromEdge": 1024,
+          "targetEdge": 256,
+          "estVramSavedBytes": 5242880
+        }
+      ],
+      "manual": []
+    },
+    {
+      "id": "assets/models/props/pillar.glb",
+      "path": "assets/models/props/pillar.glb",
+      "role": "arena-decor",
+      "worstCount": 36,
+      "vramBytes": 5592405,
+      "triangles": 136,
+      "breaches": [
+        {
+          "metric": "maxTextureEdge",
+          "tier": "warn",
+          "value": 1024,
+          "warn": 512,
+          "limit": 1024
+        }
+      ],
+      "actions": [
+        {
+          "kind": "texture-resize",
+          "fromEdge": 1024,
+          "targetEdge": 512,
+          "estVramSavedBytes": 4194304
+        }
+      ],
+      "manual": []
+    },
+    {
+      "id": "prop.flower",
+      "path": "assets/models/hex/waterlily.glb",
+      "role": "arena-decor",
+      "worstCount": 4,
+      "vramBytes": 5592405,
+      "triangles": 68,
+      "breaches": [
+        {
+          "metric": "maxTextureEdge",
+          "tier": "warn",
+          "value": 1024,
+          "warn": 512,
+          "limit": 1024
+        }
+      ],
+      "actions": [
+        {
+          "kind": "texture-resize",
+          "fromEdge": 1024,
+          "targetEdge": 512,
+          "estVramSavedBytes": 4194304
+        }
+      ],
+      "manual": []
+    },
+    {
+      "id": "assets/models/hex/tree_single.glb",
+      "path": "assets/models/hex/tree_single.glb",
+      "role": "arena-decor",
+      "worstCount": 4,
+      "vramBytes": 5592405,
+      "triangles": 50,
+      "breaches": [
+        {
+          "metric": "maxTextureEdge",
+          "tier": "warn",
+          "value": 1024,
+          "warn": 512,
+          "limit": 1024
+        }
+      ],
+      "actions": [
+        {
+          "kind": "texture-resize",
+          "fromEdge": 1024,
+          "targetEdge": 512,
+          "estVramSavedBytes": 4194304
+        }
+      ],
+      "manual": []
+    },
+    {
+      "id": "assets/models/hex/hex_grass.glb",
+      "path": "assets/models/hex/hex_grass.glb",
+      "role": "arena-decor",
+      "worstCount": 78,
+      "vramBytes": 5592405,
+      "triangles": 36,
+      "breaches": [
+        {
+          "metric": "maxTextureEdge",
+          "tier": "warn",
+          "value": 1024,
+          "warn": 512,
+          "limit": 1024
+        }
+      ],
+      "actions": [
+        {
+          "kind": "texture-resize",
+          "fromEdge": 1024,
+          "targetEdge": 512,
+          "estVramSavedBytes": 4194304
+        }
+      ],
+      "manual": []
+    }
+  ],
+  "needsReauthor": [
+    {
+      "id": "assets/blizzard-local/models/E00R.glb",
+      "path": "assets/blizzard-local/models/E00R.glb",
+      "role": "champion",
+      "metrics": [
+        "animChannels"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/E00S.glb",
+      "path": "assets/blizzard-local/models/E00S.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/E00T.glb",
+      "path": "assets/blizzard-local/models/E00T.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/E00V.glb",
+      "path": "assets/blizzard-local/models/E00V.glb",
+      "role": "champion",
+      "metrics": [
+        "animChannels"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/E015.glb",
+      "path": "assets/blizzard-local/models/E015.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/Ecen.glb",
+      "path": "assets/blizzard-local/models/Ecen.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/Efur.glb",
+      "path": "assets/blizzard-local/models/Efur.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/Ekee.glb",
+      "path": "assets/blizzard-local/models/Ekee.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/H001.glb",
+      "path": "assets/blizzard-local/models/H001.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/H02K.glb",
+      "path": "assets/blizzard-local/models/H02K.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/H02S.glb",
+      "path": "assets/blizzard-local/models/H02S.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/H02Y.glb",
+      "path": "assets/blizzard-local/models/H02Y.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/H02Z.glb",
+      "path": "assets/blizzard-local/models/H02Z.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/Hpal.glb",
+      "path": "assets/blizzard-local/models/Hpal.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/N00B.glb",
+      "path": "assets/blizzard-local/models/N00B.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/N01L.glb",
+      "path": "assets/blizzard-local/models/N01L.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/Nbst.glb",
+      "path": "assets/blizzard-local/models/Nbst.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/Nman.glb",
+      "path": "assets/blizzard-local/models/Nman.glb",
+      "role": "champion",
+      "metrics": [
+        "animChannels"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/O02O.glb",
+      "path": "assets/blizzard-local/models/O02O.glb",
+      "role": "champion",
+      "metrics": [
+        "animChannels"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/Obla.glb",
+      "path": "assets/blizzard-local/models/Obla.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/Ogld.glb",
+      "path": "assets/blizzard-local/models/Ogld.glb",
+      "role": "champion",
+      "metrics": [
+        "animChannels"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/Orkn.glb",
+      "path": "assets/blizzard-local/models/Orkn.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/Oshd.glb",
+      "path": "assets/blizzard-local/models/Oshd.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/Othr.glb",
+      "path": "assets/blizzard-local/models/Othr.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/U00B.glb",
+      "path": "assets/blizzard-local/models/U00B.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/U00K.glb",
+      "path": "assets/blizzard-local/models/U00K.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/U012.glb",
+      "path": "assets/blizzard-local/models/U012.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/U01F.glb",
+      "path": "assets/blizzard-local/models/U01F.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/Ubal.glb",
+      "path": "assets/blizzard-local/models/Ubal.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/Ucrl.glb",
+      "path": "assets/blizzard-local/models/Ucrl.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/Udea.glb",
+      "path": "assets/blizzard-local/models/Udea.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/Umal.glb",
+      "path": "assets/blizzard-local/models/Umal.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "assets/blizzard-local/models/Uwar.glb",
+      "path": "assets/blizzard-local/models/Uwar.glb",
+      "role": "champion",
+      "metrics": [
+        "animChannels"
+      ]
+    },
+    {
+      "id": "assets/models/menu/dragon2.glb",
+      "path": "assets/models/menu/dragon2.glb",
+      "role": "hero-prop",
+      "metrics": [
+        "animChannels"
+      ]
+    },
+    {
+      "id": "assets/models/shop/merchant.glb",
+      "path": "assets/models/shop/merchant.glb",
+      "role": "hero-prop",
+      "metrics": [
+        "drawCalls"
+      ]
+    },
+    {
+      "id": "imported.cloud",
+      "path": "assets/models/imported/cloud.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls"
+      ]
+    },
+    {
+      "id": "imported.fox",
+      "path": "assets/models/imported/fox.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls"
+      ]
+    },
+    {
+      "id": "imported.fox2",
+      "path": "assets/models/imported/fox2.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls"
+      ]
+    },
+    {
+      "id": "imported.gumdam",
+      "path": "assets/models/imported/gumdam.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "imported.herofate",
+      "path": "assets/models/imported/herofate.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls"
+      ]
+    },
+    {
+      "id": "imported.herogirl",
+      "path": "assets/models/imported/herogirl.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls"
+      ]
+    },
+    {
+      "id": "imported.herohanzouhattori",
+      "path": "assets/models/imported/herohanzouhattori.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls"
+      ]
+    },
+    {
+      "id": "imported.herohehi",
+      "path": "assets/models/imported/herohehi.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls"
+      ]
+    },
+    {
+      "id": "imported.herohimurakenshin",
+      "path": "assets/models/imported/herohimurakenshin.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls"
+      ]
+    },
+    {
+      "id": "imported.heroichigo",
+      "path": "assets/models/imported/heroichigo.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls"
+      ]
+    },
+    {
+      "id": "imported.herokunoichi",
+      "path": "assets/models/imported/herokunoichi.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls"
+      ]
+    },
+    {
+      "id": "imported.herokyo",
+      "path": "assets/models/imported/herokyo.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls"
+      ]
+    },
+    {
+      "id": "imported.herolight",
+      "path": "assets/models/imported/herolight.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls"
+      ]
+    },
+    {
+      "id": "imported.heromiku",
+      "path": "assets/models/imported/heromiku.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls"
+      ]
+    },
+    {
+      "id": "imported.heromusashimiyamoto",
+      "path": "assets/models/imported/heromusashimiyamoto.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls"
+      ]
+    },
+    {
+      "id": "imported.herorider",
+      "path": "assets/models/imported/herorider.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls"
+      ]
+    },
+    {
+      "id": "imported.herosaber",
+      "path": "assets/models/imported/herosaber.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls"
+      ]
+    },
+    {
+      "id": "imported.herosephiroth",
+      "path": "assets/models/imported/herosephiroth.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls"
+      ]
+    },
+    {
+      "id": "imported.herotoshiiemaeda",
+      "path": "assets/models/imported/herotoshiiemaeda.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls"
+      ]
+    },
+    {
+      "id": "imported.japanesecherry",
+      "path": "assets/models/imported/japanesecherry.glb",
+      "role": "arena-decor",
+      "metrics": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "imported.linkstik",
+      "path": "assets/models/imported/linkstik.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls"
+      ]
+    },
+    {
+      "id": "imported.negi",
+      "path": "assets/models/imported/negi.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "imported.niya",
+      "path": "assets/models/imported/niya.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls"
+      ]
+    },
+    {
+      "id": "imported.picacugy",
+      "path": "assets/models/imported/picacugy.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "imported.pika",
+      "path": "assets/models/imported/pika.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls"
+      ]
+    },
+    {
+      "id": "imported.sd2",
+      "path": "assets/models/imported/sd2.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls"
+      ]
+    },
+    {
+      "id": "imported.sesshomaru",
+      "path": "assets/models/imported/sesshomaru.glb",
+      "role": "champion",
+      "metrics": [
+        "drawCalls"
+      ]
+    }
+  ],
+  "broken": [
+    {
+      "id": "assets/models/hex/hex_water.glb",
+      "path": "assets/models/hex/hex_water.glb",
+      "kind": "near-zero"
+    },
+    {
+      "id": "assets/models/hex/rock.glb",
+      "path": "assets/models/hex/rock.glb",
+      "kind": "near-zero"
+    },
+    {
+      "id": "assets/models/imported/babyface.glb",
+      "path": "assets/models/imported/babyface.glb",
+      "kind": "zero-geometry"
+    },
+    {
+      "id": "assets/models/imported/bloodbreathstream.glb",
+      "path": "assets/models/imported/bloodbreathstream.glb",
+      "kind": "near-zero"
+    },
+    {
+      "id": "assets/models/imported/boomnl.glb",
+      "path": "assets/models/imported/boomnl.glb",
+      "kind": "zero-geometry"
+    },
+    {
+      "id": "assets/models/imported/darkbreathdamage.glb",
+      "path": "assets/models/imported/darkbreathdamage.glb",
+      "kind": "zero-geometry"
+    },
+    {
+      "id": "assets/models/imported/demonfilth.glb",
+      "path": "assets/models/imported/demonfilth.glb",
+      "kind": "zero-geometry"
+    },
+    {
+      "id": "assets/models/imported/flash.glb",
+      "path": "assets/models/imported/flash.glb",
+      "kind": "near-zero"
+    },
+    {
+      "id": "assets/models/imported/lasercannonfinalred.glb",
+      "path": "assets/models/imported/lasercannonfinalred.glb",
+      "kind": "zero-geometry"
+    },
+    {
+      "id": "assets/models/imported/lavabreathdamage.glb",
+      "path": "assets/models/imported/lavabreathdamage.glb",
+      "kind": "zero-geometry"
+    },
+    {
+      "id": "assets/models/imported/luffe-punch.glb",
+      "path": "assets/models/imported/luffe-punch.glb",
+      "kind": "near-zero"
+    },
+    {
+      "id": "assets/models/imported/sonicbreathstream.glb",
+      "path": "assets/models/imported/sonicbreathstream.glb",
+      "kind": "near-zero"
+    },
+    {
+      "id": "imported.awing",
+      "path": "assets/models/imported/awing.glb",
+      "kind": "near-zero"
+    },
+    {
+      "id": "imported.blackhole",
+      "path": "assets/models/imported/blackhole.glb",
+      "kind": "zero-geometry"
+    },
+    {
+      "id": "imported.blackhole1",
+      "path": "assets/models/imported/blackhole1.glb",
+      "kind": "near-zero"
+    },
+    {
+      "id": "imported.bwing",
+      "path": "assets/models/imported/bwing.glb",
+      "kind": "near-zero"
+    },
+    {
+      "id": "imported.collision",
+      "path": "assets/models/imported/collision.glb",
+      "kind": "zero-geometry"
+    },
+    {
+      "id": "imported.divinering",
+      "path": "assets/models/imported/divinering.glb",
+      "kind": "zero-geometry"
+    },
+    {
+      "id": "imported.doom",
+      "path": "assets/models/imported/doom.glb",
+      "kind": "near-zero"
+    },
+    {
+      "id": "imported.enchant",
+      "path": "assets/models/imported/enchant.glb",
+      "kind": "zero-geometry"
+    },
+    {
+      "id": "imported.firefly",
+      "path": "assets/models/imported/firefly.glb",
+      "kind": "near-zero"
+    },
+    {
+      "id": "imported.flamessmoke",
+      "path": "assets/models/imported/flamessmoke.glb",
+      "kind": "near-zero"
+    },
+    {
+      "id": "imported.frostnova",
+      "path": "assets/models/imported/frostnova.glb",
+      "kind": "near-zero"
+    },
+    {
+      "id": "imported.grandorcaura",
+      "path": "assets/models/imported/grandorcaura.glb",
+      "kind": "near-zero"
+    },
+    {
+      "id": "imported.grandundeadaura",
+      "path": "assets/models/imported/grandundeadaura.glb",
+      "kind": "near-zero"
+    },
+    {
+      "id": "imported.gx",
+      "path": "assets/models/imported/gx.glb",
+      "kind": "near-zero"
+    },
+    {
+      "id": "imported.gxhuge",
+      "path": "assets/models/imported/gxhuge.glb",
+      "kind": "near-zero"
+    },
+    {
+      "id": "imported.herocloudcyd",
+      "path": "assets/models/imported/herocloudcyd.glb",
+      "kind": "near-zero"
+    },
+    {
+      "id": "imported.herocloudkfksword",
+      "path": "assets/models/imported/herocloudkfksword.glb",
+      "kind": "near-zero"
+    },
+    {
+      "id": "imported.heroeva01s2",
+      "path": "assets/models/imported/heroeva01s2.glb",
+      "kind": "near-zero"
+    },
+    {
+      "id": "imported.heronarutos4effect",
+      "path": "assets/models/imported/heronarutos4effect.glb",
+      "kind": "zero-geometry"
+    },
+    {
+      "id": "imported.heroraichus3",
+      "path": "assets/models/imported/heroraichus3.glb",
+      "kind": "near-zero"
+    },
+    {
+      "id": "imported.heroshanawingsmall",
+      "path": "assets/models/imported/heroshanawingsmall.glb",
+      "kind": "near-zero"
+    },
+    {
+      "id": "imported.love2",
+      "path": "assets/models/imported/love2.glb",
+      "kind": "near-zero"
+    },
+    {
+      "id": "imported.midchildernanohaaura",
+      "path": "assets/models/imported/midchildernanohaaura.glb",
+      "kind": "near-zero"
+    },
+    {
+      "id": "imported.oblivionaura",
+      "path": "assets/models/imported/oblivionaura.glb",
+      "kind": "near-zero"
+    }
+  ],
+  "screensOverCap": [
+    {
+      "id": "intermission",
+      "label": "中場市集",
+      "over": [
+        "drawCalls",
+        "vramBytes"
+      ]
+    },
+    {
+      "id": "combat-castle",
+      "label": "戰鬥 · 城堡競技場（室內）",
+      "over": [
+        "animChannels",
+        "vramBytes"
+      ]
+    },
+    {
+      "id": "combat-colosseum",
+      "label": "戰鬥 · 羅馬大擂台（室外）",
+      "over": [
+        "drawCalls",
+        "animChannels",
+        "vramBytes"
+      ]
+    },
+    {
+      "id": "combat-dota",
+      "label": "戰鬥 · Dota 三路河道（迷你）",
+      "over": [
+        "drawCalls",
+        "animChannels",
+        "vramBytes"
+      ]
+    },
+    {
+      "id": "combat-godie",
+      "label": "戰鬥 · 去死團的逆襲 EX 2.2s",
+      "over": [
+        "drawCalls",
+        "animChannels"
+      ]
+    },
+    {
+      "id": "combat-skeleton",
+      "label": "戰鬥 · Skeleton Arena",
+      "over": [
+        "animChannels",
+        "vramBytes"
+      ]
+    },
+    {
+      "id": "settlement",
+      "label": "結算畫面",
+      "over": [
+        "drawCalls",
+        "animChannels",
+        "vramBytes"
+      ]
+    }
+  ],
+  "totals": {
+    "scanned": 203,
+    "queued": 22,
+    "needsReauthor": 62,
+    "broken": 36,
+    "screensOverCap": 7,
+    "estVramSavedBytes": 93323264
+  }
+}

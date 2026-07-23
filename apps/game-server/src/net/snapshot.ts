@@ -24,6 +24,12 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
   const world = ctl.world;
   state.phase = ctl.phase.phase;
   state.round = ctl.phase.round;
+  // The ACTIVE arena for the current round (task #145). Set here every tick (not
+  // once at onCreate) so the per-round rotation reaches every client: the id
+  // changes when the controller swaps arenas at combat entry, and the client-
+  // render agent re-renders the scene on the change. Server-authoritative +
+  // deterministic, so every client agrees on the round's map.
+  state.mapId = ctl.arena.id;
   state.tick = world.tick;
   state.phaseTicksLeft = ctl.phase.ticksLeft;
   // match decided -> client disables input + starts the settlement front-view
@@ -74,6 +80,9 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
         // it needs so a player can never destroy 19 stacks unknowingly.
         ss.statStacks = Math.min(champ.statStacks, 255);
         ss.statCapstonePct = champ.statCapstonePct;
+        // buy/sell undo depth (task #121) — the client shows 「↩ 復原上一步」
+        // exactly when > 0. Clamped to the uint8 wire field.
+        ss.undoDepth = Math.min(champ.undoStack.length, 255);
       }
       if (ab) {
         ss.unspentPoints = ab.unspentPoints;

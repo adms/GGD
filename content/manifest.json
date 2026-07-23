@@ -1,24 +1,24 @@
 {
-  "contentVersion": "cv_1adb5970d846",
+  "contentVersion": "cv_ebed292b71b0",
   "collections": {
     "champions": {
-      "hash": "fa113e207590",
+      "hash": "3e9d67035b42",
       "count": 113,
       "path": "champions/_index.json"
     },
     "abilities": {
-      "hash": "3306897ea94c",
+      "hash": "df508a668315",
       "count": 554,
       "path": "abilities/_index.json"
     },
     "items": {
-      "hash": "6d9c555988f8",
+      "hash": "e4376cb8f62b",
       "count": 214,
       "path": "items/_index.json"
     },
     "augments": {
-      "hash": "f904b944bc69",
-      "count": 3,
+      "hash": "c5af1fe05bc1",
+      "count": 21,
       "path": "augments/_index.json"
     },
     "projectiles": {
@@ -42,18 +42,18 @@
       "path": "arenas/_index.json"
     },
     "config": {
-      "hash": "c5c5ac4cb1bb",
+      "hash": "617e1e491957",
       "count": 11,
       "path": "config/_index.json"
     },
     "models": {
-      "hash": "1d3ac9b3098b",
-      "count": 116,
+      "hash": "44710197170d",
+      "count": 117,
       "path": "models/_index.json"
     },
     "vfx": {
-      "hash": "b4a9bdb4c7e3",
-      "count": 294,
+      "hash": "e7eb22be475b",
+      "count": 388,
       "path": "vfx/_index.json"
     },
     "skins": {

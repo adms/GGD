@@ -79,7 +79,12 @@ describe("copyright gate: no image or chart can pick the overlay up", () => {
   it("prod nginx has no overlay route (both the source and the Helm copy)", () => {
     for (const conf of ["nginx/nginx.conf", "deploy/helm/ggd/files/nginx.conf"]) {
       const body = read(conf);
-      expect(body, conf).not.toMatch(/blizzard/i);
+      // Ignore COMMENT lines: task #127's env-tier gate added an explanatory
+      // comment mentioning "blizzard-local" (a deny/caveat about keeping the
+      // restricted assets out of the image — NOT a serving route). The guard is
+      // that no ACTIVE directive routes/serves the overlay.
+      const active = body.split("\n").filter((l) => !l.trim().startsWith("#")).join("\n");
+      expect(active, conf).not.toMatch(/blizzard/i);
       expect(body, conf).not.toContain(OVERLAY_DIR);
       // /content/ is served from the repo content/ dir — nothing else.
       expect(body, conf).toContain("location /content/ {");

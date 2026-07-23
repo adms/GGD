@@ -309,7 +309,7 @@ describe("audio quick-toggle: buses toggle independently (audio-toggle-bus-indep
     sys.unlock(); // builds master→{bgm,sfx} graph and applies current volumes
     const gains = ctx!.gains;
     const [master, bgm, sfx] = gains; // ensureCtx creates master, bgm, sfx in order
-    expect(bgm!.gain.value).toBeCloseTo(0.5, 6); // default BGM slider
+    expect(bgm!.gain.value).toBeCloseTo(0.4, 6); // default BGM slider
     expect(sfx!.gain.value).toBeCloseTo(0.9, 6); // default SFX slider
 
     sys.setBusMuted("bgm", true);
@@ -321,7 +321,7 @@ describe("audio quick-toggle: buses toggle independently (audio-toggle-bus-indep
     expect(sfx!.gain.value).toBe(0);
 
     sys.setBusMuted("bgm", false);
-    expect(bgm!.gain.value).toBeCloseTo(0.5, 6); // unmute restores the slider level
+    expect(bgm!.gain.value).toBeCloseTo(0.4, 6); // unmute restores the slider level
     sys.dispose();
   });
 });

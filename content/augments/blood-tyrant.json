@@ -1,0 +1,30 @@
+{
+  "id": "blood-tyrant",
+  "schema": "augment@1",
+  "name": "血之暴君",
+  "description": "攻擊力 +30%，吸血 +25%，暴擊率 +15%。",
+  "tier": "prismatic",
+  "weight": 22,
+  "modifiers": [
+    {
+      "stat": "ad",
+      "op": "pctAdd",
+      "value": 0.3
+    },
+    {
+      "stat": "lifesteal",
+      "op": "flat",
+      "value": 0.25
+    },
+    {
+      "stat": "critChance",
+      "op": "flat",
+      "value": 0.15
+    }
+  ],
+  "tags": [
+    "ad",
+    "sustain",
+    "offense"
+  ]
+}

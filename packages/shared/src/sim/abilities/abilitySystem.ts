@@ -25,6 +25,22 @@ import { isPassiveOnly, syncAbilityPassives } from "./abilityPassives";
  * with a cast time hit whoever stood in the circle when the key was pressed
  * even if they walked out — and missed anyone who walked in.
  */
+/**
+ * Ability CAST RANGE after the global combat-env `abilityRange` factor
+ * (task #136: 原始技能範圍太大 → 系統倍率縮為 60%). The ONE seam every read of an
+ * ability's `def.range` passes through, so cast validation, the ground clamp and
+ * the tooltip can never disagree. Applied once per read; with the neutral 1.0
+ * table it is byte-identical to the pre-#136 sim (determinism preserved).
+ */
+export function resolveAbilityRange(world: SimWorld, range: number): number {
+  return range * world.combatEnv.abilityRange;
+}
+
+/** Ability AoE RADIUS after the same `abilityRange` factor (task #136). */
+export function resolveAbilityRadius(world: SimWorld, radius: number): number {
+  return radius * world.combatEnv.abilityRange;
+}
+
 export function enemiesInCircle(
   world: SimWorld,
   caster: EntityId,
@@ -119,7 +135,9 @@ export function castAbility(
         const tgtTeam = world.team.get(target.entityId);
         if (tgtTeam && selfTeam && tgtTeam.teamId !== selfTeam.teamId) return "bad-target";
       }
-      if (distSq(t.pos, tgt.pos) > def.range * def.range) return "out-of-range";
+      // combat-env `abilityRange` (task #136) shrinks the effective cast range
+      const range = resolveAbilityRange(world, def.range);
+      if (distSq(t.pos, tgt.pos) > range * range) return "out-of-range";
       targets = [target.entityId];
       point = { x: tgt.pos.x, z: tgt.pos.z };
       direction = normalize(sub(tgt.pos, t.pos));
@@ -134,12 +152,13 @@ export function castAbility(
     }
     case "ground": {
       if (target.type !== "point") return "bad-target";
-      // clamp the point to range instead of rejecting (LoL behavior)
-      const off = clampLen(sub(target.point, t.pos), def.range);
+      // clamp the point to range instead of rejecting (LoL behavior).
+      // combat-env `abilityRange` (task #136) shrinks both the reach and the AoE.
+      const off = clampLen(sub(target.point, t.pos), resolveAbilityRange(world, def.range));
       point = add(t.pos, off);
       // ground AoE: hit enemies in radius at the point. With a cast time this
       // set is RE-QUERIED when the wind-up elapses (CastResolveSystem).
-      targets = enemiesInCircle(world, caster, point, def.radius ?? 1);
+      targets = enemiesInCircle(world, caster, point, resolveAbilityRadius(world, def.radius ?? 1));
       break;
     }
     case "dash": {

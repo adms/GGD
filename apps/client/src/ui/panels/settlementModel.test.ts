@@ -7,7 +7,7 @@ import { describe, it, expect } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
 import { createMatchStats, type PlayerMatchStats } from "@ggd/shared/sim/stats/matchStats";
 import type { Grade } from "@ggd/shared/sim/stats/rating";
-import type { SettlementPlayer } from "@ggd/shared/protocol/messages";
+import type { MatchSettlement, SettlementPlayer } from "@ggd/shared/protocol/messages";
 import {
   gradeTier,
   gradeColor,
@@ -22,6 +22,12 @@ import {
   sortSettlementRanking,
   localSettlementCard,
   isWinner,
+  localWinQuoteChampion,
+  matchDecided,
+  roundLeaderChampion,
+  roundEndQuoteChampion,
+  type RoundSeatView,
+  type RoundTeamView,
 } from "./settlementModel";
 
 function stats(over: Partial<PlayerMatchStats> = {}): PlayerMatchStats {
@@ -165,5 +171,102 @@ describe("ranking table builder (settle-rank-table)", () => {
     expect(isWinner(1, 1)).toBe(true);
     expect(isWinner(1, 0)).toBe(false);
     expect(isWinner(-1, 0)).toBe(false); // undecided
+  });
+});
+
+// ---------------------------------------------------------------------------
+// task #139 — the champion-quote (名言) resolvers behind the two post-match beats
+// ---------------------------------------------------------------------------
+
+function settlement(over: Partial<MatchSettlement> = {}): MatchSettlement {
+  return {
+    matchId: "m1",
+    winnerTeam: 0,
+    perPlayer: [
+      player({ seatId: 0, teamId: 0, champ: "godie-e008" }),
+      player({ seatId: 1, teamId: 1, champ: "sela" }),
+    ],
+    ...over,
+  };
+}
+
+function rseat(seatId: number, teamId: number, championId: string): RoundSeatView {
+  return { seatId, teamId, championId };
+}
+
+function rteam(teamId: number, over: Partial<RoundTeamView> = {}): RoundTeamView {
+  return { teamId, lives: 3, eliminated: false, placement: 0, ...over };
+}
+
+describe("moment 2 — local-win settlement quote (settle-win-quote)", () => {
+  it("returns the LOCAL champion only when the local seat's team won", () => {
+    cover("settle-win-quote");
+    // local seat 0 is on team 0, which won → its champion speaks
+    expect(localWinQuoteChampion(settlement({ winnerTeam: 0 }), 0)).toBe("godie-e008");
+    // local seat 1 is on the LOSING team → silent (no other player's line here)
+    expect(localWinQuoteChampion(settlement({ winnerTeam: 0 }), 1)).toBeNull();
+  });
+
+  it("is silent for a spectator / missing seat, an undecided winner, and no payload", () => {
+    cover("settle-win-quote");
+    expect(localWinQuoteChampion(settlement(), 9)).toBeNull(); // seat not in the board
+    expect(localWinQuoteChampion(settlement(), null)).toBeNull(); // spectator
+    expect(localWinQuoteChampion(settlement({ winnerTeam: -1 }), 0)).toBeNull(); // undecided
+    expect(localWinQuoteChampion(null, 0)).toBeNull(); // payload not yet arrived
+    expect(localWinQuoteChampion(settlement({ perPlayer: [] }), 0)).toBeNull(); // empty board
+  });
+
+  it("treats a winner with an empty champ id as nothing to say", () => {
+    cover("settle-win-quote");
+    const s = settlement({ perPlayer: [player({ seatId: 0, teamId: 0, champ: "" })] });
+    expect(localWinQuoteChampion(s, 0)).toBeNull();
+  });
+});
+
+describe("moment 3 — round-end rank-1 champion (settle-round-quote)", () => {
+  it("picks the leading (most-lives) team's lowest-seat champion", () => {
+    cover("settle-round-quote");
+    const seats = [
+      rseat(0, 0, "aaa"),
+      rseat(1, 0, "bbb"), // same team as seat 0, higher seatId → not chosen
+      rseat(2, 1, "ccc"),
+    ];
+    const teams = [rteam(0, { lives: 1 }), rteam(1, { lives: 3 })]; // team 1 leads
+    expect(roundLeaderChampion(seats, teams)).toBe("ccc");
+    // flip the lead → the other team's lowest-seat champion wins
+    expect(roundLeaderChampion(seats, [rteam(0, { lives: 3 }), rteam(1, { lives: 1 })])).toBe("aaa");
+  });
+
+  it("ranks alive teams above eliminated ones, ties on lives break to lower teamId", () => {
+    cover("settle-round-quote");
+    const seats = [rseat(0, 0, "aaa"), rseat(1, 1, "bbb"), rseat(2, 2, "ccc")];
+    // team 2 has the most lives but is eliminated → an alive team leads
+    const teams = [rteam(0, { lives: 2 }), rteam(1, { lives: 2 }), rteam(2, { lives: 9, eliminated: true, placement: 3 })];
+    expect(roundLeaderChampion(seats, teams)).toBe("aaa"); // tie 2==2 → lower teamId 0
+  });
+
+  it("returns null when there are no teams/seats or the leader has no champion", () => {
+    cover("settle-round-quote");
+    expect(roundLeaderChampion([], [rteam(0)])).toBeNull();
+    expect(roundLeaderChampion([rseat(0, 0, "aaa")], [])).toBeNull();
+    // leader team's only seat has no champion locked in yet
+    expect(roundLeaderChampion([rseat(0, 0, "")], [rteam(0)])).toBeNull();
+  });
+
+  it("matchDecided is true once ≤1 team is still alive", () => {
+    cover("settle-round-quote");
+    expect(matchDecided([rteam(0), rteam(1)])).toBe(false);
+    expect(matchDecided([rteam(0), rteam(1, { eliminated: true })])).toBe(true);
+    expect(matchDecided([rteam(0, { eliminated: true }), rteam(1, { eliminated: true })])).toBe(true);
+  });
+
+  it("roundEndQuoteChampion skips the match-deciding round, else names the leader", () => {
+    cover("settle-round-quote");
+    const seats = [rseat(0, 0, "aaa"), rseat(1, 1, "bbb")];
+    // two teams alive → a real round-end: the leader speaks to everyone
+    expect(roundEndQuoteChampion(seats, [rteam(0, { lives: 3 }), rteam(1, { lives: 1 })])).toBe("aaa");
+    // the round that eliminates the penultimate team IS the match end → silent
+    // here (moment 2's local-win quote owns that beat)
+    expect(roundEndQuoteChampion(seats, [rteam(0, { lives: 3 }), rteam(1, { eliminated: true, placement: 2 })])).toBeNull();
   });
 });

@@ -75,6 +75,19 @@ export const SHOP_MODELS = {
 } as const;
 
 /**
+ * The 旅行商人's HEAD ICON (task #146). The user asked for the merchant to have
+ * a portrait 「頭圖」 "like a champion has one"; it is shown in his intermission
+ * speech box (see ui/MerchantTipBox.tsx). No clerk/merchant art ships in the CC0
+ * packs, so this is a PLACEHOLDER path that follows the champion-icon convention
+ * (assets/icons/<group>/<id>.png). Until the PNG is generated the GlyphTile that
+ * renders it degrades to a seeded glyph on the 404 — nothing breaks in the mean-
+ * time. TO GENERATE: a warm, hooded dusk-market traveling-merchant bust matching
+ * merchant.glb (the Quaternius "Hooded Adventurer" rig), 128×128 PNG, dropped at
+ * content/assets/icons/shop/traveling-merchant.png.
+ */
+export const MERCHANT_PORTRAIT = "assets/icons/shop/traveling-merchant.png";
+
+/**
  * Meshes of `merchant.glb` to hide so the 店員 reads as a MERCHANT rather than
  * a rogue. The Quaternius "Hooded Adventurer" carries a sword on the same rig;
  * it is separate geometry, so `setEnabled(false)` on these is all it takes.
@@ -198,17 +211,20 @@ export const MERCHANT: Placement = mirrorX({
  * what makes 「這是我的英雄，我在買東西」 legible without a caption. The yaw is
  * derived from the merchant's position (see yawToward).
  *
- * The staging note that produced this scene proposed (1.5, −1.1); projecting it
- * through the actual shot put the hero's head at 62 % of screen width — under
- * the then right-docked shop card — and cropped its feet below the bottom edge.
- * Both are fixed here rather than in the camera, because the camera is what
- * holds the cart/stall/merchant composition together. See layout.test.ts, which
- * pins the framing claim instead of the coordinate.
+ * ── TASK #146: HERO TO THE RIGHT OF THE CENTRED MERCHANT ────────────────────
+ * With the merchant re-aimed to screen centre (~53 %, see CAMERA_TARGET), the
+ * hero moves from world x −1.15 — which projected to ~53 %, i.e. LEFT of the
+ * merchant, the exact thing the user complained about — to world x +0.15, which
+ * projects to ~67 %: clearly to the merchant's RIGHT while staying fully in
+ * shot, feet included. Authored −0.15 so the mirror carries it to +0.15.
  *
- * Mirrored with everything else, so the hero now anchors the lower RIGHT and
- * the card's left half is what stays clear of it.
+ * He stays in the FOREGROUND (z −0.7, closer to the lens than every prop), so he
+ * occludes nothing behind him; and sitting 0.89 u to the +x side of the
+ * eye→merchant ray (which crosses x −0.74 at his depth) he never steps in front
+ * of the shopkeeper. The next person nudging him must NOT push him back toward
+ * −0.74, where he would begin to hide the clerk (see sightline.test.ts / CAST).
  */
-export const CHAMPION_STAND = mirrorPoint({ x: 1.15, z: -0.7 } as const);
+export const CHAMPION_STAND = mirrorPoint({ x: -0.15, z: -0.7 } as const);
 export const CHAMPION_YAW = yawToward(CHAMPION_STAND, MERCHANT);
 
 // ---------------------------------------------------------------------------
@@ -333,15 +349,22 @@ export function grassRing(inner = PLAZA_RADIUS - 1, outer = PLAZA_RADIUS + 3.5):
  */
 export const CAMERA_POSITION = mirrorPoint({ x: 2.2, y: 2.35, z: -5.4 } as const);
 /**
- * Authored aimed to the RIGHT of the pitch (x = 1.0, not the staging note's
- * 0.1), which panned the whole cast LEFT in frame. With the note's aim the
- * merchant's head sat at 53 % of screen width and the counter at 49 % — i.e.
- * right against the card's edge, with the hero fully behind it. Moving the AIM
- * rather than the props keeps every relative distance in the pitch intact.
+ * ── TASK #146: THE MERCHANT IS CENTRED BY RE-AIMING ─────────────────────────
+ * The user asked for the 旅行商人 in the CENTRE of the scene with the player's
+ * hero on the RIGHT (「旅行商人…3D model 在中央,玩家 model 在右方」). That is
+ * done here by moving the AIM alone: authored x goes 1.0 → 0.5 (world −1.0 →
+ * −0.5), which pans the whole cast further right so the merchant's head lands at
+ * ~53 % of screen width — screen centre, and comfortably clear of the LEFT
+ * card's 45 % edge — instead of the ~60 % it sat at before.
  *
- * Mirrored, so the aim now falls left of the pitch and the cast pans RIGHT.
+ * Crucially this changes the AIM, not the EYE. CAMERA_POSITION is untouched, and
+ * `arcPoseFor` reconstructs the same eye from the pivot regardless of where the
+ * aim points, so the #103 clerk-sightline — a ray from the FIXED eye to the
+ * FIXED merchant world position — is byte-for-byte unchanged and still clear.
+ * Moving the aim rather than the props also keeps every distance in the pitch
+ * intact. Mirrored, so the aim falls left of the pitch and the cast pans RIGHT.
  */
-export const CAMERA_TARGET = mirrorPoint({ x: 1.0, y: 1.45, z: 1.1 } as const);
+export const CAMERA_TARGET = mirrorPoint({ x: 0.5, y: 1.45, z: 1.1 } as const);
 /** ~38° vertical field of view, in radians (Babylon `camera.fov`). */
 export const CAMERA_FOV = 38 * DEG;
 /** Fraction of the screen width the shop card occupies (LEFT-docked). */

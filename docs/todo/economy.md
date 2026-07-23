@@ -101,3 +101,26 @@ so it never disturbs the stat-path arithmetic.
 | ID | Item | Test ID | Category | Status |
 | --- | --- | --- | --- | --- |
 | bounty-01 | The killer gets base kill gold + a one-time bounty the first time an enemy dies; a revived-then-rekilled victim pays base kill gold only, and the same seed produces an identical gold trail | eco-kill-bounty | unit | done |
+| legend-01 (#108) | Legendary pool curation audited. 網友手環 (`godie-i02p`, +17 armor SIMPLE) and 蜂蜜罐 (`godie-i05y`, regen POWERFUL) are correctly ABSENT from every loot table — `legendary-weapons.json` (25) and `quest-rewards.json` (7) both match `starter.go`'s lists exactly; neither id appears in any pool. All 25 legendary 效能 stat-lines equal their modifiers (crit procs map as `critDamage = 描述倍率 − 1.75` base; active/aura effects like 死之王的長槍's 額外17%攻擊力 are `item@1`-inexpressible auras, documented not applied). No content change required. A test pinning legendary description-claims ⇔ modifiers is still needed in `packages/shared` — see spawned task | eco-legendary-desc-matches-modifiers | integration | deferred |
+
+## Augment pool — 能力抽卡 can now swing games (task #149)
+
+The 3-choose-1 augment draft was a dud: only ONE augment existed per tier, so
+`offerAugments` (draft.ts — `Augments.all().filter(a => a.tier === tier && !owned)`, then
+weighted-sample up to 3 distinct) could only ever surface a single card. PURE CONTENT bug —
+fixed by authoring a real pool under `content/augments/`. **Per-tier counts are now silver 6 /
+gold 8 / prismatic 7** (all ≥4), so the draw always fills to 3 distinct with archetype variety
+even after excluding what the champion owns. Tuned to the combat-env scale (maxHealth ×4,
+cooldown ×0.25 → on-cast / on-hit / on-kill hooks fire ~4× as often, HP pools are large so HP
+augments use `pctAdd`, not flat). Every description equals its real modifier/hook (no lies,
+per #108/#125). Every hook event, effect `kind`, `stat`, `op`, `statusId` and `projectileId`
+used was grep-confirmed to already exist in the sim — no unsupported constructs. Also gave the
+existing `aegis-surge` an explicit `target: "self"` so its "gain a shield" line is truthful for
+targeted casts too (was relying on `targets[0]` being undefined). `content:validate` green;
+`content:build` regenerated `augments/_index.json` (21 docs) + `manifest.json`.
+
+| ID | Item | Test ID | Category | Status |
+| --- | --- | --- | --- | --- |
+| aug-pool-01 (#149) | ≥4 augments per tier so the 3-choose-1 always fills to 3 with variety (silver 6 / gold 8 / prismatic 7). Archetypes spread across offense (AD/AP/AS/crit), sustain (lifesteal/regen/heal-on-kill), defense (shield/armor/HP), utility on-hit procs (slow/spell-blade/cleave) and prismatic power spikes (on-kill steroid, cleaving wave, haste engine). `content:validate` green | eco-augment-pool-variety | integration | done |
+| aug-pool-02 (#149) | Every augment fires: hook events, effect kinds, stats, ops, statusId + projectileId all grep-confirmed against the sim source of truth; self-buffs use `target: "self"` so shields/heals land on the owner regardless of cast type; damage/CC procs use `onAbilityHit`/`onBasicAttack` (never on-cast, whose `targets[0]` is undefined for skillshots). No dead augments | eco-augment-all-fire | integration | done |
+

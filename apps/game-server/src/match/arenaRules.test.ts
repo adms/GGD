@@ -65,11 +65,13 @@ describe("config doc + rules resolution (arena-06)", () => {
     expect(ARENA.ultUnlockRound).toBe(3);
     expect(ARENA.exUnlockRound).toBe(5); // per-hero EX unlocks round 5 (WC3 lvl 30)
     expect(ARENA.offerCount).toBe(3);
-    // augment-offer rounds are cancelled — EX is a per-hero ability now, not a
-    // generic augment draft; round 1 keeps its level grant + QWE auto-learn.
+    // every round offers an augment 3-choose-1 (隨機三選一, #157): silver early,
+    // gold mid, prismatic late. round 1 keeps its level grant + QWE auto-learn.
     expect(ARENA.rounds.get(1)).toMatchObject({ grantLevels: 2, autoLearn: ["Q", "W", "E"] });
-    expect(ARENA.rounds.get(1)?.augmentTier).toBeUndefined();
-    expect([...ARENA.rounds.values()].every((g) => g.augmentTier === undefined)).toBe(true);
+    expect(ARENA.rounds.get(1)?.augmentTier).toBe("silver");
+    expect([...ARENA.rounds.values()].every((g) => g.augmentTier !== undefined)).toBe(true);
+    expect(ARENA.rounds.get(3)?.augmentTier).toBe("gold");
+    expect(ARENA.rounds.get(5)?.augmentTier).toBe("prismatic");
     // task #70: round 2 drafts the 0g QUEST REWARDS (items the shop cannot
     // sell), round 5 drafts a legendary weapon. Ascending power, and neither
     // card duplicates what the player could already have bought that round.
@@ -77,9 +79,9 @@ describe("config doc + rules resolution (arena-06)", () => {
     expect(ARENA.rounds.get(5)).toMatchObject({ grantLevels: 1, weaponLootTable: "legendary-weapons" });
     expect(ARENA.rounds.get(3)).toMatchObject({ grantLevels: 1, grantGold: 2500 });
     expect(ARENA.gacha).toBeNull(); // weapon offers replace the legacy gacha
-    // overflow escalation past the table
-    expect(grantForRound(ARENA, 7)).toEqual({ grantLevels: 1, grantGold: 1500 });
-    expect(grantForRound(ARENA, 9)).toEqual({ grantLevels: 1, grantGold: 2000 });
+    // overflow escalation past the table — augment offers continue (#157)
+    expect(grantForRound(ARENA, 7)).toEqual({ grantLevels: 1, grantGold: 1500, augmentTier: "prismatic" });
+    expect(grantForRound(ARENA, 9)).toEqual({ grantLevels: 1, grantGold: 2000, augmentTier: "prismatic" });
 
     // the loaded content registry resolves to the SAME active rules
     expect(resolveArenaRules()).toEqual(ARENA);
@@ -160,7 +162,7 @@ describe("weapon-draft loot tables (arena-07)", () => {
 });
 
 describe("arena round grants (arena-01, arena-04, arena-05)", () => {
-  it("round 1: level 3, Q+W+E auto-learned rank 1, R locked, NO augment offer", () => {
+  it("round 1: level 3, Q+W+E auto-learned rank 1, R locked, silver augment offer", () => {
     cover("arena-round1-qwe");
     const ctl = makeArenaMatch(1234);
     runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === 1);
@@ -176,8 +178,21 @@ describe("arena round grants (arena-01, arena-04, arena-05)", () => {
       // EX is locked far from its round-5 unlock (heroes that have one)
       if (ab.exSlot) expect(ab.exSlot.rank).toBe(0);
     }
-    // augment offers are cancelled — round 1 offers nothing (weapon rounds stay)
-    expect(ctl.offers.size).toBe(0);
+    // the augment 3-choose-1 (隨機三選一) is back on EVERY round (#157): round 1
+    // hands every surviving seat a silver offer keyed `${round}:${seatId}`.
+    let offered = 0;
+    for (const seat of ctl.seats.values()) {
+      if ((ctl.lives.get(seat.teamId) ?? 0) <= 0) continue;
+      const offer = ctl.offers.get(`1:${seat.seatId}`);
+      expect(offer, `seat ${seat.seatId} must have a round-1 augment offer`).toBeDefined();
+      expect(offer!.kind).toBe("augment");
+      expect(offer!.tier).toBe("silver");
+      const choices = offer!.choices as string[];
+      expect(choices).toHaveLength(3);
+      expect(new Set(choices).size).toBe(3); // three DISTINCT choices
+      offered++;
+    }
+    expect(offered).toBeGreaterThan(0);
   });
 
   it("round 3: ult gate override active + 2500 gold injected at entry", () => {
@@ -261,11 +276,13 @@ describe("free 3-choose-1 weapon offers (arena-02, arena-03)", () => {
     runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === 2);
 
     // one weapon offer per surviving seat, 3 DISTINCT choices from the ROUND-2
-    // table (task #70: the 0g quest rewards, i.e. items the shop cannot sell)
+    // table (task #70: the 0g quest rewards, i.e. items the shop cannot sell).
+    // Round 2 ALSO carries a silver augment now (#157), so filter to the weapon
+    // (item) offers keyed `${round}:${seatId}:w`.
     const offered = new Map<SeatId, string[]>();
     expect(ctl.offers.size).toBeGreaterThan(0);
     for (const offer of ctl.offers.values()) {
-      expect(offer.kind).toBe("item");
+      if (offer.kind !== "item") continue; // skip the coexisting silver augment
       expect(offer.tier).toBe("weapon");
       const choices = offer.choices as string[];
       expect(choices).toHaveLength(3);
@@ -274,6 +291,7 @@ describe("free 3-choose-1 weapon offers (arena-02, arena-03)", () => {
       for (const c of choices) expect(table).toContain(c);
       offered.set(offer.seatId, [...choices]);
     }
+    expect(offered.size).toBeGreaterThan(0);
 
     // AI seats auto-pick after the short delay -> item granted FREE
     for (let i = 0; i < 15; i++) ctl.tick();
@@ -283,6 +301,93 @@ describe("free 3-choose-1 weapon offers (arena-02, arena-03)", () => {
       const items = ctl.world.champion.get(seat.entityId!)!.items;
       expect(choices.some((c) => items.includes(c as never))).toBe(true);
     }
+  });
+});
+
+describe("every-round augment 3-choose-1 restored (arena-08, #157)", () => {
+  /** Assert every surviving seat holds a `${round}:${seatId}` augment at `tier`. */
+  const assertAugmentPerSeat = (ctl: MatchController, round: number, tier: string): void => {
+    let surviving = 0;
+    for (const seat of ctl.seats.values()) {
+      if ((ctl.lives.get(seat.teamId) ?? 0) <= 0) continue;
+      surviving++;
+      const offer = ctl.offers.get(`${round}:${seat.seatId}`);
+      expect(offer, `seat ${seat.seatId} needs a round-${round} augment offer`).toBeDefined();
+      expect(offer!.kind).toBe("augment");
+      expect(offer!.tier).toBe(tier);
+      const choices = offer!.choices as string[];
+      expect(choices).toHaveLength(3);
+      expect(new Set(choices).size).toBe(3);
+    }
+    expect(surviving).toBeGreaterThan(0);
+  };
+
+  it("config schedules silver/silver/gold/gold/prismatic/prismatic on rounds 1-6", () => {
+    cover("arena-config-parse");
+    const tiers = [1, 2, 3, 4, 5, 6].map((r) => ARENA.rounds.get(r)?.augmentTier);
+    expect(tiers).toEqual(["silver", "silver", "gold", "gold", "prismatic", "prismatic"]);
+  });
+
+  it("round 1: a silver augment offer reaches every seat (headless controller)", () => {
+    cover("arena-config-parse");
+    const ctl = makeArenaMatch(1234);
+    runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === 1);
+    assertAugmentPerSeat(ctl, 1, "silver");
+  });
+
+  it("round 3: a gold augment offer reaches every surviving seat", () => {
+    cover("arena-config-parse");
+    const ctl = makeArenaMatch(1234);
+    runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === 3);
+    assertAugmentPerSeat(ctl, 3, "gold");
+  });
+
+  it("round 5: a prismatic augment AND the legendary-weapon offer coexist per seat", () => {
+    cover("arena-config-parse");
+    // high lives so the match reliably reaches round 5 without eliminations
+    const ctl = new MatchController("aug-r5", 4242, allBots(), FAST, 10, ARENA);
+    runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === 5);
+    assertAugmentPerSeat(ctl, 5, "prismatic");
+    // the round-5 weapon card lives alongside the augment card under a distinct
+    // `${round}:${seatId}:w` key — both surfaces open at once, as intended.
+    let weaponSeats = 0;
+    for (const seat of ctl.seats.values()) {
+      if ((ctl.lives.get(seat.teamId) ?? 0) <= 0) continue;
+      const weapon = ctl.offers.get(`5:${seat.seatId}:w`);
+      expect(weapon, `seat ${seat.seatId} needs a round-5 weapon offer`).toBeDefined();
+      expect(weapon!.kind).toBe("item");
+      weaponSeats++;
+    }
+    expect(weaponSeats).toBeGreaterThan(0);
+  });
+
+  it("a picked augment is excluded from the next round's silver re-offer", () => {
+    cover("arena-config-parse");
+    const ctl = makeArenaMatch(1234);
+    runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === 1);
+    // AI auto-picks choice 0 during this intermission — capture it per seat
+    const pickedBySeat = new Map<number, string>();
+    for (const [key, offer] of ctl.offers) {
+      if (!/^1:\d+$/.test(key)) continue;
+      pickedBySeat.set(offer.seatId, (offer.choices as string[])[0]!);
+    }
+    expect(pickedBySeat.size).toBeGreaterThan(0);
+    // round 2 is silver again: fresh 3 choices that EXCLUDE the owned pick
+    runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === 2);
+    let checked = 0;
+    for (const seat of ctl.seats.values()) {
+      const offer = ctl.offers.get(`2:${seat.seatId}`);
+      if (!offer || offer.kind !== "augment") continue;
+      const picked = pickedBySeat.get(seat.seatId);
+      if (picked === undefined) continue;
+      expect(offer.tier).toBe("silver");
+      const choices = offer.choices as string[];
+      expect(choices).toHaveLength(3);
+      expect(new Set(choices).size).toBe(3);
+      expect(choices).not.toContain(picked); // owned augment never re-offered
+      checked++;
+    }
+    expect(checked).toBeGreaterThan(0);
   });
 });
 

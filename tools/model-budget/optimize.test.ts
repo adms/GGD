@@ -12,6 +12,7 @@ import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterAll, describe, expect, it } from "vitest";
+import { cover } from "../../packages/shared/testkit/cover";
 
 import { geometryDiff, readGlb, rebuildGlb, sha256File } from "./glb";
 import { checkRig } from "./rig";
@@ -60,6 +61,7 @@ describe("checkRig is the rig-survival gate", () => {
     const r = checkRig(KNIGHT, out);
     expect(r.ok).toBe(false);
     expect(r.reasons.join(" ")).toMatch(/animation clip count/);
+    cover("mbudget-optimise-safety");
   });
 });
 

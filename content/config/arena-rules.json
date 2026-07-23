@@ -7,35 +7,42 @@
   "rounds": {
     "1": {
       "grantLevels": 2,
-      "autoLearn": ["Q", "W", "E"]
+      "autoLearn": ["Q", "W", "E"],
+      "augmentTier": "silver"
     },
     "2": {
       "grantLevels": 1,
       "grantGold": 750,
-      "weaponLootTable": "quest-rewards"
+      "weaponLootTable": "quest-rewards",
+      "augmentTier": "silver"
     },
     "3": {
       "grantLevels": 1,
-      "grantGold": 2500
+      "grantGold": 2500,
+      "augmentTier": "gold"
     },
     "4": {
       "grantLevels": 1,
-      "grantGold": 1000
+      "grantGold": 1000,
+      "augmentTier": "gold"
     },
     "5": {
       "grantLevels": 1,
       "grantGold": 1250,
-      "weaponLootTable": "legendary-weapons"
+      "weaponLootTable": "legendary-weapons",
+      "augmentTier": "prismatic"
     },
     "6": {
       "grantLevels": 1,
-      "grantGold": 1500
+      "grantGold": 1500,
+      "augmentTier": "prismatic"
     }
   },
   "overflow": {
     "grantLevels": 1,
     "grantGold": 1500,
-    "grantGoldPerRound": 250
+    "grantGoldPerRound": 250,
+    "augmentTier": "prismatic"
   },
   "flowers": {
     "firstSpawnSec": 15,
@@ -57,5 +64,28 @@
     "contestPauses": true,
     "damageInterrupts": false,
     "ccInterrupts": true
+  },
+  "guardianTower": {
+    "hpBase": 1450,
+    "hpGrowthPerRound": 0.28,
+    "armor": 0,
+    "magicResist": 17.65,
+    "radius": 2.5,
+    "maxHitPctMaxHp": 0.15,
+    "volleyPeriodSec": 4.0,
+    "volleyWindupSec": 0.8,
+    "volleyMarks": 3,
+    "volleyRadius": 3.0,
+    "volleyDamageBase": 108,
+    "volleyDamageGrowthPerRound": 0.14,
+    "volleyRampPct": 0.15,
+    "volleyRampMax": 2.0,
+    "dormancySec": 6.0,
+    "rewardGold": 150,
+    "restoreHpPct": 1.0,
+    "restoreManaPct": 1.0,
+    "buffDurationSec": 25,
+    "heirPulsePct": 0.25,
+    "heirPulseRadius": 2.5
   }
 }

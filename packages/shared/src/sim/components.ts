@@ -120,6 +120,48 @@ export interface ChampionComp {
    * a reconnecting client cannot desync on it.
    */
   pendingOrbSlots: number;
+  /**
+   * The current shopping session's UNDO HISTORY (task #121). A LIFO stack of
+   * the exact buy/sell transactions the player made THIS session, newest last;
+   * `undoShopAction` pops the top and reverses it precisely (see shop.ts).
+   *
+   * WHY A STACK, AND WHY IT MUST STORE THE APPLIED DELTA. The sell refund is a
+   * floored 40% (`SELL_REFUND`), so an undo that RE-DERIVED the gold to reverse
+   * could drift from what was actually applied and leak/burn a coin per cycle —
+   * the exact seam a money exploit lives in. Each entry therefore records the
+   * gold delta that was really applied and (for a buy) the stat-streak it reset,
+   * so the reversal is byte-exact and a buy→sell→undo→undo round-trip returns to
+   * the precise starting gold+inventory. An entry is popped when undone, so the
+   * same action can never be undone twice; the stack is CLEARED when combat
+   * begins (enterCombat), which commits the round's purchases — you cannot undo
+   * across a closed shop, so no cycle can ever net positive gold.
+   *
+   * SIM state (not host state): it replays with the seed, survives reconnects,
+   * and is never touched by `world.rng`, so it perturbs no random stream.
+   */
+  undoStack: ShopTxn[];
+}
+
+/**
+ * One reversible shop action (task #121). `goldDelta` is the change that was
+ * actually applied to `gold` when the action ran — NEGATIVE for a buy (gold
+ * spent), POSITIVE for a sell (refund received) — so an undo is always exactly
+ * `gold -= goldDelta`, never a re-derived figure that could disagree with what
+ * the player was charged/paid.
+ */
+export interface ShopTxn {
+  kind: "buy" | "sell";
+  itemId: ItemId;
+  /** the inventory slot the item occupied (buy) or vacated (sell) */
+  slot: number;
+  /** exact gold change applied by the action; undo does `gold -= goldDelta` */
+  goldDelta: number;
+  /**
+   * For a BUY only: the consecutive stat-streak that the purchase reset to 0
+   * (a real weapon 歸零s the 能力屬性強化 streak). Undo restores it so the
+   * reversal is total. Always 0 for a sell.
+   */
+  statStacksBefore: number;
 }
 
 export interface StatusEffect {

@@ -291,11 +291,17 @@ describe("HUD corner stack math (client-19)", () => {
   it("bottom-right is the minimap corner on desktop (gold-level stays reserved)", () => {
     cover("hud-corner-layout");
     const slots = hudSlotsInCorner("bottom-right");
-    expect(slots.map((s) => s.id)).toEqual(["gold-level", "minimap"]);
+    // gold-level (order 0) hugs the corner, the minimap (order 1) stacks above,
+    // and the persistent equipment bar (order 2, task #44) stacks above THAT so
+    // it never perturbs the map's offset.
+    expect(slots.map((s) => s.id)).toEqual(["gold-level", "minimap", "equipment"]);
     // the minimap is now REALLY managed by the registry; gold-level is the one
     // remaining hand-pinned panel (owned by another task) and stays RESERVED
     expect(hudSlot("minimap").managed).toBe(true);
     expect(hudSlot("gold-level").managed).toBe(false);
+    // the equipment bar sits ABOVE the minimap, so adding it left the map's
+    // offset untouched (the regression this ordering guards against)
+    expect(hudSlotOffset("minimap")).toBe(hudSlotBand("gold-level").end + HUD_GAP);
   });
 
   it("a slot may live in a different corner on coarse pointers", () => {
@@ -313,6 +319,9 @@ describe("HUD corner stack math (client-19)", () => {
       // touchOrder 3 for exactly this reason), so re-homing the map still wins
       // the corner it needs on a phone.
       "revive",
+      // the enemy panel stacks LAST (touchOrder 4), a compact HP strip below
+      // the whole re-homed top-left group.
+      "enemy-team",
     ]);
     // …and the CSS edges follow the effective corner, not the declared one
     const desktop = hudSlotStyle("minimap", false);
@@ -675,11 +684,21 @@ describe("HUD panel-edge contract (client-26)", () => {
 
   it("REGRESSION: the PRE-FIX layout collided — the guard is not vacuous", () => {
     cover("hud-panel-cover");
-    // Reproduce the pre-#107 world (no `displaced` policy applied): exactly the
-    // six pieces of chrome the survey named overlap the left dock, the reported
-    // FPS pill among them. A guard that passed against THIS would be worthless.
+    // Reproduce the pre-#107 world (no `displaced` policy applied): every piece
+    // of chrome docked in the top-/bottom-left overlaps the left card, the
+    // reported FPS pill among them. A guard that passed against THIS would be
+    // worthless. (`enemy-team` is a later top-left addition that likewise sits
+    // under the dock and yields via `hide`.)
     const raw = shopCollisions({ width: 1280, height: 720 }, false, false).sort();
-    expect(raw).toEqual(["fps", "gamepad", "menu", "perf-panel", "revive", "team-lives"]);
+    expect(raw).toEqual([
+      "enemy-team",
+      "fps",
+      "gamepad",
+      "menu",
+      "perf-panel",
+      "revive",
+      "team-lives",
+    ]);
     // and applying the policies clears all six
     expect(shopCollisions({ width: 1280, height: 720 }, false, true)).toEqual([]);
   });
@@ -740,5 +759,37 @@ describe("HUD panel-edge contract (client-26)", () => {
     const vp = { width: 1280, height: 720 };
     expect(hudPanelRect("shop", vp).w).toBe(560);
     expect(hudPanelRect("shop", vp).w).toBeLessThan(vp.width);
+  });
+
+  // ── task #44 / #107: the persistent equipment bar declares a slot too ───────
+  it("the equipment bar declares a right-edge slot the left shop never covers", () => {
+    cover("hud-panel-cover");
+    const eq = hudSlot("equipment");
+    // desktop bottom-right (the LoL item-bar corner), coarse-pointer top-right —
+    // both right-edge corners, mirroring the minimap's own re-home reasoning.
+    expect(hudSlotCorner("equipment", false)).toBe("bottom-right");
+    expect(hudSlotCorner("equipment", true)).toBe("top-right");
+    expect(eq.managed).toBe(true);
+    // it reserves real space on BOTH pointer types …
+    expect(hudSlotWidth("equipment", false)).toBeGreaterThan(0);
+    expect(hudSlotWidth("equipment", true)).toBeGreaterThan(0);
+    expect(hudSlotHeight("equipment", false)).toBeGreaterThan(0);
+    // … and, being right-edged and narrow enough, its rect clears the left shop
+    // on every guard viewport × pointer type — so it needs NO `displaced` policy
+    // (the safe-area contract holds by geometry, not by yielding).
+    expect(eq.displaced).toBeUndefined();
+    const covered: string[] = [];
+    for (const v of PANEL_VIEWPORTS) {
+      for (const touch of [false, true]) {
+        const rect = hudSlotRect("equipment", v, touch);
+        if (hudRectsOverlap(rect, hudPanelRect("shop", v))) {
+          covered.push(`${v.width}x${v.height}${touch ? " touch" : ""}`);
+        }
+      }
+    }
+    expect(covered).toEqual([]);
+    // it is NOT among the guard's exempt chrome — it is genuinely clear, not
+    // waved through like the overlay minimap / portal audio toggle.
+    expect(isPanelExempt(eq)).toBe(false);
   });
 });

@@ -24,7 +24,7 @@ head, so bar 24 is the audio the join fades out of — making it bar 0's own
 material is what stops the loop point from dipping in level every pass.
 """
 
-from ggd import music
+from ggd import intro, music
 from ggd.score import Score
 
 OSTINATO = (0, 2, 3, 2)   # the pack's ostinato shape, straight off menu
@@ -47,6 +47,18 @@ def build() -> Score:
     s.progression(music.PROG_DRIVE)   # Dm C Bb C
     s.gain(choir=0.98, keys=1.05, lead=1.00, strings=1.10, pad=1.15, gtr=1.10,
            perc=1.10)
+
+    # ---------------------------------------------------- SIGNATURE INTRO (#135)
+    # A rising stadium CROWD-ROAR + a supersaw riser inhale, breaking on a single
+    # deep taiko BOOM that launches the build below. The only crowd in the pack,
+    # and a pure 4 s crescendo with no downbeat until it breaks — the draft-floor
+    # filling up. See ggd/intro.py. It swells from silence so the loop crossfade
+    # never has to be duplicated into the mirror bar.
+    s.custom("fx", intro.champSelect)
+    # EXPERIMENTAL comic-MC rap on the boom (macOS `say`, gated off by default;
+    # baked only with render.py --tts). Half-shouted over the riser.
+    s.say_line(3.42, "Meijia", "選啊 快選啊 時間到了沒", rate=210, gain=0.62,
+               pan=0.05, verb=0.16)
 
     # ------------------------------------------------ the thread, in three steps
     # One figure runs the whole loop so the build has something to build ON;

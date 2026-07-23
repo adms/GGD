@@ -20,6 +20,7 @@ import { createPortal } from "react-dom";
 import { IntermissionScene } from "../render/intermission/IntermissionScene";
 import { useHud } from "../net/RoomStore";
 import { hudActions } from "./actions";
+import { MerchantTipBox } from "./MerchantTipBox";
 
 /** Cross-fade in from black so the scene swap is a cut TO something, not a flash. */
 const FADE_MS = 280;
@@ -88,6 +89,9 @@ export function IntermissionStage(): React.JSX.Element | null {
         ref={canvasRef}
         style={{ position: "absolute", inset: 0, width: "100%", height: "100%", display: "block", outline: "none" }}
       />
+      {/* the merchant's rotating tips box (task #148) — DOM ordered BEFORE the
+          fade so the black cover hides it until the scene has eased in */}
+      <MerchantTipBox />
       {/* the fade sits OVER the canvas and lifts once the scene has eased in */}
       <div
         style={{

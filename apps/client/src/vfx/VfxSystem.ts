@@ -42,16 +42,25 @@ import type { EventMessage } from "@ggd/shared/protocol/messages";
 import { Abilities, Projectiles } from "@ggd/shared/sim/content/registry";
 import type { AbilityId, ProjectileId } from "@ggd/shared/ids";
 import type { VfxDoc } from "@ggd/shared/content";
-import { pushCombatText } from "../frameBus";
+import { frameBus, pushCombatText } from "../frameBus";
 import type { CombatTextRelation } from "../ui/combatText";
 import { particleBudgetScale } from "../render/RenderConfig";
 import { qualityController } from "../render/QualityController";
+import {
+  ShadowLayer,
+  SHADOW_CHAMPION_RADIUS,
+  SHADOW_FLOWER_RADIUS,
+  type ShadowInput,
+} from "../render/shadows";
 import { Telegraph } from "./Telegraph";
 import { HitSpark } from "./HitSpark";
 import { scaledBurstCount, toParticleSystem } from "./particleFactory";
 import { frontLoadCounts, IMPACT_TINTS, type ImpactIntensity, type Rgb } from "./vfxPresets";
+import { asImpactProfile, type SparkKind } from "../render/combatFeedback";
 import { BloodFx } from "./BloodFx";
 import { CombatFeedbackFx } from "./CombatFeedbackFx";
+import { GroundDecalPool } from "./GroundDecalPool";
+import { castScorchSpec } from "./feedbackPresets";
 import { StatusAuraFx } from "./StatusAuraFx";
 import { severityForHit, sprayDirection, damageScale, type Vec2 } from "./bloodPresets";
 import { goreConfig, resolveGore } from "./goreConfig";
@@ -200,6 +209,86 @@ function impactSparkColor(dmgType: "physical" | "magic" | "true"): [number, numb
 }
 
 /**
+ * FIX #131 — a NON-finite world position (NaN/Infinity from a mid-despawn
+ * entity, an un-interpolated pose, or a corrupt event) parks a pooled additive
+ * ParticleSystem at a bad emitter position, which the GPU clamps to a screen
+ * corner → the "persistent bright-white burst stuck in the top-right" defect.
+ * Every spawn site gates on this so no emitter is ever placed off the world.
+ */
+function isFinitePos(p: { x: number; z: number } | null): p is { x: number; z: number } {
+  return p !== null && Number.isFinite(p.x) && Number.isFinite(p.z);
+}
+
+// ---------------------------------------------------------------------------
+// Ground-follow layer (task #147): blob shadows + velocity-gated walking dust.
+// Both are driven from a SINGLE per-frame pass over the live bodies the render
+// layer already exposes (frameBus.champions → fresh pos via ctx.entityPos), so
+// nothing here reads ChampionView or feeds the sim.
+// ---------------------------------------------------------------------------
+
+/** flowers ride on team -1 (see frameBus anchor) → a smaller footprint. */
+const FLOWER_TEAM = -1;
+/** Champion strides this far (world units) between walking-dust puffs. */
+const WALK_STRIDE = 0.55;
+/** Never more than one puff this often (ms) — caps a sprint's emit rate. */
+const WALK_MIN_INTERVAL_MS = 120;
+/** A jump larger than this is a teleport/respawn: re-baseline, emit nothing. */
+const WALK_TELEPORT_DIST = 3.0;
+/** How far BEHIND the foot the puff kicks up (world units, along −velocity). */
+const WALK_PUFF_TRAIL = 0.22;
+/** Ground-scorch footprint fallback when an ability declares no radius. */
+const CAST_SCORCH_RADIUS = 0.9;
+/** Concurrent cast-scorch decals (hard cap; LRU-stolen by the pool beyond). */
+const MAX_CAST_DECALS = 12;
+
+/** World y of a hit's contact point — torso height for a grounded fighter. */
+const CONTACT_Y = 1.0;
+/** How far toward the attacker to bloom the spark (body radius, world units). */
+const CONTACT_OFFSET = 0.45;
+
+/**
+ * The CONTACT SURFACE for a hit: the victim's body edge FACING the attacker,
+ * not its centre of mass. `dir` is the attacker→victim vector, so we step BACK
+ * along it from the victim centre — the point where steel meets body (audit P1
+ * 力量感). Degenerate `dir` (a self/degenerate hit) falls back to the centre.
+ */
+function contactPoint(pos: { x: number; z: number }, dir: Vec2): { x: number; z: number } {
+  const len = Math.hypot(dir.x, dir.z);
+  if (!(len > 1e-6)) return { x: pos.x, z: pos.z };
+  return { x: pos.x - (dir.x / len) * CONTACT_OFFSET, z: pos.z - (dir.z / len) * CONTACT_OFFSET };
+}
+
+/**
+ * Map the sim's resolved `sparkKind` to a DISTINCT spark tint + layered
+ * intensity, so every situational hit reads instantly at the contact point:
+ *   block   → cool-white steel (light) — a deflection, paired with a rebound fan
+ *   counter → saturated RED, max layers (ex) — the punish flash
+ *   magic   → arcane violet ; ice → icy cyan-white (opt-in element)
+ *   heavy   → dmgType spark, heavy layers (+ ground ring)
+ *   hit     → dmgType spark, light
+ */
+function sparkStyleFor(
+  kind: SparkKind,
+  dmgType: "physical" | "magic" | "true",
+): { tint: Rgb; intensity: ImpactIntensity } {
+  switch (kind) {
+    case "block":
+      return { tint: IMPACT_TINTS.guardBreak, intensity: "light" };
+    case "counter":
+      return { tint: IMPACT_TINTS.counter, intensity: "ex" };
+    case "magic":
+      return { tint: IMPACT_TINTS.magic, intensity: "heavy" };
+    case "ice":
+      return { tint: IMPACT_TINTS.ice, intensity: "heavy" };
+    case "heavy":
+      return { tint: impactSparkColor(dmgType), intensity: "heavy" };
+    case "hit":
+    default:
+      return { tint: impactSparkColor(dmgType), intensity: "light" };
+  }
+}
+
+/**
  * COLOR IDENTITY hook: a doc's own first color key, normalized to full
  * brightness and quantized, used to tint the layered pop fired alongside it —
  * an icy ability keeps an icy flash, a fire one stays fiery. Quantization
@@ -274,6 +363,14 @@ export class VfxSystem {
   private readonly feedback: CombatFeedbackFx;
   /** stun/root/slow/dash body auras (task #39) — inert until `status.set` is fed */
   private readonly status: StatusAuraFx;
+  /** soft blob shadow under every live body (task #147) */
+  private readonly shadows: ShadowLayer;
+  /** fading ground scorch where an ability lands/casts (task #147) */
+  private readonly castDecals: GroundDecalPool;
+  /** entityId → last walking-dust EMIT baseline {x,z} + time (task #147) */
+  private readonly walkTrail = new Map<number, { ex: number; ez: number; lastMs: number }>();
+  /** reused per-frame scratch for the shadow inputs (no per-frame alloc) */
+  private readonly shadowScratch: ShadowInput[] = [];
   /** entityId → last committed aim, consumed by the muzzle flash */
   private readonly aim = new Map<number, Vec2>();
 
@@ -284,6 +381,8 @@ export class VfxSystem {
     this.blood = new BloodFx(scene);
     this.feedback = new CombatFeedbackFx(scene);
     this.status = new StatusAuraFx(scene);
+    this.shadows = new ShadowLayer(scene);
+    this.castDecals = new GroundDecalPool(scene, { maxDecals: MAX_CAST_DECALS });
   }
 
   /**
@@ -308,6 +407,16 @@ export class VfxSystem {
   /** The muzzle/dust/block layer (test/observability seam). */
   get feedbackFx(): CombatFeedbackFx {
     return this.feedback;
+  }
+
+  /** The blob-shadow layer (test/observability seam). */
+  get shadowLayer(): ShadowLayer {
+    return this.shadows;
+  }
+
+  /** Live cast-scorch decals on the floor (test/observability seam). */
+  get castDecalCount(): number {
+    return this.castDecals.activeCount;
   }
 
   /** Memoized impact-first shape of a doc (gradients are baked per system). */
@@ -342,6 +451,8 @@ export class VfxSystem {
     boost = 1,
   ): ParticleSystem | null {
     if (!rawDoc) return null;
+    // FIX #131: never place a pooled system at a non-finite world position.
+    if (!Number.isFinite(x) || !Number.isFinite(z) || !Number.isFinite(y)) return null;
     const doc = this.shapeOf(rawDoc);
     // live particle-density setting (0–1), driven by preset / adaptive manager
     const scale = particleBudgetScale(qualityController.getParams().particleDensity);
@@ -387,8 +498,11 @@ export class VfxSystem {
   private posFromEvent(ev: EventMessage, id: number | undefined): { x: number; z: number } | null {
     const x = ev.data.x;
     const z = ev.data.z;
-    if (typeof x === "number" && typeof z === "number") return { x, z };
-    return id !== undefined ? this.ctx.entityPos(id) : null;
+    // FIX #131: reject a non-finite coordinate so it can never park an emitter
+    // off-world (which renders as a stuck bright burst at a screen corner).
+    if (typeof x === "number" && typeof z === "number") return isFinitePos({ x, z }) ? { x, z } : null;
+    const p = id !== undefined ? this.ctx.entityPos(id) : null;
+    return isFinitePos(p) ? p : null;
   }
 
   /**
@@ -418,6 +532,15 @@ export class VfxSystem {
     intensity: ImpactIntensity,
     tint: Rgb,
   ): void {
+    // FIX #131 (root cause): the abilityCast/flowerBurst/reviveComplete paths
+    // reach here after only a NULL check on their position — but `entityPos`
+    // can return a truthy `{x:NaN,z:NaN}` for a mid-spawn / un-interpolated
+    // entity. `play()` already refuses a non-finite emitter, but this composer
+    // fire (the BRIGHTEST, white-hot additive core — "ex" on an EX cast) did
+    // NOT, so an EX cast by a not-yet-posed champion parked a persistent white
+    // burst at the GPU-clamped screen corner and RE-FIRED it every cast. Guard
+    // the single chokepoint so every current and future caller is covered.
+    if (!Number.isFinite(x) || !Number.isFinite(z)) return;
     this.sparks.push(new HitSpark(this.scene, x, z, nowMs, intensity, 260, tint));
   }
 
@@ -490,7 +613,10 @@ export class VfxSystem {
         }
         const caster = ev.data.caster as number | undefined;
         const pos = caster !== undefined ? this.ctx.entityPos(caster) : null;
-        if (!pos) break;
+        // FIX #131: a null OR non-finite caster position spawns nothing — an
+        // un-interpolated {x:NaN} would otherwise park the EX white-hot pop
+        // (layeredPop) off-world at a screen corner.
+        if (!isFinitePos(pos)) break;
         // remember where this cast was aimed — the muzzle flash of any
         // projectile it spawns reads the direction back off this
         const dir = ev.data.direction as { x: number; z: number } | undefined;
@@ -502,6 +628,13 @@ export class VfxSystem {
         const isEx = def?.slot === "EX";
         if (isEx) this.layeredPop(pos.x, pos.z, nowMs, "ex", doc ? tintOfDoc(doc) : EX_DEFAULT_TINT);
         this.play(doc, pos.x, pos.z, nowMs, 1.0, isEx ? EX_BURST_BOOST : 1);
+        // GROUND SCORCH (task #147): stamp a fading dark mark where the ability
+        // lands (its ground `point` when it targets the floor) or, failing that,
+        // under the caster — so a cast scars the arena instead of leaving it
+        // pristine. Pooled + hard-capped like the blood splats.
+        const markX = point && isFinitePos(point) ? point.x : pos.x;
+        const markZ = point && isFinitePos(point) ? point.z : pos.z;
+        this.castDecals.spawn(markX, markZ, castScorchSpec(def?.radius ?? CAST_SCORCH_RADIUS), nowMs);
         break;
       }
       // `basicAttackHit` is the RANGED AUTO's impact — the same shape as an
@@ -511,7 +644,7 @@ export class VfxSystem {
       case "basicAttackHit": {
         const target = ev.data.target as number | undefined;
         const pos = target !== undefined ? this.ctx.entityPos(target) : null;
-        if (!pos) break;
+        if (!isFinitePos(pos)) break; // #131
         const projectileId = ev.data.projectileId as string | undefined;
         const projDef = projectileId ? Projectiles.tryGet(projectileId as ProjectileId) : undefined;
         const doc = this.doc(projDef?.vfxKey);
@@ -529,7 +662,7 @@ export class VfxSystem {
         if (ev.data.hit) break;
         const x = ev.data.x as number | undefined;
         const z = ev.data.z as number | undefined;
-        if (typeof x !== "number" || typeof z !== "number") break;
+        if (typeof x !== "number" || typeof z !== "number" || !isFinitePos({ x, z })) break; // #131
         this.sparks.push(new HitSpark(this.scene, x, z, nowMs, false, 140));
         break;
       }
@@ -597,20 +730,38 @@ export class VfxSystem {
         const target = ev.data.target as number | undefined;
         const source = ev.data.source as number | undefined;
         const pos = this.posFromEvent(ev, target ?? source);
-        if (!pos) break;
+        if (!isFinitePos(pos)) break;
         const dmgType = normalizeDmgType(ev.data.dmgType);
         const heavy = Boolean(ev.data.crit) || Boolean(ev.data.killingBlow);
         const amount = typeof ev.data.amount === "number" ? ev.data.amount : 0;
         const dir = this.damageVector(source, target, pos);
-        // BLOCKED (task #39): a guard is metal on metal — a cool-white impact
-        // kit plus a spark fan REBOUNDING at the attacker, and no blood at
-        // all. Previously a blocked hit fired the identical warm flesh spark
-        // as a clean one, so guarding read as taking damage.
-        if (ev.data.blocked) {
-          this.sparks.push(new HitSpark(this.scene, pos.x, pos.z, nowMs, false, 200, IMPACT_TINTS.guardBreak));
+        // CONTACT-POINT SPARK (audit P1): bloom the spark at the strike SURFACE
+        // facing the attacker, not the victim's centre of mass.
+        const contact = contactPoint(pos, dir);
+        // The sim's ImpactProfile resolves the DISTINCT spark identity
+        // (block/counter/magic/ice/heavy/hit — content `hitFeel`-overridable);
+        // fall back to the legacy blocked/heavy/type read for a pre-#133 replay.
+        const profile = asImpactProfile(ev.data.profile);
+        const kind: SparkKind = profile
+          ? profile.sparkKind
+          : ev.data.blocked
+            ? "block"
+            : heavy
+              ? "heavy"
+              : dmgType === "magic"
+                ? "magic"
+                : "hit";
+        const isBlock = kind === "block" || Boolean(ev.data.blocked);
+        const { tint, intensity } = sparkStyleFor(kind, dmgType);
+        this.sparks.push(
+          new HitSpark(this.scene, contact.x, contact.z, nowMs, intensity, 260, tint, CONTACT_Y),
+        );
+        // BLOCKED (task #39): a guard is metal on metal — the cool-white spark
+        // above PLUS a spark fan REBOUNDING at the attacker, and NO blood.
+        if (isBlock) {
           this.feedback.block({
-            x: pos.x,
-            z: pos.z,
+            x: contact.x,
+            z: contact.z,
             dir,
             power: 0.5 + 0.5 * damageScale(amount),
             scale: this.budgetScale(),
@@ -618,9 +769,6 @@ export class VfxSystem {
           });
           break;
         }
-        this.sparks.push(
-          new HitSpark(this.scene, pos.x, pos.z, nowMs, heavy, heavy ? 260 : 200, impactSparkColor(dmgType)),
-        );
         // …and the 濺血 layer on the SAME frame, never instead of the kit
         this.bloodSpray(
           pos,
@@ -675,7 +823,7 @@ export class VfxSystem {
           this.status.forget(id); // …and so does any CC aura it was wearing
         }
         const pos = id !== undefined ? this.ctx.entityPos(id) : null;
-        if (!pos) break;
+        if (!isFinitePos(pos)) break; // #131
         // the ground under a corpse (the killing blow's own hitImpact already
         // sprayed the crit-grade blood on the previous frame)
         this.feedback.landingDust({ x: pos.x, z: pos.z, power: 0.75, scale: this.budgetScale(), nowMs });
@@ -733,7 +881,7 @@ export class VfxSystem {
       case "vfxSpawn": {
         const x = ev.data.x as number | undefined;
         const z = ev.data.z as number | undefined;
-        if (x === undefined || z === undefined) break;
+        if (x === undefined || z === undefined || !isFinitePos({ x, z })) break; // #131
         const doc = this.doc(ev.data.vfxId as string | undefined);
         if (doc) this.play(doc, x, z, nowMs);
         else this.sparks.push(new HitSpark(this.scene, x, z, nowMs));
@@ -742,6 +890,70 @@ export class VfxSystem {
       default:
         break;
     }
+  }
+
+  /**
+   * GROUND-FOLLOW pass (task #147): one walk over the live bodies the render
+   * layer exposes (frameBus.champions), reading each body's FRESH rendered
+   * position via `ctx.entityPos` (the champion views are synced earlier in the
+   * frame). It drives BOTH the blob shadows and the velocity-gated walking
+   * dust, then prunes the per-entity walk state for bodies that despawned.
+   */
+  private syncGroundEntities(nowMs: number): void {
+    const scratch = this.shadowScratch;
+    scratch.length = 0;
+    for (const anchor of frameBus.champions.values()) {
+      const id = anchor.entityId;
+      const pos = this.ctx.entityPos(id);
+      if (!isFinitePos(pos)) continue;
+      const isFlower = anchor.teamId === FLOWER_TEAM;
+      // shadow under every LIVE body (a corpse/despawned body drops its shadow)
+      if (anchor.alive) {
+        scratch.push({ id, x: pos.x, z: pos.z, radius: isFlower ? SHADOW_FLOWER_RADIUS : SHADOW_CHAMPION_RADIUS });
+        // walking dust: champions only (a rooted flower never kicks dust)
+        if (!isFlower) this.emitWalkDust(id, pos, nowMs);
+      }
+    }
+    this.shadows.sync(scratch, nowMs);
+    // prune walk state for bodies that are no longer on the field
+    if (this.walkTrail.size > 0) {
+      for (const id of this.walkTrail.keys()) {
+        if (!frameBus.champions.has(id)) this.walkTrail.delete(id);
+      }
+    }
+  }
+
+  /**
+   * Velocity-gated walking dust for ONE body. Gated on STRIDE distance (a still
+   * body never accumulates it) paced by a min interval, so it reads like
+   * footsteps and is frame-rate independent. A teleport/respawn jump re-baselines
+   * without emitting. The puff kicks up slightly BEHIND the foot.
+   */
+  private emitWalkDust(id: number, pos: { x: number; z: number }, nowMs: number): void {
+    const st = this.walkTrail.get(id);
+    if (!st) {
+      this.walkTrail.set(id, { ex: pos.x, ez: pos.z, lastMs: -Infinity });
+      return;
+    }
+    const dx = pos.x - st.ex;
+    const dz = pos.z - st.ez;
+    const dist = Math.hypot(dx, dz);
+    if (dist > WALK_TELEPORT_DIST) {
+      st.ex = pos.x; // teleport/respawn — re-baseline, no puff
+      st.ez = pos.z;
+      return;
+    }
+    if (dist < WALK_STRIDE || nowMs - st.lastMs < WALK_MIN_INTERVAL_MS) return;
+    const inv = 1 / dist;
+    this.feedback.walkDust({
+      x: pos.x - dx * inv * WALK_PUFF_TRAIL,
+      z: pos.z - dz * inv * WALK_PUFF_TRAIL,
+      scale: this.budgetScale(),
+      nowMs,
+    });
+    st.ex = pos.x;
+    st.ez = pos.z;
+    st.lastMs = nowMs;
   }
 
   update(nowMs: number): void {
@@ -753,6 +965,9 @@ export class VfxSystem {
     this.blood.update(nowMs);
     this.feedback.update(nowMs);
     this.status.update(nowMs);
+    // ground-follow layer (task #147): shadows + walking dust + cast-scorch fades
+    this.syncGroundEntities(nowMs);
+    this.castDecals.update(nowMs);
   }
 
   dispose(): void {
@@ -762,10 +977,13 @@ export class VfxSystem {
     this.blood.dispose();
     this.feedback.dispose();
     this.status.dispose();
+    this.shadows.dispose();
+    this.castDecals.dispose();
     this.telegraphs = [];
     this.sparks = [];
     this.pool.clear();
     this.shaped.clear();
     this.aim.clear();
+    this.walkTrail.clear();
   }
 }

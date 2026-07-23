@@ -109,26 +109,25 @@
       "range": 11.0,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "magic",
+          "kind": "heal",
           "amount": {
             "perRank": [
-              80,
-              120,
-              160,
-              200
+              250,
+              500,
+              750,
+              1000
             ],
             "ratios": [
               {
                 "stat": "ap",
-                "coeff": 0.6
+                "coeff": 1.0
               }
             ]
           }
         }
       ],
       "vfxKey": "fx.ember-bolt-cast",
-      "targetsEnemies": true
+      "targetsEnemies": false
     },
     "E": {
       "id": "godie-e007.e",

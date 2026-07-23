@@ -237,6 +237,28 @@ const SLOTS = [
     displaced: "hide",
     note: "revive-circle status (task #84): shown while YOUR team has a live circle — the dead player must SEE it exists and that a teammate is channelling",
   },
+  {
+    id: "enemy-team",
+    corner: "top-left",
+    order: 3,
+    height: 156,
+    width: 184,
+    // touch: a compact HP-only strip. It stacks LAST in the top-left column,
+    // below the re-homed minimap (order 2) and the revive banner (order 3), so
+    // re-homing the map still wins the room it needs on a phone. HP-only keeps
+    // it thin enough to clear even the 375px-tall landscape viewport.
+    touchOrder: 4,
+    touchHeight: 66,
+    touchWidth: 150,
+    owner: "ui/components/EnemyTeamPanel.tsx",
+    managed: true,
+    // The left-docked shop covers the top-left corner in intermission and for a
+    // defeated spectator in combat. This panel is combat-only for a LIVING
+    // player, so it simply hides while the shop owns the corner — same reasoning
+    // as team-lives / revive, and it keeps the shopCollisions guard satisfied.
+    displaced: "hide",
+    note: "current duel's 3 enemies — champion + HP/MP + level; below the team-lives/revive stack",
+  },
 
   // ── top-right ─────────────────────────────────────────────────────────────
   {
@@ -352,6 +374,28 @@ const SLOTS = [
     owner: "ui/components/GoldLevel.tsx",
     managed: false,
     note: "RESERVED: still hard-codes right:14/bottom:14 (owned by another task). Its pin is 4px off this slot's edge; the minimap stacks above the reserved band, so the two never meet.",
+  },
+  {
+    id: "equipment",
+    corner: "bottom-right",
+    order: 2,
+    height: 50,
+    // desktop: the LoL item-bar corner, stacked one step ABOVE the minimap so it
+    // never perturbs the map's offset (order 2 > minimap's 1). Width stays under
+    // the shop's narrowest reach (45vw of a 375px viewport = 169px) so a
+    // right-anchored bar clears the left dock on every guard viewport — the slot
+    // is never covered and needs no `displaced` policy.
+    width: 190,
+    // touch: bottom-right IS the ability arc (the exact reason the minimap
+    // re-homes on coarse pointers), so the item bar moves to the top-right —
+    // another right-edge corner the left shop never reaches — and shrinks.
+    touchCorner: "top-right",
+    touchOrder: 5,
+    touchHeight: 48,
+    touchWidth: 150,
+    owner: "ui/hud/EquipmentBar.tsx",
+    managed: true,
+    note: "persistent in-match equipment bar (task #44): the champion's owned items, six visible slots; display-only (selling stays in the shop)",
   },
 ] as const;
 

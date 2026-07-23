@@ -56,7 +56,13 @@ const FX_CLIPS = [
   "count-tick", "count-final",
   // 3-choose-1 draft card lock-in (task #110) — same GENERATE.sh, same PCM format
   "draft-confirm",
+  // hit-feel audit P1 weight-tiered hit voices + re-cut block clank — same
+  // GENERATE.sh, same PCM format. Client plays these by the key convention below.
+  "hit-light", "hit-medium", "hit-heavy", "hit-crit", "block-hit",
 ] as const;
+
+/** The hit-feel P1 weight tiers + block-hit, keyed by the client convention. */
+const HIT_TIER_KEYS = ["hit-light", "hit-medium", "hit-heavy", "hit-crit", "block-hit"] as const;
 
 function loadDoc(): ConfigAudioMapDoc {
   const raw = JSON.parse(readFileSync(join(CONTENT, "config/audio-map.json"), "utf8"));
@@ -194,6 +200,33 @@ describe("authored audio-map.json", () => {
       expect(e.cooldownMs!).toBeLessThan(1000);
       expect(e.maxConcurrent ?? 0).toBeGreaterThanOrEqual(1);
       expect(e.maxConcurrent!).toBeLessThanOrEqual(2);
+    }
+  });
+
+  it("binds the hit-feel weight tiers + block-hit to distinct throttled clips", () => {
+    cover("audio-map-hit-tiers");
+    const doc = loadDoc();
+    const seen = new Set<string>();
+    for (const key of HIT_TIER_KEYS) {
+      const e = doc.sfx[key];
+      expect(e, `sfx event ${key}`).toBeDefined();
+      // each tier is its own single, distinct file (weight/block must be audible)
+      expect(e!.files.length, `${key} single clip`).toBe(1);
+      const f = e!.files[0]!;
+      expect(f.endsWith(`/fx/${key}.wav`), `${key} -> fx/${key}.wav`).toBe(true);
+      expect(seen.has(f), `${key} clip distinct`).toBe(false);
+      seen.add(f);
+      // hot combat events: cooldown-gated + a small voice cap (收尾精準, no pile-up)
+      expect(e!.cooldownMs ?? 0, `${key} cooldownMs`).toBeGreaterThan(0);
+      expect(e!.maxConcurrent ?? 0, `${key} maxConcurrent`).toBeGreaterThanOrEqual(1);
+      expect(e!.maxConcurrent!, `${key} voice cap kept small`).toBeLessThanOrEqual(4);
+    }
+    // the ringing lab block samples must no longer be the block voice's clip
+    for (const e of Object.values(doc.sfx)) {
+      for (const f of e.files) {
+        expect(f, "no clip named block-hit points at the ringing lab samples")
+          .not.toMatch(/lab\/block-(clash|shield)\.wav$/);
+      }
     }
   });
 });

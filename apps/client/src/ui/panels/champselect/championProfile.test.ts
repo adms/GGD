@@ -15,6 +15,7 @@ import {
   profileSubjectId,
   champSelectStage,
   champSelectSkillSeat,
+  champSelectProfileLayout,
   parseDescriptionSections,
   AUTO_PICK_WARN_SEC,
 } from "./championProfile";
@@ -100,6 +101,33 @@ describe("champ-select skill seat", () => {
     const seat = champSelectSkillSeat(withEx);
     expect(seat.exAbilityId).toBe(sela.abilities.Q.id);
     expect(seat.exRank).toBe(1);
+  });
+});
+
+describe("champ-select responsive layout (mobile profile fix)", () => {
+  it("keeps the desktop two-column layout with a full-size 3D stage", () => {
+    const l = champSelectProfileLayout({ touch: false, viewportHeight: 720 });
+    expect(l.stacked).toBe(false);
+    expect(l.compact).toBe(false);
+    // desktop stage is unchanged (the original fixed height)
+    expect(l.stageHeight).toBe(300);
+  });
+
+  it("stacks + shrinks the stage on phones so the tabbed intro is not clipped", () => {
+    // phone landscape (~390px tall): the intro must stay reachable, so the
+    // picker stacks into one scroll and the stage no longer eats the panel.
+    const landscape = champSelectProfileLayout({ touch: true, viewportHeight: 390 });
+    expect(landscape.stacked).toBe(true);
+    expect(landscape.compact).toBe(true);
+    // the shrunk stage must leave real room for the identity + tabs + body
+    expect(landscape.stageHeight).toBeLessThan(300);
+    expect(landscape.stageHeight).toBeLessThan(390 - 100);
+
+    // a taller touch viewport (tablet / portrait) can afford a larger stage
+    const tall = champSelectProfileLayout({ touch: true, viewportHeight: 900 });
+    expect(tall.stacked).toBe(true);
+    expect(tall.stageHeight).toBeGreaterThan(landscape.stageHeight);
+    expect(tall.stageHeight).toBeLessThan(300);
   });
 });
 
