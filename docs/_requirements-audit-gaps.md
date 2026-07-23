@@ -275,3 +275,21 @@ Genuinely-incomplete / deferred requirements surfaced during the ~1920-file bran
 - **Live playtest re-verification owed** — pending-verify — MatchController.ts + FireRingSystem.ts — code + tests prove fire ring burns/settles + #100 is gated, but confirm on a real stalemate round; damage-number colour (#164) + passive dashed-border (#166) still owed a live look.
 - **#154 security audit — 21/26 findings deferred** — deferred — docs/todo/security.md:32-48 (sec-154-02,05,06,08-13,15-22) — docs-only pass; no landed cover() yet; even the 5 'this-wave' game-server items (01/03/04/07/14) are in-progress. Go-live risk acceptance is a user call.
 - **Live-page sync** — incomplete — docs/requirements-status.md (dated 07-22, table stops at #128) + this gap log (was missing #155-171) — the two live pages trail the ledger; gen_status.py TASKS array + gap log both need #129-#171 appended; #79/#89/#98/#121/#123 3-way status drift to reconcile (gap log is the more accurate artifact).
+
+## 2026-07-23 — 回合勝利演出「每回合都是同一個英雄」（使用者回報 bug，已修）
+
+- **需求（原話）**：「我好像怎麼勝利都是結果都是放出黑崎一護的 3d model 勝利畫面?」 — ✅ **已修**。
+  舊選擇器 `apps/client/src/ui/panels/settlementModel.ts` `roundLeaderChampion()` 取「領先隊伍中 seatId 最小的英雄」，
+  而 seat↔英雄整場固定 → 只要同一隊持續領先，每回合演出必定同一人（#143 中央模型與 #142 回合結束語音共用此選擇器，兩者一起錯）。
+  改為**該回合 MVP**：伺服器新增 per-ROUND K/D（`MatchController.roundKills/roundDeaths`，於 `enterCombat` 歸零、非累計）→
+  `SeatState.roundKills/roundDeaths`（uint8）→ `RoomStore.SeatView` → 選擇器先以「回合結束時仍存活」為門檻，再依
+  回合擊殺↓ → 回合死亡↑ → seatId↑ 排序。測試：`settlementModel.test.ts`（settle-round-mvp）+ `settlement.test.ts`（round-mvp-tally）。
+- **追加需求（原話）**：「回合表現最好的人的底線門檻是必須最後還活著」 — ✅ **已實作為兩段式篩選**（先存活門檻、後表現排序）；
+  領先隊伍全滅（互相清場／火環）時退回全隊伍最佳表現者，永不回傳 null。存活判定取自權威快照 `EntityState.alive`
+  （非 `roundDeaths === 0`，因為 #84 復活圈救回的人仍算存活），所以每個客戶端算出同一位英雄、播同一段語音。
+- **⚠ 已知殘留邊界**：若某回合**領先隊伍抽到輪空（bye）**，`enterCombat` 會把該隊座位擺成死亡且不計分 →
+  存活門檻找不到倖存者、全零退場機制又落回最小 seatId，該回合仍會退化成舊行為（僅在「存活隊伍數為奇數」時發生，且永不回傳 null）。
+  要根治需要一個「本回合有參戰」的訊號（`participatedThisRound`），已超出本次修復範圍 → **待辦，併入 #143 收尾**。
+- **⚠ 併發提交事故**：此修復進行中，`a2ae538` / `3f11759` 由**另一個並行 session／hook 自動提交**，
+  把本修復與 #172 改密碼（platform/admin）混進同一個 commit。程式碼無遺失，但兩件不相干的工作已無法乾淨拆開 →
+  提醒：同一 worktree 不要同時跑會自動 commit 的 session。
