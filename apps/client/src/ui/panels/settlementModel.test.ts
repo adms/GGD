@@ -4,6 +4,9 @@
  * hints, stat formatters, and the ranking-table sort. No React/DOM.
  */
 import { describe, it, expect } from "vitest";
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
 import { createMatchStats, type PlayerMatchStats } from "@ggd/shared/sim/stats/matchStats";
 import type { Grade } from "@ggd/shared/sim/stats/rating";
@@ -29,6 +32,8 @@ import {
   type RoundSeatView,
   type RoundTeamView,
 } from "./settlementModel";
+
+const HERE = dirname(fileURLToPath(import.meta.url));
 
 function stats(over: Partial<PlayerMatchStats> = {}): PlayerMatchStats {
   return { ...createMatchStats(), ...over };
@@ -190,8 +195,17 @@ function settlement(over: Partial<MatchSettlement> = {}): MatchSettlement {
   };
 }
 
-function rseat(seatId: number, teamId: number, championId: string): RoundSeatView {
-  return { seatId, teamId, championId };
+/**
+ * A round seat. Defaults: alive, a blank round (0 kills / 0 deaths) — so a test
+ * that says nothing about performance exercises the pure-tiebreak path.
+ */
+function rseat(
+  seatId: number,
+  teamId: number,
+  championId: string,
+  over: Partial<RoundSeatView> = {},
+): RoundSeatView {
+  return { seatId, teamId, championId, alive: true, roundKills: 0, roundDeaths: 0, ...over };
 }
 
 function rteam(teamId: number, over: Partial<RoundTeamView> = {}): RoundTeamView {
@@ -224,16 +238,16 @@ describe("moment 2 — local-win settlement quote (settle-win-quote)", () => {
 });
 
 describe("moment 3 — round-end rank-1 champion (settle-round-quote)", () => {
-  it("picks the leading (most-lives) team's lowest-seat champion", () => {
+  it("picks the leading (most-lives) team, and within it a blank round falls to the lowest seat", () => {
     cover("settle-round-quote");
     const seats = [
       rseat(0, 0, "aaa"),
-      rseat(1, 0, "bbb"), // same team as seat 0, higher seatId → not chosen
+      rseat(1, 0, "bbb"), // same team, nothing to separate them → higher seatId loses
       rseat(2, 1, "ccc"),
     ];
     const teams = [rteam(0, { lives: 1 }), rteam(1, { lives: 3 })]; // team 1 leads
     expect(roundLeaderChampion(seats, teams)).toBe("ccc");
-    // flip the lead → the other team's lowest-seat champion wins
+    // flip the lead → the other team's MVP wins
     expect(roundLeaderChampion(seats, [rteam(0, { lives: 3 }), rteam(1, { lives: 1 })])).toBe("aaa");
   });
 
@@ -268,5 +282,136 @@ describe("moment 3 — round-end rank-1 champion (settle-round-quote)", () => {
     // the round that eliminates the penultimate team IS the match end → silent
     // here (moment 2's local-win quote owns that beat)
     expect(roundEndQuoteChampion(seats, [rteam(0, { lives: 3 }), rteam(1, { eliminated: true, placement: 2 })])).toBeNull();
+  });
+});
+
+/**
+ * The reported bug: 「我好像怎麼勝利都是結果都是放出黑崎一護的 3d model 勝利畫面?」 —
+ * every round presented the SAME champion. The old selector took the leading
+ * team's LOWEST-SEATID champion, and seat↔champion is fixed for a whole match,
+ * so while one team kept the lead the presentation could not change. The winner
+ * is now that ROUND's MVP: alive-gated, then ranked on the server-authoritative
+ * per-round tallies.
+ */
+describe("round-end winner = the leading team's round MVP (settle-round-mvp)", () => {
+  const leadingTeams = [rteam(0, { lives: 3 }), rteam(1, { lives: 1 })]; // team 0 leads
+
+  it("presents the round's top killer, NOT the lowest-seat champion", () => {
+    cover("settle-round-mvp");
+    const seats = [
+      rseat(2, 0, "ichigo", { roundKills: 0 }), // lowest seat: what the bug always showed
+      rseat(7, 0, "luffy", { roundKills: 3 }), // actually carried the round
+      rseat(3, 1, "enemy", { roundKills: 9 }), // losing team — never eligible
+    ];
+    expect(roundLeaderChampion(seats, leadingTeams)).toBe("luffy");
+  });
+
+  it("presents a DIFFERENT champion when a different teammate tops the next round", () => {
+    cover("settle-round-mvp");
+    // round N: seat 7 carries. round N+1: seat 2 carries. Same seats, same
+    // standings — only the per-round tallies moved. This is the regression guard.
+    const roundA = [rseat(2, 0, "ichigo", { roundKills: 0 }), rseat(7, 0, "luffy", { roundKills: 3 })];
+    const roundB = [rseat(2, 0, "ichigo", { roundKills: 2 }), rseat(7, 0, "luffy", { roundKills: 1 })];
+    expect(roundLeaderChampion(roundA, leadingTeams)).toBe("luffy");
+    expect(roundLeaderChampion(roundB, leadingTeams)).toBe("ichigo");
+    expect(roundLeaderChampion(roundA, leadingTeams)).not.toBe(roundLeaderChampion(roundB, leadingTeams));
+  });
+
+  it("is PER-ROUND: last round's hero is not re-presented on a round it did nothing in", () => {
+    cover("settle-round-mvp");
+    // the tallies are reset server-side at each combat entry, so a champion that
+    // dominated round 1 arrives at round 2 with 0 — and loses to whoever scored.
+    const round1 = [rseat(2, 0, "ichigo", { roundKills: 5 }), rseat(7, 0, "luffy", { roundKills: 0 })];
+    const round2 = [rseat(2, 0, "ichigo", { roundKills: 0 }), rseat(7, 0, "luffy", { roundKills: 1 })];
+    expect(roundLeaderChampion(round1, leadingTeams)).toBe("ichigo");
+    expect(roundLeaderChampion(round2, leadingTeams)).toBe("luffy");
+  });
+
+  it("breaks a kill tie deterministically: fewest round-deaths, then lowest seatId", () => {
+    cover("settle-round-mvp");
+    // equal kills → the one who died less
+    const byDeaths = [
+      rseat(1, 0, "aaa", { roundKills: 2, roundDeaths: 1 }),
+      rseat(5, 0, "bbb", { roundKills: 2, roundDeaths: 0 }),
+    ];
+    expect(roundLeaderChampion(byDeaths, leadingTeams)).toBe("bbb");
+    // fully tied → the lowest seatId, and the answer never depends on input order
+    const tied = [
+      rseat(5, 0, "bbb", { roundKills: 2, roundDeaths: 0 }),
+      rseat(1, 0, "aaa", { roundKills: 2, roundDeaths: 0 }),
+      rseat(9, 0, "ccc", { roundKills: 2, roundDeaths: 0 }),
+    ];
+    expect(roundLeaderChampion(tied, leadingTeams)).toBe("aaa");
+    expect(roundLeaderChampion([...tied].reverse(), leadingTeams)).toBe("aaa");
+  });
+
+  it("still resolves a champion in a round nobody scored a kill in", () => {
+    cover("settle-round-mvp");
+    // e.g. a fire-ring / timeout win: 0 kills all round → deaths, then seat
+    const seats = [
+      rseat(2, 0, "ichigo", { roundKills: 0, roundDeaths: 1 }),
+      rseat(7, 0, "luffy", { roundKills: 0, roundDeaths: 0 }),
+    ];
+    expect(roundLeaderChampion(seats, leadingTeams)).toBe("luffy");
+  });
+
+  // ---- the alive GATE: 回合表現最好的人的底線門檻是必須最後還活著 ----
+
+  it("gates on survival: a DEAD 3-kill seat loses to a LIVING 1-kill seat", () => {
+    cover("settle-round-mvp");
+    const seats = [
+      rseat(2, 0, "ichigo", { roundKills: 3, roundDeaths: 1, alive: false }),
+      rseat(7, 0, "luffy", { roundKills: 1, alive: true }),
+    ];
+    expect(roundLeaderChampion(seats, leadingTeams)).toBe("luffy");
+  });
+
+  it("never presents a dead top-killer while ANY teammate is still standing", () => {
+    cover("settle-round-mvp");
+    // the survivor did nothing at all — being alive is the baseline threshold
+    const seats = [
+      rseat(2, 0, "ichigo", { roundKills: 6, alive: false }),
+      rseat(4, 0, "zoro", { roundKills: 4, alive: false }),
+      rseat(7, 0, "luffy", { roundKills: 0, roundDeaths: 0, alive: true }),
+    ];
+    expect(roundLeaderChampion(seats, leadingTeams)).toBe("luffy");
+  });
+
+  it("a rescued champion (died, revived, standing) is eligible", () => {
+    cover("settle-round-mvp");
+    // #84 revive circle: roundDeaths > 0 yet alive at the end → still gated IN,
+    // which is why the gate reads `alive` and not `roundDeaths === 0`.
+    const seats = [
+      rseat(2, 0, "ichigo", { roundKills: 3, roundDeaths: 1, alive: true }),
+      rseat(7, 0, "luffy", { roundKills: 1, roundDeaths: 0, alive: true }),
+    ];
+    expect(roundLeaderChampion(seats, leadingTeams)).toBe("ichigo");
+  });
+
+  it("falls back to the best performer when the leading team was wiped too", () => {
+    cover("settle-round-mvp");
+    // mutual wipe / fire-ring: nobody on the leading team is alive → present the
+    // round's best performer anyway rather than nothing at all.
+    const seats = [
+      rseat(2, 0, "ichigo", { roundKills: 1, alive: false }),
+      rseat(7, 0, "luffy", { roundKills: 4, alive: false }),
+    ];
+    expect(roundLeaderChampion(seats, leadingTeams)).toBe("luffy");
+  });
+
+  it("keeps the winner MODEL and the round-end VO on the one selector", () => {
+    cover("settle-round-mvp");
+    const seats = [
+      rseat(2, 0, "ichigo", { roundKills: 0 }),
+      rseat(7, 0, "luffy", { roundKills: 3 }),
+      rseat(3, 1, "enemy", { roundKills: 9 }),
+    ];
+    // the VO's champion IS the leader champion on any non-deciding round…
+    expect(roundEndQuoteChampion(seats, leadingTeams)).toBe(roundLeaderChampion(seats, leadingTeams));
+    // …and GameApp builds the centre-screen model doc from that same call, so
+    // the hero on screen can never disagree with the voice.
+    const app = readFileSync(join(HERE, "..", "..", "GameApp.ts"), "utf8");
+    expect(app).toMatch(/const champ = roundEndQuoteChampion\(hud\.seats, hud\.teams\)/);
+    expect(app).toMatch(/roundWinnerModelDoc\(champ, hud\.seats\)/);
   });
 });

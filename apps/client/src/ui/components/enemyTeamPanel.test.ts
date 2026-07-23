@@ -45,6 +45,8 @@ function mk(over: Partial<SeatView> & { seatId: number; teamId: number }): SeatV
     exCooldown: 0,
     statStacks: 0,
     statCapstonePct: 0,
+    roundKills: 0,
+    roundDeaths: 0,
     offers: [],
     ...over,
   };

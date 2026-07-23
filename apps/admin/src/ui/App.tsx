@@ -13,6 +13,7 @@ import { ModelBudgetPage } from "./ModelBudgetPage";
 import { IconTrackingPage } from "./IconTrackingPage";
 import { MCoinGrantPage } from "./MCoinGrantPage";
 import { AuditPage } from "./AuditPage";
+import { ChangePasswordDialog } from "./ChangePasswordDialog";
 import { Btn, Panel } from "./widgets";
 import { ACCENT, BG, PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "./theme";
 
@@ -99,6 +100,9 @@ function Console(): React.JSX.Element {
   const doLogout = useApp((s) => s.doLogout);
   const showLogin = useApp((s) => s.showLogin);
   const contentAdmin = useContentAdminPage();
+  // 變更密碼 lives on the LOGGED-IN side only: the platform route needs both a
+  // session and the current password, so there is nothing to show without one.
+  const [changingPassword, setChangingPassword] = useState(false);
   // the entry exists only when the dev-only chunk actually loaded, and its
   // label comes FROM that chunk (see useContentAdminPage)
   const nav =
@@ -148,6 +152,9 @@ function Console(): React.JSX.Element {
           {account ? (
             <>
               <div style={{ fontSize: 12, color: TEXT_MAIN, marginBottom: 8 }}>{account.username}</div>
+              <Btn small onClick={() => setChangingPassword(true)} style={{ width: "100%", marginBottom: 6 }}>
+                變更密碼 Change password
+              </Btn>
               <Btn small onClick={() => void doLogout()} style={{ width: "100%" }}>
                 Sign out
               </Btn>
@@ -187,6 +194,7 @@ function Console(): React.JSX.Element {
           </>
         )}
       </main>
+      {changingPassword && account && <ChangePasswordDialog onClose={() => setChangingPassword(false)} />}
     </div>
   );
 }

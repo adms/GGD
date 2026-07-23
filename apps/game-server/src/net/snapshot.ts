@@ -64,6 +64,12 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
     ss.championId = seat.championId;
     ss.ready = seat.ready;
     ss.lastAckSeq = humanDrivers.get(seatId)?.mailbox.lastSeq ?? 0;
+    // PER-ROUND K/D (reset at each combat entry, never cumulative). The round-end
+    // winner model (#143) + quote VO (#142) rank the leading team's seats by these
+    // to name THAT round's MVP, so the presented champion changes with the round.
+    // Clamped to the uint8 wire field.
+    ss.roundKills = Math.min(ctl.roundKills.get(seatId) ?? 0, 255);
+    ss.roundDeaths = Math.min(ctl.roundDeaths.get(seatId) ?? 0, 255);
 
     if (seat.entityId !== null) {
       ss.entityId = seat.entityId;

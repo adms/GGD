@@ -287,6 +287,24 @@ export interface RoundSeatView {
   seatId: number;
   teamId: number;
   championId: string;
+  /**
+   * Is this seat's champion STILL STANDING as the round resolves? Projected from
+   * the authoritative entity snapshot (EntityState.alive), which the server does
+   * not touch again between concludeCombat and the next enterCombat — so during
+   * the round-end beat it means exactly "survived this round". This is the GATE
+   * on the round MVP: 回合表現最好的人的底線門檻是必須最後還活著.
+   * NOT `roundDeaths === 0`: a champion who was rescued by a revive circle (#84)
+   * died this round yet is standing at the end, and is eligible.
+   */
+  alive: boolean;
+  /**
+   * Kills/deaths scored by this seat IN THE ROUND THAT JUST ENDED — the
+   * server-authoritative per-round tallies (SeatState.roundKills/roundDeaths,
+   * zeroed at every combat entry). Cumulative totals would present the match's
+   * overall best killer every single round, which is the bug this replaced.
+   */
+  roundKills: number;
+  roundDeaths: number;
 }
 
 /** The team fields the round-leader ranking reads (a RoomStore TeamView satisfies it). */
@@ -321,11 +339,37 @@ function compareTeamStanding(a: RoundTeamView, b: RoundTeamView): number {
 }
 
 /**
- * The champion currently in FIRST PLACE by team standing — the round's rank-1
- * player. Reads ONLY authoritative schema fields (lives / eliminated / placement
- * / teamId / seatId), so every client computes the SAME champion and plays the
- * SAME clip. The leading team's representative is its lowest-seatId champion.
- * Returns null when there are no teams/seats or the leader has no champion.
+ * Round-MVP comparator: the better performer OF THIS ROUND sorts first.
+ * The chain is total and made only of authoritative integers, so it can never be
+ * ambiguous and every client orders the roster identically:
+ *   1. most round-kills
+ *   2. fewest round-deaths   (survived the round better)
+ *   3. lowest seatId         (final, always-decisive stable tiebreak)
+ */
+function compareRoundMvp(a: RoundSeatView, b: RoundSeatView): number {
+  if (a.roundKills !== b.roundKills) return b.roundKills - a.roundKills;
+  if (a.roundDeaths !== b.roundDeaths) return a.roundDeaths - b.roundDeaths;
+  return a.seatId - b.seatId;
+}
+
+/**
+ * The champion presented at the round-end beat: the ROUND MVP of the team in
+ * FIRST PLACE by standing. Reads ONLY authoritative schema state (lives /
+ * eliminated / placement / teamId / seatId / alive / per-round K/D), so every
+ * client computes the SAME champion, shows the SAME model and plays the SAME
+ * clip — now genuinely per-round, because the inputs change every round.
+ *
+ * Two stages, not one ranking:
+ *   GATE — 回合表現最好的人的底線門檻是必須最後還活著: only seats still ALIVE as
+ *          the round resolves are eligible, however many kills a dead one got.
+ *          If the leading team was wiped too (mutual wipe / fire-ring / timeout
+ *          win), the gate opens to the whole roster rather than presenting
+ *          nobody.
+ *   RANK — compareRoundMvp over the eligible seats.
+ *
+ * A zero-kill round therefore still resolves (fewest deaths, then lowest seat).
+ * Returns null only when there are no teams/seats at all, or the leading team
+ * has no champion locked in.
  */
 export function roundLeaderChampion(
   seats: readonly RoundSeatView[],
@@ -333,16 +377,20 @@ export function roundLeaderChampion(
 ): string | null {
   if (teams.length === 0 || seats.length === 0) return null;
   const leader = [...teams].sort(compareTeamStanding)[0]!;
-  const champs = seats
-    .filter((s) => s.teamId === leader.teamId && s.championId)
-    .sort((a, b) => a.seatId - b.seatId);
-  return champs[0]?.championId ?? null;
+  const roster = seats.filter((s) => s.teamId === leader.teamId && s.championId);
+  if (roster.length === 0) return null;
+  const survivors = roster.filter((s) => s.alive);
+  const eligible = survivors.length > 0 ? survivors : roster;
+  return [...eligible].sort(compareRoundMvp)[0]!.championId;
 }
 
 /**
  * The champion whose quote plays at a ROUND-end settlement (moment 3): the
- * round's rank-1 champion, EXCEPT on the match-deciding round (whose beat is the
- * settlement's local-win quote). Null ⇒ silent (no round-end quote this round).
+ * round's MVP (roundLeaderChampion), EXCEPT on the match-deciding round (whose
+ * beat is the settlement's local-win quote). Null ⇒ silent (no round-end quote
+ * this round). The round-winner MODEL (#143, GameApp.updateRoundWinner) resolves
+ * through this very function, so the hero on screen and the voice you hear are
+ * always the same champion — do not fork the selection.
  */
 export function roundEndQuoteChampion(
   seats: readonly RoundSeatView[],

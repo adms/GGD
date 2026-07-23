@@ -44,6 +44,10 @@ type Service struct {
 	params     *argon2id.Params
 	dummyHash  string // verified against on unknown-user login (constant-shape failure)
 
+	// auditor is the append-only audit sink used by ChangePassword. nil means
+	// "no audit log wired" (a bare service in a unit test). See password.go.
+	auditor Auditor
+
 	// requireApproval turns on the private-deploy gate (#126): new registrations
 	// are stamped pending and receive NO tokens, and login/refresh refuse any
 	// non-approved account. When false (dev/CI default) registration approves
@@ -89,10 +93,24 @@ func hasControl(s string) bool {
 	return false
 }
 
+// ValidatePassword is the platform's ONE password policy. Registration and the
+// self-service change-password flow both go through this function so a password
+// that would be refused at sign-up can never be installed later (and so the two
+// can never drift apart into two policies).
+func ValidatePassword(password string) error {
+	if hasControl(password) {
+		return httpx.BadRequest("control characters are not allowed")
+	}
+	if len(password) < 8 || len(password) > 128 {
+		return httpx.BadRequest("password must be 8-128 characters")
+	}
+	return nil
+}
+
 // ValidateRegistration checks username/email/password shape without touching
-// any store.
+// any store. The password half is ValidatePassword — see there.
 func ValidateRegistration(username, email, password string) error {
-	if hasControl(username) || hasControl(email) || hasControl(password) {
+	if hasControl(username) || hasControl(email) {
 		return httpx.BadRequest("control characters are not allowed")
 	}
 	if !usernameRe.MatchString(username) {
@@ -101,10 +119,7 @@ func ValidateRegistration(username, email, password string) error {
 	if len(email) > 254 || !emailRe.MatchString(email) {
 		return httpx.BadRequest("invalid email address")
 	}
-	if len(password) < 8 || len(password) > 128 {
-		return httpx.BadRequest("password must be 8-128 characters")
-	}
-	return nil
+	return ValidatePassword(password)
 }
 
 // Register creates an account, enforcing uniqueness atomically via Redis

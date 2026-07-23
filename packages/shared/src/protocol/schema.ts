@@ -80,6 +80,20 @@ export class SeatState extends Schema {
    * the session.
    */
   declare undoDepth: number;
+  /**
+   * PER-ROUND kill/death tally for this seat — reset to 0 at every combat entry
+   * (MatchController.enterCombat), NOT cumulative. This is the authoritative
+   * input for the round-end MVP presentation (task #143 model + #142 VO): the
+   * client picks the leading team's best performer OF THAT ROUND, so a different
+   * round genuinely presents a different champion. Cumulative totals would just
+   * re-freeze on the match's overall best killer, and a client-side tally from
+   * death events is unreliable for a late/reconnecting client — so it rides the
+   * schema, where every client decodes the SAME numbers and therefore computes
+   * the SAME champion. uint8 (clamped on projection); a round can't realistically
+   * exceed 255 kills, and a clamp only affects an already-decided MVP.
+   */
+  declare roundKills: number;
+  declare roundDeaths: number;
 
   constructor() {
     super();
@@ -108,6 +122,8 @@ export class SeatState extends Schema {
     this.statStacks = 0;
     this.statCapstonePct = 0;
     this.undoDepth = 0;
+    this.roundKills = 0;
+    this.roundDeaths = 0;
   }
 }
 defineTypes(SeatState, {
@@ -136,6 +152,8 @@ defineTypes(SeatState, {
   statStacks: "uint8",
   statCapstonePct: "uint8",
   undoDepth: "uint8",
+  roundKills: "uint8",
+  roundDeaths: "uint8",
 });
 
 export class TeamState extends Schema {

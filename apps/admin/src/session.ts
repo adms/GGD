@@ -64,6 +64,16 @@ export interface RequestOptions {
   body?: unknown;
   /** attach Authorization + auto-refresh on 401 (default true) */
   auth?: boolean;
+  /**
+   * Refresh-and-retry once on a 401 (default true).
+   *
+   * Turn this OFF for an authenticated endpoint where a 401 means "that
+   * credential was wrong", not "your token expired" — /account/password is the
+   * one such route. Retrying there would replay the attempt (spending the
+   * server's brute-force budget twice) and, on a failed refresh, sign the
+   * operator out over a mistyped password.
+   */
+  refreshOn401?: boolean;
 }
 
 /** Parse the standard error envelope; fall back to a generic message. */
@@ -158,7 +168,7 @@ export class ApiClient {
   /** JSON request with the 401 → refresh-once → retry-once policy. */
   async request<T>(path: string, opts: RequestOptions = {}): Promise<T> {
     let res = await this.rawRequest(path, opts);
-    if (res.status === 401 && opts.auth !== false && this.tokens) {
+    if (res.status === 401 && opts.auth !== false && opts.refreshOn401 !== false && this.tokens) {
       const refreshed = await this.refreshOnce();
       if (refreshed) res = await this.rawRequest(path, opts);
     }

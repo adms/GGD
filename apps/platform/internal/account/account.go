@@ -241,6 +241,29 @@ func (r *Repo) SetSeasonPoints(ctx context.Context, id string, seasonPoints int,
 // ErrInvalidStatus is returned by SetStatus for an unknown status value.
 var ErrInvalidStatus = errors.New("account: invalid status")
 
+// ErrInvalidPasswordHash is returned by SetPasswordHash when handed anything
+// that is not an encoded argon2id string. It is a backstop, not a policy: the
+// only thing that could plausibly be passed here by mistake is a plaintext
+// password, and this store must never write one.
+var ErrInvalidPasswordHash = errors.New("account: password hash must be an encoded argon2id string")
+
+// SetPasswordHash replaces the stored credential of one account through the
+// same locked read-modify-write path every other account mutation uses (so it
+// stays single-writer safe against a concurrent MMR/wallet write) and returns
+// the updated account.
+//
+// Verifying the CURRENT password is the caller's job — see
+// auth.Service.ChangePassword, which is the only writer.
+func (r *Repo) SetPasswordHash(ctx context.Context, id, hash string) (Account, error) {
+	if !strings.HasPrefix(hash, "$argon2id$") {
+		return Account{}, ErrInvalidPasswordHash
+	}
+	return r.Update(ctx, id, func(a *Account) error {
+		a.PasswordHash = hash
+		return nil
+	})
+}
+
 // SetStatus flips the private-deploy approval status (#126) on one account via
 // the locked read-modify-write path and returns the updated account. Only the
 // three Status* constants are accepted. Idempotent: re-approving an approved

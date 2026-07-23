@@ -141,6 +141,9 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 	if err != nil {
 		return nil, err
 	}
+	// Self-service password changes land in the same append-only audit log the
+	// operator console reads (auth cannot import admin — see audit.go).
+	authSvc.SetAuditor(authAuditSink{store: store, now: time.Now})
 	pres := presence.New(rdb, cfg.PresenceTTL)
 	friends := friend.New(store)
 	rooms := room.New(rdb, pres)

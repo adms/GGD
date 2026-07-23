@@ -87,6 +87,16 @@ export interface SeatView {
    */
   statStacks: number;
   statCapstonePct: number;
+  /**
+   * Kills/deaths this seat scored IN THE CURRENT ROUND — server-authoritative
+   * (SeatState.roundKills/roundDeaths), zeroed at every combat entry. NOT the
+   * cumulative `kills`/`deaths` records below, which are a local tally off death
+   * events and are therefore incomplete for a late/reconnecting client. The
+   * round-end presentation (winner model #143 + quote VO #142) ranks the leading
+   * team's survivors by these, so every client names the same round MVP.
+   */
+  roundKills: number;
+  roundDeaths: number;
   offers: OfferView[];
 }
 
@@ -295,6 +305,8 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
       exCooldown: ss.exCooldown,
       statStacks: ss.statStacks,
       statCapstonePct: ss.statCapstonePct,
+      roundKills: ss.roundKills,
+      roundDeaths: ss.roundDeaths,
       offers: ss.offers.map((o) => ({
         offerId: o.offerId,
         tier: o.tier,

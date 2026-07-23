@@ -153,6 +153,18 @@ export class MatchController {
   readonly placements = new Map<TeamId, number>();
   readonly kills = new Map<SeatId, number>();
   readonly deaths = new Map<SeatId, number>();
+  /**
+   * PER-ROUND kill/death tallies — the same events as `kills`/`deaths`, but
+   * ZEROED at every combat entry (see resetRoundTallies). They ride the snapshot
+   * (SeatState.roundKills/roundDeaths) so the round-end presentation — the
+   * winner model (#143) and the round-end quote VO (#142) — can name THIS
+   * round's MVP on the leading team instead of a fixed representative seat.
+   * They must stay per-ROUND: a cumulative tally would simply pin the match's
+   * overall best killer on screen every round, which is the same bug in a new
+   * shape.
+   */
+  readonly roundKills = new Map<SeatId, number>();
+  readonly roundDeaths = new Map<SeatId, number>();
   /** current round's pairings + bye */
   pairings: DuelPairing[] = [];
   bye: TeamId | null = null;
@@ -280,6 +292,8 @@ export class MatchController {
       this.specs.set(seatId, spec);
       this.kills.set(seatId, 0);
       this.deaths.set(seatId, 0);
+      this.roundKills.set(seatId, 0);
+      this.roundDeaths.set(seatId, 0);
     }
     for (let t = 0; t < TEAM_COUNT; t++) this.lives.set(asTeamId(t), startingLives);
   }
@@ -538,11 +552,27 @@ export class MatchController {
     this.world.setArena(picked);
   }
 
+  /**
+   * Zero the PER-ROUND K/D tallies. Called at COMBAT ENTRY — deliberately not at
+   * concludeCombat — because the round-end beat (the `resolution` phase, and the
+   * shop intermission after it) is exactly when the client reads them to present
+   * the round's MVP. Resetting on the way OUT of combat would blank the numbers
+   * one tick before anyone looks at them; resetting on the way IN keeps the just
+   * -finished round's tally readable until the next round actually starts.
+   */
+  private resetRoundTallies(): void {
+    for (const seatId of this.seats.keys()) {
+      this.roundKills.set(seatId, 0);
+      this.roundDeaths.set(seatId, 0);
+    }
+  }
+
   private enterCombat(): void {
     this.world.economyOpen = false;
     this.world.combatActive = true; // scoreboard time-alive accrues during combat
     this.offers.clear();
     this.duelWinners.clear();
+    this.resetRoundTallies();
 
     // Per-round arena rotation (task #145): pick THIS round's map deterministically
     // from the pool BEFORE anyone is placed, so fighters spawn into it and the
@@ -1062,9 +1092,16 @@ export class MatchController {
         // never award a kill (they reward the HP/MP burst instead)
         const victimIsChampion = [...this.seats.values()].some((s) => s.entityId === victim);
         for (const seat of this.seats.values()) {
-          if (seat.entityId === victim) this.deaths.set(seat.seatId, (this.deaths.get(seat.seatId) ?? 0) + 1);
-          if (victimIsChampion && killer !== null && seat.entityId === killer)
+          if (seat.entityId === victim) {
+            this.deaths.set(seat.seatId, (this.deaths.get(seat.seatId) ?? 0) + 1);
+            this.roundDeaths.set(seat.seatId, (this.roundDeaths.get(seat.seatId) ?? 0) + 1);
+          }
+          if (victimIsChampion && killer !== null && seat.entityId === killer) {
             this.kills.set(seat.seatId, (this.kills.get(seat.seatId) ?? 0) + 1);
+            // same event, per-ROUND bucket: this is what the round-end MVP
+            // presentation reads (reset at the next enterCombat).
+            this.roundKills.set(seat.seatId, (this.roundKills.get(seat.seatId) ?? 0) + 1);
+          }
         }
       }
     }
