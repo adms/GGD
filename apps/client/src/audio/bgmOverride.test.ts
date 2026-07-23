@@ -75,10 +75,15 @@ describe("ranked ladder → menuNocturne wiring (task #134)", () => {
   it("the leaderboard declares the serene bed and the director prefers it", () => {
     cover("rank-ui-nocturne-bgm");
 
-    // 1. the ranked-ladder panel asks for the nocturne while it is mounted
+    // 1. the ranked-ladder panel can ask for the nocturne — but only when it is
+    //    told it OWNS the bed. It used to ask unconditionally, and because the
+    //    panel is a permanent 280px column of the lobby (LobbyScreen), that
+    //    override was live for the whole time the player sat in the lobby and
+    //    `lobby.mp3` could never be heard. The bed is opt-in now.
     const panel = read("ui/platform/LeaderboardPanel.tsx");
     expect(panel).toContain("useBgmSceneOverride");
-    expect(panel).toMatch(/useBgmSceneOverride\(\s*["']menuNocturne["']\s*\)/);
+    expect(panel).toMatch(/useBgmSceneOverride\(\s*ownsBgm\s*\?\s*["']menuNocturne["']\s*:\s*null\s*\)/);
+    expect(panel).toMatch(/ownsBgm\s*=\s*false/); // default OFF
 
     // 2. useAudio exposes the mount-scoped request + the director's reader
     const useAudio = read("ui/useAudio.ts");
@@ -91,5 +96,27 @@ describe("ranked ladder → menuNocturne wiring (task #134)", () => {
     const director = read("ui/AudioDirector.tsx");
     expect(director).toContain("useBgmOverride");
     expect(director).toMatch(/override\s*\?\?/);
+  });
+
+  it("REGRESSION: the lobby's embedded ladder does not hijack the lobby bed", () => {
+    cover("rank-ui-nocturne-bgm-lobby");
+
+    // The bug this pins: LobbyScreen mounts <LeaderboardPanel /> as a permanent
+    // side column. While that panel requested the nocturne unconditionally, the
+    // override outranked the derived scene (`override ?? derivedScene`) for the
+    // player's entire time in the lobby — so `lobby` resolved correctly in
+    // sceneForPlatform, bound correctly in audio-map.json, and was still never
+    // audible. A correctly wired track that no player could ever hear.
+    const lobby = read("ui/platform/LobbyScreen.tsx");
+    expect(lobby).toContain("<LeaderboardPanel");
+    expect(lobby).not.toMatch(/<LeaderboardPanel[^/>]*ownsBgm/);
+
+    // And the lobby bed it must not be stealing is a real, distinct track.
+    const map = JSON.parse(read("../../../content/config/audio-map.json")) as {
+      bgm: Record<string, { file: string }>;
+    };
+    expect(map.bgm.lobby?.file).toBe("assets/audio/bgm/lobby.mp3");
+    expect(map.bgm.menuNocturne?.file).toBe("assets/audio/bgm/menuNocturne.mp3");
+    expect(map.bgm.lobby?.file).not.toBe(map.bgm.menuNocturne?.file);
   });
 });

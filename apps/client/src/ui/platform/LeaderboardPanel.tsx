@@ -559,12 +559,29 @@ function RankChangeBanner(): React.JSX.Element | null {
 
 // ---------------------------------------------------------------- panel
 
-export function LeaderboardPanel(): React.JSX.Element {
-  // 主題曲 · 寧靜女聲 (task #134): while the ranked ladder is on screen, ask the
-  // AudioDirector for the serene `menuNocturne` bed — the nocturne that used to
-  // be the login screen's second theme. Released automatically on unmount (the
-  // player leaves the lobby, or opens the store), restoring the derived scene.
-  useBgmSceneOverride("menuNocturne");
+export interface LeaderboardPanelProps {
+  /**
+   * Take over the background bed with 主題曲 · 寧靜女聲 (`menuNocturne`) while
+   * this panel is mounted. DEFAULT FALSE, and that default is the fix for a
+   * real bug.
+   *
+   * Task #134 moved the nocturne off the login screen and onto "the
+   * leaderboard / ranked-ladder screen". No such screen exists — `lobbyView`
+   * is only "play" | "store" — so the override was attached to this panel
+   * instead, and this panel is a PERMANENT 280px column of the lobby
+   * (LobbyScreen.tsx). The result: the override was active for the entire time
+   * the player was in the lobby, so `lobby.mp3` could never be heard at all.
+   * A correctly bound track that is unreachable in practice.
+   *
+   * So the bed is opt-in. An embedded side panel does not own the music; only
+   * a surface where the ladder is genuinely the thing the player is looking at
+   * should pass true.
+   */
+  ownsBgm?: boolean;
+}
+
+export function LeaderboardPanel({ ownsBgm = false }: LeaderboardPanelProps = {}): React.JSX.Element {
+  useBgmSceneOverride(ownsBgm ? "menuNocturne" : null);
 
   const meId = useApp((s) => s.account?.id ?? null);
   const loggedIn = useApp((s) => !!s.account);
