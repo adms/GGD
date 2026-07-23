@@ -1,6 +1,6 @@
 {
   "collection": "models",
-  "hash": "44710197170d",
+  "hash": "5b5ce40f5ead",
   "entries": [
     {
       "id": "champ.sela",
@@ -703,6 +703,18 @@
       "path": "models/prop.guardian.json",
       "hash": "82f99757cbbc",
       "size": 385
+    },
+    {
+      "id": "prop.guardian.beast",
+      "path": "models/prop.guardian.beast.json",
+      "hash": "7d86d57dd4e4",
+      "size": 391
+    },
+    {
+      "id": "prop.guardian.treant",
+      "path": "models/prop.guardian.treant.json",
+      "hash": "020df7426127",
+      "size": 399
     }
   ]
 }

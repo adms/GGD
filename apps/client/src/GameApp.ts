@@ -79,6 +79,7 @@ import {
   anchorColorFor,
   anchorHeightFor,
   KIND_FLOWER,
+  KIND_GUARDIAN,
   KIND_REVIVE_CIRCLE,
 } from "./render/overheadAnchors";
 import { qualityController, type RenderParams } from "./render/QualityController";
@@ -1616,17 +1617,19 @@ export class GameApp {
     const seen = this.fbSeen;
     seen.clear();
     state.entities.forEach((es) => {
-      // champions AND neutral healing flowers (kind 2) carry overhead bars
+      // champions AND neutral objectives (kind 2 flower, kind 4 guardian) carry
+      // overhead bars. A guardian is NEUTRAL (task #89): no name, teamId -1, and
+      // an explicit neutral bar colour (anchorColorFor) — never a team tint.
       if (!hasOverheadBar(es.kind)) return;
-      const isFlower = es.kind === KIND_FLOWER;
+      const isNeutral = es.kind === KIND_FLOWER || es.kind === KIND_GUARDIAN;
       seen.add(es.id);
       const pos = this.views.posOf(es.id) ?? { x: es.x, z: es.z };
       let anchor = frameBus.champions.get(es.id);
       if (!anchor) {
         anchor = {
           entityId: es.id,
-          name: isFlower ? "" : (nameBySeat.get(es.seatId) ?? `#${es.id}`),
-          teamId: isFlower ? -1 : (this.teamBySeat.get(es.seatId) ?? 0),
+          name: isNeutral ? "" : (nameBySeat.get(es.seatId) ?? `#${es.id}`),
+          teamId: isNeutral ? -1 : (this.teamBySeat.get(es.seatId) ?? 0),
           championId: "",
           isLocal: es.id === this.predictedEntityId,
           alive: es.alive,
@@ -1644,7 +1647,7 @@ export class GameApp {
       anchor.alive = es.alive;
       // picks land after the anchor is created (and change between rounds), so
       // the champion id is refreshed rather than frozen at spawn
-      anchor.championId = isFlower ? "" : (champBySeat.get(es.seatId) ?? "");
+      anchor.championId = isNeutral ? "" : (champBySeat.get(es.seatId) ?? "");
       anchor.hpPct = es.maxHp > 0 ? es.hp / es.maxHp : 0;
       anchor.shieldPct = es.maxHp > 0 ? es.shield / es.maxHp : 0;
       anchor.manaPct = es.maxMana > 0 ? es.mana / es.maxMana : 0;

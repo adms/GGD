@@ -852,7 +852,18 @@ def item_to_draft(item: dict, abilities: dict, item_id: str,
         if stat and value:
             mods.append({"stat": stat, "op": op, "value": round(value, 3)})
 
+    # Task #83: an item's ability list can carry the same rawcode twice (four
+    # source items do: AIx2, AItf, A01Y, AIx5). Warcraft never stacks a repeated
+    # ability on a unit, so adding its modifiers a second time just concatenates
+    # the modifier list onto itself and DOUBLES the stat (四魂之玉的碎片 shipped
+    # ad+4/hp+80 instead of its tooltip ad+2/hp+40). Fold each rawcode once.
+    seen_aids: set[str] = set()
     for aid in item.get("abilities", []):
+        if aid in seen_aids:
+            notes.append(f"{item_id}: ability {aid} listed twice on the item — "
+                         f"folded once (a repeat would double its modifiers)")
+            continue
+        seen_aids.add(aid)
         ab = abilities.get(aid)
         base = (ab.get("base") if ab else aid) or ""
         if base in ITEM_KNOWN:

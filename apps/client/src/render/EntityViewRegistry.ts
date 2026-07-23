@@ -16,6 +16,7 @@ import { TICK_MS } from "@ggd/shared/constants";
 import { ChampionView } from "./views/ChampionView";
 import { ProjectileView, type ProjectileMeshShape } from "./views/ProjectileView";
 import { FlowerView } from "./views/FlowerView";
+import { GuardianView } from "./views/GuardianView";
 import { ReviveCircleView } from "./views/ReviveCircleView";
 import { applyModelTint, releaseModelTint, type ModelTint } from "./views/modelTint";
 import type { AssetManager } from "./AssetManager";
@@ -170,6 +171,8 @@ export class EntityViewRegistry {
   private readonly pool: ProjectileView[] = [];
   private readonly flowers = new Map<number, FlowerView>();
   private readonly flowerPool: FlowerView[] = [];
+  private readonly guardians = new Map<number, GuardianView>();
+  private readonly guardianPool: GuardianView[] = [];
   private readonly reviveCircles = new Map<number, ReviveCircleView>();
   private readonly revivePool: ReviveCircleView[] = [];
   private readonly lastPos = new Map<number, { x: number; z: number }>();
@@ -196,6 +199,10 @@ export class EntityViewRegistry {
 
   get flowerCount(): number {
     return this.flowers.size;
+  }
+
+  get guardianCount(): number {
+    return this.guardians.size;
   }
 
   get reviveCircleCount(): number {
@@ -406,6 +413,28 @@ export class EntityViewRegistry {
         continue;
       }
 
+      if (e.kind === 4) {
+        // NEUTRAL duel-zone GUARDIAN (task #89/#105) — pooled like the flower,
+        // .glb-upgraded like champions (per-arena model doc keyed by es.key:
+        // 樹人 / 石頭人 / 巨獸人). NEVER team-tinted — its neutrality is the
+        // contract, so it deliberately skips applyTint and the seatId path.
+        let view = this.guardians.get(e.id);
+        if (!view) {
+          view = this.guardianPool.pop() ?? new GuardianView(this.scene);
+          view.activate(e.id);
+          this.guardians.set(e.id, view);
+        }
+        if (args.loadModels !== false && !view.upgradeAttempted) {
+          view.tryUpgradeToGlb(this.assets, this.content.modelDocFor?.(e.key) ?? null);
+        }
+        const pose = args.poseFor(e);
+        view.setPose(pose.x, pose.z);
+        view.setAlive(e.alive);
+        view.update(args.nowMs);
+        this.lastPos.set(e.id, { x: pose.x, z: pose.z });
+        continue;
+      }
+
       if (e.kind === 3) {
         // revive circle — pooled, fully procedural (no model doc). Progress /
         // lifetime / contest all come off the wire; the view only paints them.
@@ -516,6 +545,14 @@ export class EntityViewRegistry {
         this.flowerPool.push(view);
       }
     }
+    for (const [id, view] of this.guardians) {
+      if (!seen.has(id)) {
+        view.deactivate();
+        this.guardians.delete(id);
+        this.lastPos.delete(id);
+        this.guardianPool.push(view);
+      }
+    }
     for (const [id, view] of this.reviveCircles) {
       if (!seen.has(id)) {
         view.deactivate();
@@ -536,6 +573,8 @@ export class EntityViewRegistry {
     for (const v of this.pool) v.dispose();
     for (const v of this.flowers.values()) v.dispose();
     for (const v of this.flowerPool) v.dispose();
+    for (const v of this.guardians.values()) v.dispose();
+    for (const v of this.guardianPool) v.dispose();
     for (const v of this.reviveCircles.values()) v.dispose();
     for (const v of this.revivePool) v.dispose();
     this.champions.clear();
@@ -543,6 +582,8 @@ export class EntityViewRegistry {
     this.pool.length = 0;
     this.flowers.clear();
     this.flowerPool.length = 0;
+    this.guardians.clear();
+    this.guardianPool.length = 0;
     this.reviveCircles.clear();
     this.revivePool.length = 0;
   }

@@ -14,6 +14,7 @@
 export const KIND_CHAMPION = 0;
 export const KIND_FLOWER = 2;
 export const KIND_REVIVE_CIRCLE = 3;
+export const KIND_GUARDIAN = 4;
 
 /**
  * Does this entity kind carry an over-head HP bar? Revive circles (kind 3)
@@ -23,7 +24,7 @@ export const KIND_REVIVE_CIRCLE = 3;
  * from a floating bar.
  */
 export function hasOverheadBar(kind: number): boolean {
-  return kind === KIND_CHAMPION || kind === KIND_FLOWER;
+  return kind === KIND_CHAMPION || kind === KIND_FLOWER || kind === KIND_GUARDIAN;
 }
 
 /**
@@ -33,12 +34,29 @@ export function hasOverheadBar(kind: number): boolean {
  */
 export const NEUTRAL_BAR_COLOR = "#b7e3a8";
 
+/**
+ * Neutral bar color for the duel-zone GUARDIAN (task #89) — a warm stone-bronze,
+ * distinct from the four TEAM_CSS colors AND from the flower's leaf green, so
+ * the guardian's health bar reads as a NEUTRAL OBJECTIVE (nobody's teammate),
+ * never as a team's champion. This is the visible half of "it is neutral": the
+ * guardian encodes seatId -1, so it also never inherits a team tint.
+ */
+export const GUARDIAN_BAR_COLOR = "#c99a5c";
+
 /** Explicit bar color for a kind; undefined = the UI derives it from teamId. */
 export function anchorColorFor(kind: number): string | undefined {
-  return kind === KIND_FLOWER ? NEUTRAL_BAR_COLOR : undefined;
+  if (kind === KIND_FLOWER) return NEUTRAL_BAR_COLOR;
+  if (kind === KIND_GUARDIAN) return GUARDIAN_BAR_COLOR;
+  return undefined;
 }
 
-/** World-space Y the bar is projected from (champion head vs. low flower). */
+/**
+ * World-space Y the bar is projected from. The guardian is a tall objective
+ * (~3u model), so its bar floats higher than a champion's head; the flower is
+ * a low ground beacon.
+ */
 export function anchorHeightFor(kind: number): number {
-  return kind === KIND_FLOWER ? 1.35 : 2.45;
+  if (kind === KIND_FLOWER) return 1.35;
+  if (kind === KIND_GUARDIAN) return 3.5;
+  return 2.45;
 }

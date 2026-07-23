@@ -42,6 +42,20 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   "guardBreak",
   "flowerSpawn",
   "flowerBurst",
+  // NEUTRAL DUEL-ZONE GUARDIAN (task #89/#105). Without these the guardian is a
+  // ghost: it exists in the sim and deals/takes damage, but the client sees no
+  // wake, no health drain feedback, no PRE-LAND punish telegraph (so nobody can
+  // dodge), and no last-hit reward. `guardianMark` is the dodge cue (carries the
+  // impactTick + the post-multiplier AoE radius); `guardianSlain` names who got
+  // the last-hit bounty. Same one-list contract as every other combat visual, so
+  // the ReplayRoom forwards the identical set.
+  "guardianSpawn",
+  "guardianWake",
+  "guardianSleep",
+  "guardianMark",
+  "guardianImpact",
+  "guardianHeirPulse",
+  "guardianSlain",
   // FLOATING COMBAT TEXT (task #92): 補血 / 補魔 — the half `damage` does not
   // carry. Emitted only for DISCRETE restores, so no steady-state regen spam.
   "heal",

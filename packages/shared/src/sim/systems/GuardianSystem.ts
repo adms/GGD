@@ -387,8 +387,15 @@ export function guardianSystem(world: SimWorld): void {
     // resolve due marks -> queue physical packets (drain at step 8 of T+1).
     if (sc.marks.length > 0) {
       const remaining: GuardianMark[] = [];
+      // Scale the punish AoE by the combat-env `abilityRange` multiplier exactly
+      // as player abilities are (resolveAbilityRadius, task #136) — the raw
+      // rules.volleyRadius used to reach 1/abilityRange further than an
+      // equivalently-nominal player AoE. The telegraph the client drew (#125)
+      // carries this SAME scaled radius (see fireVolley), so the dodge circle and
+      // the damage query agree.
+      const volleyRadius = resolveAbilityRadius(world, rules.volleyRadius);
       for (const m of sc.marks) {
-        if (tick >= m.impactTick) applyMark(world, sc, m, rules.volleyRadius);
+        if (tick >= m.impactTick) applyMark(world, sc, m, volleyRadius);
         else remaining.push(m);
       }
       sc.marks = remaining;
@@ -487,6 +494,9 @@ function fireVolley(
     targets,
     impactTick: tick + rules.volleyWindupTicks,
     amount,
+    // The dodge-circle radius, POST abilityRange multiplier (#125/#136), so the
+    // pre-land telegraph the client draws matches applyMark's damage query.
+    radius: resolveAbilityRadius(world, rules.volleyRadius),
   });
 }
 
@@ -502,9 +512,11 @@ function heirPulse(
   const bteam = world.team.get(bearer);
   if (!bt || !bhp?.alive || !bteam) return; // no pulse while dead / off-field
   const amount = rules.heirPulsePct * guardianVolleyDamage(rules, buff.round);
+  // Same combat-env `abilityRange` scaling as the volley + player abilities.
+  const heirRadius = resolveAbilityRadius(world, rules.heirPulseRadius);
   const hits = queryOverlap(
     world,
-    { kind: "circle", center: { x: bt.pos.x, z: bt.pos.z }, radius: rules.heirPulseRadius },
+    { kind: "circle", center: { x: bt.pos.x, z: bt.pos.z }, radius: heirRadius },
     { zone: bt.zone, aliveOnly: true, exclude: new Set([bearer]) },
   );
   let struck = 0;

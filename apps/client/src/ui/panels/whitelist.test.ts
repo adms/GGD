@@ -74,13 +74,28 @@ describe("filter application (client-whitelist-filter)", () => {
     expect(applyItemWhitelist(items, NO_FILTER)).toHaveLength(3);
   });
 
-  // REGRESSION: the shop used to intersect the whitelist with an `id` prefix
-  // heuristic, so whitelisted items without a `godie-` prefix were unbuyable
-  // while the AI kept buying them off buildPriority. The enforced whitelist is
-  // the whole catalogue policy — no second filter may narrow it.
-  it("items: an enforced whitelist admits non-godie ids (swift-boots/serrated-edge)", () => {
+  // REGRESSION (re-expressed for task #70's final-only shop): the shop used to
+  // intersect the whitelist with an `id` prefix heuristic, so a whitelisted
+  // weapon without a `godie-` prefix was silently unbuyable while the AI kept
+  // buying it off buildPriority. That id-prefix coupling MUST stay dead. #70
+  // replaced it with a SEMANTIC rule — buyable = craftRole "final" (with a real
+  // effect) or a shop service — so membership no longer looks at the id at all.
+  // This guard now asserts that new invariant from both sides: a non-godie FINAL
+  // is admitted regardless of prefix, and a component/book/quest item on the
+  // SAME whitelist is still excluded (the owner's 只有最終合成武器 rule; the
+  // enforced whitelist narrows the final set, it can never widen past it).
+  const EFFECT = [{ stat: "attackDamage", op: "flat", value: 10 }];
+  it("items: an enforced whitelist admits a non-godie FINAL by craftRole, never a component/book/quest item", () => {
     cover("client-whitelist-filter");
-    const catalogue = [{ id: "godie-i05t" }, { id: "swift-boots" }, { id: "serrated-edge" }];
+    const catalogue = [
+      { id: "godie-i05t", craftRole: "final", modifiers: EFFECT },
+      { id: "swift-boots", craftRole: "final", modifiers: EFFECT }, // no godie- prefix, still buyable
+      { id: "serrated-edge", craftRole: "final", modifiers: EFFECT }, // ditto
+      { id: "godie-recipe-book", craftRole: "book", modifiers: EFFECT }, // 製作書: excluded
+      { id: "godie-i001", craftRole: "component", modifiers: EFFECT }, // recipe component: excluded
+      { id: "godie-ring", craftRole: "quest", modifiers: EFFECT }, // 魔戒 quest item: excluded
+    ];
+    // whitelist enables ALL six ids — the final-only rule must still drop three
     const wl = whitelistFromDoc({ items: catalogue.map((i) => i.id) });
     expect(shopCatalogue(catalogue, wl).map((i) => i.id)).toEqual([
       "godie-i05t",
@@ -89,12 +104,17 @@ describe("filter application (client-whitelist-filter)", () => {
     ]);
   });
 
-  it("items: unenforced (offline/dev) still hides skeleton demo items once imported ones load", () => {
+  it("items: unenforced (offline/dev) hides skeleton demo items once FINAL items load, else falls back", () => {
     cover("client-whitelist-filter");
-    const mixed = [{ id: "godie-i05t" }, { id: "ember-rod" }];
+    // once a real imported final loads, the no-craftRole skeleton stick vanishes
+    const mixed = [
+      { id: "godie-i05t", craftRole: "final", modifiers: EFFECT },
+      { id: "ember-rod", cost: 300 }, // skeleton demo stick, no craftRole
+    ];
     expect(shopCatalogue(mixed, NO_FILTER).map((i) => i.id)).toEqual(["godie-i05t"]);
-    // skeleton-only context (unit tests): fall back to the full list
-    const skeletonOnly = [{ id: "ember-rod" }, { id: "swift-boots" }];
+    // skeleton-only context (unit tests / bare `pnpm dev`, no imported finals):
+    // fall back to the priced demo sticks rather than render an empty grid
+    const skeletonOnly = [{ id: "ember-rod", cost: 300 }, { id: "swift-boots", cost: 300 }];
     expect(shopCatalogue(skeletonOnly, NO_FILTER)).toHaveLength(2);
   });
 });

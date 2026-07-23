@@ -198,6 +198,31 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
           (circle.contested ? ENTITY_FLAG.CONTESTED : 0);
         continue;
       }
+      const structure = world.structure.get(id);
+      if (structure) {
+        // NEUTRAL duel-zone GUARDIAN (task #89/#105). Like a flower it carries
+        // transform + health + a marker and NOTHING ELSE — no team/seat/champion
+        // — but it is its OWN distinct kind so the client stops falling it
+        // through to the champion default (kind 0 + team-0 tint = a grey blob
+        // painted as a blue teammate). seatId -1 = neutral (all four teams may
+        // target it; #85 never keeps it in colour as a teammate); key = the
+        // per-arena model doc id (樹人 / 石頭人 / 巨獸人). hp rides along so a
+        // neutral health bar renders.
+        es.kind = ENTITY_KIND.GUARDIAN;
+        es.seatId = -1;
+        es.key = structure.modelKey;
+        const hp = world.health.get(id);
+        if (hp) {
+          es.hp = hp.hp;
+          es.maxHp = hp.maxHp;
+          es.mana = 0;
+          es.maxMana = 0;
+          es.alive = hp.alive;
+          es.shield = 0;
+        }
+        es.flags = 0;
+        continue;
+      }
       const team = world.team.get(id);
       const champ = world.champion.get(id);
       es.kind = 0;

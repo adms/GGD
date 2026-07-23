@@ -184,6 +184,8 @@ export const FLOWER_SPAWN_VFX = "fx.root-snare";
  *              must not read like something happened.
  */
 const REVIVE_TINT: Rgb = [1, 0.72, 0.28];
+/** Neutral guardian (task #89) — warm stone-bronze, matching its health bar. */
+const GUARDIAN_TINT: Rgb = [0.95, 0.72, 0.42];
 export const REVIVE_SPAWN_VFX = "fx.root-snare";
 export const REVIVE_COMPLETE_VFX = "fx.barkskin";
 
@@ -983,6 +985,43 @@ export class VfxSystem {
       }
       // `reviveCircleEnd` is deliberately SILENT: a circle burning out is a
       // non-event and must not read as if something landed.
+
+      // NEUTRAL GUARDIAN (task #89). The PRE-LAND punish telegraph: a ground
+      // ring at every marked target that FILLS over the exact wind-up window
+      // (impactTick − now), so a player can SEE the volley coming and step out —
+      // consistent with the cast-telegraph contract (a dodge you cannot see is
+      // not a dodge). `radius` is the post-abilityRange value (#125), so the ring
+      // is exactly where the damage query will hit.
+      case "guardianMark": {
+        const targets = ev.data.targets as { x: number; z: number }[] | undefined;
+        if (!Array.isArray(targets)) break;
+        const radius = typeof ev.data.radius === "number" ? ev.data.radius : 3;
+        const impactTick = typeof ev.data.impactTick === "number" ? ev.data.impactTick : ev.tick;
+        const windupMs = Math.max(1, (impactTick - ev.tick) * TICK_MS);
+        for (const t of targets) {
+          if (!isFinitePos(t)) continue;
+          this.telegraphs.push(new Telegraph(this.scene, t.x, t.z, radius, nowMs, windupMs));
+        }
+        break;
+      }
+      // the volley LANDS: a hit pop at the guardian's centre (the marks already
+      // paid off their own resolve shockwave when their telegraphs fired).
+      case "guardianImpact": {
+        const x = ev.data.x as number | undefined;
+        const z = ev.data.z as number | undefined;
+        if (typeof x !== "number" || typeof z !== "number" || !isFinitePos({ x, z })) break;
+        this.layeredPop(x, z, nowMs, "heavy", GUARDIAN_TINT);
+        break;
+      }
+      // the guardian was SLAIN (last-hit reward, task #89) — a kill-grade pop so
+      // the payoff moment reads as loudly as a champion kill.
+      case "guardianSlain": {
+        const x = ev.data.x as number | undefined;
+        const z = ev.data.z as number | undefined;
+        if (typeof x !== "number" || typeof z !== "number" || !isFinitePos({ x, z })) break;
+        this.layeredPop(x, z, nowMs, "ex", GUARDIAN_TINT);
+        break;
+      }
 
       // WC3 dummy-effect-unit one-shots (task #9): the sim's spawnVfx effect
       // emits a world point + a vfx@1 doc id — play the doc there (HitSpark as
