@@ -287,9 +287,85 @@ Genuinely-incomplete / deferred requirements surfaced during the ~1920-file bran
 - **追加需求（原話）**：「回合表現最好的人的底線門檻是必須最後還活著」 — ✅ **已實作為兩段式篩選**（先存活門檻、後表現排序）；
   領先隊伍全滅（互相清場／火環）時退回全隊伍最佳表現者，永不回傳 null。存活判定取自權威快照 `EntityState.alive`
   （非 `roundDeaths === 0`，因為 #84 復活圈救回的人仍算存活），所以每個客戶端算出同一位英雄、播同一段語音。
-- **⚠ 已知殘留邊界**：若某回合**領先隊伍抽到輪空（bye）**，`enterCombat` 會把該隊座位擺成死亡且不計分 →
-  存活門檻找不到倖存者、全零退場機制又落回最小 seatId，該回合仍會退化成舊行為（僅在「存活隊伍數為奇數」時發生，且永不回傳 null）。
-  要根治需要一個「本回合有參戰」的訊號（`participatedThisRound`），已超出本次修復範圍 → **待辦，併入 #143 收尾**。
+- **~~⚠ 已知殘留邊界~~ → ✅ 已修（#173，2026-07-23 整合波）**：輪空（bye）回合的領先隊伍會被誤選。
+  原設計提案是布林 `participatedThisRound`，**實作改為 4 態 uint8** —— 它連「贏了但沒參戰」這種不可能狀態都無法表達：
+  - **訊號**：`TeamState.roundOutcome`（`NONE=0 / FOUGHT=1 / LOST=2 / WON=3`，`packages/shared/src/protocol/schema.ts`，
+    append-only 欄位不可調序）。`MatchController.roundOutcome` map：`enterCombat` 把所有隊歸零 → **把座位放進對戰區的那一圈** 設 FOUGHT →
+    `settleRound` 升級成 WON/LOST；`snapshot.ts` 每次 patch 投影；`RoomStore` → `RoundTeamView.roundOutcome`。
+    輪空隊永遠停在 NONE，因為它從來沒進過那圈迴圈。
+  - **選擇器**（`settlementModel.roundLeaderChampion`）三段式：**CANDIDATES**（WON → 退 FOUGHT/LOST → 再退全部）/
+    **GATE**（回合結束仍存活）/ **RANK**（回合擊殺↓ → 回合死亡↑ → seatId↑）。判定用**列舉成員比對**而非 `!== NONE`，
+    以免 `undefined` 或超界值被當成參戰者。名次是**逐位往下試**，領先候選若整隊沒鎖英雄會讓給次佳隊伍，
+    `null` 只剩「全場都沒有英雄」一種意思。
+  - **⚠ 這一併改變了「一般 4 隊回合」的演出**（非只有輪空回合）：優先 WON 表示**輸掉單挑的隊伍永遠不會被表揚**，
+    即使它在 lives 上還領先（`settleRound` 已先扣過分，輸家 3→2 可以壓過贏家 1）。這是刻意的、符合 #143「回合勝利演出」語意，
+    但它是需求原文沒要求的行為變更，記錄在此以免 playtest 時被當成 regression。兩個贏家同分時退到較小 teamId（席位 MVP 仍每回合變動）。
+  - **測試**：`settlement.test.ts`（round-mvp-bye）+ `settlementModel.test.ts`（settle-round-bye，含 WON 路徑的
+    GATE/RANK 鏡像案例與「候選沒鎖英雄」的續試案例）。
 - **⚠ 併發提交事故**：此修復進行中，`a2ae538` / `3f11759` 由**另一個並行 session／hook 自動提交**，
   把本修復與 #172 改密碼（platform/admin）混進同一個 commit。程式碼無遺失，但兩件不相干的工作已無法乾淨拆開 →
   提醒：同一 worktree 不要同時跑會自動 commit 的 session。
+
+## 2026-07-23 — #93 勝利演出 / #85 死亡觀戰去飽和：整合波（三份對抗式審查的收斂）
+
+### #93 勝利演出（回合＝灰底＋小煙火＋嘲諷；決賽＝暗底＋巨大烤雞煙火＋嗆聲 VO）
+
+- **需求（原話）**：「贏得回合 → 灰色底＋小煙火＋該英雄風格的嘲諷台詞；贏得整場 → 暗色底＋巨大烤雞造型煙火＋嗆人的 VO」。
+- **⛔ 曾經：六個子句只有一個真的會發生（已修）**。演出模組全部寫好、單元測試全綠，但**線沒接上**：
+  - `TeamState.roundWins` 在 schema 宣告、被 client 讀（`GameApp.victoryInput` → `VictoryGate`），
+    但**伺服器從來沒有任何一行寫它** → 小煙火是死程式碼，永遠不會放。
+    → 已修：`MatchController.roundWins`（match 生命週期計數，**不在 `resetRoundTallies` 歸零**，否則 client 的
+    `roundWins > lastRoundWins` 邊緣偵測就再也不會觸發），`settleRound` 勝方 +1（uint8 夾 255），`snapshot.ts` 每 patch 投影。
+    測試：`settlement.test.ts`（round-win-counter，3 例）。
+  - `GameApp` 呼叫 `roundWinner.show(doc)` **沒帶 ctx** → `RoundWinnerStage` 在 `if (!champ) return` 直接跳出 →
+    嘲諷台詞與字幕整條路徑在正式版不可達（只有測試自己帶參數才跑得到）。
+    → 已修：`show(doc, { championId: champ, round: state.round })`，並在 `settlementModel.test.ts` 用原始碼比對釘住這行接線。
+- **字幕比語音早 2.2 秒（已修）**：`playRound(...).then(setSubtitle)` 在**選定台詞**的下一個 microtask 就 resolve，
+  但語音要等 `delayMs`。字幕因此正好蓋在回合結束名言上——那個 delay 存在的唯一理由。
+  → 已修：新增 `PlayTauntOptions.onSpeak`，字幕改由「真正發聲的那一拍」驅動；靜音／未解鎖／測試靜音時**照樣排程、照樣出字幕**，
+  只是不出聲（字幕是演出，不是音訊）。
+- **延遲期間才按靜音會照樣出聲（已修）**：音量在排程當下讀一次就定案。
+  → 已修：所有音訊閘（測試靜音、autoplay lock、mute/0 gain、無檔案、無 element）改在 `speak()` 內、**發聲當下**重新判定。
+- **暗底把它自己要展示的烤雞壓暗（已修）**：卡片被壓住 2.34 秒就是為了讓巨大烤雞看得見，
+  但同時蓋著 0.86 alpha 近黑漸層 ＋ `brightness(0.55)`。
+  → 已修：spec 表新增 `backgroundHeld` / `backdropFilterHeld`（alpha 0.16/0.32、**完全不用 brightness**），
+  hold 結束後以 420ms 曲線收斂成正式暗底。測試 `client-victory-held-wash` 用「held 的最大 alpha < 正式的最小 alpha」量化。
+- **卡片閃一格 + #36 自動捲動被重複武裝（已修）**：`cardHeld` 改為**推導值**（只存「hold 結束」這一個邊緣）。
+- **`ROUND_PRESENT_MS` 手抄兩份（已修）**：刪掉 `GameApp` 的本地常數，改 import；否則把演出視窗縮到 2200ms 以下會**無聲**取消嘲諷。
+
+### #85 死亡觀戰去飽和
+
+- **需求（原話）**：「死亡觀戰時整個畫面去飽和，只有自己的隊友保持有顏色」。
+- **復活圈色池是全系統最大的漏色點（已修）**：隊友池已收緊到剪影尺度（4→1.5 / 11→3），但復活圈仍留在舊的「戰鬥尺度」：
+  半徑 2 的圈 → rFull 2.75 / rFade 4.75（詠唱時 6.5）。實測：**敵人站在你屍體 3u 處保留 81% 顏色**，
+  同一個敵人站在活著的隊友 3u 處是 0。而復活圈正是敵人蹲點的地方——等於「敵人去飽和」在最關鍵的位置不成立，
+  且當時的註解還宣稱它「貼著圈、不是泡泡」，程式與註解互相矛盾。
+  → 已修：`REVIVE_FULL_MARGIN` 0.75→0.25、`REVIVE_FADE_MARGIN` 2.75→1.25、`REVIVE_FADE_MARGIN_CHANNEL` 4.5→2.25
+  （3u 處剩 13%）。原本「守護這個調校」的測試是恆真式（`poolColourAt(rFade, rFull, rFade)` 對任何合法半徑都是 0），
+  已換成**絕對世界距離**斷言；「畫面讀起來是被抽乾的」面積測試也改成走 `buildFocusSources` 的真實最壞情況
+  （自己的復活圈詠釘中＋隊友），不再把最大的池排除在外。實際 7.8%，上限 8%。
+- **GLSL 與 TS 鏡像的漂移防護（已補）**：`poolColourAt` 是 `DeathFocusFx` 片段著色器的手工鏡像，六條需求級斷言全靠它忠實。
+  已在 `DeathFocusFx.test.ts` 加上對 `Effect.ShadersStore` 的字串釘樁（不需 GPU）。
+
+### 交界（單一任務的審查者看不到的部分）
+
+- **#173 選到的英雄 ↔ #93 的舞台**：同一個 `roundEndQuoteChampion` 既決定中央模型也決定嘲諷台詞的雜湊種子；
+  ctx 沒傳就等於「選好了但沒接上」。已接上並用原始碼比對釘住。
+- **#85 灰 ＋ #93 灰的疊加（已定優先序並強制）**：兩者唯一會相遇的時刻是**回合結束的那一格**——
+  死亡去飽和的閘門條件是 `phase === "combat" && !outcomeDecided`，回合結束時它開始以 `FOCUS_FADE_OUT_MS` 線性淡出，
+  而 #93 的灰底正好在同一格掛上。若灰底以全不透明掛上，就是 `grayscale(0.88)` ＋ 0.76 alpha 灰漸層疊在**已經抽乾**的畫面上，
+  在贏家模型登場的瞬間變成一塊讀不出東西的板子。
+  **規則：勝利演出擁有畫面，但以 CROSSFADE 接手，不是疊加。** 灰底以 opacity 0 掛上，在**恰好等於 #85 淡出**的時間內升到 1
+  （`ROUND_WASH_FADE_MS = FOCUS_FADE_OUT_MS`，直接 import 綁死）。決賽端沒有這條縫：#85 在 `outcomeDecided` 就解除，
+  而 `MatchEndPanel` 要等數秒後的結算封包才掛載。
+- **#85 會不會改變 #93 煙火的樣子**：會，但只在上面那條淡出尾巴內。`DeathFocusFx` 是掛在**攝影機**上的後製，
+  兩種煙火都是同一個 scene／同一台攝影機的粒子，天上的煙火離任何色池都很遠 → 若後製還在全強度，煙火會是全灰的。
+  由於 `concludeCombat`（寫 roundWins/roundOutcome、latch `outcomeDecided`）與 `phase.advance()` 在**同一 tick**，
+  client 收到計數上升的那個 patch 相位已經是 `resolution` → 閘門已解除、正在淡出。crossfade 讓這段尾巴視覺上維持單層。
+
+### 仍未做（明講）
+
+- `gen_status.py` 的 TASKS 表仍停在 #127（本波只補上 #85/#93/#143/#173 四列）；#128–#171 的補列仍是既有的「Live-page sync」缺口。
+- `RoundWinnerStage` 與 `MatchEndPanel` 共用同一個 process-wide `victoryTaunts`，回合舞台的 `clear()` 會無條件 `cancel()`。
+  審查建議讓回合舞台自己 new 一個 player——**沒有採納**：共用實例正是「永遠不會兩個聲音同時講話」的保證來源，
+  拆開反而會製造更糟的 bug。目前安全性由「決賽回合 `roundEndQuoteChampion` 回傳 null」保證，已在此記錄這條隱性耦合。

@@ -11,7 +11,9 @@ import { Scene } from "@babylonjs/core/scene";
 import { TargetCamera } from "@babylonjs/core/Cameras/targetCamera";
 import { Vector3, Matrix } from "@babylonjs/core/Maths/math.vector";
 import { KIND_CHAMPION, KIND_FLOWER, KIND_REVIVE_CIRCLE } from "./overheadAnchors";
+import { TARGET_HEIGHT } from "./views/ChampionView";
 import {
+  ALLY_ANCHOR_Y,
   ALLY_RADIUS_FADE,
   ALLY_RADIUS_FULL,
   COMBAT_PHASE,
@@ -23,11 +25,18 @@ import {
   REVIVE_WEIGHT,
   buildFocusSources,
   makeFocusSourcePool,
+  poolColourAt,
   projectFocusSource,
   rampToward,
+  smoothstep,
   type FocusEntity,
   type FocusGateInput,
 } from "./deathFocus";
+
+/** Champion body radius — packages/shared/src/sim/spawnChampion.ts (`radius: 0.6`). */
+const BODY_RADIUS = 0.6;
+/** Every shipped arena zone is `boundaryRadius: 24` (content/arenas/*.json). */
+const ZONE_RADIUS = 24;
 
 const ME = 7;
 
@@ -295,6 +304,140 @@ describe("death-focus colour sources", () => {
     const entities = [champ(ME, 1, false, 0, 0), champ(8, 1, false, 3, 0), champ(9, 2, true, 5, 0)];
     expect(buildFocusSources(ME, ME, 1, entities, noPos, out)).toBe(0);
     for (const s of out) expect(s.weight).toBe(0);
+  });
+});
+
+// ---------------------------------------------------------------------------
+
+/**
+ * The REQUIREMENT itself: 「死亡觀戰時整個畫面去飽和，只有自己的隊友保持有顏色」.
+ * The look is a shader, so it cannot be screenshotted headlessly — but the pool
+ * falloff is pure math, and `poolColourAt` mirrors the GLSL exactly. These pin
+ * the two halves that a constant alone does not: a teammate is FULLY coloured,
+ * and an enemy standing off them is NOT.
+ */
+describe("death-focus keeps teammates coloured and enemies grey", () => {
+  /** Furthest point of a standing champion from the chest-anchored pool centre. */
+  const bodyReach = Math.hypot(BODY_RADIUS, ALLY_ANCHOR_Y);
+
+  it("covers a champion's whole body in the FULLY coloured core", () => {
+    cover("death-focus-sources");
+    // head, feet and both foot corners of a TARGET_HEIGHT body at ALLY_ANCHOR_Y
+    const corners = [
+      Math.abs(TARGET_HEIGHT - ALLY_ANCHOR_Y), // top of the head
+      ALLY_ANCHOR_Y, // the feet
+      BODY_RADIUS, // the flanks, at chest height
+      bodyReach, // a foot corner — the worst case
+    ];
+    for (const d of corners) {
+      expect(d).toBeLessThan(ALLY_RADIUS_FULL);
+      expect(poolColourAt(d, ALLY_RADIUS_FULL, ALLY_RADIUS_FADE)).toBe(1);
+    }
+    // and with margin left over for the deliberately oversized champions (#150)
+    expect(ALLY_RADIUS_FULL / bodyReach).toBeGreaterThan(1.15);
+  });
+
+  it("desaturates an enemy who is not in contact with your teammate", () => {
+    cover("death-focus-sources");
+    // two champions in melee CONTACT are 2*BODY_RADIUS apart — the one case a
+    // circle provably cannot separate, and the documented residual limit
+    const contact = BODY_RADIUS * 2;
+    expect(poolColourAt(contact, ALLY_RADIUS_FULL, ALLY_RADIUS_FADE)).toBe(1);
+
+    // one body-length back is already mostly grey ...
+    expect(poolColourAt(2.5, ALLY_RADIUS_FULL, ALLY_RADIUS_FADE)).toBeLessThan(0.3);
+    // ... and anything at or beyond the fade radius is FULLY desaturated
+    for (const d of [ALLY_RADIUS_FADE, 4, 6, 11, ZONE_RADIUS]) {
+      expect(poolColourAt(d, ALLY_RADIUS_FULL, ALLY_RADIUS_FADE)).toBe(0);
+    }
+  });
+
+  it("leaves the overwhelming majority of the duel zone desaturated", () => {
+    cover("death-focus-sources");
+    // The whole scene must READ as drained. Measured on the REAL worst case
+    // built through buildFocusSources — my own revive circle being channelled
+    // PLUS two living teammates (FOCUS_MAX_SOURCES caps the pass at 4 pools) —
+    // rather than on ally pools alone, because the revive circle is the largest
+    // single pool and excluding it is how a bubble hides from this bar.
+    const out = makeFocusSourcePool();
+    const worst: FocusEntity[] = [
+      {
+        id: 90,
+        kind: KIND_REVIVE_CIRCLE,
+        seatId: ME,
+        teamId: 1,
+        alive: true,
+        x: 0,
+        z: 0,
+        revive: { radius: 2, channelling: true },
+      },
+      { id: 1, kind: KIND_CHAMPION, seatId: 1, teamId: 1, alive: true, x: 2, z: 0 },
+      { id: 2, kind: KIND_CHAMPION, seatId: 2, teamId: 1, alive: true, x: 0, z: 2 },
+      { id: 3, kind: KIND_CHAMPION, seatId: 3, teamId: 1, alive: true, x: 3, z: 3 },
+    ];
+    const n = buildFocusSources(ME, ME, 1, worst, noPos, out);
+    let coloured = 0;
+    for (let i = 0; i < n; i++) coloured += Math.PI * out[i]!.rFade * out[i]!.rFade;
+    const zoneArea = Math.PI * ZONE_RADIUS * ZONE_RADIUS;
+    // the 4u/11u tuning put the ally pools ALONE at 63%; anything above a few
+    // percent means the "desaturated" scene is mostly still in colour.
+    // Ships at 7.8% = (4.25² + 3·3²)/24²  — the bar is deliberately just above.
+    expect(coloured / zoneArea).toBeLessThan(0.08);
+  });
+
+  it("never exempts an enemy just for being in the same fight", () => {
+    cover("death-focus-sources");
+    // regression guard for the original 4u/11u tuning, which fully coloured
+    // every enemy within 4u and left one at 6u ~80% coloured
+    expect(ALLY_RADIUS_FULL).toBeLessThan(2);
+    expect(ALLY_RADIUS_FADE).toBeLessThan(4);
+    expect(poolColourAt(6, ALLY_RADIUS_FULL, ALLY_RADIUS_FADE)).toBe(0);
+  });
+
+  it("mirrors the GLSL smoothstep, clamping outside the edges", () => {
+    cover("death-focus-sources");
+    expect(smoothstep(1, 3, 0)).toBe(0);
+    expect(smoothstep(1, 3, 1)).toBe(0);
+    expect(smoothstep(1, 3, 2)).toBeCloseTo(0.5, 12);
+    expect(smoothstep(1, 3, 3)).toBe(1);
+    expect(smoothstep(1, 3, 99)).toBe(1);
+    // an unused slot contributes nothing no matter where it sits
+    expect(poolColourAt(0, 1, 3, 0)).toBe(0);
+  });
+
+  it("keeps the revive circle reading as a ring, not a bubble", () => {
+    cover("death-focus-sources");
+    const out = makeFocusSourcePool();
+    const circle = (channelling: boolean): FocusEntity => ({
+      id: 90,
+      kind: KIND_REVIVE_CIRCLE,
+      seatId: ME,
+      teamId: 1,
+      alive: true,
+      x: 0,
+      z: 0,
+      revive: { radius: 2, channelling },
+    });
+
+    // NOTE: `out` is a reused pool, so snapshot the numbers — holding a
+    // reference across a second buildFocusSources would compare a slot to itself
+    buildFocusSources(ME, ME, 1, [circle(false)], noPos, out);
+    const s = { ...out[0]! };
+    // ABSOLUTE world distances, not a restatement of smoothstep: the revive
+    // circle is where enemies CAMP, so the same enemy who is grey next to a
+    // living teammate must be grey next to your corpse. The old 0.75/2.75
+    // margins left this at 0.81 — this is the assertion that would have caught
+    // it, and the reason it is written in the same shape as the ally test.
+    expect(poolColourAt(3, s.rFull, s.rFade, s.weight)).toBeLessThan(0.3);
+    expect(poolColourAt(ALLY_RADIUS_FADE + 1, s.rFull, s.rFade, s.weight)).toBe(0);
+    // the whole pool is on the ally silhouette scale, not a bubble around it
+    expect(s.rFade).toBeLessThanOrEqual(ALLY_RADIUS_FADE + 0.5);
+
+    // …and a teammate CHANNELLING widens it visibly but not past that scale
+    buildFocusSources(ME, ME, 1, [circle(true)], noPos, out);
+    const ch = out[0]!;
+    expect(ch.rFade).toBeGreaterThan(s.rFade);
+    expect(poolColourAt(ALLY_RADIUS_FADE + 1.5, ch.rFull, ch.rFade, ch.weight)).toBe(0);
   });
 });
 

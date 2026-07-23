@@ -18,6 +18,8 @@
  *   types         data shapes mirroring content/config/audio-map.json
  *   championVoice click-your-hero select quips (champion-voices.json + fallback)
  *   sfxManifest   which SFX each scene warms (task #63: per-scene SFX preload)
+ *   victoryTaunt  round/match victory taunt VO — the line is DETERMINISTIC in
+ *                 replicated state so every client hears the same joke (#93)
  */
 export * from "./types";
 export * from "./audioSelect";

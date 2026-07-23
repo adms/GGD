@@ -14,6 +14,7 @@ import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import type { Camera } from "@babylonjs/core/Cameras/camera";
 import { KIND_CHAMPION, KIND_REVIVE_CIRCLE } from "../render/overheadAnchors";
 import { COMBAT_PHASE, FOCUS_FADE_IN_MS, FOCUS_FADE_OUT_MS, type FocusEntity } from "../render/deathFocus";
+import { Effect } from "@babylonjs/core/Materials/effect";
 import { DeathFocusFx, type DeathFocusFrame } from "./DeathFocusFx";
 
 const P0 = 11;
@@ -269,5 +270,29 @@ describe("death-focus with a revive circle (task #84)", () => {
     run(FOCUS_FADE_IN_MS + 200, withCircle);
     expect(fx.isAttached(0)).toBe(true);
     expect(fx.strengthOf(0)).toBe(1);
+  });
+});
+
+/**
+ * The falloff the requirement 「敵人去飽和」 is asserted against lives in TWO
+ * places: this GLSL and its hand-maintained TS mirror `poolColourAt`. Six
+ * requirement-level assertions in deathFocus.test.ts rest on the mirror being
+ * faithful, and a one-line shader edit would invalidate all of them without
+ * turning a single test red. This is the cheap mechanical guard: the shader is
+ * a plain string in a global registry, so no GPU is involved.
+ */
+describe("the shader and its TS mirror cannot silently drift", () => {
+  it("pins the GLSL pool falloff that render/deathFocus.poolColourAt mirrors", () => {
+    cover("death-focus-attach");
+    // force registration (the pass is built lazily on first attach)
+    const f = mkFrame();
+    fx.noteDeath(P0);
+    run(FOCUS_FADE_IN_MS + 100, f);
+    const src = Effect.ShadersStore["ggdDeathFocusFragmentShader"];
+    expect(src).toBeTruthy();
+    // MIRROR: render/deathFocus.ts `poolColourAt`
+    expect(src).toContain("w * (1.0 - smoothstep(s.z, s.w, length(d)))");
+    // …and the strength term the pools multiply into
+    expect(src).toContain("mix(col, grey, s * (1.0 - m))");
   });
 });

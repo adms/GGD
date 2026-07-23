@@ -105,6 +105,15 @@ export interface TeamView {
   lives: number;
   eliminated: boolean;
   placement: number;
+  /**
+   * What this team did in the round that just ran — a protocol ROUND_OUTCOME
+   * value (NONE / FOUGHT / LOST / WON), server-authoritative and reset at every
+   * combat entry. NONE means it did not fight: it drew the BYE, is eliminated,
+   * or the round is not settled yet. The round-end presentation (winner model
+   * #143 + quote VO #142) needs this because a bye team is parked dead and
+   * scores nothing, so it is otherwise indistinguishable from a wiped one.
+   */
+  roundOutcome: number;
 }
 
 /** One couch player of THIS machine (player 0 = the owner/primary). */
@@ -329,6 +338,7 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
     lives: t.lives,
     eliminated: t.eliminated,
     placement: t.placement,
+    roundOutcome: t.roundOutcome,
   }));
   const teamsKey = JSON.stringify(teams);
   if (teamsKey !== teamsCacheKey) {

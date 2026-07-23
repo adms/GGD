@@ -156,12 +156,57 @@ defineTypes(SeatState, {
   roundDeaths: "uint8",
 });
 
+/**
+ * TeamState.roundOutcome — what a team DID in the round that just ran. Ordered
+ * from "did nothing" upward so a selector can simply prefer the higher value.
+ *
+ *   NONE   — did not fight this round: drew the BYE, is eliminated, or the round
+ *            is not settled yet (mid-combat / fault path). The DEFAULT, so an
+ *            un-projected or legacy snapshot reads as "nobody fought" and the
+ *            presentation degrades to exactly the pre-#173 standings pick.
+ *   FOUGHT — was placed into a duel zone this round, outcome not (yet) decided.
+ *   LOST   — fought and lost its duel.
+ *   WON    — fought and won its duel.
+ *
+ * One uint8 rather than two booleans: it cannot express the impossible
+ * "won but did not fight".
+ */
+export const ROUND_OUTCOME = {
+  NONE: 0,
+  FOUGHT: 1,
+  LOST: 2,
+  WON: 3,
+} as const;
+
 export class TeamState extends Schema {
   declare teamId: number;
   declare lives: number;
   declare eliminated: boolean;
   declare placement: number; // 0 = still playing; 1..4 final placement
   declare roundWins: number;
+  /**
+   * What this team DID in the round that just ran — a ROUND_OUTCOME value, reset
+   * to NONE at every combat entry and then written as the round progresses:
+   * FOUGHT the moment enterCombat places the team's seats into a duel zone, then
+   * WON/LOST when settleRound resolves the duel. It rides the wire because the
+   * round-end presentation (winner model #143 + quote VO #142) MUST be able to
+   * tell 「輪空」 (bye) apart from 「被團滅」, and nothing else on the snapshot can:
+   * enterCombat parks a bye team's seats dead (hp.alive = false, hp = 0) without
+   * ever emitting a death, so a bye team reads exactly like an instantly-wiped
+   * one — alive:false, roundKills:0, roundDeaths:0 on every seat. That ambiguity
+   * is what made the standings leader's bye round fall back to the lowest seatId
+   * and re-present 「每回合都是同一個英雄」.
+   *
+   * Team-level, not seat-level: a bye is a property of the TEAM (every seat of it
+   * shares the fate), and the presentation's first decision — which team to
+   * present — is itself team-level, so putting it on the seat would only force
+   * the client to re-derive the team's state. 4 bytes instead of 12.
+   *
+   * NONE also covers "not yet settled" (mid-combat) and the fault path
+   * (forceAdvanceOnFault skips settleRound), where the presentation correctly
+   * degrades to a pure standings pick — there is no winner to name.
+   */
+  declare roundOutcome: number;
 
   constructor() {
     super();
@@ -170,6 +215,7 @@ export class TeamState extends Schema {
     this.eliminated = false;
     this.placement = 0;
     this.roundWins = 0;
+    this.roundOutcome = ROUND_OUTCOME.NONE;
   }
 }
 defineTypes(TeamState, {
@@ -178,6 +224,8 @@ defineTypes(TeamState, {
   eliminated: "boolean",
   placement: "uint8",
   roundWins: "uint8",
+  // APPEND-ONLY: Colyseus encodes fields by declaration index — never reorder.
+  roundOutcome: "uint8",
 });
 
 export class EntityState extends Schema {

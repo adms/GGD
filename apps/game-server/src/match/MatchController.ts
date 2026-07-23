@@ -20,6 +20,7 @@ import { spawnChampion } from "@ggd/shared/sim/spawnChampion";
 import { createMatchStats, type PlayerMatchStats } from "@ggd/shared/sim/stats/matchStats";
 import { grade, perMatchRanks } from "@ggd/shared/sim/stats/rating";
 import type { MatchSettlement, SettlementPlayer } from "@ggd/shared/protocol/messages";
+import { ROUND_OUTCOME } from "@ggd/shared/protocol/schema";
 import {
   beginCombatFlowers,
   endCombatFlowers,
@@ -165,6 +166,35 @@ export class MatchController {
    */
   readonly roundKills = new Map<SeatId, number>();
   readonly roundDeaths = new Map<SeatId, number>();
+  /**
+   * PER-ROUND participation + duel result per TEAM (a ROUND_OUTCOME value), with
+   * exactly the roundKills lifetime: NONE for everyone at combat entry, FOUGHT
+   * the moment enterCombat places a team's seats into a duel zone, WON/LOST when
+   * settleRound resolves the duel — and then readable, unchanged, through the
+   * whole `resolution` + shop beat the round-end presentation fires in.
+   *
+   * It exists because a BYE team is indistinguishable from a wiped one on the
+   * rest of the snapshot: enterCombat parks every seat dead and only revives the
+   * seats belonging to a pairing, so the bye team ends the round alive:false /
+   * roundKills:0 / roundDeaths:0 — and it never even emits a death event, since
+   * the parking mutates hp directly. Without this map the presentation would
+   * happily pick the standings leader that sat the round out, find no survivors
+   * and no scorers, and fall back to its lowest seatId: 「每回合都是同一個英雄」.
+   */
+  readonly roundOutcome = new Map<TeamId, number>();
+  /**
+   * MATCH-LIFETIME count of duels this team has won — the edge the client's
+   * victory gate (vfx/victoryTrigger) fires the small round-win firework on.
+   * Deliberately NOT in `resetRoundTallies`: it is a monotonically rising
+   * counter, and the client detects a WIN as `roundWins > lastRoundWins`, so
+   * zeroing it every round would either fire nothing or fire on the re-climb.
+   *
+   * Separate from `roundOutcome` even though settleRound writes both on the
+   * same line: roundOutcome answers 「這一回合你做了什麼」 (and is wiped every
+   * round), roundWins answers 「你到目前贏了幾場」. Projected as uint8, which
+   * caps at 255 — a match is a handful of rounds, so the clamp is unreachable.
+   */
+  readonly roundWins = new Map<TeamId, number>();
   /** current round's pairings + bye */
   pairings: DuelPairing[] = [];
   bye: TeamId | null = null;
@@ -295,7 +325,11 @@ export class MatchController {
       this.roundKills.set(seatId, 0);
       this.roundDeaths.set(seatId, 0);
     }
-    for (let t = 0; t < TEAM_COUNT; t++) this.lives.set(asTeamId(t), startingLives);
+    for (let t = 0; t < TEAM_COUNT; t++) {
+      this.lives.set(asTeamId(t), startingLives);
+      this.roundOutcome.set(asTeamId(t), ROUND_OUTCOME.NONE);
+      this.roundWins.set(asTeamId(t), 0);
+    }
   }
 
   // ---------- champ select ----------
@@ -553,11 +587,12 @@ export class MatchController {
   }
 
   /**
-   * Zero the PER-ROUND K/D tallies. Called at COMBAT ENTRY — deliberately not at
-   * concludeCombat — because the round-end beat (the `resolution` phase, and the
-   * shop intermission after it) is exactly when the client reads them to present
-   * the round's MVP. Resetting on the way OUT of combat would blank the numbers
-   * one tick before anyone looks at them; resetting on the way IN keeps the just
+   * Zero the PER-ROUND presentation inputs: the K/D tallies and every team's
+   * roundOutcome. Called at COMBAT ENTRY — deliberately not at concludeCombat —
+   * because the round-end beat (the `resolution` phase, and the shop
+   * intermission after it) is exactly when the client reads them to present the
+   * round's MVP. Resetting on the way OUT of combat would blank the numbers one
+   * tick before anyone looks at them; resetting on the way IN keeps the just
    * -finished round's tally readable until the next round actually starts.
    */
   private resetRoundTallies(): void {
@@ -565,6 +600,7 @@ export class MatchController {
       this.roundKills.set(seatId, 0);
       this.roundDeaths.set(seatId, 0);
     }
+    for (const teamId of this.roundOutcome.keys()) this.roundOutcome.set(teamId, ROUND_OUTCOME.NONE);
   }
 
   private enterCombat(): void {
@@ -613,6 +649,12 @@ export class MatchController {
         [0, pairing.sideA],
         [1, pairing.sideB],
       ] as const) {
+        // THIS is the authoritative "participated this round" seam: a team is
+        // marked FOUGHT exactly where its seats are placed into a duel zone. The
+        // bye team never reaches this loop, so it stays NONE — the one signal
+        // that separates 「輪空」 from 「被團滅」 (both read alive:false, 0/0).
+        // settleRound later upgrades this to WON/LOST.
+        this.roundOutcome.set(teamId, ROUND_OUTCOME.FOUGHT);
         let slot = 0;
         for (const seat of this.seats.values()) {
           if (seat.teamId !== teamId || seat.entityId === null) continue;
@@ -743,6 +785,16 @@ export class MatchController {
       const winner = this.duelWinners.get(pairing.zone);
       if (winner === undefined) continue;
       const loser = winner === pairing.sideA ? pairing.sideB : pairing.sideA;
+      // Upgrade FOUGHT → WON/LOST. The round-end presentation prefers a team that
+      // actually WON its duel, which also stops it ever naming the round's LOSER
+      // — possible on standings alone, because the lives deduction below can
+      // still leave the loser above the winner (loser 3→2 outranks winner 1).
+      this.roundOutcome.set(winner, ROUND_OUTCOME.WON);
+      this.roundOutcome.set(loser, ROUND_OUTCOME.LOST);
+      // …and bump the MATCH-lifetime win counter the client's victory gate
+      // edge-detects to fire the small round-win firework (#93). Clamped to the
+      // uint8 the schema replicates it as; a match never gets near 255 rounds.
+      this.roundWins.set(winner, Math.min(255, (this.roundWins.get(winner) ?? 0) + 1));
       this.lives.set(loser, Math.max(0, (this.lives.get(loser) ?? 0) - livesLost(this.phase.round)));
 
       for (const seat of this.seats.values()) {
@@ -758,7 +810,9 @@ export class MatchController {
       const winTeamIdx = winner as number;
       void winTeamIdx;
     }
-    // bye team gets loser-level gold (didn't fight)
+    // bye team gets loser-level gold (didn't fight). Its roundOutcome stays NONE
+    // — deliberately: "didn't fight" is exactly what the presentation must read,
+    // so it never celebrates a team that sat the round out.
     if (this.bye !== null) {
       for (const seat of this.seats.values()) {
         if (seat.teamId === this.bye && seat.entityId !== null) {

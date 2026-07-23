@@ -13,6 +13,7 @@
  * everything numeric/textual lives here so it is deterministic + testable.
  */
 import { TICK_HZ } from "@ggd/shared/constants";
+import { ROUND_OUTCOME } from "@ggd/shared/protocol/schema";
 import type { PlayerMatchStats } from "@ggd/shared/sim/stats/matchStats";
 import type { Grade } from "@ggd/shared/sim/stats/rating";
 import type { MatchSettlement, SettlementPlayer } from "@ggd/shared/protocol/messages";
@@ -313,6 +314,18 @@ export interface RoundTeamView {
   lives: number;
   eliminated: boolean;
   placement: number;
+  /**
+   * What this team DID in the round that just ended — a protocol ROUND_OUTCOME
+   * value (TeamState.roundOutcome), server-authoritative and reset at every
+   * combat entry. NONE means it did not fight: it drew the BYE, it is
+   * eliminated, or the round is not settled yet.
+   *
+   * The round-end presentation cannot derive this from anything else on the
+   * snapshot: enterCombat parks a bye team's seats dead without ever emitting a
+   * death, so a bye team reads alive:false / roundKills:0 / roundDeaths:0 on
+   * every seat — byte-identical to a team that was instantly wiped.
+   */
+  roundOutcome: number;
 }
 
 /**
@@ -353,35 +366,71 @@ function compareRoundMvp(a: RoundSeatView, b: RoundSeatView): number {
 }
 
 /**
- * The champion presented at the round-end beat: the ROUND MVP of the team in
- * FIRST PLACE by standing. Reads ONLY authoritative schema state (lives /
- * eliminated / placement / teamId / seatId / alive / per-round K/D), so every
- * client computes the SAME champion, shows the SAME model and plays the SAME
- * clip — now genuinely per-round, because the inputs change every round.
+ * The champion presented at the round-end beat: the ROUND MVP of the best-placed
+ * team that ACTUALLY FOUGHT this round. Reads ONLY authoritative schema state
+ * (roundOutcome / lives / eliminated / placement / teamId / seatId / alive /
+ * per-round K/D), so every client computes the SAME champion, shows the SAME
+ * model and plays the SAME clip — genuinely per-round, because the inputs change
+ * every round.
  *
- * Two stages, not one ranking:
+ * Three stages, not one ranking:
+ *   CANDIDATES — teams that WON a duel this round; failing that, teams that at
+ *          least FOUGHT; failing that, every team. A team that drew the BYE won
+ *          nothing that round, so it must never be the subject of a round-WIN
+ *          presentation — and it is the case that broke this selector before:
+ *          a bye team is parked dead with an all-zero tally, so the alive gate
+ *          found no survivors, the ranking degenerated to the lowest seatId, and
+ *          「每回合都是同一個英雄」 came back for that round. Preferring winners
+ *          also stops the round's LOSER being presented, which standings alone
+ *          permit (settleRound has already deducted lives by the time the client
+ *          reads the snapshot, so a loser at 3→2 outranks a winner at 1).
+ *          The ladder ENDS at `teams` on purpose: pre-combat, legacy and
+ *          fault-path snapshots are all-NONE, and there the answer must stay
+ *          exactly what it was before this stage existed rather than vanish.
  *   GATE — 回合表現最好的人的底線門檻是必須最後還活著: only seats still ALIVE as
  *          the round resolves are eligible, however many kills a dead one got.
- *          If the leading team was wiped too (mutual wipe / fire-ring / timeout
+ *          If the chosen team was wiped too (mutual wipe / fire-ring / timeout
  *          win), the gate opens to the whole roster rather than presenting
  *          nobody.
  *   RANK — compareRoundMvp over the eligible seats.
  *
  * A zero-kill round therefore still resolves (fewest deaths, then lowest seat).
- * Returns null only when there are no teams/seats at all, or the leading team
- * has no champion locked in.
+ * The GATE/RANK stages are retried down the ranking, so a candidate whose seats
+ * have no championId yet hands the beat to the next-best team rather than
+ * blanking it. Returns null ONLY when no team anywhere has a champion locked in.
  */
 export function roundLeaderChampion(
   seats: readonly RoundSeatView[],
   teams: readonly RoundTeamView[],
 ): string | null {
   if (teams.length === 0 || seats.length === 0) return null;
-  const leader = [...teams].sort(compareTeamStanding)[0]!;
-  const roster = seats.filter((s) => s.teamId === leader.teamId && s.championId);
-  if (roster.length === 0) return null;
-  const survivors = roster.filter((s) => s.alive);
-  const eligible = survivors.length > 0 ? survivors : roster;
-  return [...eligible].sort(compareRoundMvp)[0]!.championId;
+  // MEMBERSHIP, never `!== NONE`: an inequality also accepts `undefined` and any
+  // out-of-range value, so a RoundTeamView built by some future producer (a
+  // replay/spectator projection, a hand-built fixture) would classify a BYE team
+  // as a participant — the exact failure this selector exists to prevent.
+  const won = (t: RoundTeamView): boolean => t.roundOutcome === ROUND_OUTCOME.WON;
+  const fought = (t: RoundTeamView): boolean =>
+    t.roundOutcome === ROUND_OUTCOME.FOUGHT ||
+    t.roundOutcome === ROUND_OUTCOME.LOST ||
+    won(t);
+  const winners = teams.filter(won);
+  const participants = teams.filter(fought);
+  const candidates = winners.length > 0 ? winners : participants.length > 0 ? participants : teams;
+  // Walk the ranking rather than indexing [0]: "never blank the presentation"
+  // is only true if a candidate with NO champion locked in (the #130 shape, or a
+  // seat list that has not caught up with the team list) falls through to the
+  // next-best team instead of silencing the whole beat. The `teams` tail means
+  // null now says "no champion anywhere", which is the only case that should.
+  const ordered = [...candidates].sort(compareTeamStanding);
+  const fallback = [...teams].sort(compareTeamStanding);
+  for (const team of [...ordered, ...fallback]) {
+    const roster = seats.filter((s) => s.teamId === team.teamId && s.championId);
+    if (roster.length === 0) continue;
+    const survivors = roster.filter((s) => s.alive);
+    const eligible = survivors.length > 0 ? survivors : roster;
+    return [...eligible].sort(compareRoundMvp)[0]!.championId;
+  }
+  return null;
 }
 
 /**

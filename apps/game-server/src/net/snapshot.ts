@@ -4,7 +4,7 @@
  * later without touching anything else.
  */
 import type { ArraySchema } from "@colyseus/schema";
-import { ENTITY_FLAG, ENTITY_KIND, EntityState, MatchState, OfferState, SeatState, TeamState } from "@ggd/shared/protocol/schema";
+import { ENTITY_FLAG, ENTITY_KIND, EntityState, MatchState, OfferState, ROUND_OUTCOME, SeatState, TeamState } from "@ggd/shared/protocol/schema";
 import { Champions } from "@ggd/shared/sim/content/registry";
 import { FLOWER_MODEL_KEY } from "@ggd/shared/sim/flowers";
 import { REVIVE_CIRCLE_MODEL_KEY } from "@ggd/shared/sim/revive";
@@ -44,6 +44,15 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
     ts.lives = lives;
     ts.eliminated = lives <= 0;
     ts.placement = ctl.placements.get(teamId) ?? 0;
+    // PER-ROUND participation + duel result (reset at each combat entry). The
+    // round-end presentation needs it because a BYE team is parked dead and
+    // scores nothing, so `alive` + per-round K/D alone cannot tell 「輪空」 from
+    // 「被團滅」 — and celebrating a team that sat the round out is the #173 bug.
+    ts.roundOutcome = ctl.roundOutcome.get(teamId) ?? ROUND_OUTCOME.NONE;
+    // MATCH-lifetime duels won. The client's victory gate (vfx/victoryTrigger)
+    // fires the small round-win firework on this counter RISING, so it must be
+    // projected every patch and must never be reset mid-match (#93).
+    ts.roundWins = ctl.roundWins.get(teamId) ?? 0;
     ti++;
   }
 

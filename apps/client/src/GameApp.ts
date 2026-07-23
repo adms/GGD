@@ -59,6 +59,10 @@ import { setupLighting, type LightingHandle } from "./render/Lighting";
 import { buildArena, dressArena, disposeArena, type ArenaHandles } from "./render/ArenaScene";
 import { resolveArenaId, type ArenaIdSource } from "./render/arenaSelect";
 import { RoundWinnerStage } from "./render/RoundWinnerStage";
+// ONE number for how long the round-win beat owns the screen: the stage's grey
+// wash, the taunt delay and this trigger window all read the same constant, so
+// the window can never be shortened below the taunt delay and silently mute it.
+import { ROUND_PRESENT_MS } from "./render/victoryPresentation";
 import type { CameraRig } from "./render/CameraRig";
 import { ViewportManager } from "./render/ViewportManager";
 import { AssetManager } from "./render/AssetManager";
@@ -126,8 +130,6 @@ const CAP_SLACK_MS = 3;
 const DRAW_DISTANCE_MAX = 300;
 /** damage at/above which a hit is "heavy" enough to trigger the ripple post-fx. */
 const HEAVY_HIT_DMG = 120;
-/** how long the round-end winner model stands centre-screen (task #143), ms. */
-const ROUND_WINNER_PRESENT_MS = 3600;
 
 interface PendingAuth {
   entityId: number;
@@ -1418,8 +1420,11 @@ export class GameApp {
       const champ = roundEndQuoteChampion(hud.seats, hud.teams);
       const doc = champ ? this.roundWinnerModelDoc(champ, hud.seats) : null;
       if (doc) {
-        this.roundWinner.show(doc);
-        this.roundWinnerUntilMs = nowMs + ROUND_WINNER_PRESENT_MS;
+        // Forward the resolved winner + round: the stage needs BOTH to pick the
+        // taunt deterministically (audio/victoryTaunt hashes championId+round),
+        // and with no ctx it silently skips the whole 嘲諷台詞 half of #93.
+        this.roundWinner.show(doc, { championId: champ ?? undefined, round: state.round });
+        this.roundWinnerUntilMs = nowMs + ROUND_PRESENT_MS;
       }
     }
 
