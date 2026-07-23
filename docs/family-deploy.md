@@ -30,10 +30,15 @@ make family-up
    （`REDIS_PASSWORD` / `JWT_SIGNING_SECRET` / `PLATFORM_GAME_SHARED_SECRET`）。
    **已存在就不覆蓋**（重生會讓所有人被登出）。
 2. `make family-ship` — 產生資產清單並**深度校驗**（逐檔 sha256）本機的 overlay。
-3. `docker compose … up --build -d` — 用 `VITE_GGD_FULL_ASSETS=1` 建 client，掛上
-   `nginx/tier/family/` 與 `data/blizzard-overlay/`。
-4. `/seed -starter` — 若白名單是空的，補上 48 位英雄的預設陣容（冪等）。
-5. 印出網址、後台網址、一次性 owner 認領碼。
+3. `docker compose … build` — 用 `VITE_GGD_FULL_ASSETS=1` 建 client（就是這個旗標讓
+   overlay 真的會被請求）。
+4. 起 redis，然後**在平台啟動前**用一次性容器跑 `/seed -starter`：新主機 `data/` 是空的，
+   而平台的 boot check 會**拒絕以空白名單對外啟動**（exit 1），所以陣容必須先補進 `/data`
+   再起服務。冪等——你自己 `data/` 已經有 48 位英雄時它是 no-op。
+5. `docker compose … up -d` — 掛上 `nginx/tier/family/` 與 `data/blizzard-overlay/`，
+   全部服務起來（platform/game/redis 設 `restart: unless-stopped`，中途掛掉會自動回來；
+   edge 故意 `restart: "no"`，見第 6 節）。
+6. 印出網址、後台網址、一次性 owner 認領碼。
 
 啟動後 edge 監聽 `0.0.0.0:8088`（`docker/.env` 的 `GGD_BIND` / `GGD_PORT` 可改）。
 家人連 `http://<你的區網 IP>:8088/` 即可。

@@ -258,9 +258,13 @@ func printRestore(rep *opstate.RestoreReport, bundle *opstate.Bundle, dryRun boo
 	}
 	if rep.Changed {
 		fmt.Println("  → target changed.")
-	} else if !rep.Blocked {
+	} else if !rep.Blocked && rep.Dead.Empty() {
 		fmt.Println("  → nothing to change; target already matches the bundle.")
 	}
+	// When dead ids were found (e.g. a -strict refusal), say nothing reassuring
+	// here: the caller prints the loud ✗ error and exits non-zero. "nothing to
+	// change" next to an EMPTY target that does not match a 48-champion bundle
+	// would be actively misleading.
 }
 
 func symbol(result string) string {

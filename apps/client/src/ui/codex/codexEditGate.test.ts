@@ -51,9 +51,15 @@ describe("layer A: the write module is dev-build gated", () => {
     expect(src).toMatch(/import\.meta as unknown as \{ env\?: \{ DEV\?: boolean \} \}/);
     expect(src).toMatch(/catch\s*\{\s*return false;\s*\}/);
     expect(src).toMatch(/const ENABLED = isDevBuild\(\);/);
-    // …and it is the SAME shape blizzardOverlay.ts already proved out
+    // …and the asset gate proves the SAME guarded-import.meta convention. #176
+    // centralised that gate into config/fullAssets.ts; blizzardOverlay.ts now
+    // DELEGATES to it (const isDevBuild = fullAssetsEnabled), so assert the
+    // delegation here and the guarded try/catch import.meta shape at its source.
     const overlay = code(read("apps/client/src/render/views/blizzardOverlay.ts"));
-    expect(overlay).toMatch(/import\.meta as unknown as \{ env\?: \{ DEV\?: boolean \} \}/);
+    expect(overlay).toMatch(/from "\.\.\/\.\.\/config\/fullAssets"/);
+    const gate = code(read("apps/client/src/config/fullAssets.ts"));
+    expect(gate).toMatch(/import\.meta as unknown as \{ env\?:/);
+    expect(gate).toMatch(/catch\s*\{\s*return undefined;\s*\}/);
   });
 
   it("EVERY exported writer short-circuits on the gate as its first statement", () => {

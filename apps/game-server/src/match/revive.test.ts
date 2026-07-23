@@ -29,6 +29,7 @@ import { DEFAULT_ARENA_RULES, rulesFromDoc, type ArenaRules } from "./arenaRules
 import { projectSnapshot } from "../net/snapshot";
 import { AIDriver } from "../ai/Tier0Brain";
 import { Seat } from "../seat/Seat";
+import { FANNED_OUT_EVENT_TYPES } from "../net/eventFanout";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 
@@ -286,11 +287,13 @@ describe("Tier-0 revive seeking (rev-18)", () => {
 });
 
 describe("event whitelist (rev-11)", () => {
-  it("MatchRoom forwards the three revive events (source lint)", () => {
+  it("both the live room and the replay forward the three revive events", () => {
     cover("revive-event-whitelist");
-    const src = readFileSync(join(ROOT, "apps/game-server/src/rooms/MatchRoom.ts"), "utf8");
+    // The fanout allowlist is the shared FANNED_OUT_EVENT_TYPES set
+    // (net/eventFanout), forwarded by MatchRoom AND the replay ReplayRoom —
+    // asserting on the data covers both paths and survives an inline rewrite.
     for (const ev of ["reviveCircleSpawn", "reviveCircleEnd", "reviveComplete"]) {
-      expect(src).toContain(`ev.type === "${ev}"`);
+      expect(FANNED_OUT_EVENT_TYPES.has(ev)).toBe(true);
     }
   });
 });

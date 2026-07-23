@@ -30,7 +30,7 @@ import {
 } from "./contentFields";
 
 const CONTENT = fileURLToPath(new URL("../../../content/", import.meta.url));
-const COLLECTIONS: readonly EditCollection[] = ["champions", "abilities", "items"];
+const COLLECTIONS: readonly EditCollection[] = ["champions", "abilities", "items", "augments"];
 
 /** Read up to `n` real documents from a collection (skipping the index). */
 function sampleDocs(collection: EditCollection, n: number): Record<string, unknown>[] {
@@ -43,9 +43,16 @@ function sampleDocs(collection: EditCollection, n: number): Record<string, unkno
 }
 
 describe("the field spec", () => {
-  it("covers all three collections with the user's own wording", () => {
+  it("covers every editable collection with the user's own wording", () => {
     cover("content-admin-fields");
-    expect(COLLECTION_LABEL).toEqual({ champions: "英雄", abilities: "技能", items: "武器道具" });
+    // 三選一強化 (augments) are the DRAFT abilities — a SEPARATE editable
+    // collection from champion 技能 (task #70 rule 3).
+    expect(COLLECTION_LABEL).toEqual({
+      champions: "英雄",
+      abilities: "技能",
+      items: "武器道具",
+      augments: "三選一強化",
+    });
     for (const c of COLLECTIONS) {
       expect(fieldGroups(c).length, c).toBeGreaterThan(0);
       expect(allFields(c).length, c).toBeGreaterThan(3);

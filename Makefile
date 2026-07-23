@@ -288,6 +288,10 @@ family-verify:
 family-up:
 	$(call need,docker,https://docs.docker.com/get-docker/  (and start the daemon))
 	@docker info >/dev/null 2>&1 || { echo "✗ docker daemon is not running"; exit 1; }
+	@# Create the replay sink on the HOST first so the bind mount inherits host
+	@# ownership (a docker-created mount point can be root-owned on Linux and the
+	@# game runs as an unprivileged user). Match recording (#175) writes here.
+	@mkdir -p data/replays
 	@$(MAKE) --no-print-directory family-secrets
 	@$(MAKE) --no-print-directory family-ship
 	@echo "→ building images (the client is built with VITE_GGD_FULL_ASSETS=1 — that flag is what makes the overlay actually load)"

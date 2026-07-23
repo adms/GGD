@@ -23,6 +23,7 @@ import { DEFAULT_COMBAT_ENV, normalizeCombatEnv } from "@ggd/shared/sim/combatEn
 import { MatchController, type SeatSpec } from "../match/MatchController";
 import { DEFAULT_ARENA_RULES } from "../match/arenaRules";
 import { AIDriver } from "../ai/Tier0Brain";
+import { HumanDriver } from "../seat/HumanDriver";
 import { Whitelist } from "../curation/whitelist";
 import { MatchRecorder } from "./Recorder";
 import { buildHeader } from "./headerCodec";
@@ -32,6 +33,7 @@ import { decodeLines, REPLAY_FORMAT_VERSION, type ReplayHeader } from "./format"
 import { registryFingerprint, resetRegistryFingerprintCache } from "./fingerprint";
 import { listReplays, pruneReplays, RETAIN_MAX_FILES } from "./store";
 import { mintReplayTicket, verifyReplayTicket } from "./access";
+import { isFannedOutEvent } from "../net/eventFanout";
 
 const CONTENT = join(dirname(fileURLToPath(import.meta.url)), "../../../../content");
 const loadArena = (id: string): ArenaDoc =>
@@ -253,6 +255,124 @@ describe("record → replay", () => {
     expect(straight.player.tick).toBe(target);
     expect(straight.player.ctl.world.digest()).toBe(expected);
     expect(straight.player.divergence).toBeNull();
+  }, 60_000);
+});
+
+describe("playback is not combat-mute", () => {
+  // Every combat VISUAL in this game (floating damage/heal numbers, attack/cast
+  // animations, hit sparks, projectiles, ability VFX, shop toasts) is driven by
+  // the fanned-out MSG.EVENT stream, NOT the replicated schema. The live
+  // MatchRoom forwards net/eventFanout's whitelist; the ReplayRoom must forward
+  // the EXACT same events the re-run sim regenerates, or the owner watches HP
+  // bars drain with no idea WHY. This proves the re-run produces those events
+  // identically, tick for tick — so the ReplayRoom has something real to fan out.
+  it("regenerates the same combat events on playback that the live match produced", async () => {
+    const fanoutByTick = (ctl: MatchController): string =>
+      ctl.world.events
+        .filter(isFannedOutEvent)
+        .map((e) => `${e.type}`)
+        .join(",");
+
+    // Record, capturing the fanned-out event signature of every tick.
+    const recorded: string[] = [];
+    const rec = await recordMatch("mute-1", 778899, (ctl) => {
+      // read the PREVIOUS tick's events before this tick clears them
+      if (ctl.world.tick > 0) recorded[ctl.world.tick - 1] = fanoutByTick(ctl);
+    });
+    recorded[rec.ctl.world.tick - 1] = fanoutByTick(rec.ctl);
+
+    // A real combat match must actually contain combat events — otherwise this
+    // test would pass vacuously on a match that never fought.
+    const totalEvents = recorded.reduce((n, s) => n + (s ? s.split(",").length : 0), 0);
+    expect(totalEvents).toBeGreaterThan(50);
+    expect(recorded.some((s) => s?.includes("damage"))).toBe(true);
+
+    // Play back, capturing the same signature per tick, and compare.
+    const opened = await ReplayPlayer.open("mute-1");
+    if ("refusal" in opened) throw new Error(opened.refusal.code);
+    const p = opened.player;
+    const replayed: string[] = [];
+    while (!p.stopped) {
+      const t = p.ctl.world.tick;
+      if (!p.step()) break;
+      if (p.ctl.world.tick > t) replayed[t] = fanoutByTick(p.ctl);
+    }
+    expect(p.divergence).toBeNull();
+    // Byte-identical event stream: same events, same order, same ticks.
+    expect(replayed).toEqual(recorded);
+    // And the settlement payload the ReplayRoom fans out at the end exists.
+    expect(p.ctl.settlement).not.toBeNull();
+  }, 60_000);
+});
+
+describe("human input through the real mailbox", () => {
+  // The prior verify pass noted every round-trip was all-bot: the bot frames DO
+  // exercise the recording code, but the HUMAN-specific path — network message →
+  // InputMailbox coalescing (latest-wins order/aim, seq de-dup) → drain →
+  // tick-stamp at HumanDriver.produceIntent — was never replayed. That path IS
+  // the feedback use case ("mother says something weird happened"). This drives a
+  // real HumanDriver's mailbox the way MatchRoom's MSG.INPUT handler does, then
+  // replays and proves the human's moves/casts reproduce at the exact ticks.
+  it("records human moves + casts at the drained tick and replays them identically", async () => {
+    const matchId = "human-1";
+    const ctl = makeController(matchId, 246810);
+    // Seat 0 is the human. Attach a real HumanDriver (the same class MatchRoom
+    // attaches on join) and push into its mailbox as the network layer would.
+    const human = new HumanDriver();
+    const seat0 = ctl.seats.get(asSeatId(0))!;
+    seat0.setDriver(human);
+
+    const rec = await MatchRecorder.open(matchId, headerFor(ctl, matchId, 246810));
+    expect(rec).not.toBeNull();
+    ctl.recorder = rec;
+
+    let castSent = false;
+    let n = 0;
+    while (ctl.phase.phase !== "matchEnd" && n < 60_000) {
+      const tick = ctl.world.tick;
+      // Push BEFORE the tick runs, exactly as a message arriving between room
+      // frames does. onAttach cleared the mailbox on the first tick, so only push
+      // once combat is well underway and the driver is firmly attached.
+      if (tick === 40) {
+        // two messages the same tick → coalescing keeps the LATEST order/aim
+        human.mailbox.push({ seq: 1, order: { kind: "move", point: { x: 3, z: 3 } }, aim: { x: 1, z: 0 }, commands: [] });
+        human.mailbox.push({ seq: 2, order: { kind: "move", point: { x: -2, z: 4 } }, aim: { x: 0, z: 1 }, commands: [] });
+      }
+      if (tick === 60) {
+        human.mailbox.push({
+          seq: 3,
+          commands: [{ kind: "castAbility", slot: "Q", target: { type: "point", point: { x: 5, z: 5 } } }],
+        });
+        castSent = true;
+      }
+      ctl.tick();
+      n++;
+    }
+    expect(castSent).toBe(true);
+    const finalWorld = ctl.world.digest();
+    const finalHost = hostDigest(ctl);
+    ctl.recorder = null;
+    await rec!.finish(ctl);
+
+    // The human's discrete cast is really in the recording, stamped at the tick
+    // it drained (60), on seat 0 — not on the client's seq, the drained tick.
+    const raw = readFileSync(join(dir, `${matchId}.jsonl.gz`));
+    const { gunzipSync } = await import("node:zlib");
+    const { lines } = decodeLines(gunzipSync(raw).toString("utf8"));
+    const castLine = lines.find(
+      (l) => l.t === "i" && l.s === 0 && l.k === 60 && l.f.commands.some((c) => c.kind === "castAbility"),
+    );
+    expect(castLine).toBeDefined();
+    // The coalesced order at tick 40 kept the LATEST push (the mailbox is
+    // latest-wins), proving the human coalescing path round-trips too.
+    const moveLine = lines.find((l) => l.t === "i" && l.s === 0 && l.k === 40);
+    expect(moveLine && moveLine.t === "i" ? moveLine.f.order?.point : undefined).toEqual({ x: -2, z: 4 });
+
+    // And the whole match replays to the same digests — the human seat included.
+    const p = await playFully(matchId);
+    expect(p.divergence).toBeNull();
+    expect(p.ctl.world.digest()).toBe(finalWorld);
+    expect(hostDigest(p.ctl)).toBe(finalHost);
   }, 60_000);
 });
 

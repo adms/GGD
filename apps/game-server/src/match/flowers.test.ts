@@ -23,6 +23,7 @@ import { DEFAULT_ARENA_RULES, rulesFromDoc, type ArenaRules } from "./arenaRules
 import { projectSnapshot } from "../net/snapshot";
 import { AIDriver } from "../ai/Tier0Brain";
 import { Seat } from "../seat/Seat";
+import { FANNED_OUT_EVENT_TYPES } from "../net/eventFanout";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
 
@@ -252,10 +253,12 @@ describe("spawnFlower dev cheat (flw-11)", () => {
 });
 
 describe("MatchRoom event whitelist (flw-12)", () => {
-  it("forwards flowerSpawn + flowerBurst on MSG.EVENT (source lint)", () => {
+  it("forwards flowerSpawn + flowerBurst on MSG.EVENT", () => {
     cover("flower-event-whitelist");
-    const src = readFileSync(join(ROOT, "apps/game-server/src/rooms/MatchRoom.ts"), "utf8");
-    expect(src).toMatch(/ev\.type === "flowerSpawn"/);
-    expect(src).toMatch(/ev\.type === "flowerBurst"/);
+    // The fanout allowlist is now the FANNED_OUT_EVENT_TYPES set (net/eventFanout),
+    // shared by MatchRoom and the replay ReplayRoom — asserting on the data is
+    // stronger than scanning the room source and covers both paths.
+    expect(FANNED_OUT_EVENT_TYPES.has("flowerSpawn")).toBe(true);
+    expect(FANNED_OUT_EVENT_TYPES.has("flowerBurst")).toBe(true);
   });
 });

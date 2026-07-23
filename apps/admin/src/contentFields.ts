@@ -143,10 +143,37 @@ const ITEM_GROUPS: readonly FieldGroup[] = [
   },
 ];
 
+/**
+ * 三選一強化技能 — augments/<id>.json. These are the DRAFT abilities the owner
+ * asked to edit separately from champion abilities (task #70 rule 3): a player
+ * drafts them in the mid-match 3-choose-1, they are NOT any champion's default
+ * kit. `modifiers`/`hooks` are complex arrays, surfaced via the raw-JSON editor
+ * (uncoveredKeys names them) exactly as ability effects are.
+ */
+const AUGMENT_GROUPS: readonly FieldGroup[] = [
+  { title: "識別", fields: IDENTITY },
+  {
+    title: "基本資料",
+    fields: [
+      { path: "name", label: "名稱", kind: "text" },
+      { path: "description", label: "說明", kind: "multiline" },
+      {
+        path: "tier",
+        label: "強化等級",
+        kind: "text",
+        hint: "silver / gold / prismatic — 決定在第幾輪三選一出現",
+      },
+      { path: "weight", label: "抽中權重", kind: "number", hint: "同等級內的相對出現機率" },
+      { path: "tags", label: "標籤", kind: "stringList", hint: "逗號分隔" },
+    ],
+  },
+];
+
 const GROUPS: Record<EditCollection, readonly FieldGroup[]> = {
   champions: CHAMPION_GROUPS,
   abilities: ABILITY_GROUPS,
   items: ITEM_GROUPS,
+  augments: AUGMENT_GROUPS,
 };
 
 export function fieldGroups(collection: EditCollection): readonly FieldGroup[] {
@@ -188,6 +215,7 @@ export const COLLECTION_LABEL: Record<EditCollection, string> = {
   champions: "英雄",
   abilities: "技能",
   items: "武器道具",
+  augments: "三選一強化",
 };
 
 /** The `_index.json` / `/content` mount directory for a collection. */
@@ -195,4 +223,5 @@ export const COLLECTION_DIR: Record<EditCollection, string> = {
   champions: "champions",
   abilities: "abilities",
   items: "items",
+  augments: "augments",
 };

@@ -26,13 +26,23 @@
  * loader uses, and its FieldIssues are what the UI shows.
  */
 
-/** The three content collections an editor browses. */
-export type EditCollection = "items" | "champions" | "abilities";
+/**
+ * The content collections an editor browses.
+ *
+ * `augments` are the 3-choose-1 DRAFT abilities (能力抽卡). The owner asked for
+ * them to be editable SEPARATELY from champion abilities (task #70 rule 3:
+ * 「隨機三選一的技能應該也要在後台單獨被編輯，因為他不是角色預設技能」) — they
+ * are power-ups a player drafts mid-match, not any champion's Q/W/E/R, so they
+ * are their own collection with no champion mirror (see `writePlan`). The
+ * content-api already validates/saves them (they are in the shared COLLECTIONS
+ * registry); this only surfaces them in the console.
+ */
+export type EditCollection = "items" | "champions" | "abilities" | "augments";
 
-export const EDIT_COLLECTIONS: readonly EditCollection[] = ["champions", "abilities", "items"];
+export const EDIT_COLLECTIONS: readonly EditCollection[] = ["champions", "abilities", "items", "augments"];
 
 export function isEditCollection(v: unknown): v is EditCollection {
-  return v === "items" || v === "champions" || v === "abilities";
+  return v === "items" || v === "champions" || v === "abilities" || v === "augments";
 }
 
 /** Dev content-api mount (same-origin: the admin vite dev server proxies it). */

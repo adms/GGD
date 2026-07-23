@@ -45,11 +45,22 @@ import { compressRecording, openRecordingStream, pruneReplays, safeRecordingId }
 const FLUSH_MS = 500;
 
 /**
- * Hard ceiling on buffered lines between flushes. Reaching it means the disk
- * stopped accepting writes; we drop the recording rather than grow without
+ * Hard ceiling on buffered lines between flushes. Reaching it means our own
+ * array grew without draining; we drop the recording rather than grow without
  * bound inside a live match.
  */
 const MAX_BUFFERED_LINES = 200_000;
+
+/**
+ * Hard ceiling on the WriteStream's OWN internal backlog (`writableLength`).
+ * Our `buffer` is drained every flush, so on a slow/stalled-but-not-erroring
+ * device (a network mount, a failing drive) growth hides inside Node's internal
+ * WritableState buffer where the line-count guard above cannot see it. A healthy
+ * SSD sits near zero (~360 B/tick), so a backlog this large means the device is
+ * not keeping up — drop the recording, never grow RSS unbounded. 32 MiB is ~90 s
+ * of a 12-player match's raw stream, generous headroom before a real stall.
+ */
+const MAX_STREAM_BACKLOG_BYTES = 32 * 1024 * 1024;
 
 /** Recording ids currently being written — pruning must not touch these. */
 const liveRecordings = new Set<string>();
@@ -81,9 +92,21 @@ export class MatchRecorder implements MatchRecorderSink {
    */
   static async open(matchId: string, header: ReplayHeader): Promise<MatchRecorder | null> {
     const rec = new MatchRecorder(matchId);
+    // Never let two writers share one file. Recording ids derive from matchId,
+    // and while platform ULIDs are unique the dev path mints a random suffix; a
+    // collision would interleave two matches into one corrupt .jsonl AND let the
+    // first to finish cross-delete the other from `liveRecordings` (dropping its
+    // prune protection). Reserve the id synchronously so two concurrent opens
+    // cannot both pass this guard before either awaits.
+    if (liveRecordings.has(rec.id)) {
+      console.error(`[replay] a recording for "${rec.id}" is already being written; refusing a second writer (the match is unaffected)`);
+      return null;
+    }
+    liveRecordings.add(rec.id);
     try {
       rec.stream = await openRecordingStream(rec.id);
     } catch (err) {
+      liveRecordings.delete(rec.id);
       console.error(`[replay] could not open a recording for ${matchId}; this match will not be recorded`, err);
       return null;
     }
@@ -92,7 +115,6 @@ export class MatchRecorder implements MatchRecorderSink {
       rec.disabled = true;
       console.error(`[replay] write failed for ${matchId}; recording stopped (the match is unaffected)`, err);
     });
-    liveRecordings.add(rec.id);
     rec.push({ t: "header", ...header });
     rec.timer = setInterval(() => rec.flush(), FLUSH_MS);
     // Never hold the process open for a recorder.
@@ -245,6 +267,21 @@ export class MatchRecorder implements MatchRecorderSink {
 
   private flush(): void {
     if (this.buffer.length === 0 || !this.stream || this.disabled) return;
+    // Honour the ONE place growth can hide. `buffer` is emptied every flush, so
+    // a stalled disk does not show up there — it shows up as Node's internal
+    // WriteStream backlog climbing. If that backlog is over the ceiling the
+    // device is not keeping up; drop the recording rather than let RSS grow
+    // without bound inside a live match. (write()'s boolean return only flags a
+    // single over-highWaterMark write, which is normal; the standing backlog is
+    // the real signal.)
+    if (this.stream.writableLength > MAX_STREAM_BACKLOG_BYTES) {
+      this.disabled = true;
+      this.buffer.length = 0;
+      console.error(
+        `[replay] ${this.id}: write backlog ${this.stream.writableLength} bytes exceeded ceiling; recording stopped (the match is unaffected)`,
+      );
+      return;
+    }
     const chunk = this.buffer.join("");
     this.buffer.length = 0;
     this.stream.write(chunk);

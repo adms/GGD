@@ -22,6 +22,7 @@
  */
 import { Room, type Client } from "colyseus";
 import { MatchState } from "@ggd/shared/protocol/schema";
+import { MSG, SETTLEMENT_EVENT } from "@ggd/shared/protocol/messages";
 import {
   REPLAY_MSG,
   type ReplayControlAction,
@@ -32,6 +33,7 @@ import {
 import { TICK_MS } from "@ggd/shared/constants";
 import type { HumanDriver } from "../seat/HumanDriver";
 import { projectSnapshot } from "../net/snapshot";
+import { isFannedOutEvent } from "../net/eventFanout";
 import { ReplayPlayer, type ReplayRefusal } from "../replay/Player";
 import { verifyReplayTicket } from "../replay/access";
 
@@ -60,6 +62,8 @@ export class ReplayRoom extends Room<MatchState> {
   private speed = 1;
   private seeking = false;
   private accumulator = 0;
+  /** Guards against emitting the settlement screen more than once. */
+  private settlementSent = false;
   /** A replay has no live humans; projectSnapshot wants the map regardless. */
   private readonly noDrivers = new Map<number, HumanDriver>();
 
@@ -150,6 +154,7 @@ export class ReplayRoom extends Room<MatchState> {
     const wasPlaying = this.playing;
     this.playing = false;
     this.seeking = true;
+    this.settlementSent = false; // rebuilding from 0 — the end screen can show again
     this.broadcastStatus();
     p.reset();
     while (p.tick < targetTick && !p.stopped) {
@@ -177,9 +182,19 @@ export class ReplayRoom extends Room<MatchState> {
       if (!p.step()) {
         this.playing = false;
         if (p.divergence) this.reportDivergence(p.divergence);
-        else this.broadcastStatus();
+        else {
+          // Reached the end cleanly — show the same victory-settlement screen the
+          // live match ended on (assembled deterministically by the re-run ctl).
+          this.emitSettlement();
+          this.broadcastStatus();
+        }
         break;
       }
+      // Fan out this tick's combat events BEFORE the next step overwrites
+      // world.events — otherwise a batched (>1x / 8x) frame would forward only
+      // the final step's events and the replay would go partly combat-mute at
+      // speed. Same whitelist as the live MatchRoom (net/eventFanout).
+      this.fanOutEvents(p);
       stepped = true;
     }
     if (stepped) {
@@ -188,6 +203,33 @@ export class ReplayRoom extends Room<MatchState> {
       // tick: once every ~half second of playback.
       if (p.tick % 15 === 0) this.broadcastStatus();
     }
+  }
+
+  /**
+   * Forward the sim events the just-run tick produced, so the replay renders the
+   * exact same damage numbers, animations, hit sparks, projectiles and shop
+   * feedback the live match did. The re-run sim regenerates `world.events`
+   * deterministically each tick; without this the viewer would see HP bars drain
+   * with no combat visuals at all.
+   */
+  private fanOutEvents(p: ReplayPlayer): void {
+    for (const ev of p.ctl.world.events) {
+      if (isFannedOutEvent(ev)) {
+        this.broadcast(MSG.EVENT, { type: ev.type, tick: ev.tick, data: ev.data });
+      }
+    }
+  }
+
+  /** Broadcast the victory-settlement screen once, at clean end of playback. */
+  private emitSettlement(): void {
+    const p = this.player;
+    if (!p || this.settlementSent || !p.ctl.settlement) return;
+    this.settlementSent = true;
+    this.broadcast(MSG.EVENT, {
+      type: SETTLEMENT_EVENT,
+      tick: p.ctl.world.tick,
+      data: p.ctl.settlement,
+    });
   }
 
   /** STOP and say exactly where and why. Never a warning, never a continue. */

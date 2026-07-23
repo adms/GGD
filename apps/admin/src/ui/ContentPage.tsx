@@ -70,7 +70,9 @@ import {
   WARN,
 } from "./theme";
 
-const TABS: readonly EditCollection[] = ["champions", "abilities", "items"];
+// 三選一強化 (augments) are the DRAFT abilities — editable as their OWN tab,
+// distinct from champion 技能, per the owner (task #70 rule 3).
+const TABS: readonly EditCollection[] = ["champions", "abilities", "items", "augments"];
 
 interface Draft {
   /** path → parsed JSON value (undefined = remove the key) */

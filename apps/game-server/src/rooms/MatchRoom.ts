@@ -17,6 +17,7 @@ import { resolvePhaseConfig, resolveFireRing } from "../match/phaseConfig";
 import { planTicks } from "../match/tickLoop";
 import { resolveArenaRules } from "../match/arenaRules";
 import { resolveArena, resolveArenaPool } from "../match/arenaSelect";
+import { isFannedOutEvent } from "../net/eventFanout";
 import { cheatsEnabled } from "../match/cheatGate";
 import { HumanDriver } from "../seat/HumanDriver";
 import { AIDriver } from "../ai/Tier0Brain";
@@ -401,62 +402,12 @@ export class MatchRoom extends Room<MatchState> {
         break;
       }
       stepped = true;
-      // fan out selected sim events
+      // Fan out selected sim events. The whitelist lives in one place
+      // (net/eventFanout) so the ReplayRoom forwards the EXACT same set — a
+      // replay that dropped these would be combat-mute (HP bars drain with no
+      // damage numbers, no attack/cast animations, no hit sparks).
       for (const ev of this.ctl.world.events) {
-        if (
-          ev.type === "abilityCast" ||
-          ev.type === "damage" ||
-          ev.type === "death" ||
-          ev.type === "projectileSpawn" ||
-          ev.type === "projectileHit" ||
-          // a missile that expired without hitting anything → client fizzle,
-          // so a ranged auto that whiffs still resolves visually
-          ev.type === "projectileEnd" ||
-          ev.type === "levelUp" ||
-          ev.type === "castBegin" ||
-          ev.type === "castEnd" ||
-          ev.type === "castInterrupt" ||
-          ev.type === "attackWindup" ||
-          ev.type === "basicAttack" ||
-          ev.type === "basicAttackHit" ||
-          ev.type === "hitImpact" ||
-          ev.type === "knockdown" ||
-          ev.type === "whiff" ||
-          ev.type === "guardBreak" ||
-          ev.type === "flowerSpawn" ||
-          ev.type === "flowerBurst" ||
-          // FLOATING COMBAT TEXT (task #92): the request names four categories
-          // — 造成傷害 / 受到傷害 / 補血 / 補魔 — and the first two already ride
-          // `damage`. These two are the other half; without them the client
-          // cannot draw 補血/補魔 at all. Emitted only for DISCRETE restores
-          // (ability heals, `restore` percentages, lifesteal, flower bursts);
-          // per-tick passive regen is deliberately never emitted (see
-          // sim/combat/restore.ts), so this adds no steady-state traffic.
-          ev.type === "heal" ||
-          ev.type === "manaRestore" ||
-          // revive circles (task #84): spawn/end drive the world VFX + the
-          // spectating owner's HUD banner. Progress itself rides the snapshot,
-          // not events — a per-tick event would be pure spam.
-          ev.type === "reviveCircleSpawn" ||
-          ev.type === "reviveCircleEnd" ||
-          ev.type === "reviveComplete" ||
-          ev.type === "vfxSpawn" ||
-          // SHOP FEEDBACK (task #38/#60): the purchase/sale confirmations and —
-          // the point of the change — every REJECTION, so the client can say
-          // 金幣不足 / 背包已滿 / 已擁有 / 戰鬥中無法使用商店 instead of leaving
-          // a dead button. The client filters these to its own entity; they ride
-          // the same broadcast channel as damage/death, which already carry far
-          // more about other players than a failed purchase does.
-          ev.type === "itemBought" ||
-          ev.type === "itemSold" ||
-          ev.type === "buyRejected" ||
-          ev.type === "sellRejected" ||
-          // buy/sell UNDO (task #121): the confirmation drives the client's
-          // inventory/gold refresh + undo-button state; the rejection lets the
-          // HUD say why (nothing to undo / shop closed) instead of a dead button.
-          ev.type === "shopUndone" ||
-          ev.type === "undoRejected"
-        ) {
+        if (isFannedOutEvent(ev)) {
           this.broadcast(MSG.EVENT, { type: ev.type, tick: ev.tick, data: ev.data });
         }
       }
