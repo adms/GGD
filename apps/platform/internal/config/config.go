@@ -3,7 +3,9 @@ package config
 
 import (
 	"fmt"
+	"log/slog"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
@@ -160,5 +162,19 @@ func Load() (Config, error) {
 	if cfg.GameSharedSecret == "" {
 		return cfg, fmt.Errorf("config: PLATFORM_GAME_SHARED_SECRET is required")
 	}
+	// DATA_DIR defaults to the RELATIVE "./data", which means the durable truth
+	// of the platform moves with the process's working directory: a systemd unit
+	// without WorkingDirectory, a restart from a different shell, or a container
+	// whose volume did not mount all silently open an EMPTY store next to a full
+	// one. That is not merely lost data — an empty store reads as "this deploy
+	// has no administrator", which is the one condition that opens the
+	// first-owner claim. Resolving once, here, at least makes the path the
+	// operator sees in the log the path that is actually used.
+	abs, err := filepath.Abs(cfg.DataDir)
+	if err != nil {
+		return cfg, fmt.Errorf("config: DATA_DIR %q: %w", cfg.DataDir, err)
+	}
+	cfg.DataDir = abs
+	slog.Info("config: data directory resolved", "dataDir", cfg.DataDir)
 	return cfg, nil
 }

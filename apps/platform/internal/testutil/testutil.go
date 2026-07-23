@@ -94,8 +94,33 @@ func WriteContentFixture(t *testing.T) string {
 	return dir
 }
 
-// New boots the platform. mutate (optional) may tweak the config before wire.
+// New boots the platform as an ESTABLISHED deploy: the first-account owner
+// bootstrap is OFF, so ts.Register(...) creates an ordinary player exactly as it
+// did before the bootstrap existed. That is what almost every test means by "a
+// user", and it keeps a suite from silently minting an admin as its first
+// account. Nothing is written to the store, so account counts, leaderboards and
+// search totals are untouched.
+//
+// It is switched off at the composition root (server.Options) rather than
+// faked with a Redis key, because the bootstrap's real gate is the durable
+// "does this deploy have an admin?" question — a key alone would not answer it,
+// and pretending otherwise would make these fixtures lie about the mechanism.
+//
+// Use NewFreshDeploy to exercise the bootstrap itself.
 func New(t *testing.T, mutate ...func(*config.Config)) *TS {
+	t.Helper()
+	return newTS(t, false, mutate...)
+}
+
+// NewFreshDeploy boots the platform as a BRAND-NEW deploy: no account carries
+// the admin role, so the first registration claims ownership (admin role +
+// approved status). See internal/auth/bootstrap.go.
+func NewFreshDeploy(t *testing.T, mutate ...func(*config.Config)) *TS {
+	t.Helper()
+	return newTS(t, true, mutate...)
+}
+
+func newTS(t *testing.T, ownerBootstrap bool, mutate ...func(*config.Config)) *TS {
 	t.Helper()
 	mr := miniredis.RunT(t)
 	node := gamelinktest.New(GameSecret)
@@ -121,7 +146,10 @@ func New(t *testing.T, mutate ...func(*config.Config)) *TS {
 	for _, fn := range mutate {
 		fn(&cfg)
 	}
-	srv, err := server.New(cfg, server.Options{Argon2Params: LightArgon2})
+	srv, err := server.New(cfg, server.Options{
+		Argon2Params:          LightArgon2,
+		DisableOwnerBootstrap: !ownerBootstrap,
+	})
 	require.NoError(t, err)
 	srv.Start(context.Background())
 	t.Cleanup(srv.Close)

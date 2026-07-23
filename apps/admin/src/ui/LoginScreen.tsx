@@ -39,8 +39,11 @@ export function LoginScreen(): React.JSX.Element {
           {notAuthorized && (
             <div style={{ marginTop: 12 }}>
               <div style={{ color: WARN, fontSize: 12, textAlign: "center" }}>
-                This account is not an operator. Ask an admin to grant your account the <b>admin</b> role
-                (set <code>ADMIN_BOOTSTRAP_USERNAME</code> and restart the platform).
+                This account is not an operator. Ask an existing admin to grant your account the <b>admin</b> role.
+                <br />
+                If this deploy has <i>no</i> administrator at all, the next account to register becomes one —
+                register in the game client and sign in here. Last resort: set{" "}
+                <code>ADMIN_BOOTSTRAP_USERNAME</code> to an already-registered username and restart the platform.
               </div>
             </div>
           )}

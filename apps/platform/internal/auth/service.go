@@ -53,6 +53,11 @@ type Service struct {
 	// non-approved account. When false (dev/CI default) registration approves
 	// immediately, preserving the open-signup flow the rest of the suite assumes.
 	requireApproval bool
+
+	// ownerBootstrap is the first-account owner policy. The zero value disables
+	// it (an established deploy, or a bare service in a unit test). See
+	// bootstrap.go.
+	ownerBootstrap OwnerBootstrap
 }
 
 // New builds the auth service. params may be nil for defaults. requireApproval
@@ -122,15 +127,40 @@ func ValidateRegistration(username, email, password string) error {
 	return ValidatePassword(password)
 }
 
+// RegisterOptions carries the parts of a registration that are not credentials.
+type RegisterOptions struct {
+	// BootstrapToken is the one-time owner token from DATA_DIR/owner-setup-token
+	// (printed in the boot log). It is only consulted on a deploy that has no
+	// administrator AND has GGD_OWNER_BOOTSTRAP_TOKEN turned on. Empty otherwise.
+	BootstrapToken string
+}
+
+// registerSideworkTimeout bounds the Redis work Register does on a context that
+// deliberately outlives the caller's request (see the WithoutCancel note below).
+const registerSideworkTimeout = 5 * time.Second
+
 // Register creates an account, enforcing uniqueness atomically via Redis
 // SETNX before the JSON write.
-func (s *Service) Register(ctx context.Context, username, email, password string) (account.Account, TokenPair, error) {
+//
+// CONTEXT NOTE. Every store/Redis step below runs on a context DETACHED from
+// the caller's request. Registration is a multi-step write — reserve username,
+// reserve email, hash (~100ms of argon2id), decide ownership, create, issue
+// tokens — and the JSON store takes no context at all, so it cannot be
+// cancelled halfway. If the Redis half honoured the request context while the
+// file half did not, a client that hung up mid-hash (an aborted fetch, a
+// navigation, a short client timeout) would leave the reservations un-rolled-
+// back and the ownership decision unevaluated while the account still landed.
+// Detaching makes the whole sequence complete or fail as one, on its own clock.
+func (s *Service) Register(ctx context.Context, username, email, password string, opt RegisterOptions) (account.Account, TokenPair, error) {
 	username = strings.TrimSpace(username)
 	email = strings.TrimSpace(strings.ToLower(email))
 	if err := ValidateRegistration(username, email, password); err != nil {
 		return account.Account{}, TokenPair{}, err
 	}
 	id := account.NewID()
+
+	ctx, cancel := context.WithTimeout(context.WithoutCancel(ctx), registerSideworkTimeout)
+	defer cancel()
 
 	okUser, err := s.rdb.SetNX(ctx, redisx.KeyIdxUsername(username), id, 0)
 	if err != nil {
@@ -160,14 +190,41 @@ func (s *Service) Register(ctx context.Context, username, email, password string
 	if s.requireApproval {
 		status = account.StatusPending
 	}
+	// First-account owner bootstrap: while a deploy has NO administrator, a
+	// registration claims ownership. The grant is written into the account's
+	// first persisted state (not a create-then-promote follow-up), so there is
+	// no window in which it exists un-promoted and the value returned below
+	// already reflects it. It also FORCES approved: under the #126 gate a
+	// pending owner could never be approved — nobody exists to approve it —
+	// which would brick the deploy permanently. See bootstrap.go.
+	owner, releaseClaim := s.claimOwnership(ctx, id, opt.BootstrapToken)
+	defer releaseClaim()
+	var roles []string
+	if owner {
+		roles = []string{account.RoleAdmin}
+		status = account.StatusApproved
+	}
 	a := account.Account{
 		ID: id, Username: username, Email: email, PasswordHash: hash,
-		MMR: startingMMR, Status: status, CreatedAt: now, UpdatedAt: now,
+		MMR: startingMMR, Status: status, Roles: roles, CreatedAt: now, UpdatedAt: now,
 	}
 	if err := s.accounts.Create(ctx, a); err != nil {
-		// Roll the reservations back so a retry can succeed.
+		// Roll the reservations back so a retry can succeed. The owner claim is
+		// released by the deferred call above — and because the gate is "does an
+		// admin exist" rather than "was a claim ever taken", a failed create
+		// costs this deploy nothing: the retry can still become the owner.
 		s.rdb.R.Del(ctx, redisx.KeyIdxUsername(username), redisx.KeyIdxEmail(email))
+		if errors.Is(err, account.ErrUsernameTaken) {
+			return account.Account{}, TokenPair{}, httpx.Conflict("username is already taken")
+		}
+		if errors.Is(err, account.ErrEmailTaken) {
+			return account.Account{}, TokenPair{}, httpx.Conflict("email is already registered")
+		}
 		return account.Account{}, TokenPair{}, err
+	}
+	if owner {
+		s.consumeOwnerToken()
+		logFirstOwner(a)
 	}
 	// A pending account gets NO session — issuing a token here would hand it the
 	// very access the gate exists to withhold. The caller returns the account

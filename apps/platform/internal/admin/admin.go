@@ -17,6 +17,7 @@ import (
 	"crypto/rand"
 	"errors"
 	"log/slog"
+	"net/http"
 	"sort"
 	"strings"
 	"time"
@@ -32,8 +33,11 @@ import (
 	"github.com/ggd/platform/internal/wallet"
 )
 
-// RoleAdmin is the authorization role required by every admin route.
-const RoleAdmin = "admin"
+// RoleAdmin is the authorization role required by every admin route. It is an
+// alias of account.RoleAdmin, which is where the constant now lives so that
+// internal/auth can grant it at registration without importing this package
+// (that edge would be a cycle — see the doc comment on account.RoleAdmin).
+const RoleAdmin = account.RoleAdmin
 
 // Service owns the admin operations. It composes the existing platform
 // services rather than reaching into their stores directly.
@@ -75,8 +79,23 @@ func (s *Service) newID() string {
 	return ulid.MustNew(ulid.Timestamp(s.now()), rand.Reader).String()
 }
 
-// EnsureBootstrapAdmin idempotently grants the bootstrap username the admin
-// role. A missing account is logged, not an error (register it, then restart).
+// EnsureBootstrapAdmin idempotently makes the bootstrap username a USABLE
+// administrator. A missing account is logged, not an error (register it, then
+// restart).
+//
+// "Usable", not merely "roled", is the whole contract. This is the last-resort
+// recovery path: it is reached precisely when the deploy is in a bad state, and
+// a recovery that hands back an account which cannot obtain a token is not a
+// recovery. Granting the role alone was silently inert in two reachable states,
+// both of which end in a permanently ownerless deploy:
+//
+//   - the #126 approval gate is on and the account is still pending, so login
+//     answers 403 account_pending and no admin exists who could approve it;
+//   - the account was banned (e.g. by a squatter who won the first-owner claim
+//     before the operator did), so login answers 403 account_banned.
+//
+// So the grant also forces approved and clears any ban. Both are logged: an
+// operator must see that the rescue changed more than the role.
 func (s *Service) EnsureBootstrapAdmin(ctx context.Context) error {
 	if s.bootstrapUsername == "" {
 		return nil
@@ -90,20 +109,95 @@ func (s *Service) EnsureBootstrapAdmin(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	if a.HasRole(RoleAdmin) {
-		slog.Info("admin: bootstrap account already admin", "username", s.bootstrapUsername, "id", a.ID)
+	if a.HasRole(RoleAdmin) && a.IsApproved() && !a.Banned {
+		slog.Info("admin: bootstrap account already a usable admin", "username", s.bootstrapUsername, "id", a.ID)
 		return nil
 	}
+	grantedRole, approved, unbanned := false, false, false
 	if _, err := s.accounts.Update(ctx, a.ID, func(ac *account.Account) error {
 		if !ac.HasRole(RoleAdmin) {
 			ac.Roles = append(ac.Roles, RoleAdmin)
+			grantedRole = true
+		}
+		if !ac.IsApproved() {
+			ac.Status = account.StatusApproved
+			approved = true
+		}
+		if ac.Banned {
+			ac.Banned, ac.BanReason = false, ""
+			unbanned = true
 		}
 		return nil
 	}); err != nil {
 		return err
 	}
-	slog.Info("admin: granted admin role via bootstrap", "username", s.bootstrapUsername, "id", a.ID)
+	slog.Warn("admin: bootstrap recovery applied", "username", s.bootstrapUsername, "id", a.ID,
+		"grantedRole", grantedRole, "forcedApproved", approved, "clearedBan", unbanned)
 	return nil
+}
+
+// SetAdminRole grants or revokes the admin role on one account and audits it.
+//
+// This exists because the first-owner bootstrap can, in principle, put the role
+// on the wrong account (it is decided by arrival order on a public endpoint),
+// and until now nothing in the product could take a role back — admin.go only
+// ever appended, and no route touched roles at all. An unrecoverable wrong
+// grant would have meant hand-editing account JSON.
+//
+// Revocation refuses to remove the last USABLE admin (not merely the last
+// role-holder: an admin who is banned or unapproved cannot sign in, so counting
+// them would let the platform lock itself out). Granting also forces the target
+// approved, for the same reason EnsureBootstrapAdmin does — an admin who cannot
+// log in is not an admin.
+func (s *Service) SetAdminRole(ctx context.Context, adminID, targetID string, grant bool) (AccountRow, error) {
+	target, err := s.accounts.GetByID(ctx, targetID)
+	if err != nil {
+		return AccountRow{}, notFoundOr(err)
+	}
+	if !grant && target.HasRole(RoleAdmin) {
+		usable, err := s.accounts.UsableAdmins(ctx)
+		if err != nil {
+			return AccountRow{}, err
+		}
+		if len(usable) <= 1 && (len(usable) == 0 || usable[0] == targetID) {
+			return AccountRow{}, httpx.Err(http.StatusConflict, "last_admin",
+				"this is the only administrator who can sign in — promote someone else first")
+		}
+	}
+	a, err := s.accounts.Update(ctx, targetID, func(ac *account.Account) error {
+		if grant {
+			if !ac.HasRole(RoleAdmin) {
+				ac.Roles = append(ac.Roles, RoleAdmin)
+			}
+			if !ac.IsApproved() {
+				ac.Status = account.StatusApproved
+			}
+			return nil
+		}
+		kept := make([]string, 0, len(ac.Roles))
+		for _, role := range ac.Roles {
+			if role != RoleAdmin {
+				kept = append(kept, role)
+			}
+		}
+		if len(kept) == 0 {
+			kept = nil
+		}
+		ac.Roles = kept
+		return nil
+	})
+	if err != nil {
+		return AccountRow{}, notFoundOr(err)
+	}
+	action := "role_revoke"
+	if grant {
+		action = "role_grant"
+	}
+	if err := s.audit(ctx, adminID, action, targetID, map[string]any{"role": RoleAdmin}); err != nil {
+		return AccountRow{}, err
+	}
+	slog.Warn("admin: admin role changed", "by", adminID, "target", targetID, "granted", grant)
+	return rowOf(a), nil
 }
 
 // IsAdmin reports whether the account carries the admin role.

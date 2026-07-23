@@ -49,6 +49,17 @@ func KeyMatchDone(mid string) string            { return "match:result:done:" + 
 func KeyMatchPending(mid string) string         { return "match:pending:" + mid }
 func KeyMatchesPending() string                 { return "matches:pending" }
 
+// KeyBootstrapOwner is the short-lived MUTEX that serialises simultaneous
+// first-owner registrations: a SETNX with a TTL, released as soon as the
+// registration finishes either way.
+//
+// It is deliberately NOT the gate. Whether a deploy may still mint an owner is
+// decided from the account files on disk ("does any account carry the admin
+// role?"), because Redis is a rebuildable cache: a permanent claim here would
+// be lost by a flush and outlive a crash, so it could both hand out a second
+// ownership and block the first one forever. See internal/auth/bootstrap.go.
+func KeyBootstrapOwner() string { return "bootstrap:owner" }
+
 func ChanPresence() string        { return "chan:presence" }
 func ChanLobby(aid string) string { return "chan:lobby:" + aid }
 func ChanRoom(rid string) string  { return "chan:room:" + rid }

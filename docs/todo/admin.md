@@ -13,9 +13,45 @@ Account mutations reuse the existing locked read-modify-write paths
 `ranking.Add`), so they stay single-writer safe. Timestamps come from a clock
 seam (no wall-clock in the audit/announcement paths).
 
-**First admin:** register an account normally, set `ADMIN_BOOTSTRAP_USERNAME=<that
-username>`, and restart the platform — boot grants it the `admin` role
-idempotently. (Or grant the role on the account JSON directly.)
+**First admin — nothing to configure.** While a deploy has NO administrator, a
+registration claims ownership: that account is granted the `admin` role and
+forced to `approved` status in the same write that creates it, and the register
+response already carries both (see `internal/auth/bootstrap.go`, tests
+`auth-13`..`auth-21`). Whoever installs the platform simply registers first and
+picks their own password — no default credential ships in this repo, and there
+is no forced-change window to get wrong. The window shuts by itself the moment
+an admin exists.
+
+**The gate is "does any account carry the `admin` role?"**, read from the
+account FILES (a directory scan, not `_index.json`, and not Redis). It is
+deliberately NOT "the store is empty": every way an account can land without a
+promotion — a half-failed create, a client that hung up, a concurrent loser
+winning the race to disk — would make that rule terminal, leaving a deploy with
+accounts, no admin, and no way to ever get one. Under this rule those cases
+simply retry. The Redis `bootstrap:owner` key is only a short-TTL mutex that
+serialises simultaneous first registrations; it is released either way and can
+never decide the outcome, so a Redis flush cannot mint a second owner and a
+crash cannot block the first.
+
+**Hardening (`GGD_OWNER_BOOTSTRAP_TOKEN=1`).** The open claim is a footrace on a
+public endpoint: on a network the operator does not control, a stranger could
+register first. With this set, boot mints a one-time token into the log and
+`DATA_DIR/owner-setup-token` (0600), and only a registration presenting it (as
+`bootstrapToken` in the register body) may claim ownership. Registrations
+without it still succeed as ordinary players, so nothing bricks. A loopback
+check is NOT used and must not be added: the LAN-published vite dev server
+proxies remote clients to this binary, so every one of them arrives as
+127.0.0.1 — see `internal/server/devsurface_test.go`.
+
+**Recovery:** `ADMIN_BOOTSTRAP_USERNAME=<username>` still works — set it and
+restart, and boot makes that (already registered) account a USABLE admin
+idempotently: it grants the role, forces `approved` and clears any ban. All
+three matter, because a rescued account that is pending (under the #126 gate) or
+banned (by a squatter who won the claim) cannot obtain a token, and a rescue
+that cannot log in is not a rescue. Once in, `POST
+/api/v1/admin/accounts/{id}/role` grants or revokes the role on any account
+(audited; it refuses to remove the last admin who can still sign in), so a wrong
+grant is fixable in the product rather than by hand-editing account JSON.
 
 ## Backend (`apps/platform/internal/admin`)
 

@@ -37,6 +37,10 @@ type registerReq struct {
 	Username string `json:"username"`
 	Email    string `json:"email"`
 	Password string `json:"password"`
+	// BootstrapToken claims ownership of a deploy that has no administrator yet
+	// and was started with GGD_OWNER_BOOTSTRAP_TOKEN=1. Ignored in every other
+	// case, so an ordinary client never has to send it. See bootstrap.go.
+	BootstrapToken string `json:"bootstrapToken,omitempty"`
 }
 
 type sessionResp struct {
@@ -50,7 +54,8 @@ func (h *Handlers) register(w http.ResponseWriter, r *http.Request) {
 		httpx.WriteError(w, err)
 		return
 	}
-	a, pair, err := h.svc.Register(r.Context(), req.Username, req.Email, req.Password)
+	a, pair, err := h.svc.Register(r.Context(), req.Username, req.Email, req.Password,
+		RegisterOptions{BootstrapToken: req.BootstrapToken})
 	if err != nil {
 		httpx.WriteError(w, err)
 		return

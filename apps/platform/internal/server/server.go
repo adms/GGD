@@ -76,6 +76,13 @@ type Options struct {
 	// RequireApproval forces the private-deploy approval gate on (#126)
 	// regardless of the environment. It is OR-ed with GGD_REQUIRE_APPROVAL.
 	RequireApproval bool
+	// DisableOwnerBootstrap turns the first-account owner grant off for this
+	// instance. Real deploys never set it — the grant closes itself as soon as
+	// an admin exists (see internal/auth/bootstrap.go). It exists so a test
+	// harness can boot a platform that behaves like an ESTABLISHED deploy
+	// without having to fabricate a fixture account that would then show up in
+	// account counts, search totals and leaderboards.
+	DisableOwnerBootstrap bool
 }
 
 // requiredSecrets are the secrets that MUST be supplied from the environment;
@@ -144,6 +151,15 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 	// Self-service password changes land in the same append-only audit log the
 	// operator console reads (auth cannot import admin — see audit.go).
 	authSvc.SetAuditor(authAuditSink{store: store, now: time.Now})
+	// First-account owner bootstrap: while the deploy has no administrator, a
+	// registration claims ownership. GGD_OWNER_BOOTSTRAP_TOKEN=1 additionally
+	// requires the one-time token from DATA_DIR — the hardening switch for a
+	// deploy whose register endpoint is reachable from an untrusted network.
+	authSvc.SetOwnerBootstrap(auth.OwnerBootstrap{
+		Enabled:      !opts.DisableOwnerBootstrap,
+		RequireToken: envEnabled("GGD_OWNER_BOOTSTRAP_TOKEN"),
+		DataDir:      store.Root(),
+	})
 	pres := presence.New(rdb, cfg.PresenceTTL)
 	friends := friend.New(store)
 	rooms := room.New(rdb, pres)
@@ -228,6 +244,16 @@ func capRequestBody(next http.Handler) http.Handler {
 // throttleRegister applies the app-layer global registration cap (0 = off). It
 // keys on a fixed bucket, never on a caller address — per-IP register limiting
 // is the edge's job (see the registerRateLimit field comment).
+//
+// A shared bucket is exhaustible by one scripted client, which on an ownerless
+// deploy could in principle keep the operator from registering and so from
+// claiming ownership. Splitting it per-IP was considered and REJECTED: this
+// binary sits behind a LAN-published vite proxy, so every remote client already
+// arrives as 127.0.0.1 and would share one bucket anyway — the operator's own
+// client included. Per-IP bucketing here would add an address dependency that
+// internal/server/devsurface_test.go forbids, in exchange for no protection in
+// the topology that actually exists. Per-IP throttling belongs at the edge,
+// which is the only hop that can still see distinct callers.
 func (s *Server) throttleRegister(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if s.registerRateLimit > 0 && r.Method == http.MethodPost &&
@@ -299,6 +325,11 @@ func (s *Server) buildRouter(templates *room.Templates) {
 				ar.Use(s.Admin.AdminOnly)
 				ar.Post("/admin/accounts/{id}/approve", s.approveAccount)
 				ar.Post("/admin/accounts/{id}/deny", s.denyAccount)
+				// Role grant/revoke. The first-owner bootstrap decides ownership
+				// by arrival order on a public endpoint, so a wrong grant has to
+				// be fixable IN the product — before this route the only way to
+				// take a role back was hand-editing account JSON.
+				ar.Post("/admin/accounts/{id}/role", s.setAccountRole)
 			})
 		})
 	})
@@ -322,6 +353,34 @@ func (s *Server) approveAccount(w http.ResponseWriter, r *http.Request) {
 // session, so a previously-approved account is kicked immediately. AdminOnly.
 func (s *Server) denyAccount(w http.ResponseWriter, r *http.Request) {
 	s.setAccountStatus(w, r, account.StatusDenied)
+}
+
+// setAccountRole grants or revokes the admin role. AdminOnly-gated and audited;
+// the service refuses to remove the last administrator who can still sign in.
+func (s *Server) setAccountRole(w http.ResponseWriter, r *http.Request) {
+	var req struct {
+		Role  string `json:"role"`
+		Grant *bool  `json:"grant"`
+	}
+	if err := httpx.DecodeJSON(r, &req); err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	if req.Role != admin.RoleAdmin {
+		httpx.WriteError(w, httpx.BadRequest(`role must be "`+admin.RoleAdmin+`"`))
+		return
+	}
+	if req.Grant == nil {
+		httpx.WriteError(w, httpx.BadRequest("grant must be true or false"))
+		return
+	}
+	actor, _ := auth.IdentityFrom(r.Context())
+	row, err := s.Admin.SetAdminRole(r.Context(), actor.AccountID, chi.URLParam(r, "id"), *req.Grant)
+	if err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	httpx.WriteJSON(w, http.StatusOK, map[string]admin.AccountRow{"account": row})
 }
 
 func (s *Server) setAccountStatus(w http.ResponseWriter, r *http.Request, status string) {
@@ -356,8 +415,14 @@ func (s *Server) Boot(ctx context.Context) error {
 	// The rebuild ZADDs the visible boards behind the ranking service's back,
 	// so drop any apex pass cached from the pre-rebuild state.
 	s.Ranking.InvalidateApex()
-	// Idempotently grant the configured bootstrap account the admin role.
-	return s.Admin.EnsureBootstrapAdmin(ctx)
+	// Idempotently make the configured bootstrap account a usable admin.
+	if err := s.Admin.EnsureBootstrapAdmin(ctx); err != nil {
+		return err
+	}
+	// Report the deploy's ownership state (and mint/clear the one-time owner
+	// token). This runs LAST so it sees the bootstrap grant above and reports
+	// the deploy as owned rather than reopening the claim window for it.
+	return s.Auth.PrepareOwnerBootstrap(ctx)
 }
 
 // Start launches background loops (lobby hub, match reaper) and waits until
