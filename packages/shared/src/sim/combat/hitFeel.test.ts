@@ -18,6 +18,7 @@ import { Abilities, Champions } from "../content/registry";
 import type { AbilityDef, ChampionDef } from "../content/defs";
 import type { AbilityInstance } from "../stats/statsComp";
 import { spawnChampion } from "../spawnChampion";
+import { castAbility } from "../abilities/abilitySystem";
 import { asSeatId, asTeamId, type AbilityId, type ChampionId, type EntityId, type SeatId } from "../../ids";
 import type { DamageType } from "../effects/effect";
 import type { IntentFrame } from "../intents";
@@ -66,6 +67,19 @@ beforeAll(() => {
   Abilities.register(PLAIN_ABILITY_ID, { id: PLAIN_ABILITY_ID } as unknown as AbilityDef);
   // register directly (not via registerChampion, which would iterate .abilities)
   Champions.register(HF_CHAMPION_ID, { id: HF_CHAMPION_ID, hitFeel: OVERRIDE } as unknown as ChampionDef);
+  // a castable, damaging EX for the end-to-end cast test (no hitFeel override,
+  // so the profile it produces is the pure damage-derived EX default)
+  Abilities.register(EX_CAST_ABILITY_ID, {
+    id: EX_CAST_ABILITY_ID,
+    name: "Test Super",
+    slot: "EX",
+    castType: "targeted",
+    maxRank: 1,
+    cooldown: [30],
+    manaCost: [0],
+    range: 10,
+    effects: [{ kind: "damage", damageType: "physical", amount: { flat: 200 } }],
+  } as unknown as AbilityDef);
 });
 
 function makeWorld(seed = 7): SimWorld {

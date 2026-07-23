@@ -285,6 +285,55 @@ describe("camera shake (juice-camera-shake)", () => {
     expect(Math.abs(sumZ)).toBeLessThan(1e-6); // Z is untouched by an omni shake
   });
 
+  it("clamps the SUMMED offset so a pile-up cannot become a screen-quake", () => {
+    cover("juice-camera-directional");
+    const rest = restPosition();
+    const rig = new CameraRig(scene, { x: 0, z: 0 });
+    applyFrame(rig);
+    // fill the whole impulse pool with max-strength kicks on the same frame
+    for (let i = 0; i < 6; i++) {
+      rig.addShake(0.85, 260, { dir: { x: 1, z: 0 }, style: "directional", kick: 0.6 });
+    }
+    let peak = 0;
+    for (let t = 0; t < 20; t++) {
+      rig.update({ dtMs: 16, localPos: null, cursor: null, panKeys: null, viewportWidth: 800, viewportHeight: 600 });
+      peak = Math.max(
+        peak,
+        Math.hypot(
+          rig.camera.position.x - rest.x,
+          rig.camera.position.y - rest.y,
+          rig.camera.position.z - rest.z,
+        ),
+      );
+    }
+    // six unclamped max impulses would displace the eye by >5u; the rig caps it
+    expect(peak).toBeGreaterThan(0.5); // still reads as a heavy hit
+    expect(peak).toBeLessThan(2); // …but never as a quake
+    // a LONE max impulse is below the cap, so single hits are untouched
+    const solo = new CameraRig(scene, { x: 0, z: 0 });
+    applyFrame(solo);
+    solo.addShake(0.85, 260, { dir: { x: 1, z: 0 }, style: "directional", kick: 0.6 });
+    let soloPeak = 0;
+    for (let t = 0; t < 20; t++) {
+      solo.update({ dtMs: 16, localPos: null, cursor: null, panKeys: null, viewportWidth: 800, viewportHeight: 600 });
+      soloPeak = Math.max(
+        soloPeak,
+        Math.hypot(
+          solo.camera.position.x - rest.x,
+          solo.camera.position.y - rest.y,
+          solo.camera.position.z - rest.z,
+        ),
+      );
+    }
+    expect(soloPeak).toBeLessThan(peak); // the pile-up is still the bigger read
+    // and everything settles back to rest
+    for (let t = 0; t < 30; t++) {
+      rig.update({ dtMs: 16, localPos: null, cursor: null, panKeys: null, viewportWidth: 800, viewportHeight: 600 });
+    }
+    expect(rig.camera.position.x).toBeCloseTo(rest.x, 5);
+    expect(rig.camera.position.z).toBeCloseTo(rest.z, 5);
+  });
+
   it("exPunchIn dollies the eye toward the target then eases back crisp (EX 特寫)", () => {
     cover("juice-camera-expunch");
     const rest = restPosition();
