@@ -13,6 +13,12 @@ dist/
 build/
 *.tsbuildinfo
 
+# Vite's transient config bundle, written next to apps/*/vite.config.ts while a
+# dev server or vitest run is live and deleted on exit. Only visible mid-run, so
+# a concurrent `git add -A` is the way it sneaks into a commit.
+vite.config.*.timestamp-*.mjs
+vite.config.*.timestamp-*.mjs.map
+
 # go
 apps/platform/bin/
 tools/testrunner/bin/
