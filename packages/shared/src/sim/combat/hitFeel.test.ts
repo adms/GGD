@@ -42,6 +42,8 @@ const HF_CHAMPION_ID = "hf-test.hero" as ChampionId;
 const EX_SLOT_ABILITY_ID = "hf-test.super" as AbilityId;
 /** The authored EX doc-id shape every shipped hero uses (`champion.exAbility`). */
 const EX_SUFFIX_ABILITY_ID = "hf-test.hero.ex" as AbilityId;
+/** A castable EX ability for the end-to-end `castAbility(slot "EX")` test. */
+const EX_CAST_ABILITY_ID = "hf-test.castable-super" as AbilityId;
 
 const OVERRIDE: HitFeelInput = {
   hitstopTicks: 9,
@@ -287,6 +289,40 @@ describe("EX / super hit-feel fires on a real EX cast (#133)", () => {
     const ex = pushAndStep(world, a, b, 50, `ability:${EX_SUFFIX_ABILITY_ID}`);
     expect(ex.isEX).toBe(true);
     expect(ex.exFreeze).toBeGreaterThan(0);
+  });
+
+  it("END TO END: a real castAbility(slot 'EX') hit carries the EX profile", () => {
+    cover("cj-hf-ex-end-to-end");
+    const world = makeWorld();
+    const a = spawnChampion(world, {
+      championId: "thorne" as ChampionId,
+      seatId: asSeatId(0),
+      teamId: asTeamId(0),
+      pos: { x: ZC.x, z: Y },
+      zone: 0,
+    });
+    const b = spawnChampion(world, {
+      championId: "thorne" as ChampionId,
+      seatId: asSeatId(1),
+      teamId: asTeamId(1),
+      pos: { x: ZC.x + 1.3, z: Y },
+      zone: 0,
+    });
+    // unlock the hero's EX (what `learnEx` does at the arena EX-unlock point)
+    world.abilities.get(a)!.exSlot = {
+      abilityId: EX_CAST_ABILITY_ID,
+      rank: 1,
+      cooldownRemainingTicks: 0,
+    };
+
+    // fire it for real — the cast path stamps origin `ability:<abilityId>`
+    expect(castAbility(world, a, "EX", { type: "entity", entityId: b })).toBe("ok");
+    world.step(empty());
+
+    const p = profileOf(world, b);
+    expect(p.isEX).toBe(true);
+    expect(p.exFreeze).toBeGreaterThan(0);
+    expect(p.shakeStyle).toBe("omni");
   });
 
   it("basics / DoTs / items / a hero's OTHER abilities are never EX", () => {
