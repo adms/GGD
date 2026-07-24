@@ -1289,3 +1289,37 @@ console：`[hmr] Failed to reload /src/replay/ReplayApp.tsx / ReplayControls.tsx
   故照實留空並記錄，等一個能同時動 sim + schema + content + UI 的 lane 一次做完。
 - **決定性**：`sim/innatePassive.test.ts` 用同 seed 兩個世界跑 300 tick 逐 tick 比對 digest（含會擲
   `world.rng` 的 proc hook），另加一個不同 seed 必須不同的反證；game-server 的 replay 全套 304 測試亦全綠。
+
+## 2026-07-24 — 試玩回報：「單機對戰」按鈕按一次之後就死了（已修）
+
+### 你的回報
+client-playtest lane（port 5205）實測：按下 **Play offline vs bots** 一次沒有進到對戰之後，
+再按三次完全沒有反應——**沒有錯誤訊息、沒有 console error、也沒有任何往 game server 的請求**。
+唯一的救法是整頁重新整理。
+
+### 判定：✅ 真 bug，根因確認並已修
+`AuthScreen.tsx` 的 `runEnter` 用 `enteringRef` 擋重複點擊（雙擊不能放兩次 swoop / 兩次登入），
+但這個閂**只有登入失敗那條路會解開**（`runEnterAuth` 自己解）。單機對戰那條路
+（`runEnter(() => beginOfflineLoading(offlineMap))`）從來不解——只要那一次 enter 最後沒有真的
+把玩家帶到任何地方，閂就永久卡住，之後每一次點擊都在 `if (enteringRef.current) return;` 靜靜地被吞掉。
+「沒有錯誤、只能重整」正是這個形狀。
+
+### 落點（本次直接修完，非建任務）
+| 項目 | 內容 |
+|---|---|
+| 一條規則、全路徑解閂 | 新增純函式 `ui/platform/enterGuard.ts` 的 `shouldReleaseEnterGuard({screen, matchStaged})`：enter 只有在「離開了閒置的登入畫面」才算生效——`screen !== "auth"`，**或**已有 launch 停在 loading bar 後面（單機交接刻意讓 `screen` 停在 `"auth"` 撐那 >=1s，所以 staged 必須**維持**閂住）。`runEnter` 在 `proceed` 的 `finally` 套用它，什麼都沒動就把白閃收回、把按鈕交還 |
+| 不再靜默失敗 | `proceed` 丟例外、或單機 launch 什麼都沒 stage → 走 `showError(ENTER_FAILED_NOTE)` 由既有 ErrorToast 顯示（可點掉），不再吞掉那次點擊 |
+| 解閂要看得見 | 閂改成 ref（同步的雙擊閘）＋ state 鏡像；只解 ref 在下一次無關的 render 之前是看不見的。送出鍵與「Play offline vs bots」都改讀 state 鏡像，並讓單機鍵在一次 launch 期間 disabled |
+| 順手 | `runEnterAuth` 不再自帶一份 reset（登入失敗＝「還在 auth」，由同一條規則處理）；store 新增 `showError(message)` action，元件不再需要碰 `appStore.setState` |
+
+順帶抓到的第二個卡死（實機驗證時才現形）：`runEnter` 的 ~1.8 秒硬保底可能在 swoop 還在跑的時候就先 proceed
+（分頁被切到背景會直接停掉 render loop，掉幀也夠），接著場景把白閃畫到全白並**凍在那裡**——蓋在我們剛淡回來的
+登入畫面上，又是一個「只能重整」的白畫面。改成明確的所有權 `flashOwnedRef`：`runEnter` 授予、`fadeFlashOut` 收回，
+收回後 `onFlash` 不再寫入。實測（headless 分頁 = hidden，正好重現這條 race）：修前登入失敗留下整片白，修後
+白閃 opacity 0、`invalid credentials` 正常顯示、兩顆按鈕都活著，接著按「Play offline vs bots」直接進到選英雄畫面
+（game server `POST /matchmake/create/match → 200`，無 console error）。
+
+驗收：`login-enter-guard-release`（`ui/platform/enterGuard.test.ts`，5 例，含「staged 要維持閂住」「取消後要解閂」
+與對真 store 的一致性檢查）；`docs/todo/login-scene.md` li-21；client 全套 **2189 綠**、typecheck clean。
+（`render/vfx/bindings.test.ts` 在 worktree 紅是既有問題：`/data/**` 被 .gitignore 吃掉，worktree 沒有
+`data/curation/whitelist.json`，與本次修改無關。）
