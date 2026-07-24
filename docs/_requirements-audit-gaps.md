@@ -2150,3 +2150,21 @@ client-playtest lane（port 5205）實測：按下 **Play offline vs bots** 一�
 與對真 store 的一致性檢查）；`docs/todo/login-scene.md` li-21；client 全套 **2189 綠**、typecheck clean。
 （`render/vfx/bindings.test.ts` 在 worktree 紅是既有問題：`/data/**` 被 .gitignore 吃掉，worktree 沒有
 `data/curation/whitelist.json`，與本次修改無關。）
+
+## 需求：兩台機器的內容同步＝逐項打勾裁決，不是單向覆蓋
+
+**來源**：owner，2026-07-24。「應該是每次要同步的時候改變項目列出來選擇以誰為主，並且是打勾的形式，然後送出合併同步兩邊」
+
+**這推翻了 #189 規格的一個前提。** 那份規格假設 `data/content-overlay/` 是單一權威、單向套用在出貨 docs 之上。
+owner 要的是**雙向對帳**：同步時列出兩邊的差異項目 → 每一項用勾選決定以哪邊為主 → 送出後**兩邊都變成合併結果**。
+
+**設計影響**：
+- 需要一個 **diff 引擎**：對每個 doc 比 `hashDoc()`，分成「只有 A 改 / 只有 B 改 / 兩邊都改（真衝突）」三類。
+  只有一邊改的可以預設打勾那一邊；真衝突才需要人決定。
+- 需要 **共同祖先**才能分辨「A 改了」和「B 刪了」。`gen/` 快照鏈提供這個：每筆 overlay entry 已經帶 `baseHash`
+  （出貨 doc 在編輯當下的 hash），那就是三方合併的 base。
+- UI 是**逐項核取清單**，不是整批覆蓋。每列要顯示：doc id、哪些欄位不同、兩邊的值。
+- 送出後兩邊都推進到**同一個 generation**，所以「合併同步兩邊」是字面意思——不是一邊贏。
+
+**還沒問到的**：欄位級的裁決要不要支援（同一個英雄，A 改了 Q 冷卻、B 改了 R 傷害，理想是兩個都要）。
+先做 doc 級；若實際用起來常常需要各取一半，再升級成欄位級。
