@@ -265,7 +265,11 @@ function Strip({
         left: rect.x,
         top: rect.y,
         width: rect.w,
-        height: rect.h,
+        // minHeight, NOT height: the model computes the wrap from an estimated
+        // text advance, and if the real font runs a hair wider the content must
+        // be allowed to push the box down rather than be cut off by `overflow`.
+        // The model already proved this much room is free (#107).
+        minHeight: rect.h,
         zIndex: HUD_Z.slot,
         boxSizing: "border-box",
         padding: "5px 8px",
@@ -278,7 +282,9 @@ function Strip({
         backdropFilter: "blur(2px)",
         WebkitBackdropFilter: "blur(2px)",
         pointerEvents: "none",
-        overflow: "hidden",
+        // deliberately NOT `overflow: hidden` — see minHeight above. Clipping is
+        // what turned this box into a control list that stopped at R.
+        flexWrap: "wrap",
       }}
     >
       <Header modeLabel={modeLabel} onDismiss={onDismiss} inline />
@@ -357,10 +363,10 @@ export function ControlLegend(): React.JSX.Element | null {
 
   if (!visible) return null;
   const rows = legendRows(mode);
-  // rowCount sizes the strip: the touch set is 5 rows, the pad set is 13, and
-  // one shared height would either waste a third of a phone screen or clip the
-  // pad's last row (天生技 — the binding nobody guesses).
-  const rect = controlLegendRect(viewport, { touch: hudTouch(), couchPlayers, rowCount: rows.length });
+  // The ROWS go in, not a count: the strip wraps, so its height depends on how
+  // wide each caption is, and a count cannot answer that. Passing a count is
+  // what made the 812x375 strip clip 「F EX 技能」 off the bottom.
+  const rect = controlLegendRect(viewport, { touch: hudTouch(), couchPlayers, rows });
   // null = this viewport genuinely has no free room. Showing nothing is the
   // correct answer; overlapping the HUD is not.
   if (!rect) return null;

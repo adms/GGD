@@ -15,7 +15,12 @@ import { describe, it, expect } from "vitest";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { ControlLegendView } from "./ControlLegend";
-import { controlLegendRect, legendRows, type LegendRect } from "./controlLegendModel";
+import {
+  controlLegendRect,
+  legendRows,
+  type LegendRect,
+  type LegendRow,
+} from "./controlLegendModel";
 
 const DESKTOP = { width: 1546, height: 900 };
 const PHONE = { width: 812, height: 375 };
@@ -24,9 +29,9 @@ function rectFor(
   viewport: { width: number; height: number },
   touch: boolean,
   couchPlayers: number,
-  rowCount: number,
+  rows: readonly LegendRow[],
 ): LegendRect {
-  const rect = controlLegendRect(viewport, { touch, couchPlayers, rowCount });
+  const rect = controlLegendRect(viewport, { touch, couchPlayers, rows });
   if (!rect) throw new Error("expected a placement for this viewport");
   return rect;
 }
@@ -44,7 +49,7 @@ function html(rect: LegendRect, mode: "keyboard" | "gamepad" | "touch", label: s
 
 describe("the desktop left-flank column", () => {
   const rows = legendRows("keyboard");
-  const rect = rectFor(DESKTOP, false, 1, rows.length);
+  const rect = rectFor(DESKTOP, false, 1, rows);
   const out = html(rect, "keyboard", "鍵盤 / 滑鼠");
 
   it("paints at the derived offsets", () => {
@@ -111,7 +116,7 @@ describe("readability over the arena", () => {
     fill.rgb.map((c, i) => Math.round(fill.a * c + (1 - fill.a) * backdrop[i]!));
 
   const rows = legendRows("keyboard");
-  const out = html(rectFor(DESKTOP, false, 1, rows.length), "keyboard", "鍵盤 / 滑鼠");
+  const out = html(rectFor(DESKTOP, false, 1, rows), "keyboard", "鍵盤 / 滑鼠");
 
   /**
    * Pull the declared colours out of the rendered markup, not out of a copy of
@@ -147,10 +152,13 @@ describe("readability over the arena", () => {
 describe("the touch / couch top-gutter strip", () => {
   it("paints the pad bindings, and only those", () => {
     const rows = legendRows("gamepad");
-    const rect = rectFor(DESKTOP, false, 4, rows.length);
+    const rect = rectFor(DESKTOP, false, 4, rows);
     const out = html(rect, "gamepad", "手把");
     expect(out).toContain('data-control-legend="strip"');
-    expect(out).toContain(`height:${rect.h}px`);
+    // minHeight, not height: the wrap is estimated, so real text must be able
+    // to push the box taller rather than be clipped by it
+    expect(out).toContain(`min-height:${rect.h}px`);
+    expect(out).not.toContain("overflow:hidden");
     expect(out).toContain("十字鍵 ↑"); // 天生技 lives on the d-pad
     expect(out).toContain("左類比");
     expect(out).toContain("Start");
@@ -160,7 +168,7 @@ describe("the touch / couch top-gutter strip", () => {
 
   it("fits a phone and stays inert there too", () => {
     const rows = legendRows("touch");
-    const rect = rectFor(PHONE, true, 1, rows.length);
+    const rect = rectFor(PHONE, true, 1, rows);
     const out = html(rect, "touch", "觸控");
     expect(out).toContain('data-control-legend="strip"');
     expect(out).toContain("左側搖桿");

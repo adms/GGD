@@ -40,6 +40,7 @@ import {
   LEGEND_COLUMN_W,
   legendActionLabel,
   legendRows,
+  type LegendRow,
   MOUSE_BINDINGS,
   padFace,
   probeGamepadButton,
@@ -193,16 +194,28 @@ const VIEWPORTS: readonly HudViewport[] = [
   { width: 375, height: 667 },
 ];
 
-const PC = (touch: boolean, couchPlayers: number, rowCount: number) => ({ touch, couchPlayers, rowCount });
+const PC = (touch: boolean, couchPlayers: number, rows: readonly LegendRow[]) => ({
+  touch,
+  couchPlayers,
+  rows,
+});
+
+/**
+ * The REAL binding sets, not synthetic row counts. The strip wraps, so its
+ * height depends on how wide each caption actually is — sweeping over a count
+ * is what let the 812x375 keyboard strip ship six lines of content in a box
+ * sized for three.
+ */
+const MODES = ["keyboard", "gamepad", "touch"] as const;
 
 describe("control legend placement obeys the safe-area contract (#107)", () => {
   for (const vp of VIEWPORTS) {
     for (const touch of [false, true]) {
       for (const couchPlayers of [1, 2, 4]) {
-        // both binding-set sizes: the 5-row touch set and the 14-row keyboard set
-        for (const rowCount of [5, 14]) {
-        it(`clears every HUD slot @ ${vp.width}x${vp.height} touch=${touch} players=${couchPlayers} rows=${rowCount}`, () => {
-          const rect = controlLegendRect(vp, { touch, couchPlayers, rowCount });
+        for (const mode of MODES) {
+        const rows = legendRows(mode);
+        it(`clears every HUD slot @ ${vp.width}x${vp.height} touch=${touch} players=${couchPlayers} mode=${mode}`, () => {
+          const rect = controlLegendRect(vp, { touch, couchPlayers, rows });
           if (!rect) return; // "no room" is a legal, safe answer
           const hits: string[] = [];
           for (const slot of HUD_SLOTS) {
@@ -239,7 +252,7 @@ describe("control legend placement obeys the safe-area contract (#107)", () => {
   }
 
   it("uses the left flank on a classic desktop viewport", () => {
-    const rect = controlLegendRect({ width: 1546, height: 900 }, PC(false, 1, 14));
+    const rect = controlLegendRect({ width: 1546, height: 900 }, PC(false, 1, legendRows("keyboard")));
     expect(rect?.shape).toBe("column");
     expect(rect?.w).toBe(LEGEND_COLUMN_W);
     // below the top-left stack (☰ / 隊伍 / 復活 / 敵隊), not beside the ability bar
@@ -247,20 +260,20 @@ describe("control legend placement obeys the safe-area contract (#107)", () => {
   });
 
   it("switches to the top-gutter strip on touch and in couch play", () => {
-    expect(controlLegendRect({ width: 812, height: 375 }, PC(true, 1, 5))?.shape).toBe("strip");
-    expect(controlLegendRect({ width: 1546, height: 900 }, PC(false, 2, 13))?.shape).toBe("strip");
+    expect(controlLegendRect({ width: 812, height: 375 }, PC(true, 1, legendRows("touch")))?.shape).toBe("strip");
+    expect(controlLegendRect({ width: 1546, height: 900 }, PC(false, 2, legendRows("gamepad")))?.shape).toBe("strip");
   });
 
   it("clears the top cells' mini-HUDs in a 2x2 couch, or shows nothing", () => {
     // a short TV/window has no room above the split; the honest answer is null
-    expect(controlLegendRect({ width: 1280, height: 320 }, PC(false, 4, 13))).toBeNull();
-    const ok = controlLegendRect({ width: 1280, height: 900 }, PC(false, 4, 13));
+    expect(controlLegendRect({ width: 1280, height: 320 }, PC(false, 4, legendRows("gamepad")))).toBeNull();
+    const ok = controlLegendRect({ width: 1280, height: 900 }, PC(false, 4, legendRows("gamepad")));
     expect(ok).not.toBeNull();
     expect(ok!.y + ok!.h).toBeLessThan(900 / 2 - 78);
   });
 
   it("shows nothing rather than overlapping on a portrait phone", () => {
-    expect(controlLegendRect({ width: 375, height: 667 }, PC(true, 1, 5))).toBeNull();
+    expect(controlLegendRect({ width: 375, height: 667 }, PC(true, 1, legendRows("touch")))).toBeNull();
   });
 });
 

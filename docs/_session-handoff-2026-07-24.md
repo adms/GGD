@@ -159,3 +159,65 @@ HPF 70 Hz、−19 LUFS、−1 dBTP）。逐角狀態在 `reports/role_clip_inven
   現況 30.9% 配對可混淆，對照組 17.6%
 - **CI 那三個紅燈的修正一直躺在 `.claude/worktrees/` 裡沒被合併**，
   已合 5 個；`legendaryClaims.test.ts` 刻意不併（它是紅的，而且抓到的是真的）
+
+---
+
+## 🔐 部署絕不能蓋掉玩家記錄 —— 安全程序（擁有者明確要求）
+
+> 「部署的時候記得不要蓋掉記錄，不然大家又要重新申請帳號、玩家跟一堆幣、水晶要重打」
+
+### 資料實際存在哪（已查證）
+
+```
+/home/can/GGD/data  →  /data      BIND MOUNT（主機檔案系統）
+  accounts/  admin-audit/  curation/  journal/  matches/  replays/
+```
+
+**bind mount 不是 docker volume**，所以 `docker compose down` / `up -d --build` /
+`docker rm -f <container>` **都碰不到它**。帳號、錢包、錄影在一般部署下結構性安全。
+
+**但這三個是具名 volume，`down -v` 會刪掉**：
+
+| volume | 內容 | 刪掉的後果 |
+|---|---|---|
+| `ggd_redis-data` | session + 排行榜 sorted set | **排行榜歸零、所有人被登出** |
+| `ggd_caddy-data` | TLS 憑證 | 憑證重新簽發 |
+| `ggd_caddy-config` | Caddy 狀態 | — |
+
+### 部署前必做
+
+```bash
+ssh -A can@34.81.104.163 'cd GGD && mkdir -p ~/ggd-backups && S=$(date +%Y%m%d-%H%M%S) && \
+  tar czf ~/ggd-backups/data-$S.tgz --exclude=blizzard-overlay data/ && \
+  docker exec ggd-redis-1 redis-cli SAVE >/dev/null 2>&1; \
+  docker run --rm -v ggd_redis-data:/src:ro -v ~/ggd-backups:/dst alpine \
+    tar czf /dst/redis-$S.tgz -C /src .'
+```
+
+已於 2026-07-24 13:28 執行過一次（`data-20260724-132859.tgz` + `redis-20260724-132859.tgz`）。
+
+### ✅ 安全 / ❌ 禁止
+
+| 安全 | 禁止 |
+|---|---|
+| `docker compose up -d --build` | **`docker compose down -v`** ← 唯一會刪玩家相關資料的指令 |
+| `docker compose down`（不加 -v） | `docker volume rm ggd_redis-data` |
+| `docker rm -f <container>` | `docker system prune --volumes` |
+| `docker builder prune -af`（只清 build cache） | `rm -rf data/` |
+| `git pull`（`data/` 是 gitignore 的，碰不到） | |
+
+### 今晚真正造成損失的不是部署指令，是磁碟
+
+85 MB 的 `data/blizzard-overlay` 消失，是因為**磁碟寫滿到 100%**（build cache 一天長到 6.3 G，
+而當時磁碟只有 9.7 G）。**擁有者已擴容到 99 G（現用 8%）**，根因消除。
+仍建議加一條定期 `docker builder prune -af --filter until=48h`。
+
+### 資產覆蓋層的三個特性（重傳時會再遇到）
+
+1. **它是 gitignore 的執行期資產**，`git pull` 帶不回來，只能從本機重傳
+2. **主機沒有 rsync**，用 `tar cf - -C data blizzard-overlay | ssh HOST 'tar xf - -C GGD/data'`
+   （壓縮版曾被截斷且沒有報錯——用未壓縮並比對位元組數）
+3. ⚠️ **tar 會保留原始權限**。本機有 126 個檔案是 `600`，容器內的非 root 使用者讀不到，
+   而 `ggd-assets.sh` 的 `bytes_of()` 用 `cat {} + 2>/dev/null` **把讀取失敗靜靜吞掉**，
+   所以它報「檔案短少 64,987,962 B」而不是「權限不足」。**傳完一定要 `chmod -R a+rX`。**
+   → `ggd-assets.sh` 值得改成明確區分「缺檔」與「讀不到」。

@@ -365,15 +365,77 @@ export function legendColumnHeight(rowCount: number): number {
  * screen; a single short box would silently clip the pad's last rows — and the
  * last row is 天生技, the one binding nobody guesses.
  */
-export const LEGEND_STRIP_H_SHORT = 58;
-export const LEGEND_STRIP_H_TALL = 84;
-/** Rows that still fit two wrapped lines at the widest strip. */
-export const LEGEND_STRIP_SHORT_ROWS = 6;
 export const LEGEND_STRIP_MIN_W = 200;
 export const LEGEND_STRIP_MAX_W = 620;
 
-export function legendStripHeight(rowCount: number): number {
-  return rowCount <= LEGEND_STRIP_SHORT_ROWS ? LEGEND_STRIP_H_SHORT : LEGEND_STRIP_H_TALL;
+/** 5px top + 5px bottom padding, plus slack for font-metric variance. */
+export const LEGEND_STRIP_PAD_Y = 12;
+/** One wrapped line: the chip's box (20) + the 3px cross-axis gap. */
+export const LEGEND_STRIP_LINE_H = 23;
+/** Horizontal gap between two pills (the flex `gap` column value). */
+const STRIP_ITEM_GAP = 8;
+/** Chip horizontal padding (6+6) + border (2). */
+const CHIP_BOX_EXTRA = 14;
+/** Chip `minWidth`. */
+const CHIP_MIN_W = 20;
+/** Gap between a pill's chip and its caption. */
+const PILL_INNER_GAP = 4;
+/** 操作說明 + the mode label + the ✕, which share the strip's first line. */
+export const LEGEND_STRIP_HEADER_W = 150;
+
+/**
+ * Advance width of a string, without a DOM. CJK is full-width at the font size;
+ * latin/digits in this UI's sans run about 0.58em. Deliberately a slight
+ * OVER-estimate — erring wide costs a few pixels of height, erring narrow costs
+ * a clipped row, and only one of those is a lie.
+ */
+const CJK_RANGE = /[⺀-鿿豈-﫿＀-￯　-〿]/;
+export function approxTextWidth(text: string, fontPx: number): number {
+  let w = 0;
+  for (const ch of text) w += CJK_RANGE.test(ch) ? fontPx : fontPx * 0.58;
+  return w;
+}
+
+/** Width one 「chip + caption」 pill occupies in the strip. */
+export function legendPillWidth(row: LegendRow): number {
+  const chip = Math.max(CHIP_MIN_W, approxTextWidth(row.control, 11)) + CHIP_BOX_EXTRA;
+  return chip + PILL_INNER_GAP + approxTextWidth(row.label, 10.5);
+}
+
+/** How many wrapped lines these rows need inside `innerWidth` of usable space. */
+export function legendStripLines(rows: readonly LegendRow[], innerWidth: number): number {
+  if (rows.length === 0) return 1;
+  let lines = 1;
+  // the header sits inline on the first line and pushes the first pills along
+  let used = LEGEND_STRIP_HEADER_W;
+  for (const row of rows) {
+    const w = legendPillWidth(row);
+    const next = used + STRIP_ITEM_GAP + w;
+    if (next > innerWidth) {
+      lines += 1;
+      used = w;
+    } else {
+      used = next;
+    }
+  }
+  return lines;
+}
+
+/**
+ * The height these rows really need once wrapped into `stripWidth`.
+ *
+ * MEASURED FROM THE WRAP, not picked from a table. It used to be two constants
+ * keyed on the row count (58 / 84), and the first live playtest at 812x375
+ * showed why that cannot work: the strip wraps, so its height depends on the
+ * WIDTH it wrapped into, and a row count alone does not know that. The keyboard
+ * set (14 rows) needed six wrapped lines in the space available and got the
+ * 84px meant for three — `overflow: hidden` silently ate 「F EX 技能」 onwards,
+ * so the legend confidently showed a control list that stopped at R. Exactly
+ * the defect the column was already fixed for, one function over.
+ */
+export function legendStripHeight(rows: readonly LegendRow[], stripWidth: number): number {
+  const inner = Math.max(1, stripWidth - 16); // 8px left + 8px right padding
+  return LEGEND_STRIP_PAD_Y + legendStripLines(rows, inner) * LEGEND_STRIP_LINE_H;
 }
 
 /* ── the two unslotted clusters ────────────────────────────────────────────
@@ -440,8 +502,13 @@ export interface LegendPlacementOpts {
   touch: boolean;
   /** local players on this machine; >1 = split-screen */
   couchPlayers: number;
-  /** rows the chosen binding set will actually paint (sizes the strip) */
-  rowCount: number;
+  /**
+   * The rows the chosen binding set will actually paint. The ROWS THEMSELVES,
+   * not a count: the strip's height depends on how they wrap, and how they wrap
+   * depends on how wide each caption is. A count cannot answer that, which is
+   * how the 812x375 strip came to clip 「F EX 技能」 off the bottom.
+   */
+  rows: readonly LegendRow[];
 }
 
 /**
@@ -453,16 +520,16 @@ export function controlLegendRect(
   viewport: HudViewport,
   opts: LegendPlacementOpts,
 ): LegendRect | null {
-  const { touch, couchPlayers, rowCount } = opts;
+  const { touch, couchPlayers, rows } = opts;
   const couch = couchPlayers > 1;
-  if (touch || couch) return stripRect(viewport, touch, couchPlayers, legendStripHeight(rowCount));
+  if (touch || couch) return stripRect(viewport, touch, couchPlayers, rows);
   // Desktop prefers the flank. When the flank is too SHORT for the whole
   // binding set (a small window, or a stack that grew), it falls back to the
   // top-gutter strip rather than clipping rows off the bottom — the strip
   // wraps, so it can hold the same content in less height.
   return (
-    columnRect(viewport, touch, legendColumnHeight(rowCount)) ??
-    stripRect(viewport, touch, couchPlayers, legendStripHeight(rowCount))
+    columnRect(viewport, touch, legendColumnHeight(rows.length)) ??
+    stripRect(viewport, touch, couchPlayers, rows)
   );
 }
 
@@ -496,15 +563,30 @@ function stripRect(
   viewport: HudViewport,
   touch: boolean,
   couchPlayers: number,
-  stripH: number,
+  rows: readonly LegendRow[],
 ): LegendRect | null {
   const y = TOP_CENTRE_BAND_END + HUD_GAP;
-  if (y + stripH > viewport.height) return null;
+  /**
+   * The band the strip may occupy: from under the top-centre cluster down to
+   * the top of the bottom-centre ability cluster, which is the strip's own
+   * x-range. Everything below is the player's ability bar and resource bars.
+   */
+  const bandBottom = viewport.height - ABILITY_CLUSTER_H - HUD_GAP;
+  if (bandBottom <= y) return null;
+  /**
+   * Chicken-and-egg: the free horizontal interval depends on the strip's
+   * height, and its height depends on the width that interval leaves. Resolve
+   * it by measuring the interval against the TALLEST band the strip could ever
+   * occupy — a taller probe can only find MORE obstacles, so the interval it
+   * returns is conservative, and the real (shorter) strip is guaranteed to fit
+   * inside it.
+   */
+  const probeH = bandBottom - y;
   const mid = viewport.width / 2;
   let gapStart = HUD_EDGE;
   let gapEnd = viewport.width - HUD_EDGE;
   for (const r of reservedRects(viewport, touch)) {
-    const sharesY = r.y < y + stripH && y < r.y + r.h;
+    const sharesY = r.y < y + probeH && y < r.y + r.h;
     if (!sharesY) continue;
     // Corner slots each push in from their own side. Anything STRADDLING the
     // centre line (only the centred ability cluster can, and only on a window
@@ -515,6 +597,13 @@ function stripRect(
   }
   const avail = gapEnd - gapStart;
   if (avail < LEGEND_STRIP_MIN_W) return null;
+  const w = Math.min(avail, LEGEND_STRIP_MAX_W);
+  // NOW the width is known, so the wrap — and therefore the height — is known.
+  const stripH = legendStripHeight(rows, w);
+  // The whole binding set must FIT. If it does not, the answer is no legend,
+  // not a legend that stops at R: an incomplete reference read as complete is
+  // the failure this box exists to prevent.
+  if (y + stripH > bandBottom) return null;
   // 3-4 couch players = a 2x2 grid, and the TOP cells' mini-HUDs sit just above
   // the horizontal split. The strip must clear them or it lands on a player's
   // own health bar — the one thing a split-screen HUD may never lose.
@@ -522,7 +611,6 @@ function stripRect(
     const topCellHudTop = viewport.height / 2 - COUCH_CELL_HUD_GAP - COUCH_CELL_HUD_H;
     if (y + stripH + HUD_GAP > topCellHudTop) return null;
   }
-  const w = Math.min(avail, LEGEND_STRIP_MAX_W);
   return { shape: "strip", x: Math.round(gapStart + (avail - w) / 2), y, w, h: stripH };
 }
 
