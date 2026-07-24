@@ -1,0 +1,573 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GGD 角色參考音試聽・情緒核准</title>
+<style>
+:root{--bg:#0c0f1a;--panel:#161b2c;--panel2:#1b2136;--line:#28304a;--ink:#e7ecf7;--dim:#93a0c0;
+--accent:#f2a13c;--theme:#7ea2ff;--ok:#4fbf87;--warn:#e8b84b;--bad:#e86a6a;--mute:#6d7899}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 "Segoe UI","PingFang TC","Noto Sans TC",system-ui,sans-serif;padding:26px 18px 120px}
+.wrap{max-width:1080px;margin:0 auto}
+h1{font-size:25px;margin:0 0 6px}
+.sub{color:var(--dim);margin:0 0 18px;max-width:78ch}
+h2{font-size:17px;margin:34px 0 4px;padding-bottom:6px;border-bottom:1px solid var(--line);color:var(--accent)}
+.secblurb{color:var(--dim);font-size:13px;margin:0 0 14px;max-width:82ch}
+.secblurb b{color:var(--ink)}
+a{color:var(--theme)}
+/* scoreboard */
+.score{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:8px;margin:14px 0 6px}
+.sc{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:9px 11px}
+.sc .n{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums}
+.sc .l{font-size:11.5px;color:var(--dim);line-height:1.35}
+.sc.good .n{color:var(--ok)} .sc.warn .n{color:var(--warn)} .sc.bad .n{color:var(--bad)}
+/* callouts */
+.alert{border-left:3px solid var(--bad);background:rgba(232,106,106,.09);border-radius:0 7px 7px 0;padding:11px 13px;margin:14px 0;font-size:13.5px}
+.alert.fixed{border-color:var(--ok);background:rgba(79,191,135,.08)}
+.alert.info{border-color:var(--theme);background:rgba(126,162,255,.08)}
+.alert h3{margin:0 0 5px;font-size:14px;color:var(--bad)}
+.alert.fixed h3{color:var(--ok)} .alert.info h3{color:var(--theme)}
+.alert code{background:rgba(0,0,0,.35);padding:1px 5px;border-radius:4px;font-size:12px}
+/* encoder table */
+table.enc{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
+table.enc th,table.enc td{border:1px solid var(--line);padding:6px 9px;text-align:left;font-variant-numeric:tabular-nums}
+table.enc th{background:var(--panel2);color:var(--dim);font-weight:600}
+/* cards */
+.card{background:var(--panel);border:1px solid var(--line);border-left-width:4px;border-radius:10px;padding:13px 15px;margin-bottom:12px}
+.card.done{border-left-color:var(--ok)}
+.card.rejected{border-left-color:var(--bad)}
+.card.pending{border-left-color:var(--mute)}
+.card.noaudio{border-left-color:var(--line);opacity:.92}
+.hd{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-bottom:3px}
+.hd .zh{font-weight:700;font-size:17px}
+.hd .hid{color:var(--mute);font-size:12px;font-family:ui-monospace,Menlo,monospace}
+.hd .org{color:var(--dim);font-size:12.5px}
+.badge{font-size:11px;border-radius:4px;padding:1px 6px;border:1px solid currentColor;white-space:nowrap}
+.b-ok{color:var(--ok)} .b-warn{color:var(--warn)} .b-bad{color:var(--bad)}
+.b-dim{color:var(--mute)} .b-th{color:var(--theme)} .b-ac{color:var(--accent)}
+.meta{display:flex;flex-wrap:wrap;gap:4px 14px;color:var(--dim);font-size:12px;margin:6px 0;font-variant-numeric:tabular-nums}
+.dir{font-size:13px;color:#c3cbdd;margin:6px 0;padding-left:9px;border-left:2px solid var(--line)}
+audio{width:100%;height:34px;margin:6px 0}
+/* neighbours */
+.nb{margin:10px 0 4px;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.nb-h{background:var(--panel2);padding:6px 10px;font-size:12.5px;color:var(--dim)}
+.nb-h b{color:var(--ink)}
+.nbrow{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:7px 10px;border-top:1px solid var(--line)}
+.nbrow .who{flex:1 1 150px;font-size:13.5px}
+.nbrow .nums{display:flex;gap:9px;font-size:11.5px;color:var(--dim);font-variant-numeric:tabular-nums;flex-wrap:wrap}
+.nbrow .nums span{white-space:nowrap}
+.nbrow .nums .hot{color:var(--bad);font-weight:600}
+.nbrow .nums .mid{color:var(--warn)}
+button{font:inherit;cursor:pointer;border-radius:6px;border:1px solid var(--line);background:var(--panel2);color:var(--ink);padding:4px 10px;font-size:12.5px}
+button:hover{border-color:var(--theme)}
+button.ab{border-color:var(--accent);color:var(--accent);font-weight:600}
+button.ab.playing{background:var(--accent);color:#12151f}
+button.mini{padding:3px 8px;font-size:11.5px}
+/* verdict form */
+.vd{margin-top:11px;padding:11px;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+.vdq{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:7px}
+.vdq .q{flex:1 1 260px;font-size:13.5px}
+.vdq .q small{display:block;color:var(--mute);font-size:11.5px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.seg button{border:0;border-radius:0;padding:4px 13px;background:transparent;color:var(--dim)}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button.on-y{background:var(--ok);color:#0c0f1a;font-weight:700}
+.seg button.on-n{background:var(--bad);color:#0c0f1a;font-weight:700}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-top:8px}
+.fields label{display:block;font-size:11.5px;color:var(--dim);margin-bottom:2px}
+input[type=text],select,textarea{width:100%;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:5px 8px;font:inherit;font-size:13px}
+textarea{resize:vertical;min-height:38px}
+.vdfoot{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:9px}
+.vdstate{font-size:12px;color:var(--mute);flex:1}
+.vdstate.ok{color:var(--ok)} .vdstate.blocked{color:var(--warn)}
+/* instructs */
+details.ins{margin-top:9px;font-size:12.5px}
+details.ins summary{cursor:pointer;color:var(--dim);font-size:12px}
+details.ins .row{margin:6px 0;padding:6px 9px;background:var(--bg);border-radius:6px;border:1px solid var(--line)}
+details.ins .row b{color:var(--accent);font-size:11.5px;display:block;margin-bottom:2px}
+details.ins .row p{margin:0;color:#c3cbdd;line-height:1.5}
+/* export bar */
+.exbar{position:fixed;left:0;right:0;bottom:0;background:rgba(12,15,26,.97);border-top:1px solid var(--line);padding:9px 18px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:50;backdrop-filter:blur(6px)}
+.exbar .st{flex:1;font-size:12.5px;color:var(--dim);min-width:200px}
+.exbar .st b{color:var(--ok)}
+button.primary{background:var(--accent);color:#12151f;border-color:var(--accent);font-weight:700;padding:6px 14px}
+button.ghost{background:transparent}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 2px}
+.filters button.on{border-color:var(--accent);color:var(--accent)}
+.hint{font-size:12px;color:var(--mute);margin:6px 0}
+code.path{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;background:rgba(0,0,0,.3);padding:1px 5px;border-radius:4px;word-break:break-all}
+.worklist{width:100%;border-collapse:collapse;font-size:13px}
+.worklist th,.worklist td{border-bottom:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+.worklist th{color:var(--dim);font-weight:600;font-size:12px}
+.worklist td.n{white-space:nowrap;font-weight:600}
+.worklist td small{color:var(--mute)}
+@media (max-width:620px){.nbrow .nums{width:100%}}
+</style></head><body><div class="wrap">
+
+<h1>GGD 角色參考音試聽・情緒核准</h1>
+<p class="sub">管線可以量到「技術上可用」，但量不到「像不像這個角色」。這一頁把那一步交還給耳朵：
+每支片段可播，每一組最接近的聲線可以<b>背對背連播</b>——「這兩個分得開嗎」只有相鄰聽才答得出來——
+你的判斷會直接匯出成管線讀得懂的 <code class="path">*.review.json</code>。</p>
+
+<div id="scoreboard"></div>
+<div id="alerts"></div>
+<div id="encoders"></div>
+<div id="sections"></div>
+
+<h2>匯出</h2>
+<p class="hint">判斷會即時存在瀏覽器 localStorage，關掉頁面不會消失。完成後按下方匯出。</p>
+<div id="exporthelp"></div>
+
+</div>
+
+<div class="exbar">
+  <div class="st" id="exstat"></div>
+  <button class="ghost" id="btn-clear">清除全部判斷</button>
+  <button class="ghost" id="btn-fs">直接寫入 metadata 資料夾</button>
+  <button class="primary" id="btn-dl">下載 reviews.json</button>
+</div>
+
+<script>
+const DATA = /*__PAYLOAD__*/null;
+const TH = DATA.thresholds;
+const LSKEY = "ggd-voice-audition-v1";
+const PITCH = ["high","mid","low","high_to_low_dynamic","low_to_high_dynamic","very_low","very_high"];
+const TEMPO = ["fast","medium","slow","variable_fast","variable_slow","clipped"];
+const $ = (s,r)=> (r||document).querySelector(s);
+const el = (t,c,h)=>{const n=document.createElement(t); if(c)n.className=c; if(h!=null)n.innerHTML=h; return n;};
+const esc = s => String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+let verdicts = {};
+try { verdicts = JSON.parse(localStorage.getItem(LSKEY)||"{}"); } catch(e){ verdicts = {}; }
+const save = ()=>{ localStorage.setItem(LSKEY, JSON.stringify(verdicts)); refreshStatus(); };
+
+/* ---------- audio engine: single-owner playback + back-to-back A/B ---------- */
+const players = new Map();
+function getAudio(id){
+  if(!players.has(id)){ const a = new Audio(DATA.audio[id]); a.preload="none"; players.set(id,a); }
+  return players.get(id);
+}
+let seqToken = 0, activeBtn = null;
+function stopAll(){
+  seqToken++;
+  players.forEach(a=>{ a.pause(); a.currentTime = 0; });
+  if(activeBtn){ activeBtn.classList.remove("playing"); activeBtn = null; }
+}
+function playOne(id){
+  stopAll();
+  const a = getAudio(id); a.currentTime = 0; a.play().catch(()=>{});
+}
+/* Play A then B with a short gap, optionally repeating. The gap is deliberate:
+   a hard cut makes two clips blur together, ~320ms lets the ear reset without
+   losing the comparison. */
+function playAB(idA, idB, reps, btn){
+  stopAll();
+  const token = ++seqToken;
+  if(btn){ btn.classList.add("playing"); activeBtn = btn; }
+  const seq = [];
+  for(let i=0;i<reps;i++){ seq.push(idA, idB); }
+  let i = 0;
+  const step = ()=>{
+    if(token !== seqToken) return;
+    if(i >= seq.length){ if(btn) btn.classList.remove("playing"); activeBtn=null; return; }
+    const a = getAudio(seq[i++]);
+    a.currentTime = 0;
+    a.onended = ()=>{ if(token===seqToken) setTimeout(step, 320); };
+    a.play().catch(()=>{ if(btn) btn.classList.remove("playing"); });
+  };
+  step();
+}
+
+/* ---------- scoreboard ---------- */
+function scoreboard(){
+  const c = DATA.champions;
+  const n = s => c.filter(x=>x.status===s).length;
+  const distinct = new Set(Object.values(DATA.audio)).size;
+  const clips = Object.keys(DATA.audio).length;
+  const cells = [
+    ["", c.length, "角色總數"],
+    ["", clips, "已處理片段"],
+    [distinct<clips?"bad":"", distinct, "實際不同的錄音<br>"+
+      (distinct<clips ? (DATA.dup_groups.map(g=>g.length+" 位角色共用 1 份").join("、")) : "無重複")],
+    ["good", n("technical_candidate_ready"), "技術候選就緒<br>可直接試聽"],
+    ["warn", n("listening_review_required"), "需試聽覆核<br>啟發式示警"],
+    ["warn", n("replacement_or_manual_isolation_required"), "需替換／人工分離"],
+    ["bad", n("source_url_unavailable"), "來源連結失效"],
+    ["bad", n("record_new_voice"), "需重新錄製"],
+  ];
+  const box = el("div","score");
+  cells.forEach(([k,v,l])=> box.appendChild(el("div","sc "+k,'<div class="n">'+v+'</div><div class="l">'+l+'</div>')));
+  $("#scoreboard").appendChild(box);
+}
+
+/* ---------- alerts ---------- */
+function alerts(){
+  const host = $("#alerts");
+  const byId = Object.fromEntries(DATA.champions.map(c=>[c.id,c]));
+  DATA.dup_groups.forEach(g=>{
+    const names = g.map(id=> (byId[id]?byId[id].character:id)+" <code>"+id+"</code>").join("、");
+    host.appendChild(el("div","alert",
+      "<h3>⚠ "+g.length+" 位角色共用<b>同一個檔案</b>（位元組完全相同）</h3>"+
+      names+"<br><br>四支都是從同一支 15 秒合演 CM 切出來的，SHA-256 一致。"+
+      "清單仍把它們算成 "+g.length+" 個交付項，實際上只有 <b>1</b> 份錄音——"+
+      "所以這 "+g.length+" 位角色目前<b>沒有</b>屬於自己的參考音。"+
+      "它們的分離度必然是 1.0000，那不是「聲線太像」，是同一個檔案。"));
+  });
+  host.appendChild(el("div","alert fixed",
+    "<h3>✓ 已修好：你的判斷原本無處可去</h3>"+
+    "<code>build_manifest.py</code> 要求 <code>role_identity_status</code> 為 "+
+    "<code>manual_video_verified</code> 或 <code>human_listening_verified</code> 才可能 "+
+    "<code>approved=true</code>，但 <code>human_listening_verified</code> 這個值"+
+    "<b>全專案只出現在那一行判斷式裡，沒有任何程式碼寫得出來</b>；36 支片段裡 35 支卡在 "+
+    "<code>source_targeted_unreviewed</code> 等狀態。實測：對最乾淨的一支填滿 README 記載的所有欄位，"+
+    "仍然得到 <code>approved=false</code>、<code>CosyVoice 3 ready files: none</code>。"+
+    "現在 <code>review.json</code> 多接受一個 <code>role_identity_verified</code>，"+
+    "由你耳朵給出的「像不像這個角色」直接落到這個閘門上。拒絕語意不變：沒填或填 false 一樣擋。"));
+  host.appendChild(el("div","alert info",
+    "<h3>兩套編碼器都跑，尺規各自獨立</h3>"+
+    "ECAPA 的 0.78/0.68 是這份 pack <b>自行宣告</b>的，沒有在這批素材上校準過——"+
+    "在這 465 組配對裡 0.78 落在 p97 附近，幾乎不會示警。campplus 的 0.50 則是對 29 位 WC3 配音員"+
+    "控制組做概似比交叉點推出來的。兩者<b>永遠不可互換</b>，本頁一律分欄顯示。"+
+    "音域（ΔF0）也單獨列，不併進任何一個 cosine，因為 campplus 對音域幾乎是盲的。"));
+}
+
+/* ---------- encoder summary ---------- */
+function encoders(){
+  const s = DATA.summary; if(!s || !s.ecapa) return;
+  const p = (x,d)=> x==null? "—" : x.toFixed(d==null?3:d);
+  const t = el("table","enc");
+  t.innerHTML =
+    "<tr><th></th><th>ECAPA（pack 宣告 ≥"+TH.ecapa_high+"）</th><th>campplus（校準 ≥"+TH.campplus_confusable+"）</th></tr>"+
+    "<tr><td>中位數</td><td>"+p(s.ecapa.median)+"</td><td>"+p(s.campplus.median)+"</td></tr>"+
+    "<tr><td>p90</td><td>"+p(s.ecapa.p90)+"</td><td>"+p(s.campplus.p90)+"</td></tr>"+
+    "<tr><td>可混淆配對</td><td>"+s.ecapa.confusable_pairs+"（"+(s.ecapa.confusable_fraction*100).toFixed(1)+"%）</td>"+
+      "<td>"+s.campplus.confusable_pairs+"（"+(s.campplus.confusable_fraction*100).toFixed(1)+"%）</td></tr>"+
+    "<tr><td>兩者一致率</td><td colspan=2>"+(s.agreement.agreement_rate*100).toFixed(1)+"%　"+
+      "(同時示警 "+s.agreement.both_confusable+"・都不示警 "+s.agreement.neither+
+      "・僅 ECAPA "+s.agreement.ecapa_only+"・僅 campplus "+s.agreement.campplus_only+")</td></tr>"+
+    "<tr><td>相關性</td><td colspan=2>Pearson "+p(s.correlation.pearson)+"　Spearman "+p(s.correlation.spearman)+"</td></tr>";
+  const h = $("#encoders");
+  h.appendChild(el("h2",null,"兩套編碼器的量測"));
+  h.appendChild(el("p","secblurb", s.clips+" 支人聲片段／"+s.pairs+" 組配對。"+
+    "<b>"+s.agreement.campplus_only+"</b> 組只有 campplus 示警、僅 <b>"+s.agreement.ecapa_only+"</b> 組只有 ECAPA 示警——"+
+    "不對稱是結構性的，不是雜訊。單跑 ECAPA 會把前面那 "+s.agreement.campplus_only+" 組全部放行。"));
+  h.appendChild(t);
+}
+
+/* ---------- champion card ---------- */
+function statusBadge(c){
+  const m = {technical_candidate_ready:["b-ok","技術候選就緒"],
+             listening_review_required:["b-warn","需試聽覆核"],
+             replacement_or_manual_isolation_required:["b-warn","需替換／人工分離"],
+             source_url_unavailable:["b-bad","來源失效"],
+             record_new_voice:["b-bad","需重錄"]}[c.status] || ["b-dim",c.status];
+  return '<span class="badge '+m[0]+'">'+m[1]+'</span>';
+}
+
+function numCell(label, val, hot, mid, digits){
+  let cls = ""; if(hot) cls="hot"; else if(mid) cls="mid";
+  return '<span class="'+cls+'">'+label+" "+(val==null?"—":val.toFixed(digits==null?3:digits))+"</span>";
+}
+
+function card(c){
+  const box = el("div","card");
+  box.dataset.hid = c.id;
+  box.dataset.status = c.status;
+
+  let badges = statusBadge(c);
+  if(c.quality==="usable") badges += ' <span class="badge b-ok">音質 usable</span>';
+  else if(c.quality) badges += ' <span class="badge b-warn">音質 '+esc(c.quality)+'</span>';
+  if(c.nonhuman) badges += ' <span class="badge b-th">非人類・聲學描述子</span>';
+  if(c.role_identity) badges += ' <span class="badge b-dim">'+esc(c.role_identity)+'</span>';
+
+  box.appendChild(el("div","hd",
+    '<span class="zh">'+esc(c.character)+'</span>'+
+    '<span class="hid">'+esc(c.id)+'</span>'+
+    (c.origin?'<span class="org">'+esc(c.origin)+'</span>':'')+ " " + badges));
+
+  const meta = [];
+  if(c.duration) meta.push("長度 "+c.duration.toFixed(2)+"s");
+  if(c.voice_profile) meta.push("設定 "+esc(c.voice_profile));
+  if(c.current_voice) meta.push("現用 "+esc(c.current_voice));
+  if(c.source_url) meta.push('<a href="'+esc(c.source_url)+'" target="_blank" rel="noreferrer noopener">來源影片 ↗</a>');
+  box.appendChild(el("div","meta", meta.join("　·　")));
+
+  if(c.direction) box.appendChild(el("div","dir","方向：" + esc(c.direction)));
+  if(c.official_va) box.appendChild(el("div","meta",
+    "官方聲優（僅供版本研究，<b>不得要求模仿本人</b>）："+esc(c.official_va)));
+
+  if(!c.has_audio){
+    box.classList.add("noaudio");
+    if(c.notes) box.appendChild(el("div","meta", esc(c.notes)));
+    if(c.replacement) box.appendChild(el("div","meta","替代候選："+esc(c.replacement)+
+      (c.replacement_url?' <a href="'+esc(c.replacement_url)+'" target="_blank" rel="noreferrer noopener">↗</a>':'')));
+    return box;
+  }
+
+  /* The clip lives in DATA.audio as a base64 data URI. Assigning all 36 of them
+     to DOM attributes up front puts megabytes of string into the document and
+     makes the page crawl, so each <audio> gets its src only when the card is
+     first touched. Playback via the JS players below never needs the attribute
+     at all. */
+  const au = el("audio"); au.controls = true; au.preload = "none";
+  const arm = ()=>{ if(!au.src) au.src = DATA.audio[c.id]; };
+  au.addEventListener("pointerdown", arm);
+  au.addEventListener("focus", arm);
+  box.addEventListener("pointerenter", arm, {once:true});
+  au.addEventListener("play", ()=>{ stopAll(); });
+  box.appendChild(au);
+
+  if(c.notes && /flagged/.test(c.notes)) box.appendChild(el("div","meta","⚠ "+esc(c.notes.split(";")[0])));
+
+  /* neighbours: the whole point of the page */
+  if(c.neighbours.length){
+    const nb = el("div","nb");
+    const isNH = c.nonhuman;
+    nb.appendChild(el("div","nb-h", isNH
+      ? "最接近的聲學描述子（<b>不是</b> speaker embedding，不與 ECAPA／campplus 門檻比較）"
+      : "最容易被聽混的對象 — 按 <b>A→B</b> 背對背連播，判斷「打起來分不分得出來」"));
+    c.neighbours.forEach(p=>{
+      const row = el("div","nbrow");
+      row.appendChild(el("div","who", esc(p.other_name)+' <span class="hid">'+esc(p.other)+"</span>"));
+      const nums = el("div","nums");
+      if(isNH || p.metric==="acoustic_descriptor"){
+        nums.innerHTML = '<span>描述子 '+p.descriptor.toFixed(3)+"</span>";
+      } else {
+        nums.innerHTML =
+          numCell("E", p.ecapa, p.ecapa>=TH.ecapa_high, p.ecapa>=TH.ecapa_review) +
+          numCell("C", p.campplus, p.campplus>=TH.campplus_confusable, p.campplus>=TH.campplus_target) +
+          (p.f0>=0 ? numCell("ΔF0", p.f0, p.f0<TH.f0_gate, false, 1)+"<span>st</span>" : "");
+      }
+      row.appendChild(nums);
+      const bA = el("button","mini","▶ 本人"); bA.onclick = ()=> playOne(c.id);
+      const bB = el("button","mini","▶ 對方"); bB.onclick = ()=> playOne(p.other);
+      const bAB = el("button","ab","A→B"); bAB.onclick = ()=> playAB(c.id, p.other, 1, bAB);
+      const bAB2 = el("button","ab","A→B ×2"); bAB2.onclick = ()=> playAB(c.id, p.other, 2, bAB2);
+      row.append(bA,bB,bAB,bAB2);
+      nb.appendChild(row);
+    });
+    box.appendChild(nb);
+  }
+
+  /* instructs */
+  const ins = el("details","ins");
+  ins.appendChild(el("summary",null,"CosyVoice 3 日文指令（default / attack / ultimate / hurt / death）"));
+  ["default","attack","ultimate","hurt","death"].forEach(k=>{
+    if(!c.instructs[k]) return;
+    ins.appendChild(el("div","row","<b>"+k+"</b><p>"+esc(c.instructs[k])+"</p>"));
+  });
+  if(ins.children.length>1) box.appendChild(ins);
+
+  box.appendChild(verdictForm(c, box));
+  return box;
+}
+
+/* ---------- verdict form ---------- */
+function verdictForm(c, box){
+  const v = verdicts[c.id] || (verdicts[c.id] = {});
+  const wrap = el("div","vd");
+
+  const qs = [
+    ["role_identity_verified","聽起來就是這個角色嗎？","管線的 role_identity 閘門讀這一格"],
+    ["emotional_fit","情緒／演技對得上設定嗎？","README 記載的必要人工核准"],
+    ["separation_fit","和上面最接近的那幾支分得開嗎？","needs review 的配對必須這格為 true 才放行"],
+  ];
+  qs.forEach(([key,label,hint])=>{
+    const q = el("div","vdq");
+    q.appendChild(el("div","q","<span>"+label+"</span><small>"+hint+"</small>"));
+    const seg = el("div","seg");
+    const by = el("button",null,"是"), bn = el("button",null,"否");
+    const paint = ()=>{
+      by.className = v[key]===true ? "on-y" : "";
+      bn.className = v[key]===false ? "on-n" : "";
+    };
+    by.onclick = ()=>{ v[key] = v[key]===true ? undefined : true; paint(); save(); paintCard(c,box); };
+    bn.onclick = ()=>{ v[key] = v[key]===false ? undefined : false; paint(); save(); paintCard(c,box); };
+    paint(); seg.append(by,bn); q.appendChild(seg); wrap.appendChild(q);
+  });
+
+  const f = el("div","fields");
+  const mk = (key, label, opts, ph)=>{
+    const d = el("div"); d.appendChild(el("label",null,label));
+    let inp;
+    if(opts){
+      inp = el("select");
+      const def = el("option",null,"（用預設 "+esc(ph)+"）");
+      def.value = "";
+      inp.appendChild(def);
+      opts.forEach(o=>{ const op = el("option",null,esc(o)); op.value = o; inp.appendChild(op); });
+    } else {
+      inp = el("input"); inp.type="text"; inp.placeholder = ph||"";
+    }
+    inp.value = v[key]==null ? "" : v[key];
+    inp.onchange = ()=>{ if(inp.value==="") delete v[key]; else v[key]=inp.value; save(); };
+    d.appendChild(inp); return d;
+  };
+  f.appendChild(mk("emotion","emotion（情緒標籤）", null, "例：sweet_to_manic"));
+  f.appendChild(mk("pitch_profile","pitch_profile", PITCH, c.suggest.pitch));
+  f.appendChild(mk("tempo_profile","tempo_profile", TEMPO, c.suggest.tempo));
+  wrap.appendChild(f);
+
+  const nd = el("div"); nd.style.marginTop="8px";
+  nd.appendChild(el("label",null,"備註（寫進 review.json 的 notes）"));
+  const ta = el("textarea"); ta.value = v.notes||"";
+  ta.onchange = ()=>{ if(!ta.value.trim()) delete v.notes; else v.notes = ta.value.trim(); save(); };
+  nd.appendChild(ta); wrap.appendChild(nd);
+
+  const foot = el("div","vdfoot");
+  const st = el("div","vdstate"); foot.appendChild(st);
+  const b1 = el("button","mini","下載這支的 review.json");
+  b1.onclick = ()=> downloadOne(c);
+  foot.appendChild(b1);
+  wrap.appendChild(foot);
+  wrap._state = st;
+  box._vd = wrap;
+  setTimeout(()=>paintCard(c,box),0);
+  return wrap;
+}
+
+function paintCard(c, box){
+  const v = verdicts[c.id]||{};
+  const st = box._vd && box._vd._state;
+  box.classList.remove("done","rejected","pending");
+  let msg = "尚未判斷", cls = "vdstate";
+  if(v.emotional_fit===false || v.role_identity_verified===false){
+    box.classList.add("rejected");
+    msg = "已否決 — 這支不會進 manifest";
+  } else if(v.role_identity_verified===true && v.emotional_fit===true){
+    box.classList.add("done");
+    // The pack only demands separation_fit for pairs it marked "needs review".
+    // Anything the encoders already flagged near threshold is asked for too,
+    // so the ear is consulted exactly where the numbers are ambiguous.
+    const needSep = c.status !== "technical_candidate_ready" ||
+      (c.worst_ecapa != null && c.worst_ecapa >= TH.ecapa_review) ||
+      (c.worst_campplus != null && c.worst_campplus >= TH.campplus_confusable);
+    if(needSep && v.separation_fit !== true){
+      msg = "已通過角色＋情緒，但分離度那格還沒給 — needs review 的配對會被擋下";
+      cls = "vdstate blocked";
+    } else {
+      msg = "✓ 可核准"; cls = "vdstate ok";
+    }
+  } else {
+    box.classList.add("pending");
+  }
+  if(st){ st.className = cls; st.textContent = msg; }
+}
+
+/* ---------- sections ---------- */
+const STATUS_LABEL = {technical_candidate_ready:"可以直接試聽的 15 支",
+  listening_review_required:"需試聽覆核（啟發式示警）",
+  replacement_or_manual_isolation_required:"需替換／人工分離",
+  source_url_unavailable:"來源連結失效",
+  record_new_voice:"需重新錄製"};
+const STATUS_BLURB = {
+  technical_candidate_ready:"規格與自動訊號指標都過關。這<b>不代表</b>角色辨識已完成——那正是這頁要你決定的事。",
+  listening_review_required:"自動啟發式判定可能有配樂或多人同時說話。啟發式<b>不是</b>權威分類器：怪物聲、呼吸、笑聲都是合法表現，不該只因 ASR 辨識率低就否決。近門檻時用耳朵判。",
+  replacement_or_manual_isolation_required:"共用預告片無法給出可信的單一角色片段。其中 4 支是<b>同一個檔案</b>（見上方警示）。",
+  source_url_unavailable:"來源連結已失效，需重新尋源。沒有音檔可試聽。",
+  record_new_voice:"找不到權利清楚且可驗證的官方語音，需依法委託錄製。沒有音檔可試聽。"};
+
+function sections(){
+  const host = $("#sections");
+  ["technical_candidate_ready","listening_review_required","replacement_or_manual_isolation_required"].forEach(s=>{
+    const list = DATA.champions.filter(c=>c.status===s);
+    if(!list.length) return;
+    host.appendChild(el("h2",null,STATUS_LABEL[s]+"（"+list.length+"）"));
+    host.appendChild(el("p","secblurb",STATUS_BLURB[s]));
+    list.forEach(c=> host.appendChild(card(c)));
+  });
+  ["source_url_unavailable","record_new_voice"].forEach(s=>{
+    const list = DATA.champions.filter(c=>c.status===s);
+    if(!list.length) return;
+    host.appendChild(el("h2",null,STATUS_LABEL[s]+"（"+list.length+"）"));
+    host.appendChild(el("p","secblurb",STATUS_BLURB[s]));
+    const t = el("table","worklist");
+    t.innerHTML = "<tr><th>角色</th><th>設定聲線</th><th>該做什麼</th></tr>";
+    list.forEach(c=>{
+      const tr = el("tr");
+      tr.innerHTML = '<td class="n">'+esc(c.character)+'<br><small>'+esc(c.id)+"</small></td>"+
+        "<td><small>"+esc(c.voice_profile)+(c.origin?"<br>"+esc(c.origin):"")+"</small></td>"+
+        "<td>"+esc(c.notes||"")+
+        (c.replacement?'<br><small>替代候選：'+esc(c.replacement)+
+          (c.replacement_url?' <a href="'+esc(c.replacement_url)+'" target="_blank" rel="noreferrer noopener">↗</a>':'')+"</small>":"")+
+        "</td>";
+      t.appendChild(tr);
+    });
+    host.appendChild(t);
+  });
+}
+
+/* ---------- export ---------- */
+function reviewObject(c){
+  const v = verdicts[c.id]||{};
+  const o = {};
+  ["role_identity_verified","emotional_fit","separation_fit"].forEach(k=>{ if(typeof v[k]==="boolean") o[k]=v[k]; });
+  o.emotion = v.emotion || "unreviewed";
+  o.pitch_profile = v.pitch_profile || c.suggest.pitch;
+  o.tempo_profile = v.tempo_profile || c.suggest.tempo;
+  if(v.notes) o.notes = v.notes;
+  o.reviewed_at = new Date().toISOString();
+  o.reviewer = "casting_director_audition_page";
+  return o;
+}
+function judged(c){ const v=verdicts[c.id]||{}; return typeof v.role_identity_verified==="boolean" || typeof v.emotional_fit==="boolean"; }
+
+function blobDownload(name, text){
+  const b = new Blob([text], {type:"application/json"});
+  const u = URL.createObjectURL(b);
+  const a = document.createElement("a"); a.href=u; a.download=name; a.click();
+  setTimeout(()=>URL.revokeObjectURL(u), 2000);
+}
+function downloadOne(c){ blobDownload(c.id+".wav.review.json", JSON.stringify(reviewObject(c), null, 2)); }
+
+function bundle(){
+  const out = {};
+  DATA.champions.forEach(c=>{ if(judged(c)) out[c.id] = reviewObject(c); });
+  return out;
+}
+$("#btn-dl").onclick = ()=>{
+  const b = bundle();
+  if(!Object.keys(b).length){ alert("還沒有任何判斷。"); return; }
+  blobDownload("reviews.json", JSON.stringify({generated_at:new Date().toISOString(), reviews:b}, null, 2));
+};
+$("#btn-clear").onclick = ()=>{
+  if(!confirm("清除全部判斷？")) return;
+  verdicts = {}; localStorage.removeItem(LSKEY); location.reload();
+};
+/* Direct write, when the browser allows it: pick candidates/metadata/ once and
+   every review.json lands in place. Falls back to the bundle download. */
+const fsBtn = $("#btn-fs");
+if(!window.showDirectoryPicker){ fsBtn.style.display="none"; }
+fsBtn.onclick = async ()=>{
+  const b = bundle();
+  if(!Object.keys(b).length){ alert("還沒有任何判斷。"); return; }
+  try{
+    const dir = await window.showDirectoryPicker({mode:"readwrite"});
+    let n = 0;
+    for(const [hid, obj] of Object.entries(b)){
+      const fh = await dir.getFileHandle(hid+".wav.review.json", {create:true});
+      const w = await fh.createWritable();
+      await w.write(JSON.stringify(obj, null, 2)); await w.close(); n++;
+    }
+    alert("已寫入 "+n+" 個 review.json。接著跑：\npython3 scripts/run_pipeline.py --build-manifest");
+  }catch(e){ if(e && e.name!=="AbortError") alert("寫入失敗："+e.message+"\n改用「下載 reviews.json」。"); }
+};
+
+function refreshStatus(){
+  const withAudio = DATA.champions.filter(c=>c.has_audio);
+  const done = withAudio.filter(judged).length;
+  const ok = withAudio.filter(c=>{const v=verdicts[c.id]||{}; return v.role_identity_verified===true && v.emotional_fit===true;}).length;
+  $("#exstat").innerHTML = "已判斷 <b>"+done+"</b> / "+withAudio.length+" 支　·　其中通過 <b>"+ok+"</b> 支";
+}
+
+function exporthelp(){
+  $("#exporthelp").innerHTML =
+    '<p class="hint">下載 <code class="path">reviews.json</code> 後，在 pack 根目錄執行：</p>'+
+    '<p class="hint"><code class="path">python3 scripts/apply_reviews.py ~/Downloads/reviews.json</code><br>'+
+    '<code class="path">python3 scripts/run_pipeline.py --build-manifest</code></p>'+
+    '<p class="hint">或用「直接寫入 metadata 資料夾」，選 <code class="path">candidates/metadata/</code>，'+
+    '省掉 apply 這一步（Chrome／Edge 支援）。</p>'+
+    '<p class="hint">試聽用的音訊是 '+esc(DATA.bitrate)+' 單聲道 MP3，僅為了讓這一頁不對外連線；'+
+    '所有分離度數字都來自無損的 24 kHz WAV 原檔，而且 A/B 兩邊套用同一組編碼，不會偏袒任何一側。</p>';
+}
+
+scoreboard(); alerts(); encoders(); sections(); exporthelp(); refreshStatus();
+</script></body></html>

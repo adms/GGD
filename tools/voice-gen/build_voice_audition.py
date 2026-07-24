@@ -305,7 +305,9 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--pack", required=True, type=Path, help="voice reference pipeline root")
     ap.add_argument("--out", type=Path, default=None, help="output HTML path")
-    ap.add_argument("--bitrate", default="128k", help="MP3 bitrate for embedded audio")
+    # 96k mono off a 24 kHz source is well clear of transparency for judging
+    # voice identity, and keeps the single-file page a third smaller than 128k.
+    ap.add_argument("--bitrate", default="96k", help="MP3 bitrate for embedded audio")
     args = ap.parse_args()
 
     if not shutil.which("ffmpeg"):

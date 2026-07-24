@@ -727,3 +727,56 @@ git 證明那個值來自 initial commit，從未被改過，**不是他設的**
 合併 5 個（`.gitignore` 是 dirty 的，所以逐檔取出而非 cherry-pick）；
 `legendaryClaims.test.ts` 刻意不併——它是紅的，而且抓到的是真的（傳說池 14 件，測試要求 ≥25），
 那是 #108 的內容，該跟 #108 的修正一起進來，不是提前進來當紅燈。
+
+---
+
+## ⏸ 被「月費上限」硬中斷的任務（2026-07-24 深夜）
+
+這些 agent 是**跑到一半被硬切**，不是失敗也不是放棄。兩條都支援續跑，
+已完成的 agent 會走快取不重跑。
+
+| 工作流 | 中斷的階段 | 已經完成並落地的 | 還缺什麼 |
+|---|---|---|---|
+| `wcap02755` Arena 養成曲線 | `curve`、`cards + icons` | 隊伍生命值完整實作並測過（20 點、−2/−4/−6、**R7 起每回合再 +3**、High Stakes +15、bye 也給付）；augment 虹級 7→16；`draft.ts` 不再靜默少發卡；`config.match.json` 20 | **每回合金錢曲線的完整重寫**；新卡片的 icon 生成 |
+| `wpu66wxr4` 假完成重新盤點 | `fix:magic-weapon-class` | 5 個切片重新量測（10/11 agent）；報告已改寫 | **補 `magic`/`beam` weapon class** —— 27 個法師施法時仍然播「拉弓聲」 |
+
+**重啟指令**（腳本都在 `~/.claude/projects/-Users-Takuro-GGD/1fc1e42e-.../workflows/scripts/`）：
+
+```
+Workflow({scriptPath: ".../ggd-arena-team-health-progression-wf_0a330621-316.js",
+          resumeFromRunId: "wf_0a330621-316"})
+Workflow({scriptPath: ".../ggd-false-completions-remeasure-and-fix-wf_31d5c620-45b.js",
+          resumeFromRunId: "wf_31d5c620-45b"})
+```
+
+### 同時仍在跑（未被中斷）
+
+| 工作流 | 內容 |
+|---|---|
+| `wyec1o4t5` | 語音素材包整合（ECAPA + campplus 雙編碼器交叉驗證） |
+| `wpvfatcq1` | 首局操作提示（半透明、依輸入方式切換） |
+
+---
+
+## ✅ v0.4.1 部署完成（2026-07-24 深夜）— 過程中的四個真實故障
+
+`https://ggd.adms.ai/` **HTTP 200**。但這次部署連踩四個坑，全部值得記：
+
+1. **主機磁碟 100% 滿** — Go build 失敗的訊息長得像編譯錯誤，實際是
+   `no space left on device`。`docker builder prune -af` 清掉 4.5 GB。
+   **build cache 一天長到 6.3 G，而磁碟只有 9.7 G** → 建議加定期
+   `docker builder prune -af --filter until=48h`。
+2. **85 MB 資產覆蓋層在磁碟寫滿時整個掉了**（`data/blizzard-overlay` 只剩 4 K）。
+   它是 gitignore 的執行期資產，`git pull` 帶不回來。主機**沒有 rsync**，用 `tar | ssh` 重傳。
+3. **第一次 tar 傳輸被截斷** — 主機 64,987,962 B vs 應有 87,403,869 B。
+   **是 edge 的開機斷言抓到的**，不是我。改用未壓縮 tar 重傳並比對位元組數才過。
+4. **最後的真兇是權限**。`tar` 解壓保留原始權限，**126 個檔案是 `600`**，
+   容器內的非 root 使用者讀不到。而 `ggd-assets.sh` 的 `bytes_of()` 用
+   `cat {} + 2>/dev/null`，**把讀取失敗靜靜吞掉**，所以它報「檔案短少」而不是
+   「權限不足」——症狀指向錯誤的方向，我為此白繞了兩輪。
+   → **`ggd-assets.sh` 值得改**：讀不到的檔案應該要明講是權限問題。
+   這正是這批工作在清的同一種病：靜默失敗偽裝成別的東西。
+
+**中途 SSH agent 掉了金鑰**（`Permission denied (publickey)`），一度無法收尾；
+本機 `~/.ssh/` 只有 `id_rsa` 和 `github_rsa`，兩把都被主機拒——後來恢復了，
+但**這個環境問題還在，下次可能再發生**。

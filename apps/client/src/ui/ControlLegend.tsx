@@ -40,14 +40,40 @@ import { HUD_Z } from "./hud/hudLayout";
 import { useActiveHudPanels } from "./hud/useHudPanels";
 import { attachInputModeDetection, INPUT_MODE_LABEL, useInputMode } from "./inputMode";
 import { SfxButton } from "./SfxButton";
-import { TEXT_DIM, TEXT_MAIN } from "./theme";
+import { TEXT_MAIN } from "./theme";
 
-/** Deliberately lighter than PANEL_BG (0.88): this is a hint, not a panel. */
-const LEGEND_BG = "rgba(10, 14, 24, 0.44)";
-const LEGEND_BORDER = "1px solid rgba(120, 140, 190, 0.22)";
+/**
+ * Deliberately lighter than PANEL_BG (0.88): this is a hint, not a panel.
+ *
+ * 0.66 AND NOT 0.44 — the first live screenshot, in a real round 1 on the
+ * Skeleton arena, is why. The left flank is exactly where that arena's big
+ * white rock formations sit, and a 0.44 panel composites over rgb(235,235,235)
+ * to rgb(136,138,142); TEXT_DIM on that is a 1.18:1 contrast ratio, i.e. the
+ * captions were INVISIBLE for the half of the flank that had rock behind it.
+ * That is the whole legend failing at its one job, on the one screen a
+ * first-time player reads to learn the game.
+ *
+ * The backdrop here is a 3D scene, so it can be any colour at any moment — the
+ * fix therefore has to hold for the WORST backdrop, not the average one:
+ *   • 0.66 alpha  → worst-case (pure white behind) composite rgb(86,89,96)
+ *   • LEGEND_TEXT → 4.71:1 on that worst case (WCAG AA), 8.25:1 on the ground
+ *   • LEGEND_SHADOW → survives even a blown-out VFX flash directly behind
+ * Still plainly see-through — the arena reads through it, which is the point —
+ * and still well under the 0.88 the real panels use.
+ */
+const LEGEND_BG = "rgba(10, 14, 24, 0.66)";
+const LEGEND_BORDER = "1px solid rgba(120, 140, 190, 0.28)";
+/**
+ * Captions. NOT TEXT_DIM: that token is designed to be dim against an OPAQUE
+ * panel, and this panel is not opaque. Still a step below TEXT_MAIN so the
+ * key-caps stay the thing your eye lands on.
+ */
+const LEGEND_TEXT = "#ccd4e4";
+/** Cheap insurance against an arbitrarily bright backdrop (an explosion, snow). */
+const LEGEND_SHADOW = "0 1px 2px rgba(0, 0, 0, 0.85)";
 /** The key-cap chip: readable, but never brighter than the ability bar. */
-const CHIP_BG = "rgba(30, 40, 64, 0.55)";
-const CHIP_BORDER = "1px solid rgba(130, 152, 205, 0.3)";
+const CHIP_BG = "rgba(30, 40, 64, 0.72)";
+const CHIP_BORDER = "1px solid rgba(130, 152, 205, 0.38)";
 
 function useViewport(): { width: number; height: number } {
   const [size, setSize] = useState(() => ({
@@ -79,6 +105,7 @@ function Chip({ text }: { text: string }): React.JSX.Element {
         lineHeight: "16px",
         textAlign: "center",
         whiteSpace: "nowrap",
+        textShadow: LEGEND_SHADOW,
       }}
     >
       {text}
@@ -105,10 +132,27 @@ function Header({
         flex: inline ? "0 0 auto" : undefined,
       }}
     >
-      <span style={{ fontSize: 11, color: TEXT_MAIN, fontWeight: 700, whiteSpace: "nowrap" }}>
+      <span
+        style={{
+          fontSize: 11,
+          color: TEXT_MAIN,
+          fontWeight: 700,
+          whiteSpace: "nowrap",
+          textShadow: LEGEND_SHADOW,
+        }}
+      >
         操作說明
       </span>
-      <span style={{ fontSize: 10, color: TEXT_DIM, whiteSpace: "nowrap" }}>{modeLabel}</span>
+      <span
+        style={{
+          fontSize: 10,
+          color: LEGEND_TEXT,
+          whiteSpace: "nowrap",
+          textShadow: LEGEND_SHADOW,
+        }}
+      >
+        {modeLabel}
+      </span>
       {/* the ONE interactive pixel on this layer */}
       <SfxButton
         onClick={onDismiss}
@@ -126,7 +170,10 @@ function Header({
           borderRadius: 5,
           background: "transparent",
           border: CHIP_BORDER,
-          color: TEXT_DIM,
+          // the ✕ is the ONE thing a player must be able to find on this box,
+          // so it gets the readable colour, not the dim one
+          color: LEGEND_TEXT,
+          textShadow: LEGEND_SHADOW,
           fontSize: 11,
           cursor: "pointer",
         }}
@@ -182,7 +229,8 @@ function Column({
               style={{
                 flex: 1,
                 fontSize: 11,
-                color: TEXT_DIM,
+                color: LEGEND_TEXT,
+                textShadow: LEGEND_SHADOW,
                 lineHeight: "16px",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
@@ -238,7 +286,15 @@ function Strip({
         {rows.map((row) => (
           <span key={row.id} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
             <Chip text={row.control} />
-            <span style={{ fontSize: 10.5, color: TEXT_DIM, lineHeight: "16px", whiteSpace: "nowrap" }}>
+            <span
+              style={{
+                fontSize: 10.5,
+                color: LEGEND_TEXT,
+                textShadow: LEGEND_SHADOW,
+                lineHeight: "16px",
+                whiteSpace: "nowrap",
+              }}
+            >
               {row.label}
             </span>
           </span>
