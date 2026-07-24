@@ -42,6 +42,7 @@ export interface ShopGateView {
 export const SHOP_DENY_TEXT: Record<ShopDenyReason, string> = {
   "combat-alive": "戰鬥中無法使用商店",
   "phase-closed": "現在不是備戰時間",
+  "team-eliminated": "你的隊伍已經出局 — 這場比賽結束了",
   "no-champion": "尚未選擇英雄",
 };
 
@@ -53,12 +54,17 @@ export const SHOP_DOWNED_LABEL = "商店（陣亡中）";
  * Resolve the shop's UI state from the two things the HUD store already
  * publishes: the match phase and whether the local champion is alive.
  */
-export function shopGate(phase: string, alive: boolean, hasChampion = true): ShopGateView {
+export function shopGate(
+  phase: string,
+  alive: boolean,
+  hasChampion = true,
+  eliminated = false,
+): ShopGateView {
   if (!hasChampion) {
     return { open: false, mounted: false, label: SHOP_OPEN_LABEL, reason: SHOP_DENY_TEXT["no-champion"] };
   }
   const shopPhase = shopPhaseOf(phase);
-  const access: ShopAccess = shopOpen(shopPhase, alive);
+  const access: ShopAccess = shopOpen(shopPhase, alive, eliminated);
   if (access.open) {
     return {
       open: true,
