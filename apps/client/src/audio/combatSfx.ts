@@ -41,6 +41,20 @@
  *     the staged `magic-heal` cue. Deliberately quiet (map gain 0.41, 400 ms
  *     cooldown) because it can fire often; the flower's own spawn/burst chimes
  *     are a separate moment.
+ *   • NEUTRAL GUARDIAN (#89, per-arena faces 樹人/石頭人/巨獸人 in #105). The
+ *     tower's telegraphed AoE punish LANDS as `guardianImpact` (one per resolved
+ *     mark, all on the same tick), which renames to the heavy stone-shatter
+ *     `guardianSlam`. The pre-land `guardianMark` telegraph stays SILENT — it is
+ *     the dodge window the VfxSystem draws, and sounding it would pre-announce
+ *     the same beat twice. `guardianWake` / `guardianSleep` / `guardianSpawn` /
+ *     `guardianHeirPulse` are likewise unmapped (no clip authored for them).
+ *   • `guardianSlain` → `guardianLastHit` is the ONE seat-gated decision in this
+ *     file. The event is fanned out to every client (eventFanout), so mapping it
+ *     unconditionally would ring the gold chime in all six players' ears for a
+ *     bounty exactly one of them was paid. It therefore resolves through
+ *     `guardianRewardKey(ev, seatId)` against the local seat the AudioDirector
+ *     publishes here (see `setCombatSfxSeat`) — once per kill, for the last
+ *     hitter only, and never on the void payout (killerSeatId -1 / gold 0).
  *   • `death` / `levelUp` are intentionally NOT mapped: the AudioDirector fires
  *     those off the discrete K/D / level tally, so mapping them here too would
  *     double the sound.
@@ -112,11 +126,57 @@ export function castElementKey(vfxKey: unknown): string | null {
 }
 
 /**
+ * WHO AM I — the local seat id, published by the AudioDirector (the one place
+ * that already subscribes to `hudStore.localSeatId`) and read back by the
+ * per-frame drain.
+ *
+ * WHY A REGISTERED VALUE RATHER THAN A PARAMETER. `guardianSlain` is broadcast
+ * to every client, but its reward chime belongs to exactly one of them, so the
+ * mapping needs to know which seat is listening. The per-frame caller (GameApp)
+ * is a hot loop with no business reaching into the HUD store for audio, and the
+ * decision itself must stay unit-testable without a store — so the pure rule
+ * lives in `guardianRewardKey(ev, seatId)` and this holder is only how the
+ * conductor hands it the answer. Null (no seat yet / AudioDirector unmounted) is
+ * a legal state and simply keeps the chime silent.
+ */
+let localSeatId: number | null = null;
+
+/** Publish the local seat id for the seat-gated cues (AudioDirector owns this). */
+export function setCombatSfxSeat(seatId: number | null): void {
+  localSeatId = seatId;
+}
+
+/** The seat id currently published (test/debug read-back). */
+export function combatSfxSeat(): number | null {
+  return localSeatId;
+}
+
+/**
+ * 守衛塔最後一擊的金幣獎勵 (#89): the `guardianLastHit` reward chime, or null.
+ *
+ * Fires ONLY for the seat that landed the killing blow and was actually paid.
+ * A void payout (the killer died / left the zone in the same tick) ships
+ * `killerSeatId: -1, gold: 0` and must stay silent — nobody got the gold.
+ * Total on a malformed payload.
+ */
+export function guardianRewardKey(ev: EventMessage, seatId: number | null): string | null {
+  if (seatId === null || seatId < 0) return null;
+  const killer = ev.data.killerSeatId;
+  if (typeof killer !== "number" || killer !== seatId) return null;
+  const gold = ev.data.gold;
+  if (typeof gold === "number" && gold <= 0) return null; // void payout
+  return "guardianLastHit";
+}
+
+/**
  * The SFX-map key an event should play, or null for silence. Reads the enriched
  * `damage` payload names from the contract (dmgType/blocked/crit/killingBlow),
  * falling back to the sim's raw `type` field if `dmgType` is absent.
+ *
+ * `seatId` defaults to the seat the AudioDirector published, so the hot-path
+ * caller keeps its one-argument shape; tests pass it explicitly.
  */
-export function combatSfxKey(ev: EventMessage): string | null {
+export function combatSfxKey(ev: EventMessage, seatId: number | null = localSeatId): string | null {
   const d = ev.data;
   switch (ev.type) {
     case "damage": {
@@ -143,6 +203,14 @@ export function combatSfxKey(ev: EventMessage): string | null {
       return "abilityRankUp"; // 技能升級 — sim event ≠ map key, so a rename
     case "fireRingStart":
       return "fireRingLoop"; // 火環收縮 (#132) — sim event ≠ map key, so a rename
+    case "guardianImpact":
+      // 守衛塔範圍重擊 (#89/#105) — the telegraphed volley LANDS. One event per
+      // resolved mark, all on the same tick, so the map's 300 ms cooldown /
+      // maxConcurrent 2 collapse a multi-mark volley into a single slam.
+      return "guardianSlam";
+    case "guardianSlain":
+      // 最後一擊的金幣獎勵 — the only seat-gated cue here (see guardianRewardKey)
+      return guardianRewardKey(ev, seatId);
 
     default:
       return PASSTHROUGH.has(ev.type) ? ev.type : null;

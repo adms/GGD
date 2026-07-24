@@ -66,7 +66,7 @@
   "sfx": {
     "attackWindup": {
       "files": [
-        "assets/audio/sfx/fx/windup.wav"
+        "assets/audio/sfx/fx/windup.mp3"
       ],
       "gain": 0.28,
       "cooldownMs": 130,
@@ -74,7 +74,7 @@
     },
     "basicAttack": {
       "files": [
-        "assets/audio/sfx/fx/swing.wav"
+        "assets/audio/sfx/fx/swing.mp3"
       ],
       "gain": 0.55,
       "cooldownMs": 90,
@@ -82,7 +82,7 @@
     },
     "basicAttackHit": {
       "files": [
-        "assets/audio/sfx/fx/thud.wav"
+        "assets/audio/sfx/fx/thud.mp3"
       ],
       "gain": 0.85,
       "cooldownMs": 70,
@@ -90,7 +90,7 @@
     },
     "damage": {
       "files": [
-        "assets/audio/sfx/fx/tick.wav"
+        "assets/audio/sfx/fx/tick.mp3"
       ],
       "gain": 0.3,
       "cooldownMs": 90,
@@ -98,7 +98,7 @@
     },
     "hit": {
       "files": [
-        "assets/audio/sfx/fx/thud.wav"
+        "assets/audio/sfx/fx/thud.mp3"
       ],
       "gain": 0.6,
       "cooldownMs": 85,
@@ -106,7 +106,7 @@
     },
     "hitMagic": {
       "files": [
-        "assets/audio/sfx/fx/hit_magic.wav"
+        "assets/audio/sfx/fx/hit_magic.mp3"
       ],
       "gain": 0.62,
       "cooldownMs": 85,
@@ -114,7 +114,7 @@
     },
     "hitTrue": {
       "files": [
-        "assets/audio/sfx/fx/hit_true.wav"
+        "assets/audio/sfx/fx/hit_true.mp3"
       ],
       "gain": 0.6,
       "cooldownMs": 90,
@@ -122,8 +122,8 @@
     },
     "block": {
       "files": [
-        "assets/audio/sfx/fx/guard.wav",
-        "assets/audio/sfx/fx/block-hit.wav"
+        "assets/audio/sfx/fx/guard.mp3",
+        "assets/audio/sfx/fx/block-hit.mp3"
       ],
       "gain": 0.7,
       "cooldownMs": 110,
@@ -131,7 +131,7 @@
     },
     "crit": {
       "files": [
-        "assets/audio/sfx/fx/crit.wav"
+        "assets/audio/sfx/fx/crit.mp3"
       ],
       "gain": 0.95,
       "cooldownMs": 140,
@@ -139,7 +139,7 @@
     },
     "guardBreak": {
       "files": [
-        "assets/audio/sfx/fx/guard_break.wav"
+        "assets/audio/sfx/fx/guard_break.mp3"
       ],
       "gain": 1.0,
       "cooldownMs": 220,
@@ -147,7 +147,7 @@
     },
     "knockdown": {
       "files": [
-        "assets/audio/sfx/fx/knockdown.wav"
+        "assets/audio/sfx/fx/knockdown.mp3"
       ],
       "gain": 0.95,
       "cooldownMs": 250,
@@ -155,7 +155,7 @@
     },
     "hit-light": {
       "files": [
-        "assets/audio/sfx/fx/hit-light.wav"
+        "assets/audio/sfx/fx/hit-light.mp3"
       ],
       "gain": 0.55,
       "cooldownMs": 70,
@@ -163,7 +163,7 @@
     },
     "hit-medium": {
       "files": [
-        "assets/audio/sfx/fx/hit-medium.wav"
+        "assets/audio/sfx/fx/hit-medium.mp3"
       ],
       "gain": 0.72,
       "cooldownMs": 75,
@@ -171,7 +171,7 @@
     },
     "hit-heavy": {
       "files": [
-        "assets/audio/sfx/fx/hit-heavy.wav"
+        "assets/audio/sfx/fx/hit-heavy.mp3"
       ],
       "gain": 0.95,
       "cooldownMs": 85,
@@ -179,7 +179,7 @@
     },
     "hit-crit": {
       "files": [
-        "assets/audio/sfx/fx/hit-crit.wav"
+        "assets/audio/sfx/fx/hit-crit.mp3"
       ],
       "gain": 1.0,
       "cooldownMs": 90,
@@ -187,7 +187,7 @@
     },
     "block-hit": {
       "files": [
-        "assets/audio/sfx/fx/block-hit.wav"
+        "assets/audio/sfx/fx/block-hit.mp3"
       ],
       "gain": 0.7,
       "cooldownMs": 90,
@@ -195,7 +195,7 @@
     },
     "whiff": {
       "files": [
-        "assets/audio/sfx/lab/whiff-sword.wav"
+        "assets/audio/sfx/lab/whiff-sword.mp3"
       ],
       "gain": 0.43,
       "cooldownMs": 120,
@@ -203,7 +203,7 @@
     },
     "footstep": {
       "files": [
-        "assets/audio/sfx/fx/footstep.wav"
+        "assets/audio/sfx/fx/footstep.mp3"
       ],
       "gain": 0.22,
       "cooldownMs": 170,
@@ -211,7 +211,7 @@
     },
     "projectileSpawn": {
       "files": [
-        "assets/audio/sfx/fx/launch.wav"
+        "assets/audio/sfx/fx/launch.mp3"
       ],
       "gain": 0.4,
       "cooldownMs": 70,
@@ -219,7 +219,7 @@
     },
     "projectileHit": {
       "files": [
-        "assets/audio/sfx/fx/impact.wav"
+        "assets/audio/sfx/fx/impact.mp3"
       ],
       "gain": 0.75,
       "cooldownMs": 60,
@@ -227,7 +227,7 @@
     },
     "castBegin": {
       "files": [
-        "assets/audio/sfx/fx/cast_begin.wav"
+        "assets/audio/sfx/fx/cast_begin.mp3"
       ],
       "gain": 0.3,
       "cooldownMs": 120,
@@ -235,7 +235,7 @@
     },
     "castEnd": {
       "files": [
-        "assets/audio/sfx/fx/cast_end.wav"
+        "assets/audio/sfx/fx/cast_end.mp3"
       ],
       "gain": 0.5,
       "cooldownMs": 120,
@@ -243,7 +243,7 @@
     },
     "castInterrupt": {
       "files": [
-        "assets/audio/sfx/fx/cast_break.wav"
+        "assets/audio/sfx/fx/cast_break.mp3"
       ],
       "gain": 0.6,
       "cooldownMs": 150,
@@ -261,7 +261,7 @@
     },
     "flowerSpawn": {
       "files": [
-        "assets/audio/sfx/fx/chime_soft.wav"
+        "assets/audio/sfx/fx/chime_soft.mp3"
       ],
       "gain": 0.45,
       "cooldownMs": 400,
@@ -269,7 +269,7 @@
     },
     "flowerBurst": {
       "files": [
-        "assets/audio/sfx/fx/chime_burst.wav"
+        "assets/audio/sfx/fx/chime_burst.mp3"
       ],
       "gain": 0.85,
       "cooldownMs": 250,
@@ -343,7 +343,7 @@
     },
     "countTick": {
       "files": [
-        "assets/audio/sfx/fx/count-tick.wav"
+        "assets/audio/sfx/fx/count-tick.mp3"
       ],
       "gain": 0.9,
       "cooldownMs": 300,
@@ -351,7 +351,7 @@
     },
     "countFinal": {
       "files": [
-        "assets/audio/sfx/fx/count-final.wav"
+        "assets/audio/sfx/fx/count-final.mp3"
       ],
       "gain": 0.9,
       "cooldownMs": 300,
@@ -447,7 +447,7 @@
     },
     "uiDenied": {
       "files": [
-        "assets/audio/sfx/lab/ui-denied.wav"
+        "assets/audio/sfx/lab/ui-denied.mp3"
       ],
       "gain": 0.31,
       "cooldownMs": 250,
@@ -455,7 +455,7 @@
     },
     "uiCancel": {
       "files": [
-        "assets/audio/sfx/lab/ui-cancel.wav"
+        "assets/audio/sfx/lab/ui-cancel.mp3"
       ],
       "gain": 0.33,
       "cooldownMs": 60,
@@ -463,7 +463,7 @@
     },
     "panelOpen": {
       "files": [
-        "assets/audio/sfx/lab/panel-open.wav"
+        "assets/audio/sfx/lab/panel-open.mp3"
       ],
       "gain": 0.24,
       "cooldownMs": 150,
@@ -471,7 +471,7 @@
     },
     "shopPurchase": {
       "files": [
-        "assets/audio/sfx/lab/shop-purchase.wav"
+        "assets/audio/sfx/lab/shop-purchase.mp3"
       ],
       "gain": 0.38,
       "cooldownMs": 250,
@@ -479,7 +479,7 @@
     },
     "goldGain": {
       "files": [
-        "assets/audio/sfx/lab/gold-gain.wav"
+        "assets/audio/sfx/lab/gold-gain.mp3"
       ],
       "gain": 1.51,
       "cooldownMs": 300,
@@ -487,7 +487,7 @@
     },
     "lowHealth": {
       "files": [
-        "assets/audio/sfx/lab/low-health.wav"
+        "assets/audio/sfx/lab/low-health.mp3"
       ],
       "gain": 1.0,
       "cooldownMs": 3000,
@@ -519,7 +519,7 @@
     },
     "matchStartGong": {
       "files": [
-        "assets/audio/sfx/lab/match-start-gong.wav"
+        "assets/audio/sfx/lab/match-start-gong.mp3"
       ],
       "gain": 1.6,
       "cooldownMs": 3000,
@@ -575,7 +575,7 @@
     },
     "uiHoverCyber": {
       "files": [
-        "assets/audio/sfx/fx/ui-hover-cyber.wav"
+        "assets/audio/sfx/fx/ui-hover-cyber.mp3"
       ],
       "gain": 0.3,
       "cooldownMs": 55,
@@ -583,7 +583,7 @@
     },
     "draftConfirm": {
       "files": [
-        "assets/audio/sfx/fx/draft-confirm.wav"
+        "assets/audio/sfx/fx/draft-confirm.mp3"
       ],
       "gain": 1.0,
       "cooldownMs": 200,
@@ -663,7 +663,7 @@
     },
     "attackSword1": {
       "files": [
-        "assets/audio/sfx/lab/attack-sword-1.wav"
+        "assets/audio/sfx/lab/attack-sword-1.mp3"
       ],
       "gain": 0.42,
       "cooldownMs": 90,
@@ -671,7 +671,7 @@
     },
     "attackSword2": {
       "files": [
-        "assets/audio/sfx/lab/attack-sword-2.wav"
+        "assets/audio/sfx/lab/attack-sword-2.mp3"
       ],
       "gain": 0.63,
       "cooldownMs": 90,
@@ -679,7 +679,7 @@
     },
     "attackGreatsword": {
       "files": [
-        "assets/audio/sfx/lab/attack-greatsword.wav"
+        "assets/audio/sfx/lab/attack-greatsword.mp3"
       ],
       "gain": 0.44,
       "cooldownMs": 90,
@@ -687,7 +687,7 @@
     },
     "attackKatana": {
       "files": [
-        "assets/audio/sfx/lab/attack-katana.wav"
+        "assets/audio/sfx/lab/attack-katana.mp3"
       ],
       "gain": 0.23,
       "cooldownMs": 90,
@@ -695,7 +695,7 @@
     },
     "bowDraw": {
       "files": [
-        "assets/audio/sfx/lab/bow-draw.wav"
+        "assets/audio/sfx/lab/bow-draw.mp3"
       ],
       "gain": 0.57,
       "cooldownMs": 130,
@@ -703,7 +703,7 @@
     },
     "arrowRelease": {
       "files": [
-        "assets/audio/sfx/lab/arrow-release.wav"
+        "assets/audio/sfx/lab/arrow-release.mp3"
       ],
       "gain": 1.1,
       "cooldownMs": 70,
@@ -711,7 +711,7 @@
     },
     "arrowPierce": {
       "files": [
-        "assets/audio/sfx/lab/arrow-pierce.wav"
+        "assets/audio/sfx/lab/arrow-pierce.mp3"
       ],
       "gain": 0.43,
       "cooldownMs": 60,
@@ -719,7 +719,7 @@
     },
     "gunshot": {
       "files": [
-        "assets/audio/sfx/lab/gunshot.wav"
+        "assets/audio/sfx/lab/gunshot.mp3"
       ],
       "gain": 1.4,
       "cooldownMs": 70,
@@ -727,7 +727,7 @@
     },
     "magicFire": {
       "files": [
-        "assets/audio/sfx/lab/magic-fire.wav"
+        "assets/audio/sfx/lab/magic-fire.mp3"
       ],
       "gain": 0.62,
       "cooldownMs": 250,
@@ -743,7 +743,7 @@
     },
     "magicLightning": {
       "files": [
-        "assets/audio/sfx/lab/magic-lightning.wav"
+        "assets/audio/sfx/lab/magic-lightning.mp3"
       ],
       "gain": 0.53,
       "cooldownMs": 250,
@@ -755,6 +755,46 @@
       ],
       "gain": 0.94,
       "cooldownMs": 1000,
+      "maxConcurrent": 1
+    },
+    "recessBell": {
+      "files": [
+        "assets/audio/sfx/lab/recessBell.mp3"
+      ],
+      "gain": 0.55,
+      "cooldownMs": 5000,
+      "maxConcurrent": 1
+    },
+    "guardianSlam": {
+      "files": [
+        "assets/audio/sfx/lab/guardianSlam.mp3"
+      ],
+      "gain": 0.9,
+      "cooldownMs": 300,
+      "maxConcurrent": 2
+    },
+    "guardianLastHit": {
+      "files": [
+        "assets/audio/sfx/lab/guardianLastHit.mp3"
+      ],
+      "gain": 0.89,
+      "cooldownMs": 500,
+      "maxConcurrent": 2
+    },
+    "draftCardReveal": {
+      "files": [
+        "assets/audio/sfx/lab/draftCardReveal.mp3"
+      ],
+      "gain": 0.45,
+      "cooldownMs": 120,
+      "maxConcurrent": 3
+    },
+    "legendaryWin": {
+      "files": [
+        "assets/audio/sfx/lab/legendaryWin.mp3"
+      ],
+      "gain": 1.44,
+      "cooldownMs": 2000,
       "maxConcurrent": 1
     }
   }

@@ -84,8 +84,8 @@ The last five seconds of champ select are audible: **5 s / 4 s / 3 s / 2 s** pla
 `countTick` at **0.45 / 0.60 / 0.75 / 0.90**, and the **final second** plays the
 higher, ~3× longer `countFinal` at **1.0** — so the run-up gets progressively
 louder and the last beat is unmistakably a different sound. Both clips are new
-procedural members of the `sfx/fx/` set (`count-tick.wav` 880 Hz / 150 ms,
-`count-final.wav` 1320 Hz / 420 ms, same deterministic `GENERATE.sh`, both
+procedural members of the `sfx/fx/` set (`count-tick.mp3` 880 Hz / 150 ms,
+`count-final.mp3` 1320 Hz / 420 ms, same deterministic `GENERATE.sh`, both
 peak-normalised to −3 dBFS); the rising loudness is the per-call `volume` option
 on `playSfx`, never a differently-rendered file. Both are narrow-band tonal
 rather than noise transients because they are the only clips in the set designed

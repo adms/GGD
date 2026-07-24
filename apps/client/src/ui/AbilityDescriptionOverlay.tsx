@@ -20,6 +20,7 @@ import { useDisplayEnv } from "./displayFinal";
 import { useHeldAbility, describeHeldAbility } from "./abilityHold";
 import { metaValue } from "./components/Tooltip";
 import { parseRoleMarkup, rescaleAbilityProse, ROLE_COLOR, WC3_PROSE_CAPTION } from "./components/abilityText";
+import { PASSIVE_ACCENT, PASSIVE_SLOT_LABEL } from "./passiveSlot";
 import { PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "./theme";
 
 const EX_ACCENT = "#f2a13c";
@@ -40,7 +41,9 @@ export function AbilityDescriptionOverlay(): React.JSX.Element | null {
   const info = describeHeldAbility(seat, slot);
   if (!info) return null;
 
-  const badgeColor = slot === "EX" ? EX_ACCENT : "#8fb4ff";
+  // slot badge: amber = EX, violet = the 天生技 sixth slot, blue = Q/W/E/R
+  const badgeColor = slot === "EX" ? EX_ACCENT : slot === "PASSIVE" ? PASSIVE_ACCENT : "#8fb4ff";
+  const badgeText = info.slot === "PASSIVE" ? PASSIVE_SLOT_LABEL : info.slot;
 
   return (
     <div
@@ -82,7 +85,7 @@ export function AbilityDescriptionOverlay(): React.JSX.Element | null {
             lineHeight: 1,
           }}
         >
-          {info.slot}
+          {badgeText}
         </span>
         <span style={{ fontSize: 17, fontWeight: "bold" }}>{info.name}</span>
       </div>

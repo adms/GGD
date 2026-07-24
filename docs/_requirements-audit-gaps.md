@@ -1219,6 +1219,26 @@ console：`[hmr] Failed to reload /src/replay/ReplayApp.tsx / ReplayControls.tsx
 - **後續（內容寫入批次，需等 icon 生成排空以免撞檔）**：寫 108 份 `NN-00` 天生技 doc、把 51 個被動型接進 sim、
   在選角面板與 README 呈現「第6格 被動/天生技」。57 個主動天生技先標記、逐一接。
 
+### 第6格 慣例已定案（樣板 2 份已落地並實機載入通過）
+- **doc id**：`<championId>.passive`（`godie-e001.passive`），完全比照既有的 `.ex` 前例。
+- **champion doc 要顯式指名**：新欄位 `passiveAbility`（比照 `exAbility`），**不是**沿用 `champion.passive`
+  ——後者是 7 份 doc 上的舊 hook 區塊，不是 slot。缺席＝該英雄在原圖真的沒有 `NN-00`（3/111），是考古事實不是 TODO。
+- **slot 值**：`ability@1.slot` 新增 `"PASSIVE"`（`zChampionAbilitySlot`）。型別上刻意與 `AbilitySlot`
+  分家（新 `ChampionAbilitySlot`）：施法/升級 Command 仍只吃五個可施放槽，等 sim 真的長出
+  `passiveSlot` 實例（`exSlot` 前例）時再連同每個 switch 一起放寬。
+- **兩種天生技的判別欄位**：`innateKind: "passive" | "active"`（slot 為 PASSIVE 時必填，其餘 slot 禁止填）。
+  `"passive"` = 無 CD 的常駐自我增益，走 `ability@1.passive.ranks[0]`、`effects` 必須為空；
+  `"active"` = 有真 CD 的 D-slot 主動，必須有 `effects`。
+- **解析入口**：`championPassive(championId)`（`sim/content/registry.ts`），回傳的一定是 standalone doc 本體。
+- **樣板**：`godie-e001.passive`（22-00 嗚鎖打!，active：150 物傷 AoE + 0.5s 暈 + 4s 自我加速，JASS 佐證）與
+  `godie-e007.passive`（12-00 感應意脈，passive：20% 物理閃避）。probe：`packages/shared/scripts/probePassiveSlot.ts`。
+- **已知缺口（不是臆造，是照實記錄）**：sim 沒有 evasion/閃避機制（`Stat` 列舉沒有這個 stat，
+  `damage.ts` 也沒有 miss 判定），所以 12-00 的 0.20 目前只寫在 doc 的敘述裡，`ranks[0].modifiers` 是空的。
+  51 個被動型裡凡是閃避類的都會撞到同一面牆——要嘛 sim 加一個 evasion stat + 一次 seeded roll，要嘛照實留空。
+  **絕不可**沿用匯入器當年的 `+25 armor` 假動作（#78 已經點名過那是錯的）。
+- **待 Build 階段**：`content/bundle.json` 尚未含這 2 份新 doc（本階段不跑 `pnpm content:build`）；
+  `content/abilities/_index.json` 與 `content/manifest.json` 已同步。
+
 ### 效果音ラボ 盤點（workflow `wqo7p8m7x` 完成）
 - 大發現：庫裡已下載但**沒發聲**的 効果音ラボ 有 26 個。本次「零下載」直接接上 9 個（回血/技能升級/低血量/
   升級 jingle/EX sting/開場鑼/結束鑼/VS 揭示/結算揭示），apps/client 已改、632 音訊測試綠、tsc 0。
@@ -1227,3 +1247,45 @@ console：`[hmr] Failed to reload /src/replay/ReplayApp.tsx / ReplayControls.tsx
 - 尚需**新下載** 10 項（需使用者授權，版權物抓本機 overlay）：高＝傳說寶珠轉蛋、抽卡揭示閃光、
   守衛塔最後一擊/範圍重擊、#124 下課鐘聲；中＝分頁切換/復活詠唱/重生 warp/火環火焰；低＝競技場環境床/市場人聲。
 - 詳見 `tasks/wqo7p8m7x.output`。
+- **已補（守衛塔 2 音）**：`guardianSlam`（打撃4「岩を砕く」）＋`guardianLastHit`（アイテムを入手1「お金」）
+  素材已入庫並接線完成 —— `guardianImpact`（範圍重擊落地，每個 mark 一發、同 tick 由 300 ms cooldown 併成一擊）
+  → `guardianSlam`；`guardianSlain` → `guardianLastHit`，**只對搶到最後一擊的座位**響（事件是全房廣播，
+  故在 `audio/combatSfx.ts` 以 AudioDirector 發佈的 local seat 做閘門；`killerSeatId:-1 / gold:0` 的 void
+  payout 靜音）。sim 未改（事件本來就有）。剩餘待下載：傳說寶珠轉蛋、抽卡揭示閃光、#124 下課鐘聲等。
+
+### 効果音ラボ 授權條件：全清單上架授權頁（已完成）
+- 使用者授權下載 効果音ラボ 音效時附了一個條件：「只要好好列出附記在授權頁面就好」。
+  這是**對使用者的承諾**，不是授權義務（該站 商用可・報告不要・クレジット任意，標示來源本身是任意的）。
+- 現況盤點（以 `sfx/lab/MANIFEST.json` + `content/config/audio-map.json` 為準）：
+  **54 個素材** = 46 個 SFX（`audio/sfx/lab/`）+ 8 個 声素材（`audio/voice-jp/`）；
+  其中 **43 個 SFX 已綁定並會在遊戲中播放**，3 個 SFX（block-clash / block-shield / impact-heavy）與
+  全部 8 個語音檔隨遊戲附帶但無任何情境播放。
+- 已上架：`content/assets/CREDITS.md` 逐筆 ledger（含日文原標題、原檔名、來源頁、用途、綁定 event、處理、時長）
+  ＋ 遊戲內 `#credits` 版權聲明頁新增「効果音ラボ 全素材清單」區塊（依 UI／演出／戰鬥／魔法／環境／声素材 分組、
+  容器內捲動、手機不橫向溢出、標示 使用中／收錄未啟用）。仍留在 **禮貌性** 區塊，CC-BY 巨龍仍是唯一強制署名。
+- 誠實標註：`arenaAmbience.mp3` 只有頁面層級來源（原始檔名未留存），清單上如實寫明，不臆造連結。
+- 防漂移：`apps/client/src/ui/platform/sfxLabCredits.test.ts` 會比對磁碟檔案與 audio-map，任一漂移即紅。
+- **禁止**做「逐一試聽／下載」的音效展示頁（屬 再配布）；清單只能是文字。
+
+### 第六槽真的生效了嗎：sim 套用階段的實測（本階段完成）
+- **槽位落地**：`AbilitiesComp` 新增 `passiveSlot`（`exSlot` 前例），`spawnChampion` 以 **rank 1** 建立
+  ——EX 是「解鎖」所以 rank 0 起跳，天生技是「等級1就獲得」所以 rank 1 起跳，兩者刻意不同。
+  `syncAbilityPassives` 把它排在 Q/W/E/R/EX 之後、固定順序納入掃描，因此 `sources` 排序仍是決定性的。
+- **實測數字（`packages/shared/scripts/probeInnateApply.ts`，跑真的 content + 真的 spawnChampion）**：
+  108 個天生技裡 **19 個在出生當下就掛上 ModifierSource 並改變 final 屬性**；
+  29 個被動型 doc 的 `ranks[0]` 是**誠實的空**（機制不存在，見下）；60 個 active 型「已擁有、可定址、尚不可施放」。
+- **踩到並修掉的真 bug：重複套用**。godie-hart / godie-huth / godie-h02u / godie-h02k / godie-h01u 這 5 位
+  同一招天生技**同時**存在於舊的 `champion.passive` 內嵌區塊與新的 standalone doc。直接接上會讓
+  28-00 無限再生 變成 +24 hp/s（應為 +12）、01-00 怒斬 每次揮擊擲兩次 15% proc。
+  `innateSupersedesLegacyPassive()` 依專案既有規則（standalone doc 為準，見 `registerChampion`）壓掉內嵌那份；
+  thorne / sela 沒有 `NN-00`、內嵌區塊是唯一定義，**不動**。
+- **29 個空的到底缺什麼機制**（依數量排序，給後續 lane 當清單）：閃避／迴避 5（12-00×2、45-00、92-00、98-00）、
+  對敵方的光環減益 4（79-00×2、66-00、40-00）、機率減傷 2（03-00、78-00）、傷害型態減免 3（08-00×2、43-00）、
+  真視／隱形 4（21-00、16-00×2、27-00）、每殺成長 2（07-00、09-00）、其餘為第二生命／變身／夜間條件等。
+- **evasion 這面牆的範圍評估（本階段刻意沒做，說明理由）**：加一個 `Stat.Evasion` 不只是 `statTypes.ts`，
+  還會連動 `ITEM_MODIFIER_LIMITS`（`content/schema/common.ts` 的窮舉 Record）與 client 的
+  `statDisplay.ts` `META_BY_STAT`（同為窮舉 Record，屬 UI lane）。本階段的 lane 明文禁止改 content doc 與 UI，
+  而 modifier 本身又只能寫在 content doc 裡——只改 sim 會是**沒有任何 doc 使用的死碼**。
+  故照實留空並記錄，等一個能同時動 sim + schema + content + UI 的 lane 一次做完。
+- **決定性**：`sim/innatePassive.test.ts` 用同 seed 兩個世界跑 300 tick 逐 tick 比對 digest（含會擲
+  `world.rng` 的 proc hook），另加一個不同 seed 必須不同的反證；game-server 的 replay 全套 304 測試亦全綠。

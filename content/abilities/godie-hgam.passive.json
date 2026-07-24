@@ -1,0 +1,37 @@
+{
+  "id": "godie-hgam.passive",
+  "schema": "ability@1",
+  "name": "90-00 寄生種子",
+  "description": "[主動攻擊]\n45秒冷卻時間\n\n將寄生種子丟向敵人，每秒造成50點傷害並吸收生命回饋給施法者，持續5秒。",
+  "slot": "PASSIVE",
+  "innateKind": "active",
+  "castType": "targeted",
+  "maxRank": 1,
+  "cooldown": [
+    45.0
+  ],
+  "manaCost": [
+    100.0
+  ],
+  "range": 8.25,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          50.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.prim.nature.bolt",
+  "castTimeSec": 0.3
+}

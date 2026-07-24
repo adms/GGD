@@ -1,0 +1,26 @@
+{
+  "id": "godie-u00v.passive",
+  "schema": "ability@1",
+  "name": "78-00 銅皮鐵骨",
+  "description": "[被動]\n0秒冷卻時間\n\n有如金屬一樣的皮膚，讓刀槍難以傷害他，遭受物理攻擊時有15%機率降低所有施加在基廉列克身上的傷害210點。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0.0
+  ],
+  "manaCost": [
+    0.0
+  ],
+  "range": 0,
+  "effects": [],
+  "passive": {
+    "name": "78-00 銅皮鐵骨",
+    "ranks": [
+      {
+        "modifiers": []
+      }
+    ]
+  }
+}

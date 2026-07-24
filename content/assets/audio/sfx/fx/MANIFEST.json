@@ -3,146 +3,146 @@
  "reason": "The 21 imported w3x clips in ../ are all Chinese voice quips (kill/death/announce lines). None of them is a swing, thud, tick, projectile or cast sound, so the high-frequency combat events had no legible mapping. These fill exactly that gap.",
  "clips": [
   {
-   "file": "swing.wav",
+   "file": "swing.mp3",
    "event": "basicAttack",
    "durationSec": 0.2,
    "meanDb": -20.6,
    "recipe": "pink noise, 2x highpass 650 Hz + lowpass 6 kHz, 45 ms qsin swell then 155 ms exponential decay — an air whoosh, no pitch."
   },
   {
-   "file": "windup.wav",
+   "file": "windup.mp3",
    "event": "attackWindup",
    "durationSec": 0.09,
    "meanDb": -17.5,
-   "recipe": "brown noise, lowpass 1.1 kHz, 4 ms attack + exponential decay — a soft low 'tk' tell, deliberately duller and quieter than swing.wav so the pair reads as tell -> swing."
+   "recipe": "brown noise, lowpass 1.1 kHz, 4 ms attack + exponential decay — a soft low 'tk' tell, deliberately duller and quieter than swing.mp3 so the pair reads as tell -> swing."
   },
   {
-   "file": "thud.wav",
+   "file": "thud.mp3",
    "event": "basicAttackHit",
    "durationSec": 0.24,
    "meanDb": -18.7,
    "recipe": "sine sweep 150 -> 60 Hz (exp decay) mixed with a 50 ms pink-noise snap (900 Hz - 4.5 kHz) — body + transient; the meatiest clip in the set because the hit is the moment that must land."
   },
   {
-   "file": "tick.wav",
+   "file": "tick.mp3",
    "event": "damage",
    "durationSec": 0.04,
    "meanDb": -22.6,
    "recipe": "white noise, 1.6 - 5.2 kHz, 2 ms attack + exponential decay — a hair-thin confirm tick. Fires on EVERY damage packet (DoTs, AoE, multi-hit), so it is the smallest clip in the set and carries the lowest gain."
   },
   {
-   "file": "launch.wav",
+   "file": "launch.mp3",
    "event": "projectileSpawn",
    "durationSec": 0.14,
    "meanDb": -10.9,
    "recipe": "descending sine chirp 1200 -> 300 Hz over 120 ms + a 30 ms high-noise transient — a dry 'pew'."
   },
   {
-   "file": "impact.wav",
+   "file": "impact.mp3",
    "event": "projectileHit",
    "durationSec": 0.14,
    "meanDb": -20.8,
-   "recipe": "pink-noise burst 350 Hz - 4.8 kHz over a 260 Hz sine body, both exponentially decayed — a splat, distinctly brighter and shorter than thud.wav so projectile hits never read as auto-attack hits."
+   "recipe": "pink-noise burst 350 Hz - 4.8 kHz over a 260 Hz sine body, both exponentially decayed — a splat, distinctly brighter and shorter than thud.mp3 so projectile hits never read as auto-attack hits."
   },
   {
-   "file": "cast_begin.wav",
+   "file": "cast_begin.mp3",
    "event": "castBegin",
    "durationSec": 0.36,
    "meanDb": -8.2,
    "recipe": "rising chirp 300 -> 900 Hz plus its octave, 50 ms qsin in / 120 ms qsin out — reads as 'winding up'. Densest clip in the set (sustained tone), hence the smallest gain."
   },
   {
-   "file": "cast_end.wav",
+   "file": "cast_end.mp3",
    "event": "castEnd",
    "durationSec": 0.28,
    "meanDb": -21.2,
    "recipe": "A5 + E6 sine ping, 4 ms attack + exponential decay — the resolved counterpart to cast_begin's rise."
   },
   {
-   "file": "cast_break.wav",
+   "file": "cast_break.mp3",
    "event": "castInterrupt",
    "durationSec": 0.25,
    "meanDb": -19.2,
    "recipe": "descending sine sweep 700 -> 150 Hz + a lowpassed brown-noise thump — falls where cast_begin rises, so an interrupt is audibly the opposite of a cast."
   },
   {
-   "file": "chime_soft.wav",
+   "file": "chime_soft.mp3",
    "event": "flowerSpawn",
    "durationSec": 0.6,
    "meanDb": -20.2,
    "recipe": "E5 + B5 sine chime, 30 ms swell + long exponential decay — an ambient 'something appeared', quiet enough to ignore mid-fight."
   },
   {
-   "file": "chime_burst.wav",
+   "file": "chime_burst.mp3",
    "event": "flowerBurst",
    "durationSec": 0.8,
    "meanDb": -23.2,
    "recipe": "A5 + E6 + A6 sine bloom with a 250 ms high-noise sparkle — the reward payoff; same chime family as flowerSpawn but brighter, longer and a fifth higher."
   },
   {
-   "file": "hit_magic.wav",
+   "file": "hit_magic.mp3",
    "event": "hitMagic (魔法 damage)",
    "durationSec": 0.16,
    "recipe": "descending 900 Hz sine chirp + 1.8-7 kHz band-passed white noise, both exp-decayed — an arcane 'fzzt', distinct from the physical thud so a magic hit reads differently by ear."
   },
   {
-   "file": "hit_true.wav",
+   "file": "hit_true.mp3",
    "event": "hitTrue (true damage)",
    "durationSec": 0.2,
    "recipe": "D6 + high-fifth sine ping, 2 ms attack + exp decay — a clean, pure bell for un-mitigated true damage."
   },
   {
-   "file": "guard.wav",
+   "file": "guard.mp3",
    "event": "block (防禦 — shield/DR absorbed)",
    "durationSec": 0.12,
    "recipe": "1.2-6 kHz white-noise clank over a 520+780 Hz mid ring — a short metallic guard, the lighter '擋下' counterpart to guard_break."
   },
   {
-   "file": "guard_break.wav",
+   "file": "guard_break.mp3",
    "event": "guardBreak (破防 — shield broke this frame)",
    "durationSec": 0.34,
    "recipe": "descending 1100 Hz sine sweep + bright 2.5 kHz+ noise burst — a glassy shatter, the bigger reaction when the shield breaks."
   },
   {
-   "file": "crit.wav",
+   "file": "crit.mp3",
    "event": "crit",
    "durationSec": 0.22,
    "recipe": "fast rising 700 Hz up-chirp + a 3 kHz+ transient — a sharp bright 'shing' for critical strikes."
   },
   {
-   "file": "whiff.wav",
+   "file": "whiff.mp3",
    "event": "whiff (melee that hit nothing)",
    "durationSec": 0.22,
-   "recipe": "double-highpassed 900 Hz pink whoosh, airier and higher than swing.wav — the over-commit of a missed melee."
+   "recipe": "double-highpassed 900 Hz pink whoosh, airier and higher than swing.mp3 — the over-commit of a missed melee."
   },
   {
-   "file": "knockdown.wav",
+   "file": "knockdown.mp3",
    "event": "knockdown",
    "durationSec": 0.4,
    "recipe": "descending 110 Hz sine body-thump + low-passed brown-noise debris — a heavy 'whump' as the victim hits the ground."
   },
   {
-   "file": "footstep.wav",
+   "file": "footstep.mp3",
    "event": "footstep (local champion, subtle)",
    "durationSec": 0.07,
    "recipe": "70 ms brown-noise blip low-passed at 900 Hz — a soft, very quiet step; fired only for the local player, cooldown-gated."
   },
   {
-   "file": "count-tick.wav",
+   "file": "count-tick.mp3",
    "event": "countTick (champ-select countdown, 5/4/3/2 s)",
    "durationSec": 0.15,
    "meanDb": -15.2,
-   "recipe": "A5 880 Hz sine + 1760 Hz octave bite with a 20 ms 2.5 kHz+ noise click, 3 ms attack + exponential decay — a narrow-band beep that reads over the champSelect music bed. Tonal on purpose: a noise transient (tick.wav) disappears under BGM."
+   "recipe": "A5 880 Hz sine + 1760 Hz octave bite with a 20 ms 2.5 kHz+ noise click, 3 ms attack + exponential decay — a narrow-band beep that reads over the champSelect music bed. Tonal on purpose: a noise transient (tick.mp3) disappears under BGM."
   },
   {
-   "file": "count-final.wav",
+   "file": "count-final.mp3",
    "event": "countFinal (champ-select countdown, last second)",
    "durationSec": 0.42,
    "meanDb": -17.4,
-   "recipe": "E6 1320 Hz with a slight upward bend + 1980/2640 Hz partials and a 50 ms 3 kHz+ noise attack, 360 ms exponential tail — an octave-higher, ~3x longer 'GO' that can never be mistaken for count-tick.wav."
+   "recipe": "E6 1320 Hz with a slight upward bend + 1980/2640 Hz partials and a 50 ms 3 kHz+ noise attack, 360 ms exponential tail — an octave-higher, ~3x longer 'GO' that can never be mistaken for count-tick.mp3."
   },
   {
-   "file": "ui-hover-cyber.wav",
+   "file": "ui-hover-cyber.mp3",
    "event": "uiHoverCyber (cyber BUTTON hover)",
    "durationSec": 1.55,
    "meanDb": -24.2,
@@ -150,49 +150,49 @@
    "channels": "stereo (the ONE non-mono fx clip — the L->R traversal IS the effect; played with no pan so the baked image survives)"
   },
   {
-   "file": "draft-confirm.wav",
+   "file": "draft-confirm.mp3",
    "event": "draftConfirm",
    "durationSec": 0.605,
    "meanDb": "-18.7 dB",
    "recipe": "The 3-choose-1 card LOCK-IN (task #110): a 厲害的科技音效, a heavy tech mechanism seating. Three layers strike together at t=0 — a brown-noise CONTACT chunk (150-1300 Hz, loudest so the onset is a machined strike), a WEIGHT body (sub sine 140->55 Hz + octave-down 70->28 Hz power), and a descending detuned resonator LOCK (520->300, 660->380 Hz + a fast metallic 1560 Hz partial; descending = terminal/confirm). One 55 ms echo tap + dark master (hp 42, lp 5000). Measured against the cues it must never be mistaken for: HARD 6.0 ms onset vs the #86 cyber-hover SWELL of ~30 ms; LOW 405 Hz spectral centroid vs the hover's 1948 Hz and count-final's 2678 Hz; 0.605 s — decisive, about half count-tick (1.20 s) / count-final (1.05 s) / hover (1.55 s). The #86 hover is now ALSO low-band (~0.96 under 500 Hz vs this clip's 0.85): that shared low world is deliberate — the confirm sits in it rather than fighting it, and is separated from the hover instead by the hard onset, the darker centroid and the short length (NOT by weight). Those axes ARE the 'weighty mechanical, not bright/bubbly' brief — see GATE-draft-confirm.py, which rejects the real hover and both bells; keep the centroid low and the onset hard on any re-cut."
   },
   {
-   "file": "hit-light.wav",
+   "file": "hit-light.mp3",
    "event": "hit-light (ImpactProfile tier 'light')",
    "durationSec": 0.14,
    "meanDb": -18.5,
    "recipe": "hit-feel audit P1 weight tier 1/4. Descending 220 Hz sine body (no sub) + a thin 1.2-5.2 kHz pink-noise snap, both exp-decayed. Peak at 2.5%, silent by ~40% of the clip. The lightest voice: bright, quick, almost no low-freq body (2.5% under 150 Hz) — a jab, not a smash."
   },
   {
-   "file": "hit-medium.wav",
+   "file": "hit-medium.mp3",
    "event": "hit-medium (ImpactProfile tier 'medium')",
    "durationSec": 0.2,
    "meanDb": -18.6,
    "recipe": "hit-feel audit P1 weight tier 2/4. Descending 155 Hz sine body + a fuller 0.95-4.6 kHz pink-noise snap. Same family shape as hit-light but lower fundamental and ~59% energy under 150 Hz — a solid connect. Peak at 2.4%, silent by ~40%."
   },
   {
-   "file": "hit-heavy.wav",
+   "file": "hit-heavy.mp3",
    "event": "hit-heavy (ImpactProfile tier 'heavy')",
    "durationSec": 0.3,
    "meanDb": -17.7,
    "recipe": "hit-feel audit P1 weight tier 3/4 — the 破碎 smash. Descending 120 Hz body PLUS a 62 Hz octave-down sub power layer + a dark 0.75-4 kHz snap. The only tier carrying real sub-150 weight (~96% under 150 Hz, centroid 459 Hz). Longest at 0.30 s but exp-dead by ~40% — heavy, never a ring (收尾精準)."
   },
   {
-   "file": "hit-crit.wav",
+   "file": "hit-crit.mp3",
    "event": "hit-crit (ImpactProfile tier 'crit')",
    "durationSec": 0.24,
    "meanDb": -15.9,
    "recipe": "hit-feel audit P1 weight tier 4/4. Medium 150 Hz body + a bright 900->~1400 Hz up-chirp 'shing' + a 3 kHz+ transient. Distinct from heavy by BRIGHTNESS (centroid 4442 Hz), not weight — a lucky hit reads sharper, not merely louder. Peak at 2.1%, silent by ~40%."
   },
   {
-   "file": "block-hit.wav",
+   "file": "block-hit.mp3",
    "event": "block-hit (guard/block impact — re-cut of the RINGING lab block voice)",
    "durationSec": 0.1,
    "meanDb": -23.7,
    "recipe": "hit-feel audit P1 fix: the previous block voice (lab/block-clash + block-shield) had a slow onset (peak at 13-14%) and RANG out to ~0.5-0.66 s, violating 收尾精準. This re-cut is a front-loaded 1.4-6.8 kHz metal-noise transient + a fast-dying 560/840 Hz mid ring, no body (0% under 150 Hz). Peak at 3.2%, whole clip silent by ~0.03 s past the transient (30% of a 0.10 s file) — a crisp deflect, not mush."
   }
  ],
- "combatJuiceNote": "The nine clips from hit_magic.wav onward were added for task #3 (combat juice): distinct 物理/魔法/防禦/破防 + crit/whiff/knockdown/footstep voices for the per-frame combat-feedback layer. The type-differentiated HIT voice (物理 reuses thud.wav; 魔法/true have their own clips) is driven by the enriched `damage` event; block/guardBreak map the sim's shield/damage-reduction path. Same deterministic ffmpeg-lavfi synthesis as the originals — own work, effectively CC0, no third-party audio.",
+ "combatJuiceNote": "The nine clips from hit_magic.mp3 onward were added for task #3 (combat juice): distinct 物理/魔法/防禦/破防 + crit/whiff/knockdown/footstep voices for the per-frame combat-feedback layer. The type-differentiated HIT voice (物理 reuses thud.mp3; 魔法/true have their own clips) is driven by the enriched `damage` event; block/guardBreak map the sim's shield/damage-reduction path. Same deterministic ffmpeg-lavfi synthesis as the originals — own work, effectively CC0, no third-party audio.",
  "hitTierNote": "hit-light / hit-medium / hit-heavy / hit-crit / block-hit were added for the hit-feel audit P1 (the audible 收尾精準). One ImpactProfile.tier drives every impact channel; the SFX channel plays these by that key convention (client channel agent). All share the reference thud envelope (descending sine BODY + band-passed noise TRANSIENT, both exp-decayed) so the tiers read as one family; WEIGHT is scaled by dropping the body fundamental (220->155->120 Hz) and growing sub-150 Hz energy (light 2.5% -> medium 59% -> heavy 96%). crit is spectrally bright (centroid 4442 Hz) not heavier; block-hit re-cuts the audit's RINGING lab block voice into a 0.10 s crisp clank (peak 3.2%, silent by ~30%). Every clip peaks in the first ~3% and decays to silence by ~40% — a hit is a POP, tail < 0.35 s, no ring.",
- "countdownNote": "count-tick.wav / count-final.wav were added for task #30 (champ-select last-5-seconds countdown). They are the only clips in the set authored to be heard OVER a music bed (champSelect BGM), which is why both are narrow-band tonal rather than noise-transient. Both are peak-normalised to -3.0 dBFS exactly like the rest: the REQUIRED rising loudness across 5→2 s is the per-call `volume` option on playSfx (0.45/0.60/0.75/0.90, then 1.0 for the final second), never a differently-rendered file — see apps/client/src/audio/countdownCue.ts."
+ "countdownNote": "count-tick.mp3 / count-final.mp3 were added for task #30 (champ-select last-5-seconds countdown). They are the only clips in the set authored to be heard OVER a music bed (champSelect BGM), which is why both are narrow-band tonal rather than noise-transient. Both are peak-normalised to -3.0 dBFS exactly like the rest: the REQUIRED rising loudness across 5→2 s is the per-call `volume` option on playSfx (0.45/0.60/0.75/0.90, then 1.0 for the final second), never a differently-rendered file — see apps/client/src/audio/countdownCue.ts."
 }

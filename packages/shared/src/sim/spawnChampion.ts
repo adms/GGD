@@ -7,7 +7,7 @@ import { zeroStats } from "./stats/statTypes";
 import { recomputeStats } from "./stats/statPipeline";
 import { createMatchStats } from "./stats/matchStats";
 import { INVENTORY_SLOTS } from "./economy/shop";
-import { syncAbilityPassives } from "./abilities/abilityPassives";
+import { innateSupersedesLegacyPassive, syncAbilityPassives } from "./abilities/abilityPassives";
 
 export interface SpawnChampionArgs {
   championId: ChampionId;
@@ -54,6 +54,12 @@ export function spawnChampion(world: SimWorld, args: SpawnChampionArgs): EntityI
     // EX slot exists only for heroes that have one; rank 0 = locked until the
     // arena EX-unlock point (see learnEx / MatchController).
     exSlot: def.exAbility ? { abilityId: def.exAbility, rank: 0, cooldownRemainingTicks: 0 } : null,
+    // The SIXTH slot — 天生技 / innate. Unlike EX it spawns at rank 1, because
+    // the owner's rule is that it is OWNED FROM LEVEL 1, not learned and not
+    // unlocked. Absent only for the 3 heroes with no `NN-00` in the source map.
+    passiveSlot: def.passiveAbility
+      ? { abilityId: def.passiveAbility, rank: 1, cooldownRemainingTicks: 0 }
+      : null,
     basicAttackCdTicks: 0,
     unspentPoints: 0,
   });
@@ -61,16 +67,21 @@ export function spawnChampion(world: SimWorld, args: SpawnChampionArgs): EntityI
     championId: args.championId,
     final: zeroStats(),
     dirty: true,
-    sources: def.passive
-      ? [
-          {
-            id: `passive:${args.championId}`,
-            kind: "passive",
-            modifiers: def.passive.modifiers,
-            hooks: def.passive.hooks,
-          },
-        ]
-      : [],
+    // The LEGACY inline champion passive. Attached only when the standalone
+    // sixth-slot doc has not superseded it — five champions carry the very same
+    // 天生技 in both places, and attaching both would double it
+    // (`innateSupersedesLegacyPassive`).
+    sources:
+      def.passive && !innateSupersedesLegacyPassive(def)
+        ? [
+            {
+              id: `passive:${args.championId}`,
+              kind: "passive",
+              modifiers: def.passive.modifiers,
+              hooks: def.passive.hooks,
+            },
+          ]
+        : [],
   });
   // health starts empty; first recompute fills maxima and we top off
   world.health.set(id, {
@@ -85,7 +96,8 @@ export function spawnChampion(world: SimWorld, args: SpawnChampionArgs): EntityI
   // flower/economy paths; graded at match end)
   world.matchStats.set(id, createMatchStats());
 
-  // Q starts learned, so its permanent passive (if any) is on from spawn.
+  // Q starts learned, so its permanent passive (if any) is on from spawn — and
+  // so is the 天生技 innate, which spawns at rank 1 by definition.
   syncAbilityPassives(world, id);
 
   recomputeStats(world, id);

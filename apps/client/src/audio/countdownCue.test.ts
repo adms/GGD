@@ -374,8 +374,8 @@ class FakeCtx {
 const COUNT_MAP: AudioMap = {
   bgm: {},
   sfx: {
-    countTick: { files: ["assets/audio/sfx/fx/count-tick.wav"], gain: 0.9, cooldownMs: 300, maxConcurrent: 2 },
-    countFinal: { files: ["assets/audio/sfx/fx/count-final.wav"], gain: 0.9, cooldownMs: 300, maxConcurrent: 2 },
+    countTick: { files: ["assets/audio/sfx/fx/count-tick.mp3"], gain: 0.9, cooldownMs: 300, maxConcurrent: 2 },
+    countFinal: { files: ["assets/audio/sfx/fx/count-final.mp3"], gain: 0.9, cooldownMs: 300, maxConcurrent: 2 },
   },
 };
 

@@ -1,0 +1,37 @@
+{
+  "id": "godie-h00l.passive",
+  "schema": "ability@1",
+  "name": "60-00 聖光盾",
+  "description": "[輔助]\n45秒冷卻時間\n\n一個無法穿越的護盾將會環繞著這個部隊，保護它免於所有的傷害與法術攻擊，可以持續3秒。",
+  "slot": "PASSIVE",
+  "innateKind": "active",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    45.0
+  ],
+  "manaCost": [
+    300.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "armor",
+          "op": "flat",
+          "value": 500
+        },
+        {
+          "stat": "mr",
+          "op": "flat",
+          "value": 500
+        }
+      ],
+      "duration": 3.0
+    }
+  ],
+  "vfxKey": "fx.prim.holy.pulse-lg",
+  "castTimeSec": 0.3
+}

@@ -1,0 +1,28 @@
+{
+  "id": "godie-n00b.passive",
+  "schema": "ability@1",
+  "name": "57-00 四次元口袋",
+  "description": "[輔助]\n20秒冷卻時間\n\n從小叮噹的百寶袋隨機拿出道具，雖然大多是便宜貨，但是偶爾也會有珍貴的寶物，同時也會引起附近敵人的注意，進而攻擊小叮噹。",
+  "slot": "PASSIVE",
+  "innateKind": "active",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    20.0
+  ],
+  "manaCost": [
+    75.0
+  ],
+  "range": 0,
+  "radius": 14.67,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "spawnVfx",
+      "vfxId": "fx.prim.arcane.summon",
+      "at": "self"
+    }
+  ],
+  "vfxKey": "fx.prim.arcane.summon",
+  "castTimeSec": 0.4
+}

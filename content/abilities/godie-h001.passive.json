@@ -1,0 +1,44 @@
+{
+  "id": "godie-h001.passive",
+  "schema": "ability@1",
+  "name": "41-00 木乃伊的詛咒",
+  "description": "[輔助]\n25秒冷卻時間\n\n降低指定敵方部隊45%的移動速度，50%的攻擊速度，以及30%的破壞力，可持續4秒。",
+  "slot": "PASSIVE",
+  "innateKind": "active",
+  "castType": "targeted",
+  "maxRank": 1,
+  "cooldown": [
+    25.0
+  ],
+  "manaCost": [
+    120.0
+  ],
+  "range": 11.0,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "applyStatus",
+      "statusId": "slow40",
+      "duration": 4.0,
+      "moveSpeedMult": 0.55
+    },
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "pctAdd",
+          "value": -0.5
+        },
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": -0.3
+        }
+      ],
+      "duration": 4.0
+    }
+  ],
+  "vfxKey": "fx.prim.void.pulse",
+  "castTimeSec": 0.4
+}

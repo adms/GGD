@@ -15,6 +15,11 @@
  * pipeline and hook dispatch as items and augments — no new code path, nothing
  * to keep in sync at damage time, and the sync is a pure function of the
  * ability ranks (deterministic, replay-safe).
+ *
+ * The SIXTH slot rides the same path. A champion's 天生技 (`slot: "PASSIVE"`,
+ * `innateKind: "passive"`) is nothing more than an ability whose rank is 1 from
+ * spawn, so it needs no new machinery at all — only that `passiveSlot` be
+ * included in the sweep below.
  */
 import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
@@ -31,6 +36,59 @@ export function abilityPassiveSourceId(abilityId: string): string {
 /** True when the ability can only ever be passive (no castable effects). */
 export function isPassiveOnly(def: AbilityDef): boolean {
   return def.passive !== undefined && def.effects.length === 0;
+}
+
+/**
+ * The champion's 天生技 innate, and it is the PERMANENT-BUFF kind — the ~48 of
+ * 108 whose WC3 record has no cooldown and a `[被動]`/`[靈氣]` tag (auras,
+ * evasion, on-hit procs, regen, per-kill growth). These apply through
+ * `passive.ranks[0]` from spawn and can never be cast.
+ */
+export function isPassiveInnate(def: AbilityDef): boolean {
+  return def.slot === "PASSIVE" && def.innateKind === "passive";
+}
+
+/**
+ * The champion's 天生技 innate, ACTIVE kind — the ~60 that are real D-slot casts
+ * with a cooldown. These are owned from level 1 exactly the same way, but the
+ * sim does not yet let anything CAST them (see `AbilitiesComp.passiveSlot`), so
+ * they are deliberately inert rather than faked as a stat buff.
+ *
+ * Exported so a HUD / sweep / follow-up can enumerate exactly what is still
+ * pending instead of guessing from the absence of modifiers.
+ */
+export function isActiveInnate(def: AbilityDef): boolean {
+  return def.slot === "PASSIVE" && def.innateKind === "active";
+}
+
+/**
+ * DOUBLE-APPLICATION GUARD.
+ *
+ * Before the sixth slot existed, seven champion docs carried the 天生技 inline as
+ * `champion.passive` — a bare hook/modifier block with no slot, no rank and no
+ * ability id. Five of those seven (godie-hart 01-00 怒斬, godie-huth 28-00 無限再生,
+ * godie-h02u 92-00 憂鬱的眼神, godie-h02k 89-00 憤怒的門牙, godie-h01u 80-00 飛將神弓)
+ * now ALSO have a standalone `<id>.passive` doc carrying THE SAME ABILITY. Wiring
+ * the innate on without this guard would hand 無限再生 +24 hp/s instead of +12 and
+ * give 怒斬 two independent 15 % proc rolls per swing.
+ *
+ * The other two (thorne "Barkskin", sela "Kindling") are demo-skeleton champions
+ * with no `NN-00` and no `passiveAbility`, so their legacy block is the ONLY
+ * definition and must survive untouched.
+ *
+ * Resolution follows the project's standing rule (see `registerChampion`): THE
+ * STANDALONE DOC IS THE SOURCE OF TRUTH. When one exists and is the permanent
+ * kind, the inline block is its superseded shadow and is not attached. When the
+ * innate is `"active"` the inline block is NOT superseded — an active innate
+ * grants no permanent buff, so dropping it would silently delete a real effect.
+ */
+export function innateSupersedesLegacyPassive(champ: {
+  passive?: unknown;
+  passiveAbility?: string;
+}): boolean {
+  if (!champ.passive || champ.passiveAbility === undefined) return false;
+  const innate = Abilities.tryGet(champ.passiveAbility as never) as AbilityDef | undefined;
+  return innate !== undefined && isPassiveInnate(innate) && innate.passive !== undefined;
 }
 
 function rankBlock(def: AbilityDef, rank: number): ModifierSource | null {
@@ -62,10 +120,20 @@ export function syncAbilityPassives(world: SimWorld, id: EntityId): void {
     instances.push({ abilityId: inst.abilityId, rank: inst.rank });
   }
   if (ab.exSlot) instances.push({ abilityId: ab.exSlot.abilityId, rank: ab.exSlot.rank });
+  // The 天生技 innate goes LAST and unconditionally: it is rank 1 from spawn, so
+  // unlike Q/W/E/R there is no "not learned yet" state to wait for. Fixed
+  // position keeps `sources` ordering (and therefore Override resolution + hook
+  // firing order) deterministic.
+  if (ab.passiveSlot)
+    instances.push({ abilityId: ab.passiveSlot.abilityId, rank: ab.passiveSlot.rank });
 
   for (const inst of instances) {
     const def = Abilities.tryGet(inst.abilityId as never) as AbilityDef | undefined;
     if (!def?.passive) continue;
+    // An ACTIVE innate is a real cast, not a permanent buff. Content never
+    // authors a `passive` block on one, but assert it here too so a future
+    // mis-authored doc cannot silently turn a 40 s nuke into a free aura.
+    if (isActiveInnate(def)) continue;
     const want = rankBlock(def, inst.rank);
     const sourceId = abilityPassiveSourceId(def.id);
     // Always detach first: a rank-up must REPLACE the previous rank's block,

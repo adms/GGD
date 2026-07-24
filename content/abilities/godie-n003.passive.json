@@ -1,0 +1,32 @@
+{
+  "id": "godie-n003.passive",
+  "schema": "ability@1",
+  "name": "42-00 魔法障壁",
+  "description": "[主動攻擊]\n50秒冷卻時間\n\n真祖常駐的魔法障壁可以增加10點裝甲並減慢近戰部隊的攻擊速度9秒，可以持續9秒。",
+  "slot": "PASSIVE",
+  "innateKind": "active",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    180.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "armor",
+          "op": "flat",
+          "value": 10.0
+        }
+      ],
+      "duration": 9.0
+    }
+  ],
+  "vfxKey": "fx.prim.ice.pulse-lg",
+  "castTimeSec": 0.3
+}

@@ -29,8 +29,12 @@ import type { ChampionId } from "@ggd/shared/ids";
 import type { CoreAbilitySlot } from "@ggd/shared/sim/intents";
 import { castTypeLabel, docDescription, stripAbilityNumber } from "../components/abilityText";
 import { exSlotView, type ExSlotSeat } from "../exSlot";
+import { passiveSlotView, type InnateKind } from "../passiveSlot";
 
-/** Slot label as shown on the row. "被動" and "EX" are not castable slots. */
+/**
+ * Slot label as shown on the row. "PASSIVE" is the SIXTH slot — the 天生技 the
+ * champion owns from level 1 (never learned, never ranked); "EX" is the fifth.
+ */
 export type SkillRowSlot = CoreAbilitySlot | "EX" | "PASSIVE";
 
 export interface SkillRow {
@@ -43,6 +47,13 @@ export interface SkillRow {
   readonly description?: string;
   /** current rank (0 = not learned); EX is 0/1, PASSIVE is always 1 */
   readonly rank: number;
+  /**
+   * Only on the PASSIVE row: which SHAPE the innate takes — "passive" (no
+   * cooldown, permanently on, never pressable) or "active" (a real-cooldown
+   * WC3 D-slot ability, still owned from level 1). The view needs it because a
+   * 天生技 must never read as a button that does nothing.
+   */
+  readonly innateKind?: InnateKind;
   /** maximum rank; 1 for EX and PASSIVE */
   readonly maxRank: number;
   /** cooldown at the CURRENT rank in seconds (rank-1 value before learning) */
@@ -86,16 +97,44 @@ export function skillRows(seat: SkillDetailSeat): SkillRow[] {
   if (!def) return [];
   const rows: SkillRow[] = [];
 
-  // ── 被動 ──────────────────────────────────────────────────────────────────
-  // A champion passive has no cooldown, no cost and no rank; it is listed first
-  // because it is always active and the player never gets a button for it.
-  if (def.passive?.name) {
+  // ── 天生技 (the SIXTH slot) ───────────────────────────────────────────────
+  // The recovered NN-00 innate, resolved through `passiveSlotView` →
+  // `championPassive()` — the standalone doc named by `champion.passiveAbility`.
+  // It is listed FIRST because the champion owns it from level 1, before any
+  // point is ever spent. Rank is fixed at 1/1: it is never learned or ranked.
+  //
+  // FALLBACK: `champion.passive` is the LEGACY hook/modifier block that 7
+  // champion docs still carry. It is not a slot, but for those heroes it is the
+  // only passive text there is, so it fills the row when no NN-00 was recovered.
+  const innate = passiveSlotView(seat.championId);
+  if (innate) {
+    const row: SkillRow = {
+      slot: "PASSIVE",
+      name: innate.displayName,
+      rawName: innate.name,
+      rank: 1,
+      maxRank: 1,
+      innateKind: innate.innateKind,
+      cooldownLeftSec: 0,
+      learned: true,
+    };
+    rows.push({
+      ...row,
+      // an active innate carries real cast numbers; a pure passive carries none
+      ...(innate.cooldownSec !== undefined ? { cooldownSec: innate.cooldownSec } : {}),
+      ...(innate.manaCost !== undefined ? { manaCost: innate.manaCost } : {}),
+      ...(innate.innateKind === "active" ? { castLabel: castTypeLabel(innate.castType) } : {}),
+      ...(innate.description !== undefined ? { description: innate.description } : {}),
+      ...(innate.icon !== undefined ? { icon: innate.icon } : {}),
+    });
+  } else if (def.passive?.name) {
     const passive: SkillRow = {
       slot: "PASSIVE",
       name: stripAbilityNumber(def.passive.name),
       rawName: def.passive.name,
       rank: 1,
       maxRank: 1,
+      innateKind: "passive",
       cooldownLeftSec: 0,
       learned: true,
     };
@@ -163,8 +202,15 @@ export function skillRows(seat: SkillDetailSeat): SkillRow[] {
   return rows;
 }
 
-/** Row label for the slot column ("被動" / "EX" / the hotkey letter). */
+/**
+ * Row label for the slot column ("天生" / "EX" / the hotkey letter).
+ *
+ * NOT "被動": half the recovered NN-00 innates are real active abilities, so
+ * labelling the slot 被動 would be a lie on ~57 champions. The slot is 天生
+ * (owned from level 1); whether it is 被動 or 主動 is `row.innateKind`, shown
+ * beside it via `innateKindLabel`.
+ */
 export function slotLabel(slot: SkillRowSlot): string {
-  if (slot === "PASSIVE") return "被動";
+  if (slot === "PASSIVE") return "天生";
   return slot;
 }

@@ -69,12 +69,15 @@ export const CREDITS: readonly CreditEntry[] = [
   {
     what: "音效",
     title: "効果音ラボ",
-    author: "効果音ラボ",
-    license: "商用可・報告不要",
+    author: "効果音ラボ / Sound Effect Lab",
+    license: "商用可・報告不要・クレジット任意",
     sourceUrl: "https://soundeffect-lab.info/",
     mandatory: false,
     terms:
-      "依其使用條款：不得用於 AI 學習素材，不得將語音裁切重組成新的語句，需以原始素材完整播放。",
+      "依其使用條款，標示來源為任意（クレジット表記不要，非授權條件）；本專案仍選擇逐筆列出，" +
+      "完整清單見下方「効果音ラボ 全素材清單」。" +
+      "同條款下的限制仍然有效：不得用於 AI 學習素材，不得將語音裁切重組成新的語句，需以原始素材完整播放，" +
+      "且不得提供逐一試聽／下載的音效展示頁（該行為屬再配布）。",
   },
   {
     what: "背景音樂",

@@ -1,0 +1,37 @@
+{
+  "id": "godie-efur.passive",
+  "schema": "ability@1",
+  "name": "13-00 狂氣",
+  "description": "[輔助]\n45秒冷卻時間\n\n增加自身攻擊速度200%，但是每秒損失30點生命值，持續9秒。",
+  "slot": "PASSIVE",
+  "innateKind": "active",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    45.0
+  ],
+  "manaCost": [
+    60.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "pctAdd",
+          "value": 2.0
+        },
+        {
+          "stat": "healthRegen",
+          "op": "flat",
+          "value": -30.0
+        }
+      ],
+      "duration": 9.0
+    }
+  ],
+  "vfxKey": "fx.prim.blood.pulse-lg",
+  "castTimeSec": 0.3
+}

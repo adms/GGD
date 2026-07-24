@@ -1,0 +1,26 @@
+{
+  "id": "godie-e00t.passive",
+  "schema": "ability@1",
+  "name": "66-00 恐懼",
+  "description": "[靈氣]\n0秒冷卻時間\n\n很多人都怕鬼，因為貞子是鬼，只要接近他的人都會被嚇到而全身發顫手腳不穩。\n\n攻擊貞子的單位會因手腳發抖使攻擊時有機率失手，此狀態持續4秒。（失手機率沿用基礎「詛咒」的預設值，原始地圖未覆寫該欄位。）",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0.0
+  ],
+  "manaCost": [
+    0.0
+  ],
+  "range": 0,
+  "effects": [],
+  "passive": {
+    "name": "66-00 恐懼",
+    "ranks": [
+      {
+        "modifiers": []
+      }
+    ]
+  }
+}

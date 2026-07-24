@@ -22,8 +22,9 @@
 import { useSyncExternalStore } from "react";
 import { Champions } from "@ggd/shared/sim/content/registry";
 import type { ChampionId } from "@ggd/shared/ids";
-import type { AbilitySlot, CoreAbilitySlot } from "@ggd/shared/sim/intents";
+import type { AbilitySlot, ChampionAbilitySlot, CoreAbilitySlot } from "@ggd/shared/sim/intents";
 import { exSlotView, type ExSlotSeat } from "./exSlot";
+import { innateCastNote, innateKindLabel, passiveSlotView, PASSIVE_SLOT_LABEL } from "./passiveSlot";
 import {
   abilityMetaChips,
   castTypeLabel,
@@ -36,16 +37,27 @@ import type { TooltipMeta } from "./components/Tooltip";
 // held-slot store (plain mutable + subscribe — never React state)
 // ---------------------------------------------------------------------------
 
-let held: AbilitySlot | null = null;
+// The held slot is a CHAMPION slot (6 values) — the 天生技 tile can be held for
+// its description too, even though it is not castable.
+let held: ChampionAbilitySlot | null = null;
 const listeners = new Set<() => void>();
 
 /** The slot whose button is held right now (null = nothing held). */
-export function getHeldAbility(): AbilitySlot | null {
+export function getHeldAbility(): ChampionAbilitySlot | null {
   return held;
 }
 
+/**
+ * The held slot AS AN AIM TARGET — what the floor range/AoE telegraph reads.
+ * A held PASSIVE resolves to null: the 天生技 is not a cast, so drawing a cast
+ * range ring for it would promise an interaction that does not exist.
+ */
+export function getHeldAimSlot(): AbilitySlot | null {
+  return held === null || held === "PASSIVE" ? null : held;
+}
+
 /** Press → slot, release → null. No-op when unchanged (skips a needless notify). */
-export function setHeldAbility(slot: AbilitySlot | null): void {
+export function setHeldAbility(slot: ChampionAbilitySlot | null): void {
   if (held === slot) return;
   held = slot;
   for (const cb of listeners) cb();
@@ -59,7 +71,7 @@ export function subscribeHeldAbility(cb: () => void): () => void {
 }
 
 /** React binding — re-renders a component only when the held slot changes. */
-export function useHeldAbility(): AbilitySlot | null {
+export function useHeldAbility(): ChampionAbilitySlot | null {
   return useSyncExternalStore(subscribeHeldAbility, getHeldAbility, getHeldAbility);
 }
 
@@ -77,8 +89,8 @@ export interface HeldSeat extends ExSlotSeat {
 
 /** Everything the top-of-screen description panel renders for a held slot. */
 export interface HeldAbilityInfo {
-  /** slot badge — Q/W/E/R/EX */
-  slot: AbilitySlot;
+  /** slot badge — Q/W/E/R/EX/PASSIVE */
+  slot: ChampionAbilitySlot;
   /** clean display name (hero/skill number stripped) */
   name: string;
   /** full still-numbered name (kept for the source-of-truth tooltip parity) */
@@ -96,7 +108,34 @@ export interface HeldAbilityInfo {
  * LOCKED EX slot). Cooldown carries `{ base, factor: "cooldown" }` so the panel
  * renders the live post-multiplier final exactly like the tooltip.
  */
-export function describeHeldAbility(seat: HeldSeat, slot: AbilitySlot): HeldAbilityInfo | null {
+export function describeHeldAbility(seat: HeldSeat, slot: ChampionAbilitySlot): HeldAbilityInfo | null {
+  // 天生技 (the SIXTH slot). Its chips lead with 「天生 · 被動/主動」 and say in
+  // words that it is owned from level 1 — a held panel that only showed the
+  // description would leave the player guessing why the tile has no hotkey.
+  if (slot === "PASSIVE") {
+    const innate = passiveSlotView(seat.championId);
+    if (!innate) return null;
+    const meta: TooltipMeta[] = [
+      { label: PASSIVE_SLOT_LABEL, value: innateKindLabel(innate.innateKind) },
+    ];
+    if (innate.innateKind === "active") {
+      meta.push({ label: "施法", value: castTypeLabel(innate.castType) });
+      if (innate.cooldownSec !== undefined) {
+        meta.push({ label: "冷卻", base: innate.cooldownSec, factor: "cooldown", unit: "s" });
+      }
+      if (innate.manaCost !== undefined) meta.push({ label: "魔力", value: `${innate.manaCost}` });
+    }
+    meta.push({ label: "取得", value: innateCastNote(innate.innateKind) });
+    const info: HeldAbilityInfo = {
+      slot,
+      name: innate.displayName,
+      fullName: innate.name,
+      meta,
+    };
+    if (innate.description !== undefined) info.body = innate.description;
+    return info;
+  }
+
   if (slot === "EX") {
     const ex = exSlotView(seat);
     if (!ex) return null;

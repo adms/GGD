@@ -1,0 +1,29 @@
+{
+  "id": "godie-hvsh.passive",
+  "schema": "ability@1",
+  "name": "48-00 石化之眼",
+  "description": "[輔助]\n45秒冷卻時間\n\n開啟石化之眼，將Rider附近250範圍的部隊予以石化，持續4秒。",
+  "slot": "PASSIVE",
+  "innateKind": "active",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    45.0
+  ],
+  "manaCost": [
+    150.0
+  ],
+  "range": 0,
+  "radius": 4.58,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "applyStatus",
+      "statusId": "burnstun",
+      "duration": 4.0,
+      "stun": true
+    }
+  ],
+  "vfxKey": "fx.prim.earth.nova-lg",
+  "castTimeSec": 0.5
+}

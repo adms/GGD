@@ -1,0 +1,32 @@
+{
+  "id": "godie-othr.passive",
+  "schema": "ability@1",
+  "name": "31-00 再生能力",
+  "description": "[被動]\n0秒冷卻時間\n\n金鋼狼天生擁有強大的復原能力，每秒能回復8點生命。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0.0
+  ],
+  "manaCost": [
+    0.0
+  ],
+  "range": 0,
+  "effects": [],
+  "passive": {
+    "name": "31-00 再生能力",
+    "ranks": [
+      {
+        "modifiers": [
+          {
+            "stat": "healthRegen",
+            "op": "flat",
+            "value": 8.0
+          }
+        ]
+      }
+    ]
+  }
+}

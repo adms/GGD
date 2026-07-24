@@ -1,0 +1,47 @@
+{
+  "id": "godie-e00k.passive",
+  "schema": "ability@1",
+  "name": "19-00 閃擊",
+  "description": "[被動]\n0秒冷卻時間\n\n安云靈敏的身手可以讓她在攻擊的瞬間有15%機會繞到對手的背後，擊暈0.3秒並給予120傷害。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0.0
+  ],
+  "manaCost": [
+    0.0
+  ],
+  "range": 0,
+  "effects": [],
+  "vfxKey": "fx.prim.void.slash",
+  "passive": {
+    "name": "19-00 閃擊",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "chance": 0.15,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "flat": 120.0
+                }
+              },
+              {
+                "kind": "applyStatus",
+                "statusId": "burnstun",
+                "duration": 0.3,
+                "stun": true
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

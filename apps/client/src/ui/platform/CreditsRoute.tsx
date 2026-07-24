@@ -13,6 +13,7 @@
  */
 import { useEffect, useState } from "react";
 import { CREDITS, COPYRIGHT_LINE } from "./creditsData";
+import { SFX_LAB_BOUND_COUNT, SFX_LAB_CLIPS, SFX_LAB_GROUPS } from "./sfxLabCredits";
 import { GOLD, PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
 import { SfxButton } from "../SfxButton";
 
@@ -34,6 +35,149 @@ export function closeCredits(): void {
 }
 
 const LINK: React.CSSProperties = { color: "#a9bcff", textDecoration: "none", fontWeight: 600 };
+
+/**
+ * SfxLabList — every 効果音ラボ clip that ships in GGD, listed per the owner's
+ * condition on the download authorisation: 「只要好好列出附記在授權頁面就好」.
+ *
+ * The licence does NOT require this (商用可・報告不要・クレジット任意), so the
+ * section stays inside the courtesy area and carries no 署名為授權條件 marker —
+ * the CC-BY dragon above is still the only mandatory credit on this page.
+ *
+ * Layout rules that are load-bearing, not taste:
+ *  - The list scrolls INSIDE its own box (maxHeight + overflowY). 54 rows would
+ *    otherwise bury the four licence entries the page exists to show.
+ *  - Every row is a wrapping block, never a table. A table of file + title +
+ *    source + usage is what makes a credits page scroll sideways on a phone;
+ *    `overflowWrap: anywhere` on the long URLs finishes the job.
+ *  - NO play buttons, ever. The pack forbids 再配布 and the one build that would
+ *    trip it is an audition screen. This is a list; keep it a list.
+ */
+function SfxLabList(): React.JSX.Element {
+  const [open, setOpen] = useState(true);
+  return (
+    <section
+      style={{
+        marginBottom: 14,
+        padding: "12px 14px",
+        borderRadius: 9,
+        background: PANEL_BG,
+        border: PANEL_BORDER,
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "baseline", gap: 10, flexWrap: "wrap" }}>
+        <span style={{ fontSize: 12, color: TEXT_DIM }}>音效素材明細</span>
+        <SfxButton
+          kind="ghost"
+          onClick={() => setOpen((v) => !v)}
+          style={{
+            marginLeft: "auto",
+            padding: "2px 10px",
+            borderRadius: 6,
+            border: PANEL_BORDER,
+            background: "transparent",
+            color: TEXT_DIM,
+            fontSize: 12,
+          }}
+        >
+          {open ? "收合" : "展開"}
+        </SfxButton>
+      </div>
+      <div style={{ fontSize: 15, fontWeight: "bold", marginTop: 3 }}>
+        効果音ラボ 全素材清單（共 {SFX_LAB_CLIPS.length} 個，其中 {SFX_LAB_BOUND_COUNT} 個已在遊戲中使用）
+      </div>
+      <div style={{ fontSize: 12, color: TEXT_DIM, marginTop: 6, lineHeight: 1.7 }}>
+        依 効果音ラボ 使用條款，標示來源為<strong>任意</strong>（商用可・報告不要・クレジット表記不要），
+        並非授權條件；此處逐筆列出是本專案作者的選擇。標「使用中」者為遊戲實際會播放的音效，
+        標「收錄未啟用」者檔案雖隨遊戲附帶但目前沒有任何情境會播放。
+        來源不完整者（例如「風に揺れる草木1」只留有頁面層級來源）如實註明，不臆造連結。
+      </div>
+      {open && (
+        <div
+          style={{
+            marginTop: 10,
+            maxHeight: "46vh",
+            overflowY: "auto",
+            overflowX: "hidden",
+            borderTop: PANEL_BORDER,
+            paddingTop: 8,
+            // iOS: keep the inner list's momentum scroll from dragging the modal.
+            overscrollBehavior: "contain",
+          }}
+        >
+          {SFX_LAB_GROUPS.map((g) => {
+            const clips = SFX_LAB_CLIPS.filter((c) => c.group === g.id);
+            if (clips.length === 0) return null;
+            return (
+              <div key={g.id} style={{ marginBottom: 12 }}>
+                <div
+                  style={{
+                    position: "sticky",
+                    top: 0,
+                    background: "#0d1020",
+                    zIndex: 1,
+                    fontSize: 12,
+                    color: GOLD,
+                    fontWeight: "bold",
+                    padding: "4px 0",
+                  }}
+                >
+                  {g.label}（{clips.length}）
+                </div>
+                {clips.map((c) => (
+                  <div
+                    key={c.file}
+                    style={{
+                      padding: "6px 0",
+                      borderBottom: "1px solid rgba(255,255,255,0.06)",
+                      fontSize: 12,
+                      lineHeight: 1.6,
+                      overflowWrap: "anywhere",
+                    }}
+                  >
+                    <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "baseline" }}>
+                      <span style={{ fontSize: 13, fontWeight: 600, color: TEXT_MAIN }}>{c.title}</span>
+                      <span
+                        style={{
+                          fontSize: 10,
+                          padding: "1px 6px",
+                          borderRadius: 999,
+                          color: c.boundKeys.length > 0 ? "#8ee6b0" : TEXT_DIM,
+                          border: `1px solid ${c.boundKeys.length > 0 ? "rgba(142,230,176,0.45)" : "rgba(255,255,255,0.18)"}`,
+                        }}
+                      >
+                        {c.boundKeys.length > 0 ? "使用中" : "收錄未啟用"}
+                      </span>
+                    </div>
+                    <div style={{ color: "#c3cbdd" }}>{c.use}</div>
+                    <div style={{ color: TEXT_DIM }}>
+                      {c.file}
+                      {c.sourceFile ? ` ← ${c.sourceFile}` : " ← 原始檔名未留存"}
+                      {" · "}
+                      {c.url ? (
+                        <a href={c.url} target="_blank" rel="noopener noreferrer" style={LINK}>
+                          素材連結
+                        </a>
+                      ) : c.page ? (
+                        <a href={c.page} target="_blank" rel="noopener noreferrer" style={LINK}>
+                          {/* only the clip whose source FILE was never recorded is
+                              flagged page-level; the voice rows know their file. */}
+                          {c.sourceFile ? "來源頁" : "來源頁（僅頁面層級來源）"}
+                        </a>
+                      ) : (
+                        "來源不明"
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </section>
+  );
+}
 
 export function CreditsPage(props: { onClose: () => void }): React.JSX.Element {
   // THE "關閉不掉" BUG: the ✕ button was un-clickable. The AudioToggle is
@@ -146,6 +290,8 @@ export function CreditsPage(props: { onClose: () => void }): React.JSX.Element {
             )}
           </section>
         ))}
+
+        <SfxLabList />
       </div>
     </div>
   );

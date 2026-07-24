@@ -495,13 +495,13 @@ DRAGONS = ["/Users/Takuro/GGD/content/assets/audio/sfx/dragon-roar-angry.mp3",
            "/Users/Takuro/GGD/content/assets/audio/sfx/dragon-roar.mp3",
            "/Users/Takuro/GGD/content/assets/audio/sfx/dragon-roar2.mp3"]
 # The rejected "bubbly rising chirp" reference. It USED to be the live
-# fx/ui-hover-cyber.wav, but task #86 replaced that file with the low-flyby
+# fx/ui-hover-cyber.mp3, but task #86 replaced that file with the low-flyby
 # winner — so pointing here at the live file would compare the shipped clip to
 # ITSELF (P2 distance 0, and --selftest's "REJECTED chirp" would no longer be
 # the chirp). The original rising-chirp render is archived verbatim (byte-
 # identical, md5 1eade92637b21a7e479bfee5e7a68804) in retired/ and referenced
 # from there, so P2 and --selftest keep measuring against the real rejected sound.
-REJECTED = "/Users/Takuro/GGD/content/assets/audio/sfx/retired/ui-hover-cyber-bubbly-rising-chirp.wav"
+REJECTED = "/Users/Takuro/GGD/content/assets/audio/sfx/retired/ui-hover-cyber-bubbly-rising-chirp.mp3"
 
 
 def stack(x, gain=GAIN, offs=OFFS):

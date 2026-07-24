@@ -5,6 +5,8 @@
  * no WebGL scene and no real AudioContext.
  */
 import { describe, it, expect, vi } from "vitest";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { cover } from "@ggd/shared/testkit/cover";
 import {
   playRecessBell,
@@ -106,5 +108,86 @@ describe("intermissionAudio", () => {
     } finally {
       vi.useRealTimers();
     }
+  });
+});
+
+// ---------------------------------------------------------------------------
+// THE WIRE. Everything above proves the MODULE's contract against a fake port,
+// which stays green even if nobody ever calls it. These two blocks guard the
+// two joints that actually decide whether the owner hears a bell:
+//
+//   1. IntermissionStage's MOUNT effect calls playRecessBell(audioSystem)
+//      — the emit is on the scene-entry edge, with the real mixer singleton;
+//   2. `recessBell` is MAPPED in content/config/audio-map.json
+//      — an unmapped key makes playSfx a silent no-op, which no unit test that
+//        stubs the port can ever notice.
+//
+// The client vitest runs in a `node` environment with no DOM and no RTL, and
+// `renderToStaticMarkup` never runs effects, so the mount effect cannot be
+// executed here — the wire is asserted against the SOURCE, the same technique
+// ui/chromeReserve.test.ts and architecture.test.ts use.
+// ---------------------------------------------------------------------------
+
+const REPO = join(__dirname, "..", "..", "..", "..", "..");
+
+/** Read a source file with comments stripped, so prose can never satisfy a scan. */
+function readSource(abs: string): string {
+  return readFileSync(abs, "utf8")
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    .replace(/\/\/[^\n]*/g, "");
+}
+
+describe("the recess bell is WIRED to intermission entry (intermission-recess-bell)", () => {
+  const stage = readSource(join(__dirname, "..", "..", "ui", "IntermissionStage.tsx"));
+
+  it("IntermissionStage imports the bell emit from this module", () => {
+    cover("intermission-recess-bell");
+    expect(stage).toMatch(/import\s*\{[^}]*\bplayRecessBell\b[^}]*\}\s*from\s*"[^"]*intermissionAudio"/);
+  });
+
+  it("rings it with the REAL mixer singleton, not a local stub", () => {
+    cover("intermission-recess-bell");
+    expect(stage).toContain("playRecessBell(audioSystem)");
+  });
+
+  it("the ring sits in the MOUNT effect (once per intermission, not per re-render)", () => {
+    cover("intermission-recess-bell");
+    // the scene-lifecycle effect is the one that closes on an EMPTY dep array;
+    // slice it out and require the bell to be inside it.
+    const start = stage.indexOf("useEffect(() => {");
+    expect(start).toBeGreaterThanOrEqual(0);
+    const end = stage.indexOf("}, []);", start);
+    expect(end).toBeGreaterThan(start);
+    const mountEffect = stage.slice(start, end);
+    expect(mountEffect).toContain("playRecessBell(audioSystem)");
+  });
+});
+
+describe("the recess bell clip is actually MAPPED (intermission-recess-bell)", () => {
+  const map = JSON.parse(readFileSync(join(REPO, "content", "config", "audio-map.json"), "utf8")) as {
+    sfx?: Record<string, { files?: string[]; gain?: number; cooldownMs?: number; maxConcurrent?: number }>;
+  };
+  const entry = map.sfx?.[RECESS_BELL];
+
+  it("audio-map.json has an sfx entry for the key this module emits", () => {
+    cover("intermission-recess-bell");
+    expect(entry, `audio-map.json has no sfx."${RECESS_BELL}" — the emit would be a silent no-op`).toBeTruthy();
+    expect(entry?.files?.length).toBeGreaterThan(0);
+  });
+
+  it("every mapped file for it exists on disk", () => {
+    cover("intermission-recess-bell");
+    for (const rel of entry?.files ?? []) {
+      expect(() => readFileSync(join(REPO, "content", rel)), `missing clip: ${rel}`).not.toThrow();
+    }
+  });
+
+  it("is gated so a remount cannot double-ring it", () => {
+    cover("intermission-recess-bell");
+    // A fresh scene is built per intermission, and React StrictMode mounts twice
+    // in dev. maxConcurrent 1 + a cooldown longer than a remount gap mean the
+    // second ring is refused rather than layered on top of the first.
+    expect(entry?.maxConcurrent).toBe(1);
+    expect(entry?.cooldownMs ?? 0).toBeGreaterThanOrEqual(1000);
   });
 });

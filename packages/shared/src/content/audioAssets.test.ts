@@ -6,7 +6,12 @@
  * staged audio files ON DISK: every referenced path exists, every whitelisted
  * event is bound, the 11 BGM scenes match bgm/MANIFEST.json, the 21 imported
  * w3x clips are real MP3s (and all used), and the synthesised fx clips are the
- * right PCM/WAV format.
+ * right MP3 format.
+ *
+ * The whole library is MP3 under the task #158 loading ceiling: 44.1 kHz and at
+ * most 128 kbps. The fx clips used to ship as mono 16-bit 44.1k PCM WAV; they
+ * were transcoded in place (same stem, `.wav` -> `.mp3`), so the format gate
+ * below now reads the MPEG frame header instead of the RIFF header.
  *
  * Like icons.test.ts / standinRoster.test.ts it reads by DIRECT file path (not
  * FsContentSource/ContentLoader) so it stays green both BEFORE and AFTER
@@ -57,7 +62,7 @@ const FX_CLIPS = [
   // 3-choose-1 draft card lock-in (task #110) — same GENERATE.sh, same PCM format
   "draft-confirm",
   // hit-feel audit P1 weight-tiered hit voices + re-cut block clank — same
-  // GENERATE.sh, same PCM format. Client plays these by the key convention below.
+  // GENERATE.sh, same MP3 format. Client plays these by the key convention below.
   "hit-light", "hit-medium", "hit-heavy", "hit-crit", "block-hit",
 ] as const;
 
@@ -75,16 +80,42 @@ function isMp3(buf: Buffer): boolean {
   return buf[0] === 0xff && (buf[1]! & 0xe0) === 0xe0; // MPEG frame sync
 }
 
-function readWavFmt(buf: Buffer): {
-  riff: boolean; format: number; channels: number; sampleRate: number; bits: number;
-} {
-  return {
-    riff: buf.toString("ascii", 0, 4) === "RIFF" && buf.toString("ascii", 8, 12) === "WAVE",
-    format: buf.readUInt16LE(20),
-    channels: buf.readUInt16LE(22),
-    sampleRate: buf.readUInt32LE(24),
-    bits: buf.readUInt16LE(34),
-  };
+/** MPEG1 Layer III bitrate table (kbps), indexed by the header's bitrate index. */
+const MP3_BITRATES = [
+  0, 32, 40, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256, 320, -1,
+] as const;
+/** MPEG1 sampling rates (Hz), indexed by the header's sample-rate index. */
+const MP3_RATES = [44100, 48000, 32000, -1] as const;
+
+/**
+ * Read the first MPEG audio frame header, skipping any ID3v2 tag.
+ * Returns null when no valid MPEG1 Layer III frame is found.
+ */
+function readMp3Fmt(buf: Buffer): {
+  sampleRate: number; channels: number; bitrateKbps: number;
+} | null {
+  let i = 0;
+  // ID3v2: "ID3" + 2 version bytes + 1 flag byte + 4 syncsafe size bytes
+  if (buf.length > 10 && buf.toString("ascii", 0, 3) === "ID3") {
+    const size =
+      (buf[6]! & 0x7f) * 0x200000 + (buf[7]! & 0x7f) * 0x4000 +
+      (buf[8]! & 0x7f) * 0x80 + (buf[9]! & 0x7f);
+    i = 10 + size;
+  }
+  for (; i + 4 <= buf.length; i++) {
+    if (buf[i] !== 0xff || (buf[i + 1]! & 0xe0) !== 0xe0) continue;
+    const versionId = (buf[i + 1]! >> 3) & 0x03; // 3 = MPEG1
+    const layer = (buf[i + 1]! >> 1) & 0x03; // 1 = Layer III
+    if (versionId !== 3 || layer !== 1) continue;
+    const bitrateIdx = (buf[i + 2]! >> 4) & 0x0f;
+    const rateIdx = (buf[i + 2]! >> 2) & 0x03;
+    const channelMode = (buf[i + 3]! >> 6) & 0x03; // 3 = mono
+    const bitrateKbps = MP3_BITRATES[bitrateIdx]!;
+    const sampleRate = MP3_RATES[rateIdx]!;
+    if (bitrateKbps <= 0 || sampleRate <= 0) continue;
+    return { sampleRate, channels: channelMode === 3 ? 1 : 2, bitrateKbps };
+  }
+  return null;
 }
 
 describe("authored audio-map.json", () => {
@@ -134,6 +165,51 @@ describe("authored audio-map.json", () => {
       expect(p.startsWith("assets/"), `${p} under assets/`).toBe(true);
       expect(existsSync(join(CONTENT, p)), `${p} exists`).toBe(true);
     }
+  });
+
+  /**
+   * The existence check above is only as strong as the map is wide: a key that
+   * silently loses its `files` entry, or a download that landed as a 0-byte
+   * stub / an HTML error page, would still pass it. This is the integrity
+   * floor — EVERY bgm + sfx reference must resolve to a real, non-empty file
+   * whose header is a genuine MP3 or RIFF/WAV, and the map must not shrink
+   * below the set that has already shipped.
+   */
+  it("resolves every bgm + sfx reference to a real non-empty audio file", () => {
+    cover("audio-map-files-integrity");
+    const doc = loadDoc();
+    const refs: Array<{ kind: string; key: string; file: string }> = [];
+    for (const [key, t] of Object.entries(doc.bgm)) refs.push({ kind: "bgm", key, file: t.file });
+    for (const [key, e] of Object.entries(doc.sfx)) {
+      expect(e.files.length, `sfx ${key} has files`).toBeGreaterThan(0);
+      for (const file of e.files) refs.push({ kind: "sfx", key, file });
+    }
+
+    const unique = new Set(refs.map((r) => r.file));
+    // 12 bgm scenes + 120 unique files across 89 sfx keys as of the 効果音ラボ
+    // final-five wave. A floor, not an equality: new cues may only add.
+    expect(Object.keys(doc.bgm).length).toBeGreaterThanOrEqual(12);
+    expect(Object.keys(doc.sfx).length).toBeGreaterThanOrEqual(89);
+    expect(unique.size).toBeGreaterThanOrEqual(120);
+
+    const missing: string[] = [];
+    const bad: string[] = [];
+    for (const r of refs) {
+      const abs = join(CONTENT, r.file);
+      if (!existsSync(abs)) {
+        missing.push(`${r.kind}:${r.key} -> ${r.file}`);
+        continue;
+      }
+      const buf = readFileSync(abs);
+      if (buf.length === 0) {
+        bad.push(`${r.kind}:${r.key} -> ${r.file} (0 bytes)`);
+        continue;
+      }
+      const riff = buf.length >= 4 && buf.toString("latin1", 0, 4) === "RIFF";
+      if (!isMp3(buf) && !riff) bad.push(`${r.kind}:${r.key} -> ${r.file} (not MP3/RIFF)`);
+    }
+    expect(missing, "audio-map references with no file on disk").toEqual([]);
+    expect(bad, "audio-map references that are empty or not real audio").toEqual([]);
   });
 
   it("throttles the high-frequency combat events (cooldown + small voice cap)", () => {
@@ -213,7 +289,7 @@ describe("authored audio-map.json", () => {
       // each tier is its own single, distinct file (weight/block must be audible)
       expect(e!.files.length, `${key} single clip`).toBe(1);
       const f = e!.files[0]!;
-      expect(f.endsWith(`/fx/${key}.wav`), `${key} -> fx/${key}.wav`).toBe(true);
+      expect(f.endsWith(`/fx/${key}.mp3`), `${key} -> fx/${key}.mp3`).toBe(true);
       expect(seen.has(f), `${key} clip distinct`).toBe(false);
       seen.add(f);
       // hot combat events: cooldown-gated + a small voice cap (收尾精準, no pile-up)
@@ -225,7 +301,7 @@ describe("authored audio-map.json", () => {
     for (const e of Object.values(doc.sfx)) {
       for (const f of e.files) {
         expect(f, "no clip named block-hit points at the ringing lab samples")
-          .not.toMatch(/lab\/block-(clash|shield)\.wav$/);
+          .not.toMatch(/lab\/block-(clash|shield)\.(wav|mp3)$/);
       }
     }
   });
@@ -243,17 +319,23 @@ describe("staged audio files", () => {
     }
   });
 
-  it("synthesises the fx combat clips as mono 16-bit 44.1k PCM WAV", () => {
-    cover("audio-fx-pcm-wav");
+  it("synthesises the fx combat clips as mono 44.1k MP3 under the 128k ceiling", () => {
+    cover("audio-fx-mp3-ceiling");
     for (const name of FX_CLIPS) {
-      const p = join(AUDIO, "sfx", "fx", `${name}.wav`);
-      expect(existsSync(p), `${name}.wav exists`).toBe(true);
-      const fmt = readWavFmt(readFileSync(p));
-      expect(fmt.riff, `${name}.wav RIFF/WAVE`).toBe(true);
-      expect(fmt.format, `${name}.wav PCM`).toBe(1);
-      expect(fmt.channels, `${name}.wav mono`).toBe(1);
-      expect(fmt.sampleRate, `${name}.wav 44.1k`).toBe(44100);
-      expect(fmt.bits, `${name}.wav 16-bit`).toBe(16);
+      const p = join(AUDIO, "sfx", "fx", `${name}.mp3`);
+      expect(existsSync(p), `${name}.mp3 exists`).toBe(true);
+      // the WAV originals were replaced in place — none may come back
+      expect(existsSync(join(AUDIO, "sfx", "fx", `${name}.wav`)), `${name}.wav retired`)
+        .toBe(false);
+      const buf = readFileSync(p);
+      expect(buf.length, `${name}.mp3 non-empty`).toBeGreaterThan(256);
+      expect(isMp3(buf), `${name}.mp3 MP3/ID3 header`).toBe(true);
+      const fmt = readMp3Fmt(buf);
+      expect(fmt, `${name}.mp3 MPEG1 Layer III frame`).not.toBeNull();
+      expect(fmt!.sampleRate, `${name}.mp3 44.1k`).toBe(44100);
+      expect(fmt!.channels, `${name}.mp3 mono`).toBe(1);
+      // task #158 loading ceiling — a CEILING, not a target
+      expect(fmt!.bitrateKbps, `${name}.mp3 <=128kbps`).toBeLessThanOrEqual(128);
     }
   });
 });

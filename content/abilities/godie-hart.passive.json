@@ -1,0 +1,54 @@
+{
+  "id": "godie-hart.passive",
+  "schema": "ability@1",
+  "name": "01-00 怒斬",
+  "description": "[被動]\n0秒冷卻時間\n\n攻擊時有15%的機會，造成175點額外傷害，並震昏敵人0.5秒。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0.0
+  ],
+  "manaCost": [
+    0.0
+  ],
+  "range": 0,
+  "effects": [],
+  "passive": {
+    "name": "01-00 怒斬",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "chance": 0.15,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "perRank": [
+                    175.0
+                  ],
+                  "ratios": [
+                    {
+                      "stat": "ad",
+                      "coeff": 0.5
+                    }
+                  ]
+                }
+              },
+              {
+                "kind": "applyStatus",
+                "statusId": "burnstun",
+                "duration": 0.5,
+                "stun": true
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

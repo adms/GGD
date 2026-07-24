@@ -1,0 +1,42 @@
+{
+  "id": "godie-e00w.passive",
+  "schema": "ability@1",
+  "name": "77-00 浮雲-旋一閃",
+  "description": "[主動攻擊]\n15秒冷卻時間\n\n神鳴流的體術招式之一，閃過敵人攻擊，抓住對手後，旋轉拋摔。（每次發動限一人且為英雄）持續時間0.5秒，造成250+敏捷*5點傷害。",
+  "slot": "PASSIVE",
+  "innateKind": "active",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    15.0
+  ],
+  "manaCost": [
+    150.0
+  ],
+  "range": 0,
+  "radius": 3.67,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "flat": 250.0,
+        "ratios": [
+          {
+            "stat": "ad",
+            "coeff": 0.5
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "burnstun",
+      "duration": 0.5,
+      "stun": true
+    }
+  ],
+  "vfxKey": "fx.prim.wind.tornado",
+  "castTimeSec": 0.4
+}

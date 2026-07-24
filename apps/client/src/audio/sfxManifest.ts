@@ -61,6 +61,13 @@
  * cast-circle) are BOUND in the audio map so combat can route to them, but left to
  * lazy-load: a champion uses only one or two, so preloading the whole set would
  * re-inflate the very boot cost #63 removes. Only `mapFlavor*` stays fully absent.
+ *
+ * A third wave added the cues whose emit sites had landed ahead of their clips:
+ * the guardian tower's slam + last-hit payout (#89/#105) with `combat`, and the
+ * intermission's recess bell (#124) plus the draft-reveal sparkle/jackpot
+ * (#110/#82) with `intermission` — the latter two alongside `legendaryRoll`,
+ * since `draftReveal.revealSchedule` fires all three from the same offer mount.
+ * All five are ONE-SHOTS: none is added to {@link SFX_LOOPABLE}.
  */
 import type { AudioScene } from "./types";
 
@@ -138,6 +145,12 @@ const COMBAT_SFX: readonly string[] = [
   // layer, warming it here covers both. Loop-flagged in SFX_LOOPABLE.
   "arenaAmbience",
   "fireRingLoop",
+  // Neutral guardian tower (#89, per-arena faces in #105). Both fire repeatedly
+  // across a match — the AoE slam every punish cycle, the payout on every
+  // last hit — so they are warmed with combat rather than paying a cold fetch
+  // on the first tower fight of the round.
+  "guardianSlam",
+  "guardianLastHit",
   // fired on the intermission→combat edge, so warm it as combat begins
   "roundStart",
 ];
@@ -171,6 +184,19 @@ export const SFX_BY_SCENE: Readonly<Record<AudioScene, readonly string[]>> = {
     // intermission scene. Both loop-flagged in SFX_LOOPABLE.
     "legendaryRoll",
     "merchantAmbience",
+    // The draft REVEAL cues that ride the same offer panel as legendaryRoll
+    // (draftReveal.revealSchedule): a per-card sparkle as each of the three
+    // cards flips face-up, and the jackpot flourish a beat after a legendary
+    // lands. Warmed here for the same reason legendaryRoll is — the whole
+    // schedule fires within ~1.5 s of the offer mounting, so a cold fetch on
+    // the first card would land the sparkle after the flip it decorates.
+    "draftCardReveal",
+    "legendaryWin",
+    // recessBell (#124) — the 下課打鐘 school-recess chime rung ONCE as the
+    // 中場/備戦 window opens (intermissionAudio.RECESS_BELL). It fires on the
+    // scene-entry edge itself, so warming it with the scene is the only way it
+    // is ready in time; it is also the heaviest clip in this bucket (~26 s).
+    "recessBell",
     ...COUNTDOWN_SFX,
   ],
   battleStart: [],

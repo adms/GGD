@@ -1,0 +1,28 @@
+{
+  "id": "godie-h01n.passive",
+  "schema": "ability@1",
+  "name": "79-00 靈壓",
+  "description": "[靈氣]\n0秒冷卻時間\n\n一護本身具有的強大靈力，初始法力值較一般人高，且此靈力產生的強大靈壓能降低範圍500內敵人攻擊速度25%。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0.0
+  ],
+  "manaCost": [
+    0.0
+  ],
+  "range": 0,
+  "radius": 9.17,
+  "targetsEnemies": true,
+  "effects": [],
+  "passive": {
+    "name": "79-00 靈壓",
+    "ranks": [
+      {
+        "modifiers": []
+      }
+    ]
+  }
+}

@@ -116,7 +116,18 @@ describe("cast-time coverage (tiered by how punishing the ability is)", () => {
 
   it("passive-only abilities carry NO castTimeSec — the sim can never read it", () => {
     const passives = all.filter(isPassiveOnly);
-    expect(passives.map((d) => d.id).sort()).toEqual([...EXEMPT_PASSIVE_ONLY].sort());
+    // The FROZEN list is about the five CASTABLE slots: those are the ones the
+    // telegraph lane rewrote, so a new passive-only Q/W/E/R/EX means someone
+    // silently disarmed an ability and must come back here and say so.
+    //
+    // slot "PASSIVE" (the level-1 天生技, the 6th slot) is deliberately NOT in
+    // it: ~51 of the 108 recovered innates are passive-TYPE by construction, so
+    // pinning them here would turn one roster-wide content import into 51 edits
+    // of a list that documents nothing. The invariant that matters — no
+    // castTimeSec on anything that can never be cast — is asserted on ALL of
+    // them below, PASSIVE included.
+    const castable = passives.filter((d) => d.slot !== "PASSIVE");
+    expect(castable.map((d) => d.id).sort()).toEqual([...EXEMPT_PASSIVE_ONLY].sort());
     for (const d of passives) expect(d.castTimeSec).toBeUndefined();
   });
 

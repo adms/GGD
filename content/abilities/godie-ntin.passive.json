@@ -1,0 +1,34 @@
+{
+  "id": "godie-ntin.passive",
+  "schema": "ability@1",
+  "name": "23-00 雷光枷鎖",
+  "description": "[輔助]\n35秒冷卻時間\n\n雷光枷鎖可以緩慢對手的移動速度2秒，並且暫停對手動作0.5秒。",
+  "slot": "PASSIVE",
+  "innateKind": "active",
+  "castType": "targeted",
+  "maxRank": 1,
+  "cooldown": [
+    35
+  ],
+  "manaCost": [
+    75
+  ],
+  "range": 11,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "applyStatus",
+      "statusId": "slow40",
+      "duration": 2,
+      "moveSpeedMult": 0.5
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "burnstun",
+      "duration": 0.5,
+      "stun": true
+    }
+  ],
+  "vfxKey": "fx.prim.lightning.pulse",
+  "castTimeSec": 0.5
+}

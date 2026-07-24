@@ -1,0 +1,32 @@
+{
+  "id": "godie-hpal.passive",
+  "schema": "ability@1",
+  "name": "35-00 召喚佩",
+  "description": "[輔助]\n60秒冷卻時間\n\n召喚佩，只要佩在八雲身邊，每秒可以回復八雲1%的生命點數，並且依照佩的狀況可以適時的增強八雲的招式。",
+  "slot": "PASSIVE",
+  "innateKind": "active",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    120.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "healthRegen",
+          "op": "flat",
+          "value": 6.0
+        }
+      ],
+      "duration": 60.0
+    }
+  ],
+  "vfxKey": "fx.prim.void.summon",
+  "castTimeSec": 0.3
+}

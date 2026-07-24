@@ -1,0 +1,23 @@
+{
+  "id": "godie-udre.passive",
+  "schema": "ability@1",
+  "name": "11-00 三刀流",
+  "description": "[輔助]\n30秒冷卻時間\n\n使出三刀流，增加自身攻擊速度75%，但是每秒損失12點生命值，持續15秒，期間可增加鬼氣九刀流和三千世界傷害。",
+  "slot": "PASSIVE",
+  "innateKind": "active",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [30.0],
+  "manaCost": [45.0],
+  "range": 0,
+  "effects": [
+    { "kind": "applyBuff",
+      "modifiers": [
+        { "stat": "as", "op": "pctAdd", "value": 0.75 },
+        { "stat": "healthRegen", "op": "flat", "value": -12.0 }
+      ],
+      "duration": 15.0 }
+  ],
+  "vfxKey": "fx.prim.wind.pulse",
+  "castTimeSec": 0.3
+}

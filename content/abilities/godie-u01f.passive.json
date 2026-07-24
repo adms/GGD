@@ -1,0 +1,15 @@
+{
+  "id": "godie-u01f.passive",
+  "schema": "ability@1",
+  "name": "16-00 通靈能力",
+  "description": "[被動]\n0秒冷卻時間\n\n因為它是陰陽兩界的通靈人，同時因為他是個好人所以他看的到隱藏在世界上的東西。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [0.0],
+  "manaCost": [0.0],
+  "range": 0,
+  "effects": [],
+  "passive": { "name": "16-00 通靈能力", "ranks": [{ "modifiers": [] }] }
+}

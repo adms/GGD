@@ -1,0 +1,33 @@
+{
+  "id": "godie-o02w.passive",
+  "schema": "ability@1",
+  "name": "96-00 天香斷續膠",
+  "description": "[輔助]\n60秒冷卻時間\n\n來自北嶽恆山的治傷靈藥，能在10內恢復500點生命。",
+  "slot": "PASSIVE",
+  "innateKind": "active",
+  "castType": "targeted",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    100.0
+  ],
+  "range": 11.0,
+  "targetsEnemies": false,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "healthRegen",
+          "op": "flat",
+          "value": 50.0
+        }
+      ],
+      "duration": 10.0
+    }
+  ],
+  "vfxKey": "fx.prim.nature.pulse",
+  "castTimeSec": 0.3
+}

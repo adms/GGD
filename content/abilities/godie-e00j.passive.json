@@ -1,0 +1,26 @@
+{
+  "id": "godie-e00j.passive",
+  "schema": "ability@1",
+  "name": "95-00 紅色龍氣",
+  "description": "[輔助]\n30秒冷卻時間\n\n運用龍氣調整呼吸與氣的流動，能夠在短時間內重新進入戰鬥姿態。施展成功後將恢復10%的生命與法力，並且10秒內施展的技能會附加龍氣效果。",
+  "slot": "PASSIVE",
+  "innateKind": "active",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    30.0
+  ],
+  "manaCost": [
+    0.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "restore",
+      "healthPct": 0.1,
+      "manaPct": 0.1
+    }
+  ],
+  "vfxKey": "fx.prim.fire.pulse",
+  "castTimeSec": 0.3
+}

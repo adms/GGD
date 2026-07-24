@@ -803,9 +803,9 @@ Four new `sfx` keys in `content/config/audio-map.json` (the existing map already
 | key | moment | source | notes |
 |---|---|---|---|
 | `guardianWake` | first damage taken | 効果音ラボ `sfx/lab/cast-circle.mp3` pitched −25%, or a new `GENERATE.sh` entry | one-shot, `maxConcurrent 1` |
-| `guardianVolley` | mark stamped (the telegraph's *start*) | `sfx/lab/magic-lightning.wav` at low gain | must be audible off-screen — this is the tell |
-| `guardianImpact` | volley resolves | `sfx/lab/impact-heavy.wav` | `cooldownMs` throttled: three marks can land in one frame |
-| `guardianSlain` | the killing blow | `sfx/lab/match-end-gong.wav` + `sfx/lab/explosion.mp3` layered | the round's biggest non-victory sound |
+| `guardianVolley` | mark stamped (the telegraph's *start*) | `sfx/lab/magic-lightning.mp3` at low gain | must be audible off-screen — this is the tell |
+| `guardianImpact` | volley resolves | `sfx/lab/impact-heavy.mp3` | `cooldownMs` throttled: three marks can land in one frame |
+| `guardianSlain` | the killing blow | `sfx/lab/match-end-gong.mp3` + `sfx/lab/explosion.mp3` layered | the round's biggest non-victory sound |
 
 **Licensing:** the 効果音ラボ pack is **free for commercial use, credit optional** — filed with the
 CC0 courtesy credits, *not* with the mandatory rows (`content/assets/audio/README.md:798-822`).

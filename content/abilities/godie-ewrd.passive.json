@@ -1,0 +1,37 @@
+{
+  "id": "godie-ewrd.passive",
+  "schema": "ability@1",
+  "name": "17-00 右腕焰增",
+  "description": "[輔助]\n70秒冷卻時間\n\n右手的穴道全開增加100%的攻擊速度，以及100%的破壞力，可持續10秒。",
+  "slot": "PASSIVE",
+  "innateKind": "active",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    70.0
+  ],
+  "manaCost": [
+    0.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "pctAdd",
+          "value": 1.0
+        },
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 1.0
+        }
+      ],
+      "duration": 10.0
+    }
+  ],
+  "vfxKey": "fx.prim.fire.pulse",
+  "castTimeSec": 0.3
+}

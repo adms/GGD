@@ -240,6 +240,7 @@
     "godie"
   ],
   "exAbility": "godie-huth.ex",
+  "passiveAbility": "godie-huth.passive",
   "passive": {
     "name": "28-00 無限再生",
     "modifiers": [

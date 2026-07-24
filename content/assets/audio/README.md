@@ -332,17 +332,17 @@ each clip's synthesis recipe.
 
 | clip | → `audio-map` event | character |
 | --- | --- | --- |
-| `windup.wav` | `attackWindup` | soft low "tk" tell |
-| `swing.wav` | `basicAttack` | pink-noise air whoosh |
-| `thud.wav` | `basicAttackHit` | 150→60 Hz body + bright snap (meatiest) |
-| `tick.wav` | `damage` | hair-thin high confirm tick (fires per packet) |
-| `launch.wav` | `projectileSpawn` | descending "pew" chirp |
-| `impact.wav` | `projectileHit` | brighter/shorter splat (≠ auto-hit) |
-| `cast_begin.wav` | `castBegin` | rising 300→900 Hz chirp + octave |
-| `cast_end.wav` | `castEnd` | A5+E6 release ping |
-| `cast_break.wav` | `castInterrupt` | 700→150 Hz down-sweep + thump (≠ cast) |
-| `chime_soft.wav` | `flowerSpawn` | quiet E5+B5 ambient chime |
-| `chime_burst.wav` | `flowerBurst` | brighter A5+E6+A6 bloom + sparkle (reward) |
+| `windup.mp3` | `attackWindup` | soft low "tk" tell |
+| `swing.mp3` | `basicAttack` | pink-noise air whoosh |
+| `thud.mp3` | `basicAttackHit` | 150→60 Hz body + bright snap (meatiest) |
+| `tick.mp3` | `damage` | hair-thin high confirm tick (fires per packet) |
+| `launch.mp3` | `projectileSpawn` | descending "pew" chirp |
+| `impact.mp3` | `projectileHit` | brighter/shorter splat (≠ auto-hit) |
+| `cast_begin.mp3` | `castBegin` | rising 300→900 Hz chirp + octave |
+| `cast_end.mp3` | `castEnd` | A5+E6 release ping |
+| `cast_break.mp3` | `castInterrupt` | 700→150 Hz down-sweep + thump (≠ cast) |
+| `chime_soft.mp3` | `flowerSpawn` | quiet E5+B5 ambient chime |
+| `chime_burst.mp3` | `flowerBurst` | brighter A5+E6+A6 bloom + sparkle (reward) |
 
 `attackWindup` / `basicAttack` / `basicAttackHit` are three deliberately
 different sounds (tell → swing → thud) so a hit reads distinctly from a miss;
@@ -834,7 +834,7 @@ for the tail) → gain → encode. **WAV** (16-bit PCM) for transient-led clips
 ≤ ~2 s, where MP3 encoder delay would shift a 40 ms attack; **MP3** (libmp3lame
 192 kbps CBR mono) for longer tonal beds and all voice. Four clips that still had
 signal above −35 dB at their last 25 ms get a 20 ms fade-out so the buffer does
-not end on a non-zero sample and click — `bow-draw.wav` is the important one, the
+not end on a non-zero sample and click — `bow-draw.mp3` is the important one, the
 source itself cuts off mid-creak.
 
 SFX are **peak-normalised to −3.0 dBFS**, exactly like `sfx/fx/*.wav`. Voice is
@@ -857,7 +857,7 @@ warns — does not fail — when a clip drifts off the −3.0 dB SFX peak target
 of the voice band. Run `python3 content/assets/audio/sfx/lab/VERIFY.py`; it
 covers `voice-jp/` too and exits non-zero on any failure.
 
-Measured levels are recorded per clip; note `magic-fire.wav`, whose source peaks
+Measured levels are recorded per clip; note `magic-fire.mp3`, whose source peaks
 at 0.0 dBFS and whose mono downmix overshoots full scale — the builder
 re-measures after the stage write and corrects (final −5.6 dB, not the −3.0 a
 single pass produces). Every peak in the manifest is measured, not assumed.
@@ -866,11 +866,11 @@ single pass produces). Every peak in the manifest is measured, not assumed.
 
 Live in `content/config/audio-map.json` today:
 
-- **`block`** → `lab/block-clash.wav` + `lab/block-shield.wav` @ gain 0.63,
-  replacing `fx/guard.wav`. 防禦 is weapon-agnostic, and the two members sit
+- **`block`** → `lab/block-clash.mp3` + `lab/block-shield.mp3` @ gain 0.63,
+  replacing `fx/guard.mp3`. 防禦 is weapon-agnostic, and the two members sit
   ±1.6 dB around the old pool level so the event's perceived loudness is
   unchanged.
-- **`whiff`** → `lab/whiff-sword.wav` @ gain 0.43, replacing `fx/whiff.wav`
+- **`whiff`** → `lab/whiff-sword.mp3` @ gain 0.43, replacing `fx/whiff.mp3`
   (−21.7 dB mean vs −21.0 — a true drop-in).
 
 Sixteen more events are **authored with tuned gain/cooldown/voice-cap but emit

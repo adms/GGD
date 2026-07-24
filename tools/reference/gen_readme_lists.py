@@ -29,6 +29,10 @@ WHAT CHANGED (2026-07, three real causes the owner reported):
      shows each ability's NAME + a one-line effect gist per slot — the readable
      overview the owner asked for. The full untruncated text stays in
      docs/reference/abilities.md and the #codex page.
+  5. A champion is SIX slots, not five: the 天生技 (w3x `NN-00`, owned from level
+     1) is a real slot and it leads the kit. The importer had dropped it; the
+     archaeology pass recovered 108 of the 111 that have one. Every kit list here
+     now starts with 天生 and the census counts PASSIVE.
 
 WHAT IT READS: nothing but content/ and the operator whitelist — the loader is
 `build_context()` in gen_reference.py, shared with the docs/reference/*.md
@@ -144,9 +148,15 @@ def empty_open_warning(kind):
 # ---------------------------------------------------------------------------
 
 def kit_slots(c, ctx):
-    """Yield (slot, ability_doc) for Q/W/E/R (embedded in the champion doc) and
-    EX (a ref resolved through ctx['ability_by_id']), in slot order, skipping
-    empties."""
+    """Yield (label, ability_doc) for all SIX slots, in slot order, skipping
+    empties: 天生 (the `passiveAbility` ref — level 1, leads the kit), Q/W/E/R
+    (embedded in the champion doc) and EX (a ref). Both refs resolve through
+    ctx['ability_by_id']; the passive is never embedded, deliberately."""
+    passive = c.get("passiveAbility")
+    if passive:
+        a = ctx["ability_by_id"].get(passive)
+        if a:
+            yield "天生", a
     abils = c.get("abilities") or {}
     for slot in ("Q", "W", "E", "R"):
         a = abils.get(slot)
@@ -160,15 +170,20 @@ def kit_slots(c, ctx):
 
 
 def kit_bullets(c, ctx):
-    """One '- **SLOT** 名稱：一行效果' bullet per ability. The NAME is the
-    human-readable id (e.g. '22-01 鬼隱之擊'); the gist strips the [標籤]/冷卻
-    boilerplate and truncates. This is cause #4: readable, not raw ids.
+    """One '- **SLOT** 名稱：一行效果' bullet per ability, SIX per champion
+    (天生 first, then Q/W/E/R/EX). The NAME is the human-readable id (e.g.
+    '22-01 鬼隱之擊'); the gist strips the [標籤]/冷卻 boilerplate and truncates.
+    This is cause #4: readable, not raw ids.
 
     Rendered as a nested bullet list under each champion — it reads cleanly on
     GitHub and, unlike a wide table cell holding five name+effect entries, never
     blows the table width."""
     out = []
     for slot, a in kit_slots(c, ctx):
+        if slot == "天生":
+            # 被動 aura/proc vs a real cooldown'd innate active is the one thing a
+            # reader needs disambiguated on this slot — `innateKind` says which.
+            slot = G.INNATE_LABEL.get(a.get("innateKind"), slot)
         name = G.cell(a.get("name") or a.get("id"))
         gist = G.one_line(a.get("description"), LIMIT_KIT_GIST) or G.effect_summary(a) or "—"
         out.append(f"- **{slot}** {name}：{G.cell(gist)}")
@@ -182,9 +197,10 @@ def gen_roster(ctx):
     open_ids = ctx["open_champions"]
     open_rows = [c for c in champs if c["id"] in open_ids]
     closed_n = len(champs) - len(open_rows)
+    open_no_passive = [c for c in open_rows if not c.get("passiveAbility")]
 
     L = [
-        f"#### 開放名單 OPEN roster（{len(open_rows)} 名）— 角色 + 技能",
+        f"#### 開放名單 OPEN roster（{len(open_rows)} 名）— 角色 + 六個技能 slot",
         "",
     ]
     L += note([
@@ -192,11 +208,26 @@ def gen_roster(ctx):
         f"真相在 `data/curation/whitelist.json`，由 platform 的 `GET /api/v1/curation/whitelist` "
         f"提供、game-server 在建房時執行。來源：{ctx['whitelist_note']}",
         "",
-        "每名英雄一格：**`id` 全名**（稱號 · 職業 · 攻擊）— 一句話說明，底下五條是 Q/W/E/R/EX "
-        f"的**技能名稱＋一行效果**。效果截斷到 {LIMIT_KIT_GIST} 字、說明截斷到 "
+        "每名英雄一格：**`id` 全名**（稱號 · 職業 · 攻擊）— 一句話說明，底下**六條**是"
+        "**天生技（等級 1 就有）＋ Q/W/E/R/EX** 的**技能名稱＋一行效果**。"
+        "天生技那條會標 `天生·被動`（光環／機率觸發／回復類）或 `天生·主動`（有冷卻、"
+        "原本掛在 D 鍵的）。"
+        f"效果截斷到 {LIMIT_KIT_GIST} 字、說明截斷到 "
         f"{LIMIT_CHAMPION_DESC} 字，結尾的 `…` 是產生器加的。完整逐字內容在 "
         f"[`{DOC_ABILITIES}`](./{DOC_ABILITIES}) 或 <http://localhost:39527/#codex>。",
     ])
+    if open_no_passive:
+        who = "、".join(
+            f"**{G.cell(G.split_champion_name(c.get('name', ''))[1])}**（`{c['id']}`）"
+            for c in open_no_passive
+        )
+        all_no_passive = sum(1 for c in champs if not c.get("passiveAbility"))
+        L += note([
+            f"ℹ️ 其中 {who}只有五條 —— 沒有 `NN-00` 天生技，"
+            "**這是還原出來的事實，不是漏掉**"
+            f"（全 {len(champs)} 名裡共 {all_no_passive} 名，逐一原因見 "
+            f"[`{DOC_ROSTER}`](./{DOC_ROSTER})）。",
+        ])
 
     if not open_rows:
         L += empty_open_warning("英雄")
@@ -237,7 +268,12 @@ def gen_abilities(ctx):
     counts = {}
     for a in abils:
         counts[a.get("slot")] = counts.get(a.get("slot"), 0) + 1
-    census = " · ".join(f"{s} {counts.get(s, 0)}" for s in ("Q", "W", "E", "R", "EX"))
+    census = " · ".join(
+        f"{'天生 ' if s == 'PASSIVE' else ''}{s} {counts.get(s, 0)}" for s in G.SLOTS
+    )
+    innate = [a for a in abils if a.get("slot") == "PASSIVE"]
+    innate_p = sum(1 for a in innate if a.get("innateKind") == "passive")
+    innate_a = sum(1 for a in innate if a.get("innateKind") == "active")
 
     open_abil_n = sum(1 for a in abils if owner_of.get(a["id"]) in open_champ)
 
@@ -246,11 +282,17 @@ def gen_abilities(ctx):
         "",
     ]
     L += note([
-        "**開放英雄的每一個技能，都已經印在上面的開放名冊裡**（每名英雄 Q/W/E/R/EX 五條，"
-        "含名稱與一行效果）。這裡不再重印一次，只放全表的統計與連結，讓 README 保持精簡。",
+        "**開放英雄的每一個技能，都已經印在上面的開放名冊裡**（每名英雄六條：天生 ＋ "
+        "Q/W/E/R/EX，含名稱與一行效果）。這裡不再重印一次，只放全表的統計與連結，"
+        "讓 README 保持精簡。",
         "",
-        f"每個英雄每個 slot 一份：{census}。`slot` 只有 Q/W/E/R/EX 五種 —— **被動不是一個 slot**，"
-        "它掛在某個 QWER 技能上（`型態` 欄標「被動」的就是）；全樹沒有任何 `xx-00` 被動技能文件。",
+        f"每個英雄每個 slot 一份：{census}。**`slot` 有六種**，`PASSIVE`（天生技，w3x 的 "
+        f"`NN-00`）跟 Q/W/E/R/EX 一樣是一個 slot，而且**等級 1 就擁有**；共 {len(innate)} 份"
+        f"（{innate_p} 純被動 ＋ {innate_a} 有冷卻的天生主動），由 champion doc 的 "
+        "`passiveAbility` 指到 `<championId>.passive`。",
+        "",
+        "⚠️ 別跟舊的 `champion.passive` 區塊混為一談：那是掛在某個 QWER 技能上的被動型效果"
+        "（`型態` 欄標「被動」的那些），跟天生技 slot 是兩回事。",
         "",
         "數值是 `content/` 的**原始值**，未套用 `combat-env` 全域倍率 —— 遊戲內顯示的一律是乘算後的"
         "最終值，所以畫面上的冷卻／傷害跟表格不會相同。那是預期行為。",

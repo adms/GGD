@@ -1,0 +1,32 @@
+{
+  "id": "godie-huth.passive",
+  "schema": "ability@1",
+  "name": "28-00 無限再生",
+  "description": "[被動]\n0秒冷卻時間\n\n魔人普烏天生擁有快速的肉體再生能力，每秒回覆12點生命。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0.0
+  ],
+  "manaCost": [
+    0.0
+  ],
+  "range": 0,
+  "effects": [],
+  "passive": {
+    "name": "28-00 無限再生",
+    "ranks": [
+      {
+        "modifiers": [
+          {
+            "stat": "healthRegen",
+            "op": "flat",
+            "value": 12.0
+          }
+        ]
+      }
+    ]
+  }
+}

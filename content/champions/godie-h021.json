@@ -202,5 +202,6 @@
     "godie",
     "voxel-standin"
   ],
-  "icon": "assets/icons/champions/godie-h021.png"
+  "icon": "assets/icons/champions/godie-h021.png",
+  "passiveAbility": "godie-h021.passive"
 }

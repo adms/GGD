@@ -1,0 +1,44 @@
+{
+  "id": "godie-o02o.passive",
+  "schema": "ability@1",
+  "name": "87-00 虛空碎靈",
+  "description": "[輔助]\n60秒冷卻時間\n\n從虛空之中發出無人能敵的霸氣，粉碎敵人的靈魂，奪走附近敵人的攻擊力、裝甲以及魔力，持續5秒。",
+  "slot": "PASSIVE",
+  "innateKind": "active",
+  "castType": "ground",
+  "maxRank": 1,
+  "cooldown": [
+    45
+  ],
+  "manaCost": [
+    150
+  ],
+  "range": 0,
+  "radius": 9.17,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": -1
+        },
+        {
+          "stat": "armor",
+          "op": "flat",
+          "value": -999
+        },
+        {
+          "stat": "manaRegen",
+          "op": "flat",
+          "value": -9999
+        }
+      ],
+      "duration": 5
+    }
+  ],
+  "vfxKey": "fx.prim.void.nova-lg",
+  "castTimeSec": 0.5
+}

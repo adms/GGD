@@ -1,0 +1,26 @@
+{
+  "id": "godie-o00l.passive",
+  "schema": "ability@1",
+  "name": "53-00 空間穿梭",
+  "description": "[輔助]\n10秒冷卻時間\n\n讓一個部隊能在空間穿梭，使敵方無法直接看見，如果部隊展開攻擊，使用能力或是施展法術，就會為人所見。\n持續20秒。",
+  "slot": "PASSIVE",
+  "innateKind": "active",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    10.0
+  ],
+  "manaCost": [
+    200.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "spawnVfx",
+      "vfxId": "fx.prim.void.pulse",
+      "at": "self",
+      "durationSec": 20.0
+    }
+  ],
+  "castTimeSec": 0.3
+}

@@ -1,0 +1,28 @@
+{
+  "id": "godie-hvwd.passive",
+  "schema": "ability@1",
+  "name": "02-00 淨化",
+  "description": "[輔助]\n60秒冷卻時間\n\n淨化移除所有的異常狀態，並可以緩慢對手4秒，燃燒50點瑪那。",
+  "slot": "PASSIVE",
+  "innateKind": "active",
+  "castType": "targeted",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    75.0
+  ],
+  "range": 11.0,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "applyStatus",
+      "statusId": "root",
+      "duration": 4.0,
+      "root": true
+    }
+  ],
+  "vfxKey": "fx.prim.holy.pulse",
+  "castTimeSec": 0.4
+}

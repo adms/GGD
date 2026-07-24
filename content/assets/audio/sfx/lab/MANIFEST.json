@@ -32,27 +32,27 @@
   "target": "mono, 44.1 kHz — mono so WebAudio can spatialise, 44.1 kHz to match sfx/fx/ and the rest of the tree.",
   "wavVsMp3": "16-bit PCM WAV for short transient-led clips (the attack carries the information; MP3 encoder delay/padding is applied inconsistently by browser decodeAudioData and would shift a 40 ms attack). libmp3lame 192 kbps CBR mono for the longer tonal/ambient beds and for all voice, where a few ms of leading padding is inaudible and the size saving is real. Boundary used: transient-led AND <= ~2.0 s post-trim -> WAV, else MP3.",
   "trim": "silenceremove at -55 dB peak on both ends (via areverse), retaining 20 ms of pad, so a soft attack is never clipped.",
-  "declick": "Clips whose signal still exceeds -35 dB at the final 25 ms get a 20 ms fade-out, so the buffer does not end on a non-zero sample and click. Applied to exactly 4 clips (see per-clip `processing`). bow-draw.wav is the important one: 弓を引き絞る1 is a sustained creak that the SOURCE cuts off mid-signal.",
+  "declick": "Clips whose signal still exceeds -35 dB at the final 25 ms get a 20 ms fade-out, so the buffer does not end on a non-zero sample and click. Applied to exactly 4 clips (see per-clip `processing`). bow-draw.mp3 is the important one: 弓を引き絞る1 is a sustained creak that the SOURCE cuts off mid-signal.",
   "sfxNormalisation": "peak-normalised to -3.0 dBFS, exactly like sfx/fx/*.wav. Relative loudness between events is set by `gain` in content/config/audio-map.json, NEVER by re-rendering the file.",
   "voiceNormalisation": "mean -15.0 dB with a -1.5 dB peak ceiling — the same targetMeanDb/peakCeilingDb the announcer generator (tools/tts-gen) applies, so these land in the announcer band (-15.0..-18.2 dB mean) and can sit in the same pools without a level seam.",
-  "clippingNote": "magic-fire.wav's source peaks at 0.0 dBFS and its mono downmix overshoots full scale, so the first gain estimate read back off a clamped 16-bit stage file. The builder re-measures and corrects (final gain -5.6 dB, not the -3.0 a single pass would have produced). Every peak below is verified, not assumed.",
+  "clippingNote": "magic-fire.mp3's source peaks at 0.0 dBFS and its mono downmix overshoots full scale, so the first gain estimate read back off a clamped 16-bit stage file. The builder re-measures and corrects (final gain -5.6 dB, not the -3.0 a single pass would have produced). Every peak below is verified, not assumed.",
   "sampleRateNote": "The voice clips are kept at 44.1 kHz even though announcer/*.mp3 and voices/names/*.mp3 are 22.05 kHz. Those two packs are Apple-`say` MACHINE TTS placeholders whose 22.05 kHz is an artefact of the generator; these are real 44.1 kHz recordings and downsampling to 'match' a placeholder would be a pure quality loss."
  },
  "bindingNote": "PARTIALLY WIRED as of the #51 ledger phase, once task #40 had LANDED (announcer pools are announcer/-only and announcer.ja-JP.json is in place). `ggdEvent` on each clip remains the INTENDED binding and `suggestedGain` an equal-loudness starting point computed as anchorGain * 10^((anchorMeanDb - thisMeanDb)/20) against the clip named in `gainAnchor` — a starting value for a human ear, not a measured result. Events written `abilityCast:fire` are per-ability overrides, not new top-level events. What ACTUALLY landed in content/config/audio-map.json is recorded in `bindings` below; the per-clip `ggdEvent` was NOT rewritten, so where the two disagree `bindings` is the authority.",
  "bindings": {
   "route": "Surgical additive edit to content/config/audio-map.json. Two existing pools were replaced with real recordings; sixteen NEW event keys were authored. Nothing else in the file was touched, and no announcer/system pool was touched at all.",
   "live": {
-   "whiff": "lab/whiff-sword.wav @ gain 0.43, cooldownMs 120, maxConcurrent 2 — replaced fx/whiff.wav (-21.7 dB mean vs -21.0, a true drop-in).",
-   "blockReverted": "block-clash.wav + block-shield.wav were briefly the `block` pool but were REVERTED to the synth fx/guard.wav + fx/block-hit.wav during the hit-feel re-cut: the lab samples RING (long metallic resonance) and muddied the block clank. packages/shared/src/content/audioAssets.test.ts now HARD-ASSERTS no clip may point at lab/block-(clash|shield).wav. Do not re-wire them — they are unbound by decision, not oversight."
+   "whiff": "lab/whiff-sword.mp3 @ gain 0.43, cooldownMs 120, maxConcurrent 2 — replaced fx/whiff.mp3 (-21.7 dB mean vs -21.0, a true drop-in).",
+   "blockReverted": "block-clash.mp3 + block-shield.mp3 were briefly the `block` pool but were REVERTED to the synth fx/guard.mp3 + fx/block-hit.mp3 during the hit-feel re-cut: the lab samples RING (long metallic resonance) and muddied the block clank. packages/shared/src/content/audioAssets.test.ts now HARD-ASSERTS no clip may point at lab/block-(clash|shield).wav. Do not re-wire them — they are unbound by decision, not oversight."
   },
   "firedByShopUi": {
    "note": "Wired at the #38/#44 shop + #44 HUD landing. Emit sites: apps/client/src/ui/panels/shopFeedback.ts (DENY/BUY/SELL/OPEN/CLOSE) consumed by MerchantShop.tsx, and ui/abilityCue.ts (uiDenied on an invalid ability press).",
    "events": {
-    "uiDenied": "lab/ui-denied.wav @ 0.31 / 250 / 2 — #44 shop 無金幣 / 已擁有 / 無空位 + invalid ability press",
-    "uiCancel": "lab/ui-cancel.wav @ 0.33 / 60 / 3 — panel back/close",
-    "panelOpen": "lab/panel-open.wav @ 0.24 / 150 / 2 — #38 prep-phase shop/skill panel",
-    "shopPurchase": "lab/shop-purchase.wav @ 0.38 / 250 / 2 — #44",
-    "goldGain": "lab/gold-gain.wav @ 1.51 / 300 / 2"
+    "uiDenied": "lab/ui-denied.mp3 @ 0.31 / 250 / 2 — #44 shop 無金幣 / 已擁有 / 無空位 + invalid ability press",
+    "uiCancel": "lab/ui-cancel.mp3 @ 0.33 / 60 / 3 — panel back/close",
+    "panelOpen": "lab/panel-open.mp3 @ 0.24 / 150 / 2 — #38 prep-phase shop/skill panel",
+    "shopPurchase": "lab/shop-purchase.mp3 @ 0.38 / 250 / 2 — #44",
+    "goldGain": "lab/gold-gain.mp3 @ 1.51 / 300 / 2"
    }
   },
   "firedByAudioLane": {
@@ -60,10 +60,10 @@
    "events": {
     "heal": "lab/magic-heal.mp3 @ 0.41 / 400 / 2 — combatSfx: sim `heal` event (flower/ability/lifesteal/item); passthrough (map key == event name), warmed with combat",
     "abilityRankUp": "lab/ability-rank-up.mp3 @ 0.24 / 250 / 2 — combatSfx: sim `rankUp` event RENAMED (event ≠ map key); warmed with combat",
-    "lowHealth": "lab/low-health.wav @ 1.0 / 3000 / 1 — AudioDirector: crossedIntoLowHealth() on localHp/localMaxHp/localAlive, one edge on the downward 30% crossing (respawn re-arms); rare → lazy-loaded",
+    "lowHealth": "lab/low-health.mp3 @ 1.0 / 3000 / 1 — AudioDirector: crossedIntoLowHealth() on localHp/localMaxHp/localAlive, one edge on the downward 30% crossing (respawn re-arms); rare → lazy-loaded",
     "levelUpJingle": "lab/level-up-jingle.mp3 @ 1.17 / 1000 / 1 — AudioDirector tally: LAYERED beside the levelUp VO; rare → lazy-loaded",
     "exUnlockSting": "lab/magic-holy.mp3 @ 1.6 / 2500 / 1 — AudioDirector tally: LAYERED beside the exUnlock VO; rare → lazy-loaded",
-    "matchStartGong": "lab/match-start-gong.wav @ 1.6 / 3000 / 1 — AudioDirector: layered under the matchStart VO on the shell→match edge; warmed with champSelect",
+    "matchStartGong": "lab/match-start-gong.mp3 @ 1.6 / 3000 / 1 — AudioDirector: layered under the matchStart VO on the shell→match edge; warmed with champSelect",
     "matchEndGong": "lab/match-end-gong.mp3 @ 1.11 / 3000 / 1 — AudioDirector: → matchEnd phase edge, under the victory/defeat sting; warmed with victory+defeat",
     "vsReveal": "lab/vs-reveal.mp3 @ 1.58 / 2000 / 1 — AudioDirector: * → champSelect phase edge (the champ-select entry flourish); warmed with champSelect",
     "settlementReveal": "lab/settlement-reveal.mp3 @ 0.36 / 1000 / 1 — MatchEndPanel: one-shot the instant the ranking card is revealed (#25/#36); warmed with victory+defeat"
@@ -77,7 +77,7 @@
    }
   },
   "forbiddenBindings": "matchStart, levelUp and exUnlock are ANNOUNCER-VO-ONLY pools. Task #40 made every system broadcast Japanese and packages/shared/src/content/announcerVo.test.ts asserts those pools contain nothing outside assets/audio/announcer/. That is why the gong, the jingle and the holy sting got their OWN keys (matchStartGong / levelUpJingle / exUnlockSting) — they are meant to be LAYERED ALONGSIDE the VO, never mixed into its pool. Do not 'simplify' them back.",
-  "deliberatelyUnbound": "Every weapon clip (attack-sword-1/2, attack-greatsword, attack-katana, bow-draw, arrow-release, arrow-pierce, gunshot, impact-heavy), cast-circle, and the three elemental casts (magic-fire, magic-ice, magic-lightning). basicAttack / projectileSpawn / projectileHit / attackWindup / abilityCast are single GLOBAL events — GGD has no per-weapon or per-ability audio routing — so a katana slash bound there lands on a mage's staff and a fletched arrow on a fireball. Secondary blockers recorded per clip in the CREDITS.md ledger: attack-katana is +7.4 dB vs the pool anchor, attack-greatsword is 1.70 s against a 90 ms cooldown, cast-circle is 3.50 s against castBegin's 120 ms cooldown, and impact-heavy would fight fx/crit.wav's rising-sting legibility. These clips are the raw material for per-weapon routing (client-audio work), not a drop-in upgrade.",
+  "deliberatelyUnbound": "Every weapon clip (attack-sword-1/2, attack-greatsword, attack-katana, bow-draw, arrow-release, arrow-pierce, gunshot, impact-heavy), cast-circle, and the three elemental casts (magic-fire, magic-ice, magic-lightning). basicAttack / projectileSpawn / projectileHit / attackWindup / abilityCast are single GLOBAL events — GGD has no per-weapon or per-ability audio routing — so a katana slash bound there lands on a mage's staff and a fletched arrow on a fireball. Secondary blockers recorded per clip in the CREDITS.md ledger: attack-katana is +7.4 dB vs the pool anchor, attack-greatsword is 1.70 s against a 90 ms cooldown, cast-circle is 3.50 s against castBegin's 120 ms cooldown, and impact-heavy would fight fx/crit.mp3's rising-sting legibility. These clips are the raw material for per-weapon routing (client-audio work), not a drop-in upgrade.",
   "ledger": "content/assets/CREDITS.md — section '効果音ラボ / Sound Effect Lab pack'. Summary + pipeline + regeneration story in content/assets/audio/README.md."
  },
  "phase2": {
@@ -105,26 +105,118 @@
    "explosion": "lab/explosion.mp3 @ 0.6 / 300 / 3 — AoE/explosion blast (#39 VFX pairing); preload: combat."
   },
   "perWeaponRouting": {
-   "note": "Group B — SUPERSEDES the `bindings.deliberatelyUnbound` note FOR THESE CLIPS ONLY. They were unbound because GGD had a single GLOBAL basicAttack/projectileSpawn/abilityCast event; the combat emit agent (next phase) is adding per-weapon / per-element routing, so each clip now gets its OWN top-level key in audio-map.json to route to. gain = the clip's suggestedGain from `clips`; cooldown/maxConcurrent mirror the clip's original anchor event. Left to LAZY-LOAD (not in any sfxManifest scene): a champion uses only one or two weapons, so warming all twelve would re-inflate the boot cost #63 removes. `impact-heavy.wav` is NOT in this set — it stays deliberatelyUnbound (it would fight fx/crit.wav's rising-sting legibility).",
+   "note": "Group B — SUPERSEDES the `bindings.deliberatelyUnbound` note FOR THESE CLIPS ONLY. They were unbound because GGD had a single GLOBAL basicAttack/projectileSpawn/abilityCast event; the combat emit agent (next phase) is adding per-weapon / per-element routing, so each clip now gets its OWN top-level key in audio-map.json to route to. gain = the clip's suggestedGain from `clips`; cooldown/maxConcurrent mirror the clip's original anchor event. Left to LAZY-LOAD (not in any sfxManifest scene): a champion uses only one or two weapons, so warming all twelve would re-inflate the boot cost #63 removes. `impact-heavy.mp3` is NOT in this set — it stays deliberatelyUnbound (it would fight fx/crit.mp3's rising-sting legibility).",
    "keys": {
-    "attackSword1": "lab/attack-sword-1.wav @ 0.42 / 90 / 3 (was basicAttack anchor)",
-    "attackSword2": "lab/attack-sword-2.wav @ 0.63 / 90 / 3",
-    "attackGreatsword": "lab/attack-greatsword.wav @ 0.44 / 90 / 2",
-    "attackKatana": "lab/attack-katana.wav @ 0.23 / 90 / 3",
-    "bowDraw": "lab/bow-draw.wav @ 0.57 / 130 / 2 (was attackWindup anchor)",
-    "arrowRelease": "lab/arrow-release.wav @ 1.1 / 70 / 4 (was projectileSpawn anchor)",
-    "arrowPierce": "lab/arrow-pierce.wav @ 0.43 / 60 / 4 (was projectileHit anchor)",
-    "gunshot": "lab/gunshot.wav @ 1.4 / 70 / 3 (was projectileSpawn anchor)",
-    "magicFire": "lab/magic-fire.wav @ 0.62 / 250 / 2 (was abilityCast:fire override)",
+    "attackSword1": "lab/attack-sword-1.mp3 @ 0.42 / 90 / 3 (was basicAttack anchor)",
+    "attackSword2": "lab/attack-sword-2.mp3 @ 0.63 / 90 / 3",
+    "attackGreatsword": "lab/attack-greatsword.mp3 @ 0.44 / 90 / 2",
+    "attackKatana": "lab/attack-katana.mp3 @ 0.23 / 90 / 3",
+    "bowDraw": "lab/bow-draw.mp3 @ 0.57 / 130 / 2 (was attackWindup anchor)",
+    "arrowRelease": "lab/arrow-release.mp3 @ 1.1 / 70 / 4 (was projectileSpawn anchor)",
+    "arrowPierce": "lab/arrow-pierce.mp3 @ 0.43 / 60 / 4 (was projectileHit anchor)",
+    "gunshot": "lab/gunshot.mp3 @ 1.4 / 70 / 3 (was projectileSpawn anchor)",
+    "magicFire": "lab/magic-fire.mp3 @ 0.62 / 250 / 2 (was abilityCast:fire override)",
     "magicIce": "lab/magic-ice.mp3 @ 0.64 / 250 / 2 (was abilityCast:ice override)",
-    "magicLightning": "lab/magic-lightning.wav @ 0.53 / 250 / 2 (was abilityCast:lightning override)",
+    "magicLightning": "lab/magic-lightning.mp3 @ 0.53 / 250 / 2 (was abilityCast:lightning override)",
     "castCircle": "lab/cast-circle.mp3 @ 0.94 / 1000 / 1 (was castBegin anchor; 3.5 s clip → 1 s cooldown, cap 1)"
+   }
+  },
+  "wave3EventClips": {
+   "note": "Group C — THIRD wave, five clips new to lab/ this run, downloaded WITH full per-clip provenance (unlike Group A, which had to be backfilled — see `provenanceCaveat`). These are the clips whose EMIT SITES had already landed ahead of the audio: the intermission recess bell (#124), the guardian tower's slam + last-hit payout (#89/#105) and the draft-reveal sparkle + legendary jackpot (#110/#82). audio-map.json is the authority for the gain/cooldown/maxConcurrent that landed; sfxManifest.ts is the authority for the preload bucket. ALL FIVE ARE ONE-SHOTS — none is in sfxManifest.ts SFX_LOOPABLE, and the audio-map SfxEntry carries no `loop` field (config.audio-map@1 is .strict() and has none). They stay OUT of the `clips` array for the same reason as Group A: ACQUIRE.py additionally requires sourceBytes + pre/post dB, which this acquisition did not capture. VERIFY.py still gates their on-disk format because it globs the tree, not this ledger.",
+   "licence": "効果音ラボ — 商用可・報告不要・クレジット任意 (commercial OK, no report required, credit optional). Same COURTESY bucket as the rest of lab/; NOT a mandatory-attribution asset (the CC-BY login dragon remains the only mandatory in-game credit).",
+   "processingCaveat": "RAW SOURCE BYTES as fetched — the pack's mono / peak-normalise pipeline has NOT been applied to these five. Each `suggestedGain` below is the acquisition agent's equal-loudness ESTIMATE against an existing pack anchor, and where the value that landed in audio-map.json differs it is because the cue's role (one-shot stinger vs repeated combat hit) was weighed against its siblings. recessBell in particular is a 26.03 s clip with a long decay tail and will want a trim or fade in a later processing pass.",
+   "clips": {
+    "recessBell": {
+     "key": "recessBell",
+     "file": "lab/recessBell.mp3",
+     "sourceTitle": "学校のチャイム",
+     "sourceFile": "school-chime1.mp3",
+     "sourcePage": "https://soundeffect-lab.info/sound/anime/",
+     "sourceUrl": "https://soundeffect-lab.info/sound/anime/mp3/school-chime1.mp3",
+     "category": "演出・アニメ / 放送",
+     "siteDescription": "キンコンカンコン",
+     "durationSec": 26.03,
+     "suggestedGain": 0.55,
+     "mapping": "audio-map sfx `recessBell` @ gain 0.55 / cooldownMs 5000 / maxConcurrent 1",
+     "preload": "intermission (SFX_BY_SCENE.intermission)",
+     "loop": false,
+     "licence": "効果音ラボ — 商用可・報告不要・クレジット任意 (commercial OK, no report required, credit optional). Same COURTESY bucket as the rest of lab/; NOT a mandatory-attribution asset (the CC-BY login dragon remains the only mandatory in-game credit).",
+     "note": "#124 下課打鐘 school-recess chime, rung ONCE as the 中場/備戦 window opens (intermissionAudio.RECESS_BELL). NOT on the 生活 page (/sound/various/ has only ドアチャイム / 入店チャイム) — the 4-note chime lives on 演出・アニメ under the 放送 group. Verified genuine: MPEG ADTS layer III 192 kbps 44.1 kHz JntStereo; ffprobe 26.03 s, mean -19.7 dB, peak -6.6 dB. The 5 s cooldown + single voice is deliberate: the clip's decay tail runs long, so a re-entered intermission must never stack two bells."
+    },
+    "guardianSlam": {
+     "key": "guardianSlam",
+     "file": "lab/guardianSlam.mp3",
+     "sourceTitle": "打撃4",
+     "sourceFile": "blow4.mp3",
+     "sourcePage": "https://soundeffect-lab.info/sound/battle/",
+     "sourceUrl": "https://soundeffect-lab.info/sound/battle/mp3/blow4.mp3",
+     "category": "戦闘 (battle) / 打撃",
+     "siteDescription": "岩を砕く",
+     "durationSec": 1.272,
+     "suggestedGain": 0.9,
+     "mapping": "audio-map sfx `guardianSlam` @ gain 0.9 / cooldownMs 300 / maxConcurrent 2",
+     "preload": "combat (COMBAT_SFX, shared by the fireRing scene)",
+     "loop": false,
+     "licence": "効果音ラボ — 商用可・報告不要・クレジット任意 (commercial OK, no report required, credit optional). Same COURTESY bucket as the rest of lab/; NOT a mandatory-attribution asset (the CC-BY login dragon remains the only mandatory in-game credit).",
+     "note": "#89 / #105 neutral-guardian AoE punish — the 樹人 / 石頭人 / 巨獸人 slam. Chosen over blow3/blow6 (generic thuds), super-arts-hit1 (anime finisher sting) and stone-break1/rock-break1 (debris only, no impact transient): 打撃4「岩を砕く」 IS a heavy strike shattering rock. MPEG ADTS layer III v1, 192 kbps, 48 kHz JntStereo, 1.272 s. Cap 2 (below explosion's 3) so the punish reads as ONE big hit."
+    },
+    "guardianLastHit": {
+     "key": "guardianLastHit",
+     "file": "lab/guardianLastHit.mp3",
+     "sourceTitle": "アイテムを入手1",
+     "sourceFile": "item-get1.mp3",
+     "sourcePage": "https://soundeffect-lab.info/sound/anime/",
+     "sourceUrl": "https://soundeffect-lab.info/sound/anime/mp3/item-get1.mp3",
+     "category": "演出・アニメ / その他",
+     "siteDescription": "お金",
+     "durationSec": 3.27,
+     "suggestedGain": 0.89,
+     "mapping": "audio-map sfx `guardianLastHit` @ gain 0.89 / cooldownMs 500 / maxConcurrent 2",
+     "preload": "combat (COMBAT_SFX, shared by the fireRing scene)",
+     "loop": false,
+     "licence": "効果音ラボ — 商用可・報告不要・クレジット任意 (commercial OK, no report required, credit optional). Same COURTESY bucket as the rest of lab/; NOT a mandatory-attribution asset (the CC-BY login dragon remains the only mandatory in-game credit).",
+     "note": "#89 守衛塔最後一擊的金幣獎勵. The site's own description for this clip is 「お金」 (money) — it is literally the coin-pickup reward jingle, so it reads as a gold payout rather than a generic UI ping. MPEG ADTS layer III v1, 192 kbps, 48 kHz JntStereo, 3.270 s; raw levels mean -27.7 dB / max -4.8 dB, suggestedGain 0.89 computed against the goldGain anchor (gold-gain.mp3, post mean -32.3 dB @ 1.51). CATEGORY HONESTY: the section heading on that page is 「その他」 — the site has no 「獲得・ピロリン」 heading, so the real page/section is recorded rather than an invented label. Shaped like goldGain (cap 2) but with a longer floor: the clip is 3.27 s and the payout fires once per guardian kill."
+    },
+    "draftCardReveal": {
+     "key": "draftCardReveal",
+     "file": "lab/draftCardReveal.mp3",
+     "sourceTitle": "キラッ1",
+     "sourceFile": "kira1.mp3",
+     "sourcePage": "https://soundeffect-lab.info/sound/anime/",
+     "sourceUrl": "https://soundeffect-lab.info/sound/anime/mp3/kira1.mp3",
+     "category": "演出・アニメ (anime) / きらーん・キラッ",
+     "siteDescription": "鉄琴で演奏",
+     "durationSec": 0.989,
+     "suggestedGain": 0.45,
+     "mapping": "audio-map sfx `draftCardReveal` @ gain 0.45 / cooldownMs 120 / maxConcurrent 3",
+     "preload": "intermission (alongside legendaryRoll — the draft offers mount in the prep window)",
+     "loop": false,
+     "licence": "効果音ラボ — 商用可・報告不要・クレジット任意 (commercial OK, no report required, credit optional). Same COURTESY bucket as the rest of lab/; NOT a mandatory-attribution asset (the CC-BY login dragon remains the only mandatory in-game credit).",
+     "note": "#110 per-card face-up sparkle, fired once per card on REVEAL (draftReveal.DRAFT_CARD_REVEAL_SFX) — distinct from the draftConfirm lock-in cue that fires on PICK. Compared against きらーん1 (eye-shine1.mp3, 2.26 s), きらーん2 (eye-shine2.mp3「刃物」— blade gleam, wrong connotation) and キラッ2 (kira2.mp3, 1.99 s); キラッ1 won because at 0.989 s it can fire three times in quick succession without the 2 s stings smearing into each other. THROTTLE IS LOAD-BEARING: draftReveal.CARD_REVEAL_STAGGER_MS is 220, so cooldownMs MUST stay under it or the 2nd and 3rd card would be silently dropped; maxConcurrent 3 lets all three ring out. MPEG layer III 192 kbps 44.1 kHz JntStereo with an ID3v2.3 header (not an HTML error page)."
+    },
+    "legendaryWin": {
+     "key": "legendaryWin",
+     "file": "lab/legendaryWin.mp3",
+     "sourceTitle": "ラッパのファンファーレ",
+     "sourceFile": "trumpet1.mp3",
+     "sourcePage": "https://soundeffect-lab.info/sound/anime/",
+     "sourceUrl": "https://soundeffect-lab.info/sound/anime/mp3/trumpet1.mp3",
+     "category": "演出・アニメ / 演出",
+     "siteDescription": "喜びの演出に",
+     "durationSec": 1.888,
+     "suggestedGain": 1.44,
+     "mapping": "audio-map sfx `legendaryWin` @ gain 1.44 / cooldownMs 2000 / maxConcurrent 1",
+     "preload": "intermission (alongside legendaryRoll, whose schedule fires it)",
+     "loop": false,
+     "licence": "効果音ラボ — 商用可・報告不要・クレジット任意 (commercial OK, no report required, credit optional). Same COURTESY bucket as the rest of lab/; NOT a mandatory-attribution asset (the CC-BY login dragon remains the only mandatory in-game credit).",
+     "note": "#82 jackpot flourish, fired LEGENDARY_WIN_AFTER_LAND_MS (160 ms) after the final legendary card settles (draftReveal.LEGENDARY_WIN_SFX). Searched 演出・アニメ plus the site search for ファンファーレ / 当たり / 当選 / 獲得; the only non-voice fanfares were trumpet1.mp3 and levelup1.mp3, and levelup1 is already in the pack as level-up-jingle.mp3, so trumpet1 is the distinct jackpot flourish. The literal 「大当たり～」 hits were 声素材 voice clips (info-girl1-ooatari1.mp3) — deliberately NOT used: a spoken Japanese line would clash with the gacha reveal and falls under the pack's voice-actor restrictions. MPEG ADTS layer III v1, 192 kbps, 44.1 kHz JntStereo, 1.888 s; raw mean -23.5 dB, max -6.9 dB. suggestedGain 1.44 is an ESTIMATE assuming the standard peak-normalise to -3.0 dBFS, computed against gainAnchor level-up-jingle.mp3 (post mean -17.8 dB @ 1.17) — re-measure after processing. Given the vsReveal / matchEndGong stinger treatment: long cooldown, single voice."
+    }
    }
   }
  },
  "clips": [
   {
-   "file": "ui-denied.wav",
+   "file": "ui-denied.mp3",
    "sourceFile": "beep1.mp3",
    "sourcePage": "https://soundeffect-lab.info/sound/button/",
    "sourceUrl": "https://soundeffect-lab.info/sound/button/mp3/beep1.mp3",
@@ -159,7 +251,7 @@
    "gainAnchor": "uiClick / sfx/ui-click.mp3"
   },
   {
-   "file": "shop-purchase.wav",
+   "file": "shop-purchase.mp3",
    "sourceFile": "clearing1.mp3",
    "sourcePage": "https://soundeffect-lab.info/sound/various/",
    "sourceUrl": "https://soundeffect-lab.info/sound/various/mp3/clearing1.mp3",
@@ -194,7 +286,7 @@
    "gainAnchor": "uiClick / sfx/ui-click.mp3"
   },
   {
-   "file": "gold-gain.wav",
+   "file": "gold-gain.mp3",
    "sourceFile": "money-drop1.mp3",
    "sourcePage": "https://soundeffect-lab.info/sound/various/",
    "sourceUrl": "https://soundeffect-lab.info/sound/various/mp3/money-drop1.mp3",
@@ -229,7 +321,7 @@
    "gainAnchor": "uiClick / sfx/ui-click.mp3"
   },
   {
-   "file": "panel-open.wav",
+   "file": "panel-open.mp3",
    "sourceFile": "menu4.mp3",
    "sourcePage": "https://soundeffect-lab.info/sound/button/",
    "sourceUrl": "https://soundeffect-lab.info/sound/button/mp3/menu4.mp3",
@@ -264,7 +356,7 @@
    "gainAnchor": "uiClick / sfx/ui-click.mp3"
   },
   {
-   "file": "ui-cancel.wav",
+   "file": "ui-cancel.mp3",
    "sourceFile": "cancel1.mp3",
    "sourcePage": "https://soundeffect-lab.info/sound/button/",
    "sourceUrl": "https://soundeffect-lab.info/sound/button/mp3/cancel1.mp3",
@@ -334,7 +426,7 @@
    "gainAnchor": "uiClick / sfx/ui-click.mp3"
   },
   {
-   "file": "low-health.wav",
+   "file": "low-health.mp3",
    "sourceFile": "warning1.mp3",
    "sourcePage": "https://soundeffect-lab.info/sound/button/",
    "sourceUrl": "https://soundeffect-lab.info/sound/button/mp3/warning1.mp3",
@@ -366,7 +458,7 @@
    "normalisation": "peak -3.0 dBFS (matches sfx/fx/*.wav)",
    "processing": "decode mp3 -> aresample 44100 -> downmix mono -> trim edge silence (silenceremove peak -55 dB, 20 ms pad both ends) -> volume +5.90 dB -> 16-bit PCM WAV",
    "suggestedGain": 1.0,
-   "gainAnchor": "countTick / sfx/fx/count-tick.wav"
+   "gainAnchor": "countTick / sfx/fx/count-tick.mp3"
   },
   {
    "file": "settlement-reveal.mp3",
@@ -404,7 +496,7 @@
    "gainAnchor": "uiClick / sfx/ui-click.mp3"
   },
   {
-   "file": "match-start-gong.wav",
+   "file": "match-start-gong.mp3",
    "sourceFile": "gong-played1.mp3",
    "sourcePage": "https://soundeffect-lab.info/sound/anime/",
    "sourceUrl": "https://soundeffect-lab.info/sound/anime/mp3/gong-played1.mp3",
@@ -506,7 +598,7 @@
    "normalisation": "peak -3.0 dBFS (matches sfx/fx/*.wav)",
    "processing": "decode mp3 -> aresample 44100 -> downmix mono -> trim edge silence (silenceremove peak -55 dB, 20 ms pad both ends) -> 20 ms de-click fade-out -> volume +2.00 dB -> libmp3lame 192 kbps CBR mono",
    "suggestedGain": 1.58,
-   "gainAnchor": "countTick / sfx/fx/count-tick.wav"
+   "gainAnchor": "countTick / sfx/fx/count-tick.mp3"
   },
   {
    "file": "level-up-jingle.mp3",
@@ -544,7 +636,7 @@
    "gainAnchor": "levelUp / announcer/level-up-1.mp3"
   },
   {
-   "file": "attack-sword-1.wav",
+   "file": "attack-sword-1.mp3",
    "sourceFile": "sword-slash1.mp3",
    "sourcePage": "https://soundeffect-lab.info/sound/battle/",
    "sourceUrl": "https://soundeffect-lab.info/sound/battle/mp3/sword-slash1.mp3",
@@ -576,10 +668,10 @@
    "normalisation": "peak -3.0 dBFS (matches sfx/fx/*.wav)",
    "processing": "decode mp3 -> aresample 44100 -> downmix mono -> trim edge silence (silenceremove peak -55 dB, 20 ms pad both ends) -> volume +1.50 dB -> 16-bit PCM WAV",
    "suggestedGain": 0.42,
-   "gainAnchor": "basicAttack / sfx/fx/swing.wav"
+   "gainAnchor": "basicAttack / sfx/fx/swing.mp3"
   },
   {
-   "file": "attack-sword-2.wav",
+   "file": "attack-sword-2.mp3",
    "sourceFile": "sword-slash2.mp3",
    "sourcePage": "https://soundeffect-lab.info/sound/battle/",
    "sourceUrl": "https://soundeffect-lab.info/sound/battle/mp3/sword-slash2.mp3",
@@ -611,10 +703,10 @@
    "normalisation": "peak -3.0 dBFS (matches sfx/fx/*.wav)",
    "processing": "decode mp3 -> aresample 44100 -> downmix mono -> trim edge silence (silenceremove peak -55 dB, 20 ms pad both ends) -> volume +1.60 dB -> 16-bit PCM WAV",
    "suggestedGain": 0.63,
-   "gainAnchor": "basicAttack / sfx/fx/swing.wav"
+   "gainAnchor": "basicAttack / sfx/fx/swing.mp3"
   },
   {
-   "file": "attack-greatsword.wav",
+   "file": "attack-greatsword.mp3",
    "sourceFile": "large-sword-slash1.mp3",
    "sourcePage": "https://soundeffect-lab.info/sound/battle/",
    "sourceUrl": "https://soundeffect-lab.info/sound/battle/mp3/large-sword-slash1.mp3",
@@ -646,10 +738,10 @@
    "normalisation": "peak -3.0 dBFS (matches sfx/fx/*.wav)",
    "processing": "decode mp3 -> aresample 44100 -> downmix mono -> trim edge silence (silenceremove peak -55 dB, 20 ms pad both ends) -> volume +2.30 dB -> 16-bit PCM WAV",
    "suggestedGain": 0.44,
-   "gainAnchor": "basicAttack / sfx/fx/swing.wav"
+   "gainAnchor": "basicAttack / sfx/fx/swing.mp3"
   },
   {
-   "file": "attack-katana.wav",
+   "file": "attack-katana.mp3",
    "sourceFile": "katana-slash1.mp3",
    "sourcePage": "https://soundeffect-lab.info/sound/battle/",
    "sourceUrl": "https://soundeffect-lab.info/sound/battle/mp3/katana-slash1.mp3",
@@ -681,10 +773,10 @@
    "normalisation": "peak -3.0 dBFS (matches sfx/fx/*.wav)",
    "processing": "decode mp3 -> aresample 44100 -> downmix mono -> trim edge silence (silenceremove peak -55 dB, 20 ms pad both ends) -> volume +0.90 dB -> 16-bit PCM WAV",
    "suggestedGain": 0.23,
-   "gainAnchor": "basicAttack / sfx/fx/swing.wav"
+   "gainAnchor": "basicAttack / sfx/fx/swing.mp3"
   },
   {
-   "file": "whiff-sword.wav",
+   "file": "whiff-sword.mp3",
    "sourceFile": "sword-gesture2.mp3",
    "sourcePage": "https://soundeffect-lab.info/sound/battle/",
    "sourceUrl": "https://soundeffect-lab.info/sound/battle/mp3/sword-gesture2.mp3",
@@ -716,10 +808,10 @@
    "normalisation": "peak -3.0 dBFS (matches sfx/fx/*.wav)",
    "processing": "decode mp3 -> aresample 44100 -> downmix mono -> trim edge silence (silenceremove peak -55 dB, 20 ms pad both ends) -> volume +1.10 dB -> 16-bit PCM WAV",
    "suggestedGain": 0.43,
-   "gainAnchor": "whiff / sfx/fx/whiff.wav"
+   "gainAnchor": "whiff / sfx/fx/whiff.mp3"
   },
   {
-   "file": "block-clash.wav",
+   "file": "block-clash.mp3",
    "sourceFile": "sword-clash2.mp3",
    "sourcePage": "https://soundeffect-lab.info/sound/battle/",
    "sourceUrl": "https://soundeffect-lab.info/sound/battle/mp3/sword-clash2.mp3",
@@ -751,10 +843,10 @@
    "normalisation": "peak -3.0 dBFS (matches sfx/fx/*.wav)",
    "processing": "decode mp3 -> aresample 44100 -> downmix mono -> trim edge silence (silenceremove peak -55 dB, 20 ms pad both ends) -> volume -0.10 dB -> 16-bit PCM WAV",
    "suggestedGain": 0.75,
-   "gainAnchor": "block / sfx/fx/guard.wav"
+   "gainAnchor": "block / sfx/fx/guard.mp3"
   },
   {
-   "file": "block-shield.wav",
+   "file": "block-shield.mp3",
    "sourceFile": "shield1.mp3",
    "sourcePage": "https://soundeffect-lab.info/sound/battle/",
    "sourceUrl": "https://soundeffect-lab.info/sound/battle/mp3/shield1.mp3",
@@ -786,10 +878,10 @@
    "normalisation": "peak -3.0 dBFS (matches sfx/fx/*.wav)",
    "processing": "decode mp3 -> aresample 44100 -> downmix mono -> trim edge silence (silenceremove peak -55 dB, 20 ms pad both ends) -> volume +1.30 dB -> 16-bit PCM WAV",
    "suggestedGain": 0.52,
-   "gainAnchor": "block / sfx/fx/guard.wav"
+   "gainAnchor": "block / sfx/fx/guard.mp3"
   },
   {
-   "file": "bow-draw.wav",
+   "file": "bow-draw.mp3",
    "sourceFile": "bow-draw1.mp3",
    "sourcePage": "https://soundeffect-lab.info/sound/battle/",
    "sourceUrl": "https://soundeffect-lab.info/sound/battle/mp3/bow-draw1.mp3",
@@ -821,10 +913,10 @@
    "normalisation": "peak -3.0 dBFS (matches sfx/fx/*.wav)",
    "processing": "decode mp3 -> aresample 44100 -> downmix mono -> trim edge silence (silenceremove peak -55 dB, 20 ms pad both ends) -> 20 ms de-click fade-out -> volume +4.90 dB -> 16-bit PCM WAV",
    "suggestedGain": 0.57,
-   "gainAnchor": "attackWindup / sfx/fx/windup.wav"
+   "gainAnchor": "attackWindup / sfx/fx/windup.mp3"
   },
   {
-   "file": "arrow-release.wav",
+   "file": "arrow-release.mp3",
    "sourceFile": "arrow-release1.mp3",
    "sourcePage": "https://soundeffect-lab.info/sound/battle/",
    "sourceUrl": "https://soundeffect-lab.info/sound/battle/mp3/arrow-release1.mp3",
@@ -856,10 +948,10 @@
    "normalisation": "peak -3.0 dBFS (matches sfx/fx/*.wav)",
    "processing": "decode mp3 -> aresample 44100 -> downmix mono -> trim edge silence (silenceremove peak -55 dB, 20 ms pad both ends) -> volume +0.00 dB -> 16-bit PCM WAV",
    "suggestedGain": 1.1,
-   "gainAnchor": "projectileSpawn / sfx/fx/launch.wav"
+   "gainAnchor": "projectileSpawn / sfx/fx/launch.mp3"
   },
   {
-   "file": "arrow-pierce.wav",
+   "file": "arrow-pierce.mp3",
    "sourceFile": "arrow-pierce1.mp3",
    "sourcePage": "https://soundeffect-lab.info/sound/battle/",
    "sourceUrl": "https://soundeffect-lab.info/sound/battle/mp3/arrow-pierce1.mp3",
@@ -891,10 +983,10 @@
    "normalisation": "peak -3.0 dBFS (matches sfx/fx/*.wav)",
    "processing": "decode mp3 -> aresample 44100 -> downmix mono -> trim edge silence (silenceremove peak -55 dB, 20 ms pad both ends) -> volume +2.20 dB -> 16-bit PCM WAV",
    "suggestedGain": 0.43,
-   "gainAnchor": "projectileHit / sfx/fx/impact.wav"
+   "gainAnchor": "projectileHit / sfx/fx/impact.mp3"
   },
   {
-   "file": "gunshot.wav",
+   "file": "gunshot.mp3",
    "sourceFile": "handgun-firing1.mp3",
    "sourcePage": "https://soundeffect-lab.info/sound/battle/battle2.html",
    "sourceUrl": "https://soundeffect-lab.info/sound/battle/mp3/handgun-firing1.mp3",
@@ -926,10 +1018,10 @@
    "normalisation": "peak -3.0 dBFS (matches sfx/fx/*.wav)",
    "processing": "decode mp3 -> aresample 44100 -> downmix mono -> trim edge silence (silenceremove peak -55 dB, 20 ms pad both ends) -> volume -0.60 dB -> 16-bit PCM WAV",
    "suggestedGain": 1.4,
-   "gainAnchor": "projectileSpawn / sfx/fx/launch.wav"
+   "gainAnchor": "projectileSpawn / sfx/fx/launch.mp3"
   },
   {
-   "file": "impact-heavy.wav",
+   "file": "impact-heavy.mp3",
    "sourceFile": "punch-heavy1.mp3",
    "sourcePage": "https://soundeffect-lab.info/sound/battle/",
    "sourceUrl": "https://soundeffect-lab.info/sound/battle/mp3/punch-heavy1.mp3",
@@ -961,7 +1053,7 @@
    "normalisation": "peak -3.0 dBFS (matches sfx/fx/*.wav)",
    "processing": "decode mp3 -> aresample 44100 -> downmix mono -> trim edge silence (silenceremove peak -55 dB, 20 ms pad both ends) -> volume +1.60 dB -> 16-bit PCM WAV",
    "suggestedGain": 0.63,
-   "gainAnchor": "crit / sfx/fx/crit.wav"
+   "gainAnchor": "crit / sfx/fx/crit.mp3"
   },
   {
    "file": "cast-circle.mp3",
@@ -996,10 +1088,10 @@
    "normalisation": "peak -3.0 dBFS (matches sfx/fx/*.wav)",
    "processing": "decode mp3 -> aresample 44100 -> downmix mono -> trim edge silence (silenceremove peak -55 dB, 20 ms pad both ends) -> volume +1.90 dB -> libmp3lame 192 kbps CBR mono",
    "suggestedGain": 0.94,
-   "gainAnchor": "castBegin / sfx/fx/cast_begin.wav"
+   "gainAnchor": "castBegin / sfx/fx/cast_begin.mp3"
   },
   {
-   "file": "magic-fire.wav",
+   "file": "magic-fire.mp3",
    "sourceFile": "magic-flame1.mp3",
    "sourcePage": "https://soundeffect-lab.info/sound/battle/",
    "sourceUrl": "https://soundeffect-lab.info/sound/battle/mp3/magic-flame1.mp3",
@@ -1069,7 +1161,7 @@
    "gainAnchor": "abilityCast / sfx/moongo.mp3"
   },
   {
-   "file": "magic-lightning.wav",
+   "file": "magic-lightning.mp3",
    "sourceFile": "magic-electron2.mp3",
    "sourcePage": "https://soundeffect-lab.info/sound/battle/",
    "sourceUrl": "https://soundeffect-lab.info/sound/battle/mp3/magic-electron2.mp3",
@@ -1171,7 +1263,7 @@
    "normalisation": "peak -3.0 dBFS (matches sfx/fx/*.wav)",
    "processing": "decode mp3 -> aresample 44100 -> downmix mono -> trim edge silence (silenceremove peak -55 dB, 20 ms pad both ends) -> volume +2.20 dB -> libmp3lame 192 kbps CBR mono",
    "suggestedGain": 0.41,
-   "gainAnchor": "flowerSpawn / sfx/fx/chime_soft.wav"
+   "gainAnchor": "flowerSpawn / sfx/fx/chime_soft.mp3"
   },
   {
    "file": "magic-buff.mp3",
@@ -1206,7 +1298,7 @@
    "normalisation": "peak -3.0 dBFS (matches sfx/fx/*.wav)",
    "processing": "decode mp3 -> aresample 44100 -> downmix mono -> trim edge silence (silenceremove peak -55 dB, 20 ms pad both ends) -> volume -0.20 dB -> libmp3lame 192 kbps CBR mono",
    "suggestedGain": 0.23,
-   "gainAnchor": "flowerSpawn / sfx/fx/chime_soft.wav"
+   "gainAnchor": "flowerSpawn / sfx/fx/chime_soft.mp3"
   },
   {
    "file": "explosion.mp3",
@@ -1241,7 +1333,7 @@
    "normalisation": "peak -3.0 dBFS (matches sfx/fx/*.wav)",
    "processing": "decode mp3 -> aresample 44100 -> downmix mono -> trim edge silence (silenceremove peak -55 dB, 20 ms pad both ends) -> volume +2.30 dB -> libmp3lame 192 kbps CBR mono",
    "suggestedGain": 0.6,
-   "gainAnchor": "basicAttackHit / sfx/fx/thud.wav"
+   "gainAnchor": "basicAttackHit / sfx/fx/thud.mp3"
   }
  ]
 }

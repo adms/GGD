@@ -15,6 +15,21 @@ export type CoreAbilitySlot = "Q" | "W" | "E" | "R";
  */
 export type AbilitySlot = CoreAbilitySlot | "EX";
 
+/**
+ * EVERY slot a champion OWNS — the five castable ones plus "PASSIVE", the
+ * 天生技 the source map grants from level 1 (ability code `NN-00`, held in the
+ * WC3 hero unit's non-learnable `abilities` list). The owner's rule is six
+ * slots, not five: 「每個人應該是六種，被動也是包含 slot，我說過他是等級1就獲得」.
+ *
+ * It is deliberately a SEPARATE type from `AbilitySlot`: a cast/rank Command
+ * still carries only the five castable slots, so widening the innate into the
+ * content layer cannot silently make `ab.slots[slot]` or `rankUpAbility` accept
+ * something they have no instance for. When the sim grows a dedicated
+ * `passiveSlot` instance (the `exSlot` precedent), THAT change widens
+ * `AbilitySlot` — knowingly, with every switch updated.
+ */
+export type ChampionAbilitySlot = AbilitySlot | "PASSIVE";
+
 export type CastTarget =
   | { type: "point"; point: Vec2 }
   | { type: "dir"; dir: Vec2 }

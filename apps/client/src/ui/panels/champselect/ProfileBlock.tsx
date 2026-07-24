@@ -30,6 +30,7 @@ import { GOLD, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../../theme";
 import { splitChampionName } from "../../codex/codexData";
 import { attackTypeLabel, num, SLOT_COLOR, statLabel } from "../../codex/codexLabels";
 import { skillRows, slotLabel, type SkillRow, type SkillRowSlot } from "../skillDetails";
+import { innateCastNote, innateKindLabel, PASSIVE_ACCENT } from "../../passiveSlot";
 import { displayFinal, displayFinalText, isScaled, statDisplayFactor, useDisplayEnv } from "../../displayFinal";
 import { rescaleAbilityProse, WC3_PROSE_CAPTION } from "../../components/abilityText";
 import {
@@ -49,16 +50,19 @@ const TABS: ReadonlyArray<{ id: Tab; label: string }> = [
   { id: "lore", label: "故事" },
 ];
 
-/** Accent colour for a skill row's slot; the passive has no slot colour. */
+/** Accent colour for a skill row's slot; the 天生技 gets its own violet. */
 function slotAccent(slot: SkillRowSlot): string {
-  return slot === "PASSIVE" ? "#8a93a8" : SLOT_COLOR[slot];
+  return slot === "PASSIVE" ? PASSIVE_ACCENT : SLOT_COLOR[slot];
 }
 
 /** One skill row — icon or letter-tile fallback, name, meta line, description. */
 function SkillRowView({ row }: { row: SkillRow }): React.JSX.Element {
   const accent = slotAccent(row.slot);
   const env = useDisplayEnv();
+  const innate = row.slot === "PASSIVE";
   const meta: string[] = [];
+  // 天生技 leads with WHY it has no rank: it is owned from level 1, not learned.
+  if (innate) meta.push(innateCastNote(row.innateKind ?? "passive"));
   if (row.castLabel) meta.push(row.castLabel);
   // #125: show the post-multiplier FINAL cooldown (combat-env), not the base.
   if (row.cooldownSec !== undefined && row.cooldownSec > 0)
@@ -99,6 +103,21 @@ function SkillRowView({ row }: { row: SkillRow }): React.JSX.Element {
       <div style={{ minWidth: 0, flex: 1 }}>
         <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
           <span style={{ fontSize: 10, color: accent, fontWeight: 700 }}>{slotLabel(row.slot)}</span>
+          {/* the SIXTH slot carries its kind next to the badge: 被動 = never
+              pressed, 主動 = a real D-slot ability that is simply already owned */}
+          {innate && (
+            <span
+              style={{
+                fontSize: 9,
+                color: accent,
+                border: `1px solid ${accent}66`,
+                borderRadius: 3,
+                padding: "0 3px",
+              }}
+            >
+              {innateKindLabel(row.innateKind ?? "passive")}
+            </span>
+          )}
           <span style={{ fontSize: 13, fontWeight: 600, color: TEXT_MAIN }}>{row.name}</span>
         </div>
         {meta.length > 0 && <div style={{ fontSize: 10.5, color: TEXT_DIM, marginTop: 2 }}>{meta.join(" · ")}</div>}
@@ -391,7 +410,19 @@ export function ChampionProfile({
           (rows.length === 0 ? (
             <div style={{ fontSize: 12, color: TEXT_DIM }}>此英雄沒有技能資料</div>
           ) : (
-            rows.map((r) => <SkillRowView key={`${r.slot}-${r.rawName}`} row={r} />)
+            <>
+              {/* 「每個人應該是六種，被動也是包含 slot」 — the slot count is stated,
+                  so a hero missing its 天生技 is visible instead of silently 5. */}
+              <div style={{ fontSize: 10, color: TEXT_DIM, padding: "2px 0 4px" }}>
+                共 {rows.length} 個技能格
+                {rows.some((r) => r.slot === "PASSIVE")
+                  ? "（含天生技，等級 1 起自動擁有）"
+                  : "（此英雄在原地圖沒有天生技）"}
+              </div>
+              {rows.map((r) => (
+                <SkillRowView key={`${r.slot}-${r.rawName}`} row={r} />
+              ))}
+            </>
           ))}
         {tab === "stats" && <StatsTab championId={def.id} />}
         {tab === "play" && <PlayTab championId={def.id} />}

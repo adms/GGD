@@ -53,6 +53,7 @@ import { shopGate, shouldAutoOpen } from "./shopGate";
 import { shopClockChip } from "./prepCountdown";
 import { groupCatalogue, type Shelf, type ShelfItem } from "./shopGrouping";
 import { skillRows, slotLabel } from "./skillDetails";
+import { innateCastNote, innateKindLabel, PASSIVE_ACCENT } from "../passiveSlot";
 import { displayFinalText, useDisplayEnv } from "../displayFinal";
 import { STAT_META, formatStatValue, formatStatDelta, isVisibleDelta } from "./statDisplay";
 import { buildItemRow, type RowItem } from "./itemStats";
@@ -1137,15 +1138,27 @@ function SkillsTab(props: { seat: Parameters<typeof skillRows>[0] }): React.JSX.
               icon={row.icon}
               label={row.name}
               size={36}
-              accent={row.slot === "EX" ? ACCENT : undefined}
+              accent={row.slot === "EX" ? ACCENT : row.slot === "PASSIVE" ? PASSIVE_ACCENT : undefined}
             />
-            <div style={{ fontSize: 11, fontWeight: "bold", color: row.slot === "EX" ? ACCENT : TEXT_DIM }}>
+            <div
+              style={{
+                fontSize: 11,
+                fontWeight: "bold",
+                color: row.slot === "EX" ? ACCENT : row.slot === "PASSIVE" ? PASSIVE_ACCENT : TEXT_DIM,
+              }}
+            >
               {slotLabel(row.slot)}
             </div>
           </div>
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
               <span style={{ fontWeight: "bold" }}>{row.name}</span>
+              {/* the SIXTH slot: 被動/主動 + the fact it was never learned */}
+              {row.slot === "PASSIVE" && (
+                <span style={{ fontSize: 11, color: PASSIVE_ACCENT }}>
+                  {innateKindLabel(row.innateKind ?? "passive")} · {innateCastNote(row.innateKind ?? "passive")}
+                </span>
+              )}
               {row.maxRank > 1 && (
                 <span style={{ fontSize: 11, color: TEXT_DIM }}>
                   等級 {row.rank}/{row.maxRank}

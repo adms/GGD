@@ -1,7 +1,7 @@
 /** ability@1 — mirrors `AbilityDef` in sim/content/defs.ts. */
 import { z } from "zod";
 import type { AbilityId } from "../../ids";
-import { zAbilitySlot, zIdFor, zRef, zTintRgb } from "./common";
+import { zChampionAbilitySlot, zIdFor, zInnateKind, zRef, zTintRgb } from "./common";
 import { zAbilityPassive, zEffectDef } from "./effect";
 
 export const zCastType = z.enum(["targeted", "skillshot", "ground", "self", "dash"]);
@@ -66,7 +66,15 @@ export const zAbilityDef = z
      * the economy tooltip regexes keep matching bare numbers).
      */
     descriptionRoles: z.string().optional(),
-    slot: zAbilitySlot,
+    slot: zChampionAbilitySlot,
+    /**
+     * ONLY on `slot: "PASSIVE"` docs — whether this level-1 innate (天生技) is a
+     * permanent self-buff ("passive") or a real cast with a cooldown
+     * ("active"). See `zInnateKind`. Required when slot is "PASSIVE", rejected
+     * otherwise (enforced by `zAbilityDoc`'s superRefine below), so a consumer
+     * can branch on it without also having to re-derive the slot.
+     */
+    innateKind: zInnateKind.optional(),
     castType: zCastType,
     maxRank: z.number().int().min(1).max(6),
     /** per rank (index rank-1), seconds */
@@ -126,6 +134,43 @@ export const zAbilityDef = z
   })
   .strict();
 
-export const zAbilityDoc = zAbilityDef.extend({ schema: z.literal("ability@1") }).strict();
+/**
+ * `innateKind` and `slot: "PASSIVE"` are two halves of the same fact, so they
+ * must never disagree: a PASSIVE doc without a kind leaves the sim and the HUD
+ * guessing, and a kind on a Q/W/E/R/EX doc is a mis-edit that would read as an
+ * innate. Enforced on the STANDALONE doc only — the embedded champion copies
+ * are already pinned to Q/W/E/R by `zChampionDoc`.
+ */
+function refineInnate(
+  doc: { slot: string; innateKind?: string; effects: unknown[] },
+  ctx: z.RefinementCtx,
+): void {
+  if (doc.slot === "PASSIVE") {
+    if (doc.innateKind === undefined) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["innateKind"],
+        message: 'slot "PASSIVE" requires innateKind ("passive" | "active")',
+      });
+    } else if (doc.innateKind === "active" && doc.effects.length === 0) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["effects"],
+        message: 'innateKind "active" means a real cast — it must declare effects',
+      });
+    }
+  } else if (doc.innateKind !== undefined) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["innateKind"],
+      message: 'innateKind is only meaningful on slot "PASSIVE"',
+    });
+  }
+}
+
+export const zAbilityDoc = zAbilityDef
+  .extend({ schema: z.literal("ability@1") })
+  .strict()
+  .superRefine(refineInnate);
 
 export type AbilityDoc = z.infer<typeof zAbilityDoc>;

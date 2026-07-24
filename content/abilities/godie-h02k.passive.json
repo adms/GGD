@@ -1,0 +1,41 @@
+{
+  "id": "godie-h02k.passive",
+  "schema": "ability@1",
+  "name": "89-00 憤怒的門牙",
+  "description": "[被動]\n0秒冷卻時間\n\n有天看完神奇寶貝的熊貓，領悟了拉達的大絕招，攻擊時有3%的機率可以使出超會心一擊造成999不可迴避的傷害。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0.0
+  ],
+  "manaCost": [
+    0.0
+  ],
+  "range": 0,
+  "effects": [],
+  "passive": {
+    "name": "89-00 憤怒的門牙",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "chance": 0.03,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "flat": 999.0
+                },
+                "canCrit": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

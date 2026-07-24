@@ -1,0 +1,26 @@
+{
+  "id": "godie-n01l.passive",
+  "schema": "ability@1",
+  "name": "98-00 正妹優勢",
+  "description": "[輔助]\n0秒冷卻時間\n\n人正真好，應該沒人可以對正妹痛下殺手才對，讓學姊有25%閃避攻擊的能力，對學姊造成傷害時有10%機率將無法施展法術及攻擊，持續2秒。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0.0
+  ],
+  "manaCost": [
+    0.0
+  ],
+  "range": 0,
+  "effects": [],
+  "passive": {
+    "name": "98-00 正妹優勢",
+    "ranks": [
+      {
+        "modifiers": []
+      }
+    ]
+  }
+}

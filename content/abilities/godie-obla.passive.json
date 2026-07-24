@@ -1,0 +1,31 @@
+{
+  "id": "godie-obla.passive",
+  "schema": "ability@1",
+  "name": "33-00 砍樹",
+  "description": "[輔助]\n1秒冷卻時間\n\n砍掉一棵樹，在7秒內可以回覆150點生命值。",
+  "slot": "PASSIVE",
+  "innateKind": "active",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    1.0
+  ],
+  "manaCost": [
+    0.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "healthRegen",
+          "op": "flat",
+          "value": 21.43
+        }
+      ],
+      "duration": 7.0
+    }
+  ],
+  "vfxKey": "fx.prim.nature.pulse-sm"
+}

@@ -155,8 +155,11 @@ describe("content bundle — emission", () => {
       total += index.entries.length;
     }
     // 1488 base + 2 per-arena guardian model docs (prop.guardian.beast /
-    // prop.guardian.treant, task #105).
-    expect(total).toBe(1490);
+    // prop.guardian.treant, task #105) + 108 天生技 / PASSIVE ability docs —
+    // the level-1 6th slot the w3x importer dropped, now rolled out for every
+    // champion that has an NN-00 in the source map (3 genuinely have none:
+    // godie-h02n / godie-u01q / godie-ogld).
+    expect(total).toBe(1598);
   });
 
   it("two builds of identical content are byte-identical", () => {
@@ -250,8 +253,9 @@ describe("content bundle — consumption", () => {
       }
     }
     // and the per-doc path really did cost 1 manifest + 12 indexes + every doc
-    // (base 1488 + 2 per-arena guardian model docs, task #105)
-    expect(perDocSource.reads).toBe(1503);
+    // (base 1488 + 2 per-arena guardian model docs, task #105 + 108 天生技 /
+    // PASSIVE ability docs — see the doc-total note above)
+    expect(perDocSource.reads).toBe(1611);
   });
 
   it("costs exactly ONE request", async () => {
@@ -291,7 +295,7 @@ describe("content bundle — fallback", () => {
     const { res, fb, fs } = await load(fakeFetch(null, 404));
     expect(fb.didFallback).toBe(true);
     expect(fb.fallbackReason).toMatch(/404/);
-    expect(fs.reads).toBe(1503);
+    expect(fs.reads).toBe(1611);
     expect(res.store.ids("champions").length).toBeGreaterThan(100);
   });
 

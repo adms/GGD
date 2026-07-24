@@ -78,6 +78,27 @@ export interface AbilitiesComp {
    * (unlocked). EX is single-rank — it is UNLOCKED, never leveled.
    */
   exSlot?: AbilityInstance | null;
+  /**
+   * The SIXTH slot — the champion's 天生技 / innate (`slot: "PASSIVE"`,
+   * ability code `NN-00`). Present only when the champion doc carries a
+   * `passiveAbility`; 3 of 111 heroes genuinely have none.
+   *
+   * Its `rank` is 1 FROM SPAWN — that is the whole point of the slot
+   * (「我說過他是等級1就獲得」). It is never leveled and never unlocked.
+   *
+   * NOT CASTABLE. `Command.castAbility` carries an `AbilitySlot`, which is the
+   * five castable slots only, so there is no way to reach this instance from an
+   * intent frame — deliberately, because ~60 of the 108 innates are `innateKind:
+   * "active"` (real WC3 D-slot casts) and wiring those as real casts is a
+   * follow-up. Until then they are ADDRESSABLE (the HUD/codex can read the
+   * instance and its def) but inert: `cooldownRemainingTicks` never moves
+   * because nothing ever pays it.
+   *
+   * `innateKind: "passive"` innates ARE live: `syncAbilityPassives` attaches
+   * `def.passive.ranks[0]` as a ModifierSource at spawn, exactly like a learned
+   * Q's permanent passive.
+   */
+  passiveSlot?: AbilityInstance | null;
   basicAttackCdTicks: number;
   unspentPoints: number;
   /** active ability cast (cast time > 0); null/undefined when not casting */

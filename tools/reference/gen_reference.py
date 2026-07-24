@@ -12,7 +12,8 @@ carries the `contentVersion` it was built from so a stale file is obvious.
 WHAT IT READS (nothing else):
   content/manifest.json              -> contentVersion (a pure function of the docs)
   content/champions/*.json           -> the roster
-  content/abilities/*.json           -> the 554 per-slot ability docs
+  content/abilities/*.json           -> the per-slot ability docs (SIX slots per
+                                        champion: PASSIVE/天生 + Q/W/E/R/EX)
   content/items/*.json               -> the 214 item docs
   content/loot-tables/legendary-weapons.json -> the legendary pool
   data/curation/whitelist.json       -> OPEN roster / open items / open abilities
@@ -51,7 +52,29 @@ LEGENDARY_POOL_TABLE = "legendary-weapons"
 # The two shop SERVICES: real item docs that never occupy an inventory slot.
 SERVICE_IDS = {"stat-attunement", "legendary-orb"}
 
-SLOT_ORDER = {"Q": 0, "W": 1, "E": 2, "R": 3, "EX": 4}
+# SIX slots per champion, not five. `PASSIVE` (天生技, the w3x `NN-00`) is a real
+# slot owned from level 1 — it sorts FIRST because its number is 00 and because
+# the hero has it before he learns anything else. The importer originally dropped
+# it entirely; the archaeology pass recovered 108 of them (3 heroes genuinely have
+# no NN-00: godie-h02n / godie-u01q / godie-ogld).
+SLOT_ORDER = {"PASSIVE": 0, "Q": 1, "W": 2, "E": 3, "R": 4, "EX": 5}
+SLOTS = ("PASSIVE", "Q", "W", "E", "R", "EX")
+CASTABLE_SLOTS = ("Q", "W", "E", "R", "EX")
+
+# `ability@1.innateKind`, required on (and only on) slot PASSIVE.
+INNATE_LABEL = {"passive": "天生·被動", "active": "天生·主動"}
+
+# WHY a champion has no `passiveAbility`. Absence is a RECOVERED FACT, never a
+# TODO, so the doc says which fact. Anything not listed here falls back to a
+# generic line rather than a guess — if this dict goes stale the reader is told
+# "reason not recorded", which is honest, instead of being told something false.
+NO_PASSIVE_REASON = {
+    "sela": "非 w3x 原創英雄，沒有 `NN` 編號",
+    "thorne": "非 w3x 原創英雄，沒有 `NN` 編號",
+    "godie-h02n": "原始地圖裡完全沒有技能",
+    "godie-u01q": "原始地圖裡完全沒有技能",
+    "godie-ogld": "有 `72-01..04` 與 `72-002`，但地圖裡不存在 `72-00`",
+}
 
 # The 3-choose-1 draft pool: exactly the `quest` items. `仙后座` resolves to
 # godie-i01s here. Table lives at content/loot-tables/quest-rewards.json.
@@ -321,6 +344,8 @@ def gen_roster(ctx):
         title, full = split_champion_name(c.get("name", ""))
         abils = c.get("abilities") or {}
         ids = []
+        if c.get("passiveAbility"):
+            ids.append(f"`{c['passiveAbility']}`")
         for slot in ("Q", "W", "E", "R"):
             a = abils.get(slot)
             if isinstance(a, dict) and a.get("id"):
@@ -341,6 +366,8 @@ def gen_roster(ctx):
 
     open_rows = [c for c in champs if c["id"] in open_ids]
     closed_rows = [c for c in champs if c["id"] not in open_ids]
+    with_passive = [c for c in champs if c.get("passiveAbility")]
+    no_passive = [c for c in champs if not c.get("passiveAbility")]
 
     L = header(
         "英雄名冊 / Champion roster",
@@ -351,6 +378,15 @@ def gen_roster(ctx):
         len(champs),
         ctx,
         extra_notes=[
+            "**每名英雄有六個 slot：天生技（PASSIVE）＋ Q／W／E／R／EX。** 天生技是 w3x 的 "
+            "`NN-00`，**等級 1 就擁有**，doc 是 `champion.passiveAbility` 指到的 "
+            f"`<id>.passive`（`exAbility` 的同款寫法）。{len(with_passive)} 名有天生技；"
+            f"{len(no_passive)} 名沒有 `passiveAbility` —— "
+            + "、".join(
+                f"`{c['id']}`（{NO_PASSIVE_REASON.get(c['id'], '原因未記錄')}）"
+                for c in no_passive
+            )
+            + " —— **那是還原出來的事實，不是待辦**。",
             "`稱號` / `全名` 是從 `name` 欄位拆出來的（慣例 `稱號 - 全名`），"
             "champion doc 上**沒有**獨立的稱號欄位；不符慣例的會顯示 `—`。",
             "`名言` 不在 champion doc 裡 —— 它在 `docs/champions.csv` 與 "
@@ -358,7 +394,7 @@ def gen_roster(ctx):
         ],
     )
     head = [
-        "| id | 全名 | 稱號 | role | 攻擊 | 開放 | 一句話說明 | 技能 id（Q W E R EX） |",
+        "| id | 全名 | 稱號 | role | 攻擊 | 開放 | 一句話說明 | 技能 id（天生 Q W E R EX） |",
         "|---|---|---|---|---|---|---|---|",
     ]
 
@@ -397,6 +433,12 @@ def gen_abilities(ctx):
         tag = desc_tag(a.get("description"))
         is_passive = bool(a.get("passive")) or tag == "被動"
         slot = a.get("slot") or "?"
+        # The 天生 slot says what KIND of innate it is (`innateKind`), which is the
+        # thing a reader actually needs: 被動-type auras/procs vs a real D-slot
+        # active with a cooldown. Both are the same level-1 slot.
+        kind = INNATE_LABEL.get(a.get("innateKind")) if slot == "PASSIVE" else None
+        if kind is None:
+            kind = "被動" if is_passive else cell(tag or "主動")
         m = HERO_NUMBER_RE.match((a.get("name") or "").strip())
         num = f"{m.group(1)}-{m.group(2)}" if m else "—"
         eff = one_line(a.get("description"), 62) or effect_summary(a) or "—"
@@ -405,7 +447,7 @@ def gen_abilities(ctx):
             id=f"`{a['id']}`",
             name=cell(a.get("name")),
             slot=slot,
-            kind="被動" if is_passive else cell(tag or "主動"),
+            kind=kind,
             num=num,
             owner=(f"`{owner}` {cell(champ_name.get(owner, ''))}" if owner else "**（無主）**"),
             open_="✅" if a["id"] in open_abils else "—",
@@ -415,7 +457,12 @@ def gen_abilities(ctx):
     counts = {}
     for a in abils:
         counts[a.get("slot")] = counts.get(a.get("slot"), 0) + 1
-    census = "　·　".join(f"{s} {counts.get(s, 0)}" for s in ("Q", "W", "E", "R", "EX"))
+    census = "　·　".join(
+        f"{'天生 PASSIVE' if s == 'PASSIVE' else s} {counts.get(s, 0)}" for s in SLOTS
+    )
+    innate = [a for a in abils if a.get("slot") == "PASSIVE"]
+    innate_p = sum(1 for a in innate if a.get("innateKind") == "passive")
+    innate_a = sum(1 for a in innate if a.get("innateKind") == "active")
 
     L = header(
         "技能總表 / Ability reference",
@@ -424,12 +471,18 @@ def gen_abilities(ctx):
         len(abils),
         ctx,
         extra_notes=[
-            "`slot` 只有 Q/W/E/R/EX 五種 —— **被動不是一個 slot**，它掛在某個 QWER 技能上"
-            "（`型態` 欄標「被動」的就是）。全樹沒有任何 `xx-00` 的被動技能文件。",
-            "`編號` 是 w3x 作者的 `NN-0X` 慣例（EX 用三位數 `NN-00X`），"
+            "**`slot` 有六種：`PASSIVE`（天生技）＋ Q／W／E／R／EX。** 天生技是 w3x 的 "
+            f"`NN-00`，**等級 1 就擁有**，doc id 是 `<championId>.passive`，由 champion doc 的 "
+            f"`passiveAbility` 指過來；共 **{len(innate)}** 份"
+            f"（{innate_p} 份 `innateKind:passive` 純被動、{innate_a} 份 `innateKind:active` "
+            "有冷卻的天生主動）。原本的匯入把這個 slot 整個漏掉了，這批是從原始地圖還原回來的。",
+            "**不要跟 champion doc 上那個舊的 `passive` 區塊搞混**：那是掛在 QWER 技能上的"
+            "被動型效果（`型態` 欄標「被動」的那些），跟天生技 slot 是兩回事。",
+            "`編號` 是 w3x 作者的 `NN-0X` 慣例（天生技用 `NN-00`，EX 用三位數 `NN-00X`），"
             "由 `HERO_NUMBER_RE` 解析；非 w3x 原創英雄與少數格式異常的會顯示 `—`。",
             "`型態` 取自描述開頭的 w3x 分類標記（`[主動攻擊]`／`[輔助]`／`[被動]`…），"
-            "沒有標記的一律顯示「主動」。",
+            "沒有標記的一律顯示「主動」；天生技那格顯示的是 `innateKind`"
+            "（天生·被動／天生·主動），因為那才是讀者要分的東西。",
         ],
     )
     L.append("| id | 名稱 | slot | 型態 | 編號 | 擁有者 | 開放 | 短效果 |")
@@ -599,8 +652,12 @@ def build_context():
             a = (c.get("abilities") or {}).get(slot)
             if isinstance(a, dict) and a.get("id"):
                 ability_owner[a["id"]] = c["id"]
-        if c.get("exAbility"):
-            ability_owner[c["exAbility"]] = c["id"]
+        # `exAbility` and `passiveAbility` are both REFS to standalone docs (the
+        # passive is deliberately never embedded in `abilities`). Absence of
+        # `passiveAbility` is a recovered fact — the hero has no NN-00 — not a TODO.
+        for ref_field in ("exAbility", "passiveAbility"):
+            if c.get(ref_field):
+                ability_owner[c[ref_field]] = c["id"]
 
     ctx = {
         "contentVersion": manifest.get("contentVersion", "?"),

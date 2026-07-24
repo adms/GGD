@@ -1,0 +1,26 @@
+{
+  "id": "godie-e00r.passive",
+  "schema": "ability@1",
+  "name": "59-00 暴走",
+  "description": "[被動]\n0秒冷卻時間\n\n當初號機死亡的時候，有30%機率將會啟動暴走的機制保護自我，增加等級*2點全能力，生命回復增加40點，移動速度增加50%，有50%機率造成3倍傷害，並且敵我不分，殺死一名英雄增加全能力3點，持續20秒後將會強制回到基地維修。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0.0
+  ],
+  "manaCost": [
+    0.0
+  ],
+  "range": 0,
+  "effects": [],
+  "passive": {
+    "name": "59-00 暴走",
+    "ranks": [
+      {
+        "modifiers": []
+      }
+    ]
+  }
+}

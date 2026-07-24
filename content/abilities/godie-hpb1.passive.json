@@ -1,0 +1,26 @@
+{
+  "id": "godie-hpb1.passive",
+  "schema": "ability@1",
+  "name": "07-00 獸化心靈",
+  "description": "[被動]\n0秒冷卻時間\n\n讓獸矛的持有者每殺死8個部隊增加1點靈敏。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0.0
+  ],
+  "manaCost": [
+    0.0
+  ],
+  "range": 0,
+  "effects": [],
+  "passive": {
+    "name": "07-00 獸化心靈",
+    "ranks": [
+      {
+        "modifiers": []
+      }
+    ]
+  }
+}

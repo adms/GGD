@@ -1,0 +1,15 @@
+{
+  "id": "godie-u012.passive",
+  "schema": "ability@1",
+  "name": "61-00百連我殺",
+  "description": "[輔助]\n0秒冷卻時間\n\n有時候克勞薩先生會將自己當做祭品，藉由把自己殺掉而獲得重生。\n若克勞薩先生死亡時魔力在500點以上，他將會化身為死亡老二，裝甲下降10點以及最大生命下降600，並在10秒之後重生。\n\n死亡老二被毀壞則無法重生。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [0.0],
+  "manaCost": [0.0],
+  "range": 0,
+  "effects": [],
+  "passive": { "name": "61-00百連我殺", "ranks": [{ "modifiers": [] }] }
+}

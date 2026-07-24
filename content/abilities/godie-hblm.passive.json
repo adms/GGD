@@ -1,0 +1,32 @@
+{
+  "id": "godie-hblm.passive",
+  "schema": "ability@1",
+  "name": "05-00 啦嗚薩喀爾",
+  "description": "[輔助]\n60秒冷卻時間\n\n暫時強化賈修攻擊速度到極限，並且抵擋掉一切傷害，這段時間所受到的所有傷害都會回復為生命力，持續3秒。",
+  "slot": "PASSIVE",
+  "innateKind": "active",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    200.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "pctAdd",
+          "value": 99999.0
+        }
+      ],
+      "duration": 3.0
+    }
+  ],
+  "vfxKey": "fx.prim.lightning.pulse-lg",
+  "castTimeSec": 0.3
+}

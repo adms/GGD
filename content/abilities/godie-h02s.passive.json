@@ -1,0 +1,42 @@
+{
+  "id": "godie-h02s.passive",
+  "schema": "ability@1",
+  "name": "91-00 符文鍛造 - 墮落十字軍符文",
+  "description": "[輔助]\n45秒冷卻時間\n\n在你的符文武器上附加一個墮落十字軍符文，攻擊時可吸取生命25%，並提高20點力量，持續10秒。",
+  "slot": "PASSIVE",
+  "innateKind": "active",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    45.0
+  ],
+  "manaCost": [
+    150.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "lifesteal",
+          "op": "flat",
+          "value": 0.25
+        },
+        {
+          "stat": "ad",
+          "op": "flat",
+          "value": 20.0
+        },
+        {
+          "stat": "maxHealth",
+          "op": "flat",
+          "value": 440.0
+        }
+      ],
+      "duration": 10.0
+    }
+  ],
+  "vfxKey": "fx.prim.blood.pulse-sm",
+  "castTimeSec": 0.3
+}

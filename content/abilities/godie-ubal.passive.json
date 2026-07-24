@@ -1,0 +1,40 @@
+{
+  "id": "godie-ubal.passive",
+  "schema": "ability@1",
+  "name": "37-00 鬼眼",
+  "description": "[主動攻擊]\n45秒冷卻時間\n\n使用鬼眼降低指定目標區域內的攻擊和移動速度50%，持續5秒。",
+  "slot": "PASSIVE",
+  "innateKind": "active",
+  "castType": "ground",
+  "maxRank": 1,
+  "cooldown": [
+    45.0
+  ],
+  "manaCost": [
+    150.0
+  ],
+  "range": 22.0,
+  "radius": 11.0,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "applyStatus",
+      "statusId": "slow40",
+      "duration": 5.0,
+      "moveSpeedMult": 0.5
+    },
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "pctAdd",
+          "value": -0.5
+        }
+      ],
+      "duration": 5.0
+    }
+  ],
+  "vfxKey": "fx.prim.void.pulse-lg",
+  "castTimeSec": 0.5
+}

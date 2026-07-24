@@ -1,0 +1,32 @@
+{
+  "id": "godie-opgh.passive",
+  "schema": "ability@1",
+  "name": "32-00 青龍槍術",
+  "description": "[輔助]\n掌握青龍槍術精髓的趙子龍，由於槍術的特性，在攻擊時對英雄以及一般部隊單位造成1.3倍傷害，但對建築只能造成60%傷害。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0.0
+  ],
+  "manaCost": [
+    0.0
+  ],
+  "range": 0,
+  "effects": [],
+  "passive": {
+    "name": "32-00 青龍槍術",
+    "ranks": [
+      {
+        "modifiers": [
+          {
+            "stat": "ad",
+            "op": "pctAdd",
+            "value": 0.3
+          }
+        ]
+      }
+    ]
+  }
+}

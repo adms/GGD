@@ -7,7 +7,7 @@ import type { AbilityId, AugmentId, ChampionId, ItemId, ProjectileId } from "../
 import type { Stat, StatBlock } from "../stats/statTypes";
 import type { StatModifier, HookDef } from "../stats/modifiers";
 import type { EffectDef } from "../effects/effect";
-import type { AbilitySlot, CoreAbilitySlot } from "../intents";
+import type { ChampionAbilitySlot, CoreAbilitySlot } from "../intents";
 
 export type CastType = "targeted" | "skillshot" | "ground" | "self" | "dash";
 
@@ -43,7 +43,14 @@ export interface AbilityPassive {
 export interface AbilityDef {
   id: AbilityId;
   name: string;
-  slot: AbilitySlot;
+  slot: ChampionAbilitySlot;
+  /**
+   * ONLY on `slot: "PASSIVE"` — whether the level-1 innate (天生技) is a
+   * permanent self-buff ("passive", modelled through `passive.ranks[0]`, never
+   * castable) or a real cast with a cooldown ("active", the WC3 D-slot).
+   * Mirrors `zInnateKind`; absent on every other slot.
+   */
+  innateKind?: "passive" | "active";
   castType: CastType;
   maxRank: number;
   /** per rank (index rank-1) */
@@ -118,6 +125,13 @@ export interface ChampionDef {
    * Abilities registry (standalone ability doc), not embedded above.
    */
   exAbility?: AbilityId;
+  /**
+   * The per-hero 天生技 / PASSIVE ability id (slot "PASSIVE") — the SIXTH slot,
+   * owned from level 1, resolved via the Abilities registry exactly like
+   * `exAbility`. Absent = the source map has no NN-00 for this hero (3 of 111).
+   * Unrelated to `passive` below, which is a legacy hook block, not a slot.
+   */
+  passiveAbility?: AbilityId;
   passive?: { name: string; hooks?: HookDef[]; modifiers?: StatModifier[] };
   /**
    * Icon path relative to content/ ("assets/icons/champions/<id>.png",

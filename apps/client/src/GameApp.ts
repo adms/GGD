@@ -102,7 +102,7 @@ import { perfBus } from "./perfBus";
 import { ConnectionStats } from "./net/ConnectionStats";
 import { CastTracker } from "./CastTracker";
 import { registerHudActions } from "./ui/actions";
-import { getHeldAbility } from "./ui/abilityHold";
+import { getHeldAimSlot } from "./ui/abilityHold";
 import { envFactor, setDisplayEnvJson } from "./ui/displayFinal";
 import { audioSystem } from "./audio";
 import { loadChampionVoices, playChampionSelectVoice } from "./audio/championVoice";
@@ -887,7 +887,7 @@ export class GameApp {
     {
       let indicator: AimIndicatorState = this.touch ? touchFrame.indicator : null;
       if (indicator === null) {
-        const held = getHeldAbility();
+        const held = getHeldAimSlot(); // castable slots only — a 天生技 has no cast ring
         if (held !== null) indicator = this.resolveHoldPreview(held);
       }
       this.aimIndicator.update(indicator);

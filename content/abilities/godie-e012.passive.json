@@ -1,0 +1,41 @@
+{
+  "id": "godie-e012.passive",
+  "schema": "ability@1",
+  "name": "47-00 龍搥閃",
+  "description": "[被動]\n0秒冷卻時間\n\n有13%的機會，讓劍心使出龍搥閃砍傷附近的敵人造成280的傷害。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0.0
+  ],
+  "manaCost": [
+    0.0
+  ],
+  "range": 0,
+  "effects": [],
+  "vfxKey": "fx.prim.physical.nova",
+  "passive": {
+    "name": "47-00 龍搥閃",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onBasicAttack",
+            "chance": 0.13,
+            "effects": [
+              {
+                "kind": "damage",
+                "damageType": "physical",
+                "amount": {
+                  "flat": 280.0
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "id": "godie-u010.passive",
+  "schema": "ability@1",
+  "name": "38-00 邪眼全開",
+  "description": "[變化]\n60秒冷卻時間\n\n將移植到身上的邪眼全部打開，使得妖氣爆增，攻擊速度提升100%和移動速度50點，使用一二招傷害會增加(敏捷*2)點，持續10秒。",
+  "slot": "PASSIVE",
+  "innateKind": "active",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    0.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "pctAdd",
+          "value": 1.0
+        },
+        {
+          "stat": "ms",
+          "op": "flat",
+          "value": 0.97
+        }
+      ],
+      "duration": 10.0
+    }
+  ],
+  "vfxKey": "fx.prim.void.pulse",
+  "castTimeSec": 0.3
+}

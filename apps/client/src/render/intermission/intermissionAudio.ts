@@ -20,6 +20,22 @@
  *     reaches its natural end restarts it. `stop()` clears the timer, so nothing
  *     is left ticking once the scene is disposed (no leak).
  *
+ * ONE BELL, NOT TWO — DELIBERATE. A second "break is ending" ring was
+ * considered and rejected on the numbers, not on taste:
+ *   • the clip is 26.03 s long (a full キンコンカンコン plus a long decay tail),
+ *     and the prep window is 60 s (PhaseMachine `intermissionTicks`). A closing
+ *     ring would have to START at t≈34 s to finish before combat — the middle
+ *     of the window, which reads as random rather than as "time is up";
+ *   • start it any later and it is still sounding when the phase ends, so the
+ *     school bell rings over the opening seconds of the fight. `playSfx` is
+ *     fire-and-forget (the mixer exposes no stop-one-voice seam), so a dispose
+ *     could not cut it off;
+ *   • the last five seconds already belong to task #95, whose `countFinal`
+ *     fires on the 1 s edge. A bell on top of it is the "so dense it sounds
+ *     broken" stacking the brief warns against.
+ * The single opening ring at t=0 lands clean: it is done by t≈26 s, a full 34 s
+ * before the countdown starts, so the two cues never overlap.
+ *
  * Kept as a pure module (injected `SfxPort` + timer fns) so it is unit-testable
  * without a WebGL scene or a real AudioContext — see intermissionAudio.test.ts.
  */

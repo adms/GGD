@@ -131,20 +131,20 @@ def selftest():
     here = os.path.dirname(os.path.abspath(__file__))
     ok = True
 
-    shipped = os.path.join(here, "draft-confirm.wav")
+    shipped = os.path.join(here, "draft-confirm.mp3")
     if os.path.exists(shipped):
         m = measure(shipped)
         passed, reasons = judge(m)
-        print(f"[shipped] draft-confirm.wav  {'PASS' if passed else 'FAIL ' + str(reasons)}")
+        print(f"[shipped] draft-confirm.mp3  {'PASS' if passed else 'FAIL ' + str(reasons)}")
         ok = ok and passed
     else:
-        print("[shipped] draft-confirm.wav MISSING")
+        print("[shipped] draft-confirm.mp3 MISSING")
         ok = False
 
     # Prove distinctness against the REAL sibling cues on disk (stronger than the
     # synthetic archetypes below): the confirm must never be mistaken for the
     # cyber hover or either countdown bell, so the gate must REJECT all three.
-    for sib in ("ui-hover-cyber.wav", "count-tick.wav", "count-final.wav"):
+    for sib in ("ui-hover-cyber.mp3", "count-tick.mp3", "count-final.mp3"):
         p = os.path.join(here, sib)
         if not os.path.exists(p):
             print(f"[reject ] {sib:20s} (absent — skipped)")

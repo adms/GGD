@@ -22,6 +22,7 @@ import {
 import { useHud } from "../net/RoomStore";
 import { hudActions } from "./actions";
 import { exSlotView } from "./exSlot";
+import { innateKindLabel, passiveSlotView, PASSIVE_ACCENT, PASSIVE_SLOT_LABEL } from "./passiveSlot";
 import { setHeldAbility } from "./abilityHold";
 import { abilityActivationCue } from "./abilityCue";
 import { prefersReducedMotion } from "./buttonSfx";
@@ -39,6 +40,14 @@ const ATTACK_SIZE = 88;
 const ABILITY_SIZE = 58;
 /** ability arc radius around the attack button */
 const ARC_RADIUS = 122;
+
+/**
+ * 天生技 button center — one tile FURTHER LEFT than Q, on the attack button's
+ * own row. Kept off the arc (and off the vertical) on purpose: it is the sixth,
+ * non-castable slot, and a phone-landscape viewport is only ~390px tall, so
+ * nothing may grow upward (#151/#159).
+ */
+const PASSIVE_CENTER = { right: ATTACK_CENTER + ARC_RADIUS + ABILITY_SIZE, bottom: ATTACK_CENTER };
 
 /** Q at due-left of the attack button, R due-above, W/E on the arc between. */
 function arcCenter(i: number): { right: number; bottom: number } {
@@ -393,6 +402,67 @@ export function TouchControls(): React.JSX.Element | null {
                 }}
               />
             )}
+          </div>
+        );
+      })()}
+
+      {/* 天生技 (the SIXTH slot) — the NN-00 innate owned from LEVEL 1. Violet,
+          dashed for a pure 被動 / solid for an 主動 innate, 天生 badge instead of
+          a hotkey letter and a Lv1 chip, so it never reads as a hotkey button
+          that does nothing. A finger-hold only opens the description panel;
+          there is no pressHandler and no touch-cast path at all. */}
+      {(() => {
+        const innate = passiveSlotView(seat.championId);
+        if (!innate) return null;
+        const active = innate.innateKind === "active";
+        return (
+          <div
+            data-touch-slot="PASSIVE"
+            onTouchStart={(e) => {
+              pressVisualDown(e.currentTarget);
+              setHeldAbility("PASSIVE");
+              abilityActivationCue("PASSIVE", { passive: true });
+            }}
+            onTouchEnd={(e) => {
+              pressVisualClear(e.currentTarget);
+              setHeldAbility(null);
+            }}
+            onTouchCancel={(e) => {
+              pressVisualClear(e.currentTarget);
+              setHeldAbility(null);
+            }}
+            style={{
+              ...circleBase,
+              right: PASSIVE_CENTER.right - ABILITY_SIZE / 2,
+              bottom: PASSIVE_CENTER.bottom - ABILITY_SIZE / 2,
+              width: ABILITY_SIZE,
+              height: ABILITY_SIZE,
+              background: active ? "rgba(43, 35, 64, 0.92)" : "rgba(30, 27, 44, 0.9)",
+              border: `2px ${active ? "solid" : "dashed"} ${PASSIVE_ACCENT}`,
+              color: PASSIVE_ACCENT,
+              fontWeight: "bold",
+              transition: "transform 80ms ease, filter 80ms ease",
+            }}
+          >
+            <div style={{ fontSize: 11, fontWeight: "bold", lineHeight: 1 }}>
+              {PASSIVE_SLOT_LABEL}
+              <span style={{ fontSize: 8, marginLeft: 2 }}>{innateKindLabel(innate.innateKind)}</span>
+            </div>
+            <div
+              style={{
+                marginTop: 2,
+                maxWidth: ABILITY_SIZE - 12,
+                fontSize: 9,
+                lineHeight: 1.1,
+                overflow: "hidden",
+                whiteSpace: "nowrap",
+                textOverflow: "ellipsis",
+                color: PASSIVE_ACCENT,
+              }}
+            >
+              {innate.displayName}
+            </div>
+            <div style={{ fontSize: 7.5, color: TEXT_DIM, lineHeight: 1.1 }}>Lv1</div>
           </div>
         );
       })()}

@@ -1,0 +1,38 @@
+{
+  "id": "godie-o02p.passive",
+  "schema": "ability@1",
+  "name": "99-00 可愛就是正義",
+  "description": "[輔助]\n0秒冷卻時間\n\n這世界的真理就是可愛，可愛就是正義！在初音的影響下，週遭的部隊可以額外獲得30%生命恢復率及8%跑速。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0.0
+  ],
+  "manaCost": [
+    0.0
+  ],
+  "range": 0,
+  "radius": 11.0,
+  "effects": [],
+  "passive": {
+    "name": "99-00 可愛就是正義",
+    "ranks": [
+      {
+        "modifiers": [
+          {
+            "stat": "healthRegen",
+            "op": "pctAdd",
+            "value": 0.3
+          },
+          {
+            "stat": "ms",
+            "op": "pctAdd",
+            "value": 0.08
+          }
+        ]
+      }
+    ]
+  }
+}

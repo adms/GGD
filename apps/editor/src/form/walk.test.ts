@@ -30,8 +30,13 @@ describe("walkZod widget kinds (editor-01)", () => {
 
     expect(f.get("schema")!.kind).toBe("literal");
     expect(f.get("name")!.kind).toBe("text");
-    // slot enum now includes the per-hero "EX" ultimate slot (EX 技能)
-    expect(f.get("slot")).toMatchObject({ kind: "enum", options: ["Q", "W", "E", "R", "EX"] });
+    // slot enum covers all SIX slots a champion owns: Q/W/E/R, the per-hero
+    // "EX" ultimate (EX 技能), and "PASSIVE" — the 天生技 the source map grants
+    // at level 1 (ability code NN-00), which the w3x importer used to drop.
+    expect(f.get("slot")).toMatchObject({
+      kind: "enum",
+      options: ["Q", "W", "E", "R", "EX", "PASSIVE"],
+    });
     expect(f.get("maxRank")).toMatchObject({ kind: "number", int: true, min: 1, max: 6 });
     expect(f.get("cooldown")!.kind).toBe("array");
     expect((f.get("cooldown") as UIArray).item.kind).toBe("number");

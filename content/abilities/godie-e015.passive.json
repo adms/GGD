@@ -1,0 +1,32 @@
+{
+  "id": "godie-e015.passive",
+  "schema": "ability@1",
+  "name": "94-00 恰恰~",
+  "description": "[輔助]\n15秒冷卻時間\n\n金居福憤怒的怒吼，可以增加自身攻擊力30%及技能威力，持續時間10秒。",
+  "slot": "PASSIVE",
+  "innateKind": "active",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    15.0
+  ],
+  "manaCost": [
+    25.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.3
+        }
+      ],
+      "duration": 10.0
+    }
+  ],
+  "vfxKey": "fx.prim.sound.pulse",
+  "castTimeSec": 0.3
+}

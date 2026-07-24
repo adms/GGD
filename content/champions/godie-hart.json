@@ -305,6 +305,7 @@
     "godie"
   ],
   "exAbility": "godie-hart.ex",
+  "passiveAbility": "godie-hart.passive",
   "passive": {
     "name": "01-00 怒斬",
     "hooks": [

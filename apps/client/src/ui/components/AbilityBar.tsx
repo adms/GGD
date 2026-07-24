@@ -1,15 +1,21 @@
 /**
- * AbilityBar — QWER icons with ranks, cooldown sweeps (SeatState.cooldowns,
- * ticks → seconds) and rank-up buttons when points are unspent. Ability
- * names/castTypes come from the SHARED content registry — same defs the
+ * AbilityBar — the SIX-slot bar: Q/W/E/R icons with ranks + cooldown sweeps
+ * (SeatState.cooldowns, ticks → seconds) and rank-up buttons when points are
+ * unspent, then the EX, then the 天生技 (innate) the champion owns from level 1.
+ * Ability names/castTypes come from the SHARED content registry — same defs the
  * server casts with.
+ *
+ * The sixth tile is deliberately NOT shaped like the other five: no hotkey
+ * caption, no rank pips, no rank-up button, a violet accent and a 天生 badge,
+ * because it is not something the player presses or spends a point on. See
+ * `ui/passiveSlot` for why the slot exists and how 被動 vs 主動 differ.
  */
 import { useEffect, useRef } from "react";
 import { TICK_HZ } from "@ggd/shared/constants";
 import { Abilities, Champions } from "@ggd/shared/sim/content/registry";
 import { isPassiveOnly } from "@ggd/shared/sim/abilities/abilityPassives";
 import type { AbilityId, ChampionId } from "@ggd/shared/ids";
-import type { AbilitySlot, CoreAbilitySlot } from "@ggd/shared/sim/intents";
+import type { ChampionAbilitySlot, CoreAbilitySlot } from "@ggd/shared/sim/intents";
 import { useHud } from "../../net/RoomStore";
 import { frameBus } from "../../frameBus";
 import { hudActions } from "../actions";
@@ -18,6 +24,13 @@ import { abilityActivationCue } from "../abilityCue";
 import { prefersReducedMotion } from "../buttonSfx";
 import { AbilityDescriptionOverlay } from "../AbilityDescriptionOverlay";
 import { exSlotView } from "../exSlot";
+import {
+  innateCastNote,
+  innateKindLabel,
+  passiveSlotView,
+  PASSIVE_ACCENT,
+  PASSIVE_SLOT_LABEL,
+} from "../passiveSlot";
 import { iconSrc } from "../icons";
 import { IconImg } from "./IconImg";
 import { Tooltip, type TooltipMeta } from "./Tooltip";
@@ -52,7 +65,7 @@ function pressVisualClear(el: HTMLElement): void {
  * still answers with SOME feedback.
  */
 function holdProps(
-  slot: AbilitySlot,
+  slot: ChampionAbilitySlot,
   cue: { denied?: boolean; passive?: boolean },
 ): React.DOMAttributes<HTMLDivElement> {
   return {
@@ -347,6 +360,103 @@ export function AbilityBar(): React.JSX.Element | null {
             </div>
             </Tooltip>
             <div style={{ marginTop: 3, fontSize: 9, color: EX_ACCENT, letterSpacing: 1 }}>F</div>
+          </div>
+        );
+      })()}
+      {(() => {
+        // 天生技 (the SIXTH slot) — the recovered NN-00 innate the champion owns
+        // from LEVEL 1. Null for the three heroes that genuinely have none.
+        //
+        // It is deliberately NOT tile-shaped like the five above it:
+        //   • a 天生 badge instead of a hotkey letter, and a 「Lv1」 corner chip,
+        //     so the "you already own this" fact is on the tile, not just in a
+        //     tooltip nobody opens;
+        //   • dashed border + no glow for innateKind "passive" (#166's language:
+        //     dashed = you do not press this);
+        //   • SOLID border + a 主動 chip for innateKind "active" — the map's
+        //     D-slot innates are real abilities and must not read as auras.
+        // No rank pips and no + button either way: it is never ranked.
+        const innate = passiveSlotView(seat.championId);
+        if (!innate) return null;
+        const active = innate.innateKind === "active";
+        const meta: TooltipMeta[] = [
+          { label: PASSIVE_SLOT_LABEL, value: innateKindLabel(innate.innateKind) },
+        ];
+        if (active) {
+          meta.push({ label: "施法", value: castTypeLabel(innate.castType) });
+          if (innate.cooldownSec !== undefined)
+            meta.push({ label: "冷卻", base: innate.cooldownSec, factor: "cooldown", unit: "s" });
+          if (innate.manaCost !== undefined) meta.push({ label: "魔力", value: `${innate.manaCost}` });
+        }
+        meta.push({ label: "取得", value: innateCastNote(innate.innateKind) });
+        return (
+          <div style={{ position: "relative", width: 52, textAlign: "center" }}>
+            <Tooltip title={innate.name} body={innate.description} meta={meta} style={{ display: "block" }}>
+            <div
+              // held → the top-of-screen description panel (task #152). It never
+              // reaches the floor aim ring: getHeldAimSlot() drops PASSIVE, so a
+              // non-castable tile cannot draw a cast-range telegraph.
+              {...holdProps("PASSIVE", { passive: true })}
+              style={{
+                position: "relative",
+                width: 52,
+                height: 52,
+                borderRadius: 6,
+                overflow: "hidden",
+                background: active ? "#2b2340" : "#1e1b2c",
+                border: `${active ? 2 : 1}px ${active ? "solid" : "dashed"} ${PASSIVE_ACCENT}`,
+                color: TEXT_MAIN,
+                // NOT a button: no pointer cursor, no glow.
+                cursor: "default",
+                transition: "transform 80ms ease, filter 80ms ease",
+              }}
+            >
+              <div style={{ fontSize: 12, fontWeight: "bold", marginTop: 7, color: PASSIVE_ACCENT }}>
+                {PASSIVE_SLOT_LABEL}
+              </div>
+              <div style={{ fontSize: 8, color: TEXT_DIM, overflow: "hidden", whiteSpace: "nowrap" }}>
+                {innate.displayName}
+              </div>
+              <IconImg fill src={iconSrc(innate.icon)} alt={innate.name} />
+              {/* 「等級1就獲得」 stated ON the tile — the owner's whole point */}
+              <div
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  top: 0,
+                  padding: "0 3px",
+                  borderBottomRightRadius: 5,
+                  background: "rgba(10,8,20,0.85)",
+                  color: PASSIVE_ACCENT,
+                  fontSize: 8,
+                  lineHeight: "11px",
+                }}
+              >
+                Lv1
+              </div>
+              {/* 被動 / 主動 — the two shapes an innate takes */}
+              <div
+                style={{
+                  position: "absolute",
+                  right: 0,
+                  bottom: 0,
+                  padding: "0 3px",
+                  borderTopLeftRadius: 5,
+                  background: "rgba(10,8,20,0.85)",
+                  color: PASSIVE_ACCENT,
+                  fontSize: 8,
+                  lineHeight: "11px",
+                }}
+              >
+                {innateKindLabel(innate.innateKind)}
+              </div>
+            </div>
+            </Tooltip>
+            {/* where the other five show a hotkey / rank pips, this says why it
+                has neither — it was never learned, it is simply owned. */}
+            <div style={{ marginTop: 3, fontSize: 8, color: TEXT_DIM, letterSpacing: 0.5 }}>
+              {active ? "自動擁有" : "無需施放"}
+            </div>
           </div>
         );
       })()}

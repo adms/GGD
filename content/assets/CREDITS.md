@@ -914,12 +914,28 @@ recorded here for provenance.
 
 ## 効果音ラボ / Sound Effect Lab pack (`audio/sfx/lab/`, `audio/voice-jp/`)
 
-40 real recordings (32 SFX + 8 Japanese voice clips) from **効果音ラボ
-(Sound Effect Lab)** — https://soundeffect-lab.info/ — downloaded 2026-07-22
-(task #51). They fill the gaps the synthesised `sfx/fx/*.wav` set could not:
-weapon material, magic elements, explosions, and a whole class of UI/system
-moments (denial, purchase, gold, panel open, low health, gongs, settlement
-reveal) that previously had **no sound bound at all**.
+**54 real recordings — 46 SFX + 8 Japanese voice clips** — from **効果音ラボ
+(Sound Effect Lab)** — https://soundeffect-lab.info/ — acquired in three waves:
+32 on 2026-07-22 (task #51), 9 + 5 more on 2026-07-24. They fill the gaps the
+synthesised `sfx/fx/*.wav` set could not: weapon material, magic elements,
+explosions, ambience beds, and a whole class of UI/system moments (denial,
+purchase, gold, panel open, low health, gongs, settlement reveal, the 下課鐘,
+the gacha roll) that previously had **no sound bound at all**.
+
+**43 of the 46 SFX are bound in `content/config/audio-map.json` and audible in
+game today.** The remaining 3 SFX and all 8 voice clips ship in the repo but no
+code path plays them; every row below says which is which, and the in-game
+版權聲明 page (`#credits`) shows the same list with the same 使用中 /
+收錄未啟用 marking.
+
+> **WHY THE FULL LIST EXISTS.** The project owner authorised these downloads on
+> one condition — 「只要好好列出附記在授權頁面就好」 (list them properly on the
+> licence page). The licence itself does **not** ask for this. Listing every clip
+> is therefore a promise we made to the owner, not a licence obligation: if a
+> clip is added, removed or re-bound, this ledger and
+> `apps/client/src/ui/platform/sfxLabCredits.ts` must be updated in the same
+> change. `sfxLabCredits.test.ts` fails the build if either drifts from the files
+> on disk or from `audio-map.json`.
 
 > **COURTESY CREDIT — attribution is NOT required for this pack.** Unlike the
 > CC-BY 4.0 dragon above (and unlike the 魔王魂 BGM this repo used to ship,
@@ -982,95 +998,112 @@ reveal) that previously had **no sound bound at all**.
   no video that showcases the sound effects one by one (a normal gameplay
   trailer is fine).
 
-### Usage ledger — SFX (`audio/sfx/lab/`, 32 clips)
+### Usage ledger — SFX (`audio/sfx/lab/`, 46 clips)
 
-| staged file | source page | original file | source category | GGD binding | processing | dur / size | licence |
+| # | staged file | 原始素材（効果音ラボ 標題 / 檔名） | source page | GGD 用途 | audio-map event | processing | dur / size |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `ui-denied.wav` | https://soundeffect-lab.info/sound/button/ | `beep1.mp3` ビープ音1 | 演出・システム / ボタン・システム音 | `uiDenied` — authored, awaits emit (#44 shop 無金幣/已擁有) | mono 44.1 kHz, edge-trim, +2.60 dB → 16-bit WAV | 0.41 s / 35 KB | SEL ToU (credit optional) |
-| `shop-purchase.wav` | https://soundeffect-lab.info/sound/various/ | `clearing1.mp3` レジスターで精算 | 演出・システム / お金 | `shopPurchase` — authored, awaits emit (#44) | mono 44.1 kHz, edge-trim, +0.00 dB → 16-bit WAV | 0.72 s / 62 KB | SEL ToU (credit optional) |
-| `gold-gain.wav` | https://soundeffect-lab.info/sound/various/ | `money-drop1.mp3` お金を落とす1 | 演出・システム / お金 | `goldGain` — authored, awaits emit | mono 44.1 kHz, edge-trim, -1.10 dB, 20 ms fade-out → 16-bit WAV | 1.01 s / 87 KB | SEL ToU (credit optional) |
-| `panel-open.wav` | https://soundeffect-lab.info/sound/button/ | `menu4.mp3` メニューを開く4 | 演出・システム / ボタン・システム音 | `panelOpen` — authored, awaits emit (#38 prep-phase shop/skill panel) | mono 44.1 kHz, edge-trim, +1.00 dB → 16-bit WAV | 0.89 s / 77 KB | SEL ToU (credit optional) |
-| `ui-cancel.wav` | https://soundeffect-lab.info/sound/button/ | `cancel1.mp3` キャンセル1 | 演出・システム / ボタン・システム音 | `uiCancel` — authored, awaits emit (panel back/close) | mono 44.1 kHz, edge-trim, +2.80 dB → 16-bit WAV | 0.13 s / 11 KB | SEL ToU (credit optional) |
-| `ability-rank-up.mp3` | https://soundeffect-lab.info/sound/button/ | `decision10.mp3` 決定ボタンを押す10 | 演出・システム / ボタン・システム音 | `abilityRankUp` — authored, awaits emit (skill point spend) | mono 44.1 kHz, edge-trim, -2.10 dB → MP3 192k | 1.96 s / 47 KB | SEL ToU (credit optional) |
-| `low-health.wav` | https://soundeffect-lab.info/sound/button/ | `warning1.mp3` 警告音1 | 演出・システム / ボタン・システム音 | `lowHealth` — authored, awaits emit (HUD HP threshold) | mono 44.1 kHz, edge-trim, +5.90 dB → 16-bit WAV | 1.31 s / 113 KB | SEL ToU (credit optional) |
-| `settlement-reveal.mp3` | https://soundeffect-lab.info/sound/button/ | `data-display3.mp3` データ表示3 | 演出・システム / ボタン・システム音 | `settlementReveal` — authored, awaits emit (#25/#36 ranking row reveal) | mono 44.1 kHz, edge-trim, +2.40 dB → MP3 192k | 2.96 s / 71 KB | SEL ToU (credit optional) |
-| `match-start-gong.wav` | https://soundeffect-lab.info/sound/anime/ | `gong-played1.mp3` 試合開始のゴング | 演出・アニメ / 対戦演出 | `matchStartGong` — authored, awaits emit. **NOT** in `matchStart`: that pool is announcer-VO-only (#40) | mono 44.1 kHz, edge-trim, +1.30 dB → 16-bit WAV | 1.71 s / 148 KB | SEL ToU (credit optional) |
-| `match-end-gong.mp3` | https://soundeffect-lab.info/sound/anime/ | `gong-played2.mp3` 試合終了のゴング | 演出・アニメ / 対戦演出 | `matchEndGong` — authored, awaits emit (match over → settlement) | mono 44.1 kHz, edge-trim, +2.00 dB → MP3 192k | 2.57 s / 62 KB | SEL ToU (credit optional) |
-| `vs-reveal.mp3` | https://soundeffect-lab.info/sound/anime/ | `match-card1.mp3` 対戦カード表示1 | 演出・アニメ / 対戦演出 | `vsReveal` — authored, awaits emit (champ-select 對戰卡) | mono 44.1 kHz, edge-trim, +2.00 dB, 20 ms fade-out → MP3 192k | 2.34 s / 56 KB | SEL ToU (credit optional) |
-| `level-up-jingle.mp3` | https://soundeffect-lab.info/sound/anime/ | `levelup1.mp3` レベルアップ | 演出・アニメ | `levelUpJingle` — authored, awaits emit. **NOT** in `levelUp`: announcer-VO-only (#40) | mono 44.1 kHz, edge-trim, +0.30 dB → MP3 192k | 1.92 s / 47 KB | SEL ToU (credit optional) |
-| `attack-sword-1.wav` | https://soundeffect-lab.info/sound/battle/ | `sword-slash1.mp3` 剣で斬る1 | 戦闘 / 剣・斬撃 | staged, not bound — `basicAttack` is weapon-agnostic today | mono 44.1 kHz, edge-trim, +1.50 dB → 16-bit WAV | 0.75 s / 65 KB | SEL ToU (credit optional) |
-| `attack-sword-2.wav` | https://soundeffect-lab.info/sound/battle/ | `sword-slash2.mp3` 剣で斬る2 | 戦闘 / 剣・斬撃 | staged, not bound — `basicAttack` is weapon-agnostic today | mono 44.1 kHz, edge-trim, +1.60 dB → 16-bit WAV | 0.56 s / 49 KB | SEL ToU (credit optional) |
-| `attack-greatsword.wav` | https://soundeffect-lab.info/sound/battle/ | `large-sword-slash1.mp3` 大剣で斬る | 戦闘 / 剣・斬撃 | staged, not bound — `basicAttack`; also 1.70 s vs a 90 ms cooldown | mono 44.1 kHz, edge-trim, +2.30 dB → 16-bit WAV | 1.70 s / 147 KB | SEL ToU (credit optional) |
-| `attack-katana.wav` | https://soundeffect-lab.info/sound/battle/ | `katana-slash1.mp3` 刀で斬る1 | 戦闘 / 剣・斬撃 | staged, not bound — `basicAttack`; also +7.4 dB vs the pool anchor | mono 44.1 kHz, edge-trim, +0.90 dB → 16-bit WAV | 0.80 s / 69 KB | SEL ToU (credit optional) |
-| `whiff-sword.wav` | https://soundeffect-lab.info/sound/battle/ | `sword-gesture2.mp3` 剣の素振り2 | 戦闘 / 剣・斬撃 | **`whiff`** (bound — replaced `fx/whiff.wav`) | mono 44.1 kHz, edge-trim, +1.10 dB → 16-bit WAV | 0.48 s / 41 KB | SEL ToU (credit optional) |
-| `block-clash.wav` | https://soundeffect-lab.info/sound/battle/ | `sword-clash2.mp3` 剣で打ち合う2 | 戦闘 / 剣・斬撃 | **`block`** (bound — replaced `fx/guard.wav`) | mono 44.1 kHz, edge-trim, -0.10 dB → 16-bit WAV | 0.73 s / 63 KB | SEL ToU (credit optional) |
-| `block-shield.wav` | https://soundeffect-lab.info/sound/battle/ | `shield1.mp3` 盾で防御 | 戦闘 / 防御 | **`block`** (bound — replaced `fx/guard.wav`) | mono 44.1 kHz, edge-trim, +1.30 dB → 16-bit WAV | 0.60 s / 51 KB | SEL ToU (credit optional) |
-| `bow-draw.wav` | https://soundeffect-lab.info/sound/battle/ | `bow-draw1.mp3` 弓を引き絞る1 | 戦闘 / 弓矢 | staged, not bound — bow-only; −6.1 dB vs `fx/windup.wav` | mono 44.1 kHz, edge-trim, +4.90 dB, 20 ms fade-out → 16-bit WAV | 0.98 s / 85 KB | SEL ToU (credit optional) |
-| `arrow-release.wav` | https://soundeffect-lab.info/sound/battle/ | `arrow-release1.mp3` 弓矢を放つ | 戦闘 / 弓矢 | staged, not bound — bow-only; `projectileSpawn` fires for every projectile | mono 44.1 kHz, edge-trim, +0.00 dB → 16-bit WAV | 0.51 s / 44 KB | SEL ToU (credit optional) |
-| `arrow-pierce.wav` | https://soundeffect-lab.info/sound/battle/ | `arrow-pierce1.mp3` 弓矢が刺さる | 戦闘 / 弓矢 | staged, not bound — arrow-only; `projectileHit` fires for magic bolts too | mono 44.1 kHz, edge-trim, +2.20 dB → 16-bit WAV | 0.34 s / 30 KB | SEL ToU (credit optional) |
-| `gunshot.wav` | https://soundeffect-lab.info/sound/battle/battle2.html | `handgun-firing1.mp3` 拳銃を撃つ | 戦闘 / 戦争・銃 | staged, not bound — gun-only; same reason | mono 44.1 kHz, edge-trim, -0.60 dB → 16-bit WAV | 1.37 s / 118 KB | SEL ToU (credit optional) |
-| `impact-heavy.wav` | https://soundeffect-lab.info/sound/battle/ | `punch-heavy1.mp3` 重いパンチ1 | 戦闘 / 格闘 | staged, not bound — would fight `fx/crit.wav`'s rising-sting legibility | mono 44.1 kHz, edge-trim, +1.60 dB → 16-bit WAV | 0.55 s / 47 KB | SEL ToU (credit optional) |
-| `cast-circle.mp3` | https://soundeffect-lab.info/sound/battle/ | `magic-circle1.mp3` 魔法陣を展開 | 戦闘 / 魔法 | staged, not bound — 3.50 s against `castBegin`'s 120 ms cooldown | mono 44.1 kHz, edge-trim, +1.90 dB → MP3 192k | 3.50 s / 83 KB | SEL ToU (credit optional) |
-| `magic-fire.wav` | https://soundeffect-lab.info/sound/battle/ | `magic-flame1.mp3` 火炎魔法1 | 戦闘 / 魔法 | staged, not bound — needs per-ability routing (`abilityCast` is one global event) | mono 44.1 kHz, edge-trim, -5.60 dB → 16-bit WAV | 0.74 s / 64 KB | SEL ToU (credit optional) |
-| `magic-ice.mp3` | https://soundeffect-lab.info/sound/battle/ | `magic-ice1.mp3` 氷魔法1 | 戦闘 / 魔法 | staged, not bound — needs per-ability routing | mono 44.1 kHz, edge-trim, -0.10 dB → MP3 192k | 2.16 s / 52 KB | SEL ToU (credit optional) |
-| `magic-lightning.wav` | https://soundeffect-lab.info/sound/battle/ | `magic-electron2.mp3` 雷魔法2 | 戦闘 / 魔法 | staged, not bound — needs per-ability routing | mono 44.1 kHz, edge-trim, -1.60 dB → 16-bit WAV | 1.46 s / 126 KB | SEL ToU (credit optional) |
-| `magic-holy.mp3` | https://soundeffect-lab.info/sound/battle/ | `magic-attack-holy1.mp3` 聖魔法 | 戦闘 / 魔法 | `exUnlockSting` — authored, awaits emit. **NOT** in `exUnlock`: announcer-VO-only (#40) | mono 44.1 kHz, edge-trim, +1.90 dB → MP3 192k | 3.72 s / 89 KB | SEL ToU (credit optional) |
-| `magic-heal.mp3` | https://soundeffect-lab.info/sound/battle/ | `magic-cure2.mp3` 回復魔法2 | 戦闘 / 魔法 | `heal` — authored, awaits emit | mono 44.1 kHz, edge-trim, +2.20 dB → MP3 192k | 2.35 s / 56 KB | SEL ToU (credit optional) |
-| `magic-buff.mp3` | https://soundeffect-lab.info/sound/battle/ | `magic-statusup1.mp3` ステータス上昇魔法1 | 戦闘 / 魔法 | `buffApply` — authored, awaits emit | mono 44.1 kHz, edge-trim, -0.20 dB → MP3 192k | 1.98 s / 48 KB | SEL ToU (credit optional) |
-| `explosion.mp3` | https://soundeffect-lab.info/sound/battle/battle2.html | `bomb2.mp3` 爆発2 | 戦闘 / 戦争・銃 | `explosion` — authored, awaits emit (#39 VFX pairing) | mono 44.1 kHz, edge-trim, +2.30 dB → MP3 192k | 2.52 s / 61 KB | SEL ToU (credit optional) |
+| | **UI・系統** | | | | | | |
+| 1 | `ui-denied.mp3` | ビープ音1 / `beep1.mp3` | https://soundeffect-lab.info/sound/button/mp3/beep1.mp3 | 無法選擇／金幣不足時的錯誤提示 | `uiDenied` | 單聲道 44.1 kHz、去頭尾靜音、+2.60 dB → WAV | 0.41 s / 35 KB |
+| 2 | `shop-purchase.mp3` | レジスターで精算 / `clearing1.mp3` | https://soundeffect-lab.info/sound/various/mp3/clearing1.mp3 | 商店購買成交 | `shopPurchase` | 單聲道 44.1 kHz、去頭尾靜音、+0.00 dB → WAV | 0.72 s / 62 KB |
+| 3 | `gold-gain.mp3` | お金を落とす1 / `money-drop1.mp3` | https://soundeffect-lab.info/sound/various/mp3/money-drop1.mp3 | 取得金幣 | `goldGain` | 單聲道 44.1 kHz、去頭尾靜音、-1.10 dB → WAV | 1.01 s / 87 KB |
+| 4 | `panel-open.mp3` | メニューを開く4 / `menu4.mp3` | https://soundeffect-lab.info/sound/button/mp3/menu4.mp3 | 面板／視窗開啟 | `panelOpen` | 單聲道 44.1 kHz、去頭尾靜音、+1.00 dB → WAV | 0.89 s / 77 KB |
+| 5 | `ui-cancel.mp3` | キャンセル1 / `cancel1.mp3` | https://soundeffect-lab.info/sound/button/mp3/cancel1.mp3 | 取消、返回上一層 | `uiCancel` | 單聲道 44.1 kHz、去頭尾靜音、+2.80 dB → WAV | 0.13 s / 11 KB |
+| 6 | `ability-rank-up.mp3` | 決定ボタンを押す10 / `decision10.mp3` | https://soundeffect-lab.info/sound/button/mp3/decision10.mp3 | 技能升級（投入技能點） | `abilityRankUp` | 單聲道 44.1 kHz、去頭尾靜音、-2.10 dB → MP3 192k | 1.96 s / 47 KB |
+| 7 | `low-health.mp3` | 警告音1 / `warning1.mp3` | https://soundeffect-lab.info/sound/button/mp3/warning1.mp3 | 血量過低警告 | `lowHealth` | 單聲道 44.1 kHz、去頭尾靜音、+5.90 dB → WAV | 1.31 s / 113 KB |
+| 8 | `settlement-reveal.mp3` | データ表示3 / `data-display3.mp3` | https://soundeffect-lab.info/sound/button/mp3/data-display3.mp3 | 結算畫面逐列揭示名次 | `settlementReveal` | 單聲道 44.1 kHz、去頭尾靜音、+2.40 dB → MP3 192k | 2.96 s / 71 KB |
+| 9 | `uiTabSwitch.mp3` | カーソル移動1 / `cursor1.mp3` | https://soundeffect-lab.info/sound/button/mp3/cursor1.mp3 | 分頁／頁籤切換 | `uiTabSwitch` | 未記錄（ledger 未載明處理步驟） | — / 26 KB |
+| 10 | `uiToggle.mp3` | スイッチを押す / `switch1.mp3` | https://soundeffect-lab.info/sound/anime/mp3/switch1.mp3 | 開關類設定切換（含全域音訊開關） | `uiToggle` | 未記錄（ledger 未載明處理步驟） | — / 6 KB |
+| | **演出・賽事** | | | | | | |
+| 11 | `match-start-gong.mp3` | 試合開始のゴング / `gong-played1.mp3` | https://soundeffect-lab.info/sound/anime/mp3/gong-played1.mp3 | 開賽鑼（與日文播報疊放） | `matchStartGong` | 單聲道 44.1 kHz、去頭尾靜音、+1.30 dB → WAV | 1.71 s / 148 KB |
+| 12 | `match-end-gong.mp3` | 試合終了のゴング / `gong-played2.mp3` | https://soundeffect-lab.info/sound/anime/mp3/gong-played2.mp3 | 終場鑼，進入結算 | `matchEndGong` | 單聲道 44.1 kHz、去頭尾靜音、+2.00 dB → MP3 192k | 2.57 s / 62 KB |
+| 13 | `vs-reveal.mp3` | 対戦カード表示1 / `match-card1.mp3` | https://soundeffect-lab.info/sound/anime/mp3/match-card1.mp3 | 選角對戰卡 VS 揭示 | `vsReveal` | 單聲道 44.1 kHz、去頭尾靜音、+2.00 dB → MP3 192k | 2.34 s / 56 KB |
+| 14 | `level-up-jingle.mp3` | レベルアップ / `levelup1.mp3` | https://soundeffect-lab.info/sound/anime/mp3/levelup1.mp3 | 升級提示樂句（與日文播報疊放） | `levelUpJingle` | 單聲道 44.1 kHz、去頭尾靜音、+0.30 dB → MP3 192k | 1.92 s / 47 KB |
+| 15 | `recessBell.mp3` | 学校のチャイム / `school-chime1.mp3` | https://soundeffect-lab.info/sound/anime/mp3/school-chime1.mp3 | 中場「下課鐘」，備戰視窗開啟時響一次 | `recessBell` | 原始下載檔，未經本專案再處理 | 26.03 s / 612 KB |
+| 16 | `draftCardReveal.mp3` | キラッ1 / `kira1.mp3` | https://soundeffect-lab.info/sound/anime/mp3/kira1.mp3 | 三選一抽卡：每張卡翻面時的閃光 | `draftCardReveal` | 原始下載檔，未經本專案再處理 | 0.99 s / 26 KB |
+| 17 | `legendaryWin.mp3` | ラッパのファンファーレ / `trumpet1.mp3` | https://soundeffect-lab.info/sound/anime/mp3/trumpet1.mp3 | 傳說寶珠中獎號角 | `legendaryWin` | 原始下載檔，未經本專案再處理 | 1.89 s / 46 KB |
+| 18 | `legendaryRoll.mp3` | ドラムロール / `drum-roll1.mp3` | https://soundeffect-lab.info/sound/anime/mp3/drum-roll1.mp3 | 傳說寶珠轉蛋滾動中（循環） | `legendaryRoll` | 未記錄（ledger 未載明處理步驟） | — / 107 KB |
+| 19 | `guardianLastHit.mp3` | アイテムを入手1 / `item-get1.mp3` | https://soundeffect-lab.info/sound/anime/mp3/item-get1.mp3 | 守衛塔最後一擊的金幣獎勵 | `guardianLastHit` | 原始下載檔，未經本專案再處理 | 3.27 s / 78 KB |
+| | **戰鬥・武器** | | | | | | |
+| 20 | `attack-sword-1.mp3` | 剣で斬る1 / `sword-slash1.mp3` | https://soundeffect-lab.info/sound/battle/mp3/sword-slash1.mp3 | 單手劍普攻（第一式） | `attackSword1` | 單聲道 44.1 kHz、去頭尾靜音、+1.50 dB → WAV | 0.75 s / 65 KB |
+| 21 | `attack-sword-2.mp3` | 剣で斬る2 / `sword-slash2.mp3` | https://soundeffect-lab.info/sound/battle/mp3/sword-slash2.mp3 | 單手劍普攻（第二式） | `attackSword2` | 單聲道 44.1 kHz、去頭尾靜音、+1.60 dB → WAV | 0.56 s / 49 KB |
+| 22 | `attack-greatsword.mp3` | 大剣で斬る / `large-sword-slash1.mp3` | https://soundeffect-lab.info/sound/battle/mp3/large-sword-slash1.mp3 | 大劍普攻 | `attackGreatsword` | 單聲道 44.1 kHz、去頭尾靜音、+2.30 dB → WAV | 1.70 s / 147 KB |
+| 23 | `attack-katana.mp3` | 刀で斬る1 / `katana-slash1.mp3` | https://soundeffect-lab.info/sound/battle/mp3/katana-slash1.mp3 | 刀（日本刀）普攻 | `attackKatana` | 單聲道 44.1 kHz、去頭尾靜音、+0.90 dB → WAV | 0.80 s / 69 KB |
+| 24 | `whiff-sword.mp3` | 剣の素振り2 / `sword-gesture2.mp3` | https://soundeffect-lab.info/sound/battle/mp3/sword-gesture2.mp3 | 揮空、未命中 | `whiff` | 單聲道 44.1 kHz、去頭尾靜音、+1.10 dB → WAV | 0.48 s / 41 KB |
+| 25 | `block-clash.mp3` | 剣で打ち合う2 / `sword-clash2.mp3` | https://soundeffect-lab.info/sound/battle/mp3/sword-clash2.mp3 | 格擋音；目前 block 事件改用自製音效，此檔備而未用 | **未綁定** | 單聲道 44.1 kHz、去頭尾靜音、-0.10 dB → WAV | 0.73 s / 63 KB |
+| 26 | `block-shield.mp3` | 盾で防御 / `shield1.mp3` | https://soundeffect-lab.info/sound/battle/mp3/shield1.mp3 | 格擋音；目前 block 事件改用自製音效，此檔備而未用 | **未綁定** | 單聲道 44.1 kHz、去頭尾靜音、+1.30 dB → WAV | 0.60 s / 51 KB |
+| 27 | `bow-draw.mp3` | 弓を引き絞る1 / `bow-draw1.mp3` | https://soundeffect-lab.info/sound/battle/mp3/bow-draw1.mp3 | 拉弓蓄力 | `bowDraw` | 單聲道 44.1 kHz、去頭尾靜音、+4.90 dB → WAV | 0.98 s / 85 KB |
+| 28 | `arrow-release.mp3` | 弓矢を放つ / `arrow-release1.mp3` | https://soundeffect-lab.info/sound/battle/mp3/arrow-release1.mp3 | 放箭 | `arrowRelease` | 單聲道 44.1 kHz、去頭尾靜音、+0.00 dB → WAV | 0.51 s / 44 KB |
+| 29 | `arrow-pierce.mp3` | 弓矢が刺さる / `arrow-pierce1.mp3` | https://soundeffect-lab.info/sound/battle/mp3/arrow-pierce1.mp3 | 箭矢命中 | `arrowPierce` | 單聲道 44.1 kHz、去頭尾靜音、+2.20 dB → WAV | 0.34 s / 30 KB |
+| 30 | `gunshot.mp3` | 拳銃を撃つ / `handgun-firing1.mp3` | https://soundeffect-lab.info/sound/battle/mp3/handgun-firing1.mp3 | 槍械射擊 | `gunshot` | 單聲道 44.1 kHz、去頭尾靜音、-0.60 dB → WAV | 1.37 s / 118 KB |
+| 31 | `impact-heavy.mp3` | 重いパンチ1 / `punch-heavy1.mp3` | https://soundeffect-lab.info/sound/battle/mp3/punch-heavy1.mp3 | 重擊音；會蓋掉自製暴擊音的辨識度，故備而未用 | **未綁定** | 單聲道 44.1 kHz、去頭尾靜音、+1.60 dB → WAV | 0.55 s / 47 KB |
+| 32 | `guardianSlam.mp3` | 打撃4 / `blow4.mp3` | https://soundeffect-lab.info/sound/battle/mp3/blow4.mp3 | 守衛塔範圍重擊（樹人／石頭人／巨獸人） | `guardianSlam` | 原始下載檔，未經本專案再處理 | 1.27 s / 30 KB |
+| | **魔法・技能** | | | | | | |
+| 33 | `cast-circle.mp3` | 魔法陣を展開 / `magic-circle1.mp3` | https://soundeffect-lab.info/sound/battle/mp3/magic-circle1.mp3 | 魔法陣展開，詠唱起手 | `castCircle` | 單聲道 44.1 kHz、去頭尾靜音、+1.90 dB → MP3 192k | 3.50 s / 83 KB |
+| 34 | `magic-fire.mp3` | 火炎魔法1 / `magic-flame1.mp3` | https://soundeffect-lab.info/sound/battle/mp3/magic-flame1.mp3 | 火系技能施放 | `magicFire` | 單聲道 44.1 kHz、去頭尾靜音、-5.60 dB → WAV | 0.74 s / 64 KB |
+| 35 | `magic-ice.mp3` | 氷魔法1 / `magic-ice1.mp3` | https://soundeffect-lab.info/sound/battle/mp3/magic-ice1.mp3 | 冰系技能施放 | `magicIce` | 單聲道 44.1 kHz、去頭尾靜音、-0.10 dB → MP3 192k | 2.16 s / 52 KB |
+| 36 | `magic-lightning.mp3` | 雷魔法2 / `magic-electron2.mp3` | https://soundeffect-lab.info/sound/battle/mp3/magic-electron2.mp3 | 雷系技能施放 | `magicLightning` | 單聲道 44.1 kHz、去頭尾靜音、-1.60 dB → WAV | 1.46 s / 126 KB |
+| 37 | `magic-holy.mp3` | 聖魔法 / `magic-attack-holy1.mp3` | https://soundeffect-lab.info/sound/battle/mp3/magic-attack-holy1.mp3 | EX 技能解鎖聖光（與日文播報疊放） | `exUnlockSting` | 單聲道 44.1 kHz、去頭尾靜音、+1.90 dB → MP3 192k | 3.72 s / 89 KB |
+| 38 | `magic-heal.mp3` | 回復魔法2 / `magic-cure2.mp3` | https://soundeffect-lab.info/sound/battle/mp3/magic-cure2.mp3 | 治療 | `heal` | 單聲道 44.1 kHz、去頭尾靜音、+2.20 dB → MP3 192k | 2.35 s / 56 KB |
+| 39 | `magic-buff.mp3` | ステータス上昇魔法1 / `magic-statusup1.mp3` | https://soundeffect-lab.info/sound/battle/mp3/magic-statusup1.mp3 | 增益狀態附加 | `buffApply` | 單聲道 44.1 kHz、去頭尾靜音、-0.20 dB → MP3 192k | 1.98 s / 48 KB |
+| 40 | `explosion.mp3` | 爆発2 / `bomb2.mp3` | https://soundeffect-lab.info/sound/battle/mp3/bomb2.mp3 | 範圍爆炸 | `explosion` | 單聲道 44.1 kHz、去頭尾靜音、+2.30 dB → MP3 192k | 2.52 s / 61 KB |
+| 41 | `reviveChannel.mp3` | オーラ1 / `aura1.mp3` | https://soundeffect-lab.info/sound/battle/mp3/aura1.mp3 | 隊友復活詠唱進行中（循環） | `reviveChannel` | 未記錄（ledger 未載明處理步驟） | — / 223 KB |
+| 42 | `reviveComplete.mp3` | 回復魔法4 / `magic-cure4.mp3` | https://soundeffect-lab.info/sound/battle/mp3/magic-cure4.mp3 | 復活完成 | `reviveComplete` | 未記錄（ledger 未載明處理步驟） | — / 40 KB |
+| 43 | `respawn.mp3` | ニュッ1 / `nyu1.mp3` | https://soundeffect-lab.info/sound/anime/mp3/nyu1.mp3 | 重生、重新進場 | `respawn` | 未記錄（ledger 未載明處理步驟） | — / 7 KB |
+| | **環境音** | | | | | | |
+| 44 | `fireRingLoop.mp3` | たき火 / `fire1.mp3` | https://soundeffect-lab.info/sound/environment/mp3/fire1.mp3 | 火環收縮的燃燒床音（循環） | `fireRingLoop` | 未記錄（ledger 未載明處理步驟） | — / 1412 KB |
+| 45 | `arenaAmbience.mp3` | 風に揺れる草木1 / 原始檔名未留存 | https://soundeffect-lab.info/sound/environment/ （僅頁面層級來源，原始檔名未留存） | 競技場環境音床（循環） | `arenaAmbience` | 未記錄（ledger 未載明處理步驟） | — / 890 KB |
+| 46 | `merchantAmbience.mp3` | スーパーマーケット1 / `supermarket1.mp3` | https://soundeffect-lab.info/sound/environment/mp3/supermarket1.mp3 | 中場市集人聲床（循環） | `merchantAmbience` | 未記錄（ledger 未載明處理步驟） | — / 1179 KB |
 
 ### Usage ledger — 声素材 voice (`audio/voice-jp/`, 8 clips)
 
-All eight are the same actress, **「落ち着いた女性」 (`info-lady1`)** — real human
-ja-JP VO, normalised to the announcer band (mean −15 dB, −1.5 dB peak ceiling) so
-they can drop into an announcer pool without a level seam. The pack sits at
-`voice-jp/` rather than under `voices/` because `audio/voices/**` and
-`audio/announcer/**` belong to task #40; both manifests record the adjacency so
-nobody "tidies" it later.
-
-| staged file | source page | original file | source category | GGD binding | processing | dur / size | licence |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| `level-up.mp3` | https://soundeffect-lab.info/sound/voice/info-lady1.html | `info-lady1-levelup1.mp3` 「レベルアップ」 | 声素材 / 落ち着いた女性 (info-lady1) | staged, not bound — `levelUp` is announcer-VO-only (#40); whole-pool swap required | mono 44.1 kHz, edge-trim, +8.00 dB → MP3 192k | 0.90 s / 23 KB | SEL ToU (credit optional) |
-| `prep-phase-start.mp3` | https://soundeffect-lab.info/sound/voice/info-lady1.html | `info-lady1-zyunbihaiidesuka1.mp3` 「準備はいいですか？」 | 声素材 / 落ち着いた女性 (info-lady1) | staged, not bound — no `prepPhaseStart` event until #38 lands | mono 44.1 kHz, edge-trim, +8.90 dB → MP3 192k | 1.15 s / 29 KB | SEL ToU (credit optional) |
-| `countdown.mp3` | https://soundeffect-lab.info/sound/voice/info-lady1.html | `info-lady1-countdown1.mp3` 「3、2、1、0」 | 声素材 / 落ち着いた女性 (info-lady1) | staged, not bound — one 3.37 s 「3、2、1、0」 clip cannot drive per-second `countTick` | mono 44.1 kHz, edge-trim, +8.10 dB → MP3 192k | 3.37 s / 80 KB | SEL ToU (credit optional) |
-| `matchmaking-wait.mp3` | https://soundeffect-lab.info/sound/voice/info-lady1.html | `info-lady1-shibarakuomachi1.mp3` 「しばらくお待ちください」 | 声素材 / 落ち着いた女性 (info-lady1) | staged, not bound — no matchmaking-wait event exists | mono 44.1 kHz, edge-trim, +8.30 dB, 20 ms fade-out → MP3 192k | 1.42 s / 35 KB | SEL ToU (credit optional) |
-| `settlement-victory.mp3` | https://soundeffect-lab.info/sound/voice/info-lady1.html | `info-lady1-omedetougozaimasu1.mp3` 「おめでとうございます」 | 声素材 / 落ち着いた女性 (info-lady1) | staged, not bound — no settlement VO event; #40 owns the system voice | mono 44.1 kHz, edge-trim, +9.20 dB → MP3 192k | 1.21 s / 30 KB | SEL ToU (credit optional) |
-| `settlement-defeat.mp3` | https://soundeffect-lab.info/sound/voice/info-lady1.html | `info-lady1-zannendeshita1.mp3` 「残念でした」 | 声素材 / 落ち着いた女性 (info-lady1) | staged, not bound — same | mono 44.1 kHz, edge-trim, +6.60 dB → MP3 192k | 0.99 s / 25 KB | SEL ToU (credit optional) |
-| `candidates/match-start-youkoso.mp3` | https://soundeffect-lab.info/sound/voice/info-lady1.html | `info-lady1-youkoso1.mp3` 「ようこそ」 | 声素材 / 落ち着いた女性 (info-lady1) | quarantined candidate — partial match for `matchStart` | mono 44.1 kHz, edge-trim, +7.40 dB → MP3 192k | 0.70 s / 18 KB | SEL ToU (credit optional) |
-| `candidates/round-start-start.mp3` | https://soundeffect-lab.info/sound/voice/info-lady1.html | `info-lady1-start1.mp3` 「スタート」 | 声素材 / 落ち着いた女性 (info-lady1) | quarantined candidate — partial match for `roundStart` | mono 44.1 kHz, edge-trim, +8.60 dB → MP3 192k | 0.74 s / 19 KB | SEL ToU (credit optional) |
+| # | staged file | 原始素材（台詞 / 檔名） | source page | GGD 用途 | audio-map event |
+| --- | --- | --- | --- | --- | --- |
+| 1 | `level-up.mp3` | 「レベルアップ」 / `info-lady1-levelup1.mp3` | https://soundeffect-lab.info/sound/voice/info-lady1.html | 升級播報用候補 | **未綁定** |
+| 2 | `prep-phase-start.mp3` | 「準備はいいですか？」 / `info-lady1-zyunbihaiidesuka1.mp3` | https://soundeffect-lab.info/sound/voice/info-lady1.html | 備戰開始播報用候補 | **未綁定** |
+| 3 | `countdown.mp3` | 「3、2、1、0」 / `info-lady1-countdown1.mp3` | https://soundeffect-lab.info/sound/voice/info-lady1.html | 倒數播報用候補 | **未綁定** |
+| 4 | `matchmaking-wait.mp3` | 「しばらくお待ちください」 / `info-lady1-shibarakuomachi1.mp3` | https://soundeffect-lab.info/sound/voice/info-lady1.html | 配對等待播報用候補 | **未綁定** |
+| 5 | `settlement-victory.mp3` | 「おめでとうございます」 / `info-lady1-omedetougozaimasu1.mp3` | https://soundeffect-lab.info/sound/voice/info-lady1.html | 勝利結算播報用候補 | **未綁定** |
+| 6 | `settlement-defeat.mp3` | 「残念でした」 / `info-lady1-zannendeshita1.mp3` | https://soundeffect-lab.info/sound/voice/info-lady1.html | 落敗結算播報用候補 | **未綁定** |
+| 7 | `candidates/match-start-youkoso.mp3` | 「ようこそ」 / `info-lady1-youkoso1.mp3` | https://soundeffect-lab.info/sound/voice/info-lady1.html | 開賽播報用候補 | **未綁定** |
+| 8 | `candidates/round-start-start.mp3` | 「スタート」 / `info-lady1-start1.mp3` | https://soundeffect-lab.info/sound/voice/info-lady1.html | 回合開始播報用候補 | **未綁定** |
 
 ### What is bound, and what deliberately is not
 
-**Bound and audible today** (surgical additive edit to
-`content/config/audio-map.json`, after task #40 landed):
+**Bound and audible today — 43 of the 46 SFX.** Every row in the SFX table above
+with an `audio-map event` is live in `content/config/audio-map.json`; that file is
+the authority for gain / cooldown / voice-cap and belongs to the audio lane, not
+to this document. The bindings cover UI chrome, the draft + gacha flourishes, the
+intermission 下課鐘 and market bed, per-weapon and per-element combat routing, the
+guardian's slam and payout, the revive channel, and the arena / fire-ring beds.
 
-| event | pool | gain | why |
-| --- | --- | --- | --- |
-| `block` | `lab/block-clash.wav`, `lab/block-shield.wav` | 0.63 | 防禦 is weapon-agnostic — a real 剣で打ち合う / 盾で防御 beats the synth ping. Replaces `fx/guard.wav`; the two members sit ±1.6 dB around the old pool level, so the event's perceived loudness is unchanged. |
-| `whiff` | `lab/whiff-sword.wav` | 0.43 | a real 剣の素振り, and at −21.7 dB mean it is within 0.7 dB of the `fx/whiff.wav` it replaces — a true drop-in. |
+**Not bound — 3 SFX, with the reason recorded per row:**
 
-**Authored but silent** — 16 further events (`uiDenied`, `uiCancel`, `panelOpen`,
-`shopPurchase`, `goldGain`, `lowHealth`, `abilityRankUp`, `settlementReveal`,
-`vsReveal`, `matchStartGong`, `matchEndGong`, `levelUpJingle`, `exUnlockSting`,
-`heal`, `buffApply`, `explosion`) are authored in `audio-map.json` with a tuned
-gain/cooldown/voice-cap, but **no code emits them yet**. The emit sites live in
-`apps/client/src/audio/**` and the HUD/shop surfaces owned by tasks #38/#39/#44.
-An unknown event is simply silent, so this costs nothing at runtime and gives
-those tasks a binding that is already level-matched.
+| clip | why it ships unused |
+| --- | --- |
+| `block-clash.mp3`, `block-shield.mp3` | the `block` event currently pools the self-made `fx/guard.mp3` + `fx/block-hit.mp3`. These two were bound during #51 and later reverted; they stay on disk as the material for a future pass. |
+| `impact-heavy.mp3` | would fight `fx/crit.mp3`'s rising-sting legibility — a deliberate omission, not an oversight. |
 
-**Three "obvious" bindings that are FORBIDDEN, not merely undone:** `matchStart`,
-`levelUp` and `exUnlock` are **announcer-VO-only** pools — task #40 made every
-system broadcast Japanese and `announcerVo.test.ts` asserts the pools contain
-nothing outside `assets/audio/announcer/`. The gong, the level-up jingle and the
-holy sting therefore got their **own** event keys (`matchStartGong`,
-`levelUpJingle`, `exUnlockSting`) to be layered *alongside* the VO by whoever
-adds the emit site. Do not "simplify" them back into the VO pools.
+**Not bound — all 8 声素材 voice clips.** No code references `audio/voice-jp/**`
+at all. Task #40 made every system broadcast Japanese via the generated announcer
+pack, and `announcerVo.test.ts` asserts those pools contain nothing outside
+`assets/audio/announcer/`, so dropping a 効果音ラボ voice line into `matchStart`,
+`levelUp` or `exUnlock` is **forbidden**, not merely undone. The gong, the
+level-up jingle and the holy sting therefore have their **own** event keys
+(`matchStartGong`, `levelUpJingle`, `exUnlockSting`) and are layered *alongside*
+the VO. Do not "simplify" them back into the VO pools.
 
-**Not bound, with the reason recorded per row above:** every weapon clip
-(sword ×3, katana, greatsword, bow, arrow ×2, gunshot, heavy punch) and the three
-elemental magic casts. `basicAttack` / `projectileSpawn` / `projectileHit` /
-`attackWindup` / `abilityCast` are **single global events** — GGD has no
-per-weapon or per-ability audio routing, so binding a katana slash there would
-put a metal blade on a mage's staff and a fletched arrow on a fireball. These
-clips are the raw material for that routing, not a drop-in upgrade; the routing
-itself is client-audio work (`apps/client/src/audio/**`).
+**Provenance honesty.** One clip — `arenaAmbience.mp3` — has **page-level
+provenance only**: the acquisition agent recorded the title 「風に揺れる草木1」 and
+the 自然・環境音 page, but never the source file name, so no `sourceUrl` is
+claimed for it anywhere. Do not fill one in from a guess; if that clip ever needs
+replacing, re-download from the recorded page and write down what was actually
+fetched. Nine further clips (the 2026-07-24 wave A) had their provenance
+**backfilled** from the download agents' own reports — see
+`audio/sfx/lab/MANIFEST.json` → `phase2.provenanceCaveat` / `provenanceBackfill`
+— and their per-clip processing steps were never captured, which is why their
+`processing` column reads 未記錄 rather than an invented pipeline.
+
+**No soundboard.** The pack forbids 再配布, and the one build that would trip that
+clause is a screen that auditions or downloads these clips one by one. The
+in-game 版權聲明 list is text only and must stay text only — never add a play
+button to those rows.

@@ -322,6 +322,7 @@
     "godie"
   ],
   "exAbility": "godie-h01u.ex",
+  "passiveAbility": "godie-h01u.passive",
   "passive": {
     "name": "80-00 飛將神弓",
     "hooks": [

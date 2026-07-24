@@ -61,6 +61,41 @@ export const zCoreAbilitySlot = z.enum(["Q", "W", "E", "R"]);
  * embedded in champion.abilities and never in skillOrder/autoLearn.
  */
 export const zAbilitySlot = z.enum(["Q", "W", "E", "R", "EX"]);
+/**
+ * Every slot a champion OWNS — the five castable ones plus "PASSIVE".
+ *
+ * "PASSIVE" is the 天生技 / innate the source map grants at level 1 (ability
+ * code `NN-00`, where NN is the hero 編號 — it lives in the WC3 hero unit's
+ * non-learnable `abilities` list, NOT in `hero_abilities` with the learnable
+ * NN-01..04). The w3x importer dropped it entirely, so content shipped five
+ * slots for years; the owner's rule is six. Like "EX" it is a STANDALONE
+ * ability@1 doc (`<championId>.passive`) referenced by the champion via
+ * `passiveAbility`, never embedded in `champion.abilities` and never in
+ * skillOrder — but unlike EX it is owned from level 1 and is never ranked.
+ *
+ * Do NOT confuse this with `ability@1.passive` (the rank-indexed permanent
+ * modifier block that ANY slot may carry) or with `champion@1.passive` (a
+ * legacy per-champion hook block on 7 docs). Those describe HOW an ability
+ * behaves; this describes WHICH slot it occupies.
+ */
+export const zChampionAbilitySlot = z.enum(["Q", "W", "E", "R", "EX", "PASSIVE"]);
+
+/**
+ * Which KIND of innate a `slot: "PASSIVE"` doc is — the source map puts two
+ * genuinely different things in the same level-1 slot and both the sim and the
+ * HUD have to tell them apart:
+ *
+ *   "passive"  no cooldown, `[被動]`/`[靈氣]` in the ubertip: auras, evasion,
+ *              on-hit procs, regen, per-kill growth. Modelled as the rank-1
+ *              entry of `ability@1.passive.ranks` and attached as a permanent
+ *              ModifierSource at spawn. `effects` is empty — never castable.
+ *   "active"   a real cooldown: the WC3 D-slot nuke / summon / toggle. Has
+ *              `effects` and is cast like any other ability, just unlocked at
+ *              level 1 instead of being learned.
+ *
+ * ~51 of the 108 recovered innates are "passive", ~57 are "active".
+ */
+export const zInnateKind = z.enum(["passive", "active"]);
 
 /** Planar point — the sim has no y. */
 export const zVec2 = z.object({ x: z.number().finite(), z: z.number().finite() }).strict();

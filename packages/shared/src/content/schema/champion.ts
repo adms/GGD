@@ -53,6 +53,24 @@ export const zChampionDef = z
      */
     exAbility: zRef<AbilityId>("abilities").optional(),
     /**
+     * The per-hero 天生技 / PASSIVE — the SIXTH slot, owned from level 1.
+     *
+     * A standalone ability@1 with `slot: "PASSIVE"`, id `<championId>.passive`,
+     * resolved through the abilities collection exactly like `exAbility`. The
+     * source map codes it `NN-00` (NN = the hero 編號) in the WC3 hero unit's
+     * non-learnable `abilities` list; the importer dropped it, so every
+     * champion shipped with five slots instead of six.
+     *
+     * Absent = this hero genuinely has no NN-00 in the map. Exactly three do
+     * not: godie-h02n 腦包英雄 and godie-u01q 測試英雄 (no abilities at all) and
+     * godie-ogld 美白大法師 (has 72-01..04 + 72-002, but no 72-00 exists
+     * anywhere in the map). Absence is a recovered fact, never a TODO.
+     *
+     * NOT to be confused with `passive` below — that is a legacy per-champion
+     * hook/modifier block on 7 docs, not a slot.
+     */
+    passiveAbility: zRef<AbilityId>("abilities").optional(),
+    /**
      * w3x portrait icon extracted from the map archive (task #33), path
      * relative to content/, e.g. "assets/icons/champions/godie-e001.png".
      * Absent = Blizzard STOCK art or no WC3 source — client fallback rendering.

@@ -134,7 +134,7 @@ signal against the RMS of the mono mix (`ffmpeg -af "pan=mono|c0=c0-c1,astats"`)
 
 | File | Bytes | L−R RMS (dB) | Mix RMS (dB) | Separation | Reading |
 |---|--:|--:|--:|--:|---|
-| `sfx/fx/ui-hover-cyber.wav` | 79,458 | **−inf** | −16.99 | ∞ | **Bit-exact dual-mono** |
+| `sfx/fx/ui-hover-cyber.mp3` | 79,458 | **−inf** | −16.99 | ∞ | **Bit-exact dual-mono** |
 | `sfx/up.mp3` | 7,313 | **−inf** | −14.74 | ∞ | **Bit-exact dual-mono** |
 | `sfx/yooooooooooooo.mp3` | 35,943 | −76.56 | −15.59 | 61.0 dB | Inaudibly stereo |
 | `sfx/heycharlie.mp3` | 36,361 | −44.02 | −15.71 | 28.3 dB | Near-mono |
@@ -153,7 +153,7 @@ re-encoding each at half its current bitrate (mono `pcm_s16le` for the WAV):
 | File | Orig | Mono | Saved |
 |---|--:|--:|--:|
 | `sfx/ringnai.mp3` | 103,698 | 50,267 | 53,431 |
-| `sfx/fx/ui-hover-cyber.wav` | 79,458 | 39,768 | 39,690 |
+| `sfx/fx/ui-hover-cyber.mp3` | 79,458 | 39,768 | 39,690 |
 | `sfx/retired/dragon-roar-angry-4.4s.mp3` | 71,515 | 35,779 | 35,736 |
 | `sfx/heycharlie.mp3` | 36,361 | 18,121 | 18,240 |
 | `sfx/yooooooooooooo.mp3` | 35,943 | 18,284 | 17,659 |
@@ -162,7 +162,7 @@ re-encoding each at half its current bitrate (mono `pcm_s16le` for the WAV):
 | **Total** | **360,245** | **178,816** | **181,429** |
 
 **Recommendation: do not run a mono pass as its own task.** It is 0.55% and two of the seven
-files would be a quality regression. The one case that matters, `ui-hover-cyber.wav`, is
+files would be a quality regression. The one case that matters, `ui-hover-cyber.mp3`, is
 better solved by format (§5) than by channel count — and note that because it is bit-exact
 dual-mono, **lame produces the identical 8,403 B whether you ask for stereo or mono**, so
 the mono step buys literally nothing once it is an mp3.
@@ -183,9 +183,9 @@ rough perceptual-parity reference.
 | `voices/quotes/godie-e001.mp3` | 32 | 1 | 0.43 | 4,213 | 2,053 | 2,541 | 4,223 |
 | `voice-taunt/round/_fallback-1.mp3` | 24 | 1 | 4.00 | 18,669 | 9,825 | 11,101 | 24,677 |
 | `voice-taunt/chicken/chx-defrost.mp3` | 24 | 1 | 3.02 | 13,879 | 7,556 | 8,614 | 18,721 |
-| `sfx/fx/ui-hover-cyber.wav` | 48 | 2 | 0.45 | 79,458 | 2,365 | 2,864 | 6,314 |
-| `sfx/fx/block-hit.wav` | 48 | 1 | 0.10 | 8,898 | 759 | 1,168 | 1,925 |
-| `sfx/lab/attack-katana.wav` | 48 | 1 | 0.80 | 70,304 | 4,949 | 5,542 | 10,389 |
+| `sfx/fx/ui-hover-cyber.mp3` | 48 | 2 | 0.45 | 79,458 | 2,365 | 2,864 | 6,314 |
+| `sfx/fx/block-hit.mp3` | 48 | 1 | 0.10 | 8,898 | 759 | 1,168 | 1,925 |
+| `sfx/lab/attack-katana.mp3` | 48 | 1 | 0.80 | 70,304 | 4,949 | 5,542 | 10,389 |
 | **Total** | | | | **1,751,103** | **1,163,474** | **1,196,282** | |
 
 **Opus in Ogg is −33.6%; Opus in WebM is −31.7%.**
@@ -266,12 +266,12 @@ headline saving.** `content/assets/audio/sfx/fx/MANIFEST.json:2`, verbatim:
 That is the same decode path this document identifies in §4 (`AudioSystem.ts:950`
 `decodeAudioData`), and these are the #133 hit-feel clips — `basicAttack` / `hit` / `crit` /
 `block` / `footstep`. The "shortest clips are 100 ms" hedge below is **wrong by 2.5×**:
-measured, `tick.wav` is 0.040 s, `footstep.wav` 0.070 s, `windup.wav` 0.090 s — i.e. exactly
+measured, `tick.mp3` is 0.040 s, `footstep.mp3` 0.070 s, `windup.mp3` 0.090 s — i.e. exactly
 the 40 ms transient the rule names.
 
 So: ship `sfx/lab` on the numbers. For `sfx/fx`, the mitigation is not "an A/B listen" — it
 is **encoder-delay-safe framing** (an encoder that writes LAME/Xing gapless metadata AND a
-decode path that honours it) or keeping PCM. `sfx/retired/ui-hover-cyber.wav` (0.45 s, not a
+decode path that honours it) or keeping PCM. `sfx/retired/ui-hover-cyber.mp3` (0.45 s, not a
 transient) is a defensible carve-out from the rule rather than a reason to pretend the rule
 is not there.
 
@@ -280,7 +280,7 @@ The licence position is clean either way:
 「WAVやOGGなどどのような形式に変換していただいても構いません」 — format conversion is
 explicitly permitted, not merely tolerated. `sfx/fx/*.wav` is synthesised in-repo (own work).
 
-**Start with one file.** `sfx/fx/ui-hover-cyber.wav` is 92.2% of the four clips warmed at
+**Start with one file.** `sfx/fx/ui-hover-cyber.mp3` is 92.2% of the four clips warmed at
 the first click:
 
 | Variant | Bytes | vs orig |
@@ -308,7 +308,7 @@ three originally listed here. Grepped for the `.wav` basenames:
 | `content/bundle.json` | the baked one-request transport |
 | `content/assets/audio/sfx/lab/MANIFEST.json` | 33 basenames |
 | `content/assets/audio/sfx/fx/MANIFEST.json` | 28 basenames |
-| `content/assets/CREDITS.md` | 30 basenames — the licence **usage ledger** (e.g. `whiff-sword.wav … 0.48 s / 41 KB`) |
+| `content/assets/CREDITS.md` | 30 basenames — the licence **usage ledger** (e.g. `whiff-sword.mp3 … 0.48 s / 41 KB`) |
 | `content/assets/audio/README.md` | 20 basenames |
 | `content/assets/audio/sfx/lab/ACQUIRE.py` | 2 basenames |
 | `content/assets/audio/sfx/lab/VERIFY.py` | the `.wav` glob |
@@ -330,8 +330,8 @@ See §6.
 
 ### ⚠️ CONSIDER — prune only the clearly-dead groups: −234,841 B
 
-`sfx/retired` (215,359) + `sfx/fx/whiff.wav` (19,482, the whiff event binds
-`lab/whiff-sword.wav` instead). Explicit list only — see the LEAVE ALONE list for why a
+`sfx/retired` (215,359) + `sfx/fx/whiff.mp3` (19,482, the whiff event binds
+`lab/whiff-sword.mp3` instead). Explicit list only — see the LEAVE ALONE list for why a
 "prune unreferenced audio" sweep is wrong.
 
 > Of that, **−131,474 B is already counted in the WAV→mp3 row** (both entries are WAVs).
@@ -580,15 +580,15 @@ Only the changes that need no codec bet and no user ear-check:
 
 > **These rows OVERLAP — do not just add them up.** The prune list contains two
 > of the same fifty WAVs, so their conversion saving is counted in the WAV row
-> already: `sfx/retired/ui-hover-cyber-bubbly-rising-chirp.wav` (143,844 → 27,211,
-> saving 116,633) and `sfx/fx/whiff.wav` (19,482 → 4,641, saving 14,841).
+> already: `sfx/retired/ui-hover-cyber-bubbly-rising-chirp.mp3` (143,844 → 27,211,
+> saving 116,633) and `sfx/fx/whiff.mp3` (19,482 → 4,641, saving 14,841).
 > Overlap = **131,474 B**. The union is what the table reports.
 
 | Change | Disk | Warm-set |
 |---|--:|--:|
 | 50 WAV → mp3 128k | −2,049,587 | −853,000 |
 | `.hash` + `audio-manifests` out of the served tree | −225,294 | — |
-| Prune `sfx/retired` + `whiff.wav` (voice-jp removed — see §5) | −279,676 net new<br>(−411,150 gross, −131,474 already counted above) | — |
+| Prune `sfx/retired` + `whiff.mp3` (voice-jp removed — see §5) | −279,676 net new<br>(−411,150 gross, −131,474 already counted above) | — |
 | **Total (union)** | **−2,554,557** | **−853,000** |
 
 **−7.8% of the audio tree and −53.4% of everything the game warms, without touching BGM,

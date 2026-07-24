@@ -34,10 +34,10 @@
   "target": "mono, 44.1 kHz — mono so WebAudio can spatialise, 44.1 kHz to match sfx/fx/ and the rest of the tree.",
   "wavVsMp3": "16-bit PCM WAV for short transient-led clips (the attack carries the information; MP3 encoder delay/padding is applied inconsistently by browser decodeAudioData and would shift a 40 ms attack). libmp3lame 192 kbps CBR mono for the longer tonal/ambient beds and for all voice, where a few ms of leading padding is inaudible and the size saving is real. Boundary used: transient-led AND <= ~2.0 s post-trim -> WAV, else MP3.",
   "trim": "silenceremove at -55 dB peak on both ends (via areverse), retaining 20 ms of pad, so a soft attack is never clipped.",
-  "declick": "Clips whose signal still exceeds -35 dB at the final 25 ms get a 20 ms fade-out, so the buffer does not end on a non-zero sample and click. Applied to exactly 4 clips (see per-clip `processing`). bow-draw.wav is the important one: 弓を引き絞る1 is a sustained creak that the SOURCE cuts off mid-signal.",
+  "declick": "Clips whose signal still exceeds -35 dB at the final 25 ms get a 20 ms fade-out, so the buffer does not end on a non-zero sample and click. Applied to exactly 4 clips (see per-clip `processing`). bow-draw.mp3 is the important one: 弓を引き絞る1 is a sustained creak that the SOURCE cuts off mid-signal.",
   "sfxNormalisation": "peak-normalised to -3.0 dBFS, exactly like sfx/fx/*.wav. Relative loudness between events is set by `gain` in content/config/audio-map.json, NEVER by re-rendering the file.",
   "voiceNormalisation": "mean -15.0 dB with a -1.5 dB peak ceiling — the same targetMeanDb/peakCeilingDb the announcer generator (tools/tts-gen) applies, so these land in the announcer band (-15.0..-18.2 dB mean) and can sit in the same pools without a level seam.",
-  "clippingNote": "magic-fire.wav's source peaks at 0.0 dBFS and its mono downmix overshoots full scale, so the first gain estimate read back off a clamped 16-bit stage file. The builder re-measures and corrects (final gain -5.6 dB, not the -3.0 a single pass would have produced). Every peak below is verified, not assumed.",
+  "clippingNote": "magic-fire.mp3's source peaks at 0.0 dBFS and its mono downmix overshoots full scale, so the first gain estimate read back off a clamped 16-bit stage file. The builder re-measures and corrects (final gain -5.6 dB, not the -3.0 a single pass would have produced). Every peak below is verified, not assumed.",
   "sampleRateNote": "The voice clips are kept at 44.1 kHz even though announcer/*.mp3 and voices/names/*.mp3 are 22.05 kHz. Those two packs are Apple-`say` MACHINE TTS placeholders whose 22.05 kHz is an artefact of the generator; these are real 44.1 kHz recordings and downsampling to 'match' a placeholder would be a pure quality loss."
  },
  "bindingNote": "STILL NOT WIRED, now by CHOICE rather than by ownership. Task #40 has landed, and the #51 ledger phase did bind SFX into audio-map.json — but every voice clip here was left unbound on purpose. `ggdEvent` is the INTENDED binding; `suggestedGain` is an equal-loudness starting point against `gainAnchor`. See `whyStillUnbound` and `recommendation`.",
@@ -160,7 +160,7 @@
    "normalisation": "mean -15.0 dB, peak ceiling -1.5 dB (matches announcer/)",
    "processing": "decode mp3 -> aresample 44100 -> downmix mono -> trim edge silence (silenceremove peak -55 dB, 20 ms pad both ends) -> volume +8.10 dB -> libmp3lame 192 kbps CBR mono",
    "suggestedGain": 1.15,
-   "gainAnchor": "countTick / sfx/fx/count-tick.wav"
+   "gainAnchor": "countTick / sfx/fx/count-tick.mp3"
   },
   {
    "file": "matchmaking-wait.mp3",

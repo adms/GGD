@@ -206,6 +206,7 @@
     "voxel-standin"
   ],
   "exAbility": "godie-h02k.ex",
+  "passiveAbility": "godie-h02k.passive",
   "passive": {
     "name": "89-00 憤怒的門牙",
     "hooks": [

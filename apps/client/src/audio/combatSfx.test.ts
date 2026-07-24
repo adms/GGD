@@ -4,10 +4,17 @@
  * knockdown / whiff each get their own; pre-hit + utility events pass through;
  * tally-owned events (death/levelUp) and timing-only events map to silence.
  */
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, afterEach } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
 import type { EventMessage } from "@ggd/shared/protocol/messages";
-import { combatSfxKey, weaponAttackKey, castElementKey } from "./combatSfx";
+import {
+  combatSfxKey,
+  weaponAttackKey,
+  castElementKey,
+  guardianRewardKey,
+  setCombatSfxSeat,
+  combatSfxSeat,
+} from "./combatSfx";
 
 const ev = (type: string, data: Record<string, unknown> = {}): EventMessage => ({
   type,
@@ -130,5 +137,90 @@ describe("combat SFX key selection (juice-sfx-key)", () => {
     expect(combatSfxKey(ev("death", { id: 1 }))).toBeNull(); // AudioDirector tally
     expect(combatSfxKey(ev("levelUp"))).toBeNull(); // AudioDirector tally
     expect(combatSfxKey(ev("somethingUnknown"))).toBeNull();
+  });
+});
+
+/**
+ * NEUTRAL GUARDIAN audio (#89, per-arena faces #105). Two clips, two very
+ * different firing rules: the AoE punish is a world sound everyone hears, the
+ * last-hit bounty is a private reward for one seat.
+ */
+describe("guardian SFX (#89/#105)", () => {
+  afterEach(() => setCombatSfxSeat(null));
+
+  it("guardianImpact renames to the guardianSlam heavy stone hit", () => {
+    cover("juice-sfx-key");
+    expect(combatSfxKey(ev("guardianImpact", { id: 7, x: 3, z: -2 }))).toBe("guardianSlam");
+  });
+
+  it("the pre-land telegraph and the tower's other life-cycle events stay silent", () => {
+    cover("juice-sfx-key");
+    // guardianMark is the DODGE window (VfxSystem draws the filling ring) — the
+    // slam belongs to the landing, not the warning, or the beat sounds twice.
+    expect(combatSfxKey(ev("guardianMark", { id: 7, targets: [], impactTick: 30 }))).toBeNull();
+    expect(combatSfxKey(ev("guardianSpawn", { id: 7, zone: 0 }))).toBeNull();
+    expect(combatSfxKey(ev("guardianWake", { id: 7 }))).toBeNull();
+    expect(combatSfxKey(ev("guardianSleep", { id: 7 }))).toBeNull();
+    expect(combatSfxKey(ev("guardianHeirPulse", { id: 4 }))).toBeNull();
+  });
+
+  it("guardianSlain rings guardianLastHit ONLY for the seat that last-hit it", () => {
+    cover("juice-sfx-key");
+    const slain = ev("guardianSlain", { id: 7, x: 0, z: 0, killerSeatId: 3, gold: 120 });
+    expect(guardianRewardKey(slain, 3)).toBe("guardianLastHit");
+    // every other seat in the room receives the SAME broadcast event and must
+    // hear nothing — the gold was paid to exactly one player.
+    expect(guardianRewardKey(slain, 0)).toBeNull();
+    expect(guardianRewardKey(slain, 5)).toBeNull();
+    // no local seat yet (spectator / pre-join) → silence, never a crash
+    expect(guardianRewardKey(slain, null)).toBeNull();
+  });
+
+  it("a VOID payout is silent even for the killer's own seat", () => {
+    cover("juice-sfx-key");
+    // killer died / left the zone in the same tick: the guardian still despawns
+    // but nobody is paid (GuardianSystem.payout → killerSeatId -1, gold 0).
+    const voided = ev("guardianSlain", { id: 7, x: 0, z: 0, killerSeatId: -1, gold: 0 });
+    expect(guardianRewardKey(voided, -1)).toBeNull();
+    expect(guardianRewardKey(voided, 2)).toBeNull();
+    // a matching seat but a zero bounty is still nothing to celebrate
+    const zero = ev("guardianSlain", { id: 7, killerSeatId: 2, gold: 0 });
+    expect(guardianRewardKey(zero, 2)).toBeNull();
+  });
+
+  it("is total on a malformed guardianSlain payload", () => {
+    cover("juice-sfx-key");
+    expect(guardianRewardKey(ev("guardianSlain", {}), 1)).toBeNull();
+    expect(guardianRewardKey(ev("guardianSlain", { killerSeatId: "1" }), 1)).toBeNull();
+    // a non-numeric gold field is ignored rather than treated as a void payout
+    expect(guardianRewardKey(ev("guardianSlain", { killerSeatId: 1, gold: "lots" }), 1)).toBe(
+      "guardianLastHit",
+    );
+  });
+
+  it("combatSfxKey reads the seat the AudioDirector published", () => {
+    cover("juice-sfx-key");
+    const slain = ev("guardianSlain", { id: 7, killerSeatId: 4, gold: 120 });
+    expect(combatSfxKey(slain)).toBeNull(); // no seat published yet
+    setCombatSfxSeat(4);
+    expect(combatSfxSeat()).toBe(4);
+    expect(combatSfxKey(slain)).toBe("guardianLastHit");
+    setCombatSfxSeat(1); // a different local player watching the same match
+    expect(combatSfxKey(slain)).toBeNull();
+    setCombatSfxSeat(null); // director unmounted — back to silence
+    expect(combatSfxKey(slain)).toBeNull();
+  });
+
+  it("fires once per kill, not once per hit on the tower", () => {
+    cover("juice-sfx-key");
+    setCombatSfxSeat(3);
+    // the whole siege: many damage packets, one death, one payout event.
+    for (let i = 0; i < 20; i++) {
+      expect(combatSfxKey(ev("damage", { amount: 40, target: 7, source: 11 }))).toBe("hit");
+    }
+    expect(combatSfxKey(ev("death", { id: 7, killer: 11 }))).toBeNull();
+    expect(combatSfxKey(ev("guardianSlain", { id: 7, killerSeatId: 3, gold: 120 }))).toBe(
+      "guardianLastHit",
+    );
   });
 });

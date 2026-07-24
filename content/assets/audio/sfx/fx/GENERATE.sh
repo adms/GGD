@@ -296,8 +296,8 @@ PEAK="$(ffmpeg -hide_banner -nostats -nostdin -i "$TMP/uihc_raw.wav" \
 [ -n "$PEAK" ] || { echo "FATAL: no peak measured for ui-hover-cyber" >&2; exit 1; }
 UIHC_GAIN="$(awk -v p="$PEAK" 'BEGIN{printf "%.4f", -3.0 - p}')"
 ffmpeg -y -v error -nostdin -i "$TMP/uihc_raw.wav" -af "volume=${UIHC_GAIN}dB" \
-  -ac 2 -ar 44100 -c:a pcm_s16le "$OUT/ui-hover-cyber.wav"
-echo "ui-hover-cyber.wav: peak ${PEAK} dBFS -> -3.0 dBFS (applied ${UIHC_GAIN} dB)"
+  -ac 2 -ar 44100 -c:a pcm_s16le "$OUT/ui-hover-cyber.mp3"
+echo "ui-hover-cyber.mp3: peak ${PEAK} dBFS -> -3.0 dBFS (applied ${UIHC_GAIN} dB)"
 
 # --- countTick / countFinal: RINGSIDE BELL --------------------------------
 # User (2026-07-22): 「戰鬥選擇英雄倒數應該用擂台的中低音鐘聲比較適合氣氛」.

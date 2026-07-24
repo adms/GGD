@@ -79,6 +79,14 @@ export const REFERENCES: Partial<Record<CollectionName, (doc: never) => RefEdge[
     if (doc.exAbility) {
       out.push({ field: "exAbility", targetCollection: "abilities", targetId: doc.exAbility });
     }
+    // the per-hero 天生技 (slot "PASSIVE", the level-1 6th slot) likewise
+    if (doc.passiveAbility) {
+      out.push({
+        field: "passiveAbility",
+        targetCollection: "abilities",
+        targetId: doc.passiveAbility,
+      });
+    }
     hookRefs(doc.passive?.hooks, "passive.hooks", out);
     doc.buildPriority.forEach((itemId, i) =>
       out.push({ field: `buildPriority.${i}`, targetCollection: "items", targetId: itemId }),

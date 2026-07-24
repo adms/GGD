@@ -27,7 +27,7 @@
  * DOM-guarded and the sound/haptic/clock seams are injectable, so it runs (and
  * is asserted) in the non-DOM unit-test env too.
  */
-import type { AbilitySlot } from "@ggd/shared/sim/intents";
+import type { ChampionAbilitySlot } from "@ggd/shared/sim/intents";
 import { audioSystem } from "../audio";
 
 /** Two calls for the SAME slot within this window (ms) collapse to one cue. */
@@ -58,7 +58,7 @@ export interface AbilityCueOptions {
   now?: () => number;
 }
 
-let lastSlot: AbilitySlot | null = null;
+let lastSlot: ChampionAbilitySlot | null = null;
 let lastAt = Number.NEGATIVE_INFINITY;
 
 /** Clear the de-dupe memory. TESTS ONLY (each case starts from a clean slate). */
@@ -83,12 +83,12 @@ function defaultVibrate(pattern: number | number[]): boolean {
 }
 
 /**
- * Fire the press cue for one Q/W/E/R/EX activation. Returns true when the cue
+ * Fire the press cue for one Q/W/E/R/EX/天生 activation. Returns true when the cue
  * actually played, false when it was de-duped (a second call for the same slot
  * inside the window) — so a button press that also triggers a cast still yields
  * exactly one click.
  */
-export function abilityActivationCue(slot: AbilitySlot, opts: AbilityCueOptions = {}): boolean {
+export function abilityActivationCue(slot: ChampionAbilitySlot, opts: AbilityCueOptions = {}): boolean {
   const now = (opts.now ?? defaultNow)();
   if (slot === lastSlot && now - lastAt < ABILITY_CUE_DEDUPE_MS) return false;
   lastSlot = slot;

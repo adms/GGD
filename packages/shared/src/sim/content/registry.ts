@@ -40,6 +40,30 @@ export const LootTables = new Registry<string, LootTable>();
 
 const CORE_SLOTS = ["Q", "W", "E", "R"] as const;
 
+/**
+ * The champion's 天生技 / PASSIVE — the SIXTH slot, owned from level 1.
+ *
+ * Resolution mirrors the EX slot exactly and for the same reason: the passive
+ * is a STANDALONE ability doc (`<championId>.passive`, `slot: "PASSIVE"`), not
+ * an embedded copy under `champion.abilities`, so there is only ever one truth
+ * for it and the `registerChampion` shadowing trap cannot reach it. `registerAll`
+ * puts every standalone ability in `Abilities` before any champion, so by the
+ * time anyone can call this the doc is already there.
+ *
+ * Returns undefined when the hero has no passive — either because
+ * `passiveAbility` is absent (3 of 111 champions genuinely have no NN-00 in the
+ * source map) or because the referenced doc is missing (only reachable in
+ * hand-built test stores; `validateReferences` rejects it in real content).
+ *
+ * Branch on `def.innateKind` before acting on the result: "passive" is a
+ * permanent self-buff carried in `def.passive.ranks[0]` and can never be cast,
+ * "active" is a real cooldown ability.
+ */
+export function championPassive(id: ChampionId): AbilityDef | undefined {
+  const pid = Champions.tryGet(id)?.passiveAbility;
+  return pid === undefined ? undefined : Abilities.tryGet(pid);
+}
+
 export interface RegisterChampionOptions {
   /**
    * Let this champion's EMBEDDED ability copies REPLACE whatever is already in

@@ -1,0 +1,55 @@
+{
+  "id": "godie-e001.passive",
+  "schema": "ability@1",
+  "name": "22-00 嗚鎖打!",
+  "description": "[輔助]\n40秒冷卻時間\n\n爆發殺氣，對附近的敵方地面部隊造成150的傷害，並將他們嚇昏0.5秒，殺氣將會使禮奈速度瞬間暴增。",
+  "slot": "PASSIVE",
+  "innateKind": "active",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    40.0
+  ],
+  "manaCost": [
+    150.0
+  ],
+  "range": 0,
+  "radius": 6.42,
+  "targetsEnemies": true,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "physical",
+      "amount": {
+        "perRank": [
+          150.0
+        ],
+        "ratios": [
+          {
+            "stat": "ad",
+            "coeff": 0.5
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "burnstun",
+      "duration": 0.5,
+      "stun": true
+    },
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "as",
+          "op": "pctAdd",
+          "value": 4.0
+        }
+      ],
+      "duration": 4.0
+    }
+  ],
+  "vfxKey": "fx.prim.earth.shockwave",
+  "castTimeSec": 0.5
+}

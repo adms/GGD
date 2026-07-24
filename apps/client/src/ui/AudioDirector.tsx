@@ -22,6 +22,11 @@
  * bed, so the platform and match sources never fight over it. The low-level
  * combat SFX (attack/hit/cast/projectile/flower/damage) live only in the
  * per-frame MSG.EVENT drain (GameApp) and are intentionally NOT driven here.
+ *
+ * It does publish ONE value INTO that per-frame layer: the local seat id
+ * (`setCombatSfxSeat`). The guardian's last-hit reward chime (#89) is the single
+ * combat cue that is not the same for every listener, and this component is
+ * already the app's one owner of "which seat am I" for audio.
  */
 import { useEffect, useRef } from "react";
 import { useHud } from "../net/RoomStore";
@@ -39,6 +44,7 @@ import {
   type HealthSnapshot,
   type TallySnapshot,
 } from "../audio";
+import { setCombatSfxSeat } from "../audio/combatSfx";
 import { useAudioBoot, useAudioScene, useBgmOverride, useLoginTheme } from "./useAudio";
 
 export function AudioDirector(): null {
@@ -114,6 +120,17 @@ export function AudioDirector(): null {
   const override = useBgmOverride();
   const scene = override ?? derivedScene;
   useAudioScene(scene);
+
+  // WHO AM I → the per-frame combat SFX layer. `guardianSlain` (#89) is fanned
+  // out to every client but its 金幣獎勵 chime belongs to the ONE seat that landed
+  // the last hit, so `combatSfx` needs to know which seat is listening. This is
+  // the only place that already owns "the local seat" for audio purposes, so it
+  // publishes it; the mapping stays a pure function of (event, seat). Cleared on
+  // unmount so a torn-down director can never leave a stale seat gating a cue.
+  useEffect(() => {
+    setCombatSfxSeat(localSeatId);
+    return () => setCombatSfxSeat(null);
+  }, [localSeatId]);
 
   // matchStart greeting on the shell → match entry (fires once per match). The
   // 効果音ラボ 試合開始のゴング (#51 match-start-gong) LAYERS under the Japanese

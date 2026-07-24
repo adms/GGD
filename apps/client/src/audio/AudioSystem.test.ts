@@ -155,7 +155,7 @@ const SCENE_MAP: AudioMap = {
   sfx: {
     uiClick: { files: ["assets/audio/sfx/ui-click.mp3"] }, // always-on core
     champSelectConfirm: { files: ["assets/audio/sfx/pick.mp3"] }, // champSelect scene
-    hit: { files: ["assets/audio/sfx/fx/thud.wav"] }, // combat scene
+    hit: { files: ["assets/audio/sfx/fx/thud.mp3"] }, // combat scene
     death: { files: ["assets/audio/sfx/die.mp3"], cooldownMs: 0, maxConcurrent: 4 }, // combat tally
   },
 };
@@ -555,13 +555,13 @@ describe("AudioSystem scene-scoped SFX preloading (audio-sfx-scene-preload)", ()
     await flush();
     // boot pulled the map, but not a single SFX clip
     expect(rec.requested("ui-click.mp3")).toBe(false);
-    expect(rec.requested("thud.wav")).toBe(false);
+    expect(rec.requested("thud.mp3")).toBe(false);
 
     sys.unlock(); // first gesture: warm the core (no scene set yet)
     await flush();
     expect(rec.requested("ui-click.mp3")).toBe(true); // core is warm
     expect(rec.requested("pick.mp3")).toBe(false); // champSelect subset: not yet
-    expect(rec.requested("thud.wav")).toBe(false); // combat subset: not yet
+    expect(rec.requested("thud.mp3")).toBe(false); // combat subset: not yet
     sys.dispose();
   });
 
@@ -577,11 +577,11 @@ describe("AudioSystem scene-scoped SFX preloading (audio-sfx-scene-preload)", ()
     sys.playBgm("champSelect");
     await flush();
     expect(rec.requested("pick.mp3")).toBe(true); // champSelect's own cue
-    expect(rec.requested("thud.wav")).toBe(false); // combat is NOT dragged in
+    expect(rec.requested("thud.mp3")).toBe(false); // combat is NOT dragged in
 
     sys.playBgm("combat");
     await flush();
-    expect(rec.requested("thud.wav")).toBe(true); // combat warms on entry
+    expect(rec.requested("thud.mp3")).toBe(true); // combat warms on entry
     sys.dispose();
   });
 
@@ -612,11 +612,11 @@ describe("AudioSystem scene-scoped SFX preloading (audio-sfx-scene-preload)", ()
     sys.playBgm("combat");
     await flush();
     expect(ctxRef()).toBeNull();
-    expect(rec.requested("thud.wav")).toBe(false);
+    expect(rec.requested("thud.mp3")).toBe(false);
     // …then the unlock warms exactly that current scene
     sys.unlock();
     await flush();
-    expect(rec.requested("thud.wav")).toBe(true);
+    expect(rec.requested("thud.mp3")).toBe(true);
     sys.dispose();
   });
 });

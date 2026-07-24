@@ -1,0 +1,26 @@
+{
+  "id": "godie-e008.passive",
+  "schema": "ability@1",
+  "name": "21-00 灼眼",
+  "description": "[被動]\n0秒冷卻時間\n\n灼眼的特殊體質可以讓夏娜看見隱藏在空間夾縫的所有人，即使在晚上仍能清楚的看到四周。",
+  "slot": "PASSIVE",
+  "innateKind": "passive",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    0.0
+  ],
+  "manaCost": [
+    0.0
+  ],
+  "range": 0,
+  "effects": [],
+  "passive": {
+    "name": "21-00 灼眼",
+    "ranks": [
+      {
+        "modifiers": []
+      }
+    ]
+  }
+}

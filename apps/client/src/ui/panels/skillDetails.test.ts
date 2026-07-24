@@ -121,7 +121,10 @@ describe("skill detail rows", () => {
 
   it("labels the non-hotkey rows in Chinese", () => {
     cover("shop-skill-details");
-    expect(slotLabel("PASSIVE")).toBe("被動");
+    // 天生, NOT 被動: ~57 of the recovered NN-00 innates are ACTIVE abilities, so
+    // the slot name states when it is owned (level 1), and the row's `innateKind`
+    // carries 被動 vs 主動.
+    expect(slotLabel("PASSIVE")).toBe("天生");
     expect(slotLabel("EX")).toBe("EX");
     expect(slotLabel("Q")).toBe("Q");
   });

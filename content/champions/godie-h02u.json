@@ -207,6 +207,7 @@
     "godie"
   ],
   "exAbility": "godie-h02u.ex",
+  "passiveAbility": "godie-h02u.passive",
   "passive": {
     "name": "92-00 憂鬱的眼神",
     "hooks": [
