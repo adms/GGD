@@ -9,7 +9,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Server, matchMaker } from "colyseus";
 import { WebSocketTransport } from "@colyseus/ws-transport";
-import { ContentLoader, registerAll, Configs } from "@ggd/shared/content";
+import { ContentLoader, OverlayContentSource, registerAll, Configs } from "@ggd/shared/content";
 import { FsContentSource } from "@ggd/shared/content/node";
 import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
 import { Champions, Items, Augments, LootTables } from "@ggd/shared/sim/content/registry";
@@ -19,7 +19,8 @@ import { mintCreateToken } from "./rooms/createGate";
 import { sanitizeDisplayName } from "./net/sanitizeText";
 import { secretConfigError } from "./config/secretGuard";
 import { deployTierBootLine } from "./config/deployTier";
-import { probePlatformAtBoot } from "./config/platformUrl";
+import { probePlatformAtBoot, PLATFORM_URL } from "./config/platformUrl";
+import { fetchOverlayBundle } from "./config/contentOverlay";
 import { startContentBus, platformStatusWithContent } from "./config/contentBus";
 import { startMatchHeartbeat } from "./config/matchHeartbeat";
 import { roomRegistry } from "./rooms/roomRegistry";
@@ -270,24 +271,54 @@ gameServer.define("replay", ReplayRoom);
  * dev environments without a content/ checkout keep working.
  */
 async function loadContent(): Promise<void> {
-  try {
-    const result = await new ContentLoader(new FsContentSource(CONTENT_DIR)).load();
+  const base = new FsContentSource(CONTENT_DIR);
+  // #189: lay the platform's durable data/ content overlay over the shipped tree
+  // (best-effort — a null overlay leaves the load exactly as it was). This is the
+  // read side of "an admin edit on the host survives a git pull": the overlay
+  // lives in data/, which the :ro content mount can never erase.
+  const overlay = await fetchOverlayBundle(PLATFORM_URL);
+
+  const loadFrom = async (label: string): Promise<boolean> => {
+    const source = overlay && label === "overlay" ? new OverlayContentSource(base, overlay) : base;
+    const result = await new ContentLoader(source).load();
     registerAll(result.store);
-    // THE CONTENT VERSION NOW GOES SOMEWHERE. It was logged on this line and
-    // thrown away, while `MatchState.contentVersion` — declared and replicated
-    // since the protocol was written — stayed the empty string on every room.
-    // It is the primary key of a replay (a recording made on cv_A must never be
-    // played on cv_B), so it is published here for MatchRoom and the replay
-    // compatibility check to read.
+    // THE CONTENT VERSION NOW GOES SOMEWHERE. It was logged and thrown away,
+    // while `MatchState.contentVersion` stayed "" on every room. It is the
+    // primary key of a replay (a recording made on cv_A must never be played on
+    // cv_B), so it is published here for MatchRoom and the replay compat check.
     setActiveContentVersion(result.manifest.contentVersion);
     const arenaRules = Configs.tryGet("arena-rules") ? "arena-rules ACTIVE" : "arena-rules absent (legacy rules)";
+    const overlayNote = overlay && label === "overlay" ? ` +overlay(gen ${overlay.generation})` : "";
     console.log(
-      `[game-server] content loaded from ${CONTENT_DIR} (${result.manifest.contentVersion}): ` +
+      `[game-server] content loaded from ${CONTENT_DIR}${overlayNote} (${result.manifest.contentVersion}): ` +
         `${Champions.ids().length} champions, ${Items.ids().length} items, ` +
         `${Augments.ids().length} augments, ${LootTables.ids().length} loot tables — ${arenaRules}` +
         (result.warnings.length ? ` [${result.warnings.length} soft-ref warning(s)]` : ""),
     );
+    return true;
+  };
+
+  try {
+    await loadFrom(overlay ? "overlay" : "shipped");
+    return;
   } catch (err) {
+    // A BAD OVERLAY MUST NEVER BRICK THE SHARD. If merging the overlay made the
+    // content invalid, retry the shipped tree alone before giving up — the
+    // operator's other content is far more valuable than one bad edit, and the
+    // admin console validates on save so this is the belt to that suspenders.
+    if (overlay) {
+      console.error(
+        `[game-server] content load WITH the data/ overlay failed — retrying the shipped tree ` +
+          `alone (the overlay is not applied this boot). Fix the offending overlay doc.`,
+        err,
+      );
+      try {
+        await loadFrom("shipped");
+        return;
+      } catch (err2) {
+        err = err2;
+      }
+    }
     console.error(
       `[game-server] CONTENT LOAD FAILED from ${CONTENT_DIR} — falling back to skeleton content ` +
         `(2 champions, legacy match rules). Fix the content tree or set CONTENT_DIR.`,

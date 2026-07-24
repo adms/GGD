@@ -69,6 +69,23 @@ export interface EventMessage {
  */
 export const SETTLEMENT_EVENT = "matchSettlement" as const;
 
+/**
+ * Per-team settlement broadcast the moment a team is ELIMINATED mid-match
+ * (task #193). Same `MatchSettlement` payload shape as {@link SETTLEMENT_EVENT},
+ * but it fires while the match is still running for the surviving teams, so a
+ * player whose team's life is gone can see their evaluation screen BEFORE they
+ * choose to leave — rather than being dropped straight to the lobby. `winnerTeam`
+ * is -1 (undecided) until the final `matchSettlement` at matchEnd. The client
+ * records it into the same settlement slot and only surfaces it on the
+ * leave-flow for a player whose own team is out (see ui/panels/leaveSettlement).
+ *
+ * It is a DISTINCT event name on purpose: a prior attempt reused an event key
+ * the client never handled ("a dead key at matchEnd"), so the card never
+ * arrived. This constant is imported by BOTH the server broadcaster and the
+ * client handler, so the wire key can never drift between them again.
+ */
+export const TEAM_SETTLEMENT_EVENT = "teamSettlement" as const;
+
 export interface SettlementPlayer {
   seatId: number;
   accountId: string;

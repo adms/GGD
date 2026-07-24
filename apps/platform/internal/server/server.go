@@ -21,6 +21,7 @@ import (
 	"github.com/ggd/platform/internal/auth"
 	"github.com/ggd/platform/internal/combatenv"
 	"github.com/ggd/platform/internal/config"
+	"github.com/ggd/platform/internal/contentoverlay"
 	"github.com/ggd/platform/internal/curation"
 	"github.com/ggd/platform/internal/data/boot"
 	"github.com/ggd/platform/internal/data/jsonstore"
@@ -54,6 +55,7 @@ type Server struct {
 	Wallet    *wallet.Service
 	Admin     *admin.Service
 	Curation  *curation.Service
+	Overlay   *contentoverlay.Service
 	CombatEnv *combatenv.Service
 	OpsEnv    *opsenv.Service
 	Invites   *invite.Service
@@ -258,6 +260,9 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 
 	adminSvc := admin.New(accounts, walletSvc, rank, friends, store, rdb, cfg.AdminBootstrapUsername)
 	curationSvc := curation.New(store, rdb)
+	// #189 durable content overlay: the data/ store that lets an admin content
+	// edit survive a git pull on the host (content/ there is a :ro mount).
+	overlaySvc := contentoverlay.New(store, rdb)
 	combatEnvSvc := combatenv.New(store, rdb, cfg.ContentDir)
 	// The ops inventory DESCRIBES the reaper, so it is handed the same numbers
 	// the reaper runs on — including the interval after gamelink's own clamp,
@@ -296,7 +301,7 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 		Cfg: cfg, Rdb: rdb, Store: store, Journal: journal, Accounts: accounts,
 		Auth: authSvc, Friends: friends, Presence: pres, Rooms: rooms,
 		Ranking: rank, Gamelink: glink, Wallet: walletSvc, Admin: adminSvc,
-		Curation: curationSvc, CombatEnv: combatEnvSvc, OpsEnv: opsEnvSvc, Invites: inviteSvc,
+		Curation: curationSvc, Overlay: overlaySvc, CombatEnv: combatEnvSvc, OpsEnv: opsEnvSvc, Invites: inviteSvc,
 		AI: aiSvc, Hub: hub, Sessions: sessions,
 		registerRateLimit: envInt("GGD_REGISTER_RATE_LIMIT", 0),
 	}
@@ -376,6 +381,9 @@ func (s *Server) buildRouter(templates *room.Templates) {
 		admin.NewHandlers(s.Admin).MountPublic(api) // active announcement feed
 		// content whitelist: public read (game-server + client), admin writes
 		curation.NewHandlers(s.Curation, s.Admin.AdminOnly).MountPublic(api)
+		// #189 durable content overlay: public read of the merged-content bundle
+		// (game-server + client), admin-gated writes on the authed router below.
+		contentoverlay.NewHandlers(s.Overlay, s.Admin.AdminOnly).MountPublic(api)
 		// combat-env table: public read (game-server per-match snapshot)
 		combatenv.NewHandlers(s.CombatEnv, s.Admin.AdminOnly).MountPublic(api)
 		// server-ops table: public read (game-server resolves maxRooms +
@@ -411,6 +419,8 @@ func (s *Server) buildRouter(templates *room.Templates) {
 			admin.NewHandlers(s.Admin).Mount(pr) // /admin/* — AdminOnly inside
 			// /curation/whitelist writes — AdminOnly inside
 			curation.NewHandlers(s.Curation, s.Admin.AdminOnly).Mount(pr)
+			// #189 /content-overlay/docs/* writes — AdminOnly inside
+			contentoverlay.NewHandlers(s.Overlay, s.Admin.AdminOnly).Mount(pr)
 			// /admin/combat-env — AdminOnly inside
 			combatenv.NewHandlers(s.CombatEnv, s.Admin.AdminOnly).Mount(pr)
 			// /admin/server-ops — AdminOnly inside

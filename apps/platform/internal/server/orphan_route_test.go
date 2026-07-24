@@ -93,6 +93,18 @@ var nonFrontendCallers = map[string]struct{ caller, reason string }{
 			"public edge — a browser caller would be the bug, since a client that " +
 			"could post its own result could write its own MMR.",
 	},
+	// #189 durable content overlay. The game-server fetches the merged-content
+	// overlay bundle at BOOT and lays it over the shipped tree (OverlayContentSource,
+	// contentOverlay.ts). It is a service-to-service read of public content JSON —
+	// the browser never needs it, since the client already loads content from the
+	// static /content mount, not from this endpoint.
+	"GET /api/v1/content-overlay/bundle": {
+		caller: "apps/game-server/src/config/contentOverlay.ts",
+		reason: "#189 durable content overlay: the game-server reads the data/ overlay " +
+			"bundle at boot and merges it over the shipped content tree so an admin's edit " +
+			"survives a git pull. Public content JSON, consumed service-to-service; the " +
+			"client loads content from the static /content mount, so no UI calls this.",
+	},
 }
 
 // knownOrphans: routes that ARE unreachable today. Each line is a debt with an
@@ -153,6 +165,24 @@ var knownOrphans = map[string]string{
 		"operator can publish a notice that literally no player can see.",
 	"POST /api/v1/ai/music": "#53's 一鍵 BGM pack generation. The provider config UI exists (musicBaseUrl / " +
 		"musicModel / musicReady in admin/src/ai.ts) and there is no button that spends it.",
+
+	// ---- #189 durable content overlay: store shipped, console adapter pending -
+	// The durable data/ overlay store, the admin-gated write path and the public
+	// bundle read all shipped this pass (internal/contentoverlay), and the
+	// game-server already consumes the bundle at boot. What is left is the
+	// 內容管理 console's PRODUCTION adapter: today the editor is a dev-only chunk
+	// that writes to the localhost content-api (apps/admin/src/ui/App.tsx gates it
+	// behind import.meta.env.DEV), so no shipped UI calls these three yet. Wiring
+	// that adapter + the divergence indicator is the remaining work in
+	// docs/todo/content-sync.md.
+	"GET /api/v1/content-overlay/head": "#189 — the cheap divergence probe (generation / fingerprint) the " +
+		"內容管理 console polls for its sync badge. Backend shipped this pass; the console adapter + " +
+		"divergence indicator (docs/todo/content-sync.md) is the remaining UI, so no shipped page reads it yet.",
+	"PUT /api/v1/content-overlay/docs/{collection}/{id}": "#189 — admin overlay upsert (the host's durable " +
+		"write path for a champion/ability/item edit). Store + endpoint shipped; the production 內容管理 " +
+		"adapter that would POST here is still the dev-only content-api path, so nothing in a shipped build calls it.",
+	"DELETE /api/v1/content-overlay/docs/{collection}/{id}": "#189 — admin overlay delete (tombstone over a " +
+		"shipped doc). Same story as the overlay PUT above: backend shipped this pass, console adapter pending.",
 
 	// ---- superseded / aspirational ----------------------------------------
 	"GET /api/v1/wallet/owns": "superseded, probably deletable: the client reads ownedChampions off the " +

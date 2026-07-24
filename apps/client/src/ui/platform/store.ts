@@ -173,6 +173,15 @@ export interface AppState {
   botMatchBusy: boolean;
   lastError: string | null;
 
+  /**
+   * #193 — leave-through-settlement gate. When a player whose team is eliminated
+   * asks to leave, the leave-flow (ui/leaveFlow) sets this instead of returning
+   * to the lobby, so LeaveSettlementOverlay can show their evaluation FIRST; the
+   * overlay's 返回大廳 then calls returnToLobby (which clears it). False during
+   * normal play and for a still-alive player, who leaves directly as before.
+   */
+  leaveGate: boolean;
+
   // ------------------------------------------------------------ actions --
   boot(): Promise<void>;
   doLogin(username: string, password: string): Promise<void>;
@@ -206,6 +215,10 @@ export interface AppState {
   /** Abort a staged loading transition without launching (task #74). */
   cancelMatchLoading(): void;
   returnToLobby(): Promise<void>;
+  /** #193 — open the leave-through-settlement gate (eliminated player asked to leave) */
+  openLeaveGate(): void;
+  /** #193 — dismiss the gate without leaving (繼續觀戰) */
+  closeLeaveGate(): void;
   /** clear battlefield & restart round 1 (offline) / return to lobby (online) */
   restartMatch(): void;
 
@@ -418,6 +431,7 @@ export const appStore = createStore<AppState>()((set, get) => {
     matchEpoch: 0,
     botMatchBusy: false,
     lastError: null,
+    leaveGate: false,
 
     // ------------------------------------------------------------- auth --
 
@@ -533,6 +547,7 @@ export const appStore = createStore<AppState>()((set, get) => {
         match: null,
         matchLoading: null,
         botMatchBusy: false,
+        leaveGate: false,
       });
     },
 
@@ -571,9 +586,17 @@ export const appStore = createStore<AppState>()((set, get) => {
       set({ matchLoading: null });
     },
 
+    openLeaveGate() {
+      set({ leaveGate: true });
+    },
+
+    closeLeaveGate() {
+      set({ leaveGate: false });
+    },
+
     async returnToLobby() {
       const s = get();
-      set({ screen: s.account ? "lobby" : "auth", match: null, myReady: false, botMatchBusy: false });
+      set({ screen: s.account ? "lobby" : "auth", match: null, myReady: false, botMatchBusy: false, leaveGate: false });
       if (!s.account) return;
       // the played room is now in-match: leave it and refresh lobby data
       if (s.room) {
