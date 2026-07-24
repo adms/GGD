@@ -1,6 +1,7 @@
 {
   "id": "godie-nbst.ex",
   "name": "24-002 來~快點吃吧",
+  "icon": "assets/icons/abilities/godie-nbst.ex.webp",
   "description": "[主動攻擊]\n45秒冷卻時間\n\n瘋狂假面制裁壞蛋的最終奧義，把敵人夾入跨下持續5秒，每秒受到400點傷害。",
   "slot": "EX",
   "castType": "targeted",

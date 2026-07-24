@@ -1,6 +1,7 @@
 {
   "id": "godie-e00t.ex",
   "name": "66-002 死亡漫延",
+  "icon": "assets/icons/abilities/godie-e00t.ex.webp",
   "description": "[被動]\n0秒冷卻時間\n\n詛咒力量提升到極限的貞子，在使用靈壓震撼時將會在周圍產生結界，每秒造成範圍傷害，離貞子越遠傷害越大，最大範圍為600，最大傷害為300。",
   "slot": "EX",
   "castType": "self",

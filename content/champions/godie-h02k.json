@@ -205,5 +205,23 @@
     "godie",
     "voxel-standin"
   ],
-  "exAbility": "godie-h02k.ex"
+  "exAbility": "godie-h02k.ex",
+  "passive": {
+    "name": "89-00 憤怒的門牙",
+    "hooks": [
+      {
+        "on": "onBasicAttack",
+        "chance": 0.03,
+        "effects": [
+          {
+            "kind": "damage",
+            "damageType": "physical",
+            "amount": {
+              "flat": 999.0
+            }
+          }
+        ]
+      }
+    ]
+  }
 }

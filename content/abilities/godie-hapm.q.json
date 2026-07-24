@@ -1,6 +1,7 @@
 {
   "id": "godie-hapm.q",
   "name": "52-01 狂戰士之怒",
+  "icon": "assets/icons/abilities/godie-hapm.q.webp",
   "description": "[輔助]\n35秒冷卻時間\n\n進入狂戰士的狀態，可增加40點的額外傷害及裝甲4點，但是會降低攻擊速度20%。持續12秒。",
   "slot": "Q",
   "castType": "targeted",

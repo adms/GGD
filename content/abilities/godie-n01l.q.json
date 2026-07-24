@@ -2,6 +2,7 @@
   "id": "godie-n01l.q",
   "schema": "ability@1",
   "name": "98-01 理財的習慣",
+  "icon": "assets/icons/abilities/godie-n01l.q.webp",
   "description": "[輔助]\n0秒冷卻時間\n\n身為學姊，會一些理財的方法來增加自身的積蓄也是合情合理的，每60秒增加自身金錢及原木量1%。",
   "slot": "Q",
   "castType": "self",

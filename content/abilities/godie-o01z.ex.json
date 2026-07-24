@@ -1,6 +1,7 @@
 {
   "id": "godie-o01z.ex",
   "name": "81-002 Exellion Mode",
+  "icon": "assets/icons/abilities/godie-o01z.ex.webp",
   "description": "[輔助]\n60秒冷卻時間\n\n解除為了防止本體破壞設置的出力限制，引出了由極大的魔力消耗所換取的爆發性出力，持續15秒。\n\n所有技能增加150點魔力消耗並增加傷害(智慧*4)",
   "slot": "EX",
   "castType": "self",

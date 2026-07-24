@@ -2,6 +2,7 @@
   "id": "godie-e015.r",
   "schema": "ability@1",
   "name": "94-04 賣扣~~",
+  "icon": "assets/icons/abilities/godie-e015.r.webp",
   "description": "[主動攻擊]\n50秒冷卻時間\n\n召喚一台貨車攻擊目標，給予目標強力的衝擊造成600點傷害，並將目標撞出天邊。\n在恰恰狀態下傷害加成300點",
   "slot": "R",
   "castType": "targeted",

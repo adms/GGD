@@ -2,6 +2,7 @@
   "id": "sela.q",
   "schema": "ability@1",
   "name": "Ember Bolt",
+  "icon": "assets/icons/abilities/sela.q.webp",
   "slot": "Q",
   "castType": "skillshot",
   "maxRank": 5,

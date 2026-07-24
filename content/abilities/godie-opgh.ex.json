@@ -1,6 +1,7 @@
 {
   "id": "godie-opgh.ex",
   "name": "32-002 見龍卸甲",
+  "icon": "assets/icons/abilities/godie-opgh.ex.webp",
   "description": "[輔助]\n35秒冷卻時間\n\n大家都知道，趙雲絕對不會輕易卸甲，當趙雲卸甲的時候，便是要使出\"九天十地，菩薩搖頭怕怕，劈靂金光雷電掌\"的時候(誤)，其卸甲的霸氣可以造成自身週遭小範圍部隊攻擊力降低40%及防禦力降低15點，持續7秒。",
   "slot": "EX",
   "castType": "self",

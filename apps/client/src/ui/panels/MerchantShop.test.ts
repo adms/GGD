@@ -134,17 +134,30 @@ describe("MerchantShop left dock (#94)", () => {
  * the command-kind contract.
  */
 describe("MerchantShop undo button (#121)", () => {
-  it("shows only when a successful buy/sell is on record AND the shop is open", () => {
+  it("shows exactly when the server says a step is reversible AND the shop is open", () => {
     cover("shop-undo-button");
-    // nothing on record → no button
-    expect(canUndoShopStep(null, true)).toBe(false);
-    // a completed buy or sell is undoable — but only while the shop is interactable
-    expect(canUndoShopStep({ kind: "bought" }, true)).toBe(true);
-    expect(canUndoShopStep({ kind: "sold" }, true)).toBe(true);
-    expect(canUndoShopStep({ kind: "bought" }, false)).toBe(false);
-    // a rejection is not a step you can undo
-    expect(canUndoShopStep({ kind: "buyRejected" }, true)).toBe(false);
-    expect(canUndoShopStep({ kind: "sellRejected" }, true)).toBe(false);
+    // the server's own undo-stack depth (SeatState.undoDepth) is the whole rule
+    expect(canUndoShopStep(0, true)).toBe(false);
+    expect(canUndoShopStep(1, true)).toBe(true);
+    expect(canUndoShopStep(4, true)).toBe(true);
+    // once the shop closes the command is refused server-side too — hide it
+    expect(canUndoShopStep(1, false)).toBe(false);
+    expect(canUndoShopStep(0, false)).toBe(false);
+  });
+
+  /**
+   * THE REGRESSION THIS PINS. Visibility used to be inferred from the last shop
+   * EVENT, which left the button lit over an empty stack (a live third press was
+   * a silent no-op) and hid a still-undoable step behind any later rejection.
+   * Depth cannot express either mistake: an emptied stack is 0 and a rejection
+   * does not change the depth at all.
+   */
+  it("hides once the stack is drained, and survives a rejection landing on top", () => {
+    cover("shop-undo-button");
+    // buy, buy, undo, undo → depth 0 → gone, however recently you shopped
+    expect(canUndoShopStep(0, true)).toBe(false);
+    // a "金幣不足" rejection is not a state change: depth 2 is still 2
+    expect(canUndoShopStep(2, true)).toBe(true);
   });
 
   it("names the undo command kind the sim half reverses gold on", () => {

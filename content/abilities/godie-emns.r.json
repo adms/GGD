@@ -1,6 +1,7 @@
 {
   "id": "godie-emns.r",
   "name": "44-04 心臟麻痺",
+  "icon": "assets/icons/abilities/godie-emns.r.webp",
   "description": "[主動攻擊]\n45秒冷卻時間\n\n被死神之眼指定的人將會心臟麻痺，短時間內將會行動緩慢以及喪失(目標生命上限)*15%+450點生命並使動作緩慢持續5秒。",
   "slot": "R",
   "castType": "targeted",

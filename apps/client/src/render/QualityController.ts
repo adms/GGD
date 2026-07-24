@@ -20,6 +20,7 @@ import {
   fixedPresetResolution,
   type FrameStats,
 } from "./AdaptiveQuality";
+import { lodTierForPreset, type ModelLodTier } from "./modelLod";
 
 export interface RenderParams {
   resolutionScale: number;
@@ -32,6 +33,12 @@ export interface RenderParams {
   damageNumberCap: number;
   /** how much of the fight gets a floating number (task #92). */
   combatTextScope: CombatTextScope;
+  /**
+   * Which .glb tier AssetManager fetches (task #115). Derived from the FIXED
+   * preset only — never from the adaptive rung, because changing it costs a
+   * network fetch rather than a per-frame GPU knob (see render/modelLod.ts).
+   */
+  modelLod: ModelLodTier;
   /** current adaptive ladder index (for the perf overlay). */
   adaptiveLevel: number;
   /** whether the adaptive manager is currently in control of quality. */
@@ -135,6 +142,7 @@ export class QualityController {
       // shrink the density cap under load, but it must not silently stop
       // showing the player their own damage.
       combatTextScope: g.combatTextScope,
+      modelLod: lodTierForPreset(g.qualityPreset),
       adaptiveLevel: this.adaptive.level,
       adaptiveActive,
     };

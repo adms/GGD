@@ -16,6 +16,42 @@
 /** Two kills inside this window read as a multi-kill (one flows into the next). */
 export const MULTIKILL_WINDOW_MS = 8_000;
 
+/**
+ * HP fraction at or below which the local champion is "in danger" and the
+ * `lowHealth` warning cue (task #51's staged `low-health` clip) should sound.
+ * A single edge: it fires once when HP crosses DOWN through this line, not
+ * every frame it sits below (the audio map's 3 s cooldown is a second guard).
+ */
+export const LOW_HEALTH_FRACTION = 0.3;
+
+/** Local champion HP snapshot (discrete, change-guarded HudState projection). */
+export interface HealthSnapshot {
+  hp: number;
+  maxHp: number;
+  alive: boolean;
+}
+
+/**
+ * Whether the transition `prev → next` crosses DOWN into the low-health band and
+ * should fire the warning cue. True only when the champion is alive, `next` sits
+ * at/below the threshold with real HP left, and `prev` was above it (or unknown
+ * / dead / at full — e.g. a fresh spawn or respawn re-arms the warning). A max of
+ * 0 (no champion yet) never fires.
+ */
+export function crossedIntoLowHealth(
+  prev: HealthSnapshot,
+  next: HealthSnapshot,
+  fraction: number = LOW_HEALTH_FRACTION,
+): boolean {
+  if (!next.alive || next.maxHp <= 0 || next.hp <= 0) return false;
+  const nextRatio = next.hp / next.maxHp;
+  if (nextRatio > fraction) return false;
+  // Above the line last time we looked (or not yet meaningfully alive) → this is
+  // the downward crossing. Already below → hold, don't re-fire every tick.
+  const prevArmed = !prev.alive || prev.maxHp <= 0 || prev.hp / prev.maxHp > fraction;
+  return prevArmed;
+}
+
 /** Discrete per-player tally snapshot (all change-guarded HudState fields). */
 export interface TallySnapshot {
   /** local seat id — a change means a fresh match: re-baseline, never fire. */

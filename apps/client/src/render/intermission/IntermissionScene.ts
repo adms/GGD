@@ -93,6 +93,11 @@ import {
   type Placement,
   type Rgb,
 } from "./layout";
+import {
+  SHELF_RACK,
+  layoutShelfGoods,
+  type ShelfGoodInput,
+} from "./shelfDisplay";
 
 /** soft cap so a 120 Hz panel doesn't render a static market at 120 fps */
 const MIN_FRAME_MS = 1000 / 62;
@@ -150,6 +155,17 @@ export class IntermissionScene {
   private readonly stage: TransformNode;
   /** re-parented per team change, so the banner can be swapped in place */
   private bannerRoot: TransformNode | null = null;
+  /**
+   * The functional shelf rack (task #94). `shelfRoot` is the carcass, built
+   * once and procedurally (there is no shelf .glb, and building it means the
+   * shelves also exist in the headless test where no model loads); `goodsRoot`
+   * is its stock, torn down and rebuilt every time the catalogue changes so a
+   * bought item leaves the shelf and an undone sale puts it back.
+   */
+  private shelfRoot: TransformNode | null = null;
+  private goodsRoot: TransformNode | null = null;
+  /** last stock pushed in, replayed once the carcass exists */
+  private pendingGoods: readonly ShelfGoodInput[] = [];
   private championRoot: TransformNode | null = null;
   private championToken = 0;
   /** the hero's own baked clips, kept so a purchase can play a reaction */
@@ -460,6 +476,9 @@ export class IntermissionScene {
     const merchantC = containers.get(MERCHANT.model);
     if (merchantC) this.placeMerchant(merchantC);
 
+    // ---- the functional shelves (task #94) -----------------------------------
+    this.buildShelfRack();
+
     this.setTeam(this.teamId);
     if (champion) await this.setChampion(champion.glbPath, champion.scale);
     this.built = true;
@@ -561,6 +580,137 @@ export class IntermissionScene {
     clip.play(false);
   }
 
+  // -------------------------------------------------------------------------
+  // functional shelves (task #94)
+  // -------------------------------------------------------------------------
+
+  /**
+   * Build the shelf CARCASS: four posts and N planks, all boxes.
+   *
+   * Procedural rather than a .glb on purpose — no shelf model ships in the CC0
+   * packs (which is why this half of #94 stalled), and building it means the
+   * shelves are also present in `IntermissionScene.test.ts`, where every
+   * `AssetManager.load` resolves null and the entire loaded dressing vanishes.
+   * The one prop that must be there to prove the feature is the one that does
+   * not depend on a fetch.
+   *
+   * All numbers come from `shelfDisplay.SHELF_RACK`, so the sightline and
+   * framing guarantees the pure tests assert are the ones actually built.
+   */
+  private buildShelfRack(): void {
+    if (this.disposed || this.shelfRoot) return;
+    const r = SHELF_RACK;
+    const root = new TransformNode("im-shelf", this.scene);
+    root.parent = this.stage;
+    root.position.set(r.x, 0, r.z);
+    root.rotation.y = r.yaw;
+    this.shelfRoot = root;
+
+    // weathered pine, lit by the market's warm practicals rather than by itself
+    const wood = new StandardMaterial("im-shelf-wood", this.scene);
+    wood.diffuseColor = new Color3(0.36, 0.24, 0.14);
+    wood.specularColor = new Color3(0.06, 0.05, 0.04);
+
+    const halfW = r.width / 2 - r.postSize / 2;
+    const halfD = r.depth / 2 - r.postSize / 2;
+    for (const sx of [-1, 1]) {
+      for (const sz of [-1, 1]) {
+        const post = MeshBuilder.CreateBox(
+          "im-shelf-post",
+          { width: r.postSize, depth: r.postSize, height: r.height },
+          this.scene,
+        );
+        post.parent = root;
+        post.position.set(sx * halfW, r.height / 2, sz * halfD);
+        post.material = wood;
+        post.isPickable = false;
+        post.receiveShadows = true;
+        this.shadows?.addShadowCaster(post);
+      }
+    }
+    for (const y of r.plankY) {
+      const plank = MeshBuilder.CreateBox(
+        "im-shelf-plank",
+        { width: r.width, depth: r.depth, height: r.plankThickness },
+        this.scene,
+      );
+      plank.parent = root;
+      plank.position.set(0, y, 0);
+      plank.material = wood;
+      plank.isPickable = false;
+      plank.receiveShadows = true;
+      this.shadows?.addShadowCaster(plank);
+    }
+
+    // stock pushed in before the market finished building is applied now
+    if (this.pendingGoods.length > 0) this.setShelfGoods(this.pendingGoods);
+  }
+
+  /**
+   * Stock the shelves with the LIVE catalogue (task #94).
+   *
+   * This is what makes them functional rather than dressing: the caller
+   * (`IntermissionStage`) hands over the very shelves the shop card is
+   * rendering — #70's finals, the operator's whitelist applied, grouped by
+   * `groupCatalogue` — and each good is a small primitive tinted by its shelf.
+   * Goods the champion already OWNS go dark, so buying visibly takes something
+   * off the shelf and undoing that sale (task #121) visibly puts it back.
+   *
+   * Cheap to call: the goods live under their own node which is disposed
+   * wholesale, so a re-stock is O(goods) with no diffing and no leak. Safe to
+   * call before the market has finished loading — the stock is remembered and
+   * applied when the carcass appears.
+   */
+  setShelfGoods(goods: readonly ShelfGoodInput[]): void {
+    if (this.disposed) return;
+    this.pendingGoods = goods;
+    if (!this.shelfRoot) return;
+    this.goodsRoot?.dispose(false, true);
+    this.goodsRoot = null;
+
+    const placed = layoutShelfGoods(goods);
+    if (placed.length === 0) return;
+    const root = new TransformNode("im-shelf-goods", this.scene);
+    root.parent = this.shelfRoot;
+    this.goodsRoot = root;
+
+    for (const g of placed) {
+      // a good is ~14 px on screen, so SHAPE carries the shelf as well as hue:
+      // offence is a crate, magic an orb, defence a squat drum.
+      const mesh =
+        g.shelf === "magic"
+          ? MeshBuilder.CreateSphere("im-good", { diameter: g.size, segments: 8 }, this.scene)
+          : g.shelf === "defense"
+            ? MeshBuilder.CreateCylinder(
+                "im-good",
+                { diameter: g.size, height: g.size * 0.8, tessellation: 10 },
+                this.scene,
+              )
+            : MeshBuilder.CreateBox("im-good", { size: g.size }, this.scene);
+      mesh.parent = root;
+      mesh.position.set(g.x, g.y, g.z);
+      mesh.isPickable = false;
+      const mat = new StandardMaterial("im-good-mat", this.scene);
+      if (g.owned) {
+        // ALREADY YOURS: unlit and desaturated — the slot reads as taken, not
+        // as missing, so the shelf still shows you the full catalogue.
+        mat.diffuseColor = new Color3(g.tint.r * 0.22, g.tint.g * 0.22, g.tint.b * 0.22);
+        mat.emissiveColor = new Color3(0, 0, 0);
+        mat.alpha = 0.55;
+      } else {
+        mat.diffuseColor = new Color3(g.tint.r * 0.7, g.tint.g * 0.7, g.tint.b * 0.7);
+        // Self-lit, hard. The market is a DUSK scene — fog, a 0.45 hemispheric
+        // key and two warm practicals — and at the first live look a 0.45
+        // emissive left the goods as dark lumps indistinguishable from the
+        // timber they sit on. They have to carry their own light to read.
+        mat.emissiveColor = new Color3(g.tint.r * 0.85, g.tint.g * 0.85, g.tint.b * 0.85);
+      }
+      mat.specularColor = new Color3(0.18, 0.16, 0.12);
+      mesh.material = mat;
+      this.shadows?.addShadowCaster(mesh);
+    }
+  }
+
   /** Fly the local team's shield banner over the pitch (-1 = none). */
   setTeam(teamId: number): void {
     if (this.disposed) return;
@@ -653,10 +803,18 @@ export class IntermissionScene {
    * at the model level, not counter-rotated here (it varies per clip, so no
    * single scene transform can fix it). See the #68 hand-off.
    */
-  playChampionReaction(): void {
+  playChampionReaction(opts?: { celebratoryOnly?: boolean }): void {
     if (this.disposed || !this.championRoot) return;
     const pick = pickReactionClip(this.championGroups.map((g) => g.name));
-    const clip = pick ? (this.championGroups.find((g) => g.name === pick.clip) ?? null) : null;
+    // The owner asked that a buy read as the hero RESPONDING, 「不只是擺出攻擊
+    // 動作而已」 (task #146 follow-up). With `celebratoryOnly`, only a genuine
+    // celebration clip (victory/cheer/dance — reactionClip's "victory" tier)
+    // plays; an attack/cast pick falls through to the satisfied squash-pop
+    // instead of swinging a weapon. So a hero WITH a cheer clip celebrates, and
+    // one without does a content nod rather than an aggressive lunge — and the
+    // in-character line (HeroReactionBubble) carries the personality either way.
+    const usable = pick && (!opts?.celebratoryOnly || pick.kind === "victory") ? pick : null;
+    const clip = usable ? (this.championGroups.find((g) => g.name === usable.clip) ?? null) : null;
     if (!clip) {
       // no usable reaction clip — a legible squash-pop so the buy still lands
       this.championPulse = { start: this.elapsed, dur: 0.5 };
@@ -831,6 +989,12 @@ export class IntermissionScene {
     this.championIdle = null;
     this.championReaction = null;
     this.championPulse = null;
+    // shelf nodes hang off `stage`, which scene.dispose() takes with it; the
+    // handles are cleared so a late setShelfGoods on a disposed scene cannot
+    // reach into freed meshes.
+    this.shelfRoot = null;
+    this.goodsRoot = null;
+    this.pendingGoods = [];
     this.shadows?.dispose();
     this.shadows = null;
     this.pipeline?.dispose();

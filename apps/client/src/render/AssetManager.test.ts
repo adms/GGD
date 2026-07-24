@@ -33,6 +33,7 @@ import {
   cachedAssetBytes,
   clearAssetByteCache,
 } from "./AssetManager";
+import { setModelLodManifest, setModelLodTier, type LodManifest } from "./modelLod";
 
 /** the same tree the client fetches /content/ from */
 const CONTENT_DIR = join(__dirname, "../../../../content");
@@ -216,6 +217,95 @@ describe("AssetManager", () => {
 
     other.scene.dispose();
     other.engine.dispose();
+    scene.dispose();
+    engine.dispose();
+  });
+});
+
+/**
+ * MODEL LOD (task #115) — the request-level half.
+ *
+ * The trap this task was named for is a quality control that renders a
+ * dropdown and swaps nothing, so the assertion here is deliberately about the
+ * URL THAT WAS FETCHED, not about a resolver's return value. The stub above
+ * serves the repo's real content/ tree, so a `-small.glb` that was never
+ * generated would 404 and the container would come back null — these cases
+ * fail if the tier files stop shipping, not just if the wiring regresses.
+ */
+describe("AssetManager × model LOD tier", () => {
+  beforeEach(() => {
+    installFetchStub();
+    clearAssetByteCache();
+    setModelLodManifest(
+      JSON.parse(
+        readFileSync(join(CONTENT_DIR, "assets/models/_lod.json"), "utf-8"),
+      ) as LodManifest,
+    );
+  });
+  afterEach(() => {
+    if (realFetch) globalThis.fetch = realFetch;
+    clearAssetByteCache();
+    setModelLodManifest(null);
+    setModelLodTier("high");
+  });
+
+  it("fetches the -small file at the low preset and the authored file at high", async () => {
+    cover("asset-manager-lod-swap");
+    const high = makeScene();
+    setModelLodTier("high");
+    const full = await new AssetManager(high.scene).load(MERCHANT);
+    expect(requests.map((r) => r.url)).toEqual([`/content/${MERCHANT}`]);
+
+    const low = makeScene();
+    setModelLodTier("small");
+    const small = await new AssetManager(low.scene).load(MERCHANT);
+    expect(requests.map((r) => r.url)).toEqual([
+      `/content/${MERCHANT}`,
+      "/content/assets/models/shop/merchant-small.glb",
+    ]);
+
+    // …and the file that came back really is the cheaper one
+    const tris = (c: NonNullable<typeof full>) =>
+      c.meshes.reduce((n, m) => n + (m.getTotalIndices?.() ?? 0) / 3, 0);
+    expect(small).not.toBeNull();
+    expect(tris(small!)).toBeLessThan(tris(full!));
+
+    low.scene.dispose();
+    low.engine.dispose();
+    high.scene.dispose();
+    high.engine.dispose();
+  });
+
+  it("keys the container cache on the RESOLVED path, so a tier change is not swallowed", async () => {
+    cover("asset-manager-lod-cache-key");
+    const { engine, scene } = makeScene();
+    const assets = new AssetManager(scene);
+
+    setModelLodTier("high");
+    await assets.load(MERCHANT);
+    setModelLodTier("mid");
+    await assets.load(MERCHANT);
+
+    // Keying on the AUTHORED path would return the already-cached full-fat
+    // container here and issue no second request — the setting would look
+    // wired and do nothing, which is precisely the #115 failure mode.
+    expect(requests.map((r) => r.url)).toEqual([
+      `/content/${MERCHANT}`,
+      "/content/assets/models/shop/merchant-mid.glb",
+    ]);
+
+    scene.dispose();
+    engine.dispose();
+  });
+
+  it("a model with no generated tier is fetched unchanged (no 404 probe)", async () => {
+    cover("asset-manager-lod-passthrough");
+    const { engine, scene } = makeScene();
+    setModelLodTier("small");
+    const untiered = "assets/models/imported/holo.glb";
+    expect(await new AssetManager(scene).load(untiered)).not.toBeNull();
+    expect(requests.map((r) => r.url)).toEqual([`/content/${untiered}`]);
+
     scene.dispose();
     engine.dispose();
   });

@@ -1,6 +1,7 @@
 {
   "id": "godie-udea.r",
   "name": "65-04 天譴",
+  "icon": "assets/icons/abilities/godie-udea.r.webp",
   "description": "[主動攻擊]\n90秒冷卻時間\n\n怒氣凝聚為閃電殺暴附近的敵人，對周圍500範圍內的所有敵人放出閃雷造成250點法力損失和150點傷害並傳遞16次，聚集越多敵人則威力越強，另外給予指定目標額外500點傷害。",
   "slot": "R",
   "castType": "dash",

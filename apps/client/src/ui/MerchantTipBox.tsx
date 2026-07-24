@@ -12,14 +12,13 @@
  * below the HUD) and is DISPLAY-ONLY — `pointerEvents: none`, so it never eats a
  * click meant for the shop card. It anchors upper-centre, over the now-centred
  * merchant and clear of the LEFT shop card, with a little tail pointing down at
- * him so it reads as HIS speech. The portrait rides the left of the box: it uses
- * the shared GlyphTile, so until the placeholder PNG at MERCHANT_PORTRAIT is
- * generated it simply shows a seeded glyph — the same "img over glyph" contract
- * the shop hero portrait uses.
+ * him so it reads as HIS speech. His 頭圖 rides the left of the box —
+ * MerchantHeadIcon, a DRAWN bust (task #146): the reserved raster at
+ * MERCHANT_PORTRAIT was never generated, so this box used to show a 「旅」
+ * letter tile. The drawing still lets that PNG cover it if it ever ships.
  */
 import { useEffect, useState } from "react";
-import { GlyphTile } from "./components/GlyphTile";
-import { MERCHANT_PORTRAIT } from "../render/intermission/layout";
+import { MerchantHeadIcon } from "./components/MerchantHeadIcon";
 import { MERCHANT_TIPS, TIP_KIND_META, nextTipIndex } from "../render/intermission/merchantTips";
 
 /** Warm market palette — the anti-arena tone the whole intermission uses. */
@@ -63,7 +62,16 @@ export function MerchantTipBox({ intervalMs = 5000, rand = Math.random }: Mercha
         filter: "drop-shadow(0 6px 16px rgba(0,0,0,0.45))",
       }}
     >
-      <style>{"@keyframes ggdTipIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}"}</style>
+      <style>{
+        "@keyframes ggdTipIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}" +
+        // the head gives a small nod + scale-pop each time a new line is 'spoken',
+        // so the box reads as HIM talking, not a floating banner
+        "@keyframes ggdMerchantSpeak{0%{transform:scale(1) rotate(0)}28%{transform:scale(1.1) rotate(-3deg)}55%{transform:scale(0.98) rotate(1.5deg)}100%{transform:scale(1) rotate(0)}}" +
+        // a little quote mark that rises + fades in with each tip, the 'speech' cue
+        "@keyframes ggdQuoteIn{from{opacity:0;transform:translateY(3px) scale(0.7)}60%{opacity:1}to{opacity:0.9;transform:none}}" +
+        // never move for viewers who ask for reduced motion (accessibility)
+        "@media (prefers-reduced-motion: reduce){.ggd-tip-anim{animation:none !important}}"
+      }</style>
       <div
         style={{
           display: "flex",
@@ -75,17 +83,27 @@ export function MerchantTipBox({ intervalMs = 5000, rand = Math.random }: Mercha
           border: `1px solid ${BOX_BORDER}`,
         }}
       >
-        <GlyphTile
-          seed="traveling-merchant"
-          icon={MERCHANT_PORTRAIT}
-          label="旅行商人"
-          size={46}
-          accent={MERCHANT_ACCENT}
-          radius={9}
-        />
+        {/* his 頭圖 (task #146/#148). Now a REAL generated raster portrait ships
+            at MERCHANT_PORTRAIT (a jovial hooded travelling merchant with a gold
+            coin), so MerchantHeadIcon's raster branch lights up; the drawn bust
+            stays as the never-404 fallback. Keyed by index + given a small
+            nod/scale each new tip so it reads as HIM speaking. */}
+        <div key={index} className="ggd-tip-anim" style={{ animation: "ggdMerchantSpeak 480ms ease-out", transformOrigin: "50% 80%" }}>
+          <MerchantHeadIcon size={46} radius={9} accent={MERCHANT_ACCENT} />
+        </div>
         <div style={{ minWidth: 0 }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 3 }}>
             <span style={{ fontSize: 12, fontWeight: "bold", color: MERCHANT_ACCENT }}>旅行商人</span>
+            {/* a speech cue: a quote mark that rises in with each new line, so the
+                name reads as a SPEAKER label over something he's saying */}
+            <span
+              key={index}
+              className="ggd-tip-anim"
+              aria-hidden
+              style={{ fontSize: 13, fontWeight: "bold", color: `${MERCHANT_ACCENT}cc`, lineHeight: 1, animation: "ggdQuoteIn 400ms ease-out" }}
+            >
+              〞
+            </span>
             <span
               style={{
                 fontSize: 9,
@@ -102,6 +120,7 @@ export function MerchantTipBox({ intervalMs = 5000, rand = Math.random }: Mercha
           {/* keyed by index so each new tip re-mounts and plays the gentle fade */}
           <div
             key={index}
+            className="ggd-tip-anim"
             style={{
               fontSize: 13,
               lineHeight: 1.55,

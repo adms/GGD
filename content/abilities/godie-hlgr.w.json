@@ -1,6 +1,7 @@
 {
   "id": "godie-hlgr.w",
   "name": "03-01 磁軌砲",
+  "icon": "assets/icons/abilities/godie-hlgr.w.webp",
   "description": "[主動攻擊]\n15秒冷卻時間\n\n對著敵方部隊發射磁軌砲，造成125點傷害並讓目標昏迷0.5秒。",
   "slot": "W",
   "castType": "targeted",

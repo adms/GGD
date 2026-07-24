@@ -16,7 +16,7 @@
  * file is the JSX shell. Falls back to the old team-placement list until the
  * settlement payload arrives (or if it never does — e.g. a very old server).
  */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Champions } from "@ggd/shared/sim/content/registry";
 import type { ChampionId } from "@ggd/shared/ids";
 import type { SettlementPlayer } from "@ggd/shared/protocol/messages";
@@ -36,6 +36,7 @@ import {
   reflectionHints,
   sortSettlementRanking,
 } from "./settlementModel";
+import { audioSystem } from "../../audio";
 import { playChampionQuote } from "../../audio/nameVoice";
 import { cancelVictoryTaunt, playMatchTaunt } from "../../audio/victoryTaunt";
 import { MATCH_WIN_STING, matchEndBedScene } from "../../audio/matchEndBed";
@@ -440,6 +441,21 @@ export function MatchEndPanel(): React.JSX.Element {
   const scroll = useAutoScrollToRow<HTMLDivElement, HTMLDivElement>({
     runKey: local && !cardHeld ? `settle-${settlement?.matchId || "offline"}` : null,
   });
+
+  // 効果音ラボ データ表示 score-screen cue (#51 settlement-reveal): a single
+  // flourish the instant the ranking card is actually revealed — the same
+  // moment the auto-scroll arms (payload present, a local row to show, and the
+  // card no longer held for the chicken). Ref-guarded per match so a re-render
+  // can't re-fire it; a new matchId re-arms.
+  const revealedMatch = useRef<string | null>(null);
+  const cardShown = hasPayload && Boolean(local) && !cardHeld;
+  useEffect(() => {
+    if (!cardShown) return;
+    const key = settlement?.matchId || "offline";
+    if (revealedMatch.current === key) return;
+    revealedMatch.current = key;
+    audioSystem.playSfx("settlementReveal");
+  }, [cardShown, settlement]);
 
   if (!hasPayload) return <TeamPlacementFallback />;
 

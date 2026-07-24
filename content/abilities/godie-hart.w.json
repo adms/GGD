@@ -1,6 +1,7 @@
 {
   "id": "godie-hart.w",
   "name": "01-02 隕石擊",
+  "icon": "assets/icons/abilities/godie-hart.w.webp",
   "description": "[主動攻擊]\n35秒冷卻時間\n\n招喚隕石擊落攻擊區域內的敵人造成100傷害並且跳躍到該範圍給予斬殺造成100傷害。",
   "slot": "W",
   "castType": "ground",

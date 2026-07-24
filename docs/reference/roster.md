@@ -2,7 +2,7 @@
 
 > ⚠️ **本檔案由程式產生，請勿手動編輯。**
 > 重新產生：`pnpm docs:reference`（或 `python3 tools/reference/gen_reference.py`）
-> 產生自 contentVersion **`cv_6c0d23e1c545`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
+> 產生自 contentVersion **`cv_08c54d5701fc`**（`content/manifest.json`；它是 `content/**` 的純函數，改內容就會變）
 > 資料列：**113**　·　開放名單來源：`data/curation/whitelist.json`（updatedAt `2026-07-22T15:49:20.043229Z`）
 
 `content/champions/*.json` 共 **113** 名英雄，其中 **48** 名在開放名單（OPEN roster）內。開放名單是營運策展狀態，不是程式常數：真相是 `data/curation/whitelist.json`，由 platform 的 `GET /api/v1/curation/whitelist` 提供，由 game-server 在建房時執行。

@@ -1,6 +1,7 @@
 {
   "id": "godie-obla.e",
   "name": "33-03 地道突襲",
+  "icon": "assets/icons/abilities/godie-obla.e.webp",
   "description": "[主動攻擊]\n60秒冷卻時間\n\n挖地道到目標上方後用炸藥突襲，使該範圍受到500點傷害，並且暈眩1秒。",
   "slot": "E",
   "castType": "skillshot",

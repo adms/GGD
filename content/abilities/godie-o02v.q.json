@@ -1,6 +1,7 @@
 {
   "id": "godie-o02v.q",
   "name": "81-01 Barrel Shot",
+  "icon": "assets/icons/abilities/godie-o02v.q.webp",
   "description": "[主動攻擊]\n30秒冷卻時間\n\n帶有輔助效果的復合高速砲擊，以快速發動的魔力波動封鎖住對手的行動，造成300範圍內的敵人減緩速度80%，持續1秒，爭取砲擊集束時間，其缺點為需要極大的魔力作為高速發射的代價。",
   "slot": "Q",
   "castType": "ground",

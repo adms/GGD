@@ -2,6 +2,7 @@
   "id": "godie-h02y.q",
   "schema": "ability@1",
   "name": "97-01 壹之秘劍-焰靈",
+  "icon": "assets/icons/abilities/godie-h02y.q.webp",
   "description": "[被動]\n0秒冷卻時間\n\n每一次的攻擊都會因為黏附在目標身上的火焰而加強。這些火焰會在第一次攻擊時增加20點傷害力，第二次攻擊則提升為兩倍，第三次攻擊則增加為三倍，以此類推。如果目標在擁有火焰附著的狀況下死去，就會產生爆炸，對所有附近敵對部隊造成 50點的傷害。火焰的附著可以持續2秒。",
   "slot": "Q",
   "castType": "targeted",

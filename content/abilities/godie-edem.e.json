@@ -1,6 +1,7 @@
 {
   "id": "godie-edem.e",
   "name": "45-03 千鳥",
+  "icon": "assets/icons/abilities/godie-edem.e.webp",
   "description": "[主動攻擊]\n45秒冷卻時間\n\n卡卡西傳授的技術。 原理是把查克拉集中在手上, 再以高速突刺作直線式的攻擊，造成((英雄等級*20)+400)點法術傷害，由於威力過於強大，若敵方偏移瞄準地點將不會受到傷害。",
   "slot": "E",
   "castType": "targeted",

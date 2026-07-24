@@ -1,6 +1,7 @@
 {
   "id": "godie-emns.ex",
   "name": "44-002 交換筆記本",
+  "icon": "assets/icons/abilities/godie-emns.ex.webp",
   "description": "[主動攻擊]\n45秒冷卻時間\n\n置死地而後生的大絕招，將筆記本暫時送給別人，讓自己跟別人現存生命作交換，但是將會解除死神之眼的鎖定。",
   "slot": "EX",
   "castType": "targeted",

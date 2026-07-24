@@ -2,6 +2,7 @@
   "id": "godie-e00v.w",
   "schema": "ability@1",
   "name": "84-02 保齡球",
+  "icon": "assets/icons/abilities/godie-e00v.w.webp",
   "description": "[主動攻擊]\n25秒冷卻時間\n\n百畝森林裡非常流行的遊戲，以飛快的速度迴旋衝撞，彈開路徑上所有的東西，但維尼常常忘記收爪子而傷到人，造成力量*2+150點傷害。如果撞到東西停下來的話生氣的維尼會把周圍部隊都彈開，並給予50點傷害",
   "slot": "W",
   "castType": "targeted",

@@ -1,40 +1,52 @@
 #!/usr/bin/env python3
-"""gen_readme_lists.py — write the roster / ability / item lists INTO README.md.
+"""gen_readme_lists.py — write the OPEN roster / ability / item lists INTO README.md.
 
-WHY THIS EXISTS. The owner wants the full lists in the README itself, not
-linked away to another file. Hand-written they would be wrong within a week
-(see docs/champions.csv — nothing generates it, nothing checks it, and it has
-been drifting from content/ ever since). So the lists live in the README but
-NOTHING HUMAN WRITES THEM: this script owns three marker-delimited regions and
-rewrites only the text between them.
+WHY THIS EXISTS. The owner wants to SEE the open (whitelisted) champions, their
+skills, and the shop shelf on the GitHub repo page WITHOUT CLICKING anything.
+Hand-written they would be wrong within a week (see docs/champions.csv — nothing
+generates it, nothing checks it, and it has been drifting from content/ ever
+since). So the lists live in the README but NOTHING HUMAN WRITES THEM: this
+script owns three marker-delimited regions and rewrites only the text between
+them.
 
     <!-- BEGIN GENERATED:roster -->    …    <!-- END GENERATED:roster -->
     <!-- BEGIN GENERATED:abilities --> …    <!-- END GENERATED:abilities -->
     <!-- BEGIN GENERATED:items -->     …    <!-- END GENERATED:items -->
 
-Every hand-written word outside those markers is preserved byte for byte. If a
-marker pair is missing the block is APPENDED at the end of the file, so the
-first run bootstraps itself and later runs are in-place edits.
+WHAT CHANGED (2026-07, three real causes the owner reported):
+  1. The three blocks used to be wrapped in <details>, which GitHub renders
+     COLLAPSED — so the repo page showed three triangles and he concluded the
+     lists were missing. The OPEN lists are now rendered EXPANDED, no <details>.
+  2. The README was 224 KB because it inlined all 113 champions / 554 abilities /
+     214 items. The EXHAUSTIVE full sets now live in docs/reference/*.md; the
+     README keeps only the OPEN roster + kits + the shop shelf + the draft/orb
+     pools, and links to the full docs. This script writes BOTH targets in one
+     run (see main()).
+  3. The item lists are classified by the semantic `craftRole` marker (task #70),
+     not the old price heuristic: the shop shelf is the 28 effectful `final`
+     weapons + 2 services; the 3-choose-1 draft is the 13 `quest` items.
+  4. The roster's skill column showed raw content ids (godie-e001.q). It now
+     shows each ability's NAME + a one-line effect gist per slot — the readable
+     overview the owner asked for. The full untruncated text stays in
+     docs/reference/abilities.md and the #codex page.
 
 WHAT IT READS: nothing but content/ and the operator whitelist — the loader is
 `build_context()` in gen_reference.py, shared with the docs/reference/*.md
-generator so the two can never disagree.
-
-WHAT IT WRITES: README.md, between the markers, and nothing else.
+generator so the two can never disagree. The whitelist is git-ignored; when it is
+absent the OPEN roster is empty and this script SAYS SO loudly rather than
+emitting a silent empty list.
 
 Run it with `pnpm docs:readme` from the repo root, or directly:
   python3 tools/reference/gen_readme_lists.py
 
 Flags:
-  --check   exit 1 if the README is stale (for CI / a pre-commit hook); writes nothing.
+  --check   exit 1 if the README OR the docs/reference/*.md are stale; writes nothing.
 
-Stdlib only, deterministic, idempotent: two runs produce a byte-identical
-README. There is no timestamp in the output — the contentVersion is the
-freshness stamp, exactly as in tools/status/gen_status.py and gen_reference.py.
+Stdlib only, deterministic, idempotent: two runs produce byte-identical output.
+There is no timestamp — the contentVersion is the freshness stamp.
 """
 
 import os
-import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -47,16 +59,19 @@ README = os.path.join(REPO, "README.md")
 CMD = "pnpm docs:readme"
 SCRIPT = "tools/reference/gen_readme_lists.py"
 
-# Truncation limits, in CHARACTERS. These exist because a markdown table cell
-# that runs to 300 characters destroys the whole table's readability — and these
-# tables now live in the README, where readability is the entire point.
-# Almost every value here is CJK, which renders double-width, so a 40-char cell
-# is already ~80 columns wide. Keep these low. The full untruncated text is one
-# click away in the codex (http://localhost:39527/#codex).
+# Truncation limits, in CHARACTERS. A markdown cell / kit line that runs to 300
+# characters destroys readability, and readability is the entire point of the
+# open lists. Almost every value is CJK (double-width), so keep these low. The
+# full untruncated text is in docs/reference/*.md and http://localhost:39527/#codex.
 LIMIT_CHAMPION_DESC = 40
-LIMIT_ABILITY_EFFECT = 50
+LIMIT_KIT_GIST = 34          # per-slot effect gist in the roster kit
 LIMIT_ITEM_STATS = 52
 LIMIT_ITEM_PASSIVE = 28
+
+# Where the full (all-113 / all-554 / all-214) sets live, linked from each block.
+DOC_ROSTER = "docs/reference/roster.md"
+DOC_ABILITIES = "docs/reference/abilities.md"
+DOC_ITEMS = "docs/reference/items.md"
 
 BLOCKS = ("roster", "abilities", "items")
 
@@ -96,23 +111,8 @@ def splice(text, name, body):
 
 
 # ---------------------------------------------------------------------------
-# shared block chrome
+# shared chrome
 # ---------------------------------------------------------------------------
-
-def open_details(summary):
-    return ["<details>", f"<summary>{summary}</summary>", ""]
-
-
-def close_details(ctx, extra=None):
-    """Every block ends with the same small italic provenance line, OUTSIDE the
-    <details> so it is still visible when the block is collapsed."""
-    L = ["</details>", ""]
-    tail = f"*generated by `{CMD}`, from contentVersion `{ctx['contentVersion']}`."
-    if extra:
-        tail += f" {extra}"
-    L.append(tail + " 手動編輯這三段之間的任何字都會在下次重新產生時被覆蓋。*")
-    return L
-
 
 def note(lines):
     # ">" alone, never "> " — a trailing space on a blank quote line is invisible
@@ -120,278 +120,248 @@ def note(lines):
     return [("> " + l if l else ">") for l in lines] + [""]
 
 
+def provenance(ctx, extra=None):
+    """The small italic provenance line every block ends with."""
+    tail = f"*由 `{CMD}` 從 contentVersion `{ctx['contentVersion']}` 產生。"
+    if extra:
+        tail += f" {extra}"
+    return [tail + " 這三段標記之間的任何字都會在下次重新產生時被覆蓋。*"]
+
+
+def empty_open_warning(kind):
+    """The whitelist is git-ignored; on a fresh clone the OPEN list is empty. Say
+    so loudly — an empty open list rendered as if it were content is exactly the
+    failure that made the owner think the README was broken."""
+    return note([
+        f"⚠️ **開放{kind}名單目前是空的。** `data/curation/whitelist.json` 不存在或沒有列出任何"
+        f"{kind}（那個檔是 gitignored，fresh clone 的預設狀態）。恢復方式見 §4，或在 "
+        "`/admin/` → 內容白名單 → ⭐ 啟用示範組合 → 儲存。**這不是清單壞掉，是白名單是空的。**",
+    ])
+
+
 # ---------------------------------------------------------------------------
-# roster
+# roster — OPEN champions, readable kit (name + one-line effect per slot)
 # ---------------------------------------------------------------------------
 
-ROSTER_HEAD = [
-    "| id | 全名 | 稱號 | role | 攻擊 | 一句話說明 | 技能 id（Q W E R EX） |",
-    "|---|---|---|---|---|---|---|",
-]
-
-
-def roster_row(c):
-    title, full = G.split_champion_name(c.get("name", ""))
+def kit_slots(c, ctx):
+    """Yield (slot, ability_doc) for Q/W/E/R (embedded in the champion doc) and
+    EX (a ref resolved through ctx['ability_by_id']), in slot order, skipping
+    empties."""
     abils = c.get("abilities") or {}
-    ids = []
     for slot in ("Q", "W", "E", "R"):
         a = abils.get(slot)
         if isinstance(a, dict) and a.get("id"):
-            ids.append(f"`{a['id']}`")
-    if c.get("exAbility"):
-        ids.append(f"`{c['exAbility']}`")
-    return "| {id} | {full} | {title} | {role} | {atk} | {desc} | {abils} |".format(
-        id=f"`{c['id']}`",
-        full=G.cell(full),
-        title=G.cell(title),
-        role=G.cell(c.get("role")),
-        atk="近戰" if c.get("attackType") == "melee" else "遠程",
-        desc=G.cell(G.one_line(c.get("description"), LIMIT_CHAMPION_DESC) or "—"),
-        abils=" ".join(ids) if ids else "—",
-    )
+            yield slot, a
+    ex = c.get("exAbility")
+    if ex:
+        a = ctx["ability_by_id"].get(ex)
+        if a:
+            yield "EX", a
+
+
+def kit_bullets(c, ctx):
+    """One '- **SLOT** 名稱：一行效果' bullet per ability. The NAME is the
+    human-readable id (e.g. '22-01 鬼隱之擊'); the gist strips the [標籤]/冷卻
+    boilerplate and truncates. This is cause #4: readable, not raw ids.
+
+    Rendered as a nested bullet list under each champion — it reads cleanly on
+    GitHub and, unlike a wide table cell holding five name+effect entries, never
+    blows the table width."""
+    out = []
+    for slot, a in kit_slots(c, ctx):
+        name = G.cell(a.get("name") or a.get("id"))
+        gist = G.one_line(a.get("description"), LIMIT_KIT_GIST) or G.effect_summary(a) or "—"
+        out.append(f"- **{slot}** {name}：{G.cell(gist)}")
+    if not out:
+        out.append("- *（此英雄的技能文件缺漏）*")
+    return out
 
 
 def gen_roster(ctx):
     champs = ctx["champions"]
     open_ids = ctx["open_champions"]
     open_rows = [c for c in champs if c["id"] in open_ids]
-    closed_rows = [c for c in champs if c["id"] not in open_ids]
+    closed_n = len(champs) - len(open_rows)
 
-    L = open_details(
-        f"<b>英雄名冊 / Champion roster</b> — 全部 {len(champs)} 名英雄"
-        f"（開放 {len(open_rows)} · 未開放 {len(closed_rows)}）"
-    )
+    L = [
+        f"#### 開放名單 OPEN roster（{len(open_rows)} 名）— 角色 + 技能",
+        "",
+    ]
     L += note([
-        "開放名單是**營運策展狀態**，不是程式常數：真相在 `data/curation/whitelist.json`，"
-        "由 platform 的 `GET /api/v1/curation/whitelist` 提供、由 game-server 在建房時執行。"
-        f"來源：{ctx['whitelist_note']}",
+        "選角畫面看得到、bot 也會抽到的就是這些。這是**營運策展狀態**，不是程式常數："
+        f"真相在 `data/curation/whitelist.json`，由 platform 的 `GET /api/v1/curation/whitelist` "
+        f"提供、game-server 在建房時執行。來源：{ctx['whitelist_note']}",
         "",
-        "`稱號` / `全名` 是從 `name` 欄位拆出來的（慣例 `稱號 - 全名`），champion doc 上"
-        "**沒有**獨立的稱號欄位；不符慣例的顯示 `—`。`名言` 也不在 champion doc 裡。",
-        "",
-        f"⚠️ `一句話說明` 取自 `description` 並**截斷到 {LIMIT_CHAMPION_DESC} 字**，結尾的 `…` "
-        "是產生器加的、不是原文的一部分（表格可讀性所需，見產生器頂端的說明）。"
-        "要完整描述請開 <http://localhost:39527/#codex> 或直接讀 `content/champions/<id>.json`。"
-        "沒有 `description` 的顯示 `—`。",
+        "每名英雄一格：**`id` 全名**（稱號 · 職業 · 攻擊）— 一句話說明，底下五條是 Q/W/E/R/EX "
+        f"的**技能名稱＋一行效果**。效果截斷到 {LIMIT_KIT_GIST} 字、說明截斷到 "
+        f"{LIMIT_CHAMPION_DESC} 字，結尾的 `…` 是產生器加的。完整逐字內容在 "
+        f"[`{DOC_ABILITIES}`](./{DOC_ABILITIES}) 或 <http://localhost:39527/#codex>。",
     ])
 
-    L.append(f"#### 開放名單 OPEN roster（{len(open_rows)}）")
-    L.append("")
-    L.append("選角畫面看得到、bot 也會抽到的就是這些。")
-    L.append("")
-    L += ROSTER_HEAD
-    L += [roster_row(c) for c in open_rows]
-    L.append("")
+    if not open_rows:
+        L += empty_open_warning("英雄")
+    for c in open_rows:
+        title, full = G.split_champion_name(c.get("name", ""))
+        atk = "近戰" if c.get("attackType") == "melee" else "遠程"
+        meta = " · ".join(x for x in (G.cell(title) if title else None,
+                                      G.cell(c.get("role")), atk) if x and x != "—")
+        desc = G.one_line(c.get("description"), LIMIT_CHAMPION_DESC)
+        head = f"**`{c['id']}` {G.cell(full)}**（{meta}）"
+        if desc:
+            head += f" — {G.cell(desc)}"
+        L.append(head)
+        L.append("")
+        L += kit_bullets(c, ctx)
+        L.append("")
 
-    L.append(f"#### 未開放 not in the open roster（{len(closed_rows)}）")
-    L.append("")
-    L.append("文件存在、資料完整，但白名單沒放行，所以選不到。")
-    L.append("")
-    L += ROSTER_HEAD
-    L += [roster_row(c) for c in closed_rows]
-    L.append("")
-
-    L += close_details(ctx, f"共 {len(champs)} 列。")
-    return "\n".join(L), len(champs)
-
-
-# ---------------------------------------------------------------------------
-# abilities — grouped by champion so each block reads as a KIT, not a flat dump
-# ---------------------------------------------------------------------------
-
-ABILITY_HEAD = [
-    "| slot | id | 名稱 | 型態 | 短效果 |",
-    "|---|---|---|---|---|",
-]
-
-
-def ability_row(a):
-    tag = G.desc_tag(a.get("description"))
-    is_passive = bool(a.get("passive")) or tag == "被動"
-    eff = G.one_line(a.get("description"), LIMIT_ABILITY_EFFECT) or G.effect_summary(a) or "—"
-    return "| {slot} | {id} | {name} | {kind} | {eff} |".format(
-        slot=a.get("slot") or "?",
-        id=f"`{a['id']}`",
-        name=G.cell(a.get("name")),
-        kind="被動" if is_passive else G.cell(tag or "主動"),
-        eff=G.cell(eff),
+    L.append(
+        f"> 📖 **完整 {len(champs)} 名英雄**（含 {closed_n} 名未開放）與逐欄資料（開放旗標、"
+        f"技能 id、攻擊類型…）在 [`{DOC_ROSTER}`](./{DOC_ROSTER})。"
     )
+    L.append("")
+    L += provenance(ctx, f"開放 {len(open_rows)} / 全 {len(champs)} 名。")
+    return "\n".join(L), len(open_rows)
 
+
+# ---------------------------------------------------------------------------
+# abilities — the open kits are shown IN THE ROSTER above; this block is the
+# census + how-to-read + a link to the full 554-row detail table in docs. It is
+# deliberately compact so the README stays small; it is EXPANDED (no <details>).
+# ---------------------------------------------------------------------------
 
 def gen_abilities(ctx):
     abils = ctx["abilities"]
-    owner_of = ctx["ability_owner"]
     open_champ = ctx["open_champions"]
-
-    by_owner = {}
-    orphans = []
-    for a in abils:
-        owner = owner_of.get(a["id"])
-        if owner is None:
-            orphans.append(a)
-        else:
-            by_owner.setdefault(owner, []).append(a)
+    owner_of = ctx["ability_owner"]
 
     counts = {}
     for a in abils:
         counts[a.get("slot")] = counts.get(a.get("slot"), 0) + 1
     census = " · ".join(f"{s} {counts.get(s, 0)}" for s in ("Q", "W", "E", "R", "EX"))
 
-    champs = ctx["champions"]
-    # Open kits first — those are the ones a reader is actually looking up.
-    ordered = ([c for c in champs if c["id"] in open_champ]
-               + [c for c in champs if c["id"] not in open_champ])
+    open_abil_n = sum(1 for a in abils if owner_of.get(a["id"]) in open_champ)
 
-    L = open_details(
-        f"<b>技能總表 / Ability reference</b> — 全部 {len(abils)} 個技能"
-        f"，依英雄分組（{len(by_owner)} 套技能組）"
-    )
+    L = [
+        f"#### 技能 abilities（全 {len(abils)} 個；開放英雄的 {open_abil_n} 個）",
+        "",
+    ]
     L += note([
-        f"每個英雄每個 slot 一份：{census}。開放名單內的英雄排在前面。",
+        "**開放英雄的每一個技能，都已經印在上面的開放名冊裡**（每名英雄 Q/W/E/R/EX 五條，"
+        "含名稱與一行效果）。這裡不再重印一次，只放全表的統計與連結，讓 README 保持精簡。",
         "",
-        "`slot` 只有 Q/W/E/R/EX 五種 —— **被動不是一個 slot**，它掛在某個 QWER 技能上"
-        "（`型態` 欄標「被動」的就是）；全樹沒有任何 `xx-00` 被動技能文件。"
-        "`型態` 取自描述開頭的 w3x 分類標記，沒有標記的顯示「主動」。",
+        f"每個英雄每個 slot 一份：{census}。`slot` 只有 Q/W/E/R/EX 五種 —— **被動不是一個 slot**，"
+        "它掛在某個 QWER 技能上（`型態` 欄標「被動」的就是）；全樹沒有任何 `xx-00` 被動技能文件。",
         "",
-        "數值是 `content/` 的**原始值**，未套用 `combat-env` 全域倍率 —— 遊戲內顯示的一律是"
-        "乘算後的最終值，所以畫面上的冷卻／傷害跟這裡不會相同。那是預期行為。",
-        "",
-        f"⚠️ `短效果` 取自 `description` 並**截斷到 {LIMIT_ABILITY_EFFECT} 字**，結尾的 `…` "
-        "是產生器加的、不是原文的一部分。完整文字在 <http://localhost:39527/#codex> "
-        "或 `content/abilities/<id>.json`；沒有 `description` 的會退回一行自動摘要。",
+        "數值是 `content/` 的**原始值**，未套用 `combat-env` 全域倍率 —— 遊戲內顯示的一律是乘算後的"
+        "最終值，所以畫面上的冷卻／傷害跟表格不會相同。那是預期行為。",
     ])
-
-    for c in ordered:
-        kit = sorted(by_owner.get(c["id"], []),
-                     key=lambda a: (G.SLOT_ORDER.get(a.get("slot"), 9), a["id"]))
-        if not kit:
-            continue
-        _title, full = G.split_champion_name(c.get("name", ""))
-        mark = "✅ 開放" if c["id"] in open_champ else "— 未開放"
-        L.append(f"**`{c['id']}` {G.cell(full)}** · {G.cell(c.get('role'))} · {mark} · {len(kit)} 技")
-        L.append("")
-        L += ABILITY_HEAD
-        L += [ability_row(a) for a in kit]
-        L.append("")
-
-    if orphans:
-        L.append(f"**（無主）沒有任何 champion doc 引用（{len(orphans)}）**")
-        L.append("")
-        L += ABILITY_HEAD
-        L += [ability_row(a) for a in sorted(orphans, key=lambda a: a["id"])]
-        L.append("")
-
-    L += close_details(ctx, f"共 {len(abils)} 列。")
-    return "\n".join(L), len(abils)
+    L.append(
+        f"> 📖 **全 {len(abils)} 個技能的逐欄表**（id、名稱、slot、型態、編號、擁有英雄、開放旗標、"
+        f"完整短效果）在 [`{DOC_ABILITIES}`](./{DOC_ABILITIES})；互動版在 "
+        "<http://localhost:39527/#codex>。"
+    )
+    L.append("")
+    L += provenance(ctx, f"開放英雄技能 {open_abil_n} / 全 {len(abils)} 個。")
+    return "\n".join(L), open_abil_n
 
 
 # ---------------------------------------------------------------------------
-# items
+# items — the shop shelf + services + draft/orb pools, by craftRole, EXPANDED
 # ---------------------------------------------------------------------------
 
 ITEM_HEAD = [
-    "| id | 名稱 | 價格 | tier | 傳說池 | 開放 | 屬性 modifiers | 被動 |",
-    "|---|---|---|---|---|---|---|---|",
+    "| id | 名稱 | 價格 | 開放 | 屬性 modifiers | 被動 |",
+    "|---|---|---|---|---|---|",
 ]
+
+
+def item_row(i, ctx, price_override=None):
+    cost = i.get("cost")
+    if price_override is not None:
+        price = price_override
+    elif isinstance(cost, (int, float)) and cost > 0:
+        price = f"{cost}g"
+    else:
+        price = "—"
+    return "| {id} | {name} | {price} | {open_} | {stats} | {passive} |".format(
+        id=f"`{i['id']}`",
+        name=G.cell(i.get("name")),
+        price=price,
+        open_="✅" if i["id"] in ctx["open_items"] else "—",
+        stats=G.cell(G.truncate(G.fmt_modifiers(i), LIMIT_ITEM_STATS)),
+        passive=G.cell(G.truncate(G.fmt_passive(i), LIMIT_ITEM_PASSIVE)),
+    )
 
 
 def gen_items(ctx):
     items = ctx["items"]
-    legendary = ctx["legendary_pool"]
-    open_items = ctx["open_items"]
+    b = G.classify_items(ctx)
+    shop, inert, services = b["shop_final"], b["inert_final"], b["services"]
+    legend, quest = b["legendary"], b["quest"]
+    rest_n = len(b["component"]) + len(b["token"]) + len(b["other"]) + len(inert)
 
-    def has_effect(i):
-        return bool(i.get("modifiers")) or bool(i.get("passive"))
-
-    def shop_label(i):
-        if i["id"] in G.SERVICE_IDS:
-            return "服務"
-        if i["id"] in legendary:
-            return "傳說"
-        cost = i.get("cost")
-        if cost == G.TIER_PRICE["SIMPLE"] and has_effect(i):
-            return "簡易"
-        if cost == G.TIER_PRICE["POWERFUL"] and has_effect(i):
-            return "強力"
-        return "未上架"
-
-    def price(i):
-        if i["id"] in legendary:
-            return "無價格"
-        cost = i.get("cost")
-        return f"{cost}g" if isinstance(cost, (int, float)) else "—"
-
-    def row(i):
-        return "| {id} | {name} | {price} | T{tier} | {leg} | {open_} | {stats} | {passive} |".format(
-            id=f"`{i['id']}`",
-            name=G.cell(i.get("name")),
-            price=price(i),
-            tier=i.get("tier"),
-            leg="✅" if i["id"] in legendary else "—",
-            open_="✅" if i["id"] in open_items else "—",
-            stats=G.cell(G.truncate(G.fmt_modifiers(i), LIMIT_ITEM_STATS)),
-            passive=G.cell(G.truncate(G.fmt_passive(i), LIMIT_ITEM_PASSIVE)),
-        )
-
-    services = [i for i in items if i["id"] in G.SERVICE_IDS]
-    simple = [i for i in items if shop_label(i) == "簡易"]
-    powerful = [i for i in items if shop_label(i) == "強力"]
-    legend = [i for i in items if i["id"] in legendary]
-    listed = {i["id"] for i in services + simple + powerful + legend}
-    rest = [i for i in items if i["id"] not in listed]
-
-    L = open_details(
-        f"<b>道具總表 / Item reference</b> — 全部 {len(items)} 件道具"
-        # Every bucket must appear here: a reader who leaves the <details>
-        # collapsed sees ONLY this line, so a breakdown that does not sum to
-        # len(items) is a lie. services used to be missing (70+25+117 = 212).
-        f"（商店上架 {len(simple) + len(powerful)} · 傳說池 {len(legend)}"
-        f" · 商店服務 {len(services)} · 未上架 {len(rest)}）"
-    )
+    L = [
+        f"#### 商店貨架 + 抽卡池（能實際取得的道具）",
+        "",
+    ]
     L += note([
-        "只有兩種價格：**簡易 300g**、**強力 1200g**"
+        f"全部 {len(items)} 件道具依 `craftRole` 標記分類（task #70）。**真正能買的只有 "
+        f"{len(shop)} 件最終合成武器＋{len(services)} 項服務**；三選一 draft 抽 {len(quest)} 件任務道具、"
+        f"傳說寶玉抽 {len(legend)} 件傳說。其餘 {rest_n} 件是配方組件、代幣、殘件或還沒 payload 的 "
+        "final，不會單獨出現在商店或抽卡。",
+        "",
+        "只有兩種商店價格：簡易 **300g**、強力 **1200g**"
         "（`packages/shared/src/sim/economy/itemTiers.ts:43-46`）。**傳說沒有價格**，"
-        "只能靠三選一卡或 2400g 的傳說寶玉抽到。背包 6 格、賣出退 40%。",
+        "只能抽。背包 6 格、賣出退 40%。",
         "",
-        "「可買」的判定是**同時**滿足：價格等於某個階梯價 **且** 真的有效果"
-        "（有 `modifiers` 或 `passive`）—— 有幾件 1200g 的 WC3 製作書沒有效果，因此不上架。",
-        "",
-        "`tier` 欄是 doc 上的 1..5 分級，那是 w3x 匯入的遺留欄位，**與價格階梯無關**。"
-        "`暴擊率` / `暴擊傷害` / `吸血` 的 flat 值是**小數比例**（`+0.17` 就是 17%）；"
-        "標了 `%` 的才是 `pctAdd`。",
-        "",
-        f"⚠️ `屬性 modifiers` 截斷到 {LIMIT_ITEM_STATS} 字、`被動` 截斷到 "
-        f"{LIMIT_ITEM_PASSIVE} 字，結尾的 `…` 是產生器加的、不是原文的一部分。"
-        "完整內容在 <http://localhost:39527/#codex> 或 `content/items/<id>.json`。",
+        f"⚠️ `屬性 modifiers` 截斷到 {LIMIT_ITEM_STATS} 字、`被動` 截斷到 {LIMIT_ITEM_PASSIVE} 字。"
+        f"`暴擊率`/`吸血` 的 flat 值是小數比例（`+0.17` = 17%）。完整內容在 "
+        f"[`{DOC_ITEMS}`](./{DOC_ITEMS}) 或 <http://localhost:39527/#codex>。",
     ])
 
-    for title, rows, blurb in (
-        (f"商店服務 services（{len(services)}）", services,
-         "真的是 `item@1` 文件，但 `buyItem` 在進背包路徑前就攔截它們：不佔格、可重複買。"),
-        (f"簡易 SIMPLE 300g（{len(simple)}）", simple, None),
-        (f"強力 POWERFUL 1200g（{len(powerful)}）", powerful, None),
-        (f"傳說池 legendary pool（{len(legend)}）", legend,
-         f"`content/loot-tables/{G.LEGENDARY_POOL_TABLE}.json`，等權重抽取。買不到，"
-         "只能從第 5 回合的武器三選一或傳說寶玉取得。"),
-        (f"未上架 not purchasable（{len(rest)}）", rest,
-         "價格不在階梯上、或沒有任何效果。留著是為了 w3x 對照與未來策展，不會出現在商店。"),
-    ):
-        L.append(f"#### {title}")
+    def section(title, blurb, rows, price_override=None):
+        L.append(f"##### {title}（{len(rows)}）")
         L.append("")
         if blurb:
             L.append(blurb)
             L.append("")
-        L += ITEM_HEAD
-        L += [row(i) for i in rows]
+        if not rows:
+            L.append("*（無）*")
+            L.append("")
+            return
+        L.extend(ITEM_HEAD)
+        L.extend(item_row(i, ctx, price_override) for i in rows)
         L.append("")
 
-    missing = sorted(i for i in legendary if i not in {x["id"] for x in items})
-    if missing:
-        L.append("> ⚠️ 傳說池引用了不存在的道具 id：" + ", ".join(f"`{m}`" for m in missing))
+    section("🛒 商店貨架 shop shelf — `craftRole:final` 且有效果",
+            "真正能用金幣買的最終合成武器。白名單啟用時可能再縮小，但永遠不會放進非 final 的東西"
+            "（`shop.ts:110`）。", shop)
+    section("🔧 商店服務 services",
+            "不佔背包格、可重複買：傳說寶玉（抽傳說）與能力屬性強化（20 疊屬性路線）。",
+            services)
+    section("🎴 三選一 draft — `craftRole:quest`",
+            f"每回合三選一 draft 從這些抽（`content/loot-tables/{G.QUEST_POOL_TABLE}.json`；"
+            "`仙后座` = `godie-i01s`）。**買不到，只能抽到。**", quest, price_override="抽卡")
+    section("💎 傳說池 legendary pool",
+            f"`content/loot-tables/{G.LEGENDARY_POOL_TABLE}.json`，等權重。只能從武器三選一或 "
+            "2400g 傳說寶玉取得。", legend, price_override="抽卡")
+
+    if inert:
+        L.append(
+            f"> ⚠️ 另有 **{len(inert)} 件 `final` 沒有 payload**"
+            + "（" + "、".join(G.cell(i.get("name")) for i in inert) + "）"
+            "：主動效果 schema 還裝不下（#56），所以商店拒賣。詳見完整表。"
+        )
         L.append("")
 
-    L += close_details(ctx, f"共 {len(items)} 列。")
-    return "\n".join(L), len(items)
+    L.append(
+        f"> 📖 **全 {len(items)} 件道具依 craftRole 的完整分類表**"
+        f"（component {len(b['component'])} / token {len(b['token'])} / none {len(b['other'])} …）"
+        f"在 [`{DOC_ITEMS}`](./{DOC_ITEMS})。"
+    )
+    L.append("")
+    L += provenance(ctx, f"可取得 {len(shop) + len(services) + len(quest) + len(legend)} / 全 {len(items)} 件。")
+    return "\n".join(L), len(shop) + len(services) + len(quest) + len(legend)
 
 
 # ---------------------------------------------------------------------------
@@ -402,6 +372,17 @@ GENERATORS = {"roster": gen_roster, "abilities": gen_abilities, "items": gen_ite
 def render(ctx):
     """name -> (body, rows), in the fixed BLOCKS order."""
     return {name: GENERATORS[name](ctx) for name in BLOCKS}
+
+
+def _render_docs(ctx):
+    """The FULL sets (all 113 / 554 / 214) that live in docs/reference/*.md — the
+    same source of truth, written in the same run so README and docs can never
+    drift. name -> (path, text)."""
+    return {
+        "roster": (G.gen_roster, os.path.join(G.OUTDIR, "roster.md")),
+        "abilities": (G.gen_abilities, os.path.join(G.OUTDIR, "abilities.md")),
+        "items": (G.gen_items, os.path.join(G.OUTDIR, "items.md")),
+    }
 
 
 def main():
@@ -415,30 +396,54 @@ def main():
     ctx = G.build_context()
     rendered = render(ctx)
 
+    # README: splice the OPEN lists between the markers.
     text = original
     actions = {}
     for name in BLOCKS:
         body, _rows = rendered[name]
         text, actions[name] = splice(text, name, body)
 
+    # docs/reference/*.md: the FULL sets, from the same ctx.
+    docs = {}
+    for name, (fn, path) in _render_docs(ctx).items():
+        doc_text, _ = fn(ctx)
+        current = ""
+        if os.path.exists(path):
+            with open(path, encoding="utf-8") as f:
+                current = f.read()
+        docs[name] = (path, doc_text, doc_text != current)
+
     if check_only:
+        stale = []
         if text != original:
-            stale = ", ".join(f"{n}({a})" for n, a in actions.items())
-            sys.exit(f"README.md is stale — run `{CMD}` (blocks: {stale})")
-        print(f"README.md is up to date with contentVersion {ctx['contentVersion']}")
+            stale.append("README:" + ",".join(f"{n}({a})" for n, a in actions.items()))
+        for name, (path, _t, changed) in docs.items():
+            if changed:
+                stale.append(os.path.relpath(path, REPO))
+        if stale:
+            sys.exit(f"stale — run `{CMD}`: {'; '.join(stale)}")
+        print(f"README.md + docs/reference/*.md up to date with contentVersion {ctx['contentVersion']}")
         return
 
     changed = text != original
     if changed:
         with open(README, "w", encoding="utf-8") as f:
             f.write(text)
+    os.makedirs(G.OUTDIR, exist_ok=True)
+    for name, (path, doc_text, doc_changed) in docs.items():
+        if doc_changed:
+            with open(path, "w", encoding="utf-8") as f:
+                f.write(doc_text)
 
     print(f"contentVersion {ctx['contentVersion']}")
     for name in BLOCKS:
         _body, rows = rendered[name]
-        print(f"  {name:<10} {rows:>4} rows  ({actions[name]})")
+        print(f"  README:{name:<10} {rows:>4} open rows  ({actions[name]})")
+    for name, (path, _t, doc_changed) in docs.items():
+        print(f"  {os.path.relpath(path, REPO):<26} ({'wrote' if doc_changed else 'unchanged'})")
+    size = len(text.encode("utf-8"))
     print(f"{'wrote' if changed else 'unchanged'} {os.path.relpath(README, REPO)}"
-          f" — {len(text.splitlines())} lines total")
+          f" — {len(text.splitlines())} lines, {size} bytes ({size / 1024:.1f} KB)")
 
 
 if __name__ == "__main__":

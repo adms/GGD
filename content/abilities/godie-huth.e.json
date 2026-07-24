@@ -1,6 +1,7 @@
 {
   "id": "godie-huth.e",
   "name": "28-03 分身",
+  "icon": "assets/icons/abilities/godie-huth.e.webp",
   "description": "[輔助]\n60秒冷卻時間\n\n創造出2個普烏的實體來攻擊敵人，具有30%攻擊力，並除掉身上的所有法術效果，可持續10秒。",
   "slot": "E",
   "castType": "targeted",

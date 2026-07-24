@@ -1,6 +1,7 @@
 {
   "id": "godie-hlgr.q",
   "name": "03-02 詭雷",
+  "icon": "assets/icons/abilities/godie-hlgr.q.webp",
   "description": "[主動攻擊]\n25秒冷卻時間\n\n在一定區域中放出詭雷進行攻擊，被直接擊中的敵人承受30點直接傷害，裝甲2點破壞，周遭的敵人也會承受承受強烈電磁場每秒30點傷害的連續攻擊並降低攻擊速度為200%，持續3秒。",
   "slot": "Q",
   "castType": "targeted",

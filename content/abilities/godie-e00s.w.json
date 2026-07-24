@@ -2,6 +2,7 @@
   "id": "godie-e00s.w",
   "schema": "ability@1",
   "name": "70-02 大怒石",
+  "icon": "assets/icons/abilities/godie-e00s.w.webp",
   "description": "[被動]\n0秒冷卻時間\n\n白木具有大聯盟實力的投擲攻擊有8%機率增加50點破壞力，並敵人觸身擊暈0.4秒。",
   "slot": "W",
   "castType": "self",

@@ -1,25 +1,25 @@
 {
  "schema": "model-budget@1",
- "generatedAt": "2026-07-23T09:15:04.187Z",
+ "generatedAt": "2026-07-24T03:43:34.320Z",
  "generatedBy": "tools/model-budget/emit_report.ts (task #99)",
  "sources": [
   {
    "path": "content/models/_index.json",
-   "sha256": "535656db7f26a52a",
-   "bytes": 16807,
-   "mtime": "2026-07-23T08:34:35.281Z"
+   "sha256": "4a5d3fd3fad72427",
+   "bytes": 17099,
+   "mtime": "2026-07-24T03:42:27.337Z"
   },
   {
    "path": "content/arenas/_index.json",
    "sha256": "662c794f19e83f36",
    "bytes": 741,
-   "mtime": "2026-07-23T08:34:35.271Z"
+   "mtime": "2026-07-24T03:42:27.323Z"
   },
   {
    "path": "content/champions/_index.json",
-   "sha256": "5a9739e7b2e1ec28",
+   "sha256": "b6fb930680d577a5",
    "bytes": 14861,
-   "mtime": "2026-07-23T08:34:35.221Z"
+   "mtime": "2026-07-24T03:42:27.208Z"
   },
   {
    "path": "apps/client/src/render/ArenaGround.ts",
@@ -325,14 +325,14 @@
    "procedural": [],
    "extraDraws": null,
    "extraVram": {
-    "bytes": 16973824,
-    "why": "279 張圖示（英雄/技能/道具）：166 張 128² WEBP + 113 張 64² PNG，瀏覽器解成 RGBA8。"
+    "bytes": 68004523,
+    "why": "863 張圖示（英雄/技能/道具）：750 張 128² WEBP + 113 張 64² PNG，瀏覽器解成 RGBA8。"
    },
    "triangles": 0,
    "drawCalls": 0,
    "animChannels": 0,
    "textureBytes": 0,
-   "vramBytes": 16973824,
+   "vramBytes": 68004523,
    "limits": [
     {
      "key": "triangles",
@@ -375,7 +375,7 @@
     "triangles": "ok",
     "drawCalls": "ok",
     "animChannels": "ok",
-    "vramBytes": "ok"
+    "vramBytes": "over"
    },
    "variants": []
   },
@@ -638,12 +638,12 @@
    "variants": [
     {
      "id": "median",
-     "label": "中位陣容（12 隻 herosasuke —— 名冊面數中位數）",
-     "triangles": 46514,
-     "drawCalls": 69,
-     "animChannels": 204,
-     "textureBytes": 246061,
-     "vramBytes": 56273575,
+     "label": "中位陣容（12 隻 herotoshiiemaeda —— 名冊面數中位數）",
+     "triangles": 48158,
+     "drawCalls": 93,
+     "animChannels": 216,
+     "textureBytes": 228440,
+     "vramBytes": 56360956,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
@@ -790,12 +790,12 @@
    "variants": [
     {
      "id": "median",
-     "label": "中位陣容（12 隻 herosasuke —— 名冊面數中位數）",
-     "triangles": 54176,
-     "drawCalls": 93,
-     "animChannels": 204,
-     "textureBytes": 230267,
-     "vramBytes": 50681170,
+     "label": "中位陣容（12 隻 herotoshiiemaeda —— 名冊面數中位數）",
+     "triangles": 55820,
+     "drawCalls": 117,
+     "animChannels": 216,
+     "textureBytes": 212646,
+     "vramBytes": 50768551,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
@@ -946,12 +946,12 @@
    "variants": [
     {
      "id": "median",
-     "label": "中位陣容（12 隻 herosasuke —— 名冊面數中位數）",
-     "triangles": 66816,
-     "drawCalls": 105,
-     "animChannels": 204,
-     "textureBytes": 245962,
-     "vramBytes": 56273575,
+     "label": "中位陣容（12 隻 herotoshiiemaeda —— 名冊面數中位數）",
+     "triangles": 68460,
+     "drawCalls": 129,
+     "animChannels": 216,
+     "textureBytes": 228341,
+     "vramBytes": 56360956,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
@@ -1070,12 +1070,12 @@
    "variants": [
     {
      "id": "median",
-     "label": "中位陣容（12 隻 herosasuke —— 名冊面數中位數）",
-     "triangles": 43664,
-     "drawCalls": 184,
-     "animChannels": 254,
-     "textureBytes": 192514,
-     "vramBytes": 6204074,
+     "label": "中位陣容（12 隻 herotoshiiemaeda —— 名冊面數中位數）",
+     "triangles": 45308,
+     "drawCalls": 208,
+     "animChannels": 266,
+     "textureBytes": 174893,
+     "vramBytes": 6291455,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "warn",
@@ -1214,12 +1214,12 @@
    "variants": [
     {
      "id": "median",
-     "label": "中位陣容（12 隻 herosasuke —— 名冊面數中位數）",
-     "triangles": 38152,
-     "drawCalls": 55,
-     "animChannels": 204,
-     "textureBytes": 198679,
-     "vramBytes": 39496360,
+     "label": "中位陣容（12 隻 herotoshiiemaeda —— 名冊面數中位數）",
+     "triangles": 39796,
+     "drawCalls": 79,
+     "animChannels": 216,
+     "textureBytes": 181058,
+     "vramBytes": 39583741,
      "verdicts": {
       "triangles": "ok",
       "drawCalls": "ok",
@@ -1404,7 +1404,7 @@
      "kind": "COMBAT",
      "label": "英雄",
      "count": 12,
-     "detail": "8 位英雄使用：百畝森林的霸主 - 維尼、國寶級的畜生 - 熊貓、幕末復仇狂者 - 志志雄真實、豪洨天王 - 鄭先生、不死之身-無 - 藤井八雲、最M的魔法Jizz - 清蒸 飛鼠先生、魔界霸主 - 巴恩大魔王、北斗神拳掌門人 - 拳四郎"
+     "detail": "9 位英雄使用：百畝森林的霸主 - 維尼、國寶級的畜生 - 熊貓、幕末復仇狂者 - 志志雄真實、豪洨天王 - 鄭先生、不死之身-無 - 藤井八雲、最M的魔法Jizz - 清蒸 飛鼠先生、死亡老二 - 克勞薩先生、魔界霸主 - 巴恩大魔王、北斗神拳掌門人 - 拳四郎"
     },
     {
      "kind": "COMBAT",
@@ -1564,7 +1564,7 @@
    "note": ""
   },
   {
-   "id": "assets/models/guardians/guardian_beast.glb",
+   "id": "prop.guardian.beast",
    "path": "assets/models/guardians/guardian_beast.glb",
    "group": "guardians",
    "shipping": true,
@@ -1649,7 +1649,7 @@
    "note": "沒有任何 champion / arena / 場景引用它 —— 它不會被載入，所以不佔任何一幀的預算；但它也不該留在出貨樹裡。"
   },
   {
-   "id": "assets/models/guardians/guardian_treant_trunk.glb",
+   "id": "prop.guardian.treant",
    "path": "assets/models/guardians/guardian_treant_trunk.glb",
    "group": "guardians",
    "shipping": true,
@@ -2757,7 +2757,7 @@
    "path": "assets/models/imported/collision.glb",
    "group": "imported",
    "shipping": true,
-   "role": "champion",
+   "role": "unused",
    "triangles": 0,
    "vertices": 0,
    "drawCalls": 0,
@@ -2772,22 +2772,10 @@
    "maxTextureEdge": 0,
    "textures": [],
    "fileBytes": 1148,
-   "worstCount": 12,
-   "usedBy": [
-    {
-     "kind": "COMBAT",
-     "label": "英雄",
-     "count": 12,
-     "detail": "1 位英雄使用：死亡老二 - 克勞薩先生"
-    }
-   ],
+   "worstCount": 1,
+   "usedBy": [],
    "broken": "zero-geometry",
-   "verdicts": {
-    "triangles": "ok",
-    "drawCalls": "ok",
-    "maxTextureEdge": "ok",
-    "animChannels": "ok"
-   },
+   "verdicts": {},
    "note": "0 個 primitive —— mdx 粒子發射器沒有轉出任何幾何（#98）。它不是便宜的資產，它是壞的。"
   },
   {
@@ -10455,6 +10443,6 @@
   "vramBytes": 241869411,
   "zeroGeometry": 11,
   "nearZero": 25,
-  "unused": 80
+  "unused": 81
  }
 }

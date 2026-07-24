@@ -206,5 +206,28 @@
     "wc3-import",
     "godie"
   ],
-  "exAbility": "godie-h02u.ex"
+  "exAbility": "godie-h02u.ex",
+  "passive": {
+    "name": "92-00 憂鬱的眼神",
+    "hooks": [
+      {
+        "on": "onDamageTaken",
+        "target": "event",
+        "internalCooldown": 3.0,
+        "effects": [
+          {
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "ad",
+                "op": "pctMult",
+                "value": -0.5
+              }
+            ],
+            "duration": 3.0
+          }
+        ]
+      }
+    ]
+  }
 }

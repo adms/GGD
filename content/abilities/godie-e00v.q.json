@@ -2,6 +2,7 @@
   "id": "godie-e00v.q",
   "schema": "ability@1",
   "name": "84-01 冷笑話",
+  "icon": "assets/icons/abilities/godie-e00v.q.webp",
   "description": "[輔助]\n15秒冷卻時間\n\n說一個冷笑話，使範圍600內的敵人都被冷到無法動彈，持續0.5秒。",
   "slot": "Q",
   "castType": "ground",

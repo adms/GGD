@@ -41,9 +41,16 @@
  *     (SeatState.offers augment/legendary/gacha rounds arrive during prep).
  *   • menu — the login dragon roar (dragonRoar/dragonRoarBig).
  *
- * Authored-but-not-yet-fired pools (mapFlavor*, the `lab/` settlementReveal /
- * matchEndGong / vsReveal set) are deliberately absent: nothing plays them yet,
- * so preloading them would re-introduce the eager cost this task removes.
+ * The #51 効果音ラボ cues are now FIRED (AudioDirector phase/tally/HP edges +
+ * combatSfx `heal`/`rankUp` + the MatchEndPanel reveal). The FREQUENT ones are
+ * warmed with the scene they play in — heal / abilityRankUp with `combat`, the
+ * entry stingers (vsReveal / matchStartGong) with `champSelect`, and the end
+ * stingers (matchEndGong / settlementReveal) with `victory` + `defeat`. The RARE
+ * one-shots (lowHealth, levelUpJingle, exUnlockSting) are intentionally NOT
+ * preloaded — a once-per-life fetch latency is inaudible on them, and warming
+ * them would re-inflate boot. Only `mapFlavor*` and the two clips with NO emit
+ * source yet (buffApply / explosion — the sim raises no buff-applied or
+ * AoE-explosion event) stay fully absent.
  */
 import type { AudioScene } from "./types";
 
@@ -85,6 +92,14 @@ const COMBAT_SFX: readonly string[] = [
   "allySlain",
   "levelUp",
   "exUnlock",
+  // #51 効果音ラボ combat cues now fired here. Only the two that fire OFTEN are
+  // warmed: heal (combatSfx `heal` — flower/lifesteal, frequent) and abilityRankUp
+  // (combatSfx `rankUp`). The rare one-shots — lowHealth, and the levelUpJingle /
+  // exUnlockSting stingers layered under their VO — are left to lazy-load: a
+  // once-per-life fetch latency is inaudible on a warning/celebration cue, and
+  // preloading them would re-inflate the scene's boot cost this task (#63) removes.
+  "heal",
+  "abilityRankUp",
   // fired on the intermission→combat edge, so warm it as combat begins
   "roundStart",
 ];
@@ -102,7 +117,9 @@ export const SFX_BY_SCENE: Readonly<Record<AudioScene, readonly string[]>> = {
   menuNocturne: [],
   lobby: [],
   room: [],
-  champSelect: ["champSelectConfirm", "matchStart", ...COUNTDOWN_SFX],
+  // vsReveal fires on the champ-select entry edge; matchStartGong layers under
+  // the matchStart VO on the same shell→match entry (#51).
+  champSelect: ["champSelectConfirm", "matchStart", "matchStartGong", "vsReveal", ...COUNTDOWN_SFX],
   intermission: [
     "panelOpen",
     "uiCancel",
@@ -116,8 +133,11 @@ export const SFX_BY_SCENE: Readonly<Record<AudioScene, readonly string[]>> = {
   combat: COMBAT_SFX,
   fireRing: COMBAT_SFX,
   settlement: [],
-  victory: [],
-  defeat: [],
+  // matchEndGong fires on the → matchEnd phase edge and settlementReveal when the
+  // ranking card is revealed; matchEnd resolves the bed to victory/defeat, so warm
+  // both stingers with both outcomes (#51).
+  victory: ["matchEndGong", "settlementReveal"],
+  defeat: ["matchEndGong", "settlementReveal"],
 };
 
 /**

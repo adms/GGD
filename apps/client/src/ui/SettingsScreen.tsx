@@ -17,6 +17,7 @@ import {
   type FpsCap,
   type QualityPreset,
 } from "../settings";
+import { lodTierForPreset, type ModelLodTier } from "../render/modelLod";
 import { perfBus } from "../perfBus";
 import { audioSystem } from "../audio";
 import { SfxButton } from "./SfxButton";
@@ -24,6 +25,13 @@ import { useAllSettings } from "./useSettings";
 import { useAudioVolumes } from "./useAudio";
 import { HUD_Z } from "./hud/hudLayout";
 import { PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "./theme";
+
+/** What each model tier means in the file the client downloads (task #115). */
+const MODEL_LOD_LABEL: Record<ModelLodTier, string> = {
+  high: "full (authored .glb)",
+  mid: "reduced (-mid .glb, ~half the triangles)",
+  small: "minimal (-small .glb, ~a third of the triangles)",
+};
 
 const PRESETS: { value: QualityPreset; label: string }[] = [
   { value: "low", label: "Low" },
@@ -295,6 +303,13 @@ export function SettingsScreen({ onClose }: { onClose: () => void }): React.JSX.
               Auto adjusts resolution/particles to hold {g.fpsCap === 0 ? 60 : g.fpsCap} fps.
             </div>
           )}
+          {/* task #115: the preset also picks WHICH .glb is downloaded. Shown
+              because a download tier is otherwise invisible — you cannot see it
+              in the frame the way you can see resolution or particles. */}
+          <div style={{ color: TEXT_DIM, fontSize: 10 }}>
+            Model detail: <b style={{ color: TEXT_DIM }}>{MODEL_LOD_LABEL[lodTierForPreset(g.qualityPreset)]}</b>
+            {" — applies to models loaded from the next round on."}
+          </div>
 
           <Slider
             text="Resolution scale"

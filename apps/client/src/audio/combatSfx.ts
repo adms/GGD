@@ -11,7 +11,15 @@
  *     timing-only `hitImpact` map to nothing — no double-thud.
  *   • 破防 (guardBreak), knockdown and whiff each get their own distinct clip.
  *   • The pre-hit + utility events pass through by name (windup/swing/launch/
- *     cast/flower) — the audio map already owns those keys.
+ *     cast/flower/heal) — the audio map already owns those keys.
+ *   • `rankUp` (a skill point spent, QWER/EX rank raised) renames to the map's
+ *     `abilityRankUp` cue: the sim event and the audio key disagree, so it is a
+ *     rename rather than a passthrough. Wired off #51's staged `ability-rank-up`
+ *     clip (task-#51 ledger, previously authored-but-silent).
+ *   • `heal` (HP actually restored — flower / ability / lifesteal / item) plays
+ *     the staged `magic-heal` cue. Deliberately quiet (map gain 0.41, 400 ms
+ *     cooldown) because it can fire often; the flower's own spawn/burst chimes
+ *     are a separate moment.
  *   • `death` / `levelUp` are intentionally NOT mapped: the AudioDirector fires
  *     those off the discrete K/D / level tally, so mapping them here too would
  *     double the sound.
@@ -30,6 +38,7 @@ const PASSTHROUGH = new Set<string>([
   "abilityCast",
   "flowerSpawn",
   "flowerBurst",
+  "heal", // 回復 — HP actually restored (map key == event name); #51 magic-heal
 ]);
 
 /**
@@ -54,6 +63,9 @@ export function combatSfxKey(ev: EventMessage): string | null {
       return "knockdown";
     case "whiff":
       return "whiff";
+    case "rankUp":
+      return "abilityRankUp"; // 技能升級 — sim event ≠ map key, so a rename
+
     default:
       return PASSTHROUGH.has(ev.type) ? ev.type : null;
   }

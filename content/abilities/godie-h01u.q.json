@@ -1,6 +1,7 @@
 {
   "id": "godie-h01u.q",
   "name": "80-01 天下無雙",
+  "icon": "assets/icons/abilities/godie-h01u.q.webp",
   "description": "[被動]\n0秒冷卻時間\n\n亂世中呂布孤傲叛逆的個性，於戰鬥中追求最高戰力，犧牲3點防禦力，增進25點攻擊力。\n提升飛將神弓的攻擊加成上限為5次",
   "slot": "Q",
   "castType": "self",
@@ -36,25 +37,6 @@
             "op": "flat",
             "value": -3
           }
-        ],
-        "hooks": [
-          {
-            "on": "onKill",
-            "effects": [
-              {
-                "kind": "applyBuff",
-                "modifiers": [
-                  {
-                    "stat": "ad",
-                    "op": "flat",
-                    "value": 10
-                  }
-                ],
-                "duration": 15.0
-              }
-            ],
-            "target": "self"
-          }
         ]
       },
       {
@@ -68,25 +50,6 @@
             "stat": "armor",
             "op": "flat",
             "value": -6
-          }
-        ],
-        "hooks": [
-          {
-            "on": "onKill",
-            "effects": [
-              {
-                "kind": "applyBuff",
-                "modifiers": [
-                  {
-                    "stat": "ad",
-                    "op": "flat",
-                    "value": 10
-                  }
-                ],
-                "duration": 15.0
-              }
-            ],
-            "target": "self"
           }
         ]
       },
@@ -102,25 +65,6 @@
             "op": "flat",
             "value": -9
           }
-        ],
-        "hooks": [
-          {
-            "on": "onKill",
-            "effects": [
-              {
-                "kind": "applyBuff",
-                "modifiers": [
-                  {
-                    "stat": "ad",
-                    "op": "flat",
-                    "value": 10
-                  }
-                ],
-                "duration": 15.0
-              }
-            ],
-            "target": "self"
-          }
         ]
       },
       {
@@ -134,25 +78,6 @@
             "stat": "armor",
             "op": "flat",
             "value": -12
-          }
-        ],
-        "hooks": [
-          {
-            "on": "onKill",
-            "effects": [
-              {
-                "kind": "applyBuff",
-                "modifiers": [
-                  {
-                    "stat": "ad",
-                    "op": "flat",
-                    "value": 10
-                  }
-                ],
-                "duration": 15.0
-              }
-            ],
-            "target": "self"
           }
         ]
       }

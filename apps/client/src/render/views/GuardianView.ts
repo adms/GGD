@@ -31,6 +31,7 @@ import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
 import type { ModelDoc } from "@ggd/shared/content";
 import type { AssetManager } from "../AssetManager";
+import { ClipAnimator } from "../ClipAnimator";
 
 /** Target rendered height (world units) so every face reads as one big objective. */
 const TARGET_HEIGHT = 3.2;
@@ -63,6 +64,23 @@ export class GuardianView {
   private readonly parts: Mesh[] = [];
   private readonly ring: Mesh;
   private glbRoot: TransformNode | null = null;
+  /**
+   * Drives the adopted .glb's AnimationGroups (task #61). NULL for the two
+   * guardians whose meshes genuinely carry no clips (stone / treant are static
+   * by design); non-null for 巨獸人, whose glb ships six real
+   * `Armature|Triceratops_*` clips that nothing was ever playing — a live
+   * combat objective rendered as a frozen statue for every round.
+   */
+  private clipAnimator: ClipAnimator | null = null;
+  /**
+   * The grounding shift the adopted .glb needs so its lowest vertex sits on the
+   * arena floor. `update()` writes `position.y` every frame for the idle bob, so
+   * the shift has to be RE-ADDED there — before this it was applied once in
+   * `tryUpgradeToGlb` and then overwritten on the very next frame, i.e. a
+   * guardian whose rig does not happen to bake its feet at local y=0 floated or
+   * sank as soon as the bob started.
+   */
+  private groundY = 0;
   private upgradeStarted = false;
   private disposed = false;
   private active = false;
@@ -136,6 +154,10 @@ export class GuardianView {
   setAlive(alive: boolean): void {
     if (alive === this.alive) return;
     this.alive = alive;
+    // Play the death clip on the frame the objective falls — it is visible for
+    // the one frame before `setVisible(false)` and, more importantly, leaves the
+    // rig on its collapsed pose so a re-shown corpse never snaps back to idle.
+    if (!alive) this.clipAnimator?.play("death");
     this.setVisible(this.active && alive);
   }
 
@@ -143,11 +165,15 @@ export class GuardianView {
     this.root.setEnabled(on);
   }
 
-  /** Slow idle bob + ring spin; call once per frame while active. */
+  /** Slow idle bob + ring spin + the model's own idle clip; once per frame. */
   update(nowMs: number): void {
     const src = this.glbRoot ?? this.body;
-    src.position.y = BOB_AMPLITUDE * Math.sin(nowMs * BOB_SPEED + this.phase);
+    // The bob is the ONLY life a clip-less guardian (stone / treant) has, so it
+    // stays for every face. When the model does carry clips, its own idle plays
+    // on top — `play` is idempotent per frame.
+    src.position.y = this.groundY + BOB_AMPLITUDE * Math.sin(nowMs * BOB_SPEED + this.phase);
     this.ring.rotation.y = nowMs * RING_SPIN + this.phase;
+    if (this.alive) this.clipAnimator?.play("idle");
   }
 
   /**
@@ -187,8 +213,19 @@ export class GuardianView {
         // ground the model on the arena floor (y=0)
         glbRoot.computeWorldMatrix(true);
         const { min } = glbRoot.getHierarchyBoundingVectors(true);
-        if (Number.isFinite(min.y)) glbRoot.position.y = -min.y;
+        if (Number.isFinite(min.y)) {
+          this.groundY = -min.y;
+          glbRoot.position.y = this.groundY;
+        }
         this.glbRoot = glbRoot;
+        // DRIVE THE MODEL'S OWN CLIPS (task #61). guardian_beast.glb ships six
+        // `Armature|Triceratops_*` clips; nothing was ever playing them, so
+        // 巨獸人 stood in every duel zone as a frozen statue. `hasClips` is
+        // false for the genuinely static stone/treant meshes, so they keep the
+        // bob-only presentation they were designed with.
+        const animator = new ClipAnimator(inst.animationGroups, doc.clipMap);
+        this.clipAnimator = animator.hasClips ? animator : null;
+        if (!this.clipAnimator) animator.dispose();
         // hide the stand-in body (keep the neutral ground ring)
         for (const p of this.parts) p.setEnabled(false);
         this.body.setEnabled(false);
@@ -200,6 +237,10 @@ export class GuardianView {
 
   dispose(): void {
     this.disposed = true;
+    // AnimationGroups are not nodes — `root.dispose()` never touches them, and
+    // the scene walks them every frame. Free them FIRST, targets still alive.
+    this.clipAnimator?.dispose();
+    this.clipAnimator = null;
     this.root.dispose(false, true);
   }
 }

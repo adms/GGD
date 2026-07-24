@@ -24,7 +24,7 @@ from __future__ import annotations
 
 import re
 
-METHOD_VERSION = "twopass-v1"  # written into each PNG; bump to force regeneration
+METHOD_VERSION = "twopass-v3"  # written into each PNG; bump to force regeneration
 
 # ─────────────────────────────────────────────────────────── PASS 2 STYLE ──
 # Japanese-anime finish (日本動漫風格), applied by img2img so it colours/【styles】
@@ -304,6 +304,71 @@ def augment_keywords(doc: dict) -> tuple[str, str, str]:
 import prompt as _prompt  # ../src is already on sys.path (batch.py inserts it)
 
 ABILITY_NOUN_EXTRA: list[tuple[str, str]] = [
+    # ── cluster-breakers (added when the corpus was measured) ────────────────
+    # Each of these was written because a MEASURED collision cluster needed
+    # splitting: 18 abilities all prompted "a forked lightning bolt", 15 "a
+    # sphere of golden ki", 15 "a grinning skull", 13 "a berserk figure". The
+    # compound is the real subject; the bare element only ever supplied the hue.
+    # LIGHTNING cluster
+    ("陽電子砲", "a heavy positron cannon"),
+    ("光束炮", "a heavy plasma beam cannon"),
+    ("光束砲", "a heavy plasma beam cannon"),
+    ("電漿", "a writhing coil of plasma"),
+    ("千鳥", "a bird-shaped crackling blade held in an open palm"),
+    ("伏特", "a crackling voltage arc leaping between two points"),
+    ("詭雷", "a hidden proximity mine"),
+    ("落雷", "a lightning strike hammering down from above"),
+    ("一閃", "a single blinding flash of a drawn blade"),
+    ("絕招", "a finishing signature strike"),
+    ("投擲", "a thrown weapon spinning in flight"),
+    # KI / AURA cluster
+    ("氣功", "a channelled energy beam fired from cupped palms"),
+    ("霸氣", "an overpowering conqueror's aura"),
+    ("戰氣", "a blazing battle aura"),
+    ("念力", "an object held aloft by telekinetic force"),
+    ("發勁", "a short explosive open-palm strike"),
+    ("採藥", "a gathered medicinal herb"),
+    ("綁架", "a bound captive slung in a sack"),
+    # DEATH / VOID cluster
+    ("死神", "a hooded reaper holding a scythe"),
+    ("亡靈大軍", "a rising horde of undead soldiers"),
+    ("亡靈", "a rising horde of undead soldiers"),
+    ("筆記本", "a black leather notebook"),
+    ("產卵", "a clutch of glistening eggs"),
+    ("蛻變", "a splitting chrysalis"),
+    ("隕落", "a body falling wreathed in dark energy"),
+    ("漫延", "a creeping spreading blight"),
+    ("規則", "a written list of rules on a page"),
+    ("召喚", "a glowing summoning circle"),
+    ("肘擊", "a driving elbow strike"),
+    # BERSERK cluster
+    ("頭槌", "a driving headbutt"),
+    ("胸毛", "a bristling tuft of chest hair"),
+    ("菊花", "a chrysanthemum bloom"),
+    ("簡諧", "a swinging pendulum"),
+    ("怪物", "a hulking monster"),
+    ("戰士", "an armoured warrior"),
+    ("皮卡", "a small yellow electric rodent"),
+    # FIRE cluster
+    ("火球", "a hurled fireball"),
+    ("火箭", "a launched rocket"),
+    ("火車", "a charging steam locomotive"),
+    ("火遁", "a ninja hand seal breathing fire"),
+    ("烈焰", "a towering column of flame"),
+    # broadly useful compounds
+    ("流星", "a streaking meteor"), ("隕石", "a falling meteor"),
+    ("夜行", "a procession of night spirits"),
+    ("九頭", "a nine-headed serpent"),
+    ("天翔", "a soaring leap arcing through the sky"),
+    ("盤根", "a mass of gnarled grasping roots"),
+    ("理財", "a stack of coins beside an open ledger"),
+    ("習慣", "a repeating tally of marks"),
+    ("戟", "a crescent-bladed halberd"), ("鏢", "a spinning throwing star"),
+    ("扇", "a folding war fan"), ("傘", "an opened parasol"),
+    ("笛", "a wooden flute"), ("針", "a driven needle"),
+    ("繩", "a coiled rope"), ("盒", "a lacquered box"),
+    ("飛", "a soaring winged form"),
+    # ── original entries ─────────────────────────────────────────────────────
     # multi-character, most specific first
     ("草泥馬", "a spitting alpaca"), ("羊駝", "a spitting alpaca"),
     ("壽司", "a piece of nigiri sushi"), ("豆皮", "a piece of nigiri sushi"),
@@ -398,6 +463,102 @@ ABILITY_HUE_EXTRA: list[tuple[str, str]] = [
     ("怒", "furious red"), ("狂", "furious red"), ("暴", "furious red"),
 ]
 
+# ── vfxKey: the VFX lane's own element+shape classification, reused verbatim ──
+# Every one of the 516 planned abilities carries a `vfxKey` (145 distinct), and
+# it is the ONE orthogonal signal the name lexicon does not already have: the
+# name says WHAT, the key says WHAT SHAPE it takes on screen. Folding the shape
+# into the subject is what stops 18 lightning abilities from all prompting "a
+# forked lightning bolt" — a lightning BEAM and a lightning NOVA are different
+# pictures, and the arena already renders them as different pictures.
+# EVERY form is phrased as a BACKDROP ("with … behind it"), never as an
+# appositive ("…, radiating as a soft concentric aura"). That grammar matters
+# more than the words: an appositive re-heads the noun phrase, so SD drew the
+# SHAPE and dropped the subject — 仙氣．採藥 ("a gathered medicinal herb") and
+# 火羽 ("a single feather") both came back as identical gold mandalas, and
+# 拔焰刀 ("a single-edged katana") came back as a bare orange slash with no
+# blade. 53% of the 529 abilities take the two radial forms (pulse/nova), so
+# that one grammatical slip was collapsing half the ability bar into the same
+# concentric-ring picture. Demoted to a trailing "with …", the concrete noun
+# stays the head and actually renders, while the shape still reads.
+VFX_SHAPE_FORM = {
+    "beam": "with a long straight lance of energy streaking out behind it",
+    "bolt": "with one compact bolt of energy trailing behind it",
+    "nova": "with an expanding ring of light bursting out behind it",
+    "pulse": "with a soft glowing aura pulsing behind it",
+    "explosion": "with a violent burst of light behind it",
+    "shockwave": "with a shockwave rolling outward behind it",
+    "slash": "with a crescent slash arc sweeping behind it",
+    "swarm": "with a swarm of scattering shards around it",
+    "tornado": "with a whirling vortex spiralling behind it",
+    "dash": "with a streaking dash trail behind it",
+    "summon": "with summoning smoke rising around it",
+}
+# The non-`fx.prim.*` keys are the hand-authored effects; they name their own shape.
+VFX_NAMED_FORM = {
+    "fx.scorch-ring": "burning as a scorched ring on the ground",
+    "fx.ember-bolt": "hurled as one compact ember bolt",
+    "fx.ember-bolt-cast": "gathering in a cupped hand before release",
+    "fx.firestorm": "swirling as a firestorm column",
+    "fx.cinder-ward": "held steady as a protective ward ring",
+    "fx.root-snare": "erupting as grasping roots from the ground",
+    "fx.thorn-lash": "lashing out as a thorned whip",
+    "fx.bramble-burst": "bursting open as a bramble thicket",
+    "fx.barkskin": "hardening into a shell of thick bark",
+    "fx.basic-attack": "delivered as a plain committed strike",
+}
+# Size reads as INTENSITY, never as scale: "huge and overwhelming" fought
+# PASS-1's own "full subject in frame" and pushed the subject off the edges.
+VFX_SIZE_FORM = {"-lg": "brilliant and intense", "-sm": "small and tightly focused"}
+
+# vfx element -> hue. Ranked ABOVE the description-derived hue, because the
+# description is mechanics prose: 天翔龍閃 (an arcane dragon slash) was picking
+# up "rose pink" from a stray 心 in its stat block.
+VFX_ELEMENT_HUE = {
+    "fire": "molten orange", "ice": "pale ice blue",
+    "lightning": "electric white-blue", "holy": "radiant white-gold",
+    "void": "void violet-black", "arcane": "arcane violet",
+    "nature": "verdant green", "earth": "earthen brown",
+    "wind": "pale mint", "blood": "deep crimson", "ki": "warm gold",
+    "sound": "luminous magenta", "physical": "steel and crimson",
+}
+
+# Morphemes whose whole visual contribution is ALREADY carried by the hue. They
+# are skipped on the first noun pass so a compound name yields its concrete
+# object instead of its element: 雷鳴劍 -> "a straight sword" (electric
+# white-blue), not a 4th identical "forked lightning bolt". They are still
+# matched on the second pass, so a name that is ONLY an element still resolves.
+ELEMENT_MORPHEMES = {
+    "雷", "電", "火", "炎", "焰", "冰", "霜", "凍", "毒", "風", "光", "暗",
+    "影", "血", "聖", "神", "魔", "鬼", "氣", "念", "水", "海", "木", "土",
+    "石", "岩", "金",
+}
+
+
+def _non_element(table: list[tuple[str, str]]) -> list[tuple[str, str]]:
+    return [row for row in table if row[0] not in ELEMENT_MORPHEMES]
+
+
+def _vfx_form(doc: dict) -> tuple[str, str]:
+    """-> (shape clause, element) from the doc's vfxKey. ('', '') when absent."""
+    key = (doc.get("vfxKey") or "").strip()
+    if not key:
+        return "", ""
+    if not key.startswith("fx.prim."):
+        return VFX_NAMED_FORM.get(key, ""), ""
+    parts = key.split(".")
+    if len(parts) < 4:
+        return "", ""
+    element, tail = parts[2], parts[3]
+    shape, size = tail, ""
+    for suffix in ("-lg", "-sm"):
+        if tail.endswith(suffix):
+            shape, size = tail[: -len(suffix)], suffix
+    form = VFX_SHAPE_FORM.get(shape, "")
+    if form and size:
+        form = f"{form}, {VFX_SIZE_FORM[size]}"
+    return form, element
+
+
 # Last resort: the doc's own damage type. Still doc-derived, never a constant.
 DAMAGE_HUE = {"magic": "arcane violet", "physical": "steel and crimson",
               "true": "radiant white-gold"}
@@ -423,6 +584,7 @@ def ability_keywords(doc: dict) -> tuple[str, str, str]:
     """
     name = _prompt.strip_hero_number(doc.get("name") or "")
     body = _prompt.clean_body(doc.get("description") or "")
+    form, vfx_element = _vfx_form(doc)
 
     def pick(table, text):
         return _prompt._pick(table, text)
@@ -430,14 +592,23 @@ def ability_keywords(doc: dict) -> tuple[str, str, str]:
     def pick_ci(table, text):
         return pick(table, text) or pick(table, (text or "").lower())
 
-    noun = (pick_ci(ABILITY_NOUN_EXTRA, name) or pick(_prompt.NAME_NOUN, name)
-            or pick(_prompt.NAME_NOUN_EN, name.lower()))
+    # NOUN. Pass A skips the pure-element morphemes so a COMPOUND name gives up
+    # its concrete object (雷鳴劍 -> a sword, not a bolt); pass B lets them back
+    # in for names that really are only an element (打雷絕招 -> a bolt).
+    noun = (pick_ci(_non_element(ABILITY_NOUN_EXTRA), name)
+            or pick(_non_element(_prompt.NAME_NOUN), name)
+            or pick(_prompt.NAME_NOUN_EN, name.lower())
+            or pick_ci(ABILITY_NOUN_EXTRA, name)
+            or pick(_prompt.NAME_NOUN, name))
     signal = "name"
     if not noun:
         noun = pick_ci(ABILITY_NOUN_EXTRA, body) or pick(_prompt.NAME_NOUN, body)
         signal = "body" if noun else signal
+    # HUE. The name's own element wins; the vfxKey's element is next, ABOVE the
+    # description, whose mechanics prose produces false positives.
     hue = (pick(_prompt.ELEMENT_HUE, name) or pick_ci(ABILITY_HUE_EXTRA, name)
            or pick(_prompt.ELEMENT_HUE_EN, name.lower())
+           or VFX_ELEMENT_HUE.get(vfx_element)
            or pick(_prompt.ELEMENT_HUE, body) or pick(ABILITY_HUE_EXTRA, body))
     if not noun:
         slot = (doc.get("slot") or "").upper()
@@ -445,6 +616,10 @@ def ability_keywords(doc: dict) -> tuple[str, str, str]:
         signal = "slot"
     if not hue:
         hue = DAMAGE_HUE.get(_ability_damage_type(doc), "cyan")
+    # The vfxKey's SHAPE is appended last: same subject, different on-screen form
+    # = a different picture, which is the whole point of the ability bar.
+    if form:
+        noun = f"{noun}, {form}"
     return noun, hue, signal
 
 

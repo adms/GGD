@@ -2,6 +2,7 @@
   "id": "godie-h021.w",
   "schema": "ability@1",
   "name": "05-02 薩喀爾嘎",
+  "icon": "assets/icons/abilities/godie-h021.w.webp",
   "description": "[主動攻擊]\n15秒冷卻時間\n\n薩喀爾的強化版，放射出集中並且有穿透力的電擊，造成150傷害。",
   "slot": "W",
   "castType": "dash",

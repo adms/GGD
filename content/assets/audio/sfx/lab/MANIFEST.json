@@ -42,28 +42,38 @@
  "bindings": {
   "route": "Surgical additive edit to content/config/audio-map.json. Two existing pools were replaced with real recordings; sixteen NEW event keys were authored. Nothing else in the file was touched, and no announcer/system pool was touched at all.",
   "live": {
-   "block": "lab/block-clash.wav + lab/block-shield.wav @ gain 0.63, cooldownMs 110, maxConcurrent 3 — replaced fx/guard.wav. 防禦 is weapon-agnostic; the two members sit ±1.6 dB around the level fx/guard.wav had at gain 0.72, so perceived loudness is unchanged.",
-   "whiff": "lab/whiff-sword.wav @ gain 0.43, cooldownMs 120, maxConcurrent 2 — replaced fx/whiff.wav (-21.7 dB mean vs -21.0, a true drop-in)."
+   "whiff": "lab/whiff-sword.wav @ gain 0.43, cooldownMs 120, maxConcurrent 2 — replaced fx/whiff.wav (-21.7 dB mean vs -21.0, a true drop-in).",
+   "blockReverted": "block-clash.wav + block-shield.wav were briefly the `block` pool but were REVERTED to the synth fx/guard.wav + fx/block-hit.wav during the hit-feel re-cut: the lab samples RING (long metallic resonance) and muddied the block clank. packages/shared/src/content/audioAssets.test.ts now HARD-ASSERTS no clip may point at lab/block-(clash|shield).wav. Do not re-wire them — they are unbound by decision, not oversight."
   },
-  "authoredButSilent": {
-   "note": "Authored in audio-map.json with tuned gain/cooldown/maxConcurrent, but NO code emits them yet — the emit sites live in apps/client/src/audio/** and the HUD/shop surfaces owned by #38/#39/#44. An unknown event is silent, so this costs nothing at runtime.",
+  "firedByShopUi": {
+   "note": "Wired at the #38/#44 shop + #44 HUD landing. Emit sites: apps/client/src/ui/panels/shopFeedback.ts (DENY/BUY/SELL/OPEN/CLOSE) consumed by MerchantShop.tsx, and ui/abilityCue.ts (uiDenied on an invalid ability press).",
    "events": {
-    "uiDenied": "lab/ui-denied.wav @ 0.31 / 250 / 2 — #44 shop 無金幣 / 已擁有 / 無空位",
+    "uiDenied": "lab/ui-denied.wav @ 0.31 / 250 / 2 — #44 shop 無金幣 / 已擁有 / 無空位 + invalid ability press",
     "uiCancel": "lab/ui-cancel.wav @ 0.33 / 60 / 3 — panel back/close",
     "panelOpen": "lab/panel-open.wav @ 0.24 / 150 / 2 — #38 prep-phase shop/skill panel",
     "shopPurchase": "lab/shop-purchase.wav @ 0.38 / 250 / 2 — #44",
-    "goldGain": "lab/gold-gain.wav @ 1.51 / 300 / 2",
-    "lowHealth": "lab/low-health.wav @ 1.0 / 3000 / 1 — HUD HP threshold",
-    "abilityRankUp": "lab/ability-rank-up.mp3 @ 0.24 / 250 / 2 — skill point spend",
-    "settlementReveal": "lab/settlement-reveal.mp3 @ 0.36 / 1000 / 1 — #25/#36 ranking row reveal",
-    "vsReveal": "lab/vs-reveal.mp3 @ 1.58 / 2000 / 1 — champ-select 對戰卡",
-    "matchStartGong": "lab/match-start-gong.wav @ 1.6 / 3000 / 1",
-    "matchEndGong": "lab/match-end-gong.mp3 @ 1.11 / 3000 / 1",
-    "levelUpJingle": "lab/level-up-jingle.mp3 @ 1.17 / 1000 / 1",
-    "exUnlockSting": "lab/magic-holy.mp3 @ 1.6 / 2500 / 1",
-    "heal": "lab/magic-heal.mp3 @ 0.41 / 400 / 2",
-    "buffApply": "lab/magic-buff.mp3 @ 0.23 / 400 / 2",
-    "explosion": "lab/explosion.mp3 @ 0.6 / 300 / 3 — pair with #39's explosion VFX"
+    "goldGain": "lab/gold-gain.wav @ 1.51 / 300 / 2"
+   }
+  },
+  "firedByAudioLane": {
+   "note": "WIRED in the audio-coverage pass (this file's sibling task). Emit sites: apps/client/src/audio/combatSfx.ts (per-frame MSG.EVENT drain, combat scene), apps/client/src/ui/AudioDirector.tsx (discrete store edges), and apps/client/src/ui/panels/MatchEndPanel.tsx (settlement card reveal). The stingers keep their OWN keys so they LAYER under the VO and never re-enter the announcer-only pools (see forbiddenBindings).",
+   "events": {
+    "heal": "lab/magic-heal.mp3 @ 0.41 / 400 / 2 — combatSfx: sim `heal` event (flower/ability/lifesteal/item); passthrough (map key == event name), warmed with combat",
+    "abilityRankUp": "lab/ability-rank-up.mp3 @ 0.24 / 250 / 2 — combatSfx: sim `rankUp` event RENAMED (event ≠ map key); warmed with combat",
+    "lowHealth": "lab/low-health.wav @ 1.0 / 3000 / 1 — AudioDirector: crossedIntoLowHealth() on localHp/localMaxHp/localAlive, one edge on the downward 30% crossing (respawn re-arms); rare → lazy-loaded",
+    "levelUpJingle": "lab/level-up-jingle.mp3 @ 1.17 / 1000 / 1 — AudioDirector tally: LAYERED beside the levelUp VO; rare → lazy-loaded",
+    "exUnlockSting": "lab/magic-holy.mp3 @ 1.6 / 2500 / 1 — AudioDirector tally: LAYERED beside the exUnlock VO; rare → lazy-loaded",
+    "matchStartGong": "lab/match-start-gong.wav @ 1.6 / 3000 / 1 — AudioDirector: layered under the matchStart VO on the shell→match edge; warmed with champSelect",
+    "matchEndGong": "lab/match-end-gong.mp3 @ 1.11 / 3000 / 1 — AudioDirector: → matchEnd phase edge, under the victory/defeat sting; warmed with victory+defeat",
+    "vsReveal": "lab/vs-reveal.mp3 @ 1.58 / 2000 / 1 — AudioDirector: * → champSelect phase edge (the champ-select entry flourish); warmed with champSelect",
+    "settlementReveal": "lab/settlement-reveal.mp3 @ 0.36 / 1000 / 1 — MatchEndPanel: one-shot the instant the ranking card is revealed (#25/#36); warmed with victory+defeat"
+   }
+  },
+  "stillSilentNoEmitSource": {
+   "note": "Authored in audio-map.json but STILL unfired: the sim raises no event that maps to them. NOT a one-line audio hookup — each needs a NEW sim emit (a code change outside the audio lane), so they are left dormant (an unknown event is silent, costs nothing). Proposed for a follow-up, NOT force-wired.",
+   "events": {
+    "buffApply": "lab/magic-buff.mp3 @ 0.23 / 400 / 2 — wants a `buffApply`/status-up sim event (none emitted today; closest are statUpgradeBought / statCapstoneGranted / augmentPicked, but those are economy moments, not an in-combat buff cast)",
+    "explosion": "lab/explosion.mp3 @ 0.6 / 300 / 3 — wants an AoE/explosion sim event to pair with #39's explosion VFX (fireRingDamage exists but is a per-tick ring burn, not a discrete blast)"
    }
   },
   "forbiddenBindings": "matchStart, levelUp and exUnlock are ANNOUNCER-VO-ONLY pools. Task #40 made every system broadcast Japanese and packages/shared/src/content/announcerVo.test.ts asserts those pools contain nothing outside assets/audio/announcer/. That is why the gong, the jingle and the holy sting got their OWN keys (matchStartGong / levelUpJingle / exUnlockSting) — they are meant to be LAYERED ALONGSIDE the VO, never mixed into its pool. Do not 'simplify' them back.",

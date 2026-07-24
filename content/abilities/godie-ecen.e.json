@@ -1,6 +1,7 @@
 {
   "id": "godie-ecen.e",
   "name": "64-03 工廠機器人",
+  "icon": "assets/icons/abilities/godie-ecen.e.webp",
   "description": "[召喚]\n75秒冷卻時間\n\n約翰走路召喚2位製酒工廠中的巨大機器人LV1一同幫忙攻擊對手，持續30秒。",
   "slot": "E",
   "castType": "targeted",

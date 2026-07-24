@@ -53,6 +53,64 @@ SERVICE_IDS = {"stat-attunement", "legendary-orb"}
 
 SLOT_ORDER = {"Q": 0, "W": 1, "E": 2, "R": 3, "EX": 4}
 
+# The 3-choose-1 draft pool: exactly the `quest` items. `仙后座` resolves to
+# godie-i01s here. Table lives at content/loot-tables/quest-rewards.json.
+QUEST_POOL_TABLE = "quest-rewards"
+
+# Reader-facing labels for the `craftRole` marker recovered from the source-map
+# triggers (packages/shared/src/sim/content/defs.ts is the vocabulary, task #70).
+CRAFT_ROLE_LABEL = {
+    "final": "最終合成 final",
+    "component": "組件 component",
+    "quest": "任務獎勵 quest",
+    "token": "代幣 token",
+    "service": "商店服務 service",
+    "none": "無角色 none",
+}
+
+
+def item_has_effect(i):
+    """Mirror of packages/shared/src/sim/economy/itemTiers.ts:itemHasEffect —
+    an item@1 can express only modifiers/passive, so one carrying neither is
+    inert by construction and the sim refuses to sell it."""
+    return bool(i.get("modifiers")) or bool(i.get("passive"))
+
+
+def classify_items(ctx):
+    """The single craftRole-based partition every emitter reads. Mirrors the shop
+    gate in packages/shared/src/sim/economy/shop.ts + ui/panels/champSelectFilter.ts
+    (shopCatalogue): buyable == craftRole 'final' AND has effect, plus the two
+    shop SERVICES. The 6 finals with no payload (雷神之鎚/黑色魔書/…) stay
+    classified 'final' but off the shelf until item@1 grows an active field (#56).
+
+    Returns a dict of id-ordered lists. Every one of the 214 docs lands in exactly
+    one bucket, so the buckets always sum to len(items) — a breakdown that does
+    not is a lie the reader would catch."""
+    items = ctx["items"]
+    legendary = ctx["legendary_pool"]
+
+    shop_final = [i for i in items if i.get("craftRole") == "final" and item_has_effect(i)]
+    inert_final = [i for i in items if i.get("craftRole") == "final" and not item_has_effect(i)]
+    services = [i for i in items if i["id"] in SERVICE_IDS]
+    legend = [i for i in items if i["id"] in legendary]
+    quest = [i for i in items if i.get("craftRole") == "quest"]
+
+    taken = {i["id"] for i in shop_final + inert_final + services + legend + quest}
+    component = [i for i in items if i["id"] not in taken and i.get("craftRole") == "component"]
+    token = [i for i in items if i["id"] not in taken and i.get("craftRole") == "token"]
+    other = [i for i in items if i["id"] not in taken and i.get("craftRole") not in ("component", "token")]
+
+    return {
+        "shop_final": shop_final,
+        "inert_final": inert_final,
+        "services": services,
+        "legendary": legend,
+        "quest": quest,
+        "component": component,
+        "token": token,
+        "other": other,
+    }
+
 STAT_LABEL = {
     "ad": "攻擊力",
     "ap": "法強",
@@ -389,31 +447,23 @@ def gen_items(ctx):
     items = ctx["items"]
     legendary = ctx["legendary_pool"]
     open_items = ctx["open_items"]
-
+    b = classify_items(ctx)
     by_id = {i["id"]: i for i in items}
 
-    def has_effect(i):
-        return bool(i.get("modifiers")) or bool(i.get("passive"))
+    def role_lbl(i):
+        return CRAFT_ROLE_LABEL.get(i.get("craftRole"), i.get("craftRole") or "—")
 
-    def shop_label(i):
-        if i["id"] in SERVICE_IDS:
-            return "服務（不佔格）"
-        if i["id"] in legendary:
-            return "傳說（無價格）"
+    def price(i):
         cost = i.get("cost")
-        if cost == TIER_PRICE["SIMPLE"] and has_effect(i):
-            return "簡易 300g"
-        if cost == TIER_PRICE["POWERFUL"] and has_effect(i):
-            return "強力 1200g"
-        return "未上架"
+        return f"{cost}g" if isinstance(cost, (int, float)) and cost > 0 else "—"
 
     def row(i):
-        return "| {id} | {name} | T{tier} | {cost} | {shop} | {leg} | {open_} | {stats} | {passive} |".format(
+        return "| {id} | {name} | {role} | {price} | T{tier} | {leg} | {open_} | {stats} | {passive} |".format(
             id=f"`{i['id']}`",
             name=cell(i.get("name")),
+            role=role_lbl(i),
+            price=price(i),
             tier=i.get("tier"),
-            cost=i.get("cost"),
-            shop=shop_label(i),
             leg="✅" if i["id"] in legendary else "—",
             open_="✅" if i["id"] in open_items else "—",
             stats=cell(fmt_modifiers(i)),
@@ -421,85 +471,86 @@ def gen_items(ctx):
         )
 
     head = [
-        "| id | 名稱 | tier | cost | 商店層級 | 傳說池 | 開放 | 屬性 modifiers | 被動 passive |",
+        "| id | 名稱 | craftRole | 價格 | tier | 傳說池 | 開放 | 屬性 modifiers | 被動 passive |",
         "|---|---|---|---|---|---|---|---|---|",
     ]
 
-    services = [i for i in items if i["id"] in SERVICE_IDS]
-    simple = [i for i in items if shop_label(i) == "簡易 300g"]
-    powerful = [i for i in items if shop_label(i) == "強力 1200g"]
-    legend = [i for i in items if i["id"] in legendary]
-    listed = {i["id"] for i in services + simple + powerful + legend}
-    rest = [i for i in items if i["id"] not in listed]
+    shop = b["shop_final"]
+    inert = b["inert_final"]
+    services = b["services"]
+    legend = b["legendary"]
+    quest = b["quest"]
+    component = b["component"]
+    token = b["token"]
+    other = b["other"]
 
     L = header(
         "道具總表 / Item reference",
-        # Must account for EVERY doc: services used to be omitted here, which
-        # made the breakdown 2 short of len(items). See gen_readme_lists.py.
-        f"`content/items/*.json` 共 **{len(items)}** 份。實際上架的商店只有 "
-        f"**{len(simple) + len(powerful)}** 件（簡易 {len(simple)} + 強力 {len(powerful)}），"
-        f"傳說池 **{len(legend)}** 件，商店服務 **{len(services)}** 件，"
-        f"其餘 **{len(rest)}** 份是 w3x 匯入的殘件："
-        "價格不在階梯上、或沒有任何 `modifiers` / `passive`，所以買不到。",
+        # The buyable shop is now the SEMANTIC `craftRole === "final"` set (task
+        # #70), not a price heuristic. Every doc lands in exactly one bucket, so
+        # this breakdown always sums to len(items).
+        f"`content/items/*.json` 共 **{len(items)}** 份，依 `content/items/<id>.json` 的"
+        f" **`craftRole`** 標記分類（來源：source-map triggers，見 "
+        f"`tools/w3x-import/extract_item_roles.py`）。實際能在商店買到的只有 "
+        f"**{len(shop)}** 件最終合成武器（`craftRole:final` 且有效果）＋ **{len(services)}** 項服務；"
+        f"三選一 draft 抽 **{len(quest)}** 件任務道具，傳說寶玉抽 **{len(legend)}** 件傳說。"
+        f"其餘（{len(component)} 組件、{len(token)} 代幣、{len(other)} 無角色、{len(inert)} 無 payload 的 final）"
+        "是配方半成品或 w3x 殘件，不會單獨出現在任何商店或抽卡。",
         len(items),
         ctx,
         extra_notes=[
-            "只有兩種價格：**簡易 300g**、**強力 1200g**"
-            "（`packages/shared/src/sim/economy/itemTiers.ts:43-46`）。"
-            "**傳說沒有價格**，只能靠三選一卡或 2400g 的傳說寶玉抽到。",
-            "「可買」的判定是**同時**滿足：價格等於某個階梯價 **且** 真的有效果"
-            "（有 `modifiers` 或 `passive`）。有幾件 1200g 的 WC3 製作書沒有效果，因此不上架。",
-            f"`tier` 欄是 doc 上的 1..5 分級，那是 w3x 匯入的遺留欄位，"
-            f"**與價格階梯無關**；請看「商店層級」欄。",
+            "**上架規則（task #70）**：`shopCatalogue` / `buyItem` 只讓 "
+            "`craftRole === \"final\"` **且** 真有效果的武器上架"
+            "（`packages/shared/src/sim/economy/shop.ts:110`、"
+            "`apps/client/src/ui/panels/champSelectFilter.ts:150`）。"
+            "元件、製作書、任務、代幣一律拒賣，即使有價格、有效果、被白名單放行也一樣。",
+            f"**{len(inert)} 件 `final` 沒有 payload**（雷神之鎚／黑色魔書…）：item@1 目前只能存 "
+            "`modifiers` / `passive`，它們的主動效果 schema 還裝不下（卡在 #56），所以留在 "
+            "`final` 分類但不上架，避免變成花 1200g 的空按鈕。",
+            f"**三選一 draft 抽的是 {len(quest)} 件 `quest` 道具**"
+            f"（`content/loot-tables/{QUEST_POOL_TABLE}.json`；`仙后座` = `godie-i01s`）。"
+            "只有兩種商店價格：簡易 **300g**、強力 **1200g**"
+            "（`packages/shared/src/sim/economy/itemTiers.ts:43-46`）。",
+            "`tier` 欄是 doc 上的 1..5 分級，那是 w3x 匯入的遺留欄位，**與 craftRole 無關**。",
             "`暴擊率` / `暴擊傷害` / `吸血` 的 `flat` 值是**小數比例**，不是百分點："
             "`暴擊率 +0.17` 就是 17%。標了 `%` 的欄位才是 `pctAdd`。",
             "背包 6 格、賣出退 40%（`packages/shared/src/sim/economy/shop.ts:11,18`）。",
         ],
     )
 
-    L.append(f"## 1. 商店服務 services（{len(services)}）")
-    L.append("")
-    L.append("真的是 `item@1` 文件，但 `buyItem` 在進背包路徑前就攔截它們：不佔格、可重複買。")
-    L.append("")
-    L += head
-    L += [row(i) for i in services]
-    L.append("")
+    def section(n, title, blurb, rows):
+        L.append(f"## {n}. {title}（{len(rows)}）")
+        L.append("")
+        if blurb:
+            L.append(blurb)
+            L.append("")
+        L.extend(head)
+        L.extend(row(i) for i in rows)
+        L.append("")
 
-    L.append(f"## 2. 簡易 SIMPLE 300g（{len(simple)}）")
-    L.append("")
-    L += head
-    L += [row(i) for i in simple]
-    L.append("")
-
-    L.append(f"## 3. 強力 POWERFUL 1200g（{len(powerful)}）")
-    L.append("")
-    L += head
-    L += [row(i) for i in powerful]
-    L.append("")
-
-    L.append(f"## 4. 傳說池 legendary pool（{len(legend)}）")
-    L.append("")
-    L.append(
-        f"`content/loot-tables/{LEGENDARY_POOL_TABLE}.json`，等權重抽取。買不到，"
-        "只能從第 5 回合的武器三選一或傳說寶玉取得。"
-    )
-    L.append("")
-    L += head
-    L += [row(i) for i in legend]
-    L.append("")
+    section("1", "商店貨架 shop shelf — final 且有效果",
+            "真正能用金幣買的最終合成武器：`craftRole:final` 且有 `modifiers`／`passive`。"
+            "白名單啟用時可能再縮小，但永遠不會放進非 final 的東西。", shop)
+    section("2", "商店服務 services",
+            "真的是 `item@1` 文件，但 `buyItem` 在進背包路徑前就以 id 攔截它們：不佔格、可重複買"
+            "（傳說寶玉 2400g／能力屬性強化 375g）。", services)
+    section("3", "三選一 draft — quest（三選一 augment/武器卡）",
+            f"每回合三選一 draft 從這 {len(quest)} 件抽 3 張。買不到，只能抽到。", quest)
+    section("4", "傳說池 legendary pool",
+            f"`content/loot-tables/{LEGENDARY_POOL_TABLE}.json`，等權重抽取。買不到，"
+            "只能從武器三選一或 2400g 傳說寶玉取得。", legend)
+    section("5", "final 但無 payload（暫不上架）",
+            "分類是最終合成，但沒有 `modifiers`／`passive`，主動效果 schema 還裝不下（#56），"
+            "所以商店拒賣。", inert)
+    section("6", "組件 component", "配方半成品：只在合成路徑上，不單獨上架。", component)
+    section("7", "代幣 token", "任務／成就代幣，不是可裝備的道具。", token)
+    section("8", "其餘 none", "沒有 craftRole 角色的殘件，留著做 w3x 對照與未來策展。", other)
 
     missing = sorted(i for i in legendary if i not in by_id)
     if missing:
         L.append("> ⚠️ 傳說池引用了不存在的道具 id：" + ", ".join(f"`{m}`" for m in missing))
         L.append("")
 
-    L.append(f"## 5. 未上架 not purchasable（{len(rest)}）")
-    L.append("")
-    L.append("價格不在階梯上、或沒有任何效果。留著是為了 w3x 對照與未來策展，不會出現在商店。")
-    L.append("")
-    L += head
-    L += [row(i) for i in rest]
-    L.append("")
     return "\n".join(L) + "\n", len(items)
 
 
@@ -521,6 +572,9 @@ def build_context():
 
     pool_doc = load_json(os.path.join(CONTENT, "loot-tables", f"{LEGENDARY_POOL_TABLE}.json"), {})
     legendary_pool = {e["itemId"] for e in (pool_doc.get("entries") or []) if e.get("itemId")}
+
+    quest_doc = load_json(os.path.join(CONTENT, "loot-tables", f"{QUEST_POOL_TABLE}.json"), {})
+    quest_pool = [e["itemId"] for e in (quest_doc.get("entries") or []) if e.get("itemId")]
 
     wl = load_json(WHITELIST)
     if wl is None:
@@ -551,10 +605,13 @@ def build_context():
     ctx = {
         "contentVersion": manifest.get("contentVersion", "?"),
         "whitelist_note": whitelist_note,
+        "whitelist_present": wl is not None,
         "champions": sorted(champions, key=lambda c: c["id"]),
         "abilities": abilities,
+        "ability_by_id": {a["id"]: a for a in abilities},
         "items": sorted(items, key=lambda i: i["id"]),
         "legendary_pool": legendary_pool,
+        "quest_pool": quest_pool,
         "open_champions": open_champions,
         "open_items": open_items,
         "open_abilities": open_abilities,

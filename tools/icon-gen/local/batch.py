@@ -344,8 +344,19 @@ def run_batch(work: list[dict], args) -> dict:
         # NEVER overwrite art that is already shipping. A doc whose `icon` points
         # at a file that exists is done even when that file is one of the older
         # extracted 64px PNGs — those are the author's own map art.
+        #
+        # …but only when the art is NOT ours. A `.method` sidecar means this
+        # driver made that file, and then METHOD_VERSION — not this guard — is
+        # what decides. Without that carve-out the guard swallows its own tail:
+        # once a run has rendered an icon AND wired the doc's `icon` field, the
+        # doc is permanently pinned to that art, a METHOD_VERSION bump becomes a
+        # silent no-op ("N already-done, 0 rendered"), and a lexicon fix can
+        # never reach the corpus it was written for. Author art has no sidecar,
+        # so it stays protected exactly as before.
         have = (item["doc"].get("icon") or "").strip()
-        if have and not args.force and os.path.exists(os.path.join(CONTENT, have)):
+        have_abs = os.path.join(CONTENT, have) if have else ""
+        if (have and not args.force and os.path.exists(have_abs)
+                and not os.path.exists(_marker_path(have_abs))):
             skipped += 1
             continue
         if _is_done(out) and not args.force:

@@ -43,9 +43,14 @@ describe("combat SFX key selection (juice-sfx-key)", () => {
 
   it("pre-hit + utility events pass through by name", () => {
     cover("juice-sfx-key");
-    for (const t of ["attackWindup", "basicAttack", "projectileSpawn", "projectileHit", "castBegin", "abilityCast", "flowerBurst"]) {
+    for (const t of ["attackWindup", "basicAttack", "projectileSpawn", "projectileHit", "castBegin", "abilityCast", "flowerBurst", "heal"]) {
       expect(combatSfxKey(ev(t))).toBe(t);
     }
+  });
+
+  it("rankUp renames to the abilityRankUp cue (#51 staged clip)", () => {
+    cover("juice-sfx-key");
+    expect(combatSfxKey(ev("rankUp", { id: 1, slot: "Q", rank: 2 }))).toBe("abilityRankUp");
   });
 
   it("timing-only + tally-owned events are silent (no double sound)", () => {

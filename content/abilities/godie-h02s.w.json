@@ -2,6 +2,7 @@
   "id": "godie-h02s.w",
   "schema": "ability@1",
   "name": "91-02 疫病",
+  "icon": "assets/icons/abilities/godie-h02s.w.webp",
   "description": "[被動]\n0秒冷卻時間\n\n死騎掌握著各種疫病能力，能使敵人在痛苦中死亡。\nLV1：15%機率打出瘟疫打擊：使目標染上瘟疫，每秒損失30點生命，持續10秒。",
   "slot": "W",
   "castType": "self",

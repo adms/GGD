@@ -2,6 +2,7 @@
   "id": "godie-e00v.e",
   "schema": "ability@1",
   "name": "84-03 蜜汁",
+  "icon": "assets/icons/abilities/godie-e00v.e.webp",
   "description": "[輔助]\n50秒冷卻時間\n\n出自好心提醒對方，但不知什麼原因卻會造成目標羞愧的說不出話而禁言，降低攻擊速度30%以及移動速度50%，並且每秒減少法力60點。持續3秒。",
   "slot": "E",
   "castType": "targeted",

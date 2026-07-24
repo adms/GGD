@@ -15,7 +15,7 @@
  * Runs on Babylon's NullEngine (headless), like the other render tests.
  */
 import { describe, it, expect, beforeAll, afterAll, afterEach, vi } from "vitest";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { cover } from "@ggd/shared/testkit/cover";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
@@ -209,5 +209,134 @@ describe("stand-in size-override composition-root wiring (client-standin-overrid
     expect(small).toBeLessThan(normal);
     expect(big).toBeGreaterThan(normal);
     registry.dispose();
+  });
+});
+
+/**
+ * TASK #77 — the map's declared SCALE must survive the stand-in fallback.
+ *
+ * 40 `godie-*` champions have no shipped model and render on one of the four
+ * shared CC0 KayKit meshes. Their WC3 Scaling Value ('usca',
+ * tools/w3x-import/out/GoDieEX22s-src/OBJECTS.json) used to be dropped on the
+ * floor, so every one of them rendered at the identical normalized 1.8u.
+ *
+ * The guard below reads BOTH sides from disk — the source map's objects and the
+ * shipped overrides file — so it fails if a champion's map scale is ever
+ * silently discarded again. It is a data contract, not a fixture.
+ */
+const OBJECTS: { heroes?: Record<string, { scale?: number }>; units?: Record<string, { scale?: number }> } =
+  JSON.parse(
+    readFileSync(
+      join(__dirname, "../../../../tools/w3x-import/out/GoDieEX22s-src/OBJECTS.json"),
+      "utf8",
+    ),
+  );
+
+/** The four shared stand-in meshes — a champion on one of these has no model. */
+const STOCK_KEYS = new Set([
+  "champ.sela",
+  "champ.thorne",
+  "champ.skin.barbarian",
+  "champ.skin.rogue",
+]);
+
+/** The map's usca for a `godie-XXXX` champion, or 1.0 (the WC3 default). */
+function mapScaleOf(championId: string): number {
+  const rawcode = championId.slice("godie-".length).toUpperCase();
+  const all = { ...(OBJECTS.units ?? {}), ...(OBJECTS.heroes ?? {}) };
+  for (const [code, def] of Object.entries(all)) {
+    if (code.toUpperCase() === rawcode) return typeof def.scale === "number" ? def.scale : 1;
+  }
+  return 1;
+}
+
+/**
+ * The two champions whose base WC3 model is a CHILD (units\critters\VillagerKid)
+ * — usca alone would render them TALLER than an adult against our normalized
+ * adult height, so they carry the measured base-model correction instead.
+ * See the `note` on each entry in _standin-overrides.json.
+ */
+const CHILD_MODEL_CORRECTED = new Set(["godie-h021", "godie-hblm"]);
+
+/**
+ * Champions where #150 hand-authored a size from LORE that disagrees with the
+ * map. The shipped lore value wins until the owner rules; the disagreement is
+ * recorded in the file's `note` so it cannot rot silently.
+ */
+const LORE_OVERRIDES_MAP = new Set(["godie-h02k", "godie-ubal"]);
+
+/**
+ * godie-u011 「死亡老二 - 克勞薩先生」 — the map declares usca 1.5 on
+ * `collision.mdl`, a geometry-LESS WC3 collision dummy. That is a spec for an
+ * invisible unit, not a body: there is no height for 1.5 to scale, so the value
+ * is deliberately NOT carried over. #77 moved the champion off the empty model
+ * onto a stand-in that actually renders (see content/champions/godie-u011.json).
+ */
+const NO_BODY_TO_SCALE = new Set(["godie-u011"]);
+
+/**
+ * A #150 lore tune that lands within this fraction of the map's own value is
+ * treated as AGREEING with the map, not as discarding it (小叮噹 0.65 vs 0.60,
+ * 初號機 1.55 vs 1.60 — both authored from lore before the map value was
+ * recovered, and both within 8%).
+ */
+const LORE_AGREEMENT_TOLERANCE = 0.1;
+
+describe("stand-in fallback preserves the map's declared scale (task #77)", () => {
+  const overrides = (OVERRIDES_FILE as { overrides: Record<string, { relativeScale?: number }> })
+    .overrides;
+
+  /** every stand-in champion, straight off the shipped champion docs. */
+  const standIns = readdirSync(join(__dirname, "../../../../content/champions"))
+    .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
+    .map(
+      (f) =>
+        JSON.parse(
+          readFileSync(join(__dirname, "../../../../content/champions", f), "utf8"),
+        ) as { id: string; name: string; modelKey: string },
+    )
+    .filter((c) => STOCK_KEYS.has(c.modelKey) && c.id.startsWith("godie-"));
+
+  it("finds the stand-in roster (guard against the fixture silently emptying)", () => {
+    cover("client-standin-override");
+    expect(standIns.length).toBeGreaterThanOrEqual(40);
+  });
+
+  it("every stand-in champion's map scale reaches the renderer", () => {
+    cover("client-standin-override");
+    const dropped: string[] = [];
+    for (const c of standIns) {
+      const declared = mapScaleOf(c.id);
+      const rendered = relativeScaleOf(overrides[c.id] ?? null);
+      if (
+        CHILD_MODEL_CORRECTED.has(c.id) ||
+        LORE_OVERRIDES_MAP.has(c.id) ||
+        NO_BODY_TO_SCALE.has(c.id)
+      ) {
+        continue;
+      }
+      // a map scale of 1.0 needs no entry — the renderer's default IS 1.0
+      if (Math.abs(rendered - declared) > LORE_AGREEMENT_TOLERANCE * declared) {
+        dropped.push(`${c.id} ${c.name}: map ${declared.toFixed(2)} → rendered ${rendered}`);
+      }
+    }
+    expect(dropped, `map scale discarded for:\n${dropped.join("\n")}`).toEqual([]);
+  });
+
+  it("小叮噹 renders smaller than a default champion, and 黑化張飛 larger", () => {
+    cover("client-standin-override");
+    // the owner's own example: a 0.6-scale blue panda must not render at 1.0
+    expect(relativeScaleOf(overrides["godie-n00b"] ?? null)).toBeLessThan(1);
+    expect(mapScaleOf("godie-n00b")).toBeCloseTo(0.6, 2);
+    // and the map's largest authored unit really is the biggest on screen
+    expect(relativeScaleOf(overrides["godie-u01f"] ?? null)).toBe(2);
+  });
+
+  it("the two child-model champions render as children, not as tall adults", () => {
+    cover("client-standin-override");
+    for (const id of CHILD_MODEL_CORRECTED) {
+      expect(mapScaleOf(id), id).toBeCloseTo(1.2, 2); // the map's raw usca > 1
+      expect(relativeScaleOf(overrides[id] ?? null), id).toBeLessThan(1); // rendered small
+    }
   });
 });

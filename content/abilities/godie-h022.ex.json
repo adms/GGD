@@ -1,6 +1,7 @@
 {
   "id": "godie-h022.ex",
   "name": "82-001 太陰道-敵彈吸收陣",
+  "icon": "assets/icons/abilities/godie-h022.ex.webp",
   "description": "[輔助]\n75秒冷卻時間\n\n召喚出可以將所有傷害吸收轉為己用的魔法陣，在持續時間內無法對涅吉造成任何傷害，並於下次攻擊時發動巨神殺，傷害為(1000+吸收之傷害)，魔法陣持續6秒。",
   "slot": "EX",
   "castType": "self",

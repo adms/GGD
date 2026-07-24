@@ -591,11 +591,14 @@ export class ChampionView {
         const glbMeshes = glbRoot.getChildMeshes(false);
         // EMPTY-GLB → KEEP THE PROCEDURAL FALLBACK (task #69). A few imported
         // "models" are geometry-less WC3 dummies — e.g. `imported.collision`, a
-        // 0-mesh bone-only unit whose only clip is a static "Stand" (godie-u011
-        // is mapped to it, intentionally, as the procedural-fallback case the
-        // model-scale/bbox/texture guards document). Adopting it anyway hid the
-        // voxel figure AND installed a ClipAnimator whose "attack" resolved to
-        // "Stand" — an INVISIBLE champion that never animates a swing. Discard
+        // 0-mesh bone-only unit whose only clip is a static "Stand". No champion
+        // points at one any more (#77 moved godie-u011 「死亡老二 - 克勞薩先生」,
+        // the last holdout, off `imported.collision` — a WC3 collision dummy is
+        // a SPEC for an invisible unit, not a body, and it left the only
+        // champion in the roster with nothing to render). The guard stays as
+        // the defence for any future doc that resolves to an empty glb:
+        // adopting one hid the voxel figure AND installed a ClipAnimator whose
+        // "attack" resolved to "Stand" — an INVISIBLE champion. Discard
         // the empty instance and let the procedural figure (which DOES animate
         // attack/hurt/run) stand in. `upgradeStarted` stays true, so no retry.
         if (glbMeshes.length === 0) {

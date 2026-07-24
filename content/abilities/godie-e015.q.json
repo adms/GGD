@@ -2,6 +2,7 @@
   "id": "godie-e015.q",
   "schema": "ability@1",
   "name": "94-01 北斗爆橘拳",
+  "icon": "assets/icons/abilities/godie-e015.q.webp",
   "description": "[主動攻擊]\n25秒冷卻時間\n\n北斗神拳奧義-北斗爆橘拳，使盡全力將橘子捏爆，讓敵人驚嚇受到自身力量*2+100傷害，而爆出來的橘子汁可以恢復生命100點。\n在恰恰狀態下傷害加成(力量*1.5)",
   "slot": "Q",
   "castType": "targeted",

@@ -1,6 +1,7 @@
 {
   "id": "godie-othr.ex",
   "name": "31-002 武士之魂",
+  "icon": "assets/icons/abilities/godie-othr.ex.webp",
   "description": "[被動]\n0秒冷卻時間\n\n覺醒武士之魂的金鋼狼，施展迴旋爪擊將有2倍傷害，在野性的呼喚狀態，對敵方生命低於15%時直接必殺。",
   "slot": "EX",
   "castType": "self",

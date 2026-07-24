@@ -1,6 +1,7 @@
 {
   "id": "godie-h00l.ex",
   "name": "60-002 絕光斬",
+  "icon": "assets/icons/abilities/godie-h00l.ex.webp",
   "description": "[被動]\n0秒冷卻時間\n\n在生命低於45%的瀕死狀態，林克的絕光斬將自動覺醒，每次攻擊都能產生一道劍氣，造成325點傷害。",
   "slot": "EX",
   "castType": "self",

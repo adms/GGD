@@ -240,5 +240,15 @@
     "godie"
   ],
   "exAbility": "godie-huth.ex",
+  "passive": {
+    "name": "28-00 無限再生",
+    "modifiers": [
+      {
+        "stat": "healthRegen",
+        "op": "flat",
+        "value": 12
+      }
+    ]
+  },
   "icon": "assets/icons/champions/godie-huth.png"
 }

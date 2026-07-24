@@ -72,25 +72,6 @@
                 "op": "flat",
                 "value": -3
               }
-            ],
-            "hooks": [
-              {
-                "on": "onKill",
-                "effects": [
-                  {
-                    "kind": "applyBuff",
-                    "modifiers": [
-                      {
-                        "stat": "ad",
-                        "op": "flat",
-                        "value": 10
-                      }
-                    ],
-                    "duration": 15.0
-                  }
-                ],
-                "target": "self"
-              }
             ]
           },
           {
@@ -104,25 +85,6 @@
                 "stat": "armor",
                 "op": "flat",
                 "value": -6
-              }
-            ],
-            "hooks": [
-              {
-                "on": "onKill",
-                "effects": [
-                  {
-                    "kind": "applyBuff",
-                    "modifiers": [
-                      {
-                        "stat": "ad",
-                        "op": "flat",
-                        "value": 10
-                      }
-                    ],
-                    "duration": 15.0
-                  }
-                ],
-                "target": "self"
               }
             ]
           },
@@ -138,25 +100,6 @@
                 "op": "flat",
                 "value": -9
               }
-            ],
-            "hooks": [
-              {
-                "on": "onKill",
-                "effects": [
-                  {
-                    "kind": "applyBuff",
-                    "modifiers": [
-                      {
-                        "stat": "ad",
-                        "op": "flat",
-                        "value": 10
-                      }
-                    ],
-                    "duration": 15.0
-                  }
-                ],
-                "target": "self"
-              }
             ]
           },
           {
@@ -170,25 +113,6 @@
                 "stat": "armor",
                 "op": "flat",
                 "value": -12
-              }
-            ],
-            "hooks": [
-              {
-                "on": "onKill",
-                "effects": [
-                  {
-                    "kind": "applyBuff",
-                    "modifiers": [
-                      {
-                        "stat": "ad",
-                        "op": "flat",
-                        "value": 10
-                      }
-                    ],
-                    "duration": 15.0
-                  }
-                ],
-                "target": "self"
               }
             ]
           }
@@ -398,5 +322,27 @@
     "godie"
   ],
   "exAbility": "godie-h01u.ex",
+  "passive": {
+    "name": "80-00 飛將神弓",
+    "hooks": [
+      {
+        "on": "onKill",
+        "target": "self",
+        "effects": [
+          {
+            "kind": "applyBuff",
+            "modifiers": [
+              {
+                "stat": "ad",
+                "op": "flat",
+                "value": 10
+              }
+            ],
+            "duration": 10.0
+          }
+        ]
+      }
+    ]
+  },
   "icon": "assets/icons/champions/godie-h01u.png"
 }

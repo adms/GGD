@@ -2,6 +2,7 @@
   "id": "godie-o02o.w",
   "schema": "ability@1",
   "name": "87-02 霸體",
+  "icon": "assets/icons/abilities/godie-o02o.w.webp",
   "description": "[被動]\n0秒冷卻時間\n\n霸王威能，有10%降低所有施加在身上的傷害。",
   "slot": "W",
   "castType": "self",

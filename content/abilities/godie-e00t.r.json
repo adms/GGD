@@ -2,6 +2,7 @@
   "id": "godie-e00t.r",
   "schema": "ability@1",
   "name": "66-04  靈壓震撼",
+  "icon": "assets/icons/abilities/godie-e00t.r.webp",
   "description": "[輔助]\n<A0IC,Cool1>秒冷卻時間\n\n貞子發出凜人的靈壓，造成周圍<A0ID,Area1>範圍內的敵方單位減慢<A0ID,DataB1,%>%的攻擊速度與<A0ID,DataA1,%>%的移動速度。\n\n每秒消耗<A0IC,DataB1>點法力。",
   "slot": "R",
   "castType": "skillshot",

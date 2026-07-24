@@ -1,6 +1,7 @@
 {
   "id": "godie-ecen.w",
   "name": "64-02 酒釀精華",
+  "icon": "assets/icons/abilities/godie-ecen.w.webp",
   "description": "[主動傷害]\n50秒冷卻時間\n\n約翰走路取出酒釀精華發動神秘的攻擊，對敵方造成每秒78點傷害的連續性攻擊，若對友方造成每秒78點的HP和MP恢復，持續4波，需要持續施法。\n若約翰自身有魔幻浮水印效果，則將增加約翰智慧係數的傷害量和恢復量。",
   "slot": "W",
   "castType": "targeted",

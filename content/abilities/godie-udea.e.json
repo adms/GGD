@@ -1,6 +1,7 @@
 {
   "id": "godie-udea.e",
   "name": "65-03 魔法膨脹",
+  "icon": "assets/icons/abilities/godie-udea.e.webp",
   "description": "[主動攻擊]\n25秒冷卻時間\n\n施咒補充敵方部隊法力的缺陷，但是過度膨脹的法力將會使目標暈眩1秒並造成生命傷害，傷害公式為目標(法力上限-法力值)*1倍魔法傷害。",
   "slot": "E",
   "castType": "targeted",

@@ -29,7 +29,7 @@ export interface OfferView {
  * outcome (clicking a too-expensive item twice must beep twice).
  */
 export interface ShopEventView {
-  kind: "bought" | "sold" | "buyRejected" | "sellRejected";
+  kind: "bought" | "sold" | "buyRejected" | "sellRejected" | "undone" | "undoRejected";
   itemId: string;
   /** inventory slot for a sale / a completed purchase; -1 when not applicable */
   slot: number;
@@ -37,6 +37,12 @@ export interface ShopEventView {
   reason: string;
   /** gold AFTER the transaction; -1 when the event carried none */
   gold: number;
+  /**
+   * WHICH transaction an `undone` event reversed — the sim's `shopUndone`
+   * carries the popped entry's own `kind` ("buy" | "sell") so the toast can say
+   * 「已復原賣出」 rather than a generic "undone". "" for every other event.
+   */
+  undoneKind: string;
   seq: number;
 }
 
@@ -87,6 +93,21 @@ export interface SeatView {
    */
   statStacks: number;
   statCapstonePct: number;
+  /**
+   * How many buy/sell steps of THIS shopping session can still be reversed
+   * (task #121) — the server's own `champ.undoStack.length`.
+   *
+   * WHY IT IS READ HERE AND NOT INFERRED. The shop used to decide whether to
+   * show 「↩ 復原上一步」 from the LAST SHOP EVENT ("was it a bought/sold?"),
+   * which is a heuristic and was wrong in both directions: it kept the button
+   * lit after the stack had been emptied (so the third press was a silent
+   * no-op), and it would have hidden a still-undoable step the moment any other
+   * shop event — a rejection — landed on top. The server has always projected
+   * the exact depth; this is the field that makes the button's visibility a
+   * FACT. 0 while the seat has no champion, and 0 again the instant combat
+   * commits the session.
+   */
+  undoDepth: number;
   /**
    * Kills/deaths this seat scored IN THE CURRENT ROUND — server-authoritative
    * (SeatState.roundKills/roundDeaths), zeroed at every combat entry. NOT the
@@ -314,6 +335,7 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
       exCooldown: ss.exCooldown,
       statStacks: ss.statStacks,
       statCapstonePct: ss.statCapstonePct,
+      undoDepth: ss.undoDepth,
       roundKills: ss.roundKills,
       roundDeaths: ss.roundDeaths,
       offers: ss.offers.map((o) => ({
@@ -435,12 +457,25 @@ export function recordReject(reason: string): void {
   hudStore.setState({ lastReject: reason });
 }
 
-/** Sim event types that describe a shop outcome (task #38/#60). */
+/**
+ * Sim event types that describe a shop outcome (task #38/#60).
+ *
+ * ── THE UNDO PAIR WAS MISSING (task #121) ───────────────────────────────────
+ * The sim has emitted `shopUndone` / `undoRejected` since the undo landed, and
+ * `eventFanout` has fanned both out to the owning client — but neither was in
+ * this map, so `isShopEvent` dropped them on the floor and pressing 復原上一步
+ * produced NO toast and NO sound. The gold moved correctly and the player was
+ * told nothing; a third press on an empty stack was indistinguishable from a
+ * dead button. Both are here now, and `undoneKind` carries which transaction
+ * was reversed so the sentence can name it.
+ */
 const SHOP_EVENT_KIND: Record<string, ShopEventView["kind"]> = {
   itemBought: "bought",
   itemSold: "sold",
   buyRejected: "buyRejected",
   sellRejected: "sellRejected",
+  shopUndone: "undone",
+  undoRejected: "undoRejected",
 };
 
 /** True when this event is one the shop HUD wants (cheap pre-filter for the drain). */
@@ -471,6 +506,8 @@ export function recordShopEvent(ev: EventMessage, localEntityId: number | null):
       slot: typeof ev.data.slot === "number" ? ev.data.slot : typeof ev.data.itemSlot === "number" ? ev.data.itemSlot : -1,
       reason: typeof ev.data.reason === "string" ? ev.data.reason : "",
       gold: typeof ev.data.gold === "number" ? ev.data.gold : -1,
+      // only `shopUndone` carries this; every other payload leaves it ""
+      undoneKind: kind === "undone" && typeof ev.data.kind === "string" ? ev.data.kind : "",
       seq: shopEventSeq,
     },
   });

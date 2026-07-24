@@ -25,6 +25,7 @@ import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
 import { AnimationGroup } from "@babylonjs/core/Animations/animationGroup";
 import { IntermissionScene, type IntermissionSceneOptions } from "./IntermissionScene";
 import { CAMERA_FOV, CAMERA_POSE, CAMERA_POSITION, CAMERA_TARGET } from "./layout";
+import { SHELF_RACK } from "./shelfDisplay";
 
 // --- OffscreenCanvas 2D stub (the dust motes need a DynamicTexture) ---------
 class StubGradient {
@@ -72,6 +73,17 @@ function makeScene(extra: Partial<IntermissionSceneOptions> = {}): IntermissionS
     now: () => 0,
     ...extra,
   });
+}
+
+/**
+ * Wait for `buildProps` to finish. It awaits a `Promise.all` of ~14 asset
+ * loads, so a couple of microtask ticks is not enough — poll the scene's own
+ * `built` flag, bounded so a genuine hang fails the test rather than the suite.
+ */
+async function settled(s: IntermissionScene): Promise<void> {
+  const priv = s as unknown as { built: boolean };
+  for (let i = 0; i < 200 && !priv.built; i++) await new Promise((r) => setTimeout(r, 0));
+  expect(priv.built, "market never finished building").toBe(true);
 }
 
 describe("IntermissionScene", () => {
@@ -151,6 +163,55 @@ describe("IntermissionScene", () => {
     await expect(s.setChampion("assets/models/champions/nope.glb", 1)).resolves.toBeUndefined();
     // no hero in frame (headless 404) — a purchase reaction is a silent no-op
     expect(() => s.playChampionReaction()).not.toThrow();
+    s.dispose();
+  });
+
+  /**
+   * The functional shelves (task #94). The point of building the rack from
+   * primitives instead of a .glb is that it EXISTS here — this is the same
+   * headless market where every loaded prop resolves null, so if the shelves
+   * were a model they would be absent exactly where the scene is testable.
+   * Stocking them is a real state change on real meshes, which is what makes
+   * "the shelves hold the goods" checkable without a screenshot.
+   */
+  it("builds a shelf rack even with no loadable models, and stocks it", async () => {
+    cover("shop-functional-shelves");
+    const s = makeScene();
+    await settled(s);
+    const posts = s.scene.meshes.filter((m) => m.name === "im-shelf-post");
+    const planks = s.scene.meshes.filter((m) => m.name === "im-shelf-plank");
+    expect(posts).toHaveLength(4);
+    expect(planks).toHaveLength(SHELF_RACK.plankY.length);
+
+    // stock it with one good per shelf → one mesh per good, under the rack
+    s.setShelfGoods([
+      { itemId: "i.sword", shelf: "offense", owned: false },
+      { itemId: "i.staff", shelf: "magic", owned: false },
+      { itemId: "i.plate", shelf: "defense", owned: true },
+    ]);
+    expect(s.scene.meshes.filter((m) => m.name === "im-good")).toHaveLength(3);
+
+    // BUYING TAKES IT OFF THE SHELF, and undoing that sale puts it back — a
+    // re-stock replaces the goods wholesale rather than piling a second set on
+    s.setShelfGoods([{ itemId: "i.staff", shelf: "magic", owned: false }]);
+    expect(s.scene.meshes.filter((m) => m.name === "im-good")).toHaveLength(1);
+    s.setShelfGoods([]);
+    expect(s.scene.meshes.filter((m) => m.name === "im-good")).toHaveLength(0);
+    // the carcass survives an empty catalogue — an empty shelf, not a hole
+    expect(s.scene.meshes.filter((m) => m.name === "im-shelf-plank")).toHaveLength(
+      SHELF_RACK.plankY.length,
+    );
+    s.dispose();
+    expect(() => s.setShelfGoods([{ itemId: "i.x", shelf: "offense", owned: false }])).not.toThrow();
+  });
+
+  it("remembers stock pushed in before the market finished building", async () => {
+    cover("shop-functional-shelves");
+    const s = makeScene();
+    // synchronously after construction buildProps() has not resolved yet
+    s.setShelfGoods([{ itemId: "i.sword", shelf: "offense", owned: false }]);
+    await settled(s);
+    expect(s.scene.meshes.filter((m) => m.name === "im-good")).toHaveLength(1);
     s.dispose();
   });
 

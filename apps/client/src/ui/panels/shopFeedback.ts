@@ -55,7 +55,23 @@ export type ShopEventReason =
   | "phase-closed"
   | "no-champion"
   // sell-specific
-  | "empty-slot";
+  | "empty-slot"
+  // UndoResult values from sim/economy/shop.ts (task #121)
+  /**
+   * The session's undo history is empty — everything undoable has been undone,
+   * or a committed action (a stat tick, a 傳說寶玉 roll, entering combat)
+   * cleared the stack. NOT an error: it is the honest answer to "go back one
+   * more", and saying it is the whole difference between a bounded undo and a
+   * button that appears broken.
+   */
+  | "nothing-to-undo"
+  /**
+   * The recorded slot no longer holds what the reversal expects, so the undo
+   * REFUSED rather than clobber inventory. Defensive; the commit rules keep it
+   * out of normal play, but if it ever fires the player must be told the
+   * inventory was left alone rather than silently see nothing happen.
+   */
+  | "stale";
 
 export type ShopToastTone = "ok" | "deny";
 
@@ -86,6 +102,8 @@ export const REJECT_TEXT: Record<ShopEventReason, string> = {
   "phase-closed": "現在不是備戰時間",
   "no-champion": "尚未選擇英雄",
   "empty-slot": "這個欄位是空的",
+  "nothing-to-undo": "沒有可以復原的步驟了",
+  stale: "道具欄已變動，為避免弄亂已取消復原",
 };
 
 const GENERIC_REJECT = "無法完成交易";
@@ -119,6 +137,28 @@ export function boughtToast(itemName: string): ShopToast {
 /** A completed sale, with the gold actually refunded. */
 export function soldToast(itemName: string, refund: number): ShopToast {
   return { tone: "ok", text: `賣出 ${itemName}（+${refund} g）`, sfx: SELL_SFX };
+}
+
+/**
+ * A completed UNDO (task #121). Names WHICH transaction was reversed — a
+ * reversed SELL put the item back and TOOK the refund away; a reversed BUY
+ * gave the money back and emptied the slot — because "undone" alone leaves the
+ * player checking their gold to work out what just happened. The gold shown is
+ * the sim's post-undo figure straight off the event, never a UI re-derivation:
+ * the whole point of the stored-delta reversal is that the number a player
+ * reads and the number in the sim are the same number.
+ *
+ * Reversing a sale plays the PURCHASE sound and reversing a purchase plays the
+ * coin sound, because that is what each one does to your wallet.
+ */
+export function undoneToast(undoneKind: string, itemName: string, gold: number): ShopToast {
+  const what = undoneKind === "sell" ? "賣出" : undoneKind === "buy" ? "購入" : "上一步";
+  const goldText = gold >= 0 ? `　金幣 ${gold} g` : "";
+  return {
+    tone: "ok",
+    text: `已復原${what}${itemName ? ` ${itemName}` : ""}${goldText}`,
+    sfx: undoneKind === "sell" ? BUY_SFX : SELL_SFX,
+  };
 }
 
 /** How long a toast stays on screen before the HUD drops it. */

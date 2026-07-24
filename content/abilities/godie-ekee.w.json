@@ -1,6 +1,7 @@
 {
   "id": "godie-ekee.w",
   "name": "93-02 抽點名",
+  "icon": "assets/icons/abilities/godie-ekee.w.webp",
   "description": "[被動]\n0秒冷卻時間\n\n點名是件很無聊的事，可是不點名學生又不來，所以叫獸們發明了隨機抽點，每過15秒就對600範圍內隨機一個敵人造成140點傷害。",
   "slot": "W",
   "castType": "self",

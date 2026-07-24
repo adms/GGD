@@ -56,9 +56,24 @@ export const CONTENT_BASE = "/content/";
 export const STOCK_CHAMPION_GLB_PREFIX = "assets/models/champions/";
 
 /**
- * The overlay .glbs are exported by tools/w3x-import already normalized to
- * ~1.7 world units tall (the same convention as the shipped
- * `imported.*` docs, which all carry scale 1.0), so no extra scaling.
+ * Doc `scale` for a synthesized overlay model.
+ *
+ * CORRECTED (task #61 audit). This constant used to be justified by "the
+ * exporter already normalized every overlay glb to ~1.7 world units, so no
+ * extra scaling" — that premise is FALSE. Measuring all 40 extracted glbs:
+ * 28 land on exactly 1.700u, but 12 escaped the exporter's hero-height guard
+ * (`10 < rawHeight < 500` in tools/w3x-import/w3xlib/models.py) and were baked
+ * at the flat 1/36 prop factor instead — N00B (小叮噹's blue panda) measures
+ * 6.672u, E00S 15.64u, H02S/H02Z 21.83u.
+ *
+ * The value stays 1 because it is no longer load-bearing: `ChampionView`
+ * height-normalizes every adopted glb at load (#150 TARGET_HEIGHT) and only
+ * falls back to `doc.scale` for a glb too degenerate to measure, and
+ * ChampionView is the ONLY consumer of an overlay doc (GameApp.modelDocFor is
+ * the single call site; the champ-select / store previews never see one). So 1
+ * is the correct "unmeasurable degenerate" fallback — but it must NOT be read
+ * as an assertion that the files are pre-normalized. Any future consumer that
+ * uses `doc.scale` as an absolute has to measure, exactly as ChampionView does.
  */
 export const OVERLAY_MODEL_SCALE = 1;
 

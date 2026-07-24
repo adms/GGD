@@ -2,6 +2,7 @@
   "id": "godie-e00v.r",
   "schema": "ability@1",
   "name": "84-04 給我蜂蜜",
+  "icon": "assets/icons/abilities/godie-e00v.r.webp",
   "description": "[主動攻擊]\n60秒冷卻時間\n\n抓狂的小熊狠狠地抓住對方，接著賞他幾個熊掌吃，每次打擊給予暈眩傷害，最後一擊會將對方彈開1000距離，造成總共500+力量*1點傷害。",
   "slot": "R",
   "castType": "targeted",

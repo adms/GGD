@@ -1,6 +1,7 @@
 {
   "id": "godie-hjai.ex",
   "name": "04-002 惡夢魔王的碎片",
+  "icon": "assets/icons/abilities/godie-hjai.ex.webp",
   "description": "[輔助]\n70秒冷卻時間\n\n使用惡夢魔王碎片來短暫增幅黑魔法的威力，持續20秒。\n\n龍破斬及神滅斬增加傷害(智慧*7)",
   "slot": "EX",
   "castType": "self",

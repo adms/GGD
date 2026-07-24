@@ -2,6 +2,7 @@
   "id": "godie-h001.q",
   "schema": "ability@1",
   "name": "41-01 吸血鬼之吻",
+  "icon": "assets/icons/abilities/godie-h001.q.webp",
   "description": "[主動攻擊]\n45秒冷卻時間\n\n施展邪惡的吸血魔法，將會從敵人身上奪取200點生命來回復自己的體力。",
   "slot": "Q",
   "castType": "targeted",

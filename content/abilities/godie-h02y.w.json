@@ -2,6 +2,7 @@
   "id": "godie-h02y.w",
   "schema": "ability@1",
   "name": "97-02 貳之秘劍-紅蓮腕",
+  "icon": "assets/icons/abilities/godie-h02y.w.webp",
   "description": "[主動攻擊]\n40秒冷卻時間\n\n將目標抓至身邊並持續2秒，接著用手上的火藥點燃爆炸，造成小範圍75點傷害及暈眩0.5秒。抓住期間中斷則無爆炸效果。",
   "slot": "W",
   "castType": "self",

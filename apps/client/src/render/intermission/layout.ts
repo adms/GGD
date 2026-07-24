@@ -75,15 +75,19 @@ export const SHOP_MODELS = {
 } as const;
 
 /**
- * The 旅行商人's HEAD ICON (task #146). The user asked for the merchant to have
- * a portrait 「頭圖」 "like a champion has one"; it is shown in his intermission
- * speech box (see ui/MerchantTipBox.tsx). No clerk/merchant art ships in the CC0
- * packs, so this is a PLACEHOLDER path that follows the champion-icon convention
- * (assets/icons/<group>/<id>.png). Until the PNG is generated the GlyphTile that
- * renders it degrades to a seeded glyph on the 404 — nothing breaks in the mean-
- * time. TO GENERATE: a warm, hooded dusk-market traveling-merchant bust matching
- * merchant.glb (the Quaternius "Hooded Adventurer" rig), 128×128 PNG, dropped at
- * content/assets/icons/shop/traveling-merchant.png.
+ * The 旅行商人's HEAD ICON (task #146/#148). The user asked for the merchant to
+ * have a portrait 「頭圖」 "like a champion has one"; it is shown in his
+ * intermission speech box (see ui/MerchantTipBox.tsx), which the owner wanted to
+ * read UNMISTAKABLY as the merchant SPEAKING rather than a floating banner.
+ *
+ * This PNG NOW SHIPS. It was generated (task #148) with the repo's local
+ * two-pass SD pipeline (tools/icon-gen/local, the 先特徵後風格 method): a jovial
+ * hooded dusk-market traveling-merchant bust — warm smile, grey beard, a gold
+ * coin and his wares — matching merchant.glb (the Quaternius "Hooded Adventurer"
+ * rig), 128×128 PNG at content/assets/icons/shop/traveling-merchant.png. So
+ * MerchantHeadIcon's raster branch lights up and the box shows a real merchant
+ * FACE at 46px; the drawn vector bust stays as the never-404 fallback if the
+ * file is ever missing on a fresh clone.
  */
 export const MERCHANT_PORTRAIT = "assets/icons/shop/traveling-merchant.png";
 

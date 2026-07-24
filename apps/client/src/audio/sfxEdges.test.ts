@@ -1,6 +1,13 @@
 import { describe, expect, it } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
-import { diffTally, MULTIKILL_WINDOW_MS, type TallySnapshot } from "./sfxEdges";
+import {
+  crossedIntoLowHealth,
+  diffTally,
+  LOW_HEALTH_FRACTION,
+  MULTIKILL_WINDOW_MS,
+  type HealthSnapshot,
+  type TallySnapshot,
+} from "./sfxEdges";
 
 const base: TallySnapshot = {
   seatId: 1,
@@ -100,5 +107,37 @@ describe("diffTally", () => {
       { nowMs: 100, lastKillMs: null },
     );
     expect(r.events).toEqual(["kill", "death", "allySlain", "levelUp", "exUnlock"]);
+  });
+});
+
+describe("crossedIntoLowHealth", () => {
+  const hp = (h: number, alive = true, maxHp = 100): HealthSnapshot => ({ hp: h, maxHp, alive });
+
+  it("fires once on the downward crossing, then holds while below", () => {
+    cover("audio-low-health-edge");
+    // above → below the 30% line: fires
+    expect(crossedIntoLowHealth(hp(50), hp(25))).toBe(true);
+    // already below, dropping further: holds (cooldown/edge, not per-tick)
+    expect(crossedIntoLowHealth(hp(25), hp(10))).toBe(false);
+  });
+
+  it("does not fire while HP stays above the danger line", () => {
+    cover("audio-low-health-edge");
+    expect(crossedIntoLowHealth(hp(90), hp(60))).toBe(false);
+    // exactly at the threshold counts as in-danger
+    expect(crossedIntoLowHealth(hp(90), hp(LOW_HEALTH_FRACTION * 100))).toBe(true);
+  });
+
+  it("re-arms after a respawn (dead / no champion → back alive and low)", () => {
+    cover("audio-low-health-edge");
+    expect(crossedIntoLowHealth(hp(0, false), hp(20))).toBe(true);
+    expect(crossedIntoLowHealth({ hp: 0, maxHp: 0, alive: true }, hp(20))).toBe(true);
+  });
+
+  it("never fires on a dead, empty, or zero-HP next snapshot", () => {
+    cover("audio-low-health-edge");
+    expect(crossedIntoLowHealth(hp(50), hp(10, false))).toBe(false); // dead
+    expect(crossedIntoLowHealth(hp(50), { hp: 0, maxHp: 0, alive: true })).toBe(false); // no champ
+    expect(crossedIntoLowHealth(hp(50), hp(0))).toBe(false); // 0 HP (death handles it)
   });
 });

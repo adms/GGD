@@ -15,12 +15,19 @@
  * not painting two full 3D scenes at once; the arena's sim, network and view
  * sync keep running, so leaving the market is seamless.
  */
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { Items } from "@ggd/shared/sim/content/registry";
 import { IntermissionScene } from "../render/intermission/IntermissionScene";
+import type { ShelfGoodInput } from "../render/intermission/shelfDisplay";
 import { useHud } from "../net/RoomStore";
 import { hudActions } from "./actions";
+import { playChampionSelectVoice } from "../audio/championVoice";
+import { HeroReactionBubble } from "./HeroReactionBubble";
 import { MerchantTipBox } from "./MerchantTipBox";
+import { shopCatalogue } from "./panels/champSelectFilter";
+import { groupCatalogue } from "./panels/shopGrouping";
+import { useWhitelist } from "./panels/whitelist";
 
 /** Cross-fade in from black so the scene swap is a cut TO something, not a flash. */
 const FADE_MS = 280;
@@ -39,6 +46,31 @@ export function IntermissionStage(): React.JSX.Element | null {
   );
   // a COMPLETED purchase makes the merchant hand something over
   const purchaseSeq = useHud((s) => (s.shopEvent?.kind === "bought" ? s.shopEvent.seq : 0));
+
+  // ---- what is ON THE SHELVES (task #94) ----------------------------------
+  // The stall's rack shows the SAME catalogue the card does — #70's finals,
+  // the operator's whitelist applied, grouped by `groupCatalogue` — so the 3D
+  // market and the panel can never disagree about what is for sale. The
+  // champion's own inventory rides along so a good already in a slot goes dark
+  // on the shelf, and comes back the moment it is sold (or a sale is undone).
+  const { whitelist } = useWhitelist();
+  // JSON key rather than the array itself: `seat.items` is a fresh array every
+  // snapshot, and re-stocking the shelves 30× a second is pure churn.
+  const ownedKey = useHud((s) => {
+    if (s.localSeatId === null) return "";
+    const seat = s.seats.find((v) => v.seatId === s.localSeatId);
+    return seat ? seat.items.join("|") : "";
+  });
+  const shelfGoods = useMemo<ShelfGoodInput[]>(() => {
+    const owned = new Set(ownedKey.split("|").filter(Boolean));
+    const out: ShelfGoodInput[] = [];
+    for (const shelf of groupCatalogue(shopCatalogue(Items.all(), whitelist))) {
+      for (const item of shelf.items) {
+        out.push({ itemId: item.id, shelf: shelf.id, owned: owned.has(item.id) });
+      }
+    }
+    return out;
+  }, [whitelist, ownedKey]);
 
   // ---- scene lifecycle (once per mount = once per intermission) ------------
   // A FRESH SCENE PER ROUND IS DELIBERATE. Re-opening the market used to
@@ -81,6 +113,11 @@ export function IntermissionStage(): React.JSX.Element | null {
     sceneRef.current?.setTeam(teamId);
   }, [teamId]);
 
+  // ---- stock the stall's shelves, and re-stock as the inventory changes ----
+  useEffect(() => {
+    sceneRef.current?.setShelfGoods(shelfGoods);
+  }, [shelfGoods]);
+
   // ---- the player's own hero at the counter --------------------------------
   useEffect(() => {
     if (!championId) return;
@@ -89,11 +126,22 @@ export function IntermissionStage(): React.JSX.Element | null {
     void sceneRef.current?.setChampion(model.glbPath, model.scale, model.modelKey);
   }, [championId]);
 
-  // ---- a completed purchase: merchant hands it over, YOUR hero celebrates ---
+  // ---- a completed purchase: merchant hands it over, YOUR hero RESPONDS -----
+  // The owner asked that the hero react 「根據個性特色回應自己的想法 不只是擺出
+  // 攻擊動作而已」. So: the merchant still hands it over; the hero's reaction
+  // ANIMATION now biases to a celebration (a cheer/nod, NOT an attack swing —
+  // `celebratoryOnly`, degrading to a satisfied squash-pop when a hero has no
+  // cheer clip); the in-character LINE is surfaced by <HeroReactionBubble>; and,
+  // as a silent-safe bonus, his own voice quip plays (the voice layer is
+  // autoplay-/mute-/test-silence-gated — task #62 — so it makes NO sound in
+  // headless runs or when muted).
   useEffect(() => {
     if (purchaseSeq <= 0) return;
     sceneRef.current?.playGesture("interact");
-    sceneRef.current?.playChampionReaction();
+    sceneRef.current?.playChampionReaction({ celebratoryOnly: true });
+    if (championId) void playChampionSelectVoice(championId);
+    // championId is intentionally NOT a dep: only a genuine purchase pops this.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [purchaseSeq]);
 
   if (typeof document === "undefined") return null;
@@ -106,6 +154,9 @@ export function IntermissionStage(): React.JSX.Element | null {
       {/* the merchant's rotating tips box (task #148) — DOM ordered BEFORE the
           fade so the black cover hides it until the scene has eased in */}
       <MerchantTipBox />
+      {/* the player hero's OWN in-character reaction to a purchase (owner ask):
+          anchored over him at the RIGHT of the counter, tail pointing at him */}
+      <HeroReactionBubble championId={championId} purchaseSeq={purchaseSeq} />
       {/* the fade sits OVER the canvas and lifts once the scene has eased in */}
       <div
         style={{

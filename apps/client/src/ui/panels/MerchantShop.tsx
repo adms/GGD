@@ -43,6 +43,7 @@ import { SHOP_CARD_SIDE } from "../../render/intermission/layout";
 import { audioSystem } from "../../audio";
 import { hudActions } from "../actions";
 import { GlyphTile } from "../components/GlyphTile";
+import { MerchantHeadIcon } from "../components/MerchantHeadIcon";
 import { championIconUrl } from "../icons";
 import { SfxButton } from "../SfxButton";
 import { GOLD, PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
@@ -71,6 +72,7 @@ import {
   boughtToast,
   rejectToast,
   soldToast,
+  undoneToast,
   type ShopToast,
 } from "./shopFeedback";
 
@@ -111,14 +113,29 @@ function sendUndoLastStep(): void {
 
 /**
  * Whether the prominent undo button should show (task #121: 「只在有可還原時顯示」).
- * Pure so it can be pinned by a test: a successful buy or sell is on record AND
- * the shop is currently interactable. Rejections and an empty history show
- * nothing; the SIM caps an over-eager repeat undo to a no-op, so leaving the
- * button up for multi-step 復原 is safe.
+ *
+ * ── IT READS THE SERVER'S OWN DEPTH, NOT THE LAST EVENT ─────────────────────
+ * This used to be `lastEvent.kind === "bought" || "sold"` — a heuristic off the
+ * most recent shop TOAST — and it was wrong in both directions:
+ *
+ *   too permissive  after undoing everything, the last event was still a
+ *                   `bought`/`sold`, so the button stayed lit and the next
+ *                   press was a silent no-op. Observed live: a third click did
+ *                   nothing, with the button still glowing.
+ *   too restrictive any later shop event of another kind (a rejected buy —
+ *                   "金幣不足" is a click away at all times) replaced the last
+ *                   event and HID a step that was still perfectly undoable.
+ *
+ * `SeatState.undoDepth` — `champ.undoStack.length`, projected every snapshot
+ * since the undo landed and read by nobody until now — is the exact answer. It
+ * goes to 0 when the stack empties, when a stat tick or a 傳說寶玉 commits the
+ * session, and when combat commits the round, so the button disappears in every
+ * case where pressing it would do nothing. `shopOpen` keeps it off screen once
+ * the shop closes, mirroring the server's own `shopAccess` re-gate on the
+ * command (CommandSystem) so the HUD and the sim refuse in the same breath.
  */
-export function canUndoShopStep(lastEvent: { kind: string } | null, shopOpen: boolean): boolean {
-  if (!shopOpen || !lastEvent) return false;
-  return lastEvent.kind === "bought" || lastEvent.kind === "sold";
+export function canUndoShopStep(undoDepth: number, shopOpen: boolean): boolean {
+  return shopOpen && undoDepth > 0;
 }
 
 /** The card's dock anchoring for the open panel and the collapsed rail. */
@@ -234,7 +251,9 @@ export function MerchantShop(): React.JSX.Element | null {
         ? boughtToast(name)
         : shopEvent.kind === "sold"
           ? soldToast(name, refundOf(shopEvent.itemId))
-          : rejectToast(shopEvent.reason, name);
+          : shopEvent.kind === "undone"
+            ? undoneToast(shopEvent.undoneKind, name, shopEvent.gold)
+            : rejectToast(shopEvent.reason, name);
     setToast(next);
     if (next.sfx) audioSystem.playSfx(next.sfx);
     const timer = setTimeout(() => setToast(null), TOAST_TTL_MS);
@@ -346,7 +365,11 @@ export function MerchantShop(): React.JSX.Element | null {
       }}
     >
       {/* ---- header ---- */}
-      <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        {/* the 店員's own 頭圖 (task #146): the card is HIS counter, and until
+            now the only face on it was the player's hero portrait in the tab
+            row (#122) — the merchant was a bare string. */}
+        <MerchantHeadIcon size={26} radius={7} accent={ACCENT} />
         <div style={{ fontSize: 18, fontWeight: "bold", color: ACCENT }}>旅行商人</div>
         <div style={{ fontSize: 11, color: clock.color, fontVariantNumeric: "tabular-nums" }}>{clock.text}</div>
         <div style={{ marginLeft: "auto", color: GOLD, fontWeight: "bold" }}>{seat.gold} g</div>
@@ -372,15 +395,17 @@ export function MerchantShop(): React.JSX.Element | null {
           : "本回合已陣亡 · 回合結束前仍可採購"}
       </div>
 
-      {/* ---- prominent UNDO (task #121): only shown when a buy/sell is on record.
-              The command + the exact gold reversal are the sim half's job; this
+      {/* ---- prominent UNDO (task #121): shown exactly when the SERVER says a
+              step is reversible (`seat.undoDepth > 0`), so it disappears the
+              moment the stack empties instead of staying lit over a no-op. The
+              command + the exact gold reversal are the sim half's job; this
               button just makes 復原 obvious and dispatches it. ---- */}
-      {canUndoShopStep(shopEvent, gate.open) && (
+      {canUndoShopStep(seat.undoDepth, gate.open) && (
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 8 }}>
           <SfxButton
             kind="primary"
             onClick={sendUndoLastStep}
-            title="還原上一筆買賣（金幣精準沖回）"
+            title={`還原上一筆買賣（金幣精準沖回）· 還可復原 ${seat.undoDepth} 步`}
             style={{
               flex: 1,
               padding: "8px 14px",
@@ -395,7 +420,7 @@ export function MerchantShop(): React.JSX.Element | null {
               cursor: "pointer",
             }}
           >
-            ↩ 復原上一步
+            ↩ 復原上一步{seat.undoDepth > 1 ? `（還有 ${seat.undoDepth} 步）` : ""}
           </SfxButton>
         </div>
       )}

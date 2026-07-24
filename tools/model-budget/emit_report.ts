@@ -228,12 +228,23 @@ function analyse(file: string, url: string, group: string, shipping: boolean): G
   };
 }
 
+/**
+ * A generated LOD tier (task #115), e.g. `mage-mid.glb` / `mage-small.glb`.
+ * These are DERIVED variants of a .glb already counted, not models of their
+ * own: counting them would inflate the corpus from 203 to 377 rows, and since
+ * nothing references them by path they would every one be classified
+ * role="unused" — turning the 模型預算 page's "unused" list, the thing it exists
+ * to make actionable, into noise. The saving they represent belongs in a
+ * per-model tier column (a #99 enhancement), not in a new row.
+ */
+const LOD_TIER_GLB = /-(mid|small)\.glb$/;
+
 function walk(dir: string, out: string[] = []): string[] {
   if (!fs.existsSync(dir)) return out;
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
     const p = path.join(dir, e.name);
     if (e.isDirectory()) walk(p, out);
-    else if (e.name.endsWith(".glb")) out.push(p);
+    else if (e.name.endsWith(".glb") && !LOD_TIER_GLB.test(e.name)) out.push(p);
   }
   return out;
 }

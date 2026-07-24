@@ -26,7 +26,16 @@ type Persist = Pick<Storage, "getItem" | "setItem">;
 
 function safeLocalStorage(): Persist | null {
   try {
-    return typeof localStorage !== "undefined" ? localStorage : null;
+    // `typeof !== "undefined"` alone is not enough: Node 20+ DEFINES a global
+    // `localStorage` that is only usable when the process was started with
+    // --localstorage-file, and whose getItem is missing otherwise. Without the
+    // method check, merely importing the settings singleton throws in any
+    // node-environment vitest file — so the render seam could not be unit
+    // tested at all. Duck-type the two methods we actually use.
+    if (typeof localStorage === "undefined") return null;
+    return typeof localStorage.getItem === "function" && typeof localStorage.setItem === "function"
+      ? localStorage
+      : null;
   } catch {
     return null; // WKWebView private mode throws on access
   }

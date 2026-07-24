@@ -13,6 +13,7 @@ import {
   boughtToast,
   rejectToast,
   soldToast,
+  undoneToast,
   type ShopEventReason,
 } from "./shopFeedback";
 
@@ -34,6 +35,9 @@ const ALL_REASONS: ShopEventReason[] = [
   "phase-closed",
   "no-champion",
   "empty-slot",
+  // UndoResult (task #121) — the two ways `undoLastShopStep` can come back "no"
+  "nothing-to-undo",
+  "stale",
 ];
 
 describe("shop rejection feedback", () => {
@@ -95,5 +99,48 @@ describe("shop success feedback", () => {
     cover("shop-reject-surfaced");
     expect(BUY_SFX).not.toBe(DENY_SFX);
     expect(SELL_SFX).not.toBe(DENY_SFX);
+  });
+});
+
+/**
+ * int-36 (shop-undo-feedback, task #121). The sim has emitted `shopUndone` and
+ * `undoRejected` since the undo landed and the client dropped BOTH — pressing
+ * 復原上一步 moved the gold and said nothing, and pressing it once too often
+ * was indistinguishable from a dead button. These are the sentences that close
+ * that, and they must NAME which transaction was reversed: "undone" alone
+ * leaves the player checking their wallet to find out what happened.
+ */
+describe("shop undo feedback (#121)", () => {
+  it("says WHICH transaction was reversed, and reports the sim's own gold", () => {
+    cover("shop-undo-feedback");
+    const sell = undoneToast("sell", "烈焰法杖", 400);
+    expect(sell.tone).toBe("ok");
+    expect(sell.text).toContain("賣出");
+    expect(sell.text).toContain("烈焰法杖");
+    expect(sell.text).toContain("400"); // the post-undo gold, straight off the event
+
+    const buy = undoneToast("buy", "烈焰法杖", 1600);
+    expect(buy.text).toContain("購入");
+    expect(buy.text).toContain("1600");
+    // reversing a BUY refunds and reversing a SELL charges — opposite wallet
+    // moves, so they must not sound the same
+    expect(buy.sfx).not.toBe(sell.sfx);
+  });
+
+  it("degrades to a readable line when the kind or the gold is missing", () => {
+    cover("shop-undo-feedback");
+    const toast = undoneToast("", "", -1);
+    expect(toast.tone).toBe("ok");
+    expect(toast.text).toContain("已復原");
+    expect(toast.text).not.toContain("-1"); // never leak the "no gold on the event" sentinel
+  });
+
+  it("a refused undo is a DENY toast that explains itself", () => {
+    cover("shop-undo-feedback");
+    const empty = rejectToast("nothing-to-undo");
+    expect(empty.tone).toBe("deny");
+    expect(empty.sfx).toBe(DENY_SFX);
+    expect(empty.text).not.toContain("nothing-to-undo");
+    expect(rejectToast("stale").text).not.toBe(empty.text);
   });
 });

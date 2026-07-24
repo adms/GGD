@@ -1,6 +1,7 @@
 {
   "id": "godie-hapm.ex",
   "name": "52-002 射殺百頭",
+  "icon": "assets/icons/abilities/godie-hapm.ex.webp",
   "description": "[主動攻擊]\n60秒冷卻時間\n\n利用手中的無銘戰斧重現最得意的寶具-射殺百頭，對目標連續100下的斬擊，造成(力量*9)+900點傷害。",
   "slot": "EX",
   "castType": "targeted",

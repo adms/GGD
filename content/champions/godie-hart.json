@@ -305,5 +305,29 @@
     "godie"
   ],
   "exAbility": "godie-hart.ex",
+  "passive": {
+    "name": "01-00 怒斬",
+    "hooks": [
+      {
+        "on": "onBasicAttack",
+        "chance": 0.15,
+        "effects": [
+          {
+            "kind": "damage",
+            "damageType": "physical",
+            "amount": {
+              "flat": 175.0
+            }
+          },
+          {
+            "kind": "applyStatus",
+            "statusId": "burnstun",
+            "duration": 0.5,
+            "stun": true
+          }
+        ]
+      }
+    ]
+  },
   "icon": "assets/icons/champions/godie-hart.png"
 }

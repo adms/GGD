@@ -1,6 +1,7 @@
 {
   "id": "godie-hlgr.ex",
   "name": "03-001 龍騎兵",
+  "icon": "assets/icons/abilities/godie-hlgr.ex.webp",
   "description": "[主動攻擊]\n60秒冷卻時間\n\n射出8個自動瞄準砲筒，自動鎖定鋼彈週遭的敵人進行攻擊，每次攻擊造成300點法術傷害。持續時間20秒。",
   "slot": "EX",
   "castType": "self",

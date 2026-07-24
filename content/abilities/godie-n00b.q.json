@@ -2,6 +2,7 @@
   "id": "godie-n00b.q",
   "schema": "ability@1",
   "name": "57-01 空氣砲",
+  "icon": "assets/icons/abilities/godie-n00b.q.webp",
   "description": "[主動攻擊]\n35秒冷卻時間\n\n小叮噹的空氣砲可以造成一直線上敵方部隊250傷害並且擊退附近敵人。",
   "slot": "Q",
   "castType": "skillshot",

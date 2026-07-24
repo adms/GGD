@@ -2,6 +2,7 @@
   "id": "godie-e00t.w",
   "schema": "ability@1",
   "name": "66-02 驚駭",
+  "icon": "assets/icons/abilities/godie-e00t.w.webp",
   "description": "[輔助]\n<A0I8,Cool1>秒冷卻時間\n\n貞子突如其來的嚇人，可以使周圍<A0I9,Area1>距離內的單位被嚇到只剩下逃跑的能力，持續<A0I9,Dur1>秒。",
   "slot": "W",
   "castType": "targeted",

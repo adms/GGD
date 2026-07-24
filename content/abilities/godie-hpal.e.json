@@ -1,6 +1,7 @@
 {
   "id": "godie-hpal.e",
   "name": "35-03 鏡蠱",
+  "icon": "assets/icons/abilities/godie-hpal.e.webp",
   "description": "[輔助]\n45秒冷卻時間\n\n召喚蜘蛛獸，吐絲作繩索，為目標單位抵擋住1000點的法術傷害，持續10秒。",
   "slot": "E",
   "castType": "targeted",

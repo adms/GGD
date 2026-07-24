@@ -1,6 +1,7 @@
 {
   "id": "godie-oshd.w",
   "name": "29-02 鬼王流星雨",
+  "icon": "assets/icons/abilities/godie-oshd.w.webp",
   "description": "[主動攻擊]\n45秒冷卻時間\n\n呼喚數波流星雨來傷害附近的敵方部隊。每一波可以造成150點傷害，可持續6秒。",
   "slot": "W",
   "castType": "ground",

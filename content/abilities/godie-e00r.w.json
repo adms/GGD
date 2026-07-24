@@ -2,6 +2,7 @@
   "id": "godie-e00r.w",
   "schema": "ability@1",
   "name": "59-02 高週波短刀",
+  "icon": "assets/icons/abilities/godie-e00r.w.webp",
   "description": "[被動]\n0秒冷卻時間\n\n高週波短刀攻擊時有10%機率增加75點破壞力，並有機會將敵人擊昏0.5秒。",
   "slot": "W",
   "castType": "self",

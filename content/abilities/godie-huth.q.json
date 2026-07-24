@@ -1,6 +1,7 @@
 {
   "id": "godie-huth.q",
   "name": "28-01 吃掉你",
+  "icon": "assets/icons/abilities/godie-huth.q.webp",
   "description": "[主動攻擊]\n35秒冷卻時間\n張開大口吃掉目標，把敵人變成養分。\n\n每吃掉6隻增加1點力量。",
   "slot": "Q",
   "castType": "targeted",

@@ -1,6 +1,7 @@
 {
   "id": "godie-hjai.w",
   "name": "04-02 炸彈陣",
+  "icon": "assets/icons/abilities/godie-hjai.w.webp",
   "description": "[主動攻擊]\n25秒冷卻時間\n\n施展火焰爆裂魔法傷害敵方部隊，每秒可以燒傷55點並持續5秒的時間。在火柱消散之後，在火焰中的部隊仍然會持續受到10點的傷害，持續5秒。",
   "slot": "W",
   "castType": "ground",

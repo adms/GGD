@@ -2,6 +2,7 @@
   "id": "godie-h001.r",
   "schema": "ability@1",
   "name": "41-04 究極魔法流星雨",
+  "icon": "assets/icons/abilities/godie-h001.r.webp",
   "description": "[主動攻擊]\n60秒冷卻時間\n\n借用火龍巴拉卡斯之力，召喚出許多致命的流星隕石攻擊敵方，每顆隕石造成350點傷害，總共2顆隕石。",
   "slot": "R",
   "castType": "targeted",

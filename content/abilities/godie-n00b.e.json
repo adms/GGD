@@ -2,6 +2,7 @@
   "id": "godie-n00b.e",
   "schema": "ability@1",
   "name": "57-02 任意門",
+  "icon": "assets/icons/abilities/godie-n00b.e.webp",
   "description": "[輔助]\n80秒冷卻時間\n\n使用任意門可以傳送到地圖探索過的任何一點，準備時間為3秒。",
   "slot": "E",
   "castType": "dash",

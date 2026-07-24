@@ -1,6 +1,7 @@
 {
   "id": "godie-nplh.ex",
   "name": "16-002 布都御魂",
+  "icon": "assets/icons/abilities/godie-nplh.ex.webp",
   "description": "[輔助]\n45秒冷卻時間\n\n麻倉家世世代代流傳的通靈之劍，可以增加靈體強韌度與等級。點選使用二段媒介，使麻倉葉攻擊力提升300，但法力每秒流失30點，持續15秒。\n當阿彌陀丸在身邊時施展，則會觸發終極招式-白鵠，給予前方所有敵人750+力量*8點傷害。",
   "slot": "EX",
   "castType": "self",

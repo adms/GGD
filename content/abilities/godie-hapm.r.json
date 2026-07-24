@@ -1,6 +1,7 @@
 {
   "id": "godie-hapm.r",
   "name": "52-04 巨神一擊",
+  "icon": "assets/icons/abilities/godie-hapm.r.webp",
   "description": "[主動攻擊]\n60秒冷卻時間\n\n燃燒巨斧向前衝刺400距離後揮出致命的一擊，對周圍400內的敵人造成600點傷害。",
   "slot": "R",
   "castType": "ground",

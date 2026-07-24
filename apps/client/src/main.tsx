@@ -13,6 +13,9 @@ import { resetHudStore } from "./net/RoomStore";
 import { initRenderConfig } from "./render/RenderConfig";
 import { initSettings } from "./settings";
 import { qualityController } from "./render/QualityController";
+import { loadModelLodManifest, setModelLodTier } from "./render/modelLod";
+import { withContentVersion } from "./content/assetVersion";
+import { CONTENT_BASE_URL } from "./content/bootContent";
 import { bindGoreToSettings } from "./vfx/goreSettings";
 import { perfBus } from "./perfBus";
 import { ensureContentLoaded, isContentReady } from "./content/bootContent";
@@ -26,6 +29,11 @@ initCursor(); // apply the persisted JRPG cursor size to <html> before first pai
 initRenderConfig(); // load the persisted quality override (legacy mobile tier)
 initSettings(); // first-boot auto-detect → recommended preset (item 6)
 qualityController.init(); // subscribe the render seam to settings/adaptive changes
+// MODEL LOD (task #115): the graphics preset picks WHICH .glb is fetched, not
+// just how it is drawn. Subscribed here (not inside AssetManager) because there
+// is one tier for the whole app and several scenes build their own AssetManager.
+setModelLodTier(qualityController.getParams().modelLod);
+qualityController.subscribe((p) => setModelLodTier(p.modelLod));
 bindGoreToSettings(); // 濺血 style/intensity: settings -> vfx layer (task #39)
 
 // dev-only introspection handle (mirrors Renderer's __ggdScene) — lets the
@@ -121,6 +129,11 @@ function boot(): void {
   // Fire-and-track the content load. The readiness signal (content/bootContent)
   // flips when it settles; ScreenBody + startMatch observe it.
   void ensureContentLoaded().then((res) => {
+    // The LOD index rides the content version, so it is fetched AFTER the boot
+    // publishes it — that is what makes it `immutable` instead of a per-boot
+    // revalidation, and no model can be requested before content is ready
+    // anyway. A failure here just leaves every path resolving to itself.
+    void loadModelLodManifest(CONTENT_BASE_URL, withContentVersion);
     if (res.ok) {
       // transport is load-bearing telemetry: "per-doc" means content/bundle.json
       // was missing/stale, so this boot paid 1,454 requests instead of 1.

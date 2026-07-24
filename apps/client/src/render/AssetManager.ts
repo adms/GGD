@@ -44,6 +44,7 @@ import type { Scene } from "@babylonjs/core/scene";
 import type { AssetContainer } from "@babylonjs/core/assetContainer";
 import { LoadAssetContainerAsync } from "@babylonjs/core/Loading/sceneLoader";
 import { withContentVersion } from "../content/assetVersion";
+import { resolveLodPath } from "./modelLod";
 
 /**
  * Ceiling on the shared raw-bytes cache. 24 MB holds the whole intermission
@@ -153,12 +154,24 @@ export class AssetManager {
   /**
    * Resolve an AssetContainer for a glb path relative to content/
    * (e.g. "assets/models/props/pillar.glb"), or null when unavailable.
+   *
+   * MODEL LOD (task #115). The authored path in is the model doc's; the path
+   * actually FETCHED is `resolveLodPath`'s, which appends `-mid`/`-small` when
+   * the active graphics preset asks for a lower tier and that tier was
+   * generated. This is the ONE place the swap happens — every consumer
+   * (ChampionView, GuardianView, FlowerView, StorePreview, IntermissionScene,
+   * the audition harnesses) already funnels through here.
+   *
+   * The cache is keyed on the RESOLVED path, not the authored one: keying on
+   * the authored path would hand back the previous tier's container after a
+   * settings change and the setting would silently do nothing again.
    */
   load(path: string): Promise<AssetContainer | null> {
-    let pending = this.cache.get(path);
+    const resolved = resolveLodPath(path);
+    let pending = this.cache.get(resolved);
     if (!pending) {
-      pending = this.loadUncached(path);
-      this.cache.set(path, pending);
+      pending = this.loadUncached(resolved);
+      this.cache.set(resolved, pending);
     }
     return pending;
   }

@@ -1,6 +1,7 @@
 {
   "id": "godie-othr.w",
   "name": "31-02 重爪擊",
+  "icon": "assets/icons/abilities/godie-othr.w.webp",
   "description": "[主動攻擊]\n45秒冷卻時間\n\n使用金鋼狼獨有的爪子來攻擊敵人，造成劇烈的痛苦，給予250點傷害的同時可以恢復自己的生命，並且緩慢敵人移速30%，維持3秒。",
   "slot": "W",
   "castType": "targeted",

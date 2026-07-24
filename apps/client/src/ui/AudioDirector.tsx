@@ -28,6 +28,7 @@ import { useHud } from "../net/RoomStore";
 import { useApp } from "./platform/store";
 import {
   audioSystem,
+  crossedIntoLowHealth,
   diffTally,
   isCombatStart,
   sceneForMatch,
@@ -35,6 +36,7 @@ import {
   stepCountdown,
   COUNTDOWN_INITIAL,
   type CountdownState,
+  type HealthSnapshot,
   type TallySnapshot,
 } from "../audio";
 import { useAudioBoot, useAudioScene, useBgmOverride, useLoginTheme } from "./useAudio";
@@ -67,6 +69,11 @@ export function AudioDirector(): null {
     if (s.localSeatId === null) return 0;
     return s.seats.find((x) => x.seatId === s.localSeatId)?.exRank ?? 0;
   });
+  // Local HP bar (discrete, change-guarded projections) — drives the lowHealth
+  // warning cue. Primitive selectors so a bar tick can't spuriously re-render.
+  const localHp = useHud((s) => s.localHp);
+  const localMaxHp = useHud((s) => s.localMaxHp);
+  const localAlive = useHud((s) => s.localAlive);
   // Ready = "I have answered the prep window's question" (task #95). A single
   // boolean, flipped at most once per round → still a discrete projection.
   const localReady = useHud((s) => {
@@ -108,14 +115,23 @@ export function AudioDirector(): null {
   const scene = override ?? derivedScene;
   useAudioScene(scene);
 
-  // matchStart greeting on the shell → match entry (fires once per match).
+  // matchStart greeting on the shell → match entry (fires once per match). The
+  // 効果音ラボ 試合開始のゴング (#51 match-start-gong) LAYERS under the Japanese
+  // announcer VO — its own key, never mixed into the VO-only matchStart pool.
   const prevScreen = useRef(screen);
   useEffect(() => {
-    if (screen === "match" && prevScreen.current !== "match") audioSystem.playSfx("matchStart");
+    if (screen === "match" && prevScreen.current !== "match") {
+      audioSystem.playSfx("matchStart");
+      audioSystem.playSfx("matchStartGong");
+    }
     prevScreen.current = screen;
   }, [screen]);
 
-  // battleStart sting on the intermission → combat edge (match only).
+  // Phase-edge one-shots (match only):
+  //   • intermission → combat : battleStart sting + roundStart VO
+  //   • * → champSelect        : vsReveal 對戰カード bachi-bachi flourish (#51)
+  //   • * → matchEnd           : match-end gong (#51), layered under the win/lose
+  //                              sting `sceneForMatch` already swaps the bed to.
   const prevPhase = useRef<string | null>(null);
   useEffect(() => {
     const prev = prevPhase.current;
@@ -125,6 +141,8 @@ export function AudioDirector(): null {
       audioSystem.playSting("battleStart");
       audioSystem.playSfx("roundStart");
     }
+    if (phase === "champSelect" && prev !== "champSelect") audioSystem.playSfx("vsReveal");
+    if (phase === "matchEnd" && prev !== "matchEnd") audioSystem.playSfx("matchEndGong");
   }, [phase]);
 
   // Consolidated tally → SFX: kill/multiKill, death, allySlain, levelUp,
@@ -152,9 +170,26 @@ export function AudioDirector(): null {
     const res = diffTally(prevTally.current, next, { nowMs, lastKillMs: lastKillMs.current });
     prevTally.current = next;
     lastKillMs.current = res.lastKillMs;
-    for (const ev of res.events) audioSystem.playSfx(ev);
+    for (const ev of res.events) {
+      audioSystem.playSfx(ev);
+      // #51 stingers LAYER under the VO these tally events already fire (their
+      // own keys, kept out of the VO-only levelUp/exUnlock pools per the ledger).
+      if (ev === "levelUp") audioSystem.playSfx("levelUpJingle");
+      else if (ev === "exUnlock") audioSystem.playSfx("exUnlockSting");
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localSeatId, localKills, localDeaths, localLevel, localExRank, allyDeaths]);
+
+  // Low-HP warning cue: fires once as the local champion's HP crosses DOWN
+  // through the danger line (a fresh spawn / respawn re-arms it). The pure
+  // `crossedIntoLowHealth` owns the edge; the audio map's 3 s cooldown is a
+  // second guard against a jittering bar. (#51 low-health)
+  const prevHealth = useRef<HealthSnapshot>({ hp: localHp, maxHp: localMaxHp, alive: localAlive });
+  useEffect(() => {
+    const next: HealthSnapshot = { hp: localHp, maxHp: localMaxHp, alive: localAlive };
+    if (crossedIntoLowHealth(prevHealth.current, next)) audioSystem.playSfx("lowHealth");
+    prevHealth.current = next;
+  }, [localHp, localMaxHp, localAlive]);
 
   // prep-phase countdown (champ select + the intermission shop window): 5/4/3/2 s
   // tick louder each second, the last second is the distinct countFinal at full

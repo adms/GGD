@@ -4,7 +4,7 @@
   "name": "死亡老二 - 克勞薩先生",
   "role": "fighter",
   "attackType": "melee",
-  "modelKey": "imported.collision",
+  "modelKey": "champ.skin.barbarian",
   "baseStats": {
     "maxHealth": 100,
     "healthRegen": 1.4,

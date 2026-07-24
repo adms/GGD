@@ -1,6 +1,7 @@
 {
   "id": "godie-ntin.ex",
   "name": "23-002 雙刀模式",
+  "icon": "assets/icons/abilities/godie-ntin.ex.webp",
   "description": "[被動]\n0秒冷卻時間\n\n在菲特超音型態時，若對受到雷光枷鎖困住行動的敵人施展雷焰聖劍，將會變為雙刀終極形態，給予兩倍聖劍傷害。",
   "slot": "EX",
   "castType": "self",

@@ -1,6 +1,7 @@
 {
   "id": "godie-u010.r",
   "name": "38-04 黑龍波吸收",
+  "icon": "assets/icons/abilities/godie-u010.r.webp",
   "description": "[輔助]\n60秒冷卻時間\n\n吸收黑龍波的妖力，使支配魔界火焰的妖術師獲得爆發性的能力成長，但是會持續消耗魔力10點。\n增加100%傷害，每使用一次敏捷永久增加1點，持續10秒。",
   "slot": "R",
   "castType": "self",

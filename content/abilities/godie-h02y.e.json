@@ -2,6 +2,7 @@
   "id": "godie-h02y.e",
   "schema": "ability@1",
   "name": "97-03 弱肉強食",
+  "icon": "assets/icons/abilities/godie-h02y.e.webp",
   "description": "[被動]\n0秒冷卻時間\n\n每次攻擊都能汲取10%的傷害化為自己的生命值",
   "slot": "E",
   "castType": "self",

@@ -2,6 +2,7 @@
   "id": "thorne.q",
   "schema": "ability@1",
   "name": "Thorn Lash",
+  "icon": "assets/icons/abilities/thorne.q.webp",
   "slot": "Q",
   "castType": "dash",
   "maxRank": 5,

@@ -1,6 +1,7 @@
 {
   "id": "godie-nman.q",
   "name": "40-01 威脅之拳",
+  "icon": "assets/icons/abilities/godie-nman.q.webp",
   "description": "[被動]\n0秒冷卻時間\n\n胖虎蠻橫的拳頭在攻擊時有15%機率增加75點破壞力，並有機會將敵人震昏1秒。",
   "slot": "Q",
   "castType": "self",

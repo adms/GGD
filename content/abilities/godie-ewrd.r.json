@@ -1,6 +1,7 @@
 {
   "id": "godie-ewrd.r",
   "name": "17-04 狂龍斬",
+  "icon": "assets/icons/abilities/godie-ewrd.r.webp",
   "description": "[主動攻擊]\n60秒冷卻時間\n\n雙手穴道全開斬殺傷一個五芒星區域內的敵人5次，期間無法控制自我行動，造成(敏捷*0.7)+100傷害。",
   "slot": "R",
   "castType": "targeted",

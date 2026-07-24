@@ -1,6 +1,7 @@
 {
   "id": "godie-hapm.e",
   "name": "52-03 無銘斧劍",
+  "icon": "assets/icons/abilities/godie-hapm.e.webp",
   "description": "[被動]\n0秒冷卻時間\n\n由希臘神殿石柱打造出來的斧劍，只有BARSERKER的怪力才能揮動它，被攻擊者接下攻擊後會受到額外50點傷害且行動暫時麻痺，遲緩攻擊速度40%，持續0.6秒。",
   "slot": "E",
   "castType": "targeted",

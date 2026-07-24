@@ -1,39 +1,96 @@
 {
   "schema": "standin-overrides@2",
-  "note": "Task #150 — per-CHAMPION render-size overrides. As of #150 ChampionView HEIGHT-NORMALIZES every loaded champion glb to a common target height (render/views/ChampionView.ts TARGET_HEIGHT ≈ 1.8u) instead of applying each model doc's raw `scale` as an absolute — so by DEFAULT every champion reads the same on-screen size regardless of its glb's wildly-varying native mesh height (the #61 audit only checked the 2.5u ceiling, never relative consistency; measured spread was 1.70u..2.32u, with the four shared CC0 stand-in meshes — champ.sela renders 2.32u — the oversized group, and 夏娜/imported.heroshana at 1.70u reading small next to them). `relativeScale` is the per-champion RELATIVE multiplier on top of that normalization (1.0 = the normalized target height; <1 = deliberately smaller, >1 = bigger) — the ONLY knob for INTENTIONAL size exceptions (lore-small creatures/mascots, lore-large giants/mecha). Absent champions default to 1.0 (normal human = 夏娜). Keyed by championId. The optional `glbPath`/`clipMap` still swap in a genuinely different model (task #77). Files under content/models beginning with _ are NOT model@1 docs (like _index.json) and are skipped by the content validators/index builder. The composition root (GameApp) loads this map and feeds EntityViewRegistry.modelOverrideFor -> applyModelOverride (`relativeScale` threads to ChampionView.tryUpgradeToGlb); wiring that championId->override lookup in GameApp is the remaining composition-root step (owned by the GameApp wave, see docs/todo/models.md mdl-64). Height-normalization itself needs NO wiring and is live for every champion. Legacy note: pre-#150 this field was `scale` (an ABSOLUTE render scale, e.g. 小叮噹 0.6); it is now `relativeScale` with the new meaning. See docs/_model-size-audit-150.md.",
+  "note": "Task #150 + #77 — per-CHAMPION render-size overrides. As of #150 ChampionView HEIGHT-NORMALIZES every loaded champion glb to a common target height (render/views/ChampionView.ts TARGET_HEIGHT ≈ 1.8u) instead of applying each model doc's raw `scale` as an absolute — so by DEFAULT every champion reads the same on-screen size regardless of its glb's wildly-varying native mesh height. `relativeScale` is the per-champion RELATIVE multiplier on top of that normalization (1.0 = the normalized target height; <1 = deliberately smaller, >1 = bigger). Absent champions default to 1.0 (normal human = 夏娜). Keyed by championId. The optional `glbPath`/`clipMap` still swap in a genuinely different model. Files under content/models beginning with _ are NOT model@1 docs (like _index.json) and are skipped by the content validators/index builder. The composition root (GameApp.modelOverrideFor) loads this map via ContentDb and feeds EntityViewRegistry.modelOverrideFor -> applyModelOverride; `relativeScale` threads to ChampionView.tryUpgradeToGlb. Legacy note: pre-#150 this field was `scale` (an ABSOLUTE render scale); it is now `relativeScale`. See docs/_model-size-audit-150.md.",
+  "note77": "TASK #77 — THE MAP'S DECLARED SCALE NOW SURVIVES THE STAND-IN FALLBACK. 40 godie-* champions have no shipped model of their own and render on one of the four shared CC0 KayKit meshes (champ.sela / champ.thorne / champ.skin.barbarian / champ.skin.rogue). Before this pass their w3x Scaling Value ('usca', tools/w3x-import/out/GoDieEX22s-src/OBJECTS.json) was DISCARDED on every one of them, so all 40 rendered at the identical normalized 1.8u — 小叮噹 (a ~1.3m robot cat) exactly as tall as 巴恩大魔王. RULE APPLIED HERE: relativeScale = the map's usca, verbatim. 23 of the 40 declare no usca at all (WC3 default 1.0) and therefore need no entry — an absent entry IS the map's value. 17 declare a non-default usca and are listed below. The rule is validated by the two size exceptions #150 had already hand-tuned from lore alone: 小叮噹 shipped 0.65 vs map 0.60, 初號機 shipped 1.55 vs map 1.60 — both agree to within 8%. Only the map's SCALE can be honoured today; the map's MODEL is a Blizzard MPQ asset that is not in the deployable tree (see blizzardOverlay.ts for the dev/family overlay path, and tasks #81/#116 for the shippable-replacement proposal). NOT capped: the map is the spec (a 2.0 usca is an authored giant, not a bug) — if one frames badly in the arena camera, tune that one number here. NOT applied: godie-u011, whose w3x usca 1.5 scales `collision.mdl`, a geometry-less dummy with no body to scale.",
   "target": 1.8,
   "overrides": {
     "godie-n00b": {
       "relativeScale": 0.65,
-      "note": "小叮噹 / 哆啦A夢 (Doraemon) — a small ~1.3m robot cat; on the shared champ.sela mesh it was the OVERSIZED case (rendered 2.32u, the user's '小叮噹 too big'). Normalization brings it to target; 0.65 restores the intended small, rounded silhouette."
+      "note": "小叮噹 / 哆啦A夢 (Doraemon) — a small ~1.3m robot cat; the map declares StormPandarenBrewmaster @ usca 0.60 (literally 'a small blue panda'). #150 hand-tuned 0.65 from lore before the map value was recovered; the two agree, so the shipped 0.65 stands."
     },
     "godie-ofar": {
       "relativeScale": 0.6,
-      "note": "神奇寶貝兒 - 皮卡丘 (Pikachu, imported.pika) — a ~0.4m electric mouse. 0.6 reads as a small creature beside human champions."
+      "note": "神奇寶貝兒 - 皮卡丘 (Pikachu, imported.pika) — a ~0.4m electric mouse. 0.6 reads as a small creature beside human champions. NOT a stand-in: it has its own imported model."
     },
     "godie-hgam": {
       "relativeScale": 0.62,
-      "note": "種子神奇寶貝 - 妙蛙種子 (Bulbasaur) — a small ~0.7m starter Pokémon. Its evolved form 妙蛙花 (godie-h02r) stays full-size."
+      "note": "種子神奇寶貝 - 妙蛙種子 (Bulbasaur) — a small ~0.7m starter Pokémon. Its evolved form 妙蛙花 (godie-h02r) stays full-size. NOT a stand-in."
+    },
+    "godie-h021": {
+      "relativeScale": 0.67,
+      "note": "#77 破銅爛鐵 - 阿強一號 — map model units\\critters\\VillagerKid.mdl @ usca 1.20. THE ONE PLACE usca ALONE WOULD LIE: the base model is a CHILD, so 1.20 in WC3 still renders shorter than an adult, while 1.20 against our normalized adult height would render TALLER than every human champion. Corrected with the measured native heights the extractor recorded (data/blizzard-overlay/batches: VillagerKid rawHeight 64.89 vs the HeroPaladin reference 115.63 → base factor 0.561): 0.561 × 1.20 = 0.67. Lore agrees — 阿強一號 is a small robot boy."
+    },
+    "godie-hblm": {
+      "relativeScale": 0.67,
+      "note": "#77 慈悲的王者 - 賈修貝爾 (Zatch Bell) — same VillagerKid child model @ usca 1.20 as godie-h021, same measured correction (64.89/115.63 × 1.20). Lore agrees: Zatch is a small child."
     },
     "godie-h02k": {
       "relativeScale": 0.8,
-      "note": "國寶級的畜生 - 熊貓 (Panda) — a short, round quadruped mascot; reads shorter than a standing human without being tiny."
+      "note": "國寶級的畜生 - 熊貓 (Panda) — a short, round quadruped mascot. ⚠ CONFLICT: the map declares PandarenBrewmaster @ usca 2.00 (a giant panda), #150 authored 0.8 from lore. The shipped lore value is kept — flip to 2.0 only on an owner decision."
     },
     "godie-h02u": {
       "relativeScale": 0.85,
-      "note": "看似憂鬱的神獸 - 草泥馬 (grass-mud alpaca) — a stubby meme-mascot creature, a touch under human height."
+      "note": "看似憂鬱的神獸 - 草泥馬 (grass-mud alpaca) — a stubby meme-mascot creature, a touch under human height. NOT a stand-in."
     },
     "godie-h02v": {
       "relativeScale": 0.85,
-      "note": "看似憂鬱的神獸 - 草泥馬 (alpaca mascot, alt id) — same creature as godie-h02u."
+      "note": "看似憂鬱的神獸 - 草泥馬 (alpaca mascot, alt id) — same creature as godie-h02u. NOT a stand-in."
     },
-    "godie-e00r": {
-      "relativeScale": 1.55,
-      "note": "最終泛用人型決戰兵器 - 初號機 (EVA Unit-01) — a giant combat mecha; should tower over human champions. 1.55 keeps it inside the arena-camera framing while reading clearly large."
+    "godie-e00s": {
+      "relativeScale": 1.1,
+      "note": "#77 白木老樹精 - 白木卡迪那 — map buildings\\nightelf\\AncientProtector.mdl @ usca 1.10 (an ancient tree)."
+    },
+    "godie-ucrl": {
+      "relativeScale": 1.1,
+      "note": "#77 職業獵人 - 傑·富力士 — map units\\critters\\HighElfPeasant.mdl @ usca 1.10 (an adult elf; no child-model correction applies)."
+    },
+    "godie-e00t": {
+      "relativeScale": 1.2,
+      "note": "#77 七夜怪談 - 貞子 (Sadako) — map units\\creeps\\BansheeGhost.mdl @ usca 1.20."
+    },
+    "godie-e00u": {
+      "relativeScale": 1.2,
+      "note": "#77 完全而瀟灑的女僕 - 十六夜咲夜 — map units\\nightelf\\Runner.mdl @ usca 1.20."
+    },
+    "godie-hapm": {
+      "relativeScale": 1.2,
+      "note": "#77 海克力斯 - Berserker — map units\\demon\\FelgaurdBlue.mdl @ usca 1.20 (a heavy demon)."
+    },
+    "godie-u012": {
+      "relativeScale": 1.2,
+      "note": "#77 重金屬樂團的怪物 - 克勞薩II世 — the map gives no model of its own; the base unit's HeroDreadLord is inherited and usca is 1.20."
     },
     "godie-ubal": {
       "relativeScale": 1.3,
-      "note": "魔界霸主 - 巴恩大魔王 (Vearn, the demon lord) — a large boss-scale antagonist, rendered taller than a human champion."
+      "note": "魔界霸主 - 巴恩大魔王 (Vearn, the demon lord) — a large boss-scale antagonist. ⚠ CONFLICT: the map declares units\\orc\\WitchDoctor.mdl @ usca 1.00; #150 authored 1.3 from lore. The shipped lore value is kept — flip to 1.0 only on an owner decision."
+    },
+    "godie-o02o": {
+      "relativeScale": 1.3,
+      "note": "#77 曹操孟德 - 阿瞞大人 — map units\\demon\\ChaosWolfRider.mdl @ usca 1.30 (a mounted rider, taller than a footman)."
+    },
+    "godie-obla": {
+      "relativeScale": 1.5,
+      "note": "#77 被剝削的勞工階級 - 牧太郎 — map units\\orc\\Peon.mdl @ usca 1.50."
+    },
+    "godie-oshd": {
+      "relativeScale": 1.5,
+      "note": "#77 魔鬼筋肉人 - 鬼王達 — map Units\\Critters\\Marine.mdl @ usca 1.50 (a hulking muscleman)."
+    },
+    "godie-e00r": {
+      "relativeScale": 1.55,
+      "note": "最終泛用人型決戰兵器 - 初號機 (EVA Unit-01) — a giant combat mecha. The map declares SatyrTrickster @ usca 1.60; #150's lore-authored 1.55 agrees and is kept (it is the value tuned to stay inside the arena-camera framing)."
+    },
+    "godie-othr": {
+      "relativeScale": 1.6,
+      "note": "#77 X戰警 - 金鋼狼 (Wolverine) — map Units\\Demon\\ChaosOrcRange.mdl @ usca 1.60."
+    },
+    "godie-umal": {
+      "relativeScale": 1.65,
+      "note": "#77 北斗神拳掌門人 - 拳四郎 (Kenshiro) — map units\\critters\\VillagerMan1.mdl @ usca 1.65. VillagerMan1 is an ADULT villager, so unlike the two VillagerKid entries above no base-model correction applies."
+    },
+    "godie-u01f": {
+      "relativeScale": 2.0,
+      "note": "#77 萬夫莫敵 - 黑化張飛 — map units\\orc\\Grunt.mdl @ usca 2.00, the largest scale the map authors anywhere. Deliberately NOT capped: 「萬夫莫敵」 is supposed to tower (≈3.6u, the tallest champion in the game). If it frames badly in the arena camera, tune this one number."
     }
   }
 }

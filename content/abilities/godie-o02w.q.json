@@ -1,6 +1,7 @@
 {
   "id": "godie-o02w.q",
   "name": "96-01 華山劍法",
+  "icon": "assets/icons/abilities/godie-o02w.q.webp",
   "description": "[被動]\n0秒冷卻時間\n\n華山派的基本劍法，以速度著稱，劍式輕盈，招式多變。攻擊時有(5+敏捷/15)%機率造成額外10+敏捷*1點傷害。",
   "slot": "Q",
   "castType": "self",

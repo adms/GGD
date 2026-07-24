@@ -2,6 +2,7 @@
   "id": "godie-h001.w",
   "schema": "ability@1",
   "name": "41-02 地裂術",
+  "icon": "assets/icons/abilities/godie-h001.w.webp",
   "description": "[主動攻擊]\n35秒冷卻時間\n中等類型的法術，可以給予一直線敵人200點損害，並造成極短暫的暈眩。",
   "slot": "W",
   "castType": "skillshot",

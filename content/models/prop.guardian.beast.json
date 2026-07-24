@@ -5,12 +5,12 @@
   "scale": 2.0,
   "collisionRadius": 2.5,
   "clipMap": {
-    "idle": "idle",
-    "run": "idle",
-    "attack": "idle",
-    "cast": "idle",
-    "hurt": "idle",
-    "death": "idle"
+    "idle": "Armature|Triceratops_Idle",
+    "run": "Armature|Triceratops_Walk",
+    "attack": "Armature|Triceratops_Attack",
+    "cast": "Armature|Triceratops_Attack",
+    "hurt": "Armature|Triceratops_Idle",
+    "death": "Armature|Triceratops_Death"
   },
   "attachPoints": {
     "overhead": {

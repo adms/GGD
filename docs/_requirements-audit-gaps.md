@@ -1147,3 +1147,83 @@ console：`[hmr] Failed to reload /src/replay/ReplayApp.tsx / ReplayControls.tsx
 ### 未能親測的部分
 戰鬥內 VFX / 模型 / 打擊感因為 offline 壞掉 + 不輸入密碼（硬規則）無法親自進場；
 這部分由「技能可辨識性」工作流的逐幀戰鬥截圖負責，不重複。
+
+---
+
+## 2026-07-24 · #115 模型 LOD：畫質設定真的換檔了（含實測網路證據）
+
+**發現的坑（先驗證再修）**：`RenderParams` 完全沒有模型維度，`AssetManager.load()`
+直接用 model doc 的路徑。所以 Low 和 High 下載、繪製的是同一份 geometry —— 下拉選單本身
+不是假的（解析度／粒子／陰影／draw distance 都真的有動），但「模型細節」這一項根本不存在。
+整個 repo（`apps/client/src` + `packages/shared/src`）搜不到任何 `lod`。
+
+**做了什麼**：`tools/lod-gen/`（純 Python 標準庫，零新依賴、零下載）產出 87 個比賽會用到的
+模型的 `-mid` / `-small` 兩階；client 端新增 `render/modelLod.ts` 作為唯一解析點，
+`AssetManager` 以「解析後的路徑」為 cache key（用原路徑當 key 會讓設定再度靜默失效）。
+
+**實測數字（瀏覽器真實請求，非單元測試）**：一場 combat-dota 的模型 payload
+724,173 B（high）→ 515,073 B（mid）→ **260,304 B（small，36%）**；
+畫面三角形 112,796 → 61,828 → 31,412。請求數三階都是 10（沒有多餘的 404 探測），
+每個 URL 都帶 `?h=`（沿用既有 immutable 快取，不是一批新的 revalidating 請求）。
+
+**誠實的代價與待決**：
+- 磁碟 +33.48 MB / 174 檔（`content/assets/models` 33 MB → 67 MB）。LOD 是拿 repo 體積
+  換每個玩家的頻寬與 GPU，這筆帳要記著。
+- `small` 階偏激進：knight 的頭盔在近距離明顯變成方塊。戰鬥鏡頭距離下可接受，但**建議
+  owner 實際打一場再決定要不要把 low 當任何人的預設**。
+- 「auto」刻意停在 high：adaptive ladder 是每秒級的控制器，讓它換模型檔＝比賽中反覆發網路
+  請求，而且發生在最跑不動的機器上。真正的受益點是首次開機的 `autoDetectPreset`。
+- 部分 w3x 匯入模型縮不下去（geoset 碎片幾乎全是拓樸邊界，護縫的代價）；
+  `guardian_skeleton.glb` 因為沒有 model doc 的 clipMap，動畫（佔 42% 檔案）不敢刪。
+  → 給這些模型補 clipMap 會直接再省一截，列為後續。
+
+詳細量測與設計理由：`docs/_model-lod-115.md`。
+
+---
+
+## 2026-07-24 — 商人講話呈現 + 購買個性回應 + 被動第6格更正
+
+### 需求（本次口述）
+1. **#148 商人輪播提示要「像商人在講話」**：訊息框旁邊要有商人 icon 頭圖，讓人一眼看出是
+   「那個旅行商人在給建議」，而不是一個找不到來源、飄在畫面上的文字框。
+   - 現況：`MerchantTipBox.tsx` 已有頭圖（`MerchantHeadIcon` size 46）、「旅行商人」名牌、5s 輪播、
+     說話小尾巴——但頭圖是 #146 的「畫的」半身像，其後備 raster `MERCHANT_PORTRAIT` 從沒生成，
+     所以看起來像抽象佔位符，才連不起「這是商人」。
+   - 交付：給商人一張真正的旅行商人頭像（走 SD icon pipeline 生 raster，或把畫的半身像改到一眼是商人），
+     強化「他在說話」的讀感（名牌、尾巴指向中央商人模型、出現時的說話微動），並實機驗證中場真的會顯示。
+2. **購買後英雄要依個性回應「自己的想法」**，不只是擺出攻擊動作。
+   - 現況：`IntermissionStage.tsx` 的 `purchaseSeq` effect 只呼叫 `playGesture("interact")`（商人交貨）+
+     `playChampionReaction()`（英雄一個反應「動畫」，見 `IntermissionScene:806`，挑 clip 或 squash-pop）。
+     純動畫、沒有語音也沒有個性台詞。
+   - 交付：每角色 3 句短的、符合個性的購買反應台詞（第一人稱、由 description/角色設定生成），
+     寫進**新檔** `content/config/purchase-lines.json`（不動 champion doc → 不撞正在跑的 icon 生成），
+     加一個英雄側的說話泡泡 `HeroReactionBubble.tsx`，購買時顯示；動畫改挑「非攻擊」的滿意反應。
+     語音先不做（掛到 #142 名言 VO），文字泡泡是本次必交。
+   - 執行中：workflow `w5gaat4m4`（Speak+Persona ∥，然後 Wire）。
+
+### 更正（重要）— 被動/天生技「是」第6格，之前 README 說錯了
+- 使用者一再強調「每個人應該是六種，被動也是包含 slot，等級1就獲得」。稍早 README 生成器附註寫
+  「全樹沒有任何 xx-00 被動技能文件」——**磁碟上屬實，但模型錯**。
+- 來源考古（workflow `wr1rlg7b2`，純考古未改內容）證實：
+  - 被動/天生技 slot 的正確編碼是 **`NN-00`**（NN=英雄編號），不是 QWER 意義的 xx-00，
+    也不是那 7 個 `22-02` 式巢狀 passive（那些其實是 passive-typed 的 QWER 01–04）。
+  - **108/111 角色**在英雄單位的 `abilities`（WC3 非學習/天生技，等級1即有）裡有各自的 `NN-00`；
+    匯入器把它整個丟了——內容只出 q/w/e/r/ex 五份。
+  - 108 個 NN-00 裡 **~51 是真被動型**（無 CD/[被動]：光環、閃避、觸發、回復、每擊/每殺成長）可用
+    `abilityPassives.ts` 以 ranks[] 套用；**~57 是主動天生技**（D-slot、有真 CD），仍是等級1的 slot 但
+    不能當純數值 self-buff。
+  - 3 個真的沒有：`godie-h02n 腦包英雄`、`godie-u01q 測試英雄`（都沒 abilities）、`godie-ogld 美白大法師`
+    （有 72-01..04 + 72-002，但全圖沒有 72-00）。
+  - 抽取法已對 7 個既有巢狀 passive 交叉驗證（58-02 鋼鐵尾巴、14-03 魔力應援 逐 rank 完全吻合）。
+  - 詳見 `tasks/wr1rlg7b2.output`。
+- **後續（內容寫入批次，需等 icon 生成排空以免撞檔）**：寫 108 份 `NN-00` 天生技 doc、把 51 個被動型接進 sim、
+  在選角面板與 README 呈現「第6格 被動/天生技」。57 個主動天生技先標記、逐一接。
+
+### 效果音ラボ 盤點（workflow `wqo7p8m7x` 完成）
+- 大發現：庫裡已下載但**沒發聲**的 効果音ラボ 有 26 個。本次「零下載」直接接上 9 個（回血/技能升級/低血量/
+  升級 jingle/EX sting/開場鑼/結束鑼/VS 揭示/結算揭示），apps/client 已改、632 音訊測試綠、tsc 0。
+- 2 個下載+已對應但無事件可觸發（buffApply、explosion）→ 需先加 sim 事件。
+- 1 個不能接：block-clash/block-shield（殘響，打擊感刻意換掉，`audioAssets.test.ts` 擋著）。
+- 尚需**新下載** 10 項（需使用者授權，版權物抓本機 overlay）：高＝傳說寶珠轉蛋、抽卡揭示閃光、
+  守衛塔最後一擊/範圍重擊、#124 下課鐘聲；中＝分頁切換/復活詠唱/重生 warp/火環火焰；低＝競技場環境床/市場人聲。
+- 詳見 `tasks/wqo7p8m7x.output`。

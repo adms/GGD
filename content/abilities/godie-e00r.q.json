@@ -2,6 +2,7 @@
   "id": "godie-e00r.q",
   "schema": "ability@1",
   "name": "59-01 吞噬",
+  "icon": "assets/icons/abilities/godie-e00r.q.webp",
   "description": "[輔助]\n60秒冷卻時間\n\n啟動吞噬狀態可讓初號機攻擊力增加20點傷害，攻擊時獲得生命回饋15%，可持續9秒",
   "slot": "Q",
   "castType": "targeted",
