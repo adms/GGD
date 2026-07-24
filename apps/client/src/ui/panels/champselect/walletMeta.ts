@@ -131,6 +131,34 @@ export function selectableIdsByOwnership(
 }
 
 /**
+ * Split a whitelisted roster into what the champ-select grid SHOWS versus what
+ * the account may SELECT.
+ *
+ * The grid must DISPLAY every available champion — including a LOCKED (priced,
+ * un-owned) one — because the 「🔓 解鎖 (N 水晶)」 unlock affordance (#118) lives
+ * on the locked champion's OWN card. Filtering locked champions out of the grid
+ * (which task #201 first did, via `selectableByOwnership` on the display set)
+ * removes the only place a player can spend crystals to unlock them — the very
+ * 「藍水晶解鎖角色不見了」 regression this exists to prevent.
+ *
+ * `selectableIds` is the `owned ∩ available` set: it gates the click-to-pick and
+ * the 🎲 random pool, so a locked champion can be previewed and unlocked but
+ * never LOCKED IN. The game-server's MatchController.selectChampion remains the
+ * authoritative reject of an unowned lock-in (#201) — this is UX legibility only.
+ */
+export function rosterDisplayAndSelectable<T extends { id: string }>(
+  whitelisted: readonly T[],
+  prices: PriceMap,
+  owned: ReadonlySet<string>,
+): { display: readonly T[]; selectableIds: ReadonlySet<string> } {
+  const selectableIds = new Set<string>();
+  for (const c of whitelisted) {
+    if (isSelectableByOwnership(c.id, prices, owned)) selectableIds.add(c.id);
+  }
+  return { display: whitelisted, selectableIds };
+}
+
+/**
  * Stable sort that floats favourited champions to the TOP while preserving the
  * original relative order within each group. Non-mutating.
  */

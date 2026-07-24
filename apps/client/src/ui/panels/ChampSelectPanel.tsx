@@ -63,7 +63,7 @@ import {
 import {
   useWalletMeta,
   sortFavouritesFirst,
-  selectableByOwnership,
+  rosterDisplayAndSelectable,
   selectableIdsByOwnership,
 } from "./champselect/walletMeta";
 import { CrystalBadge, ChampMetaOverlay } from "./champselect/ChampMetaControls";
@@ -123,20 +123,21 @@ export function ChampSelectPanel(): React.JSX.Element {
   // ownership, not just on the curation whitelist (task #201).
   const meta = useWalletMeta();
 
-  // The SELECTABLE roster is `owned ∩ available`: the operator whitelist decides
-  // which champions exist in this build (availability), and ownership decides
-  // which of those THIS account has unlocked. A locked (priced, un-unlocked)
-  // champion is dropped from the grid entirely so it can be neither clicked nor
-  // random-rolled. When meta is unavailable (offline / unreachable platform) we
-  // cannot know ownership, so we fall back to whitelist-only — the SERVER still
-  // rejects an unowned lock-in, and #130's free-roster floor keeps the set
-  // non-empty. This is a UX/legibility filter; the authoritative gate is the
-  // game-server's MatchController.selectChampion.
+  // The grid SHOWS every available (whitelisted) champion — INCLUDING a locked
+  // (priced, un-owned) one — because the 「🔓 解鎖 (N 水晶)」 button (#118) lives on
+  // the locked champion's own card. SELECTION and 🎲 random are gated to
+  // `selectableIds` (owned ∩ available) instead: a locked champion previews +
+  // unlocks but never LOCKS IN. #201 first filtered locked champions out of the
+  // grid too, which removed the only way to spend crystals — that was the
+  // 「藍水晶解鎖角色不見了」 regression. `selectableIds` is null when meta is
+  // unavailable (offline): ownership is unknown, so everything is selectable and
+  // the SERVER's MatchController.selectChampion stays the authoritative reject.
   const whitelisted = useMemo(() => applyChampionWhitelist(roster, whitelist), [roster, whitelist]);
-  const available = useMemo(
-    () => (meta.available ? selectableByOwnership(whitelisted, meta.prices, meta.owned) : whitelisted),
-    [whitelisted, meta.available, meta.prices, meta.owned],
-  );
+  const { available, selectableIds } = useMemo(() => {
+    if (!meta.available) return { available: whitelisted, selectableIds: null as ReadonlySet<string> | null };
+    const { display, selectableIds } = rosterDisplayAndSelectable(whitelisted, meta.prices, meta.owned);
+    return { available: display, selectableIds };
+  }, [whitelisted, meta.available, meta.prices, meta.owned]);
   const shown = useMemo(() => filterChampions(available, query), [available, query]);
   const rosterEmpty = whitelist.enforced && available.length === 0;
 
@@ -194,6 +195,11 @@ export function ChampSelectPanel(): React.JSX.Element {
     // A click is BOTH the pick and the preview: the stage/tabs switch instantly
     // and locally, without waiting for the server to echo the seat back.
     dispatchPreview({ type: "click", id });
+    // #201: a LOCKED (priced, un-owned) champion previews but is NOT picked — its
+    // card's 「🔓 解鎖」 button is the way in, and the server rejects an unowned
+    // lock-in regardless. `selectableIds` is null offline (ownership unknown), so
+    // everything is pickable and the server stays the authoritative gate.
+    if (selectableIds && !selectableIds.has(id)) return;
     hudActions.selectChampion(id); // normal SELECT_CHAMPION (+ name call-out, confirm SFX)
   };
 
@@ -594,6 +600,10 @@ export function ChampSelectPanel(): React.JSX.Element {
                   // once locked the whole roster is frozen; the locked pick stays
                   // highlighted (with a 🔒), every other card is disabled + dimmed.
                   const frozenOther = locked && !picked;
+                  // a champion the account has NOT unlocked (priced, un-owned):
+                  // still SHOWN so its 「🔓 解鎖」 button (below) is reachable, but
+                  // dimmed + marked so a click reads as "unlock me", not "pick me".
+                  const lockedOut = !!selectableIds && !selectableIds.has(c.id);
                   return (
                     // relative column wrapper: the pick button, the favourite
                     // star (absolute overlay) and the optional unlock button
@@ -635,7 +645,7 @@ export function ChampSelectPanel(): React.JSX.Element {
                                 ? "1px solid #3d4d74"
                                 : "1px solid #2c3448",
                           color: TEXT_MAIN,
-                          opacity: frozenOther ? 0.45 : 1,
+                          opacity: frozenOther ? 0.45 : lockedOut ? 0.62 : 1,
                           display: "flex",
                           alignItems: "center",
                           gap: 8,
@@ -649,6 +659,27 @@ export function ChampSelectPanel(): React.JSX.Element {
                           </div>
                         </div>
                       </SfxButton>
+                      {/* 🔒 badge on a champion the account has not unlocked yet —
+                          the 「🔓 解鎖」 button (ChampMetaOverlay, below) is the way in */}
+                      {lockedOut && !locked && (
+                        <div
+                          style={{
+                            position: "absolute",
+                            top: -6,
+                            left: -6,
+                            fontSize: 13,
+                            lineHeight: 1,
+                            background: "#2a2030",
+                            border: "1px solid #6b5a3a",
+                            borderRadius: 999,
+                            padding: "2px 4px",
+                            pointerEvents: "none",
+                          }}
+                          aria-label="尚未解鎖"
+                        >
+                          🔒
+                        </div>
+                      )}
                       {/* 🔒 badge pinned to the locked pick */}
                       {locked && picked && (
                         <div

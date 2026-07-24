@@ -14,6 +14,7 @@ import {
   loadWalletMeta,
   normalizeWallet,
   pricesFromCatalog,
+  rosterDisplayAndSelectable,
   selectableByOwnership,
   selectableIdsByOwnership,
   sortFavouritesFirst,
@@ -186,5 +187,23 @@ describe("champ-select ownership filter (meta-client-ownership)", () => {
     expect(selectableIdsByOwnership(ids, prices(), new Set())).toEqual(["sela"]);
     // owning vex adds it back; thorne (priced, still not owned) stays out.
     expect(selectableIdsByOwnership(ids, prices(), new Set(["vex"]))).toEqual(["sela", "vex"]);
+  });
+
+  // Regression guard for 「藍水晶解鎖角色不見了」: #201 first filtered locked
+  // champions out of the DISPLAY set too, which removed the 「🔓 解鎖」 button
+  // (it lives on the locked champion's own card). The grid must SHOW every
+  // available champion; only SELECTION is gated to owned∩available.
+  it("rosterDisplayAndSelectable SHOWS locked champions but excludes them from the selectable set", () => {
+    cover("meta-client-ownership-display");
+    const roster = [{ id: "sela" }, { id: "thorne" }, { id: "vex" }, { id: "ghost" }];
+    const owned = new Set(["thorne"]);
+    const { display, selectableIds } = rosterDisplayAndSelectable(roster, prices(), owned);
+    // DISPLAY keeps the locked champion 'vex' — its unlock button needs a card.
+    expect(display.map((c) => c.id)).toEqual(["sela", "thorne", "vex", "ghost"]);
+    // SELECTABLE excludes only the locked champion.
+    expect(selectableIds.has("vex")).toBe(false); // locked → not pickable
+    expect(selectableIds.has("thorne")).toBe(true); // priced but owned
+    expect(selectableIds.has("sela")).toBe(true); // free
+    expect(selectableIds.has("ghost")).toBe(true); // unknown price → free
   });
 });
