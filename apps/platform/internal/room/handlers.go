@@ -26,6 +26,13 @@ func NewHandlers(svc *Service, templates *Templates, inviteTTL time.Duration) *H
 func (h *Handlers) Mount(r chi.Router) {
 	r.Get("/lobby/rooms", h.listOpen)
 	r.Post("/rooms", h.create)
+	// One-click bot match. Static path, so it wins over /rooms/{id} in the
+	// chi trie. The registered-player gate is the router's, not this
+	// handler's: this Mount is called inside the authed + PlayableOnly group
+	// (server.go), so a guest has no token to reach it with and a banned or
+	// unapproved account is refused on the very next request. A client-side
+	// check would be decoration; there is deliberately none.
+	r.Post("/rooms/solo", h.startSolo)
 	r.Post("/rooms/join-by-code", h.joinByCode)
 	r.Get("/rooms/templates", h.listTemplates)
 	r.Post("/rooms/templates", h.saveTemplate)
@@ -181,6 +188,29 @@ func (h *Handlers) settings(w http.ResponseWriter, r *http.Request) {
 func (h *Handlers) start(w http.ResponseWriter, r *http.Request) {
 	me := auth.MustIdentity(r.Context())
 	info, err := h.svc.Start(r.Context(), me.AccountID, chi.URLParam(r, "id"))
+	if err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	httpx.WriteJSON(w, http.StatusOK, info)
+}
+
+// startSolo is the lobby's 一鍵開房: create a private room against bots and
+// start it in the same request. The response is the ordinary StartInfo; the
+// seat token reaches the player over the lobby WS exactly as it does for a
+// room start, so the client needs no second code path to enter the match.
+func (h *Handlers) startSolo(w http.ResponseWriter, r *http.Request) {
+	me := auth.MustIdentity(r.Context())
+	var st Settings
+	// An empty body is the whole point of one click — decode only if one was
+	// sent (map / bot difficulty are optional refinements).
+	if r.ContentLength != 0 {
+		if err := httpx.DecodeJSON(r, &st); err != nil {
+			httpx.WriteError(w, err)
+			return
+		}
+	}
+	info, err := h.svc.StartSolo(r.Context(), me.AccountID, st)
 	if err != nil {
 		httpx.WriteError(w, err)
 		return

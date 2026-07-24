@@ -464,9 +464,18 @@ function main(): void {
   addUse("assets/models/menu/dragon2.glb", { scene: "LOGIN", label: "登入巨龍", count: 2 });
   addUse("assets/models/hex/waterlily.glb", { scene: "COMBAT", label: "治療花（prop.flower）", count: 4 });
 
-  for (const u of readJson(path.join(ROOT, "data/blizzard-overlay/MANIFEST.json")).units
-    ? Object.values<any>(readJson(path.join(ROOT, "data/blizzard-overlay/MANIFEST.json")).units)
-    : []) {
+  // The Blizzard overlay is DEV-ONLY, gitignored runtime state (see
+  // .gitignore `/data/**`): it exists on the owner's machine and on the family
+  // host, and never in CI or a fresh clone. Reading it unconditionally made
+  // this whole report — which is otherwise about shipped assets — fail with
+  // ENOENT wherever the optional overlay is absent, which is everywhere that
+  // matters for a build gate. Absent overlay simply contributes no DEV-ONLY
+  // rows; that is the correct reading, not a degraded one.
+  const overlayManifest = path.join(ROOT, "data/blizzard-overlay/MANIFEST.json");
+  const overlayUnits = fs.existsSync(overlayManifest)
+    ? (readJson(overlayManifest).units ?? {})
+    : {};
+  for (const u of Object.values<any>(overlayUnits)) {
     addUse(u.glb, {
       scene: "DEV-ONLY",
       label: "Blizzard 覆蓋層（本機開發，不出貨）",
