@@ -44,10 +44,10 @@
  * do neither: it is not corner chrome (it wants the long empty flank BESIDE
  * the arena, not a corner) and `hud/hudLayout.ts` is out of scope for this
  * change. The honest alternative to editing the registry is to obey it: derive
- * the rectangle FROM the registry's own numbers (`hudStackEnd`,
- * `hudSlotWidth`) and let `controlLegendModel.test.ts` prove the result touches no
- * slot's reserved rect on every guard viewport. Same protection, from the
- * outside.
+ * the rectangle FROM the registry's own reserved rects (`hudSlotRect` /
+ * `hudStackEnd`) and let `controlLegendModel.test.ts` prove the result touches
+ * no slot on every guard viewport, for both pointer types. Same protection,
+ * from the outside.
  *
  * Two shapes, because there are two different layout problems:
  *   COLUMN — classic single-player desktop. The left flank between the
@@ -59,9 +59,11 @@
  *            flank, and the honest answer is a different placement, not smaller
  *            text (the same call hudLayout makes when it re-homes the minimap).
  *            In couch the flank belongs to a player's viewport. Both get a
- *            single wrapped strip in the top gutter, between the widest
- *            top-left slot and the widest top-right slot, under the phase
- *            timer — a band no cell HUD and no slot occupies.
+ *            single wrapped strip in the top gutter — the free horizontal
+ *            interval at its own y-band, under the phase timer, above the top
+ *            cells' mini-HUDs. Desktop also FALLS BACK to the strip when the
+ *            flank is too short for the whole binding set, because clipping
+ *            rows off a reference card is the one thing it may never do.
  */
 import type { CastableSlot } from "@ggd/shared/sim/intents";
 import {
@@ -196,10 +198,13 @@ export function probeGamepadSticks(): { move: boolean; aim: boolean } {
  * fails loudly rather than rendering as a bare index.
  */
 const PAD_FACE: Record<string, string> = {
-  A: "Ⓐ",
-  B: "Ⓑ",
-  X: "Ⓧ",
-  Y: "Ⓨ",
+  // plain letters, exactly as they are printed on the physical pad — the
+  // circled forms (Ⓐ Ⓑ Ⓧ Ⓨ) render tiny at 11px and Ⓧ reads as a ✕, which on a
+  // box that also HAS a ✕ is the one confusion this must not create.
+  A: "A",
+  B: "B",
+  X: "X",
+  Y: "Y",
   LB: "LB",
   RB: "RB",
   LT: "LT",
@@ -331,10 +336,26 @@ export interface LegendRect {
 
 /** Width of the left-flank column. Fits 「十字鍵 ↑」 + a 10-character caption. */
 export const LEGEND_COLUMN_W = 218;
-/** Below this the column is not worth the pixels it would steal — use nothing. */
-export const LEGEND_COLUMN_MIN_H = 150;
-/** Upper bound on the column: a reference, never a wall of text. */
-export const LEGEND_COLUMN_MAX_H = 320;
+
+/*
+ * The column is sized to its CONTENT, and the numbers below are MEASURED off a
+ * real render (1546x900, headless Chrome, the app's own font stack), not
+ * guessed. This matters more than it looks: the first version capped the
+ * column at a flat 320px and silently swallowed the last three keyboard rows —
+ * 方向鍵 / 左鍵點自己 / 滾輪 — which is precisely the "confident, incomplete
+ * answer" this whole legend exists to avoid. A legend that cannot fit must say
+ * so (see `controlLegendRect`), never trim itself.
+ */
+/** One row: key-cap line box + the 3px row gap. */
+export const LEGEND_ROW_H = 26;
+/** Title row + its bottom margin. */
+export const LEGEND_HEADER_H = 26;
+/** 7px top + 7px bottom padding, plus slack for font-metric variance. */
+export const LEGEND_PAD_Y = 24;
+
+export function legendColumnHeight(rowCount: number): number {
+  return LEGEND_PAD_Y + LEGEND_HEADER_H + rowCount * LEGEND_ROW_H;
+}
 
 /**
  * Wrapped chips. The height follows the ROW COUNT rather than being one size
@@ -434,9 +455,15 @@ export function controlLegendRect(
 ): LegendRect | null {
   const { touch, couchPlayers, rowCount } = opts;
   const couch = couchPlayers > 1;
-  return touch || couch
-    ? stripRect(viewport, touch, couchPlayers, legendStripHeight(rowCount))
-    : columnRect(viewport, touch);
+  if (touch || couch) return stripRect(viewport, touch, couchPlayers, legendStripHeight(rowCount));
+  // Desktop prefers the flank. When the flank is too SHORT for the whole
+  // binding set (a small window, or a stack that grew), it falls back to the
+  // top-gutter strip rather than clipping rows off the bottom — the strip
+  // wraps, so it can hold the same content in less height.
+  return (
+    columnRect(viewport, touch, legendColumnHeight(rowCount)) ??
+    stripRect(viewport, touch, couchPlayers, legendStripHeight(rowCount))
+  );
 }
 
 /**
@@ -444,7 +471,7 @@ export function controlLegendRect(
  * whose reserved rect shares the column's x-range — the bottom-left telemetry
  * chips normally, and on a narrow window the bottom-right minimap too.
  */
-function columnRect(viewport: HudViewport, touch: boolean): LegendRect | null {
+function columnRect(viewport: HudViewport, touch: boolean, needed: number): LegendRect | null {
   const x = HUD_EDGE;
   const w = LEGEND_COLUMN_W;
   const top = hudStackEnd("top-left", touch, { skipTransient: true }) + HUD_GAP;
@@ -455,9 +482,8 @@ function columnRect(viewport: HudViewport, touch: boolean): LegendRect | null {
     if (r.y + r.h <= top) continue; // entirely above the flank
     if (r.y - HUD_GAP < bottomLimit) bottomLimit = r.y - HUD_GAP;
   }
-  const h = Math.min(bottomLimit - top, LEGEND_COLUMN_MAX_H);
-  if (h < LEGEND_COLUMN_MIN_H) return null;
-  return { shape: "column", x, y: top, w, h };
+  if (bottomLimit - top < needed) return null; // would clip — let the strip try
+  return { shape: "column", x, y: top, w, h: needed };
 }
 
 /**

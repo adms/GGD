@@ -1890,3 +1890,51 @@ WC3 的 missile art 分的是**元素**（火球／遠見者／暗影獵手／�
 **本車道沒動、但要記帳的旁證**：`icons.test.ts` 與 `bundle.test.ts` 的 4 條紅燈
 **與本次無關**——`content/` 有 **127 份別的車道還沒 commit 的 vfx/augment 文件**，
 而 bundle 測試把總數硬釘在 1598（實際 1725）。這是 pre-existing，不要算進來也不要順手改釘死的數字。
+
+---
+
+## #187 「操作說明應該要在進入遊戲第一局旁邊用半透明提示吧」 — 第一局操作圖例
+
+**需求**（owner，今晚要跟家人第一次開打）：進入遊戲第一局，在畫面旁邊放半透明的操作說明。
+
+**做了什麼**（新檔全部在 `apps/client/src/ui/`，只改 `HudRoot.tsx` 一行掛載）：
+- `ui/controlLegendModel.ts` — 內容與幾何，**純函數**。
+- `ui/ControlLegend.tsx` — `ControlLegendView`（純）＋讀 store 的外殼。
+- `ui/inputMode.ts` — 新的「玩家現在手上拿的是什麼」seam（本來不存在）。
+
+**核心決定：圖例是「算出來的」，不是「打出來的」。**
+一份手打的按鍵表在第一次改鍵時就變成謊話，而且沒有任何東西會發現——這正是這波
+campaign 一整天在刪的缺陷型別。所以：
+- **手把**：不是讀 `SLOT_BY_BUTTON`，而是**真的去跑** `mapGamepadFrame()`。
+  `probeGamepadButton(i)` 餵一個只按了第 i 鍵的合成 frame，看吐回什麼 Order/Command。
+  搖桿同理。改鍵、加鍵、刪鍵 → 圖例同一個 commit 跟著動。
+- **鍵盤技能鍵**：直接來自 `SLOT_BY_CODE`（`InputCapture` 自己 dispatch 的那張表）。
+- **推導不出來的兩類**（`onKeyDown` switch 裡的 A/S/B/Space/方向鍵、滑鼠 listener、
+  touch 的 JSX）改成**宣告 + 雙向 source scan**：宣告的 token 必須在來源檔裡找得到，
+  而且 switch 裡**每一個** `case "Key…"` 都必須被圖例認領。加鍵不加圖例 → 測試紅。
+
+**#107 安全區**：本圖例宣告不了 slot（它要的是「戰場旁邊的長條空白」而不是角落，
+且 `hudLayout.ts` 這次不在範圍內）。誠實的替代做法是**照它的規矩來**：矩形由 registry
+自己的 `hudSlotRect` / `hudStackEnd` 算出來，並由測試在每個 guard viewport（兩種 pointer）
+證明它碰不到任何 slot。兩個**置中、沒有角落 slot 可以表達**的群組（PhaseTimer+觀戰提示、
+AbilityBar+ResourceBars）在模組裡以量測值宣告成保留框，數字用 source scan 釘回元件。
+有面板蓋住角落時（陣亡者的商店）整個圖例讓位——chrome 永遠讓，面板永遠不動。
+
+**兩種形狀**：桌機單人＝左側縱欄（上下兩堆之間的空白）；觸控與**沙發分割畫面**＝
+上方橫帶。手機的左上角在 375px 高的視窗已經排到 356px，沒有側欄可用；沙發模式的側欄
+屬於某個玩家的視角。桌機視窗太矮塞不下整份時**也退回橫帶**——寧可換位置，不可裁行。
+
+**沙發模式只有一份圖例，不是每個視角一份**：四個座位的按鍵完全一樣，四份＝四倍的墨水、
+零額外資訊，而畫面已經被切成四塊。
+
+**踩到的坑（量測救的）**：欄位高度原本寫死 320px，實測 headless render 發現
+**最後三列（方向鍵／左鍵點自己／滾輪）被 `overflow:hidden` 靜靜吃掉**——正是這份圖例
+存在的意義的反面。改成依列數精算（`legendColumnHeight`，行高 26px 為量測值），塞不下就換形狀。
+
+**其他**：`pointer-events:none`，只有 ✕ 例外（render 測試斷言「恰好一個」元素 opt-in）；
+關掉後寫 `localStorage: ggd.controlLegend.dismissed`，之後都不再出現；
+gate = `phase === "combat" && round <= 1`（`round` 本來就在 RoomStore，沒有發明新狀態）。
+
+**觀測**：headless Chrome 對三種佈局（1546x900 鍵鼠欄位／1546x900 手把橫帶／812x375 觸控橫帶）
+截圖，疊上各 slot 的保留框比對——三張都沒有重疊，13/14 列全部畫出來沒有截斷。
+client 測試 235 檔 2641 綠、`tsc --noEmit` 乾淨。

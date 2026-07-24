@@ -156,6 +156,8 @@ function Column({
         left: rect.x,
         top: rect.y,
         width: rect.w,
+        // the model sizes this to the exact row count (measured metrics), so
+        // maxHeight is a floor-under-the-floor, not the thing doing the layout
         maxHeight: rect.h,
         zIndex: HUD_Z.slot,
         boxSizing: "border-box",
@@ -246,6 +248,31 @@ function Strip({
   );
 }
 
+/**
+ * The PURE view: geometry + rows in, markup out. Split from the store-reading
+ * wrapper below for the same reason `castFeedback` is split from
+ * `castAnnounce` — the half worth pinning to exact pixels is the half with no
+ * store in it, and this one renders in a node test with no DOM at all
+ * (`controlLegendRender.test.ts`).
+ */
+export function ControlLegendView({
+  rect,
+  rows,
+  modeLabel,
+  onDismiss,
+}: {
+  rect: LegendRect;
+  rows: LegendRow[];
+  modeLabel: string;
+  onDismiss: () => void;
+}): React.JSX.Element {
+  return rect.shape === "column" ? (
+    <Column rect={rect} rows={rows} modeLabel={modeLabel} onDismiss={onDismiss} />
+  ) : (
+    <Strip rect={rect} rows={rows} modeLabel={modeLabel} onDismiss={onDismiss} />
+  );
+}
+
 export function ControlLegend(): React.JSX.Element | null {
   const phase = useHud((s) => s.phase);
   const round = useHud((s) => s.round);
@@ -286,11 +313,13 @@ export function ControlLegend(): React.JSX.Element | null {
     writeLegendDismissed(true);
     setDismissed(true);
   };
-  const modeLabel = INPUT_MODE_LABEL[mode];
 
-  return rect.shape === "column" ? (
-    <Column rect={rect} rows={rows} modeLabel={modeLabel} onDismiss={onDismiss} />
-  ) : (
-    <Strip rect={rect} rows={rows} modeLabel={modeLabel} onDismiss={onDismiss} />
+  return (
+    <ControlLegendView
+      rect={rect}
+      rows={rows}
+      modeLabel={INPUT_MODE_LABEL[mode]}
+      onDismiss={onDismiss}
+    />
   );
 }

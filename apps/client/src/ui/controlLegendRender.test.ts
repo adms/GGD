@@ -1,110 +1,104 @@
 /**
  * The legend, actually RENDERED. `controlLegendModel.test.ts` proves the rows
- * and the rectangle; this proves the component wires them to real pixels —
- * which is where a "correct" legend can still be wrong:
+ * and the rectangle; this proves the view wires them to real pixels — which is
+ * where a "correct" legend can still be wrong:
  *
- *   • it paints at the derived offsets (not somewhere else entirely);
+ *   • it paints at the derived offsets, not somewhere else entirely;
  *   • the layer is `pointer-events: none` — a hint box that swallowed a click
- *     mid-fight would be worse than the confusion it removes;
- *   • the ✕ opts back in, so it can still be dismissed;
- *   • the gate really hides it outside combat round 1 and after a dismissal.
+ *     mid-fight would be worse than the confusion it exists to remove;
+ *   • exactly ONE element opts back in, the ✕, so it stays dismissible;
+ *   • the pad view shows pad bindings and no keyboard row leaks into it.
  *
- * `renderToStaticMarkup` in the node env: no DOM, no effects, no browser. The
- * viewport therefore falls back to the component's own 1280x800 default, which
- * makes the expected geometry deterministic.
+ * `renderToStaticMarkup` in the node env: no DOM, no effects, no browser.
  */
-import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import { describe, it, expect } from "vitest";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { hudStore, resetHudStore } from "../net/RoomStore";
-import { ControlLegend } from "./ControlLegend";
-import {
-  controlLegendRect,
-  legendRows,
-  writeLegendDismissed,
-} from "./controlLegendModel";
-import { inputModeStore } from "./inputMode";
+import { ControlLegendView } from "./ControlLegend";
+import { controlLegendRect, legendRows, type LegendRect } from "./controlLegendModel";
 
-const VIEWPORT = { width: 1280, height: 800 }; // the component's no-window default
+const DESKTOP = { width: 1546, height: 900 };
+const PHONE = { width: 812, height: 375 };
 
-function inCombatRound1(): void {
-  hudStore.setState({ connected: true, phase: "combat", round: 1, localPlayers: [] });
+function rectFor(
+  viewport: { width: number; height: number },
+  touch: boolean,
+  couchPlayers: number,
+  rowCount: number,
+): LegendRect {
+  const rect = controlLegendRect(viewport, { touch, couchPlayers, rowCount });
+  if (!rect) throw new Error("expected a placement for this viewport");
+  return rect;
 }
 
-function render(): string {
-  return renderToStaticMarkup(createElement(ControlLegend));
+function html(rect: LegendRect, mode: "keyboard" | "gamepad" | "touch", label: string): string {
+  return renderToStaticMarkup(
+    createElement(ControlLegendView, {
+      rect,
+      rows: legendRows(mode),
+      modeLabel: label,
+      onDismiss: () => {},
+    }),
+  );
 }
 
-beforeEach(() => {
-  resetHudStore();
-  writeLegendDismissed(false);
-  inputModeStore.reset("keyboard");
-});
+describe("the desktop left-flank column", () => {
+  const rows = legendRows("keyboard");
+  const rect = rectFor(DESKTOP, false, 1, rows.length);
+  const out = html(rect, "keyboard", "鍵盤 / 滑鼠");
 
-afterEach(() => {
-  resetHudStore();
-  writeLegendDismissed(false);
-});
-
-describe("ControlLegend paints what the model derived", () => {
-  it("renders the left flank column at the derived offsets", () => {
-    inCombatRound1();
-    const html = render();
-    const rect = controlLegendRect(VIEWPORT, {
-      touch: false,
-      couchPlayers: 0,
-      rowCount: legendRows("keyboard").length,
-    })!;
-    expect(html).toContain('data-control-legend="column"');
-    expect(html).toContain(`left:${rect.x}px`);
-    expect(html).toContain(`top:${rect.y}px`);
-    expect(html).toContain(`width:${rect.w}px`);
+  it("paints at the derived offsets", () => {
+    expect(out).toContain('data-control-legend="column"');
+    expect(out).toContain(`left:${rect.x}px`);
+    expect(out).toContain(`top:${rect.y}px`);
+    expect(out).toContain(`width:${rect.w}px`);
+    expect(out).toContain(`max-height:${rect.h}px`);
   });
 
-  it("prints every derived row, key cap and caption", () => {
-    inCombatRound1();
-    const html = render();
-    for (const row of legendRows("keyboard")) {
-      expect(html, `missing ${row.control}`).toContain(row.control);
-      expect(html, `missing ${row.label}`).toContain(row.label);
+  it("prints every derived row — key cap AND caption", () => {
+    for (const row of rows) {
+      expect(out, `missing key cap ${row.control}`).toContain(row.control);
+      expect(out, `missing caption ${row.label}`).toContain(row.label);
     }
-    expect(html).toContain("操作說明");
-    expect(html).toContain("鍵盤 / 滑鼠");
+    expect(out).toContain("操作說明");
+    expect(out).toContain("鍵盤 / 滑鼠");
   });
 
-  it("shows the PAD bindings, and only those, once a pad is in play", () => {
-    inCombatRound1();
-    inputModeStore.reset("gamepad");
-    const html = render();
-    expect(html).toContain("手把");
-    expect(html).toContain("十字鍵 ↑"); // 天生技 on the d-pad
-    expect(html).toContain("左類比");
-    expect(html).not.toContain("滾輪"); // no keyboard/mouse rows leaked in
+  it("says F and D out loud — the two nobody guesses", () => {
+    expect(out).toContain("EX 技能");
+    expect(out).toContain("天生技");
   });
 
-  it("never eats a click: the layer is inert, the ✕ is not", () => {
-    inCombatRound1();
-    const html = render();
-    expect(html).toContain("pointer-events:none");
-    // exactly one element opts back in — the dismiss control
-    expect(html.match(/pointer-events:auto/g)).toHaveLength(1);
-    expect(html).toContain("關閉操作說明");
+  it("never eats a click; only the ✕ does", () => {
+    expect(out).toContain("pointer-events:none");
+    expect(out.match(/pointer-events:auto/g)).toHaveLength(1);
+    expect(out).toContain("關閉操作說明");
   });
 });
 
-describe("ControlLegend gating, end to end", () => {
-  it("is absent before combat and after round 1", () => {
-    resetHudStore();
-    hudStore.setState({ connected: true, phase: "intermission", round: 1 });
-    expect(render()).toBe("");
-    hudStore.setState({ phase: "combat", round: 2 });
-    expect(render()).toBe("");
+describe("the touch / couch top-gutter strip", () => {
+  it("paints the pad bindings, and only those", () => {
+    const rows = legendRows("gamepad");
+    const rect = rectFor(DESKTOP, false, 4, rows.length);
+    const out = html(rect, "gamepad", "手把");
+    expect(out).toContain('data-control-legend="strip"');
+    expect(out).toContain(`height:${rect.h}px`);
+    expect(out).toContain("十字鍵 ↑"); // 天生技 lives on the d-pad
+    expect(out).toContain("左類比");
+    expect(out).toContain("Start");
+    expect(out).not.toContain("滾輪"); // no keyboard/mouse row leaked in
+    expect(out).not.toContain("右鍵");
   });
 
-  it("stays gone once dismissed", () => {
-    inCombatRound1();
-    expect(render()).not.toBe("");
-    writeLegendDismissed(true);
-    expect(render()).toBe("");
+  it("fits a phone and stays inert there too", () => {
+    const rows = legendRows("touch");
+    const rect = rectFor(PHONE, true, 1, rows.length);
+    const out = html(rect, "touch", "觸控");
+    expect(out).toContain('data-control-legend="strip"');
+    expect(out).toContain("左側搖桿");
+    expect(out).toContain("pointer-events:none");
+    expect(out.match(/pointer-events:auto/g)).toHaveLength(1);
+    expect(out).not.toContain("Back"); // a touch player is never shown pad faces
+    expect(out).not.toContain("十字鍵");
   });
 });

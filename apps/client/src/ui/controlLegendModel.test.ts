@@ -63,7 +63,7 @@ const TOUCH_CONTROLS = readSrc("ui/TouchControls.tsx");
 
 describe("legend rows are DERIVED from the pad mapping", () => {
   it("probes the real mapGamepadFrame, not a copy of its table", () => {
-    // Ⓐ is Q by SLOT_BY_BUTTON; the probe must find that by running the map.
+    // A is Q by SLOT_BY_BUTTON; the probe must find that by running the map.
     expect(probeGamepadButton(BTN.A)).toEqual({ kind: "cast", slot: "Q" });
     expect(probeGamepadButton(BTN.BACK)).toEqual({ kind: "cast", slot: "EX" });
     expect(probeGamepadButton(BTN.DPAD_UP)).toEqual({ kind: "cast", slot: "PASSIVE" });
@@ -290,9 +290,10 @@ describe("legendRows picks the binding set for the mode in play", () => {
     const kb = legendRows("keyboard").map((r) => r.control);
     const pad = legendRows("gamepad").map((r) => r.control);
     expect(kb).toContain("Q");
-    expect(kb.some((c) => c === "Ⓐ")).toBe(false);
-    expect(pad).toContain("Ⓐ");
-    expect(pad.some((c) => c === "Q")).toBe(false);
+    expect(kb.some((c) => c === "Back" || c === "十字鍵 ↑")).toBe(false);
+    expect(pad).toContain("Back");
+    expect(pad).toContain("十字鍵 ↑");
+    expect(pad.some((c) => c === "Q" || c === "滾輪")).toBe(false);
     expect(legendRows("touch").map((r) => r.control)).toContain("左側搖桿");
   });
 
