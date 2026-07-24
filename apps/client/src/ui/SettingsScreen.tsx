@@ -262,6 +262,10 @@ export function SettingsScreen({ onClose }: { onClose: () => void }): React.JSX.
     >
       <div
         onClick={(e) => e.stopPropagation()}
+        // task #197 — the pad focus layer scopes to the settings panel (its ✕
+        // close button answers B); priority below the pause modal.
+        data-pad-scope="settings"
+        data-pad-scope-priority="45"
         style={{
           width: 320,
           maxWidth: "92vw",

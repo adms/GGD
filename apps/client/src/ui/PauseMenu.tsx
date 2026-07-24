@@ -103,6 +103,11 @@ export function PauseMenu(): React.JSX.Element {
         >
           <div
             onClick={(e) => e.stopPropagation()}
+            // task #197 — the pad focus layer scopes to the pause menu (top
+            // priority: it opens over everything). Start opens it in combat; the
+            // Resume button below carries data-pad-back so B closes it.
+            data-pad-scope="pause"
+            data-pad-scope-priority="50"
             style={{
               width: 300,
               maxWidth: "90vw",
@@ -118,7 +123,7 @@ export function PauseMenu(): React.JSX.Element {
           >
             <div style={{ fontSize: 17, fontWeight: "bold", marginBottom: 4 }}>暫停選單 Menu</div>
 
-            <SfxButton onClick={() => setOpen(false)} style={menuBtn}>
+            <SfxButton onClick={() => setOpen(false)} style={menuBtn} data-pad-back>
               ▶ Resume 繼續
             </SfxButton>
 

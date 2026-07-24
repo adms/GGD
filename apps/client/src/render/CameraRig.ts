@@ -104,6 +104,12 @@ export interface CameraUpdateArgs {
   localPos: Vec2 | null;
   cursor: CursorState | null;
   panKeys: PanKeys | null;
+  /**
+   * Analog free-pan direction (world XZ unit vector) from the gamepad modifier
+   * layer (task #197). Summed with the arrow-key / edge-pan sources and, like
+   * them, only bites while follow is off. Null/absent = no pad pan this frame.
+   */
+  panVec?: Vec2 | null;
   viewportWidth: number;
   viewportHeight: number;
 }
@@ -491,6 +497,12 @@ export class CameraRig {
         else if (args.cursor.x >= args.viewportWidth - EDGE_PX) panX += 1;
         if (args.cursor.y <= EDGE_PX) panZ += 1;
         else if (args.cursor.y >= args.viewportHeight - EDGE_PX) panZ -= 1;
+      }
+      // gamepad modifier-layer free-pan (task #197): analog, summed with the
+      // key/edge sources above so a pad and a keyboard never fight for sign.
+      if (args.panVec) {
+        panX += args.panVec.x;
+        panZ += args.panVec.z;
       }
       this.target.x += panX * PAN_SPEED * dt;
       this.target.z += panZ * PAN_SPEED * dt;

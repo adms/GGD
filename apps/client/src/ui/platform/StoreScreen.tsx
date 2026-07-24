@@ -19,6 +19,11 @@ function PurchaseDialog(): React.JSX.Element | null {
 
   return (
     <div
+      // task #197 — the pad focus layer scopes to the purchase dialog so B / the
+      // Cancel/Close button back out and A confirms, without focus escaping to
+      // the store grid behind it.
+      data-pad-scope="purchase"
+      data-pad-scope-priority="45"
       style={{
         position: "absolute",
         inset: 0,

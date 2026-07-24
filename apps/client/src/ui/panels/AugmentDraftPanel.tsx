@@ -91,6 +91,11 @@ export function AugmentDraftPanel(): React.JSX.Element | null {
         <style>{"@keyframes ggdFocusIn{from{opacity:0}to{opacity:1}}"}</style>
       </div>
       <div
+        // task #197 — the pad focus layer scopes to this panel: the draft scrim
+        // MUST be answerable by a pad, or a keyboard-less player loses the
+        // augment. High priority so it wins over any other scope beneath it.
+        data-pad-scope="augment-draft"
+        data-pad-scope-priority="40"
         style={{
           position: "absolute",
           // BOTH axes — the panel's #107 registry row declares `edge: "center"`

@@ -24,6 +24,8 @@ import { cheatsAvailable } from "../cheats";
 import { CodexRoute } from "../codex/CodexRoute";
 import { AssetConsoleRoute } from "../assets/AssetConsoleRoute";
 import { CreditsRoute } from "./CreditsRoute";
+import { PadFocusNav } from "../PadFocusNav";
+import { GamepadDiagnostics } from "../GamepadDiagnostics";
 import { useHud } from "../../net/RoomStore";
 import { useContentReady, MatchContentGate } from "./ContentGate";
 import { Btn } from "./widgets";
@@ -123,6 +125,13 @@ export function AppRoot(): React.JSX.Element {
           were missing there for exactly as long as they were mounted by hand
           (defect P0-6(b)). Both trees render the same component now. */}
       <GlobalChrome />
+      {/* task #197 — a pad drives the WHOLE UI: roving DOM focus across every
+          screen + modal (auth/lobby/store/champ-select/shop/draft/pause/…), and
+          the on-screen wake/mapping diagnostic for a keyboard-less handheld. Both
+          self-gate (the focus layer defers to the champion in live combat; the
+          diagnostic hides on the match screen). */}
+      <PadFocusNav />
+      <GamepadDiagnostics />
     </>
   );
 }

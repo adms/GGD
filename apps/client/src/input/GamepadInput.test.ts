@@ -16,6 +16,7 @@ import {
   mapGamepadFrame,
   GamepadInput,
   BTN,
+  GAMEPAD_ZOOM_STEP,
   MOVE_LEAD,
   ATTACK_MOVE_LEAD,
   GROUND_CAST_MAX,
@@ -250,5 +251,73 @@ describe("天生技 pad binding — the SIXTH slot (P0-3)", () => {
     cover("ex-input-bind");
     const intent = mapGamepadFrame(frame({ justPressed: [BTN.DPAD_UP] }), ctx({ ability: () => null }));
     expect(intent.commands).toEqual([]);
+  });
+});
+
+describe("the held-shoulder modifier layer — rank-up + camera (task #197)", () => {
+  // RB engages the layer only once it has been HELD (in `held`, not
+  // `justPressed`), so a fresh press starts it and a later face-button press
+  // reads the modifier. `held` includes the modifier without it being pressed
+  // THIS frame.
+  const modHeld = (justPressed: number[], extraHeld: number[] = []): GamepadFrame =>
+    frame({ justPressed, held: [BTN.RB, ...extraHeld, ...justPressed] });
+
+  it("RB + A/B/X/Y ranks up Q/W/E/R instead of casting them", () => {
+    for (const [btn, slot] of [
+      [BTN.A, "Q"],
+      [BTN.B, "W"],
+      [BTN.X, "E"],
+      [BTN.Y, "R"],
+    ] as const) {
+      const intent = mapGamepadFrame(modHeld([btn]), ctx());
+      expect(intent.commands).toEqual([{ kind: "rankUpAbility", slot }]);
+    }
+  });
+
+  it("RB + shoulders/LB drive zoom and follow-toggle, never orders", () => {
+    expect(mapGamepadFrame(modHeld([BTN.RT]), ctx()).camera).toEqual({ zoom: -GAMEPAD_ZOOM_STEP });
+    expect(mapGamepadFrame(modHeld([BTN.LT]), ctx()).camera).toEqual({ zoom: GAMEPAD_ZOOM_STEP });
+    expect(mapGamepadFrame(modHeld([BTN.LB]), ctx()).camera).toEqual({ toggleFollow: true });
+    // none of these leaked a recall / stop / attack order out to the sim
+    for (const b of [BTN.RT, BTN.LT, BTN.LB]) {
+      expect(mapGamepadFrame(modHeld([b]), ctx()).commands).toEqual([]);
+    }
+  });
+
+  it("RB + right stick free-pans the camera and does NOT aim", () => {
+    const intent = mapGamepadFrame(modHeld([], []), ctx());
+    // no aim while the stick pans
+    const panFrame: GamepadFrame = { move: null, aim: { x: 1, z: 0 }, justPressed: [], held: [BTN.RB] };
+    const panned = mapGamepadFrame(panFrame, ctx());
+    expect(panned.camera).toEqual({ pan: { x: 1, z: 0 } });
+    expect(panned.aim).toBeUndefined();
+    expect(intent.camera).toBeUndefined(); // centred stick → no pan
+  });
+
+  it("a plain RB tap is still a clean stop (the modifier does not steal it)", () => {
+    // RB pressed THIS frame (in justPressed) is the base layer, not the modifier
+    const tap = mapGamepadFrame(frame({ justPressed: [BTN.RB], held: [BTN.RB] }), ctx());
+    expect(tap.order).toEqual({ kind: "stop" });
+    expect(tap.camera).toBeUndefined();
+  });
+
+  it("still lets you reposition (left stick move) while the modifier is held", () => {
+    const intent = mapGamepadFrame(
+      { move: { x: 0, z: 1 }, aim: null, justPressed: [BTN.A], held: [BTN.RB, BTN.A] },
+      ctx(),
+    );
+    expect(intent.order?.kind).toBe("move");
+    expect(intent.commands).toEqual([{ kind: "rankUpAbility", slot: "Q" }]);
+  });
+
+  it("GamepadInput.poll reports which buttons are HELD (level, not edge)", () => {
+    cover("client-gamepad-edge");
+    const pad = fakePad([0, 0, 0, 0], [BTN.RB, BTN.A]);
+    const input = new GamepadInput(0, () => pad);
+    const f = input.poll()!;
+    expect(f.held).toEqual([BTN.A, BTN.RB]); // ascending button index
+    // second poll: still held → held persists, justPressed clears
+    expect(input.poll()!.held).toEqual([BTN.A, BTN.RB]);
+    expect(input.poll()!.justPressed).toEqual([]);
   });
 });
