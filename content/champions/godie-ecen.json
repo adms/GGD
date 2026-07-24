@@ -43,6 +43,7 @@
     "Q": {
       "id": "godie-ecen.q",
       "name": "64-01 威士忌攻擊",
+      "icon": "assets/icons/abilities/godie-ecen.q.webp",
       "description": "[主動傷害]\n25秒冷卻時間\n\n約翰走路藉由獨家調配的奇異威士忌發動神秘的攻擊，造成100點傷害並且緩慢對手移動速度25%，持續6秒。",
       "slot": "Q",
       "castType": "targeted",
@@ -90,6 +91,7 @@
     "W": {
       "id": "godie-ecen.w",
       "name": "64-02 酒釀精華",
+      "icon": "assets/icons/abilities/godie-ecen.w.webp",
       "description": "[主動傷害]\n50秒冷卻時間\n\n約翰走路取出酒釀精華發動神秘的攻擊，對敵方造成每秒78點傷害的連續性攻擊，若對友方造成每秒78點的HP和MP恢復，持續4波，需要持續施法。\n若約翰自身有魔幻浮水印效果，則將增加約翰智慧係數的傷害量和恢復量。",
       "slot": "W",
       "castType": "targeted",
@@ -134,6 +136,7 @@
     "E": {
       "id": "godie-ecen.e",
       "name": "64-03 工廠機器人",
+      "icon": "assets/icons/abilities/godie-ecen.e.webp",
       "description": "[召喚]\n75秒冷卻時間\n\n約翰走路召喚2位製酒工廠中的巨大機器人LV1一同幫忙攻擊對手，持續30秒。",
       "slot": "E",
       "castType": "targeted",
@@ -178,6 +181,7 @@
     "R": {
       "id": "godie-ecen.r",
       "name": "64-04 魔幻浮水印",
+      "icon": "assets/icons/abilities/godie-ecen.r.webp",
       "description": "[輔助]\n10秒冷卻時間\n\n約翰走路製造一個魔幻浮水印在友軍裝甲身上，據說是約翰走路家族代代相傳驅凶避邪的商業標籤，可提升裝甲3點，攻擊帶有此浮水印單位的玩家將受到反噬性的魔法傷害60~100點，效果持續20秒。",
       "slot": "R",
       "castType": "targeted",

@@ -42,6 +42,7 @@
     "Q": {
       "id": "godie-hapm.q",
       "name": "52-01 狂戰士之怒",
+      "icon": "assets/icons/abilities/godie-hapm.q.webp",
       "description": "[輔助]\n35秒冷卻時間\n\n進入狂戰士的狀態，可增加40點的額外傷害及裝甲4點，但是會降低攻擊速度20%。持續12秒。",
       "slot": "Q",
       "castType": "targeted",
@@ -82,13 +83,14 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.physical.pulse",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
     "W": {
       "id": "godie-hapm.w",
       "name": "52-02 蹂躪編年史",
+      "icon": "assets/icons/abilities/godie-hapm.w.webp",
       "description": "[主動攻擊]\n45秒冷卻時間\n\n迅速將目標抓回再暴力的丟出去，使之撞擊前方400距離處的敵人造成350傷害。",
       "slot": "W",
       "castType": "targeted",
@@ -126,13 +128,14 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.physical.shockwave",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
     "E": {
       "id": "godie-hapm.e",
       "name": "52-03 無銘斧劍",
+      "icon": "assets/icons/abilities/godie-hapm.e.webp",
       "description": "[被動]\n0秒冷卻時間\n\n由希臘神殿石柱打造出來的斧劍，只有BARSERKER的怪力才能揮動它，被攻擊者接下攻擊後會受到額外50點傷害且行動暫時麻痺，遲緩攻擊速度40%，持續0.6秒。",
       "slot": "E",
       "castType": "targeted",
@@ -170,13 +173,14 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.physical.slash",
       "targetsEnemies": true,
       "castTimeSec": 0.3
     },
     "R": {
       "id": "godie-hapm.r",
       "name": "52-04 巨神一擊",
+      "icon": "assets/icons/abilities/godie-hapm.r.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n燃燒巨斧向前衝刺400距離後揮出致命的一擊，對周圍400內的敵人造成600點傷害。",
       "slot": "R",
       "castType": "ground",
@@ -217,7 +221,7 @@
           "moveSpeedMult": 0.6
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.physical.shockwave-lg",
       "targetsEnemies": true,
       "radius": 6.0,
       "castTimeSec": 0.8

@@ -22,7 +22,7 @@
 | **所有模型**尺寸/縮放合理性（含非 w3x 匯入） | #1 / #77 | #1✅ / #77⬜ | |
 | **零幾何**特效模型（粒子射器沒轉出來） | #98 | ✅（名冊範圍） | 11 個零幾何 glb 是粒子發射器,glb 本來就是錯的表示;名冊技能全改綁 `fx.prim.*` 原生粒子 primitive(nova/explosion/beam/…),不出空發射器。逐項對照見 `docs/todo/ability-vfx.md` |
 | **全技能+道具** 1:1 對照 WC3 原生+JASS | #78 | ⏸ | 全專案最大保真缺口,長期任務,**未完成**（狀態頁原誤標 done,已改） |
-| **全技能** VFX 綁定（92% 共用火焰佔位、依文冰要有冰） | #79 | ✅（48 名冊 240 技能） | 全數改掉 `fx.ember-bolt-cast`,逐技能綁 element+primitive;依文 Q/E/R→`fx.prim.ice.*`(冷藍)。逐次參數=#50(`artParams.ts`)。見 `docs/todo/ability-vfx.md` |
+| **全技能** VFX 綁定（92% 共用火焰佔位、依文冰要有冰） | #79 | ✅（48 名冊 240 技能，**2026-07-24 補完鏡像**） | 全數改掉 `fx.ember-bolt-cast`,逐技能綁 element+primitive;依文 Q/E/R→`fx.prim.ice.*`(冷藍)。逐次參數=#50(`artParams.ts`)。⚠️ **原本只改了一半**:#79 的 owned surface 寫死 `content/abilities/*.json`,但每個 QWER 技能在 `content/champions/<cid>.json` `abilities[<slot>]` 還有一份反正規化鏡像 —— 452 對裡有 **192 對**的 `vfxKey` 兩邊都在、值卻不同(embedded 還停在 `fx.ember-bolt-cast`)。已同步 + 加 4 條守衛,見下方 2026-07-24 段落與 `docs/todo/ability-vfx.md` av-14..17 |
 | 遮擋物**全掃** | #29 | ✅ | |
 | **分場景載入**(不要開機全載) | #63 | ✅（SFX） | 稽核結論:模型/語音/BGM **已經是** lazy,只有 SFX 是刻意 eager(~2.5MB)。#63 已改為**分場景載入**:開機抓 0 個 SFX,UI 小核心在 unlock 暖機,各場景進入時只暖自己的子集(`audio/sfxManifest.ts` → `AudioSystem.preloadSceneSfx`),未列/未暖的 cue 仍會在首次 `playSfx` lazy 抓。model/voice 的分場景載入仍未做(見下方確認缺口#3,擴大範圍) |
 
@@ -2168,3 +2168,164 @@ owner 要的是**雙向對帳**：同步時列出兩邊的差異項目 → 每�
 
 **還沒問到的**：欄位級的裁決要不要支援（同一個英雄，A 改了 Q 冷卻、B 改了 R 傷害，理想是兩個都要）。
 先做 doc 級；若實際用起來常常需要各取一半，再升級成欄位級。
+
+---
+
+## 2026-07-24 — #79 的另一半：champion 內嵌鏡像沒跟著改（192/452 已同步 + 守衛落地）
+
+### 問題（量測，非推測）
+
+每個 QWER 技能都存兩份：權威版在 `content/abilities/<cid>.<slot>.json`，另一份反正規化鏡像在
+`content/champions/<cid>.json` 的 `abilities[<slot>]`。掃過全部 **452 對**之後：
+
+| 欄位 | 兩邊都有但值不同 | 只有 standalone 有 | 只有 embedded 有 |
+|---|---|---|---|
+| `vfxKey` | **192** | 0 | 0 |
+| `schema` | 0 | 452（設計如此，audit 本來就跳過） | 0 |
+| `icon` | 0 | 416（`icon-embed-standalone-agree` 的守備範圍，非本次；**已於同日下一段補完**） | 0 |
+
+192 條全部是 embedded 還停在舊佔位：`fx.ember-bolt-cast`×175、`fx.firestorm`×9、
+`fx.cinder-ward`×6、`fx.root-snare`×1、`fx.scorch-ring`×1。分佈在 48 個 champion 檔。
+
+### 為什麼「兩邊都有但值不同」比「缺欄位」更毒
+
+`fillGaps` 只補 standalone **沒定義**的欄位，所以跑真實對戰時 standalone(正確值)會贏 ——
+**畫面完全正常，測試全綠，肉眼看不出來**。壞掉的只有那些不經過 `registerAll` 的 RAW-DOC 消費端：
+圖鑑瀏覽器、後台 內容管理 頁，以及最嚴重的 `apps/editor/src/preview/PreviewController.ts:84`
+—— 它傳 `overrideAbilities: true`，整份採用 embedded 副本，所以**編輯器預覽看到的是舊佔位火焰**。
+
+### 落點
+
+| 項目 | 內容 |
+|---|---|
+| 同步方向 | standalone → embedded，**單向**。standalone 是權威（見 `registry.ts:107` 的 doc-comment 與 `fillGaps`），不做「挑一個比較順眼的」式和解 |
+| 改法 | champion 檔是 Python exporter 產的（浮點寫成 `30.0`），走 Node 的 JSON round-trip 會把每個數字都重寫一遍。所以逐行只換那一行 `"vfxKey": "…"`，改完再 re-parse 驗證「解析結果只有預期的 vfxKey 變了」且「差異行數 == 預期筆數」。實際 diff：192 增 192 減、**0 行非 vfxKey 變動** |
+| 重建索引 | `pnpm content:build` → `contentVersion` `cv_540d4fa9e29c` → `cv_fcb7197b7f82`（gates client cache invalidation）；`content/champions/_index.json` 48 份 per-doc hash 更新 |
+| 守衛 | `packages/shared/src/content/abilityMirror.test.ts` — 4 例，**第一次讓 `auditAbilityMirrorDrift` 真的跑在 content/ 上**（在此之前它只被 `abilityShadowing.test.ts` 的合成 2-doc fixture 碰過） |
+
+### 守衛的形狀（av-14..17）
+
+- **不 fail-fast**：把 192 條全部收進一個 list 再一次 assert。迴圈裡放裸 `expect` 的話，192 個缺陷只會回報成 1 個。失敗訊息會給 `[vfxKey×192]` 的分欄統計 + 全部明細 + 修法（往哪個方向抄、記得 `content:build`）。
+- **不 skip**：`ability-mirror-pairs` 明確 assert「每個 champion 的 QWER 都找得到 standalone twin」，而不是遇到找不到就 `continue` —— 否則刪掉 standalone 檔就能讓整套守衛真空通過。
+- **有計數**：每條都先 assert 掃到的對數 ≥ 452，避免「一份都沒掃到所以全過」。
+- **旁邊那個失效模式也擋**：`ability-mirror-one-sided` 只放行 `schema` + `icon` 這兩個既定的單邊欄位；出現第三個單邊欄位 = 又有新的「只寫一邊」的寫入路徑，直接紅。
+
+反向驗證：把 content/ 退回修前狀態跑這套守衛 → `ability-mirror-no-conflict` 與
+`ability-mirror-vfxkey` 各紅一次，訊息 `192 embedded field(s) contradict their standalone twin
+across 452 pairs [vfxKey×192]`。守衛不是真空綠的。
+
+---
+
+## 2026-07-24（同日第二則）— 同一面鏡子的另一半：`icon` 416/452 只寫了 standalone（已補完 + 守衛收緊）
+
+上一段修的是 `vfxKey`（**兩邊都有、值不同**）。同一次掃描其實已經量到 `icon` 有 416 條
+**只有 standalone 有**，當時判給 `icon-embed-standalone-agree` 而沒動。實際去跑那條守衛：
+**它是紅的**，而且不只紅一條。
+
+### 問題（量測）
+
+| 類別 | 452 對 QWER 之中 | 說明 |
+|---|---|---|
+| 兩邊都有 | 12 | 全是 `.png`，w3x 原生萃取。`extract_icons.py` 兩邊都寫（`doc["abilities"][slot]["icon"]`），所以本來就對 |
+| **只有 standalone** | **416** | 全是 `.webp`，AI 生成批次。`tools/icon-gen/src/generate.py` 的 `patch_icon_field` 只寫 `content/<family>/<doc-id>.json`，champion 內嵌那份從頭到尾沒人碰 |
+| 兩邊都沒有 | 24 | 其中 16 條是真的沒圖（`godie-e00u` / `godie-h02n` / `godie-u01f` / `godie-u01q` 四位，磁碟上 0 檔）；另 8 條**有圖但 doc 沒欄位** |
+| 值衝突 | 0 | 這次是「缺欄位」類，不是 #79 的「值互相矛盾」類 |
+
+另外 9 份 standalone doc（`godie-h02r.{q,w,e,r,ex}`、`godie-u00b.{q,w,e,r}`）webp 已生成並 commit
+（`content/config/icon-plan.json` 也列了），**doc 卻完全沒有 `icon` 欄位**。三條守衛因此連環紅：
+
+- `icon-embed-standalone-agree` — 416 條 standalone/embedded 不一致（回報第一條 `godie-e001.q`）
+- `icon-ex-consistency` — `godie-h02r.ex.webp` 在磁碟上，`godie-h02r.ex.json` 沒 `icon`
+- `icon-no-orphans` — 9 個 webp 沒有任何 doc 引用（fail-fast 只報了第一個 `godie-h02r.e.webp`）
+
+### 落點
+
+| 項目 | 內容 |
+|---|---|
+| 同步方向 | standalone → embedded，**單向**，同上一段（`registry.ts:107` + `fillGaps`） |
+| 改法 | 同上一段的逐行手術：champion 檔是 Python exporter 產的（`30.0`），Node JSON round-trip 會重寫每個數字。每筆只**插入一行** `"icon": "…",`（緊接 `"name"` 之後，與 standalone 的擺位一致 — 452 對全部如此，0 例外），改完 re-parse 驗證兩件事：把插入的行拿掉要**逐 byte 還原原檔**，且 re-parse 後刪掉新增的 key 要 `JSON.stringify` 完全相等 |
+| 實際 diff | **+433 行 / −0 行**、**0 行非 `icon` 變動**。其中 embedded 424 條（109 個 champion 檔）+ standalone 9 條（h02r×5、u00b×4） |
+| 結果 | 452 對：兩邊都有 **436**、單邊 **0**、衝突 **0**；剩下 16 條是那 4 位真的沒圖的英雄。磁碟上 orphan 圖 **0** |
+| 重建索引 | `pnpm content:build` → `contentVersion` `cv_fcb7197b7f82` → `cv_4b49a572be99`；`champions/_index.json` 109 份、`abilities/_index.json` 9 份 per-doc hash 更新 |
+| 守衛收緊 | `ability-mirror-one-sided` 的 `STANDALONE_ONLY_OK` 拿掉 `"icon"`，只剩 `"schema"`。這個豁免正是讓 416 條單邊值長期合法存在的原因；鏡像補完後移除，單邊狀態再也回不來 |
+
+### 為什麼「缺欄位」比 `vfxKey` 那類輕、但仍然要修
+
+`fillGaps` 會把 standalone 有、embedded 沒有的欄位補進去，所以走 `registerAll` 的路徑（真實對戰、
+HUD 技能列）本來就拿得到圖 —— 這也是它能潛這麼久的原因。壞掉的一樣是不經過 `registerAll` 的
+RAW-DOC 消費端：圖鑑、後台 內容管理，以及 `PreviewController.ts` 的 `overrideAbilities: true`
+（整份採用 embedded，於是**編輯器預覽的技能格是空的**）。至於那 9 份連 standalone 都沒欄位的，
+則是**所有**路徑都拿不到圖 —— 妙蛙花與飛鼠先生的 QWER/EX 一直在用字母 glyph 佔位，圖其實躺在
+`content/assets/icons/abilities/` 裡沒人引用。
+
+### 驗證
+
+反向驗證（守衛不是真空綠的）：拿 `8f5d942`（修前）的 content 重跑同一段判定 —— 用**舊**
+allowlist `[schema, icon]` 是 **0 條違規（綠）**，這就是 416 條單邊 `icon` 得以長期合法的原因；
+換成**新** allowlist `[schema]` 立刻 **416 條違規（紅）**，分欄統計 `icon×416`，掃到的對數同樣是 452。
+
+`icons.test.ts` 7 例 + `abilityMirror.test.ts` 4 例全綠；`@ggd/shared` 70/71 suite、
+`apps/client` 210/211、admin 21/21、editor 8/8、content-api 2/2 全過。唯二的紅是既有問題，與本次無關：
+`castabilitySweep.test.ts` 與 `render/vfx/bindings.test.ts` 都是 `data/curation/whitelist.json`
+被 .gitignore 吃掉、worktree 沒這檔（ENOENT）；`typecheck` 那條 `scripts/probeSlotResolve.ts`
+`TS2367` 也是既有的。
+
+---
+
+## 2026-07-25 — 把分支併回 main：鏡像守衛在合併當下抓到第三個單邊欄位
+
+`claude/compassionate-dubinsky-5c4b69` 落後 origin/main 31 個 commit。合併本身只有 6 個衝突
+（4 個是 `content:build` 的產物，重跑即可；2 個是 doc 兩邊各自 append）。真正的內容是自動合併的
+—— 而這正是 `6f338cd` 記錄過的危險形狀：上一個 icon 修復 worktree 併進來時**靜默刪掉**了
+`godie-h02r.r.json` 的整個 `hitFeel` 區塊與已綁好的 w3x `vfxKey`，owner 的原話是「我驗錯了東西：
+我檢查每個**新增**的 icon 都能解析，卻從來沒去找**刪除**」。
+
+### 所以這次先驗刪除
+
+逐葉節點比對 **1732 份 doc** 對 origin/main：
+
+| | 數量 |
+|---|---|
+| **被刪除的葉節點值** | **0** |
+| 變更的葉節點值 | 209 —— 全部是 `champions::abilities.<slot>.vfxKey`（embedded 鏡像同步） |
+| 新增的葉節點值 | 424 —— 全部是 `champions::abilities.<slot>.icon` |
+
+沒有第四種。沒有數字被重寫、沒有描述被動到、沒有 `hitFeel` 被碰。
+
+### 合併當下守衛抓到的三件事
+
+1. **30 個 embedded `vfxKey` 落後**。main 的 w3x emitter wave 把 30 個技能從 `fx.prim.*`
+   升級成真實匯入美術（`fx.w3x.particle.*` / `fx.w3x.locust.*` / `godie-*-p*`），只寫了
+   standalone 那邊。合併正確地採用了 main 較新的 standalone 值，於是 embedded 落後 —— 同一個
+   單向同步再跑一次即可（+30/−30，0 行非 vfxKey 變動）。
+2. **`hitFeel` 是第三個「只寫 standalone」的欄位**（30 個 slot，同樣來自那個 wave）。
+   已一併同步進 embedded：整個區塊**逐行原樣複製**再縮排，所以 exporter 的 `1.0` / `0.95`
+   浮點寫法原封不動；embedded 物件原本結尾早一個 key，所以 append 就是精確鏡像。
+   diff +450 / −30，那 30 行「刪除」全部是原值加一個逗號（含 `godie-ekee.Q` 的 `icon`，
+   它剛好是該物件最後一個 key）。
+3. **`ability-mirror-vfxkey` 的 primitive 底線**從 400 降到 390（實測 397）。這是**故意往下調**：
+   30 個 slot 升級到真實 w3x 美術是進步不是漂移，兩邊一致，由上面的 `stale` 清單負責證明。
+
+### 連帶：一條豁免變成謊言
+
+`fieldAdoption.test.ts` 的 `field:champions.abilities.*.hitFeel` 豁免原本寫著
+「A MIRROR GAP, not a plain zero: 30 standalone... and 0 of their champion-embedded twins」。
+鏡像補完後它就不成立了，該套件的 stale-exemption 檢查立刻紅並指名修法（「DELETE the listed
+entries; that is the entire fix」）—— 已刪除。這條檢查本身就是為了不讓豁免變成過期的謊言。
+
+### 與 main 立場的分歧（已由 owner 裁決）
+
+main 的 `icons.test.ts` 明文採「AUTHORITY MODEL」：424 個 embedded 沒有 icon 是
+「the DESIGNED steady state, not a defect」，且作者註明他試過回填、弄壞了 `loader.test.ts` 與
+`fieldAdoption.test.ts`。實測：在本分支的回填下**那兩個套件都是綠的**（`fieldAdoption` 後來紅的
+是 hitFeel 那條過期豁免，不是回填本身，且修法由測試自己指定）。owner 裁決：**一併同步 hitFeel**，
+維持「兩邊同步 + 禁止單邊」。main 那段 authority-model 註解與本分支的嚴格模型並存於同一份檔案，
+未來若要改採 authority model，改的是 `STANDALONE_ONLY_OK` 一行。
+
+### 驗證
+
+`@ggd/shared` **77/77 套件、811/811 測試全綠**（castabilitySweep 也綠了）、typecheck **clean**
+（main 已修掉 `probeSlotResolve.ts` 的 TS2367）；admin 27/27、editor 8/8、content-api 2/2。
+`apps/client` 236/237 —— 唯一的紅是 `render/vfx/bindings.test.ts`，`/data/**` 被 .gitignore 吃掉
+所以任何 worktree 都沒有 `data/curation/whitelist.json`，結構性既有問題，與本次無關。
+`content:build` → `contentVersion` `cv_6da952bde327`。

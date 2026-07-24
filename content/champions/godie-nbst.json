@@ -42,6 +42,7 @@
     "Q": {
       "id": "godie-nbst.q",
       "name": "24-01 這是我的豆皮壽司",
+      "icon": "assets/icons/abilities/godie-nbst.q.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n瘋狂假面變態般的出現，秀出豆皮壽司，使敵方驚嚇造成暈眩1.5秒及\n100傷害。",
       "slot": "Q",
       "castType": "ground",
@@ -93,6 +94,7 @@
     "W": {
       "id": "godie-nbst.w",
       "name": "24-02 變態根性",
+      "icon": "assets/icons/abilities/godie-nbst.w.webp",
       "description": "[被動]\n0秒冷卻時間\n\n變態血液使得假面防禦力提升2點。",
       "slot": "W",
       "castType": "targeted",
@@ -140,6 +142,7 @@
     "E": {
       "id": "godie-nbst.e",
       "name": "24-03 變態絕技悶絕地獄車",
+      "icon": "assets/icons/abilities/godie-nbst.e.webp",
       "description": "[主動攻擊]\n45秒冷卻時間\n\n以超快的速度迅速滑行一段距離並進行攻擊，對一直線上的地面部隊造成350+力量*3傷害。",
       "slot": "E",
       "castType": "targeted",
@@ -184,6 +187,7 @@
     "R": {
       "id": "godie-nbst.r",
       "name": "24-04 內褲變身",
+      "icon": "assets/icons/abilities/godie-nbst.r.webp",
       "description": "[輔助]\n60秒冷卻時間\n\n瘋狂假面在戴上內褲後可以發揮全部的潛力，使出正義的力量對敵人進行制裁，增加攻擊力50%，生命回復速度增加35，持續12秒。",
       "slot": "R",
       "castType": "self",

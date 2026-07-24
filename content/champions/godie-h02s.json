@@ -43,6 +43,7 @@
     "Q": {
       "id": "godie-h02s.q",
       "name": "91-01 死亡之握",
+      "icon": "assets/icons/abilities/godie-h02s.q.webp",
       "description": "[輔助]\n40秒冷卻時間\n\n駕馭周圍穢邪的能量以束縛萬物，將450距離內的目標吸引到死亡騎士面前，並強迫敵人攻擊死亡騎士，持續0.8秒。",
       "slot": "Q",
       "castType": "ground",
@@ -76,6 +77,7 @@
     "W": {
       "id": "godie-h02s.w",
       "name": "91-02 疫病",
+      "icon": "assets/icons/abilities/godie-h02s.w.webp",
       "description": "[被動]\n0秒冷卻時間\n\n死騎掌握著各種疫病能力，能使敵人在痛苦中死亡。\nLV1：15%機率打出瘟疫打擊：使目標染上瘟疫，每秒損失30點生命，持續10秒。",
       "slot": "W",
       "castType": "self",
@@ -112,6 +114,7 @@
     "E": {
       "id": "godie-h02s.e",
       "name": "91-03 碎心打擊",
+      "icon": "assets/icons/abilities/godie-h02s.e.webp",
       "description": "[主動攻擊]\n45秒冷卻時間\n\n立即打擊目標與其周圍的盟友，對主要目標造成450點傷害，且周圍也會受到一半的傷害，並且降低部隊的移動與攻擊速度，持續2.5秒。主要目標身上每個疾病效果可使此攻擊額外造成75點的傷害。",
       "slot": "E",
       "castType": "ground",
@@ -163,6 +166,7 @@
     "R": {
       "id": "godie-h02s.r",
       "name": "91-04 血魄暴噬",
+      "icon": "assets/icons/abilities/godie-h02s.r.webp",
       "description": "[被動]\n0秒冷卻時間\n\n讓巫妖王在攻擊時給予敵人50點附加傷害。",
       "slot": "R",
       "castType": "self",

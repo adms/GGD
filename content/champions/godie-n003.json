@@ -43,6 +43,7 @@
     "Q": {
       "id": "godie-n003.q",
       "name": "42-01 凍結的大地",
+      "icon": "assets/icons/abilities/godie-n003.q.webp",
       "description": "[主動攻擊]\n25秒冷卻時間\n\n以一波冰雪轟擊敵方部隊，造成目標250點的傷害，以及周圍目標150點的冰爆傷害。冰冷傷害可以降低部隊的移動與攻擊速度1.2秒。",
       "slot": "Q",
       "castType": "ground",
@@ -86,7 +87,7 @@
           "moveSpeedMult": 0.6
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.ice.shockwave",
       "targetsEnemies": true,
       "radius": 5.5,
       "castTimeSec": 0.5
@@ -94,6 +95,7 @@
     "W": {
       "id": "godie-n003.w",
       "name": "42-02 吸血祭品",
+      "icon": "assets/icons/abilities/godie-n003.w.webp",
       "description": "[輔助]\n60秒冷卻時間\n\n犧牲選定的友方不死部隊，並將它50%的生命點數轉化為吸血鬼的生命力，20%轉化為吸血鬼的法力。",
       "slot": "W",
       "castType": "self",
@@ -130,12 +132,13 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.blood.nova",
       "castTimeSec": 0.3
     },
     "E": {
       "id": "godie-n003.e",
       "name": "42-03 暗夜吹雪",
+      "icon": "assets/icons/abilities/godie-n003.e.webp",
       "description": "[主動攻擊]\n45秒冷卻時間\n\n依文潔琳的得意技之一，使用高等冰系黑魔法造成一直線敵方500點傷害。",
       "slot": "E",
       "castType": "skillshot",
@@ -173,12 +176,13 @@
           ]
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.ice.nova",
       "castTimeSec": 0.6
     },
     "R": {
       "id": "godie-n003.r",
       "name": "42-04 世界終結",
+      "icon": "assets/icons/abilities/godie-n003.r.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n由暗系永遠的黑暗以及冰系魔法永遠的冰河混合成的超強力魔法,有著足以將上古鬼神一擊殺的恐怖力量，給予隨機12次區域傷害150點以及一次智慧*4點傷害，區域內移動和攻擊速度將會下降50%。",
       "slot": "R",
       "castType": "skillshot",
@@ -213,8 +217,22 @@
           ]
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
-      "castTimeSec": 0.4
+      "vfxKey": "fx.w3x.locust.frostnova.p01",
+      "castTimeSec": 0.4,
+      "hitFeel": {
+        "hitstopTicks": 5,
+        "hitstunTicks": 8,
+        "shakeMag": 0.543,
+        "shakeStyle": "omni",
+        "sparkKind": "ice",
+        "flashColor": [
+          0.6,
+          0.82,
+          1.0
+        ],
+        "flashMs": 186,
+        "camKick": 0.466
+      }
     }
   },
   "skillOrder": [

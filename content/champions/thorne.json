@@ -43,6 +43,7 @@
     "Q": {
       "id": "thorne.q",
       "name": "Thorn Lash",
+      "icon": "assets/icons/abilities/thorne.q.webp",
       "slot": "Q",
       "castType": "dash",
       "maxRank": 5,
@@ -74,6 +75,7 @@
     "W": {
       "id": "thorne.w",
       "name": "Barkskin Bulwark",
+      "icon": "assets/icons/abilities/thorne.w.webp",
       "slot": "W",
       "castType": "self",
       "maxRank": 5,
@@ -131,6 +133,7 @@
     "E": {
       "id": "thorne.e",
       "name": "Root Snare",
+      "icon": "assets/icons/abilities/thorne.e.webp",
       "slot": "E",
       "castType": "skillshot",
       "maxRank": 5,
@@ -188,6 +191,7 @@
     "R": {
       "id": "thorne.r",
       "name": "Bramble Burst",
+      "icon": "assets/icons/abilities/thorne.r.webp",
       "slot": "R",
       "castType": "ground",
       "maxRank": 3,

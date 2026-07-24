@@ -43,6 +43,7 @@
     "Q": {
       "id": "godie-u00h.q",
       "name": "39-01 無名神風流-白虎",
+      "icon": "assets/icons/abilities/godie-u00h.q.webp",
       "description": "[主動攻擊]\n35秒冷卻時間\n\n村正臨死前教授的真無名神風\n無明神風流-白虎，以疾快的速度和力道造成強大的風壓撲向對方，造成100點傷害的同時可以打昏目標1秒。",
       "slot": "Q",
       "castType": "targeted",
@@ -89,7 +90,7 @@
           "moveSpeedMult": 0.6
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.wind.slash",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
@@ -133,7 +134,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.fire.slash",
       "targetsEnemies": true,
       "radius": 3.67,
       "icon": "assets/icons/abilities/godie-u00h.w.png",
@@ -142,6 +143,7 @@
     "E": {
       "id": "godie-u00h.e",
       "name": "39-03 無名神風流-蛟龍",
+      "icon": "assets/icons/abilities/godie-u00h.e.webp",
       "description": "[主動攻擊]\n45秒冷卻時間\n\n你聽到神風的清響聲了嗎?\n使用神風流殺人劍術，使前方直線敵人受到傷害350+敏捷*3點。",
       "slot": "E",
       "castType": "skillshot",
@@ -185,12 +187,13 @@
           ]
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.ice.beam",
       "castTimeSec": 0.5
     },
     "R": {
       "id": "godie-u00h.r",
       "name": "39-04 祕奧義．金色的神風",
+      "icon": "assets/icons/abilities/godie-u00h.r.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n同時召喚出四神時所同時發動的最終奧義，將帶給接近鬼眼狂刀的人333+敏捷*1傷害並暈眩1秒，並且招換四神造成各120傷害。",
       "slot": "R",
       "castType": "ground",
@@ -231,7 +234,7 @@
           "stun": true
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.holy.tornado-lg",
       "targetsEnemies": true,
       "radius": 6.0,
       "castTimeSec": 0.8

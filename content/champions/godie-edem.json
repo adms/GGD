@@ -43,6 +43,7 @@
     "Q": {
       "id": "godie-edem.q",
       "name": "45-01 火遁-豪火龍之術",
+      "icon": "assets/icons/abilities/godie-edem.q.webp",
       "description": "[傷害加成]\n35秒冷卻時間\n\n比豪火球之術更上一層的火遁忍術，將吐出的火焰轉化為龍形，給予範圍內敵人250+敏捷*2點傷害。",
       "slot": "Q",
       "castType": "ground",
@@ -77,7 +78,7 @@
           }
         }
       ],
-      "vfxKey": "fx.firestorm",
+      "vfxKey": "fx.prim.fire.explosion",
       "radius": 6.05,
       "targetsEnemies": true,
       "castTimeSec": 0.6
@@ -85,6 +86,7 @@
     "W": {
       "id": "godie-edem.w",
       "name": "45-02 千鳥流",
+      "icon": "assets/icons/abilities/godie-edem.w.webp",
       "description": "[主動攻擊]\n23秒冷卻時間\n\n千鳥流就是將全身充滿千鳥的雷電，使周圍敵人受到雷電傷害75點生命值與麻痺減緩攻擊與移動速度各50%，持續1.5秒。",
       "slot": "W",
       "castType": "ground",
@@ -131,7 +133,7 @@
           "moveSpeedMult": 0.5
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.lightning.beam",
       "targetsEnemies": true,
       "radius": 7.79,
       "castTimeSec": 0.6
@@ -139,6 +141,7 @@
     "E": {
       "id": "godie-edem.e",
       "name": "45-03 千鳥",
+      "icon": "assets/icons/abilities/godie-edem.e.webp",
       "description": "[主動攻擊]\n45秒冷卻時間\n\n卡卡西傳授的技術。 原理是把查克拉集中在手上, 再以高速突刺作直線式的攻擊，造成((英雄等級*20)+400)點法術傷害，由於威力過於強大，若敵方偏移瞄準地點將不會受到傷害。",
       "slot": "E",
       "castType": "targeted",
@@ -176,7 +179,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.lightning.beam",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
@@ -199,7 +202,7 @@
       ],
       "range": 0,
       "effects": [],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.void.pulse-lg",
       "icon": "assets/icons/abilities/godie-edem.r.png",
       "passive": {
         "name": "45-04 哥哥",

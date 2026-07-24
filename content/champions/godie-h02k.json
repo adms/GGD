@@ -43,6 +43,7 @@
     "Q": {
       "id": "godie-h02k.q",
       "name": "89-01 憤怒的頭槌",
+      "icon": "assets/icons/abilities/godie-h02k.q.webp",
       "description": "[被動]\n0秒冷卻時間\n\n當熊貓憤怒到極點的時候將會使出致命殺傷力的頭槌攻擊，但是牠總是忘記有這招，攻擊時有5%機率想起頭槌攻擊，造成111點破壞力，並將敵人震昏0.5秒。",
       "slot": "Q",
       "castType": "self",
@@ -75,12 +76,13 @@
           "duration": 3.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.physical.shockwave",
       "castTimeSec": 0.3
     },
     "W": {
       "id": "godie-h02k.w",
       "name": "89-02 憤怒的菊花",
+      "icon": "assets/icons/abilities/godie-h02k.w.webp",
       "description": "[被動]\n0秒冷卻時間\n\n當敵人攻擊熊貓的時候，有3%機率會讓熊貓想起四川地震牠剛好在撇條的痛苦，會胡亂噴放排泄物使敵人造成癱瘓，累積到一定次數會讓臉色難看的熊貓一洩千里。",
       "slot": "W",
       "castType": "self",
@@ -111,12 +113,13 @@
           "duration": 3.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.nature.explosion",
       "castTimeSec": 0.3
     },
     "E": {
       "id": "godie-h02k.e",
       "name": "89-03 憤怒的胸毛",
+      "icon": "assets/icons/abilities/godie-h02k.e.webp",
       "description": "[輔助]\n0秒冷卻時間\n\n傳說中拔下熊貓的一根胸毛，也就是熊貓胸毛，可以讓胸毛..是熊貓復活，這份刺激的快感也讓熊貓行動加速及提升全能力，並且隨機爆炸，但是熊貓還是常常忘記這回事，只有4%機率會想起。",
       "slot": "E",
       "castType": "self",
@@ -157,12 +160,13 @@
           "duration": 12.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.physical.swarm",
       "castTimeSec": 0.3
     },
     "R": {
       "id": "godie-h02k.r",
       "name": "89-04 憤怒的簡諧運動",
+      "icon": "assets/icons/abilities/godie-h02k.r.webp",
       "description": "[被動]\n0秒冷卻時間\n\n[我心中有個夢...] 牠這樣說著，雖然牠搞不清楚是是夢遺還是夢三小，但是每當牠想起的時候，手掌就會緊握不停揮動，攻擊時有1%機率將攻速提升到最高，並且擁有8%物理迴避。",
       "slot": "R",
       "castType": "self",
@@ -191,7 +195,7 @@
           "duration": 6.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.physical.shockwave-lg",
       "castTimeSec": 0.3
     }
   },

@@ -42,6 +42,7 @@
     "Q": {
       "id": "godie-e015.q",
       "name": "94-01 北斗爆橘拳",
+      "icon": "assets/icons/abilities/godie-e015.q.webp",
       "description": "[主動攻擊]\n25秒冷卻時間\n\n北斗神拳奧義-北斗爆橘拳，使盡全力將橘子捏爆，讓敵人驚嚇受到自身力量*2+100傷害，而爆出來的橘子汁可以恢復生命100點。\n在恰恰狀態下傷害加成(力量*1.5)",
       "slot": "Q",
       "castType": "targeted",
@@ -88,6 +89,7 @@
     "W": {
       "id": "godie-e015.w",
       "name": "94-02 橘山斬空破",
+      "icon": "assets/icons/abilities/godie-e015.w.webp",
       "description": "[主動攻擊]\n30秒冷卻時間\n\n在成堆的橘子上奮力一擊，造成大量的橘子爆破，讓敵人受到極大的驚嚇，造成範圍內敵人100點傷害並附帶跑速減緩50%，持續2秒。\n在恰恰狀態下附加四道傷害75點的斬空波",
       "slot": "W",
       "castType": "ground",
@@ -139,6 +141,7 @@
     "E": {
       "id": "godie-e015.e",
       "name": "94-03 珍奶顏射",
+      "icon": "assets/icons/abilities/godie-e015.e.webp",
       "description": "[輔助]\n60秒冷卻時間\n\n被珍珠奶茶射中的金居福，進入暴怒狀態，將會額外受到20%傷害，但每次攻擊可附帶125點傷害並暈眩0.1秒，增加攻速30%，跑速4%，持續15秒。",
       "slot": "E",
       "castType": "targeted",
@@ -189,6 +192,7 @@
     "R": {
       "id": "godie-e015.r",
       "name": "94-04 賣扣~~",
+      "icon": "assets/icons/abilities/godie-e015.r.webp",
       "description": "[主動攻擊]\n50秒冷卻時間\n\n召喚一台貨車攻擊目標，給予目標強力的衝擊造成600點傷害，並將目標撞出天邊。\n在恰恰狀態下傷害加成300點",
       "slot": "R",
       "castType": "targeted",

@@ -42,6 +42,7 @@
     "Q": {
       "id": "godie-hpb1.q",
       "name": "07-01 臨、兵、鬥",
+      "icon": "assets/icons/abilities/godie-hpb1.q.webp",
       "description": "[輔助]\n65秒冷卻時間\n\n可抵擋對方負性魔法。",
       "slot": "Q",
       "castType": "self",
@@ -70,12 +71,13 @@
           "duration": 6.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.physical.pulse-sm",
       "castTimeSec": 0.3
     },
     "W": {
       "id": "godie-hpb1.w",
       "name": "07-02 者、皆、陣",
+      "icon": "assets/icons/abilities/godie-hpb1.w.webp",
       "description": "[主動攻擊]\n50秒冷卻時間\n\n以超快的速度衝刺砍殺一直線上的敵人使得血流成河，砍殺造成225+力量*1傷害。\n\n在\"臨、兵、鬥\"發動後1秒內施展可增加(敏捷係數*3)傷害，30級之後可增加(敏捷係數*6)傷害",
       "slot": "W",
       "castType": "targeted",
@@ -116,13 +118,14 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.physical.pulse-sm",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
     "E": {
       "id": "godie-hpb1.e",
       "name": "07-03 列、在、前",
+      "icon": "assets/icons/abilities/godie-hpb1.e.webp",
       "description": "[主動攻擊]\n65秒冷卻時間\n用盡全身力氣跳起落下斬擊使得大地震動，區域內敵人皆受到(力量*2)+450傷害。\n\n在\"者、皆、陣\"發動後1秒內施展可增加(敏捷係數*5)傷害，30級之後可增加(敏捷係數*10)傷害",
       "slot": "E",
       "castType": "targeted",
@@ -160,13 +163,14 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.physical.beam",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
     "R": {
       "id": "godie-hpb1.r",
       "name": "07-04 神聖結界",
+      "icon": "assets/icons/abilities/godie-hpb1.r.webp",
       "description": "[輔助]\n45秒冷卻時間\n\n展開一道強力的結界，可以抵擋50%的傷害，持續8秒。",
       "slot": "R",
       "castType": "self",
@@ -227,7 +231,7 @@
           ]
         }
       ],
-      "vfxKey": "fx.cinder-ward",
+      "vfxKey": "fx.prim.holy.nova-lg",
       "castTimeSec": 0.4
     }
   },

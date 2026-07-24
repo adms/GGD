@@ -44,6 +44,7 @@
     "Q": {
       "id": "godie-n01l.q",
       "name": "98-01 理財的習慣",
+      "icon": "assets/icons/abilities/godie-n01l.q.webp",
       "description": "[輔助]\n0秒冷卻時間\n\n身為學姊，會一些理財的方法來增加自身的積蓄也是合情合理的，每60秒增加自身金錢及原木量1%。",
       "slot": "Q",
       "castType": "self",
@@ -80,6 +81,7 @@
     "W": {
       "id": "godie-n01l.w",
       "name": "98-02 平易近人的笑容",
+      "icon": "assets/icons/abilities/godie-n01l.w.webp",
       "description": "[靈氣]\n0秒冷卻時間\n\n學姊平易近人的笑容，足以振奮人心，提升自身及週遭友軍4%攻擊力，並每隔30秒恢復週遭友軍100點生命。",
       "slot": "W",
       "castType": "self",
@@ -133,6 +135,7 @@
     "E": {
       "id": "godie-n01l.e",
       "name": "98-03 從過去中學習",
+      "icon": "assets/icons/abilities/godie-n01l.e.webp",
       "description": "[被動]\n0秒冷卻時間\n\n年紀越大越會從過去的經驗中記取教訓，使自身更加成長，降低10%穿刺及法術傷害。",
       "slot": "E",
       "castType": "self",
@@ -174,6 +177,7 @@
     "R": {
       "id": "godie-n01l.r",
       "name": "98-04 自在飛翔",
+      "icon": "assets/icons/abilities/godie-n01l.r.webp",
       "description": "[輔助]\n0秒冷卻時間\n\n自在走向自己的目標，宛如飛燕般令人捉摸不定，可以提升自身20%攻速及5%跑速；受傷時有10%機率產生分身混淆敵人視線，分身持續7秒。",
       "slot": "R",
       "castType": "self",

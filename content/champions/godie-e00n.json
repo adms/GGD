@@ -41,6 +41,7 @@
     "Q": {
       "id": "godie-e00n.q",
       "name": "22-01 鬼隱之擊",
+      "icon": "assets/icons/abilities/godie-e00n.q.webp",
       "description": "[輔助]\n30秒冷卻時間\n\n隱形並在一定的時間內提昇50%速度以暗殺目標，當攻擊時隱形術即告失效，但是會造成額外100點的背刺傷害，持續12秒。",
       "slot": "Q",
       "castType": "self",
@@ -79,6 +80,7 @@
     "W": {
       "id": "godie-e00n.w",
       "name": "22-02 染血的柴刀",
+      "icon": "assets/icons/abilities/godie-e00n.w.webp",
       "description": "[被動]\n0秒冷卻時間\n\n攻擊時有18%的機率可以使出會心一擊造成1.25倍的傷害。",
       "slot": "W",
       "castType": "self",
@@ -115,6 +117,7 @@
     "E": {
       "id": "godie-e00n.e",
       "name": "22-03 五吋釘",
+      "icon": "assets/icons/abilities/godie-e00n.e.webp",
       "description": "[主動攻擊]\n25秒冷卻時間\n\n將一枚充滿詛咒的五吋釘射向敵方目標，造成瞬間350點傷害，並減緩60%移動速度5秒。",
       "slot": "E",
       "castType": "targeted",
@@ -165,6 +168,7 @@
     "R": {
       "id": "godie-e00n.r",
       "name": "22-04 雛見澤症候群L5",
+      "icon": "assets/icons/abilities/godie-e00n.r.webp",
       "description": "[輔助]\n60秒冷卻時間\n\n注射藥物使自己短暫激發到L5的病狀，此狀態將會強化攻擊55點和移動速度，並暫時減少生命最大值150點，持續7秒。",
       "slot": "R",
       "castType": "self",

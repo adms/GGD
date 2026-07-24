@@ -42,6 +42,7 @@
     "Q": {
       "id": "godie-h02y.q",
       "name": "97-01 壹之秘劍-焰靈",
+      "icon": "assets/icons/abilities/godie-h02y.q.webp",
       "description": "[被動]\n0秒冷卻時間\n\n每一次的攻擊都會因為黏附在目標身上的火焰而加強。這些火焰會在第一次攻擊時增加20點傷害力，第二次攻擊則提升為兩倍，第三次攻擊則增加為三倍，以此類推。如果目標在擁有火焰附著的狀況下死去，就會產生爆炸，對所有附近敵對部隊造成 50點的傷害。火焰的附著可以持續2秒。",
       "slot": "Q",
       "castType": "targeted",
@@ -86,6 +87,7 @@
     "W": {
       "id": "godie-h02y.w",
       "name": "97-02 貳之秘劍-紅蓮腕",
+      "icon": "assets/icons/abilities/godie-h02y.w.webp",
       "description": "[主動攻擊]\n40秒冷卻時間\n\n將目標抓至身邊並持續2秒，接著用手上的火藥點燃爆炸，造成小範圍75點傷害及暈眩0.5秒。抓住期間中斷則無爆炸效果。",
       "slot": "W",
       "castType": "self",
@@ -135,6 +137,7 @@
     "E": {
       "id": "godie-h02y.e",
       "name": "97-03 弱肉強食",
+      "icon": "assets/icons/abilities/godie-h02y.e.webp",
       "description": "[被動]\n0秒冷卻時間\n\n每次攻擊都能汲取10%的傷害化為自己的生命值",
       "slot": "E",
       "castType": "self",
@@ -171,6 +174,7 @@
     "R": {
       "id": "godie-h02y.r",
       "name": "97-04 終極秘劍-火產靈神",
+      "icon": "assets/icons/abilities/godie-h02y.r.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n使自己的劍與身體纏繞著火燄，每秒對自身附近的敵人造成200點傷害，並且從發出10道火柱，每一柱火燄能夠造成30點傷害，持續6秒，持續期間內擁有魔法免疫。",
       "slot": "R",
       "castType": "ground",

@@ -42,6 +42,7 @@
     "Q": {
       "id": "godie-e00r.q",
       "name": "59-01 吞噬",
+      "icon": "assets/icons/abilities/godie-e00r.q.webp",
       "description": "[輔助]\n60秒冷卻時間\n\n啟動吞噬狀態可讓初號機攻擊力增加20點傷害，攻擊時獲得生命回饋15%，可持續9秒",
       "slot": "Q",
       "castType": "targeted",
@@ -78,13 +79,14 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.void.explosion",
       "targetsEnemies": false,
       "castTimeSec": 0.3
     },
     "W": {
       "id": "godie-e00r.w",
       "name": "59-02 高週波短刀",
+      "icon": "assets/icons/abilities/godie-e00r.w.webp",
       "description": "[被動]\n0秒冷卻時間\n\n高週波短刀攻擊時有10%機率增加75點破壞力，並有機會將敵人擊昏0.5秒。",
       "slot": "W",
       "castType": "self",
@@ -115,12 +117,13 @@
           "duration": 3.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.physical.slash",
       "castTimeSec": 0.3
     },
     "E": {
       "id": "godie-e00r.e",
       "name": "59-03 AT力場",
+      "icon": "assets/icons/abilities/godie-e00r.e.webp",
       "description": "[被動]\n0秒冷卻時間\n\n一個被稱為神的聖域的力場，有40%降低所有施加在初號機身上的傷害35點。",
       "slot": "E",
       "castType": "self",
@@ -151,12 +154,27 @@
           "duration": 8.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
-      "castTimeSec": 0.3
+      "vfxKey": "fx.w3x.particle.heroeva01s2.p01",
+      "castTimeSec": 0.3,
+      "hitFeel": {
+        "hitstopTicks": 3,
+        "hitstunTicks": 5,
+        "shakeMag": 0.35,
+        "shakeStyle": "omni",
+        "sparkKind": "block",
+        "flashColor": [
+          0.7,
+          0.85,
+          1.0
+        ],
+        "flashMs": 120,
+        "camKick": 0.3
+      }
     },
     "R": {
       "id": "godie-e00r.r",
       "name": "59-04 野戰型陽電子砲",
+      "icon": "assets/icons/abilities/godie-e00r.r.webp",
       "description": "[主動攻擊]\n75秒冷卻時間\n\n集中大量能源，以求一擊必殺的陽電子砲,能夠對前方一直線的敵人造成750點傷害。",
       "slot": "R",
       "castType": "skillshot",
@@ -191,7 +209,7 @@
           ]
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.ki.beam-lg",
       "castTimeSec": 0.7
     }
   },

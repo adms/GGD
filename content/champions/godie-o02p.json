@@ -43,6 +43,7 @@
     "Q": {
       "id": "godie-o02p.q",
       "name": "99-01 甩蔥歌",
+      "icon": "assets/icons/abilities/godie-o02p.q.webp",
       "description": "[主動攻擊]\n25秒冷卻時間\n\n初音的成名曲之一，其電波般的旋律，會讓週遭的聽者有如全身通過電流一般；召喚一道閃電進行攻擊，給予最多6位敵人200點的傷害，每彈跳一個敵人傷害將降低10%。",
       "slot": "Q",
       "castType": "ground",
@@ -80,7 +81,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.sound.nova",
       "targetsEnemies": true,
       "radius": 7.33,
       "castTimeSec": 0.5
@@ -88,6 +89,7 @@
     "W": {
       "id": "godie-o02p.w",
       "name": "99-02 最初的聲音",
+      "icon": "assets/icons/abilities/godie-o02p.w.webp",
       "description": "[輔助]\n15秒冷卻時間\n\n初音的成名曲之一，其輕快的旋律，唱出的卻是感傷的故事，撫慰的歌聲，讓聽者的內心也受到了治癒；召喚一道療癒之風進行治癒，給予最多6位友方200點的治療，每彈跳一個友方治療效果將降低10%。",
       "slot": "W",
       "castType": "targeted",
@@ -124,13 +126,14 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.sound.pulse",
       "targetsEnemies": false,
       "castTimeSec": 0.3
     },
     "E": {
       "id": "godie-o02p.e",
       "name": "99-03 初音未來的消失",
+      "icon": "assets/icons/abilities/godie-o02p.e.webp",
       "description": "[輔助]\n50秒冷卻時間\n\n初音的成名曲之一，讓聽者莫名的悲憤及難過，進而在一定時間內武裝自己；在初音週遭的部隊可以額外獲得10%攻擊力加成及3點防禦，持續15秒。",
       "slot": "E",
       "castType": "self",
@@ -166,12 +169,13 @@
           "duration": 15.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.sound.explosion",
       "castTimeSec": 0.3
     },
     "R": {
       "id": "godie-o02p.r",
       "name": "99-04 世界第一的公主殿下",
+      "icon": "assets/icons/abilities/godie-o02p.r.webp",
       "description": "[主動傷害]\n60秒冷卻時間\n\n初音的成名曲之一，讓初音宛如公主般的翩翩起舞，期間不受任何魔法傷害；在初音週遭的部隊每秒受到100點傷害，每2秒會對週遭小範圍部隊施展最初的聲音，持續4秒。",
       "slot": "R",
       "castType": "self",
@@ -199,7 +203,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.holy.nova-lg",
       "castTimeSec": 0.3
     }
   },

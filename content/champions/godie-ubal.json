@@ -76,7 +76,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.void.beam",
       "targetsEnemies": true,
       "icon": "assets/icons/abilities/godie-ubal.q.png",
       "castTimeSec": 0.4
@@ -84,6 +84,7 @@
     "W": {
       "id": "godie-ubal.w",
       "name": "37-03 災難之牆",
+      "icon": "assets/icons/abilities/godie-ubal.w.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n釋放一道火牆，對面前所有的敵人每秒造成450點的傷害，火牆持續3秒。",
       "slot": "W",
       "castType": "targeted",
@@ -121,13 +122,14 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.void.shockwave",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
     "E": {
       "id": "godie-ubal.e",
       "name": "37-02 黑核晶",
+      "icon": "assets/icons/abilities/godie-ubal.e.webp",
       "description": "[主動攻擊]\n5秒冷卻時間\n\n黑核晶是長年埋在魔界地底深層的脈礦，吸收蘊藏了相當驚人的魔力，一旦被引爆釋放出來將會毀滅一切，範圍200內造成300點傷害 。\n\n戰場上最多出現7顆",
       "slot": "E",
       "castType": "targeted",
@@ -165,12 +167,13 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.void.explosion",
       "targetsEnemies": true
     },
     "R": {
       "id": "godie-ubal.r",
       "name": "37-04 魔界之王",
+      "icon": "assets/icons/abilities/godie-ubal.r.webp",
       "description": "[輔助]\n90秒冷卻時間\n\n召喚巴恩大魔王封印的年輕肉體並將靈魂合而為一，隨著技能等級提升可以使用的招式也將變多，變身後各方面的能力也會隨著技能等級提升而上升，持續35秒。",
       "slot": "R",
       "castType": "targeted",
@@ -205,7 +208,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.void.pulse-lg",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     }

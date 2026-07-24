@@ -43,6 +43,7 @@
     "Q": {
       "id": "godie-ntin.q",
       "name": "23-01 電離光槍 - 繁星飛躍",
+      "icon": "assets/icons/abilities/godie-ntin.q.webp",
       "description": "[主動攻擊]\n35秒冷卻時間\n\n發射出8道雷矢攻擊敵人，每道造成105點傷害。『阿爾卡斯、克洛塔斯、艾利亞斯，怒吼的天神啊，在我的指引下奔馳吧！巴勒基爾、札魯哥爾、布洛澤爾，電離光槍˙繁星飛躍！』",
       "slot": "Q",
       "castType": "targeted",
@@ -80,13 +81,28 @@
           }
         }
       ],
-      "vfxKey": "fx.cinder-ward",
+      "vfxKey": "fx.w3x.particle.gx.p00",
       "targetsEnemies": true,
-      "castTimeSec": 0.4
+      "castTimeSec": 0.4,
+      "hitFeel": {
+        "hitstopTicks": 3,
+        "hitstunTicks": 4,
+        "shakeMag": 0.315,
+        "shakeStyle": "directional",
+        "sparkKind": "magic",
+        "flashColor": [
+          0.65,
+          0.8,
+          1.0
+        ],
+        "flashMs": 108,
+        "camKick": 0.27
+      }
     },
     "W": {
       "id": "godie-ntin.w",
       "name": "23-02 超音型態",
+      "icon": "assets/icons/abilities/godie-ntin.w.webp",
       "description": "[輔助]\n25秒冷卻時間\n\n由雷光戰斧重新構築的防護服。以高機動的輔助功能強化攻擊速度15%及移動速度13%，可以持續10秒。",
       "slot": "W",
       "castType": "self",
@@ -123,6 +139,7 @@
     "E": {
       "id": "godie-ntin.e",
       "name": "23-03 雷牙一閃˙雷牙烈霸",
+      "icon": "assets/icons/abilities/godie-ntin.e.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n高速的儀式魔法產生落雷，刀身積蓄了能源之後，在揮刀同時將自分魔力連同魔力彈全部一併放出，造成一直線敵人450點傷害。",
       "slot": "E",
       "castType": "skillshot",
@@ -160,12 +177,27 @@
           ]
         }
       ],
-      "vfxKey": "fx.prim.lightning.slash",
-      "castTimeSec": 0.6
+      "vfxKey": "fx.w3x.particle.gxhuge.p00",
+      "castTimeSec": 0.6,
+      "hitFeel": {
+        "hitstopTicks": 3,
+        "hitstunTicks": 6,
+        "shakeMag": 0.402,
+        "shakeStyle": "omni",
+        "sparkKind": "magic",
+        "flashColor": [
+          0.65,
+          0.8,
+          1.0
+        ],
+        "flashMs": 138,
+        "camKick": 0.345
+      }
     },
     "R": {
       "id": "godie-ntin.r",
       "name": "23-04 雷焰聖劍",
+      "icon": "assets/icons/abilities/godie-ntin.r.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n解放所有的魔力，在雷霆型態下將雷劍巨大化，作出的大型斬擊攻擊，使敵人受到900點傷害，並且獲得200點攻擊力，持續4秒。",
       "slot": "R",
       "castType": "targeted",
@@ -206,9 +238,23 @@
           "root": true
         }
       ],
-      "vfxKey": "fx.cinder-ward",
+      "vfxKey": "fx.w3x.orb.lightningnova.p00",
       "targetsEnemies": true,
-      "castTimeSec": 0.5
+      "castTimeSec": 0.5,
+      "hitFeel": {
+        "hitstopTicks": 4,
+        "hitstunTicks": 7,
+        "shakeMag": 0.496,
+        "shakeStyle": "omni",
+        "sparkKind": "magic",
+        "flashColor": [
+          0.8,
+          0.88,
+          1.0
+        ],
+        "flashMs": 170,
+        "camKick": 0.425
+      }
     }
   },
   "skillOrder": [

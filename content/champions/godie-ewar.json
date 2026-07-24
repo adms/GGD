@@ -43,6 +43,7 @@
     "Q": {
       "id": "godie-ewar.q",
       "name": "12-01 鬥仙術",
+      "icon": "assets/icons/abilities/godie-ewar.q.webp",
       "description": "[主動攻擊]\n20秒冷卻時間\n\n將武道融入仙道而創出來所謂的不敗的武術，以念體攻擊敵人，造成150傷害的同時可以迷惑目標1秒。",
       "slot": "Q",
       "castType": "targeted",
@@ -96,6 +97,7 @@
     "W": {
       "id": "godie-ewar.w",
       "name": "12-02 仙氣．採藥",
+      "icon": "assets/icons/abilities/godie-ewar.w.webp",
       "description": "[輔助]\n60秒冷卻時間\n\n利用身體小周天循環恢復生命持續250點，並且除去身上任何附加法術狀態。",
       "slot": "W",
       "castType": "targeted",
@@ -219,10 +221,24 @@
           }
         }
       ],
-      "vfxKey": "fx.prim.ki.nova-lg",
+      "vfxKey": "fx.w3x.particle.supershinythingy.p00",
       "targetsEnemies": true,
       "icon": "assets/icons/abilities/godie-ewar.r.png",
-      "castTimeSec": 0.4
+      "castTimeSec": 0.4,
+      "hitFeel": {
+        "hitstopTicks": 4,
+        "hitstunTicks": 7,
+        "shakeMag": 0.52,
+        "shakeStyle": "omni",
+        "sparkKind": "magic",
+        "flashColor": [
+          1.0,
+          0.92,
+          0.6
+        ],
+        "flashMs": 178,
+        "camKick": 0.446
+      }
     }
   },
   "skillOrder": [

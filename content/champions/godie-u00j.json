@@ -43,6 +43,7 @@
     "Q": {
       "id": "godie-u00j.q",
       "name": "74-01 獄門",
+      "icon": "assets/icons/abilities/godie-u00j.q.webp",
       "description": "[主動攻擊]\n45秒冷卻時間\n\n傳說中刺死愛麗絲的必殺技，雖然命中範圍小，卻具有強大殺傷力，造成小範圍350傷害。",
       "slot": "Q",
       "castType": "ground",
@@ -86,14 +87,29 @@
           "stun": true
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.w3x.orb.herocloudkfksword.p00",
       "targetsEnemies": true,
       "radius": 1.5,
-      "castTimeSec": 0.6
+      "castTimeSec": 0.6,
+      "hitFeel": {
+        "hitstopTicks": 4,
+        "hitstunTicks": 6,
+        "shakeMag": 0.41,
+        "shakeStyle": "directional",
+        "sparkKind": "heavy",
+        "flashColor": [
+          0.85,
+          0.92,
+          1.0
+        ],
+        "flashMs": 140,
+        "camKick": 0.351
+      }
     },
     "W": {
       "id": "godie-u00j.w",
       "name": "74-02 八刀一閃",
+      "icon": "assets/icons/abilities/godie-u00j.w.webp",
       "description": "[主動攻擊]\n30秒冷卻時間\n\n極快的速度衝刺到敵人面前，給予週遭敵人敏捷*3+150傷害。",
       "slot": "W",
       "castType": "targeted",
@@ -134,13 +150,14 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.physical.slash",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
     "E": {
       "id": "godie-u00j.e",
       "name": "74-03 闇之天使",
+      "icon": "assets/icons/abilities/godie-u00j.e.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n抽取星球之力轉換為魔晃能量，瞬間爆發的威力造成150點傷害，共8道爆炸。",
       "slot": "E",
       "castType": "ground",
@@ -178,7 +195,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.void.pulse",
       "targetsEnemies": true,
       "radius": 6.0,
       "castTimeSec": 0.5
@@ -186,6 +203,7 @@
     "R": {
       "id": "godie-u00j.r",
       "name": "74-04 最終殞落星",
+      "icon": "assets/icons/abilities/godie-u00j.r.webp",
       "description": "[主動攻擊]\n75秒冷卻時間\n\n招喚災難彗星造成地面嚴重傷害，每顆隕石造成650點傷害，總共1顆隕石。",
       "slot": "R",
       "castType": "targeted",
@@ -220,7 +238,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.void.explosion-lg",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     }

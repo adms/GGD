@@ -42,6 +42,7 @@
     "Q": {
       "id": "godie-u00o.q",
       "name": "76-01 伸縮自如的橡膠戰斧",
+      "icon": "assets/icons/abilities/godie-u00o.q.webp",
       "description": "[主動攻擊]\n45秒冷卻時間\n\n利用橡膠果實的力量，將腿拉長，由上而下重擊敵人，造成傷害250點，並於目標落下處範圍250內，造成週遭部隊225點額外傷害。",
       "slot": "Q",
       "castType": "targeted",
@@ -92,6 +93,7 @@
     "W": {
       "id": "godie-u00o.w",
       "name": "76-02 伸縮自如的橡膠火箭砲",
+      "icon": "assets/icons/abilities/godie-u00o.w.webp",
       "description": "[主動攻擊]\n25秒冷卻時間\n\n藉由橡膠果實的能力，將手臂伸長，長距離給於敵人200點傷害，並且將其擊退且擊昏1秒。",
       "slot": "W",
       "castType": "targeted",
@@ -142,6 +144,7 @@
     "E": {
       "id": "godie-u00o.e",
       "name": "76-03 伸縮自如的槍亂打",
+      "icon": "assets/icons/abilities/godie-u00o.e.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n利用拳頭迅速的攻擊範圍400內敵人造成暈眩1.5秒及傷害500點。",
       "slot": "E",
       "castType": "skillshot",
@@ -185,6 +188,7 @@
     "R": {
       "id": "godie-u00o.r",
       "name": "76-04 三檔.巨人迴旋彈",
+      "icon": "assets/icons/abilities/godie-u00o.r.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n將空氣吹入骨頭中形成骨氣球，在這個狀態下將拳頭揮出造成巨人般的破壞力，給予周圍的敵人600+力量*2傷害並使之難以行動，持續2秒。",
       "slot": "R",
       "castType": "ground",
