@@ -77,13 +77,19 @@ describe("arena collision completeness (arena-collision)", () => {
   it("EVERY arena doc: every in-bounds blocking prop has a matching collision obstacle", () => {
     cover("arena-collision-complete");
     expect(arenaFiles.length).toBeGreaterThanOrEqual(5);
+    let totalChecked = 0;
     for (const f of arenaFiles) {
       const doc = zArenaDoc.parse(JSON.parse(readFileSync(join(ARENA_DIR, f), "utf8")));
       const audit = auditArenaCollision(doc);
-      // report is empty ⇒ no walk-through props
+      // report is empty ⇒ no walk-through props (every blocking prop is covered)
       expect(audit.gaps, `${f} collision gaps: ${JSON.stringify(audit.gaps)}`).toEqual([]);
-      // and it actually checked some blocking props (guards against a no-op audit)
-      expect(audit.checked, f).toBeGreaterThan(0);
+      totalChecked += audit.checked;
     }
+    // GLOBAL no-op guard: an arena is ALLOWED to have zero blocking props —
+    // skeleton is now an open arena after its central pillars were removed
+    // (「中央有大柱子，容易卡到其他場景物件」) — so the "matcher actually detected
+    // props" guard is asserted across the whole set, not per-arena. The unit
+    // test above already proves circleObstacleForDecor detects a pillar.
+    expect(totalChecked, "no arena had any blocking prop — the matcher may be a no-op").toBeGreaterThan(0);
   });
 });

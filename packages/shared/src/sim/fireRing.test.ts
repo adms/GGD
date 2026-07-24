@@ -233,13 +233,15 @@ describe("config.match@1 fireRing schedule (firering-config)", () => {
       ),
     ) as Record<string, unknown>;
 
-  it("the shipped doc validates: combatMaxSec raised + fireRing present", () => {
+  it("the shipped doc validates: combatMaxSec + fireRing present", () => {
     cover("firering-config");
     const doc = shipped();
     const parsed = zConfigMatchDoc.parse(doc);
-    expect(parsed.match.combatMaxSec).toBe(240);
+    // Owner directive: 2-minute round, ring at elapsed 60 s. `startSec` is the
+    // combat-ELAPSED time at ignition, so 60 < 120 ignites at 60 s left.
+    expect(parsed.match.combatMaxSec).toBe(120);
     expect(parsed.match.fireRing).toEqual({
-      startSec: 180,
+      startSec: 60,
       stepSec: 1,
       pctPerStep: 0.01,
       maxPctPerSec: 1,
@@ -256,7 +258,7 @@ describe("config.match@1 fireRing schedule (firering-config)", () => {
 
   it("rejects a ring that would ignite AFTER the hard backstop", () => {
     const doc = shipped();
-    (doc.match as Record<string, unknown>).combatMaxSec = 120; // < startSec 180
+    (doc.match as Record<string, unknown>).combatMaxSec = 30; // < startSec 60
     expect(() => zConfigMatchDoc.parse(doc)).toThrow(/startSec/);
   });
 
