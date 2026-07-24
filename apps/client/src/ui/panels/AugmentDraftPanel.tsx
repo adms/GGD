@@ -93,7 +93,11 @@ export function AugmentDraftPanel(): React.JSX.Element | null {
       <div
         // task #197 — the pad focus layer scopes to this panel: the draft scrim
         // MUST be answerable by a pad, or a keyboard-less player loses the
-        // augment. High priority so it wins over any other scope beneath it.
+        // augment. Priority 40 sits BELOW the modal scopes (pause=50,
+        // settings/purchase/create-room=45) ON PURPOSE: a system modal opened
+        // over the draft (e.g. pause) should take the pad, and the draft regains
+        // capture the moment it closes. Keep any NEW scrim shown during a draft
+        // out of the 41–49 band unless it truly must outrank the draft.
         data-pad-scope="augment-draft"
         data-pad-scope-priority="40"
         style={{
