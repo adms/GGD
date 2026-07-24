@@ -105,6 +105,15 @@ type Account struct {
 	// "pending", "approved" or "denied". See the Status* constants and
 	// IsApproved. Additive: files written before the gate lack it (zero value).
 	Status string `json:"status,omitempty"`
+
+	// ReferralCode is the DISPLAY form (GGD-XXXX-XXXX) of this account's own
+	// single-use personal referral code (task #203). It is minted once at
+	// registration and stored here purely so the lobby/registration UI can show
+	// the owner their code without a store scan — the burnable truth lives in
+	// the invite collection (internal/invite), keyed by the normalised code and
+	// carrying this account's id as referrerId. Empty on accounts created before
+	// the feature, or on a deploy with no invite gate (referrals require it).
+	ReferralCode string `json:"referralCode,omitempty"`
 }
 
 // IsApproved reports whether the account may log in to play. The zero-value
@@ -145,11 +154,17 @@ type Public struct {
 	// (register/login/me) or an admin-gated one (the approve/deny handler), and
 	// an admin already reads roles through AccountRow.
 	Roles []string `json:"roles,omitempty"`
+	// ReferralCode surfaces the caller's OWN personal referral code (task #203)
+	// on register/login/me so the lobby (and the pending-review screen) can show
+	// it. It is the caller's own code to share, never anyone else's — every
+	// Public response is either the caller's own account or an admin-gated one —
+	// so it is not a disclosure. Omitted when the account has none.
+	ReferralCode string `json:"referralCode,omitempty"`
 }
 
 // Public returns the API-safe projection.
 func (a Account) Public() Public {
-	return Public{ID: a.ID, Username: a.Username, MMR: a.MMR, Games: a.Games, Wins: a.Wins, CreatedAt: a.CreatedAt, Status: a.Status, Roles: a.Roles}
+	return Public{ID: a.ID, Username: a.Username, MMR: a.MMR, Games: a.Games, Wins: a.Wins, CreatedAt: a.CreatedAt, Status: a.Status, Roles: a.Roles, ReferralCode: a.ReferralCode}
 }
 
 // ErrNotFound is returned when an account does not exist.
@@ -419,6 +434,38 @@ func (r *Repo) SetStatus(ctx context.Context, id, status string) (Account, error
 		a.Status = status
 		return nil
 	})
+}
+
+// ApproveIfPending flips a PENDING account to approved and reports whether it
+// did (task #203, referral-chain auto-approval). It is the ONLY conditional
+// status transition, and the condition is load-bearing security: a referral may
+// only ever fast-track a still-pending inviter, so an account an admin has
+// already DENIED (or one already approved) is left exactly as it was. A missing
+// account is a clean no-op (false, nil) — the referrer of a code may have been
+// deleted — so a referral can never resurrect or error on a gone account.
+//
+// Locked read-modify-write like every other mutation, and it only WRITES in the
+// pending case, so re-running it against an approved/denied account touches
+// nothing (no UpdatedAt churn, no race with an admin's own decision).
+func (r *Repo) ApproveIfPending(ctx context.Context, id string) (bool, error) {
+	unlock := r.locks.Lock(id)
+	defer unlock()
+	a, err := r.GetByID(ctx, id)
+	if err != nil {
+		if errors.Is(err, ErrNotFound) {
+			return false, nil
+		}
+		return false, err
+	}
+	if a.Status != StatusPending {
+		return false, nil
+	}
+	a.Status = StatusApproved
+	a.UpdatedAt = time.Now()
+	if err := r.store.Put(ColAccounts, a.ID, a); err != nil {
+		return false, err
+	}
+	return true, nil
 }
 
 // Update runs a locked read-modify-write on one account: fn mutates the

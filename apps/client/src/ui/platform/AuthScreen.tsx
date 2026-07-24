@@ -17,7 +17,8 @@ import {
 } from "./firstOwner";
 import { ErrorToast } from "./LobbyScreen";
 import { shouldReleaseEnterGuard, ENTER_FAILED_NOTE } from "./enterGuard";
-import { Btn, TextInput, FieldError, Panel, ACCENT } from "./widgets";
+import { Btn, TextInput, FieldError, Panel, CodeBox, ACCENT } from "./widgets";
+import type { AccountPublic } from "./types";
 import {
   passwordAutoComplete,
   USERNAME_AUTOCOMPLETE,
@@ -57,6 +58,61 @@ type Mode = "login" | "register";
 // allowed); "shimmer" = CSS-only light drift (WebGL failed but motion allowed);
 // "static" = just the radial gradient (prefers-reduced-motion).
 
+/**
+ * PENDING-APPROVAL CARD (#126 gate + #203 referral). A gated registration
+ * succeeds but lands PENDING with no session, so instead of a broken lobby the
+ * form is replaced by this: the account exists, an admin must approve it — and
+ * the fast path is the referral code. The person here is EXACTLY who benefits
+ * from #203, so this (not the lobby) is where the auto-approval hint lives: a
+ * friend registering with their code flips them approved without an admin.
+ */
+function PendingApprovalCard(props: { account: AccountPublic; onBack: () => void }): React.JSX.Element {
+  const { account, onBack } = props;
+  const denied = account.status === "denied";
+  return (
+    <div style={{ padding: 18, display: "flex", flexDirection: "column", gap: 12 }}>
+      <div style={{ fontSize: 16, fontWeight: 800, color: TEXT_MAIN }}>
+        {denied ? "註冊未通過" : "註冊成功 — 等待審核"}
+      </div>
+      <div style={{ fontSize: 13, color: TEXT_DIM, lineHeight: 1.6 }}>
+        {denied ? (
+          <>帳號「{account.username}」的註冊已被管理員婉拒。</>
+        ) : (
+          <>
+            帳號「<span style={{ color: TEXT_MAIN, fontWeight: 700 }}>{account.username}</span>
+            」已建立，正在等待管理員審核，通過後就能開始遊玩。
+          </>
+        )}
+      </div>
+
+      {!denied && account.referralCode && (
+        <div
+          style={{
+            background: "rgba(90,130,255,0.10)",
+            border: `1px solid ${ACCENT}`,
+            borderRadius: 8,
+            padding: "10px 12px",
+            display: "flex",
+            flexDirection: "column",
+            gap: 8,
+          }}
+        >
+          <div style={{ fontSize: 13, fontWeight: 700, color: TEXT_MAIN }}>加速通過審核</div>
+          <div style={{ fontSize: 12, color: TEXT_DIM, lineHeight: 1.6 }}>
+            把這組<span style={{ color: ACCENT, fontWeight: 700 }}>專屬邀請碼</span>分享給還沒加入的朋友。
+            他用它註冊成功後，你就會<span style={{ color: TEXT_MAIN, fontWeight: 700 }}>自動通過審核</span> —— 不用等管理員。
+          </div>
+          <CodeBox value={account.referralCode} />
+        </div>
+      )}
+
+      <Btn kind="ghost" onClick={onBack} style={{ width: "100%" }}>
+        返回登入
+      </Btn>
+    </div>
+  );
+}
+
 export function AuthScreen(): React.JSX.Element {
   const [mode, setMode] = useState<Mode>("login");
   const [username, setUsername] = useState("");
@@ -87,6 +143,10 @@ export function AuthScreen(): React.JSX.Element {
   // First-owner state (T0 / #180): true only on a brand-new gated deploy with no
   // admin yet — flips the register form into "首位管理員設定" mode.
   const firstOwner = useApp((s) => s.bootstrapNeedsOwner);
+  // A successful-but-PENDING registration (#126 gate): the form is replaced by an
+  // "awaiting approval" card that also surfaces the #203 referral code.
+  const pendingRegistration = useApp((s) => s.pendingRegistration);
+  const clearPendingRegistration = useApp((s) => s.clearPendingRegistration);
   // login→battle handoff (task #74): stage the offline launch behind the >=1s
   // loading bar (requesting the roar fade) instead of jumping straight to match
   const beginOfflineLoading = useApp((s) => s.beginOfflineLoading);
@@ -525,6 +585,16 @@ export function AuthScreen(): React.JSX.Element {
           boxShadow: "0 18px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,0,0,0.4)",
         }}
       >
+        {pendingRegistration ? (
+          <PendingApprovalCard
+            account={pendingRegistration}
+            onBack={() => {
+              clearPendingRegistration();
+              setMode("login");
+            }}
+          />
+        ) : (
+          <>
         <div style={{ display: "flex", borderBottom: "1px solid #2c3448" }}>
           {tab("login", "Sign in")}
           {tab("register", "Create account")}
@@ -717,6 +787,8 @@ export function AuthScreen(): React.JSX.Element {
             </Btn>
           </span>
         </form>
+          </>
+        )}
       </Panel>
 
       <div

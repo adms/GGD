@@ -109,6 +109,16 @@ type Config struct {
 	// flood #174 exists to stop. Defence in depth: burn a code, THEN be seen.
 	RequireApproval bool
 
+	// NewAccountCrystals is the one-time 藍水晶 welcome grant a brand-new account
+	// is seeded with (task #204, GGD_NEW_ACCOUNT_CRYSTALS, default 1000). 藍水晶
+	// is the earn-by-playing currency that unlocks champions, so a fresh family
+	// member starts with enough to unlock their first hero without waiting for a
+	// match to settle. Seeded ONCE at registration and never re-granted (see
+	// wallet.Service.SeedNewAccountCrystals). 0 disables the seed — which is what
+	// the hand-built test config uses, so the settlement suite keeps its "a fresh
+	// wallet has zero crystals" baseline.
+	NewAccountCrystals int
+
 	// AccessTokenTTL is the JWT access-token lifetime.
 	AccessTokenTTL time.Duration
 	// RefreshTokenTTL is the opaque refresh-token lifetime in Redis.
@@ -575,6 +585,7 @@ func Load() (Config, error) {
 		FullAssets:             ServesFullAssets(normalizeDeployTier(os.Getenv("GGD_DEPLOY_TIER"))),
 		RequireInvite:          resolveRequireInvite(os.Getenv("GGD_REQUIRE_INVITE"), getenv("PLATFORM_ADDR", ":8080")),
 		RequireApproval:        resolveRequireApproval(os.Getenv("GGD_REQUIRE_APPROVAL"), getenv("PLATFORM_ADDR", ":8080")),
+		NewAccountCrystals:     getenvInt("GGD_NEW_ACCOUNT_CRYSTALS", 1000),
 		AccessTokenTTL:         15 * time.Minute,
 		RefreshTokenTTL:        30 * 24 * time.Hour,
 		PresenceTTL:            60 * time.Second,

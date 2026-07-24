@@ -15,12 +15,23 @@ import (
 // Meta-progression tuning (task #118). Crystal (水晶) is the FREE soft currency:
 // it is granted for PLAYING A MATCH and spent to unlock champions.
 //
-// WHO MAY GRANT IT. Only match settlement — the HMAC-authenticated
-// server-to-server result callback (gamelink.handleResult), which is
-// per-matchId idempotent (redisx.KeyMatchDone SetNX) and journaled with
-// ABSOLUTE post-match balances so WAL replay converges. There is deliberately
-// NO client-callable earn route: a bare authenticated self-grant with no
-// per-match key is a minting hole (a client can simply loop it).
+// WHO MAY GRANT IT. Two paths, both server-side and both un-loopable:
+//
+//  1. Match settlement — the HMAC-authenticated server-to-server result
+//     callback (gamelink.handleResult), which is per-matchId idempotent
+//     (redisx.KeyMatchDone SetNX) and journaled with ABSOLUTE post-match
+//     balances so WAL replay converges. This is the repeatable earn.
+//  2. The one-time NEW-ACCOUNT welcome seed (task #204, SeedNewAccountCrystals)
+//     — a fixed 藍水晶 grant written ONCE at registration, guarded by "this
+//     account has no walletmeta record yet" so it can never re-grant. It is
+//     reachable only from the registration path (auth.Register), which already
+//     rate-limits and gates account creation, so it mints exactly one balance
+//     per account that comes into existence.
+//
+// There is deliberately NO client-callable earn route: a bare authenticated
+// self-grant with no per-match key is a minting hole (a client can simply loop
+// it). The welcome seed is not that hole — it fires from account creation, not
+// from a request the account can repeat.
 //
 // BALANCE MODEL — the assumed play rate is written down so the owner can
 // retune from the same numbers rather than from a bare constant.
@@ -91,12 +102,12 @@ const (
 	// 則 2 倍領取」. Written as base × CrystalWinMultiplier rather than a bare
 	// 240 so the intent survives a retune — change the base and the win bonus
 	// scales with it, instead of the two silently drifting apart.
-	crystalPlace1Base = 120
+	crystalPlace1Base    = 120
 	CrystalWinMultiplier = 2
-	CrystalPlace1 = crystalPlace1Base * CrystalWinMultiplier // 240
-	CrystalPlace2 = 90
-	CrystalPlace3 = 70
-	CrystalPlace4 = 60
+	CrystalPlace1        = crystalPlace1Base * CrystalWinMultiplier // 240
+	CrystalPlace2        = 90
+	CrystalPlace3        = 70
+	CrystalPlace4        = 60
 
 	// MCoinWinGrant is the M COIN a 吃雞 earns, by the owner's instruction:
 	// 「並且可以領到 1 枚 M幣」. ONE coin, and only for first place.
@@ -229,6 +240,45 @@ func (s *Service) overlayMeta(ctx context.Context, accountID string, w *Wallet) 
 // balance it journals.
 func (s *Service) CrystalOf(ctx context.Context, accountID string) int {
 	return s.loadMeta(ctx, accountID).Crystal
+}
+
+// SeedNewAccountCrystals grants the one-time 藍水晶 welcome balance to a
+// brand-new account (task #204) and returns how many it granted (0 when it did
+// nothing). It is called ONCE, from the registration path, right after the
+// account file lands.
+//
+// It is IDEMPOTENT and — the load-bearing property — it never re-grants to an
+// existing account. The test is "does this account already have a durable
+// walletmeta record?": a fresh account has none (loadMeta seeds only the Redis
+// mirror on a miss, never the store; only a spend or a settlement grant writes
+// the store record), so the seed lands exactly once. Any account that has ever
+// spent, favourited or earned a crystal already has a record and is skipped, so
+// turning this on cannot top up veterans, and a duplicated/retried registration
+// cannot double-grant.
+//
+// A zero (or negative) configured amount is a clean no-op, which is what the
+// dev/CI wiring uses so the settlement suite keeps its zero-crystal baseline.
+func (s *Service) SeedNewAccountCrystals(ctx context.Context, accountID string) (int, error) {
+	if s.newAccountCrystals <= 0 || s.store == nil {
+		return 0, nil
+	}
+	unlock := s.metaLocks.Lock(accountID)
+	defer unlock()
+
+	exists, err := s.store.Exists(ColWalletMeta, accountID)
+	if err != nil {
+		return 0, err
+	}
+	if exists {
+		return 0, nil // already has a meta record — never re-grant
+	}
+	m := meta{Crystal: s.newAccountCrystals}
+	m.normalize()
+	if err := s.store.Put(ColWalletMeta, accountID, m); err != nil {
+		return 0, err
+	}
+	s.cacheMeta(ctx, accountID, m)
+	return s.newAccountCrystals, nil
 }
 
 // SetCrystalAbsolute writes an ABSOLUTE crystal balance. This is the ONLY

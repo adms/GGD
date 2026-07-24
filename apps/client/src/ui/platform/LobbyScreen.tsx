@@ -19,7 +19,7 @@ import { RoomView } from "./RoomView";
 import { StoreScreen } from "./StoreScreen";
 import { openCodex } from "../codex/CodexRoute";
 import { topRightClear, topRightReserve } from "../chromeReserve";
-import { Btn, MCoin, Panel, ACCENT, OK, DANGER } from "./widgets";
+import { Btn, MCoin, Crystal, Panel, CodeBox, ACCENT, OK, DANGER } from "./widgets";
 import { ARENA_OPTIONS, DEFAULT_MAP_ID } from "./maps";
 import { GOLD, PANEL_BG, TEXT_DIM, TEXT_MAIN } from "../theme";
 
@@ -276,6 +276,35 @@ function BotMatchStrip(props: { mapId: string; onMapId: (id: string) => void }):
   );
 }
 
+/**
+ * REFERRAL PANEL (task #203) — the player's own single-use invite code, so a
+ * family member on an invite-gated deploy can hand a friend a way in. On a
+ * non-gated dev platform the account carries no code, so the panel renders
+ * nothing (no empty box, no dead copy button). An ordinary Panel in the lobby
+ * flow — it claims no persistent chrome (#107 safe-area contract).
+ *
+ * The auto-approval half of the feature (a consumed code fast-tracks a PENDING
+ * inviter) is surfaced at REGISTRATION, where the pending person actually is;
+ * a lobby viewer is already approved, so here the message is simply "invite a
+ * friend". The code is single-use, which the copy makes honest: it is for one
+ * friend, and the server mints the next account its own.
+ */
+function ReferralPanel(): React.JSX.Element | null {
+  const referralCode = useApp((s) => s.account?.referralCode);
+  if (!referralCode) return null;
+  return (
+    <Panel title="邀請好友" style={{ gap: 8 }}>
+      <div style={{ fontSize: 12, color: TEXT_DIM, lineHeight: 1.5 }}>
+        把這組<span style={{ color: ACCENT, fontWeight: 700 }}>專屬邀請碼</span>分享給一位朋友，他就能註冊加入去死團。
+      </div>
+      <CodeBox value={referralCode} />
+      <div style={{ fontSize: 11, color: TEXT_DIM, lineHeight: 1.5 }}>
+        限用一次。想邀更多人，可再向管理員索取邀請碼。
+      </div>
+    </Panel>
+  );
+}
+
 export function LobbyScreen(): React.JSX.Element {
   const account = useApp((s) => s.account);
   const wallet = useApp((s) => s.wallet);
@@ -329,6 +358,7 @@ export function LobbyScreen(): React.JSX.Element {
           lobby {wsStatus}
         </div>
         <div style={{ flex: 1 }} />
+        <Crystal amount={wallet?.crystal ?? 0} size={15} />
         <MCoin amount={wallet?.mcoin ?? 0} size={15} />
         <div style={{ fontSize: 13, color: TEXT_MAIN }}>
           {account?.username}
@@ -359,6 +389,7 @@ export function LobbyScreen(): React.JSX.Element {
         <div className="ggd-lobby-body" style={{ display: "flex", gap: 12, flex: 1, minHeight: 0 }}>
           <div className="ggd-lobby-col" style={{ width: 260, display: "flex", flexDirection: "column", gap: 12, minHeight: 0 }}>
             <FriendsPanel />
+            <ReferralPanel />
           </div>
           <div className="ggd-lobby-col" style={{ flex: 1, display: "flex", flexDirection: "column", gap: 12, minWidth: 0 }}>
             {!room && <BotMatchStrip mapId={offlineMap} onMapId={setOfflineMap} />}

@@ -23,6 +23,7 @@ const ITEM: PurchaseItem = { kind: "skin", id: "skin.thorne.barbarian", name: "W
 
 const WALLET_AFTER: Wallet = {
   mcoin: 250,
+  crystal: 0,
   ownedChampions: ["sela", "thorne"],
   ownedSkins: ["skin.thorne.barbarian"],
   equippedSkins: { thorne: "skin.thorne.barbarian" },
