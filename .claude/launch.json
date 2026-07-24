@@ -22,6 +22,26 @@
       "comment": "TEMPORARY playtest lane (task #188 verification) — the game-server half of `platform-play`. Same scratchpad secret, so the platform's HMAC match-create is accepted and MatchRoom actually POSTs the result callback (that callback is the ONLY way a match settles)."
     },
     {
+      "name": "game-server-ledger",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": [
+        "-lc",
+        "set -a; . /private/tmp/claude-503/-Users-Takuro-GGD/1fc1e42e-e26b-4bec-88ef-ca25238c0f4c/scratchpad/seam.env; set +a; exec env GAME_PORT=2633 GAME_PUBLIC_ENDPOINT=ws://localhost:2633 pnpm --filter @ggd/game-server dev"
+      ],
+      "port": 2633,
+      "comment": "task #188 LEDGER VERIFICATION lane. Same scratchpad HMAC secret as `platform-ledger`, but on a PRIVATE port (2633 — 2600 was taken too). Reason it exists: five concurrent agent sessions each run `tsx watch` over this same source tree, so any source edit restarts all five at once and whichever wins the race binds :2567. Measured 2026-07-24 22:43 — `game-server-play` lost that race with EADDRINUSE and the winner (another session, no shared secret) answered the platform's signed match-create with 401 `game server rejected the match`. A private port cannot be stolen, so the seam stays intact for the length of a full match. GAME_PUBLIC_ENDPOINT must be set too: the platform pushes that literal string to the client in match_ready, so leaving it at the :2567 default would send the browser to the foreign server."
+    },
+    {
+      "name": "platform-ledger",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": [
+        "-lc",
+        "set -a; . /private/tmp/claude-503/-Users-Takuro-GGD/1fc1e42e-e26b-4bec-88ef-ca25238c0f4c/scratchpad/seam.env; set +a; exec env DATA_DIR=/Users/Takuro/GGD/data CONTENT_DIR=/Users/Takuro/GGD/content REDIS_ADDR=127.0.0.1:6379 PLATFORM_ADDR=127.0.0.1:8080 JWT_SIGNING_SECRET=devsecret GAME_SERVER_ADDR=http://127.0.0.1:2633 PLATFORM_INTERNAL_URL=http://127.0.0.1:8080 GGD_DEPLOY_TIER=private go -C /Users/Takuro/GGD/apps/platform run ./cmd/platform"
+      ],
+      "port": 8080,
+      "comment": "task #188 LEDGER VERIFICATION lane — the platform half of `game-server-ledger`. Byte-identical to `platform-play` except GAME_SERVER_ADDR points at the private :2600 game-server instead of the contested :2567. Stays on :8080 because the client's vite proxy targets that port; only the game-server hop moves."
+    },
+    {
       "name": "testrunner",
       "runtimeExecutable": "go",
       "runtimeArgs": [
