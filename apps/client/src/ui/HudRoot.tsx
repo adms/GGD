@@ -116,9 +116,16 @@ export function HudRoot(): React.JSX.Element {
         }}
       >
         Connecting to match…
-        <div style={{ fontSize: 11, color: TEXT_DIM, marginTop: 6 }}>
-          run: pnpm --filter @ggd/game-server dev
-        </div>
+        {/* The "start the dev server" hint is for the ONE person who can act on
+            it. Shipping it to ggd.adms.ai told a family member to run a pnpm
+            command, which is both useless and alarming — vite folds
+            import.meta.env.DEV to false in the production build, so the whole
+            line disappears there. */}
+        {import.meta.env.DEV && (
+          <div style={{ fontSize: 11, color: TEXT_DIM, marginTop: 6 }}>
+            run: pnpm --filter @ggd/game-server dev
+          </div>
+        )}
       </div>
     );
   }

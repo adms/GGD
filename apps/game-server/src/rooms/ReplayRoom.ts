@@ -75,6 +75,10 @@ export class ReplayRoom extends Room<MatchState> {
   }
 
   override async onCreate(options: ReplayRoomOptions): Promise<void> {
+    // Same 15 s default, same failure: a viewer opening a replay downloads the
+    // whole asset set before connecting. See MatchRoom.onCreate for the full
+    // reasoning behind 120.
+    this.setSeatReservationTime(120);
     this.maxClients = 4; // the owner, maybe someone looking over his shoulder
     this.autoDispose = true;
     this.setState(new MatchState());

@@ -221,6 +221,25 @@ export class MatchRoom extends Room<MatchState> {
     if (SHARED_SECRET && !verifyCreateToken(SHARED_SECRET, options.createToken)) {
       throw new Error("match creation is restricted to the platform reservation flow");
     }
+    // Colyseus defaults a seat reservation to 15 SECONDS, and that default
+    // silently broke every remote match on ggd.adms.ai. The sequence is:
+    // platform reserves the seat → pushes it over the lobby WS → and only THEN
+    // does the client download a 2.8 MB entry chunk, the content tree and the
+    // champion models before it opens the game socket. On the owner's machine
+    // that is instant, so it always passed in dev. On a real connection it
+    // routinely exceeds 15 s, and the seat is gone by the time the client
+    // arrives: "could not join the match: seat reservation expired", every
+    // time, while the match itself sits there perfectly healthy.
+    //
+    // A one-click bot match is the worst case — nothing else has to load first,
+    // so the entire asset download lands inside the reservation window.
+    //
+    // 120 s is measured against what has to happen in that window (a cold cache
+    // pulling the full asset set over a slow link), not picked as a round
+    // number. Being generous costs little: an unclaimed seat holds one slot in
+    // a room the reaper disposes anyway, and the seat token is signed and
+    // single-use, so a longer window widens no authorization hole.
+    this.setSeatReservationTime(120);
     // OPERATIONAL SETTINGS (admin 系統運維). Resolved HERE, at the top of
     // onCreate, because both knobs are consumed a few lines below: maxRooms by
     // the admission gate and snapshotHz by patchRate. The create path is the

@@ -33,7 +33,7 @@ func ValidateNewPassword(password string) error {
 }
 
 // GeneratedLength is how many alphabet characters a generated password carries
-// (excluding the readability dashes). 20 characters over the 57-symbol alphabet
+// (excluding the readability dashes). 20 characters over the 55-symbol alphabet
 // below is ~116 bits of entropy — far past anything argon2id needs to protect,
 // and short enough that an operator can read it off the screen and type it in.
 const GeneratedLength = 20
@@ -50,11 +50,19 @@ const passwordAlphabet = "abcdefghijkmnpqrstuvwxyzACDEFGHJKLMNPQRSTUVWXYZ2345678
 // GeneratePassword returns a cryptographically random password.
 //
 // Sampling is REJECTION-based, not `b % len(alphabet)`: the modulo shortcut
-// silently biases toward the first 256%54 symbols, which is the kind of defect
+// silently biases toward the first 256%55 symbols, which is the kind of defect
 // that never shows up in a test and quietly costs entropy forever.
 func GeneratePassword() (string, error) {
 	n := len(passwordAlphabet)
-	limit := byte(256 - (256 % n)) // bytes >= limit would fold unevenly
+	// The rejection threshold is computed and COMPARED in int, never narrowed to
+	// byte. `byte(256 - (256 % n))` is correct for today's 55-symbol alphabet
+	// (256%55=36 → 220) and a landmine for tomorrow's: any length that divides
+	// 256 — 32, 64, 128 — makes 256%n == 0, so the expression is 256, and
+	// byte(256) is 0. limit would be 0, `b >= limit` would reject EVERY byte,
+	// and GeneratePassword would spin forever. Padding the alphabet out to 64
+	// symbols "for more entropy" is exactly the kind of edit someone makes, and
+	// it would hang the owner-reset path with no test to catch it.
+	limit := 256 - (256 % n) // bytes >= limit would fold unevenly
 	var sb strings.Builder
 	buf := make([]byte, 32)
 	for written := 0; written < GeneratedLength; {
@@ -65,7 +73,7 @@ func GeneratePassword() (string, error) {
 			if written >= GeneratedLength {
 				break
 			}
-			if b >= limit {
+			if int(b) >= limit {
 				continue // reject, no bias
 			}
 			if written > 0 && written%generatedGroup == 0 {
