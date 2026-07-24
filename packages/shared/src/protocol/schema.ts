@@ -246,6 +246,52 @@ defineTypes(TeamState, {
   roundOutcome: "uint8",
 });
 
+/**
+ * DuelState — one PAIRED DUEL of the current combat round (task #208), mirroring
+ * the server's `pairings` + `duelWinners`. It rides the wire for one reason the
+ * rest of the snapshot cannot serve: a spectator whose OWN duel is already
+ * decided needs to know which OTHER zones are still LIVE so the client can jump
+ * its combat camera to a fight that is still happening, instead of leaving the
+ * player staring at their own finished/empty zone.
+ *
+ * A duel is LIVE (still being fought) exactly while `winner < 0`. The instant a
+ * side is wiped, MatchController.checkCombatEnd records a winner for that zone —
+ * so the client learns a duel is decided the same tick the server does, without
+ * re-deriving it from champion alive-counts (which the client CAN approximate,
+ * but which is fragile across the exact tick a wipe completes; this is the
+ * authoritative signal).
+ *
+ * WHY THIS AND NOT ROUNDOUTCOME. `TeamState.roundOutcome` only becomes WON/LOST
+ * at settleRound — i.e. when the WHOLE round concludes. Mid-round, while your
+ * duel is decided but another zone still fights, every team is still FOUGHT, so
+ * roundOutcome cannot tell "your duel is over" from "the round is over". This
+ * per-zone winner does, and it is empty outside combat (pairings is cleared).
+ *
+ * BYE CORRECTNESS (#173): a bye team is in NO pairing, so it appears in no
+ * DuelState — exactly as the server models it.
+ */
+export class DuelState extends Schema {
+  declare zone: number;
+  declare teamA: number;
+  declare teamB: number;
+  /** winning teamId once decided; -1 while the duel is still LIVE. */
+  declare winner: number;
+
+  constructor() {
+    super();
+    this.zone = 0;
+    this.teamA = 0;
+    this.teamB = 0;
+    this.winner = -1;
+  }
+}
+defineTypes(DuelState, {
+  zone: "uint8",
+  teamA: "uint8",
+  teamB: "uint8",
+  winner: "int8",
+});
+
 export class EntityState extends Schema {
   declare id: number;
   declare kind: number; // 0 champion, 1 projectile, 2 flower, 3 revive circle, 4 guardian (ENTITY_KIND)
@@ -339,6 +385,12 @@ export class MatchState extends Schema {
   declare seats: MapSchema<SeatState>;
   declare teams: ArraySchema<TeamState>;
   declare entities: MapSchema<EntityState>;
+  /**
+   * The current combat round's paired duels (task #208) — one entry per active
+   * pairing, empty outside combat. The client reads it to find a still-LIVE zone
+   * to spectate once its own duel is decided. See DuelState.
+   */
+  declare duels: ArraySchema<DuelState>;
 
   constructor() {
     super();
@@ -355,6 +407,7 @@ export class MatchState extends Schema {
     this.seats = new MapSchema<SeatState>();
     this.teams = new ArraySchema<TeamState>();
     this.entities = new MapSchema<EntityState>();
+    this.duels = new ArraySchema<DuelState>();
   }
 }
 defineTypes(MatchState, {
@@ -371,6 +424,8 @@ defineTypes(MatchState, {
   seats: { map: SeatState },
   teams: [TeamState],
   entities: { map: EntityState },
+  // APPEND-ONLY: Colyseus encodes fields by declaration index — never reorder.
+  duels: [DuelState],
 });
 
 /**

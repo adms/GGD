@@ -274,8 +274,14 @@ function drawReviveCircles(
  * and the callers then fall back to the whole-arena view.
  */
 function localZoneIndex(zones: ArenaZoneCircle[] | null): number | null {
+  if (!zones) return null;
+  // #208: while spectating a decided-own-duel, the combat camera has jumped to a
+  // still-live zone — follow the map there too, so the scoped minimap shows the
+  // fight you are actually watching rather than your finished/empty zone.
+  const watched = frameBus.spectateZone;
+  if (watched !== null && zones[watched]) return watched;
   const localEntityId = hudStore.getState().localEntityId;
-  if (localEntityId === null || !zones) return null;
+  if (localEntityId === null) return null;
   const me = frameBus.champions.get(localEntityId);
   if (!me) return null;
   return zoneIndexAt({ x: me.worldX, z: me.worldZ }, zones);

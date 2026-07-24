@@ -202,6 +202,14 @@ export interface FrameBus {
   arenaId: string | null;
   /** primary camera's ground-plane view (written by the render loop) */
   cameraView: CameraGroundView | null;
+  /**
+   * Duel zone the primary player is currently SPECTATING (task #208): set when
+   * their own duel is decided and the combat camera has been redirected to a
+   * still-live zone, else null (follow your own zone). The minimap (#67) reads
+   * it so the scoped map follows the fight you are actually watching, not your
+   * finished/empty zone.
+   */
+  spectateZone: number | null;
 }
 
 /** Pre-allocated, never resized: the pool IS the store (see CombatTextEntry). */
@@ -233,6 +241,7 @@ export const frameBus: FrameBus = {
   arenaZones: null,
   arenaId: null,
   cameraView: null,
+  spectateZone: null,
 };
 
 let nextCombatTextId = 1;

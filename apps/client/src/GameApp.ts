@@ -72,6 +72,7 @@ import { RoundWinnerStage } from "./render/RoundWinnerStage";
 // the window can never be shortened below the taunt delay and silently mute it.
 import { ROUND_PRESENT_MS } from "./render/victoryPresentation";
 import type { CameraRig } from "./render/CameraRig";
+import { ownDuelDecided, pickSpectateZone, type DuelView } from "./render/spectateFocus";
 import { ViewportManager } from "./render/ViewportManager";
 import { AssetManager } from "./render/AssetManager";
 import {
@@ -306,13 +307,26 @@ export class GameApp {
   private readonly entityScratch: EntityViewState[] = [];
   /** reused: champion entity id of each local player (-1 = none) — task #85. */
   private readonly focusLocalEntities: number[] = [];
+  /** reused: each local player's OWN duel decided? (task #208 — lifts the #85 wash). */
+  private readonly focusOwnDuelDecided: boolean[] = [];
   /** reused frame envelope handed to the death-focus pass (zero allocation). */
   private readonly focusFrame: DeathFocusFrame = {
     phase: "",
     outcomeDecided: false,
     localEntities: this.focusLocalEntities,
+    ownDuelDecided: this.focusOwnDuelDecided,
     entities: this.entityScratch,
   };
+  /**
+   * Per-player live zone the spectator camera has been redirected to (task
+   * #208), or absent = following the player's own zone. Keyed edge-state so the
+   * jump fires ONCE per newly-chosen live zone and the player keeps free-pan
+   * between jumps. Also the flag that a broken follow-lock must be restored when
+   * spectating ends.
+   */
+  private readonly spectateZoneByPlayer = new Map<number, number>();
+  /** reused scratch: DuelView[] rebuilt from state.duels each frame (no alloc). */
+  private readonly duelScratch: DuelView[] = [];
   /** reused scratch collections for updateFrameBus. */
   private readonly fbSeen = new Set<number>();
   private readonly fbNameBySeat = new Map<number, string>();
@@ -1057,6 +1071,10 @@ export class GameApp {
       if (rig.inSettlement) rig.clearSettlement(); // defensive (won't fire mid-match)
       // death spectator: unlock/re-lock this rig on the player's alive↔dead edge
       if (state) this.updateSpectatorCam(p, rig, state);
+      // #208: once THIS player's duel is decided, jump the camera to a zone that
+      // is still fighting. Runs AFTER updateSpectatorCam so its live-zone jump
+      // wins over the death-edge "center on my (finished) zone" default.
+      if (state) this.updateSpectateFollow(p, rig, state);
       rig.update({
         dtMs,
         localPos: pos,
@@ -1670,11 +1688,17 @@ export class GameApp {
     f.outcomeDecided = state.outcomeDecided === true;
     f.entities = this.entityScratch;
     const ids = this.focusLocalEntities;
+    const decided = this.focusOwnDuelDecided;
     ids.length = this.viewports.count;
+    decided.length = this.viewports.count;
     const localId = hudStore.getState().localEntityId;
+    const duels = this.duelViews(state);
     for (let p = 0; p < ids.length; p++) {
       const id = p === 0 ? localId : (this.playerView(p)?.entityId ?? null);
       ids[p] = id ?? -1;
+      // #208: while your teammates still fight in YOUR zone the #85 wash stays;
+      // it lifts the instant your duel is decided (you're now watching another).
+      decided[p] = ownDuelDecided(this.ownZoneOf(p, state), duels);
     }
     return f;
   }
@@ -1724,6 +1748,85 @@ export class GameApp {
     if (best) return best;
     const zone = SKELETON_ARENA.zones[dead.zone] ?? SKELETON_ARENA.zones[0]!;
     return { x: zone.center.x, z: zone.center.z };
+  }
+
+  // ------------------------------------------ spectator follows live zone --
+  // (task #208)
+
+  /**
+   * Project this frame's `MatchState.duels` into the pure decision's `DuelView`
+   * shape, reusing a pooled array + pooled entries so the per-frame camera pass
+   * allocates nothing. A duel is LIVE while its `winner` is still -1.
+   */
+  private duelViews(state: MatchState): DuelView[] {
+    const out = this.duelScratch;
+    const n = state.duels.length;
+    while (out.length < n) out.push({ zone: 0, live: false });
+    out.length = n;
+    for (let i = 0; i < n; i++) {
+      const d = state.duels[i]!;
+      out[i]!.zone = d.zone;
+      out[i]!.live = d.winner < 0;
+    }
+    return out;
+  }
+
+  /**
+   * The duel zone player `player`'s champion is in — read off its OWN entity so
+   * it stays correct while dead (the corpse keeps its zone). Null with no
+   * champion resolved yet. This is how #208 knows which duel is "mine".
+   */
+  private ownZoneOf(player: number, state: MatchState): number | null {
+    const entityId =
+      player === 0 ? hudStore.getState().localEntityId : (this.playerView(player)?.entityId ?? null);
+    if (entityId === null) return null;
+    const es = state.entities.get(String(entityId));
+    return es ? es.zone : null;
+  }
+
+  /** Centre of duel `zone` from the ACTIVE arena (frameBus), else the skeleton. */
+  private zoneCenter(zone: number): Vec2 | null {
+    const zc = frameBus.arenaZones?.[zone];
+    if (zc) return { x: zc.x, z: zc.z };
+    const z = SKELETON_ARENA.zones[zone];
+    return z ? { x: z.center.x, z: z.center.z } : null;
+  }
+
+  /**
+   * #208 — once player `player`'s OWN duel is decided AND another zone is still
+   * fighting, redirect the combat camera to that live zone so they watch the
+   * action instead of their finished/empty zone. The jump fires ONCE per newly
+   * -chosen live zone (edge-tracked in `spectateZoneByPlayer`) so manual free
+   * -pan stays usable between jumps; when the redirect ends (own duel live again
+   * next round, or nothing left to watch) follow-lock is restored for an alive
+   * winner. A dead spectator's follow state is owned by `setDead` (respawn re
+   * -locks), so we don't touch it there. For player 0 the chosen zone is also
+   * published to the minimap (frameBus.spectateZone, #67).
+   */
+  private updateSpectateFollow(player: number, rig: CameraRig, state: MatchState): void {
+    const inCombat = state.phase === "combat";
+    const desired = inCombat
+      ? pickSpectateZone(this.ownZoneOf(player, state), this.duelViews(state))
+      : null;
+    const current = this.spectateZoneByPlayer.get(player);
+    if (desired === null) {
+      if (current !== undefined) this.releaseSpectate(player, rig);
+    } else if (desired !== current) {
+      // edge: point the camera at the newly-chosen live zone exactly once.
+      this.spectateZoneByPlayer.set(player, desired);
+      const c = this.zoneCenter(desired);
+      if (c) rig.focusOn(c); // breaks follow-lock + jumps (no-op in settlement)
+    }
+    if (player === 0) frameBus.spectateZone = this.spectateZoneByPlayer.get(0) ?? null;
+  }
+
+  /** Drop player `player`'s live-zone redirect and restore an alive winner's follow-lock. */
+  private releaseSpectate(player: number, rig: CameraRig): void {
+    this.spectateZoneByPlayer.delete(player);
+    // `focusOn` broke follow-lock to peek the other zone; an ALIVE player must
+    // re-follow their own hero next round. A DEAD spectator keeps free-pan —
+    // updateSpectatorCam re-locks it on respawn — so leave that rig alone.
+    if (!rig.spectating) rig.followLock = true;
   }
 
   /** Spawn/refresh the prediction shadow to track the local champion. */

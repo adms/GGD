@@ -897,7 +897,31 @@ export class MatchController {
     return sum;
   }
 
-  /** Check duel outcomes; returns true when every pairing is decided. */
+  /**
+   * The decided winner of the duel in `zone`, or undefined while that duel is
+   * still LIVE (undecided, in combat). Public because the snapshot projection
+   * (net/snapshot.ts) mirrors it onto `MatchState.duels` so a spectating client
+   * knows which zones are still fighting (task #208). A read-only view of the
+   * private `duelWinners` map — nothing outside this class mutates duel results.
+   */
+  duelWinnerOf(zone: number): TeamId | undefined {
+    return this.duelWinners.get(zone);
+  }
+
+  /**
+   * Check duel outcomes; returns true when every pairing is decided.
+   *
+   * This is the "conclude the instant one side is wiped" seam (task #208 / the
+   * ≤1-living-team case): it runs EVERY combat tick (advancePhase → "combat"),
+   * and the MOMENT a side's in-zone living count reaches 0 the duel is recorded
+   * for that zone. The round ends as soon as `duelWinners.size` reaches
+   * `pairings.length`, so a fully-decided round never waits for the phase timer
+   * — no explicit extra guard is needed, and this is pinned by
+   * roundEnd.test.ts. Determinism holds: the only tie-breaks (double-KO, an
+   * equal-HP timer expiry) draw from `world.rng`, never Math.random/Date.now.
+   * Bye correctness (#173) is structural: a bye team is in no pairing, so it is
+   * never counted here and never blocks the conclusion.
+   */
   private checkCombatEnd(timerExpired: boolean): boolean {
     for (const pairing of this.pairings) {
       if (this.duelWinners.has(pairing.zone)) continue;

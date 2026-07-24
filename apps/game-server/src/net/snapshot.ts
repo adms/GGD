@@ -4,7 +4,7 @@
  * later without touching anything else.
  */
 import type { ArraySchema } from "@colyseus/schema";
-import { ENTITY_FLAG, ENTITY_KIND, EntityState, MatchState, OfferState, ROUND_OUTCOME, SeatState, TeamState } from "@ggd/shared/protocol/schema";
+import { DuelState, ENTITY_FLAG, ENTITY_KIND, EntityState, MatchState, OfferState, ROUND_OUTCOME, SeatState, TeamState } from "@ggd/shared/protocol/schema";
 import { Champions } from "@ggd/shared/sim/content/registry";
 import { FLOWER_MODEL_KEY } from "@ggd/shared/sim/flowers";
 import { REVIVE_CIRCLE_MODEL_KEY } from "@ggd/shared/sim/revive";
@@ -54,6 +54,32 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
     // projected every patch and must never be reset mid-match (#93).
     ts.roundWins = ctl.roundWins.get(teamId) ?? 0;
     ti++;
+  }
+
+  // ---- duels (task #208) ----
+  // Mirror the current round's pairings + per-zone winner so a spectating client
+  // can find a still-LIVE zone to watch once its own duel is decided. `pairings`
+  // is empty outside combat, so this list is empty then too. `winner < 0` == the
+  // duel is still being fought; a bye team is in no pairing and so appears here
+  // in no entry (bye correctness, #173). Rebuilt only when the shape changes to
+  // avoid redundant patches: same length AND same (zone, winner) per slot.
+  const pairings = ctl.pairings;
+  const duelsSame =
+    state.duels.length === pairings.length &&
+    pairings.every((p, i) => {
+      const d = state.duels[i];
+      return d?.zone === p.zone && d?.winner === (ctl.duelWinnerOf(p.zone) ?? -1);
+    });
+  if (!duelsSame) {
+    state.duels.clear();
+    for (const p of pairings) {
+      const ds = new DuelState();
+      ds.zone = p.zone;
+      ds.teamA = p.sideA;
+      ds.teamB = p.sideB;
+      ds.winner = ctl.duelWinnerOf(p.zone) ?? -1;
+      state.duels.push(ds);
+    }
   }
 
   // ---- seats ----

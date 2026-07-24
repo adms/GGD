@@ -140,6 +140,13 @@ export interface DeathFocusFrame {
   outcomeDecided: boolean;
   /** champion entity id of each local player (index = player); -1 = none */
   localEntities: readonly number[];
+  /**
+   * Whether each local player's OWN duel is already decided (index = player),
+   * task #208. When true the desaturation lifts so the still-fighting zone the
+   * spectator camera jumped to reads in colour. Absent/short array = false
+   * (treated as "own duel still live", preserving the #85 behaviour).
+   */
+  ownDuelDecided?: readonly boolean[];
   /** every entity in this frame's snapshot */
   entities: readonly FocusEntity[];
 }
@@ -232,6 +239,7 @@ export class DeathFocusFx {
       slot.strength = slot.gate.update({
         phase: frame?.phase ?? "",
         outcomeDecided: frame?.outcomeDecided ?? true,
+        ownDuelDecided: frame?.ownDuelDecided?.[p] ?? false,
         entityId,
         present: self !== null,
         alive: self?.alive ?? true,

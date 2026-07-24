@@ -193,7 +193,7 @@ describe("snapshot projection (rev-10)", () => {
     rc.contested = true;
 
     const state = new MatchState();
-    const ctl = { world: w, arena: SKELETON_ARENA, phase: { phase: "combat", round: 1, ticksLeft: 10 }, lives: new Map(), seats: new Map(), placements: new Map(), offers: new Map(), outcomeDecided: false };
+    const ctl = { world: w, arena: SKELETON_ARENA, phase: { phase: "combat", round: 1, ticksLeft: 10 }, lives: new Map(), seats: new Map(), placements: new Map(), offers: new Map(), outcomeDecided: false, pairings: [], duelWinnerOf: () => undefined };
     projectSnapshot(ctl as never, state, new Map());
 
     const es = state.entities.get(String(id))!;

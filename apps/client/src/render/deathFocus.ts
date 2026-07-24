@@ -141,6 +141,18 @@ export interface FocusGateInput {
   present: boolean;
   /** That entity's authoritative alive bit. */
   alive: boolean;
+  /**
+   * This viewport's OWN duel is already decided (task #208). While you are dead
+   * but your teammates are still fighting in YOUR zone (own duel LIVE), the #85
+   * desaturation stays on exactly as before — that is its whole point. But the
+   * moment your duel concludes (your team wiped, or won without you) the
+   * spectator camera jumps to a still-fighting zone (spectateFocus), and a scene
+   * greyed to nothing-but-your-teammates would drain the very fight you are now
+   * watching — none of whose fighters are your team. So a decided own-duel lifts
+   * the wash and the watched zone reads in full colour. Defaults false, so every
+   * existing caller and the original #85 behaviour are unchanged.
+   */
+  ownDuelDecided?: boolean;
   dtMs: number;
 }
 
@@ -239,6 +251,7 @@ export class DeathFocusGate {
     return (
       input.phase === COMBAT_PHASE && // round over / shop / champ-select
       !input.outcomeDecided && // settlement hero shot owns the camera
+      !input.ownDuelDecided && // own duel over → spectating a live zone (#208)
       input.entityId >= 0 && // seat lost its champion
       input.entityId === this.armedEntity && // re-seated onto a different body
       input.present // entity gone from the snapshot
