@@ -89,7 +89,7 @@
     "burstRadius": 6
   },
   "reviveCircles": {
-    "channelSec": 3.0,
+    "channelSec": 5.0,
     "radius": 2.0,
     "decayMult": 2.0,
     "revivesPerTeamPerRound": 1,

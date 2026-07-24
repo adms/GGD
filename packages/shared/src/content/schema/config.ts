@@ -222,7 +222,11 @@ export const DEFAULT_FLOWER_CONFIG: FlowerConfig = {
  */
 export const zReviveCircleConfig = z
   .object({
-    /** seconds a teammate must stand in the ring (must exceed the kill cadence) */
+    /**
+     * seconds a teammate must ACCUMULATE standing in the ring before the revive
+     * fires (must exceed the kill cadence). Shipped at 5.0 — the task #206
+     * threshold, mirrored by REVIVE_CHANNEL_SEC in sim/revive.ts.
+     */
     channelSec: z.number().positive(),
     // NOTE: there is deliberately no `lifetimeSec`. The ring burns until the
     // round ends (task #196, matching LoL Arena's untimed downed zone), so the
@@ -252,7 +256,7 @@ export type ReviveCircleConfig = z.infer<typeof zReviveCircleConfig>;
 
 /** Contract defaults for the reviveCircles block (dev cheats / fallbacks). */
 export const DEFAULT_REVIVE_CIRCLE_CONFIG: ReviveCircleConfig = {
-  channelSec: 3,
+  channelSec: 5, // task #206: 5s accumulate threshold (REVIVE_CHANNEL_SEC)
   radius: 2,
   decayMult: 2,
   revivesPerTeamPerRound: 1,

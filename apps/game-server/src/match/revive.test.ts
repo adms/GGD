@@ -69,7 +69,7 @@ describe("config parse (rev-08)", () => {
       JSON.parse(readFileSync(join(ROOT, "content/config/arena-rules.json"), "utf8")),
     );
     expect(doc.reviveCircles).toEqual({
-      channelSec: 3,
+      channelSec: 5, // task #206: 5s accumulate threshold
       radius: 2,
       decayMult: 2,
       revivesPerTeamPerRound: 1,
@@ -99,9 +99,9 @@ describe("config parse (rev-08)", () => {
     expect(() =>
       zConfigArenaRulesDoc.parse({ ...raw, reviveCircles: { ...cfg, lifetimeSec: 6 } }),
     ).toThrow();
-    // 3.0s = 90 ticks: integer at 30Hz, no rounding drift
+    // 5.0s = 150 ticks: integer at 30Hz, no rounding drift (task #206)
     const rules = reviveRulesFromConfig(cfg, 1 / 30);
-    expect(rules.channelTicks).toBe(90);
+    expect(rules.channelTicks).toBe(150);
     expect("lifetimeTicks" in rules).toBe(false);
     // above the measured p25 death cadence (2.00s) so a revive can never
     // outpace a kill, and inside the 90s combatMaxSec tail at 1 charge/team
@@ -116,7 +116,7 @@ describe("match wiring (rev-09)", () => {
     const ctl = new MatchController("m-rev", 4242, allBots(), FAST, 3, REVIVE_RULES);
     tickUntil(ctl, "combat");
     expect(ctl.world.reviveRules).not.toBeNull();
-    expect(ctl.world.reviveRules!.channelTicks).toBe(90);
+    expect(ctl.world.reviveRules!.channelTicks).toBe(150);
     // every team that is still in the match holds exactly one charge
     for (const [teamId, lives] of ctl.lives) {
       if (lives > 0) expect(ctl.world.reviveCharges.get(teamId)).toBe(1);

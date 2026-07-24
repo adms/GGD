@@ -6,7 +6,7 @@ per round**. If the team's charge is already spent, later deaths drop **no circl
 all**, which is the clause that makes the round terminate.
 
 **Config** (`content/config/arena-rules.json`, additive `reviveCircles` block on
-`config.arena-rules@1`): `channelSec 3.0 · radius 2.0 · decayMult 2.0 ·
+`config.arena-rules@1`): `channelSec 5.0 · radius 2.0 · decayMult 2.0 ·
 revivesPerTeamPerRound 1 · reviveHpPctMax 0.5 · reviveManaPctMax 0.5 · contestPauses true ·
 damageInterrupts false · ccInterrupts true`. Absent block = mechanic off (legacy), the
 same convention as `flowers`. Every judgement call below is one of these keys, so a
@@ -27,13 +27,19 @@ cap): **96 rounds, 160 duels, 566 deaths**, 406 of them "revivable" (≥1 living
 | death point → nearest living **enemy** (u) | 1.22 | **1.29** | 1.38 | 3.38 | 11.35 |
 | nearest surviving ally HP frac | 0.41 | **0.71** | 1.00 | 1.00 | 1.00 |
 
-- **`channelSec 3.0`** is bracketed from both sides. Upper: 3.0 s + the p90 walk
-  (8.48 u ÷ 5.8 u/s = 1.46 s) = 4.46 s of commitment, at which point the duel is still
-  running ~75 % of the time; at 5 s of channel the same commitment lands at 61 %, and the
-  revived ally needs ~2 s more to matter → 44 %, below a coin flip. Lower: it must exceed
-  the **p25 death cadence of 2.00 s**, or a team restores bodies faster than the enemy can
-  remove them and the duel stops converging. 3.0 s is also exactly **90 ticks** at 30 Hz —
-  integer, no rounding drift, whole-second like every other value in `flowers`.
+- **`channelSec 5.0` (task #206, owner directive 「復活圈需累積 5 秒」).** The measured
+  bracket below argued for **3.0 s**, and the owner overruled it toward a longer, more
+  committing channel — the same kind of tuning override as the #196 lifetime call, so the
+  number is a deliberate design choice, not the harness's recommendation. It stays well
+  above the **p25 death cadence of 2.00 s** (a team must not restore bodies faster than the
+  enemy removes them, or the duel stops converging), and 5.0 s is exactly **150 ticks** at
+  30 Hz — integer, no rounding drift. Pinned as the named `REVIVE_CHANNEL_SEC` constant in
+  `packages/shared/src/sim/revive.ts`; the ring rim fills toward 100 % across those 150
+  ticks. *(Original 3.0 s derivation, retained for context: 3.0 s + the p90 walk
+  8.48 u ÷ 5.8 u/s = 1.46 s = 4.46 s of commitment, duel still running ~75 % of the time;
+  at 5 s of channel commitment lands at ~61 %, the revived ally needs ~2 s more to matter →
+  ~44 %, i.e. a revive at 5 s is a comeback tool, not a guaranteed save — which is the
+  intent.)*
 - **NO LIFETIME (task #196).** This block used to specify `lifetimeSec 6.0` = 2 ×
   `channelSec` — "exactly one channel's worth of travel time", sized so the latest possible
   start still covered the max observed ally distance of 17.04 u. The owner overruled it:

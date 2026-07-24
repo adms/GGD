@@ -1162,6 +1162,35 @@ export class MatchController {
     return { matchId: this.matchId, winnerTeam, perPlayer: players };
   }
 
+  /**
+   * DETERMINISTIC auto-pick index for a draft that reached the timer unanswered
+   * (task #207: 三選一來不及選 → 自動隨機幫選一個). The choice is a pure function
+   * of the MATCH SEED and the offer's identity (its createdTick + its offerId —
+   * the offerId disambiguates two offers a seat can hold on the same tick, e.g.
+   * an augment card and a legendary-weapon card), so:
+   *   • it is genuinely varied per offer (not the fixed choices[0] it replaced),
+   *   • it consumes NO `world.rng` and never calls `Math.random`, so it perturbs
+   *     no other randomness and a same-seed REPLAY resolves the auto-pick to the
+   *     identical card — the digest stays byte-identical (see replay.test.ts),
+   *   • it is stable regardless of WHICH tick the safety-net fires on, since it
+   *     hashes the offer's createdTick rather than `world.tick`.
+   * Mirrors the arena-rotation hash (ArenaDef.pickRoundArena) in spirit: seed-
+   * derived, world.rng-independent. Returns 0 for a 0/1-card offer.
+   */
+  private autoPickIndex(offerId: string, offer: StoredOffer): number {
+    const n = offer.choices.length;
+    if (n <= 1) return 0;
+    let h = (this.matchSeed ^ Math.imul(offer.createdTick | 0, 0x9e3779b1)) >>> 0;
+    for (let i = 0; i < offerId.length; i++) {
+      h = Math.imul(h ^ offerId.charCodeAt(i), 0x01000193) >>> 0; // FNV-1a mix
+    }
+    // splitmix32 finalizer (same avalanche as ArenaDef.hash32)
+    h = Math.imul(h ^ (h >>> 16), 0x21f0aaad) >>> 0;
+    h = Math.imul(h ^ (h >>> 15), 0x735a2d97) >>> 0;
+    h = (h ^ (h >>> 15)) >>> 0;
+    return h % n;
+  }
+
   /** Apply an offer pick (augment or free item) and consume the offer. */
   private applyPick(offerId: string, offer: StoredOffer, choiceIdx: number): void {
     const choice = offer.choices[choiceIdx] ?? offer.choices[0]!;
@@ -1434,12 +1463,19 @@ export class MatchController {
       case "intermission": {
         // AI-driven seats auto-pick their first offer (augment OR weapon)
         // after a short delay; also the safety net for offers left unpicked
-        // at the timer.
+        // at the timer. Task #207 (三選一來不及選 → 自動隨機幫選一個): a draft
+        // that reaches the timer unanswered is auto-resolved to a RANDOM one of
+        // its choices — for HUMANS and bots alike — so nobody ever enters combat
+        // with an empty augment slot, and so the client's AugmentDraftPanel
+        // focus-scrim (driven by SeatState.offers) is torn down the moment the
+        // offer is consumed rather than left stuck over the combat view. The
+        // index is DETERMINISTIC (autoPickIndex, seeded off the match, never
+        // Math.random / world.rng), so a same-seed replay resolves it identically.
         for (const [offerId, offer] of [...this.offers]) {
           const seat = this.seats.get(offer.seatId);
           const age = this.world.tick - offer.createdTick;
           if ((seat?.driverKind === "ai" && age > 10) || expired) {
-            this.applyPick(offerId, offer, 0);
+            this.applyPick(offerId, offer, this.autoPickIndex(offerId, offer));
           }
         }
         if (expired || (this.allSeatsReady && this.offers.size === 0)) {

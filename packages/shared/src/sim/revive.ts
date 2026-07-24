@@ -39,13 +39,32 @@ import type { Vec2 } from "./math/vec2";
 export const REVIVE_CIRCLE_MODEL_KEY = "prop.revive-circle";
 
 /**
+ * The revive-channel threshold in SECONDS (task #206: 復活圈需累積 5 秒).
+ *
+ * A living teammate must ACCUMULATE this long standing inside a dead ally's
+ * circle before the revive completes — 5.0s at 30Hz is exactly 150 ticks
+ * ({@link reviveRulesFromConfig} rounds `channelSec / dt`), and the rim of the
+ * ring fills toward 100% as those ticks bank (the world-space progress read the
+ * ReviveCircleView paints; over the wire it is `progressTicks / channelTicks`).
+ *
+ * This is the NAMED default the shipped `config.arena-rules@1 reviveCircles`
+ * doc carries (`channelSec: 5.0`); the doc stays the runtime authority so an
+ * operator can retune it in 戰鬥系統, but the constant pins the intended 5s so a
+ * doc-less path and the tests describe the same number rather than a magic 5.
+ */
+export const REVIVE_CHANNEL_SEC = 5.0;
+
+/**
  * Revive rules in TICKS (converted from the config doc's seconds).
  *
  * The tuned contract (see docs/todo/revive-circles.md for the measured
  * derivation of every number):
- *   channelSec 3.0  — long enough that a revive never outpaces a kill (above
- *                     the measured p25 death cadence of 2.00s), short enough
- *                     that the duel still exists when you finish.
+ *   channelSec 5.0  — the {@link REVIVE_CHANNEL_SEC} threshold (task #206):
+ *                     a living teammate must bank a full 5s (150 ticks @30Hz)
+ *                     standing in the ring before the revive fires. Comfortably
+ *                     above the measured p25 death cadence (2.00s) so a revive
+ *                     never outpaces a kill, yet the duel still exists when you
+ *                     finish. The rim fills toward 100% across those 150 ticks.
  *   radius 2.0      — 1.7x a champion's own diameter (collision radius 0.6),
  *                     1/3 of the flower's burstRadius so the two ground
  *                     effects never read as the same thing.
