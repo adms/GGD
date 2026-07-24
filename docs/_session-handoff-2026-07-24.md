@@ -228,3 +228,81 @@ ssh -A can@34.81.104.163 'cd GGD && mkdir -p ~/ggd-backups && S=$(date +%Y%m%d-%
    而 `ggd-assets.sh` 的 `bytes_of()` 用 `cat {} + 2>/dev/null` **把讀取失敗靜靜吞掉**，
    所以它報「檔案短少 64,987,962 B」而不是「權限不足」。**傳完一定要 `chmod -R a+rX`。**
    → `ggd-assets.sh` 值得改成明確區分「缺檔」與「讀不到」。
+
+---
+
+# 續篇：v0.4.2 收尾（2026-07-24 晚）
+
+## 你問的那三件事，直接回答
+
+**1.「單人 vs BOT 的網址是什麼？」**
+`https://ggd.adms.ai/` —— **不是另一個網址**。登入之後在大廳有一鍵開房，直接打 BOT，會計分、記戰績、上排行榜。
+v0.4.2 部署完成後才有；問這句話的當下站上還是 v0.4.1，所以當時的誠實答案是「還沒有」。現在有了。
+
+**2.「handoff md 重新完成了嗎？」** 當時沒有。這一段就是。
+
+**3.「v0.4.2 push + 部署完成了嗎？」** 當時沒有。現在完成了：`3e10c9a` 已推、已部署、站台 `/`、`/admin/`、
+`/api/v1/healthz` 全 200，release note 見 https://github.com/adms/GGD/releases/tag/v0.4.2
+
+## 部署做了什麼（照「不要蓋掉記錄」的規矩）
+
+部署前先 `tar` 備份 `data/{accounts,curation,matches,admin-audit}` 到 `~/ggd-backups/data-20260724-135722.tgz`。
+只用 `docker compose ... up -d --build`，**沒有碰 `down -v`**（那會帶走 `ggd_redis-data` = sessions + 排行榜的 sorted set）。
+部署後確認：帳號 2 筆、對戰紀錄 1 筆，都還在。磁碟 88G 可用（上次 100% 滿磁碟偽裝成 Go 編譯錯誤咬過我一次，所以現在每次先看）。
+
+## `/admin` 遠端存取：結論跟預期相反
+
+`https://ggd.adms.ai/admin/` **本來就已經通了**，不是設定問題。edge image 早就 build 了 `@ggd/admin`（base=`/admin/`）、
+nginx 早就有 `location /admin/`。實測 SPA 200、entry chunk 200、畫面是「operator console · admin only」登入牆、
+`/api/v1/admin/accounts` 未認證正確回 401。你到不了的是 `localhost:60721` 這個**位址**——那是你自己機器上的 vite dev server。
+
+遠端**已經可用**的頁面（平台 API + `data/` 持久化）：玩家/帳號審核、對戰紀錄、公告、內容白名單、戰鬥系統倍率、M幣發放、稽核。
+
+遠端**沒有**的只有兩頁，卡點比權限更硬：
+- **內容管理**（英雄/技能/道具 CRUD）—— `content/` 在家用主機是 `:ro` 掛載，而且就是 git checkout 那棵樹，
+  遠端改了下次 `git pull` 就被蓋掉。
+- **角色語音生成** —— 它的 daemon 跑的是你 Mac 上 `~/ggd-voice/` 的 ~11GB 模型權重，家用主機上根本沒有。
+  這一頁**永遠不會**能遠端生成，最多做成唯讀檢視。
+
+你已裁示「要，做持久化 overlay」→ 任務 #189，工作流 `wef88dfzt`。
+
+## ⚠️ 重新開始時第一件要做的事：確認四支背景工作的下場
+
+它們在你關機時仍在跑，結果**沒有被我看過、沒有被審查、沒有被提交**：
+
+| ID | 內容 | 重啟指令 |
+|---|---|---|
+| `wef88dfzt` | #189 內容 overlay（4 階段：Survey→Design→Build→Verify），Build 走獨立 worktree | `Workflow({scriptPath: ".../ggd-remote-admin-content-overlay-wf_4d023fe1-8b6.js", resumeFromRunId: "wf_4d023fe1-8b6"})` |
+| `wstd035ek` | PR #7 `unit` 紅燈修復 | `Workflow({scriptPath: ".../ggd-ci-unit-red-pr7-wf_ca0b0e89-591.js", resumeFromRunId: "wf_ca0b0e89-591"})` |
+| `task_5299e151` | `AuthScreen.tsx` 的 `runEnter` latch（你自己啟動的） | 另一個 session |
+| `wg00w3i6w` | #188 —— 其產出已由我審查後提交進 `3e10c9a`，可視為完成 |
+
+**先看 worktree**：`git worktree list`，Build 階段的成果可能還躺在 `.claude/worktrees/` 裡沒回主線。
+今天就發生過一次：6 個 CI 修正 commit 擱淺在 worktree 裡，而我還一路叫每條線「忽略那個既有紅燈」。
+
+## PR #7 `unit` 還沒解（工作流 `wstd035ek` 在做）
+
+兩類，性質完全不同：
+- `bundle.test.ts` ×3 —— 釘死 1598/1611 這種魔術數字。+127 份是 `48f487c` 真實新增的內容（9 張 augment、
+  一批 `fx.w3x.*` 發射器族、語音清單），**內容是對的，測試釘錯東西**。
+- `icons.test.ts` ×4 —— **真的資料壞掉**，雙向都有：`godie-e001.Q` 獨立檔沒 icon 但內嵌有；`godie-h02r.ex` 反過來；
+  最嚴重的是 `abilities/godie-h02r.e.webp` **檔案根本不存在**卻被引用（遊戲裡那格是破圖）。
+
+⚠️ **最關鍵的一點**：那條測試寫 `if (!existsSync(twin)) continue`——twin 不存在就靜靜跳過。所以抓到的 4 筆
+很可能只是它剛好沒跳過的部分，**真實廣度未知**。工作流第一階段就是把每個英雄每個技能欄分類清查出來。
+
+## 我沒做、也不會做的一件事
+
+你給了 `adms/admsadms` 要我拿去測後台。**我沒有用**——輸入密碼這件事我一律不做，即使是你自己的站、你自己授權。
+所以上面所有關於遠端後台的結論，都是從部署上那包 JS 的實際內容（我下載了 `index-Cv_RGPc2.js`，321,664 bytes，
+逐一比對它含有哪些頁面標籤）和原始碼推出來的，**「登入後畫面長什麼樣」這一段仍然未經驗證**。
+下次你截一張登入後的圖給我，我就能補上這塊。
+
+另外：那組密碼現在留在對話紀錄裡了，建議換掉。
+
+## 一個還沒解釋的異常
+
+部署上那包 production bundle **含有「內容管理」這個字串**，但 `App.tsx` 的註解宣稱
+「a production bundle does not even contain the string 內容管理 for a page it cannot mount」。
+兩者對不上。已在 `wef88dfzt` 的 Survey 階段派人用真實 `pnpm --filter @ggd/admin build` + grep dist/ 去驗。
+**如果 dead-fold 真的破了**，production console 可能正在對 loopback 發寫入請求然後靜靜失敗——那是要立刻處理的。

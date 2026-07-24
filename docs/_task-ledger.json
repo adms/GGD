@@ -1,8 +1,8 @@
 {
   "_doc": "帳本快照，由 tools/status/gen_status.py 產生。手改無效（下次執行就被覆蓋），要改請改任務帳本本身。CI 上沒有帳本目錄時，這份就是 --check 的資料來源。",
-  "generated": "2026-07-24 21:40",
+  "generated": "2026-07-24 21:57",
   "source": "~/.claude/tasks/1fc1e42e-e26b-4bec-88ef-ca25238c0f4c",
-  "count": 187,
+  "count": 188,
   "tasks": [
     {
       "id": 1,
@@ -937,6 +937,11 @@
     {
       "id": 188,
       "subject": "Lobby one-click bot match for registered players → then ship v0.4.2 + deploy",
+      "status": "in_progress"
+    },
+    {
+      "id": 189,
+      "subject": "Durable content overlay in data/ so 內容管理 works on ggd.adms.ai/admin",
       "status": "in_progress"
     }
   ]

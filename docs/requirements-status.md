@@ -1,17 +1,17 @@
 # 去死團的逆襲 — 需求完成狀況
 
-> 最後更新 **2026-07-24 21:40** · 由 `tools/status/gen_status.py` 產生。
+> 最後更新 **2026-07-24 21:57** · 由 `tools/status/gen_status.py` 產生。
 > 這份檔案是動態的：每當有任務狀態改變，重跑一次就會刷新。
-> 任務清單於產生當下由**任務帳本**讀出（187 筆 · `~/.claude/tasks/1fc1e42e-e26b-4bec-88ef-ca25238c0f4c`），非手抄；狀態直接取自帳本。
+> 任務清單於產生當下由**任務帳本**讀出（188 筆 · `~/.claude/tasks/1fc1e42e-e26b-4bec-88ef-ca25238c0f4c`），非手抄；狀態直接取自帳本。
 
 | 狀態 | 數量 |
 |---|---|
-| 🔄 進行中 | 12 |
+| 🔄 進行中 | 13 |
 | ⬜ 待辦 | 29 |
 | ✅ 已完成 | 146 |
-| **合計** | **187** |
+| **合計** | **188** |
 
-**完成度：146/187 ≈ 78%**（進行中 12 項正在跑背景任務）
+**完成度：146/188 ≈ 78%**（進行中 13 項正在跑背景任務）
 
 圖例：🔄 背景任務實作中　⬜ 待辦　✅ 已完成並驗證
 
@@ -182,12 +182,13 @@
 | ✅ | 182 | WC3 PRE2 → Babylon parameter-driven emitter engine (render/vfx) |
 | ✅ | 183 | Faithful 球體 / 蝗蟲群 / 粒子 vfx families from the real w3x emitter dataset |
 
-## 📦 內容 / 經濟 / 資料　<sub>🔄2 · ⬜5 · ✅12</sub>
+## 📦 內容 / 經濟 / 資料　<sub>🔄3 · ⬜5 · ✅12</sub>
 
 | | # | 需求 |
 |---|---|---|
 | 🔄 | 72 | AI 圖示：0 張，卡在 #112 + 供應商金鑰 |
 | 🔄 | 108 | 傳說池誤放修正 + 說明對數值稽核 |
+| 🔄 | 189 | Durable content overlay in data/ so 內容管理 works on ggd.adms.ai/admin |
 | ⬜ | 56 | 匯入器丟掉 150/180 欄位 |
 | ⬜ | 81 | 清理 Blizzard 資產債 |
 | ⬜ | 113 | 14 對同名英雄查重複或獨立 |
@@ -2290,3 +2291,75 @@ Go 全綠（新增 `gamelink/solobot_test.go`：真的預留 12 席、`callbackU
 標示清楚的「dev 直連」）。
 
 **dev 直連保留**（`playOffline`）：測試與 `#replay=` 流程還在用，只是不再是「跟 bot 玩」的唯一入口。
+
+### #188 後續需求：「要讓人一看就知道這是可以玩的」（2026-07-24）
+
+**來源**：owner。路由做完之後，入口仍然是一顆 `small` 的 ghost 按鈕，夾在 圖鑑 與 設定 之間，
+標題還寫著 dev 工具。**家人打開大廳，看不出來哪一顆可以開始玩。**
+
+落地在 `LobbyScreen.tsx` 的 `BotMatchStrip`（在 play 欄的最上面，`RoomListPanel` 之前）：
+
+- **份量**：主按鈕改成 `Btn kind="primary"`、16px / 800 字重 / 13px 直向 padding，
+  面板本身帶 accent 邊框＋頂部漸層，和下面中性的 ROOMS 面板分得開。
+  文案 `⚔️ 一鍵開打`（**帶 VS16**：不帶的話 U+2694 會落回文字字形，在這個尺寸看起來像一個細細的 ✕，
+  一顆「開始」按鈕長得像「取消」）。標題 `單人 vs BOT`、副標 `一個人也能開打 —— 真的計分、記戰績、上排行榜`。
+- **獎勵講實話，而且講在做決定的地方**：三顆 badge 就在按鈕旁邊——
+  `水晶 ½`（金色，自己隊上有 bot）、`無 M幣`（要 12 席全真人）、`MMR 不變`（`ranking/elo.go`，不是反農場規則）。
+  底下一行不打折的說明：「隊上有 BOT，水晶只發一半；M幣要 12 人全真人。半份也是白賺，想拿滿就揪人。」
+  **這些都是可見文字，不是 tooltip**——手機上根本沒有 hover，而且一個默默少發一半的模式，
+  是玩家第一次數水晶時對經濟系統失去信任的方式。測試把 `title=` 全部剝掉之後再斷言，tooltip 通不過。
+- **dev 直連降級**：移到分隔線下面那一行、`small ghost` + `opacity .55`，和主按鈕不再是同一階。
+- **#107**：整條都在正常流排版（play 欄的 `Panel`），**沒有任何 position**——
+  top-right 的 gutter 仍然由 header 從 `chromeReserve` 取得，沒有新的常駐 chrome 宣告。測試直接掃原始碼擋回歸。
+- **#24**：兩顆都是 `widgets.Btn`，所以 hover/click SFX 與按壓縮放都在；raw `<button>` 會是啞的。
+- **#151/#159 手機**：兩個區塊都是 `flex: 1 1 <basis>` + wrap。390px 實測會疊成
+  「資訊塊 / 選圖＋大按鈕」兩段，按鈕吃滿整欄；動作區另外壓 `maxWidth: 440`，
+  否則 1600px 螢幕上那個五選一的競技場下拉會被撐到 500px 寬。1280 與 390 都用真的瀏覽器截圖看過。
+
+## 需求：`/admin` 遠端可用（`ggd.adms.ai/admin`，管理員登入後）
+
+**來源**：owner，2026-07-24。「http://localhost:60721/admin/ 這個網址遠端存取不了，請你幫忙合併到 /admin 底下，變成 ggd.adms.ai/admin 管理員登入後也可以使用」
+
+**盤點結果（實測，非讀碼推論）**：`https://ggd.adms.ai/admin/` **已經是可用的**——edge image 早就 build 了 `@ggd/admin`（base=`/admin/`）並複製到
+`/usr/share/nginx/html/admin/`，`nginx.conf` 有對應的 `location /admin/`。實測 `/admin/` 與其 entry chunk 皆 200，畫面是
+「GGD Operations · operator console · admin only」登入牆，`/api/v1/admin/accounts` 未認證正確回 401。到不了的是 `localhost:60721`
+本身——那是 owner 自己機器上的 vite dev server，`loopbackOnly.ts` 讓它**拒絕綁非 loopback 位址**，而那個鎖是承重的：
+`/content-api` 代理跳一手會把來源位址洗成 127.0.0.1，所以擋得住 LAN 的只有「連不上這個 socket」本身。
+
+**真正的落差 —— 兩頁遠端沒有，而且是刻意的**：
+- **內容管理**（英雄/技能/道具 JSON CRUD）
+- **角色語音生成**
+
+兩者的 chunk 在 production build **根本不會被產出**（`App.tsx` 的 bare `import.meta.env.DEV` 讓 rollup 死碼摺除），因為它們是往
+loopback content-api / 語音 daemon 寫檔的路徑。
+
+**為什麼不能直接開遠端（比權限更硬的理由）**：`content/` 在家用主機是 `../content:/srv/content:**ro**` 掛載，而且它就是 git
+checkout 的那棵樹。所以遠端編輯要嘛寫不進去，要嘛**下一次 `git pull` 部署就被覆蓋**——正是 owner 交代過的
+「部署的時候記得不要蓋掉記錄」那類資料損失。
+
+**要讓它遠端可用，需要的是**：一層放在 `data/` 的持久化 overlay，內容載入時疊在出貨 docs 之上——就是 curation 白名單
+（`data/curation/`）已經在用的同一個模式。這是設計工作，不是設定開關。
+
+**已經遠端可用的（平台 API + `data/` 持久化）**：玩家/帳號審核、對戰紀錄、公告、內容白名單、戰鬥系統倍率、M幣發放、稽核日誌。
+
+### #188 實機驗證（真的按下去，不是只有測試綠）
+
+不是打離線比對，是起**真的行程**跑一次：獨立 Redis:6399 ＋ platform:8081（自己的
+DATA_DIR）＋ 帶 HMAC secret 的 game-server:2600，不碰你正在跑的 :8080/:2567/:39527。
+
+- 未登入 `POST /rooms/solo` → **401**，game-server 上不會有任何預留。
+- 第一次故意讓 secret 對不上 → 平台回 `game_rejected (401)`，而且**沒有留下垃圾**：
+  大廳列表空的、`matches:pending` 空的（失敗時 `StartSolo` 會把房間 Dispose 掉）。
+- secret 對上之後一鍵：回 `{"matchId":"m_01KYA5WX…","botFill":11}`，
+  game-server `/healthz` 的 `rooms.active` **0 → 1**（真的有一間房在跑），
+  pending hash 有 `roomId` / `gameRoomId=--aBAqqgL` / 12 席（1 真人 + 11 bot），
+  大廳列表**仍然是空的**（不公開）。
+- **心跳是真的**：30 秒內 game-server 自己送了一次 liveness，`beats=1`、
+  deadline 被推到 `beat+180s`。（沒人真的連進去，房間自然 autoDispose，心跳就停了——
+  這正是收割者要處理的狀態，不是 bug。）
+- 結算：照 `MatchRoom` 的線路格式送簽章結果回呼 → `{"status":"ok","settled":1,"humanSeats":1}`。
+  帳號 `games 0→1`、`wins 0→1`、**MMR 1000 不動**（沒有可評分對手）、
+  錢包 `crystal 0→120`（= 240 的**一半**）、`mcoin 0`、
+  比賽紀錄落地 `status=completed` 且 `points=100`。
+
+也就是說：**一鍵 → 真的房 → 真的心跳 → 真的結算**，四段都在真行程上看過了。
