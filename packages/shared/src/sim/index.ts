@@ -51,6 +51,15 @@ export {
   detachSource,
   statRecomputeSystem,
 } from "./stats/statPipeline";
+export {
+  auraSystem,
+  auraSourceId,
+  resolveAuraRadius,
+  activeAuraSources,
+  type AuraDef,
+  type AuraAffects,
+  type AuraOrigin,
+} from "./aura/aura";
 export * from "./effects/effect";
 export { runEffects } from "./effects/effectRunner";
 export { fireHooks } from "./effects/hooks";

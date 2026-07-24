@@ -1,0 +1,35 @@
+{
+  "id": "last-stand",
+  "schema": "augment@1",
+  "name": "背水一戰",
+  "description": "擊殺敵人時，獲得 10 秒的 +30 護甲與 +30 魔法抗性。",
+  "tier": "prismatic",
+  "weight": 26,
+  "hooks": [
+    {
+      "on": "onKill",
+      "target": "self",
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "duration": 10,
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": 30
+            },
+            {
+              "stat": "mr",
+              "op": "flat",
+              "value": 30
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "defense"
+  ]
+}

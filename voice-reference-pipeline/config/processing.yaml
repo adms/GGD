@@ -1,0 +1,70 @@
+# 音訊處理與驗收門檻（所有腳本共用）
+
+license:
+  # private_research: 授權欄位僅記錄不攔截（使用者 2026-07-24 指示）
+  # strict:           授權未明的檔案不得 approved（對外發行前切回此模式）
+  mode: private_research
+
+target:
+  sample_rate: 24000
+  channels: 1
+  sample_fmt: s16
+
+segment:
+  min_duration_s: 3.0      # 低於此長度直接拒絕
+  ideal_min_s: 5.0
+  ideal_max_s: 15.0
+  auto_trim_above_s: 20.0  # 超過此長度自動尋找最佳片段
+  best_window_s: 12.0      # 滑動視窗長度
+  window_hop_s: 1.0
+  silence_snap_radius_s: 1.5  # 邊界貼齊最近靜音點的搜尋半徑, 避免切在句中
+  score_weights:            # 情緒張力評分權重
+    rms_dynamics: 0.4       # 音量動態 (p95-p10)
+    spectral_flux: 0.3      # 頻譜變化速度
+    pitch_range: 0.3        # 音高範圍 (IQR)
+
+loudness:
+  integrated_lufs: -19.0   # 目標 (-20 ~ -18 的中點)
+  lufs_min: -20.0
+  lufs_max: -18.0
+  true_peak_dbtp: -1.0
+  verify_tolerance_lu: 0.75
+
+filters:
+  highpass_hz: 70          # 60-80 Hz 高通, 同時去除直流偏移
+  denoise: gentle          # off | gentle — 僅溫和降噪, 不破壞聲音個性
+  denoise_nr_db: 6
+
+quality:
+  max_clipping_ratio: 0.002       # |sample| >= 0.999 FS 的比例
+  max_silence_ratio: 0.60
+  min_snr_db: 10.0
+  max_music_probability: 0.65     # 啟發式估計, 超過→人工覆核
+  max_multi_speaker_probability: 0.65
+  silence_threshold_dbfs: -45.0
+  silence_min_gap_s: 0.25
+
+separation:
+  # cosine similarity 門檻（可調整）
+  high_collision_threshold: 0.78  # >= 此值: high collision risk
+  review_threshold: 0.68          # 0.68-0.78: needs review; < 0.68: acceptable
+  embedding_backend: auto         # auto | speechbrain | spectral_proxy
+  # auto: 先嘗試 SpeechBrain ECAPA-TDNN, 不可用時退回 spectral_proxy
+  # spectral_proxy 是輕量代理特徵(頻譜統計+音高), 結果僅供排序參考
+
+# 非人類聲音角色: 不以一般 speaker embedding 作唯一判斷,
+# 另行分析 pitch range / spectral centroid / rolloff / harmonicity /
+# roughness / tempo / attack / formant 分佈
+non_human_ids:
+  - godie-e00r   # 初號機
+  - godie-h02r   # 妙蛙花
+  - godie-ofar   # 皮卡丘
+  - godie-u00v   # 基廉列克
+  - godie-hapm   # Berserker
+  - godie-h02u   # 草泥馬
+
+network:
+  timeout_s: 30
+  retries: 3
+  backoff_s: 2.0
+  user_agent: "GGD-VoiceRefPipeline/1.0 (+https://ggd.adms.ai)"

@@ -2,6 +2,7 @@
   "id": "godie-u00b.passive",
   "schema": "ability@1",
   "name": "75-00 戰鬥之歌",
+  "icon": "assets/icons/abilities/godie-u00b.passive.webp",
   "description": "[速度加成]\n75秒冷卻時間\n\n與自己締結契約，將魔法能量灌注到自身，使攻擊速度上升至極限，並且將受到的傷害轉換成自身生命，持續7秒。",
   "slot": "PASSIVE",
   "innateKind": "active",

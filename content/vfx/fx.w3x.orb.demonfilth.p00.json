@@ -1,0 +1,83 @@
+{
+  "id": "fx.w3x.orb.demonfilth.p00",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.001,
+    "angleDeg": 180
+  },
+  "mode": "continuous",
+  "lifetimeSec": {
+    "min": 3,
+    "max": 3
+  },
+  "size": {
+    "start": 0.001,
+    "end": 4.306
+  },
+  "color": {
+    "start": [
+      1,
+      0,
+      0,
+      0
+    ],
+    "end": [
+      0.502,
+      0,
+      0,
+      0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        0,
+        0,
+        0
+      ]
+    ],
+    [
+      0.1,
+      [
+        1,
+        0,
+        0,
+        1
+      ]
+    ],
+    [
+      1,
+      [
+        0.502,
+        0,
+        0,
+        0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.001
+    ],
+    [
+      0.1,
+      3.084
+    ],
+    [
+      1,
+      4.306
+    ]
+  ],
+  "blendMode": "alpha",
+  "speed": {
+    "min": 0,
+    "max": 0
+  },
+  "rate": 25,
+  "texture": "assets/textures/particles/magic_01.png",
+  "ambient": true
+}

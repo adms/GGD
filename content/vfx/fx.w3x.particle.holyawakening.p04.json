@@ -1,0 +1,82 @@
+{
+  "id": "fx.w3x.particle.holyawakening.p04",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.001,
+    "angleDeg": 1
+  },
+  "mode": "continuous",
+  "lifetimeSec": {
+    "min": 1,
+    "max": 1
+  },
+  "size": {
+    "start": 1.847,
+    "end": 7.387
+  },
+  "color": {
+    "start": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "end": [
+      1,
+      1,
+      1,
+      0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        1,
+        1,
+        1
+      ]
+    ],
+    [
+      0.5,
+      [
+        0.977,
+        0.988,
+        0.09,
+        0.592
+      ]
+    ],
+    [
+      1,
+      [
+        1,
+        1,
+        1,
+        0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      1.847
+    ],
+    [
+      0.5,
+      3.564
+    ],
+    [
+      1,
+      7.387
+    ]
+  ],
+  "blendMode": "additive",
+  "speed": {
+    "min": 1.389,
+    "max": 4.167
+  },
+  "rate": 30,
+  "texture": "assets/textures/particles/circle_04.png"
+}

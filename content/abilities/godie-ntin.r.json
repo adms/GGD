@@ -42,8 +42,22 @@
       "root": true
     }
   ],
-  "vfxKey": "fx.cinder-ward",
+  "vfxKey": "fx.w3x.orb.lightningnova.p00",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.5
+  "castTimeSec": 0.5,
+  "hitFeel": {
+    "hitstopTicks": 4,
+    "hitstunTicks": 7,
+    "shakeMag": 0.496,
+    "shakeStyle": "omni",
+    "sparkKind": "magic",
+    "flashColor": [
+      0.8,
+      0.88,
+      1.0
+    ],
+    "flashMs": 170,
+    "camKick": 0.425
+  }
 }

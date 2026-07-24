@@ -2,6 +2,7 @@
   "id": "godie-e012.passive",
   "schema": "ability@1",
   "name": "47-00 龍搥閃",
+  "icon": "assets/icons/abilities/godie-e012.passive.webp",
   "description": "[被動]\n0秒冷卻時間\n\n有13%的機會，讓劍心使出龍搥閃砍傷附近的敵人造成280的傷害。",
   "slot": "PASSIVE",
   "innateKind": "passive",

@@ -21,9 +21,11 @@
  *     from a pure passive.
  *
  * `ChampionAbilitySlot` (shared/sim/intents) is the 6-value enum; `AbilitySlot`
- * stays 5-valued on purpose so a cast/rank Command can still only name a
- * castable slot. This module therefore returns view data only — it never issues
- * a command, and the bars wire no hotkey to it.
+ * stays 5-valued on purpose so a RANK-UP command can still only name a rankable
+ * slot — the innate is castable but never rankable. This module returns view
+ * data only: it never issues a command. The BARS now do, for the "active" half —
+ * keyboard **D**, the touch 天生 button and gamepad d-pad-up all cast it; the
+ * "passive" half still has no hotkey anywhere, because there is nothing to cast.
  *
  * Pure + node-testable: no React, no DOM.
  */
@@ -48,6 +50,25 @@ export interface PassiveSlotView {
   icon?: string;
   /** "passive" = never pressable; "active" = a real-cooldown D-slot innate */
   innateKind: InnateKind;
+  /**
+   * TRUE when this innate currently DOES SOMETHING in a match:
+   *   • an "active" innate — it has authored `effects` and is cast on D;
+   *   • a "passive" innate whose `passive.ranks[0]` carries at least one
+   *     modifier, hook or aura, which `syncAbilityPassives` attaches at spawn.
+   *
+   * FALSE means the doc is a NAME AND A DESCRIPTION AND NOTHING ELSE — 29 of the
+   * 48 permanent innates are exactly that today (`12-00 感應意脈` promises 20 %
+   * physical evasion and ships `modifiers: []`). Those 29 are indistinguishable
+   * from the 19 that work unless someone says so, which is how a champion can
+   * feel "just weaker" for a whole match with nothing reporting a problem. The
+   * bars render them with {@link INNATE_INERT_NOTE} instead of the confident
+   * 「永久生效」 caption — see `innateCastNote`.
+   *
+   * This is a HONEST-LABEL flag, not a feature switch: nothing about the sim
+   * changes, the doc simply admits what it contains. Authoring the 29 missing
+   * effect blocks is content work and a separate batch.
+   */
+  effective: boolean;
   /** full cooldown in seconds — omitted for a pure passive (always 0) */
   cooldownSec?: number;
   /** mana cost — omitted when free */
@@ -71,12 +92,26 @@ export function innateKindLabel(kind: InnateKind): string {
 }
 
 /**
- * One line of copy that makes the tile's castability honest. A pure passive is
- * permanently on and has no button; an active innate is a real ability the map
- * gives you at level 1.
+ * Said for a permanent innate whose doc carries NO modifier, hook or aura — the
+ * 29 that are a name and a description and nothing else. Deliberately blunt:
+ * the alternative is 「永久生效」 on a tile that grants nothing, which is the
+ * silent-failure shape this whole sweep exists to delete. It names the state
+ * (未實作) rather than blaming the player's understanding.
  */
-export function innateCastNote(kind: InnateKind): string {
-  return kind === "active" ? "天生主動技 · 等級 1 起自動擁有" : "天生被動 · 永久生效，不需施放";
+export const INNATE_INERT_NOTE = "天生被動 · 效果尚未移植（目前無作用）";
+
+/**
+ * One line of copy that makes the tile's castability honest.
+ *   • active            — a real ability the map gives you at level 1, cast on D
+ *   • passive, working  — permanently on, no button
+ *   • passive, INERT    — {@link INNATE_INERT_NOTE}: it is not doing anything
+ *
+ * `effective` defaults to true so an older caller that passes only the kind
+ * keeps the previous wording; every bar passes the real flag.
+ */
+export function innateCastNote(kind: InnateKind, effective = true): string {
+  if (kind === "active") return "天生主動技 · 等級 1 起自動擁有（按 D 施放）";
+  return effective ? "天生被動 · 永久生效，不需施放" : INNATE_INERT_NOTE;
 }
 
 /**
@@ -89,12 +124,14 @@ export function passiveSlotView(championId: string | null | undefined): PassiveS
   if (!championId) return null;
   const def = championPassive(championId as ChampionId);
   if (!def) return null;
+  const kind: InnateKind = def.innateKind ?? "passive";
   const view: PassiveSlotView = {
     id: def.id,
     name: def.name,
     displayName: stripAbilityNumber(def.name),
-    innateKind: def.innateKind ?? "passive",
+    innateKind: kind,
     castType: def.castType,
+    effective: kind === "active" ? def.effects.length > 0 : passiveRankGrantsSomething(def),
   };
   if (def.icon !== undefined) view.icon = def.icon;
   const cd = def.cooldown[0];
@@ -104,4 +141,29 @@ export function passiveSlotView(championId: string | null | undefined): PassiveS
   const desc = docDescription(def);
   if (desc !== undefined) view.description = desc;
   return view;
+}
+
+/**
+ * Does a PERMANENT innate's rank-1 block actually grant anything?
+ *
+ * `syncAbilityPassives` attaches `passive.ranks[0]` as a ModifierSource at
+ * spawn, so the three things that can make a difference in a match are exactly
+ * the three the sim reads from that block: `modifiers` (flat/percent stats),
+ * `hooks` (on-hit / on-kill procs) and `auras` (projected onto other units).
+ * A block with none of them attaches a source that carries nothing — the hero
+ * spawns, the tile lights up, and no number anywhere is different.
+ *
+ * Rank 1 is the only column an innate ever has (`maxRank: 1`), so this is the
+ * whole question for the sixth slot.
+ */
+function passiveRankGrantsSomething(def: { passive?: { ranks: readonly unknown[] } }): boolean {
+  const rank0 = def.passive?.ranks[0] as
+    | { modifiers?: readonly unknown[]; hooks?: readonly unknown[]; auras?: readonly unknown[] }
+    | undefined;
+  if (!rank0) return false;
+  return (
+    (rank0.modifiers?.length ?? 0) > 0 ||
+    (rank0.hooks?.length ?? 0) > 0 ||
+    (rank0.auras?.length ?? 0) > 0
+  );
 }

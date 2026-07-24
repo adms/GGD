@@ -74,12 +74,24 @@ export const SWING_TRAIL_HOT_T = 0.18;
 export const SWING_TRAIL_IDLE_RATE = 0.15;
 
 /**
+ * Docs under this id prefix are FAITHFUL WC3 `PRE2` ports (`content/vfx/
+ * _w3x-families.json`, the 球體 / 蝗蟲群 / 粒子 families). They are ambient and
+ * bone-anchored, so they look exactly like weapon trails to the test below —
+ * but they are not trails, and the 刀光 retune would overwrite the very
+ * numbers they exist to preserve: it clamps lifetime to 0.25 s, caps the live
+ * count and REPLACES the colour ramp with a hot→cool one. `W3xEmitterRig`
+ * plays them instead, budgeting them explicitly. Excluded here so that neither
+ * `AmbientVfx` nor a future caller silently un-ports them.
+ */
+export const W3X_FAITHFUL_DOC_PREFIX = "fx.w3x.";
+
+/**
  * True when a vfx doc is a weapon-swing trail: an AMBIENT (lives with the
- * entity) CONTINUOUS emitter pinned to a named bone. Every ambient continuous
- * doc in content/vfx is one of these — they are all weapon/hand/prop trails.
- * One-shot ability bursts are task #33's and are left untouched.
+ * entity) CONTINUOUS emitter pinned to a named bone — minus the faithful WC3
+ * ports above. One-shot ability bursts are task #33's and are left untouched.
  */
 export function isSwingTrailDoc(doc: VfxDoc): boolean {
+  if (doc.id.startsWith(W3X_FAITHFUL_DOC_PREFIX)) return false;
   return doc.ambient === true && doc.mode === "continuous" && doc.anchorBone !== undefined;
 }
 

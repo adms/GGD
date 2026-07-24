@@ -10,7 +10,7 @@ import { useApp } from "./store";
 import { AuthScreen } from "./AuthScreen";
 import { LobbyScreen } from "./LobbyScreen";
 import { AudioDirector } from "../AudioDirector";
-import { AudioToggle } from "../AudioToggle";
+import { GlobalChrome } from "../GlobalChrome";
 import { HudRoot } from "../HudRoot";
 import { hudTouch } from "../hud/HudSlot";
 import { hudSlotStyle } from "../hud/hudLayout";
@@ -24,7 +24,6 @@ import { cheatsAvailable } from "../cheats";
 import { CodexRoute } from "../codex/CodexRoute";
 import { AssetConsoleRoute } from "../assets/AssetConsoleRoute";
 import { CreditsRoute } from "./CreditsRoute";
-import { VersionBadge } from "../VersionBadge";
 import { useHud } from "../../net/RoomStore";
 import { useContentReady, MatchContentGate } from "./ContentGate";
 import { Btn } from "./widgets";
@@ -105,9 +104,6 @@ export function AppRoot(): React.JSX.Element {
       {/* single audio conductor: boots the mixer, drives BGM for every screen
           (platform + match) and fires gameplay SFX. Render-less. */}
       <AudioDirector />
-      {/* global music/SFX quick-toggle: portals to <body>, so it rides ABOVE
-          the screen switch and the in-match HUD on every screen. */}
-      <AudioToggle />
       <ScreenBody screen={screen} />
       {/* 內容圖鑑 (task #71): a hash-routed overlay (#codex) so it opens over the
           lobby AND over a live match without touching the screen machine. */}
@@ -121,10 +117,12 @@ export function AppRoot(): React.JSX.Element {
           the licence text over the artwork. Same hash-overlay mechanism as the
           codex, so it opens from any screen and is deep-linkable. */}
       <CreditsRoute />
-      {/* Build-stamp (#66): one fixed, bottom-pinned, click-through badge above
-          the screen switch, so it shows on login AND in-match — every
-          screenshot is traceable to the build it was taken on. */}
-      <VersionBadge />
+      {/* The audio quick-toggle (#14) and the build stamp (#66). Declared in
+          ../GlobalChrome, NOT inline here, because this is not the only render
+          tree: `#replay=` boots ReplayApp instead of AppRoot, and both of these
+          were missing there for exactly as long as they were mounted by hand
+          (defect P0-6(b)). Both trees render the same component now. */}
+      <GlobalChrome />
     </>
   );
 }

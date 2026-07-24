@@ -9,6 +9,27 @@
  * caption, no rank pips, no rank-up button, a violet accent and a 天生 badge,
  * because it is not something the player presses or spends a point on. See
  * `ui/passiveSlot` for why the slot exists and how 被動 vs 主動 differ.
+ *
+ * ---------------------------------------------------------------------------
+ * CAST FEEDBACK (playtest P7) — every press answers, one way or the other
+ * ---------------------------------------------------------------------------
+ * 「按了 Q，沒有特效，也沒有『不能施放』」. Two halves, both painted here:
+ *
+ *   • ACCEPTED — the sim's `castBegin`/`abilityCast` comes back and the tile
+ *     gets a bright confirm rim (`ui/castFeedback.noteCastConfirmed`). This is
+ *     NOT redundant with the cast-fill below: an INSTANT ability has no channel
+ *     to fill and its cooldown sweep starts a frame later at a snapshot rate,
+ *     so before this the fastest abilities in the game confirmed nothing at all.
+ *     The world-space VFX is another lane's job — the button read is this one's.
+ *
+ *   • REFUSED — the tile shakes red and `components/CastNotice` says why
+ *     (冷卻中還有 3 秒 / 魔力不足 / 尚未學習…). The refusal is predicted locally on
+ *     the press for the reasons the client is certain about, then corrected by
+ *     the server's authoritative `castRejected` for the aiming ones.
+ *
+ * Both are sampled per-frame in the SAME rAF loop that drives the cast fill —
+ * per-frame data never passes through React state (client-08). Tiles carry a
+ * `data-slot-key` so the loop can find the one that was pressed.
  */
 import { useEffect, useRef } from "react";
 import { TICK_HZ } from "@ggd/shared/constants";
@@ -24,6 +45,9 @@ import { abilityActivationCue } from "../abilityCue";
 import { prefersReducedMotion } from "../buttonSfx";
 import { AbilityDescriptionOverlay } from "../AbilityDescriptionOverlay";
 import { exSlotView } from "../exSlot";
+import { denyShakeOffset, sampleCastFlash } from "../castFeedback";
+import { INNATE_ACTIVE_CASTABLE } from "../castAnnounce";
+import { CastNoticeLine } from "./CastNotice";
 import {
   innateCastNote,
   innateKindLabel,
@@ -91,6 +115,43 @@ function holdProps(
 const CAST_FILL = "rgba(84,176,240,0.45)"; // ability channel — blue
 const WINDUP_FILL = "rgba(240,168,64,0.45)"; // basic-attack wind-up — orange
 
+/** Confirm rim — the same cyan family as the cast fill, so they read as one idea. */
+const CONFIRM_RIM = "120, 220, 255";
+/** Refusal — red, and it MOVES (denyShakeOffset), so it survives a muted device. */
+const DENY_RIM = "255, 96, 96";
+
+/**
+ * Paint one tile's press verdict for this frame. Split out and PURE-ish (it
+ * only writes styles) so both the rAF loop and the tests can reason about it:
+ * a `null` sample must restore the tile exactly, or a refused press would leave
+ * a red button behind forever.
+ */
+export function paintCastFlash(
+  el: HTMLElement,
+  sample: { kind: "confirm" | "deny"; strength: number } | null,
+): void {
+  if (!sample) {
+    el.style.boxShadow = "";
+    el.style.removeProperty("--ggd-cast-shake");
+    if (el.dataset.castShake === "1") {
+      el.style.transform = "";
+      delete el.dataset.castShake;
+    }
+    return;
+  }
+  const rgb = sample.kind === "deny" ? DENY_RIM : CONFIRM_RIM;
+  const spread = (sample.kind === "deny" ? 9 : 12) * sample.strength;
+  el.style.boxShadow = `0 0 ${spread.toFixed(1)}px ${(spread / 2).toFixed(1)}px rgba(${rgb},${(
+    0.85 * sample.strength
+  ).toFixed(2)}), inset 0 0 0 2px rgba(${rgb},${(0.9 * sample.strength).toFixed(2)})`;
+  if (sample.kind === "deny") {
+    // The shake is written onto `transform` directly rather than a class, since
+    // the press animation already owns that property on this element.
+    el.style.transform = `translateX(${denyShakeOffset(sample.strength).toFixed(2)}px)`;
+    el.dataset.castShake = "1";
+  }
+}
+
 export function AbilityBar(): React.JSX.Element | null {
   const seat = useHud((s) => (s.localSeatId === null ? null : (s.seats.find((v) => v.seatId === s.localSeatId) ?? null)));
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -114,6 +175,14 @@ export function AbilityBar(): React.JSX.Element | null {
           el.style.height = "0%";
         }
       });
+      // press verdict (task P7): confirm rim / deny shake, per tile
+      const now = performance.now();
+      const tiles = root.querySelectorAll<HTMLDivElement>("[data-slot-key]");
+      tiles.forEach((el) => {
+        const key = el.dataset.slotKey as ChampionAbilitySlot | undefined;
+        if (!key) return;
+        paintCastFlash(el, sampleCastFlash(key, now));
+      });
     };
     raf = requestAnimationFrame(frame);
     return () => cancelAnimationFrame(raf);
@@ -127,6 +196,8 @@ export function AbilityBar(): React.JSX.Element | null {
     <>
     {/* held-button description panel across the top of the screen (task #152) */}
     <AbilityDescriptionOverlay />
+    {/* why a press was refused, right above the bar that refused it (P7) */}
+    <CastNoticeLine />
     <div
       ref={rootRef}
       style={{
@@ -165,6 +236,7 @@ export function AbilityBar(): React.JSX.Element | null {
           <div key={slot} style={{ position: "relative", width: 52, textAlign: "center" }}>
             <Tooltip title={ability.name} body={docDescription(ability)} meta={meta} style={{ display: "block" }}>
             <div
+              data-slot-key={slot}
               {...holdProps(slot, { denied: !learned || sweep > 0, passive })}
               style={{
                 position: "relative",
@@ -297,6 +369,7 @@ export function AbilityBar(): React.JSX.Element | null {
           <div style={{ position: "relative", width: 52, textAlign: "center" }}>
             <Tooltip title={ex.name} body={ex.description} meta={exMeta} style={{ display: "block" }}>
             <div
+              data-slot-key="EX"
               {...holdProps("EX", { denied: sweep > 0, passive: exPassive })}
               style={{
                 position: "relative",
@@ -379,6 +452,19 @@ export function AbilityBar(): React.JSX.Element | null {
         const innate = passiveSlotView(seat.championId);
         if (!innate) return null;
         const active = innate.innateKind === "active";
+        // The ONE castability seam for the sixth slot (castAnnounce owns the
+        // flag). Now TRUE for an active innate: the tile is a real button —
+        // pointer cursor, D caption, cooldown sweep and cast fill.
+        const castableInnate = active && INNATE_ACTIVE_CASTABLE;
+        // Live cooldown off the wire (seat.passiveCooldown), swept exactly like
+        // the EX tile. A 40 s innate that painted no sweep would look ready and
+        // refuse every press until it silently wasn't.
+        const innateCdSecs = (seat.passiveCooldown ?? 0) / TICK_HZ;
+        const innateSweep =
+          innateCdSecs > 0 ? Math.min(1, innateCdSecs / (innate.cooldownSec ?? innateCdSecs)) : 0;
+        // A permanent innate whose doc grants nothing (29 of 48) must not read
+        // like the 19 that work — see passiveSlot.effective.
+        const inert = !active && !innate.effective;
         const meta: TooltipMeta[] = [
           { label: PASSIVE_SLOT_LABEL, value: innateKindLabel(innate.innateKind) },
         ];
@@ -387,16 +473,28 @@ export function AbilityBar(): React.JSX.Element | null {
           if (innate.cooldownSec !== undefined)
             meta.push({ label: "冷卻", base: innate.cooldownSec, factor: "cooldown", unit: "s" });
           if (innate.manaCost !== undefined) meta.push({ label: "魔力", value: `${innate.manaCost}` });
+          if (castableInnate) meta.push({ label: "快捷", value: "D / ✛↑" });
         }
-        meta.push({ label: "取得", value: innateCastNote(innate.innateKind) });
+        meta.push({ label: "取得", value: innateCastNote(innate.innateKind, innate.effective) });
         return (
           <div style={{ position: "relative", width: 52, textAlign: "center" }}>
             <Tooltip title={innate.name} body={innate.description} meta={meta} style={{ display: "block" }}>
             <div
+              data-slot-key="PASSIVE"
               // held → the top-of-screen description panel (task #152). It never
               // reaches the floor aim ring: getHeldAimSlot() drops PASSIVE, so a
               // non-castable tile cannot draw a cast-range telegraph.
-              {...holdProps("PASSIVE", { passive: true })}
+              //
+              // `passive` is true for a PURE passive (and for an active innate
+              // if the castability flag were ever switched back off): the press
+              // is not a failed cast, so it gets the soft tick, never the error
+              // beep. A CASTABLE innate is treated like any other button — on
+              // cooldown it is a real refusal. `castAnnounce` supplies the words
+              // in every case and can still upgrade the tone (mana, dead …).
+              {...holdProps(
+                "PASSIVE",
+                castableInnate ? { denied: innateSweep > 0 } : { passive: true },
+              )}
               style={{
                 position: "relative",
                 width: 52,
@@ -406,8 +504,15 @@ export function AbilityBar(): React.JSX.Element | null {
                 background: active ? "#2b2340" : "#1e1b2c",
                 border: `${active ? 2 : 1}px ${active ? "solid" : "dashed"} ${PASSIVE_ACCENT}`,
                 color: TEXT_MAIN,
-                // NOT a button: no pointer cursor, no glow.
-                cursor: "default",
+                // An INERT permanent innate (no modifier/hook/aura in its doc)
+                // is dimmed on top of the dashed border every passive gets, so
+                // "owned but doing nothing" is visible at a glance and not only
+                // in the caption underneath.
+                opacity: inert ? 0.55 : 1,
+                // A pointer cursor on a tile that cannot fire is the exact lie
+                // #166 removed from pure passives — so it appears only for an
+                // innate that really is pressable.
+                cursor: castableInnate ? "pointer" : "default",
                 transition: "transform 80ms ease, filter 80ms ease",
               }}
             >
@@ -450,12 +555,71 @@ export function AbilityBar(): React.JSX.Element | null {
               >
                 {innateKindLabel(innate.innateKind)}
               </div>
+              {/* cooldown sweep + seconds — the same two overlays the EX tile
+                  draws, so the sixth slot reads as the same kind of thing. Only
+                  an active innate can ever be on cooldown. */}
+              {innateSweep > 0 && (
+                <div
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    height: `${innateSweep * 100}%`,
+                    background: "rgba(8, 10, 16, 0.78)",
+                  }}
+                />
+              )}
+              {innateSweep > 0 && (
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: 15,
+                    fontWeight: "bold",
+                    color: "#fff",
+                  }}
+                >
+                  {Math.ceil(innateCdSecs)}
+                </div>
+              )}
+              {/* channel fill — index 5, matching CastTracker.SLOT_INDEX. Only
+                  mounted for a castable innate: a tile that cannot cast must
+                  never carry a cast surface that could half-paint. */}
+              {castableInnate && (
+                <div
+                  data-cast-slot={5}
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    height: "0%",
+                    background: CAST_FILL,
+                    pointerEvents: "none",
+                  }}
+                />
+              )}
             </div>
             </Tooltip>
-            {/* where the other five show a hotkey / rank pips, this says why it
-                has neither — it was never learned, it is simply owned. */}
-            <div style={{ marginTop: 3, fontSize: 8, color: TEXT_DIM, letterSpacing: 0.5 }}>
-              {active ? "自動擁有" : "無需施放"}
+            {/* The caption row. An ACTIVE innate now shows a real hotkey here,
+                exactly where the EX shows F — that is how a player learns the
+                key exists at all. The permanent half keeps a sentence instead of
+                a key, and it tells the truth about ITSELF: 「無需施放」 for one
+                that is genuinely running, 「未實作」 for the 29 whose doc grants
+                nothing, because those two must not look the same. */}
+            <div
+              style={{
+                marginTop: 3,
+                fontSize: castableInnate ? 9 : 8,
+                color: castableInnate ? PASSIVE_ACCENT : inert ? "#c98a8a" : TEXT_DIM,
+                letterSpacing: castableInnate ? 1 : 0.5,
+              }}
+            >
+              {active ? (castableInnate ? "D" : "自動擁有 · 待接") : inert ? "未實作" : "無需施放"}
             </div>
           </div>
         );

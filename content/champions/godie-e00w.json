@@ -33,6 +33,11 @@
     "mr": 1.2,
     "as": 0.02
   },
+  "hitFeel": {
+    "hitstopTicks": 2,
+    "shakeMag": 0.34,
+    "knockbackMag": 0.0
+  },
   "abilities": {
     "Q": {
       "id": "godie-e00w.q",
@@ -219,7 +224,8 @@
   ],
   "tags": [
     "wc3-import",
-    "godie"
+    "godie",
+    "katana"
   ],
   "exAbility": "godie-e00w.ex",
   "passiveAbility": "godie-e00w.passive",

@@ -23,7 +23,14 @@ import { asSeatId, asTeamId, type AbilityId, type ChampionId, type EntityId, typ
 import type { DamageType } from "../effects/effect";
 import type { IntentFrame } from "../intents";
 import * as V from "../math/vec2";
-import { deriveCosmetics, mergeCosmetics, type HitFeelInput, type ImpactTier } from "./hitFeel";
+import {
+  deriveCosmetics,
+  mergeCosmetics,
+  AUTHORED_FLASH_MS_MIN,
+  AUTHORED_FLASH_MS_MAX,
+  type HitFeelInput,
+  type ImpactTier,
+} from "./hitFeel";
 
 const Z0 = SKELETON_ARENA.zones[0]!;
 const ZC = Z0.center;
@@ -54,7 +61,7 @@ const OVERRIDE: HitFeelInput = {
   shakeStyle: "omni",
   sparkKind: "ice",
   flashColor: [0.1, 0.9, 0.8],
-  flashMs: 333,
+  flashMs: 222, // inside the strobe-safe band, so it survives the merge verbatim
   camKick: 1.2,
   exFreeze: 12,
 };
@@ -153,29 +160,25 @@ function pushAndStep(
 
 // -------------------------------------------------------------- DEFAULT CURVE --
 describe("hitFeel default curve (deriveCosmetics)", () => {
-  it("scales shake / flashMs / camKick with the damage tier", () => {
+  it("scales shake / camKick with the damage tier", () => {
     cover("cj-hf-default-scales");
     const tiers: ImpactTier[] = ["light", "medium", "heavy", "crit"];
     const shakes = tiers.map((t) => deriveCosmetics(t, "physical", false, false, false).shakeMag);
     const kicks = tiers.map((t) => deriveCosmetics(t, "physical", false, false, false).camKick);
-    const flashes = tiers.map((t) => deriveCosmetics(t, "physical", false, false, false).flashMs);
     // strictly increasing across tiers (heavier hit = punchier default)
     for (let i = 1; i < tiers.length; i++) {
       expect(shakes[i]!).toBeGreaterThan(shakes[i - 1]!);
       expect(kicks[i]!).toBeGreaterThan(kicks[i - 1]!);
-      expect(flashes[i]!).toBeGreaterThan(flashes[i - 1]!);
     }
+    // flashMs is NOT defaulted here — see the flash-ownership test below.
   });
 
-  it("derives spark identity + flash colour from type / block / EX", () => {
+  it("derives spark identity from type / block / EX", () => {
     cover("cj-hf-default-derive");
     expect(deriveCosmetics("light", "physical", false, false, false).sparkKind).toBe("hit");
     expect(deriveCosmetics("heavy", "physical", false, false, false).sparkKind).toBe("heavy");
     expect(deriveCosmetics("light", "magic", false, false, false).sparkKind).toBe("magic");
     expect(deriveCosmetics("light", "physical", true, false, false).sparkKind).toBe("block");
-    // blocked flash is cool blue-white, not damage-red
-    expect(deriveCosmetics("light", "physical", true, false, false).flashColor).toEqual([0.6, 0.8, 1.0]);
-    expect(deriveCosmetics("light", "physical", false, false, false).flashColor).toEqual([1, 0.25, 0.2]);
     // EX bumps shake, arms a cosmetic freeze, floors the kick
     const ex = deriveCosmetics("light", "physical", false, false, true);
     const plain = deriveCosmetics("light", "physical", false, false, false);
@@ -190,9 +193,49 @@ describe("hitFeel default curve (deriveCosmetics)", () => {
     const merged = mergeCosmetics(base, { shakeMag: 1.9, sparkKind: "ice" });
     expect(merged.shakeMag).toBe(1.9); // overridden
     expect(merged.sparkKind).toBe("ice"); // overridden
-    expect(merged.flashMs).toBe(base.flashMs); // untouched → default
     expect(merged.camKick).toBe(base.camKick); // untouched → default
     expect(mergeCosmetics(base, undefined)).toEqual(base); // no override → identity
+  });
+
+  // ------------------------------------------------- FLASH IS AUTHORED-ONLY --
+  // The sim used to resolve a full flash palette (FLASH_PHYSICAL/MAGIC/TRUE/
+  // BLOCK + a per-tier flashMs curve) that the client threw away and replaced
+  // with its own contrast-measured colours — four constants that shipped on
+  // every hitImpact and never reached a pixel. The sim now carries ONLY what
+  // content asked for, and ABSENCE is the signal the client reads as "use the
+  // damage-type default". If these two assertions ever go green with a value
+  // in them, the client's override detection has been silently broken.
+  it("emits NO flash default — the field is absent unless content authored it", () => {
+    cover("cj-hf-flash-authored-only");
+    for (const type of ["physical", "magic", "true"] as const) {
+      for (const blocked of [false, true]) {
+        const c = deriveCosmetics("crit", type, blocked, false, true);
+        expect(c.flashColor).toBeUndefined();
+        expect(c.flashMs).toBeUndefined();
+      }
+    }
+    // and merging a hitFeel that names no flash leaves it absent too
+    const merged = mergeCosmetics(deriveCosmetics("heavy", "magic", false, false, false), {
+      shakeMag: 1.1,
+    });
+    expect("flashColor" in merged).toBe(false);
+    expect("flashMs" in merged).toBe(false);
+  });
+
+  it("passes an AUTHORED flash through, clamped into the strobe-safe band", () => {
+    cover("cj-hf-flash-authored-passthrough");
+    const base = deriveCosmetics("light", "physical", false, false, false);
+    expect(mergeCosmetics(base, { flashColor: [1, 0.92, 0.6], flashMs: 178 })).toMatchObject({
+      flashColor: [1, 0.92, 0.6], // verbatim — the client applies the legibility guard
+      flashMs: 178,
+    });
+    // out-of-band ms is clamped, not honoured: a 4-second flash would hold
+    // through the next three autos. zHitFeel rejects it at authoring time; this
+    // is the second line of defence for an already-built bundle.
+    expect(mergeCosmetics(base, { flashMs: 4000 }).flashMs).toBe(AUTHORED_FLASH_MS_MAX);
+    expect(mergeCosmetics(base, { flashMs: 0 }).flashMs).toBe(AUTHORED_FLASH_MS_MIN);
+    // components are clamped to 0..1 even if a hand-edited doc slips the schema
+    expect(mergeCosmetics(base, { flashColor: [2, -1, 0.5] }).flashColor).toEqual([1, 0, 0.5]);
   });
 });
 
@@ -216,7 +259,7 @@ describe("per-ability / per-champion hitFeel override (end to end)", () => {
     expect(p.shakeStyle).toBe("omni");
     expect(p.sparkKind).toBe("ice");
     expect(p.flashColor).toEqual([0.1, 0.9, 0.8]);
-    expect(p.flashMs).toBe(333);
+    expect(p.flashMs).toBe(222);
     expect(p.camKick).toBe(1.2);
     expect(p.exFreeze).toBe(12);
     // and the world state matches the overridden freeze/stun
@@ -250,7 +293,7 @@ describe("per-ability / per-champion hitFeel override (end to end)", () => {
     expect(p.hitstopTicks).toBe(3); // 2 + floor(90/55) = default
     expect(p.sparkKind).toBe("hit"); // medium tier → normal "hit" spark (heavy is heavy/crit only)
     expect(p.shakeMag).toBeCloseTo(0.6, 6); // medium default
-    expect(p.flashColor).toEqual([1, 0.25, 0.2]); // physical damage-red default
+    expect(p.flashColor).toBeUndefined(); // no override → client picks the damage-type colour
     expect(p.exFreeze).toBe(0);
   });
 

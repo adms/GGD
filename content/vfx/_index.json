@@ -1,6 +1,6 @@
 {
   "collection": "vfx",
-  "hash": "bb4236b30476",
+  "hash": "6d80ed88bd48",
   "entries": [
     {
       "id": "fx.barkskin",
@@ -919,6 +919,714 @@
       "path": "vfx/fx.thorn-lash.json",
       "hash": "68b0d29cd0ac",
       "size": 704
+    },
+    {
+      "id": "fx.w3x.locust.boomnl.p00",
+      "path": "vfx/fx.w3x.locust.boomnl.p00.json",
+      "hash": "047bad60d14d",
+      "size": 993
+    },
+    {
+      "id": "fx.w3x.locust.boomnl.p01",
+      "path": "vfx/fx.w3x.locust.boomnl.p01.json",
+      "hash": "c202439b28cf",
+      "size": 995
+    },
+    {
+      "id": "fx.w3x.locust.boomnl.p02",
+      "path": "vfx/fx.w3x.locust.boomnl.p02.json",
+      "hash": "d4f7bb5fe491",
+      "size": 1010
+    },
+    {
+      "id": "fx.w3x.locust.boomnl.p03",
+      "path": "vfx/fx.w3x.locust.boomnl.p03.json",
+      "hash": "0907edaa9137",
+      "size": 1010
+    },
+    {
+      "id": "fx.w3x.locust.boomnl.p04",
+      "path": "vfx/fx.w3x.locust.boomnl.p04.json",
+      "hash": "3304b74149a6",
+      "size": 1033
+    },
+    {
+      "id": "fx.w3x.locust.darkraor.p00",
+      "path": "vfx/fx.w3x.locust.darkraor.p00.json",
+      "hash": "1baa26b3a41d",
+      "size": 1014
+    },
+    {
+      "id": "fx.w3x.locust.darkraor.p01",
+      "path": "vfx/fx.w3x.locust.darkraor.p01.json",
+      "hash": "3c810bca49e5",
+      "size": 969
+    },
+    {
+      "id": "fx.w3x.locust.darkraor.p02",
+      "path": "vfx/fx.w3x.locust.darkraor.p02.json",
+      "hash": "78792aec58b7",
+      "size": 1004
+    },
+    {
+      "id": "fx.w3x.locust.frostnova.p00",
+      "path": "vfx/fx.w3x.locust.frostnova.p00.json",
+      "hash": "3f539b86f309",
+      "size": 938
+    },
+    {
+      "id": "fx.w3x.locust.frostnova.p01",
+      "path": "vfx/fx.w3x.locust.frostnova.p01.json",
+      "hash": "bac420c5a5e7",
+      "size": 947
+    },
+    {
+      "id": "fx.w3x.locust.frostnova.p02",
+      "path": "vfx/fx.w3x.locust.frostnova.p02.json",
+      "hash": "6b779868307a",
+      "size": 977
+    },
+    {
+      "id": "fx.w3x.locust.frostnova.p03",
+      "path": "vfx/fx.w3x.locust.frostnova.p03.json",
+      "hash": "980fe3b6759d",
+      "size": 1025
+    },
+    {
+      "id": "fx.w3x.orb.1hswd-01.p00",
+      "path": "vfx/fx.w3x.orb.1hswd-01.p00.json",
+      "hash": "060e9a4d070f",
+      "size": 1038
+    },
+    {
+      "id": "fx.w3x.orb.1hswd-01.p01",
+      "path": "vfx/fx.w3x.orb.1hswd-01.p01.json",
+      "hash": "a50a7451b560",
+      "size": 1043
+    },
+    {
+      "id": "fx.w3x.orb.1hswd-01.p02",
+      "path": "vfx/fx.w3x.orb.1hswd-01.p02.json",
+      "hash": "e24a37bced49",
+      "size": 1040
+    },
+    {
+      "id": "fx.w3x.orb.bloodbreathstream.p00",
+      "path": "vfx/fx.w3x.orb.bloodbreathstream.p00.json",
+      "hash": "96af1f295f4f",
+      "size": 1000
+    },
+    {
+      "id": "fx.w3x.orb.bloodbreathstream.p01",
+      "path": "vfx/fx.w3x.orb.bloodbreathstream.p01.json",
+      "hash": "09aca88dcfff",
+      "size": 1016
+    },
+    {
+      "id": "fx.w3x.orb.bloodbreathstream.p02",
+      "path": "vfx/fx.w3x.orb.bloodbreathstream.p02.json",
+      "hash": "baa1e353f5ee",
+      "size": 1014
+    },
+    {
+      "id": "fx.w3x.orb.darkbreathdamage.p00",
+      "path": "vfx/fx.w3x.orb.darkbreathdamage.p00.json",
+      "hash": "565a61f64a55",
+      "size": 971
+    },
+    {
+      "id": "fx.w3x.orb.demonfilth.p00",
+      "path": "vfx/fx.w3x.orb.demonfilth.p00.json",
+      "hash": "d9c6aaa0a406",
+      "size": 958
+    },
+    {
+      "id": "fx.w3x.orb.demonfilth.p01",
+      "path": "vfx/fx.w3x.orb.demonfilth.p01.json",
+      "hash": "25498f721c83",
+      "size": 989
+    },
+    {
+      "id": "fx.w3x.orb.demonfilth.p02",
+      "path": "vfx/fx.w3x.orb.demonfilth.p02.json",
+      "hash": "4893992793f0",
+      "size": 971
+    },
+    {
+      "id": "fx.w3x.orb.demonfilth.p03",
+      "path": "vfx/fx.w3x.orb.demonfilth.p03.json",
+      "hash": "cb05e61b09cb",
+      "size": 952
+    },
+    {
+      "id": "fx.w3x.orb.demonfilth.p04",
+      "path": "vfx/fx.w3x.orb.demonfilth.p04.json",
+      "hash": "0ac4203f561f",
+      "size": 969
+    },
+    {
+      "id": "fx.w3x.orb.divinering.p00",
+      "path": "vfx/fx.w3x.orb.divinering.p00.json",
+      "hash": "dd181ab873ab",
+      "size": 1027
+    },
+    {
+      "id": "fx.w3x.orb.divinering.p01",
+      "path": "vfx/fx.w3x.orb.divinering.p01.json",
+      "hash": "0909fe8d42d7",
+      "size": 1027
+    },
+    {
+      "id": "fx.w3x.orb.divinering.p02",
+      "path": "vfx/fx.w3x.orb.divinering.p02.json",
+      "hash": "afe1466f6f79",
+      "size": 1027
+    },
+    {
+      "id": "fx.w3x.orb.divinering.p03",
+      "path": "vfx/fx.w3x.orb.divinering.p03.json",
+      "hash": "8fc7851ad355",
+      "size": 1027
+    },
+    {
+      "id": "fx.w3x.orb.divinering.p04",
+      "path": "vfx/fx.w3x.orb.divinering.p04.json",
+      "hash": "d75decdcce89",
+      "size": 1027
+    },
+    {
+      "id": "fx.w3x.orb.divinering.p05",
+      "path": "vfx/fx.w3x.orb.divinering.p05.json",
+      "hash": "fb34270fa481",
+      "size": 1038
+    },
+    {
+      "id": "fx.w3x.orb.divinering.p06",
+      "path": "vfx/fx.w3x.orb.divinering.p06.json",
+      "hash": "fcf1be6daa92",
+      "size": 1038
+    },
+    {
+      "id": "fx.w3x.orb.divinering.p07",
+      "path": "vfx/fx.w3x.orb.divinering.p07.json",
+      "hash": "0b94cf3e169e",
+      "size": 1038
+    },
+    {
+      "id": "fx.w3x.orb.divinering.p08",
+      "path": "vfx/fx.w3x.orb.divinering.p08.json",
+      "hash": "2cf749f0f444",
+      "size": 1038
+    },
+    {
+      "id": "fx.w3x.orb.divinering.p09",
+      "path": "vfx/fx.w3x.orb.divinering.p09.json",
+      "hash": "65a0d399ba84",
+      "size": 1038
+    },
+    {
+      "id": "fx.w3x.orb.divinering.p10",
+      "path": "vfx/fx.w3x.orb.divinering.p10.json",
+      "hash": "f930c34eb2ab",
+      "size": 1092
+    },
+    {
+      "id": "fx.w3x.orb.divinering.p11",
+      "path": "vfx/fx.w3x.orb.divinering.p11.json",
+      "hash": "6362b1499240",
+      "size": 1069
+    },
+    {
+      "id": "fx.w3x.orb.divinering.p12",
+      "path": "vfx/fx.w3x.orb.divinering.p12.json",
+      "hash": "720dda9ca80b",
+      "size": 1092
+    },
+    {
+      "id": "fx.w3x.orb.divinering.p13",
+      "path": "vfx/fx.w3x.orb.divinering.p13.json",
+      "hash": "5bc49de5bd72",
+      "size": 1069
+    },
+    {
+      "id": "fx.w3x.orb.divinering.p14",
+      "path": "vfx/fx.w3x.orb.divinering.p14.json",
+      "hash": "d9af092fea4c",
+      "size": 1092
+    },
+    {
+      "id": "fx.w3x.orb.divinering.p15",
+      "path": "vfx/fx.w3x.orb.divinering.p15.json",
+      "hash": "92b382bc16d2",
+      "size": 1069
+    },
+    {
+      "id": "fx.w3x.orb.divinering.p16",
+      "path": "vfx/fx.w3x.orb.divinering.p16.json",
+      "hash": "6adf2dc04633",
+      "size": 1092
+    },
+    {
+      "id": "fx.w3x.orb.divinering.p17",
+      "path": "vfx/fx.w3x.orb.divinering.p17.json",
+      "hash": "2f97f83971fb",
+      "size": 1069
+    },
+    {
+      "id": "fx.w3x.orb.divinering.p18",
+      "path": "vfx/fx.w3x.orb.divinering.p18.json",
+      "hash": "b930f2bb2b4c",
+      "size": 1092
+    },
+    {
+      "id": "fx.w3x.orb.divinering.p19",
+      "path": "vfx/fx.w3x.orb.divinering.p19.json",
+      "hash": "ed3ad29518fc",
+      "size": 1069
+    },
+    {
+      "id": "fx.w3x.orb.herocloudkfksword.p00",
+      "path": "vfx/fx.w3x.orb.herocloudkfksword.p00.json",
+      "hash": "c2f11ad4c7d2",
+      "size": 1063
+    },
+    {
+      "id": "fx.w3x.orb.herosaber.p00",
+      "path": "vfx/fx.w3x.orb.herosaber.p00.json",
+      "hash": "541409cc2300",
+      "size": 1023
+    },
+    {
+      "id": "fx.w3x.orb.herosaber.p01",
+      "path": "vfx/fx.w3x.orb.herosaber.p01.json",
+      "hash": "93f001bbe77d",
+      "size": 1069
+    },
+    {
+      "id": "fx.w3x.orb.lightningnova.p00",
+      "path": "vfx/fx.w3x.orb.lightningnova.p00.json",
+      "hash": "2ad7814a5ca4",
+      "size": 1029
+    },
+    {
+      "id": "fx.w3x.orb.lightningnova.p01",
+      "path": "vfx/fx.w3x.orb.lightningnova.p01.json",
+      "hash": "457f4316dac5",
+      "size": 1026
+    },
+    {
+      "id": "fx.w3x.orb.magical-sword.p00",
+      "path": "vfx/fx.w3x.orb.magical-sword.p00.json",
+      "hash": "f44b63950264",
+      "size": 1024
+    },
+    {
+      "id": "fx.w3x.orb.minitypeflame.p00",
+      "path": "vfx/fx.w3x.orb.minitypeflame.p00.json",
+      "hash": "d36995741cc9",
+      "size": 1002
+    },
+    {
+      "id": "fx.w3x.orb.minitypeflame.p01",
+      "path": "vfx/fx.w3x.orb.minitypeflame.p01.json",
+      "hash": "7d02ec558e9b",
+      "size": 997
+    },
+    {
+      "id": "fx.w3x.particle.babyface.p00",
+      "path": "vfx/fx.w3x.particle.babyface.p00.json",
+      "hash": "37972366b70a",
+      "size": 963
+    },
+    {
+      "id": "fx.w3x.particle.blackhole.p00",
+      "path": "vfx/fx.w3x.particle.blackhole.p00.json",
+      "hash": "e6723fefb4a7",
+      "size": 948
+    },
+    {
+      "id": "fx.w3x.particle.blackhole.p01",
+      "path": "vfx/fx.w3x.particle.blackhole.p01.json",
+      "hash": "7b6b79ff1696",
+      "size": 940
+    },
+    {
+      "id": "fx.w3x.particle.blackhole.p02",
+      "path": "vfx/fx.w3x.particle.blackhole.p02.json",
+      "hash": "3ae932054402",
+      "size": 973
+    },
+    {
+      "id": "fx.w3x.particle.blackhole.p03",
+      "path": "vfx/fx.w3x.particle.blackhole.p03.json",
+      "hash": "b3c5dbb7b92c",
+      "size": 934
+    },
+    {
+      "id": "fx.w3x.particle.blackhole.p04",
+      "path": "vfx/fx.w3x.particle.blackhole.p04.json",
+      "hash": "04fe3b6c8634",
+      "size": 940
+    },
+    {
+      "id": "fx.w3x.particle.blackhole.p05",
+      "path": "vfx/fx.w3x.particle.blackhole.p05.json",
+      "hash": "157eddf8a11d",
+      "size": 948
+    },
+    {
+      "id": "fx.w3x.particle.blackhole.p06",
+      "path": "vfx/fx.w3x.particle.blackhole.p06.json",
+      "hash": "43b99a02146d",
+      "size": 962
+    },
+    {
+      "id": "fx.w3x.particle.blackhole1.p00",
+      "path": "vfx/fx.w3x.particle.blackhole1.p00.json",
+      "hash": "4e8c88e107da",
+      "size": 964
+    },
+    {
+      "id": "fx.w3x.particle.blackhole1.p01",
+      "path": "vfx/fx.w3x.particle.blackhole1.p01.json",
+      "hash": "6623b41b1ffe",
+      "size": 964
+    },
+    {
+      "id": "fx.w3x.particle.blackhole1.p02",
+      "path": "vfx/fx.w3x.particle.blackhole1.p02.json",
+      "hash": "9a297d767779",
+      "size": 997
+    },
+    {
+      "id": "fx.w3x.particle.enchant.p00",
+      "path": "vfx/fx.w3x.particle.enchant.p00.json",
+      "hash": "c1c2845bdeb9",
+      "size": 975
+    },
+    {
+      "id": "fx.w3x.particle.enchant.p01",
+      "path": "vfx/fx.w3x.particle.enchant.p01.json",
+      "hash": "381715cd5906",
+      "size": 975
+    },
+    {
+      "id": "fx.w3x.particle.enchant.p02",
+      "path": "vfx/fx.w3x.particle.enchant.p02.json",
+      "hash": "a4a24c2c8035",
+      "size": 975
+    },
+    {
+      "id": "fx.w3x.particle.enchant.p03",
+      "path": "vfx/fx.w3x.particle.enchant.p03.json",
+      "hash": "2f74dfea889e",
+      "size": 975
+    },
+    {
+      "id": "fx.w3x.particle.enchant.p04",
+      "path": "vfx/fx.w3x.particle.enchant.p04.json",
+      "hash": "703d7975e939",
+      "size": 975
+    },
+    {
+      "id": "fx.w3x.particle.flamessmoke.p00",
+      "path": "vfx/fx.w3x.particle.flamessmoke.p00.json",
+      "hash": "839822726e33",
+      "size": 968
+    },
+    {
+      "id": "fx.w3x.particle.flamessmoke.p01",
+      "path": "vfx/fx.w3x.particle.flamessmoke.p01.json",
+      "hash": "acfdbf9bfd5d",
+      "size": 1006
+    },
+    {
+      "id": "fx.w3x.particle.flamessmoke.p02",
+      "path": "vfx/fx.w3x.particle.flamessmoke.p02.json",
+      "hash": "80cb6ecc175c",
+      "size": 988
+    },
+    {
+      "id": "fx.w3x.particle.flamessmoke.p03",
+      "path": "vfx/fx.w3x.particle.flamessmoke.p03.json",
+      "hash": "b065030a3575",
+      "size": 969
+    },
+    {
+      "id": "fx.w3x.particle.flash.p00",
+      "path": "vfx/fx.w3x.particle.flash.p00.json",
+      "hash": "a4854c635ac7",
+      "size": 993
+    },
+    {
+      "id": "fx.w3x.particle.flash.p01",
+      "path": "vfx/fx.w3x.particle.flash.p01.json",
+      "hash": "cf25420003eb",
+      "size": 1045
+    },
+    {
+      "id": "fx.w3x.particle.gx.p00",
+      "path": "vfx/fx.w3x.particle.gx.p00.json",
+      "hash": "a5163b176c0f",
+      "size": 1029
+    },
+    {
+      "id": "fx.w3x.particle.gxhuge.p00",
+      "path": "vfx/fx.w3x.particle.gxhuge.p00.json",
+      "hash": "4b3fb987c1cd",
+      "size": 1033
+    },
+    {
+      "id": "fx.w3x.particle.heroeva01s2.p00",
+      "path": "vfx/fx.w3x.particle.heroeva01s2.p00.json",
+      "hash": "3b013f3c67e8",
+      "size": 954
+    },
+    {
+      "id": "fx.w3x.particle.heroeva01s2.p01",
+      "path": "vfx/fx.w3x.particle.heroeva01s2.p01.json",
+      "hash": "688d6f869b8b",
+      "size": 977
+    },
+    {
+      "id": "fx.w3x.particle.heroluffeattack.p00",
+      "path": "vfx/fx.w3x.particle.heroluffeattack.p00.json",
+      "hash": "238734acf0d0",
+      "size": 1047
+    },
+    {
+      "id": "fx.w3x.particle.heronarutos4effect.p00",
+      "path": "vfx/fx.w3x.particle.heronarutos4effect.p00.json",
+      "hash": "0b2f723d783e",
+      "size": 1059
+    },
+    {
+      "id": "fx.w3x.particle.heronarutos4effect.p01",
+      "path": "vfx/fx.w3x.particle.heronarutos4effect.p01.json",
+      "hash": "24d2cfacbe52",
+      "size": 1059
+    },
+    {
+      "id": "fx.w3x.particle.heronarutos4effect.p02",
+      "path": "vfx/fx.w3x.particle.heronarutos4effect.p02.json",
+      "hash": "1508b2eb2a58",
+      "size": 1059
+    },
+    {
+      "id": "fx.w3x.particle.heronarutos4effect.p03",
+      "path": "vfx/fx.w3x.particle.heronarutos4effect.p03.json",
+      "hash": "7b38b35dab07",
+      "size": 1059
+    },
+    {
+      "id": "fx.w3x.particle.heronarutos4effect.p04",
+      "path": "vfx/fx.w3x.particle.heronarutos4effect.p04.json",
+      "hash": "c66d74dacdd4",
+      "size": 1059
+    },
+    {
+      "id": "fx.w3x.particle.heronarutos4effect.p05",
+      "path": "vfx/fx.w3x.particle.heronarutos4effect.p05.json",
+      "hash": "7f49b0471e3b",
+      "size": 1093
+    },
+    {
+      "id": "fx.w3x.particle.heroraichus3.p00",
+      "path": "vfx/fx.w3x.particle.heroraichus3.p00.json",
+      "hash": "85f2d50d2c79",
+      "size": 955
+    },
+    {
+      "id": "fx.w3x.particle.heroraichus3.p01",
+      "path": "vfx/fx.w3x.particle.heroraichus3.p01.json",
+      "hash": "e10a75feb8af",
+      "size": 1022
+    },
+    {
+      "id": "fx.w3x.particle.holyawakening.p00",
+      "path": "vfx/fx.w3x.particle.holyawakening.p00.json",
+      "hash": "074f5d7b152a",
+      "size": 968
+    },
+    {
+      "id": "fx.w3x.particle.holyawakening.p01",
+      "path": "vfx/fx.w3x.particle.holyawakening.p01.json",
+      "hash": "039fb2512c03",
+      "size": 962
+    },
+    {
+      "id": "fx.w3x.particle.holyawakening.p02",
+      "path": "vfx/fx.w3x.particle.holyawakening.p02.json",
+      "hash": "96005f1af251",
+      "size": 1019
+    },
+    {
+      "id": "fx.w3x.particle.holyawakening.p03",
+      "path": "vfx/fx.w3x.particle.holyawakening.p03.json",
+      "hash": "82179b683c62",
+      "size": 1034
+    },
+    {
+      "id": "fx.w3x.particle.holyawakening.p04",
+      "path": "vfx/fx.w3x.particle.holyawakening.p04.json",
+      "hash": "6debf6681af3",
+      "size": 964
+    },
+    {
+      "id": "fx.w3x.particle.holyawakening.p05",
+      "path": "vfx/fx.w3x.particle.holyawakening.p05.json",
+      "hash": "bb221cc18d28",
+      "size": 973
+    },
+    {
+      "id": "fx.w3x.particle.lasercannonfinalred.p00",
+      "path": "vfx/fx.w3x.particle.lasercannonfinalred.p00.json",
+      "hash": "d09bde1ab23b",
+      "size": 1015
+    },
+    {
+      "id": "fx.w3x.particle.lasercannonfinalred.p01",
+      "path": "vfx/fx.w3x.particle.lasercannonfinalred.p01.json",
+      "hash": "9b071ef1f83b",
+      "size": 1011
+    },
+    {
+      "id": "fx.w3x.particle.lasercannonfinalred.p02",
+      "path": "vfx/fx.w3x.particle.lasercannonfinalred.p02.json",
+      "hash": "f1c0002359a8",
+      "size": 1018
+    },
+    {
+      "id": "fx.w3x.particle.lasercannonfinalred.p03",
+      "path": "vfx/fx.w3x.particle.lasercannonfinalred.p03.json",
+      "hash": "28b501be8559",
+      "size": 990
+    },
+    {
+      "id": "fx.w3x.particle.lasercannonfinalred.p04",
+      "path": "vfx/fx.w3x.particle.lasercannonfinalred.p04.json",
+      "hash": "4ea458eb0da1",
+      "size": 1018
+    },
+    {
+      "id": "fx.w3x.particle.lasercannonfinalred.p05",
+      "path": "vfx/fx.w3x.particle.lasercannonfinalred.p05.json",
+      "hash": "109a88042e4f",
+      "size": 983
+    },
+    {
+      "id": "fx.w3x.particle.lasercannonfinalred.p06",
+      "path": "vfx/fx.w3x.particle.lasercannonfinalred.p06.json",
+      "hash": "4ddcd0e5d3fe",
+      "size": 987
+    },
+    {
+      "id": "fx.w3x.particle.lasercannonfinalred.p07",
+      "path": "vfx/fx.w3x.particle.lasercannonfinalred.p07.json",
+      "hash": "7e677de7835a",
+      "size": 1011
+    },
+    {
+      "id": "fx.w3x.particle.lavabreathdamage.p00",
+      "path": "vfx/fx.w3x.particle.lavabreathdamage.p00.json",
+      "hash": "4a976ca70b7d",
+      "size": 969
+    },
+    {
+      "id": "fx.w3x.particle.musiccast.p00",
+      "path": "vfx/fx.w3x.particle.musiccast.p00.json",
+      "hash": "c8a77be4610d",
+      "size": 940
+    },
+    {
+      "id": "fx.w3x.particle.musiccast.p01",
+      "path": "vfx/fx.w3x.particle.musiccast.p01.json",
+      "hash": "7c83c4b23dd0",
+      "size": 948
+    },
+    {
+      "id": "fx.w3x.particle.oblivionaura.p00",
+      "path": "vfx/fx.w3x.particle.oblivionaura.p00.json",
+      "hash": "5f6acb712a5d",
+      "size": 953
+    },
+    {
+      "id": "fx.w3x.particle.sephboom.p00",
+      "path": "vfx/fx.w3x.particle.sephboom.p00.json",
+      "hash": "8c076896a7ca",
+      "size": 1018
+    },
+    {
+      "id": "fx.w3x.particle.sephboom.p01",
+      "path": "vfx/fx.w3x.particle.sephboom.p01.json",
+      "hash": "a4c9495ba8b4",
+      "size": 1013
+    },
+    {
+      "id": "fx.w3x.particle.sephboom.p02",
+      "path": "vfx/fx.w3x.particle.sephboom.p02.json",
+      "hash": "900f80bc09a5",
+      "size": 1027
+    },
+    {
+      "id": "fx.w3x.particle.sephboom.p03",
+      "path": "vfx/fx.w3x.particle.sephboom.p03.json",
+      "hash": "ce85fe571720",
+      "size": 995
+    },
+    {
+      "id": "fx.w3x.particle.sephboom.p04",
+      "path": "vfx/fx.w3x.particle.sephboom.p04.json",
+      "hash": "4413d67b48c8",
+      "size": 1019
+    },
+    {
+      "id": "fx.w3x.particle.sephboom.p05",
+      "path": "vfx/fx.w3x.particle.sephboom.p05.json",
+      "hash": "8b02560e1fe4",
+      "size": 1007
+    },
+    {
+      "id": "fx.w3x.particle.sephboom.p06",
+      "path": "vfx/fx.w3x.particle.sephboom.p06.json",
+      "hash": "037839b795dc",
+      "size": 991
+    },
+    {
+      "id": "fx.w3x.particle.sonicbreathstream.p00",
+      "path": "vfx/fx.w3x.particle.sonicbreathstream.p00.json",
+      "hash": "9d28e0474e4e",
+      "size": 989
+    },
+    {
+      "id": "fx.w3x.particle.sonicbreathstream.p01",
+      "path": "vfx/fx.w3x.particle.sonicbreathstream.p01.json",
+      "hash": "441cb9ef9868",
+      "size": 987
+    },
+    {
+      "id": "fx.w3x.particle.sonicbreathstream.p02",
+      "path": "vfx/fx.w3x.particle.sonicbreathstream.p02.json",
+      "hash": "472395d551ad",
+      "size": 999
+    },
+    {
+      "id": "fx.w3x.particle.supershinythingy.p00",
+      "path": "vfx/fx.w3x.particle.supershinythingy.p00.json",
+      "hash": "1cb6e15db56b",
+      "size": 1002
+    },
+    {
+      "id": "fx.w3x.particle.supershinythingy.p01",
+      "path": "vfx/fx.w3x.particle.supershinythingy.p01.json",
+      "hash": "a57ed887f845",
+      "size": 1029
+    },
+    {
+      "id": "fx.w3x.particle.supershinythingy.p02",
+      "path": "vfx/fx.w3x.particle.supershinythingy.p02.json",
+      "hash": "fef0e9e36a6b",
+      "size": 1017
     },
     {
       "id": "godie-1hswd-01-p0",

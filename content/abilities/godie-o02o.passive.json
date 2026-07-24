@@ -2,6 +2,7 @@
   "id": "godie-o02o.passive",
   "schema": "ability@1",
   "name": "87-00 虛空碎靈",
+  "icon": "assets/icons/abilities/godie-o02o.passive.webp",
   "description": "[輔助]\n60秒冷卻時間\n\n從虛空之中發出無人能敵的霸氣，粉碎敵人的靈魂，奪走附近敵人的攻擊力、裝甲以及魔力，持續5秒。",
   "slot": "PASSIVE",
   "innateKind": "active",

@@ -1,0 +1,84 @@
+{
+  "id": "fx.w3x.orb.bloodbreathstream.p00",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.111,
+    "angleDeg": 9.5
+  },
+  "mode": "continuous",
+  "lifetimeSec": {
+    "min": 0.5,
+    "max": 0.5
+  },
+  "size": {
+    "start": 0.417,
+    "end": 1.389
+  },
+  "color": {
+    "start": [
+      1,
+      0,
+      0,
+      1
+    ],
+    "end": [
+      1,
+      0,
+      0,
+      0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        0,
+        0,
+        1
+      ]
+    ],
+    [
+      0.5,
+      [
+        1,
+        0,
+        0,
+        1
+      ]
+    ],
+    [
+      1,
+      [
+        1,
+        0,
+        0,
+        0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.417
+    ],
+    [
+      0.5,
+      0.833
+    ],
+    [
+      1,
+      1.389
+    ]
+  ],
+  "blendMode": "alpha",
+  "speed": {
+    "min": 10.8898,
+    "max": 11.3342
+  },
+  "rate": 70,
+  "texture": "assets/textures/particles/smoke_04.png",
+  "anchorBone": "Dummy02",
+  "ambient": true
+}

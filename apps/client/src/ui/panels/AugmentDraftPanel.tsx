@@ -33,6 +33,21 @@
  *     and flips the matching card. `playSfx` no-ops on an unmapped key, so the
  *     new cues degrade to silence until the audio-map phase wires their clips —
  *     and stay silent in test mode (the mixer is locked), same as draftConfirm.
+ *
+ * AND, since the 2026-07-24 playtest (P2), a FIFTH thing: it owns the screen
+ * while it is up. It used to pin `top: 90` — landing on the merchant tip box —
+ * and share the screen with the shop list, the countdown and Ready up, so four
+ * surfaces asked for attention at once and nothing said which came first.
+ *
+ * It now (i) really centres, which is what its #107 registry row always
+ * declared (`edge: "center"`), so it clears the tip box's band by construction
+ * rather than by a pixel that happened to work at one resolution, and (ii)
+ * paints a scrim at `INTERMISSION_Z.focusScrim` that demotes and click-blocks
+ * everything it out-ranks. WHY the draft and not the shop: the draft is the one
+ * surface here that is irreversible AND expiring — miss it and the round is
+ * played without an augment, with no undo and no re-open — while browsing is
+ * voluntary, resumable and completely intact the instant a card is picked. The
+ * whole order, and the reasoning per band, is in panels/intermissionLayout.ts.
  */
 import { useEffect, useState } from "react";
 import { useHud } from "../../net/RoomStore";
@@ -45,6 +60,7 @@ import { SfxButton } from "../SfxButton";
 import { resolveChoice } from "./resolveChoice";
 import { DRAFT_CONFIRM_SFX, tierColor, tierLabel, weaponEffectDescription } from "./draftCardStyle";
 import { isLegendaryOffer, revealSchedule } from "./draftReveal";
+import { FOCUS_FADE_MS, FOCUS_HINT, FOCUS_SCRIM_BG, INTERMISSION_Z } from "./intermissionLayout";
 import { PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
 
 export function AugmentDraftPanel(): React.JSX.Element | null {
@@ -55,27 +71,58 @@ export function AugmentDraftPanel(): React.JSX.Element | null {
   if (!offers || offers.length === 0) return null;
 
   return (
-    <div
-      style={{
-        position: "absolute",
-        left: "50%",
-        top: 90,
-        transform: "translateX(-50%)",
-        width: 460,
-        padding: 14,
-        background: PANEL_BG,
-        border: PANEL_BORDER,
-        borderRadius: 12,
-        color: TEXT_MAIN,
-        pointerEvents: "auto",
-      }}
-    >
-      {offers.map((offer) => (
-        // keyed by offerId so a new offer REMOUNTS the reveal — every fresh roll
-        // replays its build-up / sparkles / jackpot from the top.
-        <DraftOffer key={offer.offerId} offer={offer} />
-      ))}
-    </div>
+    <>
+      {/* THE FOCUS SCRIM (playtest P2). It takes pointer events on purpose: a
+          merely-dimmed shop card still invites the click, and a Ready press
+          with an unanswered offer silently throws the augment away. Both come
+          back untouched the instant a card is picked, and the prep clock —
+          lifted above this scrim by PrepClock — still ends the phase on its
+          own, so nobody can be stuck behind it. */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: INTERMISSION_Z.focusScrim,
+          background: FOCUS_SCRIM_BG,
+          pointerEvents: "auto",
+          animation: `ggdFocusIn ${FOCUS_FADE_MS}ms ease-out both`,
+        }}
+      >
+        <style>{"@keyframes ggdFocusIn{from{opacity:0}to{opacity:1}}"}</style>
+      </div>
+      <div
+        style={{
+          position: "absolute",
+          // BOTH axes — the panel's #107 registry row declares `edge: "center"`
+          // and hudPanelRect resolves that to ((H − h) / 2). Pinning a literal
+          // top was the declaration/reality mismatch that put the card stack on
+          // the merchant tip box's band.
+          left: "50%",
+          top: "50%",
+          transform: "translate(-50%, -50%)",
+          zIndex: INTERMISSION_Z.focus,
+          width: 460,
+          maxWidth: "92vw",
+          padding: 14,
+          background: PANEL_BG,
+          border: PANEL_BORDER,
+          borderRadius: 12,
+          color: TEXT_MAIN,
+          pointerEvents: "auto",
+        }}
+      >
+        {offers.map((offer) => (
+          // keyed by offerId so a new offer REMOUNTS the reveal — every fresh
+          // roll replays its build-up / sparkles / jackpot from the top.
+          <DraftOffer key={offer.offerId} offer={offer} />
+        ))}
+        {/* the answer to 「四件事同時要注意力」: say which one is first, and
+            promise the rest is coming back. */}
+        <div style={{ marginTop: 10, textAlign: "center", fontSize: 11, color: TEXT_DIM }}>
+          {FOCUS_HINT}
+        </div>
+      </div>
+    </>
   );
 }
 

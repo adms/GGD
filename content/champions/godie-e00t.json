@@ -34,6 +34,11 @@
     "mr": 1.2,
     "as": 0.02
   },
+  "hitFeel": {
+    "hitstopTicks": 1,
+    "shakeMag": 0.24,
+    "knockbackMag": 0.0
+  },
   "abilities": {
     "Q": {
       "id": "godie-e00t.q",
@@ -219,7 +224,8 @@
   "tags": [
     "wc3-import",
     "godie",
-    "voxel-standin"
+    "voxel-standin",
+    "thrown"
   ],
   "exAbility": "godie-e00t.ex",
   "passiveAbility": "godie-e00t.passive",

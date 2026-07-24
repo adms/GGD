@@ -31,8 +31,25 @@
  * dismiss is not lost when the panel unmounts on a brief disconnect.
  */
 
-/** "I joined at the top of champ select" threshold, in seconds remaining. */
-export const BRIEFING_NEAR_START_SEC = 55;
+/**
+ * "I joined at the top of champ select" threshold, in seconds remaining.
+ *
+ * MUST stay below `champSelectSec` (content/config/config.match.json) or this
+ * gate is dead code. It was 55 while champ select was 60 s; #167 shortened the
+ * phase to **40 s** and this constant was not moved, so `firstObserved >= 55`
+ * became unsatisfiable and THE BRIEFING NEVER SHOWED AGAIN — silently, for every
+ * player, since #167. A playtest caught it: champ select rendered the bare
+ * 「點選英雄查看詳情與 3D 模型」 prompt with no rules briefing at all.
+ *
+ * 30 = "joined within the first 10 s of a 40 s select", which pairs with
+ * BRIEFING_WINDOW_SEC below.
+ *
+ * This coupling is fragile by construction: the phase length is never put on the
+ * wire, so this file cannot verify itself against the real config. Publishing
+ * `phaseTotalTicks` in the snapshot would make this gate config-exact and retire
+ * the hazard — worth doing before a third phase-length change.
+ */
+export const BRIEFING_NEAR_START_SEC = 30;
 
 /** How long the briefing stays up once champ select begins, in seconds. */
 export const BRIEFING_WINDOW_SEC = 10;

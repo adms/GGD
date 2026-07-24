@@ -1,0 +1,26 @@
+{
+  "id": "second-wind",
+  "schema": "augment@1",
+  "name": "二度風息",
+  "description": "受到傷害時，回復 6% 最大生命與 6% 最大魔力（8 秒冷卻）。",
+  "tier": "prismatic",
+  "weight": 30,
+  "hooks": [
+    {
+      "on": "onDamageTaken",
+      "target": "self",
+      "internalCooldown": 8,
+      "effects": [
+        {
+          "kind": "restore",
+          "healthPct": 0.06,
+          "manaPct": 0.06
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "sustain",
+    "defense"
+  ]
+}

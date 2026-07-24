@@ -2,6 +2,7 @@
   "id": "godie-o00k.passive",
   "schema": "ability@1",
   "name": "86-00 裝可愛",
+  "icon": "assets/icons/abilities/godie-o00k.passive.webp",
   "description": "[輔助]\n3秒冷卻時間\n\n裝可愛是皮卡的絕技，只可惜在戰場上裝可愛只會讓別人更想打他，有效範圍為1600。",
   "slot": "PASSIVE",
   "innateKind": "active",

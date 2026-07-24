@@ -38,8 +38,22 @@
       }
     }
   ],
-  "vfxKey": "fx.prim.arcane.pulse-sm",
+  "vfxKey": "fx.w3x.orb.darkbreathdamage.p00",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "icon": "assets/icons/abilities/godie-ekee.q.png"
+  "icon": "assets/icons/abilities/godie-ekee.q.png",
+  "hitFeel": {
+    "hitstopTicks": 3,
+    "hitstunTicks": 4,
+    "shakeMag": 0.315,
+    "shakeStyle": "directional",
+    "sparkKind": "magic",
+    "flashColor": [
+      0.62,
+      0.45,
+      0.85
+    ],
+    "flashMs": 108,
+    "camKick": 0.27
+  }
 }

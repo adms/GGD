@@ -122,6 +122,127 @@ export const READY_BLOCK_BOTTOM = 190;
 export const READY_BLOCK_HEIGHT = 60;
 export const PREP_CLOCK_BOTTOM = 262;
 
+/**
+ * Where the pill sits WHILE A 三選一 DRAFT OWNS THE SCREEN.
+ *
+ * Priority 2 in intermissionLayout.ts is right that the clock must stay visible
+ * over the focus scrim — a scrim that hides the deadline tells the player
+ * "answer this" while hiding how long they have. What it got wrong is the
+ * sentence after: "costs the focus surface nothing: this pill is
+ * pointerEvents:none". pointerEvents:none buys the draft its CLICKS back. It
+ * does not buy back the pixels. AugmentDraftPanel is centred (`top: 50%`,
+ * `translate(-50%, -50%)`, width 460) and the pill was centred at
+ * `bottom: 262` — which lands inside the panel's lower half and covered the
+ * middle weapon card's name and description outright. The owner hit it on a
+ * real draft: 「倒數擋到了」.
+ *
+ * So the clock keeps its z-index and moves instead. Pinned to the TOP edge, it
+ * clears a vertically-centred panel on any viewport where that panel fits at
+ * all, and it stays the most legible thing on screen.
+ */
+export const PREP_CLOCK_TOP_WHEN_DRAFTING = 12;
+
+/** The draft panel's header band — title + 三選一 label, no card content. */
+export const DRAFT_HEADER_HEIGHT = 44;
+
+/** Half the draft panel's declared width (AugmentDraftPanel `width: 460`). */
+const DRAFT_PANEL_WIDTH = 460;
+
+/**
+ * The pill's box and the draft panel's box, in CSS pixels, for a viewport.
+ * Exported so the test can assert they do not intersect rather than eyeballing
+ * a screenshot — the way this collision reached a live match in the first place.
+ */
+export const PILL_FULL = { w: 150, h: 56 } as const;
+
+/**
+ * The COMPACT pill: the number alone, no 「備戰時間」 caption, sized to fit
+ * inside DRAFT_HEADER_HEIGHT.
+ *
+ * Needed because on a phone in landscape the panel does not merely sit in the
+ * middle of the screen, it very nearly IS the screen: a 420–460 px card stack on
+ * a 390 px viewport fills it top to bottom. There is no band above, none below,
+ * and none beside. The only region that is not a card is the panel's own header,
+ * so on those viewports the clock shrinks to fit there rather than pretending a
+ * gap exists.
+ */
+export const PILL_COMPACT = { w: 92, h: 30 } as const;
+
+/**
+ * True when the draft leaves no room for the full pill outside the cards.
+ *
+ * Two callers, deliberately the same predicate: the geometry test knows the
+ * panel's height and passes it, while the component cannot measure the panel
+ * before laying itself out and passes the viewport instead. A viewport shorter
+ * than COMPACT_VIEWPORT_H cannot hold a centred card stack AND a 56 px pill
+ * clear of it — that is the phone-landscape case #151 already established as
+ * the tight one — so the component's proxy is sound where it matters and errs
+ * toward compact, which is never wrong, only smaller.
+ */
+export const COMPACT_VIEWPORT_H = 560;
+
+export function useCompactClock(vh: number, panelHeight = 0): boolean {
+  if (panelHeight <= 0) return vh < COMPACT_VIEWPORT_H;
+  const panelTop = (vh - Math.min(panelHeight, vh)) / 2;
+  return panelTop < PREP_CLOCK_TOP_WHEN_DRAFTING + PILL_FULL.h;
+}
+
+export function prepClockRect(
+  vw: number,
+  vh: number,
+  drafting: boolean,
+  panelHeight = 0,
+): { top: number; bottom: number; left: number; right: number } {
+  const compact = drafting && useCompactClock(vh, panelHeight);
+  const pill = compact ? PILL_COMPACT : PILL_FULL;
+  const top = drafting
+    ? compact
+      ? (DRAFT_HEADER_HEIGHT - pill.h) / 2 + (vh - Math.min(panelHeight, vh)) / 2
+      : PREP_CLOCK_TOP_WHEN_DRAFTING
+    : vh - PREP_CLOCK_BOTTOM - pill.h;
+  return { top, bottom: top + pill.h, left: (vw - pill.w) / 2, right: (vw + pill.w) / 2 };
+}
+
+/**
+ * The draft panel's HEADER band — title + 三選一 label, no card content.
+ *
+ * The contract is not "the clock may not touch the panel". On a phone in
+ * landscape (390 px tall) a centred 320–460 px panel leaves ~35 px above and
+ * below, and a 56 px pill fits in neither: there is nowhere on that screen that
+ * clears the panel, so demanding it would be demanding the impossible and the
+ * only way to satisfy it would be to hide the clock — the exact thing priority 2
+ * forbids.
+ *
+ * What actually matters is that the pill never covers a CARD, because a card is
+ * what the player has to read to answer. Landing on the header costs a title
+ * they have already read. So the guard is written against the card grid, and
+ * this band is explicitly conceded.
+ */
+/** The centred draft panel's box, given the height it renders at. */
+export function draftPanelRect(
+  vw: number,
+  vh: number,
+  panelHeight: number,
+): { top: number; bottom: number; left: number; right: number } {
+  const w = Math.min(DRAFT_PANEL_WIDTH, vw * 0.92);
+  return {
+    top: (vh - panelHeight) / 2,
+    bottom: (vh + panelHeight) / 2,
+    left: (vw - w) / 2,
+    right: (vw + w) / 2,
+  };
+}
+
+/** The panel minus its header — the region the clock must never cover. */
+export function draftCardGridRect(
+  vw: number,
+  vh: number,
+  panelHeight: number,
+): { top: number; bottom: number; left: number; right: number } {
+  const panel = draftPanelRect(vw, vh, panelHeight);
+  return { ...panel, top: panel.top + DRAFT_HEADER_HEIGHT };
+}
+
 export interface PrepClockInput {
   /** HUD store `phase` */
   phase: string;

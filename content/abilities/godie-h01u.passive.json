@@ -2,6 +2,7 @@
   "id": "godie-h01u.passive",
   "schema": "ability@1",
   "name": "80-00 飛將神弓",
+  "icon": "assets/icons/abilities/godie-h01u.passive.webp",
   "description": "[被動]\n0秒冷卻時間\n\n身經百戰的呂布，每殺死一名敵人將會在10秒內攻擊力增加10點，基礎最高累計3次。",
   "slot": "PASSIVE",
   "innateKind": "passive",

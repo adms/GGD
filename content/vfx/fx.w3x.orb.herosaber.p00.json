@@ -1,0 +1,85 @@
+{
+  "id": "fx.w3x.orb.herosaber.p00",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.035,
+    "angleDeg": 63.5
+  },
+  "mode": "continuous",
+  "lifetimeSec": {
+    "min": 0.365,
+    "max": 0.365
+  },
+  "size": {
+    "start": 0.199,
+    "end": 0.013
+  },
+  "color": {
+    "start": [
+      0,
+      0.392,
+      1,
+      1
+    ],
+    "end": [
+      1,
+      1,
+      1,
+      0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        0,
+        0.392,
+        1,
+        1
+      ]
+    ],
+    [
+      0.5,
+      [
+        1,
+        1,
+        1,
+        1
+      ]
+    ],
+    [
+      1,
+      [
+        1,
+        1,
+        1,
+        0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.199
+    ],
+    [
+      0.5,
+      0.133
+    ],
+    [
+      1,
+      0.013
+    ]
+  ],
+  "blendMode": "additive",
+  "speed": {
+    "min": 9.8428,
+    "max": 10.3807
+  },
+  "rate": 250,
+  "texture": "assets/textures/particles/flame_03.png",
+  "stretched": true,
+  "tailLength": 0.2,
+  "ambient": true
+}

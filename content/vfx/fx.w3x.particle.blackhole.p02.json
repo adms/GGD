@@ -1,0 +1,82 @@
+{
+  "id": "fx.w3x.particle.blackhole.p02",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.014,
+    "angleDeg": 7.5
+  },
+  "mode": "continuous",
+  "lifetimeSec": {
+    "min": 1,
+    "max": 1
+  },
+  "size": {
+    "start": 0.001,
+    "end": 9.251
+  },
+  "color": {
+    "start": [
+      0.169,
+      0.169,
+      1,
+      0
+    ],
+    "end": [
+      0,
+      0,
+      0.502,
+      0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        0.169,
+        0.169,
+        1,
+        0
+      ]
+    ],
+    [
+      0.4,
+      [
+        0,
+        0,
+        1,
+        1
+      ]
+    ],
+    [
+      1,
+      [
+        0,
+        0,
+        0.502,
+        0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.001
+    ],
+    [
+      0.4,
+      4.306
+    ],
+    [
+      1,
+      9.251
+    ]
+  ],
+  "blendMode": "additive",
+  "speed": {
+    "min": 0.4834,
+    "max": 0.6278
+  },
+  "rate": 25,
+  "texture": "assets/textures/particles/circle_02.png"
+}

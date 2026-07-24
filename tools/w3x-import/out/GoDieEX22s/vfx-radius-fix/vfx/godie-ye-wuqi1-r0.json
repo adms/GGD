@@ -1,0 +1,16 @@
+{
+  "id": "godie-ye-wuqi1-r0",
+  "schema": "ribbon@1",
+  "texture": "assets/textures/particles/wc3/ribbonblur1.png",
+  "widthAbove": 0.307,
+  "widthBelow": 0.307,
+  "lifespanSec": 2.0,
+  "color": [
+    0.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "blendMode": "additive",
+  "anchorBone": "Box02"
+}

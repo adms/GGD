@@ -1,0 +1,83 @@
+{
+  "id": "godie-heroraichus3-p1",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 1.389,
+    "angleDeg": 1.0
+  },
+  "mode": "continuous",
+  "rate": 40.0,
+  "lifetimeSec": {
+    "min": 1.0,
+    "max": 1.0
+  },
+  "size": {
+    "start": 0.833,
+    "end": 0.028
+  },
+  "color": {
+    "start": [
+      0.824,
+      0.812,
+      0.318,
+      0.608
+    ],
+    "end": [
+      1.0,
+      1.0,
+      1.0,
+      0.608
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        0.824,
+        0.812,
+        0.318,
+        0.608
+      ]
+    ],
+    [
+      0.3,
+      [
+        0.882,
+        0.922,
+        0.173,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.608
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.833
+    ],
+    [
+      0.3,
+      1.667
+    ],
+    [
+      1,
+      0.028
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/spark_04.png",
+  "speed": {
+    "min": 0.2778,
+    "max": 0.2778
+  },
+  "gravityY": 5.556
+}

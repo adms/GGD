@@ -2,6 +2,7 @@
   "id": "godie-h022.passive",
   "schema": "ability@1",
   "name": "82-00 天生法術書",
+  "icon": "assets/icons/abilities/godie-h022.passive.webp",
   "description": "[輔助]\n0秒冷卻時間\n\n記載多個涅吉可以使用的技能。等級1時書中只有一招：\n\n82-00-01 魔法射手-光箭\n[主動攻擊]\n5秒冷卻時間\n\n射出一發光箭，造成敵人(100+智慧*0.5)點法術傷害。亦可點取自身聚集光箭，只要攻擊或是對目標使用光箭即會一次放出，最多聚集(自身等級/3)+1次，集滿5次以上攻擊敵人的話即可使出櫻華崩拳，造成目標額外666點傷害並減緩100%跑速攻速，持續3秒。",
   "slot": "PASSIVE",
   "innateKind": "active",

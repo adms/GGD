@@ -2,6 +2,7 @@
   "id": "godie-huth.passive",
   "schema": "ability@1",
   "name": "28-00 無限再生",
+  "icon": "assets/icons/abilities/godie-huth.passive.webp",
   "description": "[被動]\n0秒冷卻時間\n\n魔人普烏天生擁有快速的肉體再生能力，每秒回覆12點生命。",
   "slot": "PASSIVE",
   "innateKind": "passive",

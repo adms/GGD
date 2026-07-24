@@ -45,7 +45,21 @@
       "duration": 15.0
     }
   ],
-  "vfxKey": "fx.prim.void.pulse-lg",
+  "vfxKey": "fx.w3x.locust.boomnl.p01",
   "schema": "ability@1",
-  "castTimeSec": 0.4
+  "castTimeSec": 0.4,
+  "hitFeel": {
+    "hitstopTicks": 5,
+    "hitstunTicks": 8,
+    "shakeMag": 0.591,
+    "shakeStyle": "omni",
+    "sparkKind": "heavy",
+    "flashColor": [
+      1.0,
+      0.72,
+      0.34
+    ],
+    "flashMs": 202,
+    "camKick": 0.506
+  }
 }

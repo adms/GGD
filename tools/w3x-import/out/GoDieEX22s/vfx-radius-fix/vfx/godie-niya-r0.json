@@ -1,0 +1,16 @@
+{
+  "id": "godie-niya-r0",
+  "schema": "ribbon@1",
+  "texture": "assets/textures/particles/wc3/ribbonblur1.png",
+  "widthAbove": 3.858,
+  "widthBelow": 3.863,
+  "lifespanSec": 0.35,
+  "color": [
+    0.176,
+    0.627,
+    1.0,
+    0.77
+  ],
+  "blendMode": "additive",
+  "anchorBone": "Weapon"
+}

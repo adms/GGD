@@ -2,6 +2,7 @@
   "id": "godie-obla.passive",
   "schema": "ability@1",
   "name": "33-00 砍樹",
+  "icon": "assets/icons/abilities/godie-obla.passive.webp",
   "description": "[輔助]\n1秒冷卻時間\n\n砍掉一棵樹，在7秒內可以回覆150點生命值。",
   "slot": "PASSIVE",
   "innateKind": "active",

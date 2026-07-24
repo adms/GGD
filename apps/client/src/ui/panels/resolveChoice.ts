@@ -18,9 +18,28 @@ export interface ResolvedChoice {
 }
 
 export function resolveChoice(choice: string): ResolvedChoice {
-  // augments (skeleton pool) carry a description but no w3x art
+  // Augments carry no w3x art (they are our own pool, not imported), and the
+  // `augment@1` schema is `.strict()` with NO `icon` field — so unlike abilities
+  // and items their art can NOT be announced by a doc field, and
+  // `tools/icon-gen/local/batch.py::set_icon_field` deliberately refuses to write
+  // one. That guard is correct; do not remove it.
+  //
+  // The art still exists: the icon pipeline generates `assets/icons/augments/
+  // <id>.webp` for all 21, and the filename is fully determined by the id. So we
+  // resolve it BY CONVENTION here instead. Without this the draft cards render as
+  // GlyphTile letter tiles (「鐵」「疾」「B」) forever, which is exactly what a
+  // playtest caught — #110 makes the card icon mandatory.
+  //
+  // A missing file is safe: GlyphTile draws its deterministic glyph underneath and
+  // <IconImg> simply never paints over it.
   const aug = Augments.tryGet(choice as AugmentId);
-  if (aug) return { name: aug.name, desc: aug.description ?? "" };
+  if (aug) {
+    return {
+      name: aug.name,
+      desc: aug.description ?? "",
+      icon: `assets/icons/augments/${aug.id}.webp`,
+    };
+  }
 
   // ability/augment choice → surface its w3x icon + recovered description
   const ability = Abilities.tryGet(choice as AbilityId);

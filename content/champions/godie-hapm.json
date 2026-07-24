@@ -33,6 +33,11 @@
     "mr": 1.2,
     "as": 0.02
   },
+  "hitFeel": {
+    "hitstopTicks": 4,
+    "shakeMag": 0.55,
+    "knockbackMag": 0.45
+  },
   "abilities": {
     "Q": {
       "id": "godie-hapm.q",
@@ -231,7 +236,8 @@
   "tags": [
     "wc3-import",
     "godie",
-    "voxel-standin"
+    "voxel-standin",
+    "greatsword"
   ],
   "exAbility": "godie-hapm.ex",
   "passiveAbility": "godie-hapm.passive",

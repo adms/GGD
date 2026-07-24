@@ -5,7 +5,7 @@
  * Pure TS — unit-testable (client-05).
  */
 import { asEntityId } from "@ggd/shared/ids";
-import type { AbilitySlot, CastTarget, Command } from "@ggd/shared/sim/intents";
+import type { CastTarget, CastableSlot, Command } from "@ggd/shared/sim/intents";
 import type { AbilityDef } from "@ggd/shared/sim/content/defs";
 import { add, clampLen, normalize, sub, type Vec2 } from "@ggd/shared/sim/math/vec2";
 
@@ -41,8 +41,14 @@ export function resolveCastTarget(ability: AimAbility, ctx: AimContext): CastTar
   }
 }
 
-/** Build the exact castAbility Command for a slot, or null if untargetable. */
-export function buildCastCommand(slot: AbilitySlot, ability: AimAbility, ctx: AimContext): Command | null {
+/**
+ * Build the exact castAbility Command for a slot, or null if untargetable.
+ *
+ * `CastableSlot`, not `AbilitySlot`: the sixth slot (the level-1 天生技) is cast
+ * through this same resolver — an active innate has a real `castType` and
+ * `range` like any other ability, so it needs no aiming rules of its own.
+ */
+export function buildCastCommand(slot: CastableSlot, ability: AimAbility, ctx: AimContext): Command | null {
   const target = resolveCastTarget(ability, ctx);
   return target ? { kind: "castAbility", slot, target } : null;
 }

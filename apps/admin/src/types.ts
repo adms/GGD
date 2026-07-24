@@ -23,6 +23,30 @@ export interface AccountRow {
   banReason?: string;
   roles: string[];
   createdAt: string;
+
+  /**
+   * The #126 private-deploy approval state: "pending", "approved", "denied", or
+   * "" for an account that predates the gate (grandfathered — see `approved`).
+   *
+   * OPTIONAL on purpose, even though the platform's admin.AccountRow always
+   * emits it (never omitempty, deliberately — see its Go doc comment). Optional
+   * here means the CONSOLE can tell three states apart instead of two:
+   *   • "pending"/"approved"/"denied" — the server answered.
+   *   • ""                            — the server answered "grandfathered".
+   *   • undefined                     — the server build predates the gate and
+   *                                     does not report approval at all.
+   * Typing it as a required `string` would collapse the last two into "" and
+   * the console would confidently render 免審核 for a platform that has no idea
+   * what approval is. ../approvals.ts is where that distinction is decided
+   * once; nothing else may re-derive it.
+   */
+  status?: string;
+  /**
+   * Mirrors the platform's account.IsApproved(): may this account get a session
+   * RIGHT NOW under the gate. Derived server-side so the console never
+   * re-implements the grandfathering rule ("" or "approved") and drifts from it.
+   */
+  approved?: boolean;
 }
 
 export interface AccountSearch {

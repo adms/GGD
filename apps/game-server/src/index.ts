@@ -19,6 +19,9 @@ import { mintCreateToken } from "./rooms/createGate";
 import { sanitizeDisplayName } from "./net/sanitizeText";
 import { secretConfigError } from "./config/secretGuard";
 import { deployTierBootLine } from "./config/deployTier";
+import { probePlatformAtBoot } from "./config/platformUrl";
+import { startContentBus, platformStatusWithContent } from "./config/contentBus";
+import { startMatchHeartbeat } from "./config/matchHeartbeat";
 import { roomRegistry } from "./rooms/roomRegistry";
 import { ReplayRoom } from "./rooms/ReplayRoom";
 import { handleInternalReplays } from "./replay/http";
@@ -31,7 +34,40 @@ const PORT = Number(process.env.GAME_PORT ?? 2567);
 const CONTENT_DIR =
   process.env.CONTENT_DIR ?? join(dirname(fileURLToPath(import.meta.url)), "../../../content");
 const SHARED_SECRET = process.env.PLATFORM_GAME_SHARED_SECRET ?? "";
+/**
+ * The address the BROWSER is told to connect to. It travels to the client in
+ * `match_ready.endpoint` and is handed straight to `new Client(...)`, so it must
+ * be reachable FROM THE PLAYER, not from inside this container.
+ *
+ * The localhost default is right for development and catastrophic anywhere else:
+ * unset on the family deploy, every player's browser was told to open a socket
+ * to the game server on their own machine, where nothing listens, and the join
+ * failed instantly. It survived undetected because on the owner's own machine
+ * localhost:2567 really IS the game server — so local play worked perfectly —
+ * and nothing in the test suite connects from a remote browser.
+ */
 const PUBLIC_ENDPOINT = process.env.GAME_PUBLIC_ENDPOINT ?? `ws://localhost:${PORT}`;
+
+/**
+ * Refuse to hand out a localhost endpoint on a deploy that serves real players.
+ *
+ * A warning would not have helped: the boot log already carried a dozen lines
+ * and this one would have joined them. GGD_DEPLOY_TIER is set to "family" (or
+ * anything non-dev) precisely on the deploys where a localhost endpoint cannot
+ * possibly be correct, so there it is fatal — a server that refuses to start is
+ * a deploy you fix in one minute, where a server that starts and hands out an
+ * unreachable address is an evening of "按了沒反應".
+ */
+const DEPLOY_TIER = process.env.GGD_DEPLOY_TIER ?? "dev";
+if (DEPLOY_TIER !== "dev" && /^wss?:\/\/(localhost|127\.|\[?::1)/i.test(PUBLIC_ENDPOINT)) {
+  console.error(
+    `[game-server] FATAL: GGD_DEPLOY_TIER=${DEPLOY_TIER} but GAME_PUBLIC_ENDPOINT is ${PUBLIC_ENDPOINT}.\n` +
+      "  That address is what the PLAYER'S BROWSER is told to connect to, so a loopback value means every\n" +
+      "  remote join fails instantly. Set GAME_PUBLIC_ENDPOINT to the public route that proxies to this\n" +
+      "  container — e.g. wss://<host>/ws, matching nginx `location /ws/`.",
+  );
+  process.exit(1);
+}
 
 // FAIL-CLOSED boot guard (mirrors the platform's #126 checkRequiredSecrets): a
 // production deploy MUST carry PLATFORM_GAME_SHARED_SECRET. Without it the
@@ -139,7 +175,27 @@ const httpServer = createServer((req, res) => {
     // shard is not broken, it is DRAINING — {active: 63, capacity: 50,
     // draining: true} means no new match starts until 13 finish. Without this
     // the refusals look like an outage.
-    res.end(JSON.stringify({ ok: true, rooms: roomRegistry.stats() }));
+    // `platform` (task #48) is the SECOND thing that was invisible. Curation,
+    // combat-env and server-ops all fail SAFE when the platform is unreachable,
+    // so a misconfigured shard looks perfectly healthy while serving allow-all
+    // and untuned multipliers. This block names the resolved platform URL, how
+    // it was chosen, and every fail-safe currently in force — so "why did my
+    // admin tuning do nothing" is one curl away instead of a log archaeology
+    // expedition. `degraded: false` is a real statement, not an absence.
+    // `platform.content` is the THIRD thing that was invisible, and the one the
+    // owner actually asks about: "I changed it in the console — did it land on
+    // the shard?" Per document it reports the version the platform last
+    // announced on the Redis bus, the version this process actually re-fetched,
+    // and when. `stale: false` means the answer is yes; `stale: true` names the
+    // reason it is no. Without it, the only way to check was to start a match
+    // and squint at the numbers.
+    res.end(
+      JSON.stringify({
+        ok: true,
+        rooms: roomRegistry.stats(),
+        platform: platformStatusWithContent(),
+      }),
+    );
     return;
   }
   if (req.url === "/_internal/matches" && req.method === "POST") {
@@ -241,6 +297,26 @@ loadContent()
   .then(() => gameServer.listen(PORT))
   .then(() => {
     console.log(`[game-server] listening on :${PORT} (secret=${SHARED_SECRET ? "set" : "DEV MODE"})`);
+    // #48: SAY IT AT BOOT. Curation / combat-env / server-ops each fail safe on
+    // an unreachable platform, so before this probe the only symptom of a
+    // misconfigured shard was matches quietly running on numbers nobody tuned.
+    // Fire-and-forget — a probe must never delay or block accepting matches;
+    // its result is also readable afterwards on GET /healthz.
+    void probePlatformAtBoot();
+    // The other half of #48: the boot probe says whether the platform is
+    // REACHABLE, this says whether its later CHANGES arrive. Started after
+    // listen() and never awaited — Redis is optional, so a missing or
+    // unreachable one must cost nothing but instant propagation. It reconnects
+    // on its own and reports itself on /healthz.
+    startContentBus();
+    // MATCH LIVENESS (#187). Tells the platform, every 30s over the HMAC
+    // channel, which matches are still being played, so its reaper renews their
+    // deadline instead of guessing one from a constant. Without this the
+    // platform falls back to a blind deadline and can write an ABANDONED result
+    // onto a match people are still playing — which is exactly what it did to
+    // the owner's family games once startingTeamLives went past 3. Fire and
+    // forget, unref'd: it never delays or blocks a match.
+    startMatchHeartbeat(SHARED_SECRET);
     // Retention runs at boot as well as after each match, so a shard that was
     // restarted mid-season still converges on the ceiling instead of only ever
     // pruning while matches happen to be finishing. Fire-and-forget: nothing

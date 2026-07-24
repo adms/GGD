@@ -30,6 +30,14 @@ build:
       context: .
       docker:
         dockerfile: docker/edge.Dockerfile
+        # BUILD IDENTITY (task #66, defect P0-6(a)). The image has no `.git`
+        # (.dockerignore) and no git binary (node:22-alpine), so the version
+        # badge can only be stamped from the host. `{{.GGD_BUILD_STAMP}}` is a
+        # skaffold template over the environment; `make up` / `make dev` export
+        # it. Unset, the client build prints a loud banner and the badge reads
+        # UNSTAMPED-BUILD rather than the old plausible "dev".
+        buildArgs:
+          GGD_BUILD_STAMP: "{{.GGD_BUILD_STAMP}}"
     - image: ggd-content-api
       context: .
       docker:

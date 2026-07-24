@@ -2,6 +2,7 @@
   "id": "godie-u00h.passive",
   "schema": "ability@1",
   "name": "39-00 無名神風流-玄武",
+  "icon": "assets/icons/abilities/godie-u00h.passive.webp",
   "description": "[輔助]\n35秒冷卻時間\n\n提升鬼畜狂刀的攻擊力30點，生命回復12點和防禦8點，來增加戰場耐久度，效果持續12秒。",
   "slot": "PASSIVE",
   "innateKind": "active",

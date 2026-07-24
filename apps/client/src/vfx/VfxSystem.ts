@@ -3,7 +3,12 @@
  * damage / death) drained once per frame by the GameApp:
  *   ability casts       → Telegraph ring (ground reads stay king) + the
  *                         ability's vfx doc played at the caster (EX casts
- *                         scale the burst up and add a layered shockwave pop)
+ *                         scale the burst up and add a layered shockwave pop).
+ *                         The 30 abilities promoted to the map's OWN art
+ *                         (render/vfx/w3xAbilityArt) instead play their whole
+ *                         emitter SET through `W3xEmitterRig` — see
+ *                         `playCastVfx`, whose fallback ladder guarantees a
+ *                         promoted cast can never draw nothing.
  *   projectile hits     → the projectile's vfx doc burst at the target
  *                         (layered HitSpark impact as the doc-less fallback;
  *                         every landed hit also layers via `hitImpact`)
@@ -58,6 +63,8 @@ import { HitSpark } from "./HitSpark";
 import { scaledBurstCount, toParticleSystem } from "./particleFactory";
 import { frontLoadCounts, IMPACT_TINTS, type ImpactIntensity, type Rgb } from "./vfxPresets";
 import { asImpactProfile, type SparkKind } from "../render/combatFeedback";
+import { extraVfxDocIds, primitiveFallbackFor, w3xArtFor } from "../render/vfx/w3xAbilityArt";
+import { W3xCastFx } from "./W3xCastFx";
 import { BloodFx } from "./BloodFx";
 import { CombatFeedbackFx } from "./CombatFeedbackFx";
 import { GroundDecalPool } from "./GroundDecalPool";
@@ -385,6 +392,15 @@ export class VfxSystem {
   private readonly shadowScratch: ShadowInput[] = [];
   /** entityId → last committed aim, consumed by the muzzle flash */
   private readonly aim = new Map<number, Vec2>();
+  /**
+   * THE RIG PATH (task #182/#183 → combat). Promoted casts play their WHOLE
+   * w3x emitter set through `W3xEmitterRig` instead of N pooled front-loaded
+   * bursts. Constructing this allocates nothing: the rig itself is built on the
+   * first promoted cast and stays null in a match that has none.
+   */
+  private readonly w3xCast: W3xCastFx;
+  /** last `update()` timestamp — the rig ticks on dt, not on absolute time */
+  private lastUpdateMs: number | null = null;
 
   constructor(
     private readonly scene: Scene,
@@ -400,6 +416,12 @@ export class VfxSystem {
       { entityPos: (id) => this.ctx.entityPos(id) },
       { getScale: () => this.budgetScale() },
     );
+    this.w3xCast = new W3xCastFx(scene, { getQualityScale: () => this.budgetScale() });
+  }
+
+  /** The w3x rig path (test/observability seam). */
+  get w3xCastFx(): W3xCastFx {
+    return this.w3xCast;
   }
 
   /**
@@ -543,6 +565,70 @@ export class VfxSystem {
   private doc(key: string | undefined): VfxDoc | null {
     if (!key) return null;
     return this.ctx.vfxDoc?.(key) ?? null;
+  }
+
+  /**
+   * THE CAST'S OWN ART — a four-rung ladder that can never end in silence.
+   *
+   * 1. PROMOTED + RIG. When `w3xAbilityArt` says this ability owns the map's
+   *    own effect, the WHOLE emitter set goes to `W3xEmitterRig` (see
+   *    `W3xCastFx`): the docs' authored emission streams, planned against the
+   *    screen particle budget, with a per-effect lifetime. A WC3 effect is a
+   *    SET — `vfxKey` names only its dominant emitter — so this is the only rung
+   *    that plays 世界終結's frost nova as the four emitters it really is.
+   * 2. PROMOTED, RIG REFUSED. The rig says no when 12 effects are already live
+   *    (or it could not be built at all). The docs still resolved, so they play
+   *    through the ordinary pooled path — `frontLoadDoc` collapses each authored
+   *    stream into ONE capped burst, which is cheap and still the right art.
+   * 3. PROMOTED, ART MISSING. The content docs did not resolve (content not
+   *    rebuilt, an older `contentVersion` still served). The ability's own
+   *    `vfxKey` names the w3x doc, so there is nothing left on the doc side —
+   *    fall back to the `fx.prim.*` key this row overrode.
+   * 4. NOTHING LEFT. A hit spark, because a cast that draws literally nothing is
+   *    the failure this whole batch exists to remove. Reached only for the 17
+   *    off-roster rows, whose champions cannot be picked in a match.
+   *
+   * An ability with NO promotion is untouched: rung 1–4 do not apply and it
+   * plays its one primitive exactly as before.
+   */
+  private playCastVfx(
+    abilityId: string | undefined,
+    doc: VfxDoc | null,
+    pos: { x: number; z: number },
+    nowMs: number,
+    boost: number,
+  ): void {
+    const art = w3xArtFor(abilityId);
+    if (!art) {
+      this.play(doc, pos.x, pos.z, nowMs, 1.0, boost);
+      return;
+    }
+    const set: VfxDoc[] = [];
+    // `doc` IS the primary for every promoted row (the ability's `vfxKey` is
+    // the family's dominant emitter, by construction). Reuse it rather than
+    // resolving the same id twice — `ctx.vfxDoc` is a live content lookup, and
+    // a double read would double-count in anything observing it.
+    const primary = doc?.id === art.primary ? doc : this.doc(art.primary);
+    if (primary) set.push(primary);
+    for (const id of extraVfxDocIds(abilityId)) {
+      const d = this.doc(id);
+      if (d) set.push(d);
+    }
+    // 1
+    if (this.w3xCast.play(art.family, set, pos.x, 1.0, pos.z, nowMs)) return;
+    // 2
+    if (set.length > 0) {
+      for (const d of set) this.play(d, pos.x, pos.z, nowMs, 1.0, boost);
+      return;
+    }
+    // 3
+    const primitive = this.doc(primitiveFallbackFor(abilityId));
+    if (primitive) {
+      this.play(primitive, pos.x, pos.z, nowMs, 1.0, boost);
+      return;
+    }
+    // 4
+    this.sparks.push(new HitSpark(this.scene, pos.x, pos.z, nowMs));
   }
 
   /**
@@ -698,7 +784,7 @@ export class VfxSystem {
         // tinted from the ability's own color so its identity is preserved.
         const isEx = def?.slot === "EX";
         if (isEx) this.layeredPop(pos.x, pos.z, nowMs, "ex", doc ? tintOfDoc(doc) : EX_DEFAULT_TINT);
-        this.play(doc, pos.x, pos.z, nowMs, 1.0, isEx ? EX_BURST_BOOST : 1);
+        this.playCastVfx(def?.id, doc, pos, nowMs, isEx ? EX_BURST_BOOST : 1);
         // GROUND SCORCH (task #147): stamp a fading dark mark where the ability
         // lands (its ground `point` when it targets the floor) or, failing that,
         // under the caster — so a cast scars the arena instead of leaving it
@@ -1105,6 +1191,14 @@ export class VfxSystem {
   }
 
   update(nowMs: number): void {
+    // The rig advances on dt (KP2 tracks, effect durations, drains) — never on
+    // wall clock, so a paused match or a hand-stepped replay stays in step. A
+    // backgrounded tab returns with a huge dt, which RELEASES the live effects
+    // rather than stranding them: the safe direction, deliberately not clamped
+    // down to a small step here (`W3xCastFx` caps it at one second).
+    const dtMs = this.lastUpdateMs === null ? 0 : nowMs - this.lastUpdateMs;
+    this.lastUpdateMs = nowMs;
+    this.w3xCast.tick(dtMs, nowMs);
     for (const t of this.telegraphs) t.update(nowMs);
     this.telegraphs = this.telegraphs.filter((t) => !t.done);
     for (const s of this.sparks) s.update(nowMs);
@@ -1129,6 +1223,11 @@ export class VfxSystem {
     this.shadows.dispose();
     this.castDecals.dispose();
     this.pillars.dispose();
+    // The rig owns its own ParticleSystems and emitter meshes — its dispose()
+    // walks every system it EVER built, pooled or live, so nothing can survive
+    // this call by being in a state we forgot about (task #131's lesson).
+    this.w3xCast.dispose();
+    this.lastUpdateMs = null;
     this.telegraphs = [];
     this.sparks = [];
     this.pool.clear();

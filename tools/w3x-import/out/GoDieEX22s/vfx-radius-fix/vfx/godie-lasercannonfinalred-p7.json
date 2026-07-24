@@ -1,0 +1,78 @@
+{
+  "id": "godie-lasercannonfinalred-p7",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.001,
+    "angleDeg": 1.0
+  },
+  "mode": "continuous",
+  "rate": 222.0,
+  "lifetimeSec": {
+    "min": 5.0,
+    "max": 5.0
+  },
+  "size": {
+    "start": 0.01,
+    "end": 12.334
+  },
+  "color": {
+    "start": [
+      0.894,
+      0.278,
+      0.294,
+      1.0
+    ],
+    "end": [
+      0.894,
+      0.278,
+      0.294,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        0.894,
+        0.278,
+        0.294,
+        1.0
+      ]
+    ],
+    [
+      0.01,
+      [
+        0.894,
+        0.278,
+        0.294,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.894,
+        0.278,
+        0.294,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.01
+    ],
+    [
+      0.01,
+      9.251
+    ],
+    [
+      1,
+      12.334
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/light_03.png"
+}

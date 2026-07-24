@@ -6,7 +6,7 @@
  */
 import { describe, it, expect } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
-import type { Order, Command, AbilitySlot } from "@ggd/shared/sim/intents";
+import type { Order, Command, CastableSlot } from "@ggd/shared/sim/intents";
 import type { Vec2 } from "@ggd/shared/sim/math/vec2";
 import type { AimAbility } from "./AimResolver";
 import {
@@ -18,12 +18,14 @@ import {
   type GamepadPlayerCtx,
 } from "./GamepadInput";
 
-const ABILITIES: Record<AbilitySlot, AimAbility> = {
+const ABILITIES: Record<CastableSlot, AimAbility> = {
   Q: { castType: "skillshot", range: 14 },
   W: { castType: "self", range: 0.1 },
   E: { castType: "ground", range: 9 },
   R: { castType: "targeted", range: 8 },
   EX: { castType: "self", range: 0 },
+  // the SIXTH slot — an active 天生技 is cast through the same paths
+  PASSIVE: { castType: "self", range: 0 },
 };
 
 function pad(axes: number[], pressed: number[] = []): PadState {

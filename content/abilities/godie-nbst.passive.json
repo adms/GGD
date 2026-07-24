@@ -2,6 +2,7 @@
   "id": "godie-nbst.passive",
   "schema": "ability@1",
   "name": "24-00 SM派對",
+  "icon": "assets/icons/abilities/godie-nbst.passive.webp",
   "description": "[輔助]\n75秒冷卻時間\n\n讓瘋狂假面進入SM的興奮狀態，攻擊速度提升20%，受到傷害時將會轉換刺激補充生命，持續3秒。",
   "slot": "PASSIVE",
   "innateKind": "active",

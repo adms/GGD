@@ -1,0 +1,173 @@
+# 候選參考音來源清單（Phase 3 search_candidates.py 的輸入）
+# 授權旗標由 2026-07-24 的線上查證結果填入（見 notes 內的 license_url）。
+# private_research 模式下這些旗標僅作記錄, 不會攔截處理流程；
+# strict 模式（config/processing.yaml → license.mode）下會決定 recommended_action。
+#
+# recommended_action 規則（search_candidates.py 實作）:
+#   auto_download      = download_allowed & commercial_use & derivative_use & ai_use 全為 true
+#                        且 confidence == high 且有具體 candidate_url
+#   manual_review      = 任一旗標為 unknown, 或 confidence 不足
+#   request_permission = 條款要求事前連絡/承認（negotiable: true）
+#   reject             = 任一旗標明確為 false（strict 模式）
+#   record_new_voice   = 無合適來源時的兜底（每位英雄至少一列）
+
+sources:
+  - name: つくよみちゃんコーパス
+    url: https://tyc.rei-yumesaki.net/material/corpus/
+    speaker_name: つくよみちゃん (CV. 夢前黎)
+    license_type: 独自規約(無料)
+    license_url: https://tyc.rei-yumesaki.net/material/corpus/
+    commercial_use: true
+    derivative_use: true
+    ai_use: true          # AI音声合成・声質変換・機械学習利用を明示的に許可
+    download_allowed: true
+    confidence: high
+    negotiable: false
+    credit: "つくよみちゃんコーパス（CV.夢前黎）+ 配布URL（公開時必須）"
+    prohibitions: 人への攻撃/政治宗教/刺激的表現のゾーニング無し/素材再配布
+    suitable_profiles: [female_cold_clear, female_low_regal, female_soft_healing, female_swordfighter, synthetic_female]
+    notes: 若い女性の朗読調クリアボイス1名。感情スタイルは通常のみ→情緒張力は限定的
+
+  - name: あみたろの声素材工房 (ITAコーパス 6感情スタイル)
+    url: https://amitaro.net/voice/corpus-list/ita/
+    speaker_name: 小春音アミ (あみたろ)
+    license_type: 独自規約(無料)
+    license_url: https://amitaro.net/voice/voice_rule/
+    commercial_use: true
+    derivative_use: true
+    ai_use: true          # 全声素材のAI学習利用を明示許可
+    download_allowed: true
+    confidence: high
+    negotiable: false
+    credit: "あみたろの声素材工房 (https://amitaro.net/) または 小春音アミ"
+    prohibitions: 年齢制限作品/なりすまし・ディープフェイク/素材転売/AIモデル有料販売は条件付き
+    suitable_profiles: [female_dynamic, female_high_tsundere, female_high_comedic, female_high_sadistic, female_child_ancient, creature_high]
+    notes: ノーマル/るんるん/よふかし/ぷんすか/ささやきA/B の6スタイル→情緒バリエーション最強の合法源
+
+  - name: 刻鳴時雨 音声コーパス
+    url: https://bindumechan.wixsite.com/shigure222/素材配布
+    speaker_name: 刻鳴時雨 (CV. 丸ころ)
+    license_type: 独自規約(無料)
+    license_url: https://bindumechan.wixsite.com/shigure222/素材配布
+    commercial_use: true
+    derivative_use: true
+    ai_use: true          # AI音声合成研究・ボイチェン利用を明示許可
+    download_allowed: true
+    confidence: medium    # Wixページのため規約全文の再確認推奨
+    negotiable: true      # 商業ソフト販売時は事前報告必須
+    credit: "刻鳴時雨（CV:丸ころ）/管理者:瓶詰め + 配布サイトリンク"
+    prohibitions: AIボイチェンモデル配布時の事前連絡なし不可
+    suitable_profiles: [child_boy_clear, child_boy_heroic, nonverbal_youth, androgynous_elegant]
+    notes: 中性的少年系とされる(未確認)。商用時は事前報告が条件
+
+  - name: Mozilla Common Voice 日本語
+    url: https://commonvoice.mozilla.org/
+    speaker_name: クラウドソース多数話者
+    license_type: CC0 1.0
+    license_url: https://github.com/common-voice/common-voice
+    commercial_use: true
+    derivative_use: true
+    ai_use: true
+    download_allowed: true
+    confidence: high
+    negotiable: false
+    credit: 不要
+    prohibitions: なし(CC0)。話者なりすましは人格権リスク
+    suitable_profiles: [male_low_dry, male_youth_gentle, male_old_regal, male_old_oily, male_professional_villain, male_intelligent_manic, male_hardboiled, male_low_flat, male_ultra_low, male_low_divine]
+    notes: 法的に最安全だが読み上げ調で感情表現なし・音質バラバラ→品質選別必須。男声の弾数確保用
+
+  - name: Freesound.org (CC0 人声クリップ)
+    url: https://freesound.org/search/?q=voice&f=license:%22Creative+Commons+0%22
+    speaker_name: クリップ毎に異なる
+    license_type: per-clip (CC0/CC-BY/CC-BY-NC)
+    license_url: https://freesound.org/help/faq/
+    commercial_use: unknown   # クリップ毎に確認
+    derivative_use: true
+    ai_use: unknown           # 2026年導入の投稿者毎AI利用可否フラグをクリップ毎に確認
+    download_allowed: true
+    confidence: medium
+    negotiable: false
+    credit: CC0は不要/CC-BYは必須
+    prohibitions: クリップのライセンス表示に従う
+    suitable_profiles: [creature_low, creature_mechanical, creature_giant, creature_comedic, creature_nasal, nonverbal_low, creature_high]
+    notes: 咆哮・唸り・獣声・非言語系の宝庫。日本語セリフ調は少ない。クリップ毎にURL+ライセンス記録必須
+
+  - name: VOICEVOX (ずんだもん・四国めたん等)
+    url: https://voicevox.hiroshiba.jp/
+    speaker_name: 合成音声キャラ多数
+    license_type: エンジン規約+キャラ別規約
+    license_url: https://voicevox.hiroshiba.jp/term/
+    commercial_use: true
+    derivative_use: unknown
+    ai_use: unknown           # 合成出力をクローン参照音声にする行為は規約に明記なし
+    download_allowed: true
+    confidence: high
+    negotiable: true          # SSS合同会社に要確認
+    credit: "VOICEVOX:キャラ名（無credit商用は1キャラ40万円+税）"
+    prohibitions: 公序良俗違反/政治宗教/フェイク情報
+    suitable_profiles: [synthetic_female, cartoon_nasal, cartoon_high_male]
+    notes: 商用ゲームのクローン素材としては規約グレー。private_research では利用可
+
+  - name: 効果音ラボ (声素材)
+    url: https://soundeffect-lab.info/sound/voice/
+    speaker_name: 男女複数声優
+    license_type: 独自規約(無料・クレジット不要)
+    license_url: https://soundeffect-lab.info/agreement/
+    commercial_use: true
+    derivative_use: true
+    ai_use: false             # 「AI学習用のデータとして利用することは禁止」と明文化
+    download_allowed: true
+    confidence: high
+    negotiable: false
+    credit: 不要（本プロジェクトのSFX利用は既存クレジット掲載を継続）
+    prohibitions: AI学習利用の明示的禁止/再配布/声優の尊厳を傷つける利用
+    suitable_profiles: []
+    notes: 重要——SFXとしての既存利用はOKだが、CosyVoice参照音声としての利用は規約違反。strict モードでは必ず reject
+
+  - name: 日本声優統計学会 声優統計コーパス
+    url: https://voice-statistics.github.io/
+    speaker_name: プロ女性声優3名 (通常/喜び/怒り)
+    license_type: 独自規約(音声は個人研究限定)
+    license_url: https://voice-statistics.github.io/
+    commercial_use: false
+    derivative_use: unknown
+    ai_use: unknown           # 個人の研究・分析目的のみ
+    download_allowed: true
+    confidence: high
+    negotiable: false
+    credit: 指定bibで引用推奨
+    prohibitions: 商用利用不可/再配布禁止
+    suitable_profiles: [female_dynamic, female_high_tsundere, female_low_breathy, female_low_assassin]
+    notes: 48kHz高音質×3感情でprivate研究には最適。商用転用は不可（strictでreject）
+
+  - name: JVSコーパス
+    url: https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus
+    speaker_name: プロ話者100名 (男女)
+    license_type: 独自規約(非商用)
+    license_url: https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus
+    commercial_use: false
+    derivative_use: unknown
+    ai_use: unknown           # 学術・非商用研究・個人利用の範囲のみ
+    download_allowed: true
+    confidence: high
+    negotiable: true          # 商用は東大TLO経由の有償ライセンスあり
+    credit: 引用推奨
+    prohibitions: 再配布禁止/標準ライセンスに商用は含まれない
+    suitable_profiles: [male_youth_heroic, male_youth_cold, male_youth_rough, male_youth_wild, male_youth_relaxed, male_youth_high_energy, male_high_heroic, male_high_sharp, male_low_warlord, male_low_battle, male_low_samurai, male_polite_sinister, male_meta_comedic]
+    notes: whisper/falsetto含む100話者→声線分離度確保の主力候補。商用化時は東大TLOルート
+
+  - name: 自主録音 (社内/委託収録)
+    url: ""
+    speaker_name: 委託声優/開発チーム
+    license_type: 契約による買い取り
+    license_url: ""
+    commercial_use: true
+    derivative_use: true
+    ai_use: true
+    download_allowed: false   # ダウンロードではなく収録
+    confidence: high
+    negotiable: false
+    credit: 契約条件による
+    prohibitions: 契約条件による
+    suitable_profiles: [creature_mechanical, creature_comedic, creature_giant, creature_nasal, nonverbal_low, male_meta_comedic, male_professional_villain, male_ultra_low]
+    notes: 非人類声・GGD原創キャラの最終手段。record_new_voice の受け皿

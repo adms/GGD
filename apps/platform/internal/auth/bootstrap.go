@@ -266,7 +266,38 @@ func (s *Service) claimOwnership(ctx context.Context, id, presentedToken string)
 	if !ok {
 		return false, noop
 	}
-	return true, func() { s.releaseOwnerClaim(ctx, id) }
+	release := func() { s.releaseOwnerClaim(ctx, id) }
+	// RE-READ THE GATE UNDER THE CLAIM. The check above is stale by the time we
+	// get here, and the mutex alone does not save us:
+	//
+	//   A and B both read admins=0. A takes the claim, creates the owner, and
+	//   RELEASES (deliberately — see the doc comment — so a failed create can be
+	//   retried at once). B's SetNX now succeeds, and B proceeds on its own
+	//   pre-A read of admins=0. Two owners.
+	//
+	// Serialising the writers was never enough; each writer also has to look
+	// again once it is alone. That is what this second read is. It cost nothing
+	// on the owner's machine, which is why 200 local runs of
+	// TestConcurrentFirstRegistrationsProduceOneOwner passed and only CI — with
+	// its slower, genuinely-parallel scheduling — ever produced the 2-admin
+	// result the test exists to forbid.
+	//
+	// Fails closed for the same reason as the first read: an unreadable store
+	// must never be mistaken for an unowned one.
+	admins, err = s.accounts.Admins(ctx)
+	if err != nil {
+		slog.Error("auth: could not re-confirm ownerlessness while holding the claim; registering without an owner grant",
+			"err", err, "recovery", bootstrapRecovery)
+		release()
+		return false, noop
+	}
+	if len(admins) > 0 {
+		// Someone won the race between our two reads. Declining costs nothing:
+		// the deploy has its owner, which is the whole point of the claim.
+		release()
+		return false, noop
+	}
+	return true, release
 }
 
 // releaseOwnerClaimScript deletes the claim only if this registration still

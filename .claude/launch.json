@@ -2,6 +2,46 @@
   "version": "0.0.1",
   "configurations": [
     {
+      "name": "platform-play",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": [
+        "-lc",
+        "set -a; . /private/tmp/claude-503/-Users-Takuro-GGD/1fc1e42e-e26b-4bec-88ef-ca25238c0f4c/scratchpad/seam.env; set +a; exec env DATA_DIR=/Users/Takuro/GGD/data CONTENT_DIR=/Users/Takuro/GGD/content REDIS_ADDR=127.0.0.1:6379 PLATFORM_ADDR=127.0.0.1:8080 JWT_SIGNING_SECRET=devsecret GAME_SERVER_ADDR=http://127.0.0.1:2567 PLATFORM_INTERNAL_URL=http://127.0.0.1:8080 GGD_DEPLOY_TIER=private go -C /Users/Takuro/GGD/apps/platform run ./cmd/platform"
+      ],
+      "port": 8080,
+      "comment": "TEMPORARY playtest lane (task #188 verification). Identical to `platform`, except PLATFORM_GAME_SHARED_SECRET is sourced from an out-of-repo scratchpad file instead of the literal `devseam` — the game-server's secretGuard now REFUSES to boot on the known dev value, so the `platform` + `game-server-seam` pair can no longer form a working HMAC seam. Delete this entry (and its game-server-play twin) once launch.json's dev seam is given a real generated secret."
+    },
+    {
+      "name": "game-server-play",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": [
+        "-lc",
+        "set -a; . /private/tmp/claude-503/-Users-Takuro-GGD/1fc1e42e-e26b-4bec-88ef-ca25238c0f4c/scratchpad/seam.env; set +a; exec pnpm --filter @ggd/game-server dev"
+      ],
+      "port": 2567,
+      "comment": "TEMPORARY playtest lane (task #188 verification) — the game-server half of `platform-play`. Same scratchpad secret, so the platform's HMAC match-create is accepted and MatchRoom actually POSTs the result callback (that callback is the ONLY way a match settles)."
+    },
+    {
+      "name": "game-server-ledger",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": [
+        "-lc",
+        "set -a; . /private/tmp/claude-503/-Users-Takuro-GGD/1fc1e42e-e26b-4bec-88ef-ca25238c0f4c/scratchpad/seam.env; set +a; cd /Users/Takuro/GGD/apps/game-server && exec env APP_ENV=development GAME_PORT=2633 GAME_PUBLIC_ENDPOINT=ws://localhost:2633 ../../node_modules/.bin/tsx src/index.ts"
+      ],
+      "port": 2633,
+      "comment": "task #188 LEDGER VERIFICATION lane. Same scratchpad HMAC secret as `platform-ledger`, but on a PRIVATE port (2633 — 2600 was taken too). Reason it exists: five concurrent agent sessions each run `tsx watch` over this same source tree, so any source edit restarts all five at once and whichever wins the race binds :2567. Measured 2026-07-24 22:43 — `game-server-play` lost that race with EADDRINUSE and the winner (another session, no shared secret) answered the platform's signed match-create with 401 `game server rejected the match`. A private port cannot be stolen, so the seam stays intact for the length of a full match. It also runs `tsx src/index.ts` (the package `start` script) rather than `pnpm dev` (`tsx watch`): measured 2026-07-24 22:55, another session saved MatchRoom.ts, every watching game-server on the box restarted, and the live room — with the only human in it — was destroyed mid-match, orphaning the pending record so it could only ever settle as `abandoned`. A verification run must not be restartable by somebody else typing. GAME_PUBLIC_ENDPOINT must be set too: the platform pushes that literal string to the client in match_ready, so leaving it at the :2567 default would send the browser to the foreign server."
+    },
+    {
+      "name": "platform-ledger",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": [
+        "-lc",
+        "set -a; . /private/tmp/claude-503/-Users-Takuro-GGD/1fc1e42e-e26b-4bec-88ef-ca25238c0f4c/scratchpad/seam.env; set +a; exec env DATA_DIR=/Users/Takuro/GGD/data CONTENT_DIR=/Users/Takuro/GGD/content REDIS_ADDR=127.0.0.1:6379 PLATFORM_ADDR=127.0.0.1:8080 JWT_SIGNING_SECRET=devsecret GAME_SERVER_ADDR=http://127.0.0.1:2633 PLATFORM_INTERNAL_URL=http://127.0.0.1:8080 GGD_DEPLOY_TIER=private go -C /Users/Takuro/GGD/apps/platform run ./cmd/platform"
+      ],
+      "port": 8080,
+      "comment": "task #188 LEDGER VERIFICATION lane — the platform half of `game-server-ledger`. Byte-identical to `platform-play` except GAME_SERVER_ADDR points at the private :2600 game-server instead of the contested :2567. Stays on :8080 because the client's vite proxy targets that port; only the game-server hop moves."
+    },
+    {
       "name": "testrunner",
       "runtimeExecutable": "go",
       "runtimeArgs": [
@@ -20,7 +60,8 @@
         "@ggd/game-server",
         "dev"
       ],
-      "port": 2567
+      "port": 2567,
+      "comment": "task #48: this plain entry now REACHES a local platform. GGD_PLATFORM_URL used to default to the k8s host `platform:8080`, unresolvable on a dev box, so curation/combat-env/server-ops silently served defaults on every local match; the default is now http://localhost:8080 (the `platform` entry's bind address) and the k8s host is only chosen when KUBERNETES_SERVICE_HOST proves we are in a pod. Boot prints `[platform] OK ... — curation: N champion(s) enabled`, or a DEGRADED banner if the platform is not up; GET :2567/healthz repeats it under `platform`."
     },
     {
       "name": "game-server-seam",
@@ -35,10 +76,9 @@
       "port": 2567
     },
     {
-      "name": "game-server-platform",
+      "name": "game-server-nowhitelist",
       "runtimeExecutable": "env",
       "runtimeArgs": [
-        "GGD_PLATFORM_URL=http://127.0.0.1:8080",
         "GGD_WHITELIST_BYPASS=1",
         "pnpm",
         "--filter",
@@ -46,7 +86,7 @@
         "dev"
       ],
       "port": 2567,
-      "comment": "game-server that can actually reach a LOCAL platform (the built-in default is the k8s host `platform:8080`, which never resolves on a dev box, so combat-env/curation always fail safe). Whitelist stays bypassed so the default-empty curation list cannot filter the roster to zero."
+      "comment": "WAS `game-server-platform`, whose only real job was the GGD_PLATFORM_URL workaround for #48 — that is fixed in config/platformUrl.ts, so the override is gone and this entry keeps just its second, still-legitimate purpose: GGD_WHITELIST_BYPASS=1 so a default-EMPTY curation list cannot filter the roster to zero while you are testing something unrelated. Note the bypass skips the whitelist fetch entirely, so it also suppresses the #48 curation warning — use the plain `game-server` entry when you want to SEE whether the platform is reachable."
     },
     {
       "name": "game-server-lan",
@@ -61,7 +101,7 @@
         "dev"
       ],
       "port": 2567,
-      "comment": "LAN group playtest — friends open http://172.16.0.4:39527 . Two things the plain `game-server` config lacks and a real 2-friend match needs (proven by the beta probe): (1) PLATFORM_GAME_SHARED_SECRET=devseam matches the `platform` config's secret, so the platform's HMAC match-create is accepted instead of 401→502 game_rejected at 開始; (2) GAME_PUBLIC_ENDPOINT points match_ready at THIS host's LAN IP, because the platform flow pushes that literal string to every client verbatim and the default ws://localhost:2567 makes a friend dial their OWN box → infinite loading. Deliberately NO GGD_WHITELIST_BYPASS: once the platform serves the real 48-champ whitelist, picks must be gated by it. IP = this host's current en0 address; re-check with `ipconfig getifaddr en0` if the network changes."
+      "comment": "GGD_PLATFORM_URL is kept EXPLICIT here even though #48 made http://localhost:8080 the default, because a LAN host is exactly where you want no ambiguity about which platform served the whitelist. LAN group playtest — friends open http://172.16.0.4:39527 . Two things the plain `game-server` config lacks and a real 2-friend match needs (proven by the beta probe): (1) PLATFORM_GAME_SHARED_SECRET=devseam matches the `platform` config's secret, so the platform's HMAC match-create is accepted instead of 401→502 game_rejected at 開始; (2) GAME_PUBLIC_ENDPOINT points match_ready at THIS host's LAN IP, because the platform flow pushes that literal string to every client verbatim and the default ws://localhost:2567 makes a friend dial their OWN box → infinite loading. Deliberately NO GGD_WHITELIST_BYPASS: once the platform serves the real 48-champ whitelist, picks must be gated by it. IP = this host's current en0 address; re-check with `ipconfig getifaddr en0` if the network changes."
     },
     {
       "name": "platform",
@@ -98,6 +138,7 @@
         "PLATFORM_INTERNAL_URL=http://127.0.0.1:8080",
         "GGD_DEPLOY_TIER=private",
         "GGD_REQUIRE_INVITE=1",
+        "GGD_REQUIRE_APPROVAL=1",
         "GGD_REGISTER_RATE_LIMIT=20",
         "go",
         "-C",
@@ -106,7 +147,7 @@
         "./cmd/platform"
       ],
       "port": 8080,
-      "comment": "task #174: the FAMILY-BUILD posture of the same platform — registration requires an invite code minted in the admin console (邀請碼). The plain `platform` entry stays open because it binds loopback (see config.resolveRequireInvite); this entry is what the deploy actually runs. Its own DATA_DIR so exercising the gate never writes into the dev store. Add GGD_OWNER_BOOTSTRAP_TOKEN=1 on a real deploy to close the first-account window too."
+      "comment": "tasks #174 + #126: the FAMILY-BUILD posture of the same platform — BOTH registration gates on, matching docker/compose.family.yaml. GGD_REQUIRE_INVITE=1 means a registration must burn a code minted in the admin console (邀請碼); GGD_REQUIRE_APPROVAL=1 means the account that code creates lands PENDING and cannot play until an admin approves it (帳號審核). Both are set EXPLICITLY because this entry binds loopback, where config.go's address heuristic correctly defaults both gates off (see config.resolveRequireInvite / resolveRequireApproval) — the plain `platform` entry is that open dev posture; this one is the rehearsal of what the deploy actually runs. Its own DATA_DIR so exercising the gates never writes into the dev store. Add GGD_OWNER_BOOTSTRAP_TOKEN=1 on a real deploy to close the first-account window too."
     },
     {
       "name": "client",
@@ -157,6 +198,22 @@
         "--strictPort"
       ],
       "port": 5199
+    },
+    {
+      "name": "client-playtest",
+      "runtimeExecutable": "env",
+      "runtimeArgs": [
+        "VITE_GAME_WS=ws://localhost:2599",
+        "pnpm",
+        "--filter",
+        "@ggd/client",
+        "dev",
+        "--port",
+        "5205",
+        "--strictPort"
+      ],
+      "port": 5205,
+      "comment": "Playtest lane: an isolated client pinned to the SECRET-FREE game-server on :2599 (`game-server-mobile`). Needed because the :2567 game-server is often running with PLATFORM_GAME_SHARED_SECRET set (the #180/#126 seam), which makes MatchRoom.onCreate refuse every client-created offline match — the `Play offline vs bots` button then only shows 正式主機請由登入 → 大廳開始遊戲. Same client source as :39527."
     },
     {
       "name": "test-dashboard",

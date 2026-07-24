@@ -33,6 +33,7 @@ import { buildSkinOverrides } from "./catalog";
 import { isPlatformRestrictedError, OFFLINE_RESTRICTED_MESSAGE } from "./firstOwner";
 import { restartAction, ONLINE_RESTART_NOTE } from "./restart";
 import { connectedPadIndices } from "../../input/GamepadInput";
+import { setLocalDisplayName } from "../../net/RoomConnection";
 import { appendPage, hasMore, nextOffset, PAGE_SIZE } from "./ranking";
 import type {
   AccountPublic,
@@ -60,6 +61,15 @@ export type LobbyView = "play" | "store";
  * the two never overlap. >=1000ms is load-bearing — do not shorten it.
  */
 export const MATCH_LOADING_MIN_MS = 1000;
+
+/**
+ * How long the lobby waits for the seat token of a one-click bot match (#188)
+ * before telling the player something went wrong. The platform has already
+ * created and started the match by the time the POST returns, so the only thing
+ * that can still be missing is the lobby WebSocket push — a state the player
+ * cannot see and would otherwise wait in forever.
+ */
+export const BOT_MATCH_SEAT_TIMEOUT_MS = 12_000;
 
 /**
  * A match launch staged behind the loading transition (task #74). While this is
@@ -146,6 +156,12 @@ export interface AppState {
   matchLoading: MatchLoading | null;
   /** bumped to force a clean GameApp teardown+recreate (offline Restart) */
   matchEpoch: number;
+  /**
+   * A one-click bot match has been requested and the seat token has not landed
+   * yet (#188). The button reads "開房中…" and cannot be pressed twice — one
+   * click must not become two matches.
+   */
+  botMatchBusy: boolean;
   lastError: string | null;
 
   // ------------------------------------------------------------ actions --
@@ -196,6 +212,13 @@ export interface AppState {
   setPick(championId: string): void;
   setLocalPlayers(count: number): Promise<void>;
   startMatch(): Promise<void>;
+  /**
+   * ONE-CLICK BOT MATCH (#188) — 「一鍵開房直接玩」. A real, settling match:
+   * the platform creates a private room, starts it with 11 bots and pushes the
+   * seat token over the lobby WS, so it records, rates and pays half crystals.
+   * This is NOT `playOffline`, which is the dev direct-join and settles nowhere.
+   */
+  playBotMatch(mapId?: string): Promise<void>;
   createInvite(accountId: string, username: string): Promise<void>;
   joinByCode(token: string): Promise<void>;
   dismissInvite(token: string): void;
@@ -277,6 +300,10 @@ export const appStore = createStore<AppState>()((set, get) => {
 
   /** Common post-auth landing: load lobby data + open the WS. */
   async function enterLobby(account: AccountPublic): Promise<void> {
+    // Publish the username to the net layer so the dev/LAN direct-join path can
+    // claim its seat by name (#156) — net/* can't reach into this store, and
+    // the offline launch payload never passes through a seat reservation.
+    setLocalDisplayName(account.username);
     set({
       screen: "lobby",
       lobbyView: "play",
@@ -377,6 +404,7 @@ export const appStore = createStore<AppState>()((set, get) => {
     match: null,
     matchLoading: null,
     matchEpoch: 0,
+    botMatchBusy: false,
     lastError: null,
 
     // ------------------------------------------------------------- auth --
@@ -454,6 +482,7 @@ export const appStore = createStore<AppState>()((set, get) => {
         /* ignore */
       }
       api.setTokens(null);
+      setLocalDisplayName(""); // never name the next session's seats after the last user
       set({
         screen: "auth",
         account: null,
@@ -477,6 +506,7 @@ export const appStore = createStore<AppState>()((set, get) => {
         purchase: purchaseIdle,
         match: null,
         matchLoading: null,
+        botMatchBusy: false,
       });
     },
 
@@ -517,7 +547,7 @@ export const appStore = createStore<AppState>()((set, get) => {
 
     async returnToLobby() {
       const s = get();
-      set({ screen: s.account ? "lobby" : "auth", match: null, myReady: false });
+      set({ screen: s.account ? "lobby" : "auth", match: null, myReady: false, botMatchBusy: false });
       if (!s.account) return;
       // the played room is now in-match: leave it and refresh lobby data
       if (s.room) {
@@ -693,6 +723,30 @@ export const appStore = createStore<AppState>()((set, get) => {
       } catch (err) {
         set({ lastError: errText(err) });
       }
+    },
+
+    async playBotMatch(mapId?: string) {
+      if (get().botMatchBusy) return; // one click is one match
+      set({ botMatchBusy: true, lastError: null });
+      try {
+        await apiFns.startSoloMatch(mapId ? { mapId } : undefined);
+      } catch (err) {
+        set({ botMatchBusy: false, lastError: errText(err) });
+        return;
+      }
+      // The match now EXISTS on the platform; the seat token follows over the
+      // lobby WS and onWsMessage flips the screen. If it never arrives (a WS
+      // that dropped between the click and the push) the player would sit in a
+      // lobby staring at a spinner while a real match ticks away without him —
+      // so say so rather than hang. The match itself is unaffected: it settles
+      // or the #187 reaper closes it out.
+      setTimeout(() => {
+        if (!get().botMatchBusy || get().screen !== "lobby") return;
+        set({
+          botMatchBusy: false,
+          lastError: "開房成功但沒收到座位（大廳連線可能斷了）— 重新整理後再試一次",
+        });
+      }, BOT_MATCH_SEAT_TIMEOUT_MS);
     },
 
     async createInvite(accountId, username) {
@@ -882,6 +936,8 @@ export const appStore = createStore<AppState>()((set, get) => {
           // snapshot the pre-match standing for the post-match rank-delta screen
           rankBefore: get().myStanding,
           showRankChange: false,
+          // the seat arrived: a pending one-click bot match is no longer pending
+          botMatchBusy: false,
           match: platformLaunch(mr.matchId, mr.endpoint, mr.seatToken, mr.seatTokens),
         });
         return;

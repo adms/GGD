@@ -101,6 +101,8 @@ func Parse(data []byte) (*Registry, error) {
 
 // Load reads and parses a suites.yaml file.
 func Load(path string) (*Registry, error) {
+	// #nosec G304 -- `path` is the checked-in tools/testrunner/suites.yaml,
+	// resolved from the repo root, not from user input.
 	data, err := os.ReadFile(path)
 	if err != nil {
 		return nil, err

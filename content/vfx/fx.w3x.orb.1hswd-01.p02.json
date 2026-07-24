@@ -1,0 +1,84 @@
+{
+  "id": "fx.w3x.orb.1hswd-01.p02",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.695,
+    "angleDeg": 45
+  },
+  "mode": "continuous",
+  "lifetimeSec": {
+    "min": 2,
+    "max": 2
+  },
+  "size": {
+    "start": 0.077,
+    "end": 0.135
+  },
+  "color": {
+    "start": [
+      0.871,
+      1,
+      0.89,
+      0
+    ],
+    "end": [
+      0.133,
+      0.529,
+      0.133,
+      0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        0.871,
+        1,
+        0.89,
+        0
+      ]
+    ],
+    [
+      0.25,
+      [
+        0.243,
+        0.859,
+        0.271,
+        0.059
+      ]
+    ],
+    [
+      1,
+      [
+        0.133,
+        0.529,
+        0.133,
+        0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.077
+    ],
+    [
+      0.25,
+      0.096
+    ],
+    [
+      1,
+      0.135
+    ]
+  ],
+  "blendMode": "additive",
+  "speed": {
+    "min": 0,
+    "max": 0.4214
+  },
+  "rate": 500,
+  "texture": "assets/textures/particles/smoke_01.png",
+  "anchorBone": "bone_b11",
+  "ambient": true
+}

@@ -49,6 +49,8 @@ import {
   type WritePlanStep,
 } from "@ggd/shared/content/editModel";
 import { createContentEditApi, type BackupEntry, type ContentEditApi, type EditIssue } from "../contentApi";
+import { createIconApi, type IconApi } from "../icons/iconApi";
+import { IconGenButton, IconGenStrip, useIconGen, type IconGen } from "./IconGenStrip";
 import { loadCollection, contentAssetUrl } from "../content";
 import type { ContentRow } from "../curation";
 import {
@@ -119,6 +121,8 @@ type Tone = "ok" | "warn" | "err";
 export interface ContentPageProps {
   /** the dev-only write API (injected in tests) */
   api: ContentEditApi;
+  /** the dev-only icon-generation daemon client (#186; injected in tests) */
+  icons?: IconApi;
 }
 
 /**
@@ -139,10 +143,11 @@ export const CONTENT_NAV = { page: "content", label: "內容管理", emoji: "�
  */
 export function ContentPageRoot(): React.JSX.Element {
   const api = useMemo(() => createContentEditApi(), []);
-  return <ContentPage api={api} />;
+  const icons = useMemo(() => createIconApi(), []);
+  return <ContentPage api={api} icons={icons} />;
 }
 
-export function ContentPage({ api }: ContentPageProps): React.JSX.Element {
+export function ContentPage({ api, icons }: ContentPageProps): React.JSX.Element {
   const [tab, setTab] = useState<EditCollection>("champions");
   const [rows, setRows] = useState<ContentRow[]>([]);
   const [listError, setListError] = useState<string | null>(null);
@@ -170,6 +175,18 @@ export function ContentPage({ api }: ContentPageProps): React.JSX.Element {
         .finally(() => setLoading(false));
     },
     [],
+  );
+
+  // ---- auto icon generation (task #186) ------------------------------------
+  // The console must not create letter tiles. `useIconGen` owns a queue+poll
+  // against the loopback icon daemon; `gen.request` is FIRE-AND-FORGET by
+  // contract, so nothing below can put a GPU on the save path. When a job
+  // finishes it wrote a WebP (and, off the augment path, the doc's `icon`
+  // field), so the list re-reads and the art actually appears.
+  const iconApi = useMemo(() => icons ?? createIconApi(), [icons]);
+  const gen = useIconGen(
+    iconApi,
+    useCallback(() => reloadList(tab), [reloadList, tab]),
   );
 
   useEffect(() => {
@@ -210,13 +227,28 @@ export function ContentPage({ api }: ContentPageProps): React.JSX.Element {
         setCreateMsg({ text: `新增失敗：${detail ?? "未知錯誤"}`, tone: "err" });
         return;
       }
-      setCreateMsg({ text: `已新增 ${id}，右邊直接編輯。`, tone: "ok" });
+      setCreateMsg({
+        text:
+          `已新增 ${id}，右邊直接編輯。` +
+          (gen.mode === "live"
+            ? "圖示已排入自動產生，不用等它。"
+            : gen.mode === "readonly"
+              ? "（圖示待補：產圖服務未啟動，先用文字方塊顯示。）"
+              : ""),
+        tone: "ok",
+      });
       setNewId("");
       reloadList(tab);
       refreshStatus();
       setSelectedId(id);
+      // #186 — THE SEAM. Fired AFTER the doc exists and AFTER the success
+      // message is on screen, and never awaited: a two-pass render is
+      // seconds-to-minutes and the owner is mid-typing. A failed or skipped
+      // generation leaves a perfectly valid document; it can never leave a
+      // half-created one, because the document is already written.
+      gen.request(tab, id);
     })();
-  }, [api, tab, newId, rows, reloadList, refreshStatus]);
+  }, [api, tab, newId, rows, reloadList, refreshStatus, gen]);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 14, height: "100%" }}>
@@ -263,6 +295,14 @@ export function ContentPage({ api }: ContentPageProps): React.JSX.Element {
               )}
             </div>
           )}
+          {/* #186: the auto-icon progress surface. Rendered for EVERY tab, not
+              only the creatable one — 補圖 applies to any doc that lost its art,
+              and the「服務沒開，圖示待補」sentence must be visible before the
+              owner wonders why nothing happened. Absent entirely when the gate
+              is off (IconGenStrip returns null). */}
+          <div style={{ marginTop: 8 }}>
+            <IconGenStrip gen={gen} />
+          </div>
           <div style={{ fontSize: 11, color: TEXT_DIM, margin: "8px 0" }}>
             {loading ? "載入中…" : `${filtered.length} / ${rows.length}`}
           </div>
@@ -289,6 +329,7 @@ export function ContentPage({ api }: ContentPageProps): React.JSX.Element {
             <DocEditor
               key={`${tab}:${selectedId}`}
               api={api}
+              gen={gen}
               collection={tab}
               id={selectedId}
               canDelete={CREATABLE.has(tab)}
@@ -391,6 +432,8 @@ function ListRow(props: {
 
 function DocEditor(props: {
   api: ContentEditApi;
+  /** #186 — the icon daemon handle, so one document can ask for its own art */
+  gen: IconGen;
   collection: EditCollection;
   id: string;
   canDelete: boolean;
@@ -668,6 +711,17 @@ function DocEditor(props: {
             <Badge color={TEXT_DIM}>沒有嵌入副本（EX 或未掛在英雄上）</Badge>
           )}
           <div style={{ flex: 1 }} />
+          {/* #186. `hasIcon` drives BOTH the label and the force flag, so 重畫
+              can only ever redraw art this pipeline made — the daemon refuses to
+              overwrite w3x / hand-picked art whatever this sends. Augments have
+              no `icon` field by schema, so they always read 補圖示 and the daemon
+              answers 已經有圖 if the conventional WebP is already there. */}
+          <IconGenButton
+            gen={props.gen}
+            collection={collection}
+            id={id}
+            hasIcon={typeof doc["icon"] === "string" && doc["icon"] !== ""}
+          />
           <Btn small onClick={reload} disabled={busy}>
             重新載入
           </Btn>

@@ -5,7 +5,7 @@
  */
 import type { EntityId, SeatId, TeamId, ChampionId, ItemId, AugmentId, ProjectileId, StatusId } from "../ids";
 import type { Vec2 } from "./math/vec2";
-import type { AbilitySlot, Order } from "./intents";
+import type { CastableSlot, Order } from "./intents";
 
 /** Planar transform: position (x,z), unit facing, collision radius. NO y. */
 export interface Transform {
@@ -70,7 +70,7 @@ export interface ProjectileComp {
   rank: number;
   origin: string;
   /** slot of the spawning ability (for slot-conditioned onAbilityHit hooks) */
-  abilitySlot?: AbilitySlot;
+  abilitySlot?: CastableSlot;
   /**
    * Basic-attack projectile (ranged auto). On impact it applies `basicDamage`
    * as origin "basic" (feeds lifesteal) and fires `onBasicAttack` item hooks —

@@ -1,0 +1,84 @@
+{
+  "id": "godie-niya-p0",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.209,
+    "angleDeg": 63.5
+  },
+  "mode": "continuous",
+  "rate": 250.0,
+  "lifetimeSec": {
+    "min": 0.365,
+    "max": 0.365
+  },
+  "size": {
+    "start": 1.198,
+    "end": 0.08
+  },
+  "color": {
+    "start": [
+      0.0,
+      0.392,
+      1.0,
+      1.0
+    ],
+    "end": [
+      1.0,
+      1.0,
+      1.0,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        0.0,
+        0.392,
+        1.0,
+        1.0
+      ]
+    ],
+    [
+      0.5,
+      [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      1.198
+    ],
+    [
+      0.5,
+      0.798
+    ],
+    [
+      1,
+      0.08
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/flame_03.png",
+  "stretched": true,
+  "tailLength": 0.2,
+  "speed": {
+    "min": 59.2302,
+    "max": 62.4612
+  }
+}

@@ -16,12 +16,13 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { zArenaDoc, type ArenaDoc } from "@ggd/shared/content";
-import { Arenas } from "@ggd/shared/content";
+import { Arenas, Configs } from "@ggd/shared/content";
 import { SKELETON_ARENA } from "@ggd/shared/sim/world/ArenaDef";
 import { asSeatId } from "@ggd/shared/ids";
 import { DEFAULT_COMBAT_ENV, normalizeCombatEnv } from "@ggd/shared/sim/combatEnv";
 import { MatchController, type SeatSpec } from "../match/MatchController";
 import { DEFAULT_ARENA_RULES } from "../match/arenaRules";
+import { resolveStartingLives } from "../match/phaseConfig";
 import { AIDriver } from "../ai/Tier0Brain";
 import { HumanDriver } from "../seat/HumanDriver";
 import { Whitelist } from "../curation/whitelist";
@@ -226,6 +227,34 @@ describe("record → replay", () => {
     expect([...p.ctl.seats.values()].map((s) => s.championId)).toEqual(
       [...rec.ctl.seats.values()].map((s) => s.championId),
     );
+  }, 60_000);
+
+  /**
+   * The lives-config compat guard. `match.startingTeamLives` is now READ from
+   * `config.match@1` instead of being a hardcoded 3, which means the live value
+   * can move between the day a replay is recorded and the day it is watched —
+   * and a replay whose reservoir silently changed is not a replay, it is a
+   * different match. The header records the reservoir the match actually ran on
+   * and `ReplayPlayer.reset` feeds THAT back; `resolveStartingLives()` is never
+   * called on the playback path. This test moves the live config to 8 underneath
+   * a recording taken at 3 and proves playback still runs on 3.
+   */
+  it("plays a 3-life recording on 3 lives after the live config moves to 8", async () => {
+    const rec = await recordMatch("rt-lives", 20260724);
+    // The live content now says 8 — as `content/config/config.match.json` does.
+    Configs.register({ id: "config.match", schema: "config@1", match: { startingTeamLives: 8 } } as never);
+    try {
+      expect(resolveStartingLives()).toBe(8);
+      const p = await playFully("rt-lives");
+      // Rebuilt from the HEADER, not from the live doc.
+      expect(p.ctl.startingLives).toBe(3);
+      expect(p.divergence).toBeNull();
+      expect(p.ctl.world.digest()).toBe(rec.finalWorld);
+      expect([...p.ctl.lives.values()]).toEqual([...rec.ctl.lives.values()]);
+      expect(p.ctl.phase.round).toBe(rec.ctl.phase.round);
+    } finally {
+      Configs.clear();
+    }
   }, 60_000);
 
   it("indexes rounds so the viewer can jump to one without simulating first", async () => {

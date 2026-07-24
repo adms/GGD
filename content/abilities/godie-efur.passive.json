@@ -2,6 +2,7 @@
   "id": "godie-efur.passive",
   "schema": "ability@1",
   "name": "13-00 狂氣",
+  "icon": "assets/icons/abilities/godie-efur.passive.webp",
   "description": "[輔助]\n45秒冷卻時間\n\n增加自身攻擊速度200%，但是每秒損失30點生命值，持續9秒。",
   "slot": "PASSIVE",
   "innateKind": "active",

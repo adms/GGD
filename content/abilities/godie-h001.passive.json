@@ -2,6 +2,7 @@
   "id": "godie-h001.passive",
   "schema": "ability@1",
   "name": "41-00 木乃伊的詛咒",
+  "icon": "assets/icons/abilities/godie-h001.passive.webp",
   "description": "[輔助]\n25秒冷卻時間\n\n降低指定敵方部隊45%的移動速度，50%的攻擊速度，以及30%的破壞力，可持續4秒。",
   "slot": "PASSIVE",
   "innateKind": "active",

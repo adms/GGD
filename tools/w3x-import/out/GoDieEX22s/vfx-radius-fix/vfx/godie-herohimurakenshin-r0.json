@@ -1,0 +1,16 @@
+{
+  "id": "godie-herohimurakenshin-r0",
+  "schema": "ribbon@1",
+  "texture": "assets/textures/particles/wc3/ribbonblur1.png",
+  "widthAbove": 0.643,
+  "widthBelow": 0.644,
+  "lifespanSec": 0.35,
+  "color": [
+    0.486,
+    0.514,
+    0.494,
+    0.35
+  ],
+  "blendMode": "additive",
+  "anchorBone": "Sword"
+}

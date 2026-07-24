@@ -6,12 +6,13 @@
  * channel. This module coerces an untrusted value into a SAFE InputMessage:
  *
  *   • unknown `cmd.kind` is dropped;
- *   • ability `slot` is whitelisted to the literal {Q,W,E,R,EX} set — a
- *     prototype-name slot ('__proto__' / 'constructor' / 'toString' / …) can
- *     never survive, so it can never index `ab.slots[slot]` into a truthy
- *     Object.prototype member and reach `Abilities.get(undefined)`, which THROWS
- *     and (via the task-#46 tick catch) would disconnect the whole match room
- *     — a one-message DoS (finding: prototype-key / payload-injection);
+ *   • ability `slot` is whitelisted to a literal set — a prototype-name slot
+ *     ('__proto__' / 'constructor' / 'toString' / …) can never survive, so it
+ *     can never index `ab.slots[slot]` into a truthy Object.prototype member and
+ *     reach `Abilities.get(undefined)`, which THROWS and (via the task-#46 tick
+ *     catch) would disconnect the whole match room — a one-message DoS
+ *     (finding: prototype-key / payload-injection). TWO sets, because the two
+ *     commands speak two different alphabets (see {@link CAST_SLOTS});
  *   • `itemSlot` must be an integer in [0, INVENTORY_SLOTS) — same reasoning for
  *     `champ.items[itemSlot]` -> `Items.get(Array.prototype)`;
  *   • every coordinate must be a FINITE number (no NaN / Infinity poisoning the
@@ -24,7 +25,14 @@
  * dependency-light so it unit-tests without a Colyseus room, and so it adds no
  * per-message allocation beyond the sanitized copy.
  */
-import type { AbilitySlot, CastTarget, Command, Order, OrderKind } from "@ggd/shared/sim/intents";
+import type {
+  AbilitySlot,
+  CastTarget,
+  CastableSlot,
+  Command,
+  Order,
+  OrderKind,
+} from "@ggd/shared/sim/intents";
 import type { Vec2 } from "@ggd/shared/sim/math/vec2";
 import type { EntityId } from "@ggd/shared/ids";
 import type { InputMessage } from "@ggd/shared/protocol/messages";
@@ -39,7 +47,36 @@ const SEQ_MODULO = 65536;
 
 // Sets — NOT plain object lookups — so a prototype-name key ('__proto__', …)
 // can never test as a member (Set uses SameValueZero, ignores the prototype).
+
+/**
+ * The RANKABLE slots — the only thing `rankUpAbility` may name. Deliberately
+ * does NOT contain "PASSIVE": the 天生技 is owned at rank 1 from spawn and has no
+ * second column to buy, so ranking it is meaningless and stays unreachable from
+ * the wire. Mirrors the shared `AbilitySlot` alphabet exactly.
+ */
 const ABILITY_SLOTS: ReadonlySet<string> = new Set<AbilitySlot>(["Q", "W", "E", "R", "EX"]);
+
+/**
+ * The CASTABLE slots — what `castAbility` may name. Mirrors the shared
+ * `CastableSlot` alphabet, i.e. `AbilitySlot` PLUS the sixth slot.
+ *
+ * WHY THIS SET EXISTS AT ALL (the silent drop this fixed): the sim had already
+ * opened the innate cast path — `CastableSlot`, `Command.castAbility`,
+ * `abilityInstanceFor`, the cooldown tick, the whole ladder — and the 60
+ * `innateKind: "active"` 天生技 fire correctly when the command reaches
+ * `world.step`. But THIS validator still whitelisted {Q,W,E,R,EX}, so a
+ * perfectly well-formed `{ kind: "castAbility", slot: "PASSIVE" }` off a real
+ * client was DROPPED HERE, silently, one layer above the code that was ready
+ * for it. No throw, no log, no `castRejected` — the player pressed the key and
+ * the universe said nothing. Widening the cast set (and only the cast set) is
+ * what makes the sixth button reach the sim.
+ *
+ * The prototype-key guarantee is unchanged: this is still a literal Set, so
+ * '__proto__' / 'constructor' / 'toString' remain non-members, and
+ * `abilityInstanceFor` additionally resolves every slot by explicit equality —
+ * junk can never fall through to `passiveSlot` (innateActive.ts).
+ */
+const CAST_SLOTS: ReadonlySet<string> = new Set<CastableSlot>(["Q", "W", "E", "R", "EX", "PASSIVE"]);
 const ORDER_KINDS: ReadonlySet<string> = new Set<OrderKind>([
   "move",
   "attackMove",
@@ -108,10 +145,10 @@ export function sanitizeCommand(raw: unknown): Command | undefined {
   const c = raw as Record<string, unknown>;
   switch (c.kind) {
     case "castAbility": {
-      if (typeof c.slot !== "string" || !ABILITY_SLOTS.has(c.slot)) return undefined;
+      if (typeof c.slot !== "string" || !CAST_SLOTS.has(c.slot)) return undefined;
       const target = toCastTarget(c.target);
       if (!target) return undefined;
-      return { kind: "castAbility", slot: c.slot as AbilitySlot, target };
+      return { kind: "castAbility", slot: c.slot as CastableSlot, target };
     }
     case "useItem": {
       const itemSlot = toItemSlot(c.itemSlot);

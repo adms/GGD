@@ -1,0 +1,83 @@
+{
+  "id": "fx.w3x.orb.demonfilth.p02",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.001,
+    "angleDeg": 180
+  },
+  "mode": "continuous",
+  "lifetimeSec": {
+    "min": 5,
+    "max": 5
+  },
+  "size": {
+    "start": 1.528,
+    "end": 2.111
+  },
+  "color": {
+    "start": [
+      1,
+      0,
+      0,
+      0
+    ],
+    "end": [
+      0.502,
+      0,
+      0,
+      0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        0,
+        0,
+        0
+      ]
+    ],
+    [
+      0.5,
+      [
+        0.667,
+        0,
+        0,
+        1
+      ]
+    ],
+    [
+      1,
+      [
+        0.502,
+        0,
+        0,
+        0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      1.528
+    ],
+    [
+      0.5,
+      1.806
+    ],
+    [
+      1,
+      2.111
+    ]
+  ],
+  "blendMode": "alpha",
+  "speed": {
+    "min": 0.6945,
+    "max": 0.6945
+  },
+  "rate": 5,
+  "texture": "assets/textures/particles/smoke_07.png",
+  "ambient": true
+}

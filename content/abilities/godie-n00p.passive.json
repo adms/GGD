@@ -2,6 +2,7 @@
   "id": "godie-n00p.passive",
   "schema": "ability@1",
   "name": "18-00 薔薇荊棘之刃",
+  "icon": "assets/icons/abilities/godie-n00p.passive.webp",
   "description": "[被動]\n0秒冷卻時間\n\n薔薇荊棘之刃可以讓葉片像刀刃一般劃過多個敵人，最多可同時攻擊3個敵人，每彈跳一次傷害就下降25%。\n\n注意:本技能與帶有法球效應的裝備衝突",
   "slot": "PASSIVE",
   "innateKind": "passive",

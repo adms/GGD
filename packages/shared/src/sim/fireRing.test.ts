@@ -259,4 +259,30 @@ describe("config.match@1 fireRing schedule (firering-config)", () => {
     (doc.match as Record<string, unknown>).combatMaxSec = 120; // < startSec 180
     expect(() => zConfigMatchDoc.parse(doc)).toThrow(/startSec/);
   });
+
+  /**
+   * THE CUE FORMULA, PROVEN AGAINST THE SIM'S OWN TICK MATH.
+   *
+   * The client never sees combat-ELAPSED time; the HUD carries `phaseSecondsLeft`,
+   * counting DOWN from `combatMaxSec`. So every client-side cue for the ring
+   * (`apps/client/src/audio/fireRingWindow.ts`: the tension BGM bed and the
+   * minimap danger rim) is driven by
+   *
+   *     secondsLeftAtIgnition = combatMaxSec - fireRing.startSec
+   *
+   * That was a hardcoded `30` until 2026-07-24 while the authored config made it
+   * 60 — the cues fired half a minute after champions had started burning, with
+   * no test, no error and nothing tying the two numbers together. This asserts
+   * the identity from the TICK side, so the client's arithmetic is checked
+   * against the sim's, not merely against itself.
+   */
+  it("ignites with exactly (combatMaxSec - startSec) seconds left — the client's cue formula", () => {
+    cover("firering-config");
+    const parsed = zConfigMatchDoc.parse(shipped());
+    const combatMaxTicks = Math.round(parsed.match.combatMaxSec * 30);
+    const rules = fireRingRulesFromConfig(parsed.match.fireRing!, DT);
+    const ticksLeftAtIgnition = combatMaxTicks - rules.startTicks;
+    expect(ticksLeftAtIgnition / 30).toBe(parsed.match.combatMaxSec - parsed.match.fireRing!.startSec);
+    expect(ticksLeftAtIgnition / 30).toBe(60);
+  });
 });

@@ -23,6 +23,7 @@ import { useHud } from "../net/RoomStore";
 import { hudActions } from "./actions";
 import { exSlotView } from "./exSlot";
 import { innateKindLabel, passiveSlotView, PASSIVE_ACCENT, PASSIVE_SLOT_LABEL } from "./passiveSlot";
+import { INNATE_ACTIVE_CASTABLE } from "./castAnnounce";
 import { setHeldAbility } from "./abilityHold";
 import { abilityActivationCue } from "./abilityCue";
 import { prefersReducedMotion } from "./buttonSfx";
@@ -43,9 +44,11 @@ const ARC_RADIUS = 122;
 
 /**
  * 天生技 button center — one tile FURTHER LEFT than Q, on the attack button's
- * own row. Kept off the arc (and off the vertical) on purpose: it is the sixth,
- * non-castable slot, and a phone-landscape viewport is only ~390px tall, so
- * nothing may grow upward (#151/#159).
+ * own row. Kept OFF the Q/W/E/R arc even though an active innate is now a real
+ * cast button: the sixth slot is a once-per-40-seconds press, not part of the
+ * rotation the thumb sweeps, and a phone-landscape viewport is only ~390px
+ * tall so nothing may grow upward (#151/#159). Off-arc also keeps it out of the
+ * path of a mis-swiped Q.
  */
 const PASSIVE_CENTER = { right: ATTACK_CENTER + ARC_RADIUS + ABILITY_SIZE, bottom: ATTACK_CENTER };
 
@@ -407,21 +410,36 @@ export function TouchControls(): React.JSX.Element | null {
       })()}
 
       {/* 天生技 (the SIXTH slot) — the NN-00 innate owned from LEVEL 1. Violet,
-          dashed for a pure 被動 / solid for an 主動 innate, 天生 badge instead of
-          a hotkey letter and a Lv1 chip, so it never reads as a hotkey button
-          that does nothing. A finger-hold only opens the description panel;
-          there is no pressHandler and no touch-cast path at all. */}
+          dashed for a pure 被動 / solid for an 主動 innate, a 天生 badge and a Lv1
+          chip.
+          TWO BUTTONS IN ONE, by kind:
+            • 主動 innate — a REAL cast button: `pressHandler("PASSIVE")` hands
+              the finger to the same tap/drag-aim path Q/W/E/R use, so a phone
+              player fires it exactly like any other ability (the keyboard has D
+              and the pad has d-pad-up; leaving touch out would have made the
+              sixth slot a desktop-only feature).
+            • 被動 innate — still no cast path at all: the press only opens the
+              description panel and plays the soft tick, and an INERT one (doc
+              grants nothing) is dimmed and captioned 未實作 so it cannot pass
+              for one that works. */}
       {(() => {
         const innate = passiveSlotView(seat.championId);
         if (!innate) return null;
         const active = innate.innateKind === "active";
+        const castable = active && INNATE_ACTIVE_CASTABLE;
+        const inert = !active && !innate.effective;
+        const innateCdSecs = (seat.passiveCooldown ?? 0) / TICK_HZ;
         return (
           <div
             data-touch-slot="PASSIVE"
             onTouchStart={(e) => {
               pressVisualDown(e.currentTarget);
+              if (castable) pressHandler("PASSIVE")(e);
               setHeldAbility("PASSIVE");
-              abilityActivationCue("PASSIVE", { passive: true });
+              abilityActivationCue(
+                "PASSIVE",
+                castable ? { denied: innateCdSecs > 0 } : { passive: true },
+              );
             }}
             onTouchEnd={(e) => {
               pressVisualClear(e.currentTarget);
@@ -441,6 +459,8 @@ export function TouchControls(): React.JSX.Element | null {
               border: `2px ${active ? "solid" : "dashed"} ${PASSIVE_ACCENT}`,
               color: PASSIVE_ACCENT,
               fontWeight: "bold",
+              // dimmed when the doc grants nothing — see passiveSlot.effective
+              opacity: inert ? 0.55 : 1,
               transition: "transform 80ms ease, filter 80ms ease",
             }}
           >
@@ -462,7 +482,24 @@ export function TouchControls(): React.JSX.Element | null {
             >
               {innate.displayName}
             </div>
-            <div style={{ fontSize: 7.5, color: TEXT_DIM, lineHeight: 1.1 }}>Lv1</div>
+            <div style={{ fontSize: 7.5, color: TEXT_DIM, lineHeight: 1.1 }}>
+              {inert ? "未實作" : "Lv1"}
+            </div>
+            {/* cooldown sweep — only an active innate can carry one, and it must
+                be visible on the phone too or the button reads as ready during
+                its whole 40 s. Same shape as the Q/W/E/R sweeps above. */}
+            {innateCdSecs > 0 && (
+              <div
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  height: `${Math.min(1, innateCdSecs / (innate.cooldownSec ?? innateCdSecs)) * 100}%`,
+                  background: "rgba(8, 10, 16, 0.78)",
+                }}
+              />
+            )}
           </div>
         );
       })()}

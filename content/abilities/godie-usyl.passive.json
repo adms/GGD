@@ -2,19 +2,42 @@
   "id": "godie-usyl.passive",
   "schema": "ability@1",
   "name": "49-00 撲殺爪擊",
+  "icon": "assets/icons/abilities/godie-usyl.passive.webp",
   "description": "[主動傷害]\n60秒冷卻時間\n\n使出異形電影中常看見的逆推攻擊，造成目標150傷害之後還會將對方撞昏1.5秒。",
   "slot": "PASSIVE",
   "innateKind": "active",
   "castType": "targeted",
   "maxRank": 1,
-  "cooldown": [60.0],
-  "manaCost": [150.0],
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    150.0
+  ],
   "range": 1.83,
   "targetsEnemies": true,
   "effects": [
-    { "kind": "damage", "damageType": "magic",
-      "amount": { "perRank": [150.0], "ratios": [{ "stat": "ap", "coeff": 0.6 }] } },
-    { "kind": "applyStatus", "statusId": "burnstun", "duration": 1.5, "stun": true }
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          150.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "burnstun",
+      "duration": 1.5,
+      "stun": true
+    }
   ],
   "vfxKey": "fx.prim.physical.slash",
   "castTimeSec": 0.5

@@ -1,0 +1,15 @@
+{
+  "id": "godie-sd2-r2",
+  "schema": "ribbon@1",
+  "texture": "assets/textures/particles/wc3/ribbonblur1.png",
+  "widthAbove": 0.38,
+  "widthBelow": 0.57,
+  "lifespanSec": 0.1,
+  "color": [
+    0.404,
+    0.004,
+    0.631,
+    0.6
+  ],
+  "blendMode": "additive"
+}

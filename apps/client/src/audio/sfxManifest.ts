@@ -57,10 +57,19 @@
  * `intermission`), the legendary-orb gacha roll (legendaryRoll with `intermission`,
  * #82) and the cross-screen UI chrome (uiTabSwitch / uiToggle in the core). The
  * looping beds among them are flagged in {@link SFX_LOOPABLE}. The per-weapon and
- * per-element lab clips (attack-sword-*, bow/arrow/gunshot, magic-fire/ice/lightning,
- * cast-circle) are BOUND in the audio map so combat can route to them, but left to
- * lazy-load: a champion uses only one or two, so preloading the whole set would
- * re-inflate the very boot cost #63 removes. Only `mapFlavor*` stays fully absent.
+ * per-element lab clips (attack-sword-*, bow/arrow/gunshot, magicBolt,
+ * magic-fire/ice/lightning) are BOUND in the audio map so combat can route to
+ * them, but left to lazy-load: a champion uses only one or two, so preloading the
+ * whole set would re-inflate the very boot cost #63 removes. `castCircle` is the
+ * exception and IS warmed with combat — see its note in COMBAT_SFX. Only
+ * `mapFlavor*` stays fully absent.
+ *
+ * `magicBolt` (the caster basic attack, added 2026-07-24) follows the per-weapon
+ * rule rather than the `castCircle` exception ON PURPOSE, even though it is the
+ * single most-fired weapon clip in the set (22 of 33 ranged champions, plus the
+ * ranged default): it is still PER-CHAMPION — a katana champion never loads it —
+ * and unlike `castCircle` it decorates nothing the victim must react to, so the
+ * one-time fetch latency costs a single early auto, not a dodge window.
  *
  * A third wave added the cues whose emit sites had landed ahead of their clips:
  * the guardian tower's slam + last-hit payout (#89/#105) with `combat`, and the
@@ -151,6 +160,14 @@ const COMBAT_SFX: readonly string[] = [
   // on the first tower fight of the round.
   "guardianSlam",
   "guardianLastHit",
+  // 魔法陣 wind-up (combatSfx `castBegin` → castCircle, castTimeSec ≥ 0.5 s).
+  // The other lab weapon/element clips stay lazy because they are PER-CHAMPION
+  // — a bow champion never loads the katana slash. This one is not: it is
+  // keyed on cast LENGTH, so ~a quarter of every champion's abilities in the
+  // game reach it, and it is the sound on the cast-telegraph pillar the victim
+  // is meant to react to. A cold fetch on the first big cast of the round would
+  // land the warning after the window it warns about, so warm it with combat.
+  "castCircle",
   // fired on the intermission→combat edge, so warm it as combat begins
   "roundStart",
 ];

@@ -2,14 +2,26 @@
   "id": "godie-uwar.passive",
   "schema": "ability@1",
   "name": "43-00 觀音大士的守護",
+  "icon": "assets/icons/abilities/godie-uwar.passive.webp",
   "description": "[被動]\n0秒冷卻時間\n\n由於受到觀音大士的庇祐，降低所有來自於穿刺型態的傷害至60%，攻擊時25%傷害會波及至附近的單位。",
   "slot": "PASSIVE",
   "innateKind": "passive",
   "castType": "self",
   "maxRank": 1,
-  "cooldown": [0.0],
-  "manaCost": [0.0],
+  "cooldown": [
+    0.0
+  ],
+  "manaCost": [
+    0.0
+  ],
   "range": 0,
   "effects": [],
-  "passive": { "name": "43-00 觀音大士的守護", "ranks": [{ "modifiers": [] }] }
+  "passive": {
+    "name": "43-00 觀音大士的守護",
+    "ranks": [
+      {
+        "modifiers": []
+      }
+    ]
+  }
 }

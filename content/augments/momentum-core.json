@@ -1,0 +1,37 @@
+{
+  "id": "momentum-core",
+  "schema": "augment@1",
+  "name": "動能核心",
+  "description": "施放技能後獲得 6 秒的 +25% 攻擊速度與 +15% 移動速度（4 秒冷卻）。",
+  "tier": "prismatic",
+  "weight": 28,
+  "hooks": [
+    {
+      "on": "onAbilityCast",
+      "target": "self",
+      "internalCooldown": 4,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "duration": 6,
+          "modifiers": [
+            {
+              "stat": "as",
+              "op": "pctAdd",
+              "value": 0.25
+            },
+            {
+              "stat": "ms",
+              "op": "pctAdd",
+              "value": 0.15
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "mobility",
+    "offense"
+  ]
+}

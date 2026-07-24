@@ -14,7 +14,14 @@
  * champion-name call-out and the confirm SFX) and the player may keep changing
  * their mind — UNTIL they press 鎖定 (or the clock runs out). Locking (see
  * champselect/lockGate) commits the current pick and freezes it: the roster, the
- * 🎲 button and every re-pick stop landing, and a 🔒 已鎖定 badge appears. The
+ * 🎲 button and every re-pick stop landing, and a 🔒 已鎖定 badge appears.
+ *
+ * THE COMMIT IS ALWAYS NAMED (playtest P1). Nothing here renders 🔒 已鎖定 off
+ * the raw `locked` boolean — every 「this is final」 surface (the header badge,
+ * the Lock In button, the banner, the seat strip, the footer hint) reads
+ * `lock.status`, which is "locked" only with a REAL champion in hand and
+ * "awaiting-auto" while the server's random is still on its way. So a seat can
+ * never present itself as 「… 🔒」 — locked onto nothing. The
  * lock is CLIENT-side only for now — a crafted client and the other players'
  * view still need a server `locked` flag (a documented apps/game-server
  * follow-up). The phase is an uninterruptible 60 s server-side; the only thing
@@ -55,7 +62,13 @@ import {
 } from "./champselect/previewGate";
 import { useWalletMeta, sortFavouritesFirst } from "./champselect/walletMeta";
 import { CrystalBadge, ChampMetaOverlay } from "./champselect/ChampMetaControls";
-import { observeLock, lockCurrentPick, pickAllowed, pickToCommitOnLock } from "./champselect/lockGate";
+import {
+  observeLock,
+  lockBanner,
+  lockCurrentPick,
+  pickAllowed,
+  pickToCommitOnLock,
+} from "./champselect/lockGate";
 
 /** inline <code> chip used by the whitelist empty-state instructions */
 const CODE: React.CSSProperties = {
@@ -125,9 +138,17 @@ export function ChampSelectPanel(): React.JSX.Element {
 
   // CLIENT-side pick LOCK (champselect/lockGate). Observing here is idempotent +
   // monotonic (a steady clock never flips it), so calling it in render is safe;
-  // it also AUTO-LOCKS when the clock hits 0 (the pick is final then, #130). An
-  // explicit 鎖定 forces one re-render to reflect the frozen state.
-  const locked = observeLock({ phase, secondsLeft, matchId });
+  // it also AUTO-LOCKS when the clock hits 0 (the pick is final then, #130) —
+  // but ONLY once a running clock has actually been seen, so the pre-roll
+  // snapshot (phase=champSelect + phaseTicksLeft=0, published by MatchRoom
+  // .onCreate before the first projectSnapshot) can no longer latch a lock onto
+  // an empty seat. An explicit 鎖定 forces one re-render to reflect the freeze.
+  // `lock.status` is never "locked" without a champion, so the panel physically
+  // cannot render 🔒 已鎖定 over nothing.
+  const lock = observeLock({ phase, secondsLeft, matchId, pick: myPick });
+  const locked = lock.locked;
+  const champName = (id: string): string => roster.find((c) => c.id === id)?.name ?? id;
+  const banner = lockBanner(lock.status, lock.autoAssigned, myPick ? champName(myPick) : "");
 
   // The champion the profile (and its 3D stage) is looking at: the CLICKED
   // preview, else the committed pick. Once locked the preview is dropped so the
@@ -274,8 +295,10 @@ export function ChampSelectPanel(): React.JSX.Element {
             <div style={{ fontSize: 16, fontWeight: "bold" }}>Choose your champion 選擇你的英雄</div>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               {meta.available && <CrystalBadge crystal={meta.crystal} />}
+              {/* the committed state is ALWAYS named — a 🔒 with no champion is
+                  exactly the P1 trap, so lock.status gates it, not `locked`. */}
               {myPick &&
-                (locked ? (
+                (lock.status === "locked" ? (
                   <div
                     style={{
                       fontSize: 11,
@@ -288,11 +311,12 @@ export function ChampSelectPanel(): React.JSX.Element {
                       whiteSpace: "nowrap",
                     }}
                   >
-                    🔒 已鎖定：{roster.find((c) => c.id === myPick)?.name ?? myPick}
+                    {lock.autoAssigned ? "🎲 隨機：" : "🔒 已鎖定："}
+                    {champName(myPick)}
                   </div>
                 ) : (
                   <div style={{ fontSize: 11, color: TEXT_DIM }}>
-                    已選：<span style={{ color: TEXT_MAIN }}>{roster.find((c) => c.id === myPick)?.name ?? myPick}</span>
+                    已選：<span style={{ color: TEXT_MAIN }}>{champName(myPick)}</span>
                   </div>
                 ))}
             </div>
@@ -315,13 +339,20 @@ export function ChampSelectPanel(): React.JSX.Element {
               }}
             >
               <span>{meta.error}</span>
-              <button
+              {/* #24: the dismiss ✕ on a real failure notice (e.g. not enough
+                  crystals). A control that removes the only explanation of why
+                  the last action failed should answer the click like every
+                  other button. `kind="ghost"` keeps it chromeless; the shared
+                  primitive supplies hover/click SFX + the press scale. */}
+              <SfxButton
+                kind="ghost"
+                sfxVolume={0.4}
                 onClick={meta.dismissError}
                 aria-label="dismiss"
                 style={{ background: "none", border: "none", color: "#f6b7b3", cursor: "pointer" }}
               >
                 ✕
-              </button>
+              </SfxButton>
             </div>
           )}
 
@@ -339,6 +370,33 @@ export function ChampSelectPanel(): React.JSX.Element {
               }}
             >
               {lastReject === "bad-champion" ? "此英雄尚未開放，請改選其他英雄。" : `選擇被拒：${lastReject}`}
+            </div>
+          )}
+
+          {/* THE COMMIT, SPELLED OUT (playtest P1). A frozen seat must never be a
+              silent 「… 🔒」: either it names the champion, or it says the system
+              is choosing one. lockBanner owns the wording + the invariant. */}
+          {banner && (
+            <div
+              style={{
+                marginBottom: 10,
+                padding: "7px 10px",
+                borderRadius: 8,
+                fontSize: 12,
+                fontWeight: "bold",
+                color:
+                  banner.tone === "waiting" ? "#f2d59a" : banner.tone === "auto" ? "#cfe0ff" : "#7fd898",
+                background:
+                  banner.tone === "waiting" ? "#3a2f14" : banner.tone === "auto" ? "#1d2740" : "#123322",
+                border:
+                  banner.tone === "waiting"
+                    ? "1px solid #e0a878"
+                    : banner.tone === "auto"
+                      ? "1px solid #6f8fe0"
+                      : "1px solid #2f7d4f",
+              }}
+            >
+              {banner.text}
             </div>
           )}
 
@@ -453,7 +511,13 @@ export function ChampSelectPanel(): React.JSX.Element {
                 onClick={lockIn}
                 disabled={locked || !myPick}
                 title={
-                  locked ? "已鎖定" : myPick ? "鎖定你的英雄 — 之後無法再更換" : "先選一隻英雄再鎖定"
+                  lock.status === "locked"
+                    ? `已鎖定：${champName(myPick)}`
+                    : lock.status === "awaiting-auto"
+                      ? "時間到 — 系統正在幫你選一隻英雄"
+                      : myPick
+                        ? "鎖定你的英雄 — 之後無法再更換"
+                        : "先選一隻英雄再鎖定"
                 }
                 style={{
                   width: "100%",
@@ -474,7 +538,11 @@ export function ChampSelectPanel(): React.JSX.Element {
                   opacity: !locked && !myPick ? 0.7 : 1,
                 }}
               >
-                {locked ? "🔒 已鎖定 LOCKED" : "🔒 鎖定英雄 Lock In"}
+                {lock.status === "locked"
+                  ? `🔒 已鎖定 LOCKED · ${champName(myPick)}`
+                  : lock.status === "awaiting-auto"
+                    ? "⏳ 系統選擇中… Assigning"
+                    : "🔒 鎖定英雄 Lock In"}
               </SfxButton>
 
               <div
@@ -604,10 +672,13 @@ export function ChampSelectPanel(): React.JSX.Element {
               gap: 6,
             }}
           >
+            {/* the seat strip shows the champion's NAME (not the raw id), and the
+                🔒 only ever sits next to a real one — 「Player 0: … 🔒」 was the
+                exact P1 symptom. A seat with no pick reads 選擇中…, not a lock. */}
             {seats.map((s) => (
               <span key={s.seatId} style={{ color: teamCss(s.teamId) }}>
-                {s.displayName || `Seat ${s.seatId}`}: {s.championId || "…"}
-                {locked && s.seatId === localSeatId ? " 🔒" : ""}
+                {s.displayName || `Seat ${s.seatId}`}: {s.championId ? champName(s.championId) : "選擇中…"}
+                {s.championId && lock.status === "locked" && s.seatId === localSeatId ? " 🔒" : ""}
               </span>
             ))}
           </div>
@@ -637,9 +708,11 @@ export function ChampSelectPanel(): React.JSX.Element {
       >
         {stage.stage === "briefing"
           ? "開打前 10 秒 · 逛一下就開始選人"
-          : locked
-            ? "🔒 已鎖定 · 無法再更換英雄"
-            : "選好後按🔒鎖定 · 未鎖定時可隨時改選"}
+          : lock.status === "locked"
+            ? `🔒 ${champName(myPick)} 已鎖定 · 無法再更換英雄`
+            : lock.status === "awaiting-auto"
+              ? "⏳ 時間到 · 系統正在幫你選一隻英雄"
+              : "選好後按🔒鎖定 · 未鎖定時可隨時改選"}
       </div>
     </div>
   );

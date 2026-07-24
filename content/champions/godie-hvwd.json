@@ -33,6 +33,11 @@
     "mr": 1.2,
     "as": 0.02
   },
+  "hitFeel": {
+    "hitstopTicks": 1,
+    "shakeMag": 0.28,
+    "knockbackMag": 0.0
+  },
   "abilities": {
     "Q": {
       "id": "godie-hvwd.q",
@@ -210,7 +215,8 @@
   ],
   "tags": [
     "wc3-import",
-    "godie"
+    "godie",
+    "bow"
   ],
   "exAbility": "godie-hvwd.ex",
   "passiveAbility": "godie-hvwd.passive",

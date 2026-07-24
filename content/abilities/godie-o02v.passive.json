@@ -2,6 +2,7 @@
   "id": "godie-o02v.passive",
   "schema": "ability@1",
   "name": "81-00 守護之光",
+  "icon": "assets/icons/abilities/godie-o02v.passive.webp",
   "description": "[防禦]\n60秒冷卻時間\n\n利用強大的魔力形成魔法防禦屏障，阻擋任何傷害，持續2秒，並可從傷害中吸收些許魔力。",
   "slot": "PASSIVE",
   "innateKind": "active",

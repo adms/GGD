@@ -82,11 +82,18 @@ describe("resolveChoice (hud-draft-choice-icon)", () => {
     const item = resolveChoice(ITEM_ICONED);
     expect(item.icon).toBe("assets/icons/items/godie-draft-weapon.png");
     expect(item.desc).toBe("2400 g");
-    // augments carry a description but never a w3x icon
+    // Augments have no w3x icon and CANNOT declare one — `augment@1` is
+    // `.strict()` with no `icon` field. Their art is resolved BY CONVENTION from
+    // the id instead, so the draft card gets its mandatory icon (#110) rather
+    // than the GlyphTile letter tile a playtest caught it rendering.
+    //
+    // This previously asserted `toBeUndefined()`, which pinned the bug: every
+    // augment card was permanently a letter tile even though all 21 generated
+    // .webp files were sitting on disk.
     const aug = resolveChoice(AUGMENT);
     expect(aug.name).toBe("增幅");
     expect(aug.desc).toBe("強化下一次施法");
-    expect(aug.icon).toBeUndefined();
+    expect(aug.icon).toBe(`assets/icons/augments/${AUGMENT}.webp`);
     // an unknown id degrades to a bare text card
     const unknown = resolveChoice("no-such-choice");
     expect(unknown).toEqual({ name: "no-such-choice", desc: "" });

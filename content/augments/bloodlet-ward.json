@@ -1,0 +1,33 @@
+{
+  "id": "bloodlet-ward",
+  "schema": "augment@1",
+  "name": "放血結界",
+  "description": "普攻命中時追加 40 (+15% 攻擊力) 真實傷害（1 秒冷卻）。",
+  "tier": "prismatic",
+  "weight": 26,
+  "hooks": [
+    {
+      "on": "onBasicAttack",
+      "internalCooldown": 1,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "true",
+          "amount": {
+            "flat": 40,
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.15
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "ad",
+    "offense"
+  ]
+}

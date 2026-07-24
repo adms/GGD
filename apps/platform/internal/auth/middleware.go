@@ -49,6 +49,38 @@ func BearerToken(r *http.Request) string {
 	return r.URL.Query().Get("token")
 }
 
+// PlayableOnly additionally requires that the authenticated account may still
+// PLAY right now: not banned, and approved under the #126 private-deploy gate.
+// It must run AFTER Middleware, which puts the identity on the context.
+//
+// Middleware alone cannot enforce this. It verifies a SIGNED BEARER TOKEN,
+// which by construction keeps asserting whatever was true when it was minted
+// for its whole TTL — so an operator's ban or denial would not reach a player
+// who is already signed in until his access token happened to expire, up to 15
+// minutes of playing after being told no. This re-reads the durable account, so
+// the decision lands on the very next request.
+//
+// It is applied to the ROOM/MATCH routes and the lobby WS handshake — the
+// surface that means "playing" — and deliberately NOT to auth.Middleware
+// globally. Putting it everywhere would add a durable account read to every
+// authenticated call (including /me, which a client polls) to re-answer a
+// question that only matters where it can actually be acted on. See
+// Service.AuthorizePlay for the check itself.
+func (s *Service) PlayableOnly(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		id, ok := IdentityFrom(r.Context())
+		if !ok {
+			httpx.WriteError(w, httpx.Unauthorized("missing access token"))
+			return
+		}
+		if err := s.AuthorizePlay(r.Context(), id.AccountID); err != nil {
+			httpx.WriteError(w, err)
+			return
+		}
+		next.ServeHTTP(w, r)
+	})
+}
+
 // Middleware enforces a valid access token and stashes the identity.
 func (s *Service) Middleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

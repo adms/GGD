@@ -1,0 +1,83 @@
+{
+  "id": "godie-meteor-p2",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.069,
+    "angleDeg": 5.0
+  },
+  "mode": "continuous",
+  "rate": 60.0,
+  "lifetimeSec": {
+    "min": 0.7,
+    "max": 0.7
+  },
+  "size": {
+    "start": 0.417,
+    "end": 0.139
+  },
+  "color": {
+    "start": [
+      0.933,
+      0.788,
+      0.216,
+      1.0
+    ],
+    "end": [
+      0.459,
+      0.0,
+      0.086,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        0.933,
+        0.788,
+        0.216,
+        1.0
+      ]
+    ],
+    [
+      0.5,
+      [
+        0.788,
+        0.184,
+        0.0,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.459,
+        0.0,
+        0.086,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.417
+    ],
+    [
+      0.5,
+      0.695
+    ],
+    [
+      1,
+      0.139
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/smoke_07.png",
+  "speed": {
+    "min": 0.5556,
+    "max": 0.5556
+  },
+  "anchorBone": "Dummy02"
+}

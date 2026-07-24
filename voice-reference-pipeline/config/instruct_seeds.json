@@ -1,0 +1,265 @@
+{
+  "_comment": "每位角色的日文聲線基底描述。build_manifest.py 以 base_ja + 場景句 + 禁止模仿句 組合出 cosyvoice_instructs.csv。scene_overrides 可覆蓋 default/attack/ultimate/hurt/death 五種場景句。",
+  "godie-e001": {
+    "base_ja": "甘く可愛らしい少女の声。普段は明るく弾むが、一瞬で低く平坦な狂気を帯びた声に豹変する。音域の落差を最大限に使う。",
+    "emotion": "甘え→狂気の豹変", "pitch_profile": "high→low 急変・広域", "tempo_profile": "可変（無邪気=速い/狂気=遅い）",
+    "scene_overrides": {
+      "ultimate": "必殺技では甘い声を捨て、低く抑揚を殺した狂気の宣告から絶叫へ雪崩れ込む。"
+    }
+  },
+  "godie-e002": {
+    "base_ja": "凛とした中低音の若い女性の声。気品と抑制のある騎士の口調で、母音がまっすぐ揺れない。過度に柔弱にしない。",
+    "emotion": "王者の威厳", "pitch_profile": "mid-low 狭域・安定", "tempo_profile": "端正・一定",
+    "scene_overrides": {
+      "ultimate": "宝具解放。抑制を解き、張りのある堂々とした咆哮で技名を宣言する。"
+    }
+  },
+  "godie-e007": {
+    "base_ja": "若く熱血な少年武将の声。語速は速く叫びに爆発力があるが、声質は軽めで厚重にしない。",
+    "emotion": "熱血", "pitch_profile": "mid-high・広域", "tempo_profile": "速い"
+  },
+  "godie-e008": {
+    "base_ja": "鋭く張りのある高音の少女の声。短い言葉を畳みかける早口で、怒りが一気に燃え上がる。",
+    "emotion": "怒りの爆発・ツンデレ", "pitch_profile": "high・広域", "tempo_profile": "速い・急変"
+  },
+  "godie-e00k": {
+    "base_ja": "低めの女性の声に少年っぽさが混じる。冷静で言葉数が少なく、短い一言に殺し屋の圧を込める。",
+    "emotion": "冷徹な殺気", "pitch_profile": "low 狭域", "tempo_profile": "遅い・短句"
+  },
+  "godie-e00r": {
+    "base_ja": "人語ではない。獣の咆哮、苦痛の絶叫、荒い呼吸に機械的な共鳴が重なった巨大生物の声。普通の朗読は禁止。",
+    "emotion": "獣性の暴走", "pitch_profile": "低域轟音+高域絶叫", "tempo_profile": "不規則",
+    "scene_overrides": {
+      "default": "低い唸りと荒い機械混じりの呼吸。今にも暴れ出しそうな不穏さ。",
+      "attack": "短く爆発する獣の咆哮。言葉はない。",
+      "ultimate": "暴走。長く引き伸ばした絶叫が咆哮に変わり、理性の欠片もない。",
+      "hurt": "金属的な悲鳴混じりの苦痛の咆哮。",
+      "death": "力尽きて途切れ途切れになる低い唸りと荒い呼吸。"
+    }
+  },
+  "godie-e00w": {
+    "base_ja": "礼儀正しく生真面目な若い女剣士の声。普段は丁寧で硬質、戦闘では張り詰めた裂帛の気合いに変わる。セイバーより若い。",
+    "emotion": "生真面目→裂帛の気合", "pitch_profile": "mid・中域", "tempo_profile": "端正→鋭い"
+  },
+  "godie-edem": {
+    "base_ja": "鼻腔に響く冷たい少年の声。抑揚を抑えた短い吐き捨てで、怒りを押し殺した凄味がある。",
+    "emotion": "抑圧された怒り", "pitch_profile": "mid-low 狭域", "tempo_profile": "短句・抑制"
+  },
+  "godie-emfr": {
+    "base_ja": "澄んだ少年（男の子）の声。真面目で少し緊張気味の敬語口調、詠唱で急に張りが出る。",
+    "emotion": "健気な緊張→詠唱の高揚", "pitch_profile": "high（少年）", "tempo_profile": "丁寧→詠唱は流麗"
+  },
+  "godie-emns": {
+    "base_ja": "理知的で滑らかな青年の声。冷静な推理口調から、箍の外れた甲高い高笑いまで大きく振れる。",
+    "emotion": "優雅→狂笑の反転", "pitch_profile": "mid→high 急変", "tempo_profile": "滑らか→哄笑"
+  },
+  "godie-etyr": {
+    "base_ja": "柔らかく温かい若い女性の声。関西弁風のゆったりした抑揚で包み込む癒やし系。高い悲鳴や叫びは使わない。",
+    "emotion": "癒やし", "pitch_profile": "mid-high・柔らか", "tempo_profile": "ゆったり",
+    "scene_overrides": {
+      "ultimate": "大技でも叫ばない。祈るように声を強め、温かさを保ったまま張りを増す。"
+    }
+  },
+  "godie-h00l": {
+    "base_ja": "台詞のない若い剣士。軽やかな中高音の短い掛け声「はっ」「せいっ」、被弾の呻き、溜めからの裂帛の気合いのみ。完全な文は話さない。",
+    "emotion": "戦闘の気合", "pitch_profile": "mid-high・短音", "tempo_profile": "短促",
+    "scene_overrides": {
+      "default": "静かな呼吸と小さな気合いのみ。台詞はない。",
+      "ultimate": "溜めの唸りから一気に解放する最大の裂帛の叫び。言葉はない。"
+    }
+  },
+  "godie-h01n": {
+    "base_ja": "ざらつきのある熱血な青年の声。少し掠れたハスキーで、怒鳴りに伸びがあり長い雄叫びで爆発する。",
+    "emotion": "熱血の咆哮", "pitch_profile": "mid・広域", "tempo_profile": "力強い・伸びる"
+  },
+  "godie-h01u": {
+    "base_ja": "胸に響く超重量級の低音の猛将。地鳴りのような威圧感で傲然と言い放ち、笑いも咆哮も分厚い。",
+    "emotion": "狂傲な威圧", "pitch_profile": "very low・胸腔共鳴", "tempo_profile": "ゆったり構えて重い"
+  },
+  "godie-h020": {
+    "base_ja": "明るく張りのある少女のハイトーン。早口でまくし立てる高エネルギーのコメディ調と、芝居がかった壮大な詠唱の反差。",
+    "emotion": "ハイテンション・喜劇", "pitch_profile": "high・広域", "tempo_profile": "とても速い"
+  },
+  "godie-h02k": {
+    "base_ja": "気だるい低い呟き、下卑た含み笑い、突然の激昂、動物じみた奇声までを行き来する多面的なコミカル獣声。可愛いだけにしない。",
+    "emotion": "多面コミカル", "pitch_profile": "low⇔high 乱高下", "tempo_profile": "不規則"
+  },
+  "godie-h02r": {
+    "base_ja": "人語ではない。低く太い生物の唸りと腹に響く咆哮。音節は少なく、名を唸るように鳴くのみ。",
+    "emotion": "重い獣性", "pitch_profile": "very low・轟音", "tempo_profile": "遅い・少音節",
+    "scene_overrides": {
+      "default": "低い鼻息と満足げな唸り。言葉はない。",
+      "ultimate": "腹の底から響かせる最大の咆哮。地響きのような持続音。"
+    }
+  },
+  "godie-h02u": {
+    "base_ja": "乾いた鼻声で神経質かつ物憂げな声。メェェという鳴き声と不条理に長い笑いが混ざる。",
+    "emotion": "神経質な憂鬱+荒謬", "pitch_profile": "mid・鼻音", "tempo_profile": "だらだら→突発",
+    "scene_overrides": {
+      "ultimate": "限界まで引き伸ばした荒謬な長鳴きと哄笑。半分鳴き声、半分笑い。"
+    }
+  },
+  "godie-hapm": {
+    "base_ja": "巨躯の狂戦士。地鳴りのような咆哮、重く粗い呼吸、被弾の怒号のみで言葉はほぼ無い。初號機のような機械的野獣化はしない、あくまで巨人の肉声。",
+    "emotion": "狂戦士の咆哮", "pitch_profile": "very low・轟音", "tempo_profile": "重い・遅い",
+    "scene_overrides": {
+      "default": "重い呼吸と低い唸り。抑えきれない闘気。",
+      "ultimate": "全身全霊の長い雄叫び。岩をも砕く肉声の轟音。"
+    }
+  },
+  "godie-hart": {
+    "base_ja": "乾いた中低音の青年の声。口数が少なく疲れた平坦さで、感情を押し殺している。激しい尖叫はしない。",
+    "emotion": "冷淡・倦怠", "pitch_profile": "mid-low 狭域", "tempo_profile": "遅め・短句",
+    "scene_overrides": {
+      "ultimate": "大技でも叫ばず、低く押し殺した気合いと鋭い呼気で決める。"
+    }
+  },
+  "godie-hpal": {
+    "base_ja": "温和で誠実な青年の声。穏やかさの中に芯の強さがあり、痛みと人間味がにじむ。不死身ゆえの悲痛を含む。",
+    "emotion": "温和→悲痛", "pitch_profile": "mid", "tempo_profile": "穏やか"
+  },
+  "godie-hpb1": {
+    "base_ja": "荒削りでガラッとした元気な少年の声。まっすぐ熱く、勢いで自然に声が裏返る。大人びさせない。",
+    "emotion": "直情の熱血", "pitch_profile": "mid-high・破音あり", "tempo_profile": "速い・勢い任せ"
+  },
+  "godie-huth": {
+    "base_ja": "高く幼い鼻声の男の声。粘つく甘えた笑いと、無邪気なままの突然の怒りが同居する童稚で危険な声。",
+    "emotion": "無邪気な狂気", "pitch_profile": "high・鼻音", "tempo_profile": "粘る→突発"
+  },
+  "godie-hvsh": {
+    "base_ja": "成熟した低い女性の声。息を多く含んだ囁くような話し方で、静かな色気と冷たさ、危うさをまとう。",
+    "emotion": "妖艶な冷語", "pitch_profile": "low・気音多め", "tempo_profile": "遅い・囁き"
+  },
+  "godie-hvwd": {
+    "base_ja": "澄んで冷たい女性の声。感情を抑えた距離感と哀しみをたたえる。息の色気は使わない。",
+    "emotion": "静かな哀しみ", "pitch_profile": "mid-low・清澄", "tempo_profile": "静かに一定"
+  },
+  "godie-n003": {
+    "base_ja": "幼い少女の声色に、老成した傲慢な古風の言い回しを乗せる。嘲るような笑いと見下す囁き。",
+    "emotion": "高慢な嘲笑", "pitch_profile": "high（幼女）", "tempo_profile": "余裕たっぷり"
+  },
+  "godie-n00b": {
+    "base_ja": "丸く鼻にかかった明るいカートゥーンの声。早口のツッコミと大きな感情の起伏、慌てると跳ねる。",
+    "emotion": "コミカルな慌て", "pitch_profile": "high・鼻音・丸い", "tempo_profile": "速い"
+  },
+  "godie-n00p": {
+    "base_ja": "柔らかく上品な中性的な声。丁寧な物腰の奥に危険な冷たさがあり、戦闘では声の温度が下がる。",
+    "emotion": "優雅な冷徹", "pitch_profile": "mid・中性的", "tempo_profile": "滑らか",
+    "scene_overrides": {
+      "ultimate": "妖狐の本性。音高を下げ、冷酷さを増した低い声で静かに宣告する。"
+    }
+  },
+  "godie-n01c": {
+    "base_ja": "明るく真っ直ぐな少年の声。純真で正義感が強く、必殺技で最高潮に張り上げる。",
+    "emotion": "純真な勇気", "pitch_profile": "high（少年）", "tempo_profile": "元気・明瞭"
+  },
+  "godie-nplh": {
+    "base_ja": "力の抜けた飄々とした少年の声。何があっても気だるくのんびりで、戦闘でも熱血にならない。",
+    "emotion": "脱力した余裕", "pitch_profile": "mid・ゆるい", "tempo_profile": "遅い・のんびり",
+    "scene_overrides": {
+      "ultimate": "必殺技もユルく言う。張り上げず、飄々としたまま少しだけ真剣さを滲ませる。"
+    }
+  },
+  "godie-o00k": {
+    "base_ja": "高く弾む少女の声にドSの愉悦を乗せる。悪戯っぽい笑いと嗜虐的な挑発。ツンデレ系の怒りとは違う、楽しんでいる残酷さ。",
+    "emotion": "嗜虐的な愉悦", "pitch_profile": "high・弾む", "tempo_profile": "軽快"
+  },
+  "godie-o00l": {
+    "base_ja": "物腰柔らかな青年の声。語尾が軽く飄々として、笑顔のまま愉しげに脅す薄気味悪さがある。",
+    "emotion": "微笑の恫喝", "pitch_profile": "mid・軽い", "tempo_profile": "飄々・軽快"
+  },
+  "godie-o00x": {
+    "base_ja": "明るく素朴な訛りのある成年男性の声。芯が強くハスキーで、戦闘では音高とエネルギーが跳ね上がる。",
+    "emotion": "素朴→戦闘の高揚", "pitch_profile": "mid-high・広域", "tempo_profile": "のんびり→爆発"
+  },
+  "godie-o02p": {
+    "base_ja": "明るく電子的な合成少女の歌声。ピッチは安定し、機械的な透明感と可憐さを持つ。",
+    "emotion": "電子的な明るさ", "pitch_profile": "high・安定", "tempo_profile": "一定・クリア",
+    "scene_overrides": {
+      "default": "電子的な透明感のある明るい声。人間らしい揺らぎは控えめ。"
+    }
+  },
+  "godie-ofar": {
+    "base_ja": "高く短い音節の鳴き声のみ。音程と抑揚だけで喜び・警戒・痛み・放電を表現する。言葉は話さない。",
+    "emotion": "鳴き声の感情表現", "pitch_profile": "very high・広域", "tempo_profile": "短促",
+    "scene_overrides": {
+      "default": "機嫌のよい弾む鳴き声。",
+      "attack": "鋭く短い威嚇の鳴き声。",
+      "ultimate": "放電。限界まで張り上げ引き伸ばした全力の鳴き声。",
+      "hurt": "痛みで裏返る短い鳴き声。",
+      "death": "力なく萎んでいく小さな鳴き声。"
+    }
+  },
+  "godie-ogld": {
+    "base_ja": "自信に満ちたプロフェッショナルな低めの男性の声。前半は爽やかに営業的、後半は徐々に酷薄な黒さがにじみ出る。",
+    "emotion": "紳士→黒化", "pitch_profile": "mid-low", "tempo_profile": "滑らか→粘る"
+  },
+  "godie-orkn": {
+    "base_ja": "中年男の油じみた息混じりの声。作り物の親切さと下卑た含み笑い。過度にカートゥーン化しない生々しさ。",
+    "emotion": "卑屈な追従→下卑た笑い", "pitch_profile": "mid-low・気音", "tempo_profile": "ねっとり遅い"
+  },
+  "godie-osam": {
+    "base_ja": "平坦で低い男性の声。感情をほぼ出さず、短い一言だけで圧をかける貴族的な冷酷さ。長い叫びより短い台詞が効く。",
+    "emotion": "無感情の威圧", "pitch_profile": "low・平坦", "tempo_profile": "遅い・極短句",
+    "scene_overrides": {
+      "ultimate": "大技でも声を張らない。むしろ声を低く静め、絶対零度の宣告で終わらせる。"
+    }
+  },
+  "godie-u00h": {
+    "base_ja": "粗く野性的な低音の青年の声。好戦的で邪気のある不敵な笑いを含み、一護よりも遅く構えて邪気が濃い。",
+    "emotion": "好戦の邪気", "pitch_profile": "low・粗い", "tempo_profile": "遅め・構え"
+  },
+  "godie-u00j": {
+    "base_ja": "深く滑らかに共鳴する低音。優雅で遅く、囁きに底知れぬ狂気と余裕を含む神性の圧迫感。普通の戦闘怒号は使わない。",
+    "emotion": "静かな狂気", "pitch_profile": "low・深い共鳴", "tempo_profile": "とても遅い",
+    "scene_overrides": {
+      "ultimate": "怒号ではなく、荘厳に引き伸ばした宣告。世界を見下ろす静かな圧で満たす。"
+    }
+  },
+  "godie-u00k": {
+    "base_ja": "極端に低く遅い宣告調の声。宗教的な魔王の威厳で、一語一語を刻むように告げる。呂布のような猛々しさは無い、冷たい沈み込む低音。",
+    "emotion": "荘厳な宣告", "pitch_profile": "ultra low", "tempo_profile": "極めて遅い",
+    "scene_overrides": {
+      "ultimate": "死の宣告。最低音で時間が止まるほど遅く、逃れられない終わりを告げる。"
+    }
+  },
+  "godie-u00l": {
+    "base_ja": "硬派な男の低く静かな声と、連続する短い裂帛の気合いの落差。冷たい一言と爆発の対比が命。",
+    "emotion": "静→爆発の落差", "pitch_profile": "mid-low→high 爆発", "tempo_profile": "静かに遅い→連打",
+    "scene_overrides": {
+      "attack": "高速で連続する短い気合いの連打。一音一音が鋭く弾ける。"
+    }
+  },
+  "godie-u00n": {
+    "base_ja": "鼻にかかったハスキーで高エネルギーの少年の声。底抜けに大きな笑いと真っ直ぐな叫び。普通の可愛い子供声にはしない。",
+    "emotion": "陽気な大笑い・闘志", "pitch_profile": "high・ハスキー", "tempo_profile": "速い・大振り"
+  },
+  "godie-u00v": {
+    "base_ja": "言葉を話さない。低い唸り、鼻息、押し殺した怒気が爆発する短い咆哮、衝撃音のような発声のみ。",
+    "emotion": "無言の怒気", "pitch_profile": "low・非言語", "tempo_profile": "静→突発",
+    "scene_overrides": {
+      "default": "静かな鼻息と低い唸り。不機嫌な沈黙の圧。",
+      "ultimate": "溜め込んだ怒気の大爆発。言葉にならない轟音の咆哮。"
+    }
+  },
+  "godie-u010": {
+    "base_ja": "高めの位置で鋭く尖った男性の声。短く傲慢な吐き捨てで、奥義の時だけ爆発的な咆哮に膨れ上がる。",
+    "emotion": "傲慢→爆発", "pitch_profile": "mid-high・鋭い", "tempo_profile": "短促"
+  },
+  "godie-u01u": {
+    "base_ja": "低く気だるい侍の声。面倒くさげでドスの効いた平坦さと、技名を叫ぶ時の豪快な気迫の対比。",
+    "emotion": "不耐→豪快な気迫", "pitch_profile": "low・ざらつき", "tempo_profile": "気だるい→一閃"
+  },
+  "godie-ubal": {
+    "base_ja": "老いて深い威厳の声。絶対の自信でゆっくり朗々と語る帝王の演説口調。荘重で決して揺るがない。",
+    "emotion": "威厳の宣告", "pitch_profile": "low・老成", "tempo_profile": "遅い・朗々"
+  },
+  "godie-udea": {
+    "base_ja": "疲れた成人男性の低めの声。徹夜でデバッグしている開発者のように、少し遅いテンポで淡々とツッコミを入れる。",
+    "emotion": "倦怠のツッコミ→中二の高揚", "pitch_profile": "mid-low→誇張", "tempo_profile": "遅い→過剰演出",
+    "scene_overrides": {
+      "attack": "技を放つ瞬間だけ急に大げさで中二病的な高張力の宣言に変わる。",
+      "ultimate": "チートコードを唱えるかのような、過剰に芝居がかった中二病全開の必殺宣言。"
+    }
+  }
+}

@@ -10,7 +10,7 @@
  */
 import { describe, it, expect } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
-import type { Command, Order, AbilitySlot } from "@ggd/shared/sim/intents";
+import type { Command, Order, CastableSlot } from "@ggd/shared/sim/intents";
 import type { AimAbility } from "./AimResolver";
 import { MOVE_LEAD } from "./GamepadInput";
 import type { PickableUnit } from "./Picking";
@@ -31,12 +31,14 @@ import {
 } from "./TouchInput";
 
 /** same ability fixture the gamepad mapping tests use (client-11) */
-const ABILITIES: Record<AbilitySlot, AimAbility> = {
+const ABILITIES: Record<CastableSlot, AimAbility> = {
   Q: { castType: "skillshot", range: 14 },
   W: { castType: "self", range: 0.1 },
   E: { castType: "ground", range: 9 },
   R: { castType: "targeted", range: 8 },
   EX: { castType: "self", range: 0 },
+  // the SIXTH slot — an active 天生技 is cast through the same paths
+  PASSIVE: { castType: "self", range: 0 },
 };
 
 function ctx(overrides: Partial<TouchPlayerCtx> = {}): TouchPlayerCtx {
@@ -361,5 +363,28 @@ describe("basic-attack button (mobile-08)", () => {
     ctrl.buttonTouchStart("ATTACK", { identifier: 1, clientX: 760, clientY: 340 });
     expect(orders).toEqual([]);
     expect(attackTapOrder(ctx({ selfPos: null }))).toBeNull();
+  });
+});
+
+describe("天生技 touch button — the SIXTH slot (P0-3)", () => {
+  it("a tap on the 天生 button casts it, exactly like Q/W/E/R", () => {
+    // Touch had NO cast path for the sixth slot at all: the tile was a label.
+    // A phone player must be able to fire everything the hero owns.
+    cover("mobile-quickcast-shapes");
+    expect(tapCastCommand("PASSIVE", ABILITIES.PASSIVE, ctx())).toEqual({
+      kind: "castAbility",
+      slot: "PASSIVE",
+      target: { type: "self" },
+    });
+  });
+
+  it("the controller routes a PASSIVE finger through the same press path", () => {
+    cover("mobile-quickcast-shapes");
+    const { ctrl, commands } = harness();
+    ctrl.buttonTouchStart("PASSIVE", { identifier: 9, clientX: 620, clientY: 320 });
+    ctrl.touchEnd(ev([9, 620, 320]));
+    expect(commands).toEqual([
+      { kind: "castAbility", slot: "PASSIVE", target: { type: "self" } },
+    ]);
   });
 });

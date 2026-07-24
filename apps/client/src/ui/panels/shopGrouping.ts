@@ -33,11 +33,22 @@
  * where things appear twice is harder to scan than one flat list, not easier.
  */
 
-/** The stat vocabulary actually present in content/items (measured, not guessed). */
+/**
+ * The stat vocabulary actually present in content/items (measured, not guessed)
+ * — plus `evasion`, the one deliberate exception.
+ *
+ * `evasion` is carried by NO item in the catalogue today; it is a champion-only
+ * stat (the 迴避 天生技 family — 感應意脈 / 寫輪眼 / JENOVA / 憂鬱的眼神 /
+ * 正妹優勢). It is listed anyway because the omission is a LATENT BUG, not an
+ * accurate measurement: `groupItems` falls through to `misc` for any stat it
+ * does not know, so the first 迴避 item anyone authors would be filed under
+ * 其他 rather than 防禦 and nothing would fail. Adding the row now costs one
+ * line and closes it before it can happen.
+ */
 type StatKey =
   | "ad" | "as" | "critChance" | "critDamage" | "lifesteal"
   | "ap" | "maxMana" | "manaRegen"
-  | "maxHealth" | "armor" | "mr" | "healthRegen"
+  | "maxHealth" | "armor" | "mr" | "healthRegen" | "evasion"
   | "ms";
 
 /** The minimum shape this module needs — deliberately structural, not the full ItemDef. */
@@ -101,6 +112,11 @@ const STAT_SHELF: Readonly<Record<StatKey, ShelfId>> = {
   armor: "defense",
   mr: "defense",
   healthRegen: "defense",
+  // 迴避 is MITIGATION, not mobility — it removes incoming damage, it does not
+  // reposition you. This is the same call `statDisplay.ts` already made (the
+  // 迴避 row sits in column 1 between 魔法抗性 and 移動速度), so a player reads
+  // it in the same group in the shop and in the 英雄全屬性狀態 panel.
+  evasion: "defense",
   ms: "mobility",
 };
 

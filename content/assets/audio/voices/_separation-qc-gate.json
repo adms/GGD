@@ -1,0 +1,309 @@
+{
+ "id": "voice-separation-qc-gate",
+ "schema": "audio.voice-separation-qc-gate@1",
+ "generatedAt": "2026-07-24",
+ "task": "#184 — inter-champion separation as a QC gate, alongside the existing fidelity check",
+ "supersedes": "docs/_voice-casting.md §7 — same rules, now n-aware and with an escalation ladder",
+ "whatThisCatches": {
+  "failureMode": "Two champions each score well against their OWN reference clip, yet sit close to EACH OTHER. Individually correct, collectively unusable.",
+  "whyFidelityCannotCatchIt": "similarity-to-own-reference is a per-champion measurement. It has no term for the rest of the roster, so a batch can be 48/48 green and still ship two timbres.",
+  "corollary": "the two checks are orthogonal and BOTH are required: fidelity says the render is the voice we cast, separation says the cast was worth casting."
+ },
+ "unitOfIdentity": {
+  "rule": "compare CHAMPION CENTROIDS, never single clips: mean of the L2-normalised campplus embeddings of all that champion's accepted lines, re-normalised.",
+  "why": "EER falls from 20.8 % (n=1) to 4.0 % (n=4) purely by averaging. Identity is a property of a speaker, not of a take.",
+  "trap": "the threshold MOVES with n. Judging 4-clip centroids against the per-clip 0.50 would pass everything — the control's different-actor mean is already 0.541 at n=4. Always read the row for min(n_a, n_b).",
+  "productionRequirement": "render >= 4 distinct lines per champion before the gate is allowed to adjudicate. Below that it may only advise. #142 already asks for 3 playback moments, so 4+ lines is free."
+ },
+ "thresholdLadder": {
+  "derivation": "split-half resampling of the WC3 control corpus (29 soundsets, 378 clips >= 1.2 s, campplus re-embedded 2026-07-24). Same-speaker = two disjoint n-clip centroids of one actor; different = n-clip centroids of two actors. 4 000 draws per cell, actors weighted uniformly. Threshold = likelihood-ratio crossover of Gaussian fits; adopted value rounded to a 0.01 grid on the safe side.",
+  "readAs": "for a pair (a,b) use the row for n = min(clips(a), clips(b)); clamp n to 8.",
+  "rows": [
+   {
+    "clipsPerChampion": 1,
+    "confusableAdopted": 0.5,
+    "confusableMeasuredCrossover": 0.4515,
+    "targetForNewCast": 0.384,
+    "hardCeiling": 0.659,
+    "eer": 0.2082,
+    "dPrime": 1.669,
+    "controlFalseAlarmRate": 0.14,
+    "pairBudget": 0.18,
+    "controlActorsEligible": 29
+   },
+   {
+    "clipsPerChampion": 2,
+    "confusableAdopted": 0.59,
+    "confusableMeasuredCrossover": 0.5927,
+    "targetForNewCast": 0.5595,
+    "hardCeiling": 0.748,
+    "eer": 0.1253,
+    "dPrime": 2.334,
+    "controlFalseAlarmRate": 0.1767,
+    "pairBudget": 0.18,
+    "controlActorsEligible": 28
+   },
+   {
+    "clipsPerChampion": 3,
+    "confusableAdopted": 0.68,
+    "confusableMeasuredCrossover": 0.6764,
+    "targetForNewCast": 0.6635,
+    "hardCeiling": 0.78,
+    "eer": 0.072,
+    "dPrime": 2.601,
+    "controlFalseAlarmRate": 0.0971,
+    "pairBudget": 0.1,
+    "controlActorsEligible": 26
+   },
+   {
+    "clipsPerChampion": 4,
+    "confusableAdopted": 0.75,
+    "confusableMeasuredCrossover": 0.7453,
+    "targetForNewCast": 0.7222,
+    "hardCeiling": 0.793,
+    "eer": 0.0403,
+    "dPrime": 2.798,
+    "controlFalseAlarmRate": 0.047,
+    "pairBudget": 0.05,
+    "controlActorsEligible": 23
+   },
+   {
+    "clipsPerChampion": 5,
+    "confusableAdopted": 0.79,
+    "confusableMeasuredCrossover": 0.7901,
+    "targetForNewCast": 0.7794,
+    "hardCeiling": 0.81,
+    "eer": 0.0266,
+    "dPrime": 3.182,
+    "controlFalseAlarmRate": 0.0236,
+    "pairBudget": 0.03,
+    "controlActorsEligible": 20
+   },
+   {
+    "clipsPerChampion": 6,
+    "confusableAdopted": 0.82,
+    "confusableMeasuredCrossover": 0.8183,
+    "targetForNewCast": 0.8101,
+    "hardCeiling": 0.82,
+    "eer": 0.0176,
+    "dPrime": 3.29,
+    "controlFalseAlarmRate": 0.0134,
+    "pairBudget": 0.02,
+    "controlActorsEligible": 19
+   },
+   {
+    "clipsPerChampion": 8,
+    "confusableAdopted": 0.85,
+    "confusableMeasuredCrossover": 0.8464,
+    "targetForNewCast": 0.8388,
+    "hardCeiling": 0.84,
+    "eer": 0.0083,
+    "dPrime": 3.387,
+    "controlFalseAlarmRate": 0.004,
+    "pairBudget": 0.01,
+    "controlActorsEligible": 11
+   }
+  ],
+  "n1BudgetNote": "at n=1 the uniform-weighted control false-alarm rate is 14.0 %, stricter than the 18 % published in §7 (which was clip-weighted, so prolific actors dominated). 18 % is retained at n=1 for continuity with the shipped baseline; it already carries 4 points of slack."
+ },
+ "passRule": {
+  "scope": "ALL pairs of accepted open-roster champions. 48 champions, any 12 can meet in a fight, so there is no seeding to exploit.",
+  "clauses": [
+   {
+    "id": "P1-ceiling",
+    "rule": "no pair at or above hardCeiling(n)",
+    "severity": "hard fail",
+    "why": "hardCeiling is the 99th percentile of genuinely-different control actors. Above it, the pair is more extreme than 99 % of professionally-cast different-actor pairs. A budget alone would let one catastrophic pair through."
+   },
+   {
+    "id": "P2-budget",
+    "rule": "fraction of pairs at or above confusable(n) <= pairBudget(n)",
+    "severity": "fail",
+    "why": "0 % is unachievable and would be pseudo-rigour — the control itself does not reach it. The roster passes when it matches the professionally-cast control at the same evidence level."
+   },
+   {
+    "id": "P3-subroster",
+    "rule": "P2 must also hold within each gender sub-roster and within each timbreFamily of the casting plan",
+    "severity": "fail",
+    "why": "a roster mean that hides a collapsed sub-population is the exact failure that shipped: overall 30.9 % looked survivable while female was 97.4 %."
+   },
+   {
+    "id": "P4-register",
+    "rule": "for every pair, |dF0| >= 2 semitones OR cosine <= target(n)",
+    "severity": "fail",
+    "why": "campplus is nearly blind to register (r=+0.09 vs +0.26 for onset rate). An embedding-only gate would pass two champions sitting on the same note."
+   },
+   {
+    "id": "P5-newcast",
+    "rule": "a NEWLY cast champion must reach cosine <= target(n) against all incumbents, not merely below confusable(n)",
+    "severity": "fail on new work only",
+    "why": "leaves headroom for a noisy single-clip measurement and stops the roster ratcheting up to the threshold one champion at a time."
+   },
+   {
+    "id": "P6-earcheck",
+    "rule": "every surviving pair in the grey zone [target(n), confusable(n)) must be auditioned by a human before the pack ships",
+    "severity": "blocking, non-automatable",
+    "why": "EER 4-21 % means campplus RANKS pairs well but cannot adjudicate any single pair. Screening is the machine's job; the verdict is not."
+   }
+  ],
+  "blameRule": {
+   "problem": "a pair violation has no inherent owner; without a rule the gate reports 283 violations and no action.",
+   "rule": [
+    "highest degree in the confusion graph (most violated pairs) is at fault",
+    "tie-break: lower fidelity-to-own-reference",
+    "tie-break: most recently accepted — the incumbent keeps its slot"
+   ],
+   "why": "makes the verdict a single actionable champion, makes the gate idempotent, and stops already-approved VO churning."
+  }
+ },
+ "escalationOnFailure": {
+  "principle": "the reference-space distance tells you WHICH remedy applies. Measure refCos (cosine between the two reference clips) before choosing.",
+  "steps": [
+   {
+    "order": 1,
+    "action": "re-render (new seed / longer or cleaner reference / different prompt text)",
+    "trigger": "refCos <= target(n) but renderCos >= confusable(n)",
+    "reading": "the references are distinct and the engine collapsed them toward its own mean speaker — a known zero-shot failure. Nothing is wrong with the casting.",
+    "cost": "minutes"
+   },
+   {
+    "order": 2,
+    "action": "different reference CLIP of the same character",
+    "trigger": "refCos in [target(n), confusable(n))",
+    "reading": "the chosen clip is unrepresentative — too short, noisy, music under it, over-processed. Character truth is fully preserved.",
+    "cost": "sourcing one clip"
+   },
+   {
+    "order": 3,
+    "action": "re-cast: move the champion to another cell of the §8 grid (change timbreFamily, keep registerBand, or vice versa)",
+    "trigger": "refCos >= confusable(n)",
+    "reading": "the two source characters genuinely have similar voices. No re-render can fix this — the collision exists in the references.",
+    "cost": "a casting decision, needs owner sign-off if it contradicts character"
+   },
+   {
+    "order": 4,
+    "action": "switch engine (CosyVoice 3 -> IndexTTS-2)",
+    "trigger": "step 1 failed across >= 3 seeds while refCos <= target(n)",
+    "reading": "this specific engine cannot hold these two identities apart.",
+    "cost": "high",
+    "risk": "cross-engine confound — two engines' outputs can cluster by ENGINE rather than by speaker. Re-measure the whole roster after any engine split, never just the moved champion."
+   },
+   {
+    "order": 5,
+    "action": "non-timbre separation: post-render register shift within character plausibility, a distinct reverb/EQ treatment, or demote to voiceClass=cry",
+    "trigger": "steps 1-4 exhausted",
+    "reading": "accept that campplus cosine will barely move (r=+0.09 with F0) and that the P4 register gate plus the human ear are what actually improve here. This fixes the PERCEPT, not the metric.",
+    "cost": "low",
+    "note": "a signature cry is the purest form of lexical identity — the strongest cue the metric cannot score at all."
+   }
+  ],
+  "neverDo": "raising confusable(n) to make a batch pass. The threshold is derived from the control corpus, not chosen."
+ },
+ "costModel": {
+  "claim": "the 48x48 audit is free; the only real cost is campplus forward passes, and those are cached.",
+  "index": "persist one 192-d float32 vector per accepted clip, keyed by the SHA-256 of the audio bytes (same pattern as the existing .mp3.hash sidecars). _separation-baseline.json already has this shape.",
+  "incrementalRender": "1 campplus pass (~50 ms) + one 47x192 matvec against the cached matrix = O(N), microseconds.",
+  "fullAudit": "one 48x192 @ 192x48 GEMM. 2 304 dot products, ~1.8 MB of float32, sub-millisecond.",
+  "explicitNonGoal": "do NOT build LSH / blocking / approximate-NN for N=48. That is pseudo-optimisation; the quadratic term is not the cost.",
+  "invalidation": "a clip's embedding is recomputed only when its content hash changes. Deleting a champion is a row drop, no recompute.",
+  "ci": "the gate needs the audio and the onnx model, so it belongs in the voice-gen lane, not in the general test job. What CI can cheaply assert is that the stored index still covers every open-roster champion and that the recorded verdict file has no unreviewed grey-zone pairs."
+ },
+ "prescreenBeforeRendering": {
+  "rule": "run the same all-pairs check on the REFERENCE clips at intake, before any TTS runs.",
+  "why": "if two references collide, no amount of re-rendering can separate the champions. Catching it at intake costs one campplus pass and saves a full render cycle plus a listening session.",
+  "threshold": "use the n=1 row unless several reference clips exist for the character, which is the better practice anyway (see unitOfIdentity)."
+ },
+ "currentState": {
+  "measuredOn": "the shipped 2-voice pack, n=1 (one quote clip per champion), open roster of 48",
+  "pairs": 1128,
+  "fractionOverConfusable": 0.3094,
+  "fractionOverHardCeiling": 0.1099,
+  "pairsViolatingP4Register": 283,
+  "worstPair": {
+   "a": "godie-h02k",
+   "aName": "熊貓",
+   "b": "godie-h02u",
+   "bName": "草泥馬",
+   "cos": 0.898,
+   "dF0": 0.3
+  },
+  "verdict": {
+   "P1-ceiling": "FAIL — 11.0 % of pairs at or above 0.67 (should be 0)",
+   "P2-budget": "FAIL — 30.9 % vs budget 18 %",
+   "P3-subroster": "FAIL — female 97.4 %, neutral 100 %",
+   "P4-register": "FAIL — 283 pairs are both confusable and within 2 semitones",
+   "P5-newcast": "n/a — nothing newly cast yet",
+   "P6-earcheck": "PENDING — audition sheet built, owner has not yet listened"
+  },
+  "confusionGraphDegree": {
+   "godie-u01u": 23,
+   "godie-udea": 23,
+   "godie-n00p": 22,
+   "godie-ubal": 22,
+   "godie-ogld": 21,
+   "godie-u00j": 21,
+   "godie-u00l": 21,
+   "godie-h01u": 20,
+   "godie-u00v": 20,
+   "godie-hpal": 19,
+   "godie-o00l": 19,
+   "godie-u00n": 18,
+   "godie-e001": 17,
+   "godie-e002": 17,
+   "godie-e008": 17,
+   "godie-e00k": 17,
+   "godie-e00w": 17,
+   "godie-etyr": 17,
+   "godie-h01n": 17,
+   "godie-h02k": 17,
+   "godie-h02u": 17,
+   "godie-hvsh": 17,
+   "godie-hvwd": 17,
+   "godie-o02p": 17,
+   "godie-u010": 17,
+   "godie-e007": 16,
+   "godie-e00r": 16,
+   "godie-edem": 16,
+   "godie-emfr": 16,
+   "godie-h020": 16,
+   "godie-o00k": 16,
+   "godie-u00h": 16,
+   "godie-h02r": 15,
+   "godie-n00b": 14,
+   "godie-ofar": 14,
+   "godie-hart": 12,
+   "godie-n003": 12,
+   "godie-o00x": 11,
+   "godie-huth": 10,
+   "godie-orkn": 10,
+   "godie-nplh": 7,
+   "godie-u00k": 5,
+   "godie-n01c": 3,
+   "godie-osam": 2,
+   "godie-emns": 1,
+   "godie-h00l": 0,
+   "godie-hapm": 0,
+   "godie-hpb1": 0
+  },
+  "isolatedChampions": [
+   "林克",
+   "Berserker",
+   "蒼月潮"
+  ]
+ },
+ "whatTheGateCannotJudge": [
+  "whether the voice SUITS the character — the metric only knows two voices differ, not which one is right for Saber",
+  "comedic timing — #57's deliberate 惡搞 jank is a timing and delivery property; cosine distance is blind to it",
+  "whether a shout reads as a shout — attack/emotional force is set by the line and the instruct channel, and the -16 LUFS R128 normalisation deliberately destroys loudness dynamics",
+  "lexical identity — 「ピカチュウ！」 is recognisable because of the WORDS. The strongest real cue, scoreable by no acoustic distance",
+  "mix and space — reverb, EQ and spatialisation are real separation levers that live outside the reference clip",
+  "SUMMARY: separation is necessary, not sufficient. The gate has no veto over the owner's ear; it only decides what is worth his time to listen to."
+ ],
+ "humanLoop": {
+  "sheet": "scratchpad voice-separation-audition.html — self-contained, audio inlined as data URIs, no build step, mirrors the bgm-audition.html pattern",
+  "contents": "the 20 closest pairs, 10 grey-zone pairs where the metric is least reliable, and 6 control pairs the metric calls clearly distinct (so the owner has an anchor for what 'separated' sounds like)",
+  "playback": "A, B, A->B back to back, A->B->A, and a blind ABX trial that scores the listener",
+  "output": "verdicts (分得出來 / 勉強 / 分不出來) plus ABX hit rate, exportable as JSON",
+  "whyABXMatters": "ABX turns the owner's ear into DATA. Enough labelled grey-zone pairs would let the threshold be re-anchored on GGD's own material instead of borrowing WC3's — that is the honest fix for the EER limit, and it is the single highest-value thing he can give back."
+ }
+}

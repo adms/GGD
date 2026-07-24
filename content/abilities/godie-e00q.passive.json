@@ -2,6 +2,7 @@
   "id": "godie-e00q.passive",
   "schema": "ability@1",
   "name": "69-001 黑化之力",
+  "icon": "assets/icons/abilities/godie-e00q.passive.webp",
   "description": "[輔助]\n\n受到黑泥影響的Saber在移動及攻擊速度上皆較一般部隊緩慢，但是擁有最佳魔力狀態，在攻擊英雄單位時，有18%機率造成2.4倍傷害。\n此技能會被法球蓋過。",
   "slot": "PASSIVE",
   "innateKind": "passive",

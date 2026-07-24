@@ -71,7 +71,14 @@ import { Seat, type SeatDriver } from "../seat/Seat";
 import { AIDriver } from "../ai/Tier0Brain";
 import { Whitelist } from "../curation/whitelist";
 import { PhaseMachine, type MatchPhase, type PhaseConfig, DEFAULT_PHASE_CONFIG } from "./PhaseMachine";
-import { pairTeams, livesLost, type DuelPairing } from "./PairedDuels";
+import {
+  pairTeams,
+  teamHealthLost,
+  isHighStakesRound,
+  HIGH_STAKES_REWARD,
+  DEFAULT_STARTING_TEAM_HEALTH,
+  type DuelPairing,
+} from "./PairedDuels";
 import { DEFAULT_ARENA_RULES, grantForRound, type ArenaRules } from "./arenaRules";
 
 /**
@@ -173,8 +180,45 @@ export class MatchController {
   readonly world: SimWorld;
   readonly seats = new Map<SeatId, Seat>();
   readonly phase: PhaseMachine;
-  readonly lives = new Map<TeamId, number>();
+  /**
+   * TEAM HEALTH per team — LoL Arena's elimination model (20-point pool, −2/−4/−6
+   * per lost duel by round band, +15 to a High Stakes winner, eliminated at 0).
+   * Drained in {@link settleRound}; read for elimination, placement and the
+   * `aliveTeams` gate everywhere else.
+   */
+  readonly teamHealth = new Map<TeamId, number>();
   readonly placements = new Map<TeamId, number>();
+  /**
+   * Teams that won a High Stakes duel and have not yet spent the draft half of
+   * that win — GGD's stand-in for Arena's LUCKY DICE (see {@link settleRound}).
+   * Cleared as the next augment offer is rolled.
+   */
+  private readonly highStakesDraftBonus = new Set<TeamId>();
+
+  /**
+   * @deprecated Vocabulary alias for {@link teamHealth} — the SAME Map object,
+   * so `for…of`, `.get`, `.size` and `new Map(ctl.lives)` all behave identically.
+   *
+   * It exists because the readers of this field live in lanes this one does not
+   * own: `net/snapshot.ts` (→ `TeamState.lives` on the wire), `replay/digest.ts`,
+   * `replay/Recorder.ts`, and the client's TeamLivesBar / CouchHudGrid. Renaming
+   * the field outright would have been a cross-lane break for a vocabulary win;
+   * the alias buys the correct name here and leaves the wire rename to the lane
+   * that owns the protocol.
+   *
+   * ⚠️ HAND-OFF for the client lane: `TeamLivesBar` renders one ❤ per unit of
+   * this value. That was a sane 3-8 hearts under the old lives model; it is now
+   * a 20-point pool that can reach 35+ after a High Stakes win, so the bar needs
+   * to become a BAR (or a number) rather than a row of hearts.
+   */
+  get lives(): Map<TeamId, number> {
+    return this.teamHealth;
+  }
+
+  /** @deprecated Vocabulary alias for {@link startingTeamHealth}. */
+  get startingLives(): number {
+    return this.startingTeamHealth;
+  }
   readonly kills = new Map<SeatId, number>();
   readonly deaths = new Map<SeatId, number>();
   /**
@@ -230,7 +274,7 @@ export class MatchController {
    * final combat round, so it flips during the last `resolution` phase — a few
    * seconds BEFORE matchEnd. While set, tick() STOPS gathering seat intents
    * (human AND AI), so champions idle and the settlement front-view shows a
-   * still hero. Deterministic (derived from team lives), so client prediction
+   * still hero. Deterministic (derived from team health), so client prediction
    * replays the freeze identically.
    */
   outcomeDecided = false;
@@ -272,7 +316,16 @@ export class MatchController {
     seed: number,
     seatSpecs: SeatSpec[],
     phaseCfg: PhaseConfig = DEFAULT_PHASE_CONFIG,
-    public readonly startingLives = 3,
+    /**
+     * Shared TEAM HEALTH at match start. The CALLER resolves this: MatchRoom
+     * from `config.match@1` (`phaseConfig.resolveStartingTeamHealth`), and the
+     * replay player from `ReplayHeader.startingLives` — never re-resolved here,
+     * so a recording always replays on the reservoir it was recorded with.
+     *
+     * Positional, so the rename does not reach MatchRoom (which passes it by
+     * position). Readers of the old property name get {@link startingLives}.
+     */
+    public readonly startingTeamHealth = DEFAULT_STARTING_TEAM_HEALTH,
     /** round-rules table; DEFAULT_ARENA_RULES = exact legacy behavior */
     public readonly rules: ArenaRules = DEFAULT_ARENA_RULES,
     /**
@@ -355,7 +408,7 @@ export class MatchController {
       this.roundDeaths.set(seatId, 0);
     }
     for (let t = 0; t < TEAM_COUNT; t++) {
-      this.lives.set(asTeamId(t), startingLives);
+      this.teamHealth.set(asTeamId(t), startingTeamHealth);
       this.roundOutcome.set(asTeamId(t), ROUND_OUTCOME.NONE);
       this.roundWins.set(asTeamId(t), 0);
     }
@@ -452,14 +505,14 @@ export class MatchController {
   // ---------- round lifecycle ----------
 
   private aliveTeams(): TeamId[] {
-    return [...this.lives.entries()].filter(([, l]) => l > 0).map(([t]) => t);
+    return [...this.teamHealth.entries()].filter(([, hp]) => hp > 0).map(([t]) => t);
   }
 
   /** seats that still play (spawned + team not eliminated), in map order. */
   private *activeSeats(): Generator<[SeatId, Seat, EntityId]> {
     for (const [seatId, seat] of this.seats) {
       if (seat.entityId === null) continue;
-      if ((this.lives.get(seat.teamId) ?? 0) <= 0) continue;
+      if ((this.teamHealth.get(seat.teamId) ?? 0) <= 0) continue;
       yield [seatId, seat, seat.entityId];
     }
   }
@@ -509,10 +562,15 @@ export class MatchController {
       }
     }
 
-    // 2) augment offers (3-choose-1) on scheduled rounds
+    // 2) augment offers (3-choose-1) on scheduled rounds — 4-choose-1 for a
+    //    team holding an unspent HIGH STAKES draft bonus (the Lucky Dice
+    //    stand-in; see settleRound for why it is offer WIDTH and not a reroll).
     if (grant?.augmentTier) {
-      for (const [seatId, , entity] of this.activeSeats()) {
-        const offer = offerAugments(this.world, entity, grant.augmentTier, this.rules.offerCount);
+      const spentBonus = new Set<TeamId>();
+      for (const [seatId, seat, entity] of this.activeSeats()) {
+        const bonus = this.highStakesDraftBonus.has(seat.teamId) ? 1 : 0;
+        if (bonus) spentBonus.add(seat.teamId);
+        const offer = offerAugments(this.world, entity, grant.augmentTier, this.rules.offerCount + bonus);
         if (offer.choices.length > 0) {
           this.offers.set(`${round}:${seatId}`, {
             kind: "augment",
@@ -522,6 +580,10 @@ export class MatchController {
           });
         }
       }
+      // The bonus is spent by the offer it widened, not by the round it was won
+      // in: a High Stakes round is not necessarily an augment round, so the
+      // reward waits for the next draft rather than evaporating.
+      for (const teamId of spentBonus) this.highStakesDraftBonus.delete(teamId);
     }
 
     // 3) legendary-weapon offers (3-choose-1, granted FREE on pick). The rolled
@@ -750,7 +812,7 @@ export class MatchController {
     // volley damage. Cleared by concludeCombat so no post-round PvE farming.
     // Absent config = OFF (same legacy-compat rule as flowers/revives). The
     // guardian is a neutral structure (no team/seat/nav/stats) so duel
-    // resolution, team lives, placement and the scoreboard stay blind to it.
+    // resolution, team health, placement and the scoreboard stay blind to it.
     if (this.rules.guardianTower) {
       beginCombatGuardians(
         this.world,
@@ -809,7 +871,24 @@ export class MatchController {
     return this.duelWinners.size === this.pairings.length;
   }
 
+  /**
+   * Settle every decided duel into TEAM HEALTH, then lock any eliminations.
+   *
+   * The model is LoL Arena's, which the owner chose over the old lives table:
+   *   • the LOSER of each duel drops `teamHealthLost(round)` — −2 (R1-3),
+   *     −4 (R4-6), −6 (R7+);
+   *   • on a HIGH STAKES round (5, then every 4th) the WINNER gains
+   *     `HIGH_STAKES_REWARD` (+15) — the mechanic that lets a winning team
+   *     pull far enough ahead that the match has a long tail instead of four
+   *     teams dying within a round of each other;
+   *   • 0 = eliminated, and placement is locked by elimination order.
+   *
+   * See `PairedDuels.isHighStakesRound` for why a BYE round pays nobody.
+   */
   private settleRound(): void {
+    // Same round + same bye for every pairing, so hoist the payout decision out
+    // of the loop: a High Stakes round pays EVERY duel winner, or none of them.
+    const highStakes = isHighStakesRound(this.phase.round, this.bye !== null);
     for (const pairing of this.pairings) {
       const winner = this.duelWinners.get(pairing.zone);
       if (winner === undefined) continue;
@@ -824,7 +903,33 @@ export class MatchController {
       // edge-detects to fire the small round-win firework (#93). Clamped to the
       // uint8 the schema replicates it as; a match never gets near 255 rounds.
       this.roundWins.set(winner, Math.min(255, (this.roundWins.get(winner) ?? 0) + 1));
-      this.lives.set(loser, Math.max(0, (this.lives.get(loser) ?? 0) - livesLost(this.phase.round)));
+      this.teamHealth.set(
+        loser,
+        Math.max(0, (this.teamHealth.get(loser) ?? 0) - teamHealthLost(this.phase.round)),
+      );
+      if (highStakes) {
+        // HIGH STAKES payout. No cap, exactly as in Arena: the whole point is
+        // that a team which keeps winning the marquee rounds buys runway no
+        // amount of ordinary winning could.
+        this.teamHealth.set(winner, (this.teamHealth.get(winner) ?? 0) + HIGH_STAKES_REWARD);
+        // …and the DRAFT half of the reward — GGD's stand-in for Arena's Lucky
+        // Dice. Arena hands each member of the winning team an extra reroll for
+        // their augment/anvil pick. GGD HAS NO PLAYER-FACING REROLL: the only
+        // `rerollOffers` in the codebase is a dev cheat (applyCheat, gated
+        // behind DEV_CHEATS and exposed solely in CheatConsole), so there is no
+        // "extra reroll" to grant and shipping one would mean a new command, a
+        // new protocol message and new UI in three lanes this one does not own.
+        //
+        // The intent of a reroll is AGENCY IN THE DRAFT — a second look at the
+        // cards. The smallest thing in GGD that carries that intent is the
+        // offer WIDTH, which is already a parameter (`rules.offerCount`): a
+        // High Stakes winner's next augment offer is 4-choose-1 instead of
+        // 3-choose-1. Same currency (more of the pool visible before you
+        // commit), zero new surface, and it is deterministic so replays are
+        // unaffected. Flagged in the hand-off as the deliberate substitution it
+        // is, not a silent omission.
+        this.highStakesDraftBonus.add(winner);
+      }
 
       for (const seat of this.seats.values()) {
         if (seat.entityId === null) continue;
@@ -851,9 +956,9 @@ export class MatchController {
     }
 
     // eliminations lock placements from the bottom; teams eliminated in the
-    // SAME round get distinct consecutive placements (deterministic: lives-map
+    // SAME round get distinct consecutive placements (deterministic: health-map
     // iteration order = ascending team id gets the worse placement first)
-    const newlyEliminated = [...this.lives.entries()]
+    const newlyEliminated = [...this.teamHealth.entries()]
       .filter(([teamId, l]) => l <= 0 && !this.placements.has(teamId))
       .map(([teamId]) => teamId);
     let place = this.aliveTeams().length + newlyEliminated.length;
@@ -861,7 +966,7 @@ export class MatchController {
   }
 
   /**
-   * Wrap up a finished combat round: despawn flowers, settle lives/placements,
+   * Wrap up a finished combat round: despawn flowers, settle team health/placements,
    * stop time-alive accrual, and — if the MATCH is now decided (<=1 team left) —
    * latch outcomeDecided and freeze every champion so the settlement front-view
    * shows a still hero. Shared by the normal combat→resolution transition and
@@ -1022,7 +1127,7 @@ export class MatchController {
       mode: "PairedDuels",
       seed: this.world.rng.state,
       rounds: this.phase.round,
-      teams: [...this.lives.keys()].map((teamId) => ({
+      teams: [...this.teamHealth.keys()].map((teamId) => ({
         teamId,
         placement: this.placements.get(teamId) ?? 1,
         members: [...this.seats.values()]
@@ -1047,7 +1152,7 @@ export class MatchController {
   get allSeatsReady(): boolean {
     for (const seat of this.seats.values()) {
       if (seat.entityId === null) continue;
-      if ((this.lives.get(seat.teamId) ?? 0) <= 0) continue;
+      if ((this.teamHealth.get(seat.teamId) ?? 0) <= 0) continue;
       if (!seat.ready) return false;
     }
     return true;
@@ -1113,7 +1218,7 @@ export class MatchController {
     }
 
     // 6) replay checkpoint, LAST — so the digest covers the sim step AND the
-    //    phase transition that ran on this tick (lives, placements and round
+    //    phase transition that ran on this tick (team health, placements and round
     //    tallies all move in step 5, and they are host state the sim digest
     //    cannot see).
     this.recorder?.onTickEnd(this);
@@ -1264,11 +1369,11 @@ export class MatchController {
 
   /**
    * Force the phase machine forward when the NORMAL transition threw (task #46
-   * failsafe). Uses ONLY host state — the phase machine, team lives, placements
+   * failsafe). Uses ONLY host state — the phase machine, team health, placements
    * and the rng — never the possibly-corrupt sim world, so a match whose sim or
    * enterCombat keeps throwing still converges to matchEnd instead of freezing
    * the countdown. The combat branch charges one life to a deterministically-
-   * chosen alive team, so lives strictly decrease across rounds and the match
+   * chosen alive team, so team health strictly decreases across rounds and the match
    * can never cycle phases forever without ending.
    */
   private forceAdvanceOnFault(): void {
@@ -1296,13 +1401,20 @@ export class MatchController {
         break;
       case "combat": {
         // We could not compute the duel outcome; charge one life to a
-        // deterministically-chosen alive team so lives still fall and the match
+        // deterministically-chosen alive team so team health still falls and the match
         // converges instead of cycling combat rounds forever.
         const alive = this.aliveTeams();
         if (alive.length > 1) {
           const loser = alive[this.world.rng.int(alive.length)]!;
-          this.lives.set(loser, Math.max(0, (this.lives.get(loser) ?? 0) - 1));
-          if ((this.lives.get(loser) ?? 0) <= 0 && !this.placements.has(loser)) {
+          // Charge the ROUND'S FULL team-health cost, not a token 1. Under the
+          // old lives model 1 WAS the round-1 cost, so the failsafe converged at
+          // the normal rate; against a 20-point pool a flat −1 would need twenty
+          // faulting rounds to eliminate one team, which is not a failsafe.
+          this.teamHealth.set(
+            loser,
+            Math.max(0, (this.teamHealth.get(loser) ?? 0) - teamHealthLost(this.phase.round)),
+          );
+          if ((this.teamHealth.get(loser) ?? 0) <= 0 && !this.placements.has(loser)) {
             this.placements.set(loser, this.aliveTeams().length + 1);
           }
         }

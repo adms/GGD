@@ -8,7 +8,7 @@
   "match": {
     "teamCount": 4,
     "teamSize": 3,
-    "startingTeamLives": 8,
+    "startingTeamLives": 20,
     "champSelectSec": 40,
     "intermissionSec": 40,
     "combatMaxSec": 240,
@@ -40,10 +40,6 @@
   },
   "draft": {
     "offerCount": 3,
-    "tierSchedule": {
-      "1": "silver",
-      "3": "gold",
-      "5": "prismatic"
-    }
+    "tierSchedule": {}
   }
 }

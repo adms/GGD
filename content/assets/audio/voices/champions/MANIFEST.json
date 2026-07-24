@@ -1,0 +1,41 @@
+{
+  "id": "champion-voice-pack",
+  "schema": "audio.champion-voice-pack@1",
+  "note": "Per-champion CLONED voice pack (tasks #27 fallback rung 2, #184 separation, #142). EMPTY ON PURPOSE — this file is the drop-in contract, written ahead of the audio so the client half needs no further change when clips land. The client (apps/client/src/audio/selectVoiceLadder.ts) reads ONLY lines.select[].clip; every other field is provenance/QA carried for the report surfaces. An empty champions map, a missing champion, a missing category and a 404 on this whole file all mean the same thing to the ladder: skip rung 2 and fall through to the name/quote rungs, which cover 113/113. Lives under content/assets/ (NOT content/config/) for the same reason the names and quotes packs do — it is a generated asset pack validated by the client's tolerant parser plus selectVoiceLadder.test.ts, not a hand-authored binding for the content schema. Writing this file is the WHOLE integration: no packages/shared schema change, no content:validate change, no client change.",
+  "generator": "tools/voice-gen — synth.py renders the clips + .method sidecars; the indexer that folds those sidecars into this file is the last unwritten step and belongs to that lane.",
+  "clipRoot": "assets/audio/voices/champions",
+  "loudness": "-16 LUFS / -1.5 dBTP, 128 kbps / 44.1 kHz mono — the #158 ceiling, matching content/assets/audio/voices/quotes.",
+  "categories": {
+    "select": "REQUIRED for the click. 2-4 short (<=1.5 s) acknowledge lines per champion; the client picks one and never repeats the previous one back-to-back. Everything else below is optional as far as this client is concerned and is indexed here so later cues need a reader, not a second manifest.",
+    "battlecry": "spawn / round start",
+    "hurt": "taking damage",
+    "death": "own death",
+    "taunt": "kill / round win",
+    "name": "the 全名 call-out, once cloned voices can replace the Kyoko/Otoya TTS render"
+  },
+  "example": {
+    "godie-e001": {
+      "engine": "cosyvoice3",
+      "variant": "base",
+      "lines": {
+        "select": [
+          {
+            "clip": "assets/audio/voices/champions/godie-e001/select-1.mp3",
+            "text": "なに？",
+            "lang": "ja",
+            "durationSec": 0.9,
+            "speakerSim": 0.81
+          },
+          {
+            "clip": "assets/audio/voices/champions/godie-e001/select-2.mp3",
+            "text": "うー、あぅあぅ",
+            "lang": "ja",
+            "durationSec": 1.1,
+            "speakerSim": 0.78
+          }
+        ]
+      }
+    }
+  },
+  "champions": {}
+}

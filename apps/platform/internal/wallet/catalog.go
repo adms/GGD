@@ -192,5 +192,32 @@ func (c Catalog) FreeChampions() []string {
 // ChampionIDs returns every priced championId in sorted order.
 func (c Catalog) ChampionIDs() []string { return append([]string{}, c.championOrder...) }
 
+// UnlockableChampions returns the sorted championIds with price > 0 — the
+// champions a player can actually spend crystals on.
+func (c Catalog) UnlockableChampions() []string {
+	out := []string{}
+	for _, id := range c.championOrder {
+		if c.ChampionPrices[id] > 0 {
+			out = append(out, id)
+		}
+	}
+	return out
+}
+
+// PriceDrift returns the sorted championIds whose unlock price is neither free
+// nor equal to cost. The champ-select unlock button label is a CLIENT-side
+// mirror of the flat CrystalUnlockCost, so any priced champion that disagrees
+// would show the player one number and charge another. server.go warns on a
+// non-empty result at boot rather than letting that lie ship silently.
+func (c Catalog) PriceDrift(cost int) []string {
+	out := []string{}
+	for _, id := range c.UnlockableChampions() {
+		if c.ChampionPrices[id] != cost {
+			out = append(out, id)
+		}
+	}
+	return out
+}
+
 // SkinIDs returns every skinId in sorted order.
 func (c Catalog) SkinIDs() []string { return append([]string{}, c.skinOrder...) }

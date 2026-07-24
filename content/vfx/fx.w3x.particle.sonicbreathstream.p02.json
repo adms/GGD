@@ -1,0 +1,83 @@
+{
+  "id": "fx.w3x.particle.sonicbreathstream.p02",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.111,
+    "angleDeg": 1
+  },
+  "mode": "continuous",
+  "lifetimeSec": {
+    "min": 0.5,
+    "max": 0.5
+  },
+  "size": {
+    "start": 0.87,
+    "end": 1.983
+  },
+  "color": {
+    "start": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "end": [
+      1,
+      1,
+      1,
+      0.051
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        1,
+        1,
+        1
+      ]
+    ],
+    [
+      0.4,
+      [
+        1,
+        1,
+        1,
+        0.929
+      ]
+    ],
+    [
+      1,
+      [
+        1,
+        1,
+        1,
+        0.051
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.87
+    ],
+    [
+      0.4,
+      1.472
+    ],
+    [
+      1,
+      1.983
+    ]
+  ],
+  "blendMode": "additive",
+  "speed": {
+    "min": 10.8898,
+    "max": 11.3342
+  },
+  "rate": 17.5,
+  "texture": "assets/textures/particles/light_01.png",
+  "anchorBone": "Dummy02"
+}

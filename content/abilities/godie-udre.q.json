@@ -32,7 +32,21 @@
       "duration": 3.0
     }
   ],
-  "vfxKey": "fx.prim.fire.pulse-sm",
+  "vfxKey": "fx.w3x.particle.lavabreathdamage.p00",
   "schema": "ability@1",
-  "castTimeSec": 0.3
+  "castTimeSec": 0.3,
+  "hitFeel": {
+    "hitstopTicks": 3,
+    "hitstunTicks": 4,
+    "shakeMag": 0.315,
+    "shakeStyle": "directional",
+    "sparkKind": "heavy",
+    "flashColor": [
+      1.0,
+      0.52,
+      0.22
+    ],
+    "flashMs": 108,
+    "camKick": 0.27
+  }
 }

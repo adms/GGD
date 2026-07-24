@@ -2,6 +2,7 @@
   "id": "godie-u00k.passive",
   "schema": "ability@1",
   "name": "71-00 暗夜契約",
+  "icon": "assets/icons/abilities/godie-u00k.passive.webp",
   "description": "[被動]\n0秒冷卻時間\n\n死之王在夜間時，移動速度將會提升100%，生命回復速度提升30點，夜間施展技能有額外效果。\n在死之王附近想施展技能的敵方單位有12%的機率魔力全失，並且受到傷害。",
   "slot": "PASSIVE",
   "innateKind": "passive",

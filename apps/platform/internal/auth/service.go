@@ -465,6 +465,41 @@ func (s *Service) Refresh(ctx context.Context, refreshToken string) (TokenPair, 
 	return s.issueTokens(ctx, a)
 }
 
+// AuthorizePlay re-checks the DURABLE account state behind an access token
+// that has already been verified, and returns the same 403 a login would have.
+// A missing/unreadable account is refused too (fail closed).
+//
+// WHY THIS EXISTS. An access token is a SIGNED BEARER TOKEN, not a session
+// lookup: once minted it is valid for its whole TTL no matter what happens to
+// the account. Login and Refresh both refuse a banned or non-approved account,
+// so the ONLY hole is the window between an operator's decision and the natural
+// expiry of a token that was already in the player's hands — up to 15 minutes
+// in which a just-denied or just-banned account can still enter the lobby, join
+// a room and start a match. On a family deploy that window is the difference
+// between "declining someone" and "declining someone, who then plays a game
+// anyway", which is not what the owner asked for when he tapped 拒絕.
+//
+// It is called at the LOBBY WEBSOCKET HANDSHAKE rather than in auth.Middleware.
+// The handshake is the door to actually playing, and it is crossed once per
+// connection, so the durable read costs one account load per connect instead of
+// one per REST call. Cheap where it matters, absent where it would be a tax.
+func (s *Service) AuthorizePlay(ctx context.Context, accountID string) error {
+	a, err := s.accounts.GetByID(ctx, accountID)
+	if err != nil {
+		if errors.Is(err, account.ErrNotFound) {
+			return httpx.Unauthorized("account no longer exists")
+		}
+		return err
+	}
+	if a.Banned {
+		return ErrBanned(a.BanReason)
+	}
+	if !a.IsApproved() {
+		return ErrNotApproved(a.Status)
+	}
+	return nil
+}
+
 // Logout revokes the presented refresh token.
 func (s *Service) Logout(ctx context.Context, refreshToken string) error {
 	return s.rdb.RevokeRefresh(ctx, refreshToken)

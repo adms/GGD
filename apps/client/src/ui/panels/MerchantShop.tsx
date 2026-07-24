@@ -50,6 +50,7 @@ import { GOLD, PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
 import { shopCatalogue } from "./champSelectFilter";
 import { useWhitelist } from "./whitelist";
 import { shopGate, shouldAutoOpen } from "./shopGate";
+import { INTERMISSION_Z } from "./intermissionLayout";
 import { shopClockChip } from "./prepCountdown";
 import { groupCatalogue, type Shelf, type ShelfItem } from "./shopGrouping";
 import { skillRows, slotLabel } from "./skillDetails";
@@ -285,6 +286,12 @@ export function MerchantShop(): React.JSX.Element | null {
       <div
         style={{
           position: "absolute",
+          // Same band as the open card: `useHudPanels` treats the shop as
+          // COVERING the left corners for its whole mounted window (rail
+          // included, deliberately), so the rail has to out-rank the chrome
+          // that yielded to it — otherwise the one control that brings the
+          // card back paints under a slot at HUD_Z.slot.
+          zIndex: INTERMISSION_Z.panel,
           ...(rail.side === "left" ? { left: rail.offset } : { right: rail.offset }),
           top: "50%",
           transform: "translateY(-50%)",
@@ -349,6 +356,13 @@ export function MerchantShop(): React.JSX.Element | null {
     <div
       style={{
         position: "absolute",
+        // #107/#106: the registry row for "shop" declares `z: HUD_Z.screen`.
+        // It is declared HERE too, from the shared band, because the guard
+        // proves rectangles — it cannot see paint order — and every managed
+        // corner slot really does carry `zIndex: HUD_Z.slot` (25) via
+        // `hudSlotStyle`. Without this the card painted UNDER the very chrome
+        // its `covers` list claims, and only `displaced: "hide"` hid the bug.
+        zIndex: INTERMISSION_Z.panel,
         top: 0,
         bottom: 0,
         width: CARD_WIDTH,
@@ -830,7 +844,23 @@ function InventoryGrid(props: { seat: SeatView; filled: number }): React.JSX.Ele
               meta={[{ label: "點擊賣出", value: `+${refundOf(itemId)} g` }]}
               style={{ display: "block" }}
             >
-              <button
+              {/* #24: a SELL is a real, gold-moving gameplay action — the one
+                  the owner already asked for an undo on (#121) because it gets
+                  mis-clicked. It was the last raw <button> on this card, so it
+                  alone answered a click with silence and no press feedback.
+                  `sfxVolume` matches the in-match HUD voice used by the tab
+                  row above; `pressScale` stays at the default because the tile
+                  uses no transform for layout. */}
+              <SfxButton
+                // `subdued`, not the base skin: base adds the notched 45° corner
+                // clip-path + colour-cycling bloom, which would slice the corners
+                // off a square 38px item icon and put six animated rainbow rings
+                // in the inventory row. `subdued` drops the notch, the bloom and
+                // the sheen and leaves a 1px hairline — the tile keeps its own
+                // brown border and reads as itself. Same kind the density
+                // toggles on this card already use.
+                kind="subdued"
+                sfxVolume={0.4}
                 onClick={() => hudActions.sendCommand({ kind: "sellItem", itemSlot: slot })}
                 style={{
                   position: "relative",
@@ -858,7 +888,7 @@ function InventoryGrid(props: { seat: SeatView; filled: number }): React.JSX.Ele
                 >
                   {refundOf(itemId)}g
                 </span>
-              </button>
+              </SfxButton>
             </Tooltip>
           );
         })}

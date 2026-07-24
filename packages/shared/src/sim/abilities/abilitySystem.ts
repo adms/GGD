@@ -5,7 +5,7 @@
  */
 import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
-import type { AbilitySlot, CoreAbilitySlot, CastTarget } from "../intents";
+import type { CastableSlot, CoreAbilitySlot, CastTarget } from "../intents";
 import { Abilities } from "../content/registry";
 import { Stat } from "../stats/statTypes";
 import { runEffects } from "../effects/effectRunner";
@@ -15,6 +15,7 @@ import { queryOverlap } from "../collision/queries";
 import { circle } from "../collision/shapes";
 import { normalize, sub, distSq, clampLen, add } from "../math/vec2";
 import { isPassiveOnly, syncAbilityPassives } from "./abilityPassives";
+import { abilityInstanceFor, innateCastBlock } from "./innateActive";
 import { armRecovery } from "./abilityRecovery";
 
 /**
@@ -84,7 +85,7 @@ export type CastResult =
 export function castAbility(
   world: SimWorld,
   caster: EntityId,
-  slot: AbilitySlot,
+  slot: CastableSlot,
   target: CastTarget,
 ): CastResult {
   const ab = world.abilities.get(caster);
@@ -93,9 +94,12 @@ export function castAbility(
   const sc = world.stats.get(caster);
   if (!ab || !t || !hp || !sc) return "bad-target";
 
-  // EX lives in its own slot; Q/W/E/R in the record. A missing exSlot (hero has
-  // no EX) or a locked EX (rank 0, pre-unlock) both read as "not-learned".
-  const inst = slot === "EX" ? ab.exSlot : ab.slots[slot];
+  // Q/W/E/R live in the record, EX in `exSlot`, the level-1 天生技 in
+  // `passiveSlot` — `abilityInstanceFor` is the ONE resolver (innateActive.ts).
+  // A missing instance (hero has no EX / no NN-00) or a locked EX (rank 0,
+  // pre-unlock) both read as "not-learned". The innate spawns at rank 1, so for
+  // it this gate only ever fires on the 3 heroes that genuinely have none.
+  const inst = abilityInstanceFor(ab, slot);
   if (!inst || inst.rank <= 0) return "not-learned";
   if (!hp.alive) return "dead";
 
@@ -108,6 +112,12 @@ export function castAbility(
   if (inst.cooldownRemainingTicks > 0) return "cooldown";
 
   const def = Abilities.get(inst.abilityId);
+  // The SIXTH slot is castable only for `innateKind: "active"` — the ~60 real
+  // WC3 D-slot innates. A permanent 天生技 (迴避/靈氣/on-hit proc) answers
+  // "passive", keyed on the AUTHORED KIND so it holds even if a mis-authored
+  // doc grew a stray effect (innateActive.ts DECISION 4).
+  const innateBlock = innateCastBlock(def);
+  if (innateBlock) return innateBlock;
   // A passive-only ability (native Cool=0, no castable effects) can never be
   // activated. Reject BEFORE any cost is paid — the old shape charged mana and
   // a fabricated cooldown for a button WC3 does not even let you press.
@@ -202,7 +212,7 @@ export function castAbility(
   inst.cooldownRemainingTicks = Math.round(cdSecs / world.dt);
   if (direction) t.facing = direction;
 
-  recordAbilityCast(world, caster); // scoreboard: one successful cast (Q/W/E/R/EX)
+  recordAbilityCast(world, caster); // scoreboard: one successful cast (Q/W/E/R/EX/天生技)
   // `vfxKey` (fx.prim.<element>.<shape>) rides along so the client's per-frame
   // audio mapper can play the ELEMENT whoosh (fire/ice/lightning) for the cast
   // without loading any ability data of its own (audio COMBAT-AUDIO routing).
@@ -271,6 +281,12 @@ export function castAbility(
   return "ok";
 }
 
+/**
+ * Spend a point on Q/W/E/R. The parameter is `CoreAbilitySlot`, which is the
+ * whole guard for the two non-rankable slots: EX is UNLOCKED (`learnEx`) and the
+ * sixth slot's 天生技 is OWNED at rank 1 for life. Neither is expressible here,
+ * so neither needs a runtime rejection.
+ */
 export function rankUpAbility(world: SimWorld, id: EntityId, slot: CoreAbilitySlot): boolean {
   const ab = world.abilities.get(id);
   const champ = world.champion.get(id);
@@ -300,6 +316,12 @@ export function tickCooldowns(world: SimWorld): void {
       if (inst.cooldownRemainingTicks > 0) inst.cooldownRemainingTicks--;
     }
     if (ab.exSlot && ab.exSlot.cooldownRemainingTicks > 0) ab.exSlot.cooldownRemainingTicks--;
+    // The SIXTH slot's cooldown is REAL and owned by the slot. Replay-neutral:
+    // the counter can only be raised by a `castAbility(slot "PASSIVE")`, which
+    // no historical input log contains, so on every existing recording this
+    // line reads 0 and does nothing (innateActive.ts DECISION 5).
+    if (ab.passiveSlot && ab.passiveSlot.cooldownRemainingTicks > 0)
+      ab.passiveSlot.cooldownRemainingTicks--;
     if (ab.basicAttackCdTicks > 0) ab.basicAttackCdTicks--;
   }
 }
