@@ -1,24 +1,25 @@
 # 去死團的逆襲 — 需求完成狀況
 
-> 最後更新 **2026-07-23 20:55** · 由 `tools/status/gen_status.py` 產生。
+> 最後更新 **2026-07-24 21:57** · 由 `tools/status/gen_status.py` 產生。
 > 這份檔案是動態的：每當有任務狀態改變，重跑一次就會刷新。
-> 任務清單於產生當下由**任務帳本**讀出（175 筆 · `~/.claude/tasks/1fc1e42e-e26b-4bec-88ef-ca25238c0f4c`），非手抄；狀態直接取自帳本。
+> 任務清單於產生當下由**任務帳本**讀出（188 筆 · `~/.claude/tasks/1fc1e42e-e26b-4bec-88ef-ca25238c0f4c`），非手抄；狀態直接取自帳本。
 
 | 狀態 | 數量 |
 |---|---|
-| 🔄 進行中 | 9 |
-| ⬜ 待辦 | 42 |
-| ✅ 已完成 | 124 |
-| **合計** | **175** |
+| 🔄 進行中 | 13 |
+| ⬜ 待辦 | 29 |
+| ✅ 已完成 | 146 |
+| **合計** | **188** |
 
-**完成度：124/175 ≈ 71%**（進行中 9 項正在跑背景任務）
+**完成度：146/188 ≈ 78%**（進行中 13 項正在跑背景任務）
 
 圖例：🔄 背景任務實作中　⬜ 待辦　✅ 已完成並驗證
 
-## 🎵 音樂 / 音效　<sub>⬜6 · ✅24</sub>
+## 🎵 音樂 / 音效　<sub>🔄1 · ⬜6 · ✅24</sub>
 
 | | # | 需求 |
 |---|---|---|
+| 🔄 | 184 | Voice distinctiveness: break the 2-voice monoculture so combat is legible by ear |
 | ⬜ | 63 | 音效分場景預載 |
 | ⬜ | 75 | 龍吟重配到縮短錨點 + 加殘響 |
 | ⬜ | 124 | 中場改編成下課打鐘開心歡樂風(需先加 bell 音色) |
@@ -50,7 +51,7 @@
 | ✅ | 137 | Additional rotating BGM variant per scene — a "Samantha James, fast" nu-jazz/deep-house alternate that rotates with each existing track |
 | ✅ | 155 | Render 名言 section on bgm-audition.html (icons + text + playback) |
 
-## 🖥️ 介面 UI　<sub>🔄4 · ⬜9 · ✅34</sub>
+## 🖥️ 介面 UI　<sub>🔄4 · ⬜6 · ✅38</sub>
 
 | | # | 需求 |
 |---|---|---|
@@ -58,16 +59,14 @@
 | 🔄 | 99 | 資產預算頁 + 離線批次優化 |
 | 🔄 | 102 | 後台管理整併（loopback=admin） |
 | 🔄 | 107 | 介面邊界契約（FPS 不再擋商店） |
-| ⬜ | 13 | 遊戲內致謝 + 授權標示 |
 | ⬜ | 19 | 三語 UI 框架 |
 | ⬜ | 41 | 選英雄 hover 觸發稱號+全名語音 |
 | ⬜ | 74 | 登入→戰鬥載入橋接 + 己方發光 |
-| ⬜ | 94 | 商店移左半邊 + 功能分群貨架 |
-| ⬜ | 121 | 商店賣出可還原(反沖 40% 退款、算對錢) |
 | ⬜ | 141 | Collaborative visual VFX/hero/skill editor for delegation (design → MVP build) |
 | ⬜ | 148 | Merchant rotating tips during intermission (rules/tips/weapon recs, 5s each) |
-| ⬜ | 151 | iPhone landscape (short-height) menu layout overlaps — login/champ-select don't fit 390px height |
+| ⬜ | 185 | Chrome saves the password but never autofills it — the auth screen has no form semantics |
 | ✅ | 12 | 程序化 isekai 登入背景 |
+| ✅ | 13 | 遊戲內致謝 + 授權標示 |
 | ✅ | 15 | 登入頁重設計（暗黑史詩） |
 | ✅ | 18 | 登入英雄頭像跑馬燈 |
 | ✅ | 21 | 戰鬥 HUD 技能提示 + EX 快捷 F |
@@ -82,6 +81,7 @@
 | ✅ | 66 | 版號置底每個畫面 |
 | ✅ | 67 | 小地圖只顯示自己對戰區 |
 | ✅ | 71 | 內容圖鑑動態頁 |
+| ✅ | 94 | 商店移左半邊 + 功能分群貨架 |
 | ✅ | 95 | 商店限時倒數 + 音效 |
 | ✅ | 96 | localhost 免登入編輯圖鑑 |
 | ✅ | 97 | 圖示覆蓋率即時進度條 |
@@ -89,10 +89,12 @@
 | ✅ | 106 | 商品內聯說明 + 六格上限 + 即時屬性預覽 |
 | ✅ | 110 | 三選一卡片炫彩流光 + 必含 icon + 科技音 |
 | ✅ | 114 | w3x 描述色碼 → 語意角色（遊戲/後台/圖鑑） |
+| ✅ | 121 | 商店賣出可還原(反沖 40% 退款、算對錢) |
 | ✅ | 122 | 商店分頁改 屬性|技能 + 顯示英雄頭圖 |
 | ✅ | 125 | 所有顯示數值=倍率計算後最終值(冷卻已設 25%) |
 | ✅ | 129 | Champ-select 3D model preview renders blank/black (no model on hover/select) |
 | ✅ | 140 | 裝備欄 slots show FULL item detail (effect + stats + lore) on hover, not just name+refund |
+| ✅ | 151 | iPhone landscape (short-height) menu layout overlaps — login/champ-select don't fit 390px height |
 | ✅ | 152 | Ability buttons: name on button (all platforms) + hold→description-at-top + range/AoE dashed floor preview |
 | ✅ | 159 | Mobile: champ-select profile + shop catalogue invisible on phone |
 | ✅ | 160 | Ability buttons: press SFX + feedback on QWER/EX (all input methods) |
@@ -102,17 +104,15 @@
 | ✅ | 167 | Champ-select: lock-in picked champion (+ shorten to 40s) |
 | ✅ | 170 | Login speed: render auth screen before the 1441-doc content load (defer the boot gate) |
 
-## ⚔️ 戰鬥系統 / 玩法　<sub>⬜7 · ✅23</sub>
+## ⚔️ 戰鬥系統 / 玩法　<sub>🔄1 · ⬜4 · ✅29</sub>
 
 | | # | 需求 |
 |---|---|---|
+| 🔄 | 188 | Lobby one-click bot match for registered players → then ship v0.4.2 + deploy |
 | ⬜ | 7 | 花朵整合驗證 + 完整測試 + 實測 |
-| ⬜ | 89 | 守護塔（樹人/石頭人…）打塔獎勵 |
-| ⬜ | 100 | 回合結束後角色還會打 66 秒 |
 | ⬜ | 119 | 英雄變身/形態切換系統：每回合或計時自動變回（真缺口） |
 | ⬜ | 145 | Random arena each combat round |
 | ⬜ | 147 | Combat juice VFX: shadows, walking dust, cast decals, hit sparks, blood |
-| ⬜ | 175 | Match replay: record seed + inputs, play any match back — the playtest feedback channel |
 | ✅ | 3 | 打擊回饋（震動/閃白/擊退/停頓） |
 | ✅ | 28 | 戰鬥環境倍率表 + 後台動態設定 |
 | ✅ | 29 | 固定視角無遮擋物稽核 |
@@ -123,8 +123,10 @@
 | ✅ | 60 | 攻擊動作/受傷變紅/遠程飛行物 |
 | ✅ | 82 | 三價經濟 + 傳說寶玉 + 20 次屬性路線 |
 | ✅ | 84 | 死亡火圈 + 隊友引導復活一次 |
+| ✅ | 89 | 守護塔（樹人/石頭人…）打塔獎勵 |
 | ✅ | 90 | 擊殺賞金 300g，復活的不再多給 |
 | ✅ | 92 | RO 風格傷害/補血/補魔數字 |
+| ✅ | 100 | 回合結束後角色還會打 66 秒 |
 | ✅ | 104 | 20 次強化閘門移到第 6 回合 |
 | ✅ | 130 | Onboarding trap: not locking a champion → spawn dead/spectator in round 1 (0 HP, 觀戰中) |
 | ✅ | 132 | Round pacing: combat ~3 min baseline, then fire-ring closes in to accelerate the finish |
@@ -136,23 +138,21 @@
 | ✅ | 164 | Floating damage numbers render black (transparent gradient fill) |
 | ✅ | 169 | RECONCILE: extend prose-rescale to damage (damageDealt now 0.5) + fix scope-lock test |
 | ✅ | 173 | 回合 MVP 輪空殘留：TeamState.roundOutcome 參戰訊號 + 優先勝方的選擇器 |
+| ✅ | 175 | Match replay: record seed + inputs, play any match back — the playtest feedback channel |
+| ✅ | 179 | Operator-state migration bundle: export/import his whitelist + combat-env onto the family host |
+| ✅ | 181 | P7 cast feedback: every Q/W/E/R/EX press answers back (confirm or reason) |
+| ✅ | 187 | First-round control legend: semi-transparent, input-aware, derived from the real key maps |
 
-## 🎭 模型 / 特效　<sub>🔄3 · ⬜9 · ✅20</sub>
+## 🎭 模型 / 特效　<sub>🔄3 · ⬜3 · ✅28</sub>
 
 | | # | 需求 |
 |---|---|---|
-| 🔄 | 105 | 守護塔各地圖不同形象 |
+| 🔄 | 50 | 移植虛擬特效單位逐次參數 |
 | 🔄 | 115 | 模型 LOD 分級（-mid/-small）讓畫質設定真的換檔案 |
 | 🔄 | 116 | 版權模型替換：Sketchfab 逐項搜尋＋自己捏 |
-| ⬜ | 50 | 移植虛擬特效單位逐次參數 |
-| ⬜ | 61 | 全模型稽核只修壞的 |
 | ⬜ | 77 | 替身 fallback 丟失真模型與縮放 |
-| ⬜ | 79 | 92% 技能共用一個火焰佔位特效 |
 | ⬜ | 98 | 11 個零幾何特效模型 |
-| ⬜ | 123 | 共用特效 primitive 庫(龍捲風/衝擊波/爆炸/蝗蟲群…) 一個服務多技能 |
-| ⬜ | 131 | Combat: persistent bright-white particle burst stuck in top-right of the arena view |
 | ⬜ | 143 | 回合勝利：贏家 3D 模型置中 + 語音（與 #93 灰底同一拍） |
-| ⬜ | 146 | Shop scene: merchant 3D model center + player model right + merchant head icon |
 | ✅ | 1 | 模型朝向 + 全英雄縮放稽核 |
 | ✅ | 9 | WC3 虛擬特效單位 → VFX/環境 |
 | ✅ | 16 | 登入 CC0 龍模型 |
@@ -162,27 +162,35 @@
 | ✅ | 37 | 刀光殘影 ≤0.25s |
 | ✅ | 49 | 移植模型頂點色/透明度 |
 | ✅ | 59 | 索隆龍捲風只在特定動作出現 |
+| ✅ | 61 | 全模型稽核只修壞的 |
 | ✅ | 64 | 受傷變紅畫在方塊而非 3D 模型 |
 | ✅ | 68 | 26 模型根骨旋轉錯誤 |
 | ✅ | 69 | 補完近戰攻擊閃光 + 一角色無攻擊動作 |
 | ✅ | 73 | 全模型掃描：未合併的球體/蝗蟲群附件幾何（孫悟空沒頭只是其中一例） |
+| ✅ | 79 | 92% 技能共用一個火焰佔位特效 |
 | ✅ | 80 | 競技場地面重建 |
 | ✅ | 85 | 死亡觀戰整個畫面去飽和，只有自己的隊友保持有顏色（復活圈色池已收到剪影尺度） |
 | ✅ | 93 | 勝利演出：回合=灰底+小煙火+英雄嘲諷 / 決賽=暗底+巨大烤雞煙火+嗆聲 VO |
 | ✅ | 103 | 店員被自己攤位擋住（sightline 測試） |
+| ✅ | 105 | 守護塔各地圖不同形象 |
 | ✅ | 111 | 皮卡丘倒地 + 購買時勝利動作 |
+| ✅ | 123 | 共用特效 primitive 庫(龍捲風/衝擊波/爆炸/蝗蟲群…) 一個服務多技能 |
+| ✅ | 131 | Combat: persistent bright-white particle burst stuck in top-right of the arena view |
+| ✅ | 146 | Shop scene: merchant 3D model center + player model right + merchant head icon |
 | ✅ | 150 | Champion model SIZE normalization: uniform on-screen height + intentional exceptions |
 | ✅ | 168 | Models float up when idle (黑崎一護 heroichigo + roster sweep) |
+| ✅ | 182 | WC3 PRE2 → Babylon parameter-driven emitter engine (render/vfx) |
+| ✅ | 183 | Faithful 球體 / 蝗蟲群 / 粒子 vfx families from the real w3x emitter dataset |
 
-## 📦 內容 / 經濟 / 資料　<sub>🔄2 · ⬜6 · ✅11</sub>
+## 📦 內容 / 經濟 / 資料　<sub>🔄3 · ⬜5 · ✅12</sub>
 
 | | # | 需求 |
 |---|---|---|
 | 🔄 | 72 | AI 圖示：0 張，卡在 #112 + 供應商金鑰 |
 | 🔄 | 108 | 傳說池誤放修正 + 說明對數值稽核 |
+| 🔄 | 189 | Durable content overlay in data/ so 內容管理 works on ggd.adms.ai/admin |
 | ⬜ | 56 | 匯入器丟掉 150/180 欄位 |
 | ⬜ | 81 | 清理 Blizzard 資產債 |
-| ⬜ | 83 | 4 個道具數值被匯入器加倍 |
 | ⬜ | 113 | 14 對同名英雄查重複或獨立 |
 | ⬜ | 144 | Per-champion w3x stats: movement/attack speed + regen from source |
 | ⬜ | 149 | Expand + power-up the augment pool so the 3-choose-1 draft can swing games |
@@ -193,20 +201,21 @@
 | ✅ | 55 | 英雄身分＝編號非模型（黑化Saber） |
 | ✅ | 70 | 只有最終道具進商店，任務進三選一 |
 | ✅ | 78 | 1:1 技能+道具對照帳(全專案最大保真缺口，長期任務，未完成) |
+| ✅ | 83 | 4 個道具數值被匯入器加倍 |
 | ✅ | 91 | 清掉殘留魔王魂文字 |
 | ✅ | 118 | 水晶/M幣 meta 養成：打場解鎖英雄+喜愛置頂+造型（稽核找到的真缺口） |
 | ✅ | 128 | 全英雄技能/道具 in-game 可施放覆蓋掃描：每個 QWER+EX 按下去真的有效（pass/fail 矩陣，非 #78 保真、非 #79 特效） |
 | ✅ | 138 | First open roster = user's 48 named champions (canonical ids) + PRIORITIZE skill/VFX porting for this batch |
 
-## 🔧 基礎建設 / 技術債　<sub>⬜5 · ✅12</sub>
+## 🔧 基礎建設 / 技術債　<sub>🔄1 · ⬜4 · ✅14</sub>
 
 | | # | 需求 |
 |---|---|---|
+| 🔄 | 126 | 私人發佈閘：註冊→pending→管理員核准才能玩 + 上線硬化 |
 | ⬜ | 48 | 遊戲伺服器寫死 k8s 主機名 |
 | ⬜ | 112 | AI 圖片路徑壞掉（金鑰也修不了） |
-| ⬜ | 126 | 私人發佈閘：註冊→pending→管理員核准才能玩 + 上線硬化 |
-| ⬜ | 174 | Invite-code registration gate: admin mints codes, only invited can register |
-| ⬜ | 176 | Family deploy: serve ALL assets (no tiering) + secrets hardening on the deploy path |
+| ⬜ | 180 | T0: Fix remote play on https://ggd.adms.ai/ — owner bootstrap + gated-deploy UX |
+| ⬜ | 186 | Admin console: auto-generate a fitting icon whenever content is created |
 | ✅ | 5 | 固定連接埠 39527 / 60721 |
 | ✅ | 6 | 排位天梯 |
 | ✅ | 10 | 抽取 Blizzard 模型 + 音效（本機限定） |
@@ -219,11 +228,19 @@
 | ✅ | 162 | Admin console: no-login on loopback (localhost=admin) |
 | ✅ | 171 | Review the working-tree diff file-by-file; judge each change, pop up on doubts |
 | ✅ | 172 | Self-service change-password: platform endpoint + admin console UI |
+| ✅ | 174 | Invite-code registration gate: admin mints codes, only invited can register |
+| ✅ | 176 | Family deploy: serve ALL assets (no tiering) + secrets hardening on the deploy path |
+
+## 🧩 其他 / 未分類　<sub>⬜1 · ✅1</sub>
+
+| | # | 需求 |
+|---|---|---|
+| ⬜ | 178 | Complete every missing icon (602) with the approved two-pass pipeline |
+| ✅ | 177 | Ship the 84MB blizzard-overlay to the family host + open the DEV-ONLY gate deliberately |
 
 ## 🔺 最該優先
 
-1. **#100 戰鬥不停** — 回合結束後角色還打 66 秒，正擋著 #85 死亡灰階看不到效果。
-2. **#112 + 供應商金鑰** — AI 圖示 0 張；我修圖片路徑，你在後台設金鑰，才跑得動。
+1. **#112 + 供應商金鑰** — AI 圖示 0 張；我修圖片路徑，你在後台設金鑰，才跑得動。
 
 ---
 
@@ -660,8 +677,17 @@ Genuinely-incomplete / deferred requirements surfaced during the ~1920-file bran
 
 - `FireRingSystem` **沒有任何幾何**：遍歷 `world.champion` 燒**所有區域**的所有活人，與位置無關 → **沒有安全區可以走**。
 - 繞過 `damageQueue`（`hp.hp -= dmg`）→ **不產生 `damage` 事件** → 無跳字、無紅閃、無音效，血條無故下降。
-- 3 個 `fireRing*` 事件不在白名單。唯一的 client 提示（BGM bed + minimap rim）由相位時鐘猜、在戰鬥第 **210** 秒才開，
-  但滿血英雄第 **194.9** 秒就被燒死 → **在每一個真的由火圈決勝的回合，提示永遠不會播**。
+- ~~3 個 `fireRing*` 事件不在白名單。唯一的 client 提示（BGM bed + minimap rim）由相位時鐘猜、在戰鬥第 **210** 秒才開，
+  但滿血英雄第 **194.9** 秒就被燒死 → **在每一個真的由火圈決勝的回合，提示永遠不會播**。~~
+  **✅ 已修（2026-07-24）**：`fireRingStart` 已在 fan-out 白名單（`fireRingTick`/`fireRingDamage` 具名列為 server-only，
+  各 360 msg/s 且無消費者——那是決定不是缺口）。提示不再用猜的：`FIRE_RING_SEC` 移入
+  `apps/client/src/audio/fireRingWindow.ts`，由 `match.combatMaxSec − match.fireRing.startSec` **推導**
+  （live 240−180 = **剩 60 秒**），BGM tension bed 與 minimap 危險環因此在戰鬥第 **180** 秒、
+  也就是**真正開始燒的同一秒**亮起，比 194.9 秒的滿血陣亡點早 **14.9 秒**——原本晚 30 秒（第 210 秒）而永遠白播。
+  該常數是 **ESM live binding**，`Minimap.tsx:41` 的既有 import 不改一個字就跟著校正。
+  跨檔關係另補**執行期斷言**：sim 的 `fireRingStart` 抵達時 `noteFireRingIgnition(phaseSecondsLeft)` 與推導值對帳，
+  差 >1.5 s 就 `console.error` 印出兩個數字（S3 形狀的參考實作）。
+  **仍破**：幾何（無環狀 mesh、無安全區）與跳字（繞過 `damageQueue`）兩條，見上面兩點。
 
 ### 📐 數字（本次計算的核心，設計文件第 4 節）
 
@@ -1201,3 +1227,1139 @@ owner 必須有一組能用的密碼登入，否則他自己也進不了後台�
 同 seed 重播 byte 相同，`SimWorld.digest()`），所以錄 seed + 輸入流就能**原封重播**
 家人那一場。必須附帶 digest 檢查：內容在底下被改過導致重播分歧時要**吵**，
 不能默默播出一場不一樣的比賽 —— 那比沒有回放更糟。
+
+### E → 延遲調整：SNAPSHOT_HZ 20→30 + INTERP_DELAY_MS 100→66
+
+> owner 已核准。兩個常數是**一組**，不可只改其中一個。
+
+**發現的真正 bug（比要求本身更重要）**：`SNAPSHOT_HZ` 在此之前**完全沒有消費者**，
+`MatchRoom` 從未指派 `Room.patchRate`，線上那個 20Hz 是 Colyseus 的
+`DEFAULT_PATCH_RATE`(=1000/20)。也就是說，只改常數等於**什麼都沒改**。
+現在 `onCreate` 實際指派 patchRate（`config/snapshotRate.ts`，可用
+`GGD_SNAPSHOT_HZ` 或後台 `serverOps.snapshotHz` 調整，免重新建置）。
+
+**第二個 bug**：`ConnectionStats.noteSnapshot()` 寫死 `50` 當作標稱間隔。
+在 30Hz(33.3ms) 下完美連線會固定算出 |33.3−50| = 16.7ms 的「抖動」，
+超過 `classifyConnection` 的 15ms good 門檻 —— 每個玩家的連線品質標籤會
+**永遠停在 fair**，而網路其實毫無問題。已改為由 `SNAPSHOT_MS` 推導。
+
+**第三個**：`settings/types.ts` 的 `DEFAULT_NETWORK.interpolationDelayMs` 才是
+runtime 真正在用的值（`GameApp` 傳 `renderParams.interpolationDelayMs`），
+不是 `INTERP_DELAY_MS`。舊玩家 localStorage 存著 100，不做 migration 就
+**永遠感受不到這次改動**。已 bump SETTINGS_VERSION 2→3，只把「未被玩家動過的
+舊預設值 100」搬到新值，玩家自己調過的保留。
+
+緩衝算術（對照真實 `InterpolationBuffer`）：buffer **不外插**，
+`renderTick >= last.tick` 時 clamp 在最新 sample → 遠端**凍結**在原地，
+下個 patch 到才續播。所以 delay 必須 ≥ 2 個快照間隔。
+before 100/50 = 2.00；after 66/33.3 = 1.98（精確 2.0 是 66.67）。
+`INTERP_INTERVALS_OF_HEADROOM` 由常數推導，`constants.test.ts` 斷言 ≥1.95。
+
+**實測頻寬**（12 席 bot、固定 seed 20260723、130s combat、單一 client 實際
+WebSocket 到達位元組）：patch 4,362.5 → 6,148.4 B/s（**+40.9%**）；
+線上總量 9,618.6 → 11,405 B/s（**+18.6%**，約 +14 kbit/s）。
+patch 幾乎沒有變小（220.8 → 217.9 B），所以 patch 那條**接近**天真的 +50%；
+真正省下來的是 event 串流（damage/cast/death，由 tick 驅動）完全不動，
+它佔 20Hz 時 55% 的頻寬。兩次跑的 event 位元組 5,256.1 vs 5,256.6 B/s
+（差 0.01%）—— 同時也證明了同 seed 的 sim 完全一致。
+
+---
+
+## 2026-07-23 · 道具上架規則（owner 第二次重申）+ icon 補完
+
+owner 說「我發現道具你沒有照我的方式上架，我再重複一次規則」—— **第二次講了，#70 標 completed 是錯的。**
+
+### 規則 1：商店只上架「最終合成武器」（有製作書的）
+可直接購買的清單 = 有製作書的最終合成品。半成品、材料、任務道具**都不該出現在商店**。
+
+### 規則 2：隨機三選一 = 恰好所有任務道具，不多不少
+owner 點名：四魂之玉、老衲的棒子、天堂之劍、仙后座、獸人船長十字鎬「等」。
+**「不要放這些任務道具以外的東西」** —— 這是排他條款，不只是包含條款。
+
+### 規則 3：三選一的「技能」要能在後台單獨編輯
+理由是 owner 自己給的：**「因為他不是角色預設技能」**。目前後台只編得到角色技能。
+
+### 現況：資料層根本表達不出這三條規則
+```
+content/items 214 份 · tier 1–5 · tags 208/214 全是 "wc3-import"
+沒有 recipe 欄位、沒有 quest 欄位、沒有任何結構化標記
+owner 點名的 5 件全部 cost = 0（唯一可用的間接訊號，但不可靠）
+```
+
+### 但地圖是 ground truth，而且標好了
+`tools/w3x-import/out/GoDieEX22s/parsed/items.json`（208 筆）：
+- **`製作書` 出現 165 次** —— 合成關係就在描述裡
+- **`任務` 出現 5 次**，而且是彩色標籤格式 `|cffff8c00任務|r`，例：
+  `I004 魔戒` → `"|cffff8c00任務|r\r\n|cffffcc00效能|r\r\n全能力+12..."`
+
+⚠️ **但 tooltip 不是最終答案**：w3x 標 任務 的 5 件是 天堂之劍/老衲的棒子/魔戒/四魂之玉/獸人船長十字鎬 ——
+owner 點名的 **仙后座沒有這個標記**（而且它有三個變體：仙后座殘骸 / 仙后座 / 兌換仙后座，
+「兌換」聞起來是任務鏈）。依 `[[ggd-source-map-recovery]]` 的規矩：**JASS > tooltip，禁止 proximity-grep**。
+
+### icon 補完（owner：現行兩段式生成法不錯且省 token）
+> 「先特徵後風格兩次生成再符合解析度跟檔案格式轉檔」
+
+現況缺口 **602 張**：
+```
+champions  109/113  (缺 4)
+abilities   13/554  (缺 541)  ← 主要缺口
+items      157/214  (缺 57)
+content/assets/icons 實際檔案 451 個
+```
+
+> **⚠️ 2026-07-24 訂正 — 上面這組數字已經過時，不要再引用。** 實測（逐檔掃 `content/`）：
+> `champions 113/113`、`items 214/214`、`abilities 646/662`、`augments 21/21`（檔名慣例，無 icon 欄位）。
+> 真實殘留是 **16**，而且那 16 不是缺口，是原圖的佔位格 —— 見下方 §「icon 自動生成（#186）」。
+> **可出貨的缺口＝0。**
+
+### 追加（同日）：白名單與戰鬥數值也要一起搬
+> 「白名單也要一起搬 調過的戰鬥數值（combat-env 的 admin override）也一起帶上主機」
+
+`/data/**` 這一條 ignore 擋掉的**不只是 overlay**，而是整個營運狀態：
+
+| 目錄 | 內容 | 少了會怎樣 |
+|---|---|---|
+| `data/blizzard-overlay` | 84 M | 10 隻開放角色變通用人偶 + 語音消失 |
+| `data/curation/whitelist.json` | **48 角色 / 30 道具 / 240 技能** | **空白名單 → 每隻角色回 `not-whitelisted` → 沒人能開始遊戲** |
+| combat-env admin override | owner 手調的戰鬥倍率 | 回到內容預設，他調的手感全部消失 |
+
+`apps/platform/internal/curation/curation.go:7` 明寫 **“Nothing here seeds content implicitly.”**
+內建 starter bundle（`starter.go:240`）是示範組、不是 owner 挑的 48 隻，而且要 admin 明確 POST 才套用。
+
+**優先序：白名單 > combat-env > overlay。**
+overlay 沒到位是 10 隻角色長得像通用人偶；白名單沒到位是**沒有人能開始遊戲**。
+
+---
+
+## #174 邀請碼註冊閘（invite-code registration gate）— 已實作
+
+> owner：「註冊可以輸入邀請碼做驗證，後台產出邀請碼來限制只有我邀請的才能註冊成功」
+
+取代 #126 的 pending/approved 審核佇列（**不做**審核佇列）。閘門在**伺服器端**：
+`apps/platform/internal/auth/service.go` 的 `Register` 內，寫入帳號之前呼叫
+`invite.Service.Redeem`。React 表單上的欄位只是 UX。
+
+| 面向 | 決定 | 理由 |
+|---|---|---|
+| 儲存 | `DATA_DIR/invites/<CODE>.json`，**完全不用 Redis** | Redis 是可重建快取；「這組用過了」放 Redis 會被 FLUSHALL 復活，而且 #117 的 orphaned redis 就會變成發帳號的管道 |
+| 原子性 | **先燒碼、後建帳號**，任何失敗路徑 `Release` 退回 | 反過來（先建帳號後燒碼）一旦中間掛掉，會留下**已經生出帳號的有效碼** → 閘門靜默漏一個註冊。先燒碼的失敗方向是「碼沒了但沒帳號」，重發一組即可 |
+| 競態 | 每組碼一把 keyed mutex，check-and-burn 在同一個臨界區 | 兩個親戚同時貼同一組碼 → 剛好一個成功，另一個看到「已被使用」 |
+| 第一個帳號 | **豁免**，且用的是 owner bootstrap **同一個** predicate（`claimOwnership` 的回傳值） | 要碼就是死結（只有 admin 能發碼，但還沒有 admin）。豁免也**沒有放寬任何東西**——那個視窗本來就在發 admin 權限，贏得那場賽跑的人根本不需要邀請碼。視窗會自己關（帳號檔一落地 `Admins()` 就非空）。真的不能接受這幾秒 → `GGD_OWNER_BOOTSTRAP_TOKEN=1`（既有開關，零新程式碼） |
+| 開關預設 | `GGD_REQUIRE_INVITE` 未設定時**由 listen address 推導**：只有明確綁 loopback（`.claude/launch.json` 的 `platform`）才關，其餘一律**開** | 忘記設定的後果是「表哥要跟我要碼」，不是「全世界都能註冊」。看的是**自己的 bind address**（開機時 operator 選的），不是 caller address——後者會被 LAN vite proxy 洗成 127.0.0.1（`devsurface_test.go` 明令禁止） |
+| 看不到的那個 case | nginx 對外、platform 綁 loopback | 只能靠 operator 設 `GGD_REQUIRE_INVITE=1`。因此 `server.New` **每次開機**都把解析結果印出來（WARN 帶 remediation），不靜默決定 |
+| 錯誤面 | `invite_required` / `invite_invalid`（未知＝過期＝已撤銷）/ `invite_used` | 只多洩漏「這組碼存在且被用掉了」，正好是電話那頭需要分辨的「打錯了」vs「被用掉了」 |
+| 碼格式 | `GGD-XXXX-XXXX`，字母表 `23456789ABCDEFGHJKMNPQRSTVWXYZ`（30 字元，去掉 I/L/O/U/0/1） | 唸電話、看截圖重打都不會混淆。~39 bits，前面還有 `GGD_REGISTER_RATE_LIMIT` |
+| 沒有的東西 | 沒有 public read、沒有「驗證這組碼」端點 | 驗證端點＝免費的猜碼 oracle。唯一測試碼的方法是嘗試註冊，而註冊會燒掉它 |
+
+**owner 的部署該跑**：`GGD_REQUIRE_INVITE=1 GGD_OWNER_BOOTSTRAP_TOKEN=1 GGD_REGISTER_RATE_LIMIT=20`
+（`GGD_REQUIRE_APPROVAL` 保持關閉 — 邀請碼本身就是審核）。
+launch.json 新增 `platform-invite` entry = 這個 posture，獨立 `DATA_DIR=/Users/Takuro/GGD/data-invite`。
+
+---
+
+## 2026-07-23 · 首場區網試玩的第一手回饋（最高優先）
+> 「請你將技能特效、粒子特效、3d model 等項目提高優先權，因為目前玩起來根本不知道哪招是哪招」
+
+**這是最重要的一條 playtest 回饋。** 遊戲已可區網玩，但技能在戰場上**無法辨識** ——
+「根本不知道哪招是哪招」。優先權重排到最高。根因（依影響排序）：
+
+1. **#79 — 285/554 技能仍共用同一團火佔位**（registry shadow 修復後 460→285）。
+   這是主因：一半技能在畫面上噴同一種火。
+2. **#123 — 共用 VFX primitive 庫**（`render/vfx/primitives.ts` 已有 PRIMITIVES 骨架）。
+   #79 要綁到「不同」的效果，前提是那些效果以可重用 primitive 存在 → **#123 是 #79 的相依前置**。
+3. **#178 — 516 技能沒有 icon**：連 HUD 技能鍵也是佔位，按鈕上也分不出哪招是哪招。
+4. **#131 — 右上角白色粒子**（跑中）+ 一般粒子雜訊。
+5. **#98 — 11 個零幾何特效模型**：匯入的 mdx 粒子發射器沒轉出來。
+6. 3D model：#77 stand-in、#113 疑似重複角色。
+
+### 併同裁決的事實（本次實跑確認）
+- **#100 回合後殘留戰鬥 → SETTLED，可關閉。** beta 探測 8 seeds/37 回合實測：
+  回合判定後戰鬥 tick=0、傷害事件=0、詠唱=0。之前「combatActive flip 後 0 傷害」的證明
+  是**空的**（同 tick 設 false，構造上必為 0），這次量的是真的。**#85 死亡去飽和的相依已解除。**
+- **#128 量尺仍失準**：`castabilitySweep.test.ts:74` `WINDOW = 26`，CT 已推到 0.9s=27 tick。
+- **⚠️ 手機直向登入路徑不可發現**（beta 探測）：家人用手機加入，橫向登入畫面破版，
+  正解「轉直向登入再轉回」沒人猜得到 → 直接說「壞了」就放棄。家人多半用手機 → 這條要進批次。
+
+---
+
+## 2026-07-23 · 我自己實際遊玩的第一手記錄（螢幕實測，非讀碼）
+
+在跑中的 LAN stack（localhost:39527）親自操作，逐個畫面截圖確認：
+
+### 🔴 PT-1 「Play offline vs bots」按鈕壞掉（onboarding 死路）
+登入頁大字寫「no account needed — jumps straight into a bot match」，
+點下去卻跳 `could not join the match: match creation is restricted to the platform reservation flow`。
+根因：game-server 帶 secret → client 自建房被擋（MatchRoom.ts:146）。**localhost 和主機都一樣壞。**
+owner 和每個家人都會先點這顆、然後卡死。→ 併入 #180（隱藏或改成「請由登入→大廳」）。
+
+### 🔴 PT-2 手機橫向登入破版（#151，實測確認）
+812×375 橫向：標題壓到頂端蓋住音訊鈕、表單被切、**「Sign in」按鈕整個被英雄陣容跑馬燈蓋住點不到**。
+家人手機一轉橫就登不了。**直向 375×812 正常**，只有橫向壞。beta 探測的警告屬實。
+
+### 🟠 PT-3 角色圖示大多是「文字色塊」佔位（#178 現形）
+登入跑馬燈與（推測）選角格，大部分角色沒有 icon，退成一個色塊+單字（亂國腦死看不海最慈種黑鋼／地時／獸魔夢笑被神美賽常電犬）。
+只有 3 隻有真頭像。這是「根本不知道哪招/哪角是哪個」的 HUD 面向。→ #178 需要那 ~20 行管線橋 + 516 張技能圖的本機 SD run（吃 GPU，排在試玩外）。
+
+### ⚪ PT-4 回放 UI 目前有 live 語法錯誤（暫時性）
+console：`[hmr] Failed to reload /src/replay/ReplayApp.tsx / ReplayControls.tsx`。
+是回放工作流（#175）正在改檔的中間狀態，非真 bug，落地後會消失。
+
+### 未能親測的部分
+戰鬥內 VFX / 模型 / 打擊感因為 offline 壞掉 + 不輸入密碼（硬規則）無法親自進場；
+這部分由「技能可辨識性」工作流的逐幀戰鬥截圖負責，不重複。
+
+---
+
+## 2026-07-24 · #115 模型 LOD：畫質設定真的換檔了（含實測網路證據）
+
+**發現的坑（先驗證再修）**：`RenderParams` 完全沒有模型維度，`AssetManager.load()`
+直接用 model doc 的路徑。所以 Low 和 High 下載、繪製的是同一份 geometry —— 下拉選單本身
+不是假的（解析度／粒子／陰影／draw distance 都真的有動），但「模型細節」這一項根本不存在。
+整個 repo（`apps/client/src` + `packages/shared/src`）搜不到任何 `lod`。
+
+**做了什麼**：`tools/lod-gen/`（純 Python 標準庫，零新依賴、零下載）產出 87 個比賽會用到的
+模型的 `-mid` / `-small` 兩階；client 端新增 `render/modelLod.ts` 作為唯一解析點，
+`AssetManager` 以「解析後的路徑」為 cache key（用原路徑當 key 會讓設定再度靜默失效）。
+
+**實測數字（瀏覽器真實請求，非單元測試）**：一場 combat-dota 的模型 payload
+724,173 B（high）→ 515,073 B（mid）→ **260,304 B（small，36%）**；
+畫面三角形 112,796 → 61,828 → 31,412。請求數三階都是 10（沒有多餘的 404 探測），
+每個 URL 都帶 `?h=`（沿用既有 immutable 快取，不是一批新的 revalidating 請求）。
+
+**誠實的代價與待決**：
+- 磁碟 +33.48 MB / 174 檔（`content/assets/models` 33 MB → 67 MB）。LOD 是拿 repo 體積
+  換每個玩家的頻寬與 GPU，這筆帳要記著。
+- `small` 階偏激進：knight 的頭盔在近距離明顯變成方塊。戰鬥鏡頭距離下可接受，但**建議
+  owner 實際打一場再決定要不要把 low 當任何人的預設**。
+- 「auto」刻意停在 high：adaptive ladder 是每秒級的控制器，讓它換模型檔＝比賽中反覆發網路
+  請求，而且發生在最跑不動的機器上。真正的受益點是首次開機的 `autoDetectPreset`。
+- 部分 w3x 匯入模型縮不下去（geoset 碎片幾乎全是拓樸邊界，護縫的代價）；
+  `guardian_skeleton.glb` 因為沒有 model doc 的 clipMap，動畫（佔 42% 檔案）不敢刪。
+  → 給這些模型補 clipMap 會直接再省一截，列為後續。
+
+詳細量測與設計理由：`docs/_model-lod-115.md`。
+
+---
+
+## 2026-07-24 — 商人講話呈現 + 購買個性回應 + 被動第6格更正
+
+### 需求（本次口述）
+1. **#148 商人輪播提示要「像商人在講話」**：訊息框旁邊要有商人 icon 頭圖，讓人一眼看出是
+   「那個旅行商人在給建議」，而不是一個找不到來源、飄在畫面上的文字框。
+   - 現況：`MerchantTipBox.tsx` 已有頭圖（`MerchantHeadIcon` size 46）、「旅行商人」名牌、5s 輪播、
+     說話小尾巴——但頭圖是 #146 的「畫的」半身像，其後備 raster `MERCHANT_PORTRAIT` 從沒生成，
+     所以看起來像抽象佔位符，才連不起「這是商人」。
+   - 交付：給商人一張真正的旅行商人頭像（走 SD icon pipeline 生 raster，或把畫的半身像改到一眼是商人），
+     強化「他在說話」的讀感（名牌、尾巴指向中央商人模型、出現時的說話微動），並實機驗證中場真的會顯示。
+2. **購買後英雄要依個性回應「自己的想法」**，不只是擺出攻擊動作。
+   - 現況：`IntermissionStage.tsx` 的 `purchaseSeq` effect 只呼叫 `playGesture("interact")`（商人交貨）+
+     `playChampionReaction()`（英雄一個反應「動畫」，見 `IntermissionScene:806`，挑 clip 或 squash-pop）。
+     純動畫、沒有語音也沒有個性台詞。
+   - 交付：每角色 3 句短的、符合個性的購買反應台詞（第一人稱、由 description/角色設定生成），
+     寫進**新檔** `content/config/purchase-lines.json`（不動 champion doc → 不撞正在跑的 icon 生成），
+     加一個英雄側的說話泡泡 `HeroReactionBubble.tsx`，購買時顯示；動畫改挑「非攻擊」的滿意反應。
+     語音先不做（掛到 #142 名言 VO），文字泡泡是本次必交。
+   - 執行中：workflow `w5gaat4m4`（Speak+Persona ∥，然後 Wire）。
+
+### 更正（重要）— 被動/天生技「是」第6格，之前 README 說錯了
+- 使用者一再強調「每個人應該是六種，被動也是包含 slot，等級1就獲得」。稍早 README 生成器附註寫
+  「全樹沒有任何 xx-00 被動技能文件」——**磁碟上屬實，但模型錯**。
+- 來源考古（workflow `wr1rlg7b2`，純考古未改內容）證實：
+  - 被動/天生技 slot 的正確編碼是 **`NN-00`**（NN=英雄編號），不是 QWER 意義的 xx-00，
+    也不是那 7 個 `22-02` 式巢狀 passive（那些其實是 passive-typed 的 QWER 01–04）。
+  - **108/111 角色**在英雄單位的 `abilities`（WC3 非學習/天生技，等級1即有）裡有各自的 `NN-00`；
+    匯入器把它整個丟了——內容只出 q/w/e/r/ex 五份。
+  - 108 個 NN-00 裡 **~51 是真被動型**（無 CD/[被動]：光環、閃避、觸發、回復、每擊/每殺成長）可用
+    `abilityPassives.ts` 以 ranks[] 套用；**~57 是主動天生技**（D-slot、有真 CD），仍是等級1的 slot 但
+    不能當純數值 self-buff。
+  - 3 個真的沒有：`godie-h02n 腦包英雄`、`godie-u01q 測試英雄`（都沒 abilities）、`godie-ogld 美白大法師`
+    （有 72-01..04 + 72-002，但全圖沒有 72-00）。
+  - 抽取法已對 7 個既有巢狀 passive 交叉驗證（58-02 鋼鐵尾巴、14-03 魔力應援 逐 rank 完全吻合）。
+  - 詳見 `tasks/wr1rlg7b2.output`。
+- **後續（內容寫入批次，需等 icon 生成排空以免撞檔）**：寫 108 份 `NN-00` 天生技 doc、把 51 個被動型接進 sim、
+  在選角面板與 README 呈現「第6格 被動/天生技」。57 個主動天生技先標記、逐一接。
+
+### 第6格 慣例已定案（樣板 2 份已落地並實機載入通過）
+- **doc id**：`<championId>.passive`（`godie-e001.passive`），完全比照既有的 `.ex` 前例。
+- **champion doc 要顯式指名**：新欄位 `passiveAbility`（比照 `exAbility`），**不是**沿用 `champion.passive`
+  ——後者是 7 份 doc 上的舊 hook 區塊，不是 slot。缺席＝該英雄在原圖真的沒有 `NN-00`（3/111），是考古事實不是 TODO。
+- **slot 值**：`ability@1.slot` 新增 `"PASSIVE"`（`zChampionAbilitySlot`）。型別上刻意與 `AbilitySlot`
+  分家（新 `ChampionAbilitySlot`）：施法/升級 Command 仍只吃五個可施放槽，等 sim 真的長出
+  `passiveSlot` 實例（`exSlot` 前例）時再連同每個 switch 一起放寬。
+- **兩種天生技的判別欄位**：`innateKind: "passive" | "active"`（slot 為 PASSIVE 時必填，其餘 slot 禁止填）。
+  `"passive"` = 無 CD 的常駐自我增益，走 `ability@1.passive.ranks[0]`、`effects` 必須為空；
+  `"active"` = 有真 CD 的 D-slot 主動，必須有 `effects`。
+- **解析入口**：`championPassive(championId)`（`sim/content/registry.ts`），回傳的一定是 standalone doc 本體。
+- **樣板**：`godie-e001.passive`（22-00 嗚鎖打!，active：150 物傷 AoE + 0.5s 暈 + 4s 自我加速，JASS 佐證）與
+  `godie-e007.passive`（12-00 感應意脈，passive：20% 物理閃避）。probe：`packages/shared/scripts/probePassiveSlot.ts`。
+- **已知缺口（不是臆造，是照實記錄）**：sim 沒有 evasion/閃避機制（`Stat` 列舉沒有這個 stat，
+  `damage.ts` 也沒有 miss 判定），所以 12-00 的 0.20 目前只寫在 doc 的敘述裡，`ranks[0].modifiers` 是空的。
+  51 個被動型裡凡是閃避類的都會撞到同一面牆——要嘛 sim 加一個 evasion stat + 一次 seeded roll，要嘛照實留空。
+  **絕不可**沿用匯入器當年的 `+25 armor` 假動作（#78 已經點名過那是錯的）。
+- **待 Build 階段**：`content/bundle.json` 尚未含這 2 份新 doc（本階段不跑 `pnpm content:build`）；
+  `content/abilities/_index.json` 與 `content/manifest.json` 已同步。
+
+### 效果音ラボ 盤點（workflow `wqo7p8m7x` 完成）
+- 大發現：庫裡已下載但**沒發聲**的 効果音ラボ 有 26 個。本次「零下載」直接接上 9 個（回血/技能升級/低血量/
+  升級 jingle/EX sting/開場鑼/結束鑼/VS 揭示/結算揭示），apps/client 已改、632 音訊測試綠、tsc 0。
+- 2 個下載+已對應但無事件可觸發（buffApply、explosion）→ 需先加 sim 事件。
+- 1 個不能接：block-clash/block-shield（殘響，打擊感刻意換掉，`audioAssets.test.ts` 擋著）。
+- 尚需**新下載** 10 項（需使用者授權，版權物抓本機 overlay）：高＝傳說寶珠轉蛋、抽卡揭示閃光、
+  守衛塔最後一擊/範圍重擊、#124 下課鐘聲；中＝分頁切換/復活詠唱/重生 warp/火環火焰；低＝競技場環境床/市場人聲。
+- 詳見 `tasks/wqo7p8m7x.output`。
+- **已補（守衛塔 2 音）**：`guardianSlam`（打撃4「岩を砕く」）＋`guardianLastHit`（アイテムを入手1「お金」）
+  素材已入庫並接線完成 —— `guardianImpact`（範圍重擊落地，每個 mark 一發、同 tick 由 300 ms cooldown 併成一擊）
+  → `guardianSlam`；`guardianSlain` → `guardianLastHit`，**只對搶到最後一擊的座位**響（事件是全房廣播，
+  故在 `audio/combatSfx.ts` 以 AudioDirector 發佈的 local seat 做閘門；`killerSeatId:-1 / gold:0` 的 void
+  payout 靜音）。sim 未改（事件本來就有）。剩餘待下載：傳說寶珠轉蛋、抽卡揭示閃光、#124 下課鐘聲等。
+
+### 効果音ラボ 授權條件：全清單上架授權頁（已完成）
+- 使用者授權下載 効果音ラボ 音效時附了一個條件：「只要好好列出附記在授權頁面就好」。
+  這是**對使用者的承諾**，不是授權義務（該站 商用可・報告不要・クレジット任意，標示來源本身是任意的）。
+- 現況盤點（以 `sfx/lab/MANIFEST.json` + `content/config/audio-map.json` 為準）：
+  **54 個素材** = 46 個 SFX（`audio/sfx/lab/`）+ 8 個 声素材（`audio/voice-jp/`）；
+  其中 **43 個 SFX 已綁定並會在遊戲中播放**，3 個 SFX（block-clash / block-shield / impact-heavy）與
+  全部 8 個語音檔隨遊戲附帶但無任何情境播放。
+- 已上架：`content/assets/CREDITS.md` 逐筆 ledger（含日文原標題、原檔名、來源頁、用途、綁定 event、處理、時長）
+  ＋ 遊戲內 `#credits` 版權聲明頁新增「効果音ラボ 全素材清單」區塊（依 UI／演出／戰鬥／魔法／環境／声素材 分組、
+  容器內捲動、手機不橫向溢出、標示 使用中／收錄未啟用）。仍留在 **禮貌性** 區塊，CC-BY 巨龍仍是唯一強制署名。
+- 誠實標註：`arenaAmbience.mp3` 只有頁面層級來源（原始檔名未留存），清單上如實寫明，不臆造連結。
+- 防漂移：`apps/client/src/ui/platform/sfxLabCredits.test.ts` 會比對磁碟檔案與 audio-map，任一漂移即紅。
+- **禁止**做「逐一試聽／下載」的音效展示頁（屬 再配布）；清單只能是文字。
+
+### 第六槽真的生效了嗎：sim 套用階段的實測（本階段完成）
+- **槽位落地**：`AbilitiesComp` 新增 `passiveSlot`（`exSlot` 前例），`spawnChampion` 以 **rank 1** 建立
+  ——EX 是「解鎖」所以 rank 0 起跳，天生技是「等級1就獲得」所以 rank 1 起跳，兩者刻意不同。
+  `syncAbilityPassives` 把它排在 Q/W/E/R/EX 之後、固定順序納入掃描，因此 `sources` 排序仍是決定性的。
+- **實測數字（`packages/shared/scripts/probeInnateApply.ts`，跑真的 content + 真的 spawnChampion）**：
+  108 個天生技裡 **19 個在出生當下就掛上 ModifierSource 並改變 final 屬性**；
+  29 個被動型 doc 的 `ranks[0]` 是**誠實的空**（機制不存在，見下）；60 個 active 型「已擁有、可定址、尚不可施放」。
+- **踩到並修掉的真 bug：重複套用**。godie-hart / godie-huth / godie-h02u / godie-h02k / godie-h01u 這 5 位
+  同一招天生技**同時**存在於舊的 `champion.passive` 內嵌區塊與新的 standalone doc。直接接上會讓
+  28-00 無限再生 變成 +24 hp/s（應為 +12）、01-00 怒斬 每次揮擊擲兩次 15% proc。
+  `innateSupersedesLegacyPassive()` 依專案既有規則（standalone doc 為準，見 `registerChampion`）壓掉內嵌那份；
+  thorne / sela 沒有 `NN-00`、內嵌區塊是唯一定義，**不動**。
+- **29 個空的到底缺什麼機制**（依數量排序，給後續 lane 當清單）：閃避／迴避 5（12-00×2、45-00、92-00、98-00）、
+  對敵方的光環減益 4（79-00×2、66-00、40-00）、機率減傷 2（03-00、78-00）、傷害型態減免 3（08-00×2、43-00）、
+  真視／隱形 4（21-00、16-00×2、27-00）、每殺成長 2（07-00、09-00）、其餘為第二生命／變身／夜間條件等。
+- **evasion 這面牆的範圍評估（本階段刻意沒做，說明理由）**：加一個 `Stat.Evasion` 不只是 `statTypes.ts`，
+  還會連動 `ITEM_MODIFIER_LIMITS`（`content/schema/common.ts` 的窮舉 Record）與 client 的
+  `statDisplay.ts` `META_BY_STAT`（同為窮舉 Record，屬 UI lane）。本階段的 lane 明文禁止改 content doc 與 UI，
+  而 modifier 本身又只能寫在 content doc 裡——只改 sim 會是**沒有任何 doc 使用的死碼**。
+  故照實留空並記錄，等一個能同時動 sim + schema + content + UI 的 lane 一次做完。
+- **決定性**：`sim/innatePassive.test.ts` 用同 seed 兩個世界跑 300 tick 逐 tick 比對 digest（含會擲
+  `world.rng` 的 proc hook），另加一個不同 seed 必須不同的反證；game-server 的 replay 全套 304 測試亦全綠。
+
+---
+
+## 2026-07-24 · 標準（驗收門檻，不是單一任務）
+
+> 使用者原話：「[技能戰鬥效果] 及 [球體/蝗蟲群/粒子特效] 要記得明確比照原 w3x 實作」
+
+這是**長期驗收門檻**：技能的戰鬥效果與 orb／蝗蟲群（locust swarm）／粒子特效必須**比照原地圖實作**，
+不接受「看起來像」的近似。往後任何技能／特效工作都要拿這條當通過標準。
+
+### 盤點現況（唯讀實測）——**目前不合格**
+
+| 項目 | 數字 | 判定 |
+|---|---:|---|
+| `fx.prim.*` 合成 primitive | **585 / 662** | ❌ #123 是風格化**重建**，不是原 mdx 粒子發射器 |
+| `fx.*` 具名／匯入特效 | 30 | 真正綁到匯入資產的只有這些 |
+| 無 `vfxKey` | 47 | ❌ |
+| #98 零幾何特效模型 | 實測 3 個 glb ≤1.9 KB（`heronarutos4effect` 1900B、`collision` 1148B、`divinering` 1020B） | ❌ 發射器沒轉出來 |
+| #50 每次施放美術參數 | 未移植 | ❌ scale/facing/tint/alpha/height/timeScale 都不是地圖值 |
+| 被動型天生技實際生效 | 19 / 48 | ❌ 29 個 modifiers 全空 |
+| 主動天生技可施放 | 0 / 60 | ❌ |
+
+### 根因分層（**修的順序必須照這個**，跳過任一層下一層都白做）
+
+1. **資產層**（#98）：WC3 的 orb／蝗蟲群本質是**粒子發射器＋附著點**，不是靜態網格。mdx→glb 轉換時
+   發射器沒有幾何可烘，出來就是空殼。正解不是「再轉一次」，而是把發射器**參數當資料抽出來**
+   （emission rate、lifespan、初速/重力、貼圖、blend mode、tint 曲線、附著骨點），在 Babylon 端
+   重建為等價發射器。
+2. **綁定層**：585 支技能指向合成 primitive。要逐支回到 w3x 的 art 欄位
+   （`Ashm` target/special/effect art、`Aloc` 附著點）與 JASS 的 `AddSpecialEffect*` 呼叫，
+   取回「本來該長什麼樣」。**JASS > tooltip**，且不得用鄰近 grep 猜。
+3. **參數層**（#50）：每次施放的 scale/facing/tint/alpha/height/timeScale。
+4. **效果層**：sim 缺 `evasion` 等屬性 → 天生技與部分技能效果落不了地。
+
+### 時序限制
+特效保真會寫 `content/abilities/*.json` 的 `vfxKey`／`effects`，與 icon workflow（`wvtuqaybu`，
+正在寫同一批檔案的 `icon` 欄位）**同檔衝突**。因此：**先跑唯讀的來源考古**產出逐支對照表，
+寫入階段排在 icon 排空之後。
+
+### ⚖️ 標準放寬（使用者澄清，2026-07-24）——「像那個效果」可以，但要有證據
+
+> 「我可以接受像那個效果，前提是 1. 你真的參考過原始參數 2. 你判斷過是否合理符合情境
+> 3. 你真的試玩過適合，方法要先自證 4. 在 Babylon 端重建等價發射器」
+
+**標準從「像素級複刻」改為「有根據的等價」**。`fx.prim.*` 近似**可以通過驗收**，但每一支都必須附上四項證據：
+
+| # | 關卡 | 通過條件 | 誰負責 |
+|---|---|---|---|
+| 1 | **讀過原始參數** | 該技能在 w3x 的 art 欄位／JASS 呼叫已被實際查出，標記 CONFIRMED／INFERRED／UNRESOLVED | 考古 `w4on4u9pu` |
+| 2 | **判斷情境合理** | 要寫出「為什麼這個近似在這個情境成立」，不是預設近似就好 | 修復階段 |
+| 3 | **實際試玩適合**＋**方法先自證** | 方法必須先拿已知正解反推成功；近似要在實機看過才算通過 | 修復階段（含實機截圖） |
+| 4 | **Babylon 端等價發射器** | 對應 #98 正解：發射器**參數化重建**，不是再轉一次 glb | 資產層 |
+
+**影響**：585 支不再預設全部要重做。多數可能在「讀過原始參數＋判斷合理＋試玩通過」後**直接判定通過**，
+工作量大幅下降；真正要動的是與原效果**明顯不符**或**落在球體／蝗蟲群／粒子**這三類、以及 #98 空殼資產的部分。
+⚠️ 不得反向濫用：**沒讀過原始參數就宣稱「近似可接受」= 不合格**。
+
+---
+
+## ✅ 已關閉（機制半邊）：sim 缺 `evasion` 屬性 —— 2026-07-24
+
+上面「效果層：sim 缺 `evasion` 等屬性 → 天生技落不了地」的**機制半邊已完成**。
+
+| 半邊 | 狀態 | 位置 |
+|---|---|---|
+| sim 屬性 + 命中判定 | ✅ 完成 | `packages/shared/src/sim/combat/evasion.ts`、`stats/statTypes.ts`、`systems/BasicAttackSystem.ts`、`systems/ProjectileSystem.ts` |
+| item modifier 上限（窮舉 Record） | ✅ 完成 | `packages/shared/src/content/schema/common.ts` `ITEM_MODIFIER_LIMITS` |
+| **內容**：29 支空 modifier 的 迴避 天生技 | ❌ 未做（內容 lane） | `content/abilities/*.passive.json` |
+| **UI**：`META_BY_STAT` / `STAT_SHELF` 沒有 `evasion` 這一列 | ❌ 未做（UI lane） | `apps/client/src/ui/panels/statDisplay.ts`、`shopGrouping.ts` |
+| **網路**：`evade` 事件未在白名單，客戶端收不到 | ❌ 未做（net/client lane） | `apps/game-server/src/net/eventFanout.ts` |
+
+**模型（一句話）**：迴避＝**只對普攻**的防守方 pre-damage 骰（近戰在傷害點、遠程在飛彈命中當下），
+用 `world.rng`；閃過＝完全 miss（無傷害／無 on-hit／無吸血／無 hitstop），但揮擊本身照樣發生。
+**不套用在技能上**，理由見 `combat/evasion.ts` DECISION 1：WC3 `Evasion` 從來只閃普攻，
+而且 cast-telegraph.md §4.5(a) 要的是「位移閃避」這種玩家可掌握的 agency，不是隱藏骰子。
+
+**`evasion = 0`（今天全部英雄）完全不擲骰**，故既有 replay／digest 逐 tick 不變（已測）。
+
+---
+
+## ✅ 已關閉：#126 私人部署審核閘 —— 補齊「後台看得到、決定留得下、決定立刻生效」 —— 2026-07-24
+
+#126 的**玩家半邊**（註冊→pending→無 token→login 403→approve 才能玩）先前已經落地。
+這一輪補的是**營運半邊**與 go-live 硬化，全部在 `apps/platform/**`（Go）：
+
+| 缺口 | 先前狀態 | 現在 | 位置 |
+|---|---|---|---|
+| 後台**看不到**誰在等 | ❌ 沒有列隊端點，`AccountRow` 連 `status` 都沒有 | ✅ `GET /admin/accounts/pending`（最舊在前）+ `?status=` 過濾 + 每列帶 `status`/`approved` | `internal/admin/admin.go`、`handlers.go` |
+| 核准/拒絕**不留紀錄** | ❌ 直接寫 `Accounts.SetStatus`，繞過 admin service，稽核日誌空白 | ✅ `admin.Service.SetApproval` → `approval_approved` / `approval_denied` + 操作者 + `reason` | `internal/admin/admin.go` |
+| 可以把自己**鎖在門外** | ❌ 拒絕最後一個可登入的管理員 = 沒人能核准任何人（含修這件事的人） | ✅ `409 last_admin`，與 `SetAdminRole` 撤權同一條規則 | `internal/admin/admin.go` |
+| 拒絕/停權**不立即生效** | ❌ access token 是簽名 bearer，最長 ~15 分鐘照玩、照管 | ✅ `AdminOnly` 要求 *usable* admin；`auth.PlayableOnly` 守 room/match REST + lobby WS handshake；拒絕時撤 refresh | `internal/admin/middleware.go`、`internal/auth/middleware.go`、`service.go`、`internal/lobby/ws.go` |
+| 忘了設 `GGD_REQUIRE_APPROVAL` 就上線 | ❌ 只讀 env，預設 = 關（開放註冊即可玩） | ✅ `config.resolveRequireApproval`：非 loopback 綁定預設 **開**，loopback 預設關（#127 分級同一個 predicate），env 兩向都可覆寫；每次開機都記 log | `internal/config/config.go`、`internal/server/server.go` |
+
+**兩道閘是疊加、不是替代**（#174 決定「誰能註冊」，#126 決定「誰能玩」）：
+持有效邀請碼註冊仍然是 `pending`；**碼在註冊當下就燒掉、不是核准時才燒**，
+否則一張邀請碼會變成無限量的待審帳號；沒碼的陌生人根本進不了待審列隊。
+第一個帳號對**兩道閘都豁免**（要碼沒人能發、要核准沒人能批 = 死鎖），這條沒有動。
+
+**go-live 硬化複查**：`config.Load()` 端到端測試已補——把 `.claude/launch.json` 的
+`devsecret`/`devseam` 搬到對外綁定會**開不起來**（#176 的守衛確實在開機路徑上），
+同一組值在 loopback 仍可正常開發；金流面用**路由樹**（非 grep）斷言全站沒有
+payment/checkout/billing/subscription/top-up，玩家也無法自行發 M 幣。
+
+**待其他 lane**：`apps/admin` 的「帳號審核」頁面（本 lane 只出 API 與契約，不碰 `apps/admin/**`）。
+
+---
+
+## ✅ 已關閉（機制半邊）：sim 沒有「靈氣／範圍光環」的施加機制 —— 2026-07-24
+
+上面「效果層：sim 缺 `evasion` 等屬性 → 天生技與部分技能效果落不了地」裡，
+**`evasion` 之外的第二面牆**：`ModifierSource` 只能改**帶著它的那一個單位**，
+沒有任何辦法表達「範圍 R 內、依陣營過濾、進出即時增刪」。
+所以每一支 `[靈氣]` 天生技都只能誠實留空。指標案例：
+
+> **79-00 靈壓**（`content/abilities/godie-h01n.passive.json`，黑崎一護）
+> 「初始法力值較一般人高，且此靈力產生的強大靈壓能**降低範圍500內敵人攻擊速度25%**。」
+> → `"radius": 9.17`、`"targetsEnemies": true`、`"passive.ranks[0].modifiers": []`
+
+前半（初始法力較高）本來就寫得出來（自身 `maxMana` modifier）；**後半才是這次補的**。
+
+| 半邊 | 狀態 | 位置 |
+|---|---|---|
+| sim 光環機制（半徑／陣營／進出增刪／linger） | ✅ 完成 | `packages/shared/src/sim/aura/aura.ts`（+ `aura.test.ts` 32 測） |
+| 掛進固定 system 順序 | ✅ 完成 | `packages/shared/src/sim/SimWorld.ts` step 0b（`rebuildGrid` 之後、`statRecomputeSystem` 之前） |
+| `ModifierSource.auras` / `kind: "aura"` | ✅ 完成 | `packages/shared/src/sim/stats/modifiers.ts` |
+| 內容欄位 `passive.ranks[N].auras` + zod | ✅ 完成 | `sim/content/defs.ts`、`content/schema/effect.ts` `zAuraDef` |
+| 純光環被動也要 attach（`modifiers` 可為空） | ✅ 完成 | `sim/abilities/abilityPassives.ts` `rankBlock` |
+| **內容**：靈壓等 `[靈氣]` 天生技的 `auras` 區塊 | ❌ 未做（內容 lane） | `content/abilities/*.passive.json` |
+| **網路**：`auraApply` / `auraEnd` 未在事件白名單 | ❌ 未做（net/client lane） | `apps/game-server/src/net/eventFanout.ts` |
+
+**模型（一句話）**：光環＝**投射出去的 `ModifierSource`**。每 tick 依現況重算「誰在裡面」，
+差異比對後把 payload 以 `kind: "aura"` 掛到範圍內單位自己的 `sources`，離開／死亡／
+發射者死亡或被 `destroy()` 就移除。**不做訂閱、不做側表**——那是正確性論證本身：
+每一種「該結束」的情況都退化成同一件事（今 tick 不在集合裡），不必為每種情況各寫一條拆除路徑，
+也就沒有任何一條路徑可以漏掉、把 −25% 攻速永久留在走遠的人身上。
+
+**半徑走 `abilityRange`（#136／#125）**：`resolveAuraRadius` 直接委派 `resolveAbilityRadius`，
+不是自己再寫一次 `radius * combatEnv.abilityRange`——否則 #136 規則一改，光環就會是唯一
+偷偷保留舊行為的地方。靈壓的 500 WC3 單位＝ 9.17 sim 單位，60% 倍率下實際為 5.502。
+
+**決定性**：本模組**完全不碰 `world.rng`**（沒有骰子可擲），迭代順序全部固定
+（`world.stats` 為遞增 entity id、`queryOverlap` 回傳已排序），所以投射出來的 `sources`
+陣列順序在每個 replica 都一致（這關係到 `Override` 解析與 hook 觸發順序）。
+沒有任何人發射光環時，digest 與 rng.state 逐 tick 與加這套機制之前完全相同（已測）。
+
+---
+
+## ✅ 已關閉（機制半邊）：主動型天生技（60 支）無法施放 —— 2026-07-24
+
+上面「天生技盤點」表裡的 **`主動天生技可施放 0 / 60 ❌`** 這一列。
+
+問題不是效果壞掉，是**槽位叫不到**：`Command.castAbility` 帶的是 `AbilitySlot`（Q/W/E/R/EX），
+而天生技的 instance 放在 `AbilitiesComp.passiveSlot`。任何 intent frame 都無法指名它，
+所以 60 支 `innateKind: "active"`（`22-00 嗚鎖打!` 40 秒 CD／150 AoE 傷害＋0.5 秒暈、
+`76-00 二檔` 60 秒 CD／20 秒 +100% 攻速）全部**寫得出來、按不到**。
+
+| 半邊 | 狀態 | 位置 |
+|---|---|---|
+| 第六槽可被 cast 指名（新型別 `CastableSlot`） | ✅ 完成 | `packages/shared/src/sim/intents.ts` |
+| 槽位→instance 唯一解析器＋主/被動判別 | ✅ 完成 | `packages/shared/src/sim/abilities/innateActive.ts`（+ `innateActive.test.ts` 20 測） |
+| 走同一條 cast 驗證階梯（法力／暈／CD／後搖） | ✅ 完成 | `packages/shared/src/sim/abilities/abilitySystem.ts` |
+| 第六槽冷卻真的會走 | ✅ 完成 | `abilitySystem.ts` `tickCooldowns` |
+| rankUp 指令額外擋掉 `"PASSIVE"` | ✅ 完成 | `packages/shared/src/sim/systems/CommandSystem.ts` |
+| hook 的 `abilitySlot` 可寫 `"PASSIVE"` | ✅ 完成 | `packages/shared/src/content/schema/common.ts` `zCastableSlot`、`schema/effect.ts` |
+| **UI**：第六顆按鈕／熱鍵／CD 掃描 | ❌ 未做（client lane） | `apps/client/src/ui/components/AbilityBar.tsx`、`ui/passiveSlot.ts` `innateCastNote` |
+| **網路**：`validateInput` 的 cast 白名單沒有 `"PASSIVE"` | ❌ 未做（net lane） | `apps/game-server/src/net/validateInput.ts:42` |
+| **cheat**：`resetCooldowns` / `zeroCooldown` 不含第六槽 | ❌ 未做（game-server lane） | `apps/game-server/src/match/MatchController.ts` |
+
+**為什麼不直接把 `"PASSIVE"` 加進 `AbilitySlot`**（原本 intents.ts 的註解是這樣預告的）：
+那會同時放寬 `Command.rankUpAbility`、`Cheat.rankAbility` 與全樹的 `ab.slots[slot]`
+（那個 Record 根本沒有 `"PASSIVE"` 這個 key）。天生技**可施放但永遠不可升級**，
+所以拆成兩套字母表：`AbilitySlot`＝五個「學來的」槽，`CastableSlot`＝六個「按得到」的槽。
+升級天生技不是被 runtime 擋下來，是**型別上打不出來**。
+
+**決定性／replay**：沒有任何舊錄影含有 `slot: "PASSIVE"` 的指令，
+所以新增的 `tickCooldowns` 那一行在每一份既有輸入日誌上都讀到 0、什麼都不做；
+本 lane 不擲任何骰。已測：同 seed 逐 tick digest 與 `rng.state` 完全相同（含反證：換 seed 會分歧）。
+
+**順手關掉的一個真實漏洞**：舊的 `slot === "EX" ? ab.exSlot : ab.slots[slot]`
+會拿呼叫端的字串去索引 Record，未經清洗的 `slot: "constructor"` 會讀到 `Object.prototype`
+的成員。新的 `abilityInstanceFor` 每一支都是對已知槽名的等值比較，其餘一律 `undefined`
+（**特別不能掉進 `passiveSlot`**，否則垃圾輸入會放天生技）。
+連帶：`apps/game-server/src/net/validateInput.test.ts:54` 那條
+「RAW castAbility slot='constructor' DOES throw（vuln is real）」的前提已不成立——
+sim 現在回 `"not-learned"` 不再拋錯，該測試要改成斷言「無效果」。（本 lane 不碰 `apps/**`。）
+
+## ✅ 已關閉：後台改了、跑著的 shard 卻不知道 —— 內容失效廣播（Redis pub/sub）—— 2026-07-24
+
+**缺口**（#48 的另外一半）：後台改 curation 白名單／combat-env／server-ops 後，
+**正在跑的 game-server 不會知道**。三份文件都只在「開新對局」時才重新抓，
+所以 shard 閒著沒人開局時，剛存好的設定可以無限期不生效，而且**沒有任何地方講出來**。
+grep 證實：整個 repo 沒有任何 `Subscribe`/`Publish` 用在設定上，Node game-server **完全沒有 Redis**。
+#48 已經讓「抓失敗」變得很大聲；這條讓「改成功」真的傳得到。
+
+| 半邊 | 狀態 | 位置 |
+|---|---|---|
+| 平台寫入時廣播（三份文件共用一個出口 `Repo.mirror`） | ✅ 完成 | `apps/platform/internal/data/redisx/contentbus.go`（`chan:content`）＋ curation / combatenv / opsenv 各自的 `mirror()` |
+| 廣播內容 = kind + etag（**不是文件本體**） | ✅ 完成 | `redisx.ContentETag`（sha256 前 12 hex）。shard 收到後回頭抓權威文件，維持**單一 ingestion path** |
+| game-server 訂閱端（**零相依**，自寫 RESP subscribe-only client） | ✅ 完成 | `apps/game-server/src/config/redisSubscriber.ts`（不動 pnpm-lock，不引入 ioredis） |
+| 收到失效 → 走 #48 的**同一條** fetch 路徑 | ✅ 完成 | `config/contentBus.ts` → `WhitelistCache.refresh()` / `CombatEnvCache.refresh()` / `ServerOpsCache.refresh()` |
+| 重抓失敗 → 進**同一個** degradation registry、上 `/healthz` | ✅ 完成 | `warnOnce(content-refresh-<kind>)`；成功後 `clearDegradation` 收回 |
+| Redis 可有可無（老闆的筆電） | ✅ 完成 | 連不上只 warn 一次＋退回 TTL 行為；`GGD_CONTENT_BUS=0` 可完全關閉；開機路徑不 await |
+| `/healthz` 回答「我剛改的到底進去了沒」 | ✅ 完成 | `platform.content.documents.<kind>`：`announcedVersion` / `appliedVersion` / `lastRefreshAt` / `stale` |
+
+**對局中安全（本條最重要的設計決定）**：
+**分界線是「開局」，不是「選角」也不是「戰鬥」。** 白名單縮小 → 只影響**之後開的**對局；
+進行中的對局（含**正在進行的選角**）用 `onCreate` 當下凍結的快照。
+理由：選角中途縮白名單，會讓游標底下的英雄消失、或讓伺服器拒絕五秒前才提供的選擇；
+戰鬥中途縮，等於回頭沒收別人**正在玩**的英雄。兩者都沒有好的 UI。
+這條是**結構性保證**不是慣例：`MatchController.whitelist` 是 readonly，`Whitelist` 不可變，
+bus 只換 shared cache 裡「下一次 onCreate 會讀到」的那顆物件，拿不到任何活著的 room。
+（`maxRooms` 是唯一真正即時的旋鈕，而且安全：只在 onCreate 讀，調低不會踢掉跑著的對局。）
+
+**重抓失敗時保留 last-known-good（安全性考量，不只是體感）**：
+`get()` 抓不到照樣 fail-safe 成 allow-all（有對局在等，不能卡死）；
+但 `refresh()` 不行——那等於「平台剛好掛掉時來一則廣播，就把內容過濾整個關掉」。
+所以 bus 觸發的重抓失敗**只記錄失敗**，沿用平台上次真的講過的值。
+
+**測試**：Go 11 條新測（`redisx` 4 / `curation` 3 / `combatenv` 2 / `opsenv` 2，含 miniredis 真訂閱、
+etag 穩定性、**沒有 Redis 也要能存**）；TS 31 條新測（RESP 分包/黏包/重連/斷線 11、
+bus publish→refetch/合流/降級/healthz 15、對局中安全 5），全部走**真的 TCP socket**。
+
+---
+
+## 語音＝戰鬥可讀性（2026-07-24，擁有者三連追加）
+
+**原話**：「如果大家聲音都相似，戰鬥的時候就會很吵而且不知道是誰放了哪招」
+「所以一定要有個性特色接近原本角色的聲音檔參考」
+「千萬不能只有 Otoya, Kyoko 兩種聲音來源來生成」
+「我稍後給你代表性的其他聲音檔給你參考」
+「能不能聽得出來講什麼其實不重要，重點是情感表達有沒有到位」
+「像 KOF 有很多空耳，喊著聽不清楚的招式名稱但是很熱血、很符合角色特色」
+
+**這把語音從「擬真度」改判成「可讀性」**，跟技能圖示、VFX 色形語言同一類問題——
+擁有者對本作最常抱怨的一句是「根本不知道哪招是哪招」。12 人同場如果共用聲線，
+音訊層就從**資訊**退化成**噪音**，反而讓可讀性更糟。
+
+**現況即病灶（已量測）**：`content/assets/audio/voices/quotes/quotes.json` 113 位角色，
+聲音來源只有 **Otoya ×72 / Kyoko ×41** 兩種。一場 12 人最多只聽得到兩種音色。這是已上線的狀態。
+
+**兩條驗收準則改寫**：
+1. ❌ 廢除 **ASR 回轉字準率當通過閘**——那會打掉 KOF 式糊音吼叫，正是要的東西。
+   ASR 降級為「只擋災難性失敗」（無聲、語言完全跑掉），不擋咬字。
+2. ✅ 新增 **跨角色分離度**為一級指標。既有的「像不像自己的參考音」不足以保證可用：
+   兩個角色可以各自都像自己，卻彼此難分。用 `campplus.onnx` 量 all-pairs 餘弦相似度。
+3. ✅ 新增 **情感表達到位**為一級指標（音高範圍／動態／語速變化），取代咬字。
+
+**引擎裁決（擁有者質疑「你要確定 IndexTTS-2 能說日文？」→ 查證後推翻我的翻盤提議）**：
+| | IndexTTS-2 | CosyVoice 3 |
+|---|---|---|
+| 日文前端 | **無**。無 ja 語言碼、無假名處理，詞表是 `checkpoints/pinyin.vocab` | `cosyvoice/tokenizer/tokenizer.py:19` → `"ja": "japanese"` |
+| 官方語言宣稱 | 僅出現在**作者介紹**的 multilingual | README:15 明列 9 語言含日文 |
+| 情緒控制 | `emo_vector` / `emo_audio_prompt` | `inference_instruct2(tts_text, instruct_text, …)`，README:20 明寫支援 emotions/speed/volume |
+
+→ IndexTTS-2 唸日文＝**漢字走中文拼音詞表**，唸出的是漢字的中文音；那是唸錯字不是空耳。
+先前日文 ASR 4/7 是這個病灶的症狀，不是「糊但對」。
+→ **CosyVoice 3 續任主力**（唯一真的會日文），情緒改用 `inference_instruct2` 下自然語言指令取得，
+**一分沒少**。IndexTTS-2 降級為中文台詞備援。
+
+**參考音來源已定案：由擁有者提供**，不自行外部蒐集。待辦是鋪好收件口與命名規則。
+
+## ~~傳說寶玉 2400g 的可及性反了~~ → **已推翻，是我算錯**（2026-07-24）
+
+> ⚠️ 下方原始推論**錯誤**，保留以記錄錯在哪。實測結論在本節末。
+
+`STARTING_GOLD=600`、`GOLD_REWARDS={kill:150, assist:75, roundWin:300, roundLose:150, killBounty:100}`。
+純存錢（完全不買裝）累積曲線：
+
+| 情境 | 湊到 2400g |
+|---|---|
+| 順風（全勝＋2殺） | **R3** |
+| 普通（半勝＋1殺） | R5 |
+| 逆風（全敗＋0殺） | **R8 僅 1800 → 整場買不起** |
+
+且這是理想化「一毛不花」曲線；中位裝備 1000g，買兩件普通裝後普通玩家整場摸不到。
+
+**方向是錯的**：最需要翻盤道具的逆風方數學上買不起，順風方 R3 就能買 → 富者愈富。
+`killBounty:100` 比一顆人頭 150 還小，補不回差距。
+**這可能是 #108 / #149 的真正上游**——那兩張票在修「翻盤手段不夠力」，
+但逆風方根本沒錢走到翻盤手段面前。待驗證後決定是調 `GOLD_REWARDS` 還是調 `LEGENDARY_ORB_PRICE`。
+
+## Chrome 存得起密碼卻不帶入（2026-07-24，#185）
+
+**原話**：「為何我 chrome 儲存登入密碼 結果下次沒幫我帶入」
+
+**這個不對稱正是它一直沒被發現的原因**：
+Chrome **存**密碼用的是寬鬆啟發式（看到 `type="password"` ＋ 一個像送出的動作就問你要不要存），
+所以「存檔提示有跳出來」**不能當作填入會動的證據**。
+Chrome **填**密碼則需要認出哪格是帳號、哪格是密碼——那要表單語意或 autocomplete 提示。
+
+**現況（讀碼確認）**：
+- `apps/client/src/ui/platform/AuthScreen.tsx`（705 行）**沒有任何 `<form>` 元素**，欄位都是裸 `<div>` 包 input；
+  `name=` / `id=` / `autoComplete=` 出現 **0 次**；送出是 `<Btn onClick={submit}>`，不是 form submit。
+- `apps/client/src/ui/platform/widgets.tsx:98` — `TextInput` 的 props 是**封閉字面型別**
+  `{ value, onChange, placeholder?, type?, onEnter?, autoFocus?, style? }`，渲染裸 `<input>`，
+  不透傳 name/id/autoComplete。**所以這是結構性缺失，不是漏寫**：任何呼叫端都無法補上，
+  不動這個共用元件就修不了 AuthScreen。
+
+**第二個隱藏 bug（只加 autocomplete 會「看起來對」但仍然失敗）**：這些是 React **受控**輸入。
+(a) Chrome 在 hydration 前後填值，React 隨後用 `value=""` 重繪把它**洗掉**——表現為閃一下就空了；
+(b) 程式化寫入 value **不會**觸發 React 的合成 onChange，除非用原生 setter 並 dispatch `input` 事件——
+所以欄位可以看起來填好了，state 卻還是 `""`，送出去是空密碼。
+
+**驗收**：帳密須成對可辨識；登入用 `current-password`、註冊用 `new-password`（寫反會讓 Chrome 在登入頁
+提議產生新密碼）；Enter 與按鈕都要能送出且 SFX 不掉；真表單送出不得造成 SPA 頁面跳轉；
+邀請碼／owner token 欄位要**刻意決定**提示值（`one-time-code` vs `off`，給錯比不給更糟）。
+另查 #170 把 auth 畫面提前於 1441 doc 載入渲染——若 input 進 DOM 的時機晚於 Chrome 的填入掃描，光這點就會失效。
+
+**擁有者端注意**：Chrome 可能要先到 `chrome://settings/passwords` 刪掉舊的那筆壞紀錄，才會重新學習修正後的表單。
+
+### 實測推翻（30 seeds / 1500+ 座位回合樣本，驅動真 `MatchController`）
+
+harness: `tools/ttk-sim/src/goldCurve.ts`（唯讀量測，不改任何 tuning），走真實內容解析
+（`resolveArenaRules` / `resolvePhaseConfig` / `combat-env.json`）、12 個 bot、`startingLives=3`、跑到 `matchEnd`。
+
+| R | 領先方 %買得起 | 落後方 %買得起 |
+|---|---|---|
+| R1 | 0% | 0% |
+| R2 | 0% | 0% |
+| **R3** | **100%** | **100%**（持有 3550，餘 1150） |
+| R4–R6 | 100% | 100% |
+
+**我錯在哪**：只算了 `STARTING_GOLD` + `GOLD_REWARDS`。但 `content/config/config.arena-rules.json` 對**每個存活座位無條件發錢**
+（`MatchController.enterIntermission` → `grantForRound`，迴圈 `activeSeats()`，**不看勝負**）：
+R1 +0、**R2 +750、R3 +2500**、R4 +1000、R5 +1250、R6 +1500。
+**光 R3 的 2500 就超過寶玉售價。** 我引用的那組常數是 `DEFAULT_ARENA_RULES`——單元測試/骨架開機的 fallback；
+正式伺服器開機載入內容（`apps/game-server/src/index.ts:232`），`resolveArenaRules()` 永遠回傳文件，走不到 default。
+
+**最壞情況（每場把錢花光）**：進 R3 前的區間收入 min **2650**（= 2500 發放 + 150 敗場金）→ **身無分文又連敗，R3 照樣買得起**。
+
+**差距不擴大**：同場最富與最窮的**總收入**差距，中位 300–550、最大 1300，**永遠不到半顆寶玉**，
+而共同發放曲線一回合就把所有人推 2500。唯一與勝負相關的收入是 roundWin 300 vs roundLose 150，**每回合差 150**。
+擊殺金可忽略：中位**每座位每場 0 殺**，65% 座位整場 0 殺，kill+assist 僅佔總收入 **6.0%**
+（每場約 30 死 vs 5 殺——回合多由火環結束，中位戰鬥 194.6 秒 vs 火環 `startSec` 180，而火環死亡沒有擊殺者，不付錢給任何人）。
+
+**沒有 R8 這一欄**：3 條命、`livesLost` 1/1/2/2/3…，實測 **4 回合×15、5 回合×13、6 回合×2**（中位 4.5、最多 6）。
+連敗三場的隊伍在 R3 結算就被淘汰——「R8 的落後玩家」在兩個意義上都不存在。
+
+**#108 / #149 不是下游**：可及性與勝負無關，所以「翻盤手段構不到」這個上游假說**被殺掉**。
+若翻盤體感仍差，病灶就在那兩張票原本說的——**池子與 augment 本身的內容**。這個結論**移除**一個假想上游，不增加它們的工作量。
+
+### 但挖出兩個真問題
+
+1. **`config.match.json` 的 `startingTeamLives: 8` 是死的**——`apps/game-server/src/rooms/MatchRoom.ts:255` 硬寫
+   `const startingLives = 3`。內容值完全沒作用。與 `phaseConfig.ts` 當初要修的是同一類「設定檔是裝飾品」bug。
+   （以 `GGD_LIVES=8` 重跑：變成 8–10 回合，R3 起仍 100% 買得起，所以不影響上面結論。）
+2. **真正的經濟形狀是「R1–R2 沒有任何有意義的商店決策，R3 一次全部解鎖」**。
+   那筆 R3 +2500 佔全場約 7600g 收入的 **33%**，而且與寶玉可買、augment 升金、`ultUnlockRound: 3` **撞在同一回合**。
+   這是發放曲線的**節奏**問題，留給擁有者調。
+
+3. **`killBounty` 被我標錯**：`DeathSystem.ts:54-56` 把它付給**擊殺者**，每個受害者一次——那是**首殺溢價，加速領先方**，
+   不是付給受害者的追趕金。拿它跟 `kill`（100 < 150）比大小是比錯了對象。**這個經濟裡沒有任何追趕金。**
+
+## 養成曲線重新設計 ＋ 自動 icon 生成（2026-07-24）
+
+**原話**：「請合理設計規則、分配 金錢、武器、Augment、解鎖技能，並且擴充卡數 **請參考 Lol 競技場**」
+「記得對應的 icon 生成也别忘了」
+「另外後台新增英雄、技能、武器、道具 ... 這些時，也自動動態生成適合的 icon」
+「記得有擴充更新元件要更新到 readme」
+
+### 為什麼「參考 LoL 競技場」是硬前提，不是風格建議
+本模式已經借用競技場的整套詞彙：silver/gold/prismatic 分級、三選一、配對對決、命數制、每回合購物。
+我第一版 brief 反而寫「別照抄 LoL」，方向錯了，已停掉重放（`wagpw4csf`）。
+新前提：**結構取自競技場，內容取自本作**。GGD 是 3v3v3v3 不是 2v2v2v2，113 個角色的技能是別的遊戲寫的，
+而且它有自己的系統（迴避／20 層屬性路線／守衛塔／復活圈／治療花／收縮火環／即將可施放的第 6 格天生技）。
+依賴龐大線上玩家池或 Riot 級平衡的機制，翻譯不過來——要說明哪些被拒絕、為什麼。
+
+### 一個已知的設計陷阱（現役卡片已經踩到）
+`Chill Touch` 寫「Your Q also slows」——但這是 113 個匯入的 WC3 角色，**Q 是原作者放什麼就是什麼**，
+沒有 LoL 那種跨角色的槽位設計語言。新卡片應觸發在**通用事件**（普攻／施放／受傷／擊殺／血量低於 X%），
+而非特定槽位。順帶：`Bloodlust` / `Chill Touch` / `Aegis Surge` 三張是英文，其餘中文，要統一。
+
+### augment 池的硬下限（已量化）
+`draft.ts:31` 是 `a.tier === tier && !owned.has(a.id)` —— **硬過濾 ＋ 不重複**，每回合永久消耗該級一張。
+silver 6 張在 R1+R2 兩回合就看光；prismatic 7 張撐不過 overflow：
+R9 只剩 3 張（等於沒得選）、R10 只有 2 張、R11 只有 1 張。
+而 `while (choices.length < count && working.length > 0)` **靜靜少發卡**，不報錯——**#47 的同一個形狀**。
+→ **`startingTeamLives` 改 8（8–10 回合）之前，必須先擴充 augment 池**，否則後段抽卡直接破。
+
+### icon 自動生成（#186）
+**引擎選擇的關鍵**：#112 明載雲端 AI 生圖對所有現行 provider 都是壞的，**所以走不了 #23 那條**。
+本機 SD 管線（`tools/icon-gen/local/`，MPS，$0，`.method` sidecar 冪等）是能跑的那條，已產出 525 技能圖 + 21 augment 圖。
+硬條件：不可阻塞存檔／不可覆蓋手選或匯入的 w3x 圖／prompt 必須由實體推導（通用 prompt 會重演視覺同質化崩潰）／
+**不得重新引入 emblem/crest 框**（本專案 A/B 已證實會摧毀主體）／augment 不寫 icon 欄位只寫檔（schema 是 `.strict()`）／
+家用主機沒有 MPS 時要**明講待生成**而非靜默無事（靜默正是這次稽核抓到 17 次的病）。
+**帳本更正（2026-07-24 覆核）**：#178 寫「602 缺圖」。逐檔實測：
+`champions 113/113`、`items 214/214`、`abilities 646/662`、`augments 21/21`。
+殘留 **16**，且**沒有一個是政策封鎖**（先前這行寫「其中含政策封鎖項」，錯了 —— 唯一上第三方版權
+暫停名單的 `godie-e00u` champion 本身早就有圖）。**可出貨缺口＝0。**
+
+那 16 是 `godie-e00u`／`godie-h02n`／`godie-u01f`／`godie-u01q` 四隻的 Q/W/E/R，而且**彼此逐位元組相同**：
+`name: "none"`、無說明、同樣的 cooldown 12／mana 60／range 11／damage 80–240／`fx.prim.physical.nova`。
+**刻意不產圖**，理由是產了會更糟：輸入相同 ⇒ prompt 相同 ⇒ 16 張互換得的圖，等於親手製造
+「根本不知道哪招是哪招」，還會把四隻沒有招式的角色標成「圖已完成」。
+四隻都**不在 48 人白名單**，玩家端根本不會渲染到它們；後台列表顯示一般文字磚。
+`plan.py` 本來就把它們歸類為 `drop`（`placeholder-ability`），現在 daemon 也一致拒絕
+（409 `placeholder-ability`），所以 補圖示 按鈕不會再跟 plan 唱反調。**這 16 個要補的是招式本身，不是圖示。**
+
+#### #186 已交付（2026-07-24）
+接點：`apps/admin/src/ui/ContentPage.tsx` 的 `createNew` —— 文件寫完、成功訊息上畫面之後才 `gen.request(tab, id)`，
+**不 await**（`IconGen.request` 回傳 `void`，型別上就不給你阻塞存檔）。
+機制：`tools/icon-gen/local/daemon.py`（127.0.0.1:8789，單一 worker + 常駐 checkpoint），admin vite 代理 `/icon-api`，
+前端每 4 秒輪詢 `/icon-api/jobs`（與 #97 覆蓋率條同節奏），只在有工作在跑時才輪詢。
+daemon **不寫任何 prompt**，全部 import `keywords.pass1_prompt/pass2_prompt` 與 `batch.render_two_pass`／`_save`／
+`set_icon_field`，所以 emblem/crest 的 A/B 否決自動繼承，augment 的「只寫檔不寫欄位」也是 batch 那一條規則本身。
+四種拒絕都回 409 + `reason`，並在畫面上以句子呈現：`blocked`（icon-plan 暫停名單，22 筆，plan 檔案 mtime 變了就重讀）、
+`author-art`（`icon` 指向存在且**沒有 `.method` sidecar** 的檔 ⇒ w3x／手選，`force` 也到不了這個分支）、
+`already-done`（同一代 METHOD_VERSION 已畫過 ⇒ 重存不會重畫）、`no-engine`（沒有 torch/MPS ⇒ **工作失敗、不寫佔位圖**）。
+空白圖（channel spread < 30）同樣丟棄不存檔。實測四條拒絕路徑與 no-engine 路徑皆已對真實資料驗過，未動任何檔案。
+測試：`apps/admin/src/icons/iconApi.test.ts`（23 項）。文件：`tools/icon-gen/README.md` §7。
+
+#### 實機驗收（2026-07-24，真的在瀏覽器點過）
+在 :60721 後台 三選一強化 分頁按 ＋新增 建立 `frost-bulwark-probe`：文件立刻建好、右側編輯器打開、
+狀態條寫「圖示已排入自動產生，不用等它」，**建立完全沒有等 GPU**。12.3 秒後狀態條翻成
+「已產圖（augment 依慣例吃檔名，schema 沒有 icon 欄位）｜取材：name」，磁碟上出現 128px WebP + `.method` sidecar，
+文件裡**沒有** `icon` 欄位（augment 規則守住），`GET /content-api/assets/...` 回 200，
+且 `apps/client/src/ui/panels/resolveChoice.ts:40` 組的正是同一條路徑 ⇒ 抽卡畫面吃得到。
+再按一次 補圖示 → 409「已經有這一代方法畫好的圖了」，不浪費 GPU。第二個 probe 熱管線 7.1 秒。
+測完兩個 probe 都已刪除，doc/art/備份全部清乾淨（21/21 對齊，無孤兒圖）。
+
+**驗收時抓到兩個真 bug（都不是讀 code 讀得出來的）**
+
+1. **刪除鈕從來沒有成功過** —— 後台按 刪除 一律回「Bad Request」。
+   `apps/admin/src/contentApi.ts` 的 `send()` 對**每個** verb 都送 `content-type: application/json`，
+   但 DELETE 沒有 body，fastify 直接 400 `FST_ERR_CTP_EMPTY_JSON_BODY`。
+   ⇒ #70 rule 3「移除一個三選一強化」等於從未可用。改成只有帶 body 才送該 header；
+   `contentApi.test.ts` 的 stub 原本**根本沒記錄 headers**（所以任何 header 錯誤都測不出來），已補記錄 + 兩條回歸測試。
+   修好後在瀏覽器重跑一次：`DELETE → 200 OK`，文件消失，數量回到 21。
+2. **新 augment 會掉進通用紋章圖** —— 21 張現役 augment 全部是 `AUGMENT_SUBJECT` 硬編的 `curated`，
+   所以名稱表從來沒被真正操練過。後台新建的卡**依定義沒有 curated 條目**，只能走名稱表；
+   實測 `thunder-sigil` 直接掉到 fallback（表裡有 `storm` 沒有 `thunder`），畫出一張通用紋章徽章。
+   ⇒ 沒配對到的新卡會**全部長一樣**，正是抽卡畫面的「分不出哪張是哪張」。
+   已擴充 `AUG_NAME_HINT`（雷/毒/影/聖/暴擊/吸血/荊棘/穿透/速/爆… 中英各一組），
+   同一個 probe 重畫後 signal 由 `fallback` 變 `name`，圖也從紋章徽章變成真的閃電。
+   21 張現役 augment 經回歸確認仍全部 `curated`（未被影響）。
+
+---
+
+## 🎙 2026-07-24 語音參考音管線（voice-reference-pipeline/，新需求批次）
+
+> 來源：使用者一次性大規格需求（48 角色 CosyVoice 3 參考音收集/處理管線）＋兩則追加指示。
+> 全部需求已在 `voice-reference-pipeline/` 落地並以 `--dry-run --all` 驗收（14 單元測試綠、合成音檔煙霧測試走完全程後清除）。
+
+| 需求（原話精神） | 落點 | 狀態 | 備註 |
+|---|---|---|---|
+| 48 角色 heroes.csv（rank/id/…/status=missing） | `config/heroes.csv` | ✅ | UTF-8 BOM，逐字照使用者清單 |
+| Phase 2 上網研究：聲優雙來源交叉查證 | `config/research/batch_*.json` + `reports/research_report.csv` | ✅ | 4 個研究代理實查，40/48 有雙 URL；フシギバナ聲優查無可信來源（誠實標注）；初號機咆哮=林原めぐみ（Yahoo/lain.gr.jp 佐證） |
+| Phase 3 合法來源搜尋+授權旗標佇列 | `config/search_sources.yaml` + `reports/license_review_queue.csv` | ✅ | 10 來源實查條款：つくよみちゃん/あみたろ/刻鳴時雨=AI明示OK；**効果音ラボ聲素材明文禁止AI學習**；声優統計/JVS=研究限定 |
+| Phase 4 只下載 auto_download＋sidecar/SHA-256/不覆蓋 | `scripts/download_permitted.py` | ✅ | 不在 --all 內，需人工核准佇列後手動執行；只接受直接音檔 URL |
+| Phase 5 轉檔 24kHz/mono/s16 + 最佳 5–15s 抽取 + 響度 -20~-18 LUFS/TP≤-1 | `extract_best_segment.py` + `normalize_audio.py` | ✅ | two-pass loudnorm 實測輸出 -19.0 LUFS；邊界貼齊靜音防切句 |
+| Phase 6 品質分析（12 指標+拒絕條件；怪叫/空耳不拒） | `inspect_audio.py` + `audio_metrics.py` | ✅ | music/multi-speaker 為啟發式估計（文件明示）；煙霧測試各拒絕路徑（爆音/靜音/背景音樂）皆實測觸發過 |
+| Phase 7 分離度（0.78/0.68 門檻可調；6 非人類角色走聲學特徵） | `analyze_separation.py` + `processing.yaml` | ✅ | speechbrain 未裝時退 spectral_proxy 並警告；非人類配對實測（0.80→high→改用非語言聲音） |
+| Phase 8 manifest + 缺角色/高碰撞清單 | `build_manifest.py` + `reports/*.csv` | ✅ | approved 五條件齊備才 true |
+| 日文情緒指令（5 場景×48 角色，含禁模仿句） | `config/instruct_seeds.json` → `reports/cosyvoice_instructs.csv` | ✅ | 48 角色手寫日文聲線基底+場景覆蓋（非語言角色/不吼型角色特別處理） |
+| 一鍵執行+dry-run+可重跑+單元測試+README 10 項 | `run_pipeline.py` / `tests/` / `README.md` | ✅ | dry-run 報表導向 logs/dry-run-reports/ 不污染正式報表 |
+| 追加：升到 Python 3.14.6 | `.venv`（brew python@3.14） | ✅ | numpy 2.5.1 + PyYAML |
+| 追加：「忘掉授權問題，私人研究用」 | `processing.yaml → license.mode: private_research` | ✅ | 授權欄位保留為記錄不攔截；`strict` 模式一鍵切回（對外發行前必切） |
+| **真缺口：48 角色實際參考音 0 檔** | `incoming/user_owned/` 待投放 | ⬜ | 管線就緒但無素材；下一步=從合法源下載或自錄，missing_characters.csv 全 48 |
+
+## worktree CI 修正合併（2026-07-24）＋ #108 的量化證據
+
+三個被遺棄的 git worktree（`.claude/worktrees/`）裡躺著 6 個未合併 commit，全部是 CI 修正。
+**它們正是我一直告訴每條工作流「這分支本來就紅、別算你頭上」的那些紅燈的解藥**，只是從沒被合併，所以沒人看得到。
+
+**合併了 5 個（逐檔取出，非 cherry-pick，因為 `.gitignore` 是 dirty 的）**：
+
+| commit | 內容 | 驗證 |
+|---|---|---|
+| `86f6867` | **`.gitignore:37 coverage/` 把整個 Go 套件吃掉了**。`tools/testrunner/internal/api` 會 import `internal/coverage`，所以**乾淨 checkout 上 testrunner 建不起來**。加 `!tools/testrunner/internal/coverage/` | `go build ./...` exit 0；`git check-ignore` 不再命中 |
+| `71f89a7` | `pnpm-lock.yaml` 缺 `tools/ttk-sim` importer | lockfile 有 1 筆 |
+| `e051957` | castability sweep 直接讀 gitignore 的營運白名單 → CI 讀不到。改成白名單不在時回退到 committed fixture | 測試通過 |
+| `45e6b48` | `emit_report.ts` 的 `ICON_EDGE[ext]` 加 `!`（557 行只在 ICON_EDGE 有該副檔名時才放進 map，TS 無法跨 Map 收窄）| typecheck 0 錯 |
+| `cfa8f11` | 忽略 Vite 執行期的 `vite.config.*.timestamp-*.mjs`（只在跑的時候存在，`git add -A` 會誤收）| — |
+
+**刻意不合併 `9542d2b`（`legendaryClaims.test.ts`，#108 的守衛）**，因為它現在是紅的，而且它抓到的是真的：
+
+```
+expect(pool.length).toBeGreaterThanOrEqual(25)
+  實際 content/loot-tables/legendary-weapons.json = 14 entries
+```
+
+那不是「描述與 modifier 不符」，是**池子大小的地板**。寫測試的人判斷傳說池至少該有 25 件，實際 14。
+第二條紅的是 crit 傳說武器的「N%機率造成M倍傷害」是否等於 chance + (M − 角色基礎)。
+**兩條都是 #108 的內容。** 那條測試應該跟 #108 的修正一起進來，不是提前進來當紅燈。
+
+→ **#108 現在有了量化目標：傳說池 14 → ≥25，且每條效能敘述都要有對應的 modifier。**
+
+**另一個順帶發現**：`vitest` 沒有排除 `.claude/worktrees/`，所以全套測試會撈到 worktree 副本、因缺 node_modules 報 `Failed to load url zod`——**假紅燈**，會讓「測試綠不綠」的判斷失真。
+
+---
+
+## 2026-07-24 · 假完成修復：`hitFeel.flashColor` / `.flashMs`（S13 形狀，戰鬥車道）
+
+**需求來源**：假完成盤點 P0-D / N1。schema 收 → sim 複製 → client 解進 struct →
+`planImpactFeedback` 最後一個 statement 沒讀它。**30 份技能文件在填活的死內容**，13 份在 live 白名單。
+
+**決策：honour（不刪欄位）**。刪不掉——`zHitFeel` 是 `.strict()`，刪欄位就要動 30 份
+`content/abilities/*.json`，那不是本車道的檔案。
+
+**⚠️ 盤點報告開的處方是錯的，這點要記進帳**：報告寫「兩行：`profile.flashColor ?? flashColorFor(...)`」。
+那會**靜默迴歸**——`deriveCosmetics` 對**每一次命中**都填了 `flashColor`，`??` 右手邊永遠不執行，
+等於用 sim 那份從未量測的調色盤（含 `FLASH_TRUE = [1,1,1]`，已被證明在淺色模型上是 no-op）
+全域取代 client 那份量測過的。**「兩行就好」本身就是 S13 的下一個實例。**
+
+**實作**：flash 兩欄在線上改成**有作者才存在**（`ImpactCosmetics.flashColor?` / `flashMs?`），
+「在／不在」就是 client 的訊號；sim 的 `FLASH_PHYSICAL/MAGIC/TRUE/BLOCK` + `FLASH_MS_BY_TIER`
+**刪除**（第二套調色盤，隨每個 hitImpact 上線、零像素）。client 新增 `resolveVictimFlash`
+（分層）+ `legibleFlashColor`（色度地板 0.65，繞最大通道加飽和，保留色相家族）。
+`zHitFeel.flashMs` 上限 1000 → 260（原值是這個聲道永遠無法兌現的數字）。
+
+**觀測**（真實 content，非 fixture，含 live 白名單交叉比對）：30/30 生效、13 份 live。
+`godie-e007.r` 之前 `[1.00,0.35,0.90]/160ms` → 現在 `[1.00,0.87,0.35]/178ms`。
+
+**留下的守衛**：`cj-s39..s45`（見 `docs/todo/combat-juice.md`），其中 `cj-s45`
+直接走 `content/abilities/*.json` 實檔，**修好之前那條測試每一列都是紅的**。
+
+**順帶確認**：上一則提到的 vitest 沒排除 `.claude/worktrees/` 仍然成立——
+`npx vitest run <path>` 會撈到 7 個 worktree 副本並報假紅燈。本輪一律用
+`--dir <真實目錄>` 或看具名檔案那一行的結果來判讀。
+
+---
+
+## 2026-07-24 · 假完成修復：`weaponClassOf` 的第六／第七個武器類別（S8＋S16 形狀，戰鬥車道）
+
+**需求來源**：假完成盤點 P0-E（以及 P1-6 指向的真缺陷）。
+**症狀**：全遊戲每一個法師的**普攻**播的是「拉弓 → 放箭 → 箭矢穿刺」。皮卡丘、莉娜因巴斯、
+涅吉、傑洛士、黑人牙膏、夜神月都在內。
+
+**根因不是缺 tag，是缺類別**。`weaponClassOf()` 是**全函數**——它永遠回一個類別，
+所以「沒有對應類別的角色」不會報錯，只會掉進 `attackType === "ranged" ? "bow" : "sword"`。
+`WEAPON_TAGS` 只有 `greatsword|katana|gun|bow|sword`，**法師無 tag 可加**。
+沒有任何測試會紅：`combatSfx.test.ts` 綠的（`bow → bowDraw` 這條路由本來就對），
+`fieldAdoption` 也綠的（它知道的五類每一類都有 ≥1 個角色）。兩邊量的都是機制，
+沒有一邊在問「玩家眼前這隻角色聽起來對不對」。
+
+**分類依據 = 暴雪自己的資料，不是角色名字**。33 個遠程角色每一個都繼承自一個真的 WC3 英雄，
+`Units/*UnitFunc.txt` 的 `Missileart=` 直接說了他丟的是什麼（從 `war3.mpq`/`War3x.mpq` 解出來）：
+
+| Missileart | 類別 | 數量 |
+|---|---|---|
+| `Arrow` / `MoonPriestessMissile` | `bow` | 5 |
+| `WardenMissile` / `BrewmasterMissile` | `thrown` | 5 |
+| FireBall / KeeperGrove / Farseer / ShadowHunter / SerpentWard / DemonHunter / BloodElf … | `magic` | 22 |
+| （無 Missileart：Tichondrius，240 射程的近戰攻擊） | `sword` | 1 |
+
+**這張表順帶推翻了兩個「用直覺會猜錯」的答案**：桔梗（除魔巫女）原本就帶的 `bow` tag
+被 `Hvwd`/Sylvanas 的 `MoonPriestessMissile` 證實是對的；而**依文潔琳其實是弓**
+（`Nbrn`/Dark Ranger → `ArrowMissile`），不是法師——盤點報告把她列進「法師」名單裡了。
+`role` 欄完全不能用：importer 把 33 個遠程角色**全部**填成 `marksman`。
+
+**兩類，不是三類、也不是一類**。`magic` 一類涵蓋全部 22 個施法者是刻意的——
+WC3 的 missile art 分的是**元素**（火球／遠見者／暗影獵手／毒蛇守衛），**不是法器**，
+再切 staff/orb/beam 是發明來源沒有的區分，而且每切一刀就要多一個 clip 才不算空類別。
+`thrown` 反過來：它**沒有**專屬 clip，所以在 `WEAPON_SFX` 裡**明寫**成通用揮擊聲
+（`GENERIC_SWING`）。**「明寫的退回」和「掉下去的退回」在程式碼裡長得一樣，但在人眼裡不一樣**，
+而這整個 bug 就是後者。
+
+**新音檔**：`content/assets/audio/sfx/lab/magic-bolt.mp3`（効果音ラボ「気弾1」，
+`qigong1.mp3`，戦闘/格闘（ゲーム・アニメ風））。走 ACQUIRE.py 同一條管線
+（44.1k mono → 去頭尾靜音 → peak −3.0 dBFS → 128k，符合 #158 的天花板），
+已進 `lab/MANIFEST.json` 的 `clips`（含 pre/post dB、bytes、來源 URL），
+**並且照使用授權條件列進版權頁** `sfxLabCredits.ts`（`sfxLabCredits.test.ts` 會把它 join 回 manifest 逐欄比對）。
+選它之前排除掉的：`magic-flame1/ice1/electron2`（已經是 `abilityCast` 的元素 whoosh，
+借用等於把普攻和施法混在一起）、`magic-stick1`（3.4 秒的閃亮波，沒有 transient，
+放在 ~1.5 秒的攻速上不能聽）。
+
+**預設也改了，但沒人靠它**：`ranged` 預設從 `bow` 改成 `magic`（普查 22/5/5/1）。
+預設仍然存在（全函數必須有），但 `sim/weaponClassCoverage.test.ts` 讓**任何**出貨的
+遠程角色只要沒 tag 就紅——所以預設只決定「沒人回答的那個角色錯得多離譜」，不決定出貨內容。
+
+**留下的守衛**（三條，各擋一個不同的洞）：
+1. `sim/weaponClassCoverage.test.ts`「每個遠程角色都有 tag」— 擋 S8（機制上線、內容 0 筆）。
+2. `combatSfx.test.ts`「每個 sim 武器類別都有**決定過**的 clip」— 從 sim 匯入 `WEAPON_TAGS`
+   本體（不是抄一份），所以**新增第八類會直接紅**，不會再靜默落到通用揮擊。這是 S16
+   （點修一列、沒對帳整張表）那條 recipe 的自動化版本。
+3. `sim/weaponClassCoverage.test.ts` 的端到端那條：真 SimWorld、真皮卡丘、真揮擊 →
+   事件上真的帶 `weaponClass=magic`。純函數、角色文件、registry、emit site 四者
+   **任一單獨測都是綠的而鏈子是斷的**，只有走完整條才問得出來。
+
+**觀測（不是「測試綠了」）**：
+- `curl localhost:39527/content/champions/godie-ofar.json` → `tags: [wc3-import, godie, magic]`
+- `curl localhost:39527/content/config/audio-map.json` → `magicBolt → assets/audio/sfx/lab/magic-bolt.mp3`
+- 全鏈探針：`weaponClass=magic → magicBolt → …/magic-bolt.mp3 → HTTP 200 / 22613 B / audio/mpeg`（live server）
+
+**本車道沒動、但要記帳的旁證**：`icons.test.ts` 與 `bundle.test.ts` 的 4 條紅燈
+**與本次無關**——`content/` 有 **127 份別的車道還沒 commit 的 vfx/augment 文件**，
+而 bundle 測試把總數硬釘在 1598（實際 1725）。這是 pre-existing，不要算進來也不要順手改釘死的數字。
+
+---
+
+## #187 「操作說明應該要在進入遊戲第一局旁邊用半透明提示吧」 — 第一局操作圖例
+
+**需求**（owner，今晚要跟家人第一次開打）：進入遊戲第一局，在畫面旁邊放半透明的操作說明。
+
+**做了什麼**（新檔全部在 `apps/client/src/ui/`，只改 `HudRoot.tsx` 一行掛載）：
+- `ui/controlLegendModel.ts` — 內容與幾何，**純函數**。
+- `ui/ControlLegend.tsx` — `ControlLegendView`（純）＋讀 store 的外殼。
+- `ui/inputMode.ts` — 新的「玩家現在手上拿的是什麼」seam（本來不存在）。
+
+**核心決定：圖例是「算出來的」，不是「打出來的」。**
+一份手打的按鍵表在第一次改鍵時就變成謊話，而且沒有任何東西會發現——這正是這波
+campaign 一整天在刪的缺陷型別。所以：
+- **手把**：不是讀 `SLOT_BY_BUTTON`，而是**真的去跑** `mapGamepadFrame()`。
+  `probeGamepadButton(i)` 餵一個只按了第 i 鍵的合成 frame，看吐回什麼 Order/Command。
+  搖桿同理。改鍵、加鍵、刪鍵 → 圖例同一個 commit 跟著動。
+- **鍵盤技能鍵**：直接來自 `SLOT_BY_CODE`（`InputCapture` 自己 dispatch 的那張表）。
+- **推導不出來的兩類**（`onKeyDown` switch 裡的 A/S/B/Space/方向鍵、滑鼠 listener、
+  touch 的 JSX）改成**宣告 + 雙向 source scan**：宣告的 token 必須在來源檔裡找得到，
+  而且 switch 裡**每一個** `case "Key…"` 都必須被圖例認領。加鍵不加圖例 → 測試紅。
+
+**#107 安全區**：本圖例宣告不了 slot（它要的是「戰場旁邊的長條空白」而不是角落，
+且 `hudLayout.ts` 這次不在範圍內）。誠實的替代做法是**照它的規矩來**：矩形由 registry
+自己的 `hudSlotRect` / `hudStackEnd` 算出來，並由測試在每個 guard viewport（兩種 pointer）
+證明它碰不到任何 slot。兩個**置中、沒有角落 slot 可以表達**的群組（PhaseTimer+觀戰提示、
+AbilityBar+ResourceBars）在模組裡以量測值宣告成保留框，數字用 source scan 釘回元件。
+有面板蓋住角落時（陣亡者的商店）整個圖例讓位——chrome 永遠讓，面板永遠不動。
+
+**兩種形狀**：桌機單人＝左側縱欄（上下兩堆之間的空白）；觸控與**沙發分割畫面**＝
+上方橫帶。手機的左上角在 375px 高的視窗已經排到 356px，沒有側欄可用；沙發模式的側欄
+屬於某個玩家的視角。桌機視窗太矮塞不下整份時**也退回橫帶**——寧可換位置，不可裁行。
+
+**沙發模式只有一份圖例，不是每個視角一份**：四個座位的按鍵完全一樣，四份＝四倍的墨水、
+零額外資訊，而畫面已經被切成四塊。
+
+**踩到的坑（量測救的）**：欄位高度原本寫死 320px，實測 headless render 發現
+**最後三列（方向鍵／左鍵點自己／滾輪）被 `overflow:hidden` 靜靜吃掉**——正是這份圖例
+存在的意義的反面。改成依列數精算（`legendColumnHeight`，行高 26px 為量測值），塞不下就換形狀。
+
+**其他**：`pointer-events:none`，只有 ✕ 例外（render 測試斷言「恰好一個」元素 opt-in）；
+關掉後寫 `localStorage: ggd.controlLegend.dismissed`，之後都不再出現；
+gate = `phase === "combat" && round <= 1`（`round` 本來就在 RoomStore，沒有發明新狀態）。
+
+**觀測**：headless Chrome 對三種佈局（1546x900 鍵鼠欄位／1546x900 手把橫帶／812x375 觸控橫帶）
+截圖，疊上各 slot 的保留框比對——三張都沒有重疊，13/14 列全部畫出來沒有截斷。
+client 測試 235 檔 2641 綠、`tsc --noEmit` 乾淨。
+
+### #187 實機驗證（真的進到 round 1 去看）——抓到兩個「測試全綠但東西是壞的」
+
+上面那段的截圖是**離線 render 疊保留框**，不是真的在打的那一局。實機跑一次
+（`game-server-mobile` + `client-playtest` :5205 → Play offline vs bots → 鎖英雄 → Ready）
+就抓到兩個 headless 比對看不出來的問題，兩個都是同一個病：**框對了、行對了、字對了，
+東西還是沒有用**。
+
+**1. 在骷髏競技場上，字根本看不見（1.18:1）。**
+面板底色原本 `rgba(10,14,24,0.44)`、字用 `TEXT_DIM #8d97ad`。左側欄的位置底下正好是
+那張圖的**白色岩石**，0.44 疊在 rgb(235,235,235) 上合成出 rgb(136,138,142)，
+`TEXT_DIM` 對它的對比是 **1.18:1**——實質上是隱形。之前每一條測試都過：列是對的、
+矩形是對的、markup 是對的，可是「半透明」跟「看得見」被拿去交換而沒有人量過。
+背景是即時 3D 場景，可以是任何顏色，所以只能對**最壞的底**負責：
+- 底色 0.44 → **0.66**（最壞情況合成 rgb(86,89,96)；仍遠低於真面板的 0.88，場景照樣透得出來）
+- 說明文字 `TEXT_DIM` → **`#ccd4e4`**（白岩上 4.71:1 過 WCAG AA，土地上 8.25:1）
+- 每一行加 `text-shadow`，讓爆炸/閃光直接打在後面時也不會被洗掉
+- ✕ 也一起提亮——它是這個框上唯一必須被找到的東西
+
+新增 `controlLegendRender.test.ts` 的對比守門：從**渲染出來的 markup** 刮出面板 alpha 與
+**最暗的**一個文字顏色（刮「第一個顏色」會量到亮的標題而放過說明文字，正是這個 bug 的形狀），
+合成到純白底上要求 ≥ 4.5:1，且 alpha 必須仍在 0.5–0.8 之間（是提示不是面板）。
+把舊值貼回去，這條測試會紅在 1.179:1——確認守得住。
+
+**2. 812x375 的橫帶把控制列表切掉，只剩到 R。**
+橫帶高度本來是依**列數**查表的兩個常數（58 / 84）。但橫帶會 wrap，
+**它的高度是「wrap 進多寬」的函數**，列數答不出這件事。14 列的鍵鼠組在該處需要六行，
+拿到的是三行的 84px，`overflow:hidden` 把「F EX 技能」以下全部靜靜吃掉——
+螢幕上是一份看起來很完整、其實停在 R 的操作說明。這跟上面那段自己記錄的
+「欄位被吃掉三列」是**同一個缺陷，隔一個函數又犯一次**。
+
+改法：`legendStripHeight(rows, width)` 依實際 wrap 量測（`approxTextWidth` 估字寬 →
+`legendPillWidth` → `legendStripLines` 貪婪換行），`LegendPlacementOpts` 從 `rowCount`
+改成 **`rows` 本身**；`stripRect` 先定出可用寬度再算高度，**塞不下就回 null**
+（「沒位子」永遠勝過「一半的控制」）；元件端 `height` → `minHeight` 並拿掉 `overflow:hidden`，
+估寬若有誤差是把框撐高而不是把字剪掉。
+測試改成掃**真實的三組按鍵**（不再是合成列數），加上「橫帶必須裝得下自己 wrap 出來的行數」
+在 6 viewport × 2 pointer × 3 座位數 × 3 模式上的斷言。
+
+結果：812x375 鍵鼠組現在**誠實地不畫**（14 列真的塞不進 ability cluster 上方的帶狀空間）；
+真手機（touch，5 列）拿到 560x58 完整橫帶；手機接手把（13 列）拿到 560x81 完整橫帶。
+
+**實機確認過的**：round 1 桌機欄位 14 列全部可讀（含壓在白岩上的最後三列）；
+5 個取樣點裡 4 個穿透到 canvas、只有 ✕ 吃到點擊；按 ✕ 立刻消失且 `localStorage` 寫入；
+重新整理 → 開新的一局 → 仍在 round 1 而圖例不再出現；打到 round 2 圖例自己消失
+（`dismissKey` 是 null，證明是 round gate 而不是誤觸關閉）；商店階段不顯示。
+
+**沒能實機驗證的**：真觸控裝置（本機只有滑鼠，`hudTouch()` 走的是裝置偵測，
+觸控那條路徑只有模型層與單元測試證明）；真手把（沒有實體手把可插，手把列是
+`mapGamepadFrame` 探針推導＋單元測試）；2–4 人沙發分割畫面（需要多個實體手把）。
+
+client 測試 235 檔 **2792 綠**、`tsc --noEmit` 乾淨。
+
+---
+
+## #188 「play offline with bot 也要開放給有註冊的玩家在大廳一鍵開房直接玩」（2026-07-24）
+
+**來源**：你的回報。**落點**：#188（本次落地，平台＋前端＋測試）。
+
+### 原本那顆按鈕不是模式，是穿著按鈕外衣的除錯捷徑
+
+大廳 `LobbyScreen.tsx` 早就有「Play vs bots」，但它 `title="dev direct-join — no
+platform match record"`，走 `store.playOffline()` → 直連 game-server。**這條路永遠不結算**：
+`MatchRoom.settleToPlatform` 沒有平台建立的 match，就沒有 pending 紀錄、沒有預留座位、
+沒有 roomId。結果是 8 個帳號 `games:0 wins:0 mmr:1000` 躺在 51 份 replay 旁邊。
+（同一顆按鈕在登入頁的版本就是 PT-1 的死路。）
+
+**所以這次的工作是路由，不是 UI。** 把按鈕做漂亮而仍然繞過平台，就是這批次一直在拆的那種缺陷。
+
+### 做法：一鍵 = 平台幫你開一間私人房並「立刻開始」
+
+新增 `POST /api/v1/rooms/solo`（`room.StartSolo`）：建房（**不上大廳列表**）→ 同一個
+呼叫裡 `Start` → 走既有 `gamelink.StartMatch`。**刻意重用而不是另開一條路**，因為那條路上
+掛著四件本來就會壞的事：平台 matchId 與預留座位、`callbackUrl`（結算的唯一入口）、
+pending 紀錄＋`gameRoomId`（#187 心跳／收割者靠它）、以及 `match_ready` 座位推播
+（前端因此不需要第二套進場流程）。
+
+**付多少不是這支函式決定的**，`gamelink/callback.go` 的反農場規則早就定義好了：
+11 個 bot ⇒ 大廳不是全真人 ⇒ **M幣 = 0**（構造上不可能刷）；自己隊上有 bot ⇒ **水晶減半**。
+分數／勝場／賽季分照給。「值得打、不值得刷」。
+
+**沒有選角繞路**：40 秒選角本來就在**局內**（`MatchController.champSelect`），
+一鍵之後直接進到那裡，`autoPickAndSpawn` 仍然守著 #130 的「沒鎖英雄就 0 HP 觀戰」陷阱。
+
+**有註冊的玩家**：閘門在 router（`auth.Middleware` + `PlayableOnly`），不是按鈕。
+未登入 401、被停權／未核准 403，而且**game-server 上不會有任何預留**。前端檢查只是裝飾。
+
+### 一個不會動的數字，講明白比較好
+
+**隱藏 MMR 不會變**，而且這不是反農場規則，是 Elo 本身（`ranking/elo.go`：只有一隊有真人
+就不是可評分的對局）。贏 11 個 bot 說不出你跟家人之間的相對強弱，所以拿來配對的那個數字
+不該動。**會動的是**：games、wins、賽季分（第一名 +100）、水晶（減半）、比賽紀錄、排行榜列。
+
+⚠️ **留給你決定的一件事**：賽季分沒有閘門（你當初的規則就是「分數不是貨幣」），
+但現在一鍵對 bot 之後，**可見排行榜的分數是可以靠打 bot 累積的**。我沒有擅自改政策；
+要收緊的話最小改動是在 `callback.go` 對「非全真人大廳」的 `AwardPoints` 也砍半或不給。
+
+### 驗證
+
+Go 全綠（新增 `gamelink/solobot_test.go`：真的預留 12 席、`callbackUrl` 正確、
+結算後 games/wins/賽季分有動且水晶＝一半、M幣＝0、比賽紀錄寫入、心跳可續命且斷了會被收割、
+不上大廳列表、未登入 401、被拒 403 且不預留）；game-server 401 綠；client 2798 綠
+（新增 `botMatch.test.ts`：一鍵走平台而**不是**直接翻到 `match`、按兩下只開一場、
+座位推播才進場、12 秒沒收到座位會說話而不是轉圈、失敗顯示原因、大廳同時有「一鍵開打」與
+標示清楚的「dev 直連」）。
+
+**dev 直連保留**（`playOffline`）：測試與 `#replay=` 流程還在用，只是不再是「跟 bot 玩」的唯一入口。
+
+### #188 後續需求：「要讓人一看就知道這是可以玩的」（2026-07-24）
+
+**來源**：owner。路由做完之後，入口仍然是一顆 `small` 的 ghost 按鈕，夾在 圖鑑 與 設定 之間，
+標題還寫著 dev 工具。**家人打開大廳，看不出來哪一顆可以開始玩。**
+
+落地在 `LobbyScreen.tsx` 的 `BotMatchStrip`（在 play 欄的最上面，`RoomListPanel` 之前）：
+
+- **份量**：主按鈕改成 `Btn kind="primary"`、16px / 800 字重 / 13px 直向 padding，
+  面板本身帶 accent 邊框＋頂部漸層，和下面中性的 ROOMS 面板分得開。
+  文案 `⚔️ 一鍵開打`（**帶 VS16**：不帶的話 U+2694 會落回文字字形，在這個尺寸看起來像一個細細的 ✕，
+  一顆「開始」按鈕長得像「取消」）。標題 `單人 vs BOT`、副標 `一個人也能開打 —— 真的計分、記戰績、上排行榜`。
+- **獎勵講實話，而且講在做決定的地方**：三顆 badge 就在按鈕旁邊——
+  `水晶 ½`（金色，自己隊上有 bot）、`無 M幣`（要 12 席全真人）、`MMR 不變`（`ranking/elo.go`，不是反農場規則）。
+  底下一行不打折的說明：「隊上有 BOT，水晶只發一半；M幣要 12 人全真人。半份也是白賺，想拿滿就揪人。」
+  **這些都是可見文字，不是 tooltip**——手機上根本沒有 hover，而且一個默默少發一半的模式，
+  是玩家第一次數水晶時對經濟系統失去信任的方式。測試把 `title=` 全部剝掉之後再斷言，tooltip 通不過。
+- **dev 直連降級**：移到分隔線下面那一行、`small ghost` + `opacity .55`，和主按鈕不再是同一階。
+- **#107**：整條都在正常流排版（play 欄的 `Panel`），**沒有任何 position**——
+  top-right 的 gutter 仍然由 header 從 `chromeReserve` 取得，沒有新的常駐 chrome 宣告。測試直接掃原始碼擋回歸。
+- **#24**：兩顆都是 `widgets.Btn`，所以 hover/click SFX 與按壓縮放都在；raw `<button>` 會是啞的。
+- **#151/#159 手機**：兩個區塊都是 `flex: 1 1 <basis>` + wrap。390px 實測會疊成
+  「資訊塊 / 選圖＋大按鈕」兩段，按鈕吃滿整欄；動作區另外壓 `maxWidth: 440`，
+  否則 1600px 螢幕上那個五選一的競技場下拉會被撐到 500px 寬。1280 與 390 都用真的瀏覽器截圖看過。
+
+## 需求：`/admin` 遠端可用（`ggd.adms.ai/admin`，管理員登入後）
+
+**來源**：owner，2026-07-24。「http://localhost:60721/admin/ 這個網址遠端存取不了，請你幫忙合併到 /admin 底下，變成 ggd.adms.ai/admin 管理員登入後也可以使用」
+
+**盤點結果（實測，非讀碼推論）**：`https://ggd.adms.ai/admin/` **已經是可用的**——edge image 早就 build 了 `@ggd/admin`（base=`/admin/`）並複製到
+`/usr/share/nginx/html/admin/`，`nginx.conf` 有對應的 `location /admin/`。實測 `/admin/` 與其 entry chunk 皆 200，畫面是
+「GGD Operations · operator console · admin only」登入牆，`/api/v1/admin/accounts` 未認證正確回 401。到不了的是 `localhost:60721`
+本身——那是 owner 自己機器上的 vite dev server，`loopbackOnly.ts` 讓它**拒絕綁非 loopback 位址**，而那個鎖是承重的：
+`/content-api` 代理跳一手會把來源位址洗成 127.0.0.1，所以擋得住 LAN 的只有「連不上這個 socket」本身。
+
+**真正的落差 —— 兩頁遠端沒有，而且是刻意的**：
+- **內容管理**（英雄/技能/道具 JSON CRUD）
+- **角色語音生成**
+
+兩者的 chunk 在 production build **根本不會被產出**（`App.tsx` 的 bare `import.meta.env.DEV` 讓 rollup 死碼摺除），因為它們是往
+loopback content-api / 語音 daemon 寫檔的路徑。
+
+**為什麼不能直接開遠端（比權限更硬的理由）**：`content/` 在家用主機是 `../content:/srv/content:**ro**` 掛載，而且它就是 git
+checkout 的那棵樹。所以遠端編輯要嘛寫不進去，要嘛**下一次 `git pull` 部署就被覆蓋**——正是 owner 交代過的
+「部署的時候記得不要蓋掉記錄」那類資料損失。
+
+**要讓它遠端可用，需要的是**：一層放在 `data/` 的持久化 overlay，內容載入時疊在出貨 docs 之上——就是 curation 白名單
+（`data/curation/`）已經在用的同一個模式。這是設計工作，不是設定開關。
+
+**已經遠端可用的（平台 API + `data/` 持久化）**：玩家/帳號審核、對戰紀錄、公告、內容白名單、戰鬥系統倍率、M幣發放、稽核日誌。
+
+### #188 實機驗證（真的按下去，不是只有測試綠）
+
+不是打離線比對，是起**真的行程**跑一次：獨立 Redis:6399 ＋ platform:8081（自己的
+DATA_DIR）＋ 帶 HMAC secret 的 game-server:2600，不碰你正在跑的 :8080/:2567/:39527。
+
+- 未登入 `POST /rooms/solo` → **401**，game-server 上不會有任何預留。
+- 第一次故意讓 secret 對不上 → 平台回 `game_rejected (401)`，而且**沒有留下垃圾**：
+  大廳列表空的、`matches:pending` 空的（失敗時 `StartSolo` 會把房間 Dispose 掉）。
+- secret 對上之後一鍵：回 `{"matchId":"m_01KYA5WX…","botFill":11}`，
+  game-server `/healthz` 的 `rooms.active` **0 → 1**（真的有一間房在跑），
+  pending hash 有 `roomId` / `gameRoomId=--aBAqqgL` / 12 席（1 真人 + 11 bot），
+  大廳列表**仍然是空的**（不公開）。
+- **心跳是真的**：30 秒內 game-server 自己送了一次 liveness，`beats=1`、
+  deadline 被推到 `beat+180s`。（沒人真的連進去，房間自然 autoDispose，心跳就停了——
+  這正是收割者要處理的狀態，不是 bug。）
+- 結算：照 `MatchRoom` 的線路格式送簽章結果回呼 → `{"status":"ok","settled":1,"humanSeats":1}`。
+  帳號 `games 0→1`、`wins 0→1`、**MMR 1000 不動**（沒有可評分對手）、
+  錢包 `crystal 0→120`（= 240 的**一半**）、`mcoin 0`、
+  比賽紀錄落地 `status=completed` 且 `points=100`。
+
+也就是說：**一鍵 → 真的房 → 真的心跳 → 真的結算**，四段都在真行程上看過了。

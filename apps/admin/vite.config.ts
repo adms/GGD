@@ -97,6 +97,32 @@ export default defineConfig({
         target: process.env.VITE_CONTENT_API_URL ?? "http://127.0.0.1:8787",
         changeOrigin: true,
       },
+      // dev voice-gen daemon (tools/voice-gen). Same authorisation model as the
+      // content-api above and for the same reason: a long-running IndexTTS
+      // batch is a job queue holding a warm Python process, not a request
+      // handler, so it lives in its own loopback-bound daemon and this server's
+      // 127.0.0.1 bind is what keeps it off the LAN. Its Origin allowlist must
+      // contain http://127.0.0.1:60721.
+      "/voice-api": {
+        target: process.env.VITE_VOICE_API_URL ?? "http://127.0.0.1:8788",
+        changeOrigin: true,
+      },
+      // dev icon-gen daemon (tools/icon-gen/local/daemon.py), task #186 — the
+      // same authorisation model again, and for the third time the same reason:
+      // a two-pass Stable-Diffusion render is a JOB QUEUE holding a warm 2 GB
+      // checkpoint, not a request handler, so it lives in its own loopback-bound
+      // daemon and THIS server's 127.0.0.1 bind is what keeps it off the LAN.
+      // Its Origin allowlist must contain http://127.0.0.1:60721.
+      //
+      // Note there is deliberately no production equivalent: the checkpoint is
+      // gitignored and the family host has no GPU, so generation is an
+      // AUTHORING-time act on the owner's Mac and ggd.adms.ai only ever serves
+      // the committed WebPs. 內容管理 is dev-only by construction anyway, so the
+      // chunk that would call this route is absent from a prod build entirely.
+      "/icon-api": {
+        target: process.env.VITE_ICON_API_URL ?? "http://127.0.0.1:8789",
+        changeOrigin: true,
+      },
     },
   },
   preview: {

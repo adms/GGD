@@ -23,6 +23,7 @@ import { Stat } from "../stats/statTypes";
 import { Champions } from "../content/registry";
 import { distSq, normalize, sub, lenSq } from "../math/vec2";
 import { fireHooks } from "../effects/hooks";
+import { rollEvade } from "../combat/evasion";
 
 /** Fallback wind-up (seconds) when a champion doc omits attackDamagePoint. */
 const DEFAULT_DAMAGE_POINT_MELEE = 0.25;
@@ -50,18 +51,70 @@ export function reachTo(sc: StatsComp, selfR: number, tgtR: number): number {
 /**
  * Weapon-class priority for the per-weapon attack SFX (audio COMBAT-AUDIO). The
  * `basicAttack` event carries this so the pure client mapper (audio/combatSfx)
- * can play a sword / greatsword / katana / bow / gun slash without loading any
- * champion data of its own. Purely descriptive — the sim never reads it back.
+ * can play the right attack voice without loading any champion data of its own.
+ * Purely descriptive — the sim never reads it back.
+ *
+ * ---------------------------------------------------------------------------
+ * WHY `magic` AND `thrown` EXIST (2026-07-24) — and why they are not cosmetic
+ * ---------------------------------------------------------------------------
+ * This list used to be melee-shaped only: greatsword|katana|gun|bow|sword. There
+ * is no such thing as an untagged champion, because {@link weaponClassOf} always
+ * answers, so every champion the list could not describe fell through the
+ * `ranged → bow` default. That silently gave a BOW DRAW to every caster in the
+ * game: 皮卡丘 electrocuting you, 莉娜因巴斯 casting, 涅吉 with a staff — all
+ * creaking a bowstring. No error, no crash; the class was simply missing from the
+ * vocabulary, so the wrong member of it won. Adding tags could not have fixed it:
+ * there was nothing to tag them AS.
+ *
+ * The five new-ish members are not invented flavour. Each ranged champion in this
+ * roster descends from a real WC3 hero unit, and Blizzard's own
+ * `Units/*UnitFunc.txt` `Missileart=` says what that hero throws. That table —
+ * not vibes, not the champion's Chinese name — is the authority:
+ *
+ *   Arrow / MoonPriestessMissile              → `bow`     (a real arrow; 5 heroes)
+ *   WardenMissile / BrewmasterMissile         → `thrown`  (a hurled object; 5)
+ *   FireBall / KeeperGrove / Farseer /
+ *   ShadowHunter / SerpentWard / DemonHunter /
+ *   BloodElf / Lich …                         → `magic`   (a conjured bolt; 22)
+ *
+ * That census (22 magic / 5 bow / 5 thrown / 1 sword across the 33 ranged
+ * champions — the last being a WC3 hero with no missile art at all) is
+ * also why the ranged DEFAULT below is now `magic` rather than `bow`. It is still
+ * a guess and still the wrong shape of answer — which is why
+ * `sim/weaponClassCoverage.test.ts` forbids any shipped ranged champion from
+ * relying on it. The default only decides how wrong a champion nobody tagged is,
+ * and "unnamed ranged hero" is far more often a caster than an archer here.
+ *
+ * TWO-FILE CONTRACT. Every member here must have a decided outcome in
+ * `apps/client/src/audio/combatSfx.ts` WEAPON_SFX — a dedicated clip, or the
+ * generic swing NAMED explicitly (that is what `thrown` does). A member with no
+ * row there falls back by accident instead of by decision, which is the same
+ * silent-default failure this comment exists to describe.
+ * `content/fieldAdoption.ts` censuses these strings as a TAG VOCABULARY, so a
+ * member no champion carries fails the S8 guard rather than quietly meaning
+ * nothing.
  */
-const WEAPON_TAGS = ["greatsword", "katana", "gun", "bow", "sword"] as const;
+export const WEAPON_TAGS = [
+  "greatsword",
+  "katana",
+  "gun",
+  "bow",
+  "magic",
+  "thrown",
+  "sword",
+] as const;
 
 /**
  * The champion's weapon class, derived from existing metadata (deterministic, no
  * rng): an explicit weapon tag on the champion doc wins (checked in the priority
  * order above so `greatsword` never collapses to `sword`); otherwise the coarse
- * default from attackType — ranged → bow, melee → sword. Always returns a class,
- * so every basic attack gets a weapon slash; the client still falls back to the
- * generic swing if that class has no bound clip.
+ * default from attackType — ranged → magic, melee → sword. Always returns a
+ * class, so every basic attack gets an attack voice.
+ *
+ * The defaults are a LAST RESORT, not the design. See WEAPON_TAGS above: shipped
+ * ranged champions are tagged from the WC3 missile-art table and a guard test
+ * keeps them that way, so reaching the `ranged` branch here means a champion doc
+ * was authored without one.
  */
 export function weaponClassOf(
   cdef: ChampionDef | undefined,
@@ -72,7 +125,7 @@ export function weaponClassOf(
     const set = new Set(tags.map((t) => t.toLowerCase()));
     for (const w of WEAPON_TAGS) if (set.has(w)) return w;
   }
-  return attackType === "ranged" ? "bow" : "sword";
+  return attackType === "ranged" ? "magic" : "sword";
 }
 
 export function basicAttackSystem(world: SimWorld): void {
@@ -208,6 +261,11 @@ function resolveAttack(
   const tgtHp = world.health.get(targetId);
   if (!t || !tgtT || !tgtHp?.alive || tgtT.zone !== t.zone) return; // defensive (whiff handled at commit)
 
+  // EVASION (迴避), MELEE half — rolled below, immediately before the melee
+  // damage point. NOT here: this function is shared with the ranged path, whose
+  // hit lands at projectile IMPACT (ProjectileSystem), and rolling in both
+  // places would dodge a ranged auto twice. See combat/evasion.ts DECISION 2.
+
   let amount = sc.final[Stat.AttackDamage];
   let crit = false;
   const cc = sc.final[Stat.CritChance];
@@ -261,7 +319,27 @@ function resolveAttack(
     return;
   }
 
-  // melee: hit lands at the damage point
+  // melee: hit lands at the damage point.
+  //
+  // The SWING happens whether or not it connects, so `basicAttack` (the client's
+  // aim commit + weapon slash SFX) is emitted FIRST, before the evasion gate
+  // below — otherwise a dodged blow would be a silent, invisible non-event and
+  // the defender would look like they were never attacked. Moving the emit above
+  // the queue push does not reorder any event: `damageQueue` is a queue drained
+  // later by combatResolveSystem, not an emit.
+  world.emit("basicAttack", { source: id, target: targetId, crit, ranged: false, weaponClass });
+
+  // EVASION (迴避) — the defender's pre-damage miss roll. A dodge is a TOTAL
+  // miss, so it short-circuits everything that follows: no damage packet, no
+  // lifesteal (it hangs off the packet), no `onBasicAttack` item proc, no
+  // hitstop/knockback, no scoreboard hit. The swing's cooldown was committed at
+  // swing start and is NOT refunded — a dodge costing the attacker a full attack
+  // cycle is the stat's whole value. `whiff` is deliberately NOT emitted: the
+  // blow reached a body and was slipped; the whiff-lunge is specifically the
+  // over-commit of hitting empty air.
+  // No-op — and zero rng draws — while evasion is 0 (every champion today).
+  if (rollEvade(world, id, targetId)) return;
+
   world.damageQueue.push({
     source: id,
     target: targetId,
@@ -270,7 +348,6 @@ function resolveAttack(
     crit,
     origin: "basic",
   });
-  world.emit("basicAttack", { source: id, target: targetId, crit, ranged: false, weaponClass });
   fireHooks(world, id, "onBasicAttack", targetId);
 }
 

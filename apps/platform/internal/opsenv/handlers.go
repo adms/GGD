@@ -107,7 +107,7 @@ func (h *Handlers) getAdmin(w http.ResponseWriter, r *http.Request) {
 		Stored:              stored,
 		Defaults:            Defaults(),
 		Descriptors:         Descriptors,
-		Info:                Info,
+		Info:                h.svc.Info(),
 		ClientInterpDelayMs: ClientInterpDelayMs,
 	})
 }
@@ -139,7 +139,7 @@ func (h *Handlers) put(w http.ResponseWriter, r *http.Request) {
 		Stored:              true,
 		Defaults:            Defaults(),
 		Descriptors:         Descriptors,
-		Info:                Info,
+		Info:                h.svc.Info(),
 		ClientInterpDelayMs: ClientInterpDelayMs,
 	})
 }

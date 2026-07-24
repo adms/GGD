@@ -215,7 +215,7 @@ describe("天生技 / innate slot — the ACTIVE innates stay honestly inert", (
     expect(faked).toEqual([]);
   });
 
-  it("the innate is addressable but unreachable from the five castable slots", () => {
+  it("the innate lives in its OWN instance, never in one of the five", () => {
     cover("innate-not-castable-yet");
     const cid = activeInnates[0]!.id.replace(/\.passive$/, "") as ChampionId;
     const { ab } = spawnOne(cid);

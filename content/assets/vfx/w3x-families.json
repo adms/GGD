@@ -1,0 +1,6122 @@
+{
+  "schema": "w3x-vfx-families@1",
+  "provenance": {
+    "dataset": "tools/w3x-import/out/emitters/EMITTERS.json (w3x-emitters@1)",
+    "modelRefs": "tools/w3x-import/out/emitters/MODEL_REFS.json",
+    "emittersDecodedByteExact": "294/294 PRE2+RIBB blocks consumed their full declared inclusiveSize",
+    "worldUnitNote": "Per-model meshScaleFactor (the factor the glb exporter baked into the mesh), NOT the 11/600 gameplay-distance constant."
+  },
+  "counts": {
+    "orb": 10,
+    "locust": 4,
+    "particle": 20,
+    "effects": 34,
+    "layers": 118
+  },
+  "effects": [
+    {
+      "id": "fx.w3x.locust.auls-a0ib",
+      "family": "locust",
+      "label": "66-03 七夜怪談 (AUls Locust Swarm)",
+      "source": {
+        "model": "(none — WC3 drew this with unit models, not an emitter)",
+        "mdxBytes": 0,
+        "glbBytes": null,
+        "assetClass": "unit-swarm",
+        "geosets": 0,
+        "triangles": 0
+      },
+      "attach": "origin",
+      "ambient": false,
+      "durationSec": 74,
+      "layers": [],
+      "ribbonDocIds": [],
+      "swarm": {
+        "countPerLevel": [
+          7,
+          12,
+          17,
+          22
+        ],
+        "spawnIntervalSec": 0.05,
+        "radiusWc3": 600,
+        "radiusWorld": 11,
+        "durationSec": 74,
+        "memberScale": 0.6,
+        "memberTint": [
+          1,
+          0,
+          0
+        ],
+        "memberModel": "units\\creeps\\NetherDragon\\NetherDragon.mdl",
+        "memberModelPresent": false
+      },
+      "usedBy": [
+        {
+          "objectId": "A0IB",
+          "baseId": "AUls",
+          "field": "ability.(unit spawn)"
+        }
+      ],
+      "supersedes": [
+        "fx.prim.void.nova"
+      ],
+      "notes": [
+        "WC3 drew each swarm member as a `units\\creeps\\NetherDragon\\NetherDragon.mdl` unit model. That asset is Blizzard stock and is not in this repo (#81 / #116), so this effect ships its LAYOUT — count per level, ring radius, spawn stagger, member scale, member tint, duration — and NO member art. Picking a stand-in emitter here would be inventing content, so the rig requires the caller to name one.",
+        "This is the map's ONLY true Locust Swarm. An earlier pass concluded the map had none because it searched for the UNIT 'Uloc'; the ability base is 'AUls'.",
+        "DataC says 100 damage, the ubertip says 160. Both are recorded; neither is a VFX parameter."
+      ]
+    },
+    {
+      "id": "fx.w3x.locust.boomnl",
+      "family": "locust",
+      "label": "Boomnl — B02V / B04R buff aura",
+      "source": {
+        "model": "Boomnl.mdx",
+        "mdxBytes": 2623,
+        "glbBytes": 288,
+        "assetClass": "pure-emitter",
+        "geosets": 0,
+        "triangles": 0
+      },
+      "attach": "chest",
+      "ambient": true,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.locust.boomnl.p00",
+          "emitterIndex": 0,
+          "nodeName": "BlizParticle01",
+          "pivotOffset": {
+            "x": -0.0103,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\Clouds8x8Fire.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 600,
+            "granularity": 0.25,
+            "coneAngleDeg": 90,
+            "swarmLike": true
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -0.0103,
+              "y": 0,
+              "z": 0
+            }
+          },
+          "notes": [
+            {
+              "field": "width/length",
+              "kind": "approximated",
+              "detail": "rectangular 70.111×65.683 emission plane → bounding disc r=0.974 (vfx@1 has no box emitter)"
+            },
+            {
+              "field": "rows/cols",
+              "kind": "dropped",
+              "detail": "8×8 flipbook dropped — the bound texture is a substituted single-frame sprite, and slicing it into cells renders garbage rather than an animation"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.locust.boomnl.p01",
+          "emitterIndex": 1,
+          "nodeName": "BlizParticle02",
+          "pivotOffset": {
+            "x": -0.0103,
+            "y": 1.4765,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\Clouds8x8Fire.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 1000,
+            "granularity": 0.25,
+            "coneAngleDeg": 180,
+            "swarmLike": true
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -0.0103,
+              "y": 1.4765,
+              "z": 0
+            }
+          },
+          "notes": [
+            {
+              "field": "width/length",
+              "kind": "approximated",
+              "detail": "rectangular 70.111×65.683 emission plane → bounding disc r=0.974 (vfx@1 has no box emitter)"
+            },
+            {
+              "field": "rows/cols",
+              "kind": "dropped",
+              "detail": "8×8 flipbook dropped — the bound texture is a substituted single-frame sprite, and slicing it into cells renders garbage rather than an animation"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.locust.boomnl.p02",
+          "emitterIndex": 2,
+          "nodeName": "BlizParticle03",
+          "pivotOffset": {
+            "x": -0.0103,
+            "y": 2.9667,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\Clouds8x8Fire.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 600,
+            "granularity": 0.25,
+            "coneAngleDeg": 90,
+            "swarmLike": true
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -0.0103,
+              "y": 2.9667,
+              "z": 0
+            }
+          },
+          "notes": [
+            {
+              "field": "width/length",
+              "kind": "approximated",
+              "detail": "rectangular 70.111×65.683 emission plane → bounding disc r=0.974 (vfx@1 has no box emitter)"
+            },
+            {
+              "field": "rows/cols",
+              "kind": "dropped",
+              "detail": "8×8 flipbook dropped — the bound texture is a substituted single-frame sprite, and slicing it into cells renders garbage rather than an animation"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.locust.boomnl.p03",
+          "emitterIndex": 3,
+          "nodeName": "BlizParticle04",
+          "pivotOffset": {
+            "x": -0.0103,
+            "y": 0.3466,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\Clouds8x8Fire.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 600,
+            "granularity": 0.25,
+            "coneAngleDeg": 90,
+            "swarmLike": true
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -0.0103,
+              "y": 0.3466,
+              "z": 0
+            }
+          },
+          "notes": [
+            {
+              "field": "width/length",
+              "kind": "approximated",
+              "detail": "rectangular 70.111×65.683 emission plane → bounding disc r=0.974 (vfx@1 has no box emitter)"
+            },
+            {
+              "field": "rows/cols",
+              "kind": "dropped",
+              "detail": "8×8 flipbook dropped — the bound texture is a substituted single-frame sprite, and slicing it into cells renders garbage rather than an animation"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.locust.boomnl.p04",
+          "emitterIndex": 4,
+          "nodeName": "BlizParticle05",
+          "pivotOffset": {
+            "x": -0.0103,
+            "y": 2.2421,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\Clouds8x8Fire.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 600,
+            "granularity": 0.25,
+            "coneAngleDeg": 90,
+            "swarmLike": true
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -0.0103,
+              "y": 2.2421,
+              "z": 0
+            }
+          },
+          "notes": [
+            {
+              "field": "width/length",
+              "kind": "approximated",
+              "detail": "rectangular 70.111×65.683 emission plane → bounding disc r=0.974 (vfx@1 has no box emitter)"
+            },
+            {
+              "field": "rows/cols",
+              "kind": "dropped",
+              "detail": "8×8 flipbook dropped — the bound texture is a substituted single-frame sprite, and slicing it into cells renders garbage rather than an animation"
+            }
+          ]
+        }
+      ],
+      "ribbonDocIds": [],
+      "usedBy": [
+        {
+          "objectId": "A0Q6",
+          "baseId": "AOws",
+          "field": "ability.casterArt"
+        },
+        {
+          "objectId": "B02V",
+          "baseId": "BOac",
+          "field": "buff.specialArt"
+        },
+        {
+          "objectId": "B04R",
+          "baseId": "BEme",
+          "field": "buff.targetArt"
+        }
+      ],
+      "supersedes": [],
+      "notes": [
+        "The converted glb is 288 B with 0 triangles: this asset IS its emitters (#98). Re-converting cannot help — the geometry never existed."
+      ]
+    },
+    {
+      "id": "fx.w3x.locust.darkraor",
+      "family": "locust",
+      "label": "Darkraor — A0YI 邪王炎殺黑龍波 龍頭",
+      "source": {
+        "model": "Darkraor.mdx",
+        "mdxBytes": 23368,
+        "glbBytes": 48860,
+        "assetClass": "mesh-and-emitter-hybrid",
+        "geosets": 3,
+        "triangles": 129
+      },
+      "attach": "origin",
+      "ambient": true,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.locust.darkraor.p00",
+          "emitterIndex": 0,
+          "nodeName": "BlizParticle01",
+          "pivotOffset": {
+            "x": -0.1235,
+            "y": 0.4282,
+            "z": -0.2037
+          },
+          "wc3Texture": "Textures\\BloodWhiteSmall.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 87.5,
+            "granularity": 0.119,
+            "coneAngleDeg": 180,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": true,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -0.1235,
+              "y": 0.4282,
+              "z": -0.2037
+            }
+          },
+          "notes": [
+            {
+              "field": "headOrTail",
+              "kind": "approximated",
+              "detail": "\"both\" draws a head billboard AND a stretched tail from the same particle. One Babylon ParticleSystem has ONE billboardMode, so this doc is the TAIL half; call expandHeadAndTail() to also get the head half as a second system"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.locust.darkraor.p01",
+          "emitterIndex": 1,
+          "nodeName": "BlizParticle07",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0.2751,
+            "z": 0
+          },
+          "wc3Texture": "ReplaceableTextures\\Weather\\Clouds8x8.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 225,
+            "granularity": 0.353,
+            "coneAngleDeg": 180,
+            "swarmLike": true
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0,
+              "y": 0.2751,
+              "z": 0
+            }
+          },
+          "notes": [
+            {
+              "field": "rows/cols",
+              "kind": "dropped",
+              "detail": "8×8 flipbook dropped — the bound texture is a substituted single-frame sprite, and slicing it into cells renders garbage rather than an animation"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.locust.darkraor.p02",
+          "emitterIndex": 2,
+          "nodeName": "Trail",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\Clouds8x8Fade.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 105.6,
+            "granularity": 1.667,
+            "coneAngleDeg": 180,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001
+          },
+          "notes": [
+            {
+              "field": "rows/cols",
+              "kind": "dropped",
+              "detail": "8×8 flipbook dropped — the bound texture is a substituted single-frame sprite, and slicing it into cells renders garbage rather than an animation"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        }
+      ],
+      "ribbonDocIds": [],
+      "usedBy": [
+        {
+          "objectId": "A0YI",
+          "baseId": "Asph",
+          "field": "ability.targetArt"
+        }
+      ],
+      "supersedes": [],
+      "notes": []
+    },
+    {
+      "id": "fx.w3x.locust.frostnova",
+      "family": "locust",
+      "label": "frostnova",
+      "source": {
+        "model": "frostnova.mdx",
+        "mdxBytes": 4547,
+        "glbBytes": 3492,
+        "assetClass": "emitter-dominant-hybrid",
+        "geosets": 1,
+        "triangles": 14
+      },
+      "attach": null,
+      "ambient": false,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.locust.frostnova.p00",
+          "emitterIndex": 0,
+          "nodeName": "Mana_Rings",
+          "pivotOffset": {
+            "x": 0,
+            "y": 1.2063,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\ManaDrainIn.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 0,
+            "granularity": 120,
+            "coneAngleDeg": 90,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": true,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0,
+              "y": 1.2063,
+              "z": 0
+            }
+          },
+          "notes": [
+            {
+              "field": "emissionRate",
+              "kind": "approximated",
+              "detail": "no usable emission rate anywhere; fell back to 10/s so the emitter is at least visible"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.xYQuad",
+              "kind": "approximated",
+              "detail": "flat XY quads instead of camera billboards. Closest Babylon behaviour is isBillboardBased=false (particles orient by direction), applied by W3xEmitterRig"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.locust.frostnova.p01",
+          "emitterIndex": 1,
+          "nodeName": "Brilliance_Rings",
+          "pivotOffset": {
+            "x": 0,
+            "y": 1.2428,
+            "z": 0
+          },
+          "wc3Texture": "Abilities\\Spells\\Human\\Brilliance\\TjShockwave2.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 100,
+            "granularity": 20,
+            "coneAngleDeg": 90,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": true,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0,
+              "y": 1.2428,
+              "z": 0
+            }
+          },
+          "notes": [
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.xYQuad",
+              "kind": "approximated",
+              "detail": "flat XY quads instead of camera billboards. Closest Babylon behaviour is isBillboardBased=false (particles orient by direction), applied by W3xEmitterRig"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.locust.frostnova.p02",
+          "emitterIndex": 2,
+          "nodeName": "Birth_Inner_Particle",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0.2458,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\ShockwaveWater1.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 45,
+            "granularity": 44.444,
+            "coneAngleDeg": 90,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": true,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0,
+              "y": 0.2458,
+              "z": 0
+            }
+          },
+          "notes": [
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.xYQuad",
+              "kind": "approximated",
+              "detail": "flat XY quads instead of camera billboards. Closest Babylon behaviour is isBillboardBased=false (particles orient by direction), applied by W3xEmitterRig"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.locust.frostnova.p03",
+          "emitterIndex": 3,
+          "nodeName": "BlizParticle01",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0.7573,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\Star8c.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 105,
+            "granularity": 0.021,
+            "coneAngleDeg": 180,
+            "swarmLike": true
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0,
+              "y": 0.7573,
+              "z": 0
+            }
+          },
+          "notes": [
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        }
+      ],
+      "ribbonDocIds": [],
+      "usedBy": [],
+      "supersedes": [],
+      "notes": [
+        "Largest particle is 6.67 world units — 3.9× a champion's height. That is the map's own segmentScaling, ported unchanged; expect it to fill the screen."
+      ]
+    },
+    {
+      "id": "fx.w3x.orb.1hswd-01",
+      "family": "orb",
+      "label": "1hswd_01 — A0XT 令狐沖劍, right,hand",
+      "source": {
+        "model": "1hswd_01.mdx",
+        "mdxBytes": 22381,
+        "glbBytes": 41524,
+        "assetClass": "mesh-and-emitter-hybrid",
+        "geosets": 2,
+        "triangles": 328
+      },
+      "attach": "right,hand",
+      "ambient": true,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.orb.1hswd-01.p00",
+          "emitterIndex": 0,
+          "nodeName": "Particle_0",
+          "pivotOffset": {
+            "x": 1.1681,
+            "y": -0.0633,
+            "z": 0
+          },
+          "wc3Texture": "Units\\Undead\\SkeletonMage\\smoke_1.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 50,
+            "granularity": 0.2,
+            "coneAngleDeg": 45,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": true,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 1.1681,
+              "y": -0.0633,
+              "z": 0
+            }
+          },
+          "notes": [
+            {
+              "field": "width/length",
+              "kind": "approximated",
+              "detail": "rectangular 24.306×3.281 emission plane → bounding disc r=0.338 (vfx@1 has no box emitter)"
+            },
+            {
+              "field": "flags.lineEmitter",
+              "kind": "approximated",
+              "detail": "emits along a LINE, not a rectangle. vfx@1 has no line emitter; the cone above is the closest shape and W3xEmitterRig narrows it to a line at build time"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.orb.1hswd-01.p01",
+          "emitterIndex": 1,
+          "nodeName": "Particle_1",
+          "pivotOffset": {
+            "x": 0.2794,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "Units\\Undead\\SkeletonMage\\smoke_1.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 15,
+            "granularity": 2.5,
+            "coneAngleDeg": 90,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": true,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0.2794,
+              "y": 0,
+              "z": 0
+            }
+          },
+          "notes": [
+            {
+              "field": "width/length",
+              "kind": "approximated",
+              "detail": "rectangular 1.389×0 emission plane → bounding disc r=0.019 (vfx@1 has no box emitter)"
+            },
+            {
+              "field": "flags.lineEmitter",
+              "kind": "approximated",
+              "detail": "emits along a LINE, not a rectangle. vfx@1 has no line emitter; the cone above is the closest shape and W3xEmitterRig narrows it to a line at build time"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.orb.1hswd-01.p02",
+          "emitterIndex": 2,
+          "nodeName": "Particle_2",
+          "pivotOffset": {
+            "x": 1.1223,
+            "y": -0.0633,
+            "z": 0
+          },
+          "wc3Texture": "Units\\Undead\\SkeletonMage\\smoke_1.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 1000,
+            "granularity": 0.097,
+            "coneAngleDeg": 45,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": true,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 1.1223,
+              "y": -0.0633,
+              "z": 0
+            }
+          },
+          "notes": [
+            {
+              "field": "width/length",
+              "kind": "approximated",
+              "detail": "rectangular 3.3×50 emission plane → bounding disc r=0.695 (vfx@1 has no box emitter)"
+            },
+            {
+              "field": "flags.lineEmitter",
+              "kind": "approximated",
+              "detail": "emits along a LINE, not a rectangle. vfx@1 has no line emitter; the cone above is the closest shape and W3xEmitterRig narrows it to a line at build time"
+            }
+          ]
+        }
+      ],
+      "ribbonDocIds": [],
+      "usedBy": [
+        {
+          "objectId": "A0XT",
+          "baseId": "Asph",
+          "field": "ability.targetArt"
+        }
+      ],
+      "supersedes": [],
+      "notes": []
+    },
+    {
+      "id": "fx.w3x.orb.bloodbreathstream",
+      "family": "orb",
+      "label": "bloodbreathstream",
+      "source": {
+        "model": "BloodBreathStream.mdx",
+        "mdxBytes": 3325,
+        "glbBytes": 3236,
+        "assetClass": "emitter-dominant-hybrid",
+        "geosets": 1,
+        "triangles": 4
+      },
+      "attach": "chest",
+      "ambient": true,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.orb.bloodbreathstream.p00",
+          "emitterIndex": 0,
+          "nodeName": "BlizParticle FLAME 1",
+          "pivotOffset": {
+            "x": -0.5868,
+            "y": 0.3269,
+            "z": 0.4624
+          },
+          "wc3Texture": "Textures\\BloodWhiteSmall.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 35,
+            "granularity": 0.25,
+            "coneAngleDeg": 9.5,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -0.5868,
+              "y": 0.3269,
+              "z": 0.4624
+            }
+          },
+          "notes": []
+        },
+        {
+          "docId": "fx.w3x.orb.bloodbreathstream.p01",
+          "emitterIndex": 1,
+          "nodeName": "BlizParticle FLAME 02",
+          "pivotOffset": {
+            "x": -0.5674,
+            "y": 0.1623,
+            "z": 0.4624
+          },
+          "wc3Texture": "Textures\\BloodWhiteSmall.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 40,
+            "granularity": 0.2,
+            "coneAngleDeg": 9.5,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -0.5674,
+              "y": 0.1623,
+              "z": 0.4624
+            }
+          },
+          "notes": []
+        },
+        {
+          "docId": "fx.w3x.orb.bloodbreathstream.p02",
+          "emitterIndex": 2,
+          "nodeName": "BlizParticle FLAME 03redglow",
+          "pivotOffset": {
+            "x": -0.5868,
+            "y": 0.2583,
+            "z": 0.4624
+          },
+          "wc3Texture": "Textures\\BloodWhiteSmall.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 35,
+            "granularity": 0.357,
+            "coneAngleDeg": 9.5,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -0.5868,
+              "y": 0.2583,
+              "z": 0.4624
+            }
+          },
+          "notes": []
+        }
+      ],
+      "ribbonDocIds": [],
+      "usedBy": [
+        {
+          "objectId": "A030",
+          "baseId": "AHtb",
+          "field": "ability.targetArt"
+        },
+        {
+          "objectId": "A0SB",
+          "baseId": "Alit",
+          "field": "ability.targetArt"
+        },
+        {
+          "objectId": "B01G",
+          "baseId": "BHtc",
+          "field": "buff.targetArt"
+        }
+      ],
+      "supersedes": [],
+      "notes": [
+        "Largest particle is 1.98 world units — 1.2× a champion's height. That is the map's own segmentScaling, ported unchanged; expect it to fill the screen."
+      ]
+    },
+    {
+      "id": "fx.w3x.orb.darkbreathdamage",
+      "family": "orb",
+      "label": "DarkBreathDamage — 93-01 期末報告 buff",
+      "source": {
+        "model": "DarkBreathDamage.mdx",
+        "mdxBytes": 1407,
+        "glbBytes": 288,
+        "assetClass": "pure-emitter",
+        "geosets": 0,
+        "triangles": 0
+      },
+      "attach": null,
+      "ambient": true,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.orb.darkbreathdamage.p00",
+          "emitterIndex": 0,
+          "nodeName": "BlizParticle05",
+          "pivotOffset": {
+            "x": 0.1551,
+            "y": -0.0877,
+            "z": 0.0026
+          },
+          "wc3Texture": "Textures\\Clouds8x8Mod.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 96,
+            "granularity": 0.28,
+            "coneAngleDeg": 10,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0.1551,
+              "y": -0.0877,
+              "z": 0.0026
+            }
+          },
+          "notes": [
+            {
+              "field": "rows/cols",
+              "kind": "dropped",
+              "detail": "8×8 flipbook dropped — the bound texture is a substituted single-frame sprite, and slicing it into cells renders garbage rather than an animation"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        }
+      ],
+      "ribbonDocIds": [],
+      "usedBy": [
+        {
+          "objectId": "A06O",
+          "baseId": "AIfb",
+          "field": "ability.targetArt"
+        },
+        {
+          "objectId": "Xbof",
+          "baseId": "Xbof",
+          "field": "buff.effectArt"
+        },
+        {
+          "objectId": "Bbof",
+          "baseId": "Bbof",
+          "field": "buff.targetArt"
+        }
+      ],
+      "supersedes": [
+        "godie-darkbreathdamage-p0"
+      ],
+      "notes": [
+        "The converted glb is 288 B with 0 triangles: this asset IS its emitters (#98). Re-converting cannot help — the geometry never existed.",
+        "No attach point in the object data. WC3 silently falls back to `origin`; reproducing that fallback IS the faithful port."
+      ]
+    },
+    {
+      "id": "fx.w3x.orb.demonfilth",
+      "family": "orb",
+      "label": "Demonfilth — B05B 黑化 buff aura",
+      "source": {
+        "model": "Demonfilth.mdx",
+        "mdxBytes": 3119,
+        "glbBytes": 288,
+        "assetClass": "pure-emitter",
+        "geosets": 0,
+        "triangles": 0
+      },
+      "attach": "overhead",
+      "ambient": true,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.orb.demonfilth.p00",
+          "emitterIndex": 0,
+          "nodeName": "Shockwave",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\AuraRune7Green.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 75,
+            "granularity": 155000000,
+            "coneAngleDeg": 180,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001
+          },
+          "notes": [
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.orb.demonfilth.p01",
+          "emitterIndex": 1,
+          "nodeName": "Rune",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\Clouds8x8Fade.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 1665,
+            "granularity": 0.867,
+            "coneAngleDeg": 180,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001
+          },
+          "notes": [
+            {
+              "field": "rows/cols",
+              "kind": "dropped",
+              "detail": "8×8 flipbook dropped — the bound texture is a substituted single-frame sprite, and slicing it into cells renders garbage rather than an animation"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.orb.demonfilth.p02",
+          "emitterIndex": 2,
+          "nodeName": "Rune2",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\Clouds8x8Fade.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 25,
+            "granularity": 0.608,
+            "coneAngleDeg": 180,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": true,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": -2,
+            "trackFrameSec": 0.001
+          },
+          "notes": [
+            {
+              "field": "rows/cols",
+              "kind": "dropped",
+              "detail": "8×8 flipbook dropped — the bound texture is a substituted single-frame sprite, and slicing it into cells renders garbage rather than an animation"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "priorityPlane",
+              "kind": "dropped",
+              "detail": "priorityPlane -2 has no Babylon equivalent — a ParticleSystem sorts by depth, not by an authored plane. Forwarded on the runtime flags for a caller that wants to map it to renderingGroupId"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.orb.demonfilth.p03",
+          "emitterIndex": 3,
+          "nodeName": "Light2",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "Doodads\\Cinematic\\EyeOfSargeras\\Demon_Rune2.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 5,
+            "granularity": 111000000,
+            "coneAngleDeg": 180,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": true,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 2,
+            "trackFrameSec": 0.001
+          },
+          "notes": [
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "priorityPlane",
+              "kind": "dropped",
+              "detail": "priorityPlane 2 has no Babylon equivalent — a ParticleSystem sorts by depth, not by an authored plane. Forwarded on the runtime flags for a caller that wants to map it to renderingGroupId"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.orb.demonfilth.p04",
+          "emitterIndex": 4,
+          "nodeName": "Rune2",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\Clouds8x8Fade.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 5,
+            "granularity": 1,
+            "coneAngleDeg": 180,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": -5,
+            "trackFrameSec": 0.001
+          },
+          "notes": [
+            {
+              "field": "rows/cols",
+              "kind": "dropped",
+              "detail": "8×8 flipbook dropped — the bound texture is a substituted single-frame sprite, and slicing it into cells renders garbage rather than an animation"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "priorityPlane",
+              "kind": "dropped",
+              "detail": "priorityPlane -5 has no Babylon equivalent — a ParticleSystem sorts by depth, not by an authored plane. Forwarded on the runtime flags for a caller that wants to map it to renderingGroupId"
+            }
+          ]
+        }
+      ],
+      "ribbonDocIds": [],
+      "usedBy": [
+        {
+          "objectId": "B05B",
+          "baseId": "BNht",
+          "field": "buff.targetArt"
+        }
+      ],
+      "supersedes": [],
+      "notes": [
+        "Largest particle is 4.31 world units — 2.5× a champion's height. That is the map's own segmentScaling, ported unchanged; expect it to fill the screen.",
+        "The converted glb is 288 B with 0 triangles: this asset IS its emitters (#98). Re-converting cannot help — the geometry never existed."
+      ]
+    },
+    {
+      "id": "fx.w3x.orb.divinering",
+      "family": "orb",
+      "label": "神聖光環 DivineRing — A0TP 球體(趙雲)",
+      "source": {
+        "model": "DivineRing.mdx",
+        "mdxBytes": 7268,
+        "glbBytes": 1020,
+        "assetClass": "pure-emitter",
+        "geosets": 0,
+        "triangles": 0
+      },
+      "attach": "chest",
+      "ambient": true,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.orb.divinering.p00",
+          "emitterIndex": 0,
+          "nodeName": "BlizParticle02",
+          "pivotOffset": {
+            "x": -2.646,
+            "y": 0,
+            "z": -0.0403
+          },
+          "wc3Texture": "Textures\\firering6.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 20,
+            "granularity": 0.2,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": true,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -2.646,
+              "y": 0,
+              "z": -0.0403
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.lineEmitter",
+              "kind": "approximated",
+              "detail": "emits along a LINE, not a rectangle. vfx@1 has no line emitter; the cone above is the closest shape and W3xEmitterRig narrows it to a line at build time"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.orb.divinering.p01",
+          "emitterIndex": 1,
+          "nodeName": "BlizParticle03",
+          "pivotOffset": {
+            "x": -1.1925,
+            "y": 0,
+            "z": -2.3222
+          },
+          "wc3Texture": "Textures\\firering6.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 20,
+            "granularity": 0.2,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": true,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -1.1925,
+              "y": 0,
+              "z": -2.3222
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.lineEmitter",
+              "kind": "approximated",
+              "detail": "emits along a LINE, not a rectangle. vfx@1 has no line emitter; the cone above is the closest shape and W3xEmitterRig narrows it to a line at build time"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.orb.divinering.p02",
+          "emitterIndex": 2,
+          "nodeName": "BlizParticle04",
+          "pivotOffset": {
+            "x": 1.841,
+            "y": 0,
+            "z": -1.7826
+          },
+          "wc3Texture": "Textures\\firering6.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 20,
+            "granularity": 0.2,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": true,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 1.841,
+              "y": 0,
+              "z": -1.7826
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.lineEmitter",
+              "kind": "approximated",
+              "detail": "emits along a LINE, not a rectangle. vfx@1 has no line emitter; the cone above is the closest shape and W3xEmitterRig narrows it to a line at build time"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.orb.divinering.p03",
+          "emitterIndex": 3,
+          "nodeName": "BlizParticle05",
+          "pivotOffset": {
+            "x": 2.0184,
+            "y": 0,
+            "z": 1.5203
+          },
+          "wc3Texture": "Textures\\firering6.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 20,
+            "granularity": 0.2,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": true,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 2.0184,
+              "y": 0,
+              "z": 1.5203
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.lineEmitter",
+              "kind": "approximated",
+              "detail": "emits along a LINE, not a rectangle. vfx@1 has no line emitter; the cone above is the closest shape and W3xEmitterRig narrows it to a line at build time"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.orb.divinering.p04",
+          "emitterIndex": 4,
+          "nodeName": "BlizParticle06",
+          "pivotOffset": {
+            "x": -1.3746,
+            "y": 0,
+            "z": 2.158
+          },
+          "wc3Texture": "Textures\\firering6.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 20,
+            "granularity": 0.2,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": true,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -1.3746,
+              "y": 0,
+              "z": 2.158
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.lineEmitter",
+              "kind": "approximated",
+              "detail": "emits along a LINE, not a rectangle. vfx@1 has no line emitter; the cone above is the closest shape and W3xEmitterRig narrows it to a line at build time"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.orb.divinering.p05",
+          "emitterIndex": 5,
+          "nodeName": "BlizParticle02",
+          "pivotOffset": {
+            "x": -2.646,
+            "y": 0,
+            "z": -0.0403
+          },
+          "wc3Texture": "Textures\\firering6.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 20,
+            "granularity": 0.267,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": true,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -2.646,
+              "y": 0,
+              "z": -0.0403
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.lineEmitter",
+              "kind": "approximated",
+              "detail": "emits along a LINE, not a rectangle. vfx@1 has no line emitter; the cone above is the closest shape and W3xEmitterRig narrows it to a line at build time"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.orb.divinering.p06",
+          "emitterIndex": 6,
+          "nodeName": "BlizParticle03",
+          "pivotOffset": {
+            "x": -1.1925,
+            "y": 0,
+            "z": -2.3222
+          },
+          "wc3Texture": "Textures\\firering6.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 20,
+            "granularity": 0.267,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": true,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -1.1925,
+              "y": 0,
+              "z": -2.3222
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.lineEmitter",
+              "kind": "approximated",
+              "detail": "emits along a LINE, not a rectangle. vfx@1 has no line emitter; the cone above is the closest shape and W3xEmitterRig narrows it to a line at build time"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.orb.divinering.p07",
+          "emitterIndex": 7,
+          "nodeName": "BlizParticle04",
+          "pivotOffset": {
+            "x": 1.841,
+            "y": 0,
+            "z": -1.7826
+          },
+          "wc3Texture": "Textures\\firering6.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 20,
+            "granularity": 0.267,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": true,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 1.841,
+              "y": 0,
+              "z": -1.7826
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.lineEmitter",
+              "kind": "approximated",
+              "detail": "emits along a LINE, not a rectangle. vfx@1 has no line emitter; the cone above is the closest shape and W3xEmitterRig narrows it to a line at build time"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.orb.divinering.p08",
+          "emitterIndex": 8,
+          "nodeName": "BlizParticle05",
+          "pivotOffset": {
+            "x": 2.0184,
+            "y": 0,
+            "z": 1.5203
+          },
+          "wc3Texture": "Textures\\firering6.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 20,
+            "granularity": 0.267,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": true,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 2.0184,
+              "y": 0,
+              "z": 1.5203
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.lineEmitter",
+              "kind": "approximated",
+              "detail": "emits along a LINE, not a rectangle. vfx@1 has no line emitter; the cone above is the closest shape and W3xEmitterRig narrows it to a line at build time"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.orb.divinering.p09",
+          "emitterIndex": 9,
+          "nodeName": "BlizParticle06",
+          "pivotOffset": {
+            "x": -1.3746,
+            "y": 0,
+            "z": 2.158
+          },
+          "wc3Texture": "Textures\\firering6.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 20,
+            "granularity": 0.267,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": true,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -1.3746,
+              "y": 0,
+              "z": 2.158
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.lineEmitter",
+              "kind": "approximated",
+              "detail": "emits along a LINE, not a rectangle. vfx@1 has no line emitter; the cone above is the closest shape and W3xEmitterRig narrows it to a line at build time"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.orb.divinering.p10",
+          "emitterIndex": 10,
+          "nodeName": "BlizParticle02_2",
+          "pivotOffset": {
+            "x": -2.646,
+            "y": 0,
+            "z": -0.0403
+          },
+          "wc3Texture": "Textures\\Yellow_Glow.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 15,
+            "granularity": 0.038,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": true,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -2.646,
+              "y": 0,
+              "z": -0.0403
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.lineEmitter",
+              "kind": "approximated",
+              "detail": "emits along a LINE, not a rectangle. vfx@1 has no line emitter; the cone above is the closest shape and W3xEmitterRig narrows it to a line at build time"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.orb.divinering.p11",
+          "emitterIndex": 11,
+          "nodeName": "BlizParticle02_2",
+          "pivotOffset": {
+            "x": -2.646,
+            "y": 0,
+            "z": -0.0403
+          },
+          "wc3Texture": "Textures\\GenericGlowX.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 20,
+            "granularity": 0.024,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": true,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -2.646,
+              "y": 0,
+              "z": -0.0403
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.lineEmitter",
+              "kind": "approximated",
+              "detail": "emits along a LINE, not a rectangle. vfx@1 has no line emitter; the cone above is the closest shape and W3xEmitterRig narrows it to a line at build time"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.orb.divinering.p12",
+          "emitterIndex": 12,
+          "nodeName": "BlizParticle03_2",
+          "pivotOffset": {
+            "x": -1.1925,
+            "y": 0,
+            "z": -2.3222
+          },
+          "wc3Texture": "Textures\\Yellow_Glow.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 15,
+            "granularity": 0.038,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": true,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -1.1925,
+              "y": 0,
+              "z": -2.3222
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.lineEmitter",
+              "kind": "approximated",
+              "detail": "emits along a LINE, not a rectangle. vfx@1 has no line emitter; the cone above is the closest shape and W3xEmitterRig narrows it to a line at build time"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.orb.divinering.p13",
+          "emitterIndex": 13,
+          "nodeName": "BlizParticle03_2",
+          "pivotOffset": {
+            "x": -1.1925,
+            "y": 0,
+            "z": -2.3222
+          },
+          "wc3Texture": "Textures\\GenericGlowX.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 20,
+            "granularity": 0.024,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": true,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -1.1925,
+              "y": 0,
+              "z": -2.3222
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.lineEmitter",
+              "kind": "approximated",
+              "detail": "emits along a LINE, not a rectangle. vfx@1 has no line emitter; the cone above is the closest shape and W3xEmitterRig narrows it to a line at build time"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.orb.divinering.p14",
+          "emitterIndex": 14,
+          "nodeName": "BlizParticle04_2",
+          "pivotOffset": {
+            "x": 1.841,
+            "y": 0,
+            "z": -1.7826
+          },
+          "wc3Texture": "Textures\\Yellow_Glow.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 15,
+            "granularity": 0.038,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": true,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 1.841,
+              "y": 0,
+              "z": -1.7826
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.lineEmitter",
+              "kind": "approximated",
+              "detail": "emits along a LINE, not a rectangle. vfx@1 has no line emitter; the cone above is the closest shape and W3xEmitterRig narrows it to a line at build time"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.orb.divinering.p15",
+          "emitterIndex": 15,
+          "nodeName": "BlizParticle04_2",
+          "pivotOffset": {
+            "x": 1.841,
+            "y": 0,
+            "z": -1.7826
+          },
+          "wc3Texture": "Textures\\GenericGlowX.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 20,
+            "granularity": 0.024,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": true,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 1.841,
+              "y": 0,
+              "z": -1.7826
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.lineEmitter",
+              "kind": "approximated",
+              "detail": "emits along a LINE, not a rectangle. vfx@1 has no line emitter; the cone above is the closest shape and W3xEmitterRig narrows it to a line at build time"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.orb.divinering.p16",
+          "emitterIndex": 16,
+          "nodeName": "BlizParticle05_2",
+          "pivotOffset": {
+            "x": 2.0184,
+            "y": 0,
+            "z": 1.5203
+          },
+          "wc3Texture": "Textures\\Yellow_Glow.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 15,
+            "granularity": 0.038,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": true,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 2.0184,
+              "y": 0,
+              "z": 1.5203
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.lineEmitter",
+              "kind": "approximated",
+              "detail": "emits along a LINE, not a rectangle. vfx@1 has no line emitter; the cone above is the closest shape and W3xEmitterRig narrows it to a line at build time"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.orb.divinering.p17",
+          "emitterIndex": 17,
+          "nodeName": "BlizParticle05_2",
+          "pivotOffset": {
+            "x": 2.0184,
+            "y": 0,
+            "z": 1.5203
+          },
+          "wc3Texture": "Textures\\GenericGlowX.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 20,
+            "granularity": 0.024,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": true,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 2.0184,
+              "y": 0,
+              "z": 1.5203
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.lineEmitter",
+              "kind": "approximated",
+              "detail": "emits along a LINE, not a rectangle. vfx@1 has no line emitter; the cone above is the closest shape and W3xEmitterRig narrows it to a line at build time"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.orb.divinering.p18",
+          "emitterIndex": 18,
+          "nodeName": "BlizParticle06_2",
+          "pivotOffset": {
+            "x": -1.3746,
+            "y": 0,
+            "z": 2.158
+          },
+          "wc3Texture": "Textures\\Yellow_Glow.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 15,
+            "granularity": 0.038,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": true,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -1.3746,
+              "y": 0,
+              "z": 2.158
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.lineEmitter",
+              "kind": "approximated",
+              "detail": "emits along a LINE, not a rectangle. vfx@1 has no line emitter; the cone above is the closest shape and W3xEmitterRig narrows it to a line at build time"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.orb.divinering.p19",
+          "emitterIndex": 19,
+          "nodeName": "BlizParticle06_2",
+          "pivotOffset": {
+            "x": -1.3746,
+            "y": 0,
+            "z": 2.158
+          },
+          "wc3Texture": "Textures\\GenericGlowX.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 20,
+            "granularity": 0.024,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": true,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -1.3746,
+              "y": 0,
+              "z": 2.158
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.lineEmitter",
+              "kind": "approximated",
+              "detail": "emits along a LINE, not a rectangle. vfx@1 has no line emitter; the cone above is the closest shape and W3xEmitterRig narrows it to a line at build time"
+            }
+          ]
+        }
+      ],
+      "ribbonDocIds": [],
+      "usedBy": [
+        {
+          "objectId": "A0TP",
+          "baseId": "Asph",
+          "field": "ability.targetArt"
+        },
+        {
+          "objectId": "A10W",
+          "baseId": "Aegr",
+          "field": "ability.casterArt"
+        },
+        {
+          "objectId": "A10W",
+          "baseId": "Aegr",
+          "field": "ability.specialArt"
+        },
+        {
+          "objectId": "A10W",
+          "baseId": "Aegr",
+          "field": "ability.targetArt"
+        }
+      ],
+      "supersedes": [
+        "godie-divinering-p0",
+        "godie-divinering-p1",
+        "godie-divinering-p2"
+      ],
+      "notes": [
+        "The converted glb is 1020 B with 0 triangles: this asset IS its emitters (#98). Re-converting cannot help — the geometry never existed."
+      ]
+    },
+    {
+      "id": "fx.w3x.orb.herocloudkfksword",
+      "family": "orb",
+      "label": "HeroCloudKFKSword — A0P3, chest",
+      "source": {
+        "model": "HeroCloudKFKSword.mdx",
+        "mdxBytes": 2827,
+        "glbBytes": 13328,
+        "assetClass": "emitter-dominant-hybrid",
+        "geosets": 1,
+        "triangles": 4
+      },
+      "attach": "chest",
+      "ambient": true,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.orb.herocloudkfksword.p00",
+          "emitterIndex": 0,
+          "nodeName": "BlizParticle01",
+          "pivotOffset": {
+            "x": -0.2093,
+            "y": 1.0476,
+            "z": -1.0144
+          },
+          "wc3Texture": "Textures\\HeroCloudKFKSword.blp",
+          "textureSubstituted": false,
+          "shape": {
+            "concurrency": 100,
+            "granularity": 0.2,
+            "coneAngleDeg": 10,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": true,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -0.2093,
+              "y": 1.0476,
+              "z": -1.0144
+            }
+          },
+          "notes": [
+            {
+              "field": "headOrTail",
+              "kind": "approximated",
+              "detail": "\"both\" draws a head billboard AND a stretched tail from the same particle. One Babylon ParticleSystem has ONE billboardMode, so this doc is the TAIL half; call expandHeadAndTail() to also get the head half as a second system"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        }
+      ],
+      "ribbonDocIds": [],
+      "usedBy": [
+        {
+          "objectId": "A0P3",
+          "baseId": "Asph",
+          "field": "ability.targetArt"
+        },
+        {
+          "objectId": "A0S4",
+          "baseId": "AOws",
+          "field": "ability.casterArt"
+        }
+      ],
+      "supersedes": [],
+      "notes": []
+    },
+    {
+      "id": "fx.w3x.orb.herosaber",
+      "family": "orb",
+      "label": "HeroSaber — A0UR, right,hand",
+      "source": {
+        "model": "HeroSaber.mdx",
+        "mdxBytes": 77996,
+        "glbBytes": 264544,
+        "assetClass": "mesh-and-emitter-hybrid",
+        "geosets": 5,
+        "triangles": 1698
+      },
+      "attach": "right,hand",
+      "ambient": true,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.orb.herosaber.p00",
+          "emitterIndex": 0,
+          "nodeName": "BlizParticle01",
+          "pivotOffset": {
+            "x": 1.5319,
+            "y": 0.0261,
+            "z": 0.0806
+          },
+          "wc3Texture": "Textures\\Flame4.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 91.3,
+            "granularity": 0.054,
+            "coneAngleDeg": 63.5,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": true,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 1.5319,
+              "y": 0.0261,
+              "z": 0.0806
+            }
+          },
+          "notes": [
+            {
+              "field": "width/length",
+              "kind": "approximated",
+              "detail": "rectangular 5.244×5.2 emission plane → bounding disc r=0.035 (vfx@1 has no box emitter)"
+            },
+            {
+              "field": "headOrTail",
+              "kind": "approximated",
+              "detail": "\"both\" draws a head billboard AND a stretched tail from the same particle. One Babylon ParticleSystem has ONE billboardMode, so this doc is the TAIL half; call expandHeadAndTail() to also get the head half as a second system"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.orb.herosaber.p01",
+          "emitterIndex": 1,
+          "nodeName": "BlizParticle02",
+          "pivotOffset": {
+            "x": -0.0187,
+            "y": 0.9146,
+            "z": -0.2365
+          },
+          "wc3Texture": "Textures\\Flare.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 50,
+            "granularity": 0.107,
+            "coneAngleDeg": 20,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -0.0187,
+              "y": 0.9146,
+              "z": -0.2365
+            }
+          },
+          "notes": [
+            {
+              "field": "width/length",
+              "kind": "approximated",
+              "detail": "rectangular 0.03×0 emission plane → bounding disc r=0.001 (vfx@1 has no box emitter)"
+            }
+          ]
+        }
+      ],
+      "ribbonDocIds": [
+        "godie-herosaber-r0"
+      ],
+      "usedBy": [
+        {
+          "objectId": "A0UR",
+          "baseId": "Asph",
+          "field": "ability.targetArt"
+        }
+      ],
+      "supersedes": [],
+      "notes": []
+    },
+    {
+      "id": "fx.w3x.orb.lightningnova",
+      "family": "orb",
+      "label": "lightningnova",
+      "source": {
+        "model": "Lightningnova.mdx",
+        "mdxBytes": 10848,
+        "glbBytes": 18260,
+        "assetClass": "mesh-and-emitter-hybrid",
+        "geosets": 3,
+        "triangles": 64
+      },
+      "attach": "chest",
+      "ambient": true,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.orb.lightningnova.p00",
+          "emitterIndex": 0,
+          "nodeName": "BlizParticle01",
+          "pivotOffset": {
+            "x": 0.0128,
+            "y": 5.284,
+            "z": 0.0176
+          },
+          "wc3Texture": "Abilities\\Spells\\Other\\Monsoon\\HitBase.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 70.2,
+            "granularity": 0.052,
+            "coneAngleDeg": 180,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0.0128,
+              "y": 5.284,
+              "z": 0.0176
+            }
+          },
+          "notes": [
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.orb.lightningnova.p01",
+          "emitterIndex": 1,
+          "nodeName": "BlizParticle02",
+          "pivotOffset": {
+            "x": 0.0128,
+            "y": 10.9648,
+            "z": 0.0176
+          },
+          "wc3Texture": "Textures\\LightningBall.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 21.3,
+            "granularity": 0.051,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0.0128,
+              "y": 10.9648,
+              "z": 0.0176
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        }
+      ],
+      "ribbonDocIds": [],
+      "usedBy": [
+        {
+          "objectId": "A0OD",
+          "baseId": "AEer",
+          "field": "ability.specialArt"
+        },
+        {
+          "objectId": "A0OD",
+          "baseId": "AEer",
+          "field": "ability.targetArt"
+        },
+        {
+          "objectId": "A0Q5",
+          "baseId": "AOsh",
+          "field": "ability.casterArt"
+        },
+        {
+          "objectId": "B02V",
+          "baseId": "BOac",
+          "field": "buff.targetArt"
+        }
+      ],
+      "supersedes": [],
+      "notes": []
+    },
+    {
+      "id": "fx.w3x.orb.magical-sword",
+      "family": "orb",
+      "label": "Magical_Sword — A00G / A094, 約束與勝利之劍",
+      "source": {
+        "model": "Magical_Sword.mdx",
+        "mdxBytes": 17627,
+        "glbBytes": 26704,
+        "assetClass": "mesh-and-emitter-hybrid",
+        "geosets": 1,
+        "triangles": 571
+      },
+      "attach": "right,hand",
+      "ambient": true,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.orb.magical-sword.p00",
+          "emitterIndex": 0,
+          "nodeName": "BlizParticle01",
+          "pivotOffset": {
+            "x": 3.4439,
+            "y": -0.0345,
+            "z": 0.0264
+          },
+          "wc3Texture": "Textures\\Yellow_Star_Dim.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 50,
+            "granularity": 0.117,
+            "coneAngleDeg": 15,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": true,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 3.4439,
+              "y": -0.0345,
+              "z": 0.0264
+            }
+          },
+          "notes": [
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        }
+      ],
+      "ribbonDocIds": [],
+      "usedBy": [
+        {
+          "objectId": "A00G",
+          "baseId": "Asph",
+          "field": "ability.targetArt"
+        },
+        {
+          "objectId": "A094",
+          "baseId": "Asph",
+          "field": "ability.targetArt"
+        }
+      ],
+      "supersedes": [],
+      "notes": []
+    },
+    {
+      "id": "fx.w3x.orb.minitypeflame",
+      "family": "orb",
+      "label": "minitypeflame",
+      "source": {
+        "model": "MinitypeFlame.MDX",
+        "mdxBytes": 9616,
+        "glbBytes": 19356,
+        "assetClass": "mesh-and-emitter-hybrid",
+        "geosets": 3,
+        "triangles": 126
+      },
+      "attach": null,
+      "ambient": true,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.orb.minitypeflame.p00",
+          "emitterIndex": 0,
+          "nodeName": "BlizParticle01",
+          "pivotOffset": {
+            "x": 0.0134,
+            "y": 2.2211,
+            "z": 0.0268
+          },
+          "wc3Texture": "Textures\\Clouds8x8.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 40.5,
+            "granularity": 0.5,
+            "coneAngleDeg": 28,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0.0134,
+              "y": 2.2211,
+              "z": 0.0268
+            }
+          },
+          "notes": [
+            {
+              "field": "rows/cols",
+              "kind": "dropped",
+              "detail": "9×9 flipbook dropped — the bound texture is a substituted single-frame sprite, and slicing it into cells renders garbage rather than an animation"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.orb.minitypeflame.p01",
+          "emitterIndex": 1,
+          "nodeName": "BlizParticle02",
+          "pivotOffset": {
+            "x": 0,
+            "y": 2.2211,
+            "z": -0.0006
+          },
+          "wc3Texture": "Textures\\GenericGlow64.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 5,
+            "granularity": 200,
+            "coneAngleDeg": 123,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": true,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0,
+              "y": 2.2211,
+              "z": -0.0006
+            }
+          },
+          "notes": []
+        }
+      ],
+      "ribbonDocIds": [],
+      "usedBy": [
+        {
+          "objectId": "A0BD",
+          "baseId": "ANsb",
+          "field": "ability.missileArt"
+        },
+        {
+          "objectId": "B00Z",
+          "baseId": "BUim",
+          "field": "buff.effectArt"
+        }
+      ],
+      "supersedes": [],
+      "notes": [
+        "Largest particle is 5.56 world units — 3.3× a champion's height. That is the map's own segmentScaling, ported unchanged; expect it to fill the screen.",
+        "No attach point in the object data. WC3 silently falls back to `origin`; reproducing that fallback IS the faithful port."
+      ]
+    },
+    {
+      "id": "fx.w3x.particle.babyface",
+      "family": "particle",
+      "label": "babyface — no reference",
+      "source": {
+        "model": "babyface.mdx",
+        "mdxBytes": 1603,
+        "glbBytes": 288,
+        "assetClass": "pure-emitter",
+        "geosets": 0,
+        "triangles": 0
+      },
+      "attach": null,
+      "ambient": false,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.particle.babyface.p00",
+          "emitterIndex": 0,
+          "nodeName": "BlizParticle01",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "babyface.blp",
+          "textureSubstituted": false,
+          "shape": {
+            "concurrency": 15,
+            "granularity": 40000000,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        }
+      ],
+      "ribbonDocIds": [],
+      "usedBy": [],
+      "supersedes": [],
+      "notes": [
+        "The converted glb is 288 B with 0 triangles: this asset IS its emitters (#98). Re-converting cannot help — the geometry never existed."
+      ]
+    },
+    {
+      "id": "fx.w3x.particle.blackhole",
+      "family": "particle",
+      "label": "BlackHole",
+      "source": {
+        "model": "BlackHole.mdx",
+        "mdxBytes": 6953,
+        "glbBytes": 5848,
+        "assetClass": "pure-emitter",
+        "geosets": 0,
+        "triangles": 0
+      },
+      "attach": null,
+      "ambient": false,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.particle.blackhole.p00",
+          "emitterIndex": 0,
+          "nodeName": "DeathFlash",
+          "pivotOffset": {
+            "x": 0.0167,
+            "y": 3.6478,
+            "z": -0.0045
+          },
+          "wc3Texture": "Textures\\Blue_Glow2.blp",
+          "textureSubstituted": false,
+          "shape": {
+            "concurrency": 40,
+            "granularity": 155,
+            "coneAngleDeg": 7.5,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0.0167,
+              "y": 3.6478,
+              "z": -0.0045
+            }
+          },
+          "notes": [
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.blackhole.p01",
+          "emitterIndex": 1,
+          "nodeName": "Shockwave",
+          "pivotOffset": {
+            "x": 0.0167,
+            "y": 3.6478,
+            "z": -0.0045
+          },
+          "wc3Texture": "Textures\\ShockwaveWater1Black.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 25,
+            "granularity": 31,
+            "coneAngleDeg": 7.5,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0.0167,
+              "y": 3.6478,
+              "z": -0.0045
+            }
+          },
+          "notes": [
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.blackhole.p02",
+          "emitterIndex": 2,
+          "nodeName": "BlizParticle08shockwaves01",
+          "pivotOffset": {
+            "x": 0.0167,
+            "y": 3.6478,
+            "z": -0.0045
+          },
+          "wc3Texture": "Textures\\ShockwaveWater1.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 25,
+            "granularity": 333,
+            "coneAngleDeg": 7.5,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": true,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0.0167,
+              "y": 3.6478,
+              "z": -0.0045
+            }
+          },
+          "notes": [
+            {
+              "field": "speed",
+              "kind": "approximated",
+              "detail": "negative speed -20 (inward emission) folded to magnitude — Babylon emit power has no inward direction"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.xYQuad",
+              "kind": "approximated",
+              "detail": "flat XY quads instead of camera billboards. Closest Babylon behaviour is isBillboardBased=false (particles orient by direction), applied by W3xEmitterRig"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.blackhole.p03",
+          "emitterIndex": 3,
+          "nodeName": "BlachHole",
+          "pivotOffset": {
+            "x": -0.4566,
+            "y": 4.0765,
+            "z": -0.0124
+          },
+          "wc3Texture": "Textures\\GenericGlowX_Mod2.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 25,
+            "granularity": 60000000,
+            "coneAngleDeg": 180,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": true,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -0.4566,
+              "y": 4.0765,
+              "z": -0.0124
+            }
+          },
+          "notes": [
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.blackhole.p04",
+          "emitterIndex": 4,
+          "nodeName": "Shockwave2",
+          "pivotOffset": {
+            "x": -0.4566,
+            "y": 4.0765,
+            "z": -0.0124
+          },
+          "wc3Texture": "Textures\\ShockwaveWater1Black.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 50,
+            "granularity": 22.143,
+            "coneAngleDeg": 180,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": true,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -0.4566,
+              "y": 4.0765,
+              "z": -0.0124
+            }
+          },
+          "notes": [
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.blackhole.p05",
+          "emitterIndex": 5,
+          "nodeName": "Energy1",
+          "pivotOffset": {
+            "x": -0.4566,
+            "y": 4.0765,
+            "z": -0.0124
+          },
+          "wc3Texture": "Textures\\Blue_Glow2.blp",
+          "textureSubstituted": false,
+          "shape": {
+            "concurrency": 25,
+            "granularity": 122000000,
+            "coneAngleDeg": 180,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": true,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -0.4566,
+              "y": 4.0765,
+              "z": -0.0124
+            }
+          },
+          "notes": [
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.blackhole.p06",
+          "emitterIndex": 6,
+          "nodeName": "Energy2",
+          "pivotOffset": {
+            "x": -0.4566,
+            "y": 4.0765,
+            "z": -0.0124
+          },
+          "wc3Texture": "Textures\\Clouds8x8Fire.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 44.4,
+            "granularity": 0.692,
+            "coneAngleDeg": 180,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -0.4566,
+              "y": 4.0765,
+              "z": -0.0124
+            }
+          },
+          "notes": [
+            {
+              "field": "rows/cols",
+              "kind": "dropped",
+              "detail": "8×8 flipbook dropped — the bound texture is a substituted single-frame sprite, and slicing it into cells renders garbage rather than an animation"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        }
+      ],
+      "ribbonDocIds": [
+        "godie-blackhole-r0",
+        "godie-blackhole-r1"
+      ],
+      "usedBy": [
+        {
+          "objectId": "A0J8",
+          "baseId": "AHtb",
+          "field": "ability.missileArt"
+        },
+        {
+          "objectId": "A0JP",
+          "baseId": "ACcv",
+          "field": "ability.casterArt"
+        }
+      ],
+      "supersedes": [],
+      "notes": [
+        "Largest particle is 9.25 world units — 5.4× a champion's height. That is the map's own segmentScaling, ported unchanged; expect it to fill the screen."
+      ]
+    },
+    {
+      "id": "fx.w3x.particle.blackhole1",
+      "family": "particle",
+      "label": "BlackHole1 — 93-00 小考",
+      "source": {
+        "model": "BlackHole1.mdx",
+        "mdxBytes": 8273,
+        "glbBytes": 33652,
+        "assetClass": "emitter-dominant-hybrid",
+        "geosets": 3,
+        "triangles": 12
+      },
+      "attach": null,
+      "ambient": false,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.particle.blackhole1.p00",
+          "emitterIndex": 0,
+          "nodeName": "BlizParticle01",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\star5tga.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 0,
+            "granularity": 0.029,
+            "coneAngleDeg": 7.5,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001
+          },
+          "notes": [
+            {
+              "field": "emissionRate",
+              "kind": "approximated",
+              "detail": "no usable emission rate anywhere; fell back to 10/s so the emitter is at least visible"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.blackhole1.p01",
+          "emitterIndex": 1,
+          "nodeName": "BlizParticle02",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\star5tga.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 0,
+            "granularity": 1,
+            "coneAngleDeg": 7.5,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": true,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001
+          },
+          "notes": [
+            {
+              "field": "speed",
+              "kind": "approximated",
+              "detail": "negative speed -20 (inward emission) folded to magnitude — Babylon emit power has no inward direction"
+            },
+            {
+              "field": "emissionRate",
+              "kind": "approximated",
+              "detail": "no usable emission rate anywhere; fell back to 10/s so the emitter is at least visible"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.lineEmitter",
+              "kind": "approximated",
+              "detail": "emits along a LINE, not a rectangle. vfx@1 has no line emitter; the cone above is the closest shape and W3xEmitterRig narrows it to a line at build time"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.blackhole1.p02",
+          "emitterIndex": 2,
+          "nodeName": "BlizParticle04",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\star2.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 0,
+            "granularity": 0.009,
+            "coneAngleDeg": 180,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": true,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001
+          },
+          "notes": [
+            {
+              "field": "emissionRate",
+              "kind": "approximated",
+              "detail": "no usable emission rate anywhere; fell back to 10/s so the emitter is at least visible"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.lineEmitter",
+              "kind": "approximated",
+              "detail": "emits along a LINE, not a rectangle. vfx@1 has no line emitter; the cone above is the closest shape and W3xEmitterRig narrows it to a line at build time"
+            }
+          ]
+        }
+      ],
+      "ribbonDocIds": [],
+      "usedBy": [],
+      "supersedes": [
+        "godie-blackhole1-p0"
+      ],
+      "notes": []
+    },
+    {
+      "id": "fx.w3x.particle.enchant",
+      "family": "particle",
+      "label": "Enchant — 21-03 赤焰爆發",
+      "source": {
+        "model": "Enchant.MDX",
+        "mdxBytes": 4215,
+        "glbBytes": 5536,
+        "assetClass": "pure-emitter",
+        "geosets": 0,
+        "triangles": 0
+      },
+      "attach": null,
+      "ambient": false,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.particle.enchant.p00",
+          "emitterIndex": 0,
+          "nodeName": "BlizParticle01",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": -4.855
+          },
+          "wc3Texture": "Textures\\Flame4.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 31.5,
+            "granularity": 3.571,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0,
+              "y": 0,
+              "z": -4.855
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.enchant.p01",
+          "emitterIndex": 1,
+          "nodeName": "BlizParticle02",
+          "pivotOffset": {
+            "x": -4.6174,
+            "y": 0,
+            "z": -1.5003
+          },
+          "wc3Texture": "Textures\\Flame4.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 31.5,
+            "granularity": 3.571,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -4.6174,
+              "y": 0,
+              "z": -1.5003
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.enchant.p02",
+          "emitterIndex": 2,
+          "nodeName": "BlizParticle03",
+          "pivotOffset": {
+            "x": -2.8537,
+            "y": 0,
+            "z": 3.9278
+          },
+          "wc3Texture": "Textures\\Flame4.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 31.5,
+            "granularity": 3.571,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -2.8537,
+              "y": 0,
+              "z": 3.9278
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.enchant.p03",
+          "emitterIndex": 3,
+          "nodeName": "BlizParticle04",
+          "pivotOffset": {
+            "x": 2.8537,
+            "y": 0,
+            "z": 3.9278
+          },
+          "wc3Texture": "Textures\\Flame4.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 31.5,
+            "granularity": 3.571,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 2.8537,
+              "y": 0,
+              "z": 3.9278
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.enchant.p04",
+          "emitterIndex": 4,
+          "nodeName": "BlizParticle05",
+          "pivotOffset": {
+            "x": 4.6174,
+            "y": 0,
+            "z": -1.5003
+          },
+          "wc3Texture": "Textures\\Flame4.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 31.5,
+            "granularity": 3.571,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 4.6174,
+              "y": 0,
+              "z": -1.5003
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        }
+      ],
+      "ribbonDocIds": [],
+      "usedBy": [
+        {
+          "objectId": "A0BF",
+          "baseId": "AUim",
+          "field": "ability.specialArt"
+        }
+      ],
+      "supersedes": [
+        "godie-enchant-p0"
+      ],
+      "notes": []
+    },
+    {
+      "id": "fx.w3x.particle.flamessmoke",
+      "family": "particle",
+      "label": "flamessmoke",
+      "source": {
+        "model": "flamessmoke.mdx",
+        "mdxBytes": 3196,
+        "glbBytes": 3224,
+        "assetClass": "emitter-dominant-hybrid",
+        "geosets": 1,
+        "triangles": 4
+      },
+      "attach": "weapon",
+      "ambient": false,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.particle.flamessmoke.p00",
+          "emitterIndex": 0,
+          "nodeName": "BlizParticle01",
+          "pivotOffset": {
+            "x": 0.0103,
+            "y": -1.7393,
+            "z": -0.0103
+          },
+          "wc3Texture": "Textures\\Clouds8x8Fade.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 150,
+            "granularity": 0.156,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0.0103,
+              "y": -1.7393,
+              "z": -0.0103
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "rows/cols",
+              "kind": "dropped",
+              "detail": "8×8 flipbook dropped — the bound texture is a substituted single-frame sprite, and slicing it into cells renders garbage rather than an animation"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.flamessmoke.p01",
+          "emitterIndex": 1,
+          "nodeName": "BlizParticle02",
+          "pivotOffset": {
+            "x": 0.0103,
+            "y": 7.0765,
+            "z": -0.0103
+          },
+          "wc3Texture": "Textures\\Clouds8x8Fade.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 100,
+            "granularity": 0.281,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0.0103,
+              "y": 7.0765,
+              "z": -0.0103
+            }
+          },
+          "notes": [
+            {
+              "field": "width/length",
+              "kind": "approximated",
+              "detail": "rectangular 60.517×61.255 emission plane → bounding disc r=0.851 (vfx@1 has no box emitter)"
+            },
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "rows/cols",
+              "kind": "dropped",
+              "detail": "8×8 flipbook dropped — the bound texture is a substituted single-frame sprite, and slicing it into cells renders garbage rather than an animation"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.flamessmoke.p02",
+          "emitterIndex": 2,
+          "nodeName": "BlizParticle03",
+          "pivotOffset": {
+            "x": 0.0103,
+            "y": 0.5802,
+            "z": -0.0103
+          },
+          "wc3Texture": "Textures\\Flare.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 12,
+            "granularity": 0.016,
+            "coneAngleDeg": 45,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0.0103,
+              "y": 0.5802,
+              "z": -0.0103
+            }
+          },
+          "notes": [
+            {
+              "field": "width/length",
+              "kind": "approximated",
+              "detail": "rectangular 60.517×61.255 emission plane → bounding disc r=0.851 (vfx@1 has no box emitter)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.flamessmoke.p03",
+          "emitterIndex": 3,
+          "nodeName": "BlizParticle04",
+          "pivotOffset": {
+            "x": 0.0103,
+            "y": -0.0575,
+            "z": -0.0103
+          },
+          "wc3Texture": "Textures\\Clouds8x8Fade.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 250,
+            "granularity": 0.063,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0.0103,
+              "y": -0.0575,
+              "z": -0.0103
+            }
+          },
+          "notes": [
+            {
+              "field": "width/length",
+              "kind": "approximated",
+              "detail": "rectangular 60.517×61.255 emission plane → bounding disc r=0.851 (vfx@1 has no box emitter)"
+            },
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "rows/cols",
+              "kind": "dropped",
+              "detail": "8×8 flipbook dropped — the bound texture is a substituted single-frame sprite, and slicing it into cells renders garbage rather than an animation"
+            }
+          ]
+        }
+      ],
+      "ribbonDocIds": [],
+      "usedBy": [
+        {
+          "objectId": "A09K",
+          "baseId": "ANht",
+          "field": "ability.casterArt"
+        },
+        {
+          "objectId": "A0OG",
+          "baseId": "ANcl",
+          "field": "ability.effectArt"
+        },
+        {
+          "objectId": "A0OG",
+          "baseId": "ANcl",
+          "field": "ability.casterArt"
+        },
+        {
+          "objectId": "A0PZ",
+          "baseId": "AIfw",
+          "field": "ability.specialArt"
+        }
+      ],
+      "supersedes": [],
+      "notes": [
+        "Largest particle is 2.50 world units — 1.5× a champion's height. That is the map's own segmentScaling, ported unchanged; expect it to fill the screen."
+      ]
+    },
+    {
+      "id": "fx.w3x.particle.flash",
+      "family": "particle",
+      "label": "flash",
+      "source": {
+        "model": "Flash.mdx",
+        "mdxBytes": 5750,
+        "glbBytes": 7224,
+        "assetClass": "emitter-dominant-hybrid",
+        "geosets": 3,
+        "triangles": 8
+      },
+      "attach": null,
+      "ambient": false,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.particle.flash.p00",
+          "emitterIndex": 0,
+          "nodeName": "BlizParticle01healtail01",
+          "pivotOffset": {
+            "x": 0.0613,
+            "y": 1.8821,
+            "z": 0.0114
+          },
+          "wc3Texture": "Textures\\Shockwave10.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 10,
+            "granularity": 10,
+            "coneAngleDeg": 180,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": true,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0.0613,
+              "y": 1.8821,
+              "z": 0.0114
+            }
+          },
+          "notes": [
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.lineEmitter",
+              "kind": "approximated",
+              "detail": "emits along a LINE, not a rectangle. vfx@1 has no line emitter; the cone above is the closest shape and W3xEmitterRig narrows it to a line at build time"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.flash.p01",
+          "emitterIndex": 1,
+          "nodeName": "BlizParticle01healtail03",
+          "pivotOffset": {
+            "x": 0.0613,
+            "y": 1.7994,
+            "z": 0.0114
+          },
+          "wc3Texture": "Textures\\Yellow_Star.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 33.6,
+            "granularity": 0.097,
+            "coneAngleDeg": 180,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": true,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0.0613,
+              "y": 1.7994,
+              "z": 0.0114
+            }
+          },
+          "notes": [
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.lineEmitter",
+              "kind": "approximated",
+              "detail": "emits along a LINE, not a rectangle. vfx@1 has no line emitter; the cone above is the closest shape and W3xEmitterRig narrows it to a line at build time"
+            }
+          ]
+        }
+      ],
+      "ribbonDocIds": [],
+      "usedBy": [
+        {
+          "objectId": "A04L",
+          "baseId": "AOsh",
+          "field": "ability.missileArt"
+        }
+      ],
+      "supersedes": [],
+      "notes": [
+        "Largest particle is 2.22 world units — 1.3× a champion's height. That is the map's own segmentScaling, ported unchanged; expect it to fill the screen."
+      ]
+    },
+    {
+      "id": "fx.w3x.particle.gx",
+      "family": "particle",
+      "label": "gx",
+      "source": {
+        "model": "gx.mdx",
+        "mdxBytes": 6931,
+        "glbBytes": 13968,
+        "assetClass": "emitter-dominant-hybrid",
+        "geosets": 3,
+        "triangles": 26
+      },
+      "attach": null,
+      "ambient": false,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.particle.gx.p00",
+          "emitterIndex": 0,
+          "nodeName": "BlizParticle01",
+          "pivotOffset": {
+            "x": 0.0468,
+            "y": 0,
+            "z": -0.0253
+          },
+          "wc3Texture": "Textures\\Blue_Glow2.blp",
+          "textureSubstituted": false,
+          "shape": {
+            "concurrency": 0,
+            "granularity": 0.02,
+            "coneAngleDeg": 90,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0.0468,
+              "y": 0,
+              "z": -0.0253
+            }
+          },
+          "notes": [
+            {
+              "field": "width/length",
+              "kind": "approximated",
+              "detail": "rectangular 39.661×43.835 emission plane → bounding disc r=0.609 (vfx@1 has no box emitter)"
+            },
+            {
+              "field": "emissionRate",
+              "kind": "approximated",
+              "detail": "no usable emission rate anywhere; fell back to 10/s so the emitter is at least visible"
+            }
+          ]
+        }
+      ],
+      "ribbonDocIds": [
+        "godie-gx-r0"
+      ],
+      "usedBy": [
+        {
+          "objectId": "A0NA",
+          "baseId": "Arsp",
+          "field": "ability.missileArt"
+        },
+        {
+          "objectId": "A112",
+          "baseId": "Arsp",
+          "field": "ability.missileArt"
+        }
+      ],
+      "supersedes": [],
+      "notes": []
+    },
+    {
+      "id": "fx.w3x.particle.gxhuge",
+      "family": "particle",
+      "label": "gxhuge",
+      "source": {
+        "model": "gxhuge.mdx",
+        "mdxBytes": 6931,
+        "glbBytes": 13980,
+        "assetClass": "emitter-dominant-hybrid",
+        "geosets": 3,
+        "triangles": 26
+      },
+      "attach": null,
+      "ambient": false,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.particle.gxhuge.p00",
+          "emitterIndex": 0,
+          "nodeName": "BlizParticle01",
+          "pivotOffset": {
+            "x": 0.0468,
+            "y": 0,
+            "z": -0.0253
+          },
+          "wc3Texture": "Textures\\Blue_Glow2.blp",
+          "textureSubstituted": false,
+          "shape": {
+            "concurrency": 0,
+            "granularity": 0.02,
+            "coneAngleDeg": 90,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0.0468,
+              "y": 0,
+              "z": -0.0253
+            }
+          },
+          "notes": [
+            {
+              "field": "width/length",
+              "kind": "approximated",
+              "detail": "rectangular 39.661×43.835 emission plane → bounding disc r=0.609 (vfx@1 has no box emitter)"
+            },
+            {
+              "field": "emissionRate",
+              "kind": "approximated",
+              "detail": "no usable emission rate anywhere; fell back to 10/s so the emitter is at least visible"
+            }
+          ]
+        }
+      ],
+      "ribbonDocIds": [
+        "godie-gxhuge-r0"
+      ],
+      "usedBy": [
+        {
+          "objectId": "A0SY",
+          "baseId": "AOsh",
+          "field": "ability.missileArt"
+        }
+      ],
+      "supersedes": [],
+      "notes": []
+    },
+    {
+      "id": "fx.w3x.particle.heroeva01s2",
+      "family": "particle",
+      "label": "heroeva01s2",
+      "source": {
+        "model": "HeroEVA01S2.mdx",
+        "mdxBytes": 4354,
+        "glbBytes": 5384,
+        "assetClass": "emitter-dominant-hybrid",
+        "geosets": 2,
+        "triangles": 22
+      },
+      "attach": "chest",
+      "ambient": false,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.particle.heroeva01s2.p00",
+          "emitterIndex": 0,
+          "nodeName": "BlizParticle01",
+          "pivotOffset": {
+            "x": 0.0034,
+            "y": 0.1405,
+            "z": 0.0007
+          },
+          "wc3Texture": "Textures\\CloudSingle.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 0,
+            "granularity": 0.12,
+            "coneAngleDeg": 180,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0.0034,
+              "y": 0.1405,
+              "z": 0.0007
+            }
+          },
+          "notes": [
+            {
+              "field": "emissionRate",
+              "kind": "approximated",
+              "detail": "no usable emission rate anywhere; fell back to 10/s so the emitter is at least visible"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.heroeva01s2.p01",
+          "emitterIndex": 1,
+          "nodeName": "UNNAMED",
+          "pivotOffset": {
+            "x": 1.389,
+            "y": 0.5556,
+            "z": 0
+          },
+          "wc3Texture": "HeroEVA01Effect.blp",
+          "textureSubstituted": false,
+          "shape": {
+            "concurrency": 10,
+            "granularity": 100000000,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 1.389,
+              "y": 0.5556,
+              "z": 0
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        }
+      ],
+      "ribbonDocIds": [],
+      "usedBy": [
+        {
+          "objectId": "A0GH",
+          "baseId": "Assk",
+          "field": "ability.specialArt"
+        },
+        {
+          "objectId": "A0GH",
+          "baseId": "Assk",
+          "field": "ability.targetArt"
+        },
+        {
+          "objectId": "A0GH",
+          "baseId": "Assk",
+          "field": "ability.casterArt"
+        }
+      ],
+      "supersedes": [],
+      "notes": [
+        "Largest particle is 2.78 world units — 1.6× a champion's height. That is the map's own segmentScaling, ported unchanged; expect it to fill the screen."
+      ]
+    },
+    {
+      "id": "fx.w3x.particle.heroluffeattack",
+      "family": "particle",
+      "label": "heroluffeattack",
+      "source": {
+        "model": "heroluffeattack.mdx",
+        "mdxBytes": 8729,
+        "glbBytes": 40664,
+        "assetClass": "emitter-dominant-hybrid",
+        "geosets": 3,
+        "triangles": 36
+      },
+      "attach": null,
+      "ambient": false,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.particle.heroluffeattack.p00",
+          "emitterIndex": 0,
+          "nodeName": "UNNAMED",
+          "pivotOffset": {
+            "x": 0,
+            "y": 1.389,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\LightningBall.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 0,
+            "granularity": 0.075,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0,
+              "y": 1.389,
+              "z": 0
+            }
+          },
+          "notes": [
+            {
+              "field": "width/length",
+              "kind": "approximated",
+              "detail": "rectangular 200×400 emission plane → bounding disc r=5.556 (vfx@1 has no box emitter)"
+            },
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "emissionRate",
+              "kind": "approximated",
+              "detail": "no usable emission rate anywhere; fell back to 10/s so the emitter is at least visible"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        }
+      ],
+      "ribbonDocIds": [],
+      "usedBy": [
+        {
+          "objectId": "A0IV",
+          "baseId": "ANcs",
+          "field": "ability.missileArt"
+        }
+      ],
+      "supersedes": [],
+      "notes": []
+    },
+    {
+      "id": "fx.w3x.particle.heronarutos4effect",
+      "family": "particle",
+      "label": "HeroNarutoS4Effect — 02-03 魂飛魄散 missile",
+      "source": {
+        "model": "HeroNarutoS4Effect.mdx",
+        "mdxBytes": 5106,
+        "glbBytes": 1916,
+        "assetClass": "pure-emitter",
+        "geosets": 0,
+        "triangles": 0
+      },
+      "attach": null,
+      "ambient": false,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.particle.heronarutos4effect.p00",
+          "emitterIndex": 0,
+          "nodeName": "KitaFX_Diagonal_1",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\sun.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 42,
+            "granularity": 12000000,
+            "coneAngleDeg": 180,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": true,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001
+          },
+          "notes": [
+            {
+              "field": "headOrTail",
+              "kind": "approximated",
+              "detail": "\"both\" draws a head billboard AND a stretched tail from the same particle. One Babylon ParticleSystem has ONE billboardMode, so this doc is the TAIL half; call expandHeadAndTail() to also get the head half as a second system"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.heronarutos4effect.p01",
+          "emitterIndex": 1,
+          "nodeName": "KitaFX_Diagonal_1",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\sun.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 42,
+            "granularity": 12000000,
+            "coneAngleDeg": 180,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": true,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001
+          },
+          "notes": [
+            {
+              "field": "headOrTail",
+              "kind": "approximated",
+              "detail": "\"both\" draws a head billboard AND a stretched tail from the same particle. One Babylon ParticleSystem has ONE billboardMode, so this doc is the TAIL half; call expandHeadAndTail() to also get the head half as a second system"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.heronarutos4effect.p02",
+          "emitterIndex": 2,
+          "nodeName": "KitaFX_Diagonal_2",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\sun.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 42,
+            "granularity": 12000000,
+            "coneAngleDeg": 180,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": true,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001
+          },
+          "notes": [
+            {
+              "field": "headOrTail",
+              "kind": "approximated",
+              "detail": "\"both\" draws a head billboard AND a stretched tail from the same particle. One Babylon ParticleSystem has ONE billboardMode, so this doc is the TAIL half; call expandHeadAndTail() to also get the head half as a second system"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.heronarutos4effect.p03",
+          "emitterIndex": 3,
+          "nodeName": "KitaFX_Diagonal_2",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\sun.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 42,
+            "granularity": 12000000,
+            "coneAngleDeg": 180,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": true,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001
+          },
+          "notes": [
+            {
+              "field": "headOrTail",
+              "kind": "approximated",
+              "detail": "\"both\" draws a head billboard AND a stretched tail from the same particle. One Babylon ParticleSystem has ONE billboardMode, so this doc is the TAIL half; call expandHeadAndTail() to also get the head half as a second system"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.heronarutos4effect.p04",
+          "emitterIndex": 4,
+          "nodeName": "KitaFX_Vertical",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\sun.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 42,
+            "granularity": 12000000,
+            "coneAngleDeg": 180,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": true,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001
+          },
+          "notes": [
+            {
+              "field": "headOrTail",
+              "kind": "approximated",
+              "detail": "\"both\" draws a head billboard AND a stretched tail from the same particle. One Babylon ParticleSystem has ONE billboardMode, so this doc is the TAIL half; call expandHeadAndTail() to also get the head half as a second system"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.heronarutos4effect.p05",
+          "emitterIndex": 5,
+          "nodeName": "KitaFX_Death",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\sun.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 51,
+            "granularity": 100000000,
+            "coneAngleDeg": 180,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": true,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001
+          },
+          "notes": [
+            {
+              "field": "headOrTail",
+              "kind": "approximated",
+              "detail": "\"both\" draws a head billboard AND a stretched tail from the same particle. One Babylon ParticleSystem has ONE billboardMode, so this doc is the TAIL half; call expandHeadAndTail() to also get the head half as a second system"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        }
+      ],
+      "ribbonDocIds": [],
+      "usedBy": [
+        {
+          "objectId": "A03D",
+          "baseId": "ACsh",
+          "field": "ability.missileArt"
+        }
+      ],
+      "supersedes": [
+        "godie-heronarutos4effect-p0"
+      ],
+      "notes": [
+        "Largest particle is 2.78 world units — 1.6× a champion's height. That is the map's own segmentScaling, ported unchanged; expect it to fill the screen.",
+        "The converted glb is 1916 B with 0 triangles: this asset IS its emitters (#98). Re-converting cannot help — the geometry never existed."
+      ]
+    },
+    {
+      "id": "fx.w3x.particle.heroraichus3",
+      "family": "particle",
+      "label": "heroraichus3",
+      "source": {
+        "model": "HeroRaichuS3.mdx",
+        "mdxBytes": 4394,
+        "glbBytes": 5384,
+        "assetClass": "emitter-dominant-hybrid",
+        "geosets": 2,
+        "triangles": 22
+      },
+      "attach": "origin",
+      "ambient": false,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.particle.heroraichus3.p00",
+          "emitterIndex": 0,
+          "nodeName": "BlizParticle01",
+          "pivotOffset": {
+            "x": 0.0034,
+            "y": 0.1405,
+            "z": 0.0007
+          },
+          "wc3Texture": "Textures\\CloudSingle.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 0,
+            "granularity": 0.12,
+            "coneAngleDeg": 180,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0.0034,
+              "y": 0.1405,
+              "z": 0.0007
+            }
+          },
+          "notes": [
+            {
+              "field": "emissionRate",
+              "kind": "approximated",
+              "detail": "no usable emission rate anywhere; fell back to 10/s so the emitter is at least visible"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.heroraichus3.p01",
+          "emitterIndex": 1,
+          "nodeName": "UNNAMED",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\LightningBall.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 40,
+            "granularity": 0.6,
+            "coneAngleDeg": 0.2,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0.2° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        }
+      ],
+      "ribbonDocIds": [],
+      "usedBy": [
+        {
+          "objectId": "A0PP",
+          "baseId": "AEsf",
+          "field": "ability.casterArt"
+        }
+      ],
+      "supersedes": [],
+      "notes": []
+    },
+    {
+      "id": "fx.w3x.particle.holyawakening",
+      "family": "particle",
+      "label": "風王結界 HolyAwakening — A0DZ, 常駐於 weapon",
+      "source": {
+        "model": "HolyAwakening.mdx",
+        "mdxBytes": 25418,
+        "glbBytes": 20484,
+        "assetClass": "emitter-dominant-hybrid",
+        "geosets": 2,
+        "triangles": 36
+      },
+      "attach": "weapon",
+      "ambient": false,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.particle.holyawakening.p00",
+          "emitterIndex": 0,
+          "nodeName": "BlizParticle05white02",
+          "pivotOffset": {
+            "x": 0.0165,
+            "y": 1.7632,
+            "z": 0.0115
+          },
+          "wc3Texture": "Textures\\Clouds8x8Mod.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 0,
+            "granularity": 0.433,
+            "coneAngleDeg": 180,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0.0165,
+              "y": 1.7632,
+              "z": 0.0115
+            }
+          },
+          "notes": [
+            {
+              "field": "emissionRate",
+              "kind": "approximated",
+              "detail": "no usable emission rate anywhere; fell back to 10/s so the emitter is at least visible"
+            },
+            {
+              "field": "rows/cols",
+              "kind": "dropped",
+              "detail": "8×8 flipbook dropped — the bound texture is a substituted single-frame sprite, and slicing it into cells renders garbage rather than an animation"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.holyawakening.p01",
+          "emitterIndex": 1,
+          "nodeName": "BlizParticle05white03",
+          "pivotOffset": {
+            "x": 0.0165,
+            "y": -0.1371,
+            "z": 0.0115
+          },
+          "wc3Texture": "Textures\\Clouds8x8Mod.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 0,
+            "granularity": 0.208,
+            "coneAngleDeg": 10,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0.0165,
+              "y": -0.1371,
+              "z": 0.0115
+            }
+          },
+          "notes": [
+            {
+              "field": "emissionRate",
+              "kind": "approximated",
+              "detail": "no usable emission rate anywhere; fell back to 10/s so the emitter is at least visible"
+            },
+            {
+              "field": "rows/cols",
+              "kind": "dropped",
+              "detail": "8×8 flipbook dropped — the bound texture is a substituted single-frame sprite, and slicing it into cells renders garbage rather than an animation"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.holyawakening.p02",
+          "emitterIndex": 2,
+          "nodeName": "BlizParticle022222",
+          "pivotOffset": {
+            "x": -0.0207,
+            "y": 2.1217,
+            "z": 0.0173
+          },
+          "wc3Texture": "Textures\\star6.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 36.8,
+            "granularity": 0.163,
+            "coneAngleDeg": 180,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -0.0207,
+              "y": 2.1217,
+              "z": 0.0173
+            }
+          },
+          "notes": [
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.holyawakening.p03",
+          "emitterIndex": 3,
+          "nodeName": "BlastFlareStreamers",
+          "pivotOffset": {
+            "x": 0.0675,
+            "y": -0.257,
+            "z": -0.0915
+          },
+          "wc3Texture": "Textures\\CartoonCloud.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 0,
+            "granularity": 4000000,
+            "coneAngleDeg": 36,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0.0675,
+              "y": -0.257,
+              "z": -0.0915
+            }
+          },
+          "notes": [
+            {
+              "field": "emissionRate",
+              "kind": "approximated",
+              "detail": "no usable emission rate anywhere; fell back to 10/s so the emitter is at least visible"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.holyawakening.p04",
+          "emitterIndex": 4,
+          "nodeName": "BlizParticle08shockwaves02",
+          "pivotOffset": {
+            "x": -0.0661,
+            "y": 0.4769,
+            "z": -0.0421
+          },
+          "wc3Texture": "Textures\\Shockwave1.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 30,
+            "granularity": 2.659,
+            "coneAngleDeg": 1,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": true,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -0.0661,
+              "y": 0.4769,
+              "z": -0.0421
+            }
+          },
+          "notes": [
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.xYQuad",
+              "kind": "approximated",
+              "detail": "flat XY quads instead of camera billboards. Closest Babylon behaviour is isBillboardBased=false (particles orient by direction), applied by W3xEmitterRig"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.holyawakening.p05",
+          "emitterIndex": 5,
+          "nodeName": "BlizParticle08shockwavesYellow",
+          "pivotOffset": {
+            "x": -0.0661,
+            "y": 0.7975,
+            "z": -0.0421
+          },
+          "wc3Texture": "Textures\\GenericGlowFaded.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 30,
+            "granularity": 0.459,
+            "coneAngleDeg": 1,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": true,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -0.0661,
+              "y": 0.7975,
+              "z": -0.0421
+            }
+          },
+          "notes": [
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.xYQuad",
+              "kind": "approximated",
+              "detail": "flat XY quads instead of camera billboards. Closest Babylon behaviour is isBillboardBased=false (particles orient by direction), applied by W3xEmitterRig"
+            }
+          ]
+        }
+      ],
+      "ribbonDocIds": [
+        "godie-holyawakening-r0",
+        "godie-holyawakening-r1",
+        "godie-holyawakening-r2",
+        "godie-holyawakening-r3",
+        "godie-holyawakening-r4",
+        "godie-holyawakening-r5",
+        "godie-holyawakening-r6",
+        "godie-holyawakening-r7"
+      ],
+      "usedBy": [
+        {
+          "objectId": "A0D5",
+          "baseId": "AOsh",
+          "field": "ability.casterArt"
+        },
+        {
+          "objectId": "A0DZ",
+          "baseId": "ANrg",
+          "field": "ability.casterArt"
+        },
+        {
+          "objectId": "A0M3",
+          "baseId": "Alit",
+          "field": "ability.missileArt"
+        },
+        {
+          "objectId": "A0M3",
+          "baseId": "Alit",
+          "field": "ability.targetArt"
+        }
+      ],
+      "supersedes": [
+        "fx.prim.wind.tornado",
+        "fx.prim.wind.nova"
+      ],
+      "notes": [
+        "Largest particle is 7.39 world units — 4.3× a champion's height. That is the map's own segmentScaling, ported unchanged; expect it to fill the screen."
+      ]
+    },
+    {
+      "id": "fx.w3x.particle.lasercannonfinalred",
+      "family": "particle",
+      "label": "LasercannonfinalRED — n01I",
+      "source": {
+        "model": "LasercannonfinalRED.mdx",
+        "mdxBytes": 5984,
+        "glbBytes": 288,
+        "assetClass": "pure-emitter",
+        "geosets": 0,
+        "triangles": 0
+      },
+      "attach": null,
+      "ambient": false,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.particle.lasercannonfinalred.p00",
+          "emitterIndex": 0,
+          "nodeName": "BlizParticleLowFire",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\Shockwave1White.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 333,
+            "granularity": 777000000,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.lasercannonfinalred.p01",
+          "emitterIndex": 1,
+          "nodeName": "BlizParticleLowSmoke",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\Shockwave10.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 444,
+            "granularity": 555000000,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.lasercannonfinalred.p02",
+          "emitterIndex": 2,
+          "nodeName": "BlizParticleShockWave04",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\White_64_Foam1.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 1794,
+            "granularity": 0.336,
+            "coneAngleDeg": 95,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001
+          },
+          "notes": [
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.lasercannonfinalred.p03",
+          "emitterIndex": 3,
+          "nodeName": "BlizParticleFlash",
+          "pivotOffset": {
+            "x": -0.0582,
+            "y": 0.3163,
+            "z": -0.0388
+          },
+          "wc3Texture": "Textures\\Flare.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 360,
+            "granularity": 86000000,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -0.0582,
+              "y": 0.3163,
+              "z": -0.0388
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.lasercannonfinalred.p04",
+          "emitterIndex": 4,
+          "nodeName": "BlizParticleShockWave03",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\Energy1.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 2775,
+            "granularity": 0.413,
+            "coneAngleDeg": 75,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001
+          },
+          "notes": [
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.lasercannonfinalred.p05",
+          "emitterIndex": 5,
+          "nodeName": "BlizParticleShockWave05",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\White_64_Foam1.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 3996,
+            "granularity": 0.165,
+            "coneAngleDeg": 111,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001
+          },
+          "notes": [
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.lasercannonfinalred.p06",
+          "emitterIndex": 6,
+          "nodeName": "BlizParticleShockWave06",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\White_64_Foam1.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 1332,
+            "granularity": 2.22,
+            "coneAngleDeg": 111,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001
+          },
+          "notes": [
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.lasercannonfinalred.p07",
+          "emitterIndex": 7,
+          "nodeName": "BlizParticleLowFlash",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\GenericGlow64.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 1110,
+            "granularity": 444000000,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        }
+      ],
+      "ribbonDocIds": [],
+      "usedBy": [],
+      "supersedes": [],
+      "notes": [
+        "Largest particle is 21.59 world units — 12.7× a champion's height. That is the map's own segmentScaling, ported unchanged; expect it to fill the screen.",
+        "The converted glb is 288 B with 0 triangles: this asset IS its emitters (#98). Re-converting cannot help — the geometry never existed."
+      ]
+    },
+    {
+      "id": "fx.w3x.particle.lavabreathdamage",
+      "family": "particle",
+      "label": "LavaBreathDamage — A0BC 11-01 燒鬼斬",
+      "source": {
+        "model": "LavaBreathDamage.mdx",
+        "mdxBytes": 1407,
+        "glbBytes": 288,
+        "assetClass": "pure-emitter",
+        "geosets": 0,
+        "triangles": 0
+      },
+      "attach": null,
+      "ambient": false,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.particle.lavabreathdamage.p00",
+          "emitterIndex": 0,
+          "nodeName": "BlizParticle05",
+          "pivotOffset": {
+            "x": 0.1551,
+            "y": -0.0877,
+            "z": 0.0026
+          },
+          "wc3Texture": "Textures\\LavaLump2.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 48,
+            "granularity": 0.28,
+            "coneAngleDeg": 10,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0.1551,
+              "y": -0.0877,
+              "z": 0.0026
+            }
+          },
+          "notes": [
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        }
+      ],
+      "ribbonDocIds": [],
+      "usedBy": [
+        {
+          "objectId": "A0BC",
+          "baseId": "AIfb",
+          "field": "ability.targetArt"
+        }
+      ],
+      "supersedes": [
+        "godie-lavabreathdamage-p0"
+      ],
+      "notes": [
+        "The converted glb is 288 B with 0 triangles: this asset IS its emitters (#98). Re-converting cannot help — the geometry never existed."
+      ]
+    },
+    {
+      "id": "fx.w3x.particle.musiccast",
+      "family": "particle",
+      "label": "MusicCast — no reference",
+      "source": {
+        "model": "MusicCast.mdx",
+        "mdxBytes": 2530,
+        "glbBytes": null,
+        "assetClass": "pure-emitter",
+        "geosets": 0,
+        "triangles": 0
+      },
+      "attach": null,
+      "ambient": false,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.particle.musiccast.p00",
+          "emitterIndex": 0,
+          "nodeName": "BlizParticle01",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "MusicCast.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 25,
+            "granularity": 0.5,
+            "coneAngleDeg": 20,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001
+          },
+          "notes": [
+            {
+              "field": "rows/cols",
+              "kind": "dropped",
+              "detail": "4×4 flipbook dropped — the bound texture is a substituted single-frame sprite, and slicing it into cells renders garbage rather than an animation"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.musiccast.p01",
+          "emitterIndex": 1,
+          "nodeName": "explode",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "MusicCast.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 0,
+            "granularity": 0.8,
+            "coneAngleDeg": 180,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001
+          },
+          "notes": [
+            {
+              "field": "emissionRate",
+              "kind": "approximated",
+              "detail": "no usable emission rate anywhere; fell back to 10/s so the emitter is at least visible"
+            },
+            {
+              "field": "rows/cols",
+              "kind": "dropped",
+              "detail": "4×4 flipbook dropped — the bound texture is a substituted single-frame sprite, and slicing it into cells renders garbage rather than an animation"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        }
+      ],
+      "ribbonDocIds": [],
+      "usedBy": [],
+      "supersedes": [],
+      "notes": [
+        "1 of 1 RIBB ribbon(s) have no authored ribbon@1 doc yet — the trail layer is still missing."
+      ]
+    },
+    {
+      "id": "fx.w3x.particle.oblivionaura",
+      "family": "particle",
+      "label": "oblivionaura",
+      "source": {
+        "model": "OblivionAura.MDX",
+        "mdxBytes": 6109,
+        "glbBytes": 25224,
+        "assetClass": "emitter-dominant-hybrid",
+        "geosets": 3,
+        "triangles": 20
+      },
+      "attach": null,
+      "ambient": false,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.particle.oblivionaura.p00",
+          "emitterIndex": 0,
+          "nodeName": "BlizParticle01",
+          "pivotOffset": {
+            "x": 0.0027,
+            "y": 0.3819,
+            "z": 0
+          },
+          "wc3Texture": "Abilities\\Spells\\Other\\HowlOfTerror\\Skull1.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 2.7,
+            "granularity": 0.333,
+            "coneAngleDeg": 76,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": true,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0.0027,
+              "y": 0.3819,
+              "z": 0
+            }
+          },
+          "notes": [
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        }
+      ],
+      "ribbonDocIds": [],
+      "usedBy": [],
+      "supersedes": [],
+      "notes": []
+    },
+    {
+      "id": "fx.w3x.particle.sephboom",
+      "family": "particle",
+      "label": "SephBoom — no reference (dead import, kept for the record)",
+      "source": {
+        "model": "SephBoom.mdx",
+        "mdxBytes": 6117,
+        "glbBytes": null,
+        "assetClass": "pure-emitter",
+        "geosets": 0,
+        "triangles": 0
+      },
+      "attach": null,
+      "ambient": false,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.particle.sephboom.p00",
+          "emitterIndex": 0,
+          "nodeName": "BOTTOM Fire",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\Clouds8x8Fire.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 3552,
+            "granularity": 0.302,
+            "coneAngleDeg": 180,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001
+          },
+          "notes": [
+            {
+              "field": "rows/cols",
+              "kind": "dropped",
+              "detail": "8×8 flipbook dropped — the bound texture is a substituted single-frame sprite, and slicing it into cells renders garbage rather than an animation"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.sephboom.p01",
+          "emitterIndex": 1,
+          "nodeName": "TOP Flash",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\Flare.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 120,
+            "granularity": 0.378,
+            "coneAngleDeg": 10,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": true,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001
+          },
+          "notes": [
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.sephboom.p02",
+          "emitterIndex": 2,
+          "nodeName": "TOP Fire",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\Clouds8x8Fire.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 1776,
+            "granularity": 0.097,
+            "coneAngleDeg": 10,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001
+          },
+          "notes": [
+            {
+              "field": "rows/cols",
+              "kind": "dropped",
+              "detail": "8×8 flipbook dropped — the bound texture is a substituted single-frame sprite, and slicing it into cells renders garbage rather than an animation"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.sephboom.p03",
+          "emitterIndex": 3,
+          "nodeName": "BOTTOM Flash",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\Flare.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 777,
+            "granularity": 1.321,
+            "coneAngleDeg": 180,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001
+          },
+          "notes": [
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.sephboom.p04",
+          "emitterIndex": 4,
+          "nodeName": "Fire",
+          "pivotOffset": {
+            "x": 0,
+            "y": -2.0834,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\Clouds8x8Fire.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 2164.5,
+            "granularity": 0.13,
+            "coneAngleDeg": 5,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0,
+              "y": -2.0834,
+              "z": 0
+            }
+          },
+          "notes": [
+            {
+              "field": "rows/cols",
+              "kind": "dropped",
+              "detail": "8×8 flipbook dropped — the bound texture is a substituted single-frame sprite, and slicing it into cells renders garbage rather than an animation"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.sephboom.p05",
+          "emitterIndex": 5,
+          "nodeName": "Flash",
+          "pivotOffset": {
+            "x": 0,
+            "y": -2.0834,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\Flare.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 227.5,
+            "granularity": 0.4,
+            "coneAngleDeg": 5,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0,
+              "y": -2.0834,
+              "z": 0
+            }
+          },
+          "notes": [
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.sephboom.p06",
+          "emitterIndex": 6,
+          "nodeName": "ShockwaveFire",
+          "pivotOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "wc3Texture": "Textures\\Shockwave1White.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 444,
+            "granularity": 8.88,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": true,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.xYQuad",
+              "kind": "approximated",
+              "detail": "flat XY quads instead of camera billboards. Closest Babylon behaviour is isBillboardBased=false (particles orient by direction), applied by W3xEmitterRig"
+            }
+          ]
+        }
+      ],
+      "ribbonDocIds": [],
+      "usedBy": [],
+      "supersedes": [],
+      "notes": [
+        "Largest particle is 18.50 world units — 10.9× a champion's height. That is the map's own segmentScaling, ported unchanged; expect it to fill the screen."
+      ]
+    },
+    {
+      "id": "fx.w3x.particle.sonicbreathstream",
+      "family": "particle",
+      "label": "sonicbreathstream",
+      "source": {
+        "model": "SonicBreathStream.mdx",
+        "mdxBytes": 3325,
+        "glbBytes": 3420,
+        "assetClass": "emitter-dominant-hybrid",
+        "geosets": 1,
+        "triangles": 4
+      },
+      "attach": "chest",
+      "ambient": false,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.particle.sonicbreathstream.p00",
+          "emitterIndex": 0,
+          "nodeName": "BlizParticle FLAME 1",
+          "pivotOffset": {
+            "x": -0.5868,
+            "y": 0.3269,
+            "z": 0.4624
+          },
+          "wc3Texture": "UI\\MiniMap\\ping4.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 8.8,
+            "granularity": 0.25,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -0.5868,
+              "y": 0.3269,
+              "z": 0.4624
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.sonicbreathstream.p01",
+          "emitterIndex": 1,
+          "nodeName": "BlizParticle FLAME 02",
+          "pivotOffset": {
+            "x": -0.5674,
+            "y": 0.1623,
+            "z": 0.4624
+          },
+          "wc3Texture": "UI\\MiniMap\\ping4.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 10,
+            "granularity": 0.2,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -0.5674,
+              "y": 0.1623,
+              "z": 0.4624
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.sonicbreathstream.p02",
+          "emitterIndex": 2,
+          "nodeName": "BlizParticle FLAME 03redglow",
+          "pivotOffset": {
+            "x": -0.5868,
+            "y": 0.2583,
+            "z": 0.4624
+          },
+          "wc3Texture": "UI\\MiniMap\\ping4.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 8.8,
+            "granularity": 0.357,
+            "coneAngleDeg": 0,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": -0.5868,
+              "y": 0.2583,
+              "z": 0.4624
+            }
+          },
+          "notes": [
+            {
+              "field": "latitude",
+              "kind": "approximated",
+              "detail": "latitude 0° raised to the schema minimum 1° (a 0° cone is a perfectly straight line, which Babylon cannot express)"
+            }
+          ]
+        }
+      ],
+      "ribbonDocIds": [],
+      "usedBy": [
+        {
+          "objectId": "A07I",
+          "baseId": "AOw2",
+          "field": "ability.casterArt"
+        }
+      ],
+      "supersedes": [],
+      "notes": [
+        "Largest particle is 1.98 world units — 1.2× a champion's height. That is the map's own segmentScaling, ported unchanged; expect it to fill the screen."
+      ]
+    },
+    {
+      "id": "fx.w3x.particle.supershinythingy",
+      "family": "particle",
+      "label": "supershinythingy",
+      "source": {
+        "model": "SuperShinyThingy.mdx",
+        "mdxBytes": 20549,
+        "glbBytes": 50580,
+        "assetClass": "emitter-dominant-hybrid",
+        "geosets": 6,
+        "triangles": 44
+      },
+      "attach": "chest",
+      "ambient": false,
+      "durationSec": null,
+      "layers": [
+        {
+          "docId": "fx.w3x.particle.supershinythingy.p00",
+          "emitterIndex": 0,
+          "nodeName": "BlizParticle08shockwaves02",
+          "pivotOffset": {
+            "x": 0.0273,
+            "y": -0.4902,
+            "z": 0.02
+          },
+          "wc3Texture": "Textures\\Shockwave4white.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 6,
+            "granularity": 120000000,
+            "coneAngleDeg": 1,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": true,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0.0273,
+              "y": -0.4902,
+              "z": 0.02
+            }
+          },
+          "notes": [
+            {
+              "field": "speed",
+              "kind": "approximated",
+              "detail": "negative speed -20 (inward emission) folded to magnitude — Babylon emit power has no inward direction"
+            },
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            },
+            {
+              "field": "flags.xYQuad",
+              "kind": "approximated",
+              "detail": "flat XY quads instead of camera billboards. Closest Babylon behaviour is isBillboardBased=false (particles orient by direction), applied by W3xEmitterRig"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.supershinythingy.p01",
+          "emitterIndex": 1,
+          "nodeName": "BlizParticle03",
+          "pivotOffset": {
+            "x": 0.0273,
+            "y": -0.4902,
+            "z": 0.02
+          },
+          "wc3Texture": "Textures\\pixies1.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 52.6,
+            "granularity": 0.102,
+            "coneAngleDeg": 180,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0.0273,
+              "y": -0.4902,
+              "z": 0.02
+            }
+          },
+          "notes": [
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        },
+        {
+          "docId": "fx.w3x.particle.supershinythingy.p02",
+          "emitterIndex": 2,
+          "nodeName": "BlizParticle03",
+          "pivotOffset": {
+            "x": 0.0273,
+            "y": -0.4902,
+            "z": 0.02
+          },
+          "wc3Texture": "UI\\Glues\\SinglePlayer\\NightElfCampaign3D\\NightElfFemaleEyeGlow1.blp",
+          "textureSubstituted": true,
+          "shape": {
+            "concurrency": 52.6,
+            "granularity": 0.102,
+            "coneAngleDeg": 180,
+            "swarmLike": false
+          },
+          "runtime": {
+            "modelSpace": false,
+            "xYQuad": false,
+            "lineEmitter": false,
+            "wantsHeadAndTail": false,
+            "priorityPlane": 0,
+            "trackFrameSec": 0.001,
+            "pivotOffset": {
+              "x": 0.0273,
+              "y": -0.4902,
+              "z": 0.02
+            }
+          },
+          "notes": [
+            {
+              "field": "flags.unshaded",
+              "kind": "exact",
+              "detail": "no-op: Babylon particles are unlit already, so 'unshaded' is the default behaviour"
+            }
+          ]
+        }
+      ],
+      "ribbonDocIds": [
+        "godie-supershinythingy-r0",
+        "godie-supershinythingy-r1",
+        "godie-supershinythingy-r2"
+      ],
+      "usedBy": [
+        {
+          "objectId": "A02O",
+          "baseId": "AOhw",
+          "field": "ability.casterArt"
+        },
+        {
+          "objectId": "A04X",
+          "baseId": "ANcl",
+          "field": "ability.casterArt"
+        },
+        {
+          "objectId": "A0LG",
+          "baseId": "ANcl",
+          "field": "ability.casterArt"
+        },
+        {
+          "objectId": "A0WO",
+          "baseId": "Aroa",
+          "field": "ability.casterArt"
+        },
+        {
+          "objectId": "A0R4",
+          "baseId": "AOsh",
+          "field": "ability.casterArt"
+        }
+      ],
+      "supersedes": [],
+      "notes": [
+        "Largest particle is 3.33 world units — 2.0× a champion's height. That is the map's own segmentScaling, ported unchanged; expect it to fill the screen."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "godie-mfls-r1",
+  "schema": "ribbon@1",
+  "texture": "assets/textures/particles/wc3/ribbonblur1.png",
+  "widthAbove": 0.576,
+  "widthBelow": 0.577,
+  "lifespanSec": 0.35,
+  "color": [
+    0.494,
+    0.749,
+    0.945,
+    0.35
+  ],
+  "blendMode": "additive",
+  "anchorBone": "Bone_Hand_L"
+}

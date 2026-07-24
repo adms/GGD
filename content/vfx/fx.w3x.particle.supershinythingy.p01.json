@@ -1,0 +1,84 @@
+{
+  "id": "fx.w3x.particle.supershinythingy.p01",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.001,
+    "angleDeg": 180
+  },
+  "mode": "continuous",
+  "lifetimeSec": {
+    "min": 0.37,
+    "max": 0.37
+  },
+  "size": {
+    "start": 0.789,
+    "end": 0.006
+  },
+  "color": {
+    "start": [
+      1,
+      1,
+      1,
+      0.396
+    ],
+    "end": [
+      1,
+      1,
+      1,
+      0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        1,
+        1,
+        0.396
+      ]
+    ],
+    [
+      0.5,
+      [
+        0.494,
+        0.749,
+        0.945,
+        1
+      ]
+    ],
+    [
+      1,
+      [
+        1,
+        1,
+        1,
+        0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.789
+    ],
+    [
+      0.5,
+      0.661
+    ],
+    [
+      1,
+      0.006
+    ]
+  ],
+  "blendMode": "additive",
+  "speed": {
+    "min": 20.4183,
+    "max": 21.2517
+  },
+  "rate": 142.2,
+  "texture": "assets/textures/particles/light_01.png",
+  "stretched": true,
+  "tailLength": 0.75
+}

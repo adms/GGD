@@ -1,0 +1,15 @@
+{
+  "id": "godie-gx-r0",
+  "schema": "ribbon@1",
+  "texture": "assets/textures/particles/wc3/blue-glow2.png",
+  "widthAbove": 0.556,
+  "widthBelow": 0.556,
+  "lifespanSec": 2.0,
+  "color": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "blendMode": "additive"
+}

@@ -1,0 +1,29 @@
+{
+  "id": "siege-breaker",
+  "schema": "augment@1",
+  "name": "攻城槌",
+  "description": "攻擊力 +45%，攻擊距離 +2，但攻擊速度 −15%。",
+  "tier": "prismatic",
+  "weight": 22,
+  "modifiers": [
+    {
+      "stat": "ad",
+      "op": "pctAdd",
+      "value": 0.45
+    },
+    {
+      "stat": "range",
+      "op": "flat",
+      "value": 2
+    },
+    {
+      "stat": "as",
+      "op": "pctAdd",
+      "value": -0.15
+    }
+  ],
+  "tags": [
+    "ad",
+    "offense"
+  ]
+}

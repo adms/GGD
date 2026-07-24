@@ -32,7 +32,19 @@ func Cover(t *testing.T, id string) {
 		}
 		mu.Lock()
 		defer mu.Unlock()
-		f, err := os.OpenFile(file, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0o644)
+		// #nosec G703,G304 -- `file` is GGD_COVERAGE_FILE, set by the test runner
+		// for its own child processes; it is an env var, not request data, so
+		// reaching it already requires control of the process environment. This
+		// helper is test-only and cannot be linked into a serving binary: Cover
+		// takes a *testing.T and the package imports "testing", and every one of
+		// the 49 importers of pkg/testkit under apps/platform is a _test.go file
+		// — neither cmd/platform nor cmd/opstate pulls it in.
+		//
+		// 0o600 (was 0o644): the beacon is a throwaway NDJSON artefact written and
+		// read by the same user, so nothing is locked out. This intentionally
+		// diverges from the otherwise-identical tools/testrunner copy, which kept
+		// 0644 to stay readable "without sudo" — same-uid access does not need it.
+		f, err := os.OpenFile(file, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0o600)
 		if err != nil {
 			t.Logf("testkit.Cover: open %s: %v", file, err)
 			return

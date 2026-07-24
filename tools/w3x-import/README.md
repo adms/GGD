@@ -25,7 +25,28 @@ cd tools/w3x-import && pnpm i && pnpm validate:glb
 
 # gate suite (registered as `w3x-import-unit` in tools/testrunner/suites.yaml)
 cd tools/w3x-import && pnpm test
+
+# read-only archaeology over the ALREADY-EXTRACTED source map (out/GoDieEX22s-src/):
+python3 tools/w3x-import/extract_emitters.py            # MDX PRE2/RIBB emitters -> out/emitters/
+python3 tools/w3x-import/extract_invocation_params.py   # JASS art params -> out/invocation-params/
+python3 tools/w3x-import/build_vfx_bindings.py          # merge both + stock/buff/summon -> out/vfx-bindings/
 ```
+
+`extract_invocation_params.py` recovers what the object data cannot express: the per-cast
+scale / tint / alpha / fly height / facing / animation clip / playback rate / spawn offset /
+lifetime that the map's GUI-compiled JASS applies to each spawned effect, attributed to the
+ability that spawns it. Every value is tagged CONFIRMED / INFERRED / UNRESOLVED, and the run
+asserts that every art-creating call in `war3map.j` landed in the dataset.
+
+`build_vfx_bindings.py` is the one the renderer consumes. It joins the two datasets above
+into `out/vfx-bindings/VFX_BINDINGS.json` — ability rawcode → art per slot → emitter params
+per model → per-cast overrides → attach points — and adds three art channels neither source
+had: **inherited stock art** (`war3map.w3a` stores only overrides; the rest falls through to
+`Units\*AbilityFunc.txt` inside the retail MPQs), the **buff channel** (`war3map.w3h`, the
+only visual most passives have), and **summoned-unit art** (a summon's whole visual is the
+unit it creates, reskinned in `war3map.w3u`). It also bridges w3a rawcodes to
+`content/abilities/*.json` doc ids by three independent methods and prints a per-doc
+coverage scoreboard. Schema and provenance: `out/vfx-bindings/VFX_BINDINGS.md`.
 
 Python deps: `python3` ≥3.10 with `mpyq` and `Pillow`
 (`pip3 install --user mpyq Pillow`). Node side only needs the workspace

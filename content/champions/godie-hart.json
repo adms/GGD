@@ -33,6 +33,11 @@
     "mr": 1.2,
     "as": 0.02
   },
+  "hitFeel": {
+    "hitstopTicks": 4,
+    "shakeMag": 0.55,
+    "knockbackMag": 0.45
+  },
   "abilities": {
     "Q": {
       "id": "godie-hart.q",
@@ -286,9 +291,23 @@
           "root": true
         }
       ],
-      "vfxKey": "fx.prim.physical.slash-lg",
+      "vfxKey": "fx.w3x.orb.herocloudkfksword.p00",
       "targetsEnemies": true,
-      "castTimeSec": 0.5
+      "castTimeSec": 0.5,
+      "hitFeel": {
+        "hitstopTicks": 5,
+        "hitstunTicks": 9,
+        "shakeMag": 0.614,
+        "shakeStyle": "directional",
+        "sparkKind": "heavy",
+        "flashColor": [
+          0.85,
+          0.92,
+          1.0
+        ],
+        "flashMs": 211,
+        "camKick": 0.526
+      }
     }
   },
   "skillOrder": [
@@ -306,7 +325,8 @@
   ],
   "tags": [
     "wc3-import",
-    "godie"
+    "godie",
+    "greatsword"
   ],
   "exAbility": "godie-hart.ex",
   "passiveAbility": "godie-hart.passive",

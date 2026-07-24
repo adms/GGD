@@ -8,10 +8,23 @@ tools/**/.venv/
 tools/icon-gen/models/
 tools/icon-gen/out/
 
+# local voice cloning (tools/voice-gen): the IndexTTS-2 checkout + its ~11 GB of
+# checkpoints live OUTSIDE the repo at ~/ggd-voice/, so nothing there is even
+# reachable by git. These two rules only cover what a run might drop IN-tree:
+# reference clips staged for a batch, and generated wav/mp3 + .method sidecars.
+tools/voice-gen/out/
+tools/voice-gen/refs/
+
 # build output
 dist/
 build/
 *.tsbuildinfo
+
+# Vite's transient config bundle, written next to apps/*/vite.config.ts while a
+# dev server or vitest run is live and deleted on exit. Only visible mid-run, so
+# a concurrent `git add -A` is the way it sneaks into a commit.
+vite.config.*.timestamp-*.mjs
+vite.config.*.timestamp-*.mjs.map
 
 # go
 apps/platform/bin/
@@ -28,6 +41,10 @@ tools/testrunner/bin/
 
 # test / coverage
 coverage/
+# ...but NOT the Go package that happens to be named `coverage`. The blanket
+# rule above silently excluded real source: tools/testrunner/internal/api
+# imports this package, so testrunner could not build in a fresh checkout.
+!tools/testrunner/internal/coverage/
 test-results/
 playwright-report/
 *.ndjson

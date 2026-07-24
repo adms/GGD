@@ -44,6 +44,13 @@ type RatingAfter struct {
 	// MCoin is the absolute post-match M COIN balance (placement reward
 	// already applied) — same idempotency pattern as MMR.
 	MCoin int `json:"mcoin"`
+	// Crystal is the absolute post-match 水晶 balance (the free per-match
+	// meta-progression grant already applied) — same idempotency pattern as
+	// MMR. This settlement callback is the ONLY thing in the system that may
+	// grant crystals; see internal/wallet/meta.go. `omitempty` keeps it absent
+	// from records written before it existed, and Apply skips a zero value so
+	// replaying such a record can never wipe a player's balance.
+	Crystal int `json:"crystal,omitempty"`
 	// Points is the absolute post-match cumulative PLAYER-board season points
 	// (placement award applied, floored at 0). Same idempotency pattern as MMR.
 	Points int `json:"points"`
@@ -145,6 +152,22 @@ func (s *Settler) Apply(ctx context.Context, st Settlement) error {
 		if s.wallet != nil {
 			if err := s.wallet.SetMCoinAbsolute(ctx, seat.AccountID, r.MCoin); err != nil {
 				return err
+			}
+			// 水晶 (task #118) — the free meta-progression currency. This is
+			// the ONLY grant path in the system; the client has no earn route.
+			// Absolute like M COIN, so a duplicate callback or a WAL replay
+			// converges instead of minting.
+			//
+			// The `> 0` guard is load-bearing, not defensive noise: match
+			// records written BEFORE this field existed decode with Crystal
+			// == 0, and applying that absolutely would wipe every crystal
+			// those players had earned the moment the WAL replayed them.
+			// A real grant is never 0 (the smallest placement award is
+			// wallet.CrystalPlace4), so skipping zero loses nothing.
+			if r.Crystal > 0 {
+				if err := s.wallet.SetCrystalAbsolute(ctx, seat.AccountID, r.Crystal); err != nil {
+					return err
+				}
 			}
 		}
 		if err := s.rank.Add(ctx, seat.AccountID, r.MMR); err != nil {

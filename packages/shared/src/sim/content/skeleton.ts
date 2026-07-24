@@ -180,7 +180,11 @@ export const SELA: ChampionDef = {
   },
   skillOrder: ["Q", "E", "W", "R"],
   buildPriority: [id<ItemId>("ember-rod"), id<ItemId>("ironhide-vest")],
-  tags: ["mage", "burst", "ranged"],
+  // `magic` is the WEAPON tag (systems/BasicAttackSystem WEAPON_TAGS), not a
+  // role word: it is what SELA's basic attack SOUNDS like. Without it she falls
+  // to `weaponClassOf`'s ranged default, and this literal must stay byte-equal
+  // to content/champions/sela.json (loader.test.ts round-trip).
+  tags: ["mage", "burst", "ranged", "magic"],
 };
 
 export const THORNE: ChampionDef = {

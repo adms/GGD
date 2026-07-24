@@ -1,0 +1,85 @@
+{
+  "id": "fx.w3x.particle.holyawakening.p03",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.001,
+    "angleDeg": 36
+  },
+  "mode": "burst",
+  "lifetimeSec": {
+    "min": 0.9,
+    "max": 0.9
+  },
+  "size": {
+    "start": 0.111,
+    "end": 0.083
+  },
+  "color": {
+    "start": [
+      1,
+      1,
+      1,
+      0.502
+    ],
+    "end": [
+      1,
+      1,
+      1,
+      0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        1,
+        1,
+        0.502
+      ]
+    ],
+    [
+      0.5,
+      [
+        0.126,
+        0.455,
+        0.882,
+        0.502
+      ]
+    ],
+    [
+      1,
+      [
+        1,
+        1,
+        1,
+        0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.111
+    ],
+    [
+      0.5,
+      0.111
+    ],
+    [
+      1,
+      0.083
+    ]
+  ],
+  "blendMode": "additive",
+  "speed": {
+    "min": 0,
+    "max": 0
+  },
+  "burstCount": 10,
+  "gravityY": -13.89,
+  "texture": "assets/textures/particles/smoke_06.png",
+  "stretched": true,
+  "tailLength": 0.1
+}

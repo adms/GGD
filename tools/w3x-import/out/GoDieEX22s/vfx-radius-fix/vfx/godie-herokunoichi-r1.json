@@ -1,0 +1,16 @@
+{
+  "id": "godie-herokunoichi-r1",
+  "schema": "ribbon@1",
+  "texture": "assets/textures/particles/wc3/ribbonblur1.png",
+  "widthAbove": 0.6,
+  "widthBelow": 0.6,
+  "lifespanSec": 0.35,
+  "color": [
+    1.0,
+    0.635,
+    0.0,
+    0.35
+  ],
+  "blendMode": "additive",
+  "anchorBone": "Sword_L"
+}

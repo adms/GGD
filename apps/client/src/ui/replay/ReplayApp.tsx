@@ -16,6 +16,7 @@ import type { Room } from "colyseus.js";
 import type { MatchState } from "@ggd/shared/protocol/schema";
 import { GameApp } from "../../GameApp";
 import { ensureContentLoaded, isContentReady } from "../../content/bootContent";
+import { GlobalChrome } from "../GlobalChrome";
 import { bindReplayRoom, ReplayControls } from "./ReplayControls";
 
 /** Parse `#replay=<id>&ticket=<t>` from the URL. */
@@ -81,6 +82,14 @@ export function ReplayApp({ id, ticket }: { id: string; ticket: string }): React
       ) : (
         <ReplayControls room={room} />
       )}
+      {/* THE CHROME THAT IS SUPPOSED TO BE ON EVERY PAGE (defect P0-6(b)).
+          This is a SECOND render tree — main.tsx renders ReplayApp INSTEAD of
+          AppRoot on `#replay=` — so nothing mounted inside AppRoot exists here.
+          The audio quick-toggle (#14) and the build stamp (#66) both claim to be
+          global and both were absent from the one page the owner screenshots for
+          playtest feedback: a replay with combat audio could not be muted, and a
+          replay screenshot named no build. See ../GlobalChrome. */}
+      <GlobalChrome />
     </div>
   );
 }

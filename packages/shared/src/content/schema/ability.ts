@@ -31,10 +31,27 @@ export const zHitFeel = z
     shakeStyle: z.enum(["directional", "omni"]).optional(),
     /** hit-spark identity (default derived from tier/type/block). */
     sparkKind: z.enum(["hit", "heavy", "counter", "block", "magic", "ice"]).optional(),
-    /** victim body-flash colour [r,g,b] 0..1 (default by damage type / block). */
+    /**
+     * Victim body-flash colour [r,g,b] 0..1 — the ability's ELEMENT tint
+     * (holy gold, ice blue, fire orange…). Unset = the client's measured
+     * damage-type palette (physical/true red, magic magenta), which is what
+     * every basic attack uses.
+     *
+     * AUTHORING NOTE: pale/near-white values are automatically saturated by
+     * the client (`legibleFlashColor` in render/combatFeedback.ts) before they
+     * are drawn. The overlay blends with ALPHA_COMBINE, so a washed-out colour
+     * is literally invisible on a pale model — the guard keeps your HUE and
+     * deepens it. Author the hue you want; don't pre-brighten it.
+     */
     flashColor: zTintRgb.optional(),
-    /** victim body-flash duration ms (default scales with tier). */
-    flashMs: z.number().min(0).max(1000).optional(),
+    /**
+     * Victim body-flash duration ms (default scales with tier: 110–185).
+     * Ceiling is 260, not "some big number": the flash MUST clear before the
+     * next hit or back-to-back autos strobe (收尾精準). Was max 1000, which
+     * let content author a value the channel could not honour — and, until
+     * this was wired up, could not honour anything at all.
+     */
+    flashMs: z.number().min(30).max(260).optional(),
     /** one-shot directional camera kick magnitude (default scales with tier). */
     camKick: z.number().min(0).max(2).optional(),
     /** cosmetic client-side EX freeze ticks (default: EX hits only). */

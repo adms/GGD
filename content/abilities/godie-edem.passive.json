@@ -2,6 +2,7 @@
   "id": "godie-edem.passive",
   "schema": "ability@1",
   "name": "45-00 寫輪眼",
+  "icon": "assets/icons/abilities/godie-edem.passive.webp",
   "description": "[被動]\n0秒冷卻時間\n\n宇智波家族的血繼限界，洞察眼能夠看清所有的攻擊，迴避一般攻擊15%，每115秒抵擋一次負性魔法。",
   "slot": "PASSIVE",
   "innateKind": "passive",

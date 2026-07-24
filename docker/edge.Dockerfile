@@ -39,7 +39,28 @@ COPY apps/admin/ apps/admin/
 # actually issues the request. Read that file's header before changing this.
 ARG VITE_GGD_FULL_ASSETS=""
 ENV VITE_GGD_FULL_ASSETS=$VITE_GGD_FULL_ASSETS
-RUN echo "edge build: VITE_GGD_FULL_ASSETS='${VITE_GGD_FULL_ASSETS}'" \
+# ---- THE BUILD STAMP (task #66, defect P0-6(a)) ------------------------------
+# THIS IMAGE CANNOT COMPUTE ITS OWN VERSION, and that is not fixable here:
+#   • .dockerignore excludes `.git` (deliberately — it is 116 MB of context);
+#   • node:22-alpine above has no git binary.
+# apps/client/dev/buildStamp.ts therefore asked git, caught the failure and
+# baked the plausible-looking literal "dev" into EVERY image ever built. The
+# badge on ggd.adms.ai read `dev`, two different images were indistinguishable,
+# and the playtest→fix→deploy loop had no way to answer "which build is this?".
+#
+# So the HOST computes the stamp and passes it in. Every build path does this —
+# docker/compose.yaml, docker/compose.family.yaml, skaffold.yaml and the
+# Makefile's GGD_BUILD_STAMP — and a guard test
+# (tools/testrunner/internal/infracheck/buildstamp_test.go) fails CI if one of
+# them stops. Unset, the client build prints a loud banner and the badge reads
+# UNSTAMPED-BUILD: visibly broken beats plausibly wrong.
+ARG GGD_BUILD_STAMP=""
+ENV GGD_BUILD_STAMP=$GGD_BUILD_STAMP
+RUN echo "edge build: VITE_GGD_FULL_ASSETS='${VITE_GGD_FULL_ASSETS}' GGD_BUILD_STAMP='${GGD_BUILD_STAMP}'" \
+ && if [ -z "${GGD_BUILD_STAMP}" ]; then \
+      echo "!! WARNING: no GGD_BUILD_STAMP build arg — this image will ship an UNSTAMPED-BUILD badge." >&2; \
+      echo "!!          pass --build-arg GGD_BUILD_STAMP=\"\$(git rev-parse --short HEAD) \$(date -u +%F)\"" >&2; \
+    fi \
  && pnpm --filter "@ggd/client" build && pnpm --filter "@ggd/editor" build && pnpm --filter "@ggd/admin" build
 
 # ---- precompress the SPA bundles -------------------------------------------

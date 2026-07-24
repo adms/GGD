@@ -83,6 +83,13 @@ services:
       PORT: "2567"
       PLATFORM_GAME_SHARED_SECRET: "${PLATFORM_GAME_SHARED_SECRET:?set PLATFORM_GAME_SHARED_SECRET in docker/.env}"
       CONTENT_DIR: /srv/content
+      # Task #48. Where the game-server fetches curation / combat-env /
+      # server-ops. It was NEVER set here, and the code's non-k8s default is
+      # http://localhost:8080 — which inside this container is the GAME itself,
+      # not the platform. Unset, every compose match silently ran on allow-all
+      # curation and untuned combat multipliers. `platform` is the compose
+      # service name on the shared default network.
+      GGD_PLATFORM_URL: "http://platform:8080"
     ports:
       - "127.0.0.1:2567:2567"
     volumes:
@@ -92,6 +99,16 @@ services:
     build:
       context: ..
       dockerfile: docker/edge.Dockerfile
+      args:
+        # BUILD IDENTITY (task #66, defect P0-6(a)). The image has no .git and
+        # no git binary, so the stamp can only come from the host. `make
+        # family-up` / `make up` export GGD_BUILD_STAMP; a bare
+        # `docker compose build` leaves it empty and the badge then reads
+        # UNSTAMPED-BUILD — loudly wrong, instead of the old plausible "dev".
+        # To stamp a hand-rolled build:
+        #   GGD_BUILD_STAMP="$(git rev-parse --short HEAD) $(date -u +%F)" \
+        #     docker compose -f docker/compose.yaml build edge
+        GGD_BUILD_STAMP: "${GGD_BUILD_STAMP:-}"
     ports:
       - "127.0.0.1:8088:8080"
     volumes:

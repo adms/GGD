@@ -2,6 +2,7 @@
   "id": "godie-h02r.passive",
   "schema": "ability@1",
   "name": "90-00 寄生種子",
+  "icon": "assets/icons/abilities/godie-h02r.passive.webp",
   "description": "[主動攻擊]\n45秒冷卻時間\n\n將寄生種子丟向敵人，每秒造成50點傷害並吸收生命回饋給施法者，持續5秒。",
   "slot": "PASSIVE",
   "innateKind": "active",

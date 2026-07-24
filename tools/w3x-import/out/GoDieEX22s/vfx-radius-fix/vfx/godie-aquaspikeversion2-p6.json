@@ -1,0 +1,84 @@
+{
+  "id": "godie-aquaspikeversion2-p6",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.069,
+    "angleDeg": 33.0
+  },
+  "mode": "continuous",
+  "rate": 66.5,
+  "lifetimeSec": {
+    "min": 1.0,
+    "max": 1.0
+  },
+  "size": {
+    "start": 0.342,
+    "end": 0.87
+  },
+  "color": {
+    "start": [
+      1.0,
+      1.0,
+      1.0,
+      0.588
+    ],
+    "end": [
+      1.0,
+      1.0,
+      1.0,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.588
+      ]
+    ],
+    [
+      0.5,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.588
+      ]
+    ],
+    [
+      1.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.342
+    ],
+    [
+      0.5,
+      0.864
+    ],
+    [
+      1,
+      0.87
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/trace_03.png",
+  "stretched": true,
+  "tailLength": 1.0,
+  "speed": {
+    "min": 4.0559,
+    "max": 7.0561
+  }
+}

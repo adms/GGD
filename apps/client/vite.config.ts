@@ -1,7 +1,6 @@
 /// <reference types="vitest/config" />
 import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
-import { execSync } from "node:child_process";
 import { createReadStream, existsSync, statSync, type Stats } from "node:fs";
 import { extname, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -10,6 +9,8 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 // task #101: live digests of the icon style-spec sources, so the asset console
 // can prove its one snapshotted section is current (dev/preview only).
 import { serveIconConsoleStamp } from "./dev/iconConsoleStamp";
+// task #66 / P0-6(a): env-first, git-second, LOUD-third build stamp resolution.
+import { computeBuildStamp } from "./dev/buildStamp";
 // task #127: the ONE authoritative environment-tier classifier (loopback | lan
 // | public). This dev/LAN server is deliberately published to the wifi
 // (`client-lan --host 0.0.0.0`), so the copyright-restricted mounts must be
@@ -459,27 +460,57 @@ function contentApiGuard(): Plugin {
  * BUILD STAMP (task #66). Computed ONCE here, at config-evaluation time on the
  * build machine — never at runtime in the browser — and handed to the client as
  * `import.meta.env.VITE_BUILD_STAMP` via `define` below, so the bottom-pinned
- * VersionBadge makes every screenshot traceable to a build. git is the only
- * source consulted; when it is absent (no repo / git not installed / a shallow
- * export) the whole stamp degrades to "dev" rather than throwing.
+ * VersionBadge makes every screenshot traceable to a build.
+ *
+ * THE RULES NOW LIVE IN ./dev/buildStamp (and are unit tested there). The short
+ * version, because it was a real production defect (P0-6(a)): git is NOT the
+ * only source any more. A container has neither `.git` (excluded by
+ * .dockerignore) nor a git binary (node:22-alpine), so asking git alone made
+ * EVERY image bake the plausible-looking string "dev" — two different images on
+ * ggd.adms.ai were indistinguishable, which defeats the badge entirely. The
+ * host now threads `GGD_BUILD_STAMP` in as a docker build arg, and when nothing
+ * can identify the build the stamp is a LOUD `UNSTAMPED-BUILD` instead.
  */
-function computeBuildStamp(): string {
-  try {
-    const sha = execSync("git rev-parse --short HEAD", {
-      stdio: ["ignore", "pipe", "ignore"],
-      timeout: 2000,
-    })
-      .toString()
-      .trim();
-    if (!sha) return "dev";
-    const date = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
-    return `${sha} ${date}`;
-  } catch {
-    return "dev";
-  }
-}
-
 const BUILD_STAMP = computeBuildStamp();
+
+/**
+ * THE DEV BADGE HAD NO BUILD IDENTITY AT ALL (playtest P8, 2026-07-24).
+ *
+ * `define` above is a COMPILE-TIME substitution — and in SERVE mode vite owns
+ * `import.meta.env` and synthesizes it per request, so a define keyed on
+ * `import.meta.env.VITE_BUILD_STAMP` is simply not applied there. MEASURED
+ * against this very server: the VersionBadge read `undefined` and fell back to
+ * "dev", so every dev screenshot was untraceable — the exact thing #66 exists
+ * to prevent. (Compounding it, `computeBuildStamp()` runs exactly ONCE, when
+ * vite evaluates this config, so even where the define does land it freezes on
+ * the sha and date the server booted with.)
+ *
+ * The fix cannot be another `define` — nothing re-evaluates one short of a
+ * restart. So in DEV ONLY the stamp becomes a tiny live endpoint: one git call
+ * per poll, on the dev machine, answered fresh. `apply: "serve"` means it does
+ * not exist in a production build or in `vite preview`, where the baked literal
+ * is correct by construction (the build and the stamp are the same act) and a
+ * stale sha is a true report of a stale artifact rather than a bug.
+ */
+const BUILD_STAMP_ROUTE = "/__ggd-build-stamp";
+
+function liveBuildStamp(): Plugin {
+  const handler = (_req: IncomingMessage, res: ServerResponse): void => {
+    res.statusCode = 200;
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    res.setHeader("Cache-Control", "no-store");
+    // Quiet: the badge polls every 15 s, and one provenance line per poll would
+    // drown the dev log. The banner already fired once at config evaluation.
+    res.end(computeBuildStamp(process.env, () => undefined));
+  };
+  return {
+    name: "ggd-live-build-stamp",
+    apply: "serve", // dev only — a built bundle's baked stamp is already exact
+    configureServer(server) {
+      server.middlewares.use(BUILD_STAMP_ROUTE, handler);
+    },
+  };
+}
 
 // The voxel game client. In dev the client talks to the local game-server
 // directly (ws://localhost:2567, override with VITE_GAME_WS); the /colyseus
@@ -501,6 +532,7 @@ export default defineConfig({
     react(),
     contentApiGuard(),
     copyrightTierGate(),
+    liveBuildStamp(),
     serveIconConsoleStamp(),
     // compressDevModules only wraps the /src, /@fs, /@id, /@vite and
     // /node_modules mounts, so it is independent of the ordering above; the

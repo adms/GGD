@@ -1,0 +1,88 @@
+{
+  "matchId": "m_01CONTRACT",
+  "mode": "PairedDuels",
+  "mapId": "arena-default",
+  "placements": [
+    {
+      "team": 0,
+      "place": 1
+    },
+    {
+      "team": 1,
+      "place": 2
+    },
+    {
+      "team": 2,
+      "place": 3
+    },
+    {
+      "team": 3,
+      "place": 4
+    }
+  ],
+  "seats": [
+    {
+      "accountId": "acct-00",
+      "team": 0,
+      "isBot": false,
+      "championId": "godie-e002"
+    },
+    {
+      "accountId": "bot-01",
+      "team": 0,
+      "isBot": true,
+      "championId": "godie-e00a"
+    },
+    {
+      "accountId": "bot-02",
+      "team": 0,
+      "isBot": true
+    },
+    {
+      "accountId": "acct-03",
+      "team": 1,
+      "isBot": false
+    },
+    {
+      "accountId": "bot-04",
+      "team": 1,
+      "isBot": true
+    },
+    {
+      "accountId": "bot-05",
+      "team": 1,
+      "isBot": true
+    },
+    {
+      "accountId": "bot-06",
+      "team": 2,
+      "isBot": true
+    },
+    {
+      "accountId": "bot-07",
+      "team": 2,
+      "isBot": true
+    },
+    {
+      "accountId": "bot-08",
+      "team": 2,
+      "isBot": true
+    },
+    {
+      "accountId": "bot-09",
+      "team": 3,
+      "isBot": true
+    },
+    {
+      "accountId": "bot-10",
+      "team": 3,
+      "isBot": true
+    },
+    {
+      "accountId": "bot-11",
+      "team": 3,
+      "isBot": true
+    }
+  ],
+  "endedAt": 1780000000000
+}

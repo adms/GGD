@@ -1,0 +1,82 @@
+{
+  "id": "fx.w3x.particle.blackhole.p05",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.001,
+    "angleDeg": 180
+  },
+  "mode": "continuous",
+  "lifetimeSec": {
+    "min": 1,
+    "max": 1
+  },
+  "size": {
+    "start": 0.001,
+    "end": 3.389
+  },
+  "color": {
+    "start": [
+      1,
+      1,
+      1,
+      0
+    ],
+    "end": [
+      1,
+      1,
+      1,
+      0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        1,
+        1,
+        0
+      ]
+    ],
+    [
+      0.1,
+      [
+        1,
+        1,
+        1,
+        0.216
+      ]
+    ],
+    [
+      1,
+      [
+        1,
+        1,
+        1,
+        0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.001
+    ],
+    [
+      0.1,
+      3.084
+    ],
+    [
+      1,
+      3.389
+    ]
+  ],
+  "blendMode": "additive",
+  "speed": {
+    "min": 0,
+    "max": 0
+  },
+  "rate": 25,
+  "texture": "assets/textures/particles/wc3/blue-glow2.png"
+}

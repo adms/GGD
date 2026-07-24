@@ -1,0 +1,17 @@
+.venv/
+__pycache__/
+*.pyc
+logs/*.jsonl
+logs/dry-run-reports/
+
+# 音檔不進版控（報表 CSV 與 metadata JSON 要進）
+incoming/**/*.wav
+incoming/**/*.mp3
+incoming/**/*.m4a
+incoming/**/*.flac
+incoming/**/*.ogg
+approved/**/*.wav
+rejected/**
+!rejected/.gitkeep
+candidates/previews/**
+!candidates/previews/.gitkeep

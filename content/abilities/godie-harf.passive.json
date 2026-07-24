@@ -2,6 +2,7 @@
   "id": "godie-harf.passive",
   "schema": "ability@1",
   "name": "26-00 吃洨火鍋",
+  "icon": "assets/icons/abilities/godie-harf.passive.webp",
   "description": "[輔助]\n35秒冷卻時間\n\n偉大的　鄭桑成名特技吃洨火鍋，能使周圍友軍不禁讚嘆而含淚殺敵，增加範圍400內友方部隊50%的傷害值，持續10秒。",
   "slot": "PASSIVE",
   "innateKind": "active",

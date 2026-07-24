@@ -21,7 +21,8 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 1.6
+    "range": 1.6,
+    "evasion": 0.15
   },
   "growth": {
     "maxHealth": 36,
@@ -32,6 +33,11 @@
     "armor": 0.6,
     "mr": 1.2,
     "as": 0.02
+  },
+  "hitFeel": {
+    "hitstopTicks": 2,
+    "shakeMag": 0.34,
+    "knockbackMag": 0.0
   },
   "abilities": {
     "Q": {
@@ -81,10 +87,24 @@
           "stun": true
         }
       ],
-      "vfxKey": "fx.prim.void.pulse-sm",
+      "vfxKey": "fx.w3x.orb.herocloudkfksword.p00",
       "targetsEnemies": true,
       "radius": 1.5,
-      "castTimeSec": 0.6
+      "castTimeSec": 0.6,
+      "hitFeel": {
+        "hitstopTicks": 4,
+        "hitstunTicks": 6,
+        "shakeMag": 0.41,
+        "shakeStyle": "directional",
+        "sparkKind": "heavy",
+        "flashColor": [
+          0.85,
+          0.92,
+          1.0
+        ],
+        "flashMs": 140,
+        "camKick": 0.351
+      }
     },
     "W": {
       "id": "godie-u00j.w",
@@ -235,7 +255,8 @@
   ],
   "tags": [
     "wc3-import",
-    "godie"
+    "godie",
+    "katana"
   ],
   "exAbility": "godie-u00j.ex",
   "passiveAbility": "godie-u00j.passive",

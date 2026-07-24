@@ -34,6 +34,11 @@
     "mr": 1.2,
     "as": 0.02
   },
+  "hitFeel": {
+    "hitstopTicks": 1,
+    "shakeMag": 0.24,
+    "knockbackMag": 0.0
+  },
   "abilities": {
     "Q": {
       "id": "godie-n01g.q",
@@ -212,8 +217,22 @@
           ]
         }
       ],
-      "vfxKey": "fx.prim.ice.bolt-lg",
-      "castTimeSec": 0.4
+      "vfxKey": "fx.w3x.locust.frostnova.p01",
+      "castTimeSec": 0.4,
+      "hitFeel": {
+        "hitstopTicks": 5,
+        "hitstunTicks": 8,
+        "shakeMag": 0.543,
+        "shakeStyle": "omni",
+        "sparkKind": "ice",
+        "flashColor": [
+          0.6,
+          0.82,
+          1.0
+        ],
+        "flashMs": 186,
+        "camKick": 0.466
+      }
     }
   },
   "skillOrder": [
@@ -228,7 +247,8 @@
   ],
   "tags": [
     "wc3-import",
-    "godie"
+    "godie",
+    "bow"
   ],
   "exAbility": "godie-n01g.ex",
   "passiveAbility": "godie-n01g.passive",

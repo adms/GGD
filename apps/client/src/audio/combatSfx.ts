@@ -8,10 +8,12 @@
  *     物理 (hit) / 魔法 (hitMagic) / true (hitTrue) — and the special reactions
  *     防禦 (block, a shield/DR-absorbed hit) and crit. This is the single hit
  *     voice, so `basicAttackHit` (a duplicate of the same moment) and the
- *     timing-only `hitImpact` map to nothing — no double-thud.
+ *     timing-only `hitImpact` map to nothing — no double-thud. The ONE
+ *     exception is a tracked bow arrow (see `arrowPierce` below).
  *   • 破防 (guardBreak), knockdown and whiff each get their own distinct clip.
  *   • PER-WEAPON / PER-ELEMENT ROUTING (全用). A `basicAttack` plays its
- *     WEAPON-class slash (sword / greatsword / katana / bow / gun) derived from
+ *     WEAPON-class voice (sword / greatsword / katana / bow / gun / magic /
+ *     thrown) derived from
  *     the `weaponClass` the sim now stamps on the event (BasicAttackSystem); an
  *     `abilityCast` plays its ELEMENT whoosh (fire / ice / lightning) derived
  *     from the ability `vfxKey` the sim now forwards (fx.prim.<element>.<shape>).
@@ -20,6 +22,13 @@
  *     crash on a malformed payload.
  *   • The other pre-hit + utility events pass through by name (windup/swing/
  *     launch/cast/flower/heal) — the audio map already owns those keys.
+ *   • ARCHERY + 魔法陣 (the three shipped 効果音ラボ clips that had no emit site).
+ *     All three are SUBSTITUTIONS on an event that already sounds, never a new
+ *     voice: `arrowRelease` replaces the generic `projectileSpawn` launch for a
+ *     bow auto's missile, `castCircle` replaces the generic `castBegin` tick for
+ *     a LONG wind-up, and `arrowPierce` is the one added layer (a quiet transient
+ *     under the thud that already plays). See ARROW TRACKING and
+ *     {@link CAST_CIRCLE_MIN_SEC} below.
  *   • `rankUp` (a skill point spent, QWER/EX rank raised) renames to the map's
  *     `abilityRankUp` cue: the sim event and the audio key disagree, so it is a
  *     rename rather than a passthrough. Wired off #51's staged `ability-rank-up`
@@ -60,13 +69,16 @@
  *     double the sound.
  */
 import type { EventMessage } from "@ggd/shared/protocol/messages";
+import { hudStore } from "../net/RoomStore";
+import { noteFireRingIgnition } from "./fireRingWindow";
 
 /** Events that keep their own name as the SFX key (already in the audio map). */
 const PASSTHROUGH = new Set<string>([
   "attackWindup",
-  "projectileSpawn",
+  // `projectileSpawn` and `castBegin` are NOT here: both now have their own
+  // case in the switch, because each can resolve to either its generic clip or
+  // an archery / 魔法陣 substitute. Their generic key is still the event name.
   "projectileHit",
-  "castBegin",
   "castEnd",
   "castInterrupt",
   "flowerSpawn",
@@ -81,17 +93,46 @@ const PASSTHROUGH = new Set<string>([
 ]);
 
 /**
+ * The generic swing (`assets/audio/sfx/fx/swing.mp3`) — a neutral whoosh with no
+ * material in it. It is BOTH the fallback for an unrecognised class and the
+ * deliberate answer for `thrown`; see WEAPON_SFX.
+ */
+const GENERIC_SWING = "basicAttack";
+
+/**
  * WEAPON class → basic-attack clip. The class rides on the `basicAttack` event's
  * `weaponClass` field (stamped by BasicAttackSystem from the champion's data).
  * `sword` owns TWO clips: the heavier `attackSword2` doubles as the crit swing,
  * so both authored slashes are used and the pick stays fully deterministic
  * (keyed on the event's own `crit` flag — no rng, no wall clock).
+ *
+ * EVERY member of `sim/systems/BasicAttackSystem.WEAPON_TAGS` must appear here
+ * (`sword` via the branch below). That is the point of the two-file contract
+ * written up in that file: a class with no row falls back to the generic swing
+ * by ACCIDENT, and the whole reason `magic` had to be added is that the wrong
+ * fallback is indistinguishable from a decision when nothing states the decision.
+ *
+ *   • `magic` → `magicBolt`, the 効果音ラボ 気弾 (energy-bolt) clip. Until
+ *     2026-07-24 there was no caster class at all, so all 22 of the roster's
+ *     conjuring champions defaulted to `bow` and answered a spell with a
+ *     BOWSTRING CREAK. One class covers all of them on purpose: the WC3 missile
+ *     art distinguishes the bolt's ELEMENT (fireball / farseer / shadow-hunter /
+ *     serpent-ward), not the implement, so splitting into staff/orb/beam would be
+ *     inventing a distinction the source does not make — and each split would
+ *     need its own clip to not be an empty class.
+ *   • `thrown` → the generic swing, ON PURPOSE and stated rather than defaulted.
+ *     The two hurled-object heroes (Warden glaive, Brewmaster keg) have no
+ *     bespoke clip in the pack, and the honest sound for a hurled object is the
+ *     neutral whoosh — NOT a bow draw, which is what they got before. If a
+ *     dedicated 投擲 clip is ever acquired, this row is where it lands.
  */
 const WEAPON_SFX: Readonly<Record<string, string>> = {
   greatsword: "attackGreatsword",
   katana: "attackKatana",
   bow: "bowDraw",
   gun: "gunshot",
+  magic: "magicBolt",
+  thrown: GENERIC_SWING,
 };
 
 /**
@@ -125,6 +166,98 @@ export function castElementKey(vfxKey: unknown): string | null {
   return ELEMENT_SFX[element] ?? null;
 }
 
+// ---------------------------------------------------------------------------
+// ARROW TRACKING — 放箭 / 箭矢命中, entirely client-side
+// ---------------------------------------------------------------------------
+/**
+ * WHY THERE IS STATE HERE AT ALL. The two archery clips need to know that a
+ * given projectile is an ARROW, and the sim never says so: `projectileSpawn`
+ * ships `{ id, owner, projectileId }` and `basicAttackHit` ships
+ * `{ id, owner, target, crit, projectileId }` — neither carries `weaponClass`.
+ * The information IS already on the wire, one event earlier: BasicAttackSystem
+ * emits `basicAttack { source, ranged: true, weaponClass }` and then, with no
+ * other emit in between, `projectileSpawn { id, owner: source }` for the very
+ * same shot. So the client can join them itself. That is why this is NOT a
+ * request for a new sim field or a fan-out whitelist entry — it costs zero
+ * bytes on the wire and depends on nothing another lane has to ship.
+ *
+ * The join is deliberately narrow:
+ *   • ONE pending slot, not a map. The two emits are adjacent by construction
+ *     (BasicAttackSystem `return`s immediately after the pair), and the slot is
+ *     only consumed when `owner` matches the `source` that armed it — so an
+ *     interleaving we did not predict makes the arrow fall back to the generic
+ *     launch, never mis-fires on someone else's projectile.
+ *   • The in-flight id set is a bounded FIFO. A basic-attack arrow that expires
+ *     at max range emits NO hit event, so entries would otherwise leak for the
+ *     whole match; past {@link ARROW_TRACK_CAP} the oldest id is evicted. An
+ *     arrow lives well under a second and 12 champions cannot have 64 autos in
+ *     the air, so eviction never reaches a live shot.
+ */
+const ARROW_TRACK_CAP = 64;
+
+/** `basicAttack.source` of a bow auto awaiting its `projectileSpawn`, or null. */
+let pendingBowShot: number | null = null;
+/** Entity ids of bow-auto missiles currently in flight (insertion-ordered). */
+const arrowIds: number[] = [];
+const arrowInFlight = new Set<number>();
+
+/** Remember a missile as an arrow, evicting the oldest once the cap is hit. */
+function noteArrow(id: number): void {
+  if (arrowInFlight.has(id)) return;
+  arrowInFlight.add(id);
+  arrowIds.push(id);
+  while (arrowIds.length > ARROW_TRACK_CAP) {
+    const evicted = arrowIds.shift();
+    if (evicted !== undefined) arrowInFlight.delete(evicted);
+  }
+}
+
+/** Consume a tracked arrow id (true = this missile was a bow auto). */
+function takeArrow(id: unknown): boolean {
+  if (typeof id !== "number" || !arrowInFlight.has(id)) return false;
+  arrowInFlight.delete(id);
+  const at = arrowIds.indexOf(id);
+  if (at >= 0) arrowIds.splice(at, 1);
+  return true;
+}
+
+/** Number of missiles currently tracked as arrows (test/debug read-back). */
+export function arrowsInFlight(): number {
+  return arrowInFlight.size;
+}
+
+/** Drop all arrow/cast tracking. Called on match teardown, and by every test. */
+export function resetProjectileSfx(): void {
+  pendingBowShot = null;
+  arrowIds.length = 0;
+  arrowInFlight.clear();
+}
+
+/**
+ * 詠唱起手 (#181's cast-feedback beat, heard): the cast wind-up long enough to
+ * deserve the 魔法陣 whoosh instead of the generic `castBegin` tick.
+ *
+ * `castBegin` is ONLY emitted when the ability has a real cast time (an instant
+ * cast never fires it at all), and it is the same authoritative window the
+ * client's 0.6 s cast-telegraph light pillar rides — so this sound lands exactly
+ * on the visual telegraph the victim is supposed to react to.
+ *
+ * The line sits at 0.5 s because that is where the content actually splits: of
+ * the authored `castTimeSec` values, 0.3/0.4 s are the common snappy casts (417
+ * of 584) and 0.5 s+ are the committed ones (167). So roughly the top quarter of
+ * casts — the ones worth a "something big is winding up" — get the circle, and
+ * the clip (~1 s) is never longer than the window it decorates by much. Short
+ * casts keep the dry tick they have today.
+ */
+export const CAST_CIRCLE_MIN_SEC = 0.5;
+
+/** The wind-up key for a `castBegin`: the 魔法陣 whoosh, or the generic tick. */
+export function castTelegraphKey(castTimeSec: unknown): string {
+  return typeof castTimeSec === "number" && castTimeSec >= CAST_CIRCLE_MIN_SEC
+    ? "castCircle"
+    : "castBegin";
+}
+
 /**
  * WHO AM I — the local seat id, published by the AudioDirector (the one place
  * that already subscribes to `hudStore.localSeatId`) and read back by the
@@ -141,8 +274,16 @@ export function castElementKey(vfxKey: unknown): string | null {
  */
 let localSeatId: number | null = null;
 
-/** Publish the local seat id for the seat-gated cues (AudioDirector owns this). */
+/**
+ * Publish the local seat id for the seat-gated cues (AudioDirector owns this).
+ *
+ * A CHANGED seat also re-baselines the arrow tracking, exactly as `sfxEdges`
+ * re-baselines its tally on a seat change: entity ids restart with each match,
+ * so an arrow still "in flight" from the previous one could otherwise collide
+ * with a fresh id and put a pierce under someone else's melee swing.
+ */
 export function setCombatSfxSeat(seatId: number | null): void {
+  if (seatId !== localSeatId) resetProjectileSfx();
   localSeatId = seatId;
 }
 
@@ -188,8 +329,40 @@ export function combatSfxKey(ev: EventMessage, seatId: number | null = localSeat
       return "hit"; // 物理 (default)
     }
     case "basicAttack":
+      // ARM the archery join: a RANGED bow auto is about to emit its
+      // `projectileSpawn` with no weapon information of its own. Any other
+      // basic attack disarms it, so the slot never survives to a later shot.
+      pendingBowShot =
+        d.ranged === true && d.weaponClass === "bow" && typeof d.source === "number"
+          ? d.source
+          : null;
       // per-weapon slash, generic swing when the class is unknown/malformed
       return weaponAttackKey(d.weaponClass, d.crit) ?? "basicAttack";
+    case "projectileSpawn": {
+      // 放箭 — the missile leaving the bow. REPLACES the generic launch clip for
+      // this one shot (it is not layered on top of it), so a ranged auto still
+      // makes exactly the two sounds it makes today: the draw and the release.
+      const owner = d.owner;
+      const armed = pendingBowShot !== null && owner === pendingBowShot;
+      pendingBowShot = null;
+      if (!armed || d.projectileId !== "basic-attack") return "projectileSpawn";
+      if (typeof d.id === "number") noteArrow(d.id);
+      return "arrowRelease";
+    }
+    case "basicAttackHit": {
+      // 箭矢命中 — the ranged auto's arrival. `basicAttackHit` is otherwise
+      // SILENT on purpose (the `damage` event owns the hit voice, and sounding
+      // both would double-thud), and that stays true for every other weapon:
+      // only a tracked ARROW speaks here, and the map keeps it quiet and
+      // narrow (gain 0.34, maxConcurrent 2) so it reads as a transient on top
+      // of the existing thud — "that thud was an arrow" — not a second event.
+      // A dodged shot emits no `basicAttackHit` at all, so a miss stays silent;
+      // the id simply ages out of the FIFO.
+      return takeArrow(d.id) ? "arrowPierce" : null;
+    }
+    case "castBegin":
+      // 魔法陣展開 — long wind-ups get the circle, short ones the dry tick
+      return castTelegraphKey(d.castTimeSec);
     case "abilityCast":
       // per-element whoosh, generic cast when the vfxKey carries no known element
       return castElementKey(d.vfxKey) ?? "abilityCast";
@@ -202,7 +375,18 @@ export function combatSfxKey(ev: EventMessage, seatId: number | null = localSeat
     case "rankUp":
       return "abilityRankUp"; // 技能升級 — sim event ≠ map key, so a rename
     case "fireRingStart":
-      return "fireRingLoop"; // 火環收縮 (#132) — sim event ≠ map key, so a rename
+      // 火環收縮 (#132) — sim event ≠ map key, so a rename.
+      //
+      // ALSO the S3 tripwire, and the ONE side effect in this otherwise pure
+      // mapper. This event is the authority telling us the exact instant the
+      // ring began to burn; `audio/fireRingWindow` has independently DERIVED
+      // that instant from config.match@1 to drive the tension bed and the
+      // minimap danger rim. If the two ever disagree again — they were 30 s
+      // apart from #132 landing until 2026-07-24 — the very first round played
+      // prints both numbers. Deleting this call restores the silence that let
+      // the drift live for months. See fireRingWindow.noteFireRingIgnition.
+      noteFireRingIgnition(hudStore.getState().phaseSecondsLeft);
+      return "fireRingLoop";
     case "guardianImpact":
       // 守衛塔範圍重擊 (#89/#105) — the telegraphed volley LANDS. One event per
       // resolved mark, all on the same tick, so the map's 300 ms cooldown /

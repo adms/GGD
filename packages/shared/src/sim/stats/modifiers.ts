@@ -7,7 +7,8 @@
 import type { Stat } from "./statTypes";
 import type { EffectDef } from "../effects/effect";
 import type { AbilityId } from "../../ids";
-import type { AbilitySlot } from "../intents";
+import type { CastableSlot } from "../intents";
+import type { AuraDef, AuraOrigin } from "../aura/aura";
 
 export enum ModOp {
   Flat = "flat",
@@ -34,8 +35,8 @@ export type HookEvent =
 
 export interface HookDef {
   on: HookEvent;
-  /** optional condition: restrict to a specific ability slot */
-  abilitySlot?: AbilitySlot;
+  /** optional condition: restrict to a specific ability slot (incl. "PASSIVE") */
+  abilitySlot?: CastableSlot;
   /** effects run with the hook owner as caster and the event target as target */
   effects: EffectDef[];
   /**
@@ -61,7 +62,14 @@ export interface HookDef {
   chance?: number;
 }
 
-export type ModifierSourceKind = "champion" | "item" | "augment" | "passive" | "buff";
+/**
+ * `"aura"` is the only kind the sim WRITES rather than content authoring: it
+ * marks a source PROJECTED onto a unit by somebody else's `auras` block while
+ * that unit stands inside the radius. `auraSystem` owns every one of them and
+ * removes them the moment membership lapses — nothing else may create, mutate or
+ * detach a source of this kind. See sim/aura/aura.ts.
+ */
+export type ModifierSourceKind = "champion" | "item" | "augment" | "passive" | "buff" | "aura";
 
 export interface ModifierSource {
   /** unique instance id, e.g. "item:ember-rod#2", "aug:bloodlust", "buff:slow#t123" */
@@ -82,6 +90,21 @@ export interface ModifierSource {
    * block without inventing a new mitigation mechanic. Default (absent) = off.
    */
   damageReduction?: boolean;
+  /**
+   * AURAS (靈氣) this source PROJECTS onto other units — the only way a
+   * ModifierSource reaches past the unit carrying it. Each entry names a radius,
+   * a team filter and a payload; `auraSystem` applies that payload as its own
+   * `kind: "aura"` source to everyone inside, every tick, and removes it as they
+   * leave or die. Absent on almost everything; see sim/aura/aura.ts for the
+   * model. Authored via `ability@1.passive.ranks[N].auras`.
+   */
+  auras?: AuraDef[];
   /** runtime: last tick each hook fired (internal-cooldown bookkeeping) */
   hookLastFired?: number[];
+  /**
+   * RUNTIME, `kind: "aura"` only: which emitter/aura projected this source.
+   * Written by `auraSystem` when it attaches, read by it when it removes (the
+   * linger tail). Never authored, never present on any other kind.
+   */
+  auraOrigin?: AuraOrigin;
 }

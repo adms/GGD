@@ -2,6 +2,7 @@
   "id": "godie-e00x.passive",
   "schema": "ability@1",
   "name": "77-00 浮雲-旋一閃",
+  "icon": "assets/icons/abilities/godie-e00x.passive.webp",
   "description": "[主動攻擊]\n15秒冷卻時間\n\n神鳴流的體術招式之一，閃過敵人攻擊，抓住對手後，旋轉拋摔。（每次發動限一人且為英雄）持續時間0.5秒，造成250點傷害。",
   "slot": "PASSIVE",
   "innateKind": "active",

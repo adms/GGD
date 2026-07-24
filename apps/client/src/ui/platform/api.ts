@@ -153,6 +153,20 @@ export function startRoom(roomId: string): Promise<StartInfo> {
   return api.request<StartInfo>(`/rooms/${encodeURIComponent(roomId)}/start`, { body: {} });
 }
 
+/**
+ * One-click bot match (#188): the platform creates a private room and starts it
+ * in the same call, so this is the WHOLE client side of 「一鍵開房直接玩」.
+ *
+ * It returns only the match id + bot count; the seat token arrives moments later
+ * over the lobby WebSocket as `match_ready`, exactly like a room start — which
+ * is why entering the match needs no new code path. Do NOT confuse this with
+ * `store.playOffline`, which joins the game server directly and settles NOWHERE
+ * (dev tool). This one records, rates and pays.
+ */
+export function startSoloMatch(settings?: { mapId?: string; botDifficulty?: string }): Promise<StartInfo> {
+  return api.request<StartInfo>("/rooms/solo", { body: settings ?? {} });
+}
+
 /** Couch play: how many local players share MY machine in this room (1..4). */
 export function setLocalPlayers(roomId: string, count: number): Promise<RoomResp> {
   return api.request<RoomResp>(`/rooms/${encodeURIComponent(roomId)}/local-players`, {

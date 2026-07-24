@@ -2,6 +2,7 @@
   "id": "godie-hlgr.passive",
   "schema": "ability@1",
   "name": "03-00 相轉移裝甲",
+  "icon": "assets/icons/abilities/godie-hlgr.passive.webp",
   "description": "[被動]\n0秒冷卻時間\n\n遭受物理攻擊時有40%機率降低所有施加在煌身上的傷害75點，最低攻擊力不能低於12點。",
   "slot": "PASSIVE",
   "innateKind": "passive",

@@ -159,7 +159,9 @@ func TestSettlementPointsIdempotent(t *testing.T) {
 	// Duplicate delivery of the same matchId: acknowledged, awards nothing.
 	resp, err = gamelinktest.SendResult(ts.HTTP.URL, testutil.GameSecret, res, 0)
 	require.NoError(t, err)
-	var body map[string]string
+	// map[string]any: the result ack also carries the numeric settled/humanSeats
+	// counts (resultAck in callback.go).
+	var body map[string]any
 	require.NoError(t, json.NewDecoder(resp.Body).Decode(&body))
 	resp.Body.Close()
 	require.Equal(t, "duplicate", body["status"])

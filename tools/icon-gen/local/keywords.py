@@ -225,8 +225,27 @@ def _first_line(desc: str) -> str:
     return ""
 
 
+# Two items lost their NAME in the w3x import — the `name` field is literally
+# the doc id — so ITEM_NAME_OBJECT can never fire and they fall to their primary
+# stat, which draws a shield for both. Their 解說 lore, however, names a concrete
+# object outright, so the subject is curated from the doc's OWN text:
+#   godie-i065 「從一枚強大戒指掉出來的寶石碎片」 -> a shard off a ring's gemstone
+#   godie-i06p 「血羽是烏鴉族的聖物」            -> the crow clan's blood feather
+# (The missing NAME is a content bug, not an icon bug — flagged, not fixed here.)
+ITEM_ID_SUBJECT: dict[str, tuple[str, str]] = {
+    "godie-i065": ("a chipped shard broken off a large red gemstone",
+                   "deep crimson"),
+    "godie-i06p": ("a glossy black crow feather tipped with blood",
+                   "black and blood red"),
+}
+
+
 def item_keywords(doc: dict) -> tuple[str, str, str]:
     """-> (english subject object, dominant colour, signal)."""
+    iid = (doc.get("id") or "").strip()
+    if iid in ITEM_ID_SUBJECT:
+        subj, hue = ITEM_ID_SUBJECT[iid]
+        return subj, hue, "curated"
     name = doc.get("name") or ""
     desc = doc.get("description") or ""
     mods = doc.get("modifiers") or []
@@ -257,6 +276,58 @@ def item_keywords(doc: dict) -> tuple[str, str, str]:
 
 
 # ────────────────────────────────────────────────────────────── AUGMENTS ──
+# The 21 augments are the 3-choose-1 DRAFT CARDS the player picks EVERY round —
+# the single most-looked-at icon surface in the game (#110 makes the icon
+# mandatory on the card). 21 docs is small enough to CURATE, which is what the
+# champions did for exactly the same reason, and curation is the only way to
+# guarantee 21 distinct pictures. The tag/name heuristics below stay as the
+# fallback for augments added later (#149 wants the pool expanded).
+#
+# WHY THE HEURISTIC WASN'T ENOUGH: AUG_NAME_HINT is English-only, so the 15
+# CHINESE-named augments could never match it, and AUG_TAG_OBJECT knows only
+# 8 tags while the corpus actually uses `offense`, `on-hit`, `tempo`,
+# `snowball`, `attack-speed`, `haste`, `cc`, `aoe`. Measured result: 8 of 21
+# fell through to the SAME "a glowing heraldic power sigil" in cyan, and three
+# more collapsed onto one shield rune — the bare-tile look the owner saw live.
+AUGMENT_SUBJECT: dict[str, tuple[str, str]] = {
+    # the four DEFENCE augments, deliberately drawn as four different objects
+    "iron-bulwark": ("a riveted iron wall-plate tower shield", "steel grey"),
+    "immortal-bulwark": ("a towering fortress rampart of gold-trimmed stone",
+                         "radiant white-gold"),
+    "guardian-ward": ("a hexagonal rune barrier glyph standing on edge",
+                      "pale ice blue"),
+    "aegis-surge": ("a domed energy shield bubble", "electric white-blue"),
+    # arcane
+    "arcane-focus": ("a floating faceted arcane crystal ringed by orbiting glyphs",
+                     "arcane violet"),
+    "arcane-haste": ("a winged hourglass trailing motion streaks", "cyan"),
+    "arcane-overload": ("an overloading rune core cracking open with escaping "
+                        "energy", "arcane violet"),
+    "spell-blade": ("a sword blade inscribed with burning runes", "arcane violet"),
+    # offence / attack speed
+    "berserkers-fury": ("a pair of crossed war axes wreathed in raging aura",
+                        "furious red"),
+    "swift-strikes": ("a curved blade trailing motion streaks", "cyan"),
+    "overdrive-engine": ("a glowing mechanical engine core with spinning gears "
+                         "venting steam", "molten orange"),
+    "bone-splitter": ("a cracked white femur bone", "bone white"),
+    "storm-arrow": ("an arrow of compressed wind splitting the air",
+                    "electric white-blue"),
+    "hunters-instinct": ("a golden hawk's piercing eye", "amber gold"),
+    "conqueror": ("a golden laurel victory crown", "warm gold"),
+    # blood / sustain
+    "blood-tyrant": ("a goblet brimming over with blood", "deep crimson"),
+    "bloodlust": ("a dripping crimson fang", "blood red"),
+    "soul-reaver": ("a curved reaper scythe blade trailing soul wisps",
+                    "spectral pale cyan"),
+    "vital-surge": ("a swelling green heart wrapped in rising vitality motes",
+                    "verdant green"),
+    # cold / control
+    "chill-touch": ("a frost-rimed open hand", "pale ice blue"),
+    "frost-shatter": ("a blue ice crystal blowing apart into shards",
+                      "pale ice blue"),
+}
+
 AUG_TAG_OBJECT = {
     "defense": ("a glowing blue guardian shield rune", "steel blue"),
     "ad": ("a crossed pair of red steel blades", "crimson and steel"),
@@ -266,24 +337,170 @@ AUG_TAG_OBJECT = {
     "as": ("a coiled spring of speed lines", "cyan"),
     "crit": ("a cracked spark of critical energy", "crimson"),
     "mobility": ("a winged boot emblem", "cyan"),
+    # tags the live corpus actually uses that the map used to have no answer for
+    "offense": ("a crossed pair of bared steel blades", "crimson and steel"),
+    "on-hit": ("a rune flaring bright on a blade's impact point", "arcane violet"),
+    "attack-speed": ("a curved blade trailing motion streaks", "cyan"),
+    "haste": ("a winged hourglass trailing motion streaks", "cyan"),
+    "tempo": ("a winged hourglass trailing motion streaks", "cyan"),
+    "snowball": ("a golden laurel victory crown", "warm gold"),
+    "cc": ("a shackled figure locked in place", "pale ice blue"),
+    "aoe": ("an expanding ring of force flattening the ground", "molten orange"),
 }
+# Matched on BOTH language forms — the pool is mixed 中文/English (鐵壁護甲 /
+# Bloodlust / 奧術專注) and an English-only table left every Chinese name on the
+# generic fallback. Chinese morphemes first, then the lowercased English.
 AUG_NAME_HINT: list[tuple[str, str, str]] = [
+    # ── Chinese morphemes ────────────────────────────────────────────────
+    ("壁壘", "a fortress rampart wall", "steel grey"),
+    ("護甲", "a riveted iron wall-plate shield", "steel grey"),
+    ("結界", "a hexagonal rune barrier glyph", "pale ice blue"),
+    ("盾", "a raised guardian shield", "steel blue"),
+    ("血", "a dripping crimson fang", "blood red"),
+    ("噬", "a curved soul-devouring reaper blade", "spectral pale cyan"),
+    ("魂", "a spectral soul wisp", "spectral pale cyan"),
+    ("霜", "a blue ice crystal blowing apart", "pale ice blue"),
+    ("冰", "a blue ice crystal blowing apart", "pale ice blue"),
+    ("焰", "a burning orange flame", "molten orange"),
+    ("火", "a burning orange flame", "molten orange"),
+    ("雷", "a crackling lightning bolt", "electric white-blue"),
+    ("風暴", "an arrow of compressed wind", "electric white-blue"),
+    ("疾風", "a curved blade trailing motion streaks", "cyan"),
+    ("奧術", "a faceted arcane focus crystal", "arcane violet"),
+    ("奧能", "an overloading rune core", "arcane violet"),
+    ("咒", "a rune-inscribed sword blade", "arcane violet"),
+    ("狂戰", "crossed war axes wreathed in raging aura", "furious red"),
+    ("怒", "crossed war axes wreathed in raging aura", "furious red"),
+    ("暴君", "a goblet brimming over with blood", "deep crimson"),
+    ("碎骨", "a cracked white femur bone", "bone white"),
+    ("骨", "a cracked white femur bone", "bone white"),
+    ("獵手", "a golden hawk's piercing eye", "amber gold"),
+    ("征服", "a golden laurel victory crown", "warm gold"),
+    ("引擎", "a mechanical engine core with spinning gears", "molten orange"),
+    ("生命", "a swelling green heart", "verdant green"),
+    ("湧動", "a swelling green heart", "verdant green"),
+    # ── English ──────────────────────────────────────────────────────────
     ("aegis", "a glowing guardian shield", "steel blue"),
     ("shield", "a glowing guardian shield", "steel blue"),
     ("blood", "a dripping crimson fang", "blood red"),
     ("lust", "a burning red aura fist", "blood red"),
-    ("chill", "a spiky blue ice crystal", "pale ice blue"),
+    ("chill", "a frost-rimed open hand", "pale ice blue"),
     ("frost", "a spiky blue ice crystal", "pale ice blue"),
     ("flame", "a burning orange flame", "molten orange"),
     ("storm", "a crackling lightning bolt", "electric blue"),
+    # ── WIDENED for console-authored augments (#186) ──────────────────────
+    # Every one of the 21 shipped augments is hard-coded in AUGMENT_SUBJECT, so
+    # the tables above were only ever exercised by ids that already had a
+    # curated answer. A card CREATED IN THE CONSOLE has no curated entry by
+    # definition, so it lands here — and a measured probe (`thunder-sigil`)
+    # fell straight through to the generic sigil, because "thunder" was absent
+    # while "storm" was present. That is the 「根本不知道哪招是哪招」 failure
+    # reproduced on brand-new content: unmatched cards all draw the SAME
+    # heraldic sigil, so a draft screen of them is unreadable.
+    #
+    # ORDER IS LOAD-BEARING — `augment_keywords` returns on the FIRST substring
+    # hit, so a longer key must precede any key contained within it
+    # ("lightning" before "light", "frozen" before "rose"-style accidents).
+    # Bare "ice" is deliberately NOT here: it fires inside justice/sacrifice.
+    # Subjects deliberately REUSE the strings above so the pool keeps one
+    # visual language instead of gaining a second, divergent one.
+    ("lightning", "a crackling lightning bolt", "electric white-blue"),
+    ("thunder", "a crackling lightning bolt", "electric white-blue"),
+    ("bolt", "a crackling lightning bolt", "electric white-blue"),
+    ("shock", "a crackling lightning bolt", "electric white-blue"),
+    ("glacial", "a spiky blue ice crystal", "pale ice blue"),
+    ("frozen", "a spiky blue ice crystal", "pale ice blue"),
+    ("burn", "a burning orange flame", "molten orange"),
+    ("ember", "a smouldering ember", "molten orange"),
+    ("venom", "a dripping green poison fang", "toxic green"),
+    ("poison", "a dripping green poison fang", "toxic green"),
+    ("toxic", "a bubbling green toxin vial", "toxic green"),
+    ("shadow", "a shrouded hooded figure dissolving into smoke", "void purple"),
+    ("void", "a collapsing sphere of starless dark", "void purple"),
+    ("dark", "a shrouded hooded figure dissolving into smoke", "void purple"),
+    ("radiant", "a blazing holy sunburst", "radiant white-gold"),
+    ("divine", "a blazing holy sunburst", "radiant white-gold"),
+    ("holy", "a blazing holy sunburst", "radiant white-gold"),
+    ("light", "a blazing holy sunburst", "radiant white-gold"),
+    ("gale", "an arrow of compressed wind", "electric white-blue"),
+    ("wind", "an arrow of compressed wind", "electric white-blue"),
+    ("swift", "a curved blade trailing motion streaks", "cyan"),
+    ("haste", "a winged hourglass trailing motion streaks", "cyan"),
+    ("crit", "a cracked targeting reticle over a struck point", "crimson and steel"),
+    ("precision", "a golden hawk's piercing eye", "amber gold"),
+    ("hunter", "a golden hawk's piercing eye", "amber gold"),
+    ("pierce", "a barbed armour-piercing spearhead", "steel grey"),
+    ("thorn", "a ring of barbed iron thorns", "verdant green"),
+    ("leech", "a goblet brimming over with blood", "deep crimson"),
+    ("drain", "a goblet brimming over with blood", "deep crimson"),
+    ("vital", "a swelling green heart", "verdant green"),
+    ("regen", "a swelling green heart", "verdant green"),
+    ("heal", "a swelling green heart", "verdant green"),
+    ("soul", "a spectral soul wisp", "spectral pale cyan"),
+    ("reaper", "a curved soul-devouring reaper blade", "spectral pale cyan"),
+    ("bone", "a cracked white femur bone", "bone white"),
+    ("fury", "crossed war axes wreathed in raging aura", "furious red"),
+    ("rage", "crossed war axes wreathed in raging aura", "furious red"),
+    ("berserk", "crossed war axes wreathed in raging aura", "furious red"),
+    ("bulwark", "a riveted iron wall-plate tower shield", "steel grey"),
+    ("rampart", "a fortress rampart wall", "steel grey"),
+    ("barrier", "a hexagonal rune barrier glyph", "pale ice blue"),
+    ("ward", "a hexagonal rune barrier glyph", "pale ice blue"),
+    ("guard", "a raised guardian shield", "steel blue"),
+    ("armor", "a riveted iron wall-plate shield", "steel grey"),
+    ("armour", "a riveted iron wall-plate shield", "steel grey"),
+    ("arcane", "a faceted arcane focus crystal", "arcane violet"),
+    ("rune", "a rune-inscribed sword blade", "arcane violet"),
+    ("spell", "a rune-inscribed sword blade", "arcane violet"),
+    ("mana", "a floating blue mana orb", "arcane violet"),
+    ("overload", "an overloading rune core", "arcane violet"),
+    ("engine", "a mechanical engine core with spinning gears", "molten orange"),
+    ("titan", "a colossal armoured gauntlet", "steel grey"),
+    ("stone", "a jagged slab of grey rock", "stone grey"),
+    ("earth", "a jagged slab of grey rock", "stone grey"),
+    ("iron", "a riveted iron wall-plate shield", "steel grey"),
+    ("steel", "a crossed pair of bared steel blades", "crimson and steel"),
+    ("blade", "a crossed pair of bared steel blades", "crimson and steel"),
+    ("conquer", "a golden laurel victory crown", "warm gold"),
+    ("sigil", "a glowing heraldic power sigil", "cyan"),
+    # ── Chinese morphemes the table above still lacked ────────────────────
+    ("毒", "a dripping green poison fang", "toxic green"),
+    ("影", "a shrouded hooded figure dissolving into smoke", "void purple"),
+    ("暗", "a shrouded hooded figure dissolving into smoke", "void purple"),
+    ("虛空", "a collapsing sphere of starless dark", "void purple"),
+    ("聖", "a blazing holy sunburst", "radiant white-gold"),
+    ("神聖", "a blazing holy sunburst", "radiant white-gold"),
+    ("光", "a blazing holy sunburst", "radiant white-gold"),
+    ("暴擊", "a cracked targeting reticle over a struck point", "crimson and steel"),
+    ("致命", "a cracked targeting reticle over a struck point", "crimson and steel"),
+    ("吸血", "a goblet brimming over with blood", "deep crimson"),
+    ("荊棘", "a ring of barbed iron thorns", "verdant green"),
+    ("治療", "a swelling green heart", "verdant green"),
+    ("回復", "a swelling green heart", "verdant green"),
+    ("穿透", "a barbed armour-piercing spearhead", "steel grey"),
+    ("破甲", "a barbed armour-piercing spearhead", "steel grey"),
+    ("鐵", "a riveted iron wall-plate shield", "steel grey"),
+    ("鋼", "a crossed pair of bared steel blades", "crimson and steel"),
+    ("岩", "a jagged slab of grey rock", "stone grey"),
+    ("巨", "a colossal armoured gauntlet", "steel grey"),
+    ("速", "a curved blade trailing motion streaks", "cyan"),
+    ("迅", "a curved blade trailing motion streaks", "cyan"),
+    ("爆", "an expanding ring of force flattening the ground", "molten orange"),
+    ("刃", "a crossed pair of bared steel blades", "crimson and steel"),
+    ("劍", "a crossed pair of bared steel blades", "crimson and steel"),
+    ("法力", "a floating blue mana orb", "arcane violet"),
 ]
 
 
 def augment_keywords(doc: dict) -> tuple[str, str, str]:
-    name = (doc.get("name") or "").lower()
+    aug_id = (doc.get("id") or "").strip()
+    if aug_id in AUGMENT_SUBJECT:
+        subj, hue = AUGMENT_SUBJECT[aug_id]
+        return subj, hue, "curated"
+    name = doc.get("name") or ""
     tags = [t.lower() for t in (doc.get("tags") or [])]
     for key, obj, hue in AUG_NAME_HINT:
-        if key in name:
+        if key in name or key in name.lower():
             return obj, hue, "name"
     for t in tags:
         if t in AUG_TAG_OBJECT:
@@ -304,6 +521,70 @@ def augment_keywords(doc: dict) -> tuple[str, str, str]:
 import prompt as _prompt  # ../src is already on sys.path (batch.py inserts it)
 
 ABILITY_NOUN_EXTRA: list[tuple[str, str]] = [
+    # ── 天生技 / PASSIVE-doc cluster-breakers ────────────────────────────────
+    # The 108 `*.passive.json` docs are a corpus the lexicon had never seen. 48
+    # of them are TRUE passives (`innateKind: "passive"`) with `effects: []` and
+    # NO vfxKey, so neither the shape clause nor the damage-type hue can fire —
+    # the NAME is the only signal, and it is a rich one. These entries were
+    # written against the MEASURED output: every one below replaces a subject
+    # that was demonstrably wrong (a body-text false positive, or a collision).
+    # Longest/most specific first, as everywhere else in this table.
+    ("四次元口袋", "a magic belly pocket opening onto a starry void"),  # was 口 -> jaws
+    ("觀音大士", "a serene bodhisattva statue"),      # was 音 -> musical notes
+    ("木乃伊", "a bandaged mummy"),
+    ("憤怒的門牙", "a snarling mouth of bared white teeth"),  # was 怒 -> berserk figure
+    ("感應意脈", "a network of glowing meridian lines across an open palm"),
+    ("十二道試煉", "a ring of twelve engraved ordeal marks"),
+    ("永久性的隱形術", "a figure fading into full invisibility"),
+    ("薔薇荊棘之刃", "a thorned rose stem with a razor blade edge"),
+    ("相轉移裝甲", "a shimmering phase-shifting armour plate"),
+    ("銀色甲胄", "a suit of silver plate armour"),
+    ("龍紋記憶", "a dragon-crest tattoo etched into skin"),   # vs 青龍槍術 below
+    ("青龍槍術", "a spear wreathed in a coiling azure dragon"),
+    ("撲殺爪擊", "a pouncing set of raking claws"),           # was 殺 -> strike burst
+    ("北斗", "a seven-star big dipper burning over a clenched fist"),
+    ("飛將神弓", "a great ornate war bow drawn taut"),        # was 飛 -> winged form
+    ("無限再生", "torn flesh knitting itself endlessly back together"),
+    ("再生能力", "a wound closing over as new flesh grows"),  # was 鐵(body) -> steel bar
+    ("古老智慧", "a long-bearded elder sage's face"),         # was 飛(body) -> winged form
+    ("獸化心靈", "a snarling half-beast transformed face"),
+    ("賽亞人的血脈", "a spatter of dark blood over a warrior's crest"),
+    ("暗夜契約", "a signed blood-pact scroll under a night sky"),
+    ("黑化之力", "a figure being consumed by corrupting darkness"),
+    ("正妹優勢", "a dazzling wink with a sparkle"),
+    ("可愛就是正義", "a heart-shaped badge of justice"),
+    ("裝可愛", "a coquettish cutesy pose ringed with sparkles"),
+    ("憂鬱的眼神", "a pair of sad drooping downcast eyes"),
+    ("邪眼全開", "a wide-open evil eye ringed with dark veins"),
+    ("石化之眼", "a stone-grey petrifying eye"),
+    ("寫輪眼", "a red eye with three spinning comma marks"),
+    ("灼眼", "a blazing burning eye"),
+    ("鬼眼", "a horned demon's glaring eye"),
+    ("開設雜貨店", "a little general-store stall hung with goods"),
+    ("開瓶特技", "a bottle uncorked, cap flying off"),
+    ("天香斷續膠", "an open jar of medicinal healing salve"),
+    ("吃洨火鍋", "a bubbling hot pot on a burner"),
+    ("攝影機", "a boxy hand-cranked film camera"),           # was 影 -> shadow
+    ("芬多精", "a burst of fresh forest air motes among pine needles"),
+    ("砍樹", "an axe biting deep into a tree trunk"),
+    ("三刀流", "three katana held in a three-sword stance"),
+    ("百連", "a hundred-hit chain of rapid strikes"),
+    ("猜猜拳", "a rock-paper-scissors hand sign"),
+    ("小考", "a marked exam paper"),
+    ("淨化", "a cleansing burst of white purifying motes"),
+    ("機警", "a pricked-up alert ear"),                      # was 盾(body) -> shield
+    ("通靈", "a medium's hand cupping a glowing spirit wisp"),
+    ("JENOVA", "an alien crystalline womb pod"),
+    ("二檔", "a body venting pressurised steam"),
+    ("怒斬", "a furious downward blade slash"),              # vs 暴走 berserk figure
+    ("閃擊", "a blinding lightning-fast lunge"),
+    ("玄武", "a black tortoise-serpent guardian beast"),
+    ("恰恰", "a pair of dancing cha-cha shoes"),
+    ("SM派對", "a studded leather collar and buckled cuffs"),
+    ("龍捲風", "a towering tornado funnel"),                  # was 龍 -> dragon
+    ("飛葉", "a spinning razor leaf"),                        # was 飛 -> winged form
+    ("麻痺粉", "a drifting cloud of paralysing spores"),
+    ("祕技", "a secret-technique hand seal"),
     # ── cluster-breakers (added when the corpus was measured) ────────────────
     # Each of these was written because a MEASURED collision cluster needed
     # splitting: 18 abilities all prompted "a forked lightning bolt", 15 "a
@@ -447,6 +728,16 @@ ABILITY_NOUN_EXTRA: list[tuple[str, str]] = [
 ]
 
 ABILITY_HUE_EXTRA: list[tuple[str, str]] = [
+    # colour words the 天生技 names use. A true passive has `effects: []` and no
+    # vfxKey, so without these it lands on DAMAGE_HUE's "cyan" default — which is
+    # what put 銀色甲胄 (a SILVER cuirass) and 紅色龍氣 (a RED dragon aura) on the
+    # same generic cyan as everything else.
+    ("銀色", "lustrous silver"), ("銀", "lustrous silver"),
+    ("紅色", "deep crimson"), ("紅", "deep crimson"),
+    ("薔薇", "crimson and verdant"), ("灼", "molten orange"),
+    ("青龍", "azure blue"), ("蒼", "azure blue"),
+    ("黑化", "void violet-black"), ("暗夜", "midnight indigo"),
+    ("憂鬱", "melancholy slate blue"), ("可愛", "rose pink"),
     ("石", "earthen brown"), ("岩", "earthen brown"), ("土", "earthen brown"),
     ("地裂", "earthen brown"), ("砂", "sandy ochre"), ("沙", "sandy ochre"),
     ("鋼", "steel grey"), ("鐵", "steel grey"), ("刃", "steel grey"),
@@ -566,7 +857,37 @@ SLOT_FALLBACK_NOUN = {
     "Q": "a forward energy strike", "W": "a swirling energy sigil",
     "E": "a rising aura of power", "R": "an overwhelming ultimate energy burst",
     "EX": "a searing ultimate power crest",
+    # PASSIVE is a NEW slot value (the 108 天生技 docs). Without this row it fell
+    # through to the generic "a burst of focused energy" — the same picture an
+    # unmatched Q would get, which is exactly wrong for a permanent trait.
+    "PASSIVE": "a carved stone rune sigil",
 }
+
+# `\w` matches CJK in Python's re, so prompt.strip_hero_number's `^\d+-\d+\w*\s*`
+# eats the WHOLE name whenever the hero number is not followed by a space:
+# `61-00百連我殺` -> ``, `72-01洗刷刷` -> ``. The doc then has no name signal at
+# all and silently falls back to its mechanics prose. Restricting the optional
+# suffix to ASCII letters keeps `90-002` / `69-001` working and fixes the 5
+# affected docs. Kept LOCAL rather than patched into ../src/prompt.py, whose
+# lexicon is hashed into the paid path's `.hash` sidecars (editing it would
+# invalidate icons this task has no mandate to redraw).
+_HERO_NUMBER_RE = re.compile(r"^\d+-\d+[A-Za-z]*\s*")
+
+
+def _strip_number(name: str) -> str:
+    return _HERO_NUMBER_RE.sub("", (name or "").strip()).strip()
+
+
+def is_innate_passive(doc: dict) -> bool:
+    """A TRUE 天生技: permanently on, never cast.
+
+    `slot: "PASSIVE"` alone is not enough — 60 of the 108 passive docs carry
+    `innateKind: "active"` and are real castable skills with cooldown, mana and
+    effects (22-00 嗚鎖打! deals 150 damage). Those keep the full action-shot
+    treatment, VFX backdrop included; only `innateKind: "passive"` drops it.
+    """
+    return ((doc.get("slot") or "").upper() == "PASSIVE"
+            and (doc.get("innateKind") or "").lower() == "passive")
 
 
 def _ability_damage_type(doc: dict) -> str:
@@ -582,9 +903,15 @@ def ability_keywords(doc: dict) -> tuple[str, str, str]:
     NAME beats DESCRIPTION beats damage type — the ability's own words decide
     what is drawn, so the icon depicts THAT ability, not a house sigil.
     """
-    name = _prompt.strip_hero_number(doc.get("name") or "")
+    name = _strip_number(doc.get("name") or "")
     body = _prompt.clean_body(doc.get("description") or "")
     form, vfx_element = _vfx_form(doc)
+    # A permanent trait has no on-screen cast, so the VFX backdrop is dropped:
+    # stacking "…, with a crescent slash arc sweeping behind it, engraved as a
+    # crest" makes a three-clause prompt where neither read survives. The crest
+    # clause in pass1_prompt is the passive's discriminating form instead.
+    if is_innate_passive(doc):
+        form = ""
 
     def pick(table, text):
         return _prompt._pick(table, text)
@@ -632,6 +959,26 @@ DERIVERS = {
 }
 
 
+_ARTICLE_RE = re.compile(r"^(an?|the)\s+", re.I)
+
+
+def _one_of(subject: str) -> str:
+    """"a steel longsword" -> "a single steel longsword".
+
+    The item/augment framing wants a singular head noun, and it used to get it by
+    prepending "a single " unconditionally. Every ITEM_NAME_OBJECT value happens
+    to start with an article, so that read fine — until a subject that does NOT
+    ("a fan of…" is fine, but a bare plural is not) produced literal nonsense
+    like "a single three overlapping speed-blurred blade after-images", which
+    rendered as an unreadable starburst. Swapping the leading article keeps every
+    existing item string byte-identical and makes the new ones grammatical.
+    """
+    subject = (subject or "").strip()
+    if _ARTICLE_RE.match(subject):
+        return "a single " + _ARTICLE_RE.sub("", subject, count=1)
+    return subject
+
+
 def pass1_prompt(family: str, doc: dict) -> tuple[str, str, str]:
     """The PASS-1 (subject) positive prompt + its negative + signal. Minimal
     style so the subject renders CLEARLY and recognisably."""
@@ -641,13 +988,32 @@ def pass1_prompt(family: str, doc: dict) -> tuple[str, str, str]:
                f"portrait, front view, centred, single character, simple plain "
                f"background, clear detailed face, full subject in frame")
     elif family == "abilities":
+        # ── TRIED AND REJECTED: a distinct "emblem" read for true passives ────
+        # A passive is always on and never cast, so drawing it as a still crest
+        # rather than an action shot is an appealing idea (it would echo #166,
+        # where passive buttons already get a dashed border). It was BUILT and
+        # A/B-MEASURED against three passives at 4 clauses x 3 subjects:
+        #   A  (no clause)                                        <- winner
+        #   B  ", engraved as a still symmetrical heraldic crest emblem"
+        #   C  ", carved in engraved metal relief, still and motionless"
+        #   D  ", struck into a worn metal rune plate"
+        # Every one of B/C/D pulled the picture toward a round medallion and
+        # away from the subject. 21-00 灼眼 is the clean read on it: with no
+        # clause it renders a brilliant orange EYE in a solar corona; with B it
+        # is a gold kaleidoscope with the eye almost gone, with C an eye lost in
+        # a metal octagon, with D a tech ring with no eye at all. Adding ANY
+        # emblem word re-heads the noun phrase — the same failure VFX_SHAPE_FORM
+        # documents — and at 48 passives it would have rebuilt the collapse the
+        # previous wave was fixed to remove. The passive/castable distinction
+        # therefore stays where it already works: in the UI, not in the art.
+        #
         # An ability is an EFFECT, not a product on a table — same PASS-1 rules
         # (one clear centred subject, plain background), different framing.
         pos = (f"{subject}, glowing magical skill effect, {hue} colour scheme, "
                f"centred, one single subject, plain dark background, clear sharp "
                f"silhouette, full subject in frame")
     else:
-        pos = (f"a single {subject}, {hue} colour scheme, centred, one object, "
+        pos = (f"{_one_of(subject)}, {hue} colour scheme, centred, one object, "
                f"studio product shot, plain background, clear sharp silhouette, "
                f"full object in frame")
     neg = ("blurry, lowres, deformed, cropped, multiple objects, collage, text, "

@@ -45,7 +45,21 @@
       ]
     }
   ],
-  "vfxKey": "fx.prim.void.beam",
+  "vfxKey": "godie-tectonicfury-p0",
   "schema": "ability@1",
-  "castTimeSec": 0.6
+  "castTimeSec": 0.6,
+  "hitFeel": {
+    "hitstopTicks": 4,
+    "hitstunTicks": 6,
+    "shakeMag": 0.42,
+    "shakeStyle": "omni",
+    "sparkKind": "heavy",
+    "flashColor": [
+      0.9,
+      0.72,
+      0.48
+    ],
+    "flashMs": 144,
+    "camKick": 0.36
+  }
 }

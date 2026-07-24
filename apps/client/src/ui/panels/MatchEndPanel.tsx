@@ -21,6 +21,7 @@ import { Champions } from "@ggd/shared/sim/content/registry";
 import type { ChampionId } from "@ggd/shared/ids";
 import type { SettlementPlayer } from "@ggd/shared/protocol/messages";
 import { useHud } from "../../net/RoomStore";
+import { HUD_Z } from "../hud/hudLayout";
 import { useApp } from "../platform/store";
 import { championIconUrl } from "../icons";
 import { GlyphTile } from "../components/GlyphTile";
@@ -469,6 +470,12 @@ export function MatchEndPanel(): React.JSX.Element {
       style={{
         position: "absolute",
         inset: 0,
+        // #107: the "match-end" registry row declares `z: HUD_Z.screen` and
+        // `providesExit: true` — persistent chrome is allowed to HIDE under
+        // this panel precisely because it out-ranks it. Say the number, for the
+        // same reason the shop now does: managed slots really paint at
+        // HUD_Z.slot (25), and DOM order is not a contract.
+        zIndex: HUD_Z.screen,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",

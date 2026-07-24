@@ -369,6 +369,8 @@ func (m *Manager) runSuite(ctx context.Context, r *Run, st *SuiteState) {
 
 	start := time.Now()
 	// Allow-list: s came from suites.yaml via the scheduler; argv exec, no shell.
+	// #nosec G204 -- argv exec (no shell) and `s` is an allow-listed suite
+	// from the checked-in suites.yaml; running those commands IS the job.
 	cmd := exec.CommandContext(ctx, s.Cmd[0], s.Cmd[1:]...)
 	cmd.Dir = filepath.Join(m.opts.RepoRoot, s.Cwd)
 	cmd.Env = m.suiteEnv(r, s)
@@ -428,9 +430,12 @@ func (m *Manager) runGate(ctx context.Context, r *Run, gate *GateResult) {
 	if _, err := os.Stat(r.CoverageFile); err != nil {
 		// No suite emitted a beacon — still run the gate: it will fail if any
 		// TODO item is `done`, which is exactly the point. Create empty file.
+		// #nosec G306 -- see testkit.Cover: the beacon is a throwaway CI artefact
+		// that a developer must be able to read after a failing run.
 		_ = os.WriteFile(r.CoverageFile, nil, 0o644)
 	}
 	argv := append(append([]string{}, m.opts.GateCmd...), r.CoverageFile)
+	// #nosec G204 -- argv exec; GateCmd is this tool's own configured gate.
 	cmd := exec.CommandContext(ctx, argv[0], argv[1:]...)
 	cmd.Dir = m.opts.RepoRoot
 	cmd.Env = m.suiteEnv(r, config.Suite{})

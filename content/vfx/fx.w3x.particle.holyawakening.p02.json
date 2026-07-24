@@ -1,0 +1,84 @@
+{
+  "id": "fx.w3x.particle.holyawakening.p02",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.001,
+    "angleDeg": 180
+  },
+  "mode": "continuous",
+  "lifetimeSec": {
+    "min": 0.46,
+    "max": 0.46
+  },
+  "size": {
+    "start": 0.253,
+    "end": 0.142
+  },
+  "color": {
+    "start": [
+      1,
+      1,
+      1,
+      0
+    ],
+    "end": [
+      1,
+      1,
+      1,
+      0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        1,
+        1,
+        0
+      ]
+    ],
+    [
+      0.75,
+      [
+        0.177,
+        0.267,
+        0.937,
+        0.784
+      ]
+    ],
+    [
+      1,
+      [
+        1,
+        1,
+        1,
+        0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.253
+    ],
+    [
+      0.75,
+      0.875
+    ],
+    [
+      1,
+      0.142
+    ]
+  ],
+  "blendMode": "additive",
+  "speed": {
+    "min": 11.6676,
+    "max": 11.6676
+  },
+  "rate": 80,
+  "texture": "assets/textures/particles/star_01.png",
+  "stretched": true,
+  "tailLength": 0.5
+}

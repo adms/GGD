@@ -34,6 +34,11 @@
     "mr": 1.2,
     "as": 0.02
   },
+  "hitFeel": {
+    "hitstopTicks": 1,
+    "shakeMag": 0.18,
+    "knockbackMag": 0.0
+  },
   "abilities": {
     "Q": {
       "id": "godie-ucrl.q",
@@ -188,9 +193,23 @@
           "duration": 3.0
         }
       ],
-      "vfxKey": "fx.prim.ki.pulse-lg",
+      "vfxKey": "fx.w3x.locust.boomnl.p01",
       "icon": "assets/icons/abilities/godie-ucrl.r.png",
-      "castTimeSec": 0.4
+      "castTimeSec": 0.4,
+      "hitFeel": {
+        "hitstopTicks": 5,
+        "hitstunTicks": 8,
+        "shakeMag": 0.591,
+        "shakeStyle": "omni",
+        "sparkKind": "heavy",
+        "flashColor": [
+          1.0,
+          0.72,
+          0.34
+        ],
+        "flashMs": 202,
+        "camKick": 0.506
+      }
     }
   },
   "skillOrder": [

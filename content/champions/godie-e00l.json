@@ -32,6 +32,11 @@
     "mr": 1.2,
     "as": 0.02
   },
+  "hitFeel": {
+    "hitstopTicks": 3,
+    "shakeMag": 0.44,
+    "knockbackMag": 0.25
+  },
   "abilities": {
     "Q": {
       "id": "godie-e00l.q",
@@ -156,8 +161,22 @@
           ]
         }
       ],
-      "vfxKey": "fx.prim.holy.slash",
-      "castTimeSec": 0.3
+      "vfxKey": "fx.w3x.particle.holyawakening.p04",
+      "castTimeSec": 0.3,
+      "hitFeel": {
+        "hitstopTicks": 3,
+        "hitstunTicks": 6,
+        "shakeMag": 0.385,
+        "shakeStyle": "omni",
+        "sparkKind": "magic",
+        "flashColor": [
+          1.0,
+          0.95,
+          0.72
+        ],
+        "flashMs": 132,
+        "camKick": 0.33
+      }
     },
     "R": {
       "id": "godie-e00l.r",
@@ -215,7 +234,8 @@
   ],
   "tags": [
     "wc3-import",
-    "godie"
+    "godie",
+    "sword"
   ],
   "exAbility": "godie-e00l.ex",
   "passiveAbility": "godie-e00l.passive",

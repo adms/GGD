@@ -43,6 +43,7 @@ function mk(over: Partial<SeatView> & { seatId: number; teamId: number }): SeatV
     exAbilityId: "",
     exRank: 0,
     exCooldown: 0,
+    passiveCooldown: 0,
     statStacks: 0,
     statCapstonePct: 0,
     undoDepth: 0,

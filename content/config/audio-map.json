@@ -705,17 +705,17 @@
       "files": [
         "assets/audio/sfx/lab/arrow-release.mp3"
       ],
-      "gain": 1.1,
-      "cooldownMs": 70,
-      "maxConcurrent": 4
+      "gain": 0.42,
+      "cooldownMs": 90,
+      "maxConcurrent": 3
     },
     "arrowPierce": {
       "files": [
         "assets/audio/sfx/lab/arrow-pierce.mp3"
       ],
-      "gain": 0.43,
-      "cooldownMs": 60,
-      "maxConcurrent": 4
+      "gain": 0.34,
+      "cooldownMs": 110,
+      "maxConcurrent": 2
     },
     "gunshot": {
       "files": [
@@ -724,6 +724,14 @@
       "gain": 1.4,
       "cooldownMs": 70,
       "maxConcurrent": 3
+    },
+    "magicBolt": {
+      "files": [
+        "assets/audio/sfx/lab/magic-bolt.mp3"
+      ],
+      "gain": 0.45,
+      "cooldownMs": 130,
+      "maxConcurrent": 2
     },
     "magicFire": {
       "files": [
@@ -753,8 +761,8 @@
       "files": [
         "assets/audio/sfx/lab/cast-circle.mp3"
       ],
-      "gain": 0.94,
-      "cooldownMs": 1000,
+      "gain": 0.72,
+      "cooldownMs": 1200,
       "maxConcurrent": 1
     },
     "recessBell": {

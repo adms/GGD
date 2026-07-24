@@ -58,12 +58,37 @@ export const STAT_META: readonly StatMeta[] = [
   { stat: Stat.ManaRegen, label: "魔力回復", unit: "num1", column: 1 },
   { stat: Stat.Armor, label: "護甲", unit: "num1", column: 1 },
   { stat: Stat.MagicResist, label: "魔法抗性", unit: "num1", column: 1 },
+  // A 0..1 rate like 爆擊率/吸血, hence `pct`. Sits with the other mitigation
+  // stats: it is defence, not mobility. Only basic attacks can be evaded —
+  // abilities never are (see sim/combat/evasion.ts for why), so the panel value
+  // deliberately does NOT promise blanket damage avoidance.
+  { stat: Stat.Evasion, label: "迴避", unit: "pct", column: 1 },
   { stat: Stat.MoveSpeed, label: "移動速度", unit: "num1", column: 1 },
 ];
+
+// ⚠️ Every `Stat` MUST have a row above. `META_BY_STAT` is built with an
+// `as Record<Stat, StatMeta>` cast, so a missing stat is NOT a compile error —
+// it silently yields `undefined` at runtime and the panel just drops that row.
+// `evasion` was added to the sim and this table was missed, so the 英雄全屬性狀態
+// panel showed 15 of 16 stats with nothing to indicate the 16th existed. The
+// assertion below turns that class of omission into a loud startup failure.
 
 const META_BY_STAT: Readonly<Record<Stat, StatMeta>> = Object.fromEntries(
   STAT_META.map((m) => [m.stat, m]),
 ) as Record<Stat, StatMeta>;
+
+/**
+ * The guard the cast above cannot provide. Enumerating `Stat` at runtime is the
+ * only way to catch a stat that exists in the sim but has no row here, because
+ * the `as Record<Stat, StatMeta>` assertion tells TypeScript the map is total
+ * when it is merely typed that way.
+ *
+ * Exported (not run at import time) so it is a test assertion rather than a
+ * module side effect — a panel must never fail to load over a display label.
+ */
+export function missingStatMetaRows(): Stat[] {
+  return Object.values(Stat).filter((s) => META_BY_STAT[s] === undefined);
+}
 
 export function statMeta(stat: Stat): StatMeta {
   return META_BY_STAT[stat];

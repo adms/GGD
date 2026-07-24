@@ -19,6 +19,18 @@ python3 tools/icon-gen/src/generate.py --dry-run --tier 1
 | `src/pricing.json` | per-image rates. **A quote, not a contract** — confirm before spending. |
 | `out/` | `raw/` full-size images, `subjects.json` text-mode cache, `ledger.jsonl` receipts. |
 
+`src/` is the CLOUD generation (a paid provider through the platform). `local/`
+is the on-device one, and it is what actually drew the shipped set:
+
+| file | what it is |
+| --- | --- |
+| `local/pipeline.py` | the ONE place a Stable-Diffusion checkpoint is loaded (MPS → CPU). |
+| `local/keywords.py` | doc → subject/hue lexicon + `pass1_prompt` / `pass2_prompt`. **The prompts live here and nowhere else.** |
+| `local/batch.py` | the resumable two-pass driver: worklist, `.method` sidecars, `set_icon_field`. |
+| `local/daemon.py` | **§7** — the loopback job queue the admin console calls when content is created. |
+| `local/server.py` | an OpenAI-`/v1/images/generations` shim, so the cloud path can run against the local GPU with no Go change. |
+| `local/gen.py`, `local/wire_icon_fields.py` | one-off helpers. |
+
 ---
 
 ## 1. Extraction came first, and it is finished
@@ -174,13 +186,160 @@ rejected outright and 256×256 is not a size they offer. **Every icon generation
 failed, and configuring a key would not have fixed it.** That is repaired and
 pinned by `ai-image-dialect` in `docs/todo/ai.md`.
 
+**That repair has landed** (`isLegacyImageModel` / `imageRequestSize` in
+`provider.go`, covered by `ai_test.go`). The residual on task #112 is therefore
+*configuration*, not code — see item 1. And note the cloud path is not on the
+critical path at all any more: §7's daemon renders locally, so nothing about
+icon generation waits on a provider or a key.
+
 Still required from the operator:
 
 1. Configure an image provider in the admin console (endpoint, model, key).
    `data/config/ai-provider.json` does not exist on this machine — the config
-   has never been saved, and `/ai/icon` returns the placeholder.
+   has never been saved, and `/ai/icon` returns the placeholder. This is the
+   **only** live part of #112; the dialect bug above is fixed.
 2. Check `src/pricing.json` against the provider's published rates.
 3. Generate a small contact sheet first and **look at it**. Ability slots
    09/10 in a mixed sheet should be twins and 11/12 should not; if that is
    inverted, the template is not ready and a full run will produce 600 images
    of the same three pictures.
+
+---
+
+## 7. Icons on create — the admin console hook (#186)
+
+> 「後台新增英雄、技能、武器、道具…這些時，也自動動態生成適合的 icon」
+
+A document with no icon renders as a GlyphTile **letter tile** (「鐵」「疾」「B」).
+That is not a cosmetic gap: it is this project's most-repeated complaint,
+「根本不知道哪招是哪招」, arriving through a side door — #110 made card icons
+mandatory on the draft screen for exactly that reason. So every un-iconed doc
+the console creates walks that regression back in, and the fix belongs at the
+**create seam**, not in a batch somebody has to remember to start.
+
+```sh
+# start it once; leave it running while you author
+.venv/bin/python local/daemon.py --warm       # 127.0.0.1:8789, warm checkpoint
+```
+
+The admin vite server proxies `/icon-api` → `127.0.0.1:8789`
+(`apps/admin/vite.config.ts`). 內容管理 then:
+
+* **creates the document first, and asks for art second.** `gen.request` is
+  fire-and-forget by contract (`IconGen.request` returns `void`), so a
+  seconds-to-minutes render can never delay ＋新增. A failed or skipped
+  generation leaves a perfectly valid document — never a half-created one.
+* **polls `/icon-api/jobs` every 4 s**, the same cadence #97's live coverage bar
+  recomputes at, and only while something is in flight.
+* **re-reads the list when a job finishes**, so the art actually appears instead
+  of a success line sitting next to a letter tile.
+
+### It reuses the batch, it does not reimplement it
+
+`daemon.py` imports `keywords.pass1_prompt` / `pass2_prompt`,
+`batch.render_two_pass`, `batch._save`, `batch._is_done` and
+`batch.set_icon_field`. It contains **no prompt text of its own** — which is how
+the emblem/crest framing that `keywords.py` A/B-tested and *rejected* (it pulled
+every picture toward a medallion and away from the subject) stays rejected here
+too. A console-created doc gets byte-identically what a batch-created one gets:
+same lexicon, same two passes, same `METHOD_VERSION`, same 128 px WebP.
+
+### A new augment must not land on the generic sigil
+
+`augment_keywords` tries three sources in order: a **curated** entry in
+`AUGMENT_SUBJECT`, then a **name** substring from `AUG_NAME_HINT`, then a **tag**,
+then the fallback `"a glowing heraldic power sigil"`.
+
+All 21 shipped augments are curated, so the name table was only ever exercised
+by ids that already had a better answer — and it had gone thin without anyone
+noticing. **A card created in the console has no curated entry by definition**,
+so it lands on the name table, and a measured probe (`thunder-sigil`) fell
+straight through to the generic sigil because `"storm"` was present and
+`"thunder"` was not. Unmatched cards all draw the *same* sigil, which is
+「根本不知道哪招是哪招」 reproduced on brand-new content.
+
+`AUG_NAME_HINT` is therefore widened (thunder/lightning, poison, shadow/void,
+holy/light, crit, pierce, thorn, leech, heal/regen, wind, stone, mana, … plus
+the matching 中文 morphemes 毒/影/暗/聖/暴擊/吸血/荊棘/穿透/鐵/岩/速/爆). Two
+rules when adding more:
+
+* **Order is load-bearing.** The first substring hit wins, so a longer key must
+  precede any key contained in it (`lightning` before `light`).
+* **Watch for substring false positives.** Bare `"ice"` is deliberately absent —
+  it fires inside *justice* and *sacrifice*. `justice-blade` correctly resolves
+  to crossed blades, not an ice crystal.
+
+Verify a change without spending a GPU:
+
+```bash
+.venv/bin/python -c "import sys;sys.path[:0]=['src','local'];import keywords,json;\
+print(keywords.augment_keywords({'id':'雷霆之怒','name':'雷霆之怒','tags':[]}))"
+```
+
+The 21 shipped ids must stay `curated` — that is the regression check.
+
+### The two schema shapes
+
+| collection | what gets written |
+| --- | --- |
+| champions / abilities / items | the WebP **and** the doc's `icon` field |
+| augments | the WebP **only** — `augment@1` is `.strict()` with no `icon` field; art is resolved by convention from `assets/icons/augments/<id>.webp` |
+| loot-tables | nothing; a pool has no art of its own |
+
+### Every refusal is a sentence on screen
+
+`POST /icon-api/jobs` answers **409 with a `reason`** rather than failing quietly.
+
+| reason | meaning |
+| --- | --- |
+| `blocked` | the id is in `icon-plan.json`'s held bucket (today: third-party IP). A held gate is not a coverage gap and is never filled automatically. Re-read whenever the plan file changes. |
+| `author-art` | the doc's `icon` points at a file that exists with **no `.method` sidecar** ⇒ w3x or hand-picked art. The map's own art outranks anything we invent, and `force` cannot reach this branch. |
+| `already-done` | a current-`METHOD_VERSION` icon is on disk. **Re-saving an entity therefore regenerates nothing.** |
+| `placeholder-ability` | the ability's `name` is literally `"none"` and it has no description — a slot the w3x import never filled. See below. |
+| `no-icons` / `no-doc` / `bad-id` | asked for something that has no art, or does not exist. |
+| `no-engine` | torch/MPS unusable on this machine. The job **fails loudly**; it never writes a placeholder. |
+
+#### Why `placeholder-ability` refuses instead of drawing
+
+These are the **only 16 docs in the whole content tree without an icon**, so
+they look like the last coverage gap. They are not one. All 16 are the Q/W/E/R
+of four champions — `godie-e00u` (十六夜Sakuya), `godie-h02n` (打我阿笨蛋),
+`godie-u01f` (黑化張飛), `godie-u01q` (索隆) — and they are **byte-identical to
+each other**: `name: "none"`, no description, and the same cooldown 12 / mana 60
+/ range 11 / damage 80–240 / `fx.prim.physical.nova`.
+
+Identical input means an identical prompt, so generating would produce 16
+interchangeable pictures and mark four kit-less champions as visually finished —
+manufacturing 「根本不知道哪招是哪招」 rather than curing it. None of the four
+is in the 48-champion whitelist, so **nothing renders them to a player at all**;
+in the console they show the ordinary letter tile. `plan.py` already classifies
+them `drop` for exactly this reason (「這是原圖的佔位格，沒有任何可以下筆的內容」);
+the daemon now agrees, so the 補圖示 button cannot quietly disagree with the plan.
+
+**The fix for these 16 is authoring the kits, not the art.**
+
+Eligibility is evaluated at enqueue **and again immediately before rendering**,
+because a queued job can sit behind a long one while you hand-pick art for the
+very doc it was about to overwrite.
+
+### It never writes a placeholder
+
+Two guards, both inherited from `batch.py`: no engine ⇒ fail before any `_save`;
+a blank/solid render (channel spread &lt; 30) ⇒ discard and fail. A letter tile
+the owner can see is honest. A gradient that looks finished is not — that is the
+same reasoning as §5's `stub:true` abort.
+
+### Off the Mac it degrades out loud
+
+`local/models/` is 2 GB and gitignored, `.venv` likewise, and ggd.adms.ai has no
+GPU — so **generation is an authoring-time act on the owner's Mac** and the
+family host only ever serves the committed WebPs. The console has three states
+and all three speak:
+
+* **live** — daemon up on a machine that can render.
+* **readonly** — dev build, daemon unreachable *or* reporting no torch/MPS. The
+  strip says art is pending and prints the command above. It never spins.
+* **off** — not a dev build. 內容管理 is dev-only by construction, so the whole
+  chunk (and this client with it) is absent from a production admin build.
+
+Pinned by `apps/admin/src/icons/iconApi.test.ts`.

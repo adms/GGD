@@ -1,0 +1,29 @@
+{
+  "id": "titan-heart",
+  "schema": "augment@1",
+  "name": "泰坦之心",
+  "description": "最大生命 +40%，生命回復 +15/秒，但移動速度 −8%。",
+  "tier": "prismatic",
+  "weight": 24,
+  "modifiers": [
+    {
+      "stat": "maxHealth",
+      "op": "pctAdd",
+      "value": 0.4
+    },
+    {
+      "stat": "healthRegen",
+      "op": "flat",
+      "value": 15
+    },
+    {
+      "stat": "ms",
+      "op": "pctAdd",
+      "value": -0.08
+    }
+  ],
+  "tags": [
+    "defense",
+    "sustain"
+  ]
+}

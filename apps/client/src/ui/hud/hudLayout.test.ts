@@ -288,17 +288,23 @@ describe("HUD corner stack math (client-19)", () => {
     expect(hudSlotOffset("perf-panel")).not.toBe(40);
   });
 
-  it("bottom-right is the minimap corner on desktop (gold-level stays reserved)", () => {
+  it("bottom-right is the minimap corner on desktop (gold-level is managed too)", () => {
     cover("hud-corner-layout");
     const slots = hudSlotsInCorner("bottom-right");
     // gold-level (order 0) hugs the corner, the minimap (order 1) stacks above,
     // and the persistent equipment bar (order 2, task #44) stacks above THAT so
     // it never perturbs the map's offset.
     expect(slots.map((s) => s.id)).toEqual(["gold-level", "minimap", "equipment"]);
-    // the minimap is now REALLY managed by the registry; gold-level is the one
-    // remaining hand-pinned panel (owned by another task) and stays RESERVED
+    // BOTH are really managed by the registry now. gold-level used to be the
+    // last hand-pinned slot in this corner — `right:14 / bottom:14` against
+    // HUD_EDGE 10, reserving 56px for a box measured at 61px — which put its
+    // far edge at 75px against the minimap's band start of 74. A 1px overlap
+    // the guard was structurally blind to, because it only sees managed slots.
     expect(hudSlot("minimap").managed).toBe(true);
-    expect(hudSlot("gold-level").managed).toBe(false);
+    expect(hudSlot("gold-level").managed).toBe(true);
+    // the reservation must cover the MEASURED worst case (61px live, with the
+    // "+N skill pt" line showing) or the overlap simply comes back.
+    expect(hudSlot("gold-level").height).toBeGreaterThanOrEqual(61);
     // the equipment bar sits ABOVE the minimap, so adding it left the map's
     // offset untouched (the regression this ordering guards against)
     expect(hudSlotOffset("minimap")).toBe(hudSlotBand("gold-level").end + HUD_GAP);
@@ -517,16 +523,20 @@ describe("HUD corner sources (client-19)", () => {
    */
   it("GUARD: no HUD file hard-codes a corner position", () => {
     cover("hud-corner-layout");
-    /** files that legitimately still pin themselves — each RESERVED in the registry */
-    const ALLOW = new Map<string, string>([
-      // (platform/AppRoot.tsx's Leave button used to sit here; the safe-area
-      // contract work for #107 re-homed it onto hudSlotStyle("leave"), so the
-      // exception is gone and the guard now covers that file for real.)
-      // bottom-right: GoldLevel is hand-pinned until the minimap task re-homes
-      // that corner (the minimap itself pins with calc()/safe-area strings, so
-      // the literal scan never sees it — its slot is reserved in the registry).
-      ["components/GoldLevel.tsx", "gold-level"],
-    ]);
+    /**
+     * files that legitimately still pin themselves — each RESERVED in the
+     * registry. EMPTY, and it should stay that way:
+     *   • platform/AppRoot.tsx's Leave button was re-homed onto
+     *     hudSlotStyle("leave") by the #107 safe-area work.
+     *   • components/GoldLevel.tsx was the last one out. It pinned
+     *     `right:14 / bottom:14` against HUD_EDGE 10 while reserving 56px for a
+     *     box measured live at 61px — a real 1px overlap with the minimap band,
+     *     invisible to the guard because an unmanaged slot is not checked. It
+     *     now reads hudSlotStyle("gold-level") like every other slot.
+     * An allowance here is a slot the guard cannot protect; add one only with a
+     * reason that survives the question "so what catches it instead?".
+     */
+    const ALLOW = new Map<string, string>([]);
 
     const FILES = [
       "PauseMenu.tsx",
@@ -609,6 +619,55 @@ describe("HUD panel-edge contract (client-26)", () => {
       // every panel here mirrors a file owned by another task → RESERVED, like a slot
       if (!p.managed) expect(p.note ?? "", p.id).toMatch(/RESERVED/);
     }
+  });
+
+  /**
+   * panelDeclaredZIsPainted — the gap this module's own header described and
+   * then left open: "the FPS pill at z=25 over the shop card at z≈0". The rects
+   * got a guard; the Z NEVER DID. A covering panel that declares `z:
+   * HUD_Z.screen` and sets no `zIndex` at all paints at the default positioned
+   * layer, i.e. genuinely UNDER every managed slot (`hudSlotStyle` hands out a
+   * real `zIndex: HUD_Z.slot`) — and every test above still passes, because
+   * they all prove that RECTANGLES clear, which says nothing about paint order.
+   * Only `displaced: "hide"` on every colliding slot kept it invisible.
+   *
+   * So: any panel that COVERS a corner (the case where its z is what makes the
+   * chrome's yielding correct) must really paint at the number it declares.
+   * Panels that cover nothing (champ-select, augment-draft) are out of scope —
+   * they displace no chrome, so their layer is a local concern.
+   */
+  it("GUARD: a panel that covers a corner really PAINTS at its declared z", () => {
+    cover("hud-panel-cover");
+    /** source spellings of a z, and the number each one resolves to. */
+    const ALIASES: ReadonlyArray<readonly [string, number]> = [
+      ["HUD_Z.slot", HUD_Z.slot],
+      ["HUD_Z.expanded", HUD_Z.expanded],
+      ["HUD_Z.screen", HUD_Z.screen],
+      ["HUD_Z.focus", HUD_Z.focus],
+      // panels/intermissionLayout.ts: `panel: HUD_Z.screen` (band 3)
+      ["INTERMISSION_Z.panel", HUD_Z.screen],
+      ["INTERMISSION_Z.focus", HUD_Z.focus],
+    ];
+    const problems: string[] = [];
+    for (const p of HUD_PANELS) {
+      if (p.covers.length === 0) continue;
+      const src = readUi(p.owner.replace(/^ui\//, ""));
+      const found = [...src.matchAll(/zIndex:\s*([A-Za-z_$][\w$.]*|\d+)/g)].map((m) => m[1]!);
+      if (found.length === 0) {
+        problems.push(`${p.owner} (${p.id}) declares z=${p.z} but sets NO zIndex — it paints under every slot`);
+        continue;
+      }
+      for (const token of found) {
+        const alias = ALIASES.find(([name]) => name === token);
+        const value = alias ? alias[1] : Number(token);
+        if (!Number.isFinite(value)) {
+          problems.push(`${p.owner} (${p.id}) uses an unknown z expression "${token}" — add it to ALIASES`);
+        } else if (value !== p.z) {
+          problems.push(`${p.owner} (${p.id}) paints at ${token} (${value}) but the registry declares ${p.z}`);
+        }
+      }
+    }
+    expect(problems).toEqual([]);
   });
 
   it("hudPanel throws on an unknown id", () => {
@@ -706,15 +765,42 @@ describe("HUD panel-edge contract (client-26)", () => {
   it("the only chrome exempt from the panel guard rides ABOVE or ACCEPTS cover — and each WOULD collide", () => {
     cover("hud-panel-cover");
     const exempt = HUD_SLOTS.filter((s) => isPanelExempt(s)).map((s) => s.id);
-    expect(exempt.sort()).toEqual(["audio-toggle", "minimap"]);
-    // audio-toggle rides above every panel (portal); minimap accepts being
-    // painted over (overlay). Neither is a false exemption:
+    expect(exempt.sort()).toEqual(["audio-toggle", "gold-level", "minimap"]);
+    // audio-toggle rides above every panel (portal); minimap and gold-level
+    // accept being painted over (overlay). None is a false exemption:
     expect(hudSlot("audio-toggle").portal).toBe(true);
     expect(hudSlot("minimap").overlay).toBe(true);
+    expect(hudSlot("gold-level").overlay).toBe(true);
     // on touch the minimap re-homes to the top-left, WHERE THE SHOP DOCKS, so the
     // exemption is load-bearing, not vacuous
     const vp = { width: 812, height: 375 };
     expect(hudRectsOverlap(hudSlotRect("minimap", vp, true), hudPanelRect("shop", vp))).toBe(true);
+  });
+
+  /**
+   * goldLevelExemptionIsVacuous — gold-level's `overlay` exists for ONE thing:
+   * the relocated ☰ landing on it on a ≤375px-tall landscape phone (see the
+   * registry note). It must never quietly excuse a shop collision, so pin that
+   * the dock's rect cannot reach it on ANY guard viewport or pointer type. If
+   * this ever fails, the exemption has grown a second, undeclared job.
+   */
+  it("gold-level's `overlay` is not a licence for the shop to cover it", () => {
+    cover("hud-panel-cover");
+    for (const vp of PANEL_VIEWPORTS) {
+      for (const touch of [false, true]) {
+        const rect = hudSlotRect("gold-level", vp, touch);
+        expect(
+          hudRectsOverlap(rect, hudPanelRect("shop", vp)),
+          `${vp.width}x${vp.height}${touch ? " touch" : ""}`,
+        ).toBe(false);
+      }
+    }
+    // and the thing the exemption DOES cover really happens: on the shortest
+    // landscape phone the relocated ☰ lands on the gold readout's band.
+    const phone = { width: 667, height: 375 };
+    expect(
+      hudRectsOverlap(hudDisplacedRect("menu", phone, true), hudSlotRect("gold-level", phone, true)),
+    ).toBe(true);
   });
 
   it("the essential ☰ RELOCATES clear of the dock and stays on-screen (shortest viewport)", () => {

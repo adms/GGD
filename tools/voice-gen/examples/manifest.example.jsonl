@@ -1,0 +1,54 @@
+// voice-gen manifest — JSONL, one clip per line. `//` and `#` lines are ignored.
+// Paths in `ref` and `out` are relative to --ref-root / --out-root, which both
+// default to THIS FILE'S directory. Keep reference clips and generated audio
+// OUT of the repo: point --out-root at a scratch or asset-staging directory.
+//
+// `text` is authored exactly as the game DISPLAYS it. What the model is actually
+// fed is recorded separately in each clip's sidecar as `modelText`, so a
+// reviewer can always see what was spoken.
+//
+// The DEFAULT ENGINE IS cosyvoice3. Nothing below needs to say so.
+
+// --- Chinese. Traditional goes in as authored: CosyVoice 3 tokenises 繁中 with
+// zero <unk>. (Only IndexTTS-2 needs the OpenCC conversion, and it applies that
+// itself.) `category` is optional — absent it, the id's suffix is the category,
+// so these three are `taunt`, `death`, `victory`.
+{"id": "godie-e007.taunt",   "ref": "refs/godie-e007.wav", "text": "又變強了！",             "out": "godie-e007/taunt.mp3"}
+{"id": "godie-e007.death",   "ref": "refs/godie-e007.wav", "text": "這不可能……",             "out": "godie-e007/death.mp3"}
+{"id": "godie-e007.victory", "ref": "refs/godie-e007.wav", "text": "去死團的逆襲，全員集合！", "out": "godie-e007/victory.mp3"}
+
+// --- English.
+{"id": "godie-e007.first-blood", "ref": "refs/godie-e007.wav", "lang": "en", "text": "First blood is mine.", "out": "godie-e007/first-blood.mp3"}
+
+// --- JAPANESE. `lang: "ja"` REQUIRES `kana`: a space-separated katakana
+// reading. CosyVoice 3 reads raw kanji as Chinese, so the reading is mandatory
+// and synth.py refuses the line rather than guessing one. The spaces are
+// mora/word boundaries, and they are the ONLY pronunciation control this engine
+// offers for Japanese — there is no kana inpainting (README §6).
+{"id": "godie-e001.battlecry", "ref": "refs/godie-e001.wav", "lang": "ja", "text": "いくぞ！覚悟しろ！", "kana": "イクゾ！カクゴ シロ！", "out": "godie-e001/battlecry.mp3"}
+{"id": "godie-e001.hurt",      "ref": "refs/godie-e001.wav", "lang": "ja", "text": "うぐっ！いたいっ！", "kana": "ウグッ！イタイッ！", "out": "godie-e001/hurt.mp3"}
+
+// A champion name: `text` is the displayed Chinese title, `kana` is the spoken
+// Japanese. If qa.py reports the name came back mangled, RESPELL the kana and
+// re-run — that re-renders this clip and only this clip.
+{"id": "godie-e001.name", "ref": "refs/godie-e001.wav", "lang": "ja", "category": "name", "text": "蟬在叫人壞掉 - 龍宮禮奈", "kana": "ヒグラシ ノ ナク コロニ・リュウグウ レナ。", "out": "godie-e001/name.mp3"}
+
+// --- Pinning a line to the fallback engine by hand. Usually you do NOT write
+// this: qa.py measures the corpus and writes a pins file for `--pins`. Use it
+// only when you already know why. IndexTTS-2's per-line emotion control
+// (emoText / emoVector / emoAlpha) is the reason to reach for it deliberately —
+// CosyVoice 3 has no equivalent.
+{"id": "godie-e001.rage", "ref": "refs/godie-e001.wav", "engine": "indextts", "text": "你們都要死喔？", "out": "godie-e001/rage.mp3", "useEmoText": true, "emoText": "怒りに満ちた叫び", "emoAlpha": 0.8}
+
+// IndexTTS-2 cannot speak Japanese at all (zero kana tokens), so a ja line
+// pinned to it needs a hand-written `romaji` reading or it is refused.
+{"id": "godie-e001.defeat", "ref": "refs/godie-e001.wav", "engine": "indextts", "lang": "ja", "text": "まさか…わたしが、まけるなんて…", "kana": "マサカ… ワタシ ガ、マケル ナンテ…", "romaji": "masaka... watashi ga, makeru nante...", "out": "godie-e001/defeat.mp3"}
+
+// --- Pinning a CosyVoice VARIANT. base and RL have no clean winner: RL measured
+// better on hurt (0.531 vs 0.415) and worse on battlecry (0.326 vs 0.635).
+// Whichever ran is recorded in the sidecar either way.
+{"id": "godie-e002.hurt", "ref": "refs/godie-e002.wav", "variant": "rl", "lang": "ja", "text": "ぐああっ！", "kana": "グアーッ！", "out": "godie-e002/hurt.mp3"}
+
+// A .mp3 output goes through ffmpeg loudnorm to the pack's published target
+// (-16 LUFS / -1.5 dBTP) and out at 128 kbps / 44.1 kHz mono — the #158 ceiling,
+// matching content/assets/audio/voices/quotes. A .wav path ships raw 24 kHz.

@@ -27,6 +27,11 @@ func Cover(t testing.TB, testID string) {
 	if err != nil {
 		t.Fatalf("testkit.Cover: marshal: %v", err)
 	}
+	// #nosec G703,G304,G302 -- `file` is GGD_COVERAGE_FILE, set by this same
+	// test runner for its own child processes; it is never attacker-supplied.
+	// The beacon is an append-only NDJSON artefact that CI reads and throws
+	// away, so 0644 is deliberate: a developer must be able to read it after
+	// a failing run without sudo.
 	f, err := os.OpenFile(file, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0o644)
 	if err != nil {
 		t.Fatalf("testkit.Cover: open %s: %v", file, err)

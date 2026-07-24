@@ -115,7 +115,16 @@ func runExport(args []string) error {
 		return err
 	}
 	if *out == "-" {
-		os.Stdout.Write(raw)
+		// The error is CHECKED, not discarded. This is the carrier of the whole
+		// operator state — with -parts accounts it contains password hashes
+		// verbatim (see export.go). A short write (EPIPE, or ENOSPC on a
+		// redirect) previously left the tool printing "✓ exported" and exiting 0,
+		// so the truncation would only surface later as a checksum failure on
+		// restore — the export side reported success for a bundle it had not
+		// fully written.
+		if _, err := os.Stdout.Write(raw); err != nil {
+			return fmt.Errorf("export: writing to stdout: %w", err)
+		}
 	} else {
 		if err := os.WriteFile(*out, raw, 0o600); err != nil {
 			return fmt.Errorf("export: writing %s: %w", *out, err)
@@ -124,17 +133,23 @@ func runExport(args []string) error {
 	if *jsonOut {
 		return printJSON(rep)
 	}
-	fmt.Printf("✓ exported %s (%d bytes)\n", pathLabel(*out), len(raw))
-	fmt.Printf("  parts: %s\n", strings.Join(rep.Parts, ", "))
-	fmt.Printf("  whitelist: %d champions / %d items / %d abilities\n", rep.Champions, rep.Items, rep.Abilities)
+	// The human summary goes to STDERR. With -out - the bundle itself is on
+	// stdout, and printing the report there too produced JSON followed by
+	// "✓ exported stdout (N bytes)" and the parts/notes/warnings block — i.e.
+	// `opstate export -out - > bundle.json` silently wrote a structurally
+	// invalid bundle, every time. stdout is the data channel; diagnostics belong
+	// on stderr. Nothing parses this text (the Makefile targets use -out <file>).
+	fmt.Fprintf(os.Stderr, "✓ exported %s (%d bytes)\n", pathLabel(*out), len(raw))
+	fmt.Fprintf(os.Stderr, "  parts: %s\n", strings.Join(rep.Parts, ", "))
+	fmt.Fprintf(os.Stderr, "  whitelist: %d champions / %d items / %d abilities\n", rep.Champions, rep.Items, rep.Abilities)
 	if rep.Accounts > 0 {
-		fmt.Printf("  accounts: %d\n", rep.Accounts)
+		fmt.Fprintf(os.Stderr, "  accounts: %d\n", rep.Accounts)
 	}
 	for _, n := range rep.Notes {
-		fmt.Printf("  · %s\n", n)
+		fmt.Fprintf(os.Stderr, "  · %s\n", n)
 	}
 	for _, wn := range rep.Warnings {
-		fmt.Printf("  ! %s\n", wn)
+		fmt.Fprintf(os.Stderr, "  ! %s\n", wn)
 	}
 	return nil
 }
@@ -287,6 +302,10 @@ func readInput(path string) ([]byte, error) {
 	if path == "-" {
 		return io.ReadAll(os.Stdin)
 	}
+	// #nosec G304 -- `path` is an argv flag of an OPERATOR CLI (cmd/opstate is a
+	// separate binary from cmd/platform and serves no requests). Reading a file
+	// the operator named on their own command line is the tool's purpose; there
+	// is no privilege boundary to cross here.
 	raw, err := os.ReadFile(path)
 	if err != nil {
 		return nil, fmt.Errorf("reading %s: %w", path, err)

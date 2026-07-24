@@ -34,6 +34,11 @@
     "mr": 1.2,
     "as": 0.02
   },
+  "hitFeel": {
+    "hitstopTicks": 2,
+    "shakeMag": 0.38,
+    "knockbackMag": 0.25
+  },
   "abilities": {
     "Q": {
       "id": "godie-hlgr.q",
@@ -232,7 +237,8 @@
   ],
   "tags": [
     "wc3-import",
-    "godie"
+    "godie",
+    "gun"
   ],
   "exAbility": "godie-hlgr.ex",
   "passiveAbility": "godie-hlgr.passive",

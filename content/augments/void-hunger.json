@@ -1,0 +1,29 @@
+{
+  "id": "void-hunger",
+  "schema": "augment@1",
+  "name": "虛空飢渴",
+  "description": "法術強度 +35%，冷卻縮減 +15%，最大魔力 +25%。",
+  "tier": "prismatic",
+  "weight": 26,
+  "modifiers": [
+    {
+      "stat": "ap",
+      "op": "pctAdd",
+      "value": 0.35
+    },
+    {
+      "stat": "cdr",
+      "op": "flat",
+      "value": 0.15
+    },
+    {
+      "stat": "maxMana",
+      "op": "pctAdd",
+      "value": 0.25
+    }
+  ],
+  "tags": [
+    "ap",
+    "offense"
+  ]
+}

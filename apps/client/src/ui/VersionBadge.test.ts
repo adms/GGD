@@ -21,7 +21,9 @@ import {
   VersionBadge,
   VersionBadgeView,
   resolveStamp,
+  preferLiveStamp,
   BUILD_STAMP_FALLBACK,
+  LIVE_STAMP_ROUTE,
 } from "./VersionBadge";
 
 describe("VersionBadge (version-badge)", () => {
@@ -52,6 +54,25 @@ describe("VersionBadge (version-badge)", () => {
     expect(resolveStamp("")).toBe("dev");
     expect(resolveStamp("   ")).toBe("dev");
     expect(resolveStamp("9f8e7d6 2026-07-22")).toBe("9f8e7d6 2026-07-22");
+  });
+
+  it("a live dev stamp WINS over the frozen literal — the P8 staleness fix", () => {
+    cover("version-badge");
+    // The regression: a dev server booted at 7d1bb37 keeps substituting that sha
+    // via `define` no matter how far HEAD moves, so the badge lied about which
+    // build a screenshot came from. The live dev route is the fresher fact.
+    expect(preferLiveStamp("7d1bb37 2026-07-14", "49dca64 2026-07-24")).toBe("49dca64 2026-07-24");
+    expect(preferLiveStamp("7d1bb37 2026-07-14", " 49dca64 2026-07-24 ")).toBe("49dca64 2026-07-24");
+  });
+
+  it("every live-stamp failure mode falls back to the baked literal, never to blank", () => {
+    cover("version-badge");
+    const baked = "7d1bb37 2026-07-14";
+    expect(preferLiveStamp(baked, null)).toBe(baked); // no route (prod build) / fetch failed
+    expect(preferLiveStamp(baked, "")).toBe(baked); // empty body
+    expect(preferLiveStamp(baked, "   ")).toBe(baked); // whitespace body
+    // and the route is a dev-only, clearly-namespaced path — never a real screen
+    expect(LIVE_STAMP_ROUTE.startsWith("/__")).toBe(true);
   });
 
   it("the default export always renders a non-empty stamp inside the badge", () => {

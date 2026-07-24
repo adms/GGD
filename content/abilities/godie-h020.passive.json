@@ -2,6 +2,7 @@
   "id": "godie-h020.passive",
   "schema": "ability@1",
   "name": "04-00 翔封界",
+  "icon": "assets/icons/abilities/godie-h020.passive.webp",
   "description": "[輔助]\n50秒冷卻時間\n\n警覺的莉娜平時都會開啟翔封界達到一定的魔法防禦效果，可抵擋負性魔法一次。",
   "slot": "PASSIVE",
   "innateKind": "passive",

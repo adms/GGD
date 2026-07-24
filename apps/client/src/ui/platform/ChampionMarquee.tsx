@@ -36,6 +36,17 @@
  *   (~180 KB) instead of the full 733 KB. `loading="lazy"` alone is NOT enough
  *   here: every tile lives inside an `overflow:hidden` track moved by a CSS
  *   transform, and the lazy heuristic is not specified to track that.
+ *
+ *   RULE 3 — "REVEALED" IS NOT "LOADED" (playtest P10). Rules 1+2 got the
+ *   portraits requested; they did not get them DRAWN. `revealed` only means "we
+ *   have decided to fetch this one", and the moment it flipped, the tile swapped
+ *   its designed fallback chip for an <img> that had no bytes yet — over a
+ *   `#10151f` box. The first impression of the whole game was therefore a row of
+ *   EMPTY BLACK SQUARES for as long as the network took. The chip is now a
+ *   LAYER underneath rather than an either/or branch: it stays painted (with a
+ *   loading sheen) until that specific portrait's `onLoad` fires, and the
+ *   portrait cross-fades in over it. Cached portraits are caught via the img's
+ *   `complete` flag, since their load event can beat React's handler.
  */
 import { useEffect, useMemo, useState } from "react";
 import { Champions } from "@ggd/shared/sim/content/registry";
@@ -84,7 +95,13 @@ export function revealedPortraitCount(opts: {
  */
 function Tile({ tile, revealed }: { tile: MarqueeTile; revealed: boolean }): React.JSX.Element {
   const [failed, setFailed] = useState(false);
-  const showChip = tile.iconUrl === null || failed || !revealed;
+  // P10: DECODED, not merely "we decided to request it". See the header note —
+  // the gap between those two facts is the row of black squares.
+  const [decoded, setDecoded] = useState(false);
+  const hasImg = tile.iconUrl !== null && !failed && revealed;
+  // The chip is the floor under EVERY tile: it stays painted until this tile's
+  // own portrait has actually decoded, and the portrait then fades in over it.
+  const showChip = !hasImg || !decoded;
   return (
     <div
       style={{
@@ -116,14 +133,31 @@ function Tile({ tile, revealed }: { tile: MarqueeTile; revealed: boolean }): Rea
           justifyContent: "center",
         }}
       >
-        {showChip ? (
+        {/* The chip is a LAYER, not an either/or branch: it is painted under the
+            portrait and only stops being visible once that portrait has decoded,
+            so there is never a frame showing an empty box. While a portrait is
+            in flight the chip carries a slow sheen (`ggd-marquee-shimmer`) that
+            reads as "loading" rather than as a finished, broken tile. */}
+        {showChip && (
           <span
             aria-hidden
-            style={{ fontSize: 24, fontWeight: 800, color: "rgba(255,255,255,0.92)", lineHeight: 1 }}
+            className={hasImg ? "ggd-marquee-shimmer" : undefined}
+            style={{
+              position: "absolute",
+              inset: 0,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: 24,
+              fontWeight: 800,
+              color: "rgba(255,255,255,0.92)",
+              lineHeight: 1,
+            }}
           >
             {tile.initial}
           </span>
-        ) : (
+        )}
+        {hasImg && (
           <>
             <img
               src={tile.iconUrl ?? undefined}
@@ -131,12 +165,31 @@ function Tile({ tile, revealed }: { tile: MarqueeTile; revealed: boolean }): Rea
               loading="lazy"
               draggable={false}
               onError={() => setFailed(true)}
-              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+              // onLoad is the DECODE signal that ends the chip. `complete` is
+              // checked in the ref too: a portrait already in the HTTP cache can
+              // finish before React attaches the handler, and without that check
+              // such a tile would sit on its chip forever.
+              ref={(el) => {
+                if (el?.complete === true && el.naturalWidth > 0) setDecoded(true);
+              }}
+              onLoad={() => setDecoded(true)}
+              style={{
+                position: "absolute",
+                inset: 0,
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                display: "block",
+                // cross-fade in over the chip; no layout shift, no pop
+                opacity: decoded ? 1 : 0,
+                transition: "opacity 320ms ease-out",
+              }}
             />
             {/* w3x vertex tint, applied as an exact multiply so the portrait
                 matches the champion the 3D model renders as. 黑化Saber shares
                 Saber's extracted PNG; its 0.29 grey is what makes the two tiles
-                visibly different characters instead of one duplicate. */}
+                visibly different characters instead of one duplicate. Fades with
+                the portrait — a multiply over a bare chip would darken it. */}
             {tile.tintCss !== null && (
               <span
                 aria-hidden
@@ -146,6 +199,8 @@ function Tile({ tile, revealed }: { tile: MarqueeTile; revealed: boolean }): Rea
                   background: tile.tintCss,
                   mixBlendMode: "multiply",
                   pointerEvents: "none",
+                  opacity: decoded ? 1 : 0,
+                  transition: "opacity 320ms ease-out",
                 }}
               />
             )}
@@ -246,7 +301,18 @@ export function ChampionMarquee(): React.JSX.Element | null {
         // seamless: the track is two identical copies wide; shifting by 50%
         // (one copy) puts copy-2 exactly where copy-1 began. reduced-motion → paused.
         "@keyframes ggdChampMarquee{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}" +
-        "@media (prefers-reduced-motion: reduce){.ggd-champ-marquee-track{animation-play-state:paused!important}}"
+        "@media (prefers-reduced-motion: reduce){.ggd-champ-marquee-track{animation-play-state:paused!important}}" +
+        // P10: the "this tile is still loading" sheen. A diagonal highlight
+        // sweeping across the chip — the standard skeleton idiom, so the row
+        // reads as content on its way in rather than as a finished broken grid.
+        // Only ever applied to a chip that HAS a portrait coming (see Tile), so
+        // a genuinely portrait-less champion keeps its calm static chip and does
+        // not pretend to be loading something that will never arrive.
+        "@keyframes ggdMarqueeShimmer{0%{background-position:-140% 0}100%{background-position:240% 0}}" +
+        ".ggd-marquee-shimmer{background-image:linear-gradient(115deg," +
+        "rgba(255,255,255,0) 35%,rgba(255,255,255,0.22) 50%,rgba(255,255,255,0) 65%);" +
+        "background-size:220% 100%;animation:ggdMarqueeShimmer 1.5s ease-in-out infinite}" +
+        "@media (prefers-reduced-motion: reduce){.ggd-marquee-shimmer{animation:none}}"
       }</style>
 
       <div

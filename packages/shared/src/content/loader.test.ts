@@ -53,11 +53,16 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
     expect(Abilities.ids().length).toBeGreaterThanOrEqual(8);
     expect(Items.ids().length).toBeGreaterThanOrEqual(4);
     // augment pool: task #149 expanded it to 21 (silver 6 / gold 8 / prismatic 7)
-    // and task #157 re-enabled the per-round 3-choose-1 draft. The original
+    // and task #157 re-enabled the per-round 3-choose-1 draft. The PRISMATIC
+    // tier then went 7 -> 16 for the team-health model: `arena-rules` offers
+    // prismatic on round 5 and EVERY round after, and a 10-13 round match draws
+    // 7-9 prismatic cards per champion from a pool that picks without
+    // replacement, so 7 cards could not fill three real choices to the end (339
+    // of 1941 offers measured under-filled). See draft.test.ts. The original
     // skeleton 3 remain within the pool. EX is still a per-hero ability
     // (champion.exAbility + slot "EX"), NOT an augment. See ex-skills.test.ts.
     expect(Augments.ids()).toEqual(expect.arrayContaining(["bloodlust", "chill-touch", "aegis-surge"]));
-    expect(Augments.ids().length).toBe(21);
+    expect(Augments.ids().length).toBe(30);
     expect(Projectiles.ids().length).toBeGreaterThanOrEqual(2);
     expect(LootTables.get("round-reward").entries).toHaveLength(4);
 

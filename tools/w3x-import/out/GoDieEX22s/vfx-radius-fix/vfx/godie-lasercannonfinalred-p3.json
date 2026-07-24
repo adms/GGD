@@ -1,0 +1,78 @@
+{
+  "id": "godie-lasercannonfinalred-p3",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.001,
+    "angleDeg": 1.0
+  },
+  "mode": "continuous",
+  "rate": 90.0,
+  "lifetimeSec": {
+    "min": 4.0,
+    "max": 4.0
+  },
+  "size": {
+    "start": 2.389,
+    "end": 2.389
+  },
+  "color": {
+    "start": [
+      1.0,
+      0.502,
+      0.502,
+      1.0
+    ],
+    "end": [
+      1.0,
+      0.502,
+      0.502,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        1.0,
+        0.502,
+        0.502,
+        1.0
+      ]
+    ],
+    [
+      0.5,
+      [
+        1.0,
+        0.502,
+        0.502,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        1.0,
+        0.502,
+        0.502,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      2.389
+    ],
+    [
+      0.5,
+      2.389
+    ],
+    [
+      1,
+      2.389
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/flare_01.png"
+}

@@ -35,6 +35,11 @@
     "mr": 1.2,
     "as": 0.02
   },
+  "hitFeel": {
+    "hitstopTicks": 1,
+    "shakeMag": 0.24,
+    "knockbackMag": 0.0
+  },
   "abilities": {
     "Q": {
       "id": "godie-ekee.q",
@@ -76,9 +81,23 @@
           }
         }
       ],
-      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "vfxKey": "fx.w3x.orb.darkbreathdamage.p00",
       "targetsEnemies": true,
-      "icon": "assets/icons/abilities/godie-ekee.q.png"
+      "icon": "assets/icons/abilities/godie-ekee.q.png",
+      "hitFeel": {
+        "hitstopTicks": 3,
+        "hitstunTicks": 4,
+        "shakeMag": 0.315,
+        "shakeStyle": "directional",
+        "sparkKind": "magic",
+        "flashColor": [
+          0.62,
+          0.45,
+          0.85
+        ],
+        "flashMs": 108,
+        "camKick": 0.27
+      }
     },
     "W": {
       "id": "godie-ekee.w",
@@ -231,7 +250,8 @@
   "tags": [
     "wc3-import",
     "godie",
-    "voxel-standin"
+    "voxel-standin",
+    "magic"
   ],
   "exAbility": "godie-ekee.ex",
   "passiveAbility": "godie-ekee.passive"

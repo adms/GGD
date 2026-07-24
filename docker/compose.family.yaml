@@ -86,6 +86,23 @@ services:
       # and made every match fail to record with a silent EACCES). Point it at the
       # writable bind mount below so replays actually land and survive restarts.
       GGD_REPLAY_DIR: /data/replays
+      # WHERE THE BROWSER IS TOLD TO CONNECT. This is the one line whose absence
+      # broke every remote match: index.ts defaults PUBLIC_ENDPOINT to
+      # `ws://localhost:${PORT}`, that string is what the platform pushes to the
+      # client in `match_ready.endpoint`, and the client hands it straight to
+      # `new Client(...)`. Unset, every family member's browser was told to
+      # connect to the game server on THEIR OWN machine — where nothing is
+      # listening — so the join failed INSTANTLY. Not "seat reservation expired
+      # after 15 s"; instantly, which is exactly how the owner described it.
+      #
+      # It was invisible in every kind of testing this project does: on the
+      # owner's own machine localhost:2567 IS the game server, so playing locally
+      # works, and no unit or integration test connects from a remote browser.
+      #
+      # `/ws` is the nginx route that proxies to the game container
+      # (nginx/conf `location /ws/`). Verified live before setting it:
+      # POST https://ggd.adms.ai/ws/matchmake/joinOrCreate/match → 200.
+      GAME_PUBLIC_ENDPOINT: "wss://ggd.adms.ai/ws"
       # NOT development. The base compose sets NODE_ENV=development, which made
       # apps/game-server/src/config/secretGuard.ts inert on the one deploy path
       # that matters and left match/cheatGate.ts relying on a non-empty secret
@@ -107,6 +124,13 @@ services:
       args:
         # THE ONE THAT DECIDES THE OUTCOME. See the header, item 3.
         VITE_GGD_FULL_ASSETS: "1"
+        # Build identity (task #66 / P0-6(a)). compose merges `args` MAPS
+        # key-wise (unlike `ports`, a sequence, which needed `!override`), so
+        # the base file's value would already carry — it is restated because
+        # this is the file the family deploy is read from, and a stamp that is
+        # present in one build path and absent in another is precisely the shape
+        # of the defect being fixed. `make family-up` exports the value.
+        GGD_BUILD_STAMP: "${GGD_BUILD_STAMP:-}"
     # THE ONLY PORT REACHABLE FROM THE NETWORK.
     # GGD_BIND=127.0.0.1 keeps it local; 0.0.0.0 opens it to the LAN/tunnel.
     #

@@ -46,8 +46,7 @@ type Service struct {
 	store    *jsonstore.Store
 	cat      Catalog
 
-	metaLocks   *keyedmutex.M
-	crystalRoll func() int
+	metaLocks *keyedmutex.M
 }
 
 // New builds the wallet service around the loaded content catalog. store is
@@ -55,12 +54,11 @@ type Service struct {
 // nil in narrow unit tests that never touch meta.
 func New(accounts *account.Repo, rdb *redisx.Client, store *jsonstore.Store, cat Catalog) *Service {
 	return &Service{
-		accounts:    accounts,
-		rdb:         rdb,
-		store:       store,
-		cat:         cat,
-		metaLocks:   keyedmutex.New(),
-		crystalRoll: defaultCrystalRoll,
+		accounts:  accounts,
+		rdb:       rdb,
+		store:     store,
+		cat:       cat,
+		metaLocks: keyedmutex.New(),
 	}
 }
 

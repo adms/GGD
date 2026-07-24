@@ -39,7 +39,11 @@ import { displayFinal, envFactor, statDisplayFactor } from "../displayFinal";
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CONTENT = join(HERE, "../../../../../content");
 
-/** The shipped live combat-env (cooldown 0.25, damageDealt 0.5, maxHealth 8…). */
+/**
+ * The shipped live combat-env. Its NUMBERS are the owner's to tune — assertions
+ * against it must be invariants, never literals copied out of the file on the
+ * day the test was written.
+ */
 const LIVE_CONFIG = JSON.parse(
   readFileSync(join(CONTENT, "config/combat-env.json"), "utf8"),
 ) as { multipliers: Partial<Record<string, number>> };
@@ -104,9 +108,21 @@ describe("rescaleAbilityProse damage pass (hud-display-final)", () => {
     cover("hud-display-final");
     // the reported case: 650 base, combat runs it at 325 (×0.5)
     expect(rescaleAbilityProse("造成650傷害", DMG_HALF)).toBe("造成325傷害（WC3原 650）");
-    // and via the shipped live table (also damageDealt ×0.5) — same result
-    expect(rescaleAbilityProse("造成650傷害", LIVE)).toBe("造成325傷害（WC3原 650）");
-    // 造成 NNN 點傷害 (the 賈修 ultimate shape): 550 × 0.5 = 275
+    // The SHIPPED table is checked as an INVARIANT, not a frozen number. It used
+    // to assert the same "325" literal because damageDealt happened to be 0.5 —
+    // so the owner setting it back to 1.0 (「打太久了」) turned a deliberate
+    // balance change into a red test, which is the shape this suite exists to
+    // avoid. What must hold at ANY factor: the shown damage is the base times
+    // the live factor, and the WC3 original is annotated only when it differs.
+    {
+      const f = LIVE.damageDealt;
+      const shown = Math.round(650 * f);
+      expect(rescaleAbilityProse("造成650傷害", LIVE)).toBe(
+        f === 1 ? "造成650傷害" : `造成${shown}傷害（WC3原 650）`,
+      );
+    }
+    // 造成 NNN 點傷害 (the 賈修 ultimate shape) — DMG_HALF is a fixed TEST factor,
+    // so this literal is stable regardless of what the shipped table says.
     expect(rescaleAbilityProse("造成550點傷害", DMG_HALF)).toBe("造成275點傷害（WC3原 550）");
     // NNN[ ]點傷害 with no 造成 prefix
     expect(rescaleAbilityProse("200點傷害", DMG_HALF)).toBe("100點傷害（WC3原 200）");
@@ -144,11 +160,15 @@ describe("rescaleAbilityProse damage pass (hud-display-final)", () => {
 describe("rescaleAbilityProse cooldown + damage together (hud-display-final)", () => {
   it("rewrites BOTH literals in one pass, each by its own factor", () => {
     cover("hud-display-final");
-    // LIVE: cooldown ×0.25 AND damage ×0.5 — disjoint keyword anchors, so the
-    // cooldown number is never re-read as damage or vice-versa.
-    expect(rescaleAbilityProse("60秒冷卻時間\n造成650傷害", LIVE)).toBe(
-      "15秒冷卻時間（WC3原 60秒）\n造成325傷害（WC3原 650）",
-    );
+    // Disjoint keyword anchors: the cooldown number is never re-read as damage
+    // or vice-versa. Both expectations are DERIVED from the live table, because
+    // the owner tunes those factors and a literal here would make his balance
+    // change look like a regression.
+    const cd = LIVE.cooldown;
+    const dmg = LIVE.damageDealt;
+    const cdOut = cd === 1 ? "60秒冷卻時間" : `${Math.round(60 * cd)}秒冷卻時間（WC3原 60秒）`;
+    const dmgOut = dmg === 1 ? "造成650傷害" : `造成${Math.round(650 * dmg)}傷害（WC3原 650）`;
+    expect(rescaleAbilityProse("60秒冷卻時間\n造成650傷害", LIVE)).toBe(`${cdOut}\n${dmgOut}`);
   });
 
   it("is a no-op under a neutral table and idempotent under repeat calls", () => {
@@ -171,15 +191,23 @@ describe("rescaleAbilityProse cooldown + damage together (hud-display-final)", (
     const cd = envFactor("cooldown", LIVE); // 0.25
     const dmg = envFactor("damageDealt", LIVE); // 0.5
     const expectedFor = (desc: string): string => {
-      let e = desc.replace(
-        /(\d+)秒冷卻時間/,
-        (_m, n: string) => `${Math.round(Number(n) * cd)}秒冷卻時間（WC3原 ${n}秒）`,
-      );
-      e = e.replace(
-        /(造成\s*)(\d+)(\s*(?:點\s*)?傷害)/g,
-        (_m, p: string, n: string, s: string) =>
-          `${p}${Math.round(Number(n) * dmg)}${s}（WC3原 ${n}）`,
-      );
+      // A factor of exactly 1 is a NO-OP, not a rewrite-with-annotation: the
+      // shown number already IS the WC3 original, so annotating it would be
+      // noise. rescaleAbilityProse skips it, and so must this mirror.
+      let e =
+        cd === 1
+          ? desc
+          : desc.replace(
+              /(\d+)秒冷卻時間/,
+              (_m, n: string) => `${Math.round(Number(n) * cd)}秒冷卻時間（WC3原 ${n}秒）`,
+            );
+      if (dmg !== 1) {
+        e = e.replace(
+          /(造成\s*)(\d+)(\s*(?:點\s*)?傷害)/g,
+          (_m, p: string, n: string, s: string) =>
+            `${p}${Math.round(Number(n) * dmg)}${s}（WC3原 ${n}）`,
+        );
+      }
       return e;
     };
 
@@ -214,7 +242,12 @@ describe("rescaleAbilityProse cooldown + damage together (hud-display-final)", (
     expect(e00k).toContain("力量*0.5傷害");
     // hblm's flat 550 is rescaled, but its formula 額外傷害 term is preserved
     const hblm = rescaleAbilityProse(docDescription(loadAbility("godie-hblm.r"))!, LIVE);
-    expect(hblm).toContain("造成275點傷害（WC3原 550）");
+    {
+      const d = LIVE.damageDealt;
+      expect(hblm).toContain(
+        d === 1 ? "造成550點傷害" : `造成${Math.round(550 * d)}點傷害（WC3原 550）`,
+      );
+    }
     expect(hblm).toContain("力量*3額外傷害");
   });
 
@@ -228,21 +261,32 @@ describe("rescaleAbilityProse cooldown + damage together (hud-display-final)", (
 describe("displayFinal HP final + damage factor (hud-display-final)", () => {
   it("champion maxHealth shows the ×8 battle value — 460 → 3680", () => {
     cover("hud-display-final");
-    // the user named HP: base 460 fights at 3680 under maxHealth ×8
-    expect(displayFinal(460, "health", LIVE)).toBe(3680);
+    // the user named HP: base 460 shown at its post-multiplier final
+    const hp = Math.round(460 * LIVE.maxHealth);
+    expect(displayFinal(460, "health", LIVE)).toBe(hp);
     // the champ stat-doc key resolves to the maxHealth factor (NOT ability range)
     expect(statDisplayFactor("maxHealth")).toBe("maxHealth");
-    expect(displayFinal(460, statDisplayFactor("maxHealth"), LIVE)).toBe(3680);
+    expect(displayFinal(460, statDisplayFactor("maxHealth"), LIVE)).toBe(hp);
   });
 
-  it("the shipped live table scales damage ×0.5 (prose damage must be rewritten)", () => {
+  it("the shipped live table's factors flow through to what the HUD shows", () => {
     cover("hud-display-final");
-    expect(LIVE_CONFIG.multipliers.damageDealt).toBe(0.5);
-    expect(LIVE_CONFIG.multipliers.cooldown).toBe(0.25);
-    expect(LIVE_CONFIG.multipliers.maxHealth).toBe(8.0);
-    // so the display factor for damage is a real ×0.5 (650 → 325)
-    expect(envFactor("damage", LIVE)).toBe(0.5);
-    expect(displayFinal(650, "damage", LIVE)).toBe(325);
+    // NOT the values — the WIRING. This block used to assert damageDealt === 0.5,
+    // cooldown === 0.25, maxHealth === 8.0, i.e. it froze three balance knobs the
+    // owner tunes from playtest. He set damage back to 1.0 (「打太久了」) and this
+    // went red — a balance decision reported as a regression, which is precisely
+    // backwards. What is worth pinning is that each knob is present, sane, and
+    // reaches displayFinal through the right alias; the numbers themselves are
+    // his.
+    for (const k of ["damageDealt", "cooldown", "maxHealth"] as const) {
+      const v = LIVE_CONFIG.multipliers[k];
+      expect(typeof v, `${k} must exist in the shipped table`).toBe("number");
+      expect(v, `${k} must be a positive finite multiplier`).toBeGreaterThan(0);
+    }
+    // "damage" is an ALIAS of damageDealt — that mapping is the real contract,
+    // and it must hold whatever the factor happens to be.
+    expect(envFactor("damage", LIVE)).toBe(LIVE.damageDealt);
+    expect(displayFinal(650, "damage", LIVE)).toBe(Math.round(650 * LIVE.damageDealt));
     // champ ATTACK range must NOT ride the ability-range ×0.6 alias
     expect(statDisplayFactor("range")).toBe("attackRange");
     expect(displayFinal(6, statDisplayFactor("range"), LIVE)).toBe(6);

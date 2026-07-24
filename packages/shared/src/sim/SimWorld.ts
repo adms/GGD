@@ -31,6 +31,7 @@ import { TICK_MS } from "../constants";
 import { orderSystem } from "./systems/OrderSystem";
 import { movementSystem } from "./systems/MovementSystem";
 import { statRecomputeSystem, buffExpirySystem } from "./stats/statPipeline";
+import { auraSystem } from "./aura/aura";
 import { commandSystem } from "./systems/CommandSystem";
 import { castResolveSystem } from "./systems/CastResolveSystem";
 import { recoveryDecaySystem } from "./systems/RecoverySystem";
@@ -364,6 +365,11 @@ export class SimWorld {
     this.rebuildGrid();
 
     // FIXED system order — the client prediction replays this exact order.
+    auraSystem(this); //          0b. reconcile aura membership against the grid
+    //                             just rebuilt above, BEFORE the recompute below
+    //                             folds it in — so an aura entered this tick
+    //                             affects this tick's movement/attacks/casts and
+    //                             no second recompute is needed (aura/aura.ts).
     statRecomputeSystem(this); // 1. recompute dirty stats
     buffExpirySystem(this); //    1b. expire timed buff sources
     statusExpirySystem(this); // 2. expire statuses (slows/roots/stuns)

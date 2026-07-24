@@ -34,6 +34,11 @@
     "mr": 1.2,
     "as": 0.02
   },
+  "hitFeel": {
+    "hitstopTicks": 2,
+    "shakeMag": 0.34,
+    "knockbackMag": 0.0
+  },
   "abilities": {
     "Q": {
       "id": "godie-uvng.q",
@@ -133,10 +138,24 @@
           "moveSpeedMult": 0.6
         }
       ],
-      "vfxKey": "fx.firestorm",
+      "vfxKey": "godie-fireblast-p3",
       "targetsEnemies": true,
       "radius": 6.0,
-      "castTimeSec": 0.7
+      "castTimeSec": 0.7,
+      "hitFeel": {
+        "hitstopTicks": 3,
+        "hitstunTicks": 5,
+        "shakeMag": 0.382,
+        "shakeStyle": "omni",
+        "sparkKind": "heavy",
+        "flashColor": [
+          1.0,
+          0.66,
+          0.3
+        ],
+        "flashMs": 131,
+        "camKick": 0.328
+      }
     },
     "E": {
       "id": "godie-uvng.e",
@@ -179,8 +198,22 @@
           ]
         }
       ],
-      "vfxKey": "fx.firestorm",
-      "castTimeSec": 0.3
+      "vfxKey": "godie-tectonicfury-p0",
+      "castTimeSec": 0.3,
+      "hitFeel": {
+        "hitstopTicks": 4,
+        "hitstunTicks": 6,
+        "shakeMag": 0.42,
+        "shakeStyle": "omni",
+        "sparkKind": "heavy",
+        "flashColor": [
+          0.9,
+          0.72,
+          0.48
+        ],
+        "flashMs": 144,
+        "camKick": 0.36
+      }
     },
     "R": {
       "id": "godie-uvng.r",
@@ -219,8 +252,22 @@
           "duration": 10.0
         }
       ],
-      "vfxKey": "fx.prim.void.beam-lg",
-      "castTimeSec": 0.4
+      "vfxKey": "fx.w3x.particle.flamessmoke.p01",
+      "castTimeSec": 0.4,
+      "hitFeel": {
+        "hitstopTicks": 4,
+        "hitstunTicks": 7,
+        "shakeMag": 0.472,
+        "shakeStyle": "directional",
+        "sparkKind": "heavy",
+        "flashColor": [
+          1.0,
+          0.6,
+          0.26
+        ],
+        "flashMs": 162,
+        "camKick": 0.405
+      }
     }
   },
   "skillOrder": [
@@ -235,7 +282,8 @@
   ],
   "tags": [
     "wc3-import",
-    "godie"
+    "godie",
+    "katana"
   ],
   "exAbility": "godie-uvng.ex",
   "passiveAbility": "godie-uvng.passive",

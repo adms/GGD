@@ -34,6 +34,11 @@
     "mr": 1.2,
     "as": 0.02
   },
+  "hitFeel": {
+    "hitstopTicks": 3,
+    "shakeMag": 0.44,
+    "knockbackMag": 0.25
+  },
   "abilities": {
     "Q": {
       "id": "godie-h00l.q",
@@ -217,10 +222,24 @@
           "stun": true
         }
       ],
-      "vfxKey": "fx.prim.physical.nova-lg",
+      "vfxKey": "godie-bladestorm-swordeffect-p0",
       "targetsEnemies": true,
       "radius": 6.0,
-      "castTimeSec": 0.8
+      "castTimeSec": 0.8,
+      "hitFeel": {
+        "hitstopTicks": 5,
+        "hitstunTicks": 8,
+        "shakeMag": 0.543,
+        "shakeStyle": "omni",
+        "sparkKind": "heavy",
+        "flashColor": [
+          1.0,
+          0.9,
+          0.8
+        ],
+        "flashMs": 186,
+        "camKick": 0.466
+      }
     }
   },
   "skillOrder": [
@@ -235,7 +254,8 @@
   ],
   "tags": [
     "wc3-import",
-    "godie"
+    "godie",
+    "sword"
   ],
   "exAbility": "godie-h00l.ex",
   "passiveAbility": "godie-h00l.passive",

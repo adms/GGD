@@ -54,16 +54,22 @@ func TestEarnOnSettlement(t *testing.T) {
 	// Fixture rewards: placement1=200, placement2=120.
 	hostW, err := ts.Srv.Wallet.Get(ctx, host.ID)
 	require.NoError(t, err)
-	require.Equal(t, 700, hostW.MCoin, "winner: 500 + 200")
+	// NOTE: every fixture in this file is a BOT lobby (2 humans + 10 bots), and
+	// M幣 now requires an ALL-HUMAN 12-seat lobby (owner: 「全部玩家位置都真人
+	// 才有 M幣」). So the balance must not move at all. These assertions used to
+	// read 700 = 500 + a 200-per-placement grant; that table minted M COIN every
+	// match, which contradicted #118's own 「後台發放的造型幣（非購買）」 premise.
+	// The grant is now ONE coin, first place, perfect lobby only.
+	require.Equal(t, 500, hostW.MCoin, "bot lobby: balance untouched, no M幣")
 	guestW, err := ts.Srv.Wallet.Get(ctx, guest.ID)
 	require.NoError(t, err)
-	require.Equal(t, 120, guestW.MCoin, "second place: 0 + 120")
+	require.Equal(t, 0, guestW.MCoin, "bot lobby: second place earns nothing either")
 
 	// The match record stores the ABSOLUTE post-match balances and has no
 	// rating entries for guests; no guest account file was conjured up.
 	rec := readMatchRecord(t, ts, matchID)
-	require.Equal(t, 700, rec.Ratings[host.ID].MCoin)
-	require.Equal(t, 120, rec.Ratings[guest.ID].MCoin)
+	require.Equal(t, 500, rec.Ratings[host.ID].MCoin)
+	require.Equal(t, 0, rec.Ratings[guest.ID].MCoin)
 	require.NotContains(t, rec.Ratings, "guest-77:p")
 	require.NotContains(t, rec.Ratings, "01NOSUCHACCOUNT0000000000X")
 	_, err = ts.Srv.Accounts.GetByID(ctx, "01NOSUCHACCOUNT0000000000X")
@@ -84,25 +90,27 @@ func TestSettlementIdempotentMCoin(t *testing.T) {
 	require.Equal(t, http.StatusOK, resp1.StatusCode)
 	w1, err := ts.Srv.Wallet.Get(ctx, host.ID)
 	require.NoError(t, err)
-	require.Equal(t, 700, w1.MCoin)
+	require.Equal(t, 500, w1.MCoin)
 
 	// Duplicate callback: acknowledged, grants NOTHING again.
 	resp2, err := gamelinktest.SendResult(ts.HTTP.URL, testutil.GameSecret, res, 0)
 	require.NoError(t, err)
-	var body map[string]string
+	// map[string]any: the result ack also carries the numeric settled/humanSeats
+	// counts (resultAck in callback.go).
+	var body map[string]any
 	require.NoError(t, json.NewDecoder(resp2.Body).Decode(&body))
 	resp2.Body.Close()
 	require.Equal(t, "duplicate", body["status"])
 	w2, err := ts.Srv.Wallet.Get(ctx, host.ID)
 	require.NoError(t, err)
-	require.Equal(t, 700, w2.MCoin, "duplicate must not double-grant M COIN")
+	require.Equal(t, 500, w2.MCoin, "duplicate must not double-grant M COIN")
 
 	// Boot replay (WAL) converges to the same absolute balance too.
 	require.NoError(t, ts.Srv.Journal.AppendIntent(matchID, readMatchRecord(t, ts, matchID)))
 	require.NoError(t, ts.Srv.Boot(ctx))
 	w3, err := ts.Srv.Wallet.Get(ctx, host.ID)
 	require.NoError(t, err)
-	require.Equal(t, 700, w3.MCoin, "WAL replay applies the absolute balance idempotently")
+	require.Equal(t, 500, w3.MCoin, "WAL replay applies the absolute balance idempotently")
 }
 
 // readMatchRecord loads the settled match JSON truth.

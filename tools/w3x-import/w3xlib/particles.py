@@ -46,13 +46,23 @@ class PNode:
     object_id: int
     parent_id: int
     kind: str  # bone/helper/attachment/emitter2/ribbon/event
+    flags: int = 0
 
 
 @dataclass
 class FloatTrack:
-    """Minimal scalar track: (frame, value) pairs, interp/tangents dropped."""
+    """Minimal scalar track: (frame, value) pairs, tangents dropped.
+
+    `interp`/`global_seq` are recorded (0 none, 1 linear, 2 hermite, 3 bezier;
+    global_seq -1 when the track runs on the model timeline) so a consumer can
+    reproduce the curve, not just its peak. Tangent values are still dropped:
+    hermite/bezier emitter tracks in this map are all 2-3 keys, where linear
+    resampling is within a hair of the original.
+    """
 
     keys: list[tuple[int, float]] = field(default_factory=list)
+    interp: int = 0
+    global_seq: int = -1
 
     @property
     def max_value(self) -> float:
@@ -92,6 +102,8 @@ class ParticleEmitter2:
     track_tags: list[str] = field(default_factory=list)  # KP2* present
     emission_track: FloatTrack | None = None  # KP2E
     visibility_track: FloatTrack | None = None  # KP2V
+    tracks: dict[str, FloatTrack] = field(default_factory=dict)  # every scalar KP2*
+    flags: int = 0  # node flags (0x8000 unshaded, 0x20000 line, 0x80000 modelSpace…)
     pivot: tuple = (0.0, 0.0, 0.0)
     parse_note: str = ""
 
@@ -114,6 +126,8 @@ class RibbonEmitter:
     gravity: float = 0.0
     track_tags: list[str] = field(default_factory=list)  # KR* present
     visibility_track: FloatTrack | None = None  # KRVS
+    tracks: dict[str, FloatTrack] = field(default_factory=dict)  # every scalar KR*
+    flags: int = 0  # node flags
     pivot: tuple = (0.0, 0.0, 0.0)
     parse_note: str = ""
 
@@ -164,16 +178,16 @@ def _read_node_header(data: bytes, pos: int, kind: str) -> tuple[PNode, int]:
     incl = struct.unpack_from("<I", data, pos)[0]
     end = pos + incl
     name = data[pos + 4 : pos + 84].split(b"\x00", 1)[0].decode("latin-1")
-    obj_id, parent_id, _flags = struct.unpack_from("<iii", data, pos + 84)
-    return PNode(name, obj_id, parent_id, kind), end
+    obj_id, parent_id, flags = struct.unpack_from("<iii", data, pos + 84)
+    return PNode(name, obj_id, parent_id, kind, flags), end
 
 
 def _read_float_track(data: bytes, pos: int, is_int: bool = False) -> tuple[FloatTrack, int]:
     """Scalar K* track: u32 count, i32 interp, u32 globalSeq, then per key
     i32 frame + f32 value (+ inTan/outTan f32 each when interp > 1)."""
-    count, interp, _gseq = struct.unpack_from("<IiI", data, pos)
+    count, interp, gseq = struct.unpack_from("<IiI", data, pos)
     pos += 12
-    tr = FloatTrack()
+    tr = FloatTrack(interp=interp, global_seq=-1 if gseq == 0xFFFFFFFF else gseq)
     fmt = "<i" if is_int else "<f"
     for _ in range(count):
         frame = struct.unpack_from("<i", data, pos)[0]
@@ -210,10 +224,21 @@ def _skip_track(data: bytes, pos: int, dim: int) -> int:
 
 
 def _scan_tracks(data: bytes, pos: int, end: int, collect: dict[bytes, FloatTrack],
-                 tags_out: list[str]) -> None:
-    """Walk K* sub-chunks between pos and end; collect requested scalar tracks
-    (by tag) and record every recognized tag name. Bails out silently on
-    anything unrecognized (the caller already knows the emitter's end)."""
+                 tags_out: list[str]) -> int:
+    """Walk K* sub-chunks between pos and end; collect EVERY scalar track and
+    record every recognized tag name. Bails out silently on anything
+    unrecognized (the caller already knows the emitter's end). Returns the
+    position where scanning stopped, so the caller can assert it consumed the
+    emitter EXACTLY — the cheapest available proof that the fixed-block layout
+    is right, since a misaligned struct would leave a non-zero remainder
+    almost everywhere.
+
+    Every 1-dimensional track is kept, not just KP2E/KP2V: several models put
+    their entire expression in the tracks rather than the fixed block (the
+    `DeathWave.mdx` wavefront is a KP2W width ramp 366 -> 126 -> 669, and its
+    fixed-block width alone renders a static bar). A consumer that only reads
+    the fixed block cannot reproduce those.
+    """
     while pos + 4 <= end:
         tag = data[pos : pos + 4]
         dim = _track_dim(tag)
@@ -221,7 +246,7 @@ def _scan_tracks(data: bytes, pos: int, end: int, collect: dict[bytes, FloatTrac
             break
         d, is_int = dim
         tags_out.append(tag.decode("latin-1"))
-        if tag in (b"KP2E", b"KP2V", b"KRVS") or tag in collect:
+        if d == 1:
             tr, npos = _read_float_track(data, pos + 4, is_int)
             collect[tag] = tr
             pos = npos
@@ -229,6 +254,7 @@ def _scan_tracks(data: bytes, pos: int, end: int, collect: dict[bytes, FloatTrac
             pos = _skip_track(data, pos + 4, d)
         if pos > end:  # malformed: stop rather than misparse
             break
+    return pos
 
 
 # ---------------------------------------------------------------------------
@@ -266,6 +292,7 @@ def _parse_pre2(data: bytes, body_start: int, body_end: int, m: ParticleModel) -
             p = em_end
             continue
         em = ParticleEmitter2(node.name, node.object_id, node.parent_id)
+        em.flags = node.flags
         (em.speed, em.variation, em.latitude, em.gravity, em.lifespan,
          em.emission_rate, em.length, em.width) = v[0:8]
         em.filter_mode, em.rows, em.cols, em.head_or_tail = v[8:12]
@@ -280,9 +307,15 @@ def _parse_pre2(data: bytes, body_start: int, body_end: int, m: ParticleModel) -
         em.texture_id, em.squirt, em.priority_plane, em.replaceable_id = v[41:45]
         # optional animated sub-chunks (KP2*) between fixed block and em_end
         tracks: dict[bytes, FloatTrack] = {}
-        _scan_tracks(data, node_end + _PRE2_FIXED.size, em_end, tracks, em.track_tags)
+        stop = _scan_tracks(data, node_end + _PRE2_FIXED.size, em_end, tracks,
+                            em.track_tags)
+        if stop != em_end:
+            em.parse_note = (f"consumed {stop - p} of {incl} declared bytes "
+                             f"({em_end - stop} left over) — layout suspect")
+            m.notes.append(f"PRE2 {node.name!r}: {em.parse_note}")
         em.emission_track = tracks.get(b"KP2E")
         em.visibility_track = tracks.get(b"KP2V")
+        em.tracks = {k.decode("latin-1"): v for k, v in tracks.items()}
         m.nodes.setdefault(node.object_id, node)
         m.emitters2.append(em)
         p = em_end
@@ -316,14 +349,21 @@ def _parse_ribb(data: bytes, body_start: int, body_end: int, m: ParticleModel) -
             p = em_end
             continue
         rb = RibbonEmitter(node.name, node.object_id, node.parent_id)
+        rb.flags = node.flags
         rb.height_above, rb.height_below, rb.alpha = v[0:3]
         rb.color = tuple(v[3:6])
         rb.lifespan = v[6]
         rb.texture_slot, rb.emission_rate, rb.rows, rb.cols = v[7:11]
         rb.material_id, rb.gravity = v[11:13]
         tracks: dict[bytes, FloatTrack] = {}
-        _scan_tracks(data, node_end + _RIBB_FIXED.size, em_end, tracks, rb.track_tags)
+        stop = _scan_tracks(data, node_end + _RIBB_FIXED.size, em_end, tracks,
+                            rb.track_tags)
+        if stop != em_end:
+            rb.parse_note = (f"consumed {stop - p} of {incl} declared bytes "
+                             f"({em_end - stop} left over) — layout suspect")
+            m.notes.append(f"RIBB {node.name!r}: {rb.parse_note}")
         rb.visibility_track = tracks.get(b"KRVS")
+        rb.tracks = {k.decode("latin-1"): v for k, v in tracks.items()}
         m.nodes.setdefault(node.object_id, node)
         m.ribbons.append(rb)
         p = em_end

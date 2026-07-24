@@ -21,7 +21,8 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 1.6
+    "range": 1.6,
+    "evasion": 0.2
   },
   "growth": {
     "maxHealth": 36,
@@ -32,6 +33,11 @@
     "armor": 0.9,
     "mr": 1.2,
     "as": 0.02
+  },
+  "hitFeel": {
+    "hitstopTicks": 1,
+    "shakeMag": 0.18,
+    "knockbackMag": 0.0
   },
   "abilities": {
     "Q": {
@@ -215,10 +221,24 @@
           }
         }
       ],
-      "vfxKey": "fx.prim.ki.nova-lg",
+      "vfxKey": "fx.w3x.particle.supershinythingy.p00",
       "targetsEnemies": true,
       "icon": "assets/icons/abilities/godie-ewar.r.png",
-      "castTimeSec": 0.4
+      "castTimeSec": 0.4,
+      "hitFeel": {
+        "hitstopTicks": 4,
+        "hitstunTicks": 7,
+        "shakeMag": 0.52,
+        "shakeStyle": "omni",
+        "sparkKind": "magic",
+        "flashColor": [
+          1.0,
+          0.92,
+          0.6
+        ],
+        "flashMs": 178,
+        "camKick": 0.446
+      }
     }
   },
   "skillOrder": [

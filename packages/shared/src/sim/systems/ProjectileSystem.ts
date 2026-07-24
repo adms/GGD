@@ -10,6 +10,7 @@ import { runEffects } from "../effects/effectRunner";
 import { fireHooks } from "../effects/hooks";
 import { recordAbilityHit, recordAbilityWhiff } from "../stats/matchStats";
 import { resolveAbilityRadius } from "../abilities/abilitySystem";
+import { rollEvade } from "../combat/evasion";
 
 export function projectileSystem(world: SimWorld): void {
   const toDestroy: EntityId[] = [];
@@ -63,22 +64,36 @@ export function projectileSystem(world: SimWorld): void {
       if (proj.basic) {
         // basic-attack projectile: the on-hit pipeline resolves AT IMPACT —
         // AD damage (origin "basic" feeds lifesteal) + item onBasicAttack hooks.
-        world.damageQueue.push({
-          source: owner,
-          target: bestId,
-          amount: proj.basicDamage ?? 0,
-          type: "physical",
-          crit: proj.crit ?? false,
-          origin: "basic",
-        });
-        world.emit("basicAttackHit", {
-          id,
-          owner,
-          target: bestId,
-          crit: proj.crit ?? false,
-          projectileId: proj.projectileId,
-        });
-        fireHooks(world, owner, "onBasicAttack", bestId);
+        //
+        // EVASION (迴避), RANGED half — rolled HERE, at impact, not at launch:
+        // the arrow is dodged when it arrives, and impact is the only moment the
+        // victim is known (a missile can catch a body that walked into it). A
+        // dodge is a TOTAL miss, so it short-circuits the packet, the
+        // `basicAttackHit` event and the on-hit hooks alike; the missile is
+        // still CONSUMED (it stays in `hitSet` and the !pierce branch below
+        // destroys it), so a dodge costs the attacker the whole shot. See
+        // combat/evasion.ts DECISION 2/3. No-op, and zero rng draws, at 0.
+        // Written as a guarded block rather than an early `continue` so the
+        // projectile's own lifecycle below (pierce / range / boundary) stays
+        // EXACTLY the code path a landed shot takes.
+        if (!rollEvade(world, owner, bestId)) {
+          world.damageQueue.push({
+            source: owner,
+            target: bestId,
+            amount: proj.basicDamage ?? 0,
+            type: "physical",
+            crit: proj.crit ?? false,
+            origin: "basic",
+          });
+          world.emit("basicAttackHit", {
+            id,
+            owner,
+            target: bestId,
+            crit: proj.crit ?? false,
+            projectileId: proj.projectileId,
+          });
+          fireHooks(world, owner, "onBasicAttack", bestId);
+        }
       } else {
         world.emit("projectileHit", { id, owner, target: bestId, projectileId: proj.projectileId });
         // scoreboard: an ability skillshot connecting with an enemy champion

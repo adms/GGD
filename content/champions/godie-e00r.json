@@ -33,6 +33,11 @@
     "mr": 1.2,
     "as": 0.02
   },
+  "hitFeel": {
+    "hitstopTicks": 3,
+    "shakeMag": 0.44,
+    "knockbackMag": 0.25
+  },
   "abilities": {
     "Q": {
       "id": "godie-e00r.q",
@@ -149,8 +154,22 @@
           "duration": 8.0
         }
       ],
-      "vfxKey": "fx.prim.ki.nova",
-      "castTimeSec": 0.3
+      "vfxKey": "fx.w3x.particle.heroeva01s2.p01",
+      "castTimeSec": 0.3,
+      "hitFeel": {
+        "hitstopTicks": 3,
+        "hitstunTicks": 5,
+        "shakeMag": 0.35,
+        "shakeStyle": "omni",
+        "sparkKind": "block",
+        "flashColor": [
+          0.7,
+          0.85,
+          1.0
+        ],
+        "flashMs": 120,
+        "camKick": 0.3
+      }
     },
     "R": {
       "id": "godie-e00r.r",

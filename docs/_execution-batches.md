@@ -1,6 +1,66 @@
 # GGD 執行批次計畫（Execution Batches）
 
 > 這不是進度日誌，也不是流水帳。這是一張**照這個順序交辦下去**的作戰表。
+
+---
+
+## 📋 作戰表 · 2026-07-24 重整
+
+### 本場已落地（不得重排）
+
+| 車道 | 成果 |
+|---|---|
+| w3x 特效考古 | 推翻三個前提：art 只在二進位 `war3map.w3a`（464 支帶美術）；原生 `AddSpecialEffect*` **0 次**（全走 BJ 包裝）；**真實綁定 0/662**（不是我先前說的 88%）|
+| 上線部署鏈 | #48 挖到更深的第二個 bug（helm/compose 都沒設 `GGD_PLATFORM_URL`，容器裡解析成 localhost＝**對自己講話**）；#126 審核閘＋`409 last_admin`；封禁即時生效 |
+| 天生技 sim 機制 | evasion（**只閃普攻**，附 WC3 `Aevd` 與 cast-telegraph §4.5(a) 兩條理由）＋ aura 無狀態調和 ＋ 第 6 可施放槽。零數值漂移，405/312 測試綠 |
+| icon 補洞 | abilities 529→**646**、天生技 **108/108**、items **214/214**；撞圖群 **8→2**；augments 21/21 全異 |
+| 玩家體驗 | **P1 真因**：`MatchState` 建構子預設 `phase=champSelect, ticksLeft=0`，`onCreate` 從不覆寫 → UI 收到的第一筆是「真 matchId＋0 秒」→ 鎖被 latch。每場都中。改成三態 `LockStatus`，「locked 但沒角色」在型別上不可能 |
+| Redis 即時失效 | 發佈點在 `Repo.mirror()` 單一咽喉；訊息只帶指標不帶文件；刷新**合併不排隊**；`/healthz` 有 `announced` vs `applied` |
+| Redis 房間狀態 | **評估後拒絕**：只有一個 `GAME_SERVER_ADDR`、helm 釘 `replicas:1`、平台早就有 `match:*` ＋ reaper。做了買不到東西 |
+| 語音後台 | 糾正規格：**41 類非 42**、**2,208 clip 非 2,016**；參考音 `licence` 必填否則 422 |
+| 三個小修 | 三選一 icon 按 id 推路徑 ✅ ／ `BRIEFING_NEAR_START_SEC` 55→30（**#167 之後簡報死了**）✅ ／ evasion 補進 `STAT_META`＋`missingStatMetaRows()` 守衛 ✅ |
+
+### 舊條目（已解決，保留脈絡）
+
+### ~~A. 三選一卡片的 icon~~ ✅ 已修
+**症狀**：實機試玩時 SILVER AUGMENT 三張卡是字母格「鐵」「疾」「B」。
+**已排除的錯誤解法**：不要去補 `augment` doc 的 `icon` 欄位。`augment@1` schema 是 zod **`.strict()` 且沒有 `icon` 欄位**
+（`packages/shared/src/content/schema/augment.ts:20,22`），硬寫會驗證失敗；`tools/icon-gen/local/batch.py::set_icon_field`
+對 augments **刻意 return False**，那個守衛是對的，不要拆。
+**現況**：21 個 `.webp` **已全部生成在** `content/assets/icons/augments/<id>.webp`，而且 icon 補洞那批已把撞圖從
+「8 張共用同一個青色符文」修成 **21/21 全部不同**。
+**架構本來就對**：`AugmentDraftPanel` 用 `GlyphTile`，註解明寫「真圖一落地就自動讓位」（它把 `<IconImg>` 疊在字形上）。
+**唯一缺口**：`resolveChoice` 沒有 icon 可回傳。
+**正解**：讓 `resolveChoice`（或卡片層）**按慣例推導路徑** `assets/icons/augments/<id>.webp` —— 檔名完全由 id 決定，
+21/21 都在。不動 schema、不寫 content doc、缺檔時 `GlyphTile` 本來就會優雅退回字形。
+**擋在誰後面**：`apps/client/src/ui/panels` 目前歸「玩家體驗修復」車道。
+
+### B. evasion 的兩個半套
+1. ~~`statDisplay.ts` 的 `STAT_META` 缺 `evasion`~~ ✅ **已修**（並補了 `missingStatMetaRows()` 執行期守衛，
+   因為 `as Record<Stat,StatMeta>` 轉型讓 TypeScript 抓不到這類遺漏）。
+   ⚠️ 仍待辦：`shopGrouping.ts` 的 `STAT_SHELF` 要加 `evasion: "defense"`，否則迴避道具會掉進 `misc`。
+2. ⛔ **仍待辦**：`apps/game-server/src/net/eventFanout.ts` 的 `FANNED_OUT_EVENT_TYPES` 是硬白名單，**沒有 `evade`** →
+   sim 有發事件但**傳不到 client、也不進回放**，**閃避在畫面上完全看不見**。加進去後接 #92 的浮動字「MISS」。
+
+---
+
+## 🎯 接下來五批（依相依性分組）
+
+| # | 批次 | 錨點 → 解鎖 | 閘門 |
+|---|---|---|---|
+| **1** | **天生技效果落地** | 填 **29 個空 modifier**（迴避 0.20/0.15/0.18、光環）→ 60 個主動天生技接第 6 槽 → `eventFanout` 加 `evade` 讓閃避看得見 | sim 機制**已就緒**、icon 已排空 → **可立即跑** |
+| **2** | **VFX 綁定層** | #98 發射器參數化 → **585 支**綁真實 w3x art（464 支在 `w3a` 有資料）→ #50 每次施放參數 | 等 VFX抽取(2/3)＋Babylon發射器(1/3) |
+| **3** | **角色語音正式生成** | QC 閘校準 → **2,208 clip**（CosyVoice 3 主力／IndexTTS 備援）→ 後台試聽驗收 | 等雙引擎 QC；**吼叫/痛哼/專有名詞**兩引擎可能都不行，備案是改用 効果音ラボ 人聲 |
+| **4** | **中場經濟 swing** | #108 傳說池策展錯 → #149 augment 翻盤力 · P3 卡片中英混雜 · #145 隨機競技場 | content/items+augments **已解鎖** → 可立即跑 |
+| **5** | **合併→push→部署→雙試玩** | 合併 3 個主機 commit → push＋release note → ssh 部署 → **本地與 Web 各試玩一次並記錄** | 等全部車道落地（現 505 檔 dirty）|
+
+**尾聲（永遠最後）**：匯入器 #56 → #144。re-import 會覆蓋 `craftRole` 與 `icon`，所有內容定稿前不得跑。
+註：#50/#98 已被批次 2 吸收。
+
+### C. 兩個新發現的內容 bug（icon 車道挖到的）
+- `godie-u01f`（黑化張飛）與 `godie-e00u`（十六夜Sakuya）**不是測試英雄、可以被選**，卻有四支 `name:"none"` 的技能。
+- `godie-i065` / `godie-i06p` 是**真道具**（成本 1150/1250、有 modifiers、craftRole=component、完整解說），
+  但 `name` 在 w3x 匯入時遺失，等於 id。
 > 每一批 = 一個可以整批丟出去、丟完可以走開的波次；批內切成**檔案領域互斥的 lane**，好幾個 agent 同時跑不會撞檔。
 >
 > 改寫日期 2026-07-23 · 取代前一版八批計畫
@@ -600,3 +660,123 @@ graph LR
 | SELA / THORNE 的 TS fixture 保持 `castTimeSec 0` | `combatTiming.test.ts` 的 `ct-04` 需要一個零前搖技能；這個分歧在 `content/loader.test.ts` 裡被**明確斷言**。game-server 永遠載 `content/` |
 | `RoundWinnerStage` 與 `MatchEndPanel` 共用同一個 process-wide `victoryTaunts` player | 共用實例**正是**兩個聲音不會疊在一起的保證。安全性目前靠 `roundEndQuoteChampion` 在最終回合回 null —— **要拆之前必須先換一個等價保證** |
 | `hitImpact` 沒有 profile 時完全沒有模型反應 | `EntityViewRegistry.ts:279-281` 刻意的防禦性 no-op；已記錄以免被重新「發現」一次 |
+
+
+---
+
+# 執行批次計畫 — 2026-07-24 晚間重整
+
+## 今日戰果：9 條工作流落地，35 個 agent
+
+| 工作流 | 交付 |
+|---|---|
+| 假完成盤點（6 agent） | **27 條 confirmed-broken**，其中 17 條完全靜默；產出 `docs/_false-completions.md` 的 S1–S11 形狀分類 ＋ 每形狀一行偵測配方 |
+| 經濟可及性（3） | **推翻我的結論**：驅動真 sim 跑 30 場證明逆風方 R3 就買得起寶玉；同時挖出 `startingTeamLives` 是死設定 |
+| 死設定掃描（2） | 修好死旋鈕；挖出**平台 30 分鐘回收器會解散進行中的比賽**；證明寫死的 3 讓 20 層屬性路線**從未有人走得完** |
+| Babylon 發射器（3） | 條件四達成；**試聽頁抓到兩個綠燈測試抓不到的 bug**（池化發射器永遠 0 粒子、PIVOT 不在契約裡）；挖出 extractor 半徑大兩倍影響 282 份文件 |
+| 角色內容 0 筆（3） | 33 個武器 tag → `attackKatana`/`attackGreatsword` 首次可播；112/113 hitFeel；**挖出法師施法播拉弓聲、`flashColor`/`flashMs` 客戶端不讀** |
+| 音效最後一哩（3） | 3 個無觸發點音效接上（純客戶端，零線路成本）；**credits 頁 `boundKeys` 改成機器推導＋對 fan-out 名單驗證** |
+| Chrome 密碼（3） | **推翻我的診斷**：主因不是缺 `<form>`，是註冊頁欄位順序讓 Chrome 把**邀請碼當帳號存了** |
+| 聲線分離度（3） | 用 campplus 量出 **92% 的 Kyoko 配對相似度超過「同一真人兩段錄音」的中位數**——儀器判定是同一個人 |
+| 語音雙引擎 QC（3） | CosyVoice 3 主力；**拒絕用 ASR 當閘**並給出無法分離的實測數字 |
+
+## 今日確立的兩個判準
+
+1. **假完成的判定是三段**：東西在 → 有引用 → **在真實對局裡跑得到**。第三段是這專案一直斷的地方。
+2. **LoL 競技場是明確參考對象**（擁有者指定）。查證後採用其隊伍生命值模型：
+   **20 點、−2/−2/−2 → −4/−4/−4 → −6、歸零淘汰、第 5 回合起 High Stakes 勝方 +15**。
+   全敗方撐到第 7 回合，一場約 **7–13 回合**。
+
+## 一個流程教訓（已記入）
+
+我把 config 裡既有的 `startingTeamLives: 8` **當成擁有者的意圖**並據此分析「你的 8 要付什麼代價」。
+git 證明那個值來自 initial commit，從未被改過，**不是他設的**。
+他的指示是「修理這個死設定」，不是「命數要 8」。
+→ **不得將既有資料歸因於使用者的意圖**；來歷不明的數值先查 git，查不到就問。
+
+---
+
+## 07-24 收尾盤點（晚間）
+
+**16 條工作流落地，3 條在跑。** 全 workspace typecheck ✅ / Go build + vet ✅ / 平台測試全綠。
+工作樹 956 檔未 commit（HEAD 仍是 `49dca64`）。
+
+### 今晚新增的三條規則（擁有者現場定調）
+
+| 規則 | 實作 |
+|---|---|
+| 吃雞水晶 2 倍 ＋ 1 枚 M 幣 | `CrystalPlace1 = 120 × CrystalWinMultiplier(2) = 240`；`mcoinRewards {1:1, 其餘 0}` |
+| 有 bot / 有人跳離 → 不發 M 幣 | 12 個座位全真人才發（**沙發玩家算真人**） |
+| 自己隊有 bot → 水晶砍半 | 逐隊判定，不是逐房間 |
+
+**為什麼是逐隊而不是逐房間**：4 隊 × 3 人 = 12 座位，房間級規則等於「家人要湊 12 人才拿得到水晶」，
+「打場免費賺」會變成存在但永不發生的功能——正是這批工作在清的病。逐隊規則仍然擋掉真正的 exploit
+（一個人打 bot 最多拿一半），但家人組成一隊就能拿滿。
+
+### 兩個在實作中被測試抓到的錯
+
+1. **差點清空玩家餘額**：結算寫的是**絕對值**。閘住時若「跳過賦值」，map 缺 key → 解成 0 → 餘額被設為 0。
+   正確寫法是寫入**當前餘額**。水晶那條線早已記錄過同一個陷阱，這是第二次出現 →
+   **在這個檔案裡，「跳過一次絕對值寫入」等於「清空」**。
+2. **沙發玩家被判成 bot**：`isGuestSeat` 把 `:pN` 判為非真人，會讓四人同機遊玩拿不到 M 幣、水晶砍半。
+   已改成只看 `IsBot`。
+
+### 合併 worktree CI 修正
+
+三個被遺棄的 worktree 裡 6 個未合併 commit，**全部是我一直當成「本分支本來就紅」的那些紅燈的解藥**。
+合併 5 個（`.gitignore` 是 dirty 的，所以逐檔取出而非 cherry-pick）；
+`legendaryClaims.test.ts` 刻意不併——它是紅的，而且抓到的是真的（傳說池 14 件，測試要求 ≥25），
+那是 #108 的內容，該跟 #108 的修正一起進來，不是提前進來當紅燈。
+
+---
+
+## ⏸ 被「月費上限」硬中斷的任務（2026-07-24 深夜）
+
+這些 agent 是**跑到一半被硬切**，不是失敗也不是放棄。兩條都支援續跑，
+已完成的 agent 會走快取不重跑。
+
+| 工作流 | 中斷的階段 | 已經完成並落地的 | 還缺什麼 |
+|---|---|---|---|
+| `wcap02755` Arena 養成曲線 | `curve`、`cards + icons` | 隊伍生命值完整實作並測過（20 點、−2/−4/−6、**R7 起每回合再 +3**、High Stakes +15、bye 也給付）；augment 虹級 7→16；`draft.ts` 不再靜默少發卡；`config.match.json` 20 | **每回合金錢曲線的完整重寫**；新卡片的 icon 生成 |
+| `wpu66wxr4` 假完成重新盤點 | `fix:magic-weapon-class` | 5 個切片重新量測（10/11 agent）；報告已改寫 | **補 `magic`/`beam` weapon class** —— 27 個法師施法時仍然播「拉弓聲」 |
+
+**重啟指令**（腳本都在 `~/.claude/projects/-Users-Takuro-GGD/1fc1e42e-.../workflows/scripts/`）：
+
+```
+Workflow({scriptPath: ".../ggd-arena-team-health-progression-wf_0a330621-316.js",
+          resumeFromRunId: "wf_0a330621-316"})
+Workflow({scriptPath: ".../ggd-false-completions-remeasure-and-fix-wf_31d5c620-45b.js",
+          resumeFromRunId: "wf_31d5c620-45b"})
+```
+
+### 同時仍在跑（未被中斷）
+
+| 工作流 | 內容 |
+|---|---|
+| `wyec1o4t5` | 語音素材包整合（ECAPA + campplus 雙編碼器交叉驗證） |
+| `wpvfatcq1` | 首局操作提示（半透明、依輸入方式切換） |
+
+---
+
+## ✅ v0.4.1 部署完成（2026-07-24 深夜）— 過程中的四個真實故障
+
+`https://ggd.adms.ai/` **HTTP 200**。但這次部署連踩四個坑，全部值得記：
+
+1. **主機磁碟 100% 滿** — Go build 失敗的訊息長得像編譯錯誤，實際是
+   `no space left on device`。`docker builder prune -af` 清掉 4.5 GB。
+   **build cache 一天長到 6.3 G，而磁碟只有 9.7 G** → 建議加定期
+   `docker builder prune -af --filter until=48h`。
+2. **85 MB 資產覆蓋層在磁碟寫滿時整個掉了**（`data/blizzard-overlay` 只剩 4 K）。
+   它是 gitignore 的執行期資產，`git pull` 帶不回來。主機**沒有 rsync**，用 `tar | ssh` 重傳。
+3. **第一次 tar 傳輸被截斷** — 主機 64,987,962 B vs 應有 87,403,869 B。
+   **是 edge 的開機斷言抓到的**，不是我。改用未壓縮 tar 重傳並比對位元組數才過。
+4. **最後的真兇是權限**。`tar` 解壓保留原始權限，**126 個檔案是 `600`**，
+   容器內的非 root 使用者讀不到。而 `ggd-assets.sh` 的 `bytes_of()` 用
+   `cat {} + 2>/dev/null`，**把讀取失敗靜靜吞掉**，所以它報「檔案短少」而不是
+   「權限不足」——症狀指向錯誤的方向，我為此白繞了兩輪。
+   → **`ggd-assets.sh` 值得改**：讀不到的檔案應該要明講是權限問題。
+   這正是這批工作在清的同一種病：靜默失敗偽裝成別的東西。
+
+**中途 SSH agent 掉了金鑰**（`Permission denied (publickey)`），一度無法收尾；
+本機 `~/.ssh/` 只有 `id_rsa` 和 `github_rsa`，兩把都被主機拒——後來恢復了，
+但**這個環境問題還在，下次可能再發生**。

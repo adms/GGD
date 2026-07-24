@@ -149,6 +149,8 @@ func loadContentDefaults(contentDir string) map[string]float64 {
 		return out
 	}
 	path := filepath.Join(contentDir, "config", "combat-env.json")
+	// #nosec G304 -- operator-configured CONTENT_DIR joined with two string
+	// literals; the empty-contentDir case returned above. No request data here.
 	raw, err := os.ReadFile(path)
 	if err != nil {
 		if !errors.Is(err, os.ErrNotExist) {

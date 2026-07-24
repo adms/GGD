@@ -20,6 +20,12 @@
 import { useEffect, useState } from "react";
 import { MerchantHeadIcon } from "./components/MerchantHeadIcon";
 import { MERCHANT_TIPS, TIP_KIND_META, nextTipIndex } from "../render/intermission/merchantTips";
+import {
+  AMBIENT_TIP_BAND,
+  AMBIENT_TIP_LEFT,
+  AMBIENT_TIP_TOP,
+  FOCUS_FADE_MS,
+} from "./panels/intermissionLayout";
 
 /** Warm market palette — the anti-arena tone the whole intermission uses. */
 const BOX_BG = "rgba(26, 19, 12, 0.92)";
@@ -32,9 +38,21 @@ export interface MerchantTipBoxProps {
   intervalMs?: number;
   /** injectable RNG for the no-immediate-repeat pick (defaults to Math.random). */
   rand?: () => number;
+  /**
+   * A focus surface (the 三選一 draft) owns the screen — fade out and let it
+   * (playtest P2; priority 4 in panels/intermissionLayout.ts). NOT an unmount,
+   * deliberately: the 5 s rotation and its no-immediate-repeat history keep
+   * running underneath, so the box comes back mid-cadence instead of restarting
+   * on a tip the player may have just read.
+   */
+  muted?: boolean;
 }
 
-export function MerchantTipBox({ intervalMs = 5000, rand = Math.random }: MerchantTipBoxProps = {}): React.JSX.Element | null {
+export function MerchantTipBox({
+  intervalMs = 5000,
+  rand = Math.random,
+  muted = false,
+}: MerchantTipBoxProps = {}): React.JSX.Element | null {
   const count = MERCHANT_TIPS.length;
   const [index, setIndex] = useState(() => nextTipIndex(-1, count, rand));
 
@@ -55,11 +73,19 @@ export function MerchantTipBox({ intervalMs = 5000, rand = Math.random }: Mercha
       aria-hidden
       style={{
         position: "absolute",
-        top: "10%",
-        left: "46%",
-        maxWidth: "min(38vw, 420px)",
+        // the AMBIENT band, declared once in panels/intermissionLayout.ts — the
+        // band the centred focus panel is proven to clear (playtest P2).
+        top: AMBIENT_TIP_TOP,
+        left: AMBIENT_TIP_LEFT,
+        maxWidth: AMBIENT_TIP_BAND.maxWidth,
         pointerEvents: "none",
         filter: "drop-shadow(0 6px 16px rgba(0,0,0,0.45))",
+        // yield to a focus surface. Short viewports (a 375px-tall landscape
+        // phone) cannot fit BOTH a centred card stack and this band, so the
+        // priority order — not geometry — is what resolves it there.
+        opacity: muted ? 0 : 1,
+        transform: muted ? "translateY(-6px)" : "none",
+        transition: `opacity ${FOCUS_FADE_MS}ms ease-out, transform ${FOCUS_FADE_MS}ms ease-out`,
       }}
     >
       <style>{

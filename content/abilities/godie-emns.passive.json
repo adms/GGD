@@ -2,6 +2,7 @@
   "id": "godie-emns.passive",
   "schema": "ability@1",
   "name": "44-00 機警",
+  "icon": "assets/icons/abilities/godie-emns.passive.webp",
   "description": "[輔助]\n15秒冷卻時間\n\n夜神月的機警，將智慧具現化成魔力護盾，以魔力做為代價，可抵擋90%傷害。每點魔力可以抵免1.5點傷害。",
   "slot": "PASSIVE",
   "innateKind": "active",

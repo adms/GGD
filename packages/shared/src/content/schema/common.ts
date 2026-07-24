@@ -62,6 +62,18 @@ export const zCoreAbilitySlot = z.enum(["Q", "W", "E", "R"]);
  */
 export const zAbilitySlot = z.enum(["Q", "W", "E", "R", "EX"]);
 /**
+ * Every slot a CAST may name — the five learned ones plus "PASSIVE", the level-1
+ * 天生技. Mirrors the sim's `CastableSlot`.
+ *
+ * Deliberately separate from `zAbilitySlot`: the ~60 `innateKind: "active"`
+ * innates are castable but NEVER rankable, so rank/unlock surfaces keep the
+ * narrower enum and only cast surfaces (e.g. a hook's `abilitySlot` filter) take
+ * this one. Same members as `zChampionAbilitySlot`, different question — that
+ * one is "which slot does this DOC occupy", this one is "which slot may a cast
+ * NAME".
+ */
+export const zCastableSlot = z.enum(["Q", "W", "E", "R", "EX", "PASSIVE"]);
+/**
  * Every slot a champion OWNS — the five castable ones plus "PASSIVE".
  *
  * "PASSIVE" is the 天生技 / innate the source map grants at level 1 (ability
@@ -170,6 +182,11 @@ export const ITEM_MODIFIER_LIMITS: Record<Stat, number> = {
   [Stat.CooldownReduction]: 0.45, // STAT_CLAMPS upper bound
   [Stat.Lifesteal]: 1, // a rate, not a count — 0..1
   [Stat.AttackRange]: 5,
+  // A rate, not a count — 0..1, and STAT_CLAMPS additionally folds the RESOLVED
+  // value to [0, 0.8]. `1` here is the band that catches a mis-parse (an
+  // active's 250 range read as a dodge chance), not a balance statement; the
+  // strongest authored evasion in the source map is 0.20.
+  [Stat.Evasion]: 1,
 };
 
 /** Percentage ops are a multiplier delta (0.3 = +30%), so they share one band. */

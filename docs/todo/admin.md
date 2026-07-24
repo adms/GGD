@@ -136,6 +136,7 @@ alongside the existing two lines is all it needs (see `admin-40`).
 | admin-22 | Players table filter (substring, case-insensitive) | adminui-players-filter | unit | done |
 | admin-23 | Ban / M COIN action state machines (success/403/404 via mock fetch) | adminui-action-machines | unit | done |
 | admin-24 | Announcement form validation + active toggle | adminui-announcement-form | unit | done |
+| admin-41 | 帳號審核 (#126): the approval console. The backend (`/admin/accounts/pending`, `…/{id}/approve`, `…/{id}/deny`) shipped complete and tested with NO caller — `AccountRow` had no `status`, so a pending relative was invisible in Players and could only be let in by curl. The console half classifies all FIVE states (`pending`/`approved`/`denied`/grandfathered `""`/status-absent — the last two must not collapse), renders approval AND ban as independent badges everywhere accounts are listed, offers one-tap 通過 with a confirm-gated 婉拒 that says how it differs from 停權, and badges the queue depth on the nav rail from any page | adminui-account-approval | unit | done |
 | admin-39 | The login screen carries a 「忘記密碼 / 無法登入」 runbook (Traditional Chinese) naming the exact `cmd/ownerreset` commands, the machine to run them on, and the `DATA_DIR` trap — and it is GUIDANCE: the module imports nothing, calls nothing, names no API path, and the screen adds no reset request or token field | adminui-login-recovery | security | done |
 
 ## 內容管理 — content CRUD in the console (task #102)

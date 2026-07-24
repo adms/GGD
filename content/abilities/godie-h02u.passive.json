@@ -2,6 +2,7 @@
   "id": "godie-h02u.passive",
   "schema": "ability@1",
   "name": "92-00 憂鬱的眼神",
+  "icon": "assets/icons/abilities/godie-h02u.passive.webp",
   "description": "[輔助]\n0秒冷卻時間\n\n草泥馬天生有著極富感性的憂鬱眼神，令觀者無不動容，讓草泥馬有18%閃避敵人攻擊，對草泥馬造成傷害的部隊將降低攻擊力50%，持續3秒。",
   "slot": "PASSIVE",
   "innateKind": "passive",

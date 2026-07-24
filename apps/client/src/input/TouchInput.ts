@@ -24,7 +24,7 @@
  * NO @babylonjs imports here (client-08).
  */
 import { asEntityId } from "@ggd/shared/ids";
-import type { AbilitySlot, Command, Order } from "@ggd/shared/sim/intents";
+import type { CastableSlot, Command, Order } from "@ggd/shared/sim/intents";
 import type { Vec2 } from "@ggd/shared/sim/math/vec2";
 import { buildCastCommand, type AimAbility } from "./AimResolver";
 import {
@@ -47,8 +47,15 @@ export const CANCEL_RADIUS_PX = 28;
 /** epsilon deadzone for aim-drag normalization (guards divide-by-zero) */
 const AIM_EPS = 1e-6;
 
-/** The touch buttons: the four ability slots plus the basic-attack button. */
-export type TouchButton = AbilitySlot | "ATTACK";
+/**
+ * The touch buttons: every CASTABLE slot plus the basic-attack button.
+ *
+ * `CastableSlot`, so the SIXTH slot (the 天生技) is a real touch button and not a
+ * decoration: a phone player must be able to fire everything the hero owns.
+ * "PASSIVE" only ever arrives here for an `innateKind: "active"` innate — the
+ * bar refuses to hand a permanent 被動 tile a press handler at all.
+ */
+export type TouchButton = CastableSlot | "ATTACK";
 
 // ---------------------------------------------------------------------------
 // structural touch-event shapes (real TouchEvents satisfy these; tests
@@ -97,7 +104,7 @@ export interface TouchPlayerCtx {
   selfPos: Vec2 | null;
   /** authoritative facing (fx,fz) — tap-cast fallback direction */
   facing: Vec2 | null;
-  ability(slot: AbilitySlot): (AimAbility & { radius?: number }) | null;
+  ability(slot: CastableSlot): (AimAbility & { radius?: number }) | null;
   /** live enemy champions as pickable circles (view-space) */
   enemyUnits(): PickableUnit[];
 }
@@ -123,7 +130,7 @@ export function nearestEnemyDir(self: Vec2, units: PickableUnit[], maxRange: num
  *   targeted       → nearest enemy in range (no target → no command)
  */
 export function tapCastCommand(
-  slot: AbilitySlot,
+  slot: CastableSlot,
   ability: AimAbility,
   ctx: TouchPlayerCtx,
 ): Command | null {
@@ -147,7 +154,7 @@ export function tapCastCommand(
  * clamped 0..1 drag magnitude (ground casts land at mag·min(range, 6)).
  */
 export function aimCastCommand(
-  slot: AbilitySlot,
+  slot: CastableSlot,
   ability: AimAbility,
   ctx: TouchPlayerCtx,
   dir: Vec2,
@@ -192,7 +199,7 @@ export interface TouchJoystickFrame {
 export interface TouchAimFrame {
   /** an ability button is currently pressed */
   active: boolean;
-  slot: AbilitySlot | null;
+  slot: CastableSlot | null;
   /** true once the drag left the tap threshold */
   aiming: boolean;
   /** true when releasing now would cancel */

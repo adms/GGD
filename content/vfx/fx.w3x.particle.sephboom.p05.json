@@ -1,0 +1,83 @@
+{
+  "id": "fx.w3x.particle.sephboom.p05",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 6.945,
+    "angleDeg": 5
+  },
+  "mode": "continuous",
+  "lifetimeSec": {
+    "min": 6.5,
+    "max": 6.5
+  },
+  "size": {
+    "start": 0.001,
+    "end": 5.556
+  },
+  "color": {
+    "start": [
+      1,
+      0.502,
+      0.247,
+      1
+    ],
+    "end": [
+      1,
+      0.502,
+      0.247,
+      0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        0.502,
+        0.247,
+        1
+      ]
+    ],
+    [
+      0.05,
+      [
+        1,
+        0.502,
+        0.247,
+        1
+      ]
+    ],
+    [
+      1,
+      [
+        1,
+        0.502,
+        0.247,
+        0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.001
+    ],
+    [
+      0.05,
+      2.361
+    ],
+    [
+      1,
+      5.556
+    ]
+  ],
+  "blendMode": "additive",
+  "speed": {
+    "min": 0,
+    "max": 0
+  },
+  "rate": 35,
+  "texture": "assets/textures/particles/flare_01.png",
+  "anchorBone": "Column"
+}

@@ -9,7 +9,7 @@ import type { StatModifier } from "../stats/modifiers";
 import type { Vec2 } from "../math/vec2";
 import type { SimWorld } from "../SimWorld";
 import type { Rng } from "../math/rng";
-import type { AbilitySlot } from "../intents";
+import type { CastableSlot } from "../intents";
 
 export type DamageType = "physical" | "magic" | "true";
 
@@ -76,7 +76,7 @@ export interface EffectContext {
   /** provenance, e.g. "ability:sela.q", "item:serrated-edge" */
   origin: string;
   /** slot of the casting ability (threads through projectiles into hooks) */
-  abilitySlot?: AbilitySlot;
+  abilitySlot?: CastableSlot;
   rng: Rng;
 }
 

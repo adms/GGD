@@ -113,7 +113,7 @@
 import type { AbilityId, EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import type { AbilityDef } from "../content/defs";
-import type { AbilitySlot } from "../intents";
+import type { CastableSlot } from "../intents";
 import type { EffectDef } from "../effects/effect";
 
 /**
@@ -202,7 +202,7 @@ export function connectsOnResolve(
 export function armRecovery(
   world: SimWorld,
   caster: EntityId,
-  slot: AbilitySlot,
+  slot: CastableSlot,
   def: AbilityDef,
   targets: readonly EntityId[],
 ): void {

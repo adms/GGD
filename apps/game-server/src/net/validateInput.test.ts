@@ -19,9 +19,10 @@ import { SKELETON_ARENA } from "@ggd/shared/sim/world/ArenaDef";
 import { spawnChampion } from "@ggd/shared/sim/spawnChampion";
 import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
 import { commandSystem } from "@ggd/shared/sim/systems/CommandSystem";
-import { Champions } from "@ggd/shared/sim/content/registry";
-import { asSeatId, asTeamId, type SeatId } from "@ggd/shared/ids";
+import { Abilities, Champions } from "@ggd/shared/sim/content/registry";
+import { asSeatId, asTeamId, type AbilityId, type ChampionId, type EntityId, type SeatId } from "@ggd/shared/ids";
 import type { IntentFrame } from "@ggd/shared/sim/intents";
+import type { AbilityDef, ChampionDef } from "@ggd/shared/sim/content/defs";
 import {
   sanitizeInputMessage,
   sanitizeCommand,
@@ -51,10 +52,26 @@ function frameOf(commands: unknown[]): Map<SeatId, IntentFrame> {
 }
 
 describe("INPUT validator — prototype-key injection (sec-input-01)", () => {
-  it("RAW malicious castAbility slot='constructor' DOES throw in the sim (vuln is real)", () => {
+  // WAS: "RAW malicious castAbility slot='constructor' DOES throw (vuln is real)".
+  // The sim layer has since been hardened — `abilityInstanceFor`
+  // (packages/shared/src/sim/abilities/innateActive.ts) compares the slot name
+  // against the known slots instead of indexing a Record with it, so a
+  // prototype key now resolves to undefined and the command is reported
+  // not-learned rather than crashing the room.
+  //
+  // That makes the OLD assertion (a throw) false, but it does NOT make this
+  // test pointless: the ingress validator is still the outer layer of a
+  // defence in depth, and the property worth pinning is now the stronger one —
+  // a prototype-key slot reaching the sim RAW is INERT: it does not throw (no
+  // room-wide disconnect via the #46 tick catch) and it casts nothing.
+  it("RAW castAbility slot='constructor' is inert in the sim: no throw, no cast", () => {
     const world = worldWithChampion();
     const raw = [{ kind: "castAbility", slot: "constructor", target: { type: "self" } }];
-    expect(() => commandSystem(world, frameOf(raw))).toThrow();
+    expect(() => commandSystem(world, frameOf(raw))).not.toThrow();
+    // Nothing was cast: the sim's rng stream is untouched, so a malicious
+    // client cannot even perturb determinism with this.
+    const before = new SimWorld(SKELETON_ARENA, 12345).rng.state;
+    expect(world.rng.state).toBe(before);
   });
 
   it("SANITIZED castAbility slot='constructor' is dropped, so the sim does NOT throw", () => {
@@ -112,6 +129,25 @@ describe("INPUT validator — command shape rules (sec-input-02)", () => {
     for (const slot of ["Q", "W", "E", "R", "EX"]) {
       expect(sanitizeCommand({ kind: "castAbility", slot, target: { type: "self" } })).toBeTruthy();
     }
+  });
+
+  it("accepts a cast of the SIXTH slot — the innate the ingress used to eat", () => {
+    // The sim had opened the 天生技 cast path end to end (CastableSlot,
+    // abilityInstanceFor, the cooldown tick), but THIS validator still
+    // whitelisted {Q,W,E,R,EX}, so a well-formed innate cast from a real client
+    // was dropped right here — no throw, no log, no castRejected. 60 active
+    // innates were unreachable one layer above the code that was ready.
+    expect(sanitizeCommand({ kind: "castAbility", slot: "PASSIVE", target: { type: "self" } })).toEqual({
+      kind: "castAbility",
+      slot: "PASSIVE",
+      target: { type: "self" },
+    });
+  });
+
+  it("but the innate is still NOT rankable from the wire", () => {
+    // 天生技 is owned at rank 1 from spawn and has no second column. Widening
+    // the CAST alphabet must not have widened the RANK one.
+    expect(sanitizeCommand({ kind: "rankUpAbility", slot: "PASSIVE" })).toBeUndefined();
   });
 
   it("drops an unknown command kind", () => {
@@ -181,5 +217,105 @@ describe("INPUT validator — oversized payloads (sec-input-03)", () => {
     expect(sanitizeInputMessage(42)).toEqual({ seq: 0, commands: [] });
     expect(sanitizeInputMessage({ seq: -5 }).seq).toBe(0);
     expect(sanitizeInputMessage({ seq: 70000 }).seq).toBe(0);
+  });
+});
+
+/**
+ * THE WHOLE CHAIN, once. Everything above tests one layer; this drives a
+ * client-shaped INPUT payload through the ingress AND the sim and checks that
+ * the innate actually DID something — damage on the wire's own target and a
+ * cooldown armed on the sixth slot.
+ *
+ * It exists because the P0-3 failure was invisible at every single layer:
+ * the sim accepted "PASSIVE", the client could name it, and the cast still
+ * never happened, because the one validator between them dropped the command
+ * without a word. A test that stops at "an intent was produced" or at
+ * "castAbility returns ok" passes in exactly that broken world.
+ */
+describe("the SIXTH slot end to end — wire JSON → ingress → sim (P0-3)", () => {
+  const INNATE_CHAMP = "test-innate-hero" as ChampionId;
+  const INNATE_ID = "test-innate-hero.passive" as AbilityId;
+  const VICTIM = asSeatId(1);
+
+  /** Two enemy champions face to face; seat 0 owns an ACTIVE 天生技 (150 dmg). */
+  function duelWorld(): { world: SimWorld; caster: EntityId; victim: EntityId } {
+    registerSkeletonContent();
+    const base = Champions.get(Champions.ids()[0]!);
+    Abilities.register(INNATE_ID, {
+      id: INNATE_ID,
+      name: "22-00 嗚鎖打!",
+      slot: "PASSIVE",
+      innateKind: "active",
+      // the real 22-00 shape: a ground AoE nuke, so the assertion below is
+      // about an ENEMY losing hp, not about the caster nuking himself
+      castType: "ground",
+      maxRank: 1,
+      cooldown: [40],
+      manaCost: [0],
+      range: 0,
+      radius: 6,
+      effects: [{ kind: "damage", damageType: "magic", amount: { flat: 150 } }],
+    } as unknown as AbilityDef);
+    Champions.register(INNATE_CHAMP, {
+      ...base,
+      id: INNATE_CHAMP,
+      passiveAbility: INNATE_ID,
+    } as unknown as ChampionDef);
+
+    const world = new SimWorld(SKELETON_ARENA, 4242);
+    const caster = spawnChampion(world, {
+      championId: INNATE_CHAMP,
+      seatId: SEAT,
+      teamId: asTeamId(0),
+      pos: { x: 0, z: 0 },
+      zone: 0,
+    });
+    const victim = spawnChampion(world, {
+      championId: Champions.ids()[0]!,
+      seatId: VICTIM,
+      teamId: asTeamId(1),
+      pos: { x: 1, z: 0 },
+      zone: 0,
+    });
+    return { world, caster, victim };
+  }
+
+  it("a raw INPUT payload naming PASSIVE really damages and really cools down", () => {
+    const { world, caster, victim } = duelWorld();
+    const hpBefore = world.health.get(victim)!.hp;
+
+    // exactly what the client puts on the wire when D is pressed
+    const msg = sanitizeInputMessage({
+      seq: 1,
+      commands: [
+        { kind: "castAbility", slot: "PASSIVE", target: { type: "point", point: { x: 1, z: 0 } } },
+      ],
+    });
+    expect(msg.commands).toHaveLength(1); // survived the ingress at all
+
+    // world.step, not commandSystem alone: the real server ticks the whole
+    // pipeline, and an AoE needs the broadphase grid that step() rebuilds.
+    world.step(frameOf(msg.commands!));
+
+    // the effect RAN — not "the command was accepted"
+    expect(world.health.get(victim)!.hp).toBeLessThan(hpBefore);
+    // and it paid a real cooldown on the sixth slot, not on Q
+    const ab = world.abilities.get(caster)!;
+    expect(ab.passiveSlot!.cooldownRemainingTicks).toBeGreaterThan(0);
+    expect(ab.slots.Q.cooldownRemainingTicks).toBe(0);
+  });
+
+  it("the SAME payload did nothing before the ingress knew the slot", () => {
+    // Re-creates the exact pre-fix behaviour with the old {Q,W,E,R,EX} rule, so
+    // the test above can't quietly pass for some other reason.
+    const { world, victim } = duelWorld();
+    const hpBefore = world.health.get(victim)!.hp;
+    const oldAllowed = new Set(["Q", "W", "E", "R", "EX"]);
+    const raw = { kind: "castAbility", slot: "PASSIVE", target: { type: "point", point: { x: 1, z: 0 } } };
+    const droppedByOldRule = !oldAllowed.has(raw.slot);
+    expect(droppedByOldRule).toBe(true);
+
+    world.step(frameOf([])); // what the sim received: nothing
+    expect(world.health.get(victim)!.hp).toBe(hpBefore);
   });
 });

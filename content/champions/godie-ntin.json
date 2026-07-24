@@ -34,6 +34,11 @@
     "mr": 1.2,
     "as": 0.02
   },
+  "hitFeel": {
+    "hitstopTicks": 3,
+    "shakeMag": 0.44,
+    "knockbackMag": 0.25
+  },
   "abilities": {
     "Q": {
       "id": "godie-ntin.q",
@@ -76,9 +81,23 @@
           }
         }
       ],
-      "vfxKey": "fx.cinder-ward",
+      "vfxKey": "fx.w3x.particle.gx.p00",
       "targetsEnemies": true,
-      "castTimeSec": 0.4
+      "castTimeSec": 0.4,
+      "hitFeel": {
+        "hitstopTicks": 3,
+        "hitstunTicks": 4,
+        "shakeMag": 0.315,
+        "shakeStyle": "directional",
+        "sparkKind": "magic",
+        "flashColor": [
+          0.65,
+          0.8,
+          1.0
+        ],
+        "flashMs": 108,
+        "camKick": 0.27
+      }
     },
     "W": {
       "id": "godie-ntin.w",
@@ -158,8 +177,22 @@
           ]
         }
       ],
-      "vfxKey": "fx.prim.lightning.slash",
-      "castTimeSec": 0.6
+      "vfxKey": "fx.w3x.particle.gxhuge.p00",
+      "castTimeSec": 0.6,
+      "hitFeel": {
+        "hitstopTicks": 3,
+        "hitstunTicks": 6,
+        "shakeMag": 0.402,
+        "shakeStyle": "omni",
+        "sparkKind": "magic",
+        "flashColor": [
+          0.65,
+          0.8,
+          1.0
+        ],
+        "flashMs": 138,
+        "camKick": 0.345
+      }
     },
     "R": {
       "id": "godie-ntin.r",
@@ -205,9 +238,23 @@
           "root": true
         }
       ],
-      "vfxKey": "fx.cinder-ward",
+      "vfxKey": "fx.w3x.orb.lightningnova.p00",
       "targetsEnemies": true,
-      "castTimeSec": 0.5
+      "castTimeSec": 0.5,
+      "hitFeel": {
+        "hitstopTicks": 4,
+        "hitstunTicks": 7,
+        "shakeMag": 0.496,
+        "shakeStyle": "omni",
+        "sparkKind": "magic",
+        "flashColor": [
+          0.8,
+          0.88,
+          1.0
+        ],
+        "flashMs": 170,
+        "camKick": 0.425
+      }
     }
   },
   "skillOrder": [

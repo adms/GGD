@@ -88,8 +88,10 @@ func WriteContentFixture(t *testing.T) string {
 	}
 	for rel, body := range files {
 		full := filepath.Join(dir, filepath.FromSlash(rel))
-		require.NoError(t, os.MkdirAll(filepath.Dir(full), 0o755))
-		require.NoError(t, os.WriteFile(full, []byte(body), 0o644))
+		// 0o750 / 0o600: these live inside t.TempDir() (already 0700) and are read
+		// only by the test process itself, so nothing is locked out.
+		require.NoError(t, os.MkdirAll(filepath.Dir(full), 0o750))
+		require.NoError(t, os.WriteFile(full, []byte(body), 0o600))
 	}
 	return dir
 }

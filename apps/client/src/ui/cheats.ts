@@ -7,6 +7,7 @@
  */
 import type { Cheat } from "@ggd/shared/protocol/messages";
 import type { AbilitySlot } from "@ggd/shared/sim/intents";
+import { classifyEnvTier } from "@ggd/shared/envTier";
 import { filterChampions, type RosterChampion } from "./panels/champSelectFilter";
 
 export const LEVEL_MIN = 1;
@@ -27,6 +28,38 @@ export function clampLevel(n: number): number {
  */
 export function cheatsAvailable(mode: "platform" | "offline" | null | undefined): boolean {
   return mode === "offline";
+}
+
+/**
+ * Whether the 🐞 BUTTON may sit on the live screen (playtest P9).
+ *
+ * `cheatsAvailable` decides whether the console EXISTS at all; this decides
+ * whether it advertises itself. They are deliberately different questions. A
+ * family member playing on the LAN box or on https://ggd.adms.ai/ was being
+ * shown a permanent "cheats" button in the top-right corner of a real match —
+ * the first thing a curious kid presses, and an invitation to break their own
+ * game. The developer, on the machine running the dev server, wants it one
+ * click away.
+ *
+ * So the button is gated on the ENVIRONMENT TIER of the host the page was
+ * served from, reusing task #127's ONE classifier rather than inventing a
+ * second flag: loopback (the dev's own machine) shows it; "lan" (the phone on
+ * the wifi, the family box) and "public" (the deployed host) do not.
+ *
+ * NOTHING IS REMOVED. The console still mounts in every offline session and the
+ * backtick key still opens it everywhere — buried, not deleted, exactly as the
+ * task asks. This is UX only: the server independently hard-gates MSG.CHEAT to
+ * dev mode, so hiding or showing a button never changes what is enforceable.
+ *
+ * `location.hostname` is the right input here (not an IP): classifyEnvTier
+ * resolves "localhost"/"127.0.0.1"/"::1" to loopback, private ranges and
+ * `*.local` to lan, and everything unknown to public — fail-safe toward hiding.
+ */
+export function cheatButtonVisible(
+  mode: "platform" | "offline" | null | undefined,
+  hostname: string | undefined,
+): boolean {
+  return cheatsAvailable(mode) && classifyEnvTier(hostname) === "loopback";
 }
 
 /** Backtick toggles the console — but never while typing in a text field. */

@@ -224,6 +224,21 @@ type AccountRow struct {
 	BanReason string    `json:"banReason,omitempty"`
 	Roles     []string  `json:"roles"`
 	CreatedAt time.Time `json:"createdAt"`
+
+	// Status is the #126 approval state: "pending", "approved", "denied", or
+	// "" for an account created before the gate existed / while it was off.
+	//
+	// It is ALWAYS emitted, never omitempty. A console that has to distinguish
+	// "this account is grandfathered" from "the server build I am talking to
+	// does not know about approval at all" cannot do it if the field vanishes
+	// on the empty value — both would arrive as `undefined`. The empty string
+	// is a real, meaningful state here (see account.IsApproved), so it is sent.
+	Status string `json:"status"`
+	// Approved mirrors account.IsApproved: whether this account may obtain a
+	// session RIGHT NOW under the gate. It is derived, not stored, and exists
+	// so the console never has to re-implement the grandfathering rule (`"" or
+	// "approved"`) and drift from the server's answer.
+	Approved bool `json:"approved"`
 }
 
 func rowOf(a account.Account) AccountRow {
@@ -235,6 +250,7 @@ func rowOf(a account.Account) AccountRow {
 		ID: a.ID, Username: a.Username, Email: a.Email, MMR: a.MMR,
 		Games: a.Games, Wins: a.Wins, MCoin: a.MCoin, Banned: a.Banned,
 		BanReason: a.BanReason, Roles: roles, CreatedAt: a.CreatedAt,
+		Status: a.Status, Approved: a.IsApproved(),
 	}
 }
 
@@ -250,17 +266,46 @@ type Profile struct {
 // email contains query (case-insensitive; empty query matches all), newest
 // first. total is the pre-pagination match count.
 func (s *Service) SearchAccounts(ctx context.Context, query string, page, pageSize int) (rows []AccountRow, total int, err error) {
+	return s.SearchAccountsByStatus(ctx, query, "", page, pageSize)
+}
+
+// PendingAccounts returns the APPROVAL QUEUE: every account stamped pending
+// (#126), OLDEST FIRST, plus the pre-pagination total.
+//
+// Oldest first is the one ordering difference from SearchAccounts, and it is
+// deliberate. Search is a lookup tool, so "who signed up most recently" is the
+// useful order. This is a WORK QUEUE: the person who has been waiting longest
+// is the person the owner should answer first, and on a family deploy that
+// person is a relative currently staring at an "awaiting approval" screen.
+// Newest-first would bury them under every later arrival.
+func (s *Service) PendingAccounts(ctx context.Context, page, pageSize int) (rows []AccountRow, total int, err error) {
+	return s.searchAccounts(ctx, "", account.StatusPending, true, page, pageSize)
+}
+
+// SearchAccountsByStatus is SearchAccounts with an additional exact-match
+// filter on the #126 approval status. An empty status matches every account
+// (grandfathered ones included); otherwise only accounts carrying exactly that
+// status are returned. Newest first.
+func (s *Service) SearchAccountsByStatus(ctx context.Context, query, status string, page, pageSize int) (rows []AccountRow, total int, err error) {
+	return s.searchAccounts(ctx, query, status, false, page, pageSize)
+}
+
+func (s *Service) searchAccounts(ctx context.Context, query, status string, oldestFirst bool, page, pageSize int) (rows []AccountRow, total int, err error) {
 	page, pageSize = normalizePage(page, pageSize)
 	ids, err := s.accounts.List(ctx)
 	if err != nil {
 		return nil, 0, err
 	}
 	q := strings.ToLower(strings.TrimSpace(query))
+	status = strings.ToLower(strings.TrimSpace(status))
 	matched := make([]account.Account, 0, len(ids))
 	for _, id := range ids {
 		a, err := s.accounts.GetByID(ctx, id)
 		if err != nil {
 			continue // skip unreadable rows rather than failing the whole search
+		}
+		if status != "" && a.Status != status {
+			continue
 		}
 		if q == "" ||
 			strings.Contains(strings.ToLower(a.Username), q) ||
@@ -269,7 +314,12 @@ func (s *Service) SearchAccounts(ctx context.Context, query string, page, pageSi
 			matched = append(matched, a)
 		}
 	}
-	sort.Slice(matched, func(i, j int) bool { return matched[i].CreatedAt.After(matched[j].CreatedAt) })
+	sort.Slice(matched, func(i, j int) bool {
+		if oldestFirst {
+			return matched[i].CreatedAt.Before(matched[j].CreatedAt)
+		}
+		return matched[i].CreatedAt.After(matched[j].CreatedAt)
+	})
 	total = len(matched)
 	rows = []AccountRow{}
 	for _, a := range paginate(matched, page, pageSize) {
@@ -354,6 +404,80 @@ func (s *Service) Ban(ctx context.Context, adminID, targetID, reason string) (Ac
 	if err := s.audit(ctx, adminID, "ban", targetID, map[string]any{"reason": reason}); err != nil {
 		return AccountRow{}, err
 	}
+	return rowOf(a), nil
+}
+
+// SetApproval is the #126 approval decision: it moves one account between
+// pending / approved / denied, revokes its live sessions when the decision
+// takes access away, and appends an audit line. Returns the updated row.
+//
+// It exists so approve/deny is a SERVICE operation rather than a bare
+// account.Repo.SetStatus from an HTTP handler. Three things follow from that,
+// none of which the bare status write did:
+//
+//  1. IT IS AUDITED. Every other operator action that changes what an account
+//     may do — ban, unban, role grant/revoke, M COIN, MMR — appends to the
+//     append-only log the console reads. Approval is the decision that lets a
+//     person into the owner's private deploy at all; it being the one
+//     unrecorded action was indefensible. The reason string is recorded with
+//     it, so "why was cousin Bob declined" survives the conversation.
+//
+//  2. IT REVOKES SESSIONS WHEN ACCESS IS TAKEN AWAY. Denying (or returning to
+//     pending) an account that is currently signed in must not leave it playing
+//     until its refresh token happens to expire. Login/Refresh both re-check
+//     the status, so the revoke is belt-and-braces rather than the mechanism —
+//     but without it the account keeps a working ~15-minute access token, which
+//     on a deny is precisely the window the owner was trying to close.
+//
+//  3. IT REFUSES TO LOCK THE PLATFORM OUT. Taking approval away from the last
+//     administrator who can still sign in produces a deploy where nobody can
+//     approve anybody — including the administrator who would have to fix it,
+//     because approval is exactly what they just lost. That is the same
+//     deadlock SetAdminRole's revocation guard refuses, arrived at by a
+//     different door, so it is refused by the same rule and the same 409
+//     last_admin code. Self-denial by the sole owner is the likeliest way to
+//     get there (a mis-click on one's own row in a list), and it would have
+//     required hand-editing account JSON — or cmd/ownerreset — to undo.
+func (s *Service) SetApproval(ctx context.Context, adminID, targetID, status, reason string) (AccountRow, error) {
+	switch status {
+	case account.StatusPending, account.StatusApproved, account.StatusDenied:
+	default:
+		return AccountRow{}, httpx.BadRequest(`status must be "pending", "approved" or "denied"`)
+	}
+	target, err := s.accounts.GetByID(ctx, targetID)
+	if err != nil {
+		return AccountRow{}, notFoundOr(err)
+	}
+	// Losing approval is the direction that can brick the deploy; granting it
+	// never can, so the guard only runs on the taking-away side.
+	revokesAccess := status != account.StatusApproved
+	if revokesAccess && target.HasRole(RoleAdmin) && target.IsApproved() {
+		usable, err := s.accounts.UsableAdmins(ctx)
+		if err != nil {
+			return AccountRow{}, err
+		}
+		if len(usable) <= 1 && (len(usable) == 0 || usable[0] == targetID) {
+			return AccountRow{}, httpx.Err(http.StatusConflict, "last_admin",
+				"this is the only administrator who can sign in — approve or promote someone else first")
+		}
+	}
+	a, err := s.accounts.SetStatus(ctx, targetID, status)
+	if err != nil {
+		return AccountRow{}, notFoundOr(err)
+	}
+	if revokesAccess {
+		// Best effort — the login/refresh approval guard is authoritative even
+		// if this revoke races or fails.
+		_ = s.rdb.RevokeAllRefresh(ctx, targetID)
+	}
+	detail := map[string]any{"status": status}
+	if reason != "" {
+		detail["reason"] = reason
+	}
+	if err := s.audit(ctx, adminID, "approval_"+status, targetID, detail); err != nil {
+		return AccountRow{}, err
+	}
+	slog.Info("admin: account approval status changed", "by", adminID, "target", targetID, "status", status)
 	return rowOf(a), nil
 }
 

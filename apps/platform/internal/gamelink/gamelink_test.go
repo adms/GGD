@@ -21,6 +21,7 @@ import (
 	"github.com/ggd/platform/internal/presence"
 	"github.com/ggd/platform/internal/room"
 	"github.com/ggd/platform/internal/testutil"
+	"github.com/ggd/platform/internal/wallet"
 	"github.com/ggd/platform/pkg/testkit"
 )
 
@@ -235,7 +236,9 @@ func TestResultHMACAccepted(t *testing.T) {
 	require.NoError(t, err)
 	defer resp.Body.Close()
 	require.Equal(t, http.StatusOK, resp.StatusCode)
-	var body map[string]string
+	// map[string]any: the result ack also carries the numeric settled/humanSeats
+	// counts (resultAck in callback.go).
+	var body map[string]any
 	require.NoError(t, json.NewDecoder(resp.Body).Decode(&body))
 	require.Equal(t, "ok", body["status"])
 	require.True(t, ts.Mini.Exists("match:result:done:"+matchID))
@@ -258,7 +261,9 @@ func TestResultIdempotent(t *testing.T) {
 	// Duplicate delivery: acknowledged as duplicate, changes NOTHING.
 	resp2, err := gamelinktest.SendResult(ts.HTTP.URL, testutil.GameSecret, res, 0)
 	require.NoError(t, err)
-	var body map[string]string
+	// map[string]any: the result ack also carries the numeric settled/humanSeats
+	// counts (resultAck in callback.go).
+	var body map[string]any
 	require.NoError(t, json.NewDecoder(resp2.Body).Decode(&body))
 	resp2.Body.Close()
 	require.Equal(t, "duplicate", body["status"])
@@ -386,7 +391,9 @@ func TestReaper(t *testing.T) {
 	// A late result callback after reaping is treated as a duplicate.
 	resp, err := gamelinktest.SendResult(ts.HTTP.URL, testutil.GameSecret, result(matchID, host, guest), 0)
 	require.NoError(t, err)
-	var body map[string]string
+	// map[string]any: the result ack also carries the numeric settled/humanSeats
+	// counts (resultAck in callback.go).
+	var body map[string]any
 	require.NoError(t, json.NewDecoder(resp.Body).Decode(&body))
 	resp.Body.Close()
 	require.Equal(t, "duplicate", body["status"])
@@ -451,4 +458,40 @@ func TestWALReplayOnBoot(t *testing.T) {
 	lines, err := ts.Srv.Store.ReadLines("history", host.ID)
 	require.NoError(t, err)
 	require.Len(t, lines, 1, "history stays single-entry across replays")
+}
+
+// TestBotOnYourTeamHalvesCrystals is the anti-farm rule, both tiers. Owner:
+// 「全部玩家位置都真人才有 M幣；如果是自己隊伍 3 人都是真人那可以拿水晶，
+//
+//	若有 bot 只能拿一半水晶」
+//
+// The `result` fixture is 2 humans + 10 bots, and BOTH humans sit on a team
+// with bots — which is what a real family lobby looks like. So: half crystals,
+// zero M幣, and the match still counts for standings.
+func TestBotOnYourTeamHalvesCrystals(t *testing.T) {
+	testkit.Cover(t, "crystal-antifarm-half-on-bot-team")
+	ts := testutil.New(t)
+	ctx := context.Background()
+	host, guest, _, matchID := startMatch(ts)
+	require.NoError(t, ts.Srv.Wallet.SetCrystalAbsolute(ctx, host.ID, 55))
+
+	resp, err := gamelinktest.SendResult(ts.HTTP.URL, testutil.GameSecret, result(matchID, host, guest), 0)
+	require.NoError(t, err)
+	resp.Body.Close()
+	require.Equal(t, http.StatusOK, resp.StatusCode)
+
+	// Host placed 1st with two bots beside him → half of the place-1 grant.
+	hostW, err := ts.Srv.Wallet.Get(ctx, host.ID)
+	require.NoError(t, err)
+	require.Equal(t, 55+wallet.CrystalPlace1/2, hostW.Crystal, "bot teammate halves 水晶")
+	require.Equal(t, 0, hostW.MCoin, "a bot anywhere in the lobby means no M幣, even for 1st")
+
+	// Half of every placement is still worth having — 「打場免費賺」 must not
+	// round away to nothing for the family member who keeps losing.
+	require.Positive(t, wallet.CrystalPlace4/2, "half of last place must still be > 0")
+
+	// The match still COUNTED: standings are not currency.
+	a, err := ts.Srv.Accounts.GetByID(ctx, host.ID)
+	require.NoError(t, err)
+	require.Equal(t, 1, a.Games, "only the currency is gated, not the record")
 }

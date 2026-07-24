@@ -34,6 +34,11 @@
     "mr": 1.2,
     "as": 0.02
   },
+  "hitFeel": {
+    "hitstopTicks": 2,
+    "shakeMag": 0.34,
+    "knockbackMag": 0.0
+  },
   "abilities": {
     "Q": {
       "id": "godie-udre.q",
@@ -69,8 +74,22 @@
           "duration": 3.0
         }
       ],
-      "vfxKey": "fx.prim.fire.pulse-sm",
-      "castTimeSec": 0.3
+      "vfxKey": "fx.w3x.particle.lavabreathdamage.p00",
+      "castTimeSec": 0.3,
+      "hitFeel": {
+        "hitstopTicks": 3,
+        "hitstunTicks": 4,
+        "shakeMag": 0.315,
+        "shakeStyle": "directional",
+        "sparkKind": "heavy",
+        "flashColor": [
+          1.0,
+          0.52,
+          0.22
+        ],
+        "flashMs": 108,
+        "camKick": 0.27
+      }
     },
     "W": {
       "id": "godie-udre.w",
@@ -223,7 +242,8 @@
   ],
   "tags": [
     "wc3-import",
-    "godie"
+    "godie",
+    "katana"
   ],
   "exAbility": "godie-udre.ex",
   "passiveAbility": "godie-udre.passive",

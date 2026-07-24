@@ -33,6 +33,11 @@
     "mr": 1.2,
     "as": 0.02
   },
+  "hitFeel": {
+    "hitstopTicks": 1,
+    "shakeMag": 0.18,
+    "knockbackMag": 0.0
+  },
   "abilities": {
     "Q": {
       "id": "godie-u00v.q",
@@ -213,9 +218,23 @@
           "stun": true
         }
       ],
-      "vfxKey": "fx.prim.physical.beam-lg",
+      "vfxKey": "fx.w3x.locust.boomnl.p01",
       "targetsEnemies": true,
-      "castTimeSec": 0.7
+      "castTimeSec": 0.7,
+      "hitFeel": {
+        "hitstopTicks": 5,
+        "hitstunTicks": 8,
+        "shakeMag": 0.591,
+        "shakeStyle": "omni",
+        "sparkKind": "heavy",
+        "flashColor": [
+          1.0,
+          0.72,
+          0.34
+        ],
+        "flashMs": 202,
+        "camKick": 0.506
+      }
     }
   },
   "skillOrder": [

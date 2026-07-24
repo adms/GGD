@@ -11,9 +11,9 @@ import { MSG, SETTLEMENT_EVENT, type SelectChampionMessage, type CheatMessage } 
 import { TICK_MS, SEAT_COUNT, TEAM_SIZE } from "@ggd/shared/constants";
 import { asSeatId, type SeatId } from "@ggd/shared/ids";
 import { normalizeCombatEnv, type CombatEnvKey } from "@ggd/shared/sim/combatEnv";
-import { MatchController, type SeatSpec } from "../match/MatchController";
+import { MatchController, type MatchResult, type SeatSpec } from "../match/MatchController";
 import type { MatchPhase } from "../match/PhaseMachine";
-import { resolvePhaseConfig, resolveFireRing } from "../match/phaseConfig";
+import { resolvePhaseConfig, resolveFireRing, resolveStartingLives } from "../match/phaseConfig";
 import { planTicks } from "../match/tickLoop";
 import { resolveArenaRules } from "../match/arenaRules";
 import { resolveArena, resolveArenaPool } from "../match/arenaSelect";
@@ -26,6 +26,7 @@ import { sign, verifyTicket } from "../auth/hmac";
 import { Whitelist, WHITELIST_BYPASS, sharedWhitelistCache } from "../curation/whitelist";
 import { sharedCombatEnvCache } from "../config/combatEnv";
 import { resolveServerOps, type ServerOps } from "../config/serverOps";
+import { PLATFORM_URL } from "../config/platformUrl";
 import { sanitizeInputMessage } from "../net/validateInput";
 import { MessageRateLimiter } from "../net/messageRateLimiter";
 import { sanitizeDisplayName } from "../net/sanitizeText";
@@ -90,6 +91,81 @@ export interface MatchRoomOptions {
    */
 }
 
+/**
+ * THE RESULT-CALLBACK WIRE CONTRACT — the JSON body of
+ * `POST /api/v1/internal/matches/{matchId}/result`, field for field the Go
+ * struct `gamelink.ResultRequest` in
+ * `apps/platform/internal/gamelink/callback.go`.
+ *
+ * It is declared here, explicitly, because the previous code posted the
+ * game-server's OWN `MatchResult` and assumed the two agreed. They never did:
+ * `MatchResult` nests everything under `teams[]`, while the platform reads
+ * top-level `placements[]` and `seats[]`. Only `matchId` and `mode` overlapped,
+ * so every callback ever sent decoded into a settlement with zero seats — HMAC
+ * valid, 200 OK, nobody credited. Keeping the shape as a named type next to the
+ * function that fills it means the next divergence is a compile error here and
+ * a 400 from the platform (which now rejects a body with no placements/seats
+ * instead of silently settling it), not another year of empty ladders.
+ */
+export interface PlatformResultPayload {
+  matchId: string;
+  mode: string;
+  mapId: string;
+  /** one entry per team; `place` 1 = winner */
+  placements: { team: number; place: number }[];
+  /** every seat, bots included — the platform filters them */
+  seats: { accountId: string; team: number; isBot: boolean; championId?: string }[];
+  /** unix ms; the platform falls back to its own clock when absent */
+  endedAt: number;
+}
+
+/**
+ * Is this account id something the platform could actually credit?
+ *
+ * The dev/LAN join path stamps `dev-<sessionId>` on a seat whose client sent no
+ * account id (see onJoin), which is the honest representation of "nobody is
+ * signed in here". Those seats are real players having a real game, but there
+ * is no account to pay, so a match made only of them is not worth a callback.
+ * A signed-in client sends its platform account id even on the offline path
+ * (client store `offlineLaunch`), and couch guests arrive as platform-minted
+ * `:p2`..`:p4` pseudo-ids which the platform itself knows to skip.
+ */
+export function isSettleableAccountId(accountId: string): boolean {
+  return accountId !== "" && !accountId.startsWith("dev-");
+}
+
+/**
+ * Translate the sim's own `MatchResult` into the platform's contract above.
+ * `championOf` resolves the champion a seat actually played, which credits the
+ * per-champion points board (the platform falls back to the champion recorded
+ * at reservation when it is empty).
+ */
+export function buildPlatformResult(
+  result: MatchResult,
+  mapId: string,
+  championOf: (seatId: number) => string,
+  endedAt: number = Date.now(),
+): PlatformResultPayload {
+  return {
+    matchId: result.matchId,
+    mode: result.mode,
+    mapId,
+    placements: result.teams.map((t) => ({ team: t.teamId, place: t.placement })),
+    seats: result.teams.flatMap((t) =>
+      t.members.map((m) => {
+        const championId = championOf(m.seatId);
+        return {
+          accountId: m.accountId,
+          team: t.teamId,
+          isBot: m.isBot,
+          ...(championId ? { championId } : {}),
+        };
+      }),
+    ),
+    endedAt,
+  };
+}
+
 const SHARED_SECRET = process.env.PLATFORM_GAME_SHARED_SECRET ?? "";
 const RECONNECT_GRACE_SECS = 60;
 /**
@@ -145,6 +221,25 @@ export class MatchRoom extends Room<MatchState> {
     if (SHARED_SECRET && !verifyCreateToken(SHARED_SECRET, options.createToken)) {
       throw new Error("match creation is restricted to the platform reservation flow");
     }
+    // Colyseus defaults a seat reservation to 15 SECONDS, and that default
+    // silently broke every remote match on ggd.adms.ai. The sequence is:
+    // platform reserves the seat → pushes it over the lobby WS → and only THEN
+    // does the client download a 2.8 MB entry chunk, the content tree and the
+    // champion models before it opens the game socket. On the owner's machine
+    // that is instant, so it always passed in dev. On a real connection it
+    // routinely exceeds 15 s, and the seat is gone by the time the client
+    // arrives: "could not join the match: seat reservation expired", every
+    // time, while the match itself sits there perfectly healthy.
+    //
+    // A one-click bot match is the worst case — nothing else has to load first,
+    // so the entire asset download lands inside the reservation window.
+    //
+    // 120 s is measured against what has to happen in that window (a cold cache
+    // pulling the full asset set over a slow link), not picked as a round
+    // number. Being generous costs little: an unclaimed seat holds one slot in
+    // a room the reaper disposes anyway, and the seat token is signed and
+    // single-use, so a longer window widens no authorization hole.
+    this.setSeatReservationTime(120);
     // OPERATIONAL SETTINGS (admin 系統運維). Resolved HERE, at the top of
     // onCreate, because both knobs are consumed a few lines below: maxRooms by
     // the admission gate and snapshotHz by patchRate. The create path is the
@@ -252,7 +347,13 @@ export class MatchRoom extends Room<MatchState> {
     // round-length source of truth. null (absent block) leaves the ring off.
     const fireRing = resolveFireRing();
     const arenaRules = resolveArenaRules();
-    const startingLives = 3;
+    // STARTING TEAM LIVES from the SAME config.match@1 doc (`startingTeamLives`).
+    // Was a hardcoded `3` while the doc's authored value sat unread — the owner
+    // held the match-length dial and turning it did nothing. Resolved here, once,
+    // and frozen for the match like the phase durations above; it is also written
+    // into the replay header below, so a recording replays on ITS reservoir, not
+    // on whatever the config says at playback time.
+    const startingLives = resolveStartingLives();
     this.ctl = new MatchController(
       matchId,
       seed,
@@ -562,24 +663,121 @@ export class MatchRoom extends Room<MatchState> {
       });
     }
 
-    if (this.callbackUrl && SHARED_SECRET) {
-      const body = JSON.stringify(this.ctl.result);
-      const ts = String(Math.floor(Date.now() / 1000));
-      try {
-        await fetch(this.callbackUrl, {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-            "X-Internal-Timestamp": ts,
-            "X-Internal-Auth": sign(SHARED_SECRET, ts, body),
-          },
-          body,
-        });
-      } catch (err) {
-        console.error("result callback failed", err);
-      }
-    }
+    await this.settleToPlatform();
     // let clients read the final state, then dispose
     this.clock.setTimeout(() => this.disconnect(), 10_000);
+  }
+
+  /**
+   * Post the finished match to the platform. This call is the ONLY way a match
+   * reaches the platform: MMR, the leaderboard, M COIN and the 水晶
+   * meta-progression grant (task #118) all happen inside it, so it settles on
+   * EVERY path a match can be played on and every outcome is stated out loud.
+   *
+   * Tasks #6 / #25 — this used to be a silent skip on two independent counts:
+   *
+   *  1. It only fired for a room the platform created (`callbackUrl` set). A
+   *     dev/LAN direct-join match — which is how the owner actually plays on
+   *     his own box, signed in with his real account — settled nowhere, so 51
+   *     recorded matches sat next to an empty ladder and 0 M COIN.
+   *  2. Far worse: when it DID fire, it posted `ctl.result` raw, whose shape
+   *     (`{teams:[{teamId, placement, members:[…]}]}`) shares exactly two field
+   *     names with the platform's `gamelink.ResultRequest`. `placements` and
+   *     `seats` decoded as nil, so the platform HMAC-verified the body, walked
+   *     zero seats, credited nobody and answered 200 "ok" — then latched the
+   *     match id as done, so it could never be retried. Not one match had ever
+   *     settled on this machine.
+   *
+   * The fix is `buildPlatformResult`, which speaks the platform's contract
+   * field-for-field, plus a callback URL that is DERIVED when the platform did
+   * not supply one. Deriving it adds no trust: it targets the same HMAC-signed,
+   * signature-verified, `SetNX`-idempotent `/api/v1/internal/matches/{id}/result`
+   * the platform flow uses, so a dev/LAN match inherits exactly the
+   * authentication the platform-created one has, and the platform still decides
+   * who is real (unknown account ids are skipped there, as bots and couch
+   * guests always were).
+   */
+  private async settleToPlatform(): Promise<void> {
+    const result = this.ctl.result;
+    if (!result) return;
+    const payload = buildPlatformResult(result, this.ctl.arena.id, (seatId) =>
+      this.ctl.seats.get(asSeatId(seatId))?.championId ?? "",
+    );
+    const matchId = this.ctl.matchId;
+
+    // Seats that could actually earn something. A bot never can; neither can a
+    // dev seat that was auto-named because nobody was signed in (`dev-…`, see
+    // onJoin). If NOTHING here can earn, the post is pointless traffic that
+    // would also burn this match id in the platform's idempotency latch — so it
+    // is skipped DELIBERATELY, and said so, which is a different statement from
+    // the silence this replaced.
+    const settleable = payload.seats.filter((s) => !s.isBot && isSettleableAccountId(s.accountId));
+    if (settleable.length === 0) {
+      console.warn(
+        `[match ${matchId}] settled NOTHING to the platform: no seat belongs to a signed-in account ` +
+          `(${payload.seats.filter((s) => !s.isBot).length} human seat(s), all anonymous/dev). ` +
+          "No rating, no leaderboard entry, no M COIN, no 水晶 — expected for an offline bots-only run; " +
+          "sign in before playing if this match was supposed to count.",
+      );
+      return;
+    }
+
+    // Candidate endpoints, in order: what the platform told us to call, then
+    // the URL this process resolved for the platform (config/platformUrl.ts —
+    // GGD_PLATFORM_URL, else the in-cluster or localhost default). The second
+    // is what makes a dev/LAN match settle at all; it is also the recovery path
+    // for a deploy whose PLATFORM_INTERNAL_URL points somewhere unreachable.
+    // Retrying is safe by construction: the platform's SetNX latch answers a
+    // duplicate with "duplicate" instead of paying twice.
+    const derived = `${PLATFORM_URL.replace(/\/$/, "")}/api/v1/internal/matches/${encodeURIComponent(matchId)}/result`;
+    const targets = [...new Set([this.callbackUrl, derived].filter((u): u is string => !!u))];
+
+    const body = JSON.stringify(payload);
+    const ts = String(Math.floor(Date.now() / 1000));
+    const headers = {
+      "content-type": "application/json",
+      "X-Internal-Timestamp": ts,
+      "X-Internal-Auth": sign(SHARED_SECRET, ts, body),
+    };
+    const failures: string[] = [];
+    for (const url of targets) {
+      const how = url === this.callbackUrl ? "platform-supplied" : "derived from GGD_PLATFORM_URL";
+      try {
+        const res = await fetch(url, { method: "POST", headers, body });
+        // fetch only rejects on TRANSPORT failure: a 401 from a rotated shared
+        // secret, or the 400 the platform now returns on a contract mismatch,
+        // resolves normally and used to be discarded entirely.
+        if (!res.ok) {
+          failures.push(`HTTP ${res.status} from ${url} (${how}): ${(await res.text().catch(() => "")).slice(0, 200)}`);
+          continue;
+        }
+        // The platform reports how many accounts it actually credited. Logging
+        // ITS number rather than ours is the point: "settled: 0" against 2 human
+        // seats is the exact failure that hid here for the whole project, and it
+        // is now a line in the log instead of a 200 that means nothing.
+        const ack = (await res.json().catch(() => ({}))) as { status?: string; settled?: number };
+        const credited = typeof ack.settled === "number" ? ack.settled : -1;
+        const line =
+          `[match ${matchId}] settled to the platform (${how}): status=${ack.status ?? "?"} ` +
+          `credited=${credited < 0 ? "unreported" : credited}/${settleable.length} account(s)`;
+        if (credited === 0 && ack.status !== "duplicate") {
+          console.error(
+            `${line} — the platform accepted the result but credited NOBODY. No rating, no M COIN, no 水晶. ` +
+              "Check that these account ids exist on the platform.",
+          );
+        } else {
+          console.log(line);
+        }
+        return;
+      } catch (err) {
+        failures.push(`${url} (${how}): ${err instanceof Error ? err.message : String(err)}`);
+      }
+    }
+    console.error(
+      `[match ${matchId}] RESULT CALLBACK FAILED on every endpoint — this match awarded NO rating, ` +
+        `no leaderboard entry, no M COIN and no 水晶 to ${settleable.length} player(s). ` +
+        `Check PLATFORM_GAME_SHARED_SECRET matches the platform's and that the platform is reachable. ` +
+        `Attempts: ${failures.join(" | ")}`,
+    );
   }
 }

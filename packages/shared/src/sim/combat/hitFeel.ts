@@ -66,13 +66,25 @@ export interface HitFeelInput {
   exFreeze?: number;
 }
 
-/** The COSMETIC half of the ImpactProfile — always fully resolved (no undefined). */
+/**
+ * The COSMETIC half of the ImpactProfile.
+ *
+ * Everything here is fully resolved by the sim EXCEPT the two flash fields,
+ * which are PRESENT ONLY WHEN CONTENT AUTHORED THEM. That asymmetry is
+ * deliberate and load-bearing — see FLASH IS NOT THE SIM'S TO DEFAULT below.
+ */
 export interface ImpactCosmetics {
   shakeMag: number;
   shakeStyle: ShakeStyle;
   sparkKind: SparkKind;
-  flashColor: [number, number, number];
-  flashMs: number;
+  /**
+   * AUTHORED-ONLY victim body-flash colour. `undefined` = no content override,
+   * and the client then uses its own measured damage-type palette.
+   * PRESENCE IS THE SIGNAL — do not "helpfully" fill this in with a default.
+   */
+  flashColor?: [number, number, number];
+  /** AUTHORED-ONLY victim body-flash duration (ms). `undefined` = client tier default. */
+  flashMs?: number;
   camKick: number;
   exFreeze: number;
 }
@@ -87,17 +99,43 @@ export interface ImpactCosmetics {
 
 /** Camera shake amplitude per tier (client scales this into world units). */
 const SHAKE_BY_TIER: Record<ImpactTier, number> = { light: 0.35, medium: 0.6, heavy: 0.85, crit: 1.0 };
-/** Victim flash duration (ms) per tier — heavier hit holds the flash longer. */
-const FLASH_MS_BY_TIER: Record<ImpactTier, number> = { light: 90, medium: 120, heavy: 160, crit: 200 };
 /** Directional camera kick magnitude per tier. */
 const CAMKICK_BY_TIER: Record<ImpactTier, number> = { light: 0.15, medium: 0.3, heavy: 0.5, crit: 0.65 };
 
-/** Victim flash colours by damage type (physical = damage-red). Block overrides. */
-const FLASH_PHYSICAL: [number, number, number] = [1, 0.25, 0.2];
-const FLASH_MAGIC: [number, number, number] = [0.7, 0.4, 1.0];
-const FLASH_TRUE: [number, number, number] = [1, 1, 1];
-/** A guarded hit flashes cool blue-white, not damage-red (distinct block read). */
-const FLASH_BLOCK: [number, number, number] = [0.6, 0.8, 1.0];
+// ─────────────────────────── FLASH IS NOT THE SIM'S TO DEFAULT ───────────────
+// This module used to resolve a full damage-type flash palette here —
+// FLASH_PHYSICAL [1,.25,.2] / FLASH_MAGIC [.7,.4,1] / FLASH_TRUE [1,1,1] /
+// FLASH_BLOCK [.6,.8,1] plus a FLASH_MS_BY_TIER curve. Every one of those
+// constants was DEAD: it rode the wire on ImpactProfile.flashColor and the
+// client then threw it away and used its own `flashColorFor()`. Four constants
+// that looked live, shipped in every hitImpact, and never once reached a pixel.
+//
+// They are deleted rather than re-wired, because the client is the correct
+// owner: picking the flash colour is a CONTRAST decision about the overlay's
+// ALPHA_COMBINE blend against the real model tints, and that measurement lives
+// in render/combatFeedback.ts (which is why FLASH_TRUE's white was wrong —
+// white can only push channels UP, so it is a no-op on every pale model).
+//
+// What the sim keeps is the part only the sim knows: WHAT THE CONTENT ASKED
+// FOR. `flashColor`/`flashMs` are therefore passed through when authored and
+// LEFT UNDEFINED when not. That presence/absence IS the wire signal the client
+// needs to tell "the author chose this hue" from "nobody chose anything" —
+// without it the client cannot honour an override without also overriding the
+// 99% of hits (every basic attack; no champion doc authors a flash) whose
+// colour is carrying the physical-vs-magic damage-type read.
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Clamp band for an AUTHORED `flashMs`. The flash must clear before the next
+ * hit or back-to-back autos strobe — the client's crit flash is 185 ms and the
+ * whole channel is built around "even a crit clears well under 200 ms" (收尾精準).
+ * `zHitFeel` enforces the same 260 ms ceiling at authoring time so a bad value
+ * is a LOUD content error; this runtime clamp is only the second line of
+ * defence for an already-built bundle. 30 ms floor ≈ 1 sim tick — anything
+ * shorter cannot survive a frame hitch and would read as "the flash is broken".
+ */
+export const AUTHORED_FLASH_MS_MIN = 30;
+export const AUTHORED_FLASH_MS_MAX = 260;
 
 /** A blocked hit's cosmetics are softer (less shake / kick). */
 const BLOCK_SHAKE_MULT = 0.6;
@@ -133,39 +171,48 @@ export function deriveCosmetics(
   else if (tier === "heavy" || tier === "crit") sparkKind = "heavy";
   else sparkKind = "hit";
 
-  const flashSrc = isBlock
-    ? FLASH_BLOCK
-    : type === "magic"
-      ? FLASH_MAGIC
-      : type === "true"
-        ? FLASH_TRUE
-        : FLASH_PHYSICAL;
-
   let camKick = CAMKICK_BY_TIER[tier];
   if (isBlock) camKick *= BLOCK_CAMKICK_MULT;
   if (isEX) camKick = Math.max(camKick, EX_CAMKICK_FLOOR);
 
+  // NOTE: no flashColor / flashMs here on purpose — un-authored means ABSENT,
+  // not "some default the client will ignore". See the block comment above.
   return {
     shakeMag,
     shakeStyle,
     sparkKind,
-    flashColor: [flashSrc[0], flashSrc[1], flashSrc[2]],
-    flashMs: FLASH_MS_BY_TIER[tier],
     camKick,
     exFreeze: isEX ? EX_FREEZE_TICKS : 0,
   };
 }
 
-/** Layer explicit `hitFeel` cosmetic overrides over the derived default. */
+/** Clamp one authored 0..1 colour component (schema-checked; belt and braces). */
+function unitClamp(v: number): number {
+  return v < 0 ? 0 : v > 1 ? 1 : v;
+}
+
+/**
+ * Layer explicit `hitFeel` cosmetic overrides over the derived default.
+ *
+ * The flash pair is the odd one out: there is no base to fall back to, so an
+ * absent override stays ABSENT (the client supplies the damage-type default).
+ * `flashMs` is clamped into the strobe-safe band on the way through — content
+ * is a fixed input, so the clamp is deterministic and replay-safe.
+ */
 export function mergeCosmetics(base: ImpactCosmetics, hf?: HitFeelInput): ImpactCosmetics {
   if (!hf) return base;
-  return {
+  const out: ImpactCosmetics = {
     shakeMag: hf.shakeMag ?? base.shakeMag,
     shakeStyle: hf.shakeStyle ?? base.shakeStyle,
     sparkKind: hf.sparkKind ?? base.sparkKind,
-    flashColor: hf.flashColor ? [hf.flashColor[0], hf.flashColor[1], hf.flashColor[2]] : base.flashColor,
-    flashMs: hf.flashMs ?? base.flashMs,
     camKick: hf.camKick ?? base.camKick,
     exFreeze: hf.exFreeze ?? base.exFreeze,
   };
+  const c = hf.flashColor ?? base.flashColor;
+  if (c) out.flashColor = [unitClamp(c[0]), unitClamp(c[1]), unitClamp(c[2])];
+  const ms = hf.flashMs ?? base.flashMs;
+  if (ms !== undefined) {
+    out.flashMs = Math.min(AUTHORED_FLASH_MS_MAX, Math.max(AUTHORED_FLASH_MS_MIN, ms));
+  }
+  return out;
 }

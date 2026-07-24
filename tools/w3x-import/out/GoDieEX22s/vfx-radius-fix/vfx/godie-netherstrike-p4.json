@@ -1,0 +1,82 @@
+{
+  "id": "godie-netherstrike-p4",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.139,
+    "angleDeg": 60.0
+  },
+  "mode": "burst",
+  "burstCount": 10,
+  "lifetimeSec": {
+    "min": 0.5,
+    "max": 0.5
+  },
+  "size": {
+    "start": 0.01,
+    "end": 8.334
+  },
+  "color": {
+    "start": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "end": [
+      1.0,
+      1.0,
+      1.0,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    ],
+    [
+      0.1,
+      [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.01
+    ],
+    [
+      0.1,
+      5.556
+    ],
+    [
+      1,
+      8.334
+    ]
+  ],
+  "blendMode": "modulate",
+  "texture": "assets/textures/particles/light_03.png",
+  "speed": {
+    "min": 2.778,
+    "max": 8.334
+  }
+}

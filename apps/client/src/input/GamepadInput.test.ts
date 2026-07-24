@@ -8,7 +8,7 @@
 import { describe, it, expect } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
 import type { Vec2 } from "@ggd/shared/sim/math/vec2";
-import type { AbilitySlot } from "@ggd/shared/sim/intents";
+import type { CastableSlot } from "@ggd/shared/sim/intents";
 import { buildCastCommand, type AimAbility } from "./AimResolver";
 import { SLOT_BY_CODE } from "./InputCapture";
 import {
@@ -24,12 +24,14 @@ import {
   type PadState,
 } from "./GamepadInput";
 
-const ABILITIES: Record<AbilitySlot, AimAbility> = {
+const ABILITIES: Record<CastableSlot, AimAbility> = {
   Q: { castType: "skillshot", range: 14 },
   W: { castType: "self", range: 0.1 },
   E: { castType: "ground", range: 9 },
   R: { castType: "targeted", range: 8 },
   EX: { castType: "self", range: 0 },
+  // the SIXTH slot — an active 天生技 is cast through the same paths
+  PASSIVE: { castType: "self", range: 0 },
 };
 
 function ctx(overrides: Partial<GamepadPlayerCtx> = {}): GamepadPlayerCtx {
@@ -218,5 +220,35 @@ describe("EX skill input binding (ex-input-bind)", () => {
         { selfPos: { x: 0, z: 0 }, cursorGround: { x: 1, z: 1 } },
       ),
     ).toEqual({ kind: "castAbility", slot: "EX", target: { type: "self" } });
+  });
+});
+
+describe("天生技 pad binding — the SIXTH slot (P0-3)", () => {
+  it("d-pad UP casts the innate, and no other bound button does", () => {
+    cover("ex-input-bind");
+    const intent = mapGamepadFrame(frame({ justPressed: [BTN.DPAD_UP] }), ctx());
+    expect(intent.commands).toEqual([
+      { kind: "castAbility", slot: "PASSIVE", target: { type: "self" } },
+    ]);
+    // the face buttons keep their slots — the sixth slot took nothing away
+    for (const [btn, slot] of [
+      [BTN.A, "Q"],
+      [BTN.B, "W"],
+      [BTN.X, "E"],
+      // Y/R is `targeted` and this ctx has no enemy — a no-target cast is
+      // correctly not sent, which is a different rule and not this test's.
+      [BTN.BACK, "EX"],
+    ] as const) {
+      expect(mapGamepadFrame(frame({ justPressed: [btn] }), ctx()).commands).toEqual([
+        expect.objectContaining({ kind: "castAbility", slot }),
+      ]);
+    }
+  });
+
+  it("d-pad UP sends nothing when the hero's innate is not castable", () => {
+    // a permanent 被動 innate (or no NN-00) resolves to null upstream
+    cover("ex-input-bind");
+    const intent = mapGamepadFrame(frame({ justPressed: [BTN.DPAD_UP] }), ctx({ ability: () => null }));
+    expect(intent.commands).toEqual([]);
   });
 });

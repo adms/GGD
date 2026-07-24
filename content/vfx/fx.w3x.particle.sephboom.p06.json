@@ -1,0 +1,83 @@
+{
+  "id": "fx.w3x.particle.sephboom.p06",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 1.042,
+    "angleDeg": 1
+  },
+  "mode": "continuous",
+  "lifetimeSec": {
+    "min": 2,
+    "max": 2
+  },
+  "size": {
+    "start": 6.167,
+    "end": 18.5
+  },
+  "color": {
+    "start": [
+      1,
+      0.502,
+      0,
+      0
+    ],
+    "end": [
+      1,
+      0.502,
+      0.247,
+      0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        1,
+        0.502,
+        0,
+        0
+      ]
+    ],
+    [
+      0.5,
+      [
+        1,
+        0.502,
+        0,
+        1
+      ]
+    ],
+    [
+      1,
+      [
+        1,
+        0.502,
+        0.247,
+        0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      6.167
+    ],
+    [
+      0.5,
+      12.333
+    ],
+    [
+      1,
+      18.5
+    ]
+  ],
+  "blendMode": "additive",
+  "speed": {
+    "min": 0,
+    "max": 0
+  },
+  "rate": 222,
+  "texture": "assets/textures/particles/circle_04.png",
+  "anchorBone": "UNNAMED"
+}

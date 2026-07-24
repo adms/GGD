@@ -1,0 +1,9 @@
+# Python 3.14+（本專案以 3.14.6 開發、venv 見 README）
+numpy>=2.0
+PyYAML>=6.0
+
+# ---- 可選：真正的 speaker embedding（Phase 7 分離度分析）----
+# 未安裝時自動退回 spectral_proxy 代理特徵（結果僅供排序參考）。
+# speechbrain>=1.0
+# torch>=2.2
+# torchaudio>=2.2

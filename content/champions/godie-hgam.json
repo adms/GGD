@@ -34,6 +34,11 @@
     "mr": 1.2,
     "as": 0.02
   },
+  "hitFeel": {
+    "hitstopTicks": 1,
+    "shakeMag": 0.18,
+    "knockbackMag": 0.0
+  },
   "abilities": {
     "Q": {
       "id": "godie-hgam.q",
@@ -195,8 +200,22 @@
           ]
         }
       ],
-      "vfxKey": "fx.cinder-ward",
-      "castTimeSec": 0.4
+      "vfxKey": "fx.w3x.particle.supershinythingy.p00",
+      "castTimeSec": 0.4,
+      "hitFeel": {
+        "hitstopTicks": 4,
+        "hitstunTicks": 7,
+        "shakeMag": 0.52,
+        "shakeStyle": "omni",
+        "sparkKind": "magic",
+        "flashColor": [
+          1.0,
+          0.92,
+          0.6
+        ],
+        "flashMs": 178,
+        "camKick": 0.446
+      }
     }
   },
   "skillOrder": [

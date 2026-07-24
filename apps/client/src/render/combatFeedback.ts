@@ -51,6 +51,92 @@ export function flashColorFor(dmgType: string | undefined): [number, number, num
   return dmgType === "magic" ? [1, 0.35, 0.9] : [1, 0.15, 0.15];
 }
 
+// ───────────────────────── THE VICTIM-FLASH LAYERING (read this first) ───────
+// The victim flash carries TWO things, and they are layered, not competing:
+//
+//   LAYER 1 — DAMAGE TYPE (the system read, `flashColorFor` above).
+//     Physical/true = red, magic = magenta. This is combat legibility: it is
+//     how you know at a glance what is chewing through you. It is the DEFAULT
+//     and it covers every basic attack and every un-authored ability — i.e.
+//     the overwhelming majority of hits in a match. NOTHING may take it away:
+//     no champion doc authors a flash (all 112 that carry `hitFeel` author only
+//     hitstop/shake/knockback), so a basic attack ALWAYS reads its damage type.
+//
+//   LAYER 2 — ABILITY ELEMENT (`hitFeel.flashColor`, 31 authored ability docs).
+//     A named R/E/Q may name its own hue: 神聖 gold, ice blue, fire orange,
+//     void violet. This does not DESTROY the type read, it REFINES it — the
+//     player already knows the source (they watched the cast, they heard the
+//     name), so on that one hit the flash is free to say WHICH spell rather
+//     than merely WHICH damage school. The coarse read stays on the 99%.
+//
+//   THE GUARD — the authored hue is then forced through `legibleFlashColor`,
+//     because layer 2 must not be allowed to break the thing layer 1 was
+//     measured for. See that function.
+//
+// This is wired end to end as of the false-completions pass: `hitFeel.flashColor`
+// / `flashMs` were accepted by the schema, replicated by the sim on every
+// hitImpact, decoded into `ImpactProfile` right here — and then dropped on the
+// floor, because `planImpactFeedback` rebuilt the flash from `flashColorFor` +
+// `TIER_FX[tier].flashMs` unconditionally. 31 abilities shipped dead content.
+// If you are about to "simplify" the resolver below back into a straight
+// `flashColorFor(ctx.dmgType)` — that is the bug, and it is silent.
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Minimum CHROMATIC SPREAD (max channel − min channel) an authored flash colour
+ * must have before it is drawn.
+ *
+ * Anchored to a measurement, not to taste: the overlay draws with ALPHA_COMBINE
+ * (`out = base·(1−a) + flash·a`), so what the eye actually sees is `a·|flash −
+ * base|` per channel. Against a PALE model — the worst case, and the one the
+ * palette above was retuned for — a low-spread colour has nothing to move:
+ *
+ *   flash              spread   max Δ vs a 0.9 base @ a=0.6
+ *   [1, .15, .15] red    0.85    0.45     ← the measured, accepted default
+ *   [1, .35, .90] magic  0.65    0.33     ← the PALEST accepted default
+ *   [1, .92, .60] gold   0.40    0.18     ← authored (godie-e007.r, +5 more)
+ *   [.85,.92,1.0] azure  0.15    0.06     ← authored (godie-u00j.q, godie-hart.r)
+ *   [1, 1,   1  ] white  0.00    0.06     ← the case the docstring above rejects
+ *
+ * 0.65 is the magenta's spread — i.e. "no authored colour may be less chromatic
+ * than the palest colour the measurement pass was willing to accept". Eight of
+ * the 31 authored docs sit under it and would otherwise flash invisibly.
+ */
+export const FLASH_MIN_SPREAD = 0.65;
+
+/**
+ * Bring an AUTHORED flash colour up to the legibility floor WITHOUT changing
+ * what the author meant. The operation is a pure saturation boost about the
+ * colour's own max channel — `c' = max − (max − c)·s` — which preserves the max
+ * channel, the hue order and the ratios between the channel deltas, so the
+ * author's gold stays gold and their azure stays azure; they just stop being
+ * washed out. (Scaling toward black would have been the naive fix and is the
+ * wrong one: it DIVIDES the spread, making the invisibility worse.)
+ *
+ * Only ever applied to authored colours. The two defaults in `flashColorFor`
+ * are left alone — they were measured against the real w3x model tints in
+ * content/config/unit-tints.json and are not to be second-guessed by a formula.
+ */
+export function legibleFlashColor(rgb: readonly [number, number, number]): [number, number, number] {
+  const r = clamp01(rgb[0]);
+  const g = clamp01(rgb[1]);
+  const b = clamp01(rgb[2]);
+  const max = Math.max(r, g, b);
+  const spread = max - Math.min(r, g, b);
+  // Already chromatic enough (fire orange, deep violet…) → author's value, verbatim.
+  if (spread >= FLASH_MIN_SPREAD) return [r, g, b];
+  // A pure greyscale authored colour (spread 0) has NO hue to preserve — there
+  // is no direction to saturate in, so fall back to the measured red rather
+  // than emitting a flash that cannot be seen.
+  if (spread <= 1e-6) return [1, 0.15, 0.15];
+  const s = FLASH_MIN_SPREAD / spread;
+  return [clamp01(max - (max - r) * s), clamp01(max - (max - g) * s), clamp01(max - (max - b) * s)];
+}
+
+function clamp01(v: number): number {
+  return v < 0 ? 0 : v > 1 ? 1 : v;
+}
+
 /**
  * ATTACKER (source) flash on a LANDED hit — a brief WHITE impact pop on the
  * body that dealt the blow (task #69). The victim's red flash reads "I'm being
@@ -116,10 +202,14 @@ export interface ImpactProfile {
   shakeStyle: ShakeStyle;
   /** hit-spark identity the client plays (contact-point spark selection). */
   sparkKind: SparkKind;
-  /** victim body-flash colour [r,g,b] 0..1. */
-  flashColor: [number, number, number];
-  /** victim body-flash duration (ms). */
-  flashMs: number;
+  /**
+   * AUTHORED-ONLY victim body-flash colour [r,g,b] 0..1. `undefined` is the
+   * COMMON case and means "content named no hue" → the damage-type default.
+   * Do NOT backfill this with a default; the absence is the whole signal.
+   */
+  flashColor?: [number, number, number];
+  /** AUTHORED-ONLY victim body-flash duration (ms); `undefined` → tier default. */
+  flashMs?: number;
   /** one-shot directional camera kick magnitude. */
   camKick: number;
   /** cosmetic client-side EX freeze ticks (0 = none). */
@@ -129,10 +219,11 @@ export interface ImpactProfile {
 // ---- client mirror of the sim's damage-derived cosmetic DEFAULT curve ---------
 // (sim/combat/hitFeel.ts). Only used to backfill a pre-#133 wire payload that
 // predates the cosmetic fields, so an old replay still reads coherently.
+// NOTE there is deliberately NO flash entry here: the flash pair is
+// authored-or-absent on the wire, and its default is TIER_FX/flashColorFor
+// below — one table, not a mirror that silently diverges from it.
 const SHAKE_BY_TIER: Record<ImpactTier, number> = { light: 0.35, medium: 0.6, heavy: 0.85, crit: 1.0 };
-const FLASHMS_BY_TIER: Record<ImpactTier, number> = { light: 90, medium: 120, heavy: 160, crit: 200 };
 const CAMKICK_BY_TIER: Record<ImpactTier, number> = { light: 0.15, medium: 0.3, heavy: 0.5, crit: 0.65 };
-const DEFAULT_FLASH_RGB: [number, number, number] = [1, 0.25, 0.2];
 const EX_FREEZE_DEFAULT_TICKS = 8;
 
 /**
@@ -146,12 +237,15 @@ export function asImpactProfile(v: unknown): ImpactProfile | null {
   const tier = p.tier;
   const dir = p.knockbackDir as { x?: unknown; z?: unknown } | undefined;
   const isEX = Boolean(p.isEX);
+  // AUTHORED-ONLY: narrow when the wire carries a real triple, otherwise leave
+  // the field OFF the object entirely. `planImpactFeedback` reads the absence
+  // as "no content override" — writing a placeholder here would erase that.
   const rgb = p.flashColor as unknown;
-  const flashColor: [number, number, number] =
+  const flashColor: [number, number, number] | undefined =
     Array.isArray(rgb) && rgb.length >= 3 && rgb.every((c) => typeof c === "number")
       ? [rgb[0] as number, rgb[1] as number, rgb[2] as number]
-      : [...DEFAULT_FLASH_RGB];
-  return {
+      : undefined;
+  const out: ImpactProfile = {
     tier,
     hitstopTicks: p.hitstopTicks,
     hitstunTicks: typeof p.hitstunTicks === "number" ? p.hitstunTicks : 0,
@@ -168,11 +262,12 @@ export function asImpactProfile(v: unknown): ImpactProfile | null {
     shakeMag: typeof p.shakeMag === "number" ? p.shakeMag : SHAKE_BY_TIER[tier],
     shakeStyle: p.shakeStyle === "omni" || p.shakeStyle === "directional" ? p.shakeStyle : tier === "crit" || isEX ? "omni" : "directional",
     sparkKind: isSparkKind(p.sparkKind) ? p.sparkKind : "hit",
-    flashColor,
-    flashMs: typeof p.flashMs === "number" ? p.flashMs : FLASHMS_BY_TIER[tier],
     camKick: typeof p.camKick === "number" ? p.camKick : CAMKICK_BY_TIER[tier],
     exFreeze: typeof p.exFreeze === "number" ? p.exFreeze : isEX ? EX_FREEZE_DEFAULT_TICKS : 0,
   };
+  if (flashColor) out.flashColor = flashColor;
+  if (typeof p.flashMs === "number") out.flashMs = p.flashMs;
+  return out;
 }
 
 /**
@@ -280,7 +375,11 @@ export interface ImpactFeedbackPlan {
   /** authoritative sim freeze applied to BOTH fighters. 0 = no freeze (chip). */
   freezeTicks: number;
   freezeMs: number;
-  /** victim red/magenta flash, tier-scaled intensity + duration. */
+  /**
+   * Victim flash: the ability's AUTHORED element hue when `hitFeel.flashColor`
+   * named one, else the measured damage-type red/magenta. Alpha is always the
+   * tier's. See `resolveVictimFlash`.
+   */
   victimFlash: FlashSpec;
   /** attacker white pop, tier-scaled. */
   attackerFlash: FlashSpec;
@@ -296,6 +395,34 @@ export interface ImpactFeedbackPlan {
   // NUMBER  : the floating damage number (#92) already emphasises crit/kill; it
   //           should read `tier` so its pop crosses the same boundary. Spawned
   //           in the UI layer, not here.
+}
+
+/**
+ * Resolve the victim flash for one hit — the LAYERING described at the top of
+ * this file, in one place so there is exactly one answer to "what colour was
+ * that flash and why".
+ *
+ *   authored `flashColor` → the ability's element hue, saturation-guarded.
+ *   nothing authored      → the measured damage-type palette (the 99% case).
+ *
+ * Duration follows the same rule (authored ms, else the tier's). ALPHA is
+ * deliberately NOT authorable: it is the tier's hit-weight, the one scalar
+ * every channel in this module crosses light→heavy on together, and letting
+ * content pick it would re-open the "five decoupled constants" bug the
+ * orchestrator exists to close. It is also what ui/combatText.ts's contrast
+ * analysis assumes when it sizes the damage number's black ring against the
+ * flash it is born on top of.
+ */
+export function resolveVictimFlash(
+  profile: ImpactProfile,
+  dmgType: string | undefined,
+): FlashSpec {
+  const fx = TIER_FX[profile.tier];
+  return {
+    rgb: profile.flashColor ? legibleFlashColor(profile.flashColor) : flashColorFor(dmgType),
+    alpha: fx.flashAlpha,
+    ms: profile.flashMs ?? fx.flashMs,
+  };
 }
 
 /**
@@ -320,7 +447,12 @@ export function planImpactFeedback(
     isEX: profile.isEX,
     freezeTicks: profile.hitstopTicks,
     freezeMs: Math.max(0, profile.hitstopTicks) * ctx.tickMs,
-    victimFlash: { rgb: flashColorFor(ctx.dmgType), alpha: fx.flashAlpha, ms: fx.flashMs },
+    // THE HIT-FEEL OVERRIDE LANDS HERE. `resolveVictimFlash` layers the
+    // ability's authored element hue over the damage-type default (and
+    // guarantees the result is actually visible). This used to read
+    // `flashColorFor(ctx.dmgType)` directly, which made hitFeel.flashColor /
+    // .flashMs dead content on 31 shipped abilities. Keep the call.
+    victimFlash: resolveVictimFlash(profile, ctx.dmgType),
     attackerFlash: { rgb: [...ATTACKER_FLASH_RGB], alpha: fx.attackerAlpha, ms: fx.attackerMs },
     shake: {
       amp,

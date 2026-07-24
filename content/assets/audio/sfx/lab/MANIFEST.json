@@ -1091,6 +1091,41 @@
    "gainAnchor": "castBegin / sfx/fx/cast_begin.mp3"
   },
   {
+   "file": "magic-bolt.mp3",
+   "sourceFile": "qigong1.mp3",
+   "sourcePage": "https://soundeffect-lab.info/sound/battle/",
+   "sourceUrl": "https://soundeffect-lab.info/sound/battle/mp3/qigong1.mp3",
+   "sourceTitle": "気弾1",
+   "sourceDesc": "腹に打ち込むイメージ",
+   "sourceBytes": 37615,
+   "sourceCategory": "戦闘 / 格闘（ゲーム・アニメ風）",
+   "category": "magic",
+   "ggdEvent": "basicAttack:magic",
+   "note": "THE CASTER'S BASIC ATTACK. Acquired 2026-07-24 because there was no clip for one: sim/systems/BasicAttackSystem.weaponClassOf had no caster weapon class, so all 21 conjuring champions fell to the ranged default and answered a spell with bow-draw.mp3. Picked over magic-flame1/magic-ice1/magic-electron2 (already bound as the abilityCast element whooshes — reusing one would conflate the auto with the spell) and over magic-stick1 (3.4 s sparkle wash, no transient: unusable on a ~1.5 s attack cadence). 気弾1 is a short anime energy-bolt with a hard onset, the shared abstraction over every missile art in the roster.",
+   "pre": {
+    "sampleRate": 44100,
+    "channels": 2,
+    "durationSec": 1.505,
+    "meanDb": -18.8,
+    "peakDb": -5.6
+   },
+   "post": {
+    "codec": "mp3",
+    "sampleRate": 44100,
+    "channels": 1,
+    "durationSec": 1.344,
+    "bitRate": 134631,
+    "meanDb": -16.1,
+    "peakDb": -3.1,
+    "bytes": 22613
+   },
+   "gainAppliedDb": -0.4,
+   "normalisation": "peak -3.0 dBFS (matches sfx/fx/*.wav)",
+   "processing": "decode mp3 -> aresample 44100 -> downmix mono -> trim edge silence (silenceremove peak -55 dB, 20 ms pad both ends) -> volume -0.40 dB -> libmp3lame 128 kbps mono (the #158 ceiling, matching every other shipped lab clip — ACQUIRE.py's literal 192k predates it)",
+   "suggestedGain": 0.45,
+   "gainAnchor": "bowDraw / sfx/lab/bow-draw.mp3 — the class it replaces, same one-per-auto cadence"
+  },
+  {
    "file": "magic-fire.mp3",
    "sourceFile": "magic-flame1.mp3",
    "sourcePage": "https://soundeffect-lab.info/sound/battle/",

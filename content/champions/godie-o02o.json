@@ -33,6 +33,11 @@
     "mr": 1.2,
     "as": 0.02
   },
+  "hitFeel": {
+    "hitstopTicks": 3,
+    "shakeMag": 0.44,
+    "knockbackMag": 0.25
+  },
   "abilities": {
     "Q": {
       "id": "godie-o02o.q",

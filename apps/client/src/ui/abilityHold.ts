@@ -22,7 +22,7 @@
 import { useSyncExternalStore } from "react";
 import { Champions } from "@ggd/shared/sim/content/registry";
 import type { ChampionId } from "@ggd/shared/ids";
-import type { AbilitySlot, ChampionAbilitySlot, CoreAbilitySlot } from "@ggd/shared/sim/intents";
+import type { CastableSlot, ChampionAbilitySlot, CoreAbilitySlot } from "@ggd/shared/sim/intents";
 import { exSlotView, type ExSlotSeat } from "./exSlot";
 import { innateCastNote, innateKindLabel, passiveSlotView, PASSIVE_SLOT_LABEL } from "./passiveSlot";
 import {
@@ -37,8 +37,8 @@ import type { TooltipMeta } from "./components/Tooltip";
 // held-slot store (plain mutable + subscribe — never React state)
 // ---------------------------------------------------------------------------
 
-// The held slot is a CHAMPION slot (6 values) — the 天生技 tile can be held for
-// its description too, even though it is not castable.
+// The held slot is a CHAMPION slot (6 values). All six can be held for the
+// description panel; five of them plus an ACTIVE 天生技 are also castable.
 let held: ChampionAbilitySlot | null = null;
 const listeners = new Set<() => void>();
 
@@ -49,11 +49,16 @@ export function getHeldAbility(): ChampionAbilitySlot | null {
 
 /**
  * The held slot AS AN AIM TARGET — what the floor range/AoE telegraph reads.
- * A held PASSIVE resolves to null: the 天生技 is not a cast, so drawing a cast
- * range ring for it would promise an interaction that does not exist.
+ *
+ * PASSIVE is passed THROUGH now that the sixth slot is castable, and the
+ * castability question is answered exactly once, downstream: `GameApp`'s
+ * `abilityForSeat` returns an ability for an `innateKind: "active"` innate and
+ * null for a permanent one, so a held 主動 innate draws its real range ring and
+ * a held 被動 tile still draws nothing. Deciding it here as well would be a
+ * second copy of the rule, free to drift from the one that governs the cast.
  */
-export function getHeldAimSlot(): AbilitySlot | null {
-  return held === null || held === "PASSIVE" ? null : held;
+export function getHeldAimSlot(): CastableSlot | null {
+  return held;
 }
 
 /** Press → slot, release → null. No-op when unchanged (skips a needless notify). */
@@ -124,8 +129,10 @@ export function describeHeldAbility(seat: HeldSeat, slot: ChampionAbilitySlot): 
         meta.push({ label: "冷卻", base: innate.cooldownSec, factor: "cooldown", unit: "s" });
       }
       if (innate.manaCost !== undefined) meta.push({ label: "魔力", value: `${innate.manaCost}` });
+      // the sixth slot HAS a hotkey now — say it here exactly like EX says F
+      meta.push({ label: "快捷", value: "D / ✛↑" });
     }
-    meta.push({ label: "取得", value: innateCastNote(innate.innateKind) });
+    meta.push({ label: "取得", value: innateCastNote(innate.innateKind, innate.effective) });
     const info: HeldAbilityInfo = {
       slot,
       name: innate.displayName,

@@ -61,6 +61,22 @@ export class SeatState extends Schema {
   declare exRank: number;
   declare exCooldown: number;
   /**
+   * 天生技 (the SIXTH slot) remaining cooldown, in ticks.
+   *
+   * The innate needs no id/rank field beside it: WHICH innate a champion owns is
+   * a pure function of `championId` (`champion.passiveAbility`, resolved by the
+   * client through `ui/passiveSlot`), and its rank is 1 from spawn and never
+   * moves. The COOLDOWN is the one fact the client cannot derive — and the ~60
+   * `innateKind: "active"` innates carry real ones (40 s, 60 s…). Without this
+   * the sixth tile would paint "ready" through its entire cooldown and every
+   * press in that window would be refused by a server the player never heard
+   * from — the sixth slot's own version of the silence this campaign deletes.
+   *
+   * 0 for a permanent 被動 innate and for the 3 heroes that own no NN-00, so a
+   * legacy/unprojected snapshot reads exactly as "nothing on cooldown".
+   */
+  declare passiveCooldown: number;
+  /**
    * 能力屬性強化 progress (task #82). `statStacks` is the CONSECUTIVE stat-tick
    * count — the "N / 20" the shop shows — and it drops to 0 the instant the
    * player buys any real item, so the UI must be able to warn BEFORE the click
@@ -119,6 +135,7 @@ export class SeatState extends Schema {
     this.exAbilityId = "";
     this.exRank = 0;
     this.exCooldown = 0;
+    this.passiveCooldown = 0;
     this.statStacks = 0;
     this.statCapstonePct = 0;
     this.undoDepth = 0;
@@ -149,6 +166,7 @@ defineTypes(SeatState, {
   exAbilityId: "string",
   exRank: "uint8",
   exCooldown: "uint16",
+  passiveCooldown: "uint16",
   statStacks: "uint8",
   statCapstonePct: "uint8",
   undoDepth: "uint8",

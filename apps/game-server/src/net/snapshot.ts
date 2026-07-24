@@ -119,6 +119,10 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
           ss.exRank = 0;
           ss.exCooldown = 0;
         }
+        // 天生技 (6th slot). Only the cooldown rides the wire — which innate the
+        // hero owns follows from championId, and its rank is 1 from spawn. 0
+        // both for a permanent 被動 innate and for the 3 heroes with no NN-00.
+        ss.passiveCooldown = ab.passiveSlot?.cooldownRemainingTicks ?? 0;
       }
     }
 

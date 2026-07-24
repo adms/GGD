@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { pageRequiresSession, useApp, type Page } from "../store";
 import { LoginScreen } from "./LoginScreen";
 import { ConsoleHub } from "./ConsoleHub";
+import { ApprovalsPage } from "./ApprovalsPage";
 import { PlayersPage } from "./PlayersPage";
 import { MatchesPage } from "./MatchesPage";
 import { ReplaysPage } from "./ReplaysPage";
@@ -18,10 +19,16 @@ import { InvitesPage } from "./InvitesPage";
 import { AuditPage } from "./AuditPage";
 import { ChangePasswordDialog } from "./ChangePasswordDialog";
 import { Btn, Panel } from "./widgets";
-import { ACCENT, BG, PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "./theme";
+import { ACCENT, BG, PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "./theme";
 
 const NAV: { page: Page; label: string; emoji: string }[] = [
   { page: "hub", label: "Console Hub", emoji: "🗂️" },
+  // 帳號審核 sits ABOVE Players deliberately (task #126). It is the one page
+  // with a queue of real people waiting on the operator, and on the family
+  // deploy an un-approved relative cannot play at all until it is used. Burying
+  // it under a dozen content consoles is how the whole feature stayed invisible
+  // for a release. Its nav entry also carries the live pending-count badge.
+  { page: "approvals", label: "帳號審核", emoji: "🛂" },
   { page: "players", label: "Players", emoji: "👤" },
   { page: "matches", label: "Matches", emoji: "⚔️" },
   { page: "replays", label: "對戰回放", emoji: "🎞️" },
@@ -80,6 +87,79 @@ function useContentAdminPage(): ContentAdmin | null {
   return loaded;
 }
 
+/**
+ * THE SAME DEV GATE, for 角色語音生成 (owner spec step 4).
+ *
+ * Deliberately a SECOND hook rather than a parameterised one: the guard has to
+ * sit as a bare `if (!import.meta.env.DEV) return;` immediately above a
+ * STATICALLY ANALYSABLE `import("./VoiceGenPage")`, or rollup cannot prove the
+ * chunk is unreachable and will emit it. A generic helper taking `() =>
+ * import(...)` would hide the specifier behind a closure and quietly reinstate
+ * the very thing the gate exists to prevent — the voice page carries a write
+ * path to the loopback generation daemon.
+ */
+function useVoiceGenPage(): ContentAdmin | null {
+  const [loaded, setLoaded] = useState<ContentAdmin | null>(null);
+  useEffect(() => {
+    if (!import.meta.env.DEV) return;
+    let alive = true;
+    void import("./VoiceGenPage").then(
+      (m) => {
+        if (alive) setLoaded({ Page: m.VoiceGenPageRoot, nav: { ...m.VOICE_NAV } });
+      },
+      () => undefined,
+    );
+    return () => {
+      alive = false;
+    };
+  }, []);
+  return loaded;
+}
+
+/**
+ * THE PHONE BREAKPOINT (task #126).
+ *
+ * The shell was a hard `220px 1fr` grid, which on a 375px phone leaves ~155px
+ * for the entire console — every page unusable, buttons wrapping one glyph per
+ * line. That was survivable while the console was a desk tool. It is not
+ * survivable for 帳號審核: the moment this page exists to serve is the owner
+ * ON HIS PHONE with a relative waiting, and a queue whose 通過 button renders
+ * as a vertical stack of two characters is not a one-tap action.
+ *
+ * Below the breakpoint the rail becomes a horizontally-scrollable strip above
+ * the content and the grid collapses to one column. matchMedia rather than a
+ * resize listener: it fires only on the crossing, so there is no per-pixel
+ * re-render, and it is the same signal a CSS media query would use — which
+ * inline styles cannot express.
+ */
+const NARROW_QUERY = "(max-width: 720px)";
+
+function useIsNarrow(): boolean {
+  const [narrow, setNarrow] = useState(
+    () => globalThis.matchMedia?.(NARROW_QUERY).matches ?? false,
+  );
+  useEffect(() => {
+    const mq = globalThis.matchMedia?.(NARROW_QUERY);
+    if (!mq) return;
+    const onChange = (e: MediaQueryListEvent): void => setNarrow(e.matches);
+    setNarrow(mq.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+  return narrow;
+}
+
+/** Slot a dev-only nav entry immediately after `after`, or append. */
+function insertAfter(
+  nav: readonly { page: Page; label: string; emoji: string }[],
+  after: Page,
+  entry: { page: Page; label: string; emoji: string },
+): { page: Page; label: string; emoji: string }[] {
+  const at = nav.findIndex((n) => n.page === after);
+  if (at < 0) return [...nav, entry];
+  return [...nav.slice(0, at + 1), entry, ...nav.slice(at + 1)];
+}
+
 export function App(): React.JSX.Element {
   const screen = useApp((s) => s.screen);
   const boot = useApp((s) => s.boot);
@@ -107,13 +187,42 @@ function Console(): React.JSX.Element {
   const doLogout = useApp((s) => s.doLogout);
   const showLogin = useApp((s) => s.showLogin);
   const contentAdmin = useContentAdminPage();
+  const voiceAdmin = useVoiceGenPage();
+  const narrow = useIsNarrow();
+  const pendingCount = useApp((s) => s.pendingCount);
+  const refreshPendingCount = useApp((s) => s.refreshPendingCount);
+
+  /**
+   * Poll the 帳號審核 queue for the nav badge (task #126).
+   *
+   * It lives in the SHELL, not on the approval page, and that is the whole
+   * point: the owner is normally somewhere else in the console — or has the tab
+   * parked — when a relative registers. A count that only appears once you open
+   * the page you were never going to open is not a notification.
+   *
+   * 30s is a deliberate compromise: fast enough that "he says he registered"
+   * resolves while the phone call is still happening, slow enough to be
+   * invisible next to the hub's own 15s health pings. Failures are swallowed by
+   * the store (an older platform build simply has no such route).
+   */
+  useEffect(() => {
+    if (account === null) return;
+    void refreshPendingCount();
+    const timer = setInterval(() => void refreshPendingCount(), 30_000);
+    return () => clearInterval(timer);
+  }, [account, refreshPendingCount]);
   // 變更密碼 lives on the LOGGED-IN side only: the platform route needs both a
   // session and the current password, so there is nothing to show without one.
   const [changingPassword, setChangingPassword] = useState(false);
   // the entry exists only when the dev-only chunk actually loaded, and its
-  // label comes FROM that chunk (see useContentAdminPage)
+  // label comes FROM that chunk (see useContentAdminPage). Positioned BY NAME
+  // rather than by a hard-coded index — the index form silently mis-slotted
+  // 內容管理 the moment a page was added above it.
+  const withContent =
+    contentAdmin === null ? NAV : insertAfter(NAV, "announcements", contentAdmin.nav);
+  // 角色語音生成 sits with the other asset consoles, right after ICON 生成追蹤
   const nav =
-    contentAdmin === null ? NAV : [...NAV.slice(0, 5), contentAdmin.nav, ...NAV.slice(5)];
+    voiceAdmin === null ? withContent : insertAfter(withContent, "iconTracking", voiceAdmin.nav);
 
   // THE SPLIT GATE (task #102): a page whose data lives on the Go platform admin
   // API needs a real operator session; the content editor + local consoles do
@@ -121,11 +230,42 @@ function Console(): React.JSX.Element {
   const gated = account === null && pageRequiresSession(page);
 
   return (
-    <div style={{ minHeight: "100vh", display: "grid", gridTemplateColumns: "220px 1fr", background: BG }}>
-      <aside style={{ background: PANEL_BG, borderRight: PANEL_BORDER, padding: 16, display: "flex", flexDirection: "column" }}>
-        <div style={{ fontSize: 16, fontWeight: 800, color: TEXT_MAIN, marginBottom: 2 }}>GGD Ops</div>
-        <div style={{ fontSize: 11, color: TEXT_DIM, marginBottom: 20 }}>operator console</div>
-        <nav style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1 }}>
+    <div
+      style={{
+        minHeight: "100vh",
+        display: "grid",
+        gridTemplateColumns: narrow ? "1fr" : "220px 1fr",
+        background: BG,
+      }}
+    >
+      <aside
+        style={{
+          background: PANEL_BG,
+          // on a phone the rail is a strip ABOVE the content, so its divider
+          // has to move from the right edge to the bottom one
+          borderRight: narrow ? "none" : PANEL_BORDER,
+          borderBottom: narrow ? PANEL_BORDER : "none",
+          padding: narrow ? "10px 12px" : 16,
+          display: "flex",
+          flexDirection: "column",
+          minWidth: 0,
+        }}
+      >
+        {!narrow && (
+          <>
+            <div style={{ fontSize: 16, fontWeight: 800, color: TEXT_MAIN, marginBottom: 2 }}>GGD Ops</div>
+            <div style={{ fontSize: 11, color: TEXT_DIM, marginBottom: 20 }}>operator console</div>
+          </>
+        )}
+        <nav
+          style={
+            narrow
+              ? // one scrollable row; nothing wraps, so the strip never eats the
+                // screen no matter how many consoles get added later
+                { display: "flex", flexDirection: "row", gap: 6, overflowX: "auto", paddingBottom: 4 }
+              : { display: "flex", flexDirection: "column", gap: 4, flex: 1 }
+          }
+        >
           {nav.map((n) => {
             const active = n.page === page;
             const locked = account === null && pageRequiresSession(n.page);
@@ -146,44 +286,106 @@ function Console(): React.JSX.Element {
                   fontWeight: 600,
                   display: "flex",
                   alignItems: "center",
+                  whiteSpace: "nowrap",
+                  flexShrink: 0,
                 }}
               >
                 <span style={{ marginRight: 8 }}>{n.emoji}</span>
                 <span style={{ flex: 1 }}>{n.label}</span>
+                {/* the waiting-queue badge — a filled amber pill, not a dot:
+                    the NUMBER is what tells the owner whether one cousin or the
+                    whole family is stuck on the approval screen */}
+                {n.page === "approvals" && pendingCount > 0 && (
+                  <span
+                    title={`${pendingCount} 個帳號在等審核`}
+                    style={{
+                      marginLeft: 6,
+                      minWidth: 18,
+                      padding: "1px 6px",
+                      borderRadius: 999,
+                      background: WARN,
+                      color: "#1a1206",
+                      fontSize: 11,
+                      fontWeight: 800,
+                      textAlign: "center",
+                    }}
+                  >
+                    {pendingCount}
+                  </span>
+                )}
                 {locked && <span style={{ marginLeft: 6, fontSize: 11, opacity: 0.7 }}>🔒</span>}
               </button>
             );
           })}
         </nav>
-        <div style={{ marginTop: 16, borderTop: PANEL_BORDER, paddingTop: 12 }}>
+        <div
+          style={
+            narrow
+              ? // on a phone the account block sits inline under the strip
+                { marginTop: 8, display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }
+              : { marginTop: 16, borderTop: PANEL_BORDER, paddingTop: 12 }
+          }
+        >
           {account ? (
             <>
-              <div style={{ fontSize: 12, color: TEXT_MAIN, marginBottom: 8 }}>{account.username}</div>
-              <Btn small onClick={() => setChangingPassword(true)} style={{ width: "100%", marginBottom: 6 }}>
+              <div
+                style={{
+                  fontSize: 12,
+                  color: TEXT_MAIN,
+                  marginBottom: narrow ? 0 : 8,
+                  flex: narrow ? 1 : undefined,
+                }}
+              >
+                {account.username}
+              </div>
+              <Btn
+                small
+                onClick={() => setChangingPassword(true)}
+                style={narrow ? undefined : { width: "100%", marginBottom: 6 }}
+              >
                 變更密碼 Change password
               </Btn>
-              <Btn small onClick={() => void doLogout()} style={{ width: "100%" }}>
+              <Btn small onClick={() => void doLogout()} style={narrow ? undefined : { width: "100%" }}>
                 Sign out
               </Btn>
             </>
           ) : (
             <>
-              <div style={{ fontSize: 11, color: TEXT_DIM, marginBottom: 8, lineHeight: 1.5 }}>
+              <div
+                style={{
+                  fontSize: 11,
+                  color: TEXT_DIM,
+                  marginBottom: narrow ? 0 : 8,
+                  lineHeight: 1.5,
+                  flex: narrow ? 1 : undefined,
+                }}
+              >
                 內容編輯免登入 · 玩家管理需登入
               </div>
-              <Btn small kind="primary" onClick={() => showLogin()} style={{ width: "100%" }}>
+              <Btn small kind="primary" onClick={() => showLogin()} style={narrow ? undefined : { width: "100%" }}>
                 登入 Sign in
               </Btn>
             </>
           )}
         </div>
       </aside>
-      <main style={{ padding: 20, overflow: "auto", maxHeight: "100vh" }}>
+      {/* maxHeight/overflow only in the two-column layout — on a phone the rail
+          is stacked above, so the PAGE scrolls and pinning main to 100vh would
+          strand content below the fold */}
+      <main
+        style={{
+          padding: narrow ? 12 : 20,
+          minWidth: 0,
+          overflow: narrow ? "visible" : "auto",
+          maxHeight: narrow ? undefined : "100vh",
+        }}
+      >
         {gated ? (
           <SessionRequired onLogin={() => showLogin()} />
         ) : (
           <>
             {page === "hub" && <ConsoleHub />}
+            {page === "approvals" && <ApprovalsPage />}
             {page === "players" && <PlayersPage />}
             {page === "matches" && <MatchesPage />}
             {page === "replays" && <ReplaysPage />}
@@ -198,6 +400,10 @@ function Console(): React.JSX.Element {
             {page === "ai" && <AiSettingsPage />}
             {page === "modelBudget" && <ModelBudgetPage />}
             {page === "iconTracking" && <IconTrackingPage />}
+            {page === "voiceGen" && voiceAdmin !== null && <voiceAdmin.Page />}
+            {page === "voiceGen" && voiceAdmin === null && (
+              <div style={{ color: TEXT_DIM, padding: 8 }}>載入語音生成頁…</div>
+            )}
             {page === "mcoinGrant" && <MCoinGrantPage />}
             {page === "invites" && <InvitesPage />}
             {page === "audit" && <AuditPage />}

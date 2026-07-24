@@ -1,6 +1,6 @@
 /**
  * The champion↔ability MIRROR guard, run over the REAL content tree
- * (docs/todo/ability-vfx.md av-05).
+ * (docs/todo/ability-vfx.md av-14..17).
  *
  * Every Q/W/E/R ability is stored twice: standalone at
  * `content/abilities/<cid>.<slot>.json` and denormalised into its champion at
@@ -230,12 +230,20 @@ describe("champion↔ability mirror (real content)", () => {
       if (typeof emb === "string" && emb.startsWith("fx.prim.")) embeddedOnPrimitives += 1;
     }
     expect(stale, `${stale.length} slot(s) whose embedded vfxKey lags the standalone`).toEqual([]);
-    // 422 of the 452 EMBEDDED slots now carry a `fx.prim.*` primitive — the
-    // state this sync put there. A collapse means a bulk re-point wrote the
-    // standalone side only (exactly #79's mistake) and the mirror lagged again.
-    // The remaining 30 are legitimately off the primitive palette: they belong
-    // to champions outside #79's 48-champion whitelist and agree on BOTH sides,
-    // so they are not drift (e.g. sela.Q, still on fx.ember-bolt-cast in both).
-    expect(embeddedOnPrimitives).toBeGreaterThanOrEqual(400);
+    // 397 of the 452 EMBEDDED slots carry a `fx.prim.*` primitive. A collapse
+    // means a bulk re-point wrote the standalone side only (exactly #79's
+    // mistake) and the mirror lagged again.
+    //
+    // The floor was 400 when this landed, against 422 on primitives. It moved
+    // DOWN on purpose: merging origin/main brought the w3x emitter work, which
+    // promoted 30 slots off the stylised primitives onto real imported art
+    // (`fx.w3x.particle.*`, `fx.w3x.locust.*`, `godie-*-p*`). Those are an
+    // UPGRADE, not drift — both copies agree, which the `stale` list above is
+    // what actually proves. The rest are outside #79's 48-champion whitelist
+    // and agree on both sides too (e.g. sela.Q, still on fx.ember-bolt-cast).
+    //
+    // So this number is a floor on the PRIMITIVE palette specifically, and it
+    // is expected to keep drifting down as more abilities get faithful w3x art.
+    expect(embeddedOnPrimitives).toBeGreaterThanOrEqual(390);
   });
 });

@@ -2,6 +2,7 @@
   "id": "godie-ekee.passive",
   "schema": "ability@1",
   "name": "93-00 小考",
+  "icon": "assets/icons/abilities/godie-ekee.passive.webp",
   "description": "[主動攻擊]\n80秒冷卻時間\n\n宣佈等一下要進行小考，在教室範圍(500)內的所有人必須坐好不准亂跑，5秒後小考開始，所有跑出教室範圍的人將受到傷害，離得越遠傷害越高，最高造成600點傷害。",
   "slot": "PASSIVE",
   "innateKind": "active",

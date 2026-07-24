@@ -1,0 +1,25 @@
+{
+  "id": "executioner-edge",
+  "schema": "augment@1",
+  "name": "處決者之刃",
+  "description": "暴擊率 +30%，暴擊傷害 +50%。",
+  "tier": "prismatic",
+  "weight": 22,
+  "modifiers": [
+    {
+      "stat": "critChance",
+      "op": "flat",
+      "value": 0.3
+    },
+    {
+      "stat": "critDamage",
+      "op": "flat",
+      "value": 0.5
+    }
+  ],
+  "tags": [
+    "ad",
+    "offense",
+    "crit"
+  ]
+}

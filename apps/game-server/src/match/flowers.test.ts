@@ -19,6 +19,7 @@ import { spawnChampion } from "@ggd/shared/sim/spawnChampion";
 import { spawnFlower, flowerRulesFromConfig, FLOWER_MODEL_KEY } from "@ggd/shared/sim/flowers";
 import { MatchState, ENTITY_KIND } from "@ggd/shared/protocol/schema";
 import { MatchController, type SeatSpec } from "./MatchController";
+import { teamHealthLost } from "./PairedDuels";
 import { DEFAULT_ARENA_RULES, rulesFromDoc, type ArenaRules } from "./arenaRules";
 import { projectSnapshot } from "../net/snapshot";
 import { AIDriver } from "../ai/Tier0Brain";
@@ -141,7 +142,7 @@ describe("victory / lives / K-D isolation (flw-06) + despawn on round end (flw-0
 
     // decide every duel by killing one side; flowers alive at that moment
     // (respawn 0.5s) must not delay resolution or count as alive units
-    const livesBefore = new Map(ctl.lives);
+    const healthBefore = new Map(ctl.teamHealth);
     for (let i = 0; i < Math.round(0.5 / ctl.world.dt) + 2; i++) ctl.tick(); // let the flower respawn
     expect(ctl.world.flower.size).toBeGreaterThan(0);
     for (const pairing of ctl.pairings) {
@@ -159,10 +160,15 @@ describe("victory / lives / K-D isolation (flw-06) + despawn on round end (flw-0
     expect(ctl.phase.phase).toBe("resolution");
     // all flowers despawned the moment combat ended
     expect(ctl.world.flower.size).toBe(0);
-    // only the defeated sides lost lives — flowers changed nothing
+    // only the defeated sides lost TEAM HEALTH — flowers changed nothing. The
+    // cost is whatever the round band says (round 1 = −2), read from the model
+    // rather than hardcoded, so a future re-tune of the curve does not have to
+    // touch this test to keep proving the flower isolation it is actually about.
     for (const pairing of ctl.pairings) {
-      expect(ctl.lives.get(pairing.sideA)).toBe(livesBefore.get(pairing.sideA));
-      expect(ctl.lives.get(pairing.sideB)).toBe((livesBefore.get(pairing.sideB) ?? 0) - 1);
+      expect(ctl.teamHealth.get(pairing.sideA)).toBe(healthBefore.get(pairing.sideA));
+      expect(ctl.teamHealth.get(pairing.sideB)).toBe(
+        (healthBefore.get(pairing.sideB) ?? 0) - teamHealthLost(ctl.phase.round),
+      );
     }
   });
 });

@@ -128,7 +128,10 @@ func (s *Sessions) handleWS(w http.ResponseWriter, r *http.Request) {
 	if last := s.hub.unregister(c); last {
 		_ = s.pres.Clear(context.WithoutCancel(ctx), ident.AccountID)
 	}
-	conn.Close(websocket.StatusNormalClosure, "bye")
+	// Terminal courtesy close: the read loop has already broken, so the peer is
+	// gone by construction and there is no recovery path for a close error.
+	// Matches the established style in this file (_ = s.pres.Clear above).
+	_ = conn.Close(websocket.StatusNormalClosure, "bye")
 }
 
 func (s *Sessions) replyErr(c *client, err error) {

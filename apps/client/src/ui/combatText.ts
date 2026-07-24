@@ -180,20 +180,28 @@ import {
  */
 export type CombatTextCategory =
   | "taken" // 受到傷害 — you were hit
+  | "dodge" // 閃避 — an attack on YOU missed (task #92b)
   | "heal" // 補血 — HP restored on you
   | "mana" // 補魔 — MP restored on you
   | "dealt" // 造成傷害 — you hit something
   | "guard" // a hit on you that a shield/DR ate entirely
+  | "whiff" // MISS — YOUR attack was dodged (task #92b)
   | "allyTaken"
   | "allyHeal"
   | "allyMana"
+  | "allyDodge"
   | "other"; // neither you nor your team
 
 /** How an entity relates to the local player. */
 export type CombatTextRelation = "self" | "ally" | "enemy" | "unknown";
 
-/** What the sim event was. */
-export type CombatTextKind = "damage" | "heal" | "mana";
+/**
+ * What the sim event was. `evade` is the defender's 迴避 roll eating a basic
+ * attack whole (packages/shared/src/sim/combat/evasion.ts) — it carries NO
+ * amount, which is exactly why it needs its own kind: every other kind here is
+ * a magnitude, and an evade is the absence of one.
+ */
+export type CombatTextKind = "damage" | "heal" | "mana" | "evade";
 
 /**
  * How much of the fight the player wants numbered. The union itself lives in
@@ -221,6 +229,25 @@ export interface CombatTextEvent {
  * number that decides whether you retreat.
  */
 export function combatTextCategory(ev: CombatTextEvent): CombatTextCategory | null {
+  // 迴避 (task #92b). ONE sim event, TWO opposite readings — see the ASYMMETRY
+  // block above the palette. `targetRel === "self"` wins over `sourceRel` for
+  // the same reason it does on damage: what happened to YOUR health is the fact
+  // you act on. (Self-targeted autos do not exist, so the two never collide.)
+  if (ev.kind === "evade") {
+    if (ev.targetRel === "self") return "dodge";
+    if (ev.sourceRel === "self") return "whiff";
+    if (ev.targetRel === "ally") return "allyDodge";
+    // No local player resolved at all (spectating / pre-seat): pushCombatText's
+    // spectator branch bypasses the scope gate, and a spectator watching a duel
+    // must see the dodge or the fight reads as broken. Anything else — an enemy
+    // slipping an attack that was neither yours nor your team's — is dropped:
+    // an evade has no magnitude, so a stranger's dodge is a WORD carrying zero
+    // information for you, and it is the cheapest event on the field to spam
+    // (one 20%-evasion champion being autoed at ~1.2/s in each of three other
+    // duels). Enemy `mana` is dropped for the same reason, at every scope.
+    if (ev.targetRel === "unknown" && ev.sourceRel === "unknown") return "allyDodge";
+    return null;
+  }
   if (ev.kind === "heal") {
     if (ev.targetRel === "self") return "heal";
     if (ev.targetRel === "ally") return "allyHeal";
@@ -246,12 +273,21 @@ export function combatTextCategory(ev: CombatTextEvent): CombatTextCategory | nu
 }
 
 /** Categories each scope admits. */
-const SELF_CATEGORIES: readonly CombatTextCategory[] = ["taken", "heal", "mana", "dealt", "guard"];
+const SELF_CATEGORIES: readonly CombatTextCategory[] = [
+  "taken",
+  "dodge",
+  "heal",
+  "mana",
+  "dealt",
+  "guard",
+  "whiff",
+];
 const TEAM_CATEGORIES: readonly CombatTextCategory[] = [
   ...SELF_CATEGORIES,
   "allyTaken",
   "allyHeal",
   "allyMana",
+  "allyDodge",
 ];
 
 /** Does this scope draw this category? */
@@ -303,7 +339,63 @@ export interface CombatTextStyle {
 }
 
 /**
- * The closed palette. Five hue families, none of them a team colour.
+ * ─────────────────────────────────────────────────────────────────────────────
+ * THE 迴避 ASYMMETRY (task #92b) — one event, two opposite readings
+ *
+ * `evade` (packages/shared/src/sim/combat/evasion.ts) fires once, on the
+ * defender's body, when their 迴避 stat eats a basic attack WHOLE: no damage
+ * packet, no on-hit proc, no lifesteal, no `damage` event. Before this the
+ * client drew nothing at all for it, so a dodge was indistinguishable from a
+ * dropped packet — which is precisely the 「看不出剛剛發生什麼事」 complaint.
+ *
+ * The event is a WIN for the defender and a LOSS for the attacker, and the two
+ * must never be confused at a glance. They are separated on FOUR independent
+ * channels, none of which relies on reading a number (there is no number):
+ *
+ *              你閃過了 (dodge)              你被閃過了 (whiff)
+ *   word       「閃避」                       「MISS」
+ *   hue        lavender  #C9A7FF             slate     #9AA6B2
+ *   body       YOURS                          THEIRS
+ *   weight     26px / 900 / upright           20px / 800 / italic
+ *
+ * WHY TWO DIFFERENT WORDS, not one word in two colours. A colour-only split
+ * fails exactly when it matters — a 4-team teamfight, motion, and (for ~8% of
+ * men) a CVD viewer. 「閃避」 vs 「MISS」 cannot be confused by anyone, and the
+ * asymmetry is honest: RO's own sprite over the *victim* is the English "miss",
+ * so the attacker's read keeps the source's word and the defender's read gets
+ * the Chinese one this UI speaks.
+ *
+ * WHY LAVENDER FOR THE DODGE. Measured, like every other hue here — CIE76 ΔE to
+ * the nearest `TEAM_CSS` entry, and to every hue already in this palette:
+ *
+ *     dodge #C9A7FF → team 33.4 | taken 119.6  heal 168.9  mana 58.0
+ *                                 dealt  52.1  guard 45.2   → contrast vs ring 10.45
+ *     whiff #9AA6B2 → team 63.9 | taken 111.8  heal 125.6  mana 36.8
+ *                                 dealt  25.7  guard 10.6   → contrast vs ring  8.47
+ *
+ * Violet is the one hue family this palette had not spent, and it is the only
+ * free one that clears 25 against all four team colours (mint #7CFFD4 measures
+ * 35.9 from team green and 45.7 from mana — it would have been the second
+ * cyan-green on screen; amber #FFA640 measures 24.9 from team gold, i.e. it IS
+ * team gold).
+ *
+ * WHY WHIFF IS DELIBERATELY IN THE GREY FAMILY, ΔE 10.6 from `guard`. That is
+ * not a collision that slipped through — grey IS this palette's word for
+ * "nothing landed", and `guard` and `whiff` are its two members: a hit you
+ * absorbed and a hit you never connected. They are told apart by everything
+ * except hue (different word, different body, 20px italic vs 16px upright), and
+ * spending a sixth hue on the least consequential event on the field would have
+ * cost the palette more than it bought. `whiff` sits ΔE 25.7 from `dealt`, its
+ * real sibling — the damage number that did not happen — which is close enough
+ * to read as the same family and far enough to read as a different member.
+ *
+ * WHY NEITHER CAN CRIT. `rollEvade` runs BEFORE mitigation and returns a total
+ * miss (DECISION 3 in evasion.ts), so no crit/killingBlow modifier can ever
+ * reach these two categories. Nothing enforces that here; the size multipliers
+ * simply never fire on them.
+ *
+ * ─────────────────────────────────────────────────────────────────────────────
+ * The closed palette. Seven hue families, none of them a team colour.
  * `rank` is the admission order and reads top-to-bottom as "what a player must
  * not miss": your own health, then your own resources, then your output, then
  * everything happening to other people.
@@ -329,6 +421,29 @@ const BASE: Record<CombatTextCategory, CombatTextStyle> = {
     driftPx: -10,
     rank: 0,
   },
+  // 閃避 — the attack that WOULD have produced the number above, and did not.
+  // Deliberately shares `taken`'s anchor band and ranks immediately below it:
+  // it occupies the same slot in the player's attention, because it answers the
+  // same question ("did my health just move?"). Drifts the OPPOSITE way from
+  // `taken`, so dodging one attacker while a second one connects fans the two
+  // apart instead of stacking them.
+  dodge: {
+    fontSize: 26,
+    fontWeight: 900,
+    italic: false,
+    color: "#C9A7FF",
+    tint: "#F0E4FF",
+    alpha: 1,
+    popScale: 1.2,
+    lifeMs: 950,
+    outlinePx: 2,
+    haloPx: 6,
+    prefix: "",
+    anchorY: 1.25,
+    arcPx: 34,
+    driftPx: 14,
+    rank: 1,
+  },
   // 補血
   heal: {
     fontSize: 23,
@@ -345,7 +460,7 @@ const BASE: Record<CombatTextCategory, CombatTextStyle> = {
     anchorY: 1.05,
     arcPx: 30,
     driftPx: -24,
-    rank: 1,
+    rank: 2,
   },
   // 補魔 — italic + lighter weight + its own anchor height + the OPPOSITE drift
   // from heal, so the one pair that tritanopia collapses stays separable
@@ -365,7 +480,7 @@ const BASE: Record<CombatTextCategory, CombatTextStyle> = {
     anchorY: 0.85,
     arcPx: 28,
     driftPx: 24,
-    rank: 2,
+    rank: 3,
   },
   // 造成傷害 — RO's white. The gradient runs white → light grey so the glyph
   // keeps internal form when an ADDITIVE impact flash washes out behind it.
@@ -384,7 +499,7 @@ const BASE: Record<CombatTextCategory, CombatTextStyle> = {
     anchorY: 1.3,
     arcPx: 34,
     driftPx: 10,
-    rank: 3,
+    rank: 4,
   },
   guard: {
     fontSize: 16,
@@ -401,7 +516,30 @@ const BASE: Record<CombatTextCategory, CombatTextStyle> = {
     anchorY: 1.25,
     arcPx: 26,
     driftPx: 0,
-    rank: 4,
+    rank: 5,
+  },
+  // MISS — your swing was slipped. Sits in `dealt`'s anchor band and drifts the
+  // OPPOSITE way, because it is the 造成傷害 number that did not happen: a hit
+  // and a whiff on the same body in the same second must not pile up. Italic and
+  // quieter than `dealt` on purpose — losing a swing costs you the cooldown, and
+  // an event that costs you something should not shout louder than the ones that
+  // earn you something.
+  whiff: {
+    fontSize: 20,
+    fontWeight: 800,
+    italic: true,
+    color: "#9AA6B2",
+    tint: "#DDE4EC",
+    alpha: 0.85,
+    popScale: 1.04,
+    lifeMs: 780,
+    outlinePx: 1.5,
+    haloPx: 4,
+    prefix: "",
+    anchorY: 1.3,
+    arcPx: 30,
+    driftPx: -12,
+    rank: 6,
   },
   allyTaken: {
     fontSize: 18,
@@ -418,7 +556,7 @@ const BASE: Record<CombatTextCategory, CombatTextStyle> = {
     anchorY: 1.25,
     arcPx: 26,
     driftPx: -8,
-    rank: 5,
+    rank: 7,
   },
   allyHeal: {
     fontSize: 16,
@@ -435,7 +573,7 @@ const BASE: Record<CombatTextCategory, CombatTextStyle> = {
     anchorY: 1.05,
     arcPx: 24,
     driftPx: -18,
-    rank: 6,
+    rank: 8,
   },
   allyMana: {
     fontSize: 15,
@@ -452,7 +590,29 @@ const BASE: Record<CombatTextCategory, CombatTextStyle> = {
     anchorY: 0.85,
     arcPx: 22,
     driftPx: 18,
-    rank: 7,
+    rank: 9,
+  },
+  // A TEAMMATE slipped one — and, because it is the only evade category a
+  // spectator can reach, also every dodge seen with no local player resolved
+  // (pre-seat / 觀戰). Same hue and word as your own dodge, receded to the ally
+  // band: "someone on my side is hard to hit" is worth a glance, it is not worth
+  // competing with your own health.
+  allyDodge: {
+    fontSize: 15,
+    fontWeight: 700,
+    italic: false,
+    color: "#C9A7FF",
+    tint: "#F0E4FF",
+    alpha: 0.5,
+    popScale: 1,
+    lifeMs: 700,
+    outlinePx: 1.5,
+    haloPx: 3,
+    prefix: "",
+    anchorY: 1.25,
+    arcPx: 22,
+    driftPx: 12,
+    rank: 10,
   },
   other: {
     fontSize: 15,
@@ -469,7 +629,7 @@ const BASE: Record<CombatTextCategory, CombatTextStyle> = {
     anchorY: 1.3,
     arcPx: 22,
     driftPx: 0,
-    rank: 8,
+    rank: 11,
   },
 };
 
@@ -538,11 +698,58 @@ export function combatTextRank(category: CombatTextCategory, mods: CombatTextMod
   return combatTextStyle(category, mods).rank;
 }
 
+/**
+ * Categories that draw a WORD instead of a magnitude, because they have no
+ * magnitude: nothing was absorbed-for-N, nothing was dodged-for-N.
+ *
+ * 「閃避」 and 「MISS」 are deliberately different words for the two halves of
+ * ONE `evade` event (see THE 迴避 ASYMMETRY above) — that is the channel that
+ * survives motion, a crowded teamfight and colour-vision deficiency, none of
+ * which a hue split survives on its own.
+ */
+const WORD: Partial<Record<CombatTextCategory, string>> = {
+  guard: "GUARD",
+  dodge: "閃避",
+  allyDodge: "閃避",
+  whiff: "MISS",
+};
+
+/** Every wordless (magnitude-free) category, exported for the guard test. */
+export const COMBAT_TEXT_WORDS: Readonly<Partial<Record<CombatTextCategory, string>>> = WORD;
+
 /** The string that actually gets drawn. */
 export function combatTextLabel(category: CombatTextCategory, amount: number): string {
-  if (category === "guard") return "GUARD";
+  const word = WORD[category];
+  if (word !== undefined) return word;
   const n = Math.max(0, Math.round(amount));
   return `${BASE[category].prefix}${n}`;
+}
+
+/**
+ * Rendered width of a label in px, for the HUD-chrome overlap test only.
+ *
+ * The renderer used to assume `fontSize * 0.62 * length` — a Latin digit
+ * advance. 「閃避」 is two FULL-WIDTH glyphs at ~1.0 em each, so that estimate
+ * undercounts the box by ~40 % and a 閃避 drifting under the minimap would not
+ * be damped when it should be. CJK ideographs, kana and full-width forms count
+ * as 1.0 em; everything else keeps the measured digit advance.
+ */
+export function combatTextWidthPx(label: string, fontSize: number): number {
+  let em = 0;
+  for (const ch of label) {
+    const c = ch.codePointAt(0)!;
+    const wide =
+      (c >= 0x1100 && c <= 0x115f) || // hangul jamo
+      (c >= 0x2e80 && c <= 0xa4cf) || // CJK radicals … yi
+      (c >= 0xac00 && c <= 0xd7a3) || // hangul syllables
+      (c >= 0xf900 && c <= 0xfaff) || // CJK compatibility ideographs
+      (c >= 0xfe30 && c <= 0xfe6f) || // CJK compatibility forms
+      (c >= 0xff00 && c <= 0xff60) || // full-width forms
+      (c >= 0xffe0 && c <= 0xffe6) ||
+      (c >= 0x20000 && c <= 0x3fffd); // CJK ext B+
+    em += wide ? 1.0 : 0.62;
+  }
+  return fontSize * em;
 }
 
 // ---------------------------------------------------------------------------

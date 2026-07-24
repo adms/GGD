@@ -8,14 +8,14 @@ import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import type { HookEvent } from "../stats/modifiers";
 import { runEffects } from "./effectRunner";
-import type { AbilitySlot } from "../intents";
+import type { CastableSlot } from "../intents";
 
 export function fireHooks(
   world: SimWorld,
   owner: EntityId,
   event: HookEvent,
   target?: EntityId,
-  abilitySlot?: AbilitySlot,
+  abilitySlot?: CastableSlot,
 ): void {
   const sc = world.stats.get(owner);
   if (!sc) return;

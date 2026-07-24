@@ -33,7 +33,13 @@ type WAL struct {
 // Open ensures the journal directory exists under dataDir.
 func Open(dataDir string) (*WAL, error) {
 	dir := filepath.Join(dataDir, "journal")
-	if err := os.MkdirAll(dir, 0o755); err != nil {
+	// 0o750 (was 0o755): the journal carries full settlement payloads including
+	// absolute post-match MMR. The platform process is its only reader, at boot.
+	// On the Linux family host that means a post-mortem `cat data/journal/*.log`
+	// from a plain ssh session now needs `sudo` or `docker compose exec` — which
+	// is the journal's single most likely human use, so it is called out here
+	// rather than discovered mid-incident.
+	if err := os.MkdirAll(dir, 0o750); err != nil {
 		return nil, err
 	}
 	return &WAL{dir: dir}, nil
@@ -43,7 +49,13 @@ func (w *WAL) append(e Entry) error {
 	w.mu.Lock()
 	defer w.mu.Unlock()
 	name := filepath.Join(w.dir, e.At.UTC().Format("2006-01-02")+".log")
-	f, err := os.OpenFile(name, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0o644)
+	// #nosec G304 -- `name` has no caller-supplied component: w.dir is
+	// <dataDir>/journal fixed at Open, and the only variable is a time.Time
+	// rendered through the fixed layout "2006-01-02", which cannot emit a path
+	// separator. 0o600 (was 0o644) for the MMR payloads; note O_CREATE applies
+	// the mode only to a file it creates, so journals written before this sweep
+	// keep 0644 until the next UTC day rolls over.
+	f, err := os.OpenFile(name, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0o600)
 	if err != nil {
 		return err
 	}
@@ -85,6 +97,8 @@ func (w *WAL) PendingIntents() ([]Entry, error) {
 	intents := map[string]Entry{}
 	var order []string
 	for _, file := range files {
+		// #nosec G304 -- `file` is an element of the filepath.Glob result three
+		// lines up, bounded to <dataDir>/journal/*.log; it is not caller input.
 		f, err := os.Open(file)
 		if err != nil {
 			return nil, err
@@ -110,7 +124,9 @@ func (w *WAL) PendingIntents() ([]Entry, error) {
 				delete(intents, e.MatchID)
 			}
 		}
-		f.Close()
+		// Read-only handle: a Close error carries no data loss, and this is
+		// sequenced BEFORE the sc.Err() check so a scan error is still reported.
+		_ = f.Close()
 		if err := sc.Err(); err != nil {
 			return nil, err
 		}

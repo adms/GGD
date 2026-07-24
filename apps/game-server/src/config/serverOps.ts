@@ -50,7 +50,10 @@ import {
   MAX_CONCURRENT_ROOMS,
 } from "../rooms/roomRegistry";
 import { MAX_SNAPSHOT_HZ, MIN_SNAPSHOT_HZ, resolveSnapshotHz } from "./snapshotRate";
-import { PLATFORM_URL, warnOnce } from "./platformUrl";
+import { PLATFORM_URL, warnOnce, clearDegradation, BOOT_PROBE_KEY } from "./platformUrl";
+
+/** Degradation-registry keys this module can raise (see config/platformUrl.ts). */
+const DEGRADE_KEYS = ["server-ops-status", "server-ops-malformed", "server-ops-unreachable"];
 
 /** Process-wide bypass: skip the platform fetch (local dev/testing). */
 export const SERVER_OPS_BYPASS = process.env.GGD_SERVER_OPS_BYPASS === "1";
@@ -235,6 +238,9 @@ export async function fetchServerOpsResult(
       );
       return { ops: { ...defaults }, ok: false };
     }
+    // The platform answered with a usable table: retract any earlier degradation
+    // so /healthz stops reporting an outage that has ended.
+    clearDegradation(...DEGRADE_KEYS, BOOT_PROBE_KEY);
     return { ops: { ...defaults, ...stored }, ok: true };
   } catch (err) {
     warnOnce(
@@ -304,6 +310,34 @@ export class ServerOpsCache {
         this.inflight = null;
       });
     return this.inflight;
+  }
+
+  private refreshing: Promise<ServerOpsResult> | null = null;
+
+  /**
+   * Re-run the fetch because the platform announced a change on the content
+   * bus (config/contentBus.ts).
+   *
+   * The last-known-good policy documented in get() is EXACTLY what a
+   * bus-driven refresh needs, so this reuses it verbatim: an invalidation that
+   * arrives while the platform is down leaves the ceiling the operator set
+   * standing, and only the recorded failure changes. Single-flight so a burst
+   * of admin saves cannot fan out into a burst of HTTP requests.
+   */
+  async refresh(now: number = Date.now()): Promise<ServerOpsResult> {
+    if (this.refreshing) return this.refreshing;
+    this.refreshing = fetchServerOpsResult(this.baseUrl, this.opts)
+      .then((result) => {
+        const effective = result.ok ? result.ops : (this.lastGood ?? result.ops);
+        if (result.ok) this.lastGood = result.ops;
+        this.cached = effective;
+        this.expiresAt = now + this.ttlMs;
+        return { ...result, ops: effective };
+      })
+      .finally(() => {
+        this.refreshing = null;
+      });
+    return this.refreshing;
   }
 
   /** Drop the cache (tests / forced refresh). Keeps the last known good. */

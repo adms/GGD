@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>W3X 發射器重建確認 — PRE2 參數 → Babylon 等價發射器</title>
+<style>
+  :root { --bg:#07080c; --panel:#12161f; --line:#2a3145; --fg:#e8ecf6; --dim:#98a2bd;
+          --accent:#7dd3fc; --gold:#f0c674; --warn:#f0a674; --bad:#e07272; --ok:#8fd694; }
+  * { box-sizing:border-box; }
+  html,body { margin:0; height:100%; }
+  body { background:var(--bg); color:var(--fg); overflow:hidden;
+         font:14px/1.55 -apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans TC",sans-serif; }
+  #view { position:fixed; inset:0; width:100%; height:100%; display:block; touch-action:none; }
+  .hud { position:fixed; z-index:2; background:rgba(14,18,28,.9); border:1px solid var(--line);
+         border-radius:10px; padding:12px 14px; backdrop-filter:blur(6px); }
+  #panel { top:14px; left:14px; width:min(400px, calc(100vw - 28px));
+           max-height:calc(100vh - 140px); overflow:auto; }
+  #panel h1 { margin:0 0 4px; font-size:16px; letter-spacing:.02em; }
+  #panel p { margin:6px 0 0; color:var(--dim); font-size:12.5px; }
+  .row { display:flex; gap:6px; flex-wrap:wrap; margin-top:9px; }
+  button { font:inherit; font-size:12.5px; color:var(--fg); background:#1d2334;
+           border:1px solid var(--line); border-radius:7px; padding:5px 10px; cursor:pointer; }
+  button:hover { border-color:var(--accent); }
+  button.on { border-color:var(--gold); background:#2a2211; color:var(--gold); }
+  .lbl { color:var(--dim); font-size:11px; text-transform:uppercase; letter-spacing:.08em;
+         margin-top:14px; }
+  #stats { bottom:14px; left:14px; right:14px; font-variant-numeric:tabular-nums;
+           color:var(--dim); font-size:12px; }
+  #err { top:14px; left:14px; right:14px; max-width:660px; border-color:#7f2d2d;
+         background:#2a1212; display:none; }
+  code { background:#0009; padding:1px 5px; border-radius:4px; }
+  .src { margin-top:8px; font-size:11.5px; color:var(--dim); border-left:2px solid var(--line);
+         padding-left:9px; }
+  ul.notes { margin:8px 0 0; padding-left:0; list-style:none; }
+  ul.notes li { font-size:11.5px; margin:0 0 7px; padding-left:9px; border-left:2px solid var(--line); color:var(--dim); }
+  ul.notes li b { color:var(--fg); font-weight:600; }
+  .k-exact { border-left-color:var(--ok) !important; }
+  .k-approximated { border-left-color:var(--warn) !important; }
+  .k-dropped { border-left-color:var(--bad) !important; }
+  .tag { font-size:10px; letter-spacing:.06em; text-transform:uppercase; padding:1px 5px;
+         border-radius:4px; margin-right:5px; }
+  .tag.k-exact { background:#14301a; color:var(--ok); }
+  .tag.k-approximated { background:#33240f; color:var(--warn); }
+  .tag.k-dropped { background:#331414; color:var(--bad); }
+  table.plan { width:100%; border-collapse:collapse; margin-top:8px; font-size:11.5px; }
+  table.plan td { padding:2px 0; color:var(--dim); }
+  table.plan td:last-child { text-align:right; color:var(--fg); font-variant-numeric:tabular-nums; }
+</style>
+</head>
+<body>
+<canvas id="view"></canvas>
+
+<div id="err" class="hud">
+  <h1>載入失敗</h1>
+  <p id="errmsg"></p>
+  <p>這頁只在 <code>vite dev</code> 下可用（直接載入 <code>/src/render/vfx/*.ts</code>）。</p>
+</div>
+
+<div id="panel" class="hud">
+  <h1>W3X 發射器重建 <span style="color:var(--dim);font-size:12px">#98</span></h1>
+  <p>畫面上跑的是 <b>從 <code>PRE2</code> 二進位參數重建的等價 Babylon 發射器</b>，
+     不是把 mdx 再轉一次 glb —— 那些模型本來就沒有幾何，粒子發射器才是資產本體。
+     鏈路全程沒有替身：<code>w3xEmitterToVfxDoc</code> → <code>planEffectBudget</code> →
+     <code>toParticleSystem</code>（對局用的同一個 factory）→ <code>W3xEmitterRig</code>。</p>
+
+  <div class="lbl">效果（來源模型）</div>
+  <div class="row" id="effects"></div>
+  <div class="src" id="source">—</div>
+
+  <div class="lbl">同時在場人數（3v3v3v3 最壞情況 = 12）</div>
+  <div class="row" id="counts"></div>
+
+  <div class="lbl">生命週期</div>
+  <div class="row">
+    <button id="replay">▶ 重播</button>
+    <button id="stop">■ 停止（看它自己收乾淨）</button>
+  </div>
+
+  <div class="lbl">預算實際做了什麼</div>
+  <table class="plan" id="plan"></table>
+
+  <div class="lbl">附著點解析</div>
+  <div class="src" id="attach">—</div>
+
+  <div class="lbl">近似帳本（每一條都是判斷過的，不是猜的）</div>
+  <ul class="notes" id="notes"></ul>
+</div>
+
+<div id="stats" class="hud"><span id="readout">—</span></div>
+
+<script type="module">
+const errBox = document.getElementById("err");
+const showErr = (m) => {
+  document.getElementById("errmsg").textContent = String(m);
+  errBox.style.display = "block";
+};
+window.addEventListener("error", (e) => showErr(e.message));
+
+try {
+  const { startW3xEmitterAudition, AUDITION_EFFECTS, AUDITION_WORLD_SCALE } =
+    await import("/src/render/vfx/w3xEmitterAudition.ts");
+
+  const h = startW3xEmitterAudition(document.getElementById("view"));
+  window.__w3xfx = h; // screenshot-automation seam
+
+  const q = new URLSearchParams(location.search);
+  let effectKey = q.get("effect") ?? AUDITION_EFFECTS[0].key;
+  let champions = Number(q.get("champions") ?? 1);
+
+  const mkRow = (host, items, get, set) => {
+    const render = () => {
+      host.innerHTML = "";
+      for (const [label, value] of items) {
+        const b = document.createElement("button");
+        b.textContent = label;
+        if (get() === value) b.classList.add("on");
+        b.onclick = () => { set(value); render(); play(); };
+        host.appendChild(b);
+      }
+    };
+    render();
+    return render;
+  };
+
+  const srcBox = document.getElementById("source");
+  const play = () => {
+    h.play(effectKey, champions);
+    const e = AUDITION_EFFECTS.find((x) => x.key === effectKey);
+    srcBox.textContent = e ? e.source : "—";
+    renderNotes();
+    renderPlan();
+  };
+
+  mkRow(document.getElementById("effects"), AUDITION_EFFECTS.map((e) => [e.label, e.key]),
+        () => effectKey, (v) => { effectKey = v; });
+  mkRow(document.getElementById("counts"), [1, 2, 4, 6, 8, 12].map((n) => [`${n} 人`, n]),
+        () => champions, (v) => { champions = v; });
+
+  document.getElementById("replay").onclick = () => play();
+  document.getElementById("stop").onclick = () => h.stopAll();
+
+  const notesBox = document.getElementById("notes");
+  const renderNotes = () => {
+    const { notes } = h.stats();
+    notesBox.innerHTML = "";
+    if (!notes.length) {
+      notesBox.innerHTML = '<li class="k-exact"><span class="tag k-exact">exact</span>這個效果 1:1 重建，沒有任何近似。</li>';
+      return;
+    }
+    for (const n of notes) {
+      const li = document.createElement("li");
+      li.className = "k-" + n.kind;
+      li.innerHTML = `<span class="tag k-${n.kind}">${n.kind}</span><b>${n.field}</b> — `;
+      li.appendChild(document.createTextNode(n.detail));
+      notesBox.appendChild(li);
+    }
+  };
+
+  const planBox = document.getElementById("plan");
+  const renderPlan = () => {
+    const s = h.stats();
+    const p = s.plan;
+    document.getElementById("attach").textContent = s.attach ?? "（此效果播在世界座標，不掛骨頭）";
+    if (!p) { planBox.innerHTML = ""; return; }
+    const rows = [
+      ["原模型發射器數", p.systemsBeforeMerge],
+      ["合併相同發射器後（無損）", p.systemsAfterMerge],
+      ["實際建立的 ParticleSystem", p.kept],
+      ["因預算捨棄", p.dropped],
+      ["發射率縮放", p.rateScale === 1 ? "1.00（未稀釋）" : p.rateScale.toFixed(2)],
+      ["每個效果的存活粒子", p.particles],
+      ["完全忠實", p.faithful ? "是" : "否（已降級，見上）"],
+      ["WC3 模型單位 → 世界單位", "×" + AUDITION_WORLD_SCALE.toFixed(5) + "（1/36）"],
+    ];
+    planBox.innerHTML = rows.map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join("");
+  };
+
+  const readout = document.getElementById("readout");
+  setInterval(() => {
+    const s = h.stats();
+    readout.textContent =
+      `${s.fps} fps · 效果 ${s.effects} · 現存 ParticleSystem ${s.systems} · ` +
+      `池中閒置 ${s.pooled} · 本頁曾建立且未釋放 ${s.totalSystems}`;
+    renderPlan();
+  }, 250);
+
+  play();
+} catch (err) {
+  showErr(err && err.message ? err.message : err);
+}
+</script>
+</body>
+</html>

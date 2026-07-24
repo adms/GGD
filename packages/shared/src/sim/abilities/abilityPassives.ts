@@ -50,12 +50,13 @@ export function isPassiveInnate(def: AbilityDef): boolean {
 
 /**
  * The champion's 天生技 innate, ACTIVE kind — the ~60 that are real D-slot casts
- * with a cooldown. These are owned from level 1 exactly the same way, but the
- * sim does not yet let anything CAST them (see `AbilitiesComp.passiveSlot`), so
- * they are deliberately inert rather than faked as a stat buff.
+ * with a cooldown. Owned from level 1 exactly the same way, and CASTABLE since
+ * the sixth slot joined `CastableSlot` (see `abilities/innateActive.ts`): they
+ * fire through the ordinary `castAbility` ladder and pay a real cooldown.
  *
- * Exported so a HUD / sweep / follow-up can enumerate exactly what is still
- * pending instead of guessing from the absence of modifiers.
+ * What they must NEVER do is attach a permanent ModifierSource — an active
+ * innate is a cast, not a free aura, so `syncAbilityPassives` skips them.
+ * Exported so a HUD / sweep can tell the two halves of the slot apart.
  */
 export function isActiveInnate(def: AbilityDef): boolean {
   return def.slot === "PASSIVE" && def.innateKind === "active";
@@ -95,12 +96,17 @@ function rankBlock(def: AbilityDef, rank: number): ModifierSource | null {
   const p = def.passive;
   if (!p || rank <= 0 || p.ranks.length === 0) return null;
   const block = p.ranks[Math.min(rank, p.ranks.length) - 1]!;
-  if (!block.modifiers?.length && !block.hooks?.length) return null;
+  // An AURA-ONLY passive is a real passive: `79-00 靈壓` grants its carrier no
+  // stat at all, it only debuffs everyone standing near them. Without `auras`
+  // in this emptiness test the source would never be attached and the aura
+  // would never be emitted (auraSystem reads the ATTACHED sources).
+  if (!block.modifiers?.length && !block.hooks?.length && !block.auras?.length) return null;
   return {
     id: abilityPassiveSourceId(def.id),
     kind: "passive",
     ...(block.modifiers ? { modifiers: block.modifiers } : {}),
     ...(block.hooks ? { hooks: block.hooks } : {}),
+    ...(block.auras ? { auras: block.auras } : {}),
   };
 }
 

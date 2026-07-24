@@ -1,0 +1,84 @@
+{
+  "id": "godie-gumdam-p0",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.033,
+    "angleDeg": 3.5
+  },
+  "mode": "continuous",
+  "rate": 15.1,
+  "lifetimeSec": {
+    "min": 0.495,
+    "max": 0.495
+  },
+  "size": {
+    "start": 0.062,
+    "end": 0.126
+  },
+  "color": {
+    "start": [
+      1.0,
+      1.0,
+      1.0,
+      0.863
+    ],
+    "end": [
+      1.0,
+      1.0,
+      1.0,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.863
+      ]
+    ],
+    [
+      0.5,
+      [
+        0.663,
+        0.663,
+        0.663,
+        0.855
+      ]
+    ],
+    [
+      1.0,
+      [
+        1.0,
+        1.0,
+        1.0,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.062
+    ],
+    [
+      0.5,
+      0.106
+    ],
+    [
+      1,
+      0.126
+    ]
+  ],
+  "blendMode": "alpha",
+  "texture": "assets/textures/particles/smoke_01.png",
+  "speed": {
+    "min": 0.5956,
+    "max": 0.5956
+  },
+  "anchorBone": "Object11",
+  "ambient": true
+}

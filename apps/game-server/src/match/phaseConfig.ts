@@ -1,6 +1,8 @@
 /**
- * phaseConfig — resolve the match PHASE DURATIONS from content instead of
- * hard-coding them, the same way `arenaRules.ts` resolves the round table.
+ * phaseConfig — resolve the match PHASE DURATIONS (and the two other
+ * `config.match@1` knobs that shape a match's clock: the fire ring and the
+ * starting team lives) from content instead of hard-coding them, the same way
+ * `arenaRules.ts` resolves the round table.
  *
  * ---------------------------------------------------------------------------
  * WHY (task #38): the prep window was a hard-coded number in the WRONG PLACE
@@ -29,6 +31,7 @@ import { TICK_HZ } from "@ggd/shared/constants";
 import { Configs } from "@ggd/shared/content";
 import type { ConfigMatchDoc, FireRingConfig } from "@ggd/shared/content";
 import { DEFAULT_PHASE_CONFIG, type PhaseConfig } from "./PhaseMachine";
+import { DEFAULT_STARTING_TEAM_HEALTH, MAX_STARTING_TEAM_HEALTH } from "./PairedDuels";
 
 /** The seconds block of `config.match@1` this module consumes. */
 export interface PhaseSeconds {
@@ -95,3 +98,58 @@ export function resolveFireRing(): FireRingConfig | null {
   if (!doc || doc.schema !== "config@1" || !doc.match?.fireRing) return null;
   return doc.match.fireRing;
 }
+
+/**
+ * The ACTIVE starting TEAM HEALTH — `match.startingTeamLives` in `config.match@1`.
+ *
+ * NAME MISMATCH, ON PURPOSE. The model is LoL Arena's Team Health (a 20-point
+ * pool drained 2/4/6 per lost duel), not lives; the code says so, the content
+ * key does not. The key is declared in a `.strict()` Zod object in
+ * `packages/shared/src/content/schema/config.ts`, offered by the editor, and
+ * written by `exportContentToJson` — none of which this lane owns — so renaming
+ * it would be a cross-lane content migration for zero mechanical gain. It is
+ * the same scalar reservoir under either spelling. See
+ * `PairedDuels.DEFAULT_STARTING_TEAM_HEALTH`.
+ *
+ * SAME BUG AS #38, one field over. The key has been in the doc since the content
+ * pipeline landed, `zConfigMatchDoc` validates it as a positive int, and the
+ * editor offers it — but `MatchRoom.onCreate` passed a literal `3` to the
+ * MatchController, so the authored value was decoration. Worse than the phase
+ * durations were, in fact: this is the single knob that sets HOW LONG A MATCH
+ * IS (round count = reservoir / drain, see PairedDuels.teamHealthLost), so the
+ * owner had the match-length dial in his hands and turning it did nothing. That
+ * is fixed, and the team-health rewrite deliberately did NOT reintroduce it:
+ * the 20 is authored in `config.match.json`, not hardcoded here.
+ *
+ * Resolved ONCE per match at room creation, exactly like the phase durations and
+ * the fire ring, and then frozen: the MatchController seeds `this.teamHealth`
+ * from it in the constructor, so a mid-match content reload can never hand a
+ * running match a different reservoir than the one its rounds have been draining.
+ *
+ * FALLBACK is {@link DEFAULT_STARTING_TEAM_HEALTH} for an absent / mis-schema'd
+ * doc — a skeleton boot or a unit test still gets a playable match.
+ *
+ * REPLAY. This function is deliberately NOT called on the playback path.
+ * `ReplayHeader.startingLives` records what the match actually ran on, and
+ * `replay/Player.reset` feeds that recorded number back to the MatchController.
+ * So a replay taken at 3 still plays at 3 after the live config moves to 20 —
+ * see `replay.test.ts` ("recorded lives survive a config change").
+ */
+export function resolveStartingTeamHealth(): number {
+  const doc = Configs.tryGet("config.match") as unknown as ConfigMatchDoc | undefined;
+  const authored = doc?.schema === "config@1" ? doc.match?.startingTeamLives : undefined;
+  if (typeof authored !== "number" || !Number.isFinite(authored)) return DEFAULT_STARTING_TEAM_HEALTH;
+  // Non-integers and 0/negatives can only reach here from an unvalidated doc
+  // (Configs.tryGet is not re-validated at read time); floor + clamp rather than
+  // throw, so a bad edit degrades to a playable match instead of a dead room.
+  const n = Math.floor(authored);
+  if (n < 1) return DEFAULT_STARTING_TEAM_HEALTH;
+  return Math.min(MAX_STARTING_TEAM_HEALTH, n);
+}
+
+/**
+ * @deprecated Vocabulary alias for {@link resolveStartingTeamHealth}. `MatchRoom`
+ * (another lane's file) calls this name; the alias keeps the rename from
+ * reaching across the boundary.
+ */
+export const resolveStartingLives = resolveStartingTeamHealth;

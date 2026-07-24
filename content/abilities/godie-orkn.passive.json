@@ -2,6 +2,7 @@
   "id": "godie-orkn.passive",
   "schema": "ability@1",
   "name": "30-00 攝影機",
+  "icon": "assets/icons/abilities/godie-orkn.passive.webp",
   "description": "[輔助]\n90秒冷卻時間\n\n為了看到許多的糟糕畫面，以及方便搜尋肛人的目標，放攝影機前往附近的樹上，顯示附近整個區域的狀況，可以看到隱形部隊。",
   "slot": "PASSIVE",
   "innateKind": "active",

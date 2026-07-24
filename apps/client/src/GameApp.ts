@@ -10,7 +10,13 @@
 import { TICK_MS } from "@ggd/shared/constants";
 import { SKELETON_ARENA, arenaDefFromDoc } from "@ggd/shared/sim/world/ArenaDef";
 import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
-import { Abilities, Champions, Items, Projectiles } from "@ggd/shared/sim/content/registry";
+import {
+  Abilities,
+  Champions,
+  Items,
+  Projectiles,
+  championPassive,
+} from "@ggd/shared/sim/content/registry";
 import { Stat } from "@ggd/shared/sim/stats/statTypes";
 import { ModOp } from "@ggd/shared/sim/stats/modifiers";
 import {
@@ -20,7 +26,7 @@ import {
 } from "@ggd/shared/sim/combatEnv";
 import type { ModelDoc } from "@ggd/shared/content";
 import type { AbilityId, ChampionId, ItemId, ProjectileId } from "@ggd/shared/ids";
-import type { AbilitySlot } from "@ggd/shared/sim/intents";
+import type { AbilitySlot, CastableSlot } from "@ggd/shared/sim/intents";
 import type { Room } from "colyseus.js";
 import type { MatchState } from "@ggd/shared/protocol/schema";
 import { ENTITY_FLAG } from "@ggd/shared/protocol/schema";
@@ -39,6 +45,7 @@ import {
   setGamepadIndices,
   setLocalAccounts,
 } from "./net/RoomStore";
+import { recordCastEvent } from "./ui/castAnnounce";
 import type { IntentSender } from "./net/IntentSender";
 import { InterpolationBuffer } from "./net/InterpolationBuffer";
 import { TimeSync } from "./net/TimeSync";
@@ -832,6 +839,11 @@ export class GameApp {
       // the point of task #60, every rejection with its reason. The HUD turns
       // them into a readable line + the 効果音ラボ cue (ui/panels/shopFeedback).
       if (isShopEvent(ev.type)) recordShopEvent(ev, localId);
+      // cast outcomes for THIS player (playtest P7): `castRejected` becomes the
+      // sentence 「冷卻中，還有 3 秒」 + a red shake on the button, and
+      // castBegin/abilityCast becomes its confirm rim. Same shape as the shop
+      // line above; all the logic lives in ui/castAnnounce.
+      recordCastEvent(ev, localId, nowMs);
       // victory-settlement scoreboard (arrives once at matchEnd) → settlement UI
       if (ev.type === SETTLEMENT_EVENT) recordSettlement(ev.data as unknown as MatchSettlement);
     }
@@ -1235,7 +1247,7 @@ export class GameApp {
     return this.schemaPos(hud.localEntityId);
   }
 
-  private localAbility(slot: AbilitySlot): AimAbility | null {
+  private localAbility(slot: CastableSlot): AimAbility | null {
     return this.abilityForSeat(hudStore.getState().localSeatId, slot);
   }
 
@@ -1247,7 +1259,7 @@ export class GameApp {
    * Null when the ability isn't learned/unlocked (localAbility gate) or the hero
    * has no position yet — nothing to draw.
    */
-  private resolveHoldPreview(slot: AbilitySlot): AimIndicatorState {
+  private resolveHoldPreview(slot: CastableSlot): AimIndicatorState {
     const ability = this.localAbility(slot);
     const self = this.localSelfPos();
     if (!ability || !self) return null;
@@ -1263,7 +1275,7 @@ export class GameApp {
     return { kind: "range", x: self.x, z: self.z, range, radius };
   }
 
-  private abilityForSeat(seatId: number | null, slot: AbilitySlot): AimAbility | null {
+  private abilityForSeat(seatId: number | null, slot: CastableSlot): AimAbility | null {
     if (seatId === null) return null;
     const seat = hudStore.getState().seats.find((s) => s.seatId === seatId);
     if (!seat || !seat.championId) return null;
@@ -1273,6 +1285,25 @@ export class GameApp {
     if (slot === "EX") {
       if (!seat.exAbilityId || seat.exRank <= 0) return null; // no EX / still locked
       return Abilities.tryGet(seat.exAbilityId as AbilityId) ?? null;
+    }
+    // 天生技 — the SIXTH slot (the level-1 innate). It is NOT in
+    // `champion.abilities` and has no rank on the wire: it is a standalone
+    // `<championId>.passive` doc, owned at rank 1 from spawn, so
+    // `championPassive` is the whole resolution (same seam ui/passiveSlot uses).
+    //
+    // Only the ~60 `innateKind: "active"` innates resolve. A permanent 被動
+    // innate returns null and therefore issues NO command — the sim would
+    // answer "passive" anyway (innateCastBlock), but sending a cast we already
+    // know is refused would burn a wire slot and make every 被動 hero's D key
+    // look like a laggy ability instead of a tile that was never a button.
+    // `ui/castAnnounce` still SAYS so on the press; this only declines to send.
+    //
+    // The 3 heroes with no NN-00 return null here too, which reads as
+    // "not-learned" on the press — the same answer the other five slots give.
+    if (slot === "PASSIVE") {
+      const innate = championPassive(seat.championId as ChampionId);
+      if (!innate || innate.innateKind !== "active") return null;
+      return innate;
     }
     const rank = seat.abilityRanks[SLOT_INDEX[slot]] ?? 0;
     if (rank <= 0) return null; // not learned yet — don't spam the server
@@ -1304,7 +1335,7 @@ export class GameApp {
     return { x: es.fx, z: es.fz };
   }
 
-  private playerAbility(player: number, slot: AbilitySlot): AimAbility | null {
+  private playerAbility(player: number, slot: CastableSlot): AimAbility | null {
     if (player === 0) return this.localAbility(slot);
     return this.abilityForSeat(this.playerView(player)?.seatId ?? null, slot);
   }

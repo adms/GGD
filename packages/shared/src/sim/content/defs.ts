@@ -6,6 +6,7 @@
 import type { AbilityId, AugmentId, ChampionId, ItemId, ProjectileId } from "../../ids";
 import type { Stat, StatBlock } from "../stats/statTypes";
 import type { StatModifier, HookDef } from "../stats/modifiers";
+import type { AuraDef } from "../aura/aura";
 import type { EffectDef } from "../effects/effect";
 import type { ChampionAbilitySlot, CoreAbilitySlot } from "../intents";
 
@@ -20,6 +21,14 @@ export type CastType = "targeted" | "skillshot" | "ground" | "self" | "dash";
 export interface AbilityPassiveRank {
   modifiers?: StatModifier[];
   hooks?: HookDef[];
+  /**
+   * AURAS (靈氣) this rank projects — the 「範圍 R 內的敵人/隊友」 half of the
+   * WC3 aura family (`AOae` Endurance, `AHab` Devotion, and the innate that
+   * drove this: `79-00 靈壓`, −25 % attack speed to enemies within 500). Unlike
+   * `modifiers`, which only ever touch the unit carrying the passive, these are
+   * applied to OTHER units by proximity. See sim/aura/aura.ts.
+   */
+  auras?: AuraDef[];
 }
 
 /**
