@@ -4,6 +4,30 @@
 
 ---
 
+## 🎮 v0.4.9 待部署 · 2026-07-25 pre-push 試玩紀錄
+
+**本場已併回 main（6 條 lane，均過對抗驗證＋測試閘，未部署）：** #201 藍水晶解鎖修復 ·
+combat-env（魔力 3×/回魔 4×/CD 0.2×）· #197 手把全 UI · #203 邀請鏈自動審核 ·
+#204 藍水晶大廳+送1000 · #193 離開先過結算 · #189 內容持久層 core（含 UpdatedBy 公開洩漏修補）。
+
+**pre-push 試玩（localhost 冒煙測試，非完整多人對戰——後者是主機端 step 6）：**
+- ✅ 合併後 client **production `vite build` EXIT=0**、`main.tsx` transform 乾淨、登入頁完整渲染
+  （build stamp `b58d1e9`）；英雄跑馬燈、一鍵開打、音訊列、**#197 手把喚醒提示都在**。
+- ⚠️ dev server 啟動當下有一批 `[hmr] Failed to reload` 錯誤——**確認為 HMR 熱抽換churn**
+  （production build 乾淨、頁面正常渲染），不是真的匯入錯誤；正式部署走 vite build 不受影響。
+- 12 個 workspace `tsc` 全綠；各 lane full suite 綠（既有紅：#210 WS 閘、fireRingArm 180 vs 60、
+  bindings.test 缺 runtime whitelist.json——皆 main 上就紅、與本場無關）。
+
+**下次（主機端）實測要盯：**
+- 手把喚醒提示在鍵鼠玩家初次進站也會閃一下（pointer-events:none 無害，首次互動即消失）。
+- 非 standard 對應的手把在**戰鬥中**按鍵面只警示、不自動重映（無安全通用映射）。
+- **#189 只到 core**：主機後台 內容管理 的**正式寫入 adapter 仍未接**，所以 ggd.adms.ai 上改內容
+  還不會真的存進 data/（editor 抓不到資料的根因只解一半）。
+- **#210 安全洞**：被拒玩家持有效 token 仍能進大廳 WS（既有、非本場引入）。
+- 尚未併：#202 商店描述、#191 金幣、#195 火圈、#199 QR；工作流仍跑：#209 Slack、#208 觀戰跟場。
+
+---
+
 ## 🚀 作戰表 · 2026-07-25（本場，接續交辦）
 
 ### 本場已落地並**已部署** ggd.adms.ai（v0.4.8，build `25659898`）
