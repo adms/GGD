@@ -204,23 +204,24 @@ describe("迴避: legible at a glance without reading a number (ct-e02)", () => 
 
   it("goes through the SAME css builder — so #164's transparent-glyph fix holds", () => {
     cover("combat-text-legibility");
-    // The reported bug was a transparent text fill with nothing behind it in a
-    // renderer that fakes `background-clip:text`. Both paths must always emit a
-    // solid hue, and must never emit `color:transparent`.
+    // The reported bug was a transparent text fill with nothing behind it. This
+    // test used to also REQUIRE `background-clip:text` on the gradient branch —
+    // pinning the exact mechanism that produced it. The owner hit it a second
+    // time with a screenshot of a black 74, so the gradient branch is gone: the
+    // probe read computed style, which proves the engine accepted the clip, not
+    // that the compositor painted it, and these nodes carry `will-change` so
+    // they always have their own layer.
+    //
+    // The intent survives intact and is now unconditional: BOTH branches emit a
+    // solid hue and neither can zero the fill.
     for (const c of ["dodge", "whiff", "allyDodge"] as const) {
       const st = combatTextStyle(c);
       for (const gradient of [true, false]) {
         const css = combatTextCss(st, gradient);
         expect(css).toContain(`color:${st.color}`);
-        // the plain `color:` property specifically — `-webkit-text-fill-color`
-        // is allowed to be transparent, and only ever next to the gradient
         expect(css).not.toMatch(/(^|;)color:transparent/);
-        if (gradient) {
-          expect(css).toContain("background-clip:text");
-          expect(css).toContain("-webkit-text-fill-color:transparent");
-        } else {
-          expect(css).not.toContain("-webkit-text-fill-color");
-        }
+        expect(css, `${c}/${gradient}`).not.toMatch(/text-fill-color\s*:\s*transparent/i);
+        expect(css, `${c}/${gradient}`).not.toMatch(/background-clip\s*:\s*text/i);
       }
     }
   });

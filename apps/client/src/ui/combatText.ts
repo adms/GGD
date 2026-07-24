@@ -408,7 +408,25 @@ const BASE: Record<CombatTextCategory, CombatTextStyle> = {
     fontSize: 30,
     fontWeight: 900,
     italic: false,
-    color: "#FF0000",
+    // #FF5900, not #FF0000. Measured against the four real arena grounds
+    // (土色 #6d6250, 暗土 #4a4238, 石地 #8a8578, 白岩 #ebebeb) under the rule the
+    // ring architecture actually implies: EITHER the fill or the black ring must
+    // clear 3.0:1 against the ground, and the fill must clear 3.0:1 against its
+    // own ring or the glyph reads as one dark blob.
+    //
+    // Pure red fails that on 暗土 at 2.47:1 — red and black are both DARK, so on
+    // dark dirt neither layer separates and the number is a smudge.
+    //
+    // The replacement had THREE constraints, not one, and the first candidate
+    // (#FF5A5A) failed the third: it sat ΔE 9.4 from the red TEAM colour
+    // #e5483f, so a damage number would have read as team chrome. Searching the
+    // red→orange band for a colour that (a) clears 3.0:1 on every ground via
+    // fill-or-ring, (b) clears 3.0:1 against its own ring, and (c) stays ΔE > 25
+    // from all four team hues leaves 833 candidates; #FF5900 is the most
+    // saturated, reddest of them — ΔE 31.0 from the nearest team colour, 6.68:1
+    // against the ring, worst ground 3.14:1. It reads as a hot impact orange-red
+    // and cannot be mistaken for team red.
+    color: "#FF5900",
     tint: "#FFD9D9",
     alpha: 1,
     popScale: 1.14,
@@ -545,7 +563,25 @@ const BASE: Record<CombatTextCategory, CombatTextStyle> = {
     fontSize: 18,
     fontWeight: 700,
     italic: false,
-    color: "#FF0000",
+    // #FF5900, not #FF0000. Measured against the four real arena grounds
+    // (土色 #6d6250, 暗土 #4a4238, 石地 #8a8578, 白岩 #ebebeb) under the rule the
+    // ring architecture actually implies: EITHER the fill or the black ring must
+    // clear 3.0:1 against the ground, and the fill must clear 3.0:1 against its
+    // own ring or the glyph reads as one dark blob.
+    //
+    // Pure red fails that on 暗土 at 2.47:1 — red and black are both DARK, so on
+    // dark dirt neither layer separates and the number is a smudge.
+    //
+    // The replacement had THREE constraints, not one, and the first candidate
+    // (#FF5A5A) failed the third: it sat ΔE 9.4 from the red TEAM colour
+    // #e5483f, so a damage number would have read as team chrome. Searching the
+    // red→orange band for a colour that (a) clears 3.0:1 on every ground via
+    // fill-or-ring, (b) clears 3.0:1 against its own ring, and (c) stays ΔE > 25
+    // from all four team hues leaves 833 candidates; #FF5900 is the most
+    // saturated, reddest of them — ΔE 31.0 from the nearest team colour, 6.68:1
+    // against the ring, worst ground 3.14:1. It reads as a hot impact orange-red
+    // and cannot be mistaken for team red.
+    color: "#FF5900",
     tint: "#FFD9D9",
     alpha: 0.6,
     popScale: 1,
@@ -980,12 +1016,30 @@ export function combatTextShadow(outlinePx: number, haloPx: number): string {
  * carries legibility in both (see the module doc).
  */
 export function combatTextCss(style: CombatTextStyle, gradient: boolean): string {
-  const fill = gradient
-    ? `color:${style.color};` +
-      `background-image:linear-gradient(180deg,${style.tint} 0%,${style.tint} 24%,${style.color} 78%,${style.color} 100%);` +
-      "-webkit-background-clip:text;background-clip:text;" +
-      "-webkit-text-fill-color:transparent;"
-    : `color:${style.color};`;
+  // THE GRADIENT FILL IS OFF, AND STAYS OFF. Reported twice by the owner as
+  // 「傷害數字…看起來是黑色」, with a screenshot of a black 74 on brown dirt.
+  //
+  // The mechanism was `background-clip:text` + `-webkit-text-fill-color:
+  // transparent`, gated by probeTextGradientPaints(). The gate cannot work:
+  // it reads COMPUTED STYLE, which only proves the engine ACCEPTED the three
+  // properties, never that the compositor PAINTED them. These nodes carry
+  // `will-change:transform,opacity` and therefore live on their own compositing
+  // layer, where a browser may accept background-clip:text and then not honour
+  // it. When that happens the fill is transparent and the text-shadow — which
+  // is NOT clipped — is the only thing left on screen. That is precisely a
+  // black number, and it is why the failure reads as "black" rather than
+  // "invisible".
+  //
+  // The gradient bought a subtle top-highlight. The downside it bought with it
+  // is the single most important number in the game becoming unreadable on a
+  // machine we cannot detect. Solid hue plus the dark ring and halo below is
+  // what RO and LoL actually ship, it cannot fail this way, and the file's own
+  // fallback comment already called it "fully legible".
+  //
+  // `gradient` stays in the signature so the probe, its tests and the call site
+  // keep their shape while this is settled; it is deliberately ignored.
+  void gradient;
+  const fill = `color:${style.color};`;
   return (
     "position:absolute;left:0;top:0;pointer-events:none;white-space:nowrap;" +
     "will-change:transform,opacity;transform-origin:50% 50%;" +
