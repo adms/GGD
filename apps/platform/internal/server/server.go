@@ -238,7 +238,16 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 		"freeStarters", len(cat.FreeChampions()), "unlockable", len(cat.UnlockableChampions()),
 		"unlockCost", wallet.CrystalUnlockCost,
 		"perMatchGrant", []int{wallet.CrystalPlace1, wallet.CrystalPlace2, wallet.CrystalPlace3, wallet.CrystalPlace4})
-	walletSvc := wallet.New(accounts, rdb, store, cat)
+	walletSvc := wallet.New(accounts, rdb, store, cat, cfg.NewAccountCrystals)
+	// New-account 藍水晶 welcome seed (task #204). auth cannot import wallet, so
+	// the seeder is injected exactly like the invite gate. On the real binary
+	// cfg.NewAccountCrystals defaults to 1000; the hand-built test config leaves
+	// it 0, so the settlement suite keeps its zero-crystal baseline.
+	authSvc.SetWalletSeeder(walletSvc)
+	if cfg.NewAccountCrystals > 0 {
+		slog.Info("wallet: new accounts are seeded a one-time 藍水晶 welcome grant",
+			"crystals", cfg.NewAccountCrystals, "override", "GGD_NEW_ACCOUNT_CRYSTALS")
+	}
 
 	settler := gamelink.NewSettler(store, rdb, accounts, pres, rank, rooms, walletSvc)
 	glink := gamelink.New(rdb, accounts, pres, rank, journal, settler, cat,

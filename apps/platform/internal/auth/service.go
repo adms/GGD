@@ -68,20 +68,43 @@ type Service struct {
 	// invite, so the composition root hands it in (SetInviteGate), exactly like
 	// SetAuditor / SetOwnerBootstrap.
 	invites InviteGate
+
+	// wallet is the wallet-seed hook (task #204): after a new account lands,
+	// Register asks it to grant the one-time 藍水晶 welcome balance. nil means
+	// no seed (a bare unit-test service, or a deploy that configured 0).
+	// Injected as an interface for the same reason — auth must not import
+	// internal/wallet — via SetWalletSeeder.
+	wallet WalletSeeder
 }
 
 // InviteGate is the invite-code half of registration, implemented by
 // internal/invite. Redeem BURNS a code for accountID or returns the 403 the
 // client shows; Release gives a burned code back when the account it was burned
-// for never landed. See invite.Service for the ordering rationale.
+// for never landed. MintPersonalReferral mints the new account's own single-use
+// referral code (task #203) and ReferrerOf reports which account a code was
+// minted for (empty for an admin code) so a referral can fast-track its
+// inviter. See invite.Service for the ordering rationale.
 type InviteGate interface {
 	Redeem(ctx context.Context, code, accountID, username string) error
 	Release(ctx context.Context, code, accountID string) error
+	MintPersonalReferral(ctx context.Context, referrerID, username string) (string, error)
+	ReferrerOf(ctx context.Context, code string) (string, error)
+}
+
+// WalletSeeder grants a brand-new account its one-time welcome balance (task
+// #204). Implemented by internal/wallet; returns the amount actually granted (0
+// when nothing was seeded — an existing record, or a 0-configured amount).
+type WalletSeeder interface {
+	SeedNewAccountCrystals(ctx context.Context, accountID string) (int, error)
 }
 
 // SetInviteGate installs the invite-code gate (composition root only). nil
 // disables it.
 func (s *Service) SetInviteGate(g InviteGate) { s.invites = g }
+
+// SetWalletSeeder installs the new-account wallet seed hook (composition root
+// only). nil disables the welcome grant.
+func (s *Service) SetWalletSeeder(w WalletSeeder) { s.wallet = w }
 
 // New builds the auth service. params may be nil for defaults. requireApproval
 // enables the private-deploy approval gate.
@@ -346,6 +369,22 @@ func (s *Service) Register(ctx context.Context, username, email, password string
 		s.consumeOwnerToken()
 		logFirstOwner(a)
 	}
+
+	// ---- POST-CREATE, ALL BEST-EFFORT ---------------------------------------
+	//
+	// Everything below runs AFTER the account durably exists and MUST NOT fail
+	// the registration: the account is already the valuable thing, and the
+	// invite code is already (correctly) burned. A hiccup here degrades a
+	// feature — no welcome crystals, no personal code, a still-pending inviter —
+	// each of which an admin can resolve by hand, whereas failing the whole
+	// request would strand a created account behind a spent code. So each step
+	// logs loudly and carries on.
+	s.seedWelcomeCrystals(ctx, a.ID)
+	s.approveReferrerOf(ctx, owner, opt.InviteCode, a.ID)
+	if code := s.mintReferralCode(ctx, a.ID, a.Username); code != "" {
+		a.ReferralCode = code
+	}
+
 	// A pending account gets NO session — issuing a token here would hand it the
 	// very access the gate exists to withhold. The caller returns the account
 	// (Status "pending") with an empty token pair, which the client reads as the
@@ -355,6 +394,86 @@ func (s *Service) Register(ctx context.Context, username, email, password string
 	}
 	pair, err := s.issueTokens(ctx, a)
 	return a, pair, err
+}
+
+// seedWelcomeCrystals grants the one-time 藍水晶 welcome balance (task #204).
+// Idempotent and never re-granting inside the wallet service; here it is purely
+// best-effort with a loud log on failure.
+func (s *Service) seedWelcomeCrystals(ctx context.Context, accountID string) {
+	if s.wallet == nil {
+		return
+	}
+	granted, err := s.wallet.SeedNewAccountCrystals(ctx, accountID)
+	if err != nil {
+		slog.Error("auth: could not seed a new account's welcome crystals; it was created without them",
+			"err", err, "accountId", accountID)
+		return
+	}
+	if granted > 0 {
+		slog.Info("auth: seeded welcome 藍水晶 for a new account", "accountId", accountID, "crystals", granted)
+	}
+}
+
+// approveReferrerOf fast-tracks the INVITER of a referral registration from
+// pending → approved (task #203). It runs only for a non-owner registration on
+// a gated deploy, reads the referrer off the code that was just burned, and
+// approves it only if it is still pending (account.ApproveIfPending enforces
+// that — a denied or already-approved inviter is untouched, so admin's veto
+// stands). SELF-REFERRAL GUARD: a code minted for account X can only be
+// redeemed by a LATER, different registration (X already exists), but the
+// explicit referrer != new-account check makes that impossible-by-construction
+// fact also impossible-by-code.
+func (s *Service) approveReferrerOf(ctx context.Context, owner bool, code, newAccountID string) {
+	if s.invites == nil || owner || strings.TrimSpace(code) == "" {
+		return
+	}
+	referrerID, err := s.invites.ReferrerOf(ctx, code)
+	if err != nil {
+		slog.Error("auth: could not read the referrer of a redeemed code; the inviter stays pending",
+			"err", err, "accountId", newAccountID)
+		return
+	}
+	if referrerID == "" || referrerID == newAccountID {
+		return // an admin-minted code, or (defensively) a self-referral
+	}
+	approved, err := s.accounts.ApproveIfPending(ctx, referrerID)
+	if err != nil {
+		slog.Error("auth: referral could not approve the inviter; they stay pending for admin review",
+			"err", err, "inviter", referrerID, "via", newAccountID)
+		return
+	}
+	if approved {
+		slog.Info("auth: referral chain auto-approved a pending inviter",
+			"inviter", referrerID, "via", newAccountID)
+	}
+}
+
+// mintReferralCode mints the new account's own single-use personal referral
+// code (task #203) and persists its display form onto the account so /me and
+// the register response can show it. Best-effort: a failure just means this
+// account has no code to share yet (an admin can still approve it), so it is
+// logged and skipped rather than failing the registration. Returns the display
+// code (empty on any failure or when the gate is off).
+func (s *Service) mintReferralCode(ctx context.Context, accountID, username string) string {
+	if s.invites == nil {
+		return ""
+	}
+	code, err := s.invites.MintPersonalReferral(ctx, accountID, username)
+	if err != nil {
+		slog.Error("auth: could not mint a new account's personal referral code",
+			"err", err, "accountId", accountID)
+		return ""
+	}
+	if _, err := s.accounts.Update(ctx, accountID, func(ac *account.Account) error {
+		ac.ReferralCode = code
+		return nil
+	}); err != nil {
+		slog.Error("auth: minted a referral code but could not store it on the account",
+			"err", err, "accountId", accountID, "code", code)
+		// The code exists and is usable; it just is not pinned to the account
+		// for display. Still return it so THIS response can show it.
+	}
+	return code
 }
 
 // ErrNotApproved is the 403 returned when an account with valid credentials is

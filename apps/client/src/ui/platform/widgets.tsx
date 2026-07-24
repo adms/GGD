@@ -303,6 +303,27 @@ export function MCoin(props: { amount: number; size?: number }): React.JSX.Eleme
   );
 }
 
+/** 藍水晶 blue — the earn-by-playing currency (#118/#204). Distinct from M幣 gold. */
+export const CRYSTAL_BLUE = "#4ec3ff";
+
+/**
+ * 藍水晶 chip: icon + number, shown in the lobby HUD beside M幣. The 🔷 is
+ * inherently blue so it reads as "crystal" without relying on the text colour,
+ * and it carries a title so a first-time family member learns what it is on
+ * hover. This is the earn-by-playing currency that unlocks champions — a
+ * separate wallet from the admin-granted cosmetic M幣.
+ */
+export function Crystal(props: { amount: number; size?: number }): React.JSX.Element {
+  return (
+    <span
+      title="藍水晶 — 打場免費賺，用來解鎖英雄（與造型幣 M幣 分開）"
+      style={{ color: CRYSTAL_BLUE, fontWeight: 700, fontSize: props.size ?? 13, whiteSpace: "nowrap" }}
+    >
+      🔷 {props.amount.toLocaleString()}
+    </span>
+  );
+}
+
 const PRESENCE_COLOR: Record<string, string> = {
   online: OK,
   "in-lobby": OK,

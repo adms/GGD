@@ -20,6 +20,17 @@ export interface AccountPublic {
   games: number;
   wins: number;
   createdAt: string;
+  /** Private-deploy approval state (#126): "pending" | "approved" | "denied" | "" (grandfathered). */
+  status?: string;
+  /** The caller's OWN authorization roles (e.g. "admin"); omitted for a plain player. */
+  roles?: string[];
+  /**
+   * The caller's OWN single-use personal referral code (#203), display form
+   * GGD-XXXX-XXXX. Share it so a friend can register — and, if you are still
+   * pending, their successful registration auto-approves you. Omitted on a
+   * non-gated deploy (no invite system) or accounts that predate the feature.
+   */
+  referralCode?: string;
 }
 
 export interface SessionResp {
@@ -176,6 +187,8 @@ export interface MyChampionsResp {
 
 export interface Wallet {
   mcoin: number;
+  /** 藍水晶 — the earn-by-playing currency that unlocks champions (#118/#204). */
+  crystal: number;
   ownedChampions: string[];
   ownedSkins: string[];
   /** championId -> equipped skinId */

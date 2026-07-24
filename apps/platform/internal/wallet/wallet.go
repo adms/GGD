@@ -46,19 +46,32 @@ type Service struct {
 	store    *jsonstore.Store
 	cat      Catalog
 
+	// newAccountCrystals is the one-time 藍水晶 welcome grant a brand-new
+	// account is seeded with (task #204). It is a POLICY set at the composition
+	// root from config (GGD_NEW_ACCOUNT_CRYSTALS) rather than a constant, so the
+	// hand-built test config leaves it 0 — every settlement test keeps its
+	// baseline of "a fresh wallet has zero crystals" — while the real binary
+	// defaults it to 1000. Zero means "seed nothing". See SeedNewAccountCrystals.
+	newAccountCrystals int
+
 	metaLocks *keyedmutex.M
 }
 
 // New builds the wallet service around the loaded content catalog. store is
 // used for the meta-progression collection (crystals + favourites); it may be
-// nil in narrow unit tests that never touch meta.
-func New(accounts *account.Repo, rdb *redisx.Client, store *jsonstore.Store, cat Catalog) *Service {
+// nil in narrow unit tests that never touch meta. newAccountCrystals is the
+// one-time welcome 藍水晶 grant for a new account (0 disables it).
+func New(accounts *account.Repo, rdb *redisx.Client, store *jsonstore.Store, cat Catalog, newAccountCrystals int) *Service {
+	if newAccountCrystals < 0 {
+		newAccountCrystals = 0
+	}
 	return &Service{
-		accounts:  accounts,
-		rdb:       rdb,
-		store:     store,
-		cat:       cat,
-		metaLocks: keyedmutex.New(),
+		accounts:           accounts,
+		rdb:                rdb,
+		store:              store,
+		cat:                cat,
+		newAccountCrystals: newAccountCrystals,
+		metaLocks:          keyedmutex.New(),
 	}
 }
 

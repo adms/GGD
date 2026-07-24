@@ -88,6 +88,15 @@ const (
 	MinTTLDays     = 1
 	MaxTTLDays     = 365
 	DefaultTTLDays = 14
+
+	// PersonalReferralTTLDays is the validity window of an auto-minted personal
+	// referral code (task #203). It is the ceiling (MaxTTLDays) rather than
+	// unbounded because EffectiveStatus FAILS CLOSED on a missing/zero expiry —
+	// a referral code must carry a real ExpiresAt or it reads as expired — and
+	// the ceiling is the longest one the store already accepts. A year is long
+	// enough that a family member's own code is effectively always live while
+	// the deploy is; if it ever lapses, the next registration mints a fresh one.
+	PersonalReferralTTLDays = MaxTTLDays
 )
 
 // codeAlphabet is Crockford base32 minus I, L, O and U, and minus 0 and 1 as
@@ -150,6 +159,15 @@ type Doc struct {
 	CreatedBy string    `json:"createdBy"`
 	CreatedAt time.Time `json:"createdAt"`
 	ExpiresAt time.Time `json:"expiresAt"`
+
+	// ReferrerID marks a PERSONAL REFERRAL code (task #203): the account this
+	// code was auto-minted for at its own registration. Empty on an ordinary
+	// admin-minted invite. A referral code is a normal single-use invite in
+	// every other respect (it burns the same way and satisfies the same gate) —
+	// the only added behaviour is that burning it fast-tracks this referrer from
+	// pending → approved. The admin console's List() hides these; they are the
+	// USER'S code, surfaced to that user, not an operator artefact.
+	ReferrerID string `json:"referrerId,omitempty"`
 
 	RedeemedBy       string    `json:"redeemedBy,omitempty"`
 	RedeemedUsername string    `json:"redeemedUsername,omitempty"`
@@ -391,7 +409,7 @@ func (s *Service) Mint(ctx context.Context, adminID, note string, count, ttlDays
 	expires := now.AddDate(0, 0, ttlDays)
 	out := make([]Row, 0, count)
 	for i := 0; i < count; i++ {
-		id, err := s.mintOne(adminID, note, now, expires)
+		id, err := s.mintOne(adminID, note, "", now, expires)
 		if err != nil {
 			return nil, err
 		}
@@ -404,10 +422,69 @@ func (s *Service) Mint(ctx context.Context, adminID, note string, count, ttlDays
 	return out, nil
 }
 
+// MintPersonalReferral mints ONE single-use referral code owned by referrerID
+// (task #203) and returns its DISPLAY form. It is called from the registration
+// path for every new account on a gated deploy, so referrerID is the freshly
+// created account and username is only for the operator-facing note.
+//
+// The code is an ordinary invite in every mechanical respect — same alphabet,
+// same single-use burn, same durable store — so it satisfies the #174 gate
+// exactly like an admin code and does NOT open a code-free registration path.
+// The ONLY difference is the stored referrerId, which Redeem reports so the
+// caller can approve this referrer when someone else burns the code. It is
+// therefore SAFE to hand a family member: giving it away lets a friend register
+// (spending it once) and, as a side effect, approves the giver if still
+// pending — it can never be spent twice, and it grants the holder nothing but
+// one registration they already needed a code for.
+func (s *Service) MintPersonalReferral(ctx context.Context, referrerID, username string) (string, error) {
+	referrerID = strings.TrimSpace(referrerID)
+	if referrerID == "" {
+		return "", httpx.BadRequest("referrerId is required")
+	}
+	note := "個人推薦碼"
+	if u := strings.TrimSpace(username); u != "" {
+		note = "個人推薦碼 · " + u
+		if len([]rune(note)) > MaxNoteRunes {
+			note = "個人推薦碼"
+		}
+	}
+	now := s.now().UTC()
+	expires := now.AddDate(0, 0, PersonalReferralTTLDays)
+	id, err := s.mintOne(referrerID, note, referrerID, now, expires)
+	if err != nil {
+		return "", err
+	}
+	s.Audit(referrerID, "invite.mint_personal", display(id), map[string]any{"username": username})
+	return display(id), nil
+}
+
+// ReferrerOf returns the referrerId stored on a code (task #203), or "" when the
+// code is unknown, malformed, or an ordinary admin-minted invite. It is read
+// AFTER Redeem has burned the code, so the lookup never races the burn: the
+// referrer id is written at mint time and Redeem never clears it. A read error
+// is surfaced so the caller can log it and simply not approve anyone (fail
+// closed — the inviter stays pending, which an admin can still resolve).
+func (s *Service) ReferrerOf(ctx context.Context, rawCode string) (string, error) {
+	id := Normalize(rawCode)
+	if id == "" {
+		return "", nil
+	}
+	doc, err := s.get(id)
+	if err != nil {
+		if errors.Is(err, jsonstore.ErrNotFound) {
+			return "", nil
+		}
+		return "", err
+	}
+	return doc.ReferrerID, nil
+}
+
 // mintOne writes a single code, retrying on the (astronomically unlikely)
 // collision with an existing document rather than overwriting it — overwriting
 // would silently destroy the record of who redeemed the colliding code.
-func (s *Service) mintOne(adminID, note string, now, expires time.Time) (string, error) {
+// referrerID is empty for an admin-minted invite and the owning account for a
+// personal referral code.
+func (s *Service) mintOne(createdBy, note, referrerID string, now, expires time.Time) (string, error) {
 	for attempt := 0; attempt < 8; attempt++ {
 		id, err := newCode()
 		if err != nil {
@@ -424,13 +501,14 @@ func (s *Service) mintOne(adminID, note string, now, expires time.Time) (string,
 			continue
 		}
 		doc := Doc{
-			Version:   SchemaVersion,
-			Code:      display(id),
-			Note:      note,
-			Status:    StatusActive,
-			CreatedBy: adminID,
-			CreatedAt: now,
-			ExpiresAt: expires,
+			Version:    SchemaVersion,
+			Code:       display(id),
+			Note:       note,
+			Status:     StatusActive,
+			ReferrerID: referrerID,
+			CreatedBy:  createdBy,
+			CreatedAt:  now,
+			ExpiresAt:  expires,
 		}
 		err = s.store.Put(Collection, id, doc)
 		unlock()
@@ -442,7 +520,15 @@ func (s *Service) mintOne(adminID, note string, now, expires time.Time) (string,
 	return "", httpx.Internal("could not mint a unique invite code")
 }
 
-// List returns every code, newest first, with the derived status.
+// List returns every ADMIN-MINTED code, newest first, with the derived status.
+//
+// Personal referral codes (task #203, ReferrerID != "") are DELIBERATELY hidden:
+// the admin console's 邀請碼 page is for the codes an operator mints for the
+// family, whereas a referral code is the individual player's own — auto-minted,
+// single-use, surfaced to that player in the lobby. Listing one per account here
+// would bury the operator's own codes in machine-generated noise and invite a
+// revoke that does nothing useful. The gate (Redeem) still burns them exactly
+// the same; only this display view filters them.
 func (s *Service) List(ctx context.Context) ([]Row, error) {
 	// Scan (a directory listing), not List (_index.json): the index is derived
 	// state that reads as empty when its file is missing, and an operator must
@@ -460,6 +546,9 @@ func (s *Service) List(ctx context.Context) ([]Row, error) {
 				continue // raced with a delete
 			}
 			return nil, err
+		}
+		if doc.ReferrerID != "" {
+			continue // a personal referral code — not an operator artefact
 		}
 		rows = append(rows, Row{Doc: doc, EffectiveStatus: doc.EffectiveStatus(now)})
 	}

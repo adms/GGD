@@ -119,6 +119,14 @@ export interface AppState {
    */
   bootstrapNeedsOwner: boolean;
   bootstrapRequireToken: boolean;
+  /**
+   * A registration that SUCCEEDED but landed PENDING under the #126 approval
+   * gate — the account exists, but no session was issued, so it cannot enter the
+   * lobby. We hold the account (which carries its #203 personal referral code)
+   * so AuthScreen can show the "awaiting approval" card + the code the person
+   * can share to get auto-approved. null the rest of the time.
+   */
+  pendingRegistration: AccountPublic | null;
 
   friends: FriendsList | null;
   rooms: OpenRoom[];
@@ -182,6 +190,8 @@ export interface AppState {
   ): Promise<void>;
   /** Fetch first-owner state (best-effort) so the register form can pick its mode. */
   refreshBootstrapState(): Promise<void>;
+  /** Dismiss the "awaiting approval" card and return to the auth form (#203/#126). */
+  clearPendingRegistration(): void;
   doLogout(): Promise<void>;
   playOffline(mapId?: string): void;
   /**
@@ -381,6 +391,7 @@ export const appStore = createStore<AppState>()((set, get) => {
     authError: null,
     bootstrapNeedsOwner: false,
     bootstrapRequireToken: false,
+    pendingRegistration: null,
     friends: null,
     rooms: [],
     room: null,
@@ -439,8 +450,12 @@ export const appStore = createStore<AppState>()((set, get) => {
       }
     },
 
+    clearPendingRegistration() {
+      set({ pendingRegistration: null });
+    },
+
     async doLogin(username, password) {
-      set({ authBusy: true, authError: null });
+      set({ authBusy: true, authError: null, pendingRegistration: null });
       try {
         const resp = await apiFns.login(username, password);
         api.setTokens(resp.tokens);
@@ -451,9 +466,18 @@ export const appStore = createStore<AppState>()((set, get) => {
     },
 
     async doRegister(username, email, password, inviteCode = "", bootstrapToken = "") {
-      set({ authBusy: true, authError: null });
+      set({ authBusy: true, authError: null, pendingRegistration: null });
       try {
         const resp = await apiFns.register(username, email, password, inviteCode, bootstrapToken);
+        // Gated deploy (#126): a successful registration can land PENDING with NO
+        // session. Entering the lobby with an empty token would just bounce off
+        // the WS handshake, so instead surface the "awaiting approval" state —
+        // which carries the #203 referral code the person can share to get
+        // auto-approved. `status === "approved"` (or a token) means play now.
+        if (!resp.tokens.accessToken) {
+          set({ authBusy: false, authError: null, pendingRegistration: resp.account });
+          return;
+        }
         api.setTokens(resp.tokens);
         await enterLobby(resp.account);
       } catch (err) {
@@ -487,6 +511,7 @@ export const appStore = createStore<AppState>()((set, get) => {
       set({
         screen: "auth",
         account: null,
+        pendingRegistration: null,
         friends: null,
         rooms: [],
         room: null,
