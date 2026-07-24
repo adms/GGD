@@ -105,6 +105,48 @@ Owner：「如果團隊生命已經沒了 選擇離開遊戲的時候 要先跳�
 把三跳查詢收成一份。`useHudPanels.ts` 的內嵌副本已換掉，行為不變。
 **「未知」一律回 false**（還在比賽中），因為誤判成已淘汰會把**活著的**玩家鎖在結算畫面後面。
 
+### ⚠️ 工作流 `wf_94a7b1aa-d6f` 已經建好了，但**驗證擋下來，沒有合併**
+
+產出在 worktree `.claude/worktrees/wf_94a7b1aa-d6f-1`（7 改 2 新，未 commit）。
+typecheck 0、`src/ui` 92 檔 1228 測全過、新增 `exitSettlementGate.test.ts` 23 測。
+**三個對抗驗證有兩個回 BROKEN。不要因為測試綠就合併。**
+
+它做對的事（值得保留，重做時照抄）：
+- 抽出純函式 `ui/panels/exitSettlementGate.ts`，把「按鈕做什麼」和「按鈕寫什麼」綁在同一次
+  呼叫，所以不可能出現寫著「返回大廳」卻打開記分板的按鈕
+- `settlementOrigin(phase, exitSettlement)` 單一掛載判斷，`matchEnd` **優先於** flag
+- `resetSettlement()` 一併清 `exitSettlement`（否則重開一局直接彈結算）
+- 慶祝／自動前進／勝利 sting／吃雞嘲諷在 exit 模式**結構性關閉**，不是碰巧 false
+- 順手修掉一個真 bug：舊的 `sort((a,b) => (a.placement||9) - (b.placement||9))` 只有在
+  比賽結束後才正確。中途 `placement` 是**倒數鎖定**的（第一支出局的隊拿第 4），所以那個
+  排序會把**最後一名放在最上面**
+- 發現並處理了**第二個離開入口**：`AppRoot.tsx` 的 `MatchOverlay` 右上角小 Leave 鍵，
+  只擋暫停選單等於做一半
+
+**驗證抓到的兩個缺陷（重做時必須修掉）**：
+
+1. **比賽結束時，輸的玩家按離開變成死鍵。**
+   `phase === "matchEnd"` 時，4 隊裡有 3 隊 `eliminated === true`（伺服器
+   `snapshot.ts:45` 寫 `ts.eliminated = lives <= 0`）。於是 `exitGate(true, …)` 回
+   `"settle"`，按鈕寫「查看本場結算」，點下去呼叫 `openExitSettlement()` ——
+   但 `MatchEndPanel` **早就已經掛著了**（`matchEnd` 優先），所以**畫面上什麼都沒發生**。
+   修法方向：`exitGate` 要收 phase，`matchEnd` 時一律走 `leave`。
+
+2. **`TeamPlacementFallback` 畫在錯的 z 層，而且兩個逃生口都被藏了。**
+   它回傳的是 `cardStyle(380)` —— `position:absolute; left/top:50%; width:380`，
+   **沒有 `inset:0`、沒有 backdrop、沒有 `zIndex`**。有 payload 的那條路在 17 行之後才
+   設 `zIndex: HUD_Z.screen`。而 `#hud-root` 是 `z-index:10` 會開新的 stacking context，
+   所以這張卡落在 z-auto 帶，**任何正 z 的兄弟都會蓋在它上面**（例如 `ReadyButton` 的
+   `INTERMISSION_Z.panel = 40`，而且 `pointerEvents:auto`）。
+   同時 ☰ 被面板註冊表藏起來、右上 Leave 被 `ended` 藏起來 ——
+   **玩家可能看著一張被蓋住的卡，而且沒有其他出路。** 這就是「活人被關住」那個陷阱的變形。
+   修法方向：fallback 也要 `inset:0` + backdrop + `zIndex: HUD_Z.screen`，跟有 payload
+   的那條路一致。
+
+第三個驗證回 **SOUND**：它沒有採信報告，自己寫了一個丟棄式 vitest 建真的 `MatchState`
+schema（4 隊、本地座位在出局隊、phase combat），跑過整條投影鏈，**10 個接點全部實跑驗證**。
+所以機制本身是通的，壞的是上面兩個。
+
 ### 還沒做 ⬜（下次從這裡接）
 
 1. **HUD state 加 `exitSettlement: boolean`** — `apps/client/src/net/RoomStore.ts`
