@@ -13,13 +13,12 @@
  *     in order, so the ring visibly FILLS as the channel progresses. This is
  *     the world-space progress read the brief demands — the channeller AND the
  *     enemy standing on top of them both see how close the rescue is without
- *     looking at any HUD,
+ *     looking at any HUD. It has NO countdown of its own: task #196 gave the
+ *     ring an unlimited lifetime, so there is nothing to count down,
  *   • a central pillar of fire whose height tracks the same progress, readable
  *     even when bodies are stacked over the ring,
  *   • rising embers (one capacity-capped ParticleSystem, quality-scaled like
  *     every other pooled system — task #33's discipline),
- *   • an idle "burn-down" cue: as the 6s lifetime runs out the whole ring dims
- *     and beats faster, so an expiring circle is legible as expiring,
  *   • a CONTESTED state (enemy inside, progress held): the fire snaps to a hot
  *     warning white-orange and strobes, so "you are being blocked" reads
  *     instantly and differently from "nobody is channelling".
@@ -67,9 +66,6 @@ const RING_MIN_ALPHA = 0.45;
 const RING_MAX_ALPHA = 0.95;
 const PILLAR_MIN_ALPHA = 0.22;
 const PILLAR_MAX_ALPHA = 0.55;
-/** Below this much lifetime left the ring reads as burning out. */
-export const BURNDOWN_FROM = 0.35;
-
 /** Hot warning tint used while an enemy contests the ring. */
 const CONTEST_RGB: readonly [number, number, number] = [1.0, 0.62, 0.16];
 /** Flame highlight mixed into the team hue so it reads as FIRE, not a decal. */
@@ -99,20 +95,16 @@ export function flicker01(nowMs: number, phase: number, speed = FLICKER_SPEED): 
 }
 
 /**
- * Urgency 0..1 from the fraction of lifetime REMAINING: 0 while the circle has
- * plenty of time, ramping to 1 as it burns out. Drives the dim + faster beat.
+ * Per-frame inputs from the authoritative snapshot.
+ *
+ * There is no lifetime here. Task #196 removed the ring's expiry (it now burns
+ * until the round ends), and with it the burn-down cue that used to dim the
+ * fire and accelerate its beat as the clock ran out — a "hurry up" read with
+ * nothing left to hurry for would be a lie.
  */
-export function burndown01(lifeLeftFrac: number): number {
-  const f = lifeLeftFrac < 0 ? 0 : lifeLeftFrac > 1 ? 1 : lifeLeftFrac;
-  return f >= BURNDOWN_FROM ? 0 : 1 - f / BURNDOWN_FROM;
-}
-
-/** Per-frame inputs from the authoritative snapshot. */
 export interface ReviveCircleVisualState {
   /** channel fill 0..1 */
   progress: number;
-  /** fraction of the lifetime still to run, 1 → 0 */
-  lifeLeft: number;
   /** at least one ally is channelling right now */
   channelling: boolean;
   /** an enemy stands inside, holding progress */
@@ -309,18 +301,15 @@ export class ReviveCircleView {
   update(nowMs: number, st: ReviveCircleVisualState): void {
     if (!this.active) return;
 
-    const urgency = burndown01(st.lifeLeft);
-    // calm beat while there is time; a fast strobe while contested; an
-    // accelerating beat as the ring burns out
-    const beatSpeed = st.contested
-      ? CONTEST_STROBE_SPEED
-      : BEAT_SPEED * (1 + urgency * 2.2);
+    // calm beat, or a fast strobe while contested. The third case — an
+    // accelerating, dimming beat as the lifetime ran out — went with the
+    // lifetime itself (task #196), so the ring's intensity now means exactly
+    // one thing: whether an enemy is standing on it.
+    const beatSpeed = st.contested ? CONTEST_STROBE_SPEED : BEAT_SPEED;
     const beat = 0.5 + 0.5 * Math.sin(nowMs * beatSpeed + this.phase);
     const flick = flicker01(nowMs, this.phase);
-    // a burning-out ring dims: the "hurry up" read
-    const dim = 1 - urgency * 0.45;
 
-    this.ringMat.alpha = (RING_MIN_ALPHA + beat * (RING_MAX_ALPHA - RING_MIN_ALPHA)) * dim;
+    this.ringMat.alpha = RING_MIN_ALPHA + beat * (RING_MAX_ALPHA - RING_MIN_ALPHA);
 
     // — rim fill: light the first N tongues, flicker their height —
     const want = litTongues(st.progress);
@@ -336,15 +325,14 @@ export class ReviveCircleView {
       t.scaling.y = s;
       t.position.y = (TONGUE_HEIGHT * s) / 2;
     }
-    this.tongueMat.alpha = (0.6 + flick * 0.4) * dim;
+    this.tongueMat.alpha = 0.6 + flick * 0.4;
 
     // — central pillar: height IS the progress, so a stacked fight still reads —
     const h = PILLAR_MIN_HEIGHT + st.progress * (PILLAR_MAX_HEIGHT - PILLAR_MIN_HEIGHT);
     this.pillar.scaling.y = h;
     this.pillar.position.y = h / 2;
     this.pillarMat.alpha =
-      (PILLAR_MIN_ALPHA + (st.channelling ? beat : 0.25) * (PILLAR_MAX_ALPHA - PILLAR_MIN_ALPHA)) *
-      dim;
+      PILLAR_MIN_ALPHA + (st.channelling ? beat : 0.25) * (PILLAR_MAX_ALPHA - PILLAR_MIN_ALPHA);
 
     // — contest: hot warning tint on ring + pillar; team hue otherwise —
     const rgb = st.contested ? CONTEST_RGB : teamRgb(this.team);

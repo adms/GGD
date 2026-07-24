@@ -243,8 +243,9 @@ function drawReviveCircles(
     const r = Math.max(4 * scale, c.radius * s);
     const color = c.contested ? CONTEST_RING : teamCss(c.teamId);
     ctx.save();
-    // a burning-out circle fades with its own clock
-    ctx.globalAlpha = 0.35 + 0.5 * Math.min(1, c.lifeLeft);
+    // Flat alpha: the ring used to fade toward its expiry, but it no longer has
+    // one (task #196), so a live circle always reads at full strength.
+    ctx.globalAlpha = 0.85;
     ctx.strokeStyle = color;
     ctx.lineWidth = 1.5 * scale;
     ctx.setLineDash([3 * scale, 2 * scale]);

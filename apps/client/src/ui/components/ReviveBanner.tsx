@@ -6,15 +6,21 @@
  *      a circle was dropped for them, that it is still burning, or that a
  *      teammate is standing in it. Without this panel the whole mechanic is
  *      invisible to the one person it is about. They get the loudest copy
- *      ("隊友正在復活你") plus the countdown.
+ *      ("隊友正在復活你").
  *   2. THE CHANNELLER. They are rooted in melee range of the team that just
  *      scored a kill; the world ring already shows the fill under their feet,
  *      and this repeats it as a numeric progress bar so the commitment is
  *      unambiguous.
  *   3. Everyone else on the team, as an "a rescue is possible, go help" cue.
  *
- * RATE DISCIPLINE (client-08): progress and the countdown change every sim
- * tick, so they NEVER go through React or the Zustand store. The component
+ * THERE IS NO COUNTDOWN. This panel used to end in a "6.0s → 0.0s" readout
+ * that turned red under 1.5s. Task #196 gave the ring an unlimited lifetime
+ * (「復活隊友的圈圈 沒有消失期限直到回合結束」, matching LoL Arena's untimed
+ * downed zone), so the only honest answer to "how long do I have?" is "until
+ * the round ends" — and a clock that never moved would read as broken.
+ *
+ * RATE DISCIPLINE (client-08): progress changes every sim tick, so it NEVER
+ * goes through React or the Zustand store. The component
  * subscribes to the discrete store only for identity (am I on this team? am I
  * alive?) and drives the numbers from `frameBus.reviveCircles` inside its own
  * rAF, patching DOM styles imperatively — the same contract WorldAnchorLayer
@@ -79,7 +85,6 @@ export function ReviveBanner(): React.JSX.Element | null {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const headRef = useRef<HTMLDivElement | null>(null);
   const fillRef = useRef<HTMLDivElement | null>(null);
-  const timeRef = useRef<HTMLSpanElement | null>(null);
 
   const touch = hudTouch();
   // A defeated player's left-docked shop owns the top-left corner this banner
@@ -121,11 +126,6 @@ export function ReviveBanner(): React.JSX.Element | null {
         fillRef.current.style.width = `${Math.round(c.progress * 100)}%`;
         fillRef.current.style.background = accent;
       }
-      if (timeRef.current) {
-        timeRef.current.textContent = `${c.secondsLeft.toFixed(1)}s`;
-        // the last second reads as urgent, matching the ring's burn-down
-        timeRef.current.style.color = c.secondsLeft <= 1.5 ? CONTEST_CSS : TEXT_DIM;
-      }
     };
     raf = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(raf);
@@ -151,19 +151,9 @@ export function ReviveBanner(): React.JSX.Element | null {
       }}
     >
       <div
-        style={{
-          display: "flex",
-          alignItems: "baseline",
-          justifyContent: "space-between",
-          gap: 6,
-        }}
-      >
-        <div
-          ref={headRef}
-          style={{ fontSize: touch ? 10 : 12, fontWeight: "bold", color: TEXT_MAIN }}
-        />
-        <span ref={timeRef} style={{ fontSize: touch ? 9 : 11, color: TEXT_DIM }} />
-      </div>
+        ref={headRef}
+        style={{ fontSize: touch ? 10 : 12, fontWeight: "bold", color: TEXT_MAIN }}
+      />
       <div
         style={{
           marginTop: 5,

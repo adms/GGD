@@ -171,10 +171,8 @@ export interface ReviveCircleMarker {
   radius: number;
   /** channel fill 0..1 */
   progress: number;
-  /** seconds of lifetime still to run */
-  secondsLeft: number;
-  /** fraction of the lifetime still to run, 1 → 0 */
-  lifeLeft: number;
+  // No lifetime fields: the ring lasts until the round ends (task #196), so
+  // there is no countdown for the HUD or the world view to render.
   /** at least one ally is channelling right now */
   channelling: boolean;
   /** an enemy stands inside, holding progress */

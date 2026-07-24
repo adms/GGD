@@ -478,7 +478,6 @@ export class SimWorld {
     for (const [id, rc] of this.reviveCircle) {
       mix(id);
       mix(rc.progressTicks);
-      mix(rc.expiresAtTick);
       mix(rc.contested ? 1 : 0);
     }
     for (const [teamId, charges] of this.reviveCharges) {

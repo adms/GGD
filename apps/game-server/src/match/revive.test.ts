@@ -70,7 +70,6 @@ describe("config parse (rev-08)", () => {
     );
     expect(doc.reviveCircles).toEqual({
       channelSec: 3,
-      lifetimeSec: 6,
       radius: 2,
       decayMult: 2,
       revivesPerTeamPerRound: 1,
@@ -89,15 +88,21 @@ describe("config parse (rev-08)", () => {
     expect(DEFAULT_ARENA_RULES.reviveCircles).toBeNull();
   });
 
-  it("the tuned numbers hold their derivation: lifetime is exactly 2x the channel", () => {
+  it("the tuned numbers hold their derivation, and no lifetime survives (#196)", () => {
     cover("revive-config-parse");
     const cfg = DEFAULT_REVIVE_CIRCLE_CONFIG;
-    // "you get exactly one channel's worth of travel time"
-    expect(cfg.lifetimeSec).toBe(cfg.channelSec * 2);
-    // 3.0s = 90 ticks and 6.0s = 180 ticks: integer at 30Hz, no rounding drift
+    // the ring lasts until the round ends, so there is no lifetime to tune —
+    // the schema is `.strict()`, so a doc that still ships the old key is a
+    // parse ERROR rather than a silently-ignored field
+    expect("lifetimeSec" in cfg).toBe(false);
+    const raw = JSON.parse(readFileSync(join(ROOT, "content/config/arena-rules.json"), "utf8"));
+    expect(() =>
+      zConfigArenaRulesDoc.parse({ ...raw, reviveCircles: { ...cfg, lifetimeSec: 6 } }),
+    ).toThrow();
+    // 3.0s = 90 ticks: integer at 30Hz, no rounding drift
     const rules = reviveRulesFromConfig(cfg, 1 / 30);
     expect(rules.channelTicks).toBe(90);
-    expect(rules.lifetimeTicks).toBe(180);
+    expect("lifetimeTicks" in rules).toBe(false);
     // above the measured p25 death cadence (2.00s) so a revive can never
     // outpace a kill, and inside the 90s combatMaxSec tail at 1 charge/team
     expect(cfg.channelSec).toBeGreaterThan(2);
@@ -126,7 +131,6 @@ describe("match wiring (rev-09)", () => {
       teamId: asTeamId(anySeat.teamId),
       zone: t.zone,
       pos: t.pos,
-      lifetimeTicks: 999,
       radius: 2,
     });
     expect(ctl.world.reviveCircle.size).toBe(1);
@@ -161,7 +165,7 @@ describe("match wiring (rev-09)", () => {
 });
 
 describe("snapshot projection (rev-10)", () => {
-  it("projects kind 3 with progress/lifetime/radius in the reused float slots", () => {
+  it("projects kind 3 with progress/radius in the reused float slots", () => {
     cover("revive-snapshot-kind");
     registerSkeletonContent();
     const w = new SimWorld(SKELETON_ARENA, 3);
@@ -181,7 +185,6 @@ describe("snapshot projection (rev-10)", () => {
       teamId: asTeamId(1),
       zone: 0,
       pos: { x: c.x, z: c.z },
-      lifetimeTicks: rules.lifetimeTicks,
       radius: rules.radius,
     });
     const rc = w.reviveCircle.get(id)!;
@@ -198,8 +201,10 @@ describe("snapshot projection (rev-10)", () => {
     expect(es.key).toBe(REVIVE_CIRCLE_MODEL_KEY);
     expect(es.seatId).toBe(4); // the DEAD owner's seat → team tint + HUD name
     expect(es.hp / es.maxHp).toBeCloseTo(45 / rules.channelTicks, 6);
-    expect(es.maxMana).toBe(rules.lifetimeTicks);
-    expect(es.mana).toBeLessThanOrEqual(rules.lifetimeTicks);
+    // the mana pair carried the lifetime countdown until #196 removed it; both
+    // slots are now pinned to 0, which is the client's "no countdown" signal
+    expect(es.mana).toBe(0);
+    expect(es.maxMana).toBe(0);
     expect(es.shield).toBe(rules.radius); // ring radius, off the config
     expect(es.alive).toBe(true);
     expect(es.flags & ENTITY_FLAG.CHANNELLING).toBeTruthy();
@@ -263,7 +268,6 @@ describe("Tier-0 revive seeking (rev-18)", () => {
       teamId: asTeamId(0),
       zone: 0,
       pos: { x: c.x, z: c.z },
-      lifetimeTicks: 180,
       radius: 2,
     });
     const order = think().order;
@@ -279,7 +283,6 @@ describe("Tier-0 revive seeking (rev-18)", () => {
       teamId: asTeamId(1),
       zone: 0,
       pos: { x: c.x, z: c.z },
-      lifetimeTicks: 180,
       radius: 2,
     });
     expect(think().order?.kind).toBe("attackTarget");

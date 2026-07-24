@@ -193,8 +193,13 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
         es.key = REVIVE_CIRCLE_MODEL_KEY;
         es.hp = circle.progressTicks;
         es.maxHp = rules ? rules.channelTicks : 0;
-        es.mana = Math.max(0, circle.expiresAtTick - world.tick);
-        es.maxMana = circle.expiresAtTick - circle.spawnedAtTick;
+        // The mana pair used to carry the lifetime countdown. Task #196 removed
+        // the lifetime (the ring lasts until the round ends), so both slots are
+        // pinned to 0 — which is also the client's "no countdown" signal: it
+        // reads lifeLeft as 1 whenever maxMana is 0. Left as spare capacity
+        // rather than repurposed, so a future field gets an honest name.
+        es.mana = 0;
+        es.maxMana = 0;
         es.shield = t.radius; // ring radius, straight from the config
         es.alive = true;
         es.flags =

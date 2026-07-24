@@ -6,7 +6,7 @@ per round**. If the team's charge is already spent, later deaths drop **no circl
 all**, which is the clause that makes the round terminate.
 
 **Config** (`content/config/arena-rules.json`, additive `reviveCircles` block on
-`config.arena-rules@1`): `channelSec 3.0 · lifetimeSec 6.0 · radius 2.0 · decayMult 2.0 ·
+`config.arena-rules@1`): `channelSec 3.0 · radius 2.0 · decayMult 2.0 ·
 revivesPerTeamPerRound 1 · reviveHpPctMax 0.5 · reviveManaPctMax 0.5 · contestPauses true ·
 damageInterrupts false · ccInterrupts true`. Absent block = mechanic off (legacy), the
 same convention as `flowers`. Every judgement call below is one of these keys, so a
@@ -34,11 +34,15 @@ cap): **96 rounds, 160 duels, 566 deaths**, 406 of them "revivable" (≥1 living
   the **p25 death cadence of 2.00 s**, or a team restores bodies faster than the enemy can
   remove them and the duel stops converging. 3.0 s is also exactly **90 ticks** at 30 Hz —
   integer, no rounding drift, whole-second like every other value in `flowers`.
-- **`lifetimeSec 6.0` = 2 × `channelSec`**, i.e. *you get exactly one channel's worth of
-  travel time*. Latest possible start = 3.0 s after the death = **17.4 u** of travel, which
-  covers the **max observed** ally distance of 17.04 u with 0.4 u to spare. Longer (8 s)
-  would give a 29 u budget, beyond the zone's 21.7 u mean chord — a losing survivor could
-  disengage, kite for cooldowns and come back, the exact stall the task flags as a bug.
+- **NO LIFETIME (task #196).** This block used to specify `lifetimeSec 6.0` = 2 ×
+  `channelSec` — "exactly one channel's worth of travel time", sized so the latest possible
+  start still covered the max observed ally distance of 17.04 u. The owner overruled it:
+  「復活隊友的圈圈 沒有消失期限直到回合結束」. That also matches the cited reference — the
+  LoL Wiki documents Arena's downed-state zone and its one-revival-per-team-per-round cap
+  but states **no timeout** on the zone, and Riot's own article describes only "a circular
+  area" with no lifetime. The stall this timer was defending against is instead bounded by
+  `combatMaxSec` and the fire ring; the ring itself now ends only for a *reason* (owner
+  revived, owner's entity gone, owner's team wiped from the zone, round over).
 - **`revivesPerTeamPerRound 1`** is pinned by the **90 s `combatMaxSec` cap**. Each revive
   adds roughly one extra champion-death; the p90 gap between deaths is 9.10 s. 1 charge →
   worst observed duel 55.77 + 2×9.10 = **74.0 s (under the cap)**; 2 charges → 92.2 s
@@ -55,7 +59,8 @@ cap): **96 rounds, 160 duels, 566 deaths**, 406 of them "revivable" (≥1 living
   effects never read as the same thing.
 
 **Caveat:** all figures come from Tier-0 bot AI, which clusters more tightly than humans.
-`lifetimeSec` is the first number to revisit after a human playtest.
+`channelSec` is the first number to revisit after a human playtest (`lifetimeSec`, which
+used to hold that spot, no longer exists).
 
 **Re-measured WITH the mechanic implemented** (6 matches, 29 rounds, `arena.castle`,
 real timings): 80 circles dropped → **6 completed revives, 46 expired, 28 extinguished by
@@ -98,7 +103,7 @@ does; the channeller dying cancels the channel but the **circle survives** (it b
 the original corpse) and drops no second circle; an empty ring **drains at 2×** so a
 half-second sidestep survives and a disengage does not; progress lives on the **circle**,
 so a hand-off resumes instead of restarting; the duel-end check wins unconditionally (a
-99 % channel does not save a wiped team); the lifetime clock never pauses for anything.
+99 % channel does not save a wiped team). There is no lifetime clock at all (#196).
 
 **Revived state:** 50 % max HP / 50 % max mana at the **channeller's feet**
 (`pushOutOfObstacle` → `clampToBoundary`, the flowers' own helpers), status effects and
@@ -112,7 +117,7 @@ History is **not rewritten** — the death stays a death and the kill stays a ki
 `EntityState.kind 3` (`ENTITY_KIND.REVIVE_CIRCLE`), key `prop.revive-circle`. Rather than
 grow the wire schema, the circle reuses float slots that would otherwise sit unused:
 `seatId` = the dead owner's seat, `hp`/`maxHp` = channel progress/total,
-`mana`/`maxMana` = lifetime remaining/total, `shield` = ring radius,
+`mana`/`maxMana` = **0/0**, spare since #196 removed the lifetime, `shield` = ring radius,
 `flags` = `CHANNELLING | CONTESTED`. `MSG.EVENT` gains `reviveCircleSpawn` /
 `reviveCircleEnd` / `reviveComplete`; progress rides the snapshot, never per-tick events.
 Circles are server entities, interpolated like flowers, **never predicted**.
@@ -124,8 +129,9 @@ ground ring at the authoritative wire radius, a crown of **20 rising flame tongu
 light in order** (the world-space progress read — the channeller *and* the enemy standing
 on them both see how close the rescue is without any HUD), a central fire pillar whose
 height tracks the same progress (readable through stacked bodies), quality-capped rising
-embers, a **burn-down** dim + faster beat as the lifetime runs out, and a hot
-white-orange **contested** strobe. This is task #22's lesson applied up front.
+embers, and a hot white-orange **contested** strobe. This is task #22's lesson applied up
+front. (The **burn-down** dim + faster beat went with the lifetime in #196 — a "hurry up"
+cue with nothing to hurry for is a lie.)
 
 **HUD** (`ui/components/ReviveBanner.tsx`, `revive` slot in the task #42 corner registry —
 top-left order 2, touch order 3 so it stacks under the re-homed minimap): the dead player
@@ -149,13 +155,13 @@ axis (support 0.12 → assassin 0.02) so rescuing is rewarded on its own line.
 | rev-03 | items/gold/level survive and history is NOT rewritten — the death stays a death, the kill stays a kill; `revivesPerformed`/`revivesReceived` score instead | revive-keeps-history | unit | done |
 | rev-04 | once per TEAM per ROUND: a revived champion who dies again drops nothing; a second death while a circle burns drops no second circle; the other team's charge is untouched | revive-once-per-team | unit | done |
 | rev-05 | edges: no stacking (2 allies fill at 1x), enemy contest PAUSES (never resets), damage does not interrupt but hard CC does, empty ring drains at `decayMult`, channeller death keeps the circle + refunds nothing, team wipe extinguishes it mid-channel | revive-edge-cases | unit | done |
-| rev-06 | expires exactly at `lifetimeTicks`; the clock never pauses for a contest; a burnt-out ring does NOT spend the round's charge | revive-lifetime-expiry | unit | done |
+| rev-06 | the ring has NO expiry (#196): it survives far past the old 2x-channel deadline, through a permanent contest, and is still revivable; only `endCombatRevives` / owner-alive / owner-gone / team-wipe end it | revive-lifetime-unbounded | unit | done |
 | rev-07 | `endCombatRevives` despawns every circle, cancels channels, resets charges, and leaves the system inert | revive-combat-teardown | integration | done |
 | rev-08 | a circle is ground area: absent from the broad-phase grid, invisible to `queryOverlap`, never pushed by or pushing a champion, never moves off the corpse | revive-not-a-unit | unit | done |
 | rev-09 | two same-seed runs of a full revive produce identical digests; progress + team charges fold into `digest()` | revive-deterministic | determinism | done |
-| rev-10 | `config.arena-rules@1` parses the additive `reviveCircles` block; absent = null (legacy); 3.0s/6.0s convert to exactly 90/180 ticks and lifetime is 2x the channel | revive-config-parse | unit | done |
+| rev-10 | `config.arena-rules@1` parses the additive `reviveCircles` block; absent = null (legacy); 3.0s converts to exactly 90 ticks; the schema is `.strict()` so a stale doc still carrying `lifetimeSec` is rejected rather than silently ignored | revive-config-parse | unit | done |
 | rev-11 | MatchController arms a charge per alive team on combat entry, tears every circle + charge down on combat end, never arms without the block, and a full 12-bot match still reaches matchEnd with placements | revive-match-wiring | integration | done |
-| rev-12 | snapshot projects kind 3 / key `prop.revive-circle` / owner seatId / progress + lifetime + radius in the reused float slots / CHANNELLING+CONTESTED flags, and the entity leaves the snapshot on despawn | revive-snapshot-kind | unit | done |
+| rev-12 | snapshot projects kind 3 / key `prop.revive-circle` / owner seatId / progress + radius in the reused float slots (the lifetime pair now pinned to 0/0) / CHANNELLING+CONTESTED flags, and the entity leaves the snapshot on despawn | revive-snapshot-kind | unit | done |
 | rev-13 | MatchRoom `MSG.EVENT` whitelist forwards `reviveCircleSpawn` + `reviveCircleEnd` + `reviveComplete` (source lint) | revive-event-whitelist | regression | done |
 | rev-14 | `revivesPerformed` lifts the composite score on every role and lifts SUPPORT more than assassin (it is a support axis, not a carry one) | revive-settlement-stat | unit | done |
 | rev-15 | ring math: `litTongues` is monotonic, clamped, and lights on the FIRST tick of a channel; `burndown01` is silent until the ring is really expiring; the tint is the shared 4-team palette | revive-view-progress | unit | done |

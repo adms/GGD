@@ -46,16 +46,22 @@ export const REVIVE_CIRCLE_MODEL_KEY = "prop.revive-circle";
  *   channelSec 3.0  — long enough that a revive never outpaces a kill (above
  *                     the measured p25 death cadence of 2.00s), short enough
  *                     that the duel still exists when you finish.
- *   lifetimeSec 6.0 — exactly 2x the channel: "one channel's worth of travel
- *                     time", 17.4u of budget vs a max observed ally distance
- *                     of 17.04u. Reachable on instant commitment only.
  *   radius 2.0      — 1.7x a champion's own diameter (collision radius 0.6),
  *                     1/3 of the flower's burstRadius so the two ground
  *                     effects never read as the same thing.
+ *
+ * THERE IS NO LIFETIME. The ring used to burn for exactly 2x the channel and
+ * then vanish; task #196 removed that clock on the owner's call
+ * 「復活隊友的圈圈 沒有消失期限直到回合結束」 — which is also what LoL Arena
+ * does: the wiki documents the downed-state zone and the one-revive-per-round
+ * cap but no timeout on the zone itself. A circle now ends only for a REASON —
+ * the owner came back, the owner's entity went away, the owner's team was
+ * wiped out of the zone, or the round ended (`endCombatRevives`). None of this
+ * makes revives unlimited: `revivesPerTeamPerRound` still gates that, and the
+ * charge is still spent on completion only.
  */
 export interface ReviveRules {
   channelTicks: number;
-  lifetimeTicks: number;
   radius: number;
   /** progress drain per tick while nobody is channelling (in progress-ticks) */
   decayMult: number;
@@ -73,7 +79,6 @@ export interface ReviveRules {
 /** Seconds-based revive config (mirror of config.arena-rules@1 `reviveCircles`). */
 export interface ReviveConfigLike {
   channelSec: number;
-  lifetimeSec: number;
   radius: number;
   decayMult: number;
   revivesPerTeamPerRound: number;
@@ -88,7 +93,6 @@ export interface ReviveConfigLike {
 export function reviveRulesFromConfig(cfg: ReviveConfigLike, dt: number): ReviveRules {
   return {
     channelTicks: Math.max(1, Math.round(cfg.channelSec / dt)),
-    lifetimeTicks: Math.max(1, Math.round(cfg.lifetimeSec / dt)),
     radius: cfg.radius,
     decayMult: cfg.decayMult,
     revivesPerTeamPerRound: cfg.revivesPerTeamPerRound,
@@ -136,7 +140,6 @@ export interface SpawnReviveCircleArgs {
   teamId: TeamId;
   zone: number;
   pos: Vec2;
-  lifetimeTicks: number;
   radius: number;
 }
 
@@ -145,7 +148,8 @@ export interface SpawnReviveCircleArgs {
  * no TeamComp, no nav, no stats — see the module doc for why that shape is
  * load-bearing rather than an omission.
  *
- * Emits `reviveCircleSpawn` {id, ownerId, seatId, teamId, zone, x, z, ticks}.
+ * Emits `reviveCircleSpawn` {id, ownerId, seatId, teamId, zone, x, z}. There is
+ * no `ticks` on the payload any more: the ring has no lifetime to announce.
  */
 export function spawnReviveCircle(world: SimWorld, args: SpawnReviveCircleArgs): EntityId {
   const id = world.spawn();
@@ -162,7 +166,6 @@ export function spawnReviveCircle(world: SimWorld, args: SpawnReviveCircleArgs):
     teamId: args.teamId,
     zone: args.zone,
     spawnedAtTick: world.tick,
-    expiresAtTick: world.tick + args.lifetimeTicks,
     progressTicks: 0,
     channellerId: null,
     contested: false,
@@ -175,7 +178,6 @@ export function spawnReviveCircle(world: SimWorld, args: SpawnReviveCircleArgs):
     zone: args.zone,
     x: args.pos.x,
     z: args.pos.z,
-    ticks: args.lifetimeTicks,
   });
   return id;
 }
@@ -203,6 +205,12 @@ export function beginCombatRevives(
  * in-flight channel dies with it, and all team charges reset. No revive ever
  * resolves across a phase boundary and no circle survives into resolution,
  * intermission or the settlement scene. Idempotent.
+ *
+ * Since task #196 removed the per-circle lifetime this is the ONLY
+ * unconditional despawn left, so it is the sole thing standing between a ring
+ * and the next round. The match host calls it on every combat EXIT and again on
+ * combat ENTRY (through `beginCombatRevives`), so even a path that skipped the
+ * exit starts the next round clean.
  */
 export function endCombatRevives(world: SimWorld): void {
   for (const id of [...world.reviveCircle.keys()]) world.destroy(id);

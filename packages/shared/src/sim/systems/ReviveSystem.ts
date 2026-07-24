@@ -37,9 +37,14 @@
  *         feet on partial HP/mana, the team charge is spent (on completion
  *         only — a failed attempt never burns the round's revive), and the
  *         circle is destroyed.
- *       • EXPIRE at `expiresAtTick`: a pure absolute-tick deadline that never
- *         pauses for a contest, for the channeller dying, or for partial
- *         progress. That is what keeps the drama bounded.
+ *
+ *     THERE IS NO EXPIRE STEP. A 2x-channel deadline used to sit at the end of
+ *     this list; task #196 deleted it — 「復活隊友的圈圈 沒有消失期限直到回合
+ *     結束」, which is also LoL Arena's behaviour (no documented timeout on the
+ *     downed zone). Every remaining despawn above is a REASON, not a clock, so
+ *     a ring that is still standing always means "this rescue is still on".
+ *     What used to bound the drama is now the round itself: `endCombatRevives`
+ *     on combat exit, and the team-wiped check above.
  *
  * Disarmed worlds (reviveRules null, e.g. the client's prediction shadow
  * world or any unit test that never armed them) skip everything: circles are
@@ -103,7 +108,6 @@ function spawnCirclesForDeaths(world: SimWorld, rules: ReviveRules): void {
       teamId: team.teamId,
       zone: t.zone,
       pos: t.pos,
-      lifetimeTicks: rules.lifetimeTicks,
       radius: rules.radius,
     });
   }
@@ -183,12 +187,9 @@ function updateCircle(world: SimWorld, rules: ReviveRules, id: EntityId): void {
 
   if (rc.progressTicks >= rules.channelTicks && channellerId !== null) {
     completeRevive(world, rules, id, channellerId);
-    return;
   }
-
-  // the lifetime clock is immune to everything — checked LAST so a channel
-  // that fills on the final tick still lands (lifetime == 2x channel exactly).
-  if (world.tick >= rc.expiresAtTick) despawn(world, id, rc, ct.pos, "expired");
+  // …and nothing follows: with the lifetime gone (task #196) a circle that
+  // reaches here simply survives to the next tick.
 }
 
 /** Destroy a circle without reviving anyone. The team charge is NOT spent. */

@@ -1,25 +1,25 @@
 {
  "schema": "model-budget@1",
- "generatedAt": "2026-07-24T13:33:57.056Z",
+ "generatedAt": "2026-07-24T17:24:17.153Z",
  "generatedBy": "tools/model-budget/emit_report.ts (task #99)",
  "sources": [
   {
    "path": "content/models/_index.json",
    "sha256": "4a5d3fd3fad72427",
    "bytes": 17099,
-   "mtime": "2026-07-24T12:41:05.534Z"
+   "mtime": "2026-07-24T16:37:12.707Z"
   },
   {
    "path": "content/arenas/_index.json",
    "sha256": "662c794f19e83f36",
    "bytes": 741,
-   "mtime": "2026-07-24T12:41:05.521Z"
+   "mtime": "2026-07-24T16:37:12.697Z"
   },
   {
    "path": "content/champions/_index.json",
    "sha256": "3fd2d77a016d6501",
    "bytes": 14860,
-   "mtime": "2026-07-24T12:41:05.434Z"
+   "mtime": "2026-07-24T16:37:12.641Z"
   },
   {
    "path": "apps/client/src/render/ArenaGround.ts",
@@ -8305,6 +8305,2046 @@
     "animChannels": "ok"
    },
    "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/E00R.glb",
+   "path": "assets/blizzard-local/models/E00R.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 428,
+   "vertices": 488,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 1,
+   "joints": 62,
+   "clips": 13,
+   "animChannels": 38,
+   "textureCount": 2,
+   "textureBytes": 221385,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 172261
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    }
+   ],
+   "fileBytes": 755940,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-e00r"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "warn"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/E00S.glb",
+   "path": "assets/blizzard-local/models/E00S.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 754,
+   "vertices": 966,
+   "drawCalls": 14,
+   "materials": 5,
+   "skins": 1,
+   "joints": 154,
+   "clips": 16,
+   "animChannels": 198,
+   "textureCount": 3,
+   "textureBytes": 172720,
+   "vramBytes": 376831,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 161131
+    },
+    {
+     "w": 32,
+     "h": 32,
+     "format": "png",
+     "diskBytes": 1778
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 9811
+    }
+   ],
+   "fileBytes": 2513016,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-e00s"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/E00T.glb",
+   "path": "assets/blizzard-local/models/E00T.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 415,
+   "vertices": 532,
+   "drawCalls": 5,
+   "materials": 4,
+   "skins": 1,
+   "joints": 129,
+   "clips": 6,
+   "animChannels": 98,
+   "textureCount": 1,
+   "textureBytes": 142795,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 142795
+    }
+   ],
+   "fileBytes": 779896,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-e00t"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "warn",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/E00U.glb",
+   "path": "assets/blizzard-local/models/E00U.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 427,
+   "vertices": 557,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 1,
+   "joints": 52,
+   "clips": 10,
+   "animChannels": 28,
+   "textureCount": 2,
+   "textureBytes": 209490,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 160366
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    }
+   ],
+   "fileBytes": 719896,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-e00u"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/E00V.glb",
+   "path": "assets/blizzard-local/models/E00V.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 510,
+   "vertices": 593,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 1,
+   "joints": 57,
+   "clips": 14,
+   "animChannels": 41,
+   "textureCount": 2,
+   "textureBytes": 196781,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 147657
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    }
+   ],
+   "fileBytes": 975148,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-e00v"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "warn"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/E015.glb",
+   "path": "assets/blizzard-local/models/E015.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 570,
+   "vertices": 728,
+   "drawCalls": 8,
+   "materials": 3,
+   "skins": 1,
+   "joints": 88,
+   "clips": 27,
+   "animChannels": 80,
+   "textureCount": 1,
+   "textureBytes": 137488,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 137488
+    }
+   ],
+   "fileBytes": 1617752,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-e015"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Ecen.glb",
+   "path": "assets/blizzard-local/models/Ecen.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 839,
+   "vertices": 912,
+   "drawCalls": 14,
+   "materials": 4,
+   "skins": 1,
+   "joints": 116,
+   "clips": 12,
+   "animChannels": 142,
+   "textureCount": 2,
+   "textureBytes": 203774,
+   "vramBytes": 371370,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 189905
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 13869
+    }
+   ],
+   "fileBytes": 1892444,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-ecen"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Efur.glb",
+   "path": "assets/blizzard-local/models/Efur.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 1149,
+   "vertices": 1272,
+   "drawCalls": 14,
+   "materials": 3,
+   "skins": 1,
+   "joints": 152,
+   "clips": 8,
+   "animChannels": 149,
+   "textureCount": 1,
+   "textureBytes": 145984,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 145984
+    }
+   ],
+   "fileBytes": 1213392,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-efur"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Ekee.glb",
+   "path": "assets/blizzard-local/models/Ekee.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 1235,
+   "vertices": 1307,
+   "drawCalls": 9,
+   "materials": 6,
+   "skins": 1,
+   "joints": 133,
+   "clips": 22,
+   "animChannels": 110,
+   "textureCount": 4,
+   "textureBytes": 388534,
+   "vramBytes": 873812,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 162212
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 150788
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 26410
+    }
+   ],
+   "fileBytes": 2813348,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-ekee"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/H001.glb",
+   "path": "assets/blizzard-local/models/H001.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 595,
+   "vertices": 745,
+   "drawCalls": 8,
+   "materials": 4,
+   "skins": 1,
+   "joints": 85,
+   "clips": 11,
+   "animChannels": 126,
+   "textureCount": 3,
+   "textureBytes": 100872,
+   "vramBytes": 458751,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 84167
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 8786
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 7919
+    }
+   ],
+   "fileBytes": 1708808,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-h001"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/H021.glb",
+   "path": "assets/blizzard-local/models/H021.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 282,
+   "vertices": 255,
+   "drawCalls": 2,
+   "materials": 2,
+   "skins": 1,
+   "joints": 40,
+   "clips": 7,
+   "animChannels": 26,
+   "textureCount": 2,
+   "textureBytes": 88736,
+   "vramBytes": 174762,
+   "maxTextureEdge": 128,
+   "textures": [
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 39612
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    }
+   ],
+   "fileBytes": 287288,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-h021"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/H02K.glb",
+   "path": "assets/blizzard-local/models/H02K.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 607,
+   "vertices": 748,
+   "drawCalls": 7,
+   "materials": 3,
+   "skins": 1,
+   "joints": 83,
+   "clips": 11,
+   "animChannels": 98,
+   "textureCount": 1,
+   "textureBytes": 123825,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 123825
+    }
+   ],
+   "fileBytes": 1103624,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-h02k"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/H02N.glb",
+   "path": "assets/blizzard-local/models/H02N.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 454,
+   "vertices": 601,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 1,
+   "joints": 44,
+   "clips": 13,
+   "animChannels": 31,
+   "textureCount": 1,
+   "textureBytes": 147390,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 147390
+    }
+   ],
+   "fileBytes": 751528,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-h02n"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/H02S.glb",
+   "path": "assets/blizzard-local/models/H02S.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 583,
+   "vertices": 694,
+   "drawCalls": 7,
+   "materials": 4,
+   "skins": 1,
+   "joints": 52,
+   "clips": 14,
+   "animChannels": 42,
+   "textureCount": 2,
+   "textureBytes": 161528,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 135443
+    },
+    {
+     "w": 64,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 26085
+    }
+   ],
+   "fileBytes": 909688,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-h02s"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "warn"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/H02Y.glb",
+   "path": "assets/blizzard-local/models/H02Y.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 544,
+   "vertices": 539,
+   "drawCalls": 5,
+   "materials": 3,
+   "skins": 1,
+   "joints": 56,
+   "clips": 13,
+   "animChannels": 47,
+   "textureCount": 1,
+   "textureBytes": 135214,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 135214
+    }
+   ],
+   "fileBytes": 742328,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-h02y"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "warn",
+    "maxTextureEdge": "ok",
+    "animChannels": "warn"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/H02Z.glb",
+   "path": "assets/blizzard-local/models/H02Z.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 583,
+   "vertices": 694,
+   "drawCalls": 7,
+   "materials": 4,
+   "skins": 1,
+   "joints": 52,
+   "clips": 14,
+   "animChannels": 42,
+   "textureCount": 2,
+   "textureBytes": 161528,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 135443
+    },
+    {
+     "w": 64,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 26085
+    }
+   ],
+   "fileBytes": 909688,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-h02z"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "warn"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Hapm.glb",
+   "path": "assets/blizzard-local/models/Hapm.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 661,
+   "vertices": 669,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 1,
+   "joints": 41,
+   "clips": 9,
+   "animChannels": 26,
+   "textureCount": 2,
+   "textureBytes": 222266,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 173142
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    }
+   ],
+   "fileBytes": 513492,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-hapm"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Harf.glb",
+   "path": "assets/blizzard-local/models/Harf.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 454,
+   "vertices": 601,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 1,
+   "joints": 44,
+   "clips": 13,
+   "animChannels": 31,
+   "textureCount": 1,
+   "textureBytes": 147390,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 147390
+    }
+   ],
+   "fileBytes": 751528,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-harf"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Hblm.glb",
+   "path": "assets/blizzard-local/models/Hblm.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 282,
+   "vertices": 255,
+   "drawCalls": 2,
+   "materials": 2,
+   "skins": 1,
+   "joints": 40,
+   "clips": 7,
+   "animChannels": 26,
+   "textureCount": 2,
+   "textureBytes": 88736,
+   "vramBytes": 174762,
+   "maxTextureEdge": 128,
+   "textures": [
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 39612
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    }
+   ],
+   "fileBytes": 287288,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-hblm"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Hpal.glb",
+   "path": "assets/blizzard-local/models/Hpal.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 1546,
+   "vertices": 1873,
+   "drawCalls": 17,
+   "materials": 8,
+   "skins": 1,
+   "joints": 276,
+   "clips": 24,
+   "animChannels": 161,
+   "textureCount": 5,
+   "textureBytes": 187035,
+   "vramBytes": 442367,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 166095
+    },
+    {
+     "w": 32,
+     "h": 32,
+     "format": "png",
+     "diskBytes": 108
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 2353
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 3922
+    },
+    {
+     "w": 128,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 14557
+    }
+   ],
+   "fileBytes": 2627792,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-hpal"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/N00B.glb",
+   "path": "assets/blizzard-local/models/N00B.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 465,
+   "vertices": 572,
+   "drawCalls": 10,
+   "materials": 4,
+   "skins": 1,
+   "joints": 67,
+   "clips": 11,
+   "animChannels": 80,
+   "textureCount": 3,
+   "textureBytes": 54085,
+   "vramBytes": 114687,
+   "maxTextureEdge": 128,
+   "textures": [
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 43307
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 9349
+    },
+    {
+     "w": 32,
+     "h": 32,
+     "format": "png",
+     "diskBytes": 1429
+    }
+   ],
+   "fileBytes": 885684,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-n00b"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/N01L.glb",
+   "path": "assets/blizzard-local/models/N01L.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 489,
+   "vertices": 582,
+   "drawCalls": 7,
+   "materials": 5,
+   "skins": 1,
+   "joints": 66,
+   "clips": 11,
+   "animChannels": 47,
+   "textureCount": 2,
+   "textureBytes": 148068,
+   "vramBytes": 354986,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 146674
+    },
+    {
+     "w": 32,
+     "h": 32,
+     "format": "png",
+     "diskBytes": 1394
+    }
+   ],
+   "fileBytes": 663616,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-n01l"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "warn"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Nbst.glb",
+   "path": "assets/blizzard-local/models/Nbst.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 665,
+   "vertices": 798,
+   "drawCalls": 5,
+   "materials": 5,
+   "skins": 1,
+   "joints": 49,
+   "clips": 10,
+   "animChannels": 55,
+   "textureCount": 3,
+   "textureBytes": 162707,
+   "vramBytes": 376831,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 154478
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 6564
+    },
+    {
+     "w": 32,
+     "h": 32,
+     "format": "png",
+     "diskBytes": 1665
+    }
+   ],
+   "fileBytes": 766120,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-nbst"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "warn",
+    "maxTextureEdge": "ok",
+    "animChannels": "warn"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Nman.glb",
+   "path": "assets/blizzard-local/models/Nman.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 485,
+   "vertices": 556,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 1,
+   "joints": 57,
+   "clips": 11,
+   "animChannels": 83,
+   "textureCount": 2,
+   "textureBytes": 205894,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 42865
+    },
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 163029
+    }
+   ],
+   "fileBytes": 1008492,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-nman"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/O02O.glb",
+   "path": "assets/blizzard-local/models/O02O.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 595,
+   "vertices": 721,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 1,
+   "joints": 86,
+   "clips": 12,
+   "animChannels": 59,
+   "textureCount": 2,
+   "textureBytes": 214282,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 165158
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    }
+   ],
+   "fileBytes": 875732,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-o02o"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Obla.glb",
+   "path": "assets/blizzard-local/models/Obla.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 372,
+   "vertices": 481,
+   "drawCalls": 5,
+   "materials": 3,
+   "skins": 1,
+   "joints": 45,
+   "clips": 22,
+   "animChannels": 26,
+   "textureCount": 2,
+   "textureBytes": 202257,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 153133
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    }
+   ],
+   "fileBytes": 803064,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-obla"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "warn",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Ogld.glb",
+   "path": "assets/blizzard-local/models/Ogld.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 788,
+   "vertices": 726,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 1,
+   "joints": 77,
+   "clips": 8,
+   "animChannels": 56,
+   "textureCount": 2,
+   "textureBytes": 189150,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 140026
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    }
+   ],
+   "fileBytes": 580896,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-ogld"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Orkn.glb",
+   "path": "assets/blizzard-local/models/Orkn.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 531,
+   "vertices": 649,
+   "drawCalls": 6,
+   "materials": 4,
+   "skins": 1,
+   "joints": 50,
+   "clips": 14,
+   "animChannels": 43,
+   "textureCount": 1,
+   "textureBytes": 165051,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 165051
+    }
+   ],
+   "fileBytes": 965652,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-orkn"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "warn"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Oshd.glb",
+   "path": "assets/blizzard-local/models/Oshd.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 626,
+   "vertices": 667,
+   "drawCalls": 8,
+   "materials": 6,
+   "skins": 1,
+   "joints": 55,
+   "clips": 10,
+   "animChannels": 38,
+   "textureCount": 4,
+   "textureBytes": 144177,
+   "vramBytes": 377172,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 140425
+    },
+    {
+     "w": 8,
+     "h": 8,
+     "format": "png",
+     "diskBytes": 79
+    },
+    {
+     "w": 32,
+     "h": 32,
+     "format": "png",
+     "diskBytes": 1770
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 1903
+    }
+   ],
+   "fileBytes": 457960,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-oshd"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "warn"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Othr.glb",
+   "path": "assets/blizzard-local/models/Othr.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 468,
+   "vertices": 537,
+   "drawCalls": 4,
+   "materials": 4,
+   "skins": 1,
+   "joints": 41,
+   "clips": 10,
+   "animChannels": 22,
+   "textureCount": 2,
+   "textureBytes": 208365,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 159241
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    }
+   ],
+   "fileBytes": 551760,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-othr"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "warn",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/U00B.glb",
+   "path": "assets/blizzard-local/models/U00B.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 601,
+   "vertices": 691,
+   "drawCalls": 5,
+   "materials": 3,
+   "skins": 1,
+   "joints": 91,
+   "clips": 8,
+   "animChannels": 89,
+   "textureCount": 2,
+   "textureBytes": 294997,
+   "vramBytes": 720896,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 285648
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 9349
+    }
+   ],
+   "fileBytes": 990532,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-u00b"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "warn",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/U00K.glb",
+   "path": "assets/blizzard-local/models/U00K.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 535,
+   "vertices": 626,
+   "drawCalls": 4,
+   "materials": 4,
+   "skins": 1,
+   "joints": 101,
+   "clips": 9,
+   "animChannels": 70,
+   "textureCount": 1,
+   "textureBytes": 99853,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 99853
+    }
+   ],
+   "fileBytes": 687456,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-u00k"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "warn",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/U012.glb",
+   "path": "assets/blizzard-local/models/U012.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 806,
+   "vertices": 959,
+   "drawCalls": 12,
+   "materials": 3,
+   "skins": 1,
+   "joints": 177,
+   "clips": 11,
+   "animChannels": 117,
+   "textureCount": 1,
+   "textureBytes": 149945,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 149945
+    }
+   ],
+   "fileBytes": 1287484,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-u012"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/U01F.glb",
+   "path": "assets/blizzard-local/models/U01F.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 684,
+   "vertices": 751,
+   "drawCalls": 6,
+   "materials": 4,
+   "skins": 1,
+   "joints": 47,
+   "clips": 12,
+   "animChannels": 32,
+   "textureCount": 2,
+   "textureBytes": 204932,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 155808
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    }
+   ],
+   "fileBytes": 690888,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-u01f"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Ubal.glb",
+   "path": "assets/blizzard-local/models/Ubal.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 472,
+   "vertices": 561,
+   "drawCalls": 6,
+   "materials": 4,
+   "skins": 1,
+   "joints": 73,
+   "clips": 11,
+   "animChannels": 56,
+   "textureCount": 2,
+   "textureBytes": 184622,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 135498
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    }
+   ],
+   "fileBytes": 1043520,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-ubal"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Ucrl.glb",
+   "path": "assets/blizzard-local/models/Ucrl.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 425,
+   "vertices": 534,
+   "drawCalls": 7,
+   "materials": 4,
+   "skins": 1,
+   "joints": 34,
+   "clips": 22,
+   "animChannels": 33,
+   "textureCount": 2,
+   "textureBytes": 199467,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 150343
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    }
+   ],
+   "fileBytes": 817928,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-ucrl"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "over",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Udea.glb",
+   "path": "assets/blizzard-local/models/Udea.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 601,
+   "vertices": 691,
+   "drawCalls": 5,
+   "materials": 3,
+   "skins": 1,
+   "joints": 91,
+   "clips": 8,
+   "animChannels": 89,
+   "textureCount": 2,
+   "textureBytes": 293827,
+   "vramBytes": 720896,
+   "maxTextureEdge": 512,
+   "textures": [
+    {
+     "w": 512,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 284478
+    },
+    {
+     "w": 64,
+     "h": 64,
+     "format": "png",
+     "diskBytes": 9349
+    }
+   ],
+   "fileBytes": 989360,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-udea"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "warn",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Umal.glb",
+   "path": "assets/blizzard-local/models/Umal.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 465,
+   "vertices": 459,
+   "drawCalls": 5,
+   "materials": 4,
+   "skins": 1,
+   "joints": 68,
+   "clips": 13,
+   "animChannels": 41,
+   "textureCount": 2,
+   "textureBytes": 157656,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 108532
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    }
+   ],
+   "fileBytes": 881924,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-umal"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "warn",
+    "maxTextureEdge": "ok",
+    "animChannels": "warn"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Usyl.glb",
+   "path": "assets/blizzard-local/models/Usyl.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 588,
+   "vertices": 598,
+   "drawCalls": 3,
+   "materials": 2,
+   "skins": 1,
+   "joints": 29,
+   "clips": 7,
+   "animChannels": 24,
+   "textureCount": 2,
+   "textureBytes": 201995,
+   "vramBytes": 436906,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 152871
+    },
+    {
+     "w": 128,
+     "h": 128,
+     "format": "png",
+     "diskBytes": 49124
+    }
+   ],
+   "fileBytes": 433144,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-usyl"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "ok"
+   },
+   "note": ""
+  },
+  {
+   "id": "assets/blizzard-local/models/Uwar.glb",
+   "path": "assets/blizzard-local/models/Uwar.glb",
+   "group": "blizzard-overlay",
+   "shipping": false,
+   "role": "champion",
+   "triangles": 537,
+   "vertices": 630,
+   "drawCalls": 3,
+   "materials": 3,
+   "skins": 1,
+   "joints": 110,
+   "clips": 11,
+   "animChannels": 70,
+   "textureCount": 1,
+   "textureBytes": 149339,
+   "vramBytes": 349525,
+   "maxTextureEdge": 256,
+   "textures": [
+    {
+     "w": 256,
+     "h": 256,
+     "format": "png",
+     "diskBytes": 149339
+    }
+   ],
+   "fileBytes": 811960,
+   "worstCount": 12,
+   "usedBy": [
+    {
+     "kind": "DEV-ONLY",
+     "label": "Blizzard 覆蓋層（本機開發，不出貨）",
+     "count": 12,
+     "detail": "godie-uwar"
+    }
+   ],
+   "broken": "",
+   "verdicts": {
+    "triangles": "ok",
+    "drawCalls": "ok",
+    "maxTextureEdge": "ok",
+    "animChannels": "over"
+   },
+   "note": ""
   }
  ],
  "recorded": {
@@ -8395,12 +10435,12 @@
   }
  },
  "totals": {
-  "files": 163,
+  "files": 203,
   "shipping": 163,
-  "triangles": 169542,
+  "triangles": 193658,
   "shippingTriangles": 169542,
-  "textureBytes": 12152191,
-  "vramBytes": 225496017,
+  "textureBytes": 19166331,
+  "vramBytes": 241869411,
   "zeroGeometry": 11,
   "nearZero": 25,
   "unused": 81

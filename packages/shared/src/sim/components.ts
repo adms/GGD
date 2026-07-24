@@ -215,10 +215,13 @@ export interface ReviveCircleComp {
   teamId: TeamId;
   /** duel zone; a circle only ever affects its own zone */
   zone: number;
-  /** world.tick the circle was dropped on */
+  /**
+   * world.tick the circle was dropped on. Bookkeeping only — there is NO
+   * expiry deadline beside it any more (task #196): the ring burns until the
+   * round ends, matching LoL Arena, which documents no timeout on the downed
+   * zone either. `endCombatRevives` is what despawns it.
+   */
   spawnedAtTick: number;
-  /** hard deadline: destroyed once world.tick reaches this (never paused) */
-  expiresAtTick: number;
   /** accumulated channel progress in ticks (0 .. rules.channelTicks) */
   progressTicks: number;
   /** entity credited with driving progress this tick (null = nobody) */
