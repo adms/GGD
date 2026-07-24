@@ -31,8 +31,6 @@ const marker = (over: Partial<ReviveCircleMarker> = {}): ReviveCircleMarker => (
   worldZ: 0,
   radius: 2,
   progress: 0,
-  secondsLeft: 6,
-  lifeLeft: 1,
   channelling: false,
   contested: false,
   ...over,

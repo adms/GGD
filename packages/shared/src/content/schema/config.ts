@@ -224,8 +224,11 @@ export const zReviveCircleConfig = z
   .object({
     /** seconds a teammate must stand in the ring (must exceed the kill cadence) */
     channelSec: z.number().positive(),
-    /** seconds the ring burns, counted from the DEATH; never paused or extended */
-    lifetimeSec: z.number().positive(),
+    // NOTE: there is deliberately no `lifetimeSec`. The ring burns until the
+    // round ends (task #196, matching LoL Arena's untimed downed zone), so the
+    // knob was removed rather than pinned to 0 — a dead knob invites someone
+    // to "restore" the bug. `.strict()` below makes a stale doc that still
+    // carries the key fail loudly instead of silently doing nothing.
     /** ring radius (GGD units) — the channel/contest area */
     radius: z.number().positive(),
     /** progress drained per tick when the ring is empty (1 = same rate as filling) */
@@ -250,7 +253,6 @@ export type ReviveCircleConfig = z.infer<typeof zReviveCircleConfig>;
 /** Contract defaults for the reviveCircles block (dev cheats / fallbacks). */
 export const DEFAULT_REVIVE_CIRCLE_CONFIG: ReviveCircleConfig = {
   channelSec: 3,
-  lifetimeSec: 6,
   radius: 2,
   decayMult: 2,
   revivesPerTeamPerRound: 1,

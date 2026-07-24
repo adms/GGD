@@ -1,14 +1,17 @@
 /**
- * postFxMath — PURE intensity + decay math for the combat post-processes (the
- * red screen-edge vignette on local damage, and the ripple / heat-distortion
- * on heavy hits + beams). No Babylon here: CombatPostFx is the imperative shell
- * that feeds these numbers into the fragment shader uniforms each frame.
+ * postFxMath — PURE intensity + decay math for the combat post-process (the red
+ * screen-edge vignette on local damage). No Babylon here: CombatPostFx is the
+ * imperative shell that feeds these numbers into the fragment shader uniforms
+ * each frame.
+ *
+ * The ripple / heat-distortion channel that used to live here was removed with
+ * its shader in task #196 — see CombatPostFx's module doc for why a radial
+ * screen warp is unsalvageable in a camera rig that always looks at the local
+ * champion's feet.
  */
 
 /** Peak red-vignette strength (0..1) at full hp loss. */
 export const VIGNETTE_MAX = 0.85;
-/** Peak ripple displacement (UV units) fed to the distortion shader. */
-export const RIPPLE_MAX = 0.03;
 
 const clamp01 = (v: number): number => (Number.isFinite(v) ? Math.min(1, Math.max(0, v)) : 0);
 
@@ -20,28 +23,6 @@ const clamp01 = (v: number): number => (Number.isFinite(v) ? Math.min(1, Math.ma
 export function vignetteIntensityForHpLoss(hpLostFrac: number): number {
   const f = clamp01(hpLostFrac);
   return Math.sqrt(f) * VIGNETTE_MAX;
-}
-
-export interface RippleInput {
-  amount: number;
-  crit?: boolean;
-  killingBlow?: boolean;
-}
-
-/** Damage that maps to the full ripple displacement (before crit/kill boosts). */
-const RIPPLE_FULL_DMG = 220;
-
-/**
- * Ripple/heat-distortion strength for an impact — scales with damage, bigger on
- * crit/killingBlow, clamped to RIPPLE_MAX. Pure + monotonic in `amount`.
- */
-export function rippleAmpForImpact(input: RippleInput): number {
-  const amount = Math.max(0, input.amount);
-  if (amount <= 0 && !input.crit && !input.killingBlow) return 0;
-  let a = (amount / RIPPLE_FULL_DMG) * RIPPLE_MAX;
-  if (input.crit) a *= 1.4;
-  if (input.killingBlow) a *= 1.8;
-  return Math.min(RIPPLE_MAX, a);
 }
 
 /**
@@ -57,6 +38,5 @@ export function decayIntensity(intensity: number, dtMs: number, halfLifeMs: numb
   return next < 1e-3 ? 0 : next;
 }
 
-/** Half-lives (ms) for the two channels — the vignette lingers, ripple snaps. */
+/** Half-life (ms) for the vignette channel — it lingers after the flare. */
 export const VIGNETTE_HALF_LIFE_MS = 220;
-export const RIPPLE_HALF_LIFE_MS = 90;

@@ -18,12 +18,10 @@ import { EntityViewRegistry, type EntityViewState } from "../EntityViewRegistry"
 import { AssetManager } from "../AssetManager";
 import {
   ReviveCircleView,
-  burndown01,
   flicker01,
   litTongues,
   teamRgb,
   TONGUE_COUNT,
-  BURNDOWN_FROM,
 } from "./ReviveCircleView";
 import { TEAM_COLORS } from "./ChampionView";
 import { hasOverheadBar, KIND_REVIVE_CIRCLE } from "../overheadAnchors";
@@ -58,7 +56,6 @@ const circleEntity = (
   alive: true,
   revive: {
     progress: 0,
-    lifeLeft: 1,
     radius: 2,
     channelling: false,
     contested: false,
@@ -94,16 +91,8 @@ describe("ring progress math (rev-13)", () => {
     expect(litTongues(9)).toBe(TONGUE_COUNT);
   });
 
-  it("burndown01 is silent until the ring is genuinely running out, then ramps to 1", () => {
-    cover("revive-view-progress");
-    expect(burndown01(1)).toBe(0);
-    expect(burndown01(BURNDOWN_FROM)).toBe(0);
-    expect(burndown01(BURNDOWN_FROM / 2)).toBeCloseTo(0.5, 6);
-    expect(burndown01(0)).toBe(1);
-    // out-of-range inputs never produce a nonsense envelope
-    expect(burndown01(-1)).toBe(1);
-    expect(burndown01(4)).toBe(0);
-  });
+  // (`burndown01` was tested here until task #196 removed the ring's lifetime
+  // along with the burn-down envelope it drove.)
 
   it("flicker01 stays in [0,1] and two circles de-sync by phase", () => {
     cover("revive-view-progress");
@@ -195,14 +184,14 @@ describe("EntityViewRegistry revive dispatch (rev-14)", () => {
     expect(view.root.scaling.x).toBe(3.5); // authoritative radius, not a constant
     expect(view.root.scaling.z).toBe(3.5);
 
-    view.update(0, { progress: 0, lifeLeft: 1, channelling: false, contested: false });
+    view.update(0, { progress: 0, channelling: false, contested: false });
     expect(view.litCount).toBe(0);
-    view.update(0, { progress: 0.5, lifeLeft: 1, channelling: true, contested: false });
+    view.update(0, { progress: 0.5, channelling: true, contested: false });
     expect(view.litCount).toBe(TONGUE_COUNT / 2);
-    view.update(0, { progress: 1, lifeLeft: 0.05, channelling: true, contested: false });
+    view.update(0, { progress: 1, channelling: true, contested: false });
     expect(view.litCount).toBe(TONGUE_COUNT);
     // decay walks it back down (a sidestep is visible, not a silent reset)
-    view.update(0, { progress: 0.25, lifeLeft: 0.05, channelling: false, contested: false });
+    view.update(0, { progress: 0.25, channelling: false, contested: false });
     expect(view.litCount).toBe(TONGUE_COUNT / 4);
     view.dispose();
   });
@@ -213,7 +202,7 @@ describe("EntityViewRegistry revive dispatch (rev-14)", () => {
     view.activate(1, 0, 2);
     const cap = view.emberSystem.getCapacity();
     for (const channelling of [true, false]) {
-      view.update(500, { progress: 0.7, lifeLeft: 0.5, channelling, contested: false });
+      view.update(500, { progress: 0.7, channelling, contested: false });
       expect(view.emberSystem.emitRate).toBeGreaterThan(0);
       expect(view.emberSystem.emitRate).toBeLessThanOrEqual(cap);
     }

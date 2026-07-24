@@ -1,17 +1,13 @@
 /**
  * combat post-fx pure math (juice-postfx-math): the red-vignette intensity
- * mapping (by hp lost), the ripple/heat-distortion strength (by impact), and
- * the exponential decay both channels ride. No Babylon here.
+ * mapping (by hp lost) and the exponential decay it rides. No Babylon here.
+ * The ripple/heat-distortion channel was removed in task #196 (owner bug: the
+ * warp was welded to the local champion's feet and read as floor earthquake
+ * rings), so there is nothing left to assert about it.
  */
 import { describe, it, expect } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
-import {
-  VIGNETTE_MAX,
-  RIPPLE_MAX,
-  vignetteIntensityForHpLoss,
-  rippleAmpForImpact,
-  decayIntensity,
-} from "./postFxMath";
+import { VIGNETTE_MAX, vignetteIntensityForHpLoss, decayIntensity } from "./postFxMath";
 
 describe("vignette intensity mapping (juice-postfx-math)", () => {
   it("is 0 at no loss, monotonic in hp lost, and clamps to VIGNETTE_MAX", () => {
@@ -23,21 +19,6 @@ describe("vignette intensity mapping (juice-postfx-math)", () => {
     expect(vignetteIntensityForHpLoss(0.5)).toBeGreaterThan(vignetteIntensityForHpLoss(0.2));
     // concave (sqrt): even a small chip is visible relative to its fraction
     expect(vignetteIntensityForHpLoss(0.25)).toBeGreaterThan(0.25 * VIGNETTE_MAX);
-  });
-});
-
-describe("ripple strength (juice-postfx-math)", () => {
-  it("grows with damage, is bigger on crit/kill, and clamps to RIPPLE_MAX", () => {
-    cover("juice-postfx-math");
-    const base = rippleAmpForImpact({ amount: 100 });
-    expect(base).toBeGreaterThan(0);
-    expect(rippleAmpForImpact({ amount: 200 })).toBeGreaterThan(base);
-    expect(rippleAmpForImpact({ amount: 100, crit: true })).toBeGreaterThan(base);
-    expect(rippleAmpForImpact({ amount: 100, killingBlow: true })).toBeGreaterThan(
-      rippleAmpForImpact({ amount: 100, crit: true }),
-    );
-    expect(rippleAmpForImpact({ amount: 100000 })).toBe(RIPPLE_MAX);
-    expect(rippleAmpForImpact({ amount: 0 })).toBe(0);
   });
 });
 

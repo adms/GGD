@@ -27,11 +27,10 @@ import { circle } from "./collision/shapes";
 
 beforeAll(() => registerSkeletonContent());
 
-/** The shipped contract, in ticks (3.0s channel / 6.0s lifetime @30Hz). */
+/** The shipped contract, in ticks (3.0s channel @30Hz; no lifetime — #196). */
 const RULES: ReviveRules = reviveRulesFromConfig(
   {
     channelSec: 3,
-    lifetimeSec: 6,
     radius: 2,
     decayMult: 2,
     revivesPerTeamPerRound: 1,
@@ -44,8 +43,8 @@ const RULES: ReviveRules = reviveRulesFromConfig(
   1 / 30,
 );
 
-/** Short channel/lifetime so the tests stay fast; every RULE is unchanged. */
-const FAST: ReviveRules = { ...RULES, channelTicks: 6, lifetimeTicks: 12 };
+/** Short channel so the tests stay fast; every RULE is unchanged. */
+const FAST: ReviveRules = { ...RULES, channelTicks: 6 };
 
 const TEAM_A = asTeamId(0);
 const TEAM_B = asTeamId(1);
@@ -125,7 +124,8 @@ describe("circle drop rules (rev-01)", () => {
     // the spawn event carries everything the client needs
     const ev = w.events.find((e) => e.type === "reviveCircleSpawn");
     expect(ev?.data.teamId).toBe(TEAM_A);
-    expect(ev?.data.ticks).toBe(FAST.lifetimeTicks);
+    // no `ticks` on the payload: the ring has no lifetime to announce (#196)
+    expect(ev?.data.ticks).toBeUndefined();
   });
 
   it("no circle when the rules are unarmed, for flowers, or with no living ally", () => {
@@ -444,28 +444,40 @@ describe("edge cases (rev-04)", () => {
     expect(w.health.get(victim)!.alive).toBe(false);
   });
 
-  it("expires exactly at lifetimeTicks, and the clock never pauses", () => {
-    cover("revive-lifetime-expiry");
+  it("never expires: it outlives the old 2x-channel deadline and stays revivable", () => {
+    cover("revive-lifetime-unbounded");
     const { w, victim, ally, enemy } = duelWorld();
     kill(w, victim);
     step(w);
     const id = theCircle(w)!;
     const spawned = w.reviveCircle.get(id)!.spawnedAtTick;
-    expect(w.reviveCircle.get(id)!.expiresAtTick).toBe(spawned + FAST.lifetimeTicks);
     const pos = { ...w.transform.get(id)!.pos };
-    // contest it the whole time — a paused channel must NOT pause the lifetime
-    while (w.reviveCircle.has(id)) {
+
+    // Hold it contested for 20x the OLD lifetime (which was 2x the channel).
+    // Under the old rule the ring was gone by tick spawned+12; now nothing but
+    // a reason can end it, and a permanent contest is not a reason.
+    const oldDeadline = spawned + FAST.channelTicks * 2;
+    for (let i = 0; i < FAST.channelTicks * 40; i++) {
       teleportTo(w, ally, pos.x, pos.z);
       teleportTo(w, enemy, pos.x, pos.z);
       step(w);
-      expect(w.tick).toBeLessThanOrEqual(spawned + FAST.lifetimeTicks + 1);
     }
+    expect(w.tick).toBeGreaterThan(oldDeadline);
+    expect(w.reviveCircle.has(id)).toBe(true);
+    expect(w.events.some((e) => e.type === "reviveCircleEnd")).toBe(false);
     expect(w.health.get(victim)!.alive).toBe(false);
-    expect(w.events.some((e) => e.type === "reviveCircleEnd" && e.data.reason === "expired")).toBe(
-      true,
-    );
-    // a burnt-out ring does NOT burn the round's revive
+    // nothing was spent while it burned
     expect(reviveChargesFor(w, TEAM_A)).toBe(1);
+
+    // …and the rescue is still on: shove the enemy off and finish the channel.
+    teleportTo(w, enemy, pos.x + 20, pos.z + 20);
+    for (let i = 0; i < FAST.channelTicks + 2; i++) {
+      teleportTo(w, ally, pos.x, pos.z);
+      step(w);
+    }
+    expect(w.health.get(victim)!.alive).toBe(true);
+    expect(w.reviveCircle.has(id)).toBe(false);
+    expect(reviveChargesFor(w, TEAM_A)).toBe(0);
   });
 
   it("endCombatRevives despawns every circle, cancels channels and resets charges", () => {
@@ -554,11 +566,10 @@ describe("determinism (rev-06)", () => {
 });
 
 describe("config → rules conversion (rev-07)", () => {
-  it("seconds convert to whole ticks at 30Hz; lifetime is exactly 2x the channel", () => {
+  it("seconds convert to whole ticks at 30Hz; there is no lifetime to convert", () => {
     cover("revive-config-parse");
     expect(RULES.channelTicks).toBe(90);
-    expect(RULES.lifetimeTicks).toBe(180);
-    expect(RULES.lifetimeTicks).toBe(RULES.channelTicks * 2);
+    expect("lifetimeTicks" in RULES).toBe(false); // removed in #196, not zeroed
     expect(RULES.radius).toBe(2);
     expect(RULES.revivesPerTeamPerRound).toBe(1);
     expect(RULES.damageInterrupts).toBe(false);

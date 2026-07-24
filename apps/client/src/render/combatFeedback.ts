@@ -571,8 +571,8 @@ export function hitstopShiver(
 // ---------------------------------------------------------------------------
 
 /**
- * Whether the heavy full-screen post-fx (red vignette + ripple/heat-distortion)
- * may run. OFF on the mobile/low tier — a full-screen pass is the one thing
+ * Whether the heavy full-screen post-fx (the red damage vignette) may run.
+ * OFF on the mobile/low tier — a full-screen pass is the one thing
  * that can dent the fps baseline on weak GPUs. Camera shake / flash / particles
  * stay on every tier (they are near-free).
  */

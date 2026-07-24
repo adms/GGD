@@ -137,9 +137,6 @@ const TELEPORT_EPS = 6;
 const CAP_SLACK_MS = 3;
 /** draw distances at/above this are treated as "no cull" (skip the check). */
 const DRAW_DISTANCE_MAX = 300;
-/** damage at/above which a hit is "heavy" enough to trigger the ripple post-fx. */
-const HEAVY_HIT_DMG = 120;
-
 interface PendingAuth {
   entityId: number;
   x: number;
@@ -188,7 +185,7 @@ export class GameApp {
    * attach/sweep/tick shape as `ambient`, plus the animation-state gate.
    */
   private readonly whirlwind: WhirlwindFx;
-  /** combat post-fx (red vignette + ripple/heat-distortion); tier-gated. */
+  /** combat post-fx (red vignette on local damage); tier-gated. */
   private readonly postFx: CombatPostFx;
   /**
    * Death-spectator focus desaturation (task #85), one gate per local
@@ -402,7 +399,7 @@ export class GameApp {
     });
     this.whirlwind = new WhirlwindFx(this.renderer.scene);
 
-    // Combat post-fx (vignette + ripple) on the LOCAL player's camera. Heavy
+    // Combat post-fx (red vignette) on the LOCAL player's camera. Heavy
     // full-screen pass → quality-tier gated: constructed disabled on mobile/low,
     // and even when enabled it only attaches while an effect is decaying, so the
     // idle steady state costs nothing. Camera-shake scales down (not off) on
@@ -823,7 +820,7 @@ export class GameApp {
       this.vfx.handleEvent(ev, nowMs); // particles + damage numbers
       this.views.handleEvent(ev, nowMs); // anim pulses + hit flash + hitstop
       this.casts.handleEvent(ev, nowMs); // cast/windup timing → cast bars
-      this.applyCombatFeedback(ev, localId, nowMs); // camera kick/punch-in + vignette + ripple
+      this.applyCombatFeedback(ev, localId, nowMs); // camera kick/punch-in + vignette
       const sfxKey = combatSfxKey(ev); // per-frame combat SFX (fire-and-forget)
       if (sfxKey) audioSystem.playSfx(sfxKey);
       if (ev.type === "death" && state) {
@@ -980,7 +977,7 @@ export class GameApp {
     if (state && this.contentDb.ready) this.syncAmbient(nowMs);
     this.ambient.tick(nowMs, dtMs);
     this.whirlwind.tick(nowMs, dtMs);
-    this.postFx.update(dtMs); // decays vignette/ripple; detaches the pass when idle
+    this.postFx.update(dtMs); // decays the vignette; detaches the pass when idle
     // death-spectator greyscale (task #85). A null frame (no state) ramps every
     // viewport back to colour and detaches — same as every other revert path.
     this.deathFocus.update(dtMs, state ? this.deathFocusFrame(state) : null);
@@ -1071,13 +1068,11 @@ export class GameApp {
       if (es.kind === KIND_REVIVE_CIRCLE) {
         const rv = e.revive ?? (e.revive = {
           progress: 0,
-          lifeLeft: 1,
           radius: 2,
           channelling: false,
           contested: false,
         });
         rv.progress = es.maxHp > 0 ? Math.min(1, es.hp / es.maxHp) : 0;
-        rv.lifeLeft = es.maxMana > 0 ? Math.max(0, Math.min(1, es.mana / es.maxMana)) : 1;
         rv.radius = es.shield > 0 ? es.shield : 2;
         rv.channelling = (es.flags & ENTITY_FLAG.CHANNELLING) !== 0;
         rv.contested = (es.flags & ENTITY_FLAG.CONTESTED) !== 0;
@@ -1191,9 +1186,14 @@ export class GameApp {
    *
    * POST-FX stays on the rich `damage` payload:
    *   • RED VIGNETTE only when the LOCAL player takes damage, intensity by the
-   *     fraction of max-hp lost.
-   *   • RIPPLE / heat-distortion on any heavy hit (crit/kill or ≥ HEAVY_HIT_DMG),
-   *     matching beams/explosions. All post-fx are tier-gated inside CombatPostFx.
+   *     fraction of max-hp lost. Tier-gated inside CombatPostFx.
+   *
+   * There is deliberately NO ungated post-fx here any more. The ripple channel
+   * used to be armed from this same loop on `crit || killingBlow || amount >=
+   * 120` with no `taken` check — and `damage` is an unfiltered broadcast of
+   * every duel zone, so hits the player could not even see kept it alive for
+   * the whole round. Task #196 removed the effect; the asymmetry with the
+   * vignette below is the shape any future channel must NOT repeat.
    */
   private applyCombatFeedback(ev: EventMessage, localId: number | null, nowMs: number): void {
     const reaction = planCameraReaction(ev, {
@@ -1217,18 +1217,10 @@ export class GameApp {
     if (ev.type !== "damage") return;
     const amount = typeof ev.data.amount === "number" ? ev.data.amount : 0;
     if (amount <= 0) return;
-    const crit = Boolean(ev.data.crit);
-    const killingBlow = Boolean(ev.data.killingBlow);
     const target = ev.data.target as number | undefined;
-    const taken = localId !== null && target === localId;
-
-    if (taken) {
-      const maxHp = this.localMaxHp();
-      this.postFx.addVignette(maxHp > 0 ? amount / maxHp : 0);
-    }
-    if (crit || killingBlow || amount >= HEAVY_HIT_DMG) {
-      this.postFx.addRipple({ amount, crit, killingBlow });
-    }
+    if (localId === null || target !== localId) return; // only MY damage tints MY screen
+    const maxHp = this.localMaxHp();
+    this.postFx.addVignette(maxHp > 0 ? amount / maxHp : 0);
   }
 
   /** Max hp of the local champion (0 when unknown) — vignette hp-loss scaling. */
@@ -1699,7 +1691,6 @@ export class GameApp {
     state.entities.forEach((es) => {
       if (es.kind !== KIND_REVIVE_CIRCLE) return;
       const pos = this.views.posOf(es.id) ?? { x: es.x, z: es.z };
-      const lifeLeft = es.maxMana > 0 ? Math.max(0, Math.min(1, es.mana / es.maxMana)) : 1;
       circles.push({
         entityId: es.id,
         ownerSeatId: es.seatId,
@@ -1709,8 +1700,6 @@ export class GameApp {
         worldZ: pos.z,
         radius: es.shield > 0 ? es.shield : 2,
         progress: es.maxHp > 0 ? Math.min(1, es.hp / es.maxHp) : 0,
-        secondsLeft: (es.mana * TICK_MS) / 1000,
-        lifeLeft,
         channelling: (es.flags & ENTITY_FLAG.CHANNELLING) !== 0,
         contested: (es.flags & ENTITY_FLAG.CONTESTED) !== 0,
       });

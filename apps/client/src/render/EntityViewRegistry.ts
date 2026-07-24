@@ -61,8 +61,6 @@ export interface EntityViewState {
   revive?: {
     /** channel fill 0..1 */
     progress: number;
-    /** fraction of lifetime still to run, 1 → 0 */
-    lifeLeft: number;
     /** authoritative ring radius (world units) */
     radius: number;
     channelling: boolean;
@@ -449,7 +447,6 @@ export class EntityViewRegistry {
         view.setPose(pose.x, pose.z);
         view.update(args.nowMs, {
           progress: rv?.progress ?? 0,
-          lifeLeft: rv?.lifeLeft ?? 1,
           channelling: rv?.channelling ?? false,
           contested: rv?.contested ?? false,
         });

@@ -90,7 +90,6 @@
   },
   "reviveCircles": {
     "channelSec": 3.0,
-    "lifetimeSec": 6.0,
     "radius": 2.0,
     "decayMult": 2.0,
     "revivesPerTeamPerRound": 1,
