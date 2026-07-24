@@ -3,6 +3,9 @@
 > 生成於 `packages/shared/src/sim/castabilitySweep.test.ts`（每次跑測試即重算）。
 > 這是**診斷**：把 48 位英雄每一格 Q/W/E/R/EX + 普攻在真的 SimWorld 裡按下去，量測有沒有真的產生效果（傷害／投射物／狀態／護盾／補血／補魔／位移／特效），不修任何技能。
 
+> **名單來源**：apps/platform/internal/curation/starter.go（48）— 本機無 data/curation/whitelist.json（正常：該檔為 gitignore 的營運狀態）。
+> 名單取自**版控內**的 `starterChampions`（新安裝套用的首發開放名單，Go 端 `TestFirstOpenRoster` 逐一釘死），所以任何 clone／worktree／CI 都掃同一份 48 人；營運白名單 `data/curation/whitelist.json` 是 gitignore 的機器狀態，存在時只**加掃**它額外開放的英雄，且不列入下方釘死的計數。
+
 ## 判定圖例
 
 | 標記 | 意義 |
@@ -117,4 +120,5 @@
 - 依 castType 擺位：targeted→貼身敵人（友軍向技能→貼身友軍）、ground→敵人所在點、skillshot／dash→朝敵人、self→自己。
 - 「有效果」= 下列任一頻道被觸發且無例外：`damage`／`heal`／`manaRestore`／`projectileSpawn`／`vfxSpawn`／`knockdown` 事件，或全場護盾／狀態／buff 來源／投射物數量上升，或施法者位移（dash）。回血／回魔前先把目標降到半血半魔，確保有回復空間；施法者法力設為剛好夠付，使自我回魔也量得到。被動回血（RegenSystem）不發 `heal` 事件，故不會誤判。
 - 每次施放後步進 **26 tick**（>最長施法前搖 0.6s=18 tick）讓有前搖的技能結算；普攻給 **40 tick** 讓第一次揮擊落地。
-- **完整跑遍全 48 英雄 × 6 槽 = 288 格，無抽樣**。本測試為診斷用途，內容 no-op 不會使測試變紅（no-op 本身就是要回報的發現）。
+- **完整跑遍全 48 英雄 × 6 槽 = 288 格，無抽樣**。
+- **會變紅的三道閘**（都只看版控名單那 48 人，營運額外開放的英雄不影響）：(1) 掃描必須跑完 48×6；(2) 48 位英雄全部要能生成；(3) 可用格數（✅+🟣）不得低於 **287**（棘輪下限）。個別內容 no-op 不會使測試變紅（no-op 本身就是要回報的發現，列在下方 FAIL 清單），但既有可用的格子被改壞會。
