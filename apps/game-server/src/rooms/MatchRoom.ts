@@ -7,7 +7,13 @@
  */
 import { Room, type Client } from "colyseus";
 import { MatchState } from "@ggd/shared/protocol/schema";
-import { MSG, SETTLEMENT_EVENT, type SelectChampionMessage, type CheatMessage } from "@ggd/shared/protocol/messages";
+import {
+  MSG,
+  SETTLEMENT_EVENT,
+  TEAM_SETTLEMENT_EVENT,
+  type SelectChampionMessage,
+  type CheatMessage,
+} from "@ggd/shared/protocol/messages";
 import { TICK_MS, SEAT_COUNT, TEAM_SIZE } from "@ggd/shared/constants";
 import { asSeatId, type SeatId } from "@ggd/shared/ids";
 import { normalizeCombatEnv, type CombatEnvKey } from "@ggd/shared/sim/combatEnv";
@@ -530,6 +536,18 @@ export class MatchRoom extends Room<MatchState> {
         if (isFannedOutEvent(ev)) {
           this.broadcast(MSG.EVENT, { type: ev.type, tick: ev.tick, data: ev.data });
         }
+      }
+      // #193: a team just went out while the match keeps running → hand its
+      // players their evaluation snapshot now, so a leave from the spectator
+      // seat can pass through the settlement screen instead of dropping straight
+      // to the lobby. The final matchEnd settlement below still fires for the
+      // deciding team; these cover only the earlier, mid-match eliminations.
+      for (const es of this.ctl.takeEliminationSettlements()) {
+        this.broadcast(MSG.EVENT, {
+          type: TEAM_SETTLEMENT_EVENT,
+          tick: this.ctl.world.tick,
+          data: es.settlement as unknown as Record<string, unknown>,
+        });
       }
       if (phase === "matchEnd") {
         void this.finishMatch();

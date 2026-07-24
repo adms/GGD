@@ -19,6 +19,8 @@ import { RotateOverlay } from "../RotateOverlay";
 import { SettingsCorner } from "../SettingsCorner";
 import { PerfOverlay, FpsPill } from "../PerfOverlay";
 import { PauseMenu } from "../PauseMenu";
+import { LeaveSettlementOverlay } from "../panels/LeaveSettlementOverlay";
+import { useRequestLeave } from "../leaveFlow";
 import { CheatConsole } from "../CheatConsole";
 import { cheatsAvailable } from "../cheats";
 import { CodexRoute } from "../codex/CodexRoute";
@@ -31,7 +33,11 @@ import { PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
 
 function MatchOverlay(): React.JSX.Element {
   const phase = useHud((s) => s.phase);
-  const returnToLobby = useApp((s) => s.returnToLobby);
+  // #193: leaving routes through useRequestLeave — for a player whose team is
+  // eliminated it shows the settlement screen first, otherwise it returns to the
+  // lobby directly (the old behaviour). One shared callback, so the top-right
+  // chip and the pause menu can never diverge.
+  const requestLeave = useRequestLeave();
   const showCheats = useApp((s) => cheatsAvailable(s.match?.mode));
   // remount the cheat console on each Restart so its toggle state (god / 0-CD)
   // resets to match the fresh match/world rather than lingering from the old one
@@ -47,6 +53,10 @@ function MatchOverlay(): React.JSX.Element {
       <PerfOverlay />
       <SettingsCorner />
       <PauseMenu />
+      {/* #193: eliminated-player leave-flow — shows the evaluation screen before
+          the lobby. Self-gates on the store's leaveGate; renders nothing during
+          normal play. */}
+      <LeaveSettlementOverlay />
       {showCheats && <CheatConsole key={matchEpoch} />}
       {/* When the match ends the full-screen settlement panel (MatchEndPanel)
           owns navigation (查看戰績變化 / 返回大廳); we only show the small "Leave"
@@ -59,7 +69,7 @@ function MatchOverlay(): React.JSX.Element {
           data-hud-slot="leave"
           style={{ ...hudSlotStyle("leave", hudTouch()), pointerEvents: "auto" }}
         >
-          <Btn small title="leave the match" onClick={() => void returnToLobby()} style={{ opacity: 0.75 }}>
+          <Btn small title="leave the match" onClick={() => requestLeave()} style={{ opacity: 0.75 }}>
             Leave
           </Btn>
         </div>

@@ -130,7 +130,7 @@ import {
   EX_PUNCH_MS,
 } from "./render/combatFeedback";
 import { prefersReducedMotion } from "./ui/buttonSfx";
-import { SETTLEMENT_EVENT } from "@ggd/shared/protocol/messages";
+import { SETTLEMENT_EVENT, TEAM_SETTLEMENT_EVENT } from "@ggd/shared/protocol/messages";
 import type { EventMessage, MatchSettlement } from "@ggd/shared/protocol/messages";
 import { roundEndQuoteChampion } from "./ui/panels/settlementModel";
 
@@ -876,8 +876,13 @@ export class GameApp {
       // castBegin/abilityCast becomes its confirm rim. Same shape as the shop
       // line above; all the logic lives in ui/castAnnounce.
       recordCastEvent(ev, localId, nowMs);
-      // victory-settlement scoreboard (arrives once at matchEnd) → settlement UI
-      if (ev.type === SETTLEMENT_EVENT) recordSettlement(ev.data as unknown as MatchSettlement);
+      // victory-settlement scoreboard (arrives once at matchEnd) → settlement UI.
+      // #193: the per-team elimination snapshot (TEAM_SETTLEMENT_EVENT) rides the
+      // SAME record path so a knocked-out player's leave-flow already holds their
+      // card; the final matchEnd payload overwrites it with the decided board.
+      if (ev.type === SETTLEMENT_EVENT || ev.type === TEAM_SETTLEMENT_EVENT) {
+        recordSettlement(ev.data as unknown as MatchSettlement);
+      }
     }
 
     // match-outcome freeze: once the server decides the winner it pins every

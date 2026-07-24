@@ -292,6 +292,20 @@ export class MatchController {
   settlement: MatchSettlement | null = null;
 
   /**
+   * Per-team settlement snapshots queued when a team is ELIMINATED mid-match
+   * (task #193). Each entry is the full scoreboard snapshot taken at the moment
+   * that team's life hit 0, tagged with the eliminated team id. MatchRoom drains
+   * this every tick and broadcasts each on MSG.EVENT (TEAM_SETTLEMENT_EVENT), so
+   * a player whose team is out can open their evaluation screen before leaving.
+   *
+   * NOT part of sim/world state and never serialized — draining it changes no
+   * digest, so replays stay deterministic. Only populated for eliminations that
+   * do NOT end the match; the deciding elimination is covered by the final
+   * matchEnd settlement (maybeFinish), so it is never double-broadcast.
+   */
+  private eliminationSettlements: { teamId: number; settlement: MatchSettlement }[] = [];
+
+  /**
    * Dev-cheat toggles (offline testing only; MatchRoom hard-gates the channel).
    * Keyed by seatId so they survive champion swaps (which change entityId). The
    * per-tick sustain in tick() honors them AFTER the sim step.
@@ -999,6 +1013,32 @@ export class MatchController {
       .map(([teamId]) => teamId);
     let place = this.aliveTeams().length + newlyEliminated.length;
     for (const teamId of newlyEliminated) this.placements.set(teamId, place--);
+
+    // #193: the moment a team is knocked out — while the match is STILL RUNNING
+    // for the survivors — snapshot the scoreboard and queue it per eliminated
+    // team, so their players can open the evaluation screen before they leave.
+    // Skip the elimination that DECIDES the match (<=1 team left): maybeFinish
+    // broadcasts the authoritative final settlement then, and a duplicate
+    // mid-match card would only race it. `buildSettlement()` is a pure read
+    // (matchStats + rating), so building it here draws no rng and moves no digest.
+    if (newlyEliminated.length > 0 && this.aliveTeams().length >= 2) {
+      const snapshot = this.buildSettlement();
+      for (const teamId of newlyEliminated) {
+        this.eliminationSettlements.push({ teamId, settlement: snapshot });
+      }
+    }
+  }
+
+  /**
+   * Drain the per-team elimination settlements queued since the last call
+   * (task #193). MatchRoom calls this once per tick and broadcasts each entry.
+   * Returns and clears; a second call in the same tick yields nothing.
+   */
+  takeEliminationSettlements(): { teamId: number; settlement: MatchSettlement }[] {
+    if (this.eliminationSettlements.length === 0) return [];
+    const drained = this.eliminationSettlements;
+    this.eliminationSettlements = [];
+    return drained;
   }
 
   /**

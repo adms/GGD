@@ -127,6 +127,97 @@ describe("match-end settlement payload (settle-08)", () => {
 });
 
 /**
+ * Per-team settlement broadcast the moment a team is ELIMINATED mid-match
+ * (task #193). A player whose life is gone must be able to open their evaluation
+ * screen before leaving, even while the match runs on for the survivors — so the
+ * controller queues that team's scoreboard snapshot the instant it is knocked
+ * out. The DECIDING elimination is left to the final matchEnd settlement, so it
+ * is never double-broadcast.
+ */
+describe("per-team elimination settlement (elimination-settlement, task #193)", () => {
+  it("fires for every team eliminated WHILE the match runs, never for the decider or winner", () => {
+    cover("elimination-settlement");
+    const ctl = new MatchController("elim1", 4242, allBots(), FAST);
+    const broadcasts: { teamId: number; winnerTeam: number; players: number }[] = [];
+    let n = 0;
+    while (ctl.phase.phase !== "matchEnd" && n < 60000) {
+      ctl.tick();
+      for (const es of ctl.takeEliminationSettlements()) {
+        broadcasts.push({
+          teamId: es.teamId,
+          winnerTeam: es.settlement.winnerTeam,
+          players: es.settlement.perPlayer.length,
+        });
+      }
+      n++;
+    }
+    expect(ctl.phase.phase).toBe("matchEnd");
+
+    // at least one team went out before the decider — the whole point
+    expect(broadcasts.length).toBeGreaterThanOrEqual(1);
+
+    // mid-match every snapshot is UNDECIDED (winnerTeam -1) and carries the full
+    // board, so the eliminated player sees "戰鬥結束", never a false 勝利
+    for (const b of broadcasts) {
+      expect(b.winnerTeam).toBe(-1);
+      expect(b.players).toBe(12);
+    }
+
+    // the DECIDER (2nd place = last team eliminated) and the WINNER (1st) are
+    // never mid-broadcast — maybeFinish's authoritative settlement covers them
+    const winner = [...ctl.placements.entries()].find(([, p]) => p === 1)?.[0];
+    const decider = [...ctl.placements.entries()].find(([, p]) => p === 2)?.[0];
+    const teamIds = broadcasts.map((b) => b.teamId);
+    expect(teamIds).not.toContain(winner);
+    expect(teamIds).not.toContain(decider);
+    // every broadcast team is genuinely out, placed 3rd-or-worse
+    for (const b of broadcasts) {
+      expect(ctl.placements.get(asTeamId(b.teamId))!).toBeGreaterThanOrEqual(3);
+    }
+  });
+
+  it("is deterministic: two seeded runs queue the identical broadcast sequence", () => {
+    cover("elimination-settlement");
+    const run = (): string => {
+      const ctl = new MatchController("elim2", 9090, allBots(), FAST);
+      const seq: { teamId: number; digest: number }[] = [];
+      let n = 0;
+      while (ctl.phase.phase !== "matchEnd" && n < 60000) {
+        ctl.tick();
+        for (const es of ctl.takeEliminationSettlements()) {
+          seq.push({ teamId: es.teamId, digest: ctl.world.digest() });
+        }
+        n++;
+      }
+      return JSON.stringify(seq);
+    };
+    expect(run()).toBe(run());
+  });
+
+  it("draining the queue mutates nothing: the final matchEnd payload is unchanged", () => {
+    cover("elimination-settlement");
+    // running the match while draining mid-match eliminations must leave the
+    // final settlement byte-identical to a run that never drained — the queue is
+    // pure output, not sim state.
+    const finalDigest = (drain: boolean): string => {
+      const ctl = new MatchController("elim3", 4242, allBots(), FAST);
+      let n = 0;
+      while (ctl.phase.phase !== "matchEnd" && n < 60000) {
+        ctl.tick();
+        if (drain) ctl.takeEliminationSettlements();
+        n++;
+      }
+      return JSON.stringify({
+        winner: ctl.settlement!.winnerTeam,
+        ranks: ctl.settlement!.perPlayer.map((p) => [p.seatId, p.rank, p.grade]),
+        digest: ctl.world.digest(),
+      });
+    };
+    expect(finalDigest(true)).toBe(finalDigest(false));
+  });
+});
+
+/**
  * The per-ROUND K/D tallies behind the round-end winner presentation (the #143
  * model + #142 VO). The bug they fix: the client used to present the leading
  * team's LOWEST-SEATID champion, and seat↔champion is fixed for a whole match,

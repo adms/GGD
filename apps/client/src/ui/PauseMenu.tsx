@@ -8,6 +8,7 @@
  */
 import { useEffect, useState } from "react";
 import { useApp } from "./platform/store";
+import { useRequestLeave } from "./leaveFlow";
 import { openCodex } from "./codex/CodexRoute";
 import { SfxButton } from "./SfxButton";
 import { hudTouch } from "./hud/HudSlot";
@@ -45,7 +46,9 @@ export function PauseMenu(): React.JSX.Element {
   const { hidden: menuHidden, style: menuStyle } = useHudSlotPlacement("menu", touch);
   const isOffline = useApp((s) => s.match?.mode === "offline");
   const restartMatch = useApp((s) => s.restartMatch);
-  const returnToLobby = useApp((s) => s.returnToLobby);
+  // #193: leave routes through the shared flow — an eliminated player sees their
+  // settlement screen first; everyone else returns to the lobby as before.
+  const requestLeave = useRequestLeave();
   const account = useApp((s) => s.account);
 
   // Esc toggles the menu (ignored while typing in a field, e.g. cheat search)
@@ -149,7 +152,7 @@ export function PauseMenu(): React.JSX.Element {
             <SfxButton
               onClick={() => {
                 setOpen(false);
-                void returnToLobby();
+                requestLeave();
               }}
               style={menuBtn}
             >
