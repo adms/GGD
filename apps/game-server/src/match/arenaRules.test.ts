@@ -389,30 +389,93 @@ describe("every-round augment 3-choose-1 restored (arena-08, #157)", () => {
   it("a picked augment is excluded from the next round's silver re-offer", () => {
     cover("arena-config-parse");
     const ctl = makeArenaMatch(1234);
-    runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === 1);
-    // AI auto-picks choice 0 during this intermission — capture it per seat
-    const pickedBySeat = new Map<number, string>();
-    for (const [key, offer] of ctl.offers) {
-      if (!/^1:\d+$/.test(key)) continue;
-      pickedBySeat.set(offer.seatId, (offer.choices as string[])[0]!);
-    }
-    expect(pickedBySeat.size).toBeGreaterThan(0);
-    // round 2 is silver again: fresh 3 choices that EXCLUDE the owned pick
+    // Round 2 is silver again: its fresh 3 choices must EXCLUDE whatever the seat
+    // already owns from round 1. The round-1 draft is auto-resolved on the timer,
+    // and task #207 makes that a DETERMINISTIC RANDOM one of the three (not the
+    // old fixed choices[0]), so we read the champion's ACTUAL augments rather
+    // than assuming which card was taken.
     runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === 2);
     let checked = 0;
     for (const seat of ctl.seats.values()) {
+      if (seat.entityId === null) continue;
       const offer = ctl.offers.get(`2:${seat.seatId}`);
       if (!offer || offer.kind !== "augment") continue;
-      const picked = pickedBySeat.get(seat.seatId);
-      if (picked === undefined) continue;
+      const owned = ctl.world.champion.get(seat.entityId)!.augments as string[];
+      expect(owned.length).toBeGreaterThan(0); // the round-1 draft was auto-resolved
       expect(offer.tier).toBe("silver");
       const choices = offer.choices as string[];
       expect(choices).toHaveLength(3);
       expect(new Set(choices).size).toBe(3);
-      expect(choices).not.toContain(picked); // owned augment never re-offered
+      for (const own of owned) expect(choices).not.toContain(own); // never re-offered
       checked++;
     }
     expect(checked).toBeGreaterThan(0);
+  });
+});
+
+describe("unanswered 3-choose-1 auto-resolves to a random card (arena-207)", () => {
+  // seat 0 is a HUMAN who never sends a pickOffer; the rest are bots.
+  const seatsWithHuman = (): SeatSpec[] =>
+    Array.from({ length: 12 }, (_, i) => ({
+      seatId: i,
+      teamId: Math.floor(i / 3),
+      isBot: i !== 0,
+    }));
+  const makeMatch = (seed: number): MatchController =>
+    new MatchController(`arena207-${seed}`, seed, seatsWithHuman(), FAST, 3, ARENA);
+
+  it("a HUMAN who never picks still enters combat WITH an augment, offer cleared", () => {
+    cover("arena-config-parse");
+    const ctl = makeMatch(2024);
+    runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === 1);
+    const seat0 = [...ctl.seats.values()].find((s) => s.seatId === 0)!;
+    const offer = ctl.offers.get("1:0");
+    expect(offer, "seat 0 should have a round-1 augment offer").toBeDefined();
+    expect(offer!.kind).toBe("augment");
+    const choices = (offer!.choices as string[]).slice();
+    expect(choices).toHaveLength(3);
+    // seat 0 sends NO pick; drive to combat so the intermission timer fires the
+    // auto-pick safety net (task #207).
+    runUntil(ctl, () => ctl.phase.phase === "combat");
+    const owned = ctl.world.champion.get(seat0.entityId!)!.augments as string[];
+    expect(owned).toHaveLength(1); // never enters combat with an empty slot
+    expect(choices).toContain(owned[0]); // one of the three it was offered
+    // the offer is consumed, so SeatState.offers empties and the client's
+    // AugmentDraftPanel focus-scrim is torn down rather than stuck over combat
+    expect(ctl.offers.has("1:0")).toBe(false);
+    expect([...ctl.offers.keys()].some((k) => /^1:\d+$/.test(k))).toBe(false);
+  });
+
+  it("the auto-pick is DETERMINISTIC across same-seed runs (replay-safe)", () => {
+    cover("arena-config-parse");
+    const pickFor = (seed: number): string => {
+      const ctl = makeMatch(seed);
+      runUntil(ctl, () => ctl.phase.phase === "combat");
+      const seat0 = [...ctl.seats.values()].find((s) => s.seatId === 0)!;
+      return (ctl.world.champion.get(seat0.entityId!)!.augments as string[])[0]!;
+    };
+    expect(pickFor(2024)).toBe(pickFor(2024));
+  });
+
+  it("the auto-pick is RANDOM per offer, not a fixed choices[0]", () => {
+    cover("arena-config-parse");
+    const ctl = makeMatch(2024);
+    runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === 1);
+    const offered = new Map<number, string[]>();
+    for (const [key, o] of ctl.offers) {
+      if (!/^1:\d+$/.test(key) || o.kind !== "augment") continue;
+      offered.set(o.seatId, (o.choices as string[]).slice());
+    }
+    runUntil(ctl, () => ctl.phase.phase === "combat");
+    let nonZeroIndex = 0;
+    for (const seat of ctl.seats.values()) {
+      const choices = offered.get(seat.seatId);
+      if (!choices || seat.entityId === null) continue;
+      const owned = (ctl.world.champion.get(seat.entityId)!.augments as string[])[0]!;
+      if (choices.indexOf(owned) > 0) nonZeroIndex++;
+    }
+    // under the old hard-coded choices[0] this would be exactly 0
+    expect(nonZeroIndex).toBeGreaterThan(0);
   });
 });
 

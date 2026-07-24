@@ -18,6 +18,7 @@ import {
   reviveCircleOfTeam,
   reviveRulesFromConfig,
   REVIVE_CIRCLE_MODEL_KEY,
+  REVIVE_CHANNEL_SEC,
   type ReviveRules,
 } from "./revive";
 import { spawnFlower } from "./flowers";
@@ -27,7 +28,12 @@ import { circle } from "./collision/shapes";
 
 beforeAll(() => registerSkeletonContent());
 
-/** The shipped contract, in ticks (3.0s channel @30Hz; no lifetime — #196). */
+/**
+ * A UNIT-TEST fixture (kept at 3.0s → 90 ticks so rev-07 pins the conversion
+ * math independent of tuning). The SHIPPED threshold is 5.0s / 150 ticks —
+ * {@link REVIVE_CHANNEL_SEC}, asserted separately below (task #206). No lifetime
+ * (#196).
+ */
 const RULES: ReviveRules = reviveRulesFromConfig(
   {
     channelSec: 3,
@@ -566,6 +572,29 @@ describe("determinism (rev-06)", () => {
 });
 
 describe("config → rules conversion (rev-07)", () => {
+  it("REVIVE_CHANNEL_SEC is the named 5s threshold → 150 ticks @30Hz (task #206)", () => {
+    cover("revive-config-parse");
+    // the >5s accumulate contract lives in one named constant, not a magic 5
+    expect(REVIVE_CHANNEL_SEC).toBe(5);
+    const rules = reviveRulesFromConfig(
+      {
+        channelSec: REVIVE_CHANNEL_SEC,
+        radius: 2,
+        decayMult: 2,
+        revivesPerTeamPerRound: 1,
+        reviveHpPctMax: 0.5,
+        reviveManaPctMax: 0.5,
+        contestPauses: true,
+        damageInterrupts: false,
+        ccInterrupts: true,
+      },
+      1 / 30,
+    );
+    // exactly 5.0s of banked ticks before the ring fires — the rim fills across
+    // these 150 ticks toward 100%
+    expect(rules.channelTicks).toBe(150);
+  });
+
   it("seconds convert to whole ticks at 30Hz; there is no lifetime to convert", () => {
     cover("revive-config-parse");
     expect(RULES.channelTicks).toBe(90);
