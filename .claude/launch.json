@@ -2,6 +2,26 @@
   "version": "0.0.1",
   "configurations": [
     {
+      "name": "platform-play",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": [
+        "-lc",
+        "set -a; . /private/tmp/claude-503/-Users-Takuro-GGD/1fc1e42e-e26b-4bec-88ef-ca25238c0f4c/scratchpad/seam.env; set +a; exec env DATA_DIR=/Users/Takuro/GGD/data CONTENT_DIR=/Users/Takuro/GGD/content REDIS_ADDR=127.0.0.1:6379 PLATFORM_ADDR=127.0.0.1:8080 JWT_SIGNING_SECRET=devsecret GAME_SERVER_ADDR=http://127.0.0.1:2567 PLATFORM_INTERNAL_URL=http://127.0.0.1:8080 GGD_DEPLOY_TIER=private go -C /Users/Takuro/GGD/apps/platform run ./cmd/platform"
+      ],
+      "port": 8080,
+      "comment": "TEMPORARY playtest lane (task #188 verification). Identical to `platform`, except PLATFORM_GAME_SHARED_SECRET is sourced from an out-of-repo scratchpad file instead of the literal `devseam` — the game-server's secretGuard now REFUSES to boot on the known dev value, so the `platform` + `game-server-seam` pair can no longer form a working HMAC seam. Delete this entry (and its game-server-play twin) once launch.json's dev seam is given a real generated secret."
+    },
+    {
+      "name": "game-server-play",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": [
+        "-lc",
+        "set -a; . /private/tmp/claude-503/-Users-Takuro-GGD/1fc1e42e-e26b-4bec-88ef-ca25238c0f4c/scratchpad/seam.env; set +a; exec pnpm --filter @ggd/game-server dev"
+      ],
+      "port": 2567,
+      "comment": "TEMPORARY playtest lane (task #188 verification) — the game-server half of `platform-play`. Same scratchpad secret, so the platform's HMAC match-create is accepted and MatchRoom actually POSTs the result callback (that callback is the ONLY way a match settles)."
+    },
+    {
       "name": "testrunner",
       "runtimeExecutable": "go",
       "runtimeArgs": [
