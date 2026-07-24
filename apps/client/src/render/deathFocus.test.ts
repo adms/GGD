@@ -132,6 +132,7 @@ describe("death-focus reverts (never stuck grey)", () => {
     ["back to champ select", { phase: "champSelect" }],
     ["match ended", { phase: "matchEnd" }],
     ["outcome decided → settlement hero shot", { outcomeDecided: true }],
+    ["own duel decided → spectating a live zone (#208)", { ownDuelDecided: true }],
     ["seat lost its champion", { entityId: -1 }],
     ["re-seated onto a different body", { entityId: ME + 1 }],
     ["entity gone from the snapshot", { present: false }],
