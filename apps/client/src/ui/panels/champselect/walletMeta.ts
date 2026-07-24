@@ -93,6 +93,44 @@ export function canAfford(crystal: number, cost: number = CRYSTAL_UNLOCK_COST): 
 }
 
 /**
+ * True when this champion is SELECTABLE by ownership — i.e. NOT "locked" (a
+ * priced champion the account has not unlocked). Free / unpriced champions and
+ * already-owned champions are selectable; this is exactly the negation of the
+ * 「解鎖」 unlock-button condition, and it mirrors the server's OwnsChampion rule
+ * (free is always playable; priced must be owned).
+ */
+export function isSelectableByOwnership(id: string, prices: PriceMap, owned: ReadonlySet<string>): boolean {
+  return lockStateOf(id, prices, owned) !== "locked";
+}
+
+/**
+ * Restrict a roster to the champions the account may actually select — the
+ * `owned ∩ available` intersection, applied ON TOP of the curation whitelist
+ * (task #201). A locked (priced, un-unlocked) champion is removed from the
+ * pickable grid entirely, so it can be neither clicked nor swept over. Non-
+ * mutating; order preserved.
+ */
+export function selectableByOwnership<T extends { id: string }>(
+  list: readonly T[],
+  prices: PriceMap,
+  owned: ReadonlySet<string>,
+): T[] {
+  return list.filter((c) => isSelectableByOwnership(c.id, prices, owned));
+}
+
+/**
+ * The id-level counterpart for the 🎲 RANDOM pick: keep only champion ids the
+ * account owns, so a random/auto pick can never land on a locked champion.
+ */
+export function selectableIdsByOwnership(
+  ids: readonly string[],
+  prices: PriceMap,
+  owned: ReadonlySet<string>,
+): string[] {
+  return ids.filter((id) => isSelectableByOwnership(id, prices, owned));
+}
+
+/**
  * Stable sort that floats favourited champions to the TOP while preserving the
  * original relative order within each group. Non-mutating.
  */

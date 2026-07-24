@@ -70,6 +70,7 @@ import {
 import { Seat, type SeatDriver } from "../seat/Seat";
 import { AIDriver } from "../ai/Tier0Brain";
 import { Whitelist } from "../curation/whitelist";
+import { Ownership } from "../curation/ownership";
 import { PhaseMachine, type MatchPhase, type PhaseConfig, DEFAULT_PHASE_CONFIG } from "./PhaseMachine";
 import {
   pairTeams,
@@ -141,7 +142,12 @@ export interface MatchRecorderSink {
  * client so champ-select can explain WHY (wrong phase / unknown champion /
  * not on the content whitelist), never a silent no-op.
  */
-export type SelectReason = "wrong-phase" | "no-seat" | "unknown-champion" | "not-whitelisted";
+export type SelectReason =
+  | "wrong-phase"
+  | "no-seat"
+  | "unknown-champion"
+  | "not-whitelisted"
+  | "not-owned";
 export type SelectResult = { ok: true } | { ok: false; reason: SelectReason };
 
 export interface TeamResult {
@@ -373,6 +379,15 @@ export class MatchController {
      * so every client agrees. MatchRoom passes the full loaded pool.
      */
     public readonly arenaPool: readonly ArenaDef[] = [],
+    /**
+     * Per-account champion OWNERSHIP snapshot (task #201). Default = allow-all
+     * (every account unenforced), so every existing call site, unit test and the
+     * replay player are byte-identical; the platform-driven path (MatchRoom)
+     * passes the real per-seat ownership rebuilt from the signed match-create
+     * body. Enforced INDEPENDENTLY of the whitelist: a lock-in must be BOTH
+     * whitelisted (available) AND owned. See curation/ownership.ts.
+     */
+    public readonly ownership: Ownership = Ownership.allowAll(),
   ) {
     this.matchSeed = seed;
     registerSkeletonContent();
@@ -424,6 +439,15 @@ export class MatchController {
     // AUTHORITATIVE whitelist gate: a champion not enabled by the operator can
     // never be selected online (allow-all in dev/bypass leaves this open).
     if (!this.whitelist.allowsChampion(championId)) return { ok: false, reason: "not-whitelisted" };
+    // AUTHORITATIVE ownership gate (task #201): a champion the ACCOUNT has not
+    // unlocked can never be locked in, MANUAL or RANDOM, even when it is on the
+    // whitelist — the two predicates are independent (owned ∩ available). The
+    // client filters its roster to the same set, but that filter is bypassable,
+    // so this server-side reject is the load-bearing one: a crafted or replayed
+    // SELECT_CHAMPION for an unowned champion is refused here. Fail-open for a
+    // seat whose ownership we were never told (bots / dev joins), so #130's
+    // "always at least the free roster" floor is never turned into a dead seat.
+    if (!this.ownership.owns(seat.accountId, championId)) return { ok: false, reason: "not-owned" };
     seat.championId = championId;
     return { ok: true };
   }
@@ -460,9 +484,13 @@ export class MatchController {
    * ENABLED champion (from the model-backed `randomChampionPool`), so a seat can
    * never drop into round 1 as a broken/un-spawnable 0-HP unit (#130).
    */
-  private isEnabledSpawnablePick(championId: string): boolean {
+  private isEnabledSpawnablePick(championId: string, accountId?: string): boolean {
     if (!championId) return false;
     if (!this.whitelist.allowsChampion(championId)) return false;
+    // A carried pick the account does not own is NOT spawnable — re-roll it into
+    // an owned champion below (task #201). A seat with unknown ownership (bot /
+    // dev join) owns everything, so this is a no-op on that path.
+    if (!this.ownership.owns(accountId, championId)) return false;
     return Champions.tryGet(championId as ChampionId) !== undefined;
   }
 
@@ -474,12 +502,20 @@ export class MatchController {
     for (const [seatId, seat] of this.seats) {
       // AUTO-ASSIGN (the 隨機英雄 path): a seat with no pick, or one carrying a
       // champion that is no longer enabled / no longer a valid model-backed
-      // champion, gets a random ENABLED champion at lock-in. This is what keeps
-      // a player who let the champ-select clock run out from spawning into a
-      // confusing dead/spectator state (0 HP, ☠觀戰中) in round 1 — they drop in
-      // ALIVE as a real character instead (#130).
-      if (!this.isEnabledSpawnablePick(seat.championId)) {
-        seat.championId = pool[this.world.rng.int(pool.length)]!;
+      // champion / not owned by this account, gets a random champion at lock-in.
+      // This is what keeps a player who let the champ-select clock run out from
+      // spawning into a confusing dead/spectator state (0 HP, ☠觀戰中) in round 1
+      // — they drop in ALIVE as a real character instead (#130).
+      if (!this.isEnabledSpawnablePick(seat.championId, seat.accountId)) {
+        // The random draw is over the whitelisted pool INTERSECTED with this
+        // account's owned set, so a random/timed-out pick can never land on a
+        // locked champion (task #201). If ownership would empty the pool (a
+        // mis-provisioned account, never a real one thanks to #130's free
+        // floor) we fall back to the whitelisted pool so the match still runs —
+        // mirroring randomChampionPool's own "the match must not brick" stance.
+        const owned = this.ownership.filterOwned(seat.accountId, pool);
+        const drawPool = owned.length > 0 ? owned : pool;
+        seat.championId = drawPool[this.world.rng.int(drawPool.length)]!;
       }
       // spawn at team's eventual side; positions are reset at each combat entry
       const zone = 0;

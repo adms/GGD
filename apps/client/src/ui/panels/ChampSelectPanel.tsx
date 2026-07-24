@@ -60,7 +60,12 @@ import {
   modelLoadSubject,
   previewReducer,
 } from "./champselect/previewGate";
-import { useWalletMeta, sortFavouritesFirst } from "./champselect/walletMeta";
+import {
+  useWalletMeta,
+  sortFavouritesFirst,
+  selectableByOwnership,
+  selectableIdsByOwnership,
+} from "./champselect/walletMeta";
 import { CrystalBadge, ChampMetaOverlay } from "./champselect/ChampMetaControls";
 import {
   observeLock,
@@ -111,14 +116,30 @@ export function ChampSelectPanel(): React.JSX.Element {
       }),
     [],
   );
-  const available = useMemo(() => applyChampionWhitelist(roster, whitelist), [roster, whitelist]);
-  const shown = useMemo(() => filterChampions(available, query), [available, query]);
-  const rosterEmpty = whitelist.enforced && available.length === 0;
-
   // Meta progression (task #118): crystal balance, champion unlock + favourites.
   // Degrades to `available:false` offline / when the platform is unreachable, so
   // everything below is gated on it and the base champ-select is untouched.
+  // Read BEFORE the roster is built because the SELECTABLE set now depends on
+  // ownership, not just on the curation whitelist (task #201).
   const meta = useWalletMeta();
+
+  // The SELECTABLE roster is `owned ∩ available`: the operator whitelist decides
+  // which champions exist in this build (availability), and ownership decides
+  // which of those THIS account has unlocked. A locked (priced, un-unlocked)
+  // champion is dropped from the grid entirely so it can be neither clicked nor
+  // random-rolled. When meta is unavailable (offline / unreachable platform) we
+  // cannot know ownership, so we fall back to whitelist-only — the SERVER still
+  // rejects an unowned lock-in, and #130's free-roster floor keeps the set
+  // non-empty. This is a UX/legibility filter; the authoritative gate is the
+  // game-server's MatchController.selectChampion.
+  const whitelisted = useMemo(() => applyChampionWhitelist(roster, whitelist), [roster, whitelist]);
+  const available = useMemo(
+    () => (meta.available ? selectableByOwnership(whitelisted, meta.prices, meta.owned) : whitelisted),
+    [whitelisted, meta.available, meta.prices, meta.owned],
+  );
+  const shown = useMemo(() => filterChampions(available, query), [available, query]);
+  const rosterEmpty = whitelist.enforced && available.length === 0;
+
   // Favourited champions float to the TOP of the roster (order otherwise intact).
   const ordered = useMemo(
     () => (meta.available ? sortFavouritesFirst(shown, meta.favourites) : shown),
@@ -179,7 +200,14 @@ export function ChampSelectPanel(): React.JSX.Element {
   const pickRandom = (): void => {
     if (!pickAllowed(locked)) return; // 🎲 is disabled once locked
     dismissBriefing();
-    const id = pickRandomId(whitelistedChampionIds(Champions.ids(), whitelist));
+    // Draw from `owned ∩ available`: whitelist first (availability), then drop
+    // any locked champion so 🎲 can NEVER roll a champion the account has not
+    // unlocked (task #201). Ownership is only known when meta is available; the
+    // server rejects an unowned pick regardless, so an offline fallback to
+    // whitelist-only is still safe.
+    let pool = whitelistedChampionIds(Champions.ids(), whitelist);
+    if (meta.available) pool = selectableIdsByOwnership(pool, meta.prices, meta.owned);
+    const id = pickRandomId(pool);
     if (id) hudActions.selectChampion(id);
   };
 

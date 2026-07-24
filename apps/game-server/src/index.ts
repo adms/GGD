@@ -97,6 +97,11 @@ interface InternalMatchRequest {
     slot: number;
     champion?: string;
     isBot?: boolean;
+    // Task #201: the account's playable champion set (free roster ∪ unlocked),
+    // resolved server-side by the platform (gamelink.PlayableChampions) and
+    // carried in this HMAC-signed body. Enforced authoritatively at champ-select
+    // lock-in; absent leaves the seat's ownership unenforced (fail-open).
+    owned?: string[];
   }[];
   botFill?: { count: number; difficulty?: string };
   callbackUrl?: string;
@@ -133,6 +138,9 @@ async function handleInternalMatches(req: IncomingMessage, res: ServerResponse, 
       // downstream seat-name fallback is preserved.
       displayName: typeof s.displayName === "string" ? sanitizeDisplayName(s.displayName) : s.displayName,
       championId: s.champion,
+      // Pass through the account's owned set (task #201). Only a real array
+      // enrolls the seat for enforcement; an absent field leaves it unenforced.
+      owned: Array.isArray(s.owned) ? s.owned.filter((x): x is string => typeof x === "string") : undefined,
     }));
 
   const room = await matchMaker.createRoom("match", {
