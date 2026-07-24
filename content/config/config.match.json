@@ -11,9 +11,9 @@
     "startingTeamLives": 20,
     "champSelectSec": 20,
     "intermissionSec": 40,
-    "combatMaxSec": 240,
+    "combatMaxSec": 120,
     "fireRing": {
-      "startSec": 180,
+      "startSec": 60,
       "stepSec": 1,
       "pctPerStep": 0.01,
       "maxPctPerSec": 1
