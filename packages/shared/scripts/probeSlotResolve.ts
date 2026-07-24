@@ -78,8 +78,14 @@ for (const slot of ["Q", "W", "E", "R", "EX"] as Slot[]) {
   h.mana = h.maxMana = 99999;
 
   const vpos = world.transform.get(victim)!.pos;
+  // `castType` is "targeted" | "skillshot" | "ground" | "self" | "dash"
+  // (schema/ability.ts:7). This used to also test for "entity", a value from an
+  // older enum that no longer exists — so that half of the condition could never
+  // be true, and "targeted" was already carrying it. Dropped rather than kept as
+  // a harmless-looking no-op: an impossible comparison in a probe script is how
+  // you end up trusting a probe that silently never took the branch it claims to.
   const target =
-    picked.a.castType === "entity" || picked.a.castType === "targeted"
+    picked.a.castType === "targeted"
       ? ({ type: "entity", entityId: victim } as const)
       : picked.a.castType === "self"
         ? ({ type: "self" } as const)
