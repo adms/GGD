@@ -2357,3 +2357,13 @@ main 的 `icons.test.ts` 明文採「AUTHORITY MODEL」：424 個 embedded 沒�
 **尚待 owner 決定**（列在 spec §8，勿與上面已裁示的混為一談）：localhost 的 `lastEditedBy` 身分來源、
 同步後誰 commit 進 git、家人能不能按送出合併、`content/assets/*` 圖片要不要同步、第一版覆蓋哪些 collection、
 落選值要不要留一份可救回。
+
+---
+
+## 2026-07-25 新增需求（owner 本場提出，立即登錄）
+
+| 需求（原話精神） | 任務 | 狀態 | 備註 / 相依 |
+|---|---|---|---|
+| 大廳除 M幣外也要顯示**藍水晶**數量；**新帳號一律送 1000 藍水晶**，一進來就能買/解鎖喜歡的角色 | **#204** | ⬜ 工作流中 `wf_592d5bb1` | 藍水晶＝#118 的養成貨幣（打場賺、解鎖英雄）；M幣＝後台發放的造型幣。seed 需**冪等**（既有帳號不重發）。大廳 HUD 加 chip |
+| **邀請鏈自動審核推廣**：拿邀請碼進來者自動獲得「另一組」自己的碼；那組碼被別人成功註冊時，前一人 pending→approved 自動過審，以此類推 | **#203** | ⬜ 工作流中 `wf_592d5bb1` | 建在 #174（邀請閘）+#126（審核閘）上，**不得削弱**任一閘。防自我循環、一碼有限次、admin 仍可否決。referral 只加速邀請人過審，不繞過「要有碼才能註冊」 |
+| **嚴格部署協定**（deploy 到 ggd.adms.ai 需 owner 親自確認）：code-cut→commit→release draft／無 T0/重大 bug／localhost 實測記錄本檔／重整本檔確認可上／push+release（隔日跳版號）／deploy+實測記錄回本檔 | 流程 | ✅ 已寫入記憶 | 見 `ggd-gcp-deploy`。本檔（Execution Batches / 本盤點）即 step 3/4/6 的記錄落點 |
