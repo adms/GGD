@@ -8,9 +8,17 @@ import { FormRenderer } from "../form/FormRenderer";
 import { walkZod } from "../form/walk";
 import { issuesToErrorMap, useEditorStore, type ErrorMap } from "../store";
 import { PreviewPanel } from "../preview/PreviewPanel";
-import { AiIconPanel } from "../ai/AiIconPanel";
 import { AiFillProvider } from "../ai/AiFillContext";
-import { iconKindFor } from "../ai/prompt";
+// NOTE: the AI icon panel (../ai/AiIconPanel) is deliberately NOT rendered here.
+// The owner does not want CLOUD image generation — 「我不追求雲端生圖，只留本機端
+// SD 生圖」 — and this panel's Generate button is the one UI surface that POSTs to
+// the platform's /ai/icon cloud endpoint. Icon generation is on-device only, via
+// tools/icon-gen/local/ (the admin 自動產圖 strip → /icon-api → the local SD
+// daemon). The backend /ai/icon route and provider code are left in place but
+// UNREACHABLE from any UI, because that path shares one Go package, one API key
+// and one HTTP layer with the music/TTS/form-fill capabilities, so deleting it is
+// a risky carve for no benefit — un-wiring the button is enough. AiIconPanel.tsx
+// itself is kept (unimported) so the change is trivially reversible.
 
 export function EditorView() {
   const qc = useQueryClient();
@@ -40,7 +48,6 @@ export function EditorView() {
     errors[path] = [...(errors[path] ?? []), ...msgs];
   }
   const errorCount = Object.keys(errors).length;
-  const iconKind = iconKindFor(collection);
 
   const save = async () => {
     setSaveState("saving…");
@@ -80,7 +87,6 @@ export function EditorView() {
           </div>
         </header>
         {errorCount > 0 ? <p className="error">⚠ {errorCount} field(s) invalid</p> : null}
-        {iconKind ? <AiIconPanel kind={iconKind} docId={docId} doc={draft} /> : null}
         <AiFillProvider>
           <FormRenderer node={ui} value={draft} dataPath="" errors={errors} onChange={update} />
         </AiFillProvider>

@@ -17,7 +17,6 @@ import {
   emptyAiConfig,
   formFromConfig,
   formValid,
-  imageStatus,
   musicStatus,
   providerStatus,
   statusReason,
@@ -107,9 +106,9 @@ export function AiSettingsPage(): React.JSX.Element {
       <div>
         <div style={{ fontSize: 18, fontWeight: 800, color: TEXT_MAIN }}>AI 生成設定 · AI provider</div>
         <div style={{ fontSize: 12, color: TEXT_DIM, marginTop: 4 }}>
-          設定編輯器用來生成 icon 圖片、AI 填空文字、語音（TTS）與音樂（BGM）的供應商。四種能力各自獨立設定，可以只開其中幾項。
-          API 金鑰只存在伺服器端，前端與編輯器永遠拿不到完整金鑰。 未設定時系統以「佔位模式（stub）」運作 —
-          圖片與文字仍可產生占位內容；語音與音樂則回報未設定，由本地工具產生。
+          設定 AI 填空文字、語音（TTS）與音樂（BGM）的供應商。各能力獨立設定，可以只開其中幾項。
+          API 金鑰只存在伺服器端，前端與編輯器永遠拿不到完整金鑰。 未設定時系統以「佔位模式（stub）」運作。
+          （圖示一律由本地端 SD 生成，不走雲端供應商——見 tools/icon-gen/local/，後台 ICON 生成追蹤頁。）
         </div>
       </div>
 
@@ -129,7 +128,8 @@ export function AiSettingsPage(): React.JSX.Element {
           {loading ? "載入中…" : statusReason(config)}
         </div>
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-          <CapChip label="圖片生成 image" ready={imageStatus(config) === "ready"} />
+          {/* 圖片生成 chip removed — icons are on-device SD only (tools/icon-gen/local),
+              never a cloud provider. The backend /ai/icon route is left dormant. */}
           <CapChip label="文字生成 text" ready={textStatus(config) === "ready"} />
           <CapChip label="語音生成 tts" ready={ttsStatus(config) === "ready"} />
           <CapChip label="音樂生成 music" ready={musicStatus(config) === "ready"} />
@@ -163,25 +163,13 @@ export function AiSettingsPage(): React.JSX.Element {
           </button>
         </Field>
 
+        {/* NO cloud image endpoint/model fields — 「我不追求雲端生圖，只留本機端 SD 生圖」.
+            Icons come from the on-device SD pipeline (tools/icon-gen/local, driven from
+            the 後台 自動產圖 strip → /icon-api → the local daemon), never from a cloud
+            provider. The platform's /ai/icon route + provider code stay in place but are
+            unreachable from any UI: that path shares one Go package, one API key and one
+            HTTP layer with music/TTS/form-fill, so carving it out is risk without benefit. */}
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
-          <Field
-            label="圖片端點 · Image base URL"
-            sub="OpenAI 相容：/images/generations"
-            error={errors.imageBaseUrl}
-          >
-            <TextInput
-              value={form.imageBaseUrl}
-              onChange={(v) => patch({ imageBaseUrl: v })}
-              placeholder="https://api.openai.com/v1"
-            />
-          </Field>
-          <Field label="圖片模型 · Image model">
-            <TextInput
-              value={form.imageModel}
-              onChange={(v) => patch({ imageModel: v })}
-              placeholder="gpt-image-1 / dall-e-3"
-            />
-          </Field>
           <Field
             label="文字端點 · Text base URL"
             sub="OpenAI /chat/completions 或 Anthropic /messages"
