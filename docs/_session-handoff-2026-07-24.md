@@ -5,11 +5,11 @@
 
 ---
 
-## 🔴 最優先：ggd.adms.ai 現在是 502，我沒能收尾
+## ✅ 已解決：ggd.adms.ai 是 HTTP 200（v0.4.1 在線上）
 
-**狀態**：新的 edge 容器取代了舊的、但拒絕啟動；我補完資產後重啟它，接著本機
-ssh-agent 的金鑰失效（`Permission denied (publickey)`，`id_rsa` 與 `github_rsa`
-都被拒），無法再驗證或回滾。**站是被我弄掉的，不是它自己壞的。**
+**已修好。** 過程留在這裡是因為每一步都可能再發生一次。
+中途站確實掛過（是我弄掉的，不是它自己壞的），也一度因為 ssh-agent 掉金鑰而無法收尾——
+後來金鑰恢復、資產補齊、權限修正，edge 正常啟動。
 
 **事情的順序**（每一步都有真實證據）：
 
@@ -26,7 +26,12 @@ ssh-agent 的金鑰失效（`Permission denied (publickey)`，`id_rsa` 與 `gith
 7. 改用未壓縮 tar 重傳並比對位元組：**本機 87,462,563 B = 主機 87,462,563 B** ✅
 8. `up -d edge` 回報 Started → 然後 SSH 就進不去了
 
-**所以下次第一件事**（資產已經補完並驗過，斷言應該會過）：
+**真正的最後一根稻草是權限**：`tar` 保留了本機的 mode `600`（126 個檔案），
+容器內的非 root 使用者讀不到，而 `ggd-assets.sh` 的 `bytes_of()` 用 `cat {} + 2>/dev/null`
+**把讀取失敗靜靜吞掉**，所以它報「檔案短少」而不是「權限不足」——症狀指向錯誤的方向，
+我為此白繞了兩輪。`chmod -R a+rX` 後斷言就過了。
+
+**下次若又 502，第一件事**：
 
 ```bash
 ssh -A can@34.81.104.163 'cd GGD && \
@@ -43,8 +48,10 @@ no voice, with nothing logged and nothing broken-looking」）。
 **兩個要順手處理的環境問題**：
 - **SSH**：`ssh-add -l` 曾經有效的那把金鑰不在 agent 裡了；`~/.ssh/` 只有
   `id_rsa` 和 `github_rsa`，兩把對主機都被拒。可能要從別處補金鑰或用 GCP console。
-- **主機磁碟只有 9.7 G**，build cache 一天就長到 6.3 G。建議加一條定期
-  `docker builder prune -af --filter until=48h`，否則這件事會再發生。
+- **主機磁碟已由擁有者擴容 9.7 G → 99 G（現用 8%）**，今晚的根因消除。
+  仍建議加一條定期 `docker builder prune -af --filter until=48h`。
+- **SSH 金鑰後來恢復可用**，但 agent 曾整個清空過一次；若再遇到
+  `Permission denied (publickey)`，先看 `ssh-add -l`。
 
 ---
 

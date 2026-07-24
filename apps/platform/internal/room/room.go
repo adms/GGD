@@ -128,8 +128,15 @@ func (s *Service) write(ctx context.Context, rm Room) error {
 	}).Err()
 }
 
-// Create makes a new open room hosted by actor and joins them.
+// Create makes a new open room hosted by actor, joins them, and lists it in the
+// lobby browser.
 func (s *Service) Create(ctx context.Context, actor string, st Settings) (Room, error) {
+	return s.create(ctx, actor, st, true)
+}
+
+// create is Create with the lobby listing made explicit. `listed` is false for
+// the solo bot match (StartSolo), which is nobody else's room to join.
+func (s *Service) create(ctx context.Context, actor string, st Settings, listed bool) (Room, error) {
 	if st.Name == "" {
 		st.Name = "New Room"
 	}
@@ -147,7 +154,9 @@ func (s *Service) Create(ctx context.Context, actor string, st Settings) (Room, 
 	}
 	pipe := s.rdb.R.TxPipeline()
 	pipe.SAdd(ctx, redisx.KeyRoomMembers(rm.ID), actor)
-	pipe.ZAdd(ctx, redisx.KeyRoomsOpen(), redis.Z{Score: float64(rm.CreatedAt), Member: rm.ID})
+	if listed {
+		pipe.ZAdd(ctx, redisx.KeyRoomsOpen(), redis.Z{Score: float64(rm.CreatedAt), Member: rm.ID})
+	}
 	if _, err := pipe.Exec(ctx); err != nil {
 		return Room{}, err
 	}

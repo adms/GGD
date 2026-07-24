@@ -40,6 +40,9 @@ import {
   LEGEND_COLUMN_W,
   legendActionLabel,
   legendRows,
+  legendPillWidth,
+  legendStripHeight,
+  legendStripLines,
   type LegendRow,
   MOUSE_BINDINGS,
   padFace,
@@ -320,5 +323,64 @@ describe("legendRows picks the binding set for the mode in play", () => {
       }
       expect(new Set(rows.map((r) => r.id)).size).toBe(rows.length);
     }
+  });
+});
+
+/**
+ * THE STRIP MUST NOT CLIP. Found live, at 812x375: the strip's height was two
+ * constants keyed on the row count (58 / 84), but the strip WRAPS, so its
+ * height is a function of the width it wrapped into — which a row count cannot
+ * know. The 14-row keyboard set needed six wrapped lines and was given a box
+ * sized for three, and `overflow: hidden` quietly removed everything from
+ * 「F EX 技能」 down. The legend showed a control list that stopped at R and
+ * looked complete, which is the one failure mode it exists to prevent.
+ */
+describe("the strip is tall enough for what it actually wraps", () => {
+  const MODES = ["keyboard", "gamepad", "touch"] as const;
+
+  for (const vp of VIEWPORTS) {
+    for (const touch of [false, true]) {
+      for (const couchPlayers of [1, 2, 4]) {
+        for (const mode of MODES) {
+          const rows = legendRows(mode);
+          it(`fits every row @ ${vp.width}x${vp.height} touch=${touch} players=${couchPlayers} ${mode}`, () => {
+            const rect = controlLegendRect(vp, { touch, couchPlayers, rows });
+            if (!rect || rect.shape !== "strip") return; // null / column are covered elsewhere
+            // recompute the wrap from the width the placement actually chose
+            const needed = legendStripHeight(rows, rect.w);
+            expect(rect.h).toBeGreaterThanOrEqual(needed);
+          });
+        }
+      }
+    }
+  }
+
+  it("the 812x375 keyboard strip is no longer the old 84px three-liner", () => {
+    const rows = legendRows("keyboard");
+    const rect = controlLegendRect({ width: 812, height: 375 }, PC(false, 1, rows));
+    if (rect && rect.shape === "strip") {
+      // 14 rows cannot wrap into three lines at this width — if a rect comes
+      // back at all it must be honestly tall
+      expect(legendStripLines(rows, rect.w - 16)).toBeGreaterThan(3);
+      expect(rect.h).toBeGreaterThan(84);
+    }
+    // (null is also acceptable: "no room" beats "half the controls")
+  });
+
+  it("a wider caption really does make a wider pill", () => {
+    const short = legendPillWidth({ id: "a", control: "Q", label: "技能 Q" });
+    const long = legendPillWidth({ id: "b", control: "左鍵點自己", label: "移動 / 攻擊點到的敵人" });
+    expect(long).toBeGreaterThan(short * 2);
+  });
+
+  it("more rows in the same width means more lines", () => {
+    const few = legendStripLines(legendRows("touch"), 600);
+    const many = legendStripLines(legendRows("keyboard"), 600);
+    expect(many).toBeGreaterThan(few);
+  });
+
+  it("the same rows in a narrower strip need more lines", () => {
+    const rows = legendRows("keyboard");
+    expect(legendStripLines(rows, 300)).toBeGreaterThan(legendStripLines(rows, 600));
   });
 });
