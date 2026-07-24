@@ -50,7 +50,9 @@ export type ShopDenyReason =
   /** combat is live and the requester is still standing — the headline rule */
   | "combat-alive"
   /** not a shopping phase at all (champ select / resolution / match end) */
-  | "phase-closed";
+  | "phase-closed"
+  /** the requester's TEAM is out of the match — team health hit 0 */
+  | "team-eliminated";
 
 export type ShopAccess = { readonly open: true } | { readonly open: false; readonly reason: ShopDenyReason };
 
@@ -58,13 +60,24 @@ const OPEN: ShopAccess = { open: true };
 const DENY_COMBAT_ALIVE: ShopAccess = { open: false, reason: "combat-alive" };
 const DENY_PHASE: ShopAccess = { open: false, reason: "phase-closed" };
 const DENY_NO_CHAMPION: ShopAccess = { open: false, reason: "no-champion" };
+const DENY_ELIMINATED: ShopAccess = { open: false, reason: "team-eliminated" };
 
 /**
  * THE RULE, pure. `alive` is the REQUESTER's own state — during combat only a
  * champion who is already down may shop, which is what makes death in a duel a
  * head start on the next round instead of pure dead time.
  */
-export function shopOpen(phase: ShopPhase, alive: boolean): ShopAccess {
+export function shopOpen(phase: ShopPhase, alive: boolean, eliminated = false): ShopAccess {
+  // ELIMINATION OUTRANKS EVERYTHING. `alive` is a per-ROUND fact — your champion
+  // is down until the next spawn — but team health hitting 0 ends the MATCH for
+  // that team. The owner watched the shop open for a team that was already out:
+  // 「如果我已經完全沒有團隊生命，不應該再出現商店讓我購買」.
+  //
+  // The sim-side gate never actually let the purchase through (an eliminated
+  // team's champions are not spawned, so shopAccess returns no-champion), which
+  // is exactly why this survived: nothing was broken except what the player was
+  // shown. A shop you can open and cannot buy from is worse than no shop.
+  if (eliminated) return DENY_ELIMINATED;
   if (phase === "prep") return OPEN;
   if (phase === "combat") return alive ? DENY_COMBAT_ALIVE : OPEN;
   return DENY_PHASE;

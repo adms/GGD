@@ -124,3 +124,36 @@ describe("shop gate through the sim (server authority)", () => {
     expect(rejectionsOf(world)).toEqual(["no-slot"]);
   });
 });
+
+describe("an eliminated team gets no shop (shop-eliminated)", () => {
+  /**
+   * Team health reaching 0 ends the MATCH for that team — 「團隊生命已經沒了
+   * 整個遊戲都輸了 不是輸了回合」. The pre-existing `alive` flag is a per-ROUND
+   * fact and cannot express it, so an eliminated player was still shown a shop.
+   *
+   * Nothing was broken except what he was SHOWN: an eliminated team's champions
+   * are never spawned, so the sim-side gate already returned no-champion and the
+   * purchase could not have gone through. That is exactly why it survived — a
+   * shop you can open and cannot buy from looks like a working shop until you
+   * try. Which is this project's whole pathology in one screen.
+   */
+  it("outranks prep, outranks being down, outranks everything", () => {
+    for (const phase of ["prep", "combat", "closed"] as const) {
+      for (const alive of [true, false]) {
+        const a = shopOpen(phase, alive, true);
+        expect(a.open, `${phase}/alive=${alive} must stay closed when eliminated`).toBe(false);
+        if (!a.open) expect(a.reason).toBe("team-eliminated");
+      }
+    }
+  });
+
+  it("changes nothing for a team still in the match", () => {
+    // the default and an explicit false must agree, or the flag has leaked into
+    // the ordinary path
+    for (const phase of ["prep", "combat", "closed"] as const) {
+      for (const alive of [true, false]) {
+        expect(shopOpen(phase, alive, false)).toEqual(shopOpen(phase, alive));
+      }
+    }
+  });
+});

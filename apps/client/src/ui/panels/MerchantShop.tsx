@@ -225,7 +225,12 @@ export function MerchantShop(): React.JSX.Element | null {
   const prevPhase = useRef<string | null>(null);
   const lastToastSeq = useRef(0);
 
-  const gate = shopGate(phase, alive, hasChampion);
+  const eliminated = useHud((st) => {
+    if (st.localSeatId === null) return false;
+    const t = st.seats.find((v) => v.seatId === st.localSeatId)?.teamId;
+    return t === undefined ? false : (st.teams.find((v) => v.teamId === t)?.eliminated ?? false);
+  });
+  const gate = shopGate(phase, alive, hasChampion, eliminated);
 
   useEffect(() => {
     const prev = prevPhase.current;

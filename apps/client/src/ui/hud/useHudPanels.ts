@@ -35,6 +35,12 @@ interface PanelSignals {
   hasChampion: boolean;
   /** couch/split-screen: HudRoot mounts no shop card in this mode */
   couch: boolean;
+  /**
+   * The LOCAL player's team is out of the MATCH (team health reached 0) — not
+   * merely down for a round. `alive` cannot express it, and a slot reserved for
+   * a panel that will never mount is a hole in the layout.
+   */
+  teamEliminated: boolean;
 }
 
 /**
@@ -48,7 +54,9 @@ function isPanelActive(id: string, s: PanelSignals): boolean {
       // the shop SURFACE (card + re-open button) is present exactly while its
       // gate is mounted: prep for everyone, combat for a defeated player only —
       // and NEVER in couch play, where HudRoot renders no shop (`!couch`).
-      return !s.couch && shopGate(s.phase, s.alive, s.hasChampion).mounted;
+      // The elimination check must live here too, or the shop's HUD SLOT stays
+      // reserved for a panel that will never mount.
+      return !s.couch && shopGate(s.phase, s.alive, s.hasChampion, s.teamEliminated).mounted;
     case "match-end":
       return s.phase === "matchEnd";
     default:
@@ -64,8 +72,15 @@ export function useActiveHudPanels(): HudPanelSpec[] {
   const alive = useHud((s) => s.localAlive);
   const hasChampion = useHud((s) => s.localMaxHp > 0);
   const couch = useHud((s) => s.localPlayers.length > 1);
+  const teamEliminated = useHud((s) => {
+    if (s.localSeatId === null) return false;
+    const t = s.seats.find((v) => v.seatId === s.localSeatId)?.teamId;
+    return t === undefined ? false : (s.teams.find((v) => v.teamId === t)?.eliminated ?? false);
+  });
   return HUD_PANELS.filter(
-    (p) => p.covers.length > 0 && isPanelActive(p.id, { phase, alive, hasChampion, couch }),
+    (p) =>
+      p.covers.length > 0 &&
+      isPanelActive(p.id, { phase, alive, hasChampion, couch, teamEliminated }),
   );
 }
 
