@@ -2329,3 +2329,31 @@ main 的 `icons.test.ts` 明文採「AUTHORITY MODEL」：424 個 embedded 沒�
 `apps/client` 236/237 —— 唯一的紅是 `render/vfx/bindings.test.ts`，`/data/**` 被 .gitignore 吃掉
 所以任何 worktree 都沒有 `data/curation/whitelist.json`，結構性既有問題，與本次無關。
 `content:build` → `contentVersion` `cv_6da952bde327`。
+
+---
+
+## 2026-07-25 — 裁示：存檔不問同步；同步是獨立動作（#189 規格已落地為文件）
+
+**來源**：owner。「ggd.adms.ai 及 localhost 兩邊後台不管哪個，修改完要儲存時，都要問同步到另外一台嗎?」
+
+**答案：不要。** 規格寫進 `docs/design/content-sync.md`，驗收列在 `docs/todo/content-sync.md`（csync-01..12，全 pending）。
+
+裁示要點（不要再重新設計，也不要再問這幾條）：
+
+- **有三個 store，不是兩台機器**：Mac 的工作樹、家用主機的 `data/` overlay、以及 git。主機的 `content/` 是
+  `:ro` 掛載的 git checkout（`docker/compose.yaml:69-72`），存在那裡而不在 `data/` 的修改，下次 `git pull` 必然消失。
+  所以 **#189 是前置條件，不是加分項**。
+- **存檔：本機、即時、不會失敗、offline-first**。唯一允許的失敗是 schema 不過或寫不進磁碟；「對方連不上」不是。
+- **不在存檔時問**的三個理由：後台要開放給家人，天天彈的 modal 會被練成反射性按掉；存檔當下還不知道有沒有衝突，
+  要知道就得問一台可能關機的機器；而且同步本來就不是 yes/no —— 它是 2026-07-24 那條「逐項打勾 + 欄位級裁決」的表格。
+- **把「每次都問」換成「永遠看得到」**：常駐分歧指示器 `本機有 N 項未同步 · 對方有 M 項 · 上次同步 T`。
+  連不上時必須明說連不上，`M` 寫「未知」——**絕不可以顯示 0 或綠勾**。`N` 不需要網路，離線時仍然準確。
+- **唯一該跳的提示**不是「要不要同步」，是「對方也改了同一個欄位」：四個條件全中才跳（同一 doc、對方在上次同步後動過、
+  欄位有交集、手上有對方快照）。按掉照樣存檔。
+- **per-doc metadata 放 sidecar `data/content-sync/state.json`，不進 doc**：`zChampionDoc`/`zAbilityDoc`/`zItemDoc`/`zArenaDoc`
+  都是 `.strict()`（未知 key 硬失敗），而且 `hashDoc()` 吃整份 doc —— 履歷進 doc 會讓每次存檔都推動 `cv_`，
+  更糟的是會讓「數值相同、編輯者不同」永遠被判成衝突，diff 引擎的前提直接崩掉。
+
+**尚待 owner 決定**（列在 spec §8，勿與上面已裁示的混為一談）：localhost 的 `lastEditedBy` 身分來源、
+同步後誰 commit 進 git、家人能不能按送出合併、`content/assets/*` 圖片要不要同步、第一版覆蓋哪些 collection、
+落選值要不要留一份可救回。

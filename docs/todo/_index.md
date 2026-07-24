@@ -62,6 +62,7 @@ Regression suites always run **last** (enforced by the runner scheduler and the 
 | Platform web UI (auth/lobby/rooms/store) | [web-ui.md](web-ui.md) | client |
 | Operations admin backend + console SPA | [admin.md](admin.md) | platform + admin |
 | Content whitelist (default-empty curation) | [whitelist.md](whitelist.md) | platform + admin + client + game |
+| 兩台後台的內容同步 (tick-box, field-level arbitration) | [content-sync.md](content-sync.md) | platform + admin + content |
 | 內容圖鑑 codex (live item/champion/ability browser) | [content-codex.md](content-codex.md) | client + content |
 | AI icon/text generation (proxy + admin config + editor) | [ai.md](ai.md) | platform + admin + editor |
 | Infra & one-click K8s | [infra.md](infra.md) | infra |
