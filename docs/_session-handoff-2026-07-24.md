@@ -377,3 +377,21 @@ seatTokens 長度，然後請他重現一次。**三行埋點就能一刀切開 
    之所以沒人發現，正是因為分離度分析從來沒跑起來過。
 4. ECAPA 的 0.78 門檻**沒有校準過**；campplus 的 0.50 是用 28 位 WC3 配音員的對照組推出來的。
    兩者在 465 對上一致率 90.8%，但 43 個分歧裡有 41 個是 campplus 較嚴。**用 ECAPA 前請先校準**。
+
+---
+
+# 續篇三：v0.4.4（收工）
+
+**已完成**：PR #8 合併進 main（不帶 `--admin` 即可）；Go 工具鏈釘 **1.25.12**（實測 govulncheck 從 6 個歸零，
+owner 的建議比我原本要跳的 1.26.5 好——留在 `go.mod` 同一條線）；v0.4.4 已推、已部署、站台 200、玩家資料完好。
+Release: https://github.com/adms/GGD/releases/tag/v0.4.4
+
+**部署踩到的新事實**：`git reset --hard` 在主機上會因 `data/.gitkeep` 被 root 佔住而失敗，
+已改用 `git checkout origin/<branch> -- apps packages content docker nginx .github`（不觸碰 data/）。
+**這跟錄影 EACCES 是同一個根因**，一次修掉：`sudo chown -R 1000:1000 ~/GGD/data`
+
+**重啟後第一件事**：`git worktree list` 看兩支工作流的成果有沒有還卡在 worktree（`wstd035ek` PR#7 unit、
+`wef88dfzt` #189 內容 overlay）。它們的產出我從沒看過、沒審查、沒提交。
+
+**主機 HEAD 是 8baab096 但檔案是 dfa82ee5**（路徑式 checkout 不會移動 HEAD）。
+下次部署前先 `sudo chown` 修好權限，就能恢復乾淨的 `git reset --hard`。
