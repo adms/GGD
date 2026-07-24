@@ -93,6 +93,26 @@ var nonFrontendCallers = map[string]struct{ caller, reason string }{
 			"public edge — a browser caller would be the bug, since a client that " +
 			"could post its own result could write its own MMR.",
 	},
+	// #209 click-to-approve. There is NO bundled UI on purpose: the owner opens
+	// this from the Slack notification on their phone while NOT logged into
+	// /admin, so a front-end caller would defeat the whole point. The "caller"
+	// that mints the URL is the server itself — approvelink.Service.linkURL builds
+	// "/api/v1/approve?token=…" into the Slack message — so the route is reached,
+	// just not by a bundled front-end. The token is the gate.
+	"GET /api/v1/approve": {
+		caller: "apps/platform/internal/approvelink/service.go",
+		reason: "#209 click-to-approve CONFIRM page. Reached by the owner tapping the " +
+			"Slack link (the URL is minted by approvelink.Service.linkURL in the named " +
+			"file), NOT by any bundled UI — the owner is not logged into /admin. The GET " +
+			"is read-only/prefetch-safe; the token is the only gate.",
+	},
+	"POST /api/v1/approve": {
+		caller: "apps/platform/internal/approvelink/service.go",
+		reason: "#209 click-to-approve ACTION. Posted from the confirm page's form (whose " +
+			"action /api/v1/approve and token are emitted by the same file's link builder), " +
+			"not by a bundled UI — the owner acts from their phone via the Slack link. " +
+			"Single-use token gate; GET/POST split keeps unfurlers from auto-approving.",
+	},
 }
 
 // knownOrphans: routes that ARE unreachable today. Each line is a debt with an
@@ -153,6 +173,20 @@ var knownOrphans = map[string]string{
 		"operator can publish a notice that literally no player can see.",
 	"POST /api/v1/ai/music": "#53's 一鍵 BGM pack generation. The provider config UI exists (musicBaseUrl / " +
 		"musicModel / musicReady in admin/src/ai.ts) and there is no button that spends it.",
+
+	// ---- #209 Slack-notify config: backend shipped ahead of the toggle UI --
+	// The webhook secret + enable flag are settable two ways: the environment
+	// (GGD_SLACK_WEBHOOK_URL / GGD_SLACK_NOTIFY_ENABLED), which needs no route,
+	// and this admin-gated durable config (mirroring /admin/ai/config). The env
+	// path is complete; the console panel that would call these two is the
+	// deferred front-half of #209 (see the task's "if the config UI is too big,
+	// wire the secret via env" allowance). Wire a panel in apps/admin/src that
+	// GETs/PUTs /admin/slack-notify (same shape as admin/src/ai.ts) → delete these
+	// two lines.
+	"GET /api/v1/admin/slack-notify": "#209 — masked Slack webhook config read. No admin-console panel yet; " +
+		"the feature is driven by env (GGD_SLACK_WEBHOOK_URL) meanwhile. Wire a toggle in apps/admin/src like ai.ts.",
+	"PUT /api/v1/admin/slack-notify": "#209 — Slack webhook config write (enable + webhook). No admin-console panel " +
+		"yet; env drives it meanwhile. Wire a toggle in apps/admin/src like ai.ts and delete this line.",
 
 	// ---- superseded / aspirational ----------------------------------------
 	"GET /api/v1/wallet/owns": "superseded, probably deletable: the client reads ownedChampions off the " +

@@ -39,6 +39,23 @@ import (
 // (that edge would be a cycle — see the doc comment on account.RoleAdmin).
 const RoleAdmin = account.RoleAdmin
 
+// Approval-decision provenance, recorded on the audit line's detail.source so
+// the log can distinguish an in-console click from the #209 Slack one-tap link.
+const (
+	// SourceAdminConsole is the default: an operator clicked approve/deny in the
+	// admin console, so adminId names their account.
+	SourceAdminConsole = "admin-console"
+	// SourceSlackLink is the #209 click-to-approve link: a signed, single-use
+	// token was redeemed out of band (the owner tapping the Slack notification
+	// from their phone, not logged into /admin). There is no operator session, so
+	// adminId is ActorSlackLink rather than an account id.
+	SourceSlackLink = "slack-link"
+	// ActorSlackLink is the sentinel recorded as the audit adminId when an
+	// approval came through the Slack link: it is NOT an account id, and is
+	// deliberately not ULID-shaped so it can never collide with one.
+	ActorSlackLink = "slack-link"
+)
+
 // Service owns the admin operations. It composes the existing platform
 // services rather than reaching into their stores directly.
 type Service struct {
@@ -439,6 +456,16 @@ func (s *Service) Ban(ctx context.Context, adminID, targetID, reason string) (Ac
 //     get there (a mis-click on one's own row in a list), and it would have
 //     required hand-editing account JSON — or cmd/ownerreset — to undo.
 func (s *Service) SetApproval(ctx context.Context, adminID, targetID, status, reason string) (AccountRow, error) {
+	return s.SetApprovalWithSource(ctx, adminID, targetID, status, reason, SourceAdminConsole)
+}
+
+// SetApprovalWithSource is SetApproval with the audit provenance made explicit
+// (detail.source). It is the ONE place approve/deny is applied, so the #209
+// Slack link and the console click share every guarantee above — the last-admin
+// guard, the live-session revoke and the append-only audit line — and differ
+// only in who the log names. SetApproval passes SourceAdminConsole; the Slack
+// link passes SourceSlackLink with the ActorSlackLink sentinel for adminID.
+func (s *Service) SetApprovalWithSource(ctx context.Context, adminID, targetID, status, reason, source string) (AccountRow, error) {
 	switch status {
 	case account.StatusPending, account.StatusApproved, account.StatusDenied:
 	default:
@@ -470,15 +497,28 @@ func (s *Service) SetApproval(ctx context.Context, adminID, targetID, status, re
 		// if this revoke races or fails.
 		_ = s.rdb.RevokeAllRefresh(ctx, targetID)
 	}
-	detail := map[string]any{"status": status}
+	detail := map[string]any{"status": status, "source": source}
 	if reason != "" {
 		detail["reason"] = reason
 	}
 	if err := s.audit(ctx, adminID, "approval_"+status, targetID, detail); err != nil {
 		return AccountRow{}, err
 	}
-	slog.Info("admin: account approval status changed", "by", adminID, "target", targetID, "status", status)
+	slog.Info("admin: account approval status changed", "by", adminID, "target", targetID, "status", status, "source", source)
 	return rowOf(a), nil
+}
+
+// SetApprovalFromLink applies a #209 Slack click-to-approve decision. It is the
+// seam the internal/approvelink handler calls after it has verified the signed,
+// single-use token — the token IS the authorization, so there is no operator
+// account to name, and the decision is recorded as (ActorSlackLink, source
+// slack-link). It reuses SetApprovalWithSource, so a link approval is audited,
+// revokes live sessions on a deny, and honours the last-admin guard exactly like
+// the console. The updated row is discarded so a caller need not import this
+// package's projection type.
+func (s *Service) SetApprovalFromLink(ctx context.Context, targetID, status, reason string) error {
+	_, err := s.SetApprovalWithSource(ctx, ActorSlackLink, targetID, status, reason, SourceSlackLink)
+	return err
 }
 
 // Unban clears the banned flag and audits.

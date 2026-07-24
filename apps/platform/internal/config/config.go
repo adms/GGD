@@ -38,6 +38,26 @@ type Config struct {
 	// server, used to build the result callback URL
 	// (PLATFORM_INTERNAL_URL, default "http://platform:8080").
 	InternalURL string
+	// PublicURL is the deploy's PUBLIC base URL as a human reaches it in a
+	// browser (GGD_PUBLIC_URL, e.g. "https://ggd.adms.ai"), with no trailing
+	// slash. It is distinct from InternalURL — that one is the container-network
+	// name the game server calls and is useless on a phone. Used to build the
+	// #209 Slack click-to-approve link, which the owner opens from their device
+	// while NOT logged into /admin, so it MUST be absolute and externally
+	// reachable. Empty by default; the Slack notifier treats an empty value as
+	// "not configured" and declines to build a link rather than emit a relative
+	// one that would 404 on a phone.
+	PublicURL string
+	// SlackWebhookURL is the #209 Slack incoming-webhook URL, read from the
+	// environment (GGD_SLACK_WEBHOOK_URL) as one of the two supported ways to
+	// supply this secret (the other is the admin-gated durable config, mirroring
+	// the AI provider key). It is SERVER-SIDE ONLY — never returned to a client
+	// except masked — and is never written to content/. Empty by default.
+	SlackWebhookURL string
+	// SlackNotifyEnabled is the environment enable toggle for #209 Slack
+	// notifications (GGD_SLACK_NOTIFY_ENABLED). It is OR-ed with the durable
+	// config's own enabled flag, so either switch turns the feature on.
+	SlackNotifyEnabled bool
 	// Season is the active ranking season (SEASON, default "s1").
 	Season string
 	// ChallengerFrac is the fraction of the visible points ladder that holds
@@ -355,6 +375,17 @@ func loopbackOnlyAddr(addr string) bool {
 	return ip != nil && ip.IsLoopback()
 }
 
+// resolveBool reads a plain boolean env value (the truthy/falsey spellings the
+// rest of the platform accepts). Anything unrecognised — including empty — is
+// false, so a feature guarded by it is OFF unless explicitly switched on.
+func resolveBool(v string) bool {
+	switch strings.ToLower(strings.TrimSpace(v)) {
+	case "1", "true", "yes", "on":
+		return true
+	}
+	return false
+}
+
 // getenvFloat reads a non-negative float env var, falling back to def on
 // absence or a parse error.
 func getenvFloat(key string, def float64) float64 {
@@ -566,6 +597,9 @@ func Load() (Config, error) {
 		GameSharedSecret:       os.Getenv("PLATFORM_GAME_SHARED_SECRET"),
 		GameServerAddr:         getenv("GAME_SERVER_ADDR", "http://127.0.0.1:2567"),
 		InternalURL:            getenv("PLATFORM_INTERNAL_URL", "http://platform:8080"),
+		PublicURL:              strings.TrimRight(strings.TrimSpace(os.Getenv("GGD_PUBLIC_URL")), "/"),
+		SlackWebhookURL:        strings.TrimSpace(os.Getenv("GGD_SLACK_WEBHOOK_URL")),
+		SlackNotifyEnabled:     resolveBool(os.Getenv("GGD_SLACK_NOTIFY_ENABLED")),
 		Season:                 getenv("SEASON", "s1"),
 		ChallengerFrac:         getenvFloat("RANKED_CHALLENGER_FRAC", 0.10),
 		GrandmasterFrac:        getenvFloat("RANKED_GRANDMASTER_FRAC", 0.10),
