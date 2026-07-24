@@ -12,7 +12,7 @@
  *     instead of bricking the client.
  */
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
-import { cpSync, mkdtempSync, readFileSync, rmSync, existsSync } from "node:fs";
+import { cpSync, mkdtempSync, readdirSync, readFileSync, rmSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -105,12 +105,87 @@ class CountingFsSource implements ContentSource {
   }
 }
 
+/**
+ * The only non-doc `*.json` files that live inside a collection dir. Both are
+ * hand-maintained sidecars, not content documents:
+ *   config/_purchase-lines.json    — merchant purchase persona lines
+ *   models/_standin-overrides.json — render-side stand-in map (task #77)
+ * Enumerated by hand, on purpose. See `authoredDocIds`.
+ */
+const KNOWN_SIDECARS: Partial<Record<CollectionName, readonly string[]>> = {
+  config: ["_purchase-lines.json"],
+  models: ["_standin-overrides.json"],
+};
+
+/**
+ * The docs a human authored in `<root>/<collection>/`, listed by a rule that is
+ * DELIBERATELY DIFFERENT from the indexer's.
+ *
+ * `rebuildCollectionIndex` skips anything starting with "_". If this function
+ * reused that rule it could only ever agree with the indexer, and a regression in
+ * the skip predicate (a widened glob, a stray `.tmp` guard, a doc that acquires a
+ * name the filter eats) would hide from itself. So this one names its exclusions
+ * explicitly: a THIRD sidecar appearing, or the indexer starting to drop real
+ * docs, both surface as a diff instead of as silence.
+ */
+function authoredDocIds(root: string, name: CollectionName): string[] {
+  const skip = new Set<string>(["_index.json", ...(KNOWN_SIDECARS[name] ?? [])]);
+  return readdirSync(join(root, name))
+    .filter((f) => f.endsWith(".json") && !skip.has(f))
+    .map((f) => f.slice(0, -".json".length))
+    .sort();
+}
+
+/**
+ * A FLOOR on how much content each collection holds — NOT a snapshot.
+ *
+ * The distinction is the whole point. A pinned total (`expect(total).toBe(1598)`)
+ * goes red every time the owner adds a champion, an augment or a vfx family, so it
+ * fights his own work and gets bumped without ever being read. A floor is
+ * asymmetric: additions can never touch it, and the only thing that turns it red
+ * is content DISAPPEARING — which is exactly the event nobody would otherwise
+ * notice, because the indexer, the manifest and the bundle would all agree on the
+ * smaller world and every structural invariant below would still pass.
+ *
+ * RAISE these deliberately when a body of content is intentionally retired.
+ * NEVER lower one to make CI green — a red line here means docs left the tree.
+ *
+ * Composition at the time of writing (1,725 docs across 12 collections), kept as
+ * documentation of what the tree actually IS:
+ *   abilities 662 — includes 108 天生技 / PASSIVE docs, the level-1 6th slot the
+ *     w3x importer dropped, one per champion that has an NN-00 in the source map
+ *     (3 genuinely have none: godie-h02n / godie-u01q / godie-ogld)
+ *   vfx 553 — the shared primitive library (task #123) plus the faithful w3x
+ *     emitter families `fx.w3x.{locust,orb,particle}.*.pNN` (task #183)
+ *   models 119 — includes the 2 per-arena guardian props, prop.guardian.beast /
+ *     prop.guardian.treant (task #105)
+ *   champions 113 · items 214 · augments 30 (task #149's pool expansion) ·
+ *   config 11 · projectiles 5 · status-effects 5 · arenas 5 · skins 5 ·
+ *   loot-tables 3
+ * `content/audio-manifests/` is NOT a collection — it is absent from COLLECTIONS,
+ * so the manifest walk never sees it and it contributes 0 docs.
+ */
+const DOC_FLOORS: Record<CollectionName, number> = {
+  champions: 100,
+  abilities: 600,
+  items: 200,
+  augments: 25,
+  projectiles: 5,
+  "status-effects": 5,
+  "loot-tables": 3,
+  arenas: 5,
+  config: 11,
+  models: 110,
+  vfx: 500,
+  skins: 5,
+};
+
 describe("content bundle — emission", () => {
   let tmp: string;
 
   beforeAll(() => {
-    // A throwaway copy of the REAL tree: the bundle must be proven against the
-    // 1,441 authored docs, not a toy fixture. Only the JSON docs are copied —
+    // A throwaway copy of the REAL tree: the bundle must be proven against every
+    // authored doc, not a toy fixture. Only the JSON docs are copied —
     // content/assets is ~113 MB and no part of this path reads it.
     tmp = mkdtempSync(join(tmpdir(), "ggd-bundle-"));
     for (const name of COLLECTION_NAMES) {
@@ -131,35 +206,55 @@ describe("content bundle — emission", () => {
     expect(bundle.schema).toBe(CONTENT_BUNDLE_SCHEMA);
     expect(bundle.contentVersion).toBe(manifest.contentVersion);
 
+    // Every collection the CODE declares is in the manifest, and every collection
+    // the manifest declares is in the bundle. Without these two, a whole
+    // collection dir could vanish and nothing would fail: rebuildManifest skips
+    // dirs that do not exist, so manifest, index and bundle would simply agree on
+    // a smaller world.
+    expect(Object.keys(manifest.collections).sort()).toEqual([...COLLECTION_NAMES].sort());
+    expect(Object.keys(bundle.collections).sort()).toEqual(Object.keys(manifest.collections).sort());
+
     let total = 0;
     for (const name of COLLECTION_NAMES) {
       const meta = manifest.collections[name];
-      if (!meta) continue;
+      // a hard failure, never a `continue` — silently skipping past missing data
+      // is how a test ends up asserting nothing at all.
+      if (!meta) throw new Error(`collection ${name} missing from manifest`);
       const index = JSON.parse(readFileSync(join(tmp, name, "_index.json"), "utf8")) as {
         entries: IndexEntry[];
       };
       const col = bundle.collections[name];
-      expect(col, `collection ${name} missing from bundle`).toBeDefined();
+      if (!col) throw new Error(`collection ${name} missing from bundle`);
+      // the index lists EXACTLY the docs authored on disk — nothing the indexer
+      // quietly filtered out, nothing it invented. See `authoredDocIds` for why
+      // it does not reuse the indexer's own skip rule.
+      expect(index.entries.map((e) => e.id), `${name} index vs disk`).toEqual(
+        authoredDocIds(tmp, name),
+      );
+      // the manifest's count is a separate artifact from the index it summarises
+      expect(meta.count, `${name} manifest count`).toBe(index.entries.length);
       // same ids, same order, same per-doc hashes as the on-disk index
-      expect(col?.entries.map((e) => e.id)).toEqual(index.entries.map((e) => e.id));
-      expect(col?.entries.map((e) => e.hash)).toEqual(index.entries.map((e) => e.hash));
-      expect(col?.hash).toBe(meta.hash);
+      expect(col.entries.map((e) => e.id)).toEqual(index.entries.map((e) => e.id));
+      expect(col.entries.map((e) => e.hash)).toEqual(index.entries.map((e) => e.hash));
+      expect(col.hash).toBe(meta.hash);
       // and each bundled doc is the doc on disk, under the project's OWN
       // definition of document equality (stableStringify — the exact function
       // hashDoc hashes). See the "-0" test below for why that is not `toEqual`.
-      for (const e of col?.entries ?? []) {
+      for (const e of col.entries) {
         const onDisk = JSON.parse(readFileSync(join(tmp, name, `${e.id}.json`), "utf8"));
         expect(stableStringify(e.doc)).toBe(stableStringify(onDisk));
         expect(hashDoc(e.doc)).toBe(e.hash);
       }
+      // no collection may quietly empty out — see DOC_FLOORS: a floor, not a
+      // snapshot, so adding content can never turn this red.
+      expect(index.entries.length, `${name} doc count`).toBeGreaterThanOrEqual(DOC_FLOORS[name]);
       total += index.entries.length;
     }
-    // 1488 base + 2 per-arena guardian model docs (prop.guardian.beast /
-    // prop.guardian.treant, task #105) + 108 天生技 / PASSIVE ability docs —
-    // the level-1 6th slot the w3x importer dropped, now rolled out for every
-    // champion that has an NN-00 in the source map (3 genuinely have none:
-    // godie-h02n / godie-u01q / godie-ogld).
-    expect(total).toBe(1598);
+    // the doc total is DERIVED, never typed: it is whatever the manifest says the
+    // collections hold, cross-checked against the indexes just walked.
+    expect(total).toBe(
+      COLLECTION_NAMES.reduce((n, c) => n + (manifest.collections[c]?.count ?? 0), 0),
+    );
   });
 
   it("two builds of identical content are byte-identical", () => {
@@ -245,6 +340,9 @@ describe("content bundle — consumption", () => {
     for (const name of COLLECTION_NAMES) {
       const a = viaPerDoc.store.ids(name);
       const b = viaBundle.store.ids(name);
+      // the reference side is REAL: without this, `expect(b).toEqual(a)` below
+      // would pass just as happily on two empty stores.
+      expect(a.length, `${name} loaded per-doc`).toBe(viaPerDoc.manifest.collections[name]?.count);
       expect(b).toEqual(a);
       for (const id of a) {
         expect(stableStringify(viaBundle.store.get(name, id))).toBe(
@@ -252,10 +350,17 @@ describe("content bundle — consumption", () => {
         );
       }
     }
-    // and the per-doc path really did cost 1 manifest + 12 indexes + every doc
-    // (base 1488 + 2 per-arena guardian model docs, task #105 + 108 天生技 /
-    // PASSIVE ability docs — see the doc-total note above)
-    expect(perDocSource.reads).toBe(1611);
+    // ...and the per-doc path really did cost exactly ONE read per artifact: the
+    // manifest, one _index.json per collection, one file per doc. Derived from
+    // the manifest this very load produced, which also makes it a cross-check
+    // between two separate artifacts — a manifest whose `count` drifts from its
+    // own index fires here, where a pinned integer never could.
+    const cols = Object.keys(viaPerDoc.manifest.collections) as CollectionName[];
+    const expectedReads =
+      1 +
+      cols.length +
+      cols.reduce((n, c) => n + (viaPerDoc.manifest.collections[c]?.count ?? 0), 0);
+    expect(perDocSource.reads).toBe(expectedReads);
   });
 
   it("costs exactly ONE request", async () => {
@@ -295,7 +400,15 @@ describe("content bundle — fallback", () => {
     const { res, fb, fs } = await load(fakeFetch(null, 404));
     expect(fb.didFallback).toBe(true);
     expect(fb.fallbackReason).toMatch(/404/);
-    expect(fs.reads).toBe(1611);
+    // The fallback did a COMPLETE per-doc load, not a partial one: it costs
+    // exactly what a bare per-doc source costs. Measured against a control run in
+    // the same process rather than pinned — adding content moves both sides.
+    const control = new CountingFsSource();
+    await new ContentLoader(control).load();
+    expect(fs.reads).toBe(control.reads);
+    // ...and the control really is a full load (strictly more than the manifest
+    // plus one index each), so that equality cannot be satisfied by two no-ops.
+    expect(control.reads).toBeGreaterThan(Object.keys(res.manifest.collections).length + 1);
     expect(res.store.ids("champions").length).toBeGreaterThan(100);
   });
 

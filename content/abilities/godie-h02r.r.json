@@ -36,21 +36,7 @@
       ]
     }
   ],
-  "vfxKey": "fx.w3x.particle.supershinythingy.p00",
+  "vfxKey": "fx.prim.nature.beam-lg",
   "schema": "ability@1",
-  "castTimeSec": 0.4,
-  "hitFeel": {
-    "hitstopTicks": 4,
-    "hitstunTicks": 7,
-    "shakeMag": 0.52,
-    "shakeStyle": "omni",
-    "sparkKind": "magic",
-    "flashColor": [
-      1.0,
-      0.92,
-      0.6
-    ],
-    "flashMs": 178,
-    "camKick": 0.446
-  }
+  "castTimeSec": 0.4
 }

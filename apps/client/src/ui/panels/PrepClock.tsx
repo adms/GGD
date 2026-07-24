@@ -19,7 +19,12 @@
 import { useHud } from "../../net/RoomStore";
 import { PANEL_BG, TEXT_DIM } from "../theme";
 import { INTERMISSION_Z } from "./intermissionLayout";
-import { PREP_CLOCK_BOTTOM, prepClockView } from "./prepCountdown";
+import {
+  PREP_CLOCK_BOTTOM,
+  PREP_CLOCK_TOP_WHEN_DRAFTING,
+  useCompactClock,
+  prepClockView,
+} from "./prepCountdown";
 
 /**
  * `ggdPrepEnter` is the ANSWER TO 「進入要有倒數計時的畫面」: the pill rises into
@@ -44,15 +49,28 @@ export function PrepClock(): React.JSX.Element | null {
     s.localSeatId === null ? false : (s.seats.find((v) => v.seatId === s.localSeatId)?.ready ?? false),
   );
 
+  // Same signal AugmentDraftPanel gates on. When a draft owns the screen the
+  // pill moves to the top edge instead of sitting on the cards — see
+  // PREP_CLOCK_TOP_WHEN_DRAFTING for why moving beats hiding.
+  const drafting = useHud((s) => {
+    if (s.localSeatId === null) return false;
+    return (s.seats.find((v) => v.seatId === s.localSeatId)?.offers ?? []).length > 0;
+  });
+
   const view = prepClockView({ phase, secondsLeft, ready });
   if (!view.visible) return null;
+
+  // On a phone in landscape the card stack very nearly IS the screen, so the
+  // only non-card region is the panel's own header. Shrink to fit it rather
+  // than pretend a gap exists.
+  const compact = drafting && useCompactClock(typeof window === "undefined" ? 1080 : window.innerHeight);
 
   return (
     <div
       style={{
         position: "absolute",
         left: "50%",
-        bottom: PREP_CLOCK_BOTTOM,
+        ...(drafting ? { top: compact ? 6 : PREP_CLOCK_TOP_WHEN_DRAFTING } : { bottom: PREP_CLOCK_BOTTOM }),
         transform: "translateX(-50%)",
         // THE ONE SURFACE THAT RIDES OVER A FOCUS SCRIM (playtest P2, priority
         // 2 in panels/intermissionLayout.ts). While the 三選一 draft owns the
@@ -64,7 +82,7 @@ export function PrepClock(): React.JSX.Element | null {
         flexDirection: "column",
         alignItems: "center",
         gap: 1,
-        padding: "6px 22px",
+        padding: compact ? "2px 12px" : "6px 22px",
         borderRadius: 999,
         background: PANEL_BG,
         border: `1px solid ${view.color}55`,
@@ -81,7 +99,7 @@ export function PrepClock(): React.JSX.Element | null {
         // key and stay still.
         key={view.beat}
         style={{
-          fontSize: 26,
+          fontSize: compact ? 17 : 26,
           fontWeight: "bold",
           lineHeight: 1.1,
           color: view.color,

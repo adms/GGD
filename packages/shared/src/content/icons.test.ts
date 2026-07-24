@@ -165,18 +165,75 @@ describe("w3x original icons (icons)", () => {
     expect(iconFiles("items").length).toBeGreaterThanOrEqual(FLOOR.items);
   });
 
+  /**
+   * Every Q/W/E/R ability is stored TWICE: standalone at
+   * `content/abilities/<cid>.<slot>.json` and denormalised into the champion at
+   * `abilities[<slot>]`. The standalone doc is the source of truth
+   * (packages/shared/src/sim/content/registry.ts) — but the embedded copy is
+   * what raw-doc consumers read: the editor preview registers champions with
+   * `overrideAbilities: true` (apps/editor/src/preview/PreviewController.ts),
+   * which bypasses the gap-filling heal entirely, so an embedded slot with no
+   * `icon` renders a BLANK ability tile there.
+   *
+   * WHY THIS TEST IS SHAPED THE WAY IT IS. It used to `continue` past a slot
+   * whose standalone twin was absent, and it compared with a bare `expect`
+   * inside the loop. Both hid breadth: `expect` throws on the FIRST mismatch,
+   * so 424 desynced slots were reported to CI as a single failure on
+   * `godie-e001.Q`, and a vanished twin would have been reported as nothing at
+   * all. So: collect every discrepancy, assert the whole list at once, and make
+   * an absent twin a COUNTED, ASSERTED outcome rather than a silent skip.
+   */
   it("embedded Q/W/E/R icons agree with their standalone twins (icon-embed-standalone-agree)", () => {
     cover("icon-embed-standalone-agree");
-    for (const { file, doc } of docs("champions")) {
+    const champions = docs("champions");
+    const missingTwin: string[] = [];
+    const idMismatch: string[] = [];
+    const disagree: string[] = [];
+    let compared = 0;
+
+    for (const { file, doc } of champions) {
       const cid = file.slice(0, -5);
-      const abilities = (doc.abilities ?? {}) as Record<string, { icon?: string }>;
+      const abilities = (doc.abilities ?? {}) as Record<string, { id?: string; icon?: string }>;
       for (const slot of ["Q", "W", "E", "R"]) {
-        const twin = join(CONTENT_DIR, "abilities", `${cid}.${slot.toLowerCase()}.json`);
-        if (!existsSync(twin)) continue;
-        const standalone = JSON.parse(readFileSync(twin, "utf-8")) as { icon?: string };
-        expect(standalone.icon, `${cid}.${slot}`).toBe(abilities[slot]?.icon);
+        const twinName = `${cid}.${slot.toLowerCase()}.json`;
+        const twin = join(CONTENT_DIR, "abilities", twinName);
+        // NOT a skip. A champion slot with no standalone doc means the loader's
+        // `Abilities.tryGet(embedded.id)` misses and the embedded copy silently
+        // becomes the source of truth — the exact shadowing the registry exists
+        // to prevent. Record it and fail on it below.
+        if (!existsSync(twin)) {
+          missingTwin.push(`${cid}.${slot} -> abilities/${twinName}`);
+          continue;
+        }
+        const standalone = JSON.parse(readFileSync(twin, "utf-8")) as { id?: string; icon?: string };
+        compared += 1;
+        // This suite pairs the two copies by FILENAME, but the loader pairs them
+        // by `embedded.id`. If those ever diverge the comparison below silently
+        // checks the wrong pair, so pin the assumption instead of trusting it.
+        if (standalone.id !== abilities[slot]?.id) {
+          idMismatch.push(`${cid}.${slot}: embedded id=${abilities[slot]?.id} twin id=${standalone.id}`);
+        }
+        if (standalone.icon !== abilities[slot]?.icon) {
+          disagree.push(
+            `${cid}.${slot}: standalone=${standalone.icon ?? "(none)"} embedded=${abilities[slot]?.icon ?? "(none)"}`,
+          );
+        }
       }
     }
+
+    const sample = (xs: string[]) =>
+      `${xs.length} case(s):\n${xs.slice(0, 20).join("\n")}${xs.length > 20 ? `\n…and ${xs.length - 20} more` : ""}`;
+
+    expect(missingTwin, `champion slots with NO standalone twin doc — ${sample(missingTwin)}`).toEqual(
+      [],
+    );
+    expect(idMismatch, `embedded/twin id pairing broken — ${sample(idMismatch)}`).toEqual([]);
+    expect(disagree, `embedded/standalone icon desync — ${sample(disagree)}`).toEqual([]);
+    // Vacuity guard: with no skips left, every champion MUST contribute exactly
+    // four compared slots. Derived from the roster, so adding a champion never
+    // breaks it — but a comparison loop that quietly stops running does.
+    expect(champions.length).toBeGreaterThan(0);
+    expect(compared).toBe(champions.length * 4);
   });
 
   it("EX docs carry an icon IFF their PNG exists — regen-safe (icon-ex-consistency)", () => {
