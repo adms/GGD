@@ -213,9 +213,30 @@ describe("w3x original icons (icons)", () => {
         if (standalone.id !== abilities[slot]?.id) {
           idMismatch.push(`${cid}.${slot}: embedded id=${abilities[slot]?.id} twin id=${standalone.id}`);
         }
-        if (standalone.icon !== abilities[slot]?.icon) {
+        // AUTHORITY MODEL, not strict equality. The standalone doc is the
+        // source of truth (sim/content/registry.ts: "THE STANDALONE DOC IS THE
+        // SOURCE OF TRUTH … an embedded copy may only fill in fields the
+        // standalone doc omits"), and the AI icon pipeline's three writers
+        // (tools/icon-gen/{local/batch.py,src/generate.py,local/wire_icon_fields.py})
+        // all patch the TOP-LEVEL `icon` only. So 424 champion slots carrying
+        // no embedded icon while their twin has one is the DESIGNED steady
+        // state, not a defect — the loader's fillGaps supplies it at boot and
+        // the HUD reads the healed object.
+        //
+        // Demanding equality would mean back-filling all 424 and teaching every
+        // future writer to maintain a second copy. I tried exactly that: it
+        // broke loader.test.ts and fieldAdoption.test.ts, and it re-creates the
+        // shadow the registry doc-comment says has already cost this project
+        // five separate bugs.
+        //
+        // What must never happen is an embedded icon that CONTRADICTS its twin,
+        // because that one the heal cannot fix — fillGaps only fills gaps, so a
+        // wrong-but-present value wins and ships stale art. That is the
+        // invariant, and it is 0 violations today.
+        const embeddedIcon = abilities[slot]?.icon;
+        if (embeddedIcon !== undefined && standalone.icon !== embeddedIcon) {
           disagree.push(
-            `${cid}.${slot}: standalone=${standalone.icon ?? "(none)"} embedded=${abilities[slot]?.icon ?? "(none)"}`,
+            `${cid}.${slot}: standalone=${standalone.icon ?? "(none)"} embedded=${embeddedIcon}`,
           );
         }
       }
