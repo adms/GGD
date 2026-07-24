@@ -3,7 +3,7 @@
   "schema": "config.combat-env@1",
   "version": 1,
   "multipliers": {
-    "cooldown": 0.25,
+    "cooldown": 0.2,
     "damageDealt": 1.0,
     "defense": 1.0,
     "attackDamage": 1.0,
@@ -11,7 +11,7 @@
     "maxHealth": 8.0,
     "healthRegen": 1.0,
     "maxMana": 3.0,
-    "manaRegen": 10.0,
+    "manaRegen": 4.0,
     "moveSpeed": 1.0,
     "attackSpeed": 1.0,
     "healing": 1.0,
