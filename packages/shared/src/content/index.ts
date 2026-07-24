@@ -19,6 +19,16 @@ export {
   type BundleContentSourceOptions,
 } from "./sources/BundleContentSource";
 export { FallbackContentSource } from "./sources/FallbackContentSource";
+// #189 durable content overlay: the pure merge that lays the platform's data/
+// overlay over the shipped content tree (both consumers share this one seam).
+export {
+  OverlayContentSource,
+  emptyOverlayBundle,
+  isOverlayEmpty,
+  splitOverlayKey,
+  mergeCollectionIndex,
+  type OverlayBundle,
+} from "./overlay";
 export {
   CONTENT_BUNDLE_SCHEMA,
   CONTENT_BUNDLE_FILE,

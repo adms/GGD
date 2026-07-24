@@ -55,6 +55,13 @@ const (
 	ContentKindCuration  = "curation"
 	ContentKindCombatEnv = "combat-env"
 	ContentKindServerOps = "server-ops"
+	// ContentKindContentOverlay announces that the durable data/ content overlay
+	// (task #189) advanced — an admin edited a champion/ability/item on the host.
+	// A shard re-fetches the merged content bundle for its NEXT match. The
+	// TypeScript side (apps/game-server/src/config/contentBus.ts) must list this
+	// value to consume it; an older shard that does not simply counts it as an
+	// unknown kind and picks the change up on its normal TTL.
+	ContentKindContentOverlay = "content-overlay"
 )
 
 // ContentInvalidation announces that one operator-editable document changed.
