@@ -38,6 +38,7 @@
     "Q": {
       "id": "godie-u00k.q",
       "name": "71-01 死亡隕落",
+      "icon": "assets/icons/abilities/godie-u00k.q.webp",
       "description": "[主動攻擊]\n45秒冷卻時間\n\n死之王可幻化成代表死亡的隕石造成敵方250點傷害。",
       "slot": "Q",
       "castType": "ground",
@@ -80,6 +81,7 @@
     "W": {
       "id": "godie-u00k.w",
       "name": "71-02 靈魂吸取",
+      "icon": "assets/icons/abilities/godie-u00k.w.webp",
       "description": "[被動]\n0秒冷卻時間\n\n死之王每次攻擊可造成部隊的靈魂凍結0.01秒，並於部隊死亡後20秒內增加死之王全能力1點(最高累計10次)。",
       "slot": "W",
       "castType": "targeted",
@@ -124,6 +126,7 @@
     "E": {
       "id": "godie-u00k.e",
       "name": "71-03 厄夜靈魂",
+      "icon": "assets/icons/abilities/godie-u00k.e.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n抽取範圍內所有生命的泉源，造成生命8%傷害。\n\n夜間施展全地圖敵方移動速度降低",
       "slot": "E",
       "castType": "targeted",
@@ -168,6 +171,7 @@
     "R": {
       "id": "godie-u00k.r",
       "name": "71-04 萬惡歸宗",
+      "icon": "assets/icons/abilities/godie-u00k.r.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n抽走附近敵我所有魔力，釋放出魔力總合乘上15%的魔法爆炸傷害。\n\n夜間施法傷害加成500",
       "slot": "R",
       "castType": "targeted",

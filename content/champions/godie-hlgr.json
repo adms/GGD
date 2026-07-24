@@ -38,6 +38,7 @@
     "Q": {
       "id": "godie-hlgr.q",
       "name": "03-02 詭雷",
+      "icon": "assets/icons/abilities/godie-hlgr.q.webp",
       "description": "[主動攻擊]\n25秒冷卻時間\n\n在一定區域中放出詭雷進行攻擊，被直接擊中的敵人承受30點直接傷害，裝甲2點破壞，周遭的敵人也會承受承受強烈電磁場每秒30點傷害的連續攻擊並降低攻擊速度為200%，持續3秒。",
       "slot": "Q",
       "castType": "targeted",
@@ -85,6 +86,7 @@
     "W": {
       "id": "godie-hlgr.w",
       "name": "03-01 磁軌砲",
+      "icon": "assets/icons/abilities/godie-hlgr.w.webp",
       "description": "[主動攻擊]\n15秒冷卻時間\n\n對著敵方部隊發射磁軌砲，造成125點傷害並讓目標昏迷0.5秒。",
       "slot": "W",
       "castType": "targeted",
@@ -135,6 +137,7 @@
     "E": {
       "id": "godie-hlgr.e",
       "name": "03-03 鯨式電漿光束炮",
+      "icon": "assets/icons/abilities/godie-hlgr.e.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n一道向外的衝擊波擴散的電漿光束炮，造成一直線地面部隊450點傷害。",
       "slot": "E",
       "castType": "skillshot",
@@ -178,6 +181,7 @@
     "R": {
       "id": "godie-hlgr.r",
       "name": "03-04 全彈發射",
+      "icon": "assets/icons/abilities/godie-hlgr.r.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n用為數龐大的飛彈轟炸一塊區域造成力量*2+200點傷害，並擊暈1秒。",
       "slot": "R",
       "castType": "skillshot",

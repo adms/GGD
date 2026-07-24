@@ -2,6 +2,7 @@
   "id": "godie-u00b.w",
   "schema": "ability@1",
   "name": "75-02 幻影鬥氣",
+  "icon": "assets/icons/abilities/godie-u00b.w.webp",
   "description": "[被動]\n0秒冷卻時間\n\n傳說當鬥氣提升到極致之時，將會產生幻影造成對手傷害。攻擊時有10%的機率可以產生幻影造成50點傷害。",
   "slot": "W",
   "castType": "self",

@@ -38,6 +38,7 @@
     "Q": {
       "id": "godie-e00t.q",
       "name": "66-01 靈體化",
+      "icon": "assets/icons/abilities/godie-e00t.q.webp",
       "description": "[輔助]\n<A0I7,Cool1>秒冷卻時間\n\n貞子化為靈體隱藏身形<A0I7,Dur1>秒，同時增加移動速度<A0I7,DataB1,%>%，並且在這個狀態下第一次攻擊會造成額外<A0I7,DataC1>點傷害。",
       "slot": "Q",
       "castType": "self",
@@ -74,6 +75,7 @@
     "W": {
       "id": "godie-e00t.w",
       "name": "66-02 驚駭",
+      "icon": "assets/icons/abilities/godie-e00t.w.webp",
       "description": "[輔助]\n<A0I8,Cool1>秒冷卻時間\n\n貞子突如其來的嚇人，可以使周圍<A0I9,Area1>距離內的單位被嚇到只剩下逃跑的能力，持續<A0I9,Dur1>秒。",
       "slot": "W",
       "castType": "targeted",
@@ -118,6 +120,7 @@
     "E": {
       "id": "godie-e00t.e",
       "name": "66-03 七夜怪談",
+      "icon": "assets/icons/abilities/godie-e00t.e.webp",
       "description": "[主動傷害]\n<A0IB,Cool1>秒冷卻時間\n\n招來<A0IB,DataA1>隻鬼魂，每隻鬼魂會自動鎖定周圍的敵人，衝撞自爆造成160點法術傷害。",
       "slot": "E",
       "castType": "targeted",
@@ -162,6 +165,7 @@
     "R": {
       "id": "godie-e00t.r",
       "name": "66-04  靈壓震撼",
+      "icon": "assets/icons/abilities/godie-e00t.r.webp",
       "description": "[輔助]\n<A0IC,Cool1>秒冷卻時間\n\n貞子發出凜人的靈壓，造成周圍<A0ID,Area1>範圍內的敵方單位減慢<A0ID,DataB1,%>%的攻擊速度與<A0ID,DataA1,%>%的移動速度。\n\n每秒消耗<A0IC,DataB1>點法力。",
       "slot": "R",
       "castType": "skillshot",

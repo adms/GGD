@@ -37,6 +37,7 @@
     "Q": {
       "id": "godie-h022.q",
       "name": "82-01 雷之斧",
+      "icon": "assets/icons/abilities/godie-h022.q.webp",
       "description": "[主動攻擊]\n35秒冷卻時間\n\n雷之斧是涅吉。史普林。菲爾德父親的得意連續技之一，可以瞬間對250範圍內敵人造成210點傷害。",
       "slot": "Q",
       "castType": "ground",
@@ -88,6 +89,7 @@
     "W": {
       "id": "godie-h022.w",
       "name": "82-02 虛空瞬動",
+      "icon": "assets/icons/abilities/godie-h022.w.webp",
       "description": "[輔助]\n40秒冷卻時間\n瞬動術的高級技法，可於空中不斷使用瞬動來移動，使用後在0.5秒內點按右鍵可以無條件使用短距離瞬移。",
       "slot": "W",
       "castType": "dash",
@@ -121,6 +123,7 @@
     "E": {
       "id": "godie-h022.e",
       "name": "82-03 雷之投擲",
+      "icon": "assets/icons/abilities/godie-h022.e.webp",
       "description": "[主動攻擊]\n45秒冷卻時間\n以雷創造出的魔法之槍，急速落下給予隨機範圍內敵人(350+智慧*3)點傷害，若是於闇之魔法型態下攻擊即會施放造成直線範圍內敵人(250+智慧*1)*次數點傷害。(可點選自身累積，最多3次)",
       "slot": "E",
       "castType": "skillshot",
@@ -164,6 +167,7 @@
     "R": {
       "id": "godie-h022.r",
       "name": "82-04 闇之魔法",
+      "icon": "assets/icons/abilities/godie-h022.r.webp",
       "description": "[輔助]\n60秒冷卻時間\n黑暗福音所創之招式，吸收負面的魔法能量，犧牲肉體及心靈，在時間內增強10點全能力，並且有20%造成目標暈眩0.01秒及額外88點傷害，但會減少自身生命最大值500點，於天生法術書中將會出現術式兵裝之技能，持續15秒。",
       "slot": "R",
       "castType": "self",

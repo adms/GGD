@@ -39,6 +39,7 @@
     "Q": {
       "id": "godie-nsjs.q",
       "name": "18-01 風華圓舞陣",
+      "icon": "assets/icons/abilities/godie-nsjs.q.webp",
       "description": "[主動攻擊]\n45秒冷卻時間\n\n周圍內飄逸出10片的花瓣，每片花瓣碰觸到敵方時造成50傷害，持續8秒。",
       "slot": "Q",
       "castType": "targeted",
@@ -80,6 +81,7 @@
     "W": {
       "id": "godie-nsjs.w",
       "name": "18-02 寄生種子",
+      "icon": "assets/icons/abilities/godie-nsjs.w.webp",
       "description": "[主動攻擊]\n30秒冷卻時間\n\n把魔界凶惡植物寄生在敵人身上造成75點傷害，若干時間後將會侵蝕敵人的身體造成每秒60點傷害，持續2秒。",
       "slot": "W",
       "castType": "skillshot",
@@ -123,6 +125,7 @@
     "E": {
       "id": "godie-nsjs.e",
       "name": "18-03 妖狐變化",
+      "icon": "assets/icons/abilities/godie-nsjs.e.webp",
       "description": "[變身]\n60秒冷卻時間\n\n幻化為妖狐型態，能力將會大幅提升，隨著技能等級提升妖狐可以具備更多的能力，攻擊力和各方面的數值也會獲得成長，持續8秒。",
       "slot": "E",
       "castType": "targeted",
@@ -167,6 +170,7 @@
     "R": {
       "id": "godie-nsjs.r",
       "name": "18-04 億年樹",
+      "icon": "assets/icons/abilities/godie-nsjs.r.webp",
       "description": "[主動攻擊]\n75秒冷卻時間\n\n讓魔界最具強大魔力的億年樹在現世甦醒，億年樹擁有500點生命，出現時造成附近敵軍300傷害，每秒回復附近友軍4%生命，降低敵軍30%攻擊速度、20%移動速度，當敵人攻擊藏馬的時候將有10%的機率受到老樹盤根的攻擊，持續8秒。",
       "slot": "R",
       "castType": "targeted",

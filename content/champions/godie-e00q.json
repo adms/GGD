@@ -38,6 +38,7 @@
     "Q": {
       "id": "godie-e00q.q",
       "name": "69-01 力量強化",
+      "icon": "assets/icons/abilities/godie-e00q.q.webp",
       "description": "[被動]\n0秒冷卻時間\n\n不斷修煉讓自身攻防能力大幅上升，增加力量4點。",
       "slot": "Q",
       "castType": "self",
@@ -138,6 +139,7 @@
     "W": {
       "id": "godie-e00q.w",
       "name": "69-02 黑泥召喚",
+      "icon": "assets/icons/abilities/godie-e00q.w.webp",
       "description": "[主動攻擊]\n20秒冷卻時間\n\n召喚聖杯黑泥攻擊敵人。黑泥擁有極快的攻擊速度，可造成30-50點法術傷害，並且使攻擊目標減緩移動速度，持續8秒。",
       "slot": "W",
       "castType": "targeted",
@@ -184,6 +186,7 @@
     "E": {
       "id": "godie-e00q.e",
       "name": "69-03 約束與勝利之劍",
+      "icon": "assets/icons/abilities/godie-e00q.e.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n集結了人們的意念而形成的星星的結晶。是一把精鍊的神造兵裝，被譽為「最強的幻想(Last Phantasm)」。\n在聖劍這個分類上位於最頂端的位置。它會將所有者的魔力轉換成光之後收束並加速以增加其動能，可以讓所有者使用出神靈等級的魔法。\n其斬擊看似是放出了一道光帶，但是能讓前方直線敵人受到魔力*0.4+350點傷害。",
       "slot": "E",
       "castType": "skillshot",
@@ -227,6 +230,7 @@
     "R": {
       "id": "godie-e00q.r",
       "name": "69-04 魔力增幅",
+      "icon": "assets/icons/abilities/godie-e00q.r.webp",
       "description": "[被動]\n0秒冷卻時間\n\n打開魔術迴路，永久性的增加法力500點以及生命再生8點。",
       "slot": "R",
       "castType": "self",

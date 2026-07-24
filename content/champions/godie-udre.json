@@ -38,6 +38,7 @@
     "Q": {
       "id": "godie-udre.q",
       "name": "11-01 燒鬼斬",
+      "icon": "assets/icons/abilities/godie-udre.q.webp",
       "description": "[傷害加成]\n0秒冷卻時間\n\n在攻擊敵人時附加10點的火焰擴散傷害。",
       "slot": "Q",
       "castType": "self",
@@ -74,6 +75,7 @@
     "W": {
       "id": "godie-udre.w",
       "name": "11-02 虎狩獵",
+      "icon": "assets/icons/abilities/godie-udre.w.webp",
       "description": "[主動傷害]\n45秒冷卻時間\n\n由背負著2把刀的型態下揮出「斬擊」系招式。據說名稱的由來是因為其傷痕簡直好像老虎的條紋一樣。給予多個對手250傷害並擊暈對手1.25秒。",
       "slot": "W",
       "castType": "ground",
@@ -125,6 +127,7 @@
     "E": {
       "id": "godie-udre.e",
       "name": "11-03 鬼氣九刀流-阿修羅壹霧銀",
+      "icon": "assets/icons/abilities/godie-udre.e.webp",
       "description": "[主動傷害]\n45秒冷卻時間\n\n以鬥氣創造出鬼神阿修羅幻象的\"鬼氣九刀流 阿修羅\"，使出將對手斬擊都能霧化的必殺技\"阿修羅 壹霧銀\"，使敵人受到300傷害，並暈眩1秒，只能對英雄施展。\n\n點選三刀流持續期間，可增加威力(力量*2)\n點選武裝霸王色持續期間，可增加威力(力量*3)，並可與三刀流效果疊加",
       "slot": "E",
       "castType": "targeted",
@@ -175,6 +178,7 @@
     "R": {
       "id": "godie-udre.r",
       "name": "11-04 三千世界",
+      "icon": "assets/icons/abilities/godie-udre.r.webp",
       "description": "[主動傷害]\n60秒冷卻時間\n\n三刀流的奧義，也是索隆最強的招式。把3把刀像風車般旋轉的姿態，會產生強勁的風。然後使出的斬刀幾乎沒可能看穿。給予直線單位333傷害。\n\n點選三刀流持續期間，可增加威力(力量*3)\n點選武裝霸王色持續期間，可增加威力(力量*5)，並可與三刀流效果疊加",
       "slot": "R",
       "castType": "self",

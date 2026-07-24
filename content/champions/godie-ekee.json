@@ -83,6 +83,7 @@
     "W": {
       "id": "godie-ekee.w",
       "name": "93-02 抽點名",
+      "icon": "assets/icons/abilities/godie-ekee.w.webp",
       "description": "[被動]\n0秒冷卻時間\n\n點名是件很無聊的事，可是不點名學生又不來，所以叫獸們發明了隨機抽點，每過15秒就對600範圍內隨機一個敵人造成140點傷害。",
       "slot": "W",
       "castType": "self",
@@ -119,6 +120,7 @@
     "E": {
       "id": "godie-ekee.e",
       "name": "93-03 這次考試很簡單",
+      "icon": "assets/icons/abilities/godie-ekee.e.webp",
       "description": "[輔助]\n50秒冷卻時間\n\n小考的時候叫獸都會跟學生說考試很簡單，讓學生放鬆戒心，導致發生致命的錯誤，暫時抽取目標現有生命及瑪那值10%，並於8秒後歸還。",
       "slot": "E",
       "castType": "ground",
@@ -170,6 +172,7 @@
     "R": {
       "id": "godie-ekee.r",
       "name": "93-04 當掉",
+      "icon": "assets/icons/abilities/godie-ekee.r.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n威力滿點的宣言，對目標造成500點精神攻擊，並使其僵直2秒。",
       "slot": "R",
       "castType": "targeted",

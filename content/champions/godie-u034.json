@@ -38,6 +38,7 @@
     "Q": {
       "id": "godie-u034.q",
       "name": "06-01 山形修煉-放",
+      "icon": "assets/icons/abilities/godie-u034.q.webp",
       "description": "[被動]\n0秒冷卻時間\n\n攻擊敵人時，4%機率施展放出系能力，由掌心放出念彈造成一直線敵人150點傷害，並增強「猜猜拳-布」的威力為300點。",
       "slot": "Q",
       "castType": "self",
@@ -74,6 +75,7 @@
     "W": {
       "id": "godie-u034.w",
       "name": "06-02 山形修煉-變",
+      "icon": "assets/icons/abilities/godie-u034.w.webp",
       "description": "[被動]\n0秒冷卻時間\n\n攻擊時有25%機率會發動變化系能力，將念化為刀刃攻擊目標造成75點額外傷害。並增強「猜猜拳-剪刀」的威力為350。",
       "slot": "W",
       "castType": "self",
@@ -110,6 +112,7 @@
     "E": {
       "id": "godie-u034.e",
       "name": "06-03 山形修煉-強",
+      "icon": "assets/icons/abilities/godie-u034.e.webp",
       "description": "[被動]\n0秒冷卻時間\n\n不斷地修煉強化系能力，能讓自身攻防能力大幅上升，永久性的提昇力量7點。並增強「猜猜拳-石頭」的威力為500點。",
       "slot": "E",
       "castType": "targeted",

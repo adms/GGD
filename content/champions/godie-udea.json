@@ -39,6 +39,7 @@
     "Q": {
       "id": "godie-udea.q",
       "name": "65-01 神出鬼沒",
+      "icon": "assets/icons/abilities/godie-udea.q.webp",
       "description": "[輔助]\n25秒冷卻時間\n\n飛鼠先生可以瞬間移動3300的距離到指定的位置。",
       "slot": "Q",
       "castType": "dash",
@@ -70,6 +71,7 @@
     "W": {
       "id": "godie-udea.w",
       "name": "65-02 寒冰破碎",
+      "icon": "assets/icons/abilities/godie-udea.w.webp",
       "description": "[主動攻擊]\n30秒冷卻時間\n\n飛鼠先生在劍術學院結業創造之劍術，成功融合寒冰魔法與劍擊，能給予冰爆和劍斬衝擊雙重傷害，造成一直線敵人150點傷害，附帶隨機冰爆250傷害。",
       "slot": "W",
       "castType": "targeted",
@@ -117,6 +119,7 @@
     "E": {
       "id": "godie-udea.e",
       "name": "65-03 魔法膨脹",
+      "icon": "assets/icons/abilities/godie-udea.e.webp",
       "description": "[主動攻擊]\n25秒冷卻時間\n\n施咒補充敵方部隊法力的缺陷，但是過度膨脹的法力將會使目標暈眩1秒並造成生命傷害，傷害公式為目標(法力上限-法力值)*1倍魔法傷害。",
       "slot": "E",
       "castType": "targeted",
@@ -170,6 +173,7 @@
     "R": {
       "id": "godie-udea.r",
       "name": "65-04 天譴",
+      "icon": "assets/icons/abilities/godie-udea.r.webp",
       "description": "[主動攻擊]\n90秒冷卻時間\n\n怒氣凝聚為閃電殺暴附近的敵人，對周圍500範圍內的所有敵人放出閃雷造成250點法力損失和150點傷害並傳遞16次，聚集越多敵人則威力越強，另外給予指定目標額外500點傷害。",
       "slot": "R",
       "castType": "dash",

@@ -38,6 +38,7 @@
     "Q": {
       "id": "godie-nplh.q",
       "name": "16-03 無無明亦無",
+      "icon": "assets/icons/abilities/godie-nplh.q.webp",
       "description": "[主動攻擊]\n40秒冷卻時間\n\n使對方瑪那無效化的招式，可以燒掉對方部隊350點瑪那。並在消耗瑪那的同時，給予目標肉體同等傷害。\n在附身合體的狀態下加倍瑪那耗損，並緩慢敵人2秒且解除目標增幅",
       "slot": "Q",
       "castType": "skillshot",
@@ -81,6 +82,7 @@
     "W": {
       "id": "godie-nplh.w",
       "name": "16-01 超．占事略決",
+      "icon": "assets/icons/abilities/godie-nplh.w.webp",
       "description": "[魔法書]\n0秒冷卻時間\n\n內隱藏著許多失傳的法術。\n等級一可習得天雷 (主動攻擊)",
       "slot": "W",
       "castType": "targeted",
@@ -125,6 +127,7 @@
     "E": {
       "id": "godie-nplh.e",
       "name": "16-04 劍之精靈",
+      "icon": "assets/icons/abilities/godie-nplh.e.webp",
       "description": "[召喚]\n65秒冷卻時間\n\n召喚肉肉的阿彌陀丸來幫助麻倉葉，附身合體可暫時增加麻倉葉10點全能力。",
       "slot": "E",
       "castType": "targeted",
@@ -166,6 +169,7 @@
     "R": {
       "id": "godie-nplh.r",
       "name": "16-02 阿彌陀流真空佛陀斬",
+      "icon": "assets/icons/abilities/godie-nplh.r.webp",
       "description": "[主動攻擊]\n30秒冷卻時間\n\n阿彌陀流真空佛陀斬會以高超的拔刀術攻擊對方造成200點傷害並癱瘓行動1.5秒。\n在在附身合體的狀態下將會附加強化版的式神召來，給予敵人更強的傷害。",
       "slot": "R",
       "castType": "targeted",

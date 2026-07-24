@@ -37,6 +37,7 @@
     "Q": {
       "id": "godie-huth.q",
       "name": "28-01 吃掉你",
+      "icon": "assets/icons/abilities/godie-huth.q.webp",
       "description": "[主動攻擊]\n35秒冷卻時間\n張開大口吃掉目標，把敵人變成養分。\n\n每吃掉6隻增加1點力量。",
       "slot": "Q",
       "castType": "targeted",
@@ -83,6 +84,7 @@
     "W": {
       "id": "godie-huth.w",
       "name": "28-02 把你變成餅乾",
+      "icon": "assets/icons/abilities/godie-huth.w.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n把低等的敵人變成餅乾，吃下餅乾可以回復體力500點，也會對目標造成250傷害。",
       "slot": "W",
       "castType": "targeted",
@@ -136,6 +138,7 @@
     "E": {
       "id": "godie-huth.e",
       "name": "28-03 分身",
+      "icon": "assets/icons/abilities/godie-huth.e.webp",
       "description": "[輔助]\n60秒冷卻時間\n\n創造出2個普烏的實體來攻擊敵人，具有30%攻擊力，並除掉身上的所有法術效果，可持續10秒。",
       "slot": "E",
       "castType": "targeted",
@@ -180,6 +183,7 @@
     "R": {
       "id": "godie-huth.r",
       "name": "28-04 破滅能量彈",
+      "icon": "assets/icons/abilities/godie-huth.r.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n指定一區域給予強大的重力能量彈，造成該區域單位行動速度降低35%，並且每秒受到300點傷害，持續5秒。",
       "slot": "R",
       "castType": "targeted",

@@ -79,5 +79,5 @@ composer fire is ever parked off-world, and tighten `abilityCast` to isFinitePos
 | av-04 | #131: an EX abilityCast whose caster pos is NaN/Infinity fires NO composer (no white burst parked off-world); a finite pos still fires the ex pop | ability-vfx-131 | unit | done |
 | av-05 | every champion Q/W/E/R slot has a standalone twin — the mirror sweep never skips a slot and never passes vacuously | ability-mirror-pairs | unit | done |
 | av-06 | ZERO fields present in BOTH the embedded and standalone copy with different values, across all 452 pairs; every violation collected into one failure, not fail-fast | ability-mirror-no-conflict | regression | done |
-| av-07 | only `schema` + `icon` may live on one side of the mirror; a new standalone-only field means a fresh one-sided write path | ability-mirror-one-sided | regression | done |
+| av-07 | only `schema` may live on one side of the mirror; a new standalone-only field means a fresh one-sided write path. (`icon` was exempt until 2026-07-24 — the AI icon batch had written 416 standalone-only values; exemption removed once the icon mirror was synced, see `docs/todo/icons.md`) | ability-mirror-one-sided | regression | done |
 | av-08 | #79 mirror gap: no embedded `vfxKey` still parked on `fx.ember-bolt-cast` while its standalone twin moved to a `fx.prim.*` primitive | ability-mirror-vfxkey | regression | done |

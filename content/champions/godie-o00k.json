@@ -38,6 +38,7 @@
     "Q": {
       "id": "godie-o00k.q",
       "name": "86-01 十萬伏特",
+      "icon": "assets/icons/abilities/godie-o00k.q.webp",
       "description": "[主動攻擊]\n35秒冷卻時間\n\n皮卡的得意絕招，使出電擊攻擊6個敵人，每個敵人傷害175。",
       "slot": "Q",
       "castType": "ground",
@@ -86,6 +87,7 @@
     "W": {
       "id": "godie-o00k.w",
       "name": "86-02 電光一閃",
+      "icon": "assets/icons/abilities/godie-o00k.w.webp",
       "description": "[輔助]\n25秒冷卻時間\n\n讓皮卡娘以疾快的速度移動進出600的距離到指定的位置。",
       "slot": "W",
       "castType": "dash",
@@ -119,6 +121,7 @@
     "E": {
       "id": "godie-o00k.e",
       "name": "86-03 神鳴",
+      "icon": "assets/icons/abilities/godie-o00k.e.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n皮卡娘大絕招之一，將雷電集中在手上，再放射出去，可造成前方一直線400點的傷害。",
       "slot": "E",
       "castType": "ground",
@@ -164,6 +167,7 @@
     "R": {
       "id": "godie-o00k.r",
       "name": "86-04 打雷絕招",
+      "icon": "assets/icons/abilities/godie-o00k.r.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n放出全身積蓄的電壓瘋狂電擊範圍300距離內的敵人並使之暈眩0.5秒，每個敵人將會受到雷擊造成150點傷害並向旁邊的單位傳遞，共傳遞16次，聚集越多敵人則造成的傷害會越大。",
       "slot": "R",
       "castType": "ground",

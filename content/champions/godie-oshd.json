@@ -37,6 +37,7 @@
     "Q": {
       "id": "godie-oshd.q",
       "name": "29-01 鐵砂掌",
+      "icon": "assets/icons/abilities/godie-oshd.q.webp",
       "description": "[主動攻擊]\n20秒冷卻時間\n\n源於泗水鐵掌幫，威力無窮，任何人被擊中，五臟俱碎而導致送醫途中不治。減少護甲3點；對主要目標造成每秒25點的傷害；對附近目標造成較輕的5點傷害，持續8秒。",
       "slot": "Q",
       "castType": "targeted",
@@ -81,6 +82,7 @@
     "W": {
       "id": "godie-oshd.w",
       "name": "29-02 鬼王流星雨",
+      "icon": "assets/icons/abilities/godie-oshd.w.webp",
       "description": "[主動攻擊]\n45秒冷卻時間\n\n呼喚數波流星雨來傷害附近的敵方部隊。每一波可以造成150點傷害，可持續6秒。",
       "slot": "W",
       "castType": "ground",
@@ -126,6 +128,7 @@
     "E": {
       "id": "godie-oshd.e",
       "name": "29-03 有功夫無懦夫",
+      "icon": "assets/icons/abilities/godie-oshd.e.webp",
       "description": "[輔助]\n60秒冷卻時間\n\n聽到這句話的人，驚覺只要有功夫就沒有懦夫，啟發四周人的功夫之心，而得到無敵神力，讓附近一定區域的友方部隊，統統進入無敵狀態，但是本身並非無敵，持續3秒。",
       "slot": "E",
       "castType": "targeted",
@@ -170,6 +173,7 @@
     "R": {
       "id": "godie-oshd.r",
       "name": "29-04 電光毒龍鑽",
+      "icon": "assets/icons/abilities/godie-oshd.r.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n源於龍虎門的王小虎，原本只是一種幻想，但是經過鬼王達的改良已經成為一種必殺技，對附近的敵方地面部隊造成合計最多700點的傷害，單體攻擊400，並擊暈他們1秒，對建築物有80%傷害。",
       "slot": "R",
       "castType": "ground",

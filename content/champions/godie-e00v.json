@@ -38,6 +38,7 @@
     "Q": {
       "id": "godie-e00v.q",
       "name": "84-01 冷笑話",
+      "icon": "assets/icons/abilities/godie-e00v.q.webp",
       "description": "[輔助]\n15秒冷卻時間\n\n說一個冷笑話，使範圍600內的敵人都被冷到無法動彈，持續0.5秒。",
       "slot": "Q",
       "castType": "ground",
@@ -71,6 +72,7 @@
     "W": {
       "id": "godie-e00v.w",
       "name": "84-02 保齡球",
+      "icon": "assets/icons/abilities/godie-e00v.w.webp",
       "description": "[主動攻擊]\n25秒冷卻時間\n\n百畝森林裡非常流行的遊戲，以飛快的速度迴旋衝撞，彈開路徑上所有的東西，但維尼常常忘記收爪子而傷到人，造成力量*2+150點傷害。如果撞到東西停下來的話生氣的維尼會把周圍部隊都彈開，並給予50點傷害",
       "slot": "W",
       "castType": "targeted",
@@ -117,6 +119,7 @@
     "E": {
       "id": "godie-e00v.e",
       "name": "84-03 蜜汁",
+      "icon": "assets/icons/abilities/godie-e00v.e.webp",
       "description": "[輔助]\n50秒冷卻時間\n\n出自好心提醒對方，但不知什麼原因卻會造成目標羞愧的說不出話而禁言，降低攻擊速度30%以及移動速度50%，並且每秒減少法力60點。持續3秒。",
       "slot": "E",
       "castType": "targeted",
@@ -161,6 +164,7 @@
     "R": {
       "id": "godie-e00v.r",
       "name": "84-04 給我蜂蜜",
+      "icon": "assets/icons/abilities/godie-e00v.r.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n抓狂的小熊狠狠地抓住對方，接著賞他幾個熊掌吃，每次打擊給予暈眩傷害，最後一擊會將對方彈開1000距離，造成總共500+力量*1點傷害。",
       "slot": "R",
       "castType": "targeted",

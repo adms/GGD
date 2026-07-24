@@ -37,6 +37,7 @@
     "Q": {
       "id": "godie-e00k.q",
       "name": "19-01 斷末",
+      "icon": "assets/icons/abilities/godie-e00k.q.webp",
       "description": "[被動]\n0秒冷卻時間\n\n安云從小就被訓練一擊就能斬殺敵人不留活口，因此斬殺時有8%的機率，造成正常攻擊2.2倍。",
       "slot": "Q",
       "castType": "self",
@@ -73,6 +74,7 @@
     "W": {
       "id": "godie-e00k.w",
       "name": "19-02 迴切",
+      "icon": "assets/icons/abilities/godie-e00k.w.webp",
       "description": "[輔助]\n60秒冷卻時間\n\n安云能在各種角度流利的旋轉刀身砍殺敵人，並能感知敵意抵擋負性指定法術，給予周圍敵人75點的傷害，可直接於原地施展。",
       "slot": "W",
       "castType": "self",
@@ -107,6 +109,7 @@
     "E": {
       "id": "godie-e00k.e",
       "name": "19-03 瞬切百殺",
+      "icon": "assets/icons/abilities/godie-e00k.e.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n當安云開始殺戮時，刀子動的比反射神經還快，將會對附近的敵人進行斬殺，給予(40+敏捷*1)傷害，共八次斬殺。\n\n(迴切1秒內瞬切百殺附加力量*0.5傷害)",
       "slot": "E",
       "castType": "ground",
@@ -152,6 +155,7 @@
     "R": {
       "id": "godie-e00k.r",
       "name": "19-04 幻影暗殺",
+      "icon": "assets/icons/abilities/godie-e00k.r.webp",
       "description": "[被動]\n0秒冷卻時間\n\n當安云站在敵方背後攻擊的時候，能發揮刺客暗殺的實力，給予額外(敏捷*1)+100點傷害。",
       "slot": "R",
       "castType": "self",

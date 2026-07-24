@@ -38,6 +38,7 @@
     "Q": {
       "id": "sela.q",
       "name": "Ember Bolt",
+      "icon": "assets/icons/abilities/sela.q.webp",
       "slot": "Q",
       "castType": "skillshot",
       "maxRank": 5,
@@ -89,6 +90,7 @@
     "W": {
       "id": "sela.w",
       "name": "Cinder Ward",
+      "icon": "assets/icons/abilities/sela.w.webp",
       "slot": "W",
       "castType": "self",
       "maxRank": 5,
@@ -146,6 +148,7 @@
     "E": {
       "id": "sela.e",
       "name": "Scorch Ring",
+      "icon": "assets/icons/abilities/sela.e.webp",
       "slot": "E",
       "castType": "ground",
       "maxRank": 5,
@@ -199,6 +202,7 @@
     "R": {
       "id": "sela.r",
       "name": "Firestorm",
+      "icon": "assets/icons/abilities/sela.r.webp",
       "slot": "R",
       "castType": "ground",
       "maxRank": 3,

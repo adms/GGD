@@ -39,6 +39,7 @@
     "Q": {
       "id": "godie-usyl.q",
       "name": "49-01 遮斷獵殺",
+      "icon": "assets/icons/abilities/godie-usyl.q.webp",
       "description": "[輔助]\n45秒冷卻時間\n\n異形鎖定目標後將會放慢移動速度15%而遮斷氣息的接近對手，但是會造成額外350點的背刺傷害，持續25秒。",
       "slot": "Q",
       "castType": "self",
@@ -77,6 +78,7 @@
     "W": {
       "id": "godie-usyl.w",
       "name": "49-02 腐蝕毒液",
+      "icon": "assets/icons/abilities/godie-usyl.w.webp",
       "description": "[被動]\n0秒冷卻時間\n\n異形的每一次攻擊都能附帶些許毒性的腐蝕毒液，造成10毒傷，並且緩慢攻擊速度15%。",
       "slot": "W",
       "castType": "targeted",
@@ -118,6 +120,7 @@
     "E": {
       "id": "godie-usyl.e",
       "name": "49-03 蛻變",
+      "icon": "assets/icons/abilities/godie-usyl.e.webp",
       "description": "[被動]\n0秒冷卻時間\n\n加成遠距離攻擊傷害5%，並且每殺死一個敵方的英雄可以讓異形的敏捷獲得1點成長上限為140。",
       "slot": "E",
       "castType": "targeted",
@@ -162,6 +165,7 @@
     "R": {
       "id": "godie-usyl.r",
       "name": "49-04 母體",
+      "icon": "assets/icons/abilities/godie-usyl.r.webp",
       "description": "[招喚]\n70秒冷卻時間\n\n招換初級的異形母體，每7秒生出嫩嫩的小異形，持續25秒。",
       "slot": "R",
       "castType": "targeted",

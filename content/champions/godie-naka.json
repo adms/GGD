@@ -37,6 +37,7 @@
     "Q": {
       "id": "godie-naka.q",
       "name": "27-01 忍法風魔手裡劍",
+      "icon": "assets/icons/abilities/godie-naka.q.webp",
       "description": "[主動攻擊]\n45秒冷卻時間\n\n使用兩發風魔手裡劍以華麗的軌道攻擊敵人，造成100點傷害。",
       "slot": "Q",
       "castType": "targeted",
@@ -81,6 +82,7 @@
     "W": {
       "id": "godie-naka.w",
       "name": "27-02 忍法鬼穿刺",
+      "icon": "assets/icons/abilities/godie-naka.w.webp",
       "description": "[主動攻擊]\n35秒冷卻時間\n\n忍法鬼穿刺可以攻擊一直線敵人，將其打到空中給予200點損害，落地後暈眩1秒。",
       "slot": "W",
       "castType": "skillshot",
@@ -130,6 +132,7 @@
     "E": {
       "id": "godie-naka.e",
       "name": "27-03 忍法千變萬化之刀",
+      "icon": "assets/icons/abilities/godie-naka.e.webp",
       "description": "[傷害加成]\n60秒冷卻時間\n\n窮究一切武藝和自然元素的精隨，讓小次郎悟出深奧的忍法理論，可以隨機以不同的屬性來攻擊他的敵人，最多6次攻擊，持續30秒。\n\n火屬性給予20點傷害，持續15秒\n冰屬性緩慢敵人2.0秒\n地屬性暈眩敵人0.75秒\n風屬性給予多個敵人130點傷害\n\n本技能為法球效應\n本技能只對英雄有效",
       "slot": "E",
       "castType": "self",
@@ -166,6 +169,7 @@
     "R": {
       "id": "godie-naka.r",
       "name": "27-04 忍法暗殺奧義-飛燕閃",
+      "icon": "assets/icons/abilities/godie-naka.r.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n忍法暗殺術最高奧義，以肉眼難以察覺的速度衝刺到前方突刺，造成指定單位敏捷*3+450點傷害，暈眩時間1秒。",
       "slot": "R",
       "castType": "targeted",

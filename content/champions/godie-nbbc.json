@@ -38,6 +38,7 @@
     "Q": {
       "id": "godie-nbbc.q",
       "name": "08-01 雙龍紋",
+      "icon": "assets/icons/abilities/godie-nbbc.q.webp",
       "description": "[輔助]\n60秒冷卻時間\n\n繼承父親巴藍以及自身的龍紋章，使用雙龍紋將會使小呆的增加50點傷害，可持續9秒",
       "slot": "Q",
       "castType": "targeted",
@@ -81,6 +82,7 @@
     "W": {
       "id": "godie-nbbc.w",
       "name": "08-02 萊丁快速劍",
+      "icon": "assets/icons/abilities/godie-nbbc.w.webp",
       "description": "[主動攻擊]\n30秒冷卻時間\n\n使用萊丁(閃電咒文)複合阿邦快速劍使出的魔法劍術，造成150點傷害並瞬間移動到敵方面前，周圍敵人也會受到些許雷擊傷害。",
       "slot": "W",
       "castType": "targeted",
@@ -125,6 +127,7 @@
     "E": {
       "id": "godie-nbbc.e",
       "name": "08-03 龍鬥氣砲咒文",
+      "icon": "assets/icons/abilities/godie-nbbc.e.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n龍騎士的得意技之一，發動龍紋章之力使出咒文迫擊砲，造成攻擊線地面部隊450點傷害。",
       "slot": "E",
       "castType": "skillshot",
@@ -168,6 +171,7 @@
     "R": {
       "id": "godie-nbbc.r",
       "name": "08-04 阿邦快速劍X",
+      "icon": "assets/icons/abilities/godie-nbbc.r.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n小呆獨自思考和特訓中，所創出的新阿邦式快速劍，將A式(Arrow)與B式(Break)兩種快速劍同時使用(A+B)，造成威力強大的兩段式傷害( X ) ，造成一直線敵人450點傷害，距離550交叉在X中給予(技能等級*敏捷*7)的額外傷害，是個令人錯愕的超級必殺劍法。",
       "slot": "R",
       "castType": "targeted",

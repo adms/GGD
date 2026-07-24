@@ -38,6 +38,7 @@
     "Q": {
       "id": "godie-opgh.q",
       "name": "32-01 一騎槍閃",
+      "icon": "assets/icons/abilities/godie-opgh.q.webp",
       "description": "[主動攻擊]\n45秒冷卻時間\n\n將全身的力氣瞬間擊出，直刺敵方造成150點傷害，擊退目標600距離，暈眩1秒。",
       "slot": "Q",
       "castType": "targeted",
@@ -91,6 +92,7 @@
     "W": {
       "id": "godie-opgh.w",
       "name": "32-02 橫掃千軍",
+      "icon": "assets/icons/abilities/godie-opgh.w.webp",
       "description": "[被動]\n0秒冷卻時間\n\n疾風鶴唳的長槍可同時掃蕩傷害周圍敵人，造成10%擴散傷害。",
       "slot": "W",
       "castType": "self",
@@ -127,6 +129,7 @@
     "E": {
       "id": "godie-opgh.e",
       "name": "32-03 閃光龍牙",
+      "icon": "assets/icons/abilities/godie-opgh.e.webp",
       "description": "[主動攻擊]\n45秒冷卻時間\n\n以極快的速度朝對方進行突刺，像是飛龍掃過烈爪一般，造成力量*3+300點傷害，由於威力過於強大，若敵方偏移瞄準地點將不會受到傷害。",
       "slot": "E",
       "castType": "targeted",

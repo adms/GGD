@@ -37,6 +37,7 @@
     "Q": {
       "id": "godie-h001.q",
       "name": "41-01 吸血鬼之吻",
+      "icon": "assets/icons/abilities/godie-h001.q.webp",
       "description": "[主動攻擊]\n45秒冷卻時間\n\n施展邪惡的吸血魔法，將會從敵人身上奪取200點生命來回復自己的體力。",
       "slot": "Q",
       "castType": "targeted",
@@ -84,6 +85,7 @@
     "W": {
       "id": "godie-h001.w",
       "name": "41-02 地裂術",
+      "icon": "assets/icons/abilities/godie-h001.w.webp",
       "description": "[主動攻擊]\n35秒冷卻時間\n中等類型的法術，可以給予一直線敵人200點損害，並造成極短暫的暈眩。",
       "slot": "W",
       "castType": "skillshot",
@@ -133,6 +135,7 @@
     "E": {
       "id": "godie-h001.e",
       "name": "41-03 召喚術",
+      "icon": "assets/icons/abilities/godie-h001.e.webp",
       "description": "[召喚]\n60秒冷卻時間\n\n從一具屍體中召喚5位來自地獄的僕人骷髏斧手，持續40秒。",
       "slot": "E",
       "castType": "targeted",
@@ -180,6 +183,7 @@
     "R": {
       "id": "godie-h001.r",
       "name": "41-04 究極魔法流星雨",
+      "icon": "assets/icons/abilities/godie-h001.r.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n借用火龍巴拉卡斯之力，召喚出許多致命的流星隕石攻擊敵方，每顆隕石造成350點傷害，總共2顆隕石。",
       "slot": "R",
       "castType": "targeted",

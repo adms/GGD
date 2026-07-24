@@ -48,16 +48,20 @@ const SLOTS = ["Q", "W", "E", "R"] as const;
 const PAIR_FLOOR = 452;
 
 /**
- * Fields the standalone doc is ALLOWED to carry alone. These are the sanctioned
+ * Fields the standalone doc is ALLOWED to carry alone. This is the sanctioned
  * steady state, not drift:
  *  - `schema`  — the collection tag only a standalone doc has (452 cases, by design).
- *  - `icon`    — the w3x/AI icon set is written to standalone docs; keeping the two
- *                in step is icons.test.ts's job (`icon-embed-standalone-agree`),
- *                not this suite's.
  * A field name showing up standalone-only that is NOT on this list means a new
  * write path started editing one copy of the mirror — exactly how #79 did it.
+ *
+ * `icon` used to sit on this list. It was the SAME defect as #79's vfxKey, one
+ * class milder: the AI icon set (tools/icon-gen/src/generate.py `patch_icon_field`)
+ * wrote the standalone doc only, so 416 of the 452 slots carried an icon the
+ * embedded copy did not have. Sanctioning it here is what let it stay that way.
+ * The mirror is synced now, so the exemption is gone and the one-sided case can
+ * never come back.
  */
-const STANDALONE_ONLY_OK = new Set(["schema", "icon"]);
+const STANDALONE_ONLY_OK = new Set(["schema"]);
 
 type Doc = Record<string, unknown>;
 

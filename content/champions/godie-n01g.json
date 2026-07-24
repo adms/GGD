@@ -38,6 +38,7 @@
     "Q": {
       "id": "godie-n01g.q",
       "name": "42-01 凍結的大地",
+      "icon": "assets/icons/abilities/godie-n01g.q.webp",
       "description": "[主動攻擊]\n25秒冷卻時間\n\n以一波冰雪轟擊敵方部隊，造成目標250點的傷害，以及周圍目標150點的冰爆傷害。冰冷傷害可以降低部隊的移動與攻擊速度1.2秒。",
       "slot": "Q",
       "castType": "ground",
@@ -89,6 +90,7 @@
     "W": {
       "id": "godie-n01g.w",
       "name": "42-02 吸血祭品",
+      "icon": "assets/icons/abilities/godie-n01g.w.webp",
       "description": "[輔助]\n60秒冷卻時間\n\n犧牲選定的友方不死部隊，並將它50%的生命點數轉化為吸血鬼的生命力，20%轉化為吸血鬼的法力。",
       "slot": "W",
       "castType": "self",
@@ -131,6 +133,7 @@
     "E": {
       "id": "godie-n01g.e",
       "name": "42-03 暗夜吹雪",
+      "icon": "assets/icons/abilities/godie-n01g.e.webp",
       "description": "[主動攻擊]\n45秒冷卻時間\n\n依文潔琳的得意技之一，使用高等冰系黑魔法造成一直線敵方500點傷害。",
       "slot": "E",
       "castType": "skillshot",
@@ -174,6 +177,7 @@
     "R": {
       "id": "godie-n01g.r",
       "name": "42-04 世界終結",
+      "icon": "assets/icons/abilities/godie-n01g.r.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n由暗系永遠的黑暗以及冰系魔法永遠的冰河混合成的超強力魔法,有著足以將上古鬼神一擊殺的恐怖力量，給予隨機12次區域傷害150點以及一次智慧*4點傷害，區域內移動和攻擊速度將會下降50%。",
       "slot": "R",
       "castType": "skillshot",

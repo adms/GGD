@@ -38,6 +38,7 @@
     "Q": {
       "id": "godie-uwar.q",
       "name": "43-01 得罪了方丈還想走",
+      "icon": "assets/icons/abilities/godie-uwar.q.webp",
       "description": "[主動攻擊]\n15秒冷卻時間\n\n得罪了方丈還想走，是為了追殺敵人研發的武技，召喚出扇狀的閃電，擊中3個敵人，每個敵人會受到125傷害。",
       "slot": "Q",
       "castType": "targeted",
@@ -85,6 +86,7 @@
     "W": {
       "id": "godie-uwar.w",
       "name": "43-02 打狗鏟",
+      "icon": "assets/icons/abilities/godie-uwar.w.webp",
       "description": "[被動]\n0秒冷卻時間\n\n天下武功出少林，打狗鏟心法可以幫助在攻擊時有10%機率增加55點破壞力，並有機會將敵人震昏0.1秒。",
       "slot": "W",
       "castType": "self",
@@ -121,6 +123,7 @@
     "E": {
       "id": "godie-uwar.e",
       "name": "43-04 爆裂海景佛跳牆",
+      "icon": "assets/icons/abilities/godie-uwar.e.webp",
       "description": "[主動攻擊]\n45秒冷卻時間\n\n丟出一罐內部裝著炸彈的佛跳牆，接住的人將受到爆炸波及造成700+智慧*3點的強烈傷害。",
       "slot": "E",
       "castType": "dash",
@@ -150,6 +153,7 @@
     "R": {
       "id": "godie-uwar.r",
       "name": "43-03 少林絕學-火雲掌",
+      "icon": "assets/icons/abilities/godie-uwar.r.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n運起深厚的內力，把地板像煎荷包蛋一樣急速加熱，讓地面震動碎裂，每秒對建築物造成每秒150點的劇烈傷害，並在有效範圍與時間之中，讓部隊行動速度降低35%，持續6秒。",
       "slot": "R",
       "castType": "targeted",

@@ -38,6 +38,7 @@
     "Q": {
       "id": "godie-e00j.q",
       "name": "95-01 謝謝指教",
+      "icon": "assets/icons/abilities/godie-e00j.q.webp",
       "description": "[主動傷害]\n25秒冷卻時間\n\n左手是謝謝，右手是指教，談笑間將目標擊飛，每滑行50距離便會受到30點傷害，最遠距離400。被打中的人不會有任何的怨恨，眼神只會透露出如火一般的尊敬。\n\n《龍氣》 - 擊飛的同時將勁力打入目標體內，若因撞到物體而停止時勁力將會爆發，造成範圍傷害80點。",
       "slot": "Q",
       "castType": "targeted",
@@ -91,6 +92,7 @@
     "W": {
       "id": "godie-e00j.w",
       "name": "95-02 大和戰氣",
+      "icon": "assets/icons/abilities/godie-e00j.w.webp",
       "description": "[被動]\n0秒冷卻時間\n\n攻擊時有20%的機會，造成40點額外傷害。\n\n《龍氣》 - 被擊中的單位將會因為痛苦難耐而陷入無法行動的狀態，暈眩0.3秒。",
       "slot": "W",
       "castType": "targeted",
@@ -135,6 +137,7 @@
     "E": {
       "id": "godie-e00j.e",
       "name": "95-03 皇者戰氣第五十重天",
+      "icon": "assets/icons/abilities/godie-e00j.e.webp",
       "description": "[主動攻擊]\n45秒冷卻時間\n\n把發揮到五十重天金黃色的皇者戰氣纏繞在身上，飛行到目標身旁給予沉痛的一擊，給予600點傷害。由於威力過於強大，若敵方偏移瞄準地點將不會受到傷害。\n\n《龍氣》 - 擊中目標後將全身勁力炸開，造成大規模的毀滅性打擊，傷害值等於飛行距離的一半。",
       "slot": "E",
       "castType": "skillshot",
@@ -178,6 +181,7 @@
     "R": {
       "id": "godie-e00j.r",
       "name": "95-04 藍色戰氣一百重天",
+      "icon": "assets/icons/abilities/godie-e00j.r.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n人性本善，當戰氣運轉到最高時，便能驅逐人心中的邪惡，將他的心靈淨化成剛出生純真的樣子，淨化目標並給予600點傷害，同時移除目標300點法力。\n\n《龍氣》 - 揮拳同時用力踏擊地面，造成範圍暈眩0.5秒。",
       "slot": "R",
       "castType": "targeted",

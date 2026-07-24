@@ -37,6 +37,7 @@
     "Q": {
       "id": "godie-e002.q",
       "name": "20-02 感知能力",
+      "icon": "assets/icons/abilities/godie-e002.q.webp",
       "description": "[被動]\n0秒冷卻時間\n\n受到物理攻擊時有7%機率可迴避物理攻擊。",
       "slot": "Q",
       "castType": "self",
@@ -75,6 +76,7 @@
     "W": {
       "id": "godie-e002.w",
       "name": "20-01 風王結界",
+      "icon": "assets/icons/abilities/godie-e002.w.webp",
       "description": "開啟風王結界，每次攻擊消耗 30法力，對目標造成額外10+力量*1倍的傷害，此為法球效應。",
       "slot": "W",
       "castType": "ground",
@@ -117,6 +119,7 @@
     "E": {
       "id": "godie-e002.e",
       "name": "20-03 約束與勝利之劍",
+      "icon": "assets/icons/abilities/godie-e002.e.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n集結了人們的意念而形成的星星的結晶。是一把精鍊的神造兵裝，被譽為「最強的幻想(Last Phantasm)」。\n在聖劍這個分類上位於最頂端的位置。它會將所有者的魔力轉換成光之後收束並加速以增加其動能，可以讓所有者使用出神靈等級的魔法。\n其斬擊看似是放出了一道光帶，但是能讓前方直線敵人受到魔力*0.4+350點傷害。",
       "slot": "E",
       "castType": "skillshot",
@@ -160,6 +163,7 @@
     "R": {
       "id": "godie-e002.r",
       "name": "20-04 Avalon-永恆的理想鄉",
+      "icon": "assets/icons/abilities/godie-e002.r.webp",
       "description": "[輔助]\n60秒冷卻時間\n\nSaber手中握著的石中劍的劍鞘，可以發動傳說中EX級寶具Avalon－永恆的理想鄉，是個可以將任何魔法反彈的最強寶具，使Saber在一定時間內受到技能攻擊時，能夠給予對手強大的反擊，基礎威力為等級*30+力量*5，聚集的敵人越多和敵方技能越高，額外的傷害就越高，承受時間2秒。",
       "slot": "R",
       "castType": "ground",

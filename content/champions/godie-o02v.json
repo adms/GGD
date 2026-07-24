@@ -38,6 +38,7 @@
     "Q": {
       "id": "godie-o02v.q",
       "name": "81-01 Barrel Shot",
+      "icon": "assets/icons/abilities/godie-o02v.q.webp",
       "description": "[主動攻擊]\n30秒冷卻時間\n\n帶有輔助效果的復合高速砲擊，以快速發動的魔力波動封鎖住對手的行動，造成300範圍內的敵人減緩速度80%，持續1秒，爭取砲擊集束時間，其缺點為需要極大的魔力作為高速發射的代價。",
       "slot": "Q",
       "castType": "ground",
@@ -89,6 +90,7 @@
     "W": {
       "id": "godie-o02v.w",
       "name": "81-02 Acxel Shooter",
+      "icon": "assets/icons/abilities/godie-o02v.w.webp",
       "description": "[主動攻擊]\n35秒冷卻時間\n\n「Divine Shooter」的應用型。狙擊精度、靈彈威力、貫穿力、彈速都得到了大幅度的提升。但同時，使用者將無法在移動中使用此魔法。每道靈彈造成250+智慧*3點傷害。",
       "slot": "W",
       "castType": "skillshot",
@@ -135,6 +137,7 @@
     "E": {
       "id": "godie-o02v.e",
       "name": "81-03 Divine Buster Extention",
+      "icon": "assets/icons/abilities/godie-o02v.e.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n最大射程與彈速均相當優秀的砲擊，即使經過長距離飛行其精準度和威力也不會衰退，為奈葉的主砲之一。砲擊造成一直線上的敵方400點傷害。",
       "slot": "E",
       "castType": "targeted",
@@ -179,6 +182,7 @@
     "R": {
       "id": "godie-o02v.r",
       "name": "81-04 Starlight Breaker Plus",
+      "icon": "assets/icons/abilities/godie-o02v.r.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n集結周遭的魔力來放出巨大砲擊的集束型砲擊魔法，以長時間的充能換取了強大的破壞力以及破壞範圍，造成敵方400點傷害並暈眩1秒，為奈葉最強的攻擊魔法。",
       "slot": "R",
       "castType": "ground",

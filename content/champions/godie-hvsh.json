@@ -38,6 +38,7 @@
     "Q": {
       "id": "godie-hvsh.q",
       "name": "48-01 魔法鎖鏈",
+      "icon": "assets/icons/abilities/godie-hvsh.q.webp",
       "description": "[主動攻擊]\n25秒冷卻時間\n\n使用鎖鏈將路線上的部隊拉回自己身旁，並受到150的傷害。",
       "slot": "Q",
       "castType": "targeted",
@@ -82,6 +83,7 @@
     "W": {
       "id": "godie-hvsh.w",
       "name": "48-02 心眼",
+      "icon": "assets/icons/abilities/godie-hvsh.w.webp",
       "description": "[被動]\n0秒冷卻時間\n\n心眼讓梅杜莎有12%的機會閃避攻擊。",
       "slot": "W",
       "castType": "self",
@@ -118,6 +120,7 @@
     "E": {
       "id": "godie-hvsh.e",
       "name": "48-03 鮮血神殿",
+      "icon": "assets/icons/abilities/godie-hvsh.e.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n召喚一個嗜血的結界，每秒可以損傷敵方部隊75生命，降低攻擊速度50%，每秒受到傷害的部隊可恢復Rider1%的生命，每殺死14個部隊則增加Rider1點全能力，可持續10秒。",
       "slot": "E",
       "castType": "targeted",
@@ -162,6 +165,7 @@
     "R": {
       "id": "godie-hvsh.r",
       "name": "48-04 騎英之疆繩",
+      "icon": "assets/icons/abilities/godie-hvsh.r.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n招喚飛馬以超快的速度衝擊前方，對指定地點上的地面部隊造成敏捷*3+300的傷害。",
       "slot": "R",
       "castType": "targeted",

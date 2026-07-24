@@ -38,6 +38,7 @@
     "Q": {
       "id": "godie-h01u.q",
       "name": "80-01 天下無雙",
+      "icon": "assets/icons/abilities/godie-h01u.q.webp",
       "description": "[被動]\n0秒冷卻時間\n\n亂世中呂布孤傲叛逆的個性，於戰鬥中追求最高戰力，犧牲3點防禦力，增進25點攻擊力。\n提升飛將神弓的攻擊加成上限為5次",
       "slot": "Q",
       "castType": "self",
@@ -122,6 +123,7 @@
     "W": {
       "id": "godie-h01u.w",
       "name": "80-02 弒鬼神",
+      "icon": "assets/icons/abilities/godie-h01u.w.webp",
       "description": "[主動攻擊]\n35秒冷卻時間\n\n氣貫長槍，以電光石火之速回旋猛刺，其勢威猛，似可弒殺鬼神，造成直線450距離敵方部隊150點傷害。",
       "slot": "W",
       "castType": "skillshot",
@@ -168,6 +170,7 @@
     "E": {
       "id": "godie-h01u.e",
       "name": "80-03 鬼神烈戟",
+      "icon": "assets/icons/abilities/godie-h01u.e.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n武將殺氣凝聚為無堅不摧的巨大畫戟形象，造成範圍500內敵人350+(力量*3)點傷害。重擊敵軍的同時，氣勁化為千萬粉蝶形象追魂噬骨，並減少敵人防禦3點，持續3秒。",
       "slot": "E",
       "castType": "ground",
@@ -260,6 +263,7 @@
     "R": {
       "id": "godie-h01u.r",
       "name": "80-04 赤兔咆哮",
+      "icon": "assets/icons/abilities/godie-h01u.r.webp",
       "description": "[主動攻擊]\n15秒冷卻時間\n\n招喚赤兔馬人馬合一，於亂世中有一夫當關的氣勢，可以提升自身跑速10%並給予週遭450範圍內敵人每0.2秒10點傷害，攻擊時有20%使出弒鬼神，被攻擊時也有10%機率使出弒鬼神反擊，每秒消耗75點瑪那。",
       "slot": "R",
       "castType": "skillshot",

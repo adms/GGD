@@ -37,6 +37,7 @@
     "Q": {
       "id": "godie-hvwd.q",
       "name": "02-01 破魔之箭",
+      "icon": "assets/icons/abilities/godie-hvwd.q.webp",
       "description": "[法球效應]\n0秒冷卻時間\n\n桔梗擁有極強力的淨化能力，使敵人受到25點傷害的同時流失法力。\n本技能為法球效應",
       "slot": "Q",
       "castType": "self",
@@ -73,6 +74,7 @@
     "W": {
       "id": "godie-hvwd.w",
       "name": "02-02 明鏡止水",
+      "icon": "assets/icons/abilities/godie-hvwd.w.webp",
       "description": "[靈氣]\n0秒冷卻時間\n\n明鏡止水可以讓桔梗的弓箭威力有7%的遠距攻擊傷害加成。",
       "slot": "W",
       "castType": "self",
@@ -154,6 +156,7 @@
     "R": {
       "id": "godie-hvwd.r",
       "name": "02-04 百鬼夜行",
+      "icon": "assets/icons/abilities/godie-hvwd.r.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n招換6位式神，吸取附近敵軍部隊的生命能量。當他們回到身邊時，他們會將從犧牲者身上吸取的生命能量，用於補充生命值 。持續時間8秒。",
       "slot": "R",
       "castType": "targeted",

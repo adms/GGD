@@ -37,6 +37,7 @@
     "Q": {
       "id": "godie-e012.q",
       "name": "47-01 飛龍閃",
+      "icon": "assets/icons/abilities/godie-e012.q.webp",
       "description": "[主動攻擊]\n35秒冷卻時間\n\n高速拔刀使刀柄飛向對手造成150點傷害並擊暈1.0秒的牽制劍術，施展範圍400。",
       "slot": "Q",
       "castType": "targeted",
@@ -81,6 +82,7 @@
     "W": {
       "id": "godie-e012.w",
       "name": "47-02 神速",
+      "icon": "assets/icons/abilities/godie-e012.w.webp",
       "description": "[輔助]\n25秒冷卻時間\n\n以瞬間移動600的距離到指定的位置。",
       "slot": "W",
       "castType": "dash",
@@ -114,6 +116,7 @@
     "E": {
       "id": "godie-e012.e",
       "name": "47-03 九頭龍閃",
+      "icon": "assets/icons/abilities/godie-e012.e.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n使出飛天御劍流快速拔刀術，擊退前方範圍敵人並造成目標暫時性的速度減緩，附加連續九次共200+75*9點傷害。",
       "slot": "E",
       "castType": "ground",
@@ -165,6 +168,7 @@
     "R": {
       "id": "godie-e012.r",
       "name": "47-04 天翔龍閃",
+      "icon": "assets/icons/abilities/godie-e012.r.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n施展飛天御劍流最強奧義天翔龍閃，每秒可使周圍受到500點傷害，施展期間劍心為魔法免疫狀態，持續2秒。",
       "slot": "R",
       "castType": "ground",

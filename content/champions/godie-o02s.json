@@ -38,6 +38,7 @@
     "Q": {
       "id": "godie-o02s.q",
       "name": "53-02 強化炸彈陣",
+      "icon": "assets/icons/abilities/godie-o02s.q.webp",
       "description": "[主動攻擊]\n35秒冷卻時間\n\n施展火焰爆裂魔法傷害敵方部隊，燒傷150點。",
       "slot": "Q",
       "castType": "ground",
@@ -83,6 +84,7 @@
     "W": {
       "id": "godie-o02s.w",
       "name": "53-01 獸王牙操彈",
+      "icon": "assets/icons/abilities/godie-o02s.w.webp",
       "description": "[傷害加成]\n35秒冷卻時間\n\n借獸王之力施展之咒文，可依施法者思考操縱攻擊，光帶周圍每秒造成250+智慧*3點傷害。",
       "slot": "W",
       "castType": "skillshot",
@@ -126,6 +128,7 @@
     "E": {
       "id": "godie-o02s.e",
       "name": "53-04 暴爆咒",
+      "icon": "assets/icons/abilities/godie-o02s.e.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n火系黑魔法的最高等攻擊法術，需要的魔力相當驚人，賢者等級以上才能施展的毀滅性咒文，火焰爆裂會以施術者為中心逆時針放射爆炸給予135+智慧*2.0點傷害。",
       "slot": "E",
       "castType": "ground",
@@ -180,6 +183,7 @@
     "R": {
       "id": "godie-o02s.r",
       "name": "53-03 破法對咒",
+      "icon": "assets/icons/abilities/godie-o02s.r.webp",
       "description": "[輔助]\n27秒冷卻時間\n\n使用強大的魔力展開結界承受住範圍500內650點的法術傷害，持續6秒。",
       "slot": "R",
       "castType": "ground",

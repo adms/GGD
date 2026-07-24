@@ -1337,7 +1337,7 @@ client-playtest lane（port 5205）實測：按下 **Play offline vs bots** 一�
 |---|---|---|---|
 | `vfxKey` | **192** | 0 | 0 |
 | `schema` | 0 | 452（設計如此，audit 本來就跳過） | 0 |
-| `icon` | 0 | 416（`icon-embed-standalone-agree` 的守備範圍，非本次） | 0 |
+| `icon` | 0 | 416（`icon-embed-standalone-agree` 的守備範圍，非本次；**已於同日下一段補完**） | 0 |
 
 192 條全部是 embedded 還停在舊佔位：`fx.ember-bolt-cast`×175、`fx.firestorm`×9、
 `fx.cinder-ward`×6、`fx.root-snare`×1、`fx.scorch-ring`×1。分佈在 48 個 champion 檔。
@@ -1368,3 +1368,59 @@ client-playtest lane（port 5205）實測：按下 **Play offline vs bots** 一�
 反向驗證：把 content/ 退回修前狀態跑這套守衛 → `ability-mirror-no-conflict` 與
 `ability-mirror-vfxkey` 各紅一次，訊息 `192 embedded field(s) contradict their standalone twin
 across 452 pairs [vfxKey×192]`。守衛不是真空綠的。
+
+---
+
+## 2026-07-24（同日第二則）— 同一面鏡子的另一半：`icon` 416/452 只寫了 standalone（已補完 + 守衛收緊）
+
+上一段修的是 `vfxKey`（**兩邊都有、值不同**）。同一次掃描其實已經量到 `icon` 有 416 條
+**只有 standalone 有**，當時判給 `icon-embed-standalone-agree` 而沒動。實際去跑那條守衛：
+**它是紅的**，而且不只紅一條。
+
+### 問題（量測）
+
+| 類別 | 452 對 QWER 之中 | 說明 |
+|---|---|---|
+| 兩邊都有 | 12 | 全是 `.png`，w3x 原生萃取。`extract_icons.py` 兩邊都寫（`doc["abilities"][slot]["icon"]`），所以本來就對 |
+| **只有 standalone** | **416** | 全是 `.webp`，AI 生成批次。`tools/icon-gen/src/generate.py` 的 `patch_icon_field` 只寫 `content/<family>/<doc-id>.json`，champion 內嵌那份從頭到尾沒人碰 |
+| 兩邊都沒有 | 24 | 其中 16 條是真的沒圖（`godie-e00u` / `godie-h02n` / `godie-u01f` / `godie-u01q` 四位，磁碟上 0 檔）；另 8 條**有圖但 doc 沒欄位** |
+| 值衝突 | 0 | 這次是「缺欄位」類，不是 #79 的「值互相矛盾」類 |
+
+另外 9 份 standalone doc（`godie-h02r.{q,w,e,r,ex}`、`godie-u00b.{q,w,e,r}`）webp 已生成並 commit
+（`content/config/icon-plan.json` 也列了），**doc 卻完全沒有 `icon` 欄位**。三條守衛因此連環紅：
+
+- `icon-embed-standalone-agree` — 416 條 standalone/embedded 不一致（回報第一條 `godie-e001.q`）
+- `icon-ex-consistency` — `godie-h02r.ex.webp` 在磁碟上，`godie-h02r.ex.json` 沒 `icon`
+- `icon-no-orphans` — 9 個 webp 沒有任何 doc 引用（fail-fast 只報了第一個 `godie-h02r.e.webp`）
+
+### 落點
+
+| 項目 | 內容 |
+|---|---|
+| 同步方向 | standalone → embedded，**單向**，同上一段（`registry.ts:107` + `fillGaps`） |
+| 改法 | 同上一段的逐行手術：champion 檔是 Python exporter 產的（`30.0`），Node JSON round-trip 會重寫每個數字。每筆只**插入一行** `"icon": "…",`（緊接 `"name"` 之後，與 standalone 的擺位一致 — 452 對全部如此，0 例外），改完 re-parse 驗證兩件事：把插入的行拿掉要**逐 byte 還原原檔**，且 re-parse 後刪掉新增的 key 要 `JSON.stringify` 完全相等 |
+| 實際 diff | **+433 行 / −0 行**、**0 行非 `icon` 變動**。其中 embedded 424 條（109 個 champion 檔）+ standalone 9 條（h02r×5、u00b×4） |
+| 結果 | 452 對：兩邊都有 **436**、單邊 **0**、衝突 **0**；剩下 16 條是那 4 位真的沒圖的英雄。磁碟上 orphan 圖 **0** |
+| 重建索引 | `pnpm content:build` → `contentVersion` `cv_fcb7197b7f82` → `cv_4b49a572be99`；`champions/_index.json` 109 份、`abilities/_index.json` 9 份 per-doc hash 更新 |
+| 守衛收緊 | `ability-mirror-one-sided` 的 `STANDALONE_ONLY_OK` 拿掉 `"icon"`，只剩 `"schema"`。這個豁免正是讓 416 條單邊值長期合法存在的原因；鏡像補完後移除，單邊狀態再也回不來 |
+
+### 為什麼「缺欄位」比 `vfxKey` 那類輕、但仍然要修
+
+`fillGaps` 會把 standalone 有、embedded 沒有的欄位補進去，所以走 `registerAll` 的路徑（真實對戰、
+HUD 技能列）本來就拿得到圖 —— 這也是它能潛這麼久的原因。壞掉的一樣是不經過 `registerAll` 的
+RAW-DOC 消費端：圖鑑、後台 內容管理，以及 `PreviewController.ts` 的 `overrideAbilities: true`
+（整份採用 embedded，於是**編輯器預覽的技能格是空的**）。至於那 9 份連 standalone 都沒欄位的，
+則是**所有**路徑都拿不到圖 —— 妙蛙花與飛鼠先生的 QWER/EX 一直在用字母 glyph 佔位，圖其實躺在
+`content/assets/icons/abilities/` 裡沒人引用。
+
+### 驗證
+
+反向驗證（守衛不是真空綠的）：拿 `8f5d942`（修前）的 content 重跑同一段判定 —— 用**舊**
+allowlist `[schema, icon]` 是 **0 條違規（綠）**，這就是 416 條單邊 `icon` 得以長期合法的原因；
+換成**新** allowlist `[schema]` 立刻 **416 條違規（紅）**，分欄統計 `icon×416`，掃到的對數同樣是 452。
+
+`icons.test.ts` 7 例 + `abilityMirror.test.ts` 4 例全綠；`@ggd/shared` 70/71 suite、
+`apps/client` 210/211、admin 21/21、editor 8/8、content-api 2/2 全過。唯二的紅是既有問題，與本次無關：
+`castabilitySweep.test.ts` 與 `render/vfx/bindings.test.ts` 都是 `data/curation/whitelist.json`
+被 .gitignore 吃掉、worktree 沒這檔（ENOENT）；`typecheck` 那條 `scripts/probeSlotResolve.ts`
+`TS2367` 也是既有的。

@@ -38,6 +38,7 @@
     "Q": {
       "id": "godie-emfr.q",
       "name": "15-01 風精召喚",
+      "icon": "assets/icons/abilities/godie-emfr.q.webp",
       "description": "[主動攻擊]\n40秒冷卻時間\n\n集合3個風的中等精靈幫助召喚者攻擊敵人，每單位風之精靈造成155點傷害。",
       "slot": "Q",
       "castType": "targeted",
@@ -82,6 +83,7 @@
     "W": {
       "id": "godie-emfr.w",
       "name": "15-02 沉睡之霧",
+      "icon": "assets/icons/abilities/godie-emfr.w.webp",
       "description": "[輔助]\n20秒冷卻時間\n\n沉睡之霧可以讓周圍施咒範圍內的敵人陷入睡眠狀態，持續3秒。",
       "slot": "W",
       "castType": "targeted",
@@ -132,6 +134,7 @@
     "E": {
       "id": "godie-emfr.e",
       "name": "15-03 雷電風暴",
+      "icon": "assets/icons/abilities/godie-emfr.e.webp",
       "description": "[主動攻擊]\n45秒冷卻時間\n\n用魔法元素創造出來充滿雷元素的風暴攻擊範圍內的敵人給予400+智慧*4點的瞬間傷害，之後每秒會承受25點殘餘電流的傷害，持續2秒。",
       "slot": "E",
       "castType": "ground",
@@ -177,6 +180,7 @@
     "R": {
       "id": "godie-emfr.r",
       "name": "15-04 千之雷",
+      "icon": "assets/icons/abilities/godie-emfr.r.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n千之雷是涅吉。史普林，威力最強大的雷系魔法，缺點是念咒時間長，可以讓敵人850點的瑪那瞬間大量流失在電擊之中，魔力越多傷害亦越大，並造成周圍智慧*5點傷害。",
       "slot": "R",
       "castType": "skillshot",

@@ -38,6 +38,7 @@
     "Q": {
       "id": "godie-ofar.q",
       "name": "58-01 十萬伏特",
+      "icon": "assets/icons/abilities/godie-ofar.q.webp",
       "description": "[主動攻擊]\n35秒冷卻時間\n\n皮卡的得意絕招，使出電擊攻擊6個敵人，每個敵人傷害175。",
       "slot": "Q",
       "castType": "ground",
@@ -86,6 +87,7 @@
     "W": {
       "id": "godie-ofar.w",
       "name": "58-02 鋼鐵尾巴",
+      "icon": "assets/icons/abilities/godie-ofar.w.webp",
       "description": "[被動]\n0秒冷卻時間\n\n揮動鋼鐵尾巴可以讓皮卡在攻擊時有10%機率增加75點破壞力，並有機會將敵人震昏0.01秒。",
       "slot": "W",
       "castType": "self",
@@ -201,6 +203,7 @@
     "E": {
       "id": "godie-ofar.e",
       "name": "58-03 就決定是你了!小智",
+      "icon": "assets/icons/abilities/godie-ofar.e.webp",
       "description": "[主動傷害]\n60秒冷卻時間\n\n對著敵方的部隊投出皮卡丘痛恨已久的低能小智缺，造成350傷害之後還會將對方打昏0.5秒。",
       "slot": "E",
       "castType": "targeted",
@@ -251,6 +254,7 @@
     "R": {
       "id": "godie-ofar.r",
       "name": "58-04 瘋狂皮卡丘",
+      "icon": "assets/icons/abilities/godie-ofar.r.webp",
       "description": "[變身]\n60秒冷卻時間\n\n再也受不了裝可愛清純路線的皮卡丘終於露出本性，變身為瘋狂癡呆惡棍皮卡，瘋狂使用鋼鐵尾巴攻擊敵人，轉變成近戰單位，攻擊速度大幅提升，被敵人攻擊時會刺激攻擊力上升5點，極限是刺激50次。生命最大暫時提昇250。持續6秒。",
       "slot": "R",
       "castType": "targeted",

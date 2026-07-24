@@ -2,6 +2,7 @@
   "id": "godie-u00b.e",
   "schema": "ability@1",
   "name": "75-02 龍捲風",
+  "icon": "assets/icons/abilities/godie-u00b.e.webp",
   "description": "召喚一道可以控制的殘暴龍捲風，降低敵方部隊的移動速度，並以亂數決定將哪些地面部隊丟到半空中，同時傷害敵人的建築物。\n持續<ANto,Dur2>秒。",
   "slot": "E",
   "castType": "targeted",
