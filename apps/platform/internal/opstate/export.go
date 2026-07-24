@@ -265,6 +265,8 @@ func readContentVersion(contentDir string, rep *ExportReport) string {
 		rep.note("no CONTENT_DIR given — the bundle carries no content-version stamp, so a restore cannot tell you whether it is stale.")
 		return ""
 	}
+	// #nosec G304 -- operator-configured CONTENT_DIR joined with a string literal;
+	// the empty-contentDir case returned above.
 	raw, err := os.ReadFile(filepath.Join(contentDir, "manifest.json"))
 	if err != nil {
 		rep.warn("could not read %s: %v — the bundle carries no content-version stamp.",

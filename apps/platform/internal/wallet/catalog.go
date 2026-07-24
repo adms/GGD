@@ -79,6 +79,12 @@ func LoadCatalog(contentDir string) (Catalog, error) {
 	cat := EmptyCatalog()
 
 	storePath := filepath.Join(contentDir, "config", "store.json")
+	// #nosec G304 -- `contentDir` is operator configuration (CONTENT_DIR, set in
+	// docker/compose*.yaml), never request data, and the leaf is the literal
+	// "store.json". A caller who can set CONTENT_DIR already chooses which
+	// content tree the whole platform serves; being able to name a file inside
+	// it grants nothing further. No HTTP path reaches this — it runs once at
+	// boot (wallet.NewCatalog) and on the admin content-reload.
 	raw, err := os.ReadFile(storePath)
 	if errors.Is(err, fs.ErrNotExist) {
 		return cat, nil
@@ -122,6 +128,8 @@ func LoadCatalog(contentDir string) (Catalog, error) {
 func loadSkins(contentDir string, cat *Catalog) error {
 	dir := filepath.Join(contentDir, "skins")
 	var files []string
+	// #nosec G304 -- same rule as the store.json read above: `dir` derives from
+	// the operator's CONTENT_DIR and the leaf is the literal "_index.json".
 	if raw, err := os.ReadFile(filepath.Join(dir, "_index.json")); err == nil {
 		var idx skinIndex
 		if err := json.Unmarshal(raw, &idx); err != nil {
@@ -144,6 +152,10 @@ func loadSkins(contentDir string, cat *Catalog) error {
 	}
 
 	for _, file := range files {
+		// #nosec G304 -- `files` comes from the collection's own _index.json inside
+		// CONTENT_DIR (or a ReadDir of it), so every entry is a path the operator
+		// already published. The indexer enforces doc.id == filename stem, and no
+		// request can add an entry.
 		raw, err := os.ReadFile(file)
 		if err != nil {
 			return fmt.Errorf("wallet: read skin doc %s: %w", file, err)

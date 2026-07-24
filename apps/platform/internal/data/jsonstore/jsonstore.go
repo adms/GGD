@@ -33,6 +33,47 @@ var (
 	idRe      = regexp.MustCompile(`^[a-zA-Z0-9][a-zA-Z0-9@._-]{0,127}$`)
 )
 
+// dataFileMode is the mode every durable object file is written with. This tree
+// is NOT world-readable on purpose: it holds argon2id password hashes
+// (data/accounts/*.json), the plaintext AI provider key
+// (data/config/ai-provider.json) and single-use invite codes (data/invites).
+// Group read is kept deliberately rather than going to 0600 — the k8s seed Job
+// shares the PVC under fsGroup 65532 (deploy/helm/ggd/templates/seed-job.yaml).
+const dataFileMode os.FileMode = 0o640
+
+// dataDirMode mirrors dataFileMode for the directories holding those files.
+//
+// NOTE for the operator: on the Linux family host these directories are owned by
+// uid 65532 (the distroless platform user), so 0750 removes host-side traversal
+// for a plain ssh session. The documented paths (`docker compose cp` / `exec`,
+// i.e. Makefile family-token / family-restore) go through the daemon as root and
+// are unaffected, but two host-side dev tools read data/curation/whitelist.json
+// directly — tools/reference/gen_reference.py and gen_readme_lists.py — and will
+// need `sudo` (or the 65532 group) on a FRESH deploy. MkdirAll only applies this
+// mode to directories it actually creates, so an existing tree keeps its modes.
+const dataDirMode os.FileMode = 0o750
+
+// writeAtomic replaces path with data atomically, ENFORCING mode.
+//
+// renameio.WriteFile deliberately cannot do this: it always applies
+// WithExistingPermissions, which copies the mode off an already-existing target
+// and silently overrides the mode argument (renameio/v2@v2.0.2 tempfile.go:278-284
+// assigns cfg.chmod from the existing file). Every account doc written before this
+// sweep is 0644 on disk, so renameio.WriteFile(…, 0o640) would leave them 0644
+// forever and the tightening would be cosmetic. WithStaticPermissions is the
+// option that actually re-tightens the file on its next rewrite.
+func writeAtomic(path string, data []byte, mode os.FileMode) error {
+	t, err := renameio.NewPendingFile(path, renameio.WithStaticPermissions(mode))
+	if err != nil {
+		return err
+	}
+	defer t.Cleanup()
+	if _, err := t.Write(data); err != nil {
+		return err
+	}
+	return t.CloseAtomicallyReplace()
+}
+
 // Store is an atomic JSON-per-object file store rooted at a directory.
 type Store struct {
 	root  string
@@ -45,7 +86,7 @@ func New(root string) (*Store, error) {
 	if err != nil {
 		return nil, err
 	}
-	if err := os.MkdirAll(abs, 0o755); err != nil {
+	if err := os.MkdirAll(abs, dataDirMode); err != nil {
 		return nil, err
 	}
 	return &Store{root: abs, locks: keyedmutex.New()}, nil
@@ -101,11 +142,11 @@ func (s *Store) Put(collection, id string, v any) error {
 	data = append(data, '\n')
 
 	unlock := s.locks.Lock(collection + "/" + id)
-	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+	if err := os.MkdirAll(filepath.Dir(path), dataDirMode); err != nil {
 		unlock()
 		return err
 	}
-	err = renameio.WriteFile(path, data, 0o644)
+	err = writeAtomic(path, data, dataFileMode)
 	unlock()
 	if err != nil {
 		return fmt.Errorf("jsonstore: write %s/%s: %w", collection, id, err)
@@ -120,6 +161,11 @@ func (s *Store) Get(collection, id string, v any) error {
 		return err
 	}
 	unlock := s.locks.Lock(collection + "/" + id)
+	// #nosec G304 -- `path` is not caller-supplied: resolve() above rejected it
+	// unless the collection matched segmentRe and the id matched idRe (neither
+	// admits `/`, `\`, NUL or any non-ASCII byte), `..` was rejected explicitly,
+	// and a filepath.Rel check re-confirmed containment inside s.root. The error
+	// is returned before this line, so there is no fallback path.
 	data, err := os.ReadFile(path)
 	unlock()
 	if err != nil {
@@ -225,10 +271,15 @@ func (s *Store) AppendLine(collection, id string, v any) error {
 	}
 	unlock := s.locks.Lock(collection + "/" + id + ".jsonl")
 	defer unlock()
-	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+	if err := os.MkdirAll(filepath.Dir(path), dataDirMode); err != nil {
 		return err
 	}
-	f, err := os.OpenFile(path, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0o644)
+	// #nosec G304 -- `path` came from resolve(), same containment argument as Get.
+	// 0o640 (was 0o644): these are the admin audit trail (data/admin-audit) and
+	// per-account match history (data/history), which have no business being
+	// world-readable. O_CREATE only applies the mode to a file it creates, so
+	// jsonl files written before this sweep keep 0644 until they are recreated.
+	f, err := os.OpenFile(path, os.O_APPEND|os.O_CREATE|os.O_WRONLY, dataFileMode)
 	if err != nil {
 		return err
 	}
@@ -247,6 +298,7 @@ func (s *Store) ReadLines(collection, id string) ([]json.RawMessage, error) {
 		return nil, err
 	}
 	unlock := s.locks.Lock(collection + "/" + id + ".jsonl")
+	// #nosec G304 -- `path` came from resolve(), same containment argument as Get.
 	data, err := os.ReadFile(path)
 	unlock()
 	if err != nil {
@@ -318,8 +370,8 @@ func (s *Store) updateIndex(collection, id string, remove bool) error {
 	if err != nil {
 		return err
 	}
-	if err := os.MkdirAll(filepath.Dir(s.indexPath(collection)), 0o755); err != nil {
+	if err := os.MkdirAll(filepath.Dir(s.indexPath(collection)), dataDirMode); err != nil {
 		return err
 	}
-	return renameio.WriteFile(s.indexPath(collection), append(data, '\n'), 0o644)
+	return writeAtomic(s.indexPath(collection), append(data, '\n'), dataFileMode)
 }

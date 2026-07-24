@@ -63,6 +63,7 @@ func LoadCatalog(contentDir string) (*Catalog, error) {
 		}
 	}
 	c.Loaded = len(c.Champions) > 0 || len(c.Items) > 0 || len(c.Abilities) > 0
+	// #nosec G304 -- operator-configured CONTENT_DIR joined with a string literal.
 	if raw, err := os.ReadFile(filepath.Join(contentDir, "manifest.json")); err == nil {
 		var m contentManifest
 		if json.Unmarshal(raw, &m) == nil {

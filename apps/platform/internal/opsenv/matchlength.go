@@ -268,6 +268,10 @@ func LoadMatchShape(contentDir string) MatchShape {
 		return shape
 	}
 	path := filepath.Join(contentDir, "config", "config.match.json")
+	// #nosec G304 -- `contentDir` is operator configuration (CONTENT_DIR) and the
+	// leaf is the literal "config.match.json". Read at boot and on reload to
+	// derive the match-length model; the failure path already logs and falls back
+	// to compiled defaults, so a missing or unreadable file is handled, not fatal.
 	raw, err := os.ReadFile(path)
 	if err != nil {
 		slog.Warn("opsenv: cannot read the match config; ops page falls back to compiled defaults",

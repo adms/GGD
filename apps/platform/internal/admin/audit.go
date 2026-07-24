@@ -47,6 +47,10 @@ func (s *Service) ListAudit(ctx context.Context, page, pageSize int) (entries []
 		if f.IsDir() || !strings.HasSuffix(f.Name(), ".jsonl") {
 			continue
 		}
+		// #nosec G304 -- `dir` is <store root>/audit and f.Name() came from the
+		// os.ReadDir of that directory above, filtered to *.jsonl. Everything in
+		// that tree was written by jsonstore.AppendLine through resolve(), so no
+		// request ever chose a name here.
 		data, err := os.ReadFile(filepath.Join(dir, f.Name()))
 		if err != nil {
 			continue

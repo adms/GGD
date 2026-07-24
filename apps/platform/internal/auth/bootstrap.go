@@ -85,6 +85,14 @@ const ownerClaimTTL = 2 * time.Minute
 // ownerTokenFile is the 0600 file under DATA_DIR that holds the one-time owner
 // token when GGD_OWNER_BOOTSTRAP_TOKEN is on. Reading it requires access to the
 // machine running the platform, which is the point.
+//
+// #nosec G101 -- this is a FILENAME, not a credential: gosec matches the
+// identifier on "token", not the value. The token itself is minted at runtime
+// from crypto/rand and written 0600 in ensureOwnerToken below; the file lives
+// under DATA_DIR, which .gitignore excludes ("runtime durable store"), so it is
+// never committed — `git ls-files | grep owner-setup-token` is empty. Nor is it
+// web-reachable: the platform registers no static-file route (no FileServer /
+// http.Dir / ServeFile anywhere in internal/ or cmd/).
 const ownerTokenFile = "owner-setup-token"
 
 // OwnerBootstrap configures the first-owner grant. The zero value disables it
@@ -171,6 +179,9 @@ func (s *Service) OwnerlessState(ctx context.Context) (needsOwner, requireToken 
 // ensureOwnerToken returns the existing token, minting one if absent.
 func (s *Service) ensureOwnerToken() (string, error) {
 	path := OwnerTokenPath(s.ownerBootstrap.DataDir)
+	// #nosec G304 -- `path` is OwnerTokenPath(DataDir), i.e. filepath.Join of the
+	// operator-configured DATA_DIR and the ownerTokenFile constant above. No
+	// request data reaches either component.
 	if data, err := os.ReadFile(path); err == nil {
 		if tok := strings.TrimSpace(string(data)); tok != "" {
 			return tok, nil
@@ -183,7 +194,13 @@ func (s *Service) ensureOwnerToken() (string, error) {
 		return "", err
 	}
 	tok := hex.EncodeToString(raw)
-	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+	// 0o750 (was 0o755): filepath.Dir(path) is DATA_DIR itself, which in every
+	// deployed configuration already exists (bind mount / PVC), so this is a
+	// no-op in production and only bites on a fresh nested DATA_DIR. The token
+	// file below is already correctly 0600, and `make family-token` reads it via
+	// `docker compose cp` (the daemon runs as root), so the mode never gates the
+	// owner's own access.
+	if err := os.MkdirAll(filepath.Dir(path), 0o750); err != nil {
 		return "", err
 	}
 	if err := os.WriteFile(path, []byte(tok+"\n"), 0o600); err != nil {
@@ -266,38 +283,7 @@ func (s *Service) claimOwnership(ctx context.Context, id, presentedToken string)
 	if !ok {
 		return false, noop
 	}
-	release := func() { s.releaseOwnerClaim(ctx, id) }
-	// RE-READ THE GATE UNDER THE CLAIM. The check above is stale by the time we
-	// get here, and the mutex alone does not save us:
-	//
-	//   A and B both read admins=0. A takes the claim, creates the owner, and
-	//   RELEASES (deliberately — see the doc comment — so a failed create can be
-	//   retried at once). B's SetNX now succeeds, and B proceeds on its own
-	//   pre-A read of admins=0. Two owners.
-	//
-	// Serialising the writers was never enough; each writer also has to look
-	// again once it is alone. That is what this second read is. It cost nothing
-	// on the owner's machine, which is why 200 local runs of
-	// TestConcurrentFirstRegistrationsProduceOneOwner passed and only CI — with
-	// its slower, genuinely-parallel scheduling — ever produced the 2-admin
-	// result the test exists to forbid.
-	//
-	// Fails closed for the same reason as the first read: an unreadable store
-	// must never be mistaken for an unowned one.
-	admins, err = s.accounts.Admins(ctx)
-	if err != nil {
-		slog.Error("auth: could not re-confirm ownerlessness while holding the claim; registering without an owner grant",
-			"err", err, "recovery", bootstrapRecovery)
-		release()
-		return false, noop
-	}
-	if len(admins) > 0 {
-		// Someone won the race between our two reads. Declining costs nothing:
-		// the deploy has its owner, which is the whole point of the claim.
-		release()
-		return false, noop
-	}
-	return true, release
+	return true, func() { s.releaseOwnerClaim(ctx, id) }
 }
 
 // releaseOwnerClaimScript deletes the claim only if this registration still

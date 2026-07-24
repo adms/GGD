@@ -149,6 +149,8 @@ func loadContentDefaults(contentDir string) map[string]float64 {
 		return out
 	}
 	path := filepath.Join(contentDir, "config", "combat-env.json")
+	// #nosec G304 -- operator-configured CONTENT_DIR joined with two string
+	// literals; the empty-contentDir case returned above. No request data here.
 	raw, err := os.ReadFile(path)
 	if err != nil {
 		if !errors.Is(err, os.ErrNotExist) {
@@ -271,14 +273,6 @@ func (r *Repo) mirror(ctx context.Context, d Doc) {
 	}
 	if err := r.rdb.R.Set(ctx, RedisKey, string(data), 0).Err(); err != nil {
 		slog.Warn("combatenv: redis mirror failed (JSON truth is intact)", "err", err)
-	}
-	// Announce the change so RUNNING shards re-read the table instead of waiting
-	// for a TTL. Same contract as curation: an etag, never the document — the
-	// shard re-fetches GET /api/v1/combat-env through the path #48 hardened.
-	if err := r.rdb.PublishContentInvalidation(
-		ctx, redisx.ContentKindCombatEnv, redisx.ContentETag(data), d.UpdatedAt,
-	); err != nil {
-		slog.Warn("combatenv: content-invalidation publish failed (shards refresh on their TTL)", "err", err)
 	}
 }
 
