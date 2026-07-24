@@ -52,6 +52,14 @@ export function AudioDirector(): null {
 
   const screen = useApp((s) => s.screen);
   const inRoom = useApp((s) => s.room !== null);
+  // "The join actually committed": true only once the room socket is open and
+  // the first authoritative state has landed (RoomStore flips it on the first
+  // syncHudFromState). The screen flips to "match" the instant the seat token
+  // arrives — BEFORE the join is even attempted — so keying match audio off the
+  // screen alone plays a match-start greeting for a join that then bounces
+  // (task #200). Gating on `connected` means the greeting only fires for a
+  // match the player actually entered.
+  const connected = useHud((s) => s.connected);
 
   const phase = useHud((s) => s.phase);
   const phaseSecondsLeft = useHud((s) => s.phaseSecondsLeft);
@@ -132,17 +140,30 @@ export function AudioDirector(): null {
     return () => setCombatSfxSeat(null);
   }, [localSeatId]);
 
-  // matchStart greeting on the shell → match entry (fires once per match). The
+  // matchStart greeting on match ENTRY — but gated on the join being COMMITTED,
+  // not merely on the screen flip. The seat-token push flips `screen` to "match"
+  // before the join is attempted; a join that then bounces (e.g. an expired seat
+  // reservation, task #200) must not have played a match-start greeting for a
+  // match the player never entered ("背後聲音那些播放" on the bounced first press).
+  // So we arm on match entry and fire only when `connected` turns true. The
   // 効果音ラボ 試合開始のゴング (#51 match-start-gong) LAYERS under the Japanese
   // announcer VO — its own key, never mixed into the VO-only matchStart pool.
-  const prevScreen = useRef(screen);
+  //
+  // Fires exactly once per entry: `greeted` re-arms only when the screen LEAVES
+  // match. A "Restart match" (matchEpoch bump) keeps screen === "match" while it
+  // briefly drops `connected`, so — as before this change — it does not re-greet.
+  const greeted = useRef(false);
   useEffect(() => {
-    if (screen === "match" && prevScreen.current !== "match") {
+    if (screen !== "match") {
+      greeted.current = false; // left the match: re-arm the greeting for next entry
+      return;
+    }
+    if (connected && !greeted.current) {
+      greeted.current = true;
       audioSystem.playSfx("matchStart");
       audioSystem.playSfx("matchStartGong");
     }
-    prevScreen.current = screen;
-  }, [screen]);
+  }, [screen, connected]);
 
   // Phase-edge one-shots (match only):
   //   • intermission → combat : battleStart sting + roundStart VO
