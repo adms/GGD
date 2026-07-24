@@ -93,22 +93,28 @@ type Service struct {
 	secret   string
 	gameAddr string
 	callback string
-	pendTTL  time.Duration
-	skew     time.Duration
-	now      func() time.Time
+	// pendTTL is the BLIND deadline used only until the first liveness
+	// heartbeat arrives for a match; liveGrace is the evidence-based one that
+	// replaces it from then on. See liveness.go.
+	pendTTL   time.Duration
+	liveGrace time.Duration
+	skew      time.Duration
+	now       func() time.Time
 }
 
 // New builds the gamelink service. cat supplies the M COIN placement rewards
-// applied at settlement (wallet.EmptyCatalog() grants nothing).
+// applied at settlement (wallet.EmptyCatalog() grants nothing). liveGrace is how
+// long a match outlives its last game-server heartbeat (zero picks
+// defaultLivenessGrace).
 func New(rdb *redisx.Client, accounts *account.Repo, pres *presence.Service, rank *ranking.Service,
 	journal *wal.WAL, settler *Settler, cat wallet.Catalog, secret, gameAddr, callbackBase string,
-	pendTTL, skew time.Duration) *Service {
+	pendTTL, liveGrace, skew time.Duration) *Service {
 	return &Service{
 		rdb: rdb, accounts: accounts, pres: pres, rank: rank, journal: journal, settle: settler,
 		cat:    cat,
 		http:   &http.Client{Timeout: 10 * time.Second},
 		secret: secret, gameAddr: gameAddr,
-		callback: callbackBase, pendTTL: pendTTL, skew: skew,
+		callback: callbackBase, pendTTL: pendTTL, liveGrace: liveGrace, skew: skew,
 		now: time.Now,
 	}
 }
@@ -247,8 +253,16 @@ func (s *Service) StartMatch(ctx context.Context, rm room.Room, members []room.M
 		return room.StartInfo{}, httpx.Err(http.StatusBadGateway, "game_bad_response", "malformed game server response")
 	}
 
-	// Track the pending match for the reaper.
+	// Track the pending match for the reaper. The deadline written here is the
+	// BLIND one (s.pendTTL): at this instant the platform has no evidence about
+	// this match beyond "the game-server accepted it". The first heartbeat
+	// (liveness.go) replaces it with lastBeat+grace and every later beat pushes
+	// it forward, so how long the match runs — 3 lives or 12 — stops being any
+	// constant's business. Recording the Colyseus room id here is what lets an
+	// operator (and the reaper's logs) tie a stuck platform record to the actual
+	// room on the game server.
 	pend := map[string]any{"roomId": rm.ID, "startedAt": s.now().UnixMilli()}
+	s.recordGameRoom(pend, mr.ColyseusRoomID)
 	if seatsJSON, err := json.Marshal(seats); err == nil {
 		pend["seats"] = string(seatsJSON)
 	}

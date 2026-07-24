@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>球體 / 蝗蟲群 / 粒子 — 從出貨的 content/vfx 直接播</title>
+<style>
+  :root { --bg:#07080c; --panel:#12161f; --line:#2a3145; --fg:#e8ecf6; --dim:#98a2bd;
+          --accent:#7dd3fc; --gold:#f0c674; --warn:#f0a674; --bad:#e07272; --ok:#8fd694; }
+  * { box-sizing:border-box; }
+  html,body { margin:0; height:100%; }
+  body { background:var(--bg); color:var(--fg); overflow:hidden;
+         font:14px/1.55 -apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans TC",sans-serif; }
+  #view { position:fixed; inset:0; width:100%; height:100%; display:block; touch-action:none; }
+  .hud { position:fixed; z-index:2; background:rgba(14,18,28,.92); border:1px solid var(--line);
+         border-radius:10px; padding:12px 14px; backdrop-filter:blur(6px); }
+  #panel { top:14px; left:14px; width:min(430px, calc(100vw - 28px));
+           max-height:calc(100vh - 120px); overflow:auto; }
+  #panel h1 { margin:0 0 4px; font-size:16px; letter-spacing:.02em; }
+  #panel p { margin:6px 0 0; color:var(--dim); font-size:12.5px; }
+  .row { display:flex; gap:6px; flex-wrap:wrap; margin-top:9px; }
+  button { font:inherit; font-size:12.5px; color:var(--fg); background:#1d2334;
+           border:1px solid var(--line); border-radius:7px; padding:5px 10px; cursor:pointer; }
+  button:hover { border-color:var(--accent); }
+  button.on { border-color:var(--gold); background:#2a2211; color:var(--gold); }
+  .lbl { color:var(--dim); font-size:11px; text-transform:uppercase; letter-spacing:.08em;
+         margin-top:14px; }
+  #stats { bottom:14px; left:14px; right:14px; font-variant-numeric:tabular-nums;
+           color:var(--dim); font-size:12px; }
+  #err { top:14px; left:14px; right:14px; max-width:680px; border-color:#7f2d2d;
+         background:#2a1212; display:none; }
+  code { background:#0009; padding:1px 5px; border-radius:4px; }
+  ul.facts { margin:8px 0 0; padding-left:0; list-style:none; }
+  ul.facts li { font-size:11.5px; margin:0 0 7px; padding-left:9px;
+                border-left:2px solid var(--line); color:var(--dim); }
+  ul.facts li.warn { border-left-color:var(--warn); }
+  ul.facts li.bad  { border-left-color:var(--bad); }
+  table.plan { width:100%; border-collapse:collapse; margin-top:8px; font-size:11.5px; }
+  table.plan td { padding:2px 0; color:var(--dim); }
+  table.plan td:last-child { text-align:right; color:var(--fg); font-variant-numeric:tabular-nums; }
+  #swarm { display:none; }
+</style>
+</head>
+<body>
+<canvas id="view"></canvas>
+
+<div id="err" class="hud">
+  <h1>載入失敗</h1>
+  <p id="errmsg"></p>
+  <p>這頁只在 <code>vite dev</code> 下可用，而且需要先跑一次
+     <code>pnpm tsx apps/client/scripts/gen-w3x-families.ts</code>。</p>
+</div>
+
+<div id="panel" class="hud">
+  <h1>球體 / 蝗蟲群 / 粒子 <span style="color:var(--dim);font-size:12px">#98</span></h1>
+  <p>畫面上跑的東西 <b>全部是 fetch 回來的出貨內容</b>：
+     <code>content/assets/vfx/w3x-families.json</code> 決定佈局（PIVOT、附著點、蝗蟲群數量），
+     <code>content/vfx/fx.w3x.*.json</code> 是逐個 <code>PRE2</code> 重建的發射器。
+     這頁沒有任何手抄的參數 —— 產生器錯，這頁就跟著錯，這正是要看「成品」而不是看「副本」的理由。</p>
+
+  <div class="lbl">家族</div>
+  <div class="row" id="families"></div>
+
+  <div class="lbl">效果</div>
+  <div class="row" id="effects"></div>
+
+  <div class="lbl">來源與事實（逐條由 manifest 推出，不是打字打上去的）</div>
+  <ul class="facts" id="facts"></ul>
+
+  <div id="swarm">
+    <div class="lbl">蝗蟲群等級（決定隻數）</div>
+    <div class="row" id="levels"></div>
+    <div class="lbl">成員代用美術（原圖是 Blizzard 模型，倉庫沒有）</div>
+    <div class="row" id="members"></div>
+  </div>
+
+  <div class="lbl">同時在場人數（3v3v3v3 最壞情況 = 12）</div>
+  <div class="row" id="counts"></div>
+
+  <div class="lbl">生命週期</div>
+  <div class="row">
+    <button id="replay">▶ 重播</button>
+    <button id="stop">■ 停止（看它自己收乾淨）</button>
+  </div>
+
+  <div class="lbl">預算實際做了什麼</div>
+  <table class="plan" id="plan"></table>
+
+  <div class="lbl">附著點解析</div>
+  <div id="attach" style="font-size:11.5px;color:var(--dim);margin-top:6px">—</div>
+</div>
+
+<div id="stats" class="hud"><span id="readout">—</span></div>
+
+<script type="module">
+const errBox = document.getElementById("err");
+const showErr = (m) => {
+  document.getElementById("errmsg").textContent = String(m);
+  errBox.style.display = "block";
+};
+window.addEventListener("error", (e) => showErr(e.message));
+
+try {
+  const { startW3xFamilyAudition, describeEffect, W3X_FAMILY_LABEL, swarmCountForLevel } =
+    await import("/src/render/vfx/w3xFamilyAudition.ts");
+
+  const h = startW3xFamilyAudition(document.getElementById("view"));
+  window.__w3xfam = h; // screenshot-automation seam
+
+  // wait for the manifest fetch
+  let manifest = null;
+  for (let i = 0; i < 200 && !manifest; i++) {
+    manifest = h.manifest();
+    if (!manifest) await new Promise((r) => setTimeout(r, 25));
+  }
+  if (!manifest) throw new Error("content/assets/vfx/w3x-families.json 沒有載入（產生器跑過了嗎？）");
+
+  const q = new URLSearchParams(location.search);
+  let family = q.get("family") ?? "orb";
+  let effectId = q.get("effect") ?? null;
+  let champions = Number(q.get("champions") ?? 1);
+  let level = Number(q.get("level") ?? 4);
+  let memberDocId = q.get("member") ?? "fx.w3x.locust.boomnl.p00";
+
+  const inFamily = () => manifest.effects.filter((e) => e.family === family);
+  const current = () => manifest.effects.find((e) => e.id === effectId) ?? inFamily()[0];
+
+  const mkRow = (host, items, get, set) => {
+    const render = () => {
+      host.innerHTML = "";
+      for (const [label, value] of items()) {
+        const b = document.createElement("button");
+        b.textContent = label;
+        if (get() === value) b.classList.add("on");
+        b.onclick = () => { set(value); renderAll(); play(); };
+        host.appendChild(b);
+      }
+    };
+    return render;
+  };
+
+  const renderFamilies = mkRow(
+    document.getElementById("families"),
+    () => ["orb", "locust", "particle"].map((f) => [
+      `${W3X_FAMILY_LABEL[f]} (${manifest.effects.filter((e) => e.family === f).length})`, f,
+    ]),
+    () => family,
+    (v) => { family = v; effectId = null; },
+  );
+  const renderEffects = mkRow(
+    document.getElementById("effects"),
+    () => inFamily().map((e) => [e.label || e.id.split(".").pop(), e.id]),
+    () => current()?.id,
+    (v) => { effectId = v; },
+  );
+  const renderCounts = mkRow(
+    document.getElementById("counts"),
+    () => [1, 2, 4, 6, 8, 12].map((n) => [`${n} 人`, n]),
+    () => champions,
+    (v) => { champions = v; },
+  );
+  const renderLevels = mkRow(
+    document.getElementById("levels"),
+    () => {
+      const s = current()?.swarm;
+      if (!s) return [];
+      return s.countPerLevel.map((c, i) => [`等級 ${i + 1} — ${c} 隻`, i + 1]);
+    },
+    () => level,
+    (v) => { level = v; },
+  );
+  const renderMembers = mkRow(
+    document.getElementById("members"),
+    () => manifest.effects
+      .filter((e) => e.family === "locust" && e.layers.length)
+      .flatMap((e) => e.layers.slice(0, 2).map((l) => [l.docId.replace("fx.w3x.locust.", ""), l.docId])),
+    () => memberDocId,
+    (v) => { memberDocId = v; },
+  );
+
+  const factsBox = document.getElementById("facts");
+  const renderFacts = () => {
+    const e = current();
+    factsBox.innerHTML = "";
+    if (!e) return;
+    const lines = [...describeEffect(e), ...e.notes];
+    if (e.supersedes.length) lines.push("預計取代（由綁定 lane 切換，本 lane 不刪任何舊 preset）：" + e.supersedes.join("、"));
+    for (const t of lines) {
+      const li = document.createElement("li");
+      li.textContent = t;
+      if (/沒有|缺|代用|fallback|不是/.test(t)) li.className = "warn";
+      factsBox.appendChild(li);
+    }
+    document.getElementById("swarm").style.display = e.swarm ? "block" : "none";
+  };
+
+  const renderAll = () => {
+    renderFamilies(); renderEffects(); renderCounts(); renderLevels(); renderMembers(); renderFacts();
+  };
+
+  const play = async () => {
+    const e = current();
+    if (!e) return;
+    effectId = e.id;
+    await h.play(e.id, champions, { level, memberDocId });
+    renderPlan();
+  };
+
+  const planBox = document.getElementById("plan");
+  const renderPlan = () => {
+    const s = h.stats();
+    document.getElementById("attach").textContent = s.attach ?? "（此效果沒有附著點）";
+    const p = s.plan;
+    if (!p) { planBox.innerHTML = ""; return; }
+    const e = current();
+    const rows = [
+      ["原模型發射器數", p.systemsBeforeMerge],
+      ["合併相同發射器後（無損）", p.systemsAfterMerge],
+      ["實際建立的 ParticleSystem", p.kept],
+      ["因預算捨棄", p.dropped],
+      ["每個效果的存活粒子", p.particles],
+      ["完全忠實", p.faithful ? "是" : "否（已降級）"],
+    ];
+    if (e?.swarm) rows.push(["蝗蟲群隻數（等級 " + level + "）", swarmCountForLevel(e.swarm, level)]);
+    planBox.innerHTML = rows.map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join("");
+    if (s.problems.length) {
+      planBox.innerHTML += s.problems
+        .map((t) => `<tr><td colspan="2" style="color:var(--warn)">${t}</td></tr>`).join("");
+    }
+  };
+
+  document.getElementById("replay").onclick = () => play();
+  document.getElementById("stop").onclick = () => h.stopAll();
+
+  const readout = document.getElementById("readout");
+  setInterval(() => {
+    const s = h.stats();
+    readout.textContent =
+      `${s.fps} fps · 效果 ${s.effects} · ParticleSystem ${s.systems} · ` +
+      `現存粒子 ${s.aliveParticles} · 池中閒置 ${s.pooled} · 本頁曾建立 ${s.totalSystems}`;
+    renderPlan();
+  }, 250);
+
+  renderAll();
+  await play();
+} catch (err) {
+  showErr(err && err.message ? err.message : err);
+}
+</script>
+</body>
+</html>

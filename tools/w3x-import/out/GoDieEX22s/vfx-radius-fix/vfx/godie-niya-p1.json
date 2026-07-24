@@ -1,0 +1,84 @@
+{
+  "id": "godie-niya-p1",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.001,
+    "angleDeg": 20.0
+  },
+  "mode": "continuous",
+  "rate": 50.0,
+  "lifetimeSec": {
+    "min": 1.0,
+    "max": 1.0
+  },
+  "size": {
+    "start": 1.198,
+    "end": 0.399
+  },
+  "color": {
+    "start": [
+      0.271,
+      0.82,
+      0.82,
+      1.0
+    ],
+    "end": [
+      0.137,
+      0.263,
+      0.455,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        0.271,
+        0.82,
+        0.82,
+        1.0
+      ]
+    ],
+    [
+      0.5,
+      [
+        0.129,
+        0.341,
+        0.471,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.137,
+        0.263,
+        0.455,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      1.198
+    ],
+    [
+      0.5,
+      0.798
+    ],
+    [
+      1,
+      0.399
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/flare_01.png",
+  "speed": {
+    "min": 10.9554,
+    "max": 11.4026
+  },
+  "gravityY": -27.948,
+  "anchorBone": "Bone_Hand_L"
+}

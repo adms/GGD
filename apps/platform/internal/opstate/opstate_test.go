@@ -492,7 +492,7 @@ func TestServerOpsConfiguredRoundTrip(t *testing.T) {
 		t.Fatal(err)
 	}
 	store, _ := jsonstore.New(dst)
-	svc := opsenv.New(store, nil)
+	svc := opsenv.New(store, nil, opsenv.Runtime{})
 	_, stored, err := svc.GetStored()
 	if err != nil {
 		t.Fatal(err)

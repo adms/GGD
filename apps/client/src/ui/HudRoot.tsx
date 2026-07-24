@@ -11,6 +11,7 @@ import { hudTouch } from "./hud/HudSlot";
 import { hudSlotHeight, hudSlotStyle } from "./hud/hudLayout";
 import { useHudSlotHidden } from "./hud/useHudPanels";
 import { EquipmentBar } from "./hud/EquipmentBar";
+import { ControlLegend } from "./ControlLegend";
 import { CouchHudGrid } from "./components/CouchHudGrid";
 import { AbilityBar } from "./components/AbilityBar";
 import { ExUnlockToast } from "./components/ExUnlockToast";
@@ -139,6 +140,15 @@ export function HudRoot(): React.JSX.Element {
       <ReviveBanner />
       {!couch && <Scoreboard />}
       <GamepadIndicator />
+      {/* First-round 操作說明 (task #187). Mounted OUTSIDE the `!couch` group and
+          outside the touch branch on purpose: it is the one piece of chrome
+          every input tree and every seat count needs, and it owns its own gate
+          (combat + round<=1 + not dismissed + no covering panel) plus its own
+          placement (left flank on desktop, top-gutter strip on touch/couch).
+          ONE legend in couch play, never one per viewport: the bindings are
+          identical for all four seats, so four copies would be four times the
+          ink on an already-quartered screen for no extra information. */}
+      <ControlLegend />
       {inGame && !couch && (
         <>
           {!touchControls && <AbilityBar />}

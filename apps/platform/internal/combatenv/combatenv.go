@@ -272,6 +272,14 @@ func (r *Repo) mirror(ctx context.Context, d Doc) {
 	if err := r.rdb.R.Set(ctx, RedisKey, string(data), 0).Err(); err != nil {
 		slog.Warn("combatenv: redis mirror failed (JSON truth is intact)", "err", err)
 	}
+	// Announce the change so RUNNING shards re-read the table instead of waiting
+	// for a TTL. Same contract as curation: an etag, never the document — the
+	// shard re-fetches GET /api/v1/combat-env through the path #48 hardened.
+	if err := r.rdb.PublishContentInvalidation(
+		ctx, redisx.ContentKindCombatEnv, redisx.ContentETag(data), d.UpdatedAt,
+	); err != nil {
+		slog.Warn("combatenv: content-invalidation publish failed (shards refresh on their TTL)", "err", err)
+	}
 }
 
 // Service applies combat-env policy on top of the repository. The document is

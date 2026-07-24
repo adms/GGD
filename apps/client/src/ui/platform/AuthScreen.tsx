@@ -17,6 +17,12 @@ import {
 } from "./firstOwner";
 import { ErrorToast } from "./LobbyScreen";
 import { Btn, TextInput, FieldError, Panel, ACCENT } from "./widgets";
+import {
+  passwordAutoComplete,
+  USERNAME_AUTOCOMPLETE,
+  EMAIL_AUTOCOMPLETE,
+  CODE_AUTOCOMPLETE,
+} from "./autofill";
 import { ARENA_OPTIONS, DEFAULT_MAP_ID } from "./maps";
 import { TEXT_DIM, TEXT_MAIN } from "../theme";
 import { HomeFooter } from "./HomeFooter";
@@ -324,6 +330,10 @@ export function AuthScreen(): React.JSX.Element {
 
   const tab = (m: Mode, label: string): React.JSX.Element => (
     <button
+      // type="button" is LOAD-BEARING: these tabs sit inside the credential
+      // <form>, and a <button> with no type is a submit button — clicking
+      // "Create account" would submit the form and reload the whole SPA.
+      type="button"
       onMouseEnter={playHover}
       onClick={() => {
         playClick();
@@ -475,7 +485,24 @@ export function AuthScreen(): React.JSX.Element {
           {tab("login", "Sign in")}
           {tab("register", "Create account")}
         </div>
-        <div style={{ padding: 18, display: "flex", flexDirection: "column", gap: 12 }}>
+        {/* A REAL <form>, for the password manager's benefit (task #185).
+            Chrome will happily SAVE a credential typed into loose divs — that is
+            why the owner saw the save prompt — but to FILL it back in it has to
+            recognise a username/password PAIR, and the form is what scopes that
+            pair (without one the "form" Chrome synthesizes is the entire
+            document, arena <select> and all). The per-field autoComplete/name
+            attributes below are the other half; see ./autofill.
+            The flex/gap styles move ONTO the form: as a plain wrapper it would
+            become a single flex child and collapse every 12px gap.
+            onSubmit MUST preventDefault — an un-prevented submit navigates and
+            takes the whole SPA down with it. */}
+        <form
+          style={{ padding: 18, display: "flex", flexDirection: "column", gap: 12 }}
+          onSubmit={(e) => {
+            e.preventDefault();
+            submit();
+          }}
+        >
           <div onMouseEnter={playHover}>
             <div style={{ position: "relative" }}>
               <TextInput
@@ -484,6 +511,13 @@ export function AuthScreen(): React.JSX.Element {
                 placeholder={mode === "login" ? "username or email" : "username"}
                 onEnter={submit}
                 autoFocus
+                // Same token in both modes on purpose — that is what lets the
+                // record saved at registration match the sign-in screen later.
+                name="username"
+                id="ggd-auth-username"
+                autoComplete={USERNAME_AUTOCOMPLETE}
+                autoCapitalize="off"
+                spellCheck={false}
               />
               {!reducedMotion && <span ref={unameSparkRef} aria-hidden className="ggd-key-spark" />}
             </div>
@@ -492,7 +526,17 @@ export function AuthScreen(): React.JSX.Element {
           {mode === "register" && (
             <div onMouseEnter={playHover}>
               <div style={{ position: "relative" }}>
-                <TextInput value={email} onChange={onType(setEmail, emailSparkRef)} placeholder="email" onEnter={submit} />
+                <TextInput
+                  value={email}
+                  onChange={onType(setEmail, emailSparkRef)}
+                  placeholder="email"
+                  onEnter={submit}
+                  name="email"
+                  id="ggd-auth-email"
+                  autoComplete={EMAIL_AUTOCOMPLETE}
+                  autoCapitalize="off"
+                  spellCheck={false}
+                />
                 {!reducedMotion && <span ref={emailSparkRef} aria-hidden className="ggd-key-spark" />}
               </div>
               <FieldError text={fieldErrors.email} />
@@ -528,6 +572,15 @@ export function AuthScreen(): React.JSX.Element {
                     onChange={onType(setOwnerToken, inviteSparkRef)}
                     placeholder={OWNER_TOKEN_LABEL}
                     onEnter={submit}
+                    // NOT a credential field: autoComplete="off" keeps Chrome
+                    // from mistaking it for the username (it is the text input
+                    // right before the password box). autoCapitalize/spellCheck
+                    // off so mobile keyboards cannot mangle the lowercase hex.
+                    name="ownerToken"
+                    id="ggd-auth-owner-token"
+                    autoComplete={CODE_AUTOCOMPLETE}
+                    autoCapitalize="off"
+                    spellCheck={false}
                   />
                   {!reducedMotion && <span ref={inviteSparkRef} aria-hidden className="ggd-key-spark" />}
                 </div>
@@ -544,6 +597,18 @@ export function AuthScreen(): React.JSX.Element {
                     onChange={onType((v) => setInviteCode(v.toUpperCase()), inviteSparkRef)}
                     placeholder="邀請碼 invite code (GGD-XXXX-XXXX)"
                     onEnter={submit}
+                    // THE FIELD THAT CAUSED THE BUG. Unnamed, it is the text
+                    // input immediately before the password, so Chrome's
+                    // heuristic read it as the username and saved
+                    // {GGD-XXXX-XXXX, password} on the family deploy's very
+                    // first (invite-gated) registration — a record the sign-in
+                    // screen can never match. "off" + a distinct name, never
+                    // "one-time-code" (see ./autofill).
+                    name="inviteCode"
+                    id="ggd-auth-invite-code"
+                    autoComplete={CODE_AUTOCOMPLETE}
+                    autoCapitalize="characters"
+                    spellCheck={false}
                   />
                   {!reducedMotion && <span ref={inviteSparkRef} aria-hidden className="ggd-key-spark" />}
                 </div>
@@ -558,6 +623,16 @@ export function AuthScreen(): React.JSX.Element {
                 placeholder="password"
                 type="password"
                 onEnter={submit}
+                // Mode-dependent, and getting it backwards is worse than
+                // omitting it: "new-password" on the sign-in screen makes Chrome
+                // offer to GENERATE instead of fill, and "current-password" on
+                // the register screen suppresses the generator. React keeps this
+                // same DOM node across a mode switch (the conditional fields
+                // above hold their slots), and Chrome re-parses on the attribute
+                // change, so no remount/key juggling is needed.
+                name="password"
+                id="ggd-auth-password"
+                autoComplete={passwordAutoComplete(mode)}
               />
               {!reducedMotion && <span ref={pwSparkRef} aria-hidden className="ggd-key-spark" />}
             </div>
@@ -578,19 +653,22 @@ export function AuthScreen(): React.JSX.Element {
             </div>
           )}
           <span onMouseEnter={playHover} style={{ display: "block", marginTop: 2 }}>
+            {/* THE one real submit button of the form. A form whose credentials
+                are confirmed by a genuine submit event is what password managers
+                watch for, so the click goes through the form (onSubmit →
+                preventDefault → submit()) rather than calling submit() here —
+                one path, one call, and the click SFX is unchanged. */}
             <Btn
               kind="primary"
-              onClick={() => {
-                playClick();
-                submit();
-              }}
+              type="submit"
+              onClick={playClick}
               disabled={authBusy || enteringRef.current}
               style={{ width: "100%" }}
             >
               {authBusy ? "…" : mode === "login" ? "Sign in" : "Create account"}
             </Btn>
           </span>
-        </div>
+        </form>
       </Panel>
 
       <div

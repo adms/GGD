@@ -1,0 +1,16 @@
+{
+  "id": "godie-windmissle-r2",
+  "schema": "ribbon@1",
+  "texture": "assets/textures/particles/light_02.png",
+  "widthAbove": 0.833,
+  "widthBelow": 0.833,
+  "lifespanSec": 0.5,
+  "color": [
+    0.392,
+    0.706,
+    0.933,
+    0.6
+  ],
+  "blendMode": "additive",
+  "anchorBone": "Dummy10"
+}

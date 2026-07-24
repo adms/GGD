@@ -30,7 +30,13 @@ interface Active {
   slot: number;
 }
 
-const SLOT_INDEX: Record<string, number> = { Q: 0, W: 1, E: 2, R: 3, EX: 4 };
+/**
+ * Slot name → the bar's tile index, for the cast-fill overlay. PASSIVE is the
+ * sixth tile: the innate is cast like anything else and the ~60 active ones
+ * include real cast-time abilities, so without this entry a channelling 天生技
+ * filled nothing while every other slot did.
+ */
+const SLOT_INDEX: Record<string, number> = { Q: 0, W: 1, E: 2, R: 3, EX: 4, PASSIVE: 5 };
 /** keep a finished cast briefly in case its castEnd event is late/dropped */
 const CAST_GRACE_MS = 250;
 

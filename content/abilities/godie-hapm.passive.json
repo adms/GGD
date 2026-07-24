@@ -2,6 +2,7 @@
   "id": "godie-hapm.passive",
   "schema": "ability@1",
   "name": "52-00 十二道試煉",
+  "icon": "assets/icons/abilities/godie-hapm.passive.webp",
   "description": "[被動]\n240秒冷卻時間\n\n海格力士克服了十二道試煉，獲得眾神給予不死之身的獎賞，可以使肉身有第二生命。",
   "slot": "PASSIVE",
   "innateKind": "passive",

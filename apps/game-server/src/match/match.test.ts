@@ -4,7 +4,7 @@ import { asSeatId, asTeamId, type TeamId } from "@ggd/shared/ids";
 import { Champions } from "@ggd/shared/sim/content/registry";
 import { MatchController, type SeatSpec } from "./MatchController";
 import { PhaseMachine } from "./PhaseMachine";
-import { pairTeams, livesLost } from "./PairedDuels";
+import { pairTeams, livesLost, teamHealthLost, HIGH_STAKES_REWARD } from "./PairedDuels";
 import { MatchState } from "@ggd/shared/protocol/schema";
 import { projectSnapshot } from "../net/snapshot";
 import { HumanDriver } from "../seat/HumanDriver";
@@ -87,14 +87,26 @@ describe("PairedDuels (match-02, match-03)", () => {
     expect(pairTeams(two, 5).pairings).toEqual([{ zone: 0, sideA: 1, sideB: 3 }]);
   });
 
-  it("lives lost scales with round", () => {
+  it("team health lost escalates by round band", () => {
     cover("paired-duels-lives");
-    expect(livesLost(1)).toBe(1);
-    expect(livesLost(2)).toBe(1);
-    expect(livesLost(3)).toBe(2);
-    expect(livesLost(4)).toBe(2);
-    expect(livesLost(5)).toBe(3);
-    expect(livesLost(9)).toBe(3);
+    // Arena's bands, exactly: −2 for rounds 1-3, −4 for 4-6, −6 at 7.
+    expect(teamHealthLost(1)).toBe(2);
+    expect(teamHealthLost(3)).toBe(2);
+    expect(teamHealthLost(4)).toBe(4);
+    expect(teamHealthLost(6)).toBe(4);
+    expect(teamHealthLost(7)).toBe(6);
+    // …and GGD's one addition: it keeps climbing past 7, because at 3 alive
+    // teams `pairTeams` hands out a bye and only 1 team in 3 takes damage.
+    // Held flat at −6 the tail grinds; see the derivation in PairedDuels.ts.
+    expect(teamHealthLost(8)).toBe(9);
+    expect(teamHealthLost(9)).toBe(12);
+    // The cost MUST eventually exceed the High Stakes reward, or a team that
+    // keeps winning gains health faster than losing can take it away and the
+    // match has no bound. Crossover is round 11.
+    expect(teamHealthLost(10)).toBeLessThanOrEqual(HIGH_STAKES_REWARD);
+    expect(teamHealthLost(11)).toBeGreaterThan(HIGH_STAKES_REWARD);
+    // `livesLost` is the deprecated alias and must stay pointed at the same fn.
+    expect(livesLost).toBe(teamHealthLost);
   });
 });
 

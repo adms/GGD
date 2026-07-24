@@ -39,7 +39,21 @@
       ]
     }
   ],
-  "vfxKey": "fx.prim.holy.slash",
+  "vfxKey": "fx.w3x.particle.holyawakening.p04",
   "schema": "ability@1",
-  "castTimeSec": 0.3
+  "castTimeSec": 0.3,
+  "hitFeel": {
+    "hitstopTicks": 3,
+    "hitstunTicks": 6,
+    "shakeMag": 0.385,
+    "shakeStyle": "omni",
+    "sparkKind": "magic",
+    "flashColor": [
+      1.0,
+      0.95,
+      0.72
+    ],
+    "flashMs": 132,
+    "camKick": 0.33
+  }
 }

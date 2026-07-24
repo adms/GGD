@@ -1,0 +1,82 @@
+{
+  "id": "fx.w3x.particle.lasercannonfinalred.p07",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.001,
+    "angleDeg": 1
+  },
+  "mode": "continuous",
+  "lifetimeSec": {
+    "min": 5,
+    "max": 5
+  },
+  "size": {
+    "start": 0.001,
+    "end": 12.334
+  },
+  "color": {
+    "start": [
+      0.894,
+      0.278,
+      0.294,
+      1
+    ],
+    "end": [
+      0.894,
+      0.278,
+      0.294,
+      0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        0.894,
+        0.278,
+        0.294,
+        1
+      ]
+    ],
+    [
+      0.01,
+      [
+        0.894,
+        0.278,
+        0.294,
+        1
+      ]
+    ],
+    [
+      1,
+      [
+        0.894,
+        0.278,
+        0.294,
+        0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.001
+    ],
+    [
+      0.01,
+      9.251
+    ],
+    [
+      1,
+      12.334
+    ]
+  ],
+  "blendMode": "additive",
+  "speed": {
+    "min": 0,
+    "max": 0
+  },
+  "rate": 222,
+  "texture": "assets/textures/particles/light_03.png"
+}

@@ -4,10 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"math/rand"
 	"net/http"
 	"sort"
-	"time"
 
 	"github.com/ggd/platform/internal/account"
 	"github.com/ggd/platform/internal/data/jsonstore"
@@ -15,16 +13,111 @@ import (
 )
 
 // Meta-progression tuning (task #118). Crystal (水晶) is the FREE soft currency:
-// a small random amount is granted every match, and champions are UNLOCKED by
-// spending it. The unlock cost is pitched at roughly 20 matches of the average
-// grant ((CrystalMatchMin+CrystalMatchMax)/2 == 15; 15*20 == 300).
+// it is granted for PLAYING A MATCH and spent to unlock champions.
+//
+// WHO MAY GRANT IT. Only match settlement — the HMAC-authenticated
+// server-to-server result callback (gamelink.handleResult), which is
+// per-matchId idempotent (redisx.KeyMatchDone SetNX) and journaled with
+// ABSOLUTE post-match balances so WAL replay converges. There is deliberately
+// NO client-callable earn route: a bare authenticated self-grant with no
+// per-match key is a minting hole (a client can simply loop it).
+//
+// BALANCE MODEL — the assumed play rate is written down so the owner can
+// retune from the same numbers rather than from a bare constant.
+//
+// CORRECTED TWICE IN ONE DAY, WHICH IS THE POINT (#187). This block used to
+// claim seven rounds and twenty-five minutes, derived here by hand, while the
+// ops page said a match was fifteen minutes. Both were wrong and neither knew about the other. Then
+// the elimination model itself was replaced — 3 shared "lives" became a 20-point
+// TEAM HEALTH pool draining 2/4/6 with a per-round escalation from round 7 and a
+// High Stakes round every 4th round from round 5 that pays each winner +15.
+//
+//	REFERENCE POINT — 4 teams x 20 starting Team Health:
+//	one match  = champ-select 40s + ~11.6 rounds x (~180s combat + 40s
+//	             intermission + 6s resolution) ~= 44 minutes.
+//	             (content/config/config.match.json: combatMaxSec 240,
+//	             fireRing.startSec 180 so a round typically resolves near 3
+//	             minutes; every round going the full 240 is ~56 minutes.)
+//	one family evening ~= 1-2 hours ~= 1-3 matches.
+//
+// THAT IS A REFERENCE POINT, NOT A LIVE READING, and it is deliberately the
+// CONSERVATIVE one: it comes from a model that treats every duel as a coin flip,
+// which the game-server lane measured as ~25% longer than the real controller
+// (median 12 rounds vs 9). The live figure is COMPUTED and shown on the ops page
+// (後台 系統運維 → 「一場對戰實際多長（推導值）」, derived in
+// apps/platform/internal/opsenv/matchlength.go). Nothing in this comment is
+// allowed to be the second answer to that question again: opsenv's
+// matchlength_test.go re-derives the two numbers above from the same model and
+// fails if they drift, and fails again if the LIVE config moves match length far
+// enough from this reference that the grants below stop meaning what they say.
+//
+// Target feel: about ONE champion unlocked per evening — earned, not a grind,
+// not a giveaway. CrystalUnlockCost is 300 and is MIRRORED BY THE CLIENT
+// button label (apps/client/.../champselect/walletMeta.ts CRYSTAL_UNLOCK_COST),
+// so the tuning lever is the GRANT, not the cost:
+//
+//	place 1  120  -> 2.5 matches per unlock (~1.8h of play)
+//	place 2   90
+//	place 3   70
+//	place 4   60  -> 5.0 matches per unlock (~3.7h of play)
+//	average   85  -> 3.5 matches per unlock (~2.6h of play)
+//
+// THE HOURS MOVED; THE GRANTS DID NOT. They were computed against the old
+// 25-minute figure and read ~1h / ~2h / ~1.5h. A longer match is worth the same
+// crystals, so 「about one champion per evening」 no longer holds at the average
+// — it is now closer to one champion per two evenings. Whether to raise the
+// grants is a BALANCE decision for the owner, not a side effect of correcting a
+// comment, so it is deliberately NOT being made here and is flagged instead.
+// What is fixed is that the number that decision would be made from is no
+// longer wrong.
+//
+// Last place still earns: 「水晶（打場免費賺）」 is free THROUGH PLAY, not free
+// through winning. The 2:1 winner:loser spread makes placement matter without
+// stalling the family member who keeps losing. Across the 36 priced champions
+// the full roster is a long-term goal (~126 matches at the average), which is
+// why the starter roster in content/config/store.json is a generous 12.
 const (
-	// CrystalMatchMin/Max bound the per-match crystal grant (inclusive).
-	CrystalMatchMin = 10
-	CrystalMatchMax = 20
-	// CrystalUnlockCost is the crystal price to unlock one champion (~20 matches).
+	// CrystalUnlockCost is the DEFAULT crystal price to unlock one champion.
+	// The authoritative per-champion price is content/config/store.json
+	// (championPrices); this constant is the value the client mirrors in its
+	// 「解鎖 (N 水晶)」 label, and server.go warns at boot if any priced
+	// champion disagrees with it.
 	CrystalUnlockCost = 300
+
+	// CrystalPlace1..4 are the per-match crystal grants by final team
+	// placement. See the balance model above.
+	//
+	// 吃雞 (1st) is DOUBLE, by the owner's instruction: 「如果是該場次吃雞，水晶
+	// 則 2 倍領取」. Written as base × CrystalWinMultiplier rather than a bare
+	// 240 so the intent survives a retune — change the base and the win bonus
+	// scales with it, instead of the two silently drifting apart.
+	crystalPlace1Base = 120
+	CrystalWinMultiplier = 2
+	CrystalPlace1 = crystalPlace1Base * CrystalWinMultiplier // 240
+	CrystalPlace2 = 90
+	CrystalPlace3 = 70
+	CrystalPlace4 = 60
+
+	// MCoinWinGrant is the M COIN a 吃雞 earns, by the owner's instruction:
+	// 「並且可以領到 1 枚 M幣」. ONE coin, and only for first place.
+	//
+	// This REPLACES a per-placement table of 200/120/80/50 that contradicted
+	// #118's own premise — 「M幣改由後台發放的造型幣（非購買）」, echoed by
+	// GrantMCoin's own doc comment ("admin-granted, never purchased"). A
+	// currency that every match minted 200 of is not a scarce cosmetic; it was
+	// never a stated intent, just a number nobody revisited. The store doc is
+	// still the authority (Catalog.RewardFor reads it); this constant is what
+	// that doc now carries.
+	MCoinWinGrant = 1
 )
+
+// crystalRewards maps final team placement (1 = winner) -> crystal grant.
+var crystalRewards = map[int]int{1: CrystalPlace1, 2: CrystalPlace2, 3: CrystalPlace3, 4: CrystalPlace4}
+
+// CrystalRewardFor returns the per-match crystal grant for a final team
+// placement. An unknown or zero placement grants nothing — same shape (and
+// same safety property) as Catalog.RewardFor for M COIN.
+func CrystalRewardFor(place int) int { return crystalRewards[place] }
 
 // ColWalletMeta is the jsonstore collection holding per-account meta
 // progression (crystals + favourites). Kept OFF the account struct because a
@@ -37,19 +130,6 @@ const roleAdmin = "admin"
 
 // keyMeta is the Redis mirror key for one account's meta progression.
 func keyMeta(accountID string) string { return "walletmeta:" + accountID }
-
-// defaultCrystalRoll is the production per-match grant: a uniform draw in
-// [CrystalMatchMin, CrystalMatchMax]. Tests replace it via SetCrystalRoll for
-// deterministic amounts.
-var seededRand = rand.New(rand.NewSource(time.Now().UnixNano()))
-
-func defaultCrystalRoll() int {
-	return CrystalMatchMin + seededRand.Intn(CrystalMatchMax-CrystalMatchMin+1)
-}
-
-// SetCrystalRoll overrides the per-match crystal grant function (tests seed it
-// so match rewards are deterministic).
-func (s *Service) SetCrystalRoll(fn func() int) { s.crystalRoll = fn }
 
 // meta is the durable per-account meta-progression record.
 type meta struct {
@@ -144,27 +224,41 @@ func (s *Service) overlayMeta(ctx context.Context, accountID string, w *Wallet) 
 	}
 }
 
-// EarnMatchCrystals grants one match's worth of crystals to the account and
-// returns the updated wallet. The amount comes from crystalRoll (seeded in
-// tests). This is the free, per-match soft-currency drip.
-func (s *Service) EarnMatchCrystals(ctx context.Context, accountID string) (Wallet, error) {
-	amount := s.crystalRoll()
-	if amount < 0 {
-		amount = 0
-	}
-	if _, err := s.mutateMeta(ctx, accountID, func(m *meta) error {
-		m.Crystal += amount
-		return nil
-	}); err != nil {
-		return Wallet{}, err
-	}
-	return s.Get(ctx, accountID)
+// CrystalOf returns the account's current crystal balance (0 when it has none
+// yet). Read-only; used by match settlement to compute the ABSOLUTE post-match
+// balance it journals.
+func (s *Service) CrystalOf(ctx context.Context, accountID string) int {
+	return s.loadMeta(ctx, accountID).Crystal
 }
 
-// UnlockChampion spends CrystalUnlockCost crystals to add a priced champion to
-// the account's owned roster. Unknown champions are 404; free champions and
-// already-owned champions are 409; underfunded is 402 (nothing deducted). On a
-// lost race for ownership the crystals are refunded.
+// SetCrystalAbsolute writes an ABSOLUTE crystal balance. This is the ONLY
+// grant path, and it is reachable only from match settlement — see the
+// "WHO MAY GRANT IT" note at the top of this file.
+//
+// Absolute (not delta) for the same reason SetMCoinAbsolute is: the settlement
+// record and the WAL carry post-match values, so a duplicate result callback
+// or a boot replay converges instead of double-granting. The tradeoff is that a
+// spend racing the same account's settlement inside that millisecond-wide
+// window would be overwritten; the settlement path is per-matchId idempotent
+// and fires while the player is still on the結算 screen, so the exposure is the
+// same one M COIN and MMR already accept, and it is the safe direction: the
+// alternative (delta grants) is the minting hole this replaces.
+func (s *Service) SetCrystalAbsolute(ctx context.Context, accountID string, crystal int) error {
+	if crystal < 0 {
+		crystal = 0
+	}
+	_, err := s.mutateMeta(ctx, accountID, func(m *meta) error {
+		m.Crystal = crystal
+		return nil
+	})
+	return err
+}
+
+// UnlockChampion spends the champion's crystal price (content/config/store.json
+// championPrices — CrystalUnlockCost is only the default the client mirrors) to
+// add a priced champion to the account's owned roster. Unknown champions are
+// 404; free champions and already-owned champions are 409; underfunded is 402
+// (nothing deducted). On a lost race for ownership the crystals are refunded.
 func (s *Service) UnlockChampion(ctx context.Context, accountID, championID string) (Wallet, error) {
 	price, priced := s.cat.ChampionPrice(championID)
 	if !priced {
@@ -185,10 +279,10 @@ func (s *Service) UnlockChampion(ctx context.Context, accountID, championID stri
 
 	// Deduct crystals first (locked RMW on the meta truth).
 	if _, err := s.mutateMeta(ctx, accountID, func(m *meta) error {
-		if m.Crystal < CrystalUnlockCost {
+		if m.Crystal < price {
 			return ErrInsufficientCrystal()
 		}
-		m.Crystal -= CrystalUnlockCost
+		m.Crystal -= price
 		return nil
 	}); err != nil {
 		return Wallet{}, err
@@ -208,7 +302,7 @@ func (s *Service) UnlockChampion(ctx context.Context, accountID, championID stri
 		return nil
 	})
 	if err != nil {
-		_, _ = s.mutateMeta(ctx, accountID, func(m *meta) error { m.Crystal += CrystalUnlockCost; return nil })
+		_, _ = s.mutateMeta(ctx, accountID, func(m *meta) error { m.Crystal += price; return nil })
 		if errors.Is(err, errAlreadyOwned) {
 			return Wallet{}, httpx.Err(http.StatusConflict, "already_owned", "champion already owned")
 		}

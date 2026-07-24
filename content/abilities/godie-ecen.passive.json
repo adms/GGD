@@ -2,6 +2,7 @@
   "id": "godie-ecen.passive",
   "schema": "ability@1",
   "name": "64-00 開瓶特技",
+  "icon": "assets/icons/abilities/godie-ecen.passive.webp",
   "description": "[輔助]\n30秒冷卻時間\n\n約翰走路多年來特訓而成的開瓶絕技用在敵人身上會使敵人不斷迴旋噴發在天上，持續3秒。放心不會收開瓶費。",
   "slot": "PASSIVE",
   "innateKind": "active",

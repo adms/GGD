@@ -21,7 +21,8 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 1.6
+    "range": 1.6,
+    "evasion": 0.15
   },
   "growth": {
     "maxHealth": 28,
@@ -32,6 +33,11 @@
     "armor": 0.8,
     "mr": 1.2,
     "as": 0.02
+  },
+  "hitFeel": {
+    "hitstopTicks": 1,
+    "shakeMag": 0.18,
+    "knockbackMag": 0.0
   },
   "abilities": {
     "Q": {

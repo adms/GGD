@@ -1,0 +1,83 @@
+{
+  "id": "godie-tectonicfury-p1",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.001,
+    "angleDeg": 68.0
+  },
+  "mode": "continuous",
+  "rate": 10.417,
+  "lifetimeSec": {
+    "min": 1.2,
+    "max": 1.2
+  },
+  "size": {
+    "start": 0.517,
+    "end": 0.089
+  },
+  "color": {
+    "start": [
+      1.0,
+      0.988,
+      0.004,
+      1.0
+    ],
+    "end": [
+      0.482,
+      0.267,
+      0.024,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        1.0,
+        0.988,
+        0.004,
+        1.0
+      ]
+    ],
+    [
+      0.5,
+      [
+        0.667,
+        0.416,
+        0.0,
+        1.0
+      ]
+    ],
+    [
+      1.0,
+      [
+        0.482,
+        0.267,
+        0.024,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.517
+    ],
+    [
+      0.5,
+      0.467
+    ],
+    [
+      1,
+      0.089
+    ]
+  ],
+  "blendMode": "alpha",
+  "texture": "assets/textures/particles/wc3/rockparticle.png",
+  "speed": {
+    "min": 14.1567,
+    "max": 14.7345
+  },
+  "gravityY": -32.78
+}

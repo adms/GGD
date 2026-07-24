@@ -35,7 +35,21 @@
       "duration": 10.0
     }
   ],
-  "vfxKey": "fx.prim.void.beam-lg",
+  "vfxKey": "fx.w3x.particle.flamessmoke.p01",
   "schema": "ability@1",
-  "castTimeSec": 0.4
+  "castTimeSec": 0.4,
+  "hitFeel": {
+    "hitstopTicks": 4,
+    "hitstunTicks": 7,
+    "shakeMag": 0.472,
+    "shakeStyle": "directional",
+    "sparkKind": "heavy",
+    "flashColor": [
+      1.0,
+      0.6,
+      0.26
+    ],
+    "flashMs": 162,
+    "camKick": 0.405
+  }
 }

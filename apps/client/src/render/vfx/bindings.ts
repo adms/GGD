@@ -18,6 +18,17 @@
  * `curatedDocs()` turns this table into the `content/vfx/fx.prim.*.json` docs
  * the runtime resolves through `ContentDb.vfxFor` — so binding an ability is
  * "set its vfxKey to `vfxKeyFor(binding)`", with ZERO change to VfxSystem.
+ *
+ * THIS TABLE IS THE BASELINE, NOT THE LAST WORD. The classification below is
+ * read off each ability's NAME — good enough to give every ability a legible
+ * element+shape, but it is not evidence of what the original map drew. Where
+ * the w3x import PROVES an ability's art (`w3a-override` / `w3h-override` /
+ * `jass-literal`) and that art survives as shippable emitters, the ability is
+ * promoted to it in `./w3xAbilityArt` and its content `vfxKey` names a
+ * `fx.w3x.*` / `godie-*` doc instead of the `fx.prim.*` key computed here.
+ * 30 abilities are promoted; the other ~615 keep this baseline. So for those
+ * 30, `abilityVfxKeys()` no longer matches the shipped content doc BY DESIGN —
+ * it is the fallback classification, and `w3xAbilityArt` is the override.
  */
 import type { VfxDoc } from "@ggd/shared/content";
 import { PRIMITIVES, type PrimitiveKind } from "./primitives";

@@ -73,6 +73,12 @@ export const HUD_TOUCH_TARGET = 44;
  *   expanded — a panel opened FROM a slot (scoreboard list, cheat console), so
  *              it paints over the slots stacked below it
  *   screen   — full-screen settings sheet (ui/SettingsScreen)
+ *   focus    — a modal CHOICE that must be answered before the screen behind it
+ *              is useful again (the intermission 三選一 draft), plus its scrim.
+ *              Above `screen` because it demotes the shop card, BELOW the audio
+ *              cluster's Z_TOP because it is a choice inside a phase, not a
+ *              screen — the priority order and its scrim live in
+ *              ui/panels/intermissionLayout.ts (task #107, playtest P2).
  *   modal    — blocking full-screen overlays (pause menu, codex, asset console)
  *
  * THE AUDIO TOGGLE portals to <body> at z-index 2147483000 (AudioToggle.tsx
@@ -86,6 +92,7 @@ export const HUD_Z = {
   slot: 25,
   expanded: 30,
   screen: 40,
+  focus: 45,
   modal: 2147483600,
 } as const;
 
@@ -369,11 +376,43 @@ const SLOTS = [
     id: "gold-level",
     corner: "bottom-right",
     order: 0,
-    height: 56,
+    // MEASURED, not guessed (2026-07-24, live client at 1546x900, the app's own
+    // font stack): the box is 61.0px tall with the "+N skill pt" line and
+    // 49.5px without; 106.1px wide. The old row said 56 while the component
+    // hard-pinned bottom:14 instead of HUD_EDGE (10) — so the real far edge sat
+    // at 14+61 = 75px while this row's band ended at 66 and put the minimap at
+    // 74. That is a 1px overlap, live, whenever the player holds an unspent
+    // skill point, and the guard could not see it because the slot was
+    // `managed: false`. 64 = the measured 61 plus headroom for font-metric
+    // variance across platforms (heights are reservations, i.e. upper bounds).
+    height: 64,
     width: 120,
+    /**
+     * ACCEPTS BEING PAINTED OVER — and making the slot managed is what forced
+     * this to be said out loud. When the shop docks left, the ☰ RELOCATES into
+     * the top-right column (it is essential; it must never be trapped). On a
+     * 667x375 landscape phone that column already runs 10→300, so the displaced
+     * ☰ lands at y 308-352 — on top of this readout's 301-365 band. Measured,
+     * not guessed: neither right-hand column has 44px of slack at that height
+     * (top-left is full to 356 as well), so on the shortest phones SOMETHING
+     * has to give, and between an escape hatch and a number the shop card
+     * already prints in its own header ({seat.gold} g), the number gives.
+     *
+     * This is exactly what `overlay` means ("accepts being painted over"). It
+     * costs nothing on the panel-cover side: the left dock's rect never reaches
+     * the bottom-right corner on any guard viewport, which
+     * `goldLevelExemptionIsVacuous` (hudLayout.test.ts) asserts so the flag can
+     * never quietly start hiding a real collision. The BAND math below is
+     * unaffected by the flag — that is what keeps the minimap off this box.
+     *
+     * NOT the right long-term answer: a 375px-tall landscape phone is
+     * over-subscribed on both sides once the shop takes the left half. Shedding
+     * a slot there is a #107 layout call, not a drive-by.
+     */
+    overlay: true,
     owner: "ui/components/GoldLevel.tsx",
-    managed: false,
-    note: "RESERVED: still hard-codes right:14/bottom:14 (owned by another task). Its pin is 4px off this slot's edge; the minimap stacks above the reserved band, so the two never meet.",
+    managed: true,
+    note: "local seat gold / level / xp (+ unspent skill points). Content-sized; the reserved height is the measured worst case (skill-point line showing).",
   },
   {
     id: "equipment",
@@ -636,7 +675,14 @@ const PANELS = [
     // auto-open prep + defeated-player combat (shopGate.mounted); HudRoot mounts
     // MerchantShop in BOTH phases and the gate returns null for everyone else.
     phases: ["intermission", "combat"],
-    z: HUD_Z.screen, // ABOVE slots (25) and expanded (30)
+    // ABOVE slots (25) and expanded (30) — and the panel really PAINTS there:
+    // MerchantShop sets `zIndex: INTERMISSION_Z.panel` (= this number) on both
+    // its card and its collapsed rail. It used to set none at all, which made
+    // this row a fiction the guard could not catch: the guard proves that
+    // RECTANGLES clear, so a panel painting under the slots it "covers" reads
+    // as clean. `panelDeclaredZIsPainted` (hudLayout.test.ts) now scans the
+    // owner sources so the two cannot drift apart again.
+    z: HUD_Z.screen,
     owner: "ui/panels/MerchantShop.tsx",
     managed: false,
     note: "RESERVED: full-height left card, min(45vw,560px). Geometry owned by #106; this row declares the EDGE so covered chrome yields.",
@@ -669,15 +715,22 @@ const PANELS = [
   {
     id: "augment-draft",
     edge: "center",
-    // width:460, horizontally centred near the top (top:90); short content
-    // (one 三選一 offer). Bounded; clears the corners on every landscape viewport.
+    // width:460, BOTH-AXIS centred; short content (one 三選一 offer). Bounded;
+    // clears the corners on every landscape viewport.
+    //
+    // It used to pin `top: 90` while declaring `edge: "center"` — so this row
+    // resolved a rect the panel never occupied, and at top:90 the card stack
+    // landed straight on the merchant tip box's band (playtest P2). The panel
+    // now really centres, which is what this row always said.
     box: { width: { fraction: 0.92, maxPx: 460 }, height: { fraction: 0.6, maxPx: 300 } },
     covers: [],
     phases: ["intermission"],
-    z: HUD_Z.slot,
+    // a modal CHOICE: it out-ranks the shop card and carries its own scrim.
+    // Order + scrim: ui/panels/intermissionLayout.ts.
+    z: HUD_Z.focus,
     owner: "ui/panels/AugmentDraftPanel.tsx",
     managed: false,
-    note: "RESERVED: centred 三選一 draft; covers no corner (guard proves it).",
+    note: "RESERVED: centred 三選一 draft; covers no corner (guard proves it). FOCUS surface — see intermissionLayout.",
   },
 ] as const;
 

@@ -2,6 +2,7 @@
   "id": "godie-oshd.passive",
   "schema": "ability@1",
   "name": "29-00 開設雜貨店",
+  "icon": "assets/icons/abilities/godie-oshd.passive.webp",
   "description": "[輔助]\n60秒冷卻時間\n\n開設雜貨店，每秒可以回復附近友方2%非機械化部隊的生命點數。可持續30秒；不過要記住，開雜貨店只是他的興趣，教拳才是他的正職。",
   "slot": "PASSIVE",
   "innateKind": "active",

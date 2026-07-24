@@ -18,34 +18,104 @@ export interface AugmentOffer {
   picked: AugmentId | null;
 }
 
-/** Which rounds gate which augment tier (configurable). */
+/**
+ * NOT THE SHIPPED SCHEDULE — the no-doc FALLBACK, and the only augment-tier
+ * table in code.
+ *
+ * THE ONE AUTHORITY IS `content/config/arena-rules.json`: `rounds[r].augmentTier`,
+ * read by `MatchController` through `grantForRound`. A shipped match always has
+ * that doc, and it now schedules silver 1-3 / gold 4-6 / prismatic 7-13.
+ *
+ * This constant is consumed by exactly one caller — `DEFAULT_ARENA_RULES` in
+ * apps/game-server/src/match/arenaRules.ts — which is what a MatchController
+ * built with NO rules argument gets (unit tests, the skeleton content path). It
+ * is kept at the legacy 1/3/5 shape precisely so those tests keep describing the
+ * legacy behaviour they were written against; changing it would silently retune
+ * every doc-less test rather than the game.
+ *
+ * There used to be a THIRD copy: `draft.tierSchedule` in config.match@1, which
+ * said {1:silver, 3:gold, 5:prismatic} while arena-rules said something else.
+ * Nothing ever read it. It is now an empty record; deleting the field outright
+ * needs the `.strict()` schema in content/schema/config.ts to drop it first.
+ */
 export const AUGMENT_TIER_SCHEDULE: Record<number, AugmentTier> = {
   1: "silver",
   3: "gold",
   5: "prismatic",
 };
 
+/**
+ * Tiers in ascending power, and therefore in DESCENDING fallback preference —
+ * `TIER_FALLBACK[tier]` is the tiers `offerAugments` may borrow from when the
+ * requested tier cannot fill a card, best first. See the FALLBACK note there.
+ */
+const TIER_FALLBACK: Record<AugmentTier, readonly AugmentTier[]> = {
+  silver: [],
+  gold: ["silver"],
+  prismatic: ["gold", "silver"],
+};
+
+/**
+ * Roll a `count`-choose-1 augment card of `tier`, weighted, without
+ * replacement, excluding augments this champion already owns.
+ *
+ * -------------------------------------------------------------------------
+ * FALLBACK — why this does not just filter on `tier` any more
+ * -------------------------------------------------------------------------
+ * The old body was `Augments.all().filter(a => a.tier === tier && !owned)` and
+ * a `while (choices.length < count && working.length > 0)` loop: a HARD tier
+ * filter, drawn without replacement, and a loop that stops early and SILENTLY
+ * when the tier runs dry. Every pick permanently removes one card from that
+ * champion's future pool of that tier, so a long match walks the tier down to
+ * nothing and the card quietly shrinks 3 → 2 → 1 → 0. A "choose 1 of 1" is not
+ * a choice, and a "choose 1 of 0" is task #47 all over again: a draft card that
+ * grants nothing, with no trace anywhere.
+ *
+ * That was not hypothetical. Under the team-health model a match runs 10-13
+ * rounds and `arena-rules` gives PRISMATIC on round 5 and every round after,
+ * so a champion draws 7-9 prismatic cards from a 16-card tier. Measured on 30
+ * real matches BEFORE the tier was expanded (7 prismatic augments): 339 of
+ * 1941 prismatic offers came out under-filled, 132 of them with a single card.
+ *
+ * So the tier is now a PREFERENCE, not a wall. Fill from the requested tier
+ * first — identical rolls, identical weights, identical rng consumption while
+ * the tier can serve — and only when it is exhausted borrow the remaining slots
+ * from the next tier down. A weaker card the player can actually weigh against
+ * the others beats a card that is not a choice. Two invariants hold now that
+ * did not before:
+ *   • an offer is never shorter than `count` while ANY unowned augment exists;
+ *   • `choices[0…k]` is still drawn purely from the requested tier, so the
+ *     headline card a player sees is the one the round promised.
+ */
 export function offerAugments(world: SimWorld, entity: EntityId, tier: AugmentTier, count = 3): AugmentOffer {
   const champ = world.champion.get(entity);
   const owned = new Set(champ?.augments ?? []);
-  const pool = Augments.all().filter((a) => a.tier === tier && !owned.has(a.id));
 
   const choices: AugmentId[] = [];
-  const working = [...pool];
-  while (choices.length < count && working.length > 0) {
-    const total = working.reduce((s, a) => s + a.weight, 0);
-    let roll = world.rng.next() * total;
-    let idx = working.length - 1;
-    for (let i = 0; i < working.length; i++) {
-      roll -= working[i]!.weight;
-      if (roll <= 0) {
-        idx = i;
-        break;
+  const drawFrom = (t: AugmentTier): void => {
+    const working = Augments.all().filter((a) => a.tier === t && !owned.has(a.id) && !choices.includes(a.id));
+    while (choices.length < count && working.length > 0) {
+      const total = working.reduce((s, a) => s + a.weight, 0);
+      let roll = world.rng.next() * total;
+      let idx = working.length - 1;
+      for (let i = 0; i < working.length; i++) {
+        roll -= working[i]!.weight;
+        if (roll <= 0) {
+          idx = i;
+          break;
+        }
       }
+      choices.push(working[idx]!.id);
+      working.splice(idx, 1); // without replacement
     }
-    choices.push(working[idx]!.id);
-    working.splice(idx, 1); // without replacement
+  };
+
+  drawFrom(tier);
+  for (const lower of TIER_FALLBACK[tier]) {
+    if (choices.length >= count) break;
+    drawFrom(lower);
   }
+
   const offer: AugmentOffer = { entity, tier, choices, picked: null };
   world.emit("augmentOffer", { entity, tier, choices });
   return offer;

@@ -4,7 +4,6 @@ package server
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"log/slog"
 	"net/http"
@@ -151,11 +150,35 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 	rdb := redisx.New(cfg.RedisAddr, cfg.RedisPassword)
 	accounts := account.NewRepo(store, rdb)
 
-	// Private-deploy gate (#126): enabled by Options or GGD_REQUIRE_APPROVAL.
-	requireApproval := opts.RequireApproval || envEnabled("GGD_REQUIRE_APPROVAL")
+	// Private-deploy approval gate (#126): a new account lands PENDING and gets
+	// no session until an administrator approves it.
+	//
+	// Three inputs, OR-ed, because they answer different questions and the
+	// safe direction is "any one of them says yes":
+	//   - opts.RequireApproval — a test/embedder turning it on explicitly;
+	//   - cfg.RequireApproval  — config.resolveRequireApproval's answer, which
+	//     DEFAULTS TO ON for any non-loopback listen address (the #127 tiering
+	//     predicate, shared with the #174 invite gate);
+	//   - GGD_REQUIRE_APPROVAL — read directly as well, so a caller that builds
+	//     a Config by hand (testutil, an embedder) still honours the env var it
+	//     always honoured. config.Load folds the same variable into
+	//     cfg.RequireApproval, so on the real binary these two agree.
+	requireApproval := opts.RequireApproval || cfg.RequireApproval || envEnabled("GGD_REQUIRE_APPROVAL")
 	authSvc, err := auth.New(accounts, rdb, cfg.JWTSecret, cfg.AccessTokenTTL, cfg.RefreshTokenTTL, opts.Argon2Params, requireApproval)
 	if err != nil {
 		return nil, err
+	}
+	// Logged on EVERY boot, at WARN when off, for the same reason the invite
+	// gate is: on a family deploy these two lines are the entire answer to "who
+	// can get in", and a gate that is off must never be a quiet decision.
+	if requireApproval {
+		slog.Info("auth: new registrations are PENDING until an admin approves them — approve in the admin console (帳號審核)",
+			"addr", cfg.Addr, "override", "GGD_REQUIRE_APPROVAL")
+	} else {
+		slog.Warn("auth: registrations are AUTO-APPROVED — a new account can play immediately",
+			"addr", cfg.Addr,
+			"why", "GGD_REQUIRE_APPROVAL is off, or unset with a loopback-only listen address",
+			"harden", "set GGD_REQUIRE_APPROVAL=1 if anything (nginx, a tunnel, a proxy) forwards to this platform from outside")
 	}
 	// Self-service password changes land in the same append-only audit log the
 	// operator console reads (auth cannot import admin — see audit.go).
@@ -194,20 +217,50 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 	if len(cat.ChampionPrices) == 0 {
 		slog.Warn("wallet: no store catalog loaded — store empty, matches grant 0 M COIN",
 			"contentDir", cfg.ContentDir)
+	} else if unlockable := cat.UnlockableChampions(); len(unlockable) == 0 {
+		// Every champion priced at 0 means the whole 水晶 meta-progression loop
+		// (task #118) is decorative: nothing to spend crystals on, so the
+		// 「解鎖」 button never appears. That is a content mistake, not a
+		// deployment mode, so it is loud.
+		slog.Warn("wallet: no champion has a crystal price — the 水晶 unlock loop is inert, every champion is a free starter",
+			"contentDir", cfg.ContentDir, "champions", len(cat.ChampionPrices),
+			"fix", "set championPrices entries > 0 in content/config/store.json")
+	} else if drift := cat.PriceDrift(wallet.CrystalUnlockCost); len(drift) > 0 {
+		// The champ-select unlock button renders a CLIENT-side constant, so a
+		// price that disagrees with it charges a different number than the one
+		// the player was shown. Warn rather than fail: the server still charges
+		// the store.json price, which is the truth.
+		slog.Warn("wallet: champion crystal prices disagree with the cost the client button displays — players will be shown the wrong number",
+			"clientLabelCost", wallet.CrystalUnlockCost, "mismatched", drift,
+			"fix", "keep championPrices at the client constant, or update CRYSTAL_UNLOCK_COST in apps/client/src/ui/panels/champselect/walletMeta.ts")
 	}
+	slog.Info("wallet: 水晶 meta-progression",
+		"freeStarters", len(cat.FreeChampions()), "unlockable", len(cat.UnlockableChampions()),
+		"unlockCost", wallet.CrystalUnlockCost,
+		"perMatchGrant", []int{wallet.CrystalPlace1, wallet.CrystalPlace2, wallet.CrystalPlace3, wallet.CrystalPlace4})
 	walletSvc := wallet.New(accounts, rdb, store, cat)
 
 	settler := gamelink.NewSettler(store, rdb, accounts, pres, rank, rooms, walletSvc)
 	glink := gamelink.New(rdb, accounts, pres, rank, journal, settler, cat,
 		cfg.GameSharedSecret, cfg.GameServerAddr, cfg.InternalURL,
-		cfg.MatchPendingTTL, cfg.HMACSkew)
+		cfg.MatchPendingTTL, cfg.MatchLivenessGrace, cfg.HMACSkew)
 	rooms.SetStarter(glink)
 	rooms.SetOwnership(walletSvc)
 
 	adminSvc := admin.New(accounts, walletSvc, rank, friends, store, rdb, cfg.AdminBootstrapUsername)
 	curationSvc := curation.New(store, rdb)
 	combatEnvSvc := combatenv.New(store, rdb, cfg.ContentDir)
-	opsEnvSvc := opsenv.New(store, rdb)
+	// The ops inventory DESCRIBES the reaper, so it is handed the same numbers
+	// the reaper runs on — including the interval after gamelink's own clamp,
+	// via the one function that computes it. A page that states a timing fact
+	// it did not get from the mechanism is how #187 got a 2x-wrong duration in
+	// front of the owner.
+	opsEnvSvc := opsenv.New(store, rdb, opsenv.Runtime{
+		ContentDir:         cfg.ContentDir,
+		MatchPendingTTL:    cfg.MatchPendingTTL,
+		MatchLivenessGrace: cfg.MatchLivenessGrace,
+		ReaperInterval:     gamelink.ReaperInterval(reaperInterval(cfg), cfg.MatchLivenessGrace),
+	})
 	inviteSvc := invite.New(store)
 	aiSvc := ai.New(store, rdb)
 
@@ -334,7 +387,16 @@ func (s *Server) buildRouter(templates *room.Templates) {
 		api.Group(func(pr chi.Router) {
 			pr.Use(s.Auth.Middleware)
 			friend.NewHandlers(s.Friends, s.Accounts, s.Presence).Mount(pr)
-			room.NewHandlers(s.Rooms, templates, s.Cfg.InviteTTL).Mount(pr)
+			// Room/match routes ARE "playing", so they carry the extra
+			// PlayableOnly gate: a ban or a #126 denial applied a moment ago
+			// must stop this player NOW, not whenever his access token
+			// expires. Scoped to its own group so the durable account read
+			// costs nothing on the routes around it. Same guard the lobby
+			// WebSocket handshake applies — see auth.PlayableOnly.
+			pr.Group(func(rr chi.Router) {
+				rr.Use(s.Auth.PlayableOnly)
+				room.NewHandlers(s.Rooms, templates, s.Cfg.InviteTTL).Mount(rr)
+			})
 			ranking.NewHandlers(s.Ranking).MountAuthed(pr)
 			wallet.NewHandlers(s.Wallet).Mount(pr)
 			admin.NewHandlers(s.Admin).Mount(pr) // /admin/* — AdminOnly inside
@@ -392,7 +454,7 @@ func (s *Server) buildRouter(templates *room.Templates) {
 func (s *Server) Router() http.Handler { return s.router }
 
 // approveAccount flips a pending account to approved so it may log in to play
-// (#126). AdminOnly-gated.
+// (#126). AdminOnly-gated and audited.
 func (s *Server) approveAccount(w http.ResponseWriter, r *http.Request) {
 	s.setAccountStatus(w, r, account.StatusApproved)
 }
@@ -431,23 +493,29 @@ func (s *Server) setAccountRole(w http.ResponseWriter, r *http.Request) {
 	httpx.WriteJSON(w, http.StatusOK, map[string]admin.AccountRow{"account": row})
 }
 
+// setAccountStatus is the shared body of approve/deny. It goes through
+// admin.Service.SetApproval rather than writing the status directly, so the
+// decision is AUDITED, revokes live sessions when it takes access away, and
+// cannot strand the deploy without a usable administrator — see SetApproval.
+// An optional {"reason": "..."} body is recorded on the audit line; a missing
+// or unparseable body is not an error, because deny is also called as a bare
+// POST from a console button.
 func (s *Server) setAccountStatus(w http.ResponseWriter, r *http.Request, status string) {
-	id := chi.URLParam(r, "id")
-	a, err := s.Accounts.SetStatus(r.Context(), id, status)
+	var req struct {
+		Reason string `json:"reason"`
+	}
+	_ = httpx.DecodeJSON(r, &req)
+	actor, _ := auth.IdentityFrom(r.Context())
+	row, err := s.Admin.SetApproval(r.Context(), actor.AccountID, chi.URLParam(r, "id"), status, req.Reason)
 	if err != nil {
-		if errors.Is(err, account.ErrNotFound) {
-			httpx.WriteError(w, httpx.NotFound("account not found"))
-			return
-		}
 		httpx.WriteError(w, err)
 		return
 	}
-	if status == account.StatusDenied {
-		// Best effort — the login/refresh approval guard is authoritative even if
-		// this revoke races or fails.
-		_ = s.Rdb.RevokeAllRefresh(r.Context(), id)
-	}
-	httpx.WriteJSON(w, http.StatusOK, map[string]account.Public{"account": a.Public()})
+	// The response keeps the pre-existing {"account": …} shape, now carrying the
+	// admin row (which is a superset of account.Public for an operator caller:
+	// same id/username/status plus the ban/role/mcoin fields the console
+	// already renders elsewhere).
+	httpx.WriteJSON(w, http.StatusOK, map[string]admin.AccountRow{"account": row})
 }
 
 // Boot rebuilds the Redis hot layer from the JSON truth (WAL replay,
@@ -473,13 +541,19 @@ func (s *Server) Boot(ctx context.Context) error {
 	return s.Auth.PrepareOwnerBootstrap(ctx)
 }
 
+// reaperInterval is the sweep period this binary REQUESTS. gamelink clamps it
+// to a third of the liveness grace (see gamelink.ReaperInterval), which is what
+// actually governs; this exists so the request is written once and both the
+// reaper and the page that describes the reaper read the same expression.
+func reaperInterval(cfg config.Config) time.Duration { return cfg.MatchPendingTTL / 4 }
+
 // Start launches background loops (lobby hub, match reaper) and waits until
 // the hub subscription is live.
 func (s *Server) Start(ctx context.Context) {
 	ctx, cancel := context.WithCancel(ctx)
 	s.cancel = cancel
 	go s.Hub.Run(ctx)
-	s.Gamelink.StartReaper(ctx, s.Cfg.MatchPendingTTL/4)
+	s.Gamelink.StartReaper(ctx, reaperInterval(s.Cfg))
 	<-s.Hub.Ready()
 }
 

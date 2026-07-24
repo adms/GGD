@@ -18,6 +18,7 @@
  */
 import { useHud } from "../../net/RoomStore";
 import { PANEL_BG, TEXT_DIM } from "../theme";
+import { INTERMISSION_Z } from "./intermissionLayout";
 import { PREP_CLOCK_BOTTOM, prepClockView } from "./prepCountdown";
 
 /**
@@ -53,6 +54,12 @@ export function PrepClock(): React.JSX.Element | null {
         left: "50%",
         bottom: PREP_CLOCK_BOTTOM,
         transform: "translateX(-50%)",
+        // THE ONE SURFACE THAT RIDES OVER A FOCUS SCRIM (playtest P2, priority
+        // 2 in panels/intermissionLayout.ts). While the 三選一 draft owns the
+        // screen everything else is demoted behind its scrim — but hiding the
+        // clock would demand an answer while hiding how long there is to give
+        // it. Costs the draft nothing: this pill is pointerEvents:none.
+        zIndex: INTERMISSION_Z.deadline,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",

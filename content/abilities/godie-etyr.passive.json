@@ -2,6 +2,7 @@
   "id": "godie-etyr.passive",
   "schema": "ability@1",
   "name": "14-00 召喚式神",
+  "icon": "assets/icons/abilities/godie-etyr.passive.webp",
   "description": "[主動攻擊]\n5秒冷卻時間\n\n召喚出式神跟隨木乃香，此式神周圍將附帶95點傷害，持續25秒。",
   "slot": "PASSIVE",
   "innateKind": "active",

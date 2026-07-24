@@ -11,6 +11,7 @@ import type { OpsPayload, OpsSave } from "./serverOps";
 import { normalizeInvitePayload } from "./invites";
 import type { InvitePayload } from "./invites";
 import type {
+  AccountRow,
   AccountSearch,
   Announcement,
   AuditList,
@@ -72,9 +73,61 @@ export async function changePassword(
 
 // ---- accounts ---------------------------------------------------------------
 
-export function searchAccounts(query: string, page = 1, pageSize = 20): Promise<AccountSearch> {
+/**
+ * Search accounts. `status` filters on the #126 approval state
+ * ("pending"/"approved"/"denied"); empty means every account, which is the
+ * pre-existing behaviour every other caller relies on.
+ */
+export function searchAccounts(
+  query: string,
+  page = 1,
+  pageSize = 20,
+  status = "",
+): Promise<AccountSearch> {
   const qs = new URLSearchParams({ query, page: String(page), pageSize: String(pageSize) });
+  if (status) qs.set("status", status);
   return api.request<AccountSearch>(`/admin/accounts?${qs.toString()}`);
+}
+
+// ---- 帳號審核 · #126 private-deploy approval ---------------------------------
+// The gate is the SERVER: registration lands as `pending` and auth.PlayableOnly
+// re-reads the durable account on room routes + the lobby WS handshake, so a
+// decision here applies on the target's very next request. These three wrappers
+// are the console's only approval surface — see ../approvals.ts for the rules.
+
+/**
+ * The approval QUEUE, OLDEST FIRST (the platform orders it that way on purpose:
+ * the person who has waited longest is a relative currently looking at a
+ * "waiting for approval" screen). `total` is the full pending count, so the nav
+ * badge can be exact without paging.
+ */
+export function listPendingAccounts(page = 1, pageSize = 20): Promise<AccountSearch> {
+  const qs = new URLSearchParams({ page: String(page), pageSize: String(pageSize) });
+  return api.request<AccountSearch>(`/admin/accounts/pending?${qs.toString()}`);
+}
+
+/**
+ * Let this account in. Idempotent server-side, audited as `approval_approved`,
+ * and it is the UNDO for a deny — so the console can offer it as a one-tap
+ * action with no confirmation.
+ */
+export function approveAccount(id: string, reason = ""): Promise<{ account: AccountRow }> {
+  return api.request<{ account: AccountRow }>(`/admin/accounts/${encodeURIComponent(id)}/approve`, {
+    body: { reason },
+  });
+}
+
+/**
+ * Decline this registration. NOT a ban (see approvals.ts DENY_VS_BAN): the
+ * account stays, loses access, and is restored by approving it. Revokes live
+ * sessions, so a person already signed in is out on their next request. The
+ * platform refuses (409 last_admin) if this would leave the deploy with no
+ * administrator who can sign in.
+ */
+export function denyAccount(id: string, reason = ""): Promise<{ account: AccountRow }> {
+  return api.request<{ account: AccountRow }>(`/admin/accounts/${encodeURIComponent(id)}/deny`, {
+    body: { reason },
+  });
 }
 
 export function getProfile(id: string): Promise<Profile> {

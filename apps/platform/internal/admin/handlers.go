@@ -25,6 +25,11 @@ func (h *Handlers) Mount(r chi.Router) {
 		ar.Use(h.svc.AdminOnly)
 
 		ar.Get("/accounts", h.searchAccounts)
+		// The #126 approval QUEUE. It is a route of its own rather than only a
+		// ?status=pending filter because it is the console's landing view and
+		// its ordering differs (oldest first — see Service.PendingAccounts);
+		// registered BEFORE /accounts/{id} so chi matches the literal segment.
+		ar.Get("/accounts/pending", h.pendingAccounts)
 		ar.Get("/accounts/{id}", h.getAccount)
 		ar.Post("/accounts/{id}/mcoin", h.adjustMCoin)
 		ar.Post("/accounts/{id}/mmr", h.setMMR)
@@ -63,7 +68,26 @@ func queryInt(r *http.Request, key string, def int) int {
 func (h *Handlers) searchAccounts(w http.ResponseWriter, r *http.Request) {
 	page := queryInt(r, "page", 1)
 	pageSize := queryInt(r, "pageSize", 20)
-	rows, total, err := h.svc.SearchAccounts(r.Context(), r.URL.Query().Get("query"), page, pageSize)
+	// ?status= filters on the #126 approval state ("pending"/"approved"/
+	// "denied"). Absent or empty means every account, so every existing caller
+	// — including apps/admin's session probe — is unaffected.
+	rows, total, err := h.svc.SearchAccountsByStatus(r.Context(),
+		r.URL.Query().Get("query"), r.URL.Query().Get("status"), page, pageSize)
+	if err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	httpx.WriteJSON(w, http.StatusOK, map[string]any{
+		"accounts": rows, "page": page, "pageSize": pageSize, "total": total,
+	})
+}
+
+// pendingAccounts serves the approval queue (oldest first). `total` is the
+// full pending count, so the console can badge it without paging through.
+func (h *Handlers) pendingAccounts(w http.ResponseWriter, r *http.Request) {
+	page := queryInt(r, "page", 1)
+	pageSize := queryInt(r, "pageSize", 20)
+	rows, total, err := h.svc.PendingAccounts(r.Context(), page, pageSize)
 	if err != nil {
 		httpx.WriteError(w, err)
 		return

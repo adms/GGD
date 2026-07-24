@@ -32,6 +32,7 @@ import { playChampionSelectVoice } from "../audio/championVoice";
 import { HeroReactionBubble } from "./HeroReactionBubble";
 import { MerchantTipBox } from "./MerchantTipBox";
 import { shopCatalogue } from "./panels/champSelectFilter";
+import { INTERMISSION_Z, intermissionFocus, intermissionSurfaces } from "./panels/intermissionLayout";
 import { groupCatalogue } from "./panels/shopGrouping";
 import { useWhitelist } from "./panels/whitelist";
 
@@ -52,6 +53,19 @@ export function IntermissionStage(): React.JSX.Element | null {
   );
   // a COMPLETED purchase makes the merchant hand something over
   const purchaseSeq = useHud((s) => (s.shopEvent?.kind === "bought" ? s.shopEvent.seq : 0));
+
+  // ---- WHO OWNS THE SCREEN (playtest P2, task #107) ------------------------
+  // The ambient surfaces in this portal (the merchant's tip box) live OUTSIDE
+  // #hud-root, so no container can tell them a modal choice is up. They read
+  // the same pure rule the draft panel's own mount condition uses — a scalar
+  // count, never the offers array, so a fresh-array-per-snapshot cannot
+  // re-render the whole market 30× a second.
+  const phase = useHud((s) => s.phase);
+  const offerCount = useHud((s) => {
+    if (s.localSeatId === null) return 0;
+    return s.seats.find((v) => v.seatId === s.localSeatId)?.offers?.length ?? 0;
+  });
+  const surfaces = intermissionSurfaces(intermissionFocus({ phase, offerCount }));
 
   // ---- what is ON THE SHELVES (task #94) ----------------------------------
   // The stall's rack shows the SAME catalogue the card does — #70's finals,
@@ -161,14 +175,17 @@ export function IntermissionStage(): React.JSX.Element | null {
 
   if (typeof document === "undefined") return null;
   return createPortal(
-    <div style={{ position: "absolute", inset: 0, zIndex: 7, pointerEvents: "none" }}>
+    <div style={{ position: "absolute", inset: 0, zIndex: INTERMISSION_Z.stage, pointerEvents: "none" }}>
       <canvas
         ref={canvasRef}
         style={{ position: "absolute", inset: 0, width: "100%", height: "100%", display: "block", outline: "none" }}
       />
       {/* the merchant's rotating tips box (task #148) — DOM ordered BEFORE the
-          fade so the black cover hides it until the scene has eased in */}
-      <MerchantTipBox />
+          fade so the black cover hides it until the scene has eased in.
+          `muted` while a 三選一 draft owns the screen: it fades out (never
+          unmounts, so the rotation keeps its cadence) instead of sitting behind
+          the card stack, which is the P2 「卡片直接蓋住商人提示框」 report. */}
+      <MerchantTipBox muted={surfaces.ambientMuted} />
       {/* the player hero's OWN in-character reaction to a purchase (owner ask):
           anchored over him at the RIGHT of the counter, tail pointing at him */}
       <HeroReactionBubble championId={championId} purchaseSeq={purchaseSeq} />

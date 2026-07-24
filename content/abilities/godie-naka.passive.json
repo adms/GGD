@@ -2,6 +2,7 @@
   "id": "godie-naka.passive",
   "schema": "ability@1",
   "name": "27-00 永久性的隱形術",
+  "icon": "assets/icons/abilities/godie-naka.passive.webp",
   "description": "[被動]\n0秒冷卻時間\n\n在4秒內不做任何攻擊或施法動作，小次郎會自動隱藏自己的身影。",
   "slot": "PASSIVE",
   "innateKind": "passive",

@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "c112a6df5122",
+  "hash": "1d9a21ec1a9c",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -11,14 +11,14 @@
     {
       "id": "arena-rules",
       "path": "config/arena-rules.json",
-      "hash": "feda84e6d2b3",
-      "size": 1980
+      "hash": "37c4ad5247b6",
+      "size": 2664
     },
     {
       "id": "audio-map",
       "path": "config/audio-map.json",
-      "hash": "c9d562780a47",
-      "size": 17268
+      "hash": "024f827fca52",
+      "size": 17438
     },
     {
       "id": "champion-voices",
@@ -35,8 +35,8 @@
     {
       "id": "config.match",
       "path": "config/config.match.json",
-      "hash": "12dfcbe4a004",
-      "size": 899
+      "hash": "65b5b80553f7",
+      "size": 833
     },
     {
       "id": "gore",
@@ -53,8 +53,8 @@
     {
       "id": "store",
       "path": "config/store.json",
-      "hash": "3f285e0b0493",
-      "size": 222
+      "hash": "0c22023a64e3",
+      "size": 1264
     },
     {
       "id": "unit-tints",

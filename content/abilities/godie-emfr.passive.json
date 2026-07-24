@@ -2,6 +2,7 @@
   "id": "godie-emfr.passive",
   "schema": "ability@1",
   "name": "15-00 天生法術書",
+  "icon": "assets/icons/abilities/godie-emfr.passive.webp",
   "description": "[輔助]\n0秒冷卻時間\n\n記載多個涅吉可以使用的技能。\n\n暫定契約（60秒冷卻時間）：與我方英雄暫定契約，做出令人臉紅心跳又害羞的事情。\n執行契約（60秒冷卻時間）：執行契約增強契約人的能力，每秒消耗25點魔力，增加契約人20%跑速、75%攻速、20%攻擊力。",
   "slot": "PASSIVE",
   "innateKind": "active",

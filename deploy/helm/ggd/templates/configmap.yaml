@@ -15,3 +15,10 @@ data:
   GAME_INTERNAL_URL: {{ printf "http://%s-game:%d" .Release.Name (int .Values.game.port) | quote }}
   # Result callback target (game → platform), same HMAC seam.
   PLATFORM_INTERNAL_URL: {{ printf "http://%s-platform:%d" .Release.Name (int .Values.platform.port) | quote }}
+  # Task #48. The game-server reads GGD_PLATFORM_URL for its curation /
+  # combat-env / server-ops fetches. It has an in-cluster fallback, but that
+  # fallback guesses the bare Service name `platform` — which is WRONG here,
+  # because this chart prefixes every Service with the release name. Set it
+  # explicitly so the fallback never has to guess, and so `helm get values` shows
+  # the answer instead of it being implied by code.
+  GGD_PLATFORM_URL: {{ printf "http://%s-platform:%d" .Release.Name (int .Values.platform.port) | quote }}

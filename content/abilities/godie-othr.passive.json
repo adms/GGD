@@ -2,6 +2,7 @@
   "id": "godie-othr.passive",
   "schema": "ability@1",
   "name": "31-00 再生能力",
+  "icon": "assets/icons/abilities/godie-othr.passive.webp",
   "description": "[被動]\n0秒冷卻時間\n\n金鋼狼天生擁有強大的復原能力，每秒能回復8點生命。",
   "slot": "PASSIVE",
   "innateKind": "passive",

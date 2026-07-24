@@ -92,6 +92,23 @@ type Config struct {
 	// default and why it is the safe one.
 	RequireInvite bool
 
+	// RequireApproval turns on the registration APPROVAL gate (#126): a new
+	// account lands PENDING and cannot obtain a session until an administrator
+	// approves it. Resolved by resolveRequireApproval from GGD_REQUIRE_APPROVAL
+	// and, when that is unset, from the listen address — the same predicate the
+	// invite gate uses, for the same reason (see there).
+	//
+	// THE TWO GATES ARE NOT REDUNDANT and neither replaces the other. #174
+	// answers "may this person create an account at all" with a credential the
+	// owner handed out in advance; #126 answers "may this account play" with a
+	// decision the owner makes after seeing who actually arrived. A code that
+	// leaks — forwarded in a group chat, screenshotted, guessed off a shoulder —
+	// spends itself once and is then a player; with approval on it is a row in a
+	// queue the owner can decline. Conversely approval alone would leave
+	// registration open to anyone who can reach the URL, which is exactly the
+	// flood #174 exists to stop. Defence in depth: burn a code, THEN be seen.
+	RequireApproval bool
+
 	// AccessTokenTTL is the JWT access-token lifetime.
 	AccessTokenTTL time.Duration
 	// RefreshTokenTTL is the opaque refresh-token lifetime in Redis.
@@ -100,9 +117,43 @@ type Config struct {
 	PresenceTTL time.Duration
 	// InviteTTL is the room-invite token lifetime.
 	InviteTTL time.Duration
-	// MatchPendingTTL is how long a started match may run before the reaper
-	// marks it abandoned.
+	// MatchPendingTTL is the BLIND FALLBACK deadline for a started match: how
+	// long a match may sit in the pending set when the platform has never once
+	// heard a liveness heartbeat about it (gamelink.Service.Heartbeat).
+	//
+	// IT IS NOT A MATCH TIMER, and reading it as one is what broke #187. It was
+	// 30 minutes, sized against a match that could not exceed ~18 minutes
+	// because startingLives was hardcoded to 3. The moment
+	// content/config/config.match.json `match.startingTeamLives` started taking
+	// effect and the owner set it to 8, the MEAN match became 33.6 minutes
+	// (8.73 rounds x 226s + 40s champ select) — 42.3 minutes if rounds run to
+	// the full combatMaxSec 240. The deadline was written once at StartMatch and
+	// never renewed, so the reaper tore down matches people were playing and
+	// wrote every one of them an ABANDONED result.
+	//
+	// The fix is not this number. A live match now renews its own deadline from
+	// the game-server's HMAC-signed heartbeat (see MatchLivenessGrace), so match
+	// LENGTH no longer has any relationship to any constant here. What is left
+	// for this value to do is bound the ONE case heartbeats cannot cover: a
+	// game-server build that never sends them at all, where the platform has no
+	// evidence either way. It exists so those entries cannot accumulate in Redis
+	// forever, so it is deliberately far outside any plausible match — and every
+	// reap that uses it is logged at ERROR naming the missing signal, because a
+	// blind deadline killing a real match is exactly the silent failure this
+	// whole change exists to remove.
 	MatchPendingTTL time.Duration
+	// MatchLivenessGrace is how long a match survives after the LAST heartbeat
+	// the game-server sent for it. Once the platform has heard one heartbeat it
+	// stops guessing: the deadline becomes lastBeat+grace and is pushed forward
+	// by every subsequent beat, so a match of any length lives as long as it is
+	// demonstrably being played, and a room that dies (crash, hang, disposed
+	// without a result) is reaped within grace + one reaper interval instead of
+	// lingering for the blind fallback.
+	//
+	// The grace must clear several heartbeat intervals so one dropped POST, a GC
+	// pause or a brief platform restart cannot look like death. The game-server
+	// beats every 30s; 3 minutes tolerates five consecutive misses.
+	MatchLivenessGrace time.Duration
 	// HMACSkew is the max accepted clock skew on the internal HMAC scheme.
 	HMACSkew time.Duration
 }
@@ -123,6 +174,42 @@ func getenvInt(key string, def int) int {
 		}
 	}
 	return def
+}
+
+// Bounds on GGD_MATCH_LIVENESS_GRACE_SEC. The floor is not decoration: the
+// game-server heartbeats every 30s, so a grace under a minute would reap a
+// perfectly healthy match on two dropped POSTs. The ceiling keeps the knob from
+// being turned back into the 30-minute constant that caused #187.
+const (
+	MinLivenessGrace     = 60 * time.Second
+	MaxLivenessGrace     = 15 * time.Minute
+	DefaultLivenessGrace = 3 * time.Minute
+)
+
+// getenvSeconds reads a duration given in whole seconds, clamped to [min,max].
+// Absence, garbage and out-of-range values all fall back to def and SAY SO —
+// a mistyped deadline that silently becomes zero is the failure mode of every
+// other timeout in this repo.
+func getenvSeconds(key string, def, min, max time.Duration) time.Duration {
+	raw := os.Getenv(key)
+	if raw == "" {
+		return def
+	}
+	n, err := strconv.Atoi(raw)
+	if err != nil {
+		slog.Warn("config: ignoring unparseable duration", "key", key, "value", raw, "using", def)
+		return def
+	}
+	d := time.Duration(n) * time.Second
+	if d < min || d > max {
+		slog.Warn("config: duration out of range, clamping",
+			"key", key, "value", d, "min", min, "max", max)
+		if d < min {
+			return min
+		}
+		return max
+	}
+	return d
 }
 
 // DeployTiers is the canonical tier set. MIRROR of DEPLOY_TIERS in
@@ -204,6 +291,42 @@ func AllowsRestrictedContent(tier string) bool { return tier != "public" }
 // GGD_REQUIRE_INVITE=1 — which is why server.New logs the resolved value at
 // WARN on every boot, naming the variable, rather than deciding quietly.
 func resolveRequireInvite(env, addr string) bool {
+	switch strings.ToLower(strings.TrimSpace(env)) {
+	case "1", "true", "yes", "on":
+		return true
+	case "0", "false", "no", "off":
+		return false
+	}
+	return !loopbackOnlyAddr(addr)
+}
+
+// resolveRequireApproval decides whether the #126 approval gate is ON, from
+// GGD_REQUIRE_APPROVAL and — when that is unset — from the platform's OWN
+// listen address. It is deliberately the SAME shape and the SAME predicate as
+// resolveRequireInvite: one definition of "is this deploy networked?", so the
+// two registration gates cannot end up disagreeing about what a public deploy
+// is, and an operator only has to learn the rule once.
+//
+// THE DEFAULT IS ON for the same reason it is on for invites: the failure mode
+// of forgetting the variable must be "my cousin waits for me to tap approve",
+// not "a stranger is already in the lobby". Before this existed the gate was
+// read straight from the environment in the composition root, so a deploy that
+// simply never set GGD_REQUIRE_APPROVAL — the overwhelmingly likely mistake at
+// go-live — came up with approval OFF while every other hardening default was
+// on. The invite gate would still have stopped a stranger registering, but the
+// owner would silently have lost the second gate he asked for, and nothing in
+// the log would have said so.
+//
+// The one automatic OFF is an explicit loopback bind — .claude/launch.json's
+// local development configuration (#127 tiering: a loopback socket has no
+// remote peer to keep out). Local dev therefore keeps the open-signup flow and
+// the owner is never left tapping approve on his own dev accounts.
+//
+// Like the invite gate, this CANNOT see an nginx terminating outside and
+// forwarding to a loopback-bound platform; such a deploy must set
+// GGD_REQUIRE_APPROVAL=1, which is why server.New logs the resolved value on
+// every boot instead of deciding quietly.
+func resolveRequireApproval(env, addr string) bool {
 	switch strings.ToLower(strings.TrimSpace(env)) {
 	case "1", "true", "yes", "on":
 		return true
@@ -451,12 +574,17 @@ func Load() (Config, error) {
 		DeployTier:             normalizeDeployTier(os.Getenv("GGD_DEPLOY_TIER")),
 		FullAssets:             ServesFullAssets(normalizeDeployTier(os.Getenv("GGD_DEPLOY_TIER"))),
 		RequireInvite:          resolveRequireInvite(os.Getenv("GGD_REQUIRE_INVITE"), getenv("PLATFORM_ADDR", ":8080")),
+		RequireApproval:        resolveRequireApproval(os.Getenv("GGD_REQUIRE_APPROVAL"), getenv("PLATFORM_ADDR", ":8080")),
 		AccessTokenTTL:         15 * time.Minute,
 		RefreshTokenTTL:        30 * 24 * time.Hour,
 		PresenceTTL:            60 * time.Second,
 		InviteTTL:              10 * time.Minute,
-		MatchPendingTTL:        30 * time.Minute,
-		HMACSkew:               30 * time.Second,
+		// 2 hours, and deliberately NOT "long enough for a match" — see the
+		// field doc. This is the no-signal leak-stopper; the live deadline is
+		// MatchLivenessGrace, renewed by the game-server.
+		MatchPendingTTL:    2 * time.Hour,
+		MatchLivenessGrace: getenvSeconds("GGD_MATCH_LIVENESS_GRACE_SEC", DefaultLivenessGrace, MinLivenessGrace, MaxLivenessGrace),
+		HMACSkew:           30 * time.Second,
 	}
 	if cfg.JWTSecret == "" {
 		return cfg, fmt.Errorf("config: JWT_SIGNING_SECRET is required")

@@ -156,9 +156,14 @@ async function send(
   method: string,
   body?: unknown,
 ): Promise<Attempt> {
+  // The content-type header may only be sent WITH a body. Fastify rejects
+  // `content-type: application/json` on a bodyless request with 400
+  // FST_ERR_CTP_EMPTY_JSON_BODY — which is exactly what silently broke the
+  // 刪除 button (DELETE takes no body), so task #70 rule 3's 「移除一個三選一
+  // 強化」 answered 「Bad Request」 for every document the console ever created.
   const res = await fetchFn(url, {
     method,
-    headers: { "content-type": "application/json" },
+    headers: body === undefined ? {} : { "content-type": "application/json" },
     body: body === undefined ? undefined : JSON.stringify(body),
   });
   let parsed: unknown = null;

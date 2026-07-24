@@ -157,6 +157,14 @@ function boot(): void {
 // replay viewer — which reuses GameApp's renderer against the "replay" room —
 // instead of the normal login→lobby→match app, so the transport controls own
 // the page and none of the platform boot flow runs.
+//
+// THIS IS A SECOND RENDER TREE, and that is a hazard, not a detail: anything
+// mounted inside AppRoot does not exist here. Components that must be on every
+// page belong in ui/GlobalChrome, which BOTH trees render — the audio toggle
+// (#14) and the build stamp (#66) were mounted by hand in AppRoot and were
+// therefore missing from this page entirely (defect P0-6(b)). The guard
+// ui/globalChrome.test.ts walks the `root.render(` sites below and fails if a
+// tree (or a new third one) does not carry it.
 const replayParams = parseReplayHash(typeof location !== "undefined" ? location.hash : "");
 if (replayParams) {
   root.render(<ReplayApp id={replayParams.id} ticket={replayParams.ticket} />);

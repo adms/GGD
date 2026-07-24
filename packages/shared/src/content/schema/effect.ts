@@ -7,7 +7,7 @@
 import { z } from "zod";
 import type { EffectDef } from "../../sim/effects/effect";
 import type { ProjectileId, StatusId } from "../../ids";
-import { zAbilitySlot, zRef, zScaling, zStatModifier } from "./common";
+import { zCastableSlot, zRef, zScaling, zStatModifier } from "./common";
 
 export const zDamageType = z.enum(["physical", "magic", "true"]);
 
@@ -105,7 +105,8 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
 export const zHookDef = z
   .object({
     on: zHookEvent,
-    abilitySlot: zAbilitySlot.optional(),
+    /** restrict to one slot; "PASSIVE" is the level-1 天生技 (zCastableSlot). */
+    abilitySlot: zCastableSlot.optional(),
     effects: z.array(zEffectDef),
     internalCooldown: z.number().min(0).optional(),
     /** proc probability 0..1 on the seeded rng (absent = always) */
@@ -115,11 +116,43 @@ export const zHookDef = z
   })
   .strict();
 
+/**
+ * One AURA (靈氣) projected by a passive — mirrors `AuraDef` in
+ * sim/aura/aura.ts. The 「範圍 R 內的敵人/隊友」 half of the WC3 aura family;
+ * `modifiers` above only ever reach the unit carrying the passive.
+ */
+export const zAuraDef = z
+  .object({
+    /** stable name, unique within the passive; defaults to the array index */
+    key: z.string().min(1).optional(),
+    /**
+     * BASE radius in sim units, BEFORE the combat-env `abilityRange` factor
+     * (#136). The w3x `Area` column converts at the usual rate — 靈壓's 500 WC3
+     * units is 9.17 here. The ceiling is a MIS-PARSE guard in the spirit of
+     * `ITEM_MODIFIER_LIMITS`, not balance policy: the whole skeleton zone is
+     * `boundaryRadius: 24`, so anything past 40 is a map-wide aura and is far
+     * more likely to be a raw un-converted WC3 number that leaked through.
+     */
+    radius: z.number().positive().max(40),
+    affects: z.enum(["enemy", "ally", "all"]),
+    /** default: true for ally/all, false for enemy (WC3 auras buff the caster) */
+    includeSelf: z.boolean().optional(),
+    modifiers: z.array(zStatModifier).optional(),
+    hooks: z.array(zHookDef).optional(),
+    /** WC3 aura-buff tail: seconds it lingers after leaving. Default 0. */
+    lingerSec: z.number().min(0).max(10).optional(),
+  })
+  .strict()
+  .refine((a) => (a.modifiers?.length ?? 0) + (a.hooks?.length ?? 0) > 0, {
+    message: "aura must carry at least one modifier or hook",
+  });
+
 /** One rank of `ability@1.passive` — mirrors `AbilityPassiveRank`. */
 export const zAbilityPassiveRank = z
   .object({
     modifiers: z.array(zStatModifier).optional(),
     hooks: z.array(zHookDef).optional(),
+    auras: z.array(zAuraDef).optional(),
   })
   .strict();
 

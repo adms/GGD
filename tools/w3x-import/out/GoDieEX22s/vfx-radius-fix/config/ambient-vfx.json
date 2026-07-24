@@ -1,0 +1,60 @@
+{
+  "id": "ambient-vfx",
+  "schema": "config.ambient-vfx@1",
+  "bindings": {
+    "imported.gumdam": [
+      {
+        "vfx": "godie-gumdam-p0"
+      },
+      {
+        "vfx": "godie-gumdam-p2"
+      }
+    ],
+    "imported.herorider": [
+      {
+        "vfx": "godie-herorider-p0"
+      }
+    ],
+    "imported.heroshana": [
+      {
+        "vfx": "godie-heroshana-p0"
+      },
+      {
+        "vfx": "godie-heroshana-p1"
+      },
+      {
+        "vfx": "godie-heroshana-p2"
+      }
+    ],
+    "imported.renaryugu2": [
+      {
+        "vfx": "godie-renaryugu2-r0"
+      }
+    ],
+    "imported.sd2": [
+      {
+        "vfx": "godie-sd2-r0"
+      },
+      {
+        "vfx": "godie-sd2-r1"
+      },
+      {
+        "vfx": "godie-sd2-r2"
+      },
+      {
+        "vfx": "godie-sd2-r3"
+      }
+    ],
+    "imported.ye-wuqi1": [
+      {
+        "vfx": "godie-ye-wuqi1-p0"
+      },
+      {
+        "vfx": "godie-ye-wuqi1-p1"
+      },
+      {
+        "vfx": "godie-ye-wuqi1-p2"
+      }
+    ]
+  }
+}

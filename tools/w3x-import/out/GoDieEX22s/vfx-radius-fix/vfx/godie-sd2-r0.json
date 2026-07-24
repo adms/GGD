@@ -1,0 +1,16 @@
+{
+  "id": "godie-sd2-r0",
+  "schema": "ribbon@1",
+  "texture": "assets/textures/particles/wc3/ribbonblur1.png",
+  "widthAbove": 0.0,
+  "widthBelow": 0.0,
+  "lifespanSec": 0.1,
+  "color": [
+    0.992,
+    0.004,
+    0.004,
+    1.0
+  ],
+  "blendMode": "additive",
+  "anchorBone": "Bone_Weapon_heart"
+}

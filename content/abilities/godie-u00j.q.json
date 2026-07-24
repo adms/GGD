@@ -45,9 +45,23 @@
       "stun": true
     }
   ],
-  "vfxKey": "fx.prim.void.pulse-sm",
+  "vfxKey": "fx.w3x.orb.herocloudkfksword.p00",
   "targetsEnemies": true,
   "radius": 1.5,
   "schema": "ability@1",
-  "castTimeSec": 0.6
+  "castTimeSec": 0.6,
+  "hitFeel": {
+    "hitstopTicks": 4,
+    "hitstunTicks": 6,
+    "shakeMag": 0.41,
+    "shakeStyle": "directional",
+    "sparkKind": "heavy",
+    "flashColor": [
+      0.85,
+      0.92,
+      1.0
+    ],
+    "flashMs": 140,
+    "camKick": 0.351
+  }
 }

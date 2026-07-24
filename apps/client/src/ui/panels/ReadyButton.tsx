@@ -3,6 +3,7 @@ import { useHud } from "../../net/RoomStore";
 import { hudActions } from "../actions";
 import { SfxButton } from "../SfxButton";
 import { PANEL_BORDER, TEXT_DIM } from "../theme";
+import { INTERMISSION_Z } from "./intermissionLayout";
 
 export function ReadyButton(): React.JSX.Element | null {
   const seat = useHud((s) =>
@@ -16,6 +17,13 @@ export function ReadyButton(): React.JSX.Element | null {
     <div
       style={{
         position: "absolute",
+        // Band 3 (PANEL) — the same band as the shop card, which the module doc
+        // has always said Ready rides in. It has to be SAID now that the card
+        // carries a real z: a centred button at bottom:190 overlaps a 45vw left
+        // dock on any viewport narrower than ~1300px, so leaving Ready at the
+        // default layer would bury it under the card. Still BELOW `focusScrim`,
+        // so an unanswered draft demotes and click-blocks it exactly as before.
+        zIndex: INTERMISSION_Z.panel,
         left: "50%",
         bottom: 190,
         transform: "translateX(-50%)",

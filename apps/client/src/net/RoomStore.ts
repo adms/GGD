@@ -84,6 +84,12 @@ export interface SeatView {
   exRank: number;
   exCooldown: number;
   /**
+   * 天生技 (6th slot) remaining cooldown ticks. No id/rank beside it: which
+   * innate the hero owns follows from `championId` (ui/passiveSlot) and its rank
+   * is 1 from spawn. 0 for a permanent 被動 innate and for the 3 heroes with none.
+   */
+  passiveCooldown: number;
+  /**
    * 能力屬性強化 progress (task #82). `statStacks` is the CONSECUTIVE stat-tick
    * count the shop renders as "N / 20"; it drops to 0 the moment the player
    * buys any real item, so the shop MUST be able to warn before that click.
@@ -333,6 +339,7 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
       exAbilityId: ss.exAbilityId,
       exRank: ss.exRank,
       exCooldown: ss.exCooldown,
+      passiveCooldown: ss.passiveCooldown,
       statStacks: ss.statStacks,
       statCapstonePct: ss.statCapstonePct,
       undoDepth: ss.undoDepth,

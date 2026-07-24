@@ -12,36 +12,71 @@
     },
     "2": {
       "grantLevels": 1,
-      "grantGold": 750,
+      "grantGold": 450,
       "weaponLootTable": "quest-rewards",
       "augmentTier": "silver"
     },
     "3": {
       "grantLevels": 1,
-      "grantGold": 2500,
-      "augmentTier": "gold"
+      "grantGold": 375,
+      "augmentTier": "silver"
     },
     "4": {
-      "grantLevels": 1,
-      "grantGold": 1000,
+      "grantLevels": 2,
+      "grantGold": 525,
       "augmentTier": "gold"
     },
     "5": {
       "grantLevels": 1,
-      "grantGold": 1250,
-      "weaponLootTable": "quest-rewards",
-      "augmentTier": "prismatic"
+      "grantGold": 525,
+      "augmentTier": "gold"
     },
     "6": {
       "grantLevels": 1,
-      "grantGold": 1500,
+      "grantGold": 600,
+      "weaponLootTable": "quest-rewards",
+      "augmentTier": "gold"
+    },
+    "7": {
+      "grantLevels": 2,
+      "grantGold": 600,
+      "augmentTier": "prismatic"
+    },
+    "8": {
+      "grantLevels": 1,
+      "grantGold": 750,
+      "augmentTier": "prismatic"
+    },
+    "9": {
+      "grantLevels": 1,
+      "grantGold": 750,
+      "augmentTier": "prismatic"
+    },
+    "10": {
+      "grantLevels": 2,
+      "grantGold": 750,
+      "augmentTier": "prismatic"
+    },
+    "11": {
+      "grantLevels": 1,
+      "grantGold": 750,
+      "augmentTier": "prismatic"
+    },
+    "12": {
+      "grantLevels": 1,
+      "grantGold": 750,
+      "augmentTier": "prismatic"
+    },
+    "13": {
+      "grantLevels": 2,
+      "grantGold": 750,
       "augmentTier": "prismatic"
     }
   },
   "overflow": {
     "grantLevels": 1,
-    "grantGold": 1500,
-    "grantGoldPerRound": 250,
+    "grantGold": 750,
+    "grantGoldPerRound": 150,
     "augmentTier": "prismatic"
   },
   "flowers": {

@@ -1,6 +1,6 @@
 {
   "collection": "augments",
-  "hash": "c5af1fe05bc1",
+  "hash": "a540fdb3f023",
   "entries": [
     {
       "id": "aegis-surge",
@@ -39,6 +39,12 @@
       "size": 498
     },
     {
+      "id": "bloodlet-ward",
+      "path": "augments/bloodlet-ward.json",
+      "hash": "d038c81dc979",
+      "size": 637
+    },
+    {
       "id": "bloodlust",
       "path": "augments/bloodlust.json",
       "hash": "440c55381ac5",
@@ -61,6 +67,12 @@
       "path": "augments/conqueror.json",
       "hash": "bbbf8d220358",
       "size": 818
+    },
+    {
+      "id": "executioner-edge",
+      "path": "augments/executioner-edge.json",
+      "hash": "ea22b7b85de4",
+      "size": 416
     },
     {
       "id": "frost-shatter",
@@ -93,10 +105,40 @@
       "size": 377
     },
     {
+      "id": "last-stand",
+      "path": "augments/last-stand.json",
+      "hash": "8e4a7a3ab262",
+      "size": 676
+    },
+    {
+      "id": "momentum-core",
+      "path": "augments/momentum-core.json",
+      "hash": "074f67f6feed",
+      "size": 756
+    },
+    {
       "id": "overdrive-engine",
       "path": "augments/overdrive-engine.json",
       "hash": "0345ad2c239e",
       "size": 489
+    },
+    {
+      "id": "phantom-step",
+      "path": "augments/phantom-step.json",
+      "hash": "7770019e9197",
+      "size": 484
+    },
+    {
+      "id": "second-wind",
+      "path": "augments/second-wind.json",
+      "hash": "7536d8e14c90",
+      "size": 505
+    },
+    {
+      "id": "siege-breaker",
+      "path": "augments/siege-breaker.json",
+      "hash": "aa87bc99b4ac",
+      "size": 482
     },
     {
       "id": "soul-reaver",
@@ -123,10 +165,22 @@
       "size": 398
     },
     {
+      "id": "titan-heart",
+      "path": "augments/titan-heart.json",
+      "hash": "52084faf7ad7",
+      "size": 508
+    },
+    {
       "id": "vital-surge",
       "path": "augments/vital-surge.json",
       "hash": "17f13db6692b",
       "size": 408
+    },
+    {
+      "id": "void-hunger",
+      "path": "augments/void-hunger.json",
+      "hash": "ee344114dea0",
+      "size": 488
     }
   ]
 }

@@ -2,6 +2,7 @@
   "id": "godie-n01c.passive",
   "schema": "ability@1",
   "name": "08-00 龍紋記憶",
+  "icon": "assets/icons/abilities/godie-n01c.passive.webp",
   "description": "[被動]\n0秒冷卻時間\n\n繼承龍紋章後，歷代累積在龍騎士身上的作戰經驗，使得龍騎士能降低穿刺攻擊的破壞力為原先的60%。",
   "slot": "PASSIVE",
   "innateKind": "passive",

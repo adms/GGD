@@ -13,11 +13,17 @@ from __future__ import annotations
 
 import json
 import os
+import struct
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, ".."))
 
+from extract_particles import (  # noqa: E402
+    DEFAULT_SCALE,
+    emission_disc_radius,
+    slug,
+)
 from w3xlib.particles import parse_particles  # noqa: E402
 
 OUT = os.path.join(HERE, "..", "out", "GoDieEX22s")
@@ -92,6 +98,195 @@ def main() -> int:
             assert b["vfx"] in ids, b
     print(f"PASS particles: {len(docs)} generated docs well-formed, "
           f"ambient bindings resolve")
+
+    rc = check_emitter_radius_reading()
+    return rc
+
+
+# ---------------------------------------------------------------------------
+# emitter radius: the reading, its binary proof, and whether content matches
+# ---------------------------------------------------------------------------
+
+# The sword that settles the argument. See extract_particles.emission_disc_radius.
+# These are BINARY facts, re-read from the .mdx on every run — if a future parser
+# change makes them stop being true, the reading they justify is no longer
+# justified and this must fail loudly rather than be quietly edited.
+SWORD_MDX = "1hswd_01.mdx"
+SWORD_EMITTER = "Particle_2"
+
+
+def _geoset0_bounds(data: bytes):
+    """First GEOS vertex AABB, straight from VRTX. No mdx.py dependency."""
+    pos = 4
+    while pos + 8 <= len(data):
+        tag = data[pos:pos + 4]
+        size = struct.unpack_from("<I", data, pos + 4)[0]
+        body = pos + 8
+        if tag == b"GEOS":
+            p = body + 4  # skip the geoset's inclusive size
+            assert data[p:p + 4] == b"VRTX", data[p:p + 4]
+            n = struct.unpack_from("<I", data, p + 4)[0]
+            vs = [struct.unpack_from("<3f", data, p + 8 + 12 * i) for i in range(n)]
+            return (min(v[0] for v in vs), max(v[0] for v in vs))
+        pos = body + size
+    return None
+
+
+def _model_bbox_span(data: bytes) -> float:
+    """Largest axis of the model's own authored MODL extent (0 if not authored).
+
+    MODL body: name[80], animFileName[260], boundsRadius f32, min f32[3],
+    max f32[3], blendTime u32."""
+    pos = 4
+    while pos + 8 <= len(data):
+        tag = data[pos:pos + 4]
+        size = struct.unpack_from("<I", data, pos + 4)[0]
+        if tag == b"MODL":
+            v = struct.unpack_from("<7f", data, pos + 8 + 80 + 260)
+            spans = [v[4] - v[1], v[5] - v[2], v[6] - v[3]]
+            return max(spans) if min(spans) > 0 else 0.0
+        pos = pos + 8 + size
+    return 0.0
+
+
+def check_emitter_radius_reading() -> int:
+    """Three checks, in escalating scope.
+
+    1. PROOF — re-derive from the binary that PRE2 Width/Length are FULL side
+       lengths (spawn is +/- half about the node), not radii.
+    2. CONTRACT — the TS runtime path must still compute the same thing.
+    3. CONTENT — are the shipped docs actually on the corrected reading?
+
+    (3) is deliberately non-fatal while it is knowingly false: content/vfx/** is
+    owned by the ability-binding lane and cannot be regenerated under it. What it
+    must never do is go QUIET — a stale corpus prints a REGENERATION PENDING
+    banner every single run, and a HALF-regenerated corpus fails hard.
+    """
+    # -- 1. proof, from the bytes ------------------------------------------
+    data = open(os.path.join(RAW, SWORD_MDX), "rb").read()
+    m = parse_particles(data)
+    em = next(e for e in m.emitters2 if e.name == SWORD_EMITTER)
+    lo, hi = _geoset0_bounds(data)
+    mesh_len = hi - lo
+    pivot_x = em.pivot[0]
+    assert abs(em.width - 3.30) < 0.01 and abs(em.length - 50.0) < 0.01, em
+    assert abs(lo - -14.28) < 0.01 and abs(hi - 67.67) < 0.01, (lo, hi)
+    assert abs(pivot_x - 40.40) < 0.01, pivot_x
+    full_lo, full_hi = pivot_x - em.length / 2, pivot_x + em.length / 2
+    half_lo, half_hi = pivot_x - em.length, pivot_x + em.length
+    # full-extent reading: the glint strip sits ON the blade
+    assert lo < full_lo and full_hi < hi, (full_lo, full_hi, lo, hi)
+    # half-extent reading: it shoots 22.7 units off the TIP into thin air, runs
+    # back past the crossguard onto the grip, and is itself longer (100.0) than
+    # the entire sword (81.95) — i.e. it cannot be what the artist authored.
+    assert half_hi > hi, (half_hi, hi)
+    assert half_lo < 10.0, half_lo  # back past the crossguard, onto the grip
+    assert 2 * em.length > mesh_len, (2 * em.length, mesh_len)
+    print(f"PASS radius proof: {SWORD_MDX}/{SWORD_EMITTER} Length={em.length} on a "
+          f"{mesh_len:.2f}-unit mesh, pivot x={pivot_x:.2f} -> full-extent strip "
+          f"[{full_lo:.2f},{full_hi:.2f}] fits the blade; half-extent strip "
+          f"[{half_lo:.2f},{half_hi:.2f}] escapes the model")
+
+    # corpus form of the same argument
+    viol_full = viol_half = 0
+    for f in sorted(os.listdir(RAW)):
+        if not f.lower().endswith(".mdx"):
+            continue
+        d = open(os.path.join(RAW, f), "rb").read()
+        span = _model_bbox_span(d)
+        if span <= 0:
+            continue
+        for e in parse_particles(d).emitters2:
+            w = max(e.width, e.length)
+            if w <= 0:
+                continue
+            viol_full += 1 if w > span else 0
+            viol_half += 1 if 2 * w > span else 0
+    assert viol_full == 0, viol_full
+    assert viol_half > 0, "corpus no longer discriminates the two readings"
+    print(f"PASS radius proof: corpus-wide, {viol_full} emitters escape their own "
+          f"model bbox under the full-extent reading vs {viol_half} under the "
+          f"half-extent reading")
+
+    # -- 2. cross-language contract ----------------------------------------
+    # Python (offline extractor) and TS (runtime W3xEmitterRig) both turn the
+    # same PRE2 block into a vfx@1 `emitter.radius`. They MUST agree. There is
+    # no import that can enforce that across languages, so this greps.
+    ts = os.path.join(REPO, "apps", "client", "src", "render", "vfx", "w3xEmitter.ts")
+    src = open(ts).read()
+    need = "(Math.max(finite(em.width), finite(em.length)) / 2) * scale"
+    assert need in src, (
+        f"{ts} no longer computes the emission radius as {need!r}. "
+        "It and extract_particles.emission_disc_radius are the SAME reading of "
+        "the same bytes — change both or neither.")
+    print("PASS radius contract: w3xEmitter.ts and emission_disc_radius agree")
+    print("     (stronger, runs both languages on all 228 emitters: "
+          "python3 test/emitter_radius_crosscheck.py)")
+
+    # -- 3. is shipped content on the corrected reading? --------------------
+    scale_by_source = {}
+    if os.path.isfile(os.path.join(OUT, "models_report.json")):
+        for e in json.load(open(os.path.join(OUT, "models_report.json"))):
+            if e.get("source") and e.get("scale_factor"):
+                scale_by_source[e["source"].lower()] = float(e["scale_factor"])
+    # `agnostic` = docs where the corrected and the buggy formula happen to
+    # produce the same number (e.g. Length == 2*Width). They prove nothing about
+    # which formula generated them, so they must not be counted as evidence
+    # either way — counting them as "fresh" is what made the first version of
+    # this check scream HALF-REGENERATED at a corpus that is uniformly stale.
+    fresh = stale = unknown = agnostic = 0
+    stale_ids = []
+    for f in sorted(os.listdir(RAW)):
+        if not f.lower().endswith(".mdx"):
+            continue
+        stem = slug(f[:-4])
+        scale = scale_by_source.get(f.lower(), DEFAULT_SCALE)
+        for i, e in enumerate(parse_particles(
+                open(os.path.join(RAW, f), "rb").read()).emitters2):
+            p = os.path.join(VFX, f"godie-{stem}-p{i}.json")
+            if not os.path.isfile(p):
+                continue
+            have = json.load(open(p))["emitter"]["radius"]
+            want = emission_disc_radius(e.width, e.length, scale)
+            was = round(max(0.05, e.width * scale), 3)  # the pre-2026-07-24 bug
+            if abs(want - was) < 1e-6:
+                agnostic += 1 if abs(have - want) < 1e-6 else 0
+                unknown += 0 if abs(have - want) < 1e-6 else 1
+            elif abs(have - want) < 1e-6:
+                fresh += 1
+            elif abs(have - was) < 1e-6:
+                stale += 1
+                stale_ids.append(f"godie-{stem}-p{i}")
+            else:
+                unknown += 1
+    total = fresh + stale + unknown + agnostic
+    assert unknown == 0, (
+        f"{unknown} of {total} vfx docs match NEITHER the corrected radius "
+        "formula nor the known-buggy one — content/vfx has been hand-edited or "
+        "generated by something else. Investigate before regenerating.")
+    if stale and fresh:
+        raise AssertionError(
+            f"content/vfx is HALF-regenerated: {fresh} docs on the corrected "
+            f"emitter radius, {stale} still on the 2x-too-large one. A partial "
+            "regeneration is worse than either state — rerun "
+            "`python3 tools/w3x-import/extract_particles.py` over the whole set.")
+    if stale:
+        print("")
+        print("!! REGENERATION PENDING — emitter radius " + "!" * 34)
+        print(f"!! {stale}/{total} content/vfx/godie-*-p*.json still carry the "
+              f"2x-too-large ({agnostic} more are formula-agnostic)")
+        print("!! emitter radius (and ignore PRE2 `Length`). The extractor is "
+              "FIXED; the")
+        print("!! docs are not. They are not regenerated here because "
+              "content/vfx/** is")
+        print("!! owned by the ability-binding lane. Once that lands, run:")
+        print("!!     python3 tools/w3x-import/extract_particles.py")
+        print("!! and this banner disappears on its own.")
+        print("!! " + "!" * 60)
+        print("")
+    else:
+        print(f"PASS radius content: all {fresh} discriminating shipped vfx docs "
+              f"are on the corrected emitter radius ({agnostic} agnostic)")
     return 0
 
 

@@ -107,6 +107,13 @@ services:
       args:
         # THE ONE THAT DECIDES THE OUTCOME. See the header, item 3.
         VITE_GGD_FULL_ASSETS: "1"
+        # Build identity (task #66 / P0-6(a)). compose merges `args` MAPS
+        # key-wise (unlike `ports`, a sequence, which needed `!override`), so
+        # the base file's value would already carry — it is restated because
+        # this is the file the family deploy is read from, and a stamp that is
+        # present in one build path and absent in another is precisely the shape
+        # of the defect being fixed. `make family-up` exports the value.
+        GGD_BUILD_STAMP: "${GGD_BUILD_STAMP:-}"
     # THE ONLY PORT REACHABLE FROM THE NETWORK.
     # GGD_BIND=127.0.0.1 keeps it local; 0.0.0.0 opens it to the LAN/tunnel.
     #

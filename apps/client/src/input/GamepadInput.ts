@@ -16,11 +16,12 @@
  * RIGHT stick aims (streamed; remembered as lastAimDir). A/B/X/Y cast
  * Q/W/E/R resolved per castType exactly like the mouse AimResolver. RT
  * attack-moves, LT basic-attacks the nearest enemy, LB recalls, RB stops,
- * Back casts the per-hero EX skill, Start readies. Coexists with mouse/keyboard: both feed the same
+ * Back casts the per-hero EX skill, D-pad up casts the 天生技 innate (6th slot),
+ * Start readies. Coexists with mouse/keyboard: both feed the same
  * IntentSender, last writer wins. NO @babylonjs imports here (client-08).
  */
 import { asEntityId } from "@ggd/shared/ids";
-import type { AbilitySlot, Command, Order } from "@ggd/shared/sim/intents";
+import type { CastableSlot, Command, Order } from "@ggd/shared/sim/intents";
 import type { Vec2 } from "@ggd/shared/sim/math/vec2";
 import { abilityActivationCue } from "../ui/abilityCue";
 import { buildCastCommand, type AimAbility } from "./AimResolver";
@@ -47,14 +48,33 @@ export const BTN = {
   RT: 7,
   BACK: 8,
   START: 9,
+  /**
+   * D-pad UP (standard mapping index 12). The 天生技's pad binding — see
+   * {@link SLOT_BY_BUTTON}. The other three d-pad directions stay unbound.
+   */
+  DPAD_UP: 12,
 } as const;
 
-const SLOT_BY_BUTTON: Partial<Record<number, AbilitySlot>> = {
+/**
+ * Pad button → castable slot. Includes the SIXTH slot so the 天生技 is not a
+ * keyboard-only ability: a couch player must be able to press every button the
+ * hero owns, or the pad is quietly a five-slot version of the game.
+ *
+ * WHY THE D-PAD AND NOT A FACE BUTTON: A/B/X/Y are Q/W/E/R and Back is the EX —
+ * every face button is spoken for, and re-assigning one would break the mapping
+ * players already have. That leaves a stick click or the d-pad; the d-pad wins
+ * because it is discrete (no accidental fire while moving), it is reachable
+ * without leaving the left stick, and UP is its most findable direction. The
+ * innate is a once-per-40-seconds button, not a rotation key, so the small
+ * thumb move off the stick costs nothing in practice.
+ */
+const SLOT_BY_BUTTON: Partial<Record<number, CastableSlot>> = {
   [BTN.A]: "Q",
   [BTN.B]: "W",
   [BTN.X]: "E",
   [BTN.Y]: "R",
   [BTN.BACK]: "EX", // per-hero "EX 技能" (5th slot); no-op until unlocked
+  [BTN.DPAD_UP]: "PASSIVE", // 天生技 (6th slot); owned from level 1, active kind only
 };
 
 /**
@@ -92,7 +112,7 @@ export interface GamepadPlayerCtx {
   facing: Vec2 | null;
   /** last right-stick direction (caller-owned per-player state) */
   lastAimDir: Vec2 | null;
-  ability(slot: AbilitySlot): AimAbility | null;
+  ability(slot: CastableSlot): AimAbility | null;
   /** nearest valid enemy from a point, biased along aimDir when given */
   nearestEnemy(from: Vec2, maxRange: number, aimDir: Vec2 | null): number | null;
 }
@@ -302,7 +322,7 @@ export class GamepadSystem {
     if (intent.order) this.sinks.onOrder(intent.order);
     if (intent.aim) this.sinks.onAim(intent.aim);
     for (const cmd of intent.commands) {
-      // pad A/B/X/Y/Back cast → same button click cue as tile/key (de-duped)
+      // pad A/B/X/Y/Back/d-pad-up cast → same click cue as tile/key (de-duped)
       if (cmd.kind === "castAbility") abilityActivationCue(cmd.slot);
       this.sinks.onCommand(cmd);
     }

@@ -19,6 +19,9 @@ import { mintCreateToken } from "./rooms/createGate";
 import { sanitizeDisplayName } from "./net/sanitizeText";
 import { secretConfigError } from "./config/secretGuard";
 import { deployTierBootLine } from "./config/deployTier";
+import { probePlatformAtBoot } from "./config/platformUrl";
+import { startContentBus, platformStatusWithContent } from "./config/contentBus";
+import { startMatchHeartbeat } from "./config/matchHeartbeat";
 import { roomRegistry } from "./rooms/roomRegistry";
 import { ReplayRoom } from "./rooms/ReplayRoom";
 import { handleInternalReplays } from "./replay/http";
@@ -139,7 +142,27 @@ const httpServer = createServer((req, res) => {
     // shard is not broken, it is DRAINING — {active: 63, capacity: 50,
     // draining: true} means no new match starts until 13 finish. Without this
     // the refusals look like an outage.
-    res.end(JSON.stringify({ ok: true, rooms: roomRegistry.stats() }));
+    // `platform` (task #48) is the SECOND thing that was invisible. Curation,
+    // combat-env and server-ops all fail SAFE when the platform is unreachable,
+    // so a misconfigured shard looks perfectly healthy while serving allow-all
+    // and untuned multipliers. This block names the resolved platform URL, how
+    // it was chosen, and every fail-safe currently in force — so "why did my
+    // admin tuning do nothing" is one curl away instead of a log archaeology
+    // expedition. `degraded: false` is a real statement, not an absence.
+    // `platform.content` is the THIRD thing that was invisible, and the one the
+    // owner actually asks about: "I changed it in the console — did it land on
+    // the shard?" Per document it reports the version the platform last
+    // announced on the Redis bus, the version this process actually re-fetched,
+    // and when. `stale: false` means the answer is yes; `stale: true` names the
+    // reason it is no. Without it, the only way to check was to start a match
+    // and squint at the numbers.
+    res.end(
+      JSON.stringify({
+        ok: true,
+        rooms: roomRegistry.stats(),
+        platform: platformStatusWithContent(),
+      }),
+    );
     return;
   }
   if (req.url === "/_internal/matches" && req.method === "POST") {
@@ -241,6 +264,26 @@ loadContent()
   .then(() => gameServer.listen(PORT))
   .then(() => {
     console.log(`[game-server] listening on :${PORT} (secret=${SHARED_SECRET ? "set" : "DEV MODE"})`);
+    // #48: SAY IT AT BOOT. Curation / combat-env / server-ops each fail safe on
+    // an unreachable platform, so before this probe the only symptom of a
+    // misconfigured shard was matches quietly running on numbers nobody tuned.
+    // Fire-and-forget — a probe must never delay or block accepting matches;
+    // its result is also readable afterwards on GET /healthz.
+    void probePlatformAtBoot();
+    // The other half of #48: the boot probe says whether the platform is
+    // REACHABLE, this says whether its later CHANGES arrive. Started after
+    // listen() and never awaited — Redis is optional, so a missing or
+    // unreachable one must cost nothing but instant propagation. It reconnects
+    // on its own and reports itself on /healthz.
+    startContentBus();
+    // MATCH LIVENESS (#187). Tells the platform, every 30s over the HMAC
+    // channel, which matches are still being played, so its reaper renews their
+    // deadline instead of guessing one from a constant. Without this the
+    // platform falls back to a blind deadline and can write an ABANDONED result
+    // onto a match people are still playing — which is exactly what it did to
+    // the owner's family games once startingTeamLives went past 3. Fire and
+    // forget, unref'd: it never delays or blocks a match.
+    startMatchHeartbeat(SHARED_SECRET);
     // Retention runs at boot as well as after each match, so a shard that was
     // restarted mid-season still converges on the ceiling instead of only ever
     // pruning while matches happen to be finishing. Fire-and-forget: nothing

@@ -1,0 +1,16 @@
+{
+  "id": "godie-herosasuke-r0",
+  "schema": "ribbon@1",
+  "texture": "assets/textures/particles/wc3/ribbonblur1.png",
+  "widthAbove": 0.043,
+  "widthBelow": 0.043,
+  "lifespanSec": 0.7,
+  "color": [
+    0.078,
+    0.529,
+    0.867,
+    0.2
+  ],
+  "blendMode": "additive",
+  "anchorBone": "Bone_Arm2_R"
+}

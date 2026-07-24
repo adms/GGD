@@ -48,9 +48,23 @@
       "moveSpeedMult": 0.6
     }
   ],
-  "vfxKey": "fx.prim.fire.explosion",
+  "vfxKey": "godie-fireblast-p3",
   "targetsEnemies": true,
   "radius": 6.0,
   "schema": "ability@1",
-  "castTimeSec": 0.7
+  "castTimeSec": 0.7,
+  "hitFeel": {
+    "hitstopTicks": 3,
+    "hitstunTicks": 5,
+    "shakeMag": 0.382,
+    "shakeStyle": "omni",
+    "sparkKind": "heavy",
+    "flashColor": [
+      1.0,
+      0.66,
+      0.3
+    ],
+    "flashMs": 131,
+    "camKick": 0.328
+  }
 }

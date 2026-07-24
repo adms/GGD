@@ -33,6 +33,7 @@ import { buildSkinOverrides } from "./catalog";
 import { isPlatformRestrictedError, OFFLINE_RESTRICTED_MESSAGE } from "./firstOwner";
 import { restartAction, ONLINE_RESTART_NOTE } from "./restart";
 import { connectedPadIndices } from "../../input/GamepadInput";
+import { setLocalDisplayName } from "../../net/RoomConnection";
 import { appendPage, hasMore, nextOffset, PAGE_SIZE } from "./ranking";
 import type {
   AccountPublic,
@@ -275,6 +276,10 @@ export const appStore = createStore<AppState>()((set, get) => {
 
   /** Common post-auth landing: load lobby data + open the WS. */
   async function enterLobby(account: AccountPublic): Promise<void> {
+    // Publish the username to the net layer so the dev/LAN direct-join path can
+    // claim its seat by name (#156) — net/* can't reach into this store, and
+    // the offline launch payload never passes through a seat reservation.
+    setLocalDisplayName(account.username);
     set({
       screen: "lobby",
       lobbyView: "play",
@@ -452,6 +457,7 @@ export const appStore = createStore<AppState>()((set, get) => {
         /* ignore */
       }
       api.setTokens(null);
+      setLocalDisplayName(""); // never name the next session's seats after the last user
       set({
         screen: "auth",
         account: null,

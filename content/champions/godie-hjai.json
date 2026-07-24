@@ -34,6 +34,11 @@
     "mr": 1.2,
     "as": 0.02
   },
+  "hitFeel": {
+    "hitstopTicks": 1,
+    "shakeMag": 0.24,
+    "knockbackMag": 0.0
+  },
   "abilities": {
     "Q": {
       "id": "godie-hjai.q",
@@ -241,7 +246,8 @@
   ],
   "tags": [
     "wc3-import",
-    "godie"
+    "godie",
+    "magic"
   ],
   "exAbility": "godie-hjai.ex",
   "passiveAbility": "godie-hjai.passive",

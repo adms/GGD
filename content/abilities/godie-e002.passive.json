@@ -2,6 +2,7 @@
   "id": "godie-e002.passive",
   "schema": "ability@1",
   "name": "20-00 銀色甲胄",
+  "icon": "assets/icons/abilities/godie-e002.passive.webp",
   "description": "[被動]\n0秒冷卻時間\n\nSaber魔力化的銀色鎧甲讓Saber有相當良好的魔法抗性，當Saber魔力高於30%最大值時，有50%機率抵消(50+Saber等級*10)的傷害。",
   "slot": "PASSIVE",
   "innateKind": "passive",

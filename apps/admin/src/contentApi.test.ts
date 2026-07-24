@@ -32,6 +32,7 @@ import {
   fetchDoc,
   listBackups,
   restoreBackup,
+  deleteDoc,
   saveDocs,
   validateDoc,
   type EditFetch,
@@ -41,6 +42,9 @@ interface Call {
   url: string;
   method: string;
   body: unknown;
+  /** recorded because a header sent on a BODYLESS verb is itself a bug — see
+   *  the 刪除 regression at the bottom of this file */
+  headers: Record<string, string>;
 }
 
 interface Canned {
@@ -59,6 +63,7 @@ function stubFetch(table: readonly (readonly [RegExp, Canned])[]): {
       url,
       method: init.method ?? "GET",
       body: typeof init.body === "string" ? JSON.parse(init.body) : undefined,
+      headers: { ...((init.headers ?? {}) as Record<string, string>) },
     });
     const hit = table.find(([re]) => re.test(`${init.method ?? "GET"} ${url}`));
     const canned: Canned = hit?.[1] ?? { status: 200, body: {} };
@@ -245,5 +250,50 @@ describe("reads, validation and undo", () => {
     expect(r).toEqual({ ok: true, restored: "b1.json", contentVersion: "cv_back", error: null });
     // an empty body is the server's "newest snapshot" signal
     expect(calls[0]!.body).toEqual({});
+  });
+});
+
+// ---------------------------------------------------------------------------
+
+/**
+ * THE 刪除 BUTTON (task #70 rule 3 — 「移除一個三選一強化」).
+ *
+ * Found by actually clicking it in the console, not by reading the code: every
+ * delete answered 「Bad Request」. `send()` set `content-type: application/json`
+ * on EVERY verb, but DELETE carries no body, and fastify rejects that pairing
+ * outright with 400 FST_ERR_CTP_EMPTY_JSON_BODY:
+ *
+ *     Body cannot be empty when content-type is set to 'application/json'
+ *
+ * So the console could CREATE an augment and never remove it. Nothing caught it
+ * because the stub above did not record headers at all — a request could carry
+ * any header and every assertion still passed. It records them now, and these
+ * two tests pin both halves of the rule: no header without a body, the header
+ * whenever there is one.
+ */
+describe("deleting a document (the 刪除 button)", () => {
+  it("sends NO content-type on DELETE — the header alone is what fastify 400s on", async () => {
+    cover("content-admin-save");
+    const { fetchFn, calls } = stubFetch([
+      [/DELETE /, { status: 200, body: { deleted: true, contentVersion: "cv_gone", backup: "b.json" } }],
+    ]);
+    const r = await deleteDoc("augments", "frost-bulwark-probe", { fetchFn });
+    expect(r).toEqual({ ok: true, error: null, contentVersion: "cv_gone", backup: "b.json" });
+
+    const del = calls.find((c) => c.method === "DELETE")!;
+    expect(del.body).toBeUndefined();
+    // the whole bug in one assertion
+    expect(Object.keys(del.headers)).toEqual([]);
+  });
+
+  it("still sends content-type when there IS a body, so writes keep working", async () => {
+    cover("content-admin-save");
+    const { fetchFn, calls } = stubFetch([
+      [/POST .*\/validate$/, { status: 200, body: { ok: true } }],
+      [/POST /, { status: 200, body: { contentVersion: "cv_1" } }],
+    ]);
+    await saveDocs(writePlan("items", "x", { id: "x" }), { fetchFn });
+    const write = calls.find((c) => c.body !== undefined)!;
+    expect(write.headers["content-type"]).toBe("application/json");
   });
 });

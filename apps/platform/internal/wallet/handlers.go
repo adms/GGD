@@ -26,9 +26,14 @@ func (h *Handlers) Mount(r chi.Router) {
 	r.Post("/store/buy", h.buy)
 	r.Post("/store/equip", h.equip)
 
-	// Meta progression (task #118): free crystal drip, crystal-unlock, the
-	// favourite pin, and the admin-only M COIN grant.
-	r.Post("/wallet/crystals/earn", h.earnCrystals)
+	// Meta progression (task #118): crystal-unlock, the favourite pin, and the
+	// admin-only M COIN grant.
+	//
+	// There is deliberately NO crystal EARN route here. Crystals are granted
+	// exclusively by match settlement (the HMAC-signed internal result
+	// callback, keyed per matchId) — an authenticated self-grant with no
+	// per-match key is a minting hole a client can loop. See the "WHO MAY
+	// GRANT IT" note in meta.go.
 	r.Post("/wallet/champions/unlock", h.unlockChampion)
 	r.Post("/wallet/favourites", h.favourite)
 	r.Post("/wallet/admin/grant-mcoin", h.grantMCoin)
@@ -102,17 +107,6 @@ func (h *Handlers) equip(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	wal, err := h.svc.Equip(r.Context(), me.AccountID, req.ChampionID, req.SkinID)
-	if err != nil {
-		httpx.WriteError(w, err)
-		return
-	}
-	httpx.WriteJSON(w, http.StatusOK, wal)
-}
-
-// earnCrystals grants the authenticated account one match's worth of crystals.
-func (h *Handlers) earnCrystals(w http.ResponseWriter, r *http.Request) {
-	me := auth.MustIdentity(r.Context())
-	wal, err := h.svc.EarnMatchCrystals(r.Context(), me.AccountID)
 	if err != nil {
 		httpx.WriteError(w, err)
 		return

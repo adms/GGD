@@ -5,12 +5,17 @@
  * — no Babylon, no DOM.
  */
 import { describe, it, expect } from "vitest";
+import { readFileSync, readdirSync } from "node:fs";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
 import {
   SHAKE_MAX_AMP,
   FLASH_MS,
   FLASH_ALPHA,
   flashColorFor,
+  legibleFlashColor,
+  FLASH_MIN_SPREAD,
   asImpactProfile,
   planImpactFeedback,
   tierWeight,
@@ -37,9 +42,14 @@ import {
 /** Client mirror of the sim's per-tier cosmetic defaults (test helper). */
 const SHAKE_BY_TIER: Record<ImpactTier, number> = { light: 0.35, medium: 0.6, heavy: 0.85, crit: 1.0 };
 const CAMKICK_BY_TIER: Record<ImpactTier, number> = { light: 0.15, medium: 0.3, heavy: 0.5, crit: 0.65 };
-const FLASHMS_BY_TIER: Record<ImpactTier, number> = { light: 90, medium: 120, heavy: 160, crit: 200 };
-
-/** A minimal well-formed profile for a given tier + hitstop (test helper). */
+/**
+ * A minimal well-formed profile for a given tier + hitstop (test helper).
+ * NOTE it carries NO flashColor / flashMs — that is the normal shape of a hit
+ * from an un-authored source (every basic attack, every ability without a
+ * `hitFeel.flashColor`), which is the majority case and the one whose flash
+ * must keep reading as the DAMAGE TYPE. Tests that want the authored path pass
+ * the fields explicitly through `over`.
+ */
 const profileOf = (tier: ImpactTier, hitstopTicks: number, over: Partial<ImpactProfile> = {}): ImpactProfile => ({
   tier,
   hitstopTicks,
@@ -51,8 +61,6 @@ const profileOf = (tier: ImpactTier, hitstopTicks: number, over: Partial<ImpactP
   shakeMag: SHAKE_BY_TIER[tier],
   shakeStyle: tier === "crit" ? "omni" : "directional",
   sparkKind: tier === "heavy" || tier === "crit" ? "heavy" : "hit",
-  flashColor: [1, 0.25, 0.2],
-  flashMs: FLASHMS_BY_TIER[tier],
   camKick: CAMKICK_BY_TIER[tier],
   exFreeze: 0,
   ...over,
@@ -166,13 +174,17 @@ describe("impact profile narrowing (juice-profile)", () => {
     expect(full.camKick).toBe(0.7);
     expect(full.exFreeze).toBe(8);
 
-    // ABSENT (old replay) → tier-derived defaults, never undefined
+    // ABSENT (old replay) → tier-derived defaults, never undefined …
     const old = asImpactProfile({ tier: "heavy", hitstopTicks: 5 })!;
     expect(old.shakeMag).toBe(0.85); // heavy default
     expect(old.shakeStyle).toBe("directional");
     expect(old.sparkKind).toBe("hit");
-    expect(old.flashMs).toBe(160);
     expect(old.camKick).toBe(0.5);
+    // … EXCEPT the flash pair, which is authored-or-absent by design. Backfilling
+    // it here would make every hit look authored and permanently disable the
+    // damage-type default (the bug this contract exists to prevent).
+    expect(old.flashColor).toBeUndefined();
+    expect(old.flashMs).toBeUndefined();
     expect(old.exFreeze).toBe(0);
     // a bogus sparkKind is rejected to the safe default, not passed through
     expect(asImpactProfile({ tier: "light", hitstopTicks: 2, sparkKind: "sword" })!.sparkKind).toBe("hit");
@@ -280,6 +292,139 @@ describe("planImpactFeedback orchestrator (juice-hitstop / juice-orchestrator)",
 
     const phys = planImpactFeedback(profileOf("medium", 3), { dmgType: "physical", tickMs: 33.3 });
     expect(phys.victimFlash.rgb).toEqual(flashColorFor("physical"));
+  });
+});
+
+// ---------------------------------------------------------------------------
+// hitFeel.flashColor / .flashMs — the OVERRIDE that used to be dropped
+// ---------------------------------------------------------------------------
+// These fields were schema-accepted, sim-replicated, decoded into ImpactProfile
+// and then discarded, because planImpactFeedback rebuilt the flash from
+// flashColorFor + TIER_FX unconditionally. 31 ability docs shipped dead
+// content. If someone "simplifies" resolveVictimFlash back to the tier tables,
+// the first three tests here go red.
+describe("authored hitFeel flash override (juice-flash-override)", () => {
+  const AUTHORED_GOLD: [number, number, number] = [1, 0.92, 0.6]; // godie-e007.r 神聖
+  const AUTHORED_FIRE: [number, number, number] = [1, 0.52, 0.22]; // godie-udre.q 炎
+
+  it("an authored flashColor reaches victimFlash instead of the damage-type default", () => {
+    cover("juice-flash-override");
+    const authored = planImpactFeedback(
+      profileOf("heavy", 4, { flashColor: AUTHORED_FIRE, flashMs: 178 }),
+      { dmgType: "magic", tickMs: 33.3 },
+    );
+    // fire orange already clears the legibility floor → author's value, verbatim
+    expect(authored.victimFlash.rgb).toEqual(AUTHORED_FIRE);
+    expect(authored.victimFlash.ms).toBe(178);
+    // and it is genuinely DIFFERENT from what the un-authored hit would show
+    const plain = planImpactFeedback(profileOf("heavy", 4), { dmgType: "magic", tickMs: 33.3 });
+    expect(plain.victimFlash.rgb).toEqual(flashColorFor("magic"));
+    expect(plain.victimFlash.rgb).not.toEqual(authored.victimFlash.rgb);
+  });
+
+  it("the damage-type read SURVIVES: nothing authored → the measured palette, always", () => {
+    cover("juice-flash-override");
+    // This is the layering guarantee. No champion doc authors a flash, so every
+    // BASIC ATTACK takes this branch and physical-vs-magic keeps reading.
+    for (const tier of ["light", "medium", "heavy", "crit"] as ImpactTier[]) {
+      const magic = planImpactFeedback(profileOf(tier, 2), { dmgType: "magic", tickMs: 33.3 });
+      const phys = planImpactFeedback(profileOf(tier, 2), { dmgType: "physical", tickMs: 33.3 });
+      expect(magic.victimFlash.rgb).toEqual(flashColorFor("magic"));
+      expect(phys.victimFlash.rgb).toEqual(flashColorFor("physical"));
+      expect(magic.victimFlash.rgb).not.toEqual(phys.victimFlash.rgb);
+      expect(magic.victimFlash.ms).toBe(phys.victimFlash.ms); // tier default, both
+    }
+  });
+
+  it("alpha is NEVER authorable — it stays the tier's hit-weight", () => {
+    cover("juice-flash-override");
+    const a = planImpactFeedback(profileOf("light", 1, { flashColor: AUTHORED_GOLD }), { tickMs: 33.3 });
+    const b = planImpactFeedback(profileOf("light", 1), { tickMs: 33.3 });
+    expect(a.victimFlash.alpha).toBe(b.victimFlash.alpha);
+  });
+
+  it("legibility guard: a washed-out authored hue is saturated, not recoloured", () => {
+    cover("juice-flash-legibility");
+    // gold: spread 0.40 < 0.65 → boosted. Hue ORDER must survive (r > g > b),
+    // the max channel must be untouched, and it must not become red/magenta.
+    const gold = legibleFlashColor(AUTHORED_GOLD);
+    expect(gold[0]).toBe(1); // max channel preserved
+    expect(gold[0]).toBeGreaterThan(gold[1]!);
+    expect(gold[1]).toBeGreaterThan(gold[2]!); // still warm gold, not red
+    expect(gold[0]! - gold[2]!).toBeCloseTo(FLASH_MIN_SPREAD, 6);
+
+    // pale azure (godie-u00j.q / godie-hart.r): spread 0.15 → the worst case in
+    // the shipped set; it must come out BLUE-dominant, not washed white.
+    const azure = legibleFlashColor([0.85, 0.92, 1.0]);
+    expect(azure[2]).toBe(1);
+    expect(azure[2]).toBeGreaterThan(azure[1]!);
+    expect(azure[1]).toBeGreaterThan(azure[0]!);
+    expect(azure[2]! - azure[0]!).toBeCloseTo(FLASH_MIN_SPREAD, 6);
+
+    // already-chromatic colours are passed through untouched (no gratuitous churn)
+    expect(legibleFlashColor(AUTHORED_FIRE)).toEqual(AUTHORED_FIRE);
+    expect(legibleFlashColor(flashColorFor("magic"))).toEqual(flashColorFor("magic"));
+
+    // a greyscale authored colour has no hue to saturate → the measured red,
+    // because a white flash is a measured NO-OP on a pale model.
+    expect(legibleFlashColor([1, 1, 1])).toEqual([1, 0.15, 0.15]);
+    expect(legibleFlashColor([0.4, 0.4, 0.4])).toEqual([1, 0.15, 0.15]);
+  });
+
+  it("every SHIPPED authored flash colour clears the legibility floor after the guard", () => {
+    cover("juice-flash-legibility");
+    // the distinct hues actually authored across the 31 ability docs today
+    const shipped: [number, number, number][] = [
+      [1.0, 0.92, 0.6], [0.65, 0.8, 1.0], [1.0, 0.72, 0.34], [1.0, 0.9, 0.8],
+      [0.9, 0.72, 0.48], [0.85, 0.92, 1.0], [1.0, 0.66, 0.3], [0.62, 0.45, 0.85],
+      [1.0, 0.95, 0.72], [1.0, 0.52, 0.22], [0.7, 0.85, 1.0], [0.8, 0.88, 1.0],
+      [0.6, 0.82, 1.0], [1.0, 0.6, 0.26],
+    ];
+    for (const rgb of shipped) {
+      const out = legibleFlashColor(rgb);
+      expect(Math.max(...out) - Math.min(...out)).toBeGreaterThanOrEqual(FLASH_MIN_SPREAD - 1e-9);
+      for (const c of out) expect(c).toBeGreaterThanOrEqual(0);
+      for (const c of out) expect(c).toBeLessThanOrEqual(1);
+      // the guard preserves WHICH channel dominates — i.e. the author's hue family
+      expect(out.indexOf(Math.max(...out))).toBe(rgb.indexOf(Math.max(...rgb)));
+    }
+  });
+
+  // ------------------------------------------------------- REAL SHIPPED CONTENT
+  // Fixtures prove the function; this proves the GAME. It walks the actual
+  // content/abilities/*.json on disk, pushes each authored hitFeel through the
+  // real decode (`asImpactProfile`, exactly what the wire hands the client) and
+  // the real orchestrator, and asserts the authored hue is what would be handed
+  // to ChampionView.flash(). This is the test that would have caught the
+  // original bug: before the fix EVERY row here came back as the generic
+  // damage-type colour, and nothing anywhere went red.
+  it("every authored ability doc on disk actually reaches victimFlash", () => {
+    cover("juice-flash-override");
+    const dir = fileURLToPath(new URL("../../../../content/abilities/", import.meta.url));
+    const docs = readdirSync(dir).filter((f) => f.endsWith(".json"));
+    let authored = 0;
+    for (const file of docs) {
+      const hf = (JSON.parse(readFileSync(join(dir, file), "utf8")) as {
+        hitFeel?: { flashColor?: [number, number, number]; flashMs?: number };
+      }).hitFeel;
+      if (!hf?.flashColor) continue;
+      authored++;
+      // the wire shape the sim emits for this ability's hit
+      const profile = asImpactProfile({
+        tier: "heavy",
+        hitstopTicks: 4,
+        flashColor: hf.flashColor,
+        ...(hf.flashMs === undefined ? {} : { flashMs: hf.flashMs }),
+      })!;
+      const plan = planImpactFeedback(profile, { dmgType: "magic", tickMs: 33.3 });
+      expect(plan.victimFlash.rgb, file).toEqual(legibleFlashColor(hf.flashColor));
+      // it must NOT be the generic default — that equality WAS the bug
+      expect(plan.victimFlash.rgb, file).not.toEqual(flashColorFor("magic"));
+      if (hf.flashMs !== undefined) expect(plan.victimFlash.ms, file).toBe(hf.flashMs);
+    }
+    // guard the guard: if curation ever strips every authored doc this test
+    // would silently pass on an empty loop.
+    expect(authored).toBeGreaterThanOrEqual(30);
   });
 });
 

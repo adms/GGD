@@ -6,6 +6,13 @@
  * probe), and full silent degradation when neither source exists. The mixer is
  * a stub of the narrow VoiceAudioPort; the playClip seam itself is exercised
  * over the fake WebAudio graph in AudioSystem.test.ts.
+ *
+ * The last block covers the reopened half: the five-rung ladder that makes the
+ * click answer for all 113 champions on the PUBLIC tier. Rung ORDER and the
+ * pack contract are unit-tested in selectVoiceLadder.test.ts; the on-disk
+ * coverage claim is proved in selectVoiceCoverage.test.ts. Here it is the
+ * player's own behaviour: which rung it plays on which build, at what gain, how
+ * a rejecting borrowed loader degrades, and the no-immediate-repeat pick.
  */
 import { describe, it, expect } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
@@ -21,6 +28,13 @@ import {
   pickVoiceClip,
   type VoiceAudioPort,
 } from "./championVoice";
+import {
+  championNamesFromDoc,
+  championQuotesFromDoc,
+  type ChampionNamesManifest,
+  type ChampionQuotesManifest,
+} from "./nameVoice";
+import { VOICE_PACK_MANIFEST_PATH } from "./selectVoiceLadder";
 
 // ---------------------------------------------------------------------------
 // stubs
@@ -105,6 +119,9 @@ function build(opts: {
   now?: () => number;
   rng?: () => number;
   blizzardFallback?: boolean;
+  /** rungs 4/5 — null by default so these cases stay about rungs 1–3 */
+  names?: ChampionNamesManifest | null;
+  quotes?: ChampionQuotesManifest | null;
 }): { player: ChampionVoicePlayer; counts: Record<string, number> } {
   const { fetchFn, counts } = stubFetch({ config: opts.config, manifest: opts.manifest });
   const player = new ChampionVoicePlayer({
@@ -113,6 +130,10 @@ function build(opts: {
     now: opts.now ?? (() => 0),
     rng: opts.rng ?? (() => 0),
     blizzardFallback: opts.blizzardFallback ?? true,
+    // Injected, never borrowed: the real defaults are the champ-select layer's
+    // singletons, which would issue live fetches from a unit test.
+    namesLoader: () => Promise.resolve(opts.names ?? null),
+    quotesLoader: () => Promise.resolve(opts.quotes ?? null),
     warn: () => {},
   });
   return { player, counts };
@@ -317,5 +338,148 @@ describe("champion voice pure helpers (voice-select-config)", () => {
     expect(normalizeClipPath("/assets/a.mp3")).toBe("assets/a.mp3");
     expect(normalizeClipPath("  ")).toBeNull();
     expect(normalizeClipPath(null)).toBeNull();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// the fallback ladder, through the player (task #27 reopened)
+// ---------------------------------------------------------------------------
+
+const NAMES: ChampionNamesManifest = championNamesFromDoc({
+  champions: {
+    uther: {
+      zhName: "聖騎士 - 烏瑟",
+      spokenLine: "聖騎士‖ウーサー",
+      jaName: "ウーサー",
+      clip: "assets/audio/voices/names/uther.mp3",
+      voSegments: [
+        { part: "title", clip: "assets/audio/voices/names/uther.title.mp3" },
+        { part: "name", clip: "assets/audio/voices/names/uther.name.mp3" },
+      ],
+    },
+  },
+})!;
+
+const QUOTES: ChampionQuotesManifest = championQuotesFromDoc({
+  quotes: {
+    uther: { jpQuote: "光あれ", clip: "assets/audio/voices/quotes/uther.mp3" },
+    ghost: { jpQuote: "だれ？", clip: "assets/audio/voices/quotes/ghost.mp3" },
+  },
+})!;
+
+describe("champion select voice — the never-silent ladder (voice-select-fallback)", () => {
+  it("a no-quip champion speaks its 全名 on the PUBLIC tier, at the call-out's gain", async () => {
+    cover("voice-select-fallback");
+    const gains: (number | undefined)[] = [];
+    const played: string[] = [];
+    const audio: VoiceAudioPort = {
+      isUnlocked: true,
+      volumes: () => ({ muted: false, sfxMuted: false }),
+      playClip: (path, opts) => {
+        played.push(path);
+        gains.push(opts?.volume);
+        return true;
+      },
+    };
+    const { player } = build({
+      audio,
+      config: CONFIG,
+      manifest: MANIFEST,
+      blizzardFallback: false, // the deployed ggd.adms.ai build
+      names: NAMES,
+      quotes: QUOTES,
+    });
+    await expect(player.playSelect("uther")).resolves.toBe(true);
+    // the 稱號 half is NOT in the pool — two characters can share a 稱號
+    expect(played).toEqual(["assets/audio/voices/names/uther.name.mp3"]);
+    expect(gains).toEqual([0.95]);
+  });
+
+  it("with no name entry it still answers, from the 名言 floor", async () => {
+    cover("voice-select-fallback");
+    const { audio, played } = stubAudio();
+    const { player } = build({ audio, config: CONFIG, blizzardFallback: false, names: NAMES, quotes: QUOTES });
+    // `ghost` is in no config and no name manifest — the case that used to be silent
+    await expect(player.playSelect("ghost")).resolves.toBe(true);
+    expect(played).toEqual(["assets/audio/voices/quotes/ghost.mp3"]);
+  });
+
+  it("the gated soundset still outranks the TTS rungs on a full-assets build", async () => {
+    cover("voice-select-fallback");
+    const { audio, played } = stubAudio();
+    const { player } = build({
+      audio,
+      config: CONFIG,
+      manifest: MANIFEST,
+      blizzardFallback: true,
+      names: NAMES,
+      quotes: QUOTES,
+    });
+    await player.playSelect("uther");
+    expect(played).toEqual(["assets/blizzard-local/sound/hpal-what1.mp3"]);
+  });
+
+  it("probes the generated pack once, and a 404 just skips the rung", async () => {
+    cover("voice-select-fallback");
+    const { audio, played } = stubAudio();
+    const { player, counts } = build({ audio, config: CONFIG, blizzardFallback: false, names: NAMES, quotes: QUOTES });
+    await player.playSelect("uther");
+    await player.playSelect("uther-2");
+    const packUrls = Object.keys(counts).filter((u) => u.endsWith(VOICE_PACK_MANIFEST_PATH));
+    expect(packUrls).toHaveLength(1);
+    expect(counts[packUrls[0]!]).toBe(1);
+    expect(played[0]).toBe("assets/audio/voices/names/uther.name.mp3");
+  });
+
+  it("a multi-clip pool never repeats the previous line back-to-back", async () => {
+    cover("voice-select-fallback");
+    const { audio, played } = stubAudio();
+    let t = 0;
+    const { player } = build({
+      audio,
+      config: CONFIG,
+      now: () => t,
+      rng: () => 0, // always index 0 of whatever it is offered
+      names: NAMES,
+      quotes: QUOTES,
+    });
+    await player.playSelect("sela");
+    t += SELECT_VOICE_COOLDOWN_MS;
+    await player.playSelect("sela");
+    expect(played).toEqual([
+      "assets/audio/voice/sela-sel1.mp3",
+      "assets/audio/voice/sela-sel2.mp3",
+    ]);
+  });
+
+  it("a borrowed manifest loader that REJECTS degrades to the rung below, not a throw", async () => {
+    cover("voice-select-fallback");
+    const { audio, played } = stubAudio();
+    const { fetchFn } = stubFetch({ config: CONFIG });
+    const player = new ChampionVoicePlayer({
+      audio,
+      fetchFn,
+      now: () => 0,
+      rng: () => 0,
+      blizzardFallback: false,
+      namesLoader: () => Promise.reject(new Error("boom")),
+      quotesLoader: () => Promise.resolve(QUOTES),
+      warn: () => {},
+    });
+    await expect(player.playSelect("uther")).resolves.toBe(true);
+    expect(played).toEqual(["assets/audio/voices/quotes/uther.mp3"]);
+  });
+
+  it("exposes the whole ladder for diagnostics, empty rungs included", async () => {
+    cover("voice-select-fallback");
+    const { player } = build({ audio: stubAudio().audio, config: CONFIG, blizzardFallback: false, names: NAMES, quotes: QUOTES });
+    const rungs = await player.ladder("uther");
+    expect(rungs.map((r) => [r.tier, r.clips.length])).toEqual([
+      ["authored", 0],
+      ["generated", 0],
+      ["soundset", 0],
+      ["name", 1],
+      ["quote", 1],
+    ]);
   });
 });

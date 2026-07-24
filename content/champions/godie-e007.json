@@ -22,7 +22,8 @@
     "critDamage": 1.75,
     "cdr": 0,
     "lifesteal": 0,
-    "range": 8.2
+    "range": 8.2,
+    "evasion": 0.2
   },
   "growth": {
     "maxHealth": 36,
@@ -33,6 +34,11 @@
     "armor": 0.9,
     "mr": 1.2,
     "as": 0.02
+  },
+  "hitFeel": {
+    "hitstopTicks": 1,
+    "shakeMag": 0.24,
+    "knockbackMag": 0.0
   },
   "abilities": {
     "Q": {
@@ -231,7 +237,8 @@
   ],
   "tags": [
     "wc3-import",
-    "godie"
+    "godie",
+    "thrown"
   ],
   "exAbility": "godie-e007.ex",
   "passiveAbility": "godie-e007.passive",

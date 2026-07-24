@@ -1,0 +1,117 @@
+{
+ "schema": "vfx-bindings-scoreboard@1",
+ "summary": {
+  "universe": {
+   "ggdAbilityDocs": 662,
+   "w3aAbilityRecords": 1538,
+   "w3aCustomAbilities": 1359,
+   "w3aStockOriginalsTouchedByTheMap": 179,
+   "abilitiesInMergedIndex": 1538,
+   "note": "the owner's '662 abilities' = content/abilities/*.json minus _index.json. Verified: 662. The w3a side is larger (1538) because the map also edits stock originals in place and defines runtime-only abilities (orbs, dummy carriers) that no GGD doc represents."
+  },
+  "ggdDocCoverage": {
+   "CONFIRMED_ART": 363,
+   "CONFIRMED_NEGATIVE": 153,
+   "CONFIRMED_ART_AND_PARAMS": 102,
+   "CONFIRMED_ART_INFERRED_PARAMS": 20,
+   "SYNTHETIC_NO_SOURCE_IN_MAP": 15,
+   "INFERRED_ART": 1,
+   "HAND_AUTHORED_NOT_FROM_THE_MAP": 8
+  },
+  "abilityCoverage": {
+   "artConfirmed": 962,
+   "artInferred": 1,
+   "artConfirmedNegative": 575,
+   "artUnresolved": 0,
+   "paramsConfirmed": 92,
+   "paramsInferred": 17,
+   "paramsNone": 1429
+  },
+  "artProvenance": {
+   "stock-inherited": 788,
+   "w3a-override": 741
+  },
+  "assetStatus": {
+   "MISSING_BLIZZARD_STOCK": 1305,
+   "LIGHTNING_ID": 112,
+   "IN_REPO_MESH_PLUS_EMITTERS": 33,
+   "IN_REPO_MESH_ONLY": 41,
+   "IN_REPO_EMITTER_IS_THE_ASSET": 38
+  },
+  "categories": {
+   "orb_球體": {
+    "abilities": 77,
+    "customToThisMap": 76,
+    "artConfirmed": 77,
+    "assetInRepo": 21,
+    "assetMissingBlizzard": 56,
+    "withPerInvocationParams": 0,
+    "reachableFromAGgdDoc": 8,
+    "ggdDocsCovered": 9,
+    "delivery": {
+     "grantedByItem": 16,
+     "permanentlyOwnedByHeroUnit": 21,
+     "spawnedDummyCarrier": 13
+    },
+    "withNoCarrierFound": 40,
+    "attachedModelAssetStatus": {
+     "IN_REPO_MESH_PLUS_EMITTERS": 5,
+     "MISSING_BLIZZARD_STOCK": 56,
+     "IN_REPO_MESH_ONLY": 14,
+     "IN_REPO_EMITTER_IS_THE_ASSET": 2
+    },
+    "withAtLeastOneAttachedModel": 77
+   },
+   "locust_蝗蟲群": {
+    "abilities": 44,
+    "customToThisMap": 44,
+    "artConfirmed": 40,
+    "assetInRepo": 5,
+    "assetMissingBlizzard": 35,
+    "withPerInvocationParams": 32,
+    "reachableFromAGgdDoc": 36,
+    "ggdDocsCovered": 50
+   },
+   "particle_粒子": {
+    "abilities": 110,
+    "customToThisMap": 108,
+    "artConfirmed": 107,
+    "assetInRepo": 73,
+    "assetMissingBlizzard": 37,
+    "withPerInvocationParams": 29,
+    "reachableFromAGgdDoc": 71,
+    "ggdDocsCovered": 111
+   }
+  },
+  "emitterDocs": {
+   "emittersInCensus": 294,
+   "alreadyShippedAsContentVfxDocs": 282,
+   "notYetShipped": 12,
+   "referencedByAtLeastOneAbility": 58
+  },
+  "swarmDetectorRecall": {
+   "goldenSet": 11,
+   "caught": 9,
+   "missed": {
+    "A07Z": "75-03 暴雷無限刃 — ONE invisible unit repositioned 15x",
+    "A0VI": "28-002 普烏死亡 — Spawn Hydra retuned to 9 HeroBuu"
+   },
+   "missedWhy": {
+    "A07Z": "not a spawn swarm at all — ONE invisible unit moved 15 times with SetUnitPositionLoc. A spawn-count detector cannot see it; it needs a reposition-loop rule.",
+    "A0VI": "the multiplier lives in the ability's own data columns (Spawn Hydra's unit count), not in a JASS spawn call, so no JASS signal exists."
+   },
+   "note": "the detector is mechanical (base id / spawn count / repeat count / JASS loop membership / comma-list art). Both misses are DIFFERENT idioms, not tuning failures — stated rather than papered over."
+  }
+ },
+ "invariants": {
+  "everyW3aAbilityIsInTheIndex": true,
+  "everyInvocationAbilityIsInTheIndex": true,
+  "everyGgdDocHasAState": true,
+  "docStateCountsSumToUniverse": true,
+  "everyArtEntryHasProvenanceAndConfidence": true,
+  "everyModelStemResolvesOrIsFlagged": true,
+  "emitterCensusPreserved": true,
+  "invocationCensusPreserved": true,
+  "allOk": true
+ }
+}

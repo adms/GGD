@@ -1,0 +1,16 @@
+{
+  "id": "godie-sesshomaru-r0",
+  "schema": "ribbon@1",
+  "texture": "assets/textures/particles/wc3/ribbonblur1.png",
+  "widthAbove": 0.585,
+  "widthBelow": 0.586,
+  "lifespanSec": 0.35,
+  "color": [
+    0.996,
+    0.729,
+    0.055,
+    0.35
+  ],
+  "blendMode": "additive",
+  "anchorBone": "Sword"
+}

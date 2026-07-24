@@ -198,7 +198,8 @@ func TestSettlementSkipsGuests(t *testing.T) {
 	require.Equal(t, 1, hostAcc.Games)
 	hostW, err := ts.Srv.Wallet.Get(ctx, host.ID)
 	require.NoError(t, err)
-	require.Equal(t, 200, hostW.MCoin, "one placement-1 reward, not two")
+	require.Equal(t, 0, hostW.MCoin,
+		"no M幣: the couch lobby has bot/guest seats, and M幣 needs an all-human lobby (anti-farm)")
 
 	// The guest pseudo-id earned NOTHING anywhere: no rating entry in the
 	// match record, no account file, no history, no leaderboard row.

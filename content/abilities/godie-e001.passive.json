@@ -2,6 +2,7 @@
   "id": "godie-e001.passive",
   "schema": "ability@1",
   "name": "22-00 嗚鎖打!",
+  "icon": "assets/icons/abilities/godie-e001.passive.webp",
   "description": "[輔助]\n40秒冷卻時間\n\n爆發殺氣，對附近的敵方地面部隊造成150的傷害，並將他們嚇昏0.5秒，殺氣將會使禮奈速度瞬間暴增。",
   "slot": "PASSIVE",
   "innateKind": "active",

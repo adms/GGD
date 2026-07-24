@@ -7,12 +7,27 @@
  *
  * It owns the LAST slot of the top-right corner stack (ui/hud/hudLayout) — the
  * old hard-coded `top: 46` collided with the settings gear at `top: 44`.
+ *
+ * THE 🐞 BUTTON IS LOOPBACK-ONLY (playtest P9). It used to sit permanently on
+ * the live screen of every offline session, including the family build — the
+ * most inviting thing on screen for someone who has never played before. It is
+ * now buried behind task #127's environment tier: shown on the dev's own
+ * machine, hidden on the LAN box and on the deployed host. The BACKTICK still
+ * opens the console anywhere the console mounts, so nothing was taken away.
  */
 import { useEffect, useMemo, useState } from "react";
 import { Champions, Items } from "@ggd/shared/sim/content/registry";
 import type { AbilitySlot } from "@ggd/shared/sim/intents";
 import { hudActions } from "./actions";
-import { cheat, clampLevel, filterEntries, isCheatToggleKey, type CheatListEntry } from "./cheats";
+import { useApp } from "./platform/store";
+import {
+  cheat,
+  cheatButtonVisible,
+  clampLevel,
+  filterEntries,
+  isCheatToggleKey,
+  type CheatListEntry,
+} from "./cheats";
 import { SfxButton } from "./SfxButton";
 import { hudTouch } from "./hud/HudSlot";
 import { HUD_EDGE, HUD_Z, hudSlotHeight, hudSlotOffset, hudSlotStyle } from "./hud/hudLayout";
@@ -138,6 +153,15 @@ export function CheatConsole(): React.JSX.Element | null {
   // button never floats over the settlement screen.
   const hidden = useHudSlotHidden("cheats", touch);
 
+  // P9 — does the button get to ADVERTISE itself? Only on the dev's own machine
+  // (env tier "loopback", task #127's classifier). Read from the same store key
+  // AppRoot gates the mount on, so the two decisions cannot drift apart.
+  const mode = useApp((s) => s.match?.mode);
+  const buttonVisible = cheatButtonVisible(
+    mode,
+    typeof window === "undefined" ? undefined : window.location.hostname,
+  );
+
   const send = hudActions.sendCheat;
   const toggleGod = (): void => {
     const next = !god;
@@ -153,6 +177,11 @@ export function CheatConsole(): React.JSX.Element | null {
   if (hidden) return null;
 
   if (!open) {
+    // P9: on anything but the developer's own machine the button is BURIED, not
+    // removed — no 🐞 chip on a family member's live screen, while the backtick
+    // handler above stays registered so the console is still one keystroke away
+    // in every offline session. See cheats.ts `cheatButtonVisible`.
+    if (!buttonVisible) return null;
     return (
       <SfxButton
         onClick={() => setOpen(true)}

@@ -1,0 +1,16 @@
+{
+  "id": "godie-supershinythingy-r2",
+  "schema": "ribbon@1",
+  "texture": "assets/textures/particles/light_03.png",
+  "widthAbove": 0.5,
+  "widthBelow": 0.5,
+  "lifespanSec": 0.4,
+  "color": [
+    1.0,
+    1.0,
+    1.0,
+    0.7
+  ],
+  "blendMode": "additive",
+  "anchorBone": "Dummy10"
+}

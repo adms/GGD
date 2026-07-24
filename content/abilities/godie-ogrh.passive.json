@@ -2,6 +2,7 @@
   "id": "godie-ogrh.passive",
   "schema": "ability@1",
   "name": "09-00 賽亞人的血脈",
+  "icon": "assets/icons/abilities/godie-ogrh.passive.webp",
   "description": "[被動]\n0秒冷卻時間\n\n悟空身為賽亞人，在每次的戰鬥之後都會永無止盡的增強，每殺死一個部隊增加2點生命，每殺死15個部隊增加1點力量。",
   "slot": "PASSIVE",
   "innateKind": "passive",

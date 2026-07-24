@@ -166,7 +166,16 @@ def build_worklist(category: str, include_blocked: bool) -> list[dict]:
         ids = [g["id"] for g in gen if g["family"] == "items"] + _still_missing("items")
         for doc_id in _dedupe(ids):
             doc = _load_doc("items", doc_id)
-            if doc and (doc.get("name") or "").strip() not in ("", doc_id):
+            # An item whose `name` is its own id lost its name in the w3x import.
+            # That used to disqualify it, on the theory that a nameless doc is a
+            # placeholder — but godie-i065 and godie-i06p are real items with a
+            # real cost, real modifiers and a 解說 that names a concrete object,
+            # and keywords.ITEM_ID_SUBJECT now draws them from that lore. Only a
+            # doc with NO usable text at all is still skipped.
+            if not doc:
+                continue
+            named = (doc.get("name") or "").strip() not in ("", doc_id)
+            if named or (doc.get("description") or "").strip():
                 work.append({"family": "items", "id": doc_id, "doc": doc})
 
     if category in ("all", "abilities"):
@@ -242,6 +251,25 @@ def ability_worklist() -> list[dict]:
             continue
         work.append({"family": "abilities", "id": doc_id, "doc": doc})
     return work
+
+
+def gap_only(work: list[dict]) -> list[dict]:
+    """Restrict a worklist to the docs that have NO ICON AT ALL.
+
+    `--category all` is "everything in scope", and scope includes the 24
+    champions + 142 items whose art already SHIPS but was drawn by an older
+    METHOD_VERSION (their sidecars still read twopass-v1). Running the full
+    category to fill a coverage hole would silently redraw 166 icons the owner
+    never asked to change. `--gap` is the narrow intent: a doc counts as missing
+    exactly when its `icon` field is absent or empty — the same definition the
+    coverage audit and the #97 progress bar use.
+
+    Augments are always kept: augment@1 is `.strict()` with no `icon` field, so
+    an augment can never carry one and would otherwise be permanently invisible
+    to this filter.
+    """
+    return [w for w in work
+            if w["family"] == "augments" or not (w["doc"].get("icon") or "").strip()]
 
 
 def _is_done(path: str) -> bool:
@@ -468,6 +496,10 @@ def main() -> None:
     ap.add_argument("--force", action="store_true",
                     help="re-render even if a current-method icon exists")
     ap.add_argument("--no-blocked-champions", action="store_true")
+    ap.add_argument("--gap", action="store_true",
+                    help="only docs with NO `icon` field (+ all augments, which "
+                         "cannot carry one) — fills the coverage hole without "
+                         "redrawing already-shipping art")
     ap.add_argument("--no-write-icon-field", action="store_true")
     ap.add_argument("--strength", type=float, default=0.45,
                     help="PASS-2 img2img denoise strength (0.4-0.55)")
@@ -484,6 +516,8 @@ def main() -> None:
         return
 
     work = build_worklist(args.category, include_blocked=not args.no_blocked_champions)
+    if args.gap:
+        work = gap_only(work)
 
     if args.dry_run:
         from collections import Counter

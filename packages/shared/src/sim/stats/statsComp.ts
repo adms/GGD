@@ -2,7 +2,7 @@
 import type { AbilityId, ChampionId, EntityId } from "../../ids";
 import type { StatBlock } from "./statTypes";
 import type { ModifierSource } from "./modifiers";
-import type { AbilitySlot, CoreAbilitySlot } from "../intents";
+import type { CastableSlot, CoreAbilitySlot } from "../intents";
 import type { Vec2 } from "../math/vec2";
 
 export interface StatsComp {
@@ -27,7 +27,8 @@ export interface AbilityInstance {
  * at cast-begin (LoL-style: an interrupted cast loses the mana, not refunded).
  */
 export interface CastState {
-  slot: AbilitySlot;
+  /** `CastableSlot`: the sixth slot (天生技) casts through this state too. */
+  slot: CastableSlot;
   abilityId: AbilityId;
   rank: number;
   ticksLeft: number;
@@ -50,7 +51,8 @@ export interface CastState {
  * rationale in abilities/abilityRecovery.ts.
  */
 export interface RecoveryState {
-  slot: AbilitySlot;
+  /** `CastableSlot`: an innate that whiffs commits you exactly like a Q. */
+  slot: CastableSlot;
   /** which ability's recovery this is — a hit from THIS ability cancels it. */
   abilityId: AbilityId;
   ticksLeft: number;
@@ -86,15 +88,18 @@ export interface AbilitiesComp {
    * Its `rank` is 1 FROM SPAWN — that is the whole point of the slot
    * (「我說過他是等級1就獲得」). It is never leveled and never unlocked.
    *
-   * NOT CASTABLE. `Command.castAbility` carries an `AbilitySlot`, which is the
-   * five castable slots only, so there is no way to reach this instance from an
-   * intent frame — deliberately, because ~60 of the 108 innates are `innateKind:
-   * "active"` (real WC3 D-slot casts) and wiring those as real casts is a
-   * follow-up. Until then they are ADDRESSABLE (the HUD/codex can read the
-   * instance and its def) but inert: `cooldownRemainingTicks` never moves
-   * because nothing ever pays it.
+   * CASTABLE, for the `innateKind: "active"` half only.
+   * `Command.castAbility` carries `CastableSlot`, which includes "PASSIVE", so
+   * an intent frame reaches this instance through the ordinary `castAbility`
+   * ladder and `cooldownRemainingTicks` is a REAL cooldown that
+   * `tickCooldowns` ages (see abilities/innateActive.ts).
    *
-   * `innateKind: "passive"` innates ARE live: `syncAbilityPassives` attaches
+   * `Command.rankUpAbility` and `rankUpAbility()` still carry the narrower
+   * `AbilitySlot`/`CoreAbilitySlot`, so this instance can be cast but can NEVER
+   * be ranked — `rank` stays 1 for the champion's whole life.
+   *
+   * `innateKind: "passive"` innates are NOT castable (`castAbility` answers
+   * "passive") and are live a different way: `syncAbilityPassives` attaches
    * `def.passive.ranks[0]` as a ModifierSource at spawn, exactly like a learned
    * Q's permanent passive.
    */

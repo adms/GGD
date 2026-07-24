@@ -2,6 +2,7 @@
   "id": "godie-e00z.passive",
   "schema": "ability@1",
   "name": "19-00 閃擊",
+  "icon": "assets/icons/abilities/godie-e00z.passive.webp",
   "description": "[被動]\n0秒冷卻時間\n\n安云靈敏的身手可以讓她在攻擊的瞬間有50%機會繞到對手的背後，擊暈0.3秒並給予120傷害。",
   "slot": "PASSIVE",
   "innateKind": "passive",

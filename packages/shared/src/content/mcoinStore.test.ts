@@ -58,13 +58,37 @@ describe("config.store@1 (mcoin-13)", () => {
 
     // direct parse
     const store = zConfigStoreDoc.parse(raw);
-    expect(store.championPrices).toEqual({ sela: 0, thorne: 0 });
-    expect(store.mcoinRewards).toEqual({
-      placement1: 200,
-      placement2: 120,
-      placement3: 80,
-      placement4: 50,
-    });
+
+    // SHAPE, not a frozen roster. This previously read
+    //   expect(store.championPrices).toEqual({ sela: 0, thorne: 0 })
+    // which pinned the two demo placeholders — and BOTH were priced 0, while
+    // `UnlockChampion` answers 409 on a 0 price. So not one champion in the game
+    // was ever purchasable with crystals, and this green test was the reason
+    // nobody noticed: it asserted the broken state was the expected state.
+    //
+    // Assert the invariants that make the meta loop possible instead, so the
+    // next placeholder roster fails here rather than shipping:
+    //   • every id is a real champion (the demo ids were not),
+    //   • at least one champion is free, so a new account can play at all,
+    //   • at least one is priced > 0, so crystals have somewhere to go.
+    const prices = Object.entries(store.championPrices);
+    expect(prices.length).toBeGreaterThan(2);
+    expect(prices.every(([id]) => id.startsWith("godie-"))).toBe(true);
+    expect(prices.some(([, p]) => p === 0)).toBe(true);
+    expect(prices.some(([, p]) => p > 0)).toBe(true);
+    // Again shape, not frozen values. This pinned 200/120/80/50 — a table that
+    // minted M COIN on every placement of every match, which contradicts #118's
+    // own premise (「M幣改由後台發放的造型幣（非購買）」, echoed by GrantMCoin's
+    // doc comment "admin-granted, never purchased"). The owner set it to ONE
+    // coin for 吃雞 only; a frozen assertion would have fought that edit instead
+    // of catching a real regression.
+    //
+    // The invariants worth holding: it is a complete 4-placement table of
+    // non-negative integers, and it never rewards a worse placement more.
+    const m = store.mcoinRewards;
+    const ladder = [m.placement1, m.placement2, m.placement3, m.placement4];
+    expect(ladder.every((n) => Number.isInteger(n) && n >= 0)).toBe(true);
+    expect(ladder).toEqual([...ladder].sort((a, b) => b - a));
 
     // ...and through the config collection union (config@1 | config.store@1)
     const viaCollection = validateDoc("config", raw);

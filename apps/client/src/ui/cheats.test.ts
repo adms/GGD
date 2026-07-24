@@ -7,6 +7,7 @@ import { cover } from "@ggd/shared/testkit/cover";
 import {
   CHEAT_TOGGLE_KEY,
   cheat,
+  cheatButtonVisible,
   cheatsAvailable,
   clampLevel,
   filterEntries,
@@ -20,6 +21,41 @@ describe("cheat console availability (cheat-panel-gating)", () => {
     expect(cheatsAvailable("platform")).toBe(false); // hidden online / logged-in match
     expect(cheatsAvailable(null)).toBe(false);
     expect(cheatsAvailable(undefined)).toBe(false);
+  });
+});
+
+describe("the 🐞 button is loopback-only (cheat-panel-gating)", () => {
+  it("shows on the dev's own machine and NOWHERE else", () => {
+    cover("cheat-panel-gating");
+    // the developer, on the box running the dev server
+    expect(cheatButtonVisible("offline", "localhost")).toBe(true);
+    expect(cheatButtonVisible("offline", "127.0.0.1")).toBe(true);
+    expect(cheatButtonVisible("offline", "::1")).toBe(true);
+    // the family: phone on the wifi, the LAN box, the deployed host. This is
+    // the playtest P9 regression — a permanent "cheats" button on a live
+    // family screen.
+    expect(cheatButtonVisible("offline", "192.168.0.6")).toBe(false);
+    expect(cheatButtonVisible("offline", "mac.local")).toBe(false);
+    expect(cheatButtonVisible("offline", "ggd.adms.ai")).toBe(false);
+    // fail-safe toward hiding when the host cannot be placed at all
+    expect(cheatButtonVisible("offline", undefined)).toBe(false);
+    expect(cheatButtonVisible("offline", "")).toBe(false);
+  });
+
+  it("never overrides the offline gate — a platform match shows nothing anywhere", () => {
+    cover("cheat-panel-gating");
+    expect(cheatButtonVisible("platform", "localhost")).toBe(false);
+    expect(cheatButtonVisible(null, "localhost")).toBe(false);
+    expect(cheatButtonVisible(undefined, "127.0.0.1")).toBe(false);
+  });
+
+  it("hiding the BUTTON does not disable the console — the backtick is untouched", () => {
+    cover("cheat-panel-gating");
+    // The console still MOUNTS wherever it is available; only its advertisement
+    // is gated. Nothing was deleted, which is the whole point of P9.
+    expect(cheatsAvailable("offline")).toBe(true);
+    expect(cheatButtonVisible("offline", "ggd.adms.ai")).toBe(false);
+    expect(isCheatToggleKey(CHEAT_TOGGLE_KEY)).toBe(true);
   });
 });
 

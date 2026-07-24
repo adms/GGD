@@ -2,6 +2,7 @@
   "id": "godie-ntin.passive",
   "schema": "ability@1",
   "name": "23-00 雷光枷鎖",
+  "icon": "assets/icons/abilities/godie-ntin.passive.webp",
   "description": "[輔助]\n35秒冷卻時間\n\n雷光枷鎖可以緩慢對手的移動速度2秒，並且暫停對手動作0.5秒。",
   "slot": "PASSIVE",
   "innateKind": "active",

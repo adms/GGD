@@ -1,15 +1,30 @@
 /**
- * audio/scene — PURE mapping from app/match state to a BGM scene. Kept out of
- * the AudioSystem (and out of React) so the "what should be playing right now"
- * rule is a testable function of discrete state, never a per-frame decision.
+ * audio/scene — mapping from app/match state to a BGM scene. Kept out of the
+ * AudioSystem (and out of React) so the "what should be playing right now" rule
+ * is a testable function of discrete state, never a per-frame decision.
  *
  * Platform screens (auth → menu, lobby, room) come from the platform store;
  * in-match scenes come from the HUD store's match phase.
+ *
+ * PURITY, honestly stated: every function here is pure GIVEN ITS ARGUMENTS.
+ * `sceneForMatch` has one defaulted argument — the fire-ring window — which,
+ * when the caller omits it, is resolved from the loaded content registry (a Map
+ * lookup, no I/O). Pass `fireRingSec` explicitly to get the fully pure form.
  */
 import type { AudioScene } from "./types";
+import { fireRingWindowSec } from "./fireRingWindow";
 
-/** Seconds left in Combat below which the tension bed ("fireRing") takes over. */
-export const FIRE_RING_SEC = 30;
+/**
+ * Seconds left in Combat below which the tension bed ("fireRing") takes over —
+ * i.e. the instant the 火環 actually starts burning, DERIVED from
+ * `config.match@1` (`combatMaxSec - fireRing.startSec`), not hardcoded.
+ *
+ * Re-exported from ./fireRingWindow so the historical import path keeps working
+ * (ui/hud/Minimap.tsx imports it from here to pulse its danger rim on the SAME
+ * window). It is a LIVE ESM BINDING, not a constant — read the header of
+ * ./fireRingWindow before touching it.
+ */
+export { FIRE_RING_SEC, fireRingWindowSec, fireRingWindowSecFrom, NO_RING_FALLBACK_SEC } from "./fireRingWindow";
 
 /** Platform shell state that selects a pre-match scene. */
 export interface PlatformAudioState {
@@ -42,12 +57,21 @@ export interface MatchAudioState {
   phaseSecondsLeft: number;
   /** local team's final placement (1 = winner); 0/undefined until matchEnd */
   placement?: number;
+  /**
+   * Seconds-left threshold at which the fire ring ignites. Omit in production —
+   * it is then resolved from the authored `config.match@1` doc, which is the
+   * whole point (see ./fireRingWindow). Present so tests can pin it.
+   */
+  fireRingSec?: number;
 }
 
 /**
- * Match phase → scene. `combat` swaps to the `fireRing` tension bed for the
- * last FIRE_RING_SEC of the round (the round-timer pressure moment); matchEnd
- * resolves to victory/defeat from the local team's placement.
+ * Match phase → scene. `combat` swaps to the `fireRing` tension bed the moment
+ * the 火環 begins to burn — NOT at some independently-chosen "late round"
+ * number. The threshold is `combatMaxSec - fireRing.startSec` read from the
+ * same content doc the sim arms the ring from, so the bed and the mechanic
+ * cannot drift apart (they were 30 s apart for months; see ./fireRingWindow).
+ * matchEnd resolves to victory/defeat from the local team's placement.
  */
 export function sceneForMatch(s: MatchAudioState): AudioScene | null {
   switch (s.phase) {
@@ -55,8 +79,10 @@ export function sceneForMatch(s: MatchAudioState): AudioScene | null {
       return "champSelect";
     case "intermission":
       return "intermission";
-    case "combat":
-      return s.phaseSecondsLeft > 0 && s.phaseSecondsLeft <= FIRE_RING_SEC ? "fireRing" : "combat";
+    case "combat": {
+      const ignite = s.fireRingSec ?? fireRingWindowSec();
+      return s.phaseSecondsLeft > 0 && s.phaseSecondsLeft <= ignite ? "fireRing" : "combat";
+    }
     case "resolution":
       return "settlement";
     case "matchEnd":

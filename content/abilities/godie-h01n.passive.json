@@ -2,6 +2,7 @@
   "id": "godie-h01n.passive",
   "schema": "ability@1",
   "name": "79-00 靈壓",
+  "icon": "assets/icons/abilities/godie-h01n.passive.webp",
   "description": "[靈氣]\n0秒冷卻時間\n\n一護本身具有的強大靈力，初始法力值較一般人高，且此靈力產生的強大靈壓能降低範圍500內敵人攻擊速度25%。",
   "slot": "PASSIVE",
   "innateKind": "passive",

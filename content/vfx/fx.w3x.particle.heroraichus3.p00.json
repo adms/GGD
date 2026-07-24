@@ -1,0 +1,82 @@
+{
+  "id": "fx.w3x.particle.heroraichus3.p00",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.001,
+    "angleDeg": 180
+  },
+  "mode": "burst",
+  "lifetimeSec": {
+    "min": 0.3,
+    "max": 0.3
+  },
+  "size": {
+    "start": 0.381,
+    "end": 0.003
+  },
+  "color": {
+    "start": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "end": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "colorStops": [
+    [
+      0,
+      [
+        0,
+        0,
+        0,
+        1
+      ]
+    ],
+    [
+      0.3,
+      [
+        0,
+        0,
+        0,
+        1
+      ]
+    ],
+    [
+      1,
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      0.381
+    ],
+    [
+      0.3,
+      0.261
+    ],
+    [
+      1,
+      0.003
+    ]
+  ],
+  "blendMode": "alpha",
+  "speed": {
+    "min": 10.5564,
+    "max": 10.5564
+  },
+  "burstCount": 10,
+  "texture": "assets/textures/particles/smoke_01.png"
+}

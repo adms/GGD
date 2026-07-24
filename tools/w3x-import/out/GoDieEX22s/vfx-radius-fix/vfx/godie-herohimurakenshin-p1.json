@@ -1,0 +1,82 @@
+{
+  "id": "godie-herohimurakenshin-p1",
+  "schema": "vfx@1",
+  "emitter": {
+    "shape": "cone",
+    "radius": 0.001,
+    "angleDeg": 1.0
+  },
+  "mode": "continuous",
+  "rate": 9.9,
+  "lifetimeSec": {
+    "min": 2.1,
+    "max": 2.1
+  },
+  "size": {
+    "start": 1.597,
+    "end": 2.662
+  },
+  "color": {
+    "start": [
+      1.0,
+      0.259,
+      0.067,
+      0.925
+    ],
+    "end": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "colorStops": [
+    [
+      0.0,
+      [
+        1.0,
+        0.259,
+        0.067,
+        0.925
+      ]
+    ],
+    [
+      0.5,
+      [
+        1.0,
+        0.404,
+        0.008,
+        0.467
+      ]
+    ],
+    [
+      1.0,
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    ]
+  ],
+  "sizeStops": [
+    [
+      0,
+      1.597
+    ],
+    [
+      0.5,
+      1.997
+    ],
+    [
+      1,
+      2.662
+    ]
+  ],
+  "blendMode": "additive",
+  "texture": "assets/textures/particles/light_03.png",
+  "speed": {
+    "min": 3.1305,
+    "max": 3.2583
+  }
+}

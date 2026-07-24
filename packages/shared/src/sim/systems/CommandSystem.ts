@@ -16,6 +16,7 @@ import type { SeatId, EntityId, ItemId } from "../../ids";
 import type { IntentFrame } from "../intents";
 import type { SimWorld } from "../SimWorld";
 import { castAbility, rankUpAbility, tickCooldowns } from "../abilities/abilitySystem";
+import { isInnateSlot } from "../abilities/innateActive";
 import { buyItem, sellItem, undoShopAction } from "../economy/shop";
 import { shopAccess } from "../economy/shopAccess";
 
@@ -85,8 +86,15 @@ export function commandSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Inte
           break;
         }
         case "rankUpAbility":
-          // EX is unlocked, not ranked — only Q/W/E/R are rankable
-          if (cmd.slot !== "EX") rankUpAbility(world, entity, cmd.slot);
+          // EX is unlocked, not ranked — only Q/W/E/R are rankable. The sixth
+          // slot (天生技) is owned at RANK 1 for life, so it is refused here too:
+          // `Command.rankUpAbility` carries the narrower `AbilitySlot` and
+          // cannot even name it, but "PASSIVE" is now a REAL slot name a client
+          // sends on the cast channel, so a mis-routed press must not reach
+          // `ab.slots["PASSIVE"]` (which does not exist). Any OTHER junk value
+          // is still left to fail loudly — that is validateInput's whitelist to
+          // catch, and an existing net test pins it.
+          if (cmd.slot !== "EX" && !isInnateSlot(cmd.slot)) rankUpAbility(world, entity, cmd.slot);
           break;
         case "pickOffer":
           // offers are host-side state; surface the pick as an event

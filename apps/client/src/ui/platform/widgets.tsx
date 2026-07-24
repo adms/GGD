@@ -1,5 +1,5 @@
 /** Small shared building blocks for the platform screens (theme-consistent). */
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, GOLD } from "../theme";
 import { buttonSfx } from "../buttonSfx";
 
@@ -53,6 +53,15 @@ export function Btn(props: {
   small?: boolean;
   title?: string;
   style?: React.CSSProperties;
+  /**
+   * DEFAULTS TO "button" ON PURPOSE. A <button> with no type attribute is
+   * type="submit" per HTML — harmless while nothing is wrapped in a <form>,
+   * but AuthScreen now IS a form (see TextInput's autofill note), and there a
+   * bare Btn means clicking "Create account" (a mode tab) submits the form and
+   * reloads the whole SPA. Every Btn in the app is a plain action button; the
+   * one real submit button opts in explicitly with type="submit".
+   */
+  type?: "button" | "submit";
   children: React.ReactNode;
 }): React.JSX.Element {
   const kind = props.kind ?? "ghost";
@@ -75,6 +84,7 @@ export function Btn(props: {
   return (
     <button
       className={cls}
+      type={props.type ?? "button"}
       onClick={sfx ? sfx.onClick : props.onClick}
       onPointerEnter={sfx?.onPointerEnter}
       disabled={props.disabled}
@@ -95,6 +105,46 @@ export function Btn(props: {
   );
 }
 
+/**
+ * ---- THE AUTOFILL PROBE (task #185) ------------------------------------------
+ *
+ * Chrome tells nobody when it autofills. It sets .value and — in the common
+ * case — dispatches an `input` event React understands, but a password manager
+ * (or Chrome's own on-load fill) can also write the value with NO event at all.
+ * A controlled React input then re-renders with value="" and silently WIPES what
+ * was filled. The only reliable notification is a CSS side-channel: Chrome
+ * applies the `:-webkit-autofill` pseudo-class to a filled field, so giving that
+ * pseudo-class an animation makes the browser fire a real `animationstart` at
+ * the exact moment of the fill. That is what this stylesheet is for.
+ *
+ * It also restates the field's own colours under `:-webkit-autofill`: Chrome
+ * force-paints a pale background on filled inputs, which on this dark panel
+ * would turn the login box white the first time autofill works. The inset
+ * box-shadow is the only way to override it (background-color is ignored).
+ */
+const AUTOFILL_ANIM = "ggdAutofillStart";
+let autofillProbeInstalled = false;
+function installAutofillProbe(): void {
+  if (autofillProbeInstalled || typeof document === "undefined") return;
+  autofillProbeInstalled = true;
+  const el = document.createElement("style");
+  el.setAttribute("data-ggd", "autofill-probe");
+  el.textContent =
+    `@keyframes ${AUTOFILL_ANIM}{from{opacity:1}to{opacity:1}}` +
+    `input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus{` +
+    `animation-name:${AUTOFILL_ANIM};animation-duration:1ms;` +
+    `-webkit-text-fill-color:${TEXT_MAIN};caret-color:${TEXT_MAIN};` +
+    `-webkit-box-shadow:0 0 0 1000px #10141f inset;box-shadow:0 0 0 1000px #10141f inset;}`;
+  document.head.appendChild(el);
+}
+
+/**
+ * Belt-and-braces re-checks for managers that neither fire an event nor trip the
+ * `:-webkit-autofill` pseudo-class (Firefox, some extensions). Cheap: a handful
+ * of string comparisons in the first second and a half of the screen's life.
+ */
+const AUTOFILL_RECHECK_MS = [0, 60, 250, 700, 1500] as const;
+
 export function TextInput(props: {
   value: string;
   onChange: (v: string) => void;
@@ -103,16 +153,106 @@ export function TextInput(props: {
   onEnter?: () => void;
   autoFocus?: boolean;
   style?: React.CSSProperties;
+  /**
+   * ---- PASSWORD-MANAGER IDENTITY (task #185) ---------------------------------
+   * All optional, all additive — existing callers (FriendsPanel, RoomListPanel,
+   * RoomView) pass none of them and are unchanged.
+   *
+   * These exist because a browser cannot fill a box it cannot NAME. Without
+   * `name` / `id` / `autoComplete` an input's only identity is its placeholder,
+   * which is the weakest signal Chrome has, so a saved credential has nothing to
+   * bind to on the next visit. DELETING THESE ATTRIBUTES BREAKS EVERY PASSWORD
+   * MANAGER AND LOOKS PERFECTLY FINE IN DEV — there is no error, no warning, and
+   * no visual difference; the box is simply empty forever. See AuthScreen for
+   * which value each field carries and why.
+   */
+  name?: string;
+  id?: string;
+  autoComplete?: string;
+  autoCapitalize?: string;
+  spellCheck?: boolean;
 }): React.JSX.Element {
+  const ref = useRef<HTMLInputElement | null>(null);
+  /** Latest props for listeners installed once on mount (never re-bound). */
+  const live = useRef({ value: props.value, onChange: props.onChange });
+  live.current.value = props.value;
+  live.current.onChange = props.onChange;
+  /** The last non-empty value the BROWSER put in the box behind React's back. */
+  const filledRef = useRef("");
+  /** Has a real React change (typing, paste, event-firing autofill) ever landed? */
+  const sawChangeRef = useRef(false);
+
+  useEffect(() => {
+    installAutofillProbe();
+    const el = ref.current;
+    if (el === null) return;
+    /**
+     * Adopt a DOM value React never heard about. Guarded on non-empty and
+     * different, so it can only ever run in the divergent case: it cannot clear
+     * a field the user is typing in, and it cannot fight the parent's own
+     * transform (e.g. the invite code's uppercase) into a loop.
+     */
+    const adopt = (): void => {
+      const v = el.value;
+      if (v === "" || v === live.current.value) return;
+      filledRef.current = v;
+      live.current.onChange(v);
+    };
+    const onAnim = (e: AnimationEvent): void => {
+      if (e.animationName === AUTOFILL_ANIM) adopt();
+    };
+    el.addEventListener("animationstart", onAnim);
+    el.addEventListener("change", adopt); // managers that fire change but not input
+    const timers = AUTOFILL_RECHECK_MS.map((ms) => window.setTimeout(adopt, ms));
+    return () => {
+      el.removeEventListener("animationstart", onAnim);
+      el.removeEventListener("change", adopt);
+      for (const t of timers) window.clearTimeout(t);
+    };
+  }, []);
+
+  /**
+   * Runs after EVERY commit (no dep array, on purpose): if a re-render landed
+   * between the browser's silent fill and our adopt, React will have written
+   * value="" straight over it. Put it back. Only ever fires while no real change
+   * event has been seen — so a user who autofills and then deliberately clears
+   * the box (which DOES fire one) is never fought.
+   */
+  useEffect(() => {
+    if (sawChangeRef.current || props.value !== "") return;
+    // Prefer what is in the box right now; fall back to what we saw filled
+    // before a render wiped it.
+    const dom = ref.current?.value ?? "";
+    const recover = dom !== "" ? dom : filledRef.current;
+    if (recover === "") return;
+    live.current.onChange(recover);
+  });
+
   return (
     <input
+      ref={ref}
       value={props.value}
       type={props.type ?? "text"}
       placeholder={props.placeholder}
       autoFocus={props.autoFocus}
-      onChange={(e) => props.onChange(e.target.value)}
+      name={props.name}
+      id={props.id}
+      autoComplete={props.autoComplete}
+      autoCapitalize={props.autoCapitalize}
+      spellCheck={props.spellCheck}
+      onChange={(e) => {
+        sawChangeRef.current = true;
+        props.onChange(e.target.value);
+      }}
       onKeyDown={(e) => {
-        if (e.key === "Enter") props.onEnter?.();
+        // preventDefault ONLY when this input owns Enter: inside a <form> the
+        // key would otherwise ALSO trigger implicit submission and run submit()
+        // a second time. stopPropagation does not stop that — it is a default
+        // action, not a listener. Callers without onEnter keep native behaviour.
+        if (e.key === "Enter" && props.onEnter) {
+          e.preventDefault();
+          props.onEnter();
+        }
         e.stopPropagation(); // never leak typing into game hotkeys
       }}
       style={{

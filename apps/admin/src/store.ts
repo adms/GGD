@@ -6,7 +6,13 @@
 import { createStore } from "zustand/vanilla";
 import { useStore } from "zustand";
 
-import { api, login as apiLogin, logout as apiLogout, me as apiMe } from "./api";
+import {
+  api,
+  listPendingAccounts,
+  login as apiLogin,
+  logout as apiLogout,
+  me as apiMe,
+} from "./api";
 import { ApiError, verifyAdmin } from "./session";
 
 export type Screen = "boot" | "login" | "console";
@@ -36,6 +42,16 @@ export type Page =
    */
   | "modelBudget"
   | "iconTracking"
+  /**
+   * 角色語音生成 (owner spec step 4) — DEV BUILDS ONLY, same shape as "content":
+   * the page module is reached through an `import.meta.env.DEV`-guarded dynamic
+   * import in ui/App.tsx, so a production admin build never emits it (nor its
+   * nav label). It talks to the loopback voice-gen daemon on 127.0.0.1:8788
+   * through the admin vite server's `/voice-api` proxy — a local
+   * content-authoring tool with no platform session, exactly like the content
+   * editor, so it is NOT in SESSION_REQUIRED_PAGES below.
+   */
+  | "voiceGen"
   /** M幣 發放 (task #118) — admin-granted M COIN via /wallet/admin/grant-mcoin. */
   | "mcoinGrant"
   /**
@@ -44,6 +60,13 @@ export type Page =
    * so it is session-gated below and NOT reachable through the loopback drop-in.
    */
   | "invites"
+  /**
+   * 帳號審核 (task #126) — the private-deploy approval queue. THE blocker for
+   * remote family play: a relative who registers lands `pending` and cannot
+   * reach a room until an operator approves them here. Platform-admin-backed
+   * (it reads and writes durable accounts), so it is session-gated below.
+   */
+  | "approvals"
   /**
    * 對戰回放 (task #175) — the owner's playtest feedback channel. Lists match
    * recordings and opens them in the reused game renderer. Platform-admin-backed
@@ -78,8 +101,29 @@ export interface AppState {
    * and the content editor chunk does not even exist to drop into.
    */
   devDropIn: boolean;
+  /**
+   * 帳號審核 queue depth (task #126) — how many accounts are waiting right now.
+   *
+   * THIS IS CHROME, not page data, which is why it is the one count that lives
+   * in the store while every table fetches its own rows. It drives the badge on
+   * the nav rail and the banner on the players list, so a relative who
+   * registered is visible from whatever page the owner happens to be on. The
+   * whole failure this task fixes was approval state being reachable only if
+   * you already knew to go looking for it.
+   *
+   * -1 means "not established yet" (pre-session, or every probe so far failed)
+   * and renders as no badge — distinct from 0, which is a known-empty queue.
+   */
+  pendingCount: number;
 
   boot(opts?: BootOptions): Promise<void>;
+  /**
+   * Re-probe the queue depth. Safe to call from anywhere and at any time: with
+   * no operator session it resets to -1 without touching the network, and a
+   * failed probe LEAVES THE LAST KNOWN COUNT ALONE rather than showing 0 — a
+   * transient 502 must not make a waiting relative disappear from the nav.
+   */
+  refreshPendingCount(): Promise<void>;
   doLogin(username: string, password: string): Promise<void>;
   doLogout(): Promise<void>;
   /** raise the operator login screen (e.g. from a gated page's 登入 button) */
@@ -101,6 +145,7 @@ export interface AppState {
  */
 const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "players",
+  "approvals",
   "matches",
   "announcements",
   "curation",
@@ -147,6 +192,25 @@ export const appStore = createStore<AppState>()((set, get) => ({
   authError: null,
   notAuthorized: false,
   devDropIn: false,
+  pendingCount: -1,
+
+  async refreshPendingCount() {
+    if (get().account === null) {
+      set({ pendingCount: -1 });
+      return;
+    }
+    try {
+      // pageSize 1 — only `total` is wanted, and it is the FULL pending count
+      // server-side, so the badge is exact without paging through the queue.
+      const res = await listPendingAccounts(1, 1);
+      set({ pendingCount: typeof res.total === "number" ? res.total : 0 });
+    } catch {
+      // Deliberately silent and deliberately non-destructive. An older platform
+      // build has no /admin/accounts/pending (404) and a flaky network 502s;
+      // neither is worth an error banner on an unrelated page, and neither is
+      // evidence that the queue is empty.
+    }
+  },
 
   async boot(opts) {
     const devDropIn = opts?.devDropIn ?? contentEditorDropInEnabled();
@@ -214,11 +278,13 @@ export const appStore = createStore<AppState>()((set, get) => ({
     }
     api.setTokens(null);
     // In dev, sign-out returns to the no-login content editor (not a wall);
-    // in prod it drops back to the login screen as before.
+    // in prod it drops back to the login screen as before. Either way the
+    // approval queue depth goes back to "unknown" — it is operator-visible
+    // information about real people and must not outlive the session.
     if (get().devDropIn) {
-      set({ screen: "console", account: null, page: "content", notAuthorized: false });
+      set({ screen: "console", account: null, page: "content", notAuthorized: false, pendingCount: -1 });
     } else {
-      set({ screen: "login", account: null, page: "hub", notAuthorized: false });
+      set({ screen: "login", account: null, page: "hub", notAuthorized: false, pendingCount: -1 });
     }
   },
 

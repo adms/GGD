@@ -13,16 +13,42 @@
  * ({ units: { [unitId]: { champId, clips: { what: [paths] } } } }) and play a
  * random "what" clip — the classic click-acknowledge line. The manifest is
  * copyright-gated (never shipped), so the probe is dev-only and 404-tolerant.
- * If neither source has a clip: silent no-op.
+ *
+ * THAT IS NO LONGER THE WHOLE ANSWER. Those two sources cover 16 of 113
+ * champions on the public tier and 46 of 113 on a gated build, so the click was
+ * SILENT for ~86% of the roster on https://ggd.adms.ai/. This module now
+ * resolves through the five-rung ladder in `selectVoiceLadder.ts`, whose bottom
+ * rung is present for all 113 champions in the shipped content tree — read that
+ * module's header for the rung order, the 名言-vs-名乗り judgement, and the
+ * drop-in contract for the generated voice pack. Silence is now reachable only
+ * through the mixer gates (locked / muted), never through missing content.
  *
  * Playback rides `audioSystem.playClip` (SFX bus): unlock-gated and subject to
  * the SFX slider/mute. The module adds its own ~2.5 s per-champion cooldown so
- * click spam can't machine-gun the quips. Both fetches are cached single-flight
- * (a 404 caches null — never re-requested per click).
+ * click spam can't machine-gun the quips, plus a no-immediate-repeat pick so a
+ * multi-clip pool never says the same line twice running. Every fetch is cached
+ * single-flight (a 404 caches null — never re-requested per click).
  */
 import { AUDIO_CONTENT_BASE, audioSystem, type SfxPlayOptions } from "./AudioSystem";
 import type { Rng } from "./audioSelect";
 import { fullAssetsEnabled } from "../config/fullAssets";
+import {
+  loadChampionNames,
+  loadChampionQuotes,
+  type ChampionNamesManifest,
+  type ChampionQuotesManifest,
+} from "./nameVoice";
+import {
+  VOICE_PACK_MANIFEST_PATH,
+  pickSelectClip,
+  resolveSelectVoice,
+  selectVoiceGain,
+  selectVoiceLadder,
+  voicePackFromDoc,
+  type ChampionVoicePack,
+  type SelectVoiceInputs,
+  type SelectVoiceRung,
+} from "./selectVoiceLadder";
 
 /** Path of the authored voice config, relative to the content mount. */
 export const CHAMPION_VOICES_PATH = "config/champion-voices.json";
@@ -164,6 +190,14 @@ export interface ChampionVoiceOptions {
   /** probe the local-only Blizzard manifest (default: dev builds only) */
   blizzardFallback?: boolean;
   warn?: (msg: string, err?: unknown) => void;
+  /**
+   * Rung 4/5 sources. They default to the champ-select call-out layer's OWN
+   * cached loaders (`nameVoice`), so a click costs no extra request on any
+   * screen that already warmed them and the two layers can never disagree about
+   * what a champion's name clip is. Injected in tests.
+   */
+  namesLoader?: () => Promise<ChampionNamesManifest | null>;
+  quotesLoader?: () => Promise<ChampionQuotesManifest | null>;
 }
 
 export class ChampionVoicePlayer {
@@ -175,11 +209,16 @@ export class ChampionVoicePlayer {
   private readonly cooldownMs: number;
   private readonly blizzardFallback: boolean;
   private readonly warn: (msg: string, err?: unknown) => void;
+  private readonly namesLoader: () => Promise<ChampionNamesManifest | null>;
+  private readonly quotesLoader: () => Promise<ChampionQuotesManifest | null>;
 
   private configPromise: Promise<ChampionVoicesConfig | null> | null = null;
   private manifestPromise: Promise<BlizzardManifest | null> | null = null;
+  private packPromise: Promise<ChampionVoicePack | null> | null = null;
   /** champId → last play timestamp (ms, `now()` clock) */
   private readonly lastPlay = new Map<string, number>();
+  /** champId → the clip it last spoke, so a repeat click picks a different one */
+  private readonly lastClip = new Map<string, string>();
 
   constructor(opts: ChampionVoiceOptions = {}) {
     this.audio = opts.audio ?? audioSystem;
@@ -191,6 +230,8 @@ export class ChampionVoicePlayer {
     this.cooldownMs = opts.cooldownMs ?? SELECT_VOICE_COOLDOWN_MS;
     this.blizzardFallback = opts.blizzardFallback ?? isDevBuild();
     this.warn = opts.warn ?? ((msg, err) => console.warn(`[voice] ${msg}`, err ?? ""));
+    this.namesLoader = opts.namesLoader ?? loadChampionNames;
+    this.quotesLoader = opts.quotesLoader ?? loadChampionQuotes;
   }
 
   /** Cached single-flight fetch of the voice config; null = missing (silence). */
@@ -210,6 +251,50 @@ export class ChampionVoicePlayer {
   }
 
   /**
+   * Cached single-flight probe of the GENERATED voice pack (rung 2). Absent
+   * today — a 404 caches null and the ladder simply skips the rung — so the
+   * `tools/voice-gen` lane integrates by writing the file and nothing else.
+   */
+  loadPack(): Promise<ChampionVoicePack | null> {
+    if (!this.packPromise) {
+      this.packPromise = this.fetchJson(VOICE_PACK_MANIFEST_PATH).then(voicePackFromDoc);
+    }
+    return this.packPromise;
+  }
+
+  /**
+   * Every rung for a champion, empties included — the diagnostic seam behind
+   * the coverage numbers (which tier answers, on which build). Never throws.
+   */
+  async ladder(champId: string): Promise<SelectVoiceRung[]> {
+    return selectVoiceLadder(champId, await this.inputs());
+  }
+
+  /** The four manifests the ladder reads, fetched concurrently and cached. */
+  private async inputs(): Promise<SelectVoiceInputs> {
+    const [voices, pack, blizzard, names, quotes] = await Promise.all([
+      this.load(),
+      this.loadPack(),
+      // The gate is applied HERE, not inside the ladder: a copyright-gated rung
+      // that the build may not ask for is a fetch decision, not a ranking one.
+      this.blizzardFallback ? this.loadManifest() : Promise.resolve(null),
+      this.safe(this.namesLoader),
+      this.safe(this.quotesLoader),
+    ]);
+    return { voices, pack, blizzard, names, quotes };
+  }
+
+  /** A borrowed loader must not be able to break the click by rejecting. */
+  private async safe<T>(loader: () => Promise<T | null>): Promise<T | null> {
+    try {
+      return await loader();
+    } catch (err) {
+      this.warn("fallback manifest failed to load (silent)", err);
+      return null;
+    }
+  }
+
+  /**
    * Play a random select quip for `champId`. Silent no-op (false) when the
    * mixer is still autoplay-locked, the SFX layer is muted, the champion is on
    * its ~2.5 s quip cooldown, or no clip exists anywhere. The cooldown slot is
@@ -224,21 +309,12 @@ export class ChampionVoicePlayer {
     const last = this.lastPlay.get(champId);
     if (last !== undefined && t - last < this.cooldownMs) return false;
     this.lastPlay.set(champId, t);
-    const clip = await this.resolveClip(champId);
+    const rung = resolveSelectVoice(champId, await this.inputs());
+    if (!rung) return false;
+    const clip = pickSelectClip(rung.clips, this.rng, this.lastClip.get(champId));
     if (!clip) return false;
-    return this.audio.playClip(clip);
-  }
-
-  /** Authored select clip, else (dev only) a Blizzard "what" clip, else null. */
-  private async resolveClip(champId: string): Promise<string | null> {
-    const cfg = await this.load();
-    const entry = cfg?.champions[champId];
-    const authored = entry?.select ?? [];
-    if (authored.length > 0) return normalizeClipPath(pickVoiceClip(authored, this.rng));
-    // source "none" (or champion/config missing): dev-only soundset fallback
-    if (!this.blizzardFallback) return null;
-    const manifest = await this.loadManifest();
-    return normalizeClipPath(pickVoiceClip(blizzardWhatClips(manifest, champId), this.rng));
+    this.lastClip.set(champId, clip);
+    return this.audio.playClip(clip, { volume: selectVoiceGain(rung.tier) });
   }
 
   /** Fetch a JSON doc under the content mount; null on 404 / bad JSON / error. */
@@ -258,15 +334,25 @@ export class ChampionVoicePlayer {
   reset(): void {
     this.configPromise = null;
     this.manifestPromise = null;
+    this.packPromise = null;
     this.lastPlay.clear();
+    this.lastClip.clear();
   }
 }
 
 /** Process-wide voice layer riding the process-wide mixer. */
 export const championVoice = new ChampionVoicePlayer();
 
-/** Warm the voice config (cached; call from any boot path, safe to repeat). */
+/**
+ * Warm the voice layer (cached; call from any boot path, safe to repeat).
+ *
+ * Warms the generated pack alongside the authored config, so the first click of
+ * a match doesn't pay for the rung-2 probe. Rungs 4/5 are the champ-select
+ * layer's manifests and are warmed by whoever mounts champ select — the click
+ * still resolves them on demand if they are not.
+ */
 export function loadChampionVoices(): Promise<ChampionVoicesConfig | null> {
+  void championVoice.loadPack();
   return championVoice.load();
 }
 

@@ -121,10 +121,15 @@ export interface ImpactProfile {
   shakeStyle: ShakeStyle;
   /** hit-spark identity the client plays. */
   sparkKind: SparkKind;
-  /** victim body-flash colour [r,g,b] 0..1. */
-  flashColor: [number, number, number];
-  /** victim body-flash duration (ms). */
-  flashMs: number;
+  /**
+   * AUTHORED-ONLY victim body-flash colour [r,g,b] 0..1 — absent unless the
+   * firing champion/ability's `hitFeel` set it. The client owns the default
+   * (its palette is contrast-measured against the real model tints), so
+   * ABSENCE is the signal "use the damage-type colour". See hitFeel.ts.
+   */
+  flashColor?: [number, number, number];
+  /** AUTHORED-ONLY victim body-flash duration (ms); absent = client tier default. */
+  flashMs?: number;
   /** one-shot directional camera kick magnitude. */
   camKick: number;
   /** cosmetic client-side EX freeze ticks (0 = none). */

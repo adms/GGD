@@ -1,0 +1,16 @@
+{
+  "id": "godie-blackhole-r0",
+  "schema": "ribbon@1",
+  "texture": "assets/textures/particles/wc3/blue-glow2.png",
+  "widthAbove": 0.695,
+  "widthBelow": 0.695,
+  "lifespanSec": 0.7,
+  "color": [
+    1.0,
+    1.0,
+    1.0,
+    0.5
+  ],
+  "blendMode": "additive",
+  "anchorBone": "Dummy01"
+}

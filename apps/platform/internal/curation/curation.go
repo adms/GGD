@@ -209,6 +209,19 @@ func (r *Repo) mirror(ctx context.Context, d Doc) {
 	if err := r.rdb.R.Set(ctx, RedisKey, string(data), 0).Err(); err != nil {
 		slog.Warn("curation: redis mirror failed (JSON truth is intact)", "err", err)
 	}
+	// AND TELL THE RUNNING SHARDS. The mirror above only helps a consumer that
+	// polls Redis; the game-server reads over HTTP and caches, so before this
+	// announcement an operator's whitelist edit reached a RUNNING shard only
+	// when its short TTL happened to expire. The payload is the etag of exactly
+	// the bytes we just wrote — the shard re-fetches the authoritative document
+	// rather than trusting anything in this message (see redisx/contentbus.go).
+	// Best-effort: the durable file is already written, so a failure here means
+	// "picked up on the next TTL", not "lost".
+	if err := r.rdb.PublishContentInvalidation(
+		ctx, redisx.ContentKindCuration, redisx.ContentETag(data), d.UpdatedAt,
+	); err != nil {
+		slog.Warn("curation: content-invalidation publish failed (shards refresh on their TTL)", "err", err)
+	}
 }
 
 // Service applies whitelist policy on top of the repository. The document is

@@ -14,9 +14,18 @@
  *
  * The motion and the palette live in the pure ./combatText module so vitest
  * covers them; this file only writes what those functions return.
+ *
+ * 迴避 (task #92b) is the ONE combat outcome that does not arrive through the
+ * frame loop's event fanout, because it produces no damage packet for the fanout
+ * to hang off (packages/shared/src/sim/combat/evasion.ts DECISION 3). It is
+ * buffered as raw numbers at the network seam and drained HERE, at the top of
+ * this rAF, into the same `pushCombatText` admission pipeline as everything
+ * else — including the same `combatTextCss` fill, which is what keeps #164's
+ * transparent-glyph fix covering the new labels too.
  */
 import { useEffect, useRef } from "react";
-import { frameBus } from "../frameBus";
+import { frameBus, pushEvadeText } from "../frameBus";
+import { drainEvadeSightings } from "../net/RoomConnection";
 import {
   MAX_COMBAT_TEXT,
   chromeAlphaMult,
@@ -29,6 +38,7 @@ import {
   combatTextScale,
   combatTextStyle,
   combatTextStyleKey,
+  combatTextWidthPx,
   hudReservedRects,
   type CombatTextStyle,
   type HudRect,
@@ -131,6 +141,11 @@ export function WorldAnchorLayer(): React.JSX.Element {
     const champNodes = new Map<number, HTMLDivElement>();
     let raf = 0;
 
+    // Anything that piled up in the 迴避 buffer while this layer was UNMOUNTED
+    // belongs to a fight nobody was watching. Discard it, or remounting the HUD
+    // would fire a burst of stale 「閃避」 in one frame.
+    drainEvadeSightings();
+
     // ---- combat-text node pool: allocated ONCE, reused for the session ----
     // Probe the LIVE renderer once (a real element, not `CSS.supports`): only a
     // proven-painting background-clip:text turns the gradient fill on, so an
@@ -201,6 +216,26 @@ export function WorldAnchorLayer(): React.JSX.Element {
         }
       }
 
+      // ---- 迴避 → floating text (task #92b) ----
+      // A dodge is the one combat outcome with no damage packet behind it, so
+      // it reaches the client on its own buffer (net/RoomConnection.EvadeSighting)
+      // rather than through the frame loop's event fanout. Drained here, one
+      // frame's worth at a time, and handed straight to the SAME admission
+      // pipeline every other number goes through — so a 「閃避」 obeys the scope
+      // setting, the density cap, the per-body limit and the priority eviction
+      // without a line of its own. `atMs` is the packet's ARRIVAL time, not this
+      // frame's: a dodge that landed 8 ms ago is already 8 ms into its life,
+      // which is what keeps it in step with the swing that produced it.
+      for (const ev of drainEvadeSightings()) {
+        pushEvadeText({
+          source: ev.source,
+          target: ev.target,
+          worldX: ev.x,
+          worldZ: ev.z,
+          nowMs: ev.atMs,
+        });
+      }
+
       // ---- floating combat text ----
       const now = performance.now();
       const vw = root.clientWidth;
@@ -258,7 +293,11 @@ export function WorldAnchorLayer(): React.JSX.Element {
 
         let alpha = combatTextAlpha(t, e.lifeMs) * style.alpha;
         if (chromeRects.length > 0 && alpha > 0) {
-          const w = style.fontSize * 0.62 * Math.max(1, label.length);
+          // Width comes from the model, not from `length * 0.62`: the 迴避
+          // labels (task #92b) are full-width CJK, so the old digit-advance
+          // estimate undercounts 「閃避」 by ~40 % and would leave it undamped
+          // while it is genuinely sitting under the minimap.
+          const w = Math.max(style.fontSize * 0.62, combatTextWidthPx(label, style.fontSize));
           box.x = sx - w / 2;
           box.y = sy - style.fontSize / 2;
           box.w = w;

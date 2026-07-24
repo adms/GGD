@@ -5,13 +5,15 @@
  *   plain left-click   on YOUR OWN hero → onSelectSelf (select voice quip);
  *                      anywhere else it stays inert (misclicks are free)
  *   Q/W/E/R keydown    quick-cast per the champion ability's castType
+ *   F                  the per-hero EX skill (5th slot)
+ *   D                  the 天生技 innate (6th slot) — see SLOT_BY_CODE
  *   S stop · B recall · Space camera follow toggle · wheel zoom
  * The pure mapping helpers are exported for unit tests (client-05); the class
  * only wires DOM events onto them. NO @babylonjs imports here — the ray comes
  * in via the injected screenToGround callback.
  */
 import { asEntityId } from "@ggd/shared/ids";
-import type { AbilitySlot, Command, Order } from "@ggd/shared/sim/intents";
+import type { CastableSlot, Command, Order } from "@ggd/shared/sim/intents";
 import type { Vec2 } from "@ggd/shared/sim/math/vec2";
 import { setCursorVariant } from "../cursor";
 import { abilityActivationCue } from "../ui/abilityCue";
@@ -48,12 +50,38 @@ export function mapLeftClick(
 export const STOP_ORDER: Order = { kind: "stop" };
 export const RECALL_COMMAND: Command = { kind: "recall" };
 
-export const SLOT_BY_CODE: Record<string, AbilitySlot> = {
+/**
+ * Keyboard → slot. `CastableSlot`, so the SIXTH slot (the level-1 天生技) is in
+ * the same table as the other five and inherits the whole quick-cast path.
+ *
+ * WHY **D** FOR THE INNATE — three reasons, in order of weight:
+ *
+ *  1. IT IS WHERE THE SOURCE MAP PUT IT. WC3's command card is a 4×3 grid whose
+ *     default hotkeys run Q W E R / D F ... — the top row is the four spells and
+ *     the second row starts at D. Every one of these 108 innates IS a WC3
+ *     D-slot ability (`abilities/innateActive.ts` calls them that by name), so
+ *     D is not a free choice at all: it is the key the owner's own map already
+ *     trained his hands on, and F was already taken for the 5th slot on exactly
+ *     the same logic.
+ *  2. IT IS FREE AND ADJACENT. F is EX, so the innate sits next to it under the
+ *     same finger, and D is the only remaining key in the WASD home cluster not
+ *     already bound (A arms attack-move, S stops, W/E are spells). No existing
+ *     binding moves, so nobody's muscle memory breaks.
+ *  3. IT IS NOT A MODIFIER OR A FUNCTION KEY. A binding a family member cannot
+ *     find is the same silence as no binding at all.
+ *
+ * D is NOT the only path: the touch arc button and the gamepad D-pad-up cast
+ * the same slot (`ui/TouchControls`, `input/GamepadInput`). Binding it on the
+ * keyboard alone would have rebuilt the exact "works on one input tree only"
+ * shape this campaign exists to delete.
+ */
+export const SLOT_BY_CODE: Record<string, CastableSlot> = {
   KeyQ: "Q",
   KeyW: "W",
   KeyE: "E",
   KeyR: "R",
   KeyF: "EX", // per-hero "EX 技能" (5th slot); only fires once unlocked
+  KeyD: "PASSIVE", // 天生技 (6th slot) — the WC3 D-slot innate, owned from level 1
 };
 
 export interface CursorState {
@@ -76,7 +104,7 @@ export interface InputDeps {
   /** local champion's current (predicted) position */
   getSelfPos(): Vec2 | null;
   /** shared ability def (castType/range) for the local champion's slot */
-  getAbility(slot: AbilitySlot): AimAbility | null;
+  getAbility(slot: CastableSlot): AimAbility | null;
   /** enemy entity under a ground point (server's circle model) */
   pickEnemy(ground: Vec2): number | null;
   /** true when the LOCAL player's own champion is under the ground point */
@@ -225,7 +253,7 @@ export class InputCapture {
 
   private setPanKey(code: string, down: boolean): void {
     // arrow keys pan; WASD is reserved for game keys (A attack-move, S stop,
-    // W/E abilities) — matching MOBA conventions.
+    // W/E abilities, D the 天生技) — matching MOBA conventions.
     if (code === "ArrowUp") this.panKeys.up = down;
     else if (code === "ArrowDown") this.panKeys.down = down;
     else if (code === "ArrowLeft") this.panKeys.left = down;

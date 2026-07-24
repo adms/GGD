@@ -379,6 +379,84 @@ export function pushCombatText(input: CombatTextInput): void {
   entry.pose.visible = false;
 }
 
+// ---------------------------------------------------------------------------
+// 迴避 (task #92b)
+// ---------------------------------------------------------------------------
+
+/**
+ * How an entity relates to the LOCAL player, resolved from the champion anchor
+ * table this bus already maintains.
+ *
+ * The other combat-text producer resolves this from injected `localEntityId` /
+ * `teamOf` lookups. This one cannot: `evade` is ingested at the network seam,
+ * which has no content/seat context. It does not need one — `frameBus.champions`
+ * is written every frame with `isLocal` and `teamId` for exactly the entities
+ * that can appear on screen, and it is the same table the renderer projects
+ * from, so a relation resolved here can never disagree with what is drawn.
+ *
+ * "unknown" is the honest answer in three real cases and they all matter:
+ * before the local seat exists (pre-match / 觀戰), and for a source that is not
+ * a champion at all — a guardian's attack has no anchor entry, and it must NOT
+ * be mistaken for yours.
+ */
+export function relationToLocal(entityId: number | undefined): CombatTextRelation {
+  if (entityId === undefined) return "unknown";
+  const them = frameBus.champions.get(entityId);
+  let local: ChampionAnchor | undefined;
+  for (const a of frameBus.champions.values()) {
+    if (a.isLocal) {
+      local = a;
+      break;
+    }
+  }
+  if (!local) return "unknown";
+  if (local.entityId === entityId) return "self";
+  if (!them) return "unknown";
+  return them.teamId === local.teamId ? "ally" : "enemy";
+}
+
+/**
+ * Admit one 迴避 — the defender's stat ate a basic attack whole
+ * (packages/shared/src/sim/combat/evasion.ts `rollEvade`).
+ *
+ * Deliberately a thin adapter over `pushCombatText` rather than a second
+ * spawner: the dodge then inherits, for free and by construction, every policy
+ * task #92 established — the scope gate, the same-tick coalesce (a champion
+ * dodging two attackers on one tick gets ONE 「閃避」, not a stack), the
+ * per-target cap, priority admission, the RO multi-hit stagger, the pooled node,
+ * the lob, and the runtime-probed gradient fill that fixed #164. An evade has no
+ * magnitude, so `amount` is 0 and the label comes from the word table; `crit`
+ * and `killingBlow` are false because `rollEvade` returns before any of that is
+ * computed (evasion.ts DECISION 3 — a dodge is a total miss, not mitigation).
+ *
+ * The text is anchored on the DEFENDER's body in both readings. That is the
+ * point: 「閃避」 over your own head and "MISS" over theirs is the same fact
+ * told from two seats, and the position is what tells you which seat you are in.
+ */
+export function pushEvadeText(input: {
+  /** attacker entity id (may be a non-champion, e.g. a guardian) */
+  source: number | undefined;
+  /** defender entity id — the body the text is anchored on */
+  target: number;
+  worldX: number;
+  worldZ: number;
+  nowMs: number;
+}): void {
+  pushCombatText({
+    kind: "evade",
+    amount: 0,
+    sourceRel: relationToLocal(input.source),
+    targetRel: relationToLocal(input.target),
+    crit: false,
+    blocked: false,
+    killingBlow: false,
+    targetId: input.target,
+    worldX: input.worldX,
+    worldZ: input.worldZ,
+    nowMs: input.nowMs,
+  });
+}
+
 /** Release every entry whose life has run out. Called once per frame. */
 export function expireCombatText(nowMs: number): void {
   for (const e of combatTextPool) {

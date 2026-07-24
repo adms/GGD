@@ -1,0 +1,29 @@
+{
+  "id": "phantom-step",
+  "schema": "augment@1",
+  "name": "幻影步",
+  "description": "迴避 +25%，移動速度 +20%，攻擊速度 +25%。",
+  "tier": "prismatic",
+  "weight": 24,
+  "modifiers": [
+    {
+      "stat": "evasion",
+      "op": "flat",
+      "value": 0.25
+    },
+    {
+      "stat": "ms",
+      "op": "pctAdd",
+      "value": 0.2
+    },
+    {
+      "stat": "as",
+      "op": "pctAdd",
+      "value": 0.25
+    }
+  ],
+  "tags": [
+    "mobility",
+    "defense"
+  ]
+}

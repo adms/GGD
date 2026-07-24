@@ -10,9 +10,9 @@
 import { describe, it, expect, afterEach, vi } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
 import { registerSkeletonContent, SELA, THORNE } from "@ggd/shared/sim/content/skeleton";
-import type { Command, Order } from "@ggd/shared/sim/intents";
+import type { CastableSlot, Command, Order } from "@ggd/shared/sim/intents";
 import type { Vec2 } from "@ggd/shared/sim/math/vec2";
-import { resolveCastTarget, buildCastCommand } from "./AimResolver";
+import { resolveCastTarget, buildCastCommand, type AimAbility } from "./AimResolver";
 import {
   InputCapture,
   mapRightClick,
@@ -20,6 +20,7 @@ import {
   mapLeftClick,
   STOP_ORDER,
   RECALL_COMMAND,
+  SLOT_BY_CODE,
 } from "./InputCapture";
 
 registerSkeletonContent();
@@ -86,15 +87,24 @@ class FakeTarget {
   }
 }
 
-function captureHarness(opts: { selfHit?: boolean; enemy?: number | null } = {}): {
+function captureHarness(
+  opts: {
+    selfHit?: boolean;
+    enemy?: number | null;
+    /** per-slot ability defs; a slot absent here resolves to null (unlearned) */
+    abilities?: Partial<Record<CastableSlot, AimAbility>>;
+  } = {},
+): {
   el: FakeTarget;
   win: FakeTarget;
   orders: Order[];
+  commands: Command[];
   selects: number[];
   selfPicks: Vec2[];
   cap: InputCapture;
 } {
   const orders: Order[] = [];
+  const commands: Command[] = [];
   const selects: number[] = [];
   const selfPicks: Vec2[] = [];
   const el = new FakeTarget();
@@ -103,20 +113,20 @@ function captureHarness(opts: { selfHit?: boolean; enemy?: number | null } = {})
   const cap = new InputCapture(el as unknown as HTMLElement, {
     screenToGround: (x, y) => (y < 0 ? null : { x: x / 10, z: y / 10 }),
     getSelfPos: () => ({ x: 0, z: 0 }),
-    getAbility: () => null,
+    getAbility: (slot) => opts.abilities?.[slot] ?? null,
     pickEnemy: () => opts.enemy ?? null,
     pickSelf: (g) => {
       selfPicks.push(g);
       return opts.selfHit ?? false;
     },
     onOrder: (o) => orders.push(o),
-    onCommand: () => {},
+    onCommand: (c) => commands.push(c),
     onSelectSelf: () => selects.push(1),
     onZoom: () => {},
     onToggleFollow: () => {},
   });
   cap.attach();
-  return { el, win, orders, selects, selfPicks, cap };
+  return { el, win, orders, commands, selects, selfPicks, cap };
 }
 
 const click = (x: number, y: number, button = 0): object => ({ button, clientX: x, clientY: y });
@@ -294,5 +304,54 @@ describe("cast mapping per castType (client-05)", () => {
         expect(cmd.target.type).toBe(wantType[ability.castType]);
       }
     }
+  });
+});
+
+describe("the SIXTH slot has a key (P0-3)", () => {
+  afterEach(() => vi.unstubAllGlobals());
+
+  const SELF_CAST: AimAbility = { castType: "self", range: 0 };
+  const key = (code: string): object => ({ code, target: null, repeat: false });
+
+  it("D casts the 天生技 — the binding that made 60 active innates reachable", () => {
+    cover("client-intent-mapping");
+    const h = captureHarness({ abilities: { PASSIVE: SELF_CAST } });
+    h.win.dispatch("keydown", key("KeyD"));
+    expect(h.commands).toEqual([
+      { kind: "castAbility", slot: "PASSIVE", target: { type: "self" } },
+    ]);
+    h.cap.dispose();
+  });
+
+  it("D on a hero whose innate is NOT castable sends nothing", () => {
+    // `GameApp.abilityForSeat` returns null for a permanent 被動 innate and for
+    // the 3 heroes with no NN-00 — so the key must not manufacture a command.
+    cover("client-intent-mapping");
+    const h = captureHarness(); // no abilities at all
+    h.win.dispatch("keydown", key("KeyD"));
+    expect(h.commands).toHaveLength(0);
+    h.cap.dispose();
+  });
+
+  it("D still does not pan, and A/S/B keep their meanings", () => {
+    // The innate had to land on a FREE key: adding D must not have stolen an
+    // existing binding or turned the hero-key cluster into a camera control.
+    cover("client-intent-mapping");
+    const h = captureHarness({ abilities: { PASSIVE: SELF_CAST } });
+    h.win.dispatch("keydown", key("KeyD"));
+    expect(h.cap.panKeys).toEqual({ up: false, down: false, left: false, right: false });
+    expect(h.orders).toHaveLength(0); // D is not a stop/move
+    h.win.dispatch("keydown", key("KeyS"));
+    expect(h.orders).toEqual([{ kind: "stop" }]);
+    h.cap.dispose();
+  });
+
+  it("every castable slot is bound to exactly one distinct key", () => {
+    // The regression this pins: a sixth slot silently sharing (or missing) a
+    // key is invisible — it just never fires.
+    cover("client-intent-mapping");
+    const bound = Object.values(SLOT_BY_CODE);
+    expect(new Set(bound).size).toBe(bound.length); // no key casts two slots
+    expect(new Set(bound)).toEqual(new Set(["Q", "W", "E", "R", "EX", "PASSIVE"]));
   });
 });

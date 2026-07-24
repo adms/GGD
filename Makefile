@@ -10,6 +10,7 @@
 #   make test        run ALL suites via the testrunner CLI (regression last + todo gate)
 #   make logs        tail all GGD pod logs
 #   make todo-check  static TODO/test gate
+#   make build-stamp print the build identity every image build is stamped with
 #   make lan-probe   prove the wifi can reach the game and NO write surface (#102)
 #
 # Every target checks its tools first and prints install hints instead of
@@ -22,6 +23,38 @@ CLUSTER      := ggd
 REPO_ROOT    := $(abspath .)
 KIND_CONFIG  := deploy/kind/kind-config.yaml
 SECRETS_FILE := deploy/helm/secrets.local.yaml
+
+# ---- BUILD IDENTITY (task #66, defect P0-6(a)) -------------------------------
+# The client bakes this string into the bundle and the VersionBadge shows it at
+# the bottom of every screen, so a screenshot names its build. The IMAGE cannot
+# compute it: `.dockerignore` excludes `.git` and docker/edge.Dockerfile builds
+# on node:22-alpine, which has no git. Asking git from inside the container is
+# what made every image ever built say "dev" — a value plausible enough that
+# nobody questioned it for months, while two different deploys were literally
+# indistinguishable.
+#
+# So it is computed HERE, on the host, once, and EXPORTed — which is what makes
+# it reach every build path at once: docker/compose.yaml and
+# docker/compose.family.yaml interpolate `${GGD_BUILD_STAMP:-}` into their edge
+# build args, and skaffold.yaml expands `{{.GGD_BUILD_STAMP}}`. Adding a new
+# build path? Pass this variable, and add it to the guard test
+# tools/testrunner/internal/infracheck/buildstamp_test.go.
+#
+# `-dirty` is part of the identity on purpose: the owner routinely builds from a
+# modified tree, and two images off the same commit are otherwise one string.
+GIT_SHA        := $(shell git rev-parse --short HEAD 2>/dev/null)
+GIT_DIRTY      := $(shell test -n "$$(git status --porcelain --untracked-files=no 2>/dev/null)" && echo -dirty)
+BUILD_DATE     := $(shell date -u +%Y-%m-%d)
+export GGD_BUILD_STAMP ?= $(if $(GIT_SHA),$(GIT_SHA)$(GIT_DIRTY) $(BUILD_DATE),)
+
+.PHONY: build-stamp
+build-stamp:
+	@if [ -z "$(GGD_BUILD_STAMP)" ]; then \
+		echo "✗ no build stamp: git could not identify HEAD from $(REPO_ROOT)."; \
+		echo "  Images built now will show UNSTAMPED-BUILD on the version badge."; \
+		exit 1; \
+	fi
+	@echo "$(GGD_BUILD_STAMP)"
 
 # ---- tool guards -------------------------------------------------------------
 # usage: $(call need,<binary>,<install hint>)
@@ -295,6 +328,13 @@ family-up:
 	@$(MAKE) --no-print-directory family-secrets
 	@$(MAKE) --no-print-directory family-ship
 	@echo "→ building images (the client is built with VITE_GGD_FULL_ASSETS=1 — that flag is what makes the overlay actually load)"
+	@# The badge on the deployed page is the ONLY way to answer "which build is
+	@# this?" — print it here so the deploy log and the screenshot can be matched.
+	@if [ -n "$(GGD_BUILD_STAMP)" ]; then \
+		echo "→ build stamp: $(GGD_BUILD_STAMP)  (baked into the client bundle, shown bottom-centre)"; \
+	else \
+		echo "!! no git here: the version badge will read UNSTAMPED-BUILD and two deploys will be indistinguishable." >&2; \
+	fi
 	docker compose $(FAMILY_COMPOSE) --env-file $(FAMILY_ENV) build
 	@echo "→ starting the datastore"
 	docker compose $(FAMILY_COMPOSE) --env-file $(FAMILY_ENV) up -d redis

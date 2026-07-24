@@ -20,7 +20,10 @@
  * force allow-all for local testing.
  */
 import type { ItemId } from "@ggd/shared/ids";
-import { PLATFORM_URL, warnOnce } from "../config/platformUrl";
+import { PLATFORM_URL, warnOnce, clearDegradation, BOOT_PROBE_KEY } from "../config/platformUrl";
+
+/** Degradation-registry keys this module can raise (see config/platformUrl.ts). */
+const DEGRADE_KEYS = ["whitelist-status", "whitelist-malformed", "whitelist-unreachable"];
 
 // Re-exported for existing importers (combat-env, MatchController); the actual
 // env resolution + localhost dev fallback lives in config/platformUrl.ts.
@@ -148,14 +151,34 @@ export interface FetchOpts {
   timeoutMs?: number;
 }
 
+/** A fetch outcome plus WHETHER THE PLATFORM ACTUALLY ANSWERED. */
+export interface WhitelistResult {
+  readonly whitelist: Whitelist;
+  /**
+   * true  — the platform served a usable document (or bypass is configured,
+   *         which is a deliberate answer, not a failure).
+   * false — this is the fail-safe allow-all, i.e. NOTHING is being filtered.
+   *
+   * `Whitelist.bypass` cannot carry this: it is true for both the deliberate
+   * GGD_WHITELIST_BYPASS and the fail-safe fallback, and the refresh path has
+   * to tell those apart (see WhitelistCache.refresh).
+   */
+  readonly ok: boolean;
+  /** `updatedAt` from the served document, when there was one. */
+  readonly updatedAt?: string;
+}
+
 /**
  * Fetch the whitelist once from the platform. Never throws: on ANY failure it
  * fails safe to allow-all and logs loudly (see the fail-safe policy above).
  * When bypass is on it does not even hit the network.
  */
-export async function fetchWhitelist(baseUrl: string, opts: FetchOpts = {}): Promise<Whitelist> {
+export async function fetchWhitelistResult(
+  baseUrl: string,
+  opts: FetchOpts = {},
+): Promise<WhitelistResult> {
   const bypass = opts.bypass ?? WHITELIST_BYPASS;
-  if (bypass) return Whitelist.allowAll();
+  if (bypass) return { whitelist: Whitelist.allowAll(), ok: true };
 
   const doFetch = opts.fetchImpl ?? fetch;
   const url = `${baseUrl.replace(/\/$/, "")}/api/v1/curation/whitelist`;
@@ -169,7 +192,7 @@ export async function fetchWhitelist(baseUrl: string, opts: FetchOpts = {}): Pro
         `[whitelist] platform returned ${res.status} for ${url} — FAILING SAFE to allow-all ` +
           `(content filtering DISABLED for this match). Fix the platform or set GGD_WHITELIST_BYPASS=1.`,
       );
-      return Whitelist.allowAll();
+      return { whitelist: Whitelist.allowAll(), ok: false };
     }
     const doc = parseDoc(await res.json());
     if (!doc) {
@@ -177,7 +200,7 @@ export async function fetchWhitelist(baseUrl: string, opts: FetchOpts = {}): Pro
         "whitelist-malformed",
         `[whitelist] malformed whitelist body from ${url} — FAILING SAFE to allow-all.`,
       );
-      return Whitelist.allowAll();
+      return { whitelist: Whitelist.allowAll(), ok: false };
     }
     if (doc.champions.length === 0) {
       console.warn(
@@ -186,7 +209,11 @@ export async function fetchWhitelist(baseUrl: string, opts: FetchOpts = {}): Pro
           `Enable content in the admin console (or apply the starter set).`,
       );
     }
-    return new Whitelist(doc, false);
+    // The platform answered with a usable document: retract any earlier
+    // degradation so /healthz stops reporting an outage that has ended (and so
+    // a LATER outage warns loudly again instead of being deduped away).
+    clearDegradation(...DEGRADE_KEYS, BOOT_PROBE_KEY);
+    return { whitelist: new Whitelist(doc, false), ok: true, updatedAt: doc.updatedAt };
   } catch (err) {
     warnOnce(
       "whitelist-unreachable",
@@ -194,10 +221,15 @@ export async function fetchWhitelist(baseUrl: string, opts: FetchOpts = {}): Pro
         `(content filtering DISABLED for this match).`,
       err,
     );
-    return Whitelist.allowAll();
+    return { whitelist: Whitelist.allowAll(), ok: false };
   } finally {
     clearTimeout(timer);
   }
+}
+
+/** `fetchWhitelistResult` without the outcome flag (unchanged behaviour). */
+export async function fetchWhitelist(baseUrl: string, opts: FetchOpts = {}): Promise<Whitelist> {
+  return (await fetchWhitelistResult(baseUrl, opts)).whitelist;
 }
 
 /**
@@ -209,6 +241,9 @@ export class WhitelistCache {
   private cached: Whitelist | null = null;
   private expiresAt = 0;
   private inflight: Promise<Whitelist> | null = null;
+  /** The last whitelist the platform actually SERVED (never a fail-safe). */
+  private lastGood: Whitelist | null = null;
+  private refreshing: Promise<WhitelistResult> | null = null;
 
   constructor(
     private readonly baseUrl: string = PLATFORM_URL,
@@ -222,11 +257,12 @@ export class WhitelistCache {
     // Expiry is measured off the same clock reading passed to get(), so an
     // injected test clock and the real Date.now() default both behave.
     const expiresAt = now + this.ttlMs;
-    this.inflight = fetchWhitelist(this.baseUrl, this.opts)
-      .then((wl) => {
-        this.cached = wl;
+    this.inflight = fetchWhitelistResult(this.baseUrl, this.opts)
+      .then(({ whitelist, ok }) => {
+        if (ok) this.lastGood = whitelist;
+        this.cached = whitelist;
         this.expiresAt = expiresAt;
-        return wl;
+        return whitelist;
       })
       .finally(() => {
         this.inflight = null;
@@ -234,10 +270,65 @@ export class WhitelistCache {
     return this.inflight;
   }
 
-  /** Drop the cache (tests / forced refresh). */
+  /**
+   * Re-run the fetch NOW because the platform announced a change.
+   *
+   * TWO THINGS MAKE THIS DIFFERENT FROM get():
+   *
+   *  1. It is EAGER. get() is lazy by design — the value is resolved when a
+   *     match needs it. An invalidation has no match waiting on it, so if the
+   *     refresh merely dropped the cache, a FAILED refresh would stay invisible
+   *     until the next match creation, at which point it would look like a
+   *     fresh failure. Fetching now is what lets /healthz answer "your change
+   *     landed at 09:31:04" or "your change did NOT land, here is why".
+   *
+   *  2. A FAILED REFRESH KEEPS THE LAST KNOWN GOOD. get() fails safe to
+   *     allow-all because a match is waiting and must not be bricked. Here
+   *     nothing is waiting, and adopting allow-all would mean an INVALIDATION
+   *     MESSAGE — arriving while the platform happens to be down — silently
+   *     switching content filtering off for every subsequent match. A refresh
+   *     that cannot reach the platform therefore changes nothing except the
+   *     recorded failure. (A process that has never had a good answer has no
+   *     last-known-good to keep, so it still fails safe, which is the real
+   *     fail-safe case.) Mirrors ServerOpsCache's outage policy.
+   *
+   * Single-flight: concurrent invalidations share one in-flight fetch, so a
+   * burst of admin clicks cannot fan out into a burst of HTTP requests.
+   */
+  async refresh(now: number = Date.now()): Promise<WhitelistResult> {
+    if (this.refreshing) return this.refreshing;
+    this.refreshing = fetchWhitelistResult(this.baseUrl, this.opts)
+      .then((result) => {
+        if (result.ok) {
+          this.lastGood = result.whitelist;
+          this.cached = result.whitelist;
+          this.expiresAt = now + this.ttlMs;
+          return result;
+        }
+        if (this.lastGood) {
+          // Hold the line: keep serving what the platform last really said.
+          this.cached = this.lastGood;
+          this.expiresAt = now + this.ttlMs;
+          return { ...result, whitelist: this.lastGood };
+        }
+        return result;
+      })
+      .finally(() => {
+        this.refreshing = null;
+      });
+    return this.refreshing;
+  }
+
+  /** Drop the cache (tests / forced refresh). Keeps the last known good. */
   invalidate(): void {
     this.cached = null;
     this.expiresAt = 0;
+  }
+
+  /** Forget everything, including the last known good (tests). */
+  reset(): void {
+    this.invalidate();
+    this.lastGood = null;
   }
 }
 

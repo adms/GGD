@@ -348,10 +348,61 @@ Additive & balance-neutral (no damage number / cooldown changes).
 
 | ID | Item | Test ID | Category | Status |
 |----|------|---------|----------|--------|
-| cj-s32 | Default cosmetic curve scales shake / flashMs / camKick with the damage tier | cj-hf-default-scales | unit | done |
-| cj-s33 | Default spark identity + flash colour derive from damage type / block / EX | cj-hf-default-derive | unit | done |
+| cj-s32 | Default cosmetic curve scales shake / camKick with the damage tier | cj-hf-default-scales | unit | done |
+| cj-s33 | Default spark identity derives from damage type / block / EX | cj-hf-default-derive | unit | done |
 | cj-s34 | `mergeCosmetics` overrides only the provided fields, else identity | cj-hf-merge | unit | done |
 | cj-s35 | An ability with explicit `hitFeel` overrides the damage-derived default (hitstop/shake/spark/…) | cj-hf-ability-override | unit | done |
 | cj-s36 | A champion basic-attack `hitFeel` overrides the default on origin "basic" | cj-hf-basic-override | unit | done |
 | cj-s37 | Without `hitFeel` the profile falls back to the damage-derived default | cj-hf-default-fallback | unit | done |
 | cj-s38 | Same seed + inputs replay a byte-identical profile (determinism) | cj-hf-determinism | unit | done |
+
+### `hitFeel.flashColor` / `.flashMs` — closing a SILENT no-op (false-completions pass, 2026-07-24)
+
+Both fields were schema-accepted, sim-replicated on every `hitImpact`, and
+decoded into the client's `ImpactProfile` — then **thrown away**:
+`planImpactFeedback` rebuilt `victimFlash` from `flashColorFor(dmgType)` +
+`TIER_FX[tier].flashMs` unconditionally. **30 ability docs shipped dead
+content**, 13 of them on the live 48-champion roster. Nothing errored; the
+player simply saw the generic damage-type flash forever.
+
+Resolved as HONOUR (not delete): the fields could not be deleted without editing
+30 `content/abilities/*.json` docs, `zHitFeel` being `.strict()`.
+
+**The layering** (the thing that had to be got right — flash colour carries the
+physical-vs-magic damage-type read, which is real combat legibility):
+
+1. **Damage type stays the default and the majority case.** No champion doc
+   authors a flash — all 112 with a `hitFeel` author only
+   hitstop/shake/knockback — so **every basic attack and every un-authored
+   ability keeps the measured red/magenta palette**. The coarse read is intact
+   on ~99% of hits in a match.
+2. **An authored ability names its element instead** (holy gold, ice blue, fire
+   orange, void violet). That refines the read rather than removing it: the
+   player already knows the source of a named R they just watched cast.
+3. **Alpha is deliberately NOT authorable** — it is the tier's hit-weight, and
+   `ui/combatText.ts`'s black-ring contrast analysis assumes it.
+4. **A legibility guard sits between 2 and the screen.** The overlay draws with
+   ALPHA_COMBINE, so a pale authored colour is literally invisible on a pale
+   model — 8 of the 30 authored hues were in that band (worst:
+   `[0.85,0.92,1.0]`, max Δ 0.06 vs red's 0.45). `legibleFlashColor` raises the
+   chromatic spread to 0.65 (the magenta default's own spread — "no authored
+   colour may be less chromatic than the palest one the measurement pass
+   accepted") by saturating about the max channel, which preserves the hue
+   family exactly. Greyscale input has no hue to save and falls back to red.
+
+**Also deleted, not re-wired:** the sim's `FLASH_PHYSICAL/MAGIC/TRUE/BLOCK` +
+`FLASH_MS_BY_TIER` — a second flash palette that rode every `hitImpact` and had
+never reached a pixel. The flash pair is now **authored-or-absent on the wire**,
+and that presence/absence IS the signal the client reads. `flashMs` is clamped
+to 30–260 ms in `mergeCosmetics` and `zHitFeel` now rejects out-of-band values
+at authoring time (was `max(1000)`, a value the channel could never honour).
+
+| ID | Item | Test ID | Category | Status |
+|----|------|---------|----------|--------|
+| cj-s39 | Sim emits NO flash default — `flashColor`/`flashMs` absent unless content authored them | cj-hf-flash-authored-only | unit | done |
+| cj-s40 | An authored flash rides the wire verbatim, clamped into the strobe-safe ms band | cj-hf-flash-authored-passthrough | unit | done |
+| cj-s41 | An authored `flashColor`/`flashMs` reaches `victimFlash` instead of the tier default | juice-flash-override | unit | done |
+| cj-s42 | Nothing authored → the measured damage-type palette, every tier (the read survives) | juice-flash-override | unit | done |
+| cj-s43 | Alpha is never authorable — it stays the tier's hit-weight | juice-flash-override | unit | done |
+| cj-s44 | Washed-out authored hues are saturated, not recoloured; greyscale falls back to red | juice-flash-legibility | unit | done |
+| cj-s45 | Every REAL `content/abilities/*.json` authored flash reaches `victimFlash` (≥30 docs) | juice-flash-override | integration | done |
