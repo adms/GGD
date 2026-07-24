@@ -261,6 +261,15 @@ func TestDeniedPlayerCannotEnterTheLobbyWithALiveToken(t *testing.T) {
 
 	list := ts.Do(http.MethodGet, "/api/v1/lobby/rooms", tok, nil)
 	assert.Equal(t, http.StatusForbidden, list.Status, "a denied player must not browse the lobby: %s", string(list.Raw))
+
+	// …including the one-click bot match (#188). It is the shortest path from a
+	// browser to a running match — create and start in a single POST — so it is
+	// exactly the route where a gate that lived in the client instead of the
+	// router would be found out.
+	solo := ts.Do(http.MethodPost, "/api/v1/rooms/solo", tok, nil)
+	assert.Equal(t, http.StatusForbidden, solo.Status, "a denied player must not start a bot match: %s", string(solo.Raw))
+	assert.Equal(t, "account_denied", solo.ErrCode())
+	assert.Empty(t, ts.Node.Requests(), "and no match may be reserved on the game server for him")
 }
 
 // A banned administrator loses operator powers on the same beat, for the same

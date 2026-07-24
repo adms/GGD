@@ -1938,3 +1938,182 @@ gate = `phase === "combat" && round <= 1`（`round` 本來就在 RoomStore，沒
 **觀測**：headless Chrome 對三種佈局（1546x900 鍵鼠欄位／1546x900 手把橫帶／812x375 觸控橫帶）
 截圖，疊上各 slot 的保留框比對——三張都沒有重疊，13/14 列全部畫出來沒有截斷。
 client 測試 235 檔 2641 綠、`tsc --noEmit` 乾淨。
+
+### #187 實機驗證（真的進到 round 1 去看）——抓到兩個「測試全綠但東西是壞的」
+
+上面那段的截圖是**離線 render 疊保留框**，不是真的在打的那一局。實機跑一次
+（`game-server-mobile` + `client-playtest` :5205 → Play offline vs bots → 鎖英雄 → Ready）
+就抓到兩個 headless 比對看不出來的問題，兩個都是同一個病：**框對了、行對了、字對了，
+東西還是沒有用**。
+
+**1. 在骷髏競技場上，字根本看不見（1.18:1）。**
+面板底色原本 `rgba(10,14,24,0.44)`、字用 `TEXT_DIM #8d97ad`。左側欄的位置底下正好是
+那張圖的**白色岩石**，0.44 疊在 rgb(235,235,235) 上合成出 rgb(136,138,142)，
+`TEXT_DIM` 對它的對比是 **1.18:1**——實質上是隱形。之前每一條測試都過：列是對的、
+矩形是對的、markup 是對的，可是「半透明」跟「看得見」被拿去交換而沒有人量過。
+背景是即時 3D 場景，可以是任何顏色，所以只能對**最壞的底**負責：
+- 底色 0.44 → **0.66**（最壞情況合成 rgb(86,89,96)；仍遠低於真面板的 0.88，場景照樣透得出來）
+- 說明文字 `TEXT_DIM` → **`#ccd4e4`**（白岩上 4.71:1 過 WCAG AA，土地上 8.25:1）
+- 每一行加 `text-shadow`，讓爆炸/閃光直接打在後面時也不會被洗掉
+- ✕ 也一起提亮——它是這個框上唯一必須被找到的東西
+
+新增 `controlLegendRender.test.ts` 的對比守門：從**渲染出來的 markup** 刮出面板 alpha 與
+**最暗的**一個文字顏色（刮「第一個顏色」會量到亮的標題而放過說明文字，正是這個 bug 的形狀），
+合成到純白底上要求 ≥ 4.5:1，且 alpha 必須仍在 0.5–0.8 之間（是提示不是面板）。
+把舊值貼回去，這條測試會紅在 1.179:1——確認守得住。
+
+**2. 812x375 的橫帶把控制列表切掉，只剩到 R。**
+橫帶高度本來是依**列數**查表的兩個常數（58 / 84）。但橫帶會 wrap，
+**它的高度是「wrap 進多寬」的函數**，列數答不出這件事。14 列的鍵鼠組在該處需要六行，
+拿到的是三行的 84px，`overflow:hidden` 把「F EX 技能」以下全部靜靜吃掉——
+螢幕上是一份看起來很完整、其實停在 R 的操作說明。這跟上面那段自己記錄的
+「欄位被吃掉三列」是**同一個缺陷，隔一個函數又犯一次**。
+
+改法：`legendStripHeight(rows, width)` 依實際 wrap 量測（`approxTextWidth` 估字寬 →
+`legendPillWidth` → `legendStripLines` 貪婪換行），`LegendPlacementOpts` 從 `rowCount`
+改成 **`rows` 本身**；`stripRect` 先定出可用寬度再算高度，**塞不下就回 null**
+（「沒位子」永遠勝過「一半的控制」）；元件端 `height` → `minHeight` 並拿掉 `overflow:hidden`，
+估寬若有誤差是把框撐高而不是把字剪掉。
+測試改成掃**真實的三組按鍵**（不再是合成列數），加上「橫帶必須裝得下自己 wrap 出來的行數」
+在 6 viewport × 2 pointer × 3 座位數 × 3 模式上的斷言。
+
+結果：812x375 鍵鼠組現在**誠實地不畫**（14 列真的塞不進 ability cluster 上方的帶狀空間）；
+真手機（touch，5 列）拿到 560x58 完整橫帶；手機接手把（13 列）拿到 560x81 完整橫帶。
+
+**實機確認過的**：round 1 桌機欄位 14 列全部可讀（含壓在白岩上的最後三列）；
+5 個取樣點裡 4 個穿透到 canvas、只有 ✕ 吃到點擊；按 ✕ 立刻消失且 `localStorage` 寫入；
+重新整理 → 開新的一局 → 仍在 round 1 而圖例不再出現；打到 round 2 圖例自己消失
+（`dismissKey` 是 null，證明是 round gate 而不是誤觸關閉）；商店階段不顯示。
+
+**沒能實機驗證的**：真觸控裝置（本機只有滑鼠，`hudTouch()` 走的是裝置偵測，
+觸控那條路徑只有模型層與單元測試證明）；真手把（沒有實體手把可插，手把列是
+`mapGamepadFrame` 探針推導＋單元測試）；2–4 人沙發分割畫面（需要多個實體手把）。
+
+client 測試 235 檔 **2792 綠**、`tsc --noEmit` 乾淨。
+
+---
+
+## #188 「play offline with bot 也要開放給有註冊的玩家在大廳一鍵開房直接玩」（2026-07-24）
+
+**來源**：你的回報。**落點**：#188（本次落地，平台＋前端＋測試）。
+
+### 原本那顆按鈕不是模式，是穿著按鈕外衣的除錯捷徑
+
+大廳 `LobbyScreen.tsx` 早就有「Play vs bots」，但它 `title="dev direct-join — no
+platform match record"`，走 `store.playOffline()` → 直連 game-server。**這條路永遠不結算**：
+`MatchRoom.settleToPlatform` 沒有平台建立的 match，就沒有 pending 紀錄、沒有預留座位、
+沒有 roomId。結果是 8 個帳號 `games:0 wins:0 mmr:1000` 躺在 51 份 replay 旁邊。
+（同一顆按鈕在登入頁的版本就是 PT-1 的死路。）
+
+**所以這次的工作是路由，不是 UI。** 把按鈕做漂亮而仍然繞過平台，就是這批次一直在拆的那種缺陷。
+
+### 做法：一鍵 = 平台幫你開一間私人房並「立刻開始」
+
+新增 `POST /api/v1/rooms/solo`（`room.StartSolo`）：建房（**不上大廳列表**）→ 同一個
+呼叫裡 `Start` → 走既有 `gamelink.StartMatch`。**刻意重用而不是另開一條路**，因為那條路上
+掛著四件本來就會壞的事：平台 matchId 與預留座位、`callbackUrl`（結算的唯一入口）、
+pending 紀錄＋`gameRoomId`（#187 心跳／收割者靠它）、以及 `match_ready` 座位推播
+（前端因此不需要第二套進場流程）。
+
+**付多少不是這支函式決定的**，`gamelink/callback.go` 的反農場規則早就定義好了：
+11 個 bot ⇒ 大廳不是全真人 ⇒ **M幣 = 0**（構造上不可能刷）；自己隊上有 bot ⇒ **水晶減半**。
+分數／勝場／賽季分照給。「值得打、不值得刷」。
+
+**沒有選角繞路**：40 秒選角本來就在**局內**（`MatchController.champSelect`），
+一鍵之後直接進到那裡，`autoPickAndSpawn` 仍然守著 #130 的「沒鎖英雄就 0 HP 觀戰」陷阱。
+
+**有註冊的玩家**：閘門在 router（`auth.Middleware` + `PlayableOnly`），不是按鈕。
+未登入 401、被停權／未核准 403，而且**game-server 上不會有任何預留**。前端檢查只是裝飾。
+
+### 一個不會動的數字，講明白比較好
+
+**隱藏 MMR 不會變**，而且這不是反農場規則，是 Elo 本身（`ranking/elo.go`：只有一隊有真人
+就不是可評分的對局）。贏 11 個 bot 說不出你跟家人之間的相對強弱，所以拿來配對的那個數字
+不該動。**會動的是**：games、wins、賽季分（第一名 +100）、水晶（減半）、比賽紀錄、排行榜列。
+
+⚠️ **留給你決定的一件事**：賽季分沒有閘門（你當初的規則就是「分數不是貨幣」），
+但現在一鍵對 bot 之後，**可見排行榜的分數是可以靠打 bot 累積的**。我沒有擅自改政策；
+要收緊的話最小改動是在 `callback.go` 對「非全真人大廳」的 `AwardPoints` 也砍半或不給。
+
+### 驗證
+
+Go 全綠（新增 `gamelink/solobot_test.go`：真的預留 12 席、`callbackUrl` 正確、
+結算後 games/wins/賽季分有動且水晶＝一半、M幣＝0、比賽紀錄寫入、心跳可續命且斷了會被收割、
+不上大廳列表、未登入 401、被拒 403 且不預留）；game-server 401 綠；client 2798 綠
+（新增 `botMatch.test.ts`：一鍵走平台而**不是**直接翻到 `match`、按兩下只開一場、
+座位推播才進場、12 秒沒收到座位會說話而不是轉圈、失敗顯示原因、大廳同時有「一鍵開打」與
+標示清楚的「dev 直連」）。
+
+**dev 直連保留**（`playOffline`）：測試與 `#replay=` 流程還在用，只是不再是「跟 bot 玩」的唯一入口。
+
+### #188 後續需求：「要讓人一看就知道這是可以玩的」（2026-07-24）
+
+**來源**：owner。路由做完之後，入口仍然是一顆 `small` 的 ghost 按鈕，夾在 圖鑑 與 設定 之間，
+標題還寫著 dev 工具。**家人打開大廳，看不出來哪一顆可以開始玩。**
+
+落地在 `LobbyScreen.tsx` 的 `BotMatchStrip`（在 play 欄的最上面，`RoomListPanel` 之前）：
+
+- **份量**：主按鈕改成 `Btn kind="primary"`、16px / 800 字重 / 13px 直向 padding，
+  面板本身帶 accent 邊框＋頂部漸層，和下面中性的 ROOMS 面板分得開。
+  文案 `⚔️ 一鍵開打`（**帶 VS16**：不帶的話 U+2694 會落回文字字形，在這個尺寸看起來像一個細細的 ✕，
+  一顆「開始」按鈕長得像「取消」）。標題 `單人 vs BOT`、副標 `一個人也能開打 —— 真的計分、記戰績、上排行榜`。
+- **獎勵講實話，而且講在做決定的地方**：三顆 badge 就在按鈕旁邊——
+  `水晶 ½`（金色，自己隊上有 bot）、`無 M幣`（要 12 席全真人）、`MMR 不變`（`ranking/elo.go`，不是反農場規則）。
+  底下一行不打折的說明：「隊上有 BOT，水晶只發一半；M幣要 12 人全真人。半份也是白賺，想拿滿就揪人。」
+  **這些都是可見文字，不是 tooltip**——手機上根本沒有 hover，而且一個默默少發一半的模式，
+  是玩家第一次數水晶時對經濟系統失去信任的方式。測試把 `title=` 全部剝掉之後再斷言，tooltip 通不過。
+- **dev 直連降級**：移到分隔線下面那一行、`small ghost` + `opacity .55`，和主按鈕不再是同一階。
+- **#107**：整條都在正常流排版（play 欄的 `Panel`），**沒有任何 position**——
+  top-right 的 gutter 仍然由 header 從 `chromeReserve` 取得，沒有新的常駐 chrome 宣告。測試直接掃原始碼擋回歸。
+- **#24**：兩顆都是 `widgets.Btn`，所以 hover/click SFX 與按壓縮放都在；raw `<button>` 會是啞的。
+- **#151/#159 手機**：兩個區塊都是 `flex: 1 1 <basis>` + wrap。390px 實測會疊成
+  「資訊塊 / 選圖＋大按鈕」兩段，按鈕吃滿整欄；動作區另外壓 `maxWidth: 440`，
+  否則 1600px 螢幕上那個五選一的競技場下拉會被撐到 500px 寬。1280 與 390 都用真的瀏覽器截圖看過。
+
+## 需求：`/admin` 遠端可用（`ggd.adms.ai/admin`，管理員登入後）
+
+**來源**：owner，2026-07-24。「http://localhost:60721/admin/ 這個網址遠端存取不了，請你幫忙合併到 /admin 底下，變成 ggd.adms.ai/admin 管理員登入後也可以使用」
+
+**盤點結果（實測，非讀碼推論）**：`https://ggd.adms.ai/admin/` **已經是可用的**——edge image 早就 build 了 `@ggd/admin`（base=`/admin/`）並複製到
+`/usr/share/nginx/html/admin/`，`nginx.conf` 有對應的 `location /admin/`。實測 `/admin/` 與其 entry chunk 皆 200，畫面是
+「GGD Operations · operator console · admin only」登入牆，`/api/v1/admin/accounts` 未認證正確回 401。到不了的是 `localhost:60721`
+本身——那是 owner 自己機器上的 vite dev server，`loopbackOnly.ts` 讓它**拒絕綁非 loopback 位址**，而那個鎖是承重的：
+`/content-api` 代理跳一手會把來源位址洗成 127.0.0.1，所以擋得住 LAN 的只有「連不上這個 socket」本身。
+
+**真正的落差 —— 兩頁遠端沒有，而且是刻意的**：
+- **內容管理**（英雄/技能/道具 JSON CRUD）
+- **角色語音生成**
+
+兩者的 chunk 在 production build **根本不會被產出**（`App.tsx` 的 bare `import.meta.env.DEV` 讓 rollup 死碼摺除），因為它們是往
+loopback content-api / 語音 daemon 寫檔的路徑。
+
+**為什麼不能直接開遠端（比權限更硬的理由）**：`content/` 在家用主機是 `../content:/srv/content:**ro**` 掛載，而且它就是 git
+checkout 的那棵樹。所以遠端編輯要嘛寫不進去，要嘛**下一次 `git pull` 部署就被覆蓋**——正是 owner 交代過的
+「部署的時候記得不要蓋掉記錄」那類資料損失。
+
+**要讓它遠端可用，需要的是**：一層放在 `data/` 的持久化 overlay，內容載入時疊在出貨 docs 之上——就是 curation 白名單
+（`data/curation/`）已經在用的同一個模式。這是設計工作，不是設定開關。
+
+**已經遠端可用的（平台 API + `data/` 持久化）**：玩家/帳號審核、對戰紀錄、公告、內容白名單、戰鬥系統倍率、M幣發放、稽核日誌。
+
+### #188 實機驗證（真的按下去，不是只有測試綠）
+
+不是打離線比對，是起**真的行程**跑一次：獨立 Redis:6399 ＋ platform:8081（自己的
+DATA_DIR）＋ 帶 HMAC secret 的 game-server:2600，不碰你正在跑的 :8080/:2567/:39527。
+
+- 未登入 `POST /rooms/solo` → **401**，game-server 上不會有任何預留。
+- 第一次故意讓 secret 對不上 → 平台回 `game_rejected (401)`，而且**沒有留下垃圾**：
+  大廳列表空的、`matches:pending` 空的（失敗時 `StartSolo` 會把房間 Dispose 掉）。
+- secret 對上之後一鍵：回 `{"matchId":"m_01KYA5WX…","botFill":11}`，
+  game-server `/healthz` 的 `rooms.active` **0 → 1**（真的有一間房在跑），
+  pending hash 有 `roomId` / `gameRoomId=--aBAqqgL` / 12 席（1 真人 + 11 bot），
+  大廳列表**仍然是空的**（不公開）。
+- **心跳是真的**：30 秒內 game-server 自己送了一次 liveness，`beats=1`、
+  deadline 被推到 `beat+180s`。（沒人真的連進去，房間自然 autoDispose，心跳就停了——
+  這正是收割者要處理的狀態，不是 bug。）
+- 結算：照 `MatchRoom` 的線路格式送簽章結果回呼 → `{"status":"ok","settled":1,"humanSeats":1}`。
+  帳號 `games 0→1`、`wins 0→1`、**MMR 1000 不動**（沒有可評分對手）、
+  錢包 `crystal 0→120`（= 240 的**一半**）、`mcoin 0`、
+  比賽紀錄落地 `status=completed` 且 `points=100`。
+
+也就是說：**一鍵 → 真的房 → 真的心跳 → 真的結算**，四段都在真行程上看過了。

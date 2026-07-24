@@ -1,8 +1,8 @@
 {
   "_doc": "帳本快照，由 tools/status/gen_status.py 產生。手改無效（下次執行就被覆蓋），要改請改任務帳本本身。CI 上沒有帳本目錄時，這份就是 --check 的資料來源。",
-  "generated": "2026-07-23 20:55",
+  "generated": "2026-07-24 21:40",
   "source": "~/.claude/tasks/1fc1e42e-e26b-4bec-88ef-ca25238c0f4c",
-  "count": 175,
+  "count": 187,
   "tasks": [
     {
       "id": 1,
@@ -67,7 +67,7 @@
     {
       "id": 13,
       "subject": "In-game credits & required attributions (CC-BY 4.0 dragon is now the ONLY mandatory one + © notice + CC0 courtesy)",
-      "status": "pending"
+      "status": "completed"
     },
     {
       "id": 14,
@@ -247,7 +247,7 @@
     {
       "id": 50,
       "subject": "Port per-invocation art params for dummy-effect units + special effects (scale/facing/tint/alpha/height/timeScale)",
-      "status": "pending"
+      "status": "in_progress"
     },
     {
       "id": 51,
@@ -302,7 +302,7 @@
     {
       "id": 61,
       "subject": "AUDIT every imported model and fix only the defective ones (no blanket re-convert)",
-      "status": "pending"
+      "status": "completed"
     },
     {
       "id": 62,
@@ -392,7 +392,7 @@
     {
       "id": 79,
       "subject": "Ability VFX binding: 92% share one fire placeholder — bind real imported effects; 依文潔琳's ice spells have no ice",
-      "status": "pending"
+      "status": "completed"
     },
     {
       "id": 80,
@@ -412,7 +412,7 @@
     {
       "id": 83,
       "subject": "Importer duplicates modifier arrays — 4 items ship with doubled stats",
-      "status": "pending"
+      "status": "completed"
     },
     {
       "id": 84,
@@ -442,7 +442,7 @@
     {
       "id": 89,
       "subject": "Neutral guardian tower at each duel-zone centre: last-hit reward, AoE punish, gives siege heroes a role",
-      "status": "pending"
+      "status": "completed"
     },
     {
       "id": 90,
@@ -467,7 +467,7 @@
     {
       "id": 94,
       "subject": "Re-apply if lost: shop card moved LEFT (with mirrored scene) + functional shelves",
-      "status": "pending"
+      "status": "completed"
     },
     {
       "id": 95,
@@ -497,7 +497,7 @@
     {
       "id": 100,
       "subject": "Champions keep fighting for ~66s after the round is settled — combat never actually stops",
-      "status": "pending"
+      "status": "completed"
     },
     {
       "id": 101,
@@ -522,7 +522,7 @@
     {
       "id": 105,
       "subject": "Guardian gets a per-arena identity: 樹人 / 石頭人 / 巨獸人 — one mechanic, five faces",
-      "status": "in_progress"
+      "status": "completed"
     },
     {
       "id": 106,
@@ -602,7 +602,7 @@
     {
       "id": 121,
       "subject": "Shop: undo an accidental sell (restore item, reverse the 40%-refund gold exactly)",
-      "status": "pending"
+      "status": "completed"
     },
     {
       "id": 122,
@@ -612,7 +612,7 @@
     {
       "id": 123,
       "subject": "Shared VFX-primitive library: rebuild the common reusable WC3 effects (tornado / shockwave / explosion / locust-swarm / nova / beam) that many abilities transform-reuse",
-      "status": "pending"
+      "status": "completed"
     },
     {
       "id": 124,
@@ -627,7 +627,7 @@
     {
       "id": 126,
       "subject": "Private-deploy gate: registration → pending → admin-approved before play; + go-live security hardening (friends-only, no monetization)",
-      "status": "pending"
+      "status": "in_progress"
     },
     {
       "id": 127,
@@ -652,7 +652,7 @@
     {
       "id": 131,
       "subject": "Combat: persistent bright-white particle burst stuck in top-right of the arena view",
-      "status": "pending"
+      "status": "completed"
     },
     {
       "id": 132,
@@ -727,7 +727,7 @@
     {
       "id": 146,
       "subject": "Shop scene: merchant 3D model center + player model right + merchant head icon",
-      "status": "pending"
+      "status": "completed"
     },
     {
       "id": 147,
@@ -752,7 +752,7 @@
     {
       "id": 151,
       "subject": "iPhone landscape (short-height) menu layout overlaps — login/champ-select don't fit 390px height",
-      "status": "pending"
+      "status": "completed"
     },
     {
       "id": 152,
@@ -867,17 +867,77 @@
     {
       "id": 174,
       "subject": "Invite-code registration gate: admin mints codes, only invited can register",
-      "status": "pending"
+      "status": "completed"
     },
     {
       "id": 175,
       "subject": "Match replay: record seed + inputs, play any match back — the playtest feedback channel",
-      "status": "pending"
+      "status": "completed"
     },
     {
       "id": 176,
       "subject": "Family deploy: serve ALL assets (no tiering) + secrets hardening on the deploy path",
+      "status": "completed"
+    },
+    {
+      "id": 177,
+      "subject": "Ship the 84MB blizzard-overlay to the family host + open the DEV-ONLY gate deliberately",
+      "status": "completed"
+    },
+    {
+      "id": 178,
+      "subject": "Complete every missing icon (602) with the approved two-pass pipeline",
       "status": "pending"
+    },
+    {
+      "id": 179,
+      "subject": "Operator-state migration bundle: export/import his whitelist + combat-env onto the family host",
+      "status": "completed"
+    },
+    {
+      "id": 180,
+      "subject": "T0: Fix remote play on https://ggd.adms.ai/ — owner bootstrap + gated-deploy UX",
+      "status": "pending"
+    },
+    {
+      "id": 181,
+      "subject": "P7 cast feedback: every Q/W/E/R/EX press answers back (confirm or reason)",
+      "status": "completed"
+    },
+    {
+      "id": 182,
+      "subject": "WC3 PRE2 → Babylon parameter-driven emitter engine (render/vfx)",
+      "status": "completed"
+    },
+    {
+      "id": 183,
+      "subject": "Faithful 球體 / 蝗蟲群 / 粒子 vfx families from the real w3x emitter dataset",
+      "status": "completed"
+    },
+    {
+      "id": 184,
+      "subject": "Voice distinctiveness: break the 2-voice monoculture so combat is legible by ear",
+      "status": "in_progress"
+    },
+    {
+      "id": 185,
+      "subject": "Chrome saves the password but never autofills it — the auth screen has no form semantics",
+      "status": "pending"
+    },
+    {
+      "id": 186,
+      "subject": "Admin console: auto-generate a fitting icon whenever content is created",
+      "status": "pending"
+    },
+    {
+      "id": 187,
+      "subject": "First-round control legend: semi-transparent, input-aware, derived from the real key maps",
+      "status": "completed"
+    },
+    {
+      "id": 188,
+      "subject": "Lobby one-click bot match for registered players → then ship v0.4.2 + deploy",
+      "status": "in_progress"
     }
   ]
 }

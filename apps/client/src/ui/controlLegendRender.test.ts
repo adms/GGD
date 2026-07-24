@@ -158,7 +158,12 @@ describe("the touch / couch top-gutter strip", () => {
     // minHeight, not height: the wrap is estimated, so real text must be able
     // to push the box taller rather than be clipped by it
     expect(out).toContain(`min-height:${rect.h}px`);
-    expect(out).not.toContain("overflow:hidden");
+    // …and the CONTAINER must not clip. Scoped to the container's own style
+    // attribute: SfxButton carries its own `overflow:hidden` for the ripple, so
+    // a whole-markup search would always match and never fail.
+    const container = out.slice(0, out.indexOf('"><div'));
+    expect(container).toContain("data-control-legend");
+    expect(container).not.toContain("overflow:hidden");
     expect(out).toContain("十字鍵 ↑"); // 天生技 lives on the d-pad
     expect(out).toContain("左類比");
     expect(out).toContain("Start");

@@ -92,6 +92,9 @@ class IndexTTSEngine(BaseEngine):
         `lang` is advisory for Chinese: the Traditional->Simplified pass applies
         to anything carrying Han characters regardless, because a line tagged
         "en" that happens to contain 「去死團」 has the same problem.
+
+        It is NOT advisory for Japanese. A `lang="ja"` line never reaches the
+        Han-conversion below, whatever --allow-kana says — see the second guard.
         """
         text = (entry.get("text") or "").strip()
         lang = (entry.get("lang") or "zh").lower()
@@ -108,6 +111,18 @@ class IndexTTSEngine(BaseEngine):
                     "this line to cosyvoice3 (the default engine — it speaks "
                     "Japanese from a katakana reading), add a \"romaji\" field, or "
                     "pass --allow-kana to render the failure on purpose.")
+            if not text:
+                raise TextUnsupported("empty text")
+            # --allow-kana means "render the documented failure on purpose", and
+            # the documented failure is kana -> <unk> -> noise. It does NOT mean
+            # "silently reinterpret the line as Chinese". Falling through to the
+            # to_simplified() call below would do exactly that: a kanji-only
+            # Japanese line has no kana for the noise to be audible in, so
+            # 「必殺技 参上」 became 「必杀技 参上」 and IndexTTS-2 read it through
+            # `checkpoints/pinyin.vocab` as Mandarin — confident, fluent, and the
+            # wrong language. That is the one Japanese failure mode a listener
+            # cannot detect by ear, so it is refused even under the opt-in.
+            return text
         if not text:
             raise TextUnsupported("empty text")
         if lang != "en":
