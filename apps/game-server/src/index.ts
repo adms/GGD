@@ -34,7 +34,40 @@ const PORT = Number(process.env.GAME_PORT ?? 2567);
 const CONTENT_DIR =
   process.env.CONTENT_DIR ?? join(dirname(fileURLToPath(import.meta.url)), "../../../content");
 const SHARED_SECRET = process.env.PLATFORM_GAME_SHARED_SECRET ?? "";
+/**
+ * The address the BROWSER is told to connect to. It travels to the client in
+ * `match_ready.endpoint` and is handed straight to `new Client(...)`, so it must
+ * be reachable FROM THE PLAYER, not from inside this container.
+ *
+ * The localhost default is right for development and catastrophic anywhere else:
+ * unset on the family deploy, every player's browser was told to open a socket
+ * to the game server on their own machine, where nothing listens, and the join
+ * failed instantly. It survived undetected because on the owner's own machine
+ * localhost:2567 really IS the game server — so local play worked perfectly —
+ * and nothing in the test suite connects from a remote browser.
+ */
 const PUBLIC_ENDPOINT = process.env.GAME_PUBLIC_ENDPOINT ?? `ws://localhost:${PORT}`;
+
+/**
+ * Refuse to hand out a localhost endpoint on a deploy that serves real players.
+ *
+ * A warning would not have helped: the boot log already carried a dozen lines
+ * and this one would have joined them. GGD_DEPLOY_TIER is set to "family" (or
+ * anything non-dev) precisely on the deploys where a localhost endpoint cannot
+ * possibly be correct, so there it is fatal — a server that refuses to start is
+ * a deploy you fix in one minute, where a server that starts and hands out an
+ * unreachable address is an evening of "按了沒反應".
+ */
+const DEPLOY_TIER = process.env.GGD_DEPLOY_TIER ?? "dev";
+if (DEPLOY_TIER !== "dev" && /^wss?:\/\/(localhost|127\.|\[?::1)/i.test(PUBLIC_ENDPOINT)) {
+  console.error(
+    `[game-server] FATAL: GGD_DEPLOY_TIER=${DEPLOY_TIER} but GAME_PUBLIC_ENDPOINT is ${PUBLIC_ENDPOINT}.\n` +
+      "  That address is what the PLAYER'S BROWSER is told to connect to, so a loopback value means every\n" +
+      "  remote join fails instantly. Set GAME_PUBLIC_ENDPOINT to the public route that proxies to this\n" +
+      "  container — e.g. wss://<host>/ws, matching nginx `location /ws/`.",
+  );
+  process.exit(1);
+}
 
 // FAIL-CLOSED boot guard (mirrors the platform's #126 checkRequiredSecrets): a
 // production deploy MUST carry PLATFORM_GAME_SHARED_SECRET. Without it the
