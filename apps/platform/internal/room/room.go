@@ -529,61 +529,6 @@ func (s *Service) StartSolo(ctx context.Context, actor string, st Settings) (Sta
 	return info, nil
 }
 
-// SoloRoomName is what a one-click bot match calls itself. It is a real room
-// with a real name because it is a real match — an operator reading the pending
-// set or a match record should see what it was, not a blank.
-const SoloRoomName = "單機 vs BOT"
-
-// StartSolo is the lobby's one-click bot match: create a private room for actor
-// and start it in the SAME call, so the player presses one button and is in a
-// match against 11 bots.
-//
-// WHY IT GOES THROUGH THE ORDINARY ROOM/START PATH INSTEAD OF A SHORTCUT.
-// The client already had a "Play vs bots" button; it joined the game-server
-// directly, which means the platform never learned the match existed. No
-// callbackUrl was handed to the room, so MatchRoom's result callback had nothing
-// to post to (it now derives one, but there is still no pending record, no
-// reserved seat, no room id) — the match settled into nothing: no record, no
-// MMR, no 水晶, no ladder row. That is the difference between a game mode and a
-// debug shortcut, and it is the entire point of this function.
-//
-// Routing it through Start therefore buys, for free and without a second code
-// path that can rot out of sync with the first:
-//   - a platform-issued matchId and a RESERVED seat (gamelink.StartMatch),
-//   - the callbackUrl that makes the result settle (gamelink/callback.go),
-//   - the pending record + gameRoomId the #187 liveness reaper reads, so the
-//     match heartbeats like any other and is not reaped mid-play,
-//   - the seat token pushed over the lobby WS, which is exactly how the client
-//     already enters a normal match — so the client change is one API call.
-//
-// WHAT IT PAYS. The anti-farm rule in gamelink/callback.go decides that, not
-// this function: 11 bots mean the lobby is not all-human, so M幣 is zero by
-// construction, and the earner's own team has bots on it, so 水晶 pay at HALF
-// rate. Rating, wins and season points are never gated. Soloing bots forever is
-// therefore worth playing and not worth farming — which is what makes it safe
-// to make this button real at all.
-//
-// The room is created UNLISTED: it exists for the few milliseconds between
-// create and start, and a stranger who joined in that window would be dragged
-// into somebody else's solo match.
-func (s *Service) StartSolo(ctx context.Context, actor string, st Settings) (StartInfo, error) {
-	if st.Name == "" {
-		st.Name = SoloRoomName
-	}
-	rm, err := s.create(ctx, actor, st, false)
-	if err != nil {
-		return StartInfo{}, err
-	}
-	info, err := s.Start(ctx, actor, rm.ID)
-	if err != nil {
-		// Nothing survives a failed start: an unlisted room nobody can find is
-		// not a lobby the player can fall back into, it is litter.
-		_ = s.Dispose(ctx, rm.ID)
-		return StartInfo{}, err
-	}
-	return info, nil
-}
-
 // OpenRoom is one lobby-list row.
 type OpenRoom struct {
 	Room
