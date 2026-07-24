@@ -19,6 +19,7 @@
 import type { CSSProperties } from "react";
 import { useHud } from "../../net/RoomStore";
 import { shopGate } from "../panels/shopGate";
+import { useLocalTeamEliminated } from "./localTeam";
 import {
   HUD_PANELS,
   HUD_Z,
@@ -72,11 +73,10 @@ export function useActiveHudPanels(): HudPanelSpec[] {
   const alive = useHud((s) => s.localAlive);
   const hasChampion = useHud((s) => s.localMaxHp > 0);
   const couch = useHud((s) => s.localPlayers.length > 1);
-  const teamEliminated = useHud((s) => {
-    if (s.localSeatId === null) return false;
-    const t = s.seats.find((v) => v.seatId === s.localSeatId)?.teamId;
-    return t === undefined ? false : (s.teams.find((v) => v.teamId === t)?.eliminated ?? false);
-  });
+  // ./localTeam owns this three-hop lookup for every surface that asks it (the
+  // shop gate, this registry, and #193's exit gate) — see its header for why a
+  // fourth inline copy is the failure mode worth spending a module on.
+  const teamEliminated = useLocalTeamEliminated();
   return HUD_PANELS.filter(
     (p) =>
       p.covers.length > 0 &&
