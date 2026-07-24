@@ -30,6 +30,7 @@ import {
   type PurchaseState,
 } from "./purchase";
 import { buildSkinOverrides } from "./catalog";
+import { ensureContentLoaded } from "../../content/bootContent";
 import { isPlatformRestrictedError, OFFLINE_RESTRICTED_MESSAGE } from "./firstOwner";
 import { restartAction, ONLINE_RESTART_NOTE } from "./restart";
 import { connectedPadIndices } from "../../input/GamepadInput";
@@ -728,6 +729,23 @@ export const appStore = createStore<AppState>()((set, get) => {
     async playBotMatch(mapId?: string) {
       if (get().botMatchBusy) return; // one click is one match
       set({ botMatchBusy: true, lastError: null });
+      // PRIME THE ONE-TIME CONTENT LOAD BEFORE THE SEAT IS MINTED (task #200).
+      // A colyseus seat reservation starts its expiry clock the instant the
+      // platform mints it — which is inside startSoloMatch below — but the seat
+      // cannot be CONSUMED until the client has downloaded the entry chunk +
+      // content tree (main.tsx's startMatch no-ops on `!isContentReady()`). On a
+      // COLD first press that download outlasts the reservation window, so the
+      // join arrives after the seat has expired and bounces back to the lobby;
+      // the warmed cache then makes every later press win the race, which is
+      // exactly the first-press-only, self-healing report. Awaiting the
+      // single-flight load (already in flight from boot) here means we do not
+      // ask the platform for a seat until we can consume it AT ONCE — there is
+      // no window left to lose. Resolves immediately once warm; never rejects
+      // (a failed load falls back to the skeleton and still resolves ready).
+      await ensureContentLoaded();
+      // A press can be abandoned while content loads (logout, navigation). If we
+      // are no longer the pending press, do not mint a seat nobody will claim.
+      if (!get().botMatchBusy || get().screen !== "lobby") return;
       try {
         await apiFns.startSoloMatch(mapId ? { mapId } : undefined);
       } catch (err) {
