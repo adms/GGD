@@ -85,6 +85,7 @@ import {
   hasOverheadBar,
   anchorColorFor,
   anchorHeightFor,
+  KIND_CHAMPION,
   KIND_FLOWER,
   KIND_GUARDIAN,
   KIND_REVIVE_CIRCLE,
@@ -114,7 +115,11 @@ import { envFactor, setDisplayEnvJson } from "./ui/displayFinal";
 import { audioSystem } from "./audio";
 import { loadChampionVoices, playChampionSelectVoice } from "./audio/championVoice";
 import { combatSfxKey } from "./audio/combatSfx";
+import { resolveSpatial } from "./audio/combatSfxSpatial";
+import { SpatialSfxQueue } from "./audio/SpatialSfxQueue";
+import type { SfxRelation, SpatialListener } from "./audio/spatial";
 import { FootstepCadence } from "./audio/footsteps";
+import { RemoteFootsteps, type FootstepSample } from "./audio/remoteFootsteps";
 import { effectiveQuality, onQualityChange } from "./render/RenderConfig";
 import {
   heavyPostFxEnabled,
@@ -218,6 +223,21 @@ export class GameApp {
   private roundWinnerUntilMs = 0;
   /** local-champion footstep cadence (subtle walk/run cue). */
   private readonly footstep = new FootstepCadence();
+  /**
+   * SPATIAL COMBAT AUDIO (see audio/spatial).
+   *
+   * `sfxQueue` collects the frame's combat sounds instead of firing them inline,
+   * so they can be sorted by what matters BEFORE the SfxGate sees them and so
+   * the listener frame is the current one (the drain is step 1, the camera is
+   * step 5 — an inline pan would be a frame stale).
+   *
+   * `remoteSteps` derives a footstep cadence for the OTHER eleven champions,
+   * which the sim deliberately emits no event for.
+   */
+  private readonly sfxQueue = new SpatialSfxQueue();
+  private readonly remoteSteps = new RemoteFootsteps();
+  /** scratch for the per-frame remote-footstep sampling (no per-frame alloc). */
+  private readonly stepSamples: FootstepSample[] = [];
   /**
    * OS `prefers-reduced-motion`, read ONCE at construction (it is stable for the
    * life of a match, and the drain path must not touch matchMedia per event).
@@ -679,6 +699,8 @@ export class GameApp {
     this.victoryFx.dispose(); // disposes the chicken mesh + both firework pools
     this.roundWinner.dispose(); // tears down the round-end winner overlay canvas
     this.footstep.reset();
+    this.remoteSteps.reset();
+    this.sfxQueue.reset(); // drop any un-flushed batch — teardown must be silent
     this.views.dispose();
     this.renderer.dispose(); // stops + disposes the Babylon engine/scene
     this.interp.clear();
@@ -824,8 +846,21 @@ export class GameApp {
       this.views.handleEvent(ev, nowMs); // anim pulses + hit flash + hitstop
       this.casts.handleEvent(ev, nowMs); // cast/windup timing → cast bars
       this.applyCombatFeedback(ev, localId, nowMs); // camera kick/punch-in + vignette + ripple
-      const sfxKey = combatSfxKey(ev); // per-frame combat SFX (fire-and-forget)
-      if (sfxKey) audioSystem.playSfx(sfxKey);
+      // Per-frame combat SFX. QUEUED, not played: the listener frame is only
+      // current after the camera update (step 5), and the batch has to be sorted
+      // by priority before the SfxGate sees it — `abilityCast` admits ONE voice
+      // per 1.2 s arena-wide, so without the sort the cast you hear in a twelve
+      // body fight is decided by packet order. See audio/SpatialSfxQueue.
+      //
+      // `resolveSpatial` returning null is NOT "drop it": it means the event is
+      // deliberately centred (guardianSlain's gold chime, rankUp, fireRingStart)
+      // or its position is not resolvable this frame, and a null source plays
+      // exactly as it does today. Only `spatialMix` (inside the flush) decides
+      // that something is out of range and must not play at all.
+      const sfxKey = combatSfxKey(ev);
+      if (sfxKey) {
+        this.sfxQueue.push(sfxKey, resolveSpatial(ev, this.audioEntityPos, localId, this.audioTeamOf));
+      }
       if (ev.type === "death" && state) {
         recordDeathEvent(ev, state);
         // task #85: the ONLY signal that means "you died", as opposed to the
@@ -911,17 +946,21 @@ export class GameApp {
 
     // 4) entity views — imperative transform writes
     const localPose = this.prediction.active ? this.prediction.renderPose(dtMs, renderAlpha) : null;
-    // subtle footstep cue for the local champion (cooldown-gated in playSfx)
+    // Subtle footstep cue for the local champion. Queued CENTRED (source null):
+    // it is at the listener, so panning it would be a no-op by construction —
+    // but going through the queue gives it the `self` priority band, so your own
+    // step beats a stranger's for the shared `footstep` gate slot.
     if (localPose) {
-      if (this.footstep.advance(localPose.x, localPose.z)) audioSystem.playSfx("footstep");
+      if (this.footstep.advance(localPose.x, localPose.z)) this.sfxQueue.push("footstep", null);
     } else {
       this.footstep.reset();
     }
     if (state) {
       const center = localPose ? { x: localPose.x, z: localPose.z } : this.localSelfPos();
       const drawDist = this.renderParams.drawDistance;
+      const entities = this.collectEntities(state);
       this.views.sync({
-        entities: this.collectEntities(state),
+        entities,
         poseFor: (e) => {
           if (e.id === this.predictedEntityId && localPose && e.alive) return localPose;
           return this.interp.sample(e.id, renderTick) ?? { x: e.x, z: e.z, fx: e.fx, fz: e.fz };
@@ -934,6 +973,40 @@ export class GameApp {
             ? { cx: center.x, cz: center.z, maxDistance: drawDist }
             : undefined,
       });
+
+      // 4a) REMOTE FOOTSTEPS. Eleven of the twelve bodies in a fight are silent
+      // today: the sim deliberately emits no per-tick footstep event, so the cue
+      // has to be derived here, from the RENDERED positions (post-interpolation,
+      // post-cull) that the player can actually see. Fed after `views.sync` so
+      // `posOf` is this frame's, not last frame's.
+      this.stepSamples.length = 0;
+      for (const e of entities) {
+        if (e.kind !== KIND_CHAMPION || !e.alive) continue;
+        // The local champion is excluded here and ONLY here: it has its own
+        // cadence above, fed from the prediction pose. Keying the exclusion on
+        // the HUD's localEntityId (not predictedEntityId) keeps the two paths
+        // mutually exclusive even on the frames where prediction is inactive.
+        if (e.id === localId) continue;
+        const p = this.views.posOf(e.id);
+        if (!p) continue; // culled or not yet spawned — no step this frame
+        this.stepSamples.push({ id: e.id, x: p.x, z: p.z });
+      }
+      if (this.stepSamples.length > 0) {
+        // nearest-first is measured from the BODY, like every other level
+        // decision — a camera panned away must not re-rank whose steps you hear
+        const anchor = localPose ?? this.localSelfPos() ?? this.viewports.primary.audioTarget;
+        const steps = this.remoteSteps.step(this.stepSamples, anchor.x, anchor.z, nowMs);
+        for (const s of steps) {
+          this.sfxQueue.push("footstep", {
+            x: s.x,
+            z: s.z,
+            cls: "texture",
+            relation: this.footstepRelation(s.id, localId),
+          });
+        }
+      }
+    } else {
+      this.remoteSteps.reset();
     }
 
     // 5) cameras — one per local player, each following its own champion.
@@ -971,7 +1044,14 @@ export class GameApp {
     // camera after the update above, never a stand-in rectangle.
     frameBus.cameraView = this.cameraRig.groundView();
 
-    // 5b) decor auto-fade — ghost tall landmark props (audit #29 "fade") that
+    // 5b) FLUSH THE COMBAT SOUND FIELD. Deliberately here and not at the drain:
+    // the listener is only current once the camera has moved (just above) and
+    // the views have synced (step 4). The cost is up to one frame of added
+    // latency on a one-shot — far under the network jitter already in the pipe,
+    // and the queue had to exist for the priority sort anyway.
+    this.sfxQueue.flush(this.audioListener(localPose), (key, opts) => audioSystem.playSfx(key, opts));
+
+    // 5c) decor auto-fade — ghost tall landmark props (audit #29 "fade") that
     // block any camera→hero sightline; no-op on arenas without fade props.
     this.updateDecorFade(dtMs, state !== null);
 
@@ -1169,6 +1249,67 @@ export class GameApp {
     const es = this.conn.room?.state.entities.get(String(id));
     if (!es) return null;
     return this.teamBySeat.get(es.seatId) ?? null;
+  }
+
+  // ------------------------------------------------- spatial combat audio --
+  //
+  // The SAME two accessors the VFX layer is given at construction, so a sound
+  // can never end up where the sparks are not. Bound once as fields rather than
+  // built per event — the drain runs them for every combat event, every frame.
+
+  private readonly audioEntityPos = (id: number): { x: number; z: number } | null =>
+    this.views.posOf(id) ?? this.schemaPos(id);
+
+  private readonly audioTeamOf = (id: number): number | null => this.teamOfEntity(id);
+
+  /**
+   * The listener frame: a SPLIT anchor, deliberately.
+   *
+   *   • LEVEL (volume + priority) = the local champion's own rendered body.
+   *     "How much does this matter to me" is a question about where my body is,
+   *     so a camera panned across the arena must never quieten the hit landing
+   *     on my champion.
+   *   • DIRECTION (pan + depth) = camera rig 0's UNSHAKEN target. "Where do I
+   *     look" is a question about the frame, so screen-left is always audio-left.
+   *
+   * Under followLock — all of normal combat — the two are the same point to
+   * within the 90 ms follow lerp. They only diverge in free-pan and while dead
+   * (spectatorCenter), which are exactly the two states where a single anchor
+   * would be wrong. With no living body the level anchor falls back to the
+   * camera target rather than going silent.
+   *
+   * Rig 0 only: there is one AudioContext, so split-screen player 2 hears
+   * player 1's field. Stated, accepted — and the same convention `frameBus.project`,
+   * the minimap and VictoryFireworks already use.
+   *
+   * NEVER null: a GameApp always has a camera rig, so the sound field is always
+   * buildable. (`SpatialSfxQueue.flush` still accepts null and degrades to
+   * centred — that is its own defence for any future caller, not a state this
+   * one reaches.)
+   */
+  private audioListener(localPose: { x: number; z: number } | null): SpatialListener {
+    const dir = this.viewports.primary.audioTarget;
+    const body = localPose ?? this.localSelfPos();
+    if (!body) {
+      // dead / spectating / pre-spawn: place the ear at the camera. Combat still
+      // sounds directional, it just no longer has a body to be centred on.
+      return { levelX: dir.x, levelZ: dir.z, dirX: dir.x, dirZ: dir.z };
+    }
+    return { levelX: body.x, levelZ: body.z, dirX: dir.x, dirZ: dir.z };
+  }
+
+  /**
+   * Whose footstep this is. There is no event and therefore no actor/victim —
+   * only team membership, which is the whole point: an enemy's step is the
+   * one you need to hear over your own team's shuffling.
+   */
+  private footstepRelation(id: number, localId: number | null): SfxRelation {
+    if (localId === null) return "third";
+    if (id === localId) return "self";
+    const mine = this.teamOfEntity(localId);
+    const theirs = this.teamOfEntity(id);
+    if (mine === null || theirs === null) return "third";
+    return mine === theirs ? "ally" : "enemy";
   }
 
   /**

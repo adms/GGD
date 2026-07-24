@@ -30,6 +30,17 @@
  *   sfxManifest   which SFX each scene warms (task #63: per-scene SFX preload)
  *   victoryTaunt  round/match victory taunt VO — the line is DETERMINISTIC in
  *                 replicated state so every client hears the same joke (#93)
+ *   spatial       PURE 3D sound-field geometry: world position + listener frame
+ *                 → volume / pan / depth low-pass / priority. No WebAudio, no
+ *                 Babylon — which is what lets the design be asserted against
+ *                 known camera geometry instead of through a graph mock
+ *   combatSfxSpatial  WHERE each combat event's sound is and WHOSE it is (keyed
+ *                 by ev.type, never by SFX key, so sfxReachability stays intact)
+ *   SpatialSfxQueue   one frame's batch, sorted by priority BEFORE the SfxGate
+ *                 sees it — the half of 「不知道誰做了什麼」 that panning alone
+ *                 cannot fix
+ *   remoteFootsteps   derived walking cue for the OTHER eleven champions, which
+ *                 the sim deliberately emits no event for
  */
 export * from "./types";
 export * from "./audioSelect";
@@ -45,5 +56,9 @@ export * from "./countdownCue";
 export * from "./championVoice";
 export * from "./selectVoiceLadder";
 export * from "./sfxManifest";
+export * from "./spatial";
+export * from "./combatSfxSpatial";
+export * from "./SpatialSfxQueue";
+export * from "./remoteFootsteps";
 export { AudioSystem, audioSystem, AUDIO_CONTENT_BASE, AUDIO_MAP_PATH, VOLUME_RAMP_MS } from "./AudioSystem";
 export type { AudioSystemOptions, BedEndedEvent, SfxPlayOptions } from "./AudioSystem";

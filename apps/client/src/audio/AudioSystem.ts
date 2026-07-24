@@ -53,6 +53,18 @@ import { withContentVersion } from "../content/assetVersion";
  */
 export const VOLUME_RAMP_MS = 25;
 
+/**
+ * How many spare panners / low-pass filters the spatial insert pool keeps.
+ *
+ * Σ maxConcurrent over the combat keys in `content/config/audio-map.json` is
+ * 115, but a real frame never approaches that (the per-key cooldowns bound it
+ * long before the caps do), and every voice that IS in flight is holding its
+ * nodes rather than sitting in the pool. 24 is comfortably above the steady
+ * state of a twelve-body fight and is a floor on memory, not a limit on
+ * playback: past the cap a returned node is simply dropped for the GC.
+ */
+export const SPATIAL_POOL_MAX = 24;
+
 /** Default content mount (same one ContentDb fetches docs from). */
 export const AUDIO_CONTENT_BASE = "/content/";
 /** Path of the authored map, fetched directly so it works pre-reindex. */
@@ -188,6 +200,44 @@ export interface SfxPlayOptions {
   volume?: number;
   /** stereo pan -1 (left) … 0 (centre) … +1 (right); omitted = centred, no panner */
   pan?: number;
+  /**
+   * Low-pass cutoff in Hz for the 前後 (screen depth) cue — omitted or ≥ Nyquist
+   * means NO filter node at all. See `audio/spatial.depthTilt` for why depth is
+   * a timbre axis here rather than an HRTF elevation angle: the combat camera is
+   * pinned at 68° with yaw ≡ 0, so nothing in the arena is ever behind the
+   * listener and HRTF's distinguishing cue never engages.
+   */
+  lowpassHz?: number;
+  /**
+   * Which SfxGate budget this voice competes in. Defaults to the event name, so
+   * every pre-existing caller is byte-identical. The CLIP still comes from the
+   * event's own map entry — only the rate limiting is re-keyed.
+   *
+   * It exists because the gate's cooldown is CROSS-FRAME and keyed on the event
+   * string alone, so a newly-added source of a key silently starves the old one:
+   * eleven remote footstep feeders cut the local player's own steps to 21 %
+   * (measured; see `audio/spatial.gateKeyFor`). A caller that adds a new
+   * population to an existing key gives that population its own band instead of
+   * taking the incumbent's slots.
+   */
+  gateKey?: string;
+}
+
+/**
+ * The per-voice spatial insert: `voiceGain → [panner] → [lowpass] → sfxBus`.
+ *
+ * `head` is what the voice gain connects TO and `tail` is what connects to the
+ * BUS — never around it, so the SFX slider and both mutes keep applying exactly
+ * as before. Returns null when the call asked for nothing spatial (the plain,
+ * centred, full-gain path every pre-existing caller relies on) or when the
+ * context predates the node types (old Safari), in which case the voice wires
+ * straight to the bus — degraded to centred, NEVER to silence.
+ */
+interface SpatialChain {
+  head: AudioNode;
+  tail: AudioNode;
+  /** disconnect every node in the chain; idempotent, never throws. */
+  dispose(): void;
 }
 
 function defaultCtxFactory(): AudioContext | null {
@@ -754,46 +804,64 @@ export class AudioSystem {
     const ctx = this.ensureCtx();
     const bus = this.sfxBus;
     if (!ctx || !bus) return false;
-    if (!this.gate.tryAcquire(event, entry, this.now())) return false;
+    // The gate is keyed by BAND, not by event: see SfxPlayOptions.gateKey. The
+    // clip, its gain and its cooldown/cap numbers all still come from `entry`
+    // (the event's own map row) — only WHICH tally they are counted against
+    // moves, and only for a caller that asks.
+    const gateKey = opts?.gateKey ?? event;
+    if (!this.gate.tryAcquire(gateKey, entry, this.now())) return false;
     const file = pickSfxFile(entry, this.rng);
     if (!file) {
-      this.gate.release(event);
+      this.gate.release(gateKey);
       return false;
     }
     const volMul = sfxVoiceMultiplier(opts?.volume);
     const pan = opts?.pan;
+    const lowpassHz = opts?.lowpassHz;
     void this.loadBuffer(file).then((buffer) => {
       if (!buffer || this.disposed) {
-        this.gate.release(event);
+        this.gate.release(gateKey);
         return;
       }
+      let gain: GainNode | null = null;
+      let chain: SpatialChain | null = null;
       try {
-        const gain = ctx.createGain();
+        gain = ctx.createGain();
         gain.gain.value = (entry.gain ?? 1) * volMul;
-        const panner = this.makePanner(ctx, pan);
+        chain = this.makeSpatialChain(ctx, pan, lowpassHz);
         const src = ctx.createBufferSource();
         src.buffer = buffer;
         src.connect(gain);
-        if (panner) {
-          gain.connect(panner);
-          panner.connect(bus);
+        if (chain) {
+          gain.connect(chain.head);
+          chain.tail.connect(bus);
         } else {
           gain.connect(bus);
         }
+        const g = gain;
+        const c = chain;
         src.onended = (): void => {
-          this.gate.release(event);
-          this.safeDisconnect(src, gain);
-          if (panner) {
-            try {
-              panner.disconnect();
-            } catch {
-              /* already gone */
-            }
-          }
+          this.gate.release(gateKey);
+          this.safeDisconnect(src, g);
+          c?.dispose();
         };
         src.start();
       } catch (err) {
-        this.gate.release(event);
+        this.gate.release(gateKey);
+        // TEARDOWN ON THE THROW PATH. If the wiring above succeeded and only
+        // `src.start()` threw, the gain and the spatial nodes are already
+        // edge-connected to the SFX bus and `onended` will never fire. Leaving
+        // them attached was survivable when a voice was one GainNode; it is not
+        // something to keep doing now that every positioned one-shot can carry a
+        // panner and a filter too.
+        if (gain) {
+          try {
+            gain.disconnect();
+          } catch {
+            /* already gone */
+          }
+        }
+        chain?.dispose();
         this.warn(`sfx ${event} failed`, err);
       }
     });
@@ -816,33 +884,40 @@ export class AudioSystem {
     if (!ctx || !bus) return false;
     const volMul = sfxVoiceMultiplier(opts?.volume);
     const pan = opts?.pan;
+    const lowpassHz = opts?.lowpassHz;
     void this.loadBuffer(path).then((buffer) => {
       if (!buffer || this.disposed) return;
+      let gain: GainNode | null = null;
+      let chain: SpatialChain | null = null;
       try {
-        const gain = ctx.createGain();
+        gain = ctx.createGain();
         gain.gain.value = volMul;
-        const panner = this.makePanner(ctx, pan);
+        chain = this.makeSpatialChain(ctx, pan, lowpassHz);
         const src = ctx.createBufferSource();
         src.buffer = buffer;
         src.connect(gain);
-        if (panner) {
-          gain.connect(panner);
-          panner.connect(bus);
+        if (chain) {
+          gain.connect(chain.head);
+          chain.tail.connect(bus);
         } else {
           gain.connect(bus);
         }
+        const g = gain;
+        const c = chain;
         src.onended = (): void => {
-          this.safeDisconnect(src, gain);
-          if (panner) {
-            try {
-              panner.disconnect();
-            } catch {
-              /* already gone */
-            }
-          }
+          this.safeDisconnect(src, g);
+          c?.dispose();
         };
         src.start();
       } catch (err) {
+        if (gain) {
+          try {
+            gain.disconnect();
+          } catch {
+            /* already gone */
+          }
+        }
+        chain?.dispose();
         this.warn(`clip ${path} failed`, err);
       }
     });
@@ -850,21 +925,132 @@ export class AudioSystem {
   }
 
   /**
-   * A StereoPanner for a positioned one-shot, or null when no pan was requested
-   * or the context predates StereoPannerNode (old Safari) — the voice then
-   * connects straight to the bus (centred), never breaking playback.
+   * Build the per-voice spatial insert, or null when the call is plain/centred.
+   *
+   * WHY PER-SHOT AND NOT POOLED. The allocation-per-sound pattern already exists
+   * and always has — a fresh `GainNode` per one-shot, plus a fresh
+   * `StereoPannerNode` for every positioned one since the login dragon. This
+   * adds at most one `BiquadFilterNode`, a multiplier on an existing pattern
+   * rather than a new class of problem. Against the measured ceilings (Σ
+   * `maxConcurrent` over the combat-reachable keys = 115 voices; a busy
+   * teamfight is ~8–25 concurrent, 20–50 starts/s) a StereoPanner is ~2
+   * multiplies/sample and a Biquad ~5, i.e. well under 1 % of a core at 25
+   * voices. Pooling would be optimising a rounding error — and would be actively
+   * WORSE: the `catch` paths above would have to return nodes to a free list, so
+   * a throw would leak a pooled node permanently instead of leaving collectable
+   * graph litter. Pooling converts a benign bug into a live one.
+   *
+   * Degradation is one-way: a context without `createStereoPanner` /
+   * `createBiquadFilter`, or a throw while building, yields a less-spatial
+   * voice — never a silent one.
    */
-  private makePanner(ctx: AudioContext, pan?: number): StereoPannerNode | null {
-    if (pan === undefined) return null;
+  private makeSpatialChain(ctx: AudioContext, pan?: number, lowpassHz?: number): SpatialChain | null {
+    const nodes: AudioNode[] = [];
+    let panner: StereoPannerNode | null = null;
+    let filter: BiquadFilterNode | null = null;
+
+    if (pan !== undefined) {
+      panner = this.takePanner(ctx);
+      if (panner) {
+        panner.pan.value = clampPan(pan);
+        nodes.push(panner);
+      }
+    }
+
+    // A cutoff at or above the audible ceiling is a no-op filter; skip the node
+    // rather than pay for it (this is the common case in your own melee, where
+    // the depth offset is ~0). Non-finite input can never reach the AudioParam.
+    if (typeof lowpassHz === "number" && Number.isFinite(lowpassHz) && lowpassHz > 0 && lowpassHz < 20000) {
+      filter = this.takeFilter(ctx);
+      if (filter) {
+        filter.type = "lowpass";
+        filter.frequency.value = Math.max(80, lowpassHz);
+        nodes.push(filter);
+      }
+    }
+
+    if (nodes.length === 0) return null;
+    for (let i = 0; i < nodes.length - 1; i++) nodes[i]!.connect(nodes[i + 1]!);
+    let released = false;
+    return {
+      head: nodes[0]!,
+      tail: nodes[nodes.length - 1]!,
+      dispose: (): void => {
+        for (const n of nodes) {
+          try {
+            n.disconnect();
+          } catch {
+            /* already gone */
+          }
+        }
+        // Idempotent: `dispose` is reachable from BOTH `onended` and the
+        // start-threw teardown, and returning the same node to the pool twice
+        // would hand one panner to two live voices at once.
+        if (released) return;
+        released = true;
+        if (panner) this.givePanner(panner);
+        if (filter) this.giveFilter(filter);
+      },
+    };
+  }
+
+  // ------------------------------------------------------------------------
+  // SPATIAL INSERT POOL
+  //
+  // A pre-spatial voice was ONE node (a GainNode) and lived for the length of a
+  // clip. A positioned one adds a panner and sometimes a low-pass, and combat
+  // fires them at the rate the SfxGate allows across a dozen keys — so the
+  // number that matters is not how many nodes are alive (that is bounded by the
+  // gate) but how many are CONSTRUCTED per second, because that is what feeds
+  // the GC on the frame thread.
+  //
+  // MEASURED on a 240-sound duel-zone mix: 1.00 node/voice centred, 2.09
+  // positioned. Pooling does not change what is connected at any instant; it
+  // changes the churn, so a fight that has reached steady state constructs
+  // nothing at all. Both numbers are asserted in spatialDelivery.test.ts.
+  //
+  // A pooled node is only ever handed out while it is DISCONNECTED (dispose
+  // disconnects first, and is idempotent), so a returned node can never still be
+  // carrying audio. The caps exist so a pathological burst cannot grow the pool
+  // without bound — past the cap a node is simply dropped for the GC, which is
+  // exactly the old behaviour.
+  // ------------------------------------------------------------------------
+
+  private readonly pannerPool: StereoPannerNode[] = [];
+  private readonly filterPool: BiquadFilterNode[] = [];
+
+  private takePanner(ctx: AudioContext): StereoPannerNode | null {
+    const pooled = this.pannerPool.pop();
+    if (pooled) return pooled;
     const maker = (ctx as unknown as { createStereoPanner?: () => StereoPannerNode }).createStereoPanner;
-    if (typeof maker !== "function") return null;
+    if (typeof maker !== "function") return null; // old/limited context — stay centred, never fail the voice
     try {
-      const node = maker.call(ctx);
-      node.pan.value = clampPan(pan);
-      return node;
+      return maker.call(ctx);
     } catch {
       return null;
     }
+  }
+
+  private givePanner(node: StereoPannerNode): void {
+    if (this.disposed || this.pannerPool.length >= SPATIAL_POOL_MAX) return;
+    this.pannerPool.push(node);
+  }
+
+  private takeFilter(ctx: AudioContext): BiquadFilterNode | null {
+    const pooled = this.filterPool.pop();
+    if (pooled) return pooled;
+    const maker = (ctx as unknown as { createBiquadFilter?: () => BiquadFilterNode }).createBiquadFilter;
+    if (typeof maker !== "function") return null; // unfiltered rather than unplayed
+    try {
+      return maker.call(ctx);
+    } catch {
+      return null;
+    }
+  }
+
+  private giveFilter(node: BiquadFilterNode): void {
+    if (this.disposed || this.filterPool.length >= SPATIAL_POOL_MAX) return;
+    this.filterPool.push(node);
   }
 
   /** Voices in flight for an event (tests / diagnostics). */
@@ -1122,6 +1308,13 @@ export class AudioSystem {
     // natural end; dropping the subscribers as well makes that structural.
     this.bedEndListeners.clear();
     this.gate.reset();
+    // The spatial insert pool holds nodes belonging to the context we are about
+    // to close. Dropping them here (rather than letting them ride) means a
+    // rebuilt AudioSystem never hands a node from a CLOSED context to a voice
+    // in a live one — `givePanner`/`giveFilter` also refuse once disposed, so a
+    // clip that ends after teardown cannot refill it either.
+    this.pannerPool.length = 0;
+    this.filterPool.length = 0;
     this.rotation.reset();
     this.buffers.clear();
     this.bgmLoadOrder.length = 0;

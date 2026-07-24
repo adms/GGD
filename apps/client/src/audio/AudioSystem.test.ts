@@ -28,17 +28,38 @@ class FakeParam {
     this.value = v;
   }
 }
-class FakeGain {
+/**
+ * Connect/disconnect are RECORDED, not swallowed. The old fakes had empty
+ * bodies, so no test in this repo could prove any spatial node was ever torn
+ * down — "the panner is disconnected" was a claim from reading the source. With
+ * `connections` tracked, the teardown tests below can assert the connected-node
+ * count returns to zero on BOTH the happy path and the throw path.
+ */
+class FakeNode {
+  connections = 0;
+  disconnects = 0;
+  connect(): void {
+    this.connections++;
+  }
+  disconnect(): void {
+    this.disconnects++;
+    this.connections = 0;
+  }
+  get connected(): boolean {
+    return this.connections > 0;
+  }
+}
+class FakeGain extends FakeNode {
   gain = new FakeParam();
-  connect(): void {}
-  disconnect(): void {}
 }
-class FakePanner {
+class FakePanner extends FakeNode {
   pan = new FakeParam();
-  connect(): void {}
-  disconnect(): void {}
 }
-class FakeSource {
+class FakeFilter extends FakeNode {
+  type = "";
+  frequency = new FakeParam();
+}
+class FakeSource extends FakeNode {
   buffer: unknown = null;
   loop = false;
   onended: (() => void) | null = null;
@@ -47,10 +68,14 @@ class FakeSource {
   /** captured args of start(when, offset) — the task #109 phase-resume seam */
   startWhen = 0;
   startOffset = 0;
-  constructor(private ctx: FakeCtx) {}
-  connect(): void {}
-  disconnect(): void {}
+  constructor(private ctx: FakeCtx) {
+    super();
+  }
   start(when = 0, offset = 0): void {
+    if (this.ctx.failNextStart) {
+      this.ctx.failNextStart = false;
+      throw new Error("start failed");
+    }
     this.started = true;
     this.startWhen = when;
     this.startOffset = offset;
@@ -73,6 +98,9 @@ class FakeCtx {
   started: FakeSource[] = [];
   gains: FakeGain[] = [];
   panners: FakePanner[] = [];
+  filters: FakeFilter[] = [];
+  /** set to make the NEXT src.start() throw (exercises the catch/teardown) */
+  failNextStart = false;
   /** decoded-buffer duration (seconds) — parametrised for the loop-resume test */
   constructor(readonly bufferDuration = 1) {}
   createGain(): FakeGain {
@@ -85,8 +113,17 @@ class FakeCtx {
     this.panners.push(p);
     return p;
   }
+  createBiquadFilter(): FakeFilter {
+    const f = new FakeFilter();
+    this.filters.push(f);
+    return f;
+  }
   createBufferSource(): FakeSource {
     return new FakeSource(this);
+  }
+  /** every spatial insert node currently wired into the graph */
+  connectedSpatialNodes(): number {
+    return [...this.panners, ...this.filters].filter((n) => n.connected).length;
   }
   decodeAudioData(_bytes: ArrayBuffer): Promise<AudioBuffer> {
     return Promise.resolve({ duration: this.bufferDuration } as unknown as AudioBuffer);
@@ -396,7 +433,116 @@ describe("AudioSystem positioned SFX (audio-sfx-volume-pan)", () => {
     expect(sys.playSfx("death")).toBe(true); // no opts → back-compat path
     await flush();
     expect(ctx.panners.length).toBe(0); // centred → no StereoPanner node
+    expect(ctx.filters.length).toBe(0); // ...and no depth filter either
     expect(ctx.gains[ctx.gains.length - 1]!.gain.value).toBeCloseTo(1); // authored gain (default 1)
+    sys.dispose();
+  });
+});
+
+/**
+ * The 前後 (screen-depth) insert and — the thing this repo has never actually
+ * proven — that the spatial nodes are TORN DOWN. The pre-existing fakes had
+ * empty `disconnect()` bodies, so "the panner is disconnected" was a claim from
+ * reading the source, not a tested fact. It matters more now: a positioned
+ * one-shot can carry a panner AND a filter, and the throw path used to release
+ * the gate while leaving both wired to the SFX bus.
+ */
+describe("AudioSystem spatial insert + teardown (audio-spatial-graph)", () => {
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => vi.useRealTimers());
+
+  it("inserts a low-pass at the requested cutoff, between the voice gain and the bus", async () => {
+    cover("audio-spatial-graph");
+    const { sys, ctxRef } = build({ now: () => 0 });
+    await sys.loadMap();
+    sys.unlock();
+    await flush();
+    const ctx = ctxRef()!;
+    expect(sys.playSfx("death", { volume: 0.5, pan: -0.4, lowpassHz: 3008 })).toBe(true);
+    await flush();
+    expect(ctx.panners.length).toBe(1);
+    expect(ctx.panners[0]!.pan.value).toBeCloseTo(-0.4);
+    expect(ctx.filters.length).toBe(1);
+    expect(ctx.filters[0]!.type).toBe("lowpass");
+    expect(ctx.filters[0]!.frequency.value).toBeCloseTo(3008);
+    // the voice gain still carries the per-call volume → the SFX bus slider and
+    // mute, which sit downstream of the insert, are unaffected
+    expect(ctx.gains[ctx.gains.length - 1]!.gain.value).toBeCloseTo(0.5);
+    sys.dispose();
+  });
+
+  it("skips the filter node for an inaudible cutoff and for a non-finite one", async () => {
+    cover("audio-spatial-graph");
+    let t = 0;
+    const { sys, ctxRef } = build({ now: () => t });
+    await sys.loadMap();
+    sys.unlock();
+    await flush();
+    const ctx = ctxRef()!;
+    expect(sys.playSfx("death", { pan: 0, lowpassHz: 20000 })).toBe(true); // at the ceiling
+    await flush();
+    expect(ctx.panners.length).toBe(1); // the pan insert still happened...
+    expect(ctx.filters.length).toBe(0); // ...but no filter was worth allocating
+    t += 1000; // past the death cooldown
+    ctx.started[ctx.started.length - 1]!.end();
+    expect(sys.playSfx("death", { pan: 0, lowpassHz: NaN })).toBe(true);
+    await flush();
+    expect(ctx.filters.length).toBe(0); // a NaN can never reach the AudioParam
+    sys.dispose();
+  });
+
+  it("disconnects EVERY spatial node when the clip ends", async () => {
+    cover("audio-spatial-graph");
+    const { sys, ctxRef } = build({ now: () => 0 });
+    await sys.loadMap();
+    sys.unlock();
+    await flush();
+    const ctx = ctxRef()!;
+    expect(sys.playSfx("death", { pan: 0.6, lowpassHz: 2400 })).toBe(true);
+    await flush();
+    expect(ctx.connectedSpatialNodes()).toBe(2); // panner + filter, both wired in
+    ctx.started[ctx.started.length - 1]!.end(); // clip finishes
+    expect(ctx.connectedSpatialNodes()).toBe(0); // ...and both are released
+    expect(ctx.panners[0]!.disconnects).toBeGreaterThan(0);
+    expect(ctx.filters[0]!.disconnects).toBeGreaterThan(0);
+    expect(sys.activeVoices("death")).toBe(0); // gate slot returned too
+    sys.dispose();
+  });
+
+  it("ALSO disconnects them when src.start() throws (the path onended never runs on)", async () => {
+    cover("audio-spatial-graph");
+    const { sys, ctxRef } = build({ now: () => 0 });
+    await sys.loadMap();
+    sys.unlock();
+    await flush();
+    const ctx = ctxRef()!;
+    ctx.failNextStart = true;
+    expect(() => sys.playSfx("death", { pan: -0.7, lowpassHz: 1800 })).not.toThrow();
+    await flush();
+    expect(ctx.panners.length).toBe(1); // the nodes WERE built before the throw
+    expect(ctx.filters.length).toBe(1);
+    expect(ctx.connectedSpatialNodes()).toBe(0); // ...and none is left on the bus
+    expect(sys.activeVoices("death")).toBe(0); // gate released, as before
+    sys.dispose();
+  });
+
+  it("makes no AudioContext and no spatial node at all when silenced (task #62)", async () => {
+    cover("audio-spatial-graph");
+    let t = 0;
+    const { sys, ctxRef } = build({ silent: true, now: () => t });
+    await sys.loadMap();
+    sys.unlock();
+    await flush();
+    // a whole batch of positioned one-shots, exactly as a busy frame would flush
+    for (let i = 0; i < 20; i++) {
+      t += 400;
+      expect(sys.playSfx("death", { volume: 0.4, pan: -0.5, lowpassHz: 2000 })).toBe(false);
+    }
+    await flush();
+    // the guard is STRUCTURAL: a silenced system's ctxFactory returns null, so
+    // ensureCtx() fails and every play short-circuits before any node exists.
+    expect(ctxRef()).toBeNull();
+    expect(sys.isSilenced).toBe(true);
     sys.dispose();
   });
 });

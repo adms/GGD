@@ -183,6 +183,26 @@ export class CameraRig {
     return this.camera.position;
   }
 
+  /**
+   * The UNSHAKEN ground target — the direction anchor for the combat sound field
+   * (audio/spatial). Read this, never `eye` and never `groundView()`.
+   *
+   * `apply()` writes the SHAKEN eye into both the camera transform and
+   * `recordSightline`, so `groundView().yawRad` is `atan2(-shakeX, back - shakeZ)`.
+   * At the default dolly of 10 the standoff is only 3.75 u, so a SHAKE_SUM_MAX
+   * impulse swings that reported yaw by 25.7°. A minimap box rotating 25° for
+   * 200 ms is invisible; a soundfield swinging 25° on every heavy hit is audible
+   * smearing, arriving exactly when legibility matters most. The target itself
+   * never carries the shake, which is why it is the one safe listener basis.
+   *
+   * Returned by value: the internal `target` is mutated in place every frame,
+   * so handing out the reference would let a caller observe it changing under
+   * them mid-frame.
+   */
+  get audioTarget(): { x: number; z: number } {
+    return { x: this.target.x, z: this.target.z };
+  }
+
   private get dollyMax(): number {
     return this.dead ? DOLLY_MAX_DEAD : DOLLY_MAX;
   }
