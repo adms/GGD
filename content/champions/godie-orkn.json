@@ -64,7 +64,7 @@
           "root": true
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.void.pulse-sm",
       "castTimeSec": 0.4
     },
     "W": {
@@ -107,7 +107,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.nature.nova",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
@@ -151,7 +151,7 @@
           }
         }
       ],
-      "vfxKey": "fx.firestorm",
+      "vfxKey": "fx.prim.fire.explosion",
       "targetsEnemies": true,
       "castTimeSec": 0.3
     },
@@ -198,7 +198,7 @@
           ]
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.physical.shockwave-lg",
       "castTimeSec": 0.7
     }
   },

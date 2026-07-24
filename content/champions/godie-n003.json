@@ -81,7 +81,7 @@
           "moveSpeedMult": 0.6
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.ice.shockwave",
       "targetsEnemies": true,
       "radius": 5.5,
       "castTimeSec": 0.5
@@ -125,7 +125,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.blood.nova",
       "castTimeSec": 0.3
     },
     "E": {
@@ -168,7 +168,7 @@
           ]
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.ice.nova",
       "castTimeSec": 0.6
     },
     "R": {
@@ -208,7 +208,7 @@
           ]
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.ice.explosion-lg",
       "castTimeSec": 0.4
     }
   },

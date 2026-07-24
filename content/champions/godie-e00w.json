@@ -80,7 +80,7 @@
           "stun": true
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.physical.slash",
       "targetsEnemies": true,
       "radius": 6.0,
       "castTimeSec": 0.7
@@ -118,7 +118,7 @@
           "duration": 6.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.lightning.beam",
       "castTimeSec": 0.3
     },
     "E": {
@@ -161,7 +161,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.lightning.nova",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
@@ -202,7 +202,7 @@
           }
         }
       ],
-      "vfxKey": "fx.cinder-ward",
+      "vfxKey": "fx.prim.lightning.beam-lg",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     }

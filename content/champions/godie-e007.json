@@ -84,7 +84,7 @@
           "moveSpeedMult": 0.6
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.ki.pulse-sm",
       "targetsEnemies": true,
       "castTimeSec": 0.3
     },
@@ -127,7 +127,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.nature.pulse",
       "targetsEnemies": false,
       "castTimeSec": 0.3
     },
@@ -171,7 +171,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.ki.shockwave",
       "targetsEnemies": true,
       "icon": "assets/icons/abilities/godie-e007.e.png",
       "castTimeSec": 0.4
@@ -213,7 +213,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.ki.explosion-lg",
       "targetsEnemies": true,
       "icon": "assets/icons/abilities/godie-e007.r.png",
       "castTimeSec": 0.4

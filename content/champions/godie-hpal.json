@@ -75,7 +75,7 @@
           ]
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.earth.shockwave",
       "castTimeSec": 0.4
     },
     "W": {
@@ -124,7 +124,7 @@
           "root": true
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.earth.beam",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
@@ -168,7 +168,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.void.swarm",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
@@ -209,7 +209,7 @@
           }
         }
       ],
-      "vfxKey": "fx.cinder-ward",
+      "vfxKey": "fx.prim.holy.beam-lg",
       "targetsEnemies": true,
       "castTimeSec": 0.7
     }

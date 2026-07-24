@@ -70,7 +70,7 @@
           "duration": 3.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.physical.shockwave",
       "castTimeSec": 0.3
     },
     "W": {
@@ -106,7 +106,7 @@
           "duration": 3.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.nature.explosion",
       "castTimeSec": 0.3
     },
     "E": {
@@ -152,7 +152,7 @@
           "duration": 12.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.physical.swarm",
       "castTimeSec": 0.3
     },
     "R": {
@@ -186,7 +186,7 @@
           "duration": 6.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.physical.shockwave-lg",
       "castTimeSec": 0.3
     }
   },

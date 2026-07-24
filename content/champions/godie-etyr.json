@@ -71,7 +71,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.wind.nova",
       "castTimeSec": 0.3
     },
     "W": {
@@ -95,7 +95,7 @@
       ],
       "range": 0,
       "effects": [],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.holy.pulse",
       "passive": {
         "name": "14-03 魔力應援",
         "ranks": [
@@ -198,7 +198,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.holy.explosion",
       "targetsEnemies": true,
       "radius": 1.5,
       "castTimeSec": 0.5
@@ -240,7 +240,7 @@
           }
         }
       ],
-      "vfxKey": "fx.cinder-ward",
+      "vfxKey": "fx.prim.holy.nova-lg",
       "targetsEnemies": true
     }
   },

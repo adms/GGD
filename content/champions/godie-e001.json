@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.void.pulse-sm",
       "castTimeSec": 0.3
     },
     "W": {
@@ -145,7 +145,7 @@
       ],
       "range": 0,
       "effects": [],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.blood.slash",
       "passive": {
         "name": "22-02 染血的柴刀",
         "ranks": [
@@ -254,7 +254,7 @@
           "moveSpeedMult": 0.4
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.physical.beam",
       "targetsEnemies": true,
       "castTimeSec": 0.5
     },
@@ -289,7 +289,7 @@
           "duration": 7
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.blood.nova-lg",
       "castTimeSec": 0.4
     }
   },

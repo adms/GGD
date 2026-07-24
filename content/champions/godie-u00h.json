@@ -84,7 +84,7 @@
           "moveSpeedMult": 0.6
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.wind.slash",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
@@ -128,7 +128,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.fire.slash",
       "targetsEnemies": true,
       "radius": 3.67,
       "icon": "assets/icons/abilities/godie-u00h.w.png",
@@ -180,7 +180,7 @@
           ]
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.ice.beam",
       "castTimeSec": 0.5
     },
     "R": {
@@ -226,7 +226,7 @@
           "stun": true
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.holy.tornado-lg",
       "targetsEnemies": true,
       "radius": 6.0,
       "castTimeSec": 0.8

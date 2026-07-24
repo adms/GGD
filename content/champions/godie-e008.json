@@ -77,7 +77,7 @@
           "moveSpeedMult": 0.6
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.fire.slash",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
@@ -144,7 +144,7 @@
           ]
         }
       ],
-      "vfxKey": "fx.firestorm",
+      "vfxKey": "fx.prim.fire.nova",
       "castTimeSec": 0.3
     },
     "E": {
@@ -193,7 +193,7 @@
           ]
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.fire.explosion",
       "castTimeSec": 0.7
     },
     "R": {
@@ -227,7 +227,7 @@
           "duration": 3.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.fire.explosion-lg",
       "castTimeSec": 0.4
     }
   },

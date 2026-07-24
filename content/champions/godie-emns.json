@@ -74,7 +74,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.void.pulse-sm",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
@@ -101,7 +101,7 @@
       ],
       "range": 0,
       "effects": [],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.void.pulse",
       "passive": {
         "name": "44-02 死神的規則",
         "ranks": [
@@ -218,7 +218,7 @@
           }
         }
       ],
-      "vfxKey": "fx.firestorm",
+      "vfxKey": "fx.prim.physical.shockwave",
       "targetsEnemies": true,
       "radius": 1.5,
       "castTimeSec": 0.6
@@ -260,7 +260,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.void.nova-lg",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     }

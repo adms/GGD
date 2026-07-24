@@ -74,7 +74,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.fire.pulse",
       "targetsEnemies": false,
       "castTimeSec": 0.3
     },
@@ -118,7 +118,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.lightning.beam",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
@@ -162,7 +162,7 @@
           ]
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.fire.beam",
       "castTimeSec": 0.5
     },
     "R": {
@@ -202,7 +202,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.physical.slash-lg",
       "targetsEnemies": true,
       "castTimeSec": 0.6
     }

@@ -22,7 +22,7 @@
 | **所有模型**尺寸/縮放合理性（含非 w3x 匯入） | #1 / #77 | #1✅ / #77⬜ | |
 | **零幾何**特效模型（粒子射器沒轉出來） | #98 | ✅（名冊範圍） | 11 個零幾何 glb 是粒子發射器,glb 本來就是錯的表示;名冊技能全改綁 `fx.prim.*` 原生粒子 primitive(nova/explosion/beam/…),不出空發射器。逐項對照見 `docs/todo/ability-vfx.md` |
 | **全技能+道具** 1:1 對照 WC3 原生+JASS | #78 | ⏸ | 全專案最大保真缺口,長期任務,**未完成**（狀態頁原誤標 done,已改） |
-| **全技能** VFX 綁定（92% 共用火焰佔位、依文冰要有冰） | #79 | ✅（48 名冊 240 技能） | 全數改掉 `fx.ember-bolt-cast`,逐技能綁 element+primitive;依文 Q/E/R→`fx.prim.ice.*`(冷藍)。逐次參數=#50(`artParams.ts`)。見 `docs/todo/ability-vfx.md` |
+| **全技能** VFX 綁定（92% 共用火焰佔位、依文冰要有冰） | #79 | ✅（48 名冊 240 技能，**2026-07-24 補完鏡像**） | 全數改掉 `fx.ember-bolt-cast`,逐技能綁 element+primitive;依文 Q/E/R→`fx.prim.ice.*`(冷藍)。逐次參數=#50(`artParams.ts`)。⚠️ **原本只改了一半**:#79 的 owned surface 寫死 `content/abilities/*.json`,但每個 QWER 技能在 `content/champions/<cid>.json` `abilities[<slot>]` 還有一份反正規化鏡像 —— 452 對裡有 **192 對**的 `vfxKey` 兩邊都在、值卻不同(embedded 還停在 `fx.ember-bolt-cast`)。已同步 + 加 4 條守衛,見下方 2026-07-24 段落與 `docs/todo/ability-vfx.md` av-05..08 |
 | 遮擋物**全掃** | #29 | ✅ | |
 | **分場景載入**(不要開機全載) | #63 | ✅（SFX） | 稽核結論:模型/語音/BGM **已經是** lazy,只有 SFX 是刻意 eager(~2.5MB)。#63 已改為**分場景載入**:開機抓 0 個 SFX,UI 小核心在 unlock 暖機,各場景進入時只暖自己的子集(`audio/sfxManifest.ts` → `AudioSystem.preloadSceneSfx`),未列/未暖的 cue 仍會在首次 `playSfx` lazy 抓。model/voice 的分場景載入仍未做(見下方確認缺口#3,擴大範圍) |
 
@@ -1323,3 +1323,48 @@ client-playtest lane（port 5205）實測：按下 **Play offline vs bots** 一�
 與對真 store 的一致性檢查）；`docs/todo/login-scene.md` li-21；client 全套 **2189 綠**、typecheck clean。
 （`render/vfx/bindings.test.ts` 在 worktree 紅是既有問題：`/data/**` 被 .gitignore 吃掉，worktree 沒有
 `data/curation/whitelist.json`，與本次修改無關。）
+
+---
+
+## 2026-07-24 — #79 的另一半：champion 內嵌鏡像沒跟著改（192/452 已同步 + 守衛落地）
+
+### 問題（量測，非推測）
+
+每個 QWER 技能都存兩份：權威版在 `content/abilities/<cid>.<slot>.json`，另一份反正規化鏡像在
+`content/champions/<cid>.json` 的 `abilities[<slot>]`。掃過全部 **452 對**之後：
+
+| 欄位 | 兩邊都有但值不同 | 只有 standalone 有 | 只有 embedded 有 |
+|---|---|---|---|
+| `vfxKey` | **192** | 0 | 0 |
+| `schema` | 0 | 452（設計如此，audit 本來就跳過） | 0 |
+| `icon` | 0 | 416（`icon-embed-standalone-agree` 的守備範圍，非本次） | 0 |
+
+192 條全部是 embedded 還停在舊佔位：`fx.ember-bolt-cast`×175、`fx.firestorm`×9、
+`fx.cinder-ward`×6、`fx.root-snare`×1、`fx.scorch-ring`×1。分佈在 48 個 champion 檔。
+
+### 為什麼「兩邊都有但值不同」比「缺欄位」更毒
+
+`fillGaps` 只補 standalone **沒定義**的欄位，所以跑真實對戰時 standalone(正確值)會贏 ——
+**畫面完全正常，測試全綠，肉眼看不出來**。壞掉的只有那些不經過 `registerAll` 的 RAW-DOC 消費端：
+圖鑑瀏覽器、後台 內容管理 頁，以及最嚴重的 `apps/editor/src/preview/PreviewController.ts:84`
+—— 它傳 `overrideAbilities: true`，整份採用 embedded 副本，所以**編輯器預覽看到的是舊佔位火焰**。
+
+### 落點
+
+| 項目 | 內容 |
+|---|---|
+| 同步方向 | standalone → embedded，**單向**。standalone 是權威（見 `registry.ts:107` 的 doc-comment 與 `fillGaps`），不做「挑一個比較順眼的」式和解 |
+| 改法 | champion 檔是 Python exporter 產的（浮點寫成 `30.0`），走 Node 的 JSON round-trip 會把每個數字都重寫一遍。所以逐行只換那一行 `"vfxKey": "…"`，改完再 re-parse 驗證「解析結果只有預期的 vfxKey 變了」且「差異行數 == 預期筆數」。實際 diff：192 增 192 減、**0 行非 vfxKey 變動** |
+| 重建索引 | `pnpm content:build` → `contentVersion` `cv_540d4fa9e29c` → `cv_fcb7197b7f82`（gates client cache invalidation）；`content/champions/_index.json` 48 份 per-doc hash 更新 |
+| 守衛 | `packages/shared/src/content/abilityMirror.test.ts` — 4 例，**第一次讓 `auditAbilityMirrorDrift` 真的跑在 content/ 上**（在此之前它只被 `abilityShadowing.test.ts` 的合成 2-doc fixture 碰過） |
+
+### 守衛的形狀（av-05..08）
+
+- **不 fail-fast**：把 192 條全部收進一個 list 再一次 assert。迴圈裡放裸 `expect` 的話，192 個缺陷只會回報成 1 個。失敗訊息會給 `[vfxKey×192]` 的分欄統計 + 全部明細 + 修法（往哪個方向抄、記得 `content:build`）。
+- **不 skip**：`ability-mirror-pairs` 明確 assert「每個 champion 的 QWER 都找得到 standalone twin」，而不是遇到找不到就 `continue` —— 否則刪掉 standalone 檔就能讓整套守衛真空通過。
+- **有計數**：每條都先 assert 掃到的對數 ≥ 452，避免「一份都沒掃到所以全過」。
+- **旁邊那個失效模式也擋**：`ability-mirror-one-sided` 只放行 `schema` + `icon` 這兩個既定的單邊欄位；出現第三個單邊欄位 = 又有新的「只寫一邊」的寫入路徑，直接紅。
+
+反向驗證：把 content/ 退回修前狀態跑這套守衛 → `ability-mirror-no-conflict` 與
+`ability-mirror-vfxkey` 各紅一次，訊息 `192 embedded field(s) contradict their standalone twin
+across 452 pairs [vfxKey×192]`。守衛不是真空綠的。

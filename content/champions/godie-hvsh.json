@@ -75,7 +75,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.arcane.beam",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
@@ -112,7 +112,7 @@
           "duration": 6.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.arcane.pulse",
       "castTimeSec": 0.3
     },
     "E": {
@@ -155,7 +155,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.blood.nova",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
@@ -196,7 +196,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.arcane.beam-lg",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     }

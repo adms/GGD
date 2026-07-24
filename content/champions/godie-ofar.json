@@ -78,7 +78,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.lightning.nova",
       "targetsEnemies": true,
       "radius": 6.42,
       "castTimeSec": 0.5
@@ -106,7 +106,7 @@
       ],
       "range": 0,
       "effects": [],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.physical.slash",
       "passive": {
         "name": "58-02 鋼鐵尾巴",
         "ranks": [
@@ -244,7 +244,7 @@
           "stun": true
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.lightning.pulse",
       "targetsEnemies": true,
       "castTimeSec": 0.5
     },
@@ -285,7 +285,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.lightning.explosion-lg",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     }
