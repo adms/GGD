@@ -23,17 +23,38 @@ passive** (native `Cool=0`, no castable effects) is reported as PASSIVE, not FAI
 Output is the pass/fail matrix + summary + failure list, regenerated into
 `docs/_castability-128.md` on every run.
 
-## Result (2026-07-23 run)
+The harness is **also a ratchet** (2026-07-25). It used to be a pure diagnostic
+that "does not go red on a content no-op" — its only live assertion was
+`roster.length === 48`, so all 288 cells could have failed and the suite stayed
+green. It now pins a measured floor (`MIN_PASS` / `MIN_WORKING`) and an explicit
+`KNOWN_FAILING` set, and derives its step window from the longest authored cast
+instead of a hard-coded constant, so a regression shows up as a **named cell**,
+not as a number nobody reads.
 
-**282 / 288 ✅ PASS · 6 🟣 PASSIVE (correct WC3 permanents) · 0 ❌ FAIL · 0 spawn failures.**
-Counting the 6 permanents as correct behaviour, **288 / 288** slots behave as intended.
-PASS channel mix (proves it is not rubber-stamping on cosmetics): 184 damage, 70 buff,
-14 projectile, 7 heal, 5 dash, 2 shield, **0 vfx-only**. Ranged/melee dimension: all 14
-ranged champs' basics launch a projectile (`ranged:true`); all 34 melee basics are
+## Result (2026-07-25 run — contentVersion `cv_ecff53279fad`)
+
+**281 / 288 ✅ PASS · 7 🟣 PASSIVE (correct WC3 permanents) · 0 ❌ FAIL · 0 spawn failures.**
+Counting the 7 permanents as correct behaviour, **288 / 288** slots behave as intended.
+PASS channel mix (proves it is not rubber-stamping on cosmetics): 180 damage, 70 buff,
+14 projectile, 8 heal, 5 dash, 2 shield, 2 status, **0 vfx-only**. Ranged/melee dimension:
+all 14 ranged champs' basics launch a projectile (`ranged:true`); all 34 melee basics are
 contact damage (`ranged:false`).
+
+### Correction to the earlier "282 / 6 / 0" claim
+
+The prior run's summary here (282 PASS · 6 PASSIVE · **0 FAIL · 288/288**)
+contradicted the report `docs/_castability-128.md`, which the same harness
+generated saying **280 PASS · 7 PASSIVE · 1 FAIL · 287/288**. The report was
+right that a cell was failing; the todo page had simply not recorded it. But the
+report's *diagnosis* was wrong: the one ❌ was `godie-u00n` (草帽小子) **R**,
+authored at `castTimeSec: 0.9` = **27 ticks**, while the harness stepped a
+hard-coded `WINDOW = 26` — it read the effect one tick before the cast resolved
+and logged "cast accepted but produced no measurable effect". It was never a
+content gap. The window is now derived from content (`maxAuthoredCastTicks + 8`),
+that cell PASSes, and both ledgers agree at **0 real FAIL**.
 
 ## Items
 
 | ID | Item | Test ID | Category | Status |
 | --- | --- | --- | --- | --- |
-| cast128-01 | Every whitelisted champion spawns; Q/W/E/R/EX + basic each fire a measurable effect (or are verified permanent passives); pass/fail matrix written to docs/_castability-128.md | castability-sweep-128 | regression | done |
+| cast128-01 | Every whitelisted champion spawns; Q/W/E/R/EX + basic each fire a measurable effect (or are verified permanent passives); the sweep ratchets a measured PASS floor + a named KNOWN_FAILING set (currently empty) so any regression goes red by name; pass/fail matrix written to docs/_castability-128.md | castability-sweep-128 | regression | done |

@@ -27,9 +27,17 @@
  *
  * OUTPUT. The pass/fail matrix + summary + failure list is written to
  * docs/_castability-128.md every run, so the ability-fidelity / VFX owners have
- * a live diagnostic they can re-generate. This is a MEASUREMENT harness — it
- * fixes nothing and (deliberately) does not go red on a content no-op; it only
- * asserts that the sweep itself ran to completion over all 48 champions.
+ * a live diagnostic they can re-generate.
+ *
+ * IT IS ALSO A RATCHET (added 2026-07-25). It used to be a pure diagnostic that
+ * "deliberately does not go red on a content no-op" — which meant all 288 cells
+ * could report FAIL and the suite still passed, because the only assertion that
+ * could ever fail was `roster.length === 48`. The report was therefore the only
+ * place the truth lived, and the todo ledger drifted away from it unnoticed.
+ * Now the sweep pins a measured FLOOR (see MIN_PASS / MIN_WORKING below) and an
+ * explicit KNOWN_FAILING set, so a regression shows up as a NAMED cell rather
+ * than as a number nobody reads. Never lower the floor to make the suite green:
+ * if a cell regresses, fix the cell or record it — with a reason — as known.
  */
 import { describe, it, expect, beforeAll } from "vitest";
 import { dirname, join } from "node:path";
@@ -53,6 +61,7 @@ import { spawnChampion } from "./spawnChampion";
 import { castAbility, rankUpAbility, learnEx } from "./abilities/abilitySystem";
 import { isPassiveOnly, abilityPassiveSourceId } from "./abilities/abilityPassives";
 import { asSeatId, asTeamId, type ChampionId, type EntityId } from "../ids";
+import { TICK_HZ } from "../constants";
 import type { AbilityDef, CastType } from "./content/defs";
 import type { AbilitySlot, CastTarget, CoreAbilitySlot } from "./intents";
 
@@ -70,13 +79,70 @@ const P = { x: Z0.center.x, z: Z0.center.z + 14 };
 const ADJ = 1.35;
 /** A robust melee bruiser used as the enemy / ally punching bag. */
 const DUMMY = "godie-hart" as ChampionId;
-/** Max authored cast time is 0.6 s (18 ticks); step comfortably past it. */
-const WINDOW = 26;
+/**
+ * Post-resolution settle: ticks stepped AFTER the wind-up ends, so the effect
+ * has room to land, spawn its projectile and emit its events.
+ */
+const SETTLE_TICKS = 8;
+/** Lower bound on the step window — what an instant (castTimeSec 0) cast gets. */
+const MIN_WINDOW = 26;
+/**
+ * Ticks stepped after each cast. DERIVED FROM CONTENT in `beforeAll`, never
+ * hand-written: `maxAuthoredCastTicks + SETTLE_TICKS`.
+ *
+ * This used to be the hard-coded 26 with the comment "max authored cast time is
+ * 0.6 s (18 ticks)". That comment went stale: `godie-u00n.r` (草帽小子 R) is
+ * authored at `castTimeSec: 0.9` = 27 ticks, so the window ended ONE TICK before
+ * the ability resolved and the sweep reported it as "cast accepted but produced
+ * no measurable effect (no-op)" — a measurement artifact recorded in the ledger
+ * as a content gap for two days. Deriving the window makes that class of lie
+ * impossible; `expect(WINDOW).toBeGreaterThan(maxCastTicks)` re-proves it every
+ * run, so nobody has to trust a comment.
+ */
+let WINDOW = MIN_WINDOW;
+/** Longest authored cast, in ticks, over the whole ability registry. */
+let maxCastTicks = 0;
 /** Ticks allowed for the FIRST basic-attack swing to land. */
 const BASIC_WINDOW = 40;
 
 const SLOTS: AbilitySlot[] = ["Q", "W", "E", "R", "EX"];
 type SlotName = "Q" | "W" | "E" | "R" | "EX" | "basic";
+const COLS: SlotName[] = ["Q", "W", "E", "R", "EX", "basic"];
+
+// ------------------------------------------------------------------ the floor
+//
+// MEASURED 2026-07-25 against contentVersion `cv_ecff53279fad`, on the
+// 48-champion roster (the operator's curation whitelist and the committed
+// `castabilityRoster.fixture.json` are set-identical, so CI measures the same
+// roster the operator does). Full run, no sampling: 48 × 6 = 288 cells.
+//
+//   281 ✅ PASS · 7 🟣 PASSIVE · 0 ❌ FAIL · 0 spawn failures.
+//
+// The 7 PASSIVE are verified WC3 permanents (native Cool=0) whose ModifierSource
+// is confirmed attached — correct behaviour, not gaps; hence MIN_WORKING counts
+// PASS + PASSIVE. The floors are a RATCHET, not a target: raise them when the
+// measurement improves, and never lower them to make the suite green. If this
+// header's contentVersion no longer matches `content/manifest.json`, the numbers
+// below are stale — re-measure before trusting them (the run prints both).
+const MEASURED_ON = "2026-07-25";
+const MEASURED_CONTENT_VERSION = "cv_ecff53279fad";
+/** Minimum cells that must cast AND produce a measurable effect. */
+const MIN_PASS = 281;
+/** Minimum cells that must behave as intended (PASS + verified permanent PASSIVE). */
+const MIN_WORKING = 288;
+/**
+ * Cells known to FAIL, as `<championId>:<slot>`, each with a reason. Asserted by
+ * EXACT SET EQUALITY, deliberately: a blanket count-floor hides WHICH cell broke
+ * (one cell regressing while another is fixed clears any floor), and a stale
+ * allowlist is itself a lie. A new failure shows up here as a NAME; a fixed
+ * failure also goes red, telling you to delete the entry and update
+ * docs/todo/castability.md in the same commit.
+ *
+ * Empty as of 2026-07-25. The only prior entry, `godie-u00n:R`, was never a
+ * content gap — it was the stale WINDOW cutting the cast off one tick early
+ * (see WINDOW above).
+ */
+const KNOWN_FAILING: readonly string[] = [];
 
 type Verdict = "PASS" | "FAIL" | "PASSIVE";
 interface Cell {
@@ -123,6 +189,9 @@ const rosterSource = (): { champions: string[]; from: string } => {
   return { champions: JSON.parse(readFileSync(file, "utf8")).champions as string[], from };
 };
 
+/** contentVersion of the bundle actually loaded, for staleness reporting. */
+let contentVersion = "(unknown)";
+
 beforeAll(async () => {
   for (const r of [Champions, Abilities, Items, Augments, Projectiles, LootTables]) r.clear();
   for (const r of [Arenas, Configs, Models, VfxDefs, StatusEffects]) r.clear();
@@ -130,7 +199,31 @@ beforeAll(async () => {
   registerAll(res.store);
   const src = rosterSource();
   roster = src.champions;
-  console.log(`castability sweep: ${roster.length} champions from the ${src.from}`);
+
+  // Size the step window to the CONTENT, not to a comment. `abilitySystem`
+  // resolves a cast at Math.round(castTimeSec / dt) ticks; mirror that exactly.
+  maxCastTicks = Math.max(
+    0,
+    ...Abilities.all().map((a) => Math.round((a.castTimeSec ?? 0) * TICK_HZ)),
+  );
+  WINDOW = Math.max(MIN_WINDOW, maxCastTicks + SETTLE_TICKS);
+
+  try {
+    contentVersion = (
+      JSON.parse(readFileSync(join(CONTENT_DIR, "manifest.json"), "utf8")) as {
+        contentVersion?: string;
+      }
+    ).contentVersion ?? "(unknown)";
+  } catch {
+    /* manifest is optional for the sweep; only used to report floor staleness */
+  }
+
+  console.log(
+    `castability sweep: ${roster.length} champions from the ${src.from}; ` +
+      `contentVersion ${contentVersion} (floor measured ${MEASURED_ON} against ` +
+      `${MEASURED_CONTENT_VERSION}); longest authored cast ${maxCastTicks} ticks, ` +
+      `step window ${WINDOW} ticks`,
+  );
 });
 
 // --------------------------------------------------------------------- helpers
@@ -286,22 +379,31 @@ function testSlot(championId: string, slot: AbilitySlot): Cell {
     }
     events.push(...world.events.map((e) => e.type));
 
+    // PEAK, not end-state. The window is sized to the longest authored wind-up,
+    // so it now outlives short buffs/statuses/shields and in-flight projectiles;
+    // sampling only at the end would let a real effect expire before we look and
+    // read as a no-op. Take the max over the whole window instead.
+    const after = { ...before };
+    let moved = false;
     for (let i = 0; i < WINDOW; i++) {
       world.step(NO_INTENTS);
       events.push(...world.events.map((e) => e.type));
+      const s = snapshot(world);
+      after.shields = Math.max(after.shields, s.shields);
+      after.statuses = Math.max(after.statuses, s.statuses);
+      after.buffs = Math.max(after.buffs, s.buffs);
+      after.projectiles = Math.max(after.projectiles, s.projectiles);
+      moved ||=
+        Math.hypot(
+          world.transform.get(caster)!.pos.x - casterAnchor.x,
+          world.transform.get(caster)!.pos.z - casterAnchor.z,
+        ) > 0.2 || world.nav.get(caster)!.override != null;
       // re-pin the two dummies so a knockback / shove cannot carry them out of
       // a ground circle before it resolves (the caster is left free so a dash
       // effect can visibly move it).
       world.transform.get(foe)!.pos = { ...foePos };
       world.transform.get(ally)!.pos = { ...allyPos };
     }
-
-    const after = snapshot(world);
-    const moved =
-      Math.hypot(
-        world.transform.get(caster)!.pos.x - casterAnchor.x,
-        world.transform.get(caster)!.pos.z - casterAnchor.z,
-      ) > 0.2 || world.nav.get(caster)!.override != null;
 
     // pick the first channel that fired, for the report
     const fired = (t: string): boolean => events.includes(t);
@@ -452,15 +554,46 @@ describe("task #128 — in-game castability coverage sweep", () => {
       });
     }
 
+    // Regenerate the diagnostic FIRST, so the report on disk describes the run
+    // even when the assertions below go red — that report is how you find out
+    // which cell moved.
     writeReport();
 
-    // The sweep is a DIAGNOSTIC: it must run end-to-end over all 48 champions
-    // and every slot, but it deliberately does not go red on a content no-op —
-    // the no-ops ARE the finding and live in the report.
-    expect(results.length).toBe(48);
-    for (const r of results) {
-      expect(Object.keys(r.cells).length).toBe(6);
-    }
+    const t = tally();
+    const stale =
+      contentVersion === MEASURED_CONTENT_VERSION
+        ? ""
+        : ` (NOTE: floor was measured ${MEASURED_ON} against contentVersion ` +
+          `${MEASURED_CONTENT_VERSION}; this run loaded ${contentVersion} — if the ` +
+          `content legitimately changed, RE-MEASURE and move the floor, in the same ` +
+          `commit as docs/todo/castability.md)`;
+
+    // ---- the sweep must have actually run over the whole roster ----
+    expect(roster.length).toBe(48);
+    expect(results.length).toBe(roster.length);
+    expect(t.totalCells).toBe(roster.length * COLS.length);
+    expect(results.filter((r) => !r.spawnOk).map((r) => r.id)).toEqual([]);
+
+    // ---- the window must outlive the longest wind-up the content authors ----
+    // Without this, a newly authored slower cast silently reads as a no-op (the
+    // exact bug that put a phantom FAIL in the ledger for godie-u00n.r).
+    expect(WINDOW).toBeGreaterThan(maxCastTicks);
+
+    // ---- NAMED failures: exact set, so a regression arrives as a name ----
+    expect(t.failing.join(", ") || "(none)").toBe(
+      [...KNOWN_FAILING].sort().join(", ") || "(none)",
+    );
+
+    // ---- and the count floor, so nothing can rot underneath the name check ----
+    expect(
+      t.pass,
+      `PASS cells dropped below the measured floor${stale}. See docs/_castability-128.md`,
+    ).toBeGreaterThanOrEqual(MIN_PASS);
+    expect(
+      t.pass + t.passive,
+      `working cells (PASS + verified permanent PASSIVE) dropped below the ` +
+        `measured floor${stale}. See docs/_castability-128.md`,
+    ).toBeGreaterThanOrEqual(MIN_WORKING);
   });
 });
 
@@ -472,16 +605,34 @@ function mark(c: Cell): string {
   return "❌";
 }
 
-function writeReport(): void {
-  const cols: SlotName[] = ["Q", "W", "E", "R", "EX", "basic"];
-  const totalCells = results.length * cols.length;
+interface Failure {
+  id: string;
+  name: string;
+  slot: SlotName;
+  cell: Cell;
+  atk: string;
+}
+
+/**
+ * Single count of the matrix, shared by the assertions and the report so the
+ * ledger and the ratchet can never be computed two different ways.
+ * `failing` is the sorted `<championId>:<slot>` key set the assertions compare.
+ */
+function tally(): {
+  totalCells: number;
+  pass: number;
+  passive: number;
+  fail: number;
+  failures: Failure[];
+  failing: string[];
+} {
+  const totalCells = results.length * COLS.length;
   let pass = 0;
   let passive = 0;
   let fail = 0;
-  const failures: { id: string; name: string; slot: SlotName; cell: Cell; atk: string }[] = [];
-
+  const failures: Failure[] = [];
   for (const r of results) {
-    for (const slot of cols) {
+    for (const slot of COLS) {
       const c = r.cells[slot];
       if (c.verdict === "PASS") pass++;
       else if (c.verdict === "PASSIVE") passive++;
@@ -491,6 +642,19 @@ function writeReport(): void {
       }
     }
   }
+  return {
+    totalCells,
+    pass,
+    passive,
+    fail,
+    failures,
+    failing: failures.map((f) => `${f.id}:${f.slot}`).sort(),
+  };
+}
+
+function writeReport(): void {
+  const cols = COLS;
+  const { totalCells, pass, passive, fail, failures } = tally();
 
   // channel tally over PASS cells — proves the sweep detects real gameplay
   // channels, not just the cosmetic vfxSpawn that most abilities also carry.
@@ -532,6 +696,12 @@ function writeReport(): void {
     "> 這是**診斷**：把 48 位英雄每一格 Q/W/E/R/EX + 普攻在真的 SimWorld 裡按下去，量測有沒有真的產生效果" +
       "（傷害／投射物／狀態／護盾／補血／補魔／位移／特效），不修任何技能。",
   );
+  L.push(
+    `> 同時是**棘輪**：測試釘住已量測的下限（PASS ≥ ${MIN_PASS}、PASS+PASSIVE ≥ ${MIN_WORKING}）` +
+      `與具名的已知失敗集合（目前${KNOWN_FAILING.length === 0 ? "為空" : "：" + KNOWN_FAILING.join("、")}），` +
+      "任何一格退化都會讓測試變紅並指名是哪一格。",
+  );
+  L.push(`> 本次 contentVersion：\`${contentVersion}\`（下限量測基準 \`${MEASURED_CONTENT_VERSION}\`，${MEASURED_ON}）。`);
   L.push("");
   L.push("## 判定圖例");
   L.push("");
@@ -550,7 +720,8 @@ function writeReport(): void {
   );
   L.push(
     `- 把「正確的永久被動」算進可接受行為：**${pass + passive} / ${totalCells}**` +
-      `（${(((pass + passive) / totalCells) * 100).toFixed(1)}%）如預期運作，只有 **${fail}** 格是真正的缺口。`,
+      `（${(((pass + passive) / totalCells) * 100).toFixed(1)}%）如預期運作，` +
+      (fail === 0 ? "**沒有任何一格是缺口**。" : `只有 **${fail}** 格是真正的缺口。`),
   );
   L.push(`- 英雄生成失敗：**${spawnFails.length}**` + (spawnFails.length ? `（${spawnFails.map((r) => r.id).join(", ")}）` : "（無）"));
   L.push("");
@@ -639,10 +810,16 @@ function writeReport(): void {
       "施法者法力設為剛好夠付，使自我回魔也量得到。被動回血（RegenSystem）不發 `heal` 事件，故不會誤判。",
   );
   L.push(
-    `- 每次施放後步進 **${WINDOW} tick**（>最長施法前搖 0.6s=18 tick）讓有前搖的技能結算；普攻給 **${BASIC_WINDOW} tick** 讓第一次揮擊落地。`,
+    `- 每次施放後步進 **${WINDOW} tick**＝**內容中最長施法前搖 ${maxCastTicks} tick**（\`${(maxCastTicks / TICK_HZ).toFixed(2)}s\`）＋ ${SETTLE_TICKS} tick 結算餘裕；` +
+      `視窗由內容推導，不是寫死的常數（舊版寫死 26 tick，剛好比 0.9s 前搖短 1 tick，把 \`godie-u00n\` 的 R 誤判成 no-op）。` +
+      `普攻給 **${BASIC_WINDOW} tick** 讓第一次揮擊落地。`,
   );
   L.push(
-    "- **完整跑遍全 48 英雄 × 6 槽 = 288 格，無抽樣**。本測試為診斷用途，內容 no-op 不會使測試變紅（no-op 本身就是要回報的發現）。",
+    "- 狀態面（護盾／狀態／buff／投射物）取**視窗內的峰值**而非結束時的值，避免短效果在視窗結束前就過期而被誤判成 no-op。",
+  );
+  L.push(
+    `- **完整跑遍全 48 英雄 × 6 槽 = 288 格，無抽樣**。本測試同時是棘輪：任一格退化會讓 \`pnpm --filter @ggd/shared exec vitest run\` 變紅，` +
+      `並具名指出是哪一格（下限：PASS ≥ ${MIN_PASS}、PASS+PASSIVE ≥ ${MIN_WORKING}；已知失敗集合以精確比對）。`,
   );
   L.push("");
 
