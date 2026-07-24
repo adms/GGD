@@ -243,7 +243,6 @@ export const SFX_REACHABILITY: readonly SfxReachRow[] = [
   { key: "draftCardReveal", kind: "client", site: DRAFT_REVEAL },
   { key: "legendaryRoll", kind: "client", site: DRAFT_REVEAL },
   { key: "legendaryWin", kind: "client", site: DRAFT_REVEAL },
-  { key: "recessBell", kind: "client", site: INTERMISSION_AUDIO },
   { key: "merchantAmbience", kind: "client", site: INTERMISSION_AUDIO },
 
   // ── cannot sound today ───────────────────────────────────────────────────
@@ -289,6 +288,15 @@ export const SFX_REACHABILITY: readonly SfxReachRow[] = [
     reason:
       "#3-era orphan as a KEY — though its FILE is not orphaned: block-hit.mp3 is the second clip in the `block` entry's pool, so the sound still ships and still plays, just never under this name.",
   },
+  // NOTE — `recessBell` used to sit in this file as a `client` row. It is not
+  // here in EITHER bucket any more, and that is correct: #190 withdrew the emit
+  // (「商店音樂播放 BGM 就好，不要變成鐘聲」) AND dropped the audio-map entry,
+  // because sfxLabCredits' "no clip is mapped but silent" alarm says in so many
+  // words to wire the cue or drop the map entry and never to relax the rule.
+  // This file's row set must EQUAL the map's key set, so an unmapped key must
+  // have no row. The clip still ships and stays on the 版權聲明 page as 備而未用,
+  // exactly like block-clash / block-shield / impact-heavy.
+  //
   // AUTHORED, WAITING ON A UI SEAM (see audio/types.ts).
   {
     key: "taunt",

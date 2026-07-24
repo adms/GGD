@@ -765,14 +765,6 @@
       "cooldownMs": 1200,
       "maxConcurrent": 1
     },
-    "recessBell": {
-      "files": [
-        "assets/audio/sfx/lab/recessBell.mp3"
-      ],
-      "gain": 0.55,
-      "cooldownMs": 5000,
-      "maxConcurrent": 1
-    },
     "guardianSlam": {
       "files": [
         "assets/audio/sfx/lab/guardianSlam.mp3"

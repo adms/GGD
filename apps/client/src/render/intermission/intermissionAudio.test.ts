@@ -1,20 +1,14 @@
 /**
- * intermissionAudio — the recess bell fires ONCE on entry, and the market
- * ambience loops through a lifecycle-owned re-arm timer that stops clean on
- * dispose (tasks #124, #38). Pure module: a fake SfxPort + injected timers, so
- * no WebGL scene and no real AudioContext.
+ * intermissionAudio — the market ambience loops through a lifecycle-owned
+ * re-arm timer that stops clean on dispose (task #38), and NOTHING rings a bell
+ * on scene entry any more (task #190). Pure module: a fake SfxPort + injected
+ * timers, so no WebGL scene and no real AudioContext.
  */
 import { describe, it, expect, vi } from "vitest";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { cover } from "@ggd/shared/testkit/cover";
-import {
-  playRecessBell,
-  startMarketAmbience,
-  RECESS_BELL,
-  MARKET_AMBIENCE,
-  type AmbienceTimers,
-} from "./intermissionAudio";
+import { startMarketAmbience, MARKET_AMBIENCE, type AmbienceTimers } from "./intermissionAudio";
 
 /** Records every playSfx event; `available` decides what the mixer returns. */
 function fakeAudio(available = true): { events: string[]; playSfx: (e: string) => boolean } {
@@ -49,22 +43,6 @@ function fakeTimers(): AmbienceTimers & { tick(): void; active: boolean } {
 }
 
 describe("intermissionAudio", () => {
-  it("rings the recess bell exactly once on entry", () => {
-    cover("intermission-recess-bell");
-    const audio = fakeAudio();
-    const ok = playRecessBell(audio);
-    expect(ok).toBe(true);
-    expect(audio.events).toEqual([RECESS_BELL]);
-  });
-
-  it("the bell emit is a silent no-op (never throws) when the clip is unmapped", () => {
-    cover("intermission-recess-bell");
-    const audio = fakeAudio(false); // map has no recessBell yet
-    expect(() => playRecessBell(audio)).not.toThrow();
-    expect(playRecessBell(audio)).toBe(false);
-    expect(audio.events).toEqual([RECESS_BELL, RECESS_BELL]);
-  });
-
   it("starts the market ambience immediately and re-arms it on the loop timer", () => {
     cover("intermission-market-ambience");
     const audio = fakeAudio();
@@ -111,19 +89,23 @@ describe("intermissionAudio", () => {
   });
 });
 
+
 // ---------------------------------------------------------------------------
-// THE WIRE. Everything above proves the MODULE's contract against a fake port,
-// which stays green even if nobody ever calls it. These two blocks guard the
-// two joints that actually decide whether the owner hears a bell:
+// THE WIRE — now an ANTI-wire (task #190).
 //
-//   1. IntermissionStage's MOUNT effect calls playRecessBell(audioSystem)
-//      — the emit is on the scene-entry edge, with the real mixer singleton;
-//   2. `recessBell` is MAPPED in content/config/audio-map.json
-//      — an unmapped key makes playSfx a silent no-op, which no unit test that
-//        stubs the port can ever notice.
+// This block used to prove the recess bell WAS rung on intermission entry. The
+// owner's verdict reversed it: 「商店音樂播放 BGM 就好，不要變成鐘聲」. So the same
+// three joints are asserted in the negative, because a removal that nothing
+// guards is a removal that comes back:
+//
+//   1. IntermissionStage must not import or call any bell emit;
+//   2. this module must not export one;
+//   3. `recessBell` must be filed as UNREACHABLE in audio/sfxReachability, so
+//      the 版權聲明 page stops claiming the clip is 使用中 while still crediting
+//      it (the 効果音ラボ authorisation is per-clip and survives the removal).
 //
 // The client vitest runs in a `node` environment with no DOM and no RTL, and
-// `renderToStaticMarkup` never runs effects, so the mount effect cannot be
+// `renderToStaticMarkup` never runs effects, so a mount effect cannot be
 // executed here — the wire is asserted against the SOURCE, the same technique
 // ui/chromeReserve.test.ts and architecture.test.ts use.
 // ---------------------------------------------------------------------------
@@ -137,57 +119,64 @@ function readSource(abs: string): string {
     .replace(/\/\/[^\n]*/g, "");
 }
 
-describe("the recess bell is WIRED to intermission entry (intermission-recess-bell)", () => {
+describe("the intermission rings NO bell (intermission-no-recess-bell)", () => {
   const stage = readSource(join(__dirname, "..", "..", "ui", "IntermissionStage.tsx"));
+  const self = readSource(join(__dirname, "intermissionAudio.ts"));
 
-  it("IntermissionStage imports the bell emit from this module", () => {
-    cover("intermission-recess-bell");
-    expect(stage).toMatch(/import\s*\{[^}]*\bplayRecessBell\b[^}]*\}\s*from\s*"[^"]*intermissionAudio"/);
+  it("IntermissionStage neither imports nor calls a bell emit", () => {
+    cover("intermission-no-recess-bell");
+    expect(stage).not.toMatch(/\bplayRecessBell\b/);
+    expect(stage).not.toMatch(/\brecessBell\b/);
   });
 
-  it("rings it with the REAL mixer singleton, not a local stub", () => {
-    cover("intermission-recess-bell");
-    expect(stage).toContain("playRecessBell(audioSystem)");
+  it("this module exports no bell emit for anyone else to call either", () => {
+    cover("intermission-no-recess-bell");
+    expect(self).not.toMatch(/\bplayRecessBell\b/);
+    expect(self).not.toMatch(/\bRECESS_BELL\b/);
+    expect(self).not.toMatch(/"recessBell"/);
   });
 
-  it("the ring sits in the MOUNT effect (once per intermission, not per re-render)", () => {
-    cover("intermission-recess-bell");
-    // the scene-lifecycle effect is the one that closes on an EMPTY dep array;
-    // slice it out and require the bell to be inside it.
-    const start = stage.indexOf("useEffect(() => {");
-    expect(start).toBeGreaterThanOrEqual(0);
-    const end = stage.indexOf("}, []);", start);
-    expect(end).toBeGreaterThan(start);
-    const mountEffect = stage.slice(start, end);
-    expect(mountEffect).toContain("playRecessBell(audioSystem)");
+  it("the market ambience — the one cue that SHOULD play — is still wired", () => {
+    cover("intermission-market-ambience");
+    // The negative assertions above would all pass on an empty file, so the
+    // positive half is stated in the same block.
+    expect(stage).toMatch(/import\s*\{[^}]*\bstartMarketAmbience\b[^}]*\}\s*from\s*"[^"]*intermissionAudio"/);
+    expect(stage).toContain("startMarketAmbience(audioSystem)");
   });
 });
 
-describe("the recess bell clip is actually MAPPED (intermission-recess-bell)", () => {
+describe("the bell clip still ships and stays credited (intermission-no-recess-bell)", () => {
   const map = JSON.parse(readFileSync(join(REPO, "content", "config", "audio-map.json"), "utf8")) as {
-    sfx?: Record<string, { files?: string[]; gain?: number; cooldownMs?: number; maxConcurrent?: number }>;
+    sfx?: Record<string, { files?: string[] }>;
   };
-  const entry = map.sfx?.[RECESS_BELL];
 
-  it("audio-map.json has an sfx entry for the key this module emits", () => {
-    cover("intermission-recess-bell");
-    expect(entry, `audio-map.json has no sfx."${RECESS_BELL}" — the emit would be a silent no-op`).toBeTruthy();
-    expect(entry?.files?.length).toBeGreaterThan(0);
+  it("has NO audio-map entry — a mapped key nothing plays is the alarm state", () => {
+    cover("intermission-no-recess-bell");
+    // sfxLabCredits' "no clip is mapped but silent" test says in so many words:
+    // wire the cue or drop the map entry, never relax the rule. The emit is
+    // gone, so the entry goes too — and sfxReachability, whose row set must
+    // equal the map's key set, must not carry a row for it either.
+    expect(map.sfx?.recessBell).toBeUndefined();
+    const reach = readSource(join(__dirname, "..", "..", "audio", "sfxReachability.ts"));
+    expect(reach).not.toContain('key: "recessBell"');
   });
 
-  it("every mapped file for it exists on disk", () => {
-    cover("intermission-recess-bell");
-    for (const rel of entry?.files ?? []) {
-      expect(() => readFileSync(join(REPO, "content", rel)), `missing clip: ${rel}`).not.toThrow();
-    }
+  it("keeps the FILE on disk and the credit line, because the licence is per-clip", () => {
+    cover("intermission-no-recess-bell");
+    // The 効果音ラボ authorisation's one condition is that every shipped clip is
+    // listed on the 版權聲明 page. Un-wiring a cue must never quietly drop that
+    // listing — it flips to 備而未用, exactly like block-clash / impact-heavy.
+    expect(() => readFileSync(join(REPO, "content/assets/audio/sfx/lab/recessBell.mp3"))).not.toThrow();
+    const credits = readFileSync(join(__dirname, "..", "..", "ui", "platform", "sfxLabCredits.ts"), "utf8");
+    const row = credits.split("\n").find((l) => l.includes("sfx/lab/recessBell.mp3"));
+    expect(row, "recessBell lost its credits row").toBeTruthy();
+    expect(row).toContain("mapKeys: []");
+    expect(row).toContain("備而未用");
   });
 
-  it("is gated so a remount cannot double-ring it", () => {
-    cover("intermission-recess-bell");
-    // A fresh scene is built per intermission, and React StrictMode mounts twice
-    // in dev. maxConcurrent 1 + a cooldown longer than a remount gap mean the
-    // second ring is refused rather than layered on top of the first.
-    expect(entry?.maxConcurrent).toBe(1);
-    expect(entry?.cooldownMs ?? 0).toBeGreaterThanOrEqual(1000);
+  it("is no longer warmed with the intermission scene", () => {
+    cover("intermission-no-recess-bell");
+    const manifest = readSource(join(__dirname, "..", "..", "audio", "sfxManifest.ts"));
+    expect(manifest).not.toContain('"recessBell"');
   });
 });

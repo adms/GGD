@@ -73,10 +73,11 @@
  *
  * A third wave added the cues whose emit sites had landed ahead of their clips:
  * the guardian tower's slam + last-hit payout (#89/#105) with `combat`, and the
- * intermission's recess bell (#124) plus the draft-reveal sparkle/jackpot
- * (#110/#82) with `intermission` — the latter two alongside `legendaryRoll`,
- * since `draftReveal.revealSchedule` fires all three from the same offer mount.
- * All five are ONE-SHOTS: none is added to {@link SFX_LOOPABLE}.
+ * draft-reveal sparkle/jackpot (#110/#82) with `intermission` — the latter
+ * alongside `legendaryRoll`, since `draftReveal.revealSchedule` fires all three
+ * from the same offer mount. All are ONE-SHOTS: none is in {@link SFX_LOOPABLE}.
+ * (That wave also warmed the intermission's 26 s recess bell; #190 deleted the
+ * emit, so the warm went with it.)
  */
 import type { AudioScene } from "./types";
 
@@ -209,11 +210,10 @@ export const SFX_BY_SCENE: Readonly<Record<AudioScene, readonly string[]>> = {
     // the first card would land the sparkle after the flip it decorates.
     "draftCardReveal",
     "legendaryWin",
-    // recessBell (#124) — the 下課打鐘 school-recess chime rung ONCE as the
-    // 中場/備戦 window opens (intermissionAudio.RECESS_BELL). It fires on the
-    // scene-entry edge itself, so warming it with the scene is the only way it
-    // is ready in time; it is also the heaviest clip in this bucket (~26 s).
-    "recessBell",
+    // NOT recessBell. The 下課打鐘 chime used to be warmed here — it was the
+    // heaviest clip in this bucket (~26 s) and it is no longer emitted at all
+    // (#190: 「商店音樂播放 BGM 就好，不要變成鐘聲」). Warming a clip nothing
+    // plays is pure boot cost, which is the exact defect #63 exists to remove.
     ...COUNTDOWN_SFX,
   ],
   battleStart: [],

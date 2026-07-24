@@ -1,11 +1,31 @@
 /**
- * AbilityBar — the SIX-slot bar: Q/W/E/R icons with ranks + cooldown sweeps
- * (SeatState.cooldowns, ticks → seconds) and rank-up buttons when points are
- * unspent, then the EX, then the 天生技 (innate) the champion owns from level 1.
- * Ability names/castTypes come from the SHARED content registry — same defs the
- * server casts with.
+ * AbilityBar — the SIX-slot bar, left to right:
  *
- * The sixth tile is deliberately NOT shaped like the other five: no hotkey
+ *     天生技 │ Q │ W │ E │ R │ EX
+ *
+ * The 天生技 (innate) the champion owns from level 1 leads; then the four
+ * Q/W/E/R actives with ranks + cooldown sweeps (SeatState.cooldowns, ticks →
+ * seconds) and rank-up buttons when points are unspent; then the EX. Ability
+ * names/castTypes come from the SHARED content registry — same defs the server
+ * casts with.
+ *
+ * ---------------------------------------------------------------------------
+ * SCREEN ORDER ≠ WIRE ORDER — both are load-bearing, and they DISAGREE
+ * ---------------------------------------------------------------------------
+ * The owner's call: 「戰鬥時 技能按鈕順序應該是 天生技/Q/W/E/R/EX」. It reads as a
+ * progression — what you were born with, what you learn, what you unlock last.
+ *
+ * The WIRE order is different and must stay different. `CASTABLE_SLOTS` in
+ * shared/sim/intents is `["Q","W","E","R","EX","PASSIVE"]`, and those positions
+ * are INDICES, not a ranking: `seat.abilityRanks[i]`, `seat.cooldowns[i]` and
+ * `data-cast-slot={i}` (matched by `CastTracker.SLOT_INDEX`) all key off them.
+ * So the innate is index 5 while being the FIRST tile, and `SLOTS.map`'s `i`
+ * stays 0-3 no matter where the block sits in the JSX. Reordering
+ * `CASTABLE_SLOTS` to "tidy this up" would silently repoint every cooldown
+ * sweep in the bar; `abilityBarOrder.test.ts` guards the screen order and
+ * `innateActive.test.ts:258` pins the wire order, on purpose, in two places.
+ *
+ * The first tile is deliberately NOT shaped like the other five: no hotkey
  * caption, no rank pips, no rank-up button, a violet accent and a 天生 badge,
  * because it is not something the player presses or spends a point on. See
  * `ui/passiveSlot` for why the slot exists and how 被動 vs 主動 differ.
@@ -214,6 +234,196 @@ export function AbilityBar(): React.JSX.Element | null {
         pointerEvents: "auto",
       }}
     >
+      {(() => {
+        // 天生技 — the recovered NN-00 innate the champion owns from LEVEL 1,
+        // and the FIRST tile on the bar (it is still wire index 5; see the
+        // header on why screen order and wire order deliberately disagree).
+        // Null for the three heroes that genuinely have none.
+        //
+        // It is deliberately NOT tile-shaped like the five that follow it:
+        //   • a 天生 badge instead of a hotkey letter, and a 「Lv1」 corner chip,
+        //     so the "you already own this" fact is on the tile, not just in a
+        //     tooltip nobody opens;
+        //   • dashed border + no glow for innateKind "passive" (#166's language:
+        //     dashed = you do not press this);
+        //   • SOLID border + a 主動 chip for innateKind "active" — the map's
+        //     D-slot innates are real abilities and must not read as auras.
+        // No rank pips and no + button either way: it is never ranked.
+        const innate = passiveSlotView(seat.championId);
+        if (!innate) return null;
+        const active = innate.innateKind === "active";
+        // The ONE castability seam for the innate slot (castAnnounce owns the
+        // flag). Now TRUE for an active innate: the tile is a real button —
+        // pointer cursor, D caption, cooldown sweep and cast fill.
+        const castableInnate = active && INNATE_ACTIVE_CASTABLE;
+        // Live cooldown off the wire (seat.passiveCooldown), swept exactly like
+        // the EX tile. A 40 s innate that painted no sweep would look ready and
+        // refuse every press until it silently wasn't.
+        const innateCdSecs = (seat.passiveCooldown ?? 0) / TICK_HZ;
+        const innateSweep =
+          innateCdSecs > 0 ? Math.min(1, innateCdSecs / (innate.cooldownSec ?? innateCdSecs)) : 0;
+        // A permanent innate whose doc grants nothing (29 of 48) must not read
+        // like the 19 that work — see passiveSlot.effective.
+        const inert = !active && !innate.effective;
+        const meta: TooltipMeta[] = [
+          { label: PASSIVE_SLOT_LABEL, value: innateKindLabel(innate.innateKind) },
+        ];
+        if (active) {
+          meta.push({ label: "施法", value: castTypeLabel(innate.castType) });
+          if (innate.cooldownSec !== undefined)
+            meta.push({ label: "冷卻", base: innate.cooldownSec, factor: "cooldown", unit: "s" });
+          if (innate.manaCost !== undefined) meta.push({ label: "魔力", value: `${innate.manaCost}` });
+          if (castableInnate) meta.push({ label: "快捷", value: "D / ✛↑" });
+        }
+        meta.push({ label: "取得", value: innateCastNote(innate.innateKind, innate.effective) });
+        return (
+          <div style={{ position: "relative", width: 52, textAlign: "center" }}>
+            <Tooltip title={innate.name} body={innate.description} meta={meta} style={{ display: "block" }}>
+            <div
+              data-slot-key="PASSIVE"
+              // held → the top-of-screen description panel (task #152). It never
+              // reaches the floor aim ring: getHeldAimSlot() drops PASSIVE, so a
+              // non-castable tile cannot draw a cast-range telegraph.
+              //
+              // `passive` is true for a PURE passive (and for an active innate
+              // if the castability flag were ever switched back off): the press
+              // is not a failed cast, so it gets the soft tick, never the error
+              // beep. A CASTABLE innate is treated like any other button — on
+              // cooldown it is a real refusal. `castAnnounce` supplies the words
+              // in every case and can still upgrade the tone (mana, dead …).
+              {...holdProps(
+                "PASSIVE",
+                castableInnate ? { denied: innateSweep > 0 } : { passive: true },
+              )}
+              style={{
+                position: "relative",
+                width: 52,
+                height: 52,
+                borderRadius: 6,
+                overflow: "hidden",
+                background: active ? "#2b2340" : "#1e1b2c",
+                border: `${active ? 2 : 1}px ${active ? "solid" : "dashed"} ${PASSIVE_ACCENT}`,
+                color: TEXT_MAIN,
+                // An INERT permanent innate (no modifier/hook/aura in its doc)
+                // is dimmed on top of the dashed border every passive gets, so
+                // "owned but doing nothing" is visible at a glance and not only
+                // in the caption underneath.
+                opacity: inert ? 0.55 : 1,
+                // A pointer cursor on a tile that cannot fire is the exact lie
+                // #166 removed from pure passives — so it appears only for an
+                // innate that really is pressable.
+                cursor: castableInnate ? "pointer" : "default",
+                transition: "transform 80ms ease, filter 80ms ease",
+              }}
+            >
+              <div style={{ fontSize: 12, fontWeight: "bold", marginTop: 7, color: PASSIVE_ACCENT }}>
+                {PASSIVE_SLOT_LABEL}
+              </div>
+              <div style={{ fontSize: 8, color: TEXT_DIM, overflow: "hidden", whiteSpace: "nowrap" }}>
+                {innate.displayName}
+              </div>
+              <IconImg fill src={iconSrc(innate.icon)} alt={innate.name} />
+              {/* 「等級1就獲得」 stated ON the tile — the owner's whole point */}
+              <div
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  top: 0,
+                  padding: "0 3px",
+                  borderBottomRightRadius: 5,
+                  background: "rgba(10,8,20,0.85)",
+                  color: PASSIVE_ACCENT,
+                  fontSize: 8,
+                  lineHeight: "11px",
+                }}
+              >
+                Lv1
+              </div>
+              {/* 被動 / 主動 — the two shapes an innate takes */}
+              <div
+                style={{
+                  position: "absolute",
+                  right: 0,
+                  bottom: 0,
+                  padding: "0 3px",
+                  borderTopLeftRadius: 5,
+                  background: "rgba(10,8,20,0.85)",
+                  color: PASSIVE_ACCENT,
+                  fontSize: 8,
+                  lineHeight: "11px",
+                }}
+              >
+                {innateKindLabel(innate.innateKind)}
+              </div>
+              {/* cooldown sweep + seconds — the same two overlays the EX tile
+                  draws, so the innate slot reads as the same kind of thing. Only
+                  an active innate can ever be on cooldown. */}
+              {innateSweep > 0 && (
+                <div
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    height: `${innateSweep * 100}%`,
+                    background: "rgba(8, 10, 16, 0.78)",
+                  }}
+                />
+              )}
+              {innateSweep > 0 && (
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: 15,
+                    fontWeight: "bold",
+                    color: "#fff",
+                  }}
+                >
+                  {Math.ceil(innateCdSecs)}
+                </div>
+              )}
+              {/* channel fill — index 5, matching CastTracker.SLOT_INDEX. Only
+                  mounted for a castable innate: a tile that cannot cast must
+                  never carry a cast surface that could half-paint. */}
+              {castableInnate && (
+                <div
+                  data-cast-slot={5}
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    height: "0%",
+                    background: CAST_FILL,
+                    pointerEvents: "none",
+                  }}
+                />
+              )}
+            </div>
+            </Tooltip>
+            {/* The caption row. An ACTIVE innate now shows a real hotkey here,
+                exactly where the EX shows F — that is how a player learns the
+                key exists at all. The permanent half keeps a sentence instead of
+                a key, and it tells the truth about ITSELF: 「無需施放」 for one
+                that is genuinely running, 「未實作」 for the 29 whose doc grants
+                nothing, because those two must not look the same. */}
+            <div
+              style={{
+                marginTop: 3,
+                fontSize: castableInnate ? 9 : 8,
+                color: castableInnate ? PASSIVE_ACCENT : inert ? "#c98a8a" : TEXT_DIM,
+                letterSpacing: castableInnate ? 1 : 0.5,
+              }}
+            >
+              {active ? (castableInnate ? "D" : "自動擁有 · 待接") : inert ? "未實作" : "無需施放"}
+            </div>
+          </div>
+        );
+      })()}
       {SLOTS.map((slot, i) => {
         const ability = def.abilities[slot];
         const rank = seat.abilityRanks[i] ?? 0;
@@ -433,194 +643,6 @@ export function AbilityBar(): React.JSX.Element | null {
             </div>
             </Tooltip>
             <div style={{ marginTop: 3, fontSize: 9, color: EX_ACCENT, letterSpacing: 1 }}>F</div>
-          </div>
-        );
-      })()}
-      {(() => {
-        // 天生技 (the SIXTH slot) — the recovered NN-00 innate the champion owns
-        // from LEVEL 1. Null for the three heroes that genuinely have none.
-        //
-        // It is deliberately NOT tile-shaped like the five above it:
-        //   • a 天生 badge instead of a hotkey letter, and a 「Lv1」 corner chip,
-        //     so the "you already own this" fact is on the tile, not just in a
-        //     tooltip nobody opens;
-        //   • dashed border + no glow for innateKind "passive" (#166's language:
-        //     dashed = you do not press this);
-        //   • SOLID border + a 主動 chip for innateKind "active" — the map's
-        //     D-slot innates are real abilities and must not read as auras.
-        // No rank pips and no + button either way: it is never ranked.
-        const innate = passiveSlotView(seat.championId);
-        if (!innate) return null;
-        const active = innate.innateKind === "active";
-        // The ONE castability seam for the sixth slot (castAnnounce owns the
-        // flag). Now TRUE for an active innate: the tile is a real button —
-        // pointer cursor, D caption, cooldown sweep and cast fill.
-        const castableInnate = active && INNATE_ACTIVE_CASTABLE;
-        // Live cooldown off the wire (seat.passiveCooldown), swept exactly like
-        // the EX tile. A 40 s innate that painted no sweep would look ready and
-        // refuse every press until it silently wasn't.
-        const innateCdSecs = (seat.passiveCooldown ?? 0) / TICK_HZ;
-        const innateSweep =
-          innateCdSecs > 0 ? Math.min(1, innateCdSecs / (innate.cooldownSec ?? innateCdSecs)) : 0;
-        // A permanent innate whose doc grants nothing (29 of 48) must not read
-        // like the 19 that work — see passiveSlot.effective.
-        const inert = !active && !innate.effective;
-        const meta: TooltipMeta[] = [
-          { label: PASSIVE_SLOT_LABEL, value: innateKindLabel(innate.innateKind) },
-        ];
-        if (active) {
-          meta.push({ label: "施法", value: castTypeLabel(innate.castType) });
-          if (innate.cooldownSec !== undefined)
-            meta.push({ label: "冷卻", base: innate.cooldownSec, factor: "cooldown", unit: "s" });
-          if (innate.manaCost !== undefined) meta.push({ label: "魔力", value: `${innate.manaCost}` });
-          if (castableInnate) meta.push({ label: "快捷", value: "D / ✛↑" });
-        }
-        meta.push({ label: "取得", value: innateCastNote(innate.innateKind, innate.effective) });
-        return (
-          <div style={{ position: "relative", width: 52, textAlign: "center" }}>
-            <Tooltip title={innate.name} body={innate.description} meta={meta} style={{ display: "block" }}>
-            <div
-              data-slot-key="PASSIVE"
-              // held → the top-of-screen description panel (task #152). It never
-              // reaches the floor aim ring: getHeldAimSlot() drops PASSIVE, so a
-              // non-castable tile cannot draw a cast-range telegraph.
-              //
-              // `passive` is true for a PURE passive (and for an active innate
-              // if the castability flag were ever switched back off): the press
-              // is not a failed cast, so it gets the soft tick, never the error
-              // beep. A CASTABLE innate is treated like any other button — on
-              // cooldown it is a real refusal. `castAnnounce` supplies the words
-              // in every case and can still upgrade the tone (mana, dead …).
-              {...holdProps(
-                "PASSIVE",
-                castableInnate ? { denied: innateSweep > 0 } : { passive: true },
-              )}
-              style={{
-                position: "relative",
-                width: 52,
-                height: 52,
-                borderRadius: 6,
-                overflow: "hidden",
-                background: active ? "#2b2340" : "#1e1b2c",
-                border: `${active ? 2 : 1}px ${active ? "solid" : "dashed"} ${PASSIVE_ACCENT}`,
-                color: TEXT_MAIN,
-                // An INERT permanent innate (no modifier/hook/aura in its doc)
-                // is dimmed on top of the dashed border every passive gets, so
-                // "owned but doing nothing" is visible at a glance and not only
-                // in the caption underneath.
-                opacity: inert ? 0.55 : 1,
-                // A pointer cursor on a tile that cannot fire is the exact lie
-                // #166 removed from pure passives — so it appears only for an
-                // innate that really is pressable.
-                cursor: castableInnate ? "pointer" : "default",
-                transition: "transform 80ms ease, filter 80ms ease",
-              }}
-            >
-              <div style={{ fontSize: 12, fontWeight: "bold", marginTop: 7, color: PASSIVE_ACCENT }}>
-                {PASSIVE_SLOT_LABEL}
-              </div>
-              <div style={{ fontSize: 8, color: TEXT_DIM, overflow: "hidden", whiteSpace: "nowrap" }}>
-                {innate.displayName}
-              </div>
-              <IconImg fill src={iconSrc(innate.icon)} alt={innate.name} />
-              {/* 「等級1就獲得」 stated ON the tile — the owner's whole point */}
-              <div
-                style={{
-                  position: "absolute",
-                  left: 0,
-                  top: 0,
-                  padding: "0 3px",
-                  borderBottomRightRadius: 5,
-                  background: "rgba(10,8,20,0.85)",
-                  color: PASSIVE_ACCENT,
-                  fontSize: 8,
-                  lineHeight: "11px",
-                }}
-              >
-                Lv1
-              </div>
-              {/* 被動 / 主動 — the two shapes an innate takes */}
-              <div
-                style={{
-                  position: "absolute",
-                  right: 0,
-                  bottom: 0,
-                  padding: "0 3px",
-                  borderTopLeftRadius: 5,
-                  background: "rgba(10,8,20,0.85)",
-                  color: PASSIVE_ACCENT,
-                  fontSize: 8,
-                  lineHeight: "11px",
-                }}
-              >
-                {innateKindLabel(innate.innateKind)}
-              </div>
-              {/* cooldown sweep + seconds — the same two overlays the EX tile
-                  draws, so the sixth slot reads as the same kind of thing. Only
-                  an active innate can ever be on cooldown. */}
-              {innateSweep > 0 && (
-                <div
-                  style={{
-                    position: "absolute",
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    height: `${innateSweep * 100}%`,
-                    background: "rgba(8, 10, 16, 0.78)",
-                  }}
-                />
-              )}
-              {innateSweep > 0 && (
-                <div
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: 15,
-                    fontWeight: "bold",
-                    color: "#fff",
-                  }}
-                >
-                  {Math.ceil(innateCdSecs)}
-                </div>
-              )}
-              {/* channel fill — index 5, matching CastTracker.SLOT_INDEX. Only
-                  mounted for a castable innate: a tile that cannot cast must
-                  never carry a cast surface that could half-paint. */}
-              {castableInnate && (
-                <div
-                  data-cast-slot={5}
-                  style={{
-                    position: "absolute",
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    height: "0%",
-                    background: CAST_FILL,
-                    pointerEvents: "none",
-                  }}
-                />
-              )}
-            </div>
-            </Tooltip>
-            {/* The caption row. An ACTIVE innate now shows a real hotkey here,
-                exactly where the EX shows F — that is how a player learns the
-                key exists at all. The permanent half keeps a sentence instead of
-                a key, and it tells the truth about ITSELF: 「無需施放」 for one
-                that is genuinely running, 「未實作」 for the 29 whose doc grants
-                nothing, because those two must not look the same. */}
-            <div
-              style={{
-                marginTop: 3,
-                fontSize: castableInnate ? 9 : 8,
-                color: castableInnate ? PASSIVE_ACCENT : inert ? "#c98a8a" : TEXT_DIM,
-                letterSpacing: castableInnate ? 1 : 0.5,
-              }}
-            >
-              {active ? (castableInnate ? "D" : "自動擁有 · 待接") : inert ? "未實作" : "無需施放"}
-            </div>
           </div>
         );
       })()}

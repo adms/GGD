@@ -1,15 +1,10 @@
 /**
- * intermissionAudio — the INTERMISSION scene's own SFX emits (tasks #124, #38).
+ * intermissionAudio — the INTERMISSION scene's own SFX emits (task #38).
  *
- * Two cues, both fired through the shared mixer (`audioSystem.playSfx`, SFX bus)
- * so the SFX slider/mute AND the task-#62 test-mode silence gate apply to them
+ * ONE cue, fired through the shared mixer (`audioSystem.playSfx`, SFX bus) so
+ * the SFX slider/mute AND the task-#62 test-mode silence gate apply to it
  * exactly like every other cue — this module never builds its own AudioContext:
  *
- *   • recessBell (#124) — the cheerful 下課打鐘 school-recess bell, a ONE-SHOT
- *     rung as the 中場/備戰 window opens. (The clip is authored by task #124; if
- *     the map has no `recessBell` entry yet, `playSfx` simply returns false and
- *     the emit is a silent no-op until the asset lands — being unmapped costs
- *     silence, never a throw.)
  *   • merchantAmbience (#38) — the market-crowd「がやがや」murmur bed that plays
  *     UNDER the intermission while the stall is shown. It is a LOOPING bed
  *     (flagged in `sfxManifest.SFX_LOOPABLE`), but the mixer's one-shot
@@ -20,28 +15,38 @@
  *     reaches its natural end restarts it. `stop()` clears the timer, so nothing
  *     is left ticking once the scene is disposed (no leak).
  *
- * ONE BELL, NOT TWO — DELIBERATE. A second "break is ending" ring was
- * considered and rejected on the numbers, not on taste:
- *   • the clip is 26.03 s long (a full キンコンカンコン plus a long decay tail),
- *     and the prep window is 60 s (PhaseMachine `intermissionTicks`). A closing
- *     ring would have to START at t≈34 s to finish before combat — the middle
- *     of the window, which reads as random rather than as "time is up";
- *   • start it any later and it is still sounding when the phase ends, so the
- *     school bell rings over the opening seconds of the fight. `playSfx` is
- *     fire-and-forget (the mixer exposes no stop-one-voice seam), so a dispose
- *     could not cut it off;
- *   • the last five seconds already belong to task #95, whose `countFinal`
- *     fires on the 1 s edge. A bell on top of it is the "so dense it sounds
- *     broken" stacking the brief warns against.
- * The single opening ring at t=0 lands clean: it is done by t≈26 s, a full 34 s
- * before the countdown starts, so the two cues never overlap.
+ * ═══════════════════════════════════════════════════════════════════════════
+ * THE RECESS BELL IS GONE — 「商店音樂播放 BGM 就好，不要變成鐘聲」(task #190)
+ * ═══════════════════════════════════════════════════════════════════════════
+ * This module used to ring `recessBell` once on scene entry: task #124's
+ * cheerful 下課打鐘 school chime. The owner reported the shop's music as
+ * 「整個被鐘聲取代掉」 and asked for the BGM, plain. It is removed, and the
+ * reason is worth writing down because the obvious suspect was the wrong one.
+ *
+ * The BGM was NEVER a bell. `content/assets/audio/bgm/intermission.mp3` is the
+ * city-pop 街の合間 track, and MEASURED it opens on exactly the Rhodes Dm9 its
+ * score describes — an FFT of its first 2.6 s peaks at 146.5 / 174.6 / 220.0 /
+ * 261.5 / 329.6 Hz (D3 F3 A3 C4 E4), spectral flatness 0.0095. `recessBell.mp3`
+ * over the same window is two near-pure partials (349.2 / 698.5 Hz, flatness
+ * 0.00000). The track was fine; the CHIME WAS ON TOP OF IT.
+ *
+ * And it was on top of it for a long time. The clip is 26.03 s of キンコンカン
+ * コン plus decay, at gain 0.55, laid over a 60 s prep window whose music
+ * deliberately breathes in from near-silence. For the first 43 % of every shop
+ * visit the loudest thing on the SFX bus was a school bell and the quietest was
+ * the music — which is precisely "the music got replaced by a bell".
+ *
+ * The clip still ships and stays credited on the 版權聲明 page (the 効果音ラボ
+ * authorisation is per-CLIP, not per-emit); it is filed `unreachable` in
+ * `audio/sfxReachability` with this reason, so the page tells the truth about
+ * it. Do not re-add the emit here: the ONE-BELL-NOT-TWO analysis this header
+ * used to carry argued only about a SECOND ring, and the owner has since ruled
+ * on the first.
  *
  * Kept as a pure module (injected `SfxPort` + timer fns) so it is unit-testable
  * without a WebGL scene or a real AudioContext — see intermissionAudio.test.ts.
  */
 
-/** SFX event key: the 下課打鐘 school-recess bell (task #124). */
-export const RECESS_BELL = "recessBell";
 /** SFX event key: the looping market-crowd ざわめき bed (task #38). */
 export const MARKET_AMBIENCE = "merchantAmbience";
 
@@ -75,15 +80,6 @@ const defaultTimers: AmbienceTimers = {
   setInterval: (fn, ms) => globalThis.setInterval(fn, ms),
   clearInterval: (h) => globalThis.clearInterval(h as ReturnType<typeof setInterval>),
 };
-
-/**
- * Ring the 下課打鐘 recess bell ONCE, as the intermission opens. Returns whether
- * the mixer actually started it (false = unmapped / autoplay-locked / muted /
- * test-mode silent — all silent no-ops, never a throw).
- */
-export function playRecessBell(audio: SfxPort): boolean {
-  return audio.playSfx(RECESS_BELL);
-}
 
 /**
  * Start the market-crowd ambience bed and keep it looping until `stop()`.
