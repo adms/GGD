@@ -1,5 +1,5 @@
 {
-  "contentVersion": "cv_16908b22b59a",
+  "contentVersion": "cv_e822967dc30e",
   "collections": {
     "champions": {
       "hash": "0c34edaaedcd",
@@ -37,12 +37,12 @@
       "path": "loot-tables/_index.json"
     },
     "arenas": {
-      "hash": "f13643b647bc",
+      "hash": "d718d09a7a39",
       "count": 5,
       "path": "arenas/_index.json"
     },
     "config": {
-      "hash": "400e65d03d6c",
+      "hash": "e7732d666765",
       "count": 11,
       "path": "config/_index.json"
     },

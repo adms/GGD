@@ -134,27 +134,6 @@
   ],
   "decor": [
     {
-      "model": "assets/models/props/pillar.glb",
-      "x": -40,
-      "z": 0,
-      "rotQuarter": 0,
-      "scale": 2.5
-    },
-    {
-      "model": "assets/models/props/pillar.glb",
-      "x": -49,
-      "z": 8,
-      "rotQuarter": 0,
-      "scale": 1.8
-    },
-    {
-      "model": "assets/models/props/pillar.glb",
-      "x": -31,
-      "z": -8,
-      "rotQuarter": 0,
-      "scale": 1.8
-    },
-    {
       "model": "assets/models/props/torch.glb",
       "x": -16.8,
       "z": 0,
@@ -223,27 +202,6 @@
       "z": 0,
       "rotQuarter": 3,
       "scale": 1.6
-    },
-    {
-      "model": "assets/models/props/pillar.glb",
-      "x": 40,
-      "z": 0,
-      "rotQuarter": 0,
-      "scale": 2.5
-    },
-    {
-      "model": "assets/models/props/pillar.glb",
-      "x": 31,
-      "z": 8,
-      "rotQuarter": 0,
-      "scale": 1.8
-    },
-    {
-      "model": "assets/models/props/pillar.glb",
-      "x": 49,
-      "z": -8,
-      "rotQuarter": 0,
-      "scale": 1.8
     },
     {
       "model": "assets/models/props/torch.glb",
