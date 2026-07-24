@@ -14,6 +14,8 @@ import {
   loadWalletMeta,
   normalizeWallet,
   pricesFromCatalog,
+  selectableByOwnership,
+  selectableIdsByOwnership,
   sortFavouritesFirst,
   type MetaData,
   type MetaWallet,
@@ -157,5 +159,32 @@ describe("champ-select meta: offline degradation (meta-client-degrade)", () => {
       ownedChampions: ["a"],
       favourites: [],
     });
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Task #201: the roster and the 🎲 random pool are `owned ∩ available`. A LOCKED
+// champion (priced + not unlocked) is dropped from BOTH surfaces; free and owned
+// champions stay. This is the client-side legibility filter; the server rejects
+// an unowned lock-in regardless.
+describe("champ-select ownership filter (meta-client-ownership)", () => {
+  it("selectableByOwnership drops a locked champion from the manual roster, keeps free + owned", () => {
+    cover("meta-client-ownership-roster");
+    const roster = [{ id: "sela" }, { id: "thorne" }, { id: "vex" }, { id: "ghost" }];
+    // owns thorne (priced+owned → keep). sela free → keep. vex priced+not owned →
+    // DROP. ghost unknown price → treated free → keep.
+    const owned = new Set(["thorne"]);
+    const out = selectableByOwnership(roster, prices(), owned).map((c) => c.id);
+    expect(out).toEqual(["sela", "thorne", "ghost"]);
+    expect(out).not.toContain("vex"); // the locked champion is unpickable
+  });
+
+  it("selectableIdsByOwnership removes locked ids from the random pool", () => {
+    cover("meta-client-ownership-random");
+    const ids = ["sela", "thorne", "vex"];
+    // owns nothing priced: only the free 'sela' survives among priced peers.
+    expect(selectableIdsByOwnership(ids, prices(), new Set())).toEqual(["sela"]);
+    // owning vex adds it back; thorne (priced, still not owned) stays out.
+    expect(selectableIdsByOwnership(ids, prices(), new Set(["vex"]))).toEqual(["sela", "vex"]);
   });
 });

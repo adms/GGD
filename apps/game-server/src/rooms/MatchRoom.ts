@@ -24,6 +24,7 @@ import { AIDriver } from "../ai/Tier0Brain";
 import { projectSnapshot } from "../net/snapshot";
 import { sign, verifyTicket } from "../auth/hmac";
 import { Whitelist, WHITELIST_BYPASS, sharedWhitelistCache } from "../curation/whitelist";
+import { Ownership } from "../curation/ownership";
 import { sharedCombatEnvCache } from "../config/combatEnv";
 import { resolveServerOps, type ServerOps } from "../config/serverOps";
 import { PLATFORM_URL } from "../config/platformUrl";
@@ -41,8 +42,18 @@ export interface MatchRoomOptions {
   seed?: number;
   /** selected arena id (Arenas registry key); unknown/absent → skeleton */
   mapId?: string;
-  /** human seats reserved by the platform; bots fill the rest */
-  seats?: { seatId: number; teamId: number; accountId: string; displayName: string; championId?: string }[];
+  /** human seats reserved by the platform; bots fill the rest. `owned` is the
+   * account's playable champion set (task #201) — free roster ∪ unlocked — from
+   * the signed match-create body; absent leaves that seat's ownership
+   * unenforced (fail-open, e.g. dev/LAN joins). */
+  seats?: {
+    seatId: number;
+    teamId: number;
+    accountId: string;
+    displayName: string;
+    championId?: string;
+    owned?: string[];
+  }[];
   callbackUrl?: string;
   /**
    * Server-only proof that /_internal/matches minted this room (createGate.ts).
@@ -354,6 +365,13 @@ export class MatchRoom extends Room<MatchState> {
     // into the replay header below, so a recording replays on ITS reservoir, not
     // on whatever the config says at playback time.
     const startingLives = resolveStartingLives();
+    // Per-account ownership snapshot (task #201): rebuilt from the signed
+    // match-create body's per-seat `owned` sets. Only human seats the platform
+    // told us about are enforced; bots and dev/LAN seats carry no `owned` and
+    // stay unenforced (fail-open — see curation/ownership.ts). The client filters
+    // its roster to the same set, but THIS is the authoritative gate: a forged
+    // SELECT_CHAMPION for an unowned champion is rejected by MatchController.
+    const ownership = Ownership.fromSeats(humanSeats);
     this.ctl = new MatchController(
       matchId,
       seed,
@@ -367,6 +385,7 @@ export class MatchRoom extends Room<MatchState> {
       fireRing,
       // Per-round arena rotation pool (task #145).
       arenaPool,
+      ownership,
     );
     for (const h of humanSeats) {
       this.seatByAccount.set(h.accountId, asSeatId(h.seatId));

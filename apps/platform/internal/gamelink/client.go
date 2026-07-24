@@ -37,6 +37,45 @@ type Seat struct {
 	Champion    string `json:"champion"`
 	MMR         int    `json:"mmr"`
 	IsBot       bool   `json:"isBot"`
+	// Owned is the account's PLAYABLE champion set — every free champion plus its
+	// unlocked priced champions (see PlayableChampions). The game-server enforces
+	// it authoritatively at champ-select lock-in so an unowned champion cannot be
+	// selected, MANUAL or RANDOM, even by a crafted client (task #201). Bots and
+	// couch guests carry nil (omitted on the wire), which leaves that seat's
+	// ownership unenforced game-server side (fail-open — never an empty roster,
+	// #130). Guests inherit their owning member's set.
+	Owned []string `json:"owned,omitempty"`
+}
+
+// PlayableChampions returns the champion ids an account may select: every free
+// (price 0 / unpriced) champion plus every unlocked priced champion. This is
+// the exact rule wallet.Service.OwnsChampion enforces per-champion, hoisted to
+// the whole set so the game-server can gate champ-select the same way the store
+// gates a purchase.
+//
+// A nil `owned` slice (an account written before the wallet existed, or one that
+// never opened champ-select and so was never seeded) yields precisely the free
+// set — which is the #130 onboarding floor: a brand-new account is never handed
+// an empty selectable roster and left to spawn dead. The result is sorted and
+// de-duplicated so it is stable on the wire and in tests.
+func PlayableChampions(free, owned []string) []string {
+	set := make(map[string]struct{}, len(free)+len(owned))
+	for _, id := range free {
+		if id != "" {
+			set[id] = struct{}{}
+		}
+	}
+	for _, id := range owned {
+		if id != "" {
+			set[id] = struct{}{}
+		}
+	}
+	out := make([]string, 0, len(set))
+	for id := range set {
+		out = append(out, id)
+	}
+	sort.Strings(out)
+	return out
 }
 
 // BotFill describes AI backfill for the game server.
@@ -212,6 +251,32 @@ func BuildSeats(members []room.Member, lookup func(id string) (account.Account, 
 	return seats, BotFill{Count: TotalSeats - humans, Difficulty: difficulty}
 }
 
+// attachOwnership fills Seat.Owned for every human seat with the account's
+// playable champion set (task #201). Guests (":pN") share their owning member's
+// set; a per-base cache means the owner + its couch guests cost one account read.
+// A read error leaves that seat's Owned nil (unenforced) so a transient account
+// miss cannot brick the whole match at champ-select.
+func (s *Service) attachOwnership(ctx context.Context, seats []Seat) {
+	free := s.cat.FreeChampions()
+	cache := map[string][]string{}
+	for i := range seats {
+		if seats[i].IsBot {
+			continue
+		}
+		base, _ := SplitGuestID(seats[i].AccountID)
+		playable, ok := cache[base]
+		if !ok {
+			if a, err := s.accounts.GetByID(ctx, base); err == nil {
+				playable = PlayableChampions(free, a.OwnedChampions)
+			} else {
+				playable = nil // unenforced on a lookup miss (fail-open)
+			}
+			cache[base] = playable
+		}
+		seats[i].Owned = playable
+	}
+}
+
 // StartMatch implements room.MatchStarter: reserve seats on the game server,
 // track the pending match for the reaper, and push each human its seat token.
 func (s *Service) StartMatch(ctx context.Context, rm room.Room, members []room.Member) (room.StartInfo, error) {
@@ -219,6 +284,14 @@ func (s *Service) StartMatch(ctx context.Context, rm room.Room, members []room.M
 	seats, botFill := BuildSeats(members, func(id string) (account.Account, error) {
 		return s.accounts.GetByID(ctx, id)
 	}, rm.BotDifficulty)
+
+	// Task #201: stamp each HUMAN seat with the account's playable champion set so
+	// the game-server can reject a lock-in of an unowned champion. Resolved from
+	// the SAME loaded catalog (free roster) + the account's unlocked list; couch
+	// guests inherit their owning member's set (base id). Bots get nothing and
+	// stay unenforced. A lookup failure leaves the seat unenforced rather than
+	// bricking the match — the game-server treats absent ownership as fail-open.
+	s.attachOwnership(ctx, seats)
 
 	req := MatchRequest{
 		MatchID: matchID, Mode: "PairedDuels", MapID: rm.MapID,
