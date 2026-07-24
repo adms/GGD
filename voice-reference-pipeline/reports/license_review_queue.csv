@@ -1,0 +1,61 @@
+﻿id,character,candidate_url,source_name,speaker_name,license_type,license_url,commercial_use,derivative_use,ai_use,download_allowed,confidence,recommended_action
+godie-e001,龍宮禮奈,https://amitaro.net/voice/corpus-list/ita/,あみたろの声素材工房 (ITAコーパス 6感情スタイル),小春音アミ (あみたろ),独自規約(無料),https://amitaro.net/voice/voice_rule/,true,true,true,true,high,auto_download
+godie-e001,龍宮禮奈,https://voice-statistics.github.io/,日本声優統計学会 声優統計コーパス,プロ女性声優3名 (通常/喜び/怒り),独自規約(音声は個人研究限定),https://voice-statistics.github.io/,false,unknown,unknown,true,high,reject
+godie-e002,Saber,https://tyc.rei-yumesaki.net/material/corpus/,つくよみちゃんコーパス,つくよみちゃん (CV. 夢前黎),独自規約(無料),https://tyc.rei-yumesaki.net/material/corpus/,true,true,true,true,high,auto_download
+godie-e007,天地志狼,https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus,JVSコーパス,プロ話者100名 (男女),独自規約(非商用),https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus,false,unknown,unknown,true,high,reject
+godie-e008,夏娜,https://amitaro.net/voice/corpus-list/ita/,あみたろの声素材工房 (ITAコーパス 6感情スタイル),小春音アミ (あみたろ),独自規約(無料),https://amitaro.net/voice/voice_rule/,true,true,true,true,high,auto_download
+godie-e008,夏娜,https://voice-statistics.github.io/,日本声優統計学会 声優統計コーパス,プロ女性声優3名 (通常/喜び/怒り),独自規約(音声は個人研究限定),https://voice-statistics.github.io/,false,unknown,unknown,true,high,reject
+godie-e00k,安云,https://voice-statistics.github.io/,日本声優統計学会 声優統計コーパス,プロ女性声優3名 (通常/喜び/怒り),独自規約(音声は個人研究限定),https://voice-statistics.github.io/,false,unknown,unknown,true,high,reject
+godie-e00r,初號機,https://freesound.org/search/?q=voice&f=license:%22Creative+Commons+0%22,Freesound.org (CC0 人声クリップ),クリップ毎に異なる,per-clip (CC0/CC-BY/CC-BY-NC),https://freesound.org/help/faq/,unknown,true,unknown,true,medium,manual_review
+godie-e00r,初號機,,自主録音 (社内/委託収録),委託声優/開発チーム,契約による買い取り,,true,true,true,false,high,reject
+godie-e00w,櫻綻剎那,https://tyc.rei-yumesaki.net/material/corpus/,つくよみちゃんコーパス,つくよみちゃん (CV. 夢前黎),独自規約(無料),https://tyc.rei-yumesaki.net/material/corpus/,true,true,true,true,high,auto_download
+godie-edem,宇智波佐助,https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus,JVSコーパス,プロ話者100名 (男女),独自規約(非商用),https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus,false,unknown,unknown,true,high,reject
+godie-emfr,涅吉,https://bindumechan.wixsite.com/shigure222/素材配布,刻鳴時雨 音声コーパス,刻鳴時雨 (CV. 丸ころ),独自規約(無料),https://bindumechan.wixsite.com/shigure222/素材配布,true,true,true,true,medium,request_permission
+godie-emns,夜神月,https://commonvoice.mozilla.org/,Mozilla Common Voice 日本語,クラウドソース多数話者,CC0 1.0,https://github.com/common-voice/common-voice,true,true,true,true,high,auto_download
+godie-etyr,木乃香,https://tyc.rei-yumesaki.net/material/corpus/,つくよみちゃんコーパス,つくよみちゃん (CV. 夢前黎),独自規約(無料),https://tyc.rei-yumesaki.net/material/corpus/,true,true,true,true,high,auto_download
+godie-h00l,林克,https://bindumechan.wixsite.com/shigure222/素材配布,刻鳴時雨 音声コーパス,刻鳴時雨 (CV. 丸ころ),独自規約(無料),https://bindumechan.wixsite.com/shigure222/素材配布,true,true,true,true,medium,request_permission
+godie-h01n,黑崎一護,https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus,JVSコーパス,プロ話者100名 (男女),独自規約(非商用),https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus,false,unknown,unknown,true,high,reject
+godie-h01u,呂布奉先,https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus,JVSコーパス,プロ話者100名 (男女),独自規約(非商用),https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus,false,unknown,unknown,true,high,reject
+godie-h020,莉娜因巴斯,https://amitaro.net/voice/corpus-list/ita/,あみたろの声素材工房 (ITAコーパス 6感情スタイル),小春音アミ (あみたろ),独自規約(無料),https://amitaro.net/voice/voice_rule/,true,true,true,true,high,auto_download
+godie-h02k,熊貓,https://freesound.org/search/?q=voice&f=license:%22Creative+Commons+0%22,Freesound.org (CC0 人声クリップ),クリップ毎に異なる,per-clip (CC0/CC-BY/CC-BY-NC),https://freesound.org/help/faq/,unknown,true,unknown,true,medium,manual_review
+godie-h02k,熊貓,,自主録音 (社内/委託収録),委託声優/開発チーム,契約による買い取り,,true,true,true,false,high,reject
+godie-h02r,妙蛙花,https://freesound.org/search/?q=voice&f=license:%22Creative+Commons+0%22,Freesound.org (CC0 人声クリップ),クリップ毎に異なる,per-clip (CC0/CC-BY/CC-BY-NC),https://freesound.org/help/faq/,unknown,true,unknown,true,medium,manual_review
+godie-h02u,草泥馬,https://freesound.org/search/?q=voice&f=license:%22Creative+Commons+0%22,Freesound.org (CC0 人声クリップ),クリップ毎に異なる,per-clip (CC0/CC-BY/CC-BY-NC),https://freesound.org/help/faq/,unknown,true,unknown,true,medium,manual_review
+godie-h02u,草泥馬,,自主録音 (社内/委託収録),委託声優/開発チーム,契約による買い取り,,true,true,true,false,high,reject
+godie-hapm,Berserker,https://freesound.org/search/?q=voice&f=license:%22Creative+Commons+0%22,Freesound.org (CC0 人声クリップ),クリップ毎に異なる,per-clip (CC0/CC-BY/CC-BY-NC),https://freesound.org/help/faq/,unknown,true,unknown,true,medium,manual_review
+godie-hapm,Berserker,,自主録音 (社内/委託収録),委託声優/開発チーム,契約による買い取り,,true,true,true,false,high,reject
+godie-hart,克勞德,https://commonvoice.mozilla.org/,Mozilla Common Voice 日本語,クラウドソース多数話者,CC0 1.0,https://github.com/common-voice/common-voice,true,true,true,true,high,auto_download
+godie-hpal,藤井八雲,https://commonvoice.mozilla.org/,Mozilla Common Voice 日本語,クラウドソース多数話者,CC0 1.0,https://github.com/common-voice/common-voice,true,true,true,true,high,auto_download
+godie-hpb1,蒼月潮,https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus,JVSコーパス,プロ話者100名 (男女),独自規約(非商用),https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus,false,unknown,unknown,true,high,reject
+godie-huth,魔人普烏,https://voicevox.hiroshiba.jp/,VOICEVOX (ずんだもん・四国めたん等),合成音声キャラ多数,エンジン規約+キャラ別規約,https://voicevox.hiroshiba.jp/term/,true,unknown,unknown,true,high,request_permission
+godie-hvsh,Rider,https://voice-statistics.github.io/,日本声優統計学会 声優統計コーパス,プロ女性声優3名 (通常/喜び/怒り),独自規約(音声は個人研究限定),https://voice-statistics.github.io/,false,unknown,unknown,true,high,reject
+godie-hvwd,桔梗,https://tyc.rei-yumesaki.net/material/corpus/,つくよみちゃんコーパス,つくよみちゃん (CV. 夢前黎),独自規約(無料),https://tyc.rei-yumesaki.net/material/corpus/,true,true,true,true,high,auto_download
+godie-n003,依文潔琳,https://amitaro.net/voice/corpus-list/ita/,あみたろの声素材工房 (ITAコーパス 6感情スタイル),小春音アミ (あみたろ),独自規約(無料),https://amitaro.net/voice/voice_rule/,true,true,true,true,high,auto_download
+godie-n00b,哆拉A夢,https://voicevox.hiroshiba.jp/,VOICEVOX (ずんだもん・四国めたん等),合成音声キャラ多数,エンジン規約+キャラ別規約,https://voicevox.hiroshiba.jp/term/,true,unknown,unknown,true,high,request_permission
+godie-n00p,南野秀一,https://bindumechan.wixsite.com/shigure222/素材配布,刻鳴時雨 音声コーパス,刻鳴時雨 (CV. 丸ころ),独自規約(無料),https://bindumechan.wixsite.com/shigure222/素材配布,true,true,true,true,medium,request_permission
+godie-n01c,勇者小呆,https://bindumechan.wixsite.com/shigure222/素材配布,刻鳴時雨 音声コーパス,刻鳴時雨 (CV. 丸ころ),独自規約(無料),https://bindumechan.wixsite.com/shigure222/素材配布,true,true,true,true,medium,request_permission
+godie-nplh,麻倉葉,https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus,JVSコーパス,プロ話者100名 (男女),独自規約(非商用),https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus,false,unknown,unknown,true,high,reject
+godie-o00k,皮卡娘,https://amitaro.net/voice/corpus-list/ita/,あみたろの声素材工房 (ITAコーパス 6感情スタイル),小春音アミ (あみたろ),独自規約(無料),https://amitaro.net/voice/voice_rule/,true,true,true,true,high,auto_download
+godie-o00l,傑洛士,https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus,JVSコーパス,プロ話者100名 (男女),独自規約(非商用),https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus,false,unknown,unknown,true,high,reject
+godie-o00x,悟空,https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus,JVSコーパス,プロ話者100名 (男女),独自規約(非商用),https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus,false,unknown,unknown,true,high,reject
+godie-o02p,初音,https://tyc.rei-yumesaki.net/material/corpus/,つくよみちゃんコーパス,つくよみちゃん (CV. 夢前黎),独自規約(無料),https://tyc.rei-yumesaki.net/material/corpus/,true,true,true,true,high,auto_download
+godie-o02p,初音,https://voicevox.hiroshiba.jp/,VOICEVOX (ずんだもん・四国めたん等),合成音声キャラ多数,エンジン規約+キャラ別規約,https://voicevox.hiroshiba.jp/term/,true,unknown,unknown,true,high,request_permission
+godie-ofar,皮卡丘,https://amitaro.net/voice/corpus-list/ita/,あみたろの声素材工房 (ITAコーパス 6感情スタイル),小春音アミ (あみたろ),独自規約(無料),https://amitaro.net/voice/voice_rule/,true,true,true,true,high,auto_download
+godie-ofar,皮卡丘,https://freesound.org/search/?q=voice&f=license:%22Creative+Commons+0%22,Freesound.org (CC0 人声クリップ),クリップ毎に異なる,per-clip (CC0/CC-BY/CC-BY-NC),https://freesound.org/help/faq/,unknown,true,unknown,true,medium,manual_review
+godie-ogld,黑人牙膏,https://commonvoice.mozilla.org/,Mozilla Common Voice 日本語,クラウドソース多数話者,CC0 1.0,https://github.com/common-voice/common-voice,true,true,true,true,high,auto_download
+godie-ogld,黑人牙膏,,自主録音 (社内/委託収録),委託声優/開発チーム,契約による買い取り,,true,true,true,false,high,reject
+godie-orkn,臭作,https://commonvoice.mozilla.org/,Mozilla Common Voice 日本語,クラウドソース多数話者,CC0 1.0,https://github.com/common-voice/common-voice,true,true,true,true,high,auto_download
+godie-osam,殺生丸,https://commonvoice.mozilla.org/,Mozilla Common Voice 日本語,クラウドソース多数話者,CC0 1.0,https://github.com/common-voice/common-voice,true,true,true,true,high,auto_download
+godie-u00h,鬼畜狂刀KYO,https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus,JVSコーパス,プロ話者100名 (男女),独自規約(非商用),https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus,false,unknown,unknown,true,high,reject
+godie-u00j,賽菲洛斯,https://commonvoice.mozilla.org/,Mozilla Common Voice 日本語,クラウドソース多数話者,CC0 1.0,https://github.com/common-voice/common-voice,true,true,true,true,high,auto_download
+godie-u00k,死之王,https://commonvoice.mozilla.org/,Mozilla Common Voice 日本語,クラウドソース多数話者,CC0 1.0,https://github.com/common-voice/common-voice,true,true,true,true,high,auto_download
+godie-u00k,死之王,,自主録音 (社内/委託収録),委託声優/開発チーム,契約による買い取り,,true,true,true,false,high,reject
+godie-u00l,拳四郎,https://commonvoice.mozilla.org/,Mozilla Common Voice 日本語,クラウドソース多数話者,CC0 1.0,https://github.com/common-voice/common-voice,true,true,true,true,high,auto_download
+godie-u00n,蒙其.D.魯夫,https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus,JVSコーパス,プロ話者100名 (男女),独自規約(非商用),https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus,false,unknown,unknown,true,high,reject
+godie-u00v,基廉列克,https://freesound.org/search/?q=voice&f=license:%22Creative+Commons+0%22,Freesound.org (CC0 人声クリップ),クリップ毎に異なる,per-clip (CC0/CC-BY/CC-BY-NC),https://freesound.org/help/faq/,unknown,true,unknown,true,medium,manual_review
+godie-u00v,基廉列克,,自主録音 (社内/委託収録),委託声優/開発チーム,契約による買い取り,,true,true,true,false,high,reject
+godie-u010,飛影,https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus,JVSコーパス,プロ話者100名 (男女),独自規約(非商用),https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus,false,unknown,unknown,true,high,reject
+godie-u01u,索隆,https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus,JVSコーパス,プロ話者100名 (男女),独自規約(非商用),https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus,false,unknown,unknown,true,high,reject
+godie-ubal,巴恩大魔王,https://commonvoice.mozilla.org/,Mozilla Common Voice 日本語,クラウドソース多数話者,CC0 1.0,https://github.com/common-voice/common-voice,true,true,true,true,high,auto_download
+godie-udea,飛鼠先生,https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus,JVSコーパス,プロ話者100名 (男女),独自規約(非商用),https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus,false,unknown,unknown,true,high,reject
+godie-udea,飛鼠先生,,自主録音 (社内/委託収録),委託声優/開発チーム,契約による買い取り,,true,true,true,false,high,reject
