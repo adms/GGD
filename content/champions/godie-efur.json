@@ -43,6 +43,7 @@
     "Q": {
       "id": "godie-efur.q",
       "name": "13-01 老樹盤根",
+      "icon": "assets/icons/abilities/godie-efur.q.webp",
       "description": "[主動攻擊]\n26秒冷卻時間\n\n用植物的根部將敵人羈絆住而無法移動，被綑綁的敵人每秒也會承受25點的傷害，持續1秒。",
       "slot": "Q",
       "castType": "targeted",
@@ -93,6 +94,7 @@
     "W": {
       "id": "godie-efur.w",
       "name": "13-02 變化念力",
+      "icon": "assets/icons/abilities/godie-efur.w.webp",
       "description": "[輔助]\n32秒冷卻時間\n\n利用強大的念能力將指定單位轉化為軟弱無力的小動物，持續1秒。",
       "slot": "W",
       "castType": "targeted",
@@ -137,6 +139,7 @@
     "E": {
       "id": "godie-efur.e",
       "name": "13-03 快步",
+      "icon": "assets/icons/abilities/godie-efur.e.webp",
       "description": "[輔助]\n45秒冷卻時間\n\n使出揍敵客家族的殺手絕技，能快步到指定單位身邊，可持續3秒。",
       "slot": "E",
       "castType": "dash",
@@ -168,6 +171,7 @@
     "R": {
       "id": "godie-efur.r",
       "name": "13-04 暗殺奧義",
+      "icon": "assets/icons/abilities/godie-efur.r.webp",
       "description": "[被動]\n0秒冷卻時間\n\n提升暗殺奧義的功力，在攻擊時有7%的機會，攻擊力增加3倍。",
       "slot": "R",
       "castType": "self",

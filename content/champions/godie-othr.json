@@ -42,6 +42,7 @@
     "Q": {
       "id": "godie-othr.q",
       "name": "31-01 迴旋爪擊",
+      "icon": "assets/icons/abilities/godie-othr.q.webp",
       "description": "[主動攻擊]\n25秒冷卻時間\n\n傳說金鋼狼從夢X代摩天輪領悟的必殺技，以異常快的速度邊旋轉邊刺殺敵人，給予每個敵人力量*2+150點傷害。",
       "slot": "Q",
       "castType": "targeted",
@@ -89,6 +90,7 @@
     "W": {
       "id": "godie-othr.w",
       "name": "31-02 重爪擊",
+      "icon": "assets/icons/abilities/godie-othr.w.webp",
       "description": "[主動攻擊]\n45秒冷卻時間\n\n使用金鋼狼獨有的爪子來攻擊敵人，造成劇烈的痛苦，給予250點傷害的同時可以恢復自己的生命，並且緩慢敵人移速30%，維持3秒。",
       "slot": "W",
       "castType": "targeted",
@@ -160,6 +162,7 @@
     "E": {
       "id": "godie-othr.e",
       "name": "31-03 野性的呼喚",
+      "icon": "assets/icons/abilities/godie-othr.e.webp",
       "description": "[速度加成]\n60秒冷卻時間\n\n喚醒沉睡在血液中狼的野性，雖然攻擊速度上升50%和移動速度上升27%，但是將會受到額外攻擊20%傷害，持續9秒。",
       "slot": "E",
       "castType": "self",
@@ -196,6 +199,7 @@
     "R": {
       "id": "godie-othr.r",
       "name": "31-04 不要踢我蛋蛋",
+      "icon": "assets/icons/abilities/godie-othr.r.webp",
       "description": "[輔助]\n60秒冷卻時間\n\n被踢到蛋蛋的金鋼狼狂暴化，於時間內增加攻擊力15%、防禦力5點、回血15點，並且反彈(所受傷害)*120%，效果持續7秒。",
       "slot": "R",
       "castType": "self",

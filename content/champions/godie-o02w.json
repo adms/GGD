@@ -43,6 +43,7 @@
     "Q": {
       "id": "godie-o02w.q",
       "name": "96-01 華山劍法",
+      "icon": "assets/icons/abilities/godie-o02w.q.webp",
       "description": "[被動]\n0秒冷卻時間\n\n華山派的基本劍法，以速度著稱，劍式輕盈，招式多變。攻擊時有(5+敏捷/15)%機率造成額外10+敏捷*1點傷害。",
       "slot": "Q",
       "castType": "self",
@@ -79,6 +80,7 @@
     "W": {
       "id": "godie-o02w.w",
       "name": "96-02 混元掌",
+      "icon": "assets/icons/abilities/godie-o02w.w.webp",
       "description": "[主動攻擊]\n35秒冷卻時間\n\n華山派的特殊招式，於掌法內修習內勁，內外兼修。能將敵人震暈1秒並造成150點傷害。令狐沖並無心於此，故無深造。",
       "slot": "W",
       "castType": "targeted",
@@ -132,6 +134,7 @@
     "E": {
       "id": "godie-o02w.e",
       "name": "96-03 吸星大法",
+      "icon": "assets/icons/abilities/godie-o02w.e.webp",
       "description": "[主動攻擊]\n45秒冷卻時間\n\n令狐沖被困於西湖地牢時習得的絕世武功，強制吸取目標的內力200點，降低對方100%攻速及20%跑速，持續2秒，還能將吸來的內力化為己用，但使用上需與對方接觸一段時間才能生效。",
       "slot": "E",
       "castType": "targeted",
@@ -175,6 +178,7 @@
     "R": {
       "id": "godie-o02w.r",
       "name": "96-04 獨孤九劍",
+      "icon": "assets/icons/abilities/godie-o02w.r.webp",
       "description": "[主動攻擊]\n70秒冷卻時間\n\n用極快的速度像敵人攻去，在一瞬間連續攻擊數十次使其無法招架暈眩1秒，其留下的殘影在旁人看來就有如9人同時攻擊一般。每個殘影擁有30點攻擊力，持續9秒。\n\n殘影會觸發華山劍法及易筋經",
       "slot": "R",
       "castType": "targeted",

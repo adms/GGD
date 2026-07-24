@@ -42,6 +42,7 @@
     "Q": {
       "id": "godie-ewrd.q",
       "name": "17-01 鬼-真夜",
+      "icon": "assets/icons/abilities/godie-ewrd.q.webp",
       "description": "[靈氣]\n0秒冷卻時間\n\n散發出使敵人畏懼的殺氣，降低附近敵人的裝甲3點。",
       "slot": "Q",
       "castType": "self",
@@ -78,6 +79,7 @@
     "W": {
       "id": "godie-ewrd.w",
       "name": "17-02 殺無真空斬",
+      "icon": "assets/icons/abilities/godie-ewrd.w.webp",
       "description": "[主動攻擊]\n25秒冷卻時間\n\n集氣向前斬擊敵人造成175點傷害，並且造成暈眩，持續0.5秒。",
       "slot": "W",
       "castType": "targeted",
@@ -131,6 +133,7 @@
     "E": {
       "id": "godie-ewrd.e",
       "name": "17-03 空破圓斬",
+      "icon": "assets/icons/abilities/godie-ewrd.e.webp",
       "description": "[主動攻擊]\n45秒冷卻時間\n\n快速衝刺到敵人面前施展猛烈的斬擊最多使5個敵方造成重創，給予375點傷害。",
       "slot": "E",
       "castType": "targeted",
@@ -175,6 +178,7 @@
     "R": {
       "id": "godie-ewrd.r",
       "name": "17-04 狂龍斬",
+      "icon": "assets/icons/abilities/godie-ewrd.r.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n雙手穴道全開斬殺傷一個五芒星區域內的敵人5次，期間無法控制自我行動，造成(敏捷*0.7)+100傷害。",
       "slot": "R",
       "castType": "targeted",

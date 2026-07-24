@@ -257,10 +257,11 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     status: "debt",
     why: "the champion-embedded mirror of the above; same missing importer run.",
   },
-  "field:champions.abilities.*.hitFeel": {
-    status: "debt",
-    why: "A MIRROR GAP, not a plain zero: 30 standalone ability docs carry hitFeel, and 0 of their champion-embedded Q/W/E/R twins do. Gameplay is fine while registerChampion prefers the standalone doc, but that preference is exactly the #79 hazard castTimeCoverage.test.ts warns about ('the embedded copy can win at runtime'), and the codex/admin read the champion JSON directly.",
-  },
+  // `field:champions.abilities.*.hitFeel` was exempt here as "a MIRROR GAP, not a
+  // plain zero" — 30 standalone ability docs carried hitFeel and 0 of their
+  // champion-embedded twins did. The gap is closed: all 30 embedded copies now
+  // carry it, so the exemption became a lie and this suite said so. Deleted
+  // rather than re-worded, which is what the stale-exemption check asks for.
   "field:champions.baseAttackTime": {
     status: "debt",
     why: "task #144 (per-champion w3x movement/attack speed) is still pending, so all 113 champions use BasicAttackSystem.ts:173's `?? 1.0` and every hero attacks at the same base cadence — the w3x per-hero values were never imported.",

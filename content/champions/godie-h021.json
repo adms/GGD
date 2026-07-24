@@ -42,6 +42,7 @@
     "Q": {
       "id": "godie-h021.q",
       "name": "05-01 薩喀爾",
+      "icon": "assets/icons/abilities/godie-h021.q.webp",
       "description": "[主動攻擊]\n25秒冷卻時間\n\n召喚數道閃電進行攻擊給予最多3位敵人175點的傷害",
       "slot": "Q",
       "castType": "targeted",
@@ -83,6 +84,7 @@
     "W": {
       "id": "godie-h021.w",
       "name": "05-02 薩喀爾嘎",
+      "icon": "assets/icons/abilities/godie-h021.w.webp",
       "description": "[主動攻擊]\n15秒冷卻時間\n\n薩喀爾的強化版，放射出集中並且有穿透力的電擊，造成150傷害。",
       "slot": "W",
       "castType": "dash",
@@ -114,6 +116,7 @@
     "E": {
       "id": "godie-h021.e",
       "name": "05-03 及喀爾度",
+      "icon": "assets/icons/abilities/godie-h021.e.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n賈修的神秘咒語，招喚2顆磁力球，可將範圍350的對手磁化，並吸引到自己身旁的咒語。",
       "slot": "E",
       "castType": "ground",
@@ -147,6 +150,7 @@
     "R": {
       "id": "godie-h021.r",
       "name": "05-04 巴歐．薩喀爾嘎",
+      "icon": "assets/icons/abilities/godie-h021.r.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n賈修的最強咒語，招換出一條金色的雷龍衝擊敵人造成550點傷害，並擊退一段距離，若受到撞擊停止，周圍敵人將會受到力量*3額外傷害。",
       "slot": "R",
       "castType": "targeted",

@@ -80,6 +80,22 @@ collection is a no-op for icons (embedded values == standalone twins, tested).
 Suite: `packages/shared/src/content/icons.test.ts` — DIRECT file reads (green
 before AND after `content:build`, same convention as standinRoster.test.ts).
 
+**2026-07-24 — icons-09/10/11 had gone RED; the AI batch only wrote one side of
+the mirror.** `tools/icon-gen/src/generate.py` `patch_icon_field` writes
+`content/<family>/<doc-id>.json`, i.e. the STANDALONE ability doc, and nothing
+ever mirrored those values into `content/champions/<cid>.json`
+`abilities[<slot>]`. Measured over the 452 QWER pairs: **416 standalone-only**,
+12 on both sides (the original w3x extracts, which `extract_icons.py` DID write
+to both), 24 on neither — and **0 conflicts**, so this was the missing-field
+class, not #79's contradicting-value class. Separately 9 docs
+(`godie-h02r.{q,w,e,r,ex}`, `godie-u00b.{q,w,e,r}`) had their WebP generated and
+committed but never got the field at all, which is what tripped icons-10 and
+icons-11. All 433 fields are now in place; the mirror is exact (436 both-sides,
+0 one-sided) and the only slots still icon-less are the 16 belonging to the 4
+champions with no art on disk (`godie-e00u`, `godie-h02n`, `godie-u01f`,
+`godie-u01q`). `ability-mirror-one-sided` no longer exempts `icon`, so the
+one-sided state cannot come back.
+
 ---
 
 ## Coverage-bar contract (task #97 consumes, task #72 produces)

@@ -42,6 +42,7 @@
     "Q": {
       "id": "godie-o02o.q",
       "name": "87-01 大紅蓮斬",
+      "icon": "assets/icons/abilities/godie-o02o.q.webp",
       "description": "[主動攻擊]\n35秒冷卻時間\n\n氣貫長槍，以電光石火之速回旋猛刺，其勢威猛，似可弒殺鬼神，造成前方敵方部隊250點傷害。",
       "slot": "Q",
       "castType": "skillshot",
@@ -88,6 +89,7 @@
     "W": {
       "id": "godie-o02o.w",
       "name": "87-02 霸體",
+      "icon": "assets/icons/abilities/godie-o02o.w.webp",
       "description": "[被動]\n0秒冷卻時間\n\n霸王威能，有10%降低所有施加在身上的傷害。",
       "slot": "W",
       "castType": "self",
@@ -122,6 +124,7 @@
     "E": {
       "id": "godie-o02o.e",
       "name": "87-03 天下號令",
+      "icon": "assets/icons/abilities/godie-o02o.e.webp",
       "description": "[變身]\n60秒冷卻時間\n\n變身超級曹操，持續6秒。",
       "slot": "E",
       "castType": "targeted",
@@ -166,6 +169,7 @@
     "R": {
       "id": "godie-o02o.r",
       "name": "87-04 逆我必殺",
+      "icon": "assets/icons/abilities/godie-o02o.r.webp",
       "description": "[輔助]\n60秒冷卻時間\n\n殺！增加100點傷害，攻擊時獲得生命回饋80%，可持續9秒",
       "slot": "R",
       "castType": "targeted",

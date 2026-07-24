@@ -42,6 +42,7 @@
     "Q": {
       "id": "godie-hart.q",
       "name": "01-01 凶斬",
+      "icon": "assets/icons/abilities/godie-hart.q.webp",
       "description": "[主動攻擊]\n25秒冷卻時間\n\n使用大刀在敵人身上刻下凶字造成150傷害，並且使人暫時無法行動1秒。",
       "slot": "Q",
       "castType": "targeted",
@@ -88,13 +89,14 @@
           "moveSpeedMult": 0.6
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.physical.slash",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
     "W": {
       "id": "godie-hart.w",
       "name": "01-02 隕石擊",
+      "icon": "assets/icons/abilities/godie-hart.w.webp",
       "description": "[主動攻擊]\n35秒冷卻時間\n\n招喚隕石擊落攻擊區域內的敵人造成100傷害並且跳躍到該範圍給予斬殺造成100傷害。",
       "slot": "W",
       "castType": "ground",
@@ -141,7 +143,7 @@
           "moveSpeedMult": 0.6
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.fire.explosion",
       "targetsEnemies": true,
       "radius": 5.5,
       "castTimeSec": 0.7
@@ -149,6 +151,7 @@
     "E": {
       "id": "godie-hart.e",
       "name": "01-03 畫龍點睛",
+      "icon": "assets/icons/abilities/godie-hart.e.webp",
       "description": "[主動攻擊]\n45秒冷卻時間\n\n快速迴旋巨劍產生龍捲風砍殺敵人造成450點傷害，並降低目標裝甲3點，持續5秒。",
       "slot": "E",
       "castType": "ground",
@@ -239,7 +242,7 @@
           ]
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.physical.beam",
       "targetsEnemies": true,
       "radius": 6.42,
       "castTimeSec": 0.6
@@ -247,6 +250,7 @@
     "R": {
       "id": "godie-hart.r",
       "name": "01-04 超究武神霸斬",
+      "icon": "assets/icons/abilities/godie-hart.r.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n克勞德的奧義招式，連斬七次的超必殺攻擊，每一次斬擊皆造成極大傷害，總傷害630+力量*1點。",
       "slot": "R",
       "castType": "targeted",
@@ -287,9 +291,23 @@
           "root": true
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.w3x.orb.herocloudkfksword.p00",
       "targetsEnemies": true,
-      "castTimeSec": 0.5
+      "castTimeSec": 0.5,
+      "hitFeel": {
+        "hitstopTicks": 5,
+        "hitstunTicks": 9,
+        "shakeMag": 0.614,
+        "shakeStyle": "directional",
+        "sparkKind": "heavy",
+        "flashColor": [
+          0.85,
+          0.92,
+          1.0
+        ],
+        "flashMs": 211,
+        "camKick": 0.526
+      }
     }
   },
   "skillOrder": [

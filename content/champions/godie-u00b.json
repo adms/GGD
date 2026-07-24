@@ -42,6 +42,7 @@
     "Q": {
       "id": "godie-u00b.q",
       "name": "75-01 超．祕技略決",
+      "icon": "assets/icons/abilities/godie-u00b.q.webp",
       "description": "[魔法書]\n0秒冷卻時間\n\n內隱藏著許多作弊的法術。",
       "slot": "Q",
       "castType": "targeted",
@@ -89,6 +90,7 @@
     "W": {
       "id": "godie-u00b.w",
       "name": "75-02 幻影鬥氣",
+      "icon": "assets/icons/abilities/godie-u00b.w.webp",
       "description": "[被動]\n0秒冷卻時間\n\n傳說當鬥氣提升到極致之時，將會產生幻影造成對手傷害。攻擊時有10%的機率可以產生幻影造成50點傷害。",
       "slot": "W",
       "castType": "self",
@@ -125,6 +127,7 @@
     "E": {
       "id": "godie-u00b.e",
       "name": "75-02 龍捲風",
+      "icon": "assets/icons/abilities/godie-u00b.e.webp",
       "description": "召喚一道可以控制的殘暴龍捲風，降低敵方部隊的移動速度，並以亂數決定將哪些地面部隊丟到半空中，同時傷害敵人的建築物。\n持續<ANto,Dur2>秒。",
       "slot": "E",
       "castType": "targeted",
@@ -169,6 +172,7 @@
     "R": {
       "id": "godie-u00b.r",
       "name": "75-03 暴雷無限刃",
+      "icon": "assets/icons/abilities/godie-u00b.r.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n將劍刃附著雷電傷害，將會隨機對附近的敵人進行斬殺，給予50傷害並且淨化，共十五次。",
       "slot": "R",
       "castType": "ground",

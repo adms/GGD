@@ -51,11 +51,27 @@ existing `basicAttackHit` / `abilityCast` / `death` / `levelUp` reused.
   sim floor) still freezes both fighters, and a chip hit the sim did not freeze
   leaves the animation running. Position keeps flowing so knockback still slides —
   only the clip freezes.
-- **Vignette + ripple post-fx** (`vfx/CombatPostFx.ts` + pure `vfx/postFxMath.ts`):
-  one full-screen pass folding a red screen-edge vignette (LOCAL-player damage,
-  intensity by hp lost) and a ripple / heat-distortion (heavy hits + beams).
-  **Quality-tier GATED OFF on mobile/low**, and even on desktop it only attaches
-  to the camera while a channel is decaying, so idle combat costs nothing.
+- **Vignette post-fx** (`vfx/CombatPostFx.ts` + pure `vfx/postFxMath.ts`):
+  one full-screen pass drawing a red screen-edge vignette (LOCAL-player damage,
+  intensity by hp lost). **Quality-tier GATED OFF on mobile/low**, and even on
+  desktop it only attaches to the camera while the channel is decaying, so idle
+  combat costs nothing.
+  - **THE RIPPLE IS GONE (#196).** The pass used to fold in a radial
+    UV warp — `sin(dist * 55.0 - rippleTime * 11.0)` — whose centre `onApply`
+    hard-coded to UV `(0.5, 0.5)`. `CameraRig.apply()` ends every frame with
+    `setTarget(target.x, 0, target.z)` onto the local hero's ground position, so
+    viewport centre IS the pixel under the local champion's feet: every ripple in
+    the game emanated from your own feet regardless of where the hit landed. It
+    also never stopped — `addRipple` armed on ANY damage event in the match
+    (`crit || killingBlow || amount >= 120`, including duel zones the player
+    cannot see) and is a `Math.max` top-up, so the 90 ms half-life was re-slammed
+    to full faster than it could decay. The owner reported it as
+    「開始戰鬥 地板總是會有莫名的震動波紋曲線…鏡頭不動也會有，是玩家角色腳底為圓心的
+    同心圓地震波」 — three observations that the hard-coded centre, the ground's
+    tiled detail and the effect's own `rippleTimeSec` clock explain exactly.
+    REMOVED rather than re-centred: in this rig any camera-target-relative radial
+    warp lands on the local hero, so aiming it at the impact point would put the
+    rings back on your own feet every time you are the victim.
 - **Impact particles** (`vfx/VfxSystem.ts`, `vfx/HitSpark.ts`): dmgType-tinted
   spark bursts on `hitImpact` (physical spark / arcane pop / white) + a bigger
   cool-white pop on `guardBreak`.
@@ -91,7 +107,7 @@ guard SFX/spark, a greyed "guard" number, a bigger break pop).
 | cj-c02 | Camera shake applied to the live camera then decays back to rest; zero amp/duration ignored | juice-camera-shake | integration | done |
 | cj-c03 | Hitstop window is AUTHORITATIVE — the client freeze is taken verbatim from the sim's `ImpactProfile.hitstopTicks` (never re-derived from the damage amount); a fully-blocked hit (dmg 0, impact ≥ sim floor) still freezes both bodies, a chip hit the sim did not freeze leaves the animation running, and both fighters get the identical window + struck-model freeze update path | juice-hitstop | unit | done |
 | cj-c04 | Hit-flash colour (white physical/true, red magic) + ~80 ms flash timing on the struck model | juice-flash | unit | done |
-| cj-c05 | Post-fx math: red-vignette intensity by hp lost, ripple by impact (crit/kill), exponential decay to zero | juice-postfx-math | unit | done |
+| cj-c05 | Post-fx math: red-vignette intensity by hp lost, exponential decay to zero (the ripple half was REMOVED by #196 — see the note above; this row would otherwise have kept reporting green off the surviving vignette test for a feature that no longer exists) | juice-postfx-math | unit | done |
 | cj-c06 | **SUPERSEDED by task #92** ([combat-text.md](combat-text.md)) — floating numbers now key colour on WHO (造成/受到傷害/補血/補魔), not on `dmgType`, and size is constant per category rather than scaled by amount. Still asserted here: crit/killingBlow are bigger with a pop, a fully-absorbed hit reads "guard". `ui/damageNumberStyle` was replaced by `ui/combatText`; the test id is re-covered by `ui/combatText.test.ts` | juice-damage-number | unit | done |
 | cj-c07 | Per-frame combat SFX key selection (物理/魔法/防禦/破防, crit/whiff/knockdown, passthrough, tally/timing silence) | juice-sfx-key | unit | done |
 | cj-c08 | Footstep cadence: one step per stride, silent while idle, teleport re-baselines | juice-footstep | unit | done |

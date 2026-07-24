@@ -42,6 +42,7 @@
     "Q": {
       "id": "godie-emns.q",
       "name": "44-01 死神之眼",
+      "icon": "assets/icons/abilities/godie-emns.q.webp",
       "description": "[輔助]\n20秒冷卻時間\n\n與死神暫時交換眼睛來鎖定殺人目標，相對地以自己生命75%作交換，需要搭配6級技能-火車輾過以及9級技能-心臟麻痺才能遙控殺人，鎖定目標死亡才會解除鎖定。\n被鎖定的目標會因為死神的詛咒而暫時30%攻擊失手，持續15秒。",
       "slot": "Q",
       "castType": "targeted",
@@ -79,13 +80,14 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.void.pulse-sm",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
     "W": {
       "id": "godie-emns.w",
       "name": "44-02 死神的規則",
+      "icon": "assets/icons/abilities/godie-emns.w.webp",
       "description": "[被動]\n0秒冷卻時間\n\n夜神月越了解死神界和筆記本的規則，越能掌控全局，將這份知識化為智慧7點。",
       "slot": "W",
       "castType": "self",
@@ -106,7 +108,7 @@
       ],
       "range": 0,
       "effects": [],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.void.pulse",
       "passive": {
         "name": "44-02 死神的規則",
         "ranks": [
@@ -186,6 +188,7 @@
     "E": {
       "id": "godie-emns.e",
       "name": "44-03 火車輾過",
+      "icon": "assets/icons/abilities/godie-emns.e.webp",
       "description": "[主動攻擊]\n60秒冷卻時間\n\n被死神之眼鎖定的部隊身旁將會出現莫名其妙的火車撞上，使附近的敵方部隊受到650點的劇烈傷害。",
       "slot": "E",
       "castType": "ground",
@@ -223,7 +226,7 @@
           }
         }
       ],
-      "vfxKey": "fx.firestorm",
+      "vfxKey": "fx.prim.physical.shockwave",
       "targetsEnemies": true,
       "radius": 1.5,
       "castTimeSec": 0.6
@@ -231,6 +234,7 @@
     "R": {
       "id": "godie-emns.r",
       "name": "44-04 心臟麻痺",
+      "icon": "assets/icons/abilities/godie-emns.r.webp",
       "description": "[主動攻擊]\n45秒冷卻時間\n\n被死神之眼指定的人將會心臟麻痺，短時間內將會行動緩慢以及喪失(目標生命上限)*15%+450點生命並使動作緩慢持續5秒。",
       "slot": "R",
       "castType": "targeted",
@@ -265,7 +269,7 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.void.nova-lg",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     }

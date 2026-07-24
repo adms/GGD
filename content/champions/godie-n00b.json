@@ -43,6 +43,7 @@
     "Q": {
       "id": "godie-n00b.q",
       "name": "57-01 空氣砲",
+      "icon": "assets/icons/abilities/godie-n00b.q.webp",
       "description": "[主動攻擊]\n35秒冷卻時間\n\n小叮噹的空氣砲可以造成一直線上敵方部隊250傷害並且擊退附近敵人。",
       "slot": "Q",
       "castType": "skillshot",
@@ -80,12 +81,13 @@
           ]
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.wind.beam",
       "castTimeSec": 0.4
     },
     "W": {
       "id": "godie-n00b.w",
       "name": "57-03 複製鏡",
+      "icon": "assets/icons/abilities/godie-n00b.w.webp",
       "description": "[輔助攻擊]\n75秒冷卻時間\n\n未來的法寶，可將鏡前的人或物加以複製，複製出來的人物擁有與本尊相同的攻擊力，但將承受200%額外傷害，持續20秒。\n對非英雄部隊及任務用英雄無效。",
       "slot": "W",
       "castType": "targeted",
@@ -120,13 +122,14 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.arcane.pulse",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
     "E": {
       "id": "godie-n00b.e",
       "name": "57-02 任意門",
+      "icon": "assets/icons/abilities/godie-n00b.e.webp",
       "description": "[輔助]\n80秒冷卻時間\n\n使用任意門可以傳送到地圖探索過的任何一點，準備時間為3秒。",
       "slot": "E",
       "castType": "dash",
@@ -154,12 +157,13 @@
           "maxDistance": 11.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.arcane.pulse-sm",
       "castTimeSec": 0.3
     },
     "R": {
       "id": "godie-n00b.r",
       "name": "57-04 竹蜻蜓",
+      "icon": "assets/icons/abilities/godie-n00b.r.webp",
       "description": "[輔助]\n55秒冷卻時間\n\n給目標帶上竹蜻蜓，而四周會產生共12道龍捲風每個龍捲風都有著150點傷害。",
       "slot": "R",
       "castType": "targeted",
@@ -200,7 +204,7 @@
           "root": true
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.wind.tornado-lg",
       "targetsEnemies": true,
       "castTimeSec": 0.5
     }

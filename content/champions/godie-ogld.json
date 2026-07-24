@@ -43,6 +43,7 @@
     "Q": {
       "id": "godie-ogld.q",
       "name": "72-01洗刷刷",
+      "icon": "assets/icons/abilities/godie-ogld.q.webp",
       "description": "[主動攻擊]\n35秒冷卻時間\n\n召喚一陣雨季的暴風來攻擊對方的部隊，在350範圍造成150點的傷害。可持續2秒。",
       "slot": "Q",
       "castType": "targeted",
@@ -83,13 +84,14 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.holy.pulse",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
     "W": {
       "id": "godie-ogld.w",
       "name": "72-02 黑人牙菌斑",
+      "icon": "assets/icons/abilities/godie-ogld.w.webp",
       "description": "[主動]\n15秒冷卻時間\n\n釋放黑人牙菌斑病毒，被感染的部隊會每秒受到20點傷害並減緩攻擊移動速度30%，持續10秒。死亡後會釋放出1隻成熟的牙菌斑並聽從黑人控制，持續60秒。",
       "slot": "W",
       "castType": "targeted",
@@ -124,13 +126,14 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.void.swarm",
       "targetsEnemies": true,
       "castTimeSec": 0.3
     },
     "E": {
       "id": "godie-ogld.e",
       "name": "72-03 超亮白",
+      "icon": "assets/icons/abilities/godie-ogld.e.webp",
       "description": "[輔助]\n45秒冷卻時間\n\n使用超亮白牙膏攻擊目標，帶腐蝕性的牙膏會侵蝕目標6點裝甲，亮白效果也將使目標暴露於我方視野之中，持續8秒。",
       "slot": "E",
       "castType": "targeted",
@@ -165,13 +168,14 @@
           }
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.holy.nova",
       "targetsEnemies": true,
       "castTimeSec": 0.3
     },
     "R": {
       "id": "godie-ogld.r",
       "name": "72-04 黑化",
+      "icon": "assets/icons/abilities/godie-ogld.r.webp",
       "description": "[主動攻擊]\n90秒冷卻時間\n\n黑化後的黑人牙膏將會在短時間內使出敵我皆傷的噴牙膏攻擊，對周圍所有生物造成最多智慧*9的傷害。",
       "slot": "R",
       "castType": "ground",
@@ -212,7 +216,7 @@
           "stun": true
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.void.explosion-lg",
       "targetsEnemies": true,
       "radius": 3.67,
       "castTimeSec": 0.6

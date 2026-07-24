@@ -42,6 +42,7 @@
     "Q": {
       "id": "godie-harf.q",
       "name": "26-01 腳底按摩",
+      "icon": "assets/icons/abilities/godie-harf.q.webp",
       "description": "[輔助]\n60秒冷卻時間\n\n使用穴道按摩發揮一個人最大的潛力，讓這個部隊攻擊速度提昇50%，移動速度30%，但必須承受額外10%傷害，持續12秒。",
       "slot": "Q",
       "castType": "self",
@@ -78,6 +79,7 @@
     "W": {
       "id": "godie-harf.w",
       "name": "26-02 亂入",
+      "icon": "assets/icons/abilities/godie-harf.w.webp",
       "description": "[被動]\n0秒冷卻時間\n\n攻擊時有25%機率一定會命中且附加額外50點的無言傷害。",
       "slot": "W",
       "castType": "targeted",
@@ -122,6 +124,7 @@
     "E": {
       "id": "godie-harf.e",
       "name": "26-03 熱血",
+      "icon": "assets/icons/abilities/godie-harf.e.webp",
       "description": "[靈氣]\n鄭先生雄壯的熱血帶給他額外的13%傷害。",
       "slot": "E",
       "castType": "self",
@@ -158,6 +161,7 @@
     "R": {
       "id": "godie-harf.r",
       "name": "26-04 開天闢地‧洨者聖臨",
+      "icon": "assets/icons/abilities/godie-harf.r.webp",
       "description": "[輔助]\n75秒冷卻時間\n\n舉行禁忌的食子儀式獲得強大的力量，攻擊類型轉為攻城，增加25%的基礎攻擊速度，5點裝甲，維持7秒。",
       "slot": "R",
       "castType": "self",

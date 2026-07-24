@@ -42,6 +42,7 @@
     "Q": {
       "id": "godie-u00v.q",
       "name": "78-01 斬鐵拳",
+      "icon": "assets/icons/abilities/godie-u00v.q.webp",
       "description": "[被動]\n0秒冷卻時間\n\n基廉列克的拳頭在攻擊時有10%機率增加75點破壞力，並有機會將敵人震昏1秒。",
       "slot": "Q",
       "castType": "self",
@@ -74,12 +75,13 @@
           "duration": 3.0
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.physical.beam",
       "castTimeSec": 0.3
     },
     "W": {
       "id": "godie-u00v.w",
       "name": "78-02 地走龍牙破",
+      "icon": "assets/icons/abilities/godie-u00v.w.webp",
       "description": "[主動攻擊]\n55秒冷卻時間\n\n對付裝甲戰車時發動之必殺技，挖地道到目標上方後突襲，使該範圍受到200點傷害，並且暈眩0.1秒。",
       "slot": "W",
       "castType": "skillshot",
@@ -117,12 +119,13 @@
           ]
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.earth.shockwave",
       "castTimeSec": 0.3
     },
     "E": {
       "id": "godie-u00v.e",
       "name": "78-03 廬山昇龍破",
+      "icon": "assets/icons/abilities/godie-u00v.e.webp",
       "description": "[主動攻擊]\n55秒冷卻時間\n\n使數百輛警車和警察仆街的超必殺技，可對附近敵方單位造成450點傷害。",
       "slot": "E",
       "castType": "ground",
@@ -166,7 +169,7 @@
           "stun": true
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.prim.ki.beam",
       "targetsEnemies": true,
       "radius": 6.0,
       "castTimeSec": 0.8
@@ -174,6 +177,7 @@
     "R": {
       "id": "godie-u00v.r",
       "name": "78-04 死亡噴射肘擊",
+      "icon": "assets/icons/abilities/godie-u00v.r.webp",
       "description": "[主動攻擊]\n50秒冷卻時間\n\n在基廉列克發怒的時候，將會使出意外的致命一擊，超快速速飛奔到敵人面前，使用肘擊敵方造成450點傷害，擊退目標1000距離，暈眩時間1秒，若受到撞擊停止，周圍敵人將會受到力量*3額外傷害。",
       "slot": "R",
       "castType": "targeted",
@@ -214,9 +218,23 @@
           "stun": true
         }
       ],
-      "vfxKey": "fx.ember-bolt-cast",
+      "vfxKey": "fx.w3x.locust.boomnl.p01",
       "targetsEnemies": true,
-      "castTimeSec": 0.7
+      "castTimeSec": 0.7,
+      "hitFeel": {
+        "hitstopTicks": 5,
+        "hitstunTicks": 8,
+        "shakeMag": 0.591,
+        "shakeStyle": "omni",
+        "sparkKind": "heavy",
+        "flashColor": [
+          1.0,
+          0.72,
+          0.34
+        ],
+        "flashMs": 202,
+        "camKick": 0.506
+      }
     }
   },
   "skillOrder": [
