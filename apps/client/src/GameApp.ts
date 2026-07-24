@@ -51,7 +51,7 @@ import { InterpolationBuffer } from "./net/InterpolationBuffer";
 import { TimeSync } from "./net/TimeSync";
 import { LocalPrediction } from "./predict/LocalPrediction";
 import { InputCapture } from "./input/InputCapture";
-import { MultiGamepadSystem, BTN } from "./input/GamepadInput";
+import { MultiGamepadSystem, BTN, type GamepadCameraIntent } from "./input/GamepadInput";
 import { pickUnit, pickNearestUnit, type PickableUnit } from "./input/Picking";
 import type { AimAbility } from "./input/AimResolver";
 import { isTouchDevice, readTouchEnv } from "./input/mobileDetect";
@@ -336,6 +336,14 @@ export class GameApp {
   private readonly aliveByPlayer = new Map<number, boolean>();
   /** per-player champ-select cycling cursor (pad A cycles) */
   private readonly champCursor = new Map<number, number>();
+  /**
+   * Per-player pad free-pan vector for the frame in flight (task #197). The
+   * modifier layer's right-stick pan is continuous, so it is latched here by
+   * the pad `onCamera` sink and consumed by that player's CameraRig.update the
+   * same frame; the frame loop clears it before each poll, so a centred stick
+   * (no pan emitted) leaves it null and the camera holds still.
+   */
+  private readonly padCameraPan: (Vec2 | null)[] = [];
 
   /** primary connection — the single source of rendered state */
   private get conn(): RoomConnection {
@@ -554,6 +562,7 @@ export class GameApp {
         onOrder: (p, order) => this.sessions.senderFor(p)?.setOrder(order),
         onAim: (p, aim) => this.sessions.senderFor(p)?.setAim(aim),
         onCommand: (p, cmd) => this.sessions.senderFor(p)?.pushCommand(cmd, performance.now()),
+        onCamera: (p, cam) => this.applyPadCamera(p, cam),
         onButton: (p, btn) => this.onPadButton(p, btn),
         onPadsChanged: (indices) => setGamepadIndices(indices),
       },
@@ -595,6 +604,19 @@ export class GameApp {
     room.onStateChange((state) => this.onStatePatch(state));
     this.onStatePatch(room.state);
     return room;
+  }
+
+  /**
+   * Pad modifier-layer camera op for local player `player` (task #197). Zoom and
+   * follow-toggle are one-shots applied straight to that player's rig; the pan
+   * is continuous, so it is latched into `padCameraPan[player]` and the camera
+   * update step reads it this same frame (cleared at the top of the next frame).
+   */
+  private applyPadCamera(player: number, cam: GamepadCameraIntent): void {
+    const rig = this.viewports.rigFor(player);
+    if (cam.zoom) rig.zoomBy(cam.zoom);
+    if (cam.toggleFollow) rig.toggleFollow();
+    if (cam.pan) this.padCameraPan[player] = cam.pan;
   }
 
   /** Champ-select pad picking: A cycles through the roster for that player. */
@@ -923,7 +945,11 @@ export class GameApp {
     // During the settlement freeze predAccumMs is pinned to 0, so use alpha = 1
     // to hold the hero exactly on the authoritative pose instead of a tick behind.
     const renderAlpha = frozen ? 1 : Math.min(1, Math.max(0, this.predAccumMs / TICK_MS));
-    this.gamepads.poll(); // pads → per-player orders/aim/commands before the flush
+    // Clear last frame's pad free-pan latch BEFORE polling: the modifier layer
+    // only re-emits `pan` while the stick is deflected, so a released stick must
+    // leave these null (camera holds) rather than drifting on a stale vector.
+    this.padCameraPan.length = 0;
+    this.gamepads.poll(); // pads → per-player orders/aim/commands + camera before the flush
     if (this.touch) this.touch.poll(); // joystick → move orders + aim state onto touchFrame
     // Ground aim/preview telegraph, both platforms (task #152): a live touch
     // drag-aim wins; otherwise a PRESSED-AND-HELD ability button (touch finger or
@@ -1031,6 +1057,8 @@ export class GameApp {
         localPos: pos,
         cursor: p === 0 ? this.input.cursor : null,
         panKeys: p === 0 ? this.input.panKeys : null,
+        // pad modifier-layer free-pan for THIS player's own camera (task #197)
+        panVec: this.padCameraPan[p] ?? null,
         viewportWidth: this.canvas.clientWidth,
         viewportHeight: this.canvas.clientHeight,
       });

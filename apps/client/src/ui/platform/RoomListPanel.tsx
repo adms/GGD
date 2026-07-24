@@ -30,6 +30,9 @@ function CreateRoomDialog(props: { onClose: () => void }): React.JSX.Element {
 
   return (
     <div
+      // task #197 — pad focus scopes to the create-room dialog (B / Cancel backs out)
+      data-pad-scope="create-room"
+      data-pad-scope-priority="45"
       style={{
         position: "absolute",
         inset: 0,

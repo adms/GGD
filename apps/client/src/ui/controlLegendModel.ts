@@ -65,9 +65,10 @@
  *            flank is too short for the whole binding set, because clipping
  *            rows off a reference card is the one thing it may never do.
  */
-import type { CastableSlot } from "@ggd/shared/sim/intents";
+import type { AbilitySlot, CastableSlot } from "@ggd/shared/sim/intents";
 import {
   BTN,
+  GAMEPAD_MODIFIER_BTN,
   mapGamepadFrame,
   type GamepadFrame,
   type GamepadPlayerCtx,
@@ -103,7 +104,11 @@ export interface LegendRow {
 export type LegendAction =
   | { kind: "cast"; slot: CastableSlot }
   | { kind: "order"; order: "move" | "attackMove" | "attackTarget" | "stop" }
-  | { kind: "command"; command: "recall" | "ready" };
+  | { kind: "command"; command: "recall" | "ready" }
+  /** modifier layer (task #197): a spent skill point on one of the rankable slots */
+  | { kind: "rankUp"; slot: AbilitySlot }
+  /** modifier layer (task #197): a camera op (client-only, never a sim intent) */
+  | { kind: "camera"; camera: "zoomIn" | "zoomOut" | "pan" | "toggleFollow" };
 
 /**
  * Slot → caption. The sixth slot's name comes from `passiveSlot` so the legend
@@ -130,6 +135,14 @@ const COMMAND_LABEL: Record<Extract<LegendAction, { kind: "command" }>["command"
   ready: "準備完成",
 };
 
+/** Camera-op caption (modifier layer). Mirrors the keyboard camera captions. */
+const CAMERA_LABEL: Record<Extract<LegendAction, { kind: "camera" }>["camera"], string> = {
+  zoomIn: "鏡頭拉近",
+  zoomOut: "鏡頭拉遠",
+  pan: "平移鏡頭",
+  toggleFollow: "鏡頭跟隨開關",
+};
+
 /** Caption for a resolved action. Throws on an action nothing has named yet —
  * a new binding must be given words, not silently rendered blank. */
 export function legendActionLabel(action: LegendAction): string {
@@ -141,6 +154,16 @@ export function legendActionLabel(action: LegendAction): string {
   if (action.kind === "order") {
     const label = ORDER_LABEL[action.order];
     if (!label) throw new Error(`controlLegend: no caption for order "${action.order}"`);
+    return label;
+  }
+  if (action.kind === "rankUp") {
+    const label = SLOT_LABEL[action.slot];
+    if (!label) throw new Error(`controlLegend: no caption for rank-up slot "${action.slot}"`);
+    return `升級${label}`;
+  }
+  if (action.kind === "camera") {
+    const label = CAMERA_LABEL[action.camera];
+    if (!label) throw new Error(`controlLegend: no caption for camera op "${action.camera}"`);
     return label;
   }
   const label = COMMAND_LABEL[action.command];
@@ -193,6 +216,40 @@ export function probeGamepadSticks(): { move: boolean; aim: boolean } {
 }
 
 /**
+ * Run one button through the real mapping WITH the modifier (right bumper)
+ * held — the same way the pad system engages the second layer (task #197). null
+ * = that button does nothing while the modifier is held. Derived, never a copy:
+ * move rank-up off A or zoom off LT and this legend moves with it.
+ */
+export function probeGamepadModifierButton(button: number): LegendAction | null {
+  const frame: GamepadFrame = {
+    move: null,
+    aim: null,
+    justPressed: [button],
+    // RB held from a PREVIOUS frame (in `held`, not `justPressed`) is what
+    // engages the layer; see GAMEPAD_MODIFIER_BTN.
+    held: [GAMEPAD_MODIFIER_BTN, button],
+  };
+  const intent = mapGamepadFrame(frame, probeCtx());
+  for (const cmd of intent.commands) {
+    if (cmd.kind === "rankUpAbility") return { kind: "rankUp", slot: cmd.slot };
+  }
+  const cam = intent.camera;
+  if (cam?.toggleFollow) return { kind: "camera", camera: "toggleFollow" };
+  if (cam?.zoom !== undefined) return { kind: "camera", camera: cam.zoom < 0 ? "zoomIn" : "zoomOut" };
+  return null;
+}
+
+/** Does the RIGHT stick free-pan the camera while the modifier is held? */
+export function probeGamepadModifierPan(): boolean {
+  const intent = mapGamepadFrame(
+    { move: null, aim: { x: 1, z: 0 }, justPressed: [], held: [GAMEPAD_MODIFIER_BTN] },
+    probeCtx(),
+  );
+  return intent.camera?.pan !== undefined;
+}
+
+/**
  * Pad-button index → the face a player reads on the controller. Keyed by
  * `BTN`'s OWN names, so a button that appears in `BTN` without a face here
  * fails loudly rather than rendering as a bare index.
@@ -236,6 +293,28 @@ export function gamepadLegend(): LegendRow[] {
     const action = probeGamepadButton(index);
     if (!action) continue;
     rows.push({ id: `btn-${name}`, control: padFace(name), label: legendActionLabel(action) });
+  }
+  // ── THE MODIFIER LAYER (task #197): hold the right bumper for rank-up + camera.
+  // Each row is derived by running the map with RB held, exactly like the base
+  // rows above — a binding that moves in `mapGamepadFrame` moves here too.
+  const modName = Object.entries(BTN).find(([, index]) => index === GAMEPAD_MODIFIER_BTN)?.[0];
+  const modFace = modName ? padFace(modName) : String(GAMEPAD_MODIFIER_BTN);
+  for (const [name, index] of Object.entries(BTN)) {
+    if (index === GAMEPAD_MODIFIER_BTN) continue; // the modifier itself, not a combo
+    const action = probeGamepadModifierButton(index);
+    if (!action) continue;
+    rows.push({
+      id: `mod-${name}`,
+      control: `${modFace} + ${padFace(name)}`,
+      label: legendActionLabel(action),
+    });
+  }
+  if (probeGamepadModifierPan()) {
+    rows.push({
+      id: "mod-stick-right",
+      control: `${modFace} + 右類比`,
+      label: legendActionLabel({ kind: "camera", camera: "pan" }),
+    });
   }
   return rows;
 }

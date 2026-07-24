@@ -21,10 +21,11 @@
  * IntentSender, last writer wins. NO @babylonjs imports here (client-08).
  */
 import { asEntityId } from "@ggd/shared/ids";
-import type { CastableSlot, Command, Order } from "@ggd/shared/sim/intents";
+import type { AbilitySlot, CastableSlot, Command, Order } from "@ggd/shared/sim/intents";
 import type { Vec2 } from "@ggd/shared/sim/math/vec2";
 import { abilityActivationCue } from "../ui/abilityCue";
 import { buildCastCommand, type AimAbility } from "./AimResolver";
+import { isPadMenuCapturing } from "./padMenuCapture";
 
 export const GAMEPAD_DEADZONE = 0.15;
 /** How far ahead of the champion a stick-move order targets. */
@@ -78,6 +79,53 @@ const SLOT_BY_BUTTON: Partial<Record<number, CastableSlot>> = {
 };
 
 /**
+ * ════════════════════════════════════════════════════════════════════════════
+ * THE HELD-SHOULDER MODIFIER LAYER (task #197)
+ * ════════════════════════════════════════════════════════════════════════════
+ * The base layer above spends EVERY face + shoulder + menu button, so the two
+ * things a pad still could not reach — spending a skill point (rankUpAbility)
+ * and steering the camera (zoom / free-pan / follow-toggle) — need a second
+ * layer, not a seventh button. Holding the RIGHT BUMPER opens it:
+ *
+ *   RB + A/B/X/Y      →  rank up Q / W / E / R  (the `+` a mouse clicks)
+ *   RB + LT / RT      →  zoom out / zoom in     (the wheel)
+ *   RB + LB           →  toggle camera follow   (Space)
+ *   RB + right stick  →  free-pan the camera    (arrow keys / edge-pan)
+ *
+ * WHY RB, AND WHY "HELD FROM A PREVIOUS FRAME". Every shoulder already has a
+ * base action, so the modifier button unavoidably fires its own base action on
+ * the press that starts the hold. RB's base action is `stop` — the ONE base
+ * action that is safe to fire spuriously: you rank up while standing still after
+ * a level, and an extra stop-order there is a no-op. (Recall on LB or an
+ * attack-move on RT would not be.) The layer therefore only engages once RB has
+ * been down for at least one frame — `held` contains it but `justPressed` does
+ * not — so a quick RB tap is still a clean `stop`, and the base loop is skipped
+ * only while the modifier is genuinely engaged.
+ */
+export const GAMEPAD_MODIFIER_BTN = BTN.RB;
+
+/** Modifier layer: face button → the rankable slot its `+` raises. */
+const RANK_BY_BUTTON: Partial<Record<number, AbilitySlot>> = {
+  [BTN.A]: "Q",
+  [BTN.B]: "W",
+  [BTN.X]: "E",
+  [BTN.Y]: "R",
+};
+
+/** Wheel-equivalent zoom step per modifier trigger press (see CameraRig.zoomBy). */
+export const GAMEPAD_ZOOM_STEP = 120;
+
+/** Camera ops a pad frame asks for (client-only; never a sim intent). */
+export interface GamepadCameraIntent {
+  /** wheel-equivalent dolly delta; positive = out, negative = in. */
+  zoom?: number;
+  /** continuous free-pan direction (world XZ unit vector) while the stick holds. */
+  pan?: Vec2;
+  /** flip the camera follow-lock this frame. */
+  toggleFollow?: boolean;
+}
+
+/**
  * Radial deadzone + gamepad→world mapping. Pad up (-Y axis) is world +Z
  * (the camera looks along +Z), pad right is world +X. Returns a unit
  * direction, or null inside the deadzone.
@@ -103,6 +151,12 @@ export interface GamepadFrame {
   aim: Vec2 | null;
   /** button indices that went down since the previous poll (edge detect) */
   justPressed: number[];
+  /**
+   * button indices held DOWN this frame (level, not edge). Optional so the
+   * legend's synthetic single-button probes and older callers stay valid; the
+   * modifier layer (task #197) reads it to know the RIGHT BUMPER is engaged.
+   */
+  held?: number[];
 }
 
 /** Everything about ONE local player the pure mapping needs. */
@@ -122,6 +176,8 @@ export interface GamepadIntent {
   /** streamed aim (right stick), when deflected */
   aim?: Vec2;
   commands: Command[];
+  /** camera ops from the held-shoulder modifier layer (task #197). */
+  camera?: GamepadCameraIntent;
 }
 
 /** PURE frame → intent mapping (reused per local player). */
@@ -132,12 +188,43 @@ export function mapGamepadFrame(frame: GamepadFrame, ctx: GamepadPlayerCtx): Gam
   const self = ctx.selfPos;
   const aimDir = frame.aim ?? ctx.lastAimDir ?? ctx.facing ?? null;
 
-  // LEFT stick — continuous move order toward a short lead point
+  // LEFT stick — continuous move order toward a short lead point (BOTH layers:
+  // you may still reposition while ranking up / panning).
   if (frame.move && self) {
     order = {
       kind: "move",
       point: { x: self.x + frame.move.x * MOVE_LEAD, z: self.z + frame.move.z * MOVE_LEAD },
     };
+  }
+
+  // MODIFIER LAYER — RIGHT BUMPER held from a previous frame (so a plain RB tap
+  // stays a clean `stop`; see GAMEPAD_MODIFIER_BTN). While engaged, the base
+  // per-button loop is skipped and the right stick pans instead of aiming.
+  const held = frame.held;
+  if (held && held.includes(GAMEPAD_MODIFIER_BTN) && !frame.justPressed.includes(GAMEPAD_MODIFIER_BTN)) {
+    let camera: GamepadCameraIntent | undefined;
+    const cam = (patch: GamepadCameraIntent): void => {
+      camera = { ...camera, ...patch };
+    };
+    for (const b of frame.justPressed) {
+      const rankSlot = RANK_BY_BUTTON[b];
+      if (rankSlot) {
+        commands.push({ kind: "rankUpAbility", slot: rankSlot });
+      } else if (b === BTN.LT) {
+        cam({ zoom: (camera?.zoom ?? 0) + GAMEPAD_ZOOM_STEP }); // wheel out
+      } else if (b === BTN.RT) {
+        cam({ zoom: (camera?.zoom ?? 0) - GAMEPAD_ZOOM_STEP }); // wheel in
+      } else if (b === BTN.LB) {
+        cam({ toggleFollow: true });
+      }
+    }
+    // right stick → free-pan (only bites once follow is off, exactly like the
+    // arrow keys); a deflected stick pans, a centred one leaves `pan` unset.
+    if (frame.aim) cam({ pan: frame.aim });
+    const modOut: GamepadIntent = { commands };
+    if (order) modOut.order = order;
+    if (camera) modOut.camera = camera;
+    return modOut;
   }
 
   for (const b of frame.justPressed) {
@@ -203,10 +290,12 @@ export class GamepadInput {
       return null;
     }
     const justPressed: number[] = [];
+    const held: number[] = [];
     const pressed: boolean[] = [];
     for (let i = 0; i < pad.buttons.length; i++) {
       const down = pad.buttons[i]?.pressed === true;
       pressed.push(down);
+      if (down) held.push(i);
       if (down && !this.prevPressed[i]) justPressed.push(i);
     }
     this.prevPressed = pressed;
@@ -214,6 +303,7 @@ export class GamepadInput {
       move: stickToWorld(pad.axes[0] ?? 0, pad.axes[1] ?? 0),
       aim: stickToWorld(pad.axes[2] ?? 0, pad.axes[3] ?? 0),
       justPressed,
+      held,
     };
   }
 }
@@ -245,6 +335,8 @@ export interface GamepadSinks {
   onOrder(order: Order): void;
   onAim(aim: Vec2): void;
   onCommand(cmd: Command): void;
+  /** camera op from the modifier layer (zoom / free-pan / follow-toggle). */
+  onCamera?(camera: GamepadCameraIntent): void;
   /** connected pad indices changed (discrete-rate; HUD indicator) */
   onPadsChanged(indices: number[]): void;
 }
@@ -321,6 +413,7 @@ export class GamepadSystem {
     if (frame.aim) this.lastAimDir = frame.aim;
     if (intent.order) this.sinks.onOrder(intent.order);
     if (intent.aim) this.sinks.onAim(intent.aim);
+    if (intent.camera) this.sinks.onCamera?.(intent.camera);
     for (const cmd of intent.commands) {
       // pad A/B/X/Y/Back/d-pad-up cast → same click cue as tile/key (de-duped)
       if (cmd.kind === "castAbility") abilityActivationCue(cmd.slot);
@@ -338,6 +431,8 @@ export interface MultiGamepadSinks {
   onOrder(player: number, order: Order): void;
   onAim(player: number, aim: Vec2): void;
   onCommand(player: number, cmd: Command): void;
+  /** camera op from player k's modifier layer (zoom / free-pan / follow). */
+  onCamera?(player: number, camera: GamepadCameraIntent): void;
   /** raw button edge — GameApp uses this for champ-select pad picking */
   onButton?(player: number, button: number): void;
   /** connected pad indices changed (discrete-rate; HUD + join prompts) */
@@ -379,6 +474,10 @@ export class MultiGamepadSystem {
     }
 
     const players = Math.max(1, this.playerCount());
+    // A menu owns pad 0 (the first connected pad): while the DOM focus-nav layer
+    // is driving screens with it, player 0's champion must NOT also move/cast off
+    // the same sticks and buttons (task #197). Couch players 1..3 keep their pads.
+    const menuOwnsPad0 = isPadMenuCapturing();
     for (let player = 0; player < players; player++) {
       const padIndex = indices[player];
       if (padIndex === undefined) continue; // fewer pads than players
@@ -389,6 +488,9 @@ export class MultiGamepadSystem {
       }
       const frame = input.poll();
       if (!frame) continue;
+      // Poll ran (edges stay fresh, so releasing the menu never fires a stale
+      // press), but a menu-owned pad 0 emits NOTHING to the sim this frame.
+      if (player === 0 && menuOwnsPad0) continue;
 
       for (const b of frame.justPressed) this.sinks.onButton?.(player, b);
 
@@ -399,6 +501,7 @@ export class MultiGamepadSystem {
       if (frame.aim) this.lastAim.set(player, frame.aim);
       if (intent.order) this.sinks.onOrder(player, intent.order);
       if (intent.aim) this.sinks.onAim(player, intent.aim);
+      if (intent.camera) this.sinks.onCamera?.(player, intent.camera);
       for (const cmd of intent.commands) {
         // pad cast → the shared button click cue (de-duped per slot)
         if (cmd.kind === "castAbility") abilityActivationCue(cmd.slot);
