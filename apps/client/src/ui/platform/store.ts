@@ -243,6 +243,8 @@ export interface AppState {
 
   onWsMessage(raw: unknown): void;
   matchJoinFailed(message: string): void;
+  /** Surface a message in the error toast (a CLIENT-side failure, not an API one). */
+  showError(message: string): void;
   clearError(): void;
 }
 
@@ -943,6 +945,10 @@ export const appStore = createStore<AppState>()((set, get) => {
       set({ ws: next });
       // presence deltas refresh the friends list lazily
       if (next.presence !== prev.presence) void get().refreshFriends();
+    },
+
+    showError(message) {
+      set({ lastError: message });
     },
 
     clearError() {

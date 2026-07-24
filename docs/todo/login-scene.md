@@ -307,9 +307,42 @@ straight into the combat scene's voices, because the store flipped
   `commitMatchLaunch`. The in-COMBAT own-champion glow itself is a render-side
   concern (the blue team-ring); this task owns only the transition + roar fade.
 
+### Playtest fix — the enter guard must never latch permanently
+
+`runEnter` latches `enteringRef` so a double-click cannot fire two swoops (or two
+logins), but it was only ever RELEASED on the auth-failure path. An enter that
+played the cinematic and then moved the player nowhere left the guard latched for
+good: on the playtest lane (port 5205) one ineffective press of "Play offline vs
+bots" was followed by three presses that did nothing at all — no error, no
+console line, no request to the game server — and only a page reload brought the
+button back.
+
+- **One rule, released everywhere.** `shouldReleaseEnterGuard` (pure,
+  `ui/platform/enterGuard.ts`): an enter "took" only if the app left the idle
+  login screen — `screen !== "auth"`, OR a launch is staged behind the loading
+  bar (the offline handoff deliberately stays on `"auth"` for that hold, so a
+  staged launch must KEEP the guard latched). `runEnter` applies it in a
+  `finally` around `proceed`, undoing the white flash and handing the button back
+  whenever nothing moved. `runEnterAuth` no longer needs its own copy of the
+  reset — a failed login is just "still on auth".
+- **Never silent.** A `proceed` that throws, or an offline launch that stages
+  nothing, raises `ENTER_FAILED_NOTE` through the error toast (`showError`)
+  instead of swallowing the click.
+- **Visibly re-enabled.** The guard is now a ref (the synchronous double-click
+  gate) plus a state mirror, so releasing it actually re-enables the buttons;
+  both the submit button and "Play offline vs bots" read the state copy.
+- **The flash can no longer re-white the screen** (a second stuck-state found
+  while verifying this live). `runEnter`'s ~1.8 s hard fallback can proceed while
+  the swoop is still animating — a backgrounded tab pauses the render loop
+  outright, and a frame hitch is enough on its own. The scene would then paint
+  the flash to full white and FREEZE there, on top of the login screen we had
+  just faded back in. `flashOwnedRef` makes ownership explicit: `runEnter` grants
+  it, `fadeFlashOut` revokes it, and `onFlash` writes nothing once revoked.
+
 | ID | Item | Test ID | Category | Status |
 | --- | --- | --- | --- | --- |
 | li-20 | Entering a match stages the launch behind a >=1s loading bar and requests the roar fade instead of jumping straight to "match"; commit flips to the match, cancel aborts, and the overlay renders the >=1s bar only while staged | login-match-loading | unit | done |
+| li-21 | The enter guard releases whenever an enter leaves the player on the idle login screen (so "Play offline vs bots" can never latch dead), stays latched while a launch is staged behind the bar or the screen has changed, and a launch that goes nowhere raises a visible, dismissible error | login-enter-guard-release | unit | done |
 
 ## Verification
 

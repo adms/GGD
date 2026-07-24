@@ -16,6 +16,7 @@ import {
   registerArgs,
 } from "./firstOwner";
 import { ErrorToast } from "./LobbyScreen";
+import { shouldReleaseEnterGuard, ENTER_FAILED_NOTE } from "./enterGuard";
 import { Btn, TextInput, FieldError, Panel, ACCENT } from "./widgets";
 import {
   passwordAutoComplete,
@@ -89,6 +90,8 @@ export function AuthScreen(): React.JSX.Element {
   // login→battle handoff (task #74): stage the offline launch behind the >=1s
   // loading bar (requesting the roar fade) instead of jumping straight to match
   const beginOfflineLoading = useApp((s) => s.beginOfflineLoading);
+  // an enter that lands nowhere must SAY so (ErrorToast) — see runEnter
+  const showError = useApp((s) => s.showError);
 
   // Animated 3D background. Mounted here, disposed on unmount — so when the
   // screen switches to lobby/match (AuthScreen unmounts) the menu Babylon
@@ -99,13 +102,35 @@ export function AuthScreen(): React.JSX.Element {
   // it drives; both are refs so the frame loop / callbacks never re-render React.
   const sceneRef = useRef<LoginScene | null>(null);
   const flashRef = useRef<HTMLDivElement | null>(null);
+  /**
+   * Does the swoop still OWN the white flash? `runEnter`'s ~1.8 s hard fallback
+   * can proceed while the scene is still animating (a backgrounded tab pauses
+   * the render loop entirely, and a frame hitch is enough on its own). The scene
+   * then paints the flash to full white and FREEZES there — right on top of the
+   * login screen we just faded back in, which reads as another dead screen you
+   * can only reload out of. Fading out revokes ownership; the next enter grants
+   * it again.
+   */
+  const flashOwnedRef = useRef(true);
   // per-field keystroke-FX targets (glow pulse); null under reduced motion
   const unameSparkRef = useRef<HTMLSpanElement | null>(null);
   const emailSparkRef = useRef<HTMLSpanElement | null>(null);
   const pwSparkRef = useRef<HTMLSpanElement | null>(null);
   const inviteSparkRef = useRef<HTMLSpanElement | null>(null);
-  // guards a single in-flight enter transition (double-submit / double-click safe)
+  /**
+   * Guards a single in-flight enter transition (double-submit / double-click
+   * safe). BOTH a ref and state, deliberately: the ref is the SYNCHRONOUS gate
+   * (a second click has to see the first click's value before React re-renders),
+   * while the state copy is what the buttons read — releasing a ref alone
+   * re-enables nothing until some unrelated render happens along. Always move
+   * the pair together via `setEnterGuard`.
+   */
   const enteringRef = useRef(false);
+  const [entering, setEntering] = useState(false);
+  const setEnterGuard = (v: boolean): void => {
+    enteringRef.current = v;
+    setEntering(v);
+  };
   // Rolling spacing state for the serene theme's dragon gate (#88). A ref, not
   // state: a roar must never re-render the form, and the scene owns the timing.
   const calmRoarRef = useRef<CalmRoarState>(CALM_ROAR_INITIAL);
@@ -192,8 +217,10 @@ export function AuthScreen(): React.JSX.Element {
           // dragonRoarBig clip; ambient breath → the near/far dragonRoar howl)
           // and let the serene theme hush the ambient ones. See emitRoar.
           onRoar: emitRoar,
-          // enter-transition white flash → drive the overlay opacity directly
+          // enter-transition white flash → drive the overlay opacity directly,
+          // but only while the swoop still OWNS the flash (see flashOwnedRef)
           onFlash: (a) => {
+            if (!flashOwnedRef.current) return;
             const el = flashRef.current;
             if (el) el.style.opacity = String(a);
           },
@@ -253,6 +280,7 @@ export function AuthScreen(): React.JSX.Element {
     window.setTimeout(cb, 260);
   };
   const fadeFlashOut = (): void => {
+    flashOwnedRef.current = false; // a still-running swoop must not re-white it
     const el = flashRef.current;
     if (!el) return;
     el.style.transition = "opacity 320ms ease";
@@ -264,17 +292,39 @@ export function AuthScreen(): React.JSX.Element {
    * in its onComplete. A single hard fallback (~1.8 s) guarantees we ALWAYS
    * proceed even if the swoop stalls. Path is chosen purely: swoop (WebGL scene
    * live) → quick flash (WebGL off) → instant (reduced motion).
+   *
+   * The guard is ALWAYS released again when `proceed` leaves the player exactly
+   * where they were — still on the login screen with no launch staged (see
+   * `shouldReleaseEnterGuard`). It used to latch for good on any enter that
+   * didn't reach a match, which turned "Play offline vs bots" into a dead button
+   * whose only cure was a page reload.
    */
   const runEnter = (proceed: () => void | Promise<void>): void => {
     if (enteringRef.current) return;
-    enteringRef.current = true;
+    setEnterGuard(true);
+    flashOwnedRef.current = true; // this enter may drive the flash again
     let fired = false;
     let fb: number | undefined;
     const finish = (): void => {
       if (fired) return;
       fired = true;
       if (fb !== undefined) clearTimeout(fb);
-      void proceed();
+      void (async () => {
+        try {
+          await proceed();
+        } catch (err) {
+          // a throw here used to leave the guard latched AND say nothing
+          console.error("[login] enter failed", err);
+          showError(ENTER_FAILED_NOTE);
+        } finally {
+          const s = appStore.getState();
+          if (shouldReleaseEnterGuard({ screen: s.screen, matchStaged: !!s.matchLoading })) {
+            // nothing moved — undo the flash and hand the button back
+            fadeFlashOut();
+            setEnterGuard(false);
+          }
+        }
+      })();
     };
     fb = window.setTimeout(finish, 1800); // hard fallback: never get stuck on the flash
     const scene = sceneRef.current;
@@ -287,19 +337,13 @@ export function AuthScreen(): React.JSX.Element {
   /**
    * Auth then transition: the store's doLogin/doRegister already switch the
    * screen on SUCCESS (and stay on auth + set authError on failure). We run the
-   * cinematic and kick off auth in its onComplete; on failure we fade the flash
-   * back out and re-enable the form. (doLogin/doRegister logic is untouched —
-   * only the screen-switch is wrapped in the transition.)
+   * cinematic and kick off auth in its onComplete; a failure therefore just
+   * leaves us on "auth" — the case `runEnter` itself now recognises, fading the
+   * flash back out and re-enabling the form. (doLogin/doRegister logic is
+   * untouched — only the screen-switch is wrapped in the transition.)
    */
   const runEnterAuth = (authAction: () => Promise<void>): void => {
-    runEnter(async () => {
-      await authAction();
-      if (appStore.getState().screen === "auth") {
-        // failed (or otherwise still here) — undo the flash, allow another try
-        fadeFlashOut();
-        enteringRef.current = false;
-      }
-    });
+    runEnter(authAction);
   };
 
   const submit = (): void => {
@@ -662,7 +706,11 @@ export function AuthScreen(): React.JSX.Element {
               kind="primary"
               type="submit"
               onClick={playClick}
-              disabled={authBusy || enteringRef.current}
+              // `entering` (state), NOT `enteringRef.current`. The ref was the
+              // latch bug: it was set on the first attempt and never cleared, so
+              // once an enter failed the button was disabled forever with no
+              // error — the only way out was a page reload. The state resets.
+              disabled={authBusy || entering}
               style={{ width: "100%" }}
             >
               {authBusy ? "…" : mode === "login" ? "Sign in" : "Create account"}
@@ -698,13 +746,22 @@ export function AuthScreen(): React.JSX.Element {
           </select>
           <span onMouseEnter={playHover}>
             <Btn
+              // greyed only for the length of ONE launch: runEnter hands the
+              // button straight back if that launch went nowhere
+              disabled={entering}
               onClick={() => {
                 playClick();
                 // The enter cinematic plays, then in its onComplete we STAGE the
                 // launch behind the >=1s loading bar (beginOfflineLoading) rather
                 // than flipping straight to match — so the login roar fades out
                 // behind the bar before the combat scene's voices start (#74).
-                runEnter(() => beginOfflineLoading(offlineMap));
+                runEnter(() => {
+                  beginOfflineLoading(offlineMap);
+                  // Staging is synchronous, so an empty `matchLoading` here means
+                  // the launch simply did not happen. Say so out loud — this is
+                  // the press that used to vanish without a trace.
+                  if (!appStore.getState().matchLoading) showError(ENTER_FAILED_NOTE);
+                });
               }}
             >
               Play offline vs bots
