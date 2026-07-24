@@ -110,6 +110,8 @@ func LoadTodoDir(dir string) ([]Item, error) {
 	sort.Strings(names)
 	var items []Item
 	for _, n := range names {
+		// #nosec G304 -- `dir` is the repo's docs/todo and `n` came from reading
+		// that directory two lines up; there is no external input on this path.
 		data, err := os.ReadFile(filepath.Join(dir, n))
 		if err != nil {
 			return nil, err
@@ -123,6 +125,7 @@ func LoadTodoDir(dir string) ([]Item, error) {
 // A missing file yields an empty set (not an error).
 func ReadCovered(path string) map[string]bool {
 	out := map[string]bool{}
+	// #nosec G304 -- `path` is the coverage beacon this runner just wrote.
 	f, err := os.Open(path)
 	if err != nil {
 		return out

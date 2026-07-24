@@ -66,16 +66,16 @@ enforced at the content-serving layer (vite dev middleware + nginx). Full policy
 
 | ID | Item | Test ID | Category | Status |
 | --- | --- | --- | --- | --- |
-| sec-infra-08 | Environment-tier classifier (`loopback`/`lan`/`public`) — one shared util `@ggd/shared/envTier`, table-tested (46 cases); reuses the loopback rule + adds the private-IP ranges (`10./172.16-31./192.168./169.254.`, IPv6 ULA/link-local, `*.local`); fail-safe `unknown → public`. | copyright-env-tier | unit | done |
-| sec-infra-09 | Vite dev/preview middleware (`copyrightTierGate`) refuses the restricted mounts (`/content/assets/models/imported`, `/content/assets/blizzard-local`) to a public peer (403) and serves loopback+LAN; runs before `serveContent`/`serveBlizzardOverlay`; leaves the `/content-api` tripwire's 404 intact. | copyright-vite-gate | security | pending |
-| sec-infra-10 | Nginx edge gates the same mounts by `$remote_addr` tier (`geo`+`map`, `if ($ggd_deny_copyright) { return 403; }`): loopback/LAN 200, public 403; `nginx -t` clean; `make helm-sync-nginx` keeps `deploy/helm/ggd/files/nginx.conf` in sync. | copyright-nginx-gate | security | pending |
-| sec-infra-11 | Platform declares its serving tier via `GGD_DEPLOY_TIER` (`private` or `public`, default **public** = deny by omission), logged at boot. Informational — the byte-serving gate is the content layer. | copyright-deploy-tier | security | pending |
+| sec-infra-14 | Environment-tier classifier (`loopback`/`lan`/`public`) — one shared util `@ggd/shared/envTier`, table-tested (46 cases); reuses the loopback rule + adds the private-IP ranges (`10./172.16-31./192.168./169.254.`, IPv6 ULA/link-local, `*.local`); fail-safe `unknown → public`. | copyright-env-tier | unit | done |
+| sec-infra-15 | Vite dev/preview middleware (`copyrightTierGate`) refuses the restricted mounts (`/content/assets/models/imported`, `/content/assets/blizzard-local`) to a public peer (403) and serves loopback+LAN; runs before `serveContent`/`serveBlizzardOverlay`; leaves the `/content-api` tripwire's 404 intact. | copyright-vite-gate | security | pending |
+| sec-infra-16 | Nginx edge gates the same mounts by `$remote_addr` tier (`geo`+`map`, `if ($ggd_deny_copyright) { return 403; }`): loopback/LAN 200, public 403; `nginx -t` clean; `make helm-sync-nginx` keeps `deploy/helm/ggd/files/nginx.conf` in sync. | copyright-nginx-gate | security | pending |
+| sec-infra-17 | Platform declares its serving tier via `GGD_DEPLOY_TIER` (`private` or `public`, default **public** = deny by omission), logged at boot. Informational — the byte-serving gate is the content layer. | copyright-deploy-tier | security | pending |
 
-Why sec-infra-09/10/11 stay `pending`: same convention as sec-infra-01..04 —
+Why sec-infra-15/10/11 stay `pending`: same convention as sec-infra-01..04 —
 their automated beacons belong in a config/container harness
 (`tools/testrunner/internal/infracheck` for the real-nginx guard; a vite
 middleware integration harness) outside this change's ownership. The decision
-they all enforce is fully covered by sec-infra-08's unit table (the gate's whole
+they all enforce is fully covered by sec-infra-14's unit table (the gate's whole
 verdict is `mayServeRestrictedContent(classifyEnvTier(peer))`). Flip to `done`
 when the beacons land.
 

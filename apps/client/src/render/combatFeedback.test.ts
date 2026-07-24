@@ -323,7 +323,7 @@ describe("authored hitFeel flash override (juice-flash-override)", () => {
   });
 
   it("the damage-type read SURVIVES: nothing authored → the measured palette, always", () => {
-    cover("juice-flash-override");
+    cover("juice-flash-default-survives");
     // This is the layering guarantee. No champion doc authors a flash, so every
     // BASIC ATTACK takes this branch and physical-vs-magic keeps reading.
     for (const tier of ["light", "medium", "heavy", "crit"] as ImpactTier[]) {
@@ -337,7 +337,7 @@ describe("authored hitFeel flash override (juice-flash-override)", () => {
   });
 
   it("alpha is NEVER authorable — it stays the tier's hit-weight", () => {
-    cover("juice-flash-override");
+    cover("juice-flash-alpha-not-authorable");
     const a = planImpactFeedback(profileOf("light", 1, { flashColor: AUTHORED_GOLD }), { tickMs: 33.3 });
     const b = planImpactFeedback(profileOf("light", 1), { tickMs: 33.3 });
     expect(a.victimFlash.alpha).toBe(b.victimFlash.alpha);
@@ -399,7 +399,7 @@ describe("authored hitFeel flash override (juice-flash-override)", () => {
   // original bug: before the fix EVERY row here came back as the generic
   // damage-type colour, and nothing anywhere went red.
   it("every authored ability doc on disk actually reaches victimFlash", () => {
-    cover("juice-flash-override");
+    cover("juice-flash-docs-reach-victim");
     const dir = fileURLToPath(new URL("../../../../content/abilities/", import.meta.url));
     const docs = readdirSync(dir).filter((f) => f.endsWith(".json"));
     let authored = 0;

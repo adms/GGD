@@ -222,6 +222,33 @@ def build(pack: Path, out: Path, bitrate: str) -> dict[str, Any]:
     for key in pairs_by_id:
         pairs_by_id[key].sort(key=rank_key, reverse=True)
 
+    # ---- per-champion separation status ----------------------------------
+    # Mirrors build_manifest._separation_statuses(): a champion inherits the
+    # WORST collision risk of any pair it appears in. This matters because
+    # separation_fit can rescue "needs review" but NOT "high collision risk" --
+    # the pack refuses those outright, so no listening verdict can approve them.
+    # Mirrors build_manifest._separation_statuses() EXACTLY, including its
+    # treatment of "not_rated_nonhuman_descriptor": that value is absent from
+    # RISK_ORDER, so .get(risk, 0) scores it 0 and the setdefault leaves the
+    # character on "acceptable". Non-human characters therefore pass the
+    # separation gate by default. That is the pack's real behaviour, and this
+    # page has to predict the real behaviour rather than a tidier one -- but the
+    # page labels those characters so the pass is never mistaken for a measured
+    # speaker-embedding result.
+    risk_order = {"acceptable": 0, "needs review": 1, "high collision risk": 2}
+    sep_status: dict[str, str] = {}
+    for row in separation:
+        risk = row.get("collision_risk", "acceptable")
+        for key in ("id_a", "id_b"):
+            hid = row.get(key, "")
+            if not hid:
+                continue
+            cur = sep_status.get(hid, "acceptable")
+            if risk_order.get(risk, 0) > risk_order.get(cur, 0):
+                sep_status[hid] = risk
+            else:
+                sep_status.setdefault(hid, cur)
+
     # ---- assemble champions ---------------------------------------------
     champions: list[dict[str, Any]] = []
     for row in inventory:
@@ -236,6 +263,22 @@ def build(pack: Path, out: Path, bitrate: str) -> dict[str, Any]:
         worst_e = max((p["ecapa"] for p in pairs if p["metric"] != NONHUMAN_METRIC), default=None)
         worst_c = max((p["campplus"] for p in pairs if p["metric"] != NONHUMAN_METRIC), default=None)
 
+        # What build_manifest.py will still refuse even on a perfect verdict.
+        # Stating this up front stops the page promising an approval it cannot
+        # deliver -- the reviewer's ear cannot override any of these.
+        status = sep_status.get(hid, "not_analyzed" if hid in audio else "")
+        duration = fnum(row.get("duration"))
+        blockers: list[str] = []
+        if hid in audio:
+            if row.get("quality_status") != "usable":
+                blockers.append(f"品質為 {row.get('quality_status') or 'unknown'}，非 usable")
+            if not (5.0 <= duration <= 15.0):
+                blockers.append(f"長度 {duration:.2f}s 不在 5–15 秒")
+            if status == "high collision risk":
+                blockers.append("分離度為 high collision risk，管線一律不核准")
+            elif status == "not_analyzed":
+                blockers.append("分離度尚未分析")
+
         champions.append(
             {
                 "id": hid,
@@ -243,7 +286,9 @@ def build(pack: Path, out: Path, bitrate: str) -> dict[str, Any]:
                 "status": row.get("delivery_status", ""),
                 "quality": row.get("quality_status", ""),
                 "role_identity": proc.get("role_identity_status", ""),
-                "duration": fnum(row.get("duration")),
+                "separation_status": status,
+                "blockers": blockers,
+                "duration": duration,
                 "source_url": row.get("source_url", ""),
                 "notes": row.get("notes", ""),
                 "replacement": row.get("replacement_source_name", ""),

@@ -402,7 +402,7 @@ at authoring time (was `max(1000)`, a value the channel could never honour).
 | cj-s39 | Sim emits NO flash default — `flashColor`/`flashMs` absent unless content authored them | cj-hf-flash-authored-only | unit | done |
 | cj-s40 | An authored flash rides the wire verbatim, clamped into the strobe-safe ms band | cj-hf-flash-authored-passthrough | unit | done |
 | cj-s41 | An authored `flashColor`/`flashMs` reaches `victimFlash` instead of the tier default | juice-flash-override | unit | done |
-| cj-s42 | Nothing authored → the measured damage-type palette, every tier (the read survives) | juice-flash-override | unit | done |
-| cj-s43 | Alpha is never authorable — it stays the tier's hit-weight | juice-flash-override | unit | done |
+| cj-s42 | Nothing authored → the measured damage-type palette, every tier (the read survives) | juice-flash-default-survives | unit | done |
+| cj-s43 | Alpha is never authorable — it stays the tier's hit-weight | juice-flash-alpha-not-authorable | unit | done |
 | cj-s44 | Washed-out authored hues are saturated, not recoloured; greyscale falls back to red | juice-flash-legibility | unit | done |
-| cj-s45 | Every REAL `content/abilities/*.json` authored flash reaches `victimFlash` (≥30 docs) | juice-flash-override | integration | done |
+| cj-s45 | Every REAL `content/abilities/*.json` authored flash reaches `victimFlash` (≥30 docs) | juice-flash-docs-reach-victim | integration | done |

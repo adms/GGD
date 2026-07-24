@@ -45,6 +45,10 @@ table.enc th{background:var(--panel2);color:var(--dim);font-weight:600}
 .b-dim{color:var(--mute)} .b-th{color:var(--theme)} .b-ac{color:var(--accent)}
 .meta{display:flex;flex-wrap:wrap;gap:4px 14px;color:var(--dim);font-size:12px;margin:6px 0;font-variant-numeric:tabular-nums}
 .dir{font-size:13px;color:#c3cbdd;margin:6px 0;padding-left:9px;border-left:2px solid var(--line)}
+.blockers{margin:8px 0;padding:8px 11px;border-left:3px solid var(--bad);background:rgba(232,106,106,.09);border-radius:0 6px 6px 0;font-size:12.5px;color:#f0c4c4}
+.blockers.soft{border-color:var(--warn);background:rgba(232,184,75,.09);color:#efdcae}
+.blockers b{color:var(--bad)} .blockers.soft b{color:var(--warn)}
+.blockers ul{margin:4px 0 4px 16px;padding:0} .blockers li{margin:1px 0}
 audio{width:100%;height:34px;margin:6px 0}
 /* neighbours */
 .nb{margin:10px 0 4px;border:1px solid var(--line);border-radius:8px;overflow:hidden}
@@ -188,6 +192,12 @@ function scoreboard(){
     [distinct<clips?"bad":"", distinct, "實際不同的錄音<br>"+
       (distinct<clips ? (DATA.dup_groups.map(g=>g.length+" 位角色共用 1 份").join("、")) : "無重複")],
     ["good", n("technical_candidate_ready"), "技術候選就緒<br>可直接試聽"],
+    // The honest ceiling: how many clips could reach approved=true if he said
+    // yes to everything. Anything with a blocker is out of his hands.
+    [(()=>{const e=DATA.champions.filter(x=>x.has_audio && !(x.blockers||[]).length).length;
+        return e < Object.keys(DATA.audio).length ? "warn" : "good";})(),
+      DATA.champions.filter(x=>x.has_audio && !(x.blockers||[]).length).length,
+      "<b>你點頭就能過的上限</b><br>其餘皆有你無法推翻的阻擋"],
     ["warn", n("listening_review_required"), "需試聽覆核<br>啟發式示警"],
     ["warn", n("replacement_or_manual_isolation_required"), "需替換／人工分離"],
     ["bad", n("source_url_unavailable"), "來源連結失效"],
@@ -276,6 +286,16 @@ function card(c){
   if(c.quality==="usable") badges += ' <span class="badge b-ok">音質 usable</span>';
   else if(c.quality) badges += ' <span class="badge b-warn">音質 '+esc(c.quality)+'</span>';
   if(c.nonhuman) badges += ' <span class="badge b-th">非人類・聲學描述子</span>';
+  if(c.separation_status==="high collision risk") badges += ' <span class="badge b-bad">分離度 high collision risk</span>';
+  else if(c.separation_status==="needs review") badges += ' <span class="badge b-warn">分離度 needs review</span>';
+  else if(c.separation_status==="acceptable"){
+    // Non-human characters reach "acceptable" by DEFAULT, not by measurement:
+    // they never get a speaker embedding, so nothing can flag them. Saying
+    // plain "acceptable" here would dress up an unmeasured pass as a result.
+    badges += c.nonhuman
+      ? ' <span class="badge b-dim">分離度未評分・預設放行</span>'
+      : ' <span class="badge b-ok">分離度 acceptable</span>';
+  }
   if(c.role_identity) badges += ' <span class="badge b-dim">'+esc(c.role_identity)+'</span>';
 
   box.appendChild(el("div","hd",
@@ -316,6 +336,18 @@ function card(c){
   box.appendChild(au);
 
   if(c.notes && /flagged/.test(c.notes)) box.appendChild(el("div","meta","⚠ "+esc(c.notes.split(";")[0])));
+
+  /* If the pipeline will refuse this clip regardless of the verdict, say so
+     before he spends time listening to it. */
+  if(c.blockers && c.blockers.length){
+    box.appendChild(el("div","blockers",
+      "<b>就算你全部點「是」，這支也不會被核准：</b>"+
+      "<ul><li>"+c.blockers.map(esc).join("</li><li>")+"</li></ul>"+
+      "仍然值得聽並留下判斷——那會告訴我們該重錄、換來源，還是只是門檻該重新校準。"));
+  } else if(c.separation_status === "needs review"){
+    box.appendChild(el("div","blockers soft",
+      "分離度為 <b>needs review</b>：第三格必須是「是」，這支才會進 manifest。"));
+  }
 
   /* neighbours: the whole point of the page */
   if(c.neighbours.length){
@@ -434,14 +466,14 @@ function paintCard(c, box){
     msg = "已否決 — 這支不會進 manifest";
   } else if(v.role_identity_verified===true && v.emotional_fit===true){
     box.classList.add("done");
-    // The pack only demands separation_fit for pairs it marked "needs review".
-    // Anything the encoders already flagged near threshold is asked for too,
-    // so the ear is consulted exactly where the numbers are ambiguous.
-    const needSep = c.status !== "technical_candidate_ready" ||
-      (c.worst_ecapa != null && c.worst_ecapa >= TH.ecapa_review) ||
-      (c.worst_campplus != null && c.worst_campplus >= TH.campplus_confusable);
-    if(needSep && v.separation_fit !== true){
-      msg = "已通過角色＋情緒，但分離度那格還沒給 — needs review 的配對會被擋下";
+    if(c.blockers && c.blockers.length){
+      // Never promise an approval the pipeline will refuse. These blockers are
+      // outside the reviewer's control; his verdict is still recorded, but the
+      // clip cannot reach approved=true until the underlying defect is fixed.
+      msg = "你的判斷已記錄，但這支仍無法核准：" + c.blockers.join("；");
+      cls = "vdstate blocked";
+    } else if(c.separation_status === "needs review" && v.separation_fit !== true){
+      msg = "已通過角色＋情緒，但分離度為 needs review — 必須把第三格設為「是」才會放行";
       cls = "vdstate blocked";
     } else {
       msg = "✓ 可核准"; cls = "vdstate ok";
