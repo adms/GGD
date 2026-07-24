@@ -98,6 +98,7 @@ function Segmented<T extends string | number>({
         <SfxButton
           key={String(o.value)}
           className="ggd-tap"
+          clickSfx="uiTabSwitch"
           onClick={() => onPick(o.value)}
           style={{
             flex: 1,
@@ -131,6 +132,7 @@ function Toggle({
       {label(text)}
       <SfxButton
         className="ggd-tap"
+        clickSfx="uiToggle"
         onClick={() => onChange(!on)}
         aria-pressed={on}
         style={{

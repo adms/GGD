@@ -47,6 +47,34 @@ export function reachTo(sc: StatsComp, selfR: number, tgtR: number): number {
   return Math.max(sc.final[Stat.AttackRange], selfR + tgtR + 0.1);
 }
 
+/**
+ * Weapon-class priority for the per-weapon attack SFX (audio COMBAT-AUDIO). The
+ * `basicAttack` event carries this so the pure client mapper (audio/combatSfx)
+ * can play a sword / greatsword / katana / bow / gun slash without loading any
+ * champion data of its own. Purely descriptive — the sim never reads it back.
+ */
+const WEAPON_TAGS = ["greatsword", "katana", "gun", "bow", "sword"] as const;
+
+/**
+ * The champion's weapon class, derived from existing metadata (deterministic, no
+ * rng): an explicit weapon tag on the champion doc wins (checked in the priority
+ * order above so `greatsword` never collapses to `sword`); otherwise the coarse
+ * default from attackType — ranged → bow, melee → sword. Always returns a class,
+ * so every basic attack gets a weapon slash; the client still falls back to the
+ * generic swing if that class has no bound clip.
+ */
+export function weaponClassOf(
+  cdef: ChampionDef | undefined,
+  attackType: "melee" | "ranged",
+): string {
+  const tags = cdef?.tags;
+  if (tags && tags.length > 0) {
+    const set = new Set(tags.map((t) => t.toLowerCase()));
+    for (const w of WEAPON_TAGS) if (set.has(w)) return w;
+  }
+  return attackType === "ranged" ? "bow" : "sword";
+}
+
 export function basicAttackSystem(world: SimWorld): void {
   for (const [id, ab] of world.abilities) {
     const t = world.transform.get(id);
@@ -188,6 +216,7 @@ function resolveAttack(
     amount *= sc.final[Stat.CritDamage] || 1.75;
   }
 
+  const weaponClass = weaponClassOf(cdef, attackType);
   const dir = normalize(sub(tgtT.pos, t.pos));
 
   if (attackType === "ranged" && (dir.x !== 0 || dir.z !== 0)) {
@@ -227,7 +256,7 @@ function resolveAttack(
     // are descriptive only for this one projectile id.
     // ORDER MATTERS: `basicAttack` is what commits the attacker's aim on the
     // client, and the muzzle flash on `projectileSpawn` reads that aim back.
-    world.emit("basicAttack", { source: id, target: targetId, crit, ranged: true });
+    world.emit("basicAttack", { source: id, target: targetId, crit, ranged: true, weaponClass });
     world.emit("projectileSpawn", { id: pid, owner: id, projectileId: "basic-attack" });
     return;
   }
@@ -241,7 +270,7 @@ function resolveAttack(
     crit,
     origin: "basic",
   });
-  world.emit("basicAttack", { source: id, target: targetId, crit, ranged: false });
+  world.emit("basicAttack", { source: id, target: targetId, crit, ranged: false, weaponClass });
   fireHooks(world, id, "onBasicAttack", targetId);
 }
 

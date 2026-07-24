@@ -122,6 +122,12 @@ function applyEffect(e: EffectDef, ctx: EffectContext): void {
           expiresAtTick,
         });
       }
+      // ONE discrete `buffApply` cue for the status-up (audio COMBAT-AUDIO): the
+      // client plays the 增益 cast on the first buffed target. Fired only when a
+      // buff actually attached, so an empty target set makes no sound.
+      if (ctx.targets.length > 0) {
+        world.emit("buffApply", { source: ctx.caster, target: ctx.targets[0], origin: ctx.origin });
+      }
       break;
     }
     case "restore": {

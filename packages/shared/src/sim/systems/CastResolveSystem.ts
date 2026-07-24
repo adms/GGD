@@ -51,11 +51,17 @@ export function castResolveSystem(world: SimWorld): void {
     // anyone who walked in — an AoE that ignores the telegraph it just drew.
     // Everything else (targeted / self / skillshot / dash) keeps its resolved
     // target: those are locked at cast-begin by design.
-    const targets =
-      def.castType === "ground" && cast.point
-        ? // combat-env `abilityRange` (task #136) shrinks the resolve-time AoE too
-          enemiesInCircle(world, id, cast.point, resolveAbilityRadius(world, def.radius ?? 1))
-        : cast.targets;
+    const groundBlast = def.castType === "ground" && cast.point;
+    const targets = groundBlast
+      ? // combat-env `abilityRange` (task #136) shrinks the resolve-time AoE too
+        enemiesInCircle(world, id, cast.point!, resolveAbilityRadius(world, def.radius ?? 1))
+      : cast.targets;
+    // The AoE detonates at the point NOW that the wind-up elapsed — the discrete
+    // `explosion` / 爆裂 cue for a cast-time ground ability (audio COMBAT-AUDIO;
+    // the instant-cast twin fires in abilitySystem).
+    if (groundBlast) {
+      world.emit("explosion", { caster: id, abilityId: cast.abilityId, x: cast.point!.x, z: cast.point!.z });
+    }
     runEffects(def.effects, {
       world,
       caster: id,

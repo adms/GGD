@@ -33,6 +33,15 @@ export interface ButtonSfxOptions {
    * HUD control next to combat SFX). Omitted = the authored gain, unchanged.
    */
   volume?: number;
+  /**
+   * Override the CLICK voice (default "uiClick"). Lets a SHARED primitive route
+   * its own distinct cue through this one handler instead of the generic click
+   * blip: a tab / segmented-control plays "uiTabSwitch", an on/off switch plays
+   * "uiToggle". Replaces uiClick (not layered on top), so the specialised cue is
+   * heard cleanly. Hover is unchanged. no-ops under the SFX mute / test-mode
+   * silence like every other playSfx call.
+   */
+  clickSfx?: string;
 }
 
 /** Handlers for an ENABLED button. Wraps the caller's onClick with the click sfx. */
@@ -47,7 +56,7 @@ export function buttonSfx(onClick?: () => void, opts?: ButtonSfxOptions): Button
     },
     onClick: () => {
       audioSystem.unlock(); // first user gesture unlocks autoplay
-      play("uiClick");
+      play(opts?.clickSfx ?? "uiClick");
       onClick?.();
     },
   };

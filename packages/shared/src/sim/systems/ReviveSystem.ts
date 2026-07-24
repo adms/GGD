@@ -162,6 +162,19 @@ function updateCircle(world: SimWorld, rules: ReviveRules, id: EntityId): void {
   if (channellers > 0) {
     // NO STACKING: the count buys redundancy, never speed.
     if (!(contested && rules.contestPauses)) {
+      // Channel-START edge (0 → >0): the audio layer plays the reviveChannel
+      // 詠唱進行中 bed once as a teammate first commits (audio COMBAT-AUDIO, #84).
+      // A channel that decays back to 0 and is picked up again re-fires — one
+      // cue per fresh commitment, which is the intent.
+      if (rc.progressTicks === 0) {
+        world.emit("reviveChannel", {
+          id,
+          channeller: channellerId,
+          ownerId: rc.ownerId,
+          teamId: rc.teamId,
+          zone: rc.zone,
+        });
+      }
       rc.progressTicks = Math.min(rules.channelTicks, rc.progressTicks + 1);
     }
   } else if (rc.progressTicks > 0) {

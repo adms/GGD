@@ -203,7 +203,17 @@ export function castAbility(
   if (direction) t.facing = direction;
 
   recordAbilityCast(world, caster); // scoreboard: one successful cast (Q/W/E/R/EX)
-  world.emit("abilityCast", { caster, slot, abilityId: inst.abilityId, point, direction });
+  // `vfxKey` (fx.prim.<element>.<shape>) rides along so the client's per-frame
+  // audio mapper can play the ELEMENT whoosh (fire/ice/lightning) for the cast
+  // without loading any ability data of its own (audio COMBAT-AUDIO routing).
+  world.emit("abilityCast", {
+    caster,
+    slot,
+    abilityId: inst.abilityId,
+    point,
+    direction,
+    vfxKey: def.vfxKey,
+  });
 
   // ---- cast time: defer effects to CastResolveSystem when ct > 0 ----
   const ctTicks = Math.round((def.castTimeSec ?? 0) / world.dt);
@@ -231,6 +241,12 @@ export function castAbility(
   }
 
   // ---- instant cast (ct = 0): run effects immediately ----
+  // A ground-targeted AoE detonates at its point THIS tick (a cast time defers
+  // the blast to CastResolveSystem instead). One discrete `explosion` cue per
+  // cast, at the point — the client's AoE/爆裂 sound (audio COMBAT-AUDIO).
+  if (def.castType === "ground" && point) {
+    world.emit("explosion", { caster, abilityId: inst.abilityId, x: point.x, z: point.z });
+  }
   runEffects(def.effects, {
     world,
     caster,

@@ -588,6 +588,174 @@
       "gain": 1.0,
       "cooldownMs": 200,
       "maxConcurrent": 1
+    },
+    "legendaryRoll": {
+      "files": [
+        "assets/audio/sfx/lab/legendaryRoll.mp3"
+      ],
+      "gain": 1.0,
+      "cooldownMs": 500,
+      "maxConcurrent": 1
+    },
+    "uiTabSwitch": {
+      "files": [
+        "assets/audio/sfx/lab/uiTabSwitch.mp3"
+      ],
+      "gain": 0.3,
+      "cooldownMs": 60,
+      "maxConcurrent": 2
+    },
+    "uiToggle": {
+      "files": [
+        "assets/audio/sfx/lab/uiToggle.mp3"
+      ],
+      "gain": 0.22,
+      "cooldownMs": 60,
+      "maxConcurrent": 2
+    },
+    "reviveChannel": {
+      "files": [
+        "assets/audio/sfx/lab/reviveChannel.mp3"
+      ],
+      "gain": 0.5,
+      "cooldownMs": 250,
+      "maxConcurrent": 1
+    },
+    "reviveComplete": {
+      "files": [
+        "assets/audio/sfx/lab/reviveComplete.mp3"
+      ],
+      "gain": 0.5,
+      "cooldownMs": 500,
+      "maxConcurrent": 2
+    },
+    "respawn": {
+      "files": [
+        "assets/audio/sfx/lab/respawn.mp3"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 500,
+      "maxConcurrent": 2
+    },
+    "fireRingLoop": {
+      "files": [
+        "assets/audio/sfx/lab/fireRingLoop.mp3"
+      ],
+      "gain": 0.5,
+      "cooldownMs": 250,
+      "maxConcurrent": 1
+    },
+    "arenaAmbience": {
+      "files": [
+        "assets/audio/sfx/lab/arenaAmbience.mp3"
+      ],
+      "gain": 0.35,
+      "cooldownMs": 250,
+      "maxConcurrent": 1
+    },
+    "merchantAmbience": {
+      "files": [
+        "assets/audio/sfx/lab/merchantAmbience.mp3"
+      ],
+      "gain": 0.35,
+      "cooldownMs": 250,
+      "maxConcurrent": 1
+    },
+    "attackSword1": {
+      "files": [
+        "assets/audio/sfx/lab/attack-sword-1.wav"
+      ],
+      "gain": 0.42,
+      "cooldownMs": 90,
+      "maxConcurrent": 3
+    },
+    "attackSword2": {
+      "files": [
+        "assets/audio/sfx/lab/attack-sword-2.wav"
+      ],
+      "gain": 0.63,
+      "cooldownMs": 90,
+      "maxConcurrent": 3
+    },
+    "attackGreatsword": {
+      "files": [
+        "assets/audio/sfx/lab/attack-greatsword.wav"
+      ],
+      "gain": 0.44,
+      "cooldownMs": 90,
+      "maxConcurrent": 2
+    },
+    "attackKatana": {
+      "files": [
+        "assets/audio/sfx/lab/attack-katana.wav"
+      ],
+      "gain": 0.23,
+      "cooldownMs": 90,
+      "maxConcurrent": 3
+    },
+    "bowDraw": {
+      "files": [
+        "assets/audio/sfx/lab/bow-draw.wav"
+      ],
+      "gain": 0.57,
+      "cooldownMs": 130,
+      "maxConcurrent": 2
+    },
+    "arrowRelease": {
+      "files": [
+        "assets/audio/sfx/lab/arrow-release.wav"
+      ],
+      "gain": 1.1,
+      "cooldownMs": 70,
+      "maxConcurrent": 4
+    },
+    "arrowPierce": {
+      "files": [
+        "assets/audio/sfx/lab/arrow-pierce.wav"
+      ],
+      "gain": 0.43,
+      "cooldownMs": 60,
+      "maxConcurrent": 4
+    },
+    "gunshot": {
+      "files": [
+        "assets/audio/sfx/lab/gunshot.wav"
+      ],
+      "gain": 1.4,
+      "cooldownMs": 70,
+      "maxConcurrent": 3
+    },
+    "magicFire": {
+      "files": [
+        "assets/audio/sfx/lab/magic-fire.wav"
+      ],
+      "gain": 0.62,
+      "cooldownMs": 250,
+      "maxConcurrent": 2
+    },
+    "magicIce": {
+      "files": [
+        "assets/audio/sfx/lab/magic-ice.mp3"
+      ],
+      "gain": 0.64,
+      "cooldownMs": 250,
+      "maxConcurrent": 2
+    },
+    "magicLightning": {
+      "files": [
+        "assets/audio/sfx/lab/magic-lightning.wav"
+      ],
+      "gain": 0.53,
+      "cooldownMs": 250,
+      "maxConcurrent": 2
+    },
+    "castCircle": {
+      "files": [
+        "assets/audio/sfx/lab/cast-circle.mp3"
+      ],
+      "gain": 0.94,
+      "cooldownMs": 1000,
+      "maxConcurrent": 1
     }
   }
 }

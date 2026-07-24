@@ -48,9 +48,19 @@
  * stingers (matchEndGong / settlementReveal) with `victory` + `defeat`. The RARE
  * one-shots (lowHealth, levelUpJingle, exUnlockSting) are intentionally NOT
  * preloaded — a once-per-life fetch latency is inaudible on them, and warming
- * them would re-inflate boot. Only `mapFlavor*` and the two clips with NO emit
- * source yet (buffApply / explosion — the sim raises no buff-applied or
- * AoE-explosion event) stay fully absent.
+ * them would re-inflate boot.
+ *
+ * A later pass added the second wave of cues the emit agents fire: buffApply /
+ * explosion (previously map-only, no emit source), the death→revive→respawn
+ * flow (reviveChannel / reviveComplete / respawn, #84), the arena/market/fire-ring
+ * ambience beds (arenaAmbience / fireRingLoop with `combat`, merchantAmbience with
+ * `intermission`), the legendary-orb gacha roll (legendaryRoll with `intermission`,
+ * #82) and the cross-screen UI chrome (uiTabSwitch / uiToggle in the core). The
+ * looping beds among them are flagged in {@link SFX_LOOPABLE}. The per-weapon and
+ * per-element lab clips (attack-sword-*, bow/arrow/gunshot, magic-fire/ice/lightning,
+ * cast-circle) are BOUND in the audio map so combat can route to them, but left to
+ * lazy-load: a champion uses only one or two, so preloading the whole set would
+ * re-inflate the very boot cost #63 removes. Only `mapFlavor*` stays fully absent.
  */
 import type { AudioScene } from "./types";
 
@@ -60,7 +70,17 @@ import type { AudioScene } from "./types";
  * cold fetch. Kept deliberately tiny — these are the only cues with no single
  * home scene.
  */
-export const SFX_CORE: readonly string[] = ["uiClick", "uiHover", "uiHoverCyber", "uiType"];
+export const SFX_CORE: readonly string[] = [
+  "uiClick",
+  "uiHover",
+  "uiHoverCyber",
+  "uiType",
+  // Cross-screen chrome with no single home scene: the segment/tab switch fired
+  // from the shop/codex/settings tab strips and the on/off toggle that lives in
+  // the global audio cluster shown on every screen. Both tiny; warmed on unlock.
+  "uiTabSwitch",
+  "uiToggle",
+];
 
 /** The combat sound layer, shared by `combat` and its late-round `fireRing` twin. */
 const COMBAT_SFX: readonly string[] = [
@@ -100,6 +120,24 @@ const COMBAT_SFX: readonly string[] = [
   // preloading them would re-inflate the scene's boot cost this task (#63) removes.
   "heal",
   "abilityRankUp",
+  // The two clips that had a map entry but no emit source until this pass now
+  // fire in combat (buff-applied status cast + AoE/explosion blast), so warm them
+  // here.
+  "buffApply",
+  "explosion",
+  // Death→revive→respawn flow (#84). Deaths and revives happen repeatedly across a
+  // match, so warm these with combat rather than paying a fetch on the first one:
+  // the revive channel loop starts the instant a teammate steps into the circle,
+  // its completion sting fires on the resurrect, and respawn plays on re-entry.
+  "reviveChannel",
+  "reviveComplete",
+  "respawn",
+  // Continuous combat beds. arenaAmbience is the arena environment floor that
+  // starts with the round; fireRingLoop (#132) is the closing-ring bed that comes
+  // in during the fireRing phase — and since fireRing shares this exact combat
+  // layer, warming it here covers both. Loop-flagged in SFX_LOOPABLE.
+  "arenaAmbience",
+  "fireRingLoop",
   // fired on the intermission→combat edge, so warm it as combat begins
   "roundStart",
 ];
@@ -127,6 +165,12 @@ export const SFX_BY_SCENE: Readonly<Record<AudioScene, readonly string[]>> = {
     "shopPurchase",
     "goldGain",
     "draftConfirm",
+    // legendaryRoll (#82) is the gacha/legendary-orb roll build-up; the
+    // augment/legendary/gacha draft rounds arrive during this prep window.
+    // merchantAmbience (#38) is the market crowd bed that plays through the
+    // intermission scene. Both loop-flagged in SFX_LOOPABLE.
+    "legendaryRoll",
+    "merchantAmbience",
     ...COUNTDOWN_SFX,
   ],
   battleStart: [],
@@ -148,4 +192,31 @@ export const SFX_BY_SCENE: Readonly<Record<AudioScene, readonly string[]>> = {
 export function sfxEventsForScene(scene: AudioScene | null | undefined): readonly string[] {
   if (!scene) return [];
   return SFX_BY_SCENE[scene] ?? [];
+}
+
+/**
+ * SFX events whose clip is a LOOPING bed rather than a one-shot, so the emit
+ * layer must start it as a sustained voice (`AudioBufferSourceNode.loop = true`)
+ * and hold a handle to stop it, instead of the fire-and-forget `playSfx` a
+ * transient uses. These are the ambience floors and the two channelled
+ * build-ups: the arena/market environment beds, the fire-ring closing bed
+ * (#132), the death-revive channel (#84) and the legendary-orb roll (#82).
+ *
+ * This is metadata for the emit agents ONLY — `sfxManifest` itself just warms
+ * buffers; nothing here changes preload. The map entries carry no `loop` field
+ * (the `config.audio-map@1` SfxEntry schema is strict and has none — looping is
+ * a playback decision, exactly like the BGM beds), so this set is where the
+ * loop intent is recorded on the client side.
+ */
+export const SFX_LOOPABLE: ReadonlySet<string> = new Set([
+  "arenaAmbience",
+  "merchantAmbience",
+  "fireRingLoop",
+  "reviveChannel",
+  "legendaryRoll",
+]);
+
+/** True when an SFX event should be played as a sustained loop (see SFX_LOOPABLE). */
+export function isLoopableSfx(event: string): boolean {
+  return SFX_LOOPABLE.has(event);
 }

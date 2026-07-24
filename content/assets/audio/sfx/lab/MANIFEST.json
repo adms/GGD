@@ -80,6 +80,48 @@
   "deliberatelyUnbound": "Every weapon clip (attack-sword-1/2, attack-greatsword, attack-katana, bow-draw, arrow-release, arrow-pierce, gunshot, impact-heavy), cast-circle, and the three elemental casts (magic-fire, magic-ice, magic-lightning). basicAttack / projectileSpawn / projectileHit / attackWindup / abilityCast are single GLOBAL events — GGD has no per-weapon or per-ability audio routing — so a katana slash bound there lands on a mage's staff and a fletched arrow on a fireball. Secondary blockers recorded per clip in the CREDITS.md ledger: attack-katana is +7.4 dB vs the pool anchor, attack-greatsword is 1.70 s against a 90 ms cooldown, cast-circle is 3.50 s against castBegin's 120 ms cooldown, and impact-heavy would fight fx/crit.wav's rising-sting legibility. These clips are the raw material for per-weapon routing (client-audio work), not a drop-in upgrade.",
   "ledger": "content/assets/CREDITS.md — section '効果音ラボ / Sound Effect Lab pack'. Summary + pipeline + regeneration story in content/assets/audio/README.md."
  },
+ "phase2": {
+  "note": "SECOND audio-coverage wave. This section is a LEDGER only; it is NOT the `clips` array (ACQUIRE.py iterates `clips` and would fail on any entry without a soundeffect-lab.info sourceUrl/sourceBytes). Two groups: (A) nine NEW event clips downloaded THIS run into lab/, and (B) the per-weapon / per-element clips that were on disk and `deliberatelyUnbound` above, now given their OWN dedicated routing keys so the combat emit agent can address them individually. audio-map.json is the authority for the exact gain/cooldown/maxConcurrent that landed; sfxManifest.ts is the authority for preload + loop flagging.",
+  "licence": "courtesy — same permissive, attribution-OPTIONAL bucket as the rest of this pack (see `licence` above). No mandatory-attribution change: the CC-BY login dragon stays the one mandatory in-game credit. Recorded in CREDITS.md's COURTESY bucket, not the CC0 block and not the mandatory block.",
+  "provenanceCaveat": "RESOLVED 2026-07-24. The registry phase originally recorded these nine as sourcePage UNKNOWN because the acquisition phase did not thread per-clip provenance through. It has since been BACKFILLED from the acquisition agents' own reported sourcePage + clip notes (workflow wf_3229bea3-129 journal) — see each clip line below and `provenanceBackfill`. All nine are genuinely soundeffect-lab.info clips in the courtesy bucket. They remain OUT of the `clips` array because ACQUIRE.py additionally requires sourceBytes + pre/post dB, which were never captured; promote them only after re-running acquisition with those fields. VERIFY.py still gates their on-disk format because it globs the tree, not this ledger.",
+  "provenanceBackfill": "Backfilled from the download agents' returned sourcePage/notes. Exact source filenames are recorded where the agent reported one; `arenaAmbience` is page-level only (the agent named the clip 「風に揺れる草木1」/弱風 but not the file) and is deliberately left without a fabricated sourceUrl. Licence for all nine: 効果音ラボ — 商用可・報告不要・クレジット任意 (attribution NOT required; the CC-BY login dragon remains the only mandatory in-game credit).",
+  "newEventClips": {
+   "note": "Group A — nine clips new to lab/ this run. `loop:true` means the emit layer plays it as a sustained voice (flagged in sfxManifest.ts SFX_LOOPABLE); the audio-map SfxEntry carries NO loop field (the config.audio-map@1 schema is strict and has none — looping is a client playback decision, like the BGM beds). `preload` names the sfxManifest bucket that warms it.",
+   "clips": {
+    "legendaryRoll": "lab/legendaryRoll.mp3 @ gain 1.0 / 500 / 1, loop — 傳說寶珠轉蛋 roll build-up (#82 gacha); preload: intermission (augment/legendary/gacha draft rounds arrive during prep). SOURCE: 効果音ラボ「ドラムロール」(drum-roll1.mp3), 演出・アニメ, desc「ダラララ。生演奏」— https://soundeffect-lab.info/sound/anime/mp3/drum-roll1.mp3",
+    "uiTabSwitch": "lab/uiTabSwitch.mp3 @ gain 0.3 / 60 / 2 — 分頁/segment 切換; preload: SFX_CORE (cross-screen chrome). SOURCE: 効果音ラボ「カーソル移動1」(cursor1.mp3), 演出・システム/カーソル移動, desc「クセの少ない電子音」— https://soundeffect-lab.info/sound/button/mp3/cursor1.mp3",
+    "uiToggle": "lab/uiToggle.mp3 @ gain 0.22 / 60 / 2 — 開關/設定切換; preload: SFX_CORE (the global audio cluster's on/off, on every screen). SOURCE: 効果音ラボ「スイッチを押す」(switch1.mp3), 演出・アニメ, desc「ポチッとな」— https://soundeffect-lab.info/sound/anime/mp3/switch1.mp3",
+    "reviveChannel": "lab/reviveChannel.mp3 @ gain 0.5 / 250 / 1, loop — 復活詠唱進行中 (#84); preload: combat. SOURCE: 効果音ラボ「オーラ1」(aura1.mp3), 戦闘/魔法, desc「光を身にまとう」— https://soundeffect-lab.info/sound/battle/mp3/aura1.mp3",
+    "reviveComplete": "lab/reviveComplete.mp3 @ gain 0.5 / 500 / 2 — 復活完成; preload: combat. SOURCE: 効果音ラボ「回復魔法4」(magic-cure4.mp3), 戦闘/魔法, desc 大回復→神聖な光 — https://soundeffect-lab.info/sound/battle/mp3/magic-cure4.mp3",
+    "respawn": "lab/respawn.mp3 @ gain 0.6 / 500 / 2 — 重生/重新進場; preload: combat. SOURCE: 効果音ラボ「ニュッ1」(nyu1.mp3), 演出・アニメ, desc「何かを出す」— https://soundeffect-lab.info/sound/anime/mp3/nyu1.mp3",
+    "fireRingLoop": "lab/fireRingLoop.mp3 @ gain 0.5 / 250 / 1, loop — 火環收縮 (#132); preload: combat (fireRing scene shares the combat layer). SOURCE: 効果音ラボ「たき火」(fire1.mp3), 自然/環境音, desc「パチパチと燃える」— https://soundeffect-lab.info/sound/environment/mp3/fire1.mp3",
+    "arenaAmbience": "lab/arenaAmbience.mp3 @ gain 0.35 / 250 / 1, loop — 競技場環境音床; preload: combat. SOURCE: 効果音ラボ「風に揺れる草木1」(弱風), 自然/環境音, page https://soundeffect-lab.info/sound/environment/ — exact source filename NOT reported by the acquisition agent, so no sourceUrl is claimed here.",
+    "merchantAmbience": "lab/merchantAmbience.mp3 @ gain 0.35 / 250 / 1, loop — 中場市場人聲床 (#38); preload: intermission. SOURCE: 効果音ラボ「スーパーマーケット1」(supermarket1.mp3), 生活/環境音, desc「がやがや」— https://soundeffect-lab.info/sound/environment/mp3/supermarket1.mp3"
+   }
+  },
+  "alreadyMappedNowPreloaded": {
+   "note": "Already in audio-map.json since #51 but eventless until now; this pass adds them to sfxManifest.ts COMBAT_SFX so the combat emit agent can fire+preload them. No audio-map change.",
+   "buffApply": "lab/magic-buff.mp3 @ 0.23 / 400 / 2 — status/buff-applied cast; preload: combat.",
+   "explosion": "lab/explosion.mp3 @ 0.6 / 300 / 3 — AoE/explosion blast (#39 VFX pairing); preload: combat."
+  },
+  "perWeaponRouting": {
+   "note": "Group B — SUPERSEDES the `bindings.deliberatelyUnbound` note FOR THESE CLIPS ONLY. They were unbound because GGD had a single GLOBAL basicAttack/projectileSpawn/abilityCast event; the combat emit agent (next phase) is adding per-weapon / per-element routing, so each clip now gets its OWN top-level key in audio-map.json to route to. gain = the clip's suggestedGain from `clips`; cooldown/maxConcurrent mirror the clip's original anchor event. Left to LAZY-LOAD (not in any sfxManifest scene): a champion uses only one or two weapons, so warming all twelve would re-inflate the boot cost #63 removes. `impact-heavy.wav` is NOT in this set — it stays deliberatelyUnbound (it would fight fx/crit.wav's rising-sting legibility).",
+   "keys": {
+    "attackSword1": "lab/attack-sword-1.wav @ 0.42 / 90 / 3 (was basicAttack anchor)",
+    "attackSword2": "lab/attack-sword-2.wav @ 0.63 / 90 / 3",
+    "attackGreatsword": "lab/attack-greatsword.wav @ 0.44 / 90 / 2",
+    "attackKatana": "lab/attack-katana.wav @ 0.23 / 90 / 3",
+    "bowDraw": "lab/bow-draw.wav @ 0.57 / 130 / 2 (was attackWindup anchor)",
+    "arrowRelease": "lab/arrow-release.wav @ 1.1 / 70 / 4 (was projectileSpawn anchor)",
+    "arrowPierce": "lab/arrow-pierce.wav @ 0.43 / 60 / 4 (was projectileHit anchor)",
+    "gunshot": "lab/gunshot.wav @ 1.4 / 70 / 3 (was projectileSpawn anchor)",
+    "magicFire": "lab/magic-fire.wav @ 0.62 / 250 / 2 (was abilityCast:fire override)",
+    "magicIce": "lab/magic-ice.mp3 @ 0.64 / 250 / 2 (was abilityCast:ice override)",
+    "magicLightning": "lab/magic-lightning.wav @ 0.53 / 250 / 2 (was abilityCast:lightning override)",
+    "castCircle": "lab/cast-circle.mp3 @ 0.94 / 1000 / 1 (was castBegin anchor; 3.5 s clip → 1 s cooldown, cap 1)"
+   }
+  }
+ },
  "clips": [
   {
    "file": "ui-denied.wav",

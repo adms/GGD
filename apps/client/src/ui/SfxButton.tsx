@@ -25,12 +25,19 @@ export interface SfxButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEle
   pressScale?: number;
   /** skin variant — adds the shared `.ggd-btn--<kind>` class (buttonFx.css). */
   kind?: SfxButtonKind;
+  /**
+   * Override the CLICK voice (default "uiClick"). A shared tab / segmented
+   * primitive passes "uiTabSwitch"; an on/off switch passes "uiToggle". Replaces
+   * the generic click blip (not layered), so the specialised cue reads cleanly.
+   */
+  clickSfx?: string;
 }
 
 export function SfxButton({
   sfxVolume,
   pressScale = 0.95,
   kind,
+  clickSfx,
   className,
   disabled,
   style,
@@ -44,7 +51,10 @@ export function SfxButton({
 }: SfxButtonProps): React.JSX.Element {
   const sfx = disabled
     ? undefined
-    : buttonSfx(undefined, sfxVolume !== undefined ? { volume: sfxVolume } : undefined);
+    : buttonSfx(undefined, {
+        ...(sfxVolume !== undefined ? { volume: sfxVolume } : {}),
+        ...(clickSfx !== undefined ? { clickSfx } : {}),
+      });
 
   // shared JRPG + cyber-glow skin (buttonFx.css) — skin only; the caller's
   // inline `style` still owns geometry (padding/size/radius).

@@ -140,9 +140,20 @@ export function AudioDirector(): null {
     if (isCombatStart(prev, phase)) {
       audioSystem.playSting("battleStart");
       audioSystem.playSfx("roundStart");
+      // Quiet arena environment bed under the combat BGM — fired once as the
+      // round begins (the ~38 s clip is played as one long one-shot; the client
+      // has no true SFX loop). Always appropriate: it is the room, not the fight.
+      audioSystem.playSfx("arenaAmbience");
+      // 重生/重新進場 — the local champion materialises into the arena at round
+      // start. Gated on being alive so a spectator / bye seat stays silent. A
+      // mid-round revive is NOT a phase edge, so this never doubles with the
+      // global reviveComplete shimmer (#84). See the per-frame combat path for
+      // reviveChannel / reviveComplete.
+      if (localAlive) audioSystem.playSfx("respawn");
     }
     if (phase === "champSelect" && prev !== "champSelect") audioSystem.playSfx("vsReveal");
     if (phase === "matchEnd" && prev !== "matchEnd") audioSystem.playSfx("matchEndGong");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase]);
 
   // Consolidated tally → SFX: kill/multiKill, death, allySlain, levelUp,

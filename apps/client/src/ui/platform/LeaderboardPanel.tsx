@@ -138,6 +138,7 @@ function TabBar(props: {
         return (
           <SfxButton
             key={o.key}
+            clickSfx="uiTabSwitch"
             onClick={() => props.onSelect(o.key)}
             style={{
               flex: 1,

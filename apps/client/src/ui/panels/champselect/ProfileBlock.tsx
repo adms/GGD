@@ -14,6 +14,7 @@
  * shared, so a number here can never disagree with the sim or the codex.
  */
 import { useEffect, useState } from "react";
+import { audioSystem } from "../../../audio";
 import { Abilities, Champions } from "@ggd/shared/sim/content/registry";
 import type { AbilityId, ChampionId } from "@ggd/shared/ids";
 import {
@@ -360,7 +361,11 @@ export function ChampionProfile({
         {TABS.map((t) => (
           <button
             key={t.id}
-            onClick={() => setTab(t.id)}
+            onClick={() => {
+              audioSystem.unlock(); // a tap is a user gesture — kick autoplay
+              audioSystem.playSfx("uiTabSwitch"); // distinct segment-switch cue
+              setTab(t.id);
+            }}
             style={{
               flex: 1,
               padding: "6px 4px",

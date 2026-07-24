@@ -20,8 +20,14 @@ import { createPortal } from "react-dom";
 import { Items } from "@ggd/shared/sim/content/registry";
 import { IntermissionScene } from "../render/intermission/IntermissionScene";
 import type { ShelfGoodInput } from "../render/intermission/shelfDisplay";
+import {
+  playRecessBell,
+  startMarketAmbience,
+  type MarketAmbienceHandle,
+} from "../render/intermission/intermissionAudio";
 import { useHud } from "../net/RoomStore";
 import { hudActions } from "./actions";
+import { audioSystem } from "../audio/AudioSystem";
 import { playChampionSelectVoice } from "../audio/championVoice";
 import { HeroReactionBubble } from "./HeroReactionBubble";
 import { MerchantTipBox } from "./MerchantTipBox";
@@ -98,8 +104,17 @@ export function IntermissionStage(): React.JSX.Element | null {
     // belt-and-braces: reveal even if the scene never reports (it guarantees
     // exactly-once, including on dispose — this is only for a stalled tab).
     const reveal = setTimeout(() => setReady(true), FADE_MS * 4);
+    // ---- INTERMISSION AUDIO (tasks #124, #38) ----------------------------
+    // The 下課打鐘 recess bell rings ONCE as the 備戰 window opens; the market
+    // ざわめき murmur bed loops UNDER the scene the whole time. Both ride the SFX
+    // bus via audioSystem.playSfx, so the SFX slider/mute and the #62 test-mode
+    // silence gate apply — headless/background runs make no sound. The ambience
+    // is a managed loop whose re-arm timer is cleared on dispose (no leak).
+    playRecessBell(audioSystem);
+    const ambience: MarketAmbienceHandle = startMarketAmbience(audioSystem);
     return () => {
       clearTimeout(reveal);
+      ambience.stop();
       sceneRef.current = null;
       scene.dispose();
       hudActions.setArenaRenderSuppressed(false);

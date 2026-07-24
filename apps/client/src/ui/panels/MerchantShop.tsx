@@ -434,6 +434,7 @@ export function MerchantShop(): React.JSX.Element | null {
               key={key}
               kind="subdued"
               sfxVolume={0.5}
+              clickSfx="uiTabSwitch"
               onClick={() => setTab(key)}
               style={{
                 padding: "5px 16px",

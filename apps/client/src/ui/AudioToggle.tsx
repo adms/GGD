@@ -478,6 +478,9 @@ export function AudioToggle(): React.JSX.Element {
   const onToggle = (bus: AudioBus): void => {
     // a tap is a user gesture: kick autoplay if the context is still suspended
     audioSystem.unlock();
+    // on/off switch cue — emitted BEFORE the mute flips so muting the SFX bus
+    // still gets its confirmation blip (playSfx no-ops under test-mode silence).
+    audioSystem.playSfx("uiToggle");
     audioSettings.toggleBusMuted(bus);
   };
 
