@@ -18,7 +18,25 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  GO_VERSION: "1.25"   # apps/platform requires go 1.25; tools/testrunner needs >= 1.23
+  # BUILD toolchain, not the language version. apps/platform/go.mod still says
+  # `go 1.25` and tools/testrunner `go 1.23` — those are minimum LANGUAGE
+  # versions and are deliberately left alone; this pin only decides which
+  # compiler produces the binary we ship.
+  #
+  # Pinned to 1.26.5 because `vuln` (govulncheck) found SIX standard-library
+  # vulnerabilities that our code actually REACHES — not "present in a module we
+  # require", but on a live call path:
+  #   GO-2026-5856 crypto/tls      → fixed 1.26.5
+  #   GO-2026-4970 os              → fixed 1.26.5
+  #   GO-2026-5039 net/textproto   → fixed 1.26.4
+  #   GO-2026-5037 crypto/x509     → fixed 1.26.4
+  #   GO-2026-4971 net             → fixed 1.26.3
+  #   GO-2026-4918 net/http        → fixed 1.26.3
+  # e.g. gamelink.Service.StartMatch → http.Client.Do (internal/gamelink/
+  # client.go:241). This platform is internet-facing at ggd.adms.ai, so these
+  # are real exposure, not paperwork. 1.26.5 is the lowest version that clears
+  # all six; raise it, never lower it.
+  GO_VERSION: "1.26.5"
 
 jobs:
   # ---- setup: install + prime the pnpm store cache ---------------------------
