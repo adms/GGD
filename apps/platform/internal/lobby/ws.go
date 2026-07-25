@@ -64,6 +64,18 @@ func (s *Sessions) handleWS(w http.ResponseWriter, r *http.Request) {
 		httpx.WriteError(w, err)
 		return
 	}
+	// A valid access token is NOT enough to enter the lobby. The token is a
+	// signed bearer credential that keeps asserting whatever was true when it was
+	// minted for its whole TTL, so an operator's #126 denial (or a ban) applied a
+	// moment ago would otherwise let a just-refused player keep playing until his
+	// token happened to expire. Re-read the durable account status at the
+	// handshake — the door to actually playing — and answer the same 403 a login
+	// would, BEFORE upgrading. Same guard the room/match REST routes carry via
+	// auth.PlayableOnly. See auth.Service.AuthorizePlay.
+	if err := s.authn.AuthorizePlay(r.Context(), claims.Subject); err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
 	ident := auth.Identity{AccountID: claims.Subject, Username: claims.Username}
 
 	conn, err := websocket.Accept(w, r, &websocket.AcceptOptions{
