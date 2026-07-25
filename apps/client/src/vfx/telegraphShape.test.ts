@@ -97,12 +97,18 @@ describe("telegraph geometry is derived from content, at the SIM's own size", ()
     expect(g?.kind === "lock" ? g.radius : null).toBeCloseTo(BODY_RADIUS, 6);
   });
 
-  it("skillshot → the PROJECTILE's corridor: maxRange × abilityRange, hitRadius × 2", () => {
+  it("skillshot → the PROJECTILE's corridor: BOTH maxRange and hitRadius × abilityRange", () => {
     cover("telegraph-shape-derivation");
-    // PIN: the projectile's travel really is abilityRange-scaled, its hit
-    // radius really is not.
+    // PIN: the projectile's travel is abilityRange-scaled …
     expect(stripComments(readFileSync(join(REPO_ROOT, "packages/shared/src/sim/effects/effectRunner.ts"), "utf8")))
       .toContain("remainingRange: resolveAbilityRange(world, def.maxRange)");
+    // … and so is its HIT RADIUS. An earlier revision of this test asserted the
+    // opposite ("hit radius really is not"), which made every skillshot
+    // corridor 1/mult too narrow — a telegraph that lies about how wide it
+    // hits. ProjectileSystem only skips the scale for BASIC attacks, and
+    // spawnProjectile never marks an ability projectile basic.
+    expect(stripComments(readFileSync(join(REPO_ROOT, "packages/shared/src/sim/systems/ProjectileSystem.ts"), "utf8")))
+      .toContain("proj.basic ? proj.hitRadius : resolveAbilityRadius(world, proj.hitRadius)");
     const g = deriveTelegraphGeometry(
       ability({
         castType: "skillshot",
@@ -113,7 +119,21 @@ describe("telegraph geometry is derived from content, at the SIM's own size", ()
     );
     expect(g).toMatchObject({ kind: "line", anchor: "caster" });
     expect(g?.kind === "line" ? g.length : null).toBeCloseTo(12 * MULT, 6);
-    expect(g?.kind === "line" ? g.width : null).toBeCloseTo(1.0, 6);
+    expect(g?.kind === "line" ? g.width : null).toBeCloseTo(1.0 * MULT, 6);
+    // a skillshot IS dangerous — it must stay in the enemy danger channel
+    expect(g?.kind === "line" ? (g.harmless ?? false) : null).toBe(false);
+  });
+
+  it("a dash corridor is marked HARMLESS — it is movement, not damage", () => {
+    cover("telegraph-shape-derivation");
+    // PIN: startDash only redirects movement; nothing along the corridor is hit.
+    expect(stripComments(readFileSync(join(REPO_ROOT, "packages/shared/src/sim/systems/MovementSystem.ts"), "utf8")))
+      .toContain("nav.override");
+    const g = deriveTelegraphGeometry(
+      ability({ castType: "dash", range: 6, effects: [{ kind: "dash", maxDistance: 5 }] }),
+      env(),
+    );
+    expect(g).toMatchObject({ kind: "line", anchor: "caster", harmless: true });
   });
 
   it("a skillshot whose projectile doc is missing returns NULL, not the cast range", () => {

@@ -111,7 +111,21 @@ export type TelegraphGeometry =
   /** single target: arc at the victim + tether to the caster */
   | { kind: "lock"; radius: number; anchor: "point"; source: string }
   /** skillshot / dash corridor, cast from the caster along the aim */
-  | { kind: "line"; length: number; width: number; anchor: "caster"; source: string }
+  | {
+      kind: "line";
+      length: number;
+      width: number;
+      anchor: "caster";
+      source: string;
+      /**
+       * TRUE when the corridor is pure movement and deals NO damage along its
+       * path (castType `dash` — MovementSystem.startDash only sets nav.override).
+       * The renderer must paint these in the neutral "someone is moving here"
+       * channel, never the enemy DANGER channel: telling a player to dodge a
+       * harmless line is the same lie as the fabricated `targeted` ring.
+       */
+      harmless?: boolean;
+    }
   /** caster-centred marker (self buffs) */
   | { kind: "self"; radius: number; anchor: "caster"; source: string };
 
@@ -181,14 +195,21 @@ export function deriveTelegraphGeometry(
       // were the corridor.
       if (!proj) return null;
       const length = proj.maxRange * mult;
-      const width = proj.hitRadius * 2;
+      // The WIDTH is scaled too. An earlier revision multiplied only the length
+      // and justified it with "the sim does NOT scale hitRadius" — that was
+      // wrong by 1.67× and made the corridor lie about how wide it hits.
+      // ProjectileSystem.ts collides at
+      //   `proj.basic ? proj.hitRadius : resolveAbilityRadius(world, proj.hitRadius)`
+      // and spawnProjectile (effectRunner.ts) never sets `basic`, so EVERY
+      // ability skillshot collides at hitRadius × abilityRange.
+      const width = proj.hitRadius * 2 * mult;
       if (!(length >= MIN_EXTENT) || !(width >= MIN_EXTENT)) return null;
       return {
         kind: "line",
         length,
         width,
         anchor: "caster",
-        source: `${eff!.projectileId!} maxRange ${proj.maxRange} × abilityRange ${mult}, hitRadius ${proj.hitRadius} ×2`,
+        source: `${eff!.projectileId!} maxRange ${proj.maxRange} × abilityRange ${mult}, hitRadius ${proj.hitRadius} ×2 × abilityRange ${mult}`,
       };
     }
     case "dash": {
@@ -199,10 +220,17 @@ export function deriveTelegraphGeometry(
       if (!(length >= MIN_EXTENT)) return null;
       return {
         kind: "line",
+        // A dash is pure MOVEMENT: MovementSystem.startDash only sets
+        // nav.override and deals no damage along the corridor. Painting it in
+        // the enemy DANGER channel would tell players to dodge something
+        // harmless — the same over-claim as the fabricated `targeted` ring this
+        // module exists to kill. `harmless` demotes it to the neutral
+        // "someone is moving here" channel instead of "get out of this line".
+        harmless: true,
         length,
         width,
         anchor: "caster",
-        source: `dash maxDistance ${eff.maxDistance} (sim applies no abilityRange), body width ${width}`,
+        source: `dash maxDistance ${eff.maxDistance} (sim applies no abilityRange), body width ${width} — movement only, no damage`,
       };
     }
     case "self": {
