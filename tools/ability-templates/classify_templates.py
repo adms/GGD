@@ -38,15 +38,52 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 ABIL = ROOT / "content" / "abilities"
 CHAMPS = ROOT / "content" / "champions"
+SRC = ROOT / "tools" / "w3x-import" / "out" / "GoDieEX22s-src"
 OUT = ROOT / "docs" / "ability-templates.csv"
 
 champ_names = {
     p.stem: json.loads(p.read_text()).get("name", p.stem) for p in CHAMPS.glob("godie-*.json")
 }
 
+# ── WC3 側資料: 三軸稽核 (rawcode/JASS/特效模型/音效) + 物件欄 + 音效檔綁定 ──
+audit = {r["ability"]: r for r in json.loads((SRC / "EFFECT_AUDIT.json").read_text())["abilities"]}
+_obj = json.loads((SRC / "OBJECTS.json").read_text())
+objects = _obj.get("abilities", _obj)
+sfx_bind = json.loads((SRC / "SFX_BINDINGS.json").read_text())["bindings"]
+
+# WC3 stock 基底 → 人話標籤 (球體/蝗蟲群/變身/召喚 等特殊機制由此判讀)
+BASE_LABELS = {
+    "ANcl": "通魔(觸發殼)", "AEIl": "變身", "AHtb": "風暴之鎚", "AOsh": "衝擊波",
+    "Aegr": "復原", "AOws": "戰爭踐踏", "AEev": "閃避", "AHbh": "重擊",
+    "Absk": "狂暴", "AOcr": "致命一擊", "ANsb": "妖術", "ANcs": "集束火箭",
+    "AEme": "變形", "AHtc": "雷霆一擊", "AEtq": "寧靜", "AUcs": "腐臭蜂群",
+    "Awar": "戰爭踐踏", "Aamk": "屬性加成", "AEer": "糾纏根鬚", "AUls": "蝗蟲群",
+    "AOsw": "幽魂狼(召喚)", "Awfb": "火焰箭(球體)", "AIfb": "火焰球體", "AIlb": "閃電球體",
+    "AIob": "黑蝕球體", "AHfa": "搜魂術(球體)", "AOcl": "閃電鏈", "AHbz": "暴風雪",
+    "ANfd": "投擲酒桶", "AUan": "動物復生(召喚)", "AEfn": "自然之力(召喚)",
+    "AUdc": "黑暗轉換", "AUin": "地獄火(召喚)", "ANsi": "沉默", "AUdr": "生命吸取",
+    "AOmi": "劍刃風暴", "AEsf": "星辰墜落", "ANrf": "焰雨", "AHmt": "群體傳送",
+    "AOwk": "疾風步", "AEsh": "影遁", "AOhx": "妖術", "ANfl": "火焰之雨",
+}
+ORB_BASES = {"Awfb", "AIfb", "AIlb", "AIob", "AHfa"}
+SUMMON_BASES = {"AOsw", "AUan", "AEfn", "AUin", "ANfl"}
+
 WAVE_PROJ = re.compile(r"wave|nova|breath|carrion", re.I)
 KW_SUMMON = re.compile(r"招喚|召喚|招換")
 KW_MORPH = re.compile(r"變身|型態|合體|進化|化身|變成")
+
+
+def wc3col(v):
+    """OBJECTS 的每等級欄 {'1': x, '2': y} → 'x/y' (全同則單值)。"""
+    if not isinstance(v, dict):
+        return "" if v is None else str(v)
+    vals = [v[k] for k in sorted(v, key=lambda s: int(s) if str(s).isdigit() else 0)]
+    uniq = {str(x) for x in vals}
+    if len(uniq) == 1:
+        vals = vals[:1]
+    return "/".join(
+        str(int(x)) if isinstance(x, float) and x == int(x) else str(x) for x in vals
+    )
 
 
 def fmt(v):
@@ -117,6 +154,33 @@ for p in sorted(ABIL.glob("godie-*.json")):
     mods = (buff or {}).get("modifiers", []) if buff else []
     if not mods and has_pmod:
         mods = pranks[0].get("modifiers", [])
+
+    # ── WC3/JASS 側 ──
+    au = audit.get(d["id"], {})
+    rawcode = au.get("rawcode") or ""
+    base = au.get("base") or ""
+    ob = objects.get(rawcode, {}) if rawcode else {}
+    calls = (au.get("damage", {}) or {}).get("jass_damage_calls", []) or []
+    jass_dmg = "; ".join(f"{c.get('fn', c.get('trigger', '?'))}:{c['line']}" for c in calls[:4])
+    vfx_ax = au.get("vfx", {}) or {}
+    models = vfx_ax.get("jass_models", []) or []
+    dummies = vfx_ax.get("jass_dummy_units", []) or []
+    snds = (au.get("sfx", {}) or {}).get("jass_sounds", []) or []
+    snd_files = []
+    for s in snds:
+        b = sfx_bind.get(s, {})
+        snd_files.append(f"{s}→{b.get('extracted_file') or b.get('wc3_path') or '?'}")
+    special = []
+    if base in ORB_BASES or "法球" in desc:
+        special.append("球體/法球")
+    if base == "AUls":
+        special.append("蝗蟲群")
+    if base in SUMMON_BASES:
+        special.append("召喚基底")
+    if base == "AEIl" or (KW_MORPH.search(desc) and d.get("castType") == "self"):
+        special.append("變身基底" if base == "AEIl" else "")
+    special = [s for s in special if s]
+
     rows.append(
         {
             "分類": cat,
@@ -138,8 +202,19 @@ for p in sorted(ABIL.glob("godie-*.json")):
             "增益持續": (buff or {}).get("duration", "") if buff else "",
             "投射物": (proj or {}).get("projectileId", "") if proj else "",
             "施法時間": d.get("castTimeSec", ""),
-            "音效": d.get("sfxKey", ""),
-            "特效": d.get("vfxKey", ""),
+            "GGD音效": d.get("sfxKey", ""),
+            "GGD特效": d.get("vfxKey", ""),
+            "rawcode": rawcode,
+            "WC3基底": f"{base} {BASE_LABELS.get(base, '')}".strip(),
+            "特殊機制": "; ".join(special),
+            "WC3範圍": wc3col(ob.get("area")),
+            "WC3持續": wc3col(ob.get("duration")),
+            "WC3目標限制": wc3col(ob.get("targets_allowed")),
+            "JASS觸發器": "; ".join(au.get("jass_triggers", []) or []),
+            "JASS傷害呼叫": jass_dmg,
+            "JASS特效模型": "; ".join(m.replace("\\\\", "\\") for m in models[:6]),
+            "JASS替身單位": "; ".join(dummies),
+            "WC3音效": "; ".join(snd_files),
             "判定依據": why,
         }
     )
