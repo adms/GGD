@@ -17,6 +17,9 @@ function CreateRoomDialog(props: { onClose: () => void }): React.JSX.Element {
   const [difficulty, setDifficulty] = useState("normal");
   const [mapId, setMapId] = useState(DEFAULT_MAP_ID);
   const [localPlayers, setLocalPlayers] = useState(1);
+  // 肉鴿殭屍模式 (#215) — default CHECKED (ON) per the owner directive. Only when a
+  // host UNCHECKS it does createRoom transmit `false` down the chain.
+  const [rogueliteMobs, setRogueliteMobs] = useState(true);
 
   const selStyle: React.CSSProperties = {
     padding: "8px 10px",
@@ -73,6 +76,20 @@ function CreateRoomDialog(props: { onClose: () => void }): React.JSX.Element {
               <option value="hard">hard bots</option>
             </select>
           </div>
+          <label
+            style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer", fontSize: 13, color: TEXT_MAIN }}
+          >
+            <input
+              type="checkbox"
+              checked={rogueliteMobs}
+              onChange={(e) => setRogueliteMobs(e.target.checked)}
+              style={{ width: 16, height: 16 }}
+            />
+            <span>
+              肉鴿殭屍模式{" "}
+              <span style={{ fontSize: 11, color: TEXT_DIM }}>(第3場起喪屍湧入 · 預設開啟)</span>
+            </span>
+          </label>
           <div>
             <div style={{ fontSize: 11, color: TEXT_DIM, marginBottom: 3 }}>
               Local players (couch co-op — coming soon)
@@ -91,7 +108,7 @@ function CreateRoomDialog(props: { onClose: () => void }): React.JSX.Element {
               kind="primary"
               style={{ flex: 1 }}
               onClick={() => {
-                void createRoom(name.trim() || "New Room", difficulty, mapId);
+                void createRoom(name.trim() || "New Room", difficulty, mapId, rogueliteMobs);
                 props.onClose();
               }}
             >

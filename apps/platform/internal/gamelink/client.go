@@ -92,6 +92,11 @@ type MatchRequest struct {
 	Seats       []Seat  `json:"seats"`
 	BotFill     BotFill `json:"botFill"`
 	CallbackURL string  `json:"callbackUrl"`
+	// RogueliteMobs is the per-room 肉鴿殭屍模式 toggle (#215), *bool so an omitted
+	// value (nil) reaches the game server as absent === ON. The JSON tag MUST
+	// match the game server's InternalMatchRequest.rogueliteMobs byte-for-byte;
+	// a typo would drop the field and mask an intended OFF as an ON.
+	RogueliteMobs *bool `json:"rogueliteMobs,omitempty"`
 }
 
 // Reservation is one human's seat token.
@@ -297,6 +302,8 @@ func (s *Service) StartMatch(ctx context.Context, rm room.Room, members []room.M
 		MatchID: matchID, Mode: "PairedDuels", MapID: rm.MapID,
 		Seats: seats, BotFill: botFill,
 		CallbackURL: s.callback + "/api/v1/internal/matches/" + matchID + "/result",
+		// Forward the per-room #215 toggle; nil stays nil === ON on the wire.
+		RogueliteMobs: rm.RogueliteMobs,
 	}
 	body, err := json.Marshal(req)
 	if err != nil {

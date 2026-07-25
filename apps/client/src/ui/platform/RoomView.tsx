@@ -135,6 +135,7 @@ export function RoomView(): React.JSX.Element | null {
   const setReady = useApp((s) => s.setReady);
   const setPick = useApp((s) => s.setPick);
   const setLocalPlayers = useApp((s) => s.setLocalPlayers);
+  const updateRoomSettings = useApp((s) => s.updateRoomSettings);
   const startMatch = useApp((s) => s.startMatch);
   const leaveRoom = useApp((s) => s.leaveRoom);
 
@@ -167,6 +168,26 @@ export function RoomView(): React.JSX.Element | null {
             <br />
             🗺 <span style={{ color: TEXT_MAIN }}>{mapLabel(room.room.mapId)}</span>
           </div>
+          {/* 肉鴿殭屍模式 (#215) — host-only toggle; absent === ON. Takes effect for
+              the NEXT match (arenaRules is frozen at match start). */}
+          {iAmHost ? (
+            <label
+              style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer", fontSize: 12, color: TEXT_MAIN, marginBottom: 6 }}
+            >
+              <input
+                type="checkbox"
+                checked={room.room.rogueliteMobs !== false}
+                onChange={(e) => void updateRoomSettings({ rogueliteMobs: e.target.checked })}
+                style={{ width: 15, height: 15 }}
+              />
+              肉鴿殭屍模式{" "}
+              <span style={{ fontSize: 11, color: TEXT_DIM }}>(下一場生效)</span>
+            </label>
+          ) : (
+            <div style={{ fontSize: 11, color: TEXT_DIM, marginBottom: 6 }}>
+              肉鴿殭屍模式: <span style={{ color: TEXT_MAIN }}>{room.room.rogueliteMobs !== false ? "開啟" : "關閉"}</span>
+            </div>
+          )}
           <div style={{ flex: 1, overflowY: "auto", minHeight: 0 }}>
             {room.members.map((m) => (
               <div

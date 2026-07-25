@@ -65,6 +65,8 @@ export interface Room {
   botDifficulty: string;
   status: string; // "open" | "in-match"
   createdAt: number;
+  /** per-room 肉鴿殭屍模式 toggle (#215); absent/undefined === ON (default-ON). */
+  rogueliteMobs?: boolean;
 }
 
 export interface RoomMember {

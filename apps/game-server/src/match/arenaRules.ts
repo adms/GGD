@@ -57,6 +57,17 @@ export interface ArenaRules {
   goldDrop: GoldDropConfig | null;
   /** roguelite mob-wave rules (task #215); null = mechanic off (legacy) */
   mobWaves: MobWavesConfig | null;
+  /**
+   * PER-ROOM roguelite-mob toggle (task #215, owner directive 2026-07-25:
+   * 「肉鴿殭屍模式…做成房間開關，但預設是打開」). This is NOT sourced from the
+   * content doc — `mobWaves` above is the GLOBAL tuning (fromRound/reward/cap),
+   * this is the per-match ON/OFF switch a room host flips. It defaults to ON and
+   * is only driven to `false` by an explicit room override, so absent/undefined
+   * === ON at every hop (old rooms, old replays, DEFAULT_ARENA_RULES). Frozen
+   * into ArenaRules at match creation and read by the sim ONLY via `this.rules`,
+   * so it is a deterministic, replay-recorded input — never a client cosmetic.
+   */
+  rogueliteMobs: boolean;
 }
 
 /** Legacy behavior: augment tiers per AUGMENT_TIER_SCHEDULE + round-2+ gacha. */
@@ -77,6 +88,12 @@ export const DEFAULT_ARENA_RULES: ArenaRules = {
   guardianTower: null,
   goldDrop: null,
   mobWaves: null,
+  // Default ON (owner directive): every match/test/room without an explicit
+  // override plays with the roguelite mobs armed. `mobWaves` being null here
+  // means DEFAULT_ARENA_RULES still spawns nothing (no tuning), but a resolved
+  // arena-rules doc that supplies mobWaves will spawn unless a room turns this
+  // off — which is exactly the pre-existing behavior, now switchable.
+  rogueliteMobs: true,
 };
 
 /** Convert a parsed config.arena-rules@1 doc into the controller's rule table. */
@@ -104,6 +121,9 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
     guardianTower: doc.guardianTower ?? null,
     goldDrop: doc.goldDrop ?? null,
     mobWaves: doc.mobWaves ?? null,
+    // NOT a content-doc field: the per-room toggle defaults ON here and is only
+    // ever driven to false by the room override merged in MatchRoom.onCreate.
+    rogueliteMobs: true,
   };
 }
 
