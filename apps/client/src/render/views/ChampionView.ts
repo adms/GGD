@@ -22,7 +22,14 @@ import type { Mesh } from "@babylonjs/core/Meshes/mesh";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
+import { Vector4 } from "@babylonjs/core/Maths/math.vector";
 import type { ModelDoc } from "@ggd/shared/content";
+import {
+  faceUVQuads,
+  motifFaceUVQuads,
+  type VoxelSkinRecipe,
+} from "@ggd/shared/content/voxelSkin";
+import { acquireVoxelSkinTexture, releaseVoxelSkinTexture } from "./voxelSkinTexture";
 import { AnimationStateMachine, type AnimState, type AnimPulse } from "../anim/AnimationStateMachine";
 import { ClipAnimator } from "../ClipAnimator";
 import type { AssetManager } from "../AssetManager";
@@ -60,6 +67,77 @@ const ACCENTS: Record<string, [number, number, number]> = {
 };
 
 const PX = 1.8 / 32; // 32 voxel-pixels tall → 1.8 world units
+
+/** `[u1,v1,u2,v2]` quads → Babylon's `faceUV` array. */
+const toFaceUV = (quads: number[][]): Vector4[] =>
+  quads.map((q) => new Vector4(q[0] as number, q[1] as number, q[2] as number, q[3] as number));
+
+/**
+ * MOTIF GEOMETRY (task #231). Each entry is the boxes one motif adds, in voxel
+ * pixels relative to `bodyRoot`: `[w, h, d, x, y, z]`. FRONT is +Z (see
+ * `facingToYaw`), so a cape sits at negative Z.
+ *
+ * Kept to 1–2 small boxes per slot on purpose — the whole reason #226 exists is
+ * that the old champions were too heavy, and a silhouette that accumulates
+ * accessories stops being a silhouette. `mask` is deliberately absent: it is
+ * painted into the face texture and costs no geometry at all.
+ */
+const MOTIF_GEOMETRY: Readonly<Record<string, readonly (readonly number[])[]>> = Object.freeze({
+  // head (head box is 8³ centred at y = 28)
+  hood: [[9, 5, 9, 0, 31, 0]],
+  horns: [
+    [2, 4, 2, -3, 34, 0],
+    [2, 4, 2, 3, 34, 0],
+  ],
+  "beast-ears": [
+    [2, 3, 1, -3, 34, 0],
+    [2, 3, 1, 3, 34, 0],
+  ],
+  "brim-hat": [[12, 1, 12, 0, 32.5, 0]],
+  crown: [[9, 2, 9, 0, 33, 0]],
+  halo: [[8, 1, 8, 0, 37, 0]],
+  antenna: [[1, 5, 1, 0, 35, 0]],
+  headband: [[9, 2, 9, 0, 30.5, 0]],
+  // shoulder (arm pivots sit at y = 24, x = ±6)
+  pauldrons: [
+    [4, 2, 5, -6, 24.5, 0],
+    [4, 2, 5, 6, 24.5, 0],
+  ],
+  spikes: [
+    [2, 4, 2, -5, 26, 0],
+    [2, 4, 2, 5, 26, 0],
+  ],
+  epaulets: [
+    [5, 1, 5, -6, 24, 0],
+    [5, 1, 5, 6, 24, 0],
+  ],
+  shawl: [[10, 3, 5, 0, 23, 0]],
+  // back (torso is 8w × 12h × 4d centred at y = 18)
+  cape: [[8, 12, 1, 0, 18, -2.6]],
+  "scarf-tail": [[2, 8, 1, 0, 20, -2.6]],
+  tail: [[2, 2, 6, 0, 13, -4]],
+  backpack: [[6, 6, 3, 0, 19, -3.6]],
+  "wing-stubs": [
+    [3, 5, 1, -3, 21, -2.6],
+    [3, 5, 1, 3, 21, -2.6],
+  ],
+});
+
+/** `#rrggbb` → the 0..1 triple a `Color3` wants. */
+function hexRgb(hex: string): [number, number, number] {
+  const n = parseInt(hex.slice(1), 16);
+  return [((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255];
+}
+
+/** Options bag for the view — additive, so the 4-arg call sites still compile. */
+export interface ChampionViewOptions {
+  /**
+   * The champion's generated voxel skin (task #231). Absent/null keeps the
+   * pre-#231 flat team-coloured figure EXACTLY as it was, which is what lets
+   * every existing caller and test stay untouched.
+   */
+  skin?: VoxelSkinRecipe | null;
+}
 
 /**
  * HEIGHT-NORMALIZATION target (task #150). Every loaded champion .glb is scaled
@@ -107,6 +185,10 @@ export class ChampionView {
   private readonly ownedMaterials: StandardMaterial[] = [];
   private readonly teamRing: Mesh;
   private readonly blobShadow: Mesh;
+  /** The generated voxel skin this figure was built with (task #231), if any. */
+  private readonly skin: VoxelSkinRecipe | null = null;
+  /** championId whose cached atlas this view holds a reference to (or null). */
+  private atlasChampionId: string | null = null;
 
   private clipAnimator: ClipAnimator | null = null;
   private glbRoot: TransformNode | null = null;
@@ -140,13 +222,16 @@ export class ChampionView {
     readonly entityId: number,
     readonly modelKey: string,
     teamId: number,
+    opts: ChampionViewOptions = {},
   ) {
     this.root = new TransformNode(`champ-${entityId}`, scene);
     this.bodyRoot = new TransformNode(`champ-${entityId}-body`, scene);
     this.bodyRoot.parent = this.root;
 
     const team = TEAM_COLORS[((teamId % 4) + 4) % 4]!;
-    const accent = ACCENTS[modelKey] ?? [0.5, 0.5, 0.55];
+    const skin = opts.skin ?? null;
+    this.skin = skin;
+    const accent = skin ? hexRgb(skin.palette.accent) : (ACCENTS[modelKey] ?? [0.5, 0.5, 0.55]);
 
     const mat = (name: string, rgb: [number, number, number]): StandardMaterial => {
       const m = new StandardMaterial(`champ-${entityId}-${name}`, scene);
@@ -155,7 +240,22 @@ export class ChampionView {
       this.ownedMaterials.push(m);
       return m;
     };
-    const skinMat = mat("skin", [0.87, 0.72, 0.58]);
+    // THE PAINTED ATLAS (#231). With a skin, `champ-<id>-skin` carries the
+    // 64×64 texture and a WHITE diffuse, so Standard shading resolves to
+    // `texture × diffuseColor` — which is exactly the slot the #49 vertex tint
+    // multiplies into, so tint composes over the painted surface uniformly and
+    // modelTint.ts needs no change at all. Without a skin the material keeps
+    // its pre-#231 flat flesh colour.
+    const skinMat = mat("skin", skin ? [1, 1, 1] : [0.87, 0.72, 0.58]);
+    const atlas = skin ? acquireVoxelSkinTexture(scene, skin) : null;
+    if (atlas) {
+      skinMat.diffuseTexture = atlas;
+      this.atlasChampionId = skin ? skin.championId : null;
+    } else if (skin) {
+      // texture upload refused (exotic engine): fall back to a flat outfit
+      // colour rather than rendering a white figure.
+      skinMat.diffuseColor = new Color3(...hexRgb(skin.palette.outfitPrimary));
+    }
     const teamMat = mat("team", team);
     const accentMat = mat("accent", accent);
 
@@ -167,20 +267,38 @@ export class ChampionView {
       m: StandardMaterial,
       parent: TransformNode,
       y: number,
+      extra?: { x?: number; z?: number; faceUV?: Vector4[] },
     ): Mesh => {
-      const b = MeshBuilder.CreateBox(`champ-${entityId}-${name}`, { width: w * PX, height: h * PX, depth: d * PX }, scene);
+      const b = MeshBuilder.CreateBox(
+        `champ-${entityId}-${name}`,
+        {
+          width: w * PX,
+          height: h * PX,
+          depth: d * PX,
+          ...(extra?.faceUV ? { faceUV: extra.faceUV, wrap: true } : {}),
+        },
+        scene,
+      );
       b.material = m;
       b.parent = parent;
-      b.position.y = y * PX;
+      b.position.set((extra?.x ?? 0) * PX, y * PX, (extra?.z ?? 0) * PX);
       b.isPickable = false;
       this.proceduralParts.push(b);
       this.flashMeshes.push(b); // procedural parts flash by default
       return b;
     };
 
+    // UV quads for each part, or undefined when this champion has no skin (the
+    // box then keeps Babylon's default whole-texture UVs on a flat material).
+    const uv = (part: "head" | "torso" | "armL" | "armR" | "legs"): Vector4[] | undefined =>
+      skin ? toFaceUV(faceUVQuads(part)) : undefined;
+
     // Minecraft proportions (voxel px): legs 12, torso 12, head 8 → 32 tall.
-    this.torso = box("torso", 8, 12, 4, teamMat, this.bodyRoot, 18);
-    this.head = box("head", 8, 8, 8, skinMat, this.bodyRoot, 28);
+    // WITH a skin the torso and legs wear the painted atlas; WITHOUT one they
+    // stay flat team colour, which is the pre-#231 team read.
+    const bodyMat = skin ? skinMat : teamMat;
+    this.torso = box("torso", 8, 12, 4, bodyMat, this.bodyRoot, 18, { faceUV: uv("torso") });
+    this.head = box("head", 8, 8, 8, skinMat, this.bodyRoot, 28, { faceUV: uv("head") });
 
     // limbs pivot at their attachment point (shoulder/hip)
     const limb = (
@@ -188,17 +306,58 @@ export class ChampionView {
       m: StandardMaterial,
       px: number,
       pivotY: number,
+      faceUV?: Vector4[],
     ): TransformNode => {
       const pivot = new TransformNode(`champ-${entityId}-${name}-pivot`, scene);
       pivot.parent = this.bodyRoot;
       pivot.position.set(px * PX, pivotY * PX, 0);
-      box(name, 4, 12, 4, m, pivot as TransformNode, -6);
+      box(name, 4, 12, 4, m, pivot as TransformNode, -6, { faceUV });
       return pivot;
     };
-    this.armL = limb("armL", accentMat, -6, 24);
-    this.armR = limb("armR", accentMat, 6, 24);
-    this.legL = limb("legL", teamMat, -2, 12);
-    this.legR = limb("legR", teamMat, 2, 12);
+    const limbMat = skin ? skinMat : accentMat;
+    const legMat = skin ? skinMat : teamMat;
+    this.armL = limb("armL", limbMat, -6, 24, uv("armL"));
+    this.armR = limb("armR", limbMat, 6, 24, uv("armR"));
+    this.legL = limb("legL", legMat, -2, 12, uv("legs"));
+    this.legR = limb("legR", legMat, 2, 12, uv("legs"));
+
+    if (skin) {
+      // ---- TEAM BAND (#231 team composition) ----------------------------
+      // The skin repaints the torso and both legs, which used to BE the team
+      // read. It is replaced by a dedicated chest band in the flat team colour
+      // plus the emissive ring below — and `-teamband` is in
+      // modelTint.UNTINTED_MESH_SUFFIXES so a dark #49 tint cannot crush the
+      // stripe to unreadable, the same protection the ring already has.
+      // The material keeps the name `champ-<id>-team`; only what it paints moved.
+      box("teamband", 8.6, 3, 4.6, teamMat, this.bodyRoot, 21);
+
+      // ---- MOTIFS (≤6 boxes, budget-enforced by the generator) -----------
+      // Created through `box()` on purpose: that is what puts them in BOTH
+      // `proceduralParts` (so they hide when a glb is adopted) AND
+      // `flashMeshes` (so #64's hit flash paints them).
+      const motifSlots: [string, number][] = [
+        [skin.motifs.head, 0],
+        [skin.motifs.shoulder, 1],
+        [skin.motifs.back, 2],
+      ];
+      for (const [motif, cell] of motifSlots) {
+        const boxes = MOTIF_GEOMETRY[motif];
+        if (!boxes) continue; // "none", or a texture-only motif such as `mask`
+        const faceUV = atlas ? toFaceUV(motifFaceUVQuads(cell)) : undefined;
+        boxes.forEach((b, i) => {
+          box(
+            `motif-${motif}-${i}`,
+            b[0] as number,
+            b[1] as number,
+            b[2] as number,
+            skinMat,
+            this.bodyRoot,
+            b[4] as number,
+            { x: b[3] as number, z: b[5] as number, faceUV },
+          );
+        });
+      }
+    }
 
     // ---- team identity ring + blob shadow (independent of model source) ----
     const ringMat = new StandardMaterial(`champ-${entityId}-ring`, scene);
@@ -569,6 +728,18 @@ export class ChampionView {
    * the doc's raw `scale` no longer sets the on-screen size.
    */
   tryUpgradeToGlb(assets: AssetManager, doc: ModelDoc | null, relativeScale = 1): void {
+    // TASK #231 — a champion whose recipe says `preferVoxelBody` has NO art of
+    // its own: its modelKey points at one of the four shared stand-in meshes,
+    // which is precisely the "44 heroes wearing 4 faces" problem. Adopting that
+    // glb would hide the generated skin behind somebody else's body, so the
+    // upgrade is declined outright and the champion keeps its own voxel figure.
+    // Latch `upgradeStarted` so the registry stops asking every frame. When
+    // #226 deletes the KayKit glbs this branch becomes a no-op rather than a
+    // behaviour change.
+    if (this.skin?.preferVoxelBody) {
+      this.upgradeStarted = true;
+      return;
+    }
     if (!doc || this.upgradeStarted || this.disposed) return;
     this.upgradeStarted = true;
     void assets
@@ -668,7 +839,19 @@ export class ChampionView {
     // FIRST, while their targets are still alive.
     this.clipAnimator?.dispose();
     this.clipAnimator = null;
+    const scene = this.root.getScene();
     this.root.dispose(false, false);
+    // The generated atlas is CACHE-OWNED and refcounted per championId (six
+    // champions on the same hero share one 16 KB texture), so it is released,
+    // never force-disposed — `dispose(false, true)` below would otherwise tear
+    // it out from under every other view still rendering that champion. Release
+    // FIRST, so the material we are about to dispose no longer points at a
+    // texture the cache might legitimately keep alive.
+    if (this.atlasChampionId) {
+      releaseVoxelSkinTexture(scene, this.atlasChampionId);
+      for (const m of this.ownedMaterials) m.diffuseTexture = null;
+      this.atlasChampionId = null;
+    }
     for (const m of this.ownedMaterials) m.dispose(false, true);
     this.ownedMaterials.length = 0;
   }

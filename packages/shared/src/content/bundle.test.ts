@@ -114,7 +114,10 @@ class CountingFsSource implements ContentSource {
  */
 const KNOWN_SIDECARS: Partial<Record<CollectionName, readonly string[]>> = {
   config: ["_purchase-lines.json"],
-  models: ["_standin-overrides.json"],
+  // task #231 adds `_voxel-skins.json` — the hand-authored voxel-skin override
+  // channel. Listed here EXPLICITLY (the point of this table) so it is a
+  // reviewed addition rather than a silent one.
+  models: ["_standin-overrides.json", "_voxel-skins.json"],
 };
 
 /**

@@ -1122,3 +1122,29 @@ button to those rows.
   weight licence must be re-confirmed before any public release (tools/voice-gen/README §Licences).
   IndexTTS-2 (fallback engine, bilibili Model Use License) — only used where noted
   in per-clip `.method` sidecars.
+
+## Generated champion voxel skins (no files — painted at runtime)
+
+- **What**: every champion's blocky-voxel look (task #231) — a 7-colour palette,
+  face/hair/outfit blocking, a 3×3 chest glyph and up to three accessory motifs —
+  is **generated deterministically from the champion's own document** and painted
+  into a 64×64 atlas in the browser. **Zero image files are authored, downloaded or
+  shipped**: the whole roster costs ~20 KB of JSON *instructions*, and the code that
+  produces the pixels is `packages/shared/src/content/voxelSkin/paint.ts`.
+- **Origin of every element**: the twelve skin tones, twelve hair tones, four metal
+  tones, sixteen 3×3 emblem glyphs, eight hair silhouettes, six eye styles, eight
+  tops, six legs and the motif vocabulary are **all authored in this repository**,
+  in that file and in `types.ts`. No palette, texture, sprite, UV layout or costume
+  design is taken from Minecraft/Mojang, from Blizzard, or from any copyrighted
+  character art — the atlas layout is this project's own and is deliberately NOT
+  the Minecraft player-skin layout.
+- **The one external-looking input** is `voxelSkin/hints.ts`: 59 short English
+  strings (`PolarBear`, `BansheeGhost`, `AncientProtector`, …) lifted from the
+  `model` field of the source map's own hero rows via our importer. They are read
+  purely as **silhouette nouns** by the keyword rules — "this hero was shaped like a
+  bear" — and select from our own tone ladders. No asset is loaded, referenced or
+  derived from them.
+- **Parody, evoked not reproduced**: the champions are 惡搞 originals. The rules
+  deliberately work at the level of palette and silhouette (undead ⇒ corpse tone,
+  caster ⇒ robe, one-eyed ⇒ eyepatch) and never attempt to reproduce a specific
+  copyrighted costume.

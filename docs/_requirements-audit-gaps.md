@@ -2436,3 +2436,22 @@ main 的 `icons.test.ts` 明文採「AUTHORITY MODEL」：424 個 embedded 沒�
 - **不可重用 #204 的 `BackfillWelcomeCrystals`**。它委派 `SeedNewAccountCrystals`，冪等規則是「已有 walletmeta 記錄就跳過」——線上幾乎每個帳號都有記錄，一鍵發放走它會**回報成功但幾乎一個都沒發到**。只借形狀（逐帳號迴圈、granted/failed 計數、首個錯誤浮出、絕不中斷），`GGD_BACKFILL_WELCOME_CRYSTALS` **維持 0、完全沒動**。新動作是**可重複執行**的操作員動作（跑兩次就每人兩份），所以 UI 才必須有明確確認步驟。
 - **不可用 `CrystalOf` + `SetCrystalAbsolute` 拼發放**。那是跨兩次呼叫的 read-modify-write，會和結算（寫絕對值）競爭，批次迴圈更把窗口拉到整個迴圈長度。新增 `wallet.Service.AddCrystal`，建在既有 `mutateMeta`（`metaLocks.Lock(accountID)`）之上，單筆與批次共用同一個上鎖的變更點。
 - **金額一律伺服器端驗證**：正整數、上限 `admin.MaxCrystalGrant`（1,000,000，防打錯零而非經濟規則）；**負數直接拒絕不做 clamp**——餘額下限是 0，收負數等於「把玩家水晶歸零」而不是扣除。批次失敗採「逐帳號收集、首個錯誤浮出、成功的照樣算數」，因為每筆都是單鍵上鎖 RMW，中途失敗不會留下半寫的餘額。
+
+---
+
+## 2026-07-26 新增需求（owner 本場提出，立即登錄）
+
+| 需求（原話） | 任務 | 狀態 | 備註 / 相依 |
+|---|---|---|---|
+| 「體素角色 你可以自己產生適合該角色的貼圖，把缺模組的角色都做完，我們等等來驗收」 | **#231** | ✅ 已實作（`feat/voxel-champion-skins`） | 每位英雄一套決定性生成的體素外觀 + 執行期繪製的 64×64 貼圖；後台 🧱 體素外觀對照表 供驗收 |
+
+#### 🔎 #231 實作註記：出的是「配方」不是像素
+114 位英雄 → **114 個互異外觀簽章、114 組互異四色配色、0 次鹽值升級**（對真實 doc 樹量測，非估計）。
+
+- **不出貨任何圖檔**。`generateVoxelSkin(champion) → VoxelSkinRecipe`（7 個調色槽 + 臉/髮/服裝分區 + ≤3 個造型配件）是純函式，只用 FNV-1a 對 **championId** 取雜湊當亂數源；`paintVoxelAtlas(recipe) → Uint8ClampedArray(64×64×4)` 也是純函式，client 端用 `RawTexture` 上傳。全部 114 位的**壓縮配方 20,508 B（180 B/英雄，gzip 4,692 B）**，貼圖出貨 **0 B**。
+- **為什麼是 `RawTexture` 而不是 `DynamicTexture`**：後者要 `OffscreenCanvas` + 2D context，headless 測試環境沒有（選單的 procedural sprites 就得裝 canvas stub）。改吃 bytes 之後瀏覽器與 vitest 走同一條路，沒有只在測試裡跑的分支會腐爛。
+- **三道決定性易讀性修補**（都是有界迴圈，無隨機）：outfitPrimary 以**實測相對亮度**箝在 [0.16, 0.58]（量到 0.174–0.570）——地板是為了活過 #49 染色（狂戰士 ×0.3137，最暗一件仍有 0.0547，測試釘住 ≥0.045）；眼睛與衣服亮度差 ≥0.28；飽和色相落在四個隊伍色 ±22° 內就旋轉 +42°。
+- **描述欄故意不進關鍵字乾草堆**：client 端是從 `ChampionDef` 解析英雄，那裡**沒有** `description`（只有 JSON doc 有）。若把它算進去，遊戲內生成的外觀會和對照表／測試生成的**不一樣**——整個任務就垮了。所以輸入面 = 所有消費端看得到的交集（稱號/本名/tags/技能 vfx 元素/w3x 剪影字）。
+- **44 位共用替身英雄真的離開了共用網格**：recipe 帶 `preferVoxelBody`，`ChampionView.tryUpgradeToGlb` 直接婉拒那顆 glb。#226 之後刪掉 KayKit glb，這個分支就變成 no-op 而不是行為改變。
+- **隊伍色是本設計最高風險處**：體素貼圖蓋掉了原本承擔隊伍辨識的軀幹+雙腿，改成「發光地環 + 新增一條胸前隊伍色帶 `champ-<id>-teamband`」，並把 `-teamband` 加進 `UNTINTED_MESH_SUFFIXES`（否則暗色染色會把色帶壓黑——正是當初排除地環的同一個失敗）。**這件事螢幕截圖判不了，需要一次戰鬥距離的實機試玩**：4 種隊伍色、畫面上 6 個英雄。若讀不出來，退路是把雙腿還原成隊伍色，貼圖只管頭+軀幹+手臂。
+- **`voxel-standin` 標籤保留並重新定義**，沒有退役：41 份 doc 帶著它，語意改讀成「這位英雄沒有自己的匯入美術」——依然完全成立（生成外觀是程序產生的，不是匯入的）。退掉標籤等於失去 #226 要替換的那群英雄在內容側唯一的把手。champ-select 的替身標語也順著改成誠實版本（那面舞台仍走 glb，`StorePreview` 沒有 procedural 路徑）。

@@ -82,6 +82,7 @@ import {
 } from "./render/EntityViewRegistry";
 import { blizzardOverlayModels } from "./render/views/blizzardOverlay";
 import { championTintForId } from "./render/views/championTint";
+import { voxelSkinForId } from "./render/views/voxelSkinFor";
 import {
   hasOverheadBar,
   anchorColorFor,
@@ -469,6 +470,14 @@ export class GameApp {
       // `relativeScale` ON TOP of ChampionView's height-normalization (default 1.0 →
       // the normalized target for the ~105 champions with no override).
       modelOverrideFor: (e) => this.modelOverrideFor(e),
+      // GENERATED VOXEL SKIN (task #231). Third use of the same entity →
+      // championId seam, for the same client-08 reason. The recipe is computed
+      // (pure, from the ChampionDef the registry already holds), not fetched;
+      // only the optional hand-authored override comes off the content mount.
+      voxelSkinFor: (e) => {
+        const championId = this.championIdForSeat(e.seatId);
+        return voxelSkinForId(championId, this.contentDb.voxelSkinOverrideFor(championId ?? ""));
+      },
     });
     this.vfx = new VfxSystem(this.renderer.scene, {
       entityPos: (id) => this.views.posOf(id) ?? this.schemaPos(id),

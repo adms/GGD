@@ -1018,6 +1018,28 @@ export function AssetConsolePage({ onClose }: { onClose: () => void }): React.JS
           </div>
         </Section>
 
+        {/* SEAM for task #231. Same convention as #99 above and for the same
+            reason: the review surface for the generated voxel skins is the
+            admin 體素外觀對照表, which computes every look live from /content
+            plus the shared generator. Re-rendering 114 paper dolls HERE would
+            be a second implementation that could disagree with the first, so
+            this section names the owner instead of duplicating the renderer. */}
+        <Section
+          id="asset-voxel-skins"
+          title="體素角色外觀"
+          subtitle="任務 #231 的區塊 —— 審核頁在後台"
+        >
+          <div style={{ fontSize: 11, color: TEXT_DIM, lineHeight: 1.8 }}>
+            每個英雄的體素貼圖由共用產生器依英雄自身身分決定性地生成，執行期才繪製成 64×64 圖集，
+            出貨 0 位元組貼圖。全部 114 位英雄的對照表（含篩選、依 modelKey 群組、相似度警示、
+            待改標記與 overrides 匯出）在後台 <Code>🧱 體素外觀對照表</Code>。
+            <div style={{ marginTop: 6 }}>
+              那一頁與遊戲共用同一支 <Code>generateVoxelSkin</Code> 與{" "}
+              <Code>paintVoxelAtlas</Code>，畫的是實際上機的像素；這裡刻意不重畫一份。
+            </div>
+          </div>
+        </Section>
+
         <div style={{ fontSize: 10, color: TEXT_DIM, lineHeight: 1.8 }}>
           資料來源：<Code>/api/v1/ai/readiness</Code>（供應商狀態，即時）·{" "}
           <Code>/content</Code>（內容與圖示，即時）·{" "}

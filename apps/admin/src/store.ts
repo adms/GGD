@@ -61,6 +61,13 @@ export type Page =
   | "modelBudget"
   | "iconTracking"
   /**
+   * 體素外觀對照表 (task #231) — the 驗收 surface for the per-champion generated
+   * voxel skins. Unlike its two siblings above it MEASURES NOTHING EXTERNAL: it
+   * computes every look at view time from /content + the shared generator, so
+   * there is no report for it to read and nothing for it to go stale against.
+   */
+  | "voxelSkins"
+  /**
    * 角色語音生成 (owner spec step 4) — DEV BUILDS ONLY, same shape as "content":
    * the page module is reached through an `import.meta.env.DEV`-guarded dynamic
    * import in ui/App.tsx, so a production admin build never emits it (nor its
