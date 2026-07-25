@@ -20,7 +20,13 @@
     "name": "12-00 感應意脈",
     "ranks": [
       {
-        "modifiers": []
+        "modifiers": [
+          {
+            "stat": "evasion",
+            "op": "flat",
+            "value": 0.2
+          }
+        ]
       }
     ]
   }

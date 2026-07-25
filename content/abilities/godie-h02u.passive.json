@@ -20,7 +20,13 @@
     "name": "92-00 憂鬱的眼神",
     "ranks": [
       {
-        "modifiers": [],
+        "modifiers": [
+          {
+            "stat": "evasion",
+            "op": "flat",
+            "value": 0.18
+          }
+        ],
         "hooks": [
           {
             "on": "onDamageTaken",

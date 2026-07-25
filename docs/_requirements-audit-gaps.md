@@ -2463,3 +2463,79 @@ main 的 `icons.test.ts` 明文採「AUTHORITY MODEL」：424 個 embedded 沒�
 2. 手把 A 鍵走的是合成 `.click()`（`PadFocusNav.tsx`），因此**不會觸發 pointerdown 的按壓縮放**——手把按下去沒有按壓回饋。獨立的手感項目。
 
 **Gate**：`tsc --noEmit` 綠、`build` 綠、client 全測 3050 passed。另有 2 個**先前就紅**的失敗（`render/vfx/bindings.test.ts` 收集期失敗、`ui/components/descriptionRescale.test.ts` 冷卻倍率 15→12）——已在乾淨 base commit 上 stash 覆現確認與本任務無關（見記憶 `ggd-ci-preexisting-breakages`）。
+#### 🧬 2026-07-26 天生技效果落地（Execution Batch 項目 1）— 普查校正 + 首批落地
+
+**普查數字校正：不是 48 支全空，是 29 支。** `content/abilities/*passive*.json` 共 109 支，其中 61 支
+`innateKind:"active"`（全部帶 effects、全部已可施放），48 支 `innateKind:"passive"`。被動天生技的
+`effects: []` 是**規格要求、不是 bug**——`zAbilityDoc.refineInnate` 只對 active 種類要求 effects，
+`isPassiveOnly()` 正是以 `passive !== undefined && effects.length === 0` 判定，而 `innateCastBlock`
+會在扣任何成本前就擋下 PASSIVE 種類的按鍵。若替這 48 支填 `effects[]`，感應意脈會變成可施放的核彈。
+真正的酬載在 `passive.ranks[0].{modifiers,hooks,auras}`，以此為準**恰好 29 支為空**——與 batch 原文
+「29 個空 modifier」完全一致，`sim/combat/evasion.ts:8` 的註解也早已寫明同一個數字。
+
+**第 6 槽接線：本來就已完成，本次只驗證未重做。** `CASTABLE_SLOTS` 已含 "PASSIVE"、
+`abilities/innateActive.ts` 讓第六槽走一般 `castAbility` 階梯、`spawnChampion` 給 `passiveSlot` rank 1，
+61 支 active 天生技今天全部可按，`innateActive.test.ts` 逐一施放過。（batch 寫「60 個」，實為 61。）
+第三子項 eventFanout 的 evade 同樣早已完成。
+
+**本次落地 6 支**（`applied` 由 19 → 25）：
+
+| 天生技 | rawcode / 基底 | 落地內容 | 來源 |
+|---|---|---|---|
+| 12-00 感應意脈 ×2（e007 / ewar） | A04Z / AEev | evasion flat **0.20** | w3a DataA1 lv1 |
+| 45-00 寫輪眼（edem） | A04Q / ACev（未覆寫） | evasion flat **0.15** | 暴雪原生 ACev DataA1＝0.15，實讀自 MPQ |
+| 92-00 憂鬱的眼神 ×2（h02u / h02v） | A0W6 / AEev | evasion flat **0.18** + `onDamageTaken` −50% AD 3s | w3a DataA1；hook 由 JASS 45161-45193 |
+| 98-00 正妹優勢（n01l） | A0ZC / AEev | evasion flat **0.25** | w3a DataA1 |
+| 09-00 賽亞人的血脈（ogrh） | A0NL | `onKill` +2 maxHealth（鏡像 o00x） | 與 o00x 同 rawcode 同文案 |
+
+**⚠️ 迴避是「搬移」不是「新增」。** 6 支英雄的 `baseStats.evasion` 原本就掛著同一個值；若只加
+modifier 不刪 baseStats 會**加倍**（感應意脈→0.40）。已於同一 commit 逐行刪除 baseStats 該行，
+並以真實 spawn 量測最終 `Stat.Evasion` 確認為 0.20/0.15/0.18/0.25（非 2×）。
+`godie-u00j` 的 `baseStats.evasion: 0.15` **刻意保留未動**——它與自身天生技 74-00 JENOVA
+（現寫成 critChance 0.15 + critDamage 1.25，w3a A0A4/ANdb 為 15 / 3.0 / 0.15）互相矛盾，
+兩種讀法必有一錯且暴擊倍率也對不上，需獨立裁決，不做順手修改。
+
+**🔒 被測試擋下、無法保真落地的 3 支光環（原本可填，改列待解）：**
+`godie-h01n` / `godie-h01o`（79-00 靈壓，AOae，500→9.17 / 600→11.0，as −25% / as −50%+ms −10%）與
+`godie-nman`（40-00 孩子王，Aakb，Area 未覆寫→原生 900→16.5，ad −19%）。三者資料齊備且已實測驗證。
+阻礙在 `packages/shared/src/sim/innatePassive.test.ts:150`：
+`const authored = Boolean(block?.modifiers?.length || block?.hooks?.length)` **漏了 `auras`**，
+但 `abilityPassives.ts:103` 的 `rankBlock()` 有算 auras。只要填了純光環區塊，來源就會掛上而測試認為
+不該掛上，`shouldNotApplyButDid` 變非空 → 紅燈（本次已實跑複現，三支全中）。這是**測試述詞與它所
+守護的程式碼本身不一致**的既有缺陷，內容端無保真解法（配一個自造 self modifier 去迎合述詞等於發明
+數值；靈壓的「初始法力值較一般人高」已記在 baseStats.maxMana 456）。本次任務硬性限制「不得更動
+packages/shared/src/sim」，故三支一律還原留空。**解法是一行**：述詞補 `|| block?.auras?.length`，
+並把 `expect(applied).toBeGreaterThanOrEqual(19)` 提到 25（含三支光環後為 28）。需 owner 核可後另開。
+
+**NEEDS-CAPABILITY：23 支維持誠實留空，按缺什麼能力分組（→ 鑄技工坊 P2/P3）**
+
+1. **光環（3）**——能力齊備，僅被上述測試述詞擋住：h01n、h01o、nman。
+2. **隱形／真視（4）**：e008（A0BE/ANtr）、nplh + u01f（16-00 通靈，Atru）、naka（27-00，Apiv，地圖覆寫 Dur=4.0）。
+   sim 沒有隱形狀態，因此也沒有偵測；真視在沒有隱形的世界是 no-op。
+3. **攻擊方失手（1）**：e00t（66-00 恐懼，A0IE/Asth；原生 Acrs DataA1=0.33 / Dur=120，已實讀確認）。
+   `Stat.Evasion` 依設計是**防禦方**屬性（evasion.ts DECISION 2），沒有攻擊方命中率可掛。
+4. **減傷有下限的機率式平減（2）**：hlgr（A04K/Assk 40% / 12 最低傷害 / 75 減免）、u00v（A0L3/Assk 15 / 1 / 210）。
+   需要「傷害前」平減 + 觸發骰 + 傷害下限；現有 `onDamageTaken`+shield 慢一拍且表達不出下限，是近似不是移植。
+   （順帶：`godie-e002.passive` 的 rawcode A0CQ 基底是 Aegr 而非 Assk，其 50%/60 護盾寫法看來是發明，值得一併裁決。）
+5. **依攻擊類型減傷 + 濺射（3）**：n01c + nbbc（A05V/Aegr，未覆寫→原生 **0.65**，已實讀確認；n01c 文案寫的 60% 才是誤植）、
+   uwar（43-00，Aegr 明確覆寫 0.60，另有 25% 濺射）。sim 的 DamageType 只有 physical/magic/true，沒有「穿刺」軸；
+   HookDef 也只解析到事件目標，沒有由 hook 發散的 AoE。
+6. **彈跳普攻 + 法球排他槽（2）**：n00p + nsjs（A002/Asal，資料全 0，行為在文案：彈 3 名、每跳 −25%、與法球裝備衝突）。
+7. **自我復活（1）**：hapm（AOr3 Reincarnation，Cool 240）。注意這不是 #84 的復活圈（那是隊友引導）。
+8. **負面魔法格擋（2＋半支）**：h020 + hjai（A0UH/ANss，Cool 50）；45-00 寫輪眼的後半（A0ES/ANss，Cool 115）也屬此類，
+   本次只落地其迴避半邊。sim 沒有任何機制能否決一次 applyStatus/debuff。
+9. **死亡變身 + 定時自復活（3）**：e00r（59-00 暴走，JASS war3map.j:47571-47577 / 47591-47604 / 47656-47721 / 47534-47537）、
+   u011 + u012（61-00 百連我殺，JASS Aphx j:50677 / 50712 / 50745）。屬 task #119 領域。
+10. **擊殺計數器（1）**：hpb1（07-00，「每殺 8 個 +1 靈敏」）。HookDef 有 `chance` 與 `internalCooldown` 但沒有計數器；
+    把「每 8 殺」寫成 12.5% 機率是另一個技能。（o00x 就是這個切分的先例：每殺半邊已落地、每 15 殺半邊沒有。）
+11. **晝夜時鐘 + 對敵方施法的反應(1)**：u00k（71-00 暗夜契約，A0HH/Aegr 資料為 stub，真行為在文案）。
+    ⚠️ 其「夜間 +100% 移速」會超過 `STAT_CLAMPS` MoveSpeed 上限 14——屆時應**明知地抬高護欄**，
+    而不是把 100% 縮水去遷就（faithful-import 原則）。
+
+**護欄檢查（無一觸發）**：`STAT_CLAMPS[Stat.Evasion] = [0, 0.8]`，本批最大值 0.25（98-00 正妹優勢），
+比上限低 3.2×；該 clamp 註解原本記載「原始地圖最強是 0.20」，0.25 只是把這個觀察往上修正，仍不需改護欄。
+
+**castability 覆蓋率：改前＝改後＝287/288（✅279 + 🟣8 + ❌1），棘輪下限維持 287，不得調高。**
+#128 掃描的六格是 Q/W/E/R/EX/**普攻**，`SLOTS = ["Q","W","E","R","EX"]` 加普攻，**根本不掃第六槽**；
+🟣 PASSIVE 指的是「某個 Q/W/E/R/EX 格位是 WC3 永久被動」，與天生技無關。所以本批不可能推動這個數字，
+真實可比的指標是 `innatePassive.test.ts` 的 `applied`：**19 → 25（+6）**。

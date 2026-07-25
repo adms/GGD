@@ -3,7 +3,7 @@
   "schema": "ability@1",
   "name": "08-00 龍紋記憶",
   "icon": "assets/icons/abilities/godie-nbbc.passive.webp",
-  "description": "[被動]\n0秒冷卻時間\n\n繼承龍紋章後，歷代累積在龍騎士身上的作戰經驗，使得龍騎士能降低穿刺攻擊的破壞力。\n（原始地圖的說明文字引用 A05V 自己的 DataA1，但 A05V 並未覆寫該欄位，因此實際減傷比例無法由地圖物件資料確定。）",
+  "description": "[被動]\n0秒冷卻時間\n\n繼承龍紋章後，歷代累積在龍騎士身上的作戰經驗，使得龍騎士能降低穿刺攻擊的破壞力。\n（地圖在 w3a 的 original 表就地把 Aegr 的 DataA1 改成 0.60；A05V 以 Aegr 為 base 且未自行覆寫該欄，因此繼承的是地圖改過的 0.60，而非暴雪原生值。孿生的 godie-n01c 說明所寫的 60% 與地圖一致。）",
   "slot": "PASSIVE",
   "innateKind": "passive",
   "castType": "self",
