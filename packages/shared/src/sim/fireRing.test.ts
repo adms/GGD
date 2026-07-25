@@ -293,6 +293,30 @@ describe("fire-ring gating (firering-gate)", () => {
     };
     expect(mk().digest()).toBe(mk().digest());
   });
+
+  it("HARD CONSTRAINT: the burn NEVER routes through world.damageQueue", () => {
+    cover("firering-gate");
+    // A champion parked at the rim burns every shrink tick. The queue that feeds
+    // armor/MR/shields/lifesteal/kill-credit must stay empty the whole time —
+    // the ring applies hp directly and emits its own fireRingDamage event.
+    const rules = fireRingRulesFromConfig(
+      { startSec: 0, shrinkSec: 20, minRadius: 0.5, burnPctPerSecStart: 0.04, burnPctPerSecEnd: 0.2, maxPctPerSec: 1 },
+      DT,
+    );
+    const w = new SimWorld(SKELETON_ARENA, 9);
+    w.combatActive = true;
+    const c = SKELETON_ARENA.zones[0]!.center;
+    const id = champAt(w, 0, 1, c.x, c.z + (ZONE_R - BODY_R - 0.05)); // near the rim
+    beginCombatFireRing(w, rules);
+    let sawBurn = false;
+    for (let t = 0; t < 200; t++) {
+      step(w);
+      if (ringDmg(w, id) > 0) sawBurn = true;
+      expect(w.damageQueue.length).toBe(0); // every tick, no exceptions
+      if (!w.health.get(id)!.alive) break;
+    }
+    expect(sawBurn).toBe(true); // the burn really did happen (else the guard is vacuous)
+  });
 });
 
 // ---------------------------------------------------------------- schema
