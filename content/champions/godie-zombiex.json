@@ -41,7 +41,7 @@
   "abilities": {
     "Q": {
       "id": "godie-zombiex.q",
-      "name": "100-01 黑泥噴吐",
+      "name": "100-01 肝泥抹德",
       "description": "[主動攻擊]\n噴出一灘黑泥，對範圍內敵人造成魔法傷害並減速。",
       "slot": "Q",
       "castType": "ground",
@@ -91,7 +91,7 @@
     },
     "W": {
       "id": "godie-zombiex.w",
-      "name": "100-02 蹣跚衝撞",
+      "name": "100-02 黑天覆七重咖哩・硬啦",
       "description": "[主動攻擊]\n拖著腐爛的身體向前衝撞，是這隻慢吞吞喪屍唯一的突進手段。",
       "slot": "W",
       "castType": "dash",
@@ -122,7 +122,7 @@
     },
     "E": {
       "id": "godie-zombiex.e",
-      "name": "100-03 泥沼陷阱",
+      "name": "100-03 咕咕嘎嘎",
       "description": "[主動攻擊]\n在地面攤開一片黑泥沼，踩進去的敵人受傷並被黏住定身。",
       "slot": "E",
       "castType": "ground",
@@ -172,7 +172,7 @@
     },
     "R": {
       "id": "godie-zombiex.r",
-      "name": "100-04 聖杯溢出",
+      "name": "100-04 百式・哈基米",
       "description": "[主動攻擊]\n聖杯的黑泥從體內爆發，對周圍造成大範圍魔法傷害並重減速。",
       "slot": "R",
       "castType": "ground",

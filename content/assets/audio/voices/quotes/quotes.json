@@ -1398,5 +1398,17 @@
       "real": false,
       "clip": "assets/audio/voices/quotes/thorne.mp3"
     }
+  },
+  "godie-zombiex": {
+    "name": "喪標麥可",
+    "character": "聖杯黑泥醬-喪標麥可（原創；#215 肉鴿小怪 avatar）",
+    "gender": "male",
+    "voice": "Otoya",
+    "jpQuote": "ハイハイ、カタカタ、フラフラ、バタンキュー",
+    "romaji": "Hai-hai, kata-kata, fura-fura, batankyū",
+    "zhGloss": "殭屍步態擬聲：好好、咔咔、晃晃、啪噠昏倒（呼應 EX「此世全部之咖哩・バタンキュー」）",
+    "source": "原創角色台詞（owner 2026-07-25）",
+    "real": false,
+    "clip": "assets/audio/voices/quotes/godie-zombiex.mp3"
   }
 }
