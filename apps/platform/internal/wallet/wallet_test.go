@@ -67,17 +67,20 @@ func TestBuyOK(t *testing.T) {
 	equipped := r.Body["equippedSkins"].(map[string]any)
 	require.Equal(t, "skin.thorne.barbarian", equipped["thorne"], "purchase auto-equips")
 
-	// Buy a priced champion.
+	// Buy a priced champion — 英雄解鎖 is paid in 藍水晶, NOT M COIN (#227).
+	grantCrystals(t, ts, u.ID, vexCrystalPrice)
 	r = ts.Do(http.MethodPost, "/api/v1/store/buy", u.Access,
 		map[string]string{"kind": "champion", "id": "vex"})
 	require.Equal(t, http.StatusOK, r.Status, string(r.Raw))
-	require.EqualValues(t, 350, r.Body["mcoin"])
+	require.EqualValues(t, 0, r.Body["crystal"], "the champion price came out of crystals")
+	require.EqualValues(t, 1250, r.Body["mcoin"], "a champion unlock must not touch M COIN")
 	require.Equal(t, []string{"sela", "thorne", "vex"}, strs(r.Body["ownedChampions"]))
 
-	// Durable: the account JSON carries the post-purchase state.
+	// Durable: the account JSON carries the post-purchase state (M COIN shows
+	// only the skin deduction).
 	acc, err := ts.Srv.Accounts.GetByID(context.Background(), u.ID)
 	require.NoError(t, err)
-	require.Equal(t, 350, acc.MCoin)
+	require.Equal(t, 1250, acc.MCoin)
 	require.Equal(t, []string{"skin.thorne.barbarian"}, acc.OwnedSkins)
 
 	// Unknown items are 404s; bad kind is a 400.
@@ -129,6 +132,42 @@ func TestBuyDuplicate(t *testing.T) {
 		map[string]string{"kind": "champion", "id": "sela"})
 	require.Equal(t, http.StatusConflict, r.Status)
 	require.Equal(t, "already_owned", r.ErrCode())
+}
+
+// TestStoreBuyChampionSpendsCrystals is the REGRESSION GUARD for task #227's
+// currency half: POST /store/buy with kind=champion must debit 藍水晶, never
+// M幣. The lobby store rendered 「Ⓜ 300」 on champion rows precisely because
+// this endpoint really did deduct M COIN, while champ-select's
+// /wallet/champions/unlock charged crystals for the same champion. If someone
+// re-splits the two paths, this fails.
+func TestStoreBuyChampionSpendsCrystals(t *testing.T) {
+	testkit.Cover(t, "mcoin-buy-ok")
+	ts := testutil.New(t)
+	u := ts.Register("alice")
+
+	// Rich in M幣, broke in 藍水晶: the champion must NOT be purchasable.
+	fund(t, ts, u.ID, 100000)
+	r := ts.Do(http.MethodPost, "/api/v1/store/buy", u.Access,
+		map[string]string{"kind": "champion", "id": "vex"})
+	require.Equal(t, http.StatusPaymentRequired, r.Status, string(r.Raw))
+	require.Equal(t, "insufficient_crystal", r.ErrCode(),
+		"champions are unlocked with crystals — an M COIN pile must not buy one")
+	require.Equal(t, false, ts.Do(http.MethodGet, "/api/v1/wallet/owns?champion=vex", u.Access, nil).Body["owns"])
+
+	// With crystals it succeeds, and the M幣 pile is untouched.
+	grantCrystals(t, ts, u.ID, vexCrystalPrice)
+	r = ts.Do(http.MethodPost, "/api/v1/store/buy", u.Access,
+		map[string]string{"kind": "champion", "id": "vex"})
+	require.Equal(t, http.StatusOK, r.Status, string(r.Raw))
+	require.EqualValues(t, 0, r.Body["crystal"])
+	require.EqualValues(t, 100000, r.Body["mcoin"], "M幣 is the cosmetic wallet — a champion unlock may not touch it")
+
+	// Skins stay on M幣 (the other half of the rule).
+	r = ts.Do(http.MethodPost, "/api/v1/store/buy", u.Access,
+		map[string]string{"kind": "skin", "id": "skin.thorne.barbarian"})
+	require.Equal(t, http.StatusOK, r.Status, string(r.Raw))
+	require.EqualValues(t, 100000-750, r.Body["mcoin"], "skins are bought with M幣")
+	require.EqualValues(t, 0, r.Body["crystal"], "a skin purchase may not touch crystals")
 }
 
 func TestEquipNotOwnedRejected(t *testing.T) {
@@ -254,8 +293,9 @@ func TestChampSelectOwnershipGate(t *testing.T) {
 	require.Equal(t, http.StatusConflict, r.Status, string(r.Raw))
 	require.Equal(t, "champion_not_owned", r.ErrCode())
 
-	// After buying the champion the same start succeeds.
-	fund(t, ts, guest.ID, 900)
+	// After unlocking the champion the same start succeeds. #227: the unlock is
+	// paid in 藍水晶 — funding M幣 here would no longer buy anything.
+	grantCrystals(t, ts, guest.ID, vexCrystalPrice)
 	require.Equal(t, http.StatusOK, ts.Do(http.MethodPost, "/api/v1/store/buy", guest.Access,
 		map[string]string{"kind": "champion", "id": "vex"}).Status)
 	require.Equal(t, true,

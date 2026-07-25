@@ -181,28 +181,32 @@ func ErrInsufficient() *httpx.E {
 	return httpx.Err(http.StatusPaymentRequired, "insufficient_mcoin", "not enough M COIN")
 }
 
-// Buy purchases a champion or skin: validate exists → not owned → sufficient
-// balance → deduct + append ownership (+ auto-equip skins), all inside one
-// locked write-through. Buying something owned is a 409.
+// Buy purchases a champion or skin.
+//
+// SKINS are the M COIN path: validate exists → not owned → sufficient balance →
+// deduct + append ownership + auto-equip, inside one locked write-through.
+// Buying something owned is a 409.
+//
+// CHAMPIONS are 藍水晶 and delegate to UnlockChampion (task #227). This method
+// used to deduct `a.MCoin` for a champion, which contradicted #118's own model:
+// crystals are the earn-by-playing currency that unlocks champions, M幣 is an
+// admin-granted cosmetic currency that is never sold. The two paths had drifted
+// — champ-select charged 300 crystals via POST /wallet/champions/unlock while
+// the lobby store charged 300 M COIN via POST /store/buy for the same champion,
+// and a player with crystals but no M幣 (the normal state) simply could not buy
+// from the store. Delegating leaves ONE champion-unlock rule on the server, so
+// no client can reach a currency-swapped path:
+//
+//	402 insufficient_crystal (not insufficient_mcoin) when underfunded,
+//	409 already_owned for an owned OR free champion (free champions are seeded
+//	    owned anyway, and the catalog already marks price==0 as owned so no buy
+//	    button is offered),
+//	404 for an unknown champion — all identical to what the store's own error
+//	    mapping now expects (ui/platform/purchase.ts).
 func (s *Service) Buy(ctx context.Context, accountID, kind, id string) (Wallet, error) {
 	switch kind {
 	case KindChampion:
-		price, ok := s.cat.ChampionPrice(id)
-		if !ok {
-			return Wallet{}, httpx.NotFound("unknown champion: " + id)
-		}
-		return s.mutate(ctx, accountID, func(a *account.Account) error {
-			if contains(a.OwnedChampions, id) {
-				return httpx.Err(http.StatusConflict, "already_owned", "champion already owned")
-			}
-			if a.MCoin < price {
-				return ErrInsufficient()
-			}
-			a.MCoin -= price
-			a.OwnedChampions = append(a.OwnedChampions, id)
-			sort.Strings(a.OwnedChampions)
-			return nil
-		})
+		return s.UnlockChampion(ctx, accountID, id)
 	case KindSkin:
 		sk, ok := s.cat.Skins[id]
 		if !ok {

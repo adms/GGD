@@ -21,6 +21,7 @@
 import { useEffect, useMemo, useReducer, useState } from "react";
 import { Champions } from "@ggd/shared/sim/content/registry";
 import { useApp } from "./store";
+import { useContentReady } from "./ContentGate";
 import { championBoard, myChampions as fetchMyChampions } from "./api";
 import {
   appendPage,
@@ -589,10 +590,18 @@ export function LeaderboardPanel({ ownsBgm = false }: LeaderboardPanelProps = {}
   const season = useApp((s) => s.leaderboard?.season ?? s.myRank?.season ?? null);
   const [panel, dispatch] = useReducer(rankPanelReducer, initialRankPanelState);
 
-  // roster snapshot (static after boot) → picker options + id→option lookup
+  // Roster → picker options + id→option lookup.
+  //
+  // #227: this memo used to have EMPTY deps under the comment "static after
+  // boot". It is not: boot paints the lobby first and streams the content
+  // bundle in the background (#170), so a cold lobby snapshotted an empty
+  // registry and the champion ladder rendered `opt?.name ?? r.championId` —
+  // raw ids — for the rest of the page session. Same class of bug as the store
+  // heading, same fix: SUBSCRIBE to readiness, don't snapshot.
+  const contentReady = useContentReady();
   const options = useMemo<ChampOption[]>(
     () => buildChampionOptions(Champions.all().map((c) => ({ id: c.id, name: c.name, ...(c.icon !== undefined ? { icon: c.icon } : {}) }))),
-    [],
+    [contentReady],
   );
   const optionsById = useMemo(() => new Map(options.map((o) => [o.id, o])), [options]);
 

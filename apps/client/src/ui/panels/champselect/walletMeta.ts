@@ -23,6 +23,7 @@
  */
 import { useCallback, useEffect, useRef, useState } from "react";
 import { api } from "../../platform/api";
+import { CRYSTAL_EARN_HINT } from "../../platform/currency";
 
 /** Flat crystal cost of one champion unlock — mirrors `CrystalUnlockCost`. */
 export const CRYSTAL_UNLOCK_COST = 300;
@@ -31,15 +32,13 @@ export const CRYSTAL_UNLOCK_COST = 300;
  * The hint shown when a player taps 「解鎖」 on a champion they cannot afford —
  * it tells them HOW to earn 藍水晶 instead of a silent no-op (task #213).
  *
- * Every clause is TRUE against the server's crystal model (internal/wallet/meta.go):
- *   • 「打場就能賺藍水晶」 — crystals are granted per match; the ONLY earn path is
- *     match settlement (there is deliberately no client-side earn route).
- *   • 「戰鬥結束後發放」 — the grant runs on the settlement callback, after the
- *     match ends (CrystalRewardFor, applied in gamelink/callback.go).
- *   • 「第一名翻倍」 — 1st place (吃雞) is doubled: CrystalPlace1 = 120 ×
- *     CrystalWinMultiplier(2) = 240, versus 90 / 70 / 60 for 2nd–4th.
+ * MOVED to ui/platform/currency (task #227): the lobby store shows the same
+ * hint on the same failure, and its purchase state machine is a pure module
+ * that must not import this React hook module. Re-exported so every existing
+ * champ-select caller keeps its import, and so the two screens can never quote
+ * two different earn rules at the player.
  */
-export const CRYSTAL_EARN_HINT = "打場就能賺藍水晶，戰鬥結束後發放，第一名翻倍";
+export { CRYSTAL_EARN_HINT };
 
 /** The slice of GET /wallet the champ-select meta chrome consumes. */
 export interface MetaWallet {

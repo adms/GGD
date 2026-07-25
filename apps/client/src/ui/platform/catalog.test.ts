@@ -5,8 +5,11 @@
  * to the match scene.
  */
 import { describe, it, expect } from "vitest";
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
 import { deriveStoreRows, buildSkinOverrides } from "./catalog";
+import { championDisplayFrom } from "./championDisplay";
 import type { Catalog, SkinDoc, Wallet } from "./types";
 
 const CATALOG: Catalog = {
@@ -72,6 +75,123 @@ describe("catalog owned/equipped derivation (webui-09)", () => {
     expect(rows).toHaveLength(1);
     expect(rows[0]!.id).toBe("mystery");
     expect(rows[0]!.skins).toHaveLength(1);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// TASK #227 — the store must never print a champion id at a player, and must
+// quote each row in the currency that actually pays for it.
+// ---------------------------------------------------------------------------
+
+/** Stand-in content registry: the two shapes a lookup can return. */
+const DOC_NAMES: Record<string, { name: string; description?: string }> = {
+  sela: {
+    name: "蟬在叫人壞掉 - 龍宮禮奈",
+    // the real w3x shape: several labelled sections in ONE field
+    description: "故事：村子裡最開朗的少女。\n推薦玩家：新手\n上手度：★☆☆",
+  },
+  thorne: { name: "聖杯黑泥醬 - 喪標麥可" }, // named, but NO description
+};
+const display = (id: string) => {
+  const doc = DOC_NAMES[id];
+  return championDisplayFrom(id, doc?.name ?? null, doc?.description ?? null);
+};
+
+describe("#227 champion rows carry player-readable strings, not ids", () => {
+  it("NO champion row renders its id when a content name exists", () => {
+    cover("webui-catalog-derive");
+    const rows = deriveStoreRows(CATALOG, DOCS, display);
+    // THE REGRESSION: this is exactly what the store printed as the heading.
+    for (const r of rows) {
+      if (!r.named) continue;
+      expect(r.name).not.toBe(r.id);
+      expect(r.fullName).not.toBe(r.id);
+    }
+    const sela = rows.find((r) => r.id === "sela")!;
+    expect(sela.name).toBe("蟬在叫人壞掉 - 龍宮禮奈");
+    expect(sela.title).toBe("蟬在叫人壞掉"); // 稱號 shown beside the name
+    expect(sela.fullName).toBe("龍宮禮奈");
+    expect(sela.blurb).toBe("村子裡最開朗的少女。"); // 故事 only, never the raw blob
+  });
+
+  it("a champion with no description renders NO blurb (no empty box, no undefined)", () => {
+    cover("webui-catalog-derive");
+    const thorne = deriveStoreRows(CATALOG, DOCS, display).find((r) => r.id === "thorne")!;
+    expect(thorne.name).toBe("聖杯黑泥醬 - 喪標麥可");
+    expect(thorne.blurb).toBe(""); // falsy ⇒ the row renders nothing at all
+    expect(thorne.blurb).not.toBe("undefined");
+  });
+
+  it("an UNKNOWN champion degrades to the id — the fallback, never the default", () => {
+    cover("webui-catalog-derive");
+    const vex = deriveStoreRows(CATALOG, DOCS, display).find((r) => r.id === "vex")!;
+    expect(vex.named).toBe(false);
+    expect(vex.name).toBe("vex"); // pre-#227 behaviour survives only here
+    expect(vex.title).toBeNull();
+  });
+
+  it("the default lookup is id-only, so a caller that forgets to inject is visible", () => {
+    cover("webui-catalog-derive");
+    for (const r of deriveStoreRows(CATALOG, DOCS)) expect(r.named).toBe(false);
+  });
+
+  it("英雄 are priced in 藍水晶 and 造型 in M幣 — never swapped", () => {
+    cover("webui-catalog-derive");
+    const rows = deriveStoreRows(CATALOG, DOCS, display);
+    expect(rows.length).toBeGreaterThan(0);
+    for (const r of rows) {
+      expect(r.currency).toBe("crystal");
+      for (const sk of r.skins) expect(sk.currency).toBe("mcoin");
+    }
+    // The bug in the screenshot, stated as an assertion:
+    expect(rows.some((r) => r.currency === "mcoin")).toBe(false);
+    expect(rows.flatMap((r) => r.skins).some((s) => s.currency === "crystal")).toBe(false);
+  });
+});
+
+describe("#227 StoreScreen markup never re-reaches for the id or the wrong glyph", () => {
+  // The screen itself cannot be rendered here: client vitest is node-env with
+  // no DOM, and StoreScreen pulls Babylon in through StorePreviewCanvas. The
+  // repo's established substitute is a comment-stripped source scan.
+  const SRC = readFileSync(fileURLToPath(new URL("./StoreScreen.tsx", import.meta.url)), "utf8")
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    .replace(/\/\/[^\n]*/g, "");
+
+  it("prints no champion id and passes no id as a purchase name", () => {
+    cover("webui-catalog-derive");
+    // `champ.id` may survive ONLY as the React key and as the wire id sent to
+    // the server. Any other use is a player-visible string built from the id.
+    const uses = SRC.match(/[\w.]*champ\.id/g) ?? [];
+    const allowed = new Set(["champ.id"]);
+    for (const m of uses) expect(allowed.has(m)).toBe(true);
+    expect(SRC.match(/key=\{champ\.id\}/g) ?? []).toHaveLength(1);
+    expect(SRC.match(/id:\s*champ\.id/g) ?? []).toHaveLength(1);
+    expect(uses).toHaveLength(2); // exactly those two, nothing else
+    expect(SRC).not.toMatch(/>\s*\{\s*champ\.id\s*\}/); // the heading regression
+    expect(SRC).not.toMatch(/name:\s*champ\.id/); // the dialog regression
+    expect(SRC).toMatch(/\{champ\.fullName\}/);
+    expect(SRC).toMatch(/name:\s*champ\.name/);
+    // the preview caption used to print modelKey + championId at the player
+    expect(SRC).not.toMatch(/\{shown\.championId\}/);
+    expect(SRC).not.toMatch(/\{shown\.modelKey\}/);
+  });
+
+  it("keeps the rows memo subscribed to content readiness (not a [] snapshot)", () => {
+    cover("webui-catalog-derive");
+    expect(SRC).toMatch(/useContentReady\(\)/);
+    expect(SRC).toMatch(/\[catalog,\s*skinDocs,\s*contentReady\]/);
+  });
+
+  it("prices every row through the row's own currency, not a hardcoded M幣 glyph", () => {
+    cover("webui-catalog-derive");
+    expect(SRC).toMatch(/<Price currency=\{champ\.currency\}/);
+    expect(SRC).toMatch(/<Price currency=\{sk\.currency\}/);
+    // No price/balance may be rendered as M COIN by construction any more; the
+    // only surviving <MCoin> is the footer's explicit 造型幣 balance line.
+    expect(SRC).not.toMatch(/<MCoin amount=\{champ\./);
+    expect(SRC).not.toMatch(/<MCoin amount=\{purchase\./);
+    expect(SRC).not.toMatch(/<MCoin amount=\{sk\./);
+    expect(SRC).toMatch(/currency:\s*champ\.currency/); // carried into the dialog
   });
 });
 

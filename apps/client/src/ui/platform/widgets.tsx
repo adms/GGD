@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, GOLD } from "../theme";
 import { buttonSfx } from "../buttonSfx";
+import type { StoreCurrency } from "./currency";
 
 export const ACCENT = "#6f8fe0";
 export const ACCENT_BG = "#2c3f6b";
@@ -328,6 +329,27 @@ export function Crystal(props: { amount: number; size?: number }): React.JSX.Ele
     >
       🔷 {props.amount.toLocaleString()}
     </span>
+  );
+}
+
+/**
+ * Price chip driven by the ROW's currency (task #227).
+ *
+ * The store used to hardcode `<MCoin>` on every price, including champions —
+ * which are unlocked with 藍水晶. Rendering through the row's own `currency`
+ * means the glyph a player reads and the wallet the server debits come from one
+ * fact, so they cannot drift apart again.
+ */
+export function Price(props: {
+  currency: StoreCurrency;
+  amount: number;
+  size?: number;
+}): React.JSX.Element {
+  const size = props.size ?? 13;
+  return props.currency === "crystal" ? (
+    <Crystal amount={props.amount} size={size} />
+  ) : (
+    <MCoin amount={props.amount} size={size} />
   );
 }
 
