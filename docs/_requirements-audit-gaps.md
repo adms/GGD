@@ -2412,3 +2412,46 @@ main 的 `icons.test.ts` 明文採「AUTHORITY MODEL」：424 個 embedded 沒�
 - **順修**：草泥馬 W/E 編號互換（92-03/92-02）、鬼眼狂刀無名→無明神風流（kana ムミョウ 本就正確、只改字不需重錄）
 - 覆核把關戰績：駁回「牙突→縮地」誤改（牙突是桀諾正典ドラゴンランス，縮地反是瀨田宗次郎的招）；基廉列克廬山昇龍破查 reconciliation 確認是原作者梗名（豁免）
 - 6 句語音重生（osam×3/hvwd/ogld/huth），雙鏡像+讀音登錄同步，content:build 綠，試聽頁重建
+
+## 2026-07-26 試玩指令 #220 — 死亡三秒後半透明升天消失（復活圈例外）
+
+Owner 原話：「人物角色死亡 倒在地上三秒後 應該都要有半透明飛上天消失的動畫（如果有復活圈圈的例外）」。
+
+**根因（不是「沒做過這個動畫」，是屍體的視覺生命從來沒有結尾）**：`DeathSystem` 只翻 `hp.alive`，
+**sim 從不銷毀死亡英雄的 entity**——屍體會一直留在 snapshot 裡直到回合拆除，所以
+`EntityViewRegistry` 的 despawn/dispose 路徑永遠不會為屍體觸發；而 registry 的 `handleEvent`
+**根本沒有 `death` 分支**（落到 `default: break`），`ChampionView.update` 也沒有任何死後階段——
+glb 分支只把隊伍光環調暗、程序化分支把 `deathT` 拉到倒地姿勢，然後**永遠停在那裡**。
+
+**修法（純 client 視覺，sim 零改動）**：
+- `render/deathDissolve.ts`（新，無 Babylon 依賴）＝純時序：躺 `DISSOLVE_LIE_MS = 3000`（owner 的數字），
+  再以 `DISSOLVE_RISE_UNITS 3.2` / `DISSOLVE_RISE_MS 1400` 上升，透明度**線性**走到剛好 0
+  （緩動永遠到不了 0，「幾乎看不見」的屍體＝永遠不會消失的屍體）。
+- **上膛用 sim 的 `death` 事件**（`EntityViewRegistry.handleEvent` → `ChampionView.noteDeath`），
+  **不是 `alive === false`**：選角、整段中場、bye/停放席位、結算四種情況 `alive` 都是 false
+  （#85 已逐條記載），拿它當訊號會把戰鬥外整個畫面的角色都溶掉。
+- **例外＝本需求的重點**：屍體只要該幀 entity 集合裡有一個 **座位相同的 kind-3 圈**就豁免。
+  wire 上圈的 `seatId` 就是**死者的席位**（沒有 ownerId 欄位，席位是唯一 join key）；
+  「在場」等於「還可認領」，因為圈只能在死亡當幀生成（`spawnCirclesForDeaths`），而 #196 已把
+  存活時間整個拿掉。**每幀重算不鎖存**（`death` 事件與帶圈的 snapshot patch 先後不定）；
+  受保護時把死亡時間戳重錨到 now，所以 3 秒是從救援真正結束才開始算。
+  一隊同時只能燒一個圈，所以第二個隊友死掉沒圈、照常溶解——這是正確行為不是 bug。
+- **通道選擇**：淡出走 per-mesh `visibility`，**絕不碰 `material.alpha`**——英雄 glb 以
+  `cloneMaterials: false` 實體化，同模型的所有英雄**共用同一個 material**，寫 alpha 會一次淡掉
+  全部並和 #49 的 tint clone 打架。上升走 `root.position.y`（沒有別的東西寫它）。
+  **不加自發光「升天光」**：必須留在 #85 的去飽和裡，而不是在畫面上打一個亮洞。
+- **消失時**只關 body 節點（**不是 `root`**——draw-distance cull 擁有 `root.setEnabled`，
+  會在角色回到範圍時把已消失的屍體重新打開），並 `ClipAnimator.stopAll()`：AnimationGroup 不是節點，
+  看不見的屍體若還在「播放」死亡動畫，每幀仍在 `scene.animationGroups` 裡付出成本。
+  **view 物件本身留著**：entity 還在 snapshot 裡，dispose 會在下一幀被重建路徑復活並重觸發 async glb 載入。
+  頭頂血條已由 `anchor.alive` 隱藏；小地圖的淡出死亡標記**刻意保留**（#84：死者靠它找自己的屍體和圈）。
+
+| 測試 ID | 覆蓋 |
+|---|---|
+| `revive-dissolve-timing` | 恰好 3.0 秒不透明且貼地 → 單調上升＋單調淡出 → 透明度**剛好** 0 並在任何更晚的取樣維持消失；負數/NaN 經過時間讀作「still lying」 |
+| `revive-dissolve-view` | 躺→升＋淡→消失且 `root` 保持 enabled；復活圈在時 30 秒完全不溶解、保護解除後重新起算 3 秒；沒有 `death` 事件的屍體永不溶解；復活完整還原並可再次上膛；重複的 death 事件不會重啟躺倒計時 |
+| `revive-dissolve-wiring` | `death` 事件上膛；無事件的屍體不溶解；圈只豁免**自己席位**的屍體（同時第二具無圈屍體照常溶解），圈離開 snapshot 後豁免解除；`seatId -1` 永遠無法匹配 |
+
+**閘門**：`@ggd/shared` 880/880 綠（sim 未動，#215 MobSystem 15 / FireRingSystem 6 / fireRing 18 / revive 20 全部未調整即綠）；
+client typecheck + build 綠；client 3052 測試中僅 2 個**既有**紅（`descriptionRescale`：live 表冷卻已是 ×0.20 而測試寫死 ×0.25；
+`render/vfx/bindings.test.ts` 收集期就失敗）——已用 `git stash` 在 base commit 上覆驗，與本次改動無關。

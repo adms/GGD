@@ -162,6 +162,20 @@ export interface SyncArgs {
    * from `(cx, cz)` (the followed champion). Omit for no culling.
    */
   cull?: { cx: number; cz: number; maxDistance: number };
+  /**
+   * SEATS THAT STILL HAVE A CLAIMABLE REVIVE CIRCLE this frame (task #220's
+   * exemption). A revive circle is a kind-3 entity whose `seatId` IS THE DEAD
+   * OWNER'S SEAT — the wire carries no ownerId, so the SEAT is the only join
+   * key. A corpse whose seat is in this set never dissolves: the circle is the
+   * anchor a teammate channels on (#84/#206) and #196 gave it no expiry.
+   *
+   * Supplied by the caller (GameApp.collectEntities already walks every entity
+   * and decodes kind 3) rather than derived here, because `entities` is typed
+   * `Iterable` — a generator caller would be consumed by a pre-pass.
+   *
+   * Omitted = no exemption (headless tests / callers with no circles).
+   */
+  reviveSeats?: ReadonlySet<number>;
 }
 
 export class EntityViewRegistry {
@@ -341,6 +355,17 @@ export class EntityViewRegistry {
       case "knockdown": {
         const target = ev.data.target as number | undefined;
         if (target !== undefined) this.champions.get(target)?.triggerKnockdown(nowMs);
+        break;
+      }
+      // CORPSE DISSOLVE (playtest directive #220) — arm the 3 s lie-down clock.
+      // The EVENT is the only honest "this body died" signal: `alive === false`
+      // is also true in champ-select, through the whole intermission, for a
+      // bye/parked seat (MatchController.enterCombat parks every seat dead) and
+      // during settlement, and dissolving those would empty the screen outside
+      // combat. Exactly the signal task #85 arms its death-spectator wash with.
+      case "death": {
+        const id = ev.data.id as number | undefined;
+        if (id !== undefined) this.champions.get(Number(id))?.noteDeath(nowMs);
         break;
       }
       default:
@@ -532,6 +557,10 @@ export class EntityViewRegistry {
       this.speedEma.set(e.id, speed);
       this.lastPos.set(e.id, { x: pose.x, z: pose.z });
       const state = view.anim.update({ alive: e.alive, moving }, args.nowMs);
+      // #220 revive exemption, re-evaluated EVERY frame (never latched): the
+      // `death` event and the snapshot patch carrying the circle can land in
+      // either order, and the circle ends the moment the rescue is spent.
+      view.setReviveProtected(e.seatId >= 0 && args.reviveSeats?.has(e.seatId) === true);
       view.update(state, args.nowMs, args.dtMs, speed);
     }
 

@@ -427,3 +427,102 @@ describe("stand-in model/scale override (client-standin-override, task #77)", ()
     registry.dispose();
   });
 });
+
+/**
+ * revive-dissolve-wiring (playtest directive #220): the registry ARMS the corpse
+ * dissolve off the sim's `death` EVENT and gates it on this frame's revive
+ * circles, joined BY SEAT. The reported symptom — a body that lies on the ground
+ * forever — is exactly "the registry never handled `death`".
+ */
+describe("EntityViewRegistry corpse dissolve wiring (#220)", () => {
+  const deadAtSeat = (id: number, seatId: number): EntityViewState => ({
+    ...champ(id, 0, 0, false),
+    seatId,
+  });
+  const circleForSeat = (id: number, seatId: number): EntityViewState => ({
+    id,
+    kind: 3,
+    seatId, // the wire carries the DEAD OWNER's seat here — the only join key
+    key: "prop.revive-circle",
+    teamId: 1,
+    x: 0,
+    z: 0,
+    fx: 1,
+    fz: 0,
+    alive: true,
+    revive: { progress: 0.2, radius: 2, channelling: true, contested: false },
+  });
+  const step = (
+    registry: EntityViewRegistry,
+    entities: EntityViewState[],
+    nowMs: number,
+    reviveSeats?: ReadonlySet<number>,
+  ): void => {
+    registry.sync({ entities, poseFor: passthrough, nowMs, dtMs: 33, loadModels: false, reviveSeats });
+  };
+
+  it("a `death` event arms the dissolve; the body is gone after 3 s + the rise", () => {
+    cover("revive-dissolve-wiring");
+    const registry = new EntityViewRegistry(scene, new AssetManager(scene));
+    step(registry, [champ(31, 0, 0)], 0);
+    registry.handleEvent({ type: "death", data: { id: 31, killer: 32 } } as never, 1000);
+    const view = registry.getChampionView(31)!;
+    expect(view.deathElapsedMs(1000)).toBe(0); // armed by the event
+
+    step(registry, [deadAtSeat(31, 0)], 3500); // 2.5 s in — still lying
+    expect(view.vanished).toBe(false);
+    expect(view.root.position.y).toBe(0);
+    step(registry, [deadAtSeat(31, 0)], 9000); // well past lie + rise
+    expect(view.vanished).toBe(true);
+    registry.dispose();
+  });
+
+  it("dead WITHOUT a death event never dissolves (bye/parked seat, intermission)", () => {
+    cover("revive-dissolve-wiring");
+    const registry = new EntityViewRegistry(scene, new AssetManager(scene));
+    for (let t = 0; t <= 20000; t += 500) step(registry, [deadAtSeat(41, 1)], t);
+    const view = registry.getChampionView(41)!;
+    expect(view.deathElapsedMs(20000)).toBeNull();
+    expect(view.vanished).toBe(false);
+    registry.dispose();
+  });
+
+  it("a circle on the OWNER'S SEAT exempts that corpse — and only that one", () => {
+    cover("revive-dissolve-wiring");
+    const registry = new EntityViewRegistry(scene, new AssetManager(scene));
+    // seat 2 died and got a circle; seat 3 died with the team charge already
+    // spent, so it gets NO circle and must dissolve normally.
+    step(registry, [champ(51, 0, 0), champ(52, 2, 0)], 0);
+    registry.handleEvent({ type: "death", data: { id: 51 } } as never, 0);
+    registry.handleEvent({ type: "death", data: { id: 52 } } as never, 0);
+    const rescued = registry.getChampionView(51)!;
+    const doomed = registry.getChampionView(52)!;
+
+    const world = [deadAtSeat(51, 2), deadAtSeat(52, 3), circleForSeat(900, 2)];
+    for (let t = 0; t <= 12000; t += 250) step(registry, world, t, new Set([2]));
+    expect(rescued.vanished).toBe(false); // the channel anchor stayed put
+    expect(rescued.root.position.y).toBe(0);
+    expect(doomed.vanished).toBe(true); // no circle for seat 3 → normal dissolve
+
+    // the rescue is spent → the circle leaves the snapshot → the corpse dissolves
+    for (let t = 12250; t <= 20000; t += 250) {
+      step(registry, [deadAtSeat(51, 2), deadAtSeat(52, 3)], t, new Set<number>());
+    }
+    expect(rescued.vanished).toBe(true);
+    registry.dispose();
+  });
+
+  it("a non-champion kind's seatId -1 cannot match a corpse's exemption", () => {
+    cover("revive-dissolve-wiring");
+    // projectiles/coins encode seatId -1 on the wire; a -1 in the set (which the
+    // collector guards against) must never exempt a real corpse.
+    const registry = new EntityViewRegistry(scene, new AssetManager(scene));
+    step(registry, [champ(61, 0, 0)], 0);
+    registry.handleEvent({ type: "death", data: { id: 61 } } as never, 0);
+    const view = registry.getChampionView(61)!;
+    const corpse: EntityViewState = { ...champ(61, 0, 0, false), seatId: -1 };
+    for (let t = 0; t <= 9000; t += 250) step(registry, [corpse], t, new Set([-1]));
+    expect(view.vanished).toBe(true);
+    registry.dispose();
+  });
+});

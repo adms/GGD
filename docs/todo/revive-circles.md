@@ -174,3 +174,46 @@ axis (support 0.12 → assassin 0.02) so rescuing is rewarded on its own line.
 | rev-16 | EntityState.kind 3 → pooled ReviveCircleView (never champion/flower/projectile), pool reuse across circles, coexists with kinds 0/2, NO overhead bar, rim fill tracks wire progress, ring sized from the wire radius, embers inside the capacity cap | revive-view-dispatch | unit | done |
 | rev-17 | HUD shows YOUR circle first, falls back to a teammate's, NEVER an enemy team's; six distinct headlines; the slot comes from the corner registry and per-tick values stay off React; the minimap paints circles under the markers with a parameterised zone filter | revive-hud-banner | unit | done |
 | rev-18 | Tier-0 AI walks (MOVE order) to its OWN team's in-zone circle within 18u, outranking the flower rule; never seeks an enemy team's circle; fights normally when there is none | revive-ai-seek | unit | done |
+
+## Corpse dissolve — 死亡三秒後半透明升天 (playtest directive #220)
+
+Owner, 2026-07-26: 「人物角色死亡 倒在地上三秒後 應該都要有半透明飛上天消失的動畫（如果有
+復活圈圈的例外）」. **Pure client visual.** The sim is untouched: `DeathSystem` still only
+flips `hp.alive`, the corpse entity stays in the snapshot until the round tears down, and
+`ReviveSystem` alone decides whether a rescue is possible. The dissolve gates nothing.
+
+- **Clock** (`render/deathDissolve.ts`, Babylon-free): lie `DISSOLVE_LIE_MS = 3000` (the
+  owner's number), then rise `DISSOLVE_RISE_UNITS 3.2` over `DISSOLVE_RISE_MS 1400` while
+  the alpha runs LINEARLY to exactly 0 — an eased fade never reaches zero, and a
+  "nearly invisible" corpse never leaves the screen.
+- **Arming** is the sim's `death` EVENT (`EntityViewRegistry.handleEvent` →
+  `ChampionView.noteDeath`), never `alive === false` — the same four false positives
+  task #85 documents (champ-select, the whole intermission, a bye/parked seat,
+  settlement) would otherwise dissolve every body outside combat.
+- **The exception is THIS feature.** A corpse is exempt while the frame's entity set
+  contains a kind-3 circle **on its own seat** — `EntityState.seatId` of a circle IS the
+  dead owner's seat, and there is no ownerId on the wire, so the seat is the only join
+  key. Presence == claimable, because a circle can only spawn on the tick of the death
+  (`spawnCirclesForDeaths`) and #196 gave it no expiry. Re-evaluated EVERY frame (the
+  `death` event and the snapshot patch can land in either order); while protected the
+  death timestamp is re-anchored to now, so the 3 s starts when the rescue is really
+  spent. Only one circle per team may burn, so a second teammate dying while one is up
+  correctly gets no exemption.
+- **Channels.** The fade is per-mesh `visibility`, never `material.alpha`: champion .glbs
+  instantiate with `cloneMaterials: false` and SHARE one material per model, so a material
+  write would fade every champion on that model and fight #49's tint clones. The rise is
+  on `root.position.y` (nothing else writes it). No emissive/additive "ascension" glow —
+  the body must stay inside #85's desaturation instead of punching a bright hole in it.
+- **Vanish** hides the body nodes (never `root` — the draw-distance cull owns
+  `root.setEnabled`) and stops every AnimationGroup, which are not nodes and would keep
+  ticking on an invisible corpse. The view object itself stays alive because the ENTITY
+  is still in the snapshot: disposing it would be undone by the re-create on the very next
+  frame and would re-fire the async glb load. The overhead HP bar is already hidden by
+  `anchor.alive`; the minimap's fading dead marker is deliberately left alone (#84 — it is
+  how a dead player finds their own corpse and circle).
+
+| ID | Item | Test ID | Category | Status |
+| --- | --- | --- | --- | --- |
+| rev-19 | dissolve clock: opaque + grounded for exactly 3.0 s, then monotonic rise + monotonic fade, visibility reaching EXACTLY 0 and staying vanished for any later sample; negative/NaN elapsed reads as "still lying" | revive-dissolve-timing | unit | done |
+| rev-20 | ChampionView: lies → rises + fades → vanishes with `root` left enabled; NEVER dissolves while revive-protected (30 s) and starts a fresh 3 s when protection drops; never dissolves without a `death` event; a revive restores visibility/enable/position and re-arms; a duplicated death event does not restart the lie-down | revive-dissolve-view | integration | done |
+| rev-21 | EntityViewRegistry: `death` event arms the dissolve; a corpse with no event never dissolves; a circle exempts ONLY the corpse on its own seat (a second, circle-less death dissolves normally) and the exemption lifts when the circle leaves the snapshot; `seatId -1` can never match | revive-dissolve-wiring | regression | done |
