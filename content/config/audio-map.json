@@ -741,6 +741,22 @@
       "cooldownMs": 1200,
       "maxConcurrent": 1
     },
+    "crowdCheer": {
+      "files": [
+        "assets/audio/sfx/fx/crowd-cheer.mp3"
+      ],
+      "gain": 0.45,
+      "cooldownMs": 2400,
+      "maxConcurrent": 1
+    },
+    "crowdCheerBig": {
+      "files": [
+        "assets/audio/sfx/fx/crowd-cheer-big.mp3"
+      ],
+      "gain": 0.5,
+      "cooldownMs": 2400,
+      "maxConcurrent": 1
+    },
     "allySlain": {
       "files": [
         "assets/audio/announcer/ally-slain.mp3"

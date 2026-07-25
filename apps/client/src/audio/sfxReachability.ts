@@ -285,6 +285,11 @@ export const SFX_REACHABILITY: readonly SfxReachRow[] = [
   { key: "allySlain", kind: "client", site: "apps/client/src/audio/sfxEdges.ts" },
   { key: "levelUp", kind: "client", site: "apps/client/src/audio/sfxEdges.ts" },
   { key: "exUnlock", kind: "client", site: "apps/client/src/audio/sfxEdges.ts" },
+  // 周圍觀眾歡呼 on a LOCAL kill (#234). The tier and the per-call volume are
+  // decided by the pure `crowdCheer` — which is why the key literals live there
+  // and not in the AudioDirector shell that calls playSfx with them.
+  { key: "crowdCheer", kind: "client", site: "apps/client/src/audio/crowdCheer.ts" },
+  { key: "crowdCheerBig", kind: "client", site: "apps/client/src/audio/crowdCheer.ts" },
   { key: "levelUpJingle", kind: "client", site: AUDIO_DIRECTOR },
   { key: "exUnlockSting", kind: "client", site: AUDIO_DIRECTOR },
   { key: "lowHealth", kind: "client", site: AUDIO_DIRECTOR },

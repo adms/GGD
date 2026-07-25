@@ -22,6 +22,9 @@
  *   loginAmbience DORMANT calm-roar gate (its serene login bed moved to #134)
  *   countdownCue  pure last-5s tick for champ select + the prep window
  *                 (once/second, rising volume, ends on a distinct final cue)
+ *   crowdCheer    pure 觀眾歡呼 rule for a local kill (#234): which cheer clip
+ *                 and how loud, with its OWN throttle that escalates a spree
+ *                 into one BIGGER cheer instead of N overlapping copies
  *   types         data shapes mirroring content/config/audio-map.json
  *   championVoice click-your-hero select quips (champion-voices.json + fallback)
  *   selectVoiceLadder the five-rung fallback that makes that click answer for
@@ -53,6 +56,7 @@ export * from "./bgmVariants";
 export * from "./loginAmbience";
 export * from "./sfxEdges";
 export * from "./countdownCue";
+export * from "./crowdCheer";
 export * from "./championVoice";
 export * from "./selectVoiceLadder";
 export * from "./contextualVoice";

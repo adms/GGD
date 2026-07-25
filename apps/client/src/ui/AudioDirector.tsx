@@ -10,6 +10,8 @@
  *   → combat                           → battleStart sting + combat bed under it
  *   screen → match                     → matchStart greeting
  *   local K/D tally                    → kill / multiKill / death / allySlain
+ *                                        + the local champion's own kill line
+ *                                        and the 觀眾歡呼 crowd cheer (#234)
  *   local level / EX rank              → levelUp / exUnlock
  *   local champion pick                → champSelectConfirm
  *   prep-phase last 5 s                → countTick ×4 (rising) then countFinal
@@ -34,6 +36,7 @@ import { useApp } from "./platform/store";
 import {
   audioSystem,
   crossedIntoLowHealth,
+  decideCrowdCheer,
   diffTally,
   isCombatEnd,
   isCombatStart,
@@ -41,6 +44,7 @@ import {
   sceneForPlatform,
   stepCountdown,
   COUNTDOWN_INITIAL,
+  type CheerTier,
   type CountdownState,
   type HealthSnapshot,
   type TallySnapshot,
@@ -222,6 +226,12 @@ export function AudioDirector(): null {
   const lastKillMs = useRef<number | null>(null);
   const killStreak = useRef<number>(0);
   const everKilled = useRef<boolean>(false);
+  // Crowd-cheer throttle state (#234). Kept SEPARATE from the kill/multiKill
+  // announcer keys on purpose: the SfxGate cooldown is cross-frame and keyed on
+  // the event string, so a new population poured into an existing key starves
+  // the incumbent. The rule itself is the pure `decideCrowdCheer`.
+  const lastCheerMs = useRef<number | null>(null);
+  const lastCheerTier = useRef<CheerTier>(0);
   useEffect(() => {
     const next: TallySnapshot = {
       seatId: localSeatId,
@@ -242,6 +252,14 @@ export function AudioDirector(): null {
     lastKillMs.current = res.lastKillMs;
     killStreak.current = res.killStreak;
     everKilled.current = res.everKilled;
+    // A seat change is a NEW match: re-baseline the cheer window too, or a
+    // stale timestamp from the previous match could swallow the first cheer of
+    // this one (diffTally already returns killVoice = null on that transition,
+    // so nothing sounds while we reset).
+    if (res.rebaselined) {
+      lastCheerMs.current = null;
+      lastCheerTier.current = 0;
+    }
     for (const ev of res.events) {
       audioSystem.playSfx(ev);
       // #51 stingers LAYER under the VO these tally events already fire (their
@@ -253,6 +271,26 @@ export function AudioDirector(): null {
     // unstoppable line (celebratory, always fires past the throttle). Only the
     // local streak talks; a seat change re-baselines killVoice to null.
     if (res.killVoice && localChampionId) playContextualVoice(localChampionId, res.killVoice);
+    // 周圍觀眾歡呼 (#234) — the arena reacting to MY kill, alongside my own
+    // champion's line. Deliberately NOT fired for an ally's or an enemy's kill:
+    // `hudStore.kills` tallies every seat, so those are observable, but a cheer
+    // per body in a twelve-champion fight is the "wall of noise" the owner ruled
+    // out (and the streak refs above are single-seat by construction). A spree
+    // escalates to the LONGER, LOUDER roar rather than stacking copies — the
+    // decision, including its own throttle, is the pure `decideCrowdCheer`; the
+    // audio map's maxConcurrent:1 + 2.4 s cooldown is the second guard.
+    const cheer = decideCrowdCheer({
+      killVoice: res.killVoice,
+      killStreak: res.killStreak,
+      nowMs,
+      lastCheerMs: lastCheerMs.current,
+      lastCheerTier: lastCheerTier.current,
+    });
+    if (cheer) {
+      audioSystem.playSfx(cheer.event, { volume: cheer.volume });
+      lastCheerMs.current = nowMs;
+      lastCheerTier.current = cheer.tier;
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localSeatId, localKills, localDeaths, localLevel, localExRank, allyDeaths]);
 

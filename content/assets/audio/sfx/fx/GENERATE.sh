@@ -40,6 +40,30 @@ synth() {
     -ac 1 -ar 44100 -c:a pcm_s16le "$OUT/$name.wav"
 }
 
+# synth_mp3 <name> <ffmpeg-args...> -> peak-normalised MONO 44.1 kHz 128 kbps mp3
+#
+# Same normalisation contract as `synth`, different CONTAINER. The WAV rationale
+# at the top of this file (encoder delay smears a 40 ms transient) is about the
+# 40-200 ms combat transients; it does not apply to a clip that is over a second
+# long and whose onset is a deliberate ~130 ms SWELL — a few ms of encoder pad is
+# inaudible there, and every file actually shipped in this directory today is
+# mp3/44100/mono/128k (`tools/audio-optimize/optimize.sh`'s ceiling). A clip
+# emitted as .wav here would be a silent 404 against the .mp3 path the audio map
+# names, so anything long enough to tolerate mp3 is authored straight to mp3.
+synth_mp3() {
+  local name="$1"; shift
+  ffmpeg -y -v error -nostdin "$@" -ac 1 -ar 44100 -c:a pcm_f32le "$TMP/$name.wav"
+  local peak
+  peak="$(ffmpeg -hide_banner -nostats -nostdin -i "$TMP/$name.wav" -af volumedetect -f null - 2>&1 \
+          | sed -n 's/.*max_volume: \(-*[0-9.]*\) dB.*/\1/p')"
+  [ -n "$peak" ] || { echo "FATAL: no peak measured for $name" >&2; exit 1; }
+  local gain
+  gain="$(awk -v p="$peak" 'BEGIN{printf "%.4f", -3.0 - p}')"
+  ffmpeg -y -v error -nostdin -i "$TMP/$name.wav" -af "volume=${gain}dB" \
+    -ac 1 -ar 44100 -c:a libmp3lame -b:a 128k "$OUT/$name.mp3"
+  echo "$name.mp3: peak ${peak} dBFS -> -3.0 dBFS (applied ${gain} dB)"
+}
+
 # --- basicAttack: air swing (pink-noise whoosh, swells then drops) -----------
 synth swing \
   -f lavfi -i "anoisesrc=r=44100:c=pink:d=0.20:a=1:seed=11" \
@@ -368,3 +392,85 @@ synth draft-confirm \
 [2:a]afade=t=in:st=0:d=0.0015,afade=t=out:st=0.32:d=0.23:curve=exp[lock];\
 [chunk][body][lock]amix=inputs=3:duration=longest:normalize=0,\
 aecho=0.85:0.30:55:0.26,highpass=f=42,lowpass=f=5000[a]" -map "[a]"
+
+# ===========================================================================
+# CROWD CHEER (task #234): 周圍觀眾歡呼 on a kill.
+#
+# WHY PROCEDURAL. The 効果音ラボ ledger (../lab/MANIFEST.json, 33 clips) covers
+# buttons/system, money, 対戦演出, 剣・斬撃, 弓矢, 銃, 格闘, 魔法, 爆発 — and
+# nothing crowd / 歓声 / 拍手 / 観客. The two "ambience" names in that pack are
+# decoys: arenaAmbience is 「風に揺れる草木」(wind in grass) and merchantAmbience
+# is a market bed. So this is synthesised here from lavfi sources only — own
+# work, effectively CC0 — and therefore is NOT an entry in ../lab/MANIFEST.json
+# or content/assets/CREDITS.md: nothing was downloaded.
+#
+# WHAT MAKES NOISE READ AS A CROWD RATHER THAN AS HISS, most important first:
+#   1. THE 200-3500 Hz BAND. Massed human voices put nearly all their energy
+#      where speech formants live. Real wind (lab/arenaAmbience) sits at a
+#      5704 Hz centroid with only 32% in that band; these clips are 63-73%
+#      in-band at a ~2.5 kHz centroid. That is the whole difference between
+#      "wind" and "people". MEASURED, never judged by ear — background agents
+#      must not make sound on this machine (task #62).
+#   2. TWO DECORRELATED VOICE LAYERS. One noise bed is one throat. A second
+#      pink bed pitch-shifted via asetrate (0.82 / 0.78) and band-limited
+#      differently decorrelates the two, so the result reads as MANY.
+#   3. A BREATHING MODULATOR. The vox bed is multiplied by a sum of three
+#      incommensurate low sines (5.7 / 9.3 / 14.1 Hz) — the surge and fall of a
+#      crowd rather than a steady wash.
+#   4. DISCRETE CLAP TRANSIENTS. A high (2-9 kHz) bed multiplied by sharp
+#      pow(abs(sin),n) spike trains at incommensurate rates → individual claps
+#      and whistles scattered across the swell (14 / 22 spikes measured).
+#   5. AN EVENT ENVELOPE, NOT A BED. ~0.10-0.13 s swell, peak at ~0.3-0.4 s,
+#      exponential decay to 7-10% of peak by the tail. arenaAmbience holds at
+#      42% forever because it IS the room; a cheer is a REACTION and must die.
+#   6. ROOM. Two/three short echo taps (57-211 ms) put the crowd AROUND the
+#      arena instead of in the listener's face — that is what buys the
+#      "positional-ish / clearly ambient" quality with no PannerNode. Kept MONO
+#      so a future PannerNode can still spatialise it.
+#
+# TWO clips, not one, because the escalation has to be LONGER as well as louder
+# (owner: one cheer per kill, never N overlapping copies). crowd-cheer is the
+# 1.60 s single-kill 歓声; crowd-cheer-big is the 2.80 s ROAR for first blood /
+# triple+ / unstoppable and additionally carries a 90-420 Hz brown-noise body
+# layer (the mass of a big crowd). WHICH one plays, and at what per-call volume,
+# is decided by the pure apps/client/src/audio/crowdCheer.ts — never by a random
+# pool pick, so a pentakill can never draw the small cheer.
+# ===========================================================================
+
+# --- crowdCheer: the standard 歓声 (a single kill) ---------------------------
+synth_mp3 crowd-cheer \
+  -f lavfi -i "anoisesrc=r=44100:c=pink:d=1.60:a=1:seed=61" \
+  -f lavfi -i "anoisesrc=r=44100:c=pink:d=2.10:a=1:seed=62" \
+  -f lavfi -i "anoisesrc=r=44100:c=white:d=1.60:a=1:seed=63" \
+  -f lavfi -i "aevalsrc='(0.70+0.30*(0.5*sin(2*PI*5.7*t)+0.3*sin(2*PI*9.3*t)+0.2*sin(2*PI*14.1*t)))*min(1,t/0.13)*exp(-1.7*max(0,t-0.40))':d=1.60:s=44100" \
+  -f lavfi -i "aevalsrc='(0.40*pow(abs(sin(2*PI*7.3*t)),26)+0.32*pow(abs(sin(2*PI*5.1*t+0.9)),30)+0.24*pow(abs(sin(2*PI*11.7*t+2.1)),34))*min(1,t/0.09)*exp(-2.4*max(0,t-0.28))':d=1.60:s=44100" \
+  -filter_complex "\
+[0:a]highpass=f=280:p=2,lowpass=f=3200:p=2[v1];\
+[1:a]asetrate=44100*0.82,aresample=44100,atrim=0:1.60,asetpts=N/SR/TB,highpass=f=380:p=2,lowpass=f=2400:p=2,volume=0.8[v2];\
+[v1][v2]amix=inputs=2:duration=first:normalize=0[vox];\
+[vox][3:a]amultiply[voxenv];\
+[2:a]highpass=f=2200:p=2,lowpass=f=9000:p=2[clapraw];\
+[clapraw][4:a]amultiply,volume=1.7[claps];\
+[voxenv][claps]amix=inputs=2:duration=first:normalize=0[dry];\
+[dry]aecho=0.9:0.35:57|113:0.30|0.18,lowpass=f=6800:p=2,highpass=f=180:p=2[out]" \
+  -map "[out]" -t 1.60
+
+# --- crowdCheerBig: the ROAR (first blood / triple+ / unstoppable) -----------
+synth_mp3 crowd-cheer-big \
+  -f lavfi -i "anoisesrc=r=44100:c=pink:d=2.80:a=1:seed=64" \
+  -f lavfi -i "anoisesrc=r=44100:c=pink:d=3.60:a=1:seed=65" \
+  -f lavfi -i "anoisesrc=r=44100:c=white:d=2.80:a=1:seed=66" \
+  -f lavfi -i "anoisesrc=r=44100:c=brown:d=2.80:a=1:seed=67" \
+  -f lavfi -i "aevalsrc='(0.66+0.34*(0.5*sin(2*PI*4.3*t)+0.3*sin(2*PI*7.9*t)+0.2*sin(2*PI*12.7*t)))*min(1,t/0.11)*exp(-1.05*max(0,t-0.85))':d=2.80:s=44100" \
+  -f lavfi -i "aevalsrc='(0.42*pow(abs(sin(2*PI*8.9*t)),22)+0.34*pow(abs(sin(2*PI*6.3*t+0.7)),26)+0.28*pow(abs(sin(2*PI*13.1*t+1.9)),30)+0.22*pow(abs(sin(2*PI*17.3*t+2.8)),34))*min(1,t/0.08)*exp(-1.35*max(0,t-0.55))':d=2.80:s=44100" \
+  -filter_complex "\
+[0:a]highpass=f=260:p=2,lowpass=f=3400:p=2[v1];\
+[1:a]asetrate=44100*0.78,aresample=44100,atrim=0:2.80,asetpts=N/SR/TB,highpass=f=340:p=2,lowpass=f=2600:p=2,volume=0.85[v2];\
+[3:a]highpass=f=90:p=2,lowpass=f=420:p=2,volume=0.55[body];\
+[v1][v2][body]amix=inputs=3:duration=first:normalize=0[vox];\
+[vox][4:a]amultiply[voxenv];\
+[2:a]highpass=f=2000:p=2,lowpass=f=9500:p=2[clapraw];\
+[clapraw][5:a]amultiply,volume=1.8[claps];\
+[voxenv][claps]amix=inputs=2:duration=first:normalize=0[dry];\
+[dry]aecho=0.9:0.4:71|139|211:0.32|0.20|0.12,lowpass=f=7200:p=2,highpass=f=110:p=2[out]" \
+  -map "[out]" -t 2.80
