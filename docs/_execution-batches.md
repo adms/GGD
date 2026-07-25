@@ -53,13 +53,28 @@ nginx **有**擋這條路徑的規則（`nginx/nginx.conf:365-366`），它沒�
    - **v0.5.14 的「格擋語音」「閃避語音」在目前內容下永遠不會響**：`blocked` 只在護盾吸收或有減傷 buff 時為真，而**減傷 buff 的內容文件數是 0**；`evade` 在 evasion==0 時根本不發事件，只有 9 份內容給閃避。已寫進 v0.5.14 release note，不含糊帶過。
    - **通則：release note 與完成宣告一律要問「這條觸發在正常一場遊戲裡真的會發生嗎？」單元測試綠不算證據。**
 
-3. **喪標麥可 godie-zombiex 是英雄，不是小兵（owner 更正）。** champion doc 宣告了 Q/W/E/R 但**沒有天生技**，白名單只開了 `.ex` —— 而 `.ex` 不在那四格裡。**選他進場等於四個技能全關。** 語音 183 個檔案早就生好、完全沒用到；icon 則是英雄與五支技能**全空**。→ #236。
+3. **喪標麥可 godie-zombiex（owner 更正：他是英雄，不是小兵）—— 但我第一版的診斷是錯的，更正如下。**
+
+   ❌ **我錯了**：我說「沒有天生技、EX 沒掛進格位、選他等於四個技能全關」。全部不成立。champion doc 用的是 `passiveAbility` / `exAbility` **指標欄位**（`content/champions/godie-zombiex.json:238-239`），而**每一隻英雄都是這樣**——champion doc 從不把 PASSIVE/EX 塞進 `abilities{}`，`abilityMirror.test.ts` 的 SLOTS 也只有 Q/W/E/R。`godie-zombiex.passive.json`（100-00 黑聖杯・四拍令咒）確實存在。而且 `allowsAbility()` 在整個 repo 只有一個生產呼叫點，只管 EX 解鎖、不管 Q/W/E/R；`docs/_castability-128.md:99` 早就把他掃成 **✅✅✅✅✅✅**。**我的錯誤是只印了 `abilities` 這個 dict 的 key 就下結論。**
+
+   ⚠️ **真正的問題比我說的嚴重，而且是 #217 造成的**：`mobRulesFromConfig()` 明文把 champion doc 當作「英雄卡與其小兵化身的單一真相來源」，從 `baseStats.maxHealth + growth.maxHealth*(level-1)` 推小兵數值。為了讓小兵符合 owner 的數值表，#217 **改寫了英雄自己的數值**：`maxHealth 600→100`、`healthRegen 4.0→1`、`growth.maxHealth 65→50`、`growth.healthRegen 0.15→0.2`。對照組：Saber 580/54、魯夫 480/59、揍敵客 420/30。**100 血的英雄不是可上架的英雄。**
+
+   ✅ **對線上的實際影響：零。** 我查過 host 的開機日誌 —— `whitelist enables 48 champions`，`godie-zombiex` 不在裡面。那份 49 個英雄（含 zombiex）的白名單是 **owner 本機的 operator 狀態**，不是 host 的。所以在 ggd.adms.ai 上沒有人選得到他，那組數值只餵給小兵，正是 #217 要的。**這是一個為「有人把他開成英雄的那一刻」預先上膛的陷阱** —— 而 #236 正要做這件事。
+
+   所以 #236 的真正阻擋點不是補技能格，是：**一份文件裝不下英雄卡與小兵卡兩套數值**，必須先拆開。
+
+   其餘實際缺口（SOP 機器稽核 16 列跑出 10/16 PASS）：名言語音、圖示、starter.go、Go 釘住名單、castability ratchet、商店目錄。語音 54 個檔案早就生好（`quote.mp3` 確認是 owner 現行台詞、非過期），icon 則是英雄與六支技能**全空**。→ #236。
 
 4. **`store.json` 的 `championPrices` 只有 48 筆 —— 這是新英雄 SOP 漏掉的一列。** 不在名單裡的英雄雖然仍可選（被歸類為 free），但 `ToggleFavourite`/`UnlockChampion` 會 404，**永遠不能被「喜愛置頂」**。喪標麥可現在就中這個洞。
 
 5. **#128 掃描那唯一一個 ❌ 是量測工具的 bug，不是內容問題。** 魯夫 R 施法前搖 0.9 s = 27 tick，掃描只往後看 `WINDOW = 26` tick，技能在觀測停止的下一 tick 才結算。窗口拉到 ~34 tick 就會變 288/288。與 #198 有關。
 
-6. **線上早就存在的缺陷：邀請碼用完沒被標記 redeemed（#237）。** 我在 v0.5.10 的 worktree 驗過，**v0.5.10 就是這次部署前線上跑的版本**，所以不是迴歸。緩解：審查制仍強制每筆註冊進待審佇列。工作流的第一件事是**實際跑兩次註冊用同一組碼**，先確定是產品壞了還是測試在說謊，再談修法。
+6. **#237 邀請碼 —— 結果是測試在說謊，產品是好的。** 工作流照要求先跑真實伺服器（真 jsonstore + 真 redis、family 姿態）而不是讀程式碼推論：管理員發碼 → 表弟註冊成功（pending）→ **第二次用同一組碼註冊被 403 `invite_used`**，燒碼寫進磁碟、重啟也還在，`redeemedBy` 有寫。#126 也完好：pending 帳號登入回 403 `account_pending`。**#174 的閘從頭到尾都是好的。** 紅的原因是 #203：每個新帳號註冊時也會自動產生自己的推薦碼，`List` 又是新到舊排序，所以測試斷言的 `invites[0]` 變成表弟自己的推薦碼（合理地 active、沒有 redeemedBy），管理員那一組其實在 `invites[1]` 且正確地 redeemed。同一個索引缺陷還藏了另外兩支紅測試（`TestInviteHappyPath`、`TestConcurrentRegistrationsShareOneCode`），而後者真正重要的那條斷言「8 個併發註冊只能產生 1 個帳號」**是綠的**。→ 修測試，不動產品。
+
+7. **#189 內容持久層 —— 前提又錯了，而且錯得更有用。** 我原本以為「後台改的內容在容器重建後消失」。實查：**持久層早就寫好也是綠的，但從來沒有任何東西寫進去過。** 三個原因：(a) **正式版的 admin bundle 根本不含 內容管理** —— `App.tsx` 的 `if (!import.meta.env.DEV) return;` 是可靜態分析的裸閘，rollup 直接把整個 chunk 折掉，所以 ggd.adms.ai 上那些頁面**不是被隱藏，是不存在**；(b) 就算存在，它唯一的寫入器打的是 `/content-api` —— 那是 dev-only 的 Fastify，**刻意不進正式 nginx**（這正是 loopbackOnly 的姿態，不能動）；(c) 瀏覽器端也沒有消費者，client 從不把來源包進 `OverlayContentSource`。所以正確的問題不是「存不住」，是「**線上根本沒有改內容的功能**」。
+   附帶兩個把我原本的心智模型修掉的事實：**`content/bundle.json` 沒有被烤進 image** —— 它是 git checkout 的唯讀 bind mount（所以容器內根本寫不了，手寫進去的東西會死在下次 `git pull`）；以及 **v0.5.12 的 content-bus 修復只涵蓋三份 operator 文件**（curation / combat-env / server-ops），overlay 的內容文件依設計是開機才讀，platform 發的 `content-overlay` 失效通知會被 game-server 當成未知種類丟棄 —— 所以內容改動無論如何都要重啟 game 容器。
+
+8. **#240 四個 KayKit 模組退場（owner：「我不想再看到這些模組了」）。** 分支確實刪了 12 個檔（4 個 base + 8 個 LOD，約 9.3 MB）。**doc 的 id 不能一起刪**：`skeleton.ts:38/:195` 硬寫了 `champ.sela`/`champ.thorne` 且必須與 champion 文件逐位元組相同。殘留引用最要緊的是 `apps/client/public/model-budget.html:448` 直接找 `champions/knight.glb`（後台會開的頁）。`CREDITS.md` 說城堡的值班鎧甲重用 knight.glb，但 `arena.castle.json` 的 decor 實際沒引用它 —— 文件描述了沒出貨的東西。**要加永久守衛**，讓它們回不來。
 
 ### 下一批（依相依性分組 · deploy 需 owner 醒來確認）
 
