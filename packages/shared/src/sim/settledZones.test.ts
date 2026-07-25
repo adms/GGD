@@ -288,6 +288,47 @@ describe("a SETTLED zone stands its mobs down (#216 + #215)", () => {
   });
 });
 
+/**
+ * #216 × #221 — the pair that only misbehaves TOGETHER.
+ *
+ * Both branches were green on their own. #221 gave every champion an in-sim
+ * auto-acquire pass gated on the GLOBAL `combatActive`, which is exactly the
+ * gate #216 exists because it is too coarse: in the window between "my duel
+ * ended" and "the last duel ends" a survivor of a settled zone would be handed
+ * a fresh target and go right on fighting — in practice farming the zombies
+ * `mobSystem` had just stood down two describes above, while the defeated
+ * player watches from the shop. Same "the round is over HERE" rule as the ring
+ * and the mobs.
+ */
+describe("a SETTLED zone stands its AUTO-ATTACK down (#216 × #221)", () => {
+  it("a survivor stops auto-acquiring, and releases the auto target it held", () => {
+    cover("teardown-settled-zone-autoacquire");
+    const w = world(11);
+    // Two enemies nose to nose, well inside the melee acquire floor.
+    const a = champ(w, ZONE0.center.x, ZONE0.center.z, 0, 1);
+    const b = champ(w, ZONE0.center.x + 1.2, ZONE0.center.z, 0, 2);
+    // A second, still-LIVE duel: it must be completely untouched.
+    const c = champ(w, ZONE1.center.x, ZONE1.center.z, 1, 1);
+    champ(w, ZONE1.center.x + 1.2, ZONE1.center.z, 1, 2);
+
+    // BASELINE: acquisition proven live in both zones.
+    step(w);
+    expect(w.nav.get(a)!.attackTarget).toBe(b);
+    expect(w.nav.get(a)!.attackTargetAuto).toBe(true);
+    expect(w.nav.get(c)!.attackTarget).not.toBeNull();
+
+    // THE EDGE: zone 0's duel is decided. Zone 1 fights on.
+    w.settledZones.add(0);
+    for (let t = 0; t < 20; t++) {
+      step(w);
+      expect(w.nav.get(a)!.attackTarget).toBeNull(); // released, and never re-taken
+      expect(w.nav.get(a)!.attackTargetAuto).toBe(false);
+      expect(w.nav.get(b)!.attackTarget).toBeNull();
+    }
+    expect(w.nav.get(c)!.attackTarget).not.toBeNull(); // the live duel is untouched
+  });
+});
+
 describe("settledZones is DETERMINISTIC recorded state (#216)", () => {
   /** Run a world for `ticks`, settling zone 0 at `settleAt` (-1 = never). */
   function run(seed: number, settleAt: number, ticks = 150): SimWorld {

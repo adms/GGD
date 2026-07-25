@@ -190,6 +190,29 @@ function autoAcquirePass(world: SimWorld): void {
     const sc = world.stats.get(id);
     if (!nav || !t || !hp?.alive || !sc) continue;
 
+    // ---- #216 × #221: STAND DOWN IN A SETTLED ZONE ----
+    // `world.combatActive` is GLOBAL — it only drops once EVERY pairing is
+    // decided — so between "my duel ended" and "the last duel ends" this pass
+    // would hand a survivor a brand-new target and keep the fight running in a
+    // zone whose round is already over. The defeated player is looking at the
+    // shop by then (client shopGate), which is the exact 「回到商店…戰鬥沒真正
+    // 結束」 report #216 exists to kill: its fire ring has stopped burning
+    // (FireRingSystem) and its mobs have dropped aggro (MobSystem), so the
+    // SIM-CHOSEN target must go the same way or the survivors would simply
+    // switch to farming the stood-down zombies.
+    //
+    // Only the AUTO target is released. An EXPLICIT order the player gave is
+    // left exactly as #216 shipped it — #216 deliberately scoped itself to what
+    // the sim does ON THE PLAYER'S BEHALF, and silently cancelling a human's
+    // own click here would be a second, unrelated behaviour change.
+    if (world.settledZones.has(t.zone)) {
+      if (nav.attackTargetAuto) {
+        nav.attackTarget = null;
+        nav.attackTargetAuto = false;
+      }
+      continue;
+    }
+
     // A swing is already committed at a specific target: do not re-point it
     // mid-wind-up (BasicAttackSystem would cancel it and the hero would never
     // land a blow).
