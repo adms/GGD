@@ -3,7 +3,14 @@ import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import { recordGold, recordXp } from "../stats/matchStats";
 
-export const LEVEL_CAP = 18;
+/**
+ * True level cap is 99. The per-round grant schedule (arena-rules.json) only
+ * carries a champion to cumulative L50 by round 11; the remaining L50→L99 is
+ * earned from XP — kills/assists today, and the roguelite mob-clearing planned
+ * for the next version. So `grantLevels` (round grants) tops out at 50 by
+ * design (rounds 12+ grant 0), while `grantXp` can climb all the way to 99.
+ */
+export const LEVEL_CAP = 99;
 export const XP_REWARDS = { kill: 120, assist: 60, roundSurvive: 100 };
 /**
  * `killBounty` (task #90) is a ONE-TIME premium paid on top of `kill` the FIRST
