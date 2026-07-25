@@ -181,12 +181,93 @@ const AUGMENT_GROUPS: readonly FieldGroup[] = [
  */
 const LOOT_GROUPS: readonly FieldGroup[] = [{ title: "識別", fields: IDENTITY }];
 
+/**
+ * 特效 — vfx/<id>.json (task #205). The vfx collection is a discriminated union
+ * (vfx@1 particle | ribbon@1 trail) with strict cross-field refinements. The
+ * SCALAR knobs get labelled inputs; the tuple/gradient core (color.start/end
+ * rgba, colorStops/sizeStops, spriteSheet, emitter shape params) stays in the
+ * raw-JSON 整份覆蓋 escape hatch surfaced by uncoveredKeys() — exactly as an
+ * ability's `effects` and a loot-table's `entries` are today. A rich rgba /
+ * gradient-stop widget is a deferred additive follow-up, not this pass.
+ */
+const VFX_GROUPS: readonly FieldGroup[] = [
+  { title: "識別", fields: IDENTITY },
+  {
+    title: "發射與生命",
+    fields: [
+      { path: "mode", label: "模式", kind: "text", hint: "continuous（持續）或 burst（爆發）" },
+      { path: "rate", label: "每秒粒子數", kind: "number", hint: "continuous 模式必填" },
+      { path: "burstCount", label: "每爆發粒子數", kind: "integer", hint: "burst 模式必填" },
+      { path: "lifetimeSec.min", label: "壽命最小(秒)", kind: "number" },
+      { path: "lifetimeSec.max", label: "壽命最大(秒)", kind: "number", hint: "須 ≥ 最小值" },
+      { path: "blendMode", label: "混合模式", kind: "text", hint: "additive / alpha / modulate / alphaKey" },
+    ],
+  },
+  {
+    title: "大小與物理",
+    fields: [
+      { path: "size.start", label: "起始大小", kind: "number" },
+      { path: "size.end", label: "結束大小", kind: "number" },
+      { path: "gravityY", label: "重力Y", kind: "number", hint: "負值向下（WC3 gravity → -y）" },
+      { path: "speed.min", label: "噴發速度最小", kind: "number" },
+      { path: "speed.max", label: "噴發速度最大", kind: "number", hint: "須 ≥ 最小值" },
+      { path: "stretched", label: "拉伸尾焰", kind: "boolean", hint: "WC3 tail → BILLBOARD 拉伸" },
+      { path: "ambient", label: "常駐(隨實體存活)", kind: "boolean" },
+      { path: "anchorBone", label: "掛點骨架", kind: "text", hint: "glb joint 名稱；空=模型根" },
+    ],
+  },
+  {
+    title: "貼圖",
+    fields: [
+      { path: "texture", label: "貼圖路徑", kind: "text", hint: "須以 assets/ 開頭" },
+    ],
+  },
+  // ribbon@1 shares this collection; its own scalars are labelled here too so a
+  // ribbon doc is not entirely raw-JSON. Fields absent from a vfx@1 doc simply
+  // render empty (getAt → undefined), which is the same as any optional field.
+  {
+    title: "緞帶 (ribbon@1)",
+    fields: [
+      { path: "widthAbove", label: "上緣寬", kind: "number" },
+      { path: "widthBelow", label: "下緣寬", kind: "number" },
+      { path: "lifespanSec", label: "殘影壽命(秒)", kind: "number" },
+      { path: "uvScrollPerSec", label: "UV 捲動/秒", kind: "number" },
+    ],
+  },
+];
+
+/**
+ * 場景物件 — arenas/<id>.json (場景物件管理). Only identity + the visual scalars
+ * get labelled inputs. The gameplay payload — `zones[]` (center / boundaryRadius
+ * / obstacles / spawns, a nested superRefine that every obstacle & spawn sits
+ * inside the boundary) and `decor[]` prop placements — is raw-JSON only, so a
+ * save can never produce an arena the sim's collision loader would reject: the
+ * content-api dry-run runs zArenaDoc's superRefine before a byte is written.
+ */
+const ARENA_GROUPS: readonly FieldGroup[] = [
+  { title: "識別", fields: IDENTITY },
+  {
+    title: "基本資料",
+    fields: [
+      { path: "name", label: "名稱", kind: "text" },
+      {
+        path: "groundStyle",
+        label: "地面樣式",
+        kind: "text",
+        hint: "stone / dirt / wood / grass / sand（視覺，不影響碰撞）",
+      },
+    ],
+  },
+];
+
 const GROUPS: Record<EditCollection, readonly FieldGroup[]> = {
   champions: CHAMPION_GROUPS,
   abilities: ABILITY_GROUPS,
   items: ITEM_GROUPS,
   augments: AUGMENT_GROUPS,
   "loot-tables": LOOT_GROUPS,
+  vfx: VFX_GROUPS,
+  arenas: ARENA_GROUPS,
 };
 
 export function fieldGroups(collection: EditCollection): readonly FieldGroup[] {
@@ -230,6 +311,8 @@ export const COLLECTION_LABEL: Record<EditCollection, string> = {
   items: "武器道具",
   augments: "三選一強化",
   "loot-tables": "三選一抽獎池",
+  vfx: "特效",
+  arenas: "場景物件",
 };
 
 /** The `_index.json` / `/content` mount directory for a collection. */
@@ -239,4 +322,6 @@ export const COLLECTION_DIR: Record<EditCollection, string> = {
   items: "items",
   augments: "augments",
   "loot-tables": "loot-tables",
+  vfx: "vfx",
+  arenas: "arenas",
 };

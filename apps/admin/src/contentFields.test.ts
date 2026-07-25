@@ -57,6 +57,12 @@ describe("the field spec", () => {
       // group + a raw-JSON entries editor, hence it is NOT in the form-rich
       // COLLECTIONS list below that asserts >3 editable fields.
       "loot-tables": "三選一抽獎池",
+      // 特效管理 (task #205) + 場景物件管理 — the two NEW editable collections.
+      // Both are form-LEAN (identity + scalars only; the tuple/gradient/zone
+      // payload is raw-JSON), so like loot-tables they are NOT in the
+      // form-rich COLLECTIONS list below that asserts >3 editable fields.
+      vfx: "特效",
+      arenas: "場景物件",
     });
     for (const c of COLLECTIONS) {
       expect(fieldGroups(c).length, c).toBeGreaterThan(0);

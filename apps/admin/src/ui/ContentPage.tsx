@@ -59,6 +59,8 @@ import {
   uncoveredKeys,
   type FieldSpec,
 } from "../contentFields";
+import { AudioAuditionPage } from "./AudioAuditionPage";
+import { NewHeroPageRoot } from "./NewHeroPage";
 import { Badge, Btn, ErrorBanner, Panel, TextInput } from "./widgets";
 import {
   ACCENT,
@@ -75,19 +77,37 @@ import {
 // 三選一強化 (augments) are the DRAFT abilities — editable as their OWN tab,
 // distinct from champion 技能, per the owner (task #70 rule 3). 三選一抽獎池
 // (loot-tables) are the ITEM draft POOLS (quest-rewards + legendary-weapons):
-// the owner curates which items the weapon 3-choose-1 offers from here.
-const TABS: readonly EditCollection[] = ["champions", "abilities", "items", "augments", "loot-tables"];
+// the owner curates which items the weapon 3-choose-1 offers from here. This is
+// the DEFAULT tab set (no `only` prop); each nav route passes its own `only`.
+const ALL_TABS: readonly EditCollection[] = [
+  "champions",
+  "abilities",
+  "items",
+  "augments",
+  "loot-tables",
+  "vfx",
+  "arenas",
+];
 
-// Collections the owner may ADD to / REMOVE from via the console (task #70
-// rule 3: 「隨機三選一的技能應該也要在後台單獨被編輯」 — editing the fixed set is
-// not enough, he must be able to change WHICH augments exist). Only augments
-// qualify: champions/abilities/items are the imported WC3 tree (not authored
-// here) and a loot-table is REFERENCED by arena-rules, so deleting one would
-// silently empty a draft round — those stay edit-only.
-const CREATABLE: ReadonlySet<EditCollection> = new Set<EditCollection>(["augments"]);
+// Collections the owner may CREATE via the inline ＋新增 box. `augments` (task
+// #70 rule 3: 「隨機三選一的技能應該也要在後台單獨被編輯」) plus the two authored
+// collections `vfx` / `arenas` (task #205): both are hand-authored or
+// _index-driven, so a new doc from a schema-valid skeleton is a legitimate act.
+// champions is NOT here — it is create-only through the 新英雄模板 wizard
+// (a bare {id} champion 422s, and a single-doc champion would dangle its
+// ability refs). abilities/items/loot-tables stay edit-only.
+export const CREATABLE: ReadonlySet<EditCollection> = new Set<EditCollection>(["augments", "vfx", "arenas"]);
+
+// Collections the owner may DELETE. Split OUT of CREATABLE (which used to gate
+// both) so the two policies can differ: everything creatable here is also
+// deletable (recoverable — the server snapshots bytes before unlinking), but
+// champions would be creatable-via-wizard-yet-not-deletable if it were here.
+// Deleting an arena only shrinks the reindex-driven random-arena pool; deleting
+// a vfx only drops a soft-ref target — neither breaks the bundle build.
+export const DELETABLE: ReadonlySet<EditCollection> = new Set<EditCollection>(["augments", "vfx", "arenas"]);
 
 /** A blank, schema-valid skeleton for a freshly-created document. */
-function skeletonDoc(collection: EditCollection, id: string): Record<string, unknown> {
+export function skeletonDoc(collection: EditCollection, id: string): Record<string, unknown> {
   if (collection === "augments") {
     return {
       id,
@@ -97,6 +117,43 @@ function skeletonDoc(collection: EditCollection, id: string): Record<string, unk
       tier: "silver",
       weight: 10,
       tags: [],
+    };
+  }
+  if (collection === "vfx") {
+    // minimal-valid vfx@1 — a bare {id} 422s. continuous ⇒ rate required;
+    // lifetimeSec/size/color/blendMode are all mandatory. The rgba tuples and
+    // any gradient stops are then tuned via the raw-JSON escape hatch.
+    return {
+      id,
+      schema: "vfx@1",
+      emitter: { shape: "point" },
+      mode: "continuous",
+      rate: 20,
+      lifetimeSec: { min: 0.5, max: 1 },
+      size: { start: 0.2, end: 0 },
+      color: { start: [1, 1, 1, 1], end: [1, 1, 1, 0] },
+      blendMode: "additive",
+    };
+  }
+  if (collection === "arenas") {
+    // minimal-valid arena@1 — one zone with a 2-side spawn tuple, both spawns
+    // and (empty) obstacles inside boundaryRadius so zZoneDef's superRefine
+    // passes. zones[] payload is then authored via the raw-JSON editor.
+    return {
+      id,
+      schema: "arena@1",
+      name: id,
+      groundStyle: "stone",
+      decor: [],
+      zones: [
+        {
+          id: "z0",
+          center: { x: 0, z: 0 },
+          boundaryRadius: 40,
+          obstacles: [],
+          spawns: [[{ x: -10, z: 0 }], [{ x: 10, z: 0 }]],
+        },
+      ],
     };
   }
   return { id };
@@ -123,6 +180,15 @@ export interface ContentPageProps {
   api: ContentEditApi;
   /** the dev-only icon-generation daemon client (#186; injected in tests) */
   icons?: IconApi;
+  /**
+   * Restrict this instance to a subset of collections. One nav route → one
+   * `only` list over the SAME editor engine (英雄管理 = ["champions"], 技能管理 =
+   * ["abilities","augments"], 武器道具管理 = ["items","loot-tables"], 特效管理 =
+   * ["vfx"], 場景物件管理 = ["arenas"]). When it has a single member the tab bar
+   * hides entirely. Omitted = all collections (the legacy 內容管理 behaviour),
+   * kept so nothing that constructs a bare ContentPage breaks.
+   */
+  only?: readonly EditCollection[];
 }
 
 /**
@@ -136,19 +202,69 @@ export interface ContentPageProps {
 export const CONTENT_NAV = { page: "content", label: "內容管理", emoji: "📚" } as const;
 
 /**
+ * The per-collection nav ROUTES this dev chunk contributes, in the owner's
+ * 內容·素材管理 order. Each carries the `only` list it mounts ContentPage with.
+ * `audio` (AudioAuditionPage) and `newHero` (NewHeroPage) render OTHER
+ * components in this same chunk — see `renderContentDevPage`. Exported so the
+ * App shell can splice them into the nav BY NAME while the label + route stay
+ * inside the dev-only chunk (a production build lacks the strings entirely,
+ * same discipline as CONTENT_NAV).
+ */
+export interface ContentRoute {
+  readonly page: string;
+  readonly label: string;
+  readonly emoji: string;
+  /** collections when this route mounts the ContentPage editor; absent for audio/newHero */
+  readonly only?: readonly EditCollection[];
+}
+
+export const CONTENT_SECTION = "內容·素材管理";
+
+export const CONTENT_ROUTES: readonly ContentRoute[] = [
+  { page: "audio", label: "音樂音效素材管理", emoji: "🎵" },
+  { page: "champions", label: "英雄管理", emoji: "🦸", only: ["champions"] },
+  { page: "newHero", label: "新英雄模板", emoji: "✨" },
+  { page: "abilities", label: "技能管理", emoji: "🔮", only: ["abilities", "augments"] },
+  { page: "items", label: "武器道具管理", emoji: "⚔️", only: ["items", "loot-tables"] },
+  { page: "vfx", label: "特效管理", emoji: "🎆", only: ["vfx"] },
+  { page: "arenas", label: "場景物件管理", emoji: "🏟️", only: ["arenas"] },
+];
+
+/**
+ * Render whichever dev content page the shell asks for. Lives in the dev chunk
+ * so the eagerly-loaded App never names ContentPage / NewHeroPage /
+ * AudioAuditionPage / ../contentApi. `onNavigate` lets the 新英雄模板 wizard
+ * deep-link into 英雄管理 after a successful create.
+ */
+export function renderContentDevPage(
+  page: string,
+  onNavigate?: (page: string, selectId?: string) => void,
+): React.JSX.Element | null {
+  if (page === "audio") return <AudioAuditionPage />;
+  if (page === "newHero") return <NewHeroPageRoot onNavigate={onNavigate} />;
+  const route = CONTENT_ROUTES.find((r) => r.page === page && r.only !== undefined);
+  if (route === undefined) return null;
+  return <ContentPageRoot only={route.only} />;
+}
+
+/**
  * What App.tsx's dev-gated dynamic import actually mounts. Constructing the
  * write API HERE — inside the lazily-imported chunk — is the point: nothing in
  * the eagerly-loaded shell so much as names ../contentApi, so a production
  * build has no reference to pull the module in.
  */
-export function ContentPageRoot(): React.JSX.Element {
+export function ContentPageRoot({ only }: { only?: readonly EditCollection[] } = {}): React.JSX.Element {
   const api = useMemo(() => createContentEditApi(), []);
   const icons = useMemo(() => createIconApi(), []);
-  return <ContentPage api={api} icons={icons} />;
+  return <ContentPage api={api} icons={icons} only={only} />;
 }
 
-export function ContentPage({ api, icons }: ContentPageProps): React.JSX.Element {
-  const [tab, setTab] = useState<EditCollection>("champions");
+export function ContentPage({ api, icons, only }: ContentPageProps): React.JSX.Element {
+  const TABS = useMemo<readonly EditCollection[]>(
+    () => (only && only.length > 0 ? only : ALL_TABS),
+    [only],
+  );
+  const [tab, setTab] = useState<EditCollection>(() => TABS[0] ?? "champions");
   const [rows, setRows] = useState<ContentRow[]>([]);
   const [listError, setListError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -259,16 +375,18 @@ export function ContentPage({ api, icons }: ContentPageProps): React.JSX.Element
         onRefresh={refreshStatus}
       />
 
-      <div style={{ display: "flex", gap: 8 }}>
-        {TABS.map((t) => (
-          <Btn key={t} kind={t === tab ? "primary" : "ghost"} onClick={() => setTab(t)}>
-            {COLLECTION_LABEL[t]}
-            <span style={{ color: TEXT_DIM, marginLeft: 6, fontWeight: 400 }}>
-              {t === tab ? rows.length : ""}
-            </span>
-          </Btn>
-        ))}
-      </div>
+      {TABS.length > 1 && (
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+          {TABS.map((t) => (
+            <Btn key={t} kind={t === tab ? "primary" : "ghost"} onClick={() => setTab(t)}>
+              {COLLECTION_LABEL[t]}
+              <span style={{ color: TEXT_DIM, marginLeft: 6, fontWeight: 400 }}>
+                {t === tab ? rows.length : ""}
+              </span>
+            </Btn>
+          ))}
+        </div>
+      )}
 
       <ErrorBanner text={listError} />
 
@@ -332,7 +450,7 @@ export function ContentPage({ api, icons }: ContentPageProps): React.JSX.Element
               gen={gen}
               collection={tab}
               id={selectedId}
-              canDelete={CREATABLE.has(tab)}
+              canDelete={DELETABLE.has(tab)}
               onSaved={() => {
                 reloadList(tab);
                 refreshStatus();

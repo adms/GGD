@@ -1,5 +1,5 @@
 /** App shell — boot → login → console with a left nav rail. */
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { pageRequiresSession, useApp, type Page } from "../store";
 import { LoginScreen } from "./LoginScreen";
 import { ConsoleHub } from "./ConsoleHub";
@@ -21,30 +21,49 @@ import { ChangePasswordDialog } from "./ChangePasswordDialog";
 import { Btn, Panel } from "./widgets";
 import { ACCENT, BG, PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "./theme";
 
-const NAV: { page: Page; label: string; emoji: string }[] = [
-  { page: "hub", label: "Console Hub", emoji: "🗂️" },
-  // 帳號審核 sits ABOVE Players deliberately (task #126). It is the one page
-  // with a queue of real people waiting on the operator, and on the family
-  // deploy an un-approved relative cannot play at all until it is used. Burying
-  // it under a dozen content consoles is how the whole feature stayed invisible
-  // for a release. Its nav entry also carries the live pending-count badge.
-  { page: "approvals", label: "帳號審核", emoji: "🛂" },
-  { page: "players", label: "Players", emoji: "👤" },
-  { page: "matches", label: "Matches", emoji: "⚔️" },
-  { page: "replays", label: "對戰回放", emoji: "🎞️" },
-  { page: "announcements", label: "Announcements", emoji: "📢" },
-  { page: "curation", label: "內容白名單", emoji: "✅" },
-  { page: "combatEnv", label: "戰鬥系統", emoji: "⚖️" },
-  { page: "serverOps", label: "系統運維", emoji: "🛠️" },
-  { page: "ai", label: "AI 生成設定", emoji: "🤖" },
-  // The two asset consoles (task #102). They RENDER measurements published by
-  // #99 (models) and #97/#101 (icons); neither counts anything itself.
-  { page: "modelBudget", label: "模型預算", emoji: "📐" },
-  { page: "iconTracking", label: "ICON 生成追蹤", emoji: "🖼️" },
-  { page: "mcoinGrant", label: "M幣 發放", emoji: "🪙" },
+interface NavItem {
+  page: Page;
+  label: string;
+  emoji: string;
+  /** left-rail section header this row lives under */
+  section: string;
+}
+
+// The owner's four-section back-office (directive 2026-07-25). Every EXISTING
+// route stays reachable — this only regroups + adds. The dev-only 內容·素材管理
+// content routes (audio / champions / newHero / abilities / items / vfx /
+// arenas) and 角色語音生成 are SPLICED IN by name from their dev chunk (see the
+// hooks below), so a production build simply shows this section with only its
+// always-present member (內容白名單) under it.
+const SEC_OPS = "營運";
+const SEC_CONTENT = "內容·素材管理";
+const SEC_ASSETS = "資產產線";
+const SEC_SYS = "系統";
+
+const NAV: NavItem[] = [
+  // 營運 — session-gated player/operations surfaces. 帳號審核 leads (task #126):
+  // it is the one page with real people waiting, and it carries the pending badge.
+  { page: "approvals", label: "帳號審核", emoji: "🛂", section: SEC_OPS },
+  { page: "players", label: "Players", emoji: "👤", section: SEC_OPS },
+  { page: "matches", label: "Matches", emoji: "⚔️", section: SEC_OPS },
+  { page: "replays", label: "對戰回放", emoji: "🎞️", section: SEC_OPS },
+  { page: "announcements", label: "Announcements", emoji: "📢", section: SEC_OPS },
+  { page: "mcoinGrant", label: "M幣 發放", emoji: "🪙", section: SEC_OPS },
   // #174: the private deploy's front door — mint a code, see who used it.
-  { page: "invites", label: "邀請碼", emoji: "🎟️" },
-  { page: "audit", label: "Audit log", emoji: "📜" },
+  { page: "invites", label: "邀請碼", emoji: "🎟️", section: SEC_OPS },
+  { page: "audit", label: "Audit log", emoji: "📜", section: SEC_OPS },
+  // 內容·素材管理 — the dev content routes + 角色語音生成 splice in AFTER audit and
+  // BEFORE this always-present member, so the whole section reads contiguously.
+  { page: "curation", label: "內容白名單", emoji: "✅", section: SEC_CONTENT },
+  // 資產產線 — the asset consoles (task #102). They RENDER measurements published
+  // by #99 (models) and #97/#101 (icons); neither counts anything itself.
+  { page: "ai", label: "AI 生成設定", emoji: "🤖", section: SEC_ASSETS },
+  { page: "modelBudget", label: "模型預算", emoji: "📐", section: SEC_ASSETS },
+  { page: "iconTracking", label: "ICON 生成追蹤", emoji: "🖼️", section: SEC_ASSETS },
+  // 系統
+  { page: "hub", label: "Console Hub", emoji: "🗂️", section: SEC_SYS },
+  { page: "combatEnv", label: "戰鬥系統", emoji: "⚖️", section: SEC_SYS },
+  { page: "serverOps", label: "系統運維", emoji: "🛠️", section: SEC_SYS },
 ];
 
 /**
@@ -67,16 +86,38 @@ interface ContentAdmin {
   readonly nav: { page: Page; label: string; emoji: string };
 }
 
-function useContentAdminPage(): ContentAdmin | null {
-  const [loaded, setLoaded] = useState<ContentAdmin | null>(null);
+/**
+ * The 內容·素材管理 SUITE (owner directive 2026-07-25). Same dev gate as before —
+ * a bare `import.meta.env.DEV` early return immediately above a statically
+ * analysable `import("./ContentPage")` — but the chunk now contributes a LIST of
+ * nav routes (m.CONTENT_ROUTES: audio · champions · newHero · abilities · items
+ * · vfx · arenas) and a `render` function that mounts the right dev page for
+ * each. Everything (routes, labels, editor engine, write module) still travels
+ * with this one chunk, so a production build contains none of it. All routes
+ * stay OUT of SESSION_REQUIRED_PAGES → loopback no-login editing is preserved.
+ */
+interface ContentSuite {
+  readonly routes: readonly NavItem[];
+  readonly render: (page: Page, onNavigate: (page: string, selectId?: string) => void) => React.JSX.Element | null;
+}
+
+function useContentSuite(): ContentSuite | null {
+  const [loaded, setLoaded] = useState<ContentSuite | null>(null);
   useEffect(() => {
     if (!import.meta.env.DEV) return;
     let alive = true;
     void import("./ContentPage").then(
       (m) => {
-        // the LABEL travels with the chunk too, so a production bundle does not
-        // even contain the string "內容管理" for a page it cannot mount
-        if (alive) setLoaded({ Page: m.ContentPageRoot, nav: { ...m.CONTENT_NAV } });
+        if (!alive) return;
+        // labels + routes travel WITH the chunk, so a production bundle does not
+        // even contain the strings for pages it cannot mount.
+        const routes: NavItem[] = m.CONTENT_ROUTES.map((r) => ({
+          page: r.page as Page,
+          label: r.label,
+          emoji: r.emoji,
+          section: m.CONTENT_SECTION,
+        }));
+        setLoaded({ routes, render: (page, onNav) => m.renderContentDevPage(page, onNav) });
       },
       () => undefined,
     );
@@ -149,15 +190,33 @@ function useIsNarrow(): boolean {
   return narrow;
 }
 
-/** Slot a dev-only nav entry immediately after `after`, or append. */
-function insertAfter(
-  nav: readonly { page: Page; label: string; emoji: string }[],
-  after: Page,
-  entry: { page: Page; label: string; emoji: string },
-): { page: Page; label: string; emoji: string }[] {
+const CONTENT_SUITE_PAGES: ReadonlySet<Page> = new Set<Page>([
+  "audio",
+  "champions",
+  "newHero",
+  "abilities",
+  "items",
+  "vfx",
+  "arenas",
+]);
+
+/** True for a 內容·素材管理 route that the dev chunk owns (so we can show a spinner). */
+function isContentSuitePage(page: Page): boolean {
+  return CONTENT_SUITE_PAGES.has(page);
+}
+
+/** Slot a block of dev-only nav entries immediately after `after`, or append. */
+function insertBlockAfter(nav: readonly NavItem[], after: Page, block: readonly NavItem[]): NavItem[] {
   const at = nav.findIndex((n) => n.page === after);
+  if (at < 0) return [...nav, ...block];
+  return [...nav.slice(0, at + 1), ...block, ...nav.slice(at + 1)];
+}
+
+/** Slot a dev-only nav entry immediately BEFORE `before`, or append. */
+function insertBefore(nav: readonly NavItem[], before: Page, entry: NavItem): NavItem[] {
+  const at = nav.findIndex((n) => n.page === before);
   if (at < 0) return [...nav, entry];
-  return [...nav.slice(0, at + 1), entry, ...nav.slice(at + 1)];
+  return [...nav.slice(0, at), entry, ...nav.slice(at)];
 }
 
 export function App(): React.JSX.Element {
@@ -186,7 +245,7 @@ function Console(): React.JSX.Element {
   const account = useApp((s) => s.account);
   const doLogout = useApp((s) => s.doLogout);
   const showLogin = useApp((s) => s.showLogin);
-  const contentAdmin = useContentAdminPage();
+  const contentSuite = useContentSuite();
   const voiceAdmin = useVoiceGenPage();
   const narrow = useIsNarrow();
   const pendingCount = useApp((s) => s.pendingCount);
@@ -214,15 +273,18 @@ function Console(): React.JSX.Element {
   // 變更密碼 lives on the LOGGED-IN side only: the platform route needs both a
   // session and the current password, so there is nothing to show without one.
   const [changingPassword, setChangingPassword] = useState(false);
-  // the entry exists only when the dev-only chunk actually loaded, and its
-  // label comes FROM that chunk (see useContentAdminPage). Positioned BY NAME
-  // rather than by a hard-coded index — the index form silently mis-slotted
-  // 內容管理 the moment a page was added above it.
+  // The dev content routes exist only when the dev chunk loaded; their labels
+  // come FROM that chunk. Spliced BY NAME into 內容·素材管理: the content block
+  // right after 營運's last row (audit), then 角色語音生成 right before the
+  // always-present 內容白名單 — so the section reads audio · … · arenas · voiceGen
+  // · curation. A production build shows the section with only curation.
   const withContent =
-    contentAdmin === null ? NAV : insertAfter(NAV, "announcements", contentAdmin.nav);
-  // 角色語音生成 sits with the other asset consoles, right after ICON 生成追蹤
+    contentSuite === null ? NAV : insertBlockAfter(NAV, "audit", contentSuite.routes);
   const nav =
-    voiceAdmin === null ? withContent : insertAfter(withContent, "iconTracking", voiceAdmin.nav);
+    voiceAdmin === null
+      ? withContent
+      : insertBefore(withContent, "curation", { ...voiceAdmin.nav, section: SEC_CONTENT });
+  const onNavigate = (p: string, _selectId?: string): void => navigate(p as Page);
 
   // THE SPLIT GATE (task #102): a page whose data lives on the Go platform admin
   // API needs a real operator session; the content editor + local consoles do
@@ -266,12 +328,30 @@ function Console(): React.JSX.Element {
               : { display: "flex", flexDirection: "column", gap: 4, flex: 1 }
           }
         >
-          {nav.map((n) => {
+          {nav.map((n, i) => {
             const active = n.page === page;
             const locked = account === null && pageRequiresSession(n.page);
+            // a dim section header whenever the section changes — only in the
+            // column layout (in the narrow horizontal strip a header would break
+            // the single scrollable row)
+            const showHeader = !narrow && (i === 0 || nav[i - 1]!.section !== n.section);
             return (
+              <Fragment key={n.page}>
+                {showHeader && (
+                  <div
+                    style={{
+                      fontSize: 10,
+                      fontWeight: 700,
+                      letterSpacing: 1,
+                      color: TEXT_DIM,
+                      opacity: 0.7,
+                      margin: i === 0 ? "0 0 4px 8px" : "12px 0 4px 8px",
+                    }}
+                  >
+                    {n.section}
+                  </div>
+                )}
               <button
-                key={n.page}
                 onClick={() => navigate(n.page)}
                 title={locked ? "需登入（平台管理 API）" : undefined}
                 style={{
@@ -315,6 +395,7 @@ function Console(): React.JSX.Element {
                 )}
                 {locked && <span style={{ marginLeft: 6, fontSize: 11, opacity: 0.7 }}>🔒</span>}
               </button>
+              </Fragment>
             );
           })}
         </nav>
@@ -391,9 +472,10 @@ function Console(): React.JSX.Element {
             {page === "replays" && <ReplaysPage />}
             {page === "announcements" && <AnnouncementsPage />}
             {page === "curation" && <CurationPage />}
-            {page === "content" && contentAdmin !== null && <contentAdmin.Page />}
-            {page === "content" && contentAdmin === null && (
-              <div style={{ color: TEXT_DIM, padding: 8 }}>載入編輯器…</div>
+            {/* 內容·素材管理 dev routes — all mounted from the one dev chunk. */}
+            {contentSuite !== null && contentSuite.render(page, onNavigate)}
+            {contentSuite === null && isContentSuitePage(page) && (
+              <div style={{ color: TEXT_DIM, padding: 8 }}>載入內容·素材管理…</div>
             )}
             {page === "combatEnv" && <CombatEnvPage />}
             {page === "serverOps" && <ServerOpsPage />}

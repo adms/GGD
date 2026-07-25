@@ -29,6 +29,24 @@ export type Page =
    * string literal and keeps navigation type-safe.
    */
   | "content"
+  /**
+   * The 內容·素材管理 back-office routes (owner directive 2026-07-25). Each is a
+   * per-collection view over the SAME ContentPage editor engine (or, for
+   * `audio`/`newHero`, a sibling dev page in the same chunk). ALL are DEV BUILDS
+   * ONLY — reached exclusively through App's `import.meta.env.DEV`-guarded
+   * dynamic import of ./ContentPage — and ALL stay OUT of
+   * SESSION_REQUIRED_PAGES so the loopback no-login editing parity with
+   * "content"/"voiceGen" holds. `audio` iframes the two audition pages (read-only
+   * cross-origin) + the same-origin voice board; `champions`/`abilities`/`items`
+   * /`vfx`/`arenas` route the editor; `newHero` is the 新英雄模板 wizard.
+   */
+  | "audio"
+  | "champions"
+  | "newHero"
+  | "abilities"
+  | "items"
+  | "vfx"
+  | "arenas"
   | "combatEnv"
   /**
    * 系統運維 (server ops) — the operational numbers: 同時對戰上限 + 快照頻率
@@ -216,7 +234,7 @@ export const appStore = createStore<AppState>()((set, get) => ({
     const devDropIn = opts?.devDropIn ?? contentEditorDropInEnabled();
     // Where a session-less console lands: the content editor in dev, otherwise
     // the hub (only reached post-login in a production build).
-    const landing: Page = devDropIn ? "content" : "hub";
+    const landing: Page = devDropIn ? "champions" : "hub";
     set({ devDropIn });
 
     if (!api.hasSession) {
@@ -282,7 +300,7 @@ export const appStore = createStore<AppState>()((set, get) => ({
     // approval queue depth goes back to "unknown" — it is operator-visible
     // information about real people and must not outlive the session.
     if (get().devDropIn) {
-      set({ screen: "console", account: null, page: "content", notAuthorized: false, pendingCount: -1 });
+      set({ screen: "console", account: null, page: "champions", notAuthorized: false, pendingCount: -1 });
     } else {
       set({ screen: "login", account: null, page: "hub", notAuthorized: false, pendingCount: -1 });
     }
