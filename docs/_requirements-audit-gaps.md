@@ -2412,3 +2412,27 @@ main 的 `icons.test.ts` 明文採「AUTHORITY MODEL」：424 個 embedded 沒�
 - **順修**：草泥馬 W/E 編號互換（92-03/92-02）、鬼眼狂刀無名→無明神風流（kana ムミョウ 本就正確、只改字不需重錄）
 - 覆核把關戰績：駁回「牙突→縮地」誤改（牙突是桀諾正典ドラゴンランス，縮地反是瀨田宗次郎的招）；基廉列克廬山昇龍破查 reconciliation 確認是原作者梗名（豁免）
 - 6 句語音重生（osam×3/hvwd/ogld/huth），雙鏡像+讀音登錄同步，content:build 綠，試聽頁重建
+
+---
+
+## 2026-07-26 新增需求（owner 本場提出，立即登錄）
+
+| 需求（原話精神） | 任務 | 狀態 | 備註 / 相依 |
+|---|---|---|---|
+| 「請在後台 **發放M幣的地方**也可以設定**發放藍水晶**，以及**一鍵發放所有帳號藍水晶**的功能」 | **#225** | ✅ 已實作（`feat/admin-crystal-grant`） | 單筆 + 批次兩支端點，**放在 `internal/admin` 而非 `internal/wallet`**（見下方註記）。UI 沿用同一頁 `MCoinGrantPage`（新增兩個 Panel），純邏輯抽到 `apps/admin/src/crystalGrant.ts` |
+
+#### 🔎 #225 實作註記：兩個「後台 M 幣入口」，而發放頁用的那個**沒有稽核**
+盤點時發現後台其實有**兩條** M 幣路徑，而「M幣 發放」頁走的是沒有稽核的那條：
+
+1. `POST /api/v1/wallet/admin/grant-mcoin`（`internal/wallet`）— **發放頁實際呼叫的**。授權只靠 service 內的 `caller.HasRole("admin")`（**不檢查 banned / #126 approved**），且**不寫任何稽核行**。
+2. `POST /api/v1/admin/accounts/{id}/mcoin`（`internal/admin`）— 玩家列表頁走的。`AdminOnly` middleware + 寫 `mcoin_adjust` 稽核。
+
+需求明訂「每一筆發放都要進稽核」，所以新的水晶端點**必須**放在 `internal/admin`：稽核 writer 與 `AdminOnly` 都在那裡，而 `internal/wallet` **不可能**自己寫稽核（`admin` import `wallet`，反向就是循環——`wallet/meta.go` 把 `roleAdmin = "admin"` 寫成字面常數就是為了閃這個循環）。因此：
+- 新端點：`POST /admin/accounts/{id}/crystal`、`POST /admin/crystals/grant-all`，均在 `r.Route("/admin", …)` 內自動繼承 `AdminOnly`（roled + 未 ban + 已審核），比 grant-mcoin 的閘**更強**，沒有削弱任何既有防線。
+- 稽核：單筆 `crystal_grant`（targetId = 帳號，detail `{amount, balance, reason}`）；批次**只寫一行** `crystal_grant_all`（targetId = `"*"`，detail `{amount, accounts, granted, failed, reason}`），符合「批次只記一次 + 帶影響帳號數」。`AuditPage` 的 `ACTION_LABEL` 已補這兩個動作。
+- **nginx 不需改動**：`nginx/nginx.conf` 已有泛用 `location /api/`，沒有新增任何對外暴露面。
+
+#### 🔎 #225 實作註記：兩個容易踩的坑（都已避開）
+- **不可重用 #204 的 `BackfillWelcomeCrystals`**。它委派 `SeedNewAccountCrystals`，冪等規則是「已有 walletmeta 記錄就跳過」——線上幾乎每個帳號都有記錄，一鍵發放走它會**回報成功但幾乎一個都沒發到**。只借形狀（逐帳號迴圈、granted/failed 計數、首個錯誤浮出、絕不中斷），`GGD_BACKFILL_WELCOME_CRYSTALS` **維持 0、完全沒動**。新動作是**可重複執行**的操作員動作（跑兩次就每人兩份），所以 UI 才必須有明確確認步驟。
+- **不可用 `CrystalOf` + `SetCrystalAbsolute` 拼發放**。那是跨兩次呼叫的 read-modify-write，會和結算（寫絕對值）競爭，批次迴圈更把窗口拉到整個迴圈長度。新增 `wallet.Service.AddCrystal`，建在既有 `mutateMeta`（`metaLocks.Lock(accountID)`）之上，單筆與批次共用同一個上鎖的變更點。
+- **金額一律伺服器端驗證**：正整數、上限 `admin.MaxCrystalGrant`（1,000,000，防打錯零而非經濟規則）；**負數直接拒絕不做 clamp**——餘額下限是 0，收負數等於「把玩家水晶歸零」而不是扣除。批次失敗採「逐帳號收集、首個錯誤浮出、成功的照樣算數」，因為每筆都是單鍵上鎖 RMW，中途失敗不會留下半寫的餘額。

@@ -8,6 +8,10 @@ import { GOLD, TEXT_DIM, TEXT_MAIN } from "./theme";
 
 const ACTION_LABEL: Record<string, string> = {
   mcoin_adjust: "M COIN adjust",
+  crystal_grant: "藍水晶 grant",
+  // The bulk grant is ONE line for the whole run, with targetId "*" and the
+  // affected-account count in the detail — not one line per account.
+  crystal_grant_all: "藍水晶 grant · ALL accounts",
   mmr_set: "MMR set",
   ban: "Ban",
   unban: "Unban",

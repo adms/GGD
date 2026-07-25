@@ -390,6 +390,139 @@ func (s *Service) AdjustMCoin(ctx context.Context, adminID, targetID string, del
 	return next, nil
 }
 
+// MaxCrystalGrant is the largest 藍水晶 amount one operator action may hand out
+// per account (task #225). It is a TYPO GUARD, not an economy rule: at
+// wallet.CrystalUnlockCost (300) it is still ~3,333 champion unlocks, far past
+// any grant the owner would mean, while an extra couple of zeros on a bulk
+// "give everyone 1000" is refused instead of silently minting a number nobody
+// can spend. The same bound applies to the single and the bulk grant so the
+// console cannot reach a value through one door that the other refuses.
+const MaxCrystalGrant = 1_000_000
+
+// GrantCrystal adds 藍水晶 to ONE account on an operator's behalf and records an
+// audit line (task #225). Returns the target's resulting balance.
+//
+// Additive, never absolute: two grants of 500 mean 1000. amount is validated by
+// the handler (positive, <= MaxCrystalGrant) and re-checked here so a future
+// non-HTTP caller cannot skip it. A missing account is a clean 404 BEFORE any
+// balance moves.
+func (s *Service) GrantCrystal(ctx context.Context, adminID, targetID string, amount int, reason string) (int, error) {
+	if err := validCrystalAmount(amount); err != nil {
+		return 0, err
+	}
+	if _, err := s.accounts.GetByID(ctx, targetID); err != nil {
+		return 0, notFoundOr(err)
+	}
+	next, err := s.wallet.AddCrystal(ctx, targetID, amount)
+	if err != nil {
+		return 0, err
+	}
+	if err := s.audit(ctx, adminID, "crystal_grant", targetID, map[string]any{
+		"amount": amount, "balance": next, "reason": reason,
+	}); err != nil {
+		return 0, err
+	}
+	return next, nil
+}
+
+// BulkGrantResult is the outcome of a 一鍵發放 run: every account that exists was
+// attempted exactly once, and each landed in exactly one of granted/failed.
+//
+// FirstError is carried IN THE RESULT rather than returned as an error because a
+// partial failure is a reportable outcome here, not a failed request: 900 of 901
+// accounts really were granted, and an operator who is shown a bare error learns
+// neither that nor whether to re-run (re-running would double-grant the 900).
+// GrantCrystalAll's error return is reserved for failures where NOTHING was
+// attempted — a bad amount or an unreadable account directory.
+type BulkGrantResult struct {
+	// Accounts is how many accounts existed and were attempted.
+	Accounts int `json:"accounts"`
+	// Granted is how many balances actually moved.
+	Granted int `json:"granted"`
+	// Failed is how many accounts errored. Their balances are UNCHANGED (each
+	// grant is one locked read-modify-write), never half-written.
+	Failed int `json:"failed"`
+	// FirstError is the first per-account (or audit-write) failure message, empty
+	// when everything succeeded.
+	FirstError string `json:"firstError,omitempty"`
+}
+
+// GrantCrystalAll is 一鍵發放所有帳號藍水晶: the same additive grant applied to
+// EVERY account that exists, in one operator action (task #225).
+//
+// IT IS NOT THE #204 BACKFILL AND MUST NOT BE BUILT ON IT.
+// wallet.BackfillWelcomeCrystals delegates to SeedNewAccountCrystals, whose
+// idempotency rule is "skip any account that already has a walletmeta record".
+// On a live deploy essentially every account has one, so routing an operator
+// bulk grant through it would report success and grant almost nobody. This is a
+// deliberately REPEATABLE action with no skip rule: run it twice and everyone
+// gets it twice, which is what 「一鍵發放」 means. Only the SHAPE is borrowed —
+// per-account loop, counters, first error surfaced, never abort.
+//
+// Accounts are enumerated with store.Scan (the files that actually exist) rather
+// than accounts.List (the derived _index.json), because a missing index reads as
+// an EMPTY collection: a 一鍵發放 that silently grants zero accounts and reports
+// success is the failure mode worth paying a directory listing to avoid.
+//
+// PARTIAL FAILURE IS BOUNDED, NOT ROLLED BACK. Each account is one locked
+// read-modify-write, so a mid-loop failure leaves earlier accounts correctly
+// granted and later ones untouched — no account is ever left with a half-written
+// balance. The audit line is written ONCE, AFTER the loop, and carries the
+// counts; a failure to write it does not undo the balances, so the returned
+// error means "the grants happened but the log did not", which is the honest
+// thing for the operator to see.
+func (s *Service) GrantCrystalAll(ctx context.Context, adminID string, amount int, reason string) (BulkGrantResult, error) {
+	if err := validCrystalAmount(amount); err != nil {
+		return BulkGrantResult{}, err
+	}
+	ids, err := s.store.Scan(account.ColAccounts)
+	if err != nil {
+		return BulkGrantResult{}, err
+	}
+	out := BulkGrantResult{Accounts: len(ids)}
+	var firstErr error
+	for _, id := range ids {
+		if _, err := s.wallet.AddCrystal(ctx, id, amount); err != nil {
+			out.Failed++
+			if firstErr == nil {
+				firstErr = err
+			}
+			continue
+		}
+		out.Granted++
+	}
+	// ONE line for the whole operation, with the affected-account count — the
+	// targetId is a sentinel rather than an empty string so the console's Target
+	// column is never blank.
+	if auditErr := s.audit(ctx, adminID, "crystal_grant_all", "*", map[string]any{
+		"amount": amount, "accounts": out.Accounts, "granted": out.Granted,
+		"failed": out.Failed, "reason": reason,
+	}); auditErr != nil && firstErr == nil {
+		firstErr = auditErr
+	}
+	if firstErr != nil {
+		out.FirstError = firstErr.Error()
+	}
+	slog.Warn("admin: bulk crystal grant", "by", adminID, "amount", amount,
+		"accounts", out.Accounts, "granted", out.Granted, "failed", out.Failed, "firstError", out.FirstError)
+	return out, nil
+}
+
+// validCrystalAmount enforces the operator-grant bounds: a whole positive
+// amount no larger than MaxCrystalGrant. Zero and negative are refused rather
+// than clamped — the meta record floors at 0, so accepting a negative amount
+// would quietly WIPE a balance instead of deducting from it, and "deduct
+// crystals" is not a feature this surface offers.
+func validCrystalAmount(amount int) error {
+	if amount <= 0 {
+		return httpx.BadRequest("amount must be a positive whole number")
+	}
+	if amount > MaxCrystalGrant {
+		return httpx.BadRequest("amount out of range")
+	}
+	return nil
+}
+
 // SetMMR sets an ABSOLUTE MMR (keeping games/wins), re-ZADDs the leaderboard,
 // and audits.
 func (s *Service) SetMMR(ctx context.Context, adminID, targetID string, mmr int, reason string) error {

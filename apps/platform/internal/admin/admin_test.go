@@ -38,6 +38,8 @@ func adminRoutes(targetID string) []struct{ method, path string } {
 		{http.MethodGet, "/api/v1/admin/accounts"},
 		{http.MethodGet, "/api/v1/admin/accounts/" + targetID},
 		{http.MethodPost, "/api/v1/admin/accounts/" + targetID + "/mcoin"},
+		{http.MethodPost, "/api/v1/admin/accounts/" + targetID + "/crystal"},
+		{http.MethodPost, "/api/v1/admin/crystals/grant-all"},
 		{http.MethodPost, "/api/v1/admin/accounts/" + targetID + "/mmr"},
 		{http.MethodPost, "/api/v1/admin/accounts/" + targetID + "/ban"},
 		{http.MethodPost, "/api/v1/admin/accounts/" + targetID + "/unban"},
