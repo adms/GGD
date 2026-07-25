@@ -151,6 +151,8 @@ const DRAW_DISTANCE_MAX = 300;
  * (hurt-heavy grunt); anything lighter is the short hurt. A killing blow is
  * always heavy. Contextual-voice only — never a sim value. */
 const HURT_HEAVY_FRACTION = 0.18;
+/** Idle seconds before the "hum" line may roll (the idle latch is the real gate). */
+const HUM_IDLE_MS = 10_000;
 interface PendingAuth {
   entityId: number;
   x: number;
@@ -325,6 +327,13 @@ export class GameApp {
   private readonly entityScratch: EntityViewState[] = [];
   /** entity id → last tick's CC bitmask, for the contextual status-voice edge. */
   private readonly prevEntityFlags = new Map<number, number>();
+  /**
+   * hum idle latch (voice-binding-design.md §三): the last time the LOCAL player
+   * did anything — issued an order (IntentSender.onSent) or took/received a
+   * damage/heal event. After HUM_IDLE_MS of silence the frame loop rolls the
+   * quiet "hum" line. -Infinity so a fresh match does not hum before any input.
+   */
+  private lastLocalActivityMs = -Infinity;
   /** reused: champion entity id of each local player (-1 = none) — task #85. */
   private readonly focusLocalEntities: number[] = [];
   /** reused: each local player's OWN duel decided? (task #208 — lifts the #85 wash). */
@@ -559,6 +568,8 @@ export class GameApp {
       if (msg.order) this.prediction.recordInput(msg.seq, msg.order);
       // ping estimate: stamp each seq so the ack delta measures RTT
       this.connStats.noteSent(msg.seq, performance.now());
+      // hum idle latch: any issued input means you are NOT idle (voice §三).
+      this.noteLocalCombat();
     };
 
     frameBus.project = (x, y, z) => this.cameraRig.projectToScreen(x, y, z);
@@ -573,7 +584,17 @@ export class GameApp {
       onCommand: (cmd) => this.sender.pushCommand(cmd, performance.now()),
       onSelectSelf: () => {
         const champ = this.localChampionId();
-        if (champ) void playChampionSelectVoice(champ);
+        if (!champ) return;
+        // click-self quip: 二擇一 (client Math.random) between the select-voice
+        // ladder (map-quip / soundset / #139 名言) and the generated pack's own
+        // `quote` line, so both channels are exercised but only ONE voice fires
+        // per click (anti-pollution 「同一時間一句」; voice-binding-design.md §三).
+        // The pack-quote rides playContextualVoice → the shared throttle + the
+        // in-flight de-dup; a hero with no `quote` line falls through to nothing,
+        // so bias toward the always-available ladder when the coin picks quote
+        // but the pack is empty is handled by playContextualVoice returning false.
+        if (Math.random() < 0.5 && playContextualVoice(champ, "quote")) return;
+        void playChampionSelectVoice(champ);
       },
       onZoom: (deltaY) => this.cameraRig.zoomBy(deltaY),
       onToggleFollow: () => this.cameraRig.toggleFollow(),
@@ -1139,8 +1160,12 @@ export class GameApp {
         // CONTEXTUAL VOICE — a CC status line on the 0→1 flag edge (client-side
         // edge detector over the authoritative bitmask; no sim edit). poison/blind
         // have no ENTITY_FLAG bit, so they stay dormant (see manifest).
-        this.dispatchStatusVoice(es.id, es.flags);
+        this.dispatchStatusVoice(es.id, es.flags, localId);
       });
+      // hum — the LOCAL champion idles a quiet line after HUM_IDLE_MS of no
+      // input / combat. Suppressed during the settlement freeze (the match is
+      // over, the hero is pinned for the front-view). Client-only cosmetic.
+      if (!frozen) this.maybeHum(nowMs, localId);
     } else {
       this.remoteSteps.reset();
     }
@@ -1484,7 +1509,16 @@ export class GameApp {
       const target = Number(d.target);
       if (d.crit === true) {
         const attacker = this.championIdForEntity(source);
-        if (attacker) playContextualVoice(attacker, "crit");
+        // No genuine non-crit heavy-swing signal exists, so attack-heavy rides
+        // the crit edge: 二擇一 (client Math.random) between the existing "crit"
+        // line and "attack-heavy" so a crit fires exactly ONE of them, never both
+        // (voice-binding-design.md §三). Own buckets → no shared cooldown.
+        if (attacker) playContextualVoice(attacker, Math.random() < 0.5 ? "crit" : "attack-heavy");
+      }
+      // block is gated to the LOCAL defender: a hit you fully/partly warded off.
+      if (d.blocked === true && localId !== null && target === localId) {
+        const blocker = this.championIdForEntity(target);
+        if (blocker) playContextualVoice(blocker, "block");
       }
       // hurt is gated to the LOCAL victim so only your own champion grunts.
       if (localId !== null && target === localId) {
@@ -1497,6 +1531,31 @@ export class GameApp {
             d.killingBlow === true || (maxHp > 0 && amount / maxHp >= HURT_HEAVY_FRACTION);
           playContextualVoice(victim, heavy ? "hurt-heavy" : "hurt");
         }
+        this.noteLocalCombat(); // reset the hum idle latch — you are in a fight
+      }
+      return;
+    }
+    if (ev.type === "heal") {
+      // healed — only when YOUR champion is the one restored (discrete heals only;
+      // per-tick regen is never emitted, revive rides reviveComplete elsewhere).
+      const target = Number(d.target);
+      if (localId !== null && target === localId) {
+        const champ = this.championIdForEntity(target);
+        if (champ) playContextualVoice(champ, "healed");
+        this.noteLocalCombat(); // being healed counts as activity
+      }
+      return;
+    }
+    if (ev.type === "evade") {
+      // dodge — a total miss on YOUR champion. The `evade` event rides the same
+      // queuedEvents drain as damage (RoomConnection.bind pushes it to both the
+      // frame queue and the WorldAnchorLayer sighting buffer), so this is the
+      // clean seam — no socket-callback fanout, no double-drain of the buffer.
+      const target = Number(d.target);
+      if (localId !== null && target === localId) {
+        const champ = this.championIdForEntity(target);
+        if (champ) playContextualVoice(champ, "dodge");
+        this.noteLocalCombat(); // dodging is combat activity
       }
       return;
     }
@@ -1515,16 +1574,57 @@ export class GameApp {
    * bitmask itself is authoritative). Only the freshly-SET bit speaks, so a
    * status that lingers across many ticks says its line once, not every frame.
    */
-  private dispatchStatusVoice(entityId: number, flags: number): void {
+  private dispatchStatusVoice(entityId: number, flags: number, localId: number | null): void {
     const prev = this.prevEntityFlags.get(entityId) ?? 0;
     this.prevEntityFlags.set(entityId, flags);
     const rose = flags & ~prev; // bits newly set this tick
     if (rose === 0) return;
     const champ = this.championIdForEntity(entityId);
     if (!champ) return;
-    if (rose & ENTITY_FLAG.STUNNED) playContextualVoice(champ, "stun");
+    const isLocal = localId !== null && entityId === localId;
+    // CC lines (any champion the edge detector can see). A local hard-CC edge
+    // additionally rolls a 怒罵 "curse" — 二擇一 (client Math.random) so a stun
+    // never stacks two voices on the same frame (voice-binding-design.md §三).
+    if (rose & ENTITY_FLAG.STUNNED) {
+      if (isLocal && Math.random() < 0.5) playContextualVoice(champ, "curse");
+      else playContextualVoice(champ, "stun");
+    }
     if (rose & ENTITY_FLAG.SLOWED) playContextualVoice(champ, "slow");
-    if (rose & ENTITY_FLAG.ROOTED) playContextualVoice(champ, "bind");
+    if (rose & ENTITY_FLAG.ROOTED) {
+      if (isLocal && Math.random() < 0.5) playContextualVoice(champ, "curse");
+      else playContextualVoice(champ, "bind");
+    }
+    // T1 self-only movement/attack lines: only YOUR champion narrates its own
+    // basic-attack windup and dash, on the flag's rising edge (never per frame).
+    if (isLocal) {
+      // attack-light rides its own low-prob/high-cooldown policy so a ~0.7 s auto
+      // does NOT shout every swing (owner hard rule).
+      if (rose & ENTITY_FLAG.WINDUP) playContextualVoice(champ, "attack-light");
+      if (rose & ENTITY_FLAG.DASHING) playContextualVoice(champ, "sprint");
+    }
+  }
+
+  /** Mark the local player active NOW, resetting the hum idle latch (voice §三). */
+  private noteLocalCombat(): void {
+    this.lastLocalActivityMs =
+      typeof performance !== "undefined" ? performance.now() : Date.now();
+  }
+
+  /**
+   * Roll the idle "hum" line once the LOCAL player has been silent for
+   * HUM_IDLE_MS. The idle latch is the real gate; the per-category cooldown
+   * (20 s) + low prob keep it from chattering between fights. Client-only, and
+   * the shared throttle/de-dup layer still applies inside playContextualVoice.
+   */
+  private maybeHum(nowMs: number, localId: number | null): void {
+    if (localId === null) return;
+    if (nowMs - this.lastLocalActivityMs < HUM_IDLE_MS) return;
+    const champ = this.championIdForEntity(localId);
+    if (!champ) return;
+    // Re-arm the latch to nowMs whether or not the roll fires, so a blocked roll
+    // waits another full idle window instead of retrying every frame.
+    this.lastLocalActivityMs = nowMs;
+    playContextualVoice(champ, "hum");
   }
 
   /**

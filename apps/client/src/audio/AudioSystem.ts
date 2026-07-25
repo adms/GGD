@@ -223,6 +223,20 @@ export interface SfxPlayOptions {
    * taking the incumbent's slots.
    */
   gateKey?: string;
+  /**
+   * Fired exactly once when this clip's playback is DONE — the natural end
+   * (`src.onended`), a load/decode failure (404, undecodable buffer), or a
+   * throw while wiring the graph. It NEVER fires for a call `playClip` refused
+   * synchronously (locked/muted/disposed → returns false without scheduling),
+   * so the caller can pair `if (playClip(...)) …` with an onEnded that only
+   * runs for calls that were actually taken.
+   *
+   * WHY: the contextual-voice de-dup (`activeClips`) needs a caller-visible
+   * "this clip is no longer sounding" signal to clear its in-flight entry —
+   * without one, a clip self-mutes permanently after its first play. Every
+   * terminal path calls it so an entry can never leak on a 404/decode-fail.
+   */
+  onEnded?: () => void;
 }
 
 /**
@@ -887,8 +901,22 @@ export class AudioSystem {
     const volMul = sfxVoiceMultiplier(opts?.volume);
     const pan = opts?.pan;
     const lowpassHz = opts?.lowpassHz;
+    // Fire the caller's onEnded EXACTLY once across every terminal path (natural
+    // end, load/decode fail, wiring throw). `playClip` already returned true, so
+    // the caller has committed its in-flight state and needs the release signal
+    // even when the buffer never decodes (else e.g. activeClips leaks on a 404).
+    const onEnded = opts?.onEnded;
+    let ended = false;
+    const fireEnded = (): void => {
+      if (ended || !onEnded) return;
+      ended = true;
+      onEnded();
+    };
     void this.loadBuffer(path).then((buffer) => {
-      if (!buffer || this.disposed) return;
+      if (!buffer || this.disposed) {
+        fireEnded();
+        return;
+      }
       let gain: GainNode | null = null;
       let chain: SpatialChain | null = null;
       try {
@@ -909,6 +937,7 @@ export class AudioSystem {
         src.onended = (): void => {
           this.safeDisconnect(src, g);
           c?.dispose();
+          fireEnded();
         };
         src.start();
       } catch (err) {
@@ -921,6 +950,7 @@ export class AudioSystem {
         }
         chain?.dispose();
         this.warn(`clip ${path} failed`, err);
+        fireEnded();
       }
     });
     return true;

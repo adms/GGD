@@ -684,6 +684,36 @@ describe("AudioSystem playClip voice seam (voice-playclip)", () => {
     expect(ctx.started.length).toBe(started); // nothing started for the 404
     sys.dispose();
   });
+
+  it("fires onEnded on the natural end (the contextualVoice de-dup release seam)", async () => {
+    cover("voice-playclip");
+    const { sys, ctxRef } = build();
+    await sys.loadMap();
+    sys.unlock();
+    await flush();
+    const ctx = ctxRef()!;
+    let ended = 0;
+    expect(sys.playClip("assets/audio/voice/sela-sel1.mp3", { onEnded: () => ended++ })).toBe(true);
+    await flush();
+    expect(ended).toBe(0); // still sounding
+    ctx.started[ctx.started.length - 1]!.end(); // clip finishes
+    expect(ended).toBe(1); // released exactly once
+  });
+
+  it("fires onEnded even when the clip 404s, so an activeClips entry never leaks", async () => {
+    cover("voice-playclip");
+    const { sys } = build();
+    await sys.loadMap();
+    sys.unlock();
+    await flush();
+    let ended = 0;
+    // playClip returns true synchronously, but the buffer never decodes (404) —
+    // the early return must STILL fire onEnded or the de-dup entry is stuck.
+    expect(sys.playClip("assets/audio/sfx/nope.mp3", { onEnded: () => ended++ })).toBe(true);
+    await flush();
+    expect(ended).toBe(1);
+    sys.dispose();
+  });
 });
 
 // task #63: SFX load PER SCENE, not all at boot. A small UI core is warmed on

@@ -39,6 +39,14 @@ import { packClips, pickSelectClip, type ChampionVoicePack } from "./selectVoice
 export const GLOBAL_MIN_GAP_MS = 1_200;
 /** A single champion never fires two contextual lines closer than this. */
 export const CHAMP_MIN_GAP_MS = 1_500;
+/**
+ * Belt-and-suspenders release for the in-flight de-dup: if `playClip`'s onEnded
+ * never fires (a missing audio backend, a leaked BufferSource), the clip's
+ * `activeClips` entry is force-cleared after this long so the same line can
+ * never self-mute permanently. Longer than any shipped voice line (max ~18 s
+ * stings are BGM, not contextual lines — those are ≤ a few seconds).
+ */
+export const CLIP_SAFETY_MS = 8_000;
 
 /** Per-category dispatch policy. */
 export interface CategoryPolicy {
@@ -94,6 +102,35 @@ export function policyFor(category: string): CategoryPolicy {
     case "slow":
     case "bind":
       return { prob: 0.6, cooldownMs: 2_500, preempt: false };
+    // ── Tier-1 categories (voice-binding-design.md §三) ──────────────────────
+    case "quote":
+      // pack 名言 at the select-confirm / settlement / click-self moments; those
+      // moments self-latch, so this is a gentle flavour roll, not a spam risk.
+      return { prob: 0.6, cooldownMs: 2_500, preempt: false };
+    case "attack-light":
+      // OWNER HARD RULE: a basic auto fires WINDUP ~1.4×/s, so this MUST be low
+      // prob + high cooldown or it washes the channel. Never per-swing.
+      return { prob: 0.08, cooldownMs: 12_000, preempt: false };
+    case "attack-heavy":
+      // Rides the crit signal (二擇一 with "crit" at the call site); mirror crit
+      // tuning but keep its own bucket so the two never share a cooldown.
+      return { prob: 0.25, cooldownMs: 3_000, preempt: false };
+    case "block":
+      return { prob: 0.5, cooldownMs: 2_500, preempt: false };
+    case "dodge":
+      return { prob: 0.5, cooldownMs: 2_500, preempt: false };
+    case "sprint":
+      // Dashing is frequent — moderate prob, longer cooldown.
+      return { prob: 0.3, cooldownMs: 6_000, preempt: false };
+    case "healed":
+      return { prob: 0.4, cooldownMs: 3_000, preempt: false };
+    case "hum":
+      // The client idle latch is the primary gate; keep the roll quiet so it
+      // never chatters between fights.
+      return { prob: 0.15, cooldownMs: 20_000, preempt: false };
+    case "curse":
+      // Received hard-CC 怒罵 (二擇一 with the stun/bind line at the call site).
+      return { prob: 0.4, cooldownMs: 4_000, preempt: false };
     default:
       return DEFAULT_POLICY;
   }
@@ -126,6 +163,14 @@ export class ContextualVoicePlayer {
   private readonly lastCatAt = new Map<string, number>();
   /** `${champId}:${category}` → last clip, so a repeat picks a different one. */
   private readonly lastClip = new Map<string, string>();
+  /**
+   * In-flight de-dup (owner hard rule 「同一個語音不會同時播放」): the set of clip
+   * srcs CURRENTLY sounding. A clip already in here is SKIPPED without overlap or
+   * queue, and — crucially — without burning throttle state, so the same event's
+   * next roll can still pick a different variant. Cleared per-clip on the
+   * playClip onEnded, with a safety timeout backstop.
+   */
+  private readonly activeClips = new Set<string>();
 
   constructor(opts: ContextualVoiceOptions = {}) {
     this.audio = opts.audio ?? audioSystem;
@@ -190,13 +235,31 @@ export class ContextualVoicePlayer {
     );
     if (!clip) return false;
 
+    // IN-FLIGHT DE-DUP: the SAME clip is already sounding — skip it (no overlap,
+    // no queue) WITHOUT burning throttle, so this event's next roll can still
+    // pick a different variant of the same category.
+    if (this.activeClips.has(clip)) return false;
+
     // Commit throttle state only once we are actually going to play.
     this.lastVoiceAt = t;
     this.lastChampAt.set(champId, t);
     this.lastCatAt.set(bucketKey, t);
     this.lastClip.set(clipKey, clip);
 
-    return this.audio.playClip(clip, { volume: 1 });
+    this.activeClips.add(clip);
+    const release = (): void => {
+      this.activeClips.delete(clip);
+    };
+    const ok = this.audio.playClip(clip, { volume: 1, onEnded: release });
+    if (!ok) {
+      // play refused synchronously (disposed / a mid-flight lock) — don't leak.
+      release();
+      return false;
+    }
+    // Backstop: if onEnded never arrives (no backend, a leaked source), force the
+    // entry out after the safety window so the line can never self-mute forever.
+    if (typeof setTimeout === "function") setTimeout(release, CLIP_SAFETY_MS);
+    return true;
   }
 
   /** Drop caches + cooldowns (tests / content live-reload). */
@@ -206,6 +269,7 @@ export class ContextualVoicePlayer {
     this.lastChampAt.clear();
     this.lastCatAt.clear();
     this.lastClip.clear();
+    this.activeClips.clear();
   }
 }
 
