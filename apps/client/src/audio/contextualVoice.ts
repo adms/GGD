@@ -67,6 +67,12 @@ export interface CategoryPolicy {
   bucket?: string;
 }
 
+/** Clamp a call-site probability multiplier into 0..1 (non-finite → 0). */
+function clamp01(n: number): number {
+  if (typeof n !== "number" || !Number.isFinite(n)) return 0;
+  return n < 0 ? 0 : n > 1 ? 1 : n;
+}
+
 const CELEBRATORY: CategoryPolicy = { prob: 1, cooldownMs: 0, preempt: true };
 const DEFAULT_POLICY: CategoryPolicy = { prob: 0.5, cooldownMs: 2_500, preempt: false };
 
@@ -136,6 +142,29 @@ export function policyFor(category: string): CategoryPolicy {
   }
 }
 
+/**
+ * Per-CALL modulation of a category's policy (task #223). The category tuning
+ * stays the single source of truth for "how often does a hurt line fire"; this
+ * only lets the CALL SITE say how much the line matters to the listener, which
+ * is knowledge the audio layer deliberately does not have (it has never taken a
+ * localId, a relation or a distance, and must not start).
+ */
+export interface ContextualPlayOptions {
+  /**
+   * Multiplier on the category probability, clamped to 0..1 — so it can only
+   * ever make a line RARER than the owner-tuned policy, never more frequent.
+   * See audio/voiceAudience for the bands that produce it.
+   */
+  probScale?: number;
+  /**
+   * Force the celebratory bypass of the global + per-champion gaps for a line
+   * whose category does not normally get it. Only ever passed for once-per-death
+   * lines (`defeat`) that are ABOUT the local player; a repeatable line must
+   * never be given this or the throttle stops being a ceiling.
+   */
+  preempt?: boolean;
+}
+
 export interface ContextualVoiceOptions {
   audio?: VoiceAudioPort;
   rng?: Rng;
@@ -193,7 +222,7 @@ export class ContextualVoicePlayer {
    * the mixer is locked/muted, the champion has no clip for the category, the
    * probability roll fails, or any throttle layer blocks it.
    */
-  playContextual(champId: string, category: string): boolean {
+  playContextual(champId: string, category: string, opts?: ContextualPlayOptions): boolean {
     if (!champId || !category) return false;
     if (!this.audio.isUnlocked) return false;
     const v = this.audio.volumes();
@@ -209,12 +238,19 @@ export class ContextualVoicePlayer {
     if (clips.length === 0) return false; // hero/category not in the pack — fall through
 
     const policy = policyFor(category);
+    // The call site may only ever DE-weight (probScale is clamped to 0..1) or —
+    // for a once-per-death line about the local player — request the same
+    // bypass the celebratory lines get. It can never lower a preempt the
+    // category already owns.
+    const scale = clamp01(opts?.probScale ?? 1);
+    if (scale <= 0) return false; // scored out by the call site — never entered
+    const preempt = policy.preempt || opts?.preempt === true;
     const t = this.now();
 
     // Layer 1: global one-voice-per-beat (celebratory preempts).
-    if (!policy.preempt && t - this.lastVoiceAt < this.globalGapMs) return false;
+    if (!preempt && t - this.lastVoiceAt < this.globalGapMs) return false;
     // Layer 2: per-champion cooldown (celebratory preempts).
-    if (!policy.preempt) {
+    if (!preempt) {
       const lc = this.lastChampAt.get(champId);
       if (lc !== undefined && t - lc < this.champGapMs) return false;
     }
@@ -224,8 +260,10 @@ export class ContextualVoicePlayer {
       const lb = this.lastCatAt.get(bucketKey);
       if (lb !== undefined && t - lb < policy.cooldownMs) return false;
     }
-    // Layer 4: probability (client rng — never world.rng).
-    if (policy.prob < 1 && this.rng() >= policy.prob) return false;
+    // Layer 4: probability (client rng — never world.rng), scaled by how much
+    // this line matters to THIS listener (task #223 audience weighting).
+    const prob = policy.prob * scale;
+    if (prob < 1 && this.rng() >= prob) return false;
 
     const clipKey = `${champId}:${category}`;
     const clip = pickSelectClip(
@@ -282,7 +320,11 @@ export function warmContextualVoice(): Promise<void> {
 }
 
 /** Fire a contextual line for a champion (see ContextualVoicePlayer.playContextual). */
-export function playContextualVoice(champId: string | null | undefined, category: string): boolean {
+export function playContextualVoice(
+  champId: string | null | undefined,
+  category: string,
+  opts?: ContextualPlayOptions,
+): boolean {
   if (!champId) return false;
-  return contextualVoice.playContextual(champId, category);
+  return contextualVoice.playContextual(champId, category, opts);
 }
