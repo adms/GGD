@@ -261,3 +261,94 @@ geometry, so nothing here can become one of #17's oversized effect meshes.
 | av-15 | ZERO fields present in BOTH the embedded and standalone copy with different values, across all 452 pairs; every violation collected into one failure, not fail-fast | ability-mirror-no-conflict | regression | done |
 | av-16 | only `schema` may live on one side of the mirror; a new standalone-only field means a fresh one-sided write path. (`icon` was exempt until 2026-07-24 — the AI icon batch had written 416 standalone-only values; exemption removed once the icon mirror was synced, see `docs/todo/icons.md`) | ability-mirror-one-sided | regression | done |
 | av-17 | #79 mirror gap: no embedded `vfxKey` still parked on `fx.ember-bolt-cast` while its standalone twin moved to a `fx.prim.*` primitive | ability-mirror-vfxkey | regression | done |
+
+## #230 — 特效真實引用普查（每個英雄 × 每個技能）
+
+Owner directive 2026-07-26: 「真正做好是追技能真正引用的特效/粒子/球體/蝗蟲群
+請你盤點所有英雄、技能清單，告訴我真實的狀況」. Binding SOME `vfxKey` is not
+fidelity — fidelity is referencing what the map ACTUALLY used.
+
+**The census.** `tools/w3x-import/build_vfx_census.py` joins every ability doc to
+its `war3map.w3a` record and writes two artefacts:
+`tools/w3x-import/out/vfx-census/CENSUS.json` (working) and
+`content/assets/vfx/w3x-ability-provenance.json` (shipped, immutable).
+The join is **hero-number + EXACT name**, never `VFX_BINDINGS.ggdDocIndex`'s slot
+letter — the map's `A0DZ 20-01 風王結界` reports `slotFromNumber = q` while the
+content doc named 風王結界 is `godie-e002.W`. Saber's Q and W are crossed, and a
+slot-letter join manufactures four confident, wrong rebinds.
+
+**Measured, 668 ability docs × 115 champions × 6 slots:**
+
+| status | before | after |
+| --- | --: | --: |
+| TRUE-PORT | 25 | **34** |
+| PRIMITIVE-SUBSTITUTE (actionable) | 28 | **20** |
+| PRIMITIVE-NECESSARY (#81/#116, no extraction possible) | 388 | 388 |
+| LEGACY-KEY | 18 | **17** |
+| NO-CAST (passives, correct) | 47 | 47 |
+| NO-SOURCE (map named nothing) | 162 | 162 |
+
+**Rebound (9), all provable, `vfxKey` only:** `godie-h00l.r` →
+`godie-bladestorm-swordeffect-p0`; `godie-u010.q` + `godie-uvng.q` →
+`fx.w3x.particle.flamessmoke.p01`; `godie-u010.w` + `godie-uvng.w` →
+`godie-fireblast-p3`; `godie-u010.e` + `godie-uvng.e` → `godie-tectonicfury-p0`;
+`godie-e007.ex` + `godie-ewar.ex` → `fx.w3x.particle.supershinythingy.p00`.
+Five of those were already promoted in `W3X_ABILITY_ART` — the renderer played
+the real art while the content metadata still claimed a primitive, which is why
+`w3xAbilityArt.test.ts` "the ability's shipped vfxKey IS the promoted primary"
+was RED on main. Four are new promotions (38-01 邪王炎殺劍 ×2, 12-002 仙氣發勁 ×2).
+
+**「106 支閒置」 is an overstatement, and the real gap is smaller and sharper.**
+`vfxKey` is ONE string but a WC3 effect is a SET, so most layers of a promoted
+family reach the screen through `extraVfxDocIds()`. Of the 118 published
+`fx.w3x.*` layers: 12 are a `vfxKey`, 19 more play as extras, 87 never reach the
+renderer. Of those 87, **51 belong to 10 families with ZERO root-anchored
+emitters** (`divinering` 0/20, `enchant` 0/5, `sephboom` 0/7,
+`heronarutos4effect` 0/6, `bloodbreathstream` 0/3, `sonicbreathstream` 0/3,
+`flash` 0/2, `heroluffeattack` 0/1, `1hswd-01` 0/3, `magical-sword` 0/1) and
+**41 belong to 12 families no ability references at all**. Neither is a missed
+rebind.
+
+**Left alone, and why** (all listed on the live page, not buried here):
+* `godie-e002.w` + `godie-e00l.w` (20-01 風王結界) — `HolyAwakening.mdx` is a real
+  `w3a-override` and passes the gate 6/6, but 風王結界 is wind-by-canon and
+  HolyAwakening is the same model as Saber's 20-03, so binding it makes two of
+  four abilities the same golden burst. **Owner decision.**
+* 18 rows blocked by the renderer, not by taste — their families are not
+  root-anchored, so the flat cast path would collapse them into one column.
+
+**HIGHEST-LEVERAGE FOLLOW-UP (its own task).** `apps/client/src/vfx/W3xCastFx.ts`
+hands `W3xEmitterRig` a FLAT doc list with no `pivotOffset`, while
+`apps/client/src/render/vfx/w3xFamilyRuntime.ts` already builds exactly that
+layout for the audition page. Wiring the cast path through
+`toFamilySpec()` unlocks all 10 zero-root families (51 docs) and ~14 further
+ability rows — including 78-002 加速爆體, whose `A10W` sets `targetArt` AND
+`casterArt` AND `specialArt` all to `DivineRing.mdx`, the strongest-provenance
+true-port candidate in the whole map.
+
+**Missing-extraction backlog** (models abilities really reference with NO
+`fx.w3x.*` family): with emitters → `earthtornado2` (14 em, 1 root),
+`lightningtornado` (14, 1), `fireblast` (4/4), `tectonicfury` (2/2),
+`bladestorm-swordeffect` (1/1) — the #183 re-derivation list. With ZERO emitters
+→ `herocloudcyd` (10 refs), `purplecoat` (9), `grandundeadaura` (5),
+`midchildernanohaaura` (4), `crescent` (3), … — mesh-only art the particle
+pipeline can never produce; those need the MESH/attachment path, not #183.
+
+**Never bind:** `fx.w3x.locust.auls-a0ib` — 0 layers, 0 geosets, 0 triangles. It
+ships a swarm LAYOUT only, because WC3 drew each member with a Blizzard unit
+model that is not in this repo. The #98 zero-geometry case.
+
+### The live page
+
+`資產主控台` (`#assets`) → 特效真實引用普查, next to 圖示覆蓋率. Computed at VIEW
+TIME from the shipped content + the archaeology sidecar, so a rebind moves the
+numbers with no regeneration. Logic in `apps/client/src/ui/assets/vfxCensus.ts`
+(pure, node-tested); load in `useVfxCensus.ts` (lazy — the sidecar is ~540 kB and
+is not fetched until the section is opened); view in `VfxCensusPanel.tsx`.
+
+| ID | Item | Test ID | Category | Status |
+| --- | --- | --- | --- | --- |
+| av-18 | the six statuses are derived, not stored: NO-CAST / NO-SOURCE / PRIMITIVE-NECESSARY / PRIMITIVE-SUBSTITUTE / LEGACY-KEY / TRUE-PORT, plus MIS-BOUND as the bug canary | vfxCensus.test.ts | unit | done |
+| av-19 | TRUE-PORT requires the bound doc to be a layer of an extraction taken from THIS ability's own art — a same-looking key from another family is MIS-BOUND (no name-similarity evidence) | vfxCensus.test.ts | regression | done |
+| av-20 | a layer that is nobody's `vfxKey` but IS a promoted extra counts as USED; every unreached layer carries a machine-checked reason | vfxCensus.test.ts | regression | done |
+| av-21 | every gate-passing substitute left on a primitive carries an owner note, and no owner note goes stale | vfxCensus.test.ts | regression | done |

@@ -2635,3 +2635,18 @@ playtest 指令「技能冷卻進度不容易從圖示上看到」。表面看�
 - 測試：`ui/cooldownView.test.ts`（純數學，含「35s 授權值在 `cooldown:0.2` 下剛施放必須 frac=1.0 而非 0.2」的根因鎖）+ `ui/components/cooldownChrome.test.ts`（source scan）。test_id `cooldown-legibility` 已登錄 `docs/todo/client-hud.md` client-36。
 - **殘留（未修，另案）**：`Stat.CooldownReduction` 進一步縮短實際冷卻，client 不知道座位的 CDR，故堆 20% CDR 的玩家會看到抹除從 80% 起跑（已 clamp，誠實且會自我收斂）。精確解＝在 `SeatView` 的 `cooldowns` 旁加 `cooldownMax: number[]`。
 - **殘留（未修，另案）**：couch HUD 只有 Q/W/E/R chip，**沒有 EX / 天生技 格**，三介面 parity 仍缺一角。
+
+#### 🎆 2026-07-26 #230：特效真實引用普查（每個英雄 × 每個技能）+ 真綁定
+使用者指正：「真正做好是追技能真正引用的特效/粒子/球體/蝗蟲群 請你盤點所有英雄、技能清單，告訴我真實的狀況」。綁「某個」vfxKey 不算忠實，忠實是綁「原圖那一支真的用的」。
+- **普查器** `tools/w3x-import/build_vfx_census.py`（可重跑、內建 assert）：668 技能文件 × 115 英雄 × 6 槽全覆蓋。**join 方式＝英雄編號＋技能名精確比對（619/668 精確）**，不用 VFX_BINDINGS 的槽位字母——地圖 `A0DZ 20-01 風王結界` 標 `slotFromNumber=q`，但內容裡叫「20-01 風王結界」的文件是 `godie-e002.W`：Saber 的 Q/W 是交叉的，用槽位 join 會製造 4 筆自信但錯誤的改綁。
+- **產出兩份**：`out/vfx-census/CENSUS.json`（工作用）＋ `content/assets/vfx/w3x-ability-provenance.json`（隨版發行、**只存不會變的考古事實**：rawcode / 每個美術通道真正指的 mdx / provenance / 抽出了哪些文件 / 每顆模型有幾個發射器、幾個掛在模型根）。**會變的一半（現在綁什麼、哪些 vfx 文件存在）刻意不寫進去**，由頁面在檢視當下讀活的內容算——所以改一次綁定，頁面就跟著動，不需要重產。
+- **狀態盤點（前 → 後）**：真實移植 25→**34**、可動的缺口（通用替身但原作已抽出）28→**20**、抽不出來（暴雪內建 .mdl／閃電 id，#81/#116）388、舊制 key 18→**17**、無施法特效 47、原圖沒指定 162。
+- **改綁 9 支（只動 vfxKey，effects/damage/scaling 一律沒碰，鏡像逐行同步）**：林克 60-04 迴旋斬 → `godie-bladestorm-swordeffect-p0`；飛影 38-01/38-02/38-03（×2 分身）→ `fx.w3x.particle.flamessmoke.p01` / `godie-fireblast-p3` / `godie-tectonicfury-p0`；天地志狼 12-002 仙氣發勁（×2 分身）→ `fx.w3x.particle.supershinythingy.p00`。其中 5 支原本就已在 `W3X_ABILITY_ART` 升級過——**算圖端一直在播真美術，只有內容 metadata 在說謊**，這就是 main 上 `w3xAbilityArt.test.ts`「shipped vfxKey IS the promoted primary」紅掉的原因，現在綠了。
+- **推翻「106 支閒置」的說法**：`vfxKey` 只有一個字串，但一個 WC3 特效是一整組發射器，其餘圖層是靠 `extraVfxDocIds()` 一起播的。118 個圖層裡：12 個是 vfxKey、19 個以伴隨層上場、87 個真的沒上場。而那 87 個裡 **51 個屬於 10 個「零根節點」家族**（divinering 0/20、enchant 0/5、sephboom 0/7、heronarutos4effect 0/6…），**41 個屬於 12 個根本沒有任何技能引用的家族**。兩者都不是「漏改綁」。
+- **刻意留下、列成擁有者決策**：Saber 20-01 風王結界（`HolyAwakening.mdx` 是真的 w3a-override 且 6/6 根節點可播，但風王結界正典是「風」，而 HolyAwakening 正是 20-03 約束與勝利之劍 同一顆模型——綁下去四招裡兩招長一樣）。另 18 列是被算圖限制擋住，不是品味問題。
+- **最高槓桿後續（另開任務）**：`apps/client/src/vfx/W3xCastFx.ts` 把文件攤平丟給 `W3xEmitterRig`、沒有 `pivotOffset`，而 `w3xFamilyRuntime.toFamilySpec()` 早就替試聽頁做好那份版面。接起來可一次解鎖 10 個零根節點家族（51 個文件）+ 約 14 列技能，包含 78-002 加速爆體（A10W 把 target/caster/special **三個通道**全設成 DivineRing.mdx，是全地圖 provenance 最強的一筆）。
+- **抽取待辦**：有發射器但沒有 fx.w3x 家族＝earthtornado2(14)、lightningtornado(14)、fireblast(4)、tectonicfury(2)、bladestorm-swordeffect(1)（#183 再推導清單）；**零發射器**＝herocloudcyd(10 引用)、purplecoat(9)、grandundeadaura(5)… 這些是純網格美術，粒子管線永遠產不出來，要走模型/掛點路徑，不是同一筆債。
+- **永不綁定**：`fx.w3x.locust.auls-a0ib`（0 圖層/0 幾何，只有蜂群版面——#98 零幾何問題）。
+- **活頁**：資產主控台 `#assets` → 「特效真實引用普查」，與圖示覆蓋率同一個接縫。純邏輯在 `apps/client/src/ui/assets/vfxCensus.ts`（node 測試 18 項），載入 `useVfxCensus.ts`（側檔 540 kB，展開才抓），畫面 `VfxCensusPanel.tsx`。
+- 閘門：`pnpm content:build` 綠、`pnpm --filter @ggd/shared test` 880/880 綠（含 bundle + #128 castability + abilityMirror + vfxParticles）、client typecheck + build 綠、client 3065 測試通過。兩支紅是 main 本來就紅（`bindings.test.ts` 讀 gitignore 掉的 `data/curation/whitelist.json`、`descriptionRescale.test.ts` 冷卻倍率），已 stash 回 main 覆驗。
+

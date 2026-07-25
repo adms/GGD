@@ -18,7 +18,15 @@
  * merely INHERITED from a Blizzard stock ability is never promoted — it is not
  * evidence of intent, and the model is not in this repo anyway.
  *
- * THE RENDERABILITY GATE — why only 30 of 662. Three filters, in order:
+ * THE #230 SWEEP. `tools/w3x-import/build_vfx_census.py` re-ran this derivation
+ * over EVERY champion × EVERY slot and found four ability rows that pass every
+ * filter below and had simply been missed: 38-01 邪王炎殺劍 (both 飛影 docs, on
+ * `flamessmoke`) and 12-002 仙氣發勁 (both 天地志狼 docs, on `supershinythingy`).
+ * They are added; nothing else moved. The census also proves the table is not
+ * merely incomplete but CORRECT about what it excludes — see `unrenderable` in
+ * `content/assets/vfx/w3x-ability-provenance.json`.
+ *
+ * THE RENDERABILITY GATE — why only 34 of 668. Three filters, in order:
  *   1. the art must be a MAP-IMPORTED model (`IN_REPO_*`). 1305 of the 1529
  *      resolved art entries are retail Blizzard `.mdl` paths we cannot ship
  *      (#81/#116) — those abilities keep the primitive.
@@ -155,6 +163,20 @@ export const W3X_ABILITY_ART: Readonly<Record<string, W3xAbilityArt>> = {
     primary: "godie-tectonicfury-p0",
     extra: ["godie-tectonicfury-p1"],
   },
+  // 邪眼師 - 飛影 — 38-01 邪王炎殺劍  [roster]  (#230)
+  // A0OG sets BOTH casterArt AND effectArt to `flamessmoke.mdx` — two channels
+  // agreeing, author-set on both. p01 is the family's tall plume (pivot z=+254.7
+  // against p00/p02/p03 at −62.6/+20.9/−2.1), so it is the visible body of the
+  // effect, and it is already 38-04's proven primary on the same model — one
+  // dominant emitter for the whole family.
+  "godie-u010.q": {
+    family: "flamessmoke",
+    w3aId: "A0OG",
+    provenance: "w3a-override",
+    via: "art:caster+art:effect",
+    primary: "fx.w3x.particle.flamessmoke.p01",
+    extra: ["fx.w3x.particle.flamessmoke.p00", "fx.w3x.particle.flamessmoke.p02", "fx.w3x.particle.flamessmoke.p03"],
+  },
   // 邪眼師 - 飛影 — 38-04 黑龍波吸收  [roster]
   "godie-u010.r": {
     family: "flamessmoke",
@@ -163,6 +185,21 @@ export const W3X_ABILITY_ART: Readonly<Record<string, W3xAbilityArt>> = {
     via: "art:caster",
     primary: "fx.w3x.particle.flamessmoke.p01",
     extra: ["fx.w3x.particle.flamessmoke.p00", "fx.w3x.particle.flamessmoke.p02", "fx.w3x.particle.flamessmoke.p03"],
+  },
+  // 龍之子 - 天地志狼 — 12-002 仙氣發勁  [roster]  (#230)
+  // The A0SQ handler literal-names `SuperShinyThingy.mdx` — the strongest
+  // provenance there is. Every other art channel on this ability is Blizzard
+  // stock (MirrorImageCaster / NagaDeath) and cannot ship (#81/#116). Emitter
+  // choice is positionally NEUTRAL here: all three emitters share one identical
+  // pivot (1.0, −0.7, −17.6), so p00 is picked because it is index 0 and is
+  // already the established primary for 12-04 and 90-04 on the same model.
+  "godie-e007.ex": {
+    family: "supershinythingy",
+    w3aId: "A0SQ",
+    provenance: "jass-literal",
+    via: "jass:effectTargetUnit",
+    primary: "fx.w3x.particle.supershinythingy.p00",
+    extra: ["fx.w3x.particle.supershinythingy.p01", "fx.w3x.particle.supershinythingy.p02"],
   },
   // 邪眼師 - 飛影 — 38-02 邪王炎殺煉獄焦  [roster]
   "godie-u010.w": {
@@ -316,6 +353,24 @@ export const W3X_ABILITY_ART: Readonly<Record<string, W3xAbilityArt>> = {
     via: "art:missile",
     primary: "godie-tectonicfury-p0",
     extra: ["godie-tectonicfury-p1"],
+  },
+  // 龍之子 - 天地志狼 — 12-002 仙氣發勁  [off-roster]  (#230)
+  "godie-ewar.ex": {
+    family: "supershinythingy",
+    w3aId: "A0SQ",
+    provenance: "jass-literal",
+    via: "jass:effectTargetUnit",
+    primary: "fx.w3x.particle.supershinythingy.p00",
+    extra: ["fx.w3x.particle.supershinythingy.p01", "fx.w3x.particle.supershinythingy.p02"],
+  },
+  // 邪眼師 - 飛影 — 38-01 邪王炎殺劍  [off-roster]  (#230)
+  "godie-uvng.q": {
+    family: "flamessmoke",
+    w3aId: "A0OG",
+    provenance: "w3a-override",
+    via: "art:caster+art:effect",
+    primary: "fx.w3x.particle.flamessmoke.p01",
+    extra: ["fx.w3x.particle.flamessmoke.p00", "fx.w3x.particle.flamessmoke.p02", "fx.w3x.particle.flamessmoke.p03"],
   },
   // 邪眼師 - 飛影 — 38-04 黑龍波吸收  [off-roster]
   "godie-uvng.r": {
