@@ -28,11 +28,16 @@ import { DEFAULT_SETTINGS, type Settings } from "../settings";
 const MANIFEST: LodManifest = {
   schema: "lod@1",
   models: {
-    "assets/models/champions/mage.glb": {
-      bytes: 1034320,
-      triangles: 5683,
-      mid: { path: "assets/models/champions/mage-mid.glb", bytes: 911000, triangles: 3113 },
-      small: { path: "assets/models/champions/mage-small.glb", bytes: 423476, triangles: 1583 },
+    // A model that genuinely still HAS tiers. It used to be champions/mage.glb;
+    // #226 replaced the four stand-ins with ~168-triangle generated box-men,
+    // which sit below the LOD floor and legitimately ship ONE tier — so a
+    // champion path is no longer a valid fixture for tier resolution.
+    // Numbers re-pinned from content/assets/models/_lod.json.
+    "assets/models/hex/tower_blue.glb": {
+      bytes: 335200,
+      triangles: 5659,
+      mid: { path: "assets/models/hex/tower_blue-mid.glb", bytes: 181784, triangles: 3111 },
+      small: { path: "assets/models/hex/tower_blue-small.glb", bytes: 105152, triangles: 1583 },
     },
     "assets/models/props/only-mid.glb": {
       mid: { path: "assets/models/props/only-mid-mid.glb", bytes: 10, triangles: 1 },
@@ -47,17 +52,17 @@ afterEach(() => {
 
 describe("resolveLodPath", () => {
   it("swaps in the tier file the manifest declares", () => {
-    expect(resolveLodPath("assets/models/champions/mage.glb", "mid", MANIFEST)).toBe(
-      "assets/models/champions/mage-mid.glb",
+    expect(resolveLodPath("assets/models/hex/tower_blue.glb", "mid", MANIFEST)).toBe(
+      "assets/models/hex/tower_blue-mid.glb",
     );
-    expect(resolveLodPath("assets/models/champions/mage.glb", "small", MANIFEST)).toBe(
-      "assets/models/champions/mage-small.glb",
+    expect(resolveLodPath("assets/models/hex/tower_blue.glb", "small", MANIFEST)).toBe(
+      "assets/models/hex/tower_blue-small.glb",
     );
   });
 
   it("high is a no-op — the authored file is the top tier", () => {
-    expect(resolveLodPath("assets/models/champions/mage.glb", "high", MANIFEST)).toBe(
-      "assets/models/champions/mage.glb",
+    expect(resolveLodPath("assets/models/hex/tower_blue.glb", "high", MANIFEST)).toBe(
+      "assets/models/hex/tower_blue.glb",
     );
   });
 
@@ -77,8 +82,8 @@ describe("resolveLodPath", () => {
   });
 
   it("without a manifest nothing is swapped (old deploy / failed fetch)", () => {
-    expect(resolveLodPath("assets/models/champions/mage.glb", "small", null)).toBe(
-      "assets/models/champions/mage.glb",
+    expect(resolveLodPath("assets/models/hex/tower_blue.glb", "small", null)).toBe(
+      "assets/models/hex/tower_blue.glb",
     );
   });
 
@@ -86,8 +91,8 @@ describe("resolveLodPath", () => {
     setModelLodManifest(MANIFEST);
     setModelLodTier("small");
     expect(getModelLodTier()).toBe("small");
-    expect(resolveLodPath("assets/models/champions/mage.glb")).toBe(
-      "assets/models/champions/mage-small.glb",
+    expect(resolveLodPath("assets/models/hex/tower_blue.glb")).toBe(
+      "assets/models/hex/tower_blue-small.glb",
     );
   });
 });
@@ -138,8 +143,8 @@ describe("loadModelLodManifest", () => {
       }) as never,
     );
     expect(ok).toBe(true);
-    expect(resolveLodPath("assets/models/champions/mage.glb", "mid")).toBe(
-      "assets/models/champions/mage-mid.glb",
+    expect(resolveLodPath("assets/models/hex/tower_blue.glb", "mid")).toBe(
+      "assets/models/hex/tower_blue-mid.glb",
     );
   });
 

@@ -20,6 +20,7 @@ import { GuardianView } from "./views/GuardianView";
 import { ReviveCircleView } from "./views/ReviveCircleView";
 import { CoinView } from "./views/CoinView";
 import { applyModelTint, releaseModelTint, type ModelTint } from "./views/modelTint";
+import type { VoxelLook } from "./views/voxelLook";
 import type { AssetManager } from "./AssetManager";
 import {
   ATTACKER_FLASH_MS,
@@ -121,6 +122,21 @@ export interface ModelDocOverride {
   relativeScale?: number;
   glbPath?: string;
   clipMap?: ModelDoc["clipMap"];
+  /**
+   * Per-champion look for the generated blocky humanoids (#226): palette,
+   * proportions and prop mask, derived deterministically from the championId by
+   * `views/voxelLook.voxelLookFor`.
+   *
+   * It rides THIS seam, and not `model@1`, on purpose. 44 champions share four
+   * model docs, so a content-schema field could not express a per-champion
+   * look without splitting the docs — and two of those doc ids are frozen by
+   * `packages/shared/src/sim/**`. This interface is already the client-side
+   * place where the entity → championId hop happens, so the look arrives with
+   * zero content-schema surface and nothing in the sim is touched.
+   *
+   * Absent for imported champions (which wear their own mesh) and for mobs.
+   */
+  voxel?: VoxelLook;
 }
 
 /**
@@ -517,6 +533,10 @@ export class EntityViewRegistry {
         const override = this.content.modelOverrideFor?.(e);
         const baseDoc = this.content.modelDocFor?.(e.key, e.seatId) ?? null;
         const doc = applyModelOverride(baseDoc, override);
+        // #226: the per-champion blocky look is adopted BEFORE the glb load is
+        // kicked off, so the procedural fallback is already in the champion's
+        // own colours while the mesh is still in flight.
+        view.setVoxelLook(override?.voxel);
         view.tryUpgradeToGlb(this.assets, doc, relativeScaleOf(override));
       }
       this.applyTint(e, view);

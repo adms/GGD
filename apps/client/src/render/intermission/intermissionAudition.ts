@@ -32,10 +32,11 @@ import {
   SHOP_CARD_WIDTH_FRACTION,
 } from "./layout";
 
-/** A clean KayKit hero (champ.thorne) at its measured 1.7 u scale — a stand-in
- *  for "the player's own champion" so the shot reads as a real shop scene. No
- *  imported-model defect (task #68's face-down poses) to muddy the picture. */
-const CHAMPION = { glbPath: "assets/models/champions/knight.glb", scale: 0.7328 } as const;
+/** The generated blocky stand-in (champ.thorne) — a proxy for "the player's
+ *  own champion" so the shot reads as a real shop scene, with no imported-model
+ *  defect (task #68's face-down poses) to muddy the picture. Scale is 1.0
+ *  because the bake measures exactly TARGET_HEIGHT (#226). */
+const CHAMPION = { glbPath: "assets/models/champions/blocky-knight.glb", scale: 1.0 } as const;
 
 /** The three body-height samples int-28 fires at, verbatim. */
 const SAMPLE_HEIGHTS: readonly (readonly [string, number])[] = [

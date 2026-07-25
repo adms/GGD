@@ -1,6 +1,6 @@
 /**
  * AssetManager — shared .glb loading. Each distinct path under content/
- * (e.g. "assets/models/champions/mage.glb") is fetched ONCE into an
+ * (e.g. "assets/models/champions/blocky-mage.glb") is fetched ONCE into an
  * AssetContainer and cached; every consumer instantiates from that container
  * (instantiateModelsToScene), so 12 champions on screen cost one GLB parse.
  * load() resolves null on any failure — callers keep their procedural

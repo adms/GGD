@@ -40,8 +40,8 @@ describe("skin@1 (mcoin-12)", () => {
 
     // the new skin model docs parse under model@1 and point at the staged GLBs
     for (const [rel, glb] of [
-      ["models/champ.skin.barbarian.json", "assets/models/champions/barbarian.glb"],
-      ["models/champ.skin.rogue.json", "assets/models/champions/rogue.glb"],
+      ["models/champ.skin.barbarian.json", "assets/models/champions/blocky-barbarian.glb"],
+      ["models/champ.skin.rogue.json", "assets/models/champions/blocky-rogue.glb"],
     ] as const) {
       const res = validateDoc("models", readDoc(rel));
       expect(res.ok, `model doc ${rel} must parse`).toBe(true);

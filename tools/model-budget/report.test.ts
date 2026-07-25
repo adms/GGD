@@ -46,10 +46,14 @@ beforeAll(() => {
 
 describe("the generator reproduces the cross-checked baseline", () => {
   it("shipping totals match the independent parsers", () => {
-    // 158 shipping .glb / 158,494 tris was the agreed baseline; a new prop glb
-    // (guardian, task #105) may nudge the count, so assert the floor not equality
+    // The agreed baseline was 158 shipping .glb / 158,494 tris. Owner directive
+    // #226 deliberately RATCHETED THE TRIANGLE FLOOR DOWN: the four KayKit
+    // stand-ins (25,555 tris authored, 9.73 MB with their LOD tiers) were deleted
+    // and replaced by five generated box-men totalling 840 tris, so the shipping
+    // total moved 169,542 → 144,827. Re-derived from the regenerated report, not
+    // hand-computed. Still a floor, not equality — a new prop may nudge it up.
     expect(report.totals.shipping).toBeGreaterThanOrEqual(158);
-    expect(report.totals.shippingTriangles).toBeGreaterThanOrEqual(158_494);
+    expect(report.totals.shippingTriangles).toBeGreaterThanOrEqual(144_827);
   });
   itWithOverlay("VRAM matches the independent texture scan to the byte", () => {
     // 230,859,342 bytes was the number both texture scanners produced
@@ -103,8 +107,11 @@ describe("the same-screen budget is per-frame, not per-repository", () => {
 });
 
 describe("WHERE IT IS USED is traced, not guessed", () => {
-  it("the four KayKit stand-ins are marked used by many champions", () => {
-    for (const name of ["knight", "mage", "barbarian", "rogue"]) {
+  it("the four generated stand-ins are marked used by many champions", () => {
+    // Re-pointed at the blocky bakes rather than deleted: the assertion is still
+    // meaningful (44 champions resolve to these four files) and letting it pass
+    // vacuously on an empty set would quietly stop testing anything.
+    for (const name of ["blocky-knight", "blocky-mage", "blocky-barbarian", "blocky-rogue"]) {
       const m = report.models.find((x: any) => x.path.endsWith(`champions/${name}.glb`));
       const champUse = m.usedBy.find((u: any) => u.label === "英雄");
       expect(champUse).toBeTruthy();

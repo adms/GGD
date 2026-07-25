@@ -34,7 +34,7 @@ mesh/draw-call count, largest texture edge, per-frame animation channels — sco
 them against the role's gate, and prints the exact remedy for each breach:
 
 ```
-knight.glb  role=champion (report)  → OVER
+guardian_skeleton.glb  role=champion (--role)  → OVER
     ok  每實例三角面        6952  warn 16000 / limit 28000
   OVER! 每模型 mesh/draw call  15  warn 3 / limit 5    → manual: 合併同材質 primitive (playbook 步驟 1)
   WARN  貼圖最長邊 (px)      1024  warn 512 / limit 1024 → optimise 貼圖 1024→512px (VRAM ↓75%)
@@ -148,12 +148,15 @@ prints the bootstrap command and skips. **It never falls back to Babylon's
 simplifier**, which cannot preserve skin weights — a decimator that destroys a rig
 is worse than the oversized model it replaced.
 
-> Verified end to end: `knight.glb` 6952 → 4033 tris with 41 joints / 76 clips /
+> Verified end to end (on the since-retired `knight.glb`): 6952 → 4033 tris with 41 joints / 76 clips /
 > 8712 channels unchanged, loading cleanly through the repo's own
 > `tools/w3x-import/validate_glb.mts` Babylon loader.
 >
 > Those clip/channel figures are PRE-TRIM. `trimClips.ts` has since cut
-> `knight.glb` to 16 clips / 1,873 channels; the decimation result above is
+> `knight.glb` to 16 clips / 1,873 channels. NOTE: owner directive #226 deleted
+> those four stand-ins outright — generated ~168-triangle box-men replaced them,
+> see `tools/voxel-gen` — so this paragraph is a worked example, not current
+> state; the decimation result above is
 > unaffected (it is a triangle-count claim), but do not quote 76/8712 as the
 > file's current shape.
 

@@ -60,6 +60,20 @@ TIERS = {
 }
 
 
+# A model this small has nothing left to decimate: a tier file would add a
+# request and a manifest row to save nothing, and would be a LIE in the #115
+# manifest ("this is the cheap version" when it is the same thing).
+#
+# This floor exists because of #226. The four champion stand-ins became
+# generated ~168-triangle / ~51 KB box-men (tools/voxel-gen), and their tier
+# rows were deliberately removed from _lod.json. Without a floor here, the next
+# `pnpm lod:gen` would see role == "champion" in report.json, pull them back in
+# and silently re-create fake tiers — undoing a deliberate decision with no
+# review. A model below EITHER bound legitimately ships ONE tier.
+LOD_FLOOR_TRIS = 1500
+LOD_FLOOR_BYTES = 64 * 1024
+
+
 # --------------------------------------------------------------------- corpus
 def match_corpus() -> list[str]:
     """
@@ -67,6 +81,9 @@ def match_corpus() -> list[str]:
     objectives and the intermission market. Deliberately NOT the whole tree: 74
     of the 163 .glb are unreferenced w3x effect remnants (audit #61), and
     decimating those would be pure churn.
+
+    Models under LOD_FLOOR_TRIS / LOD_FLOOR_BYTES are skipped — see the note on
+    those constants; that is the correct state, not missing work.
     """
     report_path = os.path.join(MODELS_DIR, "..", "model-budget", "report.json")
     paths: set[str] = set()
@@ -75,8 +92,14 @@ def match_corpus() -> list[str]:
         for model in report.get("models", []):
             if model.get("role") in ("champion", "arena-decor", "hero-prop", "intermission-prop"):
                 rel = model["path"]
-                if rel.startswith("assets/models/"):
-                    paths.add(os.path.join(ROOT, "content", rel))
+                if not rel.startswith("assets/models/"):
+                    continue
+                if (
+                    model.get("triangles", 0) < LOD_FLOOR_TRIS
+                    and model.get("fileBytes", 0) < LOD_FLOOR_BYTES
+                ):
+                    continue  # below the LOD floor — one tier is correct
+                paths.add(os.path.join(ROOT, "content", rel))
     except (OSError, ValueError):
         pass
     # The guardians are live combat objectives that the budget report misfiles as

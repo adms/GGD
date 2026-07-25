@@ -171,10 +171,10 @@ describe("assets route (editor 3D preview: editor-asset-route)", () => {
     cover("editor-asset-route");
     mkdirSync(join(root, "assets/models/champions"), { recursive: true });
     mkdirSync(join(root, "assets/textures/particles"), { recursive: true });
-    writeFileSync(join(root, "assets/models/champions/mage.glb"), GLB);
+    writeFileSync(join(root, "assets/models/champions/blocky-mage.glb"), GLB);
     writeFileSync(join(root, "assets/textures/particles/flame_01.png"), PNG);
 
-    const glb = await app.inject({ url: "/content-api/assets/models/champions/mage.glb" });
+    const glb = await app.inject({ url: "/content-api/assets/models/champions/blocky-mage.glb" });
     expect(glb.statusCode).toBe(200);
     expect(glb.headers["content-type"]).toBe("model/gltf-binary");
     expect(glb.rawPayload.equals(GLB)).toBe(true);

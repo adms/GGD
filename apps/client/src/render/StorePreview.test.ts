@@ -46,7 +46,7 @@ const DOC = (id: string): ModelDoc =>
   ({
     id,
     schema: "model@1",
-    glbPath: "assets/models/champions/mage.glb", // native → no yaw rotation
+    glbPath: "assets/models/champions/blocky-mage.glb", // native → no yaw rotation
     scale: 1,
     collisionRadius: 0.5,
     clipMap: { idle: "Idle", run: "Walk", attack: "Atk", cast: "Cast", hurt: "Hit", death: "Die" },

@@ -7,62 +7,6 @@
     "small"
   ],
   "models": {
-    "assets/models/champions/barbarian.glb": {
-      "bytes": 1057940,
-      "triangles": 6543,
-      "mid": {
-        "path": "assets/models/champions/barbarian-mid.glb",
-        "bytes": 928616,
-        "triangles": 3587
-      },
-      "small": {
-        "path": "assets/models/champions/barbarian-small.glb",
-        "bytes": 454068,
-        "triangles": 1825
-      }
-    },
-    "assets/models/champions/knight.glb": {
-      "bytes": 1103872,
-      "triangles": 6952,
-      "mid": {
-        "path": "assets/models/champions/knight-mid.glb",
-        "bytes": 950960,
-        "triangles": 3812
-      },
-      "small": {
-        "path": "assets/models/champions/knight-small.glb",
-        "bytes": 440820,
-        "triangles": 1936
-      }
-    },
-    "assets/models/champions/mage.glb": {
-      "bytes": 1034320,
-      "triangles": 5683,
-      "mid": {
-        "path": "assets/models/champions/mage-mid.glb",
-        "bytes": 911000,
-        "triangles": 3113
-      },
-      "small": {
-        "path": "assets/models/champions/mage-small.glb",
-        "bytes": 423476,
-        "triangles": 1583
-      }
-    },
-    "assets/models/champions/rogue.glb": {
-      "bytes": 1060924,
-      "triangles": 6377,
-      "mid": {
-        "path": "assets/models/champions/rogue-mid.glb",
-        "bytes": 925188,
-        "triangles": 3496
-      },
-      "small": {
-        "path": "assets/models/champions/rogue-small.glb",
-        "bytes": 434340,
-        "triangles": 1780
-      }
-    },
     "assets/models/guardians/guardian_beast.glb": {
       "bytes": 309684,
       "triangles": 1332,

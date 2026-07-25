@@ -26,7 +26,7 @@ const CONTENT_DIR = join(HERE, "../../../../content");
 interface Champ {
   modelKey: string;
   glbPath: string;
-  family: "imported" | "kaykit";
+  family: "imported" | "kaykit" | "blocky";
   empty: boolean;
   fullHeight: number;
   scale: number;

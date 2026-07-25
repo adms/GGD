@@ -20,7 +20,9 @@ import { RESERVED_CLIPS, pruneAnimations, pruneDiff, requiredClips } from "./tri
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "../..");
 const CHAMPS = path.join(ROOT, "content/assets/models/champions");
-const STAND_INS = ["knight", "rogue", "barbarian", "mage"].map((n) => path.join(CHAMPS, `${n}.glb`));
+const STAND_INS = ["blocky-knight", "blocky-rogue", "blocky-barbarian", "blocky-mage"].map(
+  (n) => path.join(CHAMPS, `${n}.glb`),
+);
 
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "trimclips-test-"));
 afterAll(() => fs.rmSync(tmp, { recursive: true, force: true }));
@@ -28,26 +30,29 @@ afterAll(() => fs.rmSync(tmp, { recursive: true, force: true }));
 const clipNames = (file: string): string[] => (readGlb(file).json.animations ?? []).map((a: any) => a.name);
 
 describe("the keep-set is derived from the content, not hardcoded", () => {
-  it("knight.glb's required set covers every champ.thorne clipMap value", () => {
+  it("blocky-knight.glb's required set covers every champ.thorne clipMap value", () => {
     const doc = JSON.parse(fs.readFileSync(path.join(ROOT, "content/models/champ.thorne.json"), "utf8"));
-    const req = requiredClips(path.join(CHAMPS, "knight.glb"), clipNames(path.join(CHAMPS, "knight.glb")));
+    const req = requiredClips(path.join(CHAMPS, "blocky-knight.glb"), clipNames(path.join(CHAMPS, "blocky-knight.glb")));
     for (const clip of Object.values(doc.clipMap) as string[]) expect(req.clips).toContain(clip);
     expect(req.docs).toContain("champ.thorne");
   });
 
-  it("it also covers the SECOND mechanism: reactionClip's own pick (Cheer)", () => {
+  it("it also covers the SECOND mechanism: reactionClip's own pick (cheer)", () => {
     // reactionClip deliberately ignores clipMap — a clipMap-only trim would drop
-    // Cheer and downgrade every shop purchase reaction to an attack swing.
-    const req = requiredClips(path.join(CHAMPS, "knight.glb"), clipNames(path.join(CHAMPS, "knight.glb")));
-    expect(req.clips).toContain("Cheer");
-    expect(req.reasons.get("Cheer")!.join(" ")).toMatch(/pickReactionClip/);
+    // the celebration and downgrade every shop purchase reaction to an attack
+    // swing. The generated bakes name it `cheer` (was KayKit's `Cheer`); the
+    // picker is case-insensitive, so the same rule finds both.
+    const f = path.join(CHAMPS, "blocky-knight.glb");
+    const req = requiredClips(f, clipNames(f));
+    expect(req.clips).toContain("cheer");
+    expect(req.reasons.get("cheer")!.join(" ")).toMatch(/pickReactionClip/);
   });
 
   it("reserved entries are SCOPED to the stand-in directory, never global", () => {
     expect(RESERVED_CLIPS.every((r) => r.scope === "assets/models/champions/")).toBe(true);
     // a glb outside that prefix gets no reserved clips, only its own clipMap
     const outside = requiredClips(path.join(ROOT, "content/assets/models/props/guardian_skeleton.glb"), ["Idle", "Hit_A"]);
-    expect(outside.clips).not.toContain("Hit_A");
+    expect(outside.clips).not.toContain("cheer");
   });
 });
 
@@ -67,38 +72,28 @@ describe("the SHIPPED stand-ins still satisfy every derived requirement", () => 
 
   // The EXACT roster, pinned. `toBeLessThan(76)` was too weak to be a guard:
   // it passes at 6 clips, i.e. it would happily accept a trim that had dropped
-  // "Cheer" and every other reserved clip. Pinning the names means a future
-  // re-trim that loses one fails HERE, with the clip named, instead of showing
-  // up as a champion who silently stops celebrating a purchase.
-  const EXPECTED_ROSTER = [
-    "1H_Melee_Attack_Slice_Diagonal",
-    "2H_Melee_Attack_Spin",
-    "2H_Melee_Idle",
-    "Cheer",
-    "Death_A",
-    "Death_A_Pose",
-    "Death_B",
-    "Hit_A",
-    "Hit_B",
-    "Idle",
-    "Interact",
-    "Running_A",
-    "Spellcast_Long",
-    "Spellcast_Shoot",
-    "Use_Item",
-    "Walking_A",
-  ];
+  // the celebration and every other reserved clip. Pinning the names means a
+  // future re-bake that loses one fails HERE, with the clip named, instead of
+  // showing up as a champion who silently stops celebrating a purchase.
+  //
+  // WAS the 16-clip KayKit roster (1H_Melee_Attack_Slice_Diagonal, 2H_Melee_Idle,
+  // Death_A_Pose, Walking_A, …). #226 replaced those files with generated
+  // box-men that carry exactly the seven clips the game reaches for — the six
+  // model@1 states plus the shop celebration — so there is nothing left to trim
+  // and the roster IS the requirement.
+  const EXPECTED_ROSTER = ["attack", "cast", "cheer", "death", "hurt", "idle", "run"];
 
-  it.each(STAND_INS)("%s ships EXACTLY the pinned 16-clip roster", (file) => {
+  it.each(STAND_INS)("%s ships EXACTLY the pinned 7-clip roster", (file) => {
     expect(clipNames(file).slice().sort()).toEqual(EXPECTED_ROSTER);
   });
 
-  it("the trim actually happened and stayed under the upstream 76", () => {
+  it("carries no clip the game cannot reach (nothing left to prune)", () => {
     for (const f of STAND_INS) {
       const m = measureGlb(f);
       expect(m.clips).toBe(EXPECTED_ROSTER.length);
-      expect(m.clips).toBeLessThan(76);
-      expect(m.clips).toBeGreaterThanOrEqual(requiredClips(f, clipNames(f)).clips.length);
+      // every shipped clip is REQUIRED, so the prune stage is a no-op here —
+      // the strongest form of "the trim happened".
+      expect(m.clips).toBe(requiredClips(f, clipNames(f)).clips.length);
     }
   });
 
@@ -107,17 +102,17 @@ describe("the SHIPPED stand-ins still satisfy every derived requirement", () => 
     // the presence-gated derivation used to hide
     for (const f of STAND_INS) {
       const names = clipNames(f);
-      expect(names).toContain("Cheer"); // pickReactionClip → victory tier
-      expect(names).toContain("2H_Melee_Idle"); // IntermissionScene shop idle regex
+      expect(names).toContain("cheer"); // pickReactionClip → victory tier
+      expect(names).toContain("idle"); // IntermissionScene shop idle regex
     }
   });
 });
 
 describe("the prune moves animation bytes and NOTHING else", () => {
   it("a re-prune of a shipped file is geometry/rig/texture identical", () => {
-    const src = path.join(CHAMPS, "knight.glb");
+    const src = path.join(CHAMPS, "blocky-knight.glb");
     const glb = readGlb(src);
-    const keep = clipNames(src).filter((n) => n !== "Walking_A"); // drop one, keep the rest
+    const keep = clipNames(src).filter((n) => n !== "cheer"); // drop one, keep the rest
     const out = path.join(tmp, "reprune.glb");
     fs.writeFileSync(out, pruneAnimations(glb, keep));
     expect(pruneDiff(src, out, keep)).toBeNull();
@@ -125,16 +120,16 @@ describe("the prune moves animation bytes and NOTHING else", () => {
   });
 
   it("refuses a keep-set naming a clip the file does not have", () => {
-    const glb = readGlb(path.join(CHAMPS, "mage.glb"));
-    expect(() => pruneAnimations(glb, ["Idle", "No_Such_Clip"])).toThrow(/missing clips: No_Such_Clip/);
+    const glb = readGlb(path.join(CHAMPS, "blocky-mage.glb"));
+    expect(() => pruneAnimations(glb, ["idle", "No_Such_Clip"])).toThrow(/missing clips: No_Such_Clip/);
   });
 
   it("pruneDiff catches a candidate that lost a required clip", () => {
-    const src = path.join(CHAMPS, "rogue.glb");
+    const src = path.join(CHAMPS, "blocky-rogue.glb");
     const glb = readGlb(src);
     const out = path.join(tmp, "short.glb");
-    fs.writeFileSync(out, pruneAnimations(glb, ["Idle"]));
+    fs.writeFileSync(out, pruneAnimations(glb, ["idle"]));
     // asked to verify against a two-clip contract the candidate cannot satisfy
-    expect(pruneDiff(src, out, ["Idle", "Cheer"])).toMatch(/clip count is 1/);
+    expect(pruneDiff(src, out, ["idle", "cheer"])).toMatch(/clip count is 1/);
   });
 });
