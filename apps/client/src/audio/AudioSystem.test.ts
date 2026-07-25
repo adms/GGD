@@ -1102,3 +1102,104 @@ describe("AudioSystem test-mode silence (audio-test-silence)", () => {
     sys.dispose();
   });
 });
+
+/**
+ * TASK #216 — 「回到商店時…還會有火圈聲音」.
+ *
+ * `fireRingLoop` is a ~60 s clip fired ONCE at ring ignition and `arenaAmbience`
+ * a ~38 s clip fired once at round start. Before this, `playSfx` was strictly
+ * fire-and-forget — `AudioSystem` had NO stop path for SFX at all (only
+ * `stopBed()` for BGM) — so a round that settled inside that window carried
+ * burning fire straight through 結算 and into the shop. These pin the stop path
+ * itself: only ambience BEDS are tracked, they can be cut, and a bed that was
+ * still DECODING when combat ended must never start afterwards.
+ */
+const BED_MAP: AudioMap = {
+  bgm: { combat: { file: "assets/audio/bgm/combat.mp3", loop: true } },
+  sfx: {
+    // both are in sfxManifest.SFX_LOOPABLE — the client's record of loop intent
+    fireRingLoop: { files: ["assets/audio/sfx/lab/fireRingLoop.mp3"], maxConcurrent: 1 },
+    arenaAmbience: { files: ["assets/audio/sfx/lab/arenaAmbience.mp3"], maxConcurrent: 1 },
+    // a transient, for contrast: it must NOT be tracked or stoppable
+    hit: { files: ["assets/audio/sfx/fx/thud.mp3"], cooldownMs: 0, maxConcurrent: 8 },
+  },
+};
+
+describe("AudioSystem sustained-SFX teardown (audio-sfx-stop, task #216)", () => {
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => vi.useRealTimers());
+
+  it("STOPS a playing fire-ring bed — the leak the owner heard over the shop", async () => {
+    cover("audio-sfx-stop");
+    const { sys, ctxRef } = build({ fetchFn: okFetch(BED_MAP), now: () => 0 });
+    await sys.loadMap();
+    sys.unlock();
+    await flush();
+    expect(sys.playSfx("fireRingLoop")).toBe(true);
+    await flush();
+    const ctx = ctxRef()!;
+    const bed = ctx.started[ctx.started.length - 1]!;
+    expect(bed.started).toBe(true);
+    expect(bed.stopped).toBe(false); // ~60 s of fire, playing on
+
+    // the combat→shop edge
+    expect(sys.stopSfx("fireRingLoop")).toBe(1);
+    vi.advanceTimersByTime(1000);
+    expect(bed.stopped).toBe(true);
+    sys.dispose();
+  });
+
+  it("stopSustainedSfx cuts EVERY fight bed at once and leaves transients alone", async () => {
+    cover("audio-sfx-stop");
+    const { sys, ctxRef } = build({ fetchFn: okFetch(BED_MAP), now: () => 0 });
+    await sys.loadMap();
+    sys.unlock();
+    await flush();
+    sys.playSfx("fireRingLoop");
+    sys.playSfx("arenaAmbience");
+    sys.playSfx("hit");
+    await flush();
+    const ctx = ctxRef()!;
+    expect(ctx.started.filter((s) => !s.stopped).length).toBe(3);
+
+    // exactly the two BEDS are stopped; the transient is fire-and-forget
+    expect(sys.stopSustainedSfx()).toBe(2);
+    vi.advanceTimersByTime(1000);
+    expect(ctx.started.filter((s) => s.stopped).length).toBe(2);
+    sys.dispose();
+  });
+
+  it("cancels a bed that was still DECODING when combat ended", async () => {
+    cover("audio-sfx-stop");
+    // The ring can ignite on the same phase edge that ends the round; if the
+    // stop only reached PLAYING voices, the fire would start a beat later —
+    // over the shop — and then be unstoppable again.
+    const { sys, ctxRef } = build({ fetchFn: okFetch(BED_MAP), now: () => 0 });
+    await sys.loadMap();
+    sys.unlock();
+    await flush();
+    const before = ctxRef()!.started.length;
+    sys.playSfx("fireRingLoop"); // decode in flight
+    sys.stopSustainedSfx(); // …and the round ends right now
+    await flush();
+    expect(ctxRef()!.started.length).toBe(before); // it never started
+    // …and the voice slot was released, so the next round can play it again
+    expect(sys.activeVoices("fireRingLoop")).toBe(0);
+    sys.dispose();
+  });
+
+  it("is idempotent and safe with nothing playing", async () => {
+    cover("audio-sfx-stop");
+    const { sys } = build({ fetchFn: okFetch(BED_MAP), now: () => 0 });
+    await sys.loadMap();
+    sys.unlock();
+    await flush();
+    expect(sys.stopSustainedSfx()).toBe(0); // never entered combat
+    sys.playSfx("fireRingLoop");
+    await flush();
+    expect(sys.stopSustainedSfx()).toBe(1);
+    expect(sys.stopSustainedSfx()).toBe(0); // second edge: nothing left to cut
+    vi.advanceTimersByTime(1000);
+    sys.dispose();
+  });
+});

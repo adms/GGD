@@ -7,6 +7,7 @@ import { describe, it, expect } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
 import {
   FIRE_RING_SEC,
+  isCombatEnd,
   isCombatStart,
   loopResumeOffsetSec,
   sceneForMatch,
@@ -62,6 +63,40 @@ describe("combat-start sting edge (audio-scene-map)", () => {
     expect(isCombatStart(null, "combat")).toBe(true);
     expect(isCombatStart("combat", "combat")).toBe(false); // already in combat
     expect(isCombatStart("combat", "resolution")).toBe(false);
+  });
+});
+
+describe("combat TEARDOWN edge (audio-combat-teardown-edge, task #216)", () => {
+  it("fires on EVERY exit from combat — that is when the fight's beds must die", () => {
+    cover("audio-combat-teardown-edge");
+    // The bug: `fireRingLoop` is a ~60 s one-shot lit at ring ignition and
+    // nothing could stop a started SFX, so a round that settled inside that
+    // window carried burning fire through 結算 into the shop
+    // (「回到商店時…還會有火圈聲音」). The teardown hangs off this edge.
+    expect(isCombatEnd("combat", "resolution")).toBe(true);
+    expect(isCombatEnd("combat", "intermission")).toBe(true);
+    // …including the jump straight to the match end: there is no phase in which
+    // a fight bed belongs, so no exit is exempt.
+    expect(isCombatEnd("combat", "matchEnd")).toBe(true);
+  });
+
+  it("does NOT fire while in combat, or on any edge that never left it", () => {
+    cover("audio-combat-teardown-edge");
+    expect(isCombatEnd("combat", "combat")).toBe(false); // still fighting
+    expect(isCombatEnd("intermission", "combat")).toBe(false); // the START edge
+    expect(isCombatEnd("resolution", "intermission")).toBe(false);
+    expect(isCombatEnd(null, "champSelect")).toBe(false); // fresh mount
+  });
+
+  it("is the exact mirror of isCombatStart — the two never fire on one edge", () => {
+    cover("audio-combat-teardown-edge");
+    const phases = [null, "champSelect", "intermission", "combat", "resolution", "matchEnd"];
+    for (const prev of phases) {
+      for (const next of phases) {
+        if (next === null) continue;
+        expect(isCombatStart(prev, next) && isCombatEnd(prev, next)).toBe(false);
+      }
+    }
   });
 });
 

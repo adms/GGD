@@ -184,6 +184,31 @@ export class SimWorld {
   combatActive = false;
 
   /**
+   * Zones whose DUEL IS ALREADY DECIDED this round (task #216).
+   *
+   * `combatActive` is GLOBAL: it only drops once EVERY pairing is settled, so
+   * between "my 3v3 ended" and "the last zone's 3v3 ends" the round is over for
+   * me and still live for the world. That window is the #216 bug — the fire
+   * ring kept eating the survivors of a finished duel (161 → 39 HP in the
+   * playtest), and since a player defeated this round is already looking at the
+   * shop (ui/panels/shopGate), the HP was visibly draining behind the shop card.
+   *
+   * This is RECORDED SIM STATE, not host state: the match host writes a zone in
+   * the same instant it records that zone's duel winner (`checkCombatEnd`) and
+   * clears the whole set in `enterCombat`, both of which are already
+   * deterministic (their only tie-breaks draw from `world.rng`). It is folded
+   * into the replay host-digest next to `combatActive`, so a replica that
+   * disagrees about which zone finished says so on the tick it happens.
+   *
+   * Systems must treat a settled zone as "combat is over HERE": no fire-ring
+   * burn (FireRingSystem + fireRing.isBurnedByFireRing), no mob aggro/melee and
+   * no new mob spawns (MobSystem). It never freezes the ring's shrink CLOCK or
+   * radius — those stay global, because the snapshot replicates one radius for
+   * the whole arena (protocol/schema.ts) and the still-live zone needs it.
+   */
+  readonly settledZones = new Set<number>();
+
+  /**
    * Combat-juice freeze state (deterministic, part of world state so client
    * prediction replays it identically). See systems/HitstopSystem.ts + combat/
    * damage.ts + docs COMBAT-JUICE notes.

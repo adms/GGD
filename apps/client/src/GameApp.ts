@@ -105,6 +105,7 @@ import { ContentDb } from "./content/ContentDb";
 import {
   frameBus,
   clearCombatText,
+  clearWorldAnchors,
   expireCombatText,
   setCombatTextScope,
   setDamageNumberCap,
@@ -1290,7 +1291,17 @@ export class GameApp {
     this.updateRoundWinner(state, nowMs);
 
     // 7) world-anchored DOM data + render
-    if (state) this.updateFrameBus(state, nowMs);
+    //
+    // THE ARENA'S DOM OVERLAY FOLLOWS THE ARENA (task #216). The world-anchored
+    // layer (HP bars, names, cast bars, revive circles, floating numbers) is DOM
+    // painted at projected world positions — it only means anything while the
+    // arena canvas underneath it is actually being drawn. The intermission
+    // Babylon scene suppresses that draw (`setArenaRenderSuppressed`), and the
+    // overlay used to keep updating regardless, which is why the owner saw
+    // 「戰場上的血條」 floating over the shop with nothing behind them. Same
+    // switch for both now: no arena render ⇒ no world anchors.
+    if (state && !this.renderSuppressed) this.updateFrameBus(state, nowMs);
+    else clearWorldAnchors();
     if (!this.renderSuppressed) this.renderer.render();
 
     // 8) perf sampling → adaptive brain + perfBus (read by the overlay @4Hz)
