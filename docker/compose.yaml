@@ -90,6 +90,23 @@ services:
       # curation and untuned combat multipliers. `platform` is the compose
       # service name on the shared default network.
       GGD_PLATFORM_URL: "http://platform:8080"
+      # CONTENT-BUS LIVE PROPAGATION. Same "localhost = myself" class as #48/#176
+      # above: the content-bus subscriber (apps/game-server/src/config/contentBus.ts
+      # startContentBus → parseRedisAddr) reads REDIS_ADDR with an in-code default
+      # of 127.0.0.1:6379. It was NEVER set on THIS container, so inside the game
+      # container it dialed the game itself → ECONNREFUSED (v0.5.10 deploy log) →
+      # the bus stayed disconnected and admin 後台 content edits did NOT propagate
+      # live; they only took effect on the next match's cache TTL. `redis` is the
+      # compose service name on the shared default network (platform already uses
+      # it at line 60). The code default 127.0.0.1:6379 is KEPT for pnpm dev / LAN,
+      # where localhost IS the redis. This sets NO ports, so redis stays
+      # loopback-published + internal-network only — #117 exposure untouched.
+      REDIS_ADDR: "redis:6379"
+      # redis runs with --requirepass (line 29); without the password the SUBSCRIBE
+      # gets NOAUTH and the bus stays dead. The subscriber sends AUTH before
+      # SUBSCRIBE when a password is present (redisSubscriber.ts:208). Same
+      # fail-fast ${VAR:?...} form platform uses at line 61.
+      REDIS_PASSWORD: "${REDIS_PASSWORD:?set REDIS_PASSWORD in docker/.env}"
     ports:
       - "127.0.0.1:2567:2567"
     volumes:
