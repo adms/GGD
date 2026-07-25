@@ -16,6 +16,7 @@ import { zConfigDoc } from "./config";
 import { zModelDoc } from "./model";
 import { zVfxCollectionDoc } from "./vfx";
 import { zSkinDoc } from "./skin";
+import { zTemplateDoc } from "./template";
 import { zId } from "./common";
 
 export interface CollectionSpec {
@@ -43,6 +44,14 @@ export const COLLECTIONS = {
   // the vfx collection also accepts ribbon@1 docs (union on `schema`)
   vfx: { schemaTag: "vfx@1", schema: zVfxCollectionDoc, label: "VFX" },
   skins: { schemaTag: "skin@1", schema: zSkinDoc, label: "Skins" },
+  // 鑄技工坊 (Skill Forge, #141/#205): parameterised behaviour templates. An
+  // ability doc references one via `template:{ref,params}` and the pure expand()
+  // fills its behaviour half at registry time — no sim change, layered on schema.
+  "ability-templates": {
+    schemaTag: "template@1",
+    schema: zTemplateDoc,
+    label: "Ability Templates",
+  },
 } as const satisfies Record<string, CollectionSpec>;
 
 export type CollectionName = keyof typeof COLLECTIONS;
@@ -72,3 +81,4 @@ export * from "./config";
 export * from "./model";
 export * from "./vfx";
 export * from "./skin";
+export * from "./template";

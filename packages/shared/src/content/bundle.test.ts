@@ -178,6 +178,7 @@ const DOC_FLOORS: Record<CollectionName, number> = {
   models: 110,
   vfx: 500,
   skins: 5,
+  "ability-templates": 29, // 鑄技工坊: 8 enabled + 21 draft families (#141/#205)
 };
 
 describe("content bundle — emission", () => {

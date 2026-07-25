@@ -139,6 +139,28 @@ function effectLines(
         out.push({ depth, kind: e.kind, summary: `projectile ${e.projectileId}, on hit:` });
         effectLines(e.onHit, finalStats, maxRank, depth + 1, out);
         break;
+      // `restore` and `spawnVfx` used to fall through this switch silently, so an
+      // ability made of them previewed as a BLANK effect list — the one place
+      // 「表單看到的 == 遊戲跑的」 breaks is exactly where a designer trusts it.
+      // 鑄技工坊's 原地震波 / 變身強化 templates emit both, so they are covered now.
+      case "restore": {
+        const parts: string[] = [];
+        if (e.healthPct !== undefined) parts.push(`${Math.round(e.healthPct * 100)}% max HP`);
+        if (e.manaPct !== undefined) parts.push(`${Math.round(e.manaPct * 100)}% max mana`);
+        out.push({
+          depth,
+          kind: e.kind,
+          summary: `restore ${parts.length > 0 ? parts.join(" + ") : "(nothing set)"}`,
+        });
+        break;
+      }
+      case "spawnVfx":
+        out.push({
+          depth,
+          kind: e.kind,
+          summary: `vfx ${e.vfxId} at ${e.at ?? "self"}${e.durationSec !== undefined ? ` for ${e.durationSec}s` : ""}`,
+        });
+        break;
     }
   }
   return out;

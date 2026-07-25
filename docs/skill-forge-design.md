@@ -1,6 +1,6 @@
 # 「鑄技工坊」計畫 (Project Skill Forge) — 技能模板編輯器設計
 
-> 狀態: **設計定稿, 等待實作** · 起案 2026-07-26 · owner: Takuro
+> 狀態: **P1 已實作** (見 §七) · 設計定稿 2026-07-26 · owner: Takuro
 > 前置資產: [ability-templates.md](ability-templates.md) (29 類行為模板總覽) ·
 > [ability-templates.csv](ability-templates.csv) (498 技能 × 35 欄) ·
 > `tools/w3x-import/out/GoDieEX22s-src/JASS_BEHAVIOR.json` (309 筆 JASS 行為記錄)
@@ -107,3 +107,72 @@ expand(template, params) → { castType, effects[], radius?, castTimeSec?, vfx �
 - 不改 sim 戰鬥數值平衡 (只管行為形狀)
 - 不做模板市集/分享 (單機編輯器內用)
 - P1 不動 sim 詞彙 — 有缺口的模板明示降級, 不偷偷擴 schema
+
+---
+
+## 七、P1 實作狀態 (2026-07-26 落地)
+
+狀態: **P1 已實作**。以下記錄實作時發現、與上面設計稿 **不同** 的地方 —
+設計稿本身不改，差異寫在這裡，避免未來讀者以為設計沒被執行。
+
+### 7.1 已交付
+
+| 設計項 | 實作 |
+|---|---|
+| `template@1` schema | `packages/shared/src/content/schema/template.ts` + 註冊進 `COLLECTIONS`（`ability-templates`） |
+| 純展開器 + 能力表 | `content/templates/expand.ts`：`expand()` / `mergeExpansion()` / `eject()` / `SIM_CAPABILITIES` |
+| 29 個模板文件 | `content/ability-templates/`，8 個 `enabled`、21 個 `draft` |
+| 選卡頁 + 參數表單 + 試放 + 寫回 | `apps/editor/src/forge/`（品牌名 鑄技工坊） |
+| 展開器 golden test | `templates/expand.test.ts` |
+| 往返 diff=0 | `expand.test.ts` 的 ROUNDTRIP 區塊 |
+| `fieldAdoption` debt | `fieldAdoption.test.ts` 的 `field:abilities.template` + champion 鏡像條目 |
+
+### 7.2 設計稿講得不夠、實作補上的三件事
+
+1. **展開結果不只 `{castType, effects[], radius?, castTimeSec?}`。**
+   攻擊觸發 / 受擊反應 這兩類是 PASSIVE，行為掛在 `passive.ranks[].hooks`，
+   `effects` 是空陣列。`ExpandResult` 因此多了 `passive` 與 `innateKind`，
+   否則這兩類（合計 29 支技能）根本無法通過 `zAbilityDoc`。
+
+2. **參數槽多了 `inert` 欄位。** 實作時用「改參數看展開結果會不會動」的探針掃過
+   全部啟用模板，抓到 **7 個宣告了但展開器根本沒讀的參數槽**
+   （`tpl-line-sweep` 的分段幾何 ×3、`tpl-traveling-wave` 的逐步推進 ×3、
+   `tpl-on-hit-react.reflectRadius`）。這是本系統最惡質的失效模式：設計師照著
+   JASS 實測值填一個數字，表單收下，遊戲完全忽略，而且沒有任何東西會報錯。
+   現在這些槽必須標 `inert` 說明理由，編輯器灰掉並寫「本版不生效」，
+   `paramsSchema.test.ts` 每次都重跑探針，多一個沒標的就紅。
+
+3. **表單 schema 是 runtime 合成的。** `paramsSchemaFor(t)` 把模板的 DATA 參數槽
+   轉成真的 Zod object 給既有的 form walker 走，所以「表單看到的 == 遊戲跑的」
+   有測試背書（`paramsSchema.test.ts`），而不是靠兩邊各寫一份。
+
+### 7.3 覆蓋率誠實化
+
+設計稿 §三 P1 寫「~60% 技能」。實測 `docs/ability-templates.csv`：
+啟用的 8 類合計 **114 / 498 列 = 22.9%**。498 列裡有 240 列是
+「物件資料技能(無觸發)」，根本沒有 JASS 觸發行為；只算真的有行為記錄的 258 列，
+P1 覆蓋 **44.2%**。60% 這個數字要嘛重新定義（把 240 列物件資料技能折進這 8 個
+形狀，但 CSV 目前沒有這個對照表），要嘛就照實記成 22.9%。**不要拿 60% 當已完成。**
+
+### 7.4 順帶修掉的 production 漏洞
+
+`apps/editor` 從來沒有 DEV gate，但 `apps/editor/dist` 是被烘進
+`docker/edge.Dockerfile` 並在 `/editor/` 對外服務的，而 `/content-api/` 只存在於
+`nginx/dev/content-api.conf`。也就是說正式版一直在對外送出一排指向不存在路由的
+存檔按鈕。已比照 `apps/admin/src/contentApi.ts` 補上
+`WRITES_ENABLED = import.meta.env.DEV`，所有 writer 先檢查它。
+伺服器端沒有放寬任何東西：`guard.ts`、兩份 nginx conf 都沒動，
+content-api 仍拒絕在 `NODE_ENV=production` 啟動。
+
+### 7.5 P1 沒做的（明確留給 P2）
+
+- **3D 試放**：`PreviewController.mount()` 目前仍是 renderless stub，
+  `has3DPreview()` 也不含 abilities。P1 的「即時試放」是**真 sim 的數值/效果行預覽**
+  （sandbox SimWorld + 真 statPipeline + 真 resolveScaling），不是 3D 放招。
+  UI 上照實寫明，不假裝。
+- **展開時機**：目前在 `registerAll()` 展開。設計上更嚴謹的位置是
+  `ContentLoader.load()` 的 `validateReferences()` 之前，這樣模板產生的
+  `spawnProjectile.projectileId` 才會納入引用完整性檢查。P1 沒有任何內容採用
+  template，所以現在沒有引用會逃掉；**P2 第一支技能採用模板之前必須先搬。**
+- **內容遷移**：P1 刻意不讓任何 content 文件採用 `template`。驗收是往返
+  golden test（diff=0），不是改內容。

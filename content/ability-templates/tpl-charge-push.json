@@ -1,0 +1,18 @@
+{
+  "id": "tpl-charge-push",
+  "schema": "template@1",
+  "name": "衝鋒推撞",
+  "description": "P2 衝鋒推撞 (需 knockback 詞彙)。",
+  "family": "charge-push",
+  "status": "draft",
+  "params": {},
+  "requires": [
+    "dash",
+    "knockback"
+  ],
+  "gapScore": 5,
+  "exemplar": {
+    "skill": "(draft)",
+    "jass": "(P2/P3)"
+  }
+}

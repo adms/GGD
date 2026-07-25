@@ -2723,3 +2723,36 @@ console 端鏡像同一個上限常數；`/wallet/admin/grant-mcoin` 路由、ha
 `approval_console_test.go` 兩道都探（舊門 404、新門對非 admin 403）。
 負數保留（扣除是這張表單既有的能力），但界是**對稱**的，且明白寫出「餘額下限是 0，
 所以大額負數是歸零不是扣那麼多」。
+
+#### 🔨 2026-07-26 追記：鑄技工坊 P1 落地（#141/#205）
+
+需求原話精神：「編輯器裡選行為模板 → 填參數 → 即時試放 → 一鍵寫回，不再手寫
+EffectDef JSON、不再手動同步鏡像雙副本」。設計定稿 `docs/skill-forge-design.md`，
+P1 已實作，實作差異寫在該文件 §七（設計稿本身不動）。
+
+- **交付**：`template@1` schema + 註冊（`ability-templates` collection，29 個文件：
+  8 enabled / 21 draft）· 純展開器 `content/templates/expand.ts`（sim 與編輯器共用同一顆）·
+  `apps/editor/src/forge/` 選卡頁+參數表單+試放+鏡像寫回 · content-api 兩條
+  PATCH 行編輯路由 + `POST /rebuild`
+- **驗收**：往返 diff=0（`expand.test.ts` ROUNDTRIP 區塊，用模板重做一支現有技能，
+  語意 diff 為零）
+- **掃描式需求對照**：這條屬於「編輯器（localhost 即管理者可編輯）」那一列的延伸 —
+  #96 圖鑑即編輯器 ✅、#102 後台 CRUD ⏸、**#141 鑄技工坊 P1 ✅**（P2/P3 見設計稿 §三）
+
+**三個實作時抓到、原本沒人在追的問題**（都已修，細節見 skill-forge-design.md §七）：
+
+1. **`apps/editor` 從來沒有 DEV gate，但它會被烘進正式版 image。**
+   `docker/edge.Dockerfile` 把 `apps/editor/dist` 烘進去、`nginx.conf` 在 `/editor/`
+   對外服務，而 `/content-api/` 只存在於 `nginx/dev/content-api.conf`。正式版一直
+   對外送出一排指向不存在路由的存檔按鈕。已補 `WRITES_ENABLED = import.meta.env.DEV`
+   （比照 admin）。伺服器端一律沒動：guard.ts、兩份 nginx conf、NODE_ENV=production
+   拒絕啟動，全部原樣。
+2. **行編輯寫入器原本 0 測試。** `spliceEmbeddedSlot` 已存在但沒有任何測試覆蓋，
+   而它正是 #78「絕不 JSON round-trip content 文件」規則的實作。已補 7 條測試，
+   包含關鍵的「用自己的現值 splice 回去要 byte 完全不變」（JSON round-trip 會把
+   Python 匯出的 `30.0` 變成 `30`）。
+3. **7 個「表單收得下、遊戲完全忽略」的參數槽。** 用探針掃出來的，見 §七.2。
+   現在必須標 `inert`，測試每次重跑探針。
+
+**覆蓋率誠實化**：設計稿 P1 寫「~60% 技能」，實測是 **114/498 = 22.9%**
+（只算有 JASS 行為記錄的 258 列則為 44.2%）。不要拿 60% 當已完成。

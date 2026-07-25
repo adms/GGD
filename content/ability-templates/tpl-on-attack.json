@@ -1,0 +1,59 @@
+{
+  "id": "tpl-on-attack",
+  "schema": "template@1",
+  "name": "攻擊觸發",
+  "description": "普攻/造成傷害時觸發的被動加成（HP% 執行門檻為紅色降級槽）。",
+  "family": "on-attack",
+  "status": "enabled",
+  "params": {
+    "event": {
+      "type": "enum",
+      "values": [
+        "onBasicAttack",
+        "onDamageDealt"
+      ],
+      "default": "onBasicAttack"
+    },
+    "chance": {
+      "type": "number",
+      "default": 1,
+      "min": 0,
+      "max": 1,
+      "unit": "ratio"
+    },
+    "bonusDamage": {
+      "type": "scaling",
+      "default": {
+        "perRank": [
+          9999
+        ],
+        "ratios": []
+      }
+    },
+    "damageType": {
+      "type": "enum",
+      "values": [
+        "magic",
+        "physical",
+        "true"
+      ],
+      "default": "magic"
+    },
+    "internalCooldown": {
+      "type": "number",
+      "default": 0,
+      "min": 0,
+      "max": 60,
+      "unit": "s",
+      "optional": true
+    }
+  },
+  "requires": [
+    "hooks"
+  ],
+  "gapScore": 7,
+  "exemplar": {
+    "skill": "獸矛 Beast Spear",
+    "jass": "EVENT_PLAYER_UNIT_ATTACKED"
+  }
+}

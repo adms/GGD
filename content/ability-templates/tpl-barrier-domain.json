@@ -1,0 +1,15 @@
+{
+  "id": "tpl-barrier-domain",
+  "schema": "template@1",
+  "name": "結界領域",
+  "description": "P3 結界領域。",
+  "family": "barrier-domain",
+  "status": "draft",
+  "params": {},
+  "requires": [],
+  "gapScore": 2,
+  "exemplar": {
+    "skill": "(draft)",
+    "jass": "(P2/P3)"
+  }
+}

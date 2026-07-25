@@ -3,6 +3,7 @@ import { z } from "zod";
 import type { AbilityId } from "../../ids";
 import { zChampionAbilitySlot, zIdFor, zInnateKind, zRef, zTintRgb } from "./common";
 import { zAbilityPassive, zEffectDef } from "./effect";
+import { zAbilityTemplateRef } from "./template";
 
 export const zCastType = z.enum(["targeted", "skillshot", "ground", "self", "dash"]);
 
@@ -157,6 +158,18 @@ export const zAbilityDef = z
      * damage-derived default. Applies to every hit this ability lands.
      */
     hitFeel: zHitFeel.optional(),
+    /**
+     * 鑄技工坊 (Skill Forge, #141/#205) — this ability's BEHAVIOUR is authored by
+     * a template@1 doc rather than hand-written `effects`. Stores the template id
+     * + filled param slots ONLY; the pure `expand()` (content/templates/expand.ts)
+     * fills castType/effects/radius/… at registry time. On disk the doc still
+     * carries the skeleton (name/slot/cooldown/manaCost/range/icon/description)
+     * and an EMPTY `effects: []` (expanded at load) — which passes `zAbilityDoc`
+     * because `effects` has no min and `refineInnate` only constrains PASSIVE
+     * slots. WITHOUT this optional field a templated doc is rejected (zAbilityDef
+     * is `.strict()`), so this edit is mandatory to the template system.
+     */
+    template: zAbilityTemplateRef.optional(),
   })
   .strict();
 

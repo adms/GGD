@@ -1,0 +1,15 @@
+{
+  "id": "tpl-data-no-trigger",
+  "schema": "template@1",
+  "name": "物件資料技能無觸發",
+  "description": "物件資料技能無觸發。",
+  "family": "data-no-trigger",
+  "status": "draft",
+  "params": {},
+  "requires": [],
+  "gapScore": 7,
+  "exemplar": {
+    "skill": "(draft)",
+    "jass": "(P2/P3)"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "id": "tpl-summon-agent",
+  "schema": "template@1",
+  "name": "召喚代理",
+  "description": "P3 召喚代理 (52 技能最大缺口, 需 summon)。",
+  "family": "summon-agent",
+  "status": "draft",
+  "params": {},
+  "requires": [
+    "summon"
+  ],
+  "gapScore": 4,
+  "exemplar": {
+    "skill": "(draft)",
+    "jass": "(P2/P3)"
+  }
+}

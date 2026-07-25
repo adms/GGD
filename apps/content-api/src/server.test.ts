@@ -415,3 +415,226 @@ describe("content bundle staleness guard", () => {
     expect(existsSync(bundleFile())).toBe(true);
   });
 });
+
+// ---------------------------------------------------------------------------
+// 鑄技工坊 (#141/#205) — the LINE-EDIT member patches
+// ---------------------------------------------------------------------------
+//
+// PUT round-trips the whole doc through JSON.stringify, which renormalises the
+// Python exporter's `30.0` to `30` across the ENTIRE file. These routes splice
+// one member's bytes and leave everything else alone — so the assertions here
+// are as much about what did NOT change as about what did.
+
+const ABILITY = {
+  id: "hero-x.q",
+  schema: "ability@1",
+  name: "01-01 Test Strike",
+  slot: "Q",
+  castType: "self",
+  maxRank: 5,
+  cooldown: [8, 8, 8, 8, 8],
+  manaCost: [50, 50, 50, 50, 50],
+  range: 6,
+  effects: [],
+};
+
+/** A champion written the way the Python exporter writes one: `X.0` floats. */
+const PY_CHAMPION_TEXT = `{
+  "id": "hero-x",
+  "schema": "champion@1",
+  "name": "Test Hero",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "champ.test",
+  "baseStats": { "maxHealth": 600.0, "ad": 55.0 },
+  "growth": { "maxHealth": 80.0, "ad": 3.0 },
+  "abilities": {
+    "Q": {
+      "id": "hero-x.q",
+      "name": "01-01 Test Strike",
+      "slot": "Q",
+      "castType": "self",
+      "maxRank": 5,
+      "cooldown": [8, 8, 8, 8, 8],
+      "manaCost": [50, 50, 50, 50, 50],
+      "range": 6.0,
+      "effects": []
+    },
+    "W": {
+      "id": "hero-x.w",
+      "name": "01-02 Two",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 5,
+      "cooldown": [30, 30, 30, 30, 30],
+      "manaCost": [50, 50, 50, 50, 50],
+      "range": 9.17,
+      "effects": []
+    },
+    "E": {
+      "id": "hero-x.e",
+      "name": "01-03 Three",
+      "slot": "E",
+      "castType": "self",
+      "maxRank": 5,
+      "cooldown": [12, 12, 12, 12, 12],
+      "manaCost": [50, 50, 50, 50, 50],
+      "range": 3.0,
+      "effects": []
+    },
+    "R": {
+      "id": "hero-x.r",
+      "name": "01-04 Four",
+      "slot": "R",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [100, 100, 100],
+      "manaCost": [100, 100, 100],
+      "range": 12.0,
+      "effects": []
+    }
+  },
+  "skillOrder": ["Q", "W", "E", "R"],
+  "buildPriority": [],
+  "tags": []
+}
+`;
+
+describe("鑄技工坊 member patches (content-api-member-patch)", () => {
+  const championFile = (): string => join(root, "champions", "hero-x.json");
+  const abilityFile = (): string => join(root, "abilities", "hero-x.q.json");
+
+  beforeEach(() => {
+    mkdirSync(join(root, "champions"), { recursive: true });
+    writeFileSync(championFile(), PY_CHAMPION_TEXT);
+    writeDocAtomic(root, "abilities", ABILITY);
+    rebuildAllIndexes(root);
+  });
+
+  it("PATCHes one champion slot and leaves every other byte — floats included", async () => {
+    cover("content-api-member-patch");
+    const before = readFileSync(championFile(), "utf8");
+    const res = await app.inject({
+      method: "PATCH",
+      url: "/content-api/champions/hero-x/abilities/Q",
+      payload: {
+        ...ABILITY,
+        schema: undefined,
+        castType: "targeted",
+        targetsEnemies: true,
+        template: { ref: "tpl-single-strike", params: { damageType: "magic" } },
+        effects: [{ kind: "damage", damageType: "magic", amount: { perRank: [100] } }],
+      },
+    });
+    expect(res.statusCode).toBe(200);
+    const after = readFileSync(championFile(), "utf8");
+
+    // the OTHER slots' bytes are untouched: W's 9.17, E's 3.0, R's 12.0 and the
+    // top-level 600.0/55.0 — a whole-doc PUT would have rewritten all of them
+    expect(after).toContain('"range": 9.17');
+    expect(after).toContain('"range": 3.0');
+    expect(after).toContain('"range": 12.0');
+    expect(after).toContain('"maxHealth": 600.0');
+    expect(after).toContain('"ad": 55.0');
+    // …and the patch landed
+    const parsed = JSON.parse(after) as { abilities: { Q: { castType: string } } };
+    expect(parsed.abilities.Q.castType).toBe("targeted");
+    // the change is CONFINED: the E/W/R spans are byte-identical to before
+    const span = (t: string, slot: string): string =>
+      t.slice(t.indexOf(`"${slot}": {`), t.indexOf("}", t.indexOf(`"effects": []`, t.indexOf(`"${slot}": {`))));
+    for (const slot of ["W", "E", "R"]) {
+      expect(span(after, slot)).toBe(span(before, slot));
+    }
+  });
+
+  it("PATCHes only the named members of a standalone ability doc", async () => {
+    cover("content-api-member-patch");
+    const res = await app.inject({
+      method: "PATCH",
+      url: "/content-api/abilities/hero-x.q",
+      payload: {
+        castType: "targeted",
+        effects: [{ kind: "damage", damageType: "magic", amount: { perRank: [100] } }],
+      },
+    });
+    expect(res.statusCode).toBe(200);
+    const doc = JSON.parse(readFileSync(abilityFile(), "utf8")) as {
+      castType: string;
+      effects: unknown[];
+      name: string;
+    };
+    expect(doc.castType).toBe("targeted");
+    expect(doc.effects).toHaveLength(1);
+    expect(doc.name).toBe("01-01 Test Strike"); // untouched members survive
+  });
+
+  it("rejects an unknown slot with 404 and writes nothing", async () => {
+    cover("content-api-member-patch");
+    const before = readFileSync(championFile(), "utf8");
+    const res = await app.inject({
+      method: "PATCH",
+      url: "/content-api/champions/hero-x/abilities/Z",
+      payload: { id: "hero-x.z" },
+    });
+    expect(res.statusCode).toBe(404);
+    expect(readFileSync(championFile(), "utf8")).toBe(before);
+  });
+
+  it("rejects a patch that would make the WHOLE champion invalid, leaving the file untouched", async () => {
+    cover("content-api-member-patch");
+    const before = readFileSync(championFile(), "utf8");
+    const res = await app.inject({
+      method: "PATCH",
+      url: "/content-api/champions/hero-x/abilities/Q",
+      // slot "W" in the Q position — zChampionDoc's superRefine rejects it
+      payload: { ...ABILITY, schema: undefined, slot: "W" },
+    });
+    expect(res.statusCode).toBe(422);
+    expect(readFileSync(championFile(), "utf8")).toBe(before);
+  });
+
+  it("rejects an ability patch that would make the doc invalid", async () => {
+    cover("content-api-member-patch");
+    const before = readFileSync(abilityFile(), "utf8");
+    const res = await app.inject({
+      method: "PATCH",
+      url: "/content-api/abilities/hero-x.q",
+      payload: { castType: "not-a-cast-type" },
+    });
+    expect(res.statusCode).toBe(422);
+    expect(readFileSync(abilityFile(), "utf8")).toBe(before);
+  });
+
+  it("snapshots the file for undo before patching", async () => {
+    cover("content-api-member-patch");
+    await app.inject({
+      method: "PATCH",
+      url: "/content-api/abilities/hero-x.q",
+      payload: { castType: "targeted" },
+    });
+    const backups = await app.inject({ url: "/content-api/abilities/hero-x.q/backups" });
+    expect(backups.statusCode).toBe(200);
+    expect((backups.json() as { entries: unknown[] }).entries.length).toBeGreaterThan(0);
+  });
+
+  it("POST /rebuild regenerates the indexes + manifest (content:build as an endpoint)", async () => {
+    cover("content-api-member-patch");
+    const res = await app.inject({ method: "POST", url: "/content-api/rebuild", payload: {} });
+    expect(res.statusCode).toBe(200);
+    const body = res.json() as { collections: number; contentVersion: string };
+    expect(body.collections).toBeGreaterThan(0);
+    expect(body.contentVersion).toMatch(/[0-9a-f]/);
+    expect(existsSync(join(root, "champions", "_index.json"))).toBe(true);
+  });
+
+  it("PATCH is a MUTATING verb — a non-loopback peer is refused by the guard", async () => {
+    cover("content-api-member-patch");
+    const res = await app.inject({
+      method: "PATCH",
+      url: "/content-api/abilities/hero-x.q",
+      payload: { castType: "targeted" },
+      remoteAddress: "10.1.2.3",
+    });
+    expect(res.statusCode).toBe(403);
+  });
+});

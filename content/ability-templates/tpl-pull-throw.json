@@ -1,0 +1,17 @@
+{
+  "id": "tpl-pull-throw",
+  "schema": "template@1",
+  "name": "拉扯投擲",
+  "description": "P2 拉扯投擲 (需位移詞彙)。",
+  "family": "pull-throw",
+  "status": "draft",
+  "params": {},
+  "requires": [
+    "knockback"
+  ],
+  "gapScore": 3,
+  "exemplar": {
+    "skill": "(draft)",
+    "jass": "(P2/P3)"
+  }
+}

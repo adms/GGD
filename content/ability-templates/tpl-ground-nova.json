@@ -1,0 +1,48 @@
+{
+  "id": "tpl-ground-nova",
+  "schema": "template@1",
+  "name": "原地震波",
+  "description": "以施法者為中心的環形震波。",
+  "family": "ground-nova",
+  "status": "enabled",
+  "params": {
+    "radius": {
+      "type": "number",
+      "default": 530,
+      "min": 200,
+      "max": 900,
+      "unit": "wc3u"
+    },
+    "damage": {
+      "type": "scaling",
+      "default": {
+        "perRank": [
+          150
+        ],
+        "ratios": []
+      }
+    },
+    "damageType": {
+      "type": "enum",
+      "values": [
+        "magic",
+        "physical",
+        "true"
+      ],
+      "default": "magic"
+    },
+    "castTimeSec": {
+      "type": "number",
+      "default": 0,
+      "min": 0,
+      "max": 5,
+      "unit": "s"
+    }
+  },
+  "requires": [],
+  "gapScore": 8,
+  "exemplar": {
+    "skill": "80-03 鬼神烈戟",
+    "jass": "A0N0"
+  }
+}

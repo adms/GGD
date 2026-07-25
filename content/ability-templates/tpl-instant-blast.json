@@ -1,0 +1,49 @@
+{
+  "id": "tpl-instant-blast",
+  "schema": "template@1",
+  "name": "瞬發點爆",
+  "description": "指定點/目標的瞬發爆發；帶半徑時為地面 AoE，否則單體。",
+  "family": "instant-blast",
+  "status": "enabled",
+  "params": {
+    "radius": {
+      "type": "number",
+      "default": 480,
+      "min": 200,
+      "max": 900,
+      "unit": "wc3u",
+      "optional": true
+    },
+    "damage": {
+      "type": "scaling",
+      "default": {
+        "perRank": [
+          200
+        ],
+        "ratios": []
+      }
+    },
+    "damageType": {
+      "type": "enum",
+      "values": [
+        "magic",
+        "physical",
+        "true"
+      ],
+      "default": "magic"
+    },
+    "castTimeSec": {
+      "type": "number",
+      "default": 1,
+      "min": 0,
+      "max": 5,
+      "unit": "s"
+    }
+  },
+  "requires": [],
+  "gapScore": 8,
+  "exemplar": {
+    "skill": "90-03 藤鞭",
+    "jass": "A0Y4"
+  }
+}
