@@ -1,0 +1,38 @@
+/*
+ * Ability-cooldown chrome keyframes (task #219).
+ *
+ * ONE animation: the bloom that fires on the frame a skill comes off cooldown,
+ * so "it is back" is an EVENT and not merely the absence of a number. It is
+ * mounted by ui/components/CooldownChrome.tsx on a CHILD overlay of the tile —
+ * never on the tile itself, whose transform/filter belong to the press
+ * animation and the deny shake.
+ *
+ * Lives in CSS rather than inline because @keyframes cannot be expressed in a
+ * React style object; imported once from src/main.tsx beside buttonFx.css.
+ */
+@keyframes ggd-cd-ready {
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  35% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.25);
+  }
+}
+
+/* Reduced motion: keep the "it is ready" statement, drop the movement. */
+@media (prefers-reduced-motion: reduce) {
+  @keyframes ggd-cd-ready {
+    0% {
+      opacity: 0.9;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+}
