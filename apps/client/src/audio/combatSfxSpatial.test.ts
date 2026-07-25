@@ -112,10 +112,10 @@ describe("combatSfxSpatial resolution — every positioned event actually resolv
    * half-wired table fails: a spec whose entityFallback names a field the sim
    * does not emit resolves to null and shows up here, not in a playtest.
    */
-  it("yields a signed pan for all 21 positioned event types, via payload x/z", () => {
+  it("yields a signed pan for all 22 positioned event types, via payload x/z", () => {
     cover("audio-spatial-callsite-coverage");
     const types = Object.keys(EVENT_SPATIAL);
-    expect(types.length).toBe(21);
+    expect(types.length).toBe(22);
     for (const type of types) {
       // 5 u to the listener's LEFT — the sign is the assertion
       const src = resolveSpatial(ev(type, { x: -5, z: 0, source: 7, target: 8 }), noPos, null, noTeam);

@@ -59,7 +59,7 @@ export interface EventSpatialSpec {
 }
 
 /**
- * The 21 positioned event types. Everything `combatSfx.combatSfxKey` can voice
+ * The 22 positioned event types. Everything `combatSfx.combatSfxKey` can voice
  * is either in here or in {@link CENTRED_EVENTS} — `combatSfxSpatial.test.ts`
  * scrapes `combatSfx.ts` and goes red on a new case that is in neither, so a
  * future event cannot ship silently unspatialised.
@@ -112,12 +112,21 @@ export const EVENT_SPATIAL: Readonly<Record<string, EventSpatialSpec>> = {
   // ownerId is the player being brought back: if that is you, this is the most
   // important sound on the field, so it takes the top (victim) band.
   reviveComplete: { cls: "focus", entityFallback: ["ownerId", "id", "channeller"], actorField: "channeller", victimField: "ownerId" },
+
+  // --- 陣亡投幣 (#191) ------------------------------------------------------
+  // payload x/z is where the coin lands; `id` is the COIN entity. The thrower
+  // is named only by `seatId`, which is not an entity id — so like the flowers
+  // this is a neutral: no actor, no victim, relation demotes to "third". It is
+  // a lootable world ping, not a damage-class beat, hence `texture`.
+  coinDropped: { cls: "texture", entityFallback: ["id"], actorField: null, victimField: null },
 };
 
 /**
  * In-world events that `combatSfxKey` voices and that must stay CENTRED, each
  * with the reason. These are not oversights — a directional version of any of
- * them would be worse than the centred one.
+ * them would be worse than the centred one. A `case` that deliberately maps to
+ * NULL also lands here: the coverage scrape counts every case, and rightly so —
+ * if it ever starts voicing, somebody must re-decide where the sound is.
  */
 export const CENTRED_EVENTS: Readonly<Record<string, string>> = {
   // a GOLD REWARD chime for the local seat (guardianRewardKey gates it on
@@ -129,6 +138,14 @@ export const CENTRED_EVENTS: Readonly<Record<string, string>> = {
   // the fire ring is the whole arena boundary closing in. It has no direction
   // by nature, and panning it would imply one.
   fireRingStart: "non-directional by nature — the ring surrounds you",
+  // the collector's own LOUD jingle, seat-gated by coinRewardKey to exactly one
+  // player — the same shape as guardianSlain, for the same reason. The payload
+  // carries x/z, so it COULD be placed; it must not be: your own banked reward
+  // is a HUD beat, and panning it would place "you got paid" somewhere else.
+  coinPickedUp: "seat-gated coin reward jingle — a HUD beat, not a world event",
+  // combatSfxKey maps this to NULL — `ui/castFeedback` owns the 拒絕 cue, and
+  // there is nothing in the world to place anyway (payload is {seatId, reason}).
+  coinDropRejected: "voiced as silence — ui/castFeedback owns the refusal cue",
 };
 
 // ---------------------------------------------------------------------------
