@@ -32,7 +32,8 @@
 - **Batch 5D 商店貨架 = NO-OP（已完成）**：`shelfDisplay.ts` + IntermissionScene 佈貨、#146 商人頭像（PNG 已由圖示側線於 07-24 補上）皆在 HEAD，layout+sightline+shelfDisplay+IntermissionScene 測試同時綠。
 - **Batch 5B 行動裝置/HUD = 1 個真修**：#151 橫向/#107 殘留/#152 觸控名稱皆已完成；唯一真缺口 **#152 桌機技能名被圖示蓋掉**（`<IconImg fill>` inset:0 蓋住 in-flow 名字）→ 加底部 scrim 名字覆蓋層，桌機技能名終於看得到（`f2716b6`）。
 - **六連 NO-OP 的結論 → 全面對帳**（實查 HEAD）：`hitFeel` **已 143 檔完成**（計畫說 0，過期）。**真正仍開著的少數缺口**：① `useItem`/`recall` 仍 inert（`CommandSystem.ts:121`）—— 主動道具/回城按了沒反應，唯一與 gameplay 有關的；② `canCrit` ≈0（技能暴擊政策/內容）；③ `descriptionRoles`=0（tooltip 顏色，+#125 地雷）；④ `spriteSheet`=0（粒子 flipbook，繫於匯入器 #56）。②③④ 屬打磨。
-- **判斷：計畫已達 owner 的「只剩不重要議題」線。** 最後一個「還算重要」的是 ① 主動道具/回城 —— 排 Round 3 清掉它，之後就只剩打磨，供 owner 拍板 deploy。
+- **① 主動道具其實是 moot**：實查內容 **0 個道具有 active（點擊使用）效果**，14 個有效果的道具全是 passive（裝上即生效）。所以 `useItem` inert **對玩家沒有任何影響**（沒有主動道具可用）；`recall` 同理是 3 條輸入路徑接到一個沒有內容的功能。→ 不重要。
+- **判斷：計畫已達 owner 的「只剩不重要議題」線 —— 沒有還開著的 gameplay 缺口。** 真正剩下的只有打磨：`canCrit`≈0（技能暴擊，平衡選項非 bug）、`descriptionRoles`=0（tooltip 顏色）、`spriteSheet`=0（粒子動畫）、`recall` 死按鈕（可實作或刪）。**v0.5.4 已 push。等 owner 拍板：直接 deploy，或先清某個打磨項。**
 
 ---
 
