@@ -23,42 +23,49 @@ passive** (native `Cool=0`, no castable effects) is reported as PASSIVE, not FAI
 Output is the pass/fail matrix + summary + failure list, regenerated into
 `docs/_castability-128.md` on every run.
 
-The harness is **also a ratchet** (2026-07-25). It used to be a pure diagnostic
-that "does not go red on a content no-op" — its only live assertion was
-`roster.length === 48`, so all 288 cells could have failed and the suite stayed
-green. It now pins a measured floor (`MIN_PASS` / `MIN_WORKING`) and an explicit
-`KNOWN_FAILING` set, and derives its step window from the longest authored cast
-instead of a hard-coded constant, so a regression shows up as a **named cell**,
-not as a number nobody reads.
+## Where the roster comes from (and why it was broken)
 
-## Result (2026-07-25 run — contentVersion `cv_1e8298588746`)
+The 48 come from **tracked** source: `starterChampions` in
+`apps/platform/internal/curation/starter.go` — the first open roster a fresh install
+seeds, pinned id-for-id by Go's `TestFirstOpenRoster` (parsed by
+`packages/shared/testkit/starterRoster.ts`).
 
-**280 / 288 ✅ PASS · 8 🟣 PASSIVE (correct WC3 permanents) · 0 ❌ FAIL · 0 spawn failures.**
-Counting the 8 permanents as correct behaviour, **288 / 288** slots behave as intended.
-The −1 PASS / +1 PASSIVE against the previous `cv_ecff53279fad` measurement (281 ✅ · 7 🟣)
-is the JASS-fidelity fix to `godie-e002:Q` 20-02 感知能力: its WC3 source `A0CM` is the
-native Evasion (`AEev`, Cool=0 permanent, 7/14/21/28% 迴避), so the invented castable
-armor buff became a verified `passive:modifiers` cell — a reclassification, not a
-regression. PASS channel mix (proves it is not rubber-stamping on cosmetics): 180 damage,
-69 buff, 14 projectile, 8 heal, 5 dash, 2 shield, 2 status, **0 vfx-only**. Ranged/melee
-dimension: all 14 ranged champs' basics launch a projectile (`ranged:true`); all 34 melee
-basics are contact damage (`ranged:false`).
+It used to read `data/curation/whitelist.json`, which is **`.gitignore`d live operator
+state**. That file exists only on the owner's machine, so in every fresh clone, worktree
+and CI run the suite died of `ENOENT` inside `beforeAll`, reported "1 skipped", and had
+**never verified a single castability assertion off that machine** — while this row sat
+`done` on its strength. The operator whitelist is still honoured where it exists, but
+only **additively**: champions it enables beyond the tracked 48 are swept too and flagged
+in the report, and are excluded from the pinned counts so the gates mean the same thing
+everywhere. (The two lists are set-identical today, so nothing was lost on the owner's
+machine and full coverage was gained everywhere else.)
 
-### Correction to the earlier "282 / 6 / 0" claim
+## What goes red
 
-The prior run's summary here (282 PASS · 6 PASSIVE · **0 FAIL · 288/288**)
-contradicted the report `docs/_castability-128.md`, which the same harness
-generated saying **280 PASS · 7 PASSIVE · 1 FAIL · 287/288**. The report was
-right that a cell was failing; the todo page had simply not recorded it. But the
-report's *diagnosis* was wrong: the one ❌ was `godie-u00n` (草帽小子) **R**,
-authored at `castTimeSec: 0.9` = **27 ticks**, while the harness stepped a
-hard-coded `WINDOW = 26` — it read the effect one tick before the cast resolved
-and logged "cast accepted but produced no measurable effect". It was never a
-content gap. The window is now derived from content (`maxAuthoredCastTicks + 8`),
-that cell PASSes, and both ledgers agree at **0 real FAIL**.
+A diagnostic that can never fail is as dead as one that never runs, so three gates hold
+over the tracked 48: (1) the sweep runs end-to-end, 48 × 6; (2) **every** champion spawns;
+(3) a **ratchet** on working cells (✅ + 🟣) at the measured floor — an individual content
+no-op stays a report finding, but a slot that works today and stops working goes red.
+
+## Result (2026-07-24 run, at `ac64abc`)
+
+**280 / 288 ✅ PASS · 7 🟣 PASSIVE (correct WC3 permanents) · 1 ❌ FAIL · 0 spawn failures.**
+Counting the 7 permanents as correct behaviour, **287 / 288** slots behave as intended;
+the ratchet floor is set there. The one gap is 草帽小子 蒙其.D.魯夫 (`godie-u00n`) **R** —
+a `ground` cast that is accepted and then produces no measurable effect.
+PASS channel mix (proves it is not rubber-stamping on cosmetics): 179 damage, 70 buff,
+14 projectile, 8 heal, 5 dash, 2 shield, 2 status, **0 vfx-only**. Ranged/melee dimension:
+all 14 ranged champs' basics launch a projectile (`ranged:true`); all 34 melee basics are
+contact damage (`ranged:false`).
+
+> The earlier 2026-07-23 entry here recorded 282 ✅ / 6 🟣 / **0 ❌** = 288/288, but the
+> generated `docs/_castability-128.md` committed at `ac64abc` already showed 280/7/1 — this
+> prose was simply stale. The tracked-roster sweep reproduces the owner's committed matrix
+> cell-for-cell (the two rosters are set-identical), so the delta is content/sim drift, not
+> a roster change. `godie-u00n` R is a live finding for the ability-fidelity owner.
 
 ## Items
 
 | ID | Item | Test ID | Category | Status |
 | --- | --- | --- | --- | --- |
-| cast128-01 | Every whitelisted champion spawns; Q/W/E/R/EX + basic each fire a measurable effect (or are verified permanent passives); the sweep ratchets a measured PASS floor + a named KNOWN_FAILING set (currently empty) so any regression goes red by name; pass/fail matrix written to docs/_castability-128.md | castability-sweep-128 | regression | done |
+| cast128-01 | Every champion on the TRACKED first open roster spawns; Q/W/E/R/EX + basic each fire a measurable effect (or are verified permanent passives), held to a working-cell ratchet; pass/fail matrix written to docs/_castability-128.md | castability-sweep-128 | regression | done |

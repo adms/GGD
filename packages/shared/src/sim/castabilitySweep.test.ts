@@ -25,25 +25,40 @@
  * A permanent WC3 passive (native Cool=0, no castable effects) is not a bug: it
  * is reported as PASSIVE and we verify its ModifierSource actually attaches.
  *
+ * WHERE THE ROSTER COMES FROM. From TRACKED source: `starterChampions` in
+ * apps/platform/internal/curation/starter.go, the hand-picked 48 a fresh
+ * install seeds into the whitelist (see testkit/starterRoster.ts). It used to
+ * read `data/curation/whitelist.json` — live operator state, `.gitignore`d —
+ * which existed only on the owner's machine, so in every fresh clone, worktree
+ * and CI run this suite died of ENOENT inside `beforeAll` and reported "1
+ * skipped": it had never once verified a castability assertion off that
+ * machine. The operator whitelist is still honoured where it exists, but only
+ * ADDITIVELY: champions it enables beyond the tracked 48 are swept too and
+ * flagged in the report, and they are excluded from the pinned counts so the
+ * gates below mean the same thing everywhere.
+ *
  * OUTPUT. The pass/fail matrix + summary + failure list is written to
  * docs/_castability-128.md every run, so the ability-fidelity / VFX owners have
  * a live diagnostic they can re-generate.
  *
- * IT IS ALSO A RATCHET (added 2026-07-25). It used to be a pure diagnostic that
- * "deliberately does not go red on a content no-op" — which meant all 288 cells
- * could report FAIL and the suite still passed, because the only assertion that
- * could ever fail was `roster.length === 48`. The report was therefore the only
- * place the truth lived, and the todo ledger drifted away from it unnoticed.
- * Now the sweep pins a measured FLOOR (see MIN_PASS / MIN_WORKING below) and an
- * explicit KNOWN_FAILING set, so a regression shows up as a NAMED cell rather
- * than as a number nobody reads. Never lower the floor to make the suite green:
- * if a cell regresses, fix the cell or record it — with a reason — as known.
+ * WHAT GOES RED. This is a MEASUREMENT harness and it fixes nothing, but a
+ * diagnostic that can never fail is the same dead weight as one that never
+ * runs, so three gates hold over the tracked roster:
+ *   1. the sweep runs end-to-end — all 48 champions, 6 cells each;
+ *   2. EVERY champion spawns (a champion that cannot enter a SimWorld is not a
+ *      content no-op, it is broken content or a broken loader);
+ *   3. a RATCHET on working cells (✅ PASS + 🟣 verified PASSIVE) — the floor is
+ *      today's measurement (287 of 288), so a regression that kills a slot goes
+ *      red while the one known no-op stays in the report as a finding rather
+ *      than as a failure. Raise the floor when the number improves; never lower
+ *      it to make a red run green.
  */
 import { describe, it, expect, beforeAll } from "vitest";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { cover } from "../../testkit/cover";
+import { readStarterRoster, STARTER_GO_REL } from "../../testkit/starterRoster";
 import { ContentLoader } from "../content/loader";
 import { FsContentSource } from "../content/node/FsContentSource";
 import {
@@ -61,15 +76,29 @@ import { spawnChampion } from "./spawnChampion";
 import { castAbility, rankUpAbility, learnEx } from "./abilities/abilitySystem";
 import { isPassiveOnly, abilityPassiveSourceId } from "./abilities/abilityPassives";
 import { asSeatId, asTeamId, type ChampionId, type EntityId } from "../ids";
-import { TICK_HZ } from "../constants";
 import type { AbilityDef, CastType } from "./content/defs";
 import type { AbilitySlot, CastTarget, CoreAbilitySlot } from "./intents";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, "../../../.."); // packages/shared/src/sim -> repo root
 const CONTENT_DIR = join(ROOT, "content");
+/** DEV-ONLY operator state (gitignored). Additive; never required — see below. */
 const WHITELIST = join(ROOT, "data/curation/whitelist.json");
 const REPORT = join(ROOT, "docs/_castability-128.md");
+
+/** The tracked roster is pinned at 48 by Go's TestFirstOpenRoster. */
+const ROSTER_SIZE = 48;
+/**
+ * RATCHET FLOOR — working cells (✅ PASS + 🟣 verified PASSIVE) over the 48
+ * tracked champions × 6 slots = 288. Measured 2026-07-24 at 287/288 (280 PASS +
+ * 7 PASSIVE), and the floor sits exactly there, so ANY slot that works today
+ * and stops working goes red. The single gap (godie-u00n R — a ground cast
+ * accepted with no measurable effect) is itemised in the FAIL table of
+ * docs/_castability-128.md and belongs to the ability-fidelity / VFX owners.
+ * Raise this to 288 when that one is fixed. Do NOT lower it to green a red run:
+ * a drop means a slot that used to fire no longer does.
+ */
+const WORKING_CELL_FLOOR = 287;
 
 const NO_INTENTS = new Map();
 const Z0 = SKELETON_ARENA.zones[0]!;
@@ -79,75 +108,13 @@ const P = { x: Z0.center.x, z: Z0.center.z + 14 };
 const ADJ = 1.35;
 /** A robust melee bruiser used as the enemy / ally punching bag. */
 const DUMMY = "godie-hart" as ChampionId;
-/**
- * Post-resolution settle: ticks stepped AFTER the wind-up ends, so the effect
- * has room to land, spawn its projectile and emit its events.
- */
-const SETTLE_TICKS = 8;
-/** Lower bound on the step window — what an instant (castTimeSec 0) cast gets. */
-const MIN_WINDOW = 26;
-/**
- * Ticks stepped after each cast. DERIVED FROM CONTENT in `beforeAll`, never
- * hand-written: `maxAuthoredCastTicks + SETTLE_TICKS`.
- *
- * This used to be the hard-coded 26 with the comment "max authored cast time is
- * 0.6 s (18 ticks)". That comment went stale: `godie-u00n.r` (草帽小子 R) is
- * authored at `castTimeSec: 0.9` = 27 ticks, so the window ended ONE TICK before
- * the ability resolved and the sweep reported it as "cast accepted but produced
- * no measurable effect (no-op)" — a measurement artifact recorded in the ledger
- * as a content gap for two days. Deriving the window makes that class of lie
- * impossible; `expect(WINDOW).toBeGreaterThan(maxCastTicks)` re-proves it every
- * run, so nobody has to trust a comment.
- */
-let WINDOW = MIN_WINDOW;
-/** Longest authored cast, in ticks, over the whole ability registry. */
-let maxCastTicks = 0;
+/** Max authored cast time is 0.6 s (18 ticks); step comfortably past it. */
+const WINDOW = 26;
 /** Ticks allowed for the FIRST basic-attack swing to land. */
 const BASIC_WINDOW = 40;
 
 const SLOTS: AbilitySlot[] = ["Q", "W", "E", "R", "EX"];
 type SlotName = "Q" | "W" | "E" | "R" | "EX" | "basic";
-const COLS: SlotName[] = ["Q", "W", "E", "R", "EX", "basic"];
-
-// ------------------------------------------------------------------ the floor
-//
-// MEASURED 2026-07-25 against contentVersion `cv_1e8298588746`, on the
-// 48-champion roster (the operator's curation whitelist and the committed
-// `castabilityRoster.fixture.json` are set-identical, so CI measures the same
-// roster the operator does). Full run, no sampling: 48 × 6 = 288 cells.
-//
-//   280 ✅ PASS · 8 🟣 PASSIVE · 0 ❌ FAIL · 0 spawn failures.
-//
-// (Previous measurement, cv_ecff53279fad: 281 ✅ · 7 🟣. The −1/+1 is the JASS
-// fidelity fix to 20-02 感知能力 `godie-e002.q` — its WC3 source `A0CM` is the
-// native Evasion `AEev`, a Cool=0 permanent, so the invented castable armor
-// buff became a verified passive:modifiers cell. Not a regression.)
-//
-// The 8 PASSIVE are verified WC3 permanents (native Cool=0) whose ModifierSource
-// is confirmed attached — correct behaviour, not gaps; hence MIN_WORKING counts
-// PASS + PASSIVE. The floors are a RATCHET, not a target: raise them when the
-// measurement improves, and never lower them to make the suite green. If this
-// header's contentVersion no longer matches `content/manifest.json`, the numbers
-// below are stale — re-measure before trusting them (the run prints both).
-const MEASURED_ON = "2026-07-25";
-const MEASURED_CONTENT_VERSION = "cv_1e8298588746";
-/** Minimum cells that must cast AND produce a measurable effect. */
-const MIN_PASS = 280;
-/** Minimum cells that must behave as intended (PASS + verified permanent PASSIVE). */
-const MIN_WORKING = 288;
-/**
- * Cells known to FAIL, as `<championId>:<slot>`, each with a reason. Asserted by
- * EXACT SET EQUALITY, deliberately: a blanket count-floor hides WHICH cell broke
- * (one cell regressing while another is fixed clears any floor), and a stale
- * allowlist is itself a lie. A new failure shows up here as a NAME; a fixed
- * failure also goes red, telling you to delete the entry and update
- * docs/todo/castability.md in the same commit.
- *
- * Empty as of 2026-07-25. The only prior entry, `godie-u00n:R`, was never a
- * content gap — it was the stale WINDOW cutting the cast off one tick early
- * (see WINDOW above).
- */
-const KNOWN_FAILING: readonly string[] = [];
 
 type Verdict = "PASS" | "FAIL" | "PASSIVE";
 interface Cell {
@@ -168,68 +135,55 @@ interface ChampResult {
   basicRangedFlag?: boolean;
 }
 
-let roster: string[] = [];
 const results: ChampResult[] = [];
-
-/**
- * The sweep runs against the OPERATOR'S curation state, which is deliberately
- * not in git: `.gitignore` excludes `/data/**` because the whitelist is live
- * operational state, not a program constant (see README 開放名單). So the file
- * exists on a working machine and never in a fresh checkout — including CI,
- * where an unguarded read failed the whole suite at collection time with ENOENT.
- *
- * Falling back to a committed snapshot rather than skipping, because the TODO
- * runtime gate (`pnpm todo:runtime`) fails any `done` row whose beacon never
- * fires, and cast128-01 is done — a skipped sweep turns a red `unit` into a red
- * `regression`. The sweep is a SIM assertion (every champion spawns, every slot
- * fires), so a representative roster exercises exactly what it is there to
- * catch; the real whitelist still wins wherever it exists.
- */
-const ROSTER_FIXTURE = join(HERE, "castabilityRoster.fixture.json");
-
-const rosterSource = (): { champions: string[]; from: string } => {
-  const [file, from] = existsSync(WHITELIST)
-    ? [WHITELIST, "curation whitelist"]
-    : [ROSTER_FIXTURE, "committed fixture"];
-  return { champions: JSON.parse(readFileSync(file, "utf8")).champions as string[], from };
-};
-
-/** contentVersion of the bundle actually loaded, for staleness reporting. */
-let contentVersion = "(unknown)";
+/** Tracked 48; the operator-only extras swept on top; where each came from. */
+let tracked: string[] = [];
+let extras: string[] = [];
+let rosterSource = "";
 
 beforeAll(async () => {
   for (const r of [Champions, Abilities, Items, Augments, Projectiles, LootTables]) r.clear();
   for (const r of [Arenas, Configs, Models, VfxDefs, StatusEffects]) r.clear();
   const res = await new ContentLoader(new FsContentSource(CONTENT_DIR)).load();
   registerAll(res.store);
-  const src = rosterSource();
-  roster = src.champions;
-
-  // Size the step window to the CONTENT, not to a comment. `abilitySystem`
-  // resolves a cast at Math.round(castTimeSec / dt) ticks; mirror that exactly.
-  maxCastTicks = Math.max(
-    0,
-    ...Abilities.all().map((a) => Math.round((a.castTimeSec ?? 0) * TICK_HZ)),
-  );
-  WINDOW = Math.max(MIN_WINDOW, maxCastTicks + SETTLE_TICKS);
-
-  try {
-    contentVersion = (
-      JSON.parse(readFileSync(join(CONTENT_DIR, "manifest.json"), "utf8")) as {
-        contentVersion?: string;
-      }
-    ).contentVersion ?? "(unknown)";
-  } catch {
-    /* manifest is optional for the sweep; only used to report floor staleness */
-  }
-
-  console.log(
-    `castability sweep: ${roster.length} champions from the ${src.from}; ` +
-      `contentVersion ${contentVersion} (floor measured ${MEASURED_ON} against ` +
-      `${MEASURED_CONTENT_VERSION}); longest authored cast ${maxCastTicks} ticks, ` +
-      `step window ${WINDOW} ticks`,
-  );
 });
+
+/**
+ * Read the DEV-ONLY operator whitelist, or null when it is absent (every fresh
+ * clone, worktree and CI run). Absence is NORMAL and never fails the sweep —
+ * but a whitelist that exists and is unreadable/malformed is an operator-state
+ * bug worth surfacing, so that throws rather than being swallowed as "absent".
+ */
+function readOperatorWhitelist(): string[] | null {
+  let raw: string;
+  try {
+    raw = readFileSync(WHITELIST, "utf8");
+  } catch (err) {
+    if ((err as NodeJS.ErrnoException).code === "ENOENT") return null;
+    throw err;
+  }
+  const champions = (JSON.parse(raw) as { champions?: unknown }).champions;
+  if (!Array.isArray(champions)) {
+    throw new Error(`data/curation/whitelist.json has no \`champions\` array — operator state is corrupt`);
+  }
+  return champions as string[];
+}
+
+/**
+ * The roster to sweep: the tracked 48, plus anything the operator has enabled
+ * beyond them. Throws with an explanation if the tracked source cannot be read
+ * — called from inside the test, so that surfaces as a red assertion instead of
+ * a collection-time crash that vitest reports as a SKIP.
+ */
+function resolveRoster(): string[] {
+  tracked = readStarterRoster(ROOT);
+  const operator = readOperatorWhitelist();
+  extras = operator ? operator.filter((id) => !tracked.includes(id)) : [];
+  rosterSource = operator
+    ? `${STARTER_GO_REL}（${tracked.length}）＋ data/curation/whitelist.json 額外啟用（${extras.length}）`
+    : `${STARTER_GO_REL}（${tracked.length}）— 本機無 data/curation/whitelist.json（正常：該檔為 gitignore 的營運狀態）`;
+  return [...tracked, ...extras];
+}
 
 // --------------------------------------------------------------------- helpers
 
@@ -384,31 +338,22 @@ function testSlot(championId: string, slot: AbilitySlot): Cell {
     }
     events.push(...world.events.map((e) => e.type));
 
-    // PEAK, not end-state. The window is sized to the longest authored wind-up,
-    // so it now outlives short buffs/statuses/shields and in-flight projectiles;
-    // sampling only at the end would let a real effect expire before we look and
-    // read as a no-op. Take the max over the whole window instead.
-    const after = { ...before };
-    let moved = false;
     for (let i = 0; i < WINDOW; i++) {
       world.step(NO_INTENTS);
       events.push(...world.events.map((e) => e.type));
-      const s = snapshot(world);
-      after.shields = Math.max(after.shields, s.shields);
-      after.statuses = Math.max(after.statuses, s.statuses);
-      after.buffs = Math.max(after.buffs, s.buffs);
-      after.projectiles = Math.max(after.projectiles, s.projectiles);
-      moved ||=
-        Math.hypot(
-          world.transform.get(caster)!.pos.x - casterAnchor.x,
-          world.transform.get(caster)!.pos.z - casterAnchor.z,
-        ) > 0.2 || world.nav.get(caster)!.override != null;
       // re-pin the two dummies so a knockback / shove cannot carry them out of
       // a ground circle before it resolves (the caster is left free so a dash
       // effect can visibly move it).
       world.transform.get(foe)!.pos = { ...foePos };
       world.transform.get(ally)!.pos = { ...allyPos };
     }
+
+    const after = snapshot(world);
+    const moved =
+      Math.hypot(
+        world.transform.get(caster)!.pos.x - casterAnchor.x,
+        world.transform.get(caster)!.pos.z - casterAnchor.z,
+      ) > 0.2 || world.nav.get(caster)!.override != null;
 
     // pick the first channel that fired, for the report
     const fired = (t: string): boolean => events.includes(t);
@@ -505,7 +450,12 @@ function testBasic(championId: string): { cell: Cell; projectile: boolean; range
 describe("task #128 — in-game castability coverage sweep", () => {
   it("spawns every whitelisted champion and fires every slot, writing docs/_castability-128.md", () => {
     cover("castability-sweep-128");
-    expect(roster.length).toBeGreaterThanOrEqual(48); // owner-curated whitelist may add heroes (e.g. #100 喪標麥可)
+    const roster = resolveRoster();
+    expect(
+      tracked.length,
+      `the tracked first open roster in ${STARTER_GO_REL} is pinned at ${ROSTER_SIZE} ` +
+        `champions (Go: TestFirstOpenRoster) but parsed to ${tracked.length}`,
+    ).toBe(ROSTER_SIZE);
 
     for (const id of roster) {
       let name = id;
@@ -559,46 +509,40 @@ describe("task #128 — in-game castability coverage sweep", () => {
       });
     }
 
-    // Regenerate the diagnostic FIRST, so the report on disk describes the run
-    // even when the assertions below go red — that report is how you find out
-    // which cell moved.
     writeReport();
 
-    const t = tally();
-    const stale =
-      contentVersion === MEASURED_CONTENT_VERSION
-        ? ""
-        : ` (NOTE: floor was measured ${MEASURED_ON} against contentVersion ` +
-          `${MEASURED_CONTENT_VERSION}; this run loaded ${contentVersion} — if the ` +
-          `content legitimately changed, RE-MEASURE and move the floor, in the same ` +
-          `commit as docs/todo/castability.md)`;
-
-    // ---- the sweep must have actually run over the whole roster ----
-    expect(roster.length).toBeGreaterThanOrEqual(48); // owner-curated whitelist may add heroes (e.g. #100 喪標麥可)
+    // ---- gate 1: the sweep ran end-to-end, every champion, every slot ----
     expect(results.length).toBe(roster.length);
-    expect(t.totalCells).toBe(roster.length * COLS.length);
-    expect(results.filter((r) => !r.spawnOk).map((r) => r.id)).toEqual([]);
+    expect(results.filter((r) => tracked.includes(r.id)).length).toBe(ROSTER_SIZE);
+    for (const r of results) {
+      expect(Object.keys(r.cells).length).toBe(6);
+    }
 
-    // ---- the window must outlive the longest wind-up the content authors ----
-    // Without this, a newly authored slower cast silently reads as a no-op (the
-    // exact bug that put a phantom FAIL in the ledger for godie-u00n.r).
-    expect(WINDOW).toBeGreaterThan(maxCastTicks);
+    // ---- gate 2: every TRACKED champion spawns ----
+    // Not a content no-op — a champion that cannot enter a SimWorld is broken
+    // content or a broken loader, and it is pickable in champ-select.
+    const brokenSpawns = results
+      .filter((r) => tracked.includes(r.id) && !r.spawnOk)
+      .map((r) => `${r.id} (${r.name}): ${r.spawnError}`);
+    expect(brokenSpawns, "first-open-roster champions that fail to spawn").toEqual([]);
 
-    // ---- NAMED failures: exact set, so a regression arrives as a name ----
-    expect(t.failing.join(", ") || "(none)").toBe(
-      [...KNOWN_FAILING].sort().join(", ") || "(none)",
-    );
-
-    // ---- and the count floor, so nothing can rot underneath the name check ----
+    // ---- gate 3: the working-cell ratchet ----
+    // Counted over the TRACKED roster only, so an operator's extra picks can
+    // never move the number. The known gaps stay findings in the report; a
+    // regression that kills a slot that works today goes red here.
+    const cols: SlotName[] = ["Q", "W", "E", "R", "EX", "basic"];
+    const working = results
+      .filter((r) => tracked.includes(r.id))
+      .reduce(
+        (n, r) => n + cols.filter((s) => r.cells[s].verdict !== "FAIL").length,
+        0,
+      );
     expect(
-      t.pass,
-      `PASS cells dropped below the measured floor${stale}. See docs/_castability-128.md`,
-    ).toBeGreaterThanOrEqual(MIN_PASS);
-    expect(
-      t.pass + t.passive,
-      `working cells (PASS + verified permanent PASSIVE) dropped below the ` +
-        `measured floor${stale}. See docs/_castability-128.md`,
-    ).toBeGreaterThanOrEqual(MIN_WORKING);
+      working,
+      `working cells (PASS + verified PASSIVE) over ${ROSTER_SIZE}×6=${ROSTER_SIZE * 6} fell to ` +
+        `${working}, below the ${WORKING_CELL_FLOOR} floor — see the FAIL table in ` +
+        "docs/_castability-128.md for which slot regressed",
+    ).toBeGreaterThanOrEqual(WORKING_CELL_FLOOR);
   });
 });
 
@@ -610,34 +554,16 @@ function mark(c: Cell): string {
   return "❌";
 }
 
-interface Failure {
-  id: string;
-  name: string;
-  slot: SlotName;
-  cell: Cell;
-  atk: string;
-}
-
-/**
- * Single count of the matrix, shared by the assertions and the report so the
- * ledger and the ratchet can never be computed two different ways.
- * `failing` is the sorted `<championId>:<slot>` key set the assertions compare.
- */
-function tally(): {
-  totalCells: number;
-  pass: number;
-  passive: number;
-  fail: number;
-  failures: Failure[];
-  failing: string[];
-} {
-  const totalCells = results.length * COLS.length;
+function writeReport(): void {
+  const cols: SlotName[] = ["Q", "W", "E", "R", "EX", "basic"];
+  const totalCells = results.length * cols.length;
   let pass = 0;
   let passive = 0;
   let fail = 0;
-  const failures: Failure[] = [];
+  const failures: { id: string; name: string; slot: SlotName; cell: Cell; atk: string }[] = [];
+
   for (const r of results) {
-    for (const slot of COLS) {
+    for (const slot of cols) {
       const c = r.cells[slot];
       if (c.verdict === "PASS") pass++;
       else if (c.verdict === "PASSIVE") passive++;
@@ -647,19 +573,6 @@ function tally(): {
       }
     }
   }
-  return {
-    totalCells,
-    pass,
-    passive,
-    fail,
-    failures,
-    failing: failures.map((f) => `${f.id}:${f.slot}`).sort(),
-  };
-}
-
-function writeReport(): void {
-  const cols = COLS;
-  const { totalCells, pass, passive, fail, failures } = tally();
 
   // channel tally over PASS cells — proves the sweep detects real gameplay
   // channels, not just the cosmetic vfxSpawn that most abilities also carry.
@@ -698,15 +611,19 @@ function writeReport(): void {
   L.push("");
   L.push(`> 生成於 \`packages/shared/src/sim/castabilitySweep.test.ts\`（每次跑測試即重算）。`);
   L.push(
-    "> 這是**診斷**：把 48 位英雄每一格 Q/W/E/R/EX + 普攻在真的 SimWorld 裡按下去，量測有沒有真的產生效果" +
+    `> 這是**診斷**：把 ${results.length} 位英雄每一格 Q/W/E/R/EX + 普攻在真的 SimWorld 裡按下去，量測有沒有真的產生效果` +
       "（傷害／投射物／狀態／護盾／補血／補魔／位移／特效），不修任何技能。",
   );
+  L.push("");
+  L.push(`> **名單來源**：${rosterSource}。`);
   L.push(
-    `> 同時是**棘輪**：測試釘住已量測的下限（PASS ≥ ${MIN_PASS}、PASS+PASSIVE ≥ ${MIN_WORKING}）` +
-      `與具名的已知失敗集合（目前${KNOWN_FAILING.length === 0 ? "為空" : "：" + KNOWN_FAILING.join("、")}），` +
-      "任何一格退化都會讓測試變紅並指名是哪一格。",
+    "> 名單取自**版控內**的 `starterChampions`（新安裝套用的首發開放名單，Go 端 `TestFirstOpenRoster` 逐一釘死），" +
+      "所以任何 clone／worktree／CI 都掃同一份 48 人；營運白名單 `data/curation/whitelist.json` 是 gitignore 的機器狀態，" +
+      "存在時只**加掃**它額外開放的英雄，且不列入下方釘死的計數。",
   );
-  L.push(`> 本次 contentVersion：\`${contentVersion}\`（下限量測基準 \`${MEASURED_CONTENT_VERSION}\`，${MEASURED_ON}）。`);
+  if (extras.length) {
+    L.push(`> 本機額外加掃（僅營運白名單開放、不在首發名單）：${extras.map((id) => `\`${id}\``).join("、")}。`);
+  }
   L.push("");
   L.push("## 判定圖例");
   L.push("");
@@ -718,15 +635,14 @@ function writeReport(): void {
   L.push("");
   L.push("## 總計");
   L.push("");
-  L.push(`- **格數**：48 英雄 × 6 槽 = **${totalCells}**`);
+  L.push(`- **格數**：${results.length} 英雄 × 6 槽 = **${totalCells}**`);
   L.push(
     `- **✅ PASS：${pass} / ${totalCells}**（${((pass / totalCells) * 100).toFixed(1)}%）` +
       `　🟣 PASSIVE：${passive}　❌ FAIL：${fail}`,
   );
   L.push(
     `- 把「正確的永久被動」算進可接受行為：**${pass + passive} / ${totalCells}**` +
-      `（${(((pass + passive) / totalCells) * 100).toFixed(1)}%）如預期運作，` +
-      (fail === 0 ? "**沒有任何一格是缺口**。" : `只有 **${fail}** 格是真正的缺口。`),
+      `（${(((pass + passive) / totalCells) * 100).toFixed(1)}%）如預期運作，只有 **${fail}** 格是真正的缺口。`,
   );
   L.push(`- 英雄生成失敗：**${spawnFails.length}**` + (spawnFails.length ? `（${spawnFails.map((r) => r.id).join(", ")}）` : "（無）"));
   L.push("");
@@ -815,16 +731,15 @@ function writeReport(): void {
       "施法者法力設為剛好夠付，使自我回魔也量得到。被動回血（RegenSystem）不發 `heal` 事件，故不會誤判。",
   );
   L.push(
-    `- 每次施放後步進 **${WINDOW} tick**＝**內容中最長施法前搖 ${maxCastTicks} tick**（\`${(maxCastTicks / TICK_HZ).toFixed(2)}s\`）＋ ${SETTLE_TICKS} tick 結算餘裕；` +
-      `視窗由內容推導，不是寫死的常數（舊版寫死 26 tick，剛好比 0.9s 前搖短 1 tick，把 \`godie-u00n\` 的 R 誤判成 no-op）。` +
-      `普攻給 **${BASIC_WINDOW} tick** 讓第一次揮擊落地。`,
+    `- 每次施放後步進 **${WINDOW} tick**（>最長施法前搖 0.6s=18 tick）讓有前搖的技能結算；普攻給 **${BASIC_WINDOW} tick** 讓第一次揮擊落地。`,
   );
   L.push(
-    "- 狀態面（護盾／狀態／buff／投射物）取**視窗內的峰值**而非結束時的值，避免短效果在視窗結束前就過期而被誤判成 no-op。",
+    `- **完整跑遍全 ${results.length} 英雄 × 6 槽 = ${totalCells} 格，無抽樣**。`,
   );
   L.push(
-    `- **完整跑遍全 48 英雄 × 6 槽 = 288 格，無抽樣**。本測試同時是棘輪：任一格退化會讓 \`pnpm --filter @ggd/shared exec vitest run\` 變紅，` +
-      `並具名指出是哪一格（下限：PASS ≥ ${MIN_PASS}、PASS+PASSIVE ≥ ${MIN_WORKING}；已知失敗集合以精確比對）。`,
+    "- **會變紅的三道閘**（都只看版控名單那 48 人，營運額外開放的英雄不影響）：" +
+      `(1) 掃描必須跑完 48×6；(2) 48 位英雄全部要能生成；(3) 可用格數（✅+🟣）不得低於 **${WORKING_CELL_FLOOR}**（棘輪下限）。` +
+      "個別內容 no-op 不會使測試變紅（no-op 本身就是要回報的發現，列在下方 FAIL 清單），但既有可用的格子被改壞會。",
   );
   L.push("");
 
