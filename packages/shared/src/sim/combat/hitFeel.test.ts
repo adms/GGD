@@ -111,7 +111,7 @@ function spawnDummy(
   });
   world.health.set(id, { hp: 600, maxHp: 600, mana: 0, maxMana: 0, alive: true, shields: [] });
   world.team.set(id, { teamId: asTeamId(team), seatId: asSeatId(seat) });
-  world.nav.set(id, { order: null, moveTarget: null, override: null, attackTarget: null });
+  world.nav.set(id, { order: null, moveTarget: null, override: null, attackTarget: null, attackTargetAuto: false });
   world.status.set(id, { effects: [] });
   // only `championId` is read by the basic-attack hitFeel lookup
   if (championId) world.champion.set(id, { championId } as never);

@@ -1,6 +1,7 @@
 /**
  * Tier-0 AI driver: functional-but-dumb, per the plan.
- * Combat: acquire the nearest living enemy in the zone, attack-move at it,
+ * Combat: acquire a target with the SHARED sim rule (sim/targeting.ts — the same
+ * comparator a human's auto-attack uses, task #221), attack-move at it,
  * cast any ready ability at it (self-buffs on self). Non-combat: step along the
  * champion's buildPriority (first unowned affordable item), rank abilities per
  * skillOrder, ready-up. Thinks every AI_REPLAN_INTERVAL_TICKS, staggered by
@@ -12,6 +13,7 @@ import type { Command, IntentFrame, Order } from "@ggd/shared/sim/intents";
 import type { SimWorld } from "@ggd/shared/sim/SimWorld";
 import { Champions, Items } from "@ggd/shared/sim/content/registry";
 import { distSq } from "@ggd/shared/sim/math/vec2";
+import { acquireRadius, acquireTarget } from "@ggd/shared/sim/targeting";
 import { Stat } from "@ggd/shared/sim/stats/statTypes";
 import type { Seat, SeatDriver } from "../seat/Seat";
 
@@ -59,6 +61,18 @@ const KITE_REENGAGE_FRACTION = 0.85; // gap restored past 0.85·range -> hold & 
  * ~6–12 (task #128), so 4 cleanly splits the two.
  */
 const RANGED_ATTACK_RANGE = 4;
+
+/**
+ * ENGAGE range (units) — the zone-wide fallback scan a bot falls back to when
+ * nothing is inside its normal auto-acquire radius. A duel zone has a 24 u
+ * radius, so 48 covers any two points inside one; the query is still zone-scoped
+ * (`queryOverlap` honours `zone`), so this never reaches across duels.
+ *
+ * This is a BOT-ONLY behaviour, not a targeting rule: bots must walk across the
+ * zone to start a fight, players are driven there by their own hands. The rule
+ * that decides WHICH enemy is the shared one either way.
+ */
+const AI_ENGAGE_RANGE = 48;
 
 /**
  * Ranged if the champion doc says so (authoritative), else inferred from the
@@ -228,27 +242,26 @@ export class AIDriver implements SeatDriver {
       this.didReady = false;
     }
 
-    // ----- combat: nearest living enemy in my zone -----
-    const myTeam = world.team.get(id);
-    let nearest: EntityId | null = null;
-    let nearestD2 = Infinity;
-    for (const [otherId, otherTeam] of world.team) {
-      if (otherId === id) continue;
-      if (myTeam && otherTeam.teamId === myTeam.teamId) continue;
-      // Enemy CHAMPIONS and roguelite MOBS (task #215) are both valid targets:
-      // a mob is a MONSTER-team entity with no ChampionComp, so without this the
-      // bot would ignore the waves entirely and PvE would be one-sided. Mobs
-      // carry a TeamComp (unlike guardians/flowers), so they appear in this loop.
-      if (!world.champion.has(otherId) && !world.mob.has(otherId)) continue;
-      const oh = world.health.get(otherId);
-      const ot = world.transform.get(otherId);
-      if (!oh?.alive || !ot || ot.zone !== t.zone) continue;
-      const d2 = distSq(t.pos, ot.pos);
-      if (d2 < nearestD2) {
-        nearestD2 = d2;
-        nearest = otherId;
-      }
-    }
+    // ----- combat: THE shared target rule (task #221) -----
+    // This used to be the bot's own nearest-living-enemy loop — a SECOND
+    // targeting brain, living in the host, that (a) could drift away from what
+    // players do and (b) does not replay, because playback reconstructs drivers
+    // rather than replaying their decisions. It is now two calls to the one
+    // deterministic comparator in `@ggd/shared/sim/targeting`
+    // (champion→mob, 威脅→低血→最近, entity id as the final tiebreak):
+    //
+    //   CLOSE  — the exact radius a human's auto-acquire uses, so a bot and a
+    //            player standing in the same spot pick the same enemy. This is
+    //            also what keeps mobs (#215) in the fight: a zombie next to me
+    //            outranks an enemy hero on the other side of the zone.
+    //   ENGAGE — a zone-wide fallback used ONLY when nothing is close. This is
+    //            the one thing a bot has that a player does not, and it is not
+    //            a targeting rule but a "walk over there and start a fight"
+    //            rule; without it a bot would stand at spawn forever.
+    const close = acquireTarget(world, id, acquireRadius(world.stats.get(id), t.radius));
+    const picked = close ?? acquireTarget(world, id, AI_ENGAGE_RANGE);
+    const nearest: EntityId | null = picked ? picked.id : null;
+    const nearestD2 = picked ? picked.d2 : Infinity;
 
     // ----- utility rule: hurt + a healing flower nearby -> harvest it -----
     // (flowers only exist during combat; deterministic: lowest-distance, then
@@ -355,6 +368,7 @@ export class AIDriver implements SeatDriver {
     // find nothing to hit); arriving is the channel. Deterministic — the
     // reviveCircle store iterates in ascending id order.
     if (world.reviveRules) {
+      const myTeam = world.team.get(id);
       let bestD2 = REVIVE_SEEK_RANGE * REVIVE_SEEK_RANGE;
       let seek: { x: number; z: number } | null = null;
       for (const [cid, rc] of world.reviveCircle) {

@@ -20,7 +20,7 @@ function spawnUnit(world: SimWorld, seat: number, pos: V.Vec2, facing: V.Vec2): 
   world.transform.set(id, { pos: { ...pos }, vel: V.v2(), facing: { ...facing }, radius: 0.6, zone: 0 });
   world.health.set(id, { hp: 100, maxHp: 100, mana: 50, maxMana: 50, alive: true, shields: [] });
   world.team.set(id, { teamId: asTeamId(seat % 2), seatId: asSeatId(seat) });
-  world.nav.set(id, { order: null, moveTarget: null, override: null, attackTarget: null });
+  world.nav.set(id, { order: null, moveTarget: null, override: null, attackTarget: null, attackTargetAuto: false });
   world.status.set(id, { effects: [] });
   return id;
 }

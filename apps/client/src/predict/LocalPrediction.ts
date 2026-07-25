@@ -120,7 +120,7 @@ export class LocalPrediction {
     });
     this.seatId = asSeatId(setup.seatId);
     this.world.team.set(id, { teamId: 0 as TeamId, seatId: this.seatId });
-    this.world.nav.set(id, { order: null, moveTarget: null, override: null, attackTarget: null });
+    this.world.nav.set(id, { order: null, moveTarget: null, override: null, attackTarget: null, attackTargetAuto: false });
     this.world.status.set(id, { effects: [] });
     this.world.health.set(id, { hp: 1, maxHp: 1, mana: 0, maxMana: 0, alive: true, shields: [] });
     const final = zeroStats();
@@ -173,6 +173,7 @@ export class LocalPrediction {
     nav.order = null;
     nav.moveTarget = null;
     nav.attackTarget = null;
+    nav.attackTargetAuto = false;
     nav.override = null;
     this.history = [];
     this.baseOrder = null;
@@ -229,6 +230,7 @@ export class LocalPrediction {
     nav.order = null;
     nav.moveTarget = null;
     nav.attackTarget = null;
+    nav.attackTargetAuto = false;
     nav.override = null;
 
     if (this.baseOrder) this.applyOrderOnly(this.baseOrder);

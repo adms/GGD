@@ -218,6 +218,7 @@ export function basicAttackSystem(world: SimWorld): void {
     const tgtHp = world.health.get(nav.attackTarget);
     if (!tgtT || !tgtHp?.alive || tgtT.zone !== t.zone) {
       nav.attackTarget = null;
+      nav.attackTargetAuto = false;
       continue;
     }
     const reach = reachTo(sc, t.radius, tgtT.radius);

@@ -52,7 +52,7 @@ function spawnDummy(
     shields: [],
   });
   world.team.set(id, { teamId: asTeamId(team), seatId: asSeatId(seat) });
-  world.nav.set(id, { order: null, moveTarget: null, override: null, attackTarget: null });
+  world.nav.set(id, { order: null, moveTarget: null, override: null, attackTarget: null, attackTargetAuto: false });
   world.status.set(id, { effects: [] });
   const final = zeroStats();
   if (opts.lifesteal) final[Stat.Lifesteal] = opts.lifesteal;

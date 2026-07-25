@@ -36,7 +36,7 @@ function spawnFighter(
   world.transform.set(id, { pos: { ...pos }, vel: V.v2(), facing: { x: 1, z: 0 }, radius: 0.6, zone: 0 });
   world.health.set(id, { hp: 5000, maxHp: 5000, mana: 100, maxMana: 100, alive: true, shields: [] });
   world.team.set(id, { teamId: asTeamId(team), seatId: asSeatId(seat) });
-  world.nav.set(id, { order: null, moveTarget: null, override: null, attackTarget: null });
+  world.nav.set(id, { order: null, moveTarget: null, override: null, attackTarget: null, attackTargetAuto: false });
   world.status.set(id, { effects: [] });
   const final = zeroStats();
   final[Stat.MoveSpeed] = moveSpeed;

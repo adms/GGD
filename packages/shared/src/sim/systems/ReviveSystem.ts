@@ -314,6 +314,7 @@ function completeRevive(
     nav.order = null;
     nav.moveTarget = null;
     nav.attackTarget = null;
+    nav.attackTargetAuto = false;
     nav.override = null;
   }
   const ab = world.abilities.get(rc.ownerId);
