@@ -1,0 +1,655 @@
+﻿分類,英雄ID,英雄名,技能ID,欄位,技能名,施放型,冷卻,魔耗,射程,半徑,傷害perRank,傷害類型,加成,狀態,增益,增益持續,投射物,施法時間,音效,特效,判定依據
+衝刺型,godie-e012,殺人劍客 - 佐佐木小次郎,godie-e012.w,W,47-02 神速,dash,25/20/15/15/15,40/80/120/120/120,11.0,,,,,,,,,0.3,,fx.prim.holy.dash,dash無傷害
+衝刺型,godie-efur,揍敵客大家長 - 揍敵客桀諾,godie-efur.e,E,13-03 快步,dash,45/40/35/30,80/120/160/200,0.0,,,,,,,,,0.3,,fx.prim.arcane.dash,dash無傷害
+衝刺型,godie-h021,破銅爛鐵 - 阿強一號,godie-h021.w,W,05-02 薩喀爾嘎,dash,12/12/12/12,30/50/70/90,7.33,,,,,,,,,0.3,,fx.prim.lightning.dash,dash無傷害
+衝刺型,godie-h022,白色之翼 - 涅吉。史普林。菲爾德,godie-h022.w,W,82-02 虛空瞬動,dash,40/35/30/30/30,150/225/300/300/300,0.0,,,,,,,,,0.3,,fx.prim.arcane.dash,dash無傷害
+衝刺型,godie-hblm,慈悲的王者 - 賈修貝爾,godie-hblm.w,W,05-02 薩喀爾嘎,dash,12/12/12/12,30/50/70/90,7.33,,,,,,,,,0.3,,fx.prim.lightning.dash,dash無傷害
+衝刺型,godie-n00b,小叮噹 - 哆拉A夢,godie-n00b.e,E,57-02 任意門,dash,80/60/40/16/16,225/225/225/100/100,11.0,,,,,,,,,0.3,,fx.prim.arcane.pulse-sm,dash無傷害
+衝刺型,godie-o00k,傲嬌電氣老鼠 - 皮卡娘,godie-o00k.w,W,86-02 電光一閃,dash,25/20/15/15/15,50/100/150/150/150,11.0,,,,,,,,,0.3,,fx.prim.lightning.beam,dash無傷害
+衝刺型,godie-o00x,超級賽亞人 - 悟空,godie-o00x.w,W,09-02 瞬間移動,dash,18/18/18/18,100/100/100/100,11.0,,,,,,,,,0.3,,fx.prim.ki.pulse-sm,dash無傷害
+衝刺型,godie-o02l,神騎寶貝 - 皮卡丘,godie-o02l.passive,PASSIVE,58-00 電光一閃,dash,35,150,14.67,,,,,,,,,0.3,,fx.prim.lightning.dash,dash無傷害
+衝刺型,godie-ofar,神奇寶貝兒 - 皮卡丘,godie-ofar.passive,PASSIVE,58-00 電光一閃,dash,35,150,14.67,,,,,,,,,0.3,,fx.prim.lightning.dash,dash無傷害
+衝刺型,godie-ogrh,賽亞人 - 悟空,godie-ogrh.w,W,09-02 瞬間移動,dash,18/18/18/18,100/100/100/100,11.0,,,,,,,,,0.3,,fx.prim.arcane.dash,dash無傷害
+衝刺型,godie-udea,至尊學長 - 飛鼠先生,godie-udea.q,Q,65-01 神出鬼沒,dash,25/25/25/25,150/250/350/450,11.0,,,,,,,,,0.3,,fx.prim.arcane.pulse-sm,dash無傷害
+衝刺型,godie-udea,至尊學長 - 飛鼠先生,godie-udea.r,R,65-04 天譴,dash,90/60/30,250/350/450,8.25,,,,,,,,,0.3,,fx.prim.holy.nova-lg,dash無傷害
+跳斬型,godie-uwar,食神 - 撒尿牛丸,godie-uwar.e,E,43-04 爆裂海景佛跳牆,dash,45/45/45,160/220/280,8.25,,700/1000/1300,magic,1.0×ap,,,,,0.3,,fx.prim.arcane.dash,dash+damage同施放
+衝擊波型,godie-e002,亞瑟王 - Saber,godie-e002.e,E,20-03 約束與勝利之劍,skillshot,60/60/60/60,150/250/350/450,14.0,,250/400/550/700,magic,,,,,imported.wave,0.5,,fx.w3x.particle.holyawakening.p04,投射物imported.wave
+衝擊波型,godie-e008,火霧戰士 - 夏娜,godie-e008.e,E,21-03 赤焰爆發,skillshot,45/45/45/45,165/215/265/315,12.83,,400/550/700/850,magic,,burnstun(1.0s),,,imported.wave,0.7,,fx.prim.fire.explosion,投射物imported.wave
+衝擊波型,godie-e00l,亞瑟王 - Saber,godie-e00l.e,E,20-03 約束與勝利之劍,skillshot,60/60/60/60,150/250/350/450,14.0,,250/400/550/700,magic,,,,,imported.wave,0.5,,fx.w3x.particle.holyawakening.p04,投射物imported.wave
+衝擊波型,godie-e00q,英靈-亞瑟王 - 黑化Saber,godie-e00q.e,E,69-03 約束與勝利之劍,skillshot,60/60/60/60,150/250/350/450,14.0,,250/400/550/700,magic,,,,,imported.wave,0.5,,fx.w3x.particle.holyawakening.p04,投射物imported.wave
+衝擊波型,godie-e00r,最終泛用人型決戰兵器 - 初號機,godie-e00r.r,R,59-04 野戰型陽電子砲,skillshot,75/75/75,250/400/550,8.25,,750/1200/1650,magic,,,,,imported.wave,0.7,wc3.markofchaos,fx.prim.ki.beam-lg,投射物imported.wave
+衝擊波型,godie-e00s,白木老樹精 - 白木卡迪那,godie-e00s.q,Q,70-01 伸卡球,skillshot,35/35/35/35/35,150/210/270/270/270,11.0,,150/300/450/600/750,magic,,,,,imported.wave,0.5,wc3.treantready1,fx.prim.arcane.bolt,投射物imported.wave
+衝擊波型,godie-h001,地獄來襲者 - 斑剎,godie-h001.w,W,41-02 地裂術,skillshot,35/35/35/35,80/110/140/170,11.0,,200/275/350/425,magic,,burnstun(1.2s),,,imported.wave,0.6,,fx.prim.earth.bolt,投射物imported.wave
+衝擊波型,godie-h01u,亂世癿王者 - 呂布奉先,godie-h01u.w,W,80-02 弒鬼神,skillshot,35/35/35/35/35,50/85/120/120/120,11.0,,150/250/350/0/0,magic,,,,,imported.wave,0.4,wc3.defendcaster,fx.prim.physical.slash,投射物imported.wave
+衝擊波型,godie-h022,白色之翼 - 涅吉。史普林。菲爾德,godie-h022.e,E,82-03 雷之投擲,skillshot,45/45/45/45,150/210/270/330,11.0,,350/350/350/350,magic,,,,,imported.wave,0.4,,fx.w3x.orb.lightningnova.p00,投射物imported.wave
+衝擊波型,godie-h02r,種子神奇寶貝 - 妙蛙花,godie-h02r.r,R,90-04 陽光烈焰,skillshot,60/60/60,200/300/400,14.0,,600/900/1200,magic,,,,,imported.wave,0.7,,fx.w3x.particle.supershinythingy.p00,投射物imported.wave
+衝擊波型,godie-hgam,種子神奇寶貝 - 妙蛙種子,godie-hgam.r,R,90-04 陽光烈焰,skillshot,60/60/60,200/300/400,14.0,,600/900/1200,magic,,,,,imported.wave,0.7,,fx.w3x.particle.supershinythingy.p00,投射物imported.wave
+衝擊波型,godie-hlgr,鋼彈 - 煌,godie-hlgr.e,E,03-03 鯨式電漿光束炮,skillshot,60/60/60/60,150/215/280/345,11.0,,450/650/850/1050,magic,,,,,imported.wave,0.6,,fx.cinder-ward,投射物imported.wave
+衝擊波型,godie-hlgr,鋼彈 - 煌,godie-hlgr.r,R,03-04 全彈發射,skillshot,60/60/60,120/200/280,11.0,,320/470/620,magic,,,,,imported.wave,0.5,,fx.prim.arcane.bolt-lg,投射物imported.wave
+衝擊波型,godie-n003,黑暗福音 - 依文潔琳,godie-n003.e,E,42-03 暗夜吹雪,skillshot,45/45/45/45,160/280/400/520,10.08,,500/850/1200/1550,magic,,,,,imported.wave,0.6,,fx.prim.ice.nova,投射物imported.wave
+衝擊波型,godie-n003,黑暗福音 - 依文潔琳,godie-n003.r,R,42-04 世界終結,skillshot,60/60/60,500/730/960,8.25,,150/250/350,magic,,,,,imported.wave,0.5,,fx.w3x.locust.frostnova.p01,投射物imported.wave
+衝擊波型,godie-n00b,小叮噹 - 哆拉A夢,godie-n00b.q,Q,57-01 空氣砲,skillshot,35/35/35/35,65/95/125/155,9.17,,250/350/450/550,magic,,,,,imported.wave,0.4,,fx.prim.wind.beam,投射物imported.wave
+衝擊波型,godie-n01c,傳說的龍騎士 - 勇者小呆,godie-n01c.e,E,08-03 龍鬥氣砲咒文,skillshot,60/60/60/60,150/200/250/300,13.75,,450/600/750/900,magic,,,,,imported.wave,0.5,wc3.thunderclapcaster,fx.prim.fire.beam,投射物imported.wave
+衝擊波型,godie-n01g,黑暗福音 - 依文潔琳,godie-n01g.e,E,42-03 暗夜吹雪,skillshot,45/45/45/45,160/280/400/520,10.08,,500/850/1200/1550,magic,,,,,imported.wave,0.6,,fx.prim.ice.bolt,投射物imported.wave
+衝擊波型,godie-n01g,黑暗福音 - 依文潔琳,godie-n01g.r,R,42-04 世界終結,skillshot,60/60/60,500/730/960,8.25,,150/250/350,magic,,,,,imported.wave,0.5,,fx.w3x.locust.frostnova.p01,投射物imported.wave
+衝擊波型,godie-naka,猿飛佐助 - 風魔小次郎,godie-naka.w,W,27-02 忍法鬼穿刺,skillshot,35/35/35/35,90/120/150/180,11.0,,200/250/300/350,magic,,burnstun(1.2s),,,imported.wave,0.6,,fx.prim.void.bolt,投射物imported.wave
+衝擊波型,godie-nbbc,傳說的龍騎士 - 勇者小呆,godie-nbbc.e,E,08-03 龍鬥氣砲咒文,skillshot,60/60/60/60,150/200/250/300,13.75,,450/600/750/900,magic,,,,,imported.wave,0.5,wc3.thunderclapcaster,fx.prim.ki.bolt,投射物imported.wave
+衝擊波型,godie-ntin,時空管理局執務官 - 菲特·泰斯塔羅沙,godie-ntin.e,E,23-03 雷牙一閃˙雷牙烈霸,skillshot,60/60/60/60,150/220/290/360,13.75,,450/660/870/1080,magic,,,,,imported.wave,0.6,,fx.w3x.particle.gxhuge.p00,投射物imported.wave
+衝擊波型,godie-o00l,獸神官 - 傑洛士,godie-o00l.q,Q,53-01 獸王牙操彈,skillshot,35/35/35/35,180/210/240/270,11.0,,250/350/450/550,magic,,,,,imported.wave,0.4,,fx.prim.void.beam,投射物imported.wave
+衝擊波型,godie-o00x,超級賽亞人 - 悟空,godie-o00x.r,R,09-04 龜派氣功,skillshot,60/60/60,210/310/410,14.0,,450/750/1050,magic,,,,,imported.wave,0.6,,fx.prim.ki.beam-lg,投射物imported.wave
+衝擊波型,godie-o01z,魔砲少女 - 高町奈葉,godie-o01z.w,W,81-02 Acxel Shooter,skillshot,35/35/35/35/35,180/220/260/405/405,11.0,,250/375/500/625/750,magic,,,,,imported.wave,0.5,wc3.flaretarget3,fx.prim.void.bolt,投射物imported.wave
+衝擊波型,godie-o02o,曹操孟德 - 阿瞞大人,godie-o02o.q,Q,87-01 大紅蓮斬,skillshot,35/35/35/35/35,75/175/275/275/275,5.5,,250/550/850/850/850,magic,,,,,imported.wave,0.5,,fx.prim.lightning.slash,投射物imported.wave
+衝擊波型,godie-o02s,憂鬱少女 - 涼宮八ㄦ匕,godie-o02s.w,W,53-01 獸王牙操彈,skillshot,35/35/35/35,180/210/240/270,11.0,,250/350/450/550,magic,,,,,imported.wave,0.5,,fx.prim.holy.pulse-sm,投射物imported.wave
+衝擊波型,godie-o02v,白色惡魔 - 高町奈葉,godie-o02v.w,W,81-02 Acxel Shooter,skillshot,35/35/35/35/35,180/220/260/405/405,11.0,,250/375/500/625/750,magic,,,,,imported.wave,0.5,wc3.flaretarget3,fx.prim.void.bolt,投射物imported.wave
+衝擊波型,godie-obla,被剝削的勞工階級 - 牧太郎,godie-obla.e,E,33-03 地道突襲,skillshot,60/60/60/60,165/215/265/315,14.0,,500/650/800/950,magic,,burnstun(1.0s),,,imported.wave,0.7,wc3.gluescreenmeteorhit1,fx.prim.arcane.bolt,投射物imported.wave
+衝擊波型,godie-ogrh,賽亞人 - 悟空,godie-ogrh.r,R,09-04 龜派氣功,skillshot,60/60/60,210/310/410,14.0,,450/750/1050,magic,,,,,imported.wave,0.6,,fx.prim.ki.beam-lg,投射物imported.wave
+衝擊波型,godie-orkn,電車癡漢 - 臭作,godie-orkn.r,R,30-04 電車之狼衝擊,skillshot,30/30/30,150/210/270,11.0,,550/900/1250,magic,,burnstun(1.2s),,,imported.wave,0.7,,fx.prim.physical.shockwave-lg,投射物imported.wave
+衝擊波型,godie-u00h,鬼畜紅王 - 鬼畜狂刀KYO,godie-u00h.e,E,39-03 無名神風流-蛟龍,skillshot,45/45/45/45,215/245/275/305,14.0,,350/450/550/650,magic,,burnstun(1.2s),,,imported.wave,0.6,wc3.flaretarget2,fx.prim.ice.beam,投射物imported.wave
+衝擊波型,godie-u00n,草帽小子 - 蒙其.D.魯夫,godie-u00n.e,E,76-03 伸縮自如的槍亂打,skillshot,60/60/60/60,130/160/190/220,7.33,,500/600/800/1000,magic,1.0×ap,,,,imported.wave,0.5,wc3.demonhuntermissilehit3,fx.prim.physical.swarm,投射物imported.wave
+衝擊波型,godie-u00o,草帽小子 - 蒙其.D.魯夫,godie-u00o.e,E,76-03 伸縮自如的槍亂打,skillshot,60/60/60/60,130/160/190/220,7.33,,400/600/800/1000,magic,,,,,imported.wave,0.5,wc3.demonhuntermissilehit3,fx.prim.arcane.bolt,投射物imported.wave
+衝擊波型,godie-u00v,黑手黨老大 - 基廉列克,godie-u00v.w,W,78-02 地走龍牙破,skillshot,55/55/55/55,75/105/135/165,11.0,,200/300/400/500,magic,,,,,imported.wave,0.4,wc3.gluescreenmeteorhit1,fx.prim.earth.shockwave,投射物imported.wave
+衝擊波型,godie-u010,邪眼師 - 飛影,godie-u010.e,E,38-03 邪王炎殺黑龍波,skillshot,60/60/60/60,215/300/385/470,11.0,,650/900/1150/1400,magic,1.0×ap,,,,imported.wave,0.6,wc3.dragonyes2,godie-tectonicfury-p0,投射物imported.wave
+衝擊波型,godie-u011,死亡老二 - 克勞薩先生,godie-u011.w,W,61-02 霸獸盔甲,skillshot,12/12/12/12,20/40/60/80,11.0,,60/120/180/240,magic,,burnstun(1.2s),,,imported.wave,0.3,,fx.prim.arcane.pulse-sm,投射物imported.wave
+衝擊波型,godie-u012,重金屬樂團的怪物 - 克勞薩II世,godie-u012.w,W,61-02 霸獸盔甲,skillshot,12/12/12/12,20/40/60/80,11.0,,60/120/180/240,magic,,burnstun(1.2s),,,imported.wave,0.3,,fx.prim.arcane.pulse-sm,投射物imported.wave
+衝擊波型,godie-uvng,邪眼師 - 飛影,godie-uvng.e,E,38-03 邪王炎殺黑龍波,skillshot,60/60/60/60,215/300/385/470,11.0,,650/900/1150/1400,magic,,,,,imported.wave,0.6,wc3.dragonyes2,godie-tectonicfury-p0,投射物imported.wave
+飛彈型,godie-e00j,皇者 - 騜,godie-e00j.e,E,95-03 皇者戰氣第五十重天,skillshot,45/45/45/45,120/160/200/240,14.0,,600/800/1000/1200,magic,,,,,imported.bolt,0.6,,fx.prim.ki.bolt,投射物imported.bolt
+飛彈型,godie-emfr,魔法老師 - 涅吉。史普林。菲爾德,godie-emfr.r,R,15-04 千之雷,skillshot,60/60/60,100/180/260,14.0,,850/1450/2050,magic,,,,,imported.bolt,0.7,,fx.prim.lightning.beam-lg,投射物imported.bolt
+飛彈型,godie-h01n,開外掛的死神 - 黑崎一護,godie-h01n.q,Q,79-01 瞬步,skillshot,35/35/35/35,65/95/125/155,9.17,,200/300/400/500,magic,,,,,imported.bolt,0.4,,fx.prim.void.pulse-sm,投射物imported.bolt
+飛彈型,godie-h01o,外掛開很大的死神 - 黑崎一護,godie-h01o.q,Q,79-01 瞬步,skillshot,35/35/35/35,65/95/125/155,9.17,,200/300/400/500,magic,,,,,imported.bolt,0.4,,fx.prim.arcane.bolt,投射物imported.bolt
+飛彈型,godie-n00p,妖狐藏馬 - 南野秀一,godie-n00p.w,W,18-02 寄生種子,skillshot,30/30/30/30,80/105/130/155,7.33,,75/75/75/75,magic,,,,,imported.bolt,0.4,wc3.spiritofvengeanceyes3,fx.prim.nature.swarm,投射物imported.bolt
+飛彈型,godie-nplh,通靈人 - 麻倉葉,godie-nplh.q,Q,16-03 無無明亦無,skillshot,40/40/40/40,115/165/215/265,11.0,,350/500/650/800,magic,,,,,imported.bolt,0.5,,fx.prim.holy.pulse-sm,投射物imported.bolt
+飛彈型,godie-nsjs,妖狐藏馬 - 南野秀一,godie-nsjs.w,W,18-02 寄生種子,skillshot,30/30/30/30,80/105/130/155,7.33,,75/75/75/75,magic,,,,,imported.bolt,0.4,,fx.prim.nature.bolt,投射物imported.bolt
+變身型,godie-h02r,種子神奇寶貝 - 妙蛙花,godie-h02r.ex,EX,90-002 超進化! 妙蛙花,self,75,350,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.nature.pulse-lg,self+applyBuff且描述含變身詞
+變身型,godie-h02u,看似憂鬱的神獸 - 草泥馬,godie-h02u.ex,EX,92-002 最終戈壁,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.nature.explosion-lg,self+applyBuff且描述含變身詞
+變身型,godie-h02v,看似憂鬱的神獸 - 草泥馬,godie-h02v.ex,EX,92-002 最終戈壁,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.nature.pulse-lg,self+applyBuff且描述含變身詞
+變身型,godie-hgam,種子神奇寶貝 - 妙蛙種子,godie-hgam.ex,EX,90-002 超進化! 妙蛙花,self,75,350,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.nature.pulse-lg,self+applyBuff且描述含變身詞
+變身型,godie-hvsh,梅杜莎 - Rider,godie-hvsh.ex,EX,48-002 騎英之疆繩MAX,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.arcane.beam-lg,self+applyBuff且描述含變身詞
+變身型,godie-n01c,傳說的龍騎士 - 勇者小呆,godie-n01c.ex,EX,08-002 龍魔人,self,60,390,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.fire.explosion-lg,self+applyBuff且描述含變身詞
+變身型,godie-nbbc,傳說的龍騎士 - 勇者小呆,godie-nbbc.ex,EX,08-002 龍魔人,self,60,390,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.arcane.pulse-lg,self+applyBuff且描述含變身詞
+變身型,godie-ntin,時空管理局執務官 - 菲特·泰斯塔羅沙,godie-ntin.ex,EX,23-002 雙刀模式,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.lightning.pulse-lg,self+applyBuff且描述含變身詞
+變身型,godie-obla,被剝削的勞工階級 - 牧太郎,godie-obla.r,R,33-04 動物拳法,self,12/12/12,60/60/60,0,,,,,,armor flat 25,6.0,,0.3,wc3.sealwhat2,fx.prim.holy.pulse-lg,self+applyBuff且描述含變身詞
+變身型,godie-oshd,魔鬼筋肉人 - 鬼王達,godie-oshd.ex,EX,29-002 慢著!來人餵公子吃餅,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.nature.pulse-lg,self+applyBuff且描述含變身詞
+變身型,godie-u011,死亡老二 - 克勞薩先生,godie-u011.ex,EX,61-002 惡魔吉他,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.void.pulse-lg,self+applyBuff且描述含變身詞
+變身型,godie-u011,死亡老二 - 克勞薩先生,godie-u011.r,R,61-04 瘋狂怪物,self,0.5/0.5/0.5,0/0/0,0,,,,,,mr pctAdd 0.08,12.0,,,,fx.prim.arcane.pulse-lg,self+applyBuff且描述含變身詞
+變身型,godie-u012,重金屬樂團的怪物 - 克勞薩II世,godie-u012.ex,EX,61-002 惡魔吉他,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.void.pulse-lg,self+applyBuff且描述含變身詞
+變身型,godie-u012,重金屬樂團的怪物 - 克勞薩II世,godie-u012.r,R,61-04 瘋狂怪物,self,0.5/0.5/0.5,0/0/0,0,,,,,,mr pctAdd 0.08,12.0,,,,fx.prim.arcane.pulse-lg,self+applyBuff且描述含變身詞
+變身型,godie-u034,職業獵人 - 傑 富力士,godie-u034.r,R,06-04 傑桑變化,self,60/60/60,200/300/400,0,,,,,,maxHealth flat 300,3.0,,0.4,,fx.w3x.locust.boomnl.p01,self+applyBuff且描述含變身詞
+變身型,godie-ucrl,職業獵人 - 傑 富力士,godie-ucrl.r,R,06-04 傑桑變化,self,60/60/60,200/300/400,0,,,,,,maxHealth flat 300,3.0,,0.4,,fx.w3x.locust.boomnl.p01,self+applyBuff且描述含變身詞
+招喚型,godie-e008,火霧戰士 - 夏娜,godie-e008.w,W,21-01 火羽,self,30/30/30,30/60/90,0,,,,,,ms pctAdd 1.5,6.0,,0.3,,fx.prim.fire.nova,描述含招喚/召喚
+招喚型,godie-e00q,英靈-亞瑟王 - 黑化Saber,godie-e00q.w,W,69-02 黑泥召喚,targeted,20/14/8/8/8,130/200/270/270/270,14.0,,80/120/160/200/240,physical,0.5×ad,,,,,,,fx.prim.void.summon,描述含招喚/召喚
+招喚型,godie-e00s,白木老樹精 - 白木卡迪那,godie-e00s.ex,EX,70-002 樹海降臨,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.blood.pulse-lg,描述含招喚/召喚
+招喚型,godie-e00s,白木老樹精 - 白木卡迪那,godie-e00s.r,R,70-04 千年練成,targeted,70/70/70,240/420/600,14.0,,180/180/180,magic,0.7×ap,,,,,0.4,,fx.prim.arcane.nova-lg,描述含招喚/召喚
+招喚型,godie-e00v,百畝森林的霸主 - 維尼,godie-e00v.ex,EX,84-002 我只想確定你在這裡,self,70,250,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.nature.pulse-lg,描述含招喚/召喚
+招喚型,godie-e015,夜市人生 - 金居福,godie-e015.r,R,94-04 賣扣~~,targeted,50/50/50,200/275/350,11.0,,600/1000/1400,physical,0.6×ad,slow25(1.0s),,,,0.7,,fx.prim.physical.nova-lg,描述含招喚/召喚
+招喚型,godie-ecen,姜窩肯 - 約翰走路,godie-ecen.e,E,64-03 工廠機器人,targeted,75/75/75/75,150/225/300/375,11.0,,80/120/160/200,magic,0.6×ap,,,,,0.4,,fx.prim.arcane.summon,描述含招喚/召喚
+招喚型,godie-emfr,魔法老師 - 涅吉。史普林。菲爾德,godie-emfr.q,Q,15-01 風精召喚,targeted,40/40/40/40,75/125/175/225,6.42,,155/155/155/155,magic,0.6×ap,,,,,0.4,,fx.prim.wind.tornado,描述含招喚/召喚
+招喚型,godie-etyr,治癒系公主 - 木乃香,godie-etyr.e,E,14-02 式神炸裂,ground,35/35/35/35,150/180/210/240,0.0,1.5,250/400/550/700,magic,0.6×ap,,,,,0.5,,fx.prim.holy.explosion,描述含招喚/召喚
+招喚型,godie-etyr,治癒系公主 - 木乃香,godie-etyr.passive,PASSIVE,14-00 召喚式神,ground,5,150,8.25,6.42,95,magic,0.6×ap,,,,,,,fx.prim.arcane.summon,描述含招喚/召喚
+招喚型,godie-etyr,治癒系公主 - 木乃香,godie-etyr.r,R,14-04 聖夜降臨,targeted,0.5/0.5/0.5,150/225/300,8.25,,200/400/600,magic,0.7×ap,,,,,,,fx.prim.holy.nova-lg,描述含招喚/召喚
+招喚型,godie-h001,地獄來襲者 - 斑剎,godie-h001.e,E,41-03 召喚術,targeted,60/60/60/60/60,200/275/350/425/500,11.0,,5/5/4/4/3,magic,0.6×ap,,,,,0.3,,fx.prim.arcane.summon,描述含招喚/召喚
+招喚型,godie-h001,地獄來襲者 - 斑剎,godie-h001.r,R,41-04 究極魔法流星雨,targeted,60/60/60,230/345/460,6.42,,700/1050/1400,magic,0.7×ap,,,,,0.7,,fx.prim.arcane.nova-lg,描述含招喚/召喚
+招喚型,godie-h01u,亂世癿王者 - 呂布奉先,godie-h01u.r,R,80-04 赤兔咆哮,skillshot,15/15/15,70/110/150,11.0,,10/20/30,magic,,burnstun(1.2s),,,imported.wave,0.3,wc3.defendcaster,fx.prim.physical.shockwave-lg,描述含招喚/召喚
+招喚型,godie-h021,破銅爛鐵 - 阿強一號,godie-h021.e,E,05-03 及喀爾度,ground,60/60/60/60,75/125/175/225,0.0,6.0,,,,root(1.5s),,,,0.5,,fx.prim.holy.nova,描述含招喚/召喚
+招喚型,godie-h021,破銅爛鐵 - 阿強一號,godie-h021.q,Q,05-01 薩喀爾,targeted,25/25/25,60/95/130,11.0,,175/275/375,magic,0.6×ap,,,,,0.4,,fx.prim.lightning.nova,描述含招喚/召喚
+招喚型,godie-h021,破銅爛鐵 - 阿強一號,godie-h021.r,R,05-04 巴歐．薩喀爾嘎,targeted,60/60/60,140/230/320,8.25,,550/1000/1450,magic,0.7×ap,slow25(1.0s),,,,0.7,,fx.prim.lightning.nova-lg,描述含招喚/召喚
+招喚型,godie-h022,白色之翼 - 涅吉。史普林。菲爾德,godie-h022.ex,EX,82-001 太陰道-敵彈吸收陣,self,75,400,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.void.bolt-lg,描述含招喚/召喚
+招喚型,godie-h02s,死亡騎士,godie-h02s.ex,EX,91-002 亡靈大軍,ground,60,500,9.41,5.88,,magic,0.7×ap,slow40(3.0s),,,,0.7,,fx.prim.void.nova-lg,描述含招喚/召喚
+招喚型,godie-h02y,幕末復仇狂者 - 志志雄真實,godie-h02y.passive,PASSIVE,35-00 召喚佩,self,60,120,0,,,,,,,,,0.3,,fx.prim.arcane.summon,描述含招喚/召喚
+招喚型,godie-h02z,不良少年,godie-h02z.ex,EX,91-002 亡靈大軍,ground,60,500,9.41,5.88,,magic,0.7×ap,slow40(3.0s),,,,0.7,,fx.prim.void.nova-lg,描述含招喚/召喚
+招喚型,godie-hart,最終幻想 - 克勞德,godie-hart.w,W,01-02 隕石擊,ground,35/35/35/35/35,75/145/215/215/215,8.25,5.5,200/400/600/800/1000,physical,0.5×ad,slow25(1.5s),,,,0.7,,fx.prim.fire.explosion,描述含招喚/召喚
+招喚型,godie-hblm,慈悲的王者 - 賈修貝爾,godie-hblm.e,E,05-03 及喀爾度,ground,60/60/60/60,75/125/175/225,0.0,6.0,,,,root(1.5s),,,,0.5,,fx.prim.holy.nova,描述含招喚/召喚
+招喚型,godie-hblm,慈悲的王者 - 賈修貝爾,godie-hblm.ex,EX,05-002 金色巨龍,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.void.pulse-lg,描述含招喚/召喚
+招喚型,godie-hblm,慈悲的王者 - 賈修貝爾,godie-hblm.q,Q,05-01 薩喀爾,targeted,25/25/25,60/95/130,11.0,,175/275/375,magic,0.6×ap,,,,,0.4,,fx.prim.lightning.nova,描述含招喚/召喚
+招喚型,godie-hblm,慈悲的王者 - 賈修貝爾,godie-hblm.r,R,05-04 巴歐．薩喀爾嘎,targeted,60/60/60,140/230/320,8.25,,550/1000/1450,magic,0.7×ap,slow25(1.0s),,,,0.7,,fx.prim.lightning.nova-lg,描述含招喚/召喚
+招喚型,godie-hpal,不死之身-無 - 藤井八雲,godie-hpal.e,E,35-03 鏡蠱,targeted,45/45/45/45,100/150/200/250,11.0,,80/120/160/200,magic,0.6×ap,,,,,0.4,,fx.prim.void.swarm,描述含招喚/召喚
+招喚型,godie-hpal,不死之身-無 - 藤井八雲,godie-hpal.ex,EX,35-002 出來吧!全部的魔獸,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.void.swarm-lg,描述含招喚/召喚
+招喚型,godie-hpal,不死之身-無 - 藤井八雲,godie-hpal.passive,PASSIVE,35-00 召喚佩,self,60,120,0,,,,,,healthRegen flat 6.0,60.0,,0.3,,fx.prim.void.summon,描述含招喚/召喚
+招喚型,godie-hpal,不死之身-無 - 藤井八雲,godie-hpal.q,Q,35-01 土爪,skillshot,25/25/25/25,30/60/90/120,9.17,,120/240/360/480,magic,,,,,imported.wave,0.4,,fx.prim.earth.shockwave,描述含招喚/召喚
+招喚型,godie-hpal,不死之身-無 - 藤井八雲,godie-hpal.r,R,35-04 光牙,targeted,55/55/55,100/160/220,11.0,,600/1000/1400,magic,0.7×ap,,,,,0.7,,fx.prim.holy.beam-lg,描述含招喚/召喚
+招喚型,godie-hvsh,梅杜莎 - Rider,godie-hvsh.e,E,48-03 鮮血神殿,targeted,60/60/60/60,120/195/270/345,1.83,,75/150/225/300,magic,0.6×ap,,,,,0.4,,fx.prim.blood.nova,描述含招喚/召喚
+招喚型,godie-hvsh,梅杜莎 - Rider,godie-hvsh.r,R,48-04 騎英之疆繩,targeted,60/60/60,230/330/430,14.0,,300/600/900,magic,0.7×ap,,,,,0.6,,fx.prim.arcane.beam-lg,描述含招喚/召喚
+招喚型,godie-hvwd,除魔巫女 - 桔梗,godie-hvwd.r,R,02-04 百鬼夜行,targeted,60/60/60,120/210/300,11.0,,6/12/18,magic,0.7×ap,,,,,0.4,,fx.prim.void.swarm-lg,描述含招喚/召喚
+招喚型,godie-nplh,通靈人 - 麻倉葉,godie-nplh.e,E,16-04 劍之精靈,targeted,65/65/65,100/200/300,11.0,,80/120/160,physical,0.5×ad,,,,,0.4,,fx.prim.holy.beam,描述含招喚/召喚
+招喚型,godie-o02p,夢幻之星 - 初音,godie-o02p.q,Q,99-01 甩蔥歌,ground,25/25/25/25,75/105/135/165,10.08,7.33,200/275/350/425,magic,0.6×ap,,,,,0.5,,fx.prim.sound.nova,描述含招喚/召喚
+招喚型,godie-o02p,夢幻之星 - 初音,godie-o02p.w,W,99-02 最初的聲音,targeted,15/15/15/15,100/140/180/220,11.0,,,,,,,,,0.3,,fx.prim.sound.pulse,描述含招喚/召喚
+招喚型,godie-obla,被剝削的勞工階級 - 牧太郎,godie-obla.q,Q,33-01 放山雞,targeted,25/25/25/25/25,35/70/105/140/140,11.0,,80/120/160/200/240,magic,0.6×ap,,,,,0.4,wc3.chickenwhat1,fx.prim.blood.summon,描述含招喚/召喚
+招喚型,godie-ogld,美白大法師 - 黑人牙膏,godie-ogld.ex,EX,72-002 億萬星殞落,self,90,600,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.holy.swarm-lg,描述含招喚/召喚
+招喚型,godie-ogld,美白大法師 - 黑人牙膏,godie-ogld.q,Q,72-01洗刷刷,targeted,35/35/35/35/35,100/200/300/300/300,14.0,,150/300/450/450/450,magic,0.6×ap,,,,,0.4,,fx.prim.holy.pulse,描述含招喚/召喚
+招喚型,godie-u00b,最M的魔法Jizz - 清蒸 飛鼠先生,godie-u00b.e,E,75-02 龍捲風,targeted,60/60/60/60,100/100/200/250,14.0,,80/120/160/200,magic,0.6×ap,,,,,0.4,,fx.prim.wind.nova,描述含招喚/召喚
+招喚型,godie-u00h,鬼畜紅王 - 鬼畜狂刀KYO,godie-u00h.r,R,39-04 祕奧義．金色的神風,ground,60/60/60,175/275/375,0.0,6.0,333/555/777,physical,0.6×ad,burnstun(0.8s),,,,0.8,wc3.dragonyes2,fx.prim.holy.tornado-lg,描述含招喚/召喚
+招喚型,godie-u00j,神性的流失 - 賽菲洛斯,godie-u00j.ex,EX,74-002 超新星,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.void.explosion-lg,描述含招喚/召喚
+招喚型,godie-u00j,神性的流失 - 賽菲洛斯,godie-u00j.r,R,74-04 最終殞落星,targeted,60/60/60,220/330/440,11.0,,75/75/75,physical,0.6×ad,,,,,0.4,,fx.prim.void.explosion-lg,描述含招喚/召喚
+招喚型,godie-u00l,北斗之鼠 - 拳四郎,godie-u00l.r,R,25-04 ChangeDNA,targeted,60/60/60,80/160/240,11.0,,80/120/160,physical,0.6×ad,,,,,0.4,wc3.nocute,fx.prim.physical.pulse-lg,描述含招喚/召喚
+招喚型,godie-u010,邪眼師 - 飛影,godie-u010.q,Q,38-01 邪王炎殺劍,targeted,45/45/45/50/50,85/115/145/275/275,11.92,,250/350/450/550/650,magic,0.6×ap,,,,,0.5,wc3.darksummoninglaunch1,fx.prim.fire.slash,描述含招喚/召喚
+招喚型,godie-ubal,魔界霸主 - 巴恩大魔王,godie-ubal.q,Q,37-01 凱薩之鷹,targeted,15/15/15,75/105/135,6.42,,220/340/460,magic,0.6×ap,,,,,0.3,,fx.prim.void.beam,描述含招喚/召喚
+招喚型,godie-ubal,魔界霸主 - 巴恩大魔王,godie-ubal.r,R,37-04 魔界之王,targeted,90/90/90,60/300/450,11.0,,80/120/160,magic,0.7×ap,,,,,0.4,wc3.shadowhunterready1,fx.prim.void.pulse-lg,描述含招喚/召喚
+招喚型,godie-umal,北斗神拳掌門人 - 拳四郎,godie-umal.r,R,25-04 ChangeDNA,targeted,60/60/60,80/160/240,11.0,,80/120/160,physical,0.6×ad,,,,,0.4,wc3.nocute,fx.prim.lightning.pulse-lg,描述含招喚/召喚
+招喚型,godie-usyl,殺戮之牙 - 異形,godie-usyl.r,R,49-04 母體,targeted,70/70/70,150/200/250,6.42,,7/6/6,magic,0.7×ap,,,,,0.4,,fx.prim.arcane.summon-lg,描述含招喚/召喚
+招喚型,godie-uvng,邪眼師 - 飛影,godie-uvng.q,Q,38-01 邪王炎殺劍,targeted,45/45/45/50/50,85/115/145/275/275,11.92,,250/350/450/550/650,magic,0.6×ap,,,,,0.5,wc3.darksummoninglaunch1,fx.firestorm,描述含招喚/召喚
+招喚型,godie-uwar,食神 - 撒尿牛丸,godie-uwar.q,Q,43-01 得罪了方丈還想走,targeted,15/15/15/15/15,45/80/115/150/150,11.0,,125/200/275/350/350,magic,0.6×ap,,,,,0.3,,fx.prim.lightning.nova,描述含招喚/召喚
+範圍爆發型,godie-e001,蟬在叫人壞掉 - 龍宮禮奈,godie-e001.passive,PASSIVE,22-00 嗚鎖打!,self,40,150,0,6.42,150,physical,0.5×ad,burnstun(0.5s),as pctAdd 4.0,4.0,,0.5,,fx.prim.earth.shockwave,AoE r=6.42
+範圍爆發型,godie-e002,亞瑟王 - Saber,godie-e002.r,R,20-04 Avalon-永恆的理想鄉,ground,60/60/60,150/250/350,0.0,3.67,250/500/750,physical,0.6×ad,,,,,0.6,,fx.prim.holy.nova-lg,AoE r=3.67
+範圍爆發型,godie-e002,亞瑟王 - Saber,godie-e002.w,W,20-01 風王結界,ground,12/12/12,0/0/0,11.0,3.67,10/10/10,physical,0.5×ad,,,,,0.3,,fx.prim.wind.tornado,AoE r=3.67
+範圍爆發型,godie-e00k,戰國刺客Azumi - 安云,godie-e00k.e,E,19-03 瞬切百殺,ground,60/60/60/60,75/150/225/300,8.25,6.0,40/90/140/190,physical,0.5×ad,,,,,0.5,wc3.flaretarget2,fx.prim.physical.beam,AoE r=6.0
+範圍爆發型,godie-e00l,亞瑟王 - Saber,godie-e00l.r,R,20-04 Avalon-永恆的理想鄉,ground,12/60/60,150/250/350,0.0,3.67,250/500/750,physical,0.6×ad,,,,,0.3,,fx.prim.earth.nova-lg,AoE r=3.67
+範圍爆發型,godie-e00l,亞瑟王 - Saber,godie-e00l.w,W,20-01 風王結界,ground,12/12/12,0/0/0,11.0,3.67,10/10/10,physical,0.5×ad,,,,,0.3,,fx.prim.wind.nova,AoE r=3.67
+範圍爆發型,godie-e00n,蟬在叫人壞掉 - 龍宮禮奈,godie-e00n.passive,PASSIVE,22-00 嗚鎖打!,self,40,150,0,6.42,150,physical,0.5×ad,burnstun(0.5s),as pctAdd 4.0,4.0,,0.5,,fx.prim.earth.shockwave,AoE r=6.42
+範圍爆發型,godie-e00w,神鳴流劍士 - 櫻綻剎那,godie-e00w.q,Q,77-01 百烈櫻華斬,ground,40/40/40/40,75/110/145/180,0.0,6.0,200/300/400/500,physical,0.5×ad,burnstun(0.8s),,,,0.7,wc3.darksummoninglaunch1,fx.prim.physical.slash,AoE r=6.0
+範圍爆發型,godie-e00x,神鳴流劍士 - 櫻綻剎那,godie-e00x.passive,PASSIVE,77-00 浮雲-旋一閃,self,15,150,0,3.67,250,physical,0.5×ad,,,,,0.3,,fx.prim.physical.shockwave,AoE r=3.67
+範圍爆發型,godie-e00x,神鳴流劍士 - 櫻綻剎那,godie-e00x.q,Q,77-01 百烈櫻華斬,ground,40/40/40/40,75/110/145/180,0.0,6.0,200/300/400/500,physical,0.5×ad,burnstun(0.8s),,,,0.7,wc3.darksummoninglaunch1,fx.prim.nature.slash,AoE r=6.0
+範圍爆發型,godie-e00z,戰國刺客Azumi - 安云,godie-e00z.e,E,19-03 瞬切百殺,ground,60/60/60/60,75/150/225/300,8.25,6.0,40/90/140/190,physical,0.5×ad,,,,,0.5,wc3.flaretarget2,fx.prim.holy.slash,AoE r=6.0
+範圍爆發型,godie-e012,殺人劍客 - 佐佐木小次郎,godie-e012.r,R,47-04 天翔龍閃,ground,60/60/60,60/350/500,0.0,3.67,500/900/1300,physical,0.6×ad,,,,,0.7,,fx.prim.arcane.nova-lg,AoE r=3.67
+範圍爆發型,godie-e015,夜市人生 - 金居福,godie-e015.w,W,94-02 橘山斬空破,ground,30/30/30/30,50/100/150/200,0.0,6.0,100/200/300/400,physical,0.5×ad,slow40(1.5s),,,,0.6,,fx.prim.physical.slash,AoE r=6.0
+範圍爆發型,godie-edem,寫輪眼復仇者 - 宇智波佐助,godie-edem.q,Q,45-01 火遁-豪火龍之術,ground,35/35/35/35/35,150/180/210/240/240,14.67,6.05,250/350/450/550/650,magic,,,,,,0.6,,fx.prim.fire.explosion,AoE r=6.05
+範圍爆發型,godie-ekee,會叫的野獸 - 傳說中的大刀,godie-ekee.e,E,93-03 這次考試很簡單,ground,50/60/70/80,200/320/440/560,9.17,1.5,100/200/300/400,magic,0.6×ap,slow40(8.0s),,,,0.5,,fx.prim.arcane.nova,AoE r=1.5
+範圍爆發型,godie-ekee,會叫的野獸 - 傳說中的大刀,godie-ekee.passive,PASSIVE,93-00 小考,self,80,300,0,9.39,600,magic,0.6×ap,,,,,0.6,,fx.prim.lightning.nova-lg,AoE r=9.39
+範圍爆發型,godie-emfr,魔法老師 - 涅吉。史普林。菲爾德,godie-emfr.e,E,15-03 雷電風暴,ground,45/45/45/45,275/340/405/470,8.25,5.13,400/600/800/1000,magic,0.6×ap,,,,,0.6,,fx.prim.lightning.nova,AoE r=5.13
+範圍爆發型,godie-emfr,魔法老師 - 涅吉。史普林。菲爾德,godie-emfr.ex,EX,15-002 風花-武裝解除,ground,65,450,8.82,5.88,,magic,0.7×ap,,,,,0.6,,fx.prim.wind.tornado-lg,AoE r=5.88
+範圍爆發型,godie-emns,奇樂 - 夜神月,godie-emns.e,E,44-03 火車輾過,ground,60/50/40/30,150/200/250/300,0.0,1.5,650/750/850/950,magic,0.6×ap,,,,,0.6,wc3.rokhanwhat2,fx.prim.physical.shockwave,AoE r=1.5
+範圍爆發型,godie-h00l,時空勇者 - 林克,godie-h00l.r,R,60-04 迴旋斬,ground,60/60/60,170/290/410,0.0,6.0,450/750/1050,physical,0.6×ad,burnstun(0.8s),,,,0.8,wc3.axemissilelaunch1,godie-bladestorm-swordeffect-p0,AoE r=6.0
+範圍爆發型,godie-h01u,亂世癿王者 - 呂布奉先,godie-h01u.e,E,80-03 鬼神烈戟,ground,60/60/60/60,250/350/450/550,0,9.72,350/550/750/950,magic,,,armor flat -3,3.0,,0.7,,fx.prim.physical.beam,AoE r=9.72
+範圍爆發型,godie-h020,黑魔導士 - 莉娜因巴斯,godie-h020.e,E,04-03 龍破斬,ground,60/60/60/60,230/395/560/725,14.0,8.25,700/1200/1700/2200,magic,0.6×ap,slow25(1.5s),,,,0.8,,fx.prim.fire.beam,AoE r=8.25
+範圍爆發型,godie-h020,黑魔導士 - 莉娜因巴斯,godie-h020.w,W,04-02 炸彈陣,ground,25/25/25/25,55/85/115/145,14.67,5.5,55/85/115/145,magic,0.6×ap,,,,,0.5,,fx.prim.fire.explosion,AoE r=5.5
+範圍爆發型,godie-h022,白色之翼 - 涅吉。史普林。菲爾德,godie-h022.q,Q,82-01 雷之斧,ground,35/35/35/35,70/100/130/160,11.0,3.67,210/300/390/480,magic,0.6×ap,burnstun(0.8s),,,,0.6,,fx.prim.lightning.nova,AoE r=3.67
+範圍爆發型,godie-h02r,種子神奇寶貝 - 妙蛙花,godie-h02r.q,Q,90-01 飛葉快刀,ground,25/25/25,70/120/170,0.0,4.12,100/200/300,magic,0.6×ap,,,,,0.5,,fx.prim.nature.slash,AoE r=4.12
+範圍爆發型,godie-h02s,死亡騎士,godie-h02s.e,E,91-03 碎心打擊,ground,45/45/45/45,130/170/210/250,5.5,3.67,225/300/375/450,magic,0.6×ap,slow40(1.5s),,,,0.5,,fx.prim.arcane.nova,AoE r=3.67
+範圍爆發型,godie-h02y,幕末復仇狂者 - 志志雄真實,godie-h02y.r,R,97-04 終極秘劍-火產靈神,ground,60/60/60,60/350/500,0.0,3.67,200/300/400,magic,0.7×ap,,,,,0.6,,fx.firestorm,AoE r=3.67
+範圍爆發型,godie-h02z,不良少年,godie-h02z.e,E,91-03 碎心打擊,ground,45/45/45/45,130/170/210/250,5.5,3.67,225/300/375/450,magic,0.6×ap,slow40(1.5s),,,,0.5,,fx.prim.arcane.nova,AoE r=3.67
+範圍爆發型,godie-hapm,海克力斯 - Berserker,godie-hapm.r,R,52-04 巨神一擊,ground,60/60/60,200/360/520,11.0,6.0,600/1000/1400,physical,0.6×ad,slow25(1.5s),,,,0.8,,fx.prim.physical.shockwave-lg,AoE r=6.0
+範圍爆發型,godie-hart,最終幻想 - 克勞德,godie-hart.e,E,01-03 畫龍點睛,ground,45/45/45/45,120/180/240/300,3.67,6.42,450/600/750/900,physical,0.5×ad,,armor flat -3,5.0,,0.6,,fx.prim.physical.beam,AoE r=6.42
+範圍爆發型,godie-hgam,種子神奇寶貝 - 妙蛙種子,godie-hgam.q,Q,90-01 飛葉快刀,ground,25/25/25,70/120/170,0.0,4.12,100/200/300,magic,0.6×ap,,,,,0.5,,fx.prim.nature.slash,AoE r=4.12
+範圍爆發型,godie-hjai,黑魔導士 - 莉娜因巴斯,godie-hjai.e,E,04-03 龍破斬,ground,60/60/60/60,230/395/560/725,14.0,6.0,700/1200/1700/2200,magic,0.6×ap,slow25(1.5s),,,,0.8,,fx.prim.void.slash,AoE r=6.0
+範圍爆發型,godie-hjai,黑魔導士 - 莉娜因巴斯,godie-hjai.w,W,04-02 炸彈陣,ground,25/25/25/25,55/85/115/145,11.0,5.5,275/425/575/725,magic,0.6×ap,,,,,0.6,,fx.prim.fire.bolt,AoE r=5.5
+範圍爆發型,godie-n003,黑暗福音 - 依文潔琳,godie-n003.q,Q,42-01 凍結的大地,ground,25/25/25/25,100/130/160/190,10.08,5.5,150/200/250/300,magic,0.6×ap,slow40(1.5s),,,,0.5,,fx.prim.ice.shockwave,AoE r=5.5
+範圍爆發型,godie-n01g,黑暗福音 - 依文潔琳,godie-n01g.q,Q,42-01 凍結的大地,ground,25/25/25/25,100/130/160/190,10.08,5.5,150/200/250/300,magic,0.6×ap,slow40(1.5s),,,,0.5,,fx.prim.ice.nova,AoE r=5.5
+範圍爆發型,godie-nbst,變態正義 - 瘋狂假面,godie-nbst.q,Q,24-01 這是我的豆皮壽司,ground,60/60/60/60,50/80/110/140,0.0,6.0,100/200/300/400,physical,0.5×ad,burnstun(0.8s),,,,0.7,,fx.prim.physical.nova,AoE r=6.0
+範圍爆發型,godie-nman,地獄歌神 - 憤怒的胖虎,godie-nman.w,W,40-02 必殺！爆熱神音！,ground,25/25/25,55/85/115,0.0,6.0,175/275/375,magic,0.6×ap,burnstun(0.8s),,,,0.6,wc3.stampedecaster1,fx.prim.sound.nova,AoE r=6.0
+範圍爆發型,godie-o00k,傲嬌電氣老鼠 - 皮卡娘,godie-o00k.e,E,86-03 神鳴,ground,60/60/60/60,135/220/305/390,6.42,9.17,400/650/900/1150,magic,0.6×ap,,,,,0.7,,fx.prim.lightning.nova,AoE r=9.17
+範圍爆發型,godie-o00k,傲嬌電氣老鼠 - 皮卡娘,godie-o00k.q,Q,86-01 十萬伏特,ground,35/35/35/35/35,55/85/115/115/115,11.0,6.42,175/275/375/375/375,magic,0.6×ap,,,,,0.5,,fx.prim.lightning.nova,AoE r=6.42
+範圍爆發型,godie-o00k,傲嬌電氣老鼠 - 皮卡娘,godie-o00k.r,R,86-04 打雷絕招,ground,60/60/60,150/250/350,0.0,5.5,150/200/250,magic,,burnstun(0.5s),,,,0.5,,fx.prim.lightning.beam-lg,AoE r=5.5
+範圍爆發型,godie-o00l,獸神官 - 傑洛士,godie-o00l.w,W,53-02 強化炸彈陣,ground,35/35/35/35,50/100/150/200,11.92,3.69,150/300/450/600,magic,0.6×ap,,,,,0.5,,fx.prim.fire.explosion,AoE r=3.69
+範圍爆發型,godie-o01z,魔砲少女 - 高町奈葉,godie-o01z.r,R,81-04 Starlight Breaker Plus,ground,60/60/60,250/400/550,7.33,6.0,400/700/1000,magic,0.7×ap,burnstun(0.8s),,,,0.8,wc3.soulgem,fx.cinder-ward,AoE r=6.0
+範圍爆發型,godie-o02s,憂鬱少女 - 涼宮八ㄦ匕,godie-o02s.e,E,53-04 暴爆咒,ground,60/60/60/75/75,300/420/540/950/950,0.0,6.0,135/135/135/225/225,magic,0.6×ap,burnstun(0.8s),,,,0.6,,fx.prim.arcane.nova,AoE r=6.0
+範圍爆發型,godie-o02s,憂鬱少女 - 涼宮八ㄦ匕,godie-o02s.q,Q,53-02 強化炸彈陣,ground,35/35/35/35,50/100/150/200,11.92,3.69,150/300/450/600,magic,0.6×ap,,,,,0.5,,fx.prim.fire.bolt,AoE r=3.69
+範圍爆發型,godie-o02v,白色惡魔 - 高町奈葉,godie-o02v.r,R,81-04 Starlight Breaker Plus,ground,60/60/60,250/400/550,7.33,6.0,400/700/1000,magic,0.7×ap,burnstun(0.8s),,,,0.8,wc3.soulgem,fx.cinder-ward,AoE r=6.0
+範圍爆發型,godie-ofar,神奇寶貝兒 - 皮卡丘,godie-ofar.q,Q,58-01 十萬伏特,ground,35/35/35/35/35,55/85/115/115/115,11.0,6.42,175/275/375/375/375,magic,0.6×ap,,,,,0.5,,fx.prim.lightning.nova,AoE r=6.42
+範圍爆發型,godie-ogld,美白大法師 - 黑人牙膏,godie-ogld.r,R,72-04 黑化,ground,90/90/90,250/350/450,0.0,3.67,180/360/540,magic,0.7×ap,burnstun(0.8s),,,,0.7,,fx.prim.void.explosion-lg,AoE r=3.67
+範圍爆發型,godie-osam,犬妖 - 殺生丸,godie-osam.ex,EX,34-002 冥道殘月破,ground,65,800,9.41,4.71,,magic,0.7×ap,,,,,0.6,,fx.prim.void.nova-lg,AoE r=4.71
+範圍爆發型,godie-oshd,魔鬼筋肉人 - 鬼王達,godie-oshd.r,R,29-04 電光毒龍鑽,ground,60/60/60,150/300/450,14.0,4.58,200/400/600,physical,0.6×ad,slow25(1.5s),,,,0.7,,fx.cinder-ward,AoE r=4.58
+範圍爆發型,godie-oshd,魔鬼筋肉人 - 鬼王達,godie-oshd.w,W,29-02 鬼王流星雨,ground,45/45/45/45,150/200/250/250,0.0,6.0,150/200/250/300,physical,0.5×ad,,,,,0.5,,fx.prim.void.nova,AoE r=6.0
+範圍爆發型,godie-u00b,最M的魔法Jizz - 清蒸 飛鼠先生,godie-u00b.r,R,75-03 暴雷無限刃,ground,60/60/60,200/300/400,4.58,6.0,50/90/130,magic,0.7×ap,,,,,0.5,,fx.prim.lightning.nova-lg,AoE r=6.0
+範圍爆發型,godie-u00h,鬼畜紅王 - 鬼畜狂刀KYO,godie-u00h.w,W,39-02 無名神風流-朱雀,ground,50/50/50/50,50/80/110/140,9.17,3.67,150/250/350/450,physical,0.5×ad,,,,,0.5,,fx.prim.fire.slash,AoE r=3.67
+範圍爆發型,godie-u00j,神性的流失 - 賽菲洛斯,godie-u00j.e,E,74-03 闇之天使,ground,60/60/60/60,200/275/350/425,6.42,6.0,150/250/350/450,physical,0.5×ad,,,,,0.5,,fx.prim.void.pulse,AoE r=6.0
+範圍爆發型,godie-u00j,神性的流失 - 賽菲洛斯,godie-u00j.q,Q,74-01 獄門,ground,45/45/45/45,120/155/190/225,0.0,1.5,350/450/550/650,physical,0.5×ad,burnstun(0.8s),,,,0.6,,fx.w3x.orb.herocloudkfksword.p00,AoE r=1.5
+範圍爆發型,godie-u00k,邪惡意念集合體 - 死之王,godie-u00k.q,Q,71-01 死亡隕落,ground,45/45/45,85/135/185,11.0,5.5,250/400/550,magic,0.6×ap,,,,,0.5,,fx.prim.void.explosion,AoE r=5.5
+範圍爆發型,godie-u00l,北斗之鼠 - 拳四郎,godie-u00l.e,E,25-03 北斗百裂拳,ground,60/60/60/60,165/240/315/390,2.75,6.0,300/550/800/1050,physical,0.5×ad,,,,,0.7,,fx.prim.physical.swarm,AoE r=6.0
+範圍爆發型,godie-u00n,草帽小子 - 蒙其.D.魯夫,godie-u00n.r,R,76-04 三檔.巨人迴旋彈,ground,60/60/60,200/310/420,0.0,3.67,600/900/1200,physical,0.6×ad,burnstun(2.0s),,,,0.9,,fx.prim.physical.shockwave-lg,AoE r=3.67
+範圍爆發型,godie-u00o,草帽小子 - 蒙其.D.魯夫,godie-u00o.r,R,76-04 三檔.巨人迴旋彈,ground,60/60/60,200/310/420,0.0,3.67,600/900/1200,physical,0.6×ad,burnstun(2.0s),,,,0.9,,fx.prim.ki.bolt-lg,AoE r=3.67
+範圍爆發型,godie-u00v,黑手黨老大 - 基廉列克,godie-u00v.e,E,78-03 廬山昇龍破,ground,55/55/55/55,150/240/330/420,0.0,6.0,450/600/750/900,physical,0.5×ad,burnstun(0.8s),,,,0.8,wc3.dragonyes2,fx.prim.ki.beam,AoE r=6.0
+範圍爆發型,godie-u010,邪眼師 - 飛影,godie-u010.ex,EX,38-002 究極暴走黑龍波,ground,60,120,0,6.0,,magic,0.7×ap,,,,,0.8,,fx.prim.void.explosion-lg,AoE r=6.0
+範圍爆發型,godie-u010,邪眼師 - 飛影,godie-u010.w,W,38-02 邪王炎殺煉獄焦,ground,25/25/25/25/25,75/125/175/175/175,8.25,6.0,250/400/550/700/850,magic,0.6×ap,slow25(1.5s),,,,0.6,wc3.hcancelbuilding,godie-fireblast-p3,AoE r=6.0
+範圍爆發型,godie-u01u,三刀流劍士 - 索隆,godie-u01u.w,W,11-02 虎狩獵,ground,45/45/45/45,75/100/125/150,0.0,3.67,250/325/400/475,physical,0.5×ad,burnstun(0.8s),,,,0.6,,fx.prim.physical.slash,AoE r=3.67
+範圍爆發型,godie-ubal,魔界霸主 - 巴恩大魔王,godie-ubal.ex,EX,37-002 真‧黑核晶,ground,20,600,7.06,9.41,,magic,0.7×ap,,,,,0.5,,fx.prim.void.explosion-lg,AoE r=9.41
+範圍爆發型,godie-udre,三刀流劍士 - 索隆,godie-udre.w,W,11-02 虎狩獵,ground,45/45/45/45,75/100/125/150,0.0,3.67,250/325/400/475,physical,0.5×ad,burnstun(0.8s),,,,0.6,,fx.prim.physical.nova,AoE r=3.67
+範圍爆發型,godie-umal,北斗神拳掌門人 - 拳四郎,godie-umal.e,E,25-03 北斗百裂拳,ground,60/60/60/60,165/240/315/390,2.75,6.0,300/550/800/1050,physical,0.5×ad,,,,,0.7,,fx.prim.physical.slash,AoE r=6.0
+範圍爆發型,godie-uvng,邪眼師 - 飛影,godie-uvng.ex,EX,38-002 究極暴走黑龍波,ground,60,120,0,6.0,,magic,0.7×ap,,,,,0.8,,fx.prim.void.pulse-lg,AoE r=6.0
+範圍爆發型,godie-uvng,邪眼師 - 飛影,godie-uvng.w,W,38-02 邪王炎殺煉獄焦,ground,25/25/25/25/25,75/125/175/175/175,8.25,6.0,250/400/550/700/850,magic,0.6×ap,slow25(1.5s),,,,0.6,wc3.hcancelbuilding,godie-fireblast-p3,AoE r=6.0
+單體型,godie-e001,蟬在叫人壞掉 - 龍宮禮奈,godie-e001.e,E,22-03 五吋釘,targeted,25/25/25/25,100/140/180/220,8.25,,350/500/650/800,physical,0.5×ad,slow40(5.0s),,,,0.5,,fx.prim.physical.beam,targeted damage
+單體型,godie-e007,龍之子 - 天地志狼,godie-e007.e,E,12-03 破凰之心-徒手空破山,targeted,45/45/45/45,60/225/300/375,11.0,,80/120/160/200,magic,0.6×ap,,,,,0.4,,fx.prim.ki.shockwave,targeted damage
+單體型,godie-e007,龍之子 - 天地志狼,godie-e007.q,Q,12-01 鬥仙術,targeted,12/12/12/12/12,30/50/70/90/90,8.34,,150/250/350/350/350,magic,0.6×ap,slow25(1.0s),,,,0.3,,fx.prim.ki.pulse-sm,targeted damage
+單體型,godie-e007,龍之子 - 天地志狼,godie-e007.r,R,12-04 龍氣爆發,targeted,60/60/60,215/280/345,11.0,,650/950/1250,magic,0.7×ap,,,,,0.6,,fx.w3x.particle.supershinythingy.p00,targeted damage
+單體型,godie-e008,火霧戰士 - 夏娜,godie-e008.q,Q,21-02 拔焰刀,targeted,25/25/25,75/125/175,4.58,,300/400/500,magic,0.6×ap,slow25(0.5s),,,,0.4,wc3.flaretarget3,fx.prim.fire.slash,targeted damage
+單體型,godie-e00j,皇者 - 騜,godie-e00j.q,Q,95-01 謝謝指教,targeted,25/25/25/25/25,70/110/150/190/190,3.67,,240/360/480/600/600,magic,0.6×ap,slow25(0.3s),,,,0.3,,fx.prim.fire.nova,targeted damage
+單體型,godie-e00j,皇者 - 騜,godie-e00j.r,R,95-04 藍色戰氣一百重天,targeted,60/60/60,140/220/300,3.67,,600/900/1200,magic,0.7×ap,,,,,0.6,,fx.prim.ki.nova-lg,targeted damage
+單體型,godie-e00j,皇者 - 騜,godie-e00j.w,W,95-02 大和戰氣,targeted,12/12/12/12,60/60/60/60,11.0,,20/20/20/20,magic,0.6×ap,,,,,0.3,,fx.prim.ki.pulse-sm,targeted damage
+單體型,godie-e00k,戰國刺客Azumi - 安云,godie-e00k.r,R,19-04 幻影暗殺,self,12/12/12,60/60/60,0,,100/200/300,magic,0.3×ap,,critChance flat 0.25,6.0,,0.3,,fx.prim.void.swarm-lg,targeted damage
+單體型,godie-e00n,蟬在叫人壞掉 - 龍宮禮奈,godie-e00n.e,E,22-03 五吋釘,targeted,25/25/25/25,100/140/180/220,8.25,,350/500/650/800,physical,0.5×ad,slow40(5.0s),,,,0.5,,fx.prim.void.nova,targeted damage
+單體型,godie-e00t,七夜怪談 - 貞子,godie-e00t.e,E,66-03 七夜怪談,targeted,60/60/60/60,180/250/320/390,11.0,,160/160/160/160,magic,0.6×ap,,,,,0.4,,fx.prim.void.nova,targeted damage
+單體型,godie-e00u,完全而瀟灑的女僕 - 十六夜Sakuya,godie-e00u.e,E,none,targeted,12/12/12/12/12,60/60/60/60/60,11.0,,80/120/160/200/240,physical,0.5×ad,,,,,0.3,,fx.prim.physical.nova,targeted damage
+單體型,godie-e00u,完全而瀟灑的女僕 - 十六夜Sakuya,godie-e00u.q,Q,none,targeted,12/12/12/12/12,60/60/60/60/60,11.0,,80/120/160/200/240,physical,0.5×ad,,,,,0.3,,fx.prim.physical.nova,targeted damage
+單體型,godie-e00u,完全而瀟灑的女僕 - 十六夜Sakuya,godie-e00u.r,R,none,targeted,12/12/12,60/60/60,11.0,,80/120/160,physical,0.6×ad,,,,,0.3,,fx.prim.physical.nova-lg,targeted damage
+單體型,godie-e00u,完全而瀟灑的女僕 - 十六夜Sakuya,godie-e00u.w,W,none,targeted,12/12/12/12/12,60/60/60/60/60,11.0,,80/120/160/200/240,physical,0.5×ad,,,,,0.3,,fx.prim.physical.nova,targeted damage
+單體型,godie-e00v,百畝森林的霸主 - 維尼,godie-e00v.e,E,84-03 蜜汁,targeted,50/50/50/50,125/175/225/275,6.42,,60/60/60/60,physical,0.5×ad,,,,,0.3,,fx.prim.physical.pulse-sm,targeted damage
+單體型,godie-e00v,百畝森林的霸主 - 維尼,godie-e00v.r,R,84-04 給我蜂蜜,targeted,60/60/60,200/300/400,6.42,,500/800/1100,physical,0.6×ad,burnstun(3.0s),,,,0.8,,fx.prim.physical.nova-lg,targeted damage
+單體型,godie-e00v,百畝森林的霸主 - 維尼,godie-e00v.w,W,84-02 保齡球,targeted,25/25/25/0.5/0.5,120/150/180/0/0,7.33,,150/250/350/450/550,physical,0.5×ad,,,,,,,fx.prim.nature.nova,targeted damage
+單體型,godie-e00w,神鳴流劍士 - 櫻綻剎那,godie-e00w.e,E,77-03 GLADIARIA ALAT,targeted,60/60/60/60,90/180/270/360,11.0,,80/120/160/200,physical,0.5×ad,,,,,0.4,,fx.prim.lightning.nova,targeted damage
+單體型,godie-e00w,神鳴流劍士 - 櫻綻剎那,godie-e00w.r,R,77-04 真-雷光劍,targeted,70/70/70,150/225/300,11.0,,600/800/1000,physical,0.6×ad,,,,,0.6,,fx.prim.lightning.beam-lg,targeted damage
+單體型,godie-e00x,神鳴流劍士 - 櫻綻剎那,godie-e00x.e,E,77-03 GLADIARIA ALAT,targeted,60/60/60/60,90/180/270/360,11.0,,80/120/160/200,physical,0.5×ad,,,,,0.4,,fx.prim.physical.pulse-sm,targeted damage
+單體型,godie-e00x,神鳴流劍士 - 櫻綻剎那,godie-e00x.r,R,77-04 真-雷光劍,targeted,70/70/70,150/225/300,11.0,,600/800/1000,physical,0.6×ad,,,,,0.6,,fx.cinder-ward,targeted damage
+單體型,godie-e00z,戰國刺客Azumi - 安云,godie-e00z.r,R,19-04 幻影暗殺,self,12/12/12,60/60/60,0,,100/200/300,magic,0.3×ap,,critChance flat 0.25,6.0,,0.3,,fx.prim.void.pulse-lg,targeted damage
+單體型,godie-e012,殺人劍客 - 佐佐木小次郎,godie-e012.q,Q,47-01 飛龍閃,targeted,35/35/35/35,50/80/110/140,7.33,,150/250/350/450,physical,0.5×ad,,,,,0.4,,fx.prim.physical.nova,targeted damage
+單體型,godie-e015,夜市人生 - 金居福,godie-e015.e,E,94-03 珍奶顏射,targeted,60/60/60/60,100/175/250/325,11.0,,125/125/125/125,physical,0.5×ad,burnstun(0.1s),,,,0.3,,fx.prim.physical.bolt,targeted damage
+單體型,godie-e015,夜市人生 - 金居福,godie-e015.q,Q,94-01 北斗爆橘拳,targeted,25/25/25/25/8,50/100/150/325/85,2.75,,100/200/300/400/500,physical,0.5×ad,,,,,,wc3.peondeath,fx.prim.holy.slash,targeted damage
+單體型,godie-ecen,姜窩肯 - 約翰走路,godie-ecen.q,Q,64-01 威士忌攻擊,targeted,25/25/25,75/105/135,9.17,,100/200/300,magic,0.6×ap,slow25(6.0s),,,,0.4,,fx.prim.holy.nova,targeted damage
+單體型,godie-ecen,姜窩肯 - 約翰走路,godie-ecen.r,R,64-04 魔幻浮水印,targeted,10/10/10,150/225/300,11.0,,80/120/160,magic,0.7×ap,,,,,,,fx.prim.arcane.pulse-lg,targeted damage
+單體型,godie-ecen,姜窩肯 - 約翰走路,godie-ecen.w,W,64-02 酒釀精華,targeted,50/50/50/50,60/80/100/120,7.33,,68/108/148/188,magic,0.6×ap,,,,,0.4,,fx.prim.holy.nova,targeted damage
+單體型,godie-edem,寫輪眼復仇者 - 宇智波佐助,godie-edem.e,E,45-03 千鳥,targeted,45/45/45/45,120/185/250/315,12.83,,400/600/800/1000,magic,0.6×ap,,,,,0.5,,fx.prim.lightning.beam,targeted damage
+單體型,godie-efur,揍敵客大家長 - 揍敵客桀諾,godie-efur.w,W,13-02 變化念力,targeted,32/30/28/26,150/200/250/300,11.0,,0/99/99/99,magic,0.6×ap,,,,,0.3,,fx.prim.ki.pulse-sm,targeted damage
+單體型,godie-ekee,會叫的野獸 - 傳說中的大刀,godie-ekee.q,Q,93-01 期末報告,targeted,0.5/0.5/0.5/0.5,0/0/0/0,11.0,,15/25/35/45,magic,0.6×ap,,,,,,,fx.w3x.orb.darkbreathdamage.p00,targeted damage
+單體型,godie-ekee,會叫的野獸 - 傳說中的大刀,godie-ekee.r,R,93-04 當掉,targeted,60/60/60,300/400/500,7.33,,500/800/1100,magic,0.7×ap,burnstun(3.0s),,,,0.8,,fx.prim.holy.nova-lg,targeted damage
+單體型,godie-emns,奇樂 - 夜神月,godie-emns.q,Q,44-01 死神之眼,targeted,20/20/20/20,150/200/250/300,9.17,,80/120/160/200,magic,0.6×ap,,,,,0.4,wc3.gruntyesattack1,fx.prim.void.pulse-sm,targeted damage
+單體型,godie-emns,奇樂 - 夜神月,godie-emns.r,R,44-04 心臟麻痺,targeted,45/45/45,150/250/350,11.0,,450/450/450,magic,0.7×ap,,,,,0.5,wc3.gruntyesattack3,fx.prim.void.nova-lg,targeted damage
+單體型,godie-ewar,龍之子 - 天地志狼,godie-ewar.e,E,12-03 破凰之心-徒手空破山,targeted,45/45/45/45,60/225/300/375,11.0,,80/120/160/200,magic,0.6×ap,,,,,0.4,,fx.prim.ki.pulse-sm,targeted damage
+單體型,godie-ewar,龍之子 - 天地志狼,godie-ewar.q,Q,12-01 鬥仙術,targeted,12/12/12/12/12,30/50/70/90/90,8.34,,150/250/350/350/350,magic,0.6×ap,slow25(1.0s),,,,0.3,,fx.prim.ki.nova,targeted damage
+單體型,godie-ewar,龍之子 - 天地志狼,godie-ewar.r,R,12-04 龍氣爆發,targeted,60/60/60,215/280/345,11.0,,650/950/1250,magic,0.7×ap,,,,,0.6,,fx.w3x.particle.supershinythingy.p00,targeted damage
+單體型,godie-ewar,龍之子 - 天地志狼,godie-ewar.w,W,12-02 仙氣．採藥,targeted,60/60/60/60,50/100/150/200,11.0,,80/120/160/200,magic,0.6×ap,,,,,0.4,,fx.prim.ki.pulse-sm,targeted damage
+單體型,godie-ewrd,天上天下 - 棗 真夜,godie-ewrd.e,E,17-03 空破圓斬,targeted,45/45/45/45,95/130/165/200,11.0,,375/575/775/975,physical,0.5×ad,,,,,0.5,,fx.prim.physical.slash,targeted damage
+單體型,godie-ewrd,天上天下 - 棗 真夜,godie-ewrd.r,R,17-04 狂龍斬,targeted,60/60/60,150/200/250,4.58,,500/500/500,physical,0.6×ad,root(0.5s),,,,0.5,,fx.prim.physical.slash-lg,targeted damage
+單體型,godie-ewrd,天上天下 - 棗 真夜,godie-ewrd.w,W,17-02 殺無真空斬,targeted,25/25/25/25/25,35/60/85/110/110,6.42,,175/300/425/550/550,physical,0.5×ad,burnstun(0.5s),,,,0.5,,fx.prim.ki.slash,targeted damage
+單體型,godie-h001,地獄來襲者 - 斑剎,godie-h001.q,Q,41-01 吸血鬼之吻,targeted,45/45/45/45/45,60/150/225/225/225,4.58,,200/400/600/600/600,magic,0.6×ap,,,,,0.4,,fx.prim.blood.nova,targeted damage
+單體型,godie-h00l,時空勇者 - 林克,godie-h00l.q,Q,60-01 科奇利族的迴旋鏢,targeted,15/15/15/15/7,50/85/120/155/75,11.0,,150/250/350/450/450,physical,0.5×ad,,,,,,wc3.druidofthetalonmissilelaunch2,fx.prim.wind.slash,targeted damage
+單體型,godie-h01n,開外掛的死神 - 黑崎一護,godie-h01n.e,E,79-03 月牙天衝,targeted,55/55/55/55,150/200/250/300,11.0,,450/600/750/900,magic,0.6×ap,,,,,0.5,,fx.prim.void.beam,targeted damage
+單體型,godie-h01n,開外掛的死神 - 黑崎一護,godie-h01n.w,W,79-02 斬擊,self,22/22/22/22,60/80/100/120,0,,100/150/200/250,magic,0.3×ap,,as flat 0.4,10.0,,0.4,,fx.prim.physical.slash,targeted damage
+單體型,godie-h01o,外掛開很大的死神 - 黑崎一護,godie-h01o.e,E,79-03 月牙天衝,targeted,55/55/55/55,150/200/250/300,11.0,,450/600/750/900,magic,0.6×ap,,,,,0.5,,fx.prim.void.dash,targeted damage
+單體型,godie-h01o,外掛開很大的死神 - 黑崎一護,godie-h01o.w,W,79-02 斬擊,self,22/22/22/22,60/80/100/120,0,,100/150/200/250,magic,0.3×ap,,as flat 0.4,10.0,,0.4,,fx.prim.arcane.slash,targeted damage
+單體型,godie-h020,黑魔導士 - 莉娜因巴斯,godie-h020.q,Q,04-01 火球術,targeted,18/18/18/18,35/45/55/65,11.92,,170/220/270/320,magic,0.6×ap,burnstun(1.5s),,,,0.4,,fx.prim.fire.explosion,targeted damage
+單體型,godie-h020,黑魔導士 - 莉娜因巴斯,godie-h020.r,R,04-04 神滅斬,targeted,60/60/60,150/250/350,5.04,,600/1100/1600,magic,0.7×ap,slow25(2.0s),,,,0.7,,fx.prim.void.explosion-lg,targeted damage
+單體型,godie-h022,白色之翼 - 涅吉。史普林。菲爾德,godie-h022.passive,PASSIVE,82-00 天生法術書,targeted,5,50,11.0,,100,magic,0.6×ap,,,,,,,fx.prim.holy.beam,targeted damage
+單體型,godie-h02k,國寶級的畜生 - 熊貓,godie-h02k.e,E,89-03 憤怒的胸毛,self,12/12/12/12,60/60/60/60,11.0,,1000/2000/3000/4000,magic,1.0×ap,,ms pctAdd 0.04; ad flat 10; as pctAdd 0.04,12.0,,0.3,wc3.pandarenbrewmasterwarcry1,fx.prim.physical.swarm,targeted damage
+單體型,godie-h02n,腦包英雄 - 打我阿笨蛋,godie-h02n.e,E,none,targeted,12/12/12/12/12,60/60/60/60/60,11.0,,80/120/160/200/240,physical,0.5×ad,,,,,0.3,,fx.prim.physical.nova,targeted damage
+單體型,godie-h02n,腦包英雄 - 打我阿笨蛋,godie-h02n.q,Q,none,targeted,12/12/12/12/12,60/60/60/60/60,11.0,,80/120/160/200/240,physical,0.5×ad,,,,,0.3,,fx.prim.physical.nova,targeted damage
+單體型,godie-h02n,腦包英雄 - 打我阿笨蛋,godie-h02n.r,R,none,targeted,12/12/12,60/60/60,11.0,,80/120/160,physical,0.6×ad,,,,,0.3,,fx.prim.physical.nova-lg,targeted damage
+單體型,godie-h02n,腦包英雄 - 打我阿笨蛋,godie-h02n.w,W,none,targeted,12/12/12/12/12,60/60/60/60/60,11.0,,80/120/160/200/240,physical,0.5×ad,,,,,0.3,,fx.prim.physical.nova,targeted damage
+單體型,godie-h02r,種子神奇寶貝 - 妙蛙花,godie-h02r.e,E,90-03 藤鞭,targeted,45/45/45/45,125/200/275/350,9.17,,350/500/650/800,magic,0.6×ap,,,,,0.5,,fx.prim.nature.beam,targeted damage
+單體型,godie-h02u,看似憂鬱的神獸 - 草泥馬,godie-h02u.r,R,92-04 馬勒戈壁,self,75/75/75,300/420/540,0,,100/200/300,magic,0.3×ap,,as flat 0.25,3.0,,0.4,,fx.prim.nature.explosion-lg,targeted damage
+單體型,godie-h02u,看似憂鬱的神獸 - 草泥馬,godie-h02u.w,W,92-03 狂草泥馬,self,60/60/60/60,90/120/150/180,0,,400/800/1200/1600,magic,1.0×ap,,as flat 0.4,8.0,,0.6,wc3.taunt,fx.prim.physical.shockwave,targeted damage
+單體型,godie-h02v,看似憂鬱的神獸 - 草泥馬,godie-h02v.r,R,92-04 馬勒戈壁,self,75/75/75,300/420/540,0,,100/200/300,magic,0.3×ap,,as flat 0.25,3.0,,0.4,,fx.prim.nature.pulse-lg,targeted damage
+單體型,godie-h02v,看似憂鬱的神獸 - 草泥馬,godie-h02v.w,W,92-03 狂草泥馬,self,60/60/60/60,90/120/150/180,0,,400/800/1200/1600,magic,1.0×ap,,as flat 0.4,8.0,,0.6,wc3.taunt,fx.prim.nature.pulse-sm,targeted damage
+單體型,godie-h02y,幕末復仇狂者 - 志志雄真實,godie-h02y.q,Q,97-01 壹之秘劍-焰靈,targeted,12/12/12/12,60/60/60/60,11.0,,20/20/20/20,magic,0.6×ap,,,,,0.3,,fx.prim.fire.pulse-sm,targeted damage
+單體型,godie-hapm,海克力斯 - Berserker,godie-hapm.e,E,52-03 無銘斧劍,targeted,12/12/12/12,60/60/60/60,11.0,,50/70/90/110,physical,0.5×ad,,,,,0.3,,fx.prim.physical.slash,targeted damage
+單體型,godie-hapm,海克力斯 - Berserker,godie-hapm.ex,EX,52-002 射殺百頭,targeted,60,400,5.29,,,physical,0.6×ad,,,,,0.5,,fx.prim.fire.explosion-lg,targeted damage
+單體型,godie-hapm,海克力斯 - Berserker,godie-hapm.q,Q,52-01 狂戰士之怒,targeted,35/35/35/35/57,60/110/160/210/175,11.0,,40/80/120/160/200,physical,0.5×ad,,,,,0.4,,fx.prim.physical.pulse,targeted damage
+單體型,godie-hapm,海克力斯 - Berserker,godie-hapm.w,W,52-02 蹂躪編年史,targeted,45/45/45/45,60/155/190/225,5.5,,350/450/550/650,magic,0.5×ap,,,,,0.5,,fx.prim.physical.shockwave,targeted damage
+單體型,godie-harf,豪洨天王 - 鄭先生,godie-harf.w,W,26-02 亂入,targeted,12/12/12/12,60/60/60/60,11.0,,50/100/150/200,physical,0.5×ad,,,,,0.3,,fx.prim.physical.pulse-sm,targeted damage
+單體型,godie-hart,最終幻想 - 克勞德,godie-hart.q,Q,01-01 凶斬,targeted,25/25/25/25/25,60/80/100/120/120,8.25,,150/220/290/360/360,physical,0.5×ad,slow25(1.0s),,,,0.4,,fx.prim.physical.slash,targeted damage
+單體型,godie-hart,最終幻想 - 克勞德,godie-hart.r,R,01-04 超究武神霸斬,targeted,60/60/60,170/260/350,8.25,,693/1043/1393,physical,0.6×ad,root(3.0s),,,,0.8,,fx.w3x.orb.herocloudkfksword.p00,targeted damage
+單體型,godie-hgam,種子神奇寶貝 - 妙蛙種子,godie-hgam.e,E,90-03 藤鞭,targeted,45/45/45/45,125/200/275/350,9.17,,350/500/650/800,magic,0.6×ap,,,,,0.5,,fx.root-snare,targeted damage
+單體型,godie-hgam,種子神奇寶貝 - 妙蛙種子,godie-hgam.passive,PASSIVE,90-00 寄生種子,targeted,45,100,8.25,,50,magic,0.6×ap,,,,,0.3,,fx.prim.nature.bolt,targeted damage
+單體型,godie-hjai,黑魔導士 - 莉娜因巴斯,godie-hjai.q,Q,04-01 火球術,targeted,18/18/18/18,35/45/55/65,11.92,,170/220/270/320,magic,0.6×ap,burnstun(1.5s),,,,0.4,,fx.firestorm,targeted damage
+單體型,godie-hjai,黑魔導士 - 莉娜因巴斯,godie-hjai.r,R,04-04 神滅斬,targeted,60/60/60,150/250/350,5.04,,600/1100/1600,magic,0.7×ap,slow25(2.0s),,,,0.7,,fx.prim.holy.slash-lg,targeted damage
+單體型,godie-hlgr,鋼彈 - 煌,godie-hlgr.q,Q,03-02 詭雷,targeted,25/25/25/25/25,55/80/105/200/200,11.0,,30/30/30/80/80,magic,0.6×ap,,,,,0.3,,fx.prim.lightning.nova,targeted damage
+單體型,godie-hlgr,鋼彈 - 煌,godie-hlgr.w,W,03-01 磁軌砲,targeted,15/15/15/15,35/50/65/80,8.25,,125/200/275/350,magic,0.6×ap,burnstun(0.5s),,,,0.3,,fx.prim.arcane.bolt,targeted damage
+單體型,godie-hpb1,獸矛傳承使 - 蒼月潮,godie-hpb1.e,E,07-03 列、在、前,targeted,65/65/65/65,220/250/280/310,14.0,,450/550/650/750,physical,0.5×ad,,,,,0.5,wc3.moonjump,fx.prim.physical.beam,targeted damage
+單體型,godie-hpb1,獸矛傳承使 - 蒼月潮,godie-hpb1.w,W,07-02 者、皆、陣,targeted,50/50/50/50/50,110/140/170/275/275,14.0,,225/225/225/225/225,physical,0.5×ad,,,,,0.4,wc3.moongo,fx.prim.physical.pulse-sm,targeted damage
+單體型,godie-huth,超級普烏 - 魔人普烏,godie-huth.e,E,28-03 分身,targeted,60/60/60/60,120/180/240/300,11.0,,2/3/4/5,magic,0.6×ap,,,,,0.3,,fx.prim.arcane.swarm,targeted damage
+單體型,godie-huth,超級普烏 - 魔人普烏,godie-huth.q,Q,28-01 吃掉你,targeted,35/28/21/14/7,30/50/70/90/110,3.67,,80/120/160/200/240,magic,0.6×ap,,,,,,,fx.prim.arcane.pulse-sm,targeted damage
+單體型,godie-huth,超級普烏 - 魔人普烏,godie-huth.r,R,28-04 破滅能量彈,targeted,60/60/60,280/430/580,8.25,,300/400/500,magic,0.7×ap,slow40(5.0s),,,,0.5,,fx.prim.void.explosion-lg,targeted damage
+單體型,godie-huth,超級普烏 - 魔人普烏,godie-huth.w,W,28-02 把你變成餅乾,targeted,60/50/40/30/20,100/160/220/280/340,11.0,,250/350/450/550/650,magic,0.6×ap,burnstun(0.3s),,,,0.3,wc3.eggsackdeath1,fx.prim.arcane.pulse,targeted damage
+單體型,godie-hvsh,梅杜莎 - Rider,godie-hvsh.q,Q,48-01 魔法鎖鏈,targeted,25/25/25/25,50/75/100/125,14.0,,150/250/350/450,magic,0.6×ap,,,,,0.4,,fx.prim.arcane.beam,targeted damage
+單體型,godie-hvwd,除魔巫女 - 桔梗,godie-hvwd.e,E,02-03 魂飛魄散,targeted,60/60/60/60,120/185/250/315,11.0,,350/550/750/950,magic,0.6×ap,,,,,0.5,,fx.prim.void.nova,targeted damage
+單體型,godie-n00b,小叮噹 - 哆拉A夢,godie-n00b.r,R,57-04 竹蜻蜓,targeted,55/55/55,300/500/700,6.42,,150/275/400,magic,0.7×ap,root(1.0s),,,,0.6,,fx.prim.wind.tornado-lg,targeted damage
+單體型,godie-n00b,小叮噹 - 哆拉A夢,godie-n00b.w,W,57-03 複製鏡,targeted,75/75/75,200/300/400,11.0,,80/120/160,magic,0.6×ap,,,,,0.4,wc3.spellbreakerpissed4,fx.prim.arcane.pulse,targeted damage
+單體型,godie-n00p,妖狐藏馬 - 南野秀一,godie-n00p.e,E,18-03 妖狐變化,targeted,60/60/60/60,200/300/400/500,11.0,,80/120/160/200,magic,0.6×ap,,,,,0.4,wc3.altarofelderswhat1,fx.prim.nature.pulse,targeted damage
+單體型,godie-n00p,妖狐藏馬 - 南野秀一,godie-n00p.q,Q,18-01 風華圓舞陣,targeted,45/45/45,130/195/260,11.0,,10/15/15,magic,0.6×ap,,,,,0.3,,fx.prim.nature.slash,targeted damage
+單體型,godie-n00p,妖狐藏馬 - 南野秀一,godie-n00p.r,R,18-04 億年樹,targeted,75/75/75,200/375/550,6.42,,300/500/700,magic,0.7×ap,,,,,0.5,,fx.prim.nature.shockwave-lg,targeted damage
+單體型,godie-n01c,傳說的龍騎士 - 勇者小呆,godie-n01c.r,R,08-04 阿邦快速劍X,targeted,60/60/60,250/315/380,11.0,,450/650/850,physical,0.6×ad,,,,,0.6,,fx.prim.physical.slash-lg,targeted damage
+單體型,godie-n01c,傳說的龍騎士 - 勇者小呆,godie-n01c.w,W,08-02 萊丁快速劍,targeted,30/30/30/30,50/80/110/140,6.42,,150/250/350/450,physical,0.5×ad,,,,,0.4,,fx.prim.lightning.beam,targeted damage
+單體型,godie-naka,猿飛佐助 - 風魔小次郎,godie-naka.e,E,27-03 忍法千變萬化之刀,self,60/60/60/60,120/180/240/300,0,,130/180/230/280,magic,0.39×ap,,as flat 0.4,3.0,,0.4,,fx.prim.ice.pulse-sm,targeted damage
+單體型,godie-naka,猿飛佐助 - 風魔小次郎,godie-naka.q,Q,27-01 忍法風魔手裡劍,targeted,45/45/45/45,45/75/105/135,11.0,,100/150/200/250,physical,0.5×ad,,,,,0.4,,fx.prim.wind.slash,targeted damage
+單體型,godie-naka,猿飛佐助 - 風魔小次郎,godie-naka.r,R,27-04 忍法暗殺奧義-飛燕閃,targeted,60/60/60,150/225/300,8.25,,450/700/950,physical,0.6×ad,burnstun(1.0s),,,,0.7,,fx.prim.void.nova-lg,targeted damage
+單體型,godie-nbbc,傳說的龍騎士 - 勇者小呆,godie-nbbc.r,R,08-04 阿邦快速劍X,targeted,60/60/60,250/315/380,11.0,,450/650/850,physical,0.6×ad,,,,,0.6,,fx.prim.nature.slash-lg,targeted damage
+單體型,godie-nbbc,傳說的龍騎士 - 勇者小呆,godie-nbbc.w,W,08-02 萊丁快速劍,targeted,30/30/30/30,50/80/110/140,6.42,,150/250/350/450,physical,0.5×ad,,,,,0.4,,fx.prim.lightning.slash,targeted damage
+單體型,godie-nbst,變態正義 - 瘋狂假面,godie-nbst.e,E,24-03 變態絕技悶絕地獄車,targeted,45/45/45/45,220/250/280/310,14.0,,350/450/550/650,magic,0.5×ap,,,,,0.5,,fx.prim.physical.nova,targeted damage
+單體型,godie-nbst,變態正義 - 瘋狂假面,godie-nbst.w,W,24-02 變態根性,targeted,12/12/12/12/12,60/60/60/60/60,11.0,,80/120/160/200/240,physical,0.5×ad,,,,,0.3,,fx.root-snare,targeted damage
+單體型,godie-nman,地獄歌神 - 憤怒的胖虎,godie-nman.e,E,40-03 萬解-貓王胖虎,targeted,75/75/75/75,90/180/270/360,11.0,,80/120/160/200,magic,0.6×ap,,,,,0.4,,fx.prim.void.pulse-sm,targeted damage
+單體型,godie-nman,地獄歌神 - 憤怒的胖虎,godie-nman.ex,EX,40-002 環繞音響,targeted,60,400,14.12,,,magic,0.7×ap,,,,,0.5,,fx.prim.sound.nova-lg,targeted damage
+單體型,godie-nman,地獄歌神 - 憤怒的胖虎,godie-nman.r,R,40-04 地獄搖滾,targeted,60/60/60,250/375/500,11.92,,550/750/950,magic,0.7×ap,,,,,0.6,wc3.shamanready1,fx.prim.ki.nova-lg,targeted damage
+單體型,godie-nplh,通靈人 - 麻倉葉,godie-nplh.ex,EX,16-002 布都御魂,self,45,210,0,,750,magic,,,ad pctAdd 0.35,6.0,,0.6,,fx.prim.holy.beam-lg,targeted damage
+單體型,godie-nplh,通靈人 - 麻倉葉,godie-nplh.r,R,16-02 阿彌陀流真空佛陀斬,targeted,30/30/30,40/60/80,6.42,,200/300/400,physical,0.6×ad,burnstun(1.3s),,,,0.6,,fx.prim.holy.slash-lg,targeted damage
+單體型,godie-nplh,通靈人 - 麻倉葉,godie-nplh.w,W,16-01 超．占事略決,targeted,12/12/12/12,60/60/60/60,11.0,,80/120/160/200,physical,0.5×ad,,,,,0.3,,fx.prim.holy.nova,targeted damage
+單體型,godie-nsjs,妖狐藏馬 - 南野秀一,godie-nsjs.e,E,18-03 妖狐變化,targeted,60/60/60/60,200/300/400/500,11.0,,80/120/160/200,magic,0.6×ap,,,,,0.4,wc3.altarofelderswhat1,fx.prim.arcane.pulse-sm,targeted damage
+單體型,godie-nsjs,妖狐藏馬 - 南野秀一,godie-nsjs.q,Q,18-01 風華圓舞陣,targeted,45/45/45,130/195/260,11.0,,10/15/15,magic,0.6×ap,,,,,0.3,,fx.prim.wind.nova,targeted damage
+單體型,godie-nsjs,妖狐藏馬 - 南野秀一,godie-nsjs.r,R,18-04 億年樹,targeted,75/75/75,200/375/550,6.42,,300/500/700,magic,0.7×ap,,,,,0.5,,fx.prim.nature.nova-lg,targeted damage
+單體型,godie-ntin,時空管理局執務官 - 菲特·泰斯塔羅沙,godie-ntin.q,Q,23-01 電離光槍 - 繁星飛躍,targeted,35/35/35/35,60/110/160/210,9.17,,105/105/105/105,magic,0.6×ap,,,,,0.3,,fx.w3x.particle.gx.p00,targeted damage
+單體型,godie-ntin,時空管理局執務官 - 菲特·泰斯塔羅沙,godie-ntin.r,R,23-04 雷焰聖劍,targeted,60/60/60,160/290/420,9.17,,900/1500/2100,magic,0.7×ap,root(1.0s),,,,0.8,,fx.w3x.orb.lightningnova.p00,targeted damage
+單體型,godie-o00l,獸神官 - 傑洛士,godie-o00l.r,R,53-04 暴爆咒,targeted,60/60/60,300/420/540,11.0,,200/200/200,magic,0.7×ap,,,,,0.4,wc3.taunt,fx.prim.fire.explosion-lg,targeted damage
+單體型,godie-o00x,超級賽亞人 - 悟空,godie-o00x.e,E,09-03 超級賽亞人,targeted,60/60/60/60,160/240/320/400,11.0,,80/120/160/200,magic,0.6×ap,,,,,0.4,,fx.prim.ki.pulse,targeted damage
+單體型,godie-o00x,超級賽亞人 - 悟空,godie-o00x.q,Q,09-01 界王拳,targeted,45/45/45/45/57,60/75/100/125/175,11.0,,55/90/125/160/200,magic,0.6×ap,,,,,0.4,,fx.prim.ki.pulse,targeted damage
+單體型,godie-o01z,魔砲少女 - 高町奈葉,godie-o01z.e,E,81-03 Divine Buster Extention,targeted,60/60/60/60,150/220/290/360,11.0,,400/600/800/1000,magic,0.6×ap,,,,,0.5,wc3.markofchaos,fx.prim.holy.nova,targeted damage
+單體型,godie-o02l,神騎寶貝 - 皮卡丘,godie-o02l.e,E,58-03 就決定是你了!小智,targeted,60/60/60/60,70/120/170/220,11.0,,350/500/650/800,magic,0.6×ap,burnstun(0.5s),,,,0.5,,fx.prim.arcane.nova,targeted damage
+單體型,godie-o02l,神騎寶貝 - 皮卡丘,godie-o02l.q,Q,58-01 十萬伏特,targeted,35/35/35/35/35,55/85/115/115/115,11.0,,175/275/375/375/375,magic,0.6×ap,,,,,0.4,,fx.prim.lightning.nova,targeted damage
+單體型,godie-o02l,神騎寶貝 - 皮卡丘,godie-o02l.r,R,58-04 瘋狂皮卡丘,targeted,60/60/60,90/180/270,11.0,,80/120/160,magic,0.7×ap,,,,,0.4,,fx.prim.arcane.pulse-lg,targeted damage
+單體型,godie-o02o,曹操孟德 - 阿瞞大人,godie-o02o.e,E,87-03 天下號令,targeted,60/60/60/60,90/180/270/360,11.0,,80/120/160/200,physical,0.5×ad,,,,,0.4,,fx.prim.physical.pulse-sm,targeted damage
+單體型,godie-o02v,白色惡魔 - 高町奈葉,godie-o02v.e,E,81-03 Divine Buster Extention,targeted,60/60/60/60,150/220/290/360,11.0,,400/600/800/1000,magic,0.6×ap,,,,,0.5,wc3.markofchaos,fx.prim.holy.nova,targeted damage
+單體型,godie-o02w,笑傲江湖 - 令狐沖,godie-o02w.q,Q,96-01 華山劍法,self,12/12/12/12,60/60/60/60,0,,10/20/30/40,magic,0.03×ap,,armor flat 20,8.0,,0.3,,fx.prim.arcane.pulse-sm,targeted damage
+單體型,godie-o02w,笑傲江湖 - 令狐沖,godie-o02w.w,W,96-02 混元掌,targeted,35/35/35/35/35,50/70/90/90/90,7.33,,150/250/250/250/250,magic,0.6×ap,burnstun(1.0s),,,,0.5,,fx.prim.arcane.slash,targeted damage
+單體型,godie-ofar,神奇寶貝兒 - 皮卡丘,godie-ofar.e,E,58-03 就決定是你了!小智,targeted,60/60/60/60,70/120/170/220,11.0,,350/500/650/800,magic,0.6×ap,burnstun(0.5s),,,,0.5,,fx.prim.lightning.pulse,targeted damage
+單體型,godie-ofar,神奇寶貝兒 - 皮卡丘,godie-ofar.r,R,58-04 瘋狂皮卡丘,targeted,60/60/60,90/180/270,11.0,,80/120/160,magic,0.7×ap,,,,,0.4,,fx.prim.lightning.explosion-lg,targeted damage
+單體型,godie-ogld,美白大法師 - 黑人牙膏,godie-ogld.e,E,72-03 超亮白,targeted,45/45/45,75/150/225,14.0,,6/12/18,magic,0.6×ap,,,,,0.3,,fx.prim.holy.nova,targeted damage
+單體型,godie-ogld,美白大法師 - 黑人牙膏,godie-ogld.w,W,72-02 黑人牙菌斑,targeted,15/15/15,60/80/110,14.0,,20/30/40,magic,0.6×ap,,,,,0.3,,fx.prim.void.swarm,targeted damage
+單體型,godie-ogrh,賽亞人 - 悟空,godie-ogrh.e,E,09-03 超級賽亞人,targeted,60/60/60/60,160/240/320/400,11.0,,80/120/160/200,magic,0.6×ap,,,,,0.4,,fx.prim.ki.pulse-sm,targeted damage
+單體型,godie-ogrh,賽亞人 - 悟空,godie-ogrh.q,Q,09-01 界王拳,targeted,45/45/45/45/57,60/75/100/125/175,11.0,,55/90/125/160/200,magic,0.6×ap,,,,,0.4,,fx.prim.holy.slash,targeted damage
+單體型,godie-opgh,常勝將軍 - 趙子龍,godie-opgh.e,E,32-03 閃光龍牙,targeted,45/45/45/45,150/210/270/330,14.0,,300/600/900/1200,physical,0.5×ad,,,,,0.6,wc3.nazgrelyes2,fx.cinder-ward,targeted damage
+單體型,godie-opgh,常勝將軍 - 趙子龍,godie-opgh.q,Q,32-01 一騎槍閃,targeted,45/45/45/45/45,50/80/110/140/140,3.21,,150/250/250/700/700,physical,0.5×ad,burnstun(1.0s),,,,0.6,,fx.prim.ki.nova,targeted damage
+單體型,godie-orkn,電車癡漢 - 臭作,godie-orkn.e,E,30-03 痴漢火焰,targeted,30/30/30/30,150/175/200/225,11.0,,16/32/48/64,magic,0.6×ap,,,,,0.3,,fx.prim.fire.explosion,targeted damage
+單體型,godie-orkn,電車癡漢 - 臭作,godie-orkn.w,W,30-02 酒精灌腸,targeted,30/30/30/30,50/80/110/140,11.0,,80/120/160/200,magic,0.6×ap,,,,,0.4,,fx.prim.nature.nova,targeted damage
+單體型,godie-osam,犬妖 - 殺生丸,godie-osam.e,E,34-03 爆碎丸,targeted,12/12/12/12,60/60/60/60,11.0,,15/15/15/15,magic,0.6×ap,,,,,0.3,,fx.prim.void.explosion,targeted damage
+單體型,godie-osam,犬妖 - 殺生丸,godie-osam.r,R,34-04 奧義˙蒼龍破,targeted,45/45/45,200/300/400,11.0,,600/900/1200,magic,0.7×ap,,,,,0.6,,fx.prim.ki.beam-lg,targeted damage
+單體型,godie-oshd,魔鬼筋肉人 - 鬼王達,godie-oshd.e,E,29-03 有功夫無懦夫,targeted,60/60/60/60,130/195/260/325,11.0,,80/120/160/200,physical,0.5×ad,,,,,0.4,,fx.prim.holy.pulse-sm,targeted damage
+單體型,godie-oshd,魔鬼筋肉人 - 鬼王達,godie-oshd.q,Q,29-01 鐵砂掌,targeted,20/20/20/20,45/90/135/180,14.0,,200/400/600/800,physical,0.5×ad,,,,,0.5,,fx.prim.nature.slash,targeted damage
+單體型,godie-othr,X戰警 - 金鋼狼,godie-othr.q,Q,31-01 迴旋爪擊,targeted,30/30/30/50/50,120/150/180/275/275,14.0,,150/250/350/450/550,physical,0.5×ad,,,,,0.4,,fx.prim.physical.slash,targeted damage
+單體型,godie-u00b,最M的魔法Jizz - 清蒸 飛鼠先生,godie-u00b.q,Q,75-01 超．祕技略決,targeted,12/12/12/12/12,60/60/60/60/60,11.0,,80/120/160/200/240,magic,0.6×ap,,,,,0.3,,fx.prim.arcane.nova,targeted damage
+單體型,godie-u00b,最M的魔法Jizz - 清蒸 飛鼠先生,godie-u00b.w,W,75-02 幻影鬥氣,self,12/12/12/12,60/60/60/60,0,,50/70/90/110,magic,0.15×ap,,critChance flat 0.25,6.0,,0.3,,fx.prim.ki.pulse-sm,targeted damage
+單體型,godie-u00j,神性的流失 - 賽菲洛斯,godie-u00j.w,W,74-02 八刀一閃,targeted,30/30/30/50/50,150/180/210/275/275,14.0,,150/250/350/450/550,physical,0.5×ad,,,,,0.4,wc3.snapdragonmissilelaunch1,fx.prim.physical.slash,targeted damage
+單體型,godie-u00k,邪惡意念集合體 - 死之王,godie-u00k.e,E,71-03 厄夜靈魂,targeted,60/60/60/60,160/320/480/640,11.0,,80/160/240/320,magic,0.6×ap,,,,,0.4,wc3.parasite,fx.prim.void.swarm,targeted damage
+單體型,godie-u00k,邪惡意念集合體 - 死之王,godie-u00k.r,R,71-04 萬惡歸宗,targeted,60/60/60,150/250/350,11.0,,150/300/450,magic,0.7×ap,,,,,0.5,wc3.taunt,fx.prim.void.nova-lg,targeted damage
+單體型,godie-u00k,邪惡意念集合體 - 死之王,godie-u00k.w,W,71-02 靈魂吸取,targeted,12/12/12/12,60/60/60/60,11.0,,80/120/160/200,magic,0.6×ap,,,,,0.3,,fx.prim.void.beam,targeted damage
+單體型,godie-u00l,北斗之鼠 - 拳四郎,godie-u00l.q,Q,25-01 北斗懺悔拳,targeted,25/25/25/25/8,90/120/150/325/85,2.75,,150/300/450/600/750,physical,0.5×ad,,,,,,wc3.peondeath,fx.prim.physical.beam,targeted damage
+單體型,godie-u00l,北斗之鼠 - 拳四郎,godie-u00l.w,W,25-02 北斗神拳秘訣轉龍呼吸法,targeted,12/12/12/12,60/60/60/60,11.0,,12/15/18/21,physical,0.5×ad,,,,,0.3,,fx.prim.physical.pulse-sm,targeted damage
+單體型,godie-u00n,草帽小子 - 蒙其.D.魯夫,godie-u00n.q,Q,76-01 伸縮自如的橡膠戰斧,targeted,45/45/45/45,80/110/140/170,5.5,,250/375/500/625,physical,0.5×ad,root(0.3s),,,,0.3,,fx.prim.physical.shockwave,targeted damage
+單體型,godie-u00n,草帽小子 - 蒙其.D.魯夫,godie-u00n.w,W,76-02 伸縮自如的橡膠火箭砲,targeted,25/25/25/25,65/95/125/155,6.42,,200/300/400/500,physical,0.5×ad,burnstun(1.0s),,,,0.6,,fx.prim.physical.beam,targeted damage
+單體型,godie-u00o,草帽小子 - 蒙其.D.魯夫,godie-u00o.q,Q,76-01 伸縮自如的橡膠戰斧,targeted,45/45/45/45,80/110/140/170,5.5,,250/375/500/625,physical,0.5×ad,root(0.3s),,,,0.3,,fx.prim.physical.nova,targeted damage
+單體型,godie-u00o,草帽小子 - 蒙其.D.魯夫,godie-u00o.w,W,76-02 伸縮自如的橡膠火箭砲,targeted,25/25/25/25,65/95/125/155,6.42,,200/300/400/500,physical,0.5×ad,burnstun(1.0s),,,,0.6,,fx.firestorm,targeted damage
+單體型,godie-u00v,黑手黨老大 - 基廉列克,godie-u00v.r,R,78-04 死亡噴射肘擊,targeted,50/50/50,110/160/210,10.08,,450/700/950,physical,0.6×ad,burnstun(1.0s),,,,0.7,,fx.w3x.locust.boomnl.p01,targeted damage
+單體型,godie-u011,死亡老二 - 克勞薩先生,godie-u011.q,Q,61-01惡魔球,targeted,25/25/25/25,60/70/80/90,7.33,,150/200/250/300,physical,0.5×ad,root(1.0s),,,,0.5,,fx.prim.void.nova,targeted damage
+單體型,godie-u012,重金屬樂團的怪物 - 克勞薩II世,godie-u012.q,Q,61-01惡魔球,targeted,25/25/25/25,60/70/80/90,7.33,,150/200/250/300,physical,0.5×ad,root(1.0s),,,,0.5,,fx.prim.void.nova,targeted damage
+單體型,godie-u01f,萬夫莫敵 - 黑化張飛,godie-u01f.e,E,none,targeted,12/12/12/12/12,60/60/60/60/60,11.0,,80/120/160/200/240,physical,0.5×ad,,,,,0.3,,fx.prim.physical.nova,targeted damage
+單體型,godie-u01f,萬夫莫敵 - 黑化張飛,godie-u01f.q,Q,none,targeted,12/12/12/12/12,60/60/60/60/60,11.0,,80/120/160/200/240,physical,0.5×ad,,,,,0.3,,fx.prim.physical.nova,targeted damage
+單體型,godie-u01f,萬夫莫敵 - 黑化張飛,godie-u01f.r,R,none,targeted,12/12/12,60/60/60,11.0,,80/120/160,physical,0.6×ad,,,,,0.3,,fx.prim.physical.nova-lg,targeted damage
+單體型,godie-u01f,萬夫莫敵 - 黑化張飛,godie-u01f.w,W,none,targeted,12/12/12/12/12,60/60/60/60/60,11.0,,80/120/160/200/240,physical,0.5×ad,,,,,0.3,,fx.prim.physical.nova,targeted damage
+單體型,godie-u01q,測試英雄 - 索隆,godie-u01q.e,E,none,targeted,12/12/12/12/12,60/60/60/60/60,11.0,,80/120/160/200/240,physical,0.5×ad,,,,,0.3,,fx.prim.physical.nova,targeted damage
+單體型,godie-u01q,測試英雄 - 索隆,godie-u01q.q,Q,none,targeted,12/12/12/12/12,60/60/60/60/60,11.0,,80/120/160/200/240,physical,0.5×ad,,,,,0.3,,fx.prim.physical.nova,targeted damage
+單體型,godie-u01q,測試英雄 - 索隆,godie-u01q.r,R,none,targeted,12/12/12,60/60/60,11.0,,80/120/160,physical,0.6×ad,,,,,0.3,,fx.prim.physical.nova-lg,targeted damage
+單體型,godie-u01q,測試英雄 - 索隆,godie-u01q.w,W,none,targeted,12/12/12/12/12,60/60/60/60/60,11.0,,80/120/160/200/240,physical,0.5×ad,,,,,0.3,,fx.prim.physical.nova,targeted damage
+單體型,godie-u01u,三刀流劍士 - 索隆,godie-u01u.e,E,11-03 鬼氣九刀流-阿修羅壹霧銀,targeted,45/45/45/45,100/130/160/190,8.25,,300/450/600/750,physical,0.5×ad,burnstun(1.0s),,,,0.6,,fx.prim.void.slash,targeted damage
+單體型,godie-u034,職業獵人 - 傑 富力士,godie-u034.e,E,06-03 山形修煉-強,targeted,12/12/12/12/12,60/60/60/60/60,11.0,,80/120/160/200/240,physical,0.5×ad,,,,,0.3,wc3.mortarteampissed9,fx.prim.earth.pulse-sm,targeted damage
+單體型,godie-u034,職業獵人 - 傑 富力士,godie-u034.passive,PASSIVE,06-00 猜猜拳,targeted,45,140,4.58,,350,magic,0.6×ap,,,,,0.4,wc3.mortarteampissed9,fx.prim.earth.pulse-sm,targeted damage
+單體型,godie-u034,職業獵人 - 傑 富力士,godie-u034.q,Q,06-01 山形修煉-放,self,12/12/12/12,60/60/60/60,0,,300/375/450/525,magic,0.9×ap,,armor flat 25,6.0,,0.3,wc3.mortarteampissed9,fx.prim.ki.pulse-sm,targeted damage
+單體型,godie-u034,職業獵人 - 傑 富力士,godie-u034.w,W,06-02 山形修煉-變,self,12/12/12/12,60/60/60/60,0,,350/450/550/650,magic,1.0×ap,,as flat 0.25,3.0,,0.3,wc3.mortarteampissed9,fx.prim.ki.pulse-sm,targeted damage
+單體型,godie-ubal,魔界霸主 - 巴恩大魔王,godie-ubal.e,E,37-02 黑核晶,targeted,5/5/5/5,100/150/200/250,7.33,,300/450/600/750,magic,0.6×ap,,,,,,,fx.prim.void.explosion,targeted damage
+單體型,godie-ubal,魔界霸主 - 巴恩大魔王,godie-ubal.w,W,37-03 災難之牆,targeted,60/50/40/30,350/450/550/650,9.17,,450/450/450/450,magic,0.6×ap,,,,,0.4,wc3.trollbatriderpissed2,fx.prim.void.shockwave,targeted damage
+單體型,godie-ucrl,職業獵人 - 傑 富力士,godie-ucrl.e,E,06-03 山形修煉-強,targeted,12/12/12/12/12,60/60/60/60/60,11.0,,80/120/160/200/240,physical,0.5×ad,,,,,0.3,wc3.mortarteampissed9,fx.prim.earth.pulse-sm,targeted damage
+單體型,godie-ucrl,職業獵人 - 傑 富力士,godie-ucrl.passive,PASSIVE,06-00 猜猜拳,targeted,45,140,4.58,,350,magic,0.6×ap,,,,,0.4,wc3.mortarteampissed9,fx.prim.earth.pulse-sm,targeted damage
+單體型,godie-ucrl,職業獵人 - 傑 富力士,godie-ucrl.q,Q,06-01 山形修煉-放,self,12/12/12/12,60/60/60/60,0,,300/375/450/525,magic,0.9×ap,,armor flat 25,6.0,,0.3,wc3.mortarteampissed9,fx.prim.ki.pulse-sm,targeted damage
+單體型,godie-ucrl,職業獵人 - 傑 富力士,godie-ucrl.w,W,06-02 山形修煉-變,self,12/12/12/12,60/60/60/60,0,,350/450/550/650,magic,1.0×ap,,as flat 0.25,3.0,,0.3,wc3.mortarteampissed9,fx.prim.ki.pulse-sm,targeted damage
+單體型,godie-udea,至尊學長 - 飛鼠先生,godie-udea.e,E,65-03 魔法膨脹,targeted,25/25/25/25/25,60/150/225/300/300,10.08,,200/400/600/800/800,magic,0.6×ap,slow25(1.0s),,,,0.5,wc3.taunt,fx.prim.arcane.explosion,targeted damage
+單體型,godie-udea,至尊學長 - 飛鼠先生,godie-udea.w,W,65-02 寒冰破碎,targeted,30/30/30/30/30,150/215/280/280/280,11.0,,150/350/550/550/550,magic,0.6×ap,,,,,0.4,,fx.prim.ice.nova,targeted damage
+單體型,godie-udre,三刀流劍士 - 索隆,godie-udre.e,E,11-03 鬼氣九刀流-阿修羅壹霧銀,targeted,45/45/45/45,100/130/160/190,8.25,,300/450/600/750,physical,0.5×ad,burnstun(1.0s),,,,0.6,,fx.prim.void.slash,targeted damage
+單體型,godie-umal,北斗神拳掌門人 - 拳四郎,godie-umal.q,Q,25-01 北斗懺悔拳,targeted,25/25/25/25/8,90/120/150/325/85,2.75,,150/300/450/600/750,magic,0.5×ap,,,,,,wc3.peondeath,fx.prim.physical.slash,targeted damage
+單體型,godie-umal,北斗神拳掌門人 - 拳四郎,godie-umal.w,W,25-02 北斗神拳秘訣轉龍呼吸法,targeted,12/12/12/12,60/60/60/60,11.0,,12/15/18/21,physical,0.5×ad,,,,,0.3,,fx.prim.holy.pulse-sm,targeted damage
+單體型,godie-usyl,殺戮之牙 - 異形,godie-usyl.e,E,49-03 蛻變,targeted,12/12/12/12,60/60/60/60,11.0,,80/120/160/200,magic,0.6×ap,,,,,0.3,wc3.mercenarywhat1,fx.prim.void.pulse-sm,targeted damage
+單體型,godie-usyl,殺戮之牙 - 異形,godie-usyl.ex,EX,49-002 產卵,targeted,60,250,9.41,,,magic,0.7×ap,,,,,0.5,,fx.prim.void.nova-lg,targeted damage
+單體型,godie-usyl,殺戮之牙 - 異形,godie-usyl.passive,PASSIVE,49-00 撲殺爪擊,targeted,60,150,1.83,,150,magic,0.6×ap,burnstun(1.5s),,,,0.5,,fx.prim.physical.slash,targeted damage
+單體型,godie-usyl,殺戮之牙 - 異形,godie-usyl.w,W,49-02 腐蝕毒液,targeted,12/12/12,60/60/60,11.0,,10/20/30,magic,0.6×ap,,,,,0.3,,fx.prim.nature.pulse-sm,targeted damage
+單體型,godie-uwar,食神 - 撒尿牛丸,godie-uwar.r,R,43-03 少林絕學-火雲掌,targeted,60/60/60,250/300/350,12.83,,80/120/160,magic,0.7×ap,,,,,0.4,,fx.firestorm,targeted damage
+控場型,godie-e007,龍之子 - 天地志狼,godie-e007.ex,EX,12-002 仙氣發勁,targeted,30,360,7.65,,,magic,0.7×ap,slow40(3.0s),,,,0.6,,fx.prim.ki.pulse-lg,applyStatus slow40
+控場型,godie-e00s,白木老樹精 - 白木卡迪那,godie-e00s.e,E,70-03 木束縛之術,targeted,60/60/60/60,100/150/150/250,11.0,,,,,root(1.5s),,,,0.4,,fx.prim.nature.pulse-sm,applyStatus root
+控場型,godie-e00t,七夜怪談 - 貞子,godie-e00t.w,W,66-02 驚駭,targeted,55/50/45/40,150/150/150/150,11.0,,,,,slow30(5.0s),,,,0.3,wc3.necropolisupgrade2,fx.prim.arcane.pulse-sm,applyStatus slow30
+控場型,godie-e00v,百畝森林的霸主 - 維尼,godie-e00v.q,Q,84-01 冷笑話,ground,15/15/15/15,75/115/155/195,0.0,6.0,,,,burnstun(0.5s),,,,0.3,,fx.prim.arcane.nova,applyStatus burnstun
+控場型,godie-e00w,神鳴流劍士 - 櫻綻剎那,godie-e00w.passive,PASSIVE,77-00 浮雲-旋一閃,self,15,150,0,3.67,,magic,0.5×ap,burnstun(0.5s),,,,0.3,,fx.prim.wind.tornado,applyStatus burnstun
+控場型,godie-e012,殺人劍客 - 佐佐木小次郎,godie-e012.e,E,47-03 九頭龍閃,ground,60/60/60/60,120/180/240/300,6.42,6.0,9/9/9/9,physical,0.5×ad,slow25(1.5s),,,,0.5,,fx.prim.physical.nova,applyStatus slow25
+控場型,godie-ecen,姜窩肯 - 約翰走路,godie-ecen.passive,PASSIVE,64-00 開瓶特技,targeted,30,60,9.17,,,,,burnstun(3.0s),,,,0.5,,fx.prim.wind.tornado,applyStatus burnstun
+控場型,godie-edem,寫輪眼復仇者 - 宇智波佐助,godie-edem.w,W,45-02 千鳥流,ground,23/23/23/35/35,70/110/150/130/130,0.0,7.79,75/150/225/300/300,magic,0.6×ap,slow40(1.5s),,,,0.5,,fx.prim.lightning.beam,applyStatus slow40
+控場型,godie-efur,揍敵客大家長 - 揍敵客桀諾,godie-efur.q,Q,13-01 老樹盤根,targeted,26/26/26/26,150/185/220/255,11.0,,25/40/55/70,magic,0.6×ap,root(1.0s),,,,0.4,,fx.root-snare,applyStatus root
+控場型,godie-emfr,魔法老師 - 涅吉。史普林。菲爾德,godie-emfr.w,W,15-02 沉睡之霧,targeted,20/20/20/20,60/130/160/190,6.42,,75/75/75/75,magic,0.6×ap,burnstun(3.0s),,,,0.5,wc3.akamapissed8,fx.prim.wind.pulse,applyStatus burnstun
+控場型,godie-emns,奇樂 - 夜神月,godie-emns.ex,EX,44-002 交換筆記本,targeted,60,350,5.29,,,magic,0.7×ap,slow40(3.0s),,,,0.6,wc3.kaelyesattack3,fx.prim.void.pulse-lg,applyStatus slow40
+控場型,godie-ewar,龍之子 - 天地志狼,godie-ewar.ex,EX,12-002 仙氣發勁,targeted,30,360,7.65,,,magic,0.7×ap,slow40(3.0s),,,,0.6,,fx.prim.ki.nova-lg,applyStatus slow40
+控場型,godie-h001,地獄來襲者 - 斑剎,godie-h001.passive,PASSIVE,41-00 木乃伊的詛咒,targeted,25,120,11.0,,,,,slow40(4.0s),as pctAdd -0.5; ad pctAdd -0.3,4.0,,0.4,,fx.prim.void.pulse,applyStatus slow40
+控場型,godie-h02k,國寶級的畜生 - 熊貓,godie-h02k.ex,EX,89-002 俄羅斯輪盤,targeted,60,315,5.29,,,physical,0.6×ad,slow40(3.0s),,,,0.6,wc3.mortarimpact,fx.prim.fire.explosion-lg,applyStatus slow40
+控場型,godie-h02r,種子神奇寶貝 - 妙蛙花,godie-h02r.w,W,90-02 麻痺粉,ground,25/25/25/25,20/50/80/110,0.0,6.0,,,,slow40(4.0s),,,,0.5,,fx.prim.nature.swarm,applyStatus slow40
+控場型,godie-h02s,死亡騎士,godie-h02s.q,Q,91-01 死亡之握,ground,40/40/40/40,140/180/220/260,0,6.0,,,,root(0.8s),,,,0.5,wc3.headhunteryes4,fx.prim.void.nova,applyStatus root
+控場型,godie-h02u,看似憂鬱的神獸 - 草泥馬,godie-h02u.e,E,92-02 消化液,targeted,40/40/40/40,150/200/250/300,11.0,,20/30/40/50,magic,0.6×ap,slow40(7.0s),,,,0.4,,fx.prim.nature.nova,applyStatus slow40
+控場型,godie-h02v,看似憂鬱的神獸 - 草泥馬,godie-h02v.e,E,92-02 消化液,targeted,40/40/40/40,150/200/250/300,11.0,,20/30/40/50,magic,0.6×ap,slow40(7.0s),,,,0.4,,fx.prim.arcane.nova,applyStatus slow40
+控場型,godie-h02y,幕末復仇狂者 - 志志雄真實,godie-h02y.w,W,97-02 貳之秘劍-紅蓮腕,self,40/40/40/40,140/180/220/260,0,,75/150/225/300,magic,0.6×ap,burnstun(0.5s),,,,0.5,,fx.prim.fire.slash,applyStatus burnstun
+控場型,godie-h02z,不良少年,godie-h02z.q,Q,91-01 死亡之握,ground,40/40/40/40,140/180/220/260,0,6.0,,,,root(0.8s),,,,0.5,wc3.headhunteryes4,fx.prim.void.nova,applyStatus root
+控場型,godie-hgam,種子神奇寶貝 - 妙蛙種子,godie-hgam.w,W,90-02 麻痺粉,ground,25/25/25/25,20/50/80/110,0.0,6.0,,,,slow40(4.0s),,,,0.5,,fx.prim.arcane.nova,applyStatus slow40
+控場型,godie-hpal,不死之身-無 - 藤井八雲,godie-hpal.w,W,35-02 石絲,targeted,25/25/25/25,110/145/180/215,11.0,,37.5/105/202.5/330,magic,0.6×ap,root(0.75s),,,,0.5,,fx.prim.earth.beam,applyStatus root
+控場型,godie-hvsh,梅杜莎 - Rider,godie-hvsh.passive,PASSIVE,48-00 石化之眼,self,45,150,0,4.58,,,,burnstun(4.0s),,,,0.5,,fx.prim.earth.nova-lg,applyStatus burnstun
+控場型,godie-hvwd,除魔巫女 - 桔梗,godie-hvwd.ex,EX,02-002 神通眼,targeted,60,315,5.29,,,magic,0.7×ap,slow40(3.0s),,,,0.6,,fx.prim.holy.pulse-lg,applyStatus slow40
+控場型,godie-hvwd,除魔巫女 - 桔梗,godie-hvwd.passive,PASSIVE,02-00 淨化,targeted,60,75,11.0,,,,,root(4.0s),,,,0.4,,fx.prim.holy.pulse,applyStatus root
+控場型,godie-nbst,變態正義 - 瘋狂假面,godie-nbst.ex,EX,24-002 來~快點吃吧,targeted,60,315,5.29,,,physical,0.6×ad,slow40(3.0s),,,,0.6,wc3.peasantpissed3,fx.prim.physical.nova-lg,applyStatus slow40
+控場型,godie-ntin,時空管理局執務官 - 菲特·泰斯塔羅沙,godie-ntin.passive,PASSIVE,23-00 雷光枷鎖,targeted,35,75,11,,,,,slow40(2s),,,,0.5,,fx.prim.lightning.pulse,applyStatus slow40
+控場型,godie-o01z,魔砲少女 - 高町奈葉,godie-o01z.q,Q,81-01 Barrel Shot,ground,30/30/30/30,80/130/180/230,11.0,5.5,80/120/160/200,magic,0.6×ap,slow25(1.5s),,,,0.5,wc3.defendcaster,fx.prim.ki.nova,applyStatus slow25
+控場型,godie-o02v,白色惡魔 - 高町奈葉,godie-o02v.q,Q,81-01 Barrel Shot,ground,30/30/30/30,80/130/180/230,11.0,5.5,80/120/160/200,magic,0.6×ap,slow25(1.5s),,,,0.5,wc3.defendcaster,fx.prim.ki.nova,applyStatus slow25
+控場型,godie-o02w,笑傲江湖 - 令狐沖,godie-o02w.e,E,96-03 吸星大法,targeted,45/45/45/45,140/210/280/350,7.33,,,,,slow40(3.0s),as pctMult -1.0,3.0,,0.4,,fx.prim.arcane.pulse-sm,applyStatus slow40
+控場型,godie-o02w,笑傲江湖 - 令狐沖,godie-o02w.r,R,96-04 獨孤九劍,targeted,70/70/70,150/240/330,7.33,,,,,burnstun(1.0s),,,,0.6,,fx.prim.arcane.slash-lg,applyStatus burnstun
+控場型,godie-obla,被剝削的勞工階級 - 牧太郎,godie-obla.w,W,33-02 吃完的口香糖,targeted,45/45/45/45,100/150/200/250,11.0,,,,,root(2.0s),,,,0.4,,fx.prim.arcane.pulse-sm,applyStatus root
+控場型,godie-orkn,電車癡漢 - 臭作,godie-orkn.q,Q,30-01 綁架,self,15/15/15/15/15,30/50/70/90/110,0,,,,,root(1.0s),,,,0.3,wc3.headhunteryes4,fx.prim.void.pulse-sm,applyStatus root
+控場型,godie-u00h,鬼畜紅王 - 鬼畜狂刀KYO,godie-u00h.q,Q,39-01 無名神風流-白虎,targeted,25/25/25/25/25,35/55/55/95/95,9.17,,75/175/250/325/325,physical,0.5×ad,slow25(1.0s),,,,0.4,,fx.prim.wind.slash,applyStatus slow25
+控場型,godie-ubal,魔界霸主 - 巴恩大魔王,godie-ubal.passive,PASSIVE,37-00 鬼眼,ground,45,150,22.0,11.0,,,,slow40(5.0s),as pctAdd -0.5,5.0,,0.5,,fx.prim.void.pulse-lg,applyStatus slow40
+治療護盾型,godie-e007,龍之子 - 天地志狼,godie-e007.w,W,12-02 仙氣．採藥,targeted,60/60/60/60,50/100/150/200,11.0,,,,,,,,,0.3,,fx.prim.nature.pulse,heal
+治療護盾型,godie-e00j,皇者 - 騜,godie-e00j.passive,PASSIVE,95-00 紅色龍氣,self,30,0,0,,,,,,,,,0.3,,fx.prim.fire.pulse,restore
+治療護盾型,godie-e00r,最終泛用人型決戰兵器 - 初號機,godie-e00r.q,Q,59-01 吞噬,targeted,60/60/60/60,50/80/110/140,11.0,,,,,,,,,0.3,,fx.prim.void.explosion,heal
+治療護盾型,godie-e00u,完全而瀟灑的女僕 - 十六夜Sakuya,godie-e00u.passive,PASSIVE,44-00 機警,self,15,50,0,,,,,,,,,0.3,,fx.prim.arcane.pulse,shield
+治療護盾型,godie-emns,奇樂 - 夜神月,godie-emns.passive,PASSIVE,44-00 機警,self,15,50,0,,,,,,,,,0.3,,fx.prim.void.pulse,shield
+治療護盾型,godie-etyr,治癒系公主 - 木乃香,godie-etyr.q,Q,14-01 東風繪扇、南風末廣,self,25/25/25,120/170/220,0.0,,,,,,,,,0.3,,fx.prim.wind.nova,heal
+治療護盾型,godie-h00l,時空勇者 - 林克,godie-h00l.w,W,60-02 鎖鏈槍,self,35/35/35/35,50/75/100/125,0,,,,,,,,,0.3,wc3.headhunteryes4,fx.prim.physical.beam,shield
+治療護盾型,godie-h02r,種子神奇寶貝 - 妙蛙花,godie-h02r.passive,PASSIVE,90-00 寄生種子,targeted,45,100,11.0,,50,magic,0.6×ap,,,,,0.3,,fx.prim.nature.pulse,heal
+治療護盾型,godie-n003,黑暗福音 - 依文潔琳,godie-n003.w,W,42-02 吸血祭品,self,60/60/60/60,0/0/0/0,11.0,,,,,,,,,0.3,,fx.prim.blood.nova,heal
+治療護盾型,godie-n01c,傳說的龍騎士 - 勇者小呆,godie-n01c.q,Q,08-01 雙龍紋,targeted,60/60/60/60,50/80/110/140,11.0,,,,,,,,,0.3,,fx.prim.fire.pulse,heal
+治療護盾型,godie-n01g,黑暗福音 - 依文潔琳,godie-n01g.w,W,42-02 吸血祭品,self,60/60/60/60,0/0/0/0,11.0,,,,,,,,,0.3,,fx.prim.blood.pulse-sm,heal
+治療護盾型,godie-n01l,學姊 - 小派,godie-n01l.w,W,98-02 平易近人的笑容,self,12/12/12/12,60/60/60/60,11.0,,,,,,ad pctAdd 0.04,12.0,,0.3,,fx.prim.arcane.pulse-sm,heal
+治療護盾型,godie-nbbc,傳說的龍騎士 - 勇者小呆,godie-nbbc.q,Q,08-01 雙龍紋,targeted,12/60/60/60,50/80/110/140,11.0,,,,,,,,,0.3,,fx.prim.arcane.pulse-sm,heal
+治療護盾型,godie-o00l,獸神官 - 傑洛士,godie-o00l.e,E,53-03 破法對咒,ground,27/27/27/27,120/180/240/300,0.0,1.5,,,,,,,,0.3,wc3.waygatewhat1,fx.prim.arcane.pulse,shield
+治療護盾型,godie-o01z,魔砲少女 - 高町奈葉,godie-o01z.passive,PASSIVE,81-00 守護之光,self,60,150,0,,,,,,,,,0.3,,fx.prim.holy.pulse-lg,shield
+治療護盾型,godie-o02o,曹操孟德 - 阿瞞大人,godie-o02o.r,R,87-04 逆我必殺,targeted,12/60/60,50/80/110,11.0,,,,,,,,,0.3,,fx.prim.arcane.pulse-lg,heal
+治療護盾型,godie-o02p,夢幻之星 - 初音,godie-o02p.ex,EX,99-002 把你給MikuMiku掉,targeted,65,400,11.0,,,,,,,,,0.3,,fx.prim.sound.swarm-lg,restore
+治療護盾型,godie-o02p,夢幻之星 - 初音,godie-o02p.r,R,99-04 世界第一的公主殿下,self,60/60/60,225/325/425,0,,,,,,,,,0.3,,fx.prim.holy.nova-lg,heal
+治療護盾型,godie-o02s,憂鬱少女 - 涼宮八ㄦ匕,godie-o02s.r,R,53-03 破法對咒,ground,27/27/27,120/180/240,0.0,1.5,,,,,,,,0.3,wc3.waygatewhat1,fx.prim.arcane.nova-lg,shield
+治療護盾型,godie-o02v,白色惡魔 - 高町奈葉,godie-o02v.passive,PASSIVE,81-00 守護之光,self,60,150,0,,,,,,,,,0.3,,fx.prim.holy.pulse-lg,shield
+治療護盾型,godie-oshd,魔鬼筋肉人 - 鬼王達,godie-oshd.passive,PASSIVE,29-00 開設雜貨店,targeted,60,150,11.0,,,,,,,,,0.3,,fx.prim.holy.pulse-lg,restore
+治療護盾型,godie-othr,X戰警 - 金鋼狼,godie-othr.w,W,31-02 重爪擊,targeted,60/60/60/60/60,100/130/160/275/275,3.21,,250/400/550/900/900,physical,0.5×ad,slow30(3.0s),,,,0.5,,fx.prim.physical.slash,heal
+自體強化型,godie-e001,蟬在叫人壞掉 - 龍宮禮奈,godie-e001.ex,EX,22-002 月光下的決鬥者,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.blood.pulse-lg,self applyBuff
+自體強化型,godie-e001,蟬在叫人壞掉 - 龍宮禮奈,godie-e001.q,Q,22-01 鬼隱之擊,self,30/30/30/75/75,60/110/160/255/255,0,,,,,,ms pctAdd 0.5,12.0,,0.3,,fx.prim.void.pulse-sm,self applyBuff
+自體強化型,godie-e001,蟬在叫人壞掉 - 龍宮禮奈,godie-e001.r,R,22-04 雛見澤症候群L5,self,60/60/60,70/140/210,0,,,,,,ad flat 55,7,,0.4,,fx.prim.blood.nova-lg,self applyBuff
+自體強化型,godie-e002,亞瑟王 - Saber,godie-e002.ex,EX,20-002 解放.約束勝利劍MAX,self,60,120,0,,,,,,ad pctAdd 0.6,6.0,,0.4,,fx.prim.holy.beam-lg,self applyBuff
+自體強化型,godie-e008,火霧戰士 - 夏娜,godie-e008.ex,EX,21-002 天破壤碎,self,60,800,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.fire.explosion-lg,self applyBuff
+自體強化型,godie-e008,火霧戰士 - 夏娜,godie-e008.r,R,21-04 討滅封絕,self,75/75/75,200/350/500,0,,,,,,as flat 0.25,3.0,,0.4,wc3.soulpreservation,fx.prim.fire.explosion-lg,self applyBuff
+自體強化型,godie-e00j,皇者 - 騜,godie-e00j.ex,EX,95-002 固有結界-和諧世界,self,100,700,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.arcane.pulse-lg,self applyBuff
+自體強化型,godie-e00k,戰國刺客Azumi - 安云,godie-e00k.ex,EX,19-002 紫色披風,self,60,390,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.void.pulse-lg,self applyBuff
+自體強化型,godie-e00k,戰國刺客Azumi - 安云,godie-e00k.q,Q,19-01 斷末,self,12/12/12/12,60/60/60/60,0,,,,,,critChance flat 0.25,6.0,,0.3,,fx.prim.physical.slash,self applyBuff
+自體強化型,godie-e00k,戰國刺客Azumi - 安云,godie-e00k.w,W,19-02 迴切,self,60/60/60,50/70/90,0,,,,,,ms pctAdd 0.5,6.0,,0.3,,fx.prim.physical.slash,self applyBuff
+自體強化型,godie-e00l,亞瑟王 - Saber,godie-e00l.ex,EX,20-002 解放.約束勝利劍MAX,self,60,120,0,,,,,,ad pctAdd 0.6,6.0,,0.4,,fx.prim.arcane.pulse-lg,self applyBuff
+自體強化型,godie-e00n,蟬在叫人壞掉 - 龍宮禮奈,godie-e00n.ex,EX,22-002 月光下的決鬥者,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.ki.pulse-lg,self applyBuff
+自體強化型,godie-e00n,蟬在叫人壞掉 - 龍宮禮奈,godie-e00n.q,Q,22-01 鬼隱之擊,self,30/30/30/75/75,60/110/160/255/255,0,,,,,,ms pctAdd 1.0,6.0,,0.3,,fx.prim.void.pulse-sm,self applyBuff
+自體強化型,godie-e00n,蟬在叫人壞掉 - 龍宮禮奈,godie-e00n.r,R,22-04 雛見澤症候群L5,self,60/60/60,70/140/210,0,,,,,,ad flat 55,7,,0.4,,fx.prim.arcane.pulse-lg,self applyBuff
+自體強化型,godie-e00n,蟬在叫人壞掉 - 龍宮禮奈,godie-e00n.w,W,22-02 染血的柴刀,self,12/12/12/12,60/60/60/60,0,,,,,,critChance flat 0.25,6.0,,0.3,,fx.prim.blood.pulse-sm,self applyBuff
+自體強化型,godie-e00q,英靈-亞瑟王 - 黑化Saber,godie-e00q.ex,EX,69-002 固有結界-黑洞,self,60,700,0,,,,,,ad pctAdd 0.35,6.0,,0.4,wc3.parasite,fx.prim.void.pulse-lg,self applyBuff
+自體強化型,godie-e00r,最終泛用人型決戰兵器 - 初號機,godie-e00r.e,E,59-03 AT力場,self,12/12/12/12,60/60/60/60,0,,,,,,armor flat 20,8.0,,0.3,,fx.w3x.particle.heroeva01s2.p01,self applyBuff
+自體強化型,godie-e00r,最終泛用人型決戰兵器 - 初號機,godie-e00r.ex,EX,59-001 完全暴走,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.void.explosion-lg,self applyBuff
+自體強化型,godie-e00r,最終泛用人型決戰兵器 - 初號機,godie-e00r.w,W,59-02 高週波短刀,self,12/12/12/12,60/60/60/60,0,,,,,,as flat 0.25,3.0,,0.3,,fx.prim.physical.slash,self applyBuff
+自體強化型,godie-e00s,白木老樹精 - 白木卡迪那,godie-e00s.w,W,70-02 大怒石,self,12/12/12/12,60/60/60/60,0,,,,,,as flat 0.25,3.0,,0.3,,fx.prim.earth.pulse-sm,self applyBuff
+自體強化型,godie-e00t,七夜怪談 - 貞子,godie-e00t.ex,EX,66-002 死亡漫延,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.void.pulse-lg,self applyBuff
+自體強化型,godie-e00t,七夜怪談 - 貞子,godie-e00t.q,Q,66-01 靈體化,self,20/20/20/20,56/72/88/104,0,,,,,,ms pctAdd 0.3,6.0,,0.3,,fx.prim.void.pulse-sm,self applyBuff
+自體強化型,godie-e00w,神鳴流劍士 - 櫻綻剎那,godie-e00w.ex,EX,77-002 御雷劍,self,75,255,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.lightning.beam-lg,self applyBuff
+自體強化型,godie-e00w,神鳴流劍士 - 櫻綻剎那,godie-e00w.w,W,77-02 雷鳴劍,self,12/12/12/12,60/60/60/60,0,,,,,,critChance flat 0.25,6.0,,0.3,,fx.prim.lightning.beam,self applyBuff
+自體強化型,godie-e00x,神鳴流劍士 - 櫻綻剎那,godie-e00x.ex,EX,77-002 御雷劍,self,75,255,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.lightning.pulse-lg,self applyBuff
+自體強化型,godie-e00x,神鳴流劍士 - 櫻綻剎那,godie-e00x.w,W,77-02 雷鳴劍,self,12/12/12/12,60/60/60/60,0,,,,,,critChance flat 0.25,6.0,,0.3,,fx.prim.lightning.pulse-sm,self applyBuff
+自體強化型,godie-e00z,戰國刺客Azumi - 安云,godie-e00z.ex,EX,19-002 紫色披風,self,60,390,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.wind.pulse-lg,self applyBuff
+自體強化型,godie-e00z,戰國刺客Azumi - 安云,godie-e00z.q,Q,19-01 斷末,self,12/12/12/12,60/60/60/60,0,,,,,,critChance flat 0.25,6.0,,0.3,,fx.prim.arcane.pulse-sm,self applyBuff
+自體強化型,godie-e00z,戰國刺客Azumi - 安云,godie-e00z.w,W,19-02 迴切,self,60/60/60,50/70/90,0,,,,,,ms pctAdd 0.5,6.0,,0.3,,fx.prim.nature.slash,self applyBuff
+自體強化型,godie-e015,夜市人生 - 金居福,godie-e015.ex,EX,94-002 歹戲拖棚,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.blood.pulse-lg,self applyBuff
+自體強化型,godie-e015,夜市人生 - 金居福,godie-e015.passive,PASSIVE,94-00 恰恰~,self,15,25,0,,,,,,ad pctAdd 0.3,10.0,,0.3,,fx.prim.sound.pulse,self applyBuff
+自體強化型,godie-ecen,姜窩肯 - 約翰走路,godie-ecen.ex,EX,64-002 魔幻嘉年華,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.arcane.pulse-lg,self applyBuff
+自體強化型,godie-edem,寫輪眼復仇者 - 宇智波佐助,godie-edem.ex,EX,45-002 天照,self,60,444,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.void.explosion-lg,self applyBuff
+自體強化型,godie-efur,揍敵客大家長 - 揍敵客桀諾,godie-efur.ex,EX,13-002 KISS ME!,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.arcane.pulse-lg,self applyBuff
+自體強化型,godie-efur,揍敵客大家長 - 揍敵客桀諾,godie-efur.passive,PASSIVE,13-00 狂氣,self,45,60,0,,,,,,as pctAdd 2.0; healthRegen flat -30.0,9.0,,0.3,,fx.prim.blood.pulse-lg,self applyBuff
+自體強化型,godie-efur,揍敵客大家長 - 揍敵客桀諾,godie-efur.r,R,13-04 暗殺奧義,self,12/12/12,60/60/60,0,,,,,,critChance flat 0.25,6.0,,0.3,,fx.prim.void.pulse-lg,self applyBuff
+自體強化型,godie-ekee,會叫的野獸 - 傳說中的大刀,godie-ekee.ex,EX,93-002 二一,self,80,500,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.arcane.pulse-lg,self applyBuff
+自體強化型,godie-ekee,會叫的野獸 - 傳說中的大刀,godie-ekee.w,W,93-02 抽點名,self,12/12/12/12,60/60/60/60,0,,,,,,armor flat 20,8.0,,0.3,,fx.prim.arcane.pulse-sm,self applyBuff
+自體強化型,godie-emfr,魔法老師 - 涅吉。史普林。菲爾德,godie-emfr.passive,PASSIVE,15-00 天生法術書,targeted,60,100,3.67,,,,,,ms pctAdd 0.2; as pctAdd 0.75; ad pctAdd 0.2,4.0,,0.3,,fx.prim.arcane.pulse,self applyBuff
+自體強化型,godie-ewrd,天上天下 - 棗 真夜,godie-ewrd.ex,EX,17-002 天照龍門,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.arcane.pulse-lg,self applyBuff
+自體強化型,godie-ewrd,天上天下 - 棗 真夜,godie-ewrd.passive,PASSIVE,17-00 右腕焰增,self,70,0,0,,,,,,as pctAdd 1.0; ad pctAdd 1.0,10.0,,0.3,,fx.prim.fire.pulse,self applyBuff
+自體強化型,godie-ewrd,天上天下 - 棗 真夜,godie-ewrd.q,Q,17-01 鬼-真夜,self,12/12/12/12,60/60/60/60,0,,,,,,armor flat -45.0,10.0,,0.3,,fx.prim.void.pulse-sm,self applyBuff
+自體強化型,godie-h001,地獄來襲者 - 斑剎,godie-h001.ex,EX,41-002 絕對屏障,self,25,500,0,,,,,,armor flat 500,5.0,,0.4,,fx.prim.arcane.pulse-lg,self applyBuff
+自體強化型,godie-h00l,時空勇者 - 林克,godie-h00l.e,E,60-03 海拉爾之盾的庇護,self,12/12/12/12,100/100/100/100,11.0,,,,,,armor pctAdd 0.2; mr pctAdd 0.2; ms pctAdd -0.5,12.0,,0.3,,fx.prim.holy.pulse,self applyBuff
+自體強化型,godie-h00l,時空勇者 - 林克,godie-h00l.ex,EX,60-002 絕光斬,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.holy.beam-lg,self applyBuff
+自體強化型,godie-h00l,時空勇者 - 林克,godie-h00l.passive,PASSIVE,60-00 聖光盾,self,45,300,0,,,,,,armor flat 500; mr flat 500,3.0,,0.3,,fx.prim.holy.pulse-lg,self applyBuff
+自體強化型,godie-h01n,開外掛的死神 - 黑崎一護,godie-h01n.ex,EX,79-002 虛化,self,60,500,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.void.explosion-lg,self applyBuff
+自體強化型,godie-h01n,開外掛的死神 - 黑崎一護,godie-h01n.r,R,79-04 卍解,self,60/60/60,100/200/300,0,,,,,,maxHealth flat 300,3.0,,0.4,,fx.prim.void.pulse-lg,self applyBuff
+自體強化型,godie-h01o,外掛開很大的死神 - 黑崎一護,godie-h01o.ex,EX,79-002 虛化,self,60,500,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.nature.pulse-lg,self applyBuff
+自體強化型,godie-h01o,外掛開很大的死神 - 黑崎一護,godie-h01o.r,R,79-04 卍解,self,60/60/60,100/200/300,0,,,,,,maxHealth flat 300,3.0,,0.4,,fx.prim.void.pulse-lg,self applyBuff
+自體強化型,godie-h01u,亂世癿王者 - 呂布奉先,godie-h01u.ex,EX,80-002 戰無不勝,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.physical.pulse-lg,self applyBuff
+自體強化型,godie-h020,黑魔導士 - 莉娜因巴斯,godie-h020.ex,EX,04-002 惡夢魔王的碎片,self,70,360,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.void.nova-lg,self applyBuff
+自體強化型,godie-h021,破銅爛鐵 - 阿強一號,godie-h021.passive,PASSIVE,05-00 啦嗚薩喀爾,self,60,200,0,,,,,,as override 2.5,3.0,,0.3,,fx.prim.lightning.pulse,self applyBuff
+自體強化型,godie-h022,白色之翼 - 涅吉。史普林。菲爾德,godie-h022.r,R,82-04 闇之魔法,self,60/60/60,250/350/450,0.0,,,,,,ad flat 10; ap flat 10; armor flat 10; maxHealth flat -500,15.0,,0.4,,fx.w3x.locust.boomnl.p01,self applyBuff
+自體強化型,godie-h02k,國寶級的畜生 - 熊貓,godie-h02k.q,Q,89-01 憤怒的頭槌,self,12/12/12/12/12,60/60/60/60/60,0,,,,,,as flat 0.25,3.0,,0.3,,fx.prim.physical.shockwave,self applyBuff
+自體強化型,godie-h02k,國寶級的畜生 - 熊貓,godie-h02k.r,R,89-04 憤怒的簡諧運動,self,12/12/12,60/60/60,0,,,,,,armor flat 25,6.0,,0.3,wc3.pandarenbrewmasteryes1,fx.prim.physical.shockwave-lg,self applyBuff
+自體強化型,godie-h02k,國寶級的畜生 - 熊貓,godie-h02k.w,W,89-02 憤怒的菊花,self,12/12/12/12,60/60/60/60,0,,,,,,as flat 0.25,3.0,,0.3,wc3.pandarenbrewmasterpissed8,fx.prim.nature.explosion,self applyBuff
+自體強化型,godie-h02s,死亡騎士,godie-h02s.passive,PASSIVE,91-00 符文鍛造 - 墮落十字軍符文,self,45,150,0,,,,,,lifesteal flat 0.25; ad flat 20.0; maxHealth flat 440.0,10.0,,0.3,,fx.prim.blood.pulse-sm,self applyBuff
+自體強化型,godie-h02s,死亡騎士,godie-h02s.r,R,91-04 血魄暴噬,self,12/12/12,60/60/60,0,,,,,,as flat 0.25,3.0,,0.3,,fx.prim.blood.pulse-lg,self applyBuff
+自體強化型,godie-h02s,死亡騎士,godie-h02s.w,W,91-02 疫病,self,12/12/12/12,60/60/60/60,0,,,,,,armor flat 20,8.0,,0.3,,fx.prim.nature.pulse-sm,self applyBuff
+自體強化型,godie-h02u,看似憂鬱的神獸 - 草泥馬,godie-h02u.q,Q,92-01 臥草泥馬,self,40/40/20/20,160/160/160/160,0,,,,,,maxHealth flat 300,3.0,,0.3,,fx.prim.physical.shockwave,self applyBuff
+自體強化型,godie-h02v,看似憂鬱的神獸 - 草泥馬,godie-h02v.q,Q,92-01 臥草泥馬,self,40/40/20/20,160/160/160/160,0,,,,,,maxHealth flat 300,3.0,,0.3,,fx.prim.nature.pulse-sm,self applyBuff
+自體強化型,godie-h02y,幕末復仇狂者 - 志志雄真實,godie-h02y.e,E,97-03 弱肉強食,self,12/12/12/12,60/60/60/60,11.0,,,,,,lifesteal flat 0.1,12.0,,0.3,,fx.prim.arcane.pulse-sm,self applyBuff
+自體強化型,godie-h02y,幕末復仇狂者 - 志志雄真實,godie-h02y.ex,EX,97-002 終極秘劍-火產靈神,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.fire.slash-lg,self applyBuff
+自體強化型,godie-h02z,不良少年,godie-h02z.passive,PASSIVE,91-00 符文鍛造 - 墮落十字軍符文,self,45,150,0,,,,,,lifesteal flat 0.25; ad flat 20.0; maxHealth flat 440.0,10.0,,0.3,,fx.prim.blood.pulse-sm,self applyBuff
+自體強化型,godie-h02z,不良少年,godie-h02z.r,R,91-04 血魄暴噬,self,12/12/12,60/60/60,0,,,,,,as flat 0.25,3.0,,0.3,,fx.prim.blood.pulse-lg,self applyBuff
+自體強化型,godie-h02z,不良少年,godie-h02z.w,W,91-02 疫病,self,12/12/12/12,60/60/60/60,0,,,,,,armor flat 20,8.0,,0.3,,fx.prim.nature.pulse-sm,self applyBuff
+自體強化型,godie-harf,豪洨天王 - 鄭先生,godie-harf.e,E,26-03 熱血,self,12/12/12/12,60/60/60/60,11.0,,,,,,ad pctAdd 0.13,12.0,,0.3,,fx.prim.blood.pulse-sm,self applyBuff
+自體強化型,godie-harf,豪洨天王 - 鄭先生,godie-harf.ex,EX,26-002 鄉民的正義,self,80,250,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.arcane.pulse-lg,self applyBuff
+自體強化型,godie-harf,豪洨天王 - 鄭先生,godie-harf.passive,PASSIVE,26-00 吃洨火鍋,self,35,165,0,7.33,,,,,ad pctAdd 0.5,10.0,,0.4,,fx.prim.physical.pulse-lg,self applyBuff
+自體強化型,godie-harf,豪洨天王 - 鄭先生,godie-harf.q,Q,26-01 腳底按摩,self,60/60/60/60,50/100/150/200,0,,,,,,as flat 0.4,8.0,,0.3,,fx.prim.arcane.pulse-sm,self applyBuff
+自體強化型,godie-harf,豪洨天王 - 鄭先生,godie-harf.r,R,26-04 開天闢地‧洨者聖臨,self,75/75/75,140/210/280,0,,,,,,as pctAdd 0.25; armor flat 5,7,,0.4,,fx.cinder-ward,self applyBuff
+自體強化型,godie-hart,最終幻想 - 克勞德,godie-hart.ex,EX,01-002 究極魔劍,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.holy.beam-lg,self applyBuff
+自體強化型,godie-hblm,慈悲的王者 - 賈修貝爾,godie-hblm.passive,PASSIVE,05-00 啦嗚薩喀爾,self,60,200,0,,,,,,as pctAdd 99999.0,3.0,,0.3,,fx.prim.lightning.pulse-lg,self applyBuff
+自體強化型,godie-hjai,黑魔導士 - 莉娜因巴斯,godie-hjai.ex,EX,04-002 惡夢魔王的碎片,self,70,480,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.void.pulse-lg,self applyBuff
+自體強化型,godie-hlgr,鋼彈 - 煌,godie-hlgr.ex,EX,03-001 龍騎兵,self,60,500,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.arcane.pulse-lg,self applyBuff
+自體強化型,godie-hpb1,獸矛傳承使 - 蒼月潮,godie-hpb1.ex,EX,07-002 獸矛持有者,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.physical.explosion-lg,self applyBuff
+自體強化型,godie-hpb1,獸矛傳承使 - 蒼月潮,godie-hpb1.q,Q,07-01 臨、兵、鬥,self,65/55/45,60/60/60,0,,,,,,ms pctAdd 0.5,6.0,,0.3,,fx.prim.physical.pulse-sm,self applyBuff
+自體強化型,godie-hpb1,獸矛傳承使 - 蒼月潮,godie-hpb1.r,R,07-04 神聖結界,self,45/45/45,150/300/450,0,,,,,,armor flat 25,8.0,,0.4,,fx.prim.holy.nova-lg,self applyBuff
+自體強化型,godie-huth,超級普烏 - 魔人普烏,godie-huth.ex,EX,28-002 普烏死亡,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.void.explosion-lg,self applyBuff
+自體強化型,godie-hvsh,梅杜莎 - Rider,godie-hvsh.w,W,48-02 心眼,self,12/12/12/12,60/60/60/60,0,,,,,,armor flat 25,6.0,,0.3,,fx.prim.arcane.pulse,self applyBuff
+自體強化型,godie-hvwd,除魔巫女 - 桔梗,godie-hvwd.q,Q,02-01 破魔之箭,self,12/12/12/12,60/60/60/60,11.0,,,,,,ad flat 30,12.0,,0.3,,fx.prim.holy.beam,self applyBuff
+自體強化型,godie-hvwd,除魔巫女 - 桔梗,godie-hvwd.w,W,02-02 明鏡止水,self,12/12/12/12,60/60/60/60,11.0,,,,,,ad pctAdd 0.07,12.0,,0.3,,fx.prim.holy.pulse,self applyBuff
+自體強化型,godie-n003,黑暗福音 - 依文潔琳,godie-n003.ex,EX,42-002 魔力印章,self,60,999,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.ice.pulse-lg,self applyBuff
+自體強化型,godie-n003,黑暗福音 - 依文潔琳,godie-n003.passive,PASSIVE,42-00 魔法障壁,self,60,180,0,,,,,,armor flat 10.0,9.0,,0.3,,fx.prim.ice.pulse-lg,self applyBuff
+自體強化型,godie-n00b,小叮噹 - 哆拉A夢,godie-n00b.ex,EX,57-002 時光機,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.arcane.nova-lg,self applyBuff
+自體強化型,godie-n00p,妖狐藏馬 - 南野秀一,godie-n00p.ex,EX,18-002 魔界吸血植物,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.nature.swarm-lg,self applyBuff
+自體強化型,godie-n01g,黑暗福音 - 依文潔琳,godie-n01g.ex,EX,42-002 魔力印章,self,60,999,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.arcane.pulse-lg,self applyBuff
+自體強化型,godie-n01g,黑暗福音 - 依文潔琳,godie-n01g.passive,PASSIVE,42-00 魔法障壁,self,60,180,0,,,,,,armor flat 10.0,9.0,,0.3,,fx.prim.ice.pulse-lg,self applyBuff
+自體強化型,godie-n01l,學姊 - 小派,godie-n01l.e,E,98-03 從過去中學習,self,12/12/12/12,60/60/60/60,11.0,,,,,,armor pctAdd 0.1; mr pctAdd 0.1,12.0,,0.3,,fx.prim.arcane.pulse-sm,self applyBuff
+自體強化型,godie-n01l,學姊 - 小派,godie-n01l.ex,EX,98-002 夢想前程的彼方,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.arcane.pulse-lg,self applyBuff
+自體強化型,godie-n01l,學姊 - 小派,godie-n01l.q,Q,98-01 理財的習慣,self,12/12/12/12,60/60/60/60,0,,,,,,critChance flat 0.25,6.0,,0.3,,fx.prim.nature.pulse-sm,self applyBuff
+自體強化型,godie-n01l,學姊 - 小派,godie-n01l.r,R,98-04 自在飛翔,self,12/12/12,60/60/60,11.0,,,,,,as pctAdd 0.2; ms pctAdd 0.05,12.0,,0.3,,fx.prim.arcane.pulse-lg,self applyBuff
+自體強化型,godie-naka,猿飛佐助 - 風魔小次郎,godie-naka.ex,EX,27-002 祕法-霧隱分身之術,self,45,300,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.wind.summon-lg,self applyBuff
+自體強化型,godie-nbst,變態正義 - 瘋狂假面,godie-nbst.passive,PASSIVE,24-00 SM派對,self,75,250,0,,,,,,as pctAdd 0.2,3,,0.3,,fx.prim.physical.pulse,self applyBuff
+自體強化型,godie-nbst,變態正義 - 瘋狂假面,godie-nbst.r,R,24-04 內褲變身,self,60/60/60,120/220/320,0,,,,,,as flat 0.25,12.0,,0.4,,fx.prim.nature.pulse-lg,self applyBuff
+自體強化型,godie-nman,地獄歌神 - 憤怒的胖虎,godie-nman.q,Q,40-01 威脅之拳,self,12/12/12/12,60/60/60/60,0,,,,,,as flat 0.25,3.0,,0.3,,fx.prim.arcane.pulse-sm,self applyBuff
+自體強化型,godie-nsjs,妖狐藏馬 - 南野秀一,godie-nsjs.ex,EX,18-002 魔界吸血植物,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.blood.pulse-lg,self applyBuff
+自體強化型,godie-ntin,時空管理局執務官 - 菲特·泰斯塔羅沙,godie-ntin.w,W,23-02 超音型態,self,25/25/25/25,30/45/60/75,0,,,,,,as flat 0.4,10.0,,0.3,,fx.prim.sound.pulse-sm,self applyBuff
+自體強化型,godie-o00k,傲嬌電氣老鼠 - 皮卡娘,godie-o00k.ex,EX,86-002 雷電萌神,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.lightning.explosion-lg,self applyBuff
+自體強化型,godie-o00l,獸神官 - 傑洛士,godie-o00l.ex,EX,53-002 恐懼力量,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.void.nova-lg,self applyBuff
+自體強化型,godie-o00x,超級賽亞人 - 悟空,godie-o00x.ex,EX,09-002 十倍龜派氣功,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.ki.beam-lg,self applyBuff
+自體強化型,godie-o01z,魔砲少女 - 高町奈葉,godie-o01z.ex,EX,81-002 Exellion Mode,self,60,480,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.arcane.pulse-lg,self applyBuff
+自體強化型,godie-o02l,神騎寶貝 - 皮卡丘,godie-o02l.ex,EX,58-002 打雷絕招,self,60,350,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.lightning.pulse-lg,self applyBuff
+自體強化型,godie-o02l,神騎寶貝 - 皮卡丘,godie-o02l.w,W,58-02 鋼鐵尾巴,self,12/12/12/12/12,60/60/60/60/60,0,,,,,,as flat 0.25,3.0,,0.3,,fx.prim.arcane.pulse-sm,self applyBuff
+自體強化型,godie-o02o,曹操孟德 - 阿瞞大人,godie-o02o.passive,PASSIVE,87-00 虛空碎靈,ground,45,150,0,9.17,,,,,ad pctAdd -1; armor flat -999; manaRegen flat -9999,5,,0.5,,fx.prim.void.nova-lg,self applyBuff
+自體強化型,godie-o02o,曹操孟德 - 阿瞞大人,godie-o02o.w,W,87-02 霸體,self,12/12/12,60/60/60,0,,,,,,armor flat 20,8.0,,0.3,,fx.prim.arcane.pulse-sm,self applyBuff
+自體強化型,godie-o02p,夢幻之星 - 初音,godie-o02p.e,E,99-03 初音未來的消失,self,50/50/50/50,175/255/335/415,0.0,,,,,,ad pctAdd 0.1; armor flat 3,15.0,,0.3,,fx.prim.sound.explosion,self applyBuff
+自體強化型,godie-o02s,憂鬱少女 - 涼宮八ㄦ匕,godie-o02s.passive,PASSIVE,53-00 空間穿梭,self,10,200,0,,,,,,,20,,,,fx.prim.void.pulse,self applyBuff
+自體強化型,godie-o02v,白色惡魔 - 高町奈葉,godie-o02v.ex,EX,81-002 Exellion Mode,self,60,480,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.arcane.pulse-lg,self applyBuff
+自體強化型,godie-o02w,笑傲江湖 - 令狐沖,godie-o02w.ex,EX,96-002 易筋經,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.wind.pulse-lg,self applyBuff
+自體強化型,godie-o02w,笑傲江湖 - 令狐沖,godie-o02w.passive,PASSIVE,96-00 天香斷續膠,targeted,60,100,11.0,,,,,,healthRegen flat 50.0,10.0,,0.3,,fx.prim.nature.pulse,self applyBuff
+自體強化型,godie-obla,被剝削的勞工階級 - 牧太郎,godie-obla.ex,EX,33-001 喝了再上,self,1,120,0,,,,,,ad pctAdd 0.35,6.0,,,,fx.prim.nature.pulse-lg,self applyBuff
+自體強化型,godie-obla,被剝削的勞工階級 - 牧太郎,godie-obla.passive,PASSIVE,33-00 砍樹,self,1,0,0,,,,,,healthRegen flat 21.43,7.0,,,,fx.prim.nature.pulse-sm,self applyBuff
+自體強化型,godie-ofar,神奇寶貝兒 - 皮卡丘,godie-ofar.ex,EX,58-002 打雷絕招,self,60,300,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.lightning.beam-lg,self applyBuff
+自體強化型,godie-ogrh,賽亞人 - 悟空,godie-ogrh.ex,EX,09-002 十倍龜派氣功,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.ki.beam-lg,self applyBuff
+自體強化型,godie-opgh,常勝將軍 - 趙子龍,godie-opgh.ex,EX,32-002 見龍卸甲,self,35,225,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.lightning.pulse-lg,self applyBuff
+自體強化型,godie-opgh,常勝將軍 - 趙子龍,godie-opgh.r,R,32-04 狂龍霸體,self,45/45/45,60/60/60,11.0,,,,,,as pctAdd 0.5; ms pctAdd 0.12,30.0,,0.4,,fx.prim.arcane.pulse-lg,self applyBuff
+自體強化型,godie-opgh,常勝將軍 - 趙子龍,godie-opgh.w,W,32-02 橫掃千軍,self,12/12/12/12,60/60/60/60,11.0,,,,,,ad pctAdd 0.1,12.0,,0.3,,fx.prim.wind.pulse-sm,self applyBuff
+自體強化型,godie-orkn,電車癡漢 - 臭作,godie-orkn.ex,EX,30-002 變態紳士,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.void.pulse-lg,self applyBuff
+自體強化型,godie-osam,犬妖 - 殺生丸,godie-osam.passive,PASSIVE,34-00 靈魂吞噬,self,60,160,0,,,,,,healthRegen flat 200.0,5.0,,0.3,,fx.prim.void.pulse,self applyBuff
+自體強化型,godie-osam,犬妖 - 殺生丸,godie-osam.q,Q,34-01 風華之爪,self,12/12/12/12/12,60/60/60/60/60,11.0,,,,,,ad pctAdd 0.1,12.0,,0.3,,fx.prim.wind.slash,self applyBuff
+自體強化型,godie-osam,犬妖 - 殺生丸,godie-osam.w,W,34-02 合氣斬,self,12/12/12/12/12,60/60/60/60/60,0,,,,,,critChance flat 0.25,6.0,,0.3,,fx.prim.wind.slash,self applyBuff
+自體強化型,godie-othr,X戰警 - 金鋼狼,godie-othr.e,E,31-03 野性的呼喚,self,60/60/60/60,120/180/240/300,0,,,,,,as flat 0.4,9.0,,0.3,,fx.prim.blood.pulse-sm,self applyBuff
+自體強化型,godie-othr,X戰警 - 金鋼狼,godie-othr.ex,EX,31-002 武士之魂,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.void.pulse-lg,self applyBuff
+自體強化型,godie-othr,X戰警 - 金鋼狼,godie-othr.r,R,31-04 不要踢我蛋蛋,self,60/60/60,150/250/350,0,,,,,,as flat 0.25,10.0,,0.4,,fx.prim.blood.pulse-lg,self applyBuff
+自體強化型,godie-u00b,最M的魔法Jizz - 清蒸 飛鼠先生,godie-u00b.passive,PASSIVE,75-00 戰鬥之歌,self,75,140,0,,,,,,as pctAdd 99999.0,7.0,,0.3,,fx.prim.sound.pulse,self applyBuff
+自體強化型,godie-u00h,鬼畜紅王 - 鬼畜狂刀KYO,godie-u00h.ex,EX,39-002-紅王,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.fire.explosion-lg,self applyBuff
+自體強化型,godie-u00h,鬼畜紅王 - 鬼畜狂刀KYO,godie-u00h.passive,PASSIVE,39-00 無名神風流-玄武,self,35,90,0,,,,,,ad flat 30.0; armor flat 8.0; healthRegen flat 12.0,12.0,,0.3,,fx.prim.earth.pulse-sm,self applyBuff
+自體強化型,godie-u00k,邪惡意念集合體 - 死之王,godie-u00k.ex,EX,71-002 夜之主,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.void.explosion-lg,self applyBuff
+自體強化型,godie-u00l,北斗之鼠 - 拳四郎,godie-u00l.ex,EX,25-002 喔拉喔拉喔拉喔拉,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.physical.shockwave-lg,self applyBuff
+自體強化型,godie-u00l,北斗之鼠 - 拳四郎,godie-u00l.passive,PASSIVE,25-00 北斗暗殺拳,self,45,70,0,,,,,,ms pctAdd 1.0,12.0,,0.3,,fx.prim.void.pulse,self applyBuff
+自體強化型,godie-u00n,草帽小子 - 蒙其.D.魯夫,godie-u00n.ex,EX,76-002 霸王色,self,60,250,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.void.nova-lg,self applyBuff
+自體強化型,godie-u00n,草帽小子 - 蒙其.D.魯夫,godie-u00n.passive,PASSIVE,76-00 二檔,self,60,0,0,,,,,,as pctAdd 1.0; ms flat 1.94; healthRegen flat -10.0,20.0,,0.3,wc3.trollwoodworkswhat1,fx.prim.blood.pulse-lg,self applyBuff
+自體強化型,godie-u00o,草帽小子 - 蒙其.D.魯夫,godie-u00o.ex,EX,76-002 霸王色,self,60,250,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.blood.pulse-lg,self applyBuff
+自體強化型,godie-u00o,草帽小子 - 蒙其.D.魯夫,godie-u00o.passive,PASSIVE,76-00 二檔,self,60,0,0,,,,,,as pctAdd 1.0; ms flat 1.93; healthRegen flat -10.0,20.0,,0.3,wc3.trollwoodworkswhat1,fx.prim.blood.pulse-sm,self applyBuff
+自體強化型,godie-u00v,黑手黨老大 - 基廉列克,godie-u00v.ex,EX,78-002 加速爆體,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.physical.pulse-lg,self applyBuff
+自體強化型,godie-u00v,黑手黨老大 - 基廉列克,godie-u00v.q,Q,78-01 斬鐵拳,self,12/12/12/12/12,60/60/60/60/60,0,,,,,,as flat 0.25,3.0,,0.3,,fx.prim.physical.beam,self applyBuff
+自體強化型,godie-u010,邪眼師 - 飛影,godie-u010.passive,PASSIVE,38-00 邪眼全開,self,60,0,0,,,,,,as pctAdd 1.0; ms flat 0.97,10.0,,0.3,,fx.prim.void.pulse,self applyBuff
+自體強化型,godie-u010,邪眼師 - 飛影,godie-u010.r,R,38-04 黑龍波吸收,self,60/60/60,100/200/300,11.0,,,,,,ad pctAdd 1.0; manaRegen flat -10,10.0,,0.4,wc3.dragonroostwhat1,fx.w3x.particle.flamessmoke.p01,self applyBuff
+自體強化型,godie-u011,死亡老二 - 克勞薩先生,godie-u011.e,E,61-03 打屁股風林火豬,self,12/12/12/12,60/60/60/60,11.0,,,,,,as pctAdd 0.5,12.0,,0.3,wc3.gruntpissed3,fx.firestorm,self applyBuff
+自體強化型,godie-u012,重金屬樂團的怪物 - 克勞薩II世,godie-u012.e,E,61-03 打屁股風林火豬,self,12/12/12/12,60/60/60/60,11.0,,,,,,as pctAdd 0.5,12.0,,0.3,wc3.gruntpissed3,fx.firestorm,self applyBuff
+自體強化型,godie-u01u,三刀流劍士 - 索隆,godie-u01u.ex,EX,11-002 武裝色霸氣,self,60,390,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.void.pulse-lg,self applyBuff
+自體強化型,godie-u01u,三刀流劍士 - 索隆,godie-u01u.passive,PASSIVE,11-00 三刀流,self,30,45,0,,,,,,as pctAdd 0.75; healthRegen flat -12.0,15.0,,0.3,,fx.prim.physical.pulse,self applyBuff
+自體強化型,godie-u01u,三刀流劍士 - 索隆,godie-u01u.q,Q,11-01 燒鬼斬,self,12/12/12/12,60/60/60/60,0,,,,,,as flat 0.25,3.0,,0.3,,fx.w3x.particle.lavabreathdamage.p00,self applyBuff
+自體強化型,godie-u01u,三刀流劍士 - 索隆,godie-u01u.r,R,11-04 三千世界,self,60/60/60,111/222/333,0,,,,,,as flat 0.4,3.0,,0.4,,fx.prim.physical.slash-lg,self applyBuff
+自體強化型,godie-u034,職業獵人 - 傑 富力士,godie-u034.ex,EX,06-002 殺意,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.blood.pulse-lg,self applyBuff
+自體強化型,godie-ucrl,職業獵人 - 傑 富力士,godie-ucrl.ex,EX,06-002 殺意,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.blood.pulse-lg,self applyBuff
+自體強化型,godie-udea,至尊學長 - 飛鼠先生,godie-udea.ex,EX,65-002 永恆的愚蠢鄉,self,90,350,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.arcane.pulse-lg,self applyBuff
+自體強化型,godie-udre,三刀流劍士 - 索隆,godie-udre.ex,EX,11-002 武裝色霸氣,self,60,390,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.ki.pulse-lg,self applyBuff
+自體強化型,godie-udre,三刀流劍士 - 索隆,godie-udre.passive,PASSIVE,11-00 三刀流,self,30,45,0,,,,,,as pctAdd 0.75; healthRegen flat -12.0,15.0,,0.3,,fx.prim.wind.pulse,self applyBuff
+自體強化型,godie-udre,三刀流劍士 - 索隆,godie-udre.q,Q,11-01 燒鬼斬,self,12/12/12/12,60/60/60/60,0,,,,,,as flat 0.25,3.0,,0.3,,fx.w3x.particle.lavabreathdamage.p00,self applyBuff
+自體強化型,godie-udre,三刀流劍士 - 索隆,godie-udre.r,R,11-04 三千世界,self,60/60/60,111/222/333,0,,,,,,as flat 0.4,3.0,,0.4,,fx.prim.wind.pulse-lg,self applyBuff
+自體強化型,godie-umal,北斗神拳掌門人 - 拳四郎,godie-umal.ex,EX,25-002 喔拉喔拉喔拉喔拉,self,60,120,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.arcane.pulse-lg,self applyBuff
+自體強化型,godie-umal,北斗神拳掌門人 - 拳四郎,godie-umal.passive,PASSIVE,25-00 北斗暗殺拳,self,45,70,0,,,,,,ms pctAdd 1.0,12.0,,0.3,,fx.prim.void.pulse,self applyBuff
+自體強化型,godie-usyl,殺戮之牙 - 異形,godie-usyl.q,Q,49-01 遮斷獵殺,self,45/45/45/65/75,70/120/170/220/255,0,,,,,,ms pctAdd 1.0,6.0,,0.3,,fx.prim.ki.pulse-sm,self applyBuff
+自體強化型,godie-uvng,邪眼師 - 飛影,godie-uvng.passive,PASSIVE,38-00 邪眼全開,self,60,0,0,,,,,,as pctAdd 1.0; ms pctAdd 0.16,10.0,,0.3,,fx.prim.fire.pulse,self applyBuff
+自體強化型,godie-uvng,邪眼師 - 飛影,godie-uvng.r,R,38-04 黑龍波吸收,self,60/60/60,100/200/300,11.0,,,,,,ad pctAdd 1.0; manaRegen flat -10,10.0,,0.4,wc3.dragonroostwhat1,fx.w3x.particle.flamessmoke.p01,self applyBuff
+自體強化型,godie-uwar,食神 - 撒尿牛丸,godie-uwar.ex,EX,43-002 食神歸位,self,60,355,0,,,,,,ad pctAdd 0.35,6.0,,0.4,,fx.prim.holy.pulse-lg,self applyBuff
+自體強化型,godie-uwar,食神 - 撒尿牛丸,godie-uwar.w,W,43-02 打狗鏟,self,12/12/12/12,60/60/60/60,0,,,,,,as flat 0.25,3.0,,0.3,,fx.prim.arcane.pulse-sm,self applyBuff
+光環型,godie-e00t,七夜怪談 - 貞子,godie-e00t.r,R,66-04  靈壓震撼,self,10/10/10,50/70/90,0,11.0,,,,,,,,,,fx.prim.void.bolt-lg,passive.auras
+被動-屬性型,godie-e001,蟬在叫人壞掉 - 龍宮禮奈,godie-e001.w,W,22-02 染血的柴刀,self,0/0/0/0,0/0/0/0,0,,,,,,critChance flat 0.18; critDamage override 1.25,,,,,fx.prim.blood.slash,passive.modifiers
+被動-屬性型,godie-e002,亞瑟王 - Saber,godie-e002.q,Q,20-02 感知能力,self,0/0/0/0,0/0/0/0,0,,,,,,evasion flat 0.07,,,,,fx.prim.holy.pulse-sm,passive.modifiers
+被動-屬性型,godie-e00l,亞瑟王 - Saber,godie-e00l.q,Q,20-02 感知能力,self,0/0/0/0,0/0/0/0,0,,,,,,evasion flat 0.07,,,,,fx.prim.arcane.pulse-sm,passive.modifiers
+被動-屬性型,godie-e00q,英靈-亞瑟王 - 黑化Saber,godie-e00q.passive,PASSIVE,69-001 黑化之力,self,0,0,0,,,,,,critChance flat 0.18; critDamage flat 0.65,,,,,,passive.modifiers
+被動-屬性型,godie-e00q,英靈-亞瑟王 - 黑化Saber,godie-e00q.q,Q,69-01 力量強化,self,0/0/0/0/0,0/0/0/0/0,0,,,,,,ad flat 4.0; maxHealth flat 88.0,,,,,fx.prim.arcane.pulse-sm,passive.modifiers
+被動-屬性型,godie-e00q,英靈-亞瑟王 - 黑化Saber,godie-e00q.r,R,69-04 魔力增幅,self,0/0/0,0/0/0,0,,,,,,maxMana flat 500.0; manaRegen flat 0.2; healthRegen flat 8.0,,,,,fx.prim.arcane.pulse-lg,passive.modifiers
+被動-屬性型,godie-e00s,白木老樹精 - 白木卡迪那,godie-e00s.passive,PASSIVE,70-00 芬多精,self,0,0,0,,,,,,healthRegen pctAdd 0.05,,,,,,passive.modifiers
+被動-屬性型,godie-edem,寫輪眼復仇者 - 宇智波佐助,godie-edem.r,R,45-04 哥哥,self,0/0/0,0/0/0,0,,,,,,armor flat 3.6; as pctAdd 0.24,,,,wc3.thunderboltmissiledeath,fx.prim.void.pulse-lg,passive.modifiers
+被動-屬性型,godie-emns,奇樂 - 夜神月,godie-emns.w,W,44-02 死神的規則,self,0/0/0/0/0,0/0/0/0/0,0,,,,,,ap flat 35; maxMana flat 105,,,,,fx.prim.void.pulse,passive.modifiers
+被動-屬性型,godie-etyr,治癒系公主 - 木乃香,godie-etyr.ex,EX,14-002 魔力激發,self,0,0,0,,,,,,manaRegen flat 0.07,,,,,fx.prim.holy.pulse-lg,passive.modifiers
+被動-屬性型,godie-etyr,治癒系公主 - 木乃香,godie-etyr.w,W,14-03 魔力應援,self,0/0/0/0,0/0/0/0,0,,,,,,as pctAdd 0.35; ms pctAdd 0.05,,,,,fx.prim.holy.pulse,passive.modifiers
+被動-屬性型,godie-h01u,亂世癿王者 - 呂布奉先,godie-h01u.q,Q,80-01 天下無雙,self,0/0/0/0,0/0/0/0,0,,,,,,ad flat 25; armor flat -3,,,,,fx.prim.physical.shockwave,passive.modifiers
+被動-屬性型,godie-huth,超級普烏 - 魔人普烏,godie-huth.passive,PASSIVE,28-00 無限再生,self,0,0,0,,,,,,healthRegen flat 12.0,,,,,,passive.modifiers
+被動-屬性型,godie-o02p,夢幻之星 - 初音,godie-o02p.passive,PASSIVE,99-00 可愛就是正義,self,0,0,0,11.0,,,,,healthRegen pctAdd 0.3; ms pctAdd 0.08,,,,,,passive.modifiers
+被動-屬性型,godie-opgh,常勝將軍 - 趙子龍,godie-opgh.passive,PASSIVE,32-00 青龍槍術,self,0,0,0,,,,,,ad pctAdd 0.3,,,,,,passive.modifiers
+被動-屬性型,godie-othr,X戰警 - 金鋼狼,godie-othr.passive,PASSIVE,31-00 再生能力,self,0,0,0,,,,,,healthRegen flat 8.0,,,,,,passive.modifiers
+被動-屬性型,godie-u00j,神性的流失 - 賽菲洛斯,godie-u00j.passive,PASSIVE,74-00 JENOVA,self,0,0,0,,,,,,critChance flat 0.15; critDamage flat 1.25,,,,,,passive.modifiers
+被動-屬性型,godie-udea,至尊學長 - 飛鼠先生,godie-udea.passive,PASSIVE,65-00 古老智慧,self,0,0,0,,,,,,armor flat 100; mr flat 100,,,,,,passive.modifiers
+被動-觸發型,godie-e002,亞瑟王 - Saber,godie-e002.passive,PASSIVE,20-00 銀色甲胄,self,0,0,0,,,,,,,,,,,,passive.hooks
+被動-觸發型,godie-e00k,戰國刺客Azumi - 安云,godie-e00k.passive,PASSIVE,19-00 閃擊,self,0,0,0,,,,,,,,,,,fx.prim.void.slash,passive.hooks
+被動-觸發型,godie-e00l,亞瑟王 - Saber,godie-e00l.passive,PASSIVE,20-00 銀色甲胄,self,0,0,0,,,,,,,,,,,,passive.hooks
+被動-觸發型,godie-e00v,百畝森林的霸主 - 維尼,godie-e00v.passive,PASSIVE,84-00 熊巴巴,self,0,0,0,,,,,,,,,,,fx.prim.physical.slash,passive.hooks
+被動-觸發型,godie-e00z,戰國刺客Azumi - 安云,godie-e00z.passive,PASSIVE,19-00 閃擊,self,0,0,0,,,,,,,,,,,fx.prim.physical.slash,passive.hooks
+被動-觸發型,godie-e012,殺人劍客 - 佐佐木小次郎,godie-e012.passive,PASSIVE,47-00 龍搥閃,self,0,0,0,,,,,,,,,,,fx.prim.physical.nova,passive.hooks
+被動-觸發型,godie-h01u,亂世癿王者 - 呂布奉先,godie-h01u.passive,PASSIVE,80-00 飛將神弓,self,0,0,0,,,,,,,,,,,,passive.hooks
+被動-觸發型,godie-h02k,國寶級的畜生 - 熊貓,godie-h02k.passive,PASSIVE,89-00 憤怒的門牙,self,0,0,0,,,,,,,,,,,,passive.hooks
+被動-觸發型,godie-h02u,看似憂鬱的神獸 - 草泥馬,godie-h02u.passive,PASSIVE,92-00 憂鬱的眼神,self,0,0,0,,,,,,,,,,,,passive.hooks
+被動-觸發型,godie-hart,最終幻想 - 克勞德,godie-hart.passive,PASSIVE,01-00 怒斬,self,0,0,0,,,,,,,,,,,,passive.hooks
+被動-觸發型,godie-o00x,超級賽亞人 - 悟空,godie-o00x.passive,PASSIVE,09-00 賽亞人的血脈,self,0,0,0,,,,,,,,,,,,passive.hooks
+被動-觸發型,godie-ofar,神奇寶貝兒 - 皮卡丘,godie-ofar.w,W,58-02 鋼鐵尾巴,self,0/0/0/0/0,0/0/0/0/0,0,,,,,,,,,,,fx.prim.physical.slash,passive.hooks
+其他,godie-e007,龍之子 - 天地志狼,godie-e007.passive,PASSIVE,12-00 感應意脈,self,0,0,0,,,,,,,,,,,,effects空/純表現
+其他,godie-e008,火霧戰士 - 夏娜,godie-e008.passive,PASSIVE,21-00 灼眼,self,0,0,0,,,,,,,,,,,,effects空/純表現
+其他,godie-e00r,最終泛用人型決戰兵器 - 初號機,godie-e00r.passive,PASSIVE,59-00 暴走,self,0,0,0,,,,,,,,,,,,effects空/純表現
+其他,godie-e00t,七夜怪談 - 貞子,godie-e00t.passive,PASSIVE,66-00 恐懼,self,0,0,0,,,,,,,,,,,,effects空/純表現
+其他,godie-edem,寫輪眼復仇者 - 宇智波佐助,godie-edem.passive,PASSIVE,45-00 寫輪眼,self,115,0,0,,,,,,,,,,,,effects空/純表現
+其他,godie-ewar,龍之子 - 天地志狼,godie-ewar.passive,PASSIVE,12-00 感應意脈,self,0,0,0,,,,,,,,,,,,effects空/純表現
+其他,godie-h01n,開外掛的死神 - 黑崎一護,godie-h01n.passive,PASSIVE,79-00 靈壓,self,0,0,0,9.17,,,,,,,,,,,effects空/純表現
+其他,godie-h01o,外掛開很大的死神 - 黑崎一護,godie-h01o.passive,PASSIVE,79-00 靈壓,self,0,0,0,11.0,,,,,,,,,,,effects空/純表現
+其他,godie-h020,黑魔導士 - 莉娜因巴斯,godie-h020.passive,PASSIVE,04-00 翔封界,self,50,0,0,,,,,,,,,,,,effects空/純表現
+其他,godie-h02v,看似憂鬱的神獸 - 草泥馬,godie-h02v.passive,PASSIVE,92-00 憂鬱的眼神,self,0,0,0,,,,,,,,,,,,effects空/純表現
+其他,godie-hapm,海克力斯 - Berserker,godie-hapm.passive,PASSIVE,52-00 十二道試煉,self,240,0,0,,,,,,,,,,,,effects空/純表現
+其他,godie-hjai,黑魔導士 - 莉娜因巴斯,godie-hjai.passive,PASSIVE,04-00 翔封界,self,50,0,0,,,,,,,,,,,,effects空/純表現
+其他,godie-hlgr,鋼彈 - 煌,godie-hlgr.passive,PASSIVE,03-00 相轉移裝甲,self,0,0,0,,,,,,,,,,,,effects空/純表現
+其他,godie-hpb1,獸矛傳承使 - 蒼月潮,godie-hpb1.passive,PASSIVE,07-00 獸化心靈,self,0,0,0,,,,,,,,,,,,effects空/純表現
+其他,godie-n00b,小叮噹 - 哆拉A夢,godie-n00b.passive,PASSIVE,57-00 四次元口袋,self,20,75,0,14.67,,,,,,,,0.4,,fx.prim.arcane.summon,effects空/純表現
+其他,godie-n00p,妖狐藏馬 - 南野秀一,godie-n00p.passive,PASSIVE,18-00 薔薇荊棘之刃,self,0,0,0,,,,,,,,,,,,effects空/純表現
+其他,godie-n01c,傳說的龍騎士 - 勇者小呆,godie-n01c.passive,PASSIVE,08-00 龍紋記憶,self,0,0,0,,,,,,,,,,,,effects空/純表現
+其他,godie-n01l,學姊 - 小派,godie-n01l.passive,PASSIVE,98-00 正妹優勢,self,0,0,0,,,,,,,,,,,,effects空/純表現
+其他,godie-naka,猿飛佐助 - 風魔小次郎,godie-naka.passive,PASSIVE,27-00 永久性的隱形術,self,0,0,0,,,,,,,,,,,,effects空/純表現
+其他,godie-nbbc,傳說的龍騎士 - 勇者小呆,godie-nbbc.passive,PASSIVE,08-00 龍紋記憶,self,0,0,0,,,,,,,,,,,,effects空/純表現
+其他,godie-nman,地獄歌神 - 憤怒的胖虎,godie-nman.passive,PASSIVE,40-00 我~是~孩~子~王~,self,0,0,0,,,,,,,,,,,,effects空/純表現
+其他,godie-nplh,通靈人 - 麻倉葉,godie-nplh.passive,PASSIVE,16-00 通靈能力,self,0,0,0,,,,,,,,,,,,effects空/純表現
+其他,godie-nsjs,妖狐藏馬 - 南野秀一,godie-nsjs.passive,PASSIVE,18-00 薔薇荊棘之刃,self,0,0,0,,,,,,,,,,,,effects空/純表現
+其他,godie-o00k,傲嬌電氣老鼠 - 皮卡娘,godie-o00k.passive,PASSIVE,86-00 裝可愛,self,3,50,0,29.33,,,,,,,,,wc3.nocute,,effects空/純表現
+其他,godie-o00l,獸神官 - 傑洛士,godie-o00l.passive,PASSIVE,53-00 空間穿梭,self,10,200,0,,,,,,,,,,,,effects空/純表現
+其他,godie-ogrh,賽亞人 - 悟空,godie-ogrh.passive,PASSIVE,09-00 賽亞人的血脈,self,0,0,0,,,,,,,,,,,,effects空/純表現
+其他,godie-orkn,電車癡漢 - 臭作,godie-orkn.passive,PASSIVE,30-00 攝影機,ground,90,100,29.33,,,,,,,,,0.4,,,effects空/純表現
+其他,godie-u00k,邪惡意念集合體 - 死之王,godie-u00k.passive,PASSIVE,71-00 暗夜契約,self,0,0,0,,,,,,,,,,,,effects空/純表現
+其他,godie-u00v,黑手黨老大 - 基廉列克,godie-u00v.passive,PASSIVE,78-00 銅皮鐵骨,self,0,0,0,,,,,,,,,,,,effects空/純表現
+其他,godie-u011,死亡老二 - 克勞薩先生,godie-u011.passive,PASSIVE,61-00百連我殺,self,0,0,0,,,,,,,,,,,,effects空/純表現
+其他,godie-u012,重金屬樂團的怪物 - 克勞薩II世,godie-u012.passive,PASSIVE,61-00百連我殺,self,0,0,0,,,,,,,,,,,,effects空/純表現
+其他,godie-u01f,萬夫莫敵 - 黑化張飛,godie-u01f.passive,PASSIVE,16-00 通靈能力,self,0,0,0,,,,,,,,,,,,effects空/純表現
+其他,godie-uwar,食神 - 撒尿牛丸,godie-uwar.passive,PASSIVE,43-00 觀音大士的守護,self,0,0,0,,,,,,,,,,,,effects空/純表現
