@@ -24,6 +24,8 @@
 ### 反省（每批試玩後回寫）
 - **Batch 4 → 8/8 大多已完成（計畫嚴重過期）**：map 實查 HEAD 發現 `4-3`(ContentDb 註冊表優先)、`4-4`(nginx `?h=` immutable)、`4-5`(單 GET 無 HEAD)、`4-6`(hover 不載入)、`4-7`(icon hash 改按鈕)、`4-8`(共用 byteCache)、以及模型/語音 lazy 載入**全部已在 `d0f643a` 系列落地**。只有 `4-2` 勉強算開著，且計畫前提是錯的（victoryTaunt 只抓一支 config JSON，不是 351 clip/5.28 MB）。**淨產出：`useAudio.ts` +25 行把 taunt config warm 提前**（`8094eb4`，client tsc/​build 綠、shared 860/860）。**教訓：這份 2026-07-23 計畫的完成度被低估；map-first 工作流正確地沒有重造已完成的東西。Batch 1 的 map 同理會篩掉 1C-3/1A-1(enum)/#79 等已落地項。**
 - 決策：Batch 4 只 25 行，push 與 Batch 1（實質批）合併成一次有意義的 release，不單獨發版。
+- **支線 B（BGM/環境音）→ 全部完成（owner 2026-07-25 親自確認核准）**：`#75` 龍吼（`sfx/dragon-roar*.mp3` + `retired/…-4.4s` 縮短錨點版）、火圈 intro（`bgm/fireRing.mp3` 已渲染）、控室重寫（`bgm/room.mp3`，score 在 `tools/bgm-gen/src/ggd/`，非計畫寫的 `scores/`）、`#135` 招牌 intro（`audition.py:54 SCENE_INTRO` + `:69 SCENE_RAP`）皆在硬碟上並已 owner 試聽核准。**支線 B 從〈接下來優先批次〉移除。**
+- **累計兩個 owner/map 佐證：這份 2026-07-23 計畫顯著低估完成度（Batch 4 的 7/8、整條支線 B）。往後每個「pending」項一律先 map 實查 HEAD 再動工，不照計畫文字重造。**
 
 ---
 
@@ -575,7 +577,9 @@ graph LR
 
 ---
 
-## 支線 B · BGM／環境音創作佇列（**前一稿整條漏掉**，序列單一寫者，與所有批次平行）
+## 支線 B · BGM／環境音創作佇列 — ✅ **全部完成（owner 2026-07-25 親自試聽核准）**，不要重排
+
+> ✅ #75 龍吼（縮短錨點+殘響）、火圈 intro（`bgm/fireRing.mp3`）、控室重寫（`bgm/room.mp3`）、#135 招牌 intro（`audition.py` SCENE_INTRO/SCENE_RAP）皆已渲染上架並 owner 核准。以下為歷史需求描述，保留備查。
 
 獨佔 `tools/bgm-gen/**` · `content/assets/audio/bgm/**` · `apps/client/public/bgm-audition.html`
 
