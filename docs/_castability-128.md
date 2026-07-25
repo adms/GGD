@@ -3,7 +3,7 @@
 > 生成於 `packages/shared/src/sim/castabilitySweep.test.ts`（每次跑測試即重算）。
 > 這是**診斷**：把 48 位英雄每一格 Q/W/E/R/EX + 普攻在真的 SimWorld 裡按下去，量測有沒有真的產生效果（傷害／投射物／狀態／護盾／補血／補魔／位移／特效），不修任何技能。
 > 同時是**棘輪**：測試釘住已量測的下限（PASS ≥ 281、PASS+PASSIVE ≥ 288）與具名的已知失敗集合（目前為空），任何一格退化都會讓測試變紅並指名是哪一格。
-> 本次 contentVersion：`cv_ecff53279fad`（下限量測基準 `cv_ecff53279fad`，2026-07-25）。
+> 本次 contentVersion：`cv_02955b512f34`（下限量測基準 `cv_ecff53279fad`，2026-07-25）。
 
 ## 判定圖例
 
