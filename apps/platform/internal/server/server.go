@@ -293,7 +293,15 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 	curationSvc := curation.New(store, rdb)
 	// #189 durable content overlay: the data/ store that lets an admin content
 	// edit survive a git pull on the host (content/ there is a :ro mount).
-	overlaySvc := contentoverlay.New(store, rdb)
+	//
+	// It is handed CONTENT_DIR so it can answer the one question the overlay
+	// alone cannot — "has the SHIPPED doc moved underneath this entry?" — by
+	// reading the hashes the TS content build already wrote into each
+	// collection's _index.json. Read-only; it never writes under content/.
+	overlaySvc := contentoverlay.New(store, rdb, contentoverlay.WithContentDir(cfg.ContentDir))
+	// One line in the deploy log about what is overlaid, plus a warning per
+	// entry the shipped tree has moved underneath. Never fails a boot.
+	overlaySvc.LogBootSummary(context.Background())
 	combatEnvSvc := combatenv.New(store, rdb, cfg.ContentDir)
 	// The ops inventory DESCRIBES the reaper, so it is handed the same numbers
 	// the reaper runs on — including the interval after gamelink's own clamp,

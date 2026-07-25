@@ -36,10 +36,13 @@ package contentoverlay
 import (
 	"context"
 	"crypto/sha256"
+	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"log/slog"
+	"os"
 	"regexp"
 	"sort"
 	"strings"
@@ -120,6 +123,58 @@ type Overlay struct {
 	UpdatedBy     string                     `json:"updatedBy"`
 	Docs          map[string]json.RawMessage `json:"docs"`
 	Deleted       map[string]bool            `json:"deleted"`
+	// Bases records, per key, WHAT THE SHIPPED TREE SAID AT EDIT TIME — the
+	// three-way-merge base the owner's 2026-07-24 directive requires
+	// (docs/_requirements-audit-gaps.md). It is what turns "overlay wins" from
+	// a silent rule into a checkable one; see precedence.go.
+	//
+	// It is deliberately a PARALLEL map rather than a field on the doc: the
+	// content schemas are `.strict()` and hashDoc eats the whole doc, so a
+	// metadata field inside the doc would fail validation AND move cv_ on every
+	// save (docs/design/content-sync.md §6). A missing entry means UNKNOWN BASE,
+	// never "clean" — an overlay written before this field existed must not
+	// masquerade as verified.
+	Bases map[string]BaseRef `json:"bases,omitempty"`
+}
+
+// PublicBundle is the copy of the overlay the UNauthenticated /bundle endpoint
+// may serve.
+//
+// It strips two things, both for the same reason: the merge consumers do not
+// need them and they name an operator.
+//
+//   - UpdatedBy — the editing admin's account ULID (the v0.4.9 leak fix).
+//   - Bases — every entry's `by`/`at` provenance. This one is new with the
+//     staleness work and TestPublicEndpointsDoNotLeakUpdatedBy caught it
+//     immediately: `bases` re-leaked exactly the id `updatedBy` was blanked to
+//     hide. The merge (packages/shared/src/content/overlay.ts) reads only
+//     `docs` and `deleted`, so nothing downstream loses anything.
+//
+// Returns a copy; the durable store keeps everything for the audit trail.
+func (o Overlay) PublicBundle() Overlay {
+	o.UpdatedBy = ""
+	o.Bases = nil
+	return o
+}
+
+// BaseRef is the shipped doc's identity at the moment an operator overlaid it.
+//
+// Known=false is a first-class answer: the host had no readable content tree
+// when the edit landed, so nothing can be concluded later. csync-03 rules that
+// a missing base "downgrades every two-sided difference to TRUE CONFLICT rather
+// than picking a side" — here that means the entry is FLAGGED, not assumed fine.
+type BaseRef struct {
+	// Known is false when the shipped tree could not be consulted at edit time.
+	Known bool `json:"known"`
+	// Shipped is true when a shipped doc existed for this key at edit time
+	// (false = the operator ADDED a doc the repo does not have).
+	Shipped bool `json:"shipped"`
+	// Hash is the shipped `hashDoc` value at edit time (empty when !Shipped).
+	Hash string `json:"hash,omitempty"`
+	// At / By are the edit's own provenance — the "when + by whom" #189
+	// requirement 6 asks for, per entry rather than only for the whole file.
+	At time.Time `json:"at"`
+	By string    `json:"by"`
 }
 
 // EmptyOverlay is a fresh host: nothing overlaid, generation 0.
@@ -129,6 +184,7 @@ func EmptyOverlay() Overlay {
 		Generation:    0,
 		Docs:          map[string]json.RawMessage{},
 		Deleted:       map[string]bool{},
+		Bases:         map[string]BaseRef{},
 	}
 }
 
@@ -148,6 +204,12 @@ type Head struct {
 	DeletedCount  int       `json:"deletedCount"`
 	UpdatedAt     time.Time `json:"updatedAt"`
 	UpdatedBy     string    `json:"updatedBy"`
+	// Degraded is true when the durable file on disk could not be parsed and the
+	// service is serving the EMPTY overlay instead (see Degradation). It is on
+	// the public head deliberately: it is a fact about the file, not about any
+	// operator, and a consumer that silently loaded the shipped tree when it
+	// expected an overlay deserves to be able to say so.
+	Degraded bool `json:"degraded"`
 }
 
 // fingerprint hashes ONLY the content (docs + deletions), so two hosts that
@@ -191,15 +253,51 @@ type logEntry struct {
 // one mutex around the read-modify-write cycle is the whole concurrency story
 // (same shape as internal/curation).
 type Service struct {
-	store *jsonstore.Store
-	rdb   *redisx.Client
-	mu    sync.Mutex
-	now   func() time.Time
+	store   *jsonstore.Store
+	rdb     *redisx.Client
+	shipped *ShippedTree
+	mu      sync.Mutex
+	now     func() time.Time
+	// degraded is non-nil while the durable file on disk is unparseable and the
+	// service is serving the empty overlay in its place. Written and read under
+	// mu (every load() call holds it).
+	degraded *Degradation
+}
+
+// Degradation records a corrupt/half-written durable file — requirement 5's
+// "surface the problem rather than failing to boot", made inspectable instead
+// of only logged.
+type Degradation struct {
+	At     time.Time `json:"at"`
+	Reason string    `json:"reason"`
+	// Bytes is the size of the unreadable file, so an operator can tell a
+	// truncated write ("it stops mid-object") from a wholesale overwrite.
+	Bytes int `json:"bytes"`
+	// Quarantine is the jsonstore id under `content-overlay` where the original
+	// bytes were preserved verbatim. NOTHING is ever deleted to recover.
+	Quarantine string `json:"quarantine"`
+	// rawHash dedupes: the same corrupt content is quarantined once, not on
+	// every read.
+	rawHash string
+}
+
+// Option configures the service at construction.
+type Option func(*Service)
+
+// WithContentDir points the service at the SHIPPED content tree (CONTENT_DIR)
+// so it can answer "has the shipped doc moved underneath this overlay entry?".
+// Without it every entry reports an UNKNOWN base rather than a clean one.
+func WithContentDir(dir string) Option {
+	return func(s *Service) { s.shipped = NewShippedTree(dir) }
 }
 
 // New builds the service. rdb may be nil (no invalidation bus).
-func New(store *jsonstore.Store, rdb *redisx.Client) *Service {
-	return &Service{store: store, rdb: rdb, now: time.Now}
+func New(store *jsonstore.Store, rdb *redisx.Client, opts ...Option) *Service {
+	s := &Service{store: store, rdb: rdb, now: time.Now, shipped: NewShippedTree("")}
+	for _, opt := range opts {
+		opt(s)
+	}
+	return s
 }
 
 // SetNow overrides the clock seam (tests inject a fixed clock).
@@ -207,25 +305,126 @@ func (s *Service) SetNow(fn func() time.Time) { s.now = fn }
 
 // load reads the durable overlay. A missing file is the empty state, not an
 // error. Backfills nil maps from a hand-edited/older file.
+//
+// ── THE CORRUPTION CONTRACT (#189 requirement 5) ─────────────────────────────
+// An unparseable file is NOT an error here. A half-written or garbage
+// `overlay.json` degrades to the EMPTY overlay — i.e. to exactly the shipped
+// content tree — after preserving the original bytes under a quarantine id and
+// logging loudly. The platform boots, the game-server boots, players play the
+// shipped content, and the problem is visible on Head (`degraded`) and on the
+// admin status page instead of taking the host down.
+//
+// Any OTHER error (permissions, a dying disk) is still returned: those are not
+// "the file says nonsense", they are "the machine is not answering", and
+// pretending the overlay is empty would be a lie about durable state.
 func (s *Service) load() (Overlay, error) {
 	var o Overlay
 	err := s.store.Get(Collection, DocID, &o)
 	if errors.Is(err, jsonstore.ErrNotFound) {
+		s.degraded = nil
 		return EmptyOverlay(), nil
 	}
 	if err != nil {
+		if isUnparseable(err) {
+			s.enterDegraded(err)
+			return EmptyOverlay(), nil
+		}
 		return EmptyOverlay(), err
 	}
+	s.degraded = nil
 	if o.Docs == nil {
 		o.Docs = map[string]json.RawMessage{}
 	}
 	if o.Deleted == nil {
 		o.Deleted = map[string]bool{}
 	}
+	if o.Bases == nil {
+		o.Bases = map[string]BaseRef{}
+	}
 	if o.SchemaVersion == 0 {
 		o.SchemaVersion = SchemaVersion
 	}
 	return o, nil
+}
+
+// isUnparseable distinguishes "the bytes are not a valid Overlay" from every
+// other read failure. Both encoding/json error types are matched: a truncated
+// write yields a SyntaxError, a hand-edit that turns `docs` into a number
+// yields an UnmarshalTypeError, and both mean the same thing operationally.
+func isUnparseable(err error) bool {
+	var se *json.SyntaxError
+	var ute *json.UnmarshalTypeError
+	return errors.As(err, &se) || errors.As(err, &ute)
+}
+
+// enterDegraded preserves the unreadable bytes and records the degradation.
+// Caller holds mu.
+//
+// The corrupt file is deliberately NOT deleted or repaired: the operator may
+// want it, and a store that silently destroys durable state to make itself
+// readable is worse than one that is unreadable. The next successful write
+// simply replaces it (jsonstore.Put is atomic), by which point the original is
+// already safe under its quarantine id.
+func (s *Service) enterDegraded(cause error) {
+	raw := s.readRaw()
+	sum := sha256.Sum256(raw)
+	rawHash := hex.EncodeToString(sum[:])[:12]
+
+	if s.degraded != nil && s.degraded.rawHash == rawHash {
+		return // same broken bytes, already reported and already quarantined
+	}
+	quarantine := DocID + ".corrupt-" + rawHash
+	d := &Degradation{
+		At:         s.now().UTC(),
+		Reason:     truncate(cause.Error(), 160),
+		Bytes:      len(raw),
+		Quarantine: quarantine,
+		rawHash:    rawHash,
+	}
+	// Quarantine as base64 rather than a string: the bytes may not be valid
+	// UTF-8, and json.Marshal would silently replace those with U+FFFD — a
+	// lossy "backup" is not a backup.
+	err := s.store.Put(Collection, quarantine, map[string]any{
+		"quarantinedAt": d.At,
+		"reason":        d.Reason,
+		"bytes":         d.Bytes,
+		"rawBase64":     base64.StdEncoding.EncodeToString(raw),
+	})
+	if err != nil {
+		slog.Error("contentoverlay: could not quarantine the corrupt overlay", "err", err)
+		d.Quarantine = ""
+	}
+	s.degraded = d
+	slog.Error("contentoverlay: DURABLE OVERLAY IS UNREADABLE — serving the shipped content tree instead",
+		"reason", d.Reason, "bytes", d.Bytes, "quarantine", d.Quarantine,
+		"collection", Collection, "docId", DocID)
+}
+
+// readRaw reads the durable file's bytes directly (for quarantine). Failure is
+// not fatal: an empty quarantine is still better than losing the degradation.
+func (s *Service) readRaw() []byte {
+	path, err := s.store.Path(Collection, DocID)
+	if err != nil {
+		return nil
+	}
+	// #nosec G304 -- `path` is jsonstore's own resolved path for a constant
+	// collection/id pair, containment-checked inside the store root.
+	raw, err := os.ReadFile(path)
+	if err != nil {
+		return nil
+	}
+	return raw
+}
+
+// Degraded returns the current degradation, or nil when the durable file reads
+// cleanly. Reading it forces a load so the answer is about the file NOW.
+func (s *Service) Degraded(ctx context.Context) (*Degradation, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if _, err := s.load(); err != nil {
+		return nil, err
+	}
+	return s.degraded, nil
 }
 
 // Get returns the whole current overlay (also the transport BUNDLE the
@@ -236,13 +435,18 @@ func (s *Service) Get(ctx context.Context) (Overlay, error) {
 	return s.load()
 }
 
-// Head returns the cheap probe document (generation / fingerprint / counts).
+// Head returns the cheap probe document (generation / fingerprint / counts),
+// plus whether the durable file is currently unreadable.
 func (s *Service) Head(ctx context.Context) (Head, error) {
-	o, err := s.Get(ctx)
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	o, err := s.load()
 	if err != nil {
 		return Head{}, err
 	}
-	return o.Head(), nil
+	hd := o.Head()
+	hd.Degraded = s.degraded != nil
+	return hd, nil
 }
 
 // PutDoc upserts one content doc into the overlay and advances the generation.
@@ -273,7 +477,35 @@ func (s *Service) PutDoc(ctx context.Context, collection, id string, doc json.Ra
 	}
 	o.Docs[k] = compact
 	delete(o.Deleted, k)
+	o.Bases[k] = s.captureBase(collection, id, by)
 	return s.commit(ctx, o, by, "put", k)
+}
+
+// captureBase records what the SHIPPED tree said about this key at edit time —
+// the three-way-merge base. It is read from the shipped `_index.json`, i.e. from
+// the hash the TypeScript content build itself wrote, so Go never re-implements
+// hashDoc (see shipped.go).
+//
+// The console does NOT get to supply this value. It could (it has the shipped
+// doc in hand), but then the base would be caller-asserted and a buggy or stale
+// console tab could stamp an entry "verified against the current shipped doc"
+// when it was verified against a doc from an hour ago. Reading it here means the
+// value written and the value compared against later come from the same file on
+// the same disk.
+func (s *Service) captureBase(collection, id, by string) BaseRef {
+	ref := BaseRef{At: s.now().UTC(), By: by}
+	hash, present, err := s.shipped.Hash(collection, id)
+	if err != nil {
+		// UNANSWERABLE, not "absent". Known stays false → the entry is flagged
+		// for review rather than silently trusted (csync-03).
+		slog.Warn("contentoverlay: no shipped base recorded for this edit (content tree unreadable)",
+			"collection", collection, "id", id, "err", err)
+		return ref
+	}
+	ref.Known = true
+	ref.Shipped = present
+	ref.Hash = hash
+	return ref
 }
 
 // DeleteDoc tombstones a doc so the merged tree drops it, and advances the
@@ -296,20 +528,78 @@ func (s *Service) DeleteDoc(ctx context.Context, collection, id string, by strin
 	}
 	delete(o.Docs, k)
 	o.Deleted[k] = true
+	o.Bases[k] = s.captureBase(collection, id, by)
 	return s.commit(ctx, o, by, "delete", k)
 }
 
-// commit stamps, persists, logs and announces a new overlay generation. Caller
-// holds the mutex. The durable write is the only step that may fail the call;
-// the log line and the invalidation are best-effort (they cannot lose data).
+// RevertDoc REMOVES the overlay's opinion about a key entirely — no doc, no
+// tombstone — so the merged tree falls back to whatever the shipped content
+// tree says.
+//
+// This is a genuinely different verb from DeleteDoc and the console needs both.
+// DeleteDoc says "this doc should not exist", which keeps overriding the shipped
+// tree forever. RevertDoc says "never mind, the repo is right" — the ONLY way to
+// clear a stale entry once `git pull` has brought a better version of the doc.
+// Without it, an operator faced with a stale entry has no non-destructive exit.
+func (s *Service) RevertDoc(ctx context.Context, collection, id string, by string) (Head, error) {
+	if err := validateKey(collection, id); err != nil {
+		return Head{}, err
+	}
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	o, err := s.load()
+	if err != nil {
+		return Head{}, err
+	}
+	k := key(collection, id)
+	_, hadDoc := o.Docs[k]
+	_, hadTombstone := o.Deleted[k]
+	if !hadDoc && !hadTombstone {
+		return Head{}, httpx.BadRequest("nothing is overlaid at " + truncate(k, 80))
+	}
+	delete(o.Docs, k)
+	delete(o.Deleted, k)
+	delete(o.Bases, k)
+	return s.commit(ctx, o, by, "revert", k)
+}
+
+// commit stamps, audits, persists, logs and announces a new overlay generation.
+// Caller holds the mutex.
+//
+// ── WHY THE AUDIT LINE IS WRITTEN FIRST, AND FAILS THE CALL ──────────────────
+// #189 requirement 4 asks that every write "leaves an audit line". That is a
+// GUARANTEE, not a hope, so it is enforced here rather than left to each
+// handler remembering to call Audit() afterwards (the shape the earlier pass
+// had — a handler-side, best-effort call that a future route could simply
+// forget). Two consequences, both chosen deliberately:
+//
+//   - the append happens BEFORE the durable content write, so there can never
+//     be a content change with no trace of who made it. The inverse — an audit
+//     line for a mutation that then failed to persist — is the safe direction:
+//     it over-reports an attempt rather than under-reporting a change.
+//   - an audit-append failure ABORTS the mutation (a real error, not a warn).
+//     A host that cannot record who changed the content is a host that should
+//     not be changing the content.
+//
+// The generation log and the redis invalidation stay best-effort: neither can
+// lose data (the log is a convenience history, and a missed invalidation only
+// costs a shard its cache TTL).
 func (s *Service) commit(ctx context.Context, o Overlay, by, op, k string) (Head, error) {
 	o.SchemaVersion = SchemaVersion
 	o.Generation++
 	o.UpdatedAt = s.now().UTC()
 	o.UpdatedBy = by
+
+	if err := s.audit(by, "content-overlay."+op, map[string]any{
+		"key": k, "generation": o.Generation, "docs": len(o.Docs), "deleted": len(o.Deleted),
+	}); err != nil {
+		return Head{}, fmt.Errorf("contentoverlay: refusing an unaudited content change: %w", err)
+	}
 	if err := s.store.Put(Collection, DocID, o); err != nil {
 		return Head{}, err
 	}
+	// the durable file now parses again by construction
+	s.degraded = nil
 	// append-only history (undo/audit trail) — best effort
 	if err := s.store.AppendLine(LogCollection, o.UpdatedAt.Format("2006-01-02"), logEntry{
 		Generation: o.Generation, At: o.UpdatedAt, By: by, Op: op, Key: k,
@@ -317,7 +607,9 @@ func (s *Service) commit(ctx context.Context, o Overlay, by, op, k string) (Head
 		slog.Warn("contentoverlay: generation-log append failed (overlay itself is written)", "err", err)
 	}
 	s.announce(ctx, o)
-	return o.Head(), nil
+	hd := o.Head()
+	hd.Degraded = false
+	return hd, nil
 }
 
 // announce publishes a content-invalidation so a running shard re-fetches the
@@ -336,9 +628,12 @@ func (s *Service) announce(ctx context.Context, o Overlay) {
 	}
 }
 
-// Audit appends one line to the shared admin audit log so overlay edits show up
-// on the console's audit page next to every other operator action. Best-effort.
-func (s *Service) Audit(adminID, action string, detail map[string]any) {
+// audit appends one line to the shared admin audit log so overlay edits show up
+// on the console's audit page next to every other operator action.
+//
+// It returns the error rather than swallowing it: commit() treats a failed
+// append as a failed mutation (see the block comment there).
+func (s *Service) audit(adminID, action string, detail map[string]any) error {
 	entry := admin.AuditEntry{
 		AdminID:  adminID,
 		Action:   action,
@@ -347,8 +642,51 @@ func (s *Service) Audit(adminID, action string, detail map[string]any) {
 		TS:       s.now().UTC(),
 	}
 	if err := s.store.AppendLine(admin.ColAudit, entry.TS.Format("2006-01-02"), entry); err != nil {
-		slog.Warn("contentoverlay: audit append failed", "action", action, "err", err)
+		slog.Error("contentoverlay: audit append failed — mutation refused", "action", action, "err", err)
+		return err
 	}
+	return nil
+}
+
+// ReadLog returns the most recent generation-log lines, newest first, across the
+// last `days` daily files. This is the ONLY reader of data/content-overlay-log/
+// — the file was being written with nothing to show it, which is exactly the
+// "cannot debug what you cannot see" gap #189 requirement 6 names.
+func (s *Service) ReadLog(days, limit int) ([]LogLine, error) {
+	if days <= 0 {
+		days = 14
+	}
+	if limit <= 0 || limit > 500 {
+		limit = 200
+	}
+	out := make([]LogLine, 0, limit)
+	day := s.now().UTC()
+	for i := 0; i < days && len(out) < limit; i++ {
+		lines, err := s.store.ReadLines(LogCollection, day.Format("2006-01-02"))
+		day = day.AddDate(0, 0, -1)
+		if err != nil {
+			// a single unreadable day must not hide the other thirteen
+			slog.Warn("contentoverlay: generation-log day unreadable", "err", err)
+			continue
+		}
+		for j := len(lines) - 1; j >= 0 && len(out) < limit; j-- {
+			var e LogLine
+			if err := json.Unmarshal(lines[j], &e); err != nil {
+				continue
+			}
+			out = append(out, e)
+		}
+	}
+	return out, nil
+}
+
+// LogLine is one generation-history entry as the admin surface reports it.
+type LogLine struct {
+	Generation int       `json:"generation"`
+	At         time.Time `json:"at"`
+	By         string    `json:"by"`
+	Op         string    `json:"op"`
+	Key        string    `json:"key"`
 }
 
 // compactObject validates that b is a JSON OBJECT and returns its compacted

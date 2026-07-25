@@ -10,6 +10,8 @@ import { normalizeOpsPayload } from "./serverOps";
 import type { OpsPayload, OpsSave } from "./serverOps";
 import { normalizeInvitePayload } from "./invites";
 import type { InvitePayload } from "./invites";
+import { normalizeLog, normalizeStatus } from "./contentOverlay";
+import type { OverlayHead, OverlayLogLine, OverlayStatus } from "./contentOverlay";
 import type {
   AccountRow,
   AccountSearch,
@@ -259,6 +261,76 @@ export function deleteAnnouncement(id: string): Promise<{ status: string }> {
 export function listAudit(page = 1, pageSize = 50): Promise<AuditList> {
   const qs = new URLSearchParams({ page: String(page), pageSize: String(pageSize) });
   return api.request<AuditList>(`/admin/audit?${qs.toString()}`);
+}
+
+// ---- content overlay (task #189) --------------------------------------------
+// THE PRODUCTION CONTENT WRITE PATH. Every call here goes to the PLATFORM with
+// an admin JWT and is audited server-side; none of it touches /content-api (the
+// dev-only loopback editor), which has no route in the production edge and must
+// keep having none. See src/contentOverlay.ts for why this is a second writer
+// rather than a relaxation of the dev gate.
+//
+// The public GET /content-overlay/head is deliberately NOT wrapped: it blanks
+// updatedBy for anonymous callers, so the console reads the admin-only
+// /content-overlay/status instead, which carries the per-entry "when + by whom".
+
+/** What is overlaid, what the repo says now, and which entries need a look. */
+export function getOverlayStatus(): Promise<OverlayStatus> {
+  return api.request<unknown>("/content-overlay/status").then(normalizeStatus);
+}
+
+/** The generation history from data/content-overlay-log/ (newest first). */
+export function getOverlayLog(): Promise<OverlayLogLine[]> {
+  return api.request<unknown>("/content-overlay/log").then(normalizeLog);
+}
+
+/** What the SHIPPED (repo) tree currently says for a doc — the editor's starting point. */
+export function getShippedDoc(
+  collection: string,
+  id: string,
+): Promise<{ present: boolean; hash: string; doc: unknown }> {
+  return api
+    .request<{ present?: boolean; hash?: string; doc?: unknown }>(
+      `/content-overlay/shipped/${encodeURIComponent(collection)}/${encodeURIComponent(id)}`,
+    )
+    .then((r) => ({ present: r?.present === true, hash: r?.hash ?? "", doc: r?.doc ?? null }));
+}
+
+/**
+ * Upsert a doc into the durable overlay. The platform records the SHIPPED hash
+ * at this moment as the entry's merge base — the console deliberately does not
+ * supply it, so a stale browser tab cannot stamp an edit as verified against a
+ * doc it read an hour ago.
+ */
+export function putOverlayDoc(
+  collection: string,
+  id: string,
+  doc: Record<string, unknown>,
+): Promise<OverlayHead> {
+  return api.request<OverlayHead>(
+    `/content-overlay/docs/${encodeURIComponent(collection)}/${encodeURIComponent(id)}`,
+    { method: "PUT", body: doc },
+  );
+}
+
+/** Tombstone a doc: the merged content tree drops it, shipped version included. */
+export function deleteOverlayDoc(collection: string, id: string): Promise<OverlayHead> {
+  return api.request<OverlayHead>(
+    `/content-overlay/docs/${encodeURIComponent(collection)}/${encodeURIComponent(id)}`,
+    { method: "DELETE" },
+  );
+}
+
+/**
+ * REVERT: drop the overlay's entry entirely so the merged tree falls back to the
+ * shipped doc. This is the non-destructive exit from a `stale` row — a tombstone
+ * would hide the repo's newer version too, which is the opposite of the intent.
+ */
+export function revertOverlayDoc(collection: string, id: string): Promise<OverlayHead> {
+  return api.request<OverlayHead>(
+    `/content-overlay/entries/${encodeURIComponent(collection)}/${encodeURIComponent(id)}`,
+    { method: "DELETE" },
+  );
 }
 
 // ---- curation (content whitelist) -------------------------------------------
