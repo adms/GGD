@@ -20,6 +20,7 @@ import type {
   RoomResp,
   SessionResp,
   StartInfo,
+  TokenPair,
   Wallet,
   ChatMsg,
 } from "./types";
@@ -89,6 +90,61 @@ export function bootstrapState(): Promise<BootstrapState> {
 
 export function login(username: string, password: string): Promise<SessionResp> {
   return api.request<SessionResp>("/auth/login", { body: { username, password }, auth: false });
+}
+
+// ------------------------------------------------ QR device login (#197/#199)
+
+/**
+ * QR reverse-login for the keyboard-less handheld (RFC 8628 adapted). The
+ * handheld — which cannot type a credential on a gamepad — mints a grant here,
+ * renders `verificationUriComplete` as a QR, and polls until an already-logged-in
+ * PHONE scans it and approves. See ./deviceLogin for the poll driver and ./qr
+ * for the self-contained (no-CDN) encoder.
+ */
+export interface DeviceStartResp {
+  /** SECRET — handheld-only, never rendered. Feeds devicePoll, never the QR. */
+  deviceCode: string;
+  /** public short code (XXXX-XXXX), the only credential-ish thing in the QR. */
+  userCode: string;
+  /** where the phone approves, e.g. https://ggd.adms.ai/link */
+  verificationUri: string;
+  /** the EXACT QR payload: verificationUri + ?code=<userCode>, nothing else. */
+  verificationUriComplete: string;
+  expiresIn: number;
+  pollInterval: number;
+}
+
+/** The RFC-8628-style discriminated union devicePoll returns (HTTP 200 body). */
+export type DevicePollResp =
+  | { status: "authorization_pending" }
+  | { status: "slow_down"; pollInterval: number }
+  | { status: "expired" }
+  | { status: "denied" }
+  | { status: "approved"; tokens: TokenPair; account: AccountPublic };
+
+/**
+ * POST /auth/device/start — mint a grant. UNAUTH: the handheld has no session
+ * yet, that is the whole point. The server reads only the User-Agent (audit).
+ */
+export function deviceStart(): Promise<DeviceStartResp> {
+  return api.request<DeviceStartResp>("/auth/device/start", { body: {}, auth: false });
+}
+
+/**
+ * POST /auth/device/poll — advance the grant. UNAUTH and rate-limited per
+ * device-code server-side; the caller must honor `slow_down`.
+ */
+export function devicePoll(deviceCode: string): Promise<DevicePollResp> {
+  return api.request<DevicePollResp>("/auth/device/poll", { body: { deviceCode }, auth: false });
+}
+
+/**
+ * POST /auth/device/approve — the phone's decision. AUTHENTICATED: the approving
+ * account is the trust anchor, taken from the bearer token server-side, never
+ * the body. A cross-site page cannot attach the bearer, so it cannot approve.
+ */
+export function deviceApprove(userCode: string, decision: "approve" | "deny"): Promise<{ ok: boolean }> {
+  return api.request<{ ok: boolean }>("/auth/device/approve", { body: { userCode, decision } });
 }
 
 export function logout(refreshToken: string): Promise<{ status: string }> {

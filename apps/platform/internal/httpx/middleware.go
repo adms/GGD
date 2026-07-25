@@ -1,6 +1,7 @@
 package httpx
 
 import (
+	"context"
 	"log/slog"
 	"net"
 	"net/http"
@@ -19,6 +20,41 @@ func Recoverer(next http.Handler) http.Handler {
 		}()
 		next.ServeHTTP(w, r)
 	})
+}
+
+// RateAllower is the throttle primitive an IPRateLimit needs: increment a
+// counter for (scope, key) inside a window and report whether the caller is
+// still under limit. redisx.Client satisfies it; the interface lives here so
+// httpx never imports redisx (and so authorization packages can wire a
+// per-IP throttle WITHOUT themselves reading a caller address — see
+// internal/server/devsurface_test.go's no-address-trust invariant).
+type RateAllower interface {
+	RateAllow(ctx context.Context, scope, key string, limit int64, window time.Duration) (bool, error)
+}
+
+// IPRateLimit throttles a route by CALLER IP. The address is read HERE, in the
+// http-plumbing layer that already owns ClientIP, and used only as a bucket
+// key — never as a permission. That placement is deliberate: it lets the auth
+// package apply an IP throttle to /auth/device/start (an unauthenticated,
+// grant-minting endpoint that an attacker could flood) while the auth package
+// itself stays free of any address read, which its own tests enforce. A forged
+// header buys an attacker a fresh bucket — it degrades a throttle, it can never
+// grant anything.
+//
+// On a Redis error the request is ALLOWED through (fail-open): a throttle
+// backend outage must not take down login, and the downstream handler still
+// enforces every real gate.
+func IPRateLimit(rl RateAllower, scope string, limit int64, window time.Duration) func(http.Handler) http.Handler {
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			ok, err := rl.RateAllow(r.Context(), scope, ClientIP(r), limit, window)
+			if err == nil && !ok {
+				WriteError(w, RateLimited("too many requests"))
+				return
+			}
+			next.ServeHTTP(w, r)
+		})
+	}
 }
 
 // RequestLogger logs each request via slog.

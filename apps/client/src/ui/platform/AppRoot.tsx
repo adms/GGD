@@ -28,6 +28,7 @@ import { AssetConsoleRoute } from "../assets/AssetConsoleRoute";
 import { CreditsRoute } from "./CreditsRoute";
 import { PadFocusNav } from "../PadFocusNav";
 import { GamepadDiagnostics } from "../GamepadDiagnostics";
+import { LinkRoute } from "./LinkRoute";
 import { useHud } from "../../net/RoomStore";
 import { useContentReady, MatchContentGate } from "./ContentGate";
 import { Btn } from "./widgets";
@@ -129,6 +130,10 @@ export function AppRoot(): React.JSX.Element {
           the licence text over the artwork. Same hash-overlay mechanism as the
           codex, so it opens from any screen and is deep-linkable. */}
       <CreditsRoute />
+      {/* 用手機登入 approval page (#197/#199): the phone lands on /link?code=…
+          from the handheld's QR and approves here. A path overlay, so it opens
+          over any screen without touching the screen machine. */}
+      <LinkRoute />
       {/* The audio quick-toggle (#14) and the build stamp (#66). Declared in
           ../GlobalChrome, NOT inline here, because this is not the only render
           tree: `#replay=` boots ReplayApp instead of AppRoot, and both of these

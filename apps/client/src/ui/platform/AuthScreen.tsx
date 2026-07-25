@@ -30,6 +30,7 @@ import { TEXT_DIM, TEXT_MAIN } from "../theme";
 import { HomeFooter } from "./HomeFooter";
 import { ChampionMarquee } from "./ChampionMarquee";
 import { MatchLoadingOverlay } from "./MatchLoadingOverlay";
+import { DeviceLoginPanel } from "./DeviceLoginPanel";
 import {
   audioSettings,
   audioSystem,
@@ -135,6 +136,9 @@ export function AuthScreen(): React.JSX.Element {
    */
   const [ownerToken, setOwnerToken] = useState("");
   const [offlineMap, setOfflineMap] = useState(DEFAULT_MAP_ID);
+  // 用手機登入 (#197/#199): opens the QR reverse-login panel. On a keyboard-less
+  // handheld this is the whole login path — no text field ever needs focus.
+  const [showDeviceLogin, setShowDeviceLogin] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<RegisterErrors>({});
   const authBusy = useApp((s) => s.authBusy);
   const authError = useApp((s) => s.authError);
@@ -786,6 +790,24 @@ export function AuthScreen(): React.JSX.Element {
               {authBusy ? "…" : mode === "login" ? "Sign in" : "Create account"}
             </Btn>
           </span>
+          {mode === "login" && (
+            // 用手機登入 (#197/#199): the gamepad-first login path. type="button"
+            // so it never submits the surrounding form. On a handheld the pad
+            // just focuses THIS button and presses A — no keyboard, no text
+            // field. Opens the QR panel below.
+            <span onMouseEnter={playHover} style={{ display: "block" }}>
+              <Btn
+                type="button"
+                onClick={() => {
+                  playClick();
+                  setShowDeviceLogin(true);
+                }}
+                style={{ width: "100%" }}
+              >
+                用手機登入 · Sign in with phone
+              </Btn>
+            </span>
+          )}
         </form>
           </>
         )}
@@ -901,6 +923,27 @@ export function AuthScreen(): React.JSX.Element {
           opacity: 0,
         }}
       />
+
+      {/* 用手機登入 QR panel (#197/#199): a modal over the login screen. The
+          gamepad drives it (D-pad focus + A/B); on approval the granted session
+          lands and the app transitions to the lobby. B / Cancel dismisses. */}
+      {showDeviceLogin && (
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            zIndex: 45,
+            display: "grid",
+            placeItems: "center",
+            background: "rgba(4,6,12,0.9)",
+            pointerEvents: "auto",
+          }}
+        >
+          <Panel style={{ background: "rgba(9, 12, 21, 0.96)" }}>
+            <DeviceLoginPanel onClose={() => setShowDeviceLogin(false)} />
+          </Panel>
+        </div>
+      )}
 
       {/* login→battle handoff (task #74): the >=1s loading bar. Renders only
           while a launch is staged (matchLoading set); holds this screen — and

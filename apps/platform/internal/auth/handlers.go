@@ -1,11 +1,14 @@
 package auth
 
 import (
+	"errors"
 	"net/http"
+	"time"
 
 	"github.com/go-chi/chi/v5"
 
 	"github.com/ggd/platform/internal/account"
+	"github.com/ggd/platform/internal/data/redisx"
 	"github.com/ggd/platform/internal/httpx"
 )
 
@@ -29,6 +32,15 @@ func (h *Handlers) Mount(r chi.Router) {
 	r.Post("/auth/login", h.login)
 	r.Post("/auth/refresh", h.refresh)
 	r.Post("/auth/logout", h.logout)
+	// QR reverse-login for the keyboard-less handheld (#197/#199, RFC 8628).
+	// /start and /poll are UNAUTH — the handheld has no session yet, that is the
+	// whole point. /start is IP-throttled by a MIDDLEWARE that reads the caller
+	// address in the httpx layer, NOT here: the auth package never reads an
+	// address itself (see internal/server/devsurface_test.go). /poll is throttled
+	// per device-code inside the service. See device.go.
+	r.With(httpx.IPRateLimit(h.svc.RateLimiter(), "devstart", 5, time.Minute)).
+		Post("/auth/device/start", h.deviceStart)
+	r.Post("/auth/device/poll", h.devicePoll)
 	r.Group(func(pr chi.Router) {
 		pr.Use(h.svc.Middleware)
 		pr.Get("/me", h.me)
@@ -36,6 +48,12 @@ func (h *Handlers) Mount(r chi.Router) {
 		// current-password-gated inside the service — a session alone can never
 		// change a password (see password.go's header).
 		pr.Post("/account/password", h.changePassword)
+		// Phone-side QR approval (#197/#199). AUTHENTICATED: the approver's
+		// existing session is the trust anchor, and the approving account comes
+		// from MustIdentity — never the request body. A cross-site page cannot
+		// attach the bearer token, so a forged navigation cannot silently
+		// approve (the CSRF defense; see device.go's threat model).
+		pr.Post("/auth/device/approve", h.deviceApprove)
 	})
 }
 
@@ -167,6 +185,78 @@ func (h *Handlers) changePassword(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	httpx.WriteJSON(w, http.StatusOK, changePasswordResp{Status: "ok", Tokens: pair, SessionsRevoked: true})
+}
+
+// deviceStart mints a QR device-login grant for the handheld. The handheld has
+// no credentials to send; the only thing read off the request is the
+// User-Agent (audit only). IP throttling is applied by the mount-time
+// middleware, so nothing here reads a caller address.
+func (h *Handlers) deviceStart(w http.ResponseWriter, r *http.Request) {
+	grant, err := h.svc.DeviceStart(r.Context(), r.UserAgent())
+	if err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	httpx.WriteJSON(w, http.StatusOK, grant)
+}
+
+type devicePollReq struct {
+	DeviceCode string `json:"deviceCode"`
+}
+
+// devicePollResp is the RFC-8628-style discriminated union. The pending/slow
+// states are HTTP 200 with the state in the body so the handheld polls one
+// uniform endpoint; tokens/account appear only on the approved branch.
+type devicePollResp struct {
+	Status       string          `json:"status"`
+	PollInterval int             `json:"pollInterval,omitempty"`
+	Tokens       *TokenPair      `json:"tokens,omitempty"`
+	Account      *account.Public `json:"account,omitempty"`
+}
+
+func (h *Handlers) devicePoll(w http.ResponseWriter, r *http.Request) {
+	var req devicePollReq
+	if err := httpx.DecodeJSON(r, &req); err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	res, err := h.svc.DevicePoll(r.Context(), req.DeviceCode)
+	if err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	resp := devicePollResp{Status: res.Status, PollInterval: res.PollInterval}
+	if res.Status == devStatusApproved {
+		pub := res.Account.Public()
+		tok := res.Tokens
+		resp.Tokens = &tok
+		resp.Account = &pub
+	}
+	httpx.WriteJSON(w, http.StatusOK, resp)
+}
+
+type deviceApproveReq struct {
+	UserCode string `json:"userCode"`
+	Decision string `json:"decision"` // "approve" | "deny"
+}
+
+func (h *Handlers) deviceApprove(w http.ResponseWriter, r *http.Request) {
+	id := MustIdentity(r.Context()) // the authenticated approver — the trust anchor
+	var req deviceApproveReq
+	if err := httpx.DecodeJSON(r, &req); err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	err := h.svc.DeviceApprove(r.Context(), req.UserCode, id.AccountID, req.Decision == "approve")
+	if err != nil {
+		if errors.Is(err, redisx.ErrDeviceUnknown) {
+			httpx.WriteError(w, httpx.NotFound("unknown or expired code"))
+			return
+		}
+		httpx.WriteError(w, err)
+		return
+	}
+	httpx.WriteJSON(w, http.StatusOK, map[string]bool{"ok": true})
 }
 
 func (h *Handlers) me(w http.ResponseWriter, r *http.Request) {

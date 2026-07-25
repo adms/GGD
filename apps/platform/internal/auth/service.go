@@ -83,6 +83,10 @@ type Service struct {
 	// imports internal/admin, which imports this package, so auth can never
 	// import it — the composition root hands it in (SetPendingNotifier).
 	notifier PendingNotifier
+	// deviceVerificationURI is where the phone approves a QR device-login
+	// (#197/#199). Empty falls back to defaultVerificationURI. Set at the
+	// composition root via SetDeviceVerificationURI. See device.go.
+	deviceVerificationURI string
 }
 
 // PendingNotifier is told when a registration lands PENDING under the #126

@@ -48,6 +48,7 @@ import type {
   RoomResp,
   SeatTokenEntry,
   SkinDoc,
+  TokenPair,
   Wallet,
 } from "./types";
 
@@ -185,6 +186,13 @@ export interface AppState {
   // ------------------------------------------------------------ actions --
   boot(): Promise<void>;
   doLogin(username: string, password: string): Promise<void>;
+  /**
+   * QR device-login success (#197/#199). The token pair an approved handheld
+   * received at the poll is fed through the IDENTICAL sink a typed login uses
+   * (api.setTokens → enterLobby), so a device-granted session is
+   * indistinguishable from a typed one from here on.
+   */
+  applyDeviceSession(tokens: TokenPair, account: AccountPublic): Promise<void>;
   /**
    * Register. `inviteCode` is the private-deploy gate (#174) — required by the
    * SERVER on a gated deploy, ignored on an open one. Optional here so the
@@ -477,6 +485,15 @@ export const appStore = createStore<AppState>()((set, get) => {
       } catch (err) {
         set({ authBusy: false, authError: errText(err) });
       }
+    },
+
+    async applyDeviceSession(tokens, account) {
+      // Same success path as doLogin — persist the pair, then enter the lobby.
+      // The server already ran the approval/ban gate before minting these
+      // tokens (auth.DevicePoll → AuthorizePlay), so there is nothing extra to
+      // check here that a typed login would not also skip.
+      api.setTokens(tokens);
+      await enterLobby(account);
     },
 
     async doRegister(username, email, password, inviteCode = "", bootstrapToken = "") {

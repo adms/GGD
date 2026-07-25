@@ -62,6 +62,12 @@ export function Btn(props: {
    * one real submit button opts in explicitly with type="submit".
    */
   type?: "button" | "submit";
+  /**
+   * Optional handle to the underlying <button>, so a gamepad-driven screen can
+   * move DOM focus onto it (#197 — the QR device-login panel focuses buttons
+   * with the D-pad). Opt-in and unused by every existing caller.
+   */
+  btnRef?: React.Ref<HTMLButtonElement>;
   children: React.ReactNode;
 }): React.JSX.Element {
   const kind = props.kind ?? "ghost";
@@ -83,6 +89,7 @@ export function Btn(props: {
   const sfx = props.disabled ? undefined : buttonSfx(props.onClick);
   return (
     <button
+      ref={props.btnRef}
       className={cls}
       type={props.type ?? "button"}
       onClick={sfx ? sfx.onClick : props.onClick}
