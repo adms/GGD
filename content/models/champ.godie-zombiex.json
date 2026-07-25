@@ -1,0 +1,28 @@
+{
+  "id": "champ.godie-zombiex",
+  "schema": "model@1",
+  "glbPath": "assets/models/props/guardian_skeleton.glb",
+  "scale": 0.831,
+  "collisionRadius": 0.6,
+  "clipMap": {
+    "idle": "Idle_Combat",
+    "run": "Walking_D_Skeletons",
+    "attack": "Spellcast_Shoot",
+    "cast": "Spellcasting",
+    "hurt": "Hit_A",
+    "death": "Death_C_Skeletons"
+  },
+  "attachPoints": {
+    "rightHand": {
+      "x": 0.32,
+      "y": 1.05,
+      "z": 0.1
+    },
+    "overhead": {
+      "x": 0,
+      "y": 2.25,
+      "z": 0
+    }
+  },
+  "teamTintMaterials": []
+}

@@ -2,13 +2,13 @@
   "id": "godie-zombiex",
   "schema": "champion@1",
   "name": "聖杯黑泥醬 - 喪標麥可",
-  "description": "故事：\n黑化聖杯溢出的惡意邪念，凝成一具會走路的黑泥喪屍。平常懶洋洋拖著腳步，被惹毛時瞬間狂化。\n(去死團原創角色)\n\n推薦玩家 : 站樁扛傷、團戰吸收\n上手度 : 易\n\n角色成長：\n生命 + 65 / 級\n攻擊 + 2.0 / 級\n基礎跑速 3（極慢，喪屍設定；可再調）\n\n配音員參考：台灣台語版的兩津勘吉\n\n可學習的技能：黑泥硬化、黑泥噴吐、蹣跚衝撞、泥沼陷阱、聖杯溢出",
+  "description": "故事：\n黑化聖杯溢出的惡意邪念，凝成一具會走路的黑泥喪屍。平常懶洋洋拖著腳步，被惹毛時瞬間狂化。\n(去死團原創角色)\n\n推薦玩家 : 站樁扛傷、團戰吸收\n上手度 : 易\n\n角色成長：\n生命 + 50 / 級（基礎 100）\n攻擊 + 2.0 / 級\n基礎跑速 3（極慢，喪屍設定；可再調）\n\n配音員參考：台灣台語版的兩津勘吉\n\n可學習的技能：黑泥硬化、黑泥噴吐、蹣跚衝撞、泥沼陷阱、聖杯溢出",
   "role": "tank",
   "attackType": "melee",
-  "modelKey": "champ.thorne",
+  "modelKey": "champ.godie-zombiex",
   "baseStats": {
-    "maxHealth": 600,
-    "healthRegen": 4.0,
+    "maxHealth": 100,
+    "healthRegen": 1,
     "maxMana": 300,
     "manaRegen": 6.0,
     "ad": 36,
@@ -24,8 +24,8 @@
     "range": 1.2
   },
   "growth": {
-    "maxHealth": 65,
-    "healthRegen": 0.15,
+    "maxHealth": 50,
+    "healthRegen": 0.2,
     "maxMana": 22,
     "manaRegen": 0.1,
     "ad": 2.0,
@@ -232,7 +232,6 @@
   "tags": [
     "godie",
     "original",
-    "voxel-standin",
     "tank"
   ],
   "exAbility": "godie-zombiex.ex",

@@ -911,9 +911,15 @@ export class MatchController {
       this.rules.mobWaves &&
       this.phase.round >= this.rules.mobWaves.fromRound
     ) {
+      // #217: the ROUND is the mob's LEVEL channel. `this.phase.round` is the same
+      // deterministic host counter that already arms guardian HP two blocks up;
+      // mobRulesFromConfig bakes level = baseLevel + levelPerRound*(round-fromRound)
+      // — round 3 → lv3, round 4 → lv4 — and the levelled maxHp/regen into the
+      // rules ONCE, here. The sim never sees a round, and a replay re-arms from its
+      // own recorded ArenaRules + its own replayed round, so it round-trips exactly.
       beginCombatMobs(
         this.world,
-        mobRulesFromConfig(this.rules.mobWaves, this.world.dt),
+        mobRulesFromConfig(this.rules.mobWaves, this.world.dt, this.phase.round),
         this.pairings.map((p) => p.zone),
       );
     } else {

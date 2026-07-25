@@ -14,7 +14,9 @@
  *                flowers are armed). combat-second S = mobTicks/TICK_HZ.
  *   2) SCHEDULE— fire a wave when the cadence lands; wave k spawns min(k,cap)
  *                mobs per active zone, one at a time, never past maxAlivePerZone.
- *   3) AI      — each mob (ascending id) aims at the nearest enemy champion.
+ *   3) AI      — each mob (ascending id) aims at the nearest enemy champion,
+ *                then regenerates `rules.hpRegenPerSec * dt` (#217: a mob has no
+ *                StatsComp, so RegenSystem never sees it).
  *   4) MELEE   — a mob in range with a ready cooldown queues one melee packet.
  *   5) PAYOUT  — pay the killer for mobs that DIED this tick, then despawn them.
  *
@@ -94,6 +96,14 @@ export function mobSystem(world: SimWorld): void {
     mob.target = target;
     const nav = world.nav.get(mobId);
     if (nav) nav.attackTarget = target === -1 ? null : target;
+
+    // 3b) REGEN (task #217) — a mob has no StatsComp, so RegenSystem skips it.
+    //     Apply the LEVELLED hp regen baked into the rules with the exact same
+    //     `hp + perSec * dt` form RegenSystem uses for champions. Zero when the
+    //     champion doc is unavailable, so a content-free world is unchanged.
+    if (rules.hpRegenPerSec > 0) {
+      mhp.hp = Math.min(mhp.maxHp, mhp.hp + rules.hpRegenPerSec * world.dt);
+    }
 
     // 4) MELEE — in range + cooldown ready → queue one packet; else age the cd.
     if (target !== -1 && mob.attackCdTicks <= 0 && bestD2 <= rules.attackRangeSq) {
