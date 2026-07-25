@@ -71,6 +71,16 @@ services:
       # presenting that token may claim ownership:
       #   docker compose exec platform cat /data/owner-setup-token
       GGD_OWNER_BOOTSTRAP_TOKEN: "1"
+      # --- #209 Slack pending-registration notify + one-tap approve link ------
+      # Secrets/values live in docker/.env on the host, never committed. Empty =
+      # feature off (the notifier declines to build a link without GGD_PUBLIC_URL).
+      GGD_SLACK_WEBHOOK_URL: "${GGD_SLACK_WEBHOOK_URL:-}"
+      GGD_SLACK_NOTIFY_ENABLED: "${GGD_SLACK_NOTIFY_ENABLED:-}"
+      GGD_PUBLIC_URL: "${GGD_PUBLIC_URL:-}"
+      # --- #204 ONE-OFF welcome-crystal backfill ----------------------------
+      # Set GGD_BACKFILL_WELCOME_CRYSTALS=1 in docker/.env for a SINGLE deploy to
+      # grant the welcome 藍水晶 to pre-#204 accounts (idempotent), then remove it.
+      GGD_BACKFILL_WELCOME_CRYSTALS: "${GGD_BACKFILL_WELCOME_CRYSTALS:-}"
     ports:
       - "127.0.0.1:8080:8080"
 

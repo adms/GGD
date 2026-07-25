@@ -81,6 +81,30 @@ func TestWelcomeSeedIsOncePerAccount(t *testing.T) {
 	require.EqualValues(t, 100, wallet(ts, u.Access).Body["crystal"], "spending is not undone by a re-seed")
 }
 
+// TestBackfillWelcomeCrystalsNeverDoubleGrants: the ONE-OFF #204 backfill reuses
+// the seed's never-re-grant guard, so running it over accounts that already have a
+// walletmeta record grants nobody and tops up no veteran — the load-bearing safety
+// property for a migration that writes live balances. It reports skipped=len(ids).
+func TestBackfillWelcomeCrystalsNeverDoubleGrants(t *testing.T) {
+	testkit.Cover(t, "meta-crystal-backfill-idempotent")
+	ts := seeded(t, 1000)
+	a := ts.Register("alice")
+	b := ts.Register("bob")
+	// alice spends down to 100; bob keeps his 1000. Both now have meta records.
+	r := ts.Do(http.MethodPost, "/api/v1/wallet/champions/unlock", a.Access,
+		map[string]string{"champion": "vex"})
+	require.Equal(t, http.StatusOK, r.Status, string(r.Raw))
+
+	granted, skipped, err := ts.Srv.Wallet.BackfillWelcomeCrystals(
+		context.Background(), []string{a.ID, b.ID})
+	require.NoError(t, err)
+	require.Equal(t, 0, granted, "the backfill must never re-grant an account that already has a record")
+	require.Equal(t, 2, skipped)
+	// Balances untouched: alice still 100 (spend not undone), bob still 1000.
+	require.EqualValues(t, 100, wallet(ts, a.Access).Body["crystal"])
+	require.EqualValues(t, 1000, wallet(ts, b.Access).Body["crystal"])
+}
+
 // TestWelcomeSeedOffByDefault: the default (0) test wiring seeds nothing, which
 // is the property the settlement suite relies on. This documents it as a fact,
 // not an accident.

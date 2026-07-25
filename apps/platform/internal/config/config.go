@@ -139,6 +139,13 @@ type Config struct {
 	// wallet has zero crystals" baseline.
 	NewAccountCrystals int
 
+	// BackfillWelcomeCrystals, when true (GGD_BACKFILL_WELCOME_CRYSTALS=1), runs a
+	// ONE-OFF migration at boot: grant the #204 welcome 藍水晶 to every existing
+	// account that never received it. Idempotent (wallet.BackfillWelcomeCrystals
+	// reuses the seed's never-re-grant guard). Off by default; set for a single
+	// deploy, then removed — future one-off grants are handled ad hoc, not here.
+	BackfillWelcomeCrystals bool
+
 	// AccessTokenTTL is the JWT access-token lifetime.
 	AccessTokenTTL time.Duration
 	// RefreshTokenTTL is the opaque refresh-token lifetime in Redis.
@@ -598,32 +605,33 @@ func Load() (Config, error) {
 		return Config{}, err
 	}
 	cfg := Config{
-		Addr:                   getenv("PLATFORM_ADDR", ":8080"),
-		RedisAddr:              store.RedisAddr,
-		RedisPassword:          store.RedisPassword,
-		DataDir:                store.DataDir,
-		ContentDir:             getenv("CONTENT_DIR", "../../content"),
-		JWTSecret:              os.Getenv("JWT_SIGNING_SECRET"),
-		GameSharedSecret:       os.Getenv("PLATFORM_GAME_SHARED_SECRET"),
-		GameServerAddr:         getenv("GAME_SERVER_ADDR", "http://127.0.0.1:2567"),
-		InternalURL:            getenv("PLATFORM_INTERNAL_URL", "http://platform:8080"),
-		PublicURL:              strings.TrimRight(strings.TrimSpace(os.Getenv("GGD_PUBLIC_URL")), "/"),
-		SlackWebhookURL:        strings.TrimSpace(os.Getenv("GGD_SLACK_WEBHOOK_URL")),
-		SlackNotifyEnabled:     resolveBool(os.Getenv("GGD_SLACK_NOTIFY_ENABLED")),
-		Season:                 getenv("SEASON", "s1"),
-		ChallengerFrac:         getenvFloat("RANKED_CHALLENGER_FRAC", 0.10),
-		GrandmasterFrac:        getenvFloat("RANKED_GRANDMASTER_FRAC", 0.10),
-		MinApexGames:           getenvInt("RANKED_MIN_APEX_GAMES", 10),
-		AdminBootstrapUsername: os.Getenv("ADMIN_BOOTSTRAP_USERNAME"),
-		DeployTier:             normalizeDeployTier(os.Getenv("GGD_DEPLOY_TIER")),
-		FullAssets:             ServesFullAssets(normalizeDeployTier(os.Getenv("GGD_DEPLOY_TIER"))),
-		RequireInvite:          resolveRequireInvite(os.Getenv("GGD_REQUIRE_INVITE"), getenv("PLATFORM_ADDR", ":8080")),
-		RequireApproval:        resolveRequireApproval(os.Getenv("GGD_REQUIRE_APPROVAL"), getenv("PLATFORM_ADDR", ":8080")),
-		NewAccountCrystals:     getenvInt("GGD_NEW_ACCOUNT_CRYSTALS", 1000),
-		AccessTokenTTL:         15 * time.Minute,
-		RefreshTokenTTL:        30 * 24 * time.Hour,
-		PresenceTTL:            60 * time.Second,
-		InviteTTL:              10 * time.Minute,
+		Addr:                    getenv("PLATFORM_ADDR", ":8080"),
+		RedisAddr:               store.RedisAddr,
+		RedisPassword:           store.RedisPassword,
+		DataDir:                 store.DataDir,
+		ContentDir:              getenv("CONTENT_DIR", "../../content"),
+		JWTSecret:               os.Getenv("JWT_SIGNING_SECRET"),
+		GameSharedSecret:        os.Getenv("PLATFORM_GAME_SHARED_SECRET"),
+		GameServerAddr:          getenv("GAME_SERVER_ADDR", "http://127.0.0.1:2567"),
+		InternalURL:             getenv("PLATFORM_INTERNAL_URL", "http://platform:8080"),
+		PublicURL:               strings.TrimRight(strings.TrimSpace(os.Getenv("GGD_PUBLIC_URL")), "/"),
+		SlackWebhookURL:         strings.TrimSpace(os.Getenv("GGD_SLACK_WEBHOOK_URL")),
+		SlackNotifyEnabled:      resolveBool(os.Getenv("GGD_SLACK_NOTIFY_ENABLED")),
+		Season:                  getenv("SEASON", "s1"),
+		ChallengerFrac:          getenvFloat("RANKED_CHALLENGER_FRAC", 0.10),
+		GrandmasterFrac:         getenvFloat("RANKED_GRANDMASTER_FRAC", 0.10),
+		MinApexGames:            getenvInt("RANKED_MIN_APEX_GAMES", 10),
+		AdminBootstrapUsername:  os.Getenv("ADMIN_BOOTSTRAP_USERNAME"),
+		DeployTier:              normalizeDeployTier(os.Getenv("GGD_DEPLOY_TIER")),
+		FullAssets:              ServesFullAssets(normalizeDeployTier(os.Getenv("GGD_DEPLOY_TIER"))),
+		RequireInvite:           resolveRequireInvite(os.Getenv("GGD_REQUIRE_INVITE"), getenv("PLATFORM_ADDR", ":8080")),
+		RequireApproval:         resolveRequireApproval(os.Getenv("GGD_REQUIRE_APPROVAL"), getenv("PLATFORM_ADDR", ":8080")),
+		NewAccountCrystals:      getenvInt("GGD_NEW_ACCOUNT_CRYSTALS", 1000),
+		BackfillWelcomeCrystals: getenvInt("GGD_BACKFILL_WELCOME_CRYSTALS", 0) == 1,
+		AccessTokenTTL:          15 * time.Minute,
+		RefreshTokenTTL:         30 * 24 * time.Hour,
+		PresenceTTL:             60 * time.Second,
+		InviteTTL:               10 * time.Minute,
 		// 2 hours, and deliberately NOT "long enough for a match" — see the
 		// field doc. This is the no-signal leak-stopper; the live deadline is
 		// MatchLivenessGrace, renewed by the game-server.

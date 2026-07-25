@@ -7,7 +7,11 @@
   "rounds": {
     "1": {
       "grantLevels": 2,
-      "autoLearn": ["Q", "W", "E"],
+      "autoLearn": [
+        "Q",
+        "W",
+        "E"
+      ],
       "augmentTier": "silver"
     },
     "2": {
@@ -17,64 +21,64 @@
       "augmentTier": "silver"
     },
     "3": {
-      "grantLevels": 1,
+      "grantLevels": 2,
       "grantGold": 375,
       "augmentTier": "silver"
     },
     "4": {
-      "grantLevels": 2,
+      "grantLevels": 3,
       "grantGold": 525,
       "augmentTier": "gold"
     },
     "5": {
-      "grantLevels": 1,
+      "grantLevels": 3,
       "grantGold": 525,
       "augmentTier": "gold"
     },
     "6": {
-      "grantLevels": 1,
+      "grantLevels": 6,
       "grantGold": 600,
       "weaponLootTable": "quest-rewards",
       "augmentTier": "gold"
     },
     "7": {
-      "grantLevels": 2,
+      "grantLevels": 4,
       "grantGold": 600,
       "augmentTier": "prismatic"
     },
     "8": {
-      "grantLevels": 1,
+      "grantLevels": 3,
       "grantGold": 750,
       "augmentTier": "prismatic"
     },
     "9": {
-      "grantLevels": 1,
+      "grantLevels": 5,
       "grantGold": 750,
       "augmentTier": "prismatic"
     },
     "10": {
-      "grantLevels": 2,
+      "grantLevels": 10,
       "grantGold": 750,
       "augmentTier": "prismatic"
     },
     "11": {
-      "grantLevels": 1,
+      "grantLevels": 10,
       "grantGold": 750,
       "augmentTier": "prismatic"
     },
     "12": {
-      "grantLevels": 1,
+      "grantLevels": 0,
       "grantGold": 750,
       "augmentTier": "prismatic"
     },
     "13": {
-      "grantLevels": 2,
+      "grantLevels": 0,
       "grantGold": 750,
       "augmentTier": "prismatic"
     }
   },
   "overflow": {
-    "grantLevels": 1,
+    "grantLevels": 0,
     "grantGold": 750,
     "grantGoldPerRound": 150,
     "augmentTier": "prismatic"

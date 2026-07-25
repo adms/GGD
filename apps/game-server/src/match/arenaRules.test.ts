@@ -85,15 +85,15 @@ describe("config doc + rules resolution (arena-06)", () => {
     // legendary-weapons.json survives only as the 2400g 傳說寶玉 gacha pool,
     // which is not a 3-choose-1 card — see the curve block below.
     expect(ARENA.rounds.get(2)).toMatchObject({ grantLevels: 1, weaponLootTable: "quest-rewards" });
-    expect(ARENA.rounds.get(6)).toMatchObject({ grantLevels: 1, weaponLootTable: "quest-rewards" });
-    expect(ARENA.rounds.get(3)).toMatchObject({ grantLevels: 1, grantGold: 375 });
+    expect(ARENA.rounds.get(6)).toMatchObject({ grantLevels: 6, weaponLootTable: "quest-rewards" });
+    expect(ARENA.rounds.get(3)).toMatchObject({ grantLevels: 2, grantGold: 375 });
     expect(ARENA.gacha).toBeNull(); // weapon offers replace the legacy gacha
-    // The table is authored out to round 13 — the measured longest match — so
-    // `overflow` is a guard rail, not a design surface (see the curve block).
-    expect(grantForRound(ARENA, 7)).toEqual({ grantLevels: 2, grantGold: 600, augmentTier: "prismatic" });
-    expect(grantForRound(ARENA, 13)).toEqual({ grantLevels: 2, grantGold: 750, augmentTier: "prismatic" });
-    expect(grantForRound(ARENA, 14)).toEqual({ grantLevels: 1, grantGold: 750, augmentTier: "prismatic" });
-    expect(grantForRound(ARENA, 16)).toEqual({ grantLevels: 1, grantGold: 1050, augmentTier: "prismatic" });
+    // The table is authored out to round 13. The owner's curve reaches the L50
+    // cap at round 11, so rounds 12+ grant 0 levels and `overflow` is gold-only.
+    expect(grantForRound(ARENA, 7)).toEqual({ grantLevels: 4, grantGold: 600, augmentTier: "prismatic" });
+    expect(grantForRound(ARENA, 13)).toEqual({ grantLevels: 0, grantGold: 750, augmentTier: "prismatic" });
+    expect(grantForRound(ARENA, 14)).toEqual({ grantLevels: 0, grantGold: 750, augmentTier: "prismatic" });
+    expect(grantForRound(ARENA, 16)).toEqual({ grantLevels: 0, grantGold: 1050, augmentTier: "prismatic" });
 
     // the loaded content registry resolves to the SAME active rules
     expect(resolveArenaRules()).toEqual(ARENA);
@@ -721,19 +721,17 @@ describe("the per-round curve (arena-curve)", () => {
     expect(cards.length).toBe(2);
   });
 
-  it("reaches the level cap only in the longest match, and never overshoots it", () => {
+  it("round grants carry to L50 by round 11; the true cap is 99 (mob XP fills the rest)", () => {
     cover("arena-config-parse");
-    // A double level every third round (1, 4, 7, 10, 13). The kit costs about
-    // 15 points (Q/W/E maxRank 4 + R maxRank 3 on the modal champion), so L16 is
-    // "kit complete" — it lands on the LAST round of a median 11-round match.
-    for (let r = 1; r <= LAST; r++) expect(levels(r)).toBe(r % 3 === 1 ? 2 : 1);
+    // Owner's round→cumulative-level table (2026-07-25): 3,4,6,9,12,18,22,25,30,40,50.
+    // Per-round grants back out to these; rounds 12+ grant 0 (rounds top out at 50).
+    const grant = [2, 1, 2, 3, 3, 6, 4, 3, 5, 10, 10, 0, 0]; // rounds 1..13
+    for (let r = 1; r <= LAST; r++) expect(levels(r)).toBe(grant[r - 1]);
     const levelAfter = (n: number): number => 1 + [...Array(n)].reduce((s, _, i) => s + levels(i + 1), 0);
-    expect(levelAfter(11)).toBe(16);
-    expect(levelAfter(13)).toBe(19); // …and grantLevels CLAMPS at LEVEL_CAP
-    expect(LEVEL_CAP).toBe(18);
-    // The clamp is real, so the overshoot is a no-op rather than a bug: this is
-    // the claim that `grantLevels: 1` "flowing past levelCap" cannot happen.
-    expect(levelAfter(LAST)).toBeGreaterThan(LEVEL_CAP);
+    expect(levelAfter(11)).toBe(50); // round grants top out at 50 by round 11
+    expect(levelAfter(13)).toBe(50); // rounds 12+ grant 0 — rounds never exceed 50
+    expect(LEVEL_CAP).toBe(99); // true cap; L50→L99 comes from XP (mobs, next version)
+    expect(levelAfter(LAST)).toBeLessThanOrEqual(LEVEL_CAP);
   });
 
   it("arena-rules is the SOLE augment-tier authority — config.match declares none", () => {
