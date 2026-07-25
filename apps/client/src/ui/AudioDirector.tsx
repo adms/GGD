@@ -35,6 +35,7 @@ import {
   audioSystem,
   crossedIntoLowHealth,
   diffTally,
+  isCombatEnd,
   isCombatStart,
   sceneForMatch,
   sceneForPlatform,
@@ -157,6 +158,10 @@ export function AudioDirector(): null {
   useEffect(() => {
     if (screen !== "match") {
       greeted.current = false; // left the match: re-arm the greeting for next entry
+      // …and no fight ambience follows you out (task #216). Leaving mid-combat
+      // (exit to lobby, a bounced join) never crosses the combat→x phase edge,
+      // so this is the second, screen-level teardown of the same beds.
+      audioSystem.stopSustainedSfx();
       return;
     }
     if (connected && !greeted.current) {
@@ -190,6 +195,14 @@ export function AudioDirector(): null {
       // reviveChannel / reviveComplete.
       if (localAlive) audioSystem.playSfx("respawn");
     }
+    // COMBAT TEARDOWN (task #216). The fight's SUSTAINED beds — the ~60 s
+    // `fireRingLoop` lit at ring ignition and the ~38 s `arenaAmbience` started
+    // with the round — are one-shot clips long enough to outlive the round that
+    // started them, and until now nothing could stop a started SFX at all. So a
+    // round settling inside that window carried burning fire through 結算 and
+    // into the shop, which is exactly what the owner heard. The edge (not a
+    // phase test) is the seam: leaving combat for ANY phase ends them.
+    if (isCombatEnd(prev, phase)) audioSystem.stopSustainedSfx();
     if (phase === "champSelect" && prev !== "champSelect") audioSystem.playSfx("vsReveal");
     if (phase === "matchEnd" && prev !== "matchEnd") audioSystem.playSfx("matchEndGong");
     // eslint-disable-next-line react-hooks/exhaustive-deps

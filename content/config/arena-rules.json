@@ -145,7 +145,10 @@
       "attackRange": 1.8,
       "attackCdSec": 1.0,
       "radius": 0.6,
-      "modelKey": "champ.thorne"
+      "modelKey": "champ.godie-zombiex",
+      "championId": "godie-zombiex",
+      "baseLevel": 3,
+      "levelPerRound": 1
     },
     "reward": {
       "gold": 20,

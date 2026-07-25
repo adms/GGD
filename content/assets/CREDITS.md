@@ -90,7 +90,10 @@ README, not by author reputation.
   > **Free for personal and commercial use**, no attribution required. (CC0 Licensed)
 - Downloaded with no login and no account, direct from `raw.githubusercontent.com`.
 - File: **`guardian_skeleton.glb`** (1,036,516 B) — the `arena.skeleton` guardian,
-  **拼裝骷髏 / 骨巨人**. Derived from the pack's `Characters/gltf/Skeleton_Minion.glb`
+  **拼裝骷髏 / 骨巨人**, and (task #217) also **聖杯黑泥醬-喪標麥可** via the
+  `champ.godie-zombiex` model doc, at the champion height normalization 1.8/2.1661 =
+  0.831 instead of the guardian's 1.5696. Same file, two docs, no second download.
+  Derived from the pack's `Characters/gltf/Skeleton_Minion.glb`
   (4,814,296 B upstream): geometry, rig, materials and texture are **byte-unchanged**;
   only the **animation set was trimmed from 95 clips to the 15** the guardian state
   machine uses, which is what takes it from 4.81 MB to 1.04 MB.

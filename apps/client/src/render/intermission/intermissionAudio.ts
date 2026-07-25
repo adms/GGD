@@ -62,6 +62,14 @@ export const AMBIENCE_REARM_MS = 2000;
 export interface SfxPort {
   /** Fire a one-shot mapped SFX; false when unmapped / gated / silenced. */
   playSfx(event: string): boolean;
+  /**
+   * Stop a sustained SFX bed (task #216). Optional so a test double may omit
+   * it; when present, `stop()` uses it to CUT the murmur rather than merely
+   * stop re-arming it — a ~50 s clip that started 2 s before the shop closes
+   * otherwise plays on over the next round, the mirror image of the fire-ring
+   * bed leaking into the shop.
+   */
+  stopSfx?(event: string): number;
 }
 
 /** Injectable timer seam (defaults to the globals; overridden in tests). */
@@ -106,6 +114,10 @@ export function startMarketAmbience(
       if (handle === null) return;
       timers.clearInterval(handle);
       handle = null;
+      // …and CUT the voice that is currently sounding (task #216). Clearing the
+      // timer alone only stops the NEXT re-arm: a clip fired seconds before the
+      // shop closed would otherwise murmur on under the next round's combat.
+      audio.stopSfx?.(MARKET_AMBIENCE);
     },
   };
 }

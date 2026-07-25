@@ -8,7 +8,6 @@
  * per-frame data never touches React state, client-08).
  */
 import { useEffect, useRef } from "react";
-import { TICK_HZ } from "@ggd/shared/constants";
 import { Abilities, Champions } from "@ggd/shared/sim/content/registry";
 import { isPassiveOnly } from "@ggd/shared/sim/abilities/abilityPassives";
 import type { AbilityId, ChampionId } from "@ggd/shared/ids";
@@ -22,6 +21,9 @@ import {
 import { useHud } from "../net/RoomStore";
 import { hudActions } from "./actions";
 import { exSlotView } from "./exSlot";
+import { cooldownView } from "./cooldownView";
+import { CooldownChrome } from "./components/CooldownChrome";
+import { displayFinal, useDisplayEnv } from "./displayFinal";
 import { innateKindLabel, passiveSlotView, PASSIVE_ACCENT, PASSIVE_SLOT_LABEL } from "./passiveSlot";
 import { INNATE_ACTIVE_CASTABLE } from "./castAnnounce";
 import { setHeldAbility } from "./abilityHold";
@@ -115,6 +117,9 @@ export function TouchControls(): React.JSX.Element | null {
   const phase = useHud((s) => s.phase);
   const localAlive = useHud((s) => s.localAlive);
   const localMaxHp = useHud((s) => s.localMaxHp);
+  // live combat-env table — the cooldown denominator must be the env-scaled
+  // final the sim charged, not the authored base (#219; see ui/cooldownView)
+  const env = useDisplayEnv();
   const rootRef = useRef<HTMLDivElement | null>(null);
 
   // per-frame chrome: joystick base/knob transforms + aim highlight — reads
@@ -250,9 +255,10 @@ export function TouchControls(): React.JSX.Element | null {
         const ability = def.abilities[slot];
         const rank = seat.abilityRanks[i] ?? 0;
         const learned = rank > 0;
-        const cdSecs = (seat.cooldowns[i] ?? 0) / TICK_HZ;
-        const maxCd = learned ? (ability.cooldown[rank - 1] ?? 1) : 1;
-        const sweep = learned && cdSecs > 0 ? Math.min(1, cdSecs / maxCd) : 0;
+        const cd = cooldownView(
+          learned ? (seat.cooldowns[i] ?? 0) : 0,
+          learned ? displayFinal(ability.cooldown[rank - 1] ?? 0, "cooldown", env) : 0,
+        );
         // passive-only skill (no castable effects) — dashed tile + soft cue
         const passive = isPassiveOnly(ability);
         const { right, bottom } = arcCenter(i);
@@ -280,7 +286,7 @@ export function TouchControls(): React.JSX.Element | null {
                 if (learned) {
                   pressHandler(slot)(e);
                   setHeldAbility(slot);
-                  abilityActivationCue(slot, { denied: cdSecs > 0, passive });
+                  abilityActivationCue(slot, { denied: cd.onCd, passive });
                 } else {
                   abilityActivationCue(slot, { denied: true, passive });
                 }
@@ -319,34 +325,8 @@ export function TouchControls(): React.JSX.Element | null {
               >
                 {stripAbilityNumber(ability.name)}
               </div>
-              {sweep > 0 && (
-                <div
-                  style={{
-                    position: "absolute",
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    height: `${sweep * 100}%`,
-                    background: "rgba(8, 10, 16, 0.78)",
-                  }}
-                />
-              )}
-              {sweep > 0 && (
-                <div
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: 15,
-                    fontWeight: "bold",
-                    color: "#fff",
-                  }}
-                >
-                  {Math.ceil(cdSecs)}
-                </div>
-              )}
+              {/* cooldown chrome — the shared radial wipe + number + ready bloom */}
+              <CooldownChrome cd={cd} fontSize={20} />
             </div>
             {seat.unspentPoints > 0 && rank < ability.maxRank && (
               <SfxButton
@@ -382,7 +362,7 @@ export function TouchControls(): React.JSX.Element | null {
       {(() => {
         const ex = exSlotView(seat);
         if (!ex) return null;
-        const sweep = ex.sweep;
+        const cd = cooldownView(seat.exCooldown, displayFinal(ex.cooldownSec, "cooldown", env));
         // EX can (rarely) be a passive-only skill → dashed tile + soft cue
         const exDef = Abilities.tryGet(seat.exAbilityId as AbilityId);
         const exPassive = exDef ? isPassiveOnly(exDef) : false;
@@ -393,7 +373,7 @@ export function TouchControls(): React.JSX.Element | null {
               pressVisualDown(e.currentTarget);
               pressHandler("EX")(e);
               setHeldAbility("EX");
-              abilityActivationCue("EX", { denied: sweep > 0, passive: exPassive });
+              abilityActivationCue("EX", { denied: cd.onCd, passive: exPassive });
             }}
             onTouchEnd={(e) => {
               pressVisualClear(e.currentTarget);
@@ -433,18 +413,10 @@ export function TouchControls(): React.JSX.Element | null {
             >
               {stripAbilityNumber(ex.name)}
             </div>
-            {sweep > 0 && (
-              <div
-                style={{
-                  position: "absolute",
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  height: `${sweep * 100}%`,
-                  background: "rgba(8, 10, 16, 0.78)",
-                }}
-              />
-            )}
+            {/* cooldown chrome. Before #219 the touch EX painted the dark rect
+                and NO NUMBER at all — the phone could see that the EX was down
+                but never how long for. Same component as every other tile. */}
+            <CooldownChrome cd={cd} fontSize={20} />
           </div>
         );
       })()}
@@ -468,7 +440,10 @@ export function TouchControls(): React.JSX.Element | null {
         const active = innate.innateKind === "active";
         const castable = active && INNATE_ACTIVE_CASTABLE;
         const inert = !active && !innate.effective;
-        const innateCdSecs = (seat.passiveCooldown ?? 0) / TICK_HZ;
+        const cd = cooldownView(
+          seat.passiveCooldown ?? 0,
+          displayFinal(innate.cooldownSec ?? 0, "cooldown", env),
+        );
         return (
           <div
             data-touch-slot="PASSIVE"
@@ -478,7 +453,7 @@ export function TouchControls(): React.JSX.Element | null {
               setHeldAbility("PASSIVE");
               abilityActivationCue(
                 "PASSIVE",
-                castable ? { denied: innateCdSecs > 0 } : { passive: true },
+                castable ? { denied: cd.onCd } : { passive: true },
               );
             }}
             onTouchEnd={(e) => {
@@ -525,21 +500,11 @@ export function TouchControls(): React.JSX.Element | null {
             <div style={{ fontSize: 7.5, color: TEXT_DIM, lineHeight: 1.1 }}>
               {inert ? "未實作" : "Lv1"}
             </div>
-            {/* cooldown sweep — only an active innate can carry one, and it must
-                be visible on the phone too or the button reads as ready during
-                its whole 40 s. Same shape as the Q/W/E/R sweeps above. */}
-            {innateCdSecs > 0 && (
-              <div
-                style={{
-                  position: "absolute",
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  height: `${Math.min(1, innateCdSecs / (innate.cooldownSec ?? innateCdSecs)) * 100}%`,
-                  background: "rgba(8, 10, 16, 0.78)",
-                }}
-              />
-            )}
+            {/* cooldown chrome — only an active innate can carry one, and it
+                must be readable on the phone too or the button looks ready for
+                its whole 40 s. Before #219 this tile showed the dark rect and
+                NO NUMBER; it now speaks the same language as every other. */}
+            <CooldownChrome cd={cd} fontSize={20} />
           </div>
         );
       })()}

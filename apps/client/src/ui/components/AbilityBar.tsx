@@ -52,7 +52,6 @@
  * `data-slot-key` so the loop can find the one that was pressed.
  */
 import { useEffect, useRef } from "react";
-import { TICK_HZ } from "@ggd/shared/constants";
 import { Abilities, Champions } from "@ggd/shared/sim/content/registry";
 import { isPassiveOnly } from "@ggd/shared/sim/abilities/abilityPassives";
 import type { AbilityId, ChampionId } from "@ggd/shared/ids";
@@ -65,6 +64,9 @@ import { abilityActivationCue } from "../abilityCue";
 import { prefersReducedMotion } from "../buttonSfx";
 import { AbilityDescriptionOverlay } from "../AbilityDescriptionOverlay";
 import { exSlotView } from "../exSlot";
+import { cooldownView } from "../cooldownView";
+import { CooldownChrome } from "./CooldownChrome";
+import { displayFinal, useDisplayEnv } from "../displayFinal";
 import { denyShakeOffset, sampleCastFlash } from "../castFeedback";
 import { INNATE_ACTIVE_CASTABLE } from "../castAnnounce";
 import { CastNoticeLine } from "./CastNotice";
@@ -215,6 +217,11 @@ function TileName({ label, color }: { label: string; color?: string }): React.JS
 export function AbilityBar(): React.JSX.Element | null {
   const seat = useHud((s) => (s.localSeatId === null ? null : (s.seats.find((v) => v.seatId === s.localSeatId) ?? null)));
   const rootRef = useRef<HTMLDivElement | null>(null);
+  // Live combat-env table (#125). The cooldown SWEEP needs it for the same
+  // reason the 冷卻 tooltip chip beside it does: the sim charges
+  // `authored × env.cooldown` seconds, so a denominator of the authored base
+  // capped the old sweep at 20% and hid it inside the name scrim (#219).
+  const env = useDisplayEnv();
 
   // Imperative cast-fill overlay: reads frameBus.localCast every frame and
   // grows the fill on the slot that's casting — off the React/per-frame path.
@@ -299,9 +306,10 @@ export function AbilityBar(): React.JSX.Element | null {
         // Live cooldown off the wire (seat.passiveCooldown), swept exactly like
         // the EX tile. A 40 s innate that painted no sweep would look ready and
         // refuse every press until it silently wasn't.
-        const innateCdSecs = (seat.passiveCooldown ?? 0) / TICK_HZ;
-        const innateSweep =
-          innateCdSecs > 0 ? Math.min(1, innateCdSecs / (innate.cooldownSec ?? innateCdSecs)) : 0;
+        const innateCd = cooldownView(
+          seat.passiveCooldown ?? 0,
+          displayFinal(innate.cooldownSec ?? 0, "cooldown", env),
+        );
         // A permanent innate whose doc grants nothing (29 of 48) must not read
         // like the 19 that work — see passiveSlot.effective.
         const inert = !active && !innate.effective;
@@ -333,7 +341,7 @@ export function AbilityBar(): React.JSX.Element | null {
               // in every case and can still upgrade the tone (mana, dead …).
               {...holdProps(
                 "PASSIVE",
-                castableInnate ? { denied: innateSweep > 0 } : { passive: true },
+                castableInnate ? { denied: innateCd.onCd } : { passive: true },
               )}
               style={{
                 position: "relative",
@@ -394,37 +402,10 @@ export function AbilityBar(): React.JSX.Element | null {
               >
                 {innateKindLabel(innate.innateKind)}
               </div>
-              {/* cooldown sweep + seconds — the same two overlays the EX tile
-                  draws, so the innate slot reads as the same kind of thing. Only
-                  an active innate can ever be on cooldown. */}
-              {innateSweep > 0 && (
-                <div
-                  style={{
-                    position: "absolute",
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    height: `${innateSweep * 100}%`,
-                    background: "rgba(8, 10, 16, 0.78)",
-                  }}
-                />
-              )}
-              {innateSweep > 0 && (
-                <div
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: 15,
-                    fontWeight: "bold",
-                    color: "#fff",
-                  }}
-                >
-                  {Math.ceil(innateCdSecs)}
-                </div>
-              )}
+              {/* cooldown chrome — the same overlay stack every tile on every
+                  surface wears (ui/components/CooldownChrome). Only an active
+                  innate can ever be on cooldown. */}
+              <CooldownChrome cd={innateCd} fontSize={20} />
               {/* channel fill — index 5, matching CastTracker.SLOT_INDEX. Only
                   mounted for a castable innate: a tile that cannot cast must
                   never carry a cast surface that could half-paint. */}
@@ -466,11 +447,14 @@ export function AbilityBar(): React.JSX.Element | null {
       {SLOTS.map((slot, i) => {
         const ability = def.abilities[slot];
         const rank = seat.abilityRanks[i] ?? 0;
-        const cdTicks = seat.cooldowns[i] ?? 0;
-        const cdSecs = cdTicks / TICK_HZ;
-        const maxCdSecs = rank > 0 ? (ability.cooldown[rank - 1] ?? 1) : 1;
-        const sweep = rank > 0 && cdSecs > 0 ? Math.min(1, cdSecs / maxCdSecs) : 0;
         const learned = rank > 0;
+        // #219 root cause: the max must be the ENV-SCALED final the sim charged
+        // (`authored × combat-env.cooldown`), not the authored base — the same
+        // seam the 冷卻 tooltip chip below already uses.
+        const cd = cooldownView(
+          learned ? (seat.cooldowns[i] ?? 0) : 0,
+          learned ? displayFinal(ability.cooldown[rank - 1] ?? 0, "cooldown", env) : 0,
+        );
         // passive-only skill (no castable effects) — dashed tile + soft cue
         const passive = isPassiveOnly(ability);
         // rank-scaled numbers (rank-1 values before the ability is learned)
@@ -486,7 +470,7 @@ export function AbilityBar(): React.JSX.Element | null {
             <Tooltip title={ability.name} body={docDescription(ability)} meta={meta} style={{ display: "block" }}>
             <div
               data-slot-key={slot}
-              {...holdProps(slot, { denied: !learned || sweep > 0, passive })}
+              {...holdProps(slot, { denied: !learned || cd.onCd, passive })}
               style={{
                 position: "relative",
                 width: 52,
@@ -517,34 +501,8 @@ export function AbilityBar(): React.JSX.Element | null {
                 label={stripAbilityNumber(ability.name)}
                 color={learned ? TEXT_MAIN : TEXT_DIM}
               />
-              {sweep > 0 && (
-                <div
-                  style={{
-                    position: "absolute",
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    height: `${sweep * 100}%`,
-                    background: "rgba(8, 10, 16, 0.78)",
-                  }}
-                />
-              )}
-              {sweep > 0 && (
-                <div
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: 15,
-                    fontWeight: "bold",
-                    color: "#fff",
-                  }}
-                >
-                  {Math.ceil(cdSecs)}
-                </div>
-              )}
+              {/* cooldown chrome — radial wipe + legible number + ready bloom */}
+              <CooldownChrome cd={cd} fontSize={20} />
               {/* cast-fill overlay (imperative; grows while this slot casts) */}
               <div
                 data-cast-slot={i}
@@ -607,7 +565,9 @@ export function AbilityBar(): React.JSX.Element | null {
         // amber styling; single-rank, so no rank pips / rank-up button.
         const ex = exSlotView(seat);
         if (!ex) return null;
-        const { cdSecs, sweep } = ex;
+        // exSlotView's own `sweep` still divides by the AUTHORED cooldown; the
+        // tile's progress geometry uses the env-scaled max instead (#219).
+        const cd = cooldownView(seat.exCooldown, displayFinal(ex.cooldownSec, "cooldown", env));
         // EX can (rarely) be a passive-only skill → dashed tile + soft cue
         const exDef = Abilities.tryGet(seat.exAbilityId as AbilityId);
         const exPassive = exDef ? isPassiveOnly(exDef) : false;
@@ -622,7 +582,7 @@ export function AbilityBar(): React.JSX.Element | null {
             <Tooltip title={ex.name} body={ex.description} meta={exMeta} style={{ display: "block" }}>
             <div
               data-slot-key="EX"
-              {...holdProps("EX", { denied: sweep > 0, passive: exPassive })}
+              {...holdProps("EX", { denied: cd.onCd, passive: exPassive })}
               style={{
                 position: "relative",
                 width: 52,
@@ -641,34 +601,8 @@ export function AbilityBar(): React.JSX.Element | null {
               <IconImg fill src={iconSrc(ex.icon)} alt={ex.name} />
               {/* EX name ON the button, after the icon so it isn't occluded (#152) */}
               <TileName label={stripAbilityNumber(ex.name)} />
-              {sweep > 0 && (
-                <div
-                  style={{
-                    position: "absolute",
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    height: `${sweep * 100}%`,
-                    background: "rgba(8, 10, 16, 0.78)",
-                  }}
-                />
-              )}
-              {sweep > 0 && (
-                <div
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: 15,
-                    fontWeight: "bold",
-                    color: "#fff",
-                  }}
-                >
-                  {Math.ceil(cdSecs)}
-                </div>
-              )}
+              {/* cooldown chrome — radial wipe + legible number + ready bloom */}
+              <CooldownChrome cd={cd} fontSize={20} />
               <div
                 data-cast-slot={4}
                 style={{

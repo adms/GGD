@@ -30,7 +30,7 @@ export function spawnChampion(world: SimWorld, args: SpawnChampionArgs): EntityI
     zone: args.zone,
   });
   world.team.set(id, { teamId: args.teamId, seatId: args.seatId });
-  world.nav.set(id, { order: null, moveTarget: null, override: null, attackTarget: null });
+  world.nav.set(id, { order: null, moveTarget: null, override: null, attackTarget: null, attackTargetAuto: false });
   world.status.set(id, { effects: [] });
   world.champion.set(id, {
     championId: args.championId,

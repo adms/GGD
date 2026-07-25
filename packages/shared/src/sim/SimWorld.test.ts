@@ -35,7 +35,7 @@ function setup(world: SimWorld): EntityId[] {
     });
     world.health.set(id, { hp: 100, maxHp: 100, mana: 50, maxMana: 50, alive: true, shields: [] });
     world.team.set(id, { teamId: asTeamId(side), seatId: asSeatId(seat) });
-    world.nav.set(id, { order: null, moveTarget: null, override: null, attackTarget: null });
+    world.nav.set(id, { order: null, moveTarget: null, override: null, attackTarget: null, attackTargetAuto: false });
     world.status.set(id, { effects: [] });
   }
   return ids;

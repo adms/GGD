@@ -28,21 +28,45 @@
  * perturb crits / evasion / the legendary orb), exactly like the coin ring. No
  * trig (the direction table is authored numeric literals, not a `Math.cos`
  * loop), no `Math.pow`, no wall-clock — see `sim/purity.test.ts`.
+ *
+ * LEVEL (task #217). A mob is level `baseLevel + levelPerRound*(round-fromRound)`
+ * — round 3 → lv3, round 4 → lv4, … — and its maxHp/regen follow the 喪標麥可
+ * champion doc's `baseStats + growth*(level-1)`. The ROUND lives on the HOST, so
+ * it reaches the sim through the one deterministic arming channel that already
+ * carries everything else: `mobRulesFromConfig(cfg, dt, round)` bakes the level
+ * and its stats into `MobRules` ONCE, at `beginCombatMobs` time. Nothing per-tick
+ * and nothing per-mob knows what a round is, so there is no wall-clock or
+ * client-state path in — exactly the shape `guardianHp(rules, round)` uses.
  */
-import type { EntityId, TeamId } from "../ids";
+import type { ChampionId, EntityId, TeamId } from "../ids";
 import { asSeatId, asTeamId } from "../ids";
 import type { SimWorld } from "./SimWorld";
 import type { Vec2 } from "./math/vec2";
 import { pushOutOfObstacle, clampToBoundary } from "./collision/resolve";
+import { Champions } from "./content/registry";
+import { Stat } from "./stats/statTypes";
 
 /**
- * EntityState.key / model doc id used for a mob on the wire — the low-poly
- * voxel-zombie standin. Resolved client-side through the SAME modelDocFor seam
- * ChampionView / FlowerView / GuardianView use; until the dedicated 喪標麥可
- * model ships it points at the champ.thorne standin. Presentation only, so it is
+ * The CHAMPION DOC a mob is an avatar of (task #217). A mob still carries NO
+ * ChampionComp — the neutrality contract is untouched — but its LEVELLED stats
+ * are read from this doc's `baseStats`/`growth` ONCE at arm time
+ * (`mobRulesFromConfig`), so the hero sheet is the single source of truth for
+ * 喪標麥可's HP curve instead of a second set of numbers drifting in the config.
+ * Overridable per-arena via `mobWaves.mob.championId`.
+ */
+export const MOB_CHAMPION_ID = "godie-zombiex";
+
+/**
+ * EntityState.key / model doc id used for a mob on the wire — 喪標麥可's REAL
+ * low-poly undead mesh (task #217: `champ.godie-zombiex` → the CC0 KayKit
+ * guardian_skeleton.glb, 5,288 tris, cheaper than the knight stand-in it
+ * replaces). Resolved client-side through the SAME modelDocFor seam ChampionView
+ * / FlowerView / GuardianView use. This constant is only the FALLBACK now: the
+ * live key travels on `MobRules.modelKey` so `mobWaves.mob.modelKey` is a real
+ * knob (it used to be authored-but-ignored). Presentation only, so it is
  * deliberately NOT folded into `SimWorld.digest()`.
  */
-export const MOB_MODEL_KEY = "champ.thorne";
+export const MOB_MODEL_KEY = "champ.godie-zombiex";
 
 /**
  * The sentinel MONSTER team. A single id OUTSIDE the player range (teams are
@@ -68,8 +92,24 @@ export interface MobRules {
   /** hard cap on mobs ALIVE per zone at once */
   maxAlivePerZone: number;
 
-  /** mob hit points (no regen — a mob has no StatsComp) */
+  /**
+   * The mob's EFFECTIVE LEVEL this round (task #217). Derived ONCE at arm time
+   * from the ROUND — `baseLevel + levelPerRound * (round - fromRound)` — because
+   * the round number lives on the host, never in the sim. Carried here (not on
+   * MobComp) so it is immutable arm-time state that no system can drift.
+   */
+  level: number;
+  /** mob hit points AT `level` (baseStats.maxHealth + growth.maxHealth*(level-1)) */
   maxHp: number;
+  /**
+   * Mob hp regenerated PER SECOND at `level` (baseStats.healthRegen +
+   * growth.healthRegen*(level-1)). Applied by mobSystem with the exact
+   * `hp + regen * dt` form RegenSystem uses for champions — a mob still has no
+   * StatsComp, so this is the only regen path it has.
+   */
+  hpRegenPerSec: number;
+  /** model doc id sent as EntityState.key (presentation only, never digested) */
+  modelKey: string;
   /** melee packet amount */
   attackDamage: number;
   /** SQUARED melee reach (compared against distSq — trig/pow-free) */
@@ -101,6 +141,9 @@ export interface MobWavesConfigLike {
     attackCdSec: number;
     radius: number;
     modelKey?: string;
+    championId?: string;
+    baseLevel?: number;
+    levelPerRound?: number;
   };
   reward: {
     gold: number;
@@ -109,20 +152,81 @@ export interface MobWavesConfigLike {
   };
 }
 
+/** Default mob level in the FIRST mob round (`fromRound`) — owner #217: 第3場 = lv3. */
+export const DEFAULT_MOB_BASE_LEVEL = 3;
+/** Default level gained per round past `fromRound` — owner #217: 每場 +1. */
+export const DEFAULT_MOB_LEVEL_PER_ROUND = 1;
+
+/**
+ * The mob's EFFECTIVE LEVEL in `round` (task #217). Pure integer arithmetic on
+ * the ROUND — the host's deterministic phase counter, the very same value that
+ * already feeds `beginCombatGuardians(..., round)`.
+ *
+ * `round <= fromRound` clamps to `baseLevel` so a mis-armed early round can
+ * never produce a level below the floor (or, worse, a negative one).
+ */
+export function mobLevelForRound(cfg: MobWavesConfigLike, round: number): number {
+  const base = cfg.mob.baseLevel ?? DEFAULT_MOB_BASE_LEVEL;
+  const per = cfg.mob.levelPerRound ?? DEFAULT_MOB_LEVEL_PER_ROUND;
+  return base + per * Math.max(0, Math.round(round) - cfg.fromRound);
+}
+
 /**
  * Convert the seconds-based config block into tick-based sim rules. The
  * seconds→ticks conversion happens ONCE, here, at arm time — never per tick, so
  * no per-tick division can round differently on a different host.
+ *
+ * `round` (task #217) is the host's 1-based combat round. It is the ONLY channel
+ * by which the round reaches the sim: the level — and therefore the levelled
+ * maxHp/regen — is baked into the returned rules right here, so `spawnMob` and
+ * `mobSystem` never learn what a round is and no wall-clock or client state can
+ * leak in. Omitting it re-arms at `fromRound` (level = baseLevel), which is what
+ * every pre-#217 caller/test means.
+ *
+ * The levelled stats come from the 喪標麥可 CHAMPION DOC (`MOB_CHAMPION_ID`,
+ * overridable via `mobWaves.mob.championId`) through the same `Champions`
+ * registry `statPipeline.recomputeStats` reads, with the identical
+ * `base + growth*(level-1)` law — one source of truth for the hero sheet and its
+ * mob avatar. When that doc is not registered (skeleton content, unit tests, a
+ * host with no content loaded) it falls back to the config's flat `mob.maxHp`
+ * and zero regen, so the mechanic keeps working content-free.
  */
-export function mobRulesFromConfig(cfg: MobWavesConfigLike, dt: number): MobRules {
+export function mobRulesFromConfig(
+  cfg: MobWavesConfigLike,
+  dt: number,
+  round: number = cfg.fromRound,
+): MobRules {
   const ticks = (sec: number): number => Math.max(1, Math.round(sec / dt));
+  const level = mobLevelForRound(cfg, round);
+  const def = Champions.tryGet((cfg.mob.championId ?? MOB_CHAMPION_ID) as ChampionId);
+  const perLevel = level - 1;
+  const maxHp =
+    def === undefined
+      ? cfg.mob.maxHp
+      : Math.max(
+          1,
+          Math.round(
+            (def.baseStats[Stat.MaxHealth] ?? cfg.mob.maxHp) +
+              (def.growth[Stat.MaxHealth] ?? 0) * perLevel,
+          ),
+        );
+  const hpRegenPerSec =
+    def === undefined
+      ? 0
+      : Math.max(
+          0,
+          (def.baseStats[Stat.HealthRegen] ?? 0) + (def.growth[Stat.HealthRegen] ?? 0) * perLevel,
+        );
   return {
     fromRound: cfg.fromRound,
     firstWaveTicks: ticks(cfg.firstWaveSec),
     waveIntervalTicks: ticks(cfg.waveIntervalSec),
     mobsPerWaveCap: cfg.mobsPerWaveCap,
     maxAlivePerZone: cfg.maxAlivePerZone,
-    maxHp: cfg.mob.maxHp,
+    level,
+    maxHp,
+    hpRegenPerSec,
+    modelKey: cfg.mob.modelKey ?? MOB_MODEL_KEY,
     attackDamage: cfg.mob.attackDamage,
     attackRangeSq: cfg.mob.attackRange * cfg.mob.attackRange,
     attackCdTicks: ticks(cfg.mob.attackCdSec),
@@ -226,7 +330,7 @@ export function spawnMob(world: SimWorld, zone: number, rules: MobRules, k: numb
     alive: true,
     shields: [],
   });
-  world.nav.set(id, { order: null, moveTarget: null, override: null, attackTarget: null });
+  world.nav.set(id, { order: null, moveTarget: null, override: null, attackTarget: null, attackTargetAuto: false });
   // seatId -1: a mob belongs to no player seat — the same "no seat" sentinel the
   // snapshot emits for every neutral entity. Only `teamId` is load-bearing.
   world.team.set(id, { teamId: MONSTER_TEAM, seatId: asSeatId(-1) });

@@ -14,7 +14,9 @@
  *                flowers are armed). combat-second S = mobTicks/TICK_HZ.
  *   2) SCHEDULE— fire a wave when the cadence lands; wave k spawns min(k,cap)
  *                mobs per active zone, one at a time, never past maxAlivePerZone.
- *   3) AI      — each mob (ascending id) aims at the nearest enemy champion.
+ *   3) AI      — each mob (ascending id) aims at the nearest enemy champion,
+ *                then regenerates `rules.hpRegenPerSec * dt` (#217: a mob has no
+ *                StatsComp, so RegenSystem never sees it).
  *   4) MELEE   — a mob in range with a ready cooldown queues one melee packet.
  *   5) PAYOUT  — pay the killer for mobs that DIED this tick, then despawn them.
  *
@@ -23,6 +25,12 @@
  * sets nav.attackTarget / queues melee for NEXT tick's chase+resolve (a 1-tick
  * latency identical to guardian volleys — harmless and deterministic). Running
  * it BEFORE deathSystem would miss same-tick kills.
+ *
+ * PER-ZONE STAND-DOWN (task #216). `combatActive` is global — it only drops once
+ * EVERY duel is decided — so a zone that finished early kept taking mob waves
+ * and mob melee while another zone fought on. Any zone in `world.settledZones`
+ * (host-written the instant that duel's winner is recorded) spawns no new wave
+ * and its mobs drop aggro, exactly like the fire ring stops burning it.
  *
  * OFF BY DEFAULT / BYTE-IDENTICAL. `world.mobRules === null || world.mobTicks <
  * 0 || !world.combatActive` makes it a strict no-op, so a skeleton/test/
@@ -62,6 +70,9 @@ export function mobSystem(world: SimWorld): void {
     // spawns up to `count`, never exceeding its alive cap.
     const zones = [...world.mobZones].sort((a, b) => a - b);
     for (const zone of zones) {
+      // #216: a zone whose duel is already decided gets no new wave — the round
+      // is over there, and PvE that keeps arriving is PvE that keeps hitting.
+      if (world.settledZones.has(zone)) continue;
       for (let i = 0; i < count; i++) {
         if (mobsAliveInZone(world, zone) >= rules.maxAlivePerZone) break;
         spawnMob(world, zone, rules, k, i);
@@ -76,6 +87,16 @@ export function mobSystem(world: SimWorld): void {
     const mt2 = world.transform.get(mobId);
     const mhp = world.health.get(mobId);
     if (!mt2 || !mhp?.alive) continue;
+    // #216: STAND DOWN in a settled zone. The duel there is decided, so a mob
+    // must not keep chasing/hitting the survivors while the other zone plays on
+    // (same reason the fire ring stops burning them). Target is cleared rather
+    // than kept, so the nav chase stops on the same tick as the melee.
+    if (world.settledZones.has(mob.zone)) {
+      mob.target = -1;
+      const idleNav = world.nav.get(mobId);
+      if (idleNav) idleNav.attackTarget = null;
+      continue;
+    }
     let target: EntityId | -1 = -1;
     let bestD2 = Infinity;
     for (const [cid, cteam] of world.team) {
@@ -94,6 +115,14 @@ export function mobSystem(world: SimWorld): void {
     mob.target = target;
     const nav = world.nav.get(mobId);
     if (nav) nav.attackTarget = target === -1 ? null : target;
+
+    // 3b) REGEN (task #217) — a mob has no StatsComp, so RegenSystem skips it.
+    //     Apply the LEVELLED hp regen baked into the rules with the exact same
+    //     `hp + perSec * dt` form RegenSystem uses for champions. Zero when the
+    //     champion doc is unavailable, so a content-free world is unchanged.
+    if (rules.hpRegenPerSec > 0) {
+      mhp.hp = Math.min(mhp.maxHp, mhp.hp + rules.hpRegenPerSec * world.dt);
+    }
 
     // 4) MELEE — in range + cooldown ready → queue one packet; else age the cd.
     if (target !== -1 && mob.attackCdTicks <= 0 && bestD2 <= rules.attackRangeSq) {

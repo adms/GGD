@@ -752,6 +752,9 @@ export class MatchController {
     this.world.combatActive = true; // scoreboard time-alive accrues during combat
     this.offers.clear();
     this.duelWinners.clear();
+    // …and the sim's mirror of it (#216): every zone is UNDECIDED again, so the
+    // fire ring burns and the mob waves arrive in all of them from tick 0.
+    this.world.settledZones.clear();
     this.resetRoundTallies();
 
     // Per-round arena rotation (task #145): pick THIS round's map deterministically
@@ -784,6 +787,7 @@ export class MatchController {
         nav.order = null;
         nav.moveTarget = null;
         nav.attackTarget = null;
+        nav.attackTargetAuto = false;
         nav.override = null;
       }
     }
@@ -911,9 +915,15 @@ export class MatchController {
       this.rules.mobWaves &&
       this.phase.round >= this.rules.mobWaves.fromRound
     ) {
+      // #217: the ROUND is the mob's LEVEL channel. `this.phase.round` is the same
+      // deterministic host counter that already arms guardian HP two blocks up;
+      // mobRulesFromConfig bakes level = baseLevel + levelPerRound*(round-fromRound)
+      // — round 3 → lv3, round 4 → lv4 — and the levelled maxHp/regen into the
+      // rules ONCE, here. The sim never sees a round, and a replay re-arms from its
+      // own recorded ArenaRules + its own replayed round, so it round-trips exactly.
       beginCombatMobs(
         this.world,
-        mobRulesFromConfig(this.rules.mobWaves, this.world.dt),
+        mobRulesFromConfig(this.rules.mobWaves, this.world.dt, this.phase.round),
         this.pairings.map((p) => p.zone),
       );
     } else {
@@ -974,21 +984,43 @@ export class MatchController {
       const aAlive = this.teamAliveCount(pairing.sideA, pairing.zone);
       const bAlive = this.teamAliveCount(pairing.sideB, pairing.zone);
       if (aAlive === 0 && bAlive === 0) {
-        this.duelWinners.set(pairing.zone, this.world.rng.chance(0.5) ? pairing.sideA : pairing.sideB);
+        this.recordDuelWinner(pairing.zone, this.world.rng.chance(0.5) ? pairing.sideA : pairing.sideB);
       } else if (bAlive === 0) {
-        this.duelWinners.set(pairing.zone, pairing.sideA);
+        this.recordDuelWinner(pairing.zone, pairing.sideA);
       } else if (aAlive === 0) {
-        this.duelWinners.set(pairing.zone, pairing.sideB);
+        this.recordDuelWinner(pairing.zone, pairing.sideB);
       } else if (timerExpired) {
         const aPct = this.teamHpPct(pairing.sideA, pairing.zone);
         const bPct = this.teamHpPct(pairing.sideB, pairing.zone);
-        this.duelWinners.set(
+        this.recordDuelWinner(
           pairing.zone,
           aPct > bPct ? pairing.sideA : bPct > aPct ? pairing.sideB : this.world.rng.chance(0.5) ? pairing.sideA : pairing.sideB,
         );
       }
     }
     return this.duelWinners.size === this.pairings.length;
+  }
+
+  /**
+   * Record a zone's duel winner — and, in the SAME instant, tell the SIM that
+   * this zone is done (task #216).
+   *
+   * `world.combatActive` is global: it only drops once every pairing is decided
+   * (concludeCombat), so between "my 3v3 ended" and "the last 3v3 ends" the sim
+   * still treated a finished zone as live combat and kept burning its survivors
+   * with the fire ring (and kept feeding it mob waves). Since a player who went
+   * down this round is already looking at the shop (client shopGate), that is
+   * exactly the reported 「回到商店…還會有火圈聲音跟血量會降低」.
+   *
+   * `settledZones` is SIM state, not host state, precisely so the systems can
+   * read it and the replay digest can hash it. This is the ONLY writer, it is
+   * called from the deterministic `checkCombatEnd` (whose only tie-breaks draw
+   * from `world.rng`), and `enterCombat` is the only clearer — no wall clock, no
+   * client input, nothing that could differ between replicas.
+   */
+  private recordDuelWinner(zone: number, winner: TeamId): void {
+    this.duelWinners.set(zone, winner);
+    this.world.settledZones.add(zone);
   }
 
   /**
@@ -1157,6 +1189,7 @@ export class MatchController {
         nav.order = null;
         nav.moveTarget = null;
         nav.attackTarget = null;
+        nav.attackTargetAuto = false;
         nav.override = null;
       }
       const t = this.world.transform.get(seat.entityId);

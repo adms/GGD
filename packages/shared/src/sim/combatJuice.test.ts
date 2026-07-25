@@ -65,7 +65,7 @@ function spawnDummy(
   });
   world.health.set(id, { hp, maxHp: hp, mana: 0, maxMana: 0, alive: true, shields: opts.shields ?? [] });
   world.team.set(id, { teamId: asTeamId(team), seatId: asSeatId(seat) });
-  world.nav.set(id, { order: null, moveTarget: null, override: null, attackTarget: null });
+  world.nav.set(id, { order: null, moveTarget: null, override: null, attackTarget: null, attackTargetAuto: false });
   world.status.set(id, { effects: [] });
   if (opts.sources) {
     world.stats.set(id, { championId: "dummy" as ChampionId, final: zeroStats(), dirty: false, sources: opts.sources });

@@ -1,0 +1,232 @@
+/**
+ * #217 喪標麥可 — the mob's MODEL, its LEVELLED stats, and the deterministic
+ * ROUND→LEVEL channel. Focused on the three reported symptoms:
+ *
+ *   (a) a mob rendered as the KNIGHT stand-in (`champ.thorne`) and the authored
+ *       `mobWaves.mob.modelKey` was silently ignored — the key now travels on
+ *       `MobRules.modelKey`;
+ *   (b) the 喪標麥可 champion doc's `baseStats`/`growth` never reached the mob at
+ *       all (a mob has no ChampionComp, so `recomputeStats` returns early), so
+ *       editing the hero sheet changed nothing on the field;
+ *   (c) every mob was the same strength in every round — there was no level.
+ *
+ * The champion numbers are read from the REAL content doc on disk (direct file
+ * read + zChampionDoc, the standinRoster.test.ts pattern) so this suite fails if
+ * the doc and the mob curve ever drift apart. Only `baseStats`/`growth` are used,
+ * which is all `mobRulesFromConfig` reads — no ability graph is needed.
+ */
+import { describe, it, expect, beforeAll } from "vitest";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { readFileSync } from "node:fs";
+import { cover } from "../../testkit/cover";
+import { zChampionDoc } from "../content/schema/champion";
+import { DEFAULT_MOB_WAVES_CONFIG, type MobWavesConfig } from "../content/schema/config";
+import { SimWorld } from "./SimWorld";
+import { SKELETON_ARENA } from "./world/ArenaDef";
+import { registerSkeletonContent } from "./content/skeleton";
+import { Champions } from "./content/registry";
+import type { ChampionDef } from "./content/defs";
+import type { ChampionId } from "../ids";
+import {
+  MOB_CHAMPION_ID,
+  MOB_MODEL_KEY,
+  mobLevelForRound,
+  mobRulesFromConfig,
+  mobsAliveInZone,
+} from "./mobs";
+import { beginCombatMobs, mobSystem } from "./systems/MobSystem";
+
+const HERE = dirname(fileURLToPath(import.meta.url));
+const CONTENT_DIR = join(HERE, "../../../../content");
+
+/** The shipped 喪標麥可 hero sheet — the single source of truth for the curve. */
+const DOC = zChampionDoc.parse(
+  JSON.parse(readFileSync(join(CONTENT_DIR, "champions", `${MOB_CHAMPION_ID}.json`), "utf8")),
+);
+
+const BASE_HP = DOC.baseStats.maxHealth!;
+const GROWTH_HP = DOC.growth.maxHealth!;
+const BASE_REGEN = DOC.baseStats.healthRegen!;
+const GROWTH_REGEN = DOC.growth.healthRegen!;
+
+beforeAll(() => {
+  registerSkeletonContent();
+  // Register JUST the stat sheet under the mob's champion id. `mobRulesFromConfig`
+  // reads only baseStats/growth, so a minimal def is a faithful stand-in for the
+  // fully-linked doc the real host loads.
+  Champions.register(MOB_CHAMPION_ID as ChampionId, {
+    id: MOB_CHAMPION_ID as ChampionId,
+    name: DOC.name,
+    role: DOC.role,
+    attackType: DOC.attackType,
+    modelKey: DOC.modelKey,
+    baseStats: DOC.baseStats,
+    growth: DOC.growth,
+    abilities: {} as ChampionDef["abilities"],
+    skillOrder: [],
+    buildPriority: [],
+    tags: DOC.tags ?? [],
+  });
+});
+
+const CFG: MobWavesConfig = { ...DEFAULT_MOB_WAVES_CONFIG };
+const DT = 1 / 30;
+
+describe("#217 (b) the hero sheet is what a mob is made of", () => {
+  it("the shipped godie-zombiex doc carries the owner's numbers (100/+50, 1/+0.2)", () => {
+    cover("mob-217-doc-numbers");
+    expect(BASE_HP).toBe(100);
+    expect(GROWTH_HP).toBe(50);
+    expect(BASE_REGEN).toBe(1);
+    expect(GROWTH_REGEN).toBe(0.2);
+  });
+
+  it("mob maxHp/regen follow base + growth*(level-1) — the SAME law recomputeStats uses", () => {
+    cover("mob-217-stats-from-doc");
+    for (const round of [3, 4, 5, 9]) {
+      const rules = mobRulesFromConfig(CFG, DT, round);
+      const level = rules.level;
+      expect(rules.maxHp).toBe(Math.round(BASE_HP + GROWTH_HP * (level - 1)));
+      expect(rules.hpRegenPerSec).toBeCloseTo(BASE_REGEN + GROWTH_REGEN * (level - 1), 10);
+    }
+    // the owner's concrete expectation: round 3 → lv3 → 100 + 50*2 = 200 hp
+    expect(mobRulesFromConfig(CFG, DT, 3).maxHp).toBe(200);
+    expect(mobRulesFromConfig(CFG, DT, 4).maxHp).toBe(250);
+  });
+
+  it("falls back to the flat config maxHp when the champion doc is not registered", () => {
+    cover("mob-217-stats-fallback");
+    const rules = mobRulesFromConfig({ ...CFG, mob: { ...CFG.mob, championId: "no-such-hero" } }, DT, 7);
+    expect(rules.maxHp).toBe(CFG.mob.maxHp);
+    expect(rules.hpRegenPerSec).toBe(0);
+  });
+});
+
+describe("#217 (c) the ROUND is the mob's level channel", () => {
+  it("round 3 → lv3 and every later round is +1 (levelPerRound)", () => {
+    cover("mob-217-level-per-round");
+    expect(mobLevelForRound(CFG, 3)).toBe(3);
+    expect(mobLevelForRound(CFG, 4)).toBe(4);
+    expect(mobLevelForRound(CFG, 5)).toBe(5);
+    expect(mobLevelForRound(CFG, 12)).toBe(12);
+  });
+
+  it("a round BELOW fromRound clamps to the base level — never 0 or negative", () => {
+    cover("mob-217-level-clamp");
+    expect(mobLevelForRound(CFG, 1)).toBe(3);
+    expect(mobLevelForRound(CFG, 2)).toBe(3);
+    // omitting the argument entirely means "the floor" (pre-#217 call sites)
+    expect(mobRulesFromConfig(CFG, DT).level).toBe(3);
+  });
+
+  it("baseLevel / levelPerRound are honoured when the arena overrides them", () => {
+    cover("mob-217-level-config");
+    const cfg: MobWavesConfig = {
+      ...CFG,
+      fromRound: 2,
+      mob: { ...CFG.mob, baseLevel: 5, levelPerRound: 2 },
+    };
+    expect(mobLevelForRound(cfg, 2)).toBe(5);
+    expect(mobLevelForRound(cfg, 4)).toBe(9);
+  });
+
+  it("a SPAWNED mob really is tougher in a later round (the symptom, end to end)", () => {
+    cover("mob-217-spawn-scales");
+    const hpOfFirstMob = (round: number): number => {
+      const w = new SimWorld(SKELETON_ARENA, 1);
+      w.combatActive = true;
+      beginCombatMobs(w, mobRulesFromConfig({ ...CFG, firstWaveSec: DT }, DT, round), [0]);
+      w.step(new Map());
+      expect(mobsAliveInZone(w, 0)).toBeGreaterThan(0);
+      const [id] = [...w.mob.keys()];
+      return w.health.get(id!)!.maxHp;
+    };
+    expect(hpOfFirstMob(3)).toBe(200);
+    expect(hpOfFirstMob(4)).toBe(250);
+    expect(hpOfFirstMob(6)).toBe(350);
+  });
+
+  it("a mob regenerates its levelled hp — RegenSystem never sees it (no StatsComp)", () => {
+    cover("mob-217-regen");
+    const w = new SimWorld(SKELETON_ARENA, 1);
+    w.combatActive = true;
+    const rules = mobRulesFromConfig({ ...CFG, firstWaveSec: DT }, DT, 3);
+    beginCombatMobs(w, rules, [0]);
+    w.step(new Map());
+    const [id] = [...w.mob.keys()];
+    const hp = w.health.get(id!)!;
+    expect(w.stats.has(id!)).toBe(false); // the neutrality contract is intact
+    hp.hp = 50;
+    for (let i = 0; i < 30; i++) w.step(new Map()); // ~1 combat second
+    expect(hp.hp).toBeGreaterThan(50);
+    expect(hp.hp).toBeLessThanOrEqual(hp.maxHp);
+    // and it can never overheal past the levelled cap
+    hp.hp = hp.maxHp;
+    for (let i = 0; i < 30; i++) w.step(new Map());
+    expect(hp.hp).toBe(hp.maxHp);
+  });
+});
+
+describe("#217 (a) the model key is a live knob", () => {
+  it("MobRules carries the mob's model doc id, defaulting to 喪標麥可's own mesh", () => {
+    cover("mob-217-modelkey-default");
+    const bare: MobWavesConfig = { ...CFG, mob: { ...CFG.mob, modelKey: undefined } };
+    expect(mobRulesFromConfig(bare, DT, 3).modelKey).toBe(MOB_MODEL_KEY);
+    expect(MOB_MODEL_KEY).toBe("champ.godie-zombiex");
+  });
+
+  it("an authored mobWaves.mob.modelKey actually reaches the rules (it used to be ignored)", () => {
+    cover("mob-217-modelkey-config");
+    const cfg: MobWavesConfig = { ...CFG, mob: { ...CFG.mob, modelKey: "champ.sela" } };
+    expect(mobRulesFromConfig(cfg, DT, 3).modelKey).toBe("champ.sela");
+  });
+
+  it("the shipped arena-rules doc points the mob at the zombie model, not the knight", () => {
+    cover("mob-217-arena-rules-model");
+    const raw = JSON.parse(
+      readFileSync(join(CONTENT_DIR, "config", "arena-rules.json"), "utf8"),
+    ) as { mobWaves: MobWavesConfig };
+    expect(raw.mobWaves.mob.modelKey).toBe("champ.godie-zombiex");
+    expect(raw.mobWaves.mob.championId).toBe(MOB_CHAMPION_ID);
+    expect(raw.mobWaves.mob.baseLevel).toBe(3);
+    expect(raw.mobWaves.mob.levelPerRound).toBe(1);
+  });
+});
+
+describe("#217 determinism", () => {
+  it("levelling draws ZERO from the rng and two same-round runs digest identically", () => {
+    cover("mob-217-determinism");
+    const build = (round: number): SimWorld => {
+      const w = new SimWorld(SKELETON_ARENA, 42);
+      w.combatActive = true;
+      beginCombatMobs(w, mobRulesFromConfig({ ...CFG, firstWaveSec: DT }, DT, round), [0]);
+      return w;
+    };
+    const a = build(5);
+    const b = build(5);
+    const rngBefore = a.rng.state;
+    for (let i = 0; i < 90; i++) {
+      a.step(new Map());
+      b.step(new Map());
+    }
+    expect(a.mob.size).toBeGreaterThan(0);
+    expect(a.rng.state).toBe(rngBefore); // no rng draw from spawn/level/regen
+    expect(a.digest()).toBe(b.digest());
+    // …and a DIFFERENT round is observably different state (hp is digested),
+    // which is what makes a level mismatch surface as a digest mismatch.
+    const c = build(6);
+    for (let i = 0; i < 90; i++) c.step(new Map());
+    expect(c.digest()).not.toBe(a.digest());
+  });
+
+  it("a disarmed world is untouched by #217 — mobSystem is still a strict no-op", () => {
+    cover("mob-217-off-noop");
+    const w = new SimWorld(SKELETON_ARENA, 7);
+    w.combatActive = true;
+    const before = w.digest();
+    mobSystem(w);
+    expect(w.mobTicks).toBe(-1);
+    expect(w.digest()).toBe(before);
+  });
+});

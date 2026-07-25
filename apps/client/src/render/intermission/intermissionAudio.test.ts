@@ -87,6 +87,40 @@ describe("intermissionAudio", () => {
       vi.useRealTimers();
     }
   });
+
+  it("stop() CUTS the sounding clip, not just the re-arm (task #216, mirror image)", () => {
+    cover("intermission-market-ambience");
+    // #216 is the fire-ring bed leaking INTO the shop; this is the same class of
+    // bug pointing the other way. The murmur is a ~50 s clip, so one fired two
+    // seconds before the shop closes plays on under the next round's combat
+    // unless the voice itself is stopped. Clearing the interval only stops the
+    // NEXT re-arm.
+    const stopped: string[] = [];
+    const audio = {
+      events: [] as string[],
+      playSfx(event: string): boolean {
+        this.events.push(event);
+        return true;
+      },
+      stopSfx(event: string): number {
+        stopped.push(event);
+        return 1;
+      },
+    };
+    const timers = fakeTimers();
+    const amb = startMarketAmbience(audio, { timers });
+    expect(stopped).toEqual([]);
+    amb.stop();
+    expect(stopped).toEqual([MARKET_AMBIENCE]);
+    expect(timers.active).toBe(false);
+  });
+
+  it("tolerates an SfxPort with no stop path at all (optional seam)", () => {
+    cover("intermission-market-ambience");
+    // `stopSfx` is optional so a test double — or an older mixer — may omit it.
+    const amb = startMarketAmbience(fakeAudio(), { timers: fakeTimers() });
+    expect(() => amb.stop()).not.toThrow();
+  });
 });
 
 

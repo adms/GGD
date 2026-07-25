@@ -488,3 +488,32 @@ export function expireCombatText(nowMs: number): void {
 export function clearCombatText(): void {
   for (const e of combatTextPool) e.active = false;
 }
+
+/**
+ * Drop every WORLD-ANCHORED datum (task #216) — the frame's way of saying
+ * "there is no arena on screen right now".
+ *
+ * THE BUG. The world-anchored layer (HP bars, names, cast bars, revive rings,
+ * floating numbers) is DOM painted at projected world positions, so it only
+ * means anything while the arena canvas UNDER it is actually being drawn. The
+ * intermission/shop scene suppresses that draw
+ * (`hudActions.setArenaRenderSuppressed`) while `GameApp` kept feeding this bus
+ * every frame regardless — which is why the owner saw 「戰場上的血條」 hovering
+ * over the shop with nothing behind them.
+ *
+ * `WorldAnchorLayer`'s rAF removes a champion's node the moment its anchor
+ * leaves `champions`, and skips a combat-text slot that is not `active`, so
+ * emptying the bus IS the teardown. Idempotent and cheap: once cleared, every
+ * subsequent suppressed frame is a handful of empty checks.
+ *
+ * NOT cleared: `project` / `arenaZones` / `arenaId` / `cameraView` /
+ * `spectateZone` are the arena's DESCRIPTION, not per-frame combat state. The
+ * minimap and the projection must survive an intermission so the next combat
+ * frame has geometry to draw against instead of one blank frame.
+ */
+export function clearWorldAnchors(): void {
+  frameBus.champions.clear();
+  frameBus.reviveCircles.length = 0;
+  frameBus.localCast = null;
+  clearCombatText();
+}

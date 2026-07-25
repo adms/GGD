@@ -2625,3 +2625,13 @@ glb 分支只把隊伍光環調暗、程序化分支把 `deathT` 拉到倒地姿
 **閘門**：`@ggd/shared` 880/880 綠（sim 未動，#215 MobSystem 15 / FireRingSystem 6 / fireRing 18 / revive 20 全部未調整即綠）；
 client typecheck + build 綠；client 3052 測試中僅 2 個**既有**紅（`descriptionRescale`：live 表冷卻已是 ×0.20 而測試寫死 ×0.25；
 `render/vfx/bindings.test.ts` 收集期就失敗）——已用 `git stash` 在 base commit 上覆驗，與本次改動無關。
+
+#### 🧊 2026-07-26 追記：#219 技能冷卻進度看不見 — 根因是「分母」不是「畫法」
+playtest 指令「技能冷卻進度不容易從圖示上看到」。表面看是配色/字級問題，實際是**算術錯誤**：
+- sim 收的冷卻是 `authored × (1-cdr) × combatEnv.cooldown`，而 `content/config/combat-env.json` 現行 `cooldown: 0.2`；三個 HUD 介面共 **5 份 inline 複製**的 sweep 全都拿「剩餘秒數 ÷ **原始 authored 冷卻**」當進度 → 進度分數**數學上永遠 ≤ 0.20**。52px 技能格上就是底部 ~10px 的一條，而那條正好被技能名 scrim 佔住 → 冷卻指示器**一輩子沒離開過 scrim**。這與 #125（數字可信）同一類：旁邊的 冷卻 tooltip 早就走 `displayFinal(..., "cooldown", env)`，底下的 sweep 沒走。
+- 修法：抽出唯一純模組 `apps/client/src/ui/cooldownView.ts`（ticks→秒→fraction→label，node 可測、不 import React/RoomStore/displayFinal），env-scaled max 由 React 呼叫端用 `useDisplayEnv()` 餵進來；唯一 `<CooldownChrome/>` 負責畫。
+- 視覺語彙改為 **conic-gradient 放射抹除 + 整格平光壓暗**：旋轉且**收縮**，與 cast fill 的「底部線性**上升**」正交（舊的矩形 sweep 與 cast fill 幾何完全相同，冷卻與吟唱讀起來一樣）；數字加 shadow+stroke+`tabular-nums`，<3s 顯示一位小數（舊 `Math.ceil` 讓最後一秒凍在「1」）；就緒瞬間 340ms bloom 打在**子元素**上（tile 的 transform/filter 是按壓與 deny shake 的頻道）。
+- 順手補齊 parity 缺口：touch EX 與 touch 天生技原本只畫暗矩形、**完全沒有秒數**；couch 24x20 chip **完全沒有進度填色**。守門測試從 HudRoot 的 import **推導**介面清單（不寫死檔名），第 4 個 HUD variant 自動繼承契約。
+- 測試：`ui/cooldownView.test.ts`（純數學，含「35s 授權值在 `cooldown:0.2` 下剛施放必須 frac=1.0 而非 0.2」的根因鎖）+ `ui/components/cooldownChrome.test.ts`（source scan）。test_id `cooldown-legibility` 已登錄 `docs/todo/client-hud.md` client-36。
+- **殘留（未修，另案）**：`Stat.CooldownReduction` 進一步縮短實際冷卻，client 不知道座位的 CDR，故堆 20% CDR 的玩家會看到抹除從 80% 起跑（已 clamp，誠實且會自我收斂）。精確解＝在 `SeatView` 的 `cooldowns` 旁加 `cooldownMax: number[]`。
+- **殘留（未修，另案）**：couch HUD 只有 Q/W/E/R chip，**沒有 EX / 天生技 格**，三介面 parity 仍缺一角。

@@ -23,6 +23,16 @@
  *     counter stops advancing, so the replicated radius freezes with the
  *     mechanic instead of shrinking over a settled round.
  *
+ * PER-ZONE GATE (task #216). `combatActive` is GLOBAL and only drops once EVERY
+ * pairing is decided, so the survivors of a duel that ended EARLY kept burning
+ * while the other zone fought on — and, because a player knocked out this round
+ * is already in the shop, that read as 「回到商店…血量會降低」. A zone listed in
+ * `world.settledZones` (written by the host the instant it records that zone's
+ * duel winner) is COMBAT-OVER: its champions are skipped here, and skipped
+ * identically by `isBurnedByFireRing` so the BURNING flag / red wash can never
+ * claim a burn that no longer happens. The ring's CLOCK and RADIUS stay global
+ * — the live zone still needs them, and the snapshot replicates only one radius.
+ *
  * The combat-elapsed counter (`fireRingTicks`) is incremented FIRST — mirroring
  * FlowerSystem — so the ring ignites exactly `startTicks` combat ticks in, and
  * the shrink's tick 0 is that same tick (radius still == the zone boundary,
@@ -67,6 +77,9 @@ export function fireRingSystem(world: SimWorld): void {
     if (!hp || !hp.alive) continue;
     const t = world.transform.get(id);
     if (!t) continue;
+    // #216: this zone's duel is already decided — the round is OVER here, so the
+    // ring must not keep eating its survivors while another zone fights on.
+    if (world.settledZones.has(t.zone)) continue;
     // per-zone geometry: each duel's ring closes on ITS OWN centre.
     const zoneDef = world.arena.zones[t.zone] ?? world.arena.zones[0];
     if (!zoneDef) continue;

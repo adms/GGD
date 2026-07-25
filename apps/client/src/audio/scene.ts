@@ -108,6 +108,22 @@ export function isCombatStart(prev: string | null, next: string): boolean {
 }
 
 /**
+ * Whether LEAVING `prev` for `next` is the combat TEARDOWN edge (task #216) —
+ * the mirror of `isCombatStart`, and the moment every fight-only sustained SFX
+ * bed must be stopped.
+ *
+ * The symptom this exists for: `fireRingLoop` is a ~60 s clip fired ONCE at
+ * ring ignition and `arenaAmbience` a ~38 s clip fired once at round start, and
+ * `playSfx` had no stop path at all — so a round that ended inside that window
+ * carried the burning-fire bed straight through 結算 into the shop
+ * (「回到商店時…還會有火圈聲音」). Any exit from combat counts, including the
+ * jump to matchEnd, because there is no phase in which those beds belong.
+ */
+export function isCombatEnd(prev: string | null, next: string): boolean {
+  return prev === "combat" && next !== "combat";
+}
+
+/**
  * Phase-continuous resume offset (SECONDS) for a LOOPING bed re-entering a scene
  * it has played before (task #109). `elapsedMs` is that scene's ACCUMULATED
  * playback time across every prior visit; the bed restarts at

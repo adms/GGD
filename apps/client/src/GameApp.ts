@@ -105,6 +105,7 @@ import { ContentDb } from "./content/ContentDb";
 import {
   frameBus,
   clearCombatText,
+  clearWorldAnchors,
   expireCombatText,
   setCombatTextScope,
   setDamageNumberCap,
@@ -118,6 +119,12 @@ import { envFactor, setDisplayEnvJson } from "./ui/displayFinal";
 import { audioSystem } from "./audio";
 import { loadChampionVoices, playChampionSelectVoice } from "./audio/championVoice";
 import { warmContextualVoice, playContextualVoice } from "./audio/contextualVoice";
+import {
+  damageVoiceCandidate,
+  deathVoiceCandidate,
+  orderVoiceCandidates,
+  type VoiceCandidate,
+} from "./audio/voiceAudience";
 import { combatSfxKey } from "./audio/combatSfx";
 import { resolveSpatial } from "./audio/combatSfxSpatial";
 import { SpatialSfxQueue } from "./audio/SpatialSfxQueue";
@@ -147,10 +154,9 @@ const CAP_SLACK_MS = 3;
 /** draw distances at/above this are treated as "no cull" (skip the check). */
 const DRAW_DISTANCE_MAX = 300;
 
-/** A hit taking at least this fraction of the local hero's max-hp is a HEAVY hit
- * (hurt-heavy grunt); anything lighter is the short hurt. A killing blow is
- * always heavy. Contextual-voice only — never a sim value. */
-const HURT_HEAVY_FRACTION = 0.18;
+// The heavy/light grunt threshold now lives with the rest of the voice-audience
+// policy (audio/voiceAudience.HURT_HEAVY_FRACTION), because #223 measures it
+// against the VICTIM'S own max-hp rather than the local hero's.
 /** Idle seconds before the "hum" line may roll (the idle latch is the real gate). */
 const HUM_IDLE_MS = 10_000;
 interface PendingAuth {
@@ -281,6 +287,13 @@ export class GameApp {
    * batch — a profiled hit shakes exactly once, through the directional path.
    */
   private batchProfiled = false;
+  /**
+   * Voice lines the CURRENT drained batch wants to speak, scored but not yet
+   * played (#223). Flushed best-first once the batch is fully drained — see
+   * flushContextualVoices for why the sort is load-bearing. Reused array,
+   * truncated (never reallocated) each flush.
+   */
+  private readonly frameVoices: VoiceCandidate[] = [];
   /** performance.now() of the last EX punch-in (guards against a restart). */
   private lastExPunchMs = -Infinity;
   /** reused scratch: champion ids seen this frame (ambient sweep) */
@@ -1041,6 +1054,11 @@ export class GameApp {
         recordSettlement(ev.data as unknown as MatchSettlement);
       }
     }
+    // #223: the widened hurt/defeat lines were SCORED during the drain, not
+    // played — dispatch them now, best band first, so the arena-wide 1.2 s voice
+    // slot goes to the line that matters most rather than to whichever packet
+    // happened to be drained first. (Same reason SpatialSfxQueue sorts.)
+    this.flushContextualVoices();
 
     // match-outcome freeze: once the server decides the winner it pins every
     // hero idle for the settlement front-view. Mirror it client-side so local
@@ -1273,7 +1291,17 @@ export class GameApp {
     this.updateRoundWinner(state, nowMs);
 
     // 7) world-anchored DOM data + render
-    if (state) this.updateFrameBus(state, nowMs);
+    //
+    // THE ARENA'S DOM OVERLAY FOLLOWS THE ARENA (task #216). The world-anchored
+    // layer (HP bars, names, cast bars, revive circles, floating numbers) is DOM
+    // painted at projected world positions — it only means anything while the
+    // arena canvas underneath it is actually being drawn. The intermission
+    // Babylon scene suppresses that draw (`setArenaRenderSuppressed`), and the
+    // overlay used to keep updating regardless, which is why the owner saw
+    // 「戰場上的血條」 floating over the shop with nothing behind them. Same
+    // switch for both now: no arena render ⇒ no world anchors.
+    if (state && !this.renderSuppressed) this.updateFrameBus(state, nowMs);
+    else clearWorldAnchors();
     if (!this.renderSuppressed) this.renderer.render();
 
     // 8) perf sampling → adaptive brain + perfBus (read by the overlay @4Hz)
@@ -1514,17 +1542,29 @@ export class GameApp {
   }
 
   /**
-   * CONTEXTUAL VOICE dispatch for one drained event (task: voice-lines-utilize).
+   * CONTEXTUAL VOICE dispatch for one drained event (task: voice-lines-utilize;
+   * audience widened by #223).
    * Maps combat events to the acting champion's own cloned category clip:
    *   • abilityCast (non-PASSIVE) → skill-name.<slot>, spoken by the CASTER.
    *   • damage with crit         → crit, spoken by the ATTACKER (source).
-   *   • damage to the LOCAL hero  → hurt / hurt-heavy (only your own champ grunts,
-   *                                 by the fraction of max-hp the blow took).
-   *   • death of the LOCAL hero   → defeat.
-   * The kill-N / first-blood / victory lines live in AudioDirector / the
-   * settlement panels (they key off the discrete tally + phase edges, not the
-   * per-frame drain). CLIENT-ONLY: contextualVoice picks with a client rng and
-   * rides audioSystem.playClip, so this never affects sim/determinism.
+   *   • damage to ANY champion   → hurt / hurt-heavy, spoken by the VICTIM, by
+   *                                the fraction of the VICTIM'S OWN max-hp the
+   *                                blow took. #223: this used to be gated to
+   *                                `target === localId`, so hitting an enemy
+   *                                produced no grunt at all — the arena only
+   *                                ever spoke in your voice.
+   *   • death of ANY champion    → defeat, spoken by the corpse (#223).
+   *   • block / healed / dodge   → still LOCAL-ONLY, deliberately: they are
+   *                                answers to YOUR input, and an enemy's parry
+   *                                is already carried by the SFX layer.
+   * The two widened categories are QUEUED, not played: they are scored by
+   * audio/voiceAudience and dispatched best-first after the batch drains, so the
+   * arena-wide 1.2 s voice slot is spent on the line that matters most instead
+   * of on whichever packet arrived first. The kill-N / first-blood / victory
+   * lines live in AudioDirector / the settlement panels (they key off the
+   * discrete tally + phase edges, not the per-frame drain). CLIENT-ONLY:
+   * contextualVoice picks with a client rng and rides audioSystem.playClip, so
+   * this never affects sim/determinism.
    */
   private dispatchContextualVoice(ev: EventMessage, localId: number | null): void {
     const d = ev.data;
@@ -1551,17 +1591,27 @@ export class GameApp {
         const blocker = this.championIdForEntity(target);
         if (blocker) playContextualVoice(blocker, "block");
       }
-      // hurt is gated to the LOCAL victim so only your own champion grunts.
+      // #223 — hurt fans out to EVERY champion, weighted by audience. The
+      // damage packet carries the VICTIM's own transform (damage.ts emits
+      // world.transform.get(target)), so the listener distance is free and
+      // needs no entity lookup and no frame-order-sensitive views.posOf read.
+      this.queueVoiceCandidate(
+        damageVoiceCandidate({
+          champId: this.championIdForEntity(target),
+          speaker: target,
+          counterpart: Number.isFinite(source) ? source : null,
+          localId,
+          teamOf: this.audioTeamOf,
+          amount: typeof d.amount === "number" ? d.amount : 0,
+          victimMaxHp: this.entityMaxHp(target),
+          killingBlow: d.killingBlow === true,
+          distance: this.listenerDistance(
+            typeof d.x === "number" ? d.x : null,
+            typeof d.z === "number" ? d.z : null,
+          ),
+        }),
+      );
       if (localId !== null && target === localId) {
-        const victim = this.championIdForEntity(target);
-        if (victim) {
-          const hud = hudStore.getState();
-          const maxHp = hud.localMaxHp > 0 ? hud.localMaxHp : 0;
-          const amount = typeof d.amount === "number" ? d.amount : 0;
-          const heavy =
-            d.killingBlow === true || (maxHp > 0 && amount / maxHp >= HURT_HEAVY_FRACTION);
-          playContextualVoice(victim, heavy ? "hurt-heavy" : "hurt");
-        }
         this.noteLocalCombat(); // reset the hum idle latch — you are in a fight
       }
       return;
@@ -1591,12 +1641,75 @@ export class GameApp {
       return;
     }
     if (ev.type === "death") {
-      // own death → defeat (the same id deathFocus.noteDeath consumes).
-      if (localId !== null && Number(d.id) === localId) {
-        const champ = this.championIdForEntity(localId);
-        if (champ) playContextualVoice(champ, "defeat");
-      }
+      // #223 — ANY champion's death cries out (the same id deathFocus.noteDeath
+      // consumes). `killer` is what makes "the enemy YOU just killed" its own
+      // band: that cry is the confirmation of your kill, so it preempts.
+      const id = Number(d.id);
+      const killer = typeof d.killer === "number" ? d.killer : null;
+      this.queueVoiceCandidate(
+        deathVoiceCandidate({
+          champId: this.championIdForEntity(id),
+          speaker: id,
+          counterpart: killer,
+          localId,
+          teamOf: this.audioTeamOf,
+          distance: this.entityListenerDistance(id),
+        }),
+      );
     }
+  }
+
+  /** Park a scored voice line for this frame's best-first flush (#223). */
+  private queueVoiceCandidate(c: VoiceCandidate | null): void {
+    if (c) this.frameVoices.push(c);
+  }
+
+  /**
+   * Dispatch the frame's queued voice lines HIGHEST BAND FIRST (#223).
+   *
+   * This is the piece that makes widening safe rather than merely louder.
+   * `contextualVoice` admits one line per 1.2 s arena-wide and is otherwise
+   * first-come-first-served in packet-drain order, so without the sort a
+   * stranger's grunt drained early in the batch would eat the beat your own
+   * grunt needed — the audience would be wider and the result LESS legible.
+   * Sorting first is the same fix (and the same band layout) SpatialSfxQueue
+   * applies to combat SFX. Everything still goes through playContextualVoice, so
+   * the de-dup, the throttle, the mute/unlock gates and the silent
+   * fall-through for an unpacked champion all apply untouched.
+   */
+  private flushContextualVoices(): void {
+    if (this.frameVoices.length === 0) return;
+    for (const c of orderVoiceCandidates(this.frameVoices)) {
+      playContextualVoice(c.champId, c.category, {
+        probScale: c.probScale,
+        preempt: c.preempt,
+      });
+    }
+    this.frameVoices.length = 0;
+  }
+
+  /** Max hp of ANY entity from the schema (0 when unknown) — the heavy/light split. */
+  private entityMaxHp(id: number): number {
+    const es = this.conn.room?.state.entities.get(String(id));
+    return es?.maxHp ?? 0;
+  }
+
+  /** Ground distance from the local listener body to a world point (null = unknown). */
+  private listenerDistance(x: number | null, z: number | null): number | null {
+    if (x === null || z === null || !Number.isFinite(x) || !Number.isFinite(z)) return null;
+    const body = this.localSelfPos();
+    if (!body) return null; // dead / spectating: no body, so no distance damping
+    return Math.hypot(x - body.x, z - body.z);
+  }
+
+  /** Same, for an entity resolved from the AUTHORITATIVE schema tick. */
+  private entityListenerDistance(id: number): number | null {
+    // Deliberately schemaPos, not audioEntityPos: this runs in step 1 of the
+    // frame and `views.sync` is step 4, so posOf would be a frame stale and null
+    // for anything culled — which would silently mute distant bodies for a
+    // reason that has nothing to do with the audience policy.
+    const p = this.schemaPos(id);
+    return p ? this.listenerDistance(p.x, p.z) : null;
   }
 
   /**

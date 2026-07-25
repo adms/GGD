@@ -455,8 +455,18 @@ export const zMobWavesConfig = z
         attackCdSec: z.number().positive(),
         /** collision/body radius (drives the edge inset = boundaryRadius - radius) */
         radius: z.number().positive(),
-        /** the voxel-zombie standin model doc id (resolved client-side) */
+        /** the mob's model doc id (resolved client-side); absent = MOB_MODEL_KEY */
         modelKey: z.string().min(1).optional(),
+        /**
+         * #217 — the CHAMPION DOC whose `baseStats`/`growth` give the mob its
+         * levelled maxHp/regen. Absent = `MOB_CHAMPION_ID` (godie-zombiex).
+         * When the doc is not registered the flat `maxHp` above is used instead.
+         */
+        championId: z.string().min(1).optional(),
+        /** #217 — mob level in round `fromRound` (owner: 第3場 = lv3) */
+        baseLevel: z.number().int().min(1).optional(),
+        /** #217 — levels gained per round past `fromRound` (owner: 每場 +1) */
+        levelPerRound: z.number().int().min(0).optional(),
       })
       .strict(),
     /** per-kill rewards */
@@ -483,11 +493,16 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
   mobsPerWaveCap: 10,
   maxAlivePerZone: 30,
   mob: {
+    // Fallback only (#217): with the godie-zombiex doc registered the mob's hp is
+    // 100 + 50*(level-1) — 200 at the round-3 floor of level 3.
     maxHp: 120,
     attackDamage: 12,
     attackRange: 1.8,
     attackCdSec: 1.0,
     radius: 0.6,
+    championId: "godie-zombiex",
+    baseLevel: 3,
+    levelPerRound: 1,
   },
   reward: {
     gold: 20,

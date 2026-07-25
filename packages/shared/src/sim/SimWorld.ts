@@ -184,6 +184,31 @@ export class SimWorld {
   combatActive = false;
 
   /**
+   * Zones whose DUEL IS ALREADY DECIDED this round (task #216).
+   *
+   * `combatActive` is GLOBAL: it only drops once EVERY pairing is settled, so
+   * between "my 3v3 ended" and "the last zone's 3v3 ends" the round is over for
+   * me and still live for the world. That window is the #216 bug — the fire
+   * ring kept eating the survivors of a finished duel (161 → 39 HP in the
+   * playtest), and since a player defeated this round is already looking at the
+   * shop (ui/panels/shopGate), the HP was visibly draining behind the shop card.
+   *
+   * This is RECORDED SIM STATE, not host state: the match host writes a zone in
+   * the same instant it records that zone's duel winner (`checkCombatEnd`) and
+   * clears the whole set in `enterCombat`, both of which are already
+   * deterministic (their only tie-breaks draw from `world.rng`). It is folded
+   * into the replay host-digest next to `combatActive`, so a replica that
+   * disagrees about which zone finished says so on the tick it happens.
+   *
+   * Systems must treat a settled zone as "combat is over HERE": no fire-ring
+   * burn (FireRingSystem + fireRing.isBurnedByFireRing), no mob aggro/melee and
+   * no new mob spawns (MobSystem). It never freezes the ring's shrink CLOCK or
+   * radius — those stay global, because the snapshot replicates one radius for
+   * the whole arena (protocol/schema.ts) and the still-live zone needs it.
+   */
+  readonly settledZones = new Set<number>();
+
+  /**
    * Combat-juice freeze state (deterministic, part of world state so client
    * prediction replays it identically). See systems/HitstopSystem.ts + combat/
    * damage.ts + docs COMBAT-JUICE notes.
@@ -549,6 +574,21 @@ export class SimWorld {
       // divergence three ticks later. 0 when free, which is the overwhelmingly
       // common case, so a pre-feature world hashes identically.
       mix(this.abilities.get(id)?.recovery?.ticksLeft ?? 0);
+      // task #221: the CURRENT auto-attack target is authoritative world state
+      // now that the sim PICKS IT ITSELF. A replica that acquired a different
+      // enemy must surface here on the acquiring tick rather than three seconds
+      // later as a position/HP drift nobody can trace back.
+      //
+      // Folded in ONLY when a target exists — mixing a `-1` sentinel for the
+      // (overwhelmingly common) untargeted entity would change the hash of every
+      // pre-feature world and break the #191 disarmed-golden canary for no
+      // information gain. `id` is re-mixed alongside so "entity 7 targets 9"
+      // can never collide with "entity 9 targets 7".
+      const at = this.nav.get(id)?.attackTarget;
+      if (at !== null && at !== undefined) {
+        mix(id);
+        mix(at);
+      }
     }
     // match scoreboard is authoritative world state — a desync here (a counter
     // that fired on one run but not the other) surfaces as a digest mismatch.
@@ -645,6 +685,23 @@ export class SimWorld {
     // surfaces the SAME tick (the gold-only-divergence blind spot), while a
     // disarmed / pre-feature world (mobTicks === -1) skips it entirely.
     if (this.mobTicks >= 0) mix(this.mobTicks);
+    // THREAT MEMORY (task #221). `recentDamagers` used to be pure assist
+    // bookkeeping and was deliberately kept OUT of the digest as transient.
+    // It is not transient any more: sim/targeting.ts reads it as the 「優先打
+    // 攻擊自己的敵人」 key, so a divergence here silently changes WHO everyone
+    // attacks. Both levels are iterated in explicit ASCENDING-ID order — the
+    // inner map's own order is first-hit order, which is exactly the kind of
+    // Map-insertion accident a digest must not depend on.
+    const victims = [...this.recentDamagers.keys()].sort((a, b) => a - b);
+    for (const victim of victims) {
+      const byAttacker = this.recentDamagers.get(victim)!;
+      mix(victim);
+      const attackers = [...byAttacker.keys()].sort((a, b) => a - b);
+      for (const attacker of attackers) {
+        mix(attacker);
+        mix(byAttacker.get(attacker)!);
+      }
+    }
     mix(this.rng.state);
     mix(this.tick);
     return h >>> 0;

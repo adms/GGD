@@ -27,6 +27,7 @@ import "./ui/buttonFx.css"; // shared JRPG + cyber-glow button skin (one import 
 // Tier-2 overrides tie on specificity with `.ggd-btn:hover::before` and win on
 // source order. ui/focusGlow.test.ts asserts this ordering.
 import "./ui/focusGlow.css";
+import "./ui/cooldown.css"; // ability-cooldown ready bloom keyframes (task #219)
 import "./cursor/cursor.css"; // JRPG cursor set (task #54a); gated to fine pointers
 
 initCursor(); // apply the persisted JRPG cursor size to <html> before first paint

@@ -52,6 +52,17 @@ export interface Navigation {
   override: { kind: "dash" | "knockback"; dir: Vec2; speed: number; remaining: number } | null;
   /** basic-attack target acquired by attack-move / attackTarget orders */
   attackTarget: EntityId | null;
+  /**
+   * PROVENANCE of `attackTarget` (task #221): true when the sim's auto-acquire
+   * rule chose it, false when the SEAT ordered it (a right-click / A-click /
+   * gamepad pick, human or bot).
+   *
+   * Without this flag the two are indistinguishable, and auto-acquire would
+   * re-point or leash-drop a target the player deliberately clicked — exactly
+   * the "must not override an explicit player action" constraint. Reset
+   * wherever `attackTarget` is written or cleared.
+   */
+  attackTargetAuto: boolean;
 }
 
 export interface ProjectileComp {
