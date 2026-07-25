@@ -53,6 +53,16 @@ export const SAMANTHA_VARIANTS: Readonly<Partial<Record<AudioScene, string>>> = 
 /** Scenes that must NEVER rotate — the login theme stays epic-only (task #134). */
 export const ROTATION_LOCKED_SCENES: ReadonlySet<string> = new Set<string>(["menu"]);
 
+/**
+ * The variant map the RUNNING app actually rotates over. Owner 2026-07-25:
+ * 「Samantha James 變體先都不使用」 — so this is EMPTY, and every scene plays its
+ * original bed only (BgmRotationStore with no variant = a no-op). The
+ * SAMANTHA_VARIANTS map above and the .samantha.mp3 files are kept intact (the
+ * bgm-audition page still lists all 12+12); ONLY the live wiring is switched
+ * off. To re-enable rotation in-game, set this back to SAMANTHA_VARIANTS.
+ */
+export const ACTIVE_BGM_VARIANTS: BgmVariantMap = {};
+
 /** A scene → variant-file map (the shape `BgmRotationStore` consumes). */
 export type BgmVariantMap = Readonly<Partial<Record<string, string>>>;
 

@@ -39,7 +39,7 @@ import {
   type Rng,
 } from "./audioSelect";
 import { audioSettings, type AudioSettingsStore } from "./audioSettings";
-import { BgmRotationStore, SAMANTHA_VARIANTS, type BgmVariantMap } from "./bgmVariants";
+import { BgmRotationStore, ACTIVE_BGM_VARIANTS, type BgmVariantMap } from "./bgmVariants";
 import { loopResumeOffsetSec } from "./scene";
 import { SFX_CORE, sfxEventsForScene } from "./sfxManifest";
 import { EMPTY_AUDIO_MAP, audioMapFromDoc, type AudioMap, type AudioScene } from "./types";
@@ -152,7 +152,9 @@ export interface AudioSystemOptions {
    * path. On each scene ENTRY the bed alternates original → variant → …. Omitted
    * (or `{}`) ⇒ no rotation: every scene always plays its authored `file`, which
    * is the behaviour every existing caller and test relies on. The process-wide
-   * `audioSystem` singleton wires the real `SAMANTHA_VARIANTS`.
+   * `audioSystem` singleton wires `ACTIVE_BGM_VARIANTS` — currently `{}` (owner
+   * 2026-07-25 disabled the Samantha variants; flip it back to `SAMANTHA_VARIANTS`
+   * in bgmVariants.ts to re-enable).
    */
   bgmVariants?: BgmVariantMap;
 }
@@ -1343,4 +1345,4 @@ export class AudioSystem {
  * original ↔ deep-house variant on entry; a bare `new AudioSystem()` (tests)
  * gets no variants and never rotates.
  */
-export const audioSystem = new AudioSystem({ bgmVariants: SAMANTHA_VARIANTS });
+export const audioSystem = new AudioSystem({ bgmVariants: ACTIVE_BGM_VARIANTS });
