@@ -1,6 +1,6 @@
 {
   "collection": "champions",
-  "hash": "5ad81c938a6c",
+  "hash": "9bf175bc146d",
   "entries": [
     {
       "id": "godie-e001",
@@ -667,6 +667,12 @@
       "path": "champions/godie-uwar.json",
       "hash": "38bf340e57f0",
       "size": 5732
+    },
+    {
+      "id": "godie-zombiex",
+      "path": "champions/godie-zombiex.json",
+      "hash": "21b71e620cff",
+      "size": 5430
     },
     {
       "id": "sela",

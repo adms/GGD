@@ -2180,6 +2180,26 @@
     "truePeakDb": -1.5
   },
   {
+    "id": "vo-title-godie-zombiex",
+    "lang": "zh-TW",
+    "voice": "Tingting",
+    "text": "聖杯黑泥醬",
+    "out": "godie-zombiex.title.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-godie-zombiex",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "喪標麥可",
+    "out": "godie-zombiex.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
     "id": "vo-name-sela",
     "lang": "ja-JP",
     "voice": "Kyoko",

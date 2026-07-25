@@ -230,6 +230,10 @@ const CASTING = {
   "godie-n00b": ["zh+ja", "小叮噹", null, "ドラエモン", "Doraemon"],
   "godie-n01l": ["zh+ja", "學姊", null, "シャオパイ", "Shao Pai"],
 
+  // Original roguelite champion (#215 mob avatar): on'yomi 稱號, 麥可→Michael.
+  // Readings are the owner's to tune ("我來修改調整就好").
+  "godie-zombiex": ["ja", "セイハイコクデイチャン", "Seihai Kokudei-chan", "ソウヒョウマイケル", "Souhyou Maikeru"],
+
   // ── RULE 3 — a genuinely English/Western referent: Karen, that fragment only.
   "godie-ecen": ["zh+en", "姜窩肯", null, "Johnnie Walker", "Johnnie Walker"],
   "godie-othr": ["zh+en", "X戰警", null, "Wolverine", "Wolverine"],

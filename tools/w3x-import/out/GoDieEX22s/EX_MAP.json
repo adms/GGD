@@ -2,7 +2,7 @@
   "unlockTech": "R00R",
   "unlockLevel": 30,
   "totalR00RAbilities": 100,
-  "championsWithEx": 102,
+  "championsWithEx": 103,
   "championsWithoutEx": 9,
   "heroes": {
     "godie-e001": {
@@ -1028,6 +1028,15 @@
       "aart": "ReplaceableTextures\\CommandButtons\\BTNRobeOfTheMagi.blp",
       "allR00R": [
         "A105"
+      ]
+    },
+    "godie-zombiex": {
+      "heroRawcode": "zbx0",
+      "exAbility": "ZBEX",
+      "nameZh": "100-002 バタンキュー",
+      "heroNameZh": "喪標麥可",
+      "allR00R": [
+        "ZBEX"
       ]
     }
   },

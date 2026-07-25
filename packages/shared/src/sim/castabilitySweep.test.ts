@@ -505,7 +505,7 @@ function testBasic(championId: string): { cell: Cell; projectile: boolean; range
 describe("task #128 — in-game castability coverage sweep", () => {
   it("spawns every whitelisted champion and fires every slot, writing docs/_castability-128.md", () => {
     cover("castability-sweep-128");
-    expect(roster.length).toBe(48);
+    expect(roster.length).toBeGreaterThanOrEqual(48); // owner-curated whitelist may add heroes (e.g. #100 喪標麥可)
 
     for (const id of roster) {
       let name = id;
@@ -574,7 +574,7 @@ describe("task #128 — in-game castability coverage sweep", () => {
           `commit as docs/todo/castability.md)`;
 
     // ---- the sweep must have actually run over the whole roster ----
-    expect(roster.length).toBe(48);
+    expect(roster.length).toBeGreaterThanOrEqual(48); // owner-curated whitelist may add heroes (e.g. #100 喪標麥可)
     expect(results.length).toBe(roster.length);
     expect(t.totalCells).toBe(roster.length * COLS.length);
     expect(results.filter((r) => !r.spawnOk).map((r) => r.id)).toEqual([]);

@@ -1310,6 +1310,16 @@
     ]
   },
   {
+    "id": "name-godie-zombiex",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "セイハイコクデイチャン・ソウヒョウマイケル。",
+    "out": "../assets/audio/voices/names/godie-zombiex.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
     "id": "name-sela",
     "lang": "en-AU",
     "voice": "Karen",

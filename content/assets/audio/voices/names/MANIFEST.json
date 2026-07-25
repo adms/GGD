@@ -3824,6 +3824,38 @@
         }
       ]
     },
+    "godie-zombiex": {
+      "zhName": "聖杯黑泥醬 - 喪標麥可",
+      "zhTitle": "聖杯黑泥醬",
+      "zhFullName": "喪標麥可",
+      "spokenTitle": "セイハイコクデイチャン",
+      "spokenName": "ソウヒョウマイケル",
+      "jaTitle": "セイハイコクデイチャン",
+      "jaName": "ソウヒョウマイケル",
+      "reading": "Seihai Kokudei-chan Souhyou Maikeru",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/godie-zombiex.mp3",
+      "voSegments": [
+        {
+          "part": "title",
+          "lang": "zh-TW",
+          "voice": "Tingting",
+          "text": "聖杯黑泥醬",
+          "clip": "assets/audio/voices/names/godie-zombiex.title.mp3"
+        },
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "喪標麥可",
+          "clip": "assets/audio/voices/names/godie-zombiex.name.mp3"
+        }
+      ],
+      "spokenLine": "セイハイコクデイチャン・ソウヒョウマイケル。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
     "sela": {
       "zhName": "Sela, the Ember Sage",
       "zhTitle": null,

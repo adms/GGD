@@ -159,13 +159,15 @@ describe("黑化Saber stays a separate hero (champion-identity-saber-alter)", ()
     expect(survivors).not.toContain("godie-e00l");
 
     // 黑泥召喚 is bespoke — it exists on this champion and nowhere else. If a
-    // merge ever swallows e00q, this kit is what gets lost.
+    // merge ever swallows e00q, this kit is what gets lost. The guard pins the
+    // whole ability name 黑泥召喚, NOT the bare 黑泥 motif: 聖杯黑泥醬
+    // (godie-zombiex) is legitimately mud-themed (黑泥噴吐 / 黑泥硬化).
     const w = champ("godie-e00q").abilities?.["W"]?.name ?? "";
-    expect(w).toContain("黑泥");
+    expect(w).toContain("黑泥召喚");
     const others = ROSTER.filter((c) => c.id !== "godie-e00q").flatMap((c) =>
       Object.values(c.abilities ?? {}).map((a) => a?.name ?? ""),
     );
-    expect(others.some((n) => n.includes("黑泥"))).toBe(false);
+    expect(others.some((n) => n.includes("黑泥召喚"))).toBe(false);
   });
 });
 

@@ -1,0 +1,240 @@
+{
+  "id": "godie-zombiex",
+  "schema": "champion@1",
+  "name": "聖杯黑泥醬 - 喪標麥可",
+  "description": "故事：\n黑化聖杯溢出的惡意邪念，凝成一具會走路的黑泥喪屍。平常懶洋洋拖著腳步，被惹毛時瞬間狂化。\n(去死團原創角色)\n\n推薦玩家 : 站樁扛傷、團戰吸收\n上手度 : 易\n\n角色成長：\n生命 + 65 / 級\n攻擊 + 2.0 / 級\n基礎跑速 3（極慢，喪屍設定；可再調）\n\n配音員參考：台灣台語版的兩津勘吉\n\n可學習的技能：黑泥硬化、黑泥噴吐、蹣跚衝撞、泥沼陷阱、聖杯溢出",
+  "role": "tank",
+  "attackType": "melee",
+  "modelKey": "champ.thorne",
+  "baseStats": {
+    "maxHealth": 600,
+    "healthRegen": 4.0,
+    "maxMana": 300,
+    "manaRegen": 6.0,
+    "ad": 36,
+    "ap": 0,
+    "armor": 0,
+    "mr": 0,
+    "as": 0.7,
+    "ms": 3.0,
+    "critChance": 0.05,
+    "critDamage": 3.0,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.2
+  },
+  "growth": {
+    "maxHealth": 65,
+    "healthRegen": 0.15,
+    "maxMana": 22,
+    "manaRegen": 0.1,
+    "ad": 2.0,
+    "armor": 0.6,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "hitFeel": {
+    "hitstopTicks": 3,
+    "shakeMag": 0.5,
+    "knockbackMag": 0.3
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-zombiex.q",
+      "name": "100-01 黑泥噴吐",
+      "description": "[主動攻擊]\n噴出一灘黑泥，對範圍內敵人造成魔法傷害並減速。",
+      "slot": "Q",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        8.0,
+        8.0,
+        8.0,
+        8.0
+      ],
+      "manaCost": [
+        40.0,
+        55.0,
+        70.0,
+        85.0
+      ],
+      "range": 7.0,
+      "radius": 3.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              80,
+              140,
+              200,
+              260
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.5
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow30",
+          "duration": 1.5,
+          "moveSpeedMult": 0.7
+        }
+      ],
+      "vfxKey": "fx.prim.blood.nova",
+      "targetsEnemies": true
+    },
+    "W": {
+      "id": "godie-zombiex.w",
+      "name": "100-02 蹣跚衝撞",
+      "description": "[主動攻擊]\n拖著腐爛的身體向前衝撞，是這隻慢吞吞喪屍唯一的突進手段。",
+      "slot": "W",
+      "castType": "dash",
+      "maxRank": 4,
+      "cooldown": [
+        16.0,
+        15.0,
+        14.0,
+        13.0
+      ],
+      "manaCost": [
+        30.0,
+        50.0,
+        70.0,
+        90.0
+      ],
+      "range": 6.0,
+      "effects": [
+        {
+          "kind": "dash",
+          "mode": "toPoint",
+          "speed": 25.0,
+          "maxDistance": 6.0
+        }
+      ],
+      "vfxKey": "fx.prim.holy.dash",
+      "castTimeSec": 0.3
+    },
+    "E": {
+      "id": "godie-zombiex.e",
+      "name": "100-03 泥沼陷阱",
+      "description": "[主動攻擊]\n在地面攤開一片黑泥沼，踩進去的敵人受傷並被黏住定身。",
+      "slot": "E",
+      "castType": "ground",
+      "maxRank": 4,
+      "cooldown": [
+        14.0,
+        13.0,
+        12.0,
+        11.0
+      ],
+      "manaCost": [
+        70.0,
+        95.0,
+        120.0,
+        145.0
+      ],
+      "range": 8.0,
+      "radius": 3.5,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              60,
+              110,
+              160,
+              210
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.5
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "root",
+          "duration": 1.0,
+          "root": true
+        }
+      ],
+      "vfxKey": "fx.prim.earth.shockwave",
+      "targetsEnemies": true
+    },
+    "R": {
+      "id": "godie-zombiex.r",
+      "name": "100-04 聖杯溢出",
+      "description": "[主動攻擊]\n聖杯的黑泥從體內爆發，對周圍造成大範圍魔法傷害並重減速。",
+      "slot": "R",
+      "castType": "ground",
+      "maxRank": 3,
+      "cooldown": [
+        90.0,
+        80.0,
+        70.0
+      ],
+      "manaCost": [
+        100.0,
+        150.0,
+        200.0
+      ],
+      "range": 0.0,
+      "radius": 4.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              300,
+              500,
+              700
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.6
+              }
+            ]
+          }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "slow40",
+          "duration": 1.5,
+          "moveSpeedMult": 0.6
+        }
+      ],
+      "vfxKey": "fx.prim.holy.nova-lg",
+      "targetsEnemies": true,
+      "castTimeSec": 0.7
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "godie",
+    "original",
+    "voxel-standin",
+    "tank"
+  ],
+  "exAbility": "godie-zombiex.ex",
+  "passiveAbility": "godie-zombiex.passive"
+}

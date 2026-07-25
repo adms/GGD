@@ -1,6 +1,6 @@
 {
   "collection": "abilities",
-  "hash": "534d322ca2b6",
+  "hash": "c4e1d35b3a1e",
   "entries": [
     {
       "id": "godie-e001.e",
@@ -3925,6 +3925,42 @@
       "path": "abilities/godie-uwar.w.json",
       "hash": "62159322f063",
       "size": 771
+    },
+    {
+      "id": "godie-zombiex.e",
+      "path": "abilities/godie-zombiex.e.json",
+      "hash": "44a0a817abf8",
+      "size": 894
+    },
+    {
+      "id": "godie-zombiex.ex",
+      "path": "abilities/godie-zombiex.ex.json",
+      "hash": "88d6c2dd8911",
+      "size": 663
+    },
+    {
+      "id": "godie-zombiex.passive",
+      "path": "abilities/godie-zombiex.passive.json",
+      "hash": "f56c299d7019",
+      "size": 777
+    },
+    {
+      "id": "godie-zombiex.q",
+      "path": "abilities/godie-zombiex.q.json",
+      "hash": "5596fc569a41",
+      "size": 884
+    },
+    {
+      "id": "godie-zombiex.r",
+      "path": "abilities/godie-zombiex.r.json",
+      "hash": "7102b9b23127",
+      "size": 896
+    },
+    {
+      "id": "godie-zombiex.w",
+      "path": "abilities/godie-zombiex.w.json",
+      "hash": "c66f4c94d195",
+      "size": 578
     },
     {
       "id": "sela.e",

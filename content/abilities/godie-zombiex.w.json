@@ -1,0 +1,32 @@
+{
+  "id": "godie-zombiex.w",
+  "schema": "ability@1",
+  "name": "100-02 蹣跚衝撞",
+  "description": "[主動攻擊]\n拖著腐爛的身體向前衝撞，是這隻慢吞吞喪屍唯一的突進手段。",
+  "slot": "W",
+  "castType": "dash",
+  "maxRank": 4,
+  "cooldown": [
+    16.0,
+    15.0,
+    14.0,
+    13.0
+  ],
+  "manaCost": [
+    30.0,
+    50.0,
+    70.0,
+    90.0
+  ],
+  "range": 6.0,
+  "effects": [
+    {
+      "kind": "dash",
+      "mode": "toPoint",
+      "speed": 25.0,
+      "maxDistance": 6.0
+    }
+  ],
+  "vfxKey": "fx.prim.holy.dash",
+  "castTimeSec": 0.3
+}

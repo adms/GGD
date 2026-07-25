@@ -141,9 +141,9 @@ describe("champion call-out VO pack", () => {
     const withTitle = [...champs.entries()].filter(
       ([id, name]) => name.includes(TITLE_SEP) && !skipped.has(id),
     );
-    // 109 of 113 champions are authored "稱號 - 全名"; one of those is the
-    // skipped test hero, leaving 108 that must speak both halves.
-    expect(withTitle.length, "champions authored with a 稱號").toBe(108);
+    // 110 of 114 champions are authored "稱號 - 全名"; one of those is the
+    // skipped test hero, leaving 109 that must speak both halves.
+    expect(withTitle.length, "champions authored with a 稱號").toBe(109);
 
     for (const [id, zhName] of withTitle) {
       const e = doc.champions[id]!;

@@ -86,7 +86,10 @@
  * NOTE some imported names have NO space after the prefix (`61-01惡魔球`), so
  * a separator must not be required.
  */
-export const HERO_NUMBER_RE = /^(\d{2})-(\d{2,3})(?!\d)/;
+// Hero 編號 is 2 digits historically (00-99); the roster now also mints 3-digit
+// numbers (owner directive: next id auto-fills the max, e.g. 喪標麥可 = 100). The
+// "-" delimiter keeps "100-00" (hero 100) unambiguous from "10-000".
+export const HERO_NUMBER_RE = /^(\d{2,3})-(\d{2,3})(?!\d)/;
 
 /** Meshes whose key starts with this are the four shared CC0 stand-ins. */
 const STAND_IN_MODEL_PREFIX = "champ.";
@@ -161,7 +164,7 @@ export function heroNumberFromAbilityName(name: string | null | undefined): stri
  */
 export function heroNumberOf(c: IdentityChampion): string | null {
   if (typeof c.heroNumber === "string") {
-    return /^\d{2}$/.test(c.heroNumber) ? c.heroNumber : null;
+    return /^\d{2,3}$/.test(c.heroNumber) ? c.heroNumber : null;
   }
   const found = new Set<string>();
   for (const ability of Object.values(c.abilities ?? {})) {

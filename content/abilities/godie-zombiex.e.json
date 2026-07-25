@@ -1,0 +1,51 @@
+{
+  "id": "godie-zombiex.e",
+  "schema": "ability@1",
+  "name": "100-03 泥沼陷阱",
+  "description": "[主動攻擊]\n在地面攤開一片黑泥沼，踩進去的敵人受傷並被黏住定身。",
+  "slot": "E",
+  "castType": "ground",
+  "maxRank": 4,
+  "cooldown": [
+    14.0,
+    13.0,
+    12.0,
+    11.0
+  ],
+  "manaCost": [
+    70.0,
+    95.0,
+    120.0,
+    145.0
+  ],
+  "range": 8.0,
+  "radius": 3.5,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          60,
+          110,
+          160,
+          210
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.5
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "root",
+      "duration": 1.0,
+      "root": true
+    }
+  ],
+  "vfxKey": "fx.prim.earth.shockwave",
+  "targetsEnemies": true
+}

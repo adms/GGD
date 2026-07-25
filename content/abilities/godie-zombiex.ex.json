@@ -1,0 +1,31 @@
+{
+  "id": "godie-zombiex.ex",
+  "schema": "ability@1",
+  "name": "100-002 バタンキュー",
+  "description": "[強化]\n倒地詐死再猛然起身，黑泥狂化，短時間大幅提升攻擊力。ハイハイ、カタカタ、フラフラ、バタンキュー。",
+  "slot": "EX",
+  "castType": "self",
+  "maxRank": 1,
+  "cooldown": [
+    60.0
+  ],
+  "manaCost": [
+    100.0
+  ],
+  "range": 0,
+  "effects": [
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "ad",
+          "op": "pctAdd",
+          "value": 0.5
+        }
+      ],
+      "duration": 6.0
+    }
+  ],
+  "vfxKey": "fx.prim.blood.nova-lg",
+  "castTimeSec": 0.4
+}

@@ -1,0 +1,49 @@
+{
+  "id": "godie-zombiex.r",
+  "schema": "ability@1",
+  "name": "100-04 聖杯溢出",
+  "description": "[主動攻擊]\n聖杯的黑泥從體內爆發，對周圍造成大範圍魔法傷害並重減速。",
+  "slot": "R",
+  "castType": "ground",
+  "maxRank": 3,
+  "cooldown": [
+    90.0,
+    80.0,
+    70.0
+  ],
+  "manaCost": [
+    100.0,
+    150.0,
+    200.0
+  ],
+  "range": 0.0,
+  "radius": 4.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          300,
+          500,
+          700
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.6
+          }
+        ]
+      }
+    },
+    {
+      "kind": "applyStatus",
+      "statusId": "slow40",
+      "duration": 1.5,
+      "moveSpeedMult": 0.6
+    }
+  ],
+  "vfxKey": "fx.prim.holy.nova-lg",
+  "targetsEnemies": true,
+  "castTimeSec": 0.7
+}
