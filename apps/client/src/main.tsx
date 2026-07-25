@@ -23,6 +23,10 @@ import { initCursor } from "./cursor";
 import { ReplayApp, parseReplayHash } from "./ui/replay/ReplayApp";
 import "./ui/mobile.css";
 import "./ui/buttonFx.css"; // shared JRPG + cyber-glow button skin (one import for the app)
+// #222 — the ONE gamepad/keyboard focus glow. MUST come after buttonFx.css: its
+// Tier-2 overrides tie on specificity with `.ggd-btn:hover::before` and win on
+// source order. ui/focusGlow.test.ts asserts this ordering.
+import "./ui/focusGlow.css";
 import "./cursor/cursor.css"; // JRPG cursor set (task #54a); gated to fine pointers
 
 initCursor(); // apply the persisted JRPG cursor size to <html> before first paint

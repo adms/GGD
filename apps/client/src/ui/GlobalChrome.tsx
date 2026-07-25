@@ -19,6 +19,15 @@
  * render `<GlobalChrome/>`, and a guard test (./globalChrome.test.ts) walks
  * every `root.render(` site in main.tsx and fails if a tree does not.
  *
+ * PadFocusNav BELONGS HERE (task #197/#222). "A pad drives the WHOLE UI flow"
+ * is a ubiquity claim of exactly the shape above, and it was mounted by hand in
+ * AppRoot — so the replay page, the one surface with nothing BUT buttons and no
+ * keyboard guarantee, could not be driven by a pad at all. It self-gates (it
+ * stands down for the champion in live combat) and is renderless, so being on
+ * every tree costs a rAF poll and nothing else. Declaring it here also means a
+ * future third tree inherits pad navigation with no edit, which is the whole
+ * point of this file.
+ *
  * DELIBERATELY NOT HERE, and why — these are AppRoot-only on purpose:
  *   • AudioDirector — it drives BGM off the platform store's `screen`, which a
  *     replay never enters (it stays at "boot"). Mounting it here would start
@@ -33,6 +42,7 @@
  * before either tree renders, so both trees already have them.
  */
 import { AudioToggle } from "./AudioToggle";
+import { PadFocusNav } from "./PadFocusNav";
 import { VersionBadge } from "./VersionBadge";
 
 export function GlobalChrome(): React.JSX.Element {
@@ -44,6 +54,9 @@ export function GlobalChrome(): React.JSX.Element {
       {/* build stamp: fixed, bottom-pinned, click-through, low z-index — every
           screenshot (including a replay screenshot) names the build it came from. */}
       <VersionBadge />
+      {/* #197/#222: roving DOM focus + the shared focus glow, on EVERY tree —
+          renderless, self-gating (it defers to the champion in live combat). */}
+      <PadFocusNav />
     </>
   );
 }

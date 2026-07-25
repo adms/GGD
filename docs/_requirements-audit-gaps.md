@@ -2412,3 +2412,31 @@ main 的 `icons.test.ts` 明文採「AUTHORITY MODEL」：424 個 embedded 沒�
 - **順修**：草泥馬 W/E 編號互換（92-03/92-02）、鬼眼狂刀無名→無明神風流（kana ムミョウ 本就正確、只改字不需重錄）
 - 覆核把關戰績：駁回「牙突→縮地」誤改（牙突是桀諾正典ドラゴンランス，縮地反是瀨田宗次郎的招）；基廉列克廬山昇龍破查 reconciliation 確認是原作者梗名（豁免）
 - 6 句語音重生（osam×3/hvwd/ogld/huth），雙鏡像+讀音登錄同步，content:build 綠，試聽頁重建
+
+## 2026-07-26 — #222「手把選取框太不明顯」：根因不是太淡，是**被 clip-path 整個裁掉**
+
+試玩指令原話：「用手把操作選取的框框太不明顯了 請你做明顯漸層炫光」。
+
+**根因（與「太淡」的直覺相反）**：舊的 pad focus ring 是 `ui/PadFocusNav.tsx` 用 JS 字串注入的一段 CSS，內容只有 `outline` + 兩層**外側** `box-shadow`。而 `.ggd-btn`（#24 按鈕皮膚）帶 `clip-path: polygon(...)` 做 45° 缺角 JRPG silhouette——**clip-path 會裁掉 outline 與外側 shadow**。所以在共用 `Btn`（`ui/platform/widgets.tsx`）與每一個 `SfxButton` 上，也就是實質整個 UI，那個框 **100% 被裁掉、畫面上什麼都沒有**。把 outline 加粗到 10px 也一樣看不到。而且它是元件裡的 JS 樣板字串，repo 內任何 `*.css` 掃描都掃不到它——沒有任何測試可能失敗。
+
+**修法：一份共用樣式，兩層（two tiers）**——因為 `<input>`/`<textarea>` 是 replaced element，**不能有 `::before`/`::after`**，只做按鈕層會讓登入表單那半邊繼續全黑：
+- **Tier 1（通用，含 input）**：動畫化的**內側** rim（`inset` box-shadow）+ 外側 halo + 循環 `outline-color`。內側 rim 畫在 border box **裡面**，clip-path 吃不掉，是承重的那道訊號。
+- **Tier 2（`.ggd-btn` 家族）**：直接改寫 #24 **既有的** `::before` 漸層環——4px（vs 基礎 1.4px）、`opacity:1`、羽化，並**重用 #24 自己的 `ggd-btn-glow` keyframe**，所以看起來是原生的而不是外掛的。它繼承 `clip-path: inherit`，光帶會沿著缺角走而不是破壞造型。
+
+**與 hover / disabled 的區別**（hover 今天就只是「同一個環，亮一點、快一倍」）：focus 同時在**四個軸**贏——厚度（4px vs 1.4px）、速度（1.3s vs hover 3s vs idle 6s 的三段階梯）、hover 完全沒有的內側 rim + halo、以及 1.03 幾何抬升；外加一個只屬於 focus 的白熾 glint 色停。disabled 則明文守衛（本檔 source-later 於 buttonFx.css，同 specificity 會贏，不能靠 JS selector 擋）。
+
+**順手關掉的兩個缺口**：
+- `PadFocusNav` 從 `AppRoot` 手動掛載改為 `ui/GlobalChrome` 成員 → `#replay=` 那棵樹（`ReplayApp`，全是 transport 按鈕、又是最沒鍵盤保證的一頁）**本來完全無法用手把操作**，現在免費拿到。`surfaceParity.test.ts` 既有的守衛順帶把「每個 render tree 都有」變成契約；同時 **必須**從 AppRoot 移除手掛，否則該守衛會紅。
+- **鍵盤是淨改善不是持平**：全 app 原本只有 `ui/mobile.css` 的 `.ggd-audio-range` 有 `:focus-visible`，而 `widgets.tsx` 的 `TextInput`（以及 codex 編輯器、store preview）內嵌 `outline:"none"` 沒有替代——也就是**文字欄位的鍵盤焦點原本是隱形的**。Tier 1 帶 `!important`，登入表單/codex/store 現在都有了真的焦點指示。⚠ 試玩會看到登入頁 Tab 樣子不同，那是修好不是壞掉。
+
+**prefers-reduced-motion**：反轉常見失敗模式（靠動畫才看得見的光暈，對要求減少動態的使用者直接消失）。這裡是**凍結在脈動的峰值**：rim/halo 照畫、光帶保留完整 4px 與多色漸層，只停止移動。測試明文禁止該區塊出現 `display:none`/`opacity:0`。
+
+**刻意不碰**（另一車道正持有這些檔）：`ui/buttonFx.css`、`ui/SfxButton.tsx`、`ui/platform/widgets.tsx`、`components/AbilityBar.tsx`、`TouchControls.tsx`、`components/CouchHudGrid.tsx`。所有 focus 規則都是**新檔裡的新 selector**，那條車道看到的是零行 diff；連 `.ggd-btn--subdued`（QWER/EX 技能格）的「安靜版 focus」（2.5px、不抬升，戰鬥中不變燈光秀）也宣告在新檔裡。
+
+**守衛**（`ui/focusGlow.test.ts`，node env、註解剝除的 source scan，比較的**兩邊都從 source 推導**，不是把現值抄成常數）：import 次序（focusGlow.css 必須在 buttonFx.css 之後，否則 Tier 2 在 source order 輸給 hover）／每條規則必須**成對**宣告 pad 屬性與 `:focus-visible`（不得單邊漂移）／reduced-motion 不得隱藏任何東西／**色票必須取自 buttonFx.css**（白色 glint 為唯一例外——這條會抓到舊 ring 那個 app 內不存在的 `#7aa2ff`）／focus 的厚度與速度必須勝過 hover 勝過 idle／disabled 守衛存在／focusGlow.* 以外**任何檔案**不得寫 `data-pad-focused` 或自己的 `:focus-visible`（例外表雙向 ratchet，過期列也會紅）／**driver 契約**：凡是同時「讀手把」又「移動 DOM focus」的檔案都必須 import `./focusGlow`（這條推導出 `DeviceLoginPanel`——手機掃碼登入那頁沒有鍵盤、原本也沒有任何選取提示）。
+
+**本次刻意不做的後續**（登錄備查）：
+1. 把 `DeviceLoginPanel` 完全遷到 `PadFocusNav`，然後刪掉 `ui/platform/gamepadFocus.ts` 及其測試（屆時消費者歸零）。本次只讓它呼叫共用的 `applyPadFocus`，維持既有導覽迴圈不動。
+2. 手把 A 鍵走的是合成 `.click()`（`PadFocusNav.tsx`），因此**不會觸發 pointerdown 的按壓縮放**——手把按下去沒有按壓回饋。獨立的手感項目。
+
+**Gate**：`tsc --noEmit` 綠、`build` 綠、client 全測 3050 passed。另有 2 個**先前就紅**的失敗（`render/vfx/bindings.test.ts` 收集期失敗、`ui/components/descriptionRescale.test.ts` 冷卻倍率 15→12）——已在乾淨 base commit 上 stash 覆現確認與本任務無關（見記憶 `ggd-ci-preexisting-breakages`）。

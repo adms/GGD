@@ -26,7 +26,6 @@ import { cheatsAvailable } from "../cheats";
 import { CodexRoute } from "../codex/CodexRoute";
 import { AssetConsoleRoute } from "../assets/AssetConsoleRoute";
 import { CreditsRoute } from "./CreditsRoute";
-import { PadFocusNav } from "../PadFocusNav";
 import { GamepadDiagnostics } from "../GamepadDiagnostics";
 import { LinkRoute } from "./LinkRoute";
 import { useHud } from "../../net/RoomStore";
@@ -134,18 +133,17 @@ export function AppRoot(): React.JSX.Element {
           from the handheld's QR and approves here. A path overlay, so it opens
           over any screen without touching the screen machine. */}
       <LinkRoute />
-      {/* The audio quick-toggle (#14) and the build stamp (#66). Declared in
-          ../GlobalChrome, NOT inline here, because this is not the only render
-          tree: `#replay=` boots ReplayApp instead of AppRoot, and both of these
-          were missing there for exactly as long as they were mounted by hand
-          (defect P0-6(b)). Both trees render the same component now. */}
+      {/* The audio quick-toggle (#14), the build stamp (#66) and the pad focus
+          layer (#197/#222). Declared in ../GlobalChrome, NOT inline here, because
+          this is not the only render tree: `#replay=` boots ReplayApp instead of
+          AppRoot, and each of these was missing there for exactly as long as it
+          was mounted by hand (defect P0-6(b)). Both trees render the same
+          component now — mounting a chrome member here again is a drift the
+          ui/surfaceParity.test.ts guard fails on. */}
       <GlobalChrome />
-      {/* task #197 — a pad drives the WHOLE UI: roving DOM focus across every
-          screen + modal (auth/lobby/store/champ-select/shop/draft/pause/…), and
-          the on-screen wake/mapping diagnostic for a keyboard-less handheld. Both
-          self-gate (the focus layer defers to the champion in live combat; the
-          diagnostic hides on the match screen). */}
-      <PadFocusNav />
+      {/* task #197 — the on-screen pad wake/mapping diagnostic for a
+          keyboard-less handheld. AppRoot-only: it self-gates on the platform
+          screen machine and has nothing to say on the replay page. */}
       <GamepadDiagnostics />
     </>
   );

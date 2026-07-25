@@ -6,8 +6,10 @@
  * that need a real browser: it polls the pad each frame, finds the active focus
  * SCOPE (the top-most modal/overlay marked `data-pad-scope`, else the whole
  * screen), enumerates the focusable controls inside it, and moves DOM focus with
- * the D-pad/stick, activates with A, and backs out with B. A visible ring
- * (`data-pad-focused`) is painted because most of these controls have none.
+ * the D-pad/stick, activates with A, and backs out with B. The focused control
+ * is marked via ./focusGlow (`applyPadFocus`) and painted by ./focusGlow.css —
+ * the ONE shared focus glow (#222), because most of these controls have none of
+ * their own. This file no longer carries any focus CSS.
  *
  * IT DEFERS TO THE CHAMPION IN LIVE COMBAT. `focusNavActive` keeps this layer
  * OUT of `combat`/`resolution` (unless a modal is open over them), so the pad
@@ -31,6 +33,7 @@ import {
   type NavAction,
 } from "../input/padFocusNav";
 import { setPadMenuCapture } from "../input/padMenuCapture";
+import { PAD_FOCUS_ATTR, applyPadFocus, clearPadFocus } from "./focusGlow";
 import { appStore } from "./platform/store";
 import { hudStore } from "../net/RoomStore";
 
@@ -43,21 +46,6 @@ const FOCUSABLE_SELECTOR = [
   '[tabindex]:not([tabindex="-1"])',
   "[data-pad-focusable]",
 ].join(",");
-
-const RING_STYLE_ID = "ggd-pad-focus-ring";
-const FOCUSED_ATTR = "data-pad-focused";
-
-/** Install the pad focus ring once — most menu controls have no ring of their own. */
-function installRingStyle(): void {
-  if (typeof document === "undefined" || document.getElementById(RING_STYLE_ID)) return;
-  const el = document.createElement("style");
-  el.id = RING_STYLE_ID;
-  el.textContent =
-    `[${FOCUSED_ATTR}]{outline:3px solid #7aa2ff !important;outline-offset:2px;` +
-    `box-shadow:0 0 0 2px rgba(122,162,255,0.45),0 0 14px rgba(122,162,255,0.5) !important;` +
-    `border-radius:8px;scroll-margin:24px;position:relative;z-index:1;}`;
-  document.head.appendChild(el);
-}
 
 function isVisible(el: Element): boolean {
   if ((el as HTMLElement).getAttribute?.("aria-hidden") === "true") return false;
@@ -104,13 +92,8 @@ function getFocusables(root: ParentNode): HTMLElement[] {
   return Array.from(root.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)).filter(isVisible);
 }
 
-function clearRing(): void {
-  document.querySelectorAll(`[${FOCUSED_ATTR}]`).forEach((el) => el.removeAttribute(FOCUSED_ATTR));
-}
-
 function setFocus(el: HTMLElement): void {
-  clearRing();
-  el.setAttribute(FOCUSED_ATTR, "");
+  applyPadFocus(el); // exclusive: clears the previous holder, then marks this one
   try {
     el.focus({ preventScroll: true });
   } catch {
@@ -134,7 +117,6 @@ function findBackControl(root: ParentNode): HTMLElement | null {
 export function PadFocusNav(): null {
   useEffect(() => {
     if (typeof window === "undefined") return;
-    installRingStyle();
     const nav = new PadMenuNav();
     let raf = 0;
     // START (menu) button edge — the pad's route to the in-match menu during live
@@ -149,13 +131,13 @@ export function PadFocusNav(): null {
     // bridge) have isTrusted=false and must never clear it.
     const onUserInput = (e: Event): void => {
       if (!e.isTrusted) return;
-      clearRing();
+      clearPadFocus();
     };
     window.addEventListener("pointerdown", onUserInput, { capture: true, passive: true });
     window.addEventListener("keydown", onUserInput, { capture: true, passive: true });
 
     const focusedInScope = (root: ParentNode): HTMLElement | null => {
-      const active = document.querySelector<HTMLElement>(`[${FOCUSED_ATTR}]`);
+      const active = document.querySelector<HTMLElement>(`[${PAD_FOCUS_ATTR}]`);
       if (active && (root === document.body ? true : (root as HTMLElement).contains(active)) && isVisible(active)) {
         return active;
       }
@@ -233,7 +215,7 @@ export function PadFocusNav(): null {
       window.removeEventListener("pointerdown", onUserInput, { capture: true } as EventListenerOptions);
       window.removeEventListener("keydown", onUserInput, { capture: true } as EventListenerOptions);
       setPadMenuCapture(false);
-      clearRing();
+      clearPadFocus();
     };
   }, []);
 
