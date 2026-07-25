@@ -6,6 +6,18 @@
 
 ---
 
+## 🚀 v0.5.4 · 2026-07-25 已部署 ggd.adms.ai（owner 親自確認 PASS）
+
+**部署協定全程執行：** ① data/ 備份（`backups/data-20260725-135547.tar.gz`，58M / 1003 entries，tar 完整性已驗）② docker/.env 檢查：Slack webhook SET、`GGD_BACKFILL_WELCOME_CRYSTALS=0`（一次性 backfill **不再跑**）③ host `9c93fcb → bfd0580` fast-forward（乾淨，25 commits）④ `docker compose build && up -d`（edge/game/platform 重建）⑤ 驗證。
+
+**上線後實測：** 站台 **HTTPS 200**；ggd-{edge,game,platform} Up、redis healthy、caddy up；platform boot 乾淨 —— 邀請閘 ON、first-owner claim closed、`dataDir /data · family · fullAssets true`、**無 backfill 重跑、無 error/panic**。Web 試玩：https://ggd.adms.ai 登入頁完整渲染（isekai 動畫背景 + 英雄跑馬燈 + 手機登入/單機對戰入口），**0 console error**（正式 build 乾淨，非 localhost 的 HMR churn）。
+
+**本版內容（v0.5.2→v0.5.4，25 commits）：** #210/#211/#213 · #203 邀請由誰產生 · #214 英雄#100 喪標麥可 · #215 肉鴿小怪波(整場累積) · Batch 4 taunt warm · Batch 7A #126 pending CAP+TTL · Batch 1 守護者鎮守光環/狀態光環/中立可點/telegraph 半徑/血特效開關 · Batch 5B 桌機技能名。**Round 2 的火圈真幾何/商店貨架皆實查為已完成(no-op)。**
+
+**盯（下次）：** 剩打磨項（canCrit / descriptionRoles+#125 / spriteSheet / recall 死按鈕）+ 真實但非阻塞的 #212 兩英雄、#189 內容持久寫入 adapter、#19 i18n。deploy 前計畫已達「只剩不重要議題」線。
+
+---
+
 ## 🔁 2026-07-25 自主循環 · Round 1（進行中，3 條平行工作流）
 
 > owner `/goal`：批次分組→盡量開平行工作流→每批完成即 push+note→試玩→反省回寫本檔→重整→loop，直到只剩不重要議題再讓 owner 確認 deploy。**push 已授權（每批一次，patch bump），deploy 仍需 owner 親自確認。**
