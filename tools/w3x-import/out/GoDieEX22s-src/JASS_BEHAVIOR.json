@@ -1,0 +1,4562 @@
+{
+ "skills": [
+  {
+   "hero": "妙蛙種子",
+   "skill_name": "90-00 寄生種子",
+   "rawcode": "A0KV",
+   "trigger_stems": [
+    "Parasitism Seed"
+   ],
+   "template": "NEW:寄生吸取",
+   "evidence": "j:26584-26623 (cond A0KV j:26585, loop j:26602-26613, buff gate B04X j:26592, heal j:26608)",
+   "geometry": "單體目標, 無AoE",
+   "timing": "sleep-loop 0.95s ×5 (~4.75s)",
+   "movement": "無",
+   "notes": "NEW定義: 目標掛buff期間週期回饋施法者的吸取環. 每0.95s檢查目標B04X buff仍在→施法者+50HP; buff消失即中止. 傷害端在底層WC3寄生技能, 觸發只做回血."
+  },
+  {
+   "hero": "妙蛙種子",
+   "skill_name": "90-03 藤鞭",
+   "rawcode": "A0Y4",
+   "trigger_stems": [
+    "Vine"
+   ],
+   "template": "瞬發點爆",
+   "evidence": "j:26628-26694 (sleep j:26680, AoE480 j:26682, dmg j:26665, pull j:26671)",
+   "geometry": "AoE 480 於施法目標點; 傷害 200+150×lvl 魔法",
+   "timing": "instant (施法後延遲1.0s)",
+   "movement": "目標被推動: 範圍內非建築單位 SetUnitPositionLoc 瞬移到施法者當前位置 (藤蔓拉人)",
+   "notes": "雙效: 敵人吃傷害, 一般單位(非中立敵對)被拉到施法者腳下. 延遲1秒後才判定."
+  },
+  {
+   "hero": "妙蛙種子",
+   "skill_name": "90-04 陽光烈焰",
+   "rawcode": "A0R4",
+   "trigger_stems": [
+    "SunFire pre",
+    "SunFire"
+   ],
+   "template": "直線分段掃擊",
+   "evidence": "j:26699-26727 (pre channel dummy), j:26782-26818 (segment loop j:26795-26804, dmg formula j:26793)",
+   "geometry": "10段×100u 朝目標方向, 每段 AoE 280 (樹木350); 傷害 300×lvl+2×(STR+AGI+INT)+300; 起點光束dummy h007 縮放200/200/400",
+   "timing": "instant 單幀 (pre: 引導1.0s 蓄能視覺 h02X; 光束2s後清除)",
+   "movement": "無施法者位移; 傷害線瞬間鋪滿",
+   "notes": "與 Excalibur 同型但 10×100u/280AoE; 每單位只吃一次 (Frog_Sun_Group 去重). SunFire pre 只是 SPELL_CHANNEL 的蓄力特效."
+  },
+  {
+   "hero": "菲特",
+   "skill_name": "23-01 電離光槍 - 繁星飛躍",
+   "rawcode": "A0NA",
+   "trigger_stems": [
+    "LightLancer",
+    "LightLancerEffect"
+   ],
+   "template": "召喚代理",
+   "evidence": "j:31063-31131 (dummy hfoo + A112 j:31113-31118, order stampede j:31120; 視覺 o026 j:31082)",
+   "geometry": "stampede 彈幕沿施法者→目標點直線; 視覺單位 o026 存活2s",
+   "timing": "instant 觸發, 彈幕由引擎持續 ~2s",
+   "movement": "傷害區行進: stampede 飛彈由引擎沿線飛行",
+   "notes": "隱形 dummy 學 A112 (stampede) 等級同步後朝目標點下令; LightLancer 只放 2 秒視覺並清場 (o026/e00F)."
+  },
+  {
+   "hero": "菲特",
+   "skill_name": "23-00 護御屏障 (Gas to Stop Tower)",
+   "rawcode": "A02D",
+   "trigger_stems": [
+    "Gas to Stop Tower"
+   ],
+   "template": "召喚代理",
+   "evidence": "j:31136-31168 (dummy ogru + A0DW j:31152-31154, RemoveUnitSP 20s j:31156)",
+   "geometry": "目標點雲霧 (cloudoffog, 停塔攻擊); dummy 壽命 ~20s",
+   "timing": "instant 施放, 雲霧持續約20s (cleanup sleep 10s)",
+   "movement": "無",
+   "notes": "dummy-cast Cloud 封鎖防禦塔攻擊; 觸發本身無傷害."
+  },
+  {
+   "hero": "菲特",
+   "skill_name": "23-04 雷焰聖劍",
+   "rawcode": "A0OD",
+   "trigger_stems": [
+    "HolySword"
+   ],
+   "template": "單體斬擊",
+   "evidence": "j:31173-31274 (EX gate j:31180-31191, 2300 nuke j:31235, timed A0RE j:31227/31259-31260)",
+   "geometry": "單體 2300 魔法 (EX條件觸發); 震屏 rect 1600×1600; 地形波紋 600×600",
+   "timing": "instant; 附加自我強化 A0RE 持續 lvl×4 s 後移除",
+   "movement": "無",
+   "notes": "混合型: 施放即掛 A0RE (lvl×4s 的變身強化成分); 若 EX_Mode+目標Bprg+自身B00K 則額外 2300 單體終結. 其餘傷害在底層技能."
+  },
+  {
+   "hero": "菲特",
+   "skill_name": "23-03 雷牙一閃˙雷牙烈霸",
+   "rawcode": "A0SY",
+   "trigger_stems": [
+    "LigtingExp"
+   ],
+   "template": "瞬發點爆",
+   "evidence": "j:31279-31334 (u02R dummy j:31298, 15×HolyBolt loop j:31309-31315, 震屏 j:31305)",
+   "geometry": "施法者位置 350×350 rect 內 15 個隨機閃光; 震屏 1600×1600 於目標點 ×lvl 次",
+   "timing": "instant (特效串 15×0.01s, 2s 後清 dummy)",
+   "movement": "無",
+   "notes": "觸發層純演出 (dummy u02R + 閃光雨 + 震屏); 傷害由底層 A0SY / dummy 承載."
+  },
+  {
+   "hero": "戰鬥涅吉",
+   "skill_name": "82-00-01 魔法射手-光箭",
+   "rawcode": "A0PI",
+   "trigger_stems": [
+    "光箭",
+    "LightArrow",
+    "LightFire",
+    "MoveLightPoint",
+    "LightDam",
+    "崩拳系列",
+    "fist",
+    "NegiAttack",
+    "NegiAttJudg",
+    "NegiAccJudg",
+    "KillUnit"
+   ],
+   "template": "攻擊觸發",
+   "evidence": "j:35141-35203 (蓄能), j:35070-35099 (fist 經 DamageLink j:5038-5039 釋放), j:35231-35257 (彈幕), j:35282-35284 (LightDam)",
+   "geometry": "蓄能上限 herolvl/3+1 (光球 u014 跟隨); 釋放: 每充能1發 thunderbolt dummy o02I 生成於涅吉周圍 r≤200; ≥5 充能追加巨雷 (scale 1000%)+thunderclap; LightDam 對 B038 buff 者補 INT×0.5",
+   "timing": "攻擊命中(EVENT_UNIT_DAMAGED 傷害鏈)觸發; LightFire periodic 0.01s 逐發; MoveLightPoint 2.0s 光球跟隨; KillUnit 60s 清理",
+   "movement": "無施法者位移; thunderbolt 飛彈由引擎行進",
+   "notes": "自我施放=+1充能, 對敵施放=直接釋放. fist 是 H022 傷害鏈總路由 (亦分派 ThunderFist/太陰道釋放); NegiAttack/NegiAttJudg/NegiAccJudg 為 proc 前置與重置簿記."
+  },
+  {
+   "hero": "戰鬥涅吉",
+   "skill_name": "82-02 虛空瞬動 (縮地)",
+   "rawcode": "A0PM",
+   "trigger_stems": [
+    "縮地",
+    "MoveStart",
+    "MoveInst"
+   ],
+   "template": "NEW:指令瞬移窗",
+   "evidence": "j:35295-35349 (window sleep j:35305, blink j:35335-35336)",
+   "geometry": "每次點指令瞬移 200u 朝指令方向",
+   "timing": "視窗 0.5×lvl s (sleep 包夾 Enable/Disable MoveInst)",
+   "movement": "施法者位移: 每接到 point order 即 SetUnitPositionLocFacing 閃現 200u",
+   "notes": "NEW定義: 限時視窗內把玩家的移動指令轉為短距瞬移(縮地). 無傷害."
+  },
+  {
+   "hero": "戰鬥涅吉",
+   "skill_name": "82-03 雷之投擲",
+   "rawcode": "A0Q5",
+   "trigger_stems": [
+    "雷之投擲",
+    "ThunderLance",
+    "ThunderCreate",
+    "ThunderMove",
+    "ThunderFist"
+   ],
+   "template": "行進波動",
+   "evidence": "j:35355-35413 (充能/投擲), j:35425-35446 (生成), j:35504-35524 (飛行+落點爆), 傷害 j:35470; 崩拳模式 j:35570-35597 + j:35101-35109",
+   "geometry": "投擲: 雷槍 o02J (max 3) 高度410, 分21步飛向目標點 (步長=dist/21, 每tick降20), 落點各 AoE 200, 傷 350+(2lvl+1)×INT; 崩拳(ThunderFist): 波動自涅吉前進 600u, 6步×100u, AoE 200/步, 傷 250×充能+充能×INT×lvl (建築減半)",
+   "timing": "ThunderCreate/Move periodic 0.01s; ThunderFist periodic 0.02s; 落點爆後 1.0s 清理",
+   "movement": "傷害區行進: 雷槍單位飛向目標點後爆; 崩拳版傷害點沿面向逐步推進",
+   "notes": "自我施放=+1充能(≤3), 點施放=擲出全部. 闇之魔法期間 (NegiJudgeThunder) 攻擊命中改走 ThunderFist 近戰釋放."
+  },
+  {
+   "hero": "戰鬥涅吉",
+   "skill_name": "82-04 闇之魔法",
+   "rawcode": "A0Q6",
+   "trigger_stems": [
+    "闇之魔法",
+    "DarkMagic",
+    "WindThunder",
+    "HellFire"
+   ],
+   "template": "變身強化",
+   "evidence": "j:35603-35633 (15s 模式 j:35616), 子技能交換 j:35645-35648 (A0PP→A0PV), j:35669-35672 (A0PS→A0PY)",
+   "geometry": "無 (純狀態)",
+   "timing": "sleep 15.0s 後自動還原",
+   "movement": "無",
+   "notes": "暗化 (vertex 20/20/20), A0Q0 等級=lvl+1, 開啟術式兵裝互換 (疾風迅雷/獄炎煉我 A0PP/A0PS→A0PV/A0PY) 並解鎖雷之投擲的崩拳釋放."
+  },
+  {
+   "hero": "戰鬥涅吉",
+   "skill_name": "82-001 太陰道-敵彈吸收陣",
+   "rawcode": "A0Z8",
+   "trigger_stems": [
+    "太陰道",
+    "absorpStart",
+    "absorp",
+    "KillGodMove"
+   ],
+   "template": "受擊反應",
+   "evidence": "j:35711-35728 (吸收+歸零 DamageModify(0) j:35719-35720), j:35693-35697 (7s 結算), j:35757-35796 (神像落下+爆發), 釋放分支 j:35114-35126",
+   "geometry": "釋放: 神像 o02K 於受擊目標處自高度1000墜下 (50/tick), 著地 AoE 300, 傷 1000+吸收總量",
+   "timing": "吸收窗: buff B059 期間 (absorpStart sleep 7.0s 結算); KillGodMove periodic 0.01s",
+   "movement": "傷害物墜落: 神像垂直下降至地面才爆",
+   "notes": "B059 期間所有受到傷害歸零並累積; 7s 後鎖定為彈藥; 下次攻擊命中 (fist 分支) 召神像砸向受擊者."
+  },
+  {
+   "hero": "胖虎",
+   "skill_name": "40-02 必殺！爆熱神音！",
+   "rawcode": "A07I",
+   "trigger_stems": [
+    "GrantSound"
+   ],
+   "template": "NEW:施法音效",
+   "evidence": "j:39114-39132 (只有 PlaySoundOnUnitBJ ×2)",
+   "geometry": "無",
+   "timing": "instant",
+   "movement": "無",
+   "notes": "NEW定義: 觸發僅為施法配音 (StampedeCaster1+BloodlustTarget), 全部實效在底層 WC3 技能."
+  },
+  {
+   "hero": "胖虎",
+   "skill_name": "40-03 痛哭流悌麥克風",
+   "rawcode": "A07J",
+   "trigger_stems": [
+    "Micphone"
+   ],
+   "template": "NEW:施法音效",
+   "evidence": "j:39137-39155 (只有 PlaySoundOnUnitBJ ×2)",
+   "geometry": "無",
+   "timing": "instant",
+   "movement": "無",
+   "notes": "同上: SargerasRoar+ShamanPissed4 配音, 實效在底層技能. (另有 MicEff=B04J 傷害鏈觸發但不在本列表)"
+  },
+  {
+   "hero": "胖虎",
+   "skill_name": "40-04 地獄搖滾",
+   "rawcode": "A0LZ",
+   "trigger_stems": [
+    "Hell Rock",
+    "Hell Rock Move",
+    "Hell Timer1",
+    "Hell Timer2",
+    "Hell Timer3",
+    "Hell Timer4",
+    "Hell Timer5",
+    "Hell Timer6",
+    "Hell Timer7",
+    "Hell Timer8",
+    "Hell Timer9"
+   ],
+   "template": "跳躍落地",
+   "evidence": "j:39160-39237 (跳躍: 41步拋物線 j:39207-39209), 落地stomp j:39214-39225, 連段 j:39311-39331/39393-39409, 終爆 j:39516-39545",
+   "geometry": "跳: 41步, 步長=dist/41, 高度 -1(i-21)²+400; 落地 dummy-stomp A0LY (暈); 連段: 5×thunderclap dummy A0LX @0.3s + 7×thunderbolt dummy @0.1s (r350-550,高0-500 隨機); 終爆 AoE 400, 傷 200×lvl+350+3×STR; EX buff B03J 時再補一輪同額 AoE 400",
+   "timing": "leap periodic 0.02s ×41 (~0.82s); 之後 Timer 鏈 0.5/0.2/0.2/0.5 + 5×0.3 + 7×0.1 + 0.1/0.3s",
+   "movement": "施法者位移: 拋物線飛向目標點, 落地後定點開演唱會 (pause+Avul 全程)",
+   "notes": "落地→暖場stomp→搖滾連拍(雷擊dummy)→吉他雷電獨奏(thunderbolt聚向自身替身h01L)→終曲大爆; 一套一技能, Timer1-9 為分鏡."
+  },
+  {
+   "hero": "劍心",
+   "skill_name": "47-04 天翔龍閃",
+   "rawcode": "A012",
+   "trigger_stems": [
+    "SkySlash"
+   ],
+   "template": "原地震波",
+   "evidence": "j:43185-43271 (拉人 j:43208-43215/43241, EX 18向 shockwave j:43244-43254)",
+   "geometry": "敵人 r200 內全部瞬移到施法者位置; EX_Mode: 18 個 hkni dummy 每 20° 一發 shockwave (A09F) 打向外 300u = 360° 環狀波",
+   "timing": "instant (SPELL_CAST 即發; EX 清理 sleep 2s)",
+   "movement": "目標被拉到施法者身上; EX 波動由引擎向外行進",
+   "notes": "本體=吸拉+底層斬擊; EX 加 360° 劍氣 nova (召喚代理式 dummy-cast)."
+  },
+  {
+   "hero": "劍心",
+   "skill_name": "47-03 九頭龍閃",
+   "rawcode": "A01B",
+   "trigger_stems": [
+    "NineSlash",
+    "NineSlashEffect"
+   ],
+   "template": "行進波動",
+   "evidence": "j:43276-43303 (起手 thunderclap dummy A0RP j:43288-43292), j:43310-43363 (9段螺旋 j:43351, AoE傷害 j:43322, 終點瞬移 j:43345)",
+   "geometry": "目標點起 9 段: 第i段位於 r=i×40, 角=面向+i×40° (螺旋); 每段 AoE 210, 傷 50×lvl+25; 起手 dummy thunderclap",
+   "timing": "periodic 0.13s ×9 (~1.2s)",
+   "movement": "傷害點沿螺旋行進; 第9段後施法者瞬移到目標點 (突進斬終格)",
+   "notes": "非直線而是繞目標點的龍捲螺旋, 收尾把劍心本體傳到落點."
+  },
+  {
+   "hero": "飛鼠先生",
+   "skill_name": "65-02 寒冰破碎 (Run)",
+   "rawcode": "A05S",
+   "trigger_stems": [
+    "Run",
+    "Run Effect"
+   ],
+   "template": "衝鋒推撞",
+   "evidence": "j:46781-46802 (起手), j:46871-46907 (每tick位移 j:46874-46875, 擊退 j:46835, frostnova proc j:46837-46840, 撞牆檢查 j:46852-46857)",
+   "geometry": "面向方向 10步×20u; 每步清 r300 樹木; r300 敵人被推離 -80u (背向) 播死亡動畫; 1/5 機率 dummy frostnova (ACfn)",
+   "timing": "periodic 0.04s ×10 (~0.4s)",
+   "movement": "施法者位移衝刺; 敵人被推開 80u/hit",
+   "notes": "位移受阻 (實際/預期 >8u 差) 即中止回退, 防穿牆."
+  },
+  {
+   "hero": "飛鼠先生",
+   "skill_name": "65-03 魔法膨脹 (MagicUp)",
+   "rawcode": "A0CH",
+   "trigger_stems": [
+    "MagicUp"
+   ],
+   "template": "單體斬擊",
+   "evidence": "j:46912-46945 (傷害公式 j:46927, 回魔 j:46928)",
+   "geometry": "單體, 無AoE; 傷害 = 目標(最大MP−當前MP)×lvl, 之後把目標 MP 補滿 100%",
+   "timing": "instant",
+   "movement": "無",
+   "notes": "以目標已耗魔量計傷再灌滿其魔力的反直覺單體 nuke; 地形波紋+替身 o00Q 為演出."
+  },
+  {
+   "hero": "飛鼠先生",
+   "skill_name": "65-04 天譴 (MoriyaBYEBYE)",
+   "rawcode": "A04C",
+   "trigger_stems": [
+    "MoriyaBYEBYE"
+   ],
+   "template": "召喚代理",
+   "evidence": "j:46950-47024 (per-unit dummy j:46984-47001, AoE500 j:47012)",
+   "geometry": "施法者 r500 內每個單位各生成一隻 ogru dummy (壽命10s) 掛 A04H chainlightning + A04I manaburn 雙點名; 目標為 U00K 時 manaburn 強制 lv9",
+   "timing": "instant 鋪設, dummy 10s 後清理",
+   "movement": "無; 閃電鏈由引擎跳",
+   "notes": "也能由 AIds 施放 1/5 機率誤觸 (Func004Func002C)."
+  },
+  {
+   "hero": "飛鼠先生",
+   "skill_name": "物品英雄之笛 (HeroCome)",
+   "rawcode": "A0EY",
+   "trigger_stems": [
+    "HeroCome"
+   ],
+   "template": "NEW:全隊集結",
+   "evidence": "j:47029-47097 (兩隊分支 j:47058-47084, 傳送+補滿 j:47063-47065)",
+   "geometry": "全地圖: 己方陣營 5 位英雄 (玩家2-6 或 8-12) 全部 SetUnitPositionLoc 到施法者; 非施法者者順帶 100% HP/MP",
+   "timing": "instant",
+   "movement": "目標被推動: 隊友整隊瞬移到施法者身邊",
+   "notes": "NEW定義: 群體召集傳送+滿狀態復活式補給. 物品技能 (英雄之笛), 非 65-XX 主技能欄."
+  },
+  {
+   "hero": "飛鼠先生",
+   "skill_name": "65-002 永恆的愚蠢鄉 (EX)",
+   "rawcode": "A0FF",
+   "trigger_stems": [
+    "StupidReady",
+    "stupidStart"
+   ],
+   "template": "受擊反應",
+   "evidence": "j:47102-47124 (6s 窗+傷害池 j:47111-47114), j:47129-47211 (反擊: 條件=敵方法術指向 Udea 單位 j:47130-47139, AoE j:47198, 傷害 j:47171)",
+   "geometry": "反擊 AoE 半徑 3600 (幾乎全場) 繞被指向的自身; 傷害 (herolvl+rand(5,10))×200 混沌; 每個受害者再吃一發 dummy chainlightning (A0CS lv3)",
+   "timing": "視窗 sleep 6.0s; 反擊 instant, 6s 後清 dummy",
+   "movement": "無",
+   "notes": "法術誘餌型反擊: 窗內只要敵人對 Udea 型英雄本體丟指向法術即整場核爆."
+  },
+  {
+   "hero": "飛鼠先生",
+   "skill_name": "75-02 幻影鬥氣 (MoriyaShadow)",
+   "rawcode": "A07W",
+   "trigger_stems": [
+    "MoriyaShadow"
+   ],
+   "template": "攻擊觸發",
+   "evidence": "j:47216-47255 (機率 j:47229, 影分身+傷害 j:47237-47241)",
+   "geometry": "單體: 攻擊時 (5×lvl+5)% 生成影像 h016 (1s, 半透明) 對被攻擊者補 20×lvl+30 魔法",
+   "timing": "EVENT_PLAYER_UNIT_ATTACKED proc; 影像 0.5s 後清",
+   "movement": "無",
+   "notes": "檢查攻擊者單位型 U00B — 此觸發屬 75號英雄本體 (與 65 號共用此觸發清單)."
+  },
+  {
+   "hero": "飛鼠先生",
+   "skill_name": "75-03 暴雷無限刃 (InfniLight)",
+   "rawcode": "A07Z",
+   "trigger_stems": [
+    "InfniLight"
+   ],
+   "template": "召喚代理",
+   "evidence": "j:47260-47313 (單 dummy 繞圈連射 j:47293-47301, purge j:47274-47277/47302)",
+   "geometry": "目標點外圈 r=650, 15 個位置 (24°/步): dummy (ogru, scale 400%, 3s) 依序瞬移各位置朝圓心各射一發 shockwave (ACsh) = 15 道向心波; 另對 r600 內每單位下 purge",
+   "timing": "instant 佈署 (同幀連下15道), 1.5s 後清理",
+   "movement": "傷害區行進: 15 道 shockwave 由圓周向圓心收束",
+   "notes": "向心收束環——與 InfniLight 名符其實的無限劍製式演出."
+  },
+  {
+   "hero": "berserker",
+   "skill_name": "52-01 狂戰士之怒 (狂暴化)",
+   "rawcode": "A0VJ",
+   "trigger_stems": [
+    "狂暴化",
+    "berserker",
+    "berserker 2"
+   ],
+   "template": "變身強化",
+   "evidence": "j:51659-51704 (A0VK=lvl+1 j:51667, buff B045 監視 j:51685, 還原 j:51693)",
+   "geometry": "無 (純狀態: 紅化 vertex 100/30/30)",
+   "timing": "berserker 2 periodic 0.30s 監視, buff B045 消失即還原",
+   "movement": "無",
+   "notes": "施放把被動效果 A0VK 升到 lvl+1, 靠 buff 存續管理持續時間."
+  },
+  {
+   "hero": "berserker",
+   "skill_name": "52-02 蹂躪編年史",
+   "rawcode": "A0U1",
+   "trigger_stems": [
+    "蹂躪編年史",
+    "Trample Start",
+    "Trample Effect",
+    "Trample Effect2"
+   ],
+   "template": "衝鋒推撞",
+   "evidence": "j:51709-51743 (鎖定 pause+Avul+Arav), j:51755-51784 (拖拽 50u/tick), j:51820-51854 (拋飛拋物線 j:51828, 落地 AoE j:51840)",
+   "geometry": "階段1: 目標被拖向施法者 50u/tick 至距離≤50; 階段2: 沿施法者面向拋飛 400u, 21步 (步長=400/21), 高度 -3(i-11)²+300; 落地 AoE 270, 傷 250+100×lvl",
+   "timing": "拖拽 periodic 0.05s; 拋飛 periodic 0.02s ×21 (~0.42s)",
+   "movement": "目標被推動: 先被拖到腳邊再被掄飛出去 (施法者不動)",
+   "notes": "目標全程 pause+蝗蟲+無敵, 落地才解鎖並結算群傷."
+  },
+  {
+   "hero": "berserker",
+   "skill_name": "52-04 巨神一擊 (Gigantomakhia)",
+   "rawcode": "A0U8",
+   "trigger_stems": [
+    "巨神一擊",
+    "Gigantomakhia 0",
+    "Gigantomakhia 1",
+    "Gigantomakhia 2"
+   ],
+   "template": "衝鋒推撞",
+   "evidence": "j:51859-51906 (蓄力: 7斧聚合 j:51880-51888), j:51923-51952 (斧聚+紅化巨大化), j:52012-52044 (衝鋒 50u/tick j:52015-52016, 終點 AoE j:52023)",
+   "geometry": "蓄力: 7 個 h02M 斧 dummy 自 r400 隨機方位 thunderbolt 聚到手中斧 (位於面向+45° r200); 衝鋒: 50u/tick, 共 dist/50 步至目標點; 終點 AoE 430, 傷 200+400×lvl, 樹木 r500 全清, 地形波紋 1024",
+   "timing": "聚斧 periodic 0.04s ×7; 衝鋒 periodic 0.02s; 全程 pause 施法者",
+   "movement": "施法者位移: 蓄力後直線衝到目標點才爆 (行進中無傷害)",
+   "notes": "衝程本身不判傷, 只有終點一擊 — 衝鋒推撞的『終點爆發』極端版."
+  },
+  {
+   "hero": "berserker",
+   "skill_name": "52-002 射殺百頭 (獵殺百頭 EX)",
+   "rawcode": "A0U5",
+   "trigger_stems": [
+    "獵殺百頭",
+    "Nine Lives EX",
+    "Nine Lives Hits",
+    "Nine Lives out",
+    "Nine Lives clear"
+   ],
+   "template": "鎖定連段",
+   "evidence": "j:52050-52093 (雙方 pause+Avul j:52064-52067, 貼臉瞬移 j:52075), j:52140-52243 (9段加速連擊, 加速 CD×0.75 j:52176, 終結 900 j:52197, 擊退 j:52205-52222)",
+   "geometry": "每段: 目標被頂前 130u, 施法者跟位到其後 100u, 每擊傷=STR; 連擊計數 Timer2 每跳+3 至 99Hit; 終結: 900 傷 + 目標沿線擊飛至多 200u (10×20u, 撞牆截斷 r300 清樹); 分身 o02T 殘影每擊生成",
+   "timing": "Timer 鏈: 首擊 1.0s, 每段 CD×0.75 遞減 (加速連段 ×9); 終結段 sleep 0.3/0.4/0.6s",
+   "movement": "目標被推動+施法者跟隨: 兩者連鎖前移, 終擊把目標擊飛",
+   "notes": "雙方全程 pause+無敵, 傷害時瞬間解無敵→打→回鎖; Nine Lives out 只是 Hit 數字演出, clear 清 o02T 殘影屍體."
+  },
+  {
+   "hero": "木偶人",
+   "skill_name": "",
+   "rawcode": "",
+   "trigger_stems": [],
+   "template": "無觸發技能",
+   "evidence": "HERO_TRIGGERS.json 木偶人=[] — war3map.j 無對應觸發叢集",
+   "geometry": "",
+   "timing": "",
+   "movement": "",
+   "notes": "此英雄技能全部由物件資料 (底層WC3技能) 實作, JASS 無任何專屬觸發."
+  },
+  {
+   "hero": "小傑",
+   "skill_name": "06-01 山形修煉-放 (被動突襲波)",
+   "rawcode": "",
+   "trigger_stems": [
+    "XHunter2"
+   ],
+   "template": "攻擊觸發",
+   "timing": "instant (on-attack proc)",
+   "geometry": "dummy shockwave (A0Y2) 朝被攻擊者發射; 機率 lvl(A08X)/20",
+   "movement": "無 (dummy 投射物行進)",
+   "evidence": "j:26823-26843 (EVENT_PLAYER_UNIT_ATTACKED j:26849; GetRandomInt(1,20)<=lvl A08X j:26827; dummy 'hfoo'+A0Y2 shockwave j:26836-26841)",
+   "notes": "無 GetSpellAbilityId; 觸發門檻為 A08X 等級, 純 dummy-cast shockwave"
+  },
+  {
+   "hero": "小傑",
+   "skill_name": "06-00 猜猜拳",
+   "rawcode": "A08Y",
+   "trigger_stems": [
+    "XHunterStone pre",
+    "XHunterStone",
+    "XHunterStone Effect",
+    "XHunterStoneX pre",
+    "XHunterStoneX"
+   ],
+   "template": "NEW:距離判定猜拳",
+   "timing": "instant branch; 石頭擊退 periodic 0.04s ×≤20 tick",
+   "geometry": "距離≤250=石頭 350+150×lvl(A020) 單體+擊退 40u×20 (max 800u, 撞牆<8u提前停, 沿途殺樹300); ≤500=剪刀 250+100×lvl(A08W) 單體; >500=布 225+75×lvl(A08X) AoE 270 於目標點",
+   "movement": "目標被推動: 40u/0.04s tick ×20 沿施法者→目標角度; EX 模式石頭終點施法者瞬移到目標旁",
+   "evidence": "j:26857-27055 (branch conds j:26941-26953; 石頭 dmg j:26967/26975; 剪刀 j:27004-27007; 布 j:27023-27026 AoE 270; knockback Effect j:27094-27141, period 0.04 j:27147)",
+   "notes": "NEW 定義: 依施法距離三分支(石頭/剪刀/布)的單體/小AoE攻擊, 石頭附帶週期目標擊退. pre=施法前搖特效(5×'o016' 1s). XHunterStoneX pre/XHunterStoneX 在 wtg 中 isEnabled=0, 未編譯進 war3map.j (推測為停用的EX變體). EX 模式各分支加掛 dummy stomp/acidbomb/thunderclap"
+  },
+  {
+   "hero": "小傑",
+   "skill_name": "06-00 猜猜拳 (攻擊自動觸發版)",
+   "rawcode": "",
+   "trigger_stems": [
+    "XHunter"
+   ],
+   "template": "攻擊觸發",
+   "timing": "instant (on-attack proc, 1/5 gate)",
+   "geometry": "同猜猜拳三分支: 石頭機率 5+AGI/10 % (350+150×lvlA020, 重用 XHunterStone Effect 擊退), 否則 50/50 剪刀(250+100×lvlA08W 單體)/布(225+75×lvlA08X, AoE 270)",
+   "movement": "石頭時目標被推 40u×20 tick (共用 gg_trg_XHunterStone_Effect)",
+   "evidence": "j:27154-27310 (cond U034+GetRandomInt(1,5)==3 j:27155-27167; agi 石頭門 j:27218-27223; EnableTrigger XHunterStone_Effect j:27252; EVENT_PLAYER_UNIT_ATTACKED j:27307)",
+   "notes": "普攻自動出拳的被動版, 與主動 A08Y 共用傷害公式與擊退觸發"
+  },
+  {
+   "hero": "麻倉葉",
+   "skill_name": "16-01-04 式神喚來 (comment: 式神招來)",
+   "rawcode": "A0A1",
+   "trigger_stems": [
+    "Soul Shock"
+   ],
+   "template": "召喚代理",
+   "timing": "sleep-loop (1.2s 後第二波, PolledWait 1.05s 清除)",
+   "geometry": "兩波各4隻 dummy 於目標點外 400u、90°間隔生成, 下move令向中心收束; 第二波 'h00K' 掛 A0A0 傷害光環",
+   "movement": "傷害單位行進: 4方向 dummy 從 400u 外向目標點收束",
+   "evidence": "j:31339-31401 (cond A0A1 j:31340; 4×'h00J' 400u/90° j:31365-31374; 4×'h00K'+A0A0 j:31376-31387; SPELL_CAST j:31398)",
+   "notes": "傷害完全由 dummy 身上的 A0A0 物件資料承載"
+  },
+  {
+   "hero": "麻倉葉",
+   "skill_name": "16-04-01 附身合體 (comment: 附身合體)",
+   "rawcode": "A0WS",
+   "trigger_stems": [
+    "GosIn"
+   ],
+   "template": "變身強化",
+   "timing": "sleep-loop 15s buff 窗口",
+   "geometry": "無幾何; 阿彌陀丸靈體 pause+hide, 本體加 A0WR、A0WQ 等級=1+lvl(A043); 15s 內解鎖 Empty/GDD 兩觸發",
+   "movement": "無 (結束時靈體移回本體位置)",
+   "evidence": "j:31406-31445 (hide/pause j:31416-31417; UnitAddAbility A0WR j:31418; Enable Empty/GDD j:31423-31424; TriggerSleepAction 15 j:31425; 還原 j:31426-31435)",
+   "notes": "附身期間才可放 無無明亦無/真空佛陀斬; 施法者是被附身的靈體單位, 本體為 udg_GosofKing"
+  },
+  {
+   "hero": "麻倉葉",
+   "skill_name": "16-03 無無明亦無 (comment: 無無明亦無)",
+   "rawcode": "A044",
+   "trigger_stems": [
+    "Empty"
+   ],
+   "template": "單體斬擊",
+   "timing": "0.5s 延遲 → instant; 1s 後清除",
+   "geometry": "單體 200+150×lvl 魔傷 + dummy purge (A0WP, 等級同步); 斬擊特效單位 'u018' 生成於目標點",
+   "movement": "施法者位移: 斬擊後瞬移至目標點沿施法角再 +100u (穿身斬)",
+   "evidence": "j:31450-31489 (cond A044 j:31451; dmg j:31472; SetUnitPositionLocFacing 100u past target j:31474-31475)",
+   "notes": "只在附身合體 15s 窗口內啟用 (trigger 平時 disabled)"
+  },
+  {
+   "hero": "麻倉葉",
+   "skill_name": "16-02 阿彌陀流真空佛陀斬 (comment: 真空佛陀斬)",
+   "rawcode": "A042",
+   "trigger_stems": [
+    "GDD"
+   ],
+   "template": "召喚代理",
+   "timing": "0.5s 兩波 stagger, PolledWait 1.05s 清除",
+   "geometry": "8隻 dummy 於目標點外 400u、45°間隔生成向中心收束; 第二波 'h00K' 掛 A0A0 傷害光環",
+   "movement": "傷害單位行進: 8方向 dummy 400u 收束到目標點",
+   "evidence": "j:31495-31556 (cond A042 j:31496; 8×45°×400u loop j:31521-31542; A0A0 j:31538)",
+   "notes": "式神喚來的8方向強化版; 只在附身窗口內啟用"
+  },
+  {
+   "hero": "麻倉葉",
+   "skill_name": "16-04 劍之精靈 (comment: 阿彌陀丸)",
+   "rawcode": "A043",
+   "trigger_stems": [
+    "MU"
+   ],
+   "template": "召喚代理",
+   "timing": "instant",
+   "geometry": "召喚本體由 WC3 物件資料 (A043 召喚阿彌陀丸靈體) 執行; JASS 僅清 udg_GosofKingMU",
+   "movement": "無",
+   "evidence": "j:31561-31579 (cond A043 j:31562; Actions 僅 set udg_GosofKingMU=null j:31568-31570)",
+   "notes": "真召喚走物件資料; 觸發只是附身狀態 bookkeeping. A043 等級同時決定附身合體的 A0WQ 強度"
+  },
+  {
+   "hero": "麻倉葉",
+   "skill_name": "16-002 布都御魂 (comment: EX)",
+   "rawcode": "A06M",
+   "trigger_stems": [
+    "ComOne"
+   ],
+   "template": "瞬發點爆",
+   "timing": "instant (+3s 清投射物)",
+   "geometry": "前方 450u 處 AoE 600 半徑, 傷害 STR×8+750; 條件: 身邊 450×450 rect 內有 'h005' 或處於附身狀態; 化妝投射物 'u00T' 前進 750u",
+   "movement": "傷害區固定 (u00T 僅視覺行進)",
+   "evidence": "j:31584-31662 (cond A06M j:31585; gate 450×450 rect j:31650+31591-31598; AoE GetUnitsInRangeOfLocAll(600, polar 450) j:31636; dmg j:31616)",
+   "notes": "EX技; 無阿彌陀丸在旁則空放"
+  },
+  {
+   "hero": "奈葉",
+   "skill_name": "81-02 Acxel Shooter",
+   "rawcode": "A0LB",
+   "trigger_stems": [
+    "AcxelShooter"
+   ],
+   "template": "瞬發點爆",
+   "timing": "sleep-loop 0.05s+0.3s 集束後單幀判傷",
+   "geometry": "彈幕 3×lvl 顆 'o023' 先散佈施法者旁 300×300 rect, 0.3s 後瞬移到目標點 150×150 rect; 判傷 400×400 rect (目標點), dmg 125+125×lvl+INT×3 (+INT×4 惡魔形態 O02V 扣150魔)",
+   "movement": "傷害區固定於目標點 (彈幕單位瞬移為視覺)",
+   "evidence": "j:35801-35907 (cond A0LB j:35802; 彈幕 loop j:35875-35880; teleport helpers j:35818-35824; rect AoE 400×400 j:35892; dmg 公式 j:35868)",
+   "notes": "白色惡魔 (O02V) 形態花 150 mana 換 +INT×4 傷害"
+  },
+  {
+   "hero": "奈葉",
+   "skill_name": "81-01 Barrel Shot",
+   "rawcode": "A0XG",
+   "trigger_stems": [
+    "BarrelShot"
+   ],
+   "template": "瞬發點爆",
+   "timing": "instant (+1.6s 清 dummy)",
+   "geometry": "目標點生成 dummy 'h02W' 施放 thunderclap (物件資料傷害); 惡魔形態額外 AoE 330 半徑 INT×4 觸發傷害",
+   "movement": "無",
+   "evidence": "j:35912-35981 (cond A0XG j:35913; dummy+thunderclap j:35962-35963; O02V 額外 AoE 330 j:35957-35959, dmg j:35933)",
+   "notes": "主傷害走 dummy thunderclap 物件資料"
+  },
+  {
+   "hero": "奈葉",
+   "skill_name": "81-03 Divine Buster Extention",
+   "rawcode": "A0XN",
+   "trigger_stems": [
+    "DivineBusterEx"
+   ],
+   "template": "直線分段掃擊",
+   "timing": "instant (單幀6段收集後一次判傷; 0.5s 相機震動)",
+   "geometry": "6×150u 沿面向 polar projection, 每段 AoE 280 收集, 全體一次吃 200+200×lvl (+INT×4 惡魔形態); 光束 dummy h01Y/h01Z/h01V 視覺",
+   "movement": "無 (光束定住, 非行進)",
+   "evidence": "j:35986-36090 (cond A0XN j:35987; loop 6×150u AoE280 j:36057-36062; dmg j:36031+36038; 光束 dummies j:36044-36051)",
+   "notes": "同 Excalibur j:32334 模式 (段數6, 段距150, AoE 280)"
+  },
+  {
+   "hero": "奈葉",
+   "skill_name": "81-04 Starlight Breaker Plus",
+   "rawcode": "A0XO",
+   "trigger_stems": [
+    "StarlightBreakerPlus"
+   ],
+   "template": "瞬發點爆",
+   "timing": "0.3s 延遲 → instant AoE",
+   "geometry": "目標點 AoE 530 半徑, dmg 100+300×lvl (+INT×4 惡魔形態); 砲身 dummy h01Y/h01Z + 全圖震動 1600×1600",
+   "movement": "無",
+   "evidence": "j:36095-36177 (cond A0XO j:36096; dmg j:36139; AoE 530 j:36155)",
+   "notes": ""
+  },
+  {
+   "hero": "鬼畜狂刀",
+   "skill_name": "39-002-紅王 (TrueBody 解鎖)",
+   "rawcode": "",
+   "trigger_stems": [
+    "TrueBody"
+   ],
+   "template": "變身強化",
+   "timing": "instant (once, 等級30時)",
+   "geometry": "無; SetUnitAbilityLevel A0Z3 → 2",
+   "movement": "無",
+   "evidence": "j:39558-39580 (EVENT_PLAYER_HERO_LEVEL j:39577; cond U00H+lvl≥30 j:39559-39563; A0Z3=2 j:39569)",
+   "notes": "等級門檻被動解鎖真身形態; 無 GetSpellAbilityId"
+  },
+  {
+   "hero": "鬼畜狂刀",
+   "skill_name": "39-02 無名神風流-朱雀",
+   "rawcode": "A0Z4",
+   "trigger_stems": [
+    "FireBird"
+   ],
+   "template": "召喚代理",
+   "timing": "instant; 拉扯 periodic 0.04s ×10",
+   "geometry": "dummy 生成於目標後方 100u, 沿目標→施法者方向發 shockwave (A0DM lvl5) 穿過目標; (lvl+1)/10 機率目標被拉向施法者 10×50u",
+   "movement": "目標被推動(拉向施法者): Set_Move_Value 50u/0.04s tick ×10 (j:4785-4796)",
+   "evidence": "j:39585-39633 (cond A0Z4 j:39586; dummy+A0DM shockwave 反向 j:39611-39616; 機率拉扯 j:39592-39600+39617-39624)",
+   "notes": "單體施放, 傷害走 dummy shockwave 物件資料; Move_Func 撞牆會提前停+終點特效"
+  },
+  {
+   "hero": "鬼畜狂刀",
+   "skill_name": "39-03 無名神風流-蛟龍",
+   "rawcode": "A0DO",
+   "trigger_stems": [
+    "ShanWindDragon",
+    "ShanWindDragonMove"
+   ],
+   "template": "衝鋒推撞",
+   "timing": "periodic 0.05s ×≤7 tick",
+   "geometry": "200u/tick 前衝 (最多7 tick=1400u 或距目標點<200 停), 每 tick AoE 350 收集敵人; 終點對收集組一次判傷 AGI×3 (EX:×6)+100×lvl+250",
+   "movement": "施法者位移: 沿施法面向 200u/0.05s 步進衝鋒",
+   "evidence": "j:39638-39779 (Set j:39652-39669 dmg 公式 j:39657-39659, Enable Move j:39667; Move step j:39752-39753, collect AoE350 j:39754, 終判 j:39755-39767; period 0.05 j:39777)",
+   "notes": "Set+Move 一對一技; 3隻 'u00W' 龍體視覺單位"
+  },
+  {
+   "hero": "鬼畜狂刀",
+   "skill_name": "39-04 祕奧義．金色的神風",
+   "rawcode": "A0DJ",
+   "trigger_stems": [
+    "GodWind"
+   ],
+   "template": "原地震波",
+   "timing": "instant (+1.5s 清 dummy)",
+   "geometry": "施法者中心 AoE 550, dmg AGI×1×lvl (EX: AGI×2×lvl); 另 4隻 dummy 於 256u 四方位 (0/90/180/270°) 各發 shockwave (A0DM/A0DL/A0DN/A0DK) 向中心收束",
+   "movement": "無 (四神 shockwave 向施法者收束為視覺+物件資料傷害)",
+   "evidence": "j:39784-39906 (cond A0DJ j:39785; AoE 550 j:39829; dmg j:39811-39813; 四神 dummies j:39831-39894)",
+   "notes": "主判傷即時, 疊加四方向收束衝擊波"
+  },
+  {
+   "hero": "牧太郎",
+   "skill_name": "33-01 放山雞",
+   "rawcode": "A02L",
+   "trigger_stems": [
+    "chieken",
+    "farmer"
+   ],
+   "template": "召喚代理",
+   "timing": "instant (SFX); farmer 為死亡事件",
+   "geometry": "召喚本體由 WC3 物件資料執行 (雞單位 'n000'); JASS 僅放音效; farmer: 'n000' 死亡時原地掉落道具 I00O",
+   "movement": "無",
+   "evidence": "j:43368-43416 (chieken cond A02L j:43369, Actions 僅 PlaySound j:43375-43377; farmer EVENT_PLAYER_UNIT_DEATH n000→CreateItem I00O j:43391-43413)",
+   "notes": "一技兩觸發: 施放音效 + 雞屍體掉寶; 真召喚走物件資料"
+  },
+  {
+   "hero": "牧太郎",
+   "skill_name": "33-03 地道突襲",
+   "rawcode": "A07D",
+   "trigger_stems": [
+    "GaiaAngre"
+   ],
+   "template": "跳躍落地",
+   "timing": "sleep-loop 0.01s/段 travel → instant 落地 (+3s 清場)",
+   "geometry": "行進段數=距離/75 (每段 75u 塵土+地形波紋視覺); 落地: dummy stomp (A07Q lvl同步) 於目標點, 殺樹 400 半徑, 10隻 'o011' 圍圈生成 (半徑160, 每30°)",
+   "movement": "施法者位移: 隱形地遁沿直線視覺行進後 SetUnitPositionLoc 到目標點",
+   "evidence": "j:43421-43491 (cond A07D j:43422; travel loop 75u/段 j:43447-43456; reposition j:43457; ring 10×o011 j:43461-43468; dummy stomp A07Q j:43470-43474)",
+   "notes": "非拋物線而是地遁式位移, 落地 AoE 走 dummy stomp 物件資料"
+  },
+  {
+   "hero": "牧太郎",
+   "skill_name": "33-04 動物拳法",
+   "rawcode": "",
+   "trigger_stems": [
+    "animal"
+   ],
+   "template": "攻擊觸發",
+   "timing": "instant (on-attack proc)",
+   "geometry": "無幾何; dummy 'ogru' 對被攻擊者施 hex (A04A); 機率 lvl(A09J)/25, EX 模式另加 1/5",
+   "movement": "無",
+   "evidence": "j:43496-43547 (EVENT_PLAYER_UNIT_ATTACKED j:43544; 機率門 j:43509-43517; dummy hex j:43530-43535)",
+   "notes": "無 GetSpellAbilityId; 觸發門檻為 A09J 等級, 把敵人變動物"
+  },
+  {
+   "hero": "牧太郎",
+   "skill_name": "33-001 喝了再上",
+   "rawcode": "A088",
+   "trigger_stems": [
+    "goagain"
+   ],
+   "template": "NEW:資源換血",
+   "timing": "instant",
+   "geometry": "無; 扣 100 gold → 自身 +1500 HP",
+   "movement": "無",
+   "evidence": "j:43552-43581 (cond A088 j:43553; gold≥100 gate j:43559-43564; AdjustPlayerState -100 + SetUnitLife +1500 j:43567-43570)",
+   "notes": "NEW 定義: 消耗玩家資源直接回復自身生命的主動技"
+  },
+  {
+   "hero": "黑人牙膏",
+   "skill_name": "72-04 黑化",
+   "rawcode": "A0CO",
+   "trigger_stems": [
+    "BlackTooth"
+   ],
+   "template": "原地震波",
+   "timing": "instant (單幀全場判傷)",
+   "geometry": "施法者中心 AoE 700, 每個非建築 dmg 30×heroLvl + rand(20,INT)×(lvl×9) (CHAOS); dummy 'o00F' (A0CP) 對每個受害者發 carrionswarm 視覺",
+   "movement": "無 (施法者暫停+變黑演出)",
+   "evidence": "j:47344-47403 (cond A0CO j:47345; dmg 公式 j:47378; AoE 700 j:47389; per-target carrionswarm j:47358-47370)",
+   "notes": "自身 pause+vertex 黑化+3倍速攻擊動畫的演出型全周爆發"
+  },
+  {
+   "hero": "黑人牙膏",
+   "skill_name": "72-05 億萬星殞落",
+   "rawcode": "A09A",
+   "trigger_stems": [
+    "ManyStar"
+   ],
+   "template": "引導通魔",
+   "timing": "channel ~3.6s (36×PolledWait 0.1); starfall dummy 壽命 32s",
+   "geometry": "36隻 'o008' dummy 依序生成於施法者外 256u 圓環 (每顆 +10°), 各自施 starfall (A09B); 施法者移動/死亡/停止 starfall 指令即中斷",
+   "movement": "無 (施法者需定身引導)",
+   "evidence": "j:47408-47490 (cond A09A j:47409; 中斷檢查 order!=starfall j:47415-47426; loop 36×256u×10° j:47462-47475; SPELL_CAST j:47487)",
+   "notes": "召喚代理×引導混合; 傷害走 dummy starfall 物件資料"
+  },
+  {
+   "hero": "熊貓",
+   "skill_name": "熊貓隨機成長 (無 rawcode)",
+   "rawcode": "",
+   "trigger_stems": [
+    "Saber_in_pandaLVUp"
+   ],
+   "template": "變身強化",
+   "timing": "instant (每次升級)",
+   "geometry": "每升一級 STR+1~4 / AGI+1~2 / INT+0~1 隨機",
+   "movement": "無",
+   "evidence": "j:52582-52603 (EVENT_PLAYER_HERO_LEVEL j:52600; ModifyHeroStat 隨機 j:52590-52592)",
+   "notes": "PandaParty/Saber_in_panda/Close/Copy (j:52396/52456/52489/52535) 為 -party/-panda 聊天指令彩蛋與英雄替換 bookkeeping, 非技能"
+  },
+  {
+   "hero": "熊貓",
+   "skill_name": "89-03 憤怒的胸毛",
+   "rawcode": "",
+   "trigger_stems": [
+    "Saber_in_pandaDie"
+   ],
+   "template": "NEW:死亡重生",
+   "timing": "instant (on-death proc)",
+   "geometry": "死亡時 lvl(A0TN)×4% 機率原地滿血復活 + dummy bloodlust/stomp(A0SR) + 三圍各 +0~1; AoE 600 內每個敵人 1/3 機率吃 1000×lvl",
+   "movement": "無",
+   "evidence": "j:52608-52675 (EVENT_PLAYER_UNIT_DEATH j:52672; 機率 lvl×4 j:52639-52644; ReviveHeroLoc j:52648; AoE600 j:52661; per-enemy 1/3+1000×lvl j:52615-52637)",
+   "notes": "NEW 定義: 死亡事件觸發的機率自我復活+周圍爆發反擊被動"
+  },
+  {
+   "hero": "熊貓",
+   "skill_name": "89-02 憤怒的菊花",
+   "rawcode": "",
+   "trigger_stems": [
+    "Saber_in_pandaChrysanthemum",
+    "Saber_in_pandaDecrease"
+   ],
+   "template": "受擊反應",
+   "timing": "instant per 被攻擊事件; 疊層每 1s 衰減 1",
+   "geometry": "被攻擊疊層 (vertex 變色顯示); <30層: lvl(A0TK)×3% 機率 dummy 'e00F' 對攻擊者施 cripple(S006); 滿30層: AoE 800 全體 cripple + 魔力砍半, 層數歸零",
+   "movement": "無",
+   "evidence": "j:52680-52779 (EVENT_PLAYER_UNIT_ATTACKED j:52776; 機率 lvl×3 j:52715-52720; 30層爆發 AoE800+mana×0.5 j:52749-52768; Decrease periodic 1s j:52838-52848)",
+   "notes": "以 ATTACKED 事件而非 EVENT_UNIT_DAMAGED 實作的受擊疊層反擊; 一技兩觸發 (疊層+衰減)"
+  },
+  {
+   "hero": "熊貓",
+   "skill_name": "89-04 憤怒的簡諧運動",
+   "rawcode": "",
+   "trigger_stems": [
+    "Saber_in_pandaJizz"
+   ],
+   "template": "攻擊觸發",
+   "timing": "instant (on-attack proc)",
+   "geometry": "攻擊時 lvl(A0TO)% 機率: dummy 'oshm' 對自己施 bloodlust + A0SR stomp",
+   "movement": "無",
+   "evidence": "j:52784-52826 (EVENT_PLAYER_UNIT_ATTACKED j:52823; 機率 lvl% j:52796-52801; dummy bloodlust+stomp j:52806-52811)",
+   "notes": "自我加速型攻擊觸發"
+  },
+  {
+   "hero": "熊貓",
+   "skill_name": "89-002 俄羅斯輪盤",
+   "rawcode": "A0TU",
+   "trigger_stems": [
+    "Saber_in_pandaEX"
+   ],
+   "template": "單體斬擊",
+   "timing": "instant",
+   "geometry": "d6 賭博: 1=自己吃 99999 CHAOS, 2=目標吃 99999 CHAOS, 3~6=空包彈 (只有字幕)",
+   "movement": "無",
+   "evidence": "j:52855-52958 (cond A0TU j:52856; GetRandomInt(1,6) j:52891; 自爆 j:52893, 秒殺目標 j:52918, 空包 j:52942-52946)",
+   "notes": "EX技; 無幾何純單體(或自身)即死判定"
+  },
+  {
+   "hero": "熊貓",
+   "skill_name": "熊貓食樹 (無 rawcode)",
+   "rawcode": "",
+   "trigger_stems": [
+    "Saber_in_pandaTree"
+   ],
+   "template": "NEW:食樹光環",
+   "timing": "periodic 1s, 永續 (等級≥30 才生效)",
+   "geometry": "每秒殺光自身 350 半徑內 destructable (樹)",
+   "movement": "無 (光環跟隨施法者)",
+   "evidence": "j:52963-52987 (period 1s j:52984; cond lvl≥30 j:52963-52967; KillDestructable 350 j:52970-52977)",
+   "notes": "NEW 定義: 週期性清除施法者周圍樹木的被動環境破壞光環, 無傷害"
+  },
+  {
+   "hero": "三本柱",
+   "skill_name": "",
+   "rawcode": "",
+   "trigger_stems": [],
+   "template": "無觸發技能",
+   "timing": "",
+   "geometry": "",
+   "movement": "",
+   "evidence": "HERO_TRIGGERS.json: 三本柱 categoryId 113 (未開放英雄), triggerCount 0; war3map.j 無對應 Trig_ cluster",
+   "notes": "未開放英雄, wtg 分類為空, 全部技能(若有)僅存在於物件資料"
+  },
+  {
+   "hero": "瘋狂假面",
+   "skill_name": "24-002 來~快點吃吧 (EX)",
+   "rawcode": "A0SG",
+   "trigger_stems": [
+    "ComeToEat",
+    "ComeToEatEffect"
+   ],
+   "template": "鎖定連段",
+   "geometry": "無範圍幾何: 目標貼附施法者; 51 tick × 0.10s (~5.1s), 每 10 tick 判傷 1 次 (共 5 hit × 400)",
+   "timing": "periodic 0.10s ×51",
+   "movement": "目標被吸附: 每 tick SetUnitPositionLoc 到施法者位置, 雙方 Pause+無敵, 結束後復原",
+   "evidence": "war3map.j:27315 (A0SG cond), 27329-27352 (set+pause+enable), 27379-27407 (0.1s loop, 每10tick 400 dmg), 27413 (0.10 periodic)",
+   "notes": "吃人技: 目標 Hlgr 免疫(彈字), 否則目標加 A0FZ、飛高-150 貼在施法者身上被連咬 5 口共 2000; 期間短暫解除無敵才判傷"
+  },
+  {
+   "hero": "孫悟空",
+   "skill_name": "09-03 超級賽亞人",
+   "rawcode": "A09E",
+   "trigger_stems": [
+    "SSJ",
+    "SSJ Affect"
+   ],
+   "template": "變身強化",
+   "geometry": "純特效: 4 圈 ThunderClap 環, 半徑 50/100/150/200, 每圈 10 支 ×36°",
+   "timing": "instant (每圈 sleep 0.01 ×4)",
+   "movement": "無 (變身由 A09E 物件資料完成, 觸發只做地形波紋+環狀特效)",
+   "evidence": "war3map.j:31686-31689 (A09E+Ogrh cond), 31702-31751 (ripple + 4×10 極座標特效環), 31667-31673 (SSJ Affect 一次性隱藏 A0S7)",
+   "notes": "SSJ Affect 是開場 bookkeeping: 對全玩家關閉 09-002b 悟空隱藏法術書(A0S7) 按鈕後自毀"
+  },
+  {
+   "hero": "孫悟空",
+   "skill_name": "擊殺成長被動 (無編號, item 'manh')",
+   "rawcode": "",
+   "trigger_stems": [
+    "Goku"
+   ],
+   "template": "NEW:擊殺成長",
+   "geometry": "無",
+   "timing": "event-driven (EVENT_PLAYER_UNIT_DEATH)",
+   "movement": "無",
+   "evidence": "war3map.j:31765-31772 (殺手=悟空玩家且悟空存活), 31782-31790 (給 'manh' 道具 + KillCounter, 每 15 殺 +1 STR)",
+   "notes": "NEW 定義: 擊殺事件計數被動 — 己方擊殺時發道具並累計, 滿 15 次歸零換 +1 力量"
+  },
+  {
+   "hero": "孫悟空",
+   "skill_name": "09-04 龜派氣功",
+   "rawcode": "A03S",
+   "trigger_stems": [
+    "Turtle Power"
+   ],
+   "template": "直線分段掃擊",
+   "geometry": "6 段 × 200u 沿施法方向, 每段 400 AoE; 樹木 400r 摧毀; 512r 英雄鏡頭震動; 口徑特效在 150u 處",
+   "timing": "instant (單幀雙 loop), 尾端 sleep 2s 清鏡頭",
+   "movement": "無 (傷害段一次性鋪滿直線)",
+   "evidence": "war3map.j:31804-31808 (A03S cond), 31916-31921 (300×lvl+STR×10/5/2+150), 31924-31934 (6×200u 極座標段+400 AoE), 31935-31944 (ANCIENT 標記回收防重複)",
+   "notes": "與 Excalibur 同型; 傷害以 ANCIENT type 標記去重, 超賽形態(O00X)吃 STR×5, EX 模式 STR×10, 基礎形態 STR×2; 建築只吃 20%"
+  },
+  {
+   "hero": "魯夫",
+   "skill_name": "76-01 伸縮自如的橡膠戰斧",
+   "rawcode": "A0IS",
+   "trigger_stems": [
+    "Luf Axe",
+    "Luf Axe Effect"
+   ],
+   "template": "NEW:抓取拋摔",
+   "geometry": "拋物線 21 步 (dDist=全程/41), 高度 -1.5(i-21)²+600; 落點 250 AoE 225 dmg + 75u 推退; 樹木 250r 摧毀; 主目標 125+125×lvl (+二檔蓄力池)",
+   "timing": "periodic 0.015s ×21 + 落地序列 sleep 0.15/0.20/0.05",
+   "movement": "施法者先瞬移到目標前 100u; 之後是目標沿拋物線被甩回施法者原位摔落; 雙方 Pause+A0FZ",
+   "evidence": "war3map.j:36239-36246 (A0IS cond), 36256-36282 (set+瞬移+pause), 36342-36389 (每tick位移+拋物線高度, 落地 AoE+主傷), 36395 (0.015 periodic)",
+   "notes": "NEW 定義: 抓住目標拋甩(目標走拋物線)後摔地, 落點單體重擊+小 AoE; 主傷吃 udg_LufDamMath 蓄力池 (76-00 二檔)"
+  },
+  {
+   "hero": "魯夫",
+   "skill_name": "76-03 伸縮自如的槍亂打",
+   "rawcode": "A0IV",
+   "trigger_stems": [
+    "Luf gun"
+   ],
+   "template": "瞬發點爆",
+   "geometry": "目標點 400 AoE, 200+200×lvl",
+   "timing": "instant",
+   "movement": "無",
+   "evidence": "war3map.j:36402-36406 (A0IV cond), 36422-36429 (200×lvl+200 dmg), 36441 (400 AoE at GetSpellTargetLoc)",
+   "notes": ""
+  },
+  {
+   "hero": "魯夫",
+   "skill_name": "76-00 二檔 (蓄力) / 76-04 三檔 啟動特效",
+   "rawcode": "A0IR",
+   "trigger_stems": [
+    "Luf two Effect",
+    "Luf died"
+   ],
+   "template": "NEW:蓄力疊加",
+   "geometry": "螺旋特效 20 步: 距離 15u×i, 角度 35°×i; 無傷害",
+   "timing": "instant + 20×sleep 0.01",
+   "movement": "無",
+   "evidence": "war3map.j:36457-36463 (A0IR 或 A0IQ cond), 36496-36505 (U00N 形態每次 +2×AGI 進 udg_LufDamMath, 非本體形態則扣), 36225-36227 (Luf died 死亡歸零)",
+   "notes": "NEW 定義: 施放累積共用傷害池, 由其他技能消費 — LufDamMath 被 76-01 摔擊與 76-02 火箭砲讀取; A0IQ(三檔)觸發同 trigger 但只放特效不加池; Luf died 為歸零 bookkeeping"
+  },
+  {
+   "hero": "魯夫",
+   "skill_name": "76-02 伸縮自如的橡膠火箭砲",
+   "rawcode": "A0IP",
+   "trigger_stems": [
+    "Luf RockFire D8",
+    "Luf RockFire Effect D8"
+   ],
+   "template": "衝鋒推撞",
+   "geometry": "擊退 50u/tick ×20 (最長 1000u), 沿路 200r 摧毀樹木, 撞牆 (位移差>8) 即停+ThunderClap",
+   "timing": "前置 sleep 0.05/0.10, 之後 periodic 0.04s ×20",
+   "movement": "施法者瞬移到目標後方 100u 揮拳; 之後目標被推動直線飛退",
+   "evidence": "war3map.j:36537-36544 (A0IP cond), 36547-36573 (瞬移+單發 udg_LufDamMath 傷害+enable), 36616-36637 (每tick 50u 推退+碰撞偵測), 36644 (0.04 periodic)",
+   "notes": "傷害完全來自二檔蓄力池 LufDamMath (無底傷); 擊退目標為擊中單位"
+  },
+  {
+   "hero": "魯夫",
+   "skill_name": "76-04 三檔.巨人迴旋彈",
+   "rawcode": "A0RZ",
+   "trigger_stems": [
+    "Luf Three",
+    "Luf Three Effect"
+   ],
+   "template": "跳躍落地",
+   "geometry": "原地垂直拋物線: 高度 -10(i-11)²+1000, 21 tick; 落點(起跳點) 380 AoE, 300+300×lvl+STR×2; 巨拳 dummy 另補 A0S2 震地",
+   "timing": "periodic 0.04s ×21, i=11 生成巨拳, i=18 判傷, i=21 收尾 (sleep 0.5/1.0)",
+   "movement": "施法者位移: 僅 SetUnitFlyHeight 垂直起跳(無水平位移), Pause+Avul+Arav; 巨拳 dummy h026 從空中下壓",
+   "evidence": "war3map.j:36651-36655 (A0RZ cond), 36658-36669 (pause+invul+enable), 36754-36814 (拋物線高度+巨拳生成+i=18 380AoE 判傷+thunderclap), 36821 (0.04 periodic)",
+   "notes": "跳躍落地的垂直特例: 水平位移為 0, AoE 打在起跳點; 附 TerrainDeformationRipple 與塵土特效"
+  },
+  {
+   "hero": "魯夫",
+   "skill_name": "76-002 霸王色 (EX)",
+   "rawcode": "A0ZK",
+   "trigger_stems": [
+    "KingColor",
+    "霸王色"
+   ],
+   "template": "召喚代理",
+   "geometry": "10 隻 dummy 'o009' 對半徑 256u、每 36° 一發 impale (放射狀); 附加效果 900r",
+   "timing": "instant + sleep 5s 清 dummy",
+   "movement": "無 (dummy impale 波各自行進)",
+   "evidence": "war3map.j:36828-36832 (A0ZK cond), 36869-36876 (10×dummy A0ZJ impale 環射), 36844-36852+36877-36880 (HP≤50% 且 1/2 機率: 900r 全單位現有 HP 砍半)",
+   "notes": "「霸王色」stem 是 isComment:1 的 GUI 註解列 (TRIGGERS.json), 實作全在 KingColor; 霸氣震懾 = 900 範圍不分敵我(除自己)半血"
+  },
+  {
+   "hero": "傑洛士",
+   "skill_name": "53-03 破法對咒",
+   "rawcode": "A07T",
+   "trigger_stems": [
+    "DefMagic"
+   ],
+   "template": "召喚代理",
+   "geometry": "施法者 550r 內全單位逐一被 dummy 下 antimagicshell (A0DS, 等級同步)",
+   "timing": "instant + sleep 6s 清 dummy",
+   "movement": "無",
+   "evidence": "war3map.j:39911-39915 (A07T cond), 39928-39939 (hfoo dummy + A0DS + 550r ForGroup antimagicshell)",
+   "notes": "Get Magic EX (war3map.j:40177-40199) 為 bookkeeping: O00L 到 30 等解鎖 A10B 53-002 恐懼力量; 53-02 強化炸彈陣(A0DQ) 無觸發, 純物件資料"
+  },
+  {
+   "hero": "傑洛士",
+   "skill_name": "53-04 暴爆咒",
+   "rawcode": "A0UE",
+   "trigger_stems": [
+    "AnKiMagic",
+    "AnKiMagic Effect"
+   ],
+   "template": "週期踩踏",
+   "geometry": "旋轉環: dummy 生成點 = 施法者周圍 300u, 角度 facing+36°×i, i=0..9; 每點 275 AoE; 傷害 (200+INT×lvl)×(0.5+0.1×i) 遞增",
+   "timing": "periodic 0.35s ×10 (~3.5s), 尾端 sleep 2s 清 dummy",
+   "movement": "傷害區繞施法者旋轉行進 (每 tick 前進 36°), 施法者不動",
+   "evidence": "war3map.j:39954-39958 (A0UE cond), 39984-39997 (EX: 1200r 敵方魔力總和×3% 存 SumOfSinMagic), 40069-40083 (每tick o00M stomp + 275 AoE 遞增傷), 40090 (0.35 periodic)",
+   "notes": "EX 模式每跳額外加 SumOfSinMagic 固定值傷害並跳字"
+  },
+  {
+   "hero": "傑洛士",
+   "skill_name": "53-01 獸王牙操彈",
+   "rawcode": "A0K1",
+   "trigger_stems": [
+    "KaoLight"
+   ],
+   "template": "瞬發點爆",
+   "geometry": "目標點 450×450 rect AoE, 傷害 100×lvl+150+3×INT; dummy 獸群 lvl+2 隻先散在施法者 450×450 再收進目標 250×250 (純視覺)",
+   "timing": "instant + sleep 0.05/0.30/0.30 分段演出",
+   "movement": "dummy 獸彈飛向目標 (視覺); 施法者與目標不動",
+   "evidence": "war3map.j:40097-40101 (A0K1 cond), 40139-40158 (lvl+2 dummy 生成/散開/收攏 + rect 450×450 判傷), 40119-40127 (敵對過濾+KaoDamage)",
+   "notes": "傷害一次性以矩形範圍判在目標點, dummy 只是操彈演出"
+  },
+  {
+   "hero": "飛影",
+   "skill_name": "38-02 邪王炎殺煉獄焦",
+   "rawcode": "A09H",
+   "trigger_stems": [
+    "FireSword",
+    "FireSwordAdded"
+   ],
+   "template": "瞬發點爆",
+   "geometry": "目標點 380 AoE; 傷害 100+150×lvl (+U010 妖化形態再加 AGI×2)",
+   "timing": "instant",
+   "movement": "無",
+   "evidence": "war3map.j:43640-43644 (A09H cond), 43670-43678 (形態分傷 + 380 AoE ForGroup)",
+   "notes": "FireSwordAdded (43693-43735) 是 bookkeeping: Uvng 升級/學技時把 A06O 等級同步到 A08P, 歸零即移除"
+  },
+  {
+   "hero": "飛影",
+   "skill_name": "38-01 邪王炎殺劍",
+   "rawcode": "A0OG",
+   "trigger_stems": [
+    "HehiSword",
+    "HehiSwordEffect"
+   ],
+   "template": "衝鋒推撞",
+   "geometry": "衝刺 50u/tick ×12 (600u) 沿面向, 撞牆(位移差>20)提前停; 路徑 250r 收集敵人, 終點對全收集者判 100×lvl+150+AGI×3 (U010) / ×1; 沿路 300r 摧毀樹木",
+   "timing": "periodic 0.02s ×≤12",
+   "movement": "施法者位移: 無敵(Avul)+A0J6 直線疾衝, 傷害在衝刺結束一次結算",
+   "evidence": "war3map.j:43741-43745 (A0OG cond), 43755-43771 (形態分傷+invul+enable), 43847-43863 (每tick 50u 位移+250r 收集+終點 ForGroup 判傷), 43870 (0.02 periodic)",
+   "notes": ""
+  },
+  {
+   "hero": "飛影",
+   "skill_name": "38-03 邪王炎殺黑龍波",
+   "rawcode": "A09I",
+   "trigger_stems": [
+    "DarkDragonEX",
+    "DarkDragonEXMove",
+    "BlackDragon"
+   ],
+   "template": "行進波動",
+   "geometry": "龍頭 h02F 生成於前方 160u; 前進 130u/tick ×14 (~1820u) 鋸齒(±35° 交替); 每 tick 250r 標記單位; 終點對全標記者 400+250×lvl (EX+U010 = 固定 2500); 沿路 450r 摧毀樹木; 施放時另有 12 隻 o00Z 於 350u 環 ×30° 放 clusterrockets (A09M)",
+   "timing": "periodic 0.08s ×14, 終點結算後 sleep 1.5s 清場; 主 trigger sleep 3s 清環",
+   "movement": "傷害區行進: 黑龍頭沿鋸齒直線推進 (EX 模式加兩顆 ±45° 隨機蛇行副龍頭, 各 200/250r 標記)",
+   "evidence": "war3map.j:44031-44035 (A09I cond), 44060-44095 (龍頭+EX雙副頭+12×clusterrockets 環), 44346-44394 (每tick 130u 鋸齒推進+250r 標記+450r 毀樹), 44301-44311 (終點 ForGroup 判傷 2500/400+250×lvl), 44411 (0.08 periodic)",
+   "notes": "BlackDragon (43901-43934) 是 0.02s 的龍身視覺驅動器, 但全圖無任何 EnableTrigger(gg_trg_BlackDragon) — 死碼, 實際行進由 DarkDragonEXMove 完成"
+  },
+  {
+   "hero": "飛影",
+   "skill_name": "38-04 黑龍波吸收",
+   "rawcode": "A09K",
+   "trigger_stems": [
+    "EatDragon"
+   ],
+   "template": "變身強化",
+   "geometry": "自身永久 +lvl AGI (基礎 AGI≤160 才生效); 12 隻隱形 o00Z 於 350u 環 ×30° 各放 clusterrockets (A09M, 等級同步); 1600×1600 鏡頭震動",
+   "timing": "instant + sleep 1.0/1.0 清 dummy",
+   "movement": "無 (吞龍 dummy o01V 從地底 -2000 竄升為演出)",
+   "evidence": "war3map.j:43940-43944 (A09K cond), 43979-43987 (AGI≤160 → +lvl AGI 永久), 43989-44003 (12×350u 環 clusterrockets), 44005 (1600 rect 鏡頭震動)",
+   "notes": "屬性吸收為主體, 環狀火焰彈幕為附帶傷害 (走 dummy 技 A09M)"
+  },
+  {
+   "hero": "初號機",
+   "skill_name": "暴走 (被動; A0GJ 59-003屬性加成 / A0GK 59-004邪黑氣)",
+   "rawcode": "",
+   "trigger_stems": [
+    "FirstDie",
+    "EVA ON",
+    "EVA Complete"
+   ],
+   "template": "NEW:死亡暴走",
+   "geometry": "無範圍; 機率 3/10 (30等後 EVA Complete 改 randomRange=4 → 3/4); 暴走 20s",
+   "timing": "event-driven (EVENT_PLAYER_UNIT_DEATH) + sleep 20s",
+   "movement": "施法者原地復活且轉為中立敵對亂暴 (SetUnitOwner NEUTRAL_AGGRESSIVE), 20s 後歸還玩家並傳送到復活區",
+   "evidence": "war3map.j:47571-47577 (FirstDie 註冊本體死亡→enable EVA_ON), 47591-47604 (機率門 GetRandomInt(1,range)<=3), 47656-47721 (轉中立+A0FR/A0GK/A0RL+A0GJ=lvl+1+原地復活, 20s 後回收), 47534-47537 (30等 range=4)",
+   "notes": "NEW 定義: 死亡時機率原地暴走復活為不可控單位, 期限後歸還; EVA Complete/FirstDie 為同一被動的 bookkeeping 兩段"
+  },
+  {
+   "hero": "初號機",
+   "skill_name": "59-04 野戰型陽電子砲",
+   "rawcode": "A0GI",
+   "trigger_stems": [
+    "ElecPower"
+   ],
+   "template": "召喚代理",
+   "geometry": "光束 dummy h01P 生成於施法者, 面向目標點, 縮放 120+30×lvl%; 900r 英雄鏡頭震動",
+   "timing": "instant + sleep 1s 清鏡頭",
+   "movement": "無 (傷害由 h01P 光束單位自身的物件資料輸出, 觸發不判傷)",
+   "evidence": "war3map.j:47736-47740 (A0GI cond), 47756-47765 (h01P 生成+縮放+FlameStrike 特效+震動)",
+   "notes": "trigger 內零 UnitDamageTarget — 純召喚砲擊 dummy + 演出"
+  },
+  {
+   "hero": "DarkKnight",
+   "skill_name": "91-00 符文鍛造-墮落十字軍符文 (A0VU 91-00x 符文力量加成)",
+   "rawcode": "A0VV",
+   "trigger_stems": [
+    "CrusadeRune",
+    "CrusadeRune close",
+    "墮落十字軍符文"
+   ],
+   "template": "變身強化",
+   "geometry": "無幾何; A0VU 等級 1→2, buff B046 消失即回 1",
+   "timing": "instant + 0.30s 週期檢查 buff 到期",
+   "movement": "無",
+   "evidence": "war3map.j:53023-53027 (A0VV cond), 53030-53033 (A0VU=2 + enable close), 53047-53056 (B046 消失→A0VU=1)",
+   "notes": "「墮落十字軍符文」stem 為 isComment:1 GUI 註解; buff 期間切換隱藏加成技等級的自我強化"
+  },
+  {
+   "hero": "DarkKnight",
+   "skill_name": "91-01 死亡之握",
+   "rawcode": "A0W3",
+   "trigger_stems": [
+    "DeathGrip",
+    "DeathGrip effect",
+    "死亡之握"
+   ],
+   "template": "NEW:強拉嘲諷",
+   "geometry": "強制指令 (8+8×lvl) tick × 0.05s (~0.4-2.0s) 令目標攻擊 DK",
+   "timing": "instant → periodic 0.05s ×(8+8×lvl)",
+   "movement": "目標被拉向施法者 — 位移由地圖共用拉人觸發處理 (JASS 註解「拉人是共同觸發」), 本 cluster 只做拉後的 order-lock",
+   "evidence": "war3map.j:53073-53080 (A0W3 cond), 53083-53087 (Index=8+8×lvl + enable effect), 53109-53116 (每tick IssueTargetOrder attack→DK), 53122 (0.05 periodic), 53071 (共同觸發註解)",
+   "notes": "NEW 定義: 單體拉扯後週期強制目標攻擊施法者 (嘲諷鎖); 無觸發傷害"
+  },
+  {
+   "hero": "DarkKnight",
+   "skill_name": "91-02 疫病 (attack-proc 套組)",
+   "rawcode": "A0W4",
+   "trigger_stems": [
+    "PlagueLV",
+    "PlagueStrike",
+    "IcyTouch",
+    "DeathStrike",
+    "疫病"
+   ],
+   "template": "攻擊觸發",
+   "geometry": "PlagueStrike 3/20 機率: 目標腳下生成 1s 疫病 dummy u032 (lvl≥3 換 u033); IcyTouch 1/8: A0VX 法球法術書升 2 級 0.5s; DeathStrike 1/10: 直傷 125, 目標帶 Bapl/B047 疫病 buff 再 +25 傷 +50 自療",
+   "timing": "event-driven (EVENT_PLAYER_UNIT_ATTACKED), IcyTouch 內含 sleep 0.5",
+   "movement": "無",
+   "evidence": "war3map.j:53157-53170 (PlagueLV: A0W4 lvl 1/2/4 分段 enable 三個 proc), 53186-53217 (3/20 dummy u032/u033), 53233-53252 (1/8 A0VX lvl2 0.5s), 53267-53314 (1/10 125+條件 25/50)",
+   "notes": "一個技能 (A0W4) 靠 PlagueLV bookkeeping 按等級解鎖三條攻擊 proc 線; dummy 帶的疫病 buff (Bapl/B047) 是 DeathStrike/HeartStrike 的引信"
+  },
+  {
+   "hero": "DarkKnight",
+   "skill_name": "91-03 碎心打擊",
+   "rawcode": "A0W1",
+   "trigger_stems": [
+    "HeartStrike",
+    "碎心打擊"
+   ],
+   "template": "單體斬擊",
+   "geometry": "無幾何; 每個疫病 buff (Bapl / B047) 各加 50+25×lvl 魔法傷",
+   "timing": "instant",
+   "movement": "無",
+   "evidence": "war3map.j:53329-53333 (A0W1 cond), 53350-53362 (Bapl/B047 各判一次 50+25×lvl)",
+   "notes": "原始 JASS 有 bug: 加傷目標寫成 GetSpellAbilityUnit() (=施法者自己) 而非 GetSpellTargetUnit(), 且第二段條件誤用 GetAttackedUnitBJ(); 意圖顯然是對目標依疫病層數補傷"
+  },
+  {
+   "hero": "DarkKnight",
+   "skill_name": "91-002 亡靈大軍 (EX)",
+   "rawcode": "A0VS",
+   "trigger_stems": [
+    "ArmyOfTheDead",
+    "亡靈大軍"
+   ],
+   "template": "召喚代理",
+   "geometry": "目標點 dummy stomp A0VT (91-002x 震地) 暈眩; 8 隻食屍鬼 u031 於 450u 環 ×45°, 20s 存活, attack-move 向圓心, 偶數位補 taunt",
+   "timing": "instant",
+   "movement": "召喚物向目標點推進 (attack order)",
+   "evidence": "war3map.j:53377-53381 (A0VS cond), 53391-53417 (dummy 震地 + 8×450u 環召喚 + taunt/attack orders)",
+   "notes": ""
+  },
+  {
+   "hero": "愛德華",
+   "skill_name": "",
+   "rawcode": "",
+   "trigger_stems": [],
+   "template": "無觸發技能",
+   "geometry": "",
+   "timing": "",
+   "movement": "無",
+   "evidence": "HERO_TRIGGERS.json: 愛德華 trigger 列表為空; war3map.j 無對應 Trig_ cluster",
+   "notes": "此英雄所有技能皆為物件資料 (object data) 實作, JASS 無任何專屬觸發"
+  },
+  {
+   "hero": "安云",
+   "skill_name": "19-02 迴切",
+   "rawcode": "A0H5",
+   "trigger_stems": [
+    "FitCutExecute"
+   ],
+   "template": "召喚代理",
+   "timing": "instant + 1s 加成窗口 (sleep 1.00 → fitCutYes=false, +3s cleanup)",
+   "geometry": "dummy 'o012' (2s timed life) 於施法者腳下, A0H6 war-stomp AoE (半徑在物件資料)",
+   "movement": "無",
+   "evidence": "j:27439-27455 (CreateNUnits 'o012' + IssueImmediateOrder \"stomp\" 27448; fitCutYes window 27450-27452)",
+   "notes": "EVENT_PLAYER_UNIT_SPELL_EFFECT; 打開 1 秒 fitCutYes 窗口讓 19-03 瞬切百殺 加 STR×0.5 傷害"
+  },
+  {
+   "hero": "安云",
+   "skill_name": "19-03 瞬切百殺",
+   "rawcode": "A0H9",
+   "trigger_stems": [
+    "HundredKill",
+    "HundredKillEffect"
+   ],
+   "template": "週期踩踏",
+   "timing": "periodic 0.15s ×8 刀 (AuzimiCutCount==8 結束); 施法後 sleep 0.01 傳送, 1.5s 後重啟施法觸發",
+   "geometry": "斬殺區 = 640×640 rect (gg_rct_HundKill, Rect(256,-64,896,576) j:4432) 移至目標點; 每刀 250 AoE 繞施法者; 傷害 AGI×1.0+lvl×50−10 (迴切窗口 +STR×0.5)",
+   "movement": "施法者被瞬移: 先 SetUnitPositionLoc 至目標點, 之後每 tick 隨機瞬移到 rect 內一點 (GetRandomLocInRect) 並留 'u018' 殘影",
+   "evidence": "j:27483-27517 (teleport+MoveRectToLoc 27509-27510), 27608-27632 (per-tick blink 27627 + 250 AoE 27629), InitTrig periodic 0.15 j:27639",
+   "notes": "施法期間無敵+踩地形關閉+700% 動畫速; 結束時 rect 內敵人播 Death 動畫(純特效), 殘影清除"
+  },
+  {
+   "hero": "安云",
+   "skill_name": "19-04 幻影暗殺",
+   "rawcode": "A02Y",
+   "trigger_stems": [
+    "AzumiShadowNew",
+    "AzumiShadow",
+    "AzumiATK",
+    "AzmuiJugATK",
+    "AzumiHit"
+   ],
+   "template": "攻擊觸發",
+   "timing": "instant per attack-damage; AzumiHit 0.9s periodic 連段重置看門狗",
+   "geometry": "無範圍 — 單體加傷 lvl×100+AGI (+75 若 E00Z 形態); E00K 形態需背刺 (面向差 ≤90°)",
+   "movement": "AzumiShadow 變體將施法者瞬移至受害者背後 80u (PolarProjection facing+180) 並下攻擊指令; 主流程無位移",
+   "evidence": "j:27775-27796 (AzumiShadowNew 傷害), 27653-27671 (AzumiShadow 背刺瞬移), 27825-27827/27858-27860 (ATK 標記/清除), 27703-27722 (HIT reset); 經傷害系統 Des_UtypTri E00K/E00Z 派發 j:5044-5049",
+   "notes": "AzumiATK (EVENT_PLAYER_UNIT_ATTACKED) 記 pending 目標, AzmuiJugATK 在施法/用物品時清除 (防指令取消攻擊白嫖); HIT 連段文字+殘影 'u018'"
+  },
+  {
+   "hero": "SABER",
+   "skill_name": "20-02 感知能力",
+   "rawcode": "",
+   "trigger_stems": [
+    "saber"
+   ],
+   "template": "NEW:施法感知自護 — 敵方英雄在附近施法時自動為自己套盾的被動反應",
+   "timing": "instant per enemy hero spell cast",
+   "geometry": "施法者 1200 範圍內的敵對 Saber (E002/E00L), 魔力≥30%, 50% 機率",
+   "movement": "無",
+   "evidence": "j:32053-32073 (dummy 'o00G' 0.5s + A0CZ 下 antimagicshell 指令 32058-32061), event=EVENT_PLAYER_UNIT_SPELL_CAST j:32080",
+   "notes": "無 GetSpellAbilityId 檢查 — 純被動; 對應 A0CM 感知能力 (風王結界的魔法感知), 用 dummy 施 antimagicshell 擋該法術"
+  },
+  {
+   "hero": "SABER",
+   "skill_name": "20-01 風王結界",
+   "rawcode": "A0DZ",
+   "trigger_stems": [
+    "Air",
+    "Air Attack",
+    "Air value deal",
+    "Air MagicBook"
+   ],
+   "template": "攻擊觸發",
+   "timing": "instant per attack hit (經 EVENT_UNIT_DAMAGED buff-dispatch)",
+   "geometry": "單體加傷 10+STR×(0.5+0.5×lvl) 魔法傷害, 每次耗魔 15+15×lvl",
+   "movement": "無",
+   "evidence": "j:32098-32111 (加傷+扣魔), 32166-32173 (Air Attack 記 pending + InitSetup 註冊傷害事件), 32129-32131 (施法/用物品清 pending), Des_BuffTri[1]=gg_trg_Air buff B04F j:4998-4999",
+   "notes": "Air MagicBook 純簿記 (map init 對全玩家隱藏 A05M 法術書); 打擊命中經傷害事件系統以 B04F buff 派發"
+  },
+  {
+   "hero": "SABER",
+   "skill_name": "20-03 約束與勝利之劍 (Excalibur)",
+   "rawcode": "A0D5",
+   "trigger_stems": [
+    "Excalibur"
+   ],
+   "template": "直線分段掃擊",
+   "timing": "instant (單幀 loop ×6; +2s 後清特效/鏡頭)",
+   "geometry": "6×200u 極座標分段 (200..1200u) 朝目標方向, 每段 400 AoE; 傷害 0.4×當前魔力+150×lvl+100; 每段 400 半徑殺樹; 鏡頭震動及於 512 內英雄",
+   "movement": "無 (施法者不動, 傷害為單幀直線帶)",
+   "evidence": "j:32334-32343 (6 段主迴圈), 32332 (傷害式), 32345-32353 (ANCIENT 標記回收防重複命中), 32322-32330 (劍氣特效單位 h00X/h00S/h008)",
+   "notes": "分類法的 exemplar 本體; 以 UNIT_TYPE_ANCIENT add/remove 做單次命中集合"
+  },
+  {
+   "hero": "SABER",
+   "skill_name": "20-04 Avalon-永恆的理想鄉",
+   "rawcode": "A0CT",
+   "trigger_stems": [
+    "avalonReady",
+    "avalonStart"
+   ],
+   "template": "受擊反應",
+   "timing": "施法開 (lvl+1)s 反制窗口 (avalonReady sleep); 反制本身 instant + 3s 後清 dummy",
+   "geometry": "敵方英雄以指向性法術鎖定 Saber 時觸發: 以 Saber 為中心 900 AoE, 傷害 30×英雄等級+STR×(lvl×5) chaos, 每個敵人再被 dummy 'o00G' (A0CS) 下 chainlightning 指令",
+   "movement": "無",
+   "evidence": "j:32381-32388 (窗口 enable/disable), 32402-32413 (條件: 法術目標==Saber 且敵對英雄), 32432-32443 (900 AoE 傷害+dummy), 32460",
+   "notes": "分類法 exemplar; EVENT_PLAYER_UNIT_SPELL_EFFECT 版的『被鎖定反擊』"
+  },
+  {
+   "hero": "SABER",
+   "skill_name": "20-04 EX (Avalon EX / ExcaliburMAX)",
+   "rawcode": "",
+   "trigger_stems": [
+    "ExcaliburMAX"
+   ],
+   "template": "鎖定連段",
+   "timing": "受傷觸發; 7-hit loop 每擊 sleep 0.05–0.30s 隨機, 終結斬後 0.2/0.5/4s 分段收尾",
+   "geometry": "7 連擊每擊 0.6×該次受到傷害 (chaos/unknown); 終結: 前方 350u 為圓心 900 AoE 固定 1800 魔法傷害; 1600×1600 rect 鏡頭震動",
+   "movement": "目標被拖動: 每擊沿 Saber 面向推 10u 且被 pause+無敵鎖定; Saber 每擊瞬移貼到目標位置",
+   "evidence": "j:32477-32499 (條件: EX_Mode + IsAvalonReady + 魔力≥70% + 敵英雄傷害來源), 32571-32606 (7-hit 迴圈), 32638 (終結 900 AoE @350u 前方)",
+   "notes": "EVENT_UNIT_DAMAGED (Damage_Event 系統掛在 Saber 身上); A0J7 add/remove 只是瞬發特效; 殘影 'u018' 與劍氣 h02G/h00S/h008 為演出"
+  },
+  {
+   "hero": "鬼王達",
+   "skill_name": "29 EX 被動 (GhostDaEX, 魔鬼筋肉人 EX)",
+   "rawcode": "",
+   "trigger_stems": [
+    "GhostDaEX"
+   ],
+   "template": "攻擊觸發",
+   "timing": "instant per attack (0.01s re-arm sleep)",
+   "geometry": "單體: 隱形 dummy 'ogru' (2s) 以 A10R 對被攻擊者下 hex 指令; 條件需攻擊者背向差 ≤90° (背刺判定)",
+   "movement": "無",
+   "evidence": "j:37238-37252 (條件: EX_Mode + Oshd + 面向差≤90 + GetRandomInt(1,2)<=2), 37266-37277 (dummy hex)",
+   "notes": "GetRandomInt(1,2)<=2 恆真 → 實際 100% 觸發; 不屬 29-01..04, 是 EX 模式附加被動"
+  },
+  {
+   "hero": "皮卡丘",
+   "skill_name": "58-03 就決定是你了!小智",
+   "rawcode": "A0C3",
+   "trigger_stems": [
+    "Sadosi"
+   ],
+   "template": "NEW:物件資料技能 — JASS 觸發只放音效, 實際效果全在物件編輯器",
+   "timing": "instant",
+   "geometry": "無 (JASS 側)",
+   "movement": "無",
+   "evidence": "j:40241-40250 (Actions 僅 PlaySoundBJ gg_snd_sawch)",
+   "notes": "真正的召喚/效果在 A0C3 物件資料; 觸發純配音"
+  },
+  {
+   "hero": "皮卡丘",
+   "skill_name": "十萬伏特放電 (LightningSpread, 不在 HERO_NUMBERS — 疑 EX/隱藏技)",
+   "rawcode": "A0SL",
+   "trigger_stems": [
+    "LightningSpread"
+   ],
+   "template": "召喚代理",
+   "timing": "instant 扇出, 4s 後清 dummy",
+   "geometry": "施法者 1800 AoE 內每個單位各生成一隻隱形 'hfoo' dummy (10s), 以 A04H lvl3 對其下 chainlightning; 另生成 'o00E' 標記單位",
+   "movement": "無 (閃電鏈彈道為物件資料)",
+   "evidence": "j:40271-40279 (per-unit dummy chainlightning), 40291-40303 (1800 enum 40296, 4s cleanup)",
+   "notes": "一單位一 dummy 的全域放電; A0SL 未列於 58-01..04"
+  },
+  {
+   "hero": "皮卡丘",
+   "skill_name": "58-04 瘋狂皮卡丘",
+   "rawcode": "A040",
+   "trigger_stems": [
+    "WildPika",
+    "WildPikaAttacked"
+   ],
+   "template": "變身強化",
+   "timing": "lvl×6 s 持續 (TriggerSleepAction); 疊層 instant per 受擊",
+   "geometry": "無範圍; 自身 A0AG 能力等級每被攻擊一次 +1, 上限 50",
+   "movement": "無",
+   "evidence": "j:40324-40330 (開窗 lvl×6s + 結束還原顏色), 40365-40374 (IncUnitAbilityLevel 'A0AG' 疊層 + 漸紅 vertex color)",
+   "notes": "計時自我強化 + 受擊疊層混合: 窗口內 EVENT_PLAYER_UNIT_ATTACKED 每次把 A0AG(被動加成, 物件資料) 升一級, 越打越紅"
+  },
+  {
+   "hero": "巴恩",
+   "skill_name": "EvilEye 妖眼 (S001 不在 HERO_NUMBERS; 37-01 凱薩之鷹=A01I 另有其碼)",
+   "rawcode": "S001",
+   "trigger_stems": [
+    "EvilEye"
+   ],
+   "template": "召喚代理",
+   "timing": "instant",
+   "geometry": "目標單位 600 AoE 內敵人被 dummy 'ogru' (2s, S002) 依序下 cripple 指令",
+   "movement": "無",
+   "evidence": "j:44430-44444 (dummy 44434-44438, 600 enum 44442), 44425-44428 (逐一 IssueTargetOrder cripple)",
+   "notes": "只建一隻 dummy 卻對群體逐一下指令 — 實際只有最後指令會完整施放 (原版 JASS 的粗糙寫法)"
+  },
+  {
+   "hero": "巴恩",
+   "skill_name": "37-04 魔界之王",
+   "rawcode": "A01Z",
+   "trigger_stems": [
+    "CombineOne"
+   ],
+   "template": "NEW:物件資料技能 — JASS 只做鏡頭震動與配音, 效果本體在物件資料",
+   "timing": "instant + 0.5s 後清震動",
+   "geometry": "震動及於目標點 1600×1600 rect 內單位的玩家鏡頭 (×lvl 次)",
+   "movement": "無",
+   "evidence": "j:44469-44488 (只有 CameraSetEQNoise + 2 音效 + 清除)",
+   "notes": "無任何傷害/單位生成; A01Z 效果 (魔界之王) 全在物件編輯器"
+  },
+  {
+   "hero": "巴恩",
+   "skill_name": "HolyShit 環狀衝擊 (A01W 不在 HERO_NUMBERS 37 清單)",
+   "rawcode": "A01W",
+   "trigger_stems": [
+    "HolyShit"
+   ],
+   "template": "召喚代理",
+   "timing": "loop ×18, 每根射線 sleep 0.05s (~0.9s 掃完全圓); 5s 後清 dummy",
+   "geometry": "18 隻 dummy 'o00B' (10s) 於施法者腳下, 各朝 256u 極座標點 (i×20°, 覆蓋 360°) 下 shockwave (A01X) + impale (A024) — 環狀 18 向震盪波/穿刺",
+   "movement": "傷害區行進: 每根 shockwave/impale 彈道由物件資料向外飛行",
+   "evidence": "j:44514-44537 (18-loop 44518-44533; 雙指令 44527-44528)",
+   "notes": "放射狀 nova 由 dummy 雙技能疊加; 傷害數值在 A01X/A024 物件資料"
+  },
+  {
+   "hero": "巴恩",
+   "skill_name": "37-03 災難之牆",
+   "rawcode": "A0KC",
+   "trigger_stems": [
+    "DestWall"
+   ],
+   "template": "召喚代理",
+   "timing": "instant 佈牆, 持續 2+lvl s 後清除",
+   "geometry": "目標點沿 (面向+90°) 方向排 9 隻 'u00R' 牆單位, 間距 100u (offset +400..−400, 總長 800u)",
+   "movement": "無 (牆固定; 牆體傷害/阻擋在 u00R 物件資料)",
+   "evidence": "j:44563-44578 (9-loop 44568-44574: PolarProjection 400−100i @ facing+90)",
+   "notes": ""
+  },
+  {
+   "hero": "巴恩",
+   "skill_name": "37-02 黑核晶 (JASS 側僅數量上限管理)",
+   "rawcode": "",
+   "trigger_stems": [
+    "BlackBoom"
+   ],
+   "template": "召喚代理",
+   "timing": "instant per 晶體單位進場",
+   "geometry": "全圖 EnterRect 監聽; 同時存在的黑核晶 (n00O/n00Y/n00Z/n00X) 上限 7, 超過殺最舊",
+   "movement": "無",
+   "evidence": "j:44592-44657 (型別過濾 44592-44606; 計數+殺最舊 44636-44651), TriggerRegisterEnterRectSimple(EntireMap) j:44663",
+   "notes": "召喚本體是 A0OY 物件資料 (37-02); 此觸發只是 FIFO 上限簿記, 歸入該召喚技"
+  },
+  {
+   "hero": "巴恩",
+   "skill_name": "真黑核晶 (EX)",
+   "rawcode": "A0ZV",
+   "trigger_stems": [
+    "TrueBlackBoom",
+    "真黑核晶"
+   ],
+   "template": "召喚代理",
+   "timing": "instant",
+   "geometry": "目標點生成 1 隻 'n00W' 真黑核晶單位 (爆炸/傷害在其物件資料)",
+   "movement": "無",
+   "evidence": "j:44678-44682 (CreateNUnits 'n00W' @ GetSpellTargetLoc)",
+   "notes": "『真黑核晶』在觸發編輯器是註解列, 未生成 JASS — 實碼即 TrueBlackBoom"
+  },
+  {
+   "hero": "白木",
+   "skill_name": "70 等級30強化解鎖 (TreeSea)",
+   "rawcode": "",
+   "trigger_stems": [
+    "TreeSea"
+   ],
+   "template": "變身強化",
+   "timing": "instant, 一次性 (DestroyTrigger)",
+   "geometry": "無 — SetUnitAbilityLevel: A0ZM→2, A0ZO→3",
+   "movement": "無",
+   "evidence": "j:47807-47823, EVENT_PLAYER_HERO_LEVEL + lvl≥30 條件 j:47811-47814/47829",
+   "notes": "半簿記半技能: 30 級自動把兩個被動能力升級 (數值內容在物件資料)"
+  },
+  {
+   "hero": "白木",
+   "skill_name": "70-03 木束縛之術",
+   "rawcode": "A0GR",
+   "trigger_stems": [
+    "whiterOldTree"
+   ],
+   "template": "召喚代理",
+   "timing": "instant, 5s 後清 dummy",
+   "geometry": "dummy 'o00Y' (2s, A0GS) 於施法者腳下, 對施法者 950 AoE 內單位逐一下 entanglingroots",
+   "movement": "無",
+   "evidence": "j:47854-47866 (dummy 47856-47860, 950 enum 47862), 逐一指令 47844-47847",
+   "notes": "同 EvilEye 的單 dummy 逐一下指令寫法 — 實際多半只纏住最後目標"
+  },
+  {
+   "hero": "白木",
+   "skill_name": "70-01 伸卡球",
+   "rawcode": "A0UJ",
+   "trigger_stems": [
+    "WoodStone"
+   ],
+   "template": "瞬發點爆",
+   "timing": "0.5s 前搖 sleep 後 instant, +2s 清演出 dummy",
+   "geometry": "目標點: 殺樹半徑 lvl×50+300; 傷害 AoE lvl×50+280, 傷害 lvl×150+STR×3 魔法; 中立敵僕從陣營單位再播死亡動畫+清其周圍 150 樹",
+   "movement": "無 (巨大 'h01X' dummy healingspray 只是投球演出)",
+   "evidence": "j:47933-47954 (傷害式 47937, 殺樹 47950, AoE 傷害 47951), Func018A j:47912-47926",
+   "notes": ""
+  },
+  {
+   "hero": "叫獸",
+   "skill_name": "小考 (quiz, A0WK 不在 HERO_NUMBERS 93 清單)",
+   "rawcode": "A0WK",
+   "trigger_stems": [
+    "quiz",
+    "小考",
+    "隨機抽點"
+   ],
+   "template": "NEW:延遲距離結算 — 施法瞬間標記範圍內敵人, N 秒後按各自離開施法點的距離結算傷害",
+   "timing": "instant 標記 → sleep 5.00s → instant 結算",
+   "geometry": "標記範圍 512 (dummy 'hfoo' A0WL faeriefire 逐一標記); 結算: 傷害 = (與施法點距離 − 500), >0 才吃, 上限 600",
+   "movement": "無 (施法者不動; 逃離施法點的目標吃更多傷害)",
+   "evidence": "j:53526-53539 (標記+sleep 5), 53505-53519 (距離結算 53507-53514)",
+   "notes": "『小考』『隨機抽點』是觸發編輯器註解列 (無 JASS); 反逃跑機制: 留在原地=0 傷"
+  },
+  {
+   "hero": "叫獸",
+   "skill_name": "93-02 抽點名",
+   "rawcode": "A0WH",
+   "trigger_stems": [
+    "attendance",
+    "attendance effect"
+   ],
+   "template": "NEW:週期單體點射 — 學會後永久計時器循環, 每次到期對施法者附近一名敵人 dummy 施放單體控制彈",
+   "timing": "periodic timer 17−2×lvl s (repeating), 每次結算 instant, dummy 2s 後清",
+   "geometry": "叫獸 600 AoE 內取第一個合法敵人, 隱形 'hfoo' dummy (1s, A0WI) 下 thunderbolt (暈擊)",
+   "movement": "無",
+   "evidence": "j:53574-53584 (學習時 StartTimerBJ 17−2lvl + enable), 53622-53635 (600 內單一目標 dummy thunderbolt, ProJudge 保證只打一個), timer event j:53655",
+   "notes": "被動: EVENT_PLAYER_HERO_SKILL/LEVEL 觸發啟動; lvl≥4 後停用重啟觸發 (計時器保持跑)"
+  },
+  {
+   "hero": "叫獸",
+   "skill_name": "93-03 這次考試很簡單",
+   "rawcode": "A0NG",
+   "trigger_stems": [
+    "TestsoEasy",
+    "TestsoEasyEff",
+    "這次考試很簡單"
+   ],
+   "template": "受擊反應",
+   "timing": "施法 instant 掛標記; 目標受傷時觸發, 效果持續 8s (sleep) 後返還",
+   "geometry": "單體: 目標當前 HP 與 MP 各暫時扣 10%×lvl, 8 秒後若存活歸還",
+   "movement": "無",
+   "evidence": "j:53683-53689 (SPELL_CAST 註冊 InitSetup+Des_Group), 53710-53722 (受傷觸發扣/還 HP MP), Des_BuffTri[3]=TestsoEasyEff buff B04I j:5004-5005",
+   "notes": "經傷害事件系統以 B04I buff 派發 — 是掛在目標身上的受擊觸發 debuff"
+  },
+  {
+   "hero": "叫獸",
+   "skill_name": "93-04 當掉/二一 (觸發用 A0WN; HERO_NUMBERS 列 A0WJ — 碼不一致)",
+   "rawcode": "A0WN",
+   "trigger_stems": [
+    "flunkOut",
+    "flunkOutEff",
+    "二ㄧ"
+   ],
+   "template": "NEW:等級剝奪 — 單體無傷害, 直接扣除目標英雄等級",
+   "timing": "instant (0.10s 一次性 timer 轉發)",
+   "geometry": "單體: 目標英雄 lvl≥10 時, 等級重設為 lvl−3 (SetHeroLevel 1 → lvl−3)",
+   "movement": "無",
+   "evidence": "j:53740-53744 (記目標+啟動 timer), 53765-53771 (降級), lvl≥10 條件 j:53758-53763",
+   "notes": "『二ㄧ』為觸發編輯器註解列"
+  },
+  {
+   "hero": "學姊",
+   "skill_name": "正妹優勢 (先天被動, 無 NN 編號)",
+   "rawcode": "",
+   "trigger_stems": [
+    "Advantage",
+    "正妹優勢"
+   ],
+   "template": "受擊反應",
+   "timing": "instant per 受擊, 10% 機率; dummy 1s 後清",
+   "geometry": "於傷害來源位置由隱形 'hfoo' dummy (A0ZB) 施放範圍沉默 (半徑在物件資料)",
+   "movement": "無",
+   "evidence": "j:55062-55084 (GetRandomInt(1,10)==5 → dummy silence @ GetEventDamageSource loc), 事件註冊 j:55045 (Open Skill of Mentor: TriggerRegisterUnitEvent EVENT_UNIT_DAMAGED)",
+   "notes": "無能力等級檢查 — 開角色即生效的天生被動"
+  },
+  {
+   "hero": "學姊",
+   "skill_name": "98-01 理財的習慣",
+   "rawcode": "A0ZD",
+   "trigger_stems": [
+    "GoldWood",
+    "理財"
+   ],
+   "template": "NEW:週期資源增益 — 固定週期按持有資源百分比生息, 無戰鬥效果",
+   "timing": "periodic 60.00s",
+   "geometry": "無空間幾何; 每次 +1%×lvl 當前金 與 +1%×lvl 當前木",
+   "movement": "無",
+   "evidence": "j:55102-55109 (複利式), InitTrig periodic 60 j:55115",
+   "notes": ""
+  },
+  {
+   "hero": "學姊",
+   "skill_name": "98-02 平易近人的笑容",
+   "rawcode": "A0ZE",
+   "trigger_stems": [
+    "Smile",
+    "平易近人的笑容"
+   ],
+   "template": "NEW:週期群體治療 — 週期踩踏的治療版: 定時對施法者周圍友軍回血",
+   "timing": "periodic 30.00s",
+   "geometry": "學姊 300 AoE 內存活友軍 +100×lvl HP",
+   "movement": "無",
+   "evidence": "j:55140-55153 (heal 55143, 300 enum 55153), periodic 30 j:55160",
+   "notes": ""
+  },
+  {
+   "hero": "學姊",
+   "skill_name": "98-04 自在飛翔 (分身)",
+   "rawcode": "A0ZI",
+   "trigger_stems": [
+    "FlyAway",
+    "分身"
+   ],
+   "template": "受擊反應",
+   "timing": "instant per 受擊, 10% 機率; dummy 1s 後清",
+   "geometry": "隱形 'hfoo' dummy (3s) 拿幻象權杖道具 'will' 對學姊使用 → 產生幻象分身",
+   "movement": "無",
+   "evidence": "j:55179-55197 (JudgeFunc A0ZI>0 且 1/10 j:55168-55176; UnitUseItemTarget 55189), 事件註冊 j:55046 (EVENT_UNIT_DAMAGED)",
+   "notes": "分身數量/屬性由 'will' (Wand of Illusion) 物件資料決定"
+  },
+  {
+   "hero": "學姊",
+   "skill_name": "夢想前程的彼方 (A0ZG 不在 HERO_NUMBERS 98 清單, 疑 EX/劇情技)",
+   "rawcode": "A0ZG",
+   "trigger_stems": [
+    "FutureDream",
+    "BeginFutureDream",
+    "夢想前程的彼方"
+   ],
+   "template": "NEW:全圖處決 — 不經傷害運算, 直接 KillUnit 敵方陣營的地圖目標單位 (勝利技)",
+   "timing": "BeginFutureDream 於 SPELL_CHANNEL 全場廣播; FutureDream 於 SPELL_EFFECT instant 處決",
+   "geometry": "無空間幾何; 依施法者陣營殺 gg_unit_unpl_0000 或 gg_unit_etoe_0016 (敵方主目標單位)",
+   "movement": "無",
+   "evidence": "j:55222-55228 (KillUnit 依陣營), 55249-55251 (channel 廣播), 事件 j:55234/55257",
+   "notes": "引導開始即公告『再過12分鐘納美克星即將爆炸！(誤)』; 施法完成直接終結敵方基地單位"
+  },
+  {
+   "hero": "藏馬",
+   "trigger_stems": [
+    "plant"
+   ],
+   "template": "單體斬擊",
+   "rawcode": "A0RV",
+   "skill_name": "18-02 寄生種子",
+   "evidence": "war3map.j:27875-27975 (Conditions A0RV; UnitDamageTargetBJ 75 j:27914; sleep 5 j:27915; dummy 'o00A'+A009 entanglingroots j:27917-27923; EX %maxHP burst j:27927/27940)",
+   "geometry": "單體目標, 無AoE; dummy 'o00A' 壽命3s",
+   "timing": "sleep 0.01 驗證buff → 75傷害 → sleep 5s → 定身+爆發 → sleep 2s 清理",
+   "movement": "無",
+   "notes": "目標須帶 'Blsh' buff (種子命中) 才生效; 5s後 dummy 施 entanglingroots 定身, EX模式加爆 40% 目標最大HP (藏馬HP≤50%時 80%+特效強化)"
+  },
+  {
+   "hero": "藏馬",
+   "trigger_stems": [
+    "EvilFox"
+   ],
+   "template": "受擊反應",
+   "rawcode": "",
+   "skill_name": "18-03 妖狐變化 (妖狐型態反擊, 與 A0P7 等級連動)",
+   "evidence": "war3map.j:27980-28035 (EVENT_PLAYER_UNIT_ATTACKED j:28032; 需 B036 buff j:28004; 機率 GetRandomInt(1,10)<=A0P7等級 或 EX j:27990-27997; dummy root j:28021-28025)",
+   "geometry": "單體反擊(攻擊者); dummy 'o00A' 壽命1s",
+   "timing": "instant (被攻擊當下)",
+   "movement": "無",
+   "notes": "藏馬處於妖狐型態(B036 buff)被攻擊時, 10%×A0P7等級機率(EX=100%)生成 dummy 對攻擊者施 A0PA entanglingroots 反定身; 用 ATTACKED 事件而非 DAMAGED"
+  },
+  {
+   "hero": "藏馬",
+   "trigger_stems": [
+    "OldTree",
+    "OldTreeDie"
+   ],
+   "template": "召喚代理",
+   "rawcode": "A0P7",
+   "skill_name": "18-04 億年樹",
+   "evidence": "war3map.j:28040-28106 (Conditions A0P7 j:28041; sleep 1.5 捕捉召喚樹 'n010' j:28063-28064; sleep 9×lvl 後清理 j:28065-28067; OldTreeDie: 'n010' 死亡2s後掃尾 j:28082-28096)",
+   "geometry": "真召喚戰鬥單位 'n010' ×1",
+   "timing": "sleep 1.5s 捕捉 → 存活 9s×等級 → 清理; 死亡觸發再清一次",
+   "movement": "無 (召喚物自主作戰)",
+   "notes": "召喚本體由能力放出, 觸發只管生命週期; OldTreeDie 為同技能的清理配對觸發"
+  },
+  {
+   "hero": "藏馬",
+   "trigger_stems": [
+    "SuperOldTree"
+   ],
+   "template": "召喚代理",
+   "rawcode": "A00O",
+   "skill_name": "億年樹EX/超級老樹 (A00O 未列於 HERO_NUMBERS 18 技能表)",
+   "evidence": "war3map.j:28111-28151 (Conditions A00O j:28112; 隱形dummy 'o00A'+A00M j:28130-28134; GetUnitsInRangeOfLocAll(450, 目標點) 逐一下 entanglingroots 指令 j:28136-28138; sleep 15 清理 j:28140-28141)",
+   "geometry": "目標單位為圓心 450 AoE 群體定身; dummy 壽命2s",
+   "timing": "instant 下單 → sleep 15s 清理",
+   "movement": "無",
+   "notes": "GUI 手法: 只建1隻 dummy 卻對群組每單位重覆下 entanglingroots (後令蓋前令, 實效存疑); 等級同步自 A00O"
+  },
+  {
+   "hero": "藏馬",
+   "trigger_stems": [
+    "Gorama"
+   ],
+   "template": "變身強化",
+   "rawcode": "A0IH",
+   "skill_name": "18-03 妖狐變化",
+   "evidence": "war3map.j:28156-28184 (Conditions A0IH j:28157; MoveRectToLoc gg_rct_Gorama j:28166; 10× UnsummonTarget 特效 loop j:28167-28174)",
+   "geometry": "rect gg_rct_Gorama 移至施法者, 10 個隨機點特效",
+   "timing": "instant",
+   "movement": "無",
+   "notes": "變身本體 (morph) 走能力端; 觸發只補 VO + 變身煙霧特效; 變身後型態的反擊由 EvilFox 觸發實作"
+  },
+  {
+   "hero": "黑Saber",
+   "trigger_stems": [
+    "ManaIcrease"
+   ],
+   "template": "變身強化",
+   "rawcode": "A0FS",
+   "skill_name": "69-04 魔力增幅",
+   "evidence": "war3map.j:32708-32739 (EVENT_PLAYER_HERO_SKILL/LEVEL j:32735-32736; SetPlayerTechResearchedSwap 'Rhpt' = A0FS等級 j:32723; 滿級3自關 j:32716/32725)",
+   "geometry": "無 (玩家科技)",
+   "timing": "instant (學技能/升級時)",
+   "movement": "無",
+   "notes": "純被動: 每學一級把 'Rhpt' 科技研究到同級 (回魔/生命強化), 非戰鬥投放"
+  },
+  {
+   "hero": "黑Saber",
+   "trigger_stems": [
+    "InSpace"
+   ],
+   "template": "召喚代理",
+   "rawcode": "A0FK",
+   "skill_name": "疑似 69-03 (黑洞/InSpace; A0FK 不在 HERO_NUMBERS 69 技能表)",
+   "evidence": "war3map.j:32744-32787 (Conditions A0FK j:32745; dummy 'o00S' 6s + A0FM j:32763-32765; TerrainDeformationRipple 600×600 6s j:32767; loop 9× 'u02S' 隨機灑在 600×600 rect j:32770-32774; sleep 8 清理 j:32775-32777)",
+   "geometry": "以施法者為中心 600×600 rect; dummy×1 (6s) + 召喚物 'u02S' ×9",
+   "timing": "instant 佈署 → sleep 8s 清理",
+   "movement": "無 (黑洞dummy定點, 效果由 A0FM 能力端拉扯)",
+   "notes": "黑洞本體=帶 A0FM 的 dummy 'o00S', 外加 9 隻 u02S 漂浮物與地形波紋演出"
+  },
+  {
+   "hero": "黑Saber",
+   "trigger_stems": [
+    "MudAttackCP"
+   ],
+   "template": "NEW:空觸發",
+   "rawcode": "",
+   "skill_name": "69-02 黑泥召喚 相關? (AOsw 能力端)",
+   "evidence": "war3map.j:1802 (僅 'trigger gg_trg_MudAttackCP = null' 宣告; 全檔無 Trig_MudAttackCP_* 函式、無 InitTrig)",
+   "geometry": "",
+   "timing": "",
+   "movement": "",
+   "notes": "NEW:空觸發 = 變數有宣告但沒有任何函式體/註冊, 死觸發; 黑泥相關效果應全在物件資料端"
+  },
+  {
+   "hero": "臭作",
+   "trigger_stems": [
+    "HentiEX"
+   ],
+   "template": "攻擊觸發",
+   "rawcode": "",
+   "skill_name": "30-02 酒精灌腸 (BNdh buff) 的 EX 攻擊追擊",
+   "evidence": "war3map.j:37313-37366 (EVENT_PLAYER_UNIT_ATTACKED j:37363; 攻擊者='Orkn' 且目標帶 'BNdh' buff 且 EX_Mode j:37314-37328; SetUnitPositionLoc 瞬移貼臉 j:37345; 傷害=目標當前魔力×0.20 j:37343/37353)",
+   "geometry": "單體; 無AoE",
+   "timing": "instant (攻擊事件當下; DisableTrigger→尾端 re-enable 防重入)",
+   "movement": "施法者位移: 臭作瞬移到被攻擊目標位置 (SetUnitPositionLoc) + Victory 動畫",
+   "notes": "EX 限定: 攻擊帶酒精灌腸 debuff(BNdh) 的目標時, 瞬移追擊並造成其當前MP 20% 魔法傷害 + 地形波紋"
+  },
+  {
+   "hero": "皮卡娘",
+   "trigger_stems": [
+    "NoCute"
+   ],
+   "template": "NEW:純音效伴隨",
+   "rawcode": "A0BX",
+   "skill_name": "疑似 86-01 (A0BX 不在 HERO_NUMBERS 86 技能表)",
+   "evidence": "war3map.j:40422-40440 (Conditions A0BX j:40423; Actions 僅 PlaySoundBJ gg_snd_nocute j:40430)",
+   "geometry": "",
+   "timing": "instant",
+   "movement": "無",
+   "notes": "NEW:純音效伴隨 = 觸發只播 VO, 技能投放 100% 在能力/物件資料端"
+  },
+  {
+   "hero": "皮卡娘",
+   "trigger_stems": [
+    "PIKACHU"
+   ],
+   "template": "原地震波",
+   "rawcode": "A0C0",
+   "skill_name": "86-04 打雷絕招",
+   "evidence": "war3map.j:40445-40514 (Conditions A0C0 j:40446; 半徑 100+200×lvl 圈內每單位各生 1 隱形 'hfoo' dummy+A04H 下 chainlightning j:40452-40460/40494; 英雄lvl≥30 第二圈 600+200×lvl j:40472-40477/40495-40496; sleep 4 清理 j:40500-40504)",
+   "geometry": "施法者為圓心: 半徑 100+200×技能等級; 英雄等級≥30 追加第二圈 600+200×技能等級; 每個圈內單位一隻 dummy (10s壽命)",
+   "timing": "instant 齊發 → sleep 4s 清理",
+   "movement": "無",
+   "notes": "實作為逐目標 dummy-cast A04H 閃電鏈 (每人一發), 行為上是以自身為中心的瞬間全域電擊"
+  },
+  {
+   "hero": "斑剎",
+   "trigger_stems": [
+    "AbsoluteDefence"
+   ],
+   "template": "召喚代理",
+   "rawcode": "A0SD",
+   "skill_name": "絕對防禦 (A0SD 不在 HERO_NUMBERS 41 技能表)",
+   "evidence": "war3map.j:44721-44749 (Conditions A0SD j:44722; 'h02C' 建於 GetSpellTargetLoc + 立即 'voodoo' 指令 j:44735-44736; SetUnitTimeScalePercent 8 j:44737; sleep 5 清理 j:44738-44739)",
+   "geometry": "目標點放置 1 隻 voodoo dummy ('h02C'); AoE 由 Big Bad Voodoo 能力端決定",
+   "timing": "instant 佈署 → 持續 5s 後清理",
+   "movement": "無 (定點法陣)",
+   "notes": "dummy 引導大巫毒 (友軍區域無敵) 5 秒的定點結界"
+  },
+  {
+   "hero": "死之王",
+   "trigger_stems": [
+    "NightMaster",
+    "NightContract"
+   ],
+   "template": "NEW:環境切換",
+   "rawcode": "",
+   "skill_name": "厄夜契約 (EX 全域夜晚機制)",
+   "evidence": "war3map.j:48003-48076 (NightMaster: EVENT_PLAYER_UNIT_SPELL_CAST + EX_Mode j:48007/48034; dummy 'hkni' 加 'moon' 道具並使用後即刪 j:48022-48026; NightContract: 'h011'/'h010' 死亡翻轉 udg_IsDay j:48042-48067)",
+   "geometry": "全地圖 (時間環境)",
+   "timing": "NightMaster: 每次施法 instant; NightContract: 事件驅動狀態機",
+   "movement": "無",
+   "notes": "NEW:環境切換 = 觸發改變全域日夜狀態: EX 模式下任何施法都經 dummy 用 'moon' 道具強制入夜; udg_IsDay 供 BadNightSoul/AllSinReturn/MagicReturn 判定夜間加成"
+  },
+  {
+   "hero": "死之王",
+   "trigger_stems": [
+    "MagicReturn"
+   ],
+   "template": "NEW:施法懲罰",
+   "rawcode": "",
+   "skill_name": "魔法反還 (死觸發: 從未被 Enable)",
+   "evidence": "war3map.j:48081-48132 (EVENT_PLAYER_UNIT_SPELL_CAST j:48129; 敵方施法者距 KOD<600 且 12% 機率 j:48082-48090; 吸乾MP+650夜/350日傷害 j:48112-48116); 全檔僅 j:2121/48127-48131 出現 gg_trg_MagicReturn, 無 EnableTrigger",
+   "geometry": "以死之王為中心 600 半徑的施法懲罰圈",
+   "timing": "instant (敵人施法當下)",
+   "movement": "無",
+   "notes": "NEW:施法懲罰 = 敵人於範圍內施法時機率觸發 (清空其魔力+懲罰傷害); 注意 Init 即 Disable 且 Open Skill of KOD 未啟用它 → 實際上停用中"
+  },
+  {
+   "hero": "死之王",
+   "trigger_stems": [
+    "DeathMeteo"
+   ],
+   "template": "召喚代理",
+   "rawcode": "A03L",
+   "skill_name": "71-01 死亡隕落",
+   "evidence": "war3map.j:48137-48189 (Conditions A03L+'U00K' j:48138-48144; dummy 'hfoo'+A095 下 'inferno' 於目標點 j:48163-48166; 隱身0.3s後 SetUnitPositionLoc 瞬移到隕石點 j:48170-48173; sleep 3 清理 j:48175-48177)",
+   "geometry": "目標點地獄火 AoE (由 A095 能力端); dummy×1",
+   "timing": "instant 下令 → 0.3+0.3s 瞬移演出 → 3s 後清理",
+   "movement": "施法者位移: 原地留 'u01A' 殘影→隱藏→瞬移至目標點現身 (dummy 隕石先落)",
+   "notes": "dummy 地獄火 + 本體跟著隕石瞬移落點的複合技"
+  },
+  {
+   "hero": "死之王",
+   "trigger_stems": [
+    "BadNightSoul"
+   ],
+   "template": "變身強化",
+   "rawcode": "A0HJ",
+   "skill_name": "71-03 厄夜靈魂",
+   "evidence": "war3map.j:48194-48227 (Conditions A0HJ j:48195; 夜間才 UnitAddAbilityBJ 'A0HL' 給 udg_NightContractUnit j:48202-48211; sleep 3 後移除 j:48216-48217)",
+   "geometry": "無 (契約單位加能力)",
+   "timing": "instant 加成 → 3s 後移除",
+   "movement": "無",
+   "notes": "夜間限定: 給厄夜契約化身掛上 A0HL 3 秒的限時能力附加"
+  },
+  {
+   "hero": "死之王",
+   "trigger_stems": [
+    "AllSinReturn"
+   ],
+   "template": "原地震波",
+   "rawcode": "A0HK",
+   "skill_name": "71-04 萬惡歸宗",
+   "evidence": "war3map.j:48232-48301 (Conditions A0HK j:48233; GetUnitsInRangeOfLocAll(600, 自身) 吸魔加總+歸零 j:48252-48254/48289; sleep 1 後對記錄敵人各打 (ΣMana+500夜/+0日)×lvl×0.15 j:48271-48277/48290-48291)",
+   "geometry": "施法者為圓心 600 AoE",
+   "timing": "instant 吸魔 → sleep 1s → 結算傷害",
+   "movement": "無",
+   "notes": "兩段式自身圓爆: 先吸光圈內所有單位 MP 累加, 1 秒後按總量×等級係數回敬給圈內敵人 (夜間 +500 基底)"
+  },
+  {
+   "hero": "死之王",
+   "trigger_stems": [
+    "SAIadd"
+   ],
+   "template": "變身強化",
+   "rawcode": "A08T",
+   "skill_name": "71-02 靈魂吸取",
+   "evidence": "war3map.j:48306-48344 (EVENT_PLAYER_UNIT_DEATH j:48341; 擊殺者=KOD 且已學 A08T j:48307-48311; 疊層 DiekingAcc, SetUnitAbilityLevelSwapped 'A0RC' = min(10,層數)×A08T等級 j:48324-48326; sleep 20 掉層 j:48327-48334)",
+   "geometry": "無 (自身被動能力升級)",
+   "timing": "擊殺 instant 疊層, 每層 20s 後衰減",
+   "movement": "無",
+   "notes": "擊殺疊層被動: 用隱藏能力 A0RC 的等級當疊層容器, 上限 10 層×技能等級"
+  },
+  {
+   "hero": "金居福",
+   "trigger_stems": [
+    "恰恰",
+    "chacha"
+   ],
+   "template": "NEW:純音效伴隨",
+   "rawcode": "A0O8",
+   "skill_name": "恰恰~ (A0O8 不在 HERO_NUMBERS 94 技能表)",
+   "evidence": "war3map.j:53817-53835 (Conditions A0O8 j:53818; Actions 僅 TextUse 漂浮字 '恰恰~' j:53825)",
+   "geometry": "",
+   "timing": "instant",
+   "movement": "無",
+   "notes": "NEW:純音效伴隨 = 觸發只出漂浮字演出; 效果全在能力端; 中文名觸發 '恰恰' 無獨立 JASS 函式, 與 chacha 同一技能"
+  },
+  {
+   "hero": "金居福",
+   "trigger_stems": [
+    "北斗爆橘拳",
+    "Oran"
+   ],
+   "template": "單體斬擊",
+   "rawcode": "A0OV",
+   "skill_name": "94-01 北斗爆橘拳",
+   "evidence": "war3map.j:53840-53891 (Conditions A0OV j:53841; UnitDamageTargetBJ lvl×100+STR×2 j:53869; B04K 加打 STR×1.5 j:53870-53871; EX 加打 STR×5 j:53874-53875; 自療 100×lvl j:53878)",
+   "geometry": "單體目標; 視覺 dummy 'o001' 0.8s",
+   "timing": "instant",
+   "movement": "無",
+   "notes": "單體爆發+吸血式自療; 珍奶buff(B04K) 與 EX 各疊一段追加傷害, 目標強制播 death 動畫"
+  },
+  {
+   "hero": "金居福",
+   "trigger_stems": [
+    "橘山斬空破",
+    "OranMon"
+   ],
+   "template": "召喚代理",
+   "rawcode": "A0QG",
+   "skill_name": "94-02 橘山斬空破",
+   "evidence": "war3map.j:53896-53953 (Conditions A0QG j:53897; 需 B04K j:53903-53908; 4× 隱形 'hfoo' dummy+A0QI 各朝 45/135/225/315 度 PolarProjection 256 下 'shockwave' j:53912-53941)",
+   "geometry": "4 道 shockwave 呈 X 形 (45°/135°/225°/315°), 指令點 256u 外; dummy 壽命 3s",
+   "timing": "instant 齊發",
+   "movement": "傷害區行進: 4 道震盪波彈體由能力端向外飛行",
+   "notes": "需要珍奶buff(B04K) 才發動; dummy-cast 四向斜角震盪波 nova"
+  },
+  {
+   "hero": "金居福",
+   "trigger_stems": [
+    "珍奶顏射",
+    "MilkTea"
+   ],
+   "template": "變身強化",
+   "rawcode": "A0QJ",
+   "skill_name": "94-03 珍奶顏射",
+   "evidence": "war3map.j:53958-53979 (Conditions A0QJ j:53959; sleep 0.1 → UnitAddAbilityBJ 'A0W2' 自身 j:53967; sleep 14 → 移除 j:53968-53969)",
+   "geometry": "無 (自身buff)",
+   "timing": "0.1s 延遲加成 → 持續 14s",
+   "movement": "無",
+   "notes": "限時 14s 自我強化: 掛 A0W2 (施放產生 B04K buff, 開場即對玩家鎖灰 j:53801), B04K 是 94-01/94-02/賣扣 的加成鑰匙"
+  },
+  {
+   "hero": "金居福",
+   "trigger_stems": [
+    "賣扣",
+    "Mic",
+    "MicEff",
+    "MicTimer"
+   ],
+   "template": "NEW:標記拋飛",
+   "rawcode": "A0O0",
+   "skill_name": "94-04 賣扣~~",
+   "evidence": "war3map.j:53984-54018 (Mic: Conditions A0O0 j:53985, InitSetup 掛單位受傷觸發 j:54007, InitSetup 本體 j:4958-4975), j:5007-5009 (B04J→gg_trg_MicEff 派發表), j:54087-54146 (MicEff: 傷害加成+Pause+算 50u 步距/角度), j:54157-54212 (MicTimer: 0.01s 週期 SetUnitPositionLoc 50u/tick + SetUnitFlyHeightBJ 50×index 拋物線)",
+   "geometry": "步距 50u × (距離/50) tick; 拋物線升/降各 12 tick (高度 50×index); 終點=固定 rect (LoveHeroPoint/DieHeroPoint)",
+   "timing": "施放標記 instant; 受傷觸發 → periodic 0.01s ×N 直到抵達",
+   "movement": "目標被推動: 被標記者受傷時被暫停、關路徑、沿拋物線整段丟到地圖固定點, 落地雷鳴特效後解除",
+   "notes": "NEW:標記拋飛 = 先點名標記(Des_Group+B04J), 目標下次受傷即被拋飛到固定刑場; B04K 時附加 300 傷害, EX 再加 STR×5; 陣營決定落點 rect"
+  },
+  {
+   "hero": "金居福",
+   "trigger_stems": [
+    "歹戲拖棚",
+    "TooLong"
+   ],
+   "template": "變身強化",
+   "rawcode": "",
+   "skill_name": "歹戲拖棚 (EX 週期成長, 無施放 rawcode)",
+   "evidence": "war3map.j:54217-54238 (TriggerRegisterTimerEventPeriodic 60s j:54235; EX_Mode 條件 j:54218; ModifyHeroStat STR/AGI/INT 各 +7 j:54225-54227)",
+   "geometry": "無",
+   "timing": "periodic 60s, 無限次",
+   "movement": "無",
+   "notes": "EX 限定滾雪球被動: 每 60 秒全屬性 +7 永久成長"
+  },
+  {
+   "hero": "賣火柴小女孩",
+   "trigger_stems": [],
+   "template": "無觸發技能",
+   "rawcode": "",
+   "skill_name": "",
+   "evidence": "HERO_TRIGGERS.json 對映為空陣列; war3map.j 無對應 Trig_* 叢集",
+   "geometry": "",
+   "timing": "",
+   "movement": "",
+   "notes": "此英雄在 JASS 端沒有任何技能觸發, 全部技能行為都在物件資料(能力)端"
+  },
+  {
+   "hero": "賈修",
+   "skill_name": "05-03 及喀爾度",
+   "rawcode": "A091",
+   "trigger_stems": [
+    "closeMe"
+   ],
+   "template": "NEW:環形吸引",
+   "geometry": "2×lvl 錨點, 半徑200u 環繞施法者均分360°, 每錨點吸引半徑 250+100×lvl",
+   "timing": "instant (單幀 loop, dummy 2s timed life)",
+   "movement": "目標被吸: 範圍內敵人 SetUnitPositionLoc 直接搬到各錨點 (無傷害)",
+   "evidence": "j:28221-28233 (loop CreateNUnits 'o00H' polar 200u + ForGroup SetUnitPositionLoc), j:28230 AoE 250+100L",
+   "notes": "NEW定義: 施法者周圍瞬間展開一圈引力點, 各點把敵人瞬移聚到點上; 純聚怪無傷害, dummy 'o00H' 僅特效"
+  },
+  {
+   "hero": "賈修",
+   "skill_name": "05-04 巴歐．薩喀爾嘎",
+   "rawcode": "A092",
+   "trigger_stems": [
+    "GoldDrgan",
+    "GoldDrgan Effect"
+   ],
+   "template": "衝鋒推撞",
+   "geometry": "50u/tick ×最多20 tick (~1000u), 撞樹半徑300, 終點 378×378 rect AoE, 傷害 STR×4",
+   "timing": "periodic 0.04s ×20 (Set+Move pair); EX 追加 20s 金龍存活",
+   "movement": "目標被推: udg_KnockBack_Target 沿施法角度每tick前推50u; 撞牆(位移<8u)提早結束",
+   "evidence": "j:28271-28302 (set + EnableTrigger), j:28407-28483 (push/終點爆發/EX金龍), j:28489 periodic 0.04",
+   "notes": "終點 378 rect AoE STR×4; EX_Mode 時清空目標魔力→召喚 'h01K' 金龍以 'gsou' 靈魂項鍊吞噬目標, A0ZW 等級=魔力/50 (cap 21), 20s 後移除"
+  },
+  {
+   "hero": "賈修",
+   "skill_name": "金龍吞噬 (EX, 無NN編號)",
+   "rawcode": "A0LD",
+   "trigger_stems": [
+    "GoldDragonEat"
+   ],
+   "template": "召喚代理",
+   "geometry": "單體, 目標HP≤50%才生效",
+   "timing": "instant + 0.5s/20s sleep 清理",
+   "movement": "無 (dummy 原地生成於目標位置)",
+   "evidence": "j:28496-28540 (HP≤50% cond j:28503, CreateNUnits 'h01K' + UnitUseItemTarget 'gsou')",
+   "notes": "召喚金龍 dummy 對低血目標使用靈魂項鍊(吞噬/即死系), 20s 後 KillUnit; A0LD 不在 HERO_NUMBERS (EX技)"
+  },
+  {
+   "hero": "鋼彈",
+   "skill_name": "03-04 全彈發射",
+   "rawcode": "A04N",
+   "trigger_stems": [
+    "Allbullet"
+   ],
+   "template": "直線分段掃擊",
+   "geometry": "6段×200u 沿面向直線, 每段 AoE 400, 傷害 STR×lvl×2+200 (建築×0.5), 摧毀400內樹木",
+   "timing": "instant (單幀雙loop) + 2s sleep 清理視覺dummy",
+   "movement": "傷害區沿直線6段單幀展開; 施法者不動",
+   "evidence": "j:32905-32956 (loop 6×200u polar j:32930, AoE 400 j:32932, dmg formula j:32926)",
+   "notes": "第二個loop用 UNIT_TYPE_ANCIENT 標記做去重(每單位只吃一段); 視覺dummy h007/h00O/h00N 於150u處, 鏡頭震動512"
+  },
+  {
+   "hero": "黑崎一護",
+   "skill_name": "79-01 瞬步",
+   "rawcode": "A0RX",
+   "trigger_stems": [
+    "瞬步",
+    "Bleach Rush"
+   ],
+   "template": "鎖定連段",
+   "geometry": "單體; 每次瞬移到目標前方100u; 傷害 50×lvl+50 (卍解buff B02E 時 +STR) ×2 hit",
+   "timing": "instant→0.1s 檢查→hit1→0.3s→hit2",
+   "movement": "施法者位移: 兩次 SetUnitPositionLocFacingLocBJ 瞬移至目標前100u",
+   "evidence": "j:37401-37441 (兩段瞬移+傷害; B02E 分支 j:37406), event j:37447",
+   "notes": "無 pause, 但為腳本化2連擊+瞬移; 需目標有 B03P buff(本體先命中的標記)才觸發"
+  },
+  {
+   "hero": "黑崎一護",
+   "skill_name": "79-02 斬擊",
+   "rawcode": "A0LK",
+   "trigger_stems": [
+    "斬擊",
+    "Bleach Strike"
+   ],
+   "template": "攻擊觸發",
+   "geometry": "單體追加傷害 50+50×lvl+STR×2",
+   "timing": "on-attack, 0.1s 延遲後結算",
+   "movement": "無",
+   "evidence": "j:37455-37478 (EVENT_PLAYER_UNIT_ATTACKED j:37484, 消耗 B02E buff j:37473)",
+   "notes": "需帶 B02E buff 才 proc, 命中即移除 buff (充能式強擊)"
+  },
+  {
+   "hero": "黑崎一護",
+   "skill_name": "79-03 月牙天衝",
+   "rawcode": "A0LL",
+   "trigger_stems": [
+    "月牙天衝",
+    "Bleach Moon",
+    "Bleach Moon Effect"
+   ],
+   "template": "行進波動",
+   "geometry": "50u/tick ×20 (總程1000u), 每tick AoE 300 (dummy周圍), 摧毀樹330; 傷害 卍解形態(H01O) 550+150×lvl / 普通 300+150×lvl",
+   "timing": "periodic 0.03s (Start+Effect pair); 終點生成爆炸dummy u00U 後 0.3s 清理",
+   "movement": "傷害區行進: 劍氣dummy o01Q/o01R 沿施法角度每tick前推50u",
+   "evidence": "j:37506-37524 (spawn+Enable), j:37602-37622 (推進+AoE300), j:37628 periodic 0.03",
+   "notes": "udg_BleachDamUnit group 去重—每單位整段只吃一次; 無終點傷害爆發(僅視覺)"
+  },
+  {
+   "hero": "黑崎一護",
+   "skill_name": "虛化 (EX, A0W5 不在 HERO_NUMBERS)",
+   "rawcode": "A0W5",
+   "trigger_stems": [
+    "虛化",
+    "Bleach Null start",
+    "Bleach Null close",
+    "Bleach Null"
+   ],
+   "template": "受擊反應",
+   "geometry": "自身; 30% 機率 (GetRandomInt(1,10)<=3) 完全格擋",
+   "timing": "buff B048 持續期間; close 為 0.3s 週期監視 buff 消失",
+   "movement": "無",
+   "evidence": "j:37642-37647 (start: A0LS→lv2+變黑), j:37687-37699 (EVENT_UNIT_DAMAGED + DamageModify(0)), 事件註冊 j:37184, close j:37668-37681",
+   "notes": "三觸發=一技能: start 開啟型態, Null 為受擊30%免傷, close 偵測 B048 buff 結束後還原 (A0LS→lv1, 顏色復原)"
+  },
+  {
+   "hero": "普烏",
+   "skill_name": "28-02 把你變成餅乾",
+   "rawcode": "A0CK",
+   "trigger_stems": [
+    "Cookie"
+   ],
+   "template": "NEW:單體變物",
+   "geometry": "單體; 僅非英雄, 等級<10, 且屬 P0/P6/中立敵對",
+   "timing": "instant",
+   "movement": "無",
+   "evidence": "j:40548-40578 (cond j:40532-40546, CreateItemLoc 'I03N' j:40574)",
+   "notes": "NEW定義: 把目標單位變成物品—擊殺由技能本體(物件資料)處理, 觸發在目標位置掉落餅乾道具 I03N 並清除 h02J 殘留dummy"
+  },
+  {
+   "hero": "普烏",
+   "skill_name": "28-01 吃掉你",
+   "rawcode": "A0GB",
+   "trigger_stems": [
+    "Eat",
+    "NO Eat"
+   ],
+   "template": "變身強化",
+   "geometry": "單體吞噬(本體為物件資料技能); 每6次施放 +1 STR 永久",
+   "timing": "instant per cast (計數器循環 0-6)",
+   "movement": "無",
+   "evidence": "j:40606-40613 (Eat_Index==6 → ModifyHeroStat STR +1), NO Eat 擋8種boss單位 j:40634-40679 (SPELL_CAST 下 stop)",
+   "notes": "兩觸發=一技能: Eat 為吞噬計數永久成長, NO Eat 為施放前擋 ebal/orai/n002/h01W/nshe/u001/u00D/u00E 等禁吞單位"
+  },
+  {
+   "hero": "普烏",
+   "skill_name": "28-04 破滅能量彈",
+   "rawcode": "A08U",
+   "trigger_stems": [
+    "EarthBoom",
+    "EarthBoomCheck"
+   ],
+   "template": "引導通魔",
+   "geometry": "目標點 AoE 450, 傷害 100×lvl+200 (建築×0.75); 視覺散布 400×400 rect; 能量球dummy o029 放大1500%",
+   "timing": "periodic 0.20s 檢查, 每5 tick (1.0s) 結算一次傷害, 持續至 earthquake 引導中斷",
+   "movement": "無—傷害區固定在施法目標點; 施法者原地引導",
+   "evidence": "j:40715-40728 (spawn球+Enable), j:40784-40806 (order=='earthquake' 檢查 j:40771, AoE450 j:40788), periodic 0.2 j:40812",
+   "notes": "引導狀態以 GetUnitCurrentOrder=='earthquake' 判定; 中斷即殺球停傷"
+  },
+  {
+   "hero": "令狐沖",
+   "skill_name": "96-01 華山劍法",
+   "rawcode": "A0XS",
+   "trigger_stems": [
+    "HuashanSword"
+   ],
+   "template": "攻擊觸發",
+   "geometry": "單體追加 10×lvl+AGI, 機率 (5+AGI/15)%",
+   "timing": "on-attack instant",
+   "movement": "無",
+   "evidence": "j:44815-44823 (機率 j:44809, dmg j:44820), event ATTACKED j:44829",
+   "notes": "獨孤九劍的劍靈分身 o02X 也吃這個 proc (cond j:44786-44792)"
+  },
+  {
+   "hero": "令狐沖",
+   "skill_name": "96-03 吸星大法",
+   "rawcode": "A0Y0",
+   "trigger_stems": [
+    "StarSucking"
+   ],
+   "template": "引導通魔",
+   "geometry": "單體; 吸魔 200×lvl (目標-, 自身+); dummy 施放 cripple (A0XW)",
+   "timing": "sleep 0.8s 後檢查 order=='channel' 單次結算",
+   "movement": "無",
+   "evidence": "j:44851-44874 (sleep0.8 j:44854, channel check j:44845, SetUnitManaBJ 轉移 j:44856-44857, dummy cripple j:44862-44865)",
+   "notes": "單次判定的引導: 0.8s 內斷引導則無效"
+  },
+  {
+   "hero": "令狐沖",
+   "skill_name": "96-04 獨孤九劍",
+   "rawcode": "A0Y5",
+   "trigger_stems": [
+    "NineSwords",
+    "NineSwords LVup",
+    "NineSwords counter"
+   ],
+   "template": "召喚代理",
+   "geometry": "目標位置生成 9 隻劍靈 o02X (10s timed life), 各自 attack 目標",
+   "timing": "sleep-loop 9×0.04s 生成; 9s 後強制清理",
+   "movement": "無 (真召喚物自行作戰)",
+   "evidence": "j:44907-44930 (loop9 spawn+attack order), LVup 同步科技 'Rome' j:44958-44965, counter 觸發僅剩全域宣告 j:2050 (已停用)",
+   "notes": "LVup 以 EVENT_PLAYER_HERO_SKILL/LEVEL 把 A0Y5 等級寫進科技 Rome 升級劍靈; NineSwords counter 在編輯器中停用, 無程式碼"
+  },
+  {
+   "hero": "賽菲洛斯",
+   "skill_name": "74-02 八刀一閃",
+   "rawcode": "A0ET",
+   "trigger_stems": [
+    "OneCut",
+    "OneCutMove"
+   ],
+   "template": "衝鋒推撞",
+   "geometry": "50u/tick ×最多16 tick (≤800u) 至施法點; 終點 400×400 rect AoE, 傷害 100×lvl+AGI×3+50",
+   "timing": "periodic 0.02s (Set+Move pair); 終點後 0.1s 恢復, 1.2s 後關 SupernovaStart 窗口",
+   "movement": "施法者位移: 沿施法方向每tick polar 前推50u, 無碰撞傷害, 僅終點爆發",
+   "evidence": "j:48385-48401 (set+Enable, A05U 加持), j:48461-48476 (推進+終點rect AoE j:48468), periodic 0.02 j:48482",
+   "notes": "AoE 僅終點(非每步); 施放後 SupernovaStart=true 1.2s—作為獄門 EX 連段的觸媒"
+  },
+  {
+   "hero": "賽菲洛斯",
+   "skill_name": "74-03 闇之天使",
+   "rawcode": "A0F4",
+   "trigger_stems": [
+    "EndBurn"
+   ],
+   "template": "召喚代理",
+   "geometry": "8發 inferno (A011, lvl=技能lvl) 隨機落在目標點 600×600 rect 內",
+   "timing": "sleep-loop 8×0.3s; 5s 後清理 dummy",
+   "movement": "無 (隱形dummy hfoo 定點施放)",
+   "evidence": "j:48501-48519 (loop8 spawn hfoo + inferno order j:48513, rect600 j:48508)",
+   "notes": "地獄火隕石雨式: dummy-cast inferno ×8"
+  },
+  {
+   "hero": "賽菲洛斯",
+   "skill_name": "74-04 最終殞落星",
+   "rawcode": "A0G5",
+   "trigger_stems": [
+    "FinalBolide"
+   ],
+   "template": "瞬發點爆",
+   "geometry": "JASS 側無傷害幾何; 鏡頭震動範圍 1600×1600 rect",
+   "timing": "sleep 0.3s → 震動 → sleep 4s → 清除",
+   "movement": "無",
+   "evidence": "j:48544-48561 (僅 CameraSetEQNoise/Clear)",
+   "notes": "觸發只做鏡頭演出—實際傷害完全來自技能本體物件資料 (點目標大爆)"
+  },
+  {
+   "hero": "賽菲洛斯",
+   "skill_name": "超新星 (EX, A0S3 不在 HERO_NUMBERS)",
+   "rawcode": "A0S3",
+   "trigger_stems": [
+    "Supernova"
+   ],
+   "template": "召喚代理",
+   "geometry": "瞬移至目標前150u; dummy inferno (A0SW) 落在目標位置; FlameStrike 視覺半徑600",
+   "timing": "0.1s+0.1s 瞬移窗 → instant dummy-cast → 2s/5s sleep 清理",
+   "movement": "施法者位移: SetUnitPositionLocFacingBJ 瞬移到目標前 150u (臨時加 A0S0/A09P 穿越)",
+   "evidence": "j:48598-48632 (blink j:48605, dummy inferno j:48616-48620, AoE600 視覺 j:48621)",
+   "notes": "EX技: 傷害主體=dummy 施放的 inferno A0SW; 觸發自帶鏡頭震動 1600 rect"
+  },
+  {
+   "hero": "賽菲洛斯",
+   "skill_name": "74-01 獄門",
+   "rawcode": "A0S4",
+   "trigger_stems": [
+    "Hell Gate"
+   ],
+   "template": "原地震波",
+   "geometry": "落地 AoE 370 繞自身, 傷害 250+100×lvl; EX追擊: dummy inferno + 視覺半徑600",
+   "timing": "升空0.3s (無敵+暫停) → 落地瞬發; EX分支再 2s/5s 清理",
+   "movement": "施法者垂直位移: fly height 0→1000→0 (原地躍起壓地), 水平不動",
+   "evidence": "j:48716-48755 (升空 j:48719-48722, AoE370 j:48726, dmg j:48672, EX cond=EX_Mode+SupernovaStart j:48684-48690)",
+   "notes": "EX_Mode 且在八刀一閃後1.2s窗口內 → 追加 dummy inferno A0SW 於自身 (與超新星共用終幕)"
+  },
+  {
+   "hero": "騜",
+   "skill_name": "紅色龍氣 (A0YB 不在 HERO_NUMBERS, 95-002系EX)",
+   "rawcode": "A0YB",
+   "trigger_stems": [
+    "紅色龍氣",
+    "RedDragon"
+   ],
+   "template": "變身強化",
+   "geometry": "自身: +10% HP, +10% MP, A0YC 提到 lv2 持續10s",
+   "timing": "instant + sleep 10s 還原",
+   "movement": "無",
+   "evidence": "j:54284-54290 (SetUnitLife/ManaPercent +10, A0YC lv2→sleep10→lv1)",
+   "notes": "計時自我強化: A0YC 應為被動強化本體"
+  },
+  {
+   "hero": "騜",
+   "skill_name": "95-01 謝謝指教",
+   "rawcode": "A0Y7",
+   "trigger_stems": [
+    "謝謝指教",
+    "Thankyou",
+    "Thankyou Effect"
+   ],
+   "template": "衝鋒推撞",
+   "geometry": "目標被推 50u/tick ×(4+4×lvl) tick, 每tick 30 傷害, 撞樹半徑300; 撞牆時若帶 B04Y buff → dummy thunderclap (A0YE lvl=技能lvl)",
+   "timing": "periodic 0.03s (Set+Effect pair)",
+   "movement": "目標被推: 沿施法角度每tick前推50u; 位移<8u 判定撞牆提早結束",
+   "evidence": "j:54320-54345 (set+Enable), j:54386-54422 (push+30dmg/tick j:54388, 撞牆分支 j:54398-54412), periodic 0.03 j:54428",
+   "notes": "撞牆爆發需皇者戰氣 B04Y buff; 一般結束(計數歸零)無爆發"
+  },
+  {
+   "hero": "騜",
+   "skill_name": "95-03 皇者戰氣第五十重天",
+   "rawcode": "A0Y8",
+   "trigger_stems": [
+    "五十重天",
+    "Fifty Sky",
+    "Fifty Sky Effect"
+   ],
+   "template": "衝鋒推撞",
+   "geometry": "施法者 50u/tick 衝向目標 (dist/50 步), 每步累積+25傷害; 到達後 250×250 rect 內對目標本體打 400+200×lvl; 帶 B04Y buff 再補 AoE 350 打累積傷害(25×步數)",
+   "timing": "periodic 0.03s (Set+Effect pair)",
+   "movement": "施法者位移: polar 逐tick逼近目標位置, 到點瞬間結算",
+   "evidence": "j:54442-54458 (set+A0YI+Enable), j:54547-54583 (推進 j:54550, 本體傷害 j:54481, B04Y AoE350 j:54559-54562), periodic 0.03 j:54589",
+   "notes": "衝鋒距離即傷害縮放(每50u+25); 命中目標與否顯示不同浮動字"
+  },
+  {
+   "hero": "騜",
+   "skill_name": "95-04 藍色戰氣一百重天",
+   "rawcode": "A0Y9",
+   "trigger_stems": [
+    "一百重天",
+    "Hundred Sky"
+   ],
+   "template": "單體斬擊",
+   "geometry": "單體 300+300×lvl; 前置: 自身帶 B04Y 時先在原地 dummy thunderclap (A0UT)",
+   "timing": "instant (TriggerSleepAction 0.00 分兩段)",
+   "movement": "無",
+   "evidence": "j:54617-54643 (dummy stomp 分支 j:54620-54633, 條件 B050 buff 才給傷害 j:54635-54640)",
+   "notes": "傷害需目標帶 B050 buff (被 thunderclap 減速/標記後) — 條件式單體重擊"
+  },
+  {
+   "hero": "騜",
+   "skill_name": "和諧世界 (A0YA 不在 HERO_NUMBERS, EX)",
+   "rawcode": "A0YA",
+   "trigger_stems": [
+    "和諧世界",
+    "FriendComeBack"
+   ],
+   "template": "NEW:全隊集結",
+   "geometry": "全地圖全隊友; 復活計時器→1s, 全隊 100% HP/MP 並傳送到施法者位置",
+   "timing": "instant → sleep 1.5s → 集結",
+   "movement": "隊友被移動: 所有友方英雄 SetUnitPositionLoc 到施法者身邊",
+   "evidence": "j:54687-54716 (revive timer→1s j:54693, 補滿+傳送 j:54706-54708)",
+   "notes": "NEW定義: 團隊支援大招—死者秒復活+全隊滿血滿魔+群體集結傳送, 無任何傷害幾何"
+  },
+  {
+   "hero": "騜",
+   "skill_name": "螃蟹世界 (Crab World, 施放觸發已停用)",
+   "rawcode": "",
+   "trigger_stems": [
+    "Crab World",
+    "Crab World Effect"
+   ],
+   "template": "NEW:引導守護領域",
+   "geometry": "以施法者為中心 600 半徑; 引導中友方英雄死亡即原地復活+100% HP",
+   "timing": "EVENT_PLAYER_UNIT_DEATH 事件式, 以 order=='tranquility' 判定引導中",
+   "movement": "無",
+   "evidence": "j:54749-54757 (ReviveHeroLoc+滿血), cond j:54730-54747 (600u+tranquility order); 主觸發 gg_trg_Crab_World 僅剩宣告 j:2255 (停用)",
+   "notes": "NEW定義: 引導(tranquility)期間的事件式領域—範圍內盟友死亡事件被攔截並立即原地復活; Crab World 施放側觸發在編輯器停用, 效果觸發依 order 字串 gate"
+  },
+  {
+   "hero": "基紐",
+   "skill_name": "",
+   "rawcode": "",
+   "trigger_stems": [
+    "ChangeBody",
+    "cleanunit",
+    "PoisWalkPre",
+    "PoisWalkEffect"
+   ],
+   "template": "無觸發技能",
+   "geometry": "",
+   "timing": "",
+   "movement": "",
+   "evidence": "j:2283-2286 (僅 trigger 全域宣告 gg_trg_ChangeBody/cleanunit/PoisWalkPre/PoisWalkEffect); 無 Trig_*_Actions / InitTrig_* 程式碼",
+   "notes": "四個觸發在編輯器中停用—war3map.j 只生成全域變數, 完全沒有函式本體, 亦無 udg_ChangeBody 相關行為程式 (udg_ChangeBodyA/B j:859-860 無人引用); 換體(ChangeBody)/毒步(PoisWalk)技能在此版本無 JASS 行為"
+  },
+  {
+   "hero": "真夜",
+   "skill_name": "17-03 空破圓斬",
+   "rawcode": "A07M",
+   "trigger_stems": [
+    "SpaceCut"
+   ],
+   "template": "NEW:瞬移貼身斬",
+   "evidence": "j:28556-28575 (cond 28557 A07M; SetUnitPositionLoc→target 28564/28570; SPELL_CAST 28581)",
+   "geometry": "無範圍幾何; 目標單位所在點",
+   "timing": "instant (TSA 0.0 + 0.5s 特效延遲後瞬移)",
+   "movement": "施法者位移: 瞬移到目標單位施法瞬間的位置 (SetUnitPositionLoc)",
+   "notes": "NEW定義: 施法瞬間記錄目標座標, 施法者直接傳送貼身; 傷害全在物件資料側, JASS 只做瞬移+特效"
+  },
+  {
+   "hero": "真夜",
+   "skill_name": "17-04 狂龍斬",
+   "rawcode": "A07N",
+   "trigger_stems": [
+    "WildCut",
+    "WildCut Effect"
+   ],
+   "template": "衝鋒推撞",
+   "evidence": "j:28596-28620 (set, dmg 公式 28600), 28666-28704 (step 28669-70, AoE 28680, 停止 28660, 週期 28702)",
+   "geometry": "250u/tick ×10 tick = 2500u 之字路徑; 每偶數 tick 方向+216°並對前一位置 400 AoE (共5波); 樹木清除 350",
+   "timing": "periodic 0.06s ×10",
+   "movement": "施法者位移: 每 tick 前推 250u, 每2 tick 轉向+216° (之字狂舞); 期間 Avul 無敵+無碰撞",
+   "notes": "傷害 100+0.7×AGI×lvl 每波; dash 期間加 A09O/A09P, 結束移除"
+  },
+  {
+   "hero": "真夜",
+   "skill_name": "EX 龍眼 (DragonEyes)",
+   "rawcode": "",
+   "trigger_stems": [
+    "DragonEyes"
+   ],
+   "template": "召喚代理",
+   "evidence": "j:28719-28736 (dummy hfoo+A117 28722-25, silence order 28726, 週期 28734, EX_Mode cond 28710)",
+   "geometry": "以施法者所在點為中心的 dummy silence AoE (半徑在 A117 物件資料)",
+   "timing": "periodic 1.00s (EX_Mode 恆常)",
+   "movement": "無 (dummy 在施法者腳下原地施放)",
+   "notes": "EX 模式被動: 每秒隱形 dummy 對自身位置放 A117 (silence 型); 無 GetSpellAbilityId, dummy 技能=A117"
+  },
+  {
+   "hero": "真夜",
+   "skill_name": "DragonEyes 30級強化",
+   "rawcode": "",
+   "trigger_stems": [
+    "DragonEyesAgi"
+   ],
+   "template": "變身強化",
+   "evidence": "j:28742-28763 (HERO_LEVEL 事件 28761, lvl≥30 cond 28746, SetUnitAbilityLevel A11G→2 28753)",
+   "geometry": "無",
+   "timing": "instant (一次性, 觸發後自我停用)",
+   "movement": "無",
+   "notes": "英雄達 30 級時把被動 A11G 升到 2 級的永久自我強化 (一次性解鎖)"
+  },
+  {
+   "hero": "夏娜",
+   "skill_name": "21-02 拔焰刀",
+   "rawcode": "A0BD",
+   "trigger_stems": [
+    "FireSwordSkill"
+   ],
+   "template": "變身強化",
+   "evidence": "j:33004-33019 (add A0DF 33007-08, PolledWait 4×lvl 33009, remove 33010)",
+   "geometry": "無",
+   "timing": "timed buff 4s×lvl (PolledWait)",
+   "movement": "無",
+   "notes": "施法時掛上同等級 A0DF (火焰劍附魔), 4×lvl 秒後移除 — 純限時自我 buff"
+  },
+  {
+   "hero": "夏娜",
+   "skill_name": "21-04 討滅封絕",
+   "rawcode": "A0HB",
+   "trigger_stems": [
+    "CloseDest",
+    "CloseDestAddAb",
+    "CloseDestEffect"
+   ],
+   "template": "NEW:結界獵殺場",
+   "evidence": "j:33032-33059 (dome o015 33037, 時窗 sleep 4×lvl+2 33045), 33081-33106 (擊殺獎勵 33082-89), 33119-33134 (罩體成長 33122, 週期 0.01 33133)",
+   "geometry": "施法者原地生成封絕罩單位 o015, 60 tick×0.01s 由 10% 放大到 310% (純視覺); 獎勵判定=全圖擊殺事件",
+   "timing": "時窗 (4×lvl+2)s; 罩體成長 periodic 0.01s ×60",
+   "movement": "無 (罩體固定於施法點)",
+   "notes": "NEW定義: 開啟限時結界, 期間夏娜(E008)每殺一名英雄→立即回滿HP/MP並永久+（lvl+1) STR/AGI/INT; 傷害不在 JASS 側"
+  },
+  {
+   "hero": "夏娜",
+   "skill_name": "EX (SpaceBreaker 天破壤碎)",
+   "rawcode": "A0UO",
+   "trigger_stems": [
+    "SpaceBreaker"
+   ],
+   "template": "召喚代理",
+   "evidence": "j:33152-33186 (HP-1000 33153, dummy hfoo+A0V9 33156-60, loop 40 33162-75, rect 1200×1200 33165, inferno order 33167)",
+   "geometry": "以施法點為中心 1200×1200 rect 內隨機 40 點, 每點 dummy 下 inferno (A0V9) + 火柱特效",
+   "timing": "sleep-loop ×40 (TSA 0.01/輪, 實測約 0.1s/輪 ≈ 4s+), 收尾 sleep 2s 清 dummy",
+   "movement": "無 (傷害區固定 rect, 隨機落點轟炸)",
+   "notes": "施放先自扣 1000 HP; 單一隱形 dummy 連續指向 40 個隨機點放 inferno"
+  },
+  {
+   "hero": "伊文潔琳",
+   "skill_name": "42-04 世界終結",
+   "rawcode": "A05D",
+   "trigger_stems": [
+    "The End ofWorld",
+    "The End ofWorldStart",
+    "The End ofWorldCasting"
+   ],
+   "template": "召喚代理",
+   "evidence": "j:37719-37733 (吟唱字幕), 37773-37801 (dmg=(lvl+3)×INT 37776, 500 AoE 直傷 37782, 震屏 1600×1600 37783), 37824-37844 (12 隻 u013 clap 37827-30, 週期 0.10 37843)",
+   "geometry": "初爆: 目標點 500 AoE 直傷; 轟炸: 目標點 450×450 rect 內隨機 12 點, 各一隻 u013 (2s 命) 放 A0P6 creepthunderclap",
+   "timing": "instant 初爆 + periodic 0.10s ×12 (~1.2s 轟炸)",
+   "movement": "無 (傷害區鎖定施法目標點)",
+   "notes": "混合型: 瞬發點爆 (500 AoE, (lvl+3)×INT 魔傷) 接 dummy 雷震轟炸; A0P6 等級=技能等級"
+  },
+  {
+   "hero": "伊文潔琳",
+   "skill_name": "EX (MagicStamp 魔法印章)",
+   "rawcode": "A06K",
+   "trigger_stems": [
+    "MagicStamp",
+    "The End ofWorldCasting EX",
+    "MagicAttackPoint"
+   ],
+   "template": "召喚代理",
+   "evidence": "j:37900-37921 (7s 時窗 37905), 37857-37872 (0.20s 週期 spawn 37859-62, 週期 37870), 37934-37945 (攻擊事件重定位 37936)",
+   "geometry": "以 EndWorldPoint 為中心 450×450 rect 隨機點, 每 0.20s 一隻 u013 (1s 命) 放 A0P6 clap; 7s ≈ 35 發",
+   "timing": "時窗 7s, periodic 0.20s",
+   "movement": "傷害區行進: 轟炸中心隨 EVN 每次普攻重定位到被攻擊者所在點 (EVENT_PLAYER_UNIT_ATTACKED)",
+   "notes": "EX技: 開場中心=自身腳下, 之後攻誰炸誰; A0P6 等級同步 A05D 等級; 收尾清光 u013"
+  },
+  {
+   "hero": "金鋼狼",
+   "skill_name": "EX 處決 (Wolf EX)",
+   "rawcode": "",
+   "trigger_stems": [
+    "Wolf EX"
+   ],
+   "template": "攻擊觸發",
+   "evidence": "j:40852-40867 (ATTACKED 事件 40865, 9999 chaos 40854, 條件 40826-43: B021 buff+HP<15%+EX_Mode)",
+   "geometry": "無 (單體, 普攻觸發)",
+   "timing": "instant (每次攻擊檢定)",
+   "movement": "無",
+   "notes": "EX模式下帶 B021 buff (31-03 野性的呼喚) 攻擊 HP<15% 非幻象非建築目標→9999 chaos 處決; 同型於 Beast_Spear 執行斬"
+  },
+  {
+   "hero": "金鋼狼",
+   "skill_name": "31-02 重爪擊",
+   "rawcode": "A0AQ",
+   "trigger_stems": [
+    "Legendary Strike"
+   ],
+   "template": "單體斬擊",
+   "evidence": "j:40880-40890 (SPELL_EFFECT 40888, 自癒 250+150×lvl 上限MaxHP 40882)",
+   "geometry": "無",
+   "timing": "instant",
+   "movement": "無",
+   "notes": "JASS 側只補一段施法自癒 250+150×lvl; 打擊傷害在物件資料 (A0AQ 本體)"
+  },
+  {
+   "hero": "金鋼狼",
+   "skill_name": "31-01 迴旋爪擊",
+   "rawcode": "A0I4",
+   "trigger_stems": [
+    "WolfStrike",
+    "WolfStrikeEffect"
+   ],
+   "template": "衝鋒推撞",
+   "evidence": "j:40910-40937 (dmg=STR×2+100×lvl+50, EX×2 40916-18; dummy h019 40921; 藏身 40925), 40993-41026 (step 50u 40997, 收集 250 AoE 41002, 終點總結算 41005-08, 週期 0.05 41025)",
+   "geometry": "50u/tick ×12 tick = 600u 直線; 沿路 250 半徑收集敵人入組, 第12 tick 對全組一次結算傷害; 樹木清除 350/tick",
+   "timing": "periodic 0.05s ×12 (~0.6s)",
+   "movement": "施法者位移(代理式): 本體隱形, 旋轉 dummy (面向+195°/tick, 600% 動速) 沿線行進, 終點本體現身於 dummy 位置",
+   "notes": "傷害延後到路徑終點一次爆給沿途碰到的所有敵人; EX_Mode 傷害×2"
+  },
+  {
+   "hero": "金鋼狼",
+   "skill_name": "31-04 不要踢我蛋蛋",
+   "rawcode": "",
+   "trigger_stems": [
+    "Dontkick"
+   ],
+   "template": "受擊反應",
+   "evidence": "j:41083-41097 (反彈 0.6×傷害 41086/41088), buff 連結 j:4994-4996 (Des_BuffTri[0]=Dontkick, B02J, DNC=true 不消耗)",
+   "geometry": "無 (單體反射)",
+   "timing": "instant (每次受傷經 DamageLink 檢定)",
+   "movement": "無",
+   "notes": "帶 B02J buff 期間受傷→反彈 60% 傷害給來源; 來源是非英雄部隊(玩家1-11)時改打該玩家英雄本體; buff 不因觸發移除"
+  },
+  {
+   "hero": "阿福",
+   "skill_name": "13-03 快步",
+   "rawcode": "AEtq",
+   "trigger_stems": [
+    "fastStep",
+    "fastStepGo"
+   ],
+   "template": "NEW:瞬步跟隨",
+   "evidence": "j:45019-45035 (add A050 45021, 時窗 1+2×lvl 45023), 45067-45089 (ISSUED_TARGET_ORDER 45087, 瞬移 45079, EX stomp A10T lv21 45069-73, 射程 1800 cond 45045)",
+   "geometry": "時窗內每次指向性命令且與目標距離<1800 → 瞬移到目標腳下; EX 每次瞬移附帶 dummy o011 stomp (A10T lv21) 於自身位置",
+   "timing": "時窗 (1+2×lvl)s; 每次下單即觸發",
+   "movement": "施法者位移: 反覆瞬移貼上每個被下令的目標 (排除 entanglingroots/hex/unholyfrenzy 指令)",
+   "notes": "NEW定義: 限時 buff 窗, 窗內所有攻擊/指向命令自動閃現到目標; A050 為附加移速/攻速被動, 收尾移除並清 o011"
+  },
+  {
+   "hero": "阿福",
+   "skill_name": "EX (BeDragon 龍化標記)",
+   "rawcode": "A10H",
+   "trigger_stems": [
+    "BeDragon Target",
+    "BeDragon"
+   ],
+   "template": "NEW:受擊標記閃現",
+   "evidence": "j:45102-45112 (InitSetup 掛傷害連結 45103), 45118-45126 (bonus=INT源×2 45119, 瞬移傷害來源至標記者 45120), buff 連結 j:5026-5027 (B05G, 消耗型)",
+   "geometry": "無範圍; 單體標記",
+   "timing": "instant (標記後下一次受傷結算)",
+   "movement": "目標被…不, 施法者(=傷害來源)位移: 標記目標下次受傷時, 傷害來源瞬移到目標位置並同向",
+   "notes": "NEW定義: A10H 對目標上 B05G 一次性標記; 標記者下次受任何傷害→buff 消耗, 傷害來源追加自身INT×2 魔傷並閃現貼身 (實戰即阿福的追殺閃現)"
+  },
+  {
+   "hero": "貞子",
+   "skill_name": "被動 受擊詛咒 (ButtyAfraid)",
+   "rawcode": "",
+   "trigger_stems": [
+    "ButtyAfraid",
+    "ButtyGhost Afraid"
+   ],
+   "template": "受擊反應",
+   "evidence": "j:48815-48832 (dummy h01C+ACcs curse 來源 48817-21), 註冊 j:48783 (EVENT_UNIT_DAMAGED on E00T); 死碼 j:48838-48860",
+   "geometry": "無 (單體詛咒反擊)",
+   "timing": "instant (每次受傷)",
+   "movement": "無",
+   "notes": "貞子每次被非建築來源打→dummy 對來源下 curse (ACcs); 'ButtyGhost Afraid' 為未接線死碼 (InitTrig 無事件無動作, 內容為同型 A0IF curse 反擊)"
+  },
+  {
+   "hero": "貞子",
+   "skill_name": "66-02 驚駭",
+   "rawcode": "A0I8",
+   "trigger_stems": [
+    "ButtyGhost Scare"
+   ],
+   "template": "召喚代理",
+   "evidence": "j:48872-48891 (dummy ogru 1s命 48875-76, A0I9 同級 48877-78, silence 自身腳下 48880)",
+   "geometry": "以施法者原地為中心的 dummy silence AoE (半徑在 A0I9 物件資料)",
+   "timing": "instant",
+   "movement": "無",
+   "notes": "本質是 dummy 代放的原地震波型恐懼/沉默; A0I9 等級=A0I8 等級"
+  },
+  {
+   "hero": "貞子",
+   "skill_name": "66-04 靈壓震撼 (+EX DeathSpread)",
+   "rawcode": "",
+   "trigger_stems": [
+    "ButtyGhost SoulDash Level",
+    "ButtyGhost SoulDash Cast",
+    "ButtyGhost SoulDash Stop",
+    "DeathSpread"
+   ],
+   "template": "週期踩踏",
+   "evidence": "j:48897-48905 (A0ID 等級同步 A0IC), 48918-48928 (immolation 指令解鎖 A0ID+開 DeathSpread), 48941-48952 (B025 消失即關, 0.2s 檢查), 49011-49023 (600 AoE 49014, dmg=0.5×距離 48997-98, 週期 1.0 49021, EX cond 48959)",
+   "geometry": "施法者周圍 600 半徑; 每目標傷害 = 0.5×該目標與貞子距離 (越遠越痛, 上限~300)",
+   "timing": "toggle (immolation buff B025 存續期間) + periodic 1.00s; 關閉檢查 0.2s",
+   "movement": "無 (光環跟隨施法者)",
+   "notes": "A0IC=獻祭型本體; A0ID 子技能開關+等級同步為 bookkeeping; DeathSpread 傷害脈衝僅 EX_Mode 生效"
+  },
+  {
+   "hero": "志志雄真實",
+   "skill_name": "",
+   "rawcode": "",
+   "trigger_stems": [],
+   "template": "無觸發技能",
+   "evidence": "HERO_TRIGGERS.json 該英雄觸發清單為空; war3map.j 無對應 Trig_ 叢集",
+   "geometry": "",
+   "timing": "",
+   "movement": "",
+   "notes": "此英雄完全沒有 JASS 觸發技能 — 全部技能行為都在物件資料 (w3a) 側"
+  },
+  {
+   "hero": "小呆",
+   "trigger_stems": [
+    "LightSpeed"
+   ],
+   "skill_name": "08-02 萊丁快速劍",
+   "rawcode": "A05T",
+   "template": "NEW:目標瞬移斬",
+   "timing": "instant + 0.5s 前搖 (SPELL_CAST + TriggerSleepAction 0.50)",
+   "geometry": "單體; 無 AoE; 傷害由基底 AOcl(鏈式閃電)承載",
+   "movement": "施法者位移: 0.5s 後 SetUnitPositionLoc 瞬移到目標施法時位置; 期間掛 A09O/A09P 保護",
+   "evidence": "j:28769-28810 (cond A05T j:28771, teleport j:28794)",
+   "notes": "NEW 定義: 基底技能打單體、JASS 把施法者瞬移到目標身邊的突進斬。觸發本身零傷害, 純位移+鏡像/戰踏特效"
+  },
+  {
+   "hero": "小呆",
+   "trigger_stems": [
+    "DraBom"
+   ],
+   "skill_name": "08-03 龍鬥氣砲咒文",
+   "rawcode": "A05J",
+   "template": "行進波動",
+   "timing": "instant (視覺 1s 定時生命; 0.5s+2s sleep 清理)",
+   "geometry": "傷害由基底 AOsh(Shockwave 直線波)承載; JASS 視覺: 10×'e003' 龍形 dummy 沿面向每 150u 排 1500u 直線; 震屏 1600×1600 rect; 地形漣漪 200",
+   "movement": "傷害區行進: 基底 shockwave 投射物直線前進; 觸發不動任何單位",
+   "evidence": "j:28815-28873 (cond A05J j:28816, 10×150u loop j:28840-28846)",
+   "notes": "觸發側零傷害 — 純特效覆蓋(龍形隊列+全場震屏), 數值全在基底 shockwave"
+  },
+  {
+   "hero": "小呆",
+   "trigger_stems": [
+    "ABanX"
+   ],
+   "skill_name": "08-04 阿邦快速劍X",
+   "rawcode": "A0EZ",
+   "template": "跳躍落地",
+   "timing": "instant 隱身 → 1.0s sleep → 落地爆發",
+   "geometry": "朝目標點前方 550u 落點; 落地 250 AoE; 傷害 7×AGI×技能等級 (排除建築)",
+   "movement": "施法者位移: ShowUnitHide 隱身 1s (原地留 e003 替身) 後瞬移 550u 落點現身 — 無拋物線變體",
+   "evidence": "j:28888-28944 (cond A0EZ j:28889, 550u j:28908, 250 AoE dmg j:28897-28903)",
+   "notes": "基底 AUcs(腐臭蜂群)另帶直線傷害; 落地 AoE 為 JASS 實傷"
+  },
+  {
+   "hero": "小呆",
+   "trigger_stems": [
+    "DragonMan"
+   ],
+   "skill_name": "(龍魔人? 未實作)",
+   "rawcode": "",
+   "template": "無觸發技能",
+   "evidence": "j:1733 (gg_trg_DragonMan 僅宣告, 全檔無 InitTrig/Actions)",
+   "notes": "死觸發: 變數宣告存在但無任何實作 — 技能不存在於 JASS"
+  },
+  {
+   "hero": "龍宮禮奈",
+   "trigger_stems": [
+    "KillPower"
+   ],
+   "skill_name": "22-00 嗚鎖打!",
+   "rawcode": "A0CL",
+   "template": "變身強化",
+   "timing": "instant; 白天 3s 後清理 dummy (夜晚不清)",
+   "geometry": "無 AoE; 自身 buff",
+   "movement": "無",
+   "evidence": "j:33239-33291 (cond A0CL j:33240, dummy bloodlust j:33272-33275, day-cleanup j:33276-33280)",
+   "notes": "基底 Awrs(狂暴)自我強化 + 隱形 dummy 'oshm' 對自己補施 bloodlust; udg_WooSoDaUnit 在此註冊供 EX 用。晝夜差: IsDay 時 3s 後殺光 'oshm'"
+  },
+  {
+   "hero": "龍宮禮奈",
+   "trigger_stems": [
+    "KillPowerEX"
+   ],
+   "skill_name": "22-003 嗚鎖打 (EX 夜間追擊)",
+   "rawcode": "",
+   "template": "攻擊觸發",
+   "timing": "EVENT_PLAYER_UNIT_ATTACKED; 每次攻擊 1/4 機率; 僅 EX_Mode + 夜晚",
+   "geometry": "dummy 施 A0SR(基底 Awrs, 數值表 220/270/320) 以 \"stomp\" 指令 — 以禮奈為中心的踐踏 AoE",
+   "movement": "無",
+   "evidence": "j:33192-33234 (night+EX+1/4 gate j:33193-33204, A0SR+stomp j:33221-33222)",
+   "notes": "攻擊 proc: dummy 對禮奈補 bloodlust 並原地 stomp; 觸發無 GetSpellAbilityId, dummy 技能= A0SR"
+  },
+  {
+   "hero": "牛丸",
+   "trigger_stems": [
+    "godJumpWall"
+   ],
+   "skill_name": "43-04 爆裂海景佛跳牆",
+   "rawcode": "ANfd",
+   "template": "原地震波",
+   "timing": "instant",
+   "geometry": "基底 ANfd(原生 Fan of Knives, data 570) 自身 AoE; JASS rider: 對 GetSpellTargetUnit() 加 3×INT 魔法傷害",
+   "movement": "無",
+   "evidence": "j:37952-37970 (cond ANfd j:37953, 3×INT j:37959)",
+   "notes": "SUSPECT: 原生 Fan of Knives 無目標單位, GetSpellTargetUnit() 可能為 null → rider 可能死碼; 另 ANfd 也是食神自己編號技, 同 rawcode 無碰撞問題"
+  },
+  {
+   "hero": "牛丸",
+   "trigger_stems": [
+    "godback"
+   ],
+   "skill_name": "43-002 食神歸位 (EX)",
+   "rawcode": "A105",
+   "template": "召喚代理",
+   "timing": "instant; dummy 2s 定時生命; 5s 後清理",
+   "geometry": "施法者 900 半徑內所有敵方單位; dummy 'hfoo' 掛 A104(43-002-01 化身術, 基底 Aply 變形術) 逐一下 \"polymorph\"",
+   "movement": "無 (目標被變形, 不位移)",
+   "evidence": "j:37973-38027 (cond A105 j:37975, 900 AoE ForGroup j:38010, polymorph order j:37989)",
+   "notes": "群體變羊: 單一 dummy 對範圍內每個敵人下 polymorph 指令"
+  },
+  {
+   "hero": "風魔",
+   "trigger_stems": [
+    "Visiable"
+   ],
+   "skill_name": "27-002 永久性的隱形術 (EX)",
+   "rawcode": "",
+   "template": "變身強化",
+   "timing": "EVENT_PLAYER_HERO_LEVEL 一次性; 之後 DisableTrigger",
+   "geometry": "無",
+   "movement": "無",
+   "evidence": "j:41103-41131 (EX gate + 'Naka' j:41104-41111, add A0S5 j:41121)",
+   "notes": "EX 被動: 升級事件觸發一次, 給自己掛 A0S5(基底 Apiv 永久隱形)"
+  },
+  {
+   "hero": "風魔",
+   "trigger_stems": [
+    "Initiate Fan Toss",
+    "Fan Movement"
+   ],
+   "skill_name": "27-01 忍法風魔手裡劍",
+   "rawcode": "A03A",
+   "template": "行進波動",
+   "timing": "periodic 0.03s; 三階段: 去程 ~17 tick / 迴旋 31 tick (279°/9°) / 回程直到距施法者 ≤20u",
+   "geometry": "兩把 dummy 扇 'h009' 沿 ±45° 夾角飛出: 去程 30u/tick 共 500u; 迴旋繞 pivot 半徑 250、9°/tick; 回程 30u/tick 追蹤施法者; 每 tick 每扇 100 AoE, 傷害 50+50×lvl, safe-group 保證同單位同階段只吃一次",
+   "movement": "傷害區行進: 雙迴力鏢 (出→弧→回), 施法者不動",
+   "evidence": "j:41136-41341 (init 幾何 j:41147-41161, dmg 100AoE j:41232-41238, 迴旋 j:41313-41318, tick 0.03 j:41337)",
+   "notes": "回程用扇→施法者現位置動態追角; 回收判定 20u"
+  },
+  {
+   "hero": "風魔",
+   "trigger_stems": [
+    "Set Charges",
+    "Elemental Buff Attempt",
+    "Deal Elemental Effect"
+   ],
+   "skill_name": "27-03 忍法千變萬化之刀",
+   "rawcode": "A03I",
+   "template": "攻擊觸發",
+   "timing": "開技 instant 給 3+3×lvl 層; 之後每次帶 B00C buff 的攻擊命中(傷害事件經 DamageLink Des_UType='Naka' 派發)消耗 1 層",
+   "geometry": "元素 1(火)/2(酸)/3(雷)/4(冰) 隨機: 1-3 → dummy 'h00A' 對受擊者施 acidbomb/thunderbolt/frostnova (等級=A03I); 4 → 以施法者為中心 350 AoE 對每個敵人 80+50×lvl 魔法傷害",
+   "movement": "無",
+   "evidence": "j:41344-41646 (charges 3+3lvl j:41358, roll+武器特效 j:41441-41468, dummy 三連 orders j:49595類比 j:41597-41625, 350 AoE burst j:41622, DamageLink 掛勾 j:5041-5042)",
+   "notes": "三觸發一技: Set Charges=上膛, Elemental Buff Attempt=攻擊時擲元素+武器光效, Deal Elemental Effect=實際命中結算; 層數歸零移除 B00C"
+  },
+  {
+   "hero": "風魔",
+   "trigger_stems": [
+    "FlySwallow"
+   ],
+   "skill_name": "27-04 忍法暗殺奧義-飛燕閃",
+   "rawcode": "A030",
+   "template": "NEW:目標瞬移斬",
+   "timing": "instant + 0.1s 後瞬移, 再 0.1s 後解除",
+   "geometry": "單體; 落點=目標身前 150u; 追加傷害 3×AGI (EX 6×AGI) 魔法",
+   "movement": "施法者位移: 瞬移到目標身前 150u, 期間掛 A0F3/A09P 並隱形化 (vertex alpha 0)",
+   "evidence": "j:41649-41692 (cond A030 j:41650, 150u 瞬移 j:41667, EX 6×AGI / 3×AGI j:41669-41672)",
+   "notes": "NEW 同小呆 08-02 定義: 基底 AHtb(風暴之錘)打暈, JASS 瞬移+AGI 追伤"
+  },
+  {
+   "hero": "超爆幹帥草泥馬",
+   "trigger_stems": [
+    "UnhappyEyes"
+   ],
+   "skill_name": "92-00 憂鬱的眼神 (GUI: 憂鬱的眼神)",
+   "rawcode": "",
+   "template": "受擊反應",
+   "timing": "EVENT_UNIT_DAMAGED (Open Skill of Horse 註冊, j:45144)",
+   "geometry": "角度判定: (攻擊者面向−馬面向) mod 360 ∈ [155°,205°] 即正面互瞪時觸發; dummy 施 A0W7(92-00-01, 降低50%攻擊 cripple) 於攻擊者",
+   "movement": "無",
+   "evidence": "j:45161-45193 (角度窗 j:45161-45169, cripple order j:45185)",
+   "notes": "被打時瞪回去: 對正面攻擊者上 -50% 攻擊 debuff; 對應 A0W6 被動"
+  },
+  {
+   "hero": "超爆幹帥草泥馬",
+   "trigger_stems": [
+    "SecHorse"
+   ],
+   "skill_name": "92-01 臥草泥馬 (GUI: 臥草泥馬)",
+   "rawcode": "A0W9",
+   "template": "變身強化",
+   "timing": "instant (0.01s sleep)",
+   "geometry": "腳下地形塗成草地 'Vgrt' (variation 2×1); 效果由 A0W8(92-01-01 生命再生光氣, 基底 ACnr 再生光環) 承載, 等級同步 = A0W9 等級",
+   "movement": "無",
+   "evidence": "j:45199-45224 (cond A0W9 j:45200, SetTerrainTypeBJ j:45209, A0W8 level-sync j:45212)",
+   "notes": "基底 AEme(變身); JASS 只鋪草+Victory 動畫+光環等級同步"
+  },
+  {
+   "hero": "超爆幹帥草泥馬",
+   "trigger_stems": [
+    "NewTrdHorse",
+    "TrdHorseAtk",
+    "TrdHorseJugATK",
+    "TrdHorseDamNew"
+   ],
+   "skill_name": "92-03 狂草泥馬 (GUI: 狂草泥馬)",
+   "rawcode": "A0WB",
+   "template": "原地震波",
+   "timing": "開技 instant; 攻擊 rider 為 EVENT_PLAYER_UNIT_ATTACKED + 傷害事件結算, buff B04D 存續期間有效",
+   "geometry": "開技: 以自身金錢 10%×lvl 為傷害(上限 400×lvl), 500 半徑對所有敵人 + 嘲諷 dummy 'o00Q'(0.5s); rider: 每次真實攻擊命中 +25 混沌傷害(對英雄甲≈50), WarStomp 特效",
+   "movement": "無",
+   "evidence": "j:45350-45406 (cond A0WB j:45351, 金錢傷害 j:45385-45389, 500 AoE j:45391); rider j:45230-45345 (attack 登記 j:45258-45264, 施法/用品取消 j:45294, B04D 判定+25 chaos j:45311-45336)",
+   "notes": "一技四觸發: NewTrdHorse=主動金錢核彈, TrdHorseAtk/JugATK/DamNew=B04D(來自 A0WB 狂暴)期間的攻擊追伤(經 InitSetup 傷害掛勾, 施法/用品會取消 pending). gg_trg_TrdHorse/TrdHorseDam 為死宣告(j:2059,2063)"
+  },
+  {
+   "hero": "超爆幹帥草泥馬",
+   "trigger_stems": [
+    "MLGBTemp",
+    "MLGBTempSteal"
+   ],
+   "skill_name": "92-04 馬勒戈壁 (GUI: 固有-馬勒戈壁)",
+   "rawcode": "A06Y",
+   "template": "週期踩踏",
+   "timing": "periodic 0.98s ×~6 tick (開技後 6s 關閉)",
+   "geometry": "以馬為中心 900×900 rect: 每 tick 對敵方非建築 100×lvl 魔法傷害; 敵方英雄且金 ≥150×lvl → 偷 150×lvl 金; EX 另偷 75 木",
+   "movement": "傷害區跟隨施法者 (rect 每 tick 重取馬的位置)",
+   "evidence": "j:45412-45525 (cond A06Y j:45413, 6s 窗 j:45420-45422, 900 rect j:45517, 偷金 j:45483-45499, 偷木EX j:45500-45507, 100×lvl dmg j:45512, tick 0.98 j:45524)",
+   "notes": "gg_trg_MLGB/MLGBDam 為死宣告(j:2067-2068); 固有結界式吸金領域"
+  },
+  {
+   "hero": "剎那",
+   "trigger_stems": [
+    "SaKu",
+    "SaKuSpaNew",
+    "SizeChange"
+   ],
+   "skill_name": "77-01 百烈櫻華斬",
+   "rawcode": "A0TV",
+   "template": "原地震波",
+   "timing": "instant; 擊退 0.04s/tick ×10; 球體視覺 1s (SizeChange 0.06s/tick)",
+   "geometry": "400 半徑內敵人全部徑向擊退: Move_Func 50u/tick ×10 ≈500u, 撞障礙(位移<10u)即停+雷擊特效+毀 150 半徑樹; 傷害由基底 AOws(戰爭踐踏)承載",
+   "movement": "目標被推動: 沿施法者→目標角度徑向外推; 施法者不動",
+   "evidence": "j:49084-49175 (cond A0TV j:49085, 400 AoE pick j:49131, Set_Move_Value(10步) j:49122, Move_Func 50u/0.04s j:4745-4793)",
+   "notes": "SaKuSpaNew=同 rawcode 的紫球膨脹視覺('o01D'+SizeChange 共用); JASS 零傷害"
+  },
+  {
+   "hero": "剎那",
+   "trigger_stems": [
+    "Flow"
+   ],
+   "skill_name": "77-02 百烈櫻華斬 (E00X 版, OBJECTS 標 77-02)",
+   "rawcode": "A0JB",
+   "template": "原地震波",
+   "timing": "instant; 球體視覺 1s",
+   "geometry": "基底 AHtc(雷霆一擊)承載實傷; JASS 傷害式 250+100×lvl − 距離/2 存在但作用於 udg_InshouGroup",
+   "movement": "無",
+   "evidence": "j:49612-49646 (cond A0JB j:49613, dmg 公式 j:49620, GroupClear j:49630)",
+   "notes": "死碼確認: udg_InshouGroup 只在 j:2684 建立、j:49630 清空, 全檔無 GroupAdd → ForGroup 永遠空轉, 距離衰減傷害從未生效; 實效=基底雷霆一擊+紫球視覺"
+  },
+  {
+   "hero": "剎那",
+   "trigger_stems": [
+    "Control Light",
+    "AngleRdDam"
+   ],
+   "skill_name": "77-002 御雷劍 (F)",
+   "rawcode": "A10G",
+   "template": "變身強化",
+   "timing": "instant buff; proc 增幅 14s (sleep), B05F buff 表定 15s",
+   "geometry": "無 AoE; 效果: 雷鳴劍 proc 1/10→1/2; 帶 B05F 時受傷 ×0.66 (DamageModify)",
+   "movement": "無",
+   "evidence": "j:49180-49200 (cond A10G j:49181, Num 2↔10 j:49188-49190); j:49063-49079 (B05F gate j:49064, ×0.66 j:49071); B05F 源=A10G (OBJECTS)",
+   "notes": "兩觸發一技: Control Light=proc 率窗, AngleRdDam=受傷減免 34% (掛在 Open Skill of Setsuna 註冊的 EVENT_UNIT_DAMAGED, j:49040)"
+  },
+  {
+   "hero": "剎那",
+   "trigger_stems": [
+    "LightATK"
+   ],
+   "skill_name": "77-02 雷鳴劍 (被動)",
+   "rawcode": "",
+   "template": "攻擊觸發",
+   "timing": "EVENT_PLAYER_UNIT_ATTACKED; 機率 1/udg_Light_Sword_Num (常態 1/10, 御雷劍中 1/2); dummy 2s 生命",
+   "geometry": "dummy 'h02L' 於攻擊者面向前方 150u 下 \"inferno\" (A0TY 77-02-01 雷鳴劍落雷, 等級=A0TX)",
+   "movement": "無",
+   "evidence": "j:49205-49245 (A0TX 等級 gate j:49206, 隨機 j:49224, 150u inferno j:49229-49231)",
+   "notes": "條件用 GetUnitAbilityLevelSwapped('A0TX')>0 而非 GetSpellAbilityId, 故 rawcode 欄留空; 實體=A0TX(基底 AOcr)"
+  },
+  {
+   "hero": "剎那",
+   "trigger_stems": [
+    "Cloud reset",
+    "Cloud ready",
+    "Cloud move"
+   ],
+   "skill_name": "77-00 浮雲-旋一閃 (D)",
+   "rawcode": "A0JD",
+   "template": "受擊反應",
+   "timing": "開技開 0.5s 反擊窗 (Cloud reset); 命中後拋摔 0.02s/tick ×21; 0.2s 前搖",
+   "geometry": "窗內被 ≤200u 的未暫停敵方英雄打到即觸發: 攻擊者沿 剎那→攻擊者 軸每 tick −20u (被拉過剎那身後, 共 420u), 飛行高 −2.5(i−11)²+250 拋物線(峰 250); 落地毀 200 半徑樹 + 雷霆特效 + 250+5×AGI 魔法傷害",
+   "movement": "目標被推動(過肩摔式拋越施法者); 施法者隱形至落地",
+   "evidence": "j:49352-49374 (cond A0JD j:49353, 0.5s 窗 j:49363-49366); j:49250-49295 (200u gate j:49264, 拋摔啟動 j:49270-49287); j:49321-49347 (拋物線 j:49322, −20u j:49323, 21 tick 落地結算 j:49325-49338, tick 0.02 j:49345)",
+   "notes": "三觸發一技: reset=開窗, ready=判定+起手, move=拋摔+落地傷害"
+  },
+  {
+   "hero": "剎那",
+   "trigger_stems": [
+    "Light Judg",
+    "Light Final",
+    "Light Final Dam",
+    "Light Fight"
+   ],
+   "skill_name": "77-04 真-雷光劍 (E00X 版, 引導)",
+   "rawcode": "A0JE",
+   "template": "引導通魔",
+   "timing": "SPELL_EFFECT 開始引導, 視覺 loop ~0.06s/次 (TriggerExecute 自遞迴), 累傷 +4×AGI/1s; SPELL_ENDCAST 結算",
+   "geometry": "結算於目標點: 基傷 250×lvl+250 + 引導加成 (+E00X 型再 +3×AGI); 450 AoE 全額 + 100 AoE 追加 5×AGI; 地形漣漪 500; 引導中在施法者周圍 350-550 隨機生成閃電 dummy 'h01E'+chainlightning 視覺",
+   "movement": "施法者位移: 結算後 SetUnitPositionLoc 瞬移到目標點",
+   "evidence": "j:49386-49391 (cond A0JE, 基傷 j:49389); j:49418-49445 (視覺自遞迴 loop); j:49471-49481 (+4×AGI/s); j:49569-49607 (ENDCAST 註冊 j:49603, 450/100 AoE j:49585-49586, 瞬移 j:49587)",
+   "notes": "四觸發一技: Judg=存點/基傷, Final=引導視覺 loop, Final Dam=按秒疊傷, Fight=停止引導時爆發+瞬移"
+  },
+  {
+   "hero": "剎那",
+   "trigger_stems": [
+    "Light sword",
+    "Light sword move"
+   ],
+   "skill_name": "77-04 真-雷光劍 (E00W 版, 蒼龍破投射)",
+   "rawcode": "A0UB",
+   "template": "行進波動",
+   "timing": "periodic 0.04s ×≤20 tick; 終點爆發後 1s 清理",
+   "geometry": "dummy 'o02U' 起點=施法者前 200u, 80u/tick 直線 (max ~1600u), 逐 tick 放大 (50%+5%/tick); 撞障礙(位移偏差>8u)或滿 20 tick → 終點爆發: 500 AoE, LightDam=200×lvl+400, 英雄額外 +LightDam/範圍內英雄數, 毀 500 半徑樹, 5×8 Monsoon 特效陣",
+   "movement": "傷害區行進: 投射 dummy 直線前進; 施法者不動",
+   "evidence": "j:49762-49797 (cond A0UB j:49763, 200u 起點 j:49780); j:49873-49946 (80u/tick j:49890, 撞牆判定 j:49900, 爆發 500 AoE j:49930-49933, LightDam j:49928, tick 0.04 j:49944)",
+   "notes": "無 per-tick 傷害的行進波動變體 — 只有終點爆發; 障礙判定用 P2/P3 錯位 >8u"
+  },
+  {
+   "hero": "剎那",
+   "trigger_stems": [
+    "InshouATK",
+    "InshouJugATK",
+    "GLADIARIA ALAT"
+   ],
+   "skill_name": "77-03 GLADIARIA ALAT (被動)",
+   "rawcode": "",
+   "template": "攻擊觸發",
+   "timing": "EVENT_PLAYER_UNIT_ATTACKED 登記 + 傷害事件結算 (DamageLink Des_UType='E00X', j:5039-5040); 施法/用品事件取消 pending",
+   "geometry": "每次真實攻擊命中 +1×AGI 魔法傷害 (單體, 無幾何)",
+   "movement": "無",
+   "evidence": "j:49668-49703 (E00X gate j:49669, InitSetup 掛勾 j:49692); j:49709-49729 (取消 gate); j:49733-49757 (+AGI 傷害 j:49745)",
+   "notes": "僅 E00X(EX 型)生效; InshouATK=登記受擊者, InshouJugATK=防止施法誤判為攻擊, GLADIARIA ALAT=實際加傷; 實體=A0JG"
+  },
+  {
+   "hero": "火拳愛斯",
+   "trigger_stems": [],
+   "skill_name": "",
+   "rawcode": "",
+   "template": "無觸發技能",
+   "evidence": "HERO_TRIGGERS.json triggerCount=0 (team 未開放英雄); war3map.j 無任何對應觸發",
+   "notes": "未開放英雄, JASS 側零技能觸發"
+  },
+  {
+   "hero": "索龍",
+   "trigger_stems": [
+    "Threesword"
+   ],
+   "skill_name": "11-00 三刀流",
+   "rawcode": "A0OU",
+   "template": "變身強化",
+   "timing": "instant",
+   "movement": "無 (自身buff)",
+   "geometry": "self-target, 無幾何",
+   "evidence": "war3map.j:28950-28962",
+   "notes": "隱藏dummy 'hfoo' 加A0CN(base Auhf 邪惡狂熱)對施法者下 unholyfrenzy = +75%攻速/-12HP/s 15s 自buff(B02Y)。此buff同時做為 11-03/11-04 的STR加成開關。Open Skill of three knife / Learn Burn Beat(A0BC↔A0CC 假技能等級同步)為純bookkeeping已略過。"
+  },
+  {
+   "hero": "索龍",
+   "trigger_stems": [
+    "Roaction",
+    "Romove"
+   ],
+   "skill_name": "11-03 鬼氣九刀流-阿修羅壹霧銀",
+   "rawcode": "A06P",
+   "template": "鎖定連段",
+   "timing": "periodic 0.02s ×11 + sleeps 0.3/0.5/0.5s",
+   "movement": "受害者與施法者皆Pause; 6隻'o018'分身繞受害者旋轉(半徑-100+20/tick, 角度+30°/tick); 結尾施法者瞬移至受害者後方300u",
+   "geometry": "單體無AoE; 傷害150×lvl+150 (+STR×2 若有B02Y三刀流buff, 再+STR×3 若U01U型態); 3+3分身×120°對稱",
+   "evidence": "war3map.j:28990-29147 (Romove period j:29145); 進場經 Des_Buff 受擊分派器 j:4940-4944, j:5010-5011 (buff B02H)",
+   "notes": "入口是EVENT_UNIT_DAMAGED分派器: A06P(base AHtb投擲)命中掛B02H, 目標受到傷害時觸發連段, 單一大傷害在演出結束才結算。"
+  },
+  {
+   "hero": "索龍",
+   "trigger_stems": [
+    "ThworldStart",
+    "ThworldMove"
+   ],
+   "skill_name": "11-04 三千世界",
+   "rawcode": "A0MQ",
+   "template": "行進波動",
+   "timing": "periodic 0.04s ×15",
+   "movement": "施法者隱形; 劍氣dummy(h01T)每tick前進50u共750u; 結束時施法者瞬移到終點現身",
+   "geometry": "50u/tick ×15 = 750u直線, 每tick 250 AoE (每敵僅命中一次, ThworldGroup去重), 沿路摧毀destructable(250)",
+   "evidence": "war3map.j:29221-29255, 29319-29349 (period j:29348)",
+   "notes": "傷害333×lvl (+STR×3 若B02Y buff, 再+STR×5 若U01U型態)。"
+  },
+  {
+   "hero": "克勞德",
+   "trigger_stems": [
+    "XFight"
+   ],
+   "skill_name": "01-01 凶斬 (EX變體: 01-01r 囧斬)",
+   "rawcode": "A072",
+   "template": "單體斬擊",
+   "timing": "instant (0.30s / EX 0.10s 延遲)",
+   "movement": "施法者瞬移到目標所在位置 (SetUnitPositionLoc)",
+   "geometry": "單體無幾何; EX(A0AZ)分支傷害80+70×lvl chaos; A072分支傷害由基底技能物件資料提供, 觸發只做瞬移+特效",
+   "evidence": "war3map.j:33385-33448",
+   "notes": "同一trigger處理A072與A0AZ兩個rawcode。Open Skill of Cloud / Super Sword(30級把A0D9 EX法術書升到2級)為bookkeeping已略過。"
+  },
+  {
+   "hero": "克勞德",
+   "trigger_stems": [
+    "StoJump Start",
+    "StoJump Effect"
+   ],
+   "skill_name": "01-02 隕石擊",
+   "rawcode": "A0UX",
+   "template": "跳躍落地",
+   "timing": "periodic 0.02s ×41",
+   "movement": "施法者沿直線41步位移, 拋物線飛行高度 h=-1.5(i-21)²+600, 步長=距離/41",
+   "geometry": "落地250 AoE傷害100×lvl, 摧毀destructable 450, 震屏1600×1600; 施法同時生成lvl隻dummy對目標點200×200矩形內random投inferno(A0UY)",
+   "evidence": "war3map.j:33608-33663, 33711-33754 (period j:33752)",
+   "notes": "跳躍+隕石雨(dummy-cast inferno)複合; 主體為41步拋物線跳躍落地AoE。"
+  },
+  {
+   "hero": "克勞德",
+   "trigger_stems": [
+    "BreakLight"
+   ],
+   "skill_name": "01-02 破光擊",
+   "rawcode": "A0G7",
+   "template": "瞬發點爆",
+   "timing": "instant (0.45-0.50s 延遲)",
+   "movement": "無 (目標點分裂彈幕)",
+   "geometry": "以目標為中心480 AoE計數敵人N; N≥2時每敵受 (350+150×lvl)/N, dummy u00F對非主目標補firebolt視覺",
+   "evidence": "war3map.j:33511-33603",
+   "notes": "傷害均分機制(Blade Beam分裂); 少於2敵時觸發器不造成傷害(主目標傷害留給物件資料)。"
+  },
+  {
+   "hero": "克勞德",
+   "trigger_stems": [
+    "Toro",
+    "Toro Rotation"
+   ],
+   "skill_name": "01-03 畫龍點睛",
+   "rawcode": "A000",
+   "template": "鎖定連段",
+   "timing": "periodic 0.04s ×15",
+   "movement": "雙方飛行高度400+無敵+Pause; 每tick目標被甩到施法者周圍150u隨機方位, 施法者原地旋轉(+270°/tick); 結束單次結算",
+   "geometry": "拋甩半徑150, 最終傷害300+150×lvl (magic)",
+   "evidence": "war3map.j:33325-33378, 33453-33504 (period j:33502)",
+   "notes": "需目標帶有B03V buff才發動(先標記後連段)。"
+  },
+  {
+   "hero": "克勞德",
+   "trigger_stems": [
+    "SuperFF7"
+   ],
+   "skill_name": "01-04 超究武神霸斬 (EX變體: 01-04r 改)",
+   "rawcode": "A077",
+   "template": "鎖定連段",
+   "timing": "sleep-loop 7段 (sleep 1-0.5i / 1-0.6i 遞減)",
+   "movement": "施法者每hit瞬移到目標周圍70u(+270°/hit); 第7hit雙方拉到1000飛行高度空中終結後落地",
+   "geometry": "7hit, 每hit 49+50×lvl (EX A0B1: +(0.25+0.25×lvl)×STR); 第7hit再+STR×lvl加成, 震屏1600×1600",
+   "evidence": "war3map.j:33759-33950",
+   "notes": "同trigger處理A077與EX A0B1; 施法期間無敵(Avul), 效果分身h002協同演出。"
+  },
+  {
+   "hero": "鄭先生",
+   "trigger_stems": [
+    "Open World"
+   ],
+   "skill_name": "26-04 開天闢地‧洨者聖臨",
+   "rawcode": "A0EW",
+   "template": "週期踩踏",
+   "timing": "channel 3+3×lvl s",
+   "movement": "無 (以施法者為中心)",
+   "geometry": "觸發側無數值; 傷害幾何在物件資料(base AEIl)",
+   "evidence": "war3map.j:38026-38045",
+   "notes": "trigger僅在SPELL_CAST掛StarfallCaster視覺3+3×lvl秒; 實際週期AoE由物件資料引導技能執行。Open Skill of EatSon只剩變數宣告(j:1905), 無函式本體。"
+  },
+  {
+   "hero": "鄭先生",
+   "trigger_stems": [
+    "Ptt Judge"
+   ],
+   "skill_name": "26-002 鄉民的正義 (EX)",
+   "rawcode": "A106",
+   "template": "召喚代理",
+   "timing": "instant",
+   "movement": "無施法者位移; 召喚物自行攻擊各自目標",
+   "geometry": "全地圖每個敵方英雄(排除Utic): 周圍半徑200、角度75°×i (i=1..5) 生成5隻'h031', 20s計時生命, 下attack指令",
+   "evidence": "war3map.j:38050-38104",
+   "notes": "map-wide enumerate (GetPlayableMapRect) — 對每個敵方英雄同時降下鄉民圍毆。"
+  },
+  {
+   "hero": "宇志波佐助",
+   "trigger_stems": [
+    "Spell Mark"
+   ],
+   "skill_name": "(A04W = 06-00x 布緩速, HERO_TRIGGERS歸類存疑)",
+   "rawcode": "A04W",
+   "template": "NEW:延遲自傷",
+   "timing": "sleep 10.00s 後單次",
+   "movement": "無",
+   "geometry": "無幾何; 自傷 400×lvl-100 (chaos)",
+   "evidence": "war3map.j:41711-41729",
+   "notes": "NEW定義: 施放後經固定延遲對施法者自身結算傷害(代價機制)。緩速本體在物件資料(base AHtc); OBJECTS.json顯示A04W屬06號職業獵人, 被HERO_TRIGGERS錯放到佐助群。"
+  },
+  {
+   "hero": "宇志波佐助",
+   "trigger_stems": [
+    "ThuBird"
+   ],
+   "skill_name": "45-02 千鳥流",
+   "rawcode": "A0JX",
+   "template": "召喚代理",
+   "timing": "instant (dummy存活2s)",
+   "movement": "無 (以施法者為中心)",
+   "geometry": "施法者周圍450 AoE: 對範圍內每單位生成隱形dummy 'o00E'(掛A0HY, base AOcl)各射一發chainlightning",
+   "evidence": "war3map.j:41734-41772",
+   "notes": "傷害數值在dummy技能A0HY物件資料; 觸發只負責每目標一發的散射。"
+  },
+  {
+   "hero": "宇志波佐助",
+   "trigger_stems": [
+    "LightCut",
+    "LightCutRun",
+    "Kylin",
+    "Kylin2"
+   ],
+   "skill_name": "45-03 千鳥",
+   "rawcode": "A0IJ",
+   "template": "衝鋒推撞",
+   "timing": "periodic 0.03s ≤100 ticks (+3s清理sleep)",
+   "movement": "施法者追蹤衝刺: 每tick朝目標推進45+5×A0U7lvl u (無碰撞SetUnitPathing false); 目標偏離施法點>容忍值則判miss改衝向容忍圈邊緣",
+   "geometry": "步長45+5×R lvl, 容忍半徑160+40×R lvl; 命中傷害200+200×lvl+20×英雄等級; 有A0U7(45-04哥哥)且目標帶B03W: 追加600 AoE AGI×2×R lvl + 麒麟風暴(5對h02O/h02P每0.6s互射chainlightning, 每1s在施法者500×500內重佈, 約4s)",
+   "evidence": "war3map.j:41777-42051 (period j:42049), Kylin j:42056-42091",
+   "notes": "起手先生成12個雷光分身(n00N, 螺旋: 半徑12×i, 角度30×i)做演出; miss時只顯示文字不結算傷害。"
+  },
+  {
+   "hero": "宇志波佐助",
+   "trigger_stems": [
+    "ChoChuFireDro"
+   ],
+   "skill_name": "45-01 火遁-豪火龍之術",
+   "rawcode": "A0M7",
+   "template": "瞬發點爆",
+   "timing": "instant (0.30s起飛延遲, 0.30s收尾)",
+   "movement": "火龍dummy(lvl隻o020+1隻o021)0.3s後從施法者整批瞬移到目標點 (彈道演出)",
+   "geometry": "目標點330 AoE, 每敵傷害100×lvl+150+AGI×2 (magic); 附dummy 'hfoo' 施howlofterror(Acht)降攻debuff",
+   "evidence": "war3map.j:42096-42181",
+   "notes": ""
+  },
+  {
+   "hero": "宇志波佐助",
+   "trigger_stems": [
+    "ImbaEye"
+   ],
+   "skill_name": "45-002 天照 (EX)",
+   "rawcode": "A102",
+   "template": "召喚代理",
+   "timing": "instant",
+   "movement": "無 (以施法者為中心)",
+   "geometry": "施法者周圍500 AoE: 每個敵人一隻隱形dummy施soulburn(A100 45-002-05 禁言)",
+   "evidence": "war3map.j:42186-42226",
+   "notes": "Row Eye Set為地圖初始的能力可用性bookkeeping(關閉A0EV)已略過。"
+  },
+  {
+   "hero": "哆啦A夢",
+   "trigger_stems": [
+    "PacketItem"
+   ],
+   "skill_name": "57-00 四次元口袋",
+   "rawcode": "A0CY",
+   "template": "NEW:道具抽獎",
+   "timing": "instant (0.50s延遲)",
+   "movement": "無",
+   "geometry": "施法者腳下生成隨機道具: phea 75% / pghe 18.75% / pres ~5.2% / whwd ~1%",
+   "evidence": "war3map.j:45569-45621",
+   "notes": "NEW定義: 施放後按巢狀機率表在地面產生道具, 無傷害幾何。base Atau。"
+  },
+  {
+   "hero": "哆啦A夢",
+   "trigger_stems": [
+    "Wohoo",
+    "JumpsDamage"
+   ],
+   "skill_name": "(隱藏彩蛋: 被神奇寶貝兒(Ofar)攻擊時驚慌跳)",
+   "rawcode": "",
+   "template": "受擊反應",
+   "timing": "periodic 0.40s ×~7 (3s), proc機率1/100",
+   "movement": "哆啦A夢自己失控亂跳: 加移除Amrf取得飛行, 每tick朝WOO矩形內隨機點move+飛高200脈衝",
+   "geometry": "每tick對周圍250內敵方 SetUnitLife -138 (固定值, 無視護甲/非UnitDamageTarget)",
+   "evidence": "war3map.j:45626-45704",
+   "notes": "EVENT_PLAYER_UNIT_ATTACKED且被攻擊者=N00B、攻擊者=Ofar(老鼠梗)。無rawcode, 純單位型別+機率條件。"
+  },
+  {
+   "hero": "哆啦A夢",
+   "trigger_stems": [
+    "CutUHead",
+    "CutUHead effect"
+   ],
+   "skill_name": "57-04 竹蜻蜓",
+   "rawcode": "A0JN",
+   "template": "召喚代理",
+   "timing": "periodic 0.30s ×12",
+   "movement": "傷害來源環繞目標點旋轉: 每tick在目標點外200u(角度+30°/tick)生成dummy 'o00I' 朝目標點放shockwave",
+   "geometry": "12發shockwave由半徑200的旋轉環向圓心收束; dummy技能A0D4(57-竹蜻蜓龍捲風, base AOsh)等級=技能等級",
+   "evidence": "war3map.j:45709-45772 (period j:45770)",
+   "notes": "傷害數值在A0D4物件資料; 觸發控制12方位收束彈幕。"
+  },
+  {
+   "hero": "哆啦A夢",
+   "trigger_stems": [
+    "Copy"
+   ],
+   "skill_name": "57-03 複製鏡",
+   "rawcode": "A0NE",
+   "template": "召喚代理",
+   "timing": "instant",
+   "movement": "無",
+   "geometry": "無觸發側幾何",
+   "evidence": "war3map.j:45777-45806",
+   "notes": "幻象複製本體在物件資料(base AIil 幻象權杖); trigger僅在SPELL_CAST擋掉對gg_unit_Utic_0117施放(下stop指令)並播音效。"
+  },
+  {
+   "hero": "哆啦A夢",
+   "trigger_stems": [
+    "TimeMachine",
+    "TimeMachineRev"
+   ],
+   "skill_name": "57-002-01 時間記憶 + 57-002-02 時光倒流 (EX)",
+   "rawcode": "A0MS",
+   "template": "NEW:全場狀態回溯",
+   "timing": "instant ×2 (記錄/還原兩次施放)",
+   "movement": "無",
+   "geometry": "map-wide: 快照全部12位玩家英雄的HP/MP (A0MS), 之後施放A0MT把所有存活英雄HP/MP設回快照值並重置快照為9999",
+   "evidence": "war3map.j:45811-45902",
+   "notes": "NEW定義: 兩段式全場狀態快照與回溯, 無傷害無幾何; 敵我全部英雄一起被回溯。"
+  },
+  {
+   "hero": "監獄兔",
+   "trigger_stems": [
+    "GroundAttack"
+   ],
+   "skill_name": "78-02 地走龍牙破",
+   "rawcode": "A0L4",
+   "template": "跳躍落地",
+   "timing": "sleep-loop 0.01s/step ×(距離/75)",
+   "movement": "遁地變體: 施法者隱形, 地裂視覺以75u/step行進到目標點, 之後施法者瞬移到目標點現身 (非拋物線)",
+   "geometry": "行進段純視覺無傷害; 終點: 摧毀destructable 400, 生成10隻'o011'(半徑160), 隱形dummy放stomp A0L7(78-032 地走龍牙, base Awrs, 等級同步) = 落點AoE傷害+暈眩(數值在物件資料)",
+   "evidence": "war3map.j:49977-50038",
+   "notes": "Open Skill of Rabbit為bookkeeping已略過。"
+  },
+  {
+   "hero": "監獄兔",
+   "trigger_stems": [
+    "HoLuKen"
+   ],
+   "skill_name": "78-03 廬山昇龍破",
+   "rawcode": "A0L2",
+   "template": "召喚代理",
+   "timing": "instant, 召喚物存在5s",
+   "movement": "無施法者位移",
+   "geometry": "施法者位置生成1隻'o01P'放大240%, 5s後清除(連同oshm dummy)",
+   "evidence": "war3map.j:50043-50077",
+   "notes": "傷害/效果在o01P單位自身物件資料; 觸發僅生成+計時清理。"
+  },
+  {
+   "hero": "監獄兔",
+   "trigger_stems": [
+    "PowerKnockBack",
+    "PowerKnockBack Effect"
+   ],
+   "skill_name": "78-04 死亡噴射肘擊",
+   "rawcode": "A0L6",
+   "template": "衝鋒推撞",
+   "timing": "periodic 0.04s ≤20 ticks (0.5s起手延遲)",
+   "movement": "施法者先瞬移到目標身上; 之後目標被沿施法方向推退40u/tick最多20 tick(800u); 撞牆(位移失敗判定 距離差>8)即停",
+   "geometry": "推退沿路摧毀destructable 300; 撞牆結算: 以撞點300×300矩形AoE傷害STR×3 (magic)",
+   "evidence": "war3map.j:50082-50229 (period j:50227)",
+   "notes": "無逐tick傷害 — 全部傷害集中在牆面撞擊AoE。"
+  },
+  {
+   "hero": "監獄兔",
+   "trigger_stems": [
+    "TwoPowerEX"
+   ],
+   "skill_name": "(EX被動: 攻擊時嗚鎖打, 借用A0SR=22-003 嗚鎖打)",
+   "rawcode": "",
+   "template": "攻擊觸發",
+   "timing": "instant, proc機率1/7 (限EX_Mode)",
+   "movement": "無",
+   "geometry": "隱形dummy對兔子放bloodlust自buff + 施stomp A0SR(base Awrs)原地AoE",
+   "evidence": "war3map.j:50234-50273",
+   "notes": "EVENT_PLAYER_UNIT_ATTACKED且攻擊者=udg_RabCastUnit; AoE數值在A0SR物件資料。"
+  },
+  {
+   "hero": "初音未來",
+   "trigger_stems": [
+    "初音未來的消失",
+    "MikuDisappear",
+    "MikuDisappearEffect"
+   ],
+   "skill_name": "99-03 初音未來的消失",
+   "rawcode": "A11B",
+   "template": "召喚代理",
+   "timing": "instant (EX護盾持續到被打光)",
+   "movement": "無 (以施法者為中心)",
+   "geometry": "施法者周圍750 AoE: 對每個單位生成隱形dummy施innerfire(A11A 99-03a 初音戰意, 等級=A11B lvl); EX: 給玩家2-6/8-12各INT×6傷害吸收池",
+   "evidence": "war3map.j:54815-54871 (本體), 54876-54907 (吸收), 分派器 j:5029-5030 (buff B05L)",
+   "notes": "EX吸收經Des_Buff受擊分派器: 帶B05L buff的單位受傷時DamageModify扣池, 池空後溢出傷害照算。"
+  },
+  {
+   "hero": "初音未來",
+   "trigger_stems": [
+    "世界第一的公主殿下",
+    "MikuNo1",
+    "MikuNo1Effect"
+   ],
+   "skill_name": "99-04 世界第一的公主殿下",
+   "rawcode": "A11C",
+   "template": "週期踩踏",
+   "timing": "periodic 2.00s pulses, 持續2+2×lvl s",
+   "movement": "脈衝區跟隨施法者 (每tick取Miku當前位置)",
+   "geometry": "每pulse對Miku周圍375內: 友軍dummy-cast healingwave(A11E 99-04b), EX模式下敵軍dummy-cast chainlightning(A11D 99-04a); 兩者等級=A116(99-01 甩蔥歌)等級",
+   "evidence": "war3map.j:54910-55000 (period j:54997)",
+   "notes": "治療/傷害數值在A11E/A11D物件資料; 觸發側控制持續時間與2s脈衝節奏。"
+  },
+  {
+   "hero": "初音未來",
+   "trigger_stems": [
+    "把你給MikuMiku掉",
+    "MikuEX"
+   ],
+   "skill_name": "99-002 把你給MikuMiku掉 (EX)",
+   "rawcode": "A11F",
+   "template": "NEW:單體回滿",
+   "timing": "instant",
+   "movement": "無",
+   "geometry": "單體目標, 無幾何: HP與MP直接設為100%",
+   "evidence": "war3map.j:55005-55024",
+   "notes": "NEW定義: 單體瞬發完全恢復(SetUnitLifePercentBJ/SetUnitManaPercentBJ 100), 非傷害非buff。Open Skill of Miku為bookkeeping已略過。"
+  },
+  {
+   "hero": "天地志狼",
+   "skill_name": "12-02 仙氣．採藥",
+   "rawcode": "A02K",
+   "trigger_stems": [
+    "GodTakeMd"
+   ],
+   "template": "召喚代理",
+   "timing": "instant + 1s cleanup sleep",
+   "geometry": "self-target; dummy 'ogru' 1s timed life",
+   "movement": "無",
+   "evidence": "j:29355-29386 (CreateNUnitsAtLoc 'ogru' + UnitAddAbility A02H + IssueTargetOrder 'purge' on caster)",
+   "notes": "Hidden dummy casts purge (A02H 12-022 淨化) on the caster themself — dummy-cast self-cleanse; hero = Ewar/E007 龍之子."
+  },
+  {
+   "hero": "天地志狼",
+   "skill_name": "12-04 龍氣爆發",
+   "rawcode": "A04X",
+   "trigger_stems": [
+    "DragonExp",
+    "DragonChannel",
+    "DragonExpGo"
+   ],
+   "template": "行進波動",
+   "timing": "channel ticks 1.0s ×≤3 (charge), then periodic 0.02s ×25",
+   "geometry": "dummy spawn 125u ahead; 75u/step ×25 = 1875u line; collect radius 100+70×charge (≤310); destructable clear 450/step; dmg 350+300×lvl + charge×AGI×5 (structures ×0.25, neutral-hostile ×0.5)",
+   "movement": "傷害區行進 — dummy 'h000' steps 75u/tick along caster facing; caster stands channelling",
+   "evidence": "j:29391-29423 (setup), j:29449-29476 (charge while order=='channel'), j:29570-29600 (0.02s march, Func002C counter==25 terminal damage j:29574-29575)",
+   "notes": "Charge-up variant: 1s timer grows dummy 450%×charge while channelling; travelling zone only COLLECTS enemies into DragonDamageGroup per tick; all damage settled in one terminal volley at step 25."
+  },
+  {
+   "hero": "天地志狼",
+   "skill_name": "12-002 仙氣發勁 (EX)",
+   "rawcode": "A0SQ",
+   "trigger_stems": [
+    "PowerBack",
+    "PowerBack Effect"
+   ],
+   "template": "衝鋒推撞",
+   "timing": "sleeps 0.5s+0.5s intro, then periodic 0.04s ×≤12",
+   "geometry": "caster blinks to 100u behind target; push 50u/tick ×12 = 600u; destructables killed in 300 radius along path; wall-stop when tick displacement <8u",
+   "movement": "施法者位移 (blink behind target) + 目標被推動 (50u/0.04s knockback)",
+   "evidence": "j:29607-29683 (blink SetUnitPositionLocFacingLocBJ j:29646, EnableTrigger PowerBack_Effect j:29663), j:29709-29741 (push loop, Func011C wall check, Func015C index>=12)",
+   "notes": "No direct UnitDamageTarget in JASS — damage rides on orb A0J7 (球體·索龍2) temporarily added during the sequence; camera-shake 1600×1600 rect is cosmetic."
+  },
+  {
+   "hero": "桔梗",
+   "skill_name": "02-01 破魔之箭 (passive)",
+   "rawcode": "",
+   "trigger_stems": [
+    "Learn FeedBack",
+    "FeedBack",
+    "FeedBack Effect"
+   ],
+   "template": "攻擊觸發",
+   "timing": "event-driven (EVENT_UNIT_DAMAGED dispatch)",
+   "geometry": "single target on hit; mana burn = dmg×(0.20+0.15×lvl A03C)−30, floor 10×lvl, cap 150",
+   "movement": "無",
+   "evidence": "j:33955-34021 (Learn adds orb A0CE; FeedBack burns mana), j:5016-5017 (udg_Des_BuffTri[7]=gg_trg_FeedBack, buff 'B01H'), j:4940-4944 (buff-dispatch engine executes trigger on damaged unit)",
+   "notes": "Orb-buff proc: her arrows apply buff B01H; map's Des_Buff damage engine fires FeedBack when the buffed victim takes damage → mana drain. Learn FeedBack is learn-sync bookkeeping (adds/removes hidden orb A0CE). 'FeedBack Effect' exists only as a declared trigger var (j:1825) with no body/Init — dead trigger."
+  },
+  {
+   "hero": "桔梗",
+   "skill_name": "02-002 神通眼 (EX)",
+   "rawcode": "A0S6",
+   "trigger_stems": [
+    "FinalShotting",
+    "FinalShottingMove"
+   ],
+   "template": "行進波動",
+   "timing": "instant cast → periodic 0.01s ×40 + terminal volley",
+   "geometry": "dummy 'h032' (scale 800%) spawns 160u ahead; 100u/step ×40 = 4000u line; collect AoE 200/step; destructable clear 450/step; volley dmg 3×AGI per enemy + dummy purge each",
+   "movement": "傷害區行進 — giant marker unit steps 100u/tick along caster facing",
+   "evidence": "j:34026-34051 (setup), j:34116-34138 (0.01s march), j:34099-34107 (terminal per-target purge + 3×AGI damage)",
+   "notes": "Same collect-then-terminal-volley pattern as 龍氣爆發: line only gathers targets into FinalShotGroup; at step 41 every collected enemy is purged and damaged at once."
+  },
+  {
+   "hero": "桔梗",
+   "skill_name": "02-04 百鬼夜行",
+   "rawcode": "A0Z6",
+   "trigger_stems": [
+    "HudGhosts"
+   ],
+   "template": "召喚代理",
+   "timing": "instant (dummy 6s life)",
+   "geometry": "map-wide — farsight ordered at each enemy hero's location",
+   "movement": "無",
+   "evidence": "j:55362-55419 (CreateNUnits 'h032' scale 300%, loop players 2-12, UnitAddAbility A11J 天眼通 + IssuePointOrder 'farsight')",
+   "notes": "Vision ultimate: one dummy repeatedly given A11J (00-天眼通 5s) and ordered farsight at every living enemy hero — global reveal, no damage."
+  },
+  {
+   "hero": "Rider",
+   "skill_name": "48-00 石化之眼",
+   "rawcode": "A0RR",
+   "trigger_stems": [
+    "Riderspell"
+   ],
+   "template": "召喚代理",
+   "timing": "instant (dummy 2s life, sleep 1s cleanup)",
+   "geometry": "silence AoE at caster's own point (radius from dummy 'h025' object data)",
+   "movement": "無",
+   "evidence": "j:38109-38137 (CreateNUnits 'h025' hidden + IssuePointOrder 'silence' at caster loc)",
+   "notes": "Hero = Hvsh 梅杜莎. Hidden dummy point-casts silence centered on Rider."
+  },
+  {
+   "hero": "Rider",
+   "skill_name": "48-01 魔法鎖鏈",
+   "rawcode": "A0RO",
+   "trigger_stems": [
+    "link",
+    "linkmove",
+    "linkback"
+   ],
+   "template": "NEW:鎖鏈鉤拉",
+   "timing": "periodic 0.03s ×≤20 (extend) then periodic 0.04s (reel back)",
+   "geometry": "chain segments 'u01R' at 50u×n up to 20 (1000u); catch check AoE 100 at tip from segment ≥3; dmg 100×lvl+50 on catch",
+   "movement": "傷害區行進 (chain tip extends 50u/tick) + 目標被推動 — caught enemy teleported back segment-by-segment to caster",
+   "evidence": "j:38143-38166 (aim), j:38181-38215 (extend + GroupPickRandomUnit catch + damage j:38197), j:38221-38245 (reel: SetUnitPositionLoc onto each chain unit while despawning)",
+   "notes": "NEW definition: projectile chain extends along a line, latches one random enemy at the tip, damages it, then drags it back to the caster while the chain retracts (Pudge-hook style). Fits no exemplar — 行進波動 lacks the pull-back."
+  },
+  {
+   "hero": "Rider",
+   "skill_name": "48-04 騎英之疆繩",
+   "rawcode": "A0RQ",
+   "trigger_stems": [
+    "RiderSprint",
+    "Ridermoveline",
+    "Ridermovecir",
+    "RidermovelineDam"
+   ],
+   "template": "跳躍落地",
+   "timing": "periodic 0.01s (line 15 ticks) → 0.02s (arc 10 ticks) → 0.01s dive → instant landing AoE",
+   "geometry": "3-phase mount flight: back-line 750u @50u/tick (+15 height), arc r600 around point 800u behind (18°/tick ×10 = 180°, +10 height), dive @50u/tick (−20 height) to cast point; landing AoE 500 dmg 300×lvl+3×AGI; 12 thunderclap FX scattered ≤300",
+   "movement": "施法者位移 — Rider hidden, pegasus dummy 'h024' flies the path; Rider teleported to landing point at impact",
+   "evidence": "j:38251-38283 (setup, hide Rider), j:38289-38316 (line), j:38322-38349 (arc), j:38363-38414 (dive + landing damage j:38360, teleport j:38380)",
+   "notes": "Blocked in EX mode (Conditions j:38255). Cinematic ride-then-crash: all damage delivered once on landing."
+  },
+  {
+   "hero": "Rider",
+   "skill_name": "48-01 怪力 (Maga Arm)",
+   "rawcode": "A0E9",
+   "trigger_stems": [
+    "Maga Arm"
+   ],
+   "template": "變身強化",
+   "timing": "instant + PolledWait 9+3×lvl s",
+   "geometry": "self only",
+   "movement": "無",
+   "evidence": "j:38420-38441 (UnitAddAbility A0EH spellbook, level-sync A0E8, timed removal)",
+   "notes": "Timed self-buff: adds spellbook A0EH (48-01o 法術書) carrying A0E8 怪力 for 9+3×lvl seconds, then strips it."
+  },
+  {
+   "hero": "Rider",
+   "skill_name": "48-03 鮮血神殿",
+   "rawcode": "",
+   "trigger_stems": [
+    "Blood Cast",
+    "Blood",
+    "BloodKill"
+   ],
+   "template": "召喚代理",
+   "timing": "periodic 1.00s while summon alive; kill event counter",
+   "geometry": "drain aura AoE 580 around summon 'o005'; dmg 75×lvl(A06C) per tick per enemy; owner hero +1% HP per enemy hit; every 15 summon kills → hero +1 STR/AGI/INT",
+   "movement": "傷害區行進 — aura follows the summoned unit wherever it walks",
+   "evidence": "j:38447-38465 (enter-map hook on 'o005'), j:38490-38524 (1s AoE drain, dmg keyed to GetUnitAbilityLevelSwapped('A06C') j:38492), j:38530-38565 (BloodKill stat farm)",
+   "notes": "True summon (blood temple creature from A06C) with a scripted life-drain aura plus a permanent-stat kill-stacking rider. rawcode '' per spec — no GetSpellAbilityId in cluster; A06C identified via damage formula."
+  },
+  {
+   "hero": "夜神月",
+   "skill_name": "44-01 死神之眼",
+   "rawcode": "A0IK",
+   "trigger_stems": [
+    "DeathEye"
+   ],
+   "template": "NEW:目標鎖定",
+   "timing": "instant",
+   "geometry": "single target, no damage; self cost = 75% of current HP (halved twice)",
+   "movement": "無",
+   "evidence": "j:42231-42277 (set udg_DeathUnit = target j:42247, SetUnitLifePercent /2 twice j:42265-42266)",
+   "notes": "NEW definition: mark skill — stores the target in a global (udg_DeathUnit) that 火車輾過/心臟麻痺 consume; costs the caster 3/4 of current HP; AI branch spams orders. Hero = Emns 44 奇樂."
+  },
+  {
+   "hero": "夜神月",
+   "skill_name": "44-03 火車輾過",
+   "rawcode": "A05H",
+   "trigger_stems": [
+    "DeathTrain"
+   ],
+   "template": "召喚代理",
+   "timing": "instant + 2s cleanup sleep",
+   "geometry": "impale at marked unit; with item I01O: dummy-impale every enemy within 600 of the mark",
+   "movement": "無 (dummy-cast impale line comes from A0EB object data)",
+   "evidence": "j:42282-42346 (dummy 'o002' + A0EB '44-火車' level-synced + IssueTargetOrder 'impale' at udg_DeathUnit; item branch Func009 j:42309-42332)",
+   "notes": "Consumes the DeathEye mark as target; item I01O upgrades to multi-impale barrage."
+  },
+  {
+   "hero": "夜神月",
+   "skill_name": "44-04 心臟麻痺",
+   "rawcode": "A05I",
+   "trigger_stems": [
+    "DeathHeart",
+    "DeathHeartBuff"
+   ],
+   "template": "單體斬擊",
+   "timing": "instant cast + 0.10s buff-watchdog window ≤1s",
+   "geometry": "single target; dmg = target maxHP×(0.05+0.10×lvl)+450",
+   "movement": "無",
+   "evidence": "j:42352-42381 (dummy casts 'unholyfrenzy' A0EC on udg_DeathUnit, dmg precomputed j:42360), j:42386-42414 (0.1s poll for buff B02G/Buhf → one UnitDamageTarget)",
+   "notes": "Dummy-buff-then-burst: unholy frenzy buff is the delivery vehicle; watchdog deals the %maxHP burst once when the buff lands, disabled after 1s."
+  },
+  {
+   "hero": "夜神月",
+   "skill_name": "44-002 交換筆記本 (EX)",
+   "rawcode": "A0SA",
+   "trigger_stems": [
+    "ChangeNote"
+   ],
+   "template": "NEW:生命互換",
+   "timing": "instant",
+   "geometry": "single target — swaps absolute current-HP values between caster and target",
+   "movement": "無",
+   "evidence": "j:42420-42446 (tempHP swap via SetUnitLifeBJ ×2, clears udg_DeathUnit)",
+   "notes": "NEW definition: HP-swap utility — caster and target exchange current life totals; no damage event, also wipes the DeathEye mark."
+  },
+  {
+   "hero": "林克",
+   "skill_name": "60-01 科奇利族的迴旋鏢",
+   "rawcode": "A0BO",
+   "trigger_stems": [
+    "Initiate Fan Toss 2",
+    "Fan Movement 2"
+   ],
+   "template": "行進波動",
+   "timing": "periodic 0.03s (out 3 ticks → orbit 21 ticks → homing return)",
+   "geometry": "boomerang dummy 'h00P': out 150u @50u/tick; orbit pivot ≈559u out (√(500²+250²)) radius 420, −18°/tick ×378°; return 50u/tick until ≤30u of caster; hit AoE 225/tick; dmg 50+100×lvl, one hit per target (SafeTargets dedup)",
+   "movement": "傷害區行進 — boomerang travels out-orbit-return; homes on the caster's live position",
+   "evidence": "j:45936-45986 (launch math j:45964), j:46057-46096 (3-phase movement j:46076-46083, per-tick 225 AoE j:46085, one-hit dedup j:46052-46053)",
+   "notes": "Boomerang path variant of the travelling wave: same periodic-step + AoE core, geometry is line-out → 378° arc → return-to-caster; each enemy damaged once per throw. Hero = H00L 60 時空勇者."
+  },
+  {
+   "hero": "林克",
+   "skill_name": "60-04 迴旋斬",
+   "rawcode": "A0BR",
+   "trigger_stems": [
+    "CircleCut",
+    "CircleCut Moving"
+   ],
+   "template": "週期踩踏",
+   "timing": "periodic 0.10s ×30 (3s)",
+   "geometry": "AoE 375 around caster's current position per tick; dmg STR×lvl×0.5 per tick; vacuum pull step = min(−130, −3200/dist) toward caster",
+   "movement": "傷害區跟隨施法者 (caster free to walk, zone re-centers每tick); 目標被推動 — enemies dragged inward each tick",
+   "evidence": "j:46102-46143 (setup, dmg formula j:46127), j:46188-46205 (30-tick loop), j:46171-46179 (pull + damage per enemy)",
+   "notes": "Bladestorm-with-vacuum: repeated stomp AoE that also sucks enemies toward Link — closer enemies pulled harder."
+  },
+  {
+   "hero": "林克",
+   "skill_name": "60-03 海拉爾之盾的庇護",
+   "rawcode": "",
+   "trigger_stems": [
+    "DefStart",
+    "DefEnd"
+   ],
+   "template": "變身強化",
+   "timing": "event toggle (defend / undefend orders)",
+   "geometry": "self only",
+   "movement": "無",
+   "evidence": "j:46211-46258 (order 'defend' → UnitAddAbility A0P5; 'undefend' → remove)",
+   "notes": "Order-gated toggle: WC3 Defend stance (Adef 60-03) adds hidden bonus ability A0P5 while active. rawcode '' — no GetSpellAbilityId, driven by EVENT_PLAYER_UNIT_ISSUED_ORDER."
+  },
+  {
+   "hero": "林克",
+   "skill_name": "60-EX 絕空斬",
+   "rawcode": "",
+   "trigger_stems": [
+    "DeathSlashEX"
+   ],
+   "template": "攻擊觸發",
+   "timing": "on attack (0.01s re-arm), while EX mode + HP≤45%",
+   "geometry": "shockwave line toward attacked unit (from A10Q object data)",
+   "movement": "傷害區行進 — dummy shockwave projectile travels toward the attack target",
+   "evidence": "j:46266-46311 (EVENT_PLAYER_UNIT_ATTACKED; dummy 'hfoo' + A10Q lvl1 + IssuePointOrder 'shockwave' at attacked unit j:46294-46298)",
+   "notes": "Low-HP EX passive: every attack while EX_Mode on and own HP ≤45% fires a free 絕空斬 shockwave via dummy."
+  },
+  {
+   "hero": "呂布",
+   "skill_name": "80-01 天下無雙 (kill-stack half)",
+   "rawcode": "",
+   "trigger_stems": [
+    "FlyHeroAch",
+    "skill1"
+   ],
+   "template": "變身強化",
+   "timing": "on kill; each stack decays after 15s sleep",
+   "geometry": "self only; A0AU level = stacks, cap 4+2×lvl(A0MX), floor 1",
+   "movement": "無",
+   "evidence": "j:50315-50348 (EVENT_PLAYER_UNIT_DEATH, killer==LuBu → SetUnitAbilityLevel A0AU +1, TriggerSleepAction 15 then −1), j:50354-50385 (skill1 level-sync)",
+   "notes": "Kill-stacking timed self-buff: each kill raises passive A0AU (80-00-x 飛將神弓) one level for 15s, cap scales with 天下無雙. skill1 is pure bookkeeping (syncs 逆甲 sub-abilities A0N4/A0N5 to A0MX level on learn). Hero = H01U 80 亂世癿王者."
+  },
+  {
+   "hero": "呂布",
+   "skill_name": "80-03 鬼神烈戟",
+   "rawcode": "A0N0",
+   "trigger_stems": [
+    "skill3"
+   ],
+   "template": "原地震波",
+   "timing": "instant",
+   "geometry": "AoE 530 around caster; dmg 150+200×lvl+3×STR; plus 3 dummy 'stampede' (A0N2 妖火) point-casts at random 256u offsets",
+   "movement": "無 (caster stationary; stampede missiles from dummies are cosmetic/extra)",
+   "evidence": "j:50390-50442 (3× CreateNUnits 'o01X' + A0N2 stampede loop j:50418-50427; instant 530 AoE damage j:50406, j:50430)",
+   "notes": "Instant self-centered nova with dummy-cast stampede volleys layered on top."
+  },
+  {
+   "hero": "呂布",
+   "skill_name": "80-04 赤兔咆哮 (mode)",
+   "rawcode": "",
+   "trigger_stems": [
+    "skill4",
+    "skill4end",
+    "skill4eff"
+   ],
+   "template": "變身強化",
+   "timing": "order toggle (immolation/unimmolation) + 1.0s buff watchdog",
+   "geometry": "self only",
+   "movement": "無",
+   "evidence": "j:50475-50497 (order 'immolation' → SetPlayerAbilityAvailable A0RW true, level=A0MZ), j:50448-50469 ('unimmolation' → hide), j:50503-50528 (1s poll: buff B02L gone → hide + cleanup)",
+   "notes": "Immolation-stance mode: while the 赤兔咆哮 buff B02L is up, the extra ability A0RW (80-04-01 邪黑氣) is unlocked for the player; watchdog revokes it when the mode drops."
+  },
+  {
+   "hero": "呂布",
+   "skill_name": "80-00 天生弒鬼神 (mode proc)",
+   "rawcode": "",
+   "trigger_stems": [
+    "RabbitYell",
+    "Get Rabbit EX"
+   ],
+   "template": "攻擊觸發",
+   "timing": "on attack, only while buff B02L (赤兔咆哮 mode) active",
+   "geometry": "shockwave line via dummy (A0MW, level = lvl A0MY); proc chance: attacking (lvl A0MZ+1)/10, being attacked (lvl A0MZ)/10",
+   "movement": "傷害區行進 — dummy shockwave travels toward the target/attacker",
+   "evidence": "j:50534-50600 (EVENT_PLAYER_UNIT_ATTACKED, buff gate j:50535, dual branches: LuBu attacks j:50573-50579 / LuBu attacked j:50581-50587, dummy 'hfoo' + 'shockwave')",
+   "notes": "Dual-direction proc: chance-based free shockwave both when 呂布 attacks and when he is attacked, only during the immolation mode. Get Rabbit EX is bookkeeping (hero lvl 30 → A101/A108 戰無不勝 set to lvl 2)."
+  },
+  {
+   "hero": "林默娘",
+   "skill_name": "",
+   "rawcode": "",
+   "trigger_stems": [],
+   "template": "無觸發技能",
+   "timing": "",
+   "geometry": "",
+   "movement": "",
+   "evidence": "HERO_TRIGGERS.json lists no triggers for this hero",
+   "notes": "No JASS trigger cluster exists — all of 林默娘's abilities are pure object-data (no scripted delivery mechanics in war3map.j)."
+  },
+  {
+   "hero": "莉娜",
+   "trigger_stems": [
+    "LinaS",
+    "LinaS Effect"
+   ],
+   "skill_name": "04-04 神滅斬",
+   "rawcode": "A07F",
+   "template": "衝鋒推撞",
+   "geometry": "推退 40u/tick ×最多10 tick (~400u); 沿途樹木清除半徑300; 阻擋判定 dist(預期,實際)<15",
+   "timing": "instant 傷害 → PolledWait 0.5s → periodic 0.08s ×10",
+   "movement": "目標被推動 — LinaS_Effect 每tick SetUnitPositionLoc 沿施法角推 40u; 施法者不動",
+   "evidence": "war3map.j:29777 (Actions: INT×12/×5 單體傷害 + enable), 29848 (Effect 推退迴圈), 30096附近 InitTrig periodic 0.08",
+   "notes": "先結算單體傷害 (H020 本體 INT×12, 否則 INT×5), 再擊退. SUSPECT: 停止條件 <15 與趙子龍 KnockBack 的 >8 相反, 正常移動成功時 dist≈0 → 第1 tick 就觸發『disable+彈回P1』, 實際擊退幾乎立即取消, 疑似原作 bug. 全圖 1600×1600 rect 鏡頭震動×技能等級."
+  },
+  {
+   "hero": "莉娜",
+   "trigger_stems": [
+    "Fire NOVA",
+    "DragonSlaveSet",
+    "DragonSlaveMove"
+   ],
+   "skill_name": "04-03 龍破斬",
+   "rawcode": "A04R",
+   "template": "行進波動",
+   "geometry": "45u/tick 行進; 每tick收集半徑200 (樹清除256); 終點爆發: 收集450 / 樹600 / 特效環18發@325半徑; 上限70 tick 或距目標<55 即爆; 第32 tick 生成彈體 h014",
+   "timing": "periodic 0.03s ×≤70; Fire NOVA 為同 rawcode 的 SPELL_CAST 詠唱字幕 5段×0.2s sleep",
+   "movement": "傷害區行進 — 彈體 (dummy h014) 沿施法線每tick前進45u; 施法者不動",
+   "evidence": "war3map.j:29893 (Fire_NOVA 詠唱), 29951 (Set: 傷害計算+h013 230%擺飾), 30098 (Move: 行進+終點爆發), 30150附近 InitTrig periodic 0.03",
+   "notes": "本任務的行進波動 exemplar. 傷害 500×lvl+200 (H020 再 +INT×7); 沿途只收集單位入 group, 傷害在終點一次結算: 建築半傷, 單位全傷; 終點另有 TerrainDeformationRipple."
+  },
+  {
+   "hero": "莉娜",
+   "trigger_stems": [
+    "GigaSlave"
+   ],
+   "skill_name": "04-05 重破斬",
+   "rawcode": "A023",
+   "template": "召喚代理",
+   "geometry": "dummy u030 ×1 於施法者腳下, timed life 1s",
+   "timing": "instant + sleep 3s 後清理殘留 u030",
+   "movement": "無 — 施法者與 dummy 皆不動",
+   "evidence": "war3map.j:30168 (Actions: CreateNUnits u030 + BTLF 1s + sleep 3 清理)",
+   "notes": "觸發本身零傷害 — 效果全在 u030 物件資料 (光環/爆炸單位). A023 在 OBJECTS.json 名為 04-05 重破斬 (HERO_NUMBERS 04 只列到 -04, 此為第5欄)."
+  },
+  {
+   "hero": "蒼月潮",
+   "trigger_stems": [
+    "order123"
+   ],
+   "skill_name": "07-01 臨、兵、鬥",
+   "rawcode": "A0G0",
+   "template": "NEW:連段起手",
+   "geometry": "無幾何 — 僅旗標與浮動文字",
+   "timing": "instant; MoonCombo=1 維持 1s (TriggerSleepAction 1.0 後歸零)",
+   "movement": "無",
+   "evidence": "war3map.j:34151 (Actions: 文字 + set udg_MoonCombo=1 → sleep 1 → =0)",
+   "notes": "NEW:連段起手 = 觸發只開連段窗口旗標, 實際傷害為物件資料技; MoonCombo==1 讓 07-02 吃 AGI 加成, 07-02 再設 MoonCombo=2 供 07-03 吃加成."
+  },
+  {
+   "hero": "蒼月潮",
+   "trigger_stems": [
+    "MoonKnock"
+   ],
+   "skill_name": "07-02 者、皆、陣",
+   "rawcode": "A0G2",
+   "template": "衝鋒推撞",
+   "geometry": "3段×200u 沿面向; 每段收集半徑300 + 樹清除300; 終點=前方600u",
+   "timing": "sleep 0.1 前置 → 單幀3段掃描 → 群體一次結算 → 施法者瞬移終點; MoonCombo=2 窗口 1s",
+   "movement": "施法者位移 — 掃完後 SetUnitPositionLoc 到前方600u; 衝刺期間掛 Avul+A09O+A09P 無敵",
+   "evidence": "war3map.j:34390 (Actions: 3×200u loop + ForGroup 傷害 + 瞬移), 34327 Conditions A0G2",
+   "notes": "衝鋒推撞 exemplar. 傷害 STR×lvl+225, 若 MoonCombo==1 再 +AGI×3 (EX_Mode 時 ×6), 一次性對收集群結算 (敵/活/非建築)."
+  },
+  {
+   "hero": "蒼月潮",
+   "trigger_stems": [
+    "Jump Start",
+    "Jump Effect"
+   ],
+   "skill_name": "07-03 列、在、前",
+   "rawcode": "A0G3",
+   "template": "跳躍落地",
+   "geometry": "41步, 每步 dist/41; 飛行高度拋物線 -1.5(i-21)²+600; 落地 AoE 330 (敵/活/非建築)",
+   "timing": "periodic 0.035s (0.35/10) ×41 ≈1.4s",
+   "movement": "施法者位移 — 每tick SetUnitPositionLoc + SetUnitFlyHeight 拋物線; 期間 pause + 無碰撞 + 烏鴉形態 A0FZ",
+   "evidence": "war3map.j:34195 (Start: 參數/傷害/pause/A0FZ), 34280 (Effect: 位移+落地AoE), 34324附近 InitTrig 0.35/10",
+   "notes": "跳躍落地 exemplar. 傷害 STR×2+lvl×100+350, 若 MoonCombo==2 再 +AGI×5 (EX ×10); 落地另有 TerrainDeformationRipple + 鏡頭震動×等級."
+  },
+  {
+   "hero": "蒼月潮",
+   "trigger_stems": [
+    "Beast Spear"
+   ],
+   "skill_name": "獸矛 (EX 處決被動, 無 NN 編號)",
+   "rawcode": "",
+   "template": "攻擊觸發",
+   "geometry": "無幾何 — 攻擊事件單體",
+   "timing": "instant on EVENT_PLAYER_UNIT_ATTACKED",
+   "movement": "無",
+   "evidence": "war3map.j:34489 (Actions: 9999 chaos), 34455 Conditions (Hpb1 + EX_Mode==true)",
+   "notes": "攻擊觸發 exemplar. EX 限定: 目標非英雄且 HP<35% → 必定 9999 CHAOS 處決; 目標為英雄 → 1% (GetRandomInt(1,100)==50) 9999. 條件用單位型別+EX旗標, 無 spell rawcode."
+  },
+  {
+   "hero": "拳四郎",
+   "trigger_stems": [
+    "YouDie"
+   ],
+   "skill_name": "25-01 北斗懺悔拳",
+   "rawcode": "A0AF",
+   "template": "單體斬擊",
+   "geometry": "純單體, 無範圍",
+   "timing": "sleep 1s ×3 (『你已經死了』三段演出) 後一次結算",
+   "movement": "無",
+   "evidence": "war3map.j:38595 (Actions: 3×TriggerSleepAction(1)+文字/音效 → dummy o001 UnitDamageTarget)",
+   "notes": "傷害 lvl×150 + STR×3 (EX_Mode 且 U00L 鼠形態時 STR×9); 傷害來源掛在 0.8s timed-life dummy o001; 目標播 death 動畫. 3秒延遲演出期間目標未被 pause."
+  },
+  {
+   "hero": "拳四郎",
+   "trigger_stems": [
+    "ChangeDNA",
+    "LightAttack"
+   ],
+   "skill_name": "25-04 ChangeDNA",
+   "rawcode": "A0HW",
+   "template": "召喚代理",
+   "geometry": "初動: 半徑900 內『每個』單位各生成一隻隱形 dummy o00E (6s, A0HY) 對其施放 chainlightning; 之後開啟攻擊觸發窗口",
+   "timing": "instant 雷擊齊發 → TriggerSleepAction(lvl×8 s) 窗口 → 關閉+清理; 窗口內攻擊事件即時",
+   "movement": "無 — dummy 原地/瞬移到目標位施法",
+   "evidence": "war3map.j:38676 (Actions: ForGroup 900 dummy chainlightning + enable LightAttack + sleep lvl×8), 38738 (LightAttack: 攻擊25%機率 proc)",
+   "notes": "複合: 召喚代理齊射 + lvl×8s 的攻擊觸發窗口 — 窗口內 Umal 需為 U00L 形態: 我方攻擊 25% (rand(1,4)==3) dummy chainlightning(A0HZ) 打目標; 被攻擊 25% dummy purge(A02H) 反制攻擊者. 條件檢 'Umal' 施放."
+  },
+  {
+   "hero": "拳四郎",
+   "trigger_stems": [
+    "HunrThum"
+   ],
+   "skill_name": "25-03 北斗百裂拳",
+   "rawcode": "A0HV",
+   "template": "瞬發點爆",
+   "geometry": "AoE 450 @ 施法目標點 (敵/非建築/活)",
+   "timing": "sleep 0.1 後單次結算",
+   "movement": "無",
+   "evidence": "war3map.j:38837 (Actions: sleep 0.1 + ForGroup 450 @SpellTargetLoc), 38818 (每單位傷害)",
+   "notes": "傷害 lvl×250+50 + STR×2 (EX 且 U00L 時 STR×6), 附 WarStomp 命中特效與亂數方向浮動字."
+  },
+  {
+   "hero": "趙子龍",
+   "trigger_stems": [
+    "Voice"
+   ],
+   "skill_name": "彩蛋: -nico 轉生夢幻之星 (非技能)",
+   "rawcode": "",
+   "template": "變身強化",
+   "geometry": "無",
+   "timing": "instant on 聊天指令 -nico",
+   "movement": "無",
+   "evidence": "war3map.j:42489 (Actions: ReplaceUnitBJ Opgh→O02P + 傷害事件重註冊), 42520附近 InitTrig 聊天事件 -nico",
+   "notes": "隱藏彩蛋, 不是戰鬥技能: 限特定玩家 (udg_d8246505 或名為 ericer) 且 Opgh Lv1 時, 永久 ReplaceUnitBJ 成 O02P 夢幻之星 (99號), 並把 DES 傷害系統事件重掛到新單位. 行為上是 morph 故掛 變身強化, 建議歸檔為彩蛋而非技能."
+  },
+  {
+   "hero": "趙子龍",
+   "trigger_stems": [
+    "KnockBack",
+    "KnockBack Effect"
+   ],
+   "skill_name": "32-01 一騎槍閃",
+   "rawcode": "A049",
+   "template": "衝鋒推撞",
+   "geometry": "推退 30u/tick ×最多20 tick (600u); 沿途樹清除300; 阻擋判定 dist(預期,實際)>8 → 停+彈回+ThunderClap",
+   "timing": "instant (觸發無傷害) → periodic 0.04s ×20",
+   "movement": "目標被推動 — 每tick SetUnitPositionLoc 沿施法者→目標角推30u; 施法者不動",
+   "evidence": "war3map.j:42559 (Actions: 設角度+enable), 42618 (Effect 推退迴圈), 42648附近 InitTrig periodic 0.04",
+   "notes": "觸發純位移+鏡頭震動×等級 — 傷害在 A049 物件資料. 這是 LinaS 同款推退模板的『正確版』(阻擋條件 >8)."
+  },
+  {
+   "hero": "趙子龍",
+   "trigger_stems": [
+    "KniSkill",
+    "KniSkillEffect"
+   ],
+   "skill_name": "32-03 閃光龍牙",
+   "rawcode": "A0I1",
+   "template": "衝鋒推撞",
+   "geometry": "50u/tick, 步數=施放時距離/50; 到位後 250×250 rect 內只結算鎖定目標; 命中生成300%縮放 dummy o00E",
+   "timing": "sleep 0.1 前置 → periodic 0.03s 衝刺 → 終點單次結算",
+   "movement": "施法者位移 — 每tick SetUnitPositionLoc 沿起點→目標原站位直線前進 (無碰撞, 掛 A0I5)",
+   "evidence": "war3map.j:42663 (KniSkill: 鎖定目標+參數), 42737 (Effect: 位移+終點結算), 42782 InitTrig periodic 0.03",
+   "notes": "突進斬殺型衝鋒: 傷害 lvl×300 + STR×3 只打施放瞬間鎖定的那一隻 (目標離開 250×250 rect 即 miss 顯示 TRIGSTR_2831); 命中才有鏡頭震動. 衝向的是目標『施放當下』的位置."
+  },
+  {
+   "hero": "趙子龍",
+   "trigger_stems": [
+    "DefStartC",
+    "DefEndC"
+   ],
+   "skill_name": "32-04 狂龍霸體",
+   "rawcode": "A0TI",
+   "template": "變身強化",
+   "geometry": "無 — 純能力增刪",
+   "timing": "instant on ISSUED_ORDER defend / undefend",
+   "movement": "無",
+   "evidence": "war3map.j:42833 (DefStartC: 加 A0TP+A0TQ + 依 A0TI 等級擇一 A0TS/A0TR/A0TT), 42882 (DefEndC: 全移除)",
+   "notes": "防禦姿態開關: defend 指令進入霸體 (lvl1→A0TS, lvl2→A0TR, lvl3→A0TT, 恆加 A0TP+A0TQ), undefend 解除. 同時支援 Opgh 與彩蛋形態 O02P."
+  },
+  {
+   "hero": "趙子龍",
+   "trigger_stems": [
+    "SevenOut",
+    "SevenIn"
+   ],
+   "skill_name": "七進七出 (廢案; A0YV 現已改掛 00-00 藍星複製技術)",
+   "rawcode": "A0YV",
+   "template": "NEW:閃現突進",
+   "geometry": "SevenOut: 每次 CAST 瞬步 350u ×最多2次 (取消施法); SevenIn: EFFECT 時瞬移 600u + dummy A0YU thunderclap + AoE 270 (敵/活/非建築)",
+   "timing": "instant (無 periodic); SevenCount 於 SevenIn 歸零",
+   "movement": "施法者位移 — SetUnitPositionLocFacingBJ 一次到位 (瞬移, 非逐tick)",
+   "evidence": "war3map.j:2009-2010 (僅 global 宣告, 無 InitTrig/本體 — 未編譯); 本體在 CUSTOM_TEXT.json triggers[SevenOut/SevenIn], TRIGGERS.json isEnabled=0",
+   "notes": "NEW:閃現突進 = 瞬間位移(非逐tick行進) + 落點AoE爆發. 死碼: 觸發停用未編譯進 war3map.j, 且 rawcode A0YV 已被重用為『00-00 藍星複製技術』. AoE 傷害 AGI×8."
+  },
+  {
+   "hero": "異型",
+   "trigger_stems": [
+    "LearnReTurn",
+    "ReTurn"
+   ],
+   "skill_name": "49-03 蛻變",
+   "rawcode": "A0BV",
+   "template": "NEW:擊殺成長",
+   "geometry": "無幾何 — 全圖死亡事件",
+   "timing": "instant on EVENT_PLAYER_UNIT_DEATH (擊殺敵方英雄時)",
+   "movement": "無",
+   "evidence": "war3map.j:46357 (LearnReTurn: 學會後 enable+execute), 46406 (ReTurn: ModifyHeroStat AGI +lvl), 46379 (擊殺者==udg_ReTurn 條件)",
+   "notes": "NEW:擊殺成長 = 事件監聽被動: 每擊殺一名敵方英雄永久 +AGI(=A0BV等級); AGI≥140 時觸發自我停用 (成長封頂). LearnReTurn 是學習註冊, 與 ReTurn 併為一技."
+  },
+  {
+   "hero": "異型",
+   "trigger_stems": [
+    "撲殺爪擊",
+    "KillAtk"
+   ],
+   "skill_name": "49-00 撲殺爪擊",
+   "rawcode": "A0NJ",
+   "template": "NEW:純裝飾觸發",
+   "geometry": "無 — 單體目標點特效",
+   "timing": "instant on SPELL_EFFECT",
+   "movement": "無",
+   "evidence": "war3map.j:46434 (Actions: ThunderClap 特效 + TextUse '你別過來!' + TalkToMe overhead, 零傷害); TRIGGERS.json: 『撲殺爪擊』isComment=1, ecaCount=0",
+   "notes": "NEW:純裝飾觸發 = 觸發只做特效/文字, 傷害/效果全在物件資料 (A0NJ = 49-00 撲殺爪擊, -00 被動欄). 『撲殺爪擊』在觸發編輯器只是註解標籤, 無 JASS 本體 — 實作即 KillAtk."
+  },
+  {
+   "hero": "克勞薩先生",
+   "trigger_stems": [
+    "DMC Dead",
+    "DMC Deadagain",
+    "DMC Revive"
+   ],
+   "skill_name": "61-00 百連我殺",
+   "rawcode": "Aphx",
+   "template": "NEW:假死演出",
+   "geometry": "prop 單位 u01P ×1 生成於腳下",
+   "timing": "instant; 解除 = 再次施放 Aphx (U011 形態) 或 U011 死亡",
+   "movement": "無 — 施法者被 pause 定身",
+   "evidence": "war3map.j:50677 (Dead: pause + u01P attack anim), 50745 (Revive: unpause + Resurrect 特效 + 清 prop), 50712 (Deadagain: U011 死亡時 unpause+清理)",
+   "notes": "NEW:假死演出 = 施法後暫停自身並生成道具單位擺姿勢, 再次施法/死亡時解除. U012(怪物形態)施 Aphx 進入假死, U011(死亡老二形態)施 Aphx 復活; 觸發零傷害, 形態切換由 Aphx(61-00 百連我殺 效果)物件資料承擔."
+  },
+  {
+   "hero": "克勞薩先生",
+   "trigger_stems": [
+    "DMC Ass",
+    "DMC Forst",
+    "DMC Pig"
+   ],
+   "skill_name": "61-03 打屁股風林火豬",
+   "rawcode": "A0OS",
+   "template": "攻擊觸發",
+   "geometry": "無 — 攻擊事件單體 proc",
+   "timing": "instant on EVENT_PLAYER_UNIT_ATTACKED (Ass 為學習事件)",
+   "movement": "無",
+   "evidence": "war3map.j:50781 (Ass: 學 lv1 附贈 A0OL), 50820 (Forst: lv≥2 15% dummy bloodlust A0OO 給自己), 50870 (Pig: lv≥4 7% dummy hex A0KN 變豬目標)",
+   "notes": "一技三觸發: DMC Ass 是學習掛件 (lv1 加 A0OL); 攻擊 proc — lv≥2 15% 隱形 dummy hfoo 對攻擊者(自己)施 bloodlust; lv≥4 7% dummy 對被攻擊者施 hex, 附浮動字+豬叫音效."
+  },
+  {
+   "hero": "克勞薩先生",
+   "trigger_stems": [
+    "DMC Evilball"
+   ],
+   "skill_name": "61-01 惡魔球",
+   "rawcode": "A0OP",
+   "template": "NEW:純裝飾觸發",
+   "geometry": "無",
+   "timing": "instant on SPELL_CAST",
+   "movement": "無",
+   "evidence": "war3map.j:50908 (Actions: 僅一組浮動文字 TRIGSTR_1044)",
+   "notes": "NEW:純裝飾觸發 = 觸發只做特效/文字, 彈體/傷害全在 A0OP 物件資料. 註: 文字錨在 GetAttackedUnitBJ() (施法事件裡通常為 null/殘值) — 原作 sloppy."
+  },
+  {
+   "hero": "克勞薩先生",
+   "trigger_stems": [
+    "DMC Kill"
+   ],
+   "skill_name": "擊殺嘲諷 (無 rawcode)",
+   "rawcode": "",
+   "template": "NEW:純裝飾觸發",
+   "geometry": "無",
+   "timing": "10 連發浮動字, 間隔 sleep 0.09s",
+   "movement": "無",
+   "evidence": "war3map.j:50938 (Actions: loop ×10 TextTag TRIGSTR_1646 @0.09s), 50928 Conditions (殺人者 U012 且死者為英雄)",
+   "notes": "U012 擊殺任一英雄後的嘲諷字幕連發; 純演出, 零數值效果."
+  },
+  {
+   "hero": "十六夜",
+   "trigger_stems": [
+    "Sakuya SpaceMagic"
+   ],
+   "skill_name": "咲夜 時符 (廢案; A0IK 現已改掛 44-01 死神之眼)",
+   "rawcode": "A0IK",
+   "template": "NEW:環繞衛星",
+   "geometry": "8 把小刀 e00V 雙環公轉: 外環半徑 min(50+150t,200), 內環 min(40+120t,150), 角速度 2π/s (相位差 90°), 持續 2.0s 後清除",
+   "timing": "handle-timer periodic 0.04s ×~50",
+   "movement": "dummy 繞施法者公轉 (SetUnitPosition 逐tick), 施法者不動",
+   "evidence": "war3map.j:2264 (僅 global 宣告, 無 InitTrig/本體 — 未編譯); 本體在 CUSTOM_TEXT.json (Sakuya_SpaceMagic_Turn), TRIGGERS.json isEnabled=0",
+   "notes": "NEW:環繞衛星 = dummy 單位群繞施法者做軌道運動的持續體術. 死碼: 未開放英雄, 觸發停用未編譯, 且 A0IK 已被重用為 44-01 死神之眼 (奇樂). 觸發內無傷害呼叫."
+  },
+  {
+   "hero": "十六夜",
+   "trigger_stems": [
+    "Sakuya StopKnife"
+   ],
+   "skill_name": "咲夜 靜止飛刀 (廢案; A0IL 現為無名 +100 item ability)",
+   "rawcode": "A0IL",
+   "template": "NEW:直線布陣",
+   "geometry": "9 把小刀 e00V 沿垂直於施法方向的直線佈置, 間距 120u (橫向偏移 -2..+6 ×120)",
+   "timing": "instant 佈陣; 以 120s timer 或施法者下一次 SPELL_EFFECT 作為後續事件 (handler Sakuya_StopKnife_Start 是空殼)",
+   "movement": "無 — 刀牆靜止駐留",
+   "evidence": "war3map.j:2265 (僅 global 宣告 — 未編譯); 本體在 CUSTOM_TEXT.json (Trig_Sakuya_StopKnife_Actions), TRIGGERS.json isEnabled=0",
+   "notes": "NEW:直線布陣 = 單幀生成一排駐留 dummy 構成牆/陣, 等待後續事件引爆 (時停飛刀半成品, 引爆邏輯未寫完). 死碼: 停用未編譯, A0IL rawcode 已被重用為 (所有狀況+100) 屬性 item ability."
+  },
+  {
+   "hero": "十六夜",
+   "trigger_stems": [
+    "Untitled Trigger 003"
+   ],
+   "skill_name": "",
+   "rawcode": "",
+   "template": "無觸發技能",
+   "geometry": "",
+   "timing": "",
+   "movement": "",
+   "evidence": "war3map.j:2266 (僅 global 宣告); TRIGGERS.json: isEnabled=0, isCustomText=0, ecaCount=1, 無 custom text body",
+   "notes": "停用的 1-ECA stub, 既未編譯進 war3map.j 也無 custom text 本體可讀 — 無可分類行為. 十六夜整包 (含 Open Skill of Sakuya) 皆停用, 屬未開放英雄."
+  },
+  {
+   "hero": "木乃香",
+   "skill_name": "14-00 召喚式神",
+   "rawcode": "A0JJ",
+   "trigger_stems": [
+    "MoveSlaveStart",
+    "MoveSlaveOrder"
+   ],
+   "template": "召喚代理",
+   "evidence": "j:30192-30201 (periodic move order), j:30207-30224 (A0JJ sets udg_MoNiUnit + EnableTrigger)",
+   "geometry": "無 (式神 'u00P' 本體由物件資料召喚)",
+   "timing": "instant cast; 週期 3.0s 跟隨令",
+   "movement": "式神被下 move 令走向施法者; 施法者不動",
+   "notes": "觸發只負責式神跟隨 (IssueTargetOrderBJ \"move\" → 木乃香); 召喚本體在物件資料"
+  },
+  {
+   "hero": "木乃香",
+   "skill_name": "14-01 東風繪扇、南風末廣",
+   "rawcode": "A0JL",
+   "trigger_stems": [
+    "Wind Effect",
+    "MagicFan",
+    "Wind CloseEffect"
+   ],
+   "template": "原地震波",
+   "evidence": "j:30354-30368 (heal loop + rects), j:30237-30248 (visual spawn), j:30389-30411 (0.05s×60 spin visual)",
+   "geometry": "以施法者為中心 rect 650×650; EX 模式 1200×1200",
+   "timing": "instant (視覺 0.05s×60 tick, 3.0s 後清理)",
+   "movement": "無/施法者原地; 兩個 'o01G' 視覺單位旋轉上升",
+   "notes": "是治療不是傷害: 友軍 +150+(lvl+1)×INT HP, 並由 'ogru'+A02H dummy 對每個友軍施 purge (驅散)"
+  },
+  {
+   "hero": "木乃香",
+   "skill_name": "14-02 式神炸裂",
+   "rawcode": "A0JM",
+   "trigger_stems": [
+    "SlaveExp"
+   ],
+   "template": "NEW:自爆式神",
+   "evidence": "j:30536-30545 (loop own slaves), j:30466-30476 (kill+AoE per slave), j:30449-30457 (damage)",
+   "geometry": "每隻式神死點 rect 500×500",
+   "timing": "instant (0.01s sleep 後一次性)",
+   "movement": "無位移; 傷害區固定在各式神屍點",
+   "notes": "NEW 定義: 引爆己方全部式神 ('u00P'/'u00Q'), 每爆一次 rect AoE 150×lvl+100+3×INT 魔傷, 施法者每爆回 150 mana; 'Etyr' 分支選式神種類"
+  },
+  {
+   "hero": "木乃香",
+   "skill_name": "14-04 AKT戰隊",
+   "rawcode": "A0JZ",
+   "trigger_stems": [
+    "AKT start",
+    "AKT stop",
+    "AKT 1",
+    "AKT 1 Effect",
+    "AKT 2",
+    "AKT 3",
+    "AKT 4",
+    "AKT 4 Effect",
+    "AKT Effect",
+    "AKT CloseEffect"
+   ],
+   "template": "引導通魔",
+   "evidence": "j:30620-30760 (staged sequence, AKTBool aborts), j:30778-30788 (ENDCAST→abort), j:30880-30908 (AKT_2 dmg), j:30937-30947 (AKT_3 dmg), j:30801-30822 / 30989-31003 (0.02s 拋物線跳)",
+   "geometry": "客串單位落點 500-700u 繞目標點 (角度 ±45/±135°); 六芒星 6 單位半徑 450; 兩段傷害各 rect 650×650 (400+4×INT 魔傷; 4×INT 混沌)",
+   "timing": "channel 分段: sleep 0.5s×3 + 3.5s + 1.2s (~6s); 跳躍 0.02s×20-21 tick",
+   "movement": "施法者原地引導; 4 個客串召喚 (夏那/和香/涼宮/皮卡) 依序跳/移動到目標點演出",
+   "notes": "SPELL_ENDCAST 設 AKTBool=true 使後續階段全部中止並清場 — 引導被斷即取消; 大魔法陣 'o01L' ×500% 縮放旋轉 10s"
+  },
+  {
+   "hero": "法師涅吉",
+   "skill_name": "15-02 沉睡之霧",
+   "rawcode": "A054",
+   "trigger_stems": [
+    "Sleep Air"
+   ],
+   "template": "召喚代理",
+   "evidence": "j:34543-34557 (dummy+A055, 450 AoE dummy-cast sleep), j:34529-34536",
+   "geometry": "目標單位周圍半徑 450",
+   "timing": "instant",
+   "movement": "無",
+   "notes": "dummy 'ogru'+A055 (等級同步) 對範圍內每個單位 (主目標除外) 施 sleep; 主目標由 A054 本體處理"
+  },
+  {
+   "hero": "法師涅吉",
+   "skill_name": "15-03 雷電風暴",
+   "rawcode": "A052",
+   "trigger_stems": [
+    "LiteningWind"
+   ],
+   "template": "瞬發點爆",
+   "evidence": "j:34609-34616 (500 AoE at target loc), j:34594-34602 (INT×4 dmg)",
+   "geometry": "目標點半徑 500",
+   "timing": "instant (視覺 'e00Y' 2s)",
+   "movement": "無",
+   "notes": "敵方非建築 INT×4 魔傷"
+  },
+  {
+   "hero": "法師涅吉",
+   "skill_name": "15-04 千之雷",
+   "rawcode": "A053",
+   "trigger_stems": [
+    "ThTh"
+   ],
+   "template": "瞬發點爆",
+   "evidence": "j:34676-34682 (500 AoE around target unit), j:34653-34664 (INT×5 dmg)",
+   "geometry": "目標單位周圍半徑 500",
+   "timing": "instant (視覺 2s)",
+   "movement": "無",
+   "notes": "每個受害者處生成 'e016' 視覺; INT×5 魔傷"
+  },
+  {
+   "hero": "法師涅吉",
+   "skill_name": "82-00-02 暫定契約",
+   "rawcode": "A0QC",
+   "trigger_stems": [
+    "暫定契約",
+    "AgreementTarget",
+    "AgreementStart",
+    "AgreementJudg"
+   ],
+   "template": "NEW:契約連結",
+   "evidence": "j:34704-34712 (A0QC 指定契約對象), j:34733-34737 ('Emfr' 下 immolation 令→契約者加 A0Q8), j:34757-34762 (1s 週期: 涅吉失去 B039 buff 即移除)",
+   "geometry": "無",
+   "timing": "instant 指定; 維持判定週期 1.0s",
+   "movement": "無",
+   "notes": "NEW 定義: 指定友軍為契約對象; 涅吉開啟 immolation (buff B039) 期間契約對象持有 'A0Q8 暫定法書', 關閉即拔除。'暫定契約' 中文名觸發是資料夾標籤, 無 JASS 本體; ability 編號掛 82 (戰鬥涅吉系)"
+  },
+  {
+   "hero": "法師涅吉",
+   "skill_name": "15-01 風精召喚",
+   "rawcode": "A0D3",
+   "trigger_stems": [
+    "風精召喚",
+    "WindWizard"
+   ],
+   "template": "召喚代理",
+   "evidence": "j:34781-34798 (hidden 'hfoo'+A056 lvl-matched, IssuePointOrder \"stampede\")",
+   "geometry": "stampede 彈幕幾何在 A056 物件資料; dummy 存活 5s",
+   "timing": "instant (dummy 引導 5s)",
+   "movement": "傷害彈幕由 dummy 的 stampede 向目標點行進",
+   "notes": "'風精召喚' 中文名觸發是標籤, WindWizard 是本體"
+  },
+  {
+   "hero": "法師涅吉",
+   "skill_name": "15-002 風花-武裝解除 (EX)",
+   "rawcode": "A0ZU",
+   "trigger_stems": [
+    "風花-武裝解除",
+    "WindFlowerStart",
+    "WindFlower"
+   ],
+   "template": "召喚代理",
+   "evidence": "j:34814-34822 (dummy 'o02Y' howlofterror at point), j:34833-34840 (damage-amp handler), j:5019-5021 (Des_BuffTri[8]=WindFlower, buff B05B), j:4940-4944 (EVENT_UNIT_DAMAGED dispatcher)",
+   "geometry": "howlofterror AoE 依物件資料; dummy 存活 3s",
+   "timing": "instant 施放; 之後每次受擊事件觸發",
+   "movement": "無",
+   "notes": "付載是受擊反應: 帶 B05B (武裝解除) 的單位每次受傷時被額外扣等量 HP (實質雙倍傷害), 下限鎖 0.41 HP — 經全域 Des_BuffTri 傷害事件表掛載"
+  },
+  {
+   "hero": "殺生丸",
+   "skill_name": "34-04 奧義˙蒼龍破",
+   "rawcode": "A0FP",
+   "trigger_stems": [
+    "BlueDragonWave"
+   ],
+   "template": "召喚代理",
+   "evidence": "j:38872-38884 (12×'n00N' 螺旋生成 + \"smart\" 令), j:38863-38865 (order to point 800u ahead)",
+   "geometry": "生成螺旋: 距離 i×12 / 角度 i×30° (i=1..12); 集體衝向施法者面向 800u 處; 存活 2s",
+   "timing": "生成 loop 12×0.03s sleep; 2s 後清除",
+   "movement": "傷害龍群 (dummy 單位) 向前行進 800u; 施法者不動",
+   "notes": "傷害來自 'n00N' 單位自身物件資料 (無 scripted UnitDamageTarget) — 行為近似行進波動但以召喚單位實作"
+  },
+  {
+   "hero": "殺生丸",
+   "skill_name": "34-冥道殘月破",
+   "rawcode": "A0J8",
+   "trigger_stems": [
+    "lzfs",
+    "lzfsEffect"
+   ],
+   "template": "NEW:隱身殘影瞬斬",
+   "evidence": "j:38905-38918 (caster 隱形+enable), j:38970-38996 (0.03s state machine), j:38948-38956 (AGI×5 dmg), j:38975 (450×450 rect)",
+   "geometry": "殘影 'o01C' 於目標半徑 250、45°×i 環繞; 終結 rect 450×450",
+   "timing": "periodic 0.03s ×8 tick 演出, 第 9 tick 引爆",
+   "movement": "施法者隱形→終結時瞬移到目標位置現身; 目標不動",
+   "notes": "NEW 定義: 施法者消失, 殘影連斬演出繞目標, 結尾單發 AoE (AGI×5 魔傷) 並瞬移貼臉。殘影角度用 udg_SeesCount (他人技能變數) — 原圖共用/殘留變數"
+  },
+  {
+   "hero": "殺生丸",
+   "skill_name": "34-002 冥道殘月破 (EX)",
+   "rawcode": "A0MV",
+   "trigger_stems": [
+    "EX 冥道殘月破",
+    "newlzfs",
+    "newlzfsmove"
+   ],
+   "template": "NEW:行進吞噬",
+   "evidence": "j:39014-39028 (set angle/dist + enable), j:39072-39104 (50u/0.03s 行進→終點吞噬), j:39091 (600 AoE hide+pause), j:39057-39063 (釋放時 1300 dmg)",
+   "geometry": "彈體 50u/tick 直線行進至目標點; 終點半徑 600 吞噬",
+   "timing": "periodic 0.03s 行進; 吞噬 6.0s 後釋放, 再 1.0s 清理",
+   "movement": "冥道口 dummy 'h02E' 從施法者行進至目標點; 被吞單位被隱藏+暫停 (拔離戰場) 6s 後原地釋放",
+   "notes": "NEW 定義: 行進彈到點後張開冥道 ('o01N'), 600 範圍內所有單位 (不分敵我, 除施法者) 隱藏+暫停 6s, 釋放時各吃 1300 魔傷。'EX 冥道殘月破' 中文名是標籤, 無 JASS"
+  },
+  {
+   "hero": "藤井八雲",
+   "skill_name": "35-00 召喚佩",
+   "rawcode": "A0MM",
+   "trigger_stems": [
+    "CallPay",
+    "PayDie"
+   ],
+   "template": "召喚代理",
+   "evidence": "j:42909-42915 (kill 舊佩→create 'h01Q'→move 跟隨), j:42936-42942 (佩死亡→Angry3x3=true 3s)",
+   "geometry": "無",
+   "timing": "instant; 死亡怒氣窗 3.0s",
+   "movement": "寵物佩走向施法者跟隨",
+   "notes": "PayDie: 佩死後 3 秒內 udg_Angry3x3=true — 是 EX 光牙八連震盪波的觸發條件; 同時清空 EyesPay/PayDam"
+  },
+  {
+   "hero": "藤井八雲",
+   "skill_name": "EightCloud (光牙/土爪 生命代價)",
+   "rawcode": "A0U6",
+   "trigger_stems": [
+    "EightCloud"
+   ],
+   "template": "NEW:施法生命代價",
+   "evidence": "j:42956-42977 (A0U6 或 A06G 施放→自傷 min(925, 0.44×當前HP))",
+   "geometry": "無",
+   "timing": "instant, 每次施放觸發",
+   "movement": "無",
+   "notes": "NEW 定義: 施放 35-04 光牙 (A0U6) 或 35-01 土爪 (A06G) 時對自己造成 min(925, 44%當前HP) 魔傷 (三隻眼的生命代價機制); 並記錄 udg_EyesMaster"
+  },
+  {
+   "hero": "藤井八雲",
+   "skill_name": "35-04 光牙",
+   "rawcode": "A0U6",
+   "trigger_stems": [
+    "Light",
+    "LightMove"
+   ],
+   "template": "行進波動",
+   "evidence": "j:43027-43089 (dmg 公式+EX 八連震盪波), j:43155-43172 (50u×16 step, 230 AoE), j:43124-43132 (per-tick dmg + LightGroup 去重)",
+   "geometry": "16 step × 50u = 800u 直線; 每 tick 半徑 230 傷害 / 250 摧毀樹木",
+   "timing": "periodic 0.04s ×16 tick",
+   "movement": "傷害區沿施法角行進; 施法者不動",
+   "notes": "傷害 200+400×lvl; 佩在 350 內存活時 +1.5×(800−佩當前HP); 每單位只中一次; EX+Angry3x3 (佩死 3s 內): 加放 8 個 dummy 隨機 ±30° shockwave (A0UZ/A0V0-A0V6) + 地形波紋"
+  },
+  {
+   "hero": "約翰走路",
+   "skill_name": "64-01 威士忌攻擊",
+   "rawcode": "A0A2",
+   "trigger_stems": [
+    "Whisky"
+   ],
+   "template": "單體斬擊",
+   "evidence": "j:46492-46495 (單體 100×lvl, DAMAGE_TYPE_MIND)",
+   "geometry": "無 (單體)",
+   "timing": "instant",
+   "movement": "無",
+   "notes": "少見的 MIND 傷害型別"
+  },
+  {
+   "hero": "約翰走路",
+   "skill_name": "64-02 酒釀精華",
+   "rawcode": "A0A7",
+   "trigger_stems": [
+    "Wine Extract Initiate",
+    "Wine Timer"
+   ],
+   "template": "引導通魔",
+   "evidence": "j:46546-46571 (首跳+啟動 1.0s timer), j:46618-46644 (order==\"channel\" 判定, 斷引導即 PauseTimer), j:46611-46615",
+   "geometry": "無 (單體)",
+   "timing": "channel; 每 1.0s 一跳, 引導中斷即停",
+   "movement": "無",
+   "notes": "敵人目標→每跳 40×lvl+28 魔傷; 友軍目標→每跳同量 HP+mana; 施法者帶威士忌 buff (B00I/B05A) 時每跳額外 +INT"
+  },
+  {
+   "hero": "約翰走路",
+   "skill_name": "64-04 魔幻浮水印",
+   "rawcode": "A0A3",
+   "trigger_stems": [
+    "Initiate Mark",
+    "Marking"
+   ],
+   "template": "受擊反應",
+   "evidence": "j:46658-46661 (記錄 Mark 施主), j:46674-46708 (EVENT_PLAYER_UNIT_ATTACKED + B00I/B05A buff 判定→反傷攻擊者), j:46710-46715 (init)",
+   "geometry": "無 (事件觸發)",
+   "timing": "持續被動, 每次被攻擊宣告觸發",
+   "movement": "無",
+   "notes": "事件是 ATTACKED (攻擊宣告) 而非 DAMAGED: 敵人攻擊帶 B00I/B05A 印記的單位時, 攻擊者吃 rand(20,60)+40×lvl (建築攻擊者 rand(10,50)+10×lvl) 魔傷 — 印記型荊棘"
+  },
+  {
+   "hero": "小熊維尼",
+   "skill_name": "84-002 我只想確定你在這裡 (EX)",
+   "rawcode": "A10U",
+   "trigger_stems": [
+    "FindyouEX"
+   ],
+   "template": "NEW:全隊集結",
+   "evidence": "j:51015-51032 (loop 玩家 1-13: 友軍英雄 +50% HP/mana + SetUnitPositionLoc 到施法者)",
+   "geometry": "全圖; 集結點=施法者位置",
+   "timing": "instant",
+   "movement": "所有友軍英雄被瞬移到施法者身邊 (維尼本體 'E00V' 型別除外)",
+   "notes": "NEW 定義: 全圖友軍英雄立即回復 50% HP 與 mana 並質量傳送到施法者"
+  },
+  {
+   "hero": "小熊維尼",
+   "skill_name": "84-04 給我蜂蜜",
+   "rawcode": "A0CX",
+   "trigger_stems": [
+    "GiveMeHoney",
+    "GiveMeHoney Effect",
+    "GiveMeHoney KB"
+   ],
+   "template": "鎖定連段",
+   "evidence": "j:51054-51088 (pause+Avul+分身+0.4s 啟動), j:51125-51200 (0.4s×6 連踩+終傷), j:51226-51253 (0.04s×20 擊退)",
+   "geometry": "每 tick 施法者貼到目標後方 100u; dummy A0RY (84-04-01 震地) 每 tick stomp; 終結擊退 50u/tick ×20 (~1000u) 隨機方向, 碰撞即停",
+   "timing": "periodic 0.4s ×6 tick 連段; 擊退 0.04s/tick",
+   "movement": "施法者被連續重定位追著目標打; 終結時目標被推飛",
+   "notes": "連段期間施法者 pause+無敵 (Avul+A0DA); 終傷 EX: STR×9+75+175×lvl / 非EX: STR×lvl+75+175×lvl 魔傷"
+  },
+  {
+   "hero": "小熊維尼",
+   "skill_name": "84-03 蜜汁",
+   "rawcode": "A0D6",
+   "trigger_stems": [
+    "Sugoi"
+   ],
+   "template": "召喚代理",
+   "evidence": "j:51267-51295 (hidden 'hfoo' dummy: A0D8 soulburn + S005 cripple, 等級同步)",
+   "geometry": "無 (單體)",
+   "timing": "instant",
+   "movement": "無",
+   "notes": "dummy 對單一目標連掛兩個 debuff (soulburn 緘默傷害 + cripple 減速)"
+  },
+  {
+   "hero": "小熊維尼",
+   "skill_name": "84-01 冷笑話",
+   "rawcode": "A0CR",
+   "trigger_stems": [
+    "ColdJoke"
+   ],
+   "template": "NEW:純文字演出",
+   "evidence": "j:51367-51438 (GetRandomInt(1,8)→八選一漂浮字, 無任何傷害/控制呼叫)",
+   "geometry": "無 (機制在物件資料)",
+   "timing": "instant",
+   "movement": "無",
+   "notes": "NEW 定義: 觸發只負責隨機講一則冷笑話 (8 條 TRIGSTR 漂浮字); 實際 AoE 效果 (應為 thunderclap 系) 全在 A0CR 物件資料"
+  },
+  {
+   "hero": "小熊維尼",
+   "skill_name": "84-02 保齡球",
+   "rawcode": "A0CV",
+   "trigger_stems": [
+    "Bowling",
+    "BowlingEffect"
+   ],
+   "template": "衝鋒推撞",
+   "evidence": "j:51455-51470 (set 傷害+700% 動畫速+enable), j:51589-51640 (50u/0.05s ×12 前滾, 200 AoE per step, 碰撞≥10u 提前停), j:51548-51574 (終點 250 AoE 擊退 5×50u)",
+   "geometry": "50u/tick ×12 = 600u 直線滾動; 每 tick 前方步點半徑 200 傷害 (去重); 終點半徑 250 追加 50 傷 + 擊退 ~250u",
+   "timing": "periodic 0.05s, 最多 12 tick",
+   "movement": "施法者本體滾動前進 (facing+190°/tick 旋轉); 終點敵人被沿遠離施法者方向逐步推開",
+   "notes": "每 tick 傷害 STR×2+100×lvl+50 一次去重; 撞牆 (預期/實際位置差≥10) 提前觸發終點爆; 摧毀樹木用了 udg_Bear_P2 (給我蜂蜜的殘留變數) — 原圖 bug"
+  },
+  {
+   "hero": "彗星小雞",
+   "trigger_stems": [
+    "Chicken Grow Int",
+    "Chicken Attack SW",
+    "Chicken Attack Action",
+    "Chicken Attack Damage",
+    "Chicken Attack Grow",
+    "Chicken LaLaShell",
+    "Chicken LaLaShell Damage",
+    "Chicken Insnare"
+   ],
+   "template": "無觸發技能",
+   "evidence": "j:2268-2275 (只剩 gg_trg_Chicken_* 變數宣告), j:48858 (唯一引用: InitTrig_ButtyGhost_Afraid 裡誤植的 DisableTrigger)",
+   "notes": "未開放英雄 (99): 全部 8 條 Chicken 觸發的 Trig_/InitTrig_ 函式本體在 GoDieEX22s 版 war3map.j 已被剝除, 無法行為分類; 技能若存在僅剩物件資料"
+  }
+ ]
+}
