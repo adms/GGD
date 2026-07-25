@@ -58,10 +58,10 @@ L.append("# GGD 技能行為模板總覽\n")
 L.append("> 產生器: `tools/ability-templates/emit_templates_md.py` · 資料源: `docs/ability-templates.csv` (JASS 三軸稽核 + 12 代理細讀 90 英雄觸發器群, 309 筆行為記錄)\n")
 L.append(f"> {len(rows)} 個獨立技能 · {len(order)} 類行為模板 · 分類依 owner 指示「全部看過再決定」由下而上聚類定案\n")
 L.append("\n## 分類總表\n")
-L.append("| 行為模板 | 技能數 | 一句定義 |")
-L.append("|---|---|---|")
+L.append("| 行為模板 | 技能數 | 平均落差分 | 一句定義 |")
+L.append("|---|---|---|---|")
 for k in order:
-    L.append(f"| [{k}](#{k.replace('/','').replace('(','').replace(')','')}) | {len(groups[k])} | {DESC.get(k,('',))[0]} |")
+    L.append(f"| [{k}](#{k.replace('/','').replace('(','').replace(')','')}) | {len(groups[k])} | {(sum(int(r.get('實作落差分') or 0) for r in groups[k])/len(groups[k])):.1f} | {DESC.get(k,('',))[0]} |")
 for k in order:
     d = DESC.get(k, ("", "", "", ""))
     L.append(f"\n## {k}\n")
@@ -71,15 +71,15 @@ for k in order:
     L.append(f"**移植備註**: {d[3]}\n")
     skl = sorted(groups[k], key=lambda r: no_key(r["技能名"]))
     if k == "物件資料技能(無觸發)":
-        L.append("| 技能 | 英雄 | WC3基底 | 傷害perRank | 特殊機制 |")
-        L.append("|---|---|---|---|---|")
-        for r in skl:
-            L.append(f"| {r['技能名']} | {r['英雄'][:40]} | {r['WC3基底']} | {r['傷害perRank']} | {r['特殊機制']} |")
-    else:
-        L.append("| 技能 | 英雄 | 行為幾何 | 行為時序 | 位移語意 | 證據 |")
+        L.append("| 技能 | 英雄 | 落差分 | WC3基底 | 傷害perRank | 特殊機制 |")
         L.append("|---|---|---|---|---|---|")
         for r in skl:
-            L.append(f"| {r['技能名']} | {r['英雄'][:40]} | {r['行為幾何'][:60]} | {r['行為時序'][:40]} | {r['位移語意'][:40]} | {r['行為證據'][:40]} |")
+            L.append(f"| {r['技能名']} | {r['英雄'][:40]} | {r.get('實作落差分','')} | {r['WC3基底']} | {r['傷害perRank']} | {r['特殊機制']} |")
+    else:
+        L.append("| 技能 | 英雄 | 落差分 | 行為幾何 | 行為時序 | 位移語意 | 證據 |")
+        L.append("|---|---|---|---|---|---|---|")
+        for r in skl:
+            L.append(f"| {r['技能名']} | {r['英雄'][:40]} | {r.get('實作落差分','')} | {r['行為幾何'][:60]} | {r['行為時序'][:40]} | {r['位移語意'][:40]} | {r['行為證據'][:40]} |")
 
 out = ROOT / "docs/ability-templates.md"
 out.write_text("\n".join(L) + "\n", encoding="utf-8")
