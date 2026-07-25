@@ -236,13 +236,16 @@ export interface AppState {
   declineFriend(accountId: string): Promise<void>;
 
   refreshRooms(): Promise<void>;
-  createRoom(name: string, botDifficulty: string, mapId?: string): Promise<void>;
+  createRoom(name: string, botDifficulty: string, mapId?: string, rogueliteMobs?: boolean): Promise<void>;
   joinRoom(roomId: string): Promise<void>;
   leaveRoom(): Promise<void>;
   refreshRoom(): Promise<void>;
   setReady(ready: boolean, champion?: string): Promise<void>;
   setPick(championId: string): void;
   setLocalPlayers(count: number): Promise<void>;
+  /** host edits room settings post-create (e.g. the #215 肉鴿殭屍模式 toggle);
+   *  takes effect for the NEXT match since arenaRules is frozen at match start. */
+  updateRoomSettings(settings: { rogueliteMobs?: boolean; mapId?: string; botDifficulty?: string }): Promise<void>;
   startMatch(): Promise<void>;
   /**
    * ONE-CLICK BOT MATCH (#188) — 「一鍵開房直接玩」. A real, settling match:
@@ -250,7 +253,7 @@ export interface AppState {
    * seat token over the lobby WS, so it records, rates and pays half crystals.
    * This is NOT `playOffline`, which is the dev direct-join and settles nowhere.
    */
-  playBotMatch(mapId?: string): Promise<void>;
+  playBotMatch(mapId?: string, rogueliteMobs?: boolean): Promise<void>;
   createInvite(accountId: string, username: string): Promise<void>;
   joinByCode(token: string): Promise<void>;
   dismissInvite(token: string): void;
@@ -696,9 +699,17 @@ export const appStore = createStore<AppState>()((set, get) => {
       }
     },
 
-    async createRoom(name, botDifficulty, mapId) {
+    async createRoom(name, botDifficulty, mapId, rogueliteMobs) {
       try {
-        const resp = await apiFns.createRoom({ name, botDifficulty, ...(mapId ? { mapId } : {}) });
+        const resp = await apiFns.createRoom({
+          name,
+          botDifficulty,
+          ...(mapId ? { mapId } : {}),
+          // Only transmit when the host UNCHECKED it: sending nothing keeps the
+          // whole chain default-ON (#215). `=== false` guards against passing a
+          // stray truthy/undefined that would still serialize a key.
+          ...(rogueliteMobs === false ? { rogueliteMobs: false } : {}),
+        });
         set({ room: resp, myReady: false, myPick: "", myLocalPlayers: 1, createdInvite: null, ws: { ...get().ws, chat: [] } });
       } catch (err) {
         set({ lastError: errText(err) });
@@ -780,6 +791,17 @@ export const appStore = createStore<AppState>()((set, get) => {
       }
     },
 
+    async updateRoomSettings(settings) {
+      const room = get().room;
+      if (!room) return;
+      try {
+        const resp = await apiFns.updateRoomSettings(room.room.id, settings);
+        set({ room: resp });
+      } catch (err) {
+        set({ lastError: errText(err) });
+      }
+    },
+
     async startMatch() {
       const room = get().room;
       if (!room) return;
@@ -791,7 +813,7 @@ export const appStore = createStore<AppState>()((set, get) => {
       }
     },
 
-    async playBotMatch(mapId?: string) {
+    async playBotMatch(mapId?: string, rogueliteMobs?: boolean) {
       if (get().botMatchBusy) return; // one click is one match
       set({ botMatchBusy: true, lastError: null });
       // PRIME THE ONE-TIME CONTENT LOAD BEFORE THE SEAT IS MINTED (task #200).
@@ -812,7 +834,12 @@ export const appStore = createStore<AppState>()((set, get) => {
       // are no longer the pending press, do not mint a seat nobody will claim.
       if (!get().botMatchBusy || get().screen !== "lobby") return;
       try {
-        await apiFns.startSoloMatch(mapId ? { mapId } : undefined);
+        // Only include a field when it deviates from the default: map when set,
+        // rogueliteMobs only when explicitly OFF (sending nothing = ON, #215).
+        const solo: { mapId?: string; rogueliteMobs?: boolean } = {};
+        if (mapId) solo.mapId = mapId;
+        if (rogueliteMobs === false) solo.rogueliteMobs = false;
+        await apiFns.startSoloMatch(Object.keys(solo).length ? solo : undefined);
       } catch (err) {
         set({ botMatchBusy: false, lastError: errText(err) });
         return;

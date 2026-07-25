@@ -165,6 +165,9 @@ function BotMatchStrip(props: { mapId: string; onMapId: (id: string) => void }):
   const playBotMatch = useApp((s) => s.playBotMatch);
   const playOffline = useApp((s) => s.playOffline);
   const busy = useApp((s) => s.botMatchBusy);
+  // 肉鴿殭屍模式 (#215) — default ON; only sends `false` to the solo path when
+  // unchecked. The empty-body solo default already means ON server-side.
+  const [rogueliteMobs, setRogueliteMobs] = useState(true);
   return (
     <Panel
       style={{
@@ -227,10 +230,22 @@ function BotMatchStrip(props: { mapId: string; onMapId: (id: string) => void }):
               </option>
             ))}
           </select>
+          <label
+            title="第3場起喪標麥可喪屍湧入 (預設開啟)"
+            style={{ display: "flex", alignItems: "center", gap: 6, flex: "1 1 100%", fontSize: 12, color: TEXT_MAIN, cursor: "pointer" }}
+          >
+            <input
+              type="checkbox"
+              checked={rogueliteMobs}
+              onChange={(e) => setRogueliteMobs(e.target.checked)}
+              style={{ width: 15, height: 15 }}
+            />
+            肉鴿殭屍模式
+          </label>
           <Btn
             kind="primary"
             disabled={busy}
-            onClick={() => void playBotMatch(props.mapId)}
+            onClick={() => void playBotMatch(props.mapId, rogueliteMobs)}
             title="開一場真正的對 BOT 比賽：記戰績、算賽季積分、發水晶（減半），不發 M幣、不動 MMR"
             style={{
               flex: "1.4 1 160px",

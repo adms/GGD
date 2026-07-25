@@ -127,6 +127,46 @@ func TestHostOnlyControls(t *testing.T) {
 	require.Equal(t, "Renamed", r.Body["room"].(map[string]any)["name"])
 }
 
+// TestRogueliteMobsToggle covers the #215 per-room 肉鴿殭屍模式 switch: absent on
+// create means ON (the *bool is nil → key omitted from the response), an explicit
+// false persists as false, and the host can flip it back ON via UpdateSettings.
+// This is the "nil → ON, never a zero-value false" guarantee the design flagged
+// as the highest-risk field-drift bug.
+func TestRogueliteMobsToggle(t *testing.T) {
+	testkit.Cover(t, "room-roguelite-toggle")
+	ts := testutil.New(t)
+	host := ts.Register("host")
+
+	// (1) Absent on create → ON, i.e. the key is omitted (nil *bool), NOT false.
+	body := createRoom(ts, host, "Default ON")
+	rm := body["room"].(map[string]any)
+	_, present := rm["rogueliteMobs"]
+	require.False(t, present, "absent toggle must stay omitted (nil === ON), never serialize false")
+
+	// (2) Explicit false on create persists as false.
+	r := ts.Do(http.MethodPost, "/api/v1/rooms", host.Access, map[string]any{
+		"name": "Mobs Off", "rogueliteMobs": false,
+	})
+	require.Equal(t, http.StatusOK, r.Status, string(r.Raw))
+	require.Equal(t, false, r.Body["room"].(map[string]any)["rogueliteMobs"])
+	rid := roomID(r.Body)
+
+	// (3) Host flips it back ON via UpdateSettings.
+	r = ts.Do(http.MethodPatch, "/api/v1/rooms/"+rid+"/settings", host.Access, map[string]any{
+		"rogueliteMobs": true,
+	})
+	require.Equal(t, http.StatusOK, r.Status, string(r.Raw))
+	require.Equal(t, true, r.Body["room"].(map[string]any)["rogueliteMobs"])
+
+	// (4) A settings PATCH that omits the field leaves the current value intact
+	// (a bare name change must not silently reset the toggle).
+	r = ts.Do(http.MethodPatch, "/api/v1/rooms/"+rid+"/settings", host.Access, map[string]any{
+		"name": "Renamed",
+	})
+	require.Equal(t, http.StatusOK, r.Status, string(r.Raw))
+	require.Equal(t, true, r.Body["room"].(map[string]any)["rogueliteMobs"], "omitted field must not reset the toggle")
+}
+
 func TestReadyTracking(t *testing.T) {
 	testkit.Cover(t, "room-ready")
 	ts := testutil.New(t)

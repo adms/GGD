@@ -216,8 +216,24 @@ export function listOpenRooms(): Promise<{ rooms: OpenRoom[] }> {
   return api.request<{ rooms: OpenRoom[] }>("/lobby/rooms");
 }
 
-export function createRoom(settings: { name?: string; mapId?: string; botDifficulty?: string }): Promise<RoomResp> {
+export function createRoom(settings: {
+  name?: string;
+  mapId?: string;
+  botDifficulty?: string;
+  // Per-room 肉鴿殭屍模式 toggle (#215). Only send `false` when the host unchecks;
+  // omitting it entirely keeps the default-ON behavior all the way down.
+  rogueliteMobs?: boolean;
+}): Promise<RoomResp> {
   return api.request<RoomResp>("/rooms", { body: settings });
+}
+
+/** Host edits room settings post-create (PATCH). The #215 toggle takes effect
+ *  for the NEXT match — arenaRules is frozen at match start. */
+export function updateRoomSettings(
+  roomId: string,
+  settings: { name?: string; mapId?: string; botDifficulty?: string; rogueliteMobs?: boolean },
+): Promise<RoomResp> {
+  return api.request<RoomResp>(`/rooms/${encodeURIComponent(roomId)}/settings`, { method: "PATCH", body: settings });
 }
 
 export function getRoom(roomId: string): Promise<RoomResp> {
@@ -252,7 +268,11 @@ export function startRoom(roomId: string): Promise<StartInfo> {
  * `store.playOffline`, which joins the game server directly and settles NOWHERE
  * (dev tool). This one records, rates and pays.
  */
-export function startSoloMatch(settings?: { mapId?: string; botDifficulty?: string }): Promise<StartInfo> {
+export function startSoloMatch(settings?: {
+  mapId?: string;
+  botDifficulty?: string;
+  rogueliteMobs?: boolean;
+}): Promise<StartInfo> {
   return api.request<StartInfo>("/rooms/solo", { body: settings ?? {} });
 }
 

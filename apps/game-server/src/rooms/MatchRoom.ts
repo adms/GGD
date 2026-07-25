@@ -93,6 +93,15 @@ export interface MatchRoomOptions {
    */
   combatEnv?: Partial<Record<CombatEnvKey, number>>;
   /**
+   * PER-ROOM roguelite-mob toggle (#215). Flows client → Go room → gamelink →
+   * this bag. `undefined` (any room created before the toggle, and the whole
+   * solo/bot default path) means ON — it is merged onto the resolved arenaRules
+   * in onCreate as `rogueliteMobs: options.rogueliteMobs !== false`, so only an
+   * explicit `false` disarms the mobs. Recorded into the replay header with the
+   * rest of ArenaRules, so a tape replays with the value it was played on.
+   */
+  rogueliteMobs?: boolean;
+  /**
    * NOTE — there is deliberately NO `serverOps` field here.
    *
    * Everything in this bag arrives from whoever created the room, which in a
@@ -363,7 +372,11 @@ export class MatchRoom extends Room<MatchState> {
     // doc as the phase durations, so `match.fireRing.startSec` is the single
     // round-length source of truth. null (absent block) leaves the ring off.
     const fireRing = resolveFireRing();
-    const arenaRules = resolveArenaRules();
+    // Merge the PER-ROOM roguelite-mob toggle (#215) onto the resolved rules
+    // BEFORE the one object is handed to both the live MatchController and
+    // buildHeader below — so the live sim and the recording can never disagree.
+    // `!== false` keeps absent/undefined === ON (default-ON owner directive).
+    const arenaRules = { ...resolveArenaRules(), rogueliteMobs: options.rogueliteMobs !== false };
     // STARTING TEAM LIVES from the SAME config.match@1 doc (`startingTeamLives`).
     // Was a hardcoded `3` while the doc's authored value sat unread — the owner
     // held the match-length dial and turning it did nothing. Resolved here, once,

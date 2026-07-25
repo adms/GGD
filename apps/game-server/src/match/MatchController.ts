@@ -902,7 +902,15 @@ export class MatchController {
     // round before fromRound = OFF (same legacy-compat rule as guardians). A mob
     // is a MONSTER-team neutral with no ChampionComp, so duel resolution, team
     // health, placement and the scoreboard stay blind to it.
-    if (this.rules.mobWaves && this.phase.round >= this.rules.mobWaves.fromRound) {
+    // The PER-ROOM toggle (#215) short-circuits the whole arm: `!== false` so
+    // absent/undefined/true all pass (default ON — old rooms/replays keep
+    // spawning), and only an explicit `false` from a room override falls through
+    // to the else-branch endCombatMobs → zero mobs, byte-identical mobless run.
+    if (
+      this.rules.rogueliteMobs !== false &&
+      this.rules.mobWaves &&
+      this.phase.round >= this.rules.mobWaves.fromRound
+    ) {
       beginCombatMobs(
         this.world,
         mobRulesFromConfig(this.rules.mobWaves, this.world.dt),

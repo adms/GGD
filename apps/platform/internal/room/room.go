@@ -42,6 +42,12 @@ type Room struct {
 	BotDifficulty string `json:"botDifficulty"`
 	Status        string `json:"status"`
 	CreatedAt     int64  `json:"createdAt"`
+	// RogueliteMobs is the PER-ROOM 肉鴿殭屍模式 toggle (#215). It is a *bool ON
+	// PURPOSE: a bare Go bool zero-values to false, which would silently regress
+	// every existing room and the whole solo path to OFF. A nil pointer means
+	// "unset" === ON (the owner's default-ON directive); only an explicit false
+	// disarms the mobs. Forwarded to the game server as *bool as well.
+	RogueliteMobs *bool `json:"rogueliteMobs,omitempty"`
 }
 
 // Settings are the host-editable knobs.
@@ -49,6 +55,9 @@ type Settings struct {
 	Name          string `json:"name,omitempty"`
 	MapID         string `json:"mapId,omitempty"`
 	BotDifficulty string `json:"botDifficulty,omitempty"`
+	// Per-room 肉鴿殭屍模式 toggle (#215); nil = unchanged/ON (see Room). *bool so
+	// an omitted field on the wire never zero-values a live room to OFF.
+	RogueliteMobs *bool `json:"rogueliteMobs,omitempty"`
 }
 
 // Member is one room member with ready state. LocalPlayers (1..4) is how many
@@ -117,15 +126,42 @@ func (s *Service) Get(ctx context.Context, roomID string) (Room, error) {
 	return Room{
 		ID: m["id"], Name: m["name"], HostID: m["hostId"], MapID: m["mapId"],
 		Mode: m["mode"], BotDifficulty: m["botDifficulty"], Status: m["status"], CreatedAt: created,
+		// Absent field (old rooms, ON-by-default) → nil pointer → ON. "1"/"0"
+		// otherwise. Never zero-value to false on a missing key.
+		RogueliteMobs: parseOptBool(m, "rogueliteMobs"),
 	}, nil
 }
 
 func (s *Service) write(ctx context.Context, rm Room) error {
-	return s.rdb.R.HSet(ctx, redisx.KeyRoom(rm.ID), map[string]any{
+	fields := map[string]any{
 		"id": rm.ID, "name": rm.Name, "hostId": rm.HostID, "mapId": rm.MapID,
 		"mode": rm.Mode, "botDifficulty": rm.BotDifficulty, "status": rm.Status,
 		"createdAt": rm.CreatedAt,
-	}).Err()
+	}
+	// Only persist the toggle when the host set it explicitly; a nil pointer
+	// leaves the key absent so it reads back as ON (default-ON directive).
+	if rm.RogueliteMobs != nil {
+		fields["rogueliteMobs"] = boolToRedis(*rm.RogueliteMobs)
+	}
+	return s.rdb.R.HSet(ctx, redisx.KeyRoom(rm.ID), fields).Err()
+}
+
+// parseOptBool reads a "1"/"0" hash field into a *bool; a missing field is nil
+// (== unset == ON for the #215 toggle), never a zero-valued false.
+func parseOptBool(m map[string]string, key string) *bool {
+	v, ok := m[key]
+	if !ok {
+		return nil
+	}
+	b := v == "1"
+	return &b
+}
+
+func boolToRedis(b bool) string {
+	if b {
+		return "1"
+	}
+	return "0"
 }
 
 // Create makes a new open room hosted by actor, joins them, and lists it in the
@@ -148,6 +184,9 @@ func (s *Service) create(ctx context.Context, actor string, st Settings, listed 
 		MapID: firstNonEmpty(st.MapID, "arena-default"), Mode: "PairedDuels",
 		BotDifficulty: firstNonEmpty(st.BotDifficulty, "normal"),
 		Status:        StatusOpen, CreatedAt: time.Now().UnixMilli(),
+		// Pass the per-room toggle straight through: nil (unset) === ON, so both
+		// the solo/bot path (empty Settings) and a normal create default to mobs.
+		RogueliteMobs: st.RogueliteMobs,
 	}
 	if err := s.write(ctx, rm); err != nil {
 		return Room{}, err
@@ -400,6 +439,12 @@ func (s *Service) UpdateSettings(ctx context.Context, actor, roomID string, st S
 	}
 	if st.BotDifficulty != "" {
 		rm.BotDifficulty = st.BotDifficulty
+	}
+	// Host flips the #215 toggle post-create: only a non-nil pointer overrides,
+	// so a settings PATCH that omits the field leaves the current value intact.
+	// (Takes effect for the NEXT match — arenaRules is frozen at match start.)
+	if st.RogueliteMobs != nil {
+		rm.RogueliteMobs = st.RogueliteMobs
 	}
 	if err := s.write(ctx, rm); err != nil {
 		return Room{}, err

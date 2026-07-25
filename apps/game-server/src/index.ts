@@ -107,6 +107,10 @@ interface InternalMatchRequest {
   botFill?: { count: number; difficulty?: string };
   callbackUrl?: string;
   seed?: number;
+  // PER-ROOM roguelite-mob toggle (#215). Absent === ON (default-ON directive);
+  // only an explicit `false` from the room host disarms the mobs. Passed straight
+  // into the MatchRoom bag and merged onto arenaRules in onCreate.
+  rogueliteMobs?: boolean;
 }
 
 async function handleInternalMatches(req: IncomingMessage, res: ServerResponse, rawBody: string): Promise<void> {
@@ -150,6 +154,8 @@ async function handleInternalMatches(req: IncomingMessage, res: ServerResponse, 
     mapId: body.mapId,
     seats: humanSeats,
     callbackUrl: body.callbackUrl,
+    // Per-room roguelite-mob toggle (#215); undefined here keeps it ON.
+    rogueliteMobs: body.rogueliteMobs,
     // Server-only proof that THIS create came from the /_internal path; the
     // room's onCreate rejects a client-initiated create that lacks it (prod).
     createToken: mintCreateToken(SHARED_SECRET),
