@@ -172,7 +172,11 @@ describe("cast-time coverage (tiered by how punishing the ability is)", () => {
     expect(duties.filter((r) => r.duty >= 0.999).map((r) => r.id)).toEqual([]); // statues
     expect(duties.filter((r) => r.duty >= 0.5).map((r) => r.id)).toEqual([]);
     const mean = duties.reduce((s, r) => s + r.duty, 0) / duties.length;
-    expect(mean).toBeLessThan(0.25); // was 0.417 under the flat rule
+    // 0.25 held at cooldownMult 0.25. The owner's 0.2 mult shrinks every cooldown
+    // while the 0.3 s cast floor does NOT, so the fixed floor is a larger fraction
+    // of a shorter cooldown and the mean root-duty rises to ~0.27. The HARD guards
+    // above (no statue, none ≥50 %) still hold — this is only the soft aggregate.
+    expect(mean).toBeLessThan(0.3); // was 0.417 flat → 0.25 at x0.25 → ~0.27 at x0.2
   });
 
   it("MOBILITY gets the floor — an escape that announces itself is not an escape", () => {
@@ -199,7 +203,14 @@ describe("cast-time coverage (tiered by how punishing the ability is)", () => {
         !d.effects.some((e) => e.kind === "damage"),
     );
     expect(saves.length).toBeGreaterThanOrEqual(15);
-    for (const d of saves) expect(d.castTimeSec).toBe(CAST_FLOOR);
+    // Floor, OR instant when the cooldown ceiling already put it below the floor
+    // — the same allowance the mobility test makes. At cooldownMult 0.2 a save
+    // whose own cooldown cannot afford even the 0.3 s floor is rapid-fire, and
+    // instant is not "late": forcing the floor there would make it a statue
+    // (cast time ≥ cooldown), which the STATUE INVARIANT forbids. The bulk must
+    // still land ON the floor so saves stay responsive-but-telegraphed.
+    for (const d of saves) expect([CAST_FLOOR, undefined]).toContain(d.castTimeSec);
+    expect(saves.filter((d) => d.castTimeSec === CAST_FLOOR).length).toBeGreaterThanOrEqual(12);
   });
 
   it("no wind-up outlives the effect it produces, except against the 0.3 s floor", () => {

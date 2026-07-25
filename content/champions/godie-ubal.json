@@ -79,7 +79,7 @@
       "vfxKey": "fx.prim.void.beam",
       "targetsEnemies": true,
       "icon": "assets/icons/abilities/godie-ubal.q.png",
-      "castTimeSec": 0.4
+      "castTimeSec": 0.3
     },
     "W": {
       "id": "godie-ubal.w",

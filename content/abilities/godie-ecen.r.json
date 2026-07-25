@@ -38,6 +38,5 @@
   ],
   "vfxKey": "fx.prim.arcane.pulse-lg",
   "targetsEnemies": true,
-  "schema": "ability@1",
-  "castTimeSec": 0.3
+  "schema": "ability@1"
 }

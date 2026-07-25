@@ -141,7 +141,7 @@
       "vfxKey": "godie-fireblast-p3",
       "targetsEnemies": true,
       "radius": 6.0,
-      "castTimeSec": 0.7,
+      "castTimeSec": 0.6,
       "hitFeel": {
         "hitstopTicks": 3,
         "hitstunTicks": 5,

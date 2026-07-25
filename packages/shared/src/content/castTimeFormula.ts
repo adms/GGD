@@ -81,10 +81,14 @@ export const SCORE_AT_CAP = 0.75;
 /**
  * combat-env `cooldown`. The cast-time ceiling has to be computed against the
  * cooldown the match ACTUALLY uses, not the authored seconds: content/config/
- * combat-env.json ships 0.25, so an authored 8 s cooldown fires every 2 s.
+ * combat-env.json ships 0.2, so an authored 8 s cooldown fires every 1.6 s.
  * Callers pass the live value; this is the shipped default.
+ *
+ * CANARY: this MUST equal content/config/combat-env.json `multipliers.cooldown`.
+ * castTimeCoverage.test asserts it; when the owner retunes the cooldown mult,
+ * re-run `scripts/deriveCastTimes.ts --write` and update this in the same commit.
  */
-export const SHIPPED_COOLDOWN_MULT = 0.25;
+export const SHIPPED_COOLDOWN_MULT = 0.2;
 
 /** Why an ability got the cast time it got — reported, tested, and auditable. */
 export type CastTimeClass =
@@ -290,7 +294,11 @@ export function deriveCastTime(def: AbilityDef, cooldownMult = SHIPPED_COOLDOWN_
 
   // ── EXEMPTION 2: rapid-fire. The ability's own real cooldown cannot afford
   // even the floor. Cast time here is incoherent by construction — it is what
-  // turned 7 champions into statues. Kept instant.
+  // turned 7 champions into statues. Kept instant. This MUST precede the
+  // mobility/defensive floors below: forcing the 0.3 s floor onto an ability
+  // whose post-multiplier cooldown is under 0.3 s makes it a statue (cast time
+  // ≥ cooldown), which the STATUE INVARIANT forbids. At cooldownMult 0.2 a few
+  // low-cooldown saves land here and are correctly instant, not floored.
   if (cooldownCeiling < CAST_FLOOR) {
     return exempt("rapid-fire", undefined, f, { cooldownCeiling });
   }
@@ -302,7 +310,8 @@ export function deriveCastTime(def: AbilityDef, cooldownMult = SHIPPED_COOLDOWN_
   if (f.dash) return exempt("mobility", CAST_FLOOR, f, { cooldownCeiling });
 
   // ── EXEMPTION 4: defensive / reactive. A shield or heal that lands 0.6 s
-  // late is a shield that did not happen. Floor.
+  // late is a shield that did not happen. Floor (or already instant above, if
+  // its cooldown was too short to afford even the floor).
   if ((f.heal > 0 || f.shield > 0 || f.restore) && f.damage === 0) {
     return exempt("defensive", CAST_FLOOR, f, { cooldownCeiling });
   }
