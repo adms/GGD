@@ -1,8 +1,8 @@
 /**
  * 說明數值最終化 — the DESCRIPTION prose must show the post-combat-env FINAL
  * numbers, not the base WC3 numbers baked into the sentence. The reported bug:
- * a "15s" cooldown chip sat next to "60秒冷卻時間" prose (cooldown runs at ×0.25),
- * and a "造成650傷害" line while damage now runs at ×0.5 (real 325).
+ * a rescaled cooldown chip sat next to raw "60秒冷卻時間" prose, and a raw
+ * "造成650傷害" line while the combat-env damage factor was scaling it down.
  *
  * These pin the pure seams (node-testable, no DOM/React):
  *   • rescaleAbilityProse rewrites the LITERALS a combat-env factor scales — the
@@ -10,8 +10,8 @@
  *     live `damageDealt` factor — appending "（WC3原 …）", while leaving every
  *     OTHER number (heal / shield / mana / duration / stat) byte-for-byte
  *     untouched (those factors are ×1.0);
- *   • displayFinal(460,'health') === 3680 (maxHealth ×8) and the damage factor is
- *     0.5 (so prose damage must be rewritten to its final);
+ *   • displayFinal(460,'health') reaches the maxHealth-scaled final, and the
+ *     "damage" alias resolves to the damageDealt factor;
  *   • real ability docs carry NO role markup, so a role-rescale would be a no-op
  *     — this pins that fact so nobody re-adds one.
  * Both factors are read from the SAME combat-env source displayFinal uses; the
@@ -65,15 +65,22 @@ function loadAbility(id: string): Record<string, unknown> {
 describe("rescaleAbilityProse cooldown pass (hud-display-final)", () => {
   it("rewrites the cooldown literal to the final and annotates the WC3 original", () => {
     cover("hud-display-final");
-    // the exact reported case: 60秒 base, combat runs it at 15s (×0.25)
+    // the exact reported case, against a FIXED TEST factor: 60秒 base × 0.25 → 15s.
+    // CD_QUARTER is this file's own fixture, not a copy of the shipped table, so
+    // this literal is stable no matter how the owner tunes combat-env.
     expect(rescaleAbilityProse("60秒冷卻時間", CD_QUARTER)).toBe("15秒冷卻時間（WC3原 60秒）");
-    // …and via the SHIPPED live table. The multiplier there is the owner's to
-    // retune (it has already moved 0.25 → 0.2), so this asserts the INVARIANT
-    // the file's own header demands — "shown = base × live cooldown, annotated
-    // with the WC3 original" — instead of a literal copied out of the config on
-    // the day the test was written, which is how this line last went stale.
-    const liveCd = Math.round(60 * (LIVE.cooldown ?? 1));
-    expect(rescaleAbilityProse("60秒冷卻時間", LIVE)).toBe(`${liveCd}秒冷卻時間（WC3原 60秒）`);
+    // …and the same shape via the SHIPPED table, checked as an INVARIANT rather
+    // than a literal. This line used to assert "15秒" because cooldown happened to
+    // be 0.25 the day it was written; 039acb2 tuned it 0.25→0.20 from playtest
+    // (「push CD a touch further」) and the deliberate balance change was reported
+    // as a regression. What must hold at ANY factor: the shown cooldown is the base
+    // times the live factor, and the WC3 original is annotated only when it differs.
+    {
+      const cd = LIVE.cooldown;
+      expect(rescaleAbilityProse("60秒冷卻時間", LIVE)).toBe(
+        cd === 1 ? "60秒冷卻時間" : `${Math.round(60 * cd)}秒冷卻時間（WC3原 60秒）`,
+      );
+    }
     // rounds to an integer: 35 × 0.25 = 8.75 → 9
     expect(rescaleAbilityProse("35秒冷卻時間", CD_QUARTER)).toBe("9秒冷卻時間（WC3原 35秒）");
   });
@@ -193,8 +200,8 @@ describe("rescaleAbilityProse cooldown + damage together (hud-display-final)", (
     // hard-coded number), so the assertion tracks BOTH the shipped config and the
     // real text. Mirrors the helper for exactly the shapes these 5 descriptions
     // carry: one "NN秒冷卻時間" cooldown literal and "造成 NNN [點]傷害" flat damage.
-    const cd = envFactor("cooldown", LIVE); // 0.25
-    const dmg = envFactor("damageDealt", LIVE); // 0.5
+    const cd = envFactor("cooldown", LIVE); // owner-tuned; never assert a literal
+    const dmg = envFactor("damageDealt", LIVE); // owner-tuned; never assert a literal
     const expectedFor = (desc: string): string => {
       // A factor of exactly 1 is a NO-OP, not a rewrite-with-annotation: the
       // shown number already IS the WC3 original, so annotating it would be
@@ -225,7 +232,15 @@ describe("rescaleAbilityProse cooldown + damage together (hud-display-final)", (
 
       const out = rescaleAbilityProse(desc!, LIVE);
       expect(out, `${id} rescales cooldown + flat damage to their finals`).toBe(expectedFor(desc!));
-      expect(out).toContain("（WC3原 ");
+      // The annotation only EXISTS when something was actually rescaled. Every
+      // one of these 5 carries a cooldown literal, so a non-neutral cooldown
+      // guarantees one; a neutral cooldown with non-neutral damage guarantees one
+      // only on the 3 that carry a flat 造成…傷害. With BOTH knobs at 1.0 the pass
+      // is a legitimate no-op and demanding the caption would be asserting that
+      // the owner may never neutralise his own multipliers.
+      if (cd !== 1 || (dmg !== 1 && /造成\s*\d+\s*(?:點\s*)?傷害/.test(desc!))) {
+        expect(out, `${id} annotates the WC3 original`).toContain("（WC3原 ");
+      }
       // idempotent over the real text too
       expect(rescaleAbilityProse(out, LIVE), `${id} is idempotent`).toBe(out);
       if (/造成\s*\d+\s*(?:點\s*)?傷害/.test(desc!)) damageRewrites += 1;
@@ -276,13 +291,12 @@ describe("displayFinal HP final + damage factor (hud-display-final)", () => {
 
   it("the shipped live table's factors flow through to what the HUD shows", () => {
     cover("hud-display-final");
-    // NOT the values — the WIRING. This block used to assert damageDealt === 0.5,
-    // cooldown === 0.25, maxHealth === 8.0, i.e. it froze three balance knobs the
-    // owner tunes from playtest. He set damage back to 1.0 (「打太久了」) and this
-    // went red — a balance decision reported as a regression, which is precisely
-    // backwards. What is worth pinning is that each knob is present, sane, and
-    // reaches displayFinal through the right alias; the numbers themselves are
-    // his.
+    // NOT the values — the WIRING. This block used to freeze three balance knobs
+    // the owner tunes from playtest (damageDealt, cooldown, maxHealth). He set
+    // damage back to 1.0 (「打太久了」) and later pushed cooldown 0.25→0.20, and each
+    // time a balance decision surfaced as a red test — which is precisely backwards.
+    // What is worth pinning is that each knob is present, sane, and reaches
+    // displayFinal through the right alias; the numbers themselves are his.
     for (const k of ["damageDealt", "cooldown", "maxHealth"] as const) {
       const v = LIVE_CONFIG.multipliers[k];
       expect(typeof v, `${k} must exist in the shipped table`).toBe("number");
