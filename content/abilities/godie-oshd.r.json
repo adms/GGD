@@ -42,7 +42,7 @@
       "moveSpeedMult": 0.6
     }
   ],
-  "vfxKey": "fx.cinder-ward",
+  "vfxKey": "fx.prim.lightning.beam",
   "targetsEnemies": true,
   "radius": 4.58,
   "schema": "ability@1",
