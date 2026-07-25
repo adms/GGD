@@ -188,10 +188,10 @@
               "damageType": "magic",
               "amount": {
                 "perRank": [
-                  1.0,
-                  1.0,
-                  1.0,
-                  1.0
+                  650.0,
+                  900.0,
+                  1150.0,
+                  1400.0
                 ]
               }
             }
@@ -199,7 +199,7 @@
         }
       ],
       "vfxKey": "godie-tectonicfury-p0",
-      "castTimeSec": 0.3,
+      "castTimeSec": 0.6,
       "hitFeel": {
         "hitstopTicks": 4,
         "hitstunTicks": 6,

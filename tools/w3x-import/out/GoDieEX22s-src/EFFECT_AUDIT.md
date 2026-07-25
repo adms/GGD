@@ -1,7 +1,7 @@
 # EFFECT_AUDIT — all-hero JASS→content 三軸掃描 (傷害/特效/音效)
 
 Scanned **654 ability instances** across 111 champions.
-Join: {'hero-numbers': 243, 'name': 368, 'UNRESOLVED': 43}  ·  Damage verdicts: {'ZERO': 18, 'TRIVIAL': 4, 'NO_DAMAGE_EFFECT': 20, 'SUSPECT': 122, 'UNVERIFIED': 23, 'OK': 152, 'N/A': 315}
+Join: {'hero-numbers': 243, 'name': 368, 'UNRESOLVED': 43}  ·  Damage verdicts: {'ZERO': 0, 'TRIVIAL': 0, 'NO_DAMAGE_EFFECT': 2, 'SUSPECT': 128, 'UNVERIFIED': 24, 'OK': 184, 'N/A': 316}
 VFX verdicts: {'MISSING': 0, 'NONE_EITHER': 47, 'OK': 607}  ·  SFX: {'wc3_has_sound': 98, 'content_sound_field_exists': False}
 
 > Ground truth: JASS trigger > object data / ubertip colour-span > prose.
@@ -13,48 +13,8 @@ VFX verdicts: {'MISSING': 0, 'NONE_EITHER': 47, 'OK': 607}  ·  SFX: {'wc3_has_s
 
 | ability | name | rawcode | verdict | content perRank | JASS damage (cited) |
 |---|---|---|---|---|---|
-| godie-e00j.e | 95-03 皇者戰氣第五十重天 | A0Y8 | **ZERO** | [[0.0, 0.0, 0.0, 0.0]] | — |
-| godie-e00s.q | 70-01 伸卡球 | A0UJ | **ZERO** | [[0.0, 0.0, 0.0, 0.0, 0.0]] | `WoodStone` j:47914 |
-| godie-e00t.r | 66-04  靈壓震撼 | A0IC | **ZERO** | [[0.0, 0.0, 0.0]] | — |
-| godie-h01n.q | 79-01 瞬步 | A0RX | **ZERO** | [[0.0, 0.0, 0.0, 0.0]] | `Bleach_Rush` j:37410; `Bleach_Rush` j:37418 |
-| godie-h01o.q | 79-01 瞬步 | A0RX | **ZERO** | [[0.0, 0.0, 0.0, 0.0]] | `Bleach_Rush` j:37410; `Bleach_Rush` j:37418 |
-| godie-h022.e | 82-03 雷之投擲 | A0Q5 | **ZERO** | [[0.0, 0.0, 0.0, 0.0]] | `ThunderMove` j:35470 |
-| godie-h02r.r | 90-04 陽光烈焰 | A0R4 | **ZERO** | [[0.0, 0.0, 0.0]] | `SunFire` j:26757 |
-| godie-hgam.r | 90-04 陽光烈焰 | A0R4 | **ZERO** | [[0.0, 0.0, 0.0]] | `SunFire` j:26757 |
-| godie-n00p.w | 18-02 寄生種子 | A0RV | **ZERO** | [[0.0, 0.0, 0.0, 0.0]] | `plant` j:27914; `plant` j:27947 |
-| godie-nsjs.w | 18-02 寄生種子 | ? | **ZERO** | [[0.0, 0.0, 0.0, 0.0]] | — |
-| godie-o00l.q | 53-01 獸王牙操彈 | A0K1 | **ZERO** | [[0.0, 0.0, 0.0, 0.0]] | `KaoLight` j:40121 |
-| godie-o00x.r | 09-04 龜派氣功 | A03S | **ZERO** | [[0.0, 0.0, 0.0]] | `Turtle_Power` j:31855; `Turtle_Power` j:31857 |
-| godie-o01z.w | 81-02 Acxel Shooter | A0LB | **ZERO** | [[0.0, 0.0, 0.0, 0.0, 0.0]] | `AcxelShooter` j:35845 |
-| godie-o02s.w | 53-01 獸王牙操彈 | A0K1 | **ZERO** | [[0.0, 0.0, 0.0, 0.0]] | `KaoLight` j:40121 |
-| godie-o02v.w | 81-02 Acxel Shooter | A0LB | **ZERO** | [[0.0, 0.0, 0.0, 0.0, 0.0]] | `AcxelShooter` j:35845 |
-| godie-obla.e | 33-03 地道突襲 | A07D | **ZERO** | [[0.0, 0.0, 0.0, 0.0]] | — |
-| godie-ogrh.r | 09-04 龜派氣功 | A03S | **ZERO** | [[0.0, 0.0, 0.0]] | `Turtle_Power` j:31855; `Turtle_Power` j:31857 |
-| godie-u00v.w | 78-02 地走龍牙破 | A0L4 | **ZERO** | [[0.0, 0.0, 0.0, 0.0]] | — |
-| godie-e00k.r | 19-04 幻影暗殺 | A02Y | **NO_DAMAGE_EFFECT** | [] | `AzumiShadowNew` j:27785 |
-| godie-e00z.r | 19-04 幻影暗殺 | A02Y | **NO_DAMAGE_EFFECT** | [] | `AzumiShadowNew` j:27785 |
 | godie-edem.r | 45-04 哥哥 | A0U7 | **NO_DAMAGE_EFFECT** | [] | `LightCutRun` j:41894; `LightCutRun` j:41971 |
-| godie-h01n.w | 79-02 斬擊 | A0LK | **NO_DAMAGE_EFFECT** | [] | `Bleach_Strike` j:37477 |
-| godie-h01o.w | 79-02 斬擊 | A0LK | **NO_DAMAGE_EFFECT** | [] | `Bleach_Strike` j:37477 |
-| godie-h02k.e | 89-03 憤怒的胸毛 | A0TN | **NO_DAMAGE_EFFECT** | [] | `Saber_in_pandaDie` j:52630 |
 | godie-h02k.ex | 89-002 俄羅斯輪盤 | A0TU | **NO_DAMAGE_EFFECT** | [] | `Saber_in_pandaEX` j:52893; `Saber_in_pandaEX` j:52918 |
-| godie-h02u.r | 92-04 馬勒戈壁 | A06Y | **NO_DAMAGE_EFFECT** | [] | `MLGBTempSteal` j:45511 |
-| godie-h02u.w | 92-03 狂草泥馬 | A0WB | **NO_DAMAGE_EFFECT** | [] | `NewTrdHorse` j:45373 |
-| godie-h02v.r | 92-04 馬勒戈壁 | A06Y | **NO_DAMAGE_EFFECT** | [] | `MLGBTempSteal` j:45511 |
-| godie-h02v.w | 92-03 狂草泥馬 | A0WB | **NO_DAMAGE_EFFECT** | [] | `NewTrdHorse` j:45373 |
-| godie-naka.e | 27-03 忍法千變萬化之刀 | A03I | **NO_DAMAGE_EFFECT** | [] | `Deal_Elemental_Effect` j:41536 |
-| godie-nplh.ex | 16-002 布都御魂 | A06M | **NO_DAMAGE_EFFECT** | [] | `ComOne` j:31616 |
-| godie-o02w.q | 96-01 華山劍法 | A0XS | **NO_DAMAGE_EFFECT** | [] | `HuashanSword` j:44820 |
-| godie-u00b.w | 75-02 幻影鬥氣 | A07W | **NO_DAMAGE_EFFECT** | [] | `MoriyaShadow` j:47241 |
-| godie-u034.q | 06-01 山形修煉-放 | A08X | **NO_DAMAGE_EFFECT** | [] | `XHunterStone` j:26922; `XHunterStone` j:26975 |
-| godie-u034.w | 06-02 山形修煉-變 | A08W | **NO_DAMAGE_EFFECT** | [] | `XHunterStone` j:26922; `XHunterStone` j:26975 |
-| godie-ucrl.q | 06-01 山形修煉-放 | A08X | **NO_DAMAGE_EFFECT** | [] | `XHunterStone` j:26922; `XHunterStone` j:26975 |
-| godie-ucrl.w | 06-02 山形修煉-變 | A08W | **NO_DAMAGE_EFFECT** | [] | `XHunterStone` j:26922; `XHunterStone` j:26975 |
-| godie-uwar.e | 43-04 爆裂海景佛跳牆 | ANfd | **NO_DAMAGE_EFFECT** | [] | `godJumpWall` j:37959 |
-| godie-n003.r | 42-04 世界終結 | A05D | **TRIVIAL** | [[1.0, 1.0, 1.0]] | `The_End_ofWorldStart` j:37761 |
-| godie-n01g.r | 42-04 世界終結 | A05D | **TRIVIAL** | [[1.0, 1.0, 1.0]] | `The_End_ofWorldStart` j:37761 |
-| godie-u00o.e | 76-03 伸縮自如的槍亂打 | A0IV | **TRIVIAL** | [[1.0, 1.0, 1.0, 1.0]] | `Luf_gun` j:36424 |
-| godie-uvng.e | 38-03 邪王炎殺黑龍波 | A09I | **TRIVIAL** | [[1.0, 1.0, 1.0, 1.0]] | `DarkDragonEXMove` j:44305; `DarkDragonEXMove` j:44307 |
 | godie-e001.passive | 22-00 嗚鎖打! | A0CL | **SUSPECT** | [[150.0]] | — |
 | godie-e002.e | 20-03 約束與勝利之劍 | A0D5 | **SUSPECT** | [[250.0, 400.0, 550.0, 700.0]] | `Excalibur` j:32255 |
 | godie-e002.r | 20-04 Avalon-永恆的理想鄉 | A0CT | **SUSPECT** | [[250.0, 500.0, 750.0]] | `avalonStart` j:32434 |
@@ -69,6 +29,7 @@ VFX verdicts: {'MISSING': 0, 'NONE_EITHER': 47, 'OK': 607}  ·  SFX: {'wc3_has_s
 | godie-e00n.passive | 22-00 嗚鎖打! | A0CL | **SUSPECT** | [[150.0]] | — |
 | godie-e00q.w | 69-02 黑泥召喚 | AOsw | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0, 240.0]] | — |
 | godie-e00s.e | 70-03 木束縛之術 | A0GR | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
+| godie-e00s.q | 70-01 伸卡球 | A0UJ | **SUSPECT** | [[150.0, 300.0, 450.0, 600.0, 750.0]] | `WoodStone` j:47914 |
 | godie-e00s.r | 70-04 千年練成 | A0GN | **SUSPECT** | [[75.0, 75.0, 75.0]] | — |
 | godie-e00t.e | 66-03 七夜怪談 | A0IB | **SUSPECT** | [[7.0, 12.0, 17.0, 22.0]] | — |
 | godie-e00t.w | 66-02 驚駭 | A0I8 | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
@@ -98,10 +59,13 @@ VFX verdicts: {'MISSING': 0, 'NONE_EITHER': 47, 'OK': 607}  ·  SFX: {'wc3_has_s
 | godie-ewrd.r | 17-04 狂龍斬 | A07N | **SUSPECT** | [[75.0, 75.0, 75.0]] | — |
 | godie-h001.r | 41-04 究極魔法流星雨 | ANr3 | **SUSPECT** | [[75.0, 75.0, 75.0]] | — |
 | godie-h001.w | 41-02 地裂術 | A0Z2 | **SUSPECT** | [[90.0, 90.0, 90.0, 90.0]] | — |
+| godie-h01n.q | 79-01 瞬步 | A0RX | **SUSPECT** | [[100.0, 150.0, 200.0, 250.0]] | `Bleach_Rush` j:37410; `Bleach_Rush` j:37418 |
+| godie-h01o.q | 79-01 瞬步 | A0RX | **SUSPECT** | [[100.0, 150.0, 200.0, 250.0]] | `Bleach_Rush` j:37410; `Bleach_Rush` j:37418 |
 | godie-h01u.r | 80-04 赤兔咆哮 | A0MZ | **SUSPECT** | [[90.0, 20.0, 30.0]] | — |
 | godie-h01u.w | 80-02 弒鬼神 | A0MY | **SUSPECT** | [[150.0, 250.0, 350.0, 0.0, 0.0]] | — |
 | godie-h020.w | 04-02 炸彈陣 | A021 | **SUSPECT** | [[110.0, 170.0, 230.0, 290.0]] | — |
 | godie-h022.passive | 82-00 天生法術書 | A0Q0 | **SUSPECT** | [[100.0]] | — |
+| godie-h02k.e | 89-03 憤怒的胸毛 | A0TN | **SUSPECT** | [[1000.0, 2000.0, 3000.0, 4000.0]] | `Saber_in_pandaDie` j:52630 |
 | godie-h02s.e | 91-03 碎心打擊 | A0W1 | **SUSPECT** | [[225.0, 300.0, 375.0, 450.0]] | `HeartStrike` j:53354; `HeartStrike` j:53360 |
 | godie-h02z.e | 91-03 碎心打擊 | A0W1 | **SUSPECT** | [[225.0, 300.0, 375.0, 450.0]] | `HeartStrike` j:53354; `HeartStrike` j:53360 |
 | godie-hapm.w | 52-02 蹂躪編年史 | A0U1 | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
@@ -137,11 +101,13 @@ VFX verdicts: {'MISSING': 0, 'NONE_EITHER': 47, 'OK': 607}  ·  SFX: {'wc3_has_s
 | godie-o00l.w | 53-02 強化炸彈陣 | A0DQ | **SUSPECT** | [[300.0, 600.0, 900.0, 1200.0]] | — |
 | godie-o00x.e | 09-03 超級賽亞人 | A09E | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
 | godie-o01z.q | 81-01 Barrel Shot | A0XG | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | `BarrelShot` j:35933 |
+| godie-o01z.w | 81-02 Acxel Shooter | A0LB | **SUSPECT** | [[250.0, 375.0, 500.0, 625.0, 750.0]] | `AcxelShooter` j:35845 |
 | godie-o02l.r | 58-04 瘋狂皮卡丘 | A040 | **SUSPECT** | [[80.0, 120.0, 160.0]] | — |
 | godie-o02o.e | 87-03 天下號令 | A0DB | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
 | godie-o02o.q | 87-01 大紅蓮斬 | A0DE | **SUSPECT** | [[250.0, 550.0, 850.0, 0.0, 0.0]] | — |
 | godie-o02s.q | 53-02 強化炸彈陣 | A0DQ | **SUSPECT** | [[300.0, 600.0, 900.0, 1200.0]] | — |
 | godie-o02v.q | 81-01 Barrel Shot | A0XG | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | `BarrelShot` j:35933 |
+| godie-o02v.w | 81-02 Acxel Shooter | A0LB | **SUSPECT** | [[250.0, 375.0, 500.0, 625.0, 750.0]] | `AcxelShooter` j:35845 |
 | godie-obla.q | 33-01 放山雞 | A02L | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0, 240.0]] | — |
 | godie-ofar.r | 58-04 瘋狂皮卡丘 | A040 | **SUSPECT** | [[80.0, 120.0, 160.0]] | — |
 | godie-ogld.r | 72-04 黑化 | A0CO | **SUSPECT** | [[77.0, 77.0, 77.0]] | `BlackTooth` j:47360 |
@@ -189,6 +155,7 @@ VFX verdicts: {'MISSING': 0, 'NONE_EITHER': 47, 'OK': 607}  ·  SFX: {'wc3_has_s
 | godie-harf.w | 26-02 亂入 | ? | **UNVERIFIED** | [[0.0, 25.0, 25.0, 25.0]] | — |
 | godie-hgam.e | 90-03 藤鞭 | ? | **UNVERIFIED** | [[350.0, 500.0, 650.0, 800.0]] | — |
 | godie-hpal.r | 35-04 光牙 | ? | **UNVERIFIED** | [[600.0, 1000.0, 1400.0]] | — |
+| godie-nsjs.w | 18-02 寄生種子 | ? | **UNVERIFIED** | [[75.0, 75.0, 75.0, 75.0]] | — |
 | godie-o00k.q | 86-01 十萬伏特 | ? | **UNVERIFIED** | [[175.0, 275.0, 375.0, 375.0, 375.0]] | — |
 | godie-ogld.w | 72-02 黑人牙菌斑 | ? | **UNVERIFIED** | [[20.0, 30.0, 40.0]] | — |
 | godie-u00b.e | 75-02 龍捲風 | ANto | **UNVERIFIED** | [[80.0, 120.0, 160.0, 200.0]] | — |

@@ -8,13 +8,13 @@
    "UNRESOLVED": 43
   },
   "damage": {
-   "ZERO": 18,
-   "TRIVIAL": 4,
-   "NO_DAMAGE_EFFECT": 20,
-   "SUSPECT": 122,
-   "UNVERIFIED": 23,
-   "OK": 152,
-   "N/A": 315
+   "ZERO": 0,
+   "TRIVIAL": 0,
+   "NO_DAMAGE_EFFECT": 2,
+   "SUSPECT": 128,
+   "UNVERIFIED": 24,
+   "OK": 184,
+   "N/A": 316
   },
   "vfx": {
    "MISSING": 0,
@@ -1553,14 +1553,14 @@
    "base": "Alsh",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "ZERO",
-    "reason": "content damage is all-zero",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      0.0,
-      0.0,
-      0.0,
-      0.0
+      600.0,
+      800.0,
+      1000.0,
+      1200.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -1973,9 +1973,15 @@
    "base": "AOcr",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "NO_DAMAGE_EFFECT",
-    "reason": "JASS cluster deals damage but content has no damage effect",
-    "content_perRank": [],
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
+    "content_perRank": [
+     [
+      100.0,
+      200.0,
+      300.0
+     ]
+    ],
     "ubertip_span_numbers": {
      "1": [
       0.0,
@@ -2043,7 +2049,8 @@
     "AzumiShadowNew"
    ],
    "content_kinds": [
-    "applyBuff"
+    "applyBuff",
+    "damage"
    ]
   },
   {
@@ -3461,15 +3468,15 @@
    "base": "ANcs",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "ZERO",
-    "reason": "content damage is all-zero",
+    "verdict": "SUSPECT",
+    "reason": "content values [600.0, 750.0] absent from ubertip spans",
     "content_perRank": [
      [
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0
+      150.0,
+      300.0,
+      450.0,
+      600.0,
+      750.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -4053,15 +4060,9 @@
    "base": "AEim",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "ZERO",
-    "reason": "content damage is all-zero",
-    "content_perRank": [
-     [
-      0.0,
-      0.0,
-      0.0
-     ]
-    ],
+    "verdict": "N/A",
+    "reason": "no damage on either side (buff/heal/summon/aura family)",
+    "content_perRank": [],
     "ubertip_span_numbers": {
      "1": [
       0.0,
@@ -4105,9 +4106,7 @@
    "vfx": {
     "verdict": "OK",
     "content_vfxKey": "fx.prim.void.bolt-lg",
-    "content_projectiles": [
-     "imported.wave"
-    ],
+    "content_projectiles": [],
     "jass_models": [],
     "jass_dummy_units": []
    },
@@ -4120,7 +4119,7 @@
     "ButtyGhost_SoulDash_Level"
    ],
    "content_kinds": [
-    "spawnProjectile"
+    "passive"
    ]
   },
   {
@@ -5683,9 +5682,15 @@
    "base": "AOcr",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "NO_DAMAGE_EFFECT",
-    "reason": "JASS cluster deals damage but content has no damage effect",
-    "content_perRank": [],
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
+    "content_perRank": [
+     [
+      100.0,
+      200.0,
+      300.0
+     ]
+    ],
     "ubertip_span_numbers": {
      "1": [
       0.0,
@@ -5753,7 +5758,8 @@
     "AzumiShadowNew"
    ],
    "content_kinds": [
-    "applyBuff"
+    "applyBuff",
+    "damage"
    ]
   },
   {
@@ -10545,14 +10551,14 @@
    "base": "Alsh",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "ZERO",
-    "reason": "content damage is all-zero",
+    "verdict": "SUSPECT",
+    "reason": "content values [100.0, 150.0, 250.0] absent from ubertip spans",
     "content_perRank": [
      [
-      0.0,
-      0.0,
-      0.0,
-      0.0
+      100.0,
+      150.0,
+      200.0,
+      250.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -10697,9 +10703,16 @@
    "base": "Absk",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "NO_DAMAGE_EFFECT",
-    "reason": "JASS cluster deals damage but content has no damage effect",
-    "content_perRank": [],
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
+    "content_perRank": [
+     [
+      100.0,
+      150.0,
+      200.0,
+      250.0
+     ]
+    ],
     "ubertip_span_numbers": {
      "1": [
       22.0,
@@ -10760,7 +10773,8 @@
     "Bleach_Strike"
    ],
    "content_kinds": [
-    "applyBuff"
+    "applyBuff",
+    "damage"
    ]
   },
   {
@@ -10964,14 +10978,14 @@
    "base": "Alsh",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "ZERO",
-    "reason": "content damage is all-zero",
+    "verdict": "SUSPECT",
+    "reason": "content values [100.0, 150.0, 250.0] absent from ubertip spans",
     "content_perRank": [
      [
-      0.0,
-      0.0,
-      0.0,
-      0.0
+      100.0,
+      150.0,
+      200.0,
+      250.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -11116,9 +11130,16 @@
    "base": "Absk",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "NO_DAMAGE_EFFECT",
-    "reason": "JASS cluster deals damage but content has no damage effect",
-    "content_perRank": [],
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
+    "content_perRank": [
+     [
+      100.0,
+      150.0,
+      200.0,
+      250.0
+     ]
+    ],
     "ubertip_span_numbers": {
      "1": [
       22.0,
@@ -11179,7 +11200,8 @@
     "Bleach_Strike"
    ],
    "content_kinds": [
-    "applyBuff"
+    "applyBuff",
+    "damage"
    ]
   },
   {
@@ -12527,14 +12549,14 @@
    "base": "AOsh",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "ZERO",
-    "reason": "content damage is all-zero",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      0.0,
-      0.0,
-      0.0,
-      0.0
+      350.0,
+      350.0,
+      350.0,
+      350.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -12896,9 +12918,16 @@
    "base": "AUau",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "NO_DAMAGE_EFFECT",
-    "reason": "JASS cluster deals damage but content has no damage effect",
-    "content_perRank": [],
+    "verdict": "SUSPECT",
+    "reason": "content values [1000.0, 2000.0, 3000.0, 4000.0] absent from ubertip spans",
+    "content_perRank": [
+     [
+      1000.0,
+      2000.0,
+      3000.0,
+      4000.0
+     ]
+    ],
     "ubertip_span_numbers": {
      "1": [
       0.0,
@@ -12949,7 +12978,8 @@
     "Saber_in_pandaDie"
    ],
    "content_kinds": [
-    "applyBuff"
+    "applyBuff",
+    "damage"
    ]
   },
   {
@@ -13502,13 +13532,13 @@
    "base": "AOsh",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "ZERO",
-    "reason": "content damage is all-zero",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      0.0,
-      0.0,
-      0.0
+      600.0,
+      900.0,
+      1200.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -14093,9 +14123,16 @@
    "base": "Absk",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "NO_DAMAGE_EFFECT",
-    "reason": "JASS cluster deals damage but content has no damage effect",
-    "content_perRank": [],
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
+    "content_perRank": [
+     [
+      400.0,
+      800.0,
+      1200.0,
+      1600.0
+     ]
+    ],
     "ubertip_span_numbers": {
      "1": [
       60.0,
@@ -14188,7 +14225,8 @@
     "NewTrdHorse"
    ],
    "content_kinds": [
-    "applyBuff"
+    "applyBuff",
+    "damage"
    ]
   },
   {
@@ -14274,9 +14312,15 @@
    "base": "ACro",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "NO_DAMAGE_EFFECT",
-    "reason": "JASS cluster deals damage but content has no damage effect",
-    "content_perRank": [],
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
+    "content_perRank": [
+     [
+      100.0,
+      200.0,
+      300.0
+     ]
+    ],
     "ubertip_span_numbers": {
      "1": [
       75.0,
@@ -14327,7 +14371,8 @@
     "MLGBTempSteal"
    ],
    "content_kinds": [
-    "applyBuff"
+    "applyBuff",
+    "damage"
    ]
   },
   {
@@ -14471,9 +14516,16 @@
    "base": "Absk",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "NO_DAMAGE_EFFECT",
-    "reason": "JASS cluster deals damage but content has no damage effect",
-    "content_perRank": [],
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
+    "content_perRank": [
+     [
+      400.0,
+      800.0,
+      1200.0,
+      1600.0
+     ]
+    ],
     "ubertip_span_numbers": {
      "1": [
       60.0,
@@ -14566,7 +14618,8 @@
     "NewTrdHorse"
    ],
    "content_kinds": [
-    "applyBuff"
+    "applyBuff",
+    "damage"
    ]
   },
   {
@@ -14652,9 +14705,15 @@
    "base": "ACro",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "NO_DAMAGE_EFFECT",
-    "reason": "JASS cluster deals damage but content has no damage effect",
-    "content_perRank": [],
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
+    "content_perRank": [
+     [
+      100.0,
+      200.0,
+      300.0
+     ]
+    ],
     "ubertip_span_numbers": {
      "1": [
       75.0,
@@ -14705,7 +14764,8 @@
     "MLGBTempSteal"
    ],
    "content_kinds": [
-    "applyBuff"
+    "applyBuff",
+    "damage"
    ]
   },
   {
@@ -17030,13 +17090,13 @@
    "base": "AOsh",
    "join": "name",
    "damage": {
-    "verdict": "ZERO",
-    "reason": "content damage is all-zero",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      0.0,
-      0.0,
-      0.0
+      600.0,
+      900.0,
+      1200.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -19826,13 +19886,13 @@
    "base": "ANcs",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "TRIVIAL",
-    "reason": "content damage <= 2 across all ranks",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      1.0,
-      1.0,
-      1.0
+      150.0,
+      250.0,
+      350.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -20367,14 +20427,14 @@
    "base": "Alsh",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "ZERO",
-    "reason": "content damage is all-zero",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      0.0,
-      0.0,
-      0.0,
-      0.0
+      75.0,
+      75.0,
+      75.0,
+      75.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -21233,13 +21293,13 @@
    "base": "ANcs",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "TRIVIAL",
-    "reason": "content damage <= 2 across all ranks",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      1.0,
-      1.0,
-      1.0
+      150.0,
+      250.0,
+      350.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -21843,9 +21903,16 @@
    "base": "Absk",
    "join": "name",
    "damage": {
-    "verdict": "NO_DAMAGE_EFFECT",
-    "reason": "JASS cluster deals damage but content has no damage effect",
-    "content_perRank": [],
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
+    "content_perRank": [
+     [
+      130.0,
+      180.0,
+      230.0,
+      280.0
+     ]
+    ],
     "ubertip_span_numbers": {
      "1": [
       60.0,
@@ -21919,7 +21986,8 @@
     "Set_Charges"
    ],
    "content_kinds": [
-    "applyBuff"
+    "applyBuff",
+    "damage"
    ]
   },
   {
@@ -23422,9 +23490,13 @@
    "base": "ANbr",
    "join": "name",
    "damage": {
-    "verdict": "NO_DAMAGE_EFFECT",
-    "reason": "JASS cluster deals damage but content has no damage effect",
-    "content_perRank": [],
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
+    "content_perRank": [
+     [
+      750.0
+     ]
+    ],
     "ubertip_span_numbers": {
      "1": [
       45.0,
@@ -23464,7 +23536,8 @@
     "ComOne"
    ],
    "content_kinds": [
-    "applyBuff"
+    "applyBuff",
+    "damage"
    ]
   },
   {
@@ -23536,14 +23609,14 @@
    "base": null,
    "join": "UNRESOLVED",
    "damage": {
-    "verdict": "ZERO",
-    "reason": "content damage is all-zero",
+    "verdict": "UNVERIFIED",
+    "reason": "no JASS handler and no ubertip numbers to check against",
     "content_perRank": [
      [
-      0.0,
-      0.0,
-      0.0,
-      0.0
+      75.0,
+      75.0,
+      75.0,
+      75.0
      ]
     ],
     "ubertip_span_numbers": {},
@@ -24378,14 +24451,14 @@
    "base": "ANcs",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "ZERO",
-    "reason": "content damage is all-zero",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      0.0,
-      0.0,
-      0.0,
-      0.0
+      250.0,
+      350.0,
+      450.0,
+      550.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -24946,13 +25019,13 @@
    "base": "AOsh",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "ZERO",
-    "reason": "content damage is all-zero",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      0.0,
-      0.0,
-      0.0
+      450.0,
+      750.0,
+      1050.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -25228,15 +25301,15 @@
    "base": "ANcs",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "ZERO",
-    "reason": "content damage is all-zero",
+    "verdict": "SUSPECT",
+    "reason": "content values [625.0, 750.0] absent from ubertip spans",
     "content_perRank": [
      [
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0
+      250.0,
+      375.0,
+      500.0,
+      625.0,
+      750.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -26598,14 +26671,14 @@
    "base": "ANcs",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "ZERO",
-    "reason": "content damage is all-zero",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      0.0,
-      0.0,
-      0.0,
-      0.0
+      250.0,
+      350.0,
+      450.0,
+      550.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -26941,15 +27014,15 @@
    "base": "ANcs",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "ZERO",
-    "reason": "content damage is all-zero",
+    "verdict": "SUSPECT",
+    "reason": "content values [625.0, 750.0] absent from ubertip spans",
     "content_perRank": [
      [
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0
+      250.0,
+      375.0,
+      500.0,
+      625.0,
+      750.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -27322,9 +27395,16 @@
    "base": "Asth",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "NO_DAMAGE_EFFECT",
-    "reason": "JASS cluster deals damage but content has no damage effect",
-    "content_perRank": [],
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
+    "content_perRank": [
+     [
+      10.0,
+      20.0,
+      30.0,
+      40.0
+     ]
+    ],
     "ubertip_span_numbers": {
      "1": [
       0.0,
@@ -27382,7 +27462,8 @@
     "HuashanSword"
    ],
    "content_kinds": [
-    "applyBuff"
+    "applyBuff",
+    "damage"
    ]
   },
   {
@@ -27764,14 +27845,14 @@
    "base": "AOsh",
    "join": "name",
    "damage": {
-    "verdict": "ZERO",
-    "reason": "content damage is all-zero",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      0.0,
-      0.0,
-      0.0,
-      0.0
+      500.0,
+      650.0,
+      800.0,
+      950.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -28762,13 +28843,13 @@
    "base": "AOsh",
    "join": "name",
    "damage": {
-    "verdict": "ZERO",
-    "reason": "content damage is all-zero",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      0.0,
-      0.0,
-      0.0
+      450.0,
+      750.0,
+      1050.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -30628,9 +30709,16 @@
    "base": "AOcr",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "NO_DAMAGE_EFFECT",
-    "reason": "JASS cluster deals damage but content has no damage effect",
-    "content_perRank": [],
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
+    "content_perRank": [
+     [
+      50.0,
+      70.0,
+      90.0,
+      110.0
+     ]
+    ],
     "ubertip_span_numbers": {
      "1": [
       0.0,
@@ -30680,7 +30768,8 @@
     "MoriyaShadow"
    ],
    "content_kinds": [
-    "applyBuff"
+    "applyBuff",
+    "damage"
    ]
   },
   {
@@ -32971,14 +33060,14 @@
    "base": "ANcs",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "TRIVIAL",
-    "reason": "content damage <= 2 across all ranks",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      1.0,
-      1.0,
-      1.0,
-      1.0
+      400.0,
+      600.0,
+      800.0,
+      1000.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -33280,14 +33369,14 @@
    "base": "AOsh",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "ZERO",
-    "reason": "content damage is all-zero",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      0.0,
-      0.0,
-      0.0,
-      0.0
+      200.0,
+      300.0,
+      400.0,
+      500.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -35265,9 +35354,16 @@
    "base": "AEev",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "NO_DAMAGE_EFFECT",
-    "reason": "JASS cluster deals damage but content has no damage effect",
-    "content_perRank": [],
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
+    "content_perRank": [
+     [
+      300.0,
+      375.0,
+      450.0,
+      525.0
+     ]
+    ],
     "ubertip_span_numbers": {
      "1": [
       0.0,
@@ -35502,7 +35598,8 @@
     "XHunterStone"
    ],
    "content_kinds": [
-    "applyBuff"
+    "applyBuff",
+    "damage"
    ]
   },
   {
@@ -35515,9 +35612,16 @@
    "base": "AHbh",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "NO_DAMAGE_EFFECT",
-    "reason": "JASS cluster deals damage but content has no damage effect",
-    "content_perRank": [],
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
+    "content_perRank": [
+     [
+      350.0,
+      450.0,
+      550.0,
+      650.0
+     ]
+    ],
     "ubertip_span_numbers": {
      "1": [
       0.0,
@@ -35749,7 +35853,8 @@
     "XHunterStone"
    ],
    "content_kinds": [
-    "applyBuff"
+    "applyBuff",
+    "damage"
    ]
   },
   {
@@ -36595,9 +36700,16 @@
    "base": "AEev",
    "join": "name",
    "damage": {
-    "verdict": "NO_DAMAGE_EFFECT",
-    "reason": "JASS cluster deals damage but content has no damage effect",
-    "content_perRank": [],
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
+    "content_perRank": [
+     [
+      300.0,
+      375.0,
+      450.0,
+      525.0
+     ]
+    ],
     "ubertip_span_numbers": {
      "1": [
       0.0,
@@ -36832,7 +36944,8 @@
     "XHunterStone"
    ],
    "content_kinds": [
-    "applyBuff"
+    "applyBuff",
+    "damage"
    ]
   },
   {
@@ -36845,9 +36958,16 @@
    "base": "AHbh",
    "join": "name",
    "damage": {
-    "verdict": "NO_DAMAGE_EFFECT",
-    "reason": "JASS cluster deals damage but content has no damage effect",
-    "content_perRank": [],
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
+    "content_perRank": [
+     [
+      350.0,
+      450.0,
+      550.0,
+      650.0
+     ]
+    ],
     "ubertip_span_numbers": {
      "1": [
       0.0,
@@ -37079,7 +37199,8 @@
     "XHunterStone"
    ],
    "content_kinds": [
-    "applyBuff"
+    "applyBuff",
+    "damage"
    ]
   },
   {
@@ -39212,14 +39333,14 @@
    "base": "AOsh",
    "join": "name",
    "damage": {
-    "verdict": "TRIVIAL",
-    "reason": "content damage <= 2 across all ranks",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      1.0,
-      1.0,
-      1.0,
-      1.0
+      650.0,
+      900.0,
+      1150.0,
+      1400.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -39563,9 +39684,15 @@
    "base": "ANfd",
    "join": "name",
    "damage": {
-    "verdict": "NO_DAMAGE_EFFECT",
-    "reason": "JASS cluster deals damage but content has no damage effect",
-    "content_perRank": [],
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
+    "content_perRank": [
+     [
+      700.0,
+      1000.0,
+      1300.0
+     ]
+    ],
     "ubertip_span_numbers": {
      "1": [
       45.0,
@@ -39613,6 +39740,7 @@
     "godJumpWall"
    ],
    "content_kinds": [
+    "damage",
     "dash"
    ]
   },

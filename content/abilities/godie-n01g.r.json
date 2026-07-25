@@ -27,9 +27,9 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              1.0,
-              1.0,
-              1.0
+              150.0,
+              250.0,
+              350.0
             ]
           }
         }
@@ -38,7 +38,7 @@
   ],
   "vfxKey": "fx.w3x.locust.frostnova.p01",
   "schema": "ability@1",
-  "castTimeSec": 0.4,
+  "castTimeSec": 0.5,
   "hitFeel": {
     "hitstopTicks": 5,
     "hitstunTicks": 8,

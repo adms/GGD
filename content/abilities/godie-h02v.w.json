@@ -21,6 +21,24 @@
   "range": 0,
   "effects": [
     {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          400.0,
+          800.0,
+          1200.0,
+          1600.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    },
+    {
       "kind": "applyBuff",
       "modifiers": [
         {
@@ -34,5 +52,5 @@
   ],
   "vfxKey": "fx.prim.nature.pulse-sm",
   "schema": "ability@1",
-  "castTimeSec": 0.3
+  "castTimeSec": 0.6
 }

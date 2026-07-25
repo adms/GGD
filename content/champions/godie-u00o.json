@@ -172,10 +172,10 @@
               "damageType": "magic",
               "amount": {
                 "perRank": [
-                  1.0,
-                  1.0,
-                  1.0,
-                  1.0
+                  400.0,
+                  600.0,
+                  800.0,
+                  1000.0
                 ]
               }
             }
@@ -183,7 +183,7 @@
         }
       ],
       "vfxKey": "fx.prim.arcane.bolt",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.5
     },
     "R": {
       "id": "godie-u00o.r",

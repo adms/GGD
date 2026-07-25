@@ -71,10 +71,10 @@
               "damageType": "magic",
               "amount": {
                 "perRank": [
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0
+                  250.0,
+                  350.0,
+                  450.0,
+                  550.0
                 ]
               }
             }
@@ -82,7 +82,7 @@
         }
       ],
       "vfxKey": "fx.prim.void.beam",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.4
     },
     "W": {
       "id": "godie-o00l.w",

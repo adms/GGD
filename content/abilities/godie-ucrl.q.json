@@ -21,6 +21,24 @@
   "range": 0,
   "effects": [
     {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          300.0,
+          375.0,
+          450.0,
+          525.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.9
+          }
+        ]
+      }
+    },
+    {
       "kind": "applyBuff",
       "modifiers": [
         {

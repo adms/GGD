@@ -63,6 +63,24 @@
       "range": 0,
       "effects": [
         {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              300.0,
+              375.0,
+              450.0,
+              525.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.9
+              }
+            ]
+          }
+        },
+        {
           "kind": "applyBuff",
           "modifiers": [
             {
@@ -99,6 +117,24 @@
       ],
       "range": 0,
       "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              350.0,
+              450.0,
+              550.0,
+              650.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        },
         {
           "kind": "applyBuff",
           "modifiers": [

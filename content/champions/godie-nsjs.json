@@ -114,10 +114,10 @@
               "damageType": "magic",
               "amount": {
                 "perRank": [
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0
+                  75.0,
+                  75.0,
+                  75.0,
+                  75.0
                 ]
               }
             }
@@ -125,7 +125,7 @@
         }
       ],
       "vfxKey": "fx.prim.nature.bolt",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.4
     },
     "E": {
       "id": "godie-nsjs.e",

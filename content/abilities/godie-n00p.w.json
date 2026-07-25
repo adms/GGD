@@ -29,10 +29,10 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              0.0,
-              0.0,
-              0.0,
-              0.0
+              75.0,
+              75.0,
+              75.0,
+              75.0
             ]
           }
         }
@@ -41,5 +41,5 @@
   ],
   "vfxKey": "fx.prim.nature.swarm",
   "schema": "ability@1",
-  "castTimeSec": 0.3
+  "castTimeSec": 0.4
 }

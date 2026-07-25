@@ -15,6 +15,15 @@
   "range": 0,
   "effects": [
     {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          750.0
+        ]
+      }
+    },
+    {
       "kind": "applyBuff",
       "modifiers": [
         {
@@ -28,5 +37,5 @@
   ],
   "vfxKey": "fx.prim.holy.beam-lg",
   "schema": "ability@1",
-  "castTimeSec": 0.4
+  "castTimeSec": 0.6
 }
