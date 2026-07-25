@@ -92,6 +92,18 @@ export function resolveHubLinks(env: HubEnv = {}, mode: "dev" | "prod" = "dev"):
       healthUrl: null,
       emoji: "🎵",
     },
+    // #230. The census is COMPUTED, and it is computed in the client's asset
+    // console from the shipped content + the archaeology sidecar. Linking there
+    // rather than re-implementing it here is deliberate: two implementations of
+    // one count is how a console starts lying (AssetConsolePage's own rule).
+    {
+      key: "vfxCensus",
+      label: "特效真實引用普查",
+      sub: "Every champion × ability: the map's real VFX vs what is bound",
+      url: `${clientBase}#assets`,
+      healthUrl: null,
+      emoji: "🎆",
+    },
     { key: "editor", label: "內容編輯器", sub: "Content editor", url: editor, healthUrl: editor, emoji: "🛠️" },
     { key: "testDashboard", label: "測試台", sub: "Test dashboard", url: testDashboard, healthUrl: testDashboard, emoji: "🧪" },
     { key: "api", label: "平台 API 健康", sub: "Platform API health", url: `${api}/v1/healthz`, healthUrl: `${api}/v1/healthz`, emoji: "❤️" },

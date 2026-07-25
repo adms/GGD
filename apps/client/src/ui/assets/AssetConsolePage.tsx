@@ -43,6 +43,7 @@ import { topRightReserve } from "../chromeReserve";
 import { Btn } from "../platform/widgets";
 import { Tooltip } from "../components/Tooltip";
 import { IconCoverageBar } from "../codex/IconCoverageBar";
+import { VfxCensusPanel } from "./VfxCensusPanel";
 import { useCodex } from "../codex/useCodex";
 import { openCodex } from "../codex/CodexRoute";
 import {
@@ -952,6 +953,12 @@ export function AssetConsolePage({ onClose }: { onClose: () => void }): React.JS
           <Btn small onClick={() => document.getElementById("asset-coverage")?.scrollIntoView({ behavior: "smooth" })}>
             覆蓋率
           </Btn>
+          <Btn
+            small
+            onClick={() => document.getElementById("asset-vfx-census")?.scrollIntoView({ behavior: "smooth" })}
+          >
+            特效普查
+          </Btn>
           <Btn small onClick={() => document.getElementById("asset-style")?.scrollIntoView({ behavior: "smooth" })}>
             樣式規格
           </Btn>
@@ -986,6 +993,18 @@ export function AssetConsolePage({ onClose }: { onClose: () => void }): React.JS
           {error && <div style={{ fontSize: 11, color: BAD }}>讀取內容失敗：{error}</div>}
           {loading && <div style={{ fontSize: 11, color: TEXT_DIM }}>正在從 /content 讀取全部內容…</div>}
           {data && <IconCoverageBar data={data} icons={icons} />}
+        </Section>
+
+        {/* #230. Same seam as 圖示覆蓋率 above: one question — "is this asset
+            really the map's, or a stand-in?" — answered from the shipped content
+            at view time. The component owns no counts of its own; everything is
+            derived in ui/assets/vfxCensus.ts, which is node-tested. */}
+        <Section
+          id="asset-vfx-census"
+          title="特效真實引用普查"
+          subtitle="每個英雄 × 每個技能：原圖真正用的特效 vs 現在綁的 —— 開啟時即時計算"
+        >
+          <VfxCensusPanel data={data} />
         </Section>
 
         <StyleSpecSection specState={specState} />

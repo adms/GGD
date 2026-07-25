@@ -84,7 +84,7 @@
           }
         }
       ],
-      "vfxKey": "fx.prim.fire.slash",
+      "vfxKey": "fx.w3x.particle.flamessmoke.p01",
       "sfxKey": "wc3.darksummoninglaunch1",
       "targetsEnemies": true,
       "castTimeSec": 0.5
@@ -139,7 +139,7 @@
           "moveSpeedMult": 0.6
         }
       ],
-      "vfxKey": "fx.prim.fire.explosion",
+      "vfxKey": "godie-fireblast-p3",
       "sfxKey": "wc3.hcancelbuilding",
       "targetsEnemies": true,
       "radius": 6.0,
@@ -206,7 +206,7 @@
           ]
         }
       ],
-      "vfxKey": "fx.prim.fire.explosion-lg",
+      "vfxKey": "godie-tectonicfury-p0",
       "sfxKey": "wc3.dragonyes2",
       "castTimeSec": 0.6,
       "hitFeel": {
