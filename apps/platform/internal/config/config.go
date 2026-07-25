@@ -129,6 +129,25 @@ type Config struct {
 	// flood #174 exists to stop. Defence in depth: burn a code, THEN be seen.
 	RequireApproval bool
 
+	// MaxPending bounds how many accounts may sit PENDING under the #126 approval
+	// gate at once (GGD_MAX_PENDING, default DefaultMaxPending). The gate turns
+	// every non-owner registration into a durable account file plus PERMANENT
+	// username/email index keys, so without a ceiling a scripted registration
+	// flood grows them without bound — a disk/Redis DoS (sec-154-11). Register
+	// refuses a new pending account once the queue is full. 0 disables the cap.
+	// Only consulted when RequireApproval is on (a pending account is only ever
+	// created there).
+	MaxPending int
+
+	// PendingApprovalTTL is how long an un-actioned PENDING account survives
+	// before the periodic sweep deletes it and reclaims its username/email
+	// reservations (GGD_PENDING_TTL in whole days, DefaultPendingTTL, clamped to
+	// [MinPendingTTL, MaxPendingTTL]). It is the other half of sec-154-11: the cap
+	// bounds how MANY pending accounts exist, this bounds how LONG one persists,
+	// so the approval queue cannot accumulate durable files + permanent Redis keys
+	// forever. Only swept when RequireApproval is on.
+	PendingApprovalTTL time.Duration
+
 	// NewAccountCrystals is the one-time 藍水晶 welcome grant a brand-new account
 	// is seeded with (task #204, GGD_NEW_ACCOUNT_CRYSTALS, default 1000). 藍水晶
 	// is the earn-by-playing currency that unlocks champions, so a fresh family
@@ -245,6 +264,47 @@ func getenvSeconds(key string, def, min, max time.Duration) time.Duration {
 			return min
 		}
 		return max
+	}
+	return d
+}
+
+// #126 pending-registration CAP + TTL knobs (sec-154-11).
+//
+// The cap bounds how MANY accounts may await approval at once; the TTL bounds
+// how LONG an un-actioned one lingers before the sweep reclaims it. The TTL
+// floor keeps a mistyped tiny value from deleting a relative before the owner
+// wakes up to approve them; the ceiling keeps the reaper from becoming
+// decorative. Both are only in force when the approval gate is on.
+const (
+	DefaultMaxPending = 200
+	MinPendingTTL     = 24 * time.Hour      // 1 day floor
+	MaxPendingTTL     = 90 * 24 * time.Hour // 90 day ceiling
+	DefaultPendingTTL = 14 * 24 * time.Hour // 2 weeks
+)
+
+// resolvePendingTTL reads GGD_PENDING_TTL as a whole number of DAYS, clamped to
+// [MinPendingTTL, MaxPendingTTL]. Absence, garbage and out-of-range values all
+// fall back to DefaultPendingTTL and SAY SO — the same fail-loud discipline as
+// getenvSeconds, so a mistyped TTL that would silently delete pending accounts
+// early can never take effect quietly.
+func resolvePendingTTL(raw string) time.Duration {
+	raw = strings.TrimSpace(raw)
+	if raw == "" {
+		return DefaultPendingTTL
+	}
+	n, err := strconv.Atoi(raw)
+	if err != nil {
+		slog.Warn("config: ignoring unparseable GGD_PENDING_TTL (whole days expected)", "value", raw, "using", DefaultPendingTTL)
+		return DefaultPendingTTL
+	}
+	d := time.Duration(n) * 24 * time.Hour
+	if d < MinPendingTTL {
+		slog.Warn("config: GGD_PENDING_TTL below floor, clamping", "days", n, "min", MinPendingTTL)
+		return MinPendingTTL
+	}
+	if d > MaxPendingTTL {
+		slog.Warn("config: GGD_PENDING_TTL above ceiling, clamping", "days", n, "max", MaxPendingTTL)
+		return MaxPendingTTL
 	}
 	return d
 }
@@ -626,6 +686,8 @@ func Load() (Config, error) {
 		FullAssets:              ServesFullAssets(normalizeDeployTier(os.Getenv("GGD_DEPLOY_TIER"))),
 		RequireInvite:           resolveRequireInvite(os.Getenv("GGD_REQUIRE_INVITE"), getenv("PLATFORM_ADDR", ":8080")),
 		RequireApproval:         resolveRequireApproval(os.Getenv("GGD_REQUIRE_APPROVAL"), getenv("PLATFORM_ADDR", ":8080")),
+		MaxPending:              getenvInt("GGD_MAX_PENDING", DefaultMaxPending),
+		PendingApprovalTTL:      resolvePendingTTL(os.Getenv("GGD_PENDING_TTL")),
 		NewAccountCrystals:      getenvInt("GGD_NEW_ACCOUNT_CRYSTALS", 1000),
 		BackfillWelcomeCrystals: getenvInt("GGD_BACKFILL_WELCOME_CRYSTALS", 0) == 1,
 		AccessTokenTTL:          15 * time.Minute,

@@ -72,6 +72,15 @@ type Server struct {
 	// limiting is owned by nginx; this global cap needs no address).
 	registerRateLimit int
 
+	// requireApproval is the resolved #126 approval-gate state (the same value
+	// handed to auth.New). Start reads it to decide whether the pending-account
+	// TTL sweep runs — there are no pending accounts to reap unless the gate is on.
+	requireApproval bool
+	// pendingApprovalTTL is how long an un-actioned PENDING account lives before
+	// the sweep deletes it and reclaims its username/email reservations
+	// (sec-154-11). Mirror of cfg.PendingApprovalTTL, read by startPendingSweep.
+	pendingApprovalTTL time.Duration
+
 	router chi.Router
 	cancel context.CancelFunc
 }
@@ -176,8 +185,14 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 	// gate is: on a family deploy these two lines are the entire answer to "who
 	// can get in", and a gate that is off must never be a quiet decision.
 	if requireApproval {
+		// The approval gate manufactures durable pending accounts, so it must ship
+		// WITH the sec-154-11 DoS guard: a CAP on how many may await approval at
+		// once, and a TTL sweep that reclaims un-actioned ones. Wire the cap into
+		// auth here; the sweep is started in Start (it needs the background ctx).
+		authSvc.SetMaxPending(cfg.MaxPending)
 		slog.Info("auth: new registrations are PENDING until an admin approves them — approve in the admin console (帳號審核)",
-			"addr", cfg.Addr, "override", "GGD_REQUIRE_APPROVAL")
+			"addr", cfg.Addr, "override", "GGD_REQUIRE_APPROVAL",
+			"maxPending", cfg.MaxPending, "pendingTTL", cfg.PendingApprovalTTL)
 	} else {
 		slog.Warn("auth: registrations are AUTO-APPROVED — a new account can play immediately",
 			"addr", cfg.Addr,
@@ -335,7 +350,9 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 		Ranking: rank, Gamelink: glink, Wallet: walletSvc, Admin: adminSvc,
 		Curation: curationSvc, Overlay: overlaySvc, CombatEnv: combatEnvSvc, OpsEnv: opsEnvSvc, Invites: inviteSvc,
 		AI: aiSvc, Approve: approveSvc, Hub: hub, Sessions: sessions,
-		registerRateLimit: envInt("GGD_REGISTER_RATE_LIMIT", 0),
+		registerRateLimit:  envInt("GGD_REGISTER_RATE_LIMIT", 0),
+		requireApproval:    requireApproval,
+		pendingApprovalTTL: cfg.PendingApprovalTTL,
 	}
 	s.buildRouter(templates)
 	return s, nil
@@ -608,13 +625,59 @@ func (s *Server) Boot(ctx context.Context) error {
 // reaper and the page that describes the reaper read the same expression.
 func reaperInterval(cfg config.Config) time.Duration { return cfg.MatchPendingTTL / 4 }
 
-// Start launches background loops (lobby hub, match reaper) and waits until
-// the hub subscription is live.
+// pendingSweepInterval is how often the #126 pending-account TTL sweep runs
+// (sec-154-11). The TTL is measured in days, so an hourly pass reclaims an
+// expired account well within a day of its deadline while costing one O(n)
+// account scan per hour — negligible at family scale.
+const pendingSweepInterval = time.Hour
+
+// startPendingSweep runs the #126 pending-account TTL reaper (sec-154-11): on a
+// fixed interval it deletes PENDING accounts older than pendingApprovalTTL and
+// reclaims their username/email reservations (account.SweepExpiredPending), so
+// the approval queue can never accumulate durable files + permanent Redis index
+// keys forever. It starts ONLY when the approval gate is on AND a positive TTL
+// is configured; otherwise no pending accounts are created and there is nothing
+// to reap, so it never starts. A first pass runs immediately at boot so a
+// process that restarts more often than the interval still makes progress.
+func (s *Server) startPendingSweep(ctx context.Context) {
+	if !s.requireApproval || s.pendingApprovalTTL <= 0 {
+		return
+	}
+	sweep := func() {
+		cutoff := time.Now().Add(-s.pendingApprovalTTL)
+		n, err := s.Accounts.SweepExpiredPending(ctx, cutoff)
+		if err != nil {
+			slog.Error("auth: pending-account TTL sweep failed", "err", err)
+			return
+		}
+		if n > 0 {
+			slog.Info("auth: pending-account TTL sweep reclaimed expired registrations",
+				"deleted", n, "ttl", s.pendingApprovalTTL)
+		}
+	}
+	go func() {
+		t := time.NewTicker(pendingSweepInterval)
+		defer t.Stop()
+		sweep()
+		for {
+			select {
+			case <-ctx.Done():
+				return
+			case <-t.C:
+				sweep()
+			}
+		}
+	}()
+}
+
+// Start launches background loops (lobby hub, match reaper, pending-account TTL
+// sweep) and waits until the hub subscription is live.
 func (s *Server) Start(ctx context.Context) {
 	ctx, cancel := context.WithCancel(ctx)
 	s.cancel = cancel
 	go s.Hub.Run(ctx)
 	s.Gamelink.StartReaper(ctx, reaperInterval(s.Cfg))
+	s.startPendingSweep(ctx)
 	<-s.Hub.Ready()
 }
 

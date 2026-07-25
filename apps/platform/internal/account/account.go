@@ -468,6 +468,119 @@ func (r *Repo) ApproveIfPending(ctx context.Context, id string) (bool, error) {
 	return true, nil
 }
 
+// CountByStatus reports how many accounts currently carry exactly the given
+// status. It powers the #126 pending-registration CAP (sec-154-11): the approval
+// gate manufactures durable pending accounts, so Register consults this before
+// creating another and refuses once the queue is full. It is an O(n) List +
+// per-id load scan — the right cost at family scale (a few hundred accounts),
+// and the same walk searchAccounts already does. A store-read failure is
+// returned, not swallowed, so the caller can fail CLOSED (refuse the
+// registration) rather than count as empty and wave a flood through.
+func (r *Repo) CountByStatus(ctx context.Context, status string) (int, error) {
+	ids, err := r.List(ctx)
+	if err != nil {
+		return 0, err
+	}
+	n := 0
+	for _, id := range ids {
+		a, err := r.GetByID(ctx, id)
+		if err != nil {
+			if errors.Is(err, ErrNotFound) {
+				continue // raced with a delete
+			}
+			return 0, err
+		}
+		if a.Status == status {
+			n++
+		}
+	}
+	return n, nil
+}
+
+// DeletePending removes a PENDING account and reclaims its username/email
+// reservations — the durable by-username/by-email index files AND the Redis
+// SETNX index keys — and reports whether it deleted anything. It is the teardown
+// the #126 pending TTL sweep uses (sec-154-11): a pending account that was never
+// approved is otherwise a durable jsonstore file plus PERMANENT (ttl 0) Redis
+// index keys that never age out.
+//
+// It REFUSES to touch any account that is not pending: an approved, denied,
+// admin or grandfathered account can never be reclaimed by the sweep, even if
+// the caller's snapshot was stale by the time the lock was taken.
+//
+// The account file is removed FIRST so a crash mid-teardown can never leave a
+// loginable account whose uniqueness reservations are already gone; a dangling
+// index ref (pointing at a now-missing account) is treated as FREE by refFree,
+// so a later registration can cleanly reclaim the name. The Redis Del is
+// best-effort — Redis is a rebuildable cache and the durable index files are the
+// truth — so a Redis hiccup is logged, not fatal.
+func (r *Repo) DeletePending(ctx context.Context, id string) (bool, error) {
+	unlock := r.locks.Lock(id)
+	defer unlock()
+	a, err := r.GetByID(ctx, id)
+	if err != nil {
+		if errors.Is(err, ErrNotFound) {
+			return false, nil
+		}
+		return false, err
+	}
+	if a.Status != StatusPending {
+		return false, nil // never reclaim an approved/denied/admin/grandfathered account
+	}
+	if err := r.store.Delete(ColAccounts, a.ID); err != nil {
+		return false, err
+	}
+	uKey, eKey := indexKey(a.Username), indexKey(a.Email)
+	if err := r.store.Delete(ColByUsername, uKey); err != nil {
+		slog.Error("account: swept a pending account but could not delete its by-username index", "id", a.ID, "err", err)
+	}
+	if err := r.store.Delete(ColByEmail, eKey); err != nil {
+		slog.Error("account: swept a pending account but could not delete its by-email index", "id", a.ID, "err", err)
+	}
+	if r.rdb != nil {
+		if err := r.rdb.R.Del(ctx, redisx.KeyIdxUsername(a.Username), redisx.KeyIdxEmail(a.Email)).Err(); err != nil {
+			slog.Error("account: swept a pending account but could not delete its Redis uniqueness keys (they rebuild from the store on next boot)",
+				"id", a.ID, "err", err)
+		}
+	}
+	return true, nil
+}
+
+// SweepExpiredPending deletes every PENDING account whose CreatedAt is strictly
+// before the cutoff, reclaiming each one's username/email reservations (see
+// DeletePending), and returns how many it removed. It is the periodic TTL half
+// of the #126 pending CAP+TTL (sec-154-11): the CAP bounds how MANY accounts may
+// sit pending at once, and this bounds how LONG an un-actioned one persists, so
+// a scripted registration flood behind the approval gate can neither grow
+// without limit nor leave durable files + permanent Redis keys that never
+// expire. An unreadable individual account is skipped, not fatal, so one bad
+// file cannot stall the whole sweep.
+func (r *Repo) SweepExpiredPending(ctx context.Context, cutoff time.Time) (int, error) {
+	ids, err := r.List(ctx)
+	if err != nil {
+		return 0, err
+	}
+	deleted := 0
+	for _, id := range ids {
+		a, err := r.GetByID(ctx, id)
+		if err != nil {
+			continue // skip a raced/unreadable row rather than failing the sweep
+		}
+		if a.Status != StatusPending || !a.CreatedAt.Before(cutoff) {
+			continue
+		}
+		ok, err := r.DeletePending(ctx, id)
+		if err != nil {
+			slog.Error("account: pending TTL sweep could not delete an expired account", "id", id, "err", err)
+			continue
+		}
+		if ok {
+			deleted++
+		}
+	}
+	return deleted, nil
+}
+
 // Update runs a locked read-modify-write on one account: fn mutates the
 // loaded account in place; returning an error aborts without writing. The
 // updated account is persisted atomically and returned.

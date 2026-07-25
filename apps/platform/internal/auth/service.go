@@ -87,7 +87,19 @@ type Service struct {
 	// (#197/#199). Empty falls back to defaultVerificationURI. Set at the
 	// composition root via SetDeviceVerificationURI. See device.go.
 	deviceVerificationURI string
+
+	// maxPending bounds how many accounts may sit PENDING under the #126 approval
+	// gate at once (sec-154-11). 0 = no cap (the dev/CI default, and what every
+	// existing test sees). Register consults it before creating a pending account
+	// and refuses once the queue is full, so the approval gate cannot be turned
+	// into an engine for unbounded, durable pending-account growth (a disk/Redis
+	// DoS). Set at the composition root from GGD_MAX_PENDING via SetMaxPending.
+	maxPending int
 }
+
+// SetMaxPending installs the #126 pending-registration cap (composition root
+// only). n <= 0 disables it, restoring the uncapped behaviour.
+func (s *Service) SetMaxPending(n int) { s.maxPending = n }
 
 // PendingNotifier is told when a registration lands PENDING under the #126
 // approval gate, so an out-of-band channel (Slack, #209) can alert the owner and
@@ -338,6 +350,35 @@ func (s *Service) Register(ctx context.Context, username, email, password string
 				"err", err, "accountId", id)
 		}
 	}()
+
+	// ---------------------------------------------------------- PENDING CAP --
+	//
+	// Under the #126 approval gate a non-owner registration lands PENDING and
+	// becomes a DURABLE account file plus PERMANENT (ttl 0) username/email index
+	// keys, reclaimed only by the periodic TTL sweep (account.SweepExpiredPending).
+	// Without a ceiling, a scripted /auth/register flood with unique usernames
+	// grows those files and keys without bound — a disk/Redis DoS (sec-154-11).
+	// So before reserving anything, refuse once the queue is full.
+	//
+	// ORDERING. This runs AFTER the invite gate — an un-invited stranger is
+	// already refused above (learning nothing), and a code burned by an invited
+	// caller who is now turned away is handed back by the deferred Release, since
+	// created is still false — and BEFORE the username/email reservation and the
+	// ~100 ms hash, so a capped caller reserves, hashes and reveals NOTHING. The
+	// message is identical regardless of which names exist, so it is no oracle.
+	// OWNERS ARE EXEMPT: the bootstrap owner is force-approved below, never
+	// pending, so it must never be counted out by its own queue.
+	if s.requireApproval && !owner && s.maxPending > 0 {
+		pending, err := s.accounts.CountByStatus(ctx, account.StatusPending)
+		if err != nil {
+			// Fail CLOSED: an unreadable store must not wave a registration
+			// through as though the queue were empty.
+			return account.Account{}, TokenPair{}, err
+		}
+		if pending >= s.maxPending {
+			return account.Account{}, TokenPair{}, httpx.RateLimited("registration temporarily closed - too many accounts awaiting approval")
+		}
+	}
 
 	okUser, err := s.rdb.SetNX(ctx, redisx.KeyIdxUsername(username), id, 0)
 	if err != nil {
