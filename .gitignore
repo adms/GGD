@@ -83,3 +83,7 @@ apps/platform/platform
 content/assets/audio/voices/lines/**/takes/
 content/assets/audio/voices/lines/**/reference.wav
 content/assets/audio/voices/lines/**/*.method
+
+# voice-reference-pipeline delivery bundles — large binary zips of the 51 refs,
+# regenerable from the pipeline; never tracked in git.
+/AudioGen_voice_reference_final_*.zip

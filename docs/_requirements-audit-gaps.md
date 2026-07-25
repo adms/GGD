@@ -2368,3 +2368,38 @@ main 的 `icons.test.ts` 明文採「AUTHORITY MODEL」：424 個 embedded 沒�
 | **邀請鏈自動審核推廣**：拿邀請碼進來者自動獲得「另一組」自己的碼；那組碼被別人成功註冊時，前一人 pending→approved 自動過審，以此類推 | **#203** | ⬜ 工作流中 `wf_592d5bb1` | 建在 #174（邀請閘）+#126（審核閘）上，**不得削弱**任一閘。防自我循環、一碼有限次、admin 仍可否決。referral 只加速邀請人過審，不繞過「要有碼才能註冊」 |
 | **嚴格部署協定**（deploy 到 ggd.adms.ai 需 owner 親自確認）：code-cut→commit→release draft／無 T0/重大 bug／localhost 實測記錄本檔／重整本檔確認可上／push+release（隔日跳版號）／deploy+實測記錄回本檔 | 流程 | ✅ 已寫入記憶 | 見 `ggd-gcp-deploy`。本檔（Execution Batches / 本盤點）即 step 3/4/6 的記錄落點 |
 | **建立掃描任務：所有英雄逐技能從 JASS 拉回實作**（「Saber 的技能傷害都在 JASS」），且**每技能三軸都要顧**：特效(3d model/粒子/球體/蝗蟲群) + 傷害效果(大部分在 JASS) + 音效 | #78 長期軸；掃描器✅ 批次修✅ 裁決✅ 音效面✅ 音效資產✅ | 🟢 傷害軸收斂；音效軸收斂（123 stock refs → 60/61 clip 自 MPQ 抽出至 data/blizzard-overlay/ability-sfx（著作權閘：dev-only mount，combatSfx 依 fullAssets 分層），91 技能補 `sfxKey`（+既有 5 = 96/98；缺 sawch.mp3 者 2 技能跳過——檔案不在任何 MPQ/map 內），49 個 wc3.* key 進 audio-map/reachability） | `tools/w3x-import/scan_ability_effects.py` → `out/GoDieEX22s-src/EFFECT_AUDIT.{json,md}`：654 技能×111 英雄，join 611/654，傷害軸 ZERO 18／TRIVIAL 4／**NO_DAMAGE_EFFECT 20**（JASS 有傷害、content 無 damage effect——早前 178 佔位帳完全沒收錄這班）／SUSPECT 122（content 數字不在 ubertip 色碼段內，需逐條讀引用的 JASS 裁決，Saber E 型的「JASS 贏 tooltip」衝突就在這班）；特效軸 MISSING 0；音效軸：98 技能 WC3 有 gg_snd 音效 → `ability@1.sfxKey` 已全面採用（96/98；`tools/w3x-import/extract_stock_sfx.py` 可重跑）。已知限制：以 unit-type 而非技能 rawcode 觸發的 trigger（如 saber 被動、ExcaliburMAX）rawcode 掃不到，要走 HERO_TRIGGERS 英雄名路徑。先導修復：Saber godie-e002+godie-e00l E [250,400,550,700]（JASS `Trig_Excalibur` j:32332，0.4×當前魔力項不可表達已記損）、Q 改被動迴避 7/14/21/28%（A0CM=原生 AEev）、被動盾牌 60=等級1值照舊 |
+
+#### 🎙 2026-07-25 追記：AudioGen 51 檔素材已入庫，語音管線閉環
+使用者交付 `AudioGen_voice_reference_final_51_2026-07-25.zip`（51 檔成品 WAV + 5 輪人工覆核紀錄 + 逐檔 YouTube 來源權利聲明 + SHA256SUMS，完整性 51/51 驗證通過）。
+上表「真缺口：實際參考音 0 檔」→ **✅ 已關閉**：51/51 全數 approved，`approved/processed/` 交付就緒，`missing_characters.csv` 清空。
+- 英雄名冊 48→51（賈修貝爾/揍敵客桀諾/喪標麥可；聲優雙來源補查：賈修=大谷育江、桀諾=2011年版大竹宏）
+- 新機制 `config/review_overrides.csv`：僅啟發式拒絕可被人工覆核推翻（引用 AudioGen 逐檔 locked_pass 紀錄），硬性缺陷不可覆蓋。實測我方啟發式誤咬 25 檔（18 多人聲/7 背景音樂誤判、0 硬缺陷）全數依人工紀錄降級放行
+- 分離度升級：venv 裝入 speechbrain+torch，人聲配對走真 ECAPA embedding（音檔以 ffmpeg 解碼餵入，不依賴 torchcodec）；非人類配對改距離型相似度 `exp(-d/scale)` 修正 z-score cosine 虛高（修正前 78 對假性高碰撞、修正後 0 對，最高相似 0.61 拳四郎vs索隆）
+- normalize 新增校正增益 pass（短片 linear loudnorm 偏移），51 檔實測 [-20.2, -17.4] LUFS / TP ≤ -1
+- **未決事項**：zip 內 heroes.csv 與 repo 版有 6 角色選角方向不一致（e00k/h02k/hpb1/ogld/udea/zombiex，實際音檔按 zip 版方向製作）；repo 版為準（使用者最新編輯），差異已回報待裁決。provenance 全套保存於 `voice-reference-pipeline/provenance/audiogen-2026-07-25/`
+
+#### 🎙 2026-07-25 追記 2：角色語音「生成」階段（44 類台詞×全角色＋後台一鍵頁）
+使用者需求：以 51 參考音為 prompt，生成 41 類（展開 46 句/角色）遊戲語音、做成後台一鍵生成+試聽頁、全角色平行自動跑完。
+盤點發現前一工作區已鋪好大半：分類 schema（categories.ts，與使用者清單逐字一致）、VoiceGen 後台頁+typed client+SSE hook+/voice-api 代理、tools/voice-gen 雙引擎合成管線（CosyVoice3 預設/IndexTTS-2 量測後備、QA gate、冪等分片）。**缺口=daemon 本體與台詞腳本**。
+- ✅ `tools/voice-gen/src/serve.mjs` 新寫（照 voiceApi.ts 契約：狀態機/stub 誠實/409 規則/SSE/併發≤4）；curl 煙霧+後台頁實測連通（51 角色×46 句、參考音全 ✓）
+- ✅ `content/assets/audio/voices/lines/CATEGORIES.json`（voice.categories@1 權威檔）+ `import_lines.mjs` 匯稿 CLI + CREDITS.md 生成語音包條目 + README §11
+- ✅ 引擎煙霧：真 ref 生成 2.28s 音檔（18.6s/clip, MPS 4GB）
+- 🔄 台詞撰稿 workflow（11 批×撰+審，ja+kana/台語 zh/非語言擬聲）執行中；完成後匯入→daemon roster 全量生成（~2346 段，3 併發約 4 小時）
+- ⚠ 授權：Fun-CosyVoice3-0.5B 權重條款需在對外發布前確認（README §Licences；CREDITS 已標注）
+
+#### 🎙 2026-07-25 追記 3：全量生成完成 + 試聽頁/看板收納（/goal 達成）
+- **2346/2346 句全數生成完成**（51 角色 × 46 句，2344 主批 + 1 單句測試 + 1 掃尾重生），0 缺漏。總時長 ~49 分鐘語音、55MB，全部 128kbps/44.1kHz/mono/-16 LUFS
+- 唯一失敗句根因＝技能名 `39-002-紅王` 第三段連字號 → 去前綴殘留 `-` 開頭被 argparse 當旗標；已修 regex + synth 呼叫改 `--text=` 形式（杜絕整類問題），掃尾重生成功
+- **效能升級**（使用者指正「沒有多工」）：實測本來就是 3 行程平行（12-24 句/分 vs 單工 3.2），但逐句子行程=每句重載模型；daemon 已升級 manifest 分片常駐模式（≥8 句自動走分片，模型每 worker 只載一次），dry-run 驗證相容，下次全量預估 2-3× 快
+- **試聽頁**：`voice-audition.html`（apps/client/public/，39527 與 8731 鏡像同步更新，2346/2346 可播）+ bgm-audition.html 加互導列
+- **即時看板**：`admin/voice-progress.html`（SSE 驅動：總進度/吞吐直方圖/51 角色熱力格⚡/即時完成流）
+- **admin 收納**：Console Hub 新增 📊 語音生成看板、🎙️ 角色語音試聽、🎵 音樂音效試聽 三卡
+- 未 commit；下一步=人工試聽驗收（後台逐句 approve）→ client 接入 41 類播放時機
+
+#### 🎙 2026-07-25 追記 4：技能喊招全面日文化（中文顯示 → 日文考證 → 日文唸法）
+使用者指正：技能名多為有名必殺技、有官方特定唸法，喊中文不對。已全面重做：
+- 查證 workflow（11 考據 + 11 對抗覆核 agent，363 次工具呼叫）：**133 筆 canonical 讀音附來源雙重驗證**（月牙天衝=ゲツガテンショウ、龍破斬=ドラグ・スレイブ、卍解、超究武神覇斬、三千世界…），查無官方讀音者誠實標 onyomi/styled 不瞎掰；覆核抓到真錯（紅王=アカノオウ 非クレナイ、ブッダギリ、クリスタリザティオー、長音修正多筆）
+- 讀音固化於 `content/assets/audio/voices/lines/SKILL_READINGS.json`（voice.skill-readings@1，256 筆）；`import_lines.mjs` 自動套用（未來新角色不會回退中文唸法）；`apply_skill_readings.mjs` 一鍵合併→推送→重生成
+- **255/255 全部重生完成**（含喪標麥可 5 筆——使用者明示無例外；陥穽/溢出等日文實詞音讀）；驗證：全部 mp3 新鮮、status 全 ja+kana
+- 分片模式實測 **49 句/分**（vs 逐句 12-24），255 句 5.2 分鐘跑完；並修正分片模式兩個邊角（舊 sidecar 誤判完成的新鮮度檢查、冪等跳過誤標 failed）
+- 顯示文字維持中文（遊戲 UI 不變），僅語音層日文化——modelText=kana 由 synth sidecar 記錄，可回溯

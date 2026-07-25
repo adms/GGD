@@ -64,8 +64,34 @@ export function resolveHubLinks(env: HubEnv = {}, mode: "dev" | "prod" = "dev"):
   const admin = pick(env, "VITE_ADMIN_URL", base.admin);
   const docs = pick(env, "VITE_DOCS_URL", base.docs);
 
+  // audition pages are static files on the client origin (apps/client/public/)
+  const clientBase = client.endsWith("/") ? client : `${client}/`;
   const links: HubLink[] = [
     { key: "client", label: "遊戲", sub: "Game client / lobby", url: client, healthUrl: client, emoji: "🎮" },
+    {
+      key: "voiceProgress",
+      label: "語音生成看板",
+      sub: "Live multi-worker progress",
+      url: `${admin.endsWith("/") ? admin : `${admin}/`}voice-progress.html`,
+      healthUrl: null,
+      emoji: "📊",
+    },
+    {
+      key: "voiceAudition",
+      label: "角色語音試聽",
+      sub: "Voice-line audition (51 champs × 46)",
+      url: `${clientBase}voice-audition.html`,
+      healthUrl: null,
+      emoji: "🎙️",
+    },
+    {
+      key: "bgmAudition",
+      label: "音樂音效試聽",
+      sub: "BGM / SFX audition",
+      url: `${clientBase}bgm-audition.html`,
+      healthUrl: null,
+      emoji: "🎵",
+    },
     { key: "editor", label: "內容編輯器", sub: "Content editor", url: editor, healthUrl: editor, emoji: "🛠️" },
     { key: "testDashboard", label: "測試台", sub: "Test dashboard", url: testDashboard, healthUrl: testDashboard, emoji: "🧪" },
     { key: "api", label: "平台 API 健康", sub: "Platform API health", url: `${api}/v1/healthz`, healthUrl: `${api}/v1/healthz`, emoji: "❤️" },

@@ -590,3 +590,42 @@ entry there, and that is the owner's call **before** 2,000 clips ship.
 3. **A listening pass.** Everything above is objective measurement. `qa.py`'s
    review queue exists precisely because some clips cannot be judged
    automatically — that is a human job, and the tool now says which ones.
+
+---
+
+## 11. The admin console lane (`src/serve.mjs` + 角色語音生成)
+
+`node tools/voice-gen/src/serve.mjs` starts the loopback daemon on
+**127.0.0.1:8788** that the admin page 角色語音生成 (dev-only, vite proxy
+`/voice-api`) talks to. The contract lives in
+`apps/admin/src/voice/voiceApi.ts` / `voiceModel.ts`; the daemon implements it:
+per-line state machine (`noText → pending → generating → generated →
+approved/rejected`), stub honesty (no engine ⇒ `/health` says `stub:true` and
+jobs fail with `no-engine`; a placeholder clip is never written), SSE progress
+(`job`/`line`/`roster`/`engine`), and one-click jobs (`scope: line | champion |
+roster`, `concurrency` ≤ 4 parallel synth.py subprocesses).
+
+Storage is the content mount, so the client can read results directly:
+
+    content/assets/audio/voices/lines/CATEGORIES.json   the owner's 41 categories
+    content/assets/audio/voices/lines/ROSTER.json       published rollup (degraded-mode read)
+    content/assets/audio/voices/lines/<champ>/status.json
+    content/assets/audio/voices/lines/<champ>/<lineId>.mp3        current clip
+    content/assets/audio/voices/lines/<champ>/takes/<lineId>.t<N>.mp3
+
+References default to `voice-reference-pipeline/approved/processed/<champ>.wav`
+(51 champs, sourceKind `repo`); the console can switch or upload one (uploads
+require a licence note, per the referenceGate rule).
+
+Line scripts are imported, not typed one by one:
+
+    node tools/voice-gen/src/import_lines.mjs <dir-with-lines_batch_*.json>
+
+Japanese lines carry a `kana` reading (README §6); the daemon refuses to
+render a ja line without one, and editing a line's text through the console
+drops the stale kana on purpose (re-import or re-author to restore it).
+
+New champion later: add the hero row to
+`voice-reference-pipeline/config/heroes.csv`, drop its reference wav in
+`approved/processed/`, import its script batch, restart the daemon — the
+console picks it up and 一鍵生成 covers it.

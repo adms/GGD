@@ -1107,3 +1107,18 @@ fetched. Nine further clips (the 2026-07-24 wave A) had their provenance
 clause is a screen that auditions or downloads these clips one by one. The
 in-game 版權聲明 list is text only and must stay text only — never add a play
 button to those rows.
+
+## Generated champion voice-line pack (`audio/voices/lines/`)
+
+- **What**: per-champion game voice lines (41 categories × 51 champions), synthesized
+  with **CosyVoice 3** (`Fun-CosyVoice3-0.5B`, FunAudioLLM) via `tools/voice-gen/`,
+  zero-shot cloned from the reference clips in `voice-reference-pipeline/approved/processed/`
+  (per-clip provenance: `voice-reference-pipeline/provenance/audiogen-2026-07-25/`,
+  user-attested sources, private-research mode — see that folder's rights files).
+- **Scripts**: line texts authored in-project (AI-drafted, human-reviewable in the
+  admin 角色語音生成 console); they parody source-material catchphrases under the
+  project's 惡搞 banner and never claim to be performed by any real voice actor.
+- **Engine licences**: CosyVoice 3 code is Apache-2.0; the `Fun-CosyVoice3-0.5B`
+  weight licence must be re-confirmed before any public release (tools/voice-gen/README §Licences).
+  IndexTTS-2 (fallback engine, bilibili Model Use License) — only used where noted
+  in per-clip `.method` sidecars.

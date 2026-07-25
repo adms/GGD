@@ -1,0 +1,189 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>語音生成即時看板</title><style>
+:root{--bg:#0c0f1a;--panel:#161b2c;--line:#28304a;--ink:#e7ecf7;--dim:#93a0c0;--accent:#f2a13c;--theme:#7ea2ff;--ok:#7ec97e;--bad:#e07a7a}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 "Segoe UI",system-ui,sans-serif;padding:22px 18px 60px}
+.wrap{max-width:1100px;margin:0 auto}
+h1{font-size:20px;margin:0 0 2px}.sub{color:var(--dim);font-size:12px;margin:0 0 16px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.chip{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 14px;min-width:96px}
+.chip .k{font-size:11px;color:var(--dim)}.chip .v{font-size:20px;font-weight:700;font-variant-numeric:tabular-nums}
+.chip .v small{font-size:11px;color:var(--dim);font-weight:400}
+.chip.hot .v{color:var(--accent)}.chip.good .v{color:var(--ok)}.chip.bad .v{color:var(--bad)}
+.barwrap{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin-bottom:14px}
+.bar{height:18px;background:#0a0d16;border-radius:9px;overflow:hidden;display:flex}
+.bar .ok{background:linear-gradient(90deg,#5f8fdd,#7ea2ff)}.bar .bad{background:var(--bad)}
+.bar div{transition:width .8s ease}
+.barlabel{display:flex;justify-content:space-between;font-size:12px;color:var(--dim);margin-top:6px;font-variant-numeric:tabular-nums}
+.cols{display:grid;grid-template-columns:2fr 1fr;gap:14px}
+@media(max-width:900px){.cols{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+.panel h2{font-size:13px;margin:0 0 10px;color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
+.cell{border:1px solid var(--line);border-radius:6px;padding:6px 8px;font-size:11px;position:relative;overflow:hidden}
+.cell .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600;position:relative;z-index:1}
+.cell .n{color:var(--dim);font-variant-numeric:tabular-nums;position:relative;z-index:1}
+.cell .fill{position:absolute;inset:0;background:rgba(126,162,255,.16);transform-origin:left;transition:transform .8s ease}
+.cell.done{border-color:var(--ok)}.cell.done .fill{background:rgba(126,201,126,.14)}
+.cell.active{border-color:var(--accent);box-shadow:0 0 8px rgba(242,161,60,.35)}
+.cell.active .nm::after{content:" ⚡";color:var(--accent)}
+.feed{list-style:none;margin:0;padding:0;font-size:12px}
+.feed li{display:flex;gap:8px;padding:4px 0;border-top:1px solid var(--line);font-variant-numeric:tabular-nums}
+.feed li:first-child{border-top:0}
+.feed .t{color:var(--dim);flex:0 0 56px}
+.feed .st{flex:0 0 56px;text-align:center;border:1px solid var(--line);border-radius:4px;font-size:10px;color:var(--dim);align-self:center;padding:0 3px}
+.feed .st.generated{color:var(--ok);border-color:var(--ok)}.feed .st.failed{color:var(--bad);border-color:var(--bad)}
+.feed .st.generating{color:var(--accent);border-color:var(--accent)}
+canvas{width:100%;height:60px;display:block}
+.foot{margin-top:14px;font-size:12px}.foot a{color:var(--theme);text-decoration:none;margin-right:14px}
+.status{font-size:11px;color:var(--dim)}
+.status b.on{color:var(--ok)}.status b.off{color:var(--bad)}
+</style></head><body><div class="wrap">
+<h1>語音生成即時看板</h1>
+<p class="sub">CosyVoice 3 多工生成（並行 worker）— 資料源：<code>/voice-api</code> SSE 即時事件＋輪詢。 <span class="status">SSE：<b id="sse" class="off">連線中…</b></span></p>
+<div class="chips">
+  <div class="chip hot"><div class="k">已完成</div><div class="v" id="done">—<small id="pct"></small></div></div>
+  <div class="chip good"><div class="k">成功</div><div class="v" id="ok">—</div></div>
+  <div class="chip bad"><div class="k">失敗</div><div class="v" id="failed">—</div></div>
+  <div class="chip"><div class="k">跳過</div><div class="v" id="skipped">—</div></div>
+  <div class="chip"><div class="k">吞吐</div><div class="v" id="rate">—<small> 句/分</small></div></div>
+  <div class="chip"><div class="k">預計剩餘</div><div class="v" id="eta">—</div></div>
+</div>
+<div class="barwrap">
+  <div class="bar"><div class="ok" id="barok" style="width:0%"></div><div class="bad" id="barbad" style="width:0%"></div></div>
+  <div class="barlabel"><span id="barinfo">—</span><span id="current">—</span></div>
+  <canvas id="spark" width="1040" height="60"></canvas>
+</div>
+<div class="cols">
+  <div class="panel"><h2>各角色進度（46 句/角色）</h2><div class="grid" id="grid"></div></div>
+  <div class="panel"><h2>即時完成流</h2><ul class="feed" id="feed"></ul></div>
+</div>
+<p class="foot">
+  <a href="/admin/">🗄️ 回後台（角色語音生成分頁可逐句試聽/驗收）</a>
+  <a href="http://localhost:39527/voice-audition.html" target="_blank">🎙️ 語音試聽頁</a>
+  <a href="http://localhost:39527/bgm-audition.html" target="_blank">🎵 音樂音效試聽</a>
+</p>
+</div><script>
+"use strict";
+const $ = (id) => document.getElementById(id);
+const champs = new Map();  // id -> {name, counts, el}
+let jobTotal = 0, samples = [];  // [t, done]
+
+function fmtEta(ms) {
+  if (ms === null || !isFinite(ms) || ms < 0) return "—";
+  const m = Math.round(ms / 60000);
+  return m < 60 ? `${m} 分` : `${Math.floor(m / 60)} 時 ${String(m % 60).padStart(2, "0")} 分`;
+}
+
+function champDone(c) { return (c.approved ?? 0) + (c.generated ?? 0); }
+
+function renderChamp(id) {
+  const c = champs.get(id);
+  if (!c || !c.el) return;
+  const done = champDone(c.counts), total = c.counts.total || 46;
+  c.el.querySelector(".n").textContent = `${done} / ${total}`;
+  c.el.querySelector(".fill").style.transform = `scaleX(${total ? done / total : 0})`;
+  c.el.classList.toggle("done", done >= total);
+}
+
+function setActive(id) {
+  for (const [cid, c] of champs) c.el?.classList.toggle("active", cid === id);
+}
+
+function applyJob(j) {
+  if (!j || j.scope !== "roster") return;
+  jobTotal = j.total;
+  $("done").childNodes[0].textContent = `${j.done}/${j.total}`;
+  $("pct").textContent = j.total ? ` ${(j.done / j.total * 100).toFixed(1)}%` : "";
+  $("ok").textContent = j.ok; $("failed").textContent = j.failed; $("skipped").textContent = j.skipped;
+  $("eta").textContent = j.state === "running" ? fmtEta(j.etaMs) : (j.state === "done" ? "完成 ✅" : j.state);
+  $("barok").style.width = `${j.total ? j.ok / j.total * 100 : 0}%`;
+  $("barbad").style.width = `${j.total ? j.failed / j.total * 100 : 0}%`;
+  $("barinfo").textContent = `job ${j.jobId} · ${j.state}`;
+  $("current").textContent = j.current ? `正在生成：${champs.get(j.current.championId)?.name ?? j.current.championId} / ${j.current.lineId}` : "";
+  if (j.current) setActive(j.current.championId);
+  const now = Date.now();
+  if (samples.length === 0 || samples[samples.length - 1][1] !== j.done) samples.push([now, j.done]);
+  samples = samples.filter((s) => now - s[0] < 10 * 60000);
+  if (samples.length >= 2) {
+    const [t0, d0] = samples[0], [t1, d1] = samples[samples.length - 1];
+    const rate = t1 > t0 ? (d1 - d0) / ((t1 - t0) / 60000) : 0;
+    $("rate").childNodes[0].textContent = rate.toFixed(1);
+  }
+  drawSpark();
+}
+
+function drawSpark() {
+  const cv = $("spark"), ctx = cv.getContext("2d");
+  ctx.clearRect(0, 0, cv.width, cv.height);
+  if (samples.length < 2) return;
+  const rates = [];
+  for (let i = 1; i < samples.length; i++) {
+    const dt = (samples[i][0] - samples[i - 1][0]) / 60000;
+    if (dt > 0) rates.push((samples[i][1] - samples[i - 1][1]) / dt);
+  }
+  if (rates.length === 0) return;
+  const max = Math.max(...rates, 1), w = cv.width / Math.max(rates.length, 30);
+  ctx.fillStyle = "rgba(126,162,255,.55)";
+  rates.forEach((r, i) => {
+    const h = (r / max) * (cv.height - 6);
+    ctx.fillRect(i * w, cv.height - h, Math.max(w - 1.5, 1), h);
+  });
+}
+
+function feed(champ, lineId, state) {
+  const ul = $("feed");
+  const li = document.createElement("li");
+  const t = new Date().toTimeString().slice(0, 8);
+  li.innerHTML = `<span class="t">${t}</span><span class="st ${state}">${state}</span><span>${champs.get(champ)?.name ?? champ} · ${lineId}</span>`;
+  ul.prepend(li);
+  while (ul.children.length > 14) ul.lastChild.remove();
+}
+
+async function boot() {
+  const r = await fetch("/voice-api/roster", { cache: "no-store" }).then((x) => x.json()).catch(() => null);
+  if (r) {
+    const grid = $("grid");
+    for (const c of r.champions) {
+      const el = document.createElement("div");
+      el.className = "cell";
+      el.innerHTML = `<div class="fill"></div><div class="nm" title="${c.championId}">${c.name.split(" - ").pop()}</div><div class="n"></div>`;
+      grid.appendChild(el);
+      champs.set(c.championId, { name: c.name.split(" - ").pop(), counts: c.counts, el });
+      renderChamp(c.championId);
+    }
+  }
+  poll();
+  sse();
+}
+
+async function poll() {
+  const d = await fetch("/voice-api/jobs", { cache: "no-store" }).then((x) => x.json()).catch(() => null);
+  if (d) {
+    const j = d.active.find((x) => x.scope === "roster") ?? d.recent.find((x) => x.scope === "roster");
+    applyJob(j);
+  }
+  setTimeout(poll, 5000);
+}
+
+function sse() {
+  const es = new EventSource("/voice-api/events");
+  es.onopen = () => { const b = $("sse"); b.textContent = "已連線"; b.className = "on"; };
+  es.onerror = () => { const b = $("sse"); b.textContent = "重連中…"; b.className = "off"; };
+  es.addEventListener("job", (ev) => { try { applyJob(JSON.parse(ev.data)); } catch {} });
+  es.addEventListener("line", (ev) => {
+    try {
+      const d = JSON.parse(ev.data);
+      if (d.state && d.state !== "generating") feed(d.championId, d.lineId, d.state);
+      if (d.state === "generating") setActive(d.championId);
+    } catch {}
+  });
+  es.addEventListener("roster", (ev) => {
+    try {
+      const d = JSON.parse(ev.data);
+      const c = champs.get(d.championId);
+      if (c) { c.counts = d.counts; renderChamp(d.championId); }
+    } catch {}
+  });
+}
+boot();
+</script></body></html>

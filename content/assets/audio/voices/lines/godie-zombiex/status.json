@@ -14,9 +14,9 @@
  },
  "lines": {
   "quote": {
-   "text": "恁爸喪標麥可！死過一擺，閣驚啥啦！",
-   "lang": "zh",
-   "textSource": "ai",
+   "text": "マイ・キョー・グァ・エ・ミャー、キョー・グァ・カン・リンニャー",
+   "lang": "ja",
+   "textSource": "authored",
    "state": "generated",
    "takes": [
     {
@@ -26,20 +26,45 @@
      "seconds": 3.92,
      "at": 1784981382882,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.64,
+     "at": 1784991452912,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.64,
+     "at": 1784991491244,
+     "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.16,
+     "at": 1784993889629,
+     "error": null
     }
    ],
    "current": {
-    "take": 1,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 63991,
-    "seconds": 3.92,
+    "bytes": 35570,
+    "seconds": 2.16,
     "lufs": null,
-    "hash": "f8542454a1c5d871b0cf83f9b1b53f7f68bfea9bc25da24b4fce68f494cb7f0c",
-    "at": 1784981382883
+    "hash": "ceed0037bdebc1e04fa7257e4a5f04eda5ecb7a4892c2398e47620045ec32c50",
+    "at": 1784993889630
    },
-   "lastError": null
+   "lastError": null,
+   "kana": "マイ キョー グァ エ ミャー キョー グァ カン リン ニャー"
   },
   "victory": {
    "text": "水啦水啦！贏啦！轉去買雞排慶祝啦！",
@@ -1162,7 +1187,7 @@
    "lastError": null
   },
   "skill-name.q": {
-   "text": "黑泥噴吐！",
+   "text": "肝泥抹德！",
    "lang": "ja",
    "textSource": "imported",
    "state": "generated",
@@ -1190,26 +1215,42 @@
      "seconds": 1.24,
      "at": 1784991186237,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.16,
+     "at": 1784991453645,
+     "error": null
+    },
+    {
+     "take": 5,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.16,
+     "at": 1784991489970,
+     "error": null
     }
    ],
    "current": {
-    "take": 3,
+    "take": 5,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 20942,
-    "seconds": 1.24,
+    "bytes": 19688,
+    "seconds": 1.16,
     "lufs": null,
-    "hash": "d46768bf19bbf6b8d3055ca5a6d38537e2d7967a4b0e4617e4ba0bc1cce69331",
-    "at": 1784991186237
+    "hash": "bf67575a1d2363dbde4f2c19647a9a2af93a41bc824107c2fe055069b00f13a0",
+    "at": 1784991489970
    },
    "lastError": null,
-   "kana": "コクデイ フント"
+   "kana": "カン ニー モー デー"
   },
   "skill-name.w": {
-   "text": "蹣跚衝撞！",
+   "text": "黑天覆七重咖哩・硬啦！",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "authored",
    "state": "generated",
    "takes": [
     {
@@ -1235,24 +1276,40 @@
      "seconds": 1.44,
      "at": 1784991184056,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.2,
+     "at": 1784991507509,
+     "error": null
+    },
+    {
+     "take": 5,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.24,
+     "at": 1784992879285,
+     "error": null
     }
    ],
    "current": {
-    "take": 3,
+    "take": 5,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 24285,
-    "seconds": 1.44,
+    "bytes": 20942,
+    "seconds": 1.24,
     "lufs": null,
-    "hash": "d6fbbfca2d5132ba9514710ab2ee922faa5565e09d4939e7d527843f5b11a6a9",
-    "at": 1784991184056
+    "hash": "3365038991390d2930bf5c1742a005f6b372783ce8abaf27aa034abe0e5e1198",
+    "at": 1784992879285
    },
    "lastError": null,
-   "kana": "マンサン ショウトツ"
+   "kana": "リー シー テ カウパッ"
   },
   "skill-name.e": {
-   "text": "泥沼陷阱！",
+   "text": "咕咕嘎嘎！",
    "lang": "ja",
    "textSource": "imported",
    "state": "generated",
@@ -1280,24 +1337,32 @@
      "seconds": 1.68,
      "at": 1784991199553,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.08,
+     "at": 1784991507981,
+     "error": null
     }
    ],
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 28047,
-    "seconds": 1.68,
+    "bytes": 18434,
+    "seconds": 1.08,
     "lufs": null,
-    "hash": "a38c06a48e2267d669782eb262b9486393f9cc89b42d955e874911e366b26317",
-    "at": 1784991199553
+    "hash": "bbbd9706c93feba2d4613d799fa9750cbfc077c72e6d0663845802429634474a",
+    "at": 1784991507981
    },
    "lastError": null,
-   "kana": "デイショウ カンセイ"
+   "kana": "グーグー ガーガー"
   },
   "skill-name.r": {
-   "text": "聖杯溢出！",
+   "text": "百式・哈基米！",
    "lang": "ja",
    "textSource": "imported",
    "state": "generated",
@@ -1325,27 +1390,34 @@
      "seconds": 1,
      "at": 1784991200919,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.12,
+     "at": 1784991524761,
+     "error": null
     }
    ],
    "current": {
-    "take": 3,
+    "take": 4,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 17180,
-    "seconds": 1,
+    "bytes": 18852,
+    "seconds": 1.12,
     "lufs": null,
-    "hash": "bcd124cc9341667589126efc0c42500bf22ad06c64845ca8bc28d7f0a8590a64",
-    "at": 1784991200919
+    "hash": "ce7641134d57d99eb05f465cf804fed9326ab3a1d7ef2506cadb42063808ee54",
+    "at": 1784991524761
    },
    "lastError": null,
-   "kana": "セイハイ イッシュツ"
+   "kana": "ヒャクシキ ハチミー"
   },
   "skill-name.ex": {
-   "text": "バタンキュー！",
+   "text": "此世全部之咖哩・バタンキュー！",
    "lang": "ja",
-   "kana": "バタン キュー",
-   "textSource": "imported",
+   "textSource": "authored",
    "state": "generated",
    "takes": [
     {
@@ -1371,20 +1443,37 @@
      "seconds": 0.64,
      "at": 1784991213187,
      "error": null
+    },
+    {
+     "take": 4,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.04,
+     "at": 1784991524501,
+     "error": null
+    },
+    {
+     "take": 5,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.28,
+     "at": 1784992010304,
+     "error": null
     }
    ],
    "current": {
-    "take": 3,
+    "take": 5,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 11328,
-    "seconds": 0.64,
+    "bytes": 21359,
+    "seconds": 1.28,
     "lufs": null,
-    "hash": "62be0801062748edd38f6cbd86a2b2a432f17fc27389ec6cf7520ae9a9f5a8e2",
-    "at": 1784991213187
+    "hash": "9822ea59c1779ab5e4f2ee40dddf4af312b88abcc68df9994dbd689e7f90074a",
+    "at": 1784992010304
    },
-   "lastError": null
+   "lastError": null,
+   "kana": "リ シ レ ゴン サ シャオ"
   }
  }
 }
