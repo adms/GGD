@@ -66,11 +66,22 @@ func TestInviteAndApprovalGatesCompose(t *testing.T) {
 	// THE CODE IS SPENT REGARDLESS. Approval is a later, independent decision,
 	// so a pending account must not leave its code live and re-usable — that
 	// would turn one invite into an unlimited supply of pending registrations.
-	inv := ts.Do(http.MethodGet, "/api/v1/admin/invites", owner.Access, nil)
-	require.Equal(t, http.StatusOK, inv.Status)
-	row := inv.Body["invites"].([]any)[0].(map[string]any)
+	//
+	// The row is located BY CODE. The listing is newest-first and mixed: the
+	// cousin's registration also minted the cousin's own #203 personal referral
+	// code, which is legitimately still active, so the first row is not the code
+	// under test.
+	row := codeRow(t, ts, owner.Access, code)
 	assert.Equal(t, "redeemed", row["effectiveStatus"], "the code is burned at registration, not at approval")
 	assert.Equal(t, cousinID, row["redeemedBy"])
+
+	// …and "spent" is enforced, not merely displayed: presenting the same code
+	// again is refused before anything is written. This is the behaviour #237
+	// suspected was missing, so it is asserted here rather than inferred from
+	// the console's rendering of the row.
+	reuse := ts.RegisterRaw("intruder", map[string]string{"inviteCode": code})
+	assert.Equal(t, http.StatusForbidden, reuse.Status, "body: %s", string(reuse.Raw))
+	assert.Equal(t, "invite_used", reuse.ErrCode(), "one code, one account — a pending first user still spends it")
 
 	// The owner approves, and only now can the cousin play.
 	appr := ts.Do(http.MethodPost, "/api/v1/admin/accounts/"+cousinID+"/approve", owner.Access, nil)

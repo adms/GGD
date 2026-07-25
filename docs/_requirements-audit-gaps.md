@@ -2635,3 +2635,57 @@ playtest 指令「技能冷卻進度不容易從圖示上看到」。表面看�
 - 測試：`ui/cooldownView.test.ts`（純數學，含「35s 授權值在 `cooldown:0.2` 下剛施放必須 frac=1.0 而非 0.2」的根因鎖）+ `ui/components/cooldownChrome.test.ts`（source scan）。test_id `cooldown-legibility` 已登錄 `docs/todo/client-hud.md` client-36。
 - **殘留（未修，另案）**：`Stat.CooldownReduction` 進一步縮短實際冷卻，client 不知道座位的 CDR，故堆 20% CDR 的玩家會看到抹除從 80% 起跑（已 clamp，誠實且會自我收斂）。精確解＝在 `SeatView` 的 `cooldowns` 旁加 `cooldownMax: number[]`。
 - **殘留（未修，另案）**：couch HUD 只有 Q/W/E/R chip，**沒有 EX / 天生技 格**，三介面 parity 仍缺一角。
+
+#### 🧊 2026-07-26 追記：#237 「邀請碼用完沒被標記 redeemed」— 是**測試**在說謊，產品從頭到尾是好的
+
+回報的紅測試 `TestInviteAndApprovalGatesCompose` 屬實，但結論相反。**先做重現、不讀 code**：
+以 `cmd/platform` 真正的 production binary（同一 composition root、真 jsonstore、真 redis，
+`GGD_REQUIRE_INVITE=1 GGD_REQUIRE_APPROVAL=1 GGD_DEPLOY_TIER=family`，隔離 DATA_DIR + 隔離 redis:16399，
+事後全部關閉、未動 docker/ 與 dev redis）跑完整註冊流程：
+
+1. owner 註冊 → `approved` / `roles:["admin"]`（首帳號豁免，反死鎖）
+2. admin 鑄 1 組 `GGD-7YKH-6KGM`
+3. cousin 用該碼註冊 → 201，`status: pending`，`accessToken: ""`
+4. intruder 用**同一組碼** → **403 `invite_used`**
+
+**同一組碼無法註冊第二次。** 且 burn 是寫進 DATA_DIR/invites 的耐久 JSON（`status=redeemed`,
+`redeemedBy=01KYDEP5…`, `redeemedUsername=cousin`），不是只在 Redis，重啟也在。#174 的閘門完好無損。
+
+**真正的根因是斷言的「索引」**：三個紅測試都拿 `GET /api/v1/admin/invites` 的 `invites[0]` 當作
+「我剛剛鑄的那組碼」。自 #203（222ddb9, 2026-07-25）起，**每次註冊都會額外鑄出該帳號自己的推薦碼**，
+而 `List` 是新到舊排序 → `invites[0]` 變成 cousin 自己那組**理應 active、理應沒有 redeemedBy** 的推薦碼；
+admin 那組其實安穩地待在 `invites[1]`，狀態正是 `redeemed`。
+`git show 222ddb9 --name-only` 確認：該 commit **從未碰過** `invite_gate_test.go` / `approval_compose_test.go`
+——一個 feature 改了既有 endpoint 的**回應形狀**，而讀那個 endpoint 的舊測試沒有跟著更新。
+
+**被第一個失敗遮住的另外兩個紅**（`go test ./internal/auth/` 其實是 3 紅不是 1 紅）：
+- `TestInviteHappyPath:60` `require.Len(rows, 1)` → 實得 3。這是 `require`，**直接中止**，
+  後面 4 條斷言（redeemedUsername / redeemedBy / note / redeemedAt）**從來沒有執行過**。
+- `TestConcurrentRegistrationsShareOneCode:194-195` 同一個 `invites[0]` 索引缺陷。
+  但它真正的斷言 `assert.Equal(t, 1, created)`（8 個併發只准生 1 個帳號）**是綠的**，
+  `Service.Redeem` 的 keyed-mutex burn-before-create 名副其實。
+
+**修法：不放寬任何斷言**（owner 規則）。改成**依 code 取列**而非依位置：
+新增 `listInvites` / `codeRow` / `adminMinted`（`invite_gate_test.go`）。這是**加強**不是放寬——
+`codeRow` 找不到該碼會 `require.FailNow` 並印出整份清單，且日後再多鑄幾種推薦碼也不會再誤判。
+`TestInviteHappyPath` 的數量斷言改成 `adminMinted(rows)` 恰 1（人為鑄的算 1 組），
+並**補上** `len(rows)==3` 把整份 feed 交代乾淨（1 admin + 每帳號 1 推薦碼），避免用 filter 藏東西。
+`approval_compose_test.go` 另**補一條 #237 真正在擔心的斷言**：同碼再註冊必須 403 `invite_used`
+——「花掉」是被強制執行的，不是 console 畫出來的。
+
+**mutation 驗證**（確認新斷言會咬人、不是空過）：把 `codeRow` 的碼換成不存在的 → 如實爆
+「code missing from the console listing」；把重用預期改成 201 → 如實爆 `expected 201, actual 403`。
+
+**#126 審核閘：成立，未被削弱。** cousin 註冊即 `pending` 且不發 session，登入回 **403 `account_pending`**；
+owner 核准後才 200 拿到 token。owner 首帳號豁免正常。
+**#203 推薦鏈：沒有壞。** 前提（「redeemedBy 從沒寫入」）本身是假的。實測 friend 用 cousin 的個人推薦碼註冊後，
+cousin **當場自動核准**（再登入即 200 approved），server log `referral chain auto-approved a pending inviter`。
+（機制讀的是鑄碼時寫的 `referrerId`，本來就不依賴 `redeemedBy`。）
+
+**嚴重性重估**：**無線上影響、無資安暴露、無需對玩家揭露**。實際損害是「一個紅測試從 v0.4.1（48f487c）
+說謊了約兩個版本」，把 CI 的真訊號蓋掉——`TestInviteHappyPath` 那 4 條**未曾執行**的斷言，
+就是這段期間**完全沒有被保護到**的東西。
+
+**閘門**：`internal/auth` + `internal/invite` 全綠。`go test ./...` 另有 **2 個既有紅**
+（`combatenv/TestCombatEnvReplacePublishesInvalidation`、`opsenv/TestWalletPlayRateAgreesWithTheDerivedLength`），
+已用 `git stash` 在 base commit `c8a069d` 上覆驗**同樣紅**，與本次改動無關。
