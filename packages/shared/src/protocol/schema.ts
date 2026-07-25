@@ -396,6 +396,22 @@ export class MatchState extends Schema {
    * .outcomeDecided / freezeControls.
    */
   declare outcomeDecided: boolean;
+  /**
+   * FIRE RING (火圈 / 火環, task #195) — REPLICATED, never re-derived.
+   *
+   * `fireRingTicks` is the sim's combat-elapsed ring counter (-1 = disarmed),
+   * `fireRingRadius` the world-unit radius of the ring RIGHT NOW.
+   *
+   * The client cannot compute these from `phaseTicksLeft`: the ring's counter
+   * FREEZES the instant a round settles (task #100 flips `combatActive`) while
+   * the phase clock keeps running, so a `phaseTicksLeft`-derived ring would go
+   * on shrinking over a hazard that has already stopped burning. Sending the
+   * authority's own numbers also makes a mid-shrink reconnect correct for free
+   * — the one-shot `fireRingStart` event never re-fires, so nothing about the
+   * ring may be event-derived.
+   */
+  declare fireRingTicks: number;
+  declare fireRingRadius: number;
   declare seats: MapSchema<SeatState>;
   declare teams: ArraySchema<TeamState>;
   declare entities: MapSchema<EntityState>;
@@ -418,6 +434,11 @@ export class MatchState extends Schema {
     this.contentVersion = "";
     this.combatEnvJson = "";
     this.outcomeDecided = false;
+    // `declare` + constructor assignment, never a field initializer: a class
+    // field would run AFTER Schema's own constructor and clobber the encoder's
+    // change tracking, so the field would never be sent on join.
+    this.fireRingTicks = -1;
+    this.fireRingRadius = 0;
     this.seats = new MapSchema<SeatState>();
     this.teams = new ArraySchema<TeamState>();
     this.entities = new MapSchema<EntityState>();
@@ -435,6 +456,9 @@ defineTypes(MatchState, {
   contentVersion: "string",
   combatEnvJson: "string",
   outcomeDecided: "boolean",
+  // APPEND-ONLY (Colyseus encodes by declaration index — never reorder).
+  fireRingTicks: "int32",
+  fireRingRadius: "float32",
   seats: { map: SeatState },
   teams: [TeamState],
   entities: { map: EntityState },
@@ -510,4 +534,11 @@ export const ENTITY_FLAG = {
   CHANNELLING: 64,
   /** revive circle only: an enemy stands inside, holding progress */
   CONTESTED: 128,
+  /**
+   * champion only: standing OUTSIDE the fire ring and burning THIS tick
+   * (task #195). Drives the client's translucent-red screen wash for the seat
+   * that owns this entity — 「角色被火燒到畫面會變半透明紅」. Composed from the
+   * sim's own burn predicate, so the wash can never disagree with the damage.
+   */
+  BURNING: 256,
 } as const;

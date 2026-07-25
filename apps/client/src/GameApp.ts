@@ -97,6 +97,8 @@ import { AmbientVfx } from "./vfx/AmbientVfx";
 import { WhirlwindFx } from "./vfx/WhirlwindFx";
 import { CombatPostFx } from "./vfx/CombatPostFx";
 import { DeathFocusFx, type DeathFocusFrame } from "./vfx/DeathFocusFx";
+import { BurnTintFx, type BurnTintFrame } from "./vfx/BurnTintFx";
+import { FireRingFx, type FireRingFrame } from "./render/vfx/FireRingFx";
 import { VictoryFireworks } from "./vfx/VictoryFireworks";
 import type { VictoryInput } from "./vfx/victoryTrigger";
 import { ContentDb } from "./content/ContentDb";
@@ -200,6 +202,16 @@ export class GameApp {
    * revert logic is render/deathFocus; this class only holds the Babylon pass.
    */
   private readonly deathFocus: DeathFocusFx;
+  /**
+   * THE FIRE RING (task #195). Two halves, deliberately separate objects:
+   *   • `fireRing` is the WORLD half — the contracting wall of flame standing
+   *     on `MatchState.fireRingRadius` in the local player's duel zone;
+   *   • `burnTint` is the SCREEN half — 「角色被火燒到畫面會變半透明紅」, one
+   *     pass per local viewport, attached BEFORE `deathFocus` so a dying
+   *     burning player greys out rather than reddening over the grey.
+   */
+  private readonly fireRing: FireRingFx;
+  private readonly burnTint: BurnTintFx;
   /**
    * Victory celebration (task #93): round win → a small firework volley,
    * MATCH win (吃雞) → the full-screen roast-chicken firework. Fired off the
@@ -327,6 +339,23 @@ export class GameApp {
   private readonly spectateZoneByPlayer = new Map<number, number>();
   /** reused scratch: DuelView[] rebuilt from state.duels each frame (no alloc). */
   private readonly duelScratch: DuelView[] = [];
+  /** reused frame envelopes for the fire ring (task #195) — zero allocation. */
+  private readonly ringFrame: FireRingFrame = {
+    phase: "",
+    fireRingTicks: -1,
+    fireRingRadius: 0,
+    zone: null,
+  };
+  private readonly burnBurning: boolean[] = [];
+  private readonly burnAlive: boolean[] = [];
+  private readonly burnRate: number[] = [];
+  private readonly burnFrame: BurnTintFrame = {
+    phase: "",
+    outcomeDecided: false,
+    burning: this.burnBurning,
+    alive: this.burnAlive,
+    rate: this.burnRate,
+  };
   /** reused scratch collections for updateFrameBus. */
   private readonly fbSeen = new Set<number>();
   private readonly fbNameBySeat = new Map<number, string>();
@@ -454,6 +483,18 @@ export class GameApp {
       this.shakeScale = cameraShakeScaleFor(q, this.reducedMotion);
       this.postFx.setEnabled(heavyPostFxEnabled(q));
     });
+
+    // THE FIRE RING (task #195). The burn tint is constructed FIRST and
+    // therefore attaches BEFORE the death focus: post-process order on a
+    // Babylon camera is attach order, so a champion who burns to death sees the
+    // red washed down to grey rather than a red film over a grey frame.
+    this.fireRing = new FireRingFx(this.renderer.scene, {
+      vfxDocFor: (id) => this.contentDb.vfxFor(id),
+    });
+    this.burnTint = new BurnTintFx(
+      { cameraFor: (p) => this.viewports.rigFor(p).camera },
+      playerCount,
+    );
 
     // Death-spectator focus (task #85) — per local viewport, so a dead P2
     // greys out its own quadrant while P1 keeps fighting in colour. NOT
@@ -728,6 +769,8 @@ export class GameApp {
     this.ambient.dispose();
     this.whirlwind.dispose();
     this.postFx.dispose();
+    this.fireRing.dispose(); // band mesh + rim emitters
+    this.burnTint.dispose(); // detaches every viewport's red wash
     this.deathFocus.dispose(); // detaches every viewport's greyscale pass
     this.victoryFx.dispose(); // disposes the chicken mesh + both firework pools
     this.roundWinner.dispose(); // tears down the round-end winner overlay canvas
@@ -1108,7 +1151,12 @@ export class GameApp {
     if (state && this.contentDb.ready) this.syncAmbient(nowMs);
     this.ambient.tick(nowMs, dtMs);
     this.whirlwind.tick(nowMs, dtMs);
-    this.postFx.update(dtMs); // decays the vignette; detaches the pass when idle
+    // FIRE RING (#195): the world band follows the REPLICATED radius (so it
+    // freezes with the mechanic on settle), and the red wash follows
+    // ENTITY_FLAG.BURNING on each seat's own champion. A null frame stops both.
+    this.fireRing.tick(nowMs, dtMs, state ? this.fireRingFrame(state) : null);
+    this.burnTint.update(dtMs, state ? this.burnTintFrame(state) : null);
+    this.postFx.update(dtMs); // decays vignette/ripple; detaches the pass when idle
     // death-spectator greyscale (task #85). A null frame (no state) ramps every
     // viewport back to colour and detaches — same as every other revert path.
     this.deathFocus.update(dtMs, state ? this.deathFocusFrame(state) : null);
@@ -1700,6 +1748,56 @@ export class GameApp {
       // it lifts the instant your duel is decided (you're now watching another).
       decided[p] = ownDuelDecided(this.ownZoneOf(p, state), duels);
     }
+    return f;
+  }
+
+  /**
+   * The fire ring's world frame (#195). The zone is the LOCAL player's duel
+   * zone: a spectator, a parked bye seat, or a client whose champion has not
+   * spawned yet gets `zone: null` and draws no ring at all, rather than
+   * guessing at zone 0 and lighting a fire around somebody else's fight.
+   */
+  private fireRingFrame(state: MatchState): FireRingFrame {
+    const f = this.ringFrame;
+    f.phase = state.phase;
+    f.fireRingTicks = state.fireRingTicks;
+    f.fireRingRadius = state.fireRingRadius;
+    const localId = hudStore.getState().localEntityId;
+    const es = localId !== null ? state.entities.get(String(localId)) : undefined;
+    const zones = frameBus.arenaZones;
+    const z = es && zones ? zones[es.zone] : undefined;
+    f.zone = z ? { x: z.x, z: z.z, r: z.r } : null;
+    return f;
+  }
+
+  /**
+   * The burn tint's frame (#195): per local seat, is that champion carrying
+   * ENTITY_FLAG.BURNING right now, and is it alive to feel it.
+   *
+   * The rate is derived from the ring's shrink progress rather than from a
+   * per-tick damage event — `fireRingDamage` is deliberately server-only
+   * (360 msg/s), and the wash only needs the RAMP, not the exact number.
+   */
+  private burnTintFrame(state: MatchState): BurnTintFrame {
+    const f = this.burnFrame;
+    f.phase = state.phase;
+    f.outcomeDecided = state.outcomeDecided === true;
+    const zones = frameBus.arenaZones;
+    for (let p = 0; p < this.viewports.count; p++) {
+      const id = p === 0 ? hudStore.getState().localEntityId : (this.playerView(p)?.entityId ?? null);
+      const es = id !== null ? state.entities.get(String(id)) : undefined;
+      this.burnBurning[p] = es ? (es.flags & ENTITY_FLAG.BURNING) !== 0 : false;
+      this.burnAlive[p] = es ? es.alive : false;
+      const zr = es && zones ? (zones[es.zone]?.r ?? 0) : 0;
+      // shrink progress 0..1 from the replicated radius, mapped onto the
+      // authored 4 %/s → 20 %/s ramp. Same shape as fireRingRatePerSec, from
+      // the only two numbers the client actually has.
+      const prog = zr > 0 ? Math.min(1, Math.max(0, 1 - state.fireRingRadius / zr)) : 0;
+      this.burnRate[p] = 0.04 + (0.2 - 0.04) * prog;
+    }
+    this.burnBurning.length = this.viewports.count;
+    this.burnAlive.length = this.viewports.count;
+    this.burnRate.length = this.viewports.count;
     return f;
   }
 

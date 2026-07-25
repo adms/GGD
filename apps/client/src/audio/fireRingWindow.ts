@@ -60,10 +60,17 @@ import { subscribeContentBoot } from "../content/bootContent";
  */
 export const NO_RING_FALLBACK_SEC = 30;
 
+/**
+ * Fallback shrink duration when the content tree carries no ring (see
+ * {@link NO_RING_FALLBACK_SEC}). Matches the schema's own `shrinkSec` default,
+ * so a skeleton boot animates the band over the same 20 s the sim would.
+ */
+export const DEFAULT_SHRINK_SEC = 20;
+
 /** The seconds fields of `config.match@1`'s `match` block that this consumes. */
 export interface FireRingClockSource {
   combatMaxSec?: number;
-  fireRing?: { startSec?: number } | undefined;
+  fireRing?: { startSec?: number; shrinkSec?: number } | undefined;
 }
 
 /**
@@ -106,8 +113,37 @@ export let FIRE_RING_SEC: number = NO_RING_FALLBACK_SEC;
 export function fireRingWindowSec(): number {
   const doc = Configs.tryGet("config.match") as unknown as ConfigMatchDoc | undefined;
   FIRE_RING_SEC = doc?.schema === "config@1" ? fireRingWindowSecFrom(doc.match) : NO_RING_FALLBACK_SEC;
+  FIRE_RING_SHRINK_SEC = doc?.schema === "config@1" ? fireRingShrinkSecFrom(doc.match) : DEFAULT_SHRINK_SEC;
   return FIRE_RING_SEC;
 }
+
+// ---------------------------------------------------------------------------
+// THE SHRINK DURATION — a SECOND derived number, deliberately not overloaded
+// onto the first (task #195)
+// ---------------------------------------------------------------------------
+
+/**
+ * PURE core: how long the ring takes to close, in seconds.
+ *
+ * This is NOT {@link FIRE_RING_SEC} and must never be folded into it. They
+ * answer different questions and are 40 vs 20 under the shipped config:
+ * `FIRE_RING_SEC` is "how much round clock is left when the ring ignites"
+ * (`audio/scene.ts` compares `phaseSecondsLeft` against it; `Minimap.tsx`
+ * divides by it for the rim's urgency ramp), while this is "how long the
+ * contraction lasts" (the flame band's animation length). Overloading one
+ * scalar would make the bed swap and the visual disagree the moment the owner
+ * retunes either number — the #132 pathology, one layer down.
+ */
+export function fireRingShrinkSecFrom(m: FireRingClockSource | null | undefined): number {
+  const s = m?.fireRing?.shrinkSec;
+  return typeof s === "number" && Number.isFinite(s) && s > 0 ? s : DEFAULT_SHRINK_SEC;
+}
+
+/**
+ * Seconds the fire ring takes to contract to its minimum. LIVE BINDING, for the
+ * same reason {@link FIRE_RING_SEC} is one — read it, never re-declare it.
+ */
+export let FIRE_RING_SHRINK_SEC: number = DEFAULT_SHRINK_SEC;
 
 // Content boot populates `Configs` asynchronously; latch the authored number
 // the moment it lands so a client sitting in the lobby already holds it.

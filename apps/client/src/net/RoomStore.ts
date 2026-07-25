@@ -182,6 +182,16 @@ export interface HudState {
    * fall back to the all-1.0 defaults. "" = neutral.
    */
   combatEnvJson: string;
+  /**
+   * FIRE RING (#195), replicated straight off `MatchState` — the sim's
+   * combat-elapsed ring counter (-1 = disarmed) and the ring's CURRENT world
+   * radius. The minimap's danger rim is drawn at this radius rather than at the
+   * zone boundary, so the map shows the hazard that exists instead of a rim
+   * that pulses over nothing. Deliberately NOT derived from `phaseSecondsLeft`:
+   * the ring freezes on round settle while the phase clock keeps running.
+   */
+  fireRingTicks: number;
+  fireRingRadius: number;
   seats: SeatView[];
   teams: TeamView[];
   /** client-side K/D tally from death events (not in the schema) */
@@ -224,6 +234,8 @@ const initial: HudState = {
   localSeatId: null,
   localEntityId: null,
   combatEnvJson: "",
+  fireRingTicks: -1,
+  fireRingRadius: 0,
   seats: [],
   teams: [],
   kills: {},
@@ -287,6 +299,12 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
   if (prev.phaseSecondsLeft !== secondsLeft) patch.phaseSecondsLeft = secondsLeft;
 
   if (prev.combatEnvJson !== state.combatEnvJson) patch.combatEnvJson = state.combatEnvJson;
+
+  // fire ring (#195): change-guarded like everything else here, but the radius
+  // moves 0.039 u per sim tick while shrinking, so in practice it patches on
+  // every snapshot for those 20 seconds — which is the point.
+  if (prev.fireRingTicks !== state.fireRingTicks) patch.fireRingTicks = state.fireRingTicks;
+  if (prev.fireRingRadius !== state.fireRingRadius) patch.fireRingRadius = state.fireRingRadius;
 
   // ---- seats (sorted by seatId; JSON key change-guard) ----
   const seats: SeatView[] = [];

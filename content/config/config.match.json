@@ -11,11 +11,13 @@
     "startingTeamLives": 20,
     "champSelectSec": 20,
     "intermissionSec": 40,
-    "combatMaxSec": 120,
+    "combatMaxSec": 100,
     "fireRing": {
       "startSec": 60,
-      "stepSec": 1,
-      "pctPerStep": 0.01,
+      "shrinkSec": 20,
+      "minRadius": 0.5,
+      "burnPctPerSecStart": 0.04,
+      "burnPctPerSecEnd": 0.2,
       "maxPctPerSec": 1
     },
     "resolutionSec": 6

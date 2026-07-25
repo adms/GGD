@@ -56,4 +56,68 @@ describe("schema encode regression (match-13)", () => {
     decoder.decode(patch);
     expect(decoded.tick).toBe(state.tick);
   });
+
+  /**
+   * The fire ring's two replicated fields (task #195) fall into exactly the trap
+   * this file exists for: `declare` + a constructor assignment encodes, a class
+   * FIELD INITIALIZER silently shadows the tracking accessor and the value is
+   * simply never sent — the client would then draw a ring at radius 0 forever
+   * with nothing to log.
+   */
+  it("encodes MatchState.fireRingTicks / fireRingRadius on join (the declare-and-assign trap)", () => {
+    cover("schema-encode");
+    const fireRing = {
+      startSec: 0.2, // 6 ticks — armed and already shrinking well inside this test
+      shrinkSec: 1,
+      minRadius: 0.5,
+      burnPctPerSecStart: 0.04,
+      burnPctPerSecEnd: 0.2,
+      maxPctPerSec: 1,
+    };
+    const ctl = new MatchController(
+      "enc-ring",
+      42,
+      Array.from({ length: 12 }, (_, i) => ({ seatId: i, teamId: Math.floor(i / 3), isBot: true })),
+      FAST,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      fireRing,
+    );
+    while (ctl.phase.phase !== "combat") ctl.tick();
+    for (let i = 0; i < 20; i++) ctl.tick(); // past ignition, mid-shrink
+
+    const state = new MatchState();
+    const encoder = new Encoder(state);
+    projectSnapshot(ctl, state, new Map());
+    expect(state.fireRingTicks).toBeGreaterThan(0);
+    expect(state.fireRingRadius).toBeLessThan(24); // it has actually moved
+
+    const decoded = new MatchState();
+    new Decoder(decoded).decode(encoder.encodeAll());
+    expect(decoded.fireRingTicks).toBe(state.fireRingTicks);
+    expect(decoded.fireRingRadius).toBeCloseTo(state.fireRingRadius, 4);
+  });
+
+  it("a match with NO ring encodes the disarmed sentinel, not a phantom ring", () => {
+    cover("schema-encode");
+    const ctl = new MatchController(
+      "enc-noring",
+      7,
+      Array.from({ length: 12 }, (_, i) => ({ seatId: i, teamId: Math.floor(i / 3), isBot: true })),
+      FAST,
+    );
+    while (ctl.phase.phase !== "combat") ctl.tick();
+    const state = new MatchState();
+    const encoder = new Encoder(state);
+    projectSnapshot(ctl, state, new Map());
+    const decoded = new MatchState();
+    new Decoder(decoded).decode(encoder.encodeAll());
+    // -1 = disarmed; the radius reads as the full zone boundary so a client that
+    // renders it unconditionally draws the un-shrunk rim, not a hazard at 0.
+    expect(decoded.fireRingTicks).toBe(-1);
+    expect(decoded.fireRingRadius).toBe(24);
+  });
 });

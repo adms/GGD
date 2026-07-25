@@ -1,5 +1,5 @@
 /**
- * FireRingSystem — the round-pacing accelerator (火圈 / 火環, task #132).
+ * FireRingSystem — the shrinking round-pacing ring (火圈 / 火環, tasks #132/#195).
  *
  * Runs right after combatResolveSystem and BEFORE deathSystem: it directly
  * removes HP (a pure environmental burn — no attacker, so no kill credit, no
@@ -7,19 +7,30 @@
  * knob), then this tick's deathSystem picks up any champion it dropped to 0 and
  * resolves the death exactly like any other (killer = null → environmental).
  *
+ * #195 — ONLY OUTSIDE THE RING BURNS. From ignition the ring contracts
+ * continuously (see `fireRing.ts`'s shrink law); a champion whose WHOLE BODY is
+ * inside its OWN zone's ring takes nothing, everyone else burns at a rate that
+ * ramps with the shrink progress. Zones are evaluated INDEPENDENTLY against
+ * their own centres — a duel in zone 1 is not judged against zone 0's geometry.
+ * Once the ring is fully closed the inside test is false for everybody, so the
+ * last seconds are 「沒有生存空間」 without a second code path.
+ *
  * GATES (all must hold, else a pure no-op):
  *   - `world.fireRingRules` armed (host called beginCombatFireRing on entry)
  *   - `world.fireRingTicks >= 0`
  *   - `world.combatActive` — LIVE combat only. The instant a round settles
- *     (task #100 flips combatActive false) the ring stops burning, so it is a
- *     finish accelerator, never a post-settle grinder.
+ *     (task #100 flips combatActive false) the ring stops burning AND its
+ *     counter stops advancing, so the replicated radius freezes with the
+ *     mechanic instead of shrinking over a settled round.
  *
  * The combat-elapsed counter (`fireRingTicks`) is incremented FIRST — mirroring
  * FlowerSystem — so the ring ignites exactly `startTicks` combat ticks in, and
- * the first damaging step lands exactly one `stepTicks` after that.
+ * the shrink's tick 0 is that same tick (radius still == the zone boundary,
+ * hence nobody burns on the ignition tick itself).
  */
 import type { SimWorld } from "../SimWorld";
-import { fireRingRatePerSec } from "../fireRing";
+import { distSq } from "../math/vec2";
+import { fireRingIsSafe, fireRingRadius, fireRingRatePerSec } from "../fireRing";
 
 export function fireRingSystem(world: SimWorld): void {
   const rules = world.fireRingRules;
@@ -28,7 +39,7 @@ export function fireRingSystem(world: SimWorld): void {
   if (!world.combatActive) return; // live combat only (task #100 coordination)
 
   // combat-elapsed counter: incremented first so ignition lands exactly
-  // startTicks into combat and step N lands exactly startTicks + N*stepTicks.
+  // startTicks into combat and the shrink clock starts on that same tick.
   world.fireRingTicks++;
   const elapsed = world.fireRingTicks;
   if (elapsed < rules.startTicks) return; // dormant — the ring has not closed in yet
@@ -38,8 +49,15 @@ export function fireRingSystem(world: SimWorld): void {
   if (ticksSinceStart === 0) world.emit("fireRingStart", { atTick: world.tick });
 
   const ratePerSec = fireRingRatePerSec(rules, ticksSinceStart);
-  world.emit("fireRingTick", { ratePerSec, ticksSinceStart });
-  if (ratePerSec <= 0) return; // grace second: telegraph only, no damage yet
+  // Telegraph carries the RADIUS too now: it is the one number a server-side
+  // consumer (replay tooling, the sim harness) needs to reason about the ring
+  // without re-deriving the law. Still SERVER-ONLY — see eventFanout.ts.
+  world.emit("fireRingTick", {
+    ratePerSec,
+    ticksSinceStart,
+    radius: fireRingRadius(rules, ticksSinceStart, world.arena.zones[0]?.boundaryRadius ?? 0),
+  });
+  if (ratePerSec <= 0) return; // degenerate config: telegraph only, no damage
 
   const dt = world.dt;
   // champion store iterates in ascending-id insertion order — deterministic.
@@ -47,17 +65,25 @@ export function fireRingSystem(world: SimWorld): void {
     void champ;
     const hp = world.health.get(id);
     if (!hp || !hp.alive) continue;
+    const t = world.transform.get(id);
+    if (!t) continue;
+    // per-zone geometry: each duel's ring closes on ITS OWN centre.
+    const zoneDef = world.arena.zones[t.zone] ?? world.arena.zones[0];
+    if (!zoneDef) continue;
+    const radius = fireRingRadius(rules, ticksSinceStart, zoneDef.boundaryRadius);
+    // WHOLE BODY inside = safe. At the closed radius `radius - t.radius < 0`,
+    // so this is false for every champion at every position.
+    if (fireRingIsSafe(radius, t.radius, distSq(t.pos, zoneDef.center))) continue;
     const dmg = hp.maxHp * ratePerSec * dt;
     if (dmg <= 0) continue;
     hp.hp -= dmg; // pure %-HP true burn: ignores armor/MR, shields and combat-env
-    const t = world.transform.get(id);
     world.emit("fireRingDamage", {
       id,
       amount: dmg,
       dmgType: "true",
       origin: "fireRing",
-      x: t?.pos.x ?? 0,
-      z: t?.pos.z ?? 0,
+      x: t.pos.x,
+      z: t.pos.z,
     });
   }
 }

@@ -185,10 +185,12 @@ export function basicAttackSystem(world: SimWorld): void {
       const w = ab.windup;
       const tgtT = world.transform.get(w.target);
       const tgtHp = world.health.get(w.target);
-      const inRange =
-        !!tgtT &&
-        tgtT.zone === t.zone &&
-        distSq(t.pos, tgtT.pos) <= reachTo(sc, t.radius, tgtT.radius) ** 2;
+      // `reach * reach`, NOT `reach ** 2`: `**` is specified as Math.pow, which
+      // is implementation-approximated and may differ by an ulp between hosts —
+      // enough to flip this `<=` and desync a replica. (The purity gate now
+      // bans `**` in sim source for exactly this reason; see purity.test.ts.)
+      const reach = tgtT ? reachTo(sc, t.radius, tgtT.radius) : 0;
+      const inRange = !!tgtT && tgtT.zone === t.zone && distSq(t.pos, tgtT.pos) <= reach * reach;
       if (!tgtT || !tgtHp?.alive || !inRange) {
         ab.windup = null;
         // WHIFF (combat-juice): if the swing had already COMMITTED (this was the

@@ -28,6 +28,7 @@
  * hostDigest first means the sim agreed and the ORCHESTRATOR disagreed (a
  * phase-timing, offer or scoring change).
  */
+import { currentFireRingRadius } from "@ggd/shared/sim/fireRing";
 import type { MatchController } from "../match/MatchController";
 
 /** FNV-1a-flavoured 32-bit accumulator, matching SimWorld.digest()'s mixer. */
@@ -111,6 +112,15 @@ export function hostDigest(ctl: MatchController): number {
   m.num(w.combatActive ? 1 : 0);
   m.num(w.economyOpen ? 1 : 0);
   m.num(w.round);
+  // FIRE RING (#195). `SimWorld.digest()` quantizes floats at 1/4096, but the
+  // ring's safety predicate has ZERO tolerance: a position divergence too small
+  // for the world digest to notice can still flip who is inside and who burns.
+  // Hashing the ring's own counter AND radius here means the run that diverges
+  // says so on the tick it happens, instead of surfacing later as an
+  // unexplained HP gap. (`SimWorld.digest()` itself stays verbatim — see the
+  // header: worldDigest must keep its exact pre-#195 expectations.)
+  m.num(w.fireRingTicks);
+  m.num(Math.round(currentFireRingRadius(w) * 4096));
 
   // --- MatchController host state (entirely outside the sim) ----------------
   m.str(ctl.phase.phase);

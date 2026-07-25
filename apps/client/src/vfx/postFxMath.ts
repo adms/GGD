@@ -40,3 +40,41 @@ export function decayIntensity(intensity: number, dtMs: number, halfLifeMs: numb
 
 /** Half-life (ms) for the vignette channel — it lingers after the flare. */
 export const VIGNETTE_HALF_LIFE_MS = 220;
+export const RIPPLE_HALF_LIFE_MS = 90;
+
+// ---------------------------------------------------------------------------
+// FIRE-RING BURN TINT (task #195) — 「角色被火燒到畫面會變半透明紅」
+// ---------------------------------------------------------------------------
+
+/**
+ * Peak burn-tint strength (0..1). Deliberately well under 1: the screen must
+ * read as ON FIRE, not as BROKEN. At 0.42 the arena, the HP bars and the
+ * ability icons all stay legible through the wash, which matters because the
+ * player is being told to RUN somewhere — a tint that hides the ring would
+ * punish them for the feedback meant to save them.
+ */
+export const BURN_MAX = 0.42;
+
+/**
+ * Half-life (ms) of the burn tint once the burning stops. Short enough that
+ * stepping back inside the ring reads as immediate relief, long enough that the
+ * 30 Hz snapshot cadence (33 ms) cannot make it strobe between two ticks that
+ * happen to straddle the boundary.
+ */
+export const BURN_HALF_LIFE_MS = 260;
+
+/**
+ * Target burn-tint strength for a per-second burn rate (fraction of maxHp).
+ *
+ * The shipped ring runs 4 %/s → 20 %/s, so `BURN_FULL_RATE` is the ramp's end:
+ * the wash starts as a hint and reaches full only when the ring has closed and
+ * there is nowhere left to stand. Concave (sqrt) like the damage vignette, so
+ * the first seconds of burning are unmistakable rather than subliminal.
+ * Pure, monotonic, clamped.
+ */
+export const BURN_FULL_RATE = 0.2;
+
+export function burnTintForRate(ratePerSec: number): number {
+  const f = clamp01(ratePerSec / BURN_FULL_RATE);
+  return Math.sqrt(f) * BURN_MAX;
+}

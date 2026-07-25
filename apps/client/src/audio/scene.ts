@@ -24,7 +24,14 @@ import { fireRingWindowSec } from "./fireRingWindow";
  * window). It is a LIVE ESM BINDING, not a constant — read the header of
  * ./fireRingWindow before touching it.
  */
-export { FIRE_RING_SEC, fireRingWindowSec, fireRingWindowSecFrom, NO_RING_FALLBACK_SEC } from "./fireRingWindow";
+export {
+  FIRE_RING_SEC,
+  FIRE_RING_SHRINK_SEC,
+  fireRingShrinkSecFrom,
+  fireRingWindowSec,
+  fireRingWindowSecFrom,
+  NO_RING_FALLBACK_SEC,
+} from "./fireRingWindow";
 
 /** Platform shell state that selects a pre-match scene. */
 export interface PlatformAudioState {

@@ -16,8 +16,10 @@ import { Configs } from "@ggd/shared/content";
 import type { ConfigDoc } from "@ggd/shared/content";
 import {
   FIRE_RING_SEC,
+  FIRE_RING_SHRINK_SEC,
   NO_RING_FALLBACK_SEC,
   __resetFireRingDriftAlarm,
+  fireRingShrinkSecFrom,
   fireRingWindowSec,
   fireRingWindowSecFrom,
   noteFireRingIgnition,
@@ -28,7 +30,7 @@ const CONFIG_PATH = join(__dirname, "../../../../content/config/config.match.jso
 
 interface MatchBlock {
   combatMaxSec: number;
-  fireRing?: { startSec: number };
+  fireRing?: { startSec: number; shrinkSec?: number };
 }
 
 function readMatchConfig(): MatchBlock {
@@ -63,11 +65,34 @@ describe("fire-ring cue window is derived, not authored twice (firering-config)"
     expect(match.fireRing).toBeTruthy();
     const expected = match.combatMaxSec - match.fireRing!.startSec;
     expect(fireRingWindowSecFrom(match)).toBe(expected);
-    // The shipped doc is 240 / 180. If this ever equals the legacy literal the
-    // test below stops being able to tell a derivation from a coincidence, so
-    // assert the actual live numbers too.
-    expect(expected).toBe(60);
+    // The shipped doc is 100 / 60 since #195 (it was 240 / 180). If this ever
+    // equals the legacy literal the test below stops being able to tell a
+    // derivation from a coincidence, so assert the actual live numbers too.
+    expect(expected).toBe(40);
     expect(expected).not.toBe(NO_RING_FALLBACK_SEC);
+    // …and the coincidence proof: the bed swaps on the EXACT tick the flames
+    // appear, which is what keeps the swap inside DRIFT_TOLERANCE_SEC.
+    expect(match.combatMaxSec).toBe(100);
+    expect(match.fireRing!.startSec).toBe(60);
+  });
+
+  it("derives the SHRINK duration separately — 40 is not 20 (firering-config)", () => {
+    cover("firering-config");
+    const match = readMatchConfig();
+    // Two different questions, two different numbers. Folding them into one
+    // scalar is how the #132 drift happened, one layer down: `FIRE_RING_SEC` is
+    // "seconds left when it ignites" (compared against phaseSecondsLeft), this
+    // is "how long the contraction lasts" (the band's animation length).
+    expect(fireRingShrinkSecFrom(match)).toBe(20);
+    expect(fireRingShrinkSecFrom(match)).not.toBe(fireRingWindowSecFrom(match));
+    // degenerate inputs fall back to the schema's own default, never to 0
+    expect(fireRingShrinkSecFrom(null)).toBe(20);
+    expect(fireRingShrinkSecFrom({ combatMaxSec: 100 })).toBe(20);
+    expect(fireRingShrinkSecFrom({ combatMaxSec: 100, fireRing: { startSec: 60 } })).toBe(20);
+    // and it tracks a registered doc through the live binding
+    registerMatchConfig({ combatMaxSec: 200, fireRing: { startSec: 100, shrinkSec: 35 } });
+    fireRingWindowSec();
+    expect(FIRE_RING_SHRINK_SEC).toBe(35);
   });
 
   it("tracks the registered content doc, including the live FIRE_RING_SEC binding", () => {
@@ -97,23 +122,34 @@ describe("fire-ring cue window is derived, not authored twice (firering-config)"
     expect(fireRingWindowSecFrom({ combatMaxSec: 240, fireRing: { startSec: 0 } })).toBe(240);
   });
 
-  it("swaps the BGM bed at the derived instant, not at 30 s", () => {
+  it("swaps the BGM bed at the derived instant, not at a literal", () => {
     cover("audio-scene-map");
     registerMatchConfig(readMatchConfig());
-    // 61 s left: the ring has NOT ignited yet → combat bed
-    expect(sceneForMatch({ phase: "combat", phaseSecondsLeft: 61 })).toBe("combat");
-    // 60 s left: ignition → tension bed. This is the assertion that was false
-    // for the whole life of #132 (it answered "combat" until 30 s left).
-    expect(sceneForMatch({ phase: "combat", phaseSecondsLeft: 60 })).toBe("fireRing");
+    // 41 s left: the ring has NOT ignited yet → combat bed
+    expect(sceneForMatch({ phase: "combat", phaseSecondsLeft: 41 })).toBe("combat");
+    // 40 s left: ignition → tension bed. This is the assertion that was false
+    // for the whole life of #132 (it answered "combat" until 30 s left), and it
+    // MOVED with the mechanic under #195 rather than needing a code change.
+    expect(sceneForMatch({ phase: "combat", phaseSecondsLeft: 40 })).toBe("fireRing");
     expect(sceneForMatch({ phase: "combat", phaseSecondsLeft: 31 })).toBe("fireRing");
     expect(sceneForMatch({ phase: "combat", phaseSecondsLeft: 5 })).toBe("fireRing");
   });
 
-  it("never re-hardcodes the window in the scene mapper (S3 source lock)", () => {
+  it("never re-hardcodes the window at its OWNER (S3 source lock)", () => {
     cover("firering-config");
-    const src = readFileSync(join(__dirname, "scene.ts"), "utf8");
-    // a numeric assignment to the window is exactly how this broke the first time
+    // The lock now points at fireRingWindow.ts, because scene.ts only
+    // RE-EXPORTS the binding — a literal reintroduced in the owning module
+    // would sail straight past a check aimed at the re-export.
+    const src = readFileSync(join(__dirname, "fireRingWindow.ts"), "utf8")
+      .replace(/\/\*[\s\S]*?\*\//g, "")
+      .replace(/\/\/[^\n]*/g, "");
+    // a numeric assignment to either window is exactly how this broke the first time
     expect(src).not.toMatch(/FIRE_RING_SEC\s*(:\s*number\s*)?=\s*\d/);
+    expect(src).not.toMatch(/FIRE_RING_SHRINK_SEC\s*(:\s*number\s*)?=\s*\d/);
+    // …and scene.ts must stay a pure re-export of both
+    const scene = readFileSync(join(__dirname, "scene.ts"), "utf8");
+    expect(scene).not.toMatch(/FIRE_RING_SEC\s*(:\s*number\s*)?=\s*\d/);
+    expect(scene).toMatch(/from "\.\/fireRingWindow"/);
   });
 });
 

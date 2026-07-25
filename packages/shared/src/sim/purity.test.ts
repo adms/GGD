@@ -16,6 +16,19 @@ const BANNED = [
   /\bMath\.atan2?\b/,
   /\bMath\.asin\b/,
   /\bMath\.acos\b/,
+  // TRANSCENDENTALS (task #195). These are NOT correctly-rounded in IEEE-754 —
+  // implementations differ between engines and CPUs, so an "eased" curve is the
+  // one thing that would pass every other gate here and still make two replicas
+  // disagree by an ulp that then flips a `<=` comparison. The fire ring's
+  // shrink law is therefore deliberately linear: subtract, divide, multiply,
+  // add. If a sim system ever genuinely needs a power, it needs a rational
+  // approximation, not Math.pow.
+  /\bMath\.pow\b/,
+  /\bMath\.exp\b/,
+  /\bMath\.log\b/,
+  /\bMath\.hypot\b/,
+  /\bMath\.cbrt\b/,
+  /\*\*/,
   /\bDate\.now\b/,
   /\bnew Date\b/,
   /\bperformance\.now\b/,

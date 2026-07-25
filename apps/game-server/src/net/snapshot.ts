@@ -9,6 +9,7 @@ import { Champions } from "@ggd/shared/sim/content/registry";
 import { FLOWER_MODEL_KEY } from "@ggd/shared/sim/flowers";
 import { REVIVE_CIRCLE_MODEL_KEY } from "@ggd/shared/sim/revive";
 import { GOLD_COIN_MODEL_KEY } from "@ggd/shared/sim/coins";
+import { currentFireRingRadius, isBurnedByFireRing } from "@ggd/shared/sim/fireRing";
 import type { ChampionId } from "@ggd/shared/ids";
 import type { MatchController } from "../match/MatchController";
 import type { HumanDriver } from "../seat/HumanDriver";
@@ -35,6 +36,13 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
   state.phaseTicksLeft = ctl.phase.ticksLeft;
   // match decided -> client disables input + starts the settlement front-view
   state.outcomeDecided = ctl.outcomeDecided;
+  // FIRE RING (#195): replicate the authority's own counter + radius. Both
+  // freeze the instant a round settles, which is exactly what the client's
+  // flame band must do — a `phaseTicksLeft`-derived ring would keep shrinking
+  // over a hazard that has stopped burning. `currentFireRingRadius` is the same
+  // pure law fireRingSystem burned against this tick.
+  state.fireRingTicks = world.fireRingTicks;
+  state.fireRingRadius = currentFireRingRadius(world);
 
   // ---- teams ----
   while (state.teams.length < ctl.lives.size) state.teams.push(new TeamState());
@@ -314,6 +322,10 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
           if (e.moveSpeedMult !== undefined && e.moveSpeedMult < 1) flags |= ENTITY_FLAG.SLOWED;
         }
       }
+      // #195: outside the fire ring THIS tick → the seat's own screen washes
+      // translucent red. Composed from the sim's burn predicate itself, so the
+      // wash and the damage can never disagree.
+      if (isBurnedByFireRing(world, id)) flags |= ENTITY_FLAG.BURNING;
       es.flags = flags;
     }
   }

@@ -39,7 +39,6 @@ import type { Order } from "@ggd/shared/sim/intents";
 import { useHud, hudStore } from "../../net/RoomStore";
 import { frameBus, type ArenaZoneCircle, type ChampionAnchor } from "../../frameBus";
 import { KIND_FLOWER, KIND_GUARDIAN } from "../../render/overheadAnchors";
-import { FIRE_RING_SEC } from "../../audio/scene";
 import { hudActions } from "../actions";
 import { HudSlot, hudTouch } from "./HudSlot";
 import { hudSlotHeight, hudSlotWidth } from "./hudLayout";
@@ -48,6 +47,7 @@ import {
   boundsForZone,
   cameraGroundQuad,
   clampToZones,
+  dangerRimSpecFor,
   dotColorFor,
   inLocalZone,
   mapToWorld,
@@ -122,10 +122,14 @@ function drawCameraBox(
 }
 
 /**
- * Late-round pressure cue: for the final FIRE_RING_SEC of combat the zone rims
- * pulse. NOTE this mirrors the audio director's tension window (the same
- * constant drives the "fireRing" BGM bed) — the sim has no shrinking-ring
- * entity, so the map must not draw one.
+ * THE FIRE RING (task #195), drawn at its REAL radius.
+ *
+ * The circle is `MatchState.fireRingRadius` — the authority's own number, the
+ * same one `fireRingSystem` burned against this tick — so the rim contracts on
+ * the map exactly as the flames contract in the world, and freezes with the
+ * mechanic when a round settles. The rule and the placement live in
+ * `minimapMath.dangerRimSpecFor`, where they are unit-tested; this function
+ * only strokes what it is told.
  */
 function drawDangerRim(
   ctx: CanvasRenderingContext2D,
@@ -136,24 +140,27 @@ function drawDangerRim(
   onlyZone: number | null,
 ): void {
   const hud = hudStore.getState();
-  if (hud.phase !== "combat") return;
-  const left = hud.phaseSecondsLeft;
-  if (!(left > 0) || left > FIRE_RING_SEC) return;
   const zones = frameBus.arenaZones;
   if (!zones) return;
-  const urgency = 1 - left / FIRE_RING_SEC; // 0 at the window's start → 1 at 0s
-  const pulse = 0.35 + 0.45 * urgency * (0.6 + 0.4 * Math.sin(nowMs / 220));
   const s = sizePx / Math.max(bounds.maxX - bounds.minX, bounds.maxZ - bounds.minZ);
   ctx.save();
-  ctx.globalAlpha = Math.max(0, Math.min(1, pulse));
   ctx.strokeStyle = DANGER_RIM;
-  ctx.lineWidth = 2 + 2 * urgency;
   zones.forEach((z, i) => {
     if (!(z.r > 0)) return;
     if (onlyZone !== null && i !== onlyZone) return; // local duel zone only (task #67)
+    const spec = dangerRimSpecFor({
+      phase: hud.phase,
+      fireRingTicks: hud.fireRingTicks,
+      fireRingRadius: hud.fireRingRadius,
+      zoneRadius: z.r,
+    });
+    if (!spec) return;
+    const pulse = 0.35 + 0.45 * spec.urgency * (0.6 + 0.4 * Math.sin(nowMs / 220));
+    ctx.globalAlpha = Math.max(0, Math.min(1, pulse));
+    ctx.lineWidth = 2 + 2 * spec.urgency;
     const c = worldToMap(z.x, z.z, bounds, sizePx, yaw);
     ctx.beginPath();
-    ctx.arc(c.x, c.y, z.r * s, 0, Math.PI * 2);
+    ctx.arc(c.x, c.y, spec.radius * s, 0, Math.PI * 2);
     ctx.stroke();
   });
   ctx.restore();

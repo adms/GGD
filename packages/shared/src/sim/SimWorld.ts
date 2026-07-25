@@ -234,11 +234,13 @@ export class SimWorld {
   flowerRules: FlowerRules | null = null;
 
   /**
-   * Fire-ring rules (ticks), task #132. null = the round-pacing hazard is OFF
-   * (legacy behavior, unit tests, the client's prediction shadow world). The
-   * match host arms these via beginCombatFireRing/endCombatFireRing (see
-   * fireRing.ts). While armed AND `combatActive`, fireRingSystem burns every
-   * living champion with the escalating %-HP true-damage ramp.
+   * Fire-ring rules (ticks), tasks #132/#195. null = the round-pacing hazard is
+   * OFF (legacy behavior, unit tests, the client's prediction shadow world).
+   * The match host arms these via beginCombatFireRing/endCombatFireRing (see
+   * fireRing.ts). While armed AND `combatActive`, fireRingSystem contracts the
+   * ring and burns every living champion standing OUTSIDE it. The RADIUS is
+   * never stored: it is a pure function of these rules and `fireRingTicks`
+   * (`currentFireRingRadius`), so it can never drift out of step with the tick.
    */
   fireRingRules: FireRingRules | null = null;
 

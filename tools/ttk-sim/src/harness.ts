@@ -75,11 +75,20 @@ export const COMBAT_ENV_BASE: Partial<Record<CombatEnvKey, number>> = {
   abilityRange: 0.6,
 };
 
-/** Real fire-ring schedule from content/config/config.match.json (match.fireRing). */
+/**
+ * Real fire-ring schedule from content/config/config.match.json (match.fireRing).
+ *
+ * #195 REPLACED THE SHAPE, so any TTK number produced before it is stale: the
+ * ring now ignites at 60 s (not 180) and CONTRACTS over 20 s, burning only what
+ * is outside it. #153's HP tuning was measured against 180 s rounds with a
+ * global burn; re-run the sweep rather than reading the old table across.
+ */
 export const PRODUCTION_FIRE_RING: FireRingConfig = {
-  startSec: 180,
-  stepSec: 1,
-  pctPerStep: 0.01,
+  startSec: 60,
+  shrinkSec: 20,
+  minRadius: 0.5,
+  burnPctPerSecStart: 0.04,
+  burnPctPerSecEnd: 0.2,
   maxPctPerSec: 1,
 };
 

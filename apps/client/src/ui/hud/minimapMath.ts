@@ -411,3 +411,50 @@ export function markerSpecFor(
     alpha: 0.95,
   };
 }
+
+// ---------------------------------------------------------------------------
+// FIRE-RING DANGER RIM (task #195)
+// ---------------------------------------------------------------------------
+
+/** What the minimap needs to draw the fire ring, straight off `MatchState`. */
+export interface DangerRimInput {
+  phase: string;
+  /** MatchState.fireRingTicks — the sim's combat-elapsed counter; -1 = disarmed */
+  fireRingTicks: number;
+  /** MatchState.fireRingRadius — the ring's CURRENT world radius */
+  fireRingRadius: number;
+  /** the zone's own boundaryRadius (the ring's starting size) */
+  zoneRadius: number;
+}
+
+/** Where to draw the rim and how hard to pulse it. */
+export interface DangerRimSpec {
+  /** world-unit radius of the circle to stroke */
+  radius: number;
+  /** 0 the instant it starts closing → 1 when fully closed */
+  urgency: number;
+}
+
+/**
+ * The minimap's fire-ring rim, DERIVED FROM THE REPLICATED RADIUS.
+ *
+ * Until #195 this was drawn at the zone boundary and gated on
+ * `phaseSecondsLeft <= FIRE_RING_SEC`, under a comment claiming 「the sim has
+ * no shrinking-ring entity, so the map must not draw one」. That was already
+ * false — the ring was burning people — and it is emphatically false now: the
+ * sim owns a radius and replicates it, so the map draws THAT.
+ *
+ * Returns null while there is nothing to show — outside combat, disarmed, or
+ * before the ring has begun to move (radius still == the zone boundary). The
+ * rim therefore appears on the first shrink tick and, because the sim freezes
+ * `fireRingTicks` on round settle, freezes with it instead of continuing to
+ * collapse over a finished round.
+ */
+export function dangerRimSpecFor(i: DangerRimInput): DangerRimSpec | null {
+  if (i.phase !== "combat") return null;
+  if (!(i.fireRingTicks >= 0)) return null;
+  if (!(i.zoneRadius > 0)) return null;
+  const r = i.fireRingRadius;
+  if (!(r > 0) || !(r < i.zoneRadius)) return null;
+  return { radius: r, urgency: Math.max(0, Math.min(1, 1 - r / i.zoneRadius)) };
+}

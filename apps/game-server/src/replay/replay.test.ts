@@ -15,7 +15,7 @@ import { readdir } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { zArenaDoc, type ArenaDoc } from "@ggd/shared/content";
+import { zArenaDoc, type ArenaDoc, type FireRingConfig } from "@ggd/shared/content";
 import { Arenas, Configs } from "@ggd/shared/content";
 import { SKELETON_ARENA } from "@ggd/shared/sim/world/ArenaDef";
 import { asSeatId } from "@ggd/shared/ids";
@@ -75,7 +75,26 @@ afterAll(() => {
   delete process.env.GGD_REPLAY_DIR;
 });
 
-function makeController(matchId: string, seed: number, whitelist = Whitelist.allowAll()): MatchController {
+/**
+ * A fire ring that ignites almost immediately and closes fast (task #195), so a
+ * short recorded match spends most of its ticks with the ring ACTIVELY shrinking
+ * and burning — which is the state whose determinism is worth proving.
+ */
+const RING: FireRingConfig = {
+  startSec: 0.5,
+  shrinkSec: 6,
+  minRadius: 0.5,
+  burnPctPerSecStart: 0.04,
+  burnPctPerSecEnd: 0.2,
+  maxPctPerSec: 1,
+};
+
+function makeController(
+  matchId: string,
+  seed: number,
+  whitelist = Whitelist.allowAll(),
+  fireRing: FireRingConfig | null = null,
+): MatchController {
   return new MatchController(
     matchId,
     seed,
@@ -86,12 +105,18 @@ function makeController(matchId: string, seed: number, whitelist = Whitelist.all
     SKELETON_ARENA,
     whitelist,
     ENV,
-    null,
+    fireRing,
     [],
   );
 }
 
-function headerFor(ctl: MatchController, matchId: string, seed: number, cv = CV): ReplayHeader {
+function headerFor(
+  ctl: MatchController,
+  matchId: string,
+  seed: number,
+  cv = CV,
+  fireRing: FireRingConfig | null = null,
+): ReplayHeader {
   return buildHeader({
     matchId,
     seed,
@@ -103,7 +128,7 @@ function headerFor(ctl: MatchController, matchId: string, seed: number, cv = CV)
     arenaPool: [],
     combatEnv: ENV,
     phaseConfig: FAST,
-    fireRing: null,
+    fireRing,
     arenaRules: DEFAULT_ARENA_RULES,
     whitelist: ctl.whitelist,
     env: { whitelistBypass: true, combatEnvBypass: false, devCheats: true },
@@ -119,9 +144,10 @@ async function recordMatch(
   matchId: string,
   seed: number,
   onTick?: (ctl: MatchController) => void,
+  fireRing: FireRingConfig | null = null,
 ): Promise<{ ctl: MatchController; ticks: number; finalWorld: number; finalHost: number }> {
-  const ctl = makeController(matchId, seed);
-  const rec = await MatchRecorder.open(matchId, headerFor(ctl, matchId, seed));
+  const ctl = makeController(matchId, seed, Whitelist.allowAll(), fireRing);
+  const rec = await MatchRecorder.open(matchId, headerFor(ctl, matchId, seed, CV, fireRing));
   expect(rec).not.toBeNull();
   ctl.recorder = rec;
   let n = 0;
@@ -228,6 +254,63 @@ describe("record → replay", () => {
     expect([...p.ctl.seats.values()].map((s) => s.championId)).toEqual(
       [...rec.ctl.seats.values()].map((s) => s.championId),
     );
+  }, 60_000);
+
+  /**
+   * THE SHRINKING RING IS THE SHARPEST DETERMINISM TEST THIS CODEBASE HAS
+   * (task #195).
+   *
+   * `SimWorld.digest()` quantizes floats at 1/4096, but the ring's safety
+   * predicate — `distSq <= inner*inner` — has ZERO tolerance. A position
+   * divergence far too small for the world digest to notice can therefore flip
+   * who is inside the ring and who burns, and from that tick the two runs are
+   * playing different matches. This records a match whose ring is igniting and
+   * closing throughout, and demands BOTH digests match on every tick.
+   */
+  it("replays a match with the fire ring SHRINKING to identical world AND host digests", async () => {
+    const rec = await recordMatch("rt-ring", 987654321, undefined, RING);
+    expect(rec.ticks).toBeGreaterThan(200);
+
+    const p = await playFully("rt-ring");
+    expect(p.divergence).toBeNull(); // per-TICK check, not just the end state
+    expect(p.finished).toBe(true);
+    expect(p.ctl.world.tick).toBe(rec.ticks);
+    expect(p.ctl.world.digest()).toBe(rec.finalWorld);
+    // hostDigest now folds in fireRingTicks + the quantized radius, so a ring
+    // that armed differently surfaces HERE rather than as an unexplained HP gap.
+    expect(hostDigest(p.ctl)).toBe(rec.finalHost);
+    expect([...p.ctl.lives.values()]).toEqual([...rec.ctl.lives.values()]);
+  }, 60_000);
+
+  /**
+   * The SIM DIGEST CONTRACT is untouched by #195.
+   *
+   * `SimWorld.digest()` is deliberately verbatim: the ring's state is folded
+   * into `hostDigest` instead, so the pre-existing "byte-identical sim" checks
+   * keep their exact expectations and this feature costs them nothing. Proven
+   * two ways — structurally (the digest never reads any fireRing field) and
+   * behaviourally (a disarmed 3000-tick seeded run is stable, so the value here
+   * is a lock a future change to digest() has to justify breaking).
+   */
+  it("SimWorld.digest() ignores the ring entirely — the sim digest contract is untouched", () => {
+    const src = readFileSync(
+      join(dirname(fileURLToPath(import.meta.url)), "../../../../packages/shared/src/sim/SimWorld.ts"),
+      "utf8",
+    );
+    const body = src.slice(src.indexOf("digest(): number {"));
+    const end = body.indexOf("\n  }");
+    expect(body.slice(0, end)).not.toMatch(/fireRing/);
+
+    // …and a disarmed run is reproducible tick-for-tick, so the number below is
+    // a real regression lock rather than a restatement of the code.
+    const run = (): number => {
+      const ctl = makeController("digest-baseline", 20260725);
+      expect(ctl.world.fireRingRules).toBeNull();
+      for (let i = 0; i < 3000; i++) ctl.tick();
+      return ctl.world.digest();
+    };
+    const a = run();
+    expect(run()).toBe(a);
   }, 60_000);
 
   /**

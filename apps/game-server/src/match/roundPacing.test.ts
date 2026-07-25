@@ -36,11 +36,17 @@ const CFG = {
   resolutionTicks: 60,
 };
 
-/** A fast-igniting ring: closes in 0.3 s into combat, ramps every 0.2 s. */
+/**
+ * A fast ring (#195 shape): ignites 0.3 s into combat and closes over 0.5 s, so
+ * champions standing anywhere in the zone are outside it almost immediately and
+ * the whole arm→ignite→shrink→burn→settle path runs inside a short test.
+ */
 const FIRE_RING: FireRingConfig = {
   startSec: 0.3, // 9 ticks @30Hz
-  stepSec: 0.2, //  6 ticks per ramp step
-  pctPerStep: 0.05,
+  shrinkSec: 0.5, // 15 ticks to fully closed
+  minRadius: 0.5,
+  burnPctPerSecStart: 0.3,
+  burnPctPerSecEnd: 0.6,
   maxPctPerSec: 1,
 };
 

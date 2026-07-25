@@ -58,6 +58,31 @@ import { pushOutOfObstacle, clampToBoundary } from "../collision/resolve";
 import { recordRevive } from "../stats/matchStats";
 import { spawnReviveCircle, reviveCircleOfTeam, teamAliveInZone } from "../revive";
 import type { ReviveRules } from "../revive";
+import { fireRingRadius } from "../fireRing";
+
+/**
+ * The fire ring's INNER safe radius in `zone` right now, for a body of
+ * `bodyRadius` — or null when no ring is armed / it has not ignited yet.
+ *
+ * `<= 0` is the fully-closed ring (#195): there is no survivable space at all,
+ * so reviving anyone is a griefing loop — they stand up and burn at 20 %/s with
+ * nowhere to go, dropping a fresh circle, forever. Live circles expire and no
+ * new one may drop from that moment.
+ */
+function fireRingInnerRadius(world: SimWorld, zone: number, bodyRadius: number): number | null {
+  const rules = world.fireRingRules;
+  if (!rules || world.fireRingTicks < 0) return null;
+  if (world.fireRingTicks < rules.startTicks) return null;
+  const zoneDef = world.arena.zones[zone] ?? world.arena.zones[0];
+  if (!zoneDef) return null;
+  const r = fireRingRadius(rules, world.fireRingTicks - rules.startTicks, zoneDef.boundaryRadius);
+  return r - bodyRadius;
+}
+
+/** Body radius of an entity, defaulting to the champion collision radius. */
+function bodyRadiusOf(world: SimWorld, id: EntityId): number {
+  return world.transform.get(id)?.radius ?? 0.6;
+}
 
 /** Is this entity under hard CC (stun / root / knockdown) right now? */
 function hardCCd(world: SimWorld, id: EntityId): boolean {
@@ -101,6 +126,10 @@ function spawnCirclesForDeaths(world: SimWorld, rules: ReviveRules): void {
     if (reviveCircleOfTeam(world, team.teamId, t.zone) !== null) continue;
     // nobody left to walk to it — the circle would be extinguished next tick
     if (teamAliveInZone(world, team.teamId, t.zone) === 0) continue;
+    // the fire ring has closed completely (#195): a revive into a total burn is
+    // a griefing loop, so refuse to drop the circle at all.
+    const inner = fireRingInnerRadius(world, t.zone, t.radius);
+    if (inner !== null && inner <= 0) continue;
 
     spawnReviveCircle(world, {
       ownerId: victim,
@@ -136,6 +165,13 @@ function updateCircle(world: SimWorld, rules: ReviveRules, id: EntityId): void {
   //   unconditionally; extinguish before the host resolves the duel.
   if (teamAliveInZone(world, rc.teamId, rc.zone) === 0) {
     despawn(world, id, rc, ct.pos, "team-wiped");
+    return;
+  }
+  // — #195: the fire ring has closed to nothing. Nobody can stand anywhere
+  //   safely, so a completed revive would only feed the burn. Extinguish.
+  const innerNow = fireRingInnerRadius(world, rc.zone, ownerT.radius);
+  if (innerNow !== null && innerNow <= 0) {
+    despawn(world, id, rc, ct.pos, "fire-ring-closed");
     return;
   }
 
@@ -242,6 +278,23 @@ function completeRevive(
   const body = { pos: { x: chT.pos.x, z: chT.pos.z }, radius: ownerT.radius };
   for (const ob of zoneDef.obstacles) pushOutOfObstacle(body, ob);
   clampToBoundary(body, zoneDef);
+  // #195: a champion may not come back OUTSIDE the fire ring — that is an
+  // instant burn they never chose. Pull the spawn point toward the zone centre
+  // until the whole body sits inside, with 0.1 u of slack so the very next tick
+  // of shrink does not immediately push them out again.
+  const inner = fireRingInnerRadius(world, rc.zone, ownerT.radius);
+  if (inner !== null && inner > 0) {
+    const maxD = inner - 0.1;
+    const d2 = distSq(body.pos, zoneDef.center);
+    if (maxD > 0 && d2 > maxD * maxD) {
+      const d = Math.sqrt(d2);
+      const s = d > 0 ? maxD / d : 0;
+      body.pos = {
+        x: zoneDef.center.x + (body.pos.x - zoneDef.center.x) * s,
+        z: zoneDef.center.z + (body.pos.z - zoneDef.center.z) * s,
+      };
+    }
+  }
 
   ownerT.pos = body.pos;
   ownerT.zone = rc.zone;

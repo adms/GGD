@@ -14,21 +14,38 @@ import { zAugmentTier } from "./augment";
 import { COMBAT_ENV_KEYS, type CombatEnvKey } from "../../sim/combatEnv";
 
 /**
- * Fire-ring (火圈 / 火環) schedule — the round-pacing hazard (task #132). Lives
- * inside `config.match@1`'s `match` block next to `combatMaxSec`. Percentages
- * are fractions of each victim's OWN maxHealth; the burn ignores armor/MR (it
- * is TRUE damage) and the combat-env damage knob. `startSec` doubles as the
- * intended round length (single source of truth) — see the field on the match
- * object. Optional + additive: absent = no ring (legacy behavior).
+ * Fire-ring (火圈 / 火環) schedule — the round-pacing hazard (tasks #132/#195).
+ * Lives inside `config.match@1`'s `match` block next to `combatMaxSec`.
+ *
+ * #195 turned the ring from a global burn timer into a SHRINKING ring: it
+ * ignites `startSec` combat-elapsed seconds in, contracts from the zone
+ * boundary to `minRadius` over `shrinkSec`, and burns only the champions
+ * OUTSIDE it, at a rate ramping `burnPctPerSecStart` → `burnPctPerSecEnd` with
+ * the shrink progress. `stepSec`/`pctPerStep` are gone with the staircase they
+ * described — the block is `.strict()`, so an old doc fails loudly instead of
+ * silently arming a ring with no shrink.
+ *
+ * Percentages are fractions of each victim's OWN maxHealth; the burn ignores
+ * armor/MR (it is TRUE damage) and the combat-env damage knob. Optional +
+ * additive: absent = no ring (legacy behavior).
  */
 export const zFireRingConfig = z
   .object({
-    /** combat-elapsed seconds until the ring ignites (== intended round length) */
+    /** combat-elapsed seconds until the ring ignites (the round-pacing knob) */
     startSec: z.number().positive(),
-    /** ramp step length — the "per second" of the 1%/s, 2%/s … escalation */
-    stepSec: z.number().positive(),
-    /** maxHealth fraction ADDED to the per-second burn rate each step (0.01 = +1%/s) */
-    pctPerStep: z.number().min(0).max(1),
+    /** seconds the ring takes to close from the zone boundary to `minRadius` */
+    shrinkSec: z.number().positive().default(20),
+    /**
+     * the fully-closed radius. Deliberately BELOW a champion's collision radius
+     * (0.6), so once closed the whole-body-inside test is false for everyone —
+     * 「沒有生存空間」 with no second rule. 0 would collapse the visual to a
+     * point and make "dist exactly 0" a measure-zero safe spot.
+     */
+    minRadius: z.number().nonnegative().default(0.5),
+    /** per-second burn (fraction of maxHealth) at ignition, outside the ring */
+    burnPctPerSecStart: z.number().min(0).max(1).default(0.04),
+    /** per-second burn (fraction of maxHealth) once the ring is fully closed */
+    burnPctPerSecEnd: z.number().min(0).max(1).default(0.2),
     /** safety cap on the per-second burn rate (fraction of maxHealth); absent = uncapped */
     maxPctPerSec: z.number().min(0).max(1).optional(),
   })
@@ -38,9 +55,11 @@ export type FireRingConfig = z.infer<typeof zFireRingConfig>;
 
 /** Contract defaults for the fireRing block (dev cheats / fallbacks). */
 export const DEFAULT_FIRE_RING_CONFIG: FireRingConfig = {
-  startSec: 180,
-  stepSec: 1,
-  pctPerStep: 0.01,
+  startSec: 60,
+  shrinkSec: 20,
+  minRadius: 0.5,
+  burnPctPerSecStart: 0.04,
+  burnPctPerSecEnd: 0.2,
   maxPctPerSec: 1,
 };
 
@@ -67,17 +86,20 @@ export const zConfigMatchDoc = z
         /**
          * HARD combat backstop: the phase force-ends here (PhaseMachine). It is
          * NOT the intended round length — the fire ring (below) closes in first
-         * and settles a stalemate well before this cap. Must be >= the ring
-         * start so the ring always has room to do its work (refine below).
+         * and settles a stalemate well before this cap. Must leave room for the
+         * WHOLE ring (`startSec + shrinkSec`), not just its ignition: a ring
+         * that is still shrinking when the phase force-ends never gets to
+         * finish anyone (refine below).
          */
         combatMaxSec: z.number().positive(),
         /**
-         * Fire ring (火圈 / 火環, task #132) — the round-pacing accelerator.
+         * Fire ring (火圈 / 火環, tasks #132/#195) — the round-pacing ring.
          * `startSec` is the SINGLE SOURCE OF TRUTH for round length: at that
-         * combat-elapsed time the ring closes in and burns every living
-         * champion with an escalating, defence-ignoring %-HP true-damage ramp
-         * (1%/s at t+1s, 2%/s at t+2s …), so a normal round settles by ~3-4 min
-         * and stalemates are punished. Optional + additive: an absent block =
+         * combat-elapsed time the ring appears at the zone boundary and then
+         * contracts over `shrinkSec` to `minRadius`, burning everyone OUTSIDE
+         * it with a defence-ignoring %-HP true-damage rate that ramps with the
+         * shrink. By the end there is no survivable space at all, so a
+         * stalemate cannot outlast it. Optional + additive: an absent block =
          * no ring (legacy behavior). Consumed by the sim via
          * `fireRingRulesFromConfig` → `beginCombatFireRing`.
          */
@@ -85,9 +107,9 @@ export const zConfigMatchDoc = z
         resolutionSec: z.number().positive(),
       })
       .strict()
-      .refine((m) => !m.fireRing || m.fireRing.startSec <= m.combatMaxSec, {
+      .refine((m) => !m.fireRing || m.fireRing.startSec + m.fireRing.shrinkSec <= m.combatMaxSec, {
         message:
-          "match.fireRing.startSec must be <= match.combatMaxSec (the ring must ignite before the hard combat backstop)",
+          "match.fireRing.startSec + shrinkSec must be <= match.combatMaxSec (the ring must finish closing before the hard combat backstop)",
         path: ["fireRing", "startSec"],
       }),
     economy: z
