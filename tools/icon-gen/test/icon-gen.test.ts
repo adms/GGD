@@ -163,8 +163,17 @@ describe.runIf(pyOk)("icon-gen runner money gates", () => {
 
   it("refuses a live run that would exceed the spend ceiling", () => {
     cover("icon-gen-dry-run");
+    // The ceiling is proven against the LIVE estimate, not a hard-coded batch
+    // size. Once coverage is complete the generate queue is empty and the
+    // estimate is $0.00, so a fixed tiny ceiling like 0.01 can never be
+    // exceeded and the gate looks broken when it is merely idle. Read the real
+    // estimate from a dry run and set the ceiling just below it, so the same
+    // assertion exercises the guard whether the queue costs $1.83 or $0.00.
+    const dry = run(GEN, ["--dry-run", "--tier", "1"]);
+    const cost = Number(dry.out.match(/COST\s+\$(\d+\.\d\d)/)?.[1] ?? "0");
+    const ceiling = (cost - 0.01).toFixed(2); // strictly below the estimate
     const { out, code } = run(GEN, [
-      "--tier", "1", "--i-have-confirmed-pricing", "--max-spend", "0.01",
+      "--tier", "1", "--i-have-confirmed-pricing", "--max-spend", ceiling,
     ]);
     expect(code).not.toBe(0);
     expect(out).toMatch(/exceeds --max-spend/);
