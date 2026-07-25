@@ -58,15 +58,33 @@ Notes:
   small amounts (importer read two unit instances of the one hero). Stats are not
   identity, so they fold.
 
-## Recommendation — ACT: none (report only)
+## Re-verification (2026-07-25, task #113 second pass)
+
+The verdict table above was re-checked independently against the **standalone**
+ability docs (`content/abilities/godie-<cid>.<slot>.json`), which is where the real
+kit + hero number live — the champion doc's `abilities` field is only the slot list
+`["Q","W","E","R"]`. For every one of the 14 pairs, BOTH members parse the **same
+hero 編號** and carry **byte-identical** `passive` / `q` / `w` / `e` / `r` / `ex`
+ability names. 黑化Saber `godie-e00q` re-confirmed as hero **69** (kit `69-001 黑化之力`
+/ `69-002 固有結界-黑洞`), wholly distinct from Saber's hero 20 — correctly NOT in the
+Saber group. So all 14 verdicts stand: **DUPLICATE (one character), none ambiguous.**
+`packages/shared/src/content/championIdentity.test.ts` (12 tests) passes green.
+
+## Recommendation — ACT: none (report only, audit)
 
 **No champion content doc was deleted or edited.** Although all 14 are unambiguous
 same-character duplicates, hand-removing a doc is the wrong instrument here:
 
-1. **The runtime already folds them.** `distinctCharacters()` partitions the roster with
-   `isSameCharacter`; the login strip's `SHARED_PORTRAIT_GROUPS`
-   (`apps/client/src/ui/platform/marqueeRoster.ts:125-149`) enumerates all 14 pairs and
-   hides the duplicate *tile*. The dedup is a live, tested behaviour, not a missing one.
+1. **The runtime already folds them.** The authoritative dedup is
+   `distinctCharacters()` partitioning the roster with `isSameCharacter`
+   (same hero number + same name ⇒ one character) — this folds **all 14** pairs,
+   including 草泥馬 (h02u/h02v) and 傑 富力士 (u034/ucrl). The login strip's
+   `SHARED_PORTRAIT_GROUPS` (`apps/client/src/ui/platform/marqueeRoster.ts:125-149`)
+   is a *narrower, cosmetic* layer that hides a duplicate *tile* only when two ids
+   render the **same portrait bitmap**; it lists **12 of the 14** pairs — the two
+   omitted pairs have distinct portrait art, so there is no shared-picture tile to
+   hide, and they are still deduped at the identity layer above. Either way the dedup
+   is a live, tested behaviour, not a missing one.
 2. **Project policy keeps every doc.** `apps/admin/src/curation.ts` deliberately does NOT
    dedupe — every authored champion stays individually listable/curatable — and the
    canonical survivor is chosen by the map's own random-hero pool (`compareCanonical`),
