@@ -290,6 +290,21 @@ export class ClipAnimator {
     return this.frozen;
   }
 
+  /**
+   * STOP EVERY CLIP without destroying anything (task #220 corpse dissolve).
+   * A vanished body is invisible but its AnimationGroups are NOT nodes — a
+   * still-"playing" death clip keeps costing per-frame work in the scene's
+   * animatables for a model nobody can see. `current` is cleared so a later
+   * `play()` (the body was revived) starts the state clip again instead of
+   * short-circuiting on the idempotence check. `dispose()` remains the only
+   * thing that frees the groups.
+   */
+  stopAll(): void {
+    for (const g of this.groups) g.stop();
+    this.current = null;
+    this.pending = null;
+  }
+
   /** Restart the one-shot for a re-triggered pulse (attack spam, etc.). */
   restart(state: AnimState): void {
     if (state !== this.current || LOOPING[state]) return;

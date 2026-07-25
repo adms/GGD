@@ -34,6 +34,7 @@ import {
   type Facing2,
 } from "../math/motion";
 import { FLASH_ALPHA, FLASH_MS, hitstopShiver } from "../combatFeedback";
+import { dissolveFrame } from "../deathDissolve";
 import { glbYawOffset } from "./glbFacing";
 import { castFollowThroughMs, castStrikeFractionFor } from "../anim/castStrike";
 
@@ -130,6 +131,21 @@ export class ChampionView {
   /** true while the body is offset by the hitstop micro-shiver (needs a reset). */
   private shiverActive = false;
   private disposed = false;
+  /**
+   * CORPSE DISSOLVE (playtest directive #220). `deathAtMs` is armed by the sim's
+   * `death` EVENT (via `noteDeath`), never by `alive === false` — the flag is
+   * also false in champ-select, through the whole intermission, for a bye/parked
+   * seat and during settlement, and dissolving those bodies would delete every
+   * champion on screen outside combat. Null = this body never died (so it never
+   * dissolves, whatever its alive flag says).
+   */
+  private deathAtMs: number | null = null;
+  /** true while a claimable revive circle exists for this body's seat (#84/#196). */
+  private reviveProtected = false;
+  /** true once the dissolve has written rise/visibility (so a reset is owed). */
+  private dissolveDirty = false;
+  /** true once the body is fully gone; cleared on the revive/respawn edge. */
+  private vanishedFlag = false;
   /** smoothed facing state (unit vectors); yaw eases cur→target every frame */
   private curFacing: Facing2 = { x: 0, z: 1 };
   private targetFacing: Facing2 = { x: 0, z: 1 };
@@ -405,9 +421,122 @@ export class ChampionView {
     this.anim.cancel("cast");
   }
 
+  /**
+   * The sim says this champion just DIED (`death` event) — start the #220
+   * corpse clock. Idempotent within one death: a duplicated/replayed event must
+   * not restart the 3 s lie-down. Re-arming after a revive is what the
+   * `alive` edge in `updateDissolve` clears the state for.
+   */
+  noteDeath(nowMs: number): void {
+    if (this.deathAtMs === null) this.deathAtMs = nowMs;
+  }
+
+  /**
+   * REVIVE EXEMPTION (#220): while a claimable revive circle exists for this
+   * body's seat, the corpse must NOT dissolve — the circle is the anchor a
+   * teammate channels on (#84/#206) and #196 gave it no expiry, so the body has
+   * to stay put as the thing being rescued. Pushed in every frame by the
+   * registry (never latched), because the `death` event and the snapshot patch
+   * that adds the circle can land in either order.
+   */
+  setReviveProtected(protectedNow: boolean): void {
+    this.reviveProtected = protectedNow;
+  }
+
+  /** True once the corpse has fully risen and faded out (#220). */
+  get vanished(): boolean {
+    return this.vanishedFlag;
+  }
+
+  /** Milliseconds since the arming `death` event, or null if this body never died. */
+  deathElapsedMs(nowMs: number): number | null {
+    return this.deathAtMs === null ? null : nowMs - this.deathAtMs;
+  }
+
+  /**
+   * CORPSE DISSOLVE (#220) — lie 3 s, then rise + fade + vanish. Returns true
+   * once the body is gone, so `update` can skip the rest of the frame's work.
+   *
+   * The clock is ABSOLUTE (`nowMs - deathAtMs`), never dt-accumulated: the
+   * draw-distance cull skips `update` entirely for far champions, so an
+   * accumulated clock would freeze while culled.
+   *
+   * While a revive is still claimable the death timestamp is RE-ANCHORED to now
+   * instead of the phase being latched — that both holds the body at the
+   * lie-down stage for as long as the circle burns AND self-heals a body that
+   * had already started rising when protection (re)appeared, since
+   * `dissolveFrame(0)` restores full opacity and zero rise.
+   */
+  private updateDissolve(state: AnimState, nowMs: number): boolean {
+    if (state !== "death") {
+      // alive again (revive completed / next round spawned this seat) — the same
+      // edge #85 disarms on. Undo everything the dissolve wrote.
+      if (this.deathAtMs !== null || this.dissolveDirty) this.resetDissolve();
+      return false;
+    }
+    // dead but never armed by a `death` event: a parked/bye/champ-select seat.
+    // It lies there exactly as it did before #220 — it did not die.
+    if (this.deathAtMs === null) return false;
+    // gone and staying gone (a circle cannot spawn for a corpse after the death
+    // tick, so protection can never reappear) — cheapest possible frame.
+    if (this.vanishedFlag && !this.reviveProtected) return true;
+    if (this.reviveProtected) this.deathAtMs = nowMs; // hold at the lie-down stage
+    const f = dissolveFrame(nowMs - this.deathAtMs);
+    if (f.phase === "lying" && !this.dissolveDirty && !this.vanishedFlag) return false; // free
+    this.root.position.y = f.riseY;
+    for (const m of this.flashMeshes) m.visibility = f.visibility;
+    this.dissolveDirty = f.phase !== "lying";
+    if (f.phase === "vanished") {
+      if (!this.vanishedFlag) this.setBodyVisible(false, nowMs);
+      return true;
+    }
+    if (this.vanishedFlag) this.setBodyVisible(true, nowMs); // protection reappeared
+    return false;
+  }
+
+  /** Enable/disable the body nodes + clips at the vanish (and on the way back). */
+  private setBodyVisible(visible: boolean, nowMs: number): void {
+    this.vanishedFlag = !visible;
+    // Toggle the BODY nodes, never `root`: the registry's draw-distance cull owns
+    // `root.setEnabled` and would re-enable a vanished corpse the moment it came
+    // back into range. The ring/shadow are already off for the dead (see below);
+    // re-enabling them here is harmless because the death branch re-hides them.
+    this.bodyRoot.setEnabled(visible);
+    this.glbRoot?.setEnabled(visible);
+    if (!visible) {
+      this.teamRing.setEnabled(false);
+      this.blobShadow.setEnabled(false);
+      // An AnimationGroup is NOT a node: a hidden body whose death clip is still
+      // "playing" keeps costing per-frame work in scene.animationGroups. Stop
+      // them all; `play()` restarts cleanly if this body is ever revived.
+      this.clipAnimator?.stopAll();
+      // drop the hit-flash overlay on the way out (nothing left to flash)
+      this.flashUntilMs = 0;
+      this.applyFlash(nowMs);
+    }
+  }
+
+  /** Undo every write the dissolve made — the body is alive/rendered again. */
+  private resetDissolve(): void {
+    this.deathAtMs = null;
+    this.root.position.y = 0;
+    if (this.dissolveDirty) {
+      for (const m of this.flashMeshes) m.visibility = 1;
+      this.dissolveDirty = false;
+    }
+    if (this.vanishedFlag) {
+      this.setBodyVisible(true, 0);
+      this.teamRing.setEnabled(true);
+      this.blobShadow.setEnabled(true);
+    }
+  }
+
   /** Advance the visual animation for this frame. */
   update(state: AnimState, nowMs: number, dtMs: number, speedUnitsPerSec = 0): void {
     this.stepFacing(dtMs); // yaw smoothing — model-source independent
+    // #220: 3 s on the ground, then rise + fade. Once vanished there is nothing
+    // left to animate, so the rest of the frame is skipped entirely.
+    if (this.updateDissolve(state, nowMs)) return;
     const frozen = nowMs < this.hitstopUntilMs; // hitstop window
     this.applyHitstopShiver(nowMs, frozen); // 破碎 buzz on the frozen body
     if (this.clipAnimator?.hasClips) {
@@ -642,6 +771,13 @@ export class ChampionView {
         this.clipAnimator = new ClipAnimator(inst.animationGroups, doc.clipMap);
         // hide the procedural fallback
         for (const p of this.proceduralParts) p.setEnabled(false);
+        // #220: the load can resolve AFTER this body already dissolved (a death
+        // early in a match, on a cold asset cache). Adopt the corpse's current
+        // dissolve state instead of popping a fully opaque model back on screen.
+        if (this.vanishedFlag) {
+          glbRoot.setEnabled(false);
+          this.clipAnimator.stopAll();
+        }
       })
       .catch((err) => {
         /* keep the procedural figure */

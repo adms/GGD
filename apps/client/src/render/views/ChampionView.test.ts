@@ -11,6 +11,7 @@ import { Scene } from "@babylonjs/core/scene";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
+import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { RawTexture } from "@babylonjs/core/Materials/Textures/rawTexture";
 import { AssetContainer } from "@babylonjs/core/assetContainer";
@@ -634,6 +635,126 @@ describe("ChampionView height-normalization (task #150)", () => {
     await Promise.resolve();
     expect(view.hasGlb).toBe(true);
     expect(view.declaredScale).toBe(1.23); // fell back to the declared scale
+    view.dispose();
+  });
+});
+
+/**
+ * revive-dissolve-view (playtest directive #220): a champion that DIED lies on
+ * the ground for 3 s, then rises while fading, then is fully gone — and never
+ * dissolves at all while its revive circle is still claimable. Headless, so the
+ * body under test is the PROCEDURAL voxel figure (loadModels is off in CI).
+ */
+describe("ChampionView corpse dissolve (#220)", () => {
+  const bodyMeshes = (v: ChampionView): AbstractMesh[] =>
+    v.root.getChildMeshes(false).filter((m) => /-(torso|head|armL|armR|legL|legR)$/.test(m.name));
+
+  it("lies for 3 s, then rises + fades, then vanishes", () => {
+    cover("revive-dissolve-view");
+    const view = new ChampionView(scene, 2201, "champ.sela", 0);
+    view.setPose(3, 4, 0, 1);
+    view.noteDeath(1000);
+
+    // t+2.9 s: still on the ground, still opaque — 「倒在地上」
+    view.update("death", 3900, 16);
+    expect(view.root.position.y).toBe(0);
+    expect(view.vanished).toBe(false);
+    for (const m of bodyMeshes(view)) expect(m.visibility).toBe(1);
+
+    // t+3.5 s: rising and half-transparent
+    view.update("death", 4500, 16);
+    expect(view.root.position.y).toBeGreaterThan(0);
+    expect(view.vanished).toBe(false);
+    for (const m of bodyMeshes(view)) {
+      expect(m.visibility).toBeLessThan(1); // < 1 → Babylon alpha-blends it
+      expect(m.visibility).toBeGreaterThan(0);
+    }
+
+    // t+5 s: gone. Nothing visible, and the ROOT is left enabled — the registry's
+    // draw-distance cull owns root.setEnabled and would undo a vanish written there.
+    view.update("death", 20000, 16);
+    expect(view.vanished).toBe(true);
+    expect(view.root.isEnabled(false)).toBe(true);
+    for (const m of bodyMeshes(view)) expect(m.visibility).toBe(0);
+    expect(bodyMeshes(view).every((m) => !m.isEnabled())).toBe(true);
+    view.dispose();
+  });
+
+  it("NEVER dissolves while a revive circle is still claimable, and resumes after", () => {
+    cover("revive-dissolve-view");
+    const view = new ChampionView(scene, 2202, "champ.sela", 0);
+    view.setPose(0, 0, 0, 1);
+    view.noteDeath(0);
+
+    // 30 s of protected corpse (a circle has no expiry since #196): the body must
+    // stay exactly where the teammate is channelling, fully opaque.
+    for (let t = 0; t <= 30000; t += 250) {
+      view.setReviveProtected(true);
+      view.update("death", t, 250);
+    }
+    expect(view.vanished).toBe(false);
+    expect(view.root.position.y).toBe(0);
+    for (const m of bodyMeshes(view)) expect(m.visibility).toBe(1);
+
+    // the rescue is spent / the circle ended → the 3 s clock starts from THERE
+    view.setReviveProtected(false);
+    view.update("death", 32000, 16); // only 2 s later: still lying
+    expect(view.root.position.y).toBe(0);
+    view.update("death", 33500, 16); // 3.5 s later: rising
+    expect(view.root.position.y).toBeGreaterThan(0);
+    view.update("death", 40000, 16);
+    expect(view.vanished).toBe(true);
+    view.dispose();
+  });
+
+  it("does not dissolve a body that never got a death EVENT (parked/bye seat)", () => {
+    cover("revive-dissolve-view");
+    // `alive === false` is also champ-select, the whole intermission, a bye seat
+    // and settlement — dissolving those would empty the screen outside combat.
+    const view = new ChampionView(scene, 2203, "champ.sela", 0);
+    view.setPose(0, 0, 0, 1);
+    for (let t = 0; t <= 20000; t += 500) view.update("death", t, 500);
+    expect(view.vanished).toBe(false);
+    expect(view.root.position.y).toBe(0);
+    for (const m of bodyMeshes(view)) expect(m.visibility).toBe(1);
+    view.dispose();
+  });
+
+  it("a revive restores the body completely (and re-arms for the next death)", () => {
+    cover("revive-dissolve-view");
+    const view = new ChampionView(scene, 2204, "champ.sela", 0);
+    view.setPose(0, 0, 0, 1);
+    view.noteDeath(0);
+    view.update("death", 9000, 16); // fully vanished
+    expect(view.vanished).toBe(true);
+
+    view.update("idle", 9016, 16); // revived → alive state
+    expect(view.vanished).toBe(false);
+    expect(view.root.position.y).toBe(0);
+    for (const m of bodyMeshes(view)) {
+      expect(m.visibility).toBe(1);
+      expect(m.isEnabled()).toBe(true);
+    }
+    expect(view.deathElapsedMs(9016)).toBeNull(); // clock cleared
+
+    // dies again → the whole cycle runs again from the new event
+    view.noteDeath(10000);
+    view.update("death", 12000, 16);
+    expect(view.root.position.y).toBe(0); // still inside the new 3 s
+    view.update("death", 16000, 16);
+    expect(view.vanished).toBe(true);
+    view.dispose();
+  });
+
+  it("a duplicated death event does not restart the lie-down", () => {
+    cover("revive-dissolve-view");
+    const view = new ChampionView(scene, 2205, "champ.sela", 0);
+    view.setPose(0, 0, 0, 1);
+    view.noteDeath(1000);
+    view.noteDeath(3500); // replayed / duplicated packet
+    expect(view.deathElapsedMs(4600)).toBe(3600); // measured from the FIRST one
+    view.update("death", 4600, 16);
+    expect(view.root.position.y).toBeGreaterThan(0);
     view.dispose();
   });
 });

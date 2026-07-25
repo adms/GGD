@@ -325,6 +325,15 @@ export class GameApp {
   /** reused per-frame entity snapshot pool (zero hot-path allocation). */
   private readonly entityPool: EntityViewState[] = [];
   private readonly entityScratch: EntityViewState[] = [];
+  /**
+   * Reused: seats that own a LIVE revive circle this frame (task #220). Filled
+   * by `collectEntities` in the same pass that decodes kind 3, and handed to
+   * `views.sync` so a corpse whose rescue is still claimable does not dissolve.
+   * Computed here rather than in the registry because `SyncArgs.entities` is an
+   * `Iterable` that a pre-pass would consume. Read-only downstream — nothing
+   * about the sim's revive rules is decided here.
+   */
+  private readonly reviveOwnerSeats = new Set<number>();
   /** entity id → last tick's CC bitmask, for the contextual status-voice edge. */
   private readonly prevEntityFlags = new Map<number, number>();
   /**
@@ -1121,6 +1130,10 @@ export class GameApp {
         },
         nowMs,
         dtMs,
+        // #220 corpse-dissolve exemption — filled by collectEntities above, in
+        // the same pass, so it is THIS frame's truth (frameBus.reviveCircles is
+        // one frame stale here: updateFrameBus runs after views.sync).
+        reviveSeats: this.reviveOwnerSeats,
         // cull champions beyond the draw distance from the followed champion
         cull:
           center && drawDist < DRAW_DISTANCE_MAX
@@ -1312,6 +1325,7 @@ export class GameApp {
   private collectEntities(state: MatchState): EntityViewState[] {
     const scratch = this.entityScratch;
     scratch.length = 0;
+    this.reviveOwnerSeats.clear(); // task #220 — refilled from this frame's kind 3s
     let i = 0;
     state.entities.forEach((es) => {
       let e = this.entityPool[i];
@@ -1343,6 +1357,11 @@ export class GameApp {
         rv.radius = es.shield > 0 ? es.shield : 2;
         rv.channelling = (es.flags & ENTITY_FLAG.CHANNELLING) !== 0;
         rv.contested = (es.flags & ENTITY_FLAG.CONTESTED) !== 0;
+        // #220: a circle's seatId IS the dead owner's seat (there is no ownerId
+        // on the wire), and #196 gave the circle no expiry — so its PRESENCE is
+        // exactly "that death is still claimable". The corpse wearing this seat
+        // must not dissolve while it is here.
+        if (es.seatId >= 0) this.reviveOwnerSeats.add(es.seatId);
       } else if (e.revive) {
         e.revive = undefined; // pooled slot reused by a different kind
       }
