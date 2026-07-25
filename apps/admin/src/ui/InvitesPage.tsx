@@ -286,6 +286,7 @@ export function InvitesPage(): React.JSX.Element {
                 <tr style={{ color: TEXT_DIM, textAlign: "left" }}>
                   <Th>邀請碼</Th>
                   <Th>備註</Th>
+                  <Th>由誰產生</Th>
                   <Th>狀態</Th>
                   <Th>使用者</Th>
                   <Th>到期</Th>
@@ -312,6 +313,23 @@ export function InvitesPage(): React.JSX.Element {
                         </code>
                       </Td>
                       <Td>{r.note || "—"}</Td>
+                      <Td>
+                        {r.source === "referral" ? (
+                          <span>
+                            <Badge color={ACCENT}>玩家推薦</Badge>
+                            {r.note.includes("·") ? (
+                              <>
+                                <br />
+                                <span style={{ fontSize: 11, color: TEXT_DIM }}>
+                                  {r.note.split("·").pop()?.trim()}
+                                </span>
+                              </>
+                            ) : null}
+                          </span>
+                        ) : (
+                          <span style={{ fontSize: 12, color: TEXT_DIM }}>後台</span>
+                        )}
+                      </Td>
                       <Td>
                         <Badge color={TONE[label.tone]}>{label.text}</Badge>
                       </Td>

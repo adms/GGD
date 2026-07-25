@@ -43,9 +43,11 @@ func TestPersonalReferralCode(t *testing.T) {
 	assert.Equal(t, "acct-A", ref)
 }
 
-// The admin console's List() shows operator-minted codes only; personal
-// referral codes are the player's own and are filtered out of that view.
-func TestPersonalReferralCodesHiddenFromAdminList(t *testing.T) {
+// The admin console's List() now SHOWS every code with a source tag (owner
+// request for the 由誰產生 column): operator-minted invites AND #203 personal
+// referral codes, so a code can be attributed to whoever produced it. A referral
+// code's Note carries the referrer's username ("個人推薦碼 · <username>").
+func TestPersonalReferralCodesShownWithSourceInAdminList(t *testing.T) {
 	s := newSvc(t)
 	ctx := context.Background()
 
@@ -57,8 +59,22 @@ func TestPersonalReferralCodesHiddenFromAdminList(t *testing.T) {
 
 	rows, err := s.List(ctx)
 	require.NoError(t, err)
-	require.Len(t, rows, 1, "only the admin-minted code is listed")
-	assert.Equal(t, admin, rows[0].Code)
+	require.Len(t, rows, 3, "admin + both referral codes are all listed now")
+
+	bySource := map[string]int{}
+	referralNote := ""
+	for _, r := range rows {
+		bySource[r.Source]++
+		if r.Code == admin {
+			assert.Equal(t, SourceAdmin, r.Source, "the operator code is tagged admin")
+		}
+		if r.Source == SourceReferral {
+			referralNote = r.Note
+		}
+	}
+	assert.Equal(t, 1, bySource[SourceAdmin], "one operator code")
+	assert.Equal(t, 2, bySource[SourceReferral], "two referral codes")
+	assert.Contains(t, referralNote, "cousin", "a referral code's Note carries the referrer's username")
 }
 
 // ReferrerOf is empty for an admin code and for anything unknown/malformed, so a

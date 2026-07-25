@@ -19,6 +19,7 @@ function row(over: Partial<InviteRow> = {}): InviteRow {
     note: "媽媽",
     status: "active",
     effectiveStatus: "active",
+    source: "admin",
     createdBy: "acct-owner",
     createdAt: "2026-07-23T10:00:00Z",
     expiresAt: "2026-08-06T10:00:00Z",

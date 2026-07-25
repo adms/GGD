@@ -22,6 +22,8 @@ export interface InviteRow {
   note: string;
   status: string;
   effectiveStatus: InviteStatus;
+  /** "admin" (operator-minted) or "referral" (#203 player code) — the 由誰產生 column. */
+  source: string;
   createdBy: string;
   createdAt: string;
   expiresAt: string;
@@ -80,6 +82,7 @@ function normalizeRow(raw: unknown): InviteRow {
     note: str(r.note),
     status: str(r.status),
     effectiveStatus: (STATUSES.has(eff) ? eff : "active") as InviteStatus,
+    source: str(r.source),
     createdBy: str(r.createdBy),
     createdAt: str(r.createdAt),
     expiresAt: str(r.expiresAt),

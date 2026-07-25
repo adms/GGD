@@ -195,11 +195,27 @@ func (d Doc) EffectiveStatus(now time.Time) string {
 	return d.Status
 }
 
+// Source labels who produced a code, so the console's 由誰產生 column can tell an
+// operator-minted invite apart from a player's #203 personal referral code.
+const (
+	SourceAdmin    = "admin"    // minted by an operator in the 邀請碼 page
+	SourceReferral = "referral" // auto-minted for a player (#203); Note carries the username
+)
+
 // Row is a Doc as the admin console consumes it: the document plus the derived
-// status, so the client never re-implements the expiry rule.
+// status + source, so the client never re-implements the expiry or source rule.
 type Row struct {
 	Doc
 	EffectiveStatus string `json:"effectiveStatus"`
+	Source          string `json:"source"`
+}
+
+// srcOf derives a Row's source tag from the stored ReferrerID (empty = admin).
+func srcOf(d Doc) string {
+	if d.ReferrerID != "" {
+		return SourceReferral
+	}
+	return SourceAdmin
 }
 
 // ------------------------------------------------------------ normalisation ---
@@ -417,7 +433,7 @@ func (s *Service) Mint(ctx context.Context, adminID, note string, count, ttlDays
 		if err != nil {
 			return nil, err
 		}
-		out = append(out, Row{Doc: doc, EffectiveStatus: doc.EffectiveStatus(now)})
+		out = append(out, Row{Doc: doc, EffectiveStatus: doc.EffectiveStatus(now), Source: srcOf(doc)})
 	}
 	return out, nil
 }
@@ -520,15 +536,12 @@ func (s *Service) mintOne(createdBy, note, referrerID string, now, expires time.
 	return "", httpx.Internal("could not mint a unique invite code")
 }
 
-// List returns every ADMIN-MINTED code, newest first, with the derived status.
-//
-// Personal referral codes (task #203, ReferrerID != "") are DELIBERATELY hidden:
-// the admin console's 邀請碼 page is for the codes an operator mints for the
-// family, whereas a referral code is the individual player's own — auto-minted,
-// single-use, surfaced to that player in the lobby. Listing one per account here
-// would bury the operator's own codes in machine-generated noise and invite a
-// revoke that does nothing useful. The gate (Redeem) still burns them exactly
-// the same; only this display view filters them.
+// List returns every code, newest first, with the derived status AND a source
+// tag (admin vs #203 personal referral). Referral codes were once hidden here as
+// machine noise, but the owner wants them visible so they can see who a code came
+// from — the 由誰產生 column reads Source, and a referral code's Note already
+// carries the referrer's username ("個人推薦碼 · <username>"). The gate (Redeem)
+// burns both kinds identically; this view only labels them.
 func (s *Service) List(ctx context.Context) ([]Row, error) {
 	// Scan (a directory listing), not List (_index.json): the index is derived
 	// state that reads as empty when its file is missing, and an operator must
@@ -547,10 +560,7 @@ func (s *Service) List(ctx context.Context) ([]Row, error) {
 			}
 			return nil, err
 		}
-		if doc.ReferrerID != "" {
-			continue // a personal referral code — not an operator artefact
-		}
-		rows = append(rows, Row{Doc: doc, EffectiveStatus: doc.EffectiveStatus(now)})
+		rows = append(rows, Row{Doc: doc, EffectiveStatus: doc.EffectiveStatus(now), Source: srcOf(doc)})
 	}
 	sort.Slice(rows, func(i, j int) bool {
 		if rows[i].CreatedAt.Equal(rows[j].CreatedAt) {
@@ -594,7 +604,7 @@ func (s *Service) Revoke(ctx context.Context, adminID, rawCode string) (Row, err
 		return Row{}, err
 	}
 	s.Audit(adminID, "invite.revoke", doc.Code, map[string]any{"note": doc.Note})
-	return Row{Doc: doc, EffectiveStatus: doc.EffectiveStatus(now)}, nil
+	return Row{Doc: doc, EffectiveStatus: doc.EffectiveStatus(now), Source: srcOf(doc)}, nil
 }
 
 // Redeem BURNS a code on behalf of the account that is about to be created.
