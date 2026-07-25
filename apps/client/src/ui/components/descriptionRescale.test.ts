@@ -67,8 +67,13 @@ describe("rescaleAbilityProse cooldown pass (hud-display-final)", () => {
     cover("hud-display-final");
     // the exact reported case: 60秒 base, combat runs it at 15s (×0.25)
     expect(rescaleAbilityProse("60秒冷卻時間", CD_QUARTER)).toBe("15秒冷卻時間（WC3原 60秒）");
-    // and via the shipped live table (also cooldown ×0.25) — same result
-    expect(rescaleAbilityProse("60秒冷卻時間", LIVE)).toBe("15秒冷卻時間（WC3原 60秒）");
+    // …and via the SHIPPED live table. The multiplier there is the owner's to
+    // retune (it has already moved 0.25 → 0.2), so this asserts the INVARIANT
+    // the file's own header demands — "shown = base × live cooldown, annotated
+    // with the WC3 original" — instead of a literal copied out of the config on
+    // the day the test was written, which is how this line last went stale.
+    const liveCd = Math.round(60 * (LIVE.cooldown ?? 1));
+    expect(rescaleAbilityProse("60秒冷卻時間", LIVE)).toBe(`${liveCd}秒冷卻時間（WC3原 60秒）`);
     // rounds to an integer: 35 × 0.25 = 8.75 → 9
     expect(rescaleAbilityProse("35秒冷卻時間", CD_QUARTER)).toBe("9秒冷卻時間（WC3原 35秒）");
   });

@@ -23,6 +23,7 @@ import { initCursor } from "./cursor";
 import { ReplayApp, parseReplayHash } from "./ui/replay/ReplayApp";
 import "./ui/mobile.css";
 import "./ui/buttonFx.css"; // shared JRPG + cyber-glow button skin (one import for the app)
+import "./ui/cooldown.css"; // ability-cooldown ready bloom keyframes (task #219)
 import "./cursor/cursor.css"; // JRPG cursor set (task #54a); gated to fine pointers
 
 initCursor(); // apply the persisted JRPG cursor size to <html> before first paint

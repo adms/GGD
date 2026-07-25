@@ -4,11 +4,13 @@
  * cameras): hp/mana bars, QWER cooldown chips, gold + level, player badge.
  * With 3 players the empty bottom-right quadrant shows a mini scoreboard.
  */
-import { TICK_HZ } from "@ggd/shared/constants";
 import { Champions } from "@ggd/shared/sim/content/registry";
 import type { ChampionId } from "@ggd/shared/ids";
 import type { CoreAbilitySlot } from "@ggd/shared/sim/intents";
 import { useHud, type LocalPlayerView, type SeatView } from "../../net/RoomStore";
+import { cooldownView } from "../cooldownView";
+import { CooldownChrome } from "./CooldownChrome";
+import { displayFinal, useDisplayEnv } from "../displayFinal";
 import { cssRects, emptyQuadrantCss, type CssRect } from "../../render/viewportRects";
 import { playerBadge } from "../platform/couch";
 import { GOLD, PANEL_BG, PANEL_BORDER, teamCss, TEXT_DIM, TEXT_MAIN } from "../theme";
@@ -25,6 +27,9 @@ function Bar({ pct, color, height = 7 }: { pct: number; color: string; height?: 
 
 function PlayerCell({ lp, seat, rect }: { lp: LocalPlayerView; seat: SeatView | null; rect: CssRect }): React.JSX.Element {
   const def = seat?.championId ? Champions.tryGet(seat.championId as ChampionId) : null;
+  // live combat-env table — the cooldown chip's denominator must be the
+  // env-scaled final, exactly like the desktop bar and the touch arc (#219)
+  const env = useDisplayEnv();
   return (
     <div
       style={{
@@ -75,13 +80,23 @@ function PlayerCell({ lp, seat, rect }: { lp: LocalPlayerView; seat: SeatView | 
         <div style={{ display: "flex", gap: 4, marginTop: 4, justifyContent: "center" }}>
           {SLOTS.map((slot, i) => {
             const rank = seat?.abilityRanks[i] ?? 0;
-            const cdSecs = (seat?.cooldowns[i] ?? 0) / TICK_HZ;
-            const onCd = rank > 0 && cdSecs > 0;
+            const ability = def ? def.abilities[slot] : null;
+            // Same env-scaled denominator as the other two surfaces (#219). The
+            // couch chip used to carry NO progress fill at all — just the letter
+            // swapped for a whole-second number.
+            const cd = cooldownView(
+              rank > 0 ? (seat?.cooldowns[i] ?? 0) : 0,
+              rank > 0 && ability ? displayFinal(ability.cooldown[rank - 1] ?? 0, "cooldown", env) : 0,
+            );
             return (
               <div
                 key={slot}
-                title={def ? def.abilities[slot].name : slot}
+                title={ability ? ability.name : slot}
                 style={{
+                  // relative + hidden so the radial wipe clips to the rounded
+                  // chip instead of painting square corners over it
+                  position: "relative",
+                  overflow: "hidden",
                   width: 24,
                   height: 20,
                   borderRadius: 4,
@@ -89,12 +104,14 @@ function PlayerCell({ lp, seat, rect }: { lp: LocalPlayerView; seat: SeatView | 
                   lineHeight: "20px",
                   fontSize: 10,
                   fontWeight: 700,
-                  background: rank > 0 ? (onCd ? "#161b26" : "#243252") : "#12151d",
+                  background: rank > 0 ? (cd.onCd ? "#161b26" : "#243252") : "#12151d",
                   border: `1px solid ${rank > 0 ? "#51649b" : "#2a3040"}`,
-                  color: onCd ? TEXT_DIM : rank > 0 ? TEXT_MAIN : "#3a4256",
+                  color: cd.onCd ? TEXT_DIM : rank > 0 ? TEXT_MAIN : "#3a4256",
                 }}
               >
-                {onCd ? Math.ceil(cdSecs) : slot}
+                {/* 24x20 has room for one glyph: the letter, or the countdown */}
+                {cd.onCd ? null : slot}
+                <CooldownChrome cd={cd} fontSize={12} />
               </div>
             );
           })}
