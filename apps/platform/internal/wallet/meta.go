@@ -281,6 +281,32 @@ func (s *Service) SeedNewAccountCrystals(ctx context.Context, accountID string) 
 	return s.newAccountCrystals, nil
 }
 
+// BackfillWelcomeCrystals is a ONE-OFF migration (task #204 follow-up): grant the
+// one-time 藍水晶 welcome balance to every EXISTING account that never received it
+// (accounts created before #204 shipped, who have 0 crystals and cannot unlock a
+// champion). It simply calls SeedNewAccountCrystals for each id, so it inherits
+// that method's load-bearing idempotency: an account that already has a walletmeta
+// record (seeded, earned, spent or favourited) is skipped and NEVER topped up, and
+// a re-run grants nobody. Triggered once via GGD_BACKFILL_WELCOME_CRYSTALS=1 on a
+// single deploy, then the flag is removed. Returns counts and the first error seen.
+func (s *Service) BackfillWelcomeCrystals(ctx context.Context, accountIDs []string) (granted, skipped int, firstErr error) {
+	for _, id := range accountIDs {
+		n, err := s.SeedNewAccountCrystals(ctx, id)
+		if err != nil {
+			if firstErr == nil {
+				firstErr = err
+			}
+			continue
+		}
+		if n > 0 {
+			granted++
+		} else {
+			skipped++
+		}
+	}
+	return granted, skipped, firstErr
+}
+
 // SetCrystalAbsolute writes an ABSOLUTE crystal balance. This is the ONLY
 // grant path, and it is reachable only from match settlement — see the
 // "WHO MAY GRANT IT" note at the top of this file.

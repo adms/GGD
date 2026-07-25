@@ -252,6 +252,20 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 		slog.Info("wallet: new accounts are seeded a one-time 藍水晶 welcome grant",
 			"crystals", cfg.NewAccountCrystals, "override", "GGD_NEW_ACCOUNT_CRYSTALS")
 	}
+	// ONE-OFF #204 backfill: grant the welcome 藍水晶 to every existing account that
+	// never got it (idempotent — veterans with a walletmeta record are skipped).
+	// Enabled for a single deploy via GGD_BACKFILL_WELCOME_CRYSTALS=1, then removed.
+	if cfg.BackfillWelcomeCrystals {
+		bctx := context.Background()
+		if ids, lerr := accounts.List(bctx); lerr != nil {
+			slog.Error("wallet: welcome-crystal backfill could not list accounts", "err", lerr)
+		} else {
+			granted, skipped, ferr := walletSvc.BackfillWelcomeCrystals(bctx, ids)
+			slog.Info("wallet: ONE-OFF welcome-crystal backfill (GGD_BACKFILL_WELCOME_CRYSTALS)",
+				"granted", granted, "skipped", skipped, "total", len(ids),
+				"crystalsEach", cfg.NewAccountCrystals, "firstErr", ferr)
+		}
+	}
 
 	settler := gamelink.NewSettler(store, rdb, accounts, pres, rank, rooms, walletSvc)
 	glink := gamelink.New(rdb, accounts, pres, rank, journal, settler, cat,
