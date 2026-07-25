@@ -20,6 +20,7 @@ import type { ItemId } from "@ggd/shared/ids";
 import { useHud } from "../../net/RoomStore";
 import { GlyphTile } from "../components/GlyphTile";
 import { Tooltip } from "../components/Tooltip";
+import { UNKNOWN_ITEM_LABEL } from "../panels/itemStats";
 import { PANEL_BG, PANEL_BORDER, TEXT_DIM } from "../theme";
 import { hudSlotStyle, hudSlotWidth } from "./hudLayout";
 import { hudTouch } from "./HudSlot";
@@ -93,7 +94,7 @@ export function EquipmentBar(): React.JSX.Element | null {
           return (
             <Tooltip
               key={cell.slot}
-              title={cell.name ?? cell.itemId}
+              title={cell.name ?? UNKNOWN_ITEM_LABEL}
               body={cell.tooltipBody ?? undefined}
               meta={cell.meta.length > 0 ? cell.meta.map((m) => ({ label: m.label, value: m.value })) : undefined}
               style={{ display: "block" }}
@@ -112,7 +113,7 @@ export function EquipmentBar(): React.JSX.Element | null {
                 <GlyphTile
                   seed={cell.itemId}
                   icon={cell.icon}
-                  label={cell.name ?? cell.itemId}
+                  label={cell.name ?? UNKNOWN_ITEM_LABEL}
                   size={tile}
                   accent={cell.unique ? ACCENT : undefined}
                 />

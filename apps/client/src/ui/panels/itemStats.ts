@@ -29,6 +29,36 @@ import { ModOp, type StatModifier } from "@ggd/shared/sim/stats/modifiers";
 import { STAT_META, statMeta } from "./statDisplay";
 
 // ---------------------------------------------------------------------------
+// player-readable name — NEVER the raw id (task #202)
+// ---------------------------------------------------------------------------
+
+/**
+ * Shown in place of an item id whenever a registry lookup misses. The owner's
+ * complaint 「購買不是顯示描述而是 ID」 was every shop surface doing
+ * `def?.name ?? itemId`: on a `tryGet` miss (client/server content divergence,
+ * a renamed/overlay item, an unregistered id like `legendary-attunement`) the
+ * fallback rendered the raw "godie-i0xx" string as user-facing text. A neutral
+ * placeholder is the honest answer — the player never reads a machine id.
+ */
+export const UNKNOWN_ITEM_LABEL = "未知道具";
+
+/**
+ * A player-readable name for an item, given whatever the (possibly-missing)
+ * registry def carries plus the id that was looked up. Returns the def's name
+ * when it is present AND is a real name — never the id. Two ways it degrades to
+ * {@link UNKNOWN_ITEM_LABEL}, and both are id-leaks this closes:
+ *   - the def is missing (`tryGet` miss) → `name` is empty/undefined;
+ *   - the def IS the id (a craftRole "component" whose importer left name==id,
+ *     never meant for the shelf but reachable if ever equipped).
+ * The id is used ONLY to detect the name==id case; it is never returned.
+ */
+export function itemDisplayName(name: string | null | undefined, id: string): string {
+  const n = (name ?? "").trim();
+  if (n.length > 0 && n !== id) return n;
+  return UNKNOWN_ITEM_LABEL;
+}
+
+// ---------------------------------------------------------------------------
 // merge + format authored modifiers
 // ---------------------------------------------------------------------------
 

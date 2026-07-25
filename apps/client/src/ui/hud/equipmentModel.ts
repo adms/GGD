@@ -23,7 +23,7 @@
  *     stays untouched.
  */
 import { INVENTORY_SLOTS } from "@ggd/shared/sim/economy/shop";
-import { buildItemRow, type RowItem } from "../panels/itemStats";
+import { buildItemRow, itemDisplayName, type RowItem } from "../panels/itemStats";
 
 /** The minimal item shape a cell needs — RowItem plus the HUD-only bits. */
 export interface EquipItemDef extends RowItem {
@@ -111,7 +111,10 @@ export function buildEquipmentCells(
     return {
       slot,
       itemId,
-      name: def?.name ?? itemId,
+      // #202: a de-whitelisted / renamed / unregistered item degrades to a
+      // readable placeholder — never the raw id, in either the tile glyph or
+      // the hover title.
+      name: itemDisplayName(def?.name, itemId),
       icon: def?.icon ?? null,
       unique,
       tooltipBody: def ? itemDetailBody(def) : null,

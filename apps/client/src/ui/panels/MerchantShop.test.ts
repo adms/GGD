@@ -36,6 +36,7 @@ import {
 } from "./MerchantShop";
 import { shopCatalogue, NO_FILTER } from "./champSelectFilter";
 import { groupCatalogue, type ShelfItem } from "./shopGrouping";
+import { buildItemRow, itemDisplayName, UNKNOWN_ITEM_LABEL, type RowItem } from "./itemStats";
 
 const HERO_WITH_ICON = "tp-shop-hero" as ChampionId;
 const HERO_NAME = "去死團測試英雄";
@@ -238,5 +239,97 @@ describe("MerchantShop shelves list real stock (#94)", () => {
     // every shelved entry is a genuine registered item (a real purchasable),
     // so nothing on the shelves is a placeholder the buy button can't honour
     for (const s of allShelved) expect(Items.tryGet(s.id as ItemId)).toBeTruthy();
+  });
+});
+
+/**
+ * #202 (store-shows-item-name-not-id): the owner reported the shop 「顯示 ID」 —
+ * an item printed its raw `godie-i0xx` string instead of a human description.
+ * The item DATA is clean; the leak was the render path — every shop surface did
+ * `def?.name ?? itemId`, and on a registry MISS (client/server content
+ * divergence, an overlay rename, an unregistered id) the fallback painted the
+ * raw id as user-facing text. This pins two guarantees:
+ *
+ *   1. a representative FINAL shop item renders a real NAME and a readable, non-id
+ *      effect/description line (what it DOES, judgeable before purchase);
+ *   2. NO shop code path can surface a bare id — every display seam routes
+ *      through `itemDisplayName`, which degrades a miss (and a name==id
+ *      component) to a readable placeholder, never the id.
+ */
+describe("MerchantShop never shows a raw item id (#202)", () => {
+  // A representative FINAL (shop) item, shaped like the real WC3 imports
+  // (godie-i00c 風行天衣): a rarity badge, stat modifiers, a 效能 block whose
+  // mechanical line survives as the ✦ effect while the stat-claim lines are
+  // stripped, and 解說 lore.
+  const FINAL_ID = "tp-shop-final-202" as ItemId;
+  const FINAL_NAME = "風行天衣";
+  const finalItem = (): ItemDef =>
+    ({
+      id: FINAL_ID,
+      name: FINAL_NAME,
+      cost: 2100,
+      tier: 3,
+      modifiers: [
+        { stat: "ad", value: 30 },
+        { stat: "moveSpeed", value: 40 },
+      ],
+      description: ["神器", "效能", "攻擊力+30", "移動速度+40", "擴散傷害60%", "解說", "御風而行的天衣。"].join("\n"),
+      tags: ["wc3-import"],
+    }) as unknown as ItemDef;
+
+  beforeAll(() => {
+    Items.register(FINAL_ID, finalItem());
+  });
+
+  it("renders a representative final's NAME and a non-id effect/description line", () => {
+    cover("store-shows-item-name-not-id");
+    const def = Items.tryGet(FINAL_ID)!;
+
+    // NAME: the real name, never the id — the exact text the shelf, the buy
+    // toast, the inventory tile and the equipment bar all bind.
+    const name = itemDisplayName(def.name, def.id);
+    expect(name).toBe(FINAL_NAME);
+    expect(name).not.toBe(def.id);
+
+    // DESCRIPTION/EFFECT: a readable ✦ line (the mechanical text the stat chips
+    // cannot carry), and it is NOT the raw id — this is the "什麼道具做什麼" the
+    // owner could not read. The stat-claim lines (攻擊力+30 …) are stripped, the
+    // 擴散傷害60% survives.
+    const row = buildItemRow(def as unknown as RowItem, null);
+    expect(row.effect).toBe("擴散傷害60%");
+    expect(row.effect).not.toBe(def.id);
+    expect(row.effect ?? "").not.toContain(def.id);
+    // and the collapsed row is not blank even for a pure detail: stat chips describe it
+    expect(row.secondary.length).toBeGreaterThan(0);
+  });
+
+  it("degrades EVERY id-resolving seam to a readable placeholder — never the id", () => {
+    cover("store-shows-item-name-not-id");
+    // a registry MISS (stale deploy, overlay rename, the unregistered
+    // `legendary-attunement` capstone id) must NOT leak the id.
+    expect(itemDisplayName(undefined, "godie-i0xx")).toBe(UNKNOWN_ITEM_LABEL);
+    expect(itemDisplayName(undefined, "legendary-attunement")).toBe(UNKNOWN_ITEM_LABEL);
+    expect(itemDisplayName(null, "godie-i0xx")).toBe(UNKNOWN_ITEM_LABEL);
+    expect(itemDisplayName("", "godie-i0xx")).toBe(UNKNOWN_ITEM_LABEL);
+    // a craftRole "component" whose importer left name==id (never on the shelf,
+    // but reachable if ever equipped) also degrades — the id is never printed.
+    expect(itemDisplayName("godie-i0zz", "godie-i0zz")).toBe(UNKNOWN_ITEM_LABEL);
+    // whatever the input, the output is NEVER the id
+    for (const id of ["godie-i0xx", "legendary-attunement", "godie-i0zz"]) {
+      expect(itemDisplayName(undefined, id)).not.toBe(id);
+      expect(itemDisplayName(id, id)).not.toBe(id);
+    }
+    // a real name always passes through untouched
+    expect(itemDisplayName(FINAL_NAME, FINAL_ID)).toBe(FINAL_NAME);
+  });
+
+  it("no shelf item in the whole live catalogue resolves to its own id", () => {
+    cover("store-shows-item-name-not-id");
+    const catalogue = shopCatalogue(Items.all(), NO_FILTER);
+    expect(catalogue.length).toBeGreaterThan(0);
+    for (const item of catalogue) {
+      // the name the shop shows is never the raw id, for every real shelf entry
+      expect(itemDisplayName(item.name, item.id)).not.toBe(item.id);
+    }
   });
 });
