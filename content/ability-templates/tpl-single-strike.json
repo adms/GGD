@@ -1,0 +1,41 @@
+{
+  "id": "tpl-single-strike",
+  "schema": "template@1",
+  "name": "單體斬擊",
+  "description": "單一指向目標的一次魔法斬擊（僅數值核心，執行斬條件為紅色降級槽）。",
+  "family": "single-strike",
+  "status": "enabled",
+  "params": {
+    "damage": {
+      "type": "scaling",
+      "default": {
+        "perRank": [
+          2300
+        ],
+        "ratios": []
+      }
+    },
+    "damageType": {
+      "type": "enum",
+      "values": [
+        "magic",
+        "physical",
+        "true"
+      ],
+      "default": "magic"
+    },
+    "castTimeSec": {
+      "type": "number",
+      "default": 0,
+      "min": 0,
+      "max": 5,
+      "unit": "s"
+    }
+  },
+  "requires": [],
+  "gapScore": 9,
+  "exemplar": {
+    "skill": "23-04 雷焰聖劍",
+    "jass": "A0OD"
+  }
+}

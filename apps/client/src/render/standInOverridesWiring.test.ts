@@ -95,7 +95,7 @@ async function loadContentDb(): Promise<ContentDb> {
 const BASE_DOC: ModelDoc = {
   id: "champ.sela",
   schema: "model@1",
-  glbPath: "assets/models/champions/mage.glb",
+  glbPath: "assets/models/champions/blocky-mage.glb",
   scale: 0.77, // the SHARED stand-in size — irrelevant post-#150 normalization
   collisionRadius: 0.6,
   clipMap: { idle: "Idle", run: "Idle", attack: "Idle", cast: "Idle", hurt: "Idle", death: "Idle" },

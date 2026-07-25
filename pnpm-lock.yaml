@@ -20,6 +20,9 @@ importers:
 
   apps/admin:
     dependencies:
+      '@babylonjs/core':
+        specifier: ^7.44.0
+        version: 7.54.3
       '@ggd/shared':
         specifier: workspace:*
         version: link:../../packages/shared
@@ -341,6 +344,21 @@ importers:
         version: 2.1.9(@types/node@22.20.1)
 
   tools/tts-gen: {}
+
+  tools/voxel-gen:
+    devDependencies:
+      '@types/node':
+        specifier: ^22.9.0
+        version: 22.20.1
+      tsx:
+        specifier: ^4.19.2
+        version: 4.23.1
+      typescript:
+        specifier: ^5.6.3
+        version: 5.9.3
+      vitest:
+        specifier: ^2.1.4
+        version: 2.1.9(@types/node@22.20.1)
 
   tools/w3x-import:
     devDependencies:

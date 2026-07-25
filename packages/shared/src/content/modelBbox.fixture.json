@@ -31,13 +31,13 @@
     },
     {
       "modelKey": "champ.sela",
-      "glbPath": "assets/models/champions/mage.glb",
-      "family": "kaykit",
+      "glbPath": "assets/models/champions/blocky-mage.glb",
+      "family": "blocky",
       "empty": false,
-      "fullHeight": 2.7157,
-      "scale": 0.7727,
-      "renderedFull": 2.0984,
-      "animGroups": 76,
+      "fullHeight": 1.8,
+      "scale": 1.0,
+      "renderedFull": 1.8,
+      "animGroups": 7,
       "allowlisted": false
     },
     {
@@ -108,13 +108,13 @@
     },
     {
       "modelKey": "champ.skin.barbarian",
-      "glbPath": "assets/models/champions/barbarian.glb",
-      "family": "kaykit",
+      "glbPath": "assets/models/champions/blocky-barbarian.glb",
+      "family": "blocky",
       "empty": false,
-      "fullHeight": 2.3978,
-      "scale": 0.7798,
-      "renderedFull": 1.8698,
-      "animGroups": 76,
+      "fullHeight": 1.8,
+      "scale": 1.0,
+      "renderedFull": 1.8,
+      "animGroups": 7,
       "allowlisted": false
     },
     {
@@ -141,13 +141,13 @@
     },
     {
       "modelKey": "champ.thorne",
-      "glbPath": "assets/models/champions/knight.glb",
-      "family": "kaykit",
+      "glbPath": "assets/models/champions/blocky-knight.glb",
+      "family": "blocky",
       "empty": false,
-      "fullHeight": 2.4666,
-      "scale": 0.7328,
-      "renderedFull": 1.8075,
-      "animGroups": 76,
+      "fullHeight": 1.8,
+      "scale": 1.0,
+      "renderedFull": 1.8,
+      "animGroups": 7,
       "allowlisted": false
     },
     {
@@ -207,13 +207,13 @@
     },
     {
       "modelKey": "champ.skin.rogue",
-      "glbPath": "assets/models/champions/rogue.glb",
-      "family": "kaykit",
+      "glbPath": "assets/models/champions/blocky-rogue.glb",
+      "family": "blocky",
       "empty": false,
-      "fullHeight": 2.187,
-      "scale": 0.7798,
-      "renderedFull": 1.7054,
-      "animGroups": 76,
+      "fullHeight": 1.8,
+      "scale": 1.0,
+      "renderedFull": 1.8,
+      "animGroups": 7,
       "allowlisted": false
     },
     {

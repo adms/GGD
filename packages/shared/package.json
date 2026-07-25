@@ -10,6 +10,9 @@
     "./sim": "./src/sim/index.ts",
     "./content": "./src/content/index.ts",
     "./content/node": "./src/content/node/index.ts",
+    "./content/voxelSkin": "./src/content/voxelSkin/index.ts",
+    "./voxel": "./src/voxel/index.ts",
+    "./voxel/*": "./src/voxel/*.ts",
     "./*": "./src/*.ts",
     "./testkit/*": "./testkit/*.ts"
   },
@@ -19,7 +22,8 @@
     "test:watch": "vitest",
     "content:build": "tsx scripts/buildIndexes.ts",
     "content:validate": "tsx scripts/contentValidate.ts",
-    "content:export": "tsx scripts/exportContentToJson.ts"
+    "content:export": "tsx scripts/exportContentToJson.ts",
+    "voxel-skins:snapshot": "tsx scripts/buildVoxelSkinSnapshot.ts"
   },
   "dependencies": {
     "@colyseus/schema": "^3.0.0",

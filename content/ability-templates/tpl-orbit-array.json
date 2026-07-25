@@ -1,0 +1,15 @@
+{
+  "id": "tpl-orbit-array",
+  "schema": "template@1",
+  "name": "布陣環繞",
+  "description": "P3 布陣環繞物件。",
+  "family": "orbit-array",
+  "status": "draft",
+  "params": {},
+  "requires": [],
+  "gapScore": 3,
+  "exemplar": {
+    "skill": "(draft)",
+    "jass": "(P2/P3)"
+  }
+}

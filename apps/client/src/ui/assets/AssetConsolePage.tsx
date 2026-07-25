@@ -43,6 +43,7 @@ import { topRightReserve } from "../chromeReserve";
 import { Btn } from "../platform/widgets";
 import { Tooltip } from "../components/Tooltip";
 import { IconCoverageBar } from "../codex/IconCoverageBar";
+import { VfxCensusPanel } from "./VfxCensusPanel";
 import { useCodex } from "../codex/useCodex";
 import { openCodex } from "../codex/CodexRoute";
 import {
@@ -952,6 +953,12 @@ export function AssetConsolePage({ onClose }: { onClose: () => void }): React.JS
           <Btn small onClick={() => document.getElementById("asset-coverage")?.scrollIntoView({ behavior: "smooth" })}>
             覆蓋率
           </Btn>
+          <Btn
+            small
+            onClick={() => document.getElementById("asset-vfx-census")?.scrollIntoView({ behavior: "smooth" })}
+          >
+            特效普查
+          </Btn>
           <Btn small onClick={() => document.getElementById("asset-style")?.scrollIntoView({ behavior: "smooth" })}>
             樣式規格
           </Btn>
@@ -988,6 +995,18 @@ export function AssetConsolePage({ onClose }: { onClose: () => void }): React.JS
           {data && <IconCoverageBar data={data} icons={icons} />}
         </Section>
 
+        {/* #230. Same seam as 圖示覆蓋率 above: one question — "is this asset
+            really the map's, or a stand-in?" — answered from the shipped content
+            at view time. The component owns no counts of its own; everything is
+            derived in ui/assets/vfxCensus.ts, which is node-tested. */}
+        <Section
+          id="asset-vfx-census"
+          title="特效真實引用普查"
+          subtitle="每個英雄 × 每個技能：原圖真正用的特效 vs 現在綁的 —— 開啟時即時計算"
+        >
+          <VfxCensusPanel data={data} />
+        </Section>
+
         <StyleSpecSection specState={specState} />
 
         <ContactSheetSection spec={specState.spec} live={live} />
@@ -1014,6 +1033,28 @@ export function AssetConsolePage({ onClose }: { onClose: () => void }): React.JS
             <div style={{ marginTop: 6 }}>
               接上方式：#99 發布量測檔後，在本檔案新增一個 <Code>&lt;Section id="asset-models"&gt;</Code>
               的內容元件，比照覆蓋率區塊 —— 引用 #99 的元件，不要在這裡重算。
+            </div>
+          </div>
+        </Section>
+
+        {/* SEAM for task #231. Same convention as #99 above and for the same
+            reason: the review surface for the generated voxel skins is the
+            admin 體素外觀對照表, which computes every look live from /content
+            plus the shared generator. Re-rendering 114 paper dolls HERE would
+            be a second implementation that could disagree with the first, so
+            this section names the owner instead of duplicating the renderer. */}
+        <Section
+          id="asset-voxel-skins"
+          title="體素角色外觀"
+          subtitle="任務 #231 的區塊 —— 審核頁在後台"
+        >
+          <div style={{ fontSize: 11, color: TEXT_DIM, lineHeight: 1.8 }}>
+            每個英雄的體素貼圖由共用產生器依英雄自身身分決定性地生成，執行期才繪製成 64×64 圖集，
+            出貨 0 位元組貼圖。全部 114 位英雄的對照表（含篩選、依 modelKey 群組、相似度警示、
+            待改標記與 overrides 匯出）在後台 <Code>🧱 體素外觀對照表</Code>。
+            <div style={{ marginTop: 6 }}>
+              那一頁與遊戲共用同一支 <Code>generateVoxelSkin</Code> 與{" "}
+              <Code>paintVoxelAtlas</Code>，畫的是實際上機的像素；這裡刻意不重畫一份。
             </div>
           </div>
         </Section>

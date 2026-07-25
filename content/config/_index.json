@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "13a47c7d4fff",
+  "hash": "12d68d18cb0d",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -17,13 +17,13 @@
     {
       "id": "audio-map",
       "path": "config/audio-map.json",
-      "hash": "7a1e4f705066",
-      "size": 27750
+      "hash": "699bac00e1c5",
+      "size": 28096
     },
     {
       "id": "champion-voices",
       "path": "config/champion-voices.json",
-      "hash": "8ce2820c89cd",
+      "hash": "c22be2458739",
       "size": 12178
     },
     {
@@ -53,8 +53,8 @@
     {
       "id": "store",
       "path": "config/store.json",
-      "hash": "0c22023a64e3",
-      "size": 1264
+      "hash": "9e65fe0f5cfb",
+      "size": 1310
     },
     {
       "id": "unit-tints",

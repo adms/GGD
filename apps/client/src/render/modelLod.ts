@@ -20,7 +20,7 @@
  * The obvious implementation — try `mage-small.glb`, fall back to `mage.glb` on
  * 404 — reintroduces exactly the pathology `AssetManager`'s header calls out:
  * it DOUBLES the round-trip count for every model that has no tier, and only
- * 89 of the 163 shipped .glb do. `content/assets/models/_lod.json` is written by
+ * about half the shipped .glb have one. `content/assets/models/_lod.json` is written by
  * `tools/lod-gen/gen_lod.py` alongside the tier files, is a few KB, is fetched
  * ONCE per boot, and rides the same `?h=` immutable cache key as everything
  * else — so resolution is a pure map lookup and a missing tier costs zero
@@ -39,6 +39,24 @@
  * "auto" deliberately stays at the top tier. The place that genuinely benefits
  * is first boot: `autoDetectPreset` puts a weak/touch device on "low" before
  * anything is fetched, so it never downloads the full-fat corpus at all.
+ *
+ * ---------------------------------------------------------------------------
+ * A MODEL BELOW THE LOD FLOOR LEGITIMATELY SHIPS ONE TIER
+ * ---------------------------------------------------------------------------
+ * The manifest OMITTING a model is a valid, deliberate state — not missing
+ * work. `tools/lod-gen/gen_lod.py` skips anything under ~1,500 triangles /
+ * ~64 KB, because a tier file there costs a request and a manifest row to save
+ * nothing, and claiming "this is the cheap version" of an already-minimal mesh
+ * would be a lie.
+ *
+ * The four champion stand-ins are the case this rule was written for: #226
+ * replaced them with generated ~168-triangle box-men (`tools/voxel-gen`), so
+ * their twelve rows were removed from `_lod.json` along with the files. Do not
+ * "restore" them. Note the deletion had to be done TOGETHER with the files:
+ * a stale row would make `resolveLodPath` hand `AssetManager` a 404 on the LOW
+ * and MEDIUM presets only, `loadUncached` would swallow it, and mobile players
+ * would be permanently stuck on the procedural fallback while the HIGH preset
+ * looked perfect.
  *
  * A tier change mid-session applies to models loaded AFTER it. Already-adopted
  * meshes keep their tier until the scene is rebuilt — deliberately: swapping a

@@ -277,6 +277,9 @@ describe("C: the write module is dev-build gated", () => {
     expect(src).not.toContain("特效管理");
     expect(src).not.toContain("新英雄模板");
     expect(src).not.toContain("音樂音效素材管理");
+    // 鑄形工坊 (task #229) is a route like any other: its label travels with
+    // the dev chunk, so the shell must not spell it either.
+    expect(src).not.toContain("鑄形工坊");
     expect(src).toContain("m.CONTENT_ROUTES");
   });
 });
@@ -392,6 +395,23 @@ describe("a real production build of the console contains no write path", () => 
         expect(bundled).not.toContain("音樂音效素材管理");
         // the wizard's own action string and the audition MIME note
         expect(bundled).not.toContain("建立英雄");
+        // 鑄形工坊 (task #229): the nav label AND the studio's own strings
+        expect(bundled).not.toContain("鑄形工坊");
+        expect(bundled).not.toContain("體素角色生成器");
+        expect(bundled).not.toContain("voxel:gen");
+
+        // THE NEW DEPENDENCY'S OWN TRIPWIRE. #229 added @babylonjs/core to the
+        // console for the studio's live preview — ~1 MB that must never reach a
+        // production bundle. The checks above grep for /content-api and for
+        // Chinese label strings, so a Babylon leak (an eager import somewhere,
+        // a dynamic import rollup could not prove unreachable) would sail past
+        // every one of them while shipping the engine to every operator.
+        //
+        // These tokens are Babylon's own class names, emitted verbatim into the
+        // chunk by its class registrations, so minification does not erase them.
+        for (const marker of ["ArcRotateCamera", "HemisphericLight", "BABYLON"]) {
+          expect(bundled, `a production bundle must not contain ${marker}`).not.toContain(marker);
+        }
       } finally {
         rmSync(out, { recursive: true, force: true });
       }

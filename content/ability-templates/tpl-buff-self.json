@@ -1,0 +1,40 @@
+{
+  "id": "tpl-buff-self",
+  "schema": "template@1",
+  "name": "變身強化-數值面",
+  "description": "純數值自我強化（技能組替換/換模僅屬 P1 非目標）。",
+  "family": "buff-self",
+  "status": "enabled",
+  "params": {
+    "duration": {
+      "type": "number",
+      "default": 15,
+      "min": 1,
+      "max": 60,
+      "unit": "s"
+    },
+    "modifiers": {
+      "type": "statModifiers",
+      "default": [
+        {
+          "stat": "ad",
+          "op": "flat",
+          "value": 50
+        }
+      ]
+    },
+    "castTimeSec": {
+      "type": "number",
+      "default": 0,
+      "min": 0,
+      "max": 5,
+      "unit": "s"
+    }
+  },
+  "requires": [],
+  "gapScore": 6,
+  "exemplar": {
+    "skill": "82-04 闇之魔法",
+    "jass": "A0Q6"
+  }
+}

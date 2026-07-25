@@ -1,10 +1,18 @@
 /**
  * trimClips — the ANIMATION-PRUNE stage of the offline optimiser.
  *
+ * ─ THE CASE THAT BUILT THIS TOOL IS NOW HISTORY ─────────────────────────────
+ * Everything below describes the four KayKit stand-ins, which owner directive
+ * #226 has since DELETED (replaced by ~168-triangle generated box-men carrying
+ * exactly 7 clips — `tools/voxel-gen`). The reasoning is kept verbatim because
+ * it is the derivation that justifies the tool, and the tool is still live for
+ * every other rigged model in the corpus (`guardian_skeleton.glb` 95 → 15 clips
+ * is the other worked example). It is no longer a description of what ships.
+ *
  * ─ WHY THIS EXISTS ───────────────────────────────────────────────────────────
- * The four generic KayKit stand-ins are the heaviest art in the project
+ * The four generic KayKit stand-ins WERE the heaviest art in the project
  * (knight/rogue/barbarian/mage = 14,478,324 B), and the intuitive lever —
- * "fewer polygons" — is the WRONG one. Measured composition of knight.glb:
+ * "fewer polygons" — was the WRONG one. Measured composition of knight.glb:
  *
  *     animation ......... 3,279,235 B  89.61%   (939,450 B of animations JSON +
  *                                                579,381 accessors + 439,789
@@ -86,28 +94,32 @@ export interface ReservedClip {
 
 const CHAMPS = "assets/models/champions/";
 
+/**
+ * THE 16 KayKit CLIP NAMES THAT USED TO LIVE HERE ARE GONE, ON PURPOSE.
+ *
+ * Every entry was scoped to `assets/models/champions/` and named a clip in the
+ * KayKit stand-ins — `2H_Melee_Idle`, `Hit_A`, `Death_A_Pose`, `Walking_A`,
+ * `1H_Melee_Attack_Slice_Diagonal`, `Spellcast_Long`, … Owner directive #226
+ * deleted those four files; the champions directory now holds five GENERATED
+ * box-men (`tools/voxel-gen`) whose entire clip roster is
+ * `idle/run/attack/cast/hurt/death/cheer`. Keeping the old names would have
+ * left a table of 16 clips that can never match anything — and, worse, would
+ * have made `--check` report a permanent phantom failure ("required clip
+ * `Hit_B` missing") on files that are correct.
+ *
+ * `cheer` is the one entry that still has to be stated. It is required by the
+ * SECOND mechanism this module exists to protect — `reactionClip` regex-matches
+ * raw AnimationGroup names, never `clipMap` — so a naive "trim to clipMap"
+ * would silently downgrade every shop purchase reaction to an attack swing.
+ * The derivation already picks it up through `pickReactionClip`, but it is
+ * reserved unconditionally so `--check` can FAIL if a future bake drops it,
+ * rather than quietly stopping asking for it (see the note in `requiredClips`).
+ *
+ * Nothing else needs reserving: the generated files carry exactly the seven
+ * clips the game reaches for, so there is no prune left to do on them at all.
+ */
 export const RESERVED_CLIPS: readonly ReservedClip[] = ([
-
-  { clip: "2H_Melee_Idle", why: "arena.castle 值班鎧甲 (空鎧) idle — CREDITS.md, task #105" },
-  { clip: "Hit_A", why: "arena.castle 空鎧 hit reaction — CREDITS.md, task #105" },
-  { clip: "Hit_B", why: "arena.castle 空鎧 hit variety — CREDITS.md, task #105" },
-  { clip: "Death_A", why: "arena.castle 空鎧 death — CREDITS.md, task #105" },
-  { clip: "Death_B", why: "arena.castle 空鎧 death variety — CREDITS.md, task #105" },
-  { clip: "Death_A_Pose", why: "death hold-pose (ClipAnimator sticks death on its last frame)" },
-  { clip: "Walking_A", why: "intermission/shop staging walk — layout.ts merchant staging, task #146" },
-  { clip: "Interact", why: "shop interaction pose — task #146 shop scene" },
-  { clip: "Use_Item", why: "item purchase/use reaction — task #121/#146" },
-  // ROSTER PARITY across the four stand-ins. They share one 41-bone rig and are
-  // swapped between freely (champ-select stand-in, `champ.skin.*` skins, the
-  // #119 form-swap), so every clip ANY of the four clipMaps names is kept in ALL
-  // four: a clip present in one file and missing from its sibling is a landmine
-  // for whoever next repoints a modelKey.
-  { clip: "1H_Melee_Attack_Slice_Diagonal", why: "roster parity — champ.thorne / champ.skin.rogue attack" },
-  { clip: "2H_Melee_Attack_Spin", why: "roster parity — champ.thorne cast / champ.skin.barbarian attack" },
-  { clip: "Spellcast_Shoot", why: "roster parity — champ.sela attack" },
-  { clip: "Spellcast_Long", why: "roster parity — champ.sela / barbarian / rogue cast" },
-  { clip: "Running_A", why: "roster parity — run, every stand-in clipMap" },
-  { clip: "Idle", why: "roster parity — idle, every stand-in clipMap" },
+  { clip: "cheer", why: "shop purchase celebration — reactionClip matches raw group names, not clipMap (#111/#121/#146)" },
 ] as const).map((r) => ({ ...r, scope: CHAMPS }));
 
 /** A model doc that points at a .glb, reduced to what this tool needs. */

@@ -1,0 +1,15 @@
+{
+  "id": "tpl-drain-leech",
+  "schema": "template@1",
+  "name": "汲取吸附",
+  "description": "P3 汲取吸附。",
+  "family": "drain-leech",
+  "status": "draft",
+  "params": {},
+  "requires": [],
+  "gapScore": 4,
+  "exemplar": {
+    "skill": "(draft)",
+    "jass": "(P2/P3)"
+  }
+}

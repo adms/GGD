@@ -12,6 +12,7 @@
 import type { Scene } from "@babylonjs/core/scene";
 import type { EventMessage } from "@ggd/shared/protocol/messages";
 import type { ModelDoc, VfxDoc } from "@ggd/shared/content";
+import type { VoxelSkinRecipe } from "@ggd/shared/content/voxelSkin";
 import { TICK_MS } from "@ggd/shared/constants";
 import { ChampionView } from "./views/ChampionView";
 import { ProjectileView, type ProjectileMeshShape } from "./views/ProjectileView";
@@ -20,6 +21,7 @@ import { GuardianView } from "./views/GuardianView";
 import { ReviveCircleView } from "./views/ReviveCircleView";
 import { CoinView } from "./views/CoinView";
 import { applyModelTint, releaseModelTint, type ModelTint } from "./views/modelTint";
+import type { VoxelLook } from "./views/voxelLook";
 import type { AssetManager } from "./AssetManager";
 import {
   ATTACKER_FLASH_MS,
@@ -100,6 +102,20 @@ export interface ViewContentHooks {
    * common case) — behaviour is then exactly as before.
    */
   modelOverrideFor?(e: EntityViewState): ModelDocOverride | null | undefined;
+  /**
+   * The champion's GENERATED VOXEL SKIN (task #231) — palette, face, outfit
+   * blocking and motifs, derived deterministically from the champion's own
+   * identity. Same shape of seam and same reason as `championTintFor`: the
+   * entity → championId step needs the seat table, which lives in the HUD store
+   * that render/** is walled off from (client-08), so GameApp supplies it.
+   *
+   * `undefined` = not resolvable yet (retry next frame), `null` = resolved and
+   * this champion renders with the plain team-coloured figure.
+   *
+   * NEVER called for kind 4 (guardian) — a neutral objective takes no champion
+   * identity, the same neutrality `championTintFor` is held to.
+   */
+  voxelSkinFor?(e: EntityViewState): VoxelSkinRecipe | null | undefined;
 }
 
 /**
@@ -121,6 +137,21 @@ export interface ModelDocOverride {
   relativeScale?: number;
   glbPath?: string;
   clipMap?: ModelDoc["clipMap"];
+  /**
+   * Per-champion look for the generated blocky humanoids (#226): palette,
+   * proportions and prop mask, derived deterministically from the championId by
+   * `views/voxelLook.voxelLookFor`.
+   *
+   * It rides THIS seam, and not `model@1`, on purpose. 44 champions share four
+   * model docs, so a content-schema field could not express a per-champion
+   * look without splitting the docs — and two of those doc ids are frozen by
+   * `packages/shared/src/sim/**`. This interface is already the client-side
+   * place where the entity → championId hop happens, so the look arrives with
+   * zero content-schema surface and nothing in the sim is touched.
+   *
+   * Absent for imported champions (which wear their own mesh) and for mobs.
+   */
+  voxel?: VoxelLook;
 }
 
 /**
@@ -505,7 +536,13 @@ export class EntityViewRegistry {
 
       let view = this.champions.get(e.id);
       if (!view) {
-        view = new ChampionView(this.scene, e.id, e.key, e.teamId);
+        // The skin is a CONSTRUCTION-TIME input: it decides the boxes, their
+        // UVs and the motif geometry, so it cannot be applied after the fact.
+        // `undefined` (seat table not filled in yet) resolves to no skin for
+        // this view — the plain figure — which is the same graceful degradation
+        // the tint path has, and the view is rebuilt on the next respawn.
+        const skin = this.content.voxelSkinFor?.(e) ?? null;
+        view = new ChampionView(this.scene, e.id, e.key, e.teamId, { skin });
         this.champions.set(e.id, view);
       }
       // idempotent: no-ops once started or while no model doc is available.
@@ -517,6 +554,10 @@ export class EntityViewRegistry {
         const override = this.content.modelOverrideFor?.(e);
         const baseDoc = this.content.modelDocFor?.(e.key, e.seatId) ?? null;
         const doc = applyModelOverride(baseDoc, override);
+        // #226: the per-champion blocky look is adopted BEFORE the glb load is
+        // kicked off, so the procedural fallback is already in the champion's
+        // own colours while the mesh is still in flight.
+        view.setVoxelLook(override?.voxel);
         view.tryUpgradeToGlb(this.assets, doc, relativeScaleOf(override));
       }
       this.applyTint(e, view);

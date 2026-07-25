@@ -364,10 +364,42 @@ func (s *Service) GetProfile(ctx context.Context, id string) (Profile, error) {
 
 // ---- account mutations (all audited) ----------------------------------------
 
+// MaxMCoinGrant bounds a single operator M幣 action, mirroring MaxCrystalGrant.
+// Same intent: a TYPO GUARD, not an economy rule. M幣 is a cosmetic currency
+// that is granted and never purchased (task #118), so there is no "correct"
+// ceiling to derive — this only refuses the extra two zeros. It is deliberately
+// SYMMETRIC because this surface, unlike crystals, legitimately deducts.
+const MaxMCoinGrant = 1_000_000
+
+// validMCoinDelta enforces the operator-adjust bounds. Unlike
+// validCrystalAmount, a NEGATIVE delta is legal: deducting M幣 is a stated
+// affordance of the 「M幣 發放」 console panel. Callers must still know that the
+// balance floors at 0, so a delta of -999999 ZEROES a balance rather than
+// deducting 999999 from it.
+func validMCoinDelta(delta int) error {
+	if delta == 0 {
+		return httpx.BadRequest("delta must be a non-zero whole number")
+	}
+	if delta > MaxMCoinGrant || delta < -MaxMCoinGrant {
+		return httpx.BadRequest("delta out of range")
+	}
+	return nil
+}
+
 // AdjustMCoin applies a signed delta to an account's M COIN balance (clamped at
 // zero) via the absolute-write path, and records an audit line. Returns the new
 // balance.
+//
+// This is the ONE audited M幣 door (task #214). The console's 「M幣 發放」 panel
+// used to POST /wallet/admin/grant-mcoin, which was role-checked but wrote no
+// audit line and validated nothing but a non-empty account id; that route is
+// gone and both console surfaces now land here. Bounds are re-checked in the
+// service, not only in the handler, so a future non-HTTP caller cannot skip
+// them — the same shape #225 gave the crystal grants.
 func (s *Service) AdjustMCoin(ctx context.Context, adminID, targetID string, delta int, reason string) (int, error) {
+	if err := validMCoinDelta(delta); err != nil {
+		return 0, err
+	}
 	if _, err := s.accounts.GetByID(ctx, targetID); err != nil {
 		return 0, notFoundOr(err)
 	}

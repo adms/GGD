@@ -1,0 +1,15 @@
+{
+  "id": "tpl-range-gamble",
+  "schema": "template@1",
+  "name": "距離博弈",
+  "description": "P3 距離博弈。",
+  "family": "range-gamble",
+  "status": "draft",
+  "params": {},
+  "requires": [],
+  "gapScore": 3,
+  "exemplar": {
+    "skill": "(draft)",
+    "jass": "(P2/P3)"
+  }
+}

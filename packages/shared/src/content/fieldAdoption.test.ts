@@ -235,6 +235,14 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     why: "apps/client/src/render/vfx/w3xEmitter.ts:520 SYNTHESIZES the VfxDoc and sets spriteSheet from the w3x emitter's rows/cols at load; particleFactory.ts:244 consumes it. Live in matches, absent from content/.",
   },
 
+  // --- landing: the schema arrived on this branch, the content arrives with
+  // the bake it describes.
+  "field:models.voxel": {
+    status: "landing",
+    since: "2026-07-26",
+    why: "task #229's 鑄形工坊 studio authors this block and task #226's `pnpm voxel:gen` consumes it; the field is the seam BETWEEN the two, so it lands with the schema and is populated when the first generated model doc is written (the studio's own save, or #226's five archetype docs). Zero adoption today is correct — no generated model exists yet — and NOT permanent: `packages/shared/src/voxel/doc.test.ts` proves a populated doc validates, so the only thing missing is a saved character. Delete this entry the moment one lands.",
+  },
+
   // --- an enum member with a documented decision to stay unused.
   "enum:arenas.groundStyle=wood": {
     status: "default-live",
@@ -280,6 +288,20 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   "enum:status-effects.polarity=buff": {
     status: "debt",
     why: "all 5 shipped status-effect docs are debuffs, so any UI that colours or filters by positive polarity has never rendered a single case. The map's buff-side statuses (haste/regen auras) were not imported.",
+  },
+  // 鑄技工坊 (Skill Forge P1, #141/#205): the `template` link landed on
+  // zAbilityDef this commit, and the 29 template@1 docs + the pure expand() ship
+  // with it, but NO existing content doc references a template yet — the editor's
+  // job is to re-author skills onto them. Until the 8 enabled families are
+  // adopted by real content this is an intentional zero. Kept as `debt` (not
+  // `landing`) so it stays visible in the banner rather than silently expiring.
+  "field:abilities.template": {
+    status: "debt",
+    why: "Skill Forge P1: the template@1 schema + expand() are live and the diff=0 roundtrip (godie-hgam.e via tpl-instant-blast) is proven in expand.test.ts, but no shipped ability yet stores template{ref,params} — that migration is the editor's writeback, done skill-by-skill. Adopting one skill turns this green.",
+  },
+  "field:champions.abilities.*.template": {
+    status: "debt",
+    why: "the champion-embedded mirror of abilities.template; adopted at the same moment the first Q/W/E/R skill is re-authored onto a template (the mirror writeback writes both copies).",
   },
 };
 

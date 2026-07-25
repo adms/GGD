@@ -26,6 +26,9 @@ import type { ModelDoc } from "./schema/model";
 import type { AnyVfxDoc, RibbonDoc, VfxDoc } from "./schema/vfx";
 import type { StatusEffectDoc } from "./schema/statusEffect";
 import type { SkinDoc } from "./schema/skin";
+import type { TemplateDoc } from "./schema/template";
+import { zAbilityDef, zAbilityDoc } from "./schema/ability";
+import { expand, mergeExpansion } from "./templates/expand";
 
 class ContentRegistry<V extends { id: string }> {
   private map = new Map<string, V>();
@@ -133,11 +136,27 @@ function stable(v: unknown): string {
  * denormalised copy embedded in the champion doc. See `registerChampion`.
  */
 export function registerAll(store: ContentStore): void {
+  // 鑄技工坊: build the template map first, then expand any templated ability at
+  // registration time — BOTH the standalone doc AND its champion-embedded twin,
+  // so the store-authoritative standalone and the sim-read embedded copy get the
+  // SAME expansion. Store ref+params on disk (NOT the expanded output) so a
+  // template upgrade re-expands every referencing skill next load (design §2.2).
+  const templates = new Map<string, TemplateDoc>(
+    store.all<TemplateDoc>("ability-templates").map((t) => [t.id, t]),
+  );
+  const expandStandalone = (d: AbilityDef): AbilityDef => expandIfTemplated(d, templates, true);
+  const expandEmbedded = (d: AbilityDef): AbilityDef => expandIfTemplated(d, templates, false);
+
   for (const d of store.all<ProjectileDef>("projectiles")) Projectiles.register(d.id, d);
   for (const d of store.all<ItemDef>("items")) Items.register(d.id, d);
   for (const d of store.all<AugmentDef>("augments")) Augments.register(d.id, d);
-  for (const d of store.all<AbilityDef>("abilities")) Abilities.register(d.id, d);
-  for (const d of store.all<ChampionDef>("champions")) registerChampion(d);
+  for (const d of store.all<AbilityDef>("abilities")) {
+    const e = expandStandalone(d);
+    Abilities.register(e.id, e);
+  }
+  for (const d of store.all<ChampionDef>("champions")) {
+    registerChampion(expandChampionTemplates(d, expandEmbedded));
+  }
   for (const d of store.all<LootTable>("loot-tables")) LootTables.register(d.id, d);
   for (const d of store.all<ArenaDoc>("arenas")) Arenas.register(d);
   for (const d of store.all<ConfigDoc>("config")) Configs.register(d);
@@ -148,4 +167,45 @@ export function registerAll(store: ContentStore): void {
   }
   for (const d of store.all<StatusEffectDoc>("status-effects")) StatusEffects.register(d);
   for (const d of store.all<SkinDoc>("skins")) Skins.register(d);
+}
+
+/** A doc that MAY carry the Skill-Forge template link (the field the sim type omits). */
+type MaybeTemplated = { readonly template?: { ref: string; params: Record<string, unknown> } };
+
+/**
+ * If `doc` references a template, expand it and re-validate the result with the
+ * shared schema (standalone → zAbilityDoc keeps the `schema` tag; embedded →
+ * zAbilityDef, which forbids it). Non-templated docs pass through untouched.
+ */
+function expandIfTemplated(
+  doc: AbilityDef,
+  templates: Map<string, TemplateDoc>,
+  standalone: boolean,
+): AbilityDef {
+  const link = (doc as unknown as MaybeTemplated).template;
+  if (link === undefined) return doc;
+  const t = templates.get(link.ref);
+  if (t === undefined) {
+    throw new Error(`ability ${doc.id}: template "${link.ref}" not found in ability-templates`);
+  }
+  const merged = mergeExpansion(doc as unknown as Record<string, unknown>, expand(t, link.params));
+  const parsed = standalone ? zAbilityDoc.parse(merged) : zAbilityDef.parse(merged);
+  return parsed as unknown as AbilityDef;
+}
+
+/** Expand the four embedded Q/W/E/R twins of a champion in place (immutably). */
+function expandChampionTemplates(
+  def: ChampionDef,
+  expandEmbedded: (d: AbilityDef) => AbilityDef,
+): ChampionDef {
+  const slots = ["Q", "W", "E", "R"] as const;
+  let changed = false;
+  const abilities = { ...def.abilities };
+  for (const slot of slots) {
+    const emb = def.abilities[slot];
+    if ((emb as unknown as MaybeTemplated).template === undefined) continue;
+    abilities[slot] = expandEmbedded(emb);
+    changed = true;
+  }
+  return changed ? { ...def, abilities } : def;
 }

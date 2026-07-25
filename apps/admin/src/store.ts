@@ -47,6 +47,13 @@ export type Page =
   | "items"
   | "vfx"
   | "arenas"
+  /**
+   * 鑄形工坊 (Project Voxel Forge, task #229) — the 體素角色生成器 studio. Same
+   * dev chunk, same gate, same absence from SESSION_REQUIRED_PAGES as every
+   * other 內容·素材管理 route: it authors a `model@1` document and writes it
+   * through the one contentApi write path, adding none of its own.
+   */
+  | "voxelStudio"
   | "combatEnv"
   /**
    * 系統運維 (server ops) — the operational numbers: 同時對戰上限 + 快照頻率
@@ -61,6 +68,13 @@ export type Page =
   | "modelBudget"
   | "iconTracking"
   /**
+   * 體素外觀對照表 (task #231) — the 驗收 surface for the per-champion generated
+   * voxel skins. Unlike its two siblings above it MEASURES NOTHING EXTERNAL: it
+   * computes every look at view time from /content + the shared generator, so
+   * there is no report for it to read and nothing for it to go stale against.
+   */
+  | "voxelSkins"
+  /**
    * 角色語音生成 (owner spec step 4) — DEV BUILDS ONLY, same shape as "content":
    * the page module is reached through an `import.meta.env.DEV`-guarded dynamic
    * import in ui/App.tsx, so a production admin build never emits it (nor its
@@ -70,7 +84,11 @@ export type Page =
    * editor, so it is NOT in SESSION_REQUIRED_PAGES below.
    */
   | "voiceGen"
-  /** M幣 發放 (task #118) — admin-granted M COIN via /wallet/admin/grant-mcoin. */
+  /**
+   * M幣 / 藍水晶 發放 (tasks #118, #225, #214) — admin-granted currency. M幣 now
+   * goes through the audited /admin/accounts/{id}/mcoin; the unaudited
+   * /wallet/admin/grant-mcoin it used to call is deleted.
+   */
   | "mcoinGrant"
   /**
    * 邀請碼 (task #174) — mint / list / revoke the single-use registration invite

@@ -110,6 +110,89 @@ describe("diffTally", () => {
   });
 });
 
+/**
+ * The CONTEXTUAL-VOICE half of a kill (#234): the same diff also names WHICH of
+ * the local champion's own lines to speak — 首殺 / 一殺..五殺 / 無人能敵 — and
+ * AudioDirector hands that category straight to `playContextualVoice`. Untested
+ * until this task, so the escalation is pinned here rather than assumed.
+ */
+describe("diffTally.killVoice — the escalating kill line", () => {
+  /** Carry the streak/latch forward exactly the way AudioDirector's refs do. */
+  function spree(kills: Array<{ atMs: number }>): Array<string | null> {
+    let prev = { ...base };
+    let lastKillMs: number | null = null;
+    let killStreak = 0;
+    let everKilled = false;
+    const out: Array<string | null> = [];
+    for (const [i, k] of kills.entries()) {
+      const next = { ...base, kills: i + 1 };
+      const r = diffTally(prev, next, { nowMs: k.atMs, lastKillMs, killStreak, everKilled });
+      prev = next;
+      lastKillMs = r.lastKillMs;
+      killStreak = r.killStreak;
+      everKilled = r.everKilled;
+      out.push(r.killVoice);
+    }
+    return out;
+  }
+
+  it("says first-blood once, then escalates 二殺/三殺… inside the window", () => {
+    cover("audio-tally-kill-voice");
+    expect(
+      spree([{ atMs: 0 }, { atMs: 1_000 }, { atMs: 2_000 }, { atMs: 3_000 }, { atMs: 4_000 }]),
+    ).toEqual(["first-blood", "kill-2", "kill-3", "kill-4", "kill-5"]);
+  });
+
+  it("goes unstoppable past five consecutive kills", () => {
+    cover("audio-tally-kill-voice");
+    const kills = [0, 1, 2, 3, 4, 5, 6].map((i) => ({ atMs: i * 1_000 }));
+    const voices = spree(kills);
+    expect(voices[5]).toBe("unstoppable"); // the sixth kill of the spree
+    expect(voices[6]).toBe("unstoppable"); // and it stays there
+  });
+
+  it("restarts the count at 一殺 when the spree goes stale", () => {
+    cover("audio-tally-kill-voice");
+    // first blood, then a kill well OUTSIDE the multi-kill window
+    expect(spree([{ atMs: 0 }, { atMs: MULTIKILL_WINDOW_MS + 1 }])).toEqual([
+      "first-blood",
+      "kill-1",
+    ]);
+  });
+
+  it("says nothing when no kill landed, and nothing on a seat change", () => {
+    cover("audio-tally-kill-voice");
+    expect(diffTally(base, { ...base, deaths: 1 }, { nowMs: 0, lastKillMs: null }).killVoice).toBeNull();
+    const rebaselined = diffTally(
+      { ...base, seatId: 1, kills: 5 },
+      { ...base, seatId: 2, kills: 0 },
+      { nowMs: 100, lastKillMs: 50, killStreak: 4, everKilled: true },
+    );
+    expect(rebaselined.killVoice).toBeNull();
+    // a new match re-arms first blood rather than leaking the old latch
+    expect(rebaselined.everKilled).toBe(false);
+    expect(rebaselined.killStreak).toBe(0);
+  });
+
+  it("only ever names categories the generated voice packs actually carry", () => {
+    cover("audio-tally-kill-voice");
+    // A category the pack has no folder for would fall through silently, which
+    // is safe but mute — so keep the emitted names pinned to the real roster
+    // (content/assets/audio/voices/lines/CATEGORIES.json orders 35-41).
+    const REAL = new Set([
+      "first-blood",
+      "kill-1",
+      "kill-2",
+      "kill-3",
+      "kill-4",
+      "kill-5",
+      "unstoppable",
+    ]);
+    const kills = Array.from({ length: 9 }, (_, i) => ({ atMs: i * 1_000 }));
+    for (const v of spree(kills)) expect(REAL.has(v!)).toBe(true);
+  });
+});
+
 describe("crossedIntoLowHealth", () => {
   const hp = (h: number, alive = true, maxHp = 100): HealthSnapshot => ({ hp: h, maxHp, alive });
 

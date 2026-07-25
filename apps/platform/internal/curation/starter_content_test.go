@@ -168,7 +168,7 @@ func TestStarterSetMatchesContentTree(t *testing.T) {
 	}
 
 	set := curation.StarterSet()
-	require.GreaterOrEqual(t, len(set.Champions), 40, "the first open roster is 48 champions")
+	require.GreaterOrEqual(t, len(set.Champions), 40, "the first open roster is 50 champions")
 	require.GreaterOrEqual(t, len(set.Items), 24, "starter set must enable at least 24 items")
 	require.GreaterOrEqual(t, len(set.Abilities), len(set.Champions)*5,
 		"every starter champion contributes its full Q/W/E/R/EX kit")
@@ -544,32 +544,37 @@ func TestStarterDraftIsQuestSet(t *testing.T) {
 	check("content/loot-tables/quest-rewards.json", tableIDs)
 }
 
-// firstOpenRoster is the user's 48 hand-picked champions — the FIRST OPEN
+// firstOpenRoster is the user's 50 hand-picked champions — the FIRST OPEN
 // ROSTER (對戰可選名單), one canonical id per requested name after dropping the
 // test/placeholder and duplicate-reskin candidates (see starter.go and 附錄A of
 // docs/hero-popularity-ranking.md). Pinned here id-for-id so a re-import or a
 // careless edit to starter.go cannot silently add, drop or swap a champion.
+//
+// 48 at task #138; task #212 added godie-efur (揍敵客桀諾 #13) and godie-hblm
+// (賈修貝爾 #05). Adding a champion here is deliberate and reviewable — that is
+// the whole point of the pin. The new-hero checklist that must be walked before
+// an id lands in this list is docs/新英雄上架SOP.md.
 var firstOpenRoster = []string{
 	"godie-e001", "godie-e002", "godie-e007", "godie-e008", "godie-e00k",
-	"godie-e00r", "godie-e00w", "godie-edem", "godie-emfr", "godie-emns",
-	"godie-etyr", "godie-h00l", "godie-h01n", "godie-h01u", "godie-h020",
-	"godie-h02k", "godie-h02r", "godie-h02u", "godie-hapm", "godie-hart",
-	"godie-hpal", "godie-hpb1", "godie-huth", "godie-hvsh", "godie-hvwd",
-	"godie-n003", "godie-n00b", "godie-n00p", "godie-n01c", "godie-nplh",
-	"godie-o00k", "godie-o00l", "godie-o00x", "godie-o02p", "godie-ofar",
-	"godie-ogld", "godie-orkn", "godie-osam", "godie-u00h", "godie-u00j",
-	"godie-u00k", "godie-u00l", "godie-u00n", "godie-u00v", "godie-u010",
-	"godie-u01u", "godie-ubal", "godie-udea",
+	"godie-e00r", "godie-e00w", "godie-edem", "godie-efur", "godie-emfr",
+	"godie-emns", "godie-etyr", "godie-h00l", "godie-h01n", "godie-h01u",
+	"godie-h020", "godie-h02k", "godie-h02r", "godie-h02u", "godie-hapm",
+	"godie-hart", "godie-hblm", "godie-hpal", "godie-hpb1", "godie-huth",
+	"godie-hvsh", "godie-hvwd", "godie-n003", "godie-n00b", "godie-n00p",
+	"godie-n01c", "godie-nplh", "godie-o00k", "godie-o00l", "godie-o00x",
+	"godie-o02p", "godie-ofar", "godie-ogld", "godie-orkn", "godie-osam",
+	"godie-u00h", "godie-u00j", "godie-u00k", "godie-u00l", "godie-u00n",
+	"godie-u00v", "godie-u010", "godie-u01u", "godie-ubal", "godie-udea",
 }
 
 // whitelist-first-open-roster: the enabled champion set the starter bundle
-// seeds is EXACTLY the 48 canonical first-open-roster ids — no more, no fewer,
+// seeds is EXACTLY the 50 canonical first-open-roster ids — no more, no fewer,
 // none swapped. This is the guard the task asks for; it needs no content tree,
 // so it runs in any environment.
 func TestFirstOpenRoster(t *testing.T) {
 	testkit.Cover(t, "whitelist-first-open-roster")
 
-	require.Len(t, firstOpenRoster, 48, "the first open roster is 48 champions")
+	require.Len(t, firstOpenRoster, 50, "the first open roster is 50 champions")
 	seen := map[string]struct{}{}
 	for _, id := range firstOpenRoster {
 		_, dup := seen[id]
@@ -580,7 +585,7 @@ func TestFirstOpenRoster(t *testing.T) {
 	want := append([]string(nil), firstOpenRoster...)
 	sort.Strings(want)
 	assert.Equal(t, want, curation.StarterSet().Champions,
-		"the starter bundle's enabled champion set must be EXACTLY the 48 canonical first-open-roster ids")
+		"the starter bundle's enabled champion set must be EXACTLY the 50 canonical first-open-roster ids")
 }
 
 // whitelist-starter-shape: the bundle's three lists are internally consistent

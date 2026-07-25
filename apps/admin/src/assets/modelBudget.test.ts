@@ -52,7 +52,7 @@ const REPORT = {
   models: [
     {
       id: "champ.sela",
-      path: "assets/models/champions/mage.glb",
+      path: "assets/models/champions/blocky-mage.glb",
       triangles: 12000,
       vertices: 6100,
       textureBytes: 1048576,

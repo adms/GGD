@@ -17,10 +17,10 @@ import { goStringSlice, readStarterRoster, STARTER_GO_REL } from "./starterRoste
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../.."); // testkit -> repo root
 
 describe("tracked first open roster", () => {
-  it("parses 48 unique ids out of the committed starter.go", () => {
+  it("parses 50 unique ids out of the committed starter.go", () => {
     const ids = readStarterRoster(ROOT);
-    expect(ids.length, `${STARTER_GO_REL} must declare the pinned 48`).toBe(48);
-    expect(new Set(ids).size).toBe(48);
+    expect(ids.length, `${STARTER_GO_REL} must declare the pinned 50`).toBe(50);
+    expect(new Set(ids).size).toBe(50);
     for (const id of ids) expect(id).toMatch(/^godie-[a-z0-9]+$/);
   });
 

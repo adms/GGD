@@ -144,10 +144,6 @@ func CrystalRewardFor(place int) int { return crystalRewards[place] }
 // parallel wave owns internal/account; keyed by accountId.
 const ColWalletMeta = "walletmeta"
 
-// roleAdmin is the authorization role required to grant M COIN. Mirrors
-// admin.RoleAdmin as a literal to avoid an import cycle (admin imports wallet).
-const roleAdmin = "admin"
-
 // keyMeta is the Redis mirror key for one account's meta progression.
 func keyMeta(accountID string) string { return "walletmeta:" + accountID }
 
@@ -454,28 +450,18 @@ func (s *Service) ToggleFavourite(ctx context.Context, accountID, championID str
 	return s.Get(ctx, accountID)
 }
 
-// GrantMCoin adds delta M COIN (造型幣) to a target account on behalf of an
-// admin. M COIN is admin-granted, never purchased (task #118 / #126). The
-// caller MUST carry the admin role — a non-admin caller is a 403 and nothing
-// changes. The balance floors at 0. Returns the target's new balance.
-func (s *Service) GrantMCoin(ctx context.Context, callerID, targetID string, delta int) (int, error) {
-	caller, err := s.accounts.GetByID(ctx, callerID)
-	if err != nil {
-		return 0, err
-	}
-	if !caller.HasRole(roleAdmin) {
-		return 0, httpx.Err(http.StatusForbidden, "forbidden", "admin role required")
-	}
-	target, err := s.accounts.GetByID(ctx, targetID)
-	if err != nil {
-		return 0, err
-	}
-	next := target.MCoin + delta
-	if next < 0 {
-		next = 0
-	}
-	if err := s.SetMCoinAbsolute(ctx, targetID, next); err != nil {
-		return 0, err
-	}
-	return next, nil
-}
+// GrantMCoin USED TO LIVE HERE and was deleted by task #214.
+//
+// It was the service half of `POST /wallet/admin/grant-mcoin`: it checked
+// caller.HasRole("admin") and nothing else — no ban check, no #126 approval
+// check, no amount bounds — and, decisively, it could write NO audit line,
+// because internal/admin owns the audit writer and admin imports wallet, so the
+// reverse edge is an import cycle. The result was an operator currency door
+// that left no trail while the sibling door (/admin/accounts/{id}/mcoin) logged
+// every move.
+//
+// The audited replacement is admin.Service.AdjustMCoin. Do NOT reintroduce a
+// grant path in this package: the cycle that blocked the audit line is still
+// there, so any M幣 mutation added here would be unauditable for the same
+// reason. wallet.Service.SetMCoinAbsolute stays exported as the low-level write
+// that admin.Service.AdjustMCoin drives.

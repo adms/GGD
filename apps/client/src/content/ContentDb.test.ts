@@ -53,6 +53,11 @@ const STANDIN = {
   target: 1.8,
   overrides: { godie2000: { relativeScale: 0.65 } },
 };
+/** task #231's hand-authored voxel-skin override sidecar (layer L1). */
+const VOXEL_SKINS = {
+  schema: "voxel-skins@1",
+  overrides: { godie2000: { motifs: { head: "crown" } } },
+};
 
 const FILES: Record<string, unknown> = {
   "/content/manifest.json": {
@@ -66,8 +71,9 @@ const FILES: Record<string, unknown> = {
   "/content/models/mock.model.json": MODEL,
   "/content/arenas/_index.json": idx("arenas", [{ id: "arena.mock", path: "arenas/arena.mock.json" }]),
   "/content/arenas/arena.mock.json": ARENA,
-  // the "_"-prefixed sidecar the content index deliberately skips
+  // the "_"-prefixed sidecars the content index deliberately skips
   "/content/models/_standin-overrides.json": STANDIN,
+  "/content/models/_voxel-skins.json": VOXEL_SKINS,
 };
 
 /** fetch-like over FILES, counting every call (ignores the ?h=<hash> cache-bust). */
@@ -109,13 +115,19 @@ afterEach(() => {
 });
 
 describe("ContentDb per-match load", () => {
-  it("re-fetches NO collection — the only request is the direct-path sidecar", async () => {
+  it("re-fetches NO collection — the only requests are the direct-path sidecars", async () => {
     const before = calls.length;
     const db = new ContentDb();
     await db.load("arena.mock");
     const made = calls.slice(before);
 
-    expect(made).toEqual(["/content/models/_standin-overrides.json"]);
+    // BOTH "_"-prefixed sidecars: the #77/#150 size overrides and (task #231)
+    // the hand-authored voxel-skin overrides. Neither is in a collection index,
+    // so neither can ride in on the boot bundle — two requests, no collections.
+    expect([...made].sort()).toEqual([
+      "/content/models/_standin-overrides.json",
+      "/content/models/_voxel-skins.json",
+    ]);
     // the two collections that used to cost 507 requests
     expect(made.some((u) => u.includes("/models/_index.json"))).toBe(false);
     expect(made.some((u) => u.includes("/vfx/"))).toBe(false);
@@ -132,6 +144,9 @@ describe("ContentDb per-match load", () => {
     // the size-override sidecar still rides in alongside the model docs
     expect(db.modelOverrideFor("godie2000")?.relativeScale).toBe(0.65);
     expect(db.modelOverrideFor("unlisted")).toBeNull();
+    // ...and so does the voxel-skin override sidecar (task #231)
+    expect(db.voxelSkinOverrideFor("godie2000")?.motifs?.head).toBe("crown");
+    expect(db.voxelSkinOverrideFor("unlisted")).toBeNull();
   });
 
   it("loadArena reads the registry — no request per arena change", async () => {

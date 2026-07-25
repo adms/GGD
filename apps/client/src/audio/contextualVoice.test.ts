@@ -171,6 +171,34 @@ describe("contextualVoice throttle + gates", () => {
     expect(audio.played).toHaveLength(1);
   });
 
+  it("a champion with NO kill pack falls through silently (#234)", async () => {
+    cover("contextual-voice");
+    const { audio, player } = make(now, () => 0);
+    await player.warm();
+    // 63 of the 114 champion docs have no generated pack at all, and even a
+    // packed champion may be missing a category. Every kill category must be a
+    // silent no-op for them — never a throw, and never another hero's voice.
+    for (const cat of [
+      "first-blood",
+      "kill-1",
+      "kill-2",
+      "kill-3",
+      "kill-4",
+      "kill-5",
+      "unstoppable",
+    ]) {
+      expect(player.playContextual("godie-nopack", cat)).toBe(false);
+    }
+    // the packed champion is missing kill-2..kill-5 / unstoppable in this
+    // fixture: those fall through too, while the ones it HAS still fire.
+    for (const cat of ["kill-2", "kill-3", "unstoppable"]) {
+      expect(player.playContextual("godie-e001", cat)).toBe(false);
+    }
+    expect(audio.played).toEqual([]); // nothing substituted, nothing borrowed
+    expect(player.playContextual("godie-e001", "kill-1")).toBe(true);
+    expect(audio.played).toEqual(["assets/audio/voices/lines/godie-e001/kill-1.mp3"]);
+  });
+
   it("inherits the unlock gate — a locked mixer plays nothing", async () => {
     cover("contextual-voice");
     const { audio, player } = make(now, () => 0);

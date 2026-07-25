@@ -21,7 +21,7 @@ import { glbYawOffset, IMPORTED_GLB_YAW_OFFSET, NATIVE_GLB_YAW_OFFSET } from "./
 const STAND_IN: ModelDoc = {
   id: "champ.sela",
   schema: "model@1",
-  glbPath: "assets/models/champions/mage.glb",
+  glbPath: "assets/models/champions/blocky-mage.glb",
   scale: 0.7727,
   collisionRadius: 0.6,
   clipMap: {
@@ -102,7 +102,7 @@ describe("blizzardOverlayFromDoc", () => {
     expect(blizzardOverlayFromDoc("<!doctype html>")).toBeNull();
     const idx = blizzardOverlayFromDoc({
       units: {
-        Bad: { champId: "godie-bad", glb: "assets/models/champions/mage.glb" },
+        Bad: { champId: "godie-bad", glb: "assets/models/champions/blocky-mage.glb" },
         Worse: { champId: "godie-worse", glb: "https://evil.example/x.glb" },
         NoChamp: { glb: "assets/blizzard-local/models/X.glb" },
       },

@@ -45,6 +45,15 @@
  * `abilities` (and unlike a champion Q/W/E/R), neither mirrors anywhere, so
  * `writePlan` needs no change: each yields a single {reason:"edit"} step.
  */
+/**
+ * `models` (task #229's 鑄形工坊) joins the editable set. Like `vfx` / `arenas`
+ * it was ALREADY in the shared COLLECTIONS registry (`zModelDoc`) and already
+ * has `content/models/_index.json`, so the content-api has always validated and
+ * written it — this only surfaces it to the console, which is what the voxel
+ * studio needs to save the `model@1` document it authors. It mirrors NOWHERE
+ * (only a Q/W/E/R ability has an embedded twin), so `writePlan` is unchanged
+ * and a model edit is a single {reason:"edit"} step.
+ */
 export type EditCollection =
   | "items"
   | "champions"
@@ -52,7 +61,8 @@ export type EditCollection =
   | "augments"
   | "loot-tables"
   | "vfx"
-  | "arenas";
+  | "arenas"
+  | "models";
 
 export const EDIT_COLLECTIONS: readonly EditCollection[] = [
   "champions",
@@ -62,6 +72,7 @@ export const EDIT_COLLECTIONS: readonly EditCollection[] = [
   "loot-tables",
   "vfx",
   "arenas",
+  "models",
 ];
 
 export function isEditCollection(v: unknown): v is EditCollection {
@@ -72,7 +83,8 @@ export function isEditCollection(v: unknown): v is EditCollection {
     v === "augments" ||
     v === "loot-tables" ||
     v === "vfx" ||
-    v === "arenas"
+    v === "arenas" ||
+    v === "models"
   );
 }
 
@@ -351,4 +363,193 @@ export function writePlan(
   );
   steps.push({ collection: "champions", id: championId, doc: patched, reason: "mirror" });
   return steps;
+}
+
+// ---------------------------------------------------------------------------
+// mirror-aware LINE EDIT (鑄技工坊 / #78) — never JSON round-trip the champion
+// ---------------------------------------------------------------------------
+
+/**
+ * WC3-derived champion docs store whole-number floats as `"60.0"`. A full-doc
+ * `JSON.stringify(doc, null, 2)` renders those as `"60"` — a byte diff on EVERY
+ * `X.0` across ALL five slots, not just the one being edited. So the mirror
+ * write must splice ONLY the target slot's brace-matched span, leaving every
+ * other byte (all the sibling slots' `"60.0"`s, key order, spacing) untouched.
+ *
+ * These functions are PURE string surgery over the champion file TEXT, unit-
+ * tested in editModel.test.ts. The content-api's mirror sub-route calls them;
+ * the guard (loopback/Origin/NODE_ENV) is unchanged.
+ */
+
+/** Fields whose whole-number values WC3 content stores with a trailing `.0`. */
+const FLOAT_FIELDS = new Set([
+  "cooldown",
+  "manaCost",
+  "range",
+  "radius",
+  "castTimeSec",
+  "recoverySec",
+  "duration",
+]);
+
+/**
+ * JSON.stringify with the project's 2-space indent, re-inserting the `.0` on
+ * whole-number values that live under a FLOAT_FIELDS key (so the spliced slot
+ * matches the surrounding champion doc's float convention). Effect amounts and
+ * other integers render plain. `baseIndent` is the column the value sits at.
+ */
+export function stringifyEmbedded(value: unknown, baseIndent: string): string {
+  const walk = (v: unknown, indent: string, floaty: boolean): string => {
+    if (typeof v === "number") {
+      if (floaty && Number.isInteger(v)) return `${v}.0`;
+      return String(v);
+    }
+    if (v === null) return "null";
+    if (typeof v === "boolean") return String(v);
+    if (typeof v === "string") return JSON.stringify(v);
+    const next = indent + "  ";
+    if (Array.isArray(v)) {
+      if (v.length === 0) return "[]";
+      const items = v.map((el) => `${next}${walk(el, next, floaty)}`);
+      return `[\n${items.join(",\n")}\n${indent}]`;
+    }
+    if (typeof v === "object") {
+      const entries = Object.entries(v as Record<string, unknown>);
+      if (entries.length === 0) return "{}";
+      const lines = entries.map(
+        ([k, val]) => `${next}${JSON.stringify(k)}: ${walk(val, next, FLOAT_FIELDS.has(k))}`,
+      );
+      return `{\n${lines.join(",\n")}\n${indent}}`;
+    }
+    return "null";
+  };
+  return walk(value, baseIndent, false);
+}
+
+/** Skip a JSON value starting at `i` (first non-ws char); return the index AFTER it. */
+function skipValue(text: string, i: number): number {
+  const c = text[i];
+  if (c === "{" || c === "[") {
+    const open = c;
+    const close = c === "{" ? "}" : "]";
+    let depth = 0;
+    let inStr = false;
+    for (let j = i; j < text.length; j++) {
+      const ch = text[j];
+      if (inStr) {
+        if (ch === "\\") j++;
+        else if (ch === '"') inStr = false;
+        continue;
+      }
+      if (ch === '"') inStr = true;
+      else if (ch === open) depth++;
+      else if (ch === close) {
+        depth--;
+        if (depth === 0) return j + 1;
+      }
+    }
+    throw new Error("unbalanced JSON while splicing champion slot");
+  }
+  if (c === '"') {
+    for (let j = i + 1; j < text.length; j++) {
+      if (text[j] === "\\") j++;
+      else if (text[j] === '"') return j + 1;
+    }
+    throw new Error("unterminated string while splicing champion slot");
+  }
+  // number / literal: read until a JSON delimiter
+  let j = i;
+  while (j < text.length && !",}]\n".includes(text[j]!)) j++;
+  return j;
+}
+
+/** Index of the `"key":` occurrence at object depth 1 inside the object at `objBrace`. */
+function findKeyInObject(text: string, objBrace: number, key: string): number {
+  const needle = `"${key}"`;
+  let depth = 0;
+  let inStr = false;
+  for (let j = objBrace; j < text.length; j++) {
+    const ch = text[j];
+    if (inStr) {
+      if (ch === "\\") j++;
+      else if (ch === '"') inStr = false;
+      continue;
+    }
+    if (ch === '"') {
+      if (depth === 1 && text.startsWith(needle, j)) {
+        const after = j + needle.length;
+        const colon = text.indexOf(":", after);
+        if (colon !== -1) return j;
+      }
+      inStr = true;
+    } else if (ch === "{" || ch === "[") depth++;
+    else if (ch === "}" || ch === "]") {
+      depth--;
+      if (depth === 0) return -1; // left the abilities object
+    }
+  }
+  return -1;
+}
+
+/**
+ * Replace the embedded `abilities.<slot>` block inside a champion doc's TEXT with
+ * `embedded`, touching no other byte. Throws if the slot is not present.
+ */
+export function spliceEmbeddedSlot(
+  championText: string,
+  slot: CoreSlot,
+  embedded: Record<string, unknown>,
+): string {
+  const abilitiesKey = findKeyInObject(championText, championText.indexOf("{"), "abilities");
+  if (abilitiesKey === -1) throw new Error("champion doc has no abilities object");
+  const abilitiesBrace = championText.indexOf("{", abilitiesKey);
+  const slotKey = findKeyInObject(championText, abilitiesBrace, slot);
+  if (slotKey === -1) throw new Error(`champion doc has no abilities.${slot}`);
+  const colon = championText.indexOf(":", slotKey);
+  let valueStart = colon + 1;
+  while (valueStart < championText.length && " \t".includes(championText[valueStart]!)) valueStart++;
+  const valueEnd = skipValue(championText, valueStart);
+  // indent = whitespace before the slot key on its line
+  const lineStart = championText.lastIndexOf("\n", slotKey) + 1;
+  const indent = championText.slice(lineStart, slotKey);
+  const serialized = stringifyEmbedded(embedded, indent);
+  return championText.slice(0, valueStart) + serialized + championText.slice(valueEnd);
+}
+
+/**
+ * Replace ONE top-level member's value inside a pretty-printed JSON doc's TEXT.
+ * The standalone half of the 鑄技工坊 writeback: re-authoring an ability onto a
+ * template only ever changes `template` / `effects` / `castType` / `radius` /
+ * `targetsEnemies` / `innateKind` / `passive` / `castTimeSec`, so splicing those
+ * members one at a time makes the git diff show exactly those lines — instead of
+ * a whole-file `JSON.stringify` renormalising every `350.0` the Python exporter
+ * wrote into `350` (measured: 56 of 359 lines on content/champions/godie-hart.json).
+ *
+ * Throws when the member is absent: a blind append would put the key in the
+ * wrong place and silently reorder the doc, so the caller must add new members
+ * through the full-doc PUT path instead.
+ */
+export function spliceTopLevelMember(text: string, key: string, value: unknown): string {
+  const rootBrace = text.indexOf("{");
+  if (rootBrace === -1) throw new Error("document is not a JSON object");
+  const keyAt = findKeyInObject(text, rootBrace, key);
+  if (keyAt === -1) throw new Error(`document has no top-level member "${key}"`);
+  const colon = text.indexOf(":", keyAt);
+  let valueStart = colon + 1;
+  while (valueStart < text.length && " \t".includes(text[valueStart]!)) valueStart++;
+  const valueEnd = skipValue(text, valueStart);
+  const lineStart = text.lastIndexOf("\n", keyAt) + 1;
+  const indent = text.slice(lineStart, keyAt);
+  return text.slice(0, valueStart) + stringifyEmbedded(value, indent) + text.slice(valueEnd);
+}
+
+/**
+ * Apply a member patch to a doc's TEXT, one splice per key, preserving every
+ * byte outside the patched members. Key order on disk is untouched (a splice
+ * never moves a member), so the resulting diff is minimal by construction.
+ */
+export function spliceMembers(text: string, patch: Record<string, unknown>): string {
+  let out = text;
+  for (const [k, v] of Object.entries(patch)) out = spliceTopLevelMember(out, k, v);
+  return out;
 }

@@ -53,15 +53,24 @@ a parallel wave, so meta stays off it) with a Redis mirror:
   family evening ≈ 1–2 h ≈ 2–4 matches. At 300 per unlock that is **2.5 matches if you keep
   winning, 3.5 on average, 5.0 if you always place last** — about one champion per evening.
   Last place still earns: 「打場免費賺」 is free THROUGH PLAY, not through winning.
-  **Roster split**: 12 of the 48 whitelisted champions are free starters (8 melee + 4 ranged,
+  **Roster split**: 12 of the 50 whitelisted champions are free starters (8 melee + 4 ranged,
   chosen for name recognition so a first-time player sees heroes they know and both attack
-  types are covered from match one); the other 36 are priced at 300.
+  types are covered from match one); the other 38 are priced at 300 — including the two
+  task #212 added (`godie-efur`, `godie-hblm`), which join at the standard 300 rather than
+  the free tier: a champion ABSENT from `championPrices` reads as "free" to `lockStateOf`
+  but 404s on `ToggleFavourite` / `UnlockChampion`, so it can never be 喜愛-pinned.
 - **喜愛置頂 / Favourite pin** — `POST /wallet/favourites {champion, favourite}` toggles a
   per-account favourite set (stored sorted, deduped), surfaced on `GET /wallet` for
   champ-select to float to the top.
-- **M幣 / M COIN** — now ADMIN-GRANTED only. `POST /wallet/admin/grant-mcoin
-  {accountId, amount}` is role-gated (caller must carry `admin`); a non-admin is 403. The
-  existing skin/cosmetic `POST /store/buy` still spends it — it is just never purchased.
+- **M幣 / M COIN** — ADMIN-GRANTED only, through `POST /admin/accounts/{id}/mcoin
+  {delta, reason}` (AdminOnly + bounds + audited as `mcoin_adjust`). The existing
+  skin/cosmetic `POST /store/buy` still spends it — it is just never purchased.
+  **Route moved in task #214.** It used to be `POST /wallet/admin/grant-mcoin
+  {accountId, amount}`, which sat outside the `/admin` subrouter (so no AdminOnly:
+  no banned test, no #126-approved test), validated nothing but a non-empty
+  accountId, and wrote **no audit line** — it could not, because `admin` imports
+  `wallet` so the edge back is an import cycle. That route is DELETED; the guard
+  that it stays deleted is `wallet.TestNoAdminMCoinRouteHere`.
 
 Wallet package: `apps/platform/internal/wallet/{meta.go,wallet.go,handlers.go,catalog.go,meta_test.go}`.
 Settlement side: `apps/platform/internal/gamelink/{callback.go,settle.go,crystal_test.go}`.
@@ -76,7 +85,7 @@ Grants are deterministic (placement-scaled), so tests need no rng seam.
 | meta-11 | A duplicate result callback and a WAL replay do not double-grant crystals | crystal-settle-idempotent | security | done |
 | meta-12 | Replaying a settlement record written before the crystal field existed does not wipe a balance | crystal-legacy-replay-safe | integration | done |
 | meta-03 | Favourite pin/unpin persists (sorted, deduped) and round-trips a Redis wipe | meta-favourite-toggle | integration | done |
-| meta-04 | Admin grants M幣 (additive); a non-admin caller is 403 and changes nothing | meta-admin-grant-mcoin | security | done |
+| meta-04 | Admin grants M幣 (additive) through the AUDITED `/admin/accounts/{id}/mcoin`; a non-admin caller is 403 and changes nothing; the retired `/wallet/admin/grant-mcoin` answers 404 to everyone incl. admins (task #214) | meta-admin-grant-mcoin | security | done |
 
 ### 藍水晶 operator grants (task #225)
 
@@ -125,8 +134,11 @@ per-card 喜愛置頂 star + 「解鎖 (300 水晶)」button) and is wired into
 `/wallet/champions/unlock`; the star POSTs `/wallet/favourites`). It degrades to hidden meta
 chrome when the platform is unreachable / there is no session, leaving the base champ-select
 untouched. Admin M幣 發放: `apps/admin/src/ui/MCoinGrantPage.tsx` + `mcoinGrant.ts` (pure
-form logic) calling `POST /wallet/admin/grant-mcoin` via `api.grantMCoin`; registered as the
-`mcoinGrant` page (nav + route in `ui/App.tsx`, `Page` union in `store.ts`).
+form logic) calling the audited `POST /admin/accounts/{id}/mcoin` via `api.grantMCoin`
+(re-pointed off the unaudited wallet route by task #214; the form now carries a 原因 that
+lands in the audit line, and mirrors the server's `MaxMCoinGrant` bound as
+`MAX_MCOIN_GRANT`); registered as the `mcoinGrant` page (nav + route in `ui/App.tsx`,
+`Page` union in `store.ts`).
 
 | ID | Item | Test ID | Category | Status |
 | --- | --- | --- | --- | --- |

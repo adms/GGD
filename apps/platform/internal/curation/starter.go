@@ -4,7 +4,7 @@ import "sort"
 
 // The STARTER SET — the named, reviewable "make a fresh install playable"
 // bundle (task #47). Its champion half is the FIRST OPEN ROSTER (對戰可選名單):
-// the 48 champions the user hand-picked to be selectable in champ-select on a
+// the 50 champions the user hand-picked to be selectable in champ-select on a
 // fresh install.
 //
 // WHY IT EXISTS. The whitelist ships EMPTY on purpose (task #4): the imported
@@ -37,13 +37,14 @@ import "sort"
 // TestStarterSetMatchesContentTree against the real content tree — the bundle
 // cannot silently rot when content is re-imported):
 //
-// CHAMPIONS (48) — the FIRST OPEN ROSTER (對戰可選名單). 113 candidates in, the
-// user's 48 hand-picked names out. This is NOT the old 13-tile demo showcase:
+// CHAMPIONS (50) — the FIRST OPEN ROSTER (對戰可選名單). 113 candidates in, the
+// user's 50 hand-picked names out — 48 at task #138, +2 at task #212
+// (揍敵客桀諾 godie-efur #13、賈修貝爾 godie-hblm #05). This is NOT the old 13-tile demo showcase:
 // it is the whole selectable roster a fresh install offers in champ-select, so
 // the gates are about ROSTER INTEGRITY (a real, complete, distinct champion),
 // NOT about a pretty demo grid.
 //
-// ONE CANONICAL ID PER NAME. ~20 of the 48 wanted names matched several content
+// ONE CANONICAL ID PER NAME. ~20 of the 50 wanted names matched several content
 // docs (re-skins, blank-story twins, a 測試 stand-in). Each name resolves to ONE
 // canonical id, chosen by: reject anything whose name carries 測試/範例/範本 or
 // whose story is a blank placeholder; then prefer the entry with a real 稱號, a
@@ -64,14 +65,15 @@ import "sort"
 //	   RULE — the task #11 hero 編號 carried by the ability names, plus the
 //	   display name. Source of truth:
 //	   packages/shared/src/content/championIdentity.ts (ported in
-//	   heroidentity_test.go, asserted by TestChampionIdentityRule). The 48 carry
-//	   48 DISTINCT hero 編號, so no pair can collide.
-//	R5 the roster is EXACTLY these 48 canonical ids — pinned id-for-id by
+//	   heroidentity_test.go, asserted by TestChampionIdentityRule). The 50 carry
+//	   50 DISTINCT hero 編號, so no pair can collide. This is why the #212 pair
+//	   opens 賈修貝爾 (godie-hblm) but NOT its 編號 05 twin 阿強一號 (godie-h021).
+//	R5 the roster is EXACTLY these 50 canonical ids — pinned id-for-id by
 //	   TestFirstOpenRoster so a re-import or a careless edit cannot silently add,
 //	   drop or swap a champion.
 //
 // WHAT IS DELIBERATELY **NOT** GATED (and why the old showcase gates G2–G6 are
-// gone). A 48-champion selectable roster is a different thing from a 13-tile
+// gone). A 50-champion selectable roster is a different thing from a 13-tile
 // demo grid, and the visual/uniqueness gates that made the grid pretty would
 // now DELETE champions the user explicitly asked for:
 //
@@ -90,7 +92,7 @@ import "sort"
 //   - TEXTURED body / silhouette height band / animation count. Presentation
 //     gates for the fixed-camera demo tiles; irrelevant to whether a champion
 //     is pickable.
-//   - buildPriority LADDER. Most of the 48 carry only a 2-item buildPriority,
+//   - buildPriority LADDER. Most of the 50 carry only a 2-item buildPriority,
 //     and the AIDriver already TOLERATES a non-purchasable rung (it skips it
 //     rather than stalling), so a "≥4 purchasable rungs" gate would reject real
 //     champions for a problem the bot no longer has.
@@ -220,14 +222,14 @@ import "sort"
 //	orb. The aboveCeiling ledger in the test is therefore EMPTY, and the gate
 //	now asserts it stays empty.
 //
-// ABILITIES (240) — 48 champions x {q,w,e,r,ex}:
+// ABILITIES (250) — 50 champions x {q,w,e,r,ex}:
 //
 //	Only `.ex` is enforced today (a champion's Q/W/E/R are embedded in the
 //	champion doc and ungated), but listing all five makes the bundle
 //	self-describing and future-proofs it if gating widens. It also means there
 //	is no such thing as a HALF-ENABLED champion in this set.
 var (
-	// The FIRST OPEN ROSTER — 48 canonical champion ids, one per user-picked
+	// The FIRST OPEN ROSTER — 50 canonical champion ids, one per user-picked
 	// name (對戰可選名單). Sorted; ApplyStarterSet unions this into the whitelist,
 	// which the client champ-select and the game-server both read. Inline
 	// annotations record the display name, hero 編號, and — for the ~20 names
@@ -246,6 +248,7 @@ var (
 		"godie-e00r", // 初號機 - 最終泛用人型決戰兵器  #59
 		"godie-e00w", // 櫻綻剎那 - 神鳴流劍士  #77  — 選 e00w（剔 e00x）
 		"godie-edem", // 宇智波佐助 - 寫輪眼復仇者  #45
+		"godie-efur", // 揍敵客桀諾 - 揍敵客大家長  #13  — 任務 #212 追加
 		"godie-emfr", // 涅吉。史普林。菲爾德 - 魔法老師  #15  — 選 #15 emfr（#82 h022 為另一獨立英雄）
 		"godie-emns", // 夜神月 - 奇樂  #44
 		"godie-etyr", // 木乃香 - 治癒系公主  #14
@@ -258,6 +261,7 @@ var (
 		"godie-h02u", // 草泥馬 - 看似憂鬱的神獸  #92  — 選 h02u（剔 h02v）
 		"godie-hapm", // Berserker - 海克力斯  #52
 		"godie-hart", // 克勞德 - 最終幻想  #01
+		"godie-hblm", // 賈修貝爾 - 慈悲的王者  #05  — 任務 #212 追加（雙胞胎 godie-h021 阿強一號 同為 #05，故不得一併開放）
 		"godie-hpal", // 藤井八雲 - 不死之身-無  #35
 		"godie-hpb1", // 蒼月潮 - 獸矛傳承使  #07
 		"godie-huth", // 魔人普烏 - 超級普烏  #28  — 注意：EX 描述為空（不影響可選性）

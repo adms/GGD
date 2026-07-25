@@ -1,0 +1,15 @@
+{
+  "id": "tpl-channel-beam",
+  "schema": "template@1",
+  "name": "引導通魔",
+  "description": "P3 引導型持續光束。",
+  "family": "channel-beam",
+  "status": "draft",
+  "params": {},
+  "requires": [],
+  "gapScore": 5,
+  "exemplar": {
+    "skill": "(draft)",
+    "jass": "(P2/P3)"
+  }
+}

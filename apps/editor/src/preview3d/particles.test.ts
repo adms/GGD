@@ -126,14 +126,14 @@ describe("toParticleSystem (vfx@1 -> Babylon)", () => {
 
 describe("assetUrl", () => {
   it("maps content-relative paths through the content-api and rejects escapes", () => {
-    expect(assetUrl("assets/models/champions/mage.glb")).toBe(
-      "/content-api/assets/models/champions/mage.glb",
+    expect(assetUrl("assets/models/champions/blocky-mage.glb")).toBe(
+      "/content-api/assets/models/champions/blocky-mage.glb",
     );
     expect(glbUrlParts("assets/models/props/pillar.glb")).toEqual({
       rootUrl: "/content-api/assets/models/props/",
       fileName: "pillar.glb",
     });
     expect(() => assetUrl("../secrets.json")).toThrow(/assets\//);
-    expect(() => assetUrl("models/champions/mage.glb")).toThrow(/assets\//);
+    expect(() => assetUrl("models/champions/blocky-mage.glb")).toThrow(/assets\//);
   });
 });

@@ -211,6 +211,48 @@ func TestMCoinClamp(t *testing.T) {
 	assert.EqualValues(t, 0, r.Body["mcoin"], "balance clamps at zero, never negative")
 }
 
+// admin-mcoin-audited (task #214): the M幣 delta is BOUNDED server-side, in the
+// service and not only in the handler, and a refused adjustment moves no money
+// and writes no audit line.
+//
+// Why this test exists. The console's 「M幣 發放」 panel used to POST the wallet
+// package's /wallet/admin/grant-mcoin, whose only validation was a non-empty
+// accountId — 2^31-1 and -2^31 both went straight through to the balance, and
+// nothing was logged. That route is deleted (see
+// wallet.TestNoAdminMCoinRouteHere) and this is the guard on its replacement.
+func TestMCoinAdjustBounds(t *testing.T) {
+	testkit.Cover(t, "admin-mcoin-audited")
+	ts := testutil.New(t)
+	adminU := ts.Register("root")
+	grantAdmin(t, ts, adminU.ID)
+	target := ts.Register("target")
+	route := "/api/v1/admin/accounts/" + target.ID + "/mcoin"
+
+	for _, bad := range []any{0, admin.MaxMCoinGrant + 1, -(admin.MaxMCoinGrant + 1)} {
+		r := ts.Do(http.MethodPost, route, adminU.Access, map[string]any{"delta": bad, "reason": "typo"})
+		assert.Equal(t, http.StatusBadRequest, r.Status, "delta %v must be refused: %s", bad, string(r.Raw))
+	}
+	// An empty body decodes to delta 0 and is refused by the same rule, so a
+	// bare POST cannot move a balance.
+	assert.Equal(t, http.StatusBadRequest,
+		ts.Do(http.MethodPost, route, adminU.Access, map[string]any{}).Status)
+
+	// Nothing moved, and nothing was written to the trail.
+	prof := ts.Do(http.MethodGet, "/api/v1/admin/accounts/"+target.ID, adminU.Access, nil)
+	require.Equal(t, http.StatusOK, prof.Status)
+	assert.EqualValues(t, 0, prof.Body["wallet"].(map[string]any)["mcoin"])
+	audit := ts.Do(http.MethodGet, "/api/v1/admin/audit", adminU.Access, nil)
+	require.Equal(t, http.StatusOK, audit.Status)
+	assert.False(t, auditHas(audit, "mcoin_adjust", target.ID),
+		"a refused adjustment must not be audited as one that happened")
+
+	// The boundary value itself is accepted — the cap is inclusive.
+	r := ts.Do(http.MethodPost, route, adminU.Access,
+		map[string]any{"delta": admin.MaxMCoinGrant, "reason": "cap"})
+	require.Equal(t, http.StatusOK, r.Status, string(r.Raw))
+	assert.EqualValues(t, admin.MaxMCoinGrant, r.Body["mcoin"])
+}
+
 // admin-mmr-leaderboard: setting an absolute MMR re-ZADDs the ladder, so the
 // player appears on the public leaderboard at the new rating.
 func TestMMRReflectedInLeaderboard(t *testing.T) {

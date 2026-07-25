@@ -20,9 +20,16 @@ import { checkRig } from "./rig";
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, "../..");
 const OPT = path.join(HERE, "optimize.ts");
-const CHAMPS = path.join(ROOT, "content/assets/models/champions");
-const KNIGHT = path.join(CHAMPS, "knight.glb");
-const MAGE = path.join(CHAMPS, "mage.glb");
+// The optimiser's whole job is shrinking OVERSIZED textures, so its fixtures
+// must be models that still have one. The four champion stand-ins were the
+// original fixtures; #226 replaced them with box-men carrying a 16² palette,
+// which would make every assertion here vacuous. Two 1024² arena props stand
+// in — same code path, same guarantees, still something to optimise.
+const HEX = path.join(ROOT, "content/assets/models/hex");
+const KNIGHT = path.join(HEX, "tower_blue.glb");
+const MAGE = path.join(HEX, "tower_red.glb");
+/** checkRig needs a RIGGED fixture with real clips — the towers have none. */
+const RIGGED = path.join(ROOT, "content/assets/models/props/guardian_skeleton.glb");
 
 const hasFfmpeg = (() => {
   try {
@@ -54,11 +61,11 @@ describe("checkRig is the rig-survival gate", () => {
 
   it("rejects a candidate that lost an animation clip", () => {
     // craft a broken candidate: same geometry bytes, one animation dropped
-    const glb = readGlb(KNIGHT);
+    const glb = readGlb(RIGGED);
     const broken = { ...glb.json, animations: (glb.json.animations ?? []).slice(1) };
     const out = path.join(tmp, "broken-clip.glb");
     fs.writeFileSync(out, rebuildGlb(broken, glb.bin!, new Map()));
-    const r = checkRig(KNIGHT, out);
+    const r = checkRig(RIGGED, out);
     expect(r.ok).toBe(false);
     expect(r.reasons.join(" ")).toMatch(/animation clip count/);
     cover("mbudget-optimise-safety");
@@ -87,7 +94,7 @@ describe.skipIf(!hasFfmpeg)("the optimiser texture stage", () => {
     expect(sha256File(KNIGHT)).toBe(before);
 
     // output + sidecar exist
-    const outGlb = path.join(out, "assets/models/champions/knight.glb");
+    const outGlb = path.join(out, "assets/models/hex/tower_blue.glb");
     expect(fs.existsSync(outGlb)).toBe(true);
     expect(fs.existsSync(`${outGlb}.opt.json`)).toBe(true);
 

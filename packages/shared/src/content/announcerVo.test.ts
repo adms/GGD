@@ -42,7 +42,8 @@ const CONTENT = join(HERE, "../../../../content");
  * The system/announcer broadcast events (NOT champion personal flavor).
  * `exUnlock` joined the set in #40: an EX rank 0→1 flip is a system state
  * change, and it previously had no announcer clip at all (only the 7 s
- * character quip `87joke`, which moved to 飛影's champion-voice select pool).
+ * character quip `87joke`, which moved to 飛影's champion-voice select pool —
+ * godie-u010; see CHARACTER_REROUTES for the #214 correction).
  */
 const ANNOUNCER_EVENTS = [
   "matchStart", "roundStart", "levelUp", "death", "multiKill", "allySlain",
@@ -67,7 +68,11 @@ const FLAVOR_POOLS: Record<string, readonly string[]> = {
 /** Character quips that left a system pool for champion-voices.json instead. */
 const CHARACTER_REROUTES: Record<string, string> = {
   mandie: "godie-h001", // 初音「哎喲!(跌倒)」
-  "87joke": "godie-efur", // 飛影「不要小看邪眼的力量！」
+  // 飛影「不要小看邪眼的力量！」. #40 parked this on godie-efur (揍敵客桀諾),
+  // which is NOT 飛影 — harmless while efur was unopened, audible the moment
+  // task #212 put efur in the first open roster (clicking 揍敵客 spoke 飛影's
+  // line). Re-homed onto 飛影's own id, godie-u010, by the #214 SOP audit.
+  "87joke": "godie-u010",
 };
 
 type Segment = { voice: string; lang: string; text: string };

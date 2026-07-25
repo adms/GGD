@@ -1,0 +1,180 @@
+{
+  "collection": "ability-templates",
+  "hash": "294b7bd98025",
+  "entries": [
+    {
+      "id": "tpl-barrier-domain",
+      "path": "ability-templates/tpl-barrier-domain.json",
+      "hash": "e3bda129eee5",
+      "size": 293
+    },
+    {
+      "id": "tpl-blink-strike",
+      "path": "ability-templates/tpl-blink-strike.json",
+      "hash": "74c359400fb6",
+      "size": 332
+    },
+    {
+      "id": "tpl-buff-self",
+      "path": "ability-templates/tpl-buff-self.json",
+      "hash": "4e409cf8897f",
+      "size": 775
+    },
+    {
+      "id": "tpl-channel-beam",
+      "path": "ability-templates/tpl-channel-beam.json",
+      "hash": "3585c60dc177",
+      "size": 298
+    },
+    {
+      "id": "tpl-charge-push",
+      "path": "ability-templates/tpl-charge-push.json",
+      "hash": "21deb88f4f2b",
+      "size": 341
+    },
+    {
+      "id": "tpl-data-no-trigger",
+      "path": "ability-templates/tpl-data-no-trigger.json",
+      "hash": "3877c010e451",
+      "size": 322
+    },
+    {
+      "id": "tpl-death-mechanic",
+      "path": "ability-templates/tpl-death-mechanic.json",
+      "hash": "552354890a7f",
+      "size": 293
+    },
+    {
+      "id": "tpl-drain-leech",
+      "path": "ability-templates/tpl-drain-leech.json",
+      "hash": "1c494f373a11",
+      "size": 287
+    },
+    {
+      "id": "tpl-global-rule",
+      "path": "ability-templates/tpl-global-rule.json",
+      "hash": "b77af65437f0",
+      "size": 287
+    },
+    {
+      "id": "tpl-ground-nova",
+      "path": "ability-templates/tpl-ground-nova.json",
+      "hash": "6bc87b80fbb6",
+      "size": 863
+    },
+    {
+      "id": "tpl-growth-charge",
+      "path": "ability-templates/tpl-growth-charge.json",
+      "hash": "5e32f986c689",
+      "size": 291
+    },
+    {
+      "id": "tpl-instant-blast",
+      "path": "ability-templates/tpl-instant-blast.json",
+      "hash": "abf6b069a67d",
+      "size": 923
+    },
+    {
+      "id": "tpl-leap-strike",
+      "path": "ability-templates/tpl-leap-strike.json",
+      "hash": "77db3cb29e93",
+      "size": 337
+    },
+    {
+      "id": "tpl-life-manipulate",
+      "path": "ability-templates/tpl-life-manipulate.json",
+      "hash": "26731145daff",
+      "size": 295
+    },
+    {
+      "id": "tpl-line-sweep",
+      "path": "ability-templates/tpl-line-sweep.json",
+      "hash": "7434ff6722be",
+      "size": 1580
+    },
+    {
+      "id": "tpl-lock-combo",
+      "path": "ability-templates/tpl-lock-combo.json",
+      "hash": "750cc6f1c2b0",
+      "size": 319
+    },
+    {
+      "id": "tpl-on-attack",
+      "path": "ability-templates/tpl-on-attack.json",
+      "hash": "12d625765a99",
+      "size": 1127
+    },
+    {
+      "id": "tpl-on-hit-react",
+      "path": "ability-templates/tpl-on-hit-react.json",
+      "hash": "a0174c3324e7",
+      "size": 1184
+    },
+    {
+      "id": "tpl-orbit-array",
+      "path": "ability-templates/tpl-orbit-array.json",
+      "hash": "d567c35ae7ba",
+      "size": 293
+    },
+    {
+      "id": "tpl-periodic-field",
+      "path": "ability-templates/tpl-periodic-field.json",
+      "hash": "b37fc5902f9a",
+      "size": 329
+    },
+    {
+      "id": "tpl-pull-throw",
+      "path": "ability-templates/tpl-pull-throw.json",
+      "hash": "a3be602729fe",
+      "size": 322
+    },
+    {
+      "id": "tpl-pure-cosmetic",
+      "path": "ability-templates/tpl-pure-cosmetic.json",
+      "hash": "d79926d1ef57",
+      "size": 318
+    },
+    {
+      "id": "tpl-range-gamble",
+      "path": "ability-templates/tpl-range-gamble.json",
+      "hash": "4f91692716dc",
+      "size": 289
+    },
+    {
+      "id": "tpl-resource-ops",
+      "path": "ability-templates/tpl-resource-ops.json",
+      "hash": "87b54b4fd0a2",
+      "size": 289
+    },
+    {
+      "id": "tpl-single-strike",
+      "path": "ability-templates/tpl-single-strike.json",
+      "hash": "c7ec7516b7f4",
+      "size": 802
+    },
+    {
+      "id": "tpl-strip-transform",
+      "path": "ability-templates/tpl-strip-transform.json",
+      "hash": "ad27d53eb64f",
+      "size": 295
+    },
+    {
+      "id": "tpl-summon-agent",
+      "path": "ability-templates/tpl-summon-agent.json",
+      "hash": "bed0989c2ae7",
+      "size": 341
+    },
+    {
+      "id": "tpl-team-synergy",
+      "path": "ability-templates/tpl-team-synergy.json",
+      "hash": "30197389108b",
+      "size": 289
+    },
+    {
+      "id": "tpl-traveling-wave",
+      "path": "ability-templates/tpl-traveling-wave.json",
+      "hash": "cb03d0490932",
+      "size": 1527
+    }
+  ]
+}

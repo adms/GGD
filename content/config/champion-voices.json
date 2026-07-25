@@ -117,10 +117,8 @@
       "soundset": null
     },
     "godie-efur": {
-      "select": [
-        "assets/audio/sfx/87joke.mp3"
-      ],
-      "source": "map-quip",
+      "select": [],
+      "source": "none",
       "soundset": null
     },
     "godie-ekee": {
@@ -520,8 +518,10 @@
       "soundset": "IceTroll"
     },
     "godie-u010": {
-      "select": [],
-      "source": "none",
+      "select": [
+        "assets/audio/sfx/87joke.mp3"
+      ],
+      "source": "map-quip",
       "soundset": "Shade"
     },
     "godie-u011": {

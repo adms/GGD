@@ -7,13 +7,30 @@ import { useEditorStore } from "../store";
 
 export function Sidebar({
   active,
+  forgeActive,
   onPick,
+  onPickForge,
 }: {
   active: CollectionName | null;
+  forgeActive?: boolean;
   onPick(collection: CollectionName): void;
+  onPickForge?(): void;
 }) {
   return (
     <nav className="sidebar">
+      {/* 鑄技工坊 is an authoring FLOW, not a collection — it sits above the
+          collection list because the designer starts there, not at a JSON doc.
+          (Editing a template@1 doc itself is still available below, since the
+          collection registry picks up "ability-templates" automatically.) */}
+      {onPickForge ? (
+        <button
+          type="button"
+          className={`sidebar-forge${forgeActive ? " active" : ""}`}
+          onClick={onPickForge}
+        >
+          🔨 鑄技工坊
+        </button>
+      ) : null}
       <h2>Collections</h2>
       {collectionRegistry.map((c) => (
         <button

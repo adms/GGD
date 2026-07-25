@@ -2635,3 +2635,198 @@ playtest 指令「技能冷卻進度不容易從圖示上看到」。表面看�
 - 測試：`ui/cooldownView.test.ts`（純數學，含「35s 授權值在 `cooldown:0.2` 下剛施放必須 frac=1.0 而非 0.2」的根因鎖）+ `ui/components/cooldownChrome.test.ts`（source scan）。test_id `cooldown-legibility` 已登錄 `docs/todo/client-hud.md` client-36。
 - **殘留（未修，另案）**：`Stat.CooldownReduction` 進一步縮短實際冷卻，client 不知道座位的 CDR，故堆 20% CDR 的玩家會看到抹除從 80% 起跑（已 clamp，誠實且會自我收斂）。精確解＝在 `SeatView` 的 `cooldowns` 旁加 `cooldownMax: number[]`。
 - **殘留（未修，另案）**：couch HUD 只有 Q/W/E/R chip，**沒有 EX / 天生技 格**，三介面 parity 仍缺一角。
+
+#### 🎆 2026-07-26 #230：特效真實引用普查（每個英雄 × 每個技能）+ 真綁定
+使用者指正：「真正做好是追技能真正引用的特效/粒子/球體/蝗蟲群 請你盤點所有英雄、技能清單，告訴我真實的狀況」。綁「某個」vfxKey 不算忠實，忠實是綁「原圖那一支真的用的」。
+- **普查器** `tools/w3x-import/build_vfx_census.py`（可重跑、內建 assert）：668 技能文件 × 115 英雄 × 6 槽全覆蓋。**join 方式＝英雄編號＋技能名精確比對（619/668 精確）**，不用 VFX_BINDINGS 的槽位字母——地圖 `A0DZ 20-01 風王結界` 標 `slotFromNumber=q`，但內容裡叫「20-01 風王結界」的文件是 `godie-e002.W`：Saber 的 Q/W 是交叉的，用槽位 join 會製造 4 筆自信但錯誤的改綁。
+- **產出兩份**：`out/vfx-census/CENSUS.json`（工作用）＋ `content/assets/vfx/w3x-ability-provenance.json`（隨版發行、**只存不會變的考古事實**：rawcode / 每個美術通道真正指的 mdx / provenance / 抽出了哪些文件 / 每顆模型有幾個發射器、幾個掛在模型根）。**會變的一半（現在綁什麼、哪些 vfx 文件存在）刻意不寫進去**，由頁面在檢視當下讀活的內容算——所以改一次綁定，頁面就跟著動，不需要重產。
+- **狀態盤點（前 → 後）**：真實移植 25→**34**、可動的缺口（通用替身但原作已抽出）28→**20**、抽不出來（暴雪內建 .mdl／閃電 id，#81/#116）388、舊制 key 18→**17**、無施法特效 47、原圖沒指定 162。
+- **改綁 9 支（只動 vfxKey，effects/damage/scaling 一律沒碰，鏡像逐行同步）**：林克 60-04 迴旋斬 → `godie-bladestorm-swordeffect-p0`；飛影 38-01/38-02/38-03（×2 分身）→ `fx.w3x.particle.flamessmoke.p01` / `godie-fireblast-p3` / `godie-tectonicfury-p0`；天地志狼 12-002 仙氣發勁（×2 分身）→ `fx.w3x.particle.supershinythingy.p00`。其中 5 支原本就已在 `W3X_ABILITY_ART` 升級過——**算圖端一直在播真美術，只有內容 metadata 在說謊**，這就是 main 上 `w3xAbilityArt.test.ts`「shipped vfxKey IS the promoted primary」紅掉的原因，現在綠了。
+- **推翻「106 支閒置」的說法**：`vfxKey` 只有一個字串，但一個 WC3 特效是一整組發射器，其餘圖層是靠 `extraVfxDocIds()` 一起播的。118 個圖層裡：12 個是 vfxKey、19 個以伴隨層上場、87 個真的沒上場。而那 87 個裡 **51 個屬於 10 個「零根節點」家族**（divinering 0/20、enchant 0/5、sephboom 0/7、heronarutos4effect 0/6…），**41 個屬於 12 個根本沒有任何技能引用的家族**。兩者都不是「漏改綁」。
+- **刻意留下、列成擁有者決策**：Saber 20-01 風王結界（`HolyAwakening.mdx` 是真的 w3a-override 且 6/6 根節點可播，但風王結界正典是「風」，而 HolyAwakening 正是 20-03 約束與勝利之劍 同一顆模型——綁下去四招裡兩招長一樣）。另 18 列是被算圖限制擋住，不是品味問題。
+- **最高槓桿後續（另開任務）**：`apps/client/src/vfx/W3xCastFx.ts` 把文件攤平丟給 `W3xEmitterRig`、沒有 `pivotOffset`，而 `w3xFamilyRuntime.toFamilySpec()` 早就替試聽頁做好那份版面。接起來可一次解鎖 10 個零根節點家族（51 個文件）+ 約 14 列技能，包含 78-002 加速爆體（A10W 把 target/caster/special **三個通道**全設成 DivineRing.mdx，是全地圖 provenance 最強的一筆）。
+- **抽取待辦**：有發射器但沒有 fx.w3x 家族＝earthtornado2(14)、lightningtornado(14)、fireblast(4)、tectonicfury(2)、bladestorm-swordeffect(1)（#183 再推導清單）；**零發射器**＝herocloudcyd(10 引用)、purplecoat(9)、grandundeadaura(5)… 這些是純網格美術，粒子管線永遠產不出來，要走模型/掛點路徑，不是同一筆債。
+- **永不綁定**：`fx.w3x.locust.auls-a0ib`（0 圖層/0 幾何，只有蜂群版面——#98 零幾何問題）。
+- **活頁**：資產主控台 `#assets` → 「特效真實引用普查」，與圖示覆蓋率同一個接縫。純邏輯在 `apps/client/src/ui/assets/vfxCensus.ts`（node 測試 18 項），載入 `useVfxCensus.ts`（側檔 540 kB，展開才抓），畫面 `VfxCensusPanel.tsx`。
+- 閘門：`pnpm content:build` 綠、`pnpm --filter @ggd/shared test` 880/880 綠（含 bundle + #128 castability + abilityMirror + vfxParticles）、client typecheck + build 綠、client 3065 測試通過。兩支紅是 main 本來就紅（`bindings.test.ts` 讀 gitignore 掉的 `data/curation/whitelist.json`、`descriptionRescale.test.ts` 冷卻倍率），已 stash 回 main 覆驗。
+
+
+---
+
+## 2026-07-26 — #212 的前提是錯的：「揍敵客已開放」從來沒發生過（#212 + #214 + M幣稽核缺口）
+
+**這一則要記的是一種「回報方式的病」，跟 2026-07-22 那則同源。**
+`#212` 被記成「揍敵客 `godie-efur` 已開放並上線，賈修 `godie-hblm` 待辦」。實際狀態是
+**兩隻都沒開**：`4114a25` 只改了 efur 的 4 個技能名字並重建索引，啟用那一步從頭到尾沒做過。
+
+會誤判是因為**內容層完整到足以騙過任何目視檢查**：champion 文件、六支技能、`_index` 註冊、
+`bundle.json`、日文名字三支 mp3、名言、EX rawcode、46 段語音包、ROSTER、圖示 —— 全部都在。
+但「在 `content/_index.json` 裡」**不 gate 任何東西**：那是整棵樹（114 英雄 / 668 技能）的
+hash manifest。真正決定 champ-select 點不點得到的只有兩處：
+
+| 閘 | 版控？ | 影響 |
+|---|---|---|
+| `apps/platform/internal/curation/starter.go` `starterChampions` | ✅ | 新安裝 seed 的名單；castability sweep / telegraph coverage / game-server whitelist 全部從這裡解析 |
+| `data/curation/whitelist.json` | ❌ gitignore | **正在跑的那台機器**唯一會讀的；`ApplyStarterSet` 在它非空時不會再跑 |
+
+只改前者 → 測試全綠、遊戲沒變；只改後者 → 本機能玩、任何 clone/CI 看不到。**兩個都要做**，
+而且部署主機那份只能走後台「內容白名單」或 #179 遷移包，**不能**為了自動化而放寬
+「starter set 永不隱式套用」的安全契約。
+
+**本次落地**：efur + hblm 一起加進 `starterChampions`（48→50，字母序插入、保留
+`// 顯示名 - 稱號 #編號` 註解格式，因為 `testkit/starterRoster.ts` 和 game-server 的
+`whitelist.test.ts` 都在正則解析那個區塊）、同步 `firstOpenRoster` 釘死名單、
+`castabilitySweep.test.ts` `ROSTER_SIZE` 48→50 且棘輪下限 **287→299（實測，不是預估：
+新增 12 格全部噴效果，299/300）**、`store.json` `championPrices` 各補一筆 300
+（不在目錄裡的英雄 `lockStateOf` 會判成 free 仍可選，但 `ToggleFavourite`／`UnlockChampion`
+兩支 API 都 404 → **永遠設不了「喜愛」**；`godie-zombiex` 今天就卡在這個狀態）。
+
+**#214 的 SOP 因此有 16 列而不是 11 列**，而且附了一支可執行的稽核器
+`tools/hero-onboarding/audit_hero.py`（有 FAIL 就 exit 1）。理由很直白：純文字清單會被用
+**跟這次一模一樣的方式**讀過去、勾過去；第 12–16 列正是眼睛會滑過去的那幾列。
+清單與逐列稽核結果見 `docs/新英雄上架SOP.md`。
+
+**SOP 抓到的第一個真 bug（不是啟用問題，是內容 bug）**：`#40` 把 `87joke`
+（飛影「不要小看邪眼的力量！」）暫存在 `godie-efur` 的 `select` 池。efur 沒開放時沒人聽得到；
+`#212` 一開放，**點揍敵客桀諾就會講飛影的台詞**。已改掛回飛影本人 `godie-u010`
+（`announcerVo.test.ts` 的 `CHARACTER_REROUTES` 與 `audioAssets.test.ts` 的註解同步更新）。
+順帶記一條稽核器**做不到**的事：它能查「這段語音有沒有跟名單內另一隻英雄共用」，
+但查不了「這句台詞到底是不是這個角色講的」—— 那一列永遠是人工步驟。
+
+**順手掃出的既有債**（`--all-starter` 掃 50 隻，非本次造成）：`godie-ogld` 缺 `passive`
+技能文件（連帶沒進 `_index`）、`godie-e00r`／`godie-u00h` 的技能編號尾碼集合不齊、
+`godie-u00n.r` 是掃描報告裡唯一的 ❌。
+
+**`godie-u00n.r` 的 ❌ 找到根因了，而且是量測器的問題**：該技能 `castTimeSec = 0.9`，
+`abilitySystem.ts` 在 `round(0.9 × 30) = 第 27 tick` 結算，而掃描器施放後只步進
+`WINDOW = 26` tick —— **早一格收手**，所以記成「接受了但量不到效果」。
+（原註解寫「最長前搖 0.6s = 18 tick」是錯的，全樹最長其實是 0.9s；已更正並在報告裡加警語。）
+調 `WINDOW` 會改變**量測定義**，歸 #128／#198 一起處理，本次刻意不動。
+
+**M幣發放稽核缺口（做 #225 時發現）**：後台有兩個 M幣入口，而
+**「M幣 發放」那顆按鈕走的那條完全沒有稽核紀錄**：
+`MCoinGrantPage → api.grantMCoin → POST /wallet/admin/grant-mcoin → wallet.Service.GrantMCoin`。
+它掛在**普通已驗證 subrouter** 上（不是 `/admin`），所以 `AdminOnly` 從來沒跑過
+（沒有 banned 檢查、沒有 #126 核准檢查，只有一個 in-service 的 `HasRole("admin")`）；
+`amount` 除了「accountId 非空」以外**完全沒驗證**（0、±2^31 都過）；而且**寫不出稽核行**——
+`admin` import `wallet`，反向邊是 import cycle，這正是 `meta.go` 當初要複製一份 `roleAdmin`
+字面值的原因。另一個入口（玩家列表 → `/admin/accounts/{id}/mcoin` → `admin.AdjustMCoin`）
+一直都有寫 `mcoin_adjust`。
+
+處理方式**不是**再開一條路由，而是**把 console 指回那條本來就該用的**，並把舊門**拆掉**：
+`api.grantMCoin` 改打 `POST /admin/accounts/{id}/mcoin`（AdminOnly ＋ 伺服器端
+`validMCoinDelta`／`MaxMCoinGrant` 上下界 ＋ `mcoin_adjust` 稽核），表單多一個「原因」欄位，
+console 端鏡像同一個上限常數；`/wallet/admin/grant-mcoin` 路由、handler、
+`wallet.Service.GrantMCoin` 與孤兒 `roleAdmin` 一併刪除。
+守衛：`wallet.TestNoAdminMCoinRouteHere`（連 admin 打舊路徑也必須 404）、
+`admin.TestMCoinAdjustBounds`（0／超界被拒，且**被拒的調整不留稽核行**，上限值本身可用）、
+`approval_console_test.go` 兩道都探（舊門 404、新門對非 admin 403）。
+負數保留（扣除是這張表單既有的能力），但界是**對稱**的，且明白寫出「餘額下限是 0，
+所以大額負數是歸零不是扣那麼多」。
+
+#### 🔨 2026-07-26 追記：鑄技工坊 P1 落地（#141/#205）
+
+需求原話精神：「編輯器裡選行為模板 → 填參數 → 即時試放 → 一鍵寫回，不再手寫
+EffectDef JSON、不再手動同步鏡像雙副本」。設計定稿 `docs/skill-forge-design.md`，
+P1 已實作，實作差異寫在該文件 §七（設計稿本身不動）。
+
+- **交付**：`template@1` schema + 註冊（`ability-templates` collection，29 個文件：
+  8 enabled / 21 draft）· 純展開器 `content/templates/expand.ts`（sim 與編輯器共用同一顆）·
+  `apps/editor/src/forge/` 選卡頁+參數表單+試放+鏡像寫回 · content-api 兩條
+  PATCH 行編輯路由 + `POST /rebuild`
+- **驗收**：往返 diff=0（`expand.test.ts` ROUNDTRIP 區塊，用模板重做一支現有技能，
+  語意 diff 為零）
+- **掃描式需求對照**：這條屬於「編輯器（localhost 即管理者可編輯）」那一列的延伸 —
+  #96 圖鑑即編輯器 ✅、#102 後台 CRUD ⏸、**#141 鑄技工坊 P1 ✅**（P2/P3 見設計稿 §三）
+
+**三個實作時抓到、原本沒人在追的問題**（都已修，細節見 skill-forge-design.md §七）：
+
+1. **`apps/editor` 從來沒有 DEV gate，但它會被烘進正式版 image。**
+   `docker/edge.Dockerfile` 把 `apps/editor/dist` 烘進去、`nginx.conf` 在 `/editor/`
+   對外服務，而 `/content-api/` 只存在於 `nginx/dev/content-api.conf`。正式版一直
+   對外送出一排指向不存在路由的存檔按鈕。已補 `WRITES_ENABLED = import.meta.env.DEV`
+   （比照 admin）。伺服器端一律沒動：guard.ts、兩份 nginx conf、NODE_ENV=production
+   拒絕啟動，全部原樣。
+2. **行編輯寫入器原本 0 測試。** `spliceEmbeddedSlot` 已存在但沒有任何測試覆蓋，
+   而它正是 #78「絕不 JSON round-trip content 文件」規則的實作。已補 7 條測試，
+   包含關鍵的「用自己的現值 splice 回去要 byte 完全不變」（JSON round-trip 會把
+   Python 匯出的 `30.0` 變成 `30`）。
+3. **7 個「表單收得下、遊戲完全忽略」的參數槽。** 用探針掃出來的，見 §七.2。
+   現在必須標 `inert`，測試每次重跑探針。
+
+**覆蓋率誠實化**：設計稿 P1 寫「~60% 技能」，實測是 **114/498 = 22.9%**
+（只算有 JASS 行為記錄的 258 列則為 44.2%）。不要拿 60% 當已完成。
+
+#### 🧱 2026-07-26 追記：#226 砍 4 個高面數 CC0 角色 → 自製方塊人（體素）
+使用者指令：「只有 4 個 CC0 角色 請你砍掉，這四個面數都太高，請你找麥塊角色的方塊人替代」。
+**IP 前提（不可協商）**：Minecraft 的模型/皮膚/貼圖是 Mojang/Microsoft 版權。全程**零下載、零抄用、零衍生**——方塊「風格」不受保護，所以幾何全部自製。
+
+- **新增 `tools/voxel-gen/`**（TypeScript，跑既有 tsx，**不新增任何依賴**）：參數表 → 5 個 .glb。
+  無 glTF 函式庫：`glbWrite.ts` 是 `tools/model-budget/glb.ts` 讀取端的對稱寫入端；`png.ts` 用 stored DEFLATE
+  保證跨 Node/zlib 版本**位元組確定性**（`gen.test.ts` 釘死每檔 sha256，`pnpm voxel:check` 可驗）。
+  幾何出處：`ChampionView.ts` 自 #64 起就用同一組比例（8:12:4、32 voxel-px、PX=1.8/32）程序化畫這個方塊人。
+- **刪 12 檔 / 9,725,524 B / 46,687 tris**（mage/knight/barbarian/rogue + 各自 -mid/-small）
+  → **增 5 檔 / 261,036 B / 840 tris**。淨 **-9.46 MB**。單角色 5,683–6,952 → **168 tris（-97.4%）**。
+  出貨總面數 169,542 → **144,827**（`report.test.ts` / `glb.test.ts` 的 ratchet 是**刻意下修**，非放寬）。
+  這是 **#81 / #116 資產債**的實質進度：整批 1024² 共用 albedo（5,592,405 B VRAM）一併消失。
+- **44 位英雄仍各自可辨識**：4 個 doc id 被 `packages/shared/src/sim/**` 凍結（`mobs.ts:45`、
+  `content/skeleton.ts:38,195`），不能拆；所以外觀改在**執行期**——`voxelLook.ts` 由 championId
+  以 FNV-1a 決定調色盤 / 體型 / 配件遮罩（純函式、無 Math.random、各端一致），
+  `voxelSkin.ts` 寫 bone scale + 複製材質貼上 16² palette。能成立是因為烘焙用**剛性蒙皮**且
+  **沒有任何 clip 動 scale**（在位元組層級測試）。順手殺掉只有 2 筆的 `ACCENTS` 表（42 位英雄本來共用同一灰）。
+- **不變式全保**：#150 高度（原生量到 1.8u，正規化係數 1.0，`doc.scale` 誠實回到 1.0，
+  順便修掉 mage.glb 因法杖撐大 bbox 量到 3.0028u 導致身體被縮小的老問題）、#68/#1 朝向（前=+Z，
+  Babylon loader 翻的是 **X 不是 Z**，實測 `knight.glb` 的 `Knight_Cape` 在 z=-0.215 佐證）、
+  #49 tint（palette 走貼圖、albedoColor 留白 → 乘算照舊）、#64 hit flash、#133、attach points。
+- **#115 LOD：方塊人合法只有一階**。`_lod.json` 的 12 列與檔案**同一 commit** 移除（留著會讓
+  low/medium preset 打 404、手機端永遠卡在程序化替身而 high 看起來正常）；`gen_lod.py` 加 LOD floor
+  以免下次 `lod:gen` 又把它們加回來。
+- **CREDITS.md 雙向誠實**：移除 KayKit Adventurers 條目（不出貨的東西不該掛致謝）、新增自製條目
+  + 明確「非 Mojang 衍生」聲明；CC BY 4.0 登入龍與 © 聲明**未動**。
+  `arena.castle` 空鎧段落標為 **SUPERSEDED 但保留**（那是 #105 完整設計，且實測未接線）。
+- **#217 後續（本次不做）**：第 5 個 `blocky-undead.glb` + `champ.blocky.undead` doc 已就位（調色盤/
+  無配件/斷手/前傾/0.62× 蹣跚），但**未**接到小怪——`mobs.ts:45` 是 sim 常數、`arena-rules.json:148`
+  是內容值，兩者優先權需先確認，且 #217 正在動那兩個檔。
+
+
+---
+
+## 2026-07-26 新增需求（owner 本場提出，立即登錄）
+
+| 需求（原話） | 任務 | 狀態 | 備註 / 相依 |
+|---|---|---|---|
+| 「體素角色 你可以自己產生適合該角色的貼圖，把缺模組的角色都做完，我們等等來驗收」 | **#231** | ✅ 已實作（`feat/voxel-champion-skins`） | 每位英雄一套決定性生成的體素外觀 + 執行期繪製的 64×64 貼圖；後台 🧱 體素外觀對照表 供驗收 |
+
+#### 🔎 #231 實作註記：出的是「配方」不是像素
+114 位英雄 → **114 個互異外觀簽章、114 組互異四色配色、0 次鹽值升級**（對真實 doc 樹量測，非估計）。
+
+- **不出貨任何圖檔**。`generateVoxelSkin(champion) → VoxelSkinRecipe`（7 個調色槽 + 臉/髮/服裝分區 + ≤3 個造型配件）是純函式，只用 FNV-1a 對 **championId** 取雜湊當亂數源；`paintVoxelAtlas(recipe) → Uint8ClampedArray(64×64×4)` 也是純函式，client 端用 `RawTexture` 上傳。全部 114 位的**壓縮配方 20,508 B（180 B/英雄，gzip 4,692 B）**，貼圖出貨 **0 B**。
+- **為什麼是 `RawTexture` 而不是 `DynamicTexture`**：後者要 `OffscreenCanvas` + 2D context，headless 測試環境沒有（選單的 procedural sprites 就得裝 canvas stub）。改吃 bytes 之後瀏覽器與 vitest 走同一條路，沒有只在測試裡跑的分支會腐爛。
+- **三道決定性易讀性修補**（都是有界迴圈，無隨機）：outfitPrimary 以**實測相對亮度**箝在 [0.16, 0.58]（量到 0.174–0.570）——地板是為了活過 #49 染色（狂戰士 ×0.3137，最暗一件仍有 0.0547，測試釘住 ≥0.045）；眼睛與衣服亮度差 ≥0.28；飽和色相落在四個隊伍色 ±22° 內就旋轉 +42°。
+- **描述欄故意不進關鍵字乾草堆**：client 端是從 `ChampionDef` 解析英雄，那裡**沒有** `description`（只有 JSON doc 有）。若把它算進去，遊戲內生成的外觀會和對照表／測試生成的**不一樣**——整個任務就垮了。所以輸入面 = 所有消費端看得到的交集（稱號/本名/tags/技能 vfx 元素/w3x 剪影字）。
+- **44 位共用替身英雄真的離開了共用網格**：recipe 帶 `preferVoxelBody`，`ChampionView.tryUpgradeToGlb` 直接婉拒那顆 glb。#226 之後刪掉 KayKit glb，這個分支就變成 no-op 而不是行為改變。
+- **隊伍色是本設計最高風險處**：體素貼圖蓋掉了原本承擔隊伍辨識的軀幹+雙腿，改成「發光地環 + 新增一條胸前隊伍色帶 `champ-<id>-teamband`」，並把 `-teamband` 加進 `UNTINTED_MESH_SUFFIXES`（否則暗色染色會把色帶壓黑——正是當初排除地環的同一個失敗）。**這件事螢幕截圖判不了，需要一次戰鬥距離的實機試玩**：4 種隊伍色、畫面上 6 個英雄。若讀不出來，退路是把雙腿還原成隊伍色，貼圖只管頭+軀幹+手臂。
+- **`voxel-standin` 標籤保留並重新定義**，沒有退役：41 份 doc 帶著它，語意改讀成「這位英雄沒有自己的匯入美術」——依然完全成立（生成外觀是程序產生的，不是匯入的）。退掉標籤等於失去 #226 要替換的那群英雄在內容側唯一的把手。champ-select 的替身標語也順著改成誠實版本（那面舞台仍走 glb，`StorePreview` 沒有 procedural 路徑）。
+
+#### 🧱 2026-07-26 #229：體素角色生成器網頁「鑄形工坊」（Project Voxel Forge）
+Owner 指令：另開分支做 體素角色生成器網頁，整合進後台；**必須與 #226 共用同一個產生器**（不得 fork 第二個長得像的）。
+
+**做法（分支 `feat/voxel-character-studio`）**
+- 產生器核心搬進 `packages/shared/src/voxel/`（boxman 部件/關節表、clips 七段動畫、archetypes 五個原型），數值**逐字取自 #226 的 `tools/voxel-gen/`**，不是重新推導。純模組：無 Babylon / 無 node Buffer / 無 `Math.random`／`Date`，才可能同時被 CLI、瀏覽器 bundle 與 vitest import。
+- 新增 #226 尚未寫的參數層 `look.ts`：`VoxelLook`（palette / 部件遮罩 / **每關節縮放＝「體型」** / 關節位移 / poseBias / clipRate / teamTint / collisionRadius）+ `lookForChampion(id, archetype)`（FNV-1a 決定性種子，golden vector 釘住 5 個出貨 model doc）。體型走**關節縮放**而非改方塊尺寸，因為 #226 的骨骼是剛性綁定、runtime 就是寫關節 scale——改方塊尺寸等於做出另一個 mesh，那才是 fork。
+- `figure.ts` 的 `buildFigure()` 是**唯一**幾何決定點；#150 統一身高在這裡強制（實測身高 → `docScale = 1.8 / height`，腳踩 y=0），所以拉滑桿**不可能**弄壞統一身高（proportion sweep 測試逐一驗證）。
+- `doc.ts` 的 `toModelDoc()` 是**唯一**文件產生點：studio 存的與 bake 讀的是同一函式，兩邊不可能對不上。glbPath 由 id 推導成 `assets/models/voxel/<id>.glb`，**刻意避開** `assets/models/imported/` 與 `assets/blizzard-local/models/`，所以 `glbYawOffset` 回 0（#68/#1）。
+- schema 僅**加法**：`model@1` 多一個 optional `voxel` 區塊，`.strict()` 與必填 `glbPath` 都不動，121 份既有 models doc 原封不動仍合法。
+
+**兩段式存檔（誠實版）**：後台存的是**參數**（走既有 contentApi gate，undo-first、dry-run 驗證、contentVersion 回報）；`.glb` 由離線 `pnpm voxel:gen` 決定性烘焙。因此**這頁一個 byte 的二進位都不寫**——content-api 的 `IMAGE_EXT`（.png/.webp/.jpg/.jpeg）不必放寬、沒有上傳路由、#226 的 sha256 釘位也保得住。
+
+**安全姿態淨變化 = 0 條新寫入路徑**：`contentApi.ts` 匯出清單未動（contentGate 測試逐一比對）、`loopbackOnly` 未動、nginx 未動、prod build 仍零 content-save。**新增**一條 tripwire：prod bundle 不得出現任何 Babylon 標記（`ArcRotateCamera`/`HemisphericLight`/`BABYLON`）——舊 gate 只 grep `/content-api` 與中文標籤，抓不到新依賴外洩。
+
+**待與 #226 對帳（其分支 `feat/blocky-voxel-characters` 仍在跑）**
+1. `packages/shared/src/voxel/` 是核心的家；merge 時 `tools/voxel-gen/{boxman,clips,archetypes}.ts` 應變成 `export * from "@ggd/shared/voxel/…"`（搬家＋re-export，不是重寫）。本次已同步過一次 #226 的 clips 修訂（idle 去掉 hips bob、attack hips 修正）——merge 時需再對一次。
+2. `lookForChampion` 必須兩邊同一份，否則後台預覽會對玩家說謊；golden vector 已備好。
+3. `gen.ts` 要**列舉所有帶 `voxel` 區塊的 model doc**，不能寫死五個，否則工坊產出的角色永遠不會被烘焙。
+4. 44 隻英雄 modelKey 改指、`modelTexture/modelBbox/modelIdleGrounding` fixture 重生 → 屬 #226 的活；工坊的「改指英雄」動作刻意留給後續（未烘焙就改指會讓那三支測試變紅）。
+5. `ChampionView.ts` 的程序化分支改成 `buildFigure`/`sampleClip` 的薄轉接層，是 payoff 但動到 client render path，屬 #226。在那之前工坊預覽的是**bake 會產出什麼**，正確但還不是遊戲內同一條 code path。
+
+**其他誠實聲明**：`attachPoints` / `teamTintMaterials` 目前**有人寫、沒人讀**（`overheadAnchors.ts` 用寫死高度）；工坊是它們第一個真正的產生者，讓它們成為消費者是新的 client render 工作，不在本次範圍。IP：全部幾何是自寫數值產生的軸對齊方塊，`@babylonjs/loaders` **不是**本 app 的依賴、頁面上沒有任何 file input／FileReader——結構上就無法吃進第三方 skin。
