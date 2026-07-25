@@ -295,10 +295,13 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
         // ROGUELITE MOB (task #215 喪標麥可). A MONSTER-team neutral that MOVES.
         // Placed BEFORE the champion default so it never paints as a grey team-0
         // teammate. seatId -1 = neutral (all champions may target it); key = the
-        // voxel-zombie standin; hp rides along so a neutral health bar renders.
+        // 喪標麥可's model doc; hp rides along so a neutral health bar renders.
+        // #217: the key comes from the ARMED rules, so `mobWaves.mob.modelKey` is
+        // a live knob instead of an authored-but-ignored field; MOB_MODEL_KEY is
+        // only the fallback for a world armed by a pre-#217 caller.
         es.kind = ENTITY_KIND.MOB;
         es.seatId = -1;
-        es.key = MOB_MODEL_KEY;
+        es.key = world.mobRules?.modelKey ?? MOB_MODEL_KEY;
         const hp = world.health.get(id);
         if (hp) {
           es.hp = hp.hp;

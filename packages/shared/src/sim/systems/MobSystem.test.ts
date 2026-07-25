@@ -30,14 +30,25 @@ import { DEFAULT_MOB_WAVES_CONFIG } from "../../content/schema/config";
 
 beforeAll(() => registerSkeletonContent());
 
-/** Fast, precise tick counts for the schedule tests. */
+/**
+ * Fast, precise tick counts for the schedule tests.
+ *
+ * #217 added `level` / `hpRegenPerSec` / `modelKey` to MobRules. This fixture
+ * pins the ROUND-3 FLOOR (level 3) and `hpRegenPerSec: 0` deliberately: every
+ * assertion below predates #217 and must keep measuring exactly what it measured
+ * before, so the levelling is exercised in `mobs.level.test.ts` instead of
+ * silently perturbing the schedule/reward/determinism suites here.
+ */
 const RULES: MobRules = {
   fromRound: 3,
   firstWaveTicks: 2,
   waveIntervalTicks: 3,
   mobsPerWaveCap: 3,
   maxAlivePerZone: 5,
+  level: 3,
   maxHp: 120,
+  hpRegenPerSec: 0,
+  modelKey: MOB_MODEL_KEY,
   attackDamage: 12,
   attackRangeSq: 1.8 * 1.8,
   attackCdTicks: 3,
@@ -99,6 +110,9 @@ describe("MobSystem — wave schedule (#215)", () => {
     // combat-second (2k-1): tick 30 (s1), 90 (s3), 150 (s5).
     expect(rules.firstWaveTicks).toBe(30);
     expect(rules.waveIntervalTicks).toBe(60);
+    // #217: the `round` argument is optional and defaults to `fromRound`, i.e.
+    // the level FLOOR — which is exactly what this pre-#217 call site means.
+    expect(rules.level).toBe(DEFAULT_MOB_WAVES_CONFIG.mob.baseLevel);
     const w = newWorld();
     beginCombatMobs(w, rules, [0]);
     step(w, 30); // s1
@@ -361,6 +375,11 @@ describe("MobSystem — constants", () => {
     cover("mob-constants");
     expect(typeof MOB_MODEL_KEY).toBe("string");
     expect(MOB_MODEL_KEY.length).toBeGreaterThan(0);
+    // #217 REGRESSION: the reported symptom was a mob rendering as the KNIGHT
+    // stand-in. The default key must be 喪標麥可's own model doc, never a
+    // borrowed champion mesh.
+    expect(MOB_MODEL_KEY).toBe("champ.godie-zombiex");
+    expect(MOB_MODEL_KEY).not.toBe("champ.thorne");
     // MONSTER team is outside the player range 0..3
     expect(MONSTER_TEAM).toBeGreaterThan(3);
   });
