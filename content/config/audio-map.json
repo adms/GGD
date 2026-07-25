@@ -5,62 +5,62 @@
     "menu": {
       "file": "assets/audio/bgm/menu.mp3",
       "loop": true,
-      "gain": 0.9
+      "gain": 0.72
     },
     "menuNocturne": {
       "file": "assets/audio/bgm/menuNocturne.mp3",
       "loop": true,
-      "gain": 0.55
+      "gain": 0.44
     },
     "lobby": {
       "file": "assets/audio/bgm/lobby.mp3",
       "loop": true,
-      "gain": 0.63
+      "gain": 0.504
     },
     "room": {
       "file": "assets/audio/bgm/room.mp3",
       "loop": true,
-      "gain": 0.9
+      "gain": 0.72
     },
     "champSelect": {
       "file": "assets/audio/bgm/champSelect.mp3",
       "loop": true,
-      "gain": 0.9
+      "gain": 0.72
     },
     "intermission": {
       "file": "assets/audio/bgm/intermission.mp3",
       "loop": true,
-      "gain": 0.85
+      "gain": 0.68
     },
     "battleStart": {
       "file": "assets/audio/bgm/battleStart.mp3",
       "loop": false,
-      "gain": 1
+      "gain": 0.8
     },
     "combat": {
       "file": "assets/audio/bgm/combat.mp3",
       "loop": true,
-      "gain": 0.65
+      "gain": 0.52
     },
     "fireRing": {
       "file": "assets/audio/bgm/fireRing.mp3",
       "loop": true,
-      "gain": 0.7
+      "gain": 0.56
     },
     "settlement": {
       "file": "assets/audio/bgm/settlement.mp3",
       "loop": true,
-      "gain": 0.85
+      "gain": 0.68
     },
     "victory": {
       "file": "assets/audio/bgm/victory.mp3",
       "loop": false,
-      "gain": 1
+      "gain": 0.8
     },
     "defeat": {
       "file": "assets/audio/bgm/defeat.mp3",
       "loop": false,
-      "gain": 0.95
+      "gain": 0.76
     }
   },
   "sfx": {
