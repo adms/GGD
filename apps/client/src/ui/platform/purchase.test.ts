@@ -19,7 +19,22 @@ import type { TokenPair, Wallet } from "./types";
 
 const TOKENS: TokenPair = { accessToken: "acc", refreshToken: "ref", expiresIn: 900 };
 const storage: TokenStorage = { load: () => TOKENS, save: () => undefined };
-const ITEM: PurchaseItem = { kind: "skin", id: "skin.thorne.barbarian", name: "Warbringer Thorne", price: 750 };
+const ITEM: PurchaseItem = {
+  kind: "skin",
+  id: "skin.thorne.barbarian",
+  name: "Warbringer Thorne",
+  price: 750,
+  currency: "mcoin",
+};
+
+/** #227: a champion is the CRYSTAL path — different wallet, different 402. */
+const CHAMPION_ITEM: PurchaseItem = {
+  kind: "champion",
+  id: "godie-zombiex",
+  name: "聖杯黑泥醬 - 喪標麥可",
+  price: 300,
+  currency: "crystal",
+};
 
 const WALLET_AFTER: Wallet = {
   mcoin: 250,
@@ -75,11 +90,41 @@ describe("purchase — 402 insufficient funds (webui-07)", () => {
     );
     expect(errState).toMatchObject({ phase: "error", code: "insufficient_mcoin" });
     if (errState.phase === "error") {
-      expect(errState.message).toBe("Not enough M COIN for this purchase.");
+      expect(errState.message).toContain("M幣");
+      expect(errState.message).not.toContain("insufficient_mcoin");
     }
     // recoverable: dismiss then start a fresh purchase
     const again = beginPurchase(cancelPurchase(errState), ITEM);
     expect(again.phase).toBe("confirm");
+  });
+});
+
+describe("#227 the champion path is 藍水晶, not M幣", () => {
+  it("a champion 402 comes back as insufficient_crystal with the earn hint", async () => {
+    cover("webui-store-402");
+    const errState = await executePurchase(
+      beginPurchase(purchaseIdle, CHAMPION_ITEM),
+      buyVia(apiWith(402, { error: { code: "insufficient_crystal", message: "not enough crystals" } })),
+    );
+    expect(errState).toMatchObject({ phase: "error", code: "insufficient_crystal" });
+    if (errState.phase === "error") {
+      // BEFORE #227 this code was unknown and fell through to the raw server
+      // string ("not enough crystals").
+      expect(errState.message).not.toBe("not enough crystals");
+      expect(errState.message).toContain("藍水晶");
+      expect(errState.message).toContain("第一名翻倍"); // #213's earn hint, reused
+      expect(errState.message).not.toContain("M幣");
+    }
+  });
+
+  it("the item carries its own currency, and it is never the id that is shown", () => {
+    cover("webui-store-buy");
+    const confirm = beginPurchase(purchaseIdle, CHAMPION_ITEM);
+    expect(confirm).toMatchObject({ phase: "confirm" });
+    if (confirm.phase !== "confirm") return;
+    expect(confirm.item.currency).toBe("crystal");
+    expect(confirm.item.name).not.toBe(confirm.item.id); // the dialog prints `name`
+    expect(ITEM.currency).toBe("mcoin"); // skins stay on M幣
   });
 });
 
@@ -93,7 +138,7 @@ describe("purchase — 409 already owned (webui-08)", () => {
     );
     expect(errState).toMatchObject({ phase: "error", code: "already_owned" });
     if (errState.phase === "error") {
-      expect(errState.message).toBe("You already own this item.");
+      expect(errState.message).toBe("你已經擁有這個項目了。");
     }
   });
 
@@ -109,6 +154,6 @@ describe("purchase — 409 already owned (webui-08)", () => {
   it("unknown store errors fall through with the server message", () => {
     cover("webui-store-409");
     expect(purchaseErrorText("weird_code", "server said no")).toBe("server said no");
-    expect(purchaseErrorText("weird_code", "")).toBe("Purchase failed.");
+    expect(purchaseErrorText("weird_code", "")).toBe("購買失敗，請稍後再試。");
   });
 });
