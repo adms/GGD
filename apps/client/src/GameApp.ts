@@ -479,6 +479,18 @@ export class GameApp {
       // is why the lookup is injected from here rather than done inside vfx/**.
       localEntityId: () => hudStore.getState().localEntityId,
       teamOf: (id) => this.teamOfEntity(id),
+      // #228 CAST TELEGRAPH TIMING. The ground shape fills off the SAME source
+      // the overhead cast bar does — CastTracker, fed castBegin/castEnd/
+      // castInterrupt/death — instead of a wall clock inside the vfx layer. A
+      // locally-timed fill drifts from the sim (CastResolveSystem pauses the
+      // wind-up on hitstop/hitstun) and never cancels on an interrupt, so the
+      // old ring could pop "it lands HERE" for damage that never landed.
+      // Only a `cast` counts: an auto-attack `windup` shares the tracker slot
+      // but is not the ability wind-up this telegraph is portraying.
+      castProgress: (id, nowMs) => {
+        const p = this.casts.progressFor(id, nowMs);
+        return p !== null && p.kind === "cast" ? p.fraction : null;
+      },
     });
     this.ambient = new AmbientVfx(this.renderer.scene, {
       bindingsFor: (key) => this.contentDb.ambientBindingsFor(key),

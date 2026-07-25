@@ -60,7 +60,10 @@ import {
   SHADOW_FLOWER_RADIUS,
   type ShadowInput,
 } from "../render/shadows";
-import { Telegraph } from "./Telegraph";
+import { Telegraph, telegraphPaletteFor } from "./Telegraph";
+import { TelegraphLayer } from "./TelegraphLayer";
+import { resolveTelegraphShape, type TelegraphAbilityLike } from "./telegraphShape";
+import type { TelegraphRelation } from "./telegraphChannel";
 import { HitSpark } from "./HitSpark";
 import { scaledBurstCount, toParticleSystem } from "./particleFactory";
 import { frontLoadCounts, IMPACT_TINTS, type ImpactIntensity, type Rgb } from "./vfxPresets";
@@ -98,6 +101,15 @@ export interface VfxContext {
   localEntityId?(): number | null;
   /** Team of an entity; null for neutrals (flowers) and unknown ids. */
   teamOf?(id: number): number | null;
+  /**
+   * The CAST BAR's own 0→1 wind-up fraction for an entity (task #228), or null
+   * when it is not casting. Injected — never re-derived here — so the ground
+   * telegraph fills over the SAME window the bar above the caster's head does
+   * and can never drift from when the damage actually lands. GameApp passes
+   * `CastTracker.progressFor`; absent ⇒ telegraphs still draw their shape but
+   * cannot animate a wind-up.
+   */
+  castProgress?(id: number, nowMs: number): number | null;
 }
 
 // ---------------------------------------------------------------------------
@@ -379,6 +391,12 @@ interface PooledSystem {
 }
 
 export class VfxSystem {
+  /**
+   * Un-owned one-shot rings (guardianMark's pre-land punish warning), which
+   * have a real TICK-derived window and no per-entity cast to track.
+   * Champion casts do NOT live here any more — they go through
+   * `telegraphLayer`, which cancels on interrupt and fills off the cast bar.
+   */
   private telegraphs: Telegraph[] = [];
   private sparks: HitSpark[] = [];
   /** per-doc-id free-list of pooled systems (cap MAX_POOL_PER_DOC) */
@@ -397,6 +415,13 @@ export class VfxSystem {
   private readonly castDecals: GroundDecalPool;
   /** 0.6s cast-telegraph light pillar, driven by the real castBegin window */
   private readonly pillars: CastPillarFx;
+  /**
+   * UNIVERSAL CAST TELEGRAPH (task #228): the ground shape every ability draws
+   * while it winds up, derived from the ability doc and filled off the cast
+   * bar's own progress. Owns the per-caster lifecycle the old ad-hoc
+   * `telegraphs.push()` never had (it could not cancel on interrupt).
+   */
+  private readonly telegraphLayer: TelegraphLayer;
   /** vfxKey → resolved pillar palette (so a cast allocates nothing) */
   private readonly pillarPalettes = new Map<string, PillarPalette>();
   /** entityId → last walking-dust EMIT baseline {x,z} + time (task #147) */
@@ -430,6 +455,15 @@ export class VfxSystem {
       { getScale: () => this.budgetScale() },
     );
     this.w3xCast = new W3xCastFx(scene, { getQualityScale: () => this.budgetScale() });
+    this.telegraphLayer = new TelegraphLayer(scene, {
+      entityPos: (id) => this.ctx.entityPos(id),
+      castProgress: (id, nowMs) => this.ctx.castProgress?.(id, nowMs) ?? null,
+    });
+  }
+
+  /** The universal cast-telegraph layer (test/observability seam, task #228). */
+  get telegraphs228(): TelegraphLayer {
+    return this.telegraphLayer;
   }
 
   /** The w3x rig path (test/observability seam). */
@@ -755,38 +789,64 @@ export class VfxSystem {
     });
   }
 
+  /**
+   * Derive + spawn the #228 telegraph for one cast.
+   *
+   * Everything it needs is already on the wire (`abilityCast` carries
+   * `point`/`direction`) or in the ability doc the client already loaded — so
+   * the drawn shape is the same geometry `abilitySystem`/`CastResolveSystem`
+   * query, at the same post-`abilityRange` size (#136/#125). A shape that
+   * cannot be derived draws NOTHING and is a red `telegraphCoverage.test.ts`,
+   * never a plausible-looking guess.
+   */
+  private spawnTelegraph(
+    caster: number,
+    def: TelegraphAbilityLike,
+    pos: { x: number; z: number },
+    point: { x: number; z: number } | undefined,
+    direction: { x: number; z: number } | undefined,
+    nowMs: number,
+  ): void {
+    const shape = resolveTelegraphShape(
+      def,
+      {
+        casterX: pos.x,
+        casterZ: pos.z,
+        point: point ?? null,
+        direction: direction ?? null,
+      },
+      {
+        abilityRange: envFactor("abilityRange"),
+        projectile: (id) => Projectiles.tryGet(id as ProjectileId) ?? null,
+      },
+    );
+    if (!shape) return;
+    // `CombatTextRelation` and `TelegraphRelation` are the same four-way axis
+    // (self/ally/enemy/unknown); the annotation keeps them from drifting apart.
+    const relation: TelegraphRelation = this.relationOf(caster);
+    const windupMs = ((def as { castTimeSec?: number }).castTimeSec ?? 0) * 1000;
+    this.telegraphLayer.begin(caster, shape, relation, windupMs, nowMs);
+  }
+
   handleEvent(ev: EventMessage, nowMs: number): void {
     switch (ev.type) {
       case "abilityCast": {
         const abilityId = ev.data.abilityId as string | undefined;
         const def = abilityId ? Abilities.tryGet(abilityId as AbilityId) : undefined;
         const point = ev.data.point as { x: number; z: number } | undefined;
-        if (point) {
-          // The ground ring must FILL over the ability's real cast window, not
-          // over Telegraph's 300 ms default. With the owner's cast times in
-          // content, a 0.6 s cast used to pop its "it fires NOW" resolve flash
-          // 300 ms before the damage actually landed — a telegraph that lies
-          // about HOW LONG is worse than none, and it would also have
-          // contradicted the light pillar standing next to it.
-          const ctMs = (def?.castTimeSec ?? 0) * 1000;
-          // The AoE hit resolves at `def.radius × combatEnv.abilityRange` (#136,
-          // sim resolveAbilityRadius). The abilityCast event carries no radius,
-          // so apply the same post-multiplier HERE — otherwise the ground ring
-          // draws the raw authored radius and lies about where the damage lands.
-          const telegraphRadius = (def?.radius ?? 1.2) * envFactor("abilityRange");
-          this.telegraphs.push(
-            new Telegraph(
-              this.scene,
-              point.x,
-              point.z,
-              telegraphRadius,
-              nowMs,
-              ctMs > 0 ? ctMs : undefined,
-            ),
-          );
-        }
         const caster = ev.data.caster as number | undefined;
         const pos = caster !== undefined ? this.ctx.entityPos(caster) : null;
+        // ---- UNIVERSAL CAST TELEGRAPH (task #228) --------------------------
+        // Every cast, every castType, derived from the ability doc — no longer
+        // "whatever happened to carry a `point`" (which drew a FABRICATED
+        // 0.72 u ring on 93 single-target cells and nothing at all on the 118
+        // self/skillshot/dash ones). See telegraphShape.ts for the honesty
+        // rules; the fill comes from the cast bar, not a local clock.
+        if (typeof caster === "number" && def && isFinitePos(pos)) {
+          this.spawnTelegraph(caster, def, pos, point, ev.data.direction as
+            | { x: number; z: number }
+            | undefined, nowMs);
+        }
         // FIX #131: a null OR non-finite caster position spawns nothing — an
         // un-interpolated {x:NaN} would otherwise park the EX white-hot pop
         // (layeredPop) off-world at a screen corner.
@@ -837,14 +897,24 @@ export class VfxSystem {
       // resolved → a short outward release flash on the frame the effects land
       case "castEnd": {
         const caster = ev.data.caster as number | undefined;
-        if (typeof caster === "number") this.pillars.finish(caster, nowMs);
+        if (typeof caster === "number") {
+          this.pillars.finish(caster, nowMs);
+          // the ground shape pops on the SAME frame the sim runs the effects
+          this.telegraphLayer.resolve(caster, nowMs);
+        }
         break;
       }
       // stunned / knocked down / killed mid-cast → snuffed, never a flash.
       // A pillar that keeps burning after an interrupt is a lie.
       case "castInterrupt": {
         const caster = ev.data.caster as number | undefined;
-        if (typeof caster === "number") this.pillars.interrupt(caster, nowMs);
+        if (typeof caster === "number") {
+          this.pillars.interrupt(caster, nowMs);
+          // …and neither may the ground shape. Before #228 nothing removed a
+          // telegraph, so a stunned caster's ring kept filling and still fired
+          // its "it lands HERE" resolve pop for damage that never happened.
+          this.telegraphLayer.interrupt(caster);
+        }
         break;
       }
       // `basicAttackHit` is the RANGED AUTO's impact — the same shape as an
@@ -1035,6 +1105,8 @@ export class VfxSystem {
           // is dropped on the wire — a pillar over a corpse is the worst lie
           // of all (it says "still coming" about damage that never will)
           this.pillars.interrupt(id, nowMs);
+          // …same reasoning for the ground shape (task #228)
+          this.telegraphLayer.interrupt(id);
         }
         const pos = id !== undefined ? this.ctx.entityPos(id) : null;
         if (!isFinitePos(pos)) break; // #131
@@ -1124,7 +1196,14 @@ export class VfxSystem {
         const windupMs = Math.max(1, (impactTick - ev.tick) * TICK_MS);
         for (const t of targets) {
           if (!isFinitePos(t)) continue;
-          this.telegraphs.push(new Telegraph(this.scene, t.x, t.z, radius, nowMs, windupMs));
+          // Same DANGER channel as an enemy champion's cast (#228): a neutral
+          // guardian's volley is incoming damage to whoever is standing in it,
+          // and one colour language for "get out" beats two.
+          this.telegraphs.push(
+            new Telegraph(this.scene, t.x, t.z, radius, nowMs, windupMs, undefined, {
+              palette: telegraphPaletteFor("enemy"),
+            }),
+          );
         }
         break;
       }
@@ -1252,6 +1331,8 @@ export class VfxSystem {
     this.w3xCast.tick(dtMs, nowMs);
     for (const t of this.telegraphs) t.update(nowMs);
     this.telegraphs = this.telegraphs.filter((t) => !t.done);
+    // #228: re-reads the cast bar's fraction per caster and advances/reaps
+    this.telegraphLayer.update(nowMs);
     for (const s of this.sparks) s.update(nowMs);
     this.sparks = this.sparks.filter((s) => !s.done);
     // decal fades + idle-pool reaping for the task #39 layers
@@ -1266,6 +1347,7 @@ export class VfxSystem {
 
   dispose(): void {
     for (const t of this.telegraphs) t.dispose();
+    this.telegraphLayer.dispose();
     for (const s of this.sparks) s.dispose();
     for (const list of this.pool.values()) for (const e of list) e.ps.dispose();
     this.blood.dispose();

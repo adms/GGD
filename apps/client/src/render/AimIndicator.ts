@@ -22,6 +22,7 @@ import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
 import type { AimIndicatorState } from "../input/TouchInput";
+import { createGroundQuad, placeGroundQuad } from "./groundShapes";
 
 const LINE_WIDTH = 0.4;
 const Y = 0.07; // just above the ground plane (telegraphs sit at 0.05/0.06)
@@ -50,14 +51,8 @@ export class AimIndicator {
     if (state?.kind === "line") {
       const line = (this.line ??= this.makeLine());
       line.setEnabled(true);
-      line.scaling.set(LINE_WIDTH, state.length, 1);
-      // plane local +Y (pre-rotation) points along world +Z after rotation.x
-      line.rotation.y = Math.atan2(state.dirX, state.dirZ);
-      line.position.set(
-        state.fromX + (state.dirX * state.length) / 2,
-        Y,
-        state.fromZ + (state.dirZ * state.length) / 2,
-      );
+      // shared with the #228 telegraph corridor (render/groundShapes)
+      placeGroundQuad(line, state.fromX, state.fromZ, state.dirX, state.dirZ, state.length, LINE_WIDTH, Y);
     } else if (this.line) {
       this.line.setEnabled(isLine);
     }
@@ -114,16 +109,10 @@ export class AimIndicator {
   }
 
   private makeLine(): Mesh {
-    const mesh = MeshBuilder.CreatePlane(
-      "aim-line",
-      { size: 1, sideOrientation: 2 /* DOUBLESIDE */ },
-      this.scene,
-    );
     // flat on the ground: local +Y → world +Z, then yawed toward the aim dir;
-    // the plane is centered, so update() places it at from + dir·length/2
-    mesh.rotation.x = Math.PI / 2;
+    // the plane is centered, so placeGroundQuad puts it at from + dir·length/2
+    const mesh = createGroundQuad(this.scene, "aim-line");
     mesh.material = this.material("aim-line-mat");
-    mesh.isPickable = false;
     return mesh;
   }
 

@@ -47,7 +47,16 @@ afterEach(() => {
   setDisplayEnvJson(""); // reset the ambient env singleton to neutral defaults
 });
 
-const CTX = { entityPos: (): { x: number; z: number } => ({ x: 0, z: 0 }) };
+/**
+ * The #228 telegraph reads its wind-up fraction from the cast bar's own source
+ * (`CastTracker.progressFor`, injected here as `castProgress`). `progress` is
+ * the knob these tests turn instead of advancing a wall clock.
+ */
+let progress: number | null = null;
+const CTX = {
+  entityPos: (): { x: number; z: number } => ({ x: 0, z: 0 }),
+  castProgress: (): number | null => progress,
+};
 const ev = (type: string, data: Record<string, unknown>): EventMessage => ({ type, tick: 1, data });
 
 describe("1A-7 guardianHeirPulse draws an aura (heir-pulse-visible)", () => {
@@ -96,13 +105,24 @@ describe("1B-3 ability-cast telegraph scales by abilityRange (telegraph-envscale
     Abilities.register(id as AbilityId, def);
   }
 
-  /** The live telegraph disc's WORLD diameter at the current fill fraction. */
-  function fillDiameterAt(vfx: VfxSystem, id: string, ageMs: number): number {
+  /**
+   * The live telegraph disc's WORLD diameter at a given wind-up fraction.
+   *
+   * The fraction is INJECTED, not timed: since task #228 the fill is read from
+   * the cast bar's own source (`VfxContext.castProgress` ← `CastTracker`) every
+   * frame instead of being integrated locally, so that a hitstop-paused
+   * wind-up pauses the ring. What this suite measures is unchanged — the drawn
+   * RADIUS must be the post-`abilityRange` one (#136).
+   */
+  function fillDiameterAt(vfx: VfxSystem, id: string, fraction: number): number {
     const before = scene.meshes.length;
     vfx.handleEvent(ev("abilityCast", { caster: 1, slot: "W", abilityId: id, point: { x: 4, z: 4 } }), 0);
     expect(scene.meshes.length).toBeGreaterThanOrEqual(before); // a telegraph spawned
-    vfx.update(ageMs);
-    const fill = scene.meshes.find((m) => m.name === "telegraph-fill") as Mesh | undefined;
+    progress = fraction;
+    vfx.update(16);
+    const fill = scene.meshes.find((m) => m.name === "telegraph-fill" && m.isEnabled()) as
+      | Mesh
+      | undefined;
     expect(fill).toBeTruthy();
     return fill!.scaling.x;
   }
@@ -112,8 +132,8 @@ describe("1B-3 ability-cast telegraph scales by abilityRange (telegraph-envscale
     setDisplayEnvJson('{"abilityRange":0.6}');
     registerAoe("test.batch1.aoe-scaled");
     const vfx = new VfxSystem(scene, CTX);
-    // mid-fill (t=0.5 of a 1000ms cast): diameter = radius*2*0.5 = radius.
-    const d = fillDiameterAt(vfx, "test.batch1.aoe-scaled", 500);
+    // mid-fill (the sim reports the wind-up half done): diameter = radius*2*0.5.
+    const d = fillDiameterAt(vfx, "test.batch1.aoe-scaled", 0.5);
     // scaled: 9.72 * 0.6 = 5.832 (NOT the unscaled 9.72 the ring used to draw)
     expect(d).toBeCloseTo(RADIUS * 0.6, 3);
     expect(d).toBeLessThan(RADIUS - 0.5); // definitively not the raw radius
@@ -125,7 +145,7 @@ describe("1B-3 ability-cast telegraph scales by abilityRange (telegraph-envscale
     setDisplayEnvJson(""); // neutral defaults — every factor 1.0
     registerAoe("test.batch1.aoe-neutral");
     const vfx = new VfxSystem(scene, CTX);
-    const d = fillDiameterAt(vfx, "test.batch1.aoe-neutral", 500);
+    const d = fillDiameterAt(vfx, "test.batch1.aoe-neutral", 0.5);
     expect(d).toBeCloseTo(RADIUS, 3);
     vfx.dispose();
   });
