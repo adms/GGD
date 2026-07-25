@@ -155,6 +155,39 @@ export function me(): Promise<{ account: AccountPublic }> {
   return api.request<{ account: AccountPublic }>("/me");
 }
 
+/** What POST /account/password returns on success (mirrors changePasswordResp). */
+export interface ChangePasswordResp {
+  status: string;
+  tokens: TokenPair;
+  sessionsRevoked: boolean;
+}
+
+/**
+ * 修改密碼 — rotate the SIGNED-IN player's OWN password (self-service, #211).
+ *
+ * Reuses the #172 platform route `POST /api/v1/account/password`. It is
+ * session-gated AND demands the CURRENT password in the body, so a stolen token
+ * alone can never lock a player out of their own account. A successful change
+ * revokes every refresh token of the account — this client's included — and
+ * returns a FRESH pair, which is swapped in here so the player stays signed in
+ * on THIS device while every other device is signed out.
+ *
+ * `refreshOn401: false` because a 401 from this route means "wrong current
+ * password", not "expired token": auto-refreshing + retrying would double-spend
+ * the server's brute-force budget and could sign the player out over a typo.
+ */
+export async function changePassword(
+  currentPassword: string,
+  newPassword: string,
+): Promise<ChangePasswordResp> {
+  const resp = await api.request<ChangePasswordResp>("/account/password", {
+    body: { currentPassword, newPassword },
+    refreshOn401: false,
+  });
+  if (resp?.tokens?.accessToken && resp?.tokens?.refreshToken) api.setTokens(resp.tokens);
+  return resp;
+}
+
 // ------------------------------------------------------------- friends ----
 
 export function listFriends(): Promise<FriendsList> {

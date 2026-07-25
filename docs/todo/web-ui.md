@@ -23,6 +23,7 @@ dev direct-join path alive without the platform.
 | webui-10 | Equipped skin → local-seat modelKey override map (owned+matching skins only) | webui-skin-override | unit | done |
 | webui-11 | E2E: register two accounts → friend → room → ready → both seat tokens join one match | webui-e2e-flow | e2e | pending |
 | webui-12 | E2E: buy + equip skin in store → champion model swaps in-match | webui-e2e-skin | e2e | pending |
+| webui-13 | Self-service 修改密碼 (#211): validate confirm-match + platform password shape, POST /account/password with the current password (refreshOn401 off), swap in the fresh token pair, GENERIC failure (no wrong-old-password oracle), 429 → wait | webui-change-password | unit | done |
 
 webui-11/12 were verified live in the browser against the real Go platform +
 game-server (2026-07-20) but stay `pending` until a Playwright suite emits their

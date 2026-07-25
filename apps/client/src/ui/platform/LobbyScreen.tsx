@@ -12,6 +12,7 @@
 import { useState } from "react";
 import { useApp } from "./store";
 import { SettingsScreen } from "../SettingsScreen";
+import { ChangePasswordDialog } from "./ChangePasswordDialog";
 import { FriendsPanel } from "./FriendsPanel";
 import { LeaderboardPanel } from "./LeaderboardPanel";
 import { RoomListPanel } from "./RoomListPanel";
@@ -314,6 +315,7 @@ export function LobbyScreen(): React.JSX.Element {
   const room = useApp((s) => s.room);
   const doLogout = useApp((s) => s.doLogout);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [passwordOpen, setPasswordOpen] = useState(false);
   const [offlineMap, setOfflineMap] = useState(DEFAULT_MAP_ID);
 
   return (
@@ -373,11 +375,15 @@ export function LobbyScreen(): React.JSX.Element {
         <Btn small onClick={() => setSettingsOpen(true)} title="graphics & network settings">
           ⚙ Settings
         </Btn>
+        <Btn small onClick={() => setPasswordOpen(true)} title="修改我的登入密碼 · change your own password">
+          🔑 密碼
+        </Btn>
         <Btn small kind="danger" onClick={() => void doLogout()}>
           Logout
         </Btn>
       </div>
       {settingsOpen && <SettingsScreen onClose={() => setSettingsOpen(false)} />}
+      {passwordOpen && <ChangePasswordDialog onClose={() => setPasswordOpen(false)} />}
 
       {/* body */}
       {lobbyView === "store" ? (
