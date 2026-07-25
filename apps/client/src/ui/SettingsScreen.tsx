@@ -15,6 +15,7 @@ import {
   INTERP_MAX_DELAY_MS,
   type CombatTextScope,
   type FpsCap,
+  type GoreSetting,
   type QualityPreset,
 } from "../settings";
 import { lodTierForPreset, type ModelLodTier } from "../render/modelLod";
@@ -50,6 +51,19 @@ const COMBAT_TEXT_SCOPES: { value: CombatTextScope; label: string }[] = [
   { value: "self", label: "Me" },
   { value: "team", label: "Team" },
   { value: "all", label: "All" },
+];
+
+/**
+ * 血花 spray style (task #39 gore pipeline). "Default" defers to the content
+ * config/gore.json; the others force a look, and "Off" disables spray entirely
+ * (the intensity=0 / off branch the pipeline was built to serve but no UI ever
+ * reached — goreSettings.ts pushes this into setGoreOverride on every change).
+ */
+const GORE_STYLE_OPTIONS: { value: GoreSetting; label: string }[] = [
+  { value: "default", label: "Default" },
+  { value: "blood", label: "Blood" },
+  { value: "stylized", label: "Stylized" },
+  { value: "off", label: "Off" },
 ];
 
 const FPS_CAPS: { value: FpsCap; label: string }[] = [
@@ -380,6 +394,28 @@ export function SettingsScreen({ onClose }: { onClose: () => void }): React.JSX.
           />
           <Toggle on={g.antialias} onChange={(v) => store.patchGraphics({ antialias: v })} text="Antialiasing" />
           <div style={{ color: TEXT_DIM, fontSize: 10 }}>Antialiasing applies on the next match.</div>
+          <div>
+            {label("Gore")}
+            <div style={{ marginTop: 4 }}>
+              <Segmented
+                options={GORE_STYLE_OPTIONS}
+                value={g.goreStyle}
+                onPick={(v) => store.patchGraphics({ goreStyle: v })}
+              />
+            </div>
+          </div>
+          <div style={{ color: TEXT_DIM, fontSize: 10 }}>
+            血花 spray style. "Default" follows the content config; "Off" disables it entirely.
+          </div>
+          <Slider
+            text="Gore intensity"
+            value={g.goreIntensity}
+            min={0}
+            max={1}
+            step={0.1}
+            fmt={(v) => `${Math.round(v * 100)}%`}
+            onChange={(v) => store.patchGraphics({ goreIntensity: v })}
+          />
         </Section>
 
         <Section title="Network">

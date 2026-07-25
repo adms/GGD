@@ -50,6 +50,7 @@ import type { VfxDoc } from "@ggd/shared/content";
 import { TICK_MS } from "@ggd/shared/constants";
 import { frameBus, pushCombatText } from "../frameBus";
 import type { CombatTextRelation } from "../ui/combatText";
+import { envFactor } from "../ui/displayFinal";
 import { particleBudgetScale } from "../render/RenderConfig";
 import { KIND_FLOWER, KIND_GUARDIAN } from "../render/overheadAnchors";
 import { qualityController } from "../render/QualityController";
@@ -439,12 +440,11 @@ export class VfxSystem {
   /**
    * STATUS BODY AURAS (task #39). The authoritative CC bitmask
    * (`EntitySchema.flags`: 1 dashing / 2 rooted / 4 stunned / 8 slowed) has
-   * shipped on the wire since the protocol was written and NOTHING on the
-   * client reads it — a stunned champion looks identical to a healthy one.
-   * The aura layer is built and pumped here; all it still needs is the game
-   * loop's existing per-entity pass calling
-   *   `vfx.statusFx.set(es.id, es.flags, pos.x, pos.z, nowMs)`
-   * once per entity per frame. Until that lands this costs nothing at all.
+   * shipped on the wire since the protocol was written. The game loop's
+   * per-frame champion pass now feeds it in (GameApp step 4b:
+   *   `vfx.statusFx.set(es.id, es.flags, pos.x, pos.z, nowMs)`),
+   * so a stun/root/slow finally reads on the body; `update` below pumps the
+   * pulses and `forget` (on despawn) sweeps them.
    */
   get statusFx(): StatusAuraFx {
     return this.status;
@@ -769,12 +769,17 @@ export class VfxSystem {
           // about HOW LONG is worse than none, and it would also have
           // contradicted the light pillar standing next to it.
           const ctMs = (def?.castTimeSec ?? 0) * 1000;
+          // The AoE hit resolves at `def.radius × combatEnv.abilityRange` (#136,
+          // sim resolveAbilityRadius). The abilityCast event carries no radius,
+          // so apply the same post-multiplier HERE — otherwise the ground ring
+          // draws the raw authored radius and lies about where the damage lands.
+          const telegraphRadius = (def?.radius ?? 1.2) * envFactor("abilityRange");
           this.telegraphs.push(
             new Telegraph(
               this.scene,
               point.x,
               point.z,
-              def?.radius ?? 1.2,
+              telegraphRadius,
               nowMs,
               ctMs > 0 ? ctMs : undefined,
             ),
@@ -1139,6 +1144,19 @@ export class VfxSystem {
         const z = ev.data.z as number | undefined;
         if (typeof x !== "number" || typeof z !== "number" || !isFinitePos({ x, z })) break;
         this.layeredPop(x, z, nowMs, "ex", GUARDIAN_TINT);
+        break;
+      }
+      // the 鎮守之力 heir buff FIRED an AoE pulse (task #89): a light aura pop at
+      // the bearer so the invisible enemies-only volley reads as a real burst of
+      // guardian power radiating off the buff-holder — otherwise the damage lands
+      // with no visual and looks like nothing happened. Kept at "light" (not the
+      // "heavy" impact / "ex" slain pops) because it RECURS every volley period —
+      // a loud pop each tick would fatigue rather than inform.
+      case "guardianHeirPulse": {
+        const x = ev.data.x as number | undefined;
+        const z = ev.data.z as number | undefined;
+        if (typeof x !== "number" || typeof z !== "number" || !isFinitePos({ x, z })) break;
+        this.layeredPop(x, z, nowMs, "light", GUARDIAN_TINT);
         break;
       }
 

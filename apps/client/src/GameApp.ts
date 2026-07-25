@@ -907,6 +907,14 @@ export class GameApp {
 
     const state = this.conn.room?.state ?? null;
 
+    // Keep the imperative displayFinal singleton current with the live wire
+    // combat-env EVERY frame (idempotent — no-ops when the JSON is unchanged),
+    // so any imperative reader is correct without a React panel mounted. The
+    // ability-cast telegraph (VfxSystem) reads `envFactor("abilityRange")` to
+    // draw the AoE at its POST-multiplier radius (#136), and event handling
+    // below fires before any hold-preview would otherwise sync it.
+    setDisplayEnvJson(hudStore.getState().combatEnvJson);
+
     // 1) drain network events (queued by socket callbacks)
     const localId = hudStore.getState().localEntityId;
     const events = this.conn.drainEvents();
@@ -1090,6 +1098,17 @@ export class GameApp {
           });
         }
       }
+
+      // 4b) STATUS BODY AURAS (task #39). The authoritative CC bitmask ships on
+      // every entity (rooted/stunned/slowed), but until now NOTHING read it —
+      // a stunned champion looked identical to a healthy one. Feed each live
+      // champion's flags at its RENDERED position; the aura layer pulses on
+      // `vfx.update` below and self-prunes on despawn (`statusFx.forget`).
+      state.entities.forEach((es) => {
+        if (es.kind !== KIND_CHAMPION || !es.alive) return;
+        const p = this.views.posOf(es.id) ?? { x: es.x, z: es.z };
+        this.vfx.statusFx.set(es.id, es.flags, p.x, p.z, nowMs);
+      });
     } else {
       this.remoteSteps.reset();
     }
@@ -1586,7 +1605,16 @@ export class GameApp {
     if (!state) return [];
     const units: PickableUnit[] = [];
     state.entities.forEach((es) => {
-      if (es.kind !== 0 || !es.alive) return;
+      // Champions AND the neutral objectives (harvest flower, guardian tower)
+      // are attackable targets the sim already accepts orders against — a human
+      // must be able to click / attack-move / auto-acquire them too, not just
+      // bots via direct AI orders. Neutrals carry seatId -1, so the team filter
+      // below resolves to -1 and never matches myTeam (they read as "enemy").
+      if (
+        (es.kind !== KIND_CHAMPION && es.kind !== KIND_GUARDIAN && es.kind !== KIND_FLOWER) ||
+        !es.alive
+      )
+        return;
       if ((this.teamBySeat.get(es.seatId) ?? -1) === myTeam) return;
       const pos = this.views.posOf(es.id) ?? { x: es.x, z: es.z };
       units.push({ id: es.id, x: pos.x, z: pos.z, radius: 0.6 });
