@@ -15,6 +15,7 @@ import * as apiFns from "./api";
 import { encodeQR } from "./qr";
 import { runDeviceLogin, type DevicePhase } from "./deviceLogin";
 import { startGamepadFocus, nextFocusIndex, type NavDir } from "./gamepadFocus";
+import { applyPadFocus, clearPadFocus } from "../focusGlow";
 import { Btn, ACCENT } from "./widgets";
 import { TEXT_DIM, TEXT_MAIN } from "../theme";
 
@@ -90,10 +91,17 @@ export function DeviceLoginPanel({ onClose }: { onClose: () => void }): React.JS
   }, [attempt, applyDeviceSession]);
 
   // Reflect the focus index onto real DOM focus so A/click activate the right
-  // button and a mouse/touch user is unaffected.
+  // button and a mouse/touch user is unaffected. It ALSO paints the shared
+  // focus glow (#222, ../focusGlow): this panel is the one surface with no
+  // keyboard at all, so "which button will A press?" has to be unmissable — and
+  // it drives its own pad loop rather than PadFocusNav, so nothing else would
+  // mark it. Cleared on unmount so the glow never outlives the panel.
   useEffect(() => {
-    btnRefs.current[focus]?.focus();
+    const el = btnRefs.current[focus];
+    el?.focus();
+    applyPadFocus(el);
   }, [focus, focusCount]);
+  useEffect(() => () => clearPadFocus(), []);
 
   // Gamepad: D-pad moves focus, A activates, B cancels (the trust-preserving
   // "back" — a mistaken open never strands a handheld with no keyboard).
