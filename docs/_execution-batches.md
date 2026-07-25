@@ -6,6 +6,27 @@
 
 ---
 
+## 🔁 2026-07-25 自主循環 · Round 1（進行中，3 條平行工作流）
+
+> owner `/goal`：批次分組→盡量開平行工作流→每批完成即 push+note→試玩→反省回寫本檔→重整→loop，直到只剩不重要議題再讓 owner 確認 deploy。**push 已授權（每批一次，patch bump），deploy 仍需 owner 親自確認。**
+
+**本輪先實地複驗（2026-07-23 計畫部分已過期），確認 Batch 1 幾項已落地：** `1C-3` 登入跑馬燈 ✅（`93bacb5` 已訂閱 `useContentReady`）、`1A-1` `ENTITY_KIND.GUARDIAN=4` ✅已存在於 schema、`registry.ts` #79 override ✅已 commit。仍為死碼：`1B-1` statusFx 無呼叫者、`1C-1` gore 開關缺、`1C-2` undoDepth 無讀者、`1C-4` credits z-index、`1D-1` gen_status 分母。
+
+**三條檔案領域互斥的平行工作流（各自 map→implement(worktree)→adversarial verify）：**
+| 工作流 | 批次 | 獨佔檔案領域 | 動 content? |
+|---|---|---|---|
+| `wf_7fba40f1` | **Batch 1 看得見的正確性** | protocol/schema · sim · game-server snapshot/MatchRoom · client render/ui/vfx · content/arenas+arena-rules+prop.guardian | 是（唯一動 bundle 者）|
+| `wf_611ea658` | **Batch 4 載入與抓取** | client AssetManager/ContentDb/IntermissionScene/audio-warm · nginx.conf · codex icon-hash | 否 |
+| `wf_8f51e61a` | **Batch 7A 平台安全** | apps/platform · apps/admin（#126 核准佇列 UI + pending cap/TTL + trusted-proxy 若安全）| 否 |
+
+三者互斥 → 合併不撞；只有 Batch 1 動 bundle.json。落地順序：各工作流回報 SOUND 後逐一驗證合併 → 每批 push+release note → localhost 試玩 → 問題回寫下方〈反省〉→ 開下一輪（Batch 2 內容、Batch 6 模型：兩者都動 content，須待 Batch 1 合併後才能開，避免 bundle 衝突）。
+
+### 反省（每批試玩後回寫）
+- **Batch 4 → 8/8 大多已完成（計畫嚴重過期）**：map 實查 HEAD 發現 `4-3`(ContentDb 註冊表優先)、`4-4`(nginx `?h=` immutable)、`4-5`(單 GET 無 HEAD)、`4-6`(hover 不載入)、`4-7`(icon hash 改按鈕)、`4-8`(共用 byteCache)、以及模型/語音 lazy 載入**全部已在 `d0f643a` 系列落地**。只有 `4-2` 勉強算開著，且計畫前提是錯的（victoryTaunt 只抓一支 config JSON，不是 351 clip/5.28 MB）。**淨產出：`useAudio.ts` +25 行把 taunt config warm 提前**（`8094eb4`，client tsc/​build 綠、shared 860/860）。**教訓：這份 2026-07-23 計畫的完成度被低估；map-first 工作流正確地沒有重造已完成的東西。Batch 1 的 map 同理會篩掉 1C-3/1A-1(enum)/#79 等已落地項。**
+- 決策：Batch 4 只 25 行，push 與 Batch 1（實質批）合併成一次有意義的 release，不單獨發版。
+
+---
+
 ## 🚀 v0.5.0 · 2026-07-25 pre-push localhost 試玩紀錄（PASS）
 
 **本場內容（20 commits，全過測試閘 shared 856 / game-server 438 / client tsc 0；#195 火圈另過對抗式 verify）：**
