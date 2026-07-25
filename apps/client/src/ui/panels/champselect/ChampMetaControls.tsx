@@ -12,7 +12,7 @@
  */
 import { SfxButton } from "../../SfxButton";
 import { GOLD, TEXT_DIM, TEXT_MAIN } from "../../theme";
-import { CRYSTAL_UNLOCK_COST, canAfford, lockStateOf, type WalletMetaHook } from "./walletMeta";
+import { CRYSTAL_EARN_HINT, CRYSTAL_UNLOCK_COST, canAfford, lockStateOf, type WalletMetaHook } from "./walletMeta";
 
 /** The 水晶 balance chip for the roster header. */
 export function CrystalBadge({ crystal }: { crystal: number }): React.JSX.Element {
@@ -91,16 +91,24 @@ export function ChampMetaOverlay({
         {favourited ? "★" : "☆"}
       </SfxButton>
 
-      {/* unlock button — only for a priced, not-owned champion */}
+      {/* unlock button — only for a priced, not-owned champion.
+          When the player can't afford it the button stays CLICKABLE (dim, not
+          disabled): tapping it surfaces the 藍水晶 earn hint (task #213) rather
+          than doing nothing. Only an in-flight mutation truly disables it. */}
       {lock === "locked" && (
         <SfxButton
           pressScale={1}
-          disabled={busy || !affordable}
+          disabled={busy}
           onClick={() => meta.unlock(championId)}
+          aria-label={
+            affordable
+              ? `解鎖英雄，需要 ${CRYSTAL_UNLOCK_COST} 水晶`
+              : `水晶不足，無法解鎖。${CRYSTAL_EARN_HINT}`
+          }
           title={
             affordable
               ? `解鎖此英雄需要 ${CRYSTAL_UNLOCK_COST} 水晶`
-              : `水晶不足 — 解鎖需要 ${CRYSTAL_UNLOCK_COST} 水晶`
+              : `水晶不足 — 解鎖需要 ${CRYSTAL_UNLOCK_COST} 水晶。${CRYSTAL_EARN_HINT}`
           }
           style={{
             width: "100%",
@@ -110,7 +118,7 @@ export function ChampMetaOverlay({
             boxSizing: "border-box",
             fontSize: 12,
             fontWeight: "bold",
-            cursor: busy || !affordable ? "default" : "pointer",
+            cursor: busy ? "default" : "pointer",
             color: affordable ? TEXT_MAIN : TEXT_DIM,
             background: affordable ? "rgba(120, 200, 255, 0.14)" : "rgba(40, 48, 66, 0.6)",
             border: affordable ? "1px solid rgba(120, 200, 255, 0.55)" : "1px solid #2c3448",

@@ -27,6 +27,20 @@ import { api } from "../../platform/api";
 /** Flat crystal cost of one champion unlock — mirrors `CrystalUnlockCost`. */
 export const CRYSTAL_UNLOCK_COST = 300;
 
+/**
+ * The hint shown when a player taps 「解鎖」 on a champion they cannot afford —
+ * it tells them HOW to earn 藍水晶 instead of a silent no-op (task #213).
+ *
+ * Every clause is TRUE against the server's crystal model (internal/wallet/meta.go):
+ *   • 「打場就能賺藍水晶」 — crystals are granted per match; the ONLY earn path is
+ *     match settlement (there is deliberately no client-side earn route).
+ *   • 「戰鬥結束後發放」 — the grant runs on the settlement callback, after the
+ *     match ends (CrystalRewardFor, applied in gamelink/callback.go).
+ *   • 「第一名翻倍」 — 1st place (吃雞) is doubled: CrystalPlace1 = 120 ×
+ *     CrystalWinMultiplier(2) = 240, versus 90 / 70 / 60 for 2nd–4th.
+ */
+export const CRYSTAL_EARN_HINT = "打場就能賺藍水晶，戰鬥結束後發放，第一名翻倍";
+
 /** The slice of GET /wallet the champ-select meta chrome consumes. */
 export interface MetaWallet {
   crystal: number;
@@ -289,9 +303,16 @@ export interface WalletMetaHook {
   /** the champion id currently mutating (disables its buttons), else null. */
   busyId: string | null;
   error: string | null;
+  /**
+   * A non-error advisory note — set when the player taps 「解鎖」 without enough
+   * 藍水晶, carrying `CRYSTAL_EARN_HINT` (how to earn more). Distinct from
+   * `error` so the panel can style it as guidance, not a failure. null = none.
+   */
+  hint: string | null;
   unlock(championId: string): void;
   toggleFavourite(championId: string): void;
   dismissError(): void;
+  dismissHint(): void;
 }
 
 /**
@@ -310,6 +331,7 @@ export function useWalletMeta(
   const [data, setData] = useState<MetaData>(EMPTY_DATA);
   const [busyId, setBusyId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [hint, setHint] = useState<string | null>(null);
 
   const aliveRef = useRef(true);
   const busyRef = useRef(false);
@@ -339,6 +361,7 @@ export function useWalletMeta(
     busyRef.current = true;
     setBusyId(id);
     setError(null);
+    setHint(null); // a real action supersedes any stale insufficient-crystal hint
     void (async () => {
       try {
         const wallet = await op();
@@ -355,9 +378,18 @@ export function useWalletMeta(
 
   const unlock = useCallback(
     (championId: string): void => {
+      // Can't afford it? Don't POST (the server would reject anyway) — surface
+      // the earn hint so the tap is answered instead of silently doing nothing
+      // (task #213). Affordability lives here, the single source of truth the
+      // 「解鎖」 button's disabled/dim styling also reads through `canAfford`.
+      if (!canAfford(data.crystal)) {
+        setError(null);
+        setHint(CRYSTAL_EARN_HINT);
+        return;
+      }
       run(championId, () => mutators.unlock(championId));
     },
-    [run, mutators],
+    [run, mutators, data.crystal],
   );
 
   const toggleFavourite = useCallback(
@@ -369,6 +401,7 @@ export function useWalletMeta(
   );
 
   const dismissError = useCallback((): void => setError(null), []);
+  const dismissHint = useCallback((): void => setHint(null), []);
 
   return {
     available,
@@ -379,8 +412,10 @@ export function useWalletMeta(
     prices: data.prices,
     busyId,
     error,
+    hint,
     unlock,
     toggleFavourite,
     dismissError,
+    dismissHint,
   };
 }

@@ -390,6 +390,42 @@ export function ChampSelectPanel(): React.JSX.Element {
             </div>
           )}
 
+          {/* #213: tapping 「解鎖」 without enough 藍水晶 answers with a HINT (how
+              to earn crystals), not a silent no-op. Crystal-blue, not error-red —
+              it's guidance, not a failure — and dismissible like the note above. */}
+          {meta.available && meta.hint && (
+            <div
+              role="status"
+              style={{
+                marginBottom: 10,
+                padding: "6px 10px",
+                borderRadius: 8,
+                fontSize: 12,
+                color: "#cfeaff",
+                background: "rgba(120, 200, 255, 0.12)",
+                border: "1px solid rgba(120, 200, 255, 0.5)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: 8,
+              }}
+            >
+              <span>
+                <span aria-hidden style={{ marginRight: 6 }}>💎</span>
+                {meta.hint}
+              </span>
+              <SfxButton
+                kind="ghost"
+                sfxVolume={0.4}
+                onClick={meta.dismissHint}
+                aria-label="dismiss"
+                style={{ background: "none", border: "none", color: "#cfeaff", cursor: "pointer" }}
+              >
+                ✕
+              </SfxButton>
+            </div>
+          )}
+
           {/* server rejected the last pick (e.g. off the whitelist) */}
           {lastReject && (
             <div
