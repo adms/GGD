@@ -100,27 +100,15 @@
       "range": 11.0,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "perRank": [
-              80,
-              120,
-              160,
-              200
-            ],
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.6
-              }
-            ]
-          }
+          "kind": "applyStatus",
+          "statusId": "slow30",
+          "duration": 5.0
         }
       ],
       "vfxKey": "fx.prim.arcane.pulse-sm",
+      "sfxKey": "wc3.necropolisupgrade2",
       "targetsEnemies": true,
-      "castTimeSec": 0.4
+      "castTimeSec": 0.3
     },
     "E": {
       "id": "godie-e00t.e",
@@ -149,10 +137,10 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              7.0,
-              12.0,
-              17.0,
-              22.0
+              160.0,
+              160.0,
+              160.0,
+              160.0
             ],
             "ratios": [
               {
@@ -165,7 +153,7 @@
       ],
       "vfxKey": "fx.prim.void.nova",
       "targetsEnemies": true,
-      "castTimeSec": 0.3
+      "castTimeSec": 0.4
     },
     "R": {
       "id": "godie-e00t.r",
@@ -173,7 +161,7 @@
       "icon": "assets/icons/abilities/godie-e00t.r.webp",
       "description": "[輔助]\n<A0IC,Cool1>秒冷卻時間\n\n貞子發出凜人的靈壓，造成周圍<A0ID,Area1>範圍內的敵方單位減慢<A0ID,DataB1,%>%的攻擊速度與<A0ID,DataA1,%>%的移動速度。\n\n每秒消耗<A0IC,DataB1>點法力。",
       "slot": "R",
-      "castType": "skillshot",
+      "castType": "self",
       "maxRank": 3,
       "cooldown": [
         10.0,
@@ -185,32 +173,75 @@
         70.0,
         90.0
       ],
-      "range": 11.0,
-      "effects": [
-        {
-          "kind": "spawnProjectile",
-          "projectileId": "imported.wave",
-          "onHit": [
-            {
-              "kind": "damage",
-              "damageType": "magic",
-              "amount": {
-                "perRank": [
-                  0.0,
-                  0.0,
-                  0.0
+      "range": 0,
+      "radius": 11.0,
+      "targetsEnemies": true,
+      "effects": [],
+      "passive": {
+        "name": "66-04  靈壓震撼",
+        "ranks": [
+          {
+            "auras": [
+              {
+                "radius": 11.0,
+                "affects": "enemy",
+                "modifiers": [
+                  {
+                    "stat": "ms",
+                    "op": "pctAdd",
+                    "value": -0.1
+                  },
+                  {
+                    "stat": "as",
+                    "op": "pctAdd",
+                    "value": -0.65
+                  }
                 ]
               }
-            },
-            {
-              "kind": "applyStatus",
-              "statusId": "burnstun",
-              "duration": 1.2,
-              "stun": true
-            }
-          ]
-        }
-      ],
+            ]
+          },
+          {
+            "auras": [
+              {
+                "radius": 11.0,
+                "affects": "enemy",
+                "modifiers": [
+                  {
+                    "stat": "ms",
+                    "op": "pctAdd",
+                    "value": -0.2
+                  },
+                  {
+                    "stat": "as",
+                    "op": "pctAdd",
+                    "value": -0.65
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "auras": [
+              {
+                "radius": 11.0,
+                "affects": "enemy",
+                "modifiers": [
+                  {
+                    "stat": "ms",
+                    "op": "pctAdd",
+                    "value": -0.3
+                  },
+                  {
+                    "stat": "as",
+                    "op": "pctAdd",
+                    "value": -0.65
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
       "vfxKey": "fx.prim.void.bolt-lg"
     }
   },

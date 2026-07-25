@@ -29,10 +29,10 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              90.0,
-              90.0,
-              90.0,
-              90.0
+              350.0,
+              450.0,
+              550.0,
+              650.0
             ]
           }
         },
@@ -46,6 +46,7 @@
     }
   ],
   "vfxKey": "fx.prim.ice.beam",
+  "sfxKey": "wc3.flaretarget2",
   "schema": "ability@1",
-  "castTimeSec": 0.5
+  "castTimeSec": 0.6
 }

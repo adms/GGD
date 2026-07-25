@@ -23,9 +23,9 @@
       "damageType": "magic",
       "amount": {
         "perRank": [
-          80,
-          120,
-          160
+          200.0,
+          200.0,
+          200.0
         ],
         "ratios": [
           {
@@ -37,6 +37,7 @@
     }
   ],
   "vfxKey": "fx.prim.fire.explosion-lg",
+  "sfxKey": "wc3.taunt",
   "targetsEnemies": true,
   "schema": "ability@1",
   "castTimeSec": 0.4

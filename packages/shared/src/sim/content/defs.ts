@@ -79,6 +79,14 @@ export interface AbilityDef {
   passive?: AbilityPassive;
   vfxKey?: string;
   /**
+   * WC3-derived per-ability cast sound cue (audio-map SFX key, e.g.
+   * "wc3.nocute"). Stamped onto the `abilityCast` event so the client's
+   * combat-audio mapper plays the source map's own clip for this cast; absent
+   * = the generic castBegin/abilityCast voice. Authored from
+   * tools/w3x-import SFX_BINDINGS (owner directive: ability ports include 音效).
+   */
+  sfxKey?: string;
+  /**
    * Cast time (seconds) — the wind-up before effects fire. Default 0 = instant
    * (skeleton behavior). With ct>0 the caster enters a cast state, pays mana +
    * cooldown up-front, and effects resolve `round(ct/dt)` ticks later.

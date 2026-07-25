@@ -46,6 +46,7 @@
     }
   ],
   "vfxKey": "fx.prim.ki.nova",
+  "sfxKey": "wc3.defendcaster",
   "targetsEnemies": true,
   "radius": 5.5,
   "schema": "ability@1",

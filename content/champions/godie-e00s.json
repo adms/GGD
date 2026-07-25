@@ -73,11 +73,11 @@
               "damageType": "magic",
               "amount": {
                 "perRank": [
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0
+                  150.0,
+                  300.0,
+                  450.0,
+                  600.0,
+                  750.0
                 ]
               }
             }
@@ -85,7 +85,8 @@
         }
       ],
       "vfxKey": "fx.prim.arcane.bolt",
-      "castTimeSec": 0.3
+      "sfxKey": "wc3.treantready1",
+      "castTimeSec": 0.5
     },
     "W": {
       "id": "godie-e00s.w",
@@ -147,22 +148,10 @@
       "range": 11.0,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "perRank": [
-              80,
-              120,
-              160,
-              200
-            ],
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.6
-              }
-            ]
-          }
+          "kind": "applyStatus",
+          "statusId": "root",
+          "duration": 1.5,
+          "root": true
         }
       ],
       "vfxKey": "fx.prim.nature.pulse-sm",
@@ -194,9 +183,9 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              75.0,
-              75.0,
-              75.0
+              180.0,
+              180.0,
+              180.0
             ],
             "ratios": [
               {

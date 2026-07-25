@@ -114,10 +114,10 @@
               "damageType": "magic",
               "amount": {
                 "perRank": [
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0
+                  75.0,
+                  75.0,
+                  75.0,
+                  75.0
                 ]
               }
             }
@@ -125,7 +125,8 @@
         }
       ],
       "vfxKey": "fx.prim.nature.swarm",
-      "castTimeSec": 0.3
+      "sfxKey": "wc3.spiritofvengeanceyes3",
+      "castTimeSec": 0.4
     },
     "E": {
       "id": "godie-n00p.e",
@@ -169,6 +170,7 @@
         }
       ],
       "vfxKey": "fx.prim.nature.pulse",
+      "sfxKey": "wc3.altarofelderswhat1",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },

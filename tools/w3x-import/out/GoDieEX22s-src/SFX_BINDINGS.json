@@ -1,0 +1,2139 @@
+{
+ "summary": {
+  "gg_snd_bindings_total": 134,
+  "abilities_with_wc3_sound": 98,
+  "ability_sound_refs": {
+   "imported_portable_now": 5,
+   "stock_needs_mpq": 123
+  },
+  "note": "content has no per-ability sound field yet — this is the porting worklist for that surface"
+ },
+ "bindings": {
+  "gg_snd_4die": {
+   "wc3_path": "war3mapImported\\\\4die.mp3",
+   "kind": "imported",
+   "extracted_file": "war3mapImported__4die.mp3"
+  },
+  "gg_snd_87joke": {
+   "wc3_path": "war3mapImported\\\\87joke.Mp3",
+   "kind": "imported",
+   "extracted_file": "war3mapImported__87joke.Mp3"
+  },
+  "gg_snd_AkamaPissed8": {
+   "wc3_path": "Units\\\\Other\\\\DranaiAkama\\\\AkamaPissed8.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_AltarOfEldersWhat1": {
+   "wc3_path": "Buildings\\\\NightElf\\\\AltarOfElders\\\\AltarOfEldersWhat1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_AltarOfKingsWhat1": {
+   "wc3_path": "Buildings\\\\Human\\\\AltarOfKings\\\\AltarOfKingsWhat1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_AmmoDumpWhat1": {
+   "wc3_path": "Buildings\\\\Other\\\\AmmoDump\\\\AmmoDumpWhat1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_AncientOfTheMoonYes1": {
+   "wc3_path": "Buildings\\\\NightElf\\\\AncientOfWar\\\\AncientOfTheMoonYes1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_ArcherYesAttack3": {
+   "wc3_path": "Units\\\\NightElf\\\\Archer\\\\ArcherYesAttack3.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_AxeMissileLaunch1": {
+   "wc3_path": "Abilities\\\\Weapons\\\\Axe\\\\AxeMissileLaunch1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_bads": {
+   "wc3_path": "war3mapImported\\\\bads.mp3",
+   "kind": "imported",
+   "extracted_file": "war3mapImported__bads.mp3"
+  },
+  "gg_snd_BigBadVoodooSpellBirth1": {
+   "wc3_path": "Abilities\\\\Spells\\\\Orc\\\\Voodoo\\\\BigBadVoodooSpellBirth1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_BloodlustTarget": {
+   "wc3_path": "Abilities\\\\Spells\\\\Orc\\\\Bloodlust\\\\BloodlustTarget.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_BridgeDeath": {
+   "wc3_path": "Sound\\\\Ambient\\\\DoodadEffects\\\\BridgeDeath.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_BristleBackMissileLaunch3": {
+   "wc3_path": "Abilities\\\\Weapons\\\\BristleBackMissile\\\\BristleBackMissileLaunch3.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_ChickenWhat1": {
+   "wc3_path": "Units\\\\Critters\\\\EasterChicken\\\\ChickenWhat1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_ClanInvitation": {
+   "wc3_path": "Sound\\\\Interface\\\\ClanInvitation.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_DarkSummoningLaunch1": {
+   "wc3_path": "Abilities\\\\Spells\\\\Undead\\\\DarkSummoning\\\\DarkSummoningLaunch1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_DefendCaster": {
+   "wc3_path": "Abilities\\\\Spells\\\\Human\\\\Defend\\\\DefendCaster.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_DemonHunterMissileHit3": {
+   "wc3_path": "Abilities\\\\Weapons\\\\DemonHunterMissile\\\\DemonHunterMissileHit3.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_die": {
+   "wc3_path": "war3mapImported\\\\die.mp3",
+   "kind": "imported",
+   "extracted_file": "war3mapImported__die.mp3"
+  },
+  "gg_snd_dogdie": {
+   "wc3_path": "war3mapImported\\\\dogdie.mp3",
+   "kind": "imported",
+   "extracted_file": "war3mapImported__dogdie.mp3"
+  },
+  "gg_snd_dorakill": {
+   "wc3_path": "war3mapImported\\\\dorakill.mp3",
+   "kind": "imported",
+   "extracted_file": "war3mapImported__dorakill.mp3"
+  },
+  "gg_snd_DragonRoostWhat1": {
+   "wc3_path": "Buildings\\\\Other\\\\DragonRoost\\\\DragonRoostWhat1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_DragonYes2": {
+   "wc3_path": "Units\\\\Creeps\\\\AzureDragon\\\\DragonYes2.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_DruidOfTheTalonMissileLaunch2": {
+   "wc3_path": "Abilities\\\\Weapons\\\\DruidoftheTalonMissile\\\\DruidOfTheTalonMissileLaunch2.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_EggSackDeath1": {
+   "wc3_path": "Doodads\\\\Dungeon\\\\Terrain\\\\EggSack\\\\EggSackDeath1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_EggSackDeath101": {
+   "wc3_path": "Doodads\\\\Dungeon\\\\Terrain\\\\EggSack\\\\EggSackDeath1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_ElvenFarmWhat1": {
+   "wc3_path": "Buildings\\\\Other\\\\ElvenFarm\\\\ElvenFarmWhat1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_even": {
+   "wc3_path": "war3mapImported\\\\even.mp3",
+   "kind": "imported",
+   "extracted_file": "war3mapImported__even.mp3"
+  },
+  "gg_snd_FarmWhat1": {
+   "wc3_path": "Buildings\\\\Human\\\\Farm\\\\FarmWhat1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_FarseerMissileLaunch": {
+   "wc3_path": "Abilities\\\\Weapons\\\\FarseerMissile\\\\FarseerMissileLaunch.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_FlameStrikeTargetWaveNonLoop1": {
+   "wc3_path": "Abilities\\\\Spells\\\\Human\\\\FlameStrike\\\\FlameStrikeTargetWaveNonLoop1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_FlareTarget1": {
+   "wc3_path": "Abilities\\\\Spells\\\\Human\\\\Flare\\\\FlareTarget1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_FlareTarget2": {
+   "wc3_path": "Abilities\\\\Spells\\\\Human\\\\Flare\\\\FlareTarget2.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_FlareTarget3": {
+   "wc3_path": "Abilities\\\\Spells\\\\Human\\\\Flare\\\\FlareTarget3.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_FlashBack1Second": {
+   "wc3_path": "Sound\\\\Ambient\\\\DoodadEffects\\\\FlashBack1Second.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_FountainOfLifeWhat1": {
+   "wc3_path": "Buildings\\\\Other\\\\FountainOfLife\\\\FountainOfLifeWhat1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_GameFound": {
+   "wc3_path": "Sound\\\\Interface\\\\GameFound.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_GlueScreenMeteorHit1": {
+   "wc3_path": "Sound\\\\Interface\\\\GlueScreenMeteorHit1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_GlueScreenMeteorHit2": {
+   "wc3_path": "Sound\\\\Interface\\\\GlueScreenMeteorHit2.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_GoldMineDeath1": {
+   "wc3_path": "Buildings\\\\Other\\\\GoldMine\\\\GoldMineDeath1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_GoodJob": {
+   "wc3_path": "Sound\\\\Interface\\\\GoodJob.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_GruntPissed3": {
+   "wc3_path": "Units\\\\Orc\\\\Grunt\\\\GruntPissed3.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_GruntWhat2": {
+   "wc3_path": "Units\\\\Orc\\\\Grunt\\\\GruntWhat2.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_GruntYesAttack1": {
+   "wc3_path": "Units\\\\Orc\\\\Grunt\\\\GruntYesAttack1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_GruntYesAttack3": {
+   "wc3_path": "Units\\\\Orc\\\\Grunt\\\\GruntYesAttack3.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_GryphonRiderMissileLaunch3": {
+   "wc3_path": "Abilities\\\\Weapons\\\\GryphonRiderMissile\\\\GryphonRiderMissileLaunch3.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_gy2": {
+   "wc3_path": "war3mapImported\\\\gy2.Mp3",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_HCancelBuilding": {
+   "wc3_path": "Sound\\\\Buildings\\\\Death\\\\HCancelBuilding.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_HeadHunterYes4": {
+   "wc3_path": "Units\\\\Orc\\\\HeadHunter\\\\HeadHunterYes4.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_HeroPaladinPissed4": {
+   "wc3_path": "Units\\\\Human\\\\HeroPaladin\\\\HeroPaladinPissed4.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_HeroWardenPissed2": {
+   "wc3_path": "Units\\\\NightElf\\\\HeroWarden\\\\HeroWardenPissed2.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_HeroWardenYesAttack3": {
+   "wc3_path": "Units\\\\NightElf\\\\HeroWarden\\\\HeroWardenYesAttack3.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_heycharlie": {
+   "wc3_path": "war3mapImported\\\\heycharlie.mp3",
+   "kind": "imported",
+   "extracted_file": "war3mapImported__heycharlie.mp3"
+  },
+  "gg_snd_Hint": {
+   "wc3_path": "Sound\\\\Interface\\\\Hint.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_HolyBolt": {
+   "wc3_path": "Abilities\\\\Spells\\\\Human\\\\HolyBolt\\\\HolyBolt.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_iKILLu": {
+   "wc3_path": "Units\\\\Creeps\\\\ForestTroll\\\\ForestTrollWarcry1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_IllidanMorphedYes3": {
+   "wc3_path": "Units\\\\NightElf\\\\Illidan\\\\IllidanMorphedYes3.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_ItemReceived": {
+   "wc3_path": "Sound\\\\Interface\\\\ItemReceived.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_KaelReady1": {
+   "wc3_path": "Units\\\\Human\\\\Kael\\\\KaelReady1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_KaelYes2": {
+   "wc3_path": "Units\\\\Human\\\\Kael\\\\KaelYes2.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_KaelYesAttack3": {
+   "wc3_path": "Units\\\\Human\\\\Kael\\\\KaelYesAttack3.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_kickme": {
+   "wc3_path": "war3mapImported\\\\kickme.mp3",
+   "kind": "imported",
+   "extracted_file": "war3mapImported__kickme.mp3"
+  },
+  "gg_snd_letsgo01": {
+   "wc3_path": "war3mapImported\\\\letsgo.mp3",
+   "kind": "imported",
+   "extracted_file": "war3mapImported__letsgo.mp3"
+  },
+  "gg_snd_mandie": {
+   "wc3_path": "war3mapImported\\\\mandie.mp3",
+   "kind": "imported",
+   "extracted_file": "war3mapImported__mandie.mp3"
+  },
+  "gg_snd_MarkOfChaos": {
+   "wc3_path": "Abilities\\\\Spells\\\\Human\\\\MarkOfChaos\\\\MarkOfChaos.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_MercenaryWhat1": {
+   "wc3_path": "Buildings\\\\Other\\\\Mercenary\\\\MercenaryWhat1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_moongo": {
+   "wc3_path": "war3mapImported\\\\moongo.mp3",
+   "kind": "imported",
+   "extracted_file": "war3mapImported__moongo.mp3"
+  },
+  "gg_snd_moonjump": {
+   "wc3_path": "war3mapImported\\\\moonjump.mp3",
+   "kind": "imported",
+   "extracted_file": "war3mapImported__moonjump.mp3"
+  },
+  "gg_snd_MortarImpact": {
+   "wc3_path": "Abilities\\\\Weapons\\\\Mortar\\\\MortarImpact.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_MortarTeamPissed9": {
+   "wc3_path": "Units\\\\Human\\\\MortarTeam\\\\MortarTeamPissed9.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_NaishaYesAttack3": {
+   "wc3_path": "Units\\\\NightElf\\\\Naisha\\\\NaishaYesAttack3.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_NazgrelYes2": {
+   "wc3_path": "Units\\\\Other\\\\Nazgrel\\\\NazgrelYes2.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_NecropolisUpgrade2": {
+   "wc3_path": "Buildings\\\\Undead\\\\Necropolis\\\\NecropolisUpgrade2.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_nocute": {
+   "wc3_path": "war3mapImported\\\\nocute.mp3",
+   "kind": "imported",
+   "extracted_file": "war3mapImported__nocute.mp3"
+  },
+  "gg_snd_nog": {
+   "wc3_path": "war3mapImported\\\\nog.mp3",
+   "kind": "imported",
+   "extracted_file": "war3mapImported__nog.mp3"
+  },
+  "gg_snd_PandarenBrewmasterPissed8": {
+   "wc3_path": "Units\\\\Creeps\\\\PandarenBrewmaster\\\\PandarenBrewmasterPissed8.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_PandarenBrewmasterWarcry1": {
+   "wc3_path": "Units\\\\Creeps\\\\PandarenBrewmaster\\\\PandarenBrewmasterWarcry1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_PandarenBrewmasterYes1": {
+   "wc3_path": "Units\\\\Creeps\\\\PandarenBrewmaster\\\\PandarenBrewmasterYes1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_Parasite": {
+   "wc3_path": "Abilities\\\\Spells\\\\Other\\\\Parasite\\\\Parasite.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_pcdie": {
+   "wc3_path": "war3mapImported\\\\pcdie.mp3",
+   "kind": "imported",
+   "extracted_file": "war3mapImported__pcdie.mp3"
+  },
+  "gg_snd_PeasantPissed3": {
+   "wc3_path": "Units\\\\Human\\\\Peasant\\\\PeasantPissed3.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_PeonDeath": {
+   "wc3_path": "Units\\\\Orc\\\\Peon\\\\PeonDeath.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_PeonWhat2": {
+   "wc3_path": "Units\\\\Orc\\\\Peon\\\\PeonWhat2.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_PICK": {
+   "wc3_path": "war3mapImported\\\\PICK.mp3",
+   "kind": "imported",
+   "extracted_file": "war3mapImported__PICK.mp3"
+  },
+  "gg_snd_pikakill": {
+   "wc3_path": "war3mapImported\\\\pikakill.mp3",
+   "kind": "imported",
+   "extracted_file": "war3mapImported__pikakill.mp3"
+  },
+  "gg_snd_PossessionMissileLaunch1": {
+   "wc3_path": "Abilities\\\\Spells\\\\Undead\\\\Possession\\\\PossessionMissileLaunch1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_PriestPissed3": {
+   "wc3_path": "Units\\\\Human\\\\Priest\\\\PriestPissed3.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_QuestFailed": {
+   "wc3_path": "Sound\\\\Interface\\\\QuestFailed.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_RokhanWhat2": {
+   "wc3_path": "Units\\\\Other\\\\Rokhan\\\\RokhanWhat2.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_SargerasLaugh": {
+   "wc3_path": "Sound\\\\Ambient\\\\DoodadEffects\\\\SargerasLaugh.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_SargerasRoar": {
+   "wc3_path": "Sound\\\\Ambient\\\\DoodadEffects\\\\SargerasRoar.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_sawch": {
+   "wc3_path": "war3mapImported\\\\sawch.mp3",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_SealWhat2": {
+   "wc3_path": "Units\\\\Critters\\\\Seal\\\\SealWhat2.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_ShadowHunterPissed8": {
+   "wc3_path": "Units\\\\Orc\\\\HeroShadowHunter\\\\ShadowHunterPissed8.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_ShadowHunterReady1": {
+   "wc3_path": "Units\\\\Orc\\\\HeroShadowHunter\\\\ShadowHunterReady1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_ShamanPissed3": {
+   "wc3_path": "Units\\\\Orc\\\\Shaman\\\\ShamanPissed3.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_ShamanPissed4": {
+   "wc3_path": "Units\\\\Orc\\\\Shaman\\\\ShamanPissed4.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_ShamanReady1": {
+   "wc3_path": "Units\\\\Orc\\\\Shaman\\\\ShamanReady1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_Sheep1": {
+   "wc3_path": "Sound\\\\Dialogue\\\\HumanExpCamp\\\\Human03x\\\\Sheep1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_Sheep3": {
+   "wc3_path": "Sound\\\\Dialogue\\\\HumanExpCamp\\\\Human03x\\\\Sheep3.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_SheepDeath": {
+   "wc3_path": "Units\\\\Critters\\\\Sheep\\\\SheepDeath.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_ShimmeringPortalDeath": {
+   "wc3_path": "Sound\\\\Ambient\\\\DoodadEffects\\\\ShimmeringPortalDeath.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_SnapDragonMissileLaunch1": {
+   "wc3_path": "Abilities\\\\Weapons\\\\snapMissile\\\\SnapDragonMissileLaunch1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_SorceressMissileLaunch1": {
+   "wc3_path": "Abilities\\\\Weapons\\\\SorceressMissile\\\\SorceressMissileLaunch1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_SorceressPissed2": {
+   "wc3_path": "Units\\\\Human\\\\Sorceress\\\\SorceressPissed2.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_SorceressWhat3": {
+   "wc3_path": "Units\\\\Human\\\\Sorceress\\\\SorceressWhat3.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_SorceressYes1": {
+   "wc3_path": "Units\\\\Human\\\\Sorceress\\\\SorceressYes1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_SorceressYes3": {
+   "wc3_path": "Units\\\\Human\\\\Sorceress\\\\SorceressYes3.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_SoulGem": {
+   "wc3_path": "Abilities\\\\Spells\\\\Items\\\\AIso\\\\SoulGem.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_SoulPreservation": {
+   "wc3_path": "Abilities\\\\Spells\\\\Demon\\\\SoulPreservation\\\\SoulPreservation.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_SpellbreakerPissed3": {
+   "wc3_path": "Units\\\\Human\\\\BloodElfSpellThief\\\\SpellbreakerPissed3.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_SpellbreakerPissed4": {
+   "wc3_path": "Units\\\\Human\\\\BloodElfSpellThief\\\\SpellbreakerPissed4.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_SpiritLodgeWhat1": {
+   "wc3_path": "Buildings\\\\Orc\\\\SpiritLodge\\\\SpiritLodgeWhat1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_SpiritOfVengeanceYes3": {
+   "wc3_path": "Units\\\\NightElf\\\\SpiritOfVengeance\\\\SpiritOfVengeanceYes3.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_StampedeCaster1": {
+   "wc3_path": "Abilities\\\\Spells\\\\Other\\\\Stampede\\\\StampedeCaster1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_SuccubusYesAttack2": {
+   "wc3_path": "Units\\\\Demon\\\\Demoness\\\\SuccubusYesAttack2.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_Taunt": {
+   "wc3_path": "Abilities\\\\Spells\\\\NightElf\\\\Taunt\\\\Taunt.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_TheHornOfCenarius": {
+   "wc3_path": "Sound\\\\Ambient\\\\DoodadEffects\\\\TheHornOfCenarius.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_ThunderBoltMissileDeath": {
+   "wc3_path": "Abilities\\\\Spells\\\\Human\\\\StormBolt\\\\ThunderBoltMissileDeath.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_ThunderClapCaster": {
+   "wc3_path": "Abilities\\\\Spells\\\\Human\\\\ThunderClap\\\\ThunderClapCaster.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_TreantReady1": {
+   "wc3_path": "Buildings\\\\NightElf\\\\AncientProtector\\\\TreantReady1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_TrollbatriderPissed2": {
+   "wc3_path": "Units\\\\Orc\\\\BatTroll\\\\TrollbatriderPissed2.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_TrollbatriderYesAttack1": {
+   "wc3_path": "Units\\\\Orc\\\\BatTroll\\\\TrollbatriderYesAttack1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_TrollbatriderYesAttack3": {
+   "wc3_path": "Units\\\\Orc\\\\BatTroll\\\\TrollbatriderYesAttack3.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_TrollWoodWorksWhat1": {
+   "wc3_path": "Buildings\\\\Orc\\\\WarMill\\\\TrollWoodWorksWhat1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_up": {
+   "wc3_path": "war3mapImported\\\\up.mp3",
+   "kind": "imported",
+   "extracted_file": "war3mapImported__up.mp3"
+  },
+  "gg_snd_VillagerCWhat1": {
+   "wc3_path": "Units\\\\Critters\\\\VillagerKid\\\\VillagerCWhat1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_WarlordPissed1": {
+   "wc3_path": "Units\\\\Demon\\\\ChaosWarlord\\\\WarlordPissed1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_WaterElementalMissile3": {
+   "wc3_path": "Abilities\\\\Weapons\\\\WaterElementalMissile\\\\WaterElementalMissile3.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_WayGateWhat1": {
+   "wc3_path": "Buildings\\\\Other\\\\Waygate\\\\WayGateWhat1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_WitchDoctorCastAttack1": {
+   "wc3_path": "Abilities\\\\Weapons\\\\WitchDoctorMissile\\\\WitchDoctorCastAttack1.wav",
+   "kind": "stock",
+   "extracted_file": null
+  },
+  "gg_snd_yooooooooooooo": {
+   "wc3_path": "war3mapImported\\\\yooooooooooooo.mp3",
+   "kind": "imported",
+   "extracted_file": "war3mapImported__yooooooooooooo.mp3"
+  },
+  "gg_snd_ringnai": {
+   "wc3_path": "war3mapImported\\\\ringnai.mp3",
+   "kind": "imported",
+   "extracted_file": "war3mapImported__ringnai.mp3"
+  }
+ },
+ "abilities": [
+  {
+   "ability": "godie-e008.q",
+   "name": "21-02 拔焰刀",
+   "champion": "godie-e008",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_FlareTarget3",
+     "wc3_path": "Abilities\\\\Spells\\\\Human\\\\Flare\\\\FlareTarget3.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-e008.r",
+   "name": "21-04 討滅封絕",
+   "champion": "godie-e008",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_FlareTarget1",
+     "wc3_path": "Abilities\\\\Spells\\\\Human\\\\Flare\\\\FlareTarget1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    },
+    {
+     "gg_snd": "gg_snd_SoulPreservation",
+     "wc3_path": "Abilities\\\\Spells\\\\Demon\\\\SoulPreservation\\\\SoulPreservation.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-e00k.e",
+   "name": "19-03 瞬切百殺",
+   "champion": "godie-e00k",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_FlareTarget2",
+     "wc3_path": "Abilities\\\\Spells\\\\Human\\\\Flare\\\\FlareTarget2.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-e00q.ex",
+   "name": "69-002 固有結界-黑洞",
+   "champion": "godie-e00q",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_Parasite",
+     "wc3_path": "Abilities\\\\Spells\\\\Other\\\\Parasite\\\\Parasite.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-e00r.r",
+   "name": "59-04 野戰型陽電子砲",
+   "champion": "godie-e00r",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_MarkOfChaos",
+     "wc3_path": "Abilities\\\\Spells\\\\Human\\\\MarkOfChaos\\\\MarkOfChaos.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-e00s.q",
+   "name": "70-01 伸卡球",
+   "champion": "godie-e00s",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_TreantReady1",
+     "wc3_path": "Buildings\\\\NightElf\\\\AncientProtector\\\\TreantReady1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-e00t.w",
+   "name": "66-02 驚駭",
+   "champion": "godie-e00t",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_NecropolisUpgrade2",
+     "wc3_path": "Buildings\\\\Undead\\\\Necropolis\\\\NecropolisUpgrade2.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-e00w.q",
+   "name": "77-01 百烈櫻華斬",
+   "champion": "godie-e00w",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_DarkSummoningLaunch1",
+     "wc3_path": "Abilities\\\\Spells\\\\Undead\\\\DarkSummoning\\\\DarkSummoningLaunch1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-e00x.q",
+   "name": "77-01 百烈櫻華斬",
+   "champion": "godie-e00x",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_DarkSummoningLaunch1",
+     "wc3_path": "Abilities\\\\Spells\\\\Undead\\\\DarkSummoning\\\\DarkSummoningLaunch1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-e00z.e",
+   "name": "19-03 瞬切百殺",
+   "champion": "godie-e00z",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_FlareTarget2",
+     "wc3_path": "Abilities\\\\Spells\\\\Human\\\\Flare\\\\FlareTarget2.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-e015.q",
+   "name": "94-01 北斗爆橘拳",
+   "champion": "godie-e015",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_PeonDeath",
+     "wc3_path": "Units\\\\Orc\\\\Peon\\\\PeonDeath.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-edem.r",
+   "name": "45-04 哥哥",
+   "champion": "godie-edem",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_ThunderBoltMissileDeath",
+     "wc3_path": "Abilities\\\\Spells\\\\Human\\\\StormBolt\\\\ThunderBoltMissileDeath.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-emfr.w",
+   "name": "15-02 沉睡之霧",
+   "champion": "godie-emfr",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_AkamaPissed8",
+     "wc3_path": "Units\\\\Other\\\\DranaiAkama\\\\AkamaPissed8.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-emns.q",
+   "name": "44-01 死神之眼",
+   "champion": "godie-emns",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_FountainOfLifeWhat1",
+     "wc3_path": "Buildings\\\\Other\\\\FountainOfLife\\\\FountainOfLifeWhat1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    },
+    {
+     "gg_snd": "gg_snd_GruntYesAttack1",
+     "wc3_path": "Units\\\\Orc\\\\Grunt\\\\GruntYesAttack1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-emns.e",
+   "name": "44-03 火車輾過",
+   "champion": "godie-emns",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_RokhanWhat2",
+     "wc3_path": "Units\\\\Other\\\\Rokhan\\\\RokhanWhat2.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-emns.r",
+   "name": "44-04 心臟麻痺",
+   "champion": "godie-emns",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_GruntYesAttack3",
+     "wc3_path": "Units\\\\Orc\\\\Grunt\\\\GruntYesAttack3.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-emns.ex",
+   "name": "44-002 交換筆記本",
+   "champion": "godie-emns",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_KaelYesAttack3",
+     "wc3_path": "Units\\\\Human\\\\Kael\\\\KaelYesAttack3.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-h00l.q",
+   "name": "60-01 科奇利族的迴旋鏢",
+   "champion": "godie-h00l",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_DruidOfTheTalonMissileLaunch2",
+     "wc3_path": "Abilities\\\\Weapons\\\\DruidoftheTalonMissile\\\\DruidOfTheTalonMissileLaunch2.wav",
+     "kind": "stock",
+     "extracted_file": null
+    },
+    {
+     "gg_snd": "gg_snd_WitchDoctorCastAttack1",
+     "wc3_path": "Abilities\\\\Weapons\\\\WitchDoctorMissile\\\\WitchDoctorCastAttack1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-h00l.w",
+   "name": "60-02 鎖鏈槍",
+   "champion": "godie-h00l",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_HeadHunterYes4",
+     "wc3_path": "Units\\\\Orc\\\\HeadHunter\\\\HeadHunterYes4.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-h00l.r",
+   "name": "60-04 迴旋斬",
+   "champion": "godie-h00l",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_AxeMissileLaunch1",
+     "wc3_path": "Abilities\\\\Weapons\\\\Axe\\\\AxeMissileLaunch1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-h01u.w",
+   "name": "80-02 弒鬼神",
+   "champion": "godie-h01u",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_DefendCaster",
+     "wc3_path": "Abilities\\\\Spells\\\\Human\\\\Defend\\\\DefendCaster.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-h01u.r",
+   "name": "80-04 赤兔咆哮",
+   "champion": "godie-h01u",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_DefendCaster",
+     "wc3_path": "Abilities\\\\Spells\\\\Human\\\\Defend\\\\DefendCaster.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-h02k.w",
+   "name": "89-02 憤怒的菊花",
+   "champion": "godie-h02k",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_PandarenBrewmasterPissed8",
+     "wc3_path": "Units\\\\Creeps\\\\PandarenBrewmaster\\\\PandarenBrewmasterPissed8.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-h02k.e",
+   "name": "89-03 憤怒的胸毛",
+   "champion": "godie-h02k",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_PandarenBrewmasterWarcry1",
+     "wc3_path": "Units\\\\Creeps\\\\PandarenBrewmaster\\\\PandarenBrewmasterWarcry1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-h02k.r",
+   "name": "89-04 憤怒的簡諧運動",
+   "champion": "godie-h02k",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_PandarenBrewmasterYes1",
+     "wc3_path": "Units\\\\Creeps\\\\PandarenBrewmaster\\\\PandarenBrewmasterYes1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-h02k.ex",
+   "name": "89-002 俄羅斯輪盤",
+   "champion": "godie-h02k",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_MortarImpact",
+     "wc3_path": "Abilities\\\\Weapons\\\\Mortar\\\\MortarImpact.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-h02s.q",
+   "name": "91-01 死亡之握",
+   "champion": "godie-h02s",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_HeadHunterYes4",
+     "wc3_path": "Units\\\\Orc\\\\HeadHunter\\\\HeadHunterYes4.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-h02u.w",
+   "name": "92-03 狂草泥馬",
+   "champion": "godie-h02u",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_Taunt",
+     "wc3_path": "Abilities\\\\Spells\\\\NightElf\\\\Taunt\\\\Taunt.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-h02v.w",
+   "name": "92-03 狂草泥馬",
+   "champion": "godie-h02v",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_Taunt",
+     "wc3_path": "Abilities\\\\Spells\\\\NightElf\\\\Taunt\\\\Taunt.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-h02z.q",
+   "name": "91-01 死亡之握",
+   "champion": "godie-h02z",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_HeadHunterYes4",
+     "wc3_path": "Units\\\\Orc\\\\HeadHunter\\\\HeadHunterYes4.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-hpb1.w",
+   "name": "07-02 者、皆、陣",
+   "champion": "godie-hpb1",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_DarkSummoningLaunch1",
+     "wc3_path": "Abilities\\\\Spells\\\\Undead\\\\DarkSummoning\\\\DarkSummoningLaunch1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    },
+    {
+     "gg_snd": "gg_snd_moongo",
+     "wc3_path": "war3mapImported\\\\moongo.mp3",
+     "kind": "imported",
+     "extracted_file": "war3mapImported__moongo.mp3"
+    }
+   ]
+  },
+  {
+   "ability": "godie-hpb1.e",
+   "name": "07-03 列、在、前",
+   "champion": "godie-hpb1",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_moonjump",
+     "wc3_path": "war3mapImported\\\\moonjump.mp3",
+     "kind": "imported",
+     "extracted_file": "war3mapImported__moonjump.mp3"
+    }
+   ]
+  },
+  {
+   "ability": "godie-huth.w",
+   "name": "28-02 把你變成餅乾",
+   "champion": "godie-huth",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_EggSackDeath1",
+     "wc3_path": "Doodads\\\\Dungeon\\\\Terrain\\\\EggSack\\\\EggSackDeath1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-n00b.w",
+   "name": "57-03 複製鏡",
+   "champion": "godie-n00b",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_SpellbreakerPissed4",
+     "wc3_path": "Units\\\\Human\\\\BloodElfSpellThief\\\\SpellbreakerPissed4.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-n00p.w",
+   "name": "18-02 寄生種子",
+   "champion": "godie-n00p",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_SpiritOfVengeanceYes3",
+     "wc3_path": "Units\\\\NightElf\\\\SpiritOfVengeance\\\\SpiritOfVengeanceYes3.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-n00p.e",
+   "name": "18-03 妖狐變化",
+   "champion": "godie-n00p",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_AltarOfEldersWhat1",
+     "wc3_path": "Buildings\\\\NightElf\\\\AltarOfElders\\\\AltarOfEldersWhat1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-n01c.e",
+   "name": "08-03 龍鬥氣砲咒文",
+   "champion": "godie-n01c",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_ThunderClapCaster",
+     "wc3_path": "Abilities\\\\Spells\\\\Human\\\\ThunderClap\\\\ThunderClapCaster.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-nbbc.e",
+   "name": "08-03 龍鬥氣砲咒文",
+   "champion": "godie-nbbc",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_ThunderClapCaster",
+     "wc3_path": "Abilities\\\\Spells\\\\Human\\\\ThunderClap\\\\ThunderClapCaster.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-nbst.ex",
+   "name": "24-002 來~快點吃吧",
+   "champion": "godie-nbst",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_PeasantPissed3",
+     "wc3_path": "Units\\\\Human\\\\Peasant\\\\PeasantPissed3.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-nman.w",
+   "name": "40-02 必殺！爆熱神音！",
+   "champion": "godie-nman",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_BloodlustTarget",
+     "wc3_path": "Abilities\\\\Spells\\\\Orc\\\\Bloodlust\\\\BloodlustTarget.wav",
+     "kind": "stock",
+     "extracted_file": null
+    },
+    {
+     "gg_snd": "gg_snd_StampedeCaster1",
+     "wc3_path": "Abilities\\\\Spells\\\\Other\\\\Stampede\\\\StampedeCaster1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-nman.r",
+   "name": "40-04 地獄搖滾",
+   "champion": "godie-nman",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_ShamanReady1",
+     "wc3_path": "Units\\\\Orc\\\\Shaman\\\\ShamanReady1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-nsjs.e",
+   "name": "18-03 妖狐變化",
+   "champion": "godie-nsjs",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_AltarOfEldersWhat1",
+     "wc3_path": "Buildings\\\\NightElf\\\\AltarOfElders\\\\AltarOfEldersWhat1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-o00k.passive",
+   "name": "86-00 裝可愛",
+   "champion": "godie-o00k",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_nocute",
+     "wc3_path": "war3mapImported\\\\nocute.mp3",
+     "kind": "imported",
+     "extracted_file": "war3mapImported__nocute.mp3"
+    }
+   ]
+  },
+  {
+   "ability": "godie-o00l.e",
+   "name": "53-03 破法對咒",
+   "champion": "godie-o00l",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_WayGateWhat1",
+     "wc3_path": "Buildings\\\\Other\\\\Waygate\\\\WayGateWhat1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-o00l.r",
+   "name": "53-04 暴爆咒",
+   "champion": "godie-o00l",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_Taunt",
+     "wc3_path": "Abilities\\\\Spells\\\\NightElf\\\\Taunt\\\\Taunt.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-o01z.q",
+   "name": "81-01 Barrel Shot",
+   "champion": "godie-o01z",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_DefendCaster",
+     "wc3_path": "Abilities\\\\Spells\\\\Human\\\\Defend\\\\DefendCaster.wav",
+     "kind": "stock",
+     "extracted_file": null
+    },
+    {
+     "gg_snd": "gg_snd_FlareTarget3",
+     "wc3_path": "Abilities\\\\Spells\\\\Human\\\\Flare\\\\FlareTarget3.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-o01z.w",
+   "name": "81-02 Acxel Shooter",
+   "champion": "godie-o01z",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_DefendCaster",
+     "wc3_path": "Abilities\\\\Spells\\\\Human\\\\Defend\\\\DefendCaster.wav",
+     "kind": "stock",
+     "extracted_file": null
+    },
+    {
+     "gg_snd": "gg_snd_FlareTarget3",
+     "wc3_path": "Abilities\\\\Spells\\\\Human\\\\Flare\\\\FlareTarget3.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-o01z.e",
+   "name": "81-03 Divine Buster Extention",
+   "champion": "godie-o01z",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_MarkOfChaos",
+     "wc3_path": "Abilities\\\\Spells\\\\Human\\\\MarkOfChaos\\\\MarkOfChaos.wav",
+     "kind": "stock",
+     "extracted_file": null
+    },
+    {
+     "gg_snd": "gg_snd_SnapDragonMissileLaunch1",
+     "wc3_path": "Abilities\\\\Weapons\\\\snapMissile\\\\SnapDragonMissileLaunch1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    },
+    {
+     "gg_snd": "gg_snd_SoulGem",
+     "wc3_path": "Abilities\\\\Spells\\\\Items\\\\AIso\\\\SoulGem.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-o01z.r",
+   "name": "81-04 Starlight Breaker Plus",
+   "champion": "godie-o01z",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_SnapDragonMissileLaunch1",
+     "wc3_path": "Abilities\\\\Weapons\\\\snapMissile\\\\SnapDragonMissileLaunch1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    },
+    {
+     "gg_snd": "gg_snd_SoulGem",
+     "wc3_path": "Abilities\\\\Spells\\\\Items\\\\AIso\\\\SoulGem.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-o02l.e",
+   "name": "58-03 就決定是你了!小智",
+   "champion": "godie-o02l",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_sawch",
+     "wc3_path": "war3mapImported\\\\sawch.mp3",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-o02s.r",
+   "name": "53-03 破法對咒",
+   "champion": "godie-o02s",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_WayGateWhat1",
+     "wc3_path": "Buildings\\\\Other\\\\Waygate\\\\WayGateWhat1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-o02v.q",
+   "name": "81-01 Barrel Shot",
+   "champion": "godie-o02v",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_DefendCaster",
+     "wc3_path": "Abilities\\\\Spells\\\\Human\\\\Defend\\\\DefendCaster.wav",
+     "kind": "stock",
+     "extracted_file": null
+    },
+    {
+     "gg_snd": "gg_snd_FlareTarget3",
+     "wc3_path": "Abilities\\\\Spells\\\\Human\\\\Flare\\\\FlareTarget3.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-o02v.w",
+   "name": "81-02 Acxel Shooter",
+   "champion": "godie-o02v",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_DefendCaster",
+     "wc3_path": "Abilities\\\\Spells\\\\Human\\\\Defend\\\\DefendCaster.wav",
+     "kind": "stock",
+     "extracted_file": null
+    },
+    {
+     "gg_snd": "gg_snd_FlareTarget3",
+     "wc3_path": "Abilities\\\\Spells\\\\Human\\\\Flare\\\\FlareTarget3.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-o02v.e",
+   "name": "81-03 Divine Buster Extention",
+   "champion": "godie-o02v",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_MarkOfChaos",
+     "wc3_path": "Abilities\\\\Spells\\\\Human\\\\MarkOfChaos\\\\MarkOfChaos.wav",
+     "kind": "stock",
+     "extracted_file": null
+    },
+    {
+     "gg_snd": "gg_snd_SnapDragonMissileLaunch1",
+     "wc3_path": "Abilities\\\\Weapons\\\\snapMissile\\\\SnapDragonMissileLaunch1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    },
+    {
+     "gg_snd": "gg_snd_SoulGem",
+     "wc3_path": "Abilities\\\\Spells\\\\Items\\\\AIso\\\\SoulGem.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-o02v.r",
+   "name": "81-04 Starlight Breaker Plus",
+   "champion": "godie-o02v",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_SnapDragonMissileLaunch1",
+     "wc3_path": "Abilities\\\\Weapons\\\\snapMissile\\\\SnapDragonMissileLaunch1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    },
+    {
+     "gg_snd": "gg_snd_SoulGem",
+     "wc3_path": "Abilities\\\\Spells\\\\Items\\\\AIso\\\\SoulGem.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-obla.q",
+   "name": "33-01 放山雞",
+   "champion": "godie-obla",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_ChickenWhat1",
+     "wc3_path": "Units\\\\Critters\\\\EasterChicken\\\\ChickenWhat1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-obla.e",
+   "name": "33-03 地道突襲",
+   "champion": "godie-obla",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_GlueScreenMeteorHit1",
+     "wc3_path": "Sound\\\\Interface\\\\GlueScreenMeteorHit1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    },
+    {
+     "gg_snd": "gg_snd_GlueScreenMeteorHit2",
+     "wc3_path": "Sound\\\\Interface\\\\GlueScreenMeteorHit2.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-obla.r",
+   "name": "33-04 動物拳法",
+   "champion": "godie-obla",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_FarmWhat1",
+     "wc3_path": "Buildings\\\\Human\\\\Farm\\\\FarmWhat1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    },
+    {
+     "gg_snd": "gg_snd_SealWhat2",
+     "wc3_path": "Units\\\\Critters\\\\Seal\\\\SealWhat2.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-ofar.e",
+   "name": "58-03 就決定是你了!小智",
+   "champion": "godie-ofar",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_sawch",
+     "wc3_path": "war3mapImported\\\\sawch.mp3",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-opgh.e",
+   "name": "32-03 閃光龍牙",
+   "champion": "godie-opgh",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_NazgrelYes2",
+     "wc3_path": "Units\\\\Other\\\\Nazgrel\\\\NazgrelYes2.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-orkn.q",
+   "name": "30-01 綁架",
+   "champion": "godie-orkn",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_HeadHunterYes4",
+     "wc3_path": "Units\\\\Orc\\\\HeadHunter\\\\HeadHunterYes4.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-u00h.e",
+   "name": "39-03 無名神風流-蛟龍",
+   "champion": "godie-u00h",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_FlareTarget2",
+     "wc3_path": "Abilities\\\\Spells\\\\Human\\\\Flare\\\\FlareTarget2.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-u00h.r",
+   "name": "39-04 祕奧義．金色的神風",
+   "champion": "godie-u00h",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_DragonYes2",
+     "wc3_path": "Units\\\\Creeps\\\\AzureDragon\\\\DragonYes2.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-u00j.w",
+   "name": "74-02 八刀一閃",
+   "champion": "godie-u00j",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_SnapDragonMissileLaunch1",
+     "wc3_path": "Abilities\\\\Weapons\\\\snapMissile\\\\SnapDragonMissileLaunch1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-u00k.e",
+   "name": "71-03 厄夜靈魂",
+   "champion": "godie-u00k",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_Parasite",
+     "wc3_path": "Abilities\\\\Spells\\\\Other\\\\Parasite\\\\Parasite.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-u00k.r",
+   "name": "71-04 萬惡歸宗",
+   "champion": "godie-u00k",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_Taunt",
+     "wc3_path": "Abilities\\\\Spells\\\\NightElf\\\\Taunt\\\\Taunt.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-u00l.q",
+   "name": "25-01 北斗懺悔拳",
+   "champion": "godie-u00l",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_GruntWhat2",
+     "wc3_path": "Units\\\\Orc\\\\Grunt\\\\GruntWhat2.wav",
+     "kind": "stock",
+     "extracted_file": null
+    },
+    {
+     "gg_snd": "gg_snd_PeonDeath",
+     "wc3_path": "Units\\\\Orc\\\\Peon\\\\PeonDeath.wav",
+     "kind": "stock",
+     "extracted_file": null
+    },
+    {
+     "gg_snd": "gg_snd_PeonWhat2",
+     "wc3_path": "Units\\\\Orc\\\\Peon\\\\PeonWhat2.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-u00l.r",
+   "name": "25-04 ChangeDNA",
+   "champion": "godie-u00l",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_nocute",
+     "wc3_path": "war3mapImported\\\\nocute.mp3",
+     "kind": "imported",
+     "extracted_file": "war3mapImported__nocute.mp3"
+    }
+   ]
+  },
+  {
+   "ability": "godie-u00n.e",
+   "name": "76-03 伸縮自如的槍亂打",
+   "champion": "godie-u00n",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_DemonHunterMissileHit3",
+     "wc3_path": "Abilities\\\\Weapons\\\\DemonHunterMissile\\\\DemonHunterMissileHit3.wav",
+     "kind": "stock",
+     "extracted_file": null
+    },
+    {
+     "gg_snd": "gg_snd_WaterElementalMissile3",
+     "wc3_path": "Abilities\\\\Weapons\\\\WaterElementalMissile\\\\WaterElementalMissile3.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-u00n.passive",
+   "name": "76-00 二檔",
+   "champion": "godie-u00n",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_TrollWoodWorksWhat1",
+     "wc3_path": "Buildings\\\\Orc\\\\WarMill\\\\TrollWoodWorksWhat1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-u00o.e",
+   "name": "76-03 伸縮自如的槍亂打",
+   "champion": "godie-u00o",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_DemonHunterMissileHit3",
+     "wc3_path": "Abilities\\\\Weapons\\\\DemonHunterMissile\\\\DemonHunterMissileHit3.wav",
+     "kind": "stock",
+     "extracted_file": null
+    },
+    {
+     "gg_snd": "gg_snd_WaterElementalMissile3",
+     "wc3_path": "Abilities\\\\Weapons\\\\WaterElementalMissile\\\\WaterElementalMissile3.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-u00o.passive",
+   "name": "76-00 二檔",
+   "champion": "godie-u00o",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_TrollWoodWorksWhat1",
+     "wc3_path": "Buildings\\\\Orc\\\\WarMill\\\\TrollWoodWorksWhat1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-u00v.w",
+   "name": "78-02 地走龍牙破",
+   "champion": "godie-u00v",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_GlueScreenMeteorHit1",
+     "wc3_path": "Sound\\\\Interface\\\\GlueScreenMeteorHit1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    },
+    {
+     "gg_snd": "gg_snd_GlueScreenMeteorHit2",
+     "wc3_path": "Sound\\\\Interface\\\\GlueScreenMeteorHit2.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-u00v.e",
+   "name": "78-03 廬山昇龍破",
+   "champion": "godie-u00v",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_DragonYes2",
+     "wc3_path": "Units\\\\Creeps\\\\AzureDragon\\\\DragonYes2.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-u010.q",
+   "name": "38-01 邪王炎殺劍",
+   "champion": "godie-u010",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_DarkSummoningLaunch1",
+     "wc3_path": "Abilities\\\\Spells\\\\Undead\\\\DarkSummoning\\\\DarkSummoningLaunch1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-u010.w",
+   "name": "38-02 邪王炎殺煉獄焦",
+   "champion": "godie-u010",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_HCancelBuilding",
+     "wc3_path": "Sound\\\\Buildings\\\\Death\\\\HCancelBuilding.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-u010.e",
+   "name": "38-03 邪王炎殺黑龍波",
+   "champion": "godie-u010",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_DragonYes2",
+     "wc3_path": "Units\\\\Creeps\\\\AzureDragon\\\\DragonYes2.wav",
+     "kind": "stock",
+     "extracted_file": null
+    },
+    {
+     "gg_snd": "gg_snd_ShimmeringPortalDeath",
+     "wc3_path": "Sound\\\\Ambient\\\\DoodadEffects\\\\ShimmeringPortalDeath.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-u010.r",
+   "name": "38-04 黑龍波吸收",
+   "champion": "godie-u010",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_DragonRoostWhat1",
+     "wc3_path": "Buildings\\\\Other\\\\DragonRoost\\\\DragonRoostWhat1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    },
+    {
+     "gg_snd": "gg_snd_FlashBack1Second",
+     "wc3_path": "Sound\\\\Ambient\\\\DoodadEffects\\\\FlashBack1Second.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-u011.e",
+   "name": "61-03 打屁股風林火豬",
+   "champion": "godie-u011",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_GruntPissed3",
+     "wc3_path": "Units\\\\Orc\\\\Grunt\\\\GruntPissed3.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-u012.e",
+   "name": "61-03 打屁股風林火豬",
+   "champion": "godie-u012",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_GruntPissed3",
+     "wc3_path": "Units\\\\Orc\\\\Grunt\\\\GruntPissed3.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-u034.q",
+   "name": "06-01 山形修煉-放",
+   "champion": "godie-u034",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_MortarTeamPissed9",
+     "wc3_path": "Units\\\\Human\\\\MortarTeam\\\\MortarTeamPissed9.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-u034.w",
+   "name": "06-02 山形修煉-變",
+   "champion": "godie-u034",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_MortarTeamPissed9",
+     "wc3_path": "Units\\\\Human\\\\MortarTeam\\\\MortarTeamPissed9.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-u034.e",
+   "name": "06-03 山形修煉-強",
+   "champion": "godie-u034",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_MortarTeamPissed9",
+     "wc3_path": "Units\\\\Human\\\\MortarTeam\\\\MortarTeamPissed9.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-u034.passive",
+   "name": "06-00 猜猜拳",
+   "champion": "godie-u034",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_MortarTeamPissed9",
+     "wc3_path": "Units\\\\Human\\\\MortarTeam\\\\MortarTeamPissed9.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-ubal.w",
+   "name": "37-03 災難之牆",
+   "champion": "godie-ubal",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_HCancelBuilding",
+     "wc3_path": "Sound\\\\Buildings\\\\Death\\\\HCancelBuilding.wav",
+     "kind": "stock",
+     "extracted_file": null
+    },
+    {
+     "gg_snd": "gg_snd_TrollbatriderPissed2",
+     "wc3_path": "Units\\\\Orc\\\\BatTroll\\\\TrollbatriderPissed2.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-ubal.r",
+   "name": "37-04 魔界之王",
+   "champion": "godie-ubal",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_ShadowHunterReady1",
+     "wc3_path": "Units\\\\Orc\\\\HeroShadowHunter\\\\ShadowHunterReady1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    },
+    {
+     "gg_snd": "gg_snd_TreantReady1",
+     "wc3_path": "Buildings\\\\NightElf\\\\AncientProtector\\\\TreantReady1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-ucrl.q",
+   "name": "06-01 山形修煉-放",
+   "champion": "godie-ucrl",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_MortarTeamPissed9",
+     "wc3_path": "Units\\\\Human\\\\MortarTeam\\\\MortarTeamPissed9.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-ucrl.w",
+   "name": "06-02 山形修煉-變",
+   "champion": "godie-ucrl",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_MortarTeamPissed9",
+     "wc3_path": "Units\\\\Human\\\\MortarTeam\\\\MortarTeamPissed9.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-ucrl.e",
+   "name": "06-03 山形修煉-強",
+   "champion": "godie-ucrl",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_MortarTeamPissed9",
+     "wc3_path": "Units\\\\Human\\\\MortarTeam\\\\MortarTeamPissed9.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-ucrl.passive",
+   "name": "06-00 猜猜拳",
+   "champion": "godie-ucrl",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_MortarTeamPissed9",
+     "wc3_path": "Units\\\\Human\\\\MortarTeam\\\\MortarTeamPissed9.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-udea.e",
+   "name": "65-03 魔法膨脹",
+   "champion": "godie-udea",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_Taunt",
+     "wc3_path": "Abilities\\\\Spells\\\\NightElf\\\\Taunt\\\\Taunt.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-umal.q",
+   "name": "25-01 北斗懺悔拳",
+   "champion": "godie-umal",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_GruntWhat2",
+     "wc3_path": "Units\\\\Orc\\\\Grunt\\\\GruntWhat2.wav",
+     "kind": "stock",
+     "extracted_file": null
+    },
+    {
+     "gg_snd": "gg_snd_PeonDeath",
+     "wc3_path": "Units\\\\Orc\\\\Peon\\\\PeonDeath.wav",
+     "kind": "stock",
+     "extracted_file": null
+    },
+    {
+     "gg_snd": "gg_snd_PeonWhat2",
+     "wc3_path": "Units\\\\Orc\\\\Peon\\\\PeonWhat2.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-umal.r",
+   "name": "25-04 ChangeDNA",
+   "champion": "godie-umal",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_nocute",
+     "wc3_path": "war3mapImported\\\\nocute.mp3",
+     "kind": "imported",
+     "extracted_file": "war3mapImported__nocute.mp3"
+    }
+   ]
+  },
+  {
+   "ability": "godie-usyl.e",
+   "name": "49-03 蛻變",
+   "champion": "godie-usyl",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_MercenaryWhat1",
+     "wc3_path": "Buildings\\\\Other\\\\Mercenary\\\\MercenaryWhat1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-uvng.q",
+   "name": "38-01 邪王炎殺劍",
+   "champion": "godie-uvng",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_DarkSummoningLaunch1",
+     "wc3_path": "Abilities\\\\Spells\\\\Undead\\\\DarkSummoning\\\\DarkSummoningLaunch1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-uvng.w",
+   "name": "38-02 邪王炎殺煉獄焦",
+   "champion": "godie-uvng",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_HCancelBuilding",
+     "wc3_path": "Sound\\\\Buildings\\\\Death\\\\HCancelBuilding.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-uvng.e",
+   "name": "38-03 邪王炎殺黑龍波",
+   "champion": "godie-uvng",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_DragonYes2",
+     "wc3_path": "Units\\\\Creeps\\\\AzureDragon\\\\DragonYes2.wav",
+     "kind": "stock",
+     "extracted_file": null
+    },
+    {
+     "gg_snd": "gg_snd_ShimmeringPortalDeath",
+     "wc3_path": "Sound\\\\Ambient\\\\DoodadEffects\\\\ShimmeringPortalDeath.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  },
+  {
+   "ability": "godie-uvng.r",
+   "name": "38-04 黑龍波吸收",
+   "champion": "godie-uvng",
+   "sounds": [
+    {
+     "gg_snd": "gg_snd_DragonRoostWhat1",
+     "wc3_path": "Buildings\\\\Other\\\\DragonRoost\\\\DragonRoostWhat1.wav",
+     "kind": "stock",
+     "extracted_file": null
+    },
+    {
+     "gg_snd": "gg_snd_FlashBack1Second",
+     "wc3_path": "Sound\\\\Ambient\\\\DoodadEffects\\\\FlashBack1Second.wav",
+     "kind": "stock",
+     "extracted_file": null
+    }
+   ]
+  }
+ ]
+}

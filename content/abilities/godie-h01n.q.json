@@ -29,10 +29,10 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              0.0,
-              0.0,
-              0.0,
-              0.0
+              200.0,
+              300.0,
+              400.0,
+              500.0
             ]
           }
         }
@@ -41,5 +41,5 @@
   ],
   "vfxKey": "fx.prim.void.pulse-sm",
   "schema": "ability@1",
-  "castTimeSec": 0.3
+  "castTimeSec": 0.4
 }

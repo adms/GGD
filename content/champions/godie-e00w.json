@@ -87,6 +87,7 @@
         }
       ],
       "vfxKey": "fx.prim.physical.slash",
+      "sfxKey": "wc3.darksummoninglaunch1",
       "targetsEnemies": true,
       "radius": 6.0,
       "castTimeSec": 0.7
@@ -198,9 +199,9 @@
           "damageType": "physical",
           "amount": {
             "perRank": [
-              80,
-              120,
-              160
+              600.0,
+              800.0,
+              1000.0
             ],
             "ratios": [
               {
@@ -213,7 +214,7 @@
       ],
       "vfxKey": "fx.prim.lightning.beam-lg",
       "targetsEnemies": true,
-      "castTimeSec": 0.4
+      "castTimeSec": 0.6
     }
   },
   "skillOrder": [

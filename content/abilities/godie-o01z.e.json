@@ -40,6 +40,7 @@
     }
   ],
   "vfxKey": "fx.prim.holy.nova",
+  "sfxKey": "wc3.markofchaos",
   "targetsEnemies": true,
   "schema": "ability@1",
   "castTimeSec": 0.5

@@ -23,6 +23,23 @@
       "mode": "toPoint",
       "speed": 30.0,
       "maxDistance": 8.25
+    },
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          700.0,
+          1000.0,
+          1300.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
     }
   ],
   "vfxKey": "fx.prim.arcane.dash",

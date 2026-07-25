@@ -20,6 +20,17 @@
  *     Both ALWAYS fall back to the generic `basicAttack` / `abilityCast` clip
  *     when the routing data is absent or unrecognised — never silence, never a
  *     crash on a malformed payload.
+ *   • PER-ABILITY WC3 CAST VOICE (owner directive: ability ports include 音效).
+ *     An ability doc may carry `sfxKey` — the cast sound the SOURCE MAP itself
+ *     bound to that ability (w3x gg_snd → imported mp3) — which the sim
+ *     forwards on `abilityCast`. It outranks the element whoosh: specific beats
+ *     generic, and the WC3 clip is the authentic sound where the element is our
+ *     invention. Only keys declared in {@link WC3_ABILITY_SFX} are honoured, so
+ *     a junk payload degrades to the element/generic route, never to a missed
+ *     audio-map lookup. It rides `abilityCast` and NOT `castBegin` because
+ *     castBegin only exists for casts with a wind-up — an instant cast (裝可愛)
+ *     would never sound there — and `abilityCast` is a SUBSTITUTION on an event
+ *     that already sounds, so the cast still makes exactly one identity voice.
  *   • The other pre-hit + utility events pass through by name (windup/swing/
  *     launch/cast/flower/heal) — the audio map already owns those keys.
  *   • ARCHERY + 魔法陣 (the three shipped 効果音ラボ clips that had no emit site).
@@ -69,6 +80,7 @@
  *     double the sound.
  */
 import type { EventMessage } from "@ggd/shared/protocol/messages";
+import { fullAssetsEnabled } from "../config/fullAssets";
 import { hudStore } from "../net/RoomStore";
 import { noteFireRingIgnition } from "./fireRingWindow";
 
@@ -152,6 +164,115 @@ const ELEMENT_SFX: Readonly<Record<string, string>> = {
   ice: "magicIce",
   lightning: "magicLightning",
 };
+
+/**
+ * The WC3 per-ability cast cues shipped so far — the audio-map keys an ability
+ * doc's `sfxKey` may name (content `ability@1.sfxKey`, recovered from the
+ * source map's gg_snd bindings by tools/w3x-import).
+ *
+ * A DECLARED SET rather than a pass-through on purpose, for the same reason
+ * WEAPON_SFX and ELEMENT_SFX are: `sfxKey` arrives off the wire as untyped
+ * event data, and returning an arbitrary string would turn a content typo into
+ * a silent audio-map miss instead of the element/generic fallback. It also
+ * keeps the sfxReachability contract honest — every playable key must appear
+ * as a literal in the file that decides it.
+ *
+ * These three clips are the MAP-AUTHOR IMPORTS (war3mapImported mp3s) that ship
+ * committed under content/assets/audio/sfx/, so they are honoured on every
+ * build tier. The stock-MPQ wave lives in {@link WC3_OVERLAY_ABILITY_SFX}.
+ */
+const WC3_ABILITY_SFX: ReadonlySet<string> = new Set([
+  "wc3.moongo", // godie-hpb1.w 者、皆、陣
+  "wc3.moonjump", // godie-hpb1.e 列、在、前
+  "wc3.nocute", // godie-o00k.passive 裝可愛, godie-u00l.r / godie-umal.r ChangeDNA
+]);
+
+/**
+ * The STOCK-MPQ per-ability cast cues (the remaining 123 sound refs of the
+ * task-#78 音效 port). Same declared-set contract as {@link WC3_ABILITY_SFX},
+ * with one difference: the clips are Blizzard-owned and NOT redistributable, so
+ * they live in the git-ignored data/blizzard-overlay/ability-sfx/ store (pulled
+ * by tools/w3x-import/extract_stock_sfx.py) and their audio-map entries point
+ * into the dev-only `assets/blizzard-local/` mount — see
+ * content/assets/blizzard-local/README.md, the copyright gate.
+ *
+ * That is why {@link wc3CastKey} honours this set only when the build asks for
+ * the full local asset overlay (config/fullAssets — same switch the Blizzard
+ * model/voice overlays gate on). On a public bundle the key resolves to null
+ * and the cast falls back to the element whoosh / generic clip it always
+ * played; it must NEVER resolve to the map key, because playSfx would fetch a
+ * URL prod deliberately does not serve and the cast would be silent instead.
+ */
+const WC3_OVERLAY_ABILITY_SFX: ReadonlySet<string> = new Set([
+  "wc3.akamapissed8", // godie-emfr.w 沉睡之霧
+  "wc3.altarofelderswhat1", // godie-n00p.e / godie-nsjs.e 妖狐變化
+  "wc3.axemissilelaunch1", // godie-h00l.r 迴旋斬
+  "wc3.chickenwhat1", // godie-obla.q 放山雞
+  "wc3.darksummoninglaunch1", // godie-e00w.q / godie-e00x.q 百烈櫻華斬, godie-u010.q / godie-uvng.q 邪王炎殺劍
+  "wc3.defendcaster", // godie-h01u.w 弒鬼神 / godie-h01u.r 赤兔咆哮, godie-o01z.q / godie-o02v.q Barrel Shot
+  "wc3.demonhuntermissilehit3", // godie-u00n.e / godie-u00o.e 伸縮自如的槍亂打
+  "wc3.dragonroostwhat1", // godie-u010.r / godie-uvng.r 黑龍波吸收
+  "wc3.dragonyes2", // godie-u00h.r 金色的神風, godie-u00v.e 廬山昇龍破, godie-u010.e / godie-uvng.e 邪王炎殺黑龍波
+  "wc3.druidofthetalonmissilelaunch2", // godie-h00l.q 科奇利族的迴旋鏢
+  "wc3.eggsackdeath1", // godie-huth.w 把你變成餅乾
+  "wc3.flaretarget2", // godie-e00k.e / godie-e00z.e 瞬切百殺, godie-u00h.e 無名神風流-蛟龍
+  "wc3.flaretarget3", // godie-e008.q 拔焰刀, godie-o01z.w / godie-o02v.w Acxel Shooter
+  "wc3.gluescreenmeteorhit1", // godie-obla.e 地道突襲, godie-u00v.w 地走龍牙破
+  "wc3.gruntpissed3", // godie-u011.e / godie-u012.e 打屁股風林火豬
+  "wc3.gruntyesattack1", // godie-emns.q 死神之眼
+  "wc3.gruntyesattack3", // godie-emns.r 心臟麻痺
+  "wc3.hcancelbuilding", // godie-u010.w / godie-uvng.w 邪王炎殺煉獄焦
+  "wc3.headhunteryes4", // godie-h00l.w 鎖鏈槍, godie-h02s.q / godie-h02z.q 死亡之握, godie-orkn.q 綁架
+  "wc3.kaelyesattack3", // godie-emns.ex 交換筆記本
+  "wc3.markofchaos", // godie-e00r.r 野戰型陽電子砲, godie-o01z.e / godie-o02v.e Divine Buster
+  "wc3.mercenarywhat1", // godie-usyl.e 蛻變
+  "wc3.mortarimpact", // godie-h02k.ex 俄羅斯輪盤
+  "wc3.mortarteampissed9", // godie-u034 / godie-ucrl 山形修煉 whole kit (猜猜拳 gag)
+  "wc3.nazgrelyes2", // godie-opgh.e 閃光龍牙
+  "wc3.necropolisupgrade2", // godie-e00t.w 驚駭
+  "wc3.pandarenbrewmasterpissed8", // godie-h02k.w 憤怒的菊花
+  "wc3.pandarenbrewmasterwarcry1", // godie-h02k.e 憤怒的胸毛
+  "wc3.pandarenbrewmasteryes1", // godie-h02k.r 憤怒的簡諧運動
+  "wc3.parasite", // godie-e00q.ex 固有結界-黑洞, godie-u00k.e 厄夜靈魂
+  "wc3.peasantpissed3", // godie-nbst.ex 來~快點吃吧
+  "wc3.peondeath", // godie-e015.q 北斗爆橘拳, godie-u00l.q / godie-umal.q 北斗懺悔拳
+  "wc3.rokhanwhat2", // godie-emns.e 火車輾過
+  "wc3.sealwhat2", // godie-obla.r 動物拳法
+  "wc3.shadowhunterready1", // godie-ubal.r 魔界之王
+  "wc3.shamanready1", // godie-nman.r 地獄搖滾
+  "wc3.snapdragonmissilelaunch1", // godie-u00j.w 八刀一閃
+  "wc3.soulgem", // godie-o01z.r / godie-o02v.r Starlight Breaker Plus
+  "wc3.soulpreservation", // godie-e008.r 討滅封絕
+  "wc3.spellbreakerpissed4", // godie-n00b.w 複製鏡
+  "wc3.spiritofvengeanceyes3", // godie-n00p.w 寄生種子
+  "wc3.stampedecaster1", // godie-nman.w 必殺！爆熱神音！
+  "wc3.taunt", // godie-h02u.w / godie-h02v.w 狂草泥馬, godie-o00l.r 暴爆咒, godie-u00k.r 萬惡歸宗, godie-udea.e 魔法膨脹
+  "wc3.thunderboltmissiledeath", // godie-edem.r 哥哥
+  "wc3.thunderclapcaster", // godie-n01c.e / godie-nbbc.e 龍鬥氣砲咒文
+  "wc3.treantready1", // godie-e00s.q 伸卡球
+  "wc3.trollbatriderpissed2", // godie-ubal.w 災難之牆
+  "wc3.trollwoodworkswhat1", // godie-u00n.passive / godie-u00o.passive 二檔
+  "wc3.waygatewhat1", // godie-o00l.e 破法對咒, godie-o02s.r 破法對咒
+]);
+
+/**
+ * The WC3 source-map cast voice for an ability cast, or null to fall through to
+ * the element/generic route. Total on junk: only a declared cue key passes.
+ *
+ * `overlayEnabled` is injectable for tests; production callers take the default
+ * — the fullAssets build switch that decides whether this bundle ever asks for
+ * the Blizzard overlay (see {@link WC3_OVERLAY_ABILITY_SFX} for why a public
+ * bundle must answer null rather than a key whose file is never served).
+ */
+export function wc3CastKey(
+  sfxKey: unknown,
+  overlayEnabled: boolean = fullAssetsEnabled(),
+): string | null {
+  if (typeof sfxKey !== "string") return null;
+  if (WC3_ABILITY_SFX.has(sfxKey)) return sfxKey;
+  if (overlayEnabled && WC3_OVERLAY_ABILITY_SFX.has(sfxKey)) return sfxKey;
+  return null;
+}
 
 /**
  * The element whoosh for an ability cast, or null to fall back to the generic
@@ -383,8 +504,9 @@ export function combatSfxKey(ev: EventMessage, seatId: number | null = localSeat
       // 魔法陣展開 — long wind-ups get the circle, short ones the dry tick
       return castTelegraphKey(d.castTimeSec);
     case "abilityCast":
-      // per-element whoosh, generic cast when the vfxKey carries no known element
-      return castElementKey(d.vfxKey) ?? "abilityCast";
+      // the ability's own WC3 cast voice first (specific beats generic), then
+      // the per-element whoosh, then the generic cast clip
+      return wc3CastKey(d.sfxKey) ?? castElementKey(d.vfxKey) ?? "abilityCast";
     case "guardBreak":
       return "guardBreak"; // 破防 — shield broke this frame
     case "knockdown":

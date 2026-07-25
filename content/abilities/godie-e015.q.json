@@ -28,11 +28,11 @@
       "damageType": "physical",
       "amount": {
         "perRank": [
-          80,
-          120,
-          160,
-          200,
-          240
+          100.0,
+          200.0,
+          300.0,
+          400.0,
+          500.0
         ],
         "ratios": [
           {
@@ -44,5 +44,6 @@
     }
   ],
   "vfxKey": "fx.prim.holy.slash",
+  "sfxKey": "wc3.peondeath",
   "targetsEnemies": true
 }

@@ -85,6 +85,7 @@
         }
       ],
       "vfxKey": "fx.prim.wind.slash",
+      "sfxKey": "wc3.druidofthetalonmissilelaunch2",
       "targetsEnemies": true
     },
     "W": {
@@ -129,6 +130,7 @@
         }
       ],
       "vfxKey": "fx.prim.physical.beam",
+      "sfxKey": "wc3.headhunteryes4",
       "castTimeSec": 0.3
     },
     "E": {
@@ -223,6 +225,7 @@
         }
       ],
       "vfxKey": "godie-bladestorm-swordeffect-p0",
+      "sfxKey": "wc3.axemissilelaunch1",
       "targetsEnemies": true,
       "radius": 6.0,
       "castTimeSec": 0.8,

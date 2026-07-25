@@ -170,6 +170,7 @@
         }
       ],
       "vfxKey": "fx.prim.physical.slash",
+      "sfxKey": "wc3.defendcaster",
       "castTimeSec": 0.4
     },
     "E": {
@@ -294,7 +295,7 @@
               "damageType": "magic",
               "amount": {
                 "perRank": [
-                  90.0,
+                  10.0,
                   20.0,
                   30.0
                 ]
@@ -310,6 +311,7 @@
         }
       ],
       "vfxKey": "fx.prim.physical.shockwave-lg",
+      "sfxKey": "wc3.defendcaster",
       "castTimeSec": 0.3
     }
   },

@@ -46,37 +46,63 @@
       "description": "[被動]\n0秒冷卻時間\n\n受到物理攻擊時有7%機率可迴避物理攻擊。",
       "slot": "Q",
       "castType": "self",
-      "maxRank": 5,
+      "maxRank": 4,
       "cooldown": [
-        12.0,
-        12.0,
-        12.0,
-        12.0,
-        12.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "manaCost": [
-        60.0,
-        60.0,
-        60.0,
-        60.0,
-        60.0
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "range": 0,
-      "effects": [
-        {
-          "kind": "applyBuff",
-          "modifiers": [
-            {
-              "stat": "armor",
-              "op": "flat",
-              "value": 25
-            }
-          ],
-          "duration": 6.0
-        }
-      ],
+      "effects": [],
       "vfxKey": "fx.prim.holy.pulse-sm",
-      "castTimeSec": 0.3
+      "passive": {
+        "name": "20-02 感知能力",
+        "ranks": [
+          {
+            "modifiers": [
+              {
+                "stat": "evasion",
+                "op": "flat",
+                "value": 0.07
+              }
+            ]
+          },
+          {
+            "modifiers": [
+              {
+                "stat": "evasion",
+                "op": "flat",
+                "value": 0.14
+              }
+            ]
+          },
+          {
+            "modifiers": [
+              {
+                "stat": "evasion",
+                "op": "flat",
+                "value": 0.21
+              }
+            ]
+          },
+          {
+            "modifiers": [
+              {
+                "stat": "evasion",
+                "op": "flat",
+                "value": 0.28
+              }
+            ]
+          }
+        ]
+      }
     },
     "W": {
       "id": "godie-e002.w",
@@ -103,9 +129,9 @@
           "damageType": "physical",
           "amount": {
             "perRank": [
-              160.0,
-              160.0,
-              160.0
+              10.0,
+              10.0,
+              10.0
             ],
             "ratios": [
               {
@@ -152,10 +178,10 @@
               "damageType": "magic",
               "amount": {
                 "perRank": [
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0
+                  250.0,
+                  400.0,
+                  550.0,
+                  700.0
                 ]
               }
             }
@@ -163,7 +189,7 @@
         }
       ],
       "vfxKey": "fx.w3x.particle.holyawakening.p04",
-      "castTimeSec": 0.3,
+      "castTimeSec": 0.5,
       "hitFeel": {
         "hitstopTicks": 3,
         "hitstunTicks": 6,

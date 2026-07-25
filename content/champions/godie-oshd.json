@@ -66,10 +66,10 @@
           "damageType": "physical",
           "amount": {
             "perRank": [
-              80,
-              120,
-              160,
-              200
+              200.0,
+              400.0,
+              600.0,
+              800.0
             ],
             "ratios": [
               {
@@ -82,7 +82,7 @@
       ],
       "vfxKey": "fx.prim.nature.slash",
       "targetsEnemies": true,
-      "castTimeSec": 0.4
+      "castTimeSec": 0.5
     },
     "W": {
       "id": "godie-oshd.w",
@@ -111,10 +111,10 @@
           "damageType": "physical",
           "amount": {
             "perRank": [
-              450.0,
-              600.0,
-              750.0,
-              900.0
+              150.0,
+              200.0,
+              250.0,
+              300.0
             ],
             "ratios": [
               {
@@ -128,7 +128,7 @@
       "vfxKey": "fx.prim.void.nova",
       "targetsEnemies": true,
       "radius": 6.0,
-      "castTimeSec": 0.6
+      "castTimeSec": 0.5
     },
     "E": {
       "id": "godie-oshd.e",

@@ -25,10 +25,10 @@
       "damageType": "magic",
       "amount": {
         "perRank": [
-          110.0,
-          170.0,
-          230.0,
-          290.0
+          275.0,
+          425.0,
+          575.0,
+          725.0
         ],
         "ratios": [
           {
@@ -43,5 +43,5 @@
   "targetsEnemies": true,
   "radius": 5.5,
   "schema": "ability@1",
-  "castTimeSec": 0.5
+  "castTimeSec": 0.6
 }

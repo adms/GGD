@@ -30,9 +30,27 @@
         }
       ],
       "duration": 10.0
+    },
+    {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          100.0,
+          150.0,
+          200.0,
+          250.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 0.3
+          }
+        ]
+      }
     }
   ],
   "vfxKey": "fx.prim.arcane.slash",
   "schema": "ability@1",
-  "castTimeSec": 0.3
+  "castTimeSec": 0.4
 }

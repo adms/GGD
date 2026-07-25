@@ -81,6 +81,7 @@
         }
       ],
       "vfxKey": "fx.prim.void.pulse-sm",
+      "sfxKey": "wc3.gruntyesattack1",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
@@ -227,6 +228,7 @@
         }
       ],
       "vfxKey": "fx.prim.physical.shockwave",
+      "sfxKey": "wc3.rokhanwhat2",
       "targetsEnemies": true,
       "radius": 1.5,
       "castTimeSec": 0.6
@@ -256,9 +258,9 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              80,
-              120,
-              160
+              450.0,
+              450.0,
+              450.0
             ],
             "ratios": [
               {
@@ -270,8 +272,9 @@
         }
       ],
       "vfxKey": "fx.prim.void.nova-lg",
+      "sfxKey": "wc3.gruntyesattack3",
       "targetsEnemies": true,
-      "castTimeSec": 0.4
+      "castTimeSec": 0.5
     }
   },
   "skillOrder": [

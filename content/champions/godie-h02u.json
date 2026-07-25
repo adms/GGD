@@ -101,6 +101,24 @@
       "range": 0,
       "effects": [
         {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              400.0,
+              800.0,
+              1200.0,
+              1600.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        },
+        {
           "kind": "applyBuff",
           "modifiers": [
             {
@@ -113,7 +131,8 @@
         }
       ],
       "vfxKey": "fx.prim.physical.shockwave",
-      "castTimeSec": 0.3
+      "sfxKey": "wc3.taunt",
+      "castTimeSec": 0.6
     },
     "E": {
       "id": "godie-h02u.e",
@@ -186,6 +205,23 @@
       ],
       "range": 0,
       "effects": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              100.0,
+              200.0,
+              300.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.3
+              }
+            ]
+          }
+        },
         {
           "kind": "applyBuff",
           "modifiers": [

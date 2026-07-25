@@ -43,6 +43,7 @@
     }
   ],
   "vfxKey": "fx.prim.physical.beam",
+  "sfxKey": "wc3.peondeath",
   "targetsEnemies": true,
   "schema": "ability@1"
 }

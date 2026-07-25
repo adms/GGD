@@ -69,11 +69,11 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              80,
-              120,
-              160,
-              200,
-              240
+              30.0,
+              30.0,
+              30.0,
+              80.0,
+              80.0
             ],
             "ratios": [
               {
@@ -86,7 +86,7 @@
       ],
       "vfxKey": "fx.prim.lightning.nova",
       "targetsEnemies": true,
-      "castTimeSec": 0.4
+      "castTimeSec": 0.3
     },
     "W": {
       "id": "godie-hlgr.w",

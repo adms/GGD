@@ -25,10 +25,10 @@
       "damageType": "physical",
       "amount": {
         "perRank": [
-          80,
-          120,
-          160,
-          200
+          100.0,
+          150.0,
+          200.0,
+          250.0
         ],
         "ratios": [
           {

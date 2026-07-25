@@ -67,10 +67,10 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              80,
-              120,
-              160,
-              200
+              155.0,
+              155.0,
+              155.0,
+              155.0
             ],
             "ratios": [
               {
@@ -133,6 +133,7 @@
         }
       ],
       "vfxKey": "fx.prim.wind.pulse",
+      "sfxKey": "wc3.akamapissed8",
       "targetsEnemies": true,
       "castTimeSec": 0.5
     },

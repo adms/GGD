@@ -156,10 +156,10 @@
               "damageType": "magic",
               "amount": {
                 "perRank": [
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0
+                  350.0,
+                  350.0,
+                  350.0,
+                  350.0
                 ]
               }
             }
@@ -167,7 +167,7 @@
         }
       ],
       "vfxKey": "fx.w3x.orb.lightningnova.p00",
-      "castTimeSec": 0.3,
+      "castTimeSec": 0.4,
       "hitFeel": {
         "hitstopTicks": 3,
         "hitstunTicks": 5,

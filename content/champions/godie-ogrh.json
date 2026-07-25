@@ -194,9 +194,9 @@
               "damageType": "magic",
               "amount": {
                 "perRank": [
-                  0.0,
-                  0.0,
-                  0.0
+                  450.0,
+                  750.0,
+                  1050.0
                 ]
               }
             }
@@ -204,7 +204,7 @@
         }
       ],
       "vfxKey": "fx.prim.ki.beam-lg",
-      "castTimeSec": 0.4
+      "castTimeSec": 0.6
     }
   },
   "skillOrder": [

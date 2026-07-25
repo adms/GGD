@@ -24,9 +24,9 @@
       "damageType": "magic",
       "amount": {
         "perRank": [
-          75.0,
-          75.0,
-          75.0
+          150.0,
+          275.0,
+          400.0
         ],
         "ratios": [
           {
@@ -45,5 +45,5 @@
   ],
   "vfxKey": "fx.prim.wind.tornado-lg",
   "targetsEnemies": true,
-  "castTimeSec": 0.5
+  "castTimeSec": 0.6
 }

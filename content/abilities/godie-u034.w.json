@@ -21,6 +21,24 @@
   "range": 0,
   "effects": [
     {
+      "kind": "damage",
+      "damageType": "magic",
+      "amount": {
+        "perRank": [
+          350.0,
+          450.0,
+          550.0,
+          650.0
+        ],
+        "ratios": [
+          {
+            "stat": "ap",
+            "coeff": 1.0
+          }
+        ]
+      }
+    },
+    {
       "kind": "applyBuff",
       "modifiers": [
         {
@@ -33,6 +51,7 @@
     }
   ],
   "vfxKey": "fx.prim.ki.pulse-sm",
+  "sfxKey": "wc3.mortarteampissed9",
   "schema": "ability@1",
   "castTimeSec": 0.3
 }

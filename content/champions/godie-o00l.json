@@ -71,10 +71,10 @@
               "damageType": "magic",
               "amount": {
                 "perRank": [
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0
+                  250.0,
+                  350.0,
+                  450.0,
+                  550.0
                 ]
               }
             }
@@ -82,7 +82,7 @@
         }
       ],
       "vfxKey": "fx.prim.void.beam",
-      "castTimeSec": 0.3
+      "castTimeSec": 0.4
     },
     "W": {
       "id": "godie-o00l.w",
@@ -111,10 +111,10 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
+              150.0,
               300.0,
-              600.0,
-              900.0,
-              1200.0
+              450.0,
+              600.0
             ],
             "ratios": [
               {
@@ -128,7 +128,7 @@
       "vfxKey": "fx.prim.fire.explosion",
       "targetsEnemies": true,
       "radius": 3.69,
-      "castTimeSec": 0.7
+      "castTimeSec": 0.5
     },
     "E": {
       "id": "godie-o00l.e",
@@ -172,6 +172,7 @@
         }
       ],
       "vfxKey": "fx.prim.arcane.pulse",
+      "sfxKey": "wc3.waygatewhat1",
       "targetsEnemies": false,
       "radius": 1.5,
       "castTimeSec": 0.3
@@ -201,9 +202,9 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              80,
-              120,
-              160
+              200.0,
+              200.0,
+              200.0
             ],
             "ratios": [
               {
@@ -215,6 +216,7 @@
         }
       ],
       "vfxKey": "fx.prim.fire.explosion-lg",
+      "sfxKey": "wc3.taunt",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     }

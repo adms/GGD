@@ -191,9 +191,9 @@
               "damageType": "magic",
               "amount": {
                 "perRank": [
-                  0.0,
-                  0.0,
-                  0.0
+                  600.0,
+                  900.0,
+                  1200.0
                 ]
               }
             }
@@ -201,7 +201,7 @@
         }
       ],
       "vfxKey": "fx.w3x.particle.supershinythingy.p00",
-      "castTimeSec": 0.4,
+      "castTimeSec": 0.7,
       "hitFeel": {
         "hitstopTicks": 4,
         "hitstunTicks": 7,

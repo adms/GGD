@@ -25,10 +25,10 @@
       "damageType": "physical",
       "amount": {
         "perRank": [
-          80,
-          120,
-          160,
-          200
+          450.0,
+          550.0,
+          650.0,
+          750.0
         ],
         "ratios": [
           {
@@ -40,7 +40,8 @@
     }
   ],
   "vfxKey": "fx.prim.physical.beam",
+  "sfxKey": "wc3.moonjump",
   "targetsEnemies": true,
   "schema": "ability@1",
-  "castTimeSec": 0.4
+  "castTimeSec": 0.5
 }

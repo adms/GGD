@@ -197,9 +197,9 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              77.0,
-              77.0,
-              77.0
+              180.0,
+              360.0,
+              540.0
             ],
             "ratios": [
               {
@@ -219,7 +219,7 @@
       "vfxKey": "fx.prim.void.explosion-lg",
       "targetsEnemies": true,
       "radius": 3.67,
-      "castTimeSec": 0.6
+      "castTimeSec": 0.7
     }
   },
   "skillOrder": [

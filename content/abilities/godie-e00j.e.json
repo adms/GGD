@@ -29,10 +29,10 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              0.0,
-              0.0,
-              0.0,
-              0.0
+              600.0,
+              800.0,
+              1000.0,
+              1200.0
             ]
           }
         }
@@ -41,5 +41,5 @@
   ],
   "vfxKey": "fx.prim.ki.bolt",
   "schema": "ability@1",
-  "castTimeSec": 0.3
+  "castTimeSec": 0.6
 }

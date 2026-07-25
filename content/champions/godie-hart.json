@@ -272,9 +272,9 @@
           "damageType": "physical",
           "amount": {
             "perRank": [
-              75.0,
-              75.0,
-              75.0
+              693.0,
+              1043.0,
+              1393.0
             ],
             "ratios": [
               {
@@ -293,7 +293,7 @@
       ],
       "vfxKey": "fx.w3x.orb.herocloudkfksword.p00",
       "targetsEnemies": true,
-      "castTimeSec": 0.5,
+      "castTimeSec": 0.8,
       "hitFeel": {
         "hitstopTicks": 5,
         "hitstunTicks": 9,

@@ -24,18 +24,18 @@
   "effects": [
     {
       "kind": "damage",
-      "damageType": "physical",
+      "damageType": "magic",
       "amount": {
         "perRank": [
-          80,
-          120,
-          160,
-          200,
-          240
+          150.0,
+          300.0,
+          450.0,
+          600.0,
+          750.0
         ],
         "ratios": [
           {
-            "stat": "ad",
+            "stat": "ap",
             "coeff": 0.5
           }
         ]
@@ -43,6 +43,7 @@
     }
   ],
   "vfxKey": "fx.prim.physical.slash",
+  "sfxKey": "wc3.peondeath",
   "targetsEnemies": true,
   "schema": "ability@1"
 }

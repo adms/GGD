@@ -88,6 +88,7 @@
         }
       ],
       "vfxKey": "fx.prim.ki.nova",
+      "sfxKey": "wc3.defendcaster",
       "targetsEnemies": true,
       "radius": 5.5,
       "castTimeSec": 0.5
@@ -125,11 +126,11 @@
               "damageType": "magic",
               "amount": {
                 "perRank": [
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0,
-                  0.0
+                  250.0,
+                  375.0,
+                  500.0,
+                  625.0,
+                  750.0
                 ]
               }
             }
@@ -137,7 +138,8 @@
         }
       ],
       "vfxKey": "fx.prim.void.bolt",
-      "castTimeSec": 0.3
+      "sfxKey": "wc3.flaretarget3",
+      "castTimeSec": 0.5
     },
     "E": {
       "id": "godie-o01z.e",
@@ -181,6 +183,7 @@
         }
       ],
       "vfxKey": "fx.prim.holy.nova",
+      "sfxKey": "wc3.markofchaos",
       "targetsEnemies": true,
       "castTimeSec": 0.5
     },
@@ -229,6 +232,7 @@
         }
       ],
       "vfxKey": "fx.cinder-ward",
+      "sfxKey": "wc3.soulgem",
       "targetsEnemies": true,
       "radius": 6.0,
       "castTimeSec": 0.8

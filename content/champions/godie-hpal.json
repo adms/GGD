@@ -111,10 +111,10 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              75.0,
-              75.0,
-              75.0,
-              75.0
+              37.5,
+              105.0,
+              202.5,
+              330.0
             ],
             "ratios": [
               {
@@ -133,7 +133,7 @@
       ],
       "vfxKey": "fx.prim.earth.beam",
       "targetsEnemies": true,
-      "castTimeSec": 0.4
+      "castTimeSec": 0.5
     },
     "E": {
       "id": "godie-hpal.e",

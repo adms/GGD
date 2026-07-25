@@ -216,6 +216,11 @@ export function castAbility(
   // `vfxKey` (fx.prim.<element>.<shape>) rides along so the client's per-frame
   // audio mapper can play the ELEMENT whoosh (fire/ice/lightning) for the cast
   // without loading any ability data of its own (audio COMBAT-AUDIO routing).
+  // `sfxKey` is the same contract one step more specific: the WC3 source map's
+  // own per-ability cast sound (content `ability@1.sfxKey`), which the mapper
+  // plays INSTEAD of the element/generic voice. Rides `abilityCast` and not
+  // `castBegin` on purpose — castBegin only fires when castTimeSec > 0, so an
+  // instant cast (e.g. godie-o00k.passive 裝可愛) would never sound there.
   world.emit("abilityCast", {
     caster,
     slot,
@@ -223,6 +228,7 @@ export function castAbility(
     point,
     direction,
     vfxKey: def.vfxKey,
+    sfxKey: def.sfxKey,
   });
 
   // ---- cast time: defer effects to CastResolveSystem when ct > 0 ----

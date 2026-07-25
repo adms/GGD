@@ -49,6 +49,7 @@
     }
   ],
   "vfxKey": "fx.prim.arcane.explosion",
+  "sfxKey": "wc3.taunt",
   "targetsEnemies": true,
   "schema": "ability@1",
   "castTimeSec": 0.5

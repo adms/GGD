@@ -85,6 +85,7 @@
         }
       ],
       "vfxKey": "fx.prim.physical.beam",
+      "sfxKey": "wc3.peondeath",
       "targetsEnemies": true
     },
     "W": {
@@ -217,6 +218,7 @@
         }
       ],
       "vfxKey": "fx.prim.physical.pulse-lg",
+      "sfxKey": "wc3.nocute",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     }

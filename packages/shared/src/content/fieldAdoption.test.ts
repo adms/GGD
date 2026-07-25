@@ -245,10 +245,9 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // DEBT — real S8s. Each of these is a mechanism that ships and never
   // happens. They print as a banner on every run until someone fixes them.
   // ===================================================================
-  "field:abilities.passive.ranks[].auras": {
-    status: "debt",
-    why: "THE BIGGEST ONE. sim/aura/aura.ts is a full aura system and SimWorld.ts:368 runs auraSystem() every tick — against 0 of 64 passive ranks. 靈氣 is a whole WC3 ability family (the [靈氣] tag zInnateKind documents) and not one has been imported. The aura code, its tests, its lingerSec tuning and its auraApply/auraEnd events are all unreachable.",
-  },
+  // "field:abilities.passive.ranks[].auras" exemption DELETED 2026-07-25: the
+  // JASS effect-audit batch converted 66-04 靈壓震撼 (godie-e00t.r, A0IC/A0ID)
+  // to a passive slow-aura — the first content aura, so the key is adopted.
   "field:abilities.descriptionRoles": {
     status: "debt",
     why: "task #114 (semantic colour-role markup) is marked COMPLETE and the render path handles it, but the importer has never been re-run, so 0 of 662 abilities carry it and every tooltip falls back to plain text. schema/ability.ts predicted exactly this: 'absent until the importer re-runs'.",

@@ -114,6 +114,7 @@
         }
       ],
       "vfxKey": "fx.prim.nature.explosion",
+      "sfxKey": "wc3.pandarenbrewmasterpissed8",
       "castTimeSec": 0.3
     },
     "E": {
@@ -139,6 +140,24 @@
       "range": 11.0,
       "effects": [
         {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              1000.0,
+              2000.0,
+              3000.0,
+              4000.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 1.0
+              }
+            ]
+          }
+        },
+        {
           "kind": "applyBuff",
           "modifiers": [
             {
@@ -161,6 +180,7 @@
         }
       ],
       "vfxKey": "fx.prim.physical.swarm",
+      "sfxKey": "wc3.pandarenbrewmasterwarcry1",
       "castTimeSec": 0.3
     },
     "R": {
@@ -196,6 +216,7 @@
         }
       ],
       "vfxKey": "fx.prim.physical.shockwave-lg",
+      "sfxKey": "wc3.pandarenbrewmasteryes1",
       "castTimeSec": 0.3
     }
   },
