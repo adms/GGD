@@ -17,6 +17,7 @@
     "lint": "pnpm -r --if-present lint",
     "todo:check": "tsx tools/todo-check/src/cli.ts --static",
     "todo:runtime": "tsx tools/todo-check/src/cli.ts --runtime",
+    "voice:index": "node tools/voice-gen/index-lines.mjs",
     "content:build": "pnpm --filter @ggd/shared content:build",
     "content:validate": "pnpm --filter @ggd/shared content:validate",
     "docs:reference": "python3 tools/reference/gen_reference.py",

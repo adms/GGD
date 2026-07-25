@@ -1,0 +1,1391 @@
+{
+ "championId": "godie-hblm",
+ "reference": {
+  "sha256": "91b2a6d49c1791a52174cb74a4eb9f6811200e4fbfda12f521f421fcc634b0e2",
+  "seconds": 0,
+  "sampleRate": 24000,
+  "source": "voice-reference-pipeline/approved/processed/godie-hblm.wav",
+  "sourceKind": "repo",
+  "licence": "",
+  "licenceUrl": "",
+  "note": "auto-adopted repo reference",
+  "addedAt": 1784968553976,
+  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/godie-hblm.wav"
+ },
+ "lines": {
+  "quote": {
+   "text": "ワシは、やさしい王様になるのだ!",
+   "lang": "ja",
+   "kana": "ワシ ワ ヤサシー オーサマ ニ ナル ノダ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.64,
+     "at": 1784980842722,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 43511,
+    "seconds": 2.64,
+    "lufs": null,
+    "hash": "3709257c6465ba5fa92b0eeba63e373fd210b734023efcb47fdc2c1b31f22d04",
+    "at": 1784980842722
+   },
+   "lastError": null
+  },
+  "victory": {
+   "text": "やったのだ!ワシたちの勝ちなのだ!",
+   "lang": "ja",
+   "kana": "ヤッタ ノダ ワシタチ ノ カチ ナノダ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.84,
+     "at": 1784980878829,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 46437,
+    "seconds": 2.84,
+    "lufs": null,
+    "hash": "f0cd78ce8f9f743bcb4c26ab4563c88b3290bfe7e924b1c26e673976fd728261",
+    "at": 1784980878829
+   },
+   "lastError": null
+  },
+  "defeat": {
+   "text": "うぬぬ…悔しいのだ…次は負けないのだ…!",
+   "lang": "ja",
+   "kana": "ウヌヌ クヤシー ノダ ツギ ワ マケナイ ノダ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.84,
+     "at": 1784980881499,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 46437,
+    "seconds": 2.84,
+    "lufs": null,
+    "hash": "f413723329a15789d9511915d11b0bde7c1ccd902efb1b8bb65acf73d02780d1",
+    "at": 1784980881499
+   },
+   "lastError": null
+  },
+  "hurt": {
+   "text": "うぬっ!",
+   "lang": "ja",
+   "kana": "ウヌッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.52,
+     "at": 1784980894586,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 9239,
+    "seconds": 0.52,
+    "lufs": null,
+    "hash": "e6f4ee5284ce16f17adb2adc4f0adc76388ddff4c31f47bb3946be9177dd1b4d",
+    "at": 1784980894587
+   },
+   "lastError": null
+  },
+  "hurt-heavy": {
+   "text": "うぬぬぬ…!まだ…倒れないのだ…!",
+   "lang": "ja",
+   "kana": "ウヌヌヌ マダ タオレナイ ノダ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.52,
+     "at": 1784980896320,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 25539,
+    "seconds": 1.52,
+    "lufs": null,
+    "hash": "667aa96358ed6ad9010f2a9dc8e830f58bcc6252d1861e5053969349843ff1a4",
+    "at": 1784980896320
+   },
+   "lastError": null
+  },
+  "stun": {
+   "text": "ほええ…目が回るのだ~…。",
+   "lang": "ja",
+   "kana": "ホエエ メ ガ マワル ノダ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.36,
+     "at": 1784980897756,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 23031,
+    "seconds": 1.36,
+    "lufs": null,
+    "hash": "1549201cec6690c843ce5b38c24fe554aa1facafb6bd4120cce1c9d20390d85f",
+    "at": 1784980897756
+   },
+   "lastError": null
+  },
+  "poison": {
+   "text": "けほっ…お腹がへんなのだ…。",
+   "lang": "ja",
+   "kana": "ケホッ オナカ ガ ヘン ナノダ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.72,
+     "at": 1784980912194,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 28465,
+    "seconds": 1.72,
+    "lufs": null,
+    "hash": "8192bfc2f5963bb19d635ffa2765916c32c91db74a3fa29e39837c7ee01e00c4",
+    "at": 1784980912194
+   },
+   "lastError": null
+  },
+  "slow": {
+   "text": "あしが…おそいのだ~…。",
+   "lang": "ja",
+   "kana": "アシ ガ オソイ ノダ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.52,
+     "at": 1784980913200,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 25539,
+    "seconds": 1.52,
+    "lufs": null,
+    "hash": "74aec85084947bef80197b43aaabd0d47390a80f5793e5bbf159452d680c5dae",
+    "at": 1784980913200
+   },
+   "lastError": null
+  },
+  "blind": {
+   "text": "うわーん!何も見えないのだ!",
+   "lang": "ja",
+   "kana": "ウワーン ナニモ ミエナイ ノダ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.08,
+     "at": 1784980916073,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 34316,
+    "seconds": 2.08,
+    "lufs": null,
+    "hash": "47b02514b18c536411684936a2cb58c091db1c839079a1db6a3b8c91b2e70316",
+    "at": 1784980916073
+   },
+   "lastError": null
+  },
+  "bind": {
+   "text": "むむむ…!はなすのだ~!",
+   "lang": "ja",
+   "kana": "ムムム ハナス ノダー",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.2,
+     "at": 1784980928333,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 20106,
+    "seconds": 1.2,
+    "lufs": null,
+    "hash": "08806ed0481f17e60ef1bcc0147887dbd1aa7081fe6f20dc642c4467230c6f96",
+    "at": 1784980928333
+   },
+   "lastError": null
+  },
+  "knockdown": {
+   "text": "うぬあっ!",
+   "lang": "ja",
+   "kana": "ウヌアッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.680249,
+     "at": 1784980928988,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 12164,
+    "seconds": 0.680249,
+    "lufs": null,
+    "hash": "ff5129e1baf0b722c0e4d6a2460333924003f4e769edf2f4678a1e4d782cda9a",
+    "at": 1784980928988
+   },
+   "lastError": null
+  },
+  "healed": {
+   "text": "元気もりもりなのだ!",
+   "lang": "ja",
+   "kana": "ゲンキ モリモリ ナノダ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.4,
+     "at": 1784980932096,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 23449,
+    "seconds": 1.4,
+    "lufs": null,
+    "hash": "63ef2c454dd3feccbeee5987a28442029cc84e8e9cbeee64fc1732d1b955f62a",
+    "at": 1784980932096
+   },
+   "lastError": null
+  },
+  "confused": {
+   "text": "ふにゃ~…ブリが空を泳いでるのだ~…。",
+   "lang": "ja",
+   "kana": "フニャー ブリ ガ ソラ オ オヨイデル ノダー",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.8,
+     "at": 1784980946927,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 46019,
+    "seconds": 2.8,
+    "lufs": null,
+    "hash": "8b2e46634303de9c4d46d2376b916236d9179ce3d4d26c8a38f63cc163468709",
+    "at": 1784980946927
+   },
+   "lastError": null
+  },
+  "paralyzed": {
+   "text": "び、びりびりなのだ~…!",
+   "lang": "ja",
+   "kana": "ビ ビリビリ ナノダ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.32,
+     "at": 1784980946636,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 22195,
+    "seconds": 1.32,
+    "lufs": null,
+    "hash": "e3d8d76dd9b042843096f5e5a362dbada0e7c9a5d063ab900f6d01d44172156b",
+    "at": 1784980946637
+   },
+   "lastError": null
+  },
+  "thanks": {
+   "text": "ありがとうなのだ!",
+   "lang": "ja",
+   "kana": "アリガトー ナノダ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.28,
+     "at": 1784980948520,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 21359,
+    "seconds": 1.28,
+    "lufs": null,
+    "hash": "fc0375e1e2132886ae44f75f93f6862d2b66ef1b2069d8b06104604c73b466e0",
+    "at": 1784980948520
+   },
+   "lastError": null
+  },
+  "taunt": {
+   "text": "ウヌなんか、ちっとも怖くないのだ!",
+   "lang": "ja",
+   "kana": "ウヌ ナンカ チットモ コワクナイ ノダ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.08,
+     "at": 1784980964144,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 34316,
+    "seconds": 2.08,
+    "lufs": null,
+    "hash": "03ec6e354e8b2537236dfeac16f00efc01cfac02a16e8b1f311bcec774571f0a",
+    "at": 1784980964144
+   },
+   "lastError": null
+  },
+  "curse": {
+   "text": "このいじわるめ、なのだーっ!",
+   "lang": "ja",
+   "kana": "コノ イジワル メ ナノダーッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.56,
+     "at": 1784980963621,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 25957,
+    "seconds": 1.56,
+    "lufs": null,
+    "hash": "f3fefc918bbbdb20b031e4c2b85efe120a563540ee89a4366fe8be03ff83a67b",
+    "at": 1784980963621
+   },
+   "lastError": null
+  },
+  "hum": {
+   "text": "ふんふ~ん♪ふんふんふ~ん♪",
+   "lang": "ja",
+   "kana": "フン フーン フン フン フーン",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.72,
+     "at": 1784980966001,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 28465,
+    "seconds": 1.72,
+    "lufs": null,
+    "hash": "0255391e7ad8011944c8a502c15dbc299bf061754b8cc0fbd22e6495a3e663ad",
+    "at": 1784980966001
+   },
+   "lastError": null
+  },
+  "attack-light": {
+   "text": "えいっ!",
+   "lang": "ja",
+   "kana": "エイッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1784980980290,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 6313,
+    "seconds": 0.32,
+    "lufs": null,
+    "hash": "039a73a63c1c28a372dbcb4f90b832072d3d05a1d30ab8c3735b2abbdd70ed98",
+    "at": 1784980980290
+   },
+   "lastError": null
+  },
+  "attack-heavy": {
+   "text": "とりゃーっ!",
+   "lang": "ja",
+   "kana": "トリャーッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.8,
+     "at": 1784980981934,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 13836,
+    "seconds": 0.8,
+    "lufs": null,
+    "hash": "9bde67c31bb6f202379f6e2cbfc2669798393854e729775944466eb0b463fb8d",
+    "at": 1784980981935
+   },
+   "lastError": null
+  },
+  "crit": {
+   "text": "いまのは効いたのだ!",
+   "lang": "ja",
+   "kana": "イマ ノ ワ キイタ ノダ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.32,
+     "at": 1784980982463,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 22195,
+    "seconds": 1.32,
+    "lufs": null,
+    "hash": "5233546eb86e231b3d827810bb6b8334b0dadb1c31a0ae6476b204fcce3e445c",
+    "at": 1784980982463
+   },
+   "lastError": null
+  },
+  "block": {
+   "text": "ふんぬ~!",
+   "lang": "ja",
+   "kana": "フンヌー",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.680249,
+     "at": 1784980995620,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 12164,
+    "seconds": 0.680249,
+    "lufs": null,
+    "hash": "5555c02be5050cd193d18fc10ff89e4684dae3921093f3aa9e48934ace653dec",
+    "at": 1784980995620
+   },
+   "lastError": null
+  },
+  "dodge": {
+   "text": "ひょいなのだ!",
+   "lang": "ja",
+   "kana": "ヒョイ ナノダ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1,
+     "at": 1784980998774,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 17180,
+    "seconds": 1,
+    "lufs": null,
+    "hash": "39f493a0ac70a70a18081963c1ade60af519fd4d0e1b25145b620effd2950183",
+    "at": 1784980998774
+   },
+   "lastError": null
+  },
+  "sprint": {
+   "text": "はしるのだ~!",
+   "lang": "ja",
+   "kana": "ハシル ノダー",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.84,
+     "at": 1784980999076,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 14672,
+    "seconds": 0.84,
+    "lufs": null,
+    "hash": "cb3471d1ccb89cd6f23b93e1fcde066f1c0cb7faf40a6ef92536302e396f9a3e",
+    "at": 1784980999076
+   },
+   "lastError": null
+  },
+  "jump": {
+   "text": "とうっ!",
+   "lang": "ja",
+   "kana": "トーッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.56,
+     "at": 1784981012370,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 10075,
+    "seconds": 0.56,
+    "lufs": null,
+    "hash": "b1954542e4f9eef4f2366da03221cb714443ecfde282014fc9a59469d6993e86",
+    "at": 1784981012371
+   },
+   "lastError": null
+  },
+  "respond.ok": {
+   "text": "うむ!まかせるのだ!",
+   "lang": "ja",
+   "kana": "ウム マカセル ノダ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.16,
+     "at": 1784981015644,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 19688,
+    "seconds": 1.16,
+    "lufs": null,
+    "hash": "4785da10611c1f8683a02ae7585948dc78aaf27db4985e3a7d0314d2eb2c5088",
+    "at": 1784981015644
+   },
+   "lastError": null
+  },
+  "respond.no": {
+   "text": "ダメなのだ!",
+   "lang": "ja",
+   "kana": "ダメ ナノダ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.92,
+     "at": 1784981015122,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 15926,
+    "seconds": 0.92,
+    "lufs": null,
+    "hash": "aee1246fb43a11a4ac0df35df5b2f57c218b1f4b8033d5736b367dd961a432c5",
+    "at": 1784981015123
+   },
+   "lastError": null
+  },
+  "puzzled": {
+   "text": "ウヌ?なんなのだ?",
+   "lang": "ja",
+   "kana": "ウヌ ナン ナノダ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.24,
+     "at": 1784981028727,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 20942,
+    "seconds": 1.24,
+    "lufs": null,
+    "hash": "5cb56063e2e2fbbaf2a2016a95f149cc44abbbfebe750a49c82a40a0ccd4cadf",
+    "at": 1784981028727
+   },
+   "lastError": null
+  },
+  "love": {
+   "text": "ウヌのこと、大好きなのだ!",
+   "lang": "ja",
+   "kana": "ウヌ ノ コト ダイスキ ナノダ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.88,
+     "at": 1784981032255,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 30973,
+    "seconds": 1.88,
+    "lufs": null,
+    "hash": "69dcfbe84e61462bea03a3417b668fa64de7b8b8126505072d37b2d186728eb9",
+    "at": 1784981032256
+   },
+   "lastError": null
+  },
+  "thumbs-up": {
+   "text": "ウヌはすごいのだ!えらいのだ!",
+   "lang": "ja",
+   "kana": "ウヌ ワ スゴイ ノダ エライ ノダ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.56,
+     "at": 1784981033346,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 41839,
+    "seconds": 2.56,
+    "lufs": null,
+    "hash": "258ed3ce9edf3cb5d564a7719a150a224a25e12ff7d2a9daa93aa683cfc2acbb",
+    "at": 1784981033346
+   },
+   "lastError": null
+  },
+  "retreat": {
+   "text": "いったん逃げるのだ~!",
+   "lang": "ja",
+   "kana": "イッタン ニゲル ノダー",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.16,
+     "at": 1784981044913,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 19688,
+    "seconds": 1.16,
+    "lufs": null,
+    "hash": "f6cf39ed69fb1769ae01c067ace8dbe3a9a26596bd961844757b9340d309cbc0",
+    "at": 1784981044913
+   },
+   "lastError": null
+  },
+  "charge": {
+   "text": "みんな、ワシに続くのだ!",
+   "lang": "ja",
+   "kana": "ミンナ ワシ ニ ツヅク ノダ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.960249,
+     "at": 1784981049059,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 32644,
+    "seconds": 1.960249,
+    "lufs": null,
+    "hash": "24c04251ccf1e7dbda20946475e3a84ffc000cd2e6aae00524130800e1e2297d",
+    "at": 1784981049059
+   },
+   "lastError": null
+  },
+  "watch": {
+   "text": "じっとがまんなのだ。",
+   "lang": "ja",
+   "kana": "ジット ガマン ナノダ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.32,
+     "at": 1784981049577,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 22195,
+    "seconds": 1.32,
+    "lufs": null,
+    "hash": "322fc72eb54acbdbd0096c9a63cf6c28d2f8d6f056c911feef0fe21a6bbb9f0e",
+    "at": 1784981049577
+   },
+   "lastError": null
+  },
+  "free-move": {
+   "text": "べつべつに行くのだ!",
+   "lang": "ja",
+   "kana": "ベツベツ ニ イク ノダ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.4,
+     "at": 1784981061355,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 23449,
+    "seconds": 1.4,
+    "lufs": null,
+    "hash": "6344f2d66899f489e9544d405eaa735b691addb400c2336a89c0ad4155e129e2",
+    "at": 1784981061355
+   },
+   "lastError": null
+  },
+  "first-blood": {
+   "text": "見たか!ワシが一番乗りなのだーっ!!",
+   "lang": "ja",
+   "kana": "ミタ カ ワシ ガ イチバン ノリ ナノダーッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.8,
+     "at": 1784981066188,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 29719,
+    "seconds": 1.8,
+    "lufs": null,
+    "hash": "319b9154a90dd2633a85555ecd22e589586b9797f196c9045f825bb797f004bb",
+    "at": 1784981066188
+   },
+   "lastError": null
+  },
+  "kill-1": {
+   "text": "一人倒したのだ!",
+   "lang": "ja",
+   "kana": "ヒトリ タオシタ ノダ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.28,
+     "at": 1784981066475,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 21359,
+    "seconds": 1.28,
+    "lufs": null,
+    "hash": "ee141fc6ba030dc3c7f0544b97ccb0598010cfd63d7e1a789a647e388c8103dc",
+    "at": 1784981066475
+   },
+   "lastError": null
+  },
+  "kill-2": {
+   "text": "二人目なのだ!",
+   "lang": "ja",
+   "kana": "フタリメ ナノダ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.16,
+     "at": 1784981077398,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 19688,
+    "seconds": 1.16,
+    "lufs": null,
+    "hash": "1f85e510da08e77bef575918b83219cf3946559777e399f72ccbb500f1e63eb9",
+    "at": 1784981077399
+   },
+   "lastError": null
+  },
+  "kill-3": {
+   "text": "三人目!ワシ、強いのだ!",
+   "lang": "ja",
+   "kana": "サンニンメ ワシ ツヨイ ノダ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.72,
+     "at": 1784981084703,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 28465,
+    "seconds": 1.72,
+    "lufs": null,
+    "hash": "be0eb3ac70ae1347a08c3725af9d36d642db84af323774d4a38d6be4da0c322f",
+    "at": 1784981084703
+   },
+   "lastError": null
+  },
+  "kill-4": {
+   "text": "四人目なのだ!とまらないのだ!",
+   "lang": "ja",
+   "kana": "ヨニンメ ナノダ トマラナイ ノダ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.32,
+     "at": 1784981083912,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 38078,
+    "seconds": 2.32,
+    "lufs": null,
+    "hash": "ec6d28ac52d1550fee7ce0431a37d3d6998675bc9f37339b454f000d7ebdb244",
+    "at": 1784981083913
+   },
+   "lastError": null
+  },
+  "kill-5": {
+   "text": "五人目なのだーっ!王様級なのだ!!",
+   "lang": "ja",
+   "kana": "ゴニンメ ナノダーッ オーサマ キュー ナノダ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.68,
+     "at": 1784981095115,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 43929,
+    "seconds": 2.68,
+    "lufs": null,
+    "hash": "bb02dd21e60c9abcf1b3371c39f421aeb49fec1bf7b6c5b06f81441c69aa15d6",
+    "at": 1784981095115
+   },
+   "lastError": null
+  },
+  "unstoppable": {
+   "text": "いまのワシは、だれにも負けないのだーっ!!",
+   "lang": "ja",
+   "kana": "イマ ノ ワシ ワ ダレ ニモ マケナイ ノダーッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.16,
+     "at": 1784981101035,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 35570,
+    "seconds": 2.16,
+    "lufs": null,
+    "hash": "b69d74d630a8a97c34f44b9ad8fe0ea9d0391f0fd667dde5e46057c33f1d790a",
+    "at": 1784981101035
+   },
+   "lastError": null
+  },
+  "skill-name.q": {
+   "text": "薩喀爾！",
+   "lang": "ja",
+   "textSource": "imported",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.72,
+     "at": 1784980845396,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": null,
+     "at": 1784991097318,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 11328,
+    "seconds": null,
+    "lufs": null,
+    "hash": "78a3f9fc83d9b09109ec6b794e174631f436aa154be69220379e4b3f6438d64d",
+    "at": 1784991097318
+   },
+   "lastError": null,
+   "kana": "ザケル"
+  },
+  "skill-name.w": {
+   "text": "薩喀爾嘎！",
+   "lang": "ja",
+   "textSource": "imported",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.68,
+     "at": 1784980861151,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": null,
+     "at": 1784991101322,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 15926,
+    "seconds": null,
+    "lufs": null,
+    "hash": "0b1c24d4208c2c7a164a05e6a87b776fea6e291e4c4648fe59f033982ab525e3",
+    "at": 1784991101322
+   },
+   "lastError": null,
+   "kana": "ザケルガ"
+  },
+  "skill-name.e": {
+   "text": "及喀爾度！",
+   "lang": "ja",
+   "textSource": "imported",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.84,
+     "at": 1784980861343,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": null,
+     "at": 1784991103324,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 8821,
+    "seconds": null,
+    "lufs": null,
+    "hash": "f8c1eb23c387166ce0be76419512a856e6abe2d807e470c21f7e2078516ca797",
+    "at": 1784991103324
+   },
+   "lastError": null,
+   "kana": "ジケルド"
+  },
+  "skill-name.r": {
+   "text": "巴歐．薩喀爾嘎！",
+   "lang": "ja",
+   "textSource": "imported",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.4,
+     "at": 1784980862788,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": null,
+     "at": 1784991105326,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 17180,
+    "seconds": null,
+    "lufs": null,
+    "hash": "14cf392b847a100b1a0620252a222c9b35cf53ac238aa0a1a0201e10ca777581",
+    "at": 1784991105326
+   },
+   "lastError": null,
+   "kana": "バオウ ザケルガ"
+  },
+  "skill-name.ex": {
+   "text": "金色巨龍！",
+   "lang": "ja",
+   "textSource": "imported",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.04,
+     "at": 1784980877347,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": null,
+     "at": 1784991109330,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 20942,
+    "seconds": null,
+    "lufs": null,
+    "hash": "455e4905720ff83e284353c46f25bc8200371ed0b7633cf8dd1a0a5e4ee45cc1",
+    "at": 1784991109330
+   },
+   "lastError": null,
+   "kana": "コンジキ ノ キョリュウ"
+  }
+ }
+}

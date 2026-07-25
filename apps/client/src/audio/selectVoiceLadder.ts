@@ -202,11 +202,24 @@ export function voicePackFromDoc(doc: unknown): ChampionVoicePack | null {
   return { champions: out };
 }
 
+/**
+ * The generated clip pool for a champion's category (empty when absent). The
+ * click reads "select"; the contextual combat-voice layer (contextualVoice.ts)
+ * reads the same pack for skill-name.<slot>, crit, hurt, kill-N, defeat, victory,
+ * stun/slow/bind and the rest — one manifest, one reader, no second file.
+ */
+export function packClips(
+  pack: ChampionVoicePack | null,
+  champId: string,
+  category: string,
+): VoicePackClip[] {
+  const clips = pack?.champions[champId]?.lines?.[category];
+  return clips ?? [];
+}
+
 /** The generated `select` pool for a champion (empty when the pack has none). */
 export function packSelectClips(pack: ChampionVoicePack | null, champId: string): string[] {
-  const lines = pack?.champions[champId]?.lines;
-  const clips = lines?.[VOICE_PACK_SELECT_CATEGORY];
-  return clips ? clips.map((c) => c.clip) : [];
+  return packClips(pack, champId, VOICE_PACK_SELECT_CATEGORY).map((c) => c.clip);
 }
 
 // ── the ladder ──────────────────────────────────────────────────────────────

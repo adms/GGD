@@ -62,7 +62,7 @@ function sha(rel: string): string {
 describe("select-voice coverage on the PUBLIC tier", () => {
   it("answers for every champion, with files that exist", () => {
     cover("voice-select-coverage");
-    expect(CHAMP_IDS).toHaveLength(113);
+    expect(CHAMP_IDS).toHaveLength(114);
 
     const silent: string[] = [];
     const missing: string[] = [];
@@ -81,8 +81,11 @@ describe("select-voice coverage on the PUBLIC tier", () => {
     expect(silent).toEqual([]);
     expect(missing).toEqual([]);
     // The composition is asserted, not just the total: a regression that
-    // silently promoted the 名言 floor over the name rung would keep 113/113.
-    expect(byTier).toEqual({ authored: 16, name: 95, quote: 2 });
+    // silently promoted the 名言 floor over the name rung would keep 114/114.
+    // The generated voice pack (51 CosyVoice3 heroes) now answers rung 2 for the
+    // 42 packed heroes without an authored map-quip; authored stays 16, and the
+    // 42 are drawn out of what was previously the name rung (95 → 54, task #184).
+    expect(byTier).toEqual({ authored: 16, generated: 42, name: 54, quote: 2 });
   });
 
   it("never gives two DIFFERENT characters the same audio file — outside the two the w3x already shared", () => {
@@ -143,17 +146,36 @@ describe("select-voice coverage on the PUBLIC tier", () => {
 });
 
 describe("the generated voice pack, as shipped today", () => {
-  it("is a parseable template that contributes nothing yet", () => {
+  it("populates 51 CosyVoice3 heroes and drives a live generated rung", () => {
     cover("voice-select-pack");
     expect(PACK).not.toBeNull();
-    expect(Object.keys(PACK?.champions ?? {})).toEqual([]);
-    // With rung 2 empty, nothing about the answers above depends on it — which
-    // is exactly what makes writing that file a drop-in for the voice-gen lane.
-    const tiers = new Set<SelectVoiceTier>();
+    // The voice-gen indexer folded the lines/ corpus in: 51 packed champions,
+    // each with a non-empty synthesized select pool.
+    expect(Object.keys(PACK?.champions ?? {})).toHaveLength(51);
+    for (const [id, entry] of Object.entries(PACK?.champions ?? {})) {
+      expect(entry.lines["select"]?.length, `${id} select pool`).toBeGreaterThan(0);
+    }
+
+    // Rung 2 now answers for exactly the packed heroes that have no authored
+    // map-quip (authored wins over generated), and every such hero's clip is a
+    // real file on disk — the #184 monoculture break.
+    const generated: string[] = [];
     for (const id of CHAMP_IDS) {
       const rung = resolveSelectVoice(id, PUBLIC);
-      if (rung) tiers.add(rung.tier);
+      if (rung?.tier === "generated") {
+        generated.push(id);
+        for (const clip of rung.clips) {
+          expect(existsSync(join(CONTENT, clip)), `${id} → ${clip}`).toBe(true);
+        }
+      }
     }
-    expect(tiers.has("generated")).toBe(false);
+    const authoredIds = new Set(
+      Object.entries(VOICES?.champions ?? {})
+        .filter(([, v]) => v.source === "map-quip" && v.select.length > 0)
+        .map(([id]) => id),
+    );
+    const packedNonAuthored = Object.keys(PACK?.champions ?? {}).filter((id) => !authoredIds.has(id));
+    expect(generated.sort()).toEqual(packedNonAuthored.sort());
+    expect(generated.length).toBe(42);
   });
 });

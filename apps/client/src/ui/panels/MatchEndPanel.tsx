@@ -39,6 +39,7 @@ import {
 } from "./settlementModel";
 import { audioSystem } from "../../audio";
 import { playChampionQuote } from "../../audio/nameVoice";
+import { playContextualVoice } from "../../audio/contextualVoice";
 import { cancelVictoryTaunt, playMatchTaunt } from "../../audio/victoryTaunt";
 import { MATCH_WIN_STING, matchEndBedScene } from "../../audio/matchEndBed";
 import { useBedEnded, useBgmSceneOverride } from "../useAudio";
@@ -430,6 +431,9 @@ export function MatchEndPanel(): React.JSX.Element {
     if (!winQuoteChamp) return;
     const t = setTimeout(() => {
       void playChampionQuote(winQuoteChamp).catch(() => {});
+      // the local match-winner's own cloned 勝利宣言 alongside the 名言 (client-only;
+      // no generated pack → silent no-op).
+      playContextualVoice(winQuoteChamp, "victory");
     }, MATCH_QUOTE_DELAY_MS);
     return () => clearTimeout(t);
   }, [winQuoteChamp]);

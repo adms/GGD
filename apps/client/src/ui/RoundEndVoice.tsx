@@ -18,6 +18,7 @@ import { useEffect, useRef } from "react";
 import { hudStore, useHud } from "../net/RoomStore";
 import { roundEndQuoteChampion } from "./panels/settlementModel";
 import { playChampionQuote } from "../audio/nameVoice";
+import { playContextualVoice } from "../audio/contextualVoice";
 
 export function RoundEndVoice(): null {
   const phase = useHud((s) => s.phase);
@@ -31,7 +32,12 @@ export function RoundEndVoice(): null {
     // one settled THIS round, with no stale-closure / dep-churn re-fire risk
     const { seats, teams } = hudStore.getState();
     const champ = roundEndQuoteChampion(seats, teams);
-    if (champ) void playChampionQuote(champ).catch(() => {});
+    if (champ) {
+      void playChampionQuote(champ).catch(() => {});
+      // the round winner's own cloned 勝利宣言, beside the 名言 (client-only cosmetic;
+      // a hero with no generated pack simply no-ops).
+      playContextualVoice(champ, "victory");
+    }
   }, [phase]);
   return null;
 }

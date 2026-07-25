@@ -1,0 +1,1391 @@
+{
+ "championId": "godie-h02r",
+ "reference": {
+  "sha256": "fba555b59c85a4fb58515af02406c577631f4060b7725c5c3acb76aad4b980fd",
+  "seconds": 0,
+  "sampleRate": 24000,
+  "source": "voice-reference-pipeline/approved/processed/godie-h02r.wav",
+  "sourceKind": "repo",
+  "licence": "",
+  "licenceUrl": "",
+  "note": "auto-adopted repo reference",
+  "addedAt": 1784968553913,
+  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/godie-h02r.wav"
+ },
+ "lines": {
+  "quote": {
+   "text": "フシギバナァァ……",
+   "lang": "ja",
+   "kana": "フシギ バナァァ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.16,
+     "at": 1784973338734,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 19688,
+    "seconds": 1.16,
+    "lufs": null,
+    "hash": "256fe91c739e6d45851af33424c23bb7c358a022391f6751fd0222c03acc100e",
+    "at": 1784973338734
+   },
+   "lastError": null
+  },
+  "victory": {
+   "text": "バナァァーッ！！",
+   "lang": "ja",
+   "kana": "バナァァーッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.6,
+     "at": 1784973366820,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 10493,
+    "seconds": 0.6,
+    "lufs": null,
+    "hash": "904925eaf4a04d4dcbdc5bff3e353cf439763fd54f5e121a75911e5510ba7019",
+    "at": 1784973366820
+   },
+   "lastError": null
+  },
+  "defeat": {
+   "text": "フシィ……ギ……",
+   "lang": "ja",
+   "kana": "フシィ ギ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.72,
+     "at": 1784973372481,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 12582,
+    "seconds": 0.72,
+    "lufs": null,
+    "hash": "4dc9094e5b4a0be946754b23f4e098648c3e50bff3bc6cc40c72776b0c8f3b82",
+    "at": 1784973372481
+   },
+   "lastError": null
+  },
+  "hurt": {
+   "text": "ギッ！",
+   "lang": "ja",
+   "kana": "ギッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1784973376808,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 5477,
+    "seconds": 0.28,
+    "lufs": null,
+    "hash": "d2ac1ec59f6d2ab1ca788808dd6523f852e0c599ece888c31af66e0c8b9946b2",
+    "at": 1784973376808
+   },
+   "lastError": null
+  },
+  "hurt-heavy": {
+   "text": "ギィィ……バナァ……",
+   "lang": "ja",
+   "kana": "ギィィ バナァ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.92,
+     "at": 1784973381069,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 15926,
+    "seconds": 0.92,
+    "lufs": null,
+    "hash": "ec52f457ff21cf0a6d1dd549cd3aeb3d4d4d177bb82e1257a2620bfe539a822f",
+    "at": 1784973381069
+   },
+   "lastError": null
+  },
+  "stun": {
+   "text": "フシ……ギ……？",
+   "lang": "ja",
+   "kana": "フシ ギ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.72,
+     "at": 1784973386127,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 12582,
+    "seconds": 0.72,
+    "lufs": null,
+    "hash": "41c3e5c1fa02e0a3fef09c10656fb81d5840cd3284354f76d698e5109579b0e1",
+    "at": 1784973386127
+   },
+   "lastError": null
+  },
+  "poison": {
+   "text": "フゥ……シィ……",
+   "lang": "ja",
+   "kana": "フゥ シィ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.88,
+     "at": 1784973391605,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 15090,
+    "seconds": 0.88,
+    "lufs": null,
+    "hash": "8113e8b9a5fbca838d52d0ca0465077d122f3970d21a23205445a95233fa9830",
+    "at": 1784973391605
+   },
+   "lastError": null
+  },
+  "slow": {
+   "text": "バ……ナァ……",
+   "lang": "ja",
+   "kana": "バ ナァ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.52,
+     "at": 1784973394242,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 9239,
+    "seconds": 0.52,
+    "lufs": null,
+    "hash": "2e8aac7ffac11a5b7619880f8cf53ccba9593e21788f379a8f8ab3c2e2900d91",
+    "at": 1784973394242
+   },
+   "lastError": null
+  },
+  "blind": {
+   "text": "フシッ！？バナッ！？",
+   "lang": "ja",
+   "kana": "フシッ バナッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.92,
+     "at": 1784973401009,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 15926,
+    "seconds": 0.92,
+    "lufs": null,
+    "hash": "b82544afad4605d0709d06afc2596ea7ab64906dee56097d806be030d057aa55",
+    "at": 1784973401009
+   },
+   "lastError": null
+  },
+  "bind": {
+   "text": "ギギィィ……ッ！",
+   "lang": "ja",
+   "kana": "ギギィィッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.64,
+     "at": 1784973406627,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 11328,
+    "seconds": 0.64,
+    "lufs": null,
+    "hash": "bf28626d44bb2c3be70ccd38c1807285e0e5c25bd65287c78f0f8e75daf8a99d",
+    "at": 1784973406627
+   },
+   "lastError": null
+  },
+  "knockdown": {
+   "text": "バフッ……",
+   "lang": "ja",
+   "kana": "バフッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.4,
+     "at": 1784973407876,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 7567,
+    "seconds": 0.4,
+    "lufs": null,
+    "hash": "a5767bcb03cc9bb852f793e9f309c1b425e145e330293e592c20a52d03c32fb3",
+    "at": 1784973407876
+   },
+   "lastError": null
+  },
+  "healed": {
+   "text": "バナァ〜……",
+   "lang": "ja",
+   "kana": "バナァー",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.680249,
+     "at": 1784973414696,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 12164,
+    "seconds": 0.680249,
+    "lufs": null,
+    "hash": "3fa420d8dea716150847416abecfedec84eadd53d9f3118a676f0d0baf2f01f8",
+    "at": 1784973414696
+   },
+   "lastError": null
+  },
+  "confused": {
+   "text": "フシ？ギバ？ナ？",
+   "lang": "ja",
+   "kana": "フシ ギバ ナ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.08,
+     "at": 1784973422065,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 18434,
+    "seconds": 1.08,
+    "lufs": null,
+    "hash": "441fdeec189da29f99c73d1e4c8d150b1f3ca8eec8adbc86bc5f5e0f91040dd8",
+    "at": 1784973422065
+   },
+   "lastError": null
+  },
+  "paralyzed": {
+   "text": "ギギギ……ッ！",
+   "lang": "ja",
+   "kana": "ギギギッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.72,
+     "at": 1784973422413,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 12582,
+    "seconds": 0.72,
+    "lufs": null,
+    "hash": "97ed636728c1e77c08d20a5dcb540dfdcfe3a8b18296c140dd6cefe1f90dd14d",
+    "at": 1784973422413
+   },
+   "lastError": null
+  },
+  "thanks": {
+   "text": "バナァ！バナァ！",
+   "lang": "ja",
+   "kana": "バナァ バナァ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.8,
+     "at": 1784973428444,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 13836,
+    "seconds": 0.8,
+    "lufs": null,
+    "hash": "a30ffc003f782e8aa78d56f524af31efa47a406cc62e60047d1be2c0f85dfbc1",
+    "at": 1784973428444
+   },
+   "lastError": null
+  },
+  "taunt": {
+   "text": "フシシシッ",
+   "lang": "ja",
+   "kana": "フシシシッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1,
+     "at": 1784973436124,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 17180,
+    "seconds": 1,
+    "lufs": null,
+    "hash": "5f5c371a0651609486eff72c6a212799d53f11cc2d78199a13b94bc264e50345",
+    "at": 1784973436125
+   },
+   "lastError": null
+  },
+  "curse": {
+   "text": "ギィバナァァッ！！",
+   "lang": "ja",
+   "kana": "ギィ バナァァッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.72,
+     "at": 1784973437199,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 12582,
+    "seconds": 0.72,
+    "lufs": null,
+    "hash": "d8221e67491648d72000eda3f8f0d41b3d56eaa99013944fa9a7e560cc73d5b9",
+    "at": 1784973437199
+   },
+   "lastError": null
+  },
+  "hum": {
+   "text": "フシ〜シギ〜バナ〜",
+   "lang": "ja",
+   "kana": "フシー シギー バナー",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.36,
+     "at": 1784973443054,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 23031,
+    "seconds": 1.36,
+    "lufs": null,
+    "hash": "8947f7f504ce0ca89f50839b737840b934742bf69895b27f1357b8200e158007",
+    "at": 1784973443054
+   },
+   "lastError": null
+  },
+  "attack-light": {
+   "text": "バッ！",
+   "lang": "ja",
+   "kana": "バッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.36,
+     "at": 1784973449686,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 6731,
+    "seconds": 0.36,
+    "lufs": null,
+    "hash": "940b5ffee639cd9346fc7b3a2dc77600a043c7f5c547f56df8e3b0270733201f",
+    "at": 1784973449686
+   },
+   "lastError": null
+  },
+  "attack-heavy": {
+   "text": "バナァッ！！",
+   "lang": "ja",
+   "kana": "バナァッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.72,
+     "at": 1784973451000,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 12582,
+    "seconds": 0.72,
+    "lufs": null,
+    "hash": "97d57756441b7340661c2338af0c8e946f694b7a1351beec743c8ae9d3bc9b19",
+    "at": 1784973451000
+   },
+   "lastError": null
+  },
+  "crit": {
+   "text": "フシギバナァァッ！！",
+   "lang": "ja",
+   "kana": "フシギ バナァァッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.16,
+     "at": 1784973458913,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 19688,
+    "seconds": 1.16,
+    "lufs": null,
+    "hash": "91871ae7499e25a4bf02ff6091e386c9da9eb6247b2534148c784ee83058dff6",
+    "at": 1784973458914
+   },
+   "lastError": null
+  },
+  "block": {
+   "text": "ギギッ……！",
+   "lang": "ja",
+   "kana": "ギギッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.4,
+     "at": 1784973463582,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 7567,
+    "seconds": 0.4,
+    "lufs": null,
+    "hash": "de644e87caf390f4c51d0cac7bf48fa227e40f5c0ef6af88529415beb418c2be",
+    "at": 1784973463582
+   },
+   "lastError": null
+  },
+  "dodge": {
+   "text": "フフッ",
+   "lang": "ja",
+   "kana": "フフッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.64,
+     "at": 1784973464423,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 11328,
+    "seconds": 0.64,
+    "lufs": null,
+    "hash": "65e705a71679f675ca25d50892831b4acb3c3d6b899be799b34c3cf5622efc93",
+    "at": 1784973464423
+   },
+   "lastError": null
+  },
+  "sprint": {
+   "text": "バナバナバナッ！",
+   "lang": "ja",
+   "kana": "バナ バナ バナッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.32,
+     "at": 1784973474247,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 22195,
+    "seconds": 1.32,
+    "lufs": null,
+    "hash": "472af98552a1c0567a898a98a5bd3e33af544d92fbe013eaa67136be25101900",
+    "at": 1784973474247
+   },
+   "lastError": null
+  },
+  "jump": {
+   "text": "フシッ！",
+   "lang": "ja",
+   "kana": "フシッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.48,
+     "at": 1784973477464,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 8821,
+    "seconds": 0.48,
+    "lufs": null,
+    "hash": "975456db015a7ab47e7037098b6a6a4f7ec53de72cf26097ed7d2803a9da415e",
+    "at": 1784973477464
+   },
+   "lastError": null
+  },
+  "respond.ok": {
+   "text": "バナ！",
+   "lang": "ja",
+   "kana": "バナ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.52,
+     "at": 1784973478084,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 9239,
+    "seconds": 0.52,
+    "lufs": null,
+    "hash": "fda490e8d9c77b25b6730f8e86fd1b7bce9c21b3650246113c04e1156be0de29",
+    "at": 1784973478084
+   },
+   "lastError": null
+  },
+  "respond.no": {
+   "text": "フシフシ……",
+   "lang": "ja",
+   "kana": "フシ フシ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.92,
+     "at": 1784973488858,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 15926,
+    "seconds": 0.92,
+    "lufs": null,
+    "hash": "3023a1068a3d744ee9f2104da5b52a62464a7d728dfdeec736e6126ad32c62c1",
+    "at": 1784973488858
+   },
+   "lastError": null
+  },
+  "puzzled": {
+   "text": "フシ？",
+   "lang": "ja",
+   "kana": "フシ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.44,
+     "at": 1784973491485,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 7985,
+    "seconds": 0.44,
+    "lufs": null,
+    "hash": "1c026e755cdb67339c27e745db6fa5896bc61d929f5720c05e985df028bca4e1",
+    "at": 1784973491486
+   },
+   "lastError": null
+  },
+  "love": {
+   "text": "バナァ……",
+   "lang": "ja",
+   "kana": "バナァ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.72,
+     "at": 1784973492248,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 12582,
+    "seconds": 0.72,
+    "lufs": null,
+    "hash": "e4395c675875a68c6023389ee6eb2dfe601ed80896d5c2474e85fdd8c7941800",
+    "at": 1784973492248
+   },
+   "lastError": null
+  },
+  "thumbs-up": {
+   "text": "フシギ！バナ！",
+   "lang": "ja",
+   "kana": "フシギ バナ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.92,
+     "at": 1784973502634,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 15926,
+    "seconds": 0.92,
+    "lufs": null,
+    "hash": "4c416f1eb780c45e62cd2ac3317197207b0862890b7a9f5bc00866d21fb42091",
+    "at": 1784973502634
+   },
+   "lastError": null
+  },
+  "retreat": {
+   "text": "フシィ……バナ……",
+   "lang": "ja",
+   "kana": "フシィ バナ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1,
+     "at": 1784973505991,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 17180,
+    "seconds": 1,
+    "lufs": null,
+    "hash": "03265e9828ed3bb2b0fdc35b0e3a1d21f218824bf788622531423be7691b1d2a",
+    "at": 1784973505991
+   },
+   "lastError": null
+  },
+  "charge": {
+   "text": "バナァァァ！！",
+   "lang": "ja",
+   "kana": "バナァァァ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.52,
+     "at": 1784973506613,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 9239,
+    "seconds": 0.52,
+    "lufs": null,
+    "hash": "de3d4ac77a6f81ffeddf7a888283169b20b8f086ebfdc7da73eb5155aa868c1b",
+    "at": 1784973506613
+   },
+   "lastError": null
+  },
+  "watch": {
+   "text": "フシ……シ……",
+   "lang": "ja",
+   "kana": "フシ シ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.76,
+     "at": 1784973516485,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 13418,
+    "seconds": 0.76,
+    "lufs": null,
+    "hash": "0aaa38129a01cdc06c344a91f5a38bdbd7f2673deb14dbfff06f69008aa76591",
+    "at": 1784973516485
+   },
+   "lastError": null
+  },
+  "free-move": {
+   "text": "バナ、バナ",
+   "lang": "ja",
+   "kana": "バナ バナ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.84,
+     "at": 1784973520450,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 14672,
+    "seconds": 0.84,
+    "lufs": null,
+    "hash": "5e09a57b228746a5b107c01f0a067b6baf93d823cae49deeb7c8260ac5ab222f",
+    "at": 1784973520450
+   },
+   "lastError": null
+  },
+  "first-blood": {
+   "text": "フシギバナァァァーッ！！！",
+   "lang": "ja",
+   "kana": "フシギ バナァァァーッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.4,
+     "at": 1784973522004,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 23449,
+    "seconds": 1.4,
+    "lufs": null,
+    "hash": "595374c5ca3793a21d58005b53a3da26379c3f9d5fe725843ad695c43cbe3651",
+    "at": 1784973522004
+   },
+   "lastError": null
+  },
+  "kill-1": {
+   "text": "ギバナッ！",
+   "lang": "ja",
+   "kana": "ギバナッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.56,
+     "at": 1784973530293,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 10075,
+    "seconds": 0.56,
+    "lufs": null,
+    "hash": "c371220b548275015985e439fbccc52f91e7140dcb8ad913f3f6c631f064f11b",
+    "at": 1784973530293
+   },
+   "lastError": null
+  },
+  "kill-2": {
+   "text": "バナバナッ！",
+   "lang": "ja",
+   "kana": "バナ バナッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.64,
+     "at": 1784973534365,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 11328,
+    "seconds": 0.64,
+    "lufs": null,
+    "hash": "cd3b89bc6437f5d2ae935d97ee15c6aa7804b201d87cc044632a6c323998a3b0",
+    "at": 1784973534365
+   },
+   "lastError": null
+  },
+  "kill-3": {
+   "text": "フシギバナッ！！",
+   "lang": "ja",
+   "kana": "フシギ バナッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.92,
+     "at": 1784973536218,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 15926,
+    "seconds": 0.92,
+    "lufs": null,
+    "hash": "6b3d7f692c35c09fc1e0bc9be9dba42bf881de1823a78b057588d51a548781a5",
+    "at": 1784973536218
+   },
+   "lastError": null
+  },
+  "kill-4": {
+   "text": "ギバナァッ！ギバナァッ！",
+   "lang": "ja",
+   "kana": "ギバナァッ ギバナァッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.64,
+     "at": 1784973544911,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 11328,
+    "seconds": 0.64,
+    "lufs": null,
+    "hash": "69725ff7cfd620e466e96adffe1df2ceec3c3bb909b32e017ecea6a036539c9d",
+    "at": 1784973544912
+   },
+   "lastError": null
+  },
+  "kill-5": {
+   "text": "フシギバナァァァァ！！！",
+   "lang": "ja",
+   "kana": "フシギ バナァァァァ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1,
+     "at": 1784973548449,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 17180,
+    "seconds": 1,
+    "lufs": null,
+    "hash": "64935368c6327ca20f69b389db60d455cd3881ce9e816b10fd53c81320f3a0f6",
+    "at": 1784973548449
+   },
+   "lastError": null
+  },
+  "unstoppable": {
+   "text": "フシィィィ……ギィィ……バナァァァァーッ！！！",
+   "lang": "ja",
+   "kana": "フシィィィ ギィィ バナァァァァーッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.56,
+     "at": 1784973550764,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 25957,
+    "seconds": 1.56,
+    "lufs": null,
+    "hash": "c3270fedf577e76201d6f4751ef457d7d6957efd45366913ae56080e2b5d3699",
+    "at": 1784973550764
+   },
+   "lastError": null
+  },
+  "skill-name.q": {
+   "text": "飛葉快刀！",
+   "lang": "ja",
+   "textSource": "imported",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.960249,
+     "at": 1784973343339,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": null,
+     "at": 1784990937009,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 15090,
+    "seconds": null,
+    "lufs": null,
+    "hash": "9a6c557816b9962a9c94374fa1ef3a6268d44c42fffcd8cd8d4488fe10955606",
+    "at": 1784990937009
+   },
+   "lastError": null,
+   "kana": "ハッパ カッター"
+  },
+  "skill-name.w": {
+   "text": "麻痺粉！",
+   "lang": "ja",
+   "textSource": "imported",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.16,
+     "at": 1784973347107,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": null,
+     "at": 1784990941017,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 12582,
+    "seconds": null,
+    "lufs": null,
+    "hash": "f3f0c6065fe86440953cf955f4f24f5488ecb73212f172b7e852d9198ba09b00",
+    "at": 1784990941017
+   },
+   "lastError": null,
+   "kana": "シビレゴナ"
+  },
+  "skill-name.e": {
+   "text": "藤鞭！",
+   "lang": "ja",
+   "textSource": "imported",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.92,
+     "at": 1784973352848,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": null,
+     "at": 1784990908957,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 16344,
+    "seconds": null,
+    "lufs": null,
+    "hash": "49df25eeea8ecc2bbcda5b3aa7831978970a3f0bb04a2b31c157ba9a7c99fd5b",
+    "at": 1784990908957
+   },
+   "lastError": null,
+   "kana": "ツル ノ ムチ"
+  },
+  "skill-name.r": {
+   "text": "陽光烈焰！",
+   "lang": "ja",
+   "textSource": "imported",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.32,
+     "at": 1784973358771,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": null,
+     "at": 1784990892927,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 12582,
+    "seconds": null,
+    "lufs": null,
+    "hash": "c0792154d028d8d4538b4f87459acf3307802fd93cffdcfcc7a0c9a90a3beaed",
+    "at": 1784990892927
+   },
+   "lastError": null,
+   "kana": "ソーラー ビーム"
+  },
+  "skill-name.ex": {
+   "text": "超進化! 妙蛙花！",
+   "lang": "ja",
+   "textSource": "imported",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.88,
+     "at": 1784973362387,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": null,
+     "at": 1784990898938,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 29301,
+    "seconds": null,
+    "lufs": null,
+    "hash": "fbdaaf07d1cef3445add7e32faf918e0b091dde7207567e51a80605f54578b98",
+    "at": 1784990898938
+   },
+   "lastError": null,
+   "kana": "メガシンカ フシギバナ"
+  }
+ }
+}

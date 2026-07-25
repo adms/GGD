@@ -1,0 +1,1391 @@
+{
+ "championId": "godie-h00l",
+ "reference": {
+  "sha256": "f937848441682b99f9bad2d69721c3df733d7d89e534043f770c36b817aa19db",
+  "seconds": 0,
+  "sampleRate": 24000,
+  "source": "voice-reference-pipeline/approved/processed/godie-h00l.wav",
+  "sourceKind": "repo",
+  "licence": "",
+  "licenceUrl": "",
+  "note": "auto-adopted repo reference",
+  "addedAt": 1784968553903,
+  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/godie-h00l.wav"
+ },
+ "lines": {
+  "quote": {
+   "text": "ハイヤーッ！",
+   "lang": "ja",
+   "kana": "ハイヤーッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.72,
+     "at": 1784972250737,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 12582,
+    "seconds": 0.72,
+    "lufs": null,
+    "hash": "cfa4afec048180a0b3d9bd1bb6d212c2704fc2bb8817ccfb0ba1b02b92aa3c23",
+    "at": 1784972250737
+   },
+   "lastError": null
+  },
+  "victory": {
+   "text": "ハッ、ハッ、ハアーッ！",
+   "lang": "ja",
+   "kana": "ハッ ハッ ハアーッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.24,
+     "at": 1784972278110,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 20942,
+    "seconds": 1.24,
+    "lufs": null,
+    "hash": "9241d189b395511d6b60c06606e8792f54c4ef88f5db1718cafd8fdff9c2c236",
+    "at": 1784972278111
+   },
+   "lastError": null
+  },
+  "defeat": {
+   "text": "うぅ…くっ…",
+   "lang": "ja",
+   "kana": "ウー クッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.44,
+     "at": 1784972282914,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 7985,
+    "seconds": 0.44,
+    "lufs": null,
+    "hash": "c999375ee787e248a0e617fc227792b8b8972759be4866d2a0cc1aef405048f7",
+    "at": 1784972282914
+   },
+   "lastError": null
+  },
+  "hurt": {
+   "text": "うあっ！",
+   "lang": "ja",
+   "kana": "ウアッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.64,
+     "at": 1784972290062,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 11328,
+    "seconds": 0.64,
+    "lufs": null,
+    "hash": "27ace69d1571e15e911eac3ce1df040fe6f517403467e93c9ad7e0aff100d6bf",
+    "at": 1784972290062
+   },
+   "lastError": null
+  },
+  "hurt-heavy": {
+   "text": "ぐあああっ…！",
+   "lang": "ja",
+   "kana": "グアアアッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.76,
+     "at": 1784972291123,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 13418,
+    "seconds": 0.76,
+    "lufs": null,
+    "hash": "23e5d3e2cc1e51a79dfa6c7098d7db3ce222a4b070d26d308506a98a266e93a4",
+    "at": 1784972291123
+   },
+   "lastError": null
+  },
+  "stun": {
+   "text": "う、うぅ…？",
+   "lang": "ja",
+   "kana": "ウ ウー",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.44,
+     "at": 1784972297458,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 7985,
+    "seconds": 0.44,
+    "lufs": null,
+    "hash": "0a65024dd6a0cd9bca4273f09054f821f082c8c7e8874eb1583b430804b72fc9",
+    "at": 1784972297458
+   },
+   "lastError": null
+  },
+  "poison": {
+   "text": "げほっ、げほっ…",
+   "lang": "ja",
+   "kana": "ゲホッ ゲホッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1,
+     "at": 1784972303348,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 17180,
+    "seconds": 1,
+    "lufs": null,
+    "hash": "410ea67e5b8930fd500d8e60de803506262819a5ee9c12f584bde1836257ff64",
+    "at": 1784972303348
+   },
+   "lastError": null
+  },
+  "slow": {
+   "text": "ぬ、ぬぅ…",
+   "lang": "ja",
+   "kana": "ヌ ヌー",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.64,
+     "at": 1784972304306,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 11328,
+    "seconds": 0.64,
+    "lufs": null,
+    "hash": "61d4189b3b61850dfac40c62bb4d4654283ec3123c9ad6cc152e111e3ec7a6bf",
+    "at": 1784972304307
+   },
+   "lastError": null
+  },
+  "blind": {
+   "text": "うわっ！？",
+   "lang": "ja",
+   "kana": "ウワッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.56,
+     "at": 1784972310415,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 10075,
+    "seconds": 0.56,
+    "lufs": null,
+    "hash": "5760d236c9ca309d3d040817716fa87b46215051ea55f3978e9e9a284bf6580d",
+    "at": 1784972310415
+   },
+   "lastError": null
+  },
+  "bind": {
+   "text": "ぬぐぐ…っ！",
+   "lang": "ja",
+   "kana": "ヌググッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.76,
+     "at": 1784972317472,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 13418,
+    "seconds": 0.76,
+    "lufs": null,
+    "hash": "f8102ed623412bae94f81759858a35ef355dada14b133210dbabba6c1b8db503",
+    "at": 1784972317472
+   },
+   "lastError": null
+  },
+  "knockdown": {
+   "text": "どわあっ！",
+   "lang": "ja",
+   "kana": "ドワーッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.56,
+     "at": 1784972317950,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 10075,
+    "seconds": 0.56,
+    "lufs": null,
+    "hash": "2cf75513741507381cd9271aff5eba13d5284f85d2014312b795736b496c2a05",
+    "at": 1784972317950
+   },
+   "lastError": null
+  },
+  "healed": {
+   "text": "ふぅ…！",
+   "lang": "ja",
+   "kana": "フー",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.4,
+     "at": 1784972323028,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 7567,
+    "seconds": 0.4,
+    "lufs": null,
+    "hash": "554fb96cf4614da61bf1cfbfe3a1f5bc3ab6947b136b20f653f73f2260f1b074",
+    "at": 1784972323028
+   },
+   "lastError": null
+  },
+  "confused": {
+   "text": "う…？うぅん…？",
+   "lang": "ja",
+   "kana": "ウ ウーン",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.64,
+     "at": 1784972330890,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 11328,
+    "seconds": 0.64,
+    "lufs": null,
+    "hash": "262dd5b7d1ddfb358ed5cd17f20620faf51dda9a4133eb8f934fa6e709fe640b",
+    "at": 1784972330890
+   },
+   "lastError": null
+  },
+  "paralyzed": {
+   "text": "ぐぐぐ…っ！",
+   "lang": "ja",
+   "kana": "グググッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.48,
+     "at": 1784972330760,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 8821,
+    "seconds": 0.48,
+    "lufs": null,
+    "hash": "06e8cfacb639e08687dee86861632a45470e22788fc44c8774b1b52dc47fd51f",
+    "at": 1784972330760
+   },
+   "lastError": null
+  },
+  "thanks": {
+   "text": "んん！",
+   "lang": "ja",
+   "kana": "ンン",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.44,
+     "at": 1784972335673,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 7985,
+    "seconds": 0.44,
+    "lufs": null,
+    "hash": "5368f1c1bd8f788328a9dc251370fc3cc6eddf89aa57882e3fd69f76f2176a0c",
+    "at": 1784972335673
+   },
+   "lastError": null
+  },
+  "taunt": {
+   "text": "フンッ、フンッ！",
+   "lang": "ja",
+   "kana": "フンッ フンッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.6,
+     "at": 1784972343789,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 10493,
+    "seconds": 0.6,
+    "lufs": null,
+    "hash": "a50ec3a4394c596b7e7ba4a1b572e915e162afbd25f469fe1223d8a975b6afb8",
+    "at": 1784972343789
+   },
+   "lastError": null
+  },
+  "curse": {
+   "text": "ぬあーっ！",
+   "lang": "ja",
+   "kana": "ヌアーッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.88,
+     "at": 1784972343930,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 15090,
+    "seconds": 0.88,
+    "lufs": null,
+    "hash": "b23c95441dde101cb216facba8af52f775378d963656883ee045299a17edd6e6",
+    "at": 1784972343930
+   },
+   "lastError": null
+  },
+  "hum": {
+   "text": "フンフン、フ〜ン♪",
+   "lang": "ja",
+   "kana": "フン フン フーン",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.6,
+     "at": 1784972348384,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 10493,
+    "seconds": 0.6,
+    "lufs": null,
+    "hash": "b7496babca1fd3ecb204c7da87427c5711cc26fba474a102026c42e7ddcaac54",
+    "at": 1784972348384
+   },
+   "lastError": null
+  },
+  "attack-light": {
+   "text": "ハッ！",
+   "lang": "ja",
+   "kana": "ハッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1784972357284,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 6313,
+    "seconds": 0.32,
+    "lufs": null,
+    "hash": "93b97c3aaa7f08818ffde6fe3322c5cb642ee896ae3435a8d073a2e867ec5eab",
+    "at": 1784972357284
+   },
+   "lastError": null
+  },
+  "attack-heavy": {
+   "text": "セイヤッ！",
+   "lang": "ja",
+   "kana": "セイヤッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.52,
+     "at": 1784972357252,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 9239,
+    "seconds": 0.52,
+    "lufs": null,
+    "hash": "b37cd2da86313e749c0600bc80ab892991dae58f6aca2bf1898202ee34f88b11",
+    "at": 1784972357252
+   },
+   "lastError": null
+  },
+  "crit": {
+   "text": "トアーッ！",
+   "lang": "ja",
+   "kana": "トアーッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.6,
+     "at": 1784972361134,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 10493,
+    "seconds": 0.6,
+    "lufs": null,
+    "hash": "ae42c0b30f5429b82b9b14e8e2755d3f46932c0aaa48617c9e97d4b70b6c5bdf",
+    "at": 1784972361134
+   },
+   "lastError": null
+  },
+  "block": {
+   "text": "ぐっ！",
+   "lang": "ja",
+   "kana": "グッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1784972370178,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 5477,
+    "seconds": 0.28,
+    "lufs": null,
+    "hash": "a8fa7f33d428f59dce8a64477cc70c5a936cd58021ada1736566f3e5c92b2330",
+    "at": 1784972370178
+   },
+   "lastError": null
+  },
+  "dodge": {
+   "text": "トッ！",
+   "lang": "ja",
+   "kana": "トッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1784972371258,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 6313,
+    "seconds": 0.32,
+    "lufs": null,
+    "hash": "214a9b6a744442d20ff569ba314123f73e025f5d506c23c5dc50d7476db70f6a",
+    "at": 1784972371258
+   },
+   "lastError": null
+  },
+  "sprint": {
+   "text": "ハッ、ハッ、ハッ…！",
+   "lang": "ja",
+   "kana": "ハッ ハッ ハッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.08,
+     "at": 1784972374087,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 18434,
+    "seconds": 1.08,
+    "lufs": null,
+    "hash": "51f1838a3dff25096b4ceeb0243b41e761d1197b411893d57862664ac11892f0",
+    "at": 1784972374087
+   },
+   "lastError": null
+  },
+  "jump": {
+   "text": "ホッ！",
+   "lang": "ja",
+   "kana": "ホッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.24,
+     "at": 1784972382569,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 5059,
+    "seconds": 0.24,
+    "lufs": null,
+    "hash": "996b616ff21220d62cbf69c0ec38e57afe9d96271987373502220e6a309e08bf",
+    "at": 1784972382569
+   },
+   "lastError": null
+  },
+  "respond.ok": {
+   "text": "ンッ！",
+   "lang": "ja",
+   "kana": "ンッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.4,
+     "at": 1784972384111,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 7567,
+    "seconds": 0.4,
+    "lufs": null,
+    "hash": "1c1297d59e170dc5380fc31dd8f873feea6d436de0816a63f319ede49c61ab9e",
+    "at": 1784972384111
+   },
+   "lastError": null
+  },
+  "respond.no": {
+   "text": "んーん",
+   "lang": "ja",
+   "kana": "ンーン",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.44,
+     "at": 1784972386915,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 7985,
+    "seconds": 0.44,
+    "lufs": null,
+    "hash": "2fc3b8e14498d60cd1082d0f5e280ed38970ebf1620c339cebc32577afac9646",
+    "at": 1784972386915
+   },
+   "lastError": null
+  },
+  "puzzled": {
+   "text": "ん…？",
+   "lang": "ja",
+   "kana": "ン",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.36,
+     "at": 1784972395919,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 6731,
+    "seconds": 0.36,
+    "lufs": null,
+    "hash": "b969cd11926db5e0e7a7bb764dbf47547d771ccdb1942647ad3662b18f93f4d5",
+    "at": 1784972395919
+   },
+   "lastError": null
+  },
+  "love": {
+   "text": "へへっ",
+   "lang": "ja",
+   "kana": "ヘヘッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.56,
+     "at": 1784972397173,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 10075,
+    "seconds": 0.56,
+    "lufs": null,
+    "hash": "eff4235fdd3ac369b04843da75ae1175893ee87831b799307de7a45594e7d79e",
+    "at": 1784972397173
+   },
+   "lastError": null
+  },
+  "thumbs-up": {
+   "text": "おーっ！",
+   "lang": "ja",
+   "kana": "オーッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1784972401161,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 5477,
+    "seconds": 0.28,
+    "lufs": null,
+    "hash": "da76cf5975b78707474559970819d10cb867685d9f327ed119ed7feb85b95db0",
+    "at": 1784972401161
+   },
+   "lastError": null
+  },
+  "retreat": {
+   "text": "とととっ…！",
+   "lang": "ja",
+   "kana": "トトトッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.680249,
+     "at": 1784972409307,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 12164,
+    "seconds": 0.680249,
+    "lufs": null,
+    "hash": "77d72ab3d1b2d209279c368ce71664575af98bf68f28ec9c3f6aaf3f2273655e",
+    "at": 1784972409307
+   },
+   "lastError": null
+  },
+  "charge": {
+   "text": "ウオオオーッ！",
+   "lang": "ja",
+   "kana": "ウオオオーッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.72,
+     "at": 1784972410115,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 12582,
+    "seconds": 0.72,
+    "lufs": null,
+    "hash": "f9ca7bd34964983616dc32ac059d0d88bd74726506a8d5e9c411cff17484aa1c",
+    "at": 1784972410115
+   },
+   "lastError": null
+  },
+  "watch": {
+   "text": "む…",
+   "lang": "ja",
+   "kana": "ム",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.32,
+     "at": 1784972413569,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 6313,
+    "seconds": 0.32,
+    "lufs": null,
+    "hash": "af7c2e24948a73bd03bc9c9ca6c74292bcead469db6d8b34895ee6465ac82fdf",
+    "at": 1784972413569
+   },
+   "lastError": null
+  },
+  "free-move": {
+   "text": "フッ！",
+   "lang": "ja",
+   "kana": "フッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.36,
+     "at": 1784972422865,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 6731,
+    "seconds": 0.36,
+    "lufs": null,
+    "hash": "9f57ba696c676543b90cc8a5e130c8630f940106bb8353f648ab990cdf793efd",
+    "at": 1784972422865
+   },
+   "lastError": null
+  },
+  "first-blood": {
+   "text": "トゥアアアーッ！！",
+   "lang": "ja",
+   "kana": "トゥアアアーッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.680249,
+     "at": 1784972423231,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 12164,
+    "seconds": 0.680249,
+    "lufs": null,
+    "hash": "5b1dca564e7cd9a1ec0993746ca6ded3d0ebe734840653e1c090e85247588679",
+    "at": 1784972423231
+   },
+   "lastError": null
+  },
+  "kill-1": {
+   "text": "セアッ！",
+   "lang": "ja",
+   "kana": "セアッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.680249,
+     "at": 1784972426682,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 12164,
+    "seconds": 0.680249,
+    "lufs": null,
+    "hash": "07583c049b14d47a95fc2ff007726754614a1ee0be5bf249dc5aca10c13d0168",
+    "at": 1784972426682
+   },
+   "lastError": null
+  },
+  "kill-2": {
+   "text": "タアーッ！",
+   "lang": "ja",
+   "kana": "タアーッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.6,
+     "at": 1784972436711,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 10493,
+    "seconds": 0.6,
+    "lufs": null,
+    "hash": "dedfff8786eaf1be8f17bf28f9acdfe11765d4d7c49b41609e593d6fab8c9ddf",
+    "at": 1784972436711
+   },
+   "lastError": null
+  },
+  "kill-3": {
+   "text": "セイヤアッ！",
+   "lang": "ja",
+   "kana": "セイヤアッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.76,
+     "at": 1784972437049,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 13418,
+    "seconds": 0.76,
+    "lufs": null,
+    "hash": "3eda126001345980ae94f5c4220feaac33d2b7e4045c3cfc88887adb681ed19b",
+    "at": 1784972437049
+   },
+   "lastError": null
+  },
+  "kill-4": {
+   "text": "ハアアーッ！！",
+   "lang": "ja",
+   "kana": "ハアアーッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.48,
+     "at": 1784972439036,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 8821,
+    "seconds": 0.48,
+    "lufs": null,
+    "hash": "9953584b7a254f7945094de16ac51a190d699156a34cfbf0168f9450fa157f7a",
+    "at": 1784972439036
+   },
+   "lastError": null
+  },
+  "kill-5": {
+   "text": "ウリャアアーッ！！",
+   "lang": "ja",
+   "kana": "ウリャアアーッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.88,
+     "at": 1784972449857,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 15090,
+    "seconds": 0.88,
+    "lufs": null,
+    "hash": "70c682db897e7b77eb1d6095a29825a52da676cd491992f83798a666a08d62ed",
+    "at": 1784972449857
+   },
+   "lastError": null
+  },
+  "unstoppable": {
+   "text": "ハアッ、ハアッ…ウオオオオオーッ！！",
+   "lang": "ja",
+   "kana": "ハアッ ハアッ ウオオオオオーッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.92,
+     "at": 1784972452478,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 31808,
+    "seconds": 1.92,
+    "lufs": null,
+    "hash": "ed767bc3f7ba3b1b5e4666b8f809ccdeedab8338b9821271e1de66942ae34263",
+    "at": 1784972452478
+   },
+   "lastError": null
+  },
+  "skill-name.q": {
+   "text": "科奇利族的迴旋鏢！",
+   "lang": "ja",
+   "textSource": "imported",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.68,
+     "at": 1784972256195,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": null,
+     "at": 1784990888918,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 18434,
+    "seconds": null,
+    "lufs": null,
+    "hash": "442edf0e10d6a827be0425761dcee0b0261476902b2e3e55ee7fa19e2fb3345b",
+    "at": 1784990888919
+   },
+   "lastError": null,
+   "kana": "コキリ ノ ブーメラン"
+  },
+  "skill-name.w": {
+   "text": "鎖鏈槍！",
+   "lang": "ja",
+   "textSource": "imported",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.08,
+     "at": 1784972263717,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": null,
+     "at": 1784990892926,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 12164,
+    "seconds": null,
+    "lufs": null,
+    "hash": "476c1c5420a0e72938bfebbcee92f9079e8dcb9091a31bc3bc96f762f14c4bc7",
+    "at": 1784990892926
+   },
+   "lastError": null,
+   "kana": "フックショット"
+  },
+  "skill-name.e": {
+   "text": "海拉爾之盾的庇護！",
+   "lang": "ja",
+   "textSource": "imported",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.2,
+     "at": 1784972264921,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": null,
+     "at": 1784990894930,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 25539,
+    "seconds": null,
+    "lufs": null,
+    "hash": "445b426d2c942969af3c75cafc8749415425aeacd10c3aae1c31bac9ecfb0573",
+    "at": 1784990894930
+   },
+   "lastError": null,
+   "kana": "ハイリア ノ タテ ノ カゴ"
+  },
+  "skill-name.r": {
+   "text": "迴旋斬！",
+   "lang": "ja",
+   "textSource": "imported",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.2,
+     "at": 1784972270068,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": null,
+     "at": 1784990898936,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 12582,
+    "seconds": null,
+    "lufs": null,
+    "hash": "45390ebafcbe1b398353bc6ad7b90d4fe035a4f4878bcf45f66c2843594a6804",
+    "at": 1784990898936
+   },
+   "lastError": null,
+   "kana": "カイテンギリ"
+  },
+  "skill-name.ex": {
+   "text": "絕光斬！",
+   "lang": "ja",
+   "textSource": "imported",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.8,
+     "at": 1784972277334,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": null,
+     "at": 1784990894932,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 16344,
+    "seconds": null,
+    "lufs": null,
+    "hash": "bc3fab186bb1f244e237df7c241dafbf1793ed2aec701bc0a74909bf1af11488",
+    "at": 1784990894932
+   },
+   "lastError": null,
+   "kana": "ゼッコウザン"
+  }
+ }
+}

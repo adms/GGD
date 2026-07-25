@@ -45,6 +45,7 @@ import {
   type TallySnapshot,
 } from "../audio";
 import { setCombatSfxSeat } from "../audio/combatSfx";
+import { playContextualVoice } from "../audio/contextualVoice";
 import { useAudioBoot, useAudioScene, useBgmOverride, useLoginTheme } from "./useAudio";
 
 export function AudioDirector(): null {
@@ -206,6 +207,8 @@ export function AudioDirector(): null {
     allyDeaths,
   });
   const lastKillMs = useRef<number | null>(null);
+  const killStreak = useRef<number>(0);
+  const everKilled = useRef<boolean>(false);
   useEffect(() => {
     const next: TallySnapshot = {
       seatId: localSeatId,
@@ -216,9 +219,16 @@ export function AudioDirector(): null {
       allyDeaths,
     };
     const nowMs = typeof performance !== "undefined" ? performance.now() : Date.now();
-    const res = diffTally(prevTally.current, next, { nowMs, lastKillMs: lastKillMs.current });
+    const res = diffTally(prevTally.current, next, {
+      nowMs,
+      lastKillMs: lastKillMs.current,
+      killStreak: killStreak.current,
+      everKilled: everKilled.current,
+    });
     prevTally.current = next;
     lastKillMs.current = res.lastKillMs;
+    killStreak.current = res.killStreak;
+    everKilled.current = res.everKilled;
     for (const ev of res.events) {
       audioSystem.playSfx(ev);
       // #51 stingers LAYER under the VO these tally events already fire (their
@@ -226,6 +236,10 @@ export function AudioDirector(): null {
       if (ev === "levelUp") audioSystem.playSfx("levelUpJingle");
       else if (ev === "exUnlock") audioSystem.playSfx("exUnlockSting");
     }
+    // CONTEXTUAL VOICE — the LOCAL champion's own kill-N / first-blood /
+    // unstoppable line (celebratory, always fires past the throttle). Only the
+    // local streak talks; a seat change re-baselines killVoice to null.
+    if (res.killVoice && localChampionId) playContextualVoice(localChampionId, res.killVoice);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localSeatId, localKills, localDeaths, localLevel, localExRank, allyDeaths]);
 

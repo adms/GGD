@@ -69,6 +69,10 @@ export interface TallyDiffCtx {
   /** timestamp of the previous local kill (null = none yet this match). */
   lastKillMs: number | null;
   multiKillWindowMs?: number;
+  /** consecutive-kill streak carried forward (0 = none / reset). */
+  killStreak?: number;
+  /** whether ANY kill has landed this match (the first-blood latch). */
+  everKilled?: boolean;
 }
 
 export interface TallyDiffResult {
@@ -78,6 +82,17 @@ export interface TallyDiffResult {
   lastKillMs: number | null;
   /** true when the seat changed (a new match): baseline reset, no events. */
   rebaselined: boolean;
+  /** updated consecutive-kill streak to carry forward. */
+  killStreak: number;
+  /** updated first-blood latch to carry forward. */
+  everKilled: boolean;
+  /**
+   * The CONTEXTUAL-VOICE category for this transition's kill, or null when no
+   * kill landed: "first-blood" on the match's first kill, else "kill-1".."kill-5"
+   * by streak, "unstoppable" past five. Consumed by AudioDirector to speak the
+   * LOCAL champion's own cloned line; the SFX in `events` are unchanged.
+   */
+  killVoice: string | null;
 }
 
 /**
@@ -91,17 +106,37 @@ export function diffTally(
   ctx: TallyDiffCtx,
 ): TallyDiffResult {
   if (prev.seatId !== next.seatId) {
-    return { events: [], lastKillMs: null, rebaselined: true };
+    return {
+      events: [],
+      lastKillMs: null,
+      rebaselined: true,
+      killStreak: 0,
+      everKilled: false,
+      killVoice: null,
+    };
   }
 
   const events: string[] = [];
   let lastKillMs = ctx.lastKillMs;
   const window = ctx.multiKillWindowMs ?? MULTIKILL_WINDOW_MS;
+  let killStreak = ctx.killStreak ?? 0;
+  let everKilled = ctx.everKilled ?? false;
+  let killVoice: string | null = null;
 
   if (next.kills > prev.kills) {
     const isMulti = lastKillMs !== null && ctx.nowMs - lastKillMs <= window;
     events.push(isMulti ? "multiKill" : "kill");
     lastKillMs = ctx.nowMs;
+    // Streak flows on a multi-kill window; a stale kill (or the first) restarts it.
+    killStreak = isMulti ? killStreak + 1 : 1;
+    if (!everKilled) {
+      killVoice = "first-blood"; // the match's first kill — the loudest line
+    } else if (killStreak > 5) {
+      killVoice = "unstoppable";
+    } else {
+      killVoice = `kill-${killStreak}`;
+    }
+    everKilled = true;
   }
   // A local death and an ally death are distinct quips; both can land at once.
   if (next.deaths > prev.deaths) events.push("death");
@@ -111,5 +146,5 @@ export function diffTally(
   // EX unlock is the one-way 0→1 rank flip.
   if (prev.exRank === 0 && next.exRank >= 1) events.push("exUnlock");
 
-  return { events, lastKillMs, rebaselined: false };
+  return { events, lastKillMs, rebaselined: false, killStreak, everKilled, killVoice };
 }

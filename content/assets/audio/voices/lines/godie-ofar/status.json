@@ -1,0 +1,1391 @@
+{
+ "championId": "godie-ofar",
+ "reference": {
+  "sha256": "de075d1827612715b3ee0a6ba5a7de19d1258dc0ee34cf981e261296d0345b82",
+  "seconds": 0,
+  "sampleRate": 24000,
+  "source": "voice-reference-pipeline/approved/processed/godie-ofar.wav",
+  "sourceKind": "repo",
+  "licence": "",
+  "licenceUrl": "",
+  "note": "auto-adopted repo reference",
+  "addedAt": 1784968553952,
+  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/godie-ofar.wav"
+ },
+ "lines": {
+  "quote": {
+   "text": "ピッカチュウ！",
+   "lang": "ja",
+   "kana": "ピッカ チュウ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.8,
+     "at": 1784977411794,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 13836,
+    "seconds": 0.8,
+    "lufs": null,
+    "hash": "ada60baef015cfded9fe1834fd0174a528879bea77fb7897c7ffa3ef39cb8e7b",
+    "at": 1784977411794
+   },
+   "lastError": null
+  },
+  "victory": {
+   "text": "ピカピカ！ピッカチュウ〜！",
+   "lang": "ja",
+   "kana": "ピカ ピカ ピッカ チュウー",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.12,
+     "at": 1784977443164,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 18852,
+    "seconds": 1.12,
+    "lufs": null,
+    "hash": "b3c6fae2547f5ee96d3bc92c67f6af301db73a2fcecc7d3dbba1ca9fada9eb67",
+    "at": 1784977443164
+   },
+   "lastError": null
+  },
+  "defeat": {
+   "text": "ピカ…チュウ……",
+   "lang": "ja",
+   "kana": "ピカ チュウ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.04,
+     "at": 1784977449462,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 17598,
+    "seconds": 1.04,
+    "lufs": null,
+    "hash": "53a9b4f2fcf9fc0c162380c76f3a6901189924f79aecae5ef7606a20fc3efc2f",
+    "at": 1784977449462
+   },
+   "lastError": null
+  },
+  "hurt": {
+   "text": "ピッ！",
+   "lang": "ja",
+   "kana": "ピッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.28,
+     "at": 1784977457442,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 5477,
+    "seconds": 0.28,
+    "lufs": null,
+    "hash": "29342107e15bb9b50c733ada94ab24ab6d1a77fde583cee0a22424537eb0d385",
+    "at": 1784977457442
+   },
+   "lastError": null
+  },
+  "hurt-heavy": {
+   "text": "ピカァーッ…！",
+   "lang": "ja",
+   "kana": "ピカァーッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.8,
+     "at": 1784977458697,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 13836,
+    "seconds": 0.8,
+    "lufs": null,
+    "hash": "17110f57afec47f661b2f0a9d7b4eb8c87962cfa4b7d69122b15b0846212ff47",
+    "at": 1784977458697
+   },
+   "lastError": null
+  },
+  "stun": {
+   "text": "ピ…ピカァ…？",
+   "lang": "ja",
+   "kana": "ピ ピカァ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.680249,
+     "at": 1784977463966,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 12164,
+    "seconds": 0.680249,
+    "lufs": null,
+    "hash": "45d8b3251993292b13de8ff8a71f5603c7043407303490bd49ac6f7a06f9539b",
+    "at": 1784977463966
+   },
+   "lastError": null
+  },
+  "poison": {
+   "text": "ピッ…ピカ…カッ…",
+   "lang": "ja",
+   "kana": "ピッ ピカ カッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.08,
+     "at": 1784977474635,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 18434,
+    "seconds": 1.08,
+    "lufs": null,
+    "hash": "a9c23c2c00cc183daa8eb57dcf2a8882ea3c8125d5ebe098c3e5aa18f8b32eaf",
+    "at": 1784977474635
+   },
+   "lastError": null
+  },
+  "slow": {
+   "text": "ピ〜カ〜…チュ〜ウ〜…",
+   "lang": "ja",
+   "kana": "ピー カー チュー ウー",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.92,
+     "at": 1784977473475,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 15926,
+    "seconds": 0.92,
+    "lufs": null,
+    "hash": "978e600708bc3275d594810c5947e4f0fd33a6357527e69fd86387c9d06eaa0b",
+    "at": 1784977473475
+   },
+   "lastError": null
+  },
+  "blind": {
+   "text": "ピカッ！？ピカピカッ！？",
+   "lang": "ja",
+   "kana": "ピカッ ピカ ピカッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.76,
+     "at": 1784977478579,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 13418,
+    "seconds": 0.76,
+    "lufs": null,
+    "hash": "07312623dcf9e20e51518f11f7c3376519d357e369c2744f2109a30ba9b8d58a",
+    "at": 1784977478579
+   },
+   "lastError": null
+  },
+  "bind": {
+   "text": "ピーッ！ピカァッ！",
+   "lang": "ja",
+   "kana": "ピーッ ピカァッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1,
+     "at": 1784977488137,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 17180,
+    "seconds": 1,
+    "lufs": null,
+    "hash": "bf09c13d57af9a581068761d279b0664d0cc3ba59a90e41b1b95d40bed6d7117",
+    "at": 1784977488137
+   },
+   "lastError": null
+  },
+  "knockdown": {
+   "text": "ピッチュウッ！",
+   "lang": "ja",
+   "kana": "ピッ チュウッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.56,
+     "at": 1784977490392,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 10075,
+    "seconds": 0.56,
+    "lufs": null,
+    "hash": "f8ceb6d4b033eb4ea6d9561c239a9ce7436afe9fdd31ece342c9e73a40fad867",
+    "at": 1784977490392
+   },
+   "lastError": null
+  },
+  "healed": {
+   "text": "ピカ〜チュ〜♪",
+   "lang": "ja",
+   "kana": "ピカー チュー",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1,
+     "at": 1784977493710,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 17180,
+    "seconds": 1,
+    "lufs": null,
+    "hash": "67a97d2749d5c8bd02a018e55f96814a81cdf398e682a1cb4db8998a7f28e205",
+    "at": 1784977493710
+   },
+   "lastError": null
+  },
+  "confused": {
+   "text": "ピカ？チュウ？ピカカ…？",
+   "lang": "ja",
+   "kana": "ピカ チュウ ピカ カ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.28,
+     "at": 1784977503925,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 21359,
+    "seconds": 1.28,
+    "lufs": null,
+    "hash": "8eb747de804fc452dc5431dfbe4fc881f863b3342e62c9835ec048a4e3f52fa6",
+    "at": 1784977503925
+   },
+   "lastError": null
+  },
+  "paralyzed": {
+   "text": "ピ、ピ、ピカカカ…！",
+   "lang": "ja",
+   "kana": "ピ ピ ピカ カ カ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.04,
+     "at": 1784977505350,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 17598,
+    "seconds": 1.04,
+    "lufs": null,
+    "hash": "5baf7d8569843229c8d4dfbe5a1e2c901b57962c3ec55b9a8cb1d638be428eae",
+    "at": 1784977505351
+   },
+   "lastError": null
+  },
+  "thanks": {
+   "text": "ピカチュウ！ピカ♪",
+   "lang": "ja",
+   "kana": "ピカ チュウ ピカ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.24,
+     "at": 1784977508837,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 20942,
+    "seconds": 1.24,
+    "lufs": null,
+    "hash": "bb3f806ea2af0297b216238c8c54a8188e192c692a274244ffd363c928ebdac9",
+    "at": 1784977508837
+   },
+   "lastError": null
+  },
+  "taunt": {
+   "text": "ピッピカ〜、ピカピカ〜♪",
+   "lang": "ja",
+   "kana": "ピッ ピカー ピカ ピカー",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.44,
+     "at": 1784977519759,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 24285,
+    "seconds": 1.44,
+    "lufs": null,
+    "hash": "3c122637b61a8edddbb30ac043411a5ba08d8cb2fba8987e58c8ab7cb841aaa1",
+    "at": 1784977519759
+   },
+   "lastError": null
+  },
+  "curse": {
+   "text": "ピカーッ！カッカッ！",
+   "lang": "ja",
+   "kana": "ピカーッ カッ カッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.28,
+     "at": 1784977520487,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 21359,
+    "seconds": 1.28,
+    "lufs": null,
+    "hash": "21d0343203e1d8c566041d294d240a04e0569ee2b10532a97760363c6ca67fe7",
+    "at": 1784977520487
+   },
+   "lastError": null
+  },
+  "hum": {
+   "text": "ピ〜カ〜ピ〜、ピカチュ〜♪",
+   "lang": "ja",
+   "kana": "ピー カー ピー ピカ チュー",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.56,
+     "at": 1784977524771,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 25957,
+    "seconds": 1.56,
+    "lufs": null,
+    "hash": "4209308f1fb58d352b34f863c27e4d0c68826714a774b14797bf6267d8af7982",
+    "at": 1784977524771
+   },
+   "lastError": null
+  },
+  "attack-light": {
+   "text": "ピカッ！",
+   "lang": "ja",
+   "kana": "ピカッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.52,
+     "at": 1784977534273,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 9239,
+    "seconds": 0.52,
+    "lufs": null,
+    "hash": "c86284ca6a7bd82a52bf288c40a07a8c775eea94eb221dd12425cc0defb41cba",
+    "at": 1784977534273
+   },
+   "lastError": null
+  },
+  "attack-heavy": {
+   "text": "ピカチュウーッ！",
+   "lang": "ja",
+   "kana": "ピカ チュウーッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.04,
+     "at": 1784977536573,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 17598,
+    "seconds": 1.04,
+    "lufs": null,
+    "hash": "bd953a27496562f9e3cfbb1ad4ac1356d076da555a60f6608ea59d14e137b58b",
+    "at": 1784977536573
+   },
+   "lastError": null
+  },
+  "crit": {
+   "text": "ピッカーッ！！",
+   "lang": "ja",
+   "kana": "ピッカーッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.6,
+     "at": 1784977539740,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 10493,
+    "seconds": 0.6,
+    "lufs": null,
+    "hash": "28e6466819adce87ba09b22dd5beb139058387ecc86513dc241ae0b3b8a8a94c",
+    "at": 1784977539740
+   },
+   "lastError": null
+  },
+  "block": {
+   "text": "ピッ！ピカ！",
+   "lang": "ja",
+   "kana": "ピッ ピカ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.6,
+     "at": 1784977549605,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 10493,
+    "seconds": 0.6,
+    "lufs": null,
+    "hash": "a4c815a48ab5b5d4ff91bd454a741556439d2524b3339049f61fb3a11d6a6e7b",
+    "at": 1784977549605
+   },
+   "lastError": null
+  },
+  "dodge": {
+   "text": "ピ〜カ♪",
+   "lang": "ja",
+   "kana": "ピー カ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.6,
+     "at": 1784977551886,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 10493,
+    "seconds": 0.6,
+    "lufs": null,
+    "hash": "b6ac74d4b6a1580010da2aee910e95aeb74e4b9041be3804802d91ca5d0f0695",
+    "at": 1784977551886
+   },
+   "lastError": null
+  },
+  "sprint": {
+   "text": "ピカピカピカッ！",
+   "lang": "ja",
+   "kana": "ピカ ピカ ピカッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.76,
+     "at": 1784977554341,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 13418,
+    "seconds": 0.76,
+    "lufs": null,
+    "hash": "9f3812003cc8b2c5743f1f5354a6529c74fe208f27c4ea1b420b7db4fd227235",
+    "at": 1784977554341
+   },
+   "lastError": null
+  },
+  "jump": {
+   "text": "ピッカ！",
+   "lang": "ja",
+   "kana": "ピッカ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.56,
+     "at": 1784977564087,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 10075,
+    "seconds": 0.56,
+    "lufs": null,
+    "hash": "5e6f7057dc4c952ce93843340cc4a6ddd575e8fcb19db3212292eeba943e1f3f",
+    "at": 1784977564087
+   },
+   "lastError": null
+  },
+  "respond.ok": {
+   "text": "ピカピカ！",
+   "lang": "ja",
+   "kana": "ピカ ピカ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.64,
+     "at": 1784977566273,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 11328,
+    "seconds": 0.64,
+    "lufs": null,
+    "hash": "13b92204b2540d0a3212de16d56265f507cba86270ce1515c42d9452ae55af8f",
+    "at": 1784977566273
+   },
+   "lastError": null
+  },
+  "respond.no": {
+   "text": "チュウッ！",
+   "lang": "ja",
+   "kana": "チュウッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.52,
+     "at": 1784977568097,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 9239,
+    "seconds": 0.52,
+    "lufs": null,
+    "hash": "d429daf026fda93cb495eceba70829efbd9e65f00005644b6ec359a58ff221f8",
+    "at": 1784977568097
+   },
+   "lastError": null
+  },
+  "puzzled": {
+   "text": "ピカ？",
+   "lang": "ja",
+   "kana": "ピカ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.48,
+     "at": 1784977578454,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 8821,
+    "seconds": 0.48,
+    "lufs": null,
+    "hash": "09e2d760149a635fed5f905bec24f7e6b8085c974076db8c542b160920c68534",
+    "at": 1784977578454
+   },
+   "lastError": null
+  },
+  "love": {
+   "text": "ピカチュウ〜♪ チュ〜♪",
+   "lang": "ja",
+   "kana": "ピカ チュウー チュー",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.4,
+     "at": 1784977581405,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 23449,
+    "seconds": 1.4,
+    "lufs": null,
+    "hash": "7297ff0463a6a27170ed627d8385b1988b8fe161aa81145b474146c79118f5d6",
+    "at": 1784977581405
+   },
+   "lastError": null
+  },
+  "thumbs-up": {
+   "text": "ピッカピカ！",
+   "lang": "ja",
+   "kana": "ピッカ ピカ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.8,
+     "at": 1784977582732,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 13836,
+    "seconds": 0.8,
+    "lufs": null,
+    "hash": "df8a429d32f7784213cad17f979c27154771087415f2a68433ad37f5effeecbf",
+    "at": 1784977582733
+   },
+   "lastError": null
+  },
+  "retreat": {
+   "text": "ピカッ、チュウチュウ！",
+   "lang": "ja",
+   "kana": "ピカッ チュウ チュウ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.16,
+     "at": 1784977593354,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 19688,
+    "seconds": 1.16,
+    "lufs": null,
+    "hash": "b2fb110ae365b4510d711b12394d0d17f87e53cf2a31959ae2a4b598b91df31c",
+    "at": 1784977593354
+   },
+   "lastError": null
+  },
+  "charge": {
+   "text": "ピッカーッ！ピカピカッ！",
+   "lang": "ja",
+   "kana": "ピッカーッ ピカ ピカッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.16,
+     "at": 1784977596325,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 19688,
+    "seconds": 1.16,
+    "lufs": null,
+    "hash": "095f751c445f5f929dad533b6b597b1487f417338d9817376a9126a6a976a0b9",
+    "at": 1784977596325
+   },
+   "lastError": null
+  },
+  "watch": {
+   "text": "ピ〜…ピカ…",
+   "lang": "ja",
+   "kana": "ピー ピカ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1,
+     "at": 1784977600908,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 17180,
+    "seconds": 1,
+    "lufs": null,
+    "hash": "3e5827c44c0c3bbc061af7b7118b337c008bd6e5e4874c0c5eb5389a783a98c8",
+    "at": 1784977600908
+   },
+   "lastError": null
+  },
+  "free-move": {
+   "text": "ピ〜カ、ピ〜カ♪",
+   "lang": "ja",
+   "kana": "ピーカ ピーカ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.16,
+     "at": 1784977608361,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 19688,
+    "seconds": 1.16,
+    "lufs": null,
+    "hash": "276a36d592e3d061e7a10aa808ec2f2102382902c8e9e27444e550051e4073ae",
+    "at": 1784977608362
+   },
+   "lastError": null
+  },
+  "first-blood": {
+   "text": "ピッカチュウーーッ！！",
+   "lang": "ja",
+   "kana": "ピッカ チュウーッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.12,
+     "at": 1784977610965,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 18852,
+    "seconds": 1.12,
+    "lufs": null,
+    "hash": "9cc8b662c4e64c62ee0fccd196062312fe7d61ded177481c81496fb2915a8d58",
+    "at": 1784977610965
+   },
+   "lastError": null
+  },
+  "kill-1": {
+   "text": "ピカッ！チュウ！",
+   "lang": "ja",
+   "kana": "ピカッ チュウ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.04,
+     "at": 1784977616337,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 17598,
+    "seconds": 1.04,
+    "lufs": null,
+    "hash": "325fcc3137123500b030da527229da087805caa43dd41e4c75c199bbf72f1f56",
+    "at": 1784977616337
+   },
+   "lastError": null
+  },
+  "kill-2": {
+   "text": "ピカピカ！チュウ！",
+   "lang": "ja",
+   "kana": "ピカ ピカ チュウ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.8,
+     "at": 1784977622877,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 13836,
+    "seconds": 0.8,
+    "lufs": null,
+    "hash": "ab4c3003d0948e82aacd597a63a9a552df4b807c94b34dae73862da6bce8d53f",
+    "at": 1784977622877
+   },
+   "lastError": null
+  },
+  "kill-3": {
+   "text": "ピッカピカーッ！",
+   "lang": "ja",
+   "kana": "ピッカ ピカーッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.16,
+     "at": 1784977626282,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 19688,
+    "seconds": 1.16,
+    "lufs": null,
+    "hash": "de1ed4f6010c7d7f7cbab2002d843065127f1689825d9d51b7cdbe6ec70cfbbd",
+    "at": 1784977626282
+   },
+   "lastError": null
+  },
+  "kill-4": {
+   "text": "ピカカカーッ！チュウチュウ！",
+   "lang": "ja",
+   "kana": "ピカ カ カーッ チュウ チュウ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.32,
+     "at": 1784977631583,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 22195,
+    "seconds": 1.32,
+    "lufs": null,
+    "hash": "084a594d1fbdd8167a5055b887425613935cada00ce3c18f0a2a775aa18b2da9",
+    "at": 1784977631583
+   },
+   "lastError": null
+  },
+  "kill-5": {
+   "text": "ピッカァーッ！！チュウウー！！",
+   "lang": "ja",
+   "kana": "ピッカァーッ チュウ ウー",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.56,
+     "at": 1784977638590,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 25957,
+    "seconds": 1.56,
+    "lufs": null,
+    "hash": "784a9dc92d5673d37b71a2b44e47ee4ebb1161f5ac7e2813cea039c3fdf81292",
+    "at": 1784977638590
+   },
+   "lastError": null
+  },
+  "unstoppable": {
+   "text": "ピカピカピカーッ！ピッカチュウーッ！！",
+   "lang": "ja",
+   "kana": "ピカ ピカ ピカーッ ピッカ チュウーッ",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.08,
+     "at": 1784977645713,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 34316,
+    "seconds": 2.08,
+    "lufs": null,
+    "hash": "beee17a5ca8e4451e19e9e6518f081058d632b16c4a870704ecb4d867f6a51c2",
+    "at": 1784977645713
+   },
+   "lastError": null
+  },
+  "skill-name.q": {
+   "text": "十萬伏特！",
+   "lang": "ja",
+   "textSource": "imported",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.240249,
+     "at": 1784977418254,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": null,
+     "at": 1784991039210,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 17598,
+    "seconds": null,
+    "lufs": null,
+    "hash": "a6f428861d563e134e325269adbac06a5957137b52a2a4a7f76ea4b0feef41b7",
+    "at": 1784991039211
+   },
+   "lastError": null,
+   "kana": "ジュウマン ボルト"
+  },
+  "skill-name.w": {
+   "text": "鋼鐵尾巴！",
+   "lang": "ja",
+   "textSource": "imported",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.44,
+     "at": 1784977428166,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": null,
+     "at": 1784991013159,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 14672,
+    "seconds": null,
+    "lufs": null,
+    "hash": "ffb90f8f444e6090a35ecdb0093b4831f1ba263b77af0de9cc73b06e56b5639d",
+    "at": 1784991013159
+   },
+   "lastError": null,
+   "kana": "アイアン テール"
+  },
+  "skill-name.e": {
+   "text": "就決定是你了!小智！",
+   "lang": "ja",
+   "textSource": "imported",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.16,
+     "at": 1784977428444,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": null,
+     "at": 1784991017166,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 24703,
+    "seconds": null,
+    "lufs": null,
+    "hash": "b07f4094364e393b9cc5bf4b45797a29d1f7a8f326a4536608dadbb06157ea0d",
+    "at": 1784991017166
+   },
+   "lastError": null,
+   "kana": "キミ ニ キメタ サトシ"
+  },
+  "skill-name.r": {
+   "text": "瘋狂皮卡丘！",
+   "lang": "ja",
+   "textSource": "imported",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.32,
+     "at": 1784977434929,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": null,
+     "at": 1784991023181,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 18852,
+    "seconds": null,
+    "lufs": null,
+    "hash": "c32f751d449a73dd1f82441bd2aa597680a53c83c8fd543e458cd6bd4fdfebc6",
+    "at": 1784991023181
+   },
+   "lastError": null,
+   "kana": "クレイジー ピカチュウ"
+  },
+  "skill-name.ex": {
+   "text": "打雷絕招！",
+   "lang": "ja",
+   "textSource": "imported",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.960249,
+     "at": 1784977444276,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": null,
+     "at": 1784991019170,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 2,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 9239,
+    "seconds": null,
+    "lufs": null,
+    "hash": "20f92ecc1baf862cd065d980372454bf6d4917779c5790e8dacf699b94acfd0d",
+    "at": 1784991019170
+   },
+   "lastError": null,
+   "kana": "カミナリ"
+  }
+ }
+}

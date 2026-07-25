@@ -1,0 +1,1033 @@
+{
+ "schema": "voice.roster@1",
+ "categoryCount": 41,
+ "lineCount": 46,
+ "generatedAt": 1784991214688,
+ "engine": {
+  "name": "cosyvoice3",
+  "version": "cv3-0.5b",
+  "stub": false
+ },
+ "champions": [
+  {
+   "championId": "godie-e001",
+   "name": "蟬在叫人壞掉 - 龍宮禮奈",
+   "hasReference": true,
+   "referenceSha256": "ee8c6e98ce9e2a808fbeb6eb7ecae2ecdd918de97ddc131cdbe3c6082c2b2ea8",
+   "lang": "ja",
+   "gender": "female",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163460.5935
+  },
+  {
+   "championId": "godie-e002",
+   "name": "亞瑟王 - Saber",
+   "hasReference": true,
+   "referenceSha256": "58d5de4463b3d460fffc83b0066502d5c5bc1f63fab605398d6097eeeea1f1ec",
+   "lang": "ja",
+   "gender": "female",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163488.1204
+  },
+  {
+   "championId": "godie-e007",
+   "name": "龍之子 - 天地志狼",
+   "hasReference": true,
+   "referenceSha256": "50aca4b15eac5e95800913821800e35b0d4eaecdc356303ca819bad568c1811a",
+   "lang": "ja",
+   "gender": "male",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163504.116
+  },
+  {
+   "championId": "godie-e008",
+   "name": "火霧戰士 - 夏娜",
+   "hasReference": true,
+   "referenceSha256": "d1b7995b578bdbd9809b81f1e8a5472c2a95e6da75162adcf8ee31369ac8d58a",
+   "lang": "ja",
+   "gender": "female",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163513.4216
+  },
+  {
+   "championId": "godie-e00k",
+   "name": "戰國刺客Azumi - 安云",
+   "hasReference": true,
+   "referenceSha256": "4d884e75e26019b7ace64392cec1bb9c7ae23a570df9b82c11fe89e469197587",
+   "lang": "ja",
+   "gender": "female",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163521.1948
+  },
+  {
+   "championId": "godie-e00r",
+   "name": "最終泛用人型決戰兵器 - 初號機",
+   "hasReference": true,
+   "referenceSha256": "2b1db6510ed304797778d88ab60ae649a816833850b57dc8ae90298a1bb26d3a",
+   "lang": "ja",
+   "gender": "other",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163533.5098
+  },
+  {
+   "championId": "godie-e00w",
+   "name": "神鳴流劍士 - 櫻綻剎那",
+   "hasReference": true,
+   "referenceSha256": "ff014207b6a903a7c2f9cf3ac730a4a724c1f6464f0428cd4f0451446c8bc4bc",
+   "lang": "ja",
+   "gender": "female",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163542.024
+  },
+  {
+   "championId": "godie-edem",
+   "name": "寫輪眼復仇者 - 宇智波佐助",
+   "hasReference": true,
+   "referenceSha256": "c24b8622f4aeda8bf327a241b6b56f9e2ed37ea4474f35de5fd6c6a20ce12d65",
+   "lang": "ja",
+   "gender": "male",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163551.075
+  },
+  {
+   "championId": "godie-emfr",
+   "name": "魔法老師 - 涅吉。史普林。菲爾德",
+   "hasReference": true,
+   "referenceSha256": "6f40b17b9f2a56cc08fb4502ee7648a3053450fdc69f2af43ec5a39b4e19f9c3",
+   "lang": "ja",
+   "gender": "other",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163558.7454
+  },
+  {
+   "championId": "godie-emns",
+   "name": "奇樂 - 夜神月",
+   "hasReference": true,
+   "referenceSha256": "29f2dd570196397bd113b830f2385b3d6147d3e53a6f0a00d54c404e0d92115c",
+   "lang": "ja",
+   "gender": "male",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163565.1445
+  },
+  {
+   "championId": "godie-etyr",
+   "name": "治癒系公主 - 木乃香",
+   "hasReference": true,
+   "referenceSha256": "326954befa551d7c04605c461250aee514c993348e75693d84e613040caa4fde",
+   "lang": "ja",
+   "gender": "female",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163571.5
+  },
+  {
+   "championId": "godie-h00l",
+   "name": "時空勇者 - 林克",
+   "hasReference": true,
+   "referenceSha256": "f937848441682b99f9bad2d69721c3df733d7d89e534043f770c36b817aa19db",
+   "lang": "ja",
+   "gender": "other",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163578.8748
+  },
+  {
+   "championId": "godie-h01n",
+   "name": "開外掛的死神 - 黑崎一護",
+   "hasReference": true,
+   "referenceSha256": "c5627653970cc01ad72b95ca8079d3f37b3742b9dd12a11e899c27a09238de55",
+   "lang": "ja",
+   "gender": "male",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163586.0317
+  },
+  {
+   "championId": "godie-h01u",
+   "name": "亂世癿王者 - 呂布奉先",
+   "hasReference": true,
+   "referenceSha256": "e8c5505ad88b5e31c64a3af4eb722b5a8e7636199567932416f37011e20b33f8",
+   "lang": "ja",
+   "gender": "male",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163593.413
+  },
+  {
+   "championId": "godie-h020",
+   "name": "黑魔導士 - 莉娜因巴斯",
+   "hasReference": true,
+   "referenceSha256": "5b15ded02eeaef4c0dfdb2fb3df1019029a6d6ee87df5e2f8501cb5a60a8bbe3",
+   "lang": "ja",
+   "gender": "female",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163600.5344
+  },
+  {
+   "championId": "godie-h02k",
+   "name": "國寶級的畜生 - 熊貓",
+   "hasReference": true,
+   "referenceSha256": "4c3a267cb1186645dc5123d407d1ebeb0ddec3277b2b69632526bdfc65da723b",
+   "lang": "ja",
+   "gender": "other",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163606.4849
+  },
+  {
+   "championId": "godie-h02r",
+   "name": "種子神奇寶貝 - 妙蛙花",
+   "hasReference": true,
+   "referenceSha256": "fba555b59c85a4fb58515af02406c577631f4060b7725c5c3acb76aad4b980fd",
+   "lang": "ja",
+   "gender": "other",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163614.3562
+  },
+  {
+   "championId": "godie-h02u",
+   "name": "看似憂鬱的神獸 - 草泥馬",
+   "hasReference": true,
+   "referenceSha256": "1c9316d9f3b7abe68eb88a31262a599838b362c58afdb7d7f649ea83dfab4614",
+   "lang": "ja",
+   "gender": "other",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163635.4297
+  },
+  {
+   "championId": "godie-hapm",
+   "name": "海克力斯 - Berserker",
+   "hasReference": true,
+   "referenceSha256": "b885f6d8eefb1bd1fbb086cf75521f89c038ba61ac97521aec9aab3129a5dbcb",
+   "lang": "ja",
+   "gender": "other",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163642.099
+  },
+  {
+   "championId": "godie-hart",
+   "name": "最終幻想 - 克勞德",
+   "hasReference": true,
+   "referenceSha256": "c87ea33a164686ef8d3835a1af06abceeb258251d0583e5ceeb47d3ba34f2c43",
+   "lang": "ja",
+   "gender": "male",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163646.9512
+  },
+  {
+   "championId": "godie-hpal",
+   "name": "不死之身-無 - 藤井八雲",
+   "hasReference": true,
+   "referenceSha256": "c1bfe70d198df8b688021c79c0e3df1df74031e432c7f9a8d5af6cd2309b8b8b",
+   "lang": "ja",
+   "gender": "male",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163656.7524
+  },
+  {
+   "championId": "godie-hpb1",
+   "name": "獸矛傳承使 - 蒼月潮",
+   "hasReference": true,
+   "referenceSha256": "5fecebba9b4d56ca7091e29c8153837f2f51e6f87c8c93f859d5fd7e6de11da2",
+   "lang": "ja",
+   "gender": "male",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163660.839
+  },
+  {
+   "championId": "godie-huth",
+   "name": "超級普烏 - 魔人普烏",
+   "hasReference": true,
+   "referenceSha256": "9fe27f15a733bbac5173d773b096edab634fbb8887480d1a4c40fdb1610266bf",
+   "lang": "ja",
+   "gender": "other",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163666.466
+  },
+  {
+   "championId": "godie-hvsh",
+   "name": "梅杜莎 - Rider",
+   "hasReference": true,
+   "referenceSha256": "6b2588870f3b1ceb57233168a6856213e617d12b6b6bf8cfdf72e3749a2a78e1",
+   "lang": "ja",
+   "gender": "female",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163670.4917
+  },
+  {
+   "championId": "godie-hvwd",
+   "name": "除魔巫女 - 桔梗",
+   "hasReference": true,
+   "referenceSha256": "0ac663ece27ff30c92bdd9eec27551e45e443e9e862accb45ca49d23f592c199",
+   "lang": "ja",
+   "gender": "female",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163676.2268
+  },
+  {
+   "championId": "godie-n003",
+   "name": "黑暗福音 - 依文潔琳",
+   "hasReference": true,
+   "referenceSha256": "30583c749d306e8171aa2c46a27ffed9d0680a77f47bc077d7acd6634f1a762f",
+   "lang": "ja",
+   "gender": "female",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163684.64
+  },
+  {
+   "championId": "godie-n00b",
+   "name": "小叮噹 - 哆拉A夢",
+   "hasReference": true,
+   "referenceSha256": "9ef9363cb4e7a9dfea90615ed91a86079992fe22826a80024bd0a4888510daf7",
+   "lang": "ja",
+   "gender": "other",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163691.4956
+  },
+  {
+   "championId": "godie-n00p",
+   "name": "妖狐藏馬 - 南野秀一",
+   "hasReference": true,
+   "referenceSha256": "773091ed3430a549e095d0e1577b06ab0bdda9392a54ba5d288f2932e2309b4d",
+   "lang": "ja",
+   "gender": "other",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163698.5037
+  },
+  {
+   "championId": "godie-n01c",
+   "name": "傳說的龍騎士 - 勇者小呆",
+   "hasReference": true,
+   "referenceSha256": "67240cd1ab5f09fdff51c0bb9cd2ef387f81c383e829a266d8c6c9562e2f55a3",
+   "lang": "ja",
+   "gender": "other",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163703.3462
+  },
+  {
+   "championId": "godie-nplh",
+   "name": "通靈人 - 麻倉葉",
+   "hasReference": true,
+   "referenceSha256": "c27129d147ca92e778e8e964af9f6c8e86dfac8f322644d872a2cb36bb74026d",
+   "lang": "ja",
+   "gender": "male",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163707.539
+  },
+  {
+   "championId": "godie-o00k",
+   "name": "傲嬌電氣老鼠 - 皮卡娘",
+   "hasReference": true,
+   "referenceSha256": "3d7dd5a2a1f3dc76efb36a1a883c308789b749b16435e5b12968ff274f9b0c49",
+   "lang": "ja",
+   "gender": "female",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163712.381
+  },
+  {
+   "championId": "godie-o00l",
+   "name": "獸神官 - 傑洛士",
+   "hasReference": true,
+   "referenceSha256": "6425ec54dd5adfba5921a723940d30c9954118c552a55de756f5ee0ca1fffaa3",
+   "lang": "ja",
+   "gender": "male",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163716.6995
+  },
+  {
+   "championId": "godie-o00x",
+   "name": "超級賽亞人 - 悟空",
+   "hasReference": true,
+   "referenceSha256": "3b2a9c5f8a5dcaeaa652629727d872e3487525268945855626a8307271f90782",
+   "lang": "ja",
+   "gender": "male",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163721.6077
+  },
+  {
+   "championId": "godie-o02p",
+   "name": "夢幻之星 - 初音",
+   "hasReference": true,
+   "referenceSha256": "0aff3c2b0e8d87cea42b0d957ef4058d70ad232878a530ebcd6d8ac5c30c481a",
+   "lang": "ja",
+   "gender": "other",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163731.883
+  },
+  {
+   "championId": "godie-ofar",
+   "name": "神奇寶貝兒 - 皮卡丘",
+   "hasReference": true,
+   "referenceSha256": "de075d1827612715b3ee0a6ba5a7de19d1258dc0ee34cf981e261296d0345b82",
+   "lang": "ja",
+   "gender": "other",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163739.3955
+  },
+  {
+   "championId": "godie-ogld",
+   "name": "美白大法師 - 黑人牙膏",
+   "hasReference": true,
+   "referenceSha256": "0db48ca01ccee9f8922ba2d45bcb3f8ad77e65eb95d032cb5ffd92999d619e9a",
+   "lang": "ja",
+   "gender": "male",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163743.5203
+  },
+  {
+   "championId": "godie-orkn",
+   "name": "電車癡漢 - 臭作",
+   "hasReference": true,
+   "referenceSha256": "9420e887af38f804da4f33c73c54567f24354577213396230343192c966f7421",
+   "lang": "ja",
+   "gender": "male",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163747.281
+  },
+  {
+   "championId": "godie-osam",
+   "name": "犬妖 - 殺生丸",
+   "hasReference": true,
+   "referenceSha256": "00892babb27cfba247bfb2cd9897d4074954d3e7c5108ca48c6e44ebd4d1d68f",
+   "lang": "ja",
+   "gender": "male",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163751.1
+  },
+  {
+   "championId": "godie-u00h",
+   "name": "鬼畜紅王 - 鬼畜狂刀KYO",
+   "hasReference": true,
+   "referenceSha256": "869635091a91eca422582afb87f6843c95598ad9f2709da299a8638302063049",
+   "lang": "ja",
+   "gender": "male",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163756.5845
+  },
+  {
+   "championId": "godie-u00j",
+   "name": "神性的流失 - 賽菲洛斯",
+   "hasReference": true,
+   "referenceSha256": "b85d3d8c502017152c0ac1e4b54790275e0e5197f55ef4040a2d1fa831bab167",
+   "lang": "ja",
+   "gender": "male",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163760.6094
+  },
+  {
+   "championId": "godie-u00k",
+   "name": "邪惡意念集合體 - 死之王",
+   "hasReference": true,
+   "referenceSha256": "041fee5dac6b5c1939222f6e7e087fd2020c817508067518da935ad7899a12f7",
+   "lang": "ja",
+   "gender": "male",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163766.0862
+  },
+  {
+   "championId": "godie-u00l",
+   "name": "北斗之鼠 - 拳四郎",
+   "hasReference": true,
+   "referenceSha256": "cf73de5f1c882028a0abbdcf53a15e2ebb243b5a6d964055e841964a3c4dd30a",
+   "lang": "ja",
+   "gender": "male",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163774.2444
+  },
+  {
+   "championId": "godie-u00n",
+   "name": "草帽小子 - 蒙其.D.魯夫",
+   "hasReference": true,
+   "referenceSha256": "80d7a6917e4dbbaabfdf3a8825e94d3ca05b71b51da96edde17c4cbf53042799",
+   "lang": "ja",
+   "gender": "male",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163780.1938
+  },
+  {
+   "championId": "godie-u00v",
+   "name": "黑手黨老大 - 基廉列克",
+   "hasReference": true,
+   "referenceSha256": "0adf1cc0ca7dbba7c803e81ac9ac146eb25d086aa72cb706f8112b6db51e7ec0",
+   "lang": "ja",
+   "gender": "other",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163785.5208
+  },
+  {
+   "championId": "godie-u010",
+   "name": "邪眼師 - 飛影",
+   "hasReference": true,
+   "referenceSha256": "5ddd064d28b935f5b7e2d39f73eb828bff13f682bf76dd00abbaabc250a1de2b",
+   "lang": "ja",
+   "gender": "male",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163789.7883
+  },
+  {
+   "championId": "godie-u01u",
+   "name": "三刀流劍士 - 索隆",
+   "hasReference": true,
+   "referenceSha256": "d5a0175f5ba0007de74d59ccdf847366ae843b38192ed4aa2325e4d3c7c6a398",
+   "lang": "ja",
+   "gender": "male",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163794.6807
+  },
+  {
+   "championId": "godie-ubal",
+   "name": "魔界霸主 - 巴恩大魔王",
+   "hasReference": true,
+   "referenceSha256": "c1d80cf8cb6c0008f8ddcaa8ab43b5d21cc4cc382b97bb57d32ada0e9ec92429",
+   "lang": "ja",
+   "gender": "male",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163797.973
+  },
+  {
+   "championId": "godie-udea",
+   "name": "至尊學長 - 飛鼠先生",
+   "hasReference": true,
+   "referenceSha256": "e2144c46f67645d938e687b94c55e5bb5a6c2ee7fc6b2406fc453aa85907b87c",
+   "lang": "ja",
+   "gender": "male",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163801.4702
+  },
+  {
+   "championId": "godie-hblm",
+   "name": "慈悲的王者 - 賈修貝爾",
+   "hasReference": true,
+   "referenceSha256": "91b2a6d49c1791a52174cb74a4eb9f6811200e4fbfda12f521f421fcc634b0e2",
+   "lang": "ja",
+   "gender": "other",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163804.9727
+  },
+  {
+   "championId": "godie-efur",
+   "name": "揍敵客大家長 - 揍敵客桀諾",
+   "hasReference": true,
+   "referenceSha256": "dc9886aa29b77ba33943c05e0af9c98661e43b6e66827f57751f8d7bdba9102f",
+   "lang": "ja",
+   "gender": "male",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991163809.1653
+  },
+  {
+   "championId": "godie-zombiex",
+   "name": "聖杯黑泥醬 - 喪標麥可",
+   "hasReference": true,
+   "referenceSha256": "087ae6055fabebbc543b807f1603cbd7dc286e7f519506863642052c570d9fa6",
+   "lang": "zh",
+   "gender": "male",
+   "counts": {
+    "approved": 0,
+    "generated": 46,
+    "stub": 0,
+    "pending": 0,
+    "generating": 0,
+    "rejected": 0,
+    "failed": 0,
+    "noText": 0,
+    "total": 46
+   },
+   "updatedAt": 1784991213187.7827
+  }
+ ]
+}

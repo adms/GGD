@@ -117,6 +117,7 @@ import { getHeldAimSlot } from "./ui/abilityHold";
 import { envFactor, setDisplayEnvJson } from "./ui/displayFinal";
 import { audioSystem } from "./audio";
 import { loadChampionVoices, playChampionSelectVoice } from "./audio/championVoice";
+import { warmContextualVoice, playContextualVoice } from "./audio/contextualVoice";
 import { combatSfxKey } from "./audio/combatSfx";
 import { resolveSpatial } from "./audio/combatSfxSpatial";
 import { SpatialSfxQueue } from "./audio/SpatialSfxQueue";
@@ -145,6 +146,11 @@ const TELEPORT_EPS = 6;
 const CAP_SLACK_MS = 3;
 /** draw distances at/above this are treated as "no cull" (skip the check). */
 const DRAW_DISTANCE_MAX = 300;
+
+/** A hit taking at least this fraction of the local hero's max-hp is a HEAVY hit
+ * (hurt-heavy grunt); anything lighter is the short hurt. A killing blow is
+ * always heavy. Contextual-voice only — never a sim value. */
+const HURT_HEAVY_FRACTION = 0.18;
 interface PendingAuth {
   entityId: number;
   x: number;
@@ -317,6 +323,8 @@ export class GameApp {
   /** reused per-frame entity snapshot pool (zero hot-path allocation). */
   private readonly entityPool: EntityViewState[] = [];
   private readonly entityScratch: EntityViewState[] = [];
+  /** entity id → last tick's CC bitmask, for the contextual status-voice edge. */
+  private readonly prevEntityFlags = new Map<number, number>();
   /** reused: champion entity id of each local player (-1 = none) — task #85. */
   private readonly focusLocalEntities: number[] = [];
   /** reused: each local player's OWN duel decided? (task #208 — lifts the #85 wash). */
@@ -530,6 +538,9 @@ export class GameApp {
     void this.contentDb.load();
     // warm the champion select-quip config (cached; 404 → silent no-op)
     void loadChampionVoices();
+    // warm the CONTEXTUAL combat-voice pack cache (same MANIFEST.json single
+    // flight) so the first cast/kill/hurt of a match can dispatch synchronously.
+    void warmContextualVoice();
     // warm the DEV-ONLY Blizzard model overlay probe (no-op in any deployed
     // build; 404 → champions keep their shipped stand-in). Priming it here
     // means the probe has usually settled before the first champion spawns.
@@ -704,6 +715,18 @@ export class GameApp {
   private championIdForSeat(seatId?: number): string | null {
     if (seatId === undefined) return null;
     const seat = hudStore.getState().seats.find((s) => s.seatId === seatId);
+    return seat?.championId ? seat.championId : null;
+  }
+
+  /**
+   * ChampionId of the entity `entityId` via the seat table (seat.entityId →
+   * championId), or null when the entity is not a seated champion (a mob, a
+   * projectile, a guardian, or a seat that has not spawned). CLIENT-ONLY, used
+   * solely to route the contextual voice line to the right champion's pack.
+   */
+  private championIdForEntity(entityId: number | null | undefined): string | null {
+    if (entityId === null || entityId === undefined) return null;
+    const seat = hudStore.getState().seats.find((s) => s.entityId === entityId);
     return seat?.championId ? seat.championId : null;
   }
 
@@ -945,6 +968,11 @@ export class GameApp {
       if (sfxKey) {
         this.sfxQueue.push(sfxKey, resolveSpatial(ev, this.audioEntityPos, localId, this.audioTeamOf));
       }
+      // CONTEXTUAL VOICE (client-only cosmetic, owner directive 2026-07-25):
+      // event → the champion's own cloned line. Rides audioSystem.playClip inside
+      // contextualVoice, so all mixer gates + the per-category throttle apply;
+      // heroes without a pack no-op. Never touches sim / world.rng.
+      this.dispatchContextualVoice(ev, localId);
       if (ev.type === "death" && state) {
         recordDeathEvent(ev, state);
         // task #85: the ONLY signal that means "you died", as opposed to the
@@ -1108,6 +1136,10 @@ export class GameApp {
         if (es.kind !== KIND_CHAMPION || !es.alive) return;
         const p = this.views.posOf(es.id) ?? { x: es.x, z: es.z };
         this.vfx.statusFx.set(es.id, es.flags, p.x, p.z, nowMs);
+        // CONTEXTUAL VOICE — a CC status line on the 0→1 flag edge (client-side
+        // edge detector over the authoritative bitmask; no sim edit). poison/blind
+        // have no ENTITY_FLAG bit, so they stay dormant (see manifest).
+        this.dispatchStatusVoice(es.id, es.flags);
       });
     } else {
       this.remoteSteps.reset();
@@ -1423,6 +1455,76 @@ export class GameApp {
     const theirs = this.teamOfEntity(id);
     if (mine === null || theirs === null) return "third";
     return mine === theirs ? "ally" : "enemy";
+  }
+
+  /**
+   * CONTEXTUAL VOICE dispatch for one drained event (task: voice-lines-utilize).
+   * Maps combat events to the acting champion's own cloned category clip:
+   *   • abilityCast (non-PASSIVE) → skill-name.<slot>, spoken by the CASTER.
+   *   • damage with crit         → crit, spoken by the ATTACKER (source).
+   *   • damage to the LOCAL hero  → hurt / hurt-heavy (only your own champ grunts,
+   *                                 by the fraction of max-hp the blow took).
+   *   • death of the LOCAL hero   → defeat.
+   * The kill-N / first-blood / victory lines live in AudioDirector / the
+   * settlement panels (they key off the discrete tally + phase edges, not the
+   * per-frame drain). CLIENT-ONLY: contextualVoice picks with a client rng and
+   * rides audioSystem.playClip, so this never affects sim/determinism.
+   */
+  private dispatchContextualVoice(ev: EventMessage, localId: number | null): void {
+    const d = ev.data;
+    if (ev.type === "abilityCast") {
+      const slot = typeof d.slot === "string" ? d.slot : null;
+      if (!slot || slot === "PASSIVE") return; // 天生技 does not shout a skill name
+      const champ = this.championIdForEntity(Number(d.caster));
+      if (champ) playContextualVoice(champ, `skill-name.${slot.toLowerCase()}`);
+      return;
+    }
+    if (ev.type === "damage") {
+      const source = Number(d.source);
+      const target = Number(d.target);
+      if (d.crit === true) {
+        const attacker = this.championIdForEntity(source);
+        if (attacker) playContextualVoice(attacker, "crit");
+      }
+      // hurt is gated to the LOCAL victim so only your own champion grunts.
+      if (localId !== null && target === localId) {
+        const victim = this.championIdForEntity(target);
+        if (victim) {
+          const hud = hudStore.getState();
+          const maxHp = hud.localMaxHp > 0 ? hud.localMaxHp : 0;
+          const amount = typeof d.amount === "number" ? d.amount : 0;
+          const heavy =
+            d.killingBlow === true || (maxHp > 0 && amount / maxHp >= HURT_HEAVY_FRACTION);
+          playContextualVoice(victim, heavy ? "hurt-heavy" : "hurt");
+        }
+      }
+      return;
+    }
+    if (ev.type === "death") {
+      // own death → defeat (the same id deathFocus.noteDeath consumes).
+      if (localId !== null && Number(d.id) === localId) {
+        const champ = this.championIdForEntity(localId);
+        if (champ) playContextualVoice(champ, "defeat");
+      }
+    }
+  }
+
+  /**
+   * Fire a CC status line on the 0→1 edge of the STUNNED / SLOWED / ROOTED flag
+   * for one entity, diffing against the previous tick's bitmask (client-side; the
+   * bitmask itself is authoritative). Only the freshly-SET bit speaks, so a
+   * status that lingers across many ticks says its line once, not every frame.
+   */
+  private dispatchStatusVoice(entityId: number, flags: number): void {
+    const prev = this.prevEntityFlags.get(entityId) ?? 0;
+    this.prevEntityFlags.set(entityId, flags);
+    const rose = flags & ~prev; // bits newly set this tick
+    if (rose === 0) return;
+    const champ = this.championIdForEntity(entityId);
+    if (!champ) return;
+    if (rose & ENTITY_FLAG.STUNNED) playContextualVoice(champ, "stun");
+    if (rose & ENTITY_FLAG.SLOWED) playContextualVoice(champ, "slow");
+    if (rose & ENTITY_FLAG.ROOTED) playContextualVoice(champ, "bind");
   }
 
   /**

@@ -1,0 +1,1390 @@
+{
+ "championId": "godie-zombiex",
+ "reference": {
+  "sha256": "087ae6055fabebbc543b807f1603cbd7dc286e7f519506863642052c570d9fa6",
+  "seconds": 0,
+  "sampleRate": 24000,
+  "source": "voice-reference-pipeline/approved/processed/godie-zombiex.wav",
+  "sourceKind": "repo",
+  "licence": "",
+  "licenceUrl": "",
+  "note": "auto-adopted repo reference",
+  "addedAt": 1784968553985,
+  "path": "/Users/Takuro/GGD/voice-reference-pipeline/approved/processed/godie-zombiex.wav"
+ },
+ "lines": {
+  "quote": {
+   "text": "恁爸喪標麥可！死過一擺，閣驚啥啦！",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.92,
+     "at": 1784981382882,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 63991,
+    "seconds": 3.92,
+    "lufs": null,
+    "hash": "f8542454a1c5d871b0cf83f9b1b53f7f68bfea9bc25da24b4fce68f494cb7f0c",
+    "at": 1784981382883
+   },
+   "lastError": null
+  },
+  "victory": {
+   "text": "水啦水啦！贏啦！轉去買雞排慶祝啦！",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 5.08,
+     "at": 1784981414177,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 82382,
+    "seconds": 5.08,
+    "lufs": null,
+    "hash": "37ebed3230165f7f679402853b2aa9cff62924247bccdaad26af547d67c32a06",
+    "at": 1784981414177
+   },
+   "lastError": null
+  },
+  "defeat": {
+   "text": "夭壽喔……輸甲脫褲……有夠毋甘願啦……",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 5.4,
+     "at": 1784981415044,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 87397,
+    "seconds": 5.4,
+    "lufs": null,
+    "hash": "20af02204b51d74e6856271e8047c2908fe26a9c552b3873d83791438b108848",
+    "at": 1784981415044
+   },
+   "lastError": null
+  },
+  "hurt": {
+   "text": "哎唷！",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.56,
+     "at": 1784981412608,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 10075,
+    "seconds": 0.56,
+    "lufs": null,
+    "hash": "e4b892e02b0ea7be0a634615e26373b05005532071c6aaed3aaa4d54131745ba",
+    "at": 1784981412608
+   },
+   "lastError": null
+  },
+  "hurt-heavy": {
+   "text": "痛甲欲閣死一擺啦……",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.36,
+     "at": 1784981428020,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 38914,
+    "seconds": 2.36,
+    "lufs": null,
+    "hash": "4478268402875125ce49056a47e4fc1c3d1d8fdbca80534fc08d853723c5e4d1",
+    "at": 1784981428020
+   },
+   "lastError": null
+  },
+  "stun": {
+   "text": "蛤……我這馬佇佗位……",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.04,
+     "at": 1784981429519,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 33898,
+    "seconds": 2.04,
+    "lufs": null,
+    "hash": "e385061b1f8a90bc38f115c194385f560cae186c849e60caad5bf406a5fd83ce",
+    "at": 1784981429519
+   },
+   "lastError": null
+  },
+  "poison": {
+   "text": "咳咳……這毒比黑泥閣較臭啦……",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 4.36,
+     "at": 1784981431019,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 70679,
+    "seconds": 4.36,
+    "lufs": null,
+    "hash": "5d30b53fa555c7718030fcaa553320469fc4ea9dc21f8a2e214df0ce6bfd29ff",
+    "at": 1784981431020
+   },
+   "lastError": null
+  },
+  "slow": {
+   "text": "拜託……喪屍本底就行足慢啦……",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 4.48,
+     "at": 1784981444519,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 72768,
+    "seconds": 4.48,
+    "lufs": null,
+    "hash": "36ff016341b8b8ca1623caebb31749ef3691a3000096d59c7556c22fcacfa200",
+    "at": 1784981444520
+   },
+   "lastError": null
+  },
+  "blind": {
+   "text": "看無啦！目睭糊去啦！",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.68,
+     "at": 1784981445268,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 43929,
+    "seconds": 2.68,
+    "lufs": null,
+    "hash": "2d3c42543b48b7353713b639594809e97d16007ed3a46d9bf975e978de037350",
+    "at": 1784981445268
+   },
+   "lastError": null
+  },
+  "bind": {
+   "text": "放開啦！恁爸毋是肉粽啦！",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.16,
+     "at": 1784981446545,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 51453,
+    "seconds": 3.16,
+    "lufs": null,
+    "hash": "4332e4cd7fdcbc7299a7b4ab509c6588c19b60c480053c891750c7d5b78cfeb7",
+    "at": 1784981446545
+   },
+   "lastError": null
+  },
+  "knockdown": {
+   "text": "哎喲喂！跋甲四跤朝天啦……",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.96,
+     "at": 1784981460660,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 64409,
+    "seconds": 3.96,
+    "lufs": null,
+    "hash": "2733e3251f3469d112a1e648daea4d48f9be6cbb4bb4d851f96c22e726e97625",
+    "at": 1784981460660
+   },
+   "lastError": null
+  },
+  "healed": {
+   "text": "齁～有夠爽快，多謝啦！",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.88,
+     "at": 1784981460438,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 47273,
+    "seconds": 2.88,
+    "lufs": null,
+    "hash": "44efe1428ed1136ecfd3dcf5fbaf927c542068f1d6891d36ebbc73b7b40008dd",
+    "at": 1784981460438
+   },
+   "lastError": null
+  },
+  "confused": {
+   "text": "嘿嘿嘿……聖杯佇天頂跳舞欸……",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.52,
+     "at": 1784981463303,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 57304,
+    "seconds": 3.52,
+    "lufs": null,
+    "hash": "b4177b3ec0da96faf8c980ab65fbf17ba5c841cb70ea35ad1e63d2485fdac9be",
+    "at": 1784981463303
+   },
+   "lastError": null
+  },
+  "paralyzed": {
+   "text": "麻麻麻……喙齒攏咧顫啦……",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.12,
+     "at": 1784981475986,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 51035,
+    "seconds": 3.12,
+    "lufs": null,
+    "hash": "cb6351b41d5229231bb02308e2c5f2ad9dd91f3f44fa3276b369134d31665b7b",
+    "at": 1784981475987
+   },
+   "lastError": null
+  },
+  "thanks": {
+   "text": "多謝你啦，足感心欸！",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.12,
+     "at": 1784981475390,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 35152,
+    "seconds": 2.12,
+    "lufs": null,
+    "hash": "9082afe588971b27437a9690a2f158fc1bfbfb3e22692da01925b3488c74d585",
+    "at": 1784981475390
+   },
+   "lastError": null
+  },
+  "taunt": {
+   "text": "哩嘛幫幫忙，轉去食奶啦！",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.28,
+     "at": 1784981478380,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 53542,
+    "seconds": 3.28,
+    "lufs": null,
+    "hash": "1f889dc95aba767a5af2d6676b8552c0bb534d8b7ccc0ca4e16257d6f96241ab",
+    "at": 1784981478380
+   },
+   "lastError": null
+  },
+  "curse": {
+   "text": "哇哩咧……夭壽骨，氣死恁爸啦！",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 4.32,
+     "at": 1784981492005,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 70261,
+    "seconds": 4.32,
+    "lufs": null,
+    "hash": "0076a54b012ac0388208c9c37955f87b8c890f12917a3d1e8d22aa4e938021f0",
+    "at": 1784981492005
+   },
+   "lastError": null
+  },
+  "hum": {
+   "text": "哼哼～哼哼哼～嗯哼嗯哼～",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.8,
+     "at": 1784981492756,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 61902,
+    "seconds": 3.8,
+    "lufs": null,
+    "hash": "bd7535b3dbd06e9cc43132bf8463b9490e04b838b9f0dba963d1d25df23ff293",
+    "at": 1784981492756
+   },
+   "lastError": null
+  },
+  "attack-light": {
+   "text": "哈！",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.44,
+     "at": 1784981492215,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 7985,
+    "seconds": 0.44,
+    "lufs": null,
+    "hash": "155c26345332c57598903bf5415dea4cab183500defa729940870b2cfa9b98c8",
+    "at": 1784981492215
+   },
+   "lastError": null
+  },
+  "attack-heavy": {
+   "text": "乎恁死啦！",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.52,
+     "at": 1784981506494,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 25539,
+    "seconds": 1.52,
+    "lufs": null,
+    "hash": "f98a2b5b7e1d398128dc01ef52c87be09e8414b158f77c5930e57b3f1e2fa462",
+    "at": 1784981506494
+   },
+   "lastError": null
+  },
+  "crit": {
+   "text": "水啦！這下有夠力！",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.04,
+     "at": 1784981508591,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 49781,
+    "seconds": 3.04,
+    "lufs": null,
+    "hash": "a9f577f64ed7f75e212be6087cfd0cd3ef0e434e6399efcf4feba0f850879f8a",
+    "at": 1784981508591
+   },
+   "lastError": null
+  },
+  "block": {
+   "text": "嗯——擋牢咧，衝啥啦！",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.04,
+     "at": 1784981507628,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 49781,
+    "seconds": 3.04,
+    "lufs": null,
+    "hash": "06ff54df9351c8cfde18f24f6bace410225bf74c14c6f318d4547d4041de81ee",
+    "at": 1784981507628
+   },
+   "lastError": null
+  },
+  "dodge": {
+   "text": "閃過～哩拍無著啦！",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.56,
+     "at": 1784981521240,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 41839,
+    "seconds": 2.56,
+    "lufs": null,
+    "hash": "dd34f9186f09229245ceaec63d14a86e757f3825301c9f952ad43d7b33462205",
+    "at": 1784981521240
+   },
+   "lastError": null
+  },
+  "sprint": {
+   "text": "喔喔喔——閃開閃開！",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.28,
+     "at": 1784981523256,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 37660,
+    "seconds": 2.28,
+    "lufs": null,
+    "hash": "6b6d50a0594dde5339284db5f45e940662def792014c1e27d9de03ee7355b28c",
+    "at": 1784981523256
+   },
+   "lastError": null
+  },
+  "jump": {
+   "text": "嘿咻！",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.88,
+     "at": 1784981522222,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 15090,
+    "seconds": 0.88,
+    "lufs": null,
+    "hash": "c919b11c4bbabd9eb087e155bd3afc7a155b6c2abea4a48a17f515736a7d7a13",
+    "at": 1784981522222
+   },
+   "lastError": null
+  },
+  "respond.ok": {
+   "text": "好啦好啦，交乎我！",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.76,
+     "at": 1784981536333,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 45183,
+    "seconds": 2.76,
+    "lufs": null,
+    "hash": "1bcab4f87dc6c8f41c6a81bde7d2bb09bb525af0b0aebf7e00da2ab846a84e2d",
+    "at": 1784981536333
+   },
+   "lastError": null
+  },
+  "respond.no": {
+   "text": "母湯啦，我無愛！",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.44,
+     "at": 1784981536784,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 24285,
+    "seconds": 1.44,
+    "lufs": null,
+    "hash": "a49095db092902550ef2e2ae0b3f0dd5ce3ae5e369ddb97cbb182229c47fbd42",
+    "at": 1784981536784
+   },
+   "lastError": null
+  },
+  "puzzled": {
+   "text": "蛤？啥物意思啦？",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.8,
+     "at": 1784981537615,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 29719,
+    "seconds": 1.8,
+    "lufs": null,
+    "hash": "fae997e62218c9b3f14d2058835288e134c1cb8be23cb5d3a42966b8f845a526",
+    "at": 1784981537615
+   },
+   "lastError": null
+  },
+  "love": {
+   "text": "啾咪～喪屍嘛是有愛心欸！",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.88,
+     "at": 1784981553321,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 63155,
+    "seconds": 3.88,
+    "lufs": null,
+    "hash": "a99aa20fdc512ca3898b18e3f78637a8188b550d8427d4ed206fe79e5cf1eba5",
+    "at": 1784981553321
+   },
+   "lastError": null
+  },
+  "thumbs-up": {
+   "text": "讚啦！拍甲有夠媠！",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.36,
+     "at": 1784981551844,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 38914,
+    "seconds": 2.36,
+    "lufs": null,
+    "hash": "956468ef909b577dbd7e2e0b1149643efd4cd134245dea1aede0d7615148367d",
+    "at": 1784981551845
+   },
+   "lastError": null
+  },
+  "retreat": {
+   "text": "先走先贏，緊撤退啦！",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.16,
+     "at": 1784981552329,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 35570,
+    "seconds": 2.16,
+    "lufs": null,
+    "hash": "33d004daf4bffdb7d6b9d73e8b2ac66467bf5d7ea7d3a262f934704f3859554e",
+    "at": 1784981552330
+   },
+   "lastError": null
+  },
+  "charge": {
+   "text": "兄弟仔，綴我衝啦！",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.24,
+     "at": 1784981566650,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 36824,
+    "seconds": 2.24,
+    "lufs": null,
+    "hash": "7e39e3853d6188262720cc1b6fe8ca480644ae045f55ec6c72c5240ba44b3446",
+    "at": 1784981566650
+   },
+   "lastError": null
+  },
+  "watch": {
+   "text": "修但幾咧……先看風向。",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.28,
+     "at": 1784981567095,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 37660,
+    "seconds": 2.28,
+    "lufs": null,
+    "hash": "23f223a2db2ff815b79d0fde3713d9913ff47c3b75c90e9aab41443dda01d003",
+    "at": 1784981567095
+   },
+   "lastError": null
+  },
+  "free-move": {
+   "text": "散開散開，逐家家己來！",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.8,
+     "at": 1784981569374,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 61902,
+    "seconds": 3.8,
+    "lufs": null,
+    "hash": "e6ff868a4353685675bcce7341b4ce990e031c6e72ae80cf78f784b64063941f",
+    "at": 1784981569374
+   },
+   "lastError": null
+  },
+  "first-blood": {
+   "text": "哇哈哈——首殺！恁爸開張啦！",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 4.16,
+     "at": 1784981583099,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 67753,
+    "seconds": 4.16,
+    "lufs": null,
+    "hash": "f3f5a40729e03279d1487e7bd3eb0252b1398720640df41dd8792da85e86bdb6",
+    "at": 1784981583100
+   },
+   "lastError": null
+  },
+  "kill-1": {
+   "text": "一個！先收一個！",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.52,
+     "at": 1784981581591,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 25539,
+    "seconds": 1.52,
+    "lufs": null,
+    "hash": "ba6e71c85506eadd4ed42710e8a6a820fcaddb57962866c1ad954177e6c4f16f",
+    "at": 1784981581591
+   },
+   "lastError": null
+  },
+  "kill-2": {
+   "text": "兩個！閣來閣來！",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.84,
+     "at": 1784981585173,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 62319,
+    "seconds": 3.84,
+    "lufs": null,
+    "hash": "d625851a54a1c6c7dab1c7bb006215878a26bf9ede51d57d092c239a8b014fb6",
+    "at": 1784981585173
+   },
+   "lastError": null
+  },
+  "kill-3": {
+   "text": "三個！擋袂牢矣喔！",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.12,
+     "at": 1784981599073,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 51035,
+    "seconds": 3.12,
+    "lufs": null,
+    "hash": "2728e9441d3cecc55b57515024ae2b1295362d2e8c9ffceb9ebc7b411da062da",
+    "at": 1784981599073
+   },
+   "lastError": null
+  },
+  "kill-4": {
+   "text": "四個！恁爸欲起痟矣啦！",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.52,
+     "at": 1784981598942,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 57304,
+    "seconds": 3.52,
+    "lufs": null,
+    "hash": "78ce4a1c19cbad54692f09c13bf1bfa3bf30155db56f394d847dbf398c8a4bfb",
+    "at": 1784981598942
+   },
+   "lastError": null
+  },
+  "kill-5": {
+   "text": "五殺啦！哇哈哈哈——五殺！",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 3.2,
+     "at": 1784981600908,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 52288,
+    "seconds": 3.2,
+    "lufs": null,
+    "hash": "3764947b418d3ed39a19e7b2c4fce42d15fd706fe47cec3d288fe2f6c93d8677",
+    "at": 1784981600908
+   },
+   "lastError": null
+  },
+  "unstoppable": {
+   "text": "無人擋會牢！規個戰場攏是我的黑泥啦——！",
+   "lang": "zh",
+   "textSource": "ai",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 4.48,
+     "at": 1784981614238,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 1,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 72768,
+    "seconds": 4.48,
+    "lufs": null,
+    "hash": "61ec7a45e9dd0d8724bf19c4df44fdff3c6aa4454e4d9d4d66d487a1f159b48f",
+    "at": 1784981614239
+   },
+   "lastError": null
+  },
+  "skill-name.q": {
+   "text": "黑泥噴吐！",
+   "lang": "ja",
+   "textSource": "imported",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.56,
+     "at": 1784981384150,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": null,
+     "at": 1784991113335,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.24,
+     "at": 1784991186237,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 20942,
+    "seconds": 1.24,
+    "lufs": null,
+    "hash": "d46768bf19bbf6b8d3055ca5a6d38537e2d7967a4b0e4617e4ba0bc1cce69331",
+    "at": 1784991186237
+   },
+   "lastError": null,
+   "kana": "コクデイ フント"
+  },
+  "skill-name.w": {
+   "text": "蹣跚衝撞！",
+   "lang": "ja",
+   "textSource": "imported",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.52,
+     "at": 1784981384188,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": null,
+     "at": 1784991115337,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.44,
+     "at": 1784991184056,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 24285,
+    "seconds": 1.44,
+    "lufs": null,
+    "hash": "d6fbbfca2d5132ba9514710ab2ee922faa5565e09d4939e7d527843f5b11a6a9",
+    "at": 1784991184056
+   },
+   "lastError": null,
+   "kana": "マンサン ショウトツ"
+  },
+  "skill-name.e": {
+   "text": "泥沼陷阱！",
+   "lang": "ja",
+   "textSource": "imported",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.32,
+     "at": 1784981398221,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": null,
+     "at": 1784991119341,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.68,
+     "at": 1784991199553,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 28047,
+    "seconds": 1.68,
+    "lufs": null,
+    "hash": "a38c06a48e2267d669782eb262b9486393f9cc89b42d955e874911e366b26317",
+    "at": 1784991199553
+   },
+   "lastError": null,
+   "kana": "デイショウ カンセイ"
+  },
+  "skill-name.r": {
+   "text": "聖杯溢出！",
+   "lang": "ja",
+   "textSource": "imported",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.24,
+     "at": 1784981399359,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": null,
+     "at": 1784991043221,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1,
+     "at": 1784991200919,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 17180,
+    "seconds": 1,
+    "lufs": null,
+    "hash": "bcd124cc9341667589126efc0c42500bf22ad06c64845ca8bc28d7f0a8590a64",
+    "at": 1784991200919
+   },
+   "lastError": null,
+   "kana": "セイハイ イッシュツ"
+  },
+  "skill-name.ex": {
+   "text": "バタンキュー！",
+   "lang": "ja",
+   "kana": "バタン キュー",
+   "textSource": "imported",
+   "state": "generated",
+   "takes": [
+    {
+     "take": 1,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.680249,
+     "at": 1784981397801,
+     "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": null,
+     "at": 1784991117339,
+     "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.64,
+     "at": 1784991213187,
+     "error": null
+    }
+   ],
+   "current": {
+    "take": 3,
+    "engine": "cosyvoice3",
+    "engineVersion": "cv3-0.5b",
+    "stub": false,
+    "bytes": 11328,
+    "seconds": 0.64,
+    "lufs": null,
+    "hash": "62be0801062748edd38f6cbd86a2b2a432f17fc27389ec6cf7520ae9a9f5a8e2",
+    "at": 1784991213187
+   },
+   "lastError": null
+  }
+ }
+}

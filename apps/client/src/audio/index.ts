@@ -55,6 +55,7 @@ export * from "./sfxEdges";
 export * from "./countdownCue";
 export * from "./championVoice";
 export * from "./selectVoiceLadder";
+export * from "./contextualVoice";
 export * from "./sfxManifest";
 export * from "./spatial";
 export * from "./combatSfxSpatial";

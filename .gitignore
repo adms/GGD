@@ -75,3 +75,11 @@ backup-*/
 __pycache__/
 *.pyc
 apps/platform/platform
+
+# generated voice-line pack PROVENANCE — the 24kHz clone SOURCE, per-take
+# renders and .method sidecars are never a playable line and never shipped; the
+# 46 mp3/hero + status.json + the generated champions/MANIFEST.json are (see
+# tools/voice-gen/index-lines.mjs, which verifies clips via status.json hashes).
+content/assets/audio/voices/lines/**/takes/
+content/assets/audio/voices/lines/**/reference.wav
+content/assets/audio/voices/lines/**/*.method

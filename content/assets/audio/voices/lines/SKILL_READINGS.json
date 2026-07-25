@@ -1,0 +1,1792 @@
+{
+ "id": "skill-readings",
+ "schema": "voice.skill-readings@1",
+ "note": "技能喊招的日文讀音登錄表。key = <championId>.<slot>；kana 為空格分詞片假名（模型實唸），name 為遊戲顯示名。basis: canonical=原作官方讀音(附來源) / onyomi / styled。",
+ "readings": {
+  "godie-e001.q": {
+   "name": "鬼隱之擊",
+   "kana": "オニカクシ ノ イチゲキ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "鬼隠し（オニカクシ）為ひぐらし官方篇章名「鬼隠し編」讀音; 技能本身為GGD組合, 之擊→の一撃"
+  },
+  "godie-e001.w": {
+   "name": "染血的柴刀",
+   "kana": "チゾメ ノ ナタ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "禮奈的招牌武器官方即為鉈（なた）, 血染め＝チゾメ為自然日語"
+  },
+  "godie-e001.e": {
+   "name": "五吋釘",
+   "kana": "ゴスン クギ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "對應日語固定詞「五寸釘（ごすんくぎ）」, ひぐらし作中亦出現此物"
+  },
+  "godie-e001.r": {
+   "name": "雛見澤症候群L5",
+   "kana": "ヒナミザワ ショウコウグン エル ファイブ",
+   "basis": "canonical",
+   "sourceUrl": "https://ja.wikipedia.org/wiki/%E9%9B%9B%E8%A6%8B%E6%B2%A2%E7%97%87%E5%80%99%E7%BE%A4",
+   "note": "已覆核: 官方用語 雛見沢症候群（ひなみざわしょうこうぐん）; L5 依 pixiv 百科可讀エルファイブ（另有俗稱エルゴ）, 喊招取エルファイブ較清晰"
+  },
+  "godie-e001.ex": {
+   "name": "月光下的決鬥者",
+   "kana": "ゲッカ ノ ケットウシャ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "GGD原創; 月下の決闘者, 用雅語「月下」貼合狂氣反差感"
+  },
+  "godie-e002.q": {
+   "name": "感知能力",
+   "kana": "カンチ ノウリョク",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "GGD泛用名（原作對應技能為「直感」但顯示名不同）, 直接音讀"
+  },
+  "godie-e002.w": {
+   "name": "風王結界",
+   "kana": "インビジブル エア",
+   "basis": "canonical",
+   "sourceUrl": "https://fate.fandom.com/ja/wiki/%E9%A2%A8%E7%8E%8B%E7%B5%90%E7%95%8C%EF%BC%88%E3%82%A4%E3%83%B3%E3%83%93%E3%82%B8%E3%83%96%E3%83%AB%E3%83%BB%E3%82%A2%EF%BC%89",
+   "note": "已覆核: 官方寫作 風王結界（ふうおうけっかい）ルビ為インビジブル・エア; 喊招用ルビ讀音"
+  },
+  "godie-e002.e": {
+   "name": "約束與勝利之劍",
+   "kana": "エクスカリバー",
+   "basis": "canonical",
+   "sourceUrl": "http://typemoon.com/contents/fate-stay-night/w5n1yv",
+   "note": "已覆核: TYPE-MOON官方 約束された勝利の剣（エクスカリバー）; Saber解放寶具時喊ルビ「エクスカリバー」"
+  },
+  "godie-e002.r": {
+   "name": "Avalon-永恆的理想鄉",
+   "kana": "アヴァロン",
+   "basis": "canonical",
+   "sourceUrl": "https://www.tmdict.com/ja/su.avalon",
+   "note": "已覆核: 官方 全て遠き理想郷（アヴァロン）; 全名讀スベテ トオキ リソウキョウ, 喊招用ルビ「アヴァロン」"
+  },
+  "godie-e002.ex": {
+   "name": "解放.約束勝利劍MAX",
+   "kana": "カイホウ エクスカリバー マックス",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "GGD強化版; 沿用官方寶具讀音エクスカリバー加解放/MAX"
+  },
+  "godie-e007.q": {
+   "name": "鬥仙術",
+   "kana": "トウセンジュツ",
+   "basis": "canonical",
+   "sourceUrl": "https://hissatuwaza.kill.jp/setume/senki.htm",
+   "note": "已覆核: 闘仙術為龍狼伝原作用語（志狼於仙界修行習得之體系, 頁內「闘仙術の最大の奥義」）, 讀音為標準音讀"
+  },
+  "godie-e007.w": {
+   "name": "仙氣．採藥",
+   "kana": "センキ サイヤク",
+   "basis": "canonical",
+   "sourceUrl": "https://hissatuwaza.kill.jp/setume/senki.htm",
+   "note": "已覆核: 原作第125話技 仙気功\"採薬\"; 依顯示名讀 仙気（せんき）採薬（さいやく）"
+  },
+  "godie-e007.e": {
+   "name": "破凰之心-徒手空破山",
+   "kana": "ハオウ ノ シン トシュ クウハザン",
+   "basis": "canonical",
+   "sourceUrl": "https://hissatuwaza.kill.jp/setume/senki.htm",
+   "note": "已覆核: 空破山（くうはざん）為原作第20話真空刃技, 來源頁明載可「素手で使用」即徒手＝としゅ; 破凰之心前綴為GGD音讀"
+  },
+  "godie-e007.r": {
+   "name": "龍氣爆發",
+   "kana": "リュウキ バクハツ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "龍気（りゅうき）為原作核心用語（志狼＝龍の子的力量）, 爆發為GGD組合"
+  },
+  "godie-e007.ex": {
+   "name": "仙氣發勁",
+   "kana": "センキ ハッケイ",
+   "basis": "canonical",
+   "sourceUrl": "https://hissatuwaza.kill.jp/setume/senki.htm",
+   "note": "已覆核: 原作第13話技 仙気発勁（せんきはっけい）, 來源頁明載「赤壁の闘いまでは主人公の最高技」"
+  },
+  "godie-e008.q": {
+   "name": "拔焰刀",
+   "kana": "バツ エントウ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "GGD名（拔出贄殿遮那的意象）, 直接音讀成中二喊法"
+  },
+  "godie-e008.w": {
+   "name": "火羽",
+   "kana": "ヒバネ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "GGD名, 訓讀ヒバネ（火の羽）較音讀自然, 貼合紅蓮双翼火羽意象"
+  },
+  "godie-e008.e": {
+   "name": "赤焰爆發",
+   "kana": "セキエン バクハツ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "GGD組合技名, 音讀"
+  },
+  "godie-e008.r": {
+   "name": "討滅封絕",
+   "kana": "トウメツ フウゼツ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "封絶（ふうぜつ）與討滅均為灼眼のシャナ原作用語讀音, 組合名為GGD"
+  },
+  "godie-e008.ex": {
+   "name": "天破壤碎",
+   "kana": "テンパ ジョウサイ",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.nicovideo.jp/a/%E7%81%BC%E7%9C%BC%E3%81%AE%E3%82%B7%E3%83%A3%E3%83%8A%E3%81%AE%E7%94%A8%E8%AA%9E%E4%B8%80%E8%A6%A7",
+   "note": "已覆核: 原作自在法 天破壌砕（てんぱじょうさい）, 紅蓮の大太刀之發展形, 動畫一期最終話夏娜正式使用"
+  },
+  "godie-e00k.q": {
+   "name": "斷末",
+   "kana": "ダンマツ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "GGD原創; 音讀, 取「断末魔」語感"
+  },
+  "godie-e00k.w": {
+   "name": "迴切",
+   "kana": "マワシギリ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "GGD原創; 劍技慣用訓讀（回し斬り）, 比音讀カイセツ更像刀技"
+  },
+  "godie-e00k.e": {
+   "name": "瞬切百殺",
+   "kana": "シュンセツ ヒャクサツ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "GGD原創; 音讀"
+  },
+  "godie-e00k.r": {
+   "name": "幻影暗殺",
+   "kana": "ゲンエイ アンサツ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "GGD原創; 音讀"
+  },
+  "godie-e00k.ex": {
+   "name": "紫色披風",
+   "kana": "ムラサキ ノ マント",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "GGD原創; 意譯「紫のマント」, 冷靜刺客低喊比音讀自然"
+  },
+  "godie-e00r.q": {
+   "name": "吞噬",
+   "kana": "ホショク",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "初號機吞食使徒(捕食)場景的意譯; 該角色為非語言怪獸聲, 讀音僅供標記"
+  },
+  "godie-e00r.w": {
+   "name": "高週波短刀",
+   "kana": "プログレッシブ ナイフ",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E3%83%97%E3%83%AD%E3%82%B0%E3%83%AC%E3%83%83%E3%82%B7%E3%83%96%E3%83%8A%E3%82%A4%E3%83%95",
+   "note": "EVA標配高振動粒子刀的官方名稱 Progressive Knife; 覆核確認pixiv百科條目存在且描述一致"
+  },
+  "godie-e00r.e": {
+   "name": "AT力場",
+   "kana": "エーティー フィールド",
+   "basis": "canonical",
+   "sourceUrl": "https://ja.wikipedia.org/wiki/%E6%96%B0%E4%B8%96%E7%B4%80%E3%82%A8%E3%83%B4%E3%82%A1%E3%83%B3%E3%82%B2%E3%83%AA%E3%82%AA%E3%83%B3%E3%81%AE%E7%94%A8%E8%AA%9E%E4%B8%80%E8%A6%A7",
+   "note": "A.T.フィールド(Absolute Terror FIELD)官方讀法; 覆核確認Wikipedia用語一覽收錄"
+  },
+  "godie-e00r.r": {
+   "name": "野戰型陽電子砲",
+   "kana": "ヤセンガタ ヨウデンシホウ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "陽電子砲(ようでんしほう)為ヤシマ作戰正典武器, 全稱ポジトロンスナイパーライフル; 但「野戰型陽電子砲」複合詞為GGD自創, 比照完全暴走準則降級為音讀"
+  },
+  "godie-e00r.ex": {
+   "name": "完全暴走",
+   "kana": "カンゼン ボウソウ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "暴走(ぼうそう)是EVA正典術語, 但「完全暴走」複合詞為GGD自創, 故不標canonical"
+  },
+  "godie-e00w.q": {
+   "name": "百烈櫻華斬",
+   "kana": "ヒャクレツ オウカザン",
+   "basis": "canonical",
+   "sourceUrl": "https://ja.wikipedia.org/wiki/%E4%BA%AC%E9%83%BD%E7%A5%9E%E9%B3%B4%E6%B5%81",
+   "note": "京都神鳴流技, Wikipedia標音ひゃくれつおうかざん (覆核確認)"
+  },
+  "godie-e00w.w": {
+   "name": "雷鳴劍",
+   "kana": "ライメイケン",
+   "basis": "canonical",
+   "sourceUrl": "https://ja.wikipedia.org/wiki/%E4%BA%AC%E9%83%BD%E7%A5%9E%E9%B3%B4%E6%B5%81",
+   "note": "京都神鳴流技 雷鳴剣(らいめいけん) (覆核確認)"
+  },
+  "godie-e00w.e": {
+   "name": "GLADIARIA ALAT",
+   "kana": "グラディアリア アラータ",
+   "basis": "canonical",
+   "sourceUrl": "https://ja.wikipedia.org/wiki/%E9%AD%94%E6%B3%95%E5%85%88%E7%94%9F%E3%83%8D%E3%82%AE%E3%81%BE!%E3%81%AE%E7%99%BB%E5%A0%B4%E4%BA%BA%E7%89%A9",
+   "note": "刹那的假契約稱號 GLADIARIA ALATA(翼ある剣士/有翼的劍士); GGD名稱截短了尾字母A; 改引Wikipedia登場人物頁(fandom原連結無法覆核)"
+  },
+  "godie-e00w.r": {
+   "name": "真-雷光劍",
+   "kana": "シン ライコウケン",
+   "basis": "canonical",
+   "sourceUrl": "https://ja.wikipedia.org/wiki/%E4%BA%AC%E9%83%BD%E7%A5%9E%E9%B3%B4%E6%B5%81",
+   "note": "神鳴流決戰奧義 真・雷光剣(しん・らいこうけん) (覆核確認)"
+  },
+  "godie-e00w.ex": {
+   "name": "御雷劍",
+   "kana": "ミカヅチケン",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "已覆核Wikipedia神鳴流技表確認查無此技; 取雷神建御雷(タケミカヅチ)的訓讀みかづち, 貼合雷系劍士風格"
+  },
+  "godie-edem.q": {
+   "name": "火遁-豪火龍之術",
+   "kana": "カトン ゴウリュウカ ノ ジュツ",
+   "basis": "canonical",
+   "sourceUrl": "https://ooyake01.com/gouryuukanojutsu",
+   "note": "正典為佐助的火遁・豪龍火の術(ごうりゅうかのじゅつ); GGD字序寫成豪火龍, 喊音採官方讀法 (覆核確認)"
+  },
+  "godie-edem.w": {
+   "name": "千鳥流",
+   "kana": "チドリ ナガシ",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E5%8D%83%E9%B3%A5(NARUTO)",
+   "note": "千鳥流し(ちどりながし) (覆核確認, pixiv另有專條千鳥流し)"
+  },
+  "godie-edem.e": {
+   "name": "千鳥",
+   "kana": "チドリ",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E5%8D%83%E9%B3%A5(NARUTO)",
+   "note": ""
+  },
+  "godie-edem.r": {
+   "name": "哥哥",
+   "kana": "ニイサン",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "佐助對鼬的稱呼「兄さん」; 原作無此技名, 以壓抑恨意的一聲ニイサン最貼角色"
+  },
+  "godie-edem.ex": {
+   "name": "天照",
+   "kana": "アマテラス",
+   "basis": "canonical",
+   "sourceUrl": "https://naruto-official.com/anime/naruto2/list/01_581",
+   "note": "官方讀法あまてらす; 覆核確認官網疾風傳第357話標題即天照（あまてらす）"
+  },
+  "godie-emfr.q": {
+   "name": "風精召喚",
+   "kana": "ウェニアント スピーリトゥス アエリアーレス",
+   "basis": "canonical",
+   "sourceUrl": "https://note.com/skylapislazuli/n/n0ec90591b2af",
+   "note": "來吧風之精靈 Veniant Spiritus Aeriales, 涅吉風精召喚咒文; 覆核詠唱引文修正スピリトゥス→スピーリトゥス(長音)"
+  },
+  "godie-emfr.w": {
+   "name": "沉睡之霧",
+   "kana": "ネブラ ヒュプノーティカ",
+   "basis": "canonical",
+   "sourceUrl": "https://plaza.rakuten.co.jp/tanahasieri/4001/",
+   "note": "眠りの霧 Nebula Hypnotica (第1話對明日菜使用的催眠咒); 呪文集引文直接標ネブラ・ヒュプノーティカ"
+  },
+  "godie-emfr.e": {
+   "name": "雷電風暴",
+   "kana": "ヨウィス テンペスタース フルグリエンス",
+   "basis": "canonical",
+   "sourceUrl": "https://note.com/skylapislazuli/n/n0ec90591b2af",
+   "note": "雷の嵐 Jovis Tempestas Fulguriens, 涅吉招牌攻擊咒文; 覆核引文完全一致, 改引考據文(原syosetu連結為二創)"
+  },
+  "godie-emfr.r": {
+   "name": "千之雷",
+   "kana": "キーリプル アストラペー",
+   "basis": "canonical",
+   "sourceUrl": "https://note.com/skylapislazuli/n/n0ec90591b2af",
+   "note": "千の雷 Chilipl Astrape (希臘語咒文); 覆核引文為キーリプル・アストラペー, 修正キリプル→キーリプル(長音)"
+  },
+  "godie-emfr.ex": {
+   "name": "風花-武裝解除",
+   "kana": "フランス エクサルマティオー",
+   "basis": "canonical",
+   "sourceUrl": "https://plaza.rakuten.co.jp/tanahasieri/4001/",
+   "note": "風花・武装解除 Flans Exarmatio, 呪文集引文標フランス・エクサルマティオー (必殺技辞典作フラン・エクサルマティオ, 採原作旁註音系)"
+  },
+  "godie-emns.q": {
+   "name": "死神之眼",
+   "kana": "シニガミ ノ メ",
+   "basis": "canonical",
+   "sourceUrl": "https://www.weblio.jp/content/%E6%AD%BB%E7%A5%9E%E3%81%AE%E7%9B%AE",
+   "note": "死神の目(しにがみのめ), 半條命交易獲得的能力 (覆核確認weblio條目存在)"
+  },
+  "godie-emns.w": {
+   "name": "死神的規則",
+   "kana": "シニガミ ノ ルール",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "原作用語為デスノートのルール; 依GGD顯示名意譯為死神のルール"
+  },
+  "godie-emns.e": {
+   "name": "火車輾過",
+   "kana": "レッシャ ジコ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "列車事故(れっしゃじこ); 月在筆記本上書寫死因的橋段意譯, 原作無固定技名"
+  },
+  "godie-emns.r": {
+   "name": "心臟麻痺",
+   "kana": "シンゾウ マヒ",
+   "basis": "canonical",
+   "sourceUrl": "https://note.com/clean_coyote980/n/n49c837c21f67",
+   "note": "心臓麻痺(しんぞうまひ), 不寫死因時的預設死法, 基拉招牌; 改引可覆核的專文(原chiebukuro連結未能查證)"
+  },
+  "godie-emns.ex": {
+   "name": "交換筆記本",
+   "kana": "ノート コウカン",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "ノートの交換(所有權轉移詭計)的意譯, 原作無固定技名"
+  },
+  "godie-etyr.q": {
+   "name": "東風繪扇、南風末廣",
+   "kana": "コチ ノ ヒオウギ ハエ ノ スエヒロ",
+   "basis": "canonical",
+   "sourceUrl": "https://wiki3.jp/aniwotadata/page/15448",
+   "note": "近衛木乃香の仮契約アーティファクト「東風ノ檜扇(コチノヒオウギ)/南風ノ末廣(ハエノスエヒロ)」。台譯「繪扇」對應原作「檜扇」。拉丁名フラーベルム・エウリー/アウストラーレ亦可作替代唸法。已覆核: 來源頁存在且明載兩讀音, pixiv百科(近衛木乃香)同"
+  },
+  "godie-etyr.w": {
+   "name": "魔力應援",
+   "kana": "マリョク オウエン",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "GGD 原創技, 音讀直唸"
+  },
+  "godie-etyr.e": {
+   "name": "式神炸裂",
+   "kana": "シキガミ サクレツ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "木乃香出身關西陰陽道名門設定, 式神用通行讀法シキガミ; 技名本身為 GGD 原創"
+  },
+  "godie-etyr.r": {
+   "name": "聖夜降臨",
+   "kana": "セイヤ コウリン",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "GGD 原創技, 音讀直唸"
+  },
+  "godie-etyr.ex": {
+   "name": "魔力激發",
+   "kana": "マリョク ゲキハツ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "GGD 原創技, 音讀直唸"
+  },
+  "godie-h00l.q": {
+   "name": "科奇利族的迴旋鏢",
+   "kana": "コキリ ノ ブーメラン",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "コキリ族為時之笛官方種族名+官方道具名ブーメラン的組合; 完整技名非官方道具名。注意林克 persona 為 nonverbal, 生成端宜以短呼喝為主"
+  },
+  "godie-h00l.w": {
+   "name": "鎖鏈槍",
+   "kana": "フックショット",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E3%83%95%E3%83%83%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88",
+   "note": "薩爾達官方道具 Hookshot=フックショット, 鎖鏈槍即其台譯。已覆核: 任天堂官網(時のオカリナ3D)與 pixiv百科同表記"
+  },
+  "godie-h00l.e": {
+   "name": "海拉爾之盾的庇護",
+   "kana": "ハイリア ノ タテ ノ カゴ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "盾名採官方ハイリアの盾; 「庇護」意譯為日語常用的加護(カゴ), 較音讀ヒゴ自然"
+  },
+  "godie-h00l.r": {
+   "name": "迴旋斬",
+   "kana": "カイテンギリ",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E5%9B%9E%E8%BB%A2%E6%96%AC%E3%82%8A",
+   "note": "薩爾達傳統奧義 Spin Attack=回転斬り(かいてんぎり)。已覆核: pixiv百科/Zelda Wiki 均以回転斬り為正式名"
+  },
+  "godie-h00l.ex": {
+   "name": "絕光斬",
+   "kana": "ゼッコウザン",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "查無對應官方技名 (曙光公主最終奧義為大回転斬り), 視為 GGD 原創, 音讀直唸"
+  },
+  "godie-h01n.q": {
+   "name": "瞬步",
+   "kana": "シュンポ",
+   "basis": "canonical",
+   "sourceUrl": "https://wazameikan.com/%E7%9E%AC%E6%AD%A9/",
+   "note": "BLEACH 死神高速步法, 官方讀音しゅんぽ。已覆核: 技名鑑頁存在, pixiv百科(死神(BLEACH))同"
+  },
+  "godie-h01n.w": {
+   "name": "斬擊",
+   "kana": "ザンゲキ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "通用招式名, 音讀直唸"
+  },
+  "godie-h01n.e": {
+   "name": "月牙天衝",
+   "kana": "ゲツガ テンショウ",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E6%9C%88%E7%89%99%E5%A4%A9%E8%A1%9D",
+   "note": "斬月唯一技, 官方讀音げつがてんしょう。已覆核: pixiv百科條目名即標音"
+  },
+  "godie-h01n.r": {
+   "name": "卍解",
+   "kana": "バンカイ",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E5%8D%8D%E8%A7%A3",
+   "note": "官方讀音ばんかい。已覆核: 一護卍解=天鎖斬月, 讀音無誤"
+  },
+  "godie-h01n.ex": {
+   "name": "虛化",
+   "kana": "ホロウカ",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E8%99%9A%E5%8C%96",
+   "note": "BLEACH 中虚化官方讀音為ほろうか (虚=ホロウ)。已覆核: pixiv百科條目「虚化 (ほろうか)」"
+  },
+  "godie-h01u.q": {
+   "name": "天下無雙",
+   "kana": "テンカ ムソウ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "標準四字熟語讀音てんかむそう, 同時是無雙系列呂布的代名詞; 無雙8官方稱號為「最強の鬼神」故不標 canonical"
+  },
+  "godie-h01u.w": {
+   "name": "弒鬼神",
+   "kana": "シキシン",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "GGD 原創技, 弒(シ)+鬼神(キシン)音讀"
+  },
+  "godie-h01u.e": {
+   "name": "鬼神烈戟",
+   "kana": "キシン レツゲキ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "GGD 原創技, 音讀直唸"
+  },
+  "godie-h01u.r": {
+   "name": "赤兔咆哮",
+   "kana": "セキト ホウコウ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "赤兔取官方馬名赤兎馬(せきとば)的讀法セキト; 技名本身為 GGD 原創"
+  },
+  "godie-h01u.ex": {
+   "name": "戰無不勝",
+   "kana": "センム フショウ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "中文成語, 依漢字音讀唸出"
+  },
+  "godie-h020.q": {
+   "name": "火球術",
+   "kana": "ファイアー ボール",
+   "basis": "canonical",
+   "sourceUrl": "http://yue.sakura.ne.jp/melody/ware/store/b/slayers.html",
+   "note": "スレイヤーズ基本攻擊魔法 Fireball=ファイアー・ボール, 火球術為其台譯。已覆核: 咒文リスト頁存在且列出該咒文"
+  },
+  "godie-h020.w": {
+   "name": "炸彈陣",
+   "kana": "ダイル ブランド",
+   "basis": "canonical",
+   "sourceUrl": "http://yue.sakura.ne.jp/melody/ware/store/b/slayers.html",
+   "note": "地面爆裂系精靈魔法 Dill Brand, 日方標準片假名ダイル・ブランド (咒文リスト已列出)。台版對照表 (mypaper.pchome.com.tw/a10820h/post/1323017572, 已覆核存在) 確認炸彈陣=Dill Brand, 惟該表記デイル・ブラント為異表記, 故 source 改指日方標準表記來源"
+  },
+  "godie-h020.e": {
+   "name": "龍破斬",
+   "kana": "ドラグ スレイブ",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E3%83%89%E3%83%A9%E3%82%B0%E3%82%B9%E3%83%AC%E3%82%A4%E3%83%96",
+   "note": "竜破斬（ドラグ・スレイブ）, 莉娜招牌黑魔法。已覆核: pixiv百科(ドラグスレイブ/竜破斬)確認表記與讀音"
+  },
+  "godie-h020.r": {
+   "name": "神滅斬",
+   "kana": "ラグナ ブレード",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E7%A5%9E%E6%BB%85%E6%96%AC",
+   "note": "神滅斬是ラグナ・ブレード的官方漢字表記 (混沌之刃, 引金色の魔王之力); 注意並非重破斬（ギガ・スレイブ）。已覆核: pixiv百科(神滅斬)存在"
+  },
+  "godie-h020.ex": {
+   "name": "惡夢魔王的碎片",
+   "kana": "アクム ノ オウ ノ ヒトカケ",
+   "basis": "canonical",
+   "sourceUrl": "https://www.0en-game.com/free/ss-slayers_ragna-blade.htm",
+   "note": "取自ラグナ・ブレード詠唱首句「悪夢の王の一欠けよ」(ひとかけ), 惡夢之王即金色の魔王 (Lord of Nightmares)。已覆核: 詠唱全文來源存在, 一欠け讀ひとかけ無誤"
+  },
+  "godie-h02k.q": {
+   "name": "憤怒的頭槌",
+   "kana": "イカリ ノ ズツキ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "GGD原創熊貓技, 意譯: 怒りの頭突き"
+  },
+  "godie-h02k.w": {
+   "name": "憤怒的菊花",
+   "kana": "イカリ ノ キッカ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "菊花音読み キッカ, 保留原名的搞笑雙關"
+  },
+  "godie-h02k.e": {
+   "name": "憤怒的胸毛",
+   "kana": "イカリ ノ ムナゲ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "胸毛=ムナゲ, 喜劇角色用直白訓読更好笑"
+  },
+  "godie-h02k.r": {
+   "name": "憤怒的簡諧運動",
+   "kana": "イカリ ノ カンカイ ウンドウ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "日文正式物理術語是単振動(タンシンドウ), 但保留簡諧運動的直讀更貼原名荒謬感"
+  },
+  "godie-h02k.ex": {
+   "name": "俄羅斯輪盤",
+   "kana": "ロシアン ルーレット",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "通用外來語"
+  },
+  "godie-h02r.q": {
+   "name": "飛葉快刀",
+   "kana": "ハッパ カッター",
+   "basis": "canonical",
+   "sourceUrl": "https://wiki.xn--rckteqa2e.com/wiki/%E3%81%AF%E3%81%A3%E3%81%B1%E3%82%AB%E3%83%83%E3%82%BF%E3%83%BC",
+   "note": "寶可夢官方招式 はっぱカッター (Razor Leaf); WebSearch 覆核確認, ポケモンWiki 頁面存在"
+  },
+  "godie-h02r.w": {
+   "name": "麻痺粉",
+   "kana": "シビレゴナ",
+   "basis": "canonical",
+   "sourceUrl": "https://wiki.xn--rckteqa2e.com/wiki/%E3%81%97%E3%81%B3%E3%82%8C%E3%81%94%E3%81%AA",
+   "note": "寶可夢官方招式 しびれごな (Stun Spore); WebSearch 覆核確認, ポケモンWiki 頁面存在"
+  },
+  "godie-h02r.e": {
+   "name": "藤鞭",
+   "kana": "ツル ノ ムチ",
+   "basis": "canonical",
+   "sourceUrl": "https://wiki.xn--rckteqa2e.com/wiki/%E3%81%A4%E3%82%8B%E3%81%AE%E3%83%A0%E3%83%81",
+   "note": "寶可夢官方招式 つるのムチ (Vine Whip); WebSearch 覆核確認, ポケモンWiki 頁面存在"
+  },
+  "godie-h02r.r": {
+   "name": "陽光烈焰",
+   "kana": "ソーラー ビーム",
+   "basis": "canonical",
+   "sourceUrl": "https://pokemongo-get.com/move/505/",
+   "note": "寶可夢官方招式 ソーラービーム (Solar Beam); WebSearch 覆核確認, 來源頁面存在"
+  },
+  "godie-h02r.ex": {
+   "name": "超進化! 妙蛙花",
+   "kana": "メガシンカ フシギバナ",
+   "basis": "canonical",
+   "sourceUrl": "https://www.pokemon.co.jp/ex/xy/pokemon/mega/09.html",
+   "note": "超進化=メガシンカ(官方用語), 妙蛙花官方日文名 フシギバナ, 該型態官方名メガフシギバナ; 原引 wiki.pokemonwiki.com 查無此站, 改引 pokemon.co.jp 官方メガフシギバナ頁"
+  },
+  "godie-h02u.q": {
+   "name": "臥草泥馬",
+   "kana": "ガ ソウデイバ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "草泥馬日文圈通用讀法 そうでいば + 臥音読み ガ; 中國迷因無官方日文喊法"
+  },
+  "godie-h02u.w": {
+   "name": "狂草泥馬",
+   "kana": "キョウ ソウデイバ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "與 q 同系列, 狂=キョウ"
+  },
+  "godie-h02u.e": {
+   "name": "消化液",
+   "kana": "ショウカエキ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": ""
+  },
+  "godie-h02u.r": {
+   "name": "馬勒戈壁",
+   "kana": "マーラー ゴビ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "迷因地名「馬勒戈壁(Mahler Gobi)沙漠」, 戈壁日文通用 ゴビ, 音譯保留迷因感"
+  },
+  "godie-h02u.ex": {
+   "name": "最終戈壁",
+   "kana": "サイシュウ ゴビ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "與 r 的 ゴビ 讀法一致"
+  },
+  "godie-hapm.q": {
+   "name": "狂戰士之怒",
+   "kana": "キョウセンシ ノ イカリ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "非 Fate 官方技名 (職階名官方為バーサーカー), 取音読み+意譯"
+  },
+  "godie-hapm.w": {
+   "name": "蹂躪編年史",
+   "kana": "ジュウリン ヘンネンシ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "查無 Fate 官方對應寶具/技名, 依漢字音読み"
+  },
+  "godie-hapm.e": {
+   "name": "無銘斧劍",
+   "kana": "ムメイ ノ フケン",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "Fate 設定中海克力斯武器為石造斧剣(フケン), 但無官方技名讀音, 故列 styled"
+  },
+  "godie-hapm.r": {
+   "name": "巨神一擊",
+   "kana": "キョシン ノ イチゲキ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "GGD 側命名, 音読み意譯"
+  },
+  "godie-hapm.ex": {
+   "name": "射殺百頭",
+   "kana": "ナイン ライブズ",
+   "basis": "canonical",
+   "sourceUrl": "https://typemoon.wiki.cre.jp/wiki/%E3%83%98%E3%83%A9%E3%82%AF%E3%83%AC%E3%82%B9",
+   "note": "Fate 官方寶具「射殺す百頭」讀作ナインライブズ (Nine Lives); WebSearch 覆核確認, TYPE-MOON Wiki 頁面存在"
+  },
+  "godie-hart.q": {
+   "name": "凶斬",
+   "kana": "キョウギリ",
+   "basis": "canonical",
+   "sourceUrl": "https://gamewith.jp/ff7/article/show/253526",
+   "note": "FF7 克勞德 Limit 技「凶斬り」(Braver 系 Lv1 第2技), 讀 きょうぎり; WebSearch 覆核確認, 來源頁面存在"
+  },
+  "godie-hart.w": {
+   "name": "隕石擊",
+   "kana": "メテオ レイン",
+   "basis": "canonical",
+   "sourceUrl": "https://gamewith.jp/ff7/article/show/253526",
+   "note": "對應克勞德 Lv3 Limit 技 メテオレイン (Meteorain), 原文即片假名; WebSearch 覆核確認"
+  },
+  "godie-hart.e": {
+   "name": "畫龍點睛",
+   "kana": "ガリョウ テンセイ",
+   "basis": "canonical",
+   "sourceUrl": "https://gamewith.jp/ff7/article/show/253526",
+   "note": "FF7 Lv3 Limit 技「画竜点睛」(Finishing Touch), 讀 がりょうてんせい; 已向 FF用語辞典Wiki 覆核ふりがな確為がりょう非がりゅう"
+  },
+  "godie-hart.r": {
+   "name": "超究武神霸斬",
+   "kana": "チョウキュウ ブシン ハザン",
+   "basis": "canonical",
+   "sourceUrl": "https://cour89.com/ff7/skills/limit/141.php",
+   "note": "FF7 克勞德最終 Limit 技「超究武神覇斬」, 讀 ちょうきゅうぶしんはざん; WebSearch 覆核確認 (ニコニコ大百科/ピクシブ百科同讀音)"
+  },
+  "godie-hart.ex": {
+   "name": "究極魔劍",
+   "kana": "キュウキョク マケン",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "覆核仍查無 FF7 官方同名技 (非 Limit 技一覽內), 依漢字音読み, 不冒稱 canonical"
+  },
+  "godie-hpal.q": {
+   "name": "土爪",
+   "kana": "トウチャオ",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E5%9C%9F%E7%88%AA",
+   "note": "3×3EYES獣魔術。ピクシブ百科事典の見出しが「土爪(とうちゃお)」。WebSearchで再確認済み"
+  },
+  "godie-hpal.w": {
+   "name": "石絲",
+   "kana": "シースー",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "原作の石化獣魔だが読みの一次ソース未確認 (再検索でも確認できず)。シリーズの中国語ピンイン読み慣例 (土爪=トウチャオ, 走鱗=ツォウリン, 鏡蠱=チンクウ) に従い shísī→シースー"
+  },
+  "godie-hpal.e": {
+   "name": "鏡蠱",
+   "kana": "チンクウ",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E9%8F%A1%E8%A0%B1",
+   "note": "反射能力の獣魔。ピクシブ百科事典の専用記事見出しが「鏡蠱 (ちんくう)」。光魔術を反射する下位獣魔"
+  },
+  "godie-hpal.r": {
+   "name": "光牙",
+   "kana": "クァンヤー",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E5%85%89%E7%89%99(3%C3%973EYES)",
+   "note": "ピクシブ百科事典の専用記事「光牙(3×3EYES)」の読みはクァンヤー。表記ゆれのコアンヤーではなく原典表記を採用 (審核で修正)"
+  },
+  "godie-hpal.ex": {
+   "name": "出來吧!全部的魔獸",
+   "kana": "イデヨ スベテ ノ ジュウマ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "GGDオリジナル召喚技。原作用語では魔獣ではなく獣魔 (ジュウマ) と呼ぶためそれに合わせた"
+  },
+  "godie-hpb1.q": {
+   "name": "臨、兵、鬥",
+   "kana": "リン ピョウ トウ",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E4%B9%9D%E5%AD%97%E8%AD%B7%E8%BA%AB%E6%B3%95",
+   "note": "九字護身法「臨・兵・闘・者・皆・陣・列・在・前」(りん・ぴょう・とう・しゃ・かい・じん・れつ・ざい・ぜん) の標準読み前3字。Wikipedia でも同読みを確認"
+  },
+  "godie-hpb1.w": {
+   "name": "者、皆、陣",
+   "kana": "シャ カイ ジン",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E4%B9%9D%E5%AD%97%E8%AD%B7%E8%BA%AB%E6%B3%95",
+   "note": "九字護身法の中3字"
+  },
+  "godie-hpb1.e": {
+   "name": "列、在、前",
+   "kana": "レツ ザイ ゼン",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E4%B9%9D%E5%AD%97%E8%AD%B7%E8%BA%AB%E6%B3%95",
+   "note": "九字護身法の後3字"
+  },
+  "godie-hpb1.r": {
+   "name": "神聖結界",
+   "kana": "シンセイ ケッカイ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "原作 (うしおととら) に同名技は確認できず。標準音読み"
+  },
+  "godie-hpb1.ex": {
+   "name": "獸矛持有者",
+   "kana": "ケモノ ノ ヤリ ノ ケイショウシャ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "原作うしおととらの武器は獣の槍 (けもののやり)。持有者は継承者として意訳"
+  },
+  "godie-huth.q": {
+   "name": "吃掉你",
+   "kana": "タベチャウゾ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "ブウの幼児口調セリフ風の意訳"
+  },
+  "godie-huth.w": {
+   "name": "把你變成餅乾",
+   "kana": "オカシ ニ ナッチャエ",
+   "basis": "canonical",
+   "sourceUrl": "https://www.weblio.jp/content/%E5%A4%89%E5%8C%96%E3%83%93%E3%83%BC%E3%83%A0+/+%E8%B6%85%E3%81%8A%E3%82%84%E3%81%A4%E5%85%89%E7%B7%9A+/+%E3%81%8A%E8%8F%93%E5%AD%90%E3%81%AB%E3%81%AA%E3%81%A3%E3%81%A1%E3%82%83%E3%81%88!+/+%E3%83%81%E3%83%A7%E3%82%B3%E3%83%AC%E3%83%BC%E3%83%88%E3%83%93%E3%83%BC%E3%83%A0",
+   "note": "変化ビームの公式別名「お菓子になっちゃえ!」(Weblio 見出しを WebSearch で実在確認)。餅乾に厳密に寄せるなら クッキー ニ ナッチャエ も可"
+  },
+  "godie-huth.e": {
+   "name": "分身",
+   "kana": "ブンシン",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": ""
+  },
+  "godie-huth.r": {
+   "name": "破滅能量彈",
+   "kana": "ハメツ ノ エネルギーダン",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "公式技名 (プラネットバースト等) と同定できず。意訳読み"
+  },
+  "godie-huth.ex": {
+   "name": "普烏死亡",
+   "kana": "ブウ シス",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "「ブウ、死す」風の劇的宣告読み。GGDオリジナル技名"
+  },
+  "godie-hvsh.q": {
+   "name": "魔法鎖鏈",
+   "kana": "マホウ ノ クサリ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "ライダーの鎖付き杭剣に公式の技名読みは無い。意訳読み"
+  },
+  "godie-hvsh.w": {
+   "name": "心眼",
+   "kana": "シンガン",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "Fateシリーズのスキル「心眼 (真/偽)」も同じ読み"
+  },
+  "godie-hvsh.e": {
+   "name": "鮮血神殿",
+   "kana": "ブラッドフォート アンドロメダ",
+   "basis": "canonical",
+   "sourceUrl": "https://ciatr.jp/topics/315424",
+   "note": "宝具「他者封鎖・鮮血神殿 (ブラッドフォート・アンドロメダ)」。WebSearchで読みと出典を再確認済み"
+  },
+  "godie-hvsh.r": {
+   "name": "騎英之疆繩",
+   "kana": "ベルレフォーン",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E9%A8%8E%E8%8B%B1%E3%81%AE%E6%89%8B%E7%B6%B1",
+   "note": "宝具「騎英の手綱 (ベルレフォーン)」。ピクシブ百科事典記事の読みで確認。元ドラフトの電撃ホビーURLは実在確認できず差し替え (審核で修正)"
+  },
+  "godie-hvsh.ex": {
+   "name": "騎英之疆繩MAX",
+   "kana": "ベルレフォーン マックス",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "本体読みは canonical (ベルレフォーン)、MAXはGGD付加"
+  },
+  "godie-hvwd.q": {
+   "name": "破魔之箭",
+   "kana": "ハマ ノ ヤ",
+   "basis": "canonical",
+   "sourceUrl": "https://ja.wikipedia.org/wiki/%E7%8A%AC%E5%A4%9C%E5%8F%89",
+   "note": "犬夜叉の桔梗/かごめの「破魔の矢 (はまのや)」。WebSearchで読みを再確認済み"
+  },
+  "godie-hvwd.w": {
+   "name": "明鏡止水",
+   "kana": "メイキョウ シスイ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "四字熟語の標準読み"
+  },
+  "godie-hvwd.e": {
+   "name": "魂飛魄散",
+   "kana": "コンピ ハクサン",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "中国語成語の音読み"
+  },
+  "godie-hvwd.r": {
+   "name": "百鬼夜行",
+   "kana": "ヒャッキ ヤコウ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "標準読み"
+  },
+  "godie-hvwd.ex": {
+   "name": "神通眼",
+   "kana": "ジンツウガン",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "GGDオリジナル。神通力に準じた音読み"
+  },
+  "godie-n003.q": {
+   "name": "凍結的大地",
+   "kana": "クリスタリザティオー テルストリス",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E3%82%A8%E3%83%B4%E3%82%A1%E3%83%B3%E3%82%B8%E3%82%A7%E3%83%AA%E3%83%B3%E3%83%BBA%E3%83%BBK%E3%83%BB%E3%83%9E%E3%82%AF%E3%83%80%E3%82%A6%E3%82%A7%E3%83%AB",
+   "note": "原作 Evangeline 冰咒「凍る大地」的拉丁語詠唱 Crystallizatio Tellustris; 詠唱結尾即喊此名。審核修正: 原稿「クリュスタリザティオー」誤植, 多來源確認為「クリスタリザティオー」(無ュ)"
+  },
+  "godie-n003.w": {
+   "name": "吸血祭品",
+   "kana": "ブラッド サクリファイス",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "無原作對應技; 配合其西洋真祖吸血鬼形象採英語系中二意譯 (Blood Sacrifice)"
+  },
+  "godie-n003.e": {
+   "name": "暗夜吹雪",
+   "kana": "ニウィス テンペスタース オブスクランス",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E3%82%A8%E3%83%B4%E3%82%A1%E3%83%B3%E3%82%B8%E3%82%A7%E3%83%AA%E3%83%B3%E3%83%BBA%E3%83%BBK%E3%83%BB%E3%83%9E%E3%82%AF%E3%83%80%E3%82%A6%E3%82%A7%E3%83%AB",
+   "note": "原作闇屬性吹雪咒「闇の吹雪」Nivis Tempestas Obscurans, Evangeline 的冰+闇代表咒之一; 讀音經覆核確認"
+  },
+  "godie-n003.r": {
+   "name": "世界終結",
+   "kana": "コズミケー カタストロフェー",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E3%82%A8%E3%83%B4%E3%82%A1%E3%83%B3%E3%82%B8%E3%82%A7%E3%83%AA%E3%83%B3%E3%83%BBA%E3%83%BBK%E3%83%BB%E3%83%9E%E3%82%AF%E3%83%80%E3%82%A6%E3%82%A7%E3%83%AB",
+   "note": "Evangeline 最強冰咒「終わる世界」的希臘語詠唱 Κοσμικη Καταστροφη; 讀音コズミケー・カタストロフェー經覆核確認 (修學旅行篇一擊消滅兩面宿儺之神)"
+  },
+  "godie-n003.ex": {
+   "name": "魔力印章",
+   "kana": "シギルム マギクム",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "無原作對應技名; 依其拉丁語咒文美學擬拉丁語 Sigillum Magicum (魔力之印)"
+  },
+  "godie-n00b.q": {
+   "name": "空氣砲",
+   "kana": "クウキホウ",
+   "basis": "canonical",
+   "sourceUrl": "https://ja.wikipedia.org/wiki/%E7%A9%BA%E6%B0%97%E7%A0%B2_(%E3%83%89%E3%83%A9%E3%81%88%E3%82%82%E3%82%93)",
+   "note": "官方道具名: 空気砲 (くうきほう), Wikipedia/pixiv 確認; 初出「未来世界の怪人」"
+  },
+  "godie-n00b.w": {
+   "name": "複製鏡",
+   "kana": "フエルミラー",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E3%83%95%E3%82%A8%E3%83%AB%E3%83%9F%E3%83%A9%E3%83%BC",
+   "note": "複製鏡為「フエルミラー」的中譯: 映入鏡中之物即被複製取出的道具; pixiv 百科確認"
+  },
+  "godie-n00b.e": {
+   "name": "任意門",
+   "kana": "ドコデモドア",
+   "basis": "canonical",
+   "sourceUrl": "https://dime.jp/genre/878477/",
+   "note": "官方道具名: どこでもドア"
+  },
+  "godie-n00b.r": {
+   "name": "竹蜻蜓",
+   "kana": "タケコプター",
+   "basis": "canonical",
+   "sourceUrl": "https://dime.jp/genre/878477/",
+   "note": "官方道具名: タケコプター"
+  },
+  "godie-n00b.ex": {
+   "name": "時光機",
+   "kana": "タイムマシン",
+   "basis": "canonical",
+   "sourceUrl": "https://ja.wikipedia.org/wiki/%E3%82%BF%E3%82%A4%E3%83%A0%E3%83%9E%E3%82%B7%E3%83%B3_(%E3%83%89%E3%83%A9%E3%81%88%E3%82%82%E3%82%93)",
+   "note": "官方道具名: タイムマシン"
+  },
+  "godie-n00p.q": {
+   "name": "風華圓舞陣",
+   "kana": "フウカ エンブジン",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E9%A2%A8%E8%8F%AF%E5%86%86%E8%88%9E%E9%99%A3",
+   "note": "蔵馬官方技「風華円舞陣 (ふうかえんぶじん)」; Weblio/pixiv 覆核確認"
+  },
+  "godie-n00p.w": {
+   "name": "寄生種子",
+   "kana": "キセイ シュシ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "蔵馬確有種子寄生戰法 (如シマネキ草) 但原作無此正式技名, 採音讀"
+  },
+  "godie-n00p.e": {
+   "name": "妖狐變化",
+   "kana": "ヨウコ ヘンゲ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "妖狐(ようこ)型態變身無正式技名; 変化採妖怪變身慣用讀法へんげ"
+  },
+  "godie-n00p.r": {
+   "name": "億年樹",
+   "kana": "オクネンジュ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "疑為原作「邪念樹(じゃねんじゅ)」的 GGD 變體名, 無官方讀音, 比照其命名法音讀"
+  },
+  "godie-n00p.ex": {
+   "name": "魔界吸血植物",
+   "kana": "マカイ キュウケツ ショクブツ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "對戰鴉的最後一擊植物原作官方名為「魔界のオジギソウ」, 但 GGD 技名改為描述性的魔界吸血植物, 與億年樹同理不套用原名, 全詞自然日語音讀"
+  },
+  "godie-n01c.q": {
+   "name": "雙龍紋",
+   "kana": "ソウリュウモン",
+   "basis": "canonical",
+   "sourceUrl": "https://ja.wikipedia.org/wiki/%E3%83%80%E3%82%A4_(%E3%83%80%E3%82%A4%E3%81%AE%E5%A4%A7%E5%86%92%E9%99%BA)",
+   "note": "官方讀音: 双竜紋 (そうりゅうもん); 東映官方商店/Wikipedia 覆核確認"
+  },
+  "godie-n01c.w": {
+   "name": "萊丁快速劍",
+   "kana": "ライデイン ストラッシュ",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E3%83%A9%E3%82%A4%E3%83%87%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%A9%E3%83%83%E3%82%B7%E3%83%A5",
+   "note": "官方技名: ライデインストラッシュ (雷咒萊丁+阿邦流快速劍合體技, 對修凱爾/巴蘭戰); pixiv 覆核確認"
+  },
+  "godie-n01c.e": {
+   "name": "龍鬥氣砲咒文",
+   "kana": "ドルオーラ",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E3%83%89%E3%83%AB%E3%82%AA%E3%83%BC%E3%83%A9",
+   "note": "竜闘気砲呪文的官方咒名即ドルオーラ, 喊招喊咒名; 東映官方商品頁「竜闘気砲呪文（ドルオーラ）」確認"
+  },
+  "godie-n01c.r": {
+   "name": "阿邦快速劍X",
+   "kana": "アバン ストラッシュ クロス",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.nicovideo.jp/a/%E3%82%A2%E3%83%90%E3%83%B3%E3%82%B9%E3%83%88%E3%83%A9%E3%83%83%E3%82%B7%E3%83%A5",
+   "note": "官方: アバンストラッシュX, X 讀作クロス; 魂の絆官方 X 帳號「アバンストラッシュX（クロス）」表記確認"
+  },
+  "godie-n01c.ex": {
+   "name": "龍魔人",
+   "kana": "リュウマジン",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E7%AB%9C%E9%AD%94%E4%BA%BA",
+   "note": "官方讀音: 竜魔人 (りゅうまじん), 龍之騎士最強形態; 覆核確認"
+  },
+  "godie-nplh.q": {
+   "name": "無無明亦無",
+   "kana": "ムムミョウ ヤクム",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E9%BA%BB%E5%80%89%E8%91%89",
+   "note": "葉的官方技, 出自般若心經, 官方讀音むむみょうやくむ; Wikipedia 麻倉葉條目「無無明亦無（むむみょうやくむ）」確認, 以浄之力無效化對方巫力"
+  },
+  "godie-nplh.w": {
+   "name": "超．占事略決",
+   "kana": "チョウ センジリャッケツ",
+   "basis": "canonical",
+   "sourceUrl": "https://ja.wikipedia.org/wiki/%E8%B6%85%E3%83%BB%E5%8D%A0%E4%BA%8B%E7%95%A5%E6%B1%BA",
+   "note": "官方讀音: 超・占事略決 (ちょう・せんじりゃっけつ); Wikipedia/Weblio 覆核確認"
+  },
+  "godie-nplh.e": {
+   "name": "劍之精靈",
+   "kana": "スピリット オブ ソード",
+   "basis": "canonical",
+   "sourceUrl": "https://ciatr.jp/topics/316099",
+   "note": "葉的 O.S. 官方名「スピリット・オブ・ソード」(Spirit of Sword), 阿彌陀丸二段 O.S. 巨劍; 覆核確認"
+  },
+  "godie-nplh.r": {
+   "name": "阿彌陀流真空佛陀斬",
+   "kana": "アミダリュウ シンクウ ブッダギリ",
+   "basis": "canonical",
+   "sourceUrl": "https://ja.wikipedia.org/wiki/%E9%BA%BB%E5%80%89%E8%91%89",
+   "note": "審核修正: Wikipedia 麻倉葉條目明載「真空仏陀切り（しんくうブッダぎり）」— 仏陀=ブッダ濁音, 非原稿的ブッタ; 名稱本身仍雙關ぶった斬り"
+  },
+  "godie-nplh.ex": {
+   "name": "布都御魂",
+   "kana": "フツノミタマ",
+   "basis": "canonical",
+   "sourceUrl": "https://ciatr.jp/topics/316099",
+   "note": "官方讀音: 布都御魂 (フツノミタマ), 葉後期媒介靈劍フツノミタマノツルギ; Wikipedia 亦確認片假名表記"
+  },
+  "godie-o00k.q": {
+   "name": "十萬伏特",
+   "kana": "ジュウマン ボルト",
+   "basis": "canonical",
+   "sourceUrl": "https://wiki.52poke.com/wiki/%E5%8D%81%E4%B8%87%E4%BC%8F%E7%89%B9%EF%BC%88%E6%8B%9B%E5%BC%8F%EF%BC%89",
+   "note": "寶可夢招式 10まんボルト (Thunderbolt) 官方中文即十萬伏特"
+  },
+  "godie-o00k.w": {
+   "name": "電光一閃",
+   "kana": "デンコウ セッカ",
+   "basis": "canonical",
+   "sourceUrl": "https://wiki.52poke.com/wiki/%E6%8B%9B%E5%BC%8F%E5%88%97%E8%A1%A8",
+   "note": "寶可夢招式 でんこうせっか (Quick Attack) 官方中文即電光一閃"
+  },
+  "godie-o00k.e": {
+   "name": "神鳴",
+   "kana": "シンメイ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "非官方招式名; 神鳴讀かみなり會與 r 打雷絕招重複, 採音讀シンメイ (有神鳴流しんめいりゅう的既有讀法先例)"
+  },
+  "godie-o00k.r": {
+   "name": "打雷絕招",
+   "kana": "カミナリ",
+   "basis": "canonical",
+   "sourceUrl": "https://wiki.52poke.com/zh-hant/%E6%89%93%E9%9B%B7%EF%BC%88%E6%8B%9B%E5%BC%8F%EF%BC%89",
+   "note": "寶可夢招式かみなり (Thunder) 官方中文為打雷; 絕招為修飾語, 喊招只喊カミナリ"
+  },
+  "godie-o00k.ex": {
+   "name": "雷電萌神",
+   "kana": "ライデン モエガミ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "GGD 原創名; 萌神仿死神/雷神訓讀作モエガミ"
+  },
+  "godie-o00l.q": {
+   "name": "獸王牙操彈",
+   "kana": "ゼラス ブリッド",
+   "basis": "canonical",
+   "sourceUrl": "https://www.weblio.jp/content/%E7%8D%A3%E7%8E%8B%E7%89%99%E6%93%8D%E5%BC%BE",
+   "note": "スレイヤーズ 獣王牙操弾＝ゼラス・ブリッド, 傑洛士(ゼロス)借獸王ゼラス之力的招牌魔族攻擊"
+  },
+  "godie-o00l.w": {
+   "name": "強化炸彈陣",
+   "kana": "ディル ブランド",
+   "basis": "canonical",
+   "sourceUrl": "https://enpedia.org/wiki/%E3%82%B9%E3%83%AC%E3%82%A4%E3%83%A4%E3%83%BC%E3%82%BA%E3%81%AE%E5%91%AA%E6%96%87%E4%B8%80%E8%A6%A7",
+   "note": "スレイヤーズ 炸弾陣/炸裂陣＝ディル・ブランド; 強化為 GGD 修飾語 (原作中傑洛士會魔力增幅他人咒文), 喊招喊咒文名ディル・ブランド"
+  },
+  "godie-o00l.e": {
+   "name": "破法對咒",
+   "kana": "ハホウ タイジュ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "查無此名的原作咒文 (原作反魔法系為崩魔陣フロウ・ブレイク/破邪封呪ルーン・ブレイカー, 皆與此名不符), 採漢字音讀"
+  },
+  "godie-o00l.r": {
+   "name": "暴爆咒",
+   "kana": "ブラスト ボム",
+   "basis": "canonical",
+   "sourceUrl": "https://www.weblio.jp/content/%E6%9A%B4%E7%88%86%E5%91%AA",
+   "note": "スレイヤーズ 暴爆呪＝ブラスト・ボム; 原作中傑洛士曾魔力增幅此咒"
+  },
+  "godie-o00l.ex": {
+   "name": "恐懼力量",
+   "kana": "キョウフ ノ チカラ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "GGD 原創名 (魔族以恐懼等負面感情為食的設定); 意譯為恐怖の力"
+  },
+  "godie-o00x.q": {
+   "name": "界王拳",
+   "kana": "カイオウケン",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E7%95%8C%E7%8E%8B%E6%8B%B3",
+   "note": ""
+  },
+  "godie-o00x.w": {
+   "name": "瞬間移動",
+   "kana": "シュンカン イドウ",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E7%9E%AC%E9%96%93%E7%A7%BB%E5%8B%95(%E3%83%89%E3%83%A9%E3%82%B4%E3%83%B3%E3%83%9C%E3%83%BC%E3%83%AB)",
+   "note": "七龍珠悟空的招式名, 讀音即字面しゅんかんいどう"
+  },
+  "godie-o00x.e": {
+   "name": "超級賽亞人",
+   "kana": "スーパー サイヤジン",
+   "basis": "canonical",
+   "sourceUrl": "https://ja.wikipedia.org/wiki/%E8%B6%85%E3%82%B5%E3%82%A4%E3%83%A4%E4%BA%BA",
+   "note": "超サイヤ人官方讀法為スーパーサイヤじん"
+  },
+  "godie-o00x.r": {
+   "name": "龜派氣功",
+   "kana": "カメハメハ",
+   "basis": "canonical",
+   "sourceUrl": "https://ja.wikipedia.org/wiki/%E3%81%8B%E3%82%81%E3%81%AF%E3%82%81%E6%B3%A2",
+   "note": "かめはめ波; 實際喊招常拉長為かーめーはーめー波ー, 交由生成端處理語氣"
+  },
+  "godie-o00x.ex": {
+   "name": "十倍龜派氣功",
+   "kana": "ジュウバイ カメハメハ",
+   "basis": "canonical",
+   "sourceUrl": "https://tamashiiweb.com/item/13604/",
+   "note": "GT 超サイヤ人4悟空的 10倍かめはめ波 (名台詞: これで最後だ！10倍かめはめ波); 官方 S.H.Figuarts 商品頁明記招式名"
+  },
+  "godie-o02p.q": {
+   "name": "甩蔥歌",
+   "kana": "イエヴァン ポルッカ",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.nicovideo.jp/a/ievan%20polkka",
+   "note": "甩蔥歌＝はちゅねミク甩蔥的 Ievan Polkka (イエヴァン・ポルッカ), Otomania 2007 投稿"
+  },
+  "godie-o02p.w": {
+   "name": "最初的聲音",
+   "kana": "ハジメテ ノ オト",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E3%83%8F%E3%82%B8%E3%83%A1%E3%83%86%E3%83%8E%E3%82%AA%E3%83%88",
+   "note": "malo 名曲ハジメテノオト (2007), 中文譯名最初的聲音"
+  },
+  "godie-o02p.e": {
+   "name": "初音未來的消失",
+   "kana": "ハツネ ミク ノ ショウシツ",
+   "basis": "canonical",
+   "sourceUrl": "https://ja.wikipedia.org/wiki/%E5%88%9D%E9%9F%B3%E3%83%9F%E3%82%AF%E3%81%AE%E6%B6%88%E5%A4%B1",
+   "note": "cosMo@暴走P 的初音ミクの消失"
+  },
+  "godie-o02p.r": {
+   "name": "世界第一的公主殿下",
+   "kana": "ワールド イズ マイン",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E3%83%AF%E3%83%BC%E3%83%AB%E3%83%89%E3%82%A4%E3%82%BA%E3%83%9E%E3%82%A4%E3%83%B3",
+   "note": "ryo(supercell) 的ワールドイズマイン (2008), 中文通稱世界第一的公主殿下; 喊曲名 (歌詞不可重製)"
+  },
+  "godie-o02p.ex": {
+   "name": "把你給MikuMiku掉",
+   "kana": "ミクミク ニ シテアゲル",
+   "basis": "canonical",
+   "sourceUrl": "https://zh.wikipedia.org/zh-hans/%E6%8A%8A%E4%BD%A0%E7%BB%99MIKUMIKU%E6%8E%89",
+   "note": "ika(ika_mo) 的みくみくにしてあげる♪【してやんよ】"
+  },
+  "godie-ofar.q": {
+   "name": "十萬伏特",
+   "kana": "ジュウマン ボルト",
+   "basis": "canonical",
+   "sourceUrl": "https://wiki.52poke.com/wiki/%E5%8D%81%E4%B8%87%E4%BC%8F%E7%89%B9%EF%BC%88%E6%8B%9B%E5%BC%8F%EF%BC%89",
+   "note": "此英雄 persona 為只發ピカ系鳴叫不說話, 生成端可將讀音轉為音高抑揚表現"
+  },
+  "godie-ofar.w": {
+   "name": "鋼鐵尾巴",
+   "kana": "アイアン テール",
+   "basis": "canonical",
+   "sourceUrl": "https://wiki.52poke.com/wiki/%E9%93%81%E5%B0%BE%EF%BC%88%E6%8B%9B%E5%BC%8F%EF%BC%89",
+   "note": "寶可夢招式アイアンテール (Iron Tail), 現行官譯鐵尾, 動畫舊譯鋼鐵尾巴"
+  },
+  "godie-ofar.e": {
+   "name": "就決定是你了!小智",
+   "kana": "キミ ニ キメタ サトシ",
+   "basis": "canonical",
+   "sourceUrl": "https://ja.wikipedia.org/wiki/%E5%8A%87%E5%A0%B4%E7%89%88%E3%83%9D%E3%82%B1%E3%83%83%E3%83%88%E3%83%A2%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%BC_%E3%82%AD%E3%83%9F%E3%81%AB%E3%81%8D%E3%82%81%E3%81%9F!",
+   "note": "サトシ決め台詞きみにきめた! (就決定是你了!), 亦為 2017 劇場版標題; 小智日文名サトシ"
+  },
+  "godie-ofar.r": {
+   "name": "瘋狂皮卡丘",
+   "kana": "クレイジー ピカチュウ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "GGD/原地圖原創名, 意譯片假名"
+  },
+  "godie-ofar.ex": {
+   "name": "打雷絕招",
+   "kana": "カミナリ",
+   "basis": "canonical",
+   "sourceUrl": "https://wiki.52poke.com/zh-hant/%E6%89%93%E9%9B%B7%EF%BC%88%E6%8B%9B%E5%BC%8F%EF%BC%89",
+   "note": "寶可夢招式かみなり (Thunder) 官方中文為打雷; 絕招為修飾語"
+  },
+  "godie-ogld.q": {
+   "name": "洗刷刷",
+   "kana": "シャカ シャカ ブラッシュ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "GGD原創角色。歯磨き擬音シャカシャカ+ブラッシュの意訳片假名。"
+  },
+  "godie-ogld.w": {
+   "name": "黑人牙菌斑",
+   "kana": "ブラック プラーク",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "牙菌斑=歯垢(プラーク)の歯科用語を採用。"
+  },
+  "godie-ogld.e": {
+   "name": "超亮白",
+   "kana": "スーパー ホワイトニング",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "美白牙膏の意訳片假名。"
+  },
+  "godie-ogld.r": {
+   "name": "黑化",
+   "kana": "コクカ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "黒化(こくか)。冷静な悪役が静かに宣告する想定。"
+  },
+  "godie-ogld.ex": {
+   "name": "億萬星殞落",
+   "kana": "ビリオン スターフォール",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "大範圍流星雨の意訳片假名。中二風に英語化。"
+  },
+  "godie-orkn.q": {
+   "name": "綁架",
+   "kana": "ユウカイ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "綁架は中文語彙のため日本語「誘拐」で意訳。"
+  },
+  "godie-orkn.w": {
+   "name": "酒精灌腸",
+   "kana": "アルコール カンチョウ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "灌腸=浣腸(かんちょう)。GGD原創ギャグ技。"
+  },
+  "godie-orkn.e": {
+   "name": "痴漢火焰",
+   "kana": "チカン カエン",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "痴漢火焔の音読み。"
+  },
+  "godie-orkn.r": {
+   "name": "電車之狼衝擊",
+   "kana": "デンシャ ノ オオカミ ショウゲキ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "電車之狼(=電車痴漢)の直訳読み+衝撃音読み。GGD原創技。"
+  },
+  "godie-orkn.ex": {
+   "name": "變態紳士",
+   "kana": "ヘンタイ シンシ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "変態紳士(へんたいしんし)は日本のネットミーム語としても定着した読み。"
+  },
+  "godie-osam.q": {
+   "name": "風華之爪",
+   "kana": "フウカ ノ ツメ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "原作技名に該当なし(被動)。原作の毒華爪(どっかそう)の型に倣うならフウカソウだが、GGD表示名を素直に読む形を採用。"
+  },
+  "godie-osam.w": {
+   "name": "合氣斬",
+   "kana": "アイキザン",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "原作に該当なし(会心被動)。合気=あいきの慣用読み。"
+  },
+  "godie-osam.e": {
+   "name": "爆碎丸",
+   "kana": "バクサイガ",
+   "basis": "canonical",
+   "sourceUrl": "https://ja.wikipedia.org/wiki/%E6%AE%BA%E7%94%9F%E4%B8%B8",
+   "note": "GGD説明「新生的爆碎丸」=殺生丸が大妖怪覚醒で得た自前の剣「爆砕牙(ばくさいが)」。表示名は丸だが原作読みバクサイガで喊ぶ。pixiv百科・Wikipediaで読み再確認済み。"
+  },
+  "godie-osam.r": {
+   "name": "奧義˙蒼龍破",
+   "kana": "オウギ ソウリュウハ",
+   "basis": "canonical",
+   "sourceUrl": "https://inuyasha.fandom.com/ja/wiki/%E9%97%98%E9%AC%BC%E7%A5%9E",
+   "note": "闘鬼神の奥義・蒼龍破(そうりゅうは)。劇場版・アニメオリジナル技、蒼い龍の形の衝撃波。必殺技辞典・Fandomで再確認済み。"
+  },
+  "godie-osam.ex": {
+   "name": "冥道殘月破",
+   "kana": "メイドウ ザンゲツハ",
+   "basis": "canonical",
+   "sourceUrl": "https://ja.wikipedia.org/wiki/%E6%AE%BA%E7%94%9F%E4%B8%B8",
+   "note": "刀々斎に打ち直された天生牙の奥義・冥道残月破(めいどうざんげつは)。空間を切り冥界へ直接送る技、GGD効果とも一致。完結編第3話タイトルでも確認。"
+  },
+  "godie-u00h.q": {
+   "name": "無名神風流-白虎",
+   "kana": "ムミョウ ジンプウリュウ ビャッコ",
+   "basis": "canonical",
+   "sourceUrl": "https://hissatuwaza.kill.jp/setume/kyo.htm",
+   "note": "正式表記は無明神風流(むみょうじんぷうりゅう/Weblio逐字確認)。白虎(びゃっこ)は四神奥義の一つ(Wikipedia「無明神風流奥義・白虎」)。"
+  },
+  "godie-u00h.w": {
+   "name": "無名神風流-朱雀",
+   "kana": "ムミョウ ジンプウリュウ スザク",
+   "basis": "canonical",
+   "sourceUrl": "https://hissatuwaza.kill.jp/setume/kyo.htm",
+   "note": "四神奥義の一つ、火の鳥の神風を放つ朱雀(すざく)。必殺技辞典で読み確認。"
+  },
+  "godie-u00h.e": {
+   "name": "無名神風流-蛟龍",
+   "kana": "ムミョウ ジンプウリュウ ミズチ",
+   "basis": "canonical",
+   "sourceUrl": "https://hissatuwaza.kill.jp/setume/kyo.htm",
+   "note": "蛟龍はSDK固有読みで「みずち」(こうりゅうではない)。無明神風流殺人剣、狂の代名詞技。Wikipediaにも殺人剣みずちとして記載。"
+  },
+  "godie-u00h.r": {
+   "name": "祕奧義．金色的神風",
+   "kana": "ヒオウギ コンジキ ノ カミカゼ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "原典は無明神風流最終奥義「黄龍」=Wikipedia原文『「朱雀」「白虎」「玄武」「青龍」4つの神風を同時に発動したときに起こすことが出来るもう一つの神風』(金色の神風)。GGD説明も四神同時召喚で一致するが、表示名が黄龍でないため表示名の意訳読みを採用。"
+  },
+  "godie-u00h.ex": {
+   "name": "-紅王",
+   "kana": "アカ ノ オウ",
+   "basis": "canonical",
+   "sourceUrl": "https://ja.wikipedia.org/wiki/SAMURAI_DEEPER_KYO",
+   "note": "壬生一族の頂点「紅の王」。Wikipedia逐字表記は「初代・紅の王(しょだい あかのおう)」で、読みはあかのおう(くれないのおうではない)。GGD説明「取回原本的身體」=真の体を取り戻した狂の覚醒に対応。"
+  },
+  "godie-u00j.q": {
+   "name": "獄門",
+   "kana": "ゴクモン",
+   "basis": "canonical",
+   "sourceUrl": "https://www.famitsu.com/matome/dff/character20.html",
+   "note": "ディシディアFFのセフィロスの技「獄門」(ごくもん、英名Hell's Gate)。GGD説明の「刺死愛麗絲」演出とも合致。ファミ通ページ実在確認済み。"
+  },
+  "godie-u00j.w": {
+   "name": "八刀一閃",
+   "kana": "ハットウ イッセン",
+   "basis": "canonical",
+   "sourceUrl": "https://game-shinden.com/sephiroth-sumabura-waza-ichiran/",
+   "note": "クライシスコア/ディシディア/スマブラSPのセフィロスの技・八刀一閃(はっとういっせん、英名Octaslash)。ページ実在・読み確認済み。"
+  },
+  "godie-u00j.e": {
+   "name": "闇之天使",
+   "kana": "ヤミ ノ テンシ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "セフィロスの「心無い天使/シャドウフレア」を想起させるがGGD独自名(魔晄エネルギー8連爆)のため直訳読み。"
+  },
+  "godie-u00j.r": {
+   "name": "最終殞落星",
+   "kana": "メテオ",
+   "basis": "canonical",
+   "sourceUrl": "https://ja.wikipedia.org/wiki/%E3%83%95%E3%82%A1%E3%82%A4%E3%83%8A%E3%83%AB%E3%83%95%E3%82%A1%E3%83%B3%E3%82%BF%E3%82%B8%E3%83%BCVII",
+   "note": "GGD説明「招喚災難彗星…隕石」=セフィロスが黒マテリアで呼ぶFF7の究極黒魔法メテオ。Wikipedia原文『黒マテリアを使って発動させる事ができる、本作における究極の黒魔法』で確認。"
+  },
+  "godie-u00j.ex": {
+   "name": "超新星",
+   "kana": "スーパー ノヴァ",
+   "basis": "canonical",
+   "sourceUrl": "https://dengekionline.com/article/202605/75700",
+   "note": "FF7セーファ・セフィロス由来の全画面攻撃「超新星(スーパーノヴァ)」。電撃オンライン記事でセフィロス専用アビリティ・全画面大ダメージ攻撃として実在確認。スマブラSP最後の切りふだ名も同じ。"
+  },
+  "godie-u00k.q": {
+   "name": "死亡隕落",
+   "kana": "デス フォール",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "GGD原創英雄。隕落=殞落之意, 意譯片假名, 貼合宗教魔王的宣告調。"
+  },
+  "godie-u00k.w": {
+   "name": "靈魂吸取",
+   "kana": "ソウル ドレイン",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "GGD原創。RPG慣用語 Soul Drain 意譯, 低音緩慢宣告適用。"
+  },
+  "godie-u00k.e": {
+   "name": "厄夜靈魂",
+   "kana": "ナイトメア ソウル",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "GGD原創。厄夜→惡夢之夜的意譯片假名。"
+  },
+  "godie-u00k.r": {
+   "name": "萬惡歸宗",
+   "kana": "バンアク キソウ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "GGD原創。万悪帰宗の音読み, 大絕用莊重漢語音更有魔王威嚴。"
+  },
+  "godie-u00k.ex": {
+   "name": "夜之主",
+   "kana": "ヨル ノ アルジ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "GGD原創。「夜の主」訓読み, 冷沉宣告感勝過音讀ヤシュ。"
+  },
+  "godie-u00l.q": {
+   "name": "北斗懺悔拳",
+   "kana": "ホクト ザンカイ ケン",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E5%8C%97%E6%96%97%E6%AE%8B%E6%82%94%E6%8B%B3",
+   "note": "原作技為「北斗残悔拳」(ほくとざんかいけん), 中譯作懺悔; 完整版為北斗残悔積歩拳。審核已再驗證讀音與pixiv條目。"
+  },
+  "godie-u00l.w": {
+   "name": "北斗神拳秘訣轉龍呼吸法",
+   "kana": "ホクト シンケン オウギ テンリュウ コキュウホウ",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E8%BB%A2%E9%BE%8D%E5%91%BC%E5%90%B8%E6%B3%95",
+   "note": "転龍呼吸法=てんりゅうこきゅうほう (審核已再驗證)。原作稱「北斗神拳奥義」而非秘訣, 語音採原作喊法。"
+  },
+  "godie-u00l.e": {
+   "name": "北斗百裂拳",
+   "kana": "ホクト ヒャクレツ ケン",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E5%8C%97%E6%96%97%E7%99%BE%E8%A3%82%E6%8B%B3",
+   "note": "ほくとひゃくれつけん (審核已再驗證)。出招時搭配「アタタタタ…ホアター!」連續氣合。"
+  },
+  "godie-u00l.r": {
+   "name": "ChangeDNA",
+   "kana": "チェンジ ディーエヌエー",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "非原作正式技名 (北斗神拳經穴改變人體的哏), 直接英語片假名。"
+  },
+  "godie-u00l.ex": {
+   "name": "喔拉喔拉喔拉喔拉",
+   "kana": "オラ オラ オラ オラ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "喔拉=オラオラ連呼的音譯還原 (JoJo系吼聲哏)。拳四郎原作吼聲是アタタタ, 但技名指定オラオラ故從技名。"
+  },
+  "godie-u00n.q": {
+   "name": "伸縮自如的橡膠戰斧",
+   "kana": "ゴムゴム ノ オノ",
+   "basis": "canonical",
+   "sourceUrl": "https://onepiece-akumanomi.com/luffy-move.html",
+   "note": "ゴムゴムの斧/戦斧, 「斧」「戦斧」皆唸オノ (審核已再驗證: 戦斧書作せんぷ読作オノ)。"
+  },
+  "godie-u00n.w": {
+   "name": "伸縮自如的橡膠火箭砲",
+   "kana": "ゴムゴム ノ バズーカ",
+   "basis": "canonical",
+   "sourceUrl": "https://onepiece-akumanomi.com/luffy-move.html",
+   "note": "ゴムゴムのバズーカ, 台譯火箭砲。"
+  },
+  "godie-u00n.e": {
+   "name": "伸縮自如的槍亂打",
+   "kana": "ゴムゴム ノ ガトリング",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E3%82%B4%E3%83%A0%E3%82%B4%E3%83%A0%E3%81%AE%E9%8A%83%E4%B9%B1%E6%89%93",
+   "note": "ゴムゴムの銃乱打, 表記「銃乱打」官方讀作ガトリング (審核已再驗證pixiv條目)。"
+  },
+  "godie-u00n.r": {
+   "name": "三檔.巨人迴旋彈",
+   "kana": "ギア サード ゴムゴム ノ ギガント ライフル",
+   "basis": "canonical",
+   "sourceUrl": "https://kaizokura.com/archives/37356793.html",
+   "note": "三檔=ギア3 (ギアサード); 巨人の回転弾官方讀作ギガントライフル (審核已抓取來源頁確認存在且涵蓋ギア3技名)。"
+  },
+  "godie-u00n.ex": {
+   "name": "霸王色",
+   "kana": "ハオウショク",
+   "basis": "canonical",
+   "sourceUrl": "https://honcierge.jp/articles/shelf_story/5212",
+   "note": "覇王色の覇気=はおうしょくのはき (審核已再驗證); 技名僅霸王色故喊ハオウショク。"
+  },
+  "godie-u00v.q": {
+   "name": "斬鐵拳",
+   "kana": "ザンテツ ケン",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "監獄兔原作無技名 (GGD惡搞命名)。音讀, 與魯邦三世五右衛門的斬鉄剣同音致敬。"
+  },
+  "godie-u00v.w": {
+   "name": "地走龍牙破",
+   "kana": "ジソウ リュウガハ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "查無原作出處 (審核再搜尋亦無此技名), 判定GGD中二命名, 純音讀。地取呉音ジ避免與馳走混淆。"
+  },
+  "godie-u00v.e": {
+   "name": "廬山昇龍破",
+   "kana": "ロザン ショウリュウハ",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E5%BB%AC%E5%B1%B1%E6%98%87%E9%BE%8D%E8%A6%87",
+   "note": "聖鬥士星矢紫龍的廬山昇龍覇 (ろざんしょうりゅうは, 審核已再驗證); GGD寫作破, 讀音相同。"
+  },
+  "godie-u00v.r": {
+   "name": "死亡噴射肘擊",
+   "kana": "デス ジェット エルボー",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "查無原作出處 (審核再搜尋摔角技亦無此名), 摔角風惡搞技, 意譯片假名。"
+  },
+  "godie-u00v.ex": {
+   "name": "加速爆體",
+   "kana": "カソク バクタイ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "GGD原創命名, 純音讀, 短促有爆發感適合非語言角色配吼聲。"
+  },
+  "godie-u010.q": {
+   "name": "邪王炎殺劍",
+   "kana": "ジャオウ エンサツ ケン",
+   "basis": "canonical",
+   "sourceUrl": "https://ja.wikipedia.org/wiki/%E9%A3%9B%E5%BD%B1_(%E5%B9%BD%E2%98%86%E9%81%8A%E2%98%86%E7%99%BD%E6%9B%B8)",
+   "note": "邪王炎殺剣=じゃおうえんさつけん (審核已再驗證)。"
+  },
+  "godie-u010.w": {
+   "name": "邪王炎殺煉獄焦",
+   "kana": "ジャオウ エンサツ レンゴク ショウ",
+   "basis": "canonical",
+   "sourceUrl": "https://ja.wikipedia.org/wiki/%E9%A3%9B%E5%BD%B1_(%E5%B9%BD%E2%98%86%E9%81%8A%E2%98%86%E7%99%BD%E6%9B%B8)",
+   "note": "邪王炎殺煉獄焦=じゃおうえんさつれんごくしょう (焦讀ショウ, 審核已再驗證Weblio)。"
+  },
+  "godie-u010.e": {
+   "name": "邪王炎殺黑龍波",
+   "kana": "ジャオウ エンサツ コクリュウハ",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E9%82%AA%E7%8E%8B%E7%82%8E%E6%AE%BA%E9%BB%92%E9%BE%8D%E6%B3%A2",
+   "note": "邪王炎殺黒龍波=じゃおうえんさつこくりゅうは (審核已再驗證pixiv條目)。奧義級, 唯一放大成爆發吶喊的技。"
+  },
+  "godie-u010.r": {
+   "name": "黑龍波吸收",
+   "kana": "コクリュウハ キュウシュウ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "原作有吞噬黑龍波的橋段但無正式技名; 沿用官方コクリュウハ+吸収。"
+  },
+  "godie-u010.ex": {
+   "name": "究極暴走黑龍波",
+   "kana": "キュウキョク ボウソウ コクリュウハ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "GGD強化版命名; コクリュウハ部分沿用官方讀音, 前綴音讀。"
+  },
+  "godie-u01u.q": {
+   "name": "燒鬼斬",
+   "kana": "ヤキ オニギリ",
+   "basis": "canonical",
+   "sourceUrl": "https://d-manga.net/onepiece-zoro-skill/",
+   "note": "原作『ONE PIECE』索隆技「焼鬼斬り」(やきおにぎり), 鬼斬り的火焰強化版; 已再查證, 名稱源自烤飯糰, 阿拉巴斯坦篇初出"
+  },
+  "godie-u01u.w": {
+   "name": "虎狩獵",
+   "kana": "トラ ガリ",
+   "basis": "canonical",
+   "sourceUrl": "https://d-manga.net/onepiece-zoro-skill/",
+   "note": "原作技「虎狩り」(とらがり), 已再查證; 東海篇初出"
+  },
+  "godie-u01u.e": {
+   "name": "鬼氣九刀流-阿修羅壹霧銀",
+   "kana": "キキ キュウトウリュウ アシュラ イチブギン",
+   "basis": "canonical",
+   "sourceUrl": "https://ameblo.jp/cr-onepiece/entry-10669763859.html",
+   "note": "原作「鬼気 九刀流『阿修羅』弌霧銀」; 弌霧銀讀いちぶぎん (源自銀幣「一分銀」), Weblio/pixiv 同; 長音改標準假名正書法 (キュウトウリュウ) 以合 batch 3 慣例"
+  },
+  "godie-u01u.r": {
+   "name": "三千世界",
+   "kana": "サントウリュウ オウギ サンゼン セカイ",
+   "basis": "canonical",
+   "sourceUrl": "https://d-manga.net/onepiece-zoro-skill/",
+   "note": "原作喊招全文「三刀流奥義 三・千・世・界」(さんとうりゅうおうぎ さんぜんせかい), 已再查證; 長音改標準正書法"
+  },
+  "godie-u01u.ex": {
+   "name": "武裝色霸氣",
+   "kana": "ブソウショク ノ ハキ",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E6%AD%A6%E8%A3%85%E8%89%B2%E3%81%AE%E8%A6%87%E6%B0%97",
+   "note": "官方用語「武装色の覇気」(ぶそうしょくのはき), 已再查證; source 換為 pixiv 百科 (本次直接驗證), 長音改標準正書法"
+  },
+  "godie-ubal.q": {
+   "name": "凱薩之鷹",
+   "kana": "カイザー フェニックス",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E3%82%AB%E3%82%A4%E3%82%B6%E3%83%BC%E3%83%95%E3%82%A7%E3%83%8B%E3%83%83%E3%82%AF%E3%82%B9",
+   "note": "『達伊大冒險』巴恩招牌魔法カイザーフェニックス (大魔王級メラゾーマ), 已再查證; 外來語保留ー"
+  },
+  "godie-ubal.w": {
+   "name": "災難之牆",
+   "kana": "カラミティ ウォール",
+   "basis": "canonical",
+   "sourceUrl": "https://ja.wikipedia.org/wiki/%E3%83%90%E3%83%BC%E3%83%B3_(%E3%83%80%E3%82%A4%E3%81%AE%E5%A4%A7%E5%86%92%E9%99%BA)",
+   "note": "原作技カラミティウォール (Calamity Wall, 衝擊波之牆, 需光魔之杖), 已再查證; source 換為 Wikipedia バーン條目 (本次直接驗證)"
+  },
+  "godie-ubal.e": {
+   "name": "黑核晶",
+   "kana": "クロ ノ コア",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E9%BB%92%E3%81%AE%E6%A0%B8%E6%99%B6",
+   "note": "原作「黒の核晶」官方讀音くろのコア (核晶標音コア), 動畫第55話標題「黒の核晶（コア）」同, 已再查證"
+  },
+  "godie-ubal.r": {
+   "name": "魔界之王",
+   "kana": "マカイ ノ オウ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "GGD 編排名 (巴恩以魔界霸主自居的宣告), 無單一官方招式對應 (原作為天地魔闘の構え/カラミティエンド等), 音讀宣告調; おう改標準正書法オウ"
+  },
+  "godie-ubal.ex": {
+   "name": "真‧黑核晶",
+   "kana": "シン クロ ノ コア",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "GGD 強化版; 沿用原作黒の核晶=くろのコア讀法, 冠「真」(しん)"
+  },
+  "godie-udea.q": {
+   "name": "神出鬼沒",
+   "kana": "シンシュツ キボツ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "GGD 原創角色; 四字熟語しんしゅつきぼつ音讀直喊"
+  },
+  "godie-udea.w": {
+   "name": "寒冰破碎",
+   "kana": "カンヒョウ ハサイ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "寒氷(かんひょう)+破砕(はさい)音讀; 長音改標準正書法"
+  },
+  "godie-udea.e": {
+   "name": "魔法膨脹",
+   "kana": "マホウ ボウチョウ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "まほうぼうちょう音讀; 長音改標準正書法"
+  },
+  "godie-udea.r": {
+   "name": "天譴",
+   "kana": "テンケン",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "てんけん音讀, 短促中二宣告"
+  },
+  "godie-udea.ex": {
+   "name": "永恆的愚蠢鄉",
+   "kana": "エイエン ノ グシュンキョウ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "惡搞 Saber 的 Avalon (永遠の理想郷=えいえんのりそうきょう); 愚蠢=ぐしゅん為日語實詞, 配合過度中二的詠唱調; 長音改標準正書法"
+  },
+  "godie-hblm.q": {
+   "name": "薩喀爾",
+   "kana": "ザケル",
+   "basis": "canonical",
+   "sourceUrl": "https://www.koregasiritai.com/gassyu-jumon/",
+   "note": "『魔法少年賈修』第一咒文ザケル (Zaker), 已再查證"
+  },
+  "godie-hblm.w": {
+   "name": "薩喀爾嘎",
+   "kana": "ザケルガ",
+   "basis": "canonical",
+   "sourceUrl": "https://www.koregasiritai.com/gassyu-jumon/",
+   "note": "貫通強化版咒文ザケルガ (Zakeruga), 已再查證; source 統一為咒文一覽頁 (本次直接驗證)"
+  },
+  "godie-hblm.e": {
+   "name": "及喀爾度",
+   "kana": "ジケルド",
+   "basis": "canonical",
+   "sourceUrl": "https://www.koregasiritai.com/gassyu-jumon/",
+   "note": "磁力咒文ジケルド (Jikerudo), 台譯「及喀爾度」音對應 ji-keru-do, 已再查證"
+  },
+  "godie-hblm.r": {
+   "name": "巴歐．薩喀爾嘎",
+   "kana": "バオウ ザケルガ",
+   "basis": "canonical",
+   "sourceUrl": "https://www.koregasiritai.com/gassyu-jumon/",
+   "note": "最大咒文, 官方表記バオウ・ザケルガ, 已再查證; kana 依官方表記バオウ (日語TTS對オウ自然讀長音, 無需改記バオー)"
+  },
+  "godie-hblm.ex": {
+   "name": "金色巨龍",
+   "kana": "コンジキ ノ キョリュウ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "指巴歐化身的金色雷龍; 金色依原作標題『金色のガッシュ!!』慣例讀こんじき; 長音改標準正書法"
+  },
+  "godie-efur.q": {
+   "name": "老樹盤根",
+   "kana": "ロウジュ バンコン",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "非 HxH 官方招式名 (桀諾原作技已查證為龍頭戯画/牙突/龍星群), 中式武術語彙音讀ろうじゅばんこん; 長音改標準正書法"
+  },
+  "godie-efur.w": {
+   "name": "變化念力",
+   "kana": "ヘンカ ネンリキ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "桀諾在原作屬變化系(へんかけい)念能力者, 但此名為 GGD 編排, 取音讀へんかねんりき"
+  },
+  "godie-efur.e": {
+   "name": "快步",
+   "kana": "カイホ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "GGD 編排名, かいほ音讀短喝"
+  },
+  "godie-efur.r": {
+   "name": "暗殺奧義",
+   "kana": "アンサツ オウギ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "名稱泛稱不指涉單一官方招式 (原作大範圍奧義為龍星群=ドラゴンダイブ, 但顯示名非該技), 取あんさつおうぎ音讀; 長音改標準正書法"
+  },
+  "godie-efur.ex": {
+   "name": "KISS ME!",
+   "kana": "キス ミー",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "英文名直接片假名化; 外來語保留ー"
+  },
+  "godie-zombiex.ex": {
+   "name": "バタンキュー",
+   "kana": "バタン キュー",
+   "basis": "canonical",
+   "sourceUrl": "",
+   "note": "顯示名本身即日文擬態語（ばたんきゅー＝倒下就睡），直接沿用，mora 分詞"
+  },
+  "godie-zombiex.q": {
+   "name": "黑泥噴吐",
+   "kana": "コクデイ フント",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "GGD原創（聖杯の黒泥意象）。噴吐=ふんと為日文實詞"
+  },
+  "godie-zombiex.w": {
+   "name": "蹣跚衝撞",
+   "kana": "マンサン ショウトツ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "蹣跚=まんさん實詞；衝撞取衝突（しょうとつ）類推，喪屍搖晃體當たり"
+  },
+  "godie-zombiex.e": {
+   "name": "泥沼陷阱",
+   "kana": "デイショウ カンセイ",
+   "basis": "styled",
+   "sourceUrl": "",
+   "note": "泥沼音讀でいしょう；陷阱採日文實詞陥穽（かんせい）"
+  },
+  "godie-zombiex.r": {
+   "name": "聖杯溢出",
+   "kana": "セイハイ イッシュツ",
+   "basis": "onyomi",
+   "sourceUrl": "",
+   "note": "Fate HF 聖杯から溢れる黒泥的致敬名；溢出=いっしゅつ實詞。技名本身非原作正式技，不標 canonical"
+  }
+ }
+}
