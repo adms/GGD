@@ -24,8 +24,9 @@
  * WHAT IT MODELS AS AN OCCLUDER
  *   - every authored decor prop, at its authored pose, AFTER the same
  *     height-squash dressArena applies at runtime;
- *   - the procedural obstacle cylinders/walls, when no pillar prop replaces
- *     them (matching dressArena's removal rule);
+ *   - the procedural obstacle markers, UNCONDITIONALLY and at their real
+ *     0.42u height (#218 — they used to be modelled as 2.4u columns that
+ *     vanished whenever the doc happened to ship pillar decor);
  *   - the task #80 boundary kerb, as a solid annular ring.
  * FADE_MODELS (the team towers) are excluded exactly as they are at runtime:
  * they keep full height and ghost out via DecorFade, which is #29's disposition
@@ -46,14 +47,18 @@ const CONTENT = join(REPO, "content");
 // camera + hero model (mirrors ArenaScene's sightline constants)
 // ---------------------------------------------------------------------------
 
-const CAMERA_PITCH_RAD = (55 * Math.PI) / 180;
+// Pitch is 68°, raised from 55° by #161 — this copy had been left behind, so
+// the whole sweep was auditing a camera that no longer exists.
+const CAMERA_PITCH_RAD = (68 * Math.PI) / 180;
 const DOLLY_MIN = 10;
-const EYE_HEIGHT = DOLLY_MIN * Math.sin(CAMERA_PITCH_RAD); // ≈ 8.19
-const STANDOFF = DOLLY_MIN * Math.cos(CAMERA_PITCH_RAD); // ≈ 5.74
+const EYE_HEIGHT = DOLLY_MIN * Math.sin(CAMERA_PITCH_RAD); // ≈ 9.27
+const STANDOFF = DOLLY_MIN * Math.cos(CAMERA_PITCH_RAD); // ≈ 3.75
 const HERO_HEAD_Y = 1.7;
 const HERO_BODY_RADIUS = 0.6; // sim body radius (spawnChampion.ts)
 const HERO_WIDTH = 1.0; // silhouette span the lateral samples below cover
 const SIGHTLINE_HEIGHT_CAP = 2.4;
+/** buildArena's collision-marker height — see ArenaScene.OBSTACLE_MARKER_TOP_Y */
+const OBSTACLE_MARKER_TOP_Y = 0.42;
 
 /** Ground grid resolution for standable points. */
 const GRID = 0.25;
@@ -455,23 +460,24 @@ function buildOccluders(doc: Doc): ArenaOccluders {
     });
   }
 
-  // procedural obstacle geometry, only where no pillar prop replaces it
-  const pillarsPlaced = doc.decor.some((d) => d.model.includes("pillar"));
+  // Procedural obstacle markers. ALWAYS present and ALWAYS low (#218): the old
+  // "skip these when the doc ships pillar decor" rule mirrored dressArena's
+  // inverted disposal, so this script agreed with the renderer's bug instead of
+  // catching it.
   for (const zone of doc.zones) {
     for (const ob of zone.obstacles) {
       if (ob.kind === "circle") {
-        if (pillarsPlaced) continue; // dressArena disposes these
         all.push({
-          kind: "aabb", label: "obstacle-cylinder",
+          kind: "aabb", label: "obstacle-marker",
           minX: ob.center.x - ob.radius, maxX: ob.center.x + ob.radius,
-          minY: 0, maxY: SIGHTLINE_HEIGHT_CAP,
+          minY: 0, maxY: OBSTACLE_MARKER_TOP_Y,
           minZ: ob.center.z - ob.radius, maxZ: ob.center.z + ob.radius,
         });
       } else {
         all.push({
-          kind: "aabb", label: "obstacle-wall",
+          kind: "aabb", label: "obstacle-wall-marker",
           minX: Math.min(ob.a.x, ob.b.x) - 0.2, maxX: Math.max(ob.a.x, ob.b.x) + 0.2,
-          minY: 0, maxY: SIGHTLINE_HEIGHT_CAP,
+          minY: 0, maxY: OBSTACLE_MARKER_TOP_Y,
           minZ: Math.min(ob.a.z, ob.b.z) - 0.2, maxZ: Math.max(ob.a.z, ob.b.z) + 0.2,
         });
       }

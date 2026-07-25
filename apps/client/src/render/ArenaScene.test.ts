@@ -12,6 +12,7 @@ import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { AssetContainer } from "@babylonjs/core/assetContainer";
 import type { ArenaDef } from "@ggd/shared/sim/world/ArenaDef";
+import { arenaDefFromDoc, SKELETON_ARENA } from "@ggd/shared/sim/world/ArenaDef";
 import type { ArenaDoc } from "@ggd/shared/content";
 import type { AssetManager } from "./AssetManager";
 import {
@@ -22,6 +23,7 @@ import {
   fullHideReach,
   minFullHideWidth,
   occludesPlayArea,
+  OBSTACLE_MARKER_TOP_Y,
   SIGHTLINE_HEIGHT_CAP,
   SIGHTLINE_EYE_HEIGHT,
   SIGHTLINE_STANDOFF,
@@ -149,7 +151,35 @@ describe("occludesPlayArea", () => {
   });
 });
 
-describe("buildArena sightline compliance (NullEngine)", () => {
+/** Every arena the COMBAT scene can actually boot: the five shipped docs plus
+ *  the built-in SKELETON_ARENA, which GameApp uses for the pre-match/boot arena
+ *  with NO doc at all — so dressArena never runs on it and buildArena's output
+ *  is final. That case is exactly the one #218 could never have covered by
+ *  fiddling with decor. */
+const COMBAT_ARENA_CASES: [string, ArenaDef][] = (() => {
+  const arenaDir = fileURLToPath(new URL("../../../../content/arenas/", import.meta.url));
+  const docs = readdirSync(arenaDir)
+    .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
+    .map(
+      (f) =>
+        [f, arenaDefFromDoc(JSON.parse(readFileSync(arenaDir + f, "utf8")))] as [string, ArenaDef],
+    );
+  return [["SKELETON_ARENA (built-in, doc-less boot arena)", SKELETON_ARENA], ...docs];
+})();
+
+function countObstacles(def: ArenaDef): { circles: number; segments: number } {
+  let circles = 0;
+  let segments = 0;
+  for (const zone of def.zones) {
+    for (const ob of zone.obstacles) {
+      if (ob.kind === "circle") circles++;
+      else segments++;
+    }
+  }
+  return { circles, segments };
+}
+
+describe("buildArena obstacle markers never occlude the combat camera (NullEngine, #218)", () => {
   let engine: NullEngine;
   let scene: Scene;
 
@@ -163,30 +193,56 @@ describe("buildArena sightline compliance (NullEngine)", () => {
     engine.dispose();
   });
 
-  it("keeps every procedural mesh top at/below SIGHTLINE_HEIGHT_CAP", () => {
-    const def: ArenaDef = {
-      id: "arena.test",
-      name: "test",
-      zones: [
-        {
-          id: "z0",
-          center: { x: 0, z: 0 },
-          boundaryRadius: 24,
-          obstacles: [
-            { kind: "circle", center: { x: 2, z: 3 }, radius: 2.5 },
-            { kind: "segment", a: { x: -6, z: -2 }, b: { x: 6, z: -2 } },
-          ],
-          spawns: [[{ x: -3, z: 0 }], [{ x: 3, z: 0 }]],
-        },
-      ],
-    };
+  it("finds every shipped arena plus the built-in one", () => {
+    expect(COMBAT_ARENA_CASES.length).toBeGreaterThanOrEqual(6);
+  });
+
+  it("states the bar this suite enforces — stricter than occludesPlayArea", () => {
+    // The OLD geometry (a 2.4u grey drum per obstacle) sat exactly ON the decor
+    // cap, so `occludesPlayArea` early-returns false for it and the previous
+    // `top <= SIGHTLINE_HEIGHT_CAP` assertion PASSED on the bug. The bar below
+    // is `fullHideReach === 0` — no part of any hero is ever hidden, at any
+    // zoom — which the 2.4u drum fails and the 0.42u marker meets.
+    expect(fullHideReach(SIGHTLINE_HEIGHT_CAP)).toBeGreaterThan(0);
+    expect(fullHideReach(OBSTACLE_MARKER_TOP_Y)).toBe(0);
+    expect(OBSTACLE_MARKER_TOP_Y).toBeLessThan(SIGHTLINE_HEIGHT_CAP);
+  });
+
+  it.each(COMBAT_ARENA_CASES)("%s — no obstacle mesh can hide a hero", (label, def) => {
+    const { circles, segments } = countObstacles(def);
+    expect(circles + segments, label).toBeGreaterThan(0);
+
     const handles = buildArena(scene, def);
-    const meshes = handles.root.getChildMeshes(false);
-    expect(meshes.length).toBeGreaterThan(0);
-    for (const m of meshes) {
+
+    // stump + floor ring per circle, one low slab per segment — ALL of them
+    // tracked. The segment slabs used to be built and then dropped on the
+    // floor (never pushed into obstacleMeshes), so nothing could find them.
+    expect(handles.obstacleMeshes, label).toHaveLength(circles * 2 + segments);
+
+    const obstacles = handles.root
+      .getChildMeshes(false)
+      .filter((m) => /-ob-\d+(-|$)/.test(m.name));
+    expect(obstacles, label).toHaveLength(circles * 2 + segments);
+
+    for (const m of obstacles) {
       const top = m.getBoundingInfo().boundingBox.maximumWorld.y;
-      expect(top).toBeLessThanOrEqual(SIGHTLINE_HEIGHT_CAP + 1e-4);
+      expect(top, `${label} ${m.name} top`).toBeLessThanOrEqual(OBSTACLE_MARKER_TOP_Y + 1e-4);
+      // the real guarantee: a 1.7u champion is never hidden anywhere, any zoom
+      expect(fullHideReach(top), `${label} ${m.name} hide-reach`).toBe(0);
+      // ...and it is still SEEN — collision must not become an invisible wall
+      expect(m.isVisible, `${label} ${m.name} visible`).toBe(true);
+      expect(top, `${label} ${m.name} not flattened away`).toBeGreaterThan(0);
     }
+
+    // the older, weaker #29 guarantee still holds for every other procedural
+    // mesh (grounds, kerbs, spawn pads)
+    for (const m of handles.root.getChildMeshes(false)) {
+      expect(
+        m.getBoundingInfo().boundingBox.maximumWorld.y,
+        `${label} ${m.name}`,
+      ).toBeLessThanOrEqual(SIGHTLINE_HEIGHT_CAP + 1e-4);
+    }
+
     disposeArena(scene, handles);
   });
 });
@@ -216,6 +272,16 @@ const TEST_ZONE: ArenaDef["zones"][number] = {
   boundaryRadius: 24,
   obstacles: [],
   spawns: [[{ x: -3, z: 0 }], [{ x: 3, z: 0 }]],
+};
+
+/** Same zone, but carrying sim obstacles — used to prove the markers' fate no
+ *  longer depends on what decor the doc happens to ship (#218). */
+const OBSTACLE_ZONE: ArenaDef["zones"][number] = {
+  ...TEST_ZONE,
+  obstacles: [
+    { kind: "circle", center: { x: 0, z: 0 }, radius: 2.5 },
+    { kind: "segment", a: { x: -6, z: -2 }, b: { x: 6, z: -2 } },
+  ],
 };
 
 const TEST_ARENA: ArenaDef = { id: "arena.test", name: "test", zones: [TEST_ZONE] };
@@ -309,6 +375,38 @@ describe("dressArena sightline enforcement (NullEngine)", () => {
     expect(handles.fader.size).toBe(1); // ...because it auto-fades instead
     disposeArena(scene, handles);
     expect(handles.fader.size).toBe(0);
+  });
+
+  // ---- #218: the markers' fate no longer depends on decor content ----
+  const OBSTACLE_ARENA: ArenaDef = { id: "arena.test", name: "test", zones: [OBSTACLE_ZONE] };
+
+  it.each([
+    ["a doc WITH pillar decor", "assets/models/props/pillar.glb"],
+    ["a doc with NO pillar decor", "assets/models/props/crates_stacked.glb"],
+  ])("keeps the low collision markers through dressArena — %s", async (_label, model) => {
+    const handles = buildArena(scene, OBSTACLE_ARENA);
+    expect(handles.obstacleMeshes).toHaveLength(3); // stump + ring + wall slab
+    await dressArena(
+      scene,
+      stubAssets({ [model]: stubContainer(scene, "prop", 4, 1.5) }),
+      OBSTACLE_ARENA,
+      {
+        ...testDoc([{ model, x: 0, z: 0, rotQuarter: 0, scale: 2.5 }]),
+        zones: [OBSTACLE_ZONE] as unknown as ArenaDoc["zones"],
+      },
+      handles,
+    );
+    // Before #218 the pillar row DISPOSED these and the non-pillar row left
+    // them standing 2.4u tall. Now both rows land in the same place: still
+    // there (collision stays visible) and still low (camera stays clear).
+    expect(handles.obstacleMeshes).toHaveLength(3);
+    for (const m of handles.obstacleMeshes) {
+      expect(m.isDisposed()).toBe(false);
+      const top = m.getBoundingInfo().boundingBox.maximumWorld.y;
+      expect(top, m.name).toBeLessThanOrEqual(OBSTACLE_MARKER_TOP_Y + 1e-4);
+      expect(fullHideReach(top), m.name).toBe(0);
+    }
+    disposeArena(scene, handles);
   });
 });
 
