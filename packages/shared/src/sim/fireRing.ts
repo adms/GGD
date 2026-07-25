@@ -56,7 +56,10 @@
  * it on combat entry (`beginCombatFireRing`) and disarms it on round exit
  * (`endCombatFireRing`). The tick loop additionally gates every burn on
  * `world.combatActive`, so the instant a round SETTLES (task #100) the ring
- * stops — it is a LIVE-combat accelerator, never a post-settle grinder.
+ * stops — it is a LIVE-combat accelerator, never a post-settle grinder — and,
+ * per zone, on `world.settledZones` (task #216), so a duel that finished EARLY
+ * stops burning its survivors instead of grinding them down while the other
+ * zone is still fighting (that grind is what the owner saw from the shop).
  *
  * PURITY: no rng, no trig, no transcendentals, no wall-clock. The radius is a
  * pure function of the tick COUNTER (never accumulated `r -= step`, which would
@@ -197,6 +200,9 @@ export function isBurnedByFireRing(world: SimWorld, id: EntityId): boolean {
   if (world.fireRingTicks < rules.startTicks) return false;
   const t = world.transform.get(id);
   if (!t) return false;
+  // #216: a zone whose duel is already decided does not burn (FireRingSystem
+  // skips it), so the BURNING flag must not claim it does.
+  if (world.settledZones.has(t.zone)) return false;
   const zoneDef = world.arena.zones[t.zone] ?? world.arena.zones[0];
   if (!zoneDef) return false;
   const radius = fireRingRadius(

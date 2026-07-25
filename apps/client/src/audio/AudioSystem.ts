@@ -41,7 +41,7 @@ import {
 import { audioSettings, type AudioSettingsStore } from "./audioSettings";
 import { BgmRotationStore, ACTIVE_BGM_VARIANTS, type BgmVariantMap } from "./bgmVariants";
 import { loopResumeOffsetSec } from "./scene";
-import { SFX_CORE, sfxEventsForScene } from "./sfxManifest";
+import { SFX_CORE, SFX_LOOPABLE, isLoopableSfx, sfxEventsForScene } from "./sfxManifest";
 import { EMPTY_AUDIO_MAP, audioMapFromDoc, type AudioMap, type AudioScene } from "./types";
 import { withContentVersion } from "../content/assetVersion";
 
@@ -242,6 +242,23 @@ interface SpatialChain {
   dispose(): void;
 }
 
+/**
+ * A LIVE sustained-SFX voice (task #216) — one entry per playing clip whose
+ * event is flagged in `sfxManifest.SFX_LOOPABLE` (the ambience/bed keys, e.g.
+ * `fireRingLoop`, `arenaAmbience`). Held only so combat teardown can fade it
+ * out; transients are never tracked. `stopping` makes a second stop request a
+ * no-op rather than a second gain ramp on the same node (overlapping automation
+ * throws in some browsers).
+ */
+interface SustainedVoice {
+  src: AudioBufferSourceNode;
+  gain: GainNode;
+  stopping: boolean;
+}
+
+/** Fade applied when a sustained SFX bed is stopped (ms). */
+const SFX_FADE_OUT_MS = 320;
+
 function defaultCtxFactory(): AudioContext | null {
   try {
     const g = globalThis as unknown as {
@@ -286,6 +303,18 @@ export class AudioSystem {
   private readonly bgmLoadOrder: string[] = [];
 
   private readonly gate = new SfxGate();
+  /**
+   * Live sustained SFX voices per event (task #216) — see {@link SustainedVoice}.
+   * Only `SFX_LOOPABLE` events land here, so a teamfight's hundreds of
+   * transients still allocate nothing.
+   */
+  private readonly sustainedVoices = new Map<string, Set<SustainedVoice>>();
+  /**
+   * Per-event stop epoch. Bumped by `stopSfx`, captured by `playSfx` before its
+   * async decode: a bed whose clip was still decoding when combat ended is
+   * cancelled instead of starting into the shop.
+   */
+  private readonly sustainedEpoch = new Map<string, number>();
   /** Per-scene original↔Samantha rotation (task #137). Empty ⇒ never rotates. */
   private readonly rotation: BgmRotationStore;
   /** The rotation-chosen file for the CURRENT scene (resolved once on entry). */
@@ -798,6 +827,15 @@ export class AudioSystem {
    * the voice and the SFX bus for a positioned one-shot. Both ride the same
    * sfxBus, so the SFX bus mute/volume still applies. Omitting `opts` keeps the
    * plain full-gain, centred behaviour every existing caller relies on.
+   *
+   * SUSTAINED KEYS (task #216). An event in `SFX_LOOPABLE` is an AMBIENCE BED,
+   * not a transient: `fireRingLoop` is ~60 s of burning fire fired once at
+   * ignition, `arenaAmbience` ~38 s of room fired once at round start. Those
+   * voices are remembered here so `stopSfx` / `stopSustainedSfx` can fade them
+   * out when combat ends — before this, `playSfx` was strictly fire-and-forget
+   * and the client had NO way to stop a started SFX at all, which is why the
+   * fire ring kept roaring over the shop. Transients are untracked (a one-frame
+   * Map write per bed, none per hit).
    */
   playSfx(event: string, opts?: SfxPlayOptions): boolean {
     if (this.disposed || !this.unlocked) return false;
@@ -820,13 +858,23 @@ export class AudioSystem {
     const volMul = sfxVoiceMultiplier(opts?.volume);
     const pan = opts?.pan;
     const lowpassHz = opts?.lowpassHz;
+    // Sustained bed bookkeeping (#216). The epoch is captured BEFORE the async
+    // decode: a stop requested while this clip is still decoding must cancel the
+    // start rather than let a bed begin after combat ended.
+    const sustained = isLoopableSfx(event);
+    const epoch = sustained ? (this.sustainedEpoch.get(event) ?? 0) : 0;
     void this.loadBuffer(file).then((buffer) => {
       if (!buffer || this.disposed) {
         this.gate.release(gateKey);
         return;
       }
+      if (sustained && epoch !== (this.sustainedEpoch.get(event) ?? 0)) {
+        this.gate.release(gateKey); // stopped mid-decode — never start it
+        return;
+      }
       let gain: GainNode | null = null;
       let chain: SpatialChain | null = null;
+      let voice: SustainedVoice | null = null;
       try {
         gain = ctx.createGain();
         gain.gain.value = (entry.gain ?? 1) * volMul;
@@ -842,14 +890,27 @@ export class AudioSystem {
         }
         const g = gain;
         const c = chain;
+        voice = sustained ? { src, gain: g, stopping: false } : null;
+        if (voice) {
+          let live = this.sustainedVoices.get(event);
+          if (!live) {
+            live = new Set<SustainedVoice>();
+            this.sustainedVoices.set(event, live);
+          }
+          live.add(voice);
+        }
+        const v = voice;
         src.onended = (): void => {
           this.gate.release(gateKey);
           this.safeDisconnect(src, g);
           c?.dispose();
+          if (v) this.sustainedVoices.get(event)?.delete(v);
         };
         src.start();
       } catch (err) {
         this.gate.release(gateKey);
+        // a tracked voice that never started must not linger in the registry
+        if (voice) this.sustainedVoices.get(event)?.delete(voice);
         // TEARDOWN ON THE THROW PATH. If the wiring above succeeded and only
         // `src.start()` threw, the gain and the spatial nodes are already
         // edge-connected to the SFX bus and `onended` will never fire. Leaving
@@ -868,6 +929,69 @@ export class AudioSystem {
       }
     });
     return true;
+  }
+
+  /**
+   * STOP a sustained SFX bed (task #216). Fades the live voices of `event` out
+   * over {@link SFX_FADE_OUT_MS} and stops them; also cancels a voice of the
+   * same event that is still decoding, so a bed cannot start after the moment
+   * it was told to stop. Returns how many playing voices it stopped.
+   *
+   * Only `SFX_LOOPABLE` events are tracked, so this is a no-op for transients —
+   * an unmapped or already-finished key costs one Map lookup and returns 0.
+   * Deliberately narrow: BGM has `stopBed`/scene changes, and one-shots are
+   * meant to be fire-and-forget. The ONE thing missing before this was a way to
+   * end an ambience bed on a phase edge, which is why the ~60 s fire-ring loop
+   * kept burning audibly through 結算 and the shop.
+   */
+  stopSfx(event: string): number {
+    // Bump the epoch even when nothing is live: it is what cancels an in-flight
+    // decode of this same event.
+    this.sustainedEpoch.set(event, (this.sustainedEpoch.get(event) ?? 0) + 1);
+    const live = this.sustainedVoices.get(event);
+    if (!live || live.size === 0) return 0;
+    let stopped = 0;
+    for (const voice of [...live]) {
+      if (voice.stopping) continue;
+      voice.stopping = true;
+      stopped++;
+      const fadeSec = SFX_FADE_OUT_MS / 1000;
+      try {
+        const ctx = this.ctx;
+        const t0 = ctx ? ctx.currentTime : 0;
+        voice.gain.gain.cancelScheduledValues(t0);
+        voice.gain.gain.setValueAtTime(voice.gain.gain.value, t0);
+        voice.gain.gain.linearRampToValueAtTime(0, t0 + fadeSec);
+      } catch {
+        /* automation unsupported/rejected — the hard stop below still lands */
+      }
+      const hardStop = (): void => {
+        try {
+          voice.src.stop();
+        } catch {
+          /* already stopped — `onended` does the disconnect + bookkeeping */
+        }
+      };
+      if (typeof setTimeout === "function") setTimeout(hardStop, SFX_FADE_OUT_MS + 40);
+      else hardStop();
+    }
+    return stopped;
+  }
+
+  /**
+   * Stop EVERY sustained SFX bed (task #216) — the combat-exit teardown. Called
+   * on the combat→resolution/intermission phase edge so no fight ambience
+   * (fire ring, arena room tone) survives into the shop. Returns the number of
+   * voices stopped.
+   */
+  stopSustainedSfx(): number {
+    let stopped = 0;
+    // EVERY loopable key, not just the ones with a live voice: a bed whose clip
+    // is still decoding has no voice yet, and bumping its epoch is exactly what
+    // stops it from starting a moment later, over the shop.
+    const keys = new Set<string>([...SFX_LOOPABLE, ...this.sustainedVoices.keys()]);
+    for (const event of keys) stopped += this.stopSfx(event);
+    return stopped;
   }
 
   /**
@@ -1309,6 +1433,10 @@ export class AudioSystem {
     // `this.bed` was cleared above, so the stop() below cannot look like a
     // natural end; dropping the subscribers as well makes that structural.
     this.bedEndListeners.clear();
+    // Sustained SFX beds (#216) die with the system: the epoch bump also stops
+    // any still-decoding bed from starting into a torn-down context.
+    this.stopSustainedSfx();
+    this.sustainedVoices.clear();
     this.gate.reset();
     // The spatial insert pool holds nodes belonging to the context we are about
     // to close. Dropping them here (rather than letting them ride) means a

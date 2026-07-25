@@ -110,6 +110,13 @@ export function hostDigest(ctl: MatchController): number {
     }
   }
   m.num(w.combatActive ? 1 : 0);
+  // PER-ZONE COMBAT LIVENESS (#216). `settledZones` decides whether the fire
+  // ring keeps burning a zone and whether mobs keep arriving in it, so a
+  // replica that disagrees about which duel already finished changes the sim.
+  // Hashed right next to `combatActive` — sorted, so the Set's insertion order
+  // (which is a host-iteration artefact) can never colour the digest.
+  for (const zone of [...w.settledZones].sort((a, b) => a - b)) m.num(zone);
+  m.num(w.settledZones.size);
   m.num(w.economyOpen ? 1 : 0);
   m.num(w.round);
   // FIRE RING (#195). `SimWorld.digest()` quantizes floats at 1/4096, but the

@@ -24,6 +24,12 @@
  * latency identical to guardian volleys — harmless and deterministic). Running
  * it BEFORE deathSystem would miss same-tick kills.
  *
+ * PER-ZONE STAND-DOWN (task #216). `combatActive` is global — it only drops once
+ * EVERY duel is decided — so a zone that finished early kept taking mob waves
+ * and mob melee while another zone fought on. Any zone in `world.settledZones`
+ * (host-written the instant that duel's winner is recorded) spawns no new wave
+ * and its mobs drop aggro, exactly like the fire ring stops burning it.
+ *
  * OFF BY DEFAULT / BYTE-IDENTICAL. `world.mobRules === null || world.mobTicks <
  * 0 || !world.combatActive` makes it a strict no-op, so a skeleton/test/
  * prediction-shadow world stays byte-identical (world.mob + world.mobKills empty,
@@ -62,6 +68,9 @@ export function mobSystem(world: SimWorld): void {
     // spawns up to `count`, never exceeding its alive cap.
     const zones = [...world.mobZones].sort((a, b) => a - b);
     for (const zone of zones) {
+      // #216: a zone whose duel is already decided gets no new wave — the round
+      // is over there, and PvE that keeps arriving is PvE that keeps hitting.
+      if (world.settledZones.has(zone)) continue;
       for (let i = 0; i < count; i++) {
         if (mobsAliveInZone(world, zone) >= rules.maxAlivePerZone) break;
         spawnMob(world, zone, rules, k, i);
@@ -76,6 +85,16 @@ export function mobSystem(world: SimWorld): void {
     const mt2 = world.transform.get(mobId);
     const mhp = world.health.get(mobId);
     if (!mt2 || !mhp?.alive) continue;
+    // #216: STAND DOWN in a settled zone. The duel there is decided, so a mob
+    // must not keep chasing/hitting the survivors while the other zone plays on
+    // (same reason the fire ring stops burning them). Target is cleared rather
+    // than kept, so the nav chase stops on the same tick as the melee.
+    if (world.settledZones.has(mob.zone)) {
+      mob.target = -1;
+      const idleNav = world.nav.get(mobId);
+      if (idleNav) idleNav.attackTarget = null;
+      continue;
+    }
     let target: EntityId | -1 = -1;
     let bestD2 = Infinity;
     for (const [cid, cteam] of world.team) {
