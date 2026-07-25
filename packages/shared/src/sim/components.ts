@@ -231,6 +231,40 @@ export interface CoinComp {
   ownerSeatId: SeatId;
 }
 
+/**
+ * Roguelite mob marker + per-round AI state (task #215 聖杯黑泥醬-喪標麥可). One
+ * per live mob, stored in `world.mob`. A mob is built from the guardian/flower
+ * NEUTRAL-entity blueprint but with TWO genuinely new capabilities layered on:
+ *
+ *   1. it MOVES — it carries a {@link Navigation} (guardians/flowers do not), so
+ *      OrderSystem + MovementSystem walk it toward its target at the fallback
+ *      BASE_MOVE_SPEED (it has NO StatsComp, so it inherits that speed);
+ *   2. it is MUTUALLY HOSTILE — it carries a {@link TeamComp} on the sentinel
+ *      MONSTER team ({@link MONSTER_TEAM}), a team no champion is ever on, so
+ *      `differentTeam` makes it an enemy to EVERY champion without a ChampionComp.
+ *
+ * A spawned mob therefore carries: Transform + Health + this marker + Navigation
+ * + TeamComp(MONSTER). Deliberately NO ChampionComp / seat / StatsComp /
+ * AbilitiesComp / matchStats entry, so the scoreboard, duel resolution, team
+ * lives and placement all stay blind to it BY CONSTRUCTION (the guardian/flower
+ * neutrality contract). All fields here are authoritative + deterministic.
+ *
+ * `modelKey` is NOT stored — it is presentation-only (resolved client-side from
+ * ENTITY_KIND.MOB like the guardian/flower), so it stays out of the digest.
+ */
+export interface MobComp {
+  /** duel zone the mob fights in (a mob only ever chases/attacks in its zone) */
+  zone: number;
+  /** the sentinel MONSTER team id it is on (always {@link MONSTER_TEAM}) */
+  team: TeamId;
+  /** current AI target (nearest enemy champion), resolved each tick; -1 = none */
+  target: EntityId | -1;
+  /** integer melee-cooldown countdown (0 = ready to swing) */
+  attackCdTicks: number;
+  /** `mobTicks` value at spawn — presentation/debug only, NOT in the digest */
+  spawnTick: number;
+}
+
 export interface ReviveCircleComp {
   /** the corpse this circle belongs to (revive target) */
   ownerId: EntityId;

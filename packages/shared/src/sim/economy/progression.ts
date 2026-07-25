@@ -11,7 +11,15 @@ import { recordGold, recordXp } from "../stats/matchStats";
  * design (rounds 12+ grant 0), while `grantXp` can climb all the way to 99.
  */
 export const LEVEL_CAP = 99;
-export const XP_REWARDS = { kill: 120, assist: 60, roundSurvive: 100 };
+/**
+ * `mob` (task #215) is the XP a killer earns per roguelite mob (喪標麥可) kill.
+ * Deliberately SMALL relative to `xpToNext` (≈4,020 at L50 → ≈7,940 at L99): a
+ * single mob barely moves the bar, so the DOMINANT L50→L99 climb is the
+ * every-30-kills `grantLevels(1)` bonus (see MobSystem / `reward.killsPerLevel`),
+ * not the per-kill XP. The mob is the intended path past the round-grant L50
+ * ceiling — that is the whole point of the mechanic.
+ */
+export const XP_REWARDS = { kill: 120, assist: 60, roundSurvive: 100, mob: 40 };
 /**
  * `killBounty` (task #90) is a ONE-TIME premium paid on top of `kill` the FIRST
  * time each enemy champion dies — extra reward for drawing first blood on a
@@ -20,7 +28,14 @@ export const XP_REWARDS = { kill: 120, assist: 60, roundSurvive: 100 };
  * deterministic match income the price ladder is derived against, so it never
  * disturbs the stat-path arithmetic (which is about deterministic income only).
  */
-export const GOLD_REWARDS = { kill: 150, assist: 75, roundWin: 300, roundLose: 150, killBounty: 100 };
+/**
+ * `mobKill` (task #215) is the FLAT, REPEATABLE gold a killer earns for slaying
+ * a roguelite mob. Unlike `killBounty` there is NO once-per-victim bookkeeping
+ * (no `bountyPaid` interaction): every mob pays a fresh 20 to whoever lands the
+ * killing blow, exactly like a LoL minion. Sits OUTSIDE the deterministic
+ * price-ladder income the shop is tuned against — it is optional PvE farm.
+ */
+export const GOLD_REWARDS = { kill: 150, assist: 75, roundWin: 300, roundLose: 150, killBounty: 100, mobKill: 20 };
 
 /**
  * Gold every champion spawns with — the turn-1 shop purse.

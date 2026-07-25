@@ -132,5 +132,25 @@
     "dropRadius": 1.9,
     "pickupRadius": 1.6,
     "coinRadius": 0.31
+  },
+  "mobWaves": {
+    "fromRound": 3,
+    "firstWaveSec": 1,
+    "waveIntervalSec": 2,
+    "mobsPerWaveCap": 10,
+    "maxAlivePerZone": 30,
+    "mob": {
+      "maxHp": 120,
+      "attackDamage": 12,
+      "attackRange": 1.8,
+      "attackCdSec": 1.0,
+      "radius": 0.6,
+      "modelKey": "champ.thorne"
+    },
+    "reward": {
+      "gold": 20,
+      "xp": 40,
+      "killsPerLevel": 30
+    }
   }
 }

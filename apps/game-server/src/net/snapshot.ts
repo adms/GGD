@@ -9,6 +9,7 @@ import { Champions } from "@ggd/shared/sim/content/registry";
 import { FLOWER_MODEL_KEY } from "@ggd/shared/sim/flowers";
 import { REVIVE_CIRCLE_MODEL_KEY } from "@ggd/shared/sim/revive";
 import { GOLD_COIN_MODEL_KEY } from "@ggd/shared/sim/coins";
+import { MOB_MODEL_KEY } from "@ggd/shared/sim/mobs";
 import { currentFireRingRadius, isBurnedByFireRing } from "@ggd/shared/sim/fireRing";
 import type { ChampionId } from "@ggd/shared/ids";
 import type { MatchController } from "../match/MatchController";
@@ -286,6 +287,27 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
         es.maxMana = 0;
         es.shield = coin.value;
         es.alive = true;
+        es.flags = 0;
+        continue;
+      }
+      const mob = world.mob.get(id);
+      if (mob) {
+        // ROGUELITE MOB (task #215 喪標麥可). A MONSTER-team neutral that MOVES.
+        // Placed BEFORE the champion default so it never paints as a grey team-0
+        // teammate. seatId -1 = neutral (all champions may target it); key = the
+        // voxel-zombie standin; hp rides along so a neutral health bar renders.
+        es.kind = ENTITY_KIND.MOB;
+        es.seatId = -1;
+        es.key = MOB_MODEL_KEY;
+        const hp = world.health.get(id);
+        if (hp) {
+          es.hp = hp.hp;
+          es.maxHp = hp.maxHp;
+          es.mana = 0;
+          es.maxMana = 0;
+          es.alive = hp.alive;
+          es.shield = 0;
+        }
         es.flags = 0;
         continue;
       }

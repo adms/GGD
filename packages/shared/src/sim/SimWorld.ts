@@ -17,9 +17,11 @@ import type {
   FlowerComp,
   ReviveCircleComp,
   CoinComp,
+  MobComp,
 } from "./components";
 import type { FlowerRules } from "./flowers";
 import type { CoinRules } from "./coins";
+import type { MobRules } from "./mobs";
 import type { FireRingRules } from "./fireRing";
 import type { ReviveRules } from "./revive";
 import { DEFAULT_COMBAT_ENV, type CombatEnvMultipliers } from "./combatEnv";
@@ -54,6 +56,7 @@ import {
   type GuardianBuff,
   type GuardianRules,
 } from "./systems/GuardianSystem";
+import { mobSystem } from "./systems/MobSystem";
 
 export interface SimEvent {
   type: string;
@@ -108,6 +111,33 @@ export class SimWorld {
    * mechanic (`guardianRules !== null`).
    */
   readonly structure = new Map<EntityId, StructureComp>();
+
+  /**
+   * Roguelite mobs (task #215 喪標麥可). A mob carries transform + health +
+   * this marker + a Navigation + a TeamComp on the sentinel MONSTER team — the
+   * guardian/flower NEUTRAL blueprint plus MOVEMENT and MUTUAL HOSTILITY (see
+   * MobComp). It is in the broad-phase grid (a legal ability/auto target) and is
+   * driven entirely by MobSystem. Empty unless the host armed the mechanic
+   * (`mobRules !== null`).
+   */
+  readonly mob = new Map<EntityId, MobComp>();
+
+  /**
+   * Cumulative mob kills per champion (killer championId -> count), task #215.
+   * NOT stored on ChampionComp (champion.level/xp/gold are not in worldDigest; a
+   * dedicated folded map is the established clean choice, mirroring coinBudget/
+   * bountyPaid). On the 30th, 60th, … kill MobSystem triggers grantLevels(1).
+   * Empty when the mechanic is off, so a pre-feature world hashes identically.
+   */
+  readonly mobKills = new Map<EntityId, number>();
+
+  /**
+   * Duel zones armed for mob waves this combat (task #215). Host state like
+   * `flowerZones`: assigned identically on every replica from a deterministic
+   * source (the round's pairings), never mutated by a system, so it stays out of
+   * digest(). Empty unless mobs are armed.
+   */
+  readonly mobZones = new Set<number>();
 
   /**
    * Active 鎮守之力 buffs (task #89 §8.3): killer entity -> the inherited-volley
@@ -307,6 +337,26 @@ export class SimWorld {
   coinRules: CoinRules | null = null;
 
   /**
+   * Mob-wave rules (ticks), task #215. null (default) = the mechanic is OFF —
+   * unit tests, the client's prediction shadow world, any match whose rules doc
+   * has no `mobWaves` block, or any round before `mobWaves.fromRound` — and
+   * EVERY mob code path opens by returning on it, so a pre-feature world is
+   * byte-identical down to the digest. The match host arms these via
+   * `beginCombatMobs` / `endCombatMobs` (see systems/MobSystem.ts).
+   */
+  mobRules: MobRules | null = null;
+
+  /**
+   * Combat-elapsed ticks driving the mob wave cadence. -1 = not armed
+   * (MobSystem idles). Set to 0 by beginCombatMobs and incremented by MobSystem
+   * each LIVE-combat tick, so the schedule is deterministic world state. Kept
+   * SEPARATE from `combatTicks` (which only advances while flowers are armed) so
+   * the wave schedule never depends on whether flowers are enabled — the exact
+   * fireRingTicks rationale. Folded into digest ONLY while armed (>= 0).
+   */
+  mobTicks = -1;
+
+  /**
    * Remaining revive charges this ROUND, per team. Armed to
    * `revivesPerTeamPerRound` on combat entry, spent on a COMPLETED revive
    * (never on spawn), cleared on combat exit. One per team is the largest
@@ -359,6 +409,11 @@ export class SimWorld {
     this.coinBudget.delete(id);
     this.structure.delete(id);
     this.guardianBuffs.delete(id);
+    // task #215: a recycled entityId must never inherit a stale mob marker or
+    // kill counter (mobKills is keyed by CHAMPION id, but registering it here is
+    // the same defensive contract every other per-entity store follows).
+    this.mob.delete(id);
+    this.mobKills.delete(id);
     this.hitstop.delete(id);
     this.knockdown.delete(id);
     this.hitstun.delete(id);
@@ -438,6 +493,12 @@ export class SimWorld {
     //                             payout (no-op unless armed). Runs AFTER deathSystem
     //                             (sees this tick's `death`) and reviveSystem (killer's
     //                             final alive-state is settled before payout).
+    mobSystem(this); //      9d′. roguelite mob waves: clock/spawn schedule, AI aim,
+    //                             melee queue, +gold/xp payout + every-30 level-up
+    //                             (no-op unless armed + combatActive). Same slot
+    //                             rationale as the guardian: reads THIS tick's
+    //                             `death` events before paying, and queues melee /
+    //                             sets nav.attackTarget for next-tick resolve/chase.
     coinSystem(this); //     9e. 陣亡投幣 pickup: a living champion walks onto a
     //                             dropped coin and banks it (no-op unless armed).
     //                             AFTER deathSystem/reviveSystem/guardianSystem so
@@ -563,6 +624,27 @@ export class SimWorld {
       mix(b.nextPulseTick);
       mix(b.round);
     }
+    // roguelite mobs (task #215) are authoritative world state: a spawn/aim/
+    // melee-cooldown that advanced on one replica but not another must surface
+    // here as a mismatch. Transform pos/facing + Health hp/mana are folded
+    // generically above (a mob has both), so only the mob-specific fields go
+    // here — plus the per-champion kill counter (the every-30 level-up trigger)
+    // and the schedule clock. All THREE are empty / -1 when the mechanic is off,
+    // so a pre-feature world hashes byte-identically.
+    for (const [id, m] of this.mob) {
+      mix(id);
+      mix(m.target);
+      mix(m.attackCdTicks);
+      mix(m.zone);
+    }
+    for (const [id, n] of this.mobKills) {
+      mix(id);
+      mix(n);
+    }
+    // Guard the clock: fold it ONLY while armed so a mid-tick schedule desync
+    // surfaces the SAME tick (the gold-only-divergence blind spot), while a
+    // disarmed / pre-feature world (mobTicks === -1) skips it entirely.
+    if (this.mobTicks >= 0) mix(this.mobTicks);
     mix(this.rng.state);
     mix(this.tick);
     return h >>> 0;

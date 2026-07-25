@@ -44,6 +44,8 @@ import {
   guardianRulesFromConfig,
 } from "@ggd/shared/sim/systems/GuardianSystem";
 import { beginCombatCoins, endCombatCoins, coinRulesFromConfig } from "@ggd/shared/sim/coins";
+import { beginCombatMobs, endCombatMobs } from "@ggd/shared/sim/systems/MobSystem";
+import { mobRulesFromConfig } from "@ggd/shared/sim/mobs";
 import { DEFAULT_FLOWER_CONFIG, type FireRingConfig } from "@ggd/shared/content";
 import type { IntentFrame, AbilitySlot } from "@ggd/shared/sim/intents";
 import type { Cheat } from "@ggd/shared/protocol/messages";
@@ -891,6 +893,24 @@ export class MatchController {
     } else {
       endCombatCoins(this.world);
     }
+
+    // arm the ROGUELITE MOB WAVES (task #215): from `mobWaves.fromRound` onward,
+    // voxel-zombie mobs (喪標麥可) stream in from the EDGES of each ACTIVE duel
+    // zone (the bye has no pairing, so no mobs) and escalate with combat time.
+    // `round` gates it; the dedicated mobTicks clock resets to 0 here. Cleared by
+    // concludeCombat so there is no post-round PvE farming. Absent config OR a
+    // round before fromRound = OFF (same legacy-compat rule as guardians). A mob
+    // is a MONSTER-team neutral with no ChampionComp, so duel resolution, team
+    // health, placement and the scoreboard stay blind to it.
+    if (this.rules.mobWaves && this.phase.round >= this.rules.mobWaves.fromRound) {
+      beginCombatMobs(
+        this.world,
+        mobRulesFromConfig(this.rules.mobWaves, this.world.dt),
+        this.pairings.map((p) => p.zone),
+      );
+    } else {
+      endCombatMobs(this.world);
+    }
   }
 
   private teamAliveCount(teamId: TeamId, zone: number): number {
@@ -1096,6 +1116,7 @@ export class MatchController {
     endCombatFireRing(this.world); // …and the round-pacing fire ring re-idles (#132)
     endCombatGuardians(this.world); // …and every neutral guardian despawns (no post-round farming, #89)
     endCombatCoins(this.world); // …and every unclaimed coin BURNS — no carry into the next round (#191)
+    endCombatMobs(this.world); // …and every mob despawns — no post-round PvE farming (#215)
     this.settleRound();
     this.world.combatActive = false;
     // The round is SETTLED: halt every champion RIGHT NOW (#100) — clear the

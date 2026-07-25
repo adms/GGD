@@ -17,6 +17,7 @@ import type {
   ReviveCircleConfig,
   GuardianTowerConfig,
   GoldDropConfig,
+  MobWavesConfig,
 } from "@ggd/shared/content";
 
 export interface RoundGrant {
@@ -54,6 +55,8 @@ export interface ArenaRules {
   guardianTower: GuardianTowerConfig | null;
   /** 陣亡投幣 rules (task #191); null = dead players cannot throw gold (legacy) */
   goldDrop: GoldDropConfig | null;
+  /** roguelite mob-wave rules (task #215); null = mechanic off (legacy) */
+  mobWaves: MobWavesConfig | null;
 }
 
 /** Legacy behavior: augment tiers per AUGMENT_TIER_SCHEDULE + round-2+ gacha. */
@@ -73,6 +76,7 @@ export const DEFAULT_ARENA_RULES: ArenaRules = {
   reviveCircles: null,
   guardianTower: null,
   goldDrop: null,
+  mobWaves: null,
 };
 
 /** Convert a parsed config.arena-rules@1 doc into the controller's rule table. */
@@ -99,6 +103,7 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
     reviveCircles: doc.reviveCircles ?? null,
     guardianTower: doc.guardianTower ?? null,
     goldDrop: doc.goldDrop ?? null,
+    mobWaves: doc.mobWaves ?? null,
   };
 }
 

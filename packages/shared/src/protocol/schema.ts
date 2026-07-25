@@ -308,7 +308,7 @@ defineTypes(DuelState, {
 
 export class EntityState extends Schema {
   declare id: number;
-  declare kind: number; // 0 champion, 1 projectile, 2 flower, 3 revive circle, 4 guardian (ENTITY_KIND)
+  declare kind: number; // 0 champion, 1 projectile, 2 flower, 3 revive circle, 4 guardian, 5 gold coin, 6 mob (ENTITY_KIND)
   declare seatId: number;
   /** visual key: champion modelKey or projectileId */
   declare key: string;
@@ -519,6 +519,16 @@ export const ENTITY_KIND = {
    *            `hasOverheadBar` returns false for it, so no bar is drawn.
    */
   GOLD_COIN: 5,
+  /**
+   * A ROGUELITE MOB (task #215 喪標麥可, key = the voxel-zombie standin). A
+   * NEUTRAL combat entity like the guardian — transform + health + a marker —
+   * but it MOVES and is on the sentinel MONSTER team, so it needs its own kind
+   * (falling through to the champion default would paint it as a grey team-0
+   * teammate). seatId = -1 (neutral, no player seat); key = MOB_MODEL_KEY; hp/
+   * maxHp/alive ride along so a neutral health bar renders. Interpolated like
+   * the guardian/flower, NEVER client-predicted.
+   */
+  MOB: 6,
 } as const;
 
 export const ENTITY_FLAG = {

@@ -235,7 +235,11 @@ export class AIDriver implements SeatDriver {
     for (const [otherId, otherTeam] of world.team) {
       if (otherId === id) continue;
       if (myTeam && otherTeam.teamId === myTeam.teamId) continue;
-      if (!world.champion.has(otherId)) continue;
+      // Enemy CHAMPIONS and roguelite MOBS (task #215) are both valid targets:
+      // a mob is a MONSTER-team entity with no ChampionComp, so without this the
+      // bot would ignore the waves entirely and PvE would be one-sided. Mobs
+      // carry a TeamComp (unlike guardians/flowers), so they appear in this loop.
+      if (!world.champion.has(otherId) && !world.mob.has(otherId)) continue;
       const oh = world.health.get(otherId);
       const ot = world.transform.get(otherId);
       if (!oh?.alive || !ot || ot.zone !== t.zone) continue;

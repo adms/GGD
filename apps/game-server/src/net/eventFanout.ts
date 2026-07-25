@@ -98,6 +98,15 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   "guardianImpact",
   "guardianHeirPulse",
   "guardianSlain",
+  // ROGUELITE MOB WAVES (task #215 喪標麥可). Without these the mob is a ghost:
+  // it exists in the sim and deals/takes damage, but the client sees no spawn
+  // (so a voxel-zombie pops into existence with no VFX/SFX) and no kill feedback
+  // (the +20 gold / +xp float has no anchor, and the every-30 level-up cue has
+  // no trigger). `mobSpawn` carries `{ id, zone, x, z, maxHp }`; `mobSlain`
+  // names who got the last-hit reward like `guardianSlain` does. Same one-list
+  // contract as every other combat visual, so the ReplayRoom forwards them too.
+  "mobSpawn",
+  "mobSlain",
   // FLOATING COMBAT TEXT (task #92): 補血 / 補魔 — the half `damage` does not
   // carry. Emitted only for DISCRETE restores, so no steady-state regen spam.
   "heal",

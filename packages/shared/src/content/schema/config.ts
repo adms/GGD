@@ -416,6 +416,86 @@ export const DEFAULT_GOLD_DROP_CONFIG: GoldDropConfig = {
   coinRadius: 0.31,
 };
 
+/**
+ * Roguelite mob waves (task #215 肉鴿小怪波 — 聖杯黑泥醬-喪標麥可 voxel-zombies).
+ * From `fromRound` onward, mobs stream in from the EDGES of each active duel
+ * zone: a wave every `waveIntervalSec`, the wave at combat-second (2k-1)
+ * spawning min(k, `mobsPerWaveCap`) mobs, capped at `maxAlivePerZone` alive per
+ * battlefield. Each mob walks to the nearest enemy champion and melee-attacks;
+ * on death it pays the killer `reward.gold` + `reward.xp`, and every
+ * `reward.killsPerLevel`th mob kill grants that champion +1 LEVEL (the intended
+ * climb past the round-grant L50 ceiling toward LV99). Optional + additive: an
+ * absent block means the mechanic is simply OFF (same legacy-compat convention
+ * as `flowers` / `reviveCircles` / `guardianTower`), which is what every unit
+ * test and the client's prediction shadow world see. Seconds in the doc, ticks
+ * in the sim (converted once by `mobRulesFromConfig`).
+ */
+export const zMobWavesConfig = z
+  .object({
+    /** 1-based round from which waves begin (matches ultUnlockRound:3 precedent) */
+    fromRound: z.number().int().min(1),
+    /** combat-second of wave k=1 (→ firstWaveTicks = round(sec/dt)) */
+    firstWaveSec: z.number().positive(),
+    /** combat-seconds between waves (wave k lands at second 2k-1 when =2) */
+    waveIntervalSec: z.number().positive(),
+    /** hard cap on mobs spawned per wave: count = min(k, mobsPerWaveCap) */
+    mobsPerWaveCap: z.number().int().min(1),
+    /** hard cap on mobs ALIVE per battlefield/duel zone at once */
+    maxAlivePerZone: z.number().int().min(1),
+    /** the mob unit's combat stats */
+    mob: z
+      .object({
+        /** mob hit points (no regen) */
+        maxHp: z.number().positive(),
+        /** melee packet amount */
+        attackDamage: z.number().min(0),
+        /** melee reach (GGD units; stored/compared squared in the sim) */
+        attackRange: z.number().positive(),
+        /** melee cooldown in seconds */
+        attackCdSec: z.number().positive(),
+        /** collision/body radius (drives the edge inset = boundaryRadius - radius) */
+        radius: z.number().positive(),
+        /** the voxel-zombie standin model doc id (resolved client-side) */
+        modelKey: z.string().min(1).optional(),
+      })
+      .strict(),
+    /** per-kill rewards */
+    reward: z
+      .object({
+        /** flat gold to the killer per mob kill */
+        gold: z.number().int().min(0),
+        /** XP to the killer per mob kill */
+        xp: z.number().int().min(0),
+        /** every Nth mob kill grants the killer +1 level */
+        killsPerLevel: z.number().int().min(1),
+      })
+      .strict(),
+  })
+  .strict();
+
+export type MobWavesConfig = z.infer<typeof zMobWavesConfig>;
+
+/** Contract defaults for the mobWaves block (dev cheats / fallbacks). */
+export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
+  fromRound: 3,
+  firstWaveSec: 1,
+  waveIntervalSec: 2,
+  mobsPerWaveCap: 10,
+  maxAlivePerZone: 30,
+  mob: {
+    maxHp: 120,
+    attackDamage: 12,
+    attackRange: 1.8,
+    attackCdSec: 1.0,
+    radius: 0.6,
+  },
+  reward: {
+    gold: 20,
+    xp: 40,
+    killsPerLevel: 30,
+  },
+};
+
 export const zConfigArenaRulesDoc = z
   .object({
     id: zId,
@@ -460,6 +540,8 @@ export const zConfigArenaRulesDoc = z
     guardianTower: zGuardianTowerConfig.optional(),
     /** 陣亡投幣 rules (task #191); omit = dead players cannot throw gold */
     goldDrop: zGoldDropConfig.optional(),
+    /** roguelite mob-wave rules (task #215); omit = no mobs (legacy behavior) */
+    mobWaves: zMobWavesConfig.optional(),
   })
   .strict();
 
