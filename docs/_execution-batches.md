@@ -6,6 +6,23 @@
 
 ---
 
+## 2026-07-26 · v0.5.6 整併回合（分支清理 + 後台內容管理 + 名言 + 語音盤點）
+
+**已推送 v0.5.6（14339c9）+ release note。** 本回合處理的 owner 指令與狀態：
+
+- **分支清理及合併**：本機 73 → 5。合併 6（admin content-suite #102/#205、#132/#195 火圈測試鎖、CI lockfile、#113 稽核、#178 圖示計畫、JASS 落差分評分）；修剪 59 已併入/已 cherry-pick + 5 被取代 WIP。**保留 4 個待裁決分支**：`task-144`（#144 移速匯入，衝突）、`claude/friendly-knuth`（CI 白名單，衝突）、`claude/practical-sinoussi`（#128 測試，衝突）、`host-deploy-fixes`（部署，owner-gated + 衝突）。
+- **#212**：godie-efur（揍敵客）已開放並 content:build 通過；**godie-hblm（賈修）仍待辦** → 進 Batch A。
+- **#100 喪標麥可 名言** → 「マイ・キョー・グァ・エ・ミャー、キョー・グァ・カン・リンニャー」（quotes.json + EX flavor）。⚠ **名言語音 clip 需重新合成**對應新台詞 → Batch A。
+- **修正既有紅燈**：喪標麥可 critDamage 3.0→1.75（legendaryClaims 全員暴擊基準），877 shared 測試全綠。
+- **#215 房間開關（預設開）**：workflow `wf_ec3f3569` 進行中（確定性/replay 保護）。
+- **語音場景綁定盤點**（owner 提問）：46 類別中 **21 有實際播放**（20 戰鬥 LIVE + quote，quote 來源仍是 quotes.json #139 非新語音包）、6 點角色專用、**19 設定但邏輯上不會播放**：attack-light/heavy、block、dodge、sprint、jump、poison、blind、knockdown、confused、paralyzed、healed、curse、hum、thumbs-up、retreat、charge、watch、free-move。
+  - **語音綁定補完** workflow `wf_39bcf5fe` 進行中：補可行層（attack-light/heavy→WINDUP 邊緣、healed→補血、hum→閒置計時器，client-only）。
+  - **仍需決策**：(B) poison/blind/knockdown/confused/paralyzed 連 protocol ENTITY_FLAG 位元都沒有，要先加旗標+狀態機制；(B) comms/ping 輪盤（thumbs-up/retreat/charge/watch/free-move + 讓 respond/thanks/taunt/love/puzzled 變真 ping）需新 UI，lobby/intermission 目前零語音綁定。若不做 ping 系統，應停止為 51 英雄生成用不到的 clip。
+
+**下一批（相依分組）**：A 內容補完（#212 hblm + #214 SOP + 名言語音）· B 語音深化（ping 輪盤 + 狀態旗標）· C 平衡凍結+實機簽收 #7 · D 編輯器/圖示。
+
+---
+
 ## 🚀 v0.5.4 · 2026-07-25 已部署 ggd.adms.ai（owner 親自確認 PASS）
 
 **部署協定全程執行：** ① data/ 備份（`backups/data-20260725-135547.tar.gz`，58M / 1003 entries，tar 完整性已驗）② docker/.env 檢查：Slack webhook SET、`GGD_BACKFILL_WELCOME_CRYSTALS=0`（一次性 backfill **不再跑**）③ host `9c93fcb → bfd0580` fast-forward（乾淨，25 commits）④ `docker compose build && up -d`（edge/game/platform 重建）⑤ 驗證。
