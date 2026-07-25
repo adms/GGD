@@ -29,6 +29,35 @@ nginx **有**擋這條路徑的規則（`nginx/nginx.conf:365-366`），它沒�
 
 ---
 
+## 🚀 2026-07-26 · v0.5.16 已部署 ggd.adms.ai（外觀大改版 + 英雄開放）
+
+**部署協定全程執行：** ① `data/` 備份 `backups/data-pre-v0516-20260725-210759.tar.gz`（58M / 1030 entries）② host `2ac42c20 → e94fb96b` fast-forward ③ build + up（三個容器重建）④ 驗證。
+
+**上線後實測：** HTTPS **200**（42 ms）· build stamp `e94fb96b 2026-07-25` 已烘進 served JS · 5 容器全部 Up · **accounts 35**（上次 34，期間有人註冊，被審查制擋在待審）· 兩道閘 ON · 無 backfill 重跑 · 無 ERROR。
+**方塊人退場實證**：`blocky-{mage,knight,barbarian,rogue,undead}.glb` 線上各回 200、每個約 **52 KB**；`{mage,knight,barbarian,rogue}.glb` **全部 404** —— 4 個高面數 KayKit 模型連同 8 個 LOD 階，共 12 檔約 9.3 MB，真的從線上消失了。
+
+**回滾方式**（萬一外觀不能接受）：host 上 `git checkout v0.5.15 && docker compose -f docker/compose.yaml -f docker/compose.family.yaml --env-file docker/.env build && up -d`。`data/` 不受影響。
+
+### ⚠️ 只有 owner 能做的一件事：賈修 / 揍敵客尚未啟用
+
+對抗式驗證抓到，我親自確認：兩位英雄已進 `starter.go`，但**不在線上的 operator 白名單**，而 `ApplyStarterSet` 在白名單非空時不會重跑 —— 所以程式碼只在「全新安裝」時才會開他們。開機日誌現在仍是 `whitelist enables 48 champions`。
+
+我試著自己補，讀到 `apps/platform/internal/auth/bootstrap.go:67`：**loopback 當管理員的機制刻意沒有啟用**，因為 platform 坐在反向代理後面、每個遠端請求進來都長得像 127.0.0.1。所以我沒有管理員權杖，也不該有。**這是設計在正常運作，不是缺陷。**
+
+→ **owner 在後台按一次「套用起始名單」**（`POST /api/v1/curation/whitelist/starter`，**union 語意**，不會洗掉你額外開的喪標麥可）即可上線。
+
+### 本輪的第三個系統性教訓（#235 挖到，最值得記）
+
+**任何視覺效果的驗證畫面，必須用遊戲真正在用的鏡頭去拍。**
+
+#93 的回合煙火從來沒有被任何人看到過，根因是 `SMALL_DISTANCE = 22` 把整輪煙火放在攝影機前方 22 公尺 —— 而 #161 把戰鬥鏡頭從 55° 拉到 **68°**、眼睛只在 9.27 公尺高，那個點**落在地板下面 9.3～14.8 公尺**。粒子有深度測試、地板不透明，所以 **209 顆粒子活著、零像素**。
+而它當初為什麼綠燈：試聽頁用 `(0, 6.5, -13)` ≈ **21°**，單元測試用 `(0, 6, -12)` ≈ **24.6°** —— **兩個都是遊戲裡不存在的鏡頭**。烤雞之所以看得到純粹是因為它是 mesh 且被設了 `renderingGroupId = 1`（Babylon 會在 group 之間清深度緩衝），運氣好，不是設計。
+**#161 動了鏡頭角度，沒有人回頭重驗那些在舊角度下框好的特效。** 這條要變成規則。
+
+（附記：`fix/235-fireworks-visible` **沒有併入 v0.5.16**。圓環那半經獨立重現確認是真的修好了，但烤雞那半的「修復前」證據是**偽造的** —— 兩張被當成 merge-base 狀態的截圖位元組完全相同，且該畫面只有把烤雞的 renderingGroupId 強制改成 0 才到得了。要重拍才收。）
+
+---
+
 ## 🚀 2026-07-26 · v0.5.15 已部署 ggd.adms.ai（玩家回饋修復包）
 
 **部署協定全程執行：** ① `data/` 備份 `backups/data-pre-v0515-20260725-200101.tar.gz`（58M / 1022 entries，內含 108 個帳號檔，壓縮檔完整性已驗）② `docker/.env` 檢查：`GGD_BACKFILL_WELCOME_CRYSTALS=0`、Slack webhook SET、`REDIS_PASSWORD` SET ③ host `36ed7d4e → 2ac42c20` fast-forward（乾淨）④ `build && up -d`（edge/game/platform 三個都重建）⑤ 驗證。
