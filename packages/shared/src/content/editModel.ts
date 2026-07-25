@@ -37,7 +37,22 @@
  * content-api already validates/saves them (they are in the shared COLLECTIONS
  * registry); this only surfaces them in the console.
  */
-export type EditCollection = "items" | "champions" | "abilities" | "augments" | "loot-tables";
+/**
+ * `vfx` (特效管理, task #205) and `arenas` (場景物件管理) join the editable set.
+ * Both were ALREADY in the shared COLLECTIONS registry (zVfxCollectionDoc /
+ * zArenaDoc) and both already have `content/<c>/_index.json`, so the content-api
+ * validates and writes them today — this only surfaces them in the console. Like
+ * `abilities` (and unlike a champion Q/W/E/R), neither mirrors anywhere, so
+ * `writePlan` needs no change: each yields a single {reason:"edit"} step.
+ */
+export type EditCollection =
+  | "items"
+  | "champions"
+  | "abilities"
+  | "augments"
+  | "loot-tables"
+  | "vfx"
+  | "arenas";
 
 export const EDIT_COLLECTIONS: readonly EditCollection[] = [
   "champions",
@@ -45,6 +60,8 @@ export const EDIT_COLLECTIONS: readonly EditCollection[] = [
   "items",
   "augments",
   "loot-tables",
+  "vfx",
+  "arenas",
 ];
 
 export function isEditCollection(v: unknown): v is EditCollection {
@@ -53,7 +70,9 @@ export function isEditCollection(v: unknown): v is EditCollection {
     v === "champions" ||
     v === "abilities" ||
     v === "augments" ||
-    v === "loot-tables"
+    v === "loot-tables" ||
+    v === "vfx" ||
+    v === "arenas"
   );
 }
 

@@ -18,6 +18,7 @@ import { describe, it, expect } from "vitest";
 import { cover } from "../../testkit/cover";
 import {
   applyEdits,
+  EDIT_COLLECTIONS,
   isEditCollection,
   diffDocs,
   docUrl,
@@ -77,6 +78,15 @@ describe("collections and urls", () => {
     expect(isEditCollection("items")).toBe(true);
     expect(isEditCollection("champions")).toBe(true);
     expect(isEditCollection("ability")).toBe(false);
+    // 特效管理 (task #205) + 場景物件管理 join the editable set — both must be
+    // recognised by the guard AND enumerated in EDIT_COLLECTIONS.
+    expect(isEditCollection("vfx")).toBe(true);
+    expect(isEditCollection("arenas")).toBe(true);
+    expect(EDIT_COLLECTIONS).toContain("vfx");
+    expect(EDIT_COLLECTIONS).toContain("arenas");
+    // …and still no mirror for them (single-write plan, like abilities-standalone)
+    expect(writePlan("vfx", "fx.x", { id: "fx.x" })).toHaveLength(1);
+    expect(writePlan("arenas", "arena.x", { id: "arena.x" })).toHaveLength(1);
     expect(docUrl("items", "a-b")).toBe("/content-api/items/a-b");
     expect(docUrl("abilities", ABILITY_ID, "validate")).toBe(`/content-api/abilities/${ABILITY_ID}/validate`);
     expect(manifestUrl()).toBe("/content-api/manifest");

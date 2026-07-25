@@ -269,9 +269,15 @@ describe("C: the write module is dev-build gated", () => {
     const src = code(APP_SRC);
     expect(src).not.toMatch(/^\s*import\s+(?!type\b)[^;]*?from\s+["']\.\/ContentPage["']/m);
     expect(src).not.toMatch(/from\s+["']\.\.\/contentApi["']/);
-    // the label lives in the lazily-imported chunk, not in the shell
+    // the labels live in the lazily-imported chunk, not in the shell — the
+    // suite's routes/render come FROM m.CONTENT_ROUTES / m.renderContentDevPage
     expect(src).not.toContain("內容管理");
-    expect(src).toContain("m.CONTENT_NAV");
+    // none of the dev content-route LABELS are written in the shell either
+    expect(src).not.toContain("英雄管理");
+    expect(src).not.toContain("特效管理");
+    expect(src).not.toContain("新英雄模板");
+    expect(src).not.toContain("音樂音效素材管理");
+    expect(src).toContain("m.CONTENT_ROUTES");
   });
 });
 
@@ -375,9 +381,17 @@ describe("a real production build of the console contains no write path", () => 
         expect(bundled).not.toContain("確認寫入");
         expect(bundled).not.toContain("復原上一次儲存");
         expect(bundled).not.toContain("即將覆蓋這些內容");
-        // even the NAV LABEL travels with the chunk, so absence is total
-        // rather than almost — see CONTENT_NAV in ui/ContentPage.tsx
+        // even the NAV LABELS travel with the chunk, so absence is total
+        // rather than almost — see CONTENT_NAV / CONTENT_ROUTES in
+        // ui/ContentPage.tsx and the 新英雄模板 wizard's own strings
         expect(bundled).not.toContain("內容管理");
+        expect(bundled).not.toContain("英雄管理");
+        expect(bundled).not.toContain("特效管理");
+        expect(bundled).not.toContain("場景物件管理");
+        expect(bundled).not.toContain("新英雄模板");
+        expect(bundled).not.toContain("音樂音效素材管理");
+        // the wizard's own action string and the audition MIME note
+        expect(bundled).not.toContain("建立英雄");
       } finally {
         rmSync(out, { recursive: true, force: true });
       }

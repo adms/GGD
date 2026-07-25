@@ -63,7 +63,7 @@ describe("B: dev drop-in reaches the content editor with no session", () => {
     cover("content-admin-gate");
     await st().boot({ devDropIn: true });
     expect(st().screen).toBe("console");
-    expect(st().page).toBe("content");
+    expect(st().page).toBe("champions");
     expect(st().account).toBeNull();
     // and the content page is NOT gated — it is served over loopback, not the
     // platform admin API
@@ -83,7 +83,7 @@ describe("B: dev drop-in reaches the content editor with no session", () => {
     await st().boot({ devDropIn: true });
     await st().doLogout();
     expect(st().screen).toBe("console");
-    expect(st().page).toBe("content");
+    expect(st().page).toBe("champions");
     expect(st().account).toBeNull();
   });
 
