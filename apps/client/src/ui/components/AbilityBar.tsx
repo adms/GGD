@@ -172,6 +172,46 @@ export function paintCastFlash(
   }
 }
 
+/**
+ * The ability name printed ON the tile — as a bottom overlay strip that comes
+ * AFTER <IconImg fill> in the DOM, so it survives task #152's "name on the
+ * button, all platforms" on desktop too.
+ *
+ * The bug it fixes: <IconImg fill> resolves to position:absolute; inset:0 and,
+ * placed after an in-flow name div, paints over it — the name only ever showed
+ * when the icon 404'd. Rendering the caption here, after the icon, on its own
+ * dark bottom scrim, puts the text back on top of the art and legible over any
+ * icon. The cooldown sweep / cast fill still come after THIS in the DOM, so an
+ * on-cooldown tile's number reads on top as before. Touch tiles already show
+ * the name and carry no icon, so they don't need this (see TouchControls).
+ */
+function TileName({ label, color }: { label: string; color?: string }): React.JSX.Element {
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: 0,
+        right: 0,
+        bottom: 0,
+        padding: "1px 2px 2px",
+        fontSize: 8,
+        lineHeight: "9px",
+        color: color ?? TEXT_MAIN,
+        // dark scrim, fading up, so the name is legible over a bright icon
+        background: "linear-gradient(to top, rgba(6,8,14,0.92) 0%, rgba(6,8,14,0.7) 55%, rgba(6,8,14,0) 100%)",
+        overflow: "hidden",
+        whiteSpace: "nowrap",
+        textOverflow: "ellipsis",
+        textAlign: "center",
+        textShadow: "0 1px 2px rgba(0,0,0,0.9)",
+        pointerEvents: "none",
+      }}
+    >
+      {label}
+    </div>
+  );
+}
+
 export function AbilityBar(): React.JSX.Element | null {
   const seat = useHud((s) => (s.localSeatId === null ? null : (s.seats.find((v) => v.seatId === s.localSeatId) ?? null)));
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -319,10 +359,9 @@ export function AbilityBar(): React.JSX.Element | null {
               <div style={{ fontSize: 12, fontWeight: "bold", marginTop: 7, color: PASSIVE_ACCENT }}>
                 {PASSIVE_SLOT_LABEL}
               </div>
-              <div style={{ fontSize: 8, color: TEXT_DIM, overflow: "hidden", whiteSpace: "nowrap" }}>
-                {innate.displayName}
-              </div>
               <IconImg fill src={iconSrc(innate.icon)} alt={innate.name} />
+              {/* name ON the tile, after the icon so it isn't painted over (#152) */}
+              <TileName label={innate.displayName} />
               {/* 「等級1就獲得」 stated ON the tile — the owner's whole point */}
               <div
                 style={{
@@ -463,9 +502,6 @@ export function AbilityBar(): React.JSX.Element | null {
               }}
             >
               <div style={{ fontSize: 18, fontWeight: "bold", marginTop: 6 }}>{slot}</div>
-              <div style={{ fontSize: 8, color: TEXT_DIM, overflow: "hidden", whiteSpace: "nowrap" }}>
-                {stripAbilityNumber(ability.name)}
-              </div>
               {/* w3x icon covers the letter tile when present; missing/404 →
                   renders nothing and the letter tile above stays visible.
                   Cooldown sweep + cast fill come AFTER in the DOM → on top. */}
@@ -474,6 +510,12 @@ export function AbilityBar(): React.JSX.Element | null {
                 src={iconSrc(ability.icon)}
                 alt={ability.name}
                 style={learned ? undefined : { filter: "grayscale(1) brightness(0.55)" }}
+              />
+              {/* ability name ON the button — after the icon so it stays visible
+                  on desktop instead of being painted over by IconImg (#152) */}
+              <TileName
+                label={stripAbilityNumber(ability.name)}
+                color={learned ? TEXT_MAIN : TEXT_DIM}
               />
               {sweep > 0 && (
                 <div
@@ -595,11 +637,10 @@ export function AbilityBar(): React.JSX.Element | null {
               }}
             >
               <div style={{ fontSize: 15, fontWeight: "bold", marginTop: 7, color: EX_ACCENT }}>EX</div>
-              <div style={{ fontSize: 8, color: TEXT_DIM, overflow: "hidden", whiteSpace: "nowrap" }}>
-                {stripAbilityNumber(ex.name)}
-              </div>
               {/* w3x EX icon under the sweep/cast overlays; fallback = amber tile */}
               <IconImg fill src={iconSrc(ex.icon)} alt={ex.name} />
+              {/* EX name ON the button, after the icon so it isn't occluded (#152) */}
+              <TileName label={stripAbilityNumber(ex.name)} />
               {sweep > 0 && (
                 <div
                   style={{

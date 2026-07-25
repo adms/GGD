@@ -69,6 +69,12 @@ const PANEL_VIEWPORTS: readonly HudViewport[] = [
   { width: 667, height: 375 },
   { width: 812, height: 375 },
   { width: 852, height: 393 },
+  // Batch 5B (#151): the two rotate-locked phone-landscape breakpoints the mobile
+  // HUD must fit in-match. 390 is a hair taller than the 375 cases above, but 360
+  // is the SHORTEST height the in-match HUD is asserted against — every managed
+  // corner stack and every shop-displaced slot must still clear it.
+  { width: 844, height: 390 },
+  { width: 780, height: 360 },
   { width: 1280, height: 720 },
   { width: 1920, height: 1080 },
 ];
