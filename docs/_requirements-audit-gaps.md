@@ -2412,3 +2412,34 @@ main 的 `icons.test.ts` 明文採「AUTHORITY MODEL」：424 個 embedded 沒�
 - **順修**：草泥馬 W/E 編號互換（92-03/92-02）、鬼眼狂刀無名→無明神風流（kana ムミョウ 本就正確、只改字不需重錄）
 - 覆核把關戰績：駁回「牙突→縮地」誤改（牙突是桀諾正典ドラゴンランス，縮地反是瀨田宗次郎的招）；基廉列克廬山昇龍破查 reconciliation 確認是原作者梗名（豁免）
 - 6 句語音重生（osam×3/hvwd/ogld/huth），雙鏡像+讀音登錄同步，content:build 綠，試聽頁重建
+
+#### 🧱 2026-07-26 追記：#226 砍 4 個高面數 CC0 角色 → 自製方塊人（體素）
+使用者指令：「只有 4 個 CC0 角色 請你砍掉，這四個面數都太高，請你找麥塊角色的方塊人替代」。
+**IP 前提（不可協商）**：Minecraft 的模型/皮膚/貼圖是 Mojang/Microsoft 版權。全程**零下載、零抄用、零衍生**——方塊「風格」不受保護，所以幾何全部自製。
+
+- **新增 `tools/voxel-gen/`**（TypeScript，跑既有 tsx，**不新增任何依賴**）：參數表 → 5 個 .glb。
+  無 glTF 函式庫：`glbWrite.ts` 是 `tools/model-budget/glb.ts` 讀取端的對稱寫入端；`png.ts` 用 stored DEFLATE
+  保證跨 Node/zlib 版本**位元組確定性**（`gen.test.ts` 釘死每檔 sha256，`pnpm voxel:check` 可驗）。
+  幾何出處：`ChampionView.ts` 自 #64 起就用同一組比例（8:12:4、32 voxel-px、PX=1.8/32）程序化畫這個方塊人。
+- **刪 12 檔 / 9,725,524 B / 46,687 tris**（mage/knight/barbarian/rogue + 各自 -mid/-small）
+  → **增 5 檔 / 261,036 B / 840 tris**。淨 **-9.46 MB**。單角色 5,683–6,952 → **168 tris（-97.4%）**。
+  出貨總面數 169,542 → **144,827**（`report.test.ts` / `glb.test.ts` 的 ratchet 是**刻意下修**，非放寬）。
+  這是 **#81 / #116 資產債**的實質進度：整批 1024² 共用 albedo（5,592,405 B VRAM）一併消失。
+- **44 位英雄仍各自可辨識**：4 個 doc id 被 `packages/shared/src/sim/**` 凍結（`mobs.ts:45`、
+  `content/skeleton.ts:38,195`），不能拆；所以外觀改在**執行期**——`voxelLook.ts` 由 championId
+  以 FNV-1a 決定調色盤 / 體型 / 配件遮罩（純函式、無 Math.random、各端一致），
+  `voxelSkin.ts` 寫 bone scale + 複製材質貼上 16² palette。能成立是因為烘焙用**剛性蒙皮**且
+  **沒有任何 clip 動 scale**（在位元組層級測試）。順手殺掉只有 2 筆的 `ACCENTS` 表（42 位英雄本來共用同一灰）。
+- **不變式全保**：#150 高度（原生量到 1.8u，正規化係數 1.0，`doc.scale` 誠實回到 1.0，
+  順便修掉 mage.glb 因法杖撐大 bbox 量到 3.0028u 導致身體被縮小的老問題）、#68/#1 朝向（前=+Z，
+  Babylon loader 翻的是 **X 不是 Z**，實測 `knight.glb` 的 `Knight_Cape` 在 z=-0.215 佐證）、
+  #49 tint（palette 走貼圖、albedoColor 留白 → 乘算照舊）、#64 hit flash、#133、attach points。
+- **#115 LOD：方塊人合法只有一階**。`_lod.json` 的 12 列與檔案**同一 commit** 移除（留著會讓
+  low/medium preset 打 404、手機端永遠卡在程序化替身而 high 看起來正常）；`gen_lod.py` 加 LOD floor
+  以免下次 `lod:gen` 又把它們加回來。
+- **CREDITS.md 雙向誠實**：移除 KayKit Adventurers 條目（不出貨的東西不該掛致謝）、新增自製條目
+  + 明確「非 Mojang 衍生」聲明；CC BY 4.0 登入龍與 © 聲明**未動**。
+  `arena.castle` 空鎧段落標為 **SUPERSEDED 但保留**（那是 #105 完整設計，且實測未接線）。
+- **#217 後續（本次不做）**：第 5 個 `blocky-undead.glb` + `champ.blocky.undead` doc 已就位（調色盤/
+  無配件/斷手/前傾/0.62× 蹣跚），但**未**接到小怪——`mobs.ts:45` 是 sim 常數、`arena-rules.json:148`
+  是內容值，兩者優先權需先確認，且 #217 正在動那兩個檔。

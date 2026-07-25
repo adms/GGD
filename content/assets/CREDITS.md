@@ -5,62 +5,46 @@ required (credits kept here out of courtesy and for provenance).
 
 ## Characters (`models/champions/*.glb`)
 
-**KayKit — Character Pack: Adventurers (1.0)** by Kay Lousberg (kaylousberg.com)
-- Source: https://github.com/KayKit-Game-Assets/KayKit-Character-Pack-Adventures-1.0
-- License: CC0 (see pack's LICENSE.txt)
-- Files: `mage.glb`, `knight.glb`, `barbarian.glb`, `rogue.glb` — rigged to one shared
-  **41-bone `Rig`**, one **1024×1024 baked albedo PNG** each, **5,683–6,952 tris**.
+**Generated in-repo — no third-party asset.** The five champion meshes
+(`blocky-mage.glb`, `blocky-knight.glb`, `blocky-barbarian.glb`,
+`blocky-rogue.glb`, `blocky-undead.glb`) are emitted by `tools/voxel-gen` from a
+parameter table written for this project: 14 axis-aligned boxes, **168 triangles**,
+one material, one embedded **16x16 palette PNG**, an 11-part / 15-joint rig and
+seven baked clips (`idle` `run` `attack` `cast` `hurt` `death` `cheer`).
+**(c) this project.**
 
-**MODIFIED — animation set trimmed from 76 clips to 16.** Same operation as
-`guardian_skeleton.glb` below, same guarantee: **geometry, rig, materials and texture are
-byte-unchanged**; only animation samplers (and the accessor / bufferView tables that exist
-solely to serve them) were removed. **No new attribution obligation** — the pack is CC0 and
-already credited here; the mandatory-attribution list stays at exactly one entry (the CC BY
-4.0 login dragon).
+- **Nothing was downloaded, copied, or derived from any Minecraft/Mojang model,
+  skin or texture** — nor from any other third party. Every vertex comes from
+  `tools/voxel-gen/boxman.ts`, every keyframe from `clips.ts`, every colour from
+  `archetypes.ts`. The blocky/voxel *style* is not a protectable element, and the
+  box vocabulary is the project's own: `apps/client/src/render/views/ChampionView.ts`
+  has drawn this same figure procedurally since task #64, and these files use its
+  exact proportions (8:12:4, 32 voxel-px tall). No affiliation with Mojang or
+  Microsoft is claimed or implied.
+- **Reproducible:** `pnpm voxel:gen` re-emits all five files byte-for-byte
+  (`tools/voxel-gen/gen.test.ts` pins each sha256), so the provenance is not a
+  claim in a file — it is a build step anyone can re-run.
+- **Per-champion variety** is applied at RUNTIME, not baked: 44 champions share
+  these four meshes, and `apps/client/src/render/views/voxelLook.ts` seeds a
+  palette, a proportion set and a prop mask deterministically from the champion id.
+  No new asset, no randomness, identical on every client.
 
-| file | upstream bytes | shipped bytes | saved | clips |
-|---|---:|---:|---:|---:|
-| `knight.glb` | 3,659,532 | **1,103,872** | 2,555,660 (69.84%) | 76 → 16 |
-| `rogue.glb` | 3,616,284 | **1,060,924** | 2,555,360 (70.66%) | 76 → 16 |
-| `barbarian.glb` | 3,613,268 | **1,057,940** | 2,555,328 (70.72%) | 76 → 16 |
-| `mage.glb` | 3,589,240 | **1,034,320** | 2,554,920 (71.18%) | 76 → 16 |
-| **total** | **14,478,324** | **4,257,056** | **10,221,268 (70.60%)** | |
+### RETIRED: KayKit — Character Pack: Adventurers (1.0)
 
-- **Why animation and not polygons.** Measured composition of `knight.glb` before the trim:
-  animation **3,279,235 B (89.61%)**, geometry **339,000 B (9.26%)**, texture **14,172 B
-  (0.39%)**, skin inverse-bind matrices **2,624 B (0.07%)**. The meshes are already low-poly
-  and pass the champion gate (`tools/model-budget/limits.ts`, warn 16,000 tris) with 2.3×
-  headroom, so decimating all four by 75% would have recovered only 899,420 B (6.21%) while
-  visibly degrading models **42 of 114 champions wear**. 99.2% of the 8,839 accessors and
-  8,840 bufferViews existed only to serve animation samplers.
-- **The 16 kept clips** (identical roster in all four files, because they share one rig and
-  are swapped between freely): `Idle`, `Running_A`, `Walking_A`, `2H_Melee_Idle`,
-  `1H_Melee_Attack_Slice_Diagonal`, `2H_Melee_Attack_Spin`, `Spellcast_Shoot`,
-  `Spellcast_Long`, `Hit_A`, `Hit_B`, `Death_A`, `Death_B`, `Death_A_Pose`, `Cheer`,
-  `Interact`, `Use_Item`.
-- **The keep-set is DERIVED, not hand-listed** — `tools/model-budget/trimClips.ts` takes the
-  union of (a) every `clipMap` value in the model docs that point at each file
-  (`champ.thorne` → knight, `champ.sela` → mage, `champ.skin.barbarian`, `champ.skin.rogue`)
-  and (b) whatever `pickReactionClip` (`apps/client/src/render/intermission/reactionClip.ts`,
-  which deliberately ignores `clipMap` and regex-matches raw group names) returns over the
-  file's real clip list — that is `Cheer`, the shop-purchase celebration. Plus a scoped
-  reserved table for the `arena.castle` 空鎧 reuse below. `trimClips.test.ts` re-derives the
-  set and fails if a shipped file no longer satisfies it, so a future `clipMap` edit cannot
-  silently ship a champion whose attack animation is missing.
-- **Verified two independent ways.** The repo's own parser (`measureGlb`) reports tris, verts,
-  meshes, materials, skins, joints, `maxTextureEdge`, `textureDiskBytes` and `vramBytes`
-  **unchanged on every file**, and every geometry / skin-IBM accessor and every image
-  bufferView compares **byte-identical**. Loaded through the exact Babylon the client ships
-  (**7.54.3 `NullEngine` + `LoadAssetContainerAsync`**): meshes, triangles, vertices,
-  skeletons (1), bones (41) and materials (1) all match the untrimmed originals, `Idle` still
-  runs `0 → 64.00000333786011` with **123 targeted animations**, and all 16 expected clip
-  names are present.
-- **Compressed, for the record:** the four together are **4,566,810 B → 1,493,701 B** gzip-9
-  and **3,757,517 B → 1,231,757 B** brotli-11, so the trim keeps ~2/3 of its value even once
-  `.glb` compression is configured at the edge.
-- **Recoverable:** the untrimmed originals are in git history, and the upstream pack is the
-  public CC0 GitHub repo linked above. Re-run `trimClips.ts` with a wider reserved table to
-  restore any clip a future feature needs.
+The four CC0 KayKit characters (`mage/knight/barbarian/rogue.glb` by Kay Lousberg,
+kaylousberg.com, CC0) **are no longer bundled** and their credit is therefore
+removed rather than left standing — a credit for an asset we do not ship is as
+dishonest as a missing one. Owner directive #226 (2026-07-26) retired them as too
+high-poly: 5,683-6,952 tris each, one shared 41-bone rig, a 1024x1024 baked albedo
+each, 16 clips. Deleting them and their `-mid` / `-small` LOD tiers removed
+**12 files / 9,725,524 B / 46,687 triangles**; the five generated replacements add
+**261,036 B / 840 triangles**. Net **-9.46 MB**.
+
+The pack remains public CC0 at
+https://github.com/KayKit-Game-Assets/KayKit-Character-Pack-Adventures-1.0 and the
+shipped (clip-trimmed) copies are in git history, should the decision ever be
+revisited. The mandatory-attribution list is unaffected and stays at exactly one
+entry (the CC BY 4.0 login dragon).
 
 ## Environment props (`models/props/*.glb`)
 
@@ -475,6 +459,24 @@ in-game credit and contradict the settled §9.3 ("the mandatory-attribution list
 Flagged, not shipped.
 
 ### `arena.castle` — 值班鎧甲 (空鎧), REUSES `champions/knight.glb` — ZERO NEW ASSET
+
+> **SUPERSEDED BY #226 — DESIGN ONLY, NEVER SHIPPED. DO NOT DELETE.**
+>
+> Everything below is built on `champions/knight.glb`, which owner directive #226
+> deleted (see *Characters* above). It also describes a design that was never
+> wired: `content/arenas/arena.castle.json` has no `guardian` field, and live
+> guardians resolve through `GuardianSystem.GUARDIAN_MODEL_KEY = "prop.guardian"`
+> → `assets/models/guardians/guardian_stone.glb`. So removing knight.glb breaks
+> **no running feature** — but it does invalidate a fully worked #105 design, and
+> deleting the record would throw away a 35-ray occluder sweep, a measured
+> 1.377 → 3.4 u scale derivation and the honest-gaps analysis at the bottom.
+>
+> It is kept, marked, and raised as a follow-up: **re-author the 空鎧 against the
+> generated box-man** (`tools/voxel-gen` — a blocky suit of plate is a palette +
+> prop-mask variant, not a new asset), then re-run the sweep, since the
+> silhouette that the 3.4 u ceiling was measured against changes completely.
+> The `Knight_*` submesh names, the 16-clip roster and the shared 1024² albedo
+> referenced below no longer exist.
 
 The stone-hall guardian (task #105) is an **animated empty suit of full plate** — the castle's
 on-duty armour that only fights back when struck. **No new file, no new licence:** it is

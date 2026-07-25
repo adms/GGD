@@ -40,7 +40,7 @@ const AZUNYAN = [
 ];
 /** billy.glb, verbatim — note the trailing spaces and the `OverHead` casing. */
 const BILLY = ["Bone_Chest", "Bone_Hand_R", "Hand Right Ref ", "Hand Left Ref ", "Chest Ref", "OverHead Ref ", "Origin Ref "];
-/** barbarian.glb — a non-WC3 rig with no attachment points at all. */
+/** A non-WC3 rig with no WC3-style attachment nodes at all. */
 const BARBARIAN = ["hand.l", "hand.r", "handslot.l", "handslot.r", "head", "chest", "foot.l", "foot.r", "IK-foot.l", "handIK.r"];
 
 describe("M6: `right,hand` is ONE attachment, not two (w3x-attach-tokens)", () => {

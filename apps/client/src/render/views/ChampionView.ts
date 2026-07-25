@@ -36,6 +36,8 @@ import {
 import { FLASH_ALPHA, FLASH_MS, hitstopShiver } from "../combatFeedback";
 import { glbYawOffset } from "./glbFacing";
 import { castFollowThroughMs, castStrikeFractionFor } from "../anim/castStrike";
+import { ARCHETYPE_BY_MODEL_KEY, fallbackAccentFor, type VoxelLook } from "./voxelLook";
+import { applyVoxelLook, releaseVoxelLook, type VoxelLookHandle } from "./voxelSkin";
 
 /**
  * Yaw turn rate (per second) for visual rotation smoothing. The rendered model
@@ -53,11 +55,24 @@ export const TEAM_COLORS: readonly [number, number, number][] = [
   [0.95, 0.78, 0.22], // gold
 ];
 
-/** Champion accent colors by modelKey (robe/armor tint). */
-const ACCENTS: Record<string, [number, number, number]> = {
-  "champ.sela": [0.62, 0.36, 0.85], // ember-mage purple
-  "champ.thorne": [0.35, 0.52, 0.3], // bramble green
-};
+/**
+ * Accent colour of the PROCEDURAL fallback figure.
+ *
+ * This used to be a two-entry table keyed by modelKey, which could not do the
+ * job it looked like it was doing: a modelKey is shared by up to 18 champions
+ * and only two of the four stand-ins were even listed, so 42 heroes rendered
+ * the same grey. Since #226 the colour is derived from the CHAMPION id through
+ * the same seed the baked mesh's palette uses (`voxelLook`), so the fallback
+ * and the .glb are the same character in the same colours — a champion does
+ * not change appearance the moment its model finishes loading.
+ *
+ * `championId` is null until the composition root resolves the seat (and for
+ * mobs, which have no champion), in which case this returns the neutral grey
+ * it always did.
+ */
+function accentFor(modelKey: string, championId: string | null): [number, number, number] {
+  return fallbackAccentFor(championId, ARCHETYPE_BY_MODEL_KEY[modelKey] ?? "mage");
+}
 
 const PX = 1.8 / 32; // 32 voxel-pixels tall → 1.8 world units
 
@@ -110,6 +125,20 @@ export class ChampionView {
 
   private clipAnimator: ClipAnimator | null = null;
   private glbRoot: TransformNode | null = null;
+  /** procedural-fallback materials this view repaints from the champion's seed. */
+  private skinMat!: StandardMaterial;
+  private accentMat!: StandardMaterial;
+  /** per-champion blocky look (#226), or null until the seat resolves. */
+  private voxelLook: VoxelLook | null = null;
+  /**
+   * The cloned material + generated palette texture `applyVoxelLook` created.
+   * Tracked SEPARATELY from `ownedMaterials` because those are the procedural
+   * figure's StandardMaterials; this one is a clone of the .glb's shared PBR
+   * material and must be freed without ever touching the shared original.
+   */
+  private voxelHandle: VoxelLookHandle | null = null;
+  /** skeletons of THIS instance (from instantiateModelsToScene), for the look. */
+  private glbSkeletons: { bones: { name: string }[] }[] = [];
   /** The render scale actually applied to the adopted .glb — the height-normalized
    *  factor × the per-champion relative multiplier (task #150; #77 declared scale). */
   private declaredScaleValue: number | null = null;
@@ -146,7 +175,7 @@ export class ChampionView {
     this.bodyRoot.parent = this.root;
 
     const team = TEAM_COLORS[((teamId % 4) + 4) % 4]!;
-    const accent = ACCENTS[modelKey] ?? [0.5, 0.5, 0.55];
+    const accent = accentFor(modelKey, null);
 
     const mat = (name: string, rgb: [number, number, number]): StandardMaterial => {
       const m = new StandardMaterial(`champ-${entityId}-${name}`, scene);
@@ -158,6 +187,10 @@ export class ChampionView {
     const skinMat = mat("skin", [0.87, 0.72, 0.58]);
     const teamMat = mat("team", team);
     const accentMat = mat("accent", accent);
+    // kept so `setVoxelLook` can repaint the fallback once the composition root
+    // resolves this entity's championId (it is not known at construction).
+    this.skinMat = skinMat;
+    this.accentMat = accentMat;
 
     const box = (
       name: string,
@@ -232,6 +265,50 @@ export class ChampionView {
     this.blobShadow.rotation.x = Math.PI / 2;
     this.blobShadow.position.y = 0.03;
     this.blobShadow.isPickable = false;
+  }
+
+  /**
+   * Adopt this champion's per-champion blocky look (#226).
+   *
+   * Called by `EntityViewRegistry` as soon as the composition root can resolve
+   * the entity → championId hop, which is NOT at construction time (render/**
+   * is walled off from the seat table, client-08). Idempotent and cheap: the
+   * first non-null look wins and later calls are ignored, so it is safe to call
+   * every frame while the seat is still resolving.
+   *
+   * Applying it repaints the PROCEDURAL fallback immediately; the .glb half is
+   * applied in `tryUpgradeToGlb` once the mesh actually lands (and this may run
+   * either before or after that, so both sides check).
+   */
+  setVoxelLook(look: VoxelLook | null | undefined): void {
+    if (!look || this.voxelLook || this.disposed) return;
+    this.voxelLook = look;
+    const [sr, sg, sb] = look.palette[0];
+    this.skinMat.diffuseColor.set(sr, sg, sb);
+    const [ar, ag, ab] = look.palette[3];
+    this.accentMat.diffuseColor.set(ar, ag, ab);
+    // the .glb may already be adopted (look arrived late) — paint it now
+    this.applyVoxelLookToGlb();
+  }
+
+  /**
+   * Paint + reshape the adopted .glb from the champion's look. Runs BEFORE
+   * `applyModelTint` (#49) in every ordering: the registry only tints once
+   * `view.hasGlb` is true, and `hasGlb` is set at the very end of the adopt
+   * path, after this. That order matters — the tint MULTIPLIES `albedoColor`,
+   * which this leaves white, so tint × palette composes as documented.
+   */
+  private applyVoxelLookToGlb(): void {
+    if (!this.voxelLook || !this.glbRoot || this.voxelHandle) return;
+    this.voxelHandle = applyVoxelLook(
+      this.glbRoot.getChildMeshes(false),
+      // THIS INSTANCE's skeletons, captured from `instantiateModelsToScene` —
+      // never `scene.skeletons`, which holds every other champion's too.
+      this.glbSkeletons,
+      this.voxelLook,
+      this.root.getScene(),
+      `champ-${this.entityId}-voxel`,
+    );
   }
 
   /**
@@ -638,6 +715,12 @@ export class ChampionView {
         const { min } = glbRoot.getHierarchyBoundingVectors(true);
         if (Number.isFinite(min.y)) glbRoot.position.y = -min.y;
         this.glbRoot = glbRoot;
+        this.glbSkeletons = inst.skeletons as unknown as { bones: { name: string }[] }[];
+        // #226 per-champion palette/proportions/props. MUST run before the
+        // registry's applyModelTint, which it does: the registry gates on
+        // `view.hasGlb`, and `hasGlb` reads `glbRoot`, set one line above —
+        // but the tint only happens on the NEXT sync, after this returns.
+        this.applyVoxelLookToGlb();
         this.declaredScaleValue = finalScale; // the render scale actually applied
         this.clipAnimator = new ClipAnimator(inst.animationGroups, doc.clipMap);
         // hide the procedural fallback
@@ -671,5 +754,12 @@ export class ChampionView {
     this.root.dispose(false, false);
     for (const m of this.ownedMaterials) m.dispose(false, true);
     this.ownedMaterials.length = 0;
+    // The #226 palette clone + its generated RawTexture are view-owned too, but
+    // are freed through their own path: `releaseVoxelLook` disposes the CLONE
+    // without `forceDisposeTextures`, so the shared source material and its
+    // textures — which belong to the AssetManager's container cache — survive.
+    releaseVoxelLook(this.voxelHandle);
+    this.voxelHandle = null;
+    this.glbSkeletons = [];
   }
 }

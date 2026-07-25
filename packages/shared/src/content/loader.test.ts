@@ -69,7 +69,7 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
     // content registries (new collections)
     expect(Arenas.get("arena.skeleton").zones).toHaveLength(2);
     expect(Configs.get("config.match").tick.tickHz).toBe(30);
-    expect(Models.get("champ.sela").glbPath).toBe("assets/models/champions/mage.glb");
+    expect(Models.get("champ.sela").glbPath).toBe("assets/models/champions/blocky-mage.glb");
     expect(VfxDefs.ids().length).toBeGreaterThanOrEqual(2);
     expect(StatusEffects.ids().sort()).toEqual(["burnstun", "root", "slow25", "slow30", "slow40"]);
   });

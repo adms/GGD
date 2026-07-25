@@ -1,30 +1,36 @@
 {
   "collection": "models",
-  "hash": "fa2c78fb7016",
+  "hash": "cb496c15ae33",
   "entries": [
+    {
+      "id": "champ.blocky.undead",
+      "path": "models/champ.blocky.undead.json",
+      "hash": "f0b6394d4a6f",
+      "size": 496
+    },
     {
       "id": "champ.sela",
       "path": "models/champ.sela.json",
-      "hash": "339dc8c8d712",
-      "size": 505
+      "hash": "90b8a7ce5f18",
+      "size": 485
     },
     {
       "id": "champ.skin.barbarian",
       "path": "models/champ.skin.barbarian.json",
-      "hash": "e89552b3013b",
-      "size": 526
+      "hash": "6820809d7a62",
+      "size": 500
     },
     {
       "id": "champ.skin.rogue",
       "path": "models/champ.skin.rogue.json",
-      "hash": "5a2289e125a5",
-      "size": 528
+      "hash": "3fe817d4f027",
+      "size": 492
     },
     {
       "id": "champ.thorne",
       "path": "models/champ.thorne.json",
-      "hash": "3da6949fda9b",
-      "size": 530
+      "hash": "082b1a16e49d",
+      "size": 489
     },
     {
       "id": "imported.1hswd-01",

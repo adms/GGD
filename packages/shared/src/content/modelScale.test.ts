@@ -20,7 +20,7 @@ const CONTENT_DIR = join(HERE, "../../../../content");
 
 interface Champ {
   modelKey: string;
-  family: "imported" | "kaykit";
+  family: "imported" | "kaykit" | "blocky";
   fullHeight: number;
   normHeight: number;
   newScale: number;

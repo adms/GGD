@@ -33,8 +33,8 @@ describe("glb facing convention (model-facing-convention)", () => {
   it("routes native (KayKit/hex/props) glbs to the native offset", () => {
     cover("model-facing-convention");
     for (const p of [
-      "assets/models/champions/mage.glb",
-      "assets/models/champions/knight.glb",
+      "assets/models/champions/blocky-mage.glb",
+      "assets/models/champions/blocky-knight.glb",
       "assets/models/hex/waterlily.glb",
       "assets/models/props/pillar.glb",
     ]) {
@@ -71,7 +71,7 @@ describe("glb facing convention (model-facing-convention)", () => {
       IMPORTED_FLIPPED_GLB_YAW_OFFSET,
     );
     // the flip only applies to imported paths, never native
-    expect(glbYawOffset("assets/models/champions/mage.glb", "imported.heroryuk")).toBe(
+    expect(glbYawOffset("assets/models/champions/blocky-mage.glb", "imported.heroryuk")).toBe(
       NATIVE_GLB_YAW_OFFSET,
     );
   });

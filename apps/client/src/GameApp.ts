@@ -80,6 +80,7 @@ import {
   type EntityViewState,
   type ModelDocOverride,
 } from "./render/EntityViewRegistry";
+import { ARCHETYPE_BY_MODEL_KEY, voxelLookFor } from "./render/views/voxelLook";
 import { blizzardOverlayModels } from "./render/views/blizzardOverlay";
 import { championTintForId } from "./render/views/championTint";
 import {
@@ -776,7 +777,15 @@ export class GameApp {
   private modelOverrideFor(e: EntityViewState): ModelDocOverride | null {
     const championId = this.championIdForSeat(e.seatId);
     if (!championId) return null;
-    return this.contentDb.modelOverrideFor(championId);
+    const base = this.contentDb.modelOverrideFor(championId);
+    // #226: 44 champions share four generated blocky meshes, so the per-champion
+    // LOOK (palette / proportions / props) is seeded from the championId here —
+    // the one place that can resolve entity → champion. Only the four stand-in
+    // model keys get one; an imported champion wears its own art and must not
+    // be repainted. Deterministic, so every client renders the same figure.
+    const archetype = ARCHETYPE_BY_MODEL_KEY[e.key];
+    if (!archetype) return base;
+    return { ...(base ?? {}), voxel: voxelLookFor(championId, archetype) };
   }
 
   start(): void {

@@ -2,13 +2,20 @@
  * standIn — is a champion wearing a generic STAND-IN model rather than its own
  * imported one? (task #76 profile block; the underlying data debt is task #77.)
  *
- * 42 of the 113 champions point their `modelKey` at one of four generic KayKit
- * meshes instead of a `imported.*` mesh extracted from the w3x:
+ * 44 of the 114 champions point their `modelKey` at one of four generic meshes
+ * instead of an `imported.*` mesh extracted from the w3x. Since #226 those are
+ * the GENERATED blocky humanoids (`tools/voxel-gen`), not the retired KayKit
+ * characters:
  *
- *     champ.sela            → mage.glb      (18 champions)
- *     champ.thorne          → knight.glb    (10)
- *     champ.skin.barbarian  → barbarian.glb ( 8)
- *     champ.skin.rogue      → rogue.glb     ( 6)
+ *     champ.sela            → blocky-mage.glb      (18 champions)
+ *     champ.thorne          → blocky-knight.glb    (11, plus the #215 mob)
+ *     champ.skin.barbarian  → blocky-barbarian.glb ( 9)
+ *     champ.skin.rogue      → blocky-rogue.glb     ( 6)
+ *
+ * A generated box-man is still a stand-in — arguably more honestly so, since it
+ * makes no claim to be the champion's own art — so the label below stays. The
+ * per-champion palette/proportions #226 applies at runtime make the 44 visually
+ * distinct from one another, but they are still not the character's real model.
  *
  * The champ-select 3D stage must NOT present one of these as the champion's real
  * model — that is the exact silent misrepresentation task #77 is about. So the
@@ -22,7 +29,7 @@
  * generic fallback is ever added to the content, it is added here too.
  */
 
-/** The four generic KayKit meshes used when a champion has no imported model. */
+/** The four generic meshes used when a champion has no imported model. */
 export const STAND_IN_MODEL_KEYS: ReadonlySet<string> = new Set([
   "champ.sela",
   "champ.thorne",

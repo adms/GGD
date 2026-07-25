@@ -242,7 +242,7 @@ describe("ChampionView.dispose animation groups", () => {
   const DOC = {
     id: "model.kaykit",
     schema: "model@1",
-    glbPath: "assets/models/champions/mage.glb",
+    glbPath: "assets/models/champions/blocky-mage.glb",
     scale: 1,
     collisionRadius: 0.5,
     clipMap: {
@@ -326,7 +326,7 @@ describe("ChampionView hit flash on the LOADED model (juice-flash-glb, task #64)
   const MESH_DOC = {
     id: "model.mesh",
     schema: "model@1",
-    glbPath: "assets/models/champions/mage.glb",
+    glbPath: "assets/models/champions/blocky-mage.glb",
     scale: 1,
     collisionRadius: 0.5,
     clipMap: {
@@ -467,7 +467,7 @@ describe("ChampionView grounds + preserves declared scale (task #61 flying / #77
   const DOC = (scale: number): ModelDoc => ({
     id: "model.test",
     schema: "model@1",
-    glbPath: "assets/models/champions/mage.glb",
+    glbPath: "assets/models/champions/blocky-mage.glb",
     scale,
     collisionRadius: 0.5,
     clipMap: { idle: "Idle", run: "Idle", attack: "Idle", cast: "Idle", hurt: "Idle", death: "Idle" },
@@ -555,7 +555,7 @@ describe("ChampionView height-normalization (task #150)", () => {
   const NORM_DOC = {
     id: "model.norm",
     schema: "model@1",
-    glbPath: "assets/models/champions/mage.glb",
+    glbPath: "assets/models/champions/blocky-mage.glb",
     scale: 1, // #150 ignores this for sizing — normalization sets the render scale
     collisionRadius: 0.5,
     clipMap: { idle: "Idle", run: "Idle", attack: "Idle", cast: "Idle", hurt: "Idle", death: "Idle" },

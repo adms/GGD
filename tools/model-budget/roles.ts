@@ -34,7 +34,7 @@ export function gateFor(role: string): Gate | undefined {
   return GATES.find((g) => g.role === role);
 }
 
-/** content-relative path a glb file maps to, e.g. assets/models/champions/knight.glb */
+/** content-relative path a glb file maps to, e.g. assets/models/champions/blocky-knight.glb */
 export function contentUrl(file: string): string {
   const rel = path.relative(CONTENT, path.resolve(file));
   return rel.split(path.sep).join("/");
