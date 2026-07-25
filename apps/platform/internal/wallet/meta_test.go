@@ -45,10 +45,13 @@ func grantAdmin(t *testing.T, ts *testutil.TS, id string) {
 // endpoint, this fails.
 //
 // The last two paths are the #225 trap. That task added OPERATOR crystal grants,
-// and the obvious place to put them was next to /wallet/admin/grant-mcoin — which
-// is in THIS package, is gated only by an in-service role check, and cannot write
-// an admin audit line (admin imports wallet, so the edge back would be a cycle).
-// They deliberately live at /admin/accounts/{id}/crystal and
+// and the obvious place to put them was next to the then-existing
+// /wallet/admin/grant-mcoin — which was in THIS package, was gated only by an
+// in-service role check, and could not write an admin audit line (admin imports
+// wallet, so the edge back would be a cycle). #225 dodged that trap; task #214
+// then deleted grant-mcoin itself for the same reason (see
+// TestNoAdminMCoinRouteHere). The crystal routes live at
+// /admin/accounts/{id}/crystal and
 // /admin/crystals/grant-all instead, behind AdminOnly and the audit writer. These
 // probes make that a tested property rather than a comment: this package's HTTP
 // surface hands out crystals to NOBODY, admin or not.
@@ -173,27 +176,37 @@ func TestFavouriteTogglePersists(t *testing.T) {
 	require.Equal(t, []string{"vex"}, strs(wallet(ts, u.Access).Body["favourites"]))
 }
 
-// TestAdminGrantMCoin: an admin can grant M COIN (造型幣) into an account; a
-// non-admin cannot, and the target balance is unchanged on refusal.
+// TestAdminGrantMCoin: an admin can grant M COIN (造型幣) into an account and the
+// player can then SPEND it; a non-admin cannot, and the target balance is
+// unchanged on refusal.
+//
+// The route moved in task #214. It used to be POST /wallet/admin/grant-mcoin,
+// which lived in THIS package: role-checked in-service, unbounded, and — because
+// admin imports wallet — incapable of writing an audit line, so every operator
+// M幣 grant vanished without a trace while the sibling door logged its own. That
+// route is deleted; the audited door is POST /admin/accounts/{id}/mcoin
+// (AdminOnly + bounds + `mcoin_adjust`), which internal/admin owns and tests for
+// authz and audit. What is asserted HERE is the half only this package can see:
+// the granted balance is real wallet money the player can spend.
+//
+// TestNoAdminMCoinRouteHere below is the guard that the deleted door stays shut.
 func TestAdminGrantMCoin(t *testing.T) {
 	testkit.Cover(t, "meta-admin-grant-mcoin")
 	ts := testutil.New(t)
 	boss, player, thief := ts.Register("boss"), ts.Register("player"), ts.Register("thief")
 	grantAdmin(t, ts, boss.ID)
+	route := "/api/v1/admin/accounts/" + player.ID + "/mcoin"
 
 	// A non-admin caller is forbidden and grants nothing.
-	r := ts.Do(http.MethodPost, "/api/v1/wallet/admin/grant-mcoin", thief.Access,
-		map[string]any{"accountId": player.ID, "amount": 500})
+	r := ts.Do(http.MethodPost, route, thief.Access, map[string]any{"delta": 500})
 	require.Equal(t, http.StatusForbidden, r.Status, string(r.Raw))
 	require.EqualValues(t, 0, wallet(ts, player.Access).Body["mcoin"], "a forbidden grant changes nothing")
 
-	// The admin grants 500, then tops up another 250 (grants are additive).
-	r = ts.Do(http.MethodPost, "/api/v1/wallet/admin/grant-mcoin", boss.Access,
-		map[string]any{"accountId": player.ID, "amount": 500})
+	// The admin grants 500, then tops up another 250 (adjustments are additive).
+	r = ts.Do(http.MethodPost, route, boss.Access, map[string]any{"delta": 500, "reason": "test"})
 	require.Equal(t, http.StatusOK, r.Status, string(r.Raw))
 	require.EqualValues(t, 500, r.Body["mcoin"])
-	r = ts.Do(http.MethodPost, "/api/v1/wallet/admin/grant-mcoin", boss.Access,
-		map[string]any{"accountId": player.ID, "amount": 250})
+	r = ts.Do(http.MethodPost, route, boss.Access, map[string]any{"delta": 250, "reason": "test"})
 	require.EqualValues(t, 750, r.Body["mcoin"])
 
 	// The player sees the granted balance and can spend it on a cosmetic skin.
@@ -203,6 +216,24 @@ func TestAdminGrantMCoin(t *testing.T) {
 
 	// No token → 401.
 	require.Equal(t, http.StatusUnauthorized,
-		ts.Do(http.MethodPost, "/api/v1/wallet/admin/grant-mcoin", "",
-			map[string]any{"accountId": player.ID, "amount": 1}).Status)
+		ts.Do(http.MethodPost, route, "", map[string]any{"delta": 1}).Status)
+}
+
+// TestNoAdminMCoinRouteHere is the REGRESSION GUARD for task #214, the M幣 twin
+// of TestNoClientCrystalEarnRoute above. This package's HTTP surface must expose
+// NO operator M幣 door: one here could never be audited (admin imports wallet,
+// so the edge back is an import cycle), which is exactly how the old
+// /wallet/admin/grant-mcoin came to be role-checked but trail-less. A 404 here —
+// even for a real admin — is the property being pinned.
+func TestNoAdminMCoinRouteHere(t *testing.T) {
+	testkit.Cover(t, "meta-admin-grant-mcoin")
+	ts := testutil.New(t)
+	boss, player := ts.Register("boss"), ts.Register("player")
+	grantAdmin(t, ts, boss.ID)
+
+	r := ts.Do(http.MethodPost, "/api/v1/wallet/admin/grant-mcoin", boss.Access,
+		map[string]any{"accountId": player.ID, "amount": 500})
+	require.Equal(t, http.StatusNotFound, r.Status,
+		"the unaudited M幣 grant route must stay deleted: %s", string(r.Raw))
+	require.EqualValues(t, 0, wallet(ts, player.Access).Body["mcoin"])
 }

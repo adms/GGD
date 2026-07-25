@@ -340,9 +340,16 @@ func TestNoMonetizationSurfaceIsReachable(t *testing.T) {
 	require.Greater(t, seen, 20, "the walk must actually have visited the route tree")
 
 	// The only way M COIN enters an account is an OPERATOR grant: a player
-	// cannot grant himself any, at any price.
+	// cannot grant himself any, at any price. Task #214 moved that grant off
+	// the unaudited /wallet/admin/grant-mcoin (deleted — hence 404 on the old
+	// path) and onto the AdminOnly, audited /admin/accounts/{id}/mcoin, so both
+	// doors are probed: the retired one must not answer at all, and the live one
+	// must refuse a non-admin.
 	player := ts.Register("player")
 	r := ts.Do(http.MethodPost, "/api/v1/wallet/admin/grant-mcoin", player.Access,
 		map[string]any{"accountId": player.ID, "amount": 100000})
+	assert.Equal(t, http.StatusNotFound, r.Status, "the unaudited M COIN grant route must stay deleted: %s", string(r.Raw))
+	r = ts.Do(http.MethodPost, "/api/v1/admin/accounts/"+player.ID+"/mcoin", player.Access,
+		map[string]any{"delta": 100000, "reason": "self"})
 	assert.Equal(t, http.StatusForbidden, r.Status, "a player must not be able to grant himself M COIN: %s", string(r.Raw))
 }

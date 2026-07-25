@@ -70,7 +70,11 @@ export type Page =
    * editor, so it is NOT in SESSION_REQUIRED_PAGES below.
    */
   | "voiceGen"
-  /** M幣 發放 (task #118) — admin-granted M COIN via /wallet/admin/grant-mcoin. */
+  /**
+   * M幣 / 藍水晶 發放 (tasks #118, #225, #214) — admin-granted currency. M幣 now
+   * goes through the audited /admin/accounts/{id}/mcoin; the unaudited
+   * /wallet/admin/grant-mcoin it used to call is deleted.
+   */
   | "mcoinGrant"
   /**
    * 邀請碼 (task #174) — mint / list / revoke the single-use registration invite

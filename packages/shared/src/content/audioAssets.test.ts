@@ -303,7 +303,7 @@ describe("authored audio-map.json", () => {
     // champion-voices.json `select` pools are a SECOND legitimate playback
     // surface (task #27), and since #40 they are the ONLY home of the two
     // character quips displaced from the system pools — `mandie` (初音, on
-    // godie-h001) and `87joke` (飛影, on godie-efur). Scanning audio-map alone
+    // godie-h001) and `87joke` (飛影, on godie-u010). Scanning audio-map alone
     // would report them stranded even though they are bound and playable.
     const voices = JSON.parse(
       readFileSync(join(CONTENT, "config/champion-voices.json"), "utf8"),

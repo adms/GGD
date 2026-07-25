@@ -5,7 +5,7 @@
  */
 import { describe, it, expect } from "vitest";
 import { cover } from "@ggd/shared/testkit/cover";
-import { formatBalance, parseGrant, submitGrant, type GrantResult } from "./mcoinGrant";
+import { formatBalance, parseGrant, submitGrant, MAX_MCOIN_GRANT, type GrantResult } from "./mcoinGrant";
 
 describe("mcoin grant form (adminui-mcoin-grant)", () => {
   it("rejects a missing account id and a missing / zero / non-integer amount", () => {
@@ -41,6 +41,34 @@ describe("mcoin grant form (adminui-mcoin-grant)", () => {
       expect(outcome.result).toEqual({ accountId: "01J7", mcoin: 1500 });
       expect(formatBalance(outcome.result.mcoin)).toBe("Ⓜ 1,500");
     }
+  });
+
+  // Task #214: the amount used to be unbounded on BOTH sides — the form
+  // accepted any integer and the old /wallet/admin/grant-mcoin validated
+  // nothing but a non-empty account id, so a mistyped 500000000 landed in a
+  // player's balance with no audit line to find it by. The cap is symmetric
+  // here because this form legitimately deducts.
+  it("rejects an amount past the ±cap the server enforces", () => {
+    cover("adminui-mcoin-grant");
+    expect(parseGrant({ accountId: "acc", amount: String(MAX_MCOIN_GRANT + 1) }).ok).toBe(false);
+    expect(parseGrant({ accountId: "acc", amount: String(-(MAX_MCOIN_GRANT + 1)) }).ok).toBe(false);
+    // The boundary itself is accepted, matching admin.MaxMCoinGrant.
+    expect(parseGrant({ accountId: "acc", amount: String(MAX_MCOIN_GRANT) }).ok).toBe(true);
+    expect(parseGrant({ accountId: "acc", amount: String(-MAX_MCOIN_GRANT) }).ok).toBe(true);
+  });
+
+  it("passes the operator reason through to the caller, trimmed", async () => {
+    cover("adminui-mcoin-grant");
+    const seen: string[] = [];
+    const fakeGrant = async (accountId: string, _amount: number, reason: string): Promise<GrantResult> => {
+      seen.push(reason);
+      return { accountId, mcoin: 1 };
+    };
+    await submitGrant({ accountId: "01J7", amount: "5" }, fakeGrant, "  活動獎勵  ");
+    // Omitted entirely → "", which the server accepts; the grant is audited
+    // either way, the reason only makes the trail readable.
+    await submitGrant({ accountId: "01J7", amount: "5" }, fakeGrant);
+    expect(seen).toEqual(["活動獎勵", ""]);
   });
 
   it("submitGrant never calls the API for invalid input", async () => {

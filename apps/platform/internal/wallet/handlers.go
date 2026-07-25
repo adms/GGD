@@ -27,16 +27,24 @@ func (h *Handlers) Mount(r chi.Router) {
 	r.Post("/store/equip", h.equip)
 
 	// Meta progression (task #118): crystal-unlock, the favourite pin, and the
-	// admin-only M COIN grant.
-	//
 	// There is deliberately NO crystal EARN route here. Crystals are granted
 	// exclusively by match settlement (the HMAC-signed internal result
 	// callback, keyed per matchId) — an authenticated self-grant with no
 	// per-match key is a minting hole a client can loop. See the "WHO MAY
 	// GRANT IT" note in meta.go.
+	//
+	// There is no ADMIN M幣 route here either, and that absence is deliberate
+	// (task #214). `POST /wallet/admin/grant-mcoin` used to live on this line.
+	// It sat on the PLAIN authenticated subrouter, so it never ran
+	// admin.Service.AdminOnly (roled + unbanned + #126-approved); it validated
+	// nothing but a non-empty accountId, so any amount passed; and it wrote NO
+	// audit line, because this package cannot reach the audit writer without an
+	// import cycle (admin imports wallet). Every operator M幣 adjustment now
+	// goes through POST /admin/accounts/{id}/mcoin (admin.Service.AdjustMCoin),
+	// which is AdminOnly, bounds-checked server-side, and audited as
+	// `mcoin_adjust` — the same shape #225 gave the 藍水晶 grants.
 	r.Post("/wallet/champions/unlock", h.unlockChampion)
 	r.Post("/wallet/favourites", h.favourite)
-	r.Post("/wallet/admin/grant-mcoin", h.grantMCoin)
 }
 
 func (h *Handlers) wallet(w http.ResponseWriter, r *http.Request) {
@@ -163,28 +171,3 @@ func (h *Handlers) favourite(w http.ResponseWriter, r *http.Request) {
 	httpx.WriteJSON(w, http.StatusOK, wal)
 }
 
-type grantMCoinReq struct {
-	AccountID string `json:"accountId"`
-	Amount    int    `json:"amount"`
-}
-
-// grantMCoin adds admin-granted M COIN to a target account. Admin-gated inside
-// the service (the caller's role is checked); a non-admin caller is a 403.
-func (h *Handlers) grantMCoin(w http.ResponseWriter, r *http.Request) {
-	me := auth.MustIdentity(r.Context())
-	var req grantMCoinReq
-	if err := httpx.DecodeJSON(r, &req); err != nil {
-		httpx.WriteError(w, err)
-		return
-	}
-	if req.AccountID == "" {
-		httpx.WriteError(w, httpx.BadRequest("accountId is required"))
-		return
-	}
-	balance, err := h.svc.GrantMCoin(r.Context(), me.AccountID, req.AccountID, req.Amount)
-	if err != nil {
-		httpx.WriteError(w, err)
-		return
-	}
-	httpx.WriteJSON(w, http.StatusOK, map[string]any{"accountId": req.AccountID, "mcoin": balance})
-}

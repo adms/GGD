@@ -8,23 +8,23 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 
 | verdict | cells | meaning |
 | --- | ---: | --- |
-| ✅ OK | 254 | shape derived from the ability's own authored data |
+| ✅ OK | 266 | shape derived from the ability's own authored data |
 | 🟡 AMBIGUOUS | 1 | derived from the SIM's default (`def.radius ?? 1`) — still the true hit area, but the doc should author it |
 | ❌ MISSING | 0 | no derivable shape — **fails the test** |
 | 🟣 PASSIVE | 32 | permanent WC3 passive, never cast, nothing to warn about |
 
-**255 / 255 castable cells telegraph honestly (100.0 %).** Before #228 the honest number was 43 / 255 (16.9 %): only `ground` casts reached the floor, `targeted` drew a fabricated 0.72 u ring that lied about a single-target hit, and `self` / `skillshot` / `dash` drew nothing at all.
+**267 / 267 castable cells telegraph honestly (100.0 %).** Before #228 the honest number was 43 / 255 (16.9 %): only `ground` casts reached the floor, `targeted` drew a fabricated 0.72 u ring that lied about a single-target hit, and `self` / `skillshot` / `dash` drew nothing at all.
 
 ## By castType
 
 | castType | cells | shape language |
 | --- | ---: | --- |
-| `targeted` | 93 | lock (arc at the victim + tether to the caster) — walking does not help |
-| `self` | 90 | self marker at the caster's feet |
-| `ground` | 44 | circle — the real `enemiesInCircle` disc; you can walk out |
+| `targeted` | 97 | lock (arc at the victim + tether to the caster) — walking does not help |
+| `self` | 95 | self marker at the caster's feet |
+| `ground` | 45 | circle — the real `enemiesInCircle` disc; you can walk out |
 | `—` | 32 | not cast |
 | `skillshot` | 22 | line — the projectile's corridor; step sideways |
-| `dash` | 6 | line — the sweep of the dash body |
+| `dash` | 8 | line — the sweep of the dash body |
 
 ## Per-ability matrix
 
@@ -78,6 +78,12 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 寫輪眼復仇者 - 宇智波佐助 `godie-edem` | E | 45-03 千鳥 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 寫輪眼復仇者 - 宇智波佐助 `godie-edem` | R | 45-04 哥哥 | `—` | — | 🟣 PASSIVE | never cast |
 | 寫輪眼復仇者 - 宇智波佐助 `godie-edem` | EX | 45-002 天照 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 揍敵客大家長 - 揍敵客桀諾 `godie-efur` | PASSIVE | 13-00 殺氣 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 揍敵客大家長 - 揍敵客桀諾 `godie-efur` | Q | 13-01 龍頭戲畫 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 揍敵客大家長 - 揍敵客桀諾 `godie-efur` | W | 13-02 變化念力 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 揍敵客大家長 - 揍敵客桀諾 `godie-efur` | E | 13-03 快步 | `dash` | line 11.00×1.20u | ✅ OK | dash maxDistance 11 (sim applies no abilityRange), body width 1.2 — movement only, no damage |
+| 揍敵客大家長 - 揍敵客桀諾 `godie-efur` | R | 13-04 暗殺奧義・牙突 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 揍敵客大家長 - 揍敵客桀諾 `godie-efur` | EX | 13-002 龍星群 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 魔法老師 - 涅吉。史普林。菲爾德 `godie-emfr` | PASSIVE | 15-00 天生法術書 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 魔法老師 - 涅吉。史普林。菲爾德 `godie-emfr` | Q | 15-01 風精召喚 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 魔法老師 - 涅吉。史普林。菲爾德 `godie-emfr` | W | 15-02 沉睡之霧 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
@@ -150,6 +156,12 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 最終幻想 - 克勞德 `godie-hart` | E | 01-03 畫龍點睛 | `ground` | circle r=3.85u | ✅ OK | radius 6.42 × abilityRange 0.6 |
 | 最終幻想 - 克勞德 `godie-hart` | R | 01-04 超究武神霸斬 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 最終幻想 - 克勞德 `godie-hart` | EX | 01-002 究極魔劍 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 慈悲的王者 - 賈修貝爾 `godie-hblm` | PASSIVE | 05-00 啦嗚薩喀爾 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 慈悲的王者 - 賈修貝爾 `godie-hblm` | Q | 05-01 薩喀爾 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 慈悲的王者 - 賈修貝爾 `godie-hblm` | W | 05-02 薩喀爾嘎 | `dash` | line 7.33×1.20u | ✅ OK | dash maxDistance 7.33 (sim applies no abilityRange), body width 1.2 — movement only, no damage |
+| 慈悲的王者 - 賈修貝爾 `godie-hblm` | E | 05-03 及喀爾度 | `ground` | circle r=3.60u | ✅ OK | radius 6 × abilityRange 0.6 |
+| 慈悲的王者 - 賈修貝爾 `godie-hblm` | R | 05-04 巴歐．薩喀爾嘎 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 慈悲的王者 - 賈修貝爾 `godie-hblm` | EX | 05-002 金色巨龍 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 不死之身-無 - 藤井八雲 `godie-hpal` | PASSIVE | 35-00 召喚佩 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 不死之身-無 - 藤井八雲 `godie-hpal` | Q | 35-01 土爪 | `skillshot` | line 7.20×1.08u | ✅ OK | imported.wave maxRange 12 × abilityRange 0.6, hitRadius 0.9 ×2 × abilityRange 0.6 |
 | 不死之身-無 - 藤井八雲 `godie-hpal` | W | 35-02 石絲 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
