@@ -61,7 +61,19 @@ describe("the 內容·素材管理 dev routes", () => {
     // champions / abilities(+augments) / items(+loot-tables) / vfx / arenas each
     // route to the SAME editor engine via `only`; audio + newHero are siblings.
     const pages = CONTENT_ROUTES.map((r) => r.page);
-    expect(pages).toEqual(["audio", "champions", "newHero", "abilities", "items", "vfx", "arenas"]);
+    // 鑄形工坊 (task #229) is the third sibling page: it renders its own
+    // component (the voxel studio) rather than the ContentPage editor, so like
+    // audio/newHero it carries no `only` list.
+    expect(pages).toEqual([
+      "audio",
+      "champions",
+      "newHero",
+      "abilities",
+      "items",
+      "vfx",
+      "arenas",
+      "voxelStudio",
+    ]);
     const only = new Set(CONTENT_ROUTES.flatMap((r) => r.only ?? []));
     for (const c of ["champions", "abilities", "augments", "items", "loot-tables", "vfx", "arenas"]) {
       expect(only.has(c as never), `no route surfaces ${c}`).toBe(true);
@@ -70,7 +82,16 @@ describe("the 內容·素材管理 dev routes", () => {
 
   it("stay OUT of SESSION_REQUIRED_PAGES (loopback no-login editing preserved)", () => {
     cover("content-admin-gate");
-    for (const p of ["audio", "champions", "newHero", "abilities", "items", "vfx", "arenas"] as const) {
+    for (const p of [
+      "audio",
+      "champions",
+      "newHero",
+      "abilities",
+      "items",
+      "vfx",
+      "arenas",
+      "voxelStudio",
+    ] as const) {
       expect(pageRequiresSession(p), `${p} must not be session-gated`).toBe(false);
     }
   });

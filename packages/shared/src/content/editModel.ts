@@ -45,6 +45,15 @@
  * `abilities` (and unlike a champion Q/W/E/R), neither mirrors anywhere, so
  * `writePlan` needs no change: each yields a single {reason:"edit"} step.
  */
+/**
+ * `models` (task #229's 鑄形工坊) joins the editable set. Like `vfx` / `arenas`
+ * it was ALREADY in the shared COLLECTIONS registry (`zModelDoc`) and already
+ * has `content/models/_index.json`, so the content-api has always validated and
+ * written it — this only surfaces it to the console, which is what the voxel
+ * studio needs to save the `model@1` document it authors. It mirrors NOWHERE
+ * (only a Q/W/E/R ability has an embedded twin), so `writePlan` is unchanged
+ * and a model edit is a single {reason:"edit"} step.
+ */
 export type EditCollection =
   | "items"
   | "champions"
@@ -52,7 +61,8 @@ export type EditCollection =
   | "augments"
   | "loot-tables"
   | "vfx"
-  | "arenas";
+  | "arenas"
+  | "models";
 
 export const EDIT_COLLECTIONS: readonly EditCollection[] = [
   "champions",
@@ -62,6 +72,7 @@ export const EDIT_COLLECTIONS: readonly EditCollection[] = [
   "loot-tables",
   "vfx",
   "arenas",
+  "models",
 ];
 
 export function isEditCollection(v: unknown): v is EditCollection {
@@ -72,7 +83,8 @@ export function isEditCollection(v: unknown): v is EditCollection {
     v === "augments" ||
     v === "loot-tables" ||
     v === "vfx" ||
-    v === "arenas"
+    v === "arenas" ||
+    v === "models"
   );
 }
 

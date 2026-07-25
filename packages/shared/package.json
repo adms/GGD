@@ -11,6 +11,8 @@
     "./content": "./src/content/index.ts",
     "./content/node": "./src/content/node/index.ts",
     "./content/voxelSkin": "./src/content/voxelSkin/index.ts",
+    "./voxel": "./src/voxel/index.ts",
+    "./voxel/*": "./src/voxel/*.ts",
     "./*": "./src/*.ts",
     "./testkit/*": "./testkit/*.ts"
   },

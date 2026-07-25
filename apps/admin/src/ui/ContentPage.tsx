@@ -61,6 +61,7 @@ import {
 } from "../contentFields";
 import { AudioAuditionPage } from "./AudioAuditionPage";
 import { NewHeroPageRoot } from "./NewHeroPage";
+import { VoxelStudioPageRoot } from "./voxel/VoxelStudioPage";
 import { Badge, Btn, ErrorBanner, Panel, TextInput } from "./widgets";
 import {
   ACCENT,
@@ -228,6 +229,11 @@ export const CONTENT_ROUTES: readonly ContentRoute[] = [
   { page: "items", label: "武器道具管理", emoji: "⚔️", only: ["items", "loot-tables"] },
   { page: "vfx", label: "特效管理", emoji: "🎆", only: ["vfx"] },
   { page: "arenas", label: "場景物件管理", emoji: "🏟️", only: ["arenas"] },
+  // 鑄形工坊 (Project Voxel Forge, task #229) — the sibling of 鑄技工坊
+  // (Project Skill Forge): that one forges 技 (skills), this one forges 形
+  // (form). Like `audio`/`newHero` it renders its OWN component rather than the
+  // ContentPage editor, so it carries no `only` list.
+  { page: "voxelStudio", label: "鑄形工坊", emoji: "🧱" },
 ];
 
 /**
@@ -242,6 +248,7 @@ export function renderContentDevPage(
 ): React.JSX.Element | null {
   if (page === "audio") return <AudioAuditionPage />;
   if (page === "newHero") return <NewHeroPageRoot onNavigate={onNavigate} />;
+  if (page === "voxelStudio") return <VoxelStudioPageRoot onNavigate={onNavigate} />;
   const route = CONTENT_ROUTES.find((r) => r.page === page && r.only !== undefined);
   if (route === undefined) return null;
   return <ContentPageRoot only={route.only} />;

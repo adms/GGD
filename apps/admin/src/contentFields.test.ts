@@ -63,6 +63,11 @@ describe("the field spec", () => {
       // form-rich COLLECTIONS list below that asserts >3 editable fields.
       vfx: "特效",
       arenas: "場景物件",
+      // 模型 (task #229) — the collection 鑄形工坊 saves its generated figure
+      // into. Form-LEAN like vfx/arenas (glbPath + scale are read-only outputs
+      // of the generator, not fields to type), so it is NOT in the form-rich
+      // COLLECTIONS list below.
+      models: "模型",
     });
     for (const c of COLLECTIONS) {
       expect(fieldGroups(c).length, c).toBeGreaterThan(0);
