@@ -20,17 +20,17 @@
     "name": "20-00 銀色甲胄",
     "ranks": [
       {
-        "modifiers": [],
         "hooks": [
           {
             "on": "onDamageTaken",
-            "target": "self",
             "chance": 0.5,
+            "target": "self",
+            "internalCooldown": 1.0,
             "effects": [
               {
                 "kind": "shield",
                 "amount": {
-                  "flat": 60
+                  "flat": 60.0
                 },
                 "duration": 1.0
               }

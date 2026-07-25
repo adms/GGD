@@ -73,6 +73,12 @@ const PRE_LANE_CAST_TIMES: Record<string, number> = {
 /** Passive-only = `passive` set AND `effects` empty: can never be activated. */
 const EXEMPT_PASSIVE_ONLY = [
   "godie-e001.w",
+  // 20-02 感知能力 (both Sabers): the WC3 source A0CM is the NATIVE Evasion
+  // `AEev` (Cool=0 permanent, 7/14/21/28% 迴避 per OBJECTS.json data columns).
+  // The prior castable "+25 armor 6s" buff was an import invention that also
+  // contradicted the doc's own [被動] description — reclassified 2026-07-25.
+  "godie-e002.q",
+  "godie-e00l.q",
   "godie-e00q.q",
   "godie-e00q.r",
   "godie-edem.r",

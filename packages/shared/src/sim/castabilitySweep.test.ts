@@ -111,23 +111,28 @@ const COLS: SlotName[] = ["Q", "W", "E", "R", "EX", "basic"];
 
 // ------------------------------------------------------------------ the floor
 //
-// MEASURED 2026-07-25 against contentVersion `cv_ecff53279fad`, on the
+// MEASURED 2026-07-25 against contentVersion `cv_1e8298588746`, on the
 // 48-champion roster (the operator's curation whitelist and the committed
 // `castabilityRoster.fixture.json` are set-identical, so CI measures the same
 // roster the operator does). Full run, no sampling: 48 × 6 = 288 cells.
 //
-//   281 ✅ PASS · 7 🟣 PASSIVE · 0 ❌ FAIL · 0 spawn failures.
+//   280 ✅ PASS · 8 🟣 PASSIVE · 0 ❌ FAIL · 0 spawn failures.
 //
-// The 7 PASSIVE are verified WC3 permanents (native Cool=0) whose ModifierSource
+// (Previous measurement, cv_ecff53279fad: 281 ✅ · 7 🟣. The −1/+1 is the JASS
+// fidelity fix to 20-02 感知能力 `godie-e002.q` — its WC3 source `A0CM` is the
+// native Evasion `AEev`, a Cool=0 permanent, so the invented castable armor
+// buff became a verified passive:modifiers cell. Not a regression.)
+//
+// The 8 PASSIVE are verified WC3 permanents (native Cool=0) whose ModifierSource
 // is confirmed attached — correct behaviour, not gaps; hence MIN_WORKING counts
 // PASS + PASSIVE. The floors are a RATCHET, not a target: raise them when the
 // measurement improves, and never lower them to make the suite green. If this
 // header's contentVersion no longer matches `content/manifest.json`, the numbers
 // below are stale — re-measure before trusting them (the run prints both).
 const MEASURED_ON = "2026-07-25";
-const MEASURED_CONTENT_VERSION = "cv_ecff53279fad";
+const MEASURED_CONTENT_VERSION = "cv_1e8298588746";
 /** Minimum cells that must cast AND produce a measurable effect. */
-const MIN_PASS = 281;
+const MIN_PASS = 280;
 /** Minimum cells that must behave as intended (PASS + verified permanent PASSIVE). */
 const MIN_WORKING = 288;
 /**

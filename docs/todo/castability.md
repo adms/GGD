@@ -31,14 +31,18 @@ green. It now pins a measured floor (`MIN_PASS` / `MIN_WORKING`) and an explicit
 instead of a hard-coded constant, so a regression shows up as a **named cell**,
 not as a number nobody reads.
 
-## Result (2026-07-25 run — contentVersion `cv_ecff53279fad`)
+## Result (2026-07-25 run — contentVersion `cv_1e8298588746`)
 
-**281 / 288 ✅ PASS · 7 🟣 PASSIVE (correct WC3 permanents) · 0 ❌ FAIL · 0 spawn failures.**
-Counting the 7 permanents as correct behaviour, **288 / 288** slots behave as intended.
-PASS channel mix (proves it is not rubber-stamping on cosmetics): 180 damage, 70 buff,
-14 projectile, 8 heal, 5 dash, 2 shield, 2 status, **0 vfx-only**. Ranged/melee dimension:
-all 14 ranged champs' basics launch a projectile (`ranged:true`); all 34 melee basics are
-contact damage (`ranged:false`).
+**280 / 288 ✅ PASS · 8 🟣 PASSIVE (correct WC3 permanents) · 0 ❌ FAIL · 0 spawn failures.**
+Counting the 8 permanents as correct behaviour, **288 / 288** slots behave as intended.
+The −1 PASS / +1 PASSIVE against the previous `cv_ecff53279fad` measurement (281 ✅ · 7 🟣)
+is the JASS-fidelity fix to `godie-e002:Q` 20-02 感知能力: its WC3 source `A0CM` is the
+native Evasion (`AEev`, Cool=0 permanent, 7/14/21/28% 迴避), so the invented castable
+armor buff became a verified `passive:modifiers` cell — a reclassification, not a
+regression. PASS channel mix (proves it is not rubber-stamping on cosmetics): 180 damage,
+69 buff, 14 projectile, 8 heal, 5 dash, 2 shield, 2 status, **0 vfx-only**. Ranged/melee
+dimension: all 14 ranged champs' basics launch a projectile (`ranged:true`); all 34 melee
+basics are contact damage (`ranged:false`).
 
 ### Correction to the earlier "282 / 6 / 0" claim
 
