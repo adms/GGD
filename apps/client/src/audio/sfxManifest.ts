@@ -129,6 +129,11 @@ const COMBAT_SFX: readonly string[] = [
   "allySlain",
   "levelUp",
   "exUnlock",
+  // 觀眾歡呼 (#234) — rides the same tally edge as kill/multiKill, so it is warm
+  // whenever they are. Only the SMALL cheer is warmed: it is the one that fires
+  // on an ordinary kill, while crowdCheerBig needs a first blood / triple+ and
+  // can afford one lazy fetch on the rare occasion it is earned.
+  "crowdCheer",
   // #51 効果音ラボ combat cues now fired here. Only the two that fire OFTEN are
   // warmed: heal (combatSfx `heal` — flower/lifesteal, frequent) and abilityRankUp
   // (combatSfx `rankUp`). The rare one-shots — lowHealth, and the levelUpJingle /
