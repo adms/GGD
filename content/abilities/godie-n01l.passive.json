@@ -20,7 +20,13 @@
     "name": "98-00 正妹優勢",
     "ranks": [
       {
-        "modifiers": []
+        "modifiers": [
+          {
+            "stat": "evasion",
+            "op": "flat",
+            "value": 0.25
+          }
+        ]
       }
     ]
   }

@@ -20,7 +20,26 @@
     "name": "09-00 賽亞人的血脈",
     "ranks": [
       {
-        "modifiers": []
+        "modifiers": [],
+        "hooks": [
+          {
+            "on": "onKill",
+            "target": "self",
+            "effects": [
+              {
+                "kind": "applyBuff",
+                "modifiers": [
+                  {
+                    "stat": "maxHealth",
+                    "op": "flat",
+                    "value": 2
+                  }
+                ],
+                "duration": 99999.0
+              }
+            ]
+          }
+        ]
       }
     ]
   }

@@ -20,7 +20,13 @@
     "name": "45-00 寫輪眼",
     "ranks": [
       {
-        "modifiers": []
+        "modifiers": [
+          {
+            "stat": "evasion",
+            "op": "flat",
+            "value": 0.15
+          }
+        ]
       }
     ]
   }
