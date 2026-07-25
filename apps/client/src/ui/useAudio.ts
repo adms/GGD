@@ -18,6 +18,19 @@ import {
   type AudioVolumes,
   type LoginRotationState,
 } from "../audio";
+import { loadVictoryTaunts } from "../audio/victoryTaunt";
+
+/**
+ * Scenes that lead into a victory taunt (round win / match win). Entering any of
+ * them warms the small `config/victory-taunts.json` script ahead of the first
+ * `playRound`/`playMatch` call. See {@link useAudioScene} for why this lives here
+ * rather than in the mixer.
+ */
+const TAUNT_WARM_SCENES: ReadonlySet<AudioScene> = new Set<AudioScene>([
+  "settlement",
+  "victory",
+  "defeat",
+]);
 
 /**
  * Boot the mixer once per app: fetch the audio map, warm the SFX buffers and
@@ -40,10 +53,22 @@ export function useAudioBoot(): void {
 /**
  * Keep the background bed in sync with a discrete scene value. `null` fades
  * the bed out; re-rendering with the same scene is a no-op inside the system.
+ *
+ * On a taunt-bearing scene entry (settlement / victory / defeat) this also warms
+ * the victory-taunt script (task #93). `loadVictoryTaunts` is a cached
+ * single-flight fetch of one small JSON (`config/victory-taunts.json`), so this
+ * only ever costs ONE request — it just moves that request off the first
+ * round-win / match-win taunt beat, where it otherwise fired lazily via
+ * `playRound`/`playMatch` → `this.load()`. The warm lives here, next to the scene
+ * driver, rather than inside AudioSystem: the mixer must not import the taunt
+ * layer (which already imports the mixer), and the SFX-warm path stays decoupled
+ * from the taunt config. NOT gated on unlock — it is a plain content fetch, not a
+ * WebAudio buffer, and test-mode silence still applies at PLAYBACK time.
  */
 export function useAudioScene(scene: AudioScene | null): void {
   useEffect(() => {
     audioSystem.playBgm(scene);
+    if (scene && TAUNT_WARM_SCENES.has(scene)) void loadVictoryTaunts();
   }, [scene]);
 }
 
