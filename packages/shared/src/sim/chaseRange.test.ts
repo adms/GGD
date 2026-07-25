@@ -13,6 +13,7 @@
 import { describe, it, expect } from "vitest";
 import { SimWorld } from "./SimWorld";
 import { SKELETON_ARENA } from "./world/ArenaDef";
+import { PILLAR_ARENA } from "../../testkit/arenas";
 import { asSeatId, asTeamId, type AbilityId, type ChampionId, type EntityId } from "../ids";
 import { Stat, zeroStats } from "./stats/statTypes";
 import type { AbilitiesComp } from "./stats/statsComp";
@@ -20,6 +21,14 @@ import { steerAroundObstacles } from "./collision/avoid";
 import * as V from "./math/vec2";
 
 const Z0 = SKELETON_ARENA.zones[0]!;
+/**
+ * The obstacle-avoidance half of this file needs a blocker between the two
+ * middle spawn slots — that used to be the shipped arena's centre pillar, which
+ * task #218 removed from every map. `PZ0` is the pre-#218 zone (testkit), so the
+ * steering algorithm keeps its subject while the shipped maps stay open. Same
+ * centre and boundary as `Z0`; only `obstacles` differs.
+ */
+const PZ0 = PILLAR_ARENA.zones[0]!;
 /** Body contact for two 0.6-radius champions. */
 const CONTACT = 1.2;
 
@@ -134,9 +143,9 @@ describe("chase stops at ATTACK RANGE, not body contact", () => {
 describe("obstacle avoidance: units walk AROUND a pillar", () => {
   it("two melee champions split by the zone-centre pillar still fight", () => {
     // probe4 from the diagnosis: bit-identical positions for 270 ticks, 0 autos.
-    const world = new SimWorld(SKELETON_ARENA, 3);
-    const a = spawnFighter(world, 0, 0, { x: Z0.center.x - 6, z: 0 }, 1.6);
-    const b = spawnFighter(world, 1, 1, { x: Z0.center.x + 6, z: 0 }, 1.6);
+    const world = new SimWorld(PILLAR_ARENA, 3);
+    const a = spawnFighter(world, 0, 0, { x: PZ0.center.x - 6, z: 0 }, 1.6);
+    const b = spawnFighter(world, 1, 1, { x: PZ0.center.x + 6, z: 0 }, 1.6);
     const { attacks, firstAttackTick } = runDuel(
       world,
       [
@@ -154,17 +163,17 @@ describe("obstacle avoidance: units walk AROUND a pillar", () => {
   it("a blocked unit reports the velocity it ACTUALLY has, never the intent", () => {
     // t.vel used to report full speed while the body was pinned to a pillar,
     // so the animation layer was told "walking" for a motionless model.
-    const world = new SimWorld(SKELETON_ARENA, 5);
-    const id = spawnFighter(world, 0, 0, { x: Z0.center.x - 6, z: 0 }, 1.6);
+    const world = new SimWorld(PILLAR_ARENA, 5);
+    const id = spawnFighter(world, 0, 0, { x: PZ0.center.x - 6, z: 0 }, 1.6);
     // order straight into the middle of the pillar (an unreachable point:
     // avoidance is deliberately skipped so the body parks against the wall)
-    world.nav.get(id)!.moveTarget = { x: Z0.center.x, z: Z0.center.z };
+    world.nav.get(id)!.moveTarget = { x: PZ0.center.x, z: PZ0.center.z };
     for (let k = 0; k < 60; k++) {
-      world.nav.get(id)!.moveTarget = { x: Z0.center.x, z: Z0.center.z };
+      world.nav.get(id)!.moveTarget = { x: PZ0.center.x, z: PZ0.center.z };
       world.step(new Map());
     }
     const t = world.transform.get(id)!;
-    expect(V.dist(t.pos, Z0.center)).toBeCloseTo(2.5 + 0.6, 2); // flush on the pillar
+    expect(V.dist(t.pos, PZ0.center)).toBeCloseTo(2.5 + 0.6, 2); // flush on the pillar
     expect(V.len(t.vel)).toBeLessThan(0.05); // and honestly reported as stopped
   });
 
@@ -172,11 +181,11 @@ describe("obstacle avoidance: units walk AROUND a pillar", () => {
     const dir = { x: 1, z: 0 };
     // clear path well clear of every pillar
     expect(
-      steerAroundObstacles({ x: Z0.center.x - 6, z: 14 }, 0.6, dir, 12, Z0.obstacles),
+      steerAroundObstacles({ x: PZ0.center.x - 6, z: 14 }, 0.6, dir, 12, PZ0.obstacles),
     ).toEqual(dir);
     // destination INSIDE the pillar → walking in is the order's actual meaning
     expect(
-      steerAroundObstacles({ x: Z0.center.x - 6, z: 0 }, 0.6, dir, 6, Z0.obstacles),
+      steerAroundObstacles({ x: PZ0.center.x - 6, z: 0 }, 0.6, dir, 6, PZ0.obstacles),
     ).toEqual(dir);
   });
 
@@ -184,8 +193,8 @@ describe("obstacle avoidance: units walk AROUND a pillar", () => {
     // Body-relative tie-breaking ("always my left") sends two units charging
     // through the same pillar around OPPOSITE sides — a permanent 180° orbit.
     const R = 2.5 + 0.6 + 0.3;
-    const east = steerAroundObstacles({ x: Z0.center.x - 6, z: 0 }, 0.6, { x: 1, z: 0 }, 12, Z0.obstacles);
-    const west = steerAroundObstacles({ x: Z0.center.x + 6, z: 0 }, 0.6, { x: -1, z: 0 }, 12, Z0.obstacles);
+    const east = steerAroundObstacles({ x: PZ0.center.x - 6, z: 0 }, 0.6, { x: 1, z: 0 }, 12, PZ0.obstacles);
+    const west = steerAroundObstacles({ x: PZ0.center.x + 6, z: 0 }, 0.6, { x: -1, z: 0 }, 12, PZ0.obstacles);
     expect(east).not.toEqual({ x: 1, z: 0 });
     expect(west).not.toEqual({ x: -1, z: 0 });
     // both deflect to the SAME side of the pillar (+z here)
@@ -193,11 +202,11 @@ describe("obstacle avoidance: units walk AROUND a pillar", () => {
     expect(west.z).toBeGreaterThan(0);
     // and both aim along a true tangent of the clearance circle
     for (const [from, d] of [
-      [{ x: Z0.center.x - 6, z: 0 }, east],
-      [{ x: Z0.center.x + 6, z: 0 }, west],
+      [{ x: PZ0.center.x - 6, z: 0 }, east],
+      [{ x: PZ0.center.x + 6, z: 0 }, west],
     ] as const) {
       expect(V.len(d)).toBeCloseTo(1, 9);
-      const to = V.sub(Z0.center, from);
+      const to = V.sub(PZ0.center, from);
       expect(Math.abs(V.cross(d, to))).toBeCloseTo(R, 6); // perpendicular offset = clearance
     }
   });

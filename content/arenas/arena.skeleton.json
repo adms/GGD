@@ -14,14 +14,6 @@
         {
           "kind": "circle",
           "center": {
-            "x": -40,
-            "z": 0
-          },
-          "radius": 2.5
-        },
-        {
-          "kind": "circle",
-          "center": {
             "x": -49,
             "z": 8
           },
@@ -75,14 +67,6 @@
       },
       "boundaryRadius": 24,
       "obstacles": [
-        {
-          "kind": "circle",
-          "center": {
-            "x": 40,
-            "z": 0
-          },
-          "radius": 2.5
-        },
         {
           "kind": "circle",
           "center": {

@@ -139,8 +139,12 @@ export const SKELETON_ARENA: ArenaDef = {
       id: `zone-${i}`,
       center: { x: cx, z: 0 },
       boundaryRadius: 24,
+      // The CENTRE obstacle was deleted (owner directive, task #218): a pillar
+      // standing on the zone centre is exactly where the fight happens and
+      // where the neutral guardian (#89/#105) already stands, so it blocked
+      // both the camera and the walk. The two flanking obstacles stay — they
+      // are cover a ranged champion can actually kite around.
       obstacles: [
-        { kind: "circle" as const, center: { x: cx, z: 0 }, radius: 2.5 },
         { kind: "circle" as const, center: { x: cx - 9, z: 8 }, radius: 1.8 },
         { kind: "circle" as const, center: { x: cx + 9, z: -8 }, radius: 1.8 },
       ],

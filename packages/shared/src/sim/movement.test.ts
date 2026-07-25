@@ -5,14 +5,22 @@
  */
 import { describe, it, expect } from "vitest";
 import { cover } from "../../testkit/cover";
+import { PILLAR_ARENA } from "../../testkit/arenas";
 import { SimWorld } from "./SimWorld";
-import { SKELETON_ARENA } from "./world/ArenaDef";
 import { asSeatId, asTeamId, type EntityId, type SeatId } from "../ids";
 import type { IntentFrame } from "./intents";
 import { turnToward, TURN_FACTOR, ACCEL_TICKS } from "./systems/MovementSystem";
 import * as V from "./math/vec2";
 
-const Z0 = SKELETON_ARENA.zones[0]!;
+/**
+ * These tests exercise the MOVEMENT ALGORITHM (bounded turning, accel ramp,
+ * arrival) against an arena that contains a blocker. They used to lean on the
+ * shipped skeleton arena's centre obstacle — so when task #218 deleted that
+ * centre pillar from every map, they started failing for a reason that had
+ * nothing to do with movement. `PILLAR_ARENA` (testkit) is the pre-#218 arena,
+ * so the algorithm keeps its blocker while the shipped maps stay open.
+ */
+const Z0 = PILLAR_ARENA.zones[0]!;
 
 /** Spawn one minimal champion-like unit (no stats comp -> base speed 6). */
 function spawnUnit(world: SimWorld, seat: number, pos: V.Vec2, facing: V.Vec2): EntityId {
@@ -31,7 +39,7 @@ const moveOrder = (seat: number, point: V.Vec2): Map<SeatId, IntentFrame> =>
 describe("smooth turning (arena-08)", () => {
   it("facing converges to the move direction without ever snapping", () => {
     cover("move-turn-smooth");
-    const world = new SimWorld(SKELETON_ARENA, 1);
+    const world = new SimWorld(PILLAR_ARENA, 1);
     const id = spawnUnit(world, 0, { x: Z0.center.x - 14, z: -8 }, { x: 1, z: 0 });
     // order a move straight "up" (+z): desired facing is perpendicular to current
     const target = { x: Z0.center.x - 14, z: 8 };
@@ -56,7 +64,7 @@ describe("smooth turning (arena-08)", () => {
 
   it("an exactly-opposite order pivots through the perp and resolves", () => {
     cover("move-turn-smooth");
-    const world = new SimWorld(SKELETON_ARENA, 2);
+    const world = new SimWorld(PILLAR_ARENA, 2);
     const id = spawnUnit(world, 0, { x: Z0.center.x + 8, z: -12 }, { x: 1, z: 0 });
     // order a move exactly behind the unit (-x)
     const target = { x: Z0.center.x - 12, z: -12 };
@@ -83,7 +91,7 @@ describe("smooth turning (arena-08)", () => {
 describe("acceleration ramp + arrival (arena-09)", () => {
   it("speed ramps to full over ACCEL_TICKS and arrival does not oscillate", () => {
     cover("move-accel-ramp");
-    const world = new SimWorld(SKELETON_ARENA, 3);
+    const world = new SimWorld(PILLAR_ARENA, 3);
     const id = spawnUnit(world, 0, { x: Z0.center.x - 10, z: 5 }, { x: 1, z: 0 });
     const target = { x: Z0.center.x + 5, z: 5 };
     world.step(moveOrder(0, target));
@@ -111,7 +119,7 @@ describe("acceleration ramp + arrival (arena-09)", () => {
   it("movement with turning + ramp is replay-deterministic", () => {
     cover("move-accel-ramp");
     const run = (): number => {
-      const world = new SimWorld(SKELETON_ARENA, 77);
+      const world = new SimWorld(PILLAR_ARENA, 77);
       spawnUnit(world, 0, { x: Z0.center.x - 12, z: -6 }, { x: 1, z: 0 });
       spawnUnit(world, 1, { x: Z0.center.x + 12, z: 6 }, { x: -1, z: 0 });
       for (let k = 0; k < 200; k++) {

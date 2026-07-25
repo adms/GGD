@@ -36,14 +36,6 @@
         {
           "kind": "circle",
           "center": {
-            "x": -40,
-            "z": 0
-          },
-          "radius": 2.5
-        },
-        {
-          "kind": "circle",
-          "center": {
             "x": -49,
             "z": 8
           },
@@ -154,14 +146,6 @@
         {
           "kind": "circle",
           "center": {
-            "x": 40,
-            "z": 0
-          },
-          "radius": 2.5
-        },
-        {
-          "kind": "circle",
-          "center": {
             "x": 31,
             "z": 8
           },
@@ -241,13 +225,6 @@
     }
   ],
   "decor": [
-    {
-      "model": "assets/models/props/pillar.glb",
-      "x": -40,
-      "z": 0,
-      "rotQuarter": 0,
-      "scale": 2.5
-    },
     {
       "model": "assets/models/props/pillar.glb",
       "x": -49,
@@ -359,13 +336,6 @@
       "z": 6,
       "rotQuarter": 3,
       "scale": 1
-    },
-    {
-      "model": "assets/models/props/pillar.glb",
-      "x": 40,
-      "z": 0,
-      "rotQuarter": 0,
-      "scale": 2.5
     },
     {
       "model": "assets/models/props/pillar.glb",

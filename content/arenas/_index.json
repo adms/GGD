@@ -1,12 +1,12 @@
 {
   "collection": "arenas",
-  "hash": "d718d09a7a39",
+  "hash": "0847ea9ec68d",
   "entries": [
     {
       "id": "arena.castle",
       "path": "arenas/arena.castle.json",
-      "hash": "abaa8935b275",
-      "size": 8940
+      "hash": "7c149e92a427",
+      "size": 8376
     },
     {
       "id": "arena.colosseum",
@@ -29,8 +29,8 @@
     {
       "id": "arena.skeleton",
       "path": "arenas/arena.skeleton.json",
-      "hash": "c061f6fa373e",
-      "size": 5034
+      "hash": "427ded638cc9",
+      "size": 4737
     }
   ]
 }

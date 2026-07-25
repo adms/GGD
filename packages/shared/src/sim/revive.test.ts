@@ -436,12 +436,20 @@ describe("edge cases (rev-04)", () => {
     step(w);
     const id = theCircle(w)!;
     const pos = { ...w.transform.get(id)!.pos };
-    // channel to 99%…
-    for (let i = 0; i < FAST.channelTicks - 1; i++) {
+    // Channel to 99% — one tick short of completion. Driven off the REAL
+    // progress rather than a fixed tick count: the count used to be exact only
+    // because the arena's centre pillar shoved the channeller out of the ring for
+    // one tick, and #218 deleted that pillar. A loop that stops at
+    // `channelTicks - 1` states the precondition this test actually needs
+    // ("99%, not yet revived") and cannot silently over-run into a completed
+    // revive the way the fixed count just did.
+    for (let i = 0; i < FAST.channelTicks * 4; i++) {
+      if ((w.reviveCircle.get(id)?.progressTicks ?? 0) >= FAST.channelTicks - 1) break;
       teleportTo(w, last, pos.x, pos.z);
       step(w);
     }
     expect(w.reviveCircle.get(id)!.progressTicks).toBe(FAST.channelTicks - 1);
+    expect(w.health.get(victim)!.alive).toBe(false); // still 99%, not revived
     // …then lose the duel. The ring dies WITH the team; a 99% channel does not
     // save the round.
     kill(w, last);
