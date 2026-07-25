@@ -258,7 +258,7 @@ rows = [
 ]
 def skill_no_key(r):
     """依技能編號 NN-XX 排序: 英雄編號 → 2位尾碼(00 天生技,01-04) → 3位 EX(00X)。無編號者殿後。"""
-    m = re.match(r"^(\d{2})-(\d{2,3})\b", r["技能名"])
+    m = re.match(r"^(\d{2})-(\d{2,3})(?!\d)", r["技能名"])
     if not m:
         return (1, 999, 9, 999, r["技能名"])
     nn, xx = m.group(1), m.group(2)
