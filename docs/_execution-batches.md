@@ -6,7 +6,26 @@
 
 ---
 
-## 🔴 醒來先看這一條 · #239 版權閘在拓樸上就全開了
+## ✅ 已結案 · #239 版權閘退役（2026-07-26，owner 拍板選 (d) 全部公開不擋）
+
+**決定與執行紀錄。** owner 兩次下指令要求全開：先是「blizzard-local 這些資源都不用擋了，全都可以打開移到正常使用區，因為目前已經用邀請+審查制嚴格擋住家人才能玩」；被告知**這個前提不成立**（邀請碼 #174 與審查制 #126 擋的是「註冊」與 lobby/platform API，`/content/assets/**` 完全不驗 session）之後，仍然明確重申：「照你原本說的，全部公開不擋」。所以這是**在知情下做的決定**，不是誤會，未來稽核看到 imported 模型可匿名下載**不是**回歸。
+
+**已做（一個 commit，因為它們互相依存）**：刪掉 `map $ggd_env_tier $ggd_deny_copyright`，以及它在 `nginx/nginx.conf` 的 imported 位置、`nginx/tier/family/10-blizzard-overlay.server.conf`、`nginx/dev/blizzard-overlay.conf` 三處的 `if (...) { return 403; }`；刪掉 vite 的 `copyrightTierGate()` plugin；`make helm-sync-nginx` 同步 helm 副本。**任何一處漏刪 = family host 的 nginx 開不起來**（`unknown "ggd_deny_copyright" variable`，而 `compose.family.yaml` 是 `restart: "no"`），且 infracheck 的 `nginx -t` 只吃 `nginx.conf` 單檔、看不到掛載進來的 fragment —— 所以另外加了一條文字斷言把所有 nginx 檔掃過一遍。
+
+**沒搬任何檔案。** 「移到正常使用區」對兩組資產意義不同：imported GLB **本來就在** `content/` 可部署樹裡，唯一與 champions/ 的差別就是那一行條件式，刪掉它就是「搬完了」；真要搬檔會打爛 #115 LOD 解析、#99 的 166 個釘死 URL 與所有 `?h=` 快取。blizzard-overlay 則是**刻意**放在 gitignore 的 `data/` 外面，搬進 `content/` 等於把 87MB Blizzard 二進位檔 commit 進 git，而它現在本來就對每個 peer 服務 —— 指令講的是**存取**，不是**存放**。
+
+**刻意留下、外觀像版權機制但不是的三樣東西**：① `geo $ggd_env_tier`（已無人讀取，但它讓 family 的 geo fragment 保持是合法 nginx）② `nginx/tier/family/00-full-assets.geo.conf`（**`tools/deploy/ggd-assets.sh` 的 #176 開機驗證是靠這個檔案「存不存在」觸發的**；當成死程式碼刪掉 = 87MB overlay 上傳殘缺時靜默開機、40/113 英雄退回無語音替身）③ `envTier.ts` 的 `classifyEnvTier`（`ui/cheats.ts` 靠它把 🐞 鈕限制在 loopback）。
+
+**順手修掉同一份稽核指出的隱形陷阱**：`00-full-assets.geo.conf` 的 `0.0.0.0/0` 與 geo 自己的 `default` 是同一個網段 → 重複網段警告、且結果隨 include 位置而變。改成 `0.0.0.0/1` + `128.0.0.0/1`（v6 是 `::/1` + `8000::/1`）：同一個位址空間、但比 `default` 更長前綴，順序無關、警告消失。測試已把這條釘住。
+
+**未做（刻意）**：沒有加 `real_ip_header X-Forwarded-For` / `set_real_ip_from`（那是下面的方案 (a)，會把閘**重新武裝**起來，與指令相反）；沒有對 `/content/assets/**` 加 session 檢查（方案 (c)）；`X-Robots-Tag: noindex` 保留 —— 「拿到 URL 的人看得到」是 owner 的決定，「請 Google 來索引 129 個第三方角色模型」是另一件更大的事，沒人要求過。
+
+**署名／授權文件已改成描述現況**（不再自相矛盾）：`docs/copyright-content-gate.md` 改為退役記錄、`content/assets/blizzard-local/README.md` 拿掉「LOCAL DEV ONLY / 絕不部署」的抬頭（#177 之後那句話本來就已經不成立）、`docs/_voice-casting.md` 的「DEV-only gated overlay」更正。**仍然成立、也仍然被測試釘住的是「位元組不進 git、不進 image、只靠執行期掛載」** —— 那是散布規則，不是存取規則。
+
+**⚠️ 一個問題留給 owner，我不會擅自決定**：`apps/client/src/ui/platform/CreditsRoute.tsx`（對外的 版權聲明 頁）目前**完全沒提**匯入角色模型與 Blizzard overlay —— 它只列了真的有授權條件要遵守的素材（CC-BY 巨龍、効果音ラボ）。以前這樣寫沒問題，因為那些資產被視為「有閘擋住的 dev 內容」；現在它們是**公開服務**的。要不要在那頁加一行公開說明，是產品／法務層級的決定，不該由我在你睡覺時默默加上去或默默不加。兩個選項都成立，請你拍板。
+
+<details>
+<summary>原始稽核記錄（2026-07-25 夜，保留為根因說明）</summary>
 
 **我親自用匿名 curl 驗證過，不是推論。** 對正式站台，沒有 cookie、沒有 token、沒有邀請碼、沒有經過審核：
 
@@ -26,6 +45,10 @@ nginx **有**擋這條路徑的規則（`nginx/nginx.conf:365-366`），它沒�
  (c) 對這條路徑加 session 檢查（靜態資產路由目前完全不看登入狀態）。
 
 **同一份稽核附帶一個隱形陷阱**：`geo.conf` 的重複網段 warning 目前結果無害（last-wins，include 在 `default public;` 之後），但分類是**順序相依**的。任何人把 include 往上搬一行，family tier 會靜默失效、40/113 英雄退回替身模型，而開機斷言只檢查位元組有沒有掛載、不檢查 geo 結果。最小修法已備好：把 `0.0.0.0/0` 拆成 `0.0.0.0/1` + `128.0.0.0/1`（同一個位址空間，但比 geo 的 `default` 更長前綴 → 無警告、且順序無關）。
+
+*（結案補記：owner 選了三個方向以外的 (d)「全部公開不擋」。閘已刪除，順序陷阱已按上述最小修法修掉。）*
+
+</details>
 
 ---
 

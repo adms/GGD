@@ -372,9 +372,15 @@ which is why the otherwise-perfect panda-for-熊貓 pick was dropped in favour o
 > yields ~20 separable identities. **20 of 48 champions can be anchored in-repo; the other 28 need
 > references from outside.** No bank on this machine solves a 48-champion roster.
 
-**Provenance, stated once:** Blizzard-owned audio, DEV-only gated overlay (#10/#177). Used here as a
+**Provenance, stated once:** Blizzard-owned audio from the overlay (#10/#177). Used here as a
 *description of a target sound*, not a shipping clone source. Anything cloned directly off it inherits the
-same gating — `anchorIsShippable: false` in the JSON for all 20.
+same provenance — `anchorIsShippable: false` in the JSON for all 20.
+
+> **2026-07-26 correction (#239).** This used to say "DEV-only gated overlay". It is neither
+> DEV-only (since #177 the overlay is mounted on the family host) nor gated (the per-peer
+> copyright gate was retired by owner decision — `docs/copyright-content-gate.md`). What
+> `anchorIsShippable: false` still means is unchanged and is the point here: these clips are
+> Blizzard's, so they are a reference for casting, never a source we ship a derived voice from.
 
 ### 8.3 Champions that should NOT get sentence-level VO
 

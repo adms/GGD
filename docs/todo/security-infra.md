@@ -55,29 +55,34 @@ Owned files: `internal/account/**` (status model), `internal/auth/service.go`
 (middleware + admin approval routes + boot secret guard). The #118 wallet route
 group was not touched.
 
-## Environment-tier content gate (copyright / single-player) (#127)
+## Environment-tier content gate (copyright) (#127) — **RETIRED 2026-07-26 (#239)**
 
-Grade the serving environment into `loopback | lan | public` and refuse the
-copyright-restricted / single-player content to a genuinely public host while
-keeping the LAN-plays-fine behaviour (a phone on the wifi is `lan` → served).
-One authoritative classifier off the **socket peer** (never a forwarded header),
-enforced at the content-serving layer (vite dev middleware + nginx). Full policy:
-[`docs/copyright-content-gate.md`](../copyright-content-gate.md).
+> **This gate no longer exists and is not coming back.** Every asset under
+> `/content/assets/**` is served to anyone with the URL. The owner decided that
+> on 2026-07-26, after being shown that static asset routes check no session at
+> all (anonymous `curl` of an imported champion GLB against production → 200) —
+> the invite code (#174) and the approval queue (#126) gate registration and the
+> platform API, not bytes. It had also never fired in production: behind Caddy's
+> `reverse_proxy`, `$remote_addr` is always a `172.16/12` container address.
+> Full record, including what deliberately survived (the `geo` block, the #176
+> boot-assertion trigger file, `classifyEnvTier` for the loopback cheat button):
+> [`docs/copyright-content-gate.md`](../copyright-content-gate.md).
+>
+> The rows below are kept for history. `withdrawn` means "this requirement was
+> deliberately dropped", not "still to do" — do not pick one up and re-implement it.
 
 | ID | Item | Test ID | Category | Status |
 | --- | --- | --- | --- | --- |
-| sec-infra-14 | Environment-tier classifier (`loopback`/`lan`/`public`) — one shared util `@ggd/shared/envTier`, table-tested (46 cases); reuses the loopback rule + adds the private-IP ranges (`10./172.16-31./192.168./169.254.`, IPv6 ULA/link-local, `*.local`); fail-safe `unknown → public`. | copyright-env-tier | unit | done |
-| sec-infra-15 | Vite dev/preview middleware (`copyrightTierGate`) refuses the restricted mounts (`/content/assets/models/imported`, `/content/assets/blizzard-local`) to a public peer (403) and serves loopback+LAN; runs before `serveContent`/`serveBlizzardOverlay`; leaves the `/content-api` tripwire's 404 intact. | copyright-vite-gate | security | pending |
-| sec-infra-16 | Nginx edge gates the same mounts by `$remote_addr` tier (`geo`+`map`, `if ($ggd_deny_copyright) { return 403; }`): loopback/LAN 200, public 403; `nginx -t` clean; `make helm-sync-nginx` keeps `deploy/helm/ggd/files/nginx.conf` in sync. | copyright-nginx-gate | security | pending |
-| sec-infra-17 | Platform declares its serving tier via `GGD_DEPLOY_TIER` (`private` or `public`, default **public** = deny by omission), logged at boot. Informational — the byte-serving gate is the content layer. | copyright-deploy-tier | security | pending |
+| sec-infra-14 | Environment-tier classifier (`loopback`/`lan`/`public`) — one shared util `@ggd/shared/envTier`, table-tested (46 cases); reuses the loopback rule + adds the private-IP ranges (`10./172.16-31./192.168./169.254.`, IPv6 ULA/link-local, `*.local`); fail-safe `unknown → public`. **The classifier survives #239** (live for the loopback-only cheat button) — only the gate it fed is gone. | copyright-env-tier | unit | done |
+| sec-infra-15 | ~~Vite dev/preview middleware (`copyrightTierGate`) refuses the restricted mounts to a public peer (403)~~ — plugin **deleted** 2026-07-26 (#239). `client-lan --host 0.0.0.0` now serves the same bytes the edge does, deliberately. | copyright-vite-gate | security | **withdrawn** |
+| sec-infra-16 | ~~Nginx edge gates the same mounts by `$remote_addr` tier (`geo`+`map`, `if ($ggd_deny_copyright) { return 403; }`)~~ — the `map` and all three `if` guards **deleted** 2026-07-26 (#239). The `geo $ggd_env_tier` block is kept, unread, so the family tier's geo fragment stays parseable and the #176 boot assertion keeps its trigger. What IS still enforced here: no nginx file may reference `$ggd_deny_copyright` (a dangling reference would stop the family edge booting) — asserted in `blizzardOverlayGate.test.ts`. | copyright-nginx-gate | security | **withdrawn** |
+| sec-infra-17 | Platform declares its serving tier via `GGD_DEPLOY_TIER` (`private` or `public`, default **public**), logged at boot. Never a byte-serving gate; **unaffected by #239** and still load-bearing for the empty-whitelist boot refusal and the game-server endpoint check. | copyright-deploy-tier | security | pending |
 
-Why sec-infra-15/10/11 stay `pending`: same convention as sec-infra-01..04 —
-their automated beacons belong in a config/container harness
-(`tools/testrunner/internal/infracheck` for the real-nginx guard; a vite
-middleware integration harness) outside this change's ownership. The decision
-they all enforce is fully covered by sec-infra-14's unit table (the gate's whole
-verdict is `mayServeRestrictedContent(classifyEnvTier(peer))`). Flip to `done`
-when the beacons land.
+Why sec-infra-17 stays `pending`: same convention as sec-infra-01..04 — its
+automated beacon belongs in a config/container harness outside this change's
+ownership. Flip to `done` when the beacon lands. sec-infra-15/16 will never be
+done or pending again; they were withdrawn by owner decision, and re-opening
+them means re-arming a gate that was deliberately removed.
 
 Owned files: `packages/shared/src/envTier.ts` (+ `.test.ts`),
 `apps/client/vite.config.ts`, `nginx/nginx.conf` + `nginx/dev/blizzard-overlay.conf`

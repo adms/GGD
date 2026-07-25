@@ -11,11 +11,6 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import { serveIconConsoleStamp } from "./dev/iconConsoleStamp";
 // task #66 / P0-6(a): env-first, git-second, LOUD-third build stamp resolution.
 import { computeBuildStamp } from "./dev/buildStamp";
-// task #127: the ONE authoritative environment-tier classifier (loopback | lan
-// | public). This dev/LAN server is deliberately published to the wifi
-// (`client-lan --host 0.0.0.0`), so the copyright-restricted mounts must be
-// served to a loopback/LAN peer and refused to a genuinely public one.
-import { classifyEnvTier, mayServeRestrictedContent } from "@ggd/shared/envTier";
 
 const CONTENT_DIR = fileURLToPath(new URL("../../content", import.meta.url));
 
@@ -331,62 +326,25 @@ function serveBlizzardOverlay(): Plugin {
   };
 }
 
-/**
- * COPYRIGHT / ENVIRONMENT-TIER GATE (task #127). The mounts below carry
- * content that a genuinely PUBLIC deploy must not serve:
- *   - /content/assets/models/imported — the imported champion GLBs (anime /
- *     game-ripped models); these live INSIDE the deployable content/ tree, so
- *     without this gate the general serveContent() handler would hand them to
- *     anyone.
- *   - /content/assets/blizzard-local  — the dev-only Blizzard overlay mount
- *     (serveBlizzardOverlay above). Belt-and-suspenders: refuse it to a public
- *     peer even where the overlay store happens to exist.
- */
-const COPYRIGHT_RESTRICTED_MOUNTS = [
-  "/content/assets/models/imported",
-  BLIZZARD_OVERLAY_MOUNT,
-] as const;
-
-/**
- * Refuse the copyright-restricted mounts to a genuinely PUBLIC peer, while
- * serving loopback + LAN unchanged (a phone on the wifi keeps working — this is
- * the LAN-published server). Classified off the SOCKET peer only
- * (req.socket.remoteAddress), never a forwarded header — see @ggd/shared/envTier
- * and the contentApiGuard note below on why a header cannot be trusted here.
+/*
+ * RETIRED: copyrightTierGate() (task #127, removed by #239 on 2026-07-26).
  *
- * Registered BEFORE serveBlizzardOverlay + serveContent so connect runs it
- * first: a served tier falls through (next()) to the real static handlers; a
- * public tier gets a terminal 403 and the file is never read. The decision is
- * exactly `mayServeRestrictedContent(classifyEnvTier(peer))`, unit-pinned in
- * packages/shared/src/envTier.test.ts.
+ * A `ggd-copyright-tier-gate` plugin used to sit here and 403 two mounts —
+ * /content/assets/models/imported and the blizzard-local overlay — for any peer
+ * that @ggd/shared/envTier classified as `public`, mirroring the nginx gate.
+ * Both halves are gone, by explicit owner decision made AFTER being shown that
+ * static /content/assets/** authenticates nobody: the invite code (#174) and
+ * the approval queue (#126) gate registration and the platform API, not bytes.
+ * The prod gate was also topologically dead — see nginx/nginx.conf's
+ * $ggd_env_tier block and docs/copyright-content-gate.md.
+ *
+ * Do not re-add this as a bug fix. Removing it makes `client-lan --host 0.0.0.0`
+ * behave the same way the deployed edge does, which is the point.
+ *
+ * classifyEnvTier itself is still very much alive — apps/client/src/ui/cheats.ts
+ * uses it to keep the 🐞 cheat button loopback-only — so envTier.ts and its
+ * 46-case table test stay exactly as they are.
  */
-function copyrightTierGate(): Plugin {
-  const guard = (req: IncomingMessage, res: ServerResponse, next: () => void): void => {
-    const tier = classifyEnvTier(req.socket.remoteAddress);
-    if (mayServeRestrictedContent(tier)) return next();
-    res.statusCode = 403;
-    res.setHeader("Content-Type", "text/plain; charset=utf-8");
-    res.setHeader("Cache-Control", "no-store");
-    res.setHeader("X-Robots-Tag", "noindex, nofollow");
-    res.end(
-      `copyright-restricted content is not served to a public host (env tier: ${tier}). ` +
-        "The imported champion models and the Blizzard overlay are available only to a " +
-        "loopback or LAN client (task #127).",
-    );
-  };
-  const register = (server: { middlewares: { use: (path: string, fn: typeof guard) => void } }): void => {
-    for (const mount of COPYRIGHT_RESTRICTED_MOUNTS) server.middlewares.use(mount, guard);
-  };
-  return {
-    name: "ggd-copyright-tier-gate",
-    configureServer(server) {
-      register(server);
-    },
-    configurePreviewServer(server) {
-      register(server);
-    },
-  };
-}
 
 /**
  * True for ::1, 127.0.0.0/8 and the IPv4-mapped forms node reports on a
@@ -523,15 +481,14 @@ export default defineConfig({
     "import.meta.env.VITE_BUILD_STAMP": JSON.stringify(BUILD_STAMP),
   },
   // contentApiGuard FIRST: it must decide before vite's proxy middleware runs.
-  // copyrightTierGate before the two content servers: it must refuse a public
-  // peer before serveBlizzardOverlay / serveContent can read a restricted file.
+  // (copyrightTierGate used to sit right after it, ahead of the two content
+  // servers; retired by #239 — see the RETIRED note where it was defined.)
   // serveBlizzardOverlay before serveContent: it owns the longer
   // /content/assets/blizzard-local prefix. (serveContent would `next()` on those
   // URLs anyway — the files are not in content/ — but the order documents it.)
   plugins: [
     react(),
     contentApiGuard(),
-    copyrightTierGate(),
     liveBuildStamp(),
     serveIconConsoleStamp(),
     // compressDevModules only wraps the /src, /@fs, /@id, /@vite and

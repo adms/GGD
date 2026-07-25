@@ -1294,21 +1294,31 @@ sequenceDiagram
 - **共用密鑰**：`PLATFORM_GAME_SHARED_SECRET`。雙向都是 `hex(HMAC_SHA256(secret, ts + "." + body))`，帶在 `X-Internal-Timestamp` / `X-Internal-Auth`，常數時間比對 + 時鐘偏移守衛。平台 `POST {gameAddr}/_internal/matches` 開房並取得 12 個席位 reservation，打完回呼 `/api/v1/internal/matches/{id}/result`。沒有密鑰時 game-server 在 production **拒絕啟動**；有密鑰時 `onCreate` 會驗 server-only 的 `createToken`，客戶端無法自行開房。
 - **DoS 邊界**：WS frame 上限 64 KiB；每 session 的 INPUT 有限流（超量 drop / 以 WS close code 4290 斷線）；`GGD_MAX_ROOMS` 上限 50（後台「系統運維」可即時調整，範圍 1～500；調低不會結束進行中的對戰，只是不再開新場）。
 
-### 環境分級閘（#127）
+### 環境分級閘（#127）→ **已於 2026-07-26 退役（#239）**
 
-`packages/shared/src/envTier.ts` 是唯一的分級器，**只吃 socket peer**（`req.socket.remoteAddress` / `$remote_addr`），**絕不看 `X-Forwarded-For`／`X-Real-IP`**。
+> **這道閘已經不存在，別把它當 bug「修回來」。** `/content/assets/**` 底下的
+> 每一個檔案（含 129 個匯入英雄 GLB + 110 個 LOD 變體、以及 blizzard-local
+> overlay）現在**任何拿到 URL 的人都取得到**，不需登入、不需邀請碼、不需審核通過。
+> 這是 owner 在被明確告知靜態路由完全不驗 session 之後，仍然做出的決定
+> （「照你原本說的，全部公開不擋」）。完整記錄：
+> [`docs/copyright-content-gate.md`](docs/copyright-content-gate.md)。
 
-| tier | 判定 | 可否取得受限內容 |
-| --- | --- | :---: |
-| `loopback` | `::1`、`127.0.0.0/8`、`localhost` / `*.localhost` | ✅ |
-| `lan` | `10/8`、`172.16/12`、`192.168/16`、`169.254/16`、`fc00::/7`、`fe80::/10`、`*.local` | ✅ |
-| `public` | 其他一切，**含無法辨識／畸形位址** | ❌ 403 |
+兩個補充事實，未來訂任何以來源位址為準的規則時都會踩到：
 
-判定式就是 `mayServeRestrictedContent(tier) === tier !== "public"`。受限的兩個 mount 是 `/content/assets/models/imported`（匯入的英雄 GLB）與 blizzard-local overlay。**兩套獨立實作互為備援**：dev 端是 vite 的 `copyrightTierGate()` plugin（掛在 `serveContent()` 之前，public 直接 403 + `no-store` + `X-Robots-Tag: noindex`），prod 端是 `nginx.conf` 的 `geo $ggd_env_tier` → `map $ggd_deny_copyright`，套在 `location ^~ /content/assets/models/imported/`。
+1. **這道閘在正式環境從來沒生效過。** 線上是 Caddy → `reverse_proxy edge:8080`
+   走 compose 內網，nginx 看到的 `$remote_addr` 是 Caddy 容器的 IP（Docker
+   172.17–172.31），落在 `172.16.0.0/12 → lan`，所以 `$ggd_deny_copyright` 恆為 0。
+   拆掉它對線上行為**零改變**。
+2. **邀請碼（#174）+ 審查制（#126）擋的是「註冊」與 lobby/platform API**，
+   靜態資產路由一律不驗 session。已用匿名 curl 驗證：
+   `GET /content/assets/models/imported/1hswd-01.glb` → 200 / 42,756 bytes。
 
-> ⚠️ 設定檔自己寫明的 caveat：`$remote_addr` 是**直接對端**。把這層 nginx 放在雲端 LB 後面，`$remote_addr` 會變成 LB 的私有位址而被判成 `lan`。真正對外部署除了這道閘，還**必須讓 image 裡根本沒有** `content/assets/models/imported/`。
-
-Go 平台**不自己服務受限內容**，只記錄營運者宣告的 tier：`GGD_DEPLOY_TIER` 只有 `private|loopback|lan` 會被正規化成 `private`，其餘（含未設定）一律 `public`。
+**仍然活著的部分**：`packages/shared/src/envTier.ts` 的 `classifyEnvTier`
+（`apps/client/src/ui/cheats.ts` 用它把 🐞 作弊鈕限制在 loopback）、
+`nginx.conf` 的 `geo $ggd_env_tier`（已無人讀取，但它讓 family tier 的
+`00-full-assets.geo.conf` 保持是合法 nginx——而那個檔案的「存在」正是 #176
+全資產開機驗證的觸發條件）、以及 `GGD_DEPLOY_TIER`（餵空白名單開機拒絕等檢查，
+與版權無關）。
 
 ### 內容管線
 

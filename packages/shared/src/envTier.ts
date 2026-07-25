@@ -1,21 +1,35 @@
 /**
  * envTier — THE ONE authoritative classifier of the serving environment for a
- * request, from the caller's socket address / host. Task #127 (environment-
- * graded content gate).
+ * request, from the caller's socket address / host. Introduced for task #127
+ * (environment-graded content gate).
+ *
+ * WHAT IT NO LONGER DOES (#239, 2026-07-26). It used to decide whether the
+ * imported champion GLBs and the Blizzard overlay were served at all. That
+ * copyright gate was RETIRED by explicit owner decision — both implementations
+ * (the vite plugin and nginx's `map $ggd_deny_copyright`) are gone, and every
+ * asset under /content/assets/** is now served to anyone with the URL. Read
+ * docs/copyright-content-gate.md before "restoring" anything here.
+ *
+ * WHAT IT STILL DOES. `classifyEnvTier` is live and load-bearing for
+ * apps/client/src/ui/cheats.ts, which shows the 🐞 cheat button ONLY on
+ * loopback — without it a permanent cheat button appears for family members on
+ * ggd.adms.ai. `mayServeRestrictedContent` / `isPublicPeer` currently have no
+ * caller; they are kept, with their table test, because the classification
+ * itself is correct and re-deriving it is how a subtle mistake gets in.
  *
  * Three tiers:
  *   - "loopback": the request came from this machine (::1, 127.0.0.0/8, or a
- *     localhost name). Full single-player + copyright-restricted content.
+ *     localhost name).
  *   - "lan":      a private-network peer (10./172.16-31./192.168./169.254.,
  *     IPv6 ULA fc00::/7, IPv6 link-local fe80::/10, or an *.local mDNS name).
- *     A phone on the same wifi is here — and is ALLOWED (the couch/LAN flow the
- *     user tests on `client-lan --host 0.0.0.0` must keep working).
- *   - "public":   anything else, INCLUDING an unknown/garbled address. The
- *     copyright gate refuses to serve the restricted mounts to this tier.
+ *     A phone on the same wifi is here.
+ *   - "public":   anything else, INCLUDING an unknown/garbled address.
  *
  * FAIL-SAFE DIRECTION. An address we cannot positively place in loopback or lan
- * is "public" — the gate then DENIES. Better to refuse a legitimate viewer than
- * to hand Blizzard-owned / imported-champion assets to the open internet.
+ * is "public", i.e. the least-privileged answer. Note this is exactly why the
+ * retired gate was toothless in production: behind Caddy's `reverse_proxy
+ * edge:8080` the socket peer is a 172.17-31 container address, so every request
+ * off the internet classified as "lan".
  *
  * ADDRESS ONLY, NEVER A FORWARDED HEADER. Callers must pass the SOCKET peer
  * (vite: `req.socket.remoteAddress`; nginx: `$remote_addr`) — never
@@ -24,11 +38,9 @@
  * apps/platform/internal/server/devsurface_test.go both refuse to trust a
  * forwarded address in any decision).
  *
- * Deliberately dependency-free and framework-free so both the vite dev
- * middleware (apps/client/vite.config.ts) and any other TS tool can import it;
- * the nginx layer re-expresses the SAME table as a `geo` block (nginx/**), two
- * independent implementations of one rule so neither is the single point of
- * failure.
+ * Deliberately dependency-free and framework-free so any TS tool can import it;
+ * the nginx layer still re-expresses the same table as a `geo $ggd_env_tier`
+ * block (nginx/nginx.conf), though since #239 nothing reads that variable.
  */
 
 /** The serving-environment tier of a single request, by its peer address. */
@@ -138,9 +150,13 @@ export function classifyEnvTier(hostOrAddr: string | undefined | null): EnvTier 
 }
 
 /**
- * May a request in this tier be served the copyright-restricted / single-player
- * content? True for loopback + lan, false for public. The serving layers'
- * whole decision is `mayServeRestrictedContent(classifyEnvTier(peer))`.
+ * May a request in this tier be served restricted content? True for loopback +
+ * lan, false for public.
+ *
+ * NO CALLER SINCE #239 — the copyright gate this expressed was retired on
+ * 2026-07-26 by owner decision. Kept as the vocabulary for any FUTURE
+ * environment-graded decision (it is a correct, tested predicate), not as a
+ * dormant copyright gate waiting to be switched back on.
  */
 export function mayServeRestrictedContent(tier: EnvTier): boolean {
   return tier !== "public";
