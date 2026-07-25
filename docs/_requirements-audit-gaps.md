@@ -2625,3 +2625,76 @@ glb 分支只把隊伍光環調暗、程序化分支把 `deathT` 拉到倒地姿
 **閘門**：`@ggd/shared` 880/880 綠（sim 未動，#215 MobSystem 15 / FireRingSystem 6 / fireRing 18 / revive 20 全部未調整即綠）；
 client typecheck + build 綠；client 3052 測試中僅 2 個**既有**紅（`descriptionRescale`：live 表冷卻已是 ×0.20 而測試寫死 ×0.25；
 `render/vfx/bindings.test.ts` 收集期就失敗）——已用 `git stash` 在 base commit 上覆驗，與本次改動無關。
+
+---
+
+## 2026-07-26 — #212 的前提是錯的：「揍敵客已開放」從來沒發生過（#212 + #214 + M幣稽核缺口）
+
+**這一則要記的是一種「回報方式的病」，跟 2026-07-22 那則同源。**
+`#212` 被記成「揍敵客 `godie-efur` 已開放並上線，賈修 `godie-hblm` 待辦」。實際狀態是
+**兩隻都沒開**：`4114a25` 只改了 efur 的 4 個技能名字並重建索引，啟用那一步從頭到尾沒做過。
+
+會誤判是因為**內容層完整到足以騙過任何目視檢查**：champion 文件、六支技能、`_index` 註冊、
+`bundle.json`、日文名字三支 mp3、名言、EX rawcode、46 段語音包、ROSTER、圖示 —— 全部都在。
+但「在 `content/_index.json` 裡」**不 gate 任何東西**：那是整棵樹（114 英雄 / 668 技能）的
+hash manifest。真正決定 champ-select 點不點得到的只有兩處：
+
+| 閘 | 版控？ | 影響 |
+|---|---|---|
+| `apps/platform/internal/curation/starter.go` `starterChampions` | ✅ | 新安裝 seed 的名單；castability sweep / telegraph coverage / game-server whitelist 全部從這裡解析 |
+| `data/curation/whitelist.json` | ❌ gitignore | **正在跑的那台機器**唯一會讀的；`ApplyStarterSet` 在它非空時不會再跑 |
+
+只改前者 → 測試全綠、遊戲沒變；只改後者 → 本機能玩、任何 clone/CI 看不到。**兩個都要做**，
+而且部署主機那份只能走後台「內容白名單」或 #179 遷移包，**不能**為了自動化而放寬
+「starter set 永不隱式套用」的安全契約。
+
+**本次落地**：efur + hblm 一起加進 `starterChampions`（48→50，字母序插入、保留
+`// 顯示名 - 稱號 #編號` 註解格式，因為 `testkit/starterRoster.ts` 和 game-server 的
+`whitelist.test.ts` 都在正則解析那個區塊）、同步 `firstOpenRoster` 釘死名單、
+`castabilitySweep.test.ts` `ROSTER_SIZE` 48→50 且棘輪下限 **287→299（實測，不是預估：
+新增 12 格全部噴效果，299/300）**、`store.json` `championPrices` 各補一筆 300
+（不在目錄裡的英雄 `lockStateOf` 會判成 free 仍可選，但 `ToggleFavourite`／`UnlockChampion`
+兩支 API 都 404 → **永遠設不了「喜愛」**；`godie-zombiex` 今天就卡在這個狀態）。
+
+**#214 的 SOP 因此有 16 列而不是 11 列**，而且附了一支可執行的稽核器
+`tools/hero-onboarding/audit_hero.py`（有 FAIL 就 exit 1）。理由很直白：純文字清單會被用
+**跟這次一模一樣的方式**讀過去、勾過去；第 12–16 列正是眼睛會滑過去的那幾列。
+清單與逐列稽核結果見 `docs/新英雄上架SOP.md`。
+
+**SOP 抓到的第一個真 bug（不是啟用問題，是內容 bug）**：`#40` 把 `87joke`
+（飛影「不要小看邪眼的力量！」）暫存在 `godie-efur` 的 `select` 池。efur 沒開放時沒人聽得到；
+`#212` 一開放，**點揍敵客桀諾就會講飛影的台詞**。已改掛回飛影本人 `godie-u010`
+（`announcerVo.test.ts` 的 `CHARACTER_REROUTES` 與 `audioAssets.test.ts` 的註解同步更新）。
+順帶記一條稽核器**做不到**的事：它能查「這段語音有沒有跟名單內另一隻英雄共用」，
+但查不了「這句台詞到底是不是這個角色講的」—— 那一列永遠是人工步驟。
+
+**順手掃出的既有債**（`--all-starter` 掃 50 隻，非本次造成）：`godie-ogld` 缺 `passive`
+技能文件（連帶沒進 `_index`）、`godie-e00r`／`godie-u00h` 的技能編號尾碼集合不齊、
+`godie-u00n.r` 是掃描報告裡唯一的 ❌。
+
+**`godie-u00n.r` 的 ❌ 找到根因了，而且是量測器的問題**：該技能 `castTimeSec = 0.9`，
+`abilitySystem.ts` 在 `round(0.9 × 30) = 第 27 tick` 結算，而掃描器施放後只步進
+`WINDOW = 26` tick —— **早一格收手**，所以記成「接受了但量不到效果」。
+（原註解寫「最長前搖 0.6s = 18 tick」是錯的，全樹最長其實是 0.9s；已更正並在報告裡加警語。）
+調 `WINDOW` 會改變**量測定義**，歸 #128／#198 一起處理，本次刻意不動。
+
+**M幣發放稽核缺口（做 #225 時發現）**：後台有兩個 M幣入口，而
+**「M幣 發放」那顆按鈕走的那條完全沒有稽核紀錄**：
+`MCoinGrantPage → api.grantMCoin → POST /wallet/admin/grant-mcoin → wallet.Service.GrantMCoin`。
+它掛在**普通已驗證 subrouter** 上（不是 `/admin`），所以 `AdminOnly` 從來沒跑過
+（沒有 banned 檢查、沒有 #126 核准檢查，只有一個 in-service 的 `HasRole("admin")`）；
+`amount` 除了「accountId 非空」以外**完全沒驗證**（0、±2^31 都過）；而且**寫不出稽核行**——
+`admin` import `wallet`，反向邊是 import cycle，這正是 `meta.go` 當初要複製一份 `roleAdmin`
+字面值的原因。另一個入口（玩家列表 → `/admin/accounts/{id}/mcoin` → `admin.AdjustMCoin`）
+一直都有寫 `mcoin_adjust`。
+
+處理方式**不是**再開一條路由，而是**把 console 指回那條本來就該用的**，並把舊門**拆掉**：
+`api.grantMCoin` 改打 `POST /admin/accounts/{id}/mcoin`（AdminOnly ＋ 伺服器端
+`validMCoinDelta`／`MaxMCoinGrant` 上下界 ＋ `mcoin_adjust` 稽核），表單多一個「原因」欄位，
+console 端鏡像同一個上限常數；`/wallet/admin/grant-mcoin` 路由、handler、
+`wallet.Service.GrantMCoin` 與孤兒 `roleAdmin` 一併刪除。
+守衛：`wallet.TestNoAdminMCoinRouteHere`（連 admin 打舊路徑也必須 404）、
+`admin.TestMCoinAdjustBounds`（0／超界被拒，且**被拒的調整不留稽核行**，上限值本身可用）、
+`approval_console_test.go` 兩道都探（舊門 404、新門對非 admin 403）。
+負數保留（扣除是這張表單既有的能力），但界是**對稱**的，且明白寫出「餘額下限是 0，
+所以大額負數是歸零不是扣那麼多」。

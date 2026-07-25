@@ -1,6 +1,6 @@
 {
   "collection": "config",
-  "hash": "2c14faf5c6e8",
+  "hash": "3e3cccb72fa5",
   "entries": [
     {
       "id": "ambient-vfx",
@@ -23,7 +23,7 @@
     {
       "id": "champion-voices",
       "path": "config/champion-voices.json",
-      "hash": "8ce2820c89cd",
+      "hash": "c22be2458739",
       "size": 12178
     },
     {
@@ -53,8 +53,8 @@
     {
       "id": "store",
       "path": "config/store.json",
-      "hash": "0c22023a64e3",
-      "size": 1264
+      "hash": "9e65fe0f5cfb",
+      "size": 1310
     },
     {
       "id": "unit-tints",

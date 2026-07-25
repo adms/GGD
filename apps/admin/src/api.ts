@@ -141,23 +141,44 @@ export function adjustMCoin(id: string, delta: number, reason: string): Promise<
 }
 
 /**
- * Grant (or deduct) admin-issued M幣 / M COIN via the wallet meta endpoint
- * (task #118). Role-gated server-side; a non-admin caller is a 403. Returns the
- * target account's resulting balance.
+ * Grant (or deduct) admin-issued M幣 / M COIN (task #118).
+ *
+ * WHICH ROUTE, AND WHY IT CHANGED (task #214). This used to POST
+ * `/wallet/admin/grant-mcoin`. That endpoint sat OUTSIDE the `/admin` subrouter,
+ * so it never ran AdminOnly — only an in-service `HasRole("admin")` check, which
+ * a banned or #126-unapproved operator still passes. It validated nothing but a
+ * non-empty account id, and it wrote NO audit line, because the wallet package
+ * cannot reach the platform's audit writer without an import cycle. So the one
+ * console button that hands out currency was the one that left no trail.
+ *
+ * It now uses the SAME audited endpoint the players table has always used:
+ * `POST /admin/accounts/{id}/mcoin` → admin.Service.AdjustMCoin, which is
+ * AdminOnly, bounds-checked server-side, and audited as `mcoin_adjust` (visible
+ * in 稽核紀錄). The old route is deleted, so there is no unaudited door left.
+ *
+ * The exported signature is unchanged apart from the optional `reason`, and the
+ * `accountId` in the result is echoed from the argument: the admin route answers
+ * with `{mcoin}` alone, and the page renders the id.
  */
-export function grantMCoin(accountId: string, amount: number): Promise<{ accountId: string; mcoin: number }> {
-  return api.request<{ accountId: string; mcoin: number }>("/wallet/admin/grant-mcoin", {
-    body: { accountId, amount },
-  });
+export function grantMCoin(
+  accountId: string,
+  amount: number,
+  reason = "",
+): Promise<{ accountId: string; mcoin: number }> {
+  return api
+    .request<{ mcoin: number }>(`/admin/accounts/${encodeURIComponent(accountId)}/mcoin`, {
+      body: { delta: amount, reason },
+    })
+    .then((r) => ({ accountId, mcoin: r.mcoin }));
 }
 
 // ---- 藍水晶 crystal grants (task #225) --------------------------------------
-// BOTH live under /admin, not beside grantMCoin's /wallet/admin/grant-mcoin.
-// That is deliberate: /admin/* carries the AdminOnly middleware (a usable admin:
-// roled, unbanned, approved under the #126 gate) AND the platform's audit
-// writer, and the brief requires every crystal grant to be logged. The wallet
-// package cannot write an audit line without an import cycle, so a crystal route
-// next to grant-mcoin would have been silently unaudited.
+// Like grantMCoin above, these live under /admin: that subrouter carries the
+// AdminOnly middleware (a usable admin: roled, unbanned, approved under the #126
+// gate) AND the platform's audit writer, and the brief requires every grant to be
+// logged. The wallet package cannot write an audit line without an import cycle,
+// so a currency route over there is unauditable by construction — which is what
+// #214 found still true of the old /wallet/admin/grant-mcoin, and deleted.
 //
 // Amounts are validated SERVER-side (positive whole numbers, capped);
 // ../crystalGrant re-checks the same rules so the console fails fast.

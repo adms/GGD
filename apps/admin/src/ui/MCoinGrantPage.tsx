@@ -4,11 +4,18 @@
  * Three operator actions on one page, because the owner asked for the crystal
  * grant to live 「在後台 發放M幣的地方」:
  *
- *   1. M幣 to one account — `POST /wallet/admin/grant-mcoin` (#118). May be
- *      negative to deduct; the server floors the balance at 0.
+ *   1. M幣 to one account — `POST /admin/accounts/{id}/mcoin` (#118, re-pointed
+ *      by #214). May be negative to deduct; the server floors the balance at 0,
+ *      bounds the magnitude, and AUDITS every adjustment as `mcoin_adjust`.
+ *      Until #214 this button called `/wallet/admin/grant-mcoin`, which was
+ *      role-checked but wrote no audit line and validated no amount — the one
+ *      currency action on this page that left no trail. That route is deleted.
  *   2. 藍水晶 to one account — `POST /admin/accounts/{id}/crystal` (#225).
  *      Positive only, capped, admin-gated AND audited.
  *   3. 一鍵發放所有帳號藍水晶 — `POST /admin/crystals/grant-all` (#225).
+ *
+ * All three now share one property worth stating plainly: every currency move an
+ * operator makes from this page appears in 稽核紀錄.
  *
  * THE BULK ACTION IS ECONOMY-WIDE, so it is deliberately hard to fire by
  * accident. Three independent guards, none of which subsumes the others:
@@ -42,6 +49,7 @@ import { ACCENT, GOLD, OK, TEXT_DIM, TEXT_MAIN, WARN } from "./theme";
 export function MCoinGrantPage(): React.JSX.Element {
   const [accountId, setAccountId] = useState("");
   const [amount, setAmount] = useState("");
+  const [reason, setReason] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<GrantResult | null>(null);
@@ -64,7 +72,7 @@ export function MCoinGrantPage(): React.JSX.Element {
     if (busy) return;
     setBusy(true);
     setError(null);
-    const outcome = await submitGrant({ accountId, amount }, grantMCoin);
+    const outcome = await submitGrant({ accountId, amount }, grantMCoin, reason);
     if (outcome.ok) {
       setResult(outcome.result);
       setAmount(""); // clear the delta; keep the account id for repeated grants
@@ -136,9 +144,11 @@ export function MCoinGrantPage(): React.JSX.Element {
     <div style={{ maxWidth: 560, display: "flex", flexDirection: "column", gap: 16 }}>
       <Panel title="M幣 發放 · Grant M COIN">
         <div style={{ fontSize: 12, color: TEXT_DIM, lineHeight: 1.7, marginBottom: 14 }}>
-          M幣（造型幣）改由後台發放，不再開放購買。輸入帳號 ID 與數量後發放；數量可為負數（扣除），伺服器會將餘額下限保護在 0。
+          M幣（造型幣）改由後台發放，不再開放購買。輸入帳號 ID 與數量後發放；數量可為負數（扣除），伺服器會將餘額下限保護在
+          0，因此大額負數是「歸零」而不是「扣那麼多」。每一筆發放都會寫入稽核紀錄。
           <br />
-          M COIN is admin-granted (never purchased). Amount may be negative to deduct; the balance floors at 0.
+          M COIN is admin-granted (never purchased). Amount may be negative to deduct; the balance floors at 0. Every
+          adjustment is audited.
         </div>
 
         <ErrorBanner text={error} onDismiss={() => setError(null)} />
@@ -151,6 +161,14 @@ export function MCoinGrantPage(): React.JSX.Element {
             setResult(null);
           }}
           placeholder="account id (e.g. 01J…)"
+          onEnter={() => void apply()}
+        />
+
+        <div style={{ fontSize: 11, color: TEXT_DIM, margin: "12px 0 6px" }}>原因 · Reason（選填，寫入稽核）</div>
+        <TextInput
+          value={reason}
+          onChange={setReason}
+          placeholder="e.g. 活動獎勵 / 補償"
           onEnter={() => void apply()}
         />
 
