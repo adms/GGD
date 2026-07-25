@@ -46,7 +46,7 @@
 | **#222 手把框看不見** | 選取框**一直都在**(`PadFocusNav.tsx` 注入 `outline:3px solid #7aa2ff` + 外發光),但 `.ggd-btn` 的 **`clip-path` 缺角造型把 outline 與外發光整個裁掉**。修法必須畫在**邊框內側**(inset 陰影 + 遮罩漸層偽元素),不能用 outline。 |
 | **#228 預告特效** | 誠實覆蓋率 **43/255 = 16.9%**;**93 格單體技畫出「會騙人的範圍圈」**;敵我預告**同一個琥珀色**、還跟自己的範圍預覽撞色。`Telegraph.ts` 目前**只會畫圓**,且**不聽 castInterrupt**(被打斷還在填、還會放落地特效)。 |
 | **#225 水晶發放** | 現行「M幣 發放」頁的端點**完全沒寫稽核**(另一條 PlayersPage 路徑才有);水晶**只有絕對值設定、沒有累加函式**(naive 實作 = 競態);`BackfillWelcomeCrystals` 在正式機會**發給 0 個帳號**(冪等規則是「已有 walletmeta 就跳過」)。 |
-| **#229 體素工坊** | 後台**已能寫 models 集合**(server 端 COLLECTIONS 有 model@1),缺的只是 client 端 `EditCollection` 沒列 models;另 `model@1` **硬性要求 glbPath**,程序化模型要處理。 |
+| **#229 體素工坊** | 後台**已能寫 models 集合**(server 端 COLLECTIONS 有 model@1),缺的只是 client 端 `EditCollection` 沒列 models;另 `model@1` **硬性要求 glbPath**,程序化模型要處理。 → **已解**:`EditCollection` 加 `models`;glbPath **不放寬**,改成由 id 推導 `assets/models/voxel/<id>.glb` 並由離線 `pnpm voxel:gen` 烘焙——後台只寫參數 JSON,**零二進位寫入**,content-api 圖片白名單不必動。 |
 | **鑄技工坊 P1** | 關鍵換算定出來了:**1 GGD 單位 ≈ 54.5 WC3 單位**(三次交叉驗證);JASS 的實測參數是**文字**(如 "AoE 480; 傷害 200+150×lvl"),模板產生器必須**解析字串**而非讀數值欄位。 |
 
 ## 🔄 進行中的工作流
@@ -58,7 +58,7 @@
 | #224 | 天生技 48 支空效果 | 進行 |
 | #225 | 後台發水晶(單筆+一鍵全帳號) | 進行 |
 | #226 | 方塊人替換 4 個高面數角色 | 進行 |
-| #229 | 體素角色生成器網頁 | 進行 |
+| #229 | 體素角色生成器網頁「鑄形工坊」 | **核心+頁面已完成**(feat/voxel-character-studio)；待 #226 merge 對帳 |
 | #230 | VFX 真實引用普查 + 回綁 | 進行 |
 | #227/#228 | 商店名稱幣別 + 預告特效 | **重開**(前次撞額度上限) |
 

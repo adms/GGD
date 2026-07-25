@@ -84,9 +84,16 @@ describe("collections and urls", () => {
     expect(isEditCollection("arenas")).toBe(true);
     expect(EDIT_COLLECTIONS).toContain("vfx");
     expect(EDIT_COLLECTIONS).toContain("arenas");
+    // 鑄形工坊 (task #229) saves a model@1 doc through the SAME gate, so
+    // `models` must be recognised too — and, like the two above, it mirrors
+    // nowhere, so the write plan stays a single step and needs no change.
+    expect(isEditCollection("models")).toBe(true);
+    expect(EDIT_COLLECTIONS).toContain("models");
     // …and still no mirror for them (single-write plan, like abilities-standalone)
     expect(writePlan("vfx", "fx.x", { id: "fx.x" })).toHaveLength(1);
     expect(writePlan("arenas", "arena.x", { id: "arena.x" })).toHaveLength(1);
+    expect(writePlan("models", "voxel.x", { id: "voxel.x" })).toHaveLength(1);
+    expect(writePlan("models", "voxel.x", { id: "voxel.x" })[0]?.reason).toBe("edit");
     expect(docUrl("items", "a-b")).toBe("/content-api/items/a-b");
     expect(docUrl("abilities", ABILITY_ID, "validate")).toBe(`/content-api/abilities/${ABILITY_ID}/validate`);
     expect(manifestUrl()).toBe("/content-api/manifest");

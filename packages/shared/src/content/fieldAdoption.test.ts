@@ -235,6 +235,14 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     why: "apps/client/src/render/vfx/w3xEmitter.ts:520 SYNTHESIZES the VfxDoc and sets spriteSheet from the w3x emitter's rows/cols at load; particleFactory.ts:244 consumes it. Live in matches, absent from content/.",
   },
 
+  // --- landing: the schema arrived on this branch, the content arrives with
+  // the bake it describes.
+  "field:models.voxel": {
+    status: "landing",
+    since: "2026-07-26",
+    why: "task #229's 鑄形工坊 studio authors this block and task #226's `pnpm voxel:gen` consumes it; the field is the seam BETWEEN the two, so it lands with the schema and is populated when the first generated model doc is written (the studio's own save, or #226's five archetype docs). Zero adoption today is correct — no generated model exists yet — and NOT permanent: `packages/shared/src/voxel/doc.test.ts` proves a populated doc validates, so the only thing missing is a saved character. Delete this entry the moment one lands.",
+  },
+
   // --- an enum member with a documented decision to stay unused.
   "enum:arenas.groundStyle=wood": {
     status: "default-live",

@@ -260,6 +260,67 @@ const ARENA_GROUPS: readonly FieldGroup[] = [
   },
 ];
 
+/**
+ * 模型 — models/<id>.json.
+ *
+ * DELIBERATELY LEAN, and the omission is the design. A generated figure's
+ * `voxel` block, its `clipMap` and its `scale` are OUTPUTS of the 鑄形工坊
+ * studio, not fields to hand-tune: `scale` is #150's measured normalisation,
+ * the clip map is total by construction, and hand-editing `voxel` would author
+ * geometry the offline bake never sees. `glbPath` is read-only for the same
+ * reason it is derived in the studio — typing it is how a model lands under
+ * `assets/models/imported/` and silently gains 90° of yaw (#68/#1).
+ *
+ * What IS editable here is the one number that is a genuine gameplay
+ * judgement: `collisionRadius`. Everything else this form does not cover is
+ * NAMED by `uncoveredKeys` and reachable through 原始 JSON, as everywhere else.
+ */
+const MODEL_GROUPS: readonly FieldGroup[] = [
+  { title: "識別", fields: IDENTITY },
+  {
+    title: "基本資料",
+    fields: [
+      {
+        path: "glbPath",
+        label: "模型檔",
+        kind: "text",
+        readOnly: true,
+        hint: "content 相對路徑；體素模型由 pnpm voxel:gen 產生，不可手改",
+      },
+      {
+        path: "scale",
+        label: "縮放",
+        kind: "number",
+        readOnly: true,
+        hint: "由 #150 統一身高換算（1.8u ÷ 實測高度），非人工填寫",
+      },
+      {
+        path: "collisionRadius",
+        label: "碰撞半徑",
+        kind: "number",
+        hint: "sim 用的平面半徑，預設 0.6",
+      },
+      {
+        path: "teamTintMaterials",
+        label: "隊色材質",
+        kind: "stringList",
+        hint: "會被染成隊伍顏色的材質名（#49）",
+      },
+    ],
+  },
+  {
+    title: "動畫對應 (clipMap)",
+    fields: [
+      { path: "clipMap.idle", label: "待機", kind: "text" },
+      { path: "clipMap.run", label: "跑動", kind: "text" },
+      { path: "clipMap.attack", label: "攻擊", kind: "text" },
+      { path: "clipMap.cast", label: "施法", kind: "text" },
+      { path: "clipMap.hurt", label: "受擊", kind: "text" },
+      { path: "clipMap.death", label: "死亡", kind: "text" },
+    ],
+  },
+];
+
 const GROUPS: Record<EditCollection, readonly FieldGroup[]> = {
   champions: CHAMPION_GROUPS,
   abilities: ABILITY_GROUPS,
@@ -268,6 +329,7 @@ const GROUPS: Record<EditCollection, readonly FieldGroup[]> = {
   "loot-tables": LOOT_GROUPS,
   vfx: VFX_GROUPS,
   arenas: ARENA_GROUPS,
+  models: MODEL_GROUPS,
 };
 
 export function fieldGroups(collection: EditCollection): readonly FieldGroup[] {
@@ -313,6 +375,8 @@ export const COLLECTION_LABEL: Record<EditCollection, string> = {
   "loot-tables": "三選一抽獎池",
   vfx: "特效",
   arenas: "場景物件",
+  // 模型 — the collection 鑄形工坊 (task #229) saves into.
+  models: "模型",
 };
 
 /** The `_index.json` / `/content` mount directory for a collection. */
@@ -324,4 +388,5 @@ export const COLLECTION_DIR: Record<EditCollection, string> = {
   "loot-tables": "loot-tables",
   vfx: "vfx",
   arenas: "arenas",
+  models: "models",
 };

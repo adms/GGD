@@ -10,6 +10,8 @@
     "./sim": "./src/sim/index.ts",
     "./content": "./src/content/index.ts",
     "./content/node": "./src/content/node/index.ts",
+    "./voxel": "./src/voxel/index.ts",
+    "./voxel/*": "./src/voxel/*.ts",
     "./*": "./src/*.ts",
     "./testkit/*": "./testkit/*.ts"
   },

@@ -20,6 +20,9 @@ importers:
 
   apps/admin:
     dependencies:
+      '@babylonjs/core':
+        specifier: ^7.44.0
+        version: 7.54.3
       '@ggd/shared':
         specifier: workspace:*
         version: link:../../packages/shared

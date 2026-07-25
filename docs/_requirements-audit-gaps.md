@@ -2412,3 +2412,26 @@ main 的 `icons.test.ts` 明文採「AUTHORITY MODEL」：424 個 embedded 沒�
 - **順修**：草泥馬 W/E 編號互換（92-03/92-02）、鬼眼狂刀無名→無明神風流（kana ムミョウ 本就正確、只改字不需重錄）
 - 覆核把關戰績：駁回「牙突→縮地」誤改（牙突是桀諾正典ドラゴンランス，縮地反是瀨田宗次郎的招）；基廉列克廬山昇龍破查 reconciliation 確認是原作者梗名（豁免）
 - 6 句語音重生（osam×3/hvwd/ogld/huth），雙鏡像+讀音登錄同步，content:build 綠，試聽頁重建
+
+#### 🧱 2026-07-26 #229：體素角色生成器網頁「鑄形工坊」（Project Voxel Forge）
+Owner 指令：另開分支做 體素角色生成器網頁，整合進後台；**必須與 #226 共用同一個產生器**（不得 fork 第二個長得像的）。
+
+**做法（分支 `feat/voxel-character-studio`）**
+- 產生器核心搬進 `packages/shared/src/voxel/`（boxman 部件/關節表、clips 七段動畫、archetypes 五個原型），數值**逐字取自 #226 的 `tools/voxel-gen/`**，不是重新推導。純模組：無 Babylon / 無 node Buffer / 無 `Math.random`／`Date`，才可能同時被 CLI、瀏覽器 bundle 與 vitest import。
+- 新增 #226 尚未寫的參數層 `look.ts`：`VoxelLook`（palette / 部件遮罩 / **每關節縮放＝「體型」** / 關節位移 / poseBias / clipRate / teamTint / collisionRadius）+ `lookForChampion(id, archetype)`（FNV-1a 決定性種子，golden vector 釘住 5 個出貨 model doc）。體型走**關節縮放**而非改方塊尺寸，因為 #226 的骨骼是剛性綁定、runtime 就是寫關節 scale——改方塊尺寸等於做出另一個 mesh，那才是 fork。
+- `figure.ts` 的 `buildFigure()` 是**唯一**幾何決定點；#150 統一身高在這裡強制（實測身高 → `docScale = 1.8 / height`，腳踩 y=0），所以拉滑桿**不可能**弄壞統一身高（proportion sweep 測試逐一驗證）。
+- `doc.ts` 的 `toModelDoc()` 是**唯一**文件產生點：studio 存的與 bake 讀的是同一函式，兩邊不可能對不上。glbPath 由 id 推導成 `assets/models/voxel/<id>.glb`，**刻意避開** `assets/models/imported/` 與 `assets/blizzard-local/models/`，所以 `glbYawOffset` 回 0（#68/#1）。
+- schema 僅**加法**：`model@1` 多一個 optional `voxel` 區塊，`.strict()` 與必填 `glbPath` 都不動，121 份既有 models doc 原封不動仍合法。
+
+**兩段式存檔（誠實版）**：後台存的是**參數**（走既有 contentApi gate，undo-first、dry-run 驗證、contentVersion 回報）；`.glb` 由離線 `pnpm voxel:gen` 決定性烘焙。因此**這頁一個 byte 的二進位都不寫**——content-api 的 `IMAGE_EXT`（.png/.webp/.jpg/.jpeg）不必放寬、沒有上傳路由、#226 的 sha256 釘位也保得住。
+
+**安全姿態淨變化 = 0 條新寫入路徑**：`contentApi.ts` 匯出清單未動（contentGate 測試逐一比對）、`loopbackOnly` 未動、nginx 未動、prod build 仍零 content-save。**新增**一條 tripwire：prod bundle 不得出現任何 Babylon 標記（`ArcRotateCamera`/`HemisphericLight`/`BABYLON`）——舊 gate 只 grep `/content-api` 與中文標籤，抓不到新依賴外洩。
+
+**待與 #226 對帳（其分支 `feat/blocky-voxel-characters` 仍在跑）**
+1. `packages/shared/src/voxel/` 是核心的家；merge 時 `tools/voxel-gen/{boxman,clips,archetypes}.ts` 應變成 `export * from "@ggd/shared/voxel/…"`（搬家＋re-export，不是重寫）。本次已同步過一次 #226 的 clips 修訂（idle 去掉 hips bob、attack hips 修正）——merge 時需再對一次。
+2. `lookForChampion` 必須兩邊同一份，否則後台預覽會對玩家說謊；golden vector 已備好。
+3. `gen.ts` 要**列舉所有帶 `voxel` 區塊的 model doc**，不能寫死五個，否則工坊產出的角色永遠不會被烘焙。
+4. 44 隻英雄 modelKey 改指、`modelTexture/modelBbox/modelIdleGrounding` fixture 重生 → 屬 #226 的活；工坊的「改指英雄」動作刻意留給後續（未烘焙就改指會讓那三支測試變紅）。
+5. `ChampionView.ts` 的程序化分支改成 `buildFigure`/`sampleClip` 的薄轉接層，是 payoff 但動到 client render path，屬 #226。在那之前工坊預覽的是**bake 會產出什麼**，正確但還不是遊戲內同一條 code path。
+
+**其他誠實聲明**：`attachPoints` / `teamTintMaterials` 目前**有人寫、沒人讀**（`overheadAnchors.ts` 用寫死高度）；工坊是它們第一個真正的產生者，讓它們成為消費者是新的 client render 工作，不在本次範圍。IP：全部幾何是自寫數值產生的軸對齊方塊，`@babylonjs/loaders` **不是**本 app 的依賴、頁面上沒有任何 file input／FileReader——結構上就無法吃進第三方 skin。

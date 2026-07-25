@@ -6,6 +6,7 @@
  */
 import { z } from "zod";
 import { zId } from "./common";
+import { zVoxelLook } from "../../voxel/look";
 
 export const zClipMap = z
   .object({
@@ -41,6 +42,19 @@ export const zModelDoc = z
       .optional(),
     /** material names that get re-tinted to the owning team's color */
     teamTintMaterials: z.array(z.string().min(1)).optional(),
+    /**
+     * The generator parameters this model was authored from (task #229's
+     * 鑄形工坊 / #226's blocky-humanoid bake). PRESENT ⇒ the .glb at `glbPath`
+     * is produced by `pnpm voxel:gen` from these numbers and must not be
+     * hand-edited; ABSENT ⇒ the model is an imported/hand-authored mesh and
+     * the bake leaves it alone.
+     *
+     * ADDITIVE AND OPTIONAL ON PURPOSE. `glbPath` stays required and the
+     * object stays `.strict()`, so all 121 existing `content/models/*.json`
+     * documents remain valid unchanged, and a generated model is still an
+     * ordinary model@1 that champions reference by `modelKey` exactly as today.
+     */
+    voxel: zVoxelLook.optional(),
   })
   .strict();
 

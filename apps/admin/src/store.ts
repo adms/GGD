@@ -47,6 +47,13 @@ export type Page =
   | "items"
   | "vfx"
   | "arenas"
+  /**
+   * 鑄形工坊 (Project Voxel Forge, task #229) — the 體素角色生成器 studio. Same
+   * dev chunk, same gate, same absence from SESSION_REQUIRED_PAGES as every
+   * other 內容·素材管理 route: it authors a `model@1` document and writes it
+   * through the one contentApi write path, adding none of its own.
+   */
+  | "voxelStudio"
   | "combatEnv"
   /**
    * 系統運維 (server ops) — the operational numbers: 同時對戰上限 + 快照頻率
