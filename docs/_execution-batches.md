@@ -6,6 +6,29 @@
 
 ---
 
+## 🔴 醒來先看這一條 · #239 版權閘在拓樸上就全開了
+
+**我親自用匿名 curl 驗證過，不是推論。** 對正式站台，沒有 cookie、沒有 token、沒有邀請碼、沒有經過審核：
+
+```
+https://ggd.adms.ai/content/assets/models/imported/1hswd-01.glb          → 200, 42,756 bytes
+https://ggd.adms.ai/content/assets/models/imported/aquaspikeversion2.glb → 200, 32,064 bytes
+https://ggd.adms.ai/content/assets/models/imported/awing.glb             → 200, 20,540 bytes
+```
+
+nginx **有**擋這條路徑的規則（`nginx/nginx.conf:365-366`），它沒生效。**根因是拓樸**：正式環境是 Caddy → `reverse_proxy edge:8080` 走 compose 內網，所以 nginx 看到的 `$remote_addr` 是 Caddy 容器的 IP（Docker 預設池 172.17–172.31），落在 `172.16.0.0/12 lan`。於是每一個從網際網路進來的請求都被分類成 `lan`，`$ggd_deny_copyright` 恆為 0。**這跟 nginx/tier/family 有沒有掛載無關 —— 把 family tier 拿掉也關不回去。**
+
+**範圍比第一時間的稽核說法窄**：`blizzard-local/` 在正式 edge 容器裡只有一個 README.md，87MB 的 Blizzard overlay 並沒有掛進去、該路徑回 404。所以外流的**不是** Blizzard MPQ 素材，是從 w3x 抽出來的 **129 個匯入角色模型**（第三方動漫/遊戲角色）。緩解：無目錄列表、有 noindex、URL 不好猜、審查制與邀請碼仍然守住「能不能玩」。
+
+**我今晚刻意沒修。** 這是 deploy path 的改動，real_ip / X-Forwarded-For 改錯會讓正式站所有資產請求 403、家人直接玩不了，而你在睡覺無法確認。三個方向擇一，需要你拍板：
+ (a) `real_ip_header X-Forwarded-For` + `set_real_ip_from <caddy 網段>`，讓 geo 看到真來源 IP —— 最正確，但要確認 Caddy 真的送 XFF，且只信任 compose 網段以防偽造。
+ (b) 把 imported 模型從 production image 裡拿掉 —— `nginx.conf:174-176` 的註解自己就寫了這才是 EXACT 的做法。要先確認缺模型時會優雅降級到體素替身（#226/#231 剛好在做）。
+ (c) 對這條路徑加 session 檢查（靜態資產路由目前完全不看登入狀態）。
+
+**同一份稽核附帶一個隱形陷阱**：`geo.conf` 的重複網段 warning 目前結果無害（last-wins，include 在 `default public;` 之後），但分類是**順序相依**的。任何人把 include 往上搬一行，family tier 會靜默失效、40/113 英雄退回替身模型，而開機斷言只檢查位元組有沒有掛載、不檢查 geo 結果。最小修法已備好：把 `0.0.0.0/0` 拆成 `0.0.0.0/1` + `128.0.0.0/1`（同一個位址空間，但比 geo 的 `default` 更長前綴 → 無警告、且順序無關）。
+
+---
+
 ## 🚀 2026-07-26 · v0.5.15 已部署 ggd.adms.ai（玩家回饋修復包）
 
 **部署協定全程執行：** ① `data/` 備份 `backups/data-pre-v0515-20260725-200101.tar.gz`（58M / 1022 entries，內含 108 個帳號檔，壓縮檔完整性已驗）② `docker/.env` 檢查：`GGD_BACKFILL_WELCOME_CRYSTALS=0`、Slack webhook SET、`REDIS_PASSWORD` SET ③ host `36ed7d4e → 2ac42c20` fast-forward（乾淨）④ `build && up -d`（edge/game/platform 三個都重建）⑤ 驗證。
