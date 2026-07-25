@@ -2,24 +2,25 @@
  * standIn — is a champion wearing a generic STAND-IN model rather than its own
  * imported one? (task #76 profile block; the underlying data debt is task #77.)
  *
- * 44 of the 114 champions point their `modelKey` at one of four generic meshes
- * instead of an `imported.*` mesh extracted from the w3x (measured 2026-07-26;
- * the counts were stale at 42/113 and 10/8 before that). Since #226 those four
- * are the GENERATED blocky humanoids (`tools/voxel-gen`), not the retired
- * KayKit characters:
+ * 43 of the 114 champions point their `modelKey` at one of four generic meshes
+ * instead of an `imported.*` mesh extracted from the w3x (re-measured on the
+ * v0.5.16 tree; earlier notes said 42/113, then 44 — the 44 counted 喪標麥可,
+ * which #217 has since moved onto its own `champ.godie-zombiex` zombie mesh).
+ * Since #226 those four are the GENERATED blocky humanoids (`tools/voxel-gen`),
+ * not the retired KayKit characters:
  *
  *     champ.sela            → blocky-mage.glb      (18 champions)
- *     champ.thorne          → blocky-knight.glb    (11, plus the #215 mob)
+ *     champ.thorne          → blocky-knight.glb    (10)
  *     champ.skin.barbarian  → blocky-barbarian.glb ( 9)
  *     champ.skin.rogue      → blocky-rogue.glb     ( 6)
  *
  * A generated box-man is still a stand-in — arguably more honestly so, since it
  * makes no claim to be the champion's own art — so the label below stays. The
- * per-champion palette/proportions #226 applies at runtime make the 44 visually
+ * per-champion palette/proportions #226 applies at runtime make the 43 visually
  * distinct from one another, but they are still not the character's real model.
  *
  * TASK #231 CHANGED WHAT THIS MEANS, AND ONLY HALF OF IT.
- * All 44 now have their OWN deterministically generated voxel skin, and
+ * All 43 now have their OWN deterministically generated voxel skin, and
  * `ChampionView` declines the shared glb for them — so IN THE ARENA nobody
  * wears somebody else's face any more. The champ-select / shop / settlement
  * stages, however, still mount the glb through `StorePreview`, which has no
@@ -28,7 +29,7 @@
  * actually true of the stage the player is looking at, rather than being
  * deleted on the strength of a fix that has not reached it yet.
  *
- * The `voxel-standin` CONTENT TAG (41 of these 44 docs carry it; sela's and
+ * The `voxel-standin` CONTENT TAG (40 of these 43 docs carry it; sela's and
  * thorne's own three in-house docs do not) is likewise KEPT and re-read: it
  * means "this champion has no imported art of its own", which is still exactly
  * true — its generated look is procedural, not imported. Retiring the tag would

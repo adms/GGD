@@ -117,10 +117,18 @@ describe("voxel skin — coverage over the real roster", () => {
     }
   });
 
+  /**
+   * 43, not the 44 this branch was written against: task #217 gave 喪標麥可
+   * (`godie-zombiex`) its OWN zombie mesh (`champ.godie-zombiex`) and dropped its
+   * `voxel-standin` tag, so it left the shared-mesh population before #231 merged.
+   * It is still both the #215 mob AND a pickable hero — nothing about that
+   * identity changed; it simply is not on a shared stand-in mesh any more.
+   * Measured distribution: sela 18 / thorne 10 / barbarian 9 / rogue 6 = 43.
+   */
   it("every champion on a shared stand-in mesh is moved onto the voxel body", () => {
     cover("voxel-skin-standin");
     const standIns = DOCS.filter((d) => STAND_IN_MODEL_KEYS.includes(d.modelKey ?? ""));
-    expect(standIns.length).toBe(44);
+    expect(standIns.length).toBe(43);
     for (const d of standIns) expect(ROSTER.recipes.get(d.id)!.preferVoxelBody).toBe(true);
     // ...and a champion with its OWN imported mesh keeps it
     const own = DOCS.filter((d) => (d.modelKey ?? "").startsWith("imported."));
