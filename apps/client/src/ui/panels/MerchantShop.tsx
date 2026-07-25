@@ -57,7 +57,7 @@ import { skillRows, slotLabel } from "./skillDetails";
 import { innateCastNote, innateKindLabel, PASSIVE_ACCENT } from "../passiveSlot";
 import { displayFinalText, useDisplayEnv } from "../displayFinal";
 import { STAT_META, formatStatValue, formatStatDelta, isVisibleDelta } from "./statDisplay";
-import { buildItemRow, type RowItem } from "./itemStats";
+import { buildItemRow, itemDisplayName, type RowItem } from "./itemStats";
 import { Tooltip } from "../components/Tooltip";
 import { rescaleAbilityProse, WC3_PROSE_CAPTION } from "../components/abilityText";
 import {
@@ -250,8 +250,11 @@ export function MerchantShop(): React.JSX.Element | null {
   useEffect(() => {
     if (!shopEvent || shopEvent.seq === lastToastSeq.current) return;
     lastToastSeq.current = shopEvent.seq;
+    // #202: on a registry miss (client/server content divergence, an overlay
+    // rename, an unregistered id) fall back to a readable placeholder — never
+    // the raw id, which is exactly the "購買顯示 ID" the owner reported.
     const name = shopEvent.itemId
-      ? (Items.tryGet(shopEvent.itemId as ItemId)?.name ?? shopEvent.itemId)
+      ? itemDisplayName(Items.tryGet(shopEvent.itemId as ItemId)?.name, shopEvent.itemId)
       : "";
     const next =
       shopEvent.kind === "bought"
@@ -830,6 +833,9 @@ function InventoryGrid(props: { seat: SeatView; filled: number }): React.JSX.Ele
             );
           }
           const def = Items.tryGet(itemId as ItemId);
+          // #202: never surface the raw id — a missing/renamed def degrades to a
+          // readable placeholder for both the tooltip title and the glyph label.
+          const name = itemDisplayName(def?.name, itemId);
           // #140: an equipped slot shows the FULL item detail on hover — the same
           // ✦ effect line + WC3 claim lines + lore the shop shelf shows (buildItemRow),
           // not just the name+refund the native title used to carry.
@@ -844,7 +850,7 @@ function InventoryGrid(props: { seat: SeatView; filled: number }): React.JSX.Ele
           return (
             <Tooltip
               key={slot}
-              title={def?.name ?? itemId}
+              title={name}
               body={detailBody || undefined}
               meta={[{ label: "點擊賣出", value: `+${refundOf(itemId)} g` }]}
               style={{ display: "block" }}
@@ -879,7 +885,7 @@ function InventoryGrid(props: { seat: SeatView; filled: number }): React.JSX.Ele
                   overflow: "hidden",
                 }}
               >
-                <GlyphTile seed={itemId} icon={def?.icon ?? null} label={def?.name ?? itemId} size={38} />
+                <GlyphTile seed={itemId} icon={def?.icon ?? null} label={name} size={38} />
                 <span
                   style={{
                     position: "absolute",
@@ -974,6 +980,9 @@ function CatalogueRow(props: {
 }): React.JSX.Element {
   const { item, anchorStat, seat, full, canBuy, density, expanded, onToggle, preview, touch } = props;
 
+  // #202: catalogue defs are clean finals, but resolve the display name through
+  // the same guard as every other surface so a stray name==id can never print.
+  const displayName = itemDisplayName(item.name, item.id);
   const price = priceOf(item);
   const service = isShopService(item.id);
   const inert = !service && !itemHasEffect(item as { modifiers?: unknown[]; passive?: unknown[] });
@@ -1018,10 +1027,10 @@ function CatalogueRow(props: {
           cursor: "pointer",
         }}
       >
-        <GlyphTile seed={item.id} icon={item.icon} label={item.name} size={28} />
+        <GlyphTile seed={item.id} icon={item.icon} label={displayName} size={28} />
         <div style={{ minWidth: 0 }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: 6, minWidth: 0 }}>
-            <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.name}</span>
+            <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{displayName}</span>
             {row.rarity && (
               <span
                 style={{
@@ -1046,7 +1055,13 @@ function CatalogueRow(props: {
               ))}
             </div>
           )}
-          {density === "detail" && row.effect && !expanded && (
+          {/* #202/#106: a buyable item must show WHAT IT DOES before purchase.
+              The one-line ✦ effect is surfaced in BOTH densities (it used to be
+              gated behind `density === "detail"`, and readDensity() defaults to
+              "compact" on any viewport < 780px tall — i.e. most windowed and all
+              phone-landscape — so the description was invisible for most players).
+              It stays a single truncated line, so compact keeps its density. */}
+          {row.effect && !expanded && (
             <div
               style={{
                 fontSize: 10,
@@ -1071,7 +1086,7 @@ function CatalogueRow(props: {
             if (!blocked) hudActions.sendCommand({ kind: "buyItem", itemId: item.id });
           }}
           disabled={!!blocked}
-          title={blocked || `購買 ${item.name}`}
+          title={blocked || `購買 ${displayName}`}
           style={{
             padding: touch ? "10px 6px" : "5px 6px",
             minHeight: touch ? TOUCH_TARGET : undefined, // >=44px finger target

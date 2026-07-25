@@ -18,6 +18,7 @@ import {
   itemDetailBody,
   type EquipItemDef,
 } from "./equipmentModel";
+import { UNKNOWN_ITEM_LABEL } from "../panels/itemStats";
 
 /** A small fixture registry keyed by id. */
 const DEFS: Record<string, EquipItemDef> = {
@@ -91,16 +92,20 @@ describe("equipment bar model (client-32)", () => {
     expect(buildEquipmentCells(["sword"], lookup)[0]!.tooltipBody).toBe(body);
   });
 
-  it("degrades to an id-labelled cell when the item def is missing", () => {
+  it("degrades to a READABLE placeholder (never the raw id) when the def is missing (#202)", () => {
     cover("hud-equipment-bar");
     const cells = buildEquipmentCells(["ghost"], lookup);
+    // #202: a missing def must NOT leak the id as user-facing text — the owner's
+    // 「顯示 ID」 complaint. The itemId is retained for the glyph seed / sell wiring,
+    // but the displayed `name` is the neutral placeholder, never "ghost".
     expect(cells[0]).toMatchObject({
       itemId: "ghost",
-      name: "ghost", // falls back to the id, never throws
+      name: UNKNOWN_ITEM_LABEL,
       icon: null,
       unique: false,
       tooltipBody: null,
       meta: [],
     });
+    expect(cells[0]!.name).not.toBe("ghost");
   });
 });
