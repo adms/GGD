@@ -8,6 +8,7 @@ import { DuelState, ENTITY_FLAG, ENTITY_KIND, EntityState, MatchState, OfferStat
 import { Champions } from "@ggd/shared/sim/content/registry";
 import { FLOWER_MODEL_KEY } from "@ggd/shared/sim/flowers";
 import { REVIVE_CIRCLE_MODEL_KEY } from "@ggd/shared/sim/revive";
+import { GOLD_COIN_MODEL_KEY } from "@ggd/shared/sim/coins";
 import type { ChampionId } from "@ggd/shared/ids";
 import type { MatchController } from "../match/MatchController";
 import type { HumanDriver } from "../seat/HumanDriver";
@@ -124,6 +125,10 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
         // buy/sell undo depth (task #121) — the client shows 「↩ 復原上一步」
         // exactly when > 0. Clamped to the uint8 wire field.
         ss.undoDepth = Math.min(champ.undoStack.length, 255);
+        // 陣亡投幣 throws left this round (task #191). Authoritative and
+        // reconnect-safe: the dead player's 「丟金幣 n/10」 button must read the
+        // same number after a socket blink as before it.
+        ss.coinsLeft = Math.min(world.coinBudget.get(seat.entityId) ?? 0, 255);
       }
       if (ab) {
         ss.unspentPoints = ab.unspentPoints;
@@ -255,6 +260,24 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
           es.alive = hp.alive;
           es.shield = 0;
         }
+        es.flags = 0;
+        continue;
+      }
+      const coin = world.coin.get(id);
+      if (coin) {
+        // DROPPED GOLD COIN (task #191). Loot on the floor: no team, no health,
+        // not targetable. Like the revive circle it reuses the existing float
+        // slots instead of growing the wire schema — `shield` carries the coin's
+        // gold value so the client never hard-codes 100.
+        es.kind = ENTITY_KIND.GOLD_COIN;
+        es.seatId = coin.ownerSeatId; // the DEAD thrower, for presentation only
+        es.key = GOLD_COIN_MODEL_KEY;
+        es.hp = 0;
+        es.maxHp = 0;
+        es.mana = 0;
+        es.maxMana = 0;
+        es.shield = coin.value;
+        es.alive = true;
         es.flags = 0;
         continue;
       }

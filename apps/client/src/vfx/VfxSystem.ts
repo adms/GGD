@@ -51,6 +51,7 @@ import { TICK_MS } from "@ggd/shared/constants";
 import { frameBus, pushCombatText } from "../frameBus";
 import type { CombatTextRelation } from "../ui/combatText";
 import { particleBudgetScale } from "../render/RenderConfig";
+import { KIND_FLOWER, KIND_GUARDIAN } from "../render/overheadAnchors";
 import { qualityController } from "../render/QualityController";
 import {
   ShadowLayer,
@@ -193,6 +194,8 @@ export const FLOWER_SPAWN_VFX = "fx.root-snare";
 const REVIVE_TINT: Rgb = [1, 0.72, 0.28];
 /** Neutral guardian (task #89) — warm stone-bronze, matching its health bar. */
 const GUARDIAN_TINT: Rgb = [0.95, 0.72, 0.42];
+/** 陣亡投幣 (task #191) — bright gold, matching CoinView's own palette. */
+const COIN_TINT: Rgb = [1, 0.88, 0.55];
 export const REVIVE_SPAWN_VFX = "fx.root-snare";
 export const REVIVE_COMPLETE_VFX = "fx.barkskin";
 
@@ -241,8 +244,17 @@ function isFinitePos(p: { x: number; z: number } | null): p is { x: number; z: n
 // nothing here reads ChampionView or feeds the sim.
 // ---------------------------------------------------------------------------
 
-/** flowers ride on team -1 (see frameBus anchor) → a smaller footprint. */
-const FLOWER_TEAM = -1;
+/**
+ * A ROOTED PROP (healing flower / neutral guardian): a smaller blob shadow and
+ * never any walking dust. Decided on the anchor's KIND rather than on
+ * `teamId === -1`, which used to mean "flower" only because the flower was the
+ * one team-less anchor — the guardian then arrived with seatId -1 and silently
+ * inherited a flower-sized shadow under a 3u statue.
+ */
+function isRootedProp(kind: number | undefined, teamId: number): boolean {
+  if (kind !== undefined) return kind === KIND_FLOWER || kind === KIND_GUARDIAN;
+  return teamId < 0; // hand-built anchor (tests) — the legacy rule
+}
 /** Champion strides this far (world units) between walking-dust puffs. */
 const WALK_STRIDE = 0.55;
 /** Never more than one puff this often (ms) — caps a sprint's emit rate. */
@@ -1051,6 +1063,27 @@ export class VfxSystem {
         this.play(this.doc(FLOWER_BURST_VFX), x, z, nowMs, 0.9);
         break;
       }
+      // 陣亡投幣 (task #191). Both events carry x/z BECAUSE the entity is gone
+      // (or, on the drop, has only just appeared): the pickup destroys the coin
+      // in the same sim tick it pays out, so there is nothing left to anchor to.
+      case "coinDropped": {
+        const x = ev.data.x as number | undefined;
+        const z = ev.data.z as number | undefined;
+        if (typeof x !== "number" || typeof z !== "number" || !isFinitePos({ x, z })) break;
+        // a small gold flare where it lands — the coin's own view carries the
+        // steady 閃光, so this is only the arrival beat
+        this.layeredPop(x, z, nowMs, "light", COIN_TINT);
+        break;
+      }
+      case "coinPickedUp": {
+        const x = ev.data.x as number | undefined;
+        const z = ev.data.z as number | undefined;
+        if (typeof x !== "number" || typeof z !== "number" || !isFinitePos({ x, z })) break;
+        // 撿到金幣 — a bright gold nova, the kill-grade pop, because someone just
+        // walked off with a hundred gold and that should be unmissable.
+        this.layeredPop(x, z, nowMs, "ex", COIN_TINT);
+        break;
+      }
       // revive circles (task #84): the events carry the circle's own x/z, so
       // the cue plays even though the entity is already gone on complete/end.
       case "reviveCircleSpawn": {
@@ -1140,12 +1173,12 @@ export class VfxSystem {
       const id = anchor.entityId;
       const pos = this.ctx.entityPos(id);
       if (!isFinitePos(pos)) continue;
-      const isFlower = anchor.teamId === FLOWER_TEAM;
+      const prop = isRootedProp(anchor.kind, anchor.teamId);
       // shadow under every LIVE body (a corpse/despawned body drops its shadow)
       if (anchor.alive) {
-        scratch.push({ id, x: pos.x, z: pos.z, radius: isFlower ? SHADOW_FLOWER_RADIUS : SHADOW_CHAMPION_RADIUS });
-        // walking dust: champions only (a rooted flower never kicks dust)
-        if (!isFlower) this.emitWalkDust(id, pos, nowMs);
+        scratch.push({ id, x: pos.x, z: pos.z, radius: prop ? SHADOW_FLOWER_RADIUS : SHADOW_CHAMPION_RADIUS });
+        // walking dust: champions only (a rooted prop never kicks dust)
+        if (!prop) this.emitWalkDust(id, pos, nowMs);
       }
     }
     this.shadows.sync(scratch, nowMs);

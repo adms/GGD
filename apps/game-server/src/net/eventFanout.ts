@@ -150,6 +150,24 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   // the ability bar's exact analogue of `buyRejected` and belongs to the same
   // one-list contract, so the replay explains a fumbled round too.
   "castRejected",
+  // 陣亡投幣 (task #191). All three are MANDATORY here: without them the whole
+  // feature is invisible with zero errors — no shine appearing on the floor, no
+  // pickup jingle, and a dead player's only button answering with silence.
+  //
+  //   coinDropped     — `{ id, seatId, x, z, value, gold, left }`: the coin hit
+  //                     the ground. Drives the world thud + the HUD counter's
+  //                     confirmation. Bounded at 10 per player per round.
+  //   coinPickedUp    — `{ id, entity, seatId, x, z, value, gold }`. Carries x/z
+  //                     because the entity is ALREADY DESTROYED by the time the
+  //                     client sees this, so the burst has nothing else to
+  //                     anchor to; `seatId` gates the reward jingle to the
+  //                     collector, like `guardianSlain` does for the bounty.
+  //   coinDropRejected — `{ seatId, reason }`: 還活著 / 上限 / 金幣不足 / … The
+  //                     same P7 contract as `castRejected` and `buyRejected` —
+  //                     every press answers back.
+  "coinDropped",
+  "coinPickedUp",
+  "coinDropRejected",
 ]);
 
 /**

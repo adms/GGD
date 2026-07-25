@@ -206,6 +206,31 @@ export interface FlowerComp {
  * All timing is in ABSOLUTE `world.tick` (not `world.combatTicks`, which only
  * advances while the flower rules are armed — see systems/ReviveSystem.ts).
  */
+/**
+ * Dropped-gold-coin marker (task #191 陣亡投幣). Thrown by a DEAD player onto
+ * the arena floor; the first LIVING champion to walk within `pickupRadius`
+ * banks `value` — friend or foe, per the owner's unqualified 「經過的玩家」.
+ *
+ * Shaped like a revive circle rather than a flower, and for sharper reasons: a
+ * coin carries transform + this marker and NOTHING ELSE.
+ *   • no {@link TeamComp} — a seat here would put the coin into
+ *     `teamAliveInZone` / duel resolution / the alive-champion checks, i.e. a
+ *     thrown coin could keep a wiped team "alive". Ownership rides in
+ *     `ownerSeatId` instead, purely so the wire can tint/attribute it.
+ *   • no {@link Health} — health is what makes an entity attackable AND what
+ *     puts hp/mana into `SimWorld.digest()`; a coin is loot, not a target.
+ * It is also kept out of the broad-phase grid, `queryOverlap` and both
+ * MovementSystem passes, so nothing can target, shove or be shoved by it.
+ */
+export interface CoinComp {
+  /** gold banked by whoever picks it up (== what the thrower paid) */
+  value: number;
+  /** duel zone; a coin only ever pays a champion fighting in its own zone */
+  zone: number;
+  /** the DEAD thrower's seat — presentation only (never a team check) */
+  ownerSeatId: SeatId;
+}
+
 export interface ReviveCircleComp {
   /** the corpse this circle belongs to (revive target) */
   ownerId: EntityId;

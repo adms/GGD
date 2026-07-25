@@ -13,6 +13,7 @@ import {
   NEUTRAL_BAR_COLOR,
   KIND_CHAMPION,
   KIND_FLOWER,
+  KIND_GOLD_COIN,
 } from "./overheadAnchors";
 import { TEAM_CSS } from "../ui/theme";
 
@@ -22,6 +23,11 @@ describe("overhead anchor rules (flower-anchor-filter)", () => {
     expect(hasOverheadBar(KIND_CHAMPION)).toBe(true);
     expect(hasOverheadBar(KIND_FLOWER)).toBe(true);
     expect(hasOverheadBar(1)).toBe(false); // projectile
+    // a dropped gold coin (task #191) is LOOT: no health sim-side, so no bar —
+    // asserted explicitly rather than relying on the catch-all below, because
+    // "kind 5 happens to be unlisted" and "kind 5 must never get a bar" are
+    // different claims and only the second one survives a future edit.
+    expect(hasOverheadBar(KIND_GOLD_COIN)).toBe(false);
     expect(hasOverheadBar(99)).toBe(false); // future kinds default to no bar
   });
 

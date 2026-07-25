@@ -100,10 +100,21 @@ const circleBase: React.CSSProperties = {
   overflow: "hidden",
 };
 
+/** The 陣亡投幣 cap, mirrored from `config.arena-rules@1 goldDrop.coinsPerRound`. */
+const COINS_PER_ROUND = 10;
+
+/** 丟金幣 — the same command the desktop G key and the spectator button send. */
+function dropCoin(): void {
+  hudActions.sendCommand({ kind: "dropCoin" });
+}
+
 export function TouchControls(): React.JSX.Element | null {
   const seat = useHud((s) =>
     s.localSeatId === null ? null : (s.seats.find((v) => v.seatId === s.localSeatId) ?? null),
   );
+  const phase = useHud((s) => s.phase);
+  const localAlive = useHud((s) => s.localAlive);
+  const localMaxHp = useHud((s) => s.localMaxHp);
   const rootRef = useRef<HTMLDivElement | null>(null);
 
   // per-frame chrome: joystick base/knob transforms + aim highlight — reads
@@ -147,6 +158,14 @@ export function TouchControls(): React.JSX.Element | null {
   const def = Champions.tryGet(seat.championId as ChampionId);
   if (!def) return null;
 
+  // 陣亡投幣 (task #191). NEVER `!localAlive` alone: a player who has not locked
+  // a champion, or who is watching a round their team sat out, is also "not
+  // alive" — offering them a button the server will only ever refuse is the
+  // dead-button defect this campaign deletes. `coinsLeft` (server-projected,
+  // reset each combat entry) is 0 for exactly those seats, and `localMaxHp > 0`
+  // additionally proves a champion exists at all.
+  const coinMode = phase === "combat" && !localAlive && localMaxHp > 0 && seat.coinsLeft > 0;
+
   return (
     <div ref={rootRef} style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 20 }}>
       {/* held-button description panel across the top of the screen (task #152) */}
@@ -186,23 +205,44 @@ export function TouchControls(): React.JSX.Element | null {
         }}
       />
 
-      {/* basic-attack button (LT semantics: nearest enemy) */}
+      {/* The CENTRE button. While the local player is DEAD with throws left it
+          becomes 陣亡投幣 (task #191); otherwise it is the basic attack (LT
+          semantics: nearest enemy).
+
+          Reusing this slot rather than adding a control is deliberate. The ⚔
+          button is INERT for a corpse — a dead champion has nothing to swing at
+          — so the biggest, best-placed target on the screen is going spare at
+          exactly the moment the player has one thing left to do. A new button
+          would also have to find room: phone landscape is ~390px tall, the left
+          corners belong to the defeated player's own shop panel, and the touch
+          top-right has ~23px of headroom before the essential ☰ leaves the
+          screen. Swapping the face costs no layout and no HUD_PANELS row. */}
       <div
-        data-touch-attack=""
-        onTouchStart={pressHandler("ATTACK")}
+        data-touch-attack={coinMode ? undefined : ""}
+        data-touch-coin={coinMode ? "" : undefined}
+        onTouchStart={coinMode ? dropCoin : pressHandler("ATTACK")}
         style={{
           ...circleBase,
           right: ATTACK_CENTER - ATTACK_SIZE / 2,
           bottom: ATTACK_CENTER - ATTACK_SIZE / 2,
           width: ATTACK_SIZE,
           height: ATTACK_SIZE,
-          background: "rgba(58, 28, 30, 0.85)",
-          border: "2px solid #7a3230",
-          color: TEXT_MAIN,
-          fontSize: 30,
+          background: coinMode ? "rgba(58, 46, 18, 0.9)" : "rgba(58, 28, 30, 0.85)",
+          border: coinMode ? `2px solid ${GOLD}` : "2px solid #7a3230",
+          color: coinMode ? GOLD : TEXT_MAIN,
+          fontSize: coinMode ? 13 : 30,
+          lineHeight: 1.25,
+          fontWeight: coinMode ? 700 : 400,
         }}
       >
-        ⚔
+        {coinMode ? (
+          <>
+            <div>丟 100金</div>
+            <div style={{ fontSize: 11, opacity: 0.85 }}>{seat.coinsLeft}/{COINS_PER_ROUND}</div>
+          </>
+        ) : (
+          "⚔"
+        )}
       </div>
 
       {/* Q/W/E/R ability arc */}

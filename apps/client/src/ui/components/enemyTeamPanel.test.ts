@@ -49,6 +49,7 @@ function mk(over: Partial<SeatView> & { seatId: number; teamId: number }): SeatV
     undoDepth: 0,
     roundKills: 0,
     roundDeaths: 0,
+    coinsLeft: 0,
     offers: [],
     ...over,
   };

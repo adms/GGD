@@ -37,6 +37,19 @@ export interface CastBar {
 
 export interface ChampionAnchor {
   entityId: number;
+  /**
+   * The authoritative `EntityState.kind` this anchor was built from
+   * (render/overheadAnchors KIND_*). Optional so a hand-built anchor (tests)
+   * stays valid, and because for a CHAMPION — the overwhelming majority — the
+   * default of `KIND_CHAMPION` is the truth.
+   *
+   * It exists because `teamId < 0` was doing this job by accident: it meant
+   * "healing flower" back when the flower was the only team-less anchor, and
+   * then the neutral GUARDIAN (#89) started encoding seatId -1 as well and
+   * silently inherited the flower's minimap pip and the flower's small blob
+   * shadow. Reading the kind makes each consumer say which neutral it means.
+   */
+  kind?: number;
   name: string;
   teamId: number;
   /**

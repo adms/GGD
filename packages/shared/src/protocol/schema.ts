@@ -110,6 +110,17 @@ export class SeatState extends Schema {
    */
   declare roundKills: number;
   declare roundDeaths: number;
+  /**
+   * 陣亡投幣 throws still available THIS ROUND (task #191), 0..10. The HUD's
+   * 「丟金幣 n/10」 counter reads it directly.
+   *
+   * It rides the schema rather than being counted client-side off `coinDropped`
+   * events for the same reason `roundKills` does: a late or RECONNECTING client
+   * has no event history, and a dead player's one remaining action must not be
+   * greyed out (or, worse, offered and then refused) because their socket
+   * blinked. Authoritative, reset by the server at every combat entry.
+   */
+  declare coinsLeft: number;
 
   constructor() {
     super();
@@ -141,6 +152,7 @@ export class SeatState extends Schema {
     this.undoDepth = 0;
     this.roundKills = 0;
     this.roundDeaths = 0;
+    this.coinsLeft = 0;
   }
 }
 defineTypes(SeatState, {
@@ -172,6 +184,8 @@ defineTypes(SeatState, {
   undoDepth: "uint8",
   roundKills: "uint8",
   roundDeaths: "uint8",
+  // APPEND-ONLY: Colyseus encodes fields by declaration index — never reorder.
+  coinsLeft: "uint8",
 });
 
 /**
@@ -467,6 +481,20 @@ export const ENTITY_KIND = {
   // APPEND-ONLY: the wire encodes kind by value; never renumber an existing
   // kind (a running client would desync). New kinds get the next integer.
   GUARDIAN: 4,
+  /**
+   * A DROPPED GOLD COIN (task #191 陣亡投幣, key "prop.gold-coin"). Loot lying
+   * on the floor: no team, no health, not targetable — so like the revive circle
+   * it reuses the float slots rather than growing the wire schema:
+   *
+   *   seatId = the DEAD THROWER's seat (so the HUD can say whose purse it was;
+   *            it is NOT a team marker — nothing about ownership gates who may
+   *            pick the coin up, which is any living champion, friend or foe)
+   *   shield = the coin's gold VALUE (100), so the client renders the authored
+   *            number instead of a hard-coded one
+   *   hp/maxHp/mana/maxMana = 0; a coin has no health component sim-side, and
+   *            `hasOverheadBar` returns false for it, so no bar is drawn.
+   */
+  GOLD_COIN: 5,
 } as const;
 
 export const ENTITY_FLAG = {

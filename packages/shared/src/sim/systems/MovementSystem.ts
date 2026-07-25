@@ -198,6 +198,9 @@ export function movementSystem(world: SimWorld): void {
     // never pushed (they are also absent from the grid, so the inner loop
     // can never see one either)
     if (world.reviveCircle.has(id)) continue;
+    // dropped coins (task #191) are loot on the floor: never push, never pushed
+    // — and, being out of the grid, never visible to the inner loop either
+    if (world.coin.has(id)) continue;
     const hp = world.health.get(id);
     if (hp && !hp.alive) continue;
     const near = world.grid.queryCircle(t.pos, t.radius + 2);
@@ -235,6 +238,9 @@ export function movementSystem(world: SimWorld): void {
   for (const [id, t] of world.transform) {
     if (world.projectile.has(id)) continue;
     if (world.reviveCircle.has(id)) continue; // stays exactly on the corpse
+    // A coin was already pushed out of obstacles + clamped at spawn (coinDropPos);
+    // re-clamping it every tick would only re-derive the same point.
+    if (world.coin.has(id)) continue;
     // Neutral guardians (task #89) are authoritative fixed terrain: never shove
     // them out of an obstacle or clamp them — GuardianSystem places one at the
     // zone CENTRE, which legitimately coincides with the centre pillar, and a

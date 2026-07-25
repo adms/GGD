@@ -49,6 +49,12 @@ import type { SimWorld } from "../SimWorld";
  *                    so it scores on its OWN line — reviving deliberately does
  *                    NOT erase the death or the enemy's kill.
  *  - revivesReceived : times this player was channelled back up by a teammate.
+ *  - coinsCollected  : 陣亡投幣 coins picked off the floor (task #191). Its own
+ *                    line rather than `goldEarned`, because that coin's 100 gold
+ *                    was already counted as earned when the thrower first got
+ *                    it; folding it in again would let two players pump the
+ *                    settlement rating by 1000 a round for money that never
+ *                    entered the economy.
  */
 export interface PlayerMatchStats {
   kills: number;
@@ -72,6 +78,7 @@ export interface PlayerMatchStats {
   multikills: number;
   revivesPerformed: number;
   revivesReceived: number;
+  coinsCollected: number;
 }
 
 /** Assist credit window: an enemy that damaged the victim within this many ticks
@@ -104,6 +111,7 @@ export function createMatchStats(): PlayerMatchStats {
     multikills: 0,
     revivesPerformed: 0,
     revivesReceived: 0,
+    coinsCollected: 0,
   };
 }
 

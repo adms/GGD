@@ -103,3 +103,17 @@ export {
   type FireRingConfigLike,
 } from "./fireRing";
 export { fireRingSystem } from "./systems/FireRingSystem";
+export {
+  coinRulesFromConfig,
+  coinDropPos,
+  coinBudgetFor,
+  dropCoinCommand,
+  spawnCoin,
+  beginCombatCoins,
+  endCombatCoins,
+  GOLD_COIN_MODEL_KEY,
+  type CoinRules,
+  type CoinConfigLike,
+  type CoinDropRejection,
+} from "./coins";
+export { coinSystem } from "./systems/CoinSystem";

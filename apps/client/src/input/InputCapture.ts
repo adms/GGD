@@ -49,6 +49,13 @@ export function mapLeftClick(
 
 export const STOP_ORDER: Order = { kind: "stop" };
 export const RECALL_COMMAND: Command = { kind: "recall" };
+/**
+ * 陣亡投幣 (task #191) — G, the dead player's one action. Unconditional here:
+ * the SIM owns the "only the dead may throw" rule and answers every refused
+ * press with a `coinDropRejected` reason, so gating the key too would just
+ * produce a second, silent refusal path that could disagree with the server.
+ */
+export const DROP_COIN_COMMAND: Command = { kind: "dropCoin" };
 
 /**
  * Keyboard → slot. `CastableSlot`, so the SIXTH slot (the level-1 天生技) is in
@@ -241,6 +248,11 @@ export class InputCapture {
         break;
       case "KeyB":
         this.deps.onCommand(RECALL_COMMAND);
+        break;
+      case "KeyG":
+        // 丟 100 金 — free of the WASD cluster, next to the movement hand, and
+        // not a modifier or function key (the three rules above SLOT_BY_CODE).
+        if (!ev.repeat) this.deps.onCommand(DROP_COIN_COMMAND);
         break;
       case "Space":
         ev.preventDefault();

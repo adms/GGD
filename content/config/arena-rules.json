@@ -121,5 +121,12 @@
     "buffDurationSec": 25,
     "heirPulsePct": 0.25,
     "heirPulseRadius": 2.5
+  },
+  "goldDrop": {
+    "coinValue": 100,
+    "coinsPerRound": 10,
+    "dropRadius": 1.9,
+    "pickupRadius": 1.6,
+    "coinRadius": 0.31
   }
 }

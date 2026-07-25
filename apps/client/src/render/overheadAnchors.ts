@@ -15,6 +15,8 @@ export const KIND_CHAMPION = 0;
 export const KIND_FLOWER = 2;
 export const KIND_REVIVE_CIRCLE = 3;
 export const KIND_GUARDIAN = 4;
+/** A dropped 100-gold coin (task #191) — loot, not a unit. */
+export const KIND_GOLD_COIN = 5;
 
 /**
  * Does this entity kind carry an over-head HP bar? Revive circles (kind 3)
@@ -26,6 +28,10 @@ export const KIND_GUARDIAN = 4;
 export function hasOverheadBar(kind: number): boolean {
   return kind === KIND_CHAMPION || kind === KIND_FLOWER || kind === KIND_GUARDIAN;
 }
+// A GOLD COIN (kind 5) is likewise excluded, and for the same reason as the
+// revive circle: it has no health component sim-side, and what it is worth is
+// painted by the coin itself (render/views/CoinView) — a floating bar over a
+// piece of loot would read as a unit you could attack.
 
 /**
  * Neutral (team-less) bar color for flowers — a pale leaf green, distinct

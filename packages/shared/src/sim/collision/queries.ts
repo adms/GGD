@@ -28,6 +28,7 @@ export function queryOverlap(world: SimWorld, shape: Shape, opts: OverlapOptions
     if (opts.exclude?.has(id)) continue;
     if (world.projectile.has(id)) continue; // projectiles are not targets
     if (world.reviveCircle.has(id)) continue; // ground area, never a target
+    if (world.coin.has(id)) continue; // dropped loot, never a target (task #191)
     const t = world.transform.get(id);
     if (!t) continue;
     if (opts.zone !== undefined && t.zone !== opts.zone) continue;

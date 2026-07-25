@@ -43,6 +43,7 @@ import {
   endCombatGuardians,
   guardianRulesFromConfig,
 } from "@ggd/shared/sim/systems/GuardianSystem";
+import { beginCombatCoins, endCombatCoins, coinRulesFromConfig } from "@ggd/shared/sim/coins";
 import { DEFAULT_FLOWER_CONFIG, type FireRingConfig } from "@ggd/shared/content";
 import type { IntentFrame, AbilitySlot } from "@ggd/shared/sim/intents";
 import type { Cheat } from "@ggd/shared/protocol/messages";
@@ -784,6 +785,11 @@ export class MatchController {
         nav.override = null;
       }
     }
+    // The champions actually SCHEDULED into a duel this round — filled by the
+    // placement loop below and handed to beginCombatCoins. A bye team and an
+    // eliminated team never reach that loop, so they get no coin budget and
+    // therefore cannot throw into someone else's duel (task #191).
+    const fighters: EntityId[] = [];
     for (const pairing of this.pairings) {
       const zoneDef = this.arena.zones[pairing.zone]!;
       for (const [side, teamId] of [
@@ -811,6 +817,7 @@ export class MatchController {
           hp.shields = [];
           const st = this.world.status.get(seat.entityId);
           if (st) st.effects = [];
+          fighters.push(seat.entityId);
           slot++;
         }
       }
@@ -872,6 +879,17 @@ export class MatchController {
       );
     } else {
       endCombatGuardians(this.world);
+    }
+
+    // arm 陣亡投幣 (task #191): ten 100-gold throws for every champion actually
+    // placed into a duel this round. `fighters` — not `this.seats` — is the
+    // authoritative list, which is what makes a bye/eliminated seat's throw come
+    // back as `not-in-round` without any team-lives plumbing reaching the sim.
+    // Absent config = OFF (same legacy-compat rule as flowers/revives/guardians).
+    if (this.rules.goldDrop) {
+      beginCombatCoins(this.world, coinRulesFromConfig(this.rules.goldDrop), fighters);
+    } else {
+      endCombatCoins(this.world);
     }
   }
 
@@ -1077,6 +1095,7 @@ export class MatchController {
     endCombatRevives(this.world); // …and every circle + in-flight channel dies
     endCombatFireRing(this.world); // …and the round-pacing fire ring re-idles (#132)
     endCombatGuardians(this.world); // …and every neutral guardian despawns (no post-round farming, #89)
+    endCombatCoins(this.world); // …and every unclaimed coin BURNS — no carry into the next round (#191)
     this.settleRound();
     this.world.combatActive = false;
     // The round is SETTLED: halt every champion RIGHT NOW (#100) — clear the

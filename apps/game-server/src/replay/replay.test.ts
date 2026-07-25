@@ -20,8 +20,9 @@ import { Arenas, Configs } from "@ggd/shared/content";
 import { SKELETON_ARENA } from "@ggd/shared/sim/world/ArenaDef";
 import { asSeatId } from "@ggd/shared/ids";
 import { DEFAULT_COMBAT_ENV, normalizeCombatEnv } from "@ggd/shared/sim/combatEnv";
+import { DEFAULT_GOLD_DROP_CONFIG } from "@ggd/shared/content";
 import { MatchController, type SeatSpec } from "../match/MatchController";
-import { DEFAULT_ARENA_RULES } from "../match/arenaRules";
+import { DEFAULT_ARENA_RULES, type ArenaRules } from "../match/arenaRules";
 import { resolveStartingLives } from "../match/phaseConfig";
 import { AIDriver } from "../ai/Tier0Brain";
 import { HumanDriver } from "../seat/HumanDriver";
@@ -529,6 +530,170 @@ describe("divergence alarm", () => {
     expect(p.divergence!.expectedWorld).toBe(p.divergence!.actualWorld);
     expect(p.divergence!.expectedHost).not.toBe(p.divergence!.actualHost);
     expect(p.divergence!.message).toContain("金幣");
+  }, 60_000);
+});
+
+/**
+ * 陣亡投幣 (task #191) end-to-end through the recorder.
+ *
+ * This test is MANDATORY rather than nice-to-have. `champion.gold` is not in
+ * `SimWorld.digest()` at all, so no test in packages/shared can prove that a
+ * thrown/collected coin moves the same gold on a replay as it did live — only
+ * `hostDigest` sees it, and only this file drives it.
+ */
+describe("dead-player gold drop (task #191)", () => {
+  const COIN_RULES: ArenaRules = { ...DEFAULT_ARENA_RULES, goldDrop: DEFAULT_GOLD_DROP_CONFIG };
+  /**
+   * A LETHAL table with a long round cap. The default test env (8x maxHealth,
+   * half damage) plus a 30 s cap produces matches in which nobody ever actually
+   * dies — and a dead player is the only one who can throw, so the coin path
+   * would never execute and this whole file would pass vacuously.
+   */
+  const COIN_ENV = normalizeCombatEnv({ damageDealt: 4, maxHealth: 0.5, cooldown: 0.25 });
+  const COIN_PHASES = { ...FAST, combatMaxTicks: 2400 };
+
+  function makeCoinController(matchId: string, seed: number): MatchController {
+    return new MatchController(
+      matchId,
+      seed,
+      allBots(),
+      COIN_PHASES,
+      3,
+      COIN_RULES,
+      SKELETON_ARENA,
+      Whitelist.allowAll(),
+      COIN_ENV,
+      null,
+      [],
+    );
+  }
+
+  function coinHeaderFor(ctl: MatchController, matchId: string, seed: number): ReplayHeader {
+    return buildHeader({
+      matchId,
+      seed,
+      contentVersion: CV,
+      seats: ctl.seats,
+      specIsBot: (seatId) => seatId > 0,
+      startingLives: 3,
+      arena: SKELETON_ARENA,
+      arenaPool: [],
+      combatEnv: COIN_ENV,
+      phaseConfig: COIN_PHASES,
+      fireRing: null,
+      arenaRules: COIN_RULES,
+      whitelist: ctl.whitelist,
+      env: { whitelistBypass: true, combatEnvBypass: false, devCheats: true },
+    });
+  }
+
+  /**
+   * Record a match in which seat 0 is a HUMAN who mashes 「丟金幣」 on every
+   * single tick. Most presses are refused (alive / not in combat / broke), which
+   * is the point — the accepted AND the rejected paths both ride the recorded
+   * input stream.
+   *
+   * The rest of the setup exists to manufacture a long stretch of "seat 0 is
+   * DEAD while its round is still running", which is the only state in which the
+   * feature does anything: seats 0-2 (all of team 0) are inert humans so the
+   * enemy kills them, and a `fullHeal` cheat resurrects seats 1-2 whenever they
+   * fall so the duel never actually resolves. Seat 0 is left dead with a
+   * `grantGold` stake and throws until the cap or its purse runs out. Cheats ride
+   * the recording as `x` lines and are re-applied at the same tick on playback.
+   */
+  async function recordCoinMatch(matchId: string, seed: number): Promise<{
+    ctl: MatchController;
+    ticks: number;
+    finalWorld: number;
+    finalHost: number;
+    drops: number;
+    pickups: number;
+  }> {
+    const ctl = makeCoinController(matchId, seed);
+    const human = new HumanDriver();
+    ctl.seats.get(asSeatId(0))!.setDriver(human);
+    for (const s of [1, 2]) ctl.seats.get(asSeatId(s))!.setDriver(new HumanDriver());
+    const rec = await MatchRecorder.open(matchId, coinHeaderFor(ctl, matchId, seed));
+    expect(rec).not.toBeNull();
+    ctl.recorder = rec;
+
+    let drops = 0;
+    let pickups = 0;
+    let funded = false;
+    let seq = 0;
+    let n = 0;
+    while (ctl.phase.phase !== "matchEnd" && n < 60_000) {
+      if (!funded && ctl.phase.phase === "combat") {
+        funded = true;
+        rec!.recordCheat(ctl.world.tick, asSeatId(0), { kind: "grantGold", amount: 1000 });
+        ctl.applyCheat(asSeatId(0), { kind: "grantGold", amount: 1000 });
+      }
+      if (ctl.world.combatActive) {
+        for (const s of [1, 2]) {
+          const e = ctl.seats.get(asSeatId(s))!.entityId;
+          if (e !== null && ctl.world.health.get(e)?.alive === false) {
+            rec!.recordCheat(ctl.world.tick, asSeatId(s), { kind: "fullHeal" });
+            ctl.applyCheat(asSeatId(s), { kind: "fullHeal" });
+          }
+        }
+      }
+      human.mailbox.push({ seq: ++seq % 65536, commands: [{ kind: "dropCoin" }] });
+      ctl.tick();
+      for (const ev of ctl.world.events) {
+        if (ev.type === "coinDropped") drops++;
+        if (ev.type === "coinPickedUp") pickups++;
+      }
+      n++;
+    }
+    const out = {
+      ctl,
+      ticks: ctl.world.tick,
+      finalWorld: ctl.world.digest(),
+      finalHost: hostDigest(ctl),
+      drops,
+      pickups,
+    };
+    ctl.recorder = null;
+    await rec!.finish(ctl);
+    return out;
+  }
+
+  it("records and replays a match with coins thrown, without diverging", async () => {
+    const rec = await recordCoinMatch("coin-1", 20260725);
+    // Not vacuous: the mechanic actually fired, and the round cap held.
+    expect(rec.drops).toBeGreaterThan(0);
+    expect(rec.drops).toBeLessThanOrEqual(10 * rec.ctl.phase.round);
+
+    const p = await playFully("coin-1");
+    expect(p.divergence).toBeNull();
+    expect(p.finished).toBe(true);
+    expect(p.ctl.world.tick).toBe(rec.ticks);
+    expect(p.ctl.world.digest()).toBe(rec.finalWorld);
+    // The gold digest is the one that matters here — it is the only place the
+    // 100-out / 100-in of every coin is visible.
+    expect(hostDigest(p.ctl)).toBe(rec.finalHost);
+    // Nothing survives the last concludeCombat: no coin carries into settlement.
+    expect(p.ctl.world.coin.size).toBe(0);
+    expect(p.ctl.world.coinBudget.size).toBe(0);
+  }, 60_000);
+
+  it("a replayed champion given +100 gold surfaces as a HOST divergence", async () => {
+    await recordCoinMatch("coin-2", 5150);
+    const opened = await ReplayPlayer.open("coin-2");
+    if ("refusal" in opened) throw new Error(opened.refusal.code);
+    const p = opened.player;
+    p.runSlice(400);
+    const champ = [...p.ctl.world.champion.values()][0];
+    expect(champ).toBeDefined();
+    // exactly one coin's worth — the smallest wrong number this feature can
+    // produce, and the one SimWorld.digest() would never see
+    champ!.gold += 100;
+    p.runSlice(1);
+
+    expect(p.divergence).not.toBeNull();
+    expect(p.divergence!.kind).toBe("host");
+    expect(p.divergence!.expectedWorld).toBe(p.divergence!.actualWorld);
+    expect(p.divergence!.expectedHost).not.toBe(p.divergence!.actualHost);
   }, 60_000);
 });
 

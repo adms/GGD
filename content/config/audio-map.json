@@ -781,6 +781,22 @@
       "cooldownMs": 500,
       "maxConcurrent": 2
     },
+    "coinPickup": {
+      "files": [
+        "assets/audio/sfx/lab/guardianLastHit.mp3"
+      ],
+      "gain": 1.9,
+      "cooldownMs": 120,
+      "maxConcurrent": 3
+    },
+    "coinDrop": {
+      "files": [
+        "assets/audio/sfx/lab/gold-gain.mp3"
+      ],
+      "gain": 1.2,
+      "cooldownMs": 150,
+      "maxConcurrent": 3
+    },
     "draftCardReveal": {
       "files": [
         "assets/audio/sfx/lab/draftCardReveal.mp3"

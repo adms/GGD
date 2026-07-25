@@ -178,6 +178,12 @@ export function sanitizeCommand(raw: unknown): Command | undefined {
       if (typeof c.slot !== "string" || !ABILITY_SLOTS.has(c.slot)) return undefined;
       return { kind: "rankUpAbility", slot: c.slot as AbilitySlot };
     }
+    // 陣亡投幣 (task #191). Payload-free by design, so there is nothing to
+    // coerce — but it still needs a case: an unknown `kind` is DROPPED here,
+    // and a command dropped at the ingress gate is the silent failure that
+    // makes a fully-implemented feature look broken with zero errors.
+    case "dropCoin":
+      return { kind: "dropCoin" };
     case "ready":
       return { kind: "ready" };
     default:

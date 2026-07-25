@@ -19,6 +19,7 @@ import { castAbility, rankUpAbility, tickCooldowns } from "../abilities/abilityS
 import { isInnateSlot } from "../abilities/innateActive";
 import { buyItem, sellItem, undoShopAction } from "../economy/shop";
 import { shopAccess } from "../economy/shopAccess";
+import { dropCoinCommand } from "../coins";
 
 export function commandSystem(world: SimWorld, intents: ReadonlyMap<SeatId, IntentFrame>): void {
   tickCooldowns(world);
@@ -36,7 +37,16 @@ export function commandSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Inte
         break;
       }
     }
-    if (entity === null) continue;
+    if (entity === null) {
+      // A seat with no champion drops every command silently — except the coin
+      // throw, which owes an answer to the button the player just pressed
+      // (task #191 / P7). `dropCoinCommand` emits `no-champion` and nothing else
+      // happens; when the mechanic is unarmed it emits nothing at all.
+      for (const cmd of frame.commands) {
+        if (cmd.kind === "dropCoin") dropCoinCommand(world, null, seatId);
+      }
+      continue;
+    }
 
     for (const cmd of frame.commands) {
       switch (cmd.kind) {
@@ -95,6 +105,11 @@ export function commandSystem(world: SimWorld, intents: ReadonlyMap<SeatId, Inte
           // is still left to fail loudly — that is validateInput's whitelist to
           // catch, and an existing net test pins it.
           if (cmd.slot !== "EX" && !isInnateSlot(cmd.slot)) rankUpAbility(world, entity, cmd.slot);
+          break;
+        case "dropCoin":
+          // 陣亡投幣 (task #191). Every gate inside emits its own
+          // `coinDropRejected`, so a refused press is never silent.
+          dropCoinCommand(world, entity, seatId);
           break;
         case "pickOffer":
           // offers are host-side state; surface the pick as an event

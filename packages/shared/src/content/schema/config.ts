@@ -358,6 +358,42 @@ export const DEFAULT_GUARDIAN_TOWER_CONFIG: GuardianTowerConfig = {
   heirPulseRadius: 2.5,
 };
 
+/**
+ * 陣亡投幣 (task #191) — a DEAD player may throw their unspent gold onto the
+ * arena floor 100 at a time, and any passing champion picks it up. Optional +
+ * additive: an absent block means the mechanic is simply OFF (same legacy-compat
+ * convention as `flowers` / `reviveCircles` / `guardianTower`), which is what
+ * every unit test and the client's prediction shadow world see.
+ *
+ * No seconds anywhere, so unlike the other three blocks there is no ticks
+ * conversion — `coinRulesFromConfig` copies it straight through.
+ */
+export const zGoldDropConfig = z
+  .object({
+    /** gold per coin — deducted from the thrower, banked whole by the finder */
+    coinValue: z.number().int().positive(),
+    /** hard cap on throws per player per ROUND (the owner's 「最多 10 枚」) */
+    coinsPerRound: z.number().int().min(1).max(255),
+    /** radius of the 10-slot ring the coins land on, around the corpse */
+    dropRadius: z.number().positive(),
+    /** a living champion this close to a coin collects it */
+    pickupRadius: z.number().positive(),
+    /** the coin's own body radius (it collides with nothing; drives the model) */
+    coinRadius: z.number().positive(),
+  })
+  .strict();
+
+export type GoldDropConfig = z.infer<typeof zGoldDropConfig>;
+
+/** Contract defaults for the goldDrop block (dev cheats / fallbacks). */
+export const DEFAULT_GOLD_DROP_CONFIG: GoldDropConfig = {
+  coinValue: 100,
+  coinsPerRound: 10,
+  dropRadius: 1.9,
+  pickupRadius: 1.6,
+  coinRadius: 0.31,
+};
+
 export const zConfigArenaRulesDoc = z
   .object({
     id: zId,
@@ -400,6 +436,8 @@ export const zConfigArenaRulesDoc = z
     reviveCircles: zReviveCircleConfig.optional(),
     /** neutral guardian-tower rules; omit = no guardian (legacy behavior) */
     guardianTower: zGuardianTowerConfig.optional(),
+    /** 陣亡投幣 rules (task #191); omit = dead players cannot throw gold */
+    goldDrop: zGoldDropConfig.optional(),
   })
   .strict();
 

@@ -31,6 +31,10 @@ import { MatchEndPanel } from "./panels/MatchEndPanel";
 import { IntermissionStage } from "./IntermissionStage";
 import { RoundEndVoice } from "./RoundEndVoice";
 import { PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "./theme";
+import { hudActions } from "./actions";
+
+/** The 陣亡投幣 cap, mirrored from `config.arena-rules@1 goldDrop.coinsPerRound`. */
+const COINS_PER_ROUND = 10;
 
 /**
  * Death-spectator hint — shown while the LOCAL champion is dead (its camera
@@ -40,7 +44,16 @@ import { PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "./theme";
 function SpectatorHint(): React.JSX.Element | null {
   const alive = useHud((s) => s.localAlive);
   const hasChampion = useHud((s) => s.localMaxHp > 0);
+  const phase = useHud((s) => s.phase);
+  const coinsLeft = useHud((s) =>
+    s.localSeatId === null ? 0 : (s.seats.find((v) => v.seatId === s.localSeatId)?.coinsLeft ?? 0),
+  );
   if (alive || !hasChampion) return null;
+  // 陣亡投幣 (task #191): the dead player's one action, offered exactly when the
+  // server would accept it — combat, dead, throws left. Gating on `!alive` alone
+  // would also light it up for a seat that never picked a champion or drew the
+  // bye, whose every press comes back `not-in-round`.
+  const canThrow = phase === "combat" && coinsLeft > 0;
   return (
     <div
       style={{
@@ -54,11 +67,34 @@ function SpectatorHint(): React.JSX.Element | null {
         borderRadius: 999,
         color: "#e6d6f0",
         fontSize: 13,
+        // the banner itself stays click-through; only the button below opts in
         pointerEvents: "none",
         whiteSpace: "nowrap",
+        display: "flex",
+        alignItems: "center",
+        gap: 12,
       }}
     >
-      ☠ 觀戰中 — 下一輪復活
+      <span>☠ 觀戰中 — 下一輪復活</span>
+      {canThrow && (
+        <button
+          type="button"
+          onClick={() => hudActions.sendCommand({ kind: "dropCoin" })}
+          style={{
+            pointerEvents: "auto",
+            padding: "3px 12px",
+            background: "rgba(58, 46, 18, 0.9)",
+            border: "1px solid #d9b64e",
+            borderRadius: 999,
+            color: "#f0d78a",
+            fontSize: 12,
+            fontWeight: 700,
+            cursor: "pointer",
+          }}
+        >
+          丟 100金 (G) {coinsLeft}/{COINS_PER_ROUND}
+        </button>
+      )}
     </div>
   );
 }

@@ -161,6 +161,12 @@ const COMBAT_SFX: readonly string[] = [
   // on the first tower fight of the round.
   "guardianSlam",
   "guardianLastHit",
+  // 陣亡投幣 (#191). The throw is a DEAD player's one remaining action and the
+  // pickup is a stranger walking over free money — both are moments the sound
+  // IS the feedback, and both fire from the first death of the round onward, so
+  // a cold fetch would silence exactly the first one.
+  "coinDrop",
+  "coinPickup",
   // 魔法陣 wind-up (combatSfx `castBegin` → castCircle, castTimeSec ≥ 0.5 s).
   // The other lab weapon/element clips stay lazy because they are PER-CHAMPION
   // — a bow champion never loads the katana slash. This one is not: it is

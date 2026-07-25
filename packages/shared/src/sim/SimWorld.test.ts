@@ -5,6 +5,16 @@ import { SKELETON_ARENA } from "./world/ArenaDef";
 import { asSeatId, asTeamId, type EntityId, type SeatId } from "../ids";
 import type { IntentFrame } from "./intents";
 import * as V from "./math/vec2";
+import { beginCombatCoins, coinRulesFromConfig, dropCoinCommand } from "./coins";
+
+/** The shipped goldDrop contract (content/config/arena-rules.json). */
+const RULES = coinRulesFromConfig({
+  coinValue: 100,
+  coinsPerRound: 10,
+  dropRadius: 1.9,
+  pickupRadius: 1.6,
+  coinRadius: 0.31,
+});
 
 /** Spawn a 6-champion setup (3v3 in zone 0) deterministically. */
 function setup(world: SimWorld): EntityId[] {
@@ -88,6 +98,78 @@ describe("SimWorld replay determinism (sim-04)", () => {
       world.step(intents);
     }
     expect(world.digest()).not.toBe(a.digest());
+  });
+});
+
+/**
+ * The NO-OP ARMING CONTRACT for 陣亡投幣 (task #191).
+ *
+ * Every coin code path opens with `if (!world.coinRules) return;`, and both new
+ * stores are folded into `digest()` only by iteration — so a world with the
+ * mechanic disarmed (unit tests, the client's PREDICTION SHADOW WORLD, any match
+ * whose arena-rules doc has no `goldDrop` block) must hash EXACTLY as it did
+ * before the feature existed. The golden below was taken from `main` before any
+ * of this landed; it is the only thing that can catch a stray unconditional mix.
+ */
+const PRE_COIN_GOLDEN_DIGEST = 0x9d9048c5;
+
+describe("coin arming is a strict no-op when disabled (task #191)", () => {
+  it("600 disarmed ticks hash tick-for-tick to the pre-feature golden", () => {
+    cover("coin-digest-noop");
+    const a = new SimWorld(SKELETON_ARENA, 1234);
+    const b = new SimWorld(SKELETON_ARENA, 1234);
+    setup(a);
+    setup(b);
+    expect(a.coinRules).toBeNull();
+    for (let k = 0; k < 600; k++) {
+      a.step(scriptedIntents(k));
+      b.step(scriptedIntents(k));
+      // two independently constructed worlds agree on EVERY tick, not just the last
+      expect(a.digest()).toBe(b.digest());
+    }
+    expect(a.coin.size).toBe(0);
+    expect(a.coinBudget.size).toBe(0);
+    expect(a.digest()).toBe(PRE_COIN_GOLDEN_DIGEST);
+  });
+
+  it("arming and throwing ONE coin changes the digest on the spawn tick", () => {
+    // the other half of the contract: the coin store really is folded in, so a
+    // replica that spawned a coin the other did not diverges immediately —
+    // which matters because `champion.gold` is not in this digest at all
+    const plain = new SimWorld(SKELETON_ARENA, 99);
+    const armed = new SimWorld(SKELETON_ARENA, 99);
+    const plainIds = setup(plain);
+    const armedIds = setup(armed);
+    for (const w of [plain, armed]) w.step(new Map());
+    expect(armed.digest()).toBe(plain.digest());
+
+    // give both a champion component so the throw has gold to spend
+    for (const [w, ids] of [
+      [plain, plainIds],
+      [armed, armedIds],
+    ] as const) {
+      w.champion.set(ids[0]!, {
+        championId: "x" as never,
+        level: 1,
+        xp: 0,
+        gold: 500,
+        items: [],
+        augments: [],
+        statStacks: 0,
+        statCapstonePct: 0,
+        pendingOrbSlots: 0,
+        undoStack: [],
+      });
+      w.health.get(ids[0]!)!.alive = false;
+      w.combatActive = true;
+    }
+    expect(armed.digest()).toBe(plain.digest()); // gold/alive alone: still equal
+
+    beginCombatCoins(armed, RULES, [armedIds[0]!]);
+    expect(armed.digest()).not.toBe(plain.digest()); // the budget map is hashed
+    expect(dropCoinCommand(armed, armedIds[0]!, asSeatId(0))).toBe("ok");
+    expect(armed.coin.size).toBe(1);
+    expect(armed.digest()).not.toBe(plain.digest());
   });
 });
 

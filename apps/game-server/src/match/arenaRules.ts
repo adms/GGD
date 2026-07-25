@@ -16,6 +16,7 @@ import type {
   FlowerConfig,
   ReviveCircleConfig,
   GuardianTowerConfig,
+  GoldDropConfig,
 } from "@ggd/shared/content";
 
 export interface RoundGrant {
@@ -51,6 +52,8 @@ export interface ArenaRules {
   reviveCircles: ReviveCircleConfig | null;
   /** neutral duel-zone guardian rules (task #89); null = mechanic off (legacy) */
   guardianTower: GuardianTowerConfig | null;
+  /** 陣亡投幣 rules (task #191); null = dead players cannot throw gold (legacy) */
+  goldDrop: GoldDropConfig | null;
 }
 
 /** Legacy behavior: augment tiers per AUGMENT_TIER_SCHEDULE + round-2+ gacha. */
@@ -69,6 +72,7 @@ export const DEFAULT_ARENA_RULES: ArenaRules = {
   flowers: null,
   reviveCircles: null,
   guardianTower: null,
+  goldDrop: null,
 };
 
 /** Convert a parsed config.arena-rules@1 doc into the controller's rule table. */
@@ -94,6 +98,7 @@ export function rulesFromDoc(doc: ConfigArenaRulesDoc): ArenaRules {
     flowers: doc.flowers ?? null,
     reviveCircles: doc.reviveCircles ?? null,
     guardianTower: doc.guardianTower ?? null,
+    goldDrop: doc.goldDrop ?? null,
   };
 }
 

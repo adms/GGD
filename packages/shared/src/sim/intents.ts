@@ -107,6 +107,15 @@ export type Command =
   | { kind: "undoLastShopStep" }
   | { kind: "pickOffer"; offerId: string }
   | { kind: "rankUpAbility"; slot: AbilitySlot }
+  /**
+   * 陣亡投幣 (task #191): throw 100 unspent gold onto the floor as a coin.
+   * Deliberately PAYLOAD-FREE. An aim point would be a client-supplied float
+   * that `toVec2` happily accepts anywhere on the map, so a dead player could
+   * post their purse onto a distant ally; the landing spot is instead derived
+   * server-side from the corpse and the throw index. Nothing to spoof, nothing
+   * to validate numerically.
+   */
+  | { kind: "dropCoin" }
   | { kind: "ready" };
 
 /** Per-tick output of ANY driver (human mailbox or AI brain). */

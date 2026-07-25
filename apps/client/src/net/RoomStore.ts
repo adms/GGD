@@ -124,6 +124,13 @@ export interface SeatView {
    */
   roundKills: number;
   roundDeaths: number;
+  /**
+   * 陣亡投幣 throws left this round (task #191), 0..10. Server-authoritative
+   * (SeatState.coinsLeft) for the same reason `undoDepth` is: a dead player's
+   * only remaining action must read the same number after a reconnect, and a
+   * client-side tally off `coinDropped` events has no history to count.
+   */
+  coinsLeft: number;
   offers: OfferView[];
 }
 
@@ -345,6 +352,7 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
       undoDepth: ss.undoDepth,
       roundKills: ss.roundKills,
       roundDeaths: ss.roundDeaths,
+      coinsLeft: ss.coinsLeft,
       offers: ss.offers.map((o) => ({
         offerId: o.offerId,
         tier: o.tier,

@@ -18,6 +18,7 @@ import { ProjectileView, type ProjectileMeshShape } from "./views/ProjectileView
 import { FlowerView } from "./views/FlowerView";
 import { GuardianView } from "./views/GuardianView";
 import { ReviveCircleView } from "./views/ReviveCircleView";
+import { CoinView } from "./views/CoinView";
 import { applyModelTint, releaseModelTint, type ModelTint } from "./views/modelTint";
 import type { AssetManager } from "./AssetManager";
 import {
@@ -173,6 +174,8 @@ export class EntityViewRegistry {
   private readonly guardianPool: GuardianView[] = [];
   private readonly reviveCircles = new Map<number, ReviveCircleView>();
   private readonly revivePool: ReviveCircleView[] = [];
+  private readonly coins = new Map<number, CoinView>();
+  private readonly coinPool: CoinView[] = [];
   private readonly lastPos = new Map<number, { x: number; z: number }>();
   /** smoothed ground speed (units/s) per champion for run-rate sync. */
   private readonly speedEma = new Map<number, number>();
@@ -205,6 +208,10 @@ export class EntityViewRegistry {
 
   get reviveCircleCount(): number {
     return this.reviveCircles.size;
+  }
+
+  get coinCount(): number {
+    return this.coins.size;
   }
 
   getChampionView(entityId: number): ChampionView | undefined {
@@ -433,6 +440,23 @@ export class EntityViewRegistry {
         continue;
       }
 
+      if (e.kind === 5) {
+        // DROPPED GOLD COIN (task #191) — pooled, fully procedural (there is no
+        // coin asset, and no GlowLayer in this scene, so CoinView builds its own
+        // 閃光 out of additive emissive). No .glb upgrade, no health, no bar.
+        let view = this.coins.get(e.id);
+        if (!view) {
+          view = this.coinPool.pop() ?? new CoinView(this.scene);
+          view.activate(e.id);
+          this.coins.set(e.id, view);
+        }
+        const pose = args.poseFor(e);
+        view.setPose(pose.x, pose.z);
+        view.update(args.nowMs);
+        this.lastPos.set(e.id, { x: pose.x, z: pose.z });
+        continue;
+      }
+
       if (e.kind === 3) {
         // revive circle — pooled, fully procedural (no model doc). Progress /
         // lifetime / contest all come off the wire; the view only paints them.
@@ -558,6 +582,14 @@ export class EntityViewRegistry {
         this.revivePool.push(view);
       }
     }
+    for (const [id, view] of this.coins) {
+      if (!seen.has(id)) {
+        view.deactivate();
+        this.coins.delete(id);
+        this.lastPos.delete(id);
+        this.coinPool.push(view);
+      }
+    }
   }
 
   dispose(): void {
@@ -574,6 +606,8 @@ export class EntityViewRegistry {
     for (const v of this.guardianPool) v.dispose();
     for (const v of this.reviveCircles.values()) v.dispose();
     for (const v of this.revivePool) v.dispose();
+    for (const v of this.coins.values()) v.dispose();
+    for (const v of this.coinPool) v.dispose();
     this.champions.clear();
     this.projectiles.clear();
     this.pool.length = 0;
@@ -583,5 +617,7 @@ export class EntityViewRegistry {
     this.guardianPool.length = 0;
     this.reviveCircles.clear();
     this.revivePool.length = 0;
+    this.coins.clear();
+    this.coinPool.length = 0;
   }
 }

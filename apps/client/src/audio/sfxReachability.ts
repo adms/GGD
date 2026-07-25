@@ -201,6 +201,19 @@ export const SFX_REACHABILITY: readonly SfxReachRow[] = [
     payload: { guardianSlain: ["killerSeatId", "gold"] },
     note: "Seat-gated: only the client that landed the last hit and was paid.",
   },
+  // 陣亡投幣 (task #191). Two NEW keys rather than a second population of
+  // `goldGain`/`guardianLastHit`: `SfxGate`'s cooldown is cross-frame and keyed
+  // on the string, so pouring combat traffic into the shop's key would starve
+  // the purchase cue for 300 ms every time somebody threw a coin.
+  {
+    key: "coinPickup",
+    kind: "combat",
+    site: COMBAT_SFX_SITE,
+    events: ["coinPickedUp"],
+    payload: { coinPickedUp: ["seatId", "value"] },
+    note: "Seat-gated: only the client whose champion actually banked the coin.",
+  },
+  { key: "coinDrop", kind: "combat", site: COMBAT_SFX_SITE, events: ["coinDropped"], payload: { coinDropped: ["seatId", "x", "z"] } },
 
   // ── client-side emit sites ───────────────────────────────────────────────
   { key: "footstep", kind: "client", site: "apps/client/src/GameApp.ts" },

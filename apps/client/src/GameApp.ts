@@ -1928,6 +1928,7 @@ export class GameApp {
       if (!anchor) {
         anchor = {
           entityId: es.id,
+          kind: es.kind,
           name: isNeutral ? "" : (nameBySeat.get(es.seatId) ?? `#${es.id}`),
           teamId: isNeutral ? -1 : (this.teamBySeat.get(es.seatId) ?? 0),
           championId: "",
@@ -1945,6 +1946,7 @@ export class GameApp {
         frameBus.champions.set(es.id, anchor);
       }
       anchor.alive = es.alive;
+      anchor.kind = es.kind; // pooled anchors outlive an entity id; keep it honest
       // picks land after the anchor is created (and change between rounds), so
       // the champion id is refreshed rather than frozen at spawn
       anchor.championId = isNeutral ? "" : (champBySeat.get(es.seatId) ?? "");

@@ -341,6 +341,10 @@ export const KEYBOARD_ORDER_BINDINGS: readonly DeclaredBinding[] = [
   { id: "KeyA", control: "A + 左鍵", label: "攻擊移動", source: 'case "KeyA"' },
   { id: "KeyS", control: "S", label: "停止動作", source: 'case "KeyS"' },
   { id: "KeyB", control: "B", label: "回城", source: 'case "KeyB"' },
+  // 陣亡投幣 (task #191) — only a DEAD player's press is accepted, but the key
+  // is listed unconditionally: the legend documents the key map, and a binding
+  // that appears only once you are already dead is one nobody discovers.
+  { id: "KeyG", control: "G", label: "陣亡時丟出 100 金", source: 'case "KeyG"' },
   { id: "Space", control: "空白鍵", label: "鏡頭跟隨開關", source: 'case "Space"' },
   { id: "Arrows", control: "方向鍵", label: "平移鏡頭", source: '"ArrowUp"' },
 ];
@@ -382,7 +386,7 @@ export const TOUCH_SOURCE = "TouchControls.tsx";
 
 export const TOUCH_BINDINGS: readonly DeclaredBinding[] = [
   { id: "joystick", control: "左側搖桿", label: "移動", source: 'data-role="joy-base"' },
-  { id: "attack", control: "右下大圓鈕", label: "普通攻擊", source: 'pressHandler("ATTACK")' },
+  { id: "attack", control: "右下大圓鈕", label: "普通攻擊（陣亡時變成丟金幣）", source: 'pressHandler("ATTACK")' },
   { id: "arc", control: "環形技能鈕", label: "施放技能（拖曳可瞄準）", source: "data-touch-slot" },
   { id: "hold", control: "長按技能鈕", label: "看技能說明", source: "setHeldAbility" },
   { id: "recall", control: "⌂", label: "回城", source: '{ kind: "recall" }' },

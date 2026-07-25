@@ -310,6 +310,25 @@ export function guardianRewardKey(ev: EventMessage, seatId: number | null): stri
 }
 
 /**
+ * 撿到金幣 (#191): the `coinPickup` jingle, or null.
+ *
+ * Copies {@link guardianRewardKey}'s shape for the same reason: `coinPickedUp`
+ * is broadcast to every client, but exactly one champion banked the money, and
+ * ringing the LOUD pickup jingle in all six players' ears for someone else's
+ * 100 gold is the same defect that gating fixed for the guardian bounty. A
+ * worthless coin (`value <= 0`, which the sim cannot currently produce) stays
+ * silent rather than celebrating nothing. Total on a malformed payload.
+ */
+export function coinRewardKey(ev: EventMessage, seatId: number | null): string | null {
+  if (seatId === null || seatId < 0) return null;
+  const collector = ev.data.seatId;
+  if (typeof collector !== "number" || collector !== seatId) return null;
+  const value = ev.data.value;
+  if (typeof value === "number" && value <= 0) return null;
+  return "coinPickup";
+}
+
+/**
  * The SFX-map key an event should play, or null for silence. Reads the enriched
  * `damage` payload names from the contract (dmgType/blocked/crit/killingBlow),
  * falling back to the sim's raw `type` field if `dmgType` is absent.
@@ -395,6 +414,18 @@ export function combatSfxKey(ev: EventMessage, seatId: number | null = localSeat
     case "guardianSlain":
       // 最後一擊的金幣獎勵 — the only seat-gated cue here (see guardianRewardKey)
       return guardianRewardKey(ev, seatId);
+    case "coinDropped":
+      // 陣亡投幣 (#191): a coin hits the arena floor. Unconditional — it is a
+      // WORLD event everyone in the duel should hear, wherever it landed.
+      return "coinDrop";
+    case "coinPickedUp":
+      // …and the collector's own LOUD reward jingle, seat-gated (coinRewardKey).
+      return coinRewardKey(ev, seatId);
+    case "coinDropRejected":
+      // The refusal rides the wire so the HUD can SAY why (P7), but it is a UI
+      // beat, not a combat one: `ui/castFeedback` already owns the 拒絕 cue and
+      // sounding it here too would double it.
+      return null;
 
     default:
       return PASSTHROUGH.has(ev.type) ? ev.type : null;

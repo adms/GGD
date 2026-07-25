@@ -16,8 +16,10 @@ import type {
   StatusComp,
   FlowerComp,
   ReviveCircleComp,
+  CoinComp,
 } from "./components";
 import type { FlowerRules } from "./flowers";
+import type { CoinRules } from "./coins";
 import type { FireRingRules } from "./fireRing";
 import type { ReviveRules } from "./revive";
 import { DEFAULT_COMBAT_ENV, type CombatEnvMultipliers } from "./combatEnv";
@@ -42,6 +44,7 @@ import { deathSystem } from "./systems/DeathSystem";
 import { fireRingSystem } from "./systems/FireRingSystem";
 import { flowerSystem } from "./systems/FlowerSystem";
 import { reviveSystem } from "./systems/ReviveSystem";
+import { coinSystem } from "./systems/CoinSystem";
 import { regenSystem } from "./systems/RegenSystem";
 import { statusExpirySystem } from "./systems/StatusSystem";
 import { hitstopDecaySystem } from "./systems/HitstopSystem";
@@ -78,6 +81,23 @@ export class SimWorld {
   readonly abilities = new Map<EntityId, AbilitiesComp>();
   readonly flower = new Map<EntityId, FlowerComp>();
   readonly reviveCircle = new Map<EntityId, ReviveCircleComp>();
+
+  /**
+   * Dropped gold coins (task #191 陣亡投幣). Transform + marker only — no
+   * TeamComp, no Health — so team/duel/alive iterations and every targeting
+   * query are blind to them by construction (see CoinComp). Empty unless the
+   * host armed the mechanic (`coinRules !== null`).
+   */
+  readonly coin = new Map<EntityId, CoinComp>();
+
+  /**
+   * Coins each champion may still throw THIS ROUND (task #191). Armed to
+   * `coinsPerRound` by `beginCombatCoins` for exactly the entities the host
+   * scheduled into the round, decremented per throw, cleared on combat exit.
+   * The ABSENCE of an entry is the whole bye/eliminated answer — those seats are
+   * parked dead but never scheduled, so they can never throw.
+   */
+  readonly coinBudget = new Map<EntityId, number>();
 
   /**
    * Neutral duel-zone GUARDIANS (task #89). A structure carries transform +
@@ -276,6 +296,15 @@ export class SimWorld {
   guardianRules: GuardianRules | null = null;
 
   /**
+   * Dropped-coin rules (task #191). null (default) = the mechanic is OFF — unit
+   * tests, the client's prediction shadow world, any match whose rules doc has
+   * no `goldDrop` block — and EVERY coin code path opens by returning on it, so
+   * a pre-feature world is byte-identical down to the digest. The match host
+   * arms these via `beginCombatCoins` / `endCombatCoins` (see coins.ts).
+   */
+  coinRules: CoinRules | null = null;
+
+  /**
    * Remaining revive charges this ROUND, per team. Armed to
    * `revivesPerTeamPerRound` on combat entry, spent on a COMPLETED revive
    * (never on spawn), cleared on combat exit. One per team is the largest
@@ -324,6 +353,8 @@ export class SimWorld {
     this.abilities.delete(id);
     this.flower.delete(id);
     this.reviveCircle.delete(id);
+    this.coin.delete(id);
+    this.coinBudget.delete(id);
     this.structure.delete(id);
     this.guardianBuffs.delete(id);
     this.hitstop.delete(id);
@@ -351,6 +382,10 @@ export class SimWorld {
       // broad-phase is what makes them structurally untargetable (every
       // ability/projectile query walks this grid) and non-colliding.
       if (this.reviveCircle.has(id)) continue;
+      // Dropped coins are LOOT lying on the floor, not bodies: out of the
+      // broad-phase means structurally untargetable (every ability/projectile
+      // query walks this grid) and non-colliding, exactly like a circle.
+      if (this.coin.has(id)) continue;
       this.grid.insertCircle(id, t.pos, t.radius);
     }
   }
@@ -401,6 +436,11 @@ export class SimWorld {
     //                             payout (no-op unless armed). Runs AFTER deathSystem
     //                             (sees this tick's `death`) and reviveSystem (killer's
     //                             final alive-state is settled before payout).
+    coinSystem(this); //     9e. 陣亡投幣 pickup: a living champion walks onto a
+    //                             dropped coin and banks it (no-op unless armed).
+    //                             AFTER deathSystem/reviveSystem/guardianSystem so
+    //                             this tick's alive-state is final before anyone is
+    //                             paid; the throw itself happened back at slot 3.
     regenSystem(this); // 10. hp/mana regen
     statRecomputeSystem(this); // 11. late recompute for same-tick attaches
     accumulateTimeAlive(this); // 12. match-stat time-alive (combat-gated)
@@ -483,6 +523,22 @@ export class SimWorld {
     for (const [teamId, charges] of this.reviveCharges) {
       mix(teamId);
       mix(charges);
+    }
+    // Dropped coins + the per-player throw budget (task #191). This is the ONLY
+    // way the DROP side becomes visible to a digest at all: a coin carries no
+    // health, and `champion.gold` was never hashed here — so without these folds
+    // a replica that spawned a coin the other did not would look identical until
+    // somebody walked over it. Both maps are empty when the mechanic is off, so
+    // a pre-feature world hashes byte-identically.
+    for (const [id, c] of this.coin) {
+      mix(id);
+      mix(c.value);
+      mix(c.zone);
+      mix(c.ownerSeatId);
+    }
+    for (const [id, left] of this.coinBudget) {
+      mix(id);
+      mix(left);
     }
     // guardians (task #89) are authoritative world state: a wake/volley/threat
     // that advanced on one replica but not another must surface here as a

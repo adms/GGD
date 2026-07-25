@@ -37,7 +37,8 @@
 import { useEffect, useRef } from "react";
 import type { Order } from "@ggd/shared/sim/intents";
 import { useHud, hudStore } from "../../net/RoomStore";
-import { frameBus, type ArenaZoneCircle } from "../../frameBus";
+import { frameBus, type ArenaZoneCircle, type ChampionAnchor } from "../../frameBus";
+import { KIND_FLOWER, KIND_GUARDIAN } from "../../render/overheadAnchors";
 import { FIRE_RING_SEC } from "../../audio/scene";
 import { hudActions } from "../actions";
 import { HudSlot, hudTouch } from "./HudSlot";
@@ -70,6 +71,17 @@ import { portraitCache } from "./minimapIcons";
  * shapes is cheap enough to afford the extra 8 frames a second.
  */
 const REDRAW_MS = 50;
+
+/**
+ * A team-less OBJECTIVE (healing flower / duel-zone guardian) rather than a
+ * champion — it draws as a neutral pip, not a team marker. See the call site
+ * for why this reads `kind` instead of `teamId < 0`.
+ */
+function isNeutralAnchor(a: ChampionAnchor): boolean {
+  if (a.kind !== undefined) return a.kind === KIND_FLOWER || a.kind === KIND_GUARDIAN;
+  return a.teamId < 0;
+}
+
 /** panel chrome around the canvas (padding + 1px border, both sides) */
 const PANEL_INSET = 12;
 /** the desktop map the marker sizes in minimapMath were tuned against */
@@ -334,8 +346,13 @@ function drawFrame(
     // champion (or flower) fighting in another 3v3 is filtered out entirely
     if (!inLocalZone(a.worldX, a.worldZ, zones, localZone)) continue;
     const p = worldToMap(a.worldX, a.worldZ, bounds, sizePx, yaw);
-    if (a.teamId < 0) {
-      // neutral healing flower (task #22) — a small glowing green pip
+    // NEUTRAL OBJECTIVE (healing flower #22 / duel-zone guardian #89) — a small
+    // glowing pip in the anchor's own neutral colour, never a team marker.
+    // Decided on `kind`, not on `teamId < 0`: the latter meant "flower" only
+    // because the flower used to be the one team-less anchor, and the guardian
+    // then inherited the rule by accident. `teamId < 0` remains the fallback for
+    // an anchor built without a kind (tests).
+    if (isNeutralAnchor(a)) {
       if (!a.alive) continue; // consumed flowers vanish immediately
       const r = 2.6 * scale;
       ctx.save();
