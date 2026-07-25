@@ -330,7 +330,7 @@ export function spawnMob(world: SimWorld, zone: number, rules: MobRules, k: numb
     alive: true,
     shields: [],
   });
-  world.nav.set(id, { order: null, moveTarget: null, override: null, attackTarget: null });
+  world.nav.set(id, { order: null, moveTarget: null, override: null, attackTarget: null, attackTargetAuto: false });
   // seatId -1: a mob belongs to no player seat — the same "no seat" sentinel the
   // snapshot emits for every neutral entity. Only `teamId` is load-bearing.
   world.team.set(id, { teamId: MONSTER_TEAM, seatId: asSeatId(-1) });

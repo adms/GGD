@@ -178,7 +178,7 @@ function makeWorldWithUnits(): { world: SimWorld; ids: EntityId[] } {
     world.transform.set(id, { pos: spots[i]!, vel: V.v2(), facing: V.v2(1, 0), radius: 0.6, zone: 0 });
     world.health.set(id, { hp: 100, maxHp: 100, mana: 50, maxMana: 50, alive: true, shields: [] });
     world.team.set(id, { teamId: asTeamId(i % 2), seatId: asSeatId(i) });
-    world.nav.set(id, { order: null, moveTarget: null, override: null, attackTarget: null });
+    world.nav.set(id, { order: null, moveTarget: null, override: null, attackTarget: null, attackTargetAuto: false });
     world.status.set(id, { effects: [] });
   }
   return { world, ids };

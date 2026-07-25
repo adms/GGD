@@ -787,6 +787,7 @@ export class MatchController {
         nav.order = null;
         nav.moveTarget = null;
         nav.attackTarget = null;
+        nav.attackTargetAuto = false;
         nav.override = null;
       }
     }
@@ -1188,6 +1189,7 @@ export class MatchController {
         nav.order = null;
         nav.moveTarget = null;
         nav.attackTarget = null;
+        nav.attackTargetAuto = false;
         nav.override = null;
       }
       const t = this.world.transform.get(seat.entityId);

@@ -37,7 +37,7 @@ function makeRefWorld(): { world: SimWorld; step: (order?: Order) => void } {
     zone: 0,
   });
   world.team.set(id, { teamId: asTeamId(0), seatId: asSeatId(SEAT) });
-  world.nav.set(id, { order: null, moveTarget: null, override: null, attackTarget: null });
+  world.nav.set(id, { order: null, moveTarget: null, override: null, attackTarget: null, attackTargetAuto: false });
   world.status.set(id, { effects: [] });
   world.health.set(id, { hp: 1, maxHp: 1, mana: 0, maxMana: 0, alive: true, shields: [] });
   const final = zeroStats();
