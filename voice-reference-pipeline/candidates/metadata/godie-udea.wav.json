@@ -1,0 +1,32 @@
+{
+  "source_path": "/Users/Takuro/GGD/voice-reference-pipeline/incoming/user_owned/godie-udea.wav",
+  "file": "godie-udea.wav",
+  "hero_id": "godie-udea",
+  "variant": 1,
+  "license_bucket": "user_owned",
+  "inspected_at": "2026-07-25T07:46:56+00:00",
+  "verdict": "accepted",
+  "reject_reasons": [],
+  "review_notes": [],
+  "metrics": {
+    "duration": 7.85,
+    "sample_rate": 24000,
+    "channels": 1,
+    "bit_depth": 16,
+    "integrated_loudness": -19.3,
+    "true_peak": -8.3,
+    "loudness_range": 0.7,
+    "clipping_ratio": 0.0,
+    "silence_ratio": 0.092,
+    "estimated_snr": 27.8,
+    "speech_or_vocal_ratio": 0.908,
+    "music_probability": 0.599,
+    "multiple_speaker_probability": 0.372
+  },
+  "sha256": "4b56859e518cb3600837dfaf9597c479b42859b734d9dc6efa05a04c14fb3cd1",
+  "segment": {
+    "start": 0.0,
+    "end": 7.85,
+    "score": 1.0
+  }
+}

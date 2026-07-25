@@ -1,0 +1,34 @@
+{
+  "source_path": "/Users/Takuro/GGD/voice-reference-pipeline/incoming/user_owned/godie-hblm.wav",
+  "file": "godie-hblm.wav",
+  "hero_id": "godie-hblm",
+  "variant": 1,
+  "license_bucket": "user_owned",
+  "inspected_at": "2026-07-25T07:46:51+00:00",
+  "verdict": "needs_review",
+  "reject_reasons": [],
+  "review_notes": [
+    "human_override(workspace_user): multi_speaker(heuristic)"
+  ],
+  "metrics": {
+    "duration": 11.9,
+    "sample_rate": 24000,
+    "channels": 1,
+    "bit_depth": 16,
+    "integrated_loudness": -19.3,
+    "true_peak": -5.8,
+    "loudness_range": 3.8,
+    "clipping_ratio": 0.0,
+    "silence_ratio": 0.427,
+    "estimated_snr": 134.3,
+    "speech_or_vocal_ratio": 0.532,
+    "music_probability": 0.493,
+    "multiple_speaker_probability": 0.711
+  },
+  "sha256": "b289dd9b3666898217f013714de626fd94c25fe8568d49c0ce23fa73ac80db6f",
+  "segment": {
+    "start": 0.0,
+    "end": 11.9,
+    "score": 1.0
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "source_path": "/Users/Takuro/GGD/voice-reference-pipeline/incoming/user_owned/godie-h02u.wav",
+  "file": "godie-h02u.wav",
+  "hero_id": "godie-h02u",
+  "variant": 1,
+  "license_bucket": "user_owned",
+  "inspected_at": "2026-07-25T07:46:50+00:00",
+  "verdict": "needs_review",
+  "reject_reasons": [],
+  "review_notes": [
+    "human_override(workspace_user): multi_speaker(heuristic)"
+  ],
+  "metrics": {
+    "duration": 12.62,
+    "sample_rate": 24000,
+    "channels": 1,
+    "bit_depth": 16,
+    "integrated_loudness": -18.7,
+    "true_peak": -1.0,
+    "loudness_range": 1.5,
+    "clipping_ratio": 0.0,
+    "silence_ratio": 0.48,
+    "estimated_snr": 132.5,
+    "speech_or_vocal_ratio": 0.52,
+    "music_probability": 0.382,
+    "multiple_speaker_probability": 0.884
+  },
+  "sha256": "d8c366e68300de064104ad3ec7b7a856aa7e04746f650210ba8ccfa0976c1d80",
+  "segment": {
+    "start": 0.0,
+    "end": 12.62,
+    "score": 1.0
+  }
+}

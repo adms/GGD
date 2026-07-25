@@ -16,18 +16,22 @@ import numpy as np  # noqa: E402
 
 import audio_metrics  # noqa: E402
 import build_manifest  # noqa: E402
+import inspect_audio  # noqa: E402
 import pipeline_util as pu  # noqa: E402
 import search_candidates  # noqa: E402
+
+
+HERO_COUNT = 51  # 48 + 2026-07-25 追加的 賈修貝爾/揍敵客桀諾/喪標麥可
 
 
 class TestHeroesCsv(unittest.TestCase):
     def setUp(self) -> None:
         self.heroes = pu.load_heroes()
 
-    def test_48_unique_heroes(self) -> None:
-        self.assertEqual(len(self.heroes), 48)
+    def test_unique_heroes(self) -> None:
+        self.assertEqual(len(self.heroes), HERO_COUNT)
         ids = [h["id"] for h in self.heroes]
-        self.assertEqual(len(set(ids)), 48)
+        self.assertEqual(len(set(ids)), HERO_COUNT)
 
     def test_initial_status_missing(self) -> None:
         self.assertTrue(all(h["status"] == "missing" for h in self.heroes))
@@ -121,7 +125,7 @@ class TestSegmentScoring(unittest.TestCase):
 class TestInstructGeneration(unittest.TestCase):
     def test_all_scenes_for_all_heroes(self) -> None:
         rows = build_manifest.build_instructs(pu.load_heroes(), pu.load_instruct_seeds())
-        self.assertEqual(len(rows), 48)
+        self.assertEqual(len(rows), HERO_COUNT)
         for row in rows:
             for scene in ("default", "attack", "ultimate", "hurt", "death"):
                 text = row[f"{scene}_instruct_ja"]
@@ -135,11 +139,51 @@ class TestInstructGeneration(unittest.TestCase):
         self.assertIn("放電", rows["godie-ofar"]["ultimate_instruct_ja"])
 
 
+class TestReviewOverride(unittest.TestCase):
+    OVERRIDE = {"file": "x.wav", "decision": "accept", "reviewer": "tester"}
+
+    def test_heuristic_only_rejection_is_demoted(self) -> None:
+        verdict, reject, review = inspect_audio.apply_review_override(
+            "rejected", ["background_music(heuristic)"], [], self.OVERRIDE)
+        self.assertEqual(verdict, "needs_review")
+        self.assertEqual(reject, [])
+        self.assertTrue(any("human_override" in n for n in review))
+
+    def test_hard_failure_stands(self) -> None:
+        verdict, reject, _ = inspect_audio.apply_review_override(
+            "rejected", ["clipping", "background_music(heuristic)"], [], self.OVERRIDE)
+        self.assertEqual(verdict, "rejected")
+        self.assertEqual(len(reject), 2)
+
+    def test_no_override_is_noop(self) -> None:
+        verdict, reject, _ = inspect_audio.apply_review_override(
+            "rejected", ["background_music(heuristic)"], [], None)
+        self.assertEqual(verdict, "rejected")
+        self.assertEqual(reject, ["background_music(heuristic)"])
+
+    def test_overrides_csv_loads_expected_files(self) -> None:
+        overrides = inspect_audio.load_review_overrides()
+        for name in ("godie-h02k.wav", "godie-hpb1.wav", "godie-nplh.wav",
+                     "godie-osam.wav", "godie-u00v.wav"):
+            self.assertIn(name, overrides)
+
+
 class TestCosine(unittest.TestCase):
     def test_cosine_similarity(self) -> None:
         self.assertAlmostEqual(audio_metrics.cosine_similarity([1, 0], [1, 0]), 1.0)
         self.assertAlmostEqual(audio_metrics.cosine_similarity([1, 0], [0, 1]), 0.0)
         self.assertEqual(audio_metrics.cosine_similarity([0, 0], [1, 1]), 0.0)
+
+    def test_feature_similarity_orders_by_distance(self) -> None:
+        same = audio_metrics.feature_similarity([1.0, -1.0], [1.0, -1.0])
+        near = audio_metrics.feature_similarity([1.0, -1.0], [1.5, -0.5])
+        far = audio_metrics.feature_similarity([1.0, -1.0], [-2.0, 2.0])
+        self.assertAlmostEqual(same, 1.0)
+        self.assertGreater(near, far)
+        # 同方向但音高分量差很大的向量不可再拿高分 (cosine 的缺陷)
+        growl = [-1.5, 0.8, 0.8]   # 低頻怪獸
+        squeak = [2.5, 0.8, 0.8]   # 高頻尖叫
+        self.assertLess(audio_metrics.feature_similarity(growl, squeak), 0.5)
 
 
 if __name__ == "__main__":

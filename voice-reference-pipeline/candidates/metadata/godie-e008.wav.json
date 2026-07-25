@@ -1,0 +1,32 @@
+{
+  "source_path": "/Users/Takuro/GGD/voice-reference-pipeline/incoming/user_owned/godie-e008.wav",
+  "file": "godie-e008.wav",
+  "hero_id": "godie-e008",
+  "variant": 1,
+  "license_bucket": "user_owned",
+  "inspected_at": "2026-07-25T07:46:48+00:00",
+  "verdict": "accepted",
+  "reject_reasons": [],
+  "review_notes": [],
+  "metrics": {
+    "duration": 5.673,
+    "sample_rate": 24000,
+    "channels": 1,
+    "bit_depth": 16,
+    "integrated_loudness": -18.7,
+    "true_peak": -5.2,
+    "loudness_range": 0.7,
+    "clipping_ratio": 0.0,
+    "silence_ratio": 0.085,
+    "estimated_snr": 20.7,
+    "speech_or_vocal_ratio": 0.906,
+    "music_probability": 0.646,
+    "multiple_speaker_probability": 0.592
+  },
+  "sha256": "58ec87b51ae8354d9558d55b5b2464dbf9289537a221538e75baf2defb9ff460",
+  "segment": {
+    "start": 0.0,
+    "end": 5.673,
+    "score": 1.0
+  }
+}

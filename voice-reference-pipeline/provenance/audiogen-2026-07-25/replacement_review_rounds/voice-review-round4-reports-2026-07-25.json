@@ -1,0 +1,99 @@
+{
+  "formatVersion": 2,
+  "reviewBatch": "replacement-round-4-2026-07-25",
+  "exportedAt": "2026-07-25T06:46:17.433Z",
+  "summary": {
+    "totalCharacters": 7,
+    "reviewedCharacters": 7,
+    "normalCharacters": 5,
+    "issueCharacters": 2,
+    "unreviewedCharacters": 0
+  },
+  "unreviewed": [],
+  "reports": [
+    {
+      "characterId": "godie-e00k",
+      "characterName": "安云",
+      "issues": [
+        "配音版本／聲優錯誤"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "必須重新抓取",
+      "createdAt": "2026-07-25 06:44:15",
+      "updatedAt": "2026-07-25 06:44:15"
+    },
+    {
+      "characterId": "godie-efur",
+      "characterName": "揍敵客大家長－揍敵客桀諾",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-25 06:46:14",
+      "updatedAt": "2026-07-25 06:46:14"
+    },
+    {
+      "characterId": "godie-hblm",
+      "characterName": "慈悲的王者－賈修貝爾",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-25 06:46:10",
+      "updatedAt": "2026-07-25 06:46:10"
+    },
+    {
+      "characterId": "godie-hpal",
+      "characterName": "藤井八雲",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-25 06:44:23",
+      "updatedAt": "2026-07-25 06:44:23"
+    },
+    {
+      "characterId": "godie-hpb1",
+      "characterName": "蒼月潮",
+      "issues": [
+        "雜訊明顯"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "必須重新抓取",
+      "createdAt": "2026-07-25 06:45:51",
+      "updatedAt": "2026-07-25 06:45:51"
+    },
+    {
+      "characterId": "godie-hvwd",
+      "characterName": "桔梗",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-25 06:45:58",
+      "updatedAt": "2026-07-25 06:45:58"
+    },
+    {
+      "characterId": "godie-udea",
+      "characterName": "飛鼠先生",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-25 06:46:06",
+      "updatedAt": "2026-07-25 06:46:06"
+    }
+  ]
+}

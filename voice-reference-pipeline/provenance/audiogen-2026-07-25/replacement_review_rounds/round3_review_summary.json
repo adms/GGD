@@ -1,0 +1,33 @@
+{
+  "reviewBatch": "replacement-round-3-2026-07-25",
+  "source": "reports/replacement_2026-07-25/voice-review-round3-reports-2026-07-25.json",
+  "reviewed": 16,
+  "lockedPasses": 11,
+  "redo": 5,
+  "lockedIds": [
+    "godie-e007",
+    "godie-h020",
+    "godie-h02k",
+    "godie-h02r",
+    "godie-hart",
+    "godie-n00b",
+    "godie-n00p",
+    "godie-no100",
+    "godie-ogld",
+    "godie-u00k",
+    "godie-ubal"
+  ],
+  "redoIds": [
+    "godie-e00k",
+    "godie-hpal",
+    "godie-hpb1",
+    "godie-hvwd",
+    "godie-udea"
+  ],
+  "issueCounts": {
+    "背景音樂太重": 3,
+    "完全不是該角色": 2,
+    "戰鬥音效太多": 1,
+    "混到其他角色": 1
+  }
+}

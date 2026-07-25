@@ -84,6 +84,29 @@ def verify_output(dest: Path, cfg: dict[str, Any]) -> str:
     return "; ".join(problems)
 
 
+def corrective_gain_pass(dest: Path, cfg: dict[str, Any]) -> str:
+    """Short clips can land off-target after linear two-pass loudnorm. Apply a
+    plain gain (TP-guarded by alimiter) to close the gap, keep only if better."""
+    target = cfg.get("target", {})
+    target_i, target_tp = _loudnorm_target(cfg)
+    lufs, _lra, _tp = ebur128(dest)
+    delta = target_i - lufs
+    fixed = dest.with_suffix(".gainfix.wav")
+    run_command([
+        "ffmpeg", "-v", "error", "-y", "-i", str(dest),
+        "-af", f"volume={delta:.2f}dB,alimiter=limit={10 ** (target_tp / 20):.4f}:level=false",
+        "-ar", str(int(target.get("sample_rate", 24000))),
+        "-ac", str(int(target.get("channels", 1))),
+        "-sample_fmt", str(target.get("sample_fmt", "s16")),
+        str(fixed),
+    ])
+    if abs(ebur128(fixed)[0] - target_i) < abs(lufs - target_i):
+        fixed.replace(dest)
+    else:
+        fixed.unlink()
+    return verify_output(dest, cfg)
+
+
 def normalize_one(src: Path, cfg: dict[str, Any], plog: ProcessingLog,
                   *, dry_run: bool, force: bool) -> Path | None:
     logger = get_logger("normalize_audio")
@@ -107,6 +130,9 @@ def normalize_one(src: Path, cfg: dict[str, Any], plog: ProcessingLog,
     measured = measure_pass(src, cfg)
     render_pass(src, dest, measured, cfg)
     problems = verify_output(dest, cfg)
+    if problems and "loudness" in problems:
+        logger.info("%s: %s — applying corrective gain pass", dest.name, problems)
+        problems = corrective_gain_pass(dest, cfg)
     status = "ok" if not problems else "verify_warn"
     if problems:
         logger.warning("%s: %s", dest.name, problems)

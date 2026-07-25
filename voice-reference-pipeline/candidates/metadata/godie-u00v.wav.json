@@ -1,0 +1,34 @@
+{
+  "source_path": "/Users/Takuro/GGD/voice-reference-pipeline/incoming/user_owned/godie-u00v.wav",
+  "file": "godie-u00v.wav",
+  "hero_id": "godie-u00v",
+  "variant": 1,
+  "license_bucket": "user_owned",
+  "inspected_at": "2026-07-25T07:46:55+00:00",
+  "verdict": "needs_review",
+  "reject_reasons": [],
+  "review_notes": [
+    "human_override(workspace_user): multi_speaker(heuristic)"
+  ],
+  "metrics": {
+    "duration": 8.0,
+    "sample_rate": 24000,
+    "channels": 1,
+    "bit_depth": 16,
+    "integrated_loudness": -19.1,
+    "true_peak": -1.0,
+    "loudness_range": 2.9,
+    "clipping_ratio": 0.0,
+    "silence_ratio": 0.139,
+    "estimated_snr": 41.6,
+    "speech_or_vocal_ratio": 0.861,
+    "music_probability": 0.481,
+    "multiple_speaker_probability": 0.898
+  },
+  "sha256": "1e3adec53b4c8659a9c05f2cfb9522958d3daae4bb5b3d922fd371be13c25d3c",
+  "segment": {
+    "start": 0.0,
+    "end": 8.0,
+    "score": 1.0
+  }
+}

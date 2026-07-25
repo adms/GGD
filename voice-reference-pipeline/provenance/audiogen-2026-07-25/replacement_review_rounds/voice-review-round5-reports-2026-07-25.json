@@ -1,0 +1,39 @@
+{
+  "formatVersion": 2,
+  "reviewBatch": "replacement-round-5-2026-07-25",
+  "exportedAt": "2026-07-25T06:56:43.328Z",
+  "summary": {
+    "totalCharacters": 2,
+    "reviewedCharacters": 2,
+    "normalCharacters": 2,
+    "issueCharacters": 0,
+    "unreviewedCharacters": 0
+  },
+  "unreviewed": [],
+  "reports": [
+    {
+      "characterId": "godie-e00k",
+      "characterName": "安云",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-25 06:56:36",
+      "updatedAt": "2026-07-25 06:56:36"
+    },
+    {
+      "characterId": "godie-hpb1",
+      "characterName": "蒼月潮",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-25 06:56:41",
+      "updatedAt": "2026-07-25 06:56:41"
+    }
+  ]
+}

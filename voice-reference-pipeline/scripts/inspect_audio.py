@@ -21,14 +21,41 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from audio_metrics import compute_metrics  # noqa: E402
 from pipeline_util import (  # noqa: E402
-    ProcessingLog, REJECTED_DIR, REPORTS_DIR, get_logger, iter_incoming_files,
-    license_mode, load_heroes, load_metadata, load_processing_config,
-    parse_ref_filename, save_metadata, sha256_of, utcnow_iso, write_csv_rows,
+    CONFIG_DIR, ProcessingLog, REJECTED_DIR, REPORTS_DIR, get_logger,
+    iter_incoming_files, license_mode, load_heroes, load_metadata,
+    load_processing_config, parse_ref_filename, read_csv_rows, save_metadata,
+    sha256_of, utcnow_iso, write_csv_rows,
 )
 
 REJECTED_FIELDS = ("id", "character", "file", "stage", "reject_reasons",
                    "duration", "integrated_loudness", "silence_ratio",
                    "clipping_ratio", "license_bucket", "timestamp")
+
+# 只有啟發式估計造成的拒絕可被人工覆核推翻；硬性缺陷(過短/爆音/損毀/靜音過多)不可。
+OVERRIDABLE_REASONS = {"background_music(heuristic)", "multi_speaker(heuristic)"}
+
+
+def load_review_overrides() -> dict[str, dict[str, str]]:
+    """config/review_overrides.csv: 人工覆核決定, 以檔名為鍵。"""
+    path = CONFIG_DIR / "review_overrides.csv"
+    if not path.exists():
+        return {}
+    return {row["file"]: row for row in read_csv_rows(path)
+            if row.get("decision") == "accept"}
+
+
+def apply_review_override(
+    verdict: str, reject: list[str], review: list[str],
+    override: dict[str, str] | None,
+) -> tuple[str, list[str], list[str]]:
+    """Demote heuristic-only rejections to needs_review when a human already
+    reviewed and accepted the clip. Hard failures always stand."""
+    if override is None or verdict != "rejected":
+        return verdict, reject, review
+    if not set(reject) <= OVERRIDABLE_REASONS:
+        return verdict, reject, review
+    demoted = [f"human_override({override.get('reviewer', '?')}): {r}" for r in reject]
+    return "needs_review", [], review + demoted
 
 
 def evaluate(metrics: dict[str, Any], license_tag: str, mode: str,
@@ -65,6 +92,7 @@ def evaluate(metrics: dict[str, Any], license_tag: str, mode: str,
 
 def inspect_file(path: Path, license_tag: str, heroes: dict[str, dict[str, str]],
                  cfg: dict[str, Any], mode: str, plog: ProcessingLog,
+                 overrides: dict[str, dict[str, str]],
                  *, dry_run: bool, force: bool) -> dict[str, Any]:
     logger = get_logger("inspect_audio")
     parsed = parse_ref_filename(path.name)
@@ -101,6 +129,8 @@ def inspect_file(path: Path, license_tag: str, heroes: dict[str, dict[str, str]]
             logger.error("%s: decode failed: %s", path.name, exc)
         else:
             verdict, reject, review = evaluate(metrics.as_dict(), license_tag, mode, cfg)
+            verdict, reject, review = apply_review_override(
+                verdict, reject, review, overrides.get(path.name))
             entry.update(verdict=verdict, reject_reasons=reject,
                          review_notes=review, metrics=metrics.as_dict(),
                          sha256=sha256_of(path))
@@ -133,7 +163,11 @@ def run(*, dry_run: bool = False, force: bool = False,
     logger.info("incoming files: %d (license mode=%s)", len(files), mode)
 
     plog = ProcessingLog()
-    results = [inspect_file(p, tag, heroes, cfg, mode, plog, dry_run=dry_run, force=force)
+    overrides = load_review_overrides()
+    if overrides:
+        logger.info("review overrides loaded: %d files", len(overrides))
+    results = [inspect_file(p, tag, heroes, cfg, mode, plog, overrides,
+                            dry_run=dry_run, force=force)
                for p, tag in files]
 
     rejected_rows = [{

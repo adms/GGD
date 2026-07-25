@@ -1,0 +1,30 @@
+{
+  "formatVersion": 1,
+  "generatedAt": "2026-07-25T07:07:02.746538+00:00",
+  "totalHeroes": 51,
+  "totalWavFiles": 51,
+  "initialApproved": 5,
+  "replacementApproved": 46,
+  "humanReviewAllPassed": true,
+  "automatedWarningsSupersededByHumanReview": [
+    "godie-h02k",
+    "godie-hpb1",
+    "godie-nplh",
+    "godie-osam",
+    "godie-u00v"
+  ],
+  "audioFormat": {
+    "container": "WAV",
+    "codec": "PCM signed 16-bit little-endian",
+    "sampleRate": 24000,
+    "channels": 1,
+    "durationTargetSeconds": [
+      5,
+      15
+    ]
+  },
+  "totalDurationSeconds": 467.69,
+  "manifest": "reports/final_voice_reference_manifest.csv",
+  "compatibleCosyVoiceManifest": "reports/voice_reference_manifest.csv",
+  "audioDirectory": "approved/processed"
+}

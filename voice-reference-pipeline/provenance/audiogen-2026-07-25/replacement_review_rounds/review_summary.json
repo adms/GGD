@@ -1,0 +1,23 @@
+{
+  "formatVersion": 1,
+  "inputReport": "/Users/Takuro/Dropbox/我的 Mac (Moriya.local)/Documents/AudioGen/voice-reference-pipeline/reports/replacement_2026-07-25/voice-review-reports-2026-07-24.json",
+  "inputExportedAt": "2026-07-24T18:36:24.639Z",
+  "total": 48,
+  "preserveNormal": 5,
+  "replace": 43,
+  "normalIds": [
+    "godie-e001",
+    "godie-nplh",
+    "godie-osam",
+    "godie-u00j",
+    "godie-u00v"
+  ],
+  "issueCounts": {
+    "完全不是該角色": 25,
+    "沒有可播放音檔": 12,
+    "背景音樂太重": 5,
+    "混到其他角色": 1,
+    "主要是其他角色": 1
+  },
+  "exactGameAssetPagesSelected": 21
+}

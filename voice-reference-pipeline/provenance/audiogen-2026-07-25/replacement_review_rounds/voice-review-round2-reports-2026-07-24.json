@@ -1,0 +1,534 @@
+{
+  "formatVersion": 2,
+  "reviewBatch": "replacement-round-2-2026-07-25",
+  "exportedAt": "2026-07-24T21:06:25.015Z",
+  "summary": {
+    "totalCharacters": 43,
+    "reviewedCharacters": 43,
+    "normalCharacters": 31,
+    "issueCharacters": 12,
+    "unreviewedCharacters": 0
+  },
+  "unreviewed": [],
+  "reports": [
+    {
+      "characterId": "godie-e002",
+      "characterName": "Saber",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-24 20:59:46",
+      "updatedAt": "2026-07-24 20:59:46"
+    },
+    {
+      "characterId": "godie-e007",
+      "characterName": "天地志狼",
+      "issues": [
+        "完全不是該角色"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "必須重新抓取",
+      "createdAt": "2026-07-24 21:00:00",
+      "updatedAt": "2026-07-24 21:00:00"
+    },
+    {
+      "characterId": "godie-e008",
+      "characterName": "夏娜",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-24 21:00:08",
+      "updatedAt": "2026-07-24 21:00:08"
+    },
+    {
+      "characterId": "godie-e00k",
+      "characterName": "安云",
+      "issues": [
+        "背景音樂太重"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "必須重新抓取",
+      "createdAt": "2026-07-24 21:00:22",
+      "updatedAt": "2026-07-24 21:00:22"
+    },
+    {
+      "characterId": "godie-e00r",
+      "characterName": "初號機",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-24 21:00:31",
+      "updatedAt": "2026-07-24 21:00:31"
+    },
+    {
+      "characterId": "godie-e00w",
+      "characterName": "櫻綻剎那",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-24 21:00:37",
+      "updatedAt": "2026-07-24 21:00:37"
+    },
+    {
+      "characterId": "godie-edem",
+      "characterName": "宇智波佐助",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-24 21:00:45",
+      "updatedAt": "2026-07-24 21:00:45"
+    },
+    {
+      "characterId": "godie-emfr",
+      "characterName": "涅吉",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-24 21:00:49",
+      "updatedAt": "2026-07-24 21:00:49"
+    },
+    {
+      "characterId": "godie-emns",
+      "characterName": "夜神月",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-24 21:00:54",
+      "updatedAt": "2026-07-24 21:00:54"
+    },
+    {
+      "characterId": "godie-etyr",
+      "characterName": "木乃香",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-24 21:01:02",
+      "updatedAt": "2026-07-24 21:01:02"
+    },
+    {
+      "characterId": "godie-h00l",
+      "characterName": "林克",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-24 21:01:07",
+      "updatedAt": "2026-07-24 21:01:07"
+    },
+    {
+      "characterId": "godie-h01n",
+      "characterName": "黑崎一護",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-24 21:01:11",
+      "updatedAt": "2026-07-24 21:01:11"
+    },
+    {
+      "characterId": "godie-h01u",
+      "characterName": "呂布奉先",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-24 21:01:16",
+      "updatedAt": "2026-07-24 21:01:16"
+    },
+    {
+      "characterId": "godie-h020",
+      "characterName": "莉娜因巴斯",
+      "issues": [
+        "完全不是該角色"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "必須重新抓取",
+      "createdAt": "2026-07-24 21:01:27",
+      "updatedAt": "2026-07-24 21:01:27"
+    },
+    {
+      "characterId": "godie-h02k",
+      "characterName": "熊貓",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-24 21:01:36",
+      "updatedAt": "2026-07-24 21:01:36"
+    },
+    {
+      "characterId": "godie-h02r",
+      "characterName": "妙蛙花",
+      "issues": [
+        "完全不是該角色"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "必須重新抓取",
+      "createdAt": "2026-07-24 21:01:53",
+      "updatedAt": "2026-07-24 21:01:53"
+    },
+    {
+      "characterId": "godie-h02u",
+      "characterName": "草泥馬",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-24 21:01:58",
+      "updatedAt": "2026-07-24 21:01:58"
+    },
+    {
+      "characterId": "godie-hapm",
+      "characterName": "Berserker",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-24 21:02:03",
+      "updatedAt": "2026-07-24 21:02:03"
+    },
+    {
+      "characterId": "godie-hart",
+      "characterName": "克勞德",
+      "issues": [
+        "完全不是該角色",
+        "背景音樂太重"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "必須重新抓取",
+      "createdAt": "2026-07-24 21:02:14",
+      "updatedAt": "2026-07-24 21:02:14"
+    },
+    {
+      "characterId": "godie-hpal",
+      "characterName": "藤井八雲",
+      "issues": [
+        "背景音樂太重"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "必須重新抓取",
+      "createdAt": "2026-07-24 21:02:32",
+      "updatedAt": "2026-07-24 21:02:32"
+    },
+    {
+      "characterId": "godie-hpb1",
+      "characterName": "蒼月潮",
+      "issues": [
+        "背景音樂太重",
+        "戰鬥音效太多"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "必須重新抓取",
+      "createdAt": "2026-07-24 21:02:49",
+      "updatedAt": "2026-07-24 21:02:49"
+    },
+    {
+      "characterId": "godie-huth",
+      "characterName": "魔人普烏",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-24 21:02:56",
+      "updatedAt": "2026-07-24 21:02:56"
+    },
+    {
+      "characterId": "godie-hvsh",
+      "characterName": "Rider",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-24 21:03:02",
+      "updatedAt": "2026-07-24 21:03:02"
+    },
+    {
+      "characterId": "godie-hvwd",
+      "characterName": "桔梗",
+      "issues": [
+        "完全不是該角色"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "必須重新抓取",
+      "createdAt": "2026-07-24 21:03:10",
+      "updatedAt": "2026-07-24 21:03:10"
+    },
+    {
+      "characterId": "godie-n003",
+      "characterName": "依文潔琳",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-24 21:03:15",
+      "updatedAt": "2026-07-24 21:03:15"
+    },
+    {
+      "characterId": "godie-n00b",
+      "characterName": "哆拉A夢",
+      "issues": [
+        "背景音樂太重"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "必須重新抓取",
+      "createdAt": "2026-07-24 21:03:27",
+      "updatedAt": "2026-07-24 21:03:27"
+    },
+    {
+      "characterId": "godie-n00p",
+      "characterName": "南野秀一",
+      "issues": [
+        "完全不是該角色",
+        "主要是其他角色"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "必須重新抓取",
+      "createdAt": "2026-07-24 21:03:45",
+      "updatedAt": "2026-07-24 21:03:45"
+    },
+    {
+      "characterId": "godie-n01c",
+      "characterName": "勇者小呆",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-24 21:03:52",
+      "updatedAt": "2026-07-24 21:03:52"
+    },
+    {
+      "characterId": "godie-o00k",
+      "characterName": "皮卡娘",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-24 21:04:01",
+      "updatedAt": "2026-07-24 21:04:01"
+    },
+    {
+      "characterId": "godie-o00l",
+      "characterName": "傑洛士",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-24 21:04:06",
+      "updatedAt": "2026-07-24 21:04:06"
+    },
+    {
+      "characterId": "godie-o00x",
+      "characterName": "悟空",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-24 21:04:12",
+      "updatedAt": "2026-07-24 21:04:12"
+    },
+    {
+      "characterId": "godie-o02p",
+      "characterName": "初音",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-24 21:04:24",
+      "updatedAt": "2026-07-24 21:04:24"
+    },
+    {
+      "characterId": "godie-ofar",
+      "characterName": "皮卡丘",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-24 21:04:33",
+      "updatedAt": "2026-07-24 21:04:33"
+    },
+    {
+      "characterId": "godie-ogld",
+      "characterName": "黑人牙膏",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-24 21:04:44",
+      "updatedAt": "2026-07-24 21:04:44"
+    },
+    {
+      "characterId": "godie-orkn",
+      "characterName": "臭作",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-24 21:04:48",
+      "updatedAt": "2026-07-24 21:04:48"
+    },
+    {
+      "characterId": "godie-u00h",
+      "characterName": "鬼畜狂刀KYO",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-24 21:05:01",
+      "updatedAt": "2026-07-24 21:05:01"
+    },
+    {
+      "characterId": "godie-u00k",
+      "characterName": "死之王",
+      "issues": [
+        "完全不是該角色"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "必須重新抓取",
+      "createdAt": "2026-07-24 21:05:20",
+      "updatedAt": "2026-07-24 21:05:20"
+    },
+    {
+      "characterId": "godie-u00l",
+      "characterName": "拳四郎",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-24 21:05:26",
+      "updatedAt": "2026-07-24 21:05:26"
+    },
+    {
+      "characterId": "godie-u00n",
+      "characterName": "蒙其.D.魯夫",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-24 21:05:30",
+      "updatedAt": "2026-07-24 21:05:30"
+    },
+    {
+      "characterId": "godie-u010",
+      "characterName": "飛影",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-24 21:05:42",
+      "updatedAt": "2026-07-24 21:05:42"
+    },
+    {
+      "characterId": "godie-u01u",
+      "characterName": "索隆",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-24 21:05:45",
+      "updatedAt": "2026-07-24 21:05:45"
+    },
+    {
+      "characterId": "godie-ubal",
+      "characterName": "巴恩大魔王",
+      "issues": [
+        "混到其他角色"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "必須重新抓取",
+      "createdAt": "2026-07-24 21:06:03",
+      "updatedAt": "2026-07-24 21:06:03"
+    },
+    {
+      "characterId": "godie-udea",
+      "characterName": "飛鼠先生",
+      "issues": [
+        "正常沒問題"
+      ],
+      "reason": "",
+      "referenceUrl": "",
+      "priority": "暫時略過",
+      "createdAt": "2026-07-24 21:06:21",
+      "updatedAt": "2026-07-24 21:06:21"
+    }
+  ]
+}

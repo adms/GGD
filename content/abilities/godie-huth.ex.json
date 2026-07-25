@@ -1,6 +1,6 @@
 {
   "id": "godie-huth.ex",
-  "name": "28-002 普烏死亡",
+  "name": "28-002 純粹魔人普烏",
   "icon": "assets/icons/abilities/godie-huth.ex.webp",
   "slot": "EX",
   "castType": "self",
@@ -27,5 +27,6 @@
   ],
   "vfxKey": "fx.prim.void.explosion-lg",
   "schema": "ability@1",
-  "castTimeSec": 0.4
+  "castTimeSec": 0.4,
+  "description": "[強化]\n60秒冷卻時間\n\n普烏被逼至絕境時的最終手段——捨棄圓潤外型，回歸最純粹兇暴的原初魔人。（機制沿用原 w3x 28-002，數值待對帳補述）"
 }

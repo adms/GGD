@@ -1,0 +1,32 @@
+{
+  "source_path": "/Users/Takuro/GGD/voice-reference-pipeline/incoming/user_owned/godie-emns.wav",
+  "file": "godie-emns.wav",
+  "hero_id": "godie-emns",
+  "variant": 1,
+  "license_bucket": "user_owned",
+  "inspected_at": "2026-07-25T07:46:49+00:00",
+  "verdict": "accepted",
+  "reject_reasons": [],
+  "review_notes": [],
+  "metrics": {
+    "duration": 8.0,
+    "sample_rate": 24000,
+    "channels": 1,
+    "bit_depth": 16,
+    "integrated_loudness": -17.9,
+    "true_peak": -3.0,
+    "loudness_range": 0.6,
+    "clipping_ratio": 0.0,
+    "silence_ratio": 0.078,
+    "estimated_snr": 20.3,
+    "speech_or_vocal_ratio": 0.922,
+    "music_probability": 0.599,
+    "multiple_speaker_probability": 0.625
+  },
+  "sha256": "03a8f2de5dfe500beadaae53617a989d54118af26b65c6f4db5cdfa5a7aab16e",
+  "segment": {
+    "start": 0.0,
+    "end": 8.0,
+    "score": 1.0
+  }
+}

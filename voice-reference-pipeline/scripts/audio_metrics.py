@@ -411,23 +411,28 @@ def proxy_embedding(features: dict[str, float]) -> list[float]:
     return [(features.get(name, mean) - mean) / std for name, mean, std in _PROXY_SCALES]
 
 
+_ECAPA_CLASSIFIER: Any | None = None
+
+
 def try_speechbrain_embedding(path: Path) -> list[float] | None:
-    """ECAPA-TDNN speaker embedding when speechbrain+torch are installed."""
+    """ECAPA-TDNN speaker embedding when speechbrain+torch are installed.
+
+    Audio is decoded via our own ffmpeg path (16 kHz mono float32) instead of
+    torchaudio.load, which needs the optional torchcodec package."""
+    global _ECAPA_CLASSIFIER
     try:
         import torch  # type: ignore[import-not-found]
-        import torchaudio  # type: ignore[import-not-found]
         from speechbrain.inference.speaker import EncoderClassifier  # type: ignore[import-not-found]
     except ImportError:
         return None
-    classifier = EncoderClassifier.from_hparams(
-        source="speechbrain/spkrec-ecapa-voxceleb",
-        savedir=str(Path.home() / ".cache" / "speechbrain-ecapa"),
-    )
-    signal, sr = torchaudio.load(str(path))
-    if sr != 16000:
-        signal = torchaudio.functional.resample(signal, sr, 16000)
+    if _ECAPA_CLASSIFIER is None:
+        _ECAPA_CLASSIFIER = EncoderClassifier.from_hparams(
+            source="speechbrain/spkrec-ecapa-voxceleb",
+            savedir=str(Path.home() / ".cache" / "speechbrain-ecapa"),
+        )
+    signal = torch.from_numpy(decode_pcm(path, sr=16000).copy()).unsqueeze(0)
     with torch.no_grad():
-        emb = classifier.encode_batch(signal)
+        emb = _ECAPA_CLASSIFIER.encode_batch(signal)
     return [float(x) for x in emb.squeeze().tolist()]
 
 
@@ -437,3 +442,13 @@ def cosine_similarity(a: list[float], b: list[float]) -> float:
     if denom == 0.0:
         return 0.0
     return float(np.dot(va, vb) / denom)
+
+
+def feature_similarity(a: list[float], b: list[float], scale: float = 3.0) -> float:
+    """Distance-based similarity for z-scaled acoustic feature vectors.
+
+    Cosine is wrong for z-score vectors (shared large components dominate and
+    e.g. a deep growl vs a high squeak can score ~0.98). exp(-||a-b||/scale)
+    keeps ordering meaningful: identical voices -> 1.0, very different -> ~0."""
+    va, vb = np.asarray(a), np.asarray(b)
+    return float(np.exp(-np.linalg.norm(va - vb) / max(scale, 1e-6)))

@@ -802,11 +802,11 @@
    "note": "公式技名 (プラネットバースト等) と同定できず。意訳読み"
   },
   "godie-huth.ex": {
-   "name": "普烏死亡",
-   "kana": "ブウ シス",
-   "basis": "styled",
-   "sourceUrl": "",
-   "note": "「ブウ、死す」風の劇的宣告読み。GGDオリジナル技名"
+   "name": "純粹魔人普烏",
+   "kana": "ジュンスイ マジン ブウ",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E9%AD%94%E4%BA%BA%E3%83%96%E3%82%A6",
+   "note": "正典形態名純粋魔人ブウ(原「普烏死亡」為佔位標籤)"
   },
   "godie-hvsh.q": {
    "name": "魔法鎖鏈",
@@ -865,11 +865,11 @@
    "note": "中国語成語の音読み"
   },
   "godie-hvwd.r": {
-   "name": "百鬼夜行",
-   "kana": "ヒャッキ ヤコウ",
-   "basis": "onyomi",
-   "sourceUrl": "",
-   "note": "標準読み"
+   "name": "死魂蟲",
+   "kana": "シニダマチュウ",
+   "basis": "canonical",
+   "sourceUrl": "https://dic.pixiv.net/a/%E6%AD%BB%E9%AD%82%E8%99%AB",
+   "note": "桔梗正典しにだまちゅう(原「百鬼夜行」屬滑頭鬼之孫)"
   },
   "godie-hvwd.ex": {
    "name": "神通眼",
@@ -1257,11 +1257,11 @@
    "note": "黒化(こくか)。冷静な悪役が静かに宣告する想定。"
   },
   "godie-ogld.ex": {
-   "name": "億萬星殞落",
-   "kana": "ビリオン スターフォール",
+   "name": "億萬衛星殞落",
+   "kana": "ティン ニー ジョーマ シュオ ニー ヘン ヨン オ",
    "basis": "styled",
    "sourceUrl": "",
-   "note": "大範圍流星雨の意訳片假名。中二風に英語化。"
+   "note": "owner 定名+空耳語音「聽你這麼說,你很勇喔?」(2026-07-25)"
   },
   "godie-orkn.q": {
    "name": "綁架",
@@ -1299,25 +1299,25 @@
    "note": "変態紳士(へんたいしんし)は日本のネットミーム語としても定着した読み。"
   },
   "godie-osam.q": {
-   "name": "風華之爪",
-   "kana": "フウカ ノ ツメ",
-   "basis": "styled",
-   "sourceUrl": "",
-   "note": "原作技名に該当なし(被動)。原作の毒華爪(どっかそう)の型に倣うならフウカソウだが、GGD表示名を素直に読む形を採用。"
+   "name": "毒華爪",
+   "kana": "ドッカソウ",
+   "basis": "canonical",
+   "sourceUrl": "https://ja.wikipedia.org/wiki/%E6%AE%BA%E7%94%9F%E4%B8%B8",
+   "note": "殺生丸正典爪技どっかそう(2026-07-25稽核正名, 原「風華之爪」查無出處)"
   },
   "godie-osam.w": {
-   "name": "合氣斬",
-   "kana": "アイキザン",
-   "basis": "styled",
-   "sourceUrl": "",
-   "note": "原作に該当なし(会心被動)。合気=あいきの慣用読み。"
+   "name": "閃光鞭",
+   "kana": "ヒカリ ノ ムチ",
+   "basis": "canonical",
+   "sourceUrl": "https://ja.wikipedia.org/wiki/%E6%AE%BA%E7%94%9F%E4%B8%B8",
+   "note": "正典「光の鞭」;顯示名沿用中譯閃光鞭(原「合氣斬」為WC3模板名)"
   },
   "godie-osam.e": {
-   "name": "爆碎丸",
+   "name": "爆碎牙",
    "kana": "バクサイガ",
    "basis": "canonical",
    "sourceUrl": "https://ja.wikipedia.org/wiki/%E6%AE%BA%E7%94%9F%E4%B8%B8",
-   "note": "GGD説明「新生的爆碎丸」=殺生丸が大妖怪覚醒で得た自前の剣「爆砕牙(ばくさいが)」。表示名は丸だが原作読みバクサイガで喊ぶ。pixiv百科・Wikipediaで読み再確認済み。"
+   "note": "正典ばくさいが(原「爆碎丸」末字誤植)"
   },
   "godie-osam.r": {
    "name": "奧義˙蒼龍破",
@@ -1334,21 +1334,21 @@
    "note": "刀々斎に打ち直された天生牙の奥義・冥道残月破(めいどうざんげつは)。空間を切り冥界へ直接送る技、GGD効果とも一致。完結編第3話タイトルでも確認。"
   },
   "godie-u00h.q": {
-   "name": "無名神風流-白虎",
+   "name": "無明神風流-白虎",
    "kana": "ムミョウ ジンプウリュウ ビャッコ",
    "basis": "canonical",
    "sourceUrl": "https://hissatuwaza.kill.jp/setume/kyo.htm",
    "note": "正式表記は無明神風流(むみょうじんぷうりゅう/Weblio逐字確認)。白虎(びゃっこ)は四神奥義の一つ(Wikipedia「無明神風流奥義・白虎」)。"
   },
   "godie-u00h.w": {
-   "name": "無名神風流-朱雀",
+   "name": "無明神風流-朱雀",
    "kana": "ムミョウ ジンプウリュウ スザク",
    "basis": "canonical",
    "sourceUrl": "https://hissatuwaza.kill.jp/setume/kyo.htm",
    "note": "四神奥義の一つ、火の鳥の神風を放つ朱雀(すざく)。必殺技辞典で読み確認。"
   },
   "godie-u00h.e": {
-   "name": "無名神風流-蛟龍",
+   "name": "無明神風流-蛟龍",
    "kana": "ムミョウ ジンプウリュウ ミズチ",
    "basis": "canonical",
    "sourceUrl": "https://hissatuwaza.kill.jp/setume/kyo.htm",

@@ -1,0 +1,22 @@
+{
+  "reviewBatch": "replacement-round-4-2026-07-25",
+  "source": "reports/replacement_2026-07-25/voice-review-round4-reports-2026-07-25.json",
+  "reviewed": 7,
+  "lockedPasses": 5,
+  "redo": 2,
+  "lockedIds": [
+    "godie-efur",
+    "godie-hblm",
+    "godie-hpal",
+    "godie-hvwd",
+    "godie-udea"
+  ],
+  "redoIds": [
+    "godie-e00k",
+    "godie-hpb1"
+  ],
+  "issueCounts": {
+    "配音版本／聲優錯誤": 1,
+    "雜訊明顯": 1
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "source_path": "/Users/Takuro/GGD/voice-reference-pipeline/incoming/user_owned/godie-hpal.wav",
+  "file": "godie-hpal.wav",
+  "hero_id": "godie-hpal",
+  "variant": 1,
+  "license_bucket": "user_owned",
+  "inspected_at": "2026-07-25T07:46:51+00:00",
+  "verdict": "accepted",
+  "reject_reasons": [],
+  "review_notes": [],
+  "metrics": {
+    "duration": 11.3,
+    "sample_rate": 24000,
+    "channels": 1,
+    "bit_depth": 16,
+    "integrated_loudness": -19.3,
+    "true_peak": -1.2,
+    "loudness_range": 5.8,
+    "clipping_ratio": 0.0,
+    "silence_ratio": 0.474,
+    "estimated_snr": 80.0,
+    "speech_or_vocal_ratio": 0.526,
+    "music_probability": 0.51,
+    "multiple_speaker_probability": 0.232
+  },
+  "sha256": "a8a343bb1f2bf36e38cc2ccfcc4ac9d2c8e48febfb0285e7dc5b92eaf58a1d1c",
+  "segment": {
+    "start": 0.0,
+    "end": 11.3,
+    "score": 1.0
+  }
+}

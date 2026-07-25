@@ -1,0 +1,11 @@
+{
+  "hero_id": "godie-o00x",
+  "source_name": "AudioGen final_51 2026-07-25 (user-attested, private_research)",
+  "source_url": "https://www.youtube.com/watch?v=m1g2aFOPPjc",
+  "direct_url": "https://www.youtube.com/watch?v=m1g2aFOPPjc",
+  "license_url": "",
+  "attestation": "workspace_user 2026-07-24: download; extract; synthetic_voice_reference",
+  "human_review": "locked_pass/round2",
+  "identity_basis": "exact named Japanese game voice files",
+  "source_sha256": "c6cfa714409e5d3e658d107c8ecbbb6641b68debad47b2d8ea41fbd822f2056c"
+}

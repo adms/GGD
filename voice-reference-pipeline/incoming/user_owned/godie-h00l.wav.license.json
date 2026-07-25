@@ -1,0 +1,11 @@
+{
+  "hero_id": "godie-h00l",
+  "source_name": "AudioGen final_51 2026-07-25 (user-attested, private_research)",
+  "source_url": "https://www.youtube.com/watch?v=2cK0DGC_r-w",
+  "direct_url": "https://www.youtube.com/watch?v=2cK0DGC_r-w",
+  "license_url": "",
+  "attestation": "workspace_user 2026-07-24: download; extract; synthetic_voice_reference",
+  "human_review": "locked_pass/round2",
+  "identity_basis": "exact named character voice files",
+  "source_sha256": "c9b4c05359ace74fec04cde693f66146de2bd5ebfbf2ba37d44e3484db631a89"
+}

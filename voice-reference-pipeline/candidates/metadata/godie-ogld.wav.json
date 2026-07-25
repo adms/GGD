@@ -1,0 +1,32 @@
+{
+  "source_path": "/Users/Takuro/GGD/voice-reference-pipeline/incoming/user_owned/godie-ogld.wav",
+  "file": "godie-ogld.wav",
+  "hero_id": "godie-ogld",
+  "variant": 1,
+  "license_bucket": "user_owned",
+  "inspected_at": "2026-07-25T07:46:54+00:00",
+  "verdict": "accepted",
+  "reject_reasons": [],
+  "review_notes": [],
+  "metrics": {
+    "duration": 14.74,
+    "sample_rate": 24000,
+    "channels": 1,
+    "bit_depth": 16,
+    "integrated_loudness": -18.8,
+    "true_peak": -1.9,
+    "loudness_range": 5.8,
+    "clipping_ratio": 0.0,
+    "silence_ratio": 0.343,
+    "estimated_snr": 21.6,
+    "speech_or_vocal_ratio": 0.656,
+    "music_probability": 0.579,
+    "multiple_speaker_probability": 0.295
+  },
+  "sha256": "34d17a4802d6a943731d8db2597f4b5794fb10b15bd28387a0599175ab6e7763",
+  "segment": {
+    "start": 0.0,
+    "end": 14.74,
+    "score": 1.0
+  }
+}

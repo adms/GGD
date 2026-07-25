@@ -2,8 +2,8 @@
 numpy>=2.0
 PyYAML>=6.0
 
-# ---- 可選：真正的 speaker embedding（Phase 7 分離度分析）----
-# 未安裝時自動退回 spectral_proxy 代理特徵（結果僅供排序參考）。
-# speechbrain>=1.0
-# torch>=2.2
-# torchaudio>=2.2
+# ---- Speaker embedding（Phase 7 分離度分析）----
+# 專案 venv 已安裝（2026-07-25）；未安裝時自動退回 spectral_proxy 並警告。
+speechbrain>=1.1
+torch>=2.13
+torchaudio>=2.13

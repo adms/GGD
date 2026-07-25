@@ -1,8 +1,8 @@
 {
   "id": "godie-hvwd.r",
-  "name": "02-04 百鬼夜行",
+  "name": "02-04 死魂蟲",
   "icon": "assets/icons/abilities/godie-hvwd.r.webp",
-  "description": "[主動攻擊]\n60秒冷卻時間\n\n招換6位式神，吸取附近敵軍部隊的生命能量。當他們回到身邊時，他們會將從犧牲者身上吸取的生命能量，用於補充生命值 。持續時間8秒。",
+  "description": "[主動攻擊]\n60秒冷卻時間\n\n放出6隻死魂蟲，吸取附近敵軍部隊的生命能量。當他們回到身邊時，他們會將從犧牲者身上吸取的生命能量，用於補充生命值 。持續時間8秒。",
   "slot": "R",
   "castType": "targeted",
   "maxRank": 3,

@@ -14,10 +14,9 @@
  },
  "lines": {
   "quote": {
-   "text": "天才ムササビのオレ様、参上だぞーっ!",
+   "text": "上、上、下、下、左、右、左、右、B、A…チートコード入力完了ぉ！",
    "lang": "ja",
-   "kana": "テンサイ ムササビ ノ オレサマ サンジョー ダゾーッ",
-   "textSource": "ai",
+   "textSource": "authored",
    "state": "generated",
    "takes": [
     {
@@ -27,20 +26,29 @@
      "seconds": 2.56,
      "at": 1784969566100,
      "error": null
+    },
+    {
+     "take": 2,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 5.76,
+     "at": 1784995402728,
+     "error": null
     }
    ],
    "current": {
-    "take": 1,
+    "take": 2,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 41839,
-    "seconds": 2.56,
+    "bytes": 93248,
+    "seconds": 5.76,
     "lufs": null,
-    "hash": "a4cc5fc1503f9d84a5705469192ed2310693fe459bdb3774db12eb0b25be0c35",
-    "at": 1784969566100
+    "hash": "ac572c9a45c451b6ca68b73d296566d3f5ccc6052bb5359f9a71a5e42161f990",
+    "at": 1784995402728
    },
-   "lastError": null
+   "lastError": null,
+   "kana": "ウエ ウエ シタ シタ ヒダリ ミギ ヒダリ ミギ ビー エー チート コード ニューリョク カンリョー"
   },
   "victory": {
    "text": "当然の勝利!オレ様、今日も天才!",

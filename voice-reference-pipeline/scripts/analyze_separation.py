@@ -19,8 +19,8 @@ from typing import Any
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from audio_metrics import (  # noqa: E402
-    acoustic_features, cosine_similarity, decode_pcm, frame_analysis,
-    proxy_embedding, try_speechbrain_embedding,
+    acoustic_features, cosine_similarity, decode_pcm, feature_similarity,
+    frame_analysis, proxy_embedding, try_speechbrain_embedding,
 )
 from pipeline_util import (  # noqa: E402
     APPROVED_PROCESSED_DIR, REPORTS_DIR, get_logger, load_heroes,
@@ -119,14 +119,16 @@ def run(*, dry_run: bool = False) -> list[dict[str, str]]:
         logger.warning("使用 spectral_proxy 代理特徵 — 結果僅供排序參考; "
                        "安裝 speechbrain 可得真正的 speaker embedding")
 
+    proxy_scale = float(cfg.get("separation", {}).get("proxy_distance_scale", 3.0))
     rows: list[dict[str, str]] = []
     for id_a, id_b in combinations(sorted(profiles), 2):
         pa, pb = profiles[id_a], profiles[id_b]
         a_nh, b_nh = id_a in non_human, id_b in non_human
-        if a_nh or b_nh:
-            # 非人類聲音: 以聲學特徵比較, 不用 speaker embedding 當唯一判斷
-            sim = cosine_similarity(proxy_embedding(pa["feature"]),
-                                    proxy_embedding(pb["feature"]))
+        if a_nh or b_nh or backend == "spectral_proxy":
+            # 非人類聲音(或無 speaker embedding 後端): 以聲學特徵的距離型
+            # 相似度比較 — z-score 向量用 cosine 會被共同大分量支配而虛高
+            sim = feature_similarity(proxy_embedding(pa["feature"]),
+                                     proxy_embedding(pb["feature"]), proxy_scale)
         else:
             sim = cosine_similarity(pa["embedding"], pb["embedding"])
         risk = risk_label(sim, cfg)

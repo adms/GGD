@@ -78,6 +78,15 @@ python3.14 -m venv .venv
 **効果音ラボ明文禁止 AI 學習利用**（我們的 SFX credits 授權是另一回事，
 聲素材不可作 CosyVoice 參考音）；声優統計・JVS 為研究限定。
 
+## 4.5 人工覆核覆蓋（review overrides）
+
+`config/review_overrides.csv` 記錄人工聽審決定。品檢中**僅啟發式**
+（`background_music` / `multi_speaker` 估計）造成的拒絕,若該檔在此名單中
+`decision=accept`,會降級為 `needs_review` 並註記覆核者——硬性缺陷
+（<3 秒、爆音、靜音>60%、損毀）**不可**覆蓋。目前收錄 AudioGen
+2026-07-25 交付的 51 檔 `locked_pass` 紀錄（出處見
+`provenance/audiogen-2026-07-25/`）。
+
 ## 5. 如何人工核准候選來源
 
 1. 跑 `--research` 產出 `reports/license_review_queue.csv`。
@@ -102,8 +111,13 @@ separation:
 非人類角色（初號機、妙蛙花、皮卡丘、基廉列克、Berserker、草泥馬 →
 `non_human_ids`）不以 speaker embedding 作唯一判斷，改用聲學特徵
 （pitch range / centroid / rolloff / harmonicity / roughness / tempo /
-attack）比較。12 人同場對戰任何角色都可能同時出現，因此報表涵蓋全部配對，
-依相似度由高到低排序。
+attack）比較。特徵比較用**距離型相似度** `exp(-‖a−b‖/scale)`
+（`proxy_distance_scale`）——z-score 向量用 cosine 會被共同大分量支配而
+嚴重虛高（實測低吼 vs 尖叫可到 0.98）。12 人同場對戰任何角色都可能同時
+出現，因此報表涵蓋全部配對，依相似度由高到低排序。
+
+本專案 venv 已安裝 `speechbrain + torch`（ECAPA-TDNN），人聲配對走真
+speaker embedding；音檔改由專案內 ffmpeg 解碼餵入（不依賴 torchcodec）。
 
 ## 7. 如何重新處理單一角色
 

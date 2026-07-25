@@ -1203,9 +1203,9 @@
    "lastError": null
   },
   "skill-name.q": {
-   "text": "風華之爪！",
+   "text": "毒華爪！",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "authored",
    "state": "generated",
    "takes": [
     {
@@ -1223,26 +1223,34 @@
      "seconds": null,
      "at": 1784991049234,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.76,
+     "at": 1784995012536,
+     "error": null
     }
    ],
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 17180,
-    "seconds": null,
+    "bytes": 13418,
+    "seconds": 0.76,
     "lufs": null,
-    "hash": "0f9bc5891a5d0e9aff7f4561e03a2c499c6c62d7c737c5f96c6ec174e5bc2274",
-    "at": 1784991049234
+    "hash": "a075ce033fb8dab1dd7a127ec7fd8066bfa9c37628e612c3fd6ac898e063da96",
+    "at": 1784995012536
    },
    "lastError": null,
-   "kana": "フウカ ノ ツメ"
+   "kana": "ドッカソウ"
   },
   "skill-name.w": {
-   "text": "合氣斬！",
+   "text": "閃光鞭！",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "authored",
    "state": "generated",
    "takes": [
     {
@@ -1260,26 +1268,34 @@
      "seconds": null,
      "at": 1784991053240,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.2,
+     "at": 1784995013929,
+     "error": null
     }
    ],
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 13418,
-    "seconds": null,
+    "bytes": 20106,
+    "seconds": 1.2,
     "lufs": null,
-    "hash": "cf350ca8f0b5809702ad31ee48ff6dc59db1e6ae10395d87464cb397cdb14399",
-    "at": 1784991053240
+    "hash": "da8d74072d692f140df080aed65238b7bcd707d7a4c6a9796442855efeb31143",
+    "at": 1784995013929
    },
    "lastError": null,
-   "kana": "アイキザン"
+   "kana": "ヒカリ ノ ムチ"
   },
   "skill-name.e": {
-   "text": "爆碎丸！",
+   "text": "爆碎牙！",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "authored",
    "state": "generated",
    "takes": [
     {
@@ -1297,18 +1313,26 @@
      "seconds": null,
      "at": 1784991035203,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 0.76,
+     "at": 1784995025369,
+     "error": null
     }
    ],
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 14672,
-    "seconds": null,
+    "bytes": 13418,
+    "seconds": 0.76,
     "lufs": null,
-    "hash": "73e581bb0fc791554ae689a864721b692f671ffc955ef86487db5555c10ac10a",
-    "at": 1784991035203
+    "hash": "b964f1f8843bbd1f29a6891543b9ea1f953d299cce7cdca8ac091fa3c87630f7",
+    "at": 1784995025369
    },
    "lastError": null,
    "kana": "バクサイガ"

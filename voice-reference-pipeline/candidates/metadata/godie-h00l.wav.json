@@ -1,0 +1,32 @@
+{
+  "source_path": "/Users/Takuro/GGD/voice-reference-pipeline/incoming/user_owned/godie-h00l.wav",
+  "file": "godie-h00l.wav",
+  "hero_id": "godie-h00l",
+  "variant": 1,
+  "license_bucket": "user_owned",
+  "inspected_at": "2026-07-25T07:46:49+00:00",
+  "verdict": "accepted",
+  "reject_reasons": [],
+  "review_notes": [],
+  "metrics": {
+    "duration": 8.0,
+    "sample_rate": 24000,
+    "channels": 1,
+    "bit_depth": 16,
+    "integrated_loudness": -17.1,
+    "true_peak": -4.1,
+    "loudness_range": 5.7,
+    "clipping_ratio": 0.0,
+    "silence_ratio": 0.406,
+    "estimated_snr": 130.6,
+    "speech_or_vocal_ratio": 0.594,
+    "music_probability": 0.479,
+    "multiple_speaker_probability": 0.629
+  },
+  "sha256": "c9b4c05359ace74fec04cde693f66146de2bd5ebfbf2ba37d44e3484db631a89",
+  "segment": {
+    "start": 0.0,
+    "end": 8.0,
+    "score": 1.0
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "source_path": "/Users/Takuro/GGD/voice-reference-pipeline/incoming/user_owned/godie-etyr.wav",
+  "file": "godie-etyr.wav",
+  "hero_id": "godie-etyr",
+  "variant": 1,
+  "license_bucket": "user_owned",
+  "inspected_at": "2026-07-25T07:46:49+00:00",
+  "verdict": "accepted",
+  "reject_reasons": [],
+  "review_notes": [],
+  "metrics": {
+    "duration": 14.989,
+    "sample_rate": 24000,
+    "channels": 1,
+    "bit_depth": 16,
+    "integrated_loudness": -19.3,
+    "true_peak": -6.0,
+    "loudness_range": 1.7,
+    "clipping_ratio": 0.0,
+    "silence_ratio": 0.07,
+    "estimated_snr": 78.5,
+    "speech_or_vocal_ratio": 0.93,
+    "music_probability": 0.581,
+    "multiple_speaker_probability": 0.509
+  },
+  "sha256": "3473861218de488cf49d1ec571db64d8c0443791f549c43cc5634b64c4d928a8",
+  "segment": {
+    "start": 0.0,
+    "end": 14.9885,
+    "score": 1.0
+  }
+}

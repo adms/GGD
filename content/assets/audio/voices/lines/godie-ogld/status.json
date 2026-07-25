@@ -1351,9 +1351,9 @@
    "kana": "コクカ"
   },
   "skill-name.ex": {
-   "text": "億萬星殞落！",
+   "text": "億萬衛星殞落！",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "authored",
    "state": "generated",
    "takes": [
     {
@@ -1371,21 +1371,29 @@
      "seconds": null,
      "at": 1784991033200,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 2.84,
+     "at": 1784995054723,
+     "error": null
     }
    ],
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 14672,
-    "seconds": null,
+    "bytes": 46437,
+    "seconds": 2.84,
     "lufs": null,
-    "hash": "08cf11dc05b7ea58decf7f562cc315b0947f6bd4f6e47f286894d80246748087",
-    "at": 1784991033200
+    "hash": "37a9a198be87387ce6b4ed2d0202fcb4dabde06acbef65b1448f7ec4fe9416c3",
+    "at": 1784995054723
    },
    "lastError": null,
-   "kana": "ビリオン スターフォール"
+   "kana": "ティン ニー ジョーマ シュオ ニー ヘン ヨン オ"
   }
  }
 }

@@ -1,1 +1,308 @@
 ﻿timestamp,stage,hero_id,variant,input_file,output_file,action,status,detail
+2026-07-25T07:45:23+00:00,inspect,godie-e001,1,godie-e001.wav,,inspect,accepted,
+2026-07-25T07:45:23+00:00,inspect,godie-e002,1,godie-e002.wav,,inspect,rejected,background_music(heuristic)
+2026-07-25T07:45:23+00:00,inspect,godie-e007,1,godie-e007.wav,,inspect,accepted,
+2026-07-25T07:45:23+00:00,inspect,godie-e008,1,godie-e008.wav,,inspect,accepted,
+2026-07-25T07:45:23+00:00,inspect,godie-e00k,1,godie-e00k.wav,,inspect,accepted,
+2026-07-25T07:45:23+00:00,inspect,godie-e00r,1,godie-e00r.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-07-25T07:45:24+00:00,inspect,godie-e00w,1,godie-e00w.wav,,inspect,accepted,
+2026-07-25T07:45:24+00:00,inspect,godie-edem,1,godie-edem.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-07-25T07:45:24+00:00,inspect,godie-efur,1,godie-efur.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-07-25T07:45:24+00:00,inspect,godie-emfr,1,godie-emfr.wav,,inspect,accepted,
+2026-07-25T07:45:24+00:00,inspect,godie-emns,1,godie-emns.wav,,inspect,accepted,
+2026-07-25T07:45:24+00:00,inspect,godie-etyr,1,godie-etyr.wav,,inspect,accepted,
+2026-07-25T07:45:25+00:00,inspect,godie-h00l,1,godie-h00l.wav,,inspect,accepted,
+2026-07-25T07:45:25+00:00,inspect,godie-h01n,1,godie-h01n.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-07-25T07:45:25+00:00,inspect,godie-h01u,1,godie-h01u.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-07-25T07:45:25+00:00,inspect,godie-h020,1,godie-h020.wav,,inspect,accepted,
+2026-07-25T07:45:25+00:00,inspect,godie-h02k,1,godie-h02k.wav,,inspect,needs_review,human_override(workspace_user): background_music(heuristic)
+2026-07-25T07:45:26+00:00,inspect,godie-h02r,1,godie-h02r.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-07-25T07:45:26+00:00,inspect,godie-h02u,1,godie-h02u.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-07-25T07:45:26+00:00,inspect,godie-hapm,1,godie-hapm.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-07-25T07:45:26+00:00,inspect,godie-hart,1,godie-hart.wav,,inspect,accepted,
+2026-07-25T07:45:26+00:00,inspect,godie-hblm,1,godie-hblm.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-07-25T07:45:26+00:00,inspect,godie-hpal,1,godie-hpal.wav,,inspect,accepted,
+2026-07-25T07:45:27+00:00,inspect,godie-hpb1,1,godie-hpb1.wav,,inspect,accepted,
+2026-07-25T07:45:27+00:00,inspect,godie-huth,1,godie-huth.wav,,inspect,accepted,
+2026-07-25T07:45:27+00:00,inspect,godie-hvsh,1,godie-hvsh.wav,,inspect,rejected,background_music(heuristic)
+2026-07-25T07:45:27+00:00,inspect,godie-hvwd,1,godie-hvwd.wav,,inspect,accepted,
+2026-07-25T07:45:28+00:00,inspect,godie-n003,1,godie-n003.wav,,inspect,rejected,background_music(heuristic)
+2026-07-25T07:45:28+00:00,inspect,godie-n00b,1,godie-n00b.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-07-25T07:45:28+00:00,inspect,godie-n00p,1,godie-n00p.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-07-25T07:45:28+00:00,inspect,godie-n01c,1,godie-n01c.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-07-25T07:45:28+00:00,inspect,godie-nplh,1,godie-nplh.wav,,inspect,accepted,
+2026-07-25T07:45:29+00:00,inspect,godie-o00k,1,godie-o00k.wav,,inspect,accepted,
+2026-07-25T07:45:29+00:00,inspect,godie-o00l,1,godie-o00l.wav,,inspect,rejected,background_music(heuristic)
+2026-07-25T07:45:29+00:00,inspect,godie-o00x,1,godie-o00x.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-07-25T07:45:29+00:00,inspect,godie-o02p,1,godie-o02p.wav,,inspect,rejected,background_music(heuristic)
+2026-07-25T07:45:29+00:00,inspect,godie-ofar,1,godie-ofar.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-07-25T07:45:29+00:00,inspect,godie-ogld,1,godie-ogld.wav,,inspect,accepted,
+2026-07-25T07:45:30+00:00,inspect,godie-orkn,1,godie-orkn.wav,,inspect,rejected,background_music(heuristic)
+2026-07-25T07:45:30+00:00,inspect,godie-osam,1,godie-osam.wav,,inspect,accepted,
+2026-07-25T07:45:30+00:00,inspect,godie-u00h,1,godie-u00h.wav,,inspect,accepted,
+2026-07-25T07:45:30+00:00,inspect,godie-u00j,1,godie-u00j.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-07-25T07:45:30+00:00,inspect,godie-u00k,1,godie-u00k.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-07-25T07:45:30+00:00,inspect,godie-u00l,1,godie-u00l.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-07-25T07:45:31+00:00,inspect,godie-u00n,1,godie-u00n.wav,,inspect,accepted,
+2026-07-25T07:45:31+00:00,inspect,godie-u00v,1,godie-u00v.wav,,inspect,needs_review,human_override(workspace_user): multi_speaker(heuristic)
+2026-07-25T07:45:31+00:00,inspect,godie-u010,1,godie-u010.wav,,inspect,rejected,multi_speaker(heuristic)
+2026-07-25T07:45:31+00:00,inspect,godie-u01u,1,godie-u01u.wav,,inspect,accepted,
+2026-07-25T07:45:31+00:00,inspect,godie-ubal,1,godie-ubal.wav,,inspect,accepted,
+2026-07-25T07:45:31+00:00,inspect,godie-udea,1,godie-udea.wav,,inspect,accepted,
+2026-07-25T07:45:32+00:00,inspect,godie-zombiex,1,godie-zombiex.wav,,inspect,rejected,background_music(heuristic)
+2026-07-25T07:45:32+00:00,extract,godie-e001,1,godie-e001.wav,godie-e001.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:45:32+00:00,extract,godie-e007,1,godie-e007.wav,godie-e007.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:45:32+00:00,extract,godie-e008,1,godie-e008.wav,godie-e008.wav,copy_whole,ok,0.00-5.67s score=1.000
+2026-07-25T07:45:32+00:00,extract,godie-e00k,1,godie-e00k.wav,godie-e00k.wav,copy_whole,ok,0.00-10.87s score=1.000
+2026-07-25T07:45:32+00:00,extract,godie-e00w,1,godie-e00w.wav,godie-e00w.wav,copy_whole,ok,0.00-7.97s score=1.000
+2026-07-25T07:45:32+00:00,extract,godie-emfr,1,godie-emfr.wav,godie-emfr.wav,copy_whole,ok,0.00-9.36s score=1.000
+2026-07-25T07:45:33+00:00,extract,godie-emns,1,godie-emns.wav,godie-emns.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:45:33+00:00,extract,godie-etyr,1,godie-etyr.wav,godie-etyr.wav,copy_whole,ok,0.00-14.99s score=1.000
+2026-07-25T07:45:33+00:00,extract,godie-h00l,1,godie-h00l.wav,godie-h00l.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:45:33+00:00,extract,godie-h020,1,godie-h020.wav,godie-h020.wav,copy_whole,ok,0.00-13.20s score=1.000
+2026-07-25T07:45:33+00:00,extract,godie-h02k,1,godie-h02k.wav,godie-h02k.wav,copy_whole,ok,0.00-11.08s score=1.000
+2026-07-25T07:45:33+00:00,extract,godie-hart,1,godie-hart.wav,godie-hart.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:45:33+00:00,extract,godie-hpal,1,godie-hpal.wav,godie-hpal.wav,copy_whole,ok,0.00-11.30s score=1.000
+2026-07-25T07:45:34+00:00,extract,godie-hpb1,1,godie-hpb1.wav,godie-hpb1.wav,copy_whole,ok,0.00-14.52s score=1.000
+2026-07-25T07:45:34+00:00,extract,godie-huth,1,godie-huth.wav,godie-huth.wav,copy_whole,ok,0.00-13.97s score=1.000
+2026-07-25T07:45:34+00:00,extract,godie-hvwd,1,godie-hvwd.wav,godie-hvwd.wav,copy_whole,ok,0.00-13.55s score=1.000
+2026-07-25T07:45:34+00:00,extract,godie-nplh,1,godie-nplh.wav,godie-nplh.wav,copy_whole,ok,0.00-6.01s score=1.000
+2026-07-25T07:45:34+00:00,extract,godie-o00k,1,godie-o00k.wav,godie-o00k.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:45:34+00:00,extract,godie-ogld,1,godie-ogld.wav,godie-ogld.wav,copy_whole,ok,0.00-14.74s score=1.000
+2026-07-25T07:45:35+00:00,extract,godie-osam,1,godie-osam.wav,godie-osam.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:45:35+00:00,extract,godie-u00h,1,godie-u00h.wav,godie-u00h.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:45:35+00:00,extract,godie-u00n,1,godie-u00n.wav,godie-u00n.wav,copy_whole,ok,0.00-5.77s score=1.000
+2026-07-25T07:45:35+00:00,extract,godie-u00v,1,godie-u00v.wav,godie-u00v.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:45:35+00:00,extract,godie-u01u,1,godie-u01u.wav,godie-u01u.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:45:35+00:00,extract,godie-ubal,1,godie-ubal.wav,godie-ubal.wav,copy_whole,ok,0.00-7.50s score=1.000
+2026-07-25T07:45:35+00:00,extract,godie-udea,1,godie-udea.wav,godie-udea.wav,copy_whole,ok,0.00-7.85s score=1.000
+2026-07-25T07:45:36+00:00,normalize,godie-e001,1,godie-e001.wav,godie-e001.wav,loudnorm2pass,ok,
+2026-07-25T07:45:36+00:00,normalize,godie-e007,1,godie-e007.wav,godie-e007.wav,loudnorm2pass,ok,
+2026-07-25T07:45:36+00:00,normalize,godie-e008,1,godie-e008.wav,godie-e008.wav,loudnorm2pass,ok,
+2026-07-25T07:45:37+00:00,normalize,godie-e00k,1,godie-e00k.wav,godie-e00k.wav,loudnorm2pass,ok,
+2026-07-25T07:45:37+00:00,normalize,godie-e00w,1,godie-e00w.wav,godie-e00w.wav,loudnorm2pass,ok,
+2026-07-25T07:45:37+00:00,normalize,godie-emfr,1,godie-emfr.wav,godie-emfr.wav,loudnorm2pass,ok,
+2026-07-25T07:45:37+00:00,normalize,godie-emns,1,godie-emns.wav,godie-emns.wav,loudnorm2pass,ok,
+2026-07-25T07:45:38+00:00,normalize,godie-etyr,1,godie-etyr.wav,godie-etyr.wav,loudnorm2pass,ok,
+2026-07-25T07:45:38+00:00,normalize,godie-h00l,1,godie-h00l.wav,godie-h00l.wav,loudnorm2pass,verify_warn,loudness -17.0 LUFS outside target
+2026-07-25T07:45:38+00:00,normalize,godie-h020,1,godie-h020.wav,godie-h020.wav,loudnorm2pass,ok,
+2026-07-25T07:45:39+00:00,normalize,godie-h02k,1,godie-h02k.wav,godie-h02k.wav,loudnorm2pass,ok,
+2026-07-25T07:45:39+00:00,normalize,godie-hart,1,godie-hart.wav,godie-hart.wav,loudnorm2pass,ok,
+2026-07-25T07:45:39+00:00,normalize,godie-hpal,1,godie-hpal.wav,godie-hpal.wav,loudnorm2pass,ok,
+2026-07-25T07:45:40+00:00,normalize,godie-hpb1,1,godie-hpb1.wav,godie-hpb1.wav,loudnorm2pass,ok,
+2026-07-25T07:45:40+00:00,normalize,godie-huth,1,godie-huth.wav,godie-huth.wav,loudnorm2pass,ok,
+2026-07-25T07:45:40+00:00,normalize,godie-hvwd,1,godie-hvwd.wav,godie-hvwd.wav,loudnorm2pass,ok,
+2026-07-25T07:45:41+00:00,normalize,godie-nplh,1,godie-nplh.wav,godie-nplh.wav,loudnorm2pass,verify_warn,loudness -16.4 LUFS outside target
+2026-07-25T07:45:41+00:00,normalize,godie-o00k,1,godie-o00k.wav,godie-o00k.wav,loudnorm2pass,ok,
+2026-07-25T07:45:41+00:00,normalize,godie-ogld,1,godie-ogld.wav,godie-ogld.wav,loudnorm2pass,ok,
+2026-07-25T07:45:42+00:00,normalize,godie-osam,1,godie-osam.wav,godie-osam.wav,loudnorm2pass,ok,
+2026-07-25T07:45:42+00:00,normalize,godie-u00h,1,godie-u00h.wav,godie-u00h.wav,loudnorm2pass,verify_warn,loudness -21.2 LUFS outside target
+2026-07-25T07:45:42+00:00,normalize,godie-u00n,1,godie-u00n.wav,godie-u00n.wav,loudnorm2pass,ok,
+2026-07-25T07:45:42+00:00,normalize,godie-u00v,1,godie-u00v.wav,godie-u00v.wav,loudnorm2pass,verify_warn,loudness -20.8 LUFS outside target
+2026-07-25T07:45:43+00:00,normalize,godie-u01u,1,godie-u01u.wav,godie-u01u.wav,loudnorm2pass,ok,
+2026-07-25T07:45:43+00:00,normalize,godie-ubal,1,godie-ubal.wav,godie-ubal.wav,loudnorm2pass,ok,
+2026-07-25T07:45:43+00:00,normalize,godie-udea,1,godie-udea.wav,godie-udea.wav,loudnorm2pass,ok,
+2026-07-25T07:46:47+00:00,inspect,godie-e001,1,godie-e001.wav,,inspect,accepted,
+2026-07-25T07:46:48+00:00,inspect,godie-e002,1,godie-e002.wav,,inspect,needs_review,human_override(workspace_user): background_music(heuristic)
+2026-07-25T07:46:48+00:00,inspect,godie-e007,1,godie-e007.wav,,inspect,accepted,
+2026-07-25T07:46:48+00:00,inspect,godie-e008,1,godie-e008.wav,,inspect,accepted,
+2026-07-25T07:46:48+00:00,inspect,godie-e00k,1,godie-e00k.wav,,inspect,accepted,
+2026-07-25T07:46:48+00:00,inspect,godie-e00r,1,godie-e00r.wav,,inspect,needs_review,human_override(workspace_user): multi_speaker(heuristic)
+2026-07-25T07:46:48+00:00,inspect,godie-e00w,1,godie-e00w.wav,,inspect,accepted,
+2026-07-25T07:46:49+00:00,inspect,godie-edem,1,godie-edem.wav,,inspect,needs_review,human_override(workspace_user): multi_speaker(heuristic)
+2026-07-25T07:46:49+00:00,inspect,godie-efur,1,godie-efur.wav,,inspect,needs_review,human_override(workspace_user): multi_speaker(heuristic)
+2026-07-25T07:46:49+00:00,inspect,godie-emfr,1,godie-emfr.wav,,inspect,accepted,
+2026-07-25T07:46:49+00:00,inspect,godie-emns,1,godie-emns.wav,,inspect,accepted,
+2026-07-25T07:46:49+00:00,inspect,godie-etyr,1,godie-etyr.wav,,inspect,accepted,
+2026-07-25T07:46:50+00:00,inspect,godie-h00l,1,godie-h00l.wav,,inspect,accepted,
+2026-07-25T07:46:50+00:00,inspect,godie-h01n,1,godie-h01n.wav,,inspect,needs_review,human_override(workspace_user): multi_speaker(heuristic)
+2026-07-25T07:46:50+00:00,inspect,godie-h01u,1,godie-h01u.wav,,inspect,needs_review,human_override(workspace_user): multi_speaker(heuristic)
+2026-07-25T07:46:50+00:00,inspect,godie-h020,1,godie-h020.wav,,inspect,accepted,
+2026-07-25T07:46:50+00:00,inspect,godie-h02k,1,godie-h02k.wav,,inspect,needs_review,human_override(workspace_user): background_music(heuristic)
+2026-07-25T07:46:50+00:00,inspect,godie-h02r,1,godie-h02r.wav,,inspect,needs_review,human_override(workspace_user): multi_speaker(heuristic)
+2026-07-25T07:46:51+00:00,inspect,godie-h02u,1,godie-h02u.wav,,inspect,needs_review,human_override(workspace_user): multi_speaker(heuristic)
+2026-07-25T07:46:51+00:00,inspect,godie-hapm,1,godie-hapm.wav,,inspect,needs_review,human_override(workspace_user): multi_speaker(heuristic)
+2026-07-25T07:46:51+00:00,inspect,godie-hart,1,godie-hart.wav,,inspect,accepted,
+2026-07-25T07:46:51+00:00,inspect,godie-hblm,1,godie-hblm.wav,,inspect,needs_review,human_override(workspace_user): multi_speaker(heuristic)
+2026-07-25T07:46:51+00:00,inspect,godie-hpal,1,godie-hpal.wav,,inspect,accepted,
+2026-07-25T07:46:51+00:00,inspect,godie-hpb1,1,godie-hpb1.wav,,inspect,accepted,
+2026-07-25T07:46:52+00:00,inspect,godie-huth,1,godie-huth.wav,,inspect,accepted,
+2026-07-25T07:46:52+00:00,inspect,godie-hvsh,1,godie-hvsh.wav,,inspect,needs_review,human_override(workspace_user): background_music(heuristic)
+2026-07-25T07:46:52+00:00,inspect,godie-hvwd,1,godie-hvwd.wav,,inspect,accepted,
+2026-07-25T07:46:52+00:00,inspect,godie-n003,1,godie-n003.wav,,inspect,needs_review,human_override(workspace_user): background_music(heuristic)
+2026-07-25T07:46:52+00:00,inspect,godie-n00b,1,godie-n00b.wav,,inspect,needs_review,human_override(workspace_user): multi_speaker(heuristic)
+2026-07-25T07:46:52+00:00,inspect,godie-n00p,1,godie-n00p.wav,,inspect,needs_review,human_override(workspace_user): multi_speaker(heuristic)
+2026-07-25T07:46:53+00:00,inspect,godie-n01c,1,godie-n01c.wav,,inspect,needs_review,human_override(workspace_user): multi_speaker(heuristic)
+2026-07-25T07:46:53+00:00,inspect,godie-nplh,1,godie-nplh.wav,,inspect,accepted,
+2026-07-25T07:46:53+00:00,inspect,godie-o00k,1,godie-o00k.wav,,inspect,accepted,
+2026-07-25T07:46:53+00:00,inspect,godie-o00l,1,godie-o00l.wav,,inspect,needs_review,human_override(workspace_user): background_music(heuristic)
+2026-07-25T07:46:53+00:00,inspect,godie-o00x,1,godie-o00x.wav,,inspect,needs_review,human_override(workspace_user): multi_speaker(heuristic)
+2026-07-25T07:46:53+00:00,inspect,godie-o02p,1,godie-o02p.wav,,inspect,needs_review,human_override(workspace_user): background_music(heuristic)
+2026-07-25T07:46:54+00:00,inspect,godie-ofar,1,godie-ofar.wav,,inspect,needs_review,human_override(workspace_user): multi_speaker(heuristic)
+2026-07-25T07:46:54+00:00,inspect,godie-ogld,1,godie-ogld.wav,,inspect,accepted,
+2026-07-25T07:46:54+00:00,inspect,godie-orkn,1,godie-orkn.wav,,inspect,needs_review,human_override(workspace_user): background_music(heuristic)
+2026-07-25T07:46:54+00:00,inspect,godie-osam,1,godie-osam.wav,,inspect,accepted,
+2026-07-25T07:46:54+00:00,inspect,godie-u00h,1,godie-u00h.wav,,inspect,accepted,
+2026-07-25T07:46:54+00:00,inspect,godie-u00j,1,godie-u00j.wav,,inspect,needs_review,human_override(workspace_user): multi_speaker(heuristic)
+2026-07-25T07:46:55+00:00,inspect,godie-u00k,1,godie-u00k.wav,,inspect,needs_review,human_override(workspace_user): multi_speaker(heuristic)
+2026-07-25T07:46:55+00:00,inspect,godie-u00l,1,godie-u00l.wav,,inspect,needs_review,human_override(workspace_user): multi_speaker(heuristic)
+2026-07-25T07:46:55+00:00,inspect,godie-u00n,1,godie-u00n.wav,,inspect,accepted,
+2026-07-25T07:46:55+00:00,inspect,godie-u00v,1,godie-u00v.wav,,inspect,needs_review,human_override(workspace_user): multi_speaker(heuristic)
+2026-07-25T07:46:55+00:00,inspect,godie-u010,1,godie-u010.wav,,inspect,needs_review,human_override(workspace_user): multi_speaker(heuristic)
+2026-07-25T07:46:55+00:00,inspect,godie-u01u,1,godie-u01u.wav,,inspect,accepted,
+2026-07-25T07:46:56+00:00,inspect,godie-ubal,1,godie-ubal.wav,,inspect,accepted,
+2026-07-25T07:46:56+00:00,inspect,godie-udea,1,godie-udea.wav,,inspect,accepted,
+2026-07-25T07:46:56+00:00,inspect,godie-zombiex,1,godie-zombiex.wav,,inspect,needs_review,human_override(workspace_user): background_music(heuristic)
+2026-07-25T07:46:56+00:00,extract,godie-e001,1,godie-e001.wav,godie-e001.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:46:56+00:00,extract,godie-e002,1,godie-e002.wav,godie-e002.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:46:56+00:00,extract,godie-e007,1,godie-e007.wav,godie-e007.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:46:57+00:00,extract,godie-e008,1,godie-e008.wav,godie-e008.wav,copy_whole,ok,0.00-5.67s score=1.000
+2026-07-25T07:46:57+00:00,extract,godie-e00k,1,godie-e00k.wav,godie-e00k.wav,copy_whole,ok,0.00-10.87s score=1.000
+2026-07-25T07:46:57+00:00,extract,godie-e00r,1,godie-e00r.wav,godie-e00r.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:46:57+00:00,extract,godie-e00w,1,godie-e00w.wav,godie-e00w.wav,copy_whole,ok,0.00-7.97s score=1.000
+2026-07-25T07:46:57+00:00,extract,godie-edem,1,godie-edem.wav,godie-edem.wav,copy_whole,ok,0.00-5.87s score=1.000
+2026-07-25T07:46:57+00:00,extract,godie-efur,1,godie-efur.wav,godie-efur.wav,copy_whole,ok,0.00-14.50s score=1.000
+2026-07-25T07:46:57+00:00,extract,godie-emfr,1,godie-emfr.wav,godie-emfr.wav,copy_whole,ok,0.00-9.36s score=1.000
+2026-07-25T07:46:58+00:00,extract,godie-emns,1,godie-emns.wav,godie-emns.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:46:58+00:00,extract,godie-etyr,1,godie-etyr.wav,godie-etyr.wav,copy_whole,ok,0.00-14.99s score=1.000
+2026-07-25T07:46:58+00:00,extract,godie-h00l,1,godie-h00l.wav,godie-h00l.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:46:58+00:00,extract,godie-h01n,1,godie-h01n.wav,godie-h01n.wav,copy_whole,ok,0.00-7.12s score=1.000
+2026-07-25T07:46:58+00:00,extract,godie-h01u,1,godie-h01u.wav,godie-h01u.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:46:58+00:00,extract,godie-h020,1,godie-h020.wav,godie-h020.wav,copy_whole,ok,0.00-13.20s score=1.000
+2026-07-25T07:46:59+00:00,extract,godie-h02k,1,godie-h02k.wav,godie-h02k.wav,copy_whole,ok,0.00-11.08s score=1.000
+2026-07-25T07:46:59+00:00,extract,godie-h02r,1,godie-h02r.wav,godie-h02r.wav,copy_whole,ok,0.00-12.95s score=1.000
+2026-07-25T07:46:59+00:00,extract,godie-h02u,1,godie-h02u.wav,godie-h02u.wav,copy_whole,ok,0.00-12.62s score=1.000
+2026-07-25T07:46:59+00:00,extract,godie-hapm,1,godie-hapm.wav,godie-hapm.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:46:59+00:00,extract,godie-hart,1,godie-hart.wav,godie-hart.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:46:59+00:00,extract,godie-hblm,1,godie-hblm.wav,godie-hblm.wav,copy_whole,ok,0.00-11.90s score=1.000
+2026-07-25T07:47:00+00:00,extract,godie-hpal,1,godie-hpal.wav,godie-hpal.wav,copy_whole,ok,0.00-11.30s score=1.000
+2026-07-25T07:47:00+00:00,extract,godie-hpb1,1,godie-hpb1.wav,godie-hpb1.wav,copy_whole,ok,0.00-14.52s score=1.000
+2026-07-25T07:47:00+00:00,extract,godie-huth,1,godie-huth.wav,godie-huth.wav,copy_whole,ok,0.00-13.97s score=1.000
+2026-07-25T07:47:00+00:00,extract,godie-hvsh,1,godie-hvsh.wav,godie-hvsh.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:47:00+00:00,extract,godie-hvwd,1,godie-hvwd.wav,godie-hvwd.wav,copy_whole,ok,0.00-13.55s score=1.000
+2026-07-25T07:47:00+00:00,extract,godie-n003,1,godie-n003.wav,godie-n003.wav,copy_whole,ok,0.00-7.54s score=1.000
+2026-07-25T07:47:01+00:00,extract,godie-n00b,1,godie-n00b.wav,godie-n00b.wav,copy_whole,ok,0.00-10.54s score=1.000
+2026-07-25T07:47:01+00:00,extract,godie-n00p,1,godie-n00p.wav,godie-n00p.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:47:01+00:00,extract,godie-n01c,1,godie-n01c.wav,godie-n01c.wav,copy_whole,ok,0.00-7.31s score=1.000
+2026-07-25T07:47:01+00:00,extract,godie-nplh,1,godie-nplh.wav,godie-nplh.wav,copy_whole,ok,0.00-6.01s score=1.000
+2026-07-25T07:47:01+00:00,extract,godie-o00k,1,godie-o00k.wav,godie-o00k.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:47:01+00:00,extract,godie-o00l,1,godie-o00l.wav,godie-o00l.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:47:02+00:00,extract,godie-o00x,1,godie-o00x.wav,godie-o00x.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:47:02+00:00,extract,godie-o02p,1,godie-o02p.wav,godie-o02p.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:47:02+00:00,extract,godie-ofar,1,godie-ofar.wav,godie-ofar.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:47:02+00:00,extract,godie-ogld,1,godie-ogld.wav,godie-ogld.wav,copy_whole,ok,0.00-14.74s score=1.000
+2026-07-25T07:47:02+00:00,extract,godie-orkn,1,godie-orkn.wav,godie-orkn.wav,copy_whole,ok,0.00-8.12s score=1.000
+2026-07-25T07:47:02+00:00,extract,godie-osam,1,godie-osam.wav,godie-osam.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:47:03+00:00,extract,godie-u00h,1,godie-u00h.wav,godie-u00h.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:47:03+00:00,extract,godie-u00j,1,godie-u00j.wav,godie-u00j.wav,copy_whole,ok,0.00-7.20s score=1.000
+2026-07-25T07:47:03+00:00,extract,godie-u00k,1,godie-u00k.wav,godie-u00k.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:47:03+00:00,extract,godie-u00l,1,godie-u00l.wav,godie-u00l.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:47:03+00:00,extract,godie-u00n,1,godie-u00n.wav,godie-u00n.wav,copy_whole,ok,0.00-5.77s score=1.000
+2026-07-25T07:47:03+00:00,extract,godie-u00v,1,godie-u00v.wav,godie-u00v.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:47:04+00:00,extract,godie-u010,1,godie-u010.wav,godie-u010.wav,copy_whole,ok,0.00-8.19s score=1.000
+2026-07-25T07:47:04+00:00,extract,godie-u01u,1,godie-u01u.wav,godie-u01u.wav,copy_whole,ok,0.00-8.00s score=1.000
+2026-07-25T07:47:04+00:00,extract,godie-ubal,1,godie-ubal.wav,godie-ubal.wav,copy_whole,ok,0.00-7.50s score=1.000
+2026-07-25T07:47:04+00:00,extract,godie-udea,1,godie-udea.wav,godie-udea.wav,copy_whole,ok,0.00-7.85s score=1.000
+2026-07-25T07:47:04+00:00,extract,godie-zombiex,1,godie-zombiex.wav,godie-zombiex.wav,copy_whole,ok,0.00-9.50s score=1.000
+2026-07-25T07:47:05+00:00,normalize,godie-e001,1,godie-e001.wav,godie-e001.wav,loudnorm2pass,ok,
+2026-07-25T07:47:05+00:00,normalize,godie-e002,1,godie-e002.wav,godie-e002.wav,loudnorm2pass,verify_warn,loudness -21.8 LUFS outside target
+2026-07-25T07:47:05+00:00,normalize,godie-e007,1,godie-e007.wav,godie-e007.wav,loudnorm2pass,ok,
+2026-07-25T07:47:06+00:00,normalize,godie-e008,1,godie-e008.wav,godie-e008.wav,loudnorm2pass,ok,
+2026-07-25T07:47:06+00:00,normalize,godie-e00k,1,godie-e00k.wav,godie-e00k.wav,loudnorm2pass,ok,
+2026-07-25T07:47:06+00:00,normalize,godie-e00r,1,godie-e00r.wav,godie-e00r.wav,loudnorm2pass,verify_warn,loudness -17.1 LUFS outside target
+2026-07-25T07:47:06+00:00,normalize,godie-e00w,1,godie-e00w.wav,godie-e00w.wav,loudnorm2pass,ok,
+2026-07-25T07:47:07+00:00,normalize,godie-edem,1,godie-edem.wav,godie-edem.wav,loudnorm2pass,ok,
+2026-07-25T07:47:07+00:00,normalize,godie-efur,1,godie-efur.wav,godie-efur.wav,loudnorm2pass,ok,
+2026-07-25T07:47:07+00:00,normalize,godie-emfr,1,godie-emfr.wav,godie-emfr.wav,loudnorm2pass,ok,
+2026-07-25T07:47:08+00:00,normalize,godie-emns,1,godie-emns.wav,godie-emns.wav,loudnorm2pass,ok,
+2026-07-25T07:47:08+00:00,normalize,godie-etyr,1,godie-etyr.wav,godie-etyr.wav,loudnorm2pass,ok,
+2026-07-25T07:47:08+00:00,normalize,godie-h00l,1,godie-h00l.wav,godie-h00l.wav,loudnorm2pass,verify_warn,loudness -17.0 LUFS outside target
+2026-07-25T07:47:09+00:00,normalize,godie-h01n,1,godie-h01n.wav,godie-h01n.wav,loudnorm2pass,ok,
+2026-07-25T07:47:09+00:00,normalize,godie-h01u,1,godie-h01u.wav,godie-h01u.wav,loudnorm2pass,ok,
+2026-07-25T07:47:09+00:00,normalize,godie-h020,1,godie-h020.wav,godie-h020.wav,loudnorm2pass,ok,
+2026-07-25T07:47:10+00:00,normalize,godie-h02k,1,godie-h02k.wav,godie-h02k.wav,loudnorm2pass,ok,
+2026-07-25T07:47:10+00:00,normalize,godie-h02r,1,godie-h02r.wav,godie-h02r.wav,loudnorm2pass,ok,
+2026-07-25T07:47:10+00:00,normalize,godie-h02u,1,godie-h02u.wav,godie-h02u.wav,loudnorm2pass,ok,
+2026-07-25T07:47:11+00:00,normalize,godie-hapm,1,godie-hapm.wav,godie-hapm.wav,loudnorm2pass,ok,
+2026-07-25T07:47:11+00:00,normalize,godie-hart,1,godie-hart.wav,godie-hart.wav,loudnorm2pass,ok,
+2026-07-25T07:47:11+00:00,normalize,godie-hblm,1,godie-hblm.wav,godie-hblm.wav,loudnorm2pass,ok,
+2026-07-25T07:47:12+00:00,normalize,godie-hpal,1,godie-hpal.wav,godie-hpal.wav,loudnorm2pass,ok,
+2026-07-25T07:47:12+00:00,normalize,godie-hpb1,1,godie-hpb1.wav,godie-hpb1.wav,loudnorm2pass,ok,
+2026-07-25T07:47:13+00:00,normalize,godie-huth,1,godie-huth.wav,godie-huth.wav,loudnorm2pass,ok,
+2026-07-25T07:47:13+00:00,normalize,godie-hvsh,1,godie-hvsh.wav,godie-hvsh.wav,loudnorm2pass,ok,
+2026-07-25T07:47:13+00:00,normalize,godie-hvwd,1,godie-hvwd.wav,godie-hvwd.wav,loudnorm2pass,ok,
+2026-07-25T07:47:13+00:00,normalize,godie-n003,1,godie-n003.wav,godie-n003.wav,loudnorm2pass,ok,
+2026-07-25T07:47:14+00:00,normalize,godie-n00b,1,godie-n00b.wav,godie-n00b.wav,loudnorm2pass,ok,
+2026-07-25T07:47:14+00:00,normalize,godie-n00p,1,godie-n00p.wav,godie-n00p.wav,loudnorm2pass,ok,
+2026-07-25T07:47:14+00:00,normalize,godie-n01c,1,godie-n01c.wav,godie-n01c.wav,loudnorm2pass,verify_warn,loudness -17.2 LUFS outside target
+2026-07-25T07:47:15+00:00,normalize,godie-nplh,1,godie-nplh.wav,godie-nplh.wav,loudnorm2pass,verify_warn,loudness -16.4 LUFS outside target
+2026-07-25T07:47:15+00:00,normalize,godie-o00k,1,godie-o00k.wav,godie-o00k.wav,loudnorm2pass,ok,
+2026-07-25T07:47:15+00:00,normalize,godie-o00l,1,godie-o00l.wav,godie-o00l.wav,loudnorm2pass,ok,
+2026-07-25T07:47:15+00:00,normalize,godie-o00x,1,godie-o00x.wav,godie-o00x.wav,loudnorm2pass,ok,
+2026-07-25T07:47:16+00:00,normalize,godie-o02p,1,godie-o02p.wav,godie-o02p.wav,loudnorm2pass,ok,
+2026-07-25T07:47:16+00:00,normalize,godie-ofar,1,godie-ofar.wav,godie-ofar.wav,loudnorm2pass,ok,
+2026-07-25T07:47:16+00:00,normalize,godie-ogld,1,godie-ogld.wav,godie-ogld.wav,loudnorm2pass,ok,
+2026-07-25T07:47:17+00:00,normalize,godie-orkn,1,godie-orkn.wav,godie-orkn.wav,loudnorm2pass,ok,
+2026-07-25T07:47:17+00:00,normalize,godie-osam,1,godie-osam.wav,godie-osam.wav,loudnorm2pass,ok,
+2026-07-25T07:47:17+00:00,normalize,godie-u00h,1,godie-u00h.wav,godie-u00h.wav,loudnorm2pass,verify_warn,loudness -21.2 LUFS outside target
+2026-07-25T07:47:17+00:00,normalize,godie-u00j,1,godie-u00j.wav,godie-u00j.wav,loudnorm2pass,ok,
+2026-07-25T07:47:18+00:00,normalize,godie-u00k,1,godie-u00k.wav,godie-u00k.wav,loudnorm2pass,ok,
+2026-07-25T07:47:18+00:00,normalize,godie-u00l,1,godie-u00l.wav,godie-u00l.wav,loudnorm2pass,ok,
+2026-07-25T07:47:18+00:00,normalize,godie-u00n,1,godie-u00n.wav,godie-u00n.wav,loudnorm2pass,ok,
+2026-07-25T07:47:19+00:00,normalize,godie-u00v,1,godie-u00v.wav,godie-u00v.wav,loudnorm2pass,verify_warn,loudness -20.8 LUFS outside target
+2026-07-25T07:47:19+00:00,normalize,godie-u010,1,godie-u010.wav,godie-u010.wav,loudnorm2pass,ok,
+2026-07-25T07:47:19+00:00,normalize,godie-u01u,1,godie-u01u.wav,godie-u01u.wav,loudnorm2pass,ok,
+2026-07-25T07:47:20+00:00,normalize,godie-ubal,1,godie-ubal.wav,godie-ubal.wav,loudnorm2pass,ok,
+2026-07-25T07:47:20+00:00,normalize,godie-udea,1,godie-udea.wav,godie-udea.wav,loudnorm2pass,ok,
+2026-07-25T07:47:20+00:00,normalize,godie-zombiex,1,godie-zombiex.wav,godie-zombiex.wav,loudnorm2pass,ok,
+2026-07-25T07:48:02+00:00,normalize,godie-e001,1,godie-e001.wav,godie-e001.wav,loudnorm2pass,ok,
+2026-07-25T07:48:03+00:00,normalize,godie-e002,1,godie-e002.wav,godie-e002.wav,loudnorm2pass,ok,
+2026-07-25T07:48:03+00:00,normalize,godie-e007,1,godie-e007.wav,godie-e007.wav,loudnorm2pass,ok,
+2026-07-25T07:48:03+00:00,normalize,godie-e008,1,godie-e008.wav,godie-e008.wav,loudnorm2pass,ok,
+2026-07-25T07:48:03+00:00,normalize,godie-e00k,1,godie-e00k.wav,godie-e00k.wav,loudnorm2pass,ok,
+2026-07-25T07:48:04+00:00,normalize,godie-e00r,1,godie-e00r.wav,godie-e00r.wav,loudnorm2pass,ok,
+2026-07-25T07:48:04+00:00,normalize,godie-e00w,1,godie-e00w.wav,godie-e00w.wav,loudnorm2pass,ok,
+2026-07-25T07:48:04+00:00,normalize,godie-edem,1,godie-edem.wav,godie-edem.wav,loudnorm2pass,ok,
+2026-07-25T07:48:05+00:00,normalize,godie-efur,1,godie-efur.wav,godie-efur.wav,loudnorm2pass,ok,
+2026-07-25T07:48:05+00:00,normalize,godie-emfr,1,godie-emfr.wav,godie-emfr.wav,loudnorm2pass,ok,
+2026-07-25T07:48:05+00:00,normalize,godie-emns,1,godie-emns.wav,godie-emns.wav,loudnorm2pass,ok,
+2026-07-25T07:48:06+00:00,normalize,godie-etyr,1,godie-etyr.wav,godie-etyr.wav,loudnorm2pass,ok,
+2026-07-25T07:48:06+00:00,normalize,godie-h00l,1,godie-h00l.wav,godie-h00l.wav,loudnorm2pass,ok,
+2026-07-25T07:48:06+00:00,normalize,godie-h01n,1,godie-h01n.wav,godie-h01n.wav,loudnorm2pass,ok,
+2026-07-25T07:48:07+00:00,normalize,godie-h01u,1,godie-h01u.wav,godie-h01u.wav,loudnorm2pass,ok,
+2026-07-25T07:48:07+00:00,normalize,godie-h020,1,godie-h020.wav,godie-h020.wav,loudnorm2pass,ok,
+2026-07-25T07:48:07+00:00,normalize,godie-h02k,1,godie-h02k.wav,godie-h02k.wav,loudnorm2pass,ok,
+2026-07-25T07:48:08+00:00,normalize,godie-h02r,1,godie-h02r.wav,godie-h02r.wav,loudnorm2pass,ok,
+2026-07-25T07:48:08+00:00,normalize,godie-h02u,1,godie-h02u.wav,godie-h02u.wav,loudnorm2pass,ok,
+2026-07-25T07:48:08+00:00,normalize,godie-hapm,1,godie-hapm.wav,godie-hapm.wav,loudnorm2pass,ok,
+2026-07-25T07:48:09+00:00,normalize,godie-hart,1,godie-hart.wav,godie-hart.wav,loudnorm2pass,ok,
+2026-07-25T07:48:09+00:00,normalize,godie-hblm,1,godie-hblm.wav,godie-hblm.wav,loudnorm2pass,ok,
+2026-07-25T07:48:10+00:00,normalize,godie-hpal,1,godie-hpal.wav,godie-hpal.wav,loudnorm2pass,ok,
+2026-07-25T07:48:10+00:00,normalize,godie-hpb1,1,godie-hpb1.wav,godie-hpb1.wav,loudnorm2pass,ok,
+2026-07-25T07:48:10+00:00,normalize,godie-huth,1,godie-huth.wav,godie-huth.wav,loudnorm2pass,ok,
+2026-07-25T07:48:10+00:00,normalize,godie-hvsh,1,godie-hvsh.wav,godie-hvsh.wav,loudnorm2pass,ok,
+2026-07-25T07:48:11+00:00,normalize,godie-hvwd,1,godie-hvwd.wav,godie-hvwd.wav,loudnorm2pass,ok,
+2026-07-25T07:48:11+00:00,normalize,godie-n003,1,godie-n003.wav,godie-n003.wav,loudnorm2pass,ok,
+2026-07-25T07:48:11+00:00,normalize,godie-n00b,1,godie-n00b.wav,godie-n00b.wav,loudnorm2pass,ok,
+2026-07-25T07:48:12+00:00,normalize,godie-n00p,1,godie-n00p.wav,godie-n00p.wav,loudnorm2pass,ok,
+2026-07-25T07:48:12+00:00,normalize,godie-n01c,1,godie-n01c.wav,godie-n01c.wav,loudnorm2pass,ok,
+2026-07-25T07:48:12+00:00,normalize,godie-nplh,1,godie-nplh.wav,godie-nplh.wav,loudnorm2pass,ok,
+2026-07-25T07:48:13+00:00,normalize,godie-o00k,1,godie-o00k.wav,godie-o00k.wav,loudnorm2pass,ok,
+2026-07-25T07:48:13+00:00,normalize,godie-o00l,1,godie-o00l.wav,godie-o00l.wav,loudnorm2pass,ok,
+2026-07-25T07:48:13+00:00,normalize,godie-o00x,1,godie-o00x.wav,godie-o00x.wav,loudnorm2pass,ok,
+2026-07-25T07:48:13+00:00,normalize,godie-o02p,1,godie-o02p.wav,godie-o02p.wav,loudnorm2pass,ok,
+2026-07-25T07:48:14+00:00,normalize,godie-ofar,1,godie-ofar.wav,godie-ofar.wav,loudnorm2pass,ok,
+2026-07-25T07:48:14+00:00,normalize,godie-ogld,1,godie-ogld.wav,godie-ogld.wav,loudnorm2pass,ok,
+2026-07-25T07:48:14+00:00,normalize,godie-orkn,1,godie-orkn.wav,godie-orkn.wav,loudnorm2pass,ok,
+2026-07-25T07:48:15+00:00,normalize,godie-osam,1,godie-osam.wav,godie-osam.wav,loudnorm2pass,ok,
+2026-07-25T07:48:15+00:00,normalize,godie-u00h,1,godie-u00h.wav,godie-u00h.wav,loudnorm2pass,ok,
+2026-07-25T07:48:15+00:00,normalize,godie-u00j,1,godie-u00j.wav,godie-u00j.wav,loudnorm2pass,ok,
+2026-07-25T07:48:16+00:00,normalize,godie-u00k,1,godie-u00k.wav,godie-u00k.wav,loudnorm2pass,ok,
+2026-07-25T07:48:16+00:00,normalize,godie-u00l,1,godie-u00l.wav,godie-u00l.wav,loudnorm2pass,ok,
+2026-07-25T07:48:16+00:00,normalize,godie-u00n,1,godie-u00n.wav,godie-u00n.wav,loudnorm2pass,ok,
+2026-07-25T07:48:17+00:00,normalize,godie-u00v,1,godie-u00v.wav,godie-u00v.wav,loudnorm2pass,verify_warn,true peak -0.5 dBTP above target
+2026-07-25T07:48:17+00:00,normalize,godie-u010,1,godie-u010.wav,godie-u010.wav,loudnorm2pass,ok,
+2026-07-25T07:48:17+00:00,normalize,godie-u01u,1,godie-u01u.wav,godie-u01u.wav,loudnorm2pass,ok,
+2026-07-25T07:48:17+00:00,normalize,godie-ubal,1,godie-ubal.wav,godie-ubal.wav,loudnorm2pass,ok,
+2026-07-25T07:48:18+00:00,normalize,godie-udea,1,godie-udea.wav,godie-udea.wav,loudnorm2pass,ok,
+2026-07-25T07:48:18+00:00,normalize,godie-zombiex,1,godie-zombiex.wav,godie-zombiex.wav,loudnorm2pass,ok,

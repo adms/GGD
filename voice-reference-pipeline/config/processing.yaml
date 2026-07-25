@@ -51,6 +51,8 @@ separation:
   embedding_backend: auto         # auto | speechbrain | spectral_proxy
   # auto: 先嘗試 SpeechBrain ECAPA-TDNN, 不可用時退回 spectral_proxy
   # spectral_proxy 是輕量代理特徵(頻譜統計+音高), 結果僅供排序參考
+  proxy_distance_scale: 3.0       # 特徵距離→相似度換算尺度 exp(-d/scale)
+  #（非人類角色與 proxy 後端使用；z-score 向量不可用 cosine）
 
 # 非人類聲音角色: 不以一般 speaker embedding 作唯一判斷,
 # 另行分析 pitch range / spectral centroid / rolloff / harmonicity /

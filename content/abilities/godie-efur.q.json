@@ -2,7 +2,7 @@
   "id": "godie-efur.q",
   "name": "13-01 龍頭戲畫",
   "icon": "assets/icons/abilities/godie-efur.q.webp",
-  "description": "[主動攻擊]\n26秒冷卻時間\n\n用植物的根部將敵人羈絆住而無法移動，被綑綁的敵人每秒也會承受25點的傷害，持續1秒。",
+  "description": "[主動攻擊]\n26秒冷卻時間\n\n放出氣化之龍纏縛敵人使其無法移動，被龍頭咬住的敵人每秒也會承受25點的傷害，持續1秒。",
   "slot": "Q",
   "castType": "targeted",
   "maxRank": 4,

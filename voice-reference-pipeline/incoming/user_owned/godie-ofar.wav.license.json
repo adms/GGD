@@ -1,0 +1,11 @@
+{
+  "hero_id": "godie-ofar",
+  "source_name": "AudioGen final_51 2026-07-25 (user-attested, private_research)",
+  "source_url": "https://www.youtube.com/watch?v=rOGS5E9HAqQ",
+  "direct_url": "https://www.youtube.com/watch?v=rOGS5E9HAqQ",
+  "license_url": "",
+  "attestation": "workspace_user 2026-07-24: download; extract; synthetic_voice_reference",
+  "human_review": "locked_pass/round2",
+  "identity_basis": "exact named character voice files",
+  "source_sha256": "4dafd06dca1f488d41383858bb6ff7d77bd48178e862009a8b8d944c383c1359"
+}

@@ -1,0 +1,32 @@
+{
+  "source_path": "/Users/Takuro/GGD/voice-reference-pipeline/incoming/user_owned/godie-ubal.wav",
+  "file": "godie-ubal.wav",
+  "hero_id": "godie-ubal",
+  "variant": 1,
+  "license_bucket": "user_owned",
+  "inspected_at": "2026-07-25T07:46:55+00:00",
+  "verdict": "accepted",
+  "reject_reasons": [],
+  "review_notes": [],
+  "metrics": {
+    "duration": 7.5,
+    "sample_rate": 24000,
+    "channels": 1,
+    "bit_depth": 16,
+    "integrated_loudness": -18.9,
+    "true_peak": -1.1,
+    "loudness_range": 3.3,
+    "clipping_ratio": 0.0,
+    "silence_ratio": 0.482,
+    "estimated_snr": 32.1,
+    "speech_or_vocal_ratio": 0.518,
+    "music_probability": 0.567,
+    "multiple_speaker_probability": 0.571
+  },
+  "sha256": "e5fa95189fe3d75d6afd97d930af47d9ae6e7a9fad2c0fc6145a27ddfc2847cd",
+  "segment": {
+    "start": 0.0,
+    "end": 7.5,
+    "score": 1.0
+  }
+}

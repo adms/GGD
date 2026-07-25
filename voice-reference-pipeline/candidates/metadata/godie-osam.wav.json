@@ -1,0 +1,32 @@
+{
+  "source_path": "/Users/Takuro/GGD/voice-reference-pipeline/incoming/user_owned/godie-osam.wav",
+  "file": "godie-osam.wav",
+  "hero_id": "godie-osam",
+  "variant": 1,
+  "license_bucket": "user_owned",
+  "inspected_at": "2026-07-25T07:46:54+00:00",
+  "verdict": "accepted",
+  "reject_reasons": [],
+  "review_notes": [],
+  "metrics": {
+    "duration": 8.0,
+    "sample_rate": 24000,
+    "channels": 1,
+    "bit_depth": 16,
+    "integrated_loudness": -19.2,
+    "true_peak": -2.1,
+    "loudness_range": 3.5,
+    "clipping_ratio": 0.0,
+    "silence_ratio": 0.312,
+    "estimated_snr": 31.0,
+    "speech_or_vocal_ratio": 0.658,
+    "music_probability": 0.613,
+    "multiple_speaker_probability": 0.19
+  },
+  "sha256": "03c53e71e08d507b256f1636b44c68991befcc68da465fff980ab5001a653187",
+  "segment": {
+    "start": 0.0,
+    "end": 8.0,
+    "score": 1.0
+  }
+}

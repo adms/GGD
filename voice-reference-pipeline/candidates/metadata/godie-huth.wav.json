@@ -1,0 +1,32 @@
+{
+  "source_path": "/Users/Takuro/GGD/voice-reference-pipeline/incoming/user_owned/godie-huth.wav",
+  "file": "godie-huth.wav",
+  "hero_id": "godie-huth",
+  "variant": 1,
+  "license_bucket": "user_owned",
+  "inspected_at": "2026-07-25T07:46:51+00:00",
+  "verdict": "accepted",
+  "reject_reasons": [],
+  "review_notes": [],
+  "metrics": {
+    "duration": 13.97,
+    "sample_rate": 24000,
+    "channels": 1,
+    "bit_depth": 16,
+    "integrated_loudness": -19.2,
+    "true_peak": -6.8,
+    "loudness_range": 3.1,
+    "clipping_ratio": 0.0,
+    "silence_ratio": 0.22,
+    "estimated_snr": 57.1,
+    "speech_or_vocal_ratio": 0.778,
+    "music_probability": 0.549,
+    "multiple_speaker_probability": 0.43
+  },
+  "sha256": "fadb6123ba683b8cf9351c7ad9ea548117dbe4307e0dd00576864287751d8a9f",
+  "segment": {
+    "start": 0.0,
+    "end": 13.97,
+    "score": 1.0
+  }
+}

@@ -42,9 +42,9 @@
   "abilities": {
     "Q": {
       "id": "godie-osam.q",
-      "name": "34-01 風華之爪",
+      "name": "34-01 毒華爪",
       "icon": "assets/icons/abilities/godie-osam.q.webp",
-      "description": "[被動]\n0秒冷卻時間\n\n殺生丸以風華之爪攻擊，導致這一擊之中10%的傷害會擊穿對方，並造成附近敵人的傷害。",
+      "description": "[被動]\n0秒冷卻時間\n\n殺生丸以毒華爪攻擊,爪中劇毒，導致這一擊之中10%的傷害會擊穿對方，並造成附近敵人的傷害。",
       "slot": "Q",
       "castType": "self",
       "maxRank": 5,
@@ -81,7 +81,7 @@
     },
     "W": {
       "id": "godie-osam.w",
-      "name": "34-02 合氣斬",
+      "name": "34-02 閃光鞭",
       "icon": "assets/icons/abilities/godie-osam.w.webp",
       "description": "[被動]\n0秒冷卻時間\n\n攻擊時有10%的機率造成1.5倍的傷害。",
       "slot": "W",
@@ -120,9 +120,9 @@
     },
     "E": {
       "id": "godie-osam.e",
-      "name": "34-03 爆碎丸",
+      "name": "34-03 爆碎牙",
       "icon": "assets/icons/abilities/godie-osam.e.webp",
-      "description": "[被動]\n0秒冷卻時間\n\n新生的爆碎丸，有15%的機會，對目標敵人造成90點額外傷害，並擊昏敵人0.5秒。",
+      "description": "[被動]\n0秒冷卻時間\n\n新生的爆碎牙，有15%的機會，對目標敵人造成90點額外傷害，並擊昏敵人0.5秒。",
       "slot": "E",
       "castType": "targeted",
       "maxRank": 4,

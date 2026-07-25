@@ -1351,9 +1351,9 @@
    "kana": "ハメツ ノ エネルギーダン"
   },
   "skill-name.ex": {
-   "text": "普烏死亡！",
+   "text": "純粹魔人普烏！",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "authored",
    "state": "generated",
    "takes": [
     {
@@ -1371,21 +1371,29 @@
      "seconds": null,
      "at": 1784990981089,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.12,
+     "at": 1784995070660,
+     "error": null
     }
    ],
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 13836,
-    "seconds": null,
+    "bytes": 18852,
+    "seconds": 1.12,
     "lufs": null,
-    "hash": "b640d7e2c1a13322359139b2761f31799a0ca06a2dfa940c2c1490835fc5da1e",
-    "at": 1784990981089
+    "hash": "fd01eccb53c297b0f49395a7fbe7a874f60258c3c7198f055379db5c2a15eaaf",
+    "at": 1784995070660
    },
    "lastError": null,
-   "kana": "ブウ シス"
+   "kana": "ジュンスイ マジン ブウ"
   }
  }
 }

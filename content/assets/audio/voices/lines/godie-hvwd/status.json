@@ -1314,9 +1314,9 @@
    "kana": "コンピ ハクサン"
   },
   "skill-name.r": {
-   "text": "百鬼夜行！",
+   "text": "死魂蟲！",
    "lang": "ja",
-   "textSource": "imported",
+   "textSource": "authored",
    "state": "generated",
    "takes": [
     {
@@ -1334,21 +1334,29 @@
      "seconds": null,
      "at": 1784990963054,
      "error": null
+    },
+    {
+     "take": 3,
+     "engine": "cosyvoice3",
+     "stub": false,
+     "seconds": 1.16,
+     "at": 1784995039520,
+     "error": null
     }
    ],
    "current": {
-    "take": 2,
+    "take": 3,
     "engine": "cosyvoice3",
     "engineVersion": "cv3-0.5b",
     "stub": false,
-    "bytes": 14672,
-    "seconds": null,
+    "bytes": 19688,
+    "seconds": 1.16,
     "lufs": null,
-    "hash": "8ce2b5471496fd4e0dba99e2eb4d3390520e8112ac27c4d6f1ab3d1aa6c142c7",
-    "at": 1784990963054
+    "hash": "95c958b619be9acc60aeea50c1ebe9977347ac94706ef1b21e733d869d8cda82",
+    "at": 1784995039520
    },
    "lastError": null,
-   "kana": "ヒャッキ ヤコウ"
+   "kana": "シニダマチュウ"
   },
   "skill-name.ex": {
    "text": "神通眼！",
