@@ -1,5 +1,5 @@
 /**
- * Roster VFX bindings (task #79): all 240 abilities of the 48 whitelisted
+ * Roster VFX bindings (task #79): all 250 abilities of the 50 whitelisted
  * champions are bound to a real element/primitive — NOT the generic fire
  * placeholder — and 依文潔琳's ice spells resolve to an ICE primitive (the
  * flagship symptom). Every generated curated doc is schema-valid.
@@ -70,12 +70,23 @@ function goList(src: string, name: string): string[] {
 
 const roster: string[] = goList(readFileSync(STARTER_GO, "utf8"), "starterChampions");
 
-describe("roster bindings cover the 48 whitelisted champions (ability-vfx-bindings)", () => {
-  it("binds every ability of all 48 champions (240 rows, none missing)", () => {
+/**
+ * The shipped roster size, asserted rather than derived — a hard number is what
+ * makes a silently-truncated parse fail instead of passing vacuously. It is a
+ * RATCHET in the same spirit as #128's castability floor: it moves up when the
+ * operator genuinely opens heroes (48 → 50 when task #212 opened 賈修貝爾
+ * `godie-hblm` and 揍敵客桀諾 `godie-efur`), and every id it counts must also
+ * carry a `bindings.ts` ROSTER row, so opening a hero without classifying its
+ * five casts still fails here.
+ */
+const ROSTER_SIZE = 50;
+
+describe("roster bindings cover the 50 whitelisted champions (ability-vfx-bindings)", () => {
+  it("binds every ability of all 50 champions (250 rows, none missing)", () => {
     cover("ability-vfx-bindings");
     // Guard the parse itself: a silently-empty goList would make every
     // assertion below vacuous, which is the failure mode this file just had.
-    expect(roster.length, "starter.go yielded no champions — the parse broke").toBe(48);
+    expect(roster.length, "starter.go yielded no champions — the parse broke").toBe(ROSTER_SIZE);
     const binds = rosterBindings();
     expect(binds).toHaveLength(roster.length * 5);
     for (const champ of roster) {
@@ -174,7 +185,7 @@ describe("operator whitelist vs bindings (ability-vfx-bindings)", () => {
       if (!operatorPresent) {
         // Not a skip: the starter-set audit above already ran and is the thing
         // CI can prove. Say out loud what was NOT covered, and how to cover it.
-        expect(roster.length).toBe(48);
+        expect(roster.length).toBe(ROSTER_SIZE);
         console.info(`[bindings] no operator whitelist at ${OPERATOR_DOC}; audit a host with:\n  ${AUDIT_THE_LIVE_HOST}`);
         return;
       }

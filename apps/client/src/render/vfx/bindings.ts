@@ -159,6 +159,17 @@ const ROSTER: Record<string, Partial<Record<Slot, Bind>>> = {
   "godie-ubal": { q: ["void", "beam"], w: ["void", "shockwave"], e: ["void", "explosion"], r: ["void", "pulse"], ex: ["void", "explosion"] },
   // 飛鼠先生 — arcane senior / ice shatter / judgment
   "godie-udea": { q: ["arcane", "pulse", "sm"], w: ["ice", "nova"], e: ["arcane", "explosion"], r: ["holy", "nova"], ex: ["arcane", "pulse"] },
+  // ---- task #212: opened by starter.go in v0.5.16, so they owe rows here ----
+  // 賈修貝爾 Zatch — lightning spellcaster (薩喀爾 / 巴歐．薩喀爾嘎), 及喀爾度
+  // is the magnet-orb utility (holy) and the EX 金色巨龍 devour reads void.
+  // These reproduce the vfxKey each ability doc already ships, so the client
+  // art table and content agree instead of drifting.
+  "godie-hblm": { q: ["lightning", "nova"], w: ["lightning", "dash"], e: ["holy", "nova"], r: ["lightning", "nova"], ex: ["void", "pulse"] },
+  // 揍敵客桀諾 Zeno — 念 assassin: 龍頭戲畫 is a coiling 氣 dragon that roots
+  // (氣 → wind per the header convention; content overrides Q to the shared
+  // `fx.root-snare` doc, so this row is the fallback classification), 快步 is
+  // the blink, 龍星群 the descending dragon-arrow ultimate.
+  "godie-efur": { q: ["wind", "tornado"], w: ["ki", "pulse", "sm"], e: ["arcane", "dash"], r: ["void", "pulse"], ex: ["arcane", "pulse"] },
 };
 
 const SLOTS: Slot[] = ["q", "w", "e", "r", "ex"];
