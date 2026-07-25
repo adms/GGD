@@ -2412,3 +2412,47 @@ main 的 `icons.test.ts` 明文採「AUTHORITY MODEL」：424 個 embedded 沒�
 - **順修**：草泥馬 W/E 編號互換（92-03/92-02）、鬼眼狂刀無名→無明神風流（kana ムミョウ 本就正確、只改字不需重錄）
 - 覆核把關戰績：駁回「牙突→縮地」誤改（牙突是桀諾正典ドラゴンランス，縮地反是瀨田宗次郎的招）；基廉列克廬山昇龍破查 reconciliation 確認是原作者梗名（豁免）
 - 6 句語音重生（osam×3/hvwd/ogld/huth），雙鏡像+讀音登錄同步，content:build 綠，試聽頁重建
+
+## 2026-07-26 — #218 戰鬥場景柱子沒清乾淨：一條「反向規則」把攝影機保證綁在內容上
+
+### 症狀（owner playtest 原話）
+「戰鬥場景中的柱子 還是沒有全部移除乾淨」——固定視角戰鬥場，灰色石柱仍擋住角色。
+
+### 根因（量測，非推測）
+`apps/client/src/render/ArenaScene.ts` 的 `buildArena()` 對**每一個 sim 障礙圓**畫一根 `SIGHTLINE_HEIGHT_CAP`(2.4u) 高的灰色圓柱；而把這些圓柱刪掉的判斷是
+`if (placedAny && doc.decor.some(d => d.model.includes("pillar")))` ——**刪不刪柱子，取決於這張圖剛好有沒有 pillar.glb 裝飾**。
+前一次修正（59c634f）把 arena.skeleton 的 pillar decor 整批刪掉，等於**順手把這條刪除分支關掉**：
+
+| arena | 障礙圓 | pillar decor | 殘留 2.4u 灰柱 |
+|---|---|---|---|
+| arena.skeleton | 6 | 0（59c634f 刪掉） | **6** |
+| arena.dota | 20 | 0 | **20** |
+| arena.godie | 55 | 0 | **55** |
+| arena.castle | 14 + 4 牆 | 6 | 0（圓柱）／**4 面牆永遠不刪** |
+| arena.colosseum | 40 | 36 | 0 |
+
+`else` 分支（segment 障礙的 2.4u 牆盒）**從來沒被 push 進 `handles.obstacleMeshes`**，所以任何路徑都刪不到它。
+另外 `GameApp.ts:440` 以 `SKELETON_ARENA` 開機（無 doc → `dressArena` 永遠不跑），開機場的 6 根柱子是**永久**的。
+68° 機位下一根 2.4u 圓柱會吃掉北側 2.4·3.75/(9.27−2.4) ≈ **1.31u 內所有人的下半身**。
+
+### 為什麼測試沒抓到
+`ArenaScene.test.ts:152-190` 只斷言 `meshes.length > 0` 且 `top <= SIGHTLINE_HEIGHT_CAP` — 2.4u 圓柱**兩條都過**，測試等於替 bug 背書。
+`occludesPlayArea()` 在 `topY <= 2.4` 直接 return false，也永遠標不出來。`scripts/occluder-sweep.ts` 是手動腳本（未進 CI），而且**鏡射了同一條反向規則**，還把 #161 改成 68° 的機位漏更新、仍以 55°/8.19u/5.74u 稽核。
+
+### 落點（本次直接修完）
+- `ArenaScene.ts` 新增 `OBSTACLE_MARKER_TOP_Y = 0.42`（＝ ArenaGround `KERB_TOP_Y` 的同一個數字、同一個理由：`fullHideReach(0.42) === 0`，比「低於 2.4u 上限」強得多——**任何縮放下都不可能遮住角色的任何一部分**）。
+- 圓障礙 → 0.42u 石墩 + 貼在**真實碰撞半徑**上的地面環（torus, top 0.12u）；線段障礙 → 0.42u 矮牆板，寬/深/角度/中心**完全不動**。三種都 push 進 `obstacleMeshes`（補上從來沒被追蹤的牆板）。**不是隱形牆**：碰撞看得見，只是不再是柱子。
+- **刪掉 dressArena 尾端那條反向分支**——標記本來就無害，castle/colosseum 的 pillar prop 又剛好站在同一批圓上（36/36、6/6 座標重合），標記直接沒入 prop 底座。
+- `occluder-sweep.ts`：55°→68°（EYE 9.27／STANDOFF 3.75）、拿掉 `pillarsPlaced` 跳過、障礙一律以 0.42u 建模。重跑 5 張圖全 PASS（colosseum 最壞 ray-block 25/35，不再全遮）。
+- **sim 一行沒動**：`ArenaDef.ts` SKELETON_ARENA 與 5 份 `content/arenas/*.json` 的 `zones` 原封不動 → `roundPacing.test.ts:149-151`（中央柱推擠）與 `kiting.test.ts:107`（z=-14 淨空道）自動保持綠。
+
+### 守衛的形狀
+`ArenaScene.test.ts` 新增 `buildArena obstacle markers never occlude the combat camera`：對 **5 份出貨 arena doc + 內建 SKELETON_ARENA** 逐一 `buildArena`，斷言
+(a) `obstacleMeshes.length === 圓×2 + 線段`（牆板再也不能悄悄漏追蹤）、
+(b) 每個 `-ob-N` mesh 的 `maximumWorld.y <= 0.42` 且 **`fullHideReach(top) === 0`**、
+(c) mesh 仍 `isVisible` 且 `top > 0`（不准變成隱形牆）。
+外加一組 dressArena 表格測試：**有** pillar decor 與**沒有** pillar decor 兩種 doc，標記都必須「還在且仍然矮」——舊碼在這兩格分別是「被刪掉」與「2.4u 高」，兩格都紅。
+反證：把石墩高度改回 `SIGHTLINE_HEIGHT_CAP` 重跑 → 8 條紅（6 張圖 + 2 條 dressArena），確認守衛真的咬得住。
+
+### 仍未關閉（刻意留給美術裁決，非本次 bug）
+arena.colosseum 36 根、arena.castle 6 根 **pillar.glb 裝飾**站在障礙圓上，被 #29 squash 到 2.4u 而非移除——那是「殘柱」的美術意圖，不是本 bug。若 owner 說的就是這兩張圖，需再裁決是否把「站在障礙圓上的 decor」也壓到 0.42u。
