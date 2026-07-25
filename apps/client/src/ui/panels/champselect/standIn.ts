@@ -3,9 +3,10 @@
  * imported one? (task #76 profile block; the underlying data debt is task #77.)
  *
  * 44 of the 114 champions point their `modelKey` at one of four generic meshes
- * instead of an `imported.*` mesh extracted from the w3x. Since #226 those are
- * the GENERATED blocky humanoids (`tools/voxel-gen`), not the retired KayKit
- * characters:
+ * instead of an `imported.*` mesh extracted from the w3x (measured 2026-07-26;
+ * the counts were stale at 42/113 and 10/8 before that). Since #226 those four
+ * are the GENERATED blocky humanoids (`tools/voxel-gen`), not the retired
+ * KayKit characters:
  *
  *     champ.sela            → blocky-mage.glb      (18 champions)
  *     champ.thorne          → blocky-knight.glb    (11, plus the #215 mob)
@@ -17,10 +18,23 @@
  * per-champion palette/proportions #226 applies at runtime make the 44 visually
  * distinct from one another, but they are still not the character's real model.
  *
- * The champ-select 3D stage must NOT present one of these as the champion's real
- * model — that is the exact silent misrepresentation task #77 is about. So the
- * profile flags a stand-in and labels the stage instead of pretending. Pure +
- * node-testable: it reads a modelKey string, never the render layer.
+ * TASK #231 CHANGED WHAT THIS MEANS, AND ONLY HALF OF IT.
+ * All 44 now have their OWN deterministically generated voxel skin, and
+ * `ChampionView` declines the shared glb for them — so IN THE ARENA nobody
+ * wears somebody else's face any more. The champ-select / shop / settlement
+ * stages, however, still mount the glb through `StorePreview`, which has no
+ * procedural path (#226 open question), so on THOSE surfaces the shared mesh is
+ * still what renders. The note below therefore stays — narrowed to say what is
+ * actually true of the stage the player is looking at, rather than being
+ * deleted on the strength of a fix that has not reached it yet.
+ *
+ * The `voxel-standin` CONTENT TAG (41 of these 44 docs carry it; sela's and
+ * thorne's own three in-house docs do not) is likewise KEPT and re-read: it
+ * means "this champion has no imported art of its own", which is still exactly
+ * true — its generated look is procedural, not imported. Retiring the tag would
+ * lose the only content-side handle on the population #226 is replacing.
+ *
+ * Pure + node-testable: it reads a modelKey string, never the render layer.
  *
  * The set is deliberately EXPLICIT rather than a `champ.` prefix rule: every
  * real per-champion model is `imported.*` (or a runtime-synthesized Blizzard
@@ -46,5 +60,6 @@ export function isStandInModel(modelKey: string | null | undefined): boolean {
  * The honest one-line label the stage shows over a stand-in, so nobody reads a
  * generic mage/knight as the champion. Trilingual-adjacent (zh load-bearing).
  */
-export const STAND_IN_NOTE_ZH = "替身模型 · 尚未匯入本角色專屬外觀";
-export const STAND_IN_NOTE_EN = "stand-in model — this champion's own art isn't imported yet";
+export const STAND_IN_NOTE_ZH = "替身模型 · 本頁預覽用；戰鬥中已改用本角色專屬體素外觀";
+export const STAND_IN_NOTE_EN =
+  "stand-in model — preview only; in combat this champion wears its own generated voxel look";

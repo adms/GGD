@@ -57,8 +57,13 @@ const TINT_EPSILON = 0.002;
  * on the field. `ChampionView` names them `champ-<id>-teamring` /
  * `champ-<id>-shadow`; the regression test below pins that coupling so a
  * rename fails loudly instead of silently repainting the ring.
+ *
+ * `-teamband` (task #231) joins them for exactly the same reason, one mesh
+ * over. Once the generated voxel skin paints the torso and the legs, that thin
+ * chest stripe is the only FLAT team colour left ON THE BODY, and a dark
+ * champion tint (Berserker multiplies by 0.3137) would crush it to unreadable.
  */
-export const UNTINTED_MESH_SUFFIXES: readonly string[] = ["-teamring", "-shadow"];
+export const UNTINTED_MESH_SUFFIXES: readonly string[] = ["-teamring", "-shadow", "-teamband"];
 
 /** Tag left on every clone we install, so apply is idempotent and reversible. */
 interface TintTag {

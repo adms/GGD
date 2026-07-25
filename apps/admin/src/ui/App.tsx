@@ -14,6 +14,7 @@ import { ServerOpsPage } from "./ServerOpsPage";
 import { AiSettingsPage } from "./AiSettingsPage";
 import { ModelBudgetPage } from "./ModelBudgetPage";
 import { IconTrackingPage } from "./IconTrackingPage";
+import { VoxelSkinSheetPage } from "./VoxelSkinSheetPage";
 import { MCoinGrantPage } from "./MCoinGrantPage";
 import { InvitesPage } from "./InvitesPage";
 import { AuditPage } from "./AuditPage";
@@ -60,6 +61,10 @@ const NAV: NavItem[] = [
   { page: "ai", label: "AI 生成設定", emoji: "🤖", section: SEC_ASSETS },
   { page: "modelBudget", label: "模型預算", emoji: "📐", section: SEC_ASSETS },
   { page: "iconTracking", label: "ICON 生成追蹤", emoji: "🖼️", section: SEC_ASSETS },
+  // task #231 — the 驗收 contact sheet for the generated per-champion voxel
+  // skins. Sits beside its asset-review siblings because that is where the
+  // owner already goes to approve art.
+  { page: "voxelSkins", label: "體素外觀對照表", emoji: "🧱", section: SEC_ASSETS },
   // 系統
   { page: "hub", label: "Console Hub", emoji: "🗂️", section: SEC_SYS },
   { page: "combatEnv", label: "戰鬥系統", emoji: "⚖️", section: SEC_SYS },
@@ -482,6 +487,7 @@ function Console(): React.JSX.Element {
             {page === "ai" && <AiSettingsPage />}
             {page === "modelBudget" && <ModelBudgetPage />}
             {page === "iconTracking" && <IconTrackingPage />}
+            {page === "voxelSkins" && <VoxelSkinSheetPage />}
             {page === "voiceGen" && voiceAdmin !== null && <voiceAdmin.Page />}
             {page === "voiceGen" && voiceAdmin === null && (
               <div style={{ color: TEXT_DIM, padding: 8 }}>載入語音生成頁…</div>

@@ -18,6 +18,7 @@ import type {
   AmbientVfxBinding,
 } from "@ggd/shared/content";
 import { Arenas, Configs, Models, RibbonDefs, VfxDefs } from "@ggd/shared/content";
+import { VOXEL_SKINS_SCHEMA, type VoxelSkinOverride } from "@ggd/shared/content/voxelSkin";
 import { applyGoreDoc } from "../vfx/goreConfig";
 import { ensureContentLoaded } from "./bootContent";
 import { withContentVersion } from "./assetVersion";
@@ -51,6 +52,22 @@ interface StandInOverridesFile {
   schema?: string;
   target?: number;
   overrides?: Record<string, StandInOverride>;
+}
+
+/**
+ * Hand-authored VOXEL SKIN overrides (task #231) from
+ * content/models/_voxel-skins.json (schema voxel-skins@1). Layer L1 of the
+ * skin's override chain and the ONLY part of it that is fetched — every other
+ * layer is computed from the champion doc the registries already hold.
+ * Same sidecar mechanics as _standin-overrides.json above: keyed by championId,
+ * leading "_" so the index builder skips it, so it rides in as a direct-path
+ * fetch. Declared structurally here rather than imported from the shared voxel
+ * skin module so the content layer stays free of render-adjacent imports; the
+ * shape is asserted against `VoxelSkinOverride` where it is consumed.
+ */
+interface VoxelSkinOverridesFile {
+  schema?: string;
+  overrides?: Record<string, Record<string, unknown>>;
 }
 
 const BASE = "/content/";
@@ -109,6 +126,7 @@ export class ContentDb {
   private ambientVfx: ConfigAmbientVfxDoc | null = null;
   private arenaDoc: ArenaDoc | null = null;
   private standInOverrides = new Map<string, StandInOverride>();
+  private voxelSkinOverrides = new Map<string, VoxelSkinOverride>();
   private loaded = false;
 
   /**
@@ -132,7 +150,7 @@ export class ContentDb {
    * overrides do, exactly as before. That costs the one sidecar request.
    */
   async load(arenaId = "arena.skeleton"): Promise<void> {
-    const [boot, standin] = await Promise.all([
+    const [boot, standin, voxelSkins] = await Promise.all([
       // single-flight; at match entry this is an already-resolved promise (0 requests)
       ensureContentLoaded(),
       // per-champion model-SIZE overrides (task #77/#150). Direct-path fetch: the
@@ -140,6 +158,11 @@ export class ContentDb {
       // so the ContentLoader never sees it. Resolving it in the SAME step as the
       // model docs is the invariant described above.
       fetchJson<StandInOverridesFile>("models/_standin-overrides.json"),
+      // hand-authored voxel-skin overrides (task #231). Same sidecar mechanics,
+      // same step — the skin is a CONSTRUCTION-TIME input to ChampionView, so a
+      // champion whose view was built before its override landed would wear the
+      // un-overridden look for the rest of the match.
+      fetchJson<VoxelSkinOverridesFile>("models/_voxel-skins.json"),
     ]);
     // per-champion render-size overrides (task #77/#150). Guarded by schema so a
     // stale/foreign file is ignored; a missing/404 file leaves the map empty and
@@ -148,6 +171,18 @@ export class ContentDb {
     if (standin?.schema === "standin-overrides@2" && standin.overrides) {
       for (const [championId, ov] of Object.entries(standin.overrides)) {
         if (ov && typeof ov === "object") this.standInOverrides.set(championId, ov);
+      }
+    }
+    // task #231 — schema-guarded exactly like the sidecar above: a stale or
+    // foreign file is ignored and every champion simply keeps its GENERATED
+    // look, which is a complete look on its own. The override file is an
+    // art-direction channel, never a prerequisite.
+    this.voxelSkinOverrides = new Map();
+    if (voxelSkins?.schema === VOXEL_SKINS_SCHEMA && voxelSkins.overrides) {
+      for (const [championId, ov] of Object.entries(voxelSkins.overrides)) {
+        if (ov && typeof ov === "object") {
+          this.voxelSkinOverrides.set(championId, ov as VoxelSkinOverride);
+        }
       }
     }
 
@@ -259,6 +294,21 @@ export class ContentDb {
    */
   modelOverrideFor(championId: string): StandInOverride | null {
     return this.standInOverrides.get(championId) ?? null;
+  }
+
+  /**
+   * Hand-authored VOXEL SKIN override (task #231) by championId, or null — the
+   * common case, because the generator produces a complete, distinct look for
+   * every champion on its own. This is the 驗收 channel: when the owner calls
+   * out a hero on the 體素外觀對照表, the fix lands here as a few authored
+   * fields rather than as a special case in the generator.
+   *
+   * Deliberately NOT gated on `this.loaded`: the recipe is computed from the
+   * champion registry, so the only thing an early call can miss is the
+   * override, and the sidecar resolves in the same step as the model docs.
+   */
+  voxelSkinOverrideFor(championId: string): VoxelSkinOverride | null {
+    return this.voxelSkinOverrides.get(championId) ?? null;
   }
 
   vfxFor(vfxKey: string): VfxDoc | null {
