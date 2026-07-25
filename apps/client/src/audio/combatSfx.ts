@@ -20,6 +20,17 @@
  *     Both ALWAYS fall back to the generic `basicAttack` / `abilityCast` clip
  *     when the routing data is absent or unrecognised — never silence, never a
  *     crash on a malformed payload.
+ *   • PER-ABILITY WC3 CAST VOICE (owner directive: ability ports include 音效).
+ *     An ability doc may carry `sfxKey` — the cast sound the SOURCE MAP itself
+ *     bound to that ability (w3x gg_snd → imported mp3) — which the sim
+ *     forwards on `abilityCast`. It outranks the element whoosh: specific beats
+ *     generic, and the WC3 clip is the authentic sound where the element is our
+ *     invention. Only keys declared in {@link WC3_ABILITY_SFX} are honoured, so
+ *     a junk payload degrades to the element/generic route, never to a missed
+ *     audio-map lookup. It rides `abilityCast` and NOT `castBegin` because
+ *     castBegin only exists for casts with a wind-up — an instant cast (裝可愛)
+ *     would never sound there — and `abilityCast` is a SUBSTITUTION on an event
+ *     that already sounds, so the cast still makes exactly one identity voice.
  *   • The other pre-hit + utility events pass through by name (windup/swing/
  *     launch/cast/flower/heal) — the audio map already owns those keys.
  *   • ARCHERY + 魔法陣 (the three shipped 効果音ラボ clips that had no emit site).
@@ -152,6 +163,34 @@ const ELEMENT_SFX: Readonly<Record<string, string>> = {
   ice: "magicIce",
   lightning: "magicLightning",
 };
+
+/**
+ * The WC3 per-ability cast cues shipped so far — the audio-map keys an ability
+ * doc's `sfxKey` may name (content `ability@1.sfxKey`, recovered from the
+ * source map's gg_snd bindings by tools/w3x-import).
+ *
+ * A DECLARED SET rather than a pass-through on purpose, for the same reason
+ * WEAPON_SFX and ELEMENT_SFX are: `sfxKey` arrives off the wire as untyped
+ * event data, and returning an arbitrary string would turn a content typo into
+ * a silent audio-map miss instead of the element/generic fallback. It also
+ * keeps the sfxReachability contract honest — every playable key must appear
+ * as a literal in the file that decides it. When the pending stock-MPQ pull
+ * lands its clips, each new cue is added here alongside its audio-map entry
+ * and reachability row.
+ */
+const WC3_ABILITY_SFX: ReadonlySet<string> = new Set([
+  "wc3.moongo", // godie-hpb1.w 者、皆、陣
+  "wc3.moonjump", // godie-hpb1.e 列、在、前
+  "wc3.nocute", // godie-o00k.passive 裝可愛, godie-u00l.r / godie-umal.r ChangeDNA
+]);
+
+/**
+ * The WC3 source-map cast voice for an ability cast, or null to fall through to
+ * the element/generic route. Total on junk: only a declared cue key passes.
+ */
+export function wc3CastKey(sfxKey: unknown): string | null {
+  return typeof sfxKey === "string" && WC3_ABILITY_SFX.has(sfxKey) ? sfxKey : null;
+}
 
 /**
  * The element whoosh for an ability cast, or null to fall back to the generic
@@ -383,8 +422,9 @@ export function combatSfxKey(ev: EventMessage, seatId: number | null = localSeat
       // 魔法陣展開 — long wind-ups get the circle, short ones the dry tick
       return castTelegraphKey(d.castTimeSec);
     case "abilityCast":
-      // per-element whoosh, generic cast when the vfxKey carries no known element
-      return castElementKey(d.vfxKey) ?? "abilityCast";
+      // the ability's own WC3 cast voice first (specific beats generic), then
+      // the per-element whoosh, then the generic cast clip
+      return wc3CastKey(d.sfxKey) ?? castElementKey(d.vfxKey) ?? "abilityCast";
     case "guardBreak":
       return "guardBreak"; // 破防 — shield broke this frame
     case "knockdown":

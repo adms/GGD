@@ -11,10 +11,10 @@
    "ZERO": 0,
    "TRIVIAL": 0,
    "NO_DAMAGE_EFFECT": 2,
-   "SUSPECT": 128,
+   "SUSPECT": 86,
    "UNVERIFIED": 24,
-   "OK": 184,
-   "N/A": 316
+   "OK": 224,
+   "N/A": 318
   },
   "vfx": {
    "MISSING": 0,
@@ -400,13 +400,13 @@
    "base": "ANrg",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [160.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      160.0,
-      160.0,
-      160.0
+      10.0,
+      10.0,
+      10.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -901,12 +901,12 @@
    "join": "hero-numbers",
    "damage": {
     "verdict": "SUSPECT",
-    "reason": "content values [4.01] absent from ubertip spans",
+    "reason": "content values [650.0, 950.0, 1250.0] absent from ubertip spans",
     "content_perRank": [
      [
-      4.01,
-      4.01,
-      4.01
+      650.0,
+      950.0,
+      1250.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -1615,13 +1615,13 @@
    "base": "Aprg",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [0.0, 5.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      0.0,
-      5.0,
-      5.0
+      600.0,
+      900.0,
+      1200.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -2200,13 +2200,13 @@
    "base": "ANrg",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [160.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      160.0,
-      160.0,
-      160.0
+      10.0,
+      10.0,
+      10.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -2949,10 +2949,10 @@
     "reason": "no JASS handler and no ubertip numbers to check against",
     "content_perRank": [
      [
-      350.0,
-      500.0,
-      650.0,
-      800.0
+      250.0,
+      400.0,
+      550.0,
+      700.0
      ]
     ],
     "ubertip_span_numbers": {},
@@ -3615,16 +3615,9 @@
    "base": "AOvd",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [80.0, 120.0, 160.0, 200.0] absent from ubertip spans",
-    "content_perRank": [
-     [
-      80.0,
-      120.0,
-      160.0,
-      200.0
-     ]
-    ],
+    "verdict": "N/A",
+    "reason": "no damage on either side (buff/heal/summon/aura family)",
+    "content_perRank": [],
     "ubertip_span_numbers": {
      "1": [
       60.0,
@@ -3663,7 +3656,7 @@
     "whiterOldTree"
    ],
    "content_kinds": [
-    "damage"
+    "applyStatus"
    ]
   },
   {
@@ -3676,13 +3669,13 @@
    "base": "ANr3",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [75.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      75.0,
-      75.0,
-      75.0
+      180.0,
+      180.0,
+      180.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -3899,16 +3892,9 @@
    "base": "ANcl",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [80.0, 120.0, 160.0, 200.0] absent from ubertip spans",
-    "content_perRank": [
-     [
-      80.0,
-      120.0,
-      160.0,
-      200.0
-     ]
-    ],
+    "verdict": "N/A",
+    "reason": "no damage on either side (buff/heal/summon/aura family)",
+    "content_perRank": [],
     "ubertip_span_numbers": {
      "1": [
       0.0,
@@ -3977,7 +3963,7 @@
     "ButtyGhost_Scare"
    ],
    "content_kinds": [
-    "damage"
+    "applyStatus"
    ]
   },
   {
@@ -3990,14 +3976,14 @@
    "base": "AUls",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [7.0, 12.0, 17.0, 22.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      7.0,
-      12.0,
-      17.0,
-      22.0
+      160.0,
+      160.0,
+      160.0,
+      160.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -4989,13 +4975,13 @@
    "base": "ANcl",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [80.0, 120.0, 160.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      80.0,
-      120.0,
-      160.0
+      600.0,
+      800.0,
+      1000.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -5347,13 +5333,13 @@
    "base": "ANcl",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [80.0, 120.0, 160.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      80.0,
-      120.0,
-      160.0
+      600.0,
+      800.0,
+      1000.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -6153,15 +6139,15 @@
    "base": "ANcl",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [80.0, 120.0, 160.0, 240.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      80.0,
-      120.0,
-      160.0,
+      100.0,
       200.0,
-      240.0
+      300.0,
+      400.0,
+      500.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -6634,13 +6620,13 @@
    "join": "name",
    "damage": {
     "verdict": "SUSPECT",
-    "reason": "content values [4.01] absent from ubertip spans",
+    "reason": "content values [68.0, 108.0, 148.0, 188.0] absent from ubertip spans",
     "content_perRank": [
      [
-      4.01,
-      4.01,
-      4.01,
-      4.01
+      68.0,
+      108.0,
+      148.0,
+      188.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -7128,14 +7114,14 @@
    "base": "ANcl",
    "join": "name",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [80.0, 120.0, 160.0, 200.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      80.0,
-      120.0,
-      160.0,
-      200.0
+      400.0,
+      600.0,
+      800.0,
+      1000.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -7371,14 +7357,14 @@
    "base": "AEer",
    "join": "name",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [75.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      75.0,
-      75.0,
-      75.0,
-      75.0
+      25.0,
+      40.0,
+      55.0,
+      70.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -8067,14 +8053,14 @@
    "base": "ANcl",
    "join": "name",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [80.0, 120.0, 160.0, 200.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      80.0,
-      120.0,
-      160.0,
-      200.0
+      155.0,
+      155.0,
+      155.0,
+      155.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -8629,13 +8615,13 @@
    "base": "ANbr",
    "join": "name",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [80.0, 120.0, 160.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      80.0,
-      120.0,
-      160.0
+      450.0,
+      450.0,
+      450.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -9378,12 +9364,12 @@
    "join": "name",
    "damage": {
     "verdict": "SUSPECT",
-    "reason": "content values [4.01] absent from ubertip spans",
+    "reason": "content values [650.0, 950.0, 1250.0] absent from ubertip spans",
     "content_perRank": [
      [
-      4.01,
-      4.01,
-      4.01
+      650.0,
+      950.0,
+      1250.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -9731,12 +9717,12 @@
    "join": "name",
    "damage": {
     "verdict": "SUSPECT",
-    "reason": "content values [75.0] absent from ubertip spans",
+    "reason": "content values [500.0] absent from ubertip spans",
     "content_perRank": [
      [
-      75.0,
-      75.0,
-      75.0
+      500.0,
+      500.0,
+      500.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -9920,14 +9906,14 @@
    "base": "AUim",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [90.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      90.0,
-      90.0,
-      90.0,
-      90.0
+      200.0,
+      275.0,
+      350.0,
+      425.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -10062,12 +10048,12 @@
    "join": "hero-numbers",
    "damage": {
     "verdict": "SUSPECT",
-    "reason": "content values [75.0] absent from ubertip spans",
+    "reason": "content values [700.0, 1050.0, 1400.0] absent from ubertip spans",
     "content_perRank": [
      [
-      75.0,
-      75.0,
-      75.0
+      700.0,
+      1050.0,
+      1400.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -10551,14 +10537,14 @@
    "base": "Alsh",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [100.0, 150.0, 250.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      100.0,
-      150.0,
       200.0,
-      250.0
+      300.0,
+      400.0,
+      500.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -10978,14 +10964,14 @@
    "base": "Alsh",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [100.0, 150.0, 250.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      100.0,
-      150.0,
       200.0,
-      250.0
+      300.0,
+      400.0,
+      500.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -11632,11 +11618,11 @@
    "base": "AEim",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [90.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      90.0,
+      10.0,
       20.0,
       30.0
      ]
@@ -11850,14 +11836,14 @@
    "base": "AHfs",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [110.0, 170.0, 230.0, 290.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      110.0,
-      170.0,
-      230.0,
-      290.0
+      55.0,
+      85.0,
+      115.0,
+      145.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -15595,14 +15581,14 @@
    "base": "AOcl",
    "join": "name",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [80.0, 120.0, 160.0, 200.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      80.0,
-      120.0,
-      160.0,
-      200.0
+      350.0,
+      450.0,
+      550.0,
+      650.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -15945,10 +15931,10 @@
     "reason": "no JASS handler and no ubertip numbers to check against",
     "content_perRank": [
      [
-      0.0,
-      25.0,
-      25.0,
-      25.0
+      50.0,
+      100.0,
+      150.0,
+      200.0
      ]
     ],
     "ubertip_span_numbers": {},
@@ -16393,12 +16379,12 @@
    "join": "name",
    "damage": {
     "verdict": "SUSPECT",
-    "reason": "content values [75.0] absent from ubertip spans",
+    "reason": "content values [693.0, 1043.0, 1393.0] absent from ubertip spans",
     "content_perRank": [
      [
-      75.0,
-      75.0,
-      75.0
+      693.0,
+      1043.0,
+      1393.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -17333,13 +17319,13 @@
    "join": "name",
    "damage": {
     "verdict": "SUSPECT",
-    "reason": "content values [110.0, 170.0, 230.0, 290.0] absent from ubertip spans",
+    "reason": "content values [275.0, 425.0, 575.0, 725.0] absent from ubertip spans",
     "content_perRank": [
      [
-      110.0,
-      170.0,
-      230.0,
-      290.0
+      275.0,
+      425.0,
+      575.0,
+      725.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -17646,15 +17632,15 @@
    "base": "ANab",
    "join": "name",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [120.0, 160.0, 240.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
+      30.0,
+      30.0,
+      30.0,
       80.0,
-      120.0,
-      160.0,
-      200.0,
-      240.0
+      80.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -18115,13 +18101,13 @@
    "join": "name",
    "damage": {
     "verdict": "SUSPECT",
-    "reason": "content values [75.0] absent from ubertip spans",
+    "reason": "content values [37.5, 105.0, 202.5, 330.0] absent from ubertip spans",
     "content_perRank": [
      [
-      75.0,
-      75.0,
-      75.0,
-      75.0
+      37.5,
+      105.0,
+      202.5,
+      330.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -18400,15 +18386,15 @@
    "base": "ANcl",
    "join": "name",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [80.0, 120.0, 160.0, 200.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      80.0,
-      120.0,
-      160.0,
-      200.0,
-      240.0
+      225.0,
+      225.0,
+      225.0,
+      225.0,
+      225.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -18512,14 +18498,14 @@
    "base": "ANcl",
    "join": "name",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [80.0, 120.0, 160.0, 200.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      80.0,
-      120.0,
-      160.0,
-      200.0
+      450.0,
+      550.0,
+      650.0,
+      750.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -19162,14 +19148,14 @@
    "base": "AChw",
    "join": "name",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [80.0, 120.0, 160.0, 200.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      80.0,
-      120.0,
-      160.0,
-      200.0
+      75.0,
+      150.0,
+      225.0,
+      300.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -19250,13 +19236,13 @@
    "base": "ANcl",
    "join": "name",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [80.0, 120.0, 160.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      80.0,
-      120.0,
-      160.0
+      300.0,
+      600.0,
+      900.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -20238,13 +20224,13 @@
    "base": "AEer",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [75.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      75.0,
-      75.0,
-      75.0
+      150.0,
+      275.0,
+      400.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -21778,14 +21764,14 @@
    "base": "ANcl",
    "join": "name",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [80.0, 120.0, 160.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      80.0,
-      120.0,
-      160.0,
-      200.0
+      100.0,
+      150.0,
+      200.0,
+      250.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -21839,14 +21825,14 @@
    "base": "AUim",
    "join": "name",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [90.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      90.0,
-      90.0,
-      90.0,
-      90.0
+      200.0,
+      250.0,
+      300.0,
+      350.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -22640,14 +22626,14 @@
    "base": "ANcl",
    "join": "name",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [80.0, 120.0, 160.0, 200.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      80.0,
-      120.0,
-      160.0,
-      200.0
+      350.0,
+      450.0,
+      550.0,
+      650.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -23059,13 +23045,13 @@
    "base": "ANcl",
    "join": "name",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [80.0, 120.0, 160.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      80.0,
-      120.0,
-      160.0
+      550.0,
+      750.0,
+      950.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -23864,14 +23850,14 @@
    "base": "Arsp",
    "join": "name",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [80.0, 120.0, 160.0, 200.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      80.0,
-      120.0,
-      160.0,
-      200.0
+      105.0,
+      105.0,
+      105.0,
+      105.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -24029,12 +24015,12 @@
    "join": "name",
    "damage": {
     "verdict": "SUSPECT",
-    "reason": "content values [75.0] absent from ubertip spans",
+    "reason": "content values [1500.0, 2100.0] absent from ubertip spans",
     "content_perRank": [
      [
-      75.0,
-      75.0,
-      75.0
+      900.0,
+      1500.0,
+      2100.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -24542,14 +24528,14 @@
    "base": "AHfs",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [900.0, 1200.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
+      150.0,
       300.0,
-      600.0,
-      900.0,
-      1200.0
+      450.0,
+      600.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -24660,13 +24646,13 @@
    "base": "APsa",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [80.0, 120.0, 160.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      80.0,
-      120.0,
-      160.0
+      200.0,
+      200.0,
+      200.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -26026,15 +26012,15 @@
    "base": "AOsh",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [0.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
       250.0,
       550.0,
       850.0,
-      0.0,
-      0.0
+      850.0,
+      850.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -26613,14 +26599,14 @@
    "base": "AHfs",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [900.0, 1200.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
+      150.0,
       300.0,
-      600.0,
-      900.0,
-      1200.0
+      450.0,
+      600.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -28548,12 +28534,12 @@
    "join": "name",
    "damage": {
     "verdict": "SUSPECT",
-    "reason": "content values [77.0] absent from ubertip spans",
+    "reason": "content values [180.0, 360.0, 540.0] absent from ubertip spans",
     "content_perRank": [
      [
-      77.0,
-      77.0,
-      77.0
+      180.0,
+      360.0,
+      540.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -29544,13 +29530,13 @@
    "base": "AUim",
    "join": "name",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [800.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      800.0,
-      800.0,
-      800.0
+      550.0,
+      900.0,
+      1250.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -30016,13 +30002,13 @@
    "join": "name",
    "damage": {
     "verdict": "SUSPECT",
-    "reason": "content values [80.0, 120.0, 160.0, 200.0] absent from ubertip spans",
+    "reason": "content values [200.0, 400.0, 600.0, 800.0] absent from ubertip spans",
     "content_perRank": [
      [
-      80.0,
-      120.0,
-      160.0,
-      200.0
+      200.0,
+      400.0,
+      600.0,
+      800.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -30085,14 +30071,14 @@
    "base": "AEsf",
    "join": "name",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [450.0, 600.0, 750.0, 900.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      450.0,
-      600.0,
-      750.0,
-      900.0
+      150.0,
+      200.0,
+      250.0,
+      300.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -30338,14 +30324,14 @@
    "join": "name",
    "damage": {
     "verdict": "SUSPECT",
-    "reason": "content values [80.0, 120.0, 160.0, 200.0] absent from ubertip spans",
+    "reason": "content values [450.0, 550.0] absent from ubertip spans",
     "content_perRank": [
      [
-      80.0,
-      120.0,
-      160.0,
-      200.0,
-      240.0
+      150.0,
+      250.0,
+      350.0,
+      450.0,
+      550.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -31066,14 +31052,14 @@
    "base": "AUim",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [90.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      90.0,
-      90.0,
-      90.0,
-      90.0
+      350.0,
+      450.0,
+      550.0,
+      650.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -32516,14 +32502,14 @@
    "base": "AEer",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [75.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      75.0,
-      75.0,
-      75.0,
-      75.0
+      250.0,
+      375.0,
+      500.0,
+      625.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -32914,14 +32900,14 @@
    "base": "AEer",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [75.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      75.0,
-      75.0,
-      75.0,
-      75.0
+      250.0,
+      375.0,
+      500.0,
+      625.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -34096,14 +34082,14 @@
    "base": "AEim",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [12.0, 24.0, 36.0, 48.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      12.0,
-      24.0,
-      36.0,
-      48.0
+      60.0,
+      120.0,
+      180.0,
+      240.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -34409,14 +34395,14 @@
    "base": "AEim",
    "join": "hero-numbers",
    "damage": {
-    "verdict": "SUSPECT",
-    "reason": "content values [12.0, 24.0, 36.0, 48.0] absent from ubertip spans",
+    "verdict": "OK",
+    "reason": "non-zero and not contradicted by the checked sources",
     "content_perRank": [
      [
-      12.0,
-      24.0,
-      36.0,
-      48.0
+      60.0,
+      120.0,
+      180.0,
+      240.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -38404,14 +38390,14 @@
    "join": "name",
    "damage": {
     "verdict": "SUSPECT",
-    "reason": "content values [80.0, 120.0, 160.0, 200.0] absent from ubertip spans",
+    "reason": "content values [600.0, 750.0] absent from ubertip spans",
     "content_perRank": [
      [
-      80.0,
-      120.0,
-      160.0,
-      200.0,
-      240.0
+      150.0,
+      300.0,
+      450.0,
+      600.0,
+      750.0
      ]
     ],
     "ubertip_span_numbers": {
@@ -39182,14 +39168,14 @@
    "join": "name",
    "damage": {
     "verdict": "SUSPECT",
-    "reason": "content values [80.0, 120.0, 160.0, 200.0] absent from ubertip spans",
+    "reason": "content values [550.0, 650.0] absent from ubertip spans",
     "content_perRank": [
      [
-      80.0,
-      120.0,
-      160.0,
-      200.0,
-      240.0
+      250.0,
+      350.0,
+      450.0,
+      550.0,
+      650.0
      ]
     ],
     "ubertip_span_numbers": {

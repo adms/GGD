@@ -172,6 +172,12 @@ export const SFX_REACHABILITY: readonly SfxReachRow[] = [
   { key: "castEnd", kind: "combat", site: COMBAT_SFX_SITE, events: ["castEnd"] },
   { key: "castInterrupt", kind: "combat", site: COMBAT_SFX_SITE, events: ["castInterrupt"] },
   { key: "abilityCast", kind: "combat", site: COMBAT_SFX_SITE, events: ["abilityCast"] },
+  // Per-ability WC3 cast voices: content `ability@1.sfxKey` rides the
+  // `abilityCast` event and REPLACES the element/generic cast voice for that
+  // one cast (combatSfx.wc3CastKey — specific beats generic, not a new voice).
+  { key: "wc3.moongo", kind: "combat", site: COMBAT_SFX_SITE, events: ["abilityCast"], payload: { abilityCast: ["sfxKey"] } },
+  { key: "wc3.moonjump", kind: "combat", site: COMBAT_SFX_SITE, events: ["abilityCast"], payload: { abilityCast: ["sfxKey"] } },
+  { key: "wc3.nocute", kind: "combat", site: COMBAT_SFX_SITE, events: ["abilityCast"], payload: { abilityCast: ["sfxKey"] } },
   { key: "magicFire", kind: "combat", site: COMBAT_SFX_SITE, events: ["abilityCast"], payload: { abilityCast: ["vfxKey"] } },
   { key: "magicIce", kind: "combat", site: COMBAT_SFX_SITE, events: ["abilityCast"], payload: { abilityCast: ["vfxKey"] } },
   { key: "magicLightning", kind: "combat", site: COMBAT_SFX_SITE, events: ["abilityCast"], payload: { abilityCast: ["vfxKey"] } },

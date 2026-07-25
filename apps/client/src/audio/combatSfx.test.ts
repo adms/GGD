@@ -12,6 +12,7 @@ import {
   combatSfxKey,
   weaponAttackKey,
   castElementKey,
+  wc3CastKey,
   guardianRewardKey,
   setCombatSfxSeat,
   combatSfxSeat,
@@ -152,6 +153,49 @@ describe("combat SFX key selection (juice-sfx-key)", () => {
       expect(castElementKey("fx.prim.arcane.bolt")).toBeNull();
       expect(castElementKey("fx.fire")).toBeNull();
       expect(castElementKey(undefined)).toBeNull();
+    });
+  });
+
+  describe("per-ability WC3 cast voice (ability@1.sfxKey — 音效 on ability ports)", () => {
+    it("plays the source map's own clip for an ability that carries sfxKey", () => {
+      cover("juice-sfx-key");
+      expect(combatSfxKey(ev("abilityCast", { sfxKey: "wc3.moongo" }))).toBe("wc3.moongo");
+      expect(combatSfxKey(ev("abilityCast", { sfxKey: "wc3.moonjump" }))).toBe("wc3.moonjump");
+      // 裝可愛 is an INSTANT self cast — no castBegin ever fires for it, which
+      // is exactly why this routing rides abilityCast and not castBegin.
+      expect(combatSfxKey(ev("abilityCast", { sfxKey: "wc3.nocute" }))).toBe("wc3.nocute");
+    });
+
+    it("outranks the element whoosh: the WC3 clip is the authentic cast sound", () => {
+      cover("juice-sfx-key");
+      // godie-umal.r carries BOTH fx.prim.lightning.pulse-lg and wc3.nocute —
+      // the source map's own clip wins over the invented element voice.
+      expect(
+        combatSfxKey(ev("abilityCast", { sfxKey: "wc3.nocute", vfxKey: "fx.prim.lightning.pulse-lg" })),
+      ).toBe("wc3.nocute");
+    });
+
+    it("falls through to element/generic on an undeclared / absent / malformed sfxKey", () => {
+      cover("juice-sfx-key");
+      // an sfxKey the client has no clip for degrades to the element route…
+      expect(
+        combatSfxKey(ev("abilityCast", { sfxKey: "wc3.not-shipped", vfxKey: "fx.prim.fire.nova" })),
+      ).toBe("magicFire");
+      // …and to the generic cast when there is no element either
+      expect(combatSfxKey(ev("abilityCast", { sfxKey: "wc3.not-shipped" }))).toBe("abilityCast");
+      expect(combatSfxKey(ev("abilityCast", { sfxKey: 42 }))).toBe("abilityCast");
+      expect(combatSfxKey(ev("abilityCast", { sfxKey: "" }))).toBe("abilityCast");
+    });
+
+    it("wc3CastKey is a pure helper: declared cue → itself, else null", () => {
+      cover("juice-sfx-key");
+      expect(wc3CastKey("wc3.moongo")).toBe("wc3.moongo");
+      expect(wc3CastKey("wc3.moonjump")).toBe("wc3.moonjump");
+      expect(wc3CastKey("wc3.nocute")).toBe("wc3.nocute");
+      expect(wc3CastKey("abilityCast")).toBeNull(); // never a lateral map key
+      expect(wc3CastKey("wc3.unknown")).toBeNull();
+      expect(wc3CastKey(undefined)).toBeNull();
+      expect(wc3CastKey(7)).toBeNull();
     });
   });
 

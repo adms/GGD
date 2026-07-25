@@ -26,10 +26,10 @@
       "damageType": "magic",
       "amount": {
         "perRank": [
-          7.0,
-          12.0,
-          17.0,
-          22.0
+          160.0,
+          160.0,
+          160.0,
+          160.0
         ],
         "ratios": [
           {
@@ -42,5 +42,5 @@
   ],
   "vfxKey": "fx.prim.void.nova",
   "targetsEnemies": true,
-  "castTimeSec": 0.3
+  "castTimeSec": 0.4
 }

@@ -66,10 +66,10 @@
           "damageType": "physical",
           "amount": {
             "perRank": [
-              80,
-              120,
-              160,
-              200
+              100.0,
+              150.0,
+              200.0,
+              250.0
             ],
             "ratios": [
               {
@@ -115,10 +115,10 @@
               "damageType": "magic",
               "amount": {
                 "perRank": [
-                  90.0,
-                  90.0,
-                  90.0,
-                  90.0
+                  200.0,
+                  250.0,
+                  300.0,
+                  350.0
                 ]
               }
             },
@@ -132,7 +132,7 @@
         }
       ],
       "vfxKey": "fx.prim.void.bolt",
-      "castTimeSec": 0.5
+      "castTimeSec": 0.6
     },
     "E": {
       "id": "godie-naka.e",

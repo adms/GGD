@@ -69,11 +69,11 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              80,
-              120,
-              160,
-              200,
-              240
+              250.0,
+              350.0,
+              450.0,
+              550.0,
+              650.0
             ],
             "ratios": [
               {
@@ -86,7 +86,7 @@
       ],
       "vfxKey": "fx.firestorm",
       "targetsEnemies": true,
-      "castTimeSec": 0.4
+      "castTimeSec": 0.5
     },
     "W": {
       "id": "godie-uvng.w",

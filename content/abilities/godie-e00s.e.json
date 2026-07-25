@@ -22,22 +22,10 @@
   "range": 11.0,
   "effects": [
     {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
-        "perRank": [
-          80,
-          120,
-          160,
-          200
-        ],
-        "ratios": [
-          {
-            "stat": "ap",
-            "coeff": 0.6
-          }
-        ]
-      }
+      "kind": "applyStatus",
+      "statusId": "root",
+      "duration": 1.5,
+      "root": true
     }
   ],
   "vfxKey": "fx.prim.nature.pulse-sm",

@@ -100,27 +100,14 @@
       "range": 11.0,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "magic",
-          "amount": {
-            "perRank": [
-              80,
-              120,
-              160,
-              200
-            ],
-            "ratios": [
-              {
-                "stat": "ap",
-                "coeff": 0.6
-              }
-            ]
-          }
+          "kind": "applyStatus",
+          "statusId": "slow30",
+          "duration": 5.0
         }
       ],
       "vfxKey": "fx.prim.arcane.pulse-sm",
       "targetsEnemies": true,
-      "castTimeSec": 0.4
+      "castTimeSec": 0.3
     },
     "E": {
       "id": "godie-e00t.e",
@@ -149,10 +136,10 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              7.0,
-              12.0,
-              17.0,
-              22.0
+              160.0,
+              160.0,
+              160.0,
+              160.0
             ],
             "ratios": [
               {
@@ -165,7 +152,7 @@
       ],
       "vfxKey": "fx.prim.void.nova",
       "targetsEnemies": true,
-      "castTimeSec": 0.3
+      "castTimeSec": 0.4
     },
     "R": {
       "id": "godie-e00t.r",

@@ -259,6 +259,30 @@
       "cooldownMs": 1200,
       "maxConcurrent": 1
     },
+    "wc3.moongo": {
+      "files": [
+        "assets/audio/sfx/moongo.mp3"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.moonjump": {
+      "files": [
+        "assets/audio/sfx/moonjump.mp3"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
+    "wc3.nocute": {
+      "files": [
+        "assets/audio/sfx/nocute.mp3"
+      ],
+      "gain": 0.6,
+      "cooldownMs": 1200,
+      "maxConcurrent": 1
+    },
     "flowerSpawn": {
       "files": [
         "assets/audio/sfx/fx/chime_soft.mp3"

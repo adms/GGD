@@ -113,6 +113,15 @@ export const zAbilityDef = z
      */
     passive: zAbilityPassive.optional(),
     vfxKey: zRef("vfx", { soft: true }).optional(),
+    /**
+     * WC3-derived per-ability cast sound cue — an audio-map SFX key (e.g.
+     * "wc3.nocute"), recovered from the source map's gg_snd bindings
+     * (tools/w3x-import SFX_BINDINGS.json). The sim stamps it on the
+     * `abilityCast` event and the client plays it INSTEAD of the generic cast
+     * voice. Absent = generic castBegin/abilityCast handling. Plain string,
+     * not a zRef: the audio map is client config, not a content collection.
+     */
+    sfxKey: z.string().min(1).optional(),
     /** cast time (seconds) before effects fire; default 0 = instant */
     castTimeSec: z.number().min(0).optional(),
     /** root the caster for the cast duration (default true) */

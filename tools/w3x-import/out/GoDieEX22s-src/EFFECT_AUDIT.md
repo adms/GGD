@@ -1,7 +1,7 @@
 # EFFECT_AUDIT — all-hero JASS→content 三軸掃描 (傷害/特效/音效)
 
 Scanned **654 ability instances** across 111 champions.
-Join: {'hero-numbers': 243, 'name': 368, 'UNRESOLVED': 43}  ·  Damage verdicts: {'ZERO': 0, 'TRIVIAL': 0, 'NO_DAMAGE_EFFECT': 2, 'SUSPECT': 128, 'UNVERIFIED': 24, 'OK': 184, 'N/A': 316}
+Join: {'hero-numbers': 243, 'name': 368, 'UNRESOLVED': 43}  ·  Damage verdicts: {'ZERO': 0, 'TRIVIAL': 0, 'NO_DAMAGE_EFFECT': 2, 'SUSPECT': 86, 'UNVERIFIED': 24, 'OK': 224, 'N/A': 318}
 VFX verdicts: {'MISSING': 0, 'NONE_EITHER': 47, 'OK': 607}  ·  SFX: {'wc3_has_sound': 98, 'content_sound_field_exists': False}
 
 > Ground truth: JASS trigger > object data / ubertip colour-span > prose.
@@ -18,132 +18,90 @@ VFX verdicts: {'MISSING': 0, 'NONE_EITHER': 47, 'OK': 607}  ·  SFX: {'wc3_has_s
 | godie-e001.passive | 22-00 嗚鎖打! | A0CL | **SUSPECT** | [[150.0]] | — |
 | godie-e002.e | 20-03 約束與勝利之劍 | A0D5 | **SUSPECT** | [[250.0, 400.0, 550.0, 700.0]] | `Excalibur` j:32255 |
 | godie-e002.r | 20-04 Avalon-永恆的理想鄉 | A0CT | **SUSPECT** | [[250.0, 500.0, 750.0]] | `avalonStart` j:32434 |
-| godie-e002.w | 20-01 風王結界 | A0DZ | **SUSPECT** | [[160.0, 160.0, 160.0]] | `Air` j:32102 |
 | godie-e007.e | 12-03 破凰之心-徒手空破山 | A02W | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
-| godie-e007.r | 12-04 龍氣爆發 | A04X | **SUSPECT** | [[4.01, 4.01, 4.01]] | — |
+| godie-e007.r | 12-04 龍氣爆發 | A04X | **SUSPECT** | [[650.0, 950.0, 1250.0]] | — |
 | godie-e00j.q | 95-01 謝謝指教 | A0Y7 | **SUSPECT** | [[240.0, 360.0, 480.0, 600.0, 600.0]] | — |
-| godie-e00j.r | 95-04 藍色戰氣一百重天 | A0Y9 | **SUSPECT** | [[0.0, 5.0, 5.0]] | `Hundred_Sky` j:54636 |
 | godie-e00l.e | 20-03 約束與勝利之劍 | A0D5 | **SUSPECT** | [[250.0, 400.0, 550.0, 700.0]] | `Excalibur` j:32255 |
 | godie-e00l.r | 20-04 Avalon-永恆的理想鄉 | A0CT | **SUSPECT** | [[250.0, 500.0, 750.0]] | `avalonStart` j:32434 |
-| godie-e00l.w | 20-01 風王結界 | A0DZ | **SUSPECT** | [[160.0, 160.0, 160.0]] | `Air` j:32102 |
 | godie-e00n.passive | 22-00 嗚鎖打! | A0CL | **SUSPECT** | [[150.0]] | — |
 | godie-e00q.w | 69-02 黑泥召喚 | AOsw | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0, 240.0]] | — |
-| godie-e00s.e | 70-03 木束縛之術 | A0GR | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
 | godie-e00s.q | 70-01 伸卡球 | A0UJ | **SUSPECT** | [[150.0, 300.0, 450.0, 600.0, 750.0]] | `WoodStone` j:47914 |
-| godie-e00s.r | 70-04 千年練成 | A0GN | **SUSPECT** | [[75.0, 75.0, 75.0]] | — |
-| godie-e00t.e | 66-03 七夜怪談 | A0IB | **SUSPECT** | [[7.0, 12.0, 17.0, 22.0]] | — |
-| godie-e00t.w | 66-02 驚駭 | A0I8 | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
 | godie-e00v.w | 84-02 保齡球 | A0CV | **SUSPECT** | [[150.0, 250.0, 350.0, 450.0, 550.0]] | — |
 | godie-e00w.e | 77-03 GLADIARIA ALAT | A0JG | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
-| godie-e00w.r | 77-04 真-雷光劍 | A0UB | **SUSPECT** | [[80.0, 120.0, 160.0]] | — |
 | godie-e00x.e | 77-03 GLADIARIA ALAT | A0JG | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
 | godie-e00x.passive | 77-00 浮雲-旋一閃 | A0JD | **SUSPECT** | [[250.0]] | — |
-| godie-e00x.r | 77-04 真-雷光劍 | A0UB | **SUSPECT** | [[80.0, 120.0, 160.0]] | — |
-| godie-e015.q | 94-01 北斗爆橘拳 | A0OV | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0, 240.0]] | `Oran` j:53869; `Oran` j:53871 |
 | godie-ecen.e | 64-03 工廠機器人 | ANrc | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
 | godie-ecen.r | 64-04 魔幻浮水印 | A0A3 | **SUSPECT** | [[80.0, 120.0, 160.0]] | `Marking` j:46703; `Marking` j:46705 |
-| godie-ecen.w | 64-02 酒釀精華 | A0A7 | **SUSPECT** | [[4.01, 4.01, 4.01, 4.01]] | `Wine_Extract_Initiate` j:46552; `Wine_Extract_Initiate` j:46559 |
-| godie-edem.e | 45-03 千鳥 | A0IJ | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
+| godie-ecen.w | 64-02 酒釀精華 | A0A7 | **SUSPECT** | [[68.0, 108.0, 148.0, 188.0]] | `Wine_Extract_Initiate` j:46552; `Wine_Extract_Initiate` j:46559 |
 | godie-edem.w | 45-02 千鳥流 | A0JX | **SUSPECT** | [[75.0, 150.0, 225.0, 300.0, 300.0]] | — |
-| godie-efur.q | 13-01 老樹盤根 | AEer | **SUSPECT** | [[75.0, 75.0, 75.0, 75.0]] | — |
 | godie-efur.w | 13-02 變化念力 | A00X | **SUSPECT** | [[0.0, 99.0, 99.0, 99.0]] | — |
 | godie-ekee.e | 93-03 這次考試很簡單 | A0NG | **SUSPECT** | [[100.0, 200.0, 300.0, 400.0]] | — |
-| godie-emfr.q | 15-01 風精召喚 | A0D3 | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
 | godie-emfr.w | 15-02 沉睡之霧 | A054 | **SUSPECT** | [[75.0, 75.0, 75.0, 75.0]] | — |
 | godie-emns.q | 44-01 死神之眼 | A0IK | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
-| godie-emns.r | 44-04 心臟麻痺 | A05I | **SUSPECT** | [[80.0, 120.0, 160.0]] | — |
 | godie-etyr.e | 14-02 式神炸裂 | A0JM | **SUSPECT** | [[250.0, 400.0, 550.0, 700.0]] | `SlaveExp` j:30451; `SlaveExp` j:30501 |
 | godie-ewar.e | 12-03 破凰之心-徒手空破山 | A02W | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
-| godie-ewar.r | 12-04 龍氣爆發 | A04X | **SUSPECT** | [[4.01, 4.01, 4.01]] | — |
+| godie-ewar.r | 12-04 龍氣爆發 | A04X | **SUSPECT** | [[650.0, 950.0, 1250.0]] | — |
 | godie-ewar.w | 12-02 仙氣．採藥 | A02K | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
-| godie-ewrd.r | 17-04 狂龍斬 | A07N | **SUSPECT** | [[75.0, 75.0, 75.0]] | — |
-| godie-h001.r | 41-04 究極魔法流星雨 | ANr3 | **SUSPECT** | [[75.0, 75.0, 75.0]] | — |
-| godie-h001.w | 41-02 地裂術 | A0Z2 | **SUSPECT** | [[90.0, 90.0, 90.0, 90.0]] | — |
-| godie-h01n.q | 79-01 瞬步 | A0RX | **SUSPECT** | [[100.0, 150.0, 200.0, 250.0]] | `Bleach_Rush` j:37410; `Bleach_Rush` j:37418 |
-| godie-h01o.q | 79-01 瞬步 | A0RX | **SUSPECT** | [[100.0, 150.0, 200.0, 250.0]] | `Bleach_Rush` j:37410; `Bleach_Rush` j:37418 |
-| godie-h01u.r | 80-04 赤兔咆哮 | A0MZ | **SUSPECT** | [[90.0, 20.0, 30.0]] | — |
+| godie-ewrd.r | 17-04 狂龍斬 | A07N | **SUSPECT** | [[500.0, 500.0, 500.0]] | — |
+| godie-h001.r | 41-04 究極魔法流星雨 | ANr3 | **SUSPECT** | [[700.0, 1050.0, 1400.0]] | — |
 | godie-h01u.w | 80-02 弒鬼神 | A0MY | **SUSPECT** | [[150.0, 250.0, 350.0, 0.0, 0.0]] | — |
-| godie-h020.w | 04-02 炸彈陣 | A021 | **SUSPECT** | [[110.0, 170.0, 230.0, 290.0]] | — |
 | godie-h022.passive | 82-00 天生法術書 | A0Q0 | **SUSPECT** | [[100.0]] | — |
 | godie-h02k.e | 89-03 憤怒的胸毛 | A0TN | **SUSPECT** | [[1000.0, 2000.0, 3000.0, 4000.0]] | `Saber_in_pandaDie` j:52630 |
 | godie-h02s.e | 91-03 碎心打擊 | A0W1 | **SUSPECT** | [[225.0, 300.0, 375.0, 450.0]] | `HeartStrike` j:53354; `HeartStrike` j:53360 |
 | godie-h02z.e | 91-03 碎心打擊 | A0W1 | **SUSPECT** | [[225.0, 300.0, 375.0, 450.0]] | `HeartStrike` j:53354; `HeartStrike` j:53360 |
-| godie-hapm.w | 52-02 蹂躪編年史 | A0U1 | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
 | godie-hart.q | 01-01 凶斬 | A072 | **SUSPECT** | [[150.0, 220.0, 290.0, 360.0, 360.0]] | `XFight` j:33419 |
-| godie-hart.r | 01-04 超究武神霸斬 | A077 | **SUSPECT** | [[75.0, 75.0, 75.0]] | `SuperFF7` j:33915; `SuperFF7` j:33921 |
+| godie-hart.r | 01-04 超究武神霸斬 | A077 | **SUSPECT** | [[693.0, 1043.0, 1393.0]] | `SuperFF7` j:33915; `SuperFF7` j:33921 |
 | godie-hart.w | 01-02 隕石擊 | A0UX | **SUSPECT** | [[200.0, 400.0, 600.0, 800.0, 1000.0]] | — |
-| godie-hjai.w | 04-02 炸彈陣 | A021 | **SUSPECT** | [[110.0, 170.0, 230.0, 290.0]] | — |
-| godie-hlgr.q | 03-02 詭雷 | ANab | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0, 240.0]] | — |
+| godie-hjai.w | 04-02 炸彈陣 | A021 | **SUSPECT** | [[275.0, 425.0, 575.0, 725.0]] | — |
 | godie-hlgr.r | 03-04 全彈發射 | A04N | **SUSPECT** | [[320.0, 470.0, 620.0]] | `Allbullet` j:32854; `Allbullet` j:32856 |
 | godie-hpal.e | 35-03 鏡蠱 | A06H | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
 | godie-hpal.q | 35-01 土爪 | A06G | **SUSPECT** | [[120.0, 240.0, 360.0, 480.0]] | `EightCloud` j:42974 |
-| godie-hpal.w | 35-02 石絲 | A06J | **SUSPECT** | [[75.0, 75.0, 75.0, 75.0]] | — |
-| godie-hpb1.e | 07-03 列、在、前 | A0G3 | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
-| godie-hpb1.w | 07-02 者、皆、陣 | A0G2 | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0, 240.0]] | `MoonKnock` j:34382 |
+| godie-hpal.w | 35-02 石絲 | A06J | **SUSPECT** | [[37.5, 105.0, 202.5, 330.0]] | — |
 | godie-huth.q | 28-01 吃掉你 | A0GB | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0, 240.0]] | — |
-| godie-hvsh.e | 48-03 鮮血神殿 | A06C | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | `Blood` j:38492 |
-| godie-hvsh.r | 48-04 騎英之疆繩 | A0RQ | **SUSPECT** | [[80.0, 120.0, 160.0]] | `RidermovelineDam` j:38360 |
-| godie-n00b.r | 57-04 竹蜻蜓 | A0JN | **SUSPECT** | [[75.0, 75.0, 75.0]] | — |
 | godie-n00b.w | 57-03 複製鏡 | A0NE | **SUSPECT** | [[80.0, 120.0, 160.0]] | — |
 | godie-n00p.e | 18-03 妖狐變化 | A0IH | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
-| godie-naka.q | 27-01 忍法風魔手裡劍 | A03A | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
-| godie-naka.w | 27-02 忍法鬼穿刺 | AUim | **SUSPECT** | [[90.0, 90.0, 90.0, 90.0]] | — |
-| godie-nbst.e | 24-03 變態絕技悶絕地獄車 | A0AP | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | `Crazy_Movement` j:25563; `Crazy_Movement` j:25572 |
 | godie-nbst.w | 24-02 變態根性 | A074 | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0, 240.0]] | — |
 | godie-nman.e | 40-03 萬解-貓王胖虎 | A0ND | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
-| godie-nman.r | 40-04 地獄搖滾 | A0LZ | **SUSPECT** | [[80.0, 120.0, 160.0]] | — |
 | godie-nplh.e | 16-04 劍之精靈 | A043 | **SUSPECT** | [[80.0, 120.0, 160.0]] | — |
 | godie-nplh.w | 16-01 超．占事略決 | A041 | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
 | godie-nsjs.e | 18-03 妖狐變化 | A0IH | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
-| godie-ntin.q | 23-01 電離光槍 - 繁星飛躍 | A0NA | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
-| godie-ntin.r | 23-04 雷焰聖劍 | A0OD | **SUSPECT** | [[75.0, 75.0, 75.0]] | `HolySword` j:31235 |
-| godie-o00l.r | 53-04 暴爆咒 | A0UE | **SUSPECT** | [[80.0, 120.0, 160.0]] | `AnKiMagic_Effect` j:40035; `AnKiMagic_Effect` j:40039 |
-| godie-o00l.w | 53-02 強化炸彈陣 | A0DQ | **SUSPECT** | [[300.0, 600.0, 900.0, 1200.0]] | — |
+| godie-ntin.r | 23-04 雷焰聖劍 | A0OD | **SUSPECT** | [[900.0, 1500.0, 2100.0]] | `HolySword` j:31235 |
 | godie-o00x.e | 09-03 超級賽亞人 | A09E | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
 | godie-o01z.q | 81-01 Barrel Shot | A0XG | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | `BarrelShot` j:35933 |
 | godie-o01z.w | 81-02 Acxel Shooter | A0LB | **SUSPECT** | [[250.0, 375.0, 500.0, 625.0, 750.0]] | `AcxelShooter` j:35845 |
 | godie-o02l.r | 58-04 瘋狂皮卡丘 | A040 | **SUSPECT** | [[80.0, 120.0, 160.0]] | — |
 | godie-o02o.e | 87-03 天下號令 | A0DB | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
-| godie-o02o.q | 87-01 大紅蓮斬 | A0DE | **SUSPECT** | [[250.0, 550.0, 850.0, 0.0, 0.0]] | — |
-| godie-o02s.q | 53-02 強化炸彈陣 | A0DQ | **SUSPECT** | [[300.0, 600.0, 900.0, 1200.0]] | — |
 | godie-o02v.q | 81-01 Barrel Shot | A0XG | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | `BarrelShot` j:35933 |
 | godie-o02v.w | 81-02 Acxel Shooter | A0LB | **SUSPECT** | [[250.0, 375.0, 500.0, 625.0, 750.0]] | `AcxelShooter` j:35845 |
 | godie-obla.q | 33-01 放山雞 | A02L | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0, 240.0]] | — |
 | godie-ofar.r | 58-04 瘋狂皮卡丘 | A040 | **SUSPECT** | [[80.0, 120.0, 160.0]] | — |
-| godie-ogld.r | 72-04 黑化 | A0CO | **SUSPECT** | [[77.0, 77.0, 77.0]] | `BlackTooth` j:47360 |
+| godie-ogld.r | 72-04 黑化 | A0CO | **SUSPECT** | [[180.0, 360.0, 540.0]] | `BlackTooth` j:47360 |
 | godie-ogrh.e | 09-03 超級賽亞人 | A09E | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
-| godie-orkn.r | 30-04 電車之狼衝擊 | A01P | **SUSPECT** | [[800.0, 800.0, 800.0]] | — |
 | godie-orkn.w | 30-02 酒精灌腸 | ANdh | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
 | godie-oshd.e | 29-03 有功夫無懦夫 | AOvd | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
-| godie-oshd.q | 29-01 鐵砂掌 | A06U | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
+| godie-oshd.q | 29-01 鐵砂掌 | A06U | **SUSPECT** | [[200.0, 400.0, 600.0, 800.0]] | — |
 | godie-oshd.r | 29-04 電光毒龍鑽 | A00Z | **SUSPECT** | [[200.0, 400.0, 600.0]] | — |
-| godie-oshd.w | 29-02 鬼王流星雨 | AEsf | **SUSPECT** | [[450.0, 600.0, 750.0, 900.0]] | — |
-| godie-othr.q | 31-01 迴旋爪擊 | A0I4 | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0, 240.0]] | — |
+| godie-othr.q | 31-01 迴旋爪擊 | A0I4 | **SUSPECT** | [[150.0, 250.0, 350.0, 450.0, 550.0]] | — |
 | godie-u00b.q | 75-01 超．祕技略決 | A075 | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0, 240.0]] | — |
-| godie-u00h.e | 39-03 無名神風流-蛟龍 | A0DO | **SUSPECT** | [[90.0, 90.0, 90.0, 90.0]] | — |
 | godie-u00j.w | 74-02 八刀一閃 | A0ET | **SUSPECT** | [[150.0, 250.0, 350.0, 450.0, 550.0]] | — |
 | godie-u00k.e | 71-03 厄夜靈魂 | A0HJ | **SUSPECT** | [[80.0, 160.0, 240.0, 320.0]] | — |
 | godie-u00k.r | 71-04 萬惡歸宗 | A0HK | **SUSPECT** | [[150.0, 300.0, 450.0]] | `AllSinReturn` j:48274; `AllSinReturn` j:48276 |
 | godie-u00k.w | 71-02 靈魂吸取 | A08T | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
 | godie-u00l.q | 25-01 北斗懺悔拳 | A0AF | **SUSPECT** | [[150.0, 300.0, 450.0, 600.0, 750.0]] | `YouDie` j:38624; `YouDie` j:38626 |
 | godie-u00l.r | 25-04 ChangeDNA | A0HW | **SUSPECT** | [[80.0, 120.0, 160.0]] | — |
-| godie-u00n.q | 76-01 伸縮自如的橡膠戰斧 | A0IS | **SUSPECT** | [[75.0, 75.0, 75.0, 75.0]] | — |
-| godie-u00o.q | 76-01 伸縮自如的橡膠戰斧 | A0IS | **SUSPECT** | [[75.0, 75.0, 75.0, 75.0]] | — |
 | godie-u010.q | 38-01 邪王炎殺劍 | A0OG | **SUSPECT** | [[250.0, 350.0, 450.0, 550.0, 650.0]] | — |
 | godie-u010.w | 38-02 邪王炎殺煉獄焦 | A09H | **SUSPECT** | [[250.0, 400.0, 550.0, 700.0, 850.0]] | `FireSword` j:43663 |
-| godie-u011.w | 61-02 霸獸盔甲 | A0OQ | **SUSPECT** | [[12.0, 24.0, 36.0, 48.0]] | — |
-| godie-u012.w | 61-02 霸獸盔甲 | A0OQ | **SUSPECT** | [[12.0, 24.0, 36.0, 48.0]] | — |
 | godie-u034.e | 06-03 山形修煉-強 | A020 | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0, 240.0]] | `XHunterStone` j:26922; `XHunterStone` j:26975 |
 | godie-ubal.r | 37-04 魔界之王 | A01Z | **SUSPECT** | [[80.0, 120.0, 160.0]] | — |
 | godie-ucrl.e | 06-03 山形修煉-強 | A020 | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0, 240.0]] | `XHunterStone` j:26922; `XHunterStone` j:26975 |
 | godie-udea.e | 65-03 魔法膨脹 | A0CH | **SUSPECT** | [[200.0, 400.0, 600.0, 800.0, 800.0]] | `MagicUp` j:46927 |
-| godie-umal.q | 25-01 北斗懺悔拳 | A0AF | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0, 240.0]] | `YouDie` j:38624; `YouDie` j:38626 |
+| godie-umal.q | 25-01 北斗懺悔拳 | A0AF | **SUSPECT** | [[150.0, 300.0, 450.0, 600.0, 750.0]] | `YouDie` j:38624; `YouDie` j:38626 |
 | godie-umal.r | 25-04 ChangeDNA | A0HW | **SUSPECT** | [[80.0, 120.0, 160.0]] | — |
 | godie-usyl.e | 49-03 蛻變 | A0BV | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0]] | — |
-| godie-uvng.q | 38-01 邪王炎殺劍 | A0OG | **SUSPECT** | [[80.0, 120.0, 160.0, 200.0, 240.0]] | — |
+| godie-uvng.q | 38-01 邪王炎殺劍 | A0OG | **SUSPECT** | [[250.0, 350.0, 450.0, 550.0, 650.0]] | — |
 | godie-uvng.w | 38-02 邪王炎殺煉獄焦 | A09H | **SUSPECT** | [[250.0, 400.0, 550.0, 700.0, 850.0]] | `FireSword` j:43663 |
 | godie-uwar.r | 43-03 少林絕學-火雲掌 | A00D | **SUSPECT** | [[80.0, 120.0, 160.0]] | — |
-| godie-e00q.e | 69-03 約束與勝利之劍 | ? | **UNVERIFIED** | [[350.0, 500.0, 650.0, 800.0]] | — |
+| godie-e00q.e | 69-03 約束與勝利之劍 | ? | **UNVERIFIED** | [[250.0, 400.0, 550.0, 700.0]] | — |
 | godie-e00u.e | none | ? | **UNVERIFIED** | [[80.0, 120.0, 160.0, 200.0, 240.0]] | — |
 | godie-e00u.q | none | ? | **UNVERIFIED** | [[80.0, 120.0, 160.0, 200.0, 240.0]] | — |
 | godie-e00u.r | none | ? | **UNVERIFIED** | [[80.0, 120.0, 160.0]] | — |
@@ -152,7 +110,7 @@ VFX verdicts: {'MISSING': 0, 'NONE_EITHER': 47, 'OK': 607}  ·  SFX: {'wc3_has_s
 | godie-h02n.q | none | ? | **UNVERIFIED** | [[80.0, 120.0, 160.0, 200.0, 240.0]] | — |
 | godie-h02n.r | none | ? | **UNVERIFIED** | [[80.0, 120.0, 160.0]] | — |
 | godie-h02n.w | none | ? | **UNVERIFIED** | [[80.0, 120.0, 160.0, 200.0, 240.0]] | — |
-| godie-harf.w | 26-02 亂入 | ? | **UNVERIFIED** | [[0.0, 25.0, 25.0, 25.0]] | — |
+| godie-harf.w | 26-02 亂入 | ? | **UNVERIFIED** | [[50.0, 100.0, 150.0, 200.0]] | — |
 | godie-hgam.e | 90-03 藤鞭 | ? | **UNVERIFIED** | [[350.0, 500.0, 650.0, 800.0]] | — |
 | godie-hpal.r | 35-04 光牙 | ? | **UNVERIFIED** | [[600.0, 1000.0, 1400.0]] | — |
 | godie-nsjs.w | 18-02 寄生種子 | ? | **UNVERIFIED** | [[75.0, 75.0, 75.0, 75.0]] | — |

@@ -118,10 +118,10 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              110.0,
-              170.0,
-              230.0,
-              290.0
+              275.0,
+              425.0,
+              575.0,
+              725.0
             ],
             "ratios": [
               {
@@ -135,7 +135,7 @@
       "vfxKey": "fx.prim.fire.bolt",
       "targetsEnemies": true,
       "radius": 5.5,
-      "castTimeSec": 0.5
+      "castTimeSec": 0.6
     },
     "E": {
       "id": "godie-hjai.e",

@@ -67,10 +67,10 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              80,
-              120,
-              160,
-              200
+              105.0,
+              105.0,
+              105.0,
+              105.0
             ],
             "ratios": [
               {
@@ -83,7 +83,7 @@
       ],
       "vfxKey": "fx.w3x.particle.gx.p00",
       "targetsEnemies": true,
-      "castTimeSec": 0.4,
+      "castTimeSec": 0.3,
       "hitFeel": {
         "hitstopTicks": 3,
         "hitstunTicks": 4,
@@ -219,9 +219,9 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              75.0,
-              75.0,
-              75.0
+              900.0,
+              1500.0,
+              2100.0
             ],
             "ratios": [
               {
@@ -240,7 +240,7 @@
       ],
       "vfxKey": "fx.w3x.orb.lightningnova.p00",
       "targetsEnemies": true,
-      "castTimeSec": 0.5,
+      "castTimeSec": 0.8,
       "hitFeel": {
         "hitstopTicks": 4,
         "hitstunTicks": 7,

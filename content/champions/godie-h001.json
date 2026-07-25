@@ -118,10 +118,10 @@
               "damageType": "magic",
               "amount": {
                 "perRank": [
-                  90.0,
-                  90.0,
-                  90.0,
-                  90.0
+                  200.0,
+                  275.0,
+                  350.0,
+                  425.0
                 ]
               }
             },
@@ -135,7 +135,7 @@
         }
       ],
       "vfxKey": "fx.prim.earth.bolt",
-      "castTimeSec": 0.5
+      "castTimeSec": 0.6
     },
     "E": {
       "id": "godie-h001.e",
@@ -210,9 +210,9 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              75.0,
-              75.0,
-              75.0
+              700.0,
+              1050.0,
+              1400.0
             ],
             "ratios": [
               {
@@ -225,7 +225,7 @@
       ],
       "vfxKey": "fx.prim.arcane.nova-lg",
       "targetsEnemies": true,
-      "castTimeSec": 0.4
+      "castTimeSec": 0.7
     }
   },
   "skillOrder": [

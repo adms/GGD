@@ -161,6 +161,14 @@ const COMBAT_SFX: readonly string[] = [
   // on the first tower fight of the round.
   "guardianSlam",
   "guardianLastHit",
+  // Per-ability WC3 cast voices (`ability@1.sfxKey` → combatSfx.wc3CastKey).
+  // These LOOK like the per-weapon rule (only the champions carrying the
+  // ability ever fire them) but warming them costs zero extra bytes: each key
+  // points at a file the generic `abilityCast` pool above already warms, and
+  // the AudioSystem dedupes buffers per file — so they ride combat for free.
+  "wc3.moongo",
+  "wc3.moonjump",
+  "wc3.nocute",
   // 陣亡投幣 (#191). The throw is a DEAD player's one remaining action and the
   // pickup is a stranger walking over free money — both are moments the sound
   // IS the feedback, and both fire from the first death of the round onward, so

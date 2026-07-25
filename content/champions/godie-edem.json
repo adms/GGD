@@ -165,10 +165,10 @@
           "damageType": "magic",
           "amount": {
             "perRank": [
-              80,
-              120,
-              160,
-              200
+              400.0,
+              600.0,
+              800.0,
+              1000.0
             ],
             "ratios": [
               {
@@ -181,7 +181,7 @@
       ],
       "vfxKey": "fx.prim.lightning.beam",
       "targetsEnemies": true,
-      "castTimeSec": 0.4
+      "castTimeSec": 0.5
     },
     "R": {
       "id": "godie-edem.r",

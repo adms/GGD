@@ -22,9 +22,9 @@
       "damageType": "magic",
       "amount": {
         "perRank": [
-          4.01,
-          4.01,
-          4.01
+          650.0,
+          950.0,
+          1250.0
         ],
         "ratios": [
           {
@@ -39,7 +39,7 @@
   "targetsEnemies": true,
   "schema": "ability@1",
   "icon": "assets/icons/abilities/godie-ewar.r.png",
-  "castTimeSec": 0.4,
+  "castTimeSec": 0.6,
   "hitFeel": {
     "hitstopTicks": 4,
     "hitstunTicks": 7,

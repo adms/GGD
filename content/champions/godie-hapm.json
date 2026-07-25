@@ -111,17 +111,17 @@
       "effects": [
         {
           "kind": "damage",
-          "damageType": "physical",
+          "damageType": "magic",
           "amount": {
             "perRank": [
-              80,
-              120,
-              160,
-              200
+              350.0,
+              450.0,
+              550.0,
+              650.0
             ],
             "ratios": [
               {
-                "stat": "ad",
+                "stat": "ap",
                 "coeff": 0.5
               }
             ]
@@ -130,7 +130,7 @@
       ],
       "vfxKey": "fx.prim.physical.shockwave",
       "targetsEnemies": true,
-      "castTimeSec": 0.4
+      "castTimeSec": 0.5
     },
     "E": {
       "id": "godie-hapm.e",
