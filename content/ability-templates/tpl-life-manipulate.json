@@ -1,0 +1,15 @@
+{
+  "id": "tpl-life-manipulate",
+  "schema": "template@1",
+  "name": "生命操作",
+  "description": "P3 生命操作。",
+  "family": "life-manipulate",
+  "status": "draft",
+  "params": {},
+  "requires": [],
+  "gapScore": 3,
+  "exemplar": {
+    "skill": "(draft)",
+    "jass": "(P2/P3)"
+  }
+}

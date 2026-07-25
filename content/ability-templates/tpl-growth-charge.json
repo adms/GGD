@@ -1,0 +1,15 @@
+{
+  "id": "tpl-growth-charge",
+  "schema": "template@1",
+  "name": "成長蓄能",
+  "description": "P3 成長蓄能。",
+  "family": "growth-charge",
+  "status": "draft",
+  "params": {},
+  "requires": [],
+  "gapScore": 4,
+  "exemplar": {
+    "skill": "(draft)",
+    "jass": "(P2/P3)"
+  }
+}

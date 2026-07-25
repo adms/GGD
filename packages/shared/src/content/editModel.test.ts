@@ -30,6 +30,10 @@ import {
   parseField,
   setAt,
   writePlan,
+  spliceEmbeddedSlot,
+  spliceMembers,
+  spliceTopLevelMember,
+  stringifyEmbedded,
 } from "./editModel";
 
 // deliberately synthetic ids: codexLive.test.ts forbids real content ids in
@@ -242,5 +246,140 @@ describe("THE MIRROR RULE — an ability edit must write both copies", () => {
     expect(writePlan("champions", CHAMPION_ID, champion())).toHaveLength(1);
     // an orphan ability (owner missing from content) still saves its own doc
     expect(writePlan("abilities", ABILITY_ID, ability(), null)).toHaveLength(1);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// 鑄技工坊 / #78 — the LINE EDIT writer
+// ---------------------------------------------------------------------------
+//
+// The rule these enforce: an edit to ONE member must not restate the rest of the
+// file. Content docs come out of a PYTHON exporter that writes whole numbers as
+// `30.0`; `JSON.stringify(doc, null, 2)` writes `30`. So a save that round-trips
+// the whole doc silently rewrites every `X.0` in it — the diff pollution #78
+// spent a batch cleaning up, and the reason the forge writes through PATCH.
+//
+// Two properties: (1) SEMANTICS — the spliced text parses to what `setAt` would
+// produce; (2) BYTES — everything outside the replaced span is identical, and
+// splicing a member back with its own value returns the text unchanged.
+
+/** A champion doc as the Python exporter actually writes one: `30.0`, not `30`. */
+const PY_CHAMPION = `{
+  "id": "hero-x",
+  "schema": "champion@1",
+  "name": "Title - Test Hero",
+  "baseStats": {
+    "maxHealth": 600.0,
+    "ad": 55.0
+  },
+  "abilities": {
+    "Q": {
+      "id": "hero-x.q",
+      "name": "01-01 One",
+      "cooldown": 8.0,
+      "range": 6.0,
+      "effects": []
+    },
+    "W": {
+      "id": "hero-x.w",
+      "name": "01-02 Two",
+      "cooldown": 30.0,
+      "range": 9.17,
+      "effects": []
+    }
+  },
+  "tags": []
+}
+`;
+
+describe("LINE EDIT — the mirror writeback must not reformat the rest of the file", () => {
+  it("splicing a slot back with its OWN current value returns the text UNCHANGED", () => {
+    cover("content-edit-model");
+    const current = getAt(JSON.parse(PY_CHAMPION), "abilities.W") as Record<string, unknown>;
+    // THE assertion a JSON round-trip fails: `30.0` would come back as `30`.
+    expect(spliceEmbeddedSlot(PY_CHAMPION, "W", current)).toBe(PY_CHAMPION);
+    expect(spliceTopLevelMember(PY_CHAMPION, "tags", [])).toBe(PY_CHAMPION);
+  });
+
+  it("means exactly setAt, semantically", () => {
+    cover("content-edit-model");
+    const next = { id: "hero-x.w", name: "01-02 Renamed", cooldown: 12, range: 9.17, effects: [] };
+    const spliced = JSON.parse(spliceEmbeddedSlot(PY_CHAMPION, "W", next)) as unknown;
+    expect(spliced).toEqual(setAt(JSON.parse(PY_CHAMPION) as Record<string, unknown>, "abilities.W", next));
+  });
+
+  it("leaves every OTHER slot's bytes — floats included — untouched", () => {
+    cover("content-edit-model");
+    const out = spliceEmbeddedSlot(PY_CHAMPION, "W", {
+      id: "hero-x.w",
+      name: "01-02 Renamed",
+      cooldown: 30,
+      range: 9.17,
+      effects: [],
+    });
+    // Q's `8.0` / `6.0` and the top-level `600.0` / `55.0` all survive…
+    expect(out).toContain('"cooldown": 8.0');
+    expect(out).toContain('"range": 6.0');
+    expect(out).toContain('"maxHealth": 600.0');
+    expect(out).toContain('"ad": 55.0');
+    // …and the edited slot re-renders whole numbers in the file's own float
+    // convention, so the NEXT edit of it is a no-op diff too.
+    expect(out).toContain('"cooldown": 30.0');
+    // exactly ONE line differs — the renamed one
+    const before = PY_CHAMPION.split("\n");
+    const after = out.split("\n");
+    expect(after.length).toBe(before.length);
+    expect(after.filter((l, i) => l !== before[i])).toEqual(['      "name": "01-02 Renamed",']);
+  });
+
+  it("patches ONLY the named top-level members of a standalone doc", () => {
+    cover("content-edit-model");
+    const doc = `{
+  "id": "hero-x.q",
+  "schema": "ability@1",
+  "name": "01-01 One",
+  "cooldown": 8.0,
+  "castType": "self",
+  "effects": []
+}
+`;
+    const out = spliceMembers(doc, {
+      castType: "targeted",
+      effects: [{ kind: "damage", damageType: "magic", amount: { perRank: [100] } }],
+    });
+    const parsed = JSON.parse(out) as { castType: string; effects: unknown[] };
+    expect(parsed.castType).toBe("targeted");
+    expect(parsed.effects).toHaveLength(1);
+    // and `cooldown: 8.0` did NOT become `8`
+    expect(out).toContain('"cooldown": 8.0');
+    expect(out).toContain('"name": "01-01 One"');
+  });
+
+  it("refuses an absent member rather than appending it in the wrong place", () => {
+    cover("content-edit-model");
+    expect(() => spliceTopLevelMember(PY_CHAMPION, "nope", 1)).toThrow(/no top-level member/);
+    expect(() => spliceEmbeddedSlot(PY_CHAMPION, "E", {})).toThrow(/no abilities\.E/);
+  });
+
+  it("stringifyEmbedded keeps the float convention on FLOAT fields only", () => {
+    cover("content-edit-model");
+    const out = stringifyEmbedded({ cooldown: 30, maxRank: 3, effects: [] }, "  ");
+    expect(out).toContain('"cooldown": 30.0'); // a float field
+    expect(out).toContain('"maxRank": 3'); // a count — stays an integer
+  });
+
+  it("survives strings that contain braces and escaped quotes", () => {
+    cover("content-edit-model");
+    const tricky = `{
+  "id": "hero-x",
+  "note": "a } brace and a \\" quote",
+  "abilities": {
+    "Q": { "id": "hero-x.q", "cooldown": 8.0 }
+  }
+}
+`;
+    const out = spliceEmbeddedSlot(tricky, "Q", { id: "hero-x.q", cooldown: 9 });
+    expect(JSON.parse(out)).toMatchObject({ note: 'a } brace and a " quote' });
+    expect((JSON.parse(out) as { abilities: { Q: { cooldown: number } } }).abilities.Q.cooldown).toBe(9);
   });
 });

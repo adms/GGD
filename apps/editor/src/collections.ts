@@ -99,6 +99,24 @@ const TEMPLATES: Record<CollectionName, (id: string) => unknown> = {
     mcoinPrice: 750,
     modelKey: "champ.sela",
   }),
+  // 鑄技工坊 (Skill Forge, #141/#205). A brand-new template starts as a `draft`
+  // with NO param slots on purpose: a template's defaults are supposed to be the
+  // exemplar's MEASURED JASS values (design §2.1), so the author fills in the
+  // exemplar + slots deliberately rather than inheriting invented placeholders.
+  // `draft` also means `expand()` refuses it, so an unfinished template can never
+  // reach content by accident.
+  "ability-templates": (id) => ({
+    id,
+    schema: "template@1",
+    name: "新模板",
+    description: "描述這個行為原型 (取自哪一類 JASS 行為)。",
+    family: "未分類",
+    status: "draft",
+    params: {},
+    requires: [],
+    gapScore: 5,
+    exemplar: { skill: "(填入 xx-0X 技能名)", jass: "(填入 rawcode 或 war3map.j:行號)" },
+  }),
   vfx: (id) => ({
     id,
     schema: "vfx@1",

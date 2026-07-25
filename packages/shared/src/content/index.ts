@@ -89,3 +89,24 @@ export {
   type CollisionGap,
   type CollisionAudit,
 } from "./arenaCollision";
+// 鑄技工坊 (Skill Forge, #141/#205): the PURE expander both the sim (registry
+// registration) and the editor (form + try-in-preview) import, so「表單看到的」
+// ==「遊戲跑的」, plus the runtime param-schema synthesis the editor form walks.
+export {
+  GGD_PER_WC3,
+  round2,
+  toLen,
+  SIM_CAPABILITIES,
+  missingCaps,
+  expand,
+  isExpandable,
+  mergeExpansion,
+  eject,
+  type SimCapability,
+  type ExpandResult,
+} from "./templates/expand";
+export {
+  paramsSchemaFor,
+  defaultParamsFor,
+  describeUnit,
+} from "./templates/paramsSchema";

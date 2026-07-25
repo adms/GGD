@@ -1,0 +1,15 @@
+{
+  "id": "tpl-team-synergy",
+  "schema": "template@1",
+  "name": "隊伍協同",
+  "description": "P3 隊伍協同。",
+  "family": "team-synergy",
+  "status": "draft",
+  "params": {},
+  "requires": [],
+  "gapScore": 2,
+  "exemplar": {
+    "skill": "(draft)",
+    "jass": "(P2/P3)"
+  }
+}

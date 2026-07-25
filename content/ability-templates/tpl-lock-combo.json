@@ -1,0 +1,17 @@
+{
+  "id": "tpl-lock-combo",
+  "schema": "template@1",
+  "name": "鎖定連段",
+  "description": "P3 鎖定連段 (需 combo 詞彙)。",
+  "family": "lock-combo",
+  "status": "draft",
+  "params": {},
+  "requires": [
+    "combo"
+  ],
+  "gapScore": 4,
+  "exemplar": {
+    "skill": "(draft)",
+    "jass": "(P2/P3)"
+  }
+}

@@ -281,6 +281,20 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     status: "debt",
     why: "all 5 shipped status-effect docs are debuffs, so any UI that colours or filters by positive polarity has never rendered a single case. The map's buff-side statuses (haste/regen auras) were not imported.",
   },
+  // 鑄技工坊 (Skill Forge P1, #141/#205): the `template` link landed on
+  // zAbilityDef this commit, and the 29 template@1 docs + the pure expand() ship
+  // with it, but NO existing content doc references a template yet — the editor's
+  // job is to re-author skills onto them. Until the 8 enabled families are
+  // adopted by real content this is an intentional zero. Kept as `debt` (not
+  // `landing`) so it stays visible in the banner rather than silently expiring.
+  "field:abilities.template": {
+    status: "debt",
+    why: "Skill Forge P1: the template@1 schema + expand() are live and the diff=0 roundtrip (godie-hgam.e via tpl-instant-blast) is proven in expand.test.ts, but no shipped ability yet stores template{ref,params} — that migration is the editor's writeback, done skill-by-skill. Adopting one skill turns this green.",
+  },
+  "field:champions.abilities.*.template": {
+    status: "debt",
+    why: "the champion-embedded mirror of abilities.template; adopted at the same moment the first Q/W/E/R skill is re-authored onto a template (the mirror writeback writes both copies).",
+  },
 };
 
 let census: Census;

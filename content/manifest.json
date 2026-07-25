@@ -1,5 +1,5 @@
 {
-  "contentVersion": "cv_e8451ffd51fb",
+  "contentVersion": "cv_7a9217421902",
   "collections": {
     "champions": {
       "hash": "5abaaca3ade3",
@@ -60,6 +60,11 @@
       "hash": "3d1095f3da83",
       "count": 5,
       "path": "skins/_index.json"
+    },
+    "ability-templates": {
+      "hash": "294b7bd98025",
+      "count": 29,
+      "path": "ability-templates/_index.json"
     }
   }
 }

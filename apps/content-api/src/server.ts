@@ -7,6 +7,9 @@
  *   PUT    /content-api/:collection/:id            upsert (Zod validate -> atomic write -> reindex)
  *   POST   /content-api/:collection/:id            create (409 if exists)
  *   DELETE /content-api/:collection/:id
+ *   PATCH  /content-api/abilities/:id              member patch (LINE EDIT, no JSON round-trip)
+ *   PATCH  /content-api/champions/:id/abilities/:slot  embedded mirror slot (LINE EDIT)
+ *   POST   /content-api/rebuild                    `pnpm content:build` as an endpoint
  *   POST   /content-api/:collection/:id/validate   dry-run (writes nothing)
  *   GET    /content-api/:collection/:id/backups    undo history for one doc
  *   POST   /content-api/:collection/:id/restore    restore a snapshot (itself undoable)
@@ -42,9 +45,17 @@ import {
   type FieldIssue,
 } from "@ggd/shared/content";
 import {
+  CORE_SLOTS,
+  setAt,
+  spliceEmbeddedSlot,
+  spliceMembers,
+  type CoreSlot,
+} from "@ggd/shared/content/editModel";
+import {
   deleteContentBundle,
   deleteDocFile,
   docPath,
+  rebuildAllIndexes,
   rebuildCollectionIndex,
   rebuildManifest,
   writeDocAtomic,
@@ -283,6 +294,141 @@ export function buildServer(opts: ContentApiOptions): FastifyInstance {
       collectionHash,
       contentVersion,
       backup: backup?.file ?? null,
+    });
+  });
+
+  // ---------- 鑄技工坊 (Skill Forge, #141/#205): LINE-EDIT member patches ------
+  //
+  // Why these exist alongside PUT: PUT round-trips the whole doc through
+  // `JSON.stringify(v, null, 2)`. The w3x importer is Python and writes whole
+  // numbers as `30.0`; Node writes `30`. Measured on content/champions/
+  // godie-hart.json, a no-op PUT rewrites 56 of its 359 lines. That is the exact
+  // failure #78 and the project's content rules forbid — an edit to ONE ability
+  // slot must not restate every float in the champion.
+  //
+  // So the forge writes through a MEMBER PATCH: validate the whole resulting doc
+  // first, then splice only the named members into the file's existing TEXT.
+  //
+  // SECURITY: nothing new is opened. `registerDevWriteGuard` is an onRequest
+  // hook and PATCH is already in its MUTATING set, so both routes inherit the
+  // loopback-peer + local-Origin check; buildServer still refuses to boot under
+  // NODE_ENV=production. guard.ts and both nginx confs are untouched.
+
+  /** Atomic text write (tmp + rename), the byte-preserving sibling of writeDocAtomic. */
+  function writeTextAtomic(file: string, text: string): void {
+    mkdirSync(dirname(file), { recursive: true });
+    const tmp = `${file}.tmp-${process.pid}`;
+    writeFileSync(tmp, text, "utf8");
+    renameSync(tmp, file);
+  }
+
+  /** PATCH a standalone ability doc's members (the writeback's step 1). */
+  app.patch<{ Params: { id: string }; Body: unknown }>(
+    "/content-api/abilities/:id",
+    async (req, reply) => {
+      const loc = resolveDoc(reply, { collection: "abilities", id: req.params.id });
+      if (!loc) return;
+      if (!existsSync(loc.file)) return err(reply, 404, `abilities/${loc.id} not found`);
+      const patch = req.body;
+      if (typeof patch !== "object" || patch === null || Array.isArray(patch)) {
+        return err(reply, 422, "body must be a JSON object of members to patch", [
+          { path: "", message: "expected an object", code: "invalid_type" },
+        ]);
+      }
+      const text = await readFile(loc.file, "utf8");
+      const current = JSON.parse(text) as Record<string, unknown>;
+      // VALIDATE THE WHOLE RESULTING DOC before a single byte moves.
+      const merged = { ...current, ...(patch as Record<string, unknown>) };
+      const doc = validateBody(reply, "abilities", loc.id, merged);
+      if (!doc) return;
+      let next: string;
+      try {
+        next = spliceMembers(text, patch as Record<string, unknown>);
+      } catch (e) {
+        return err(reply, 422, `cannot splice member: ${String(e)}`);
+      }
+      const backup = snapshotFile(backupRoot, "abilities", loc.id, loc.file, { onError: backupWarn });
+      writeTextAtomic(loc.file, next);
+      const { collectionHash, contentVersion } = reindex("abilities");
+      hub.publish({ type: "content:changed", collection: "abilities", id: loc.id, change: "change" });
+      return reply.send({
+        id: loc.id,
+        hash: hashDoc(doc),
+        collectionHash,
+        contentVersion,
+        backup: backup?.file ?? null,
+      });
+    },
+  );
+
+  /**
+   * PATCH the champion-embedded twin of one ability (the writeback's step 2).
+   * Mirror direction is ALWAYS standalone → embedded (the STRICT model): the
+   * body is `embeddedForm(abilityDoc)` and it replaces the whole
+   * `abilities.<slot>` span, brace-matched, leaving every sibling slot's bytes
+   * exactly as they were.
+   */
+  app.patch<{ Params: { id: string; slot: string }; Body: unknown }>(
+    "/content-api/champions/:id/abilities/:slot",
+    async (req, reply) => {
+      const loc = resolveDoc(reply, { collection: "champions", id: req.params.id });
+      if (!loc) return;
+      if (!existsSync(loc.file)) return err(reply, 404, `champions/${loc.id} not found`);
+      const slot = req.params.slot;
+      if (!CORE_SLOTS.includes(slot as CoreSlot)) {
+        return err(reply, 404, `unknown ability slot "${slot}" (expected Q/W/E/R)`);
+      }
+      const embedded = req.body;
+      if (typeof embedded !== "object" || embedded === null || Array.isArray(embedded)) {
+        return err(reply, 422, "body must be the embedded AbilityDef object", [
+          { path: "", message: "expected an object", code: "invalid_type" },
+        ]);
+      }
+      const text = await readFile(loc.file, "utf8");
+      const current = JSON.parse(text) as Record<string, unknown>;
+      // Validate the WHOLE champion the patch would produce — an embedded slot
+      // that is individually well-formed can still break the champion doc.
+      const merged = setAt(current, `abilities.${slot}`, embedded);
+      const doc = validateBody(reply, "champions", loc.id, merged);
+      if (!doc) return;
+      let next: string;
+      try {
+        next = spliceEmbeddedSlot(text, slot as CoreSlot, embedded as Record<string, unknown>);
+      } catch (e) {
+        return err(reply, 422, `cannot splice abilities.${slot}: ${String(e)}`);
+      }
+      const backup = snapshotFile(backupRoot, "champions", loc.id, loc.file, { onError: backupWarn });
+      writeTextAtomic(loc.file, next);
+      const { collectionHash, contentVersion } = reindex("champions");
+      hub.publish({ type: "content:changed", collection: "champions", id: loc.id, change: "change" });
+      return reply.send({
+        id: loc.id,
+        hash: hashDoc(doc),
+        collectionHash,
+        contentVersion,
+        backup: backup?.file ?? null,
+      });
+    },
+  );
+
+  /**
+   * `pnpm content:build` as an endpoint — every _index.json, manifest.json AND
+   * content/bundle.json, which is what `rebuildAllIndexes` does by default. The
+   * editor calls this ONCE at the end of a save so the designer never has to
+   * shell out to pnpm (design §2.3 step 4), and so the committed bundle stops
+   * being stale (bundle.test.ts asserts it matches the docs on disk).
+   *
+   * This is deliberately NOT what per-doc writes do: `reindex()` above only
+   * DELETES the bundle, because a CRUD endpoint quietly authoring a committed
+   * artifact on every keystroke-save is a different thing from the designer
+   * explicitly pressing 「重建索引」 at the end of an edit.
+   */
+  app.post("/content-api/rebuild", async (_req, reply) => {
+    const manifest = rebuildAllIndexes(root);
+    hub.publish({ type: "content:changed", collection: "config", id: "*", change: "change" });
+    return reply.send({
+      collections: Object.keys(manifest.collections).length,
+      contentVersion: manifest.contentVersion,
     });
   });
 
