@@ -15,7 +15,7 @@ import (
 // Meta-progression tuning (task #118). Crystal (水晶) is the FREE soft currency:
 // it is granted for PLAYING A MATCH and spent to unlock champions.
 //
-// WHO MAY GRANT IT. Two paths, both server-side and both un-loopable:
+// WHO MAY GRANT IT. Three paths, all server-side and all un-loopable:
 //
 //  1. Match settlement — the HMAC-authenticated server-to-server result
 //     callback (gamelink.handleResult), which is per-matchId idempotent
@@ -27,11 +27,20 @@ import (
 //     reachable only from the registration path (auth.Register), which already
 //     rate-limits and gates account creation, so it mints exactly one balance
 //     per account that comes into existence.
+//  3. An OPERATOR GRANT from the admin console (task #225, AddCrystal) — a
+//     single-account or all-accounts 藍水晶 grant an administrator issues by
+//     hand. It is deliberately NOT in this package's HTTP surface: the routes
+//     live in internal/admin behind the AdminOnly middleware (a usable admin:
+//     roled, unbanned, approved) and EVERY grant appends an admin audit line.
+//     internal/wallet cannot write that audit itself (admin imports wallet —
+//     see roleAdmin below), which is exactly why the endpoint belongs there and
+//     this file exposes only the locked mutation.
 //
 // There is deliberately NO client-callable earn route: a bare authenticated
 // self-grant with no per-match key is a minting hole (a client can simply loop
-// it). The welcome seed is not that hole — it fires from account creation, not
-// from a request the account can repeat.
+// it). Neither the welcome seed nor the operator grant is that hole — one fires
+// from account creation, the other from an admin-gated, audited console action;
+// neither is a request a player's own token can repeat.
 //
 // BALANCE MODEL — the assumed play rate is written down so the owner can
 // retune from the same numbers rather than from a bare constant.
@@ -328,6 +337,35 @@ func (s *Service) SetCrystalAbsolute(ctx context.Context, accountID string, crys
 		return nil
 	})
 	return err
+}
+
+// AddCrystal applies a delta to an account's crystal balance under the
+// per-account meta lock and returns the resulting balance (task #225).
+//
+// This is the ADDITIVE counterpart to SetCrystalAbsolute, and it exists so the
+// operator grant is not a read-modify-write spread across two calls. Computing
+// `CrystalOf(...) + amount` and handing the sum to SetCrystalAbsolute would race
+// a match settlement (which writes its own absolute post-match balance) and a
+// concurrent unlock spend — a bulk grant across every account widens that window
+// to however long the loop runs. mutateMeta takes the same lock every other
+// mutation takes, so the read and the write cannot be separated.
+//
+// Absolute is still right for settlement (a replayed callback must converge);
+// additive is right here because an operator grant has no idempotency key and
+// two grants of 500 mean 1000. The balance floors at 0 via meta.normalize, so a
+// negative delta cannot push an account below zero — but a negative delta is
+// NOT how crystals are taken away through the console: the handler rejects
+// non-positive amounts, precisely because flooring would silently turn "-999999"
+// into "wipe this player's balance".
+func (s *Service) AddCrystal(ctx context.Context, accountID string, delta int) (int, error) {
+	m, err := s.mutateMeta(ctx, accountID, func(m *meta) error {
+		m.Crystal += delta
+		return nil
+	})
+	if err != nil {
+		return 0, err
+	}
+	return m.Crystal, nil
 }
 
 // UnlockChampion spends the champion's crystal price (content/config/store.json

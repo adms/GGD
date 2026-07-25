@@ -43,6 +43,15 @@ func grantAdmin(t *testing.T, ts *testutil.TS, id string) {
 // crystals may only be granted by HMAC-authenticated match settlement, so no
 // authenticated client route may hand them out. If someone re-adds an earn
 // endpoint, this fails.
+//
+// The last two paths are the #225 trap. That task added OPERATOR crystal grants,
+// and the obvious place to put them was next to /wallet/admin/grant-mcoin — which
+// is in THIS package, is gated only by an in-service role check, and cannot write
+// an admin audit line (admin imports wallet, so the edge back would be a cycle).
+// They deliberately live at /admin/accounts/{id}/crystal and
+// /admin/crystals/grant-all instead, behind AdminOnly and the audit writer. These
+// probes make that a tested property rather than a comment: this package's HTTP
+// surface hands out crystals to NOBODY, admin or not.
 func TestNoClientCrystalEarnRoute(t *testing.T) {
 	testkit.Cover(t, "meta-crystal-no-earn-route")
 	ts := testutil.New(t)
@@ -51,6 +60,8 @@ func TestNoClientCrystalEarnRoute(t *testing.T) {
 	for _, path := range []string{
 		"/api/v1/wallet/crystals/earn",
 		"/api/v1/wallet/crystals",
+		"/api/v1/wallet/admin/grant-crystal",
+		"/api/v1/wallet/crystals/grant-all",
 	} {
 		r := ts.Do(http.MethodPost, path, u.Access, nil)
 		require.Equal(t, http.StatusNotFound, r.Status,

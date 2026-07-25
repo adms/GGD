@@ -78,6 +78,43 @@ Grants are deterministic (placement-scaled), so tests need no rng seam.
 | meta-03 | Favourite pin/unpin persists (sorted, deduped) and round-trips a Redis wipe | meta-favourite-toggle | integration | done |
 | meta-04 | Admin grants M幣 (additive); a non-admin caller is 403 and changes nothing | meta-admin-grant-mcoin | security | done |
 
+### 藍水晶 operator grants (task #225)
+
+Owner directive: 「請在後台 發放M幣的地方也可以設定發放藍水晶，以及 一鍵發放所有帳號 藍水晶 的功能」.
+
+Two new routes, and they live in **`internal/admin`, not `internal/wallet`**:
+`POST /admin/accounts/{id}/crystal` (single) and `POST /admin/crystals/grant-all`
+(一鍵發放所有帳號). The wallet package's own `/wallet/admin/grant-mcoin` was the obvious
+neighbour and is the WRONG home — it is gated only by an in-service role check (no
+banned/approved test) and writes **no audit line**, and it cannot write one, because
+`admin` imports `wallet` so the edge back would be an import cycle. Under `/admin` the routes
+inherit `Service.AdminOnly` (roled + unbanned + approved) and the audit writer for free.
+
+The mutation is a NEW additive primitive, `wallet.Service.AddCrystal`, built on the same
+`mutateMeta` per-account lock every other meta write uses. `CrystalOf` + `SetCrystalAbsolute`
+would have been an unlocked read-modify-write racing match settlement — and across a bulk
+loop that window is as long as the loop.
+
+The bulk path deliberately does **NOT** reuse `BackfillWelcomeCrystals` /
+`SeedNewAccountCrystals` (#204). Their idempotency is "skip any account that already has a
+walletmeta record", which on a live deploy is nearly every account — an operator bulk grant
+routed through them would report success and grant almost nobody. `GGD_BACKFILL_WELCOME_CRYSTALS`
+stays 0 and untouched. This action is REPEATABLE by design; the console requires an explicit
+confirmation showing the amount and the server-reported account count before it fires.
+
+Amounts are validated server-side on both routes: positive whole numbers only (negatives are
+refused rather than clamped — the balance floors at 0, so a negative would WIPE rather than
+deduct), capped at `admin.MaxCrystalGrant`. Console: the existing `MCoinGrantPage` gains two
+panels; pure logic in `apps/admin/src/crystalGrant.ts`.
+
+| ID | Item | Test ID | Category | Status |
+| --- | --- | --- | --- | --- |
+| meta-13 | An admin grants 藍水晶 to one account (additive, unknown account 404) and every grant is audited | admin-crystal-grant | integration | done |
+| meta-14 | Both crystal routes are behind the admin gate — no token 401, non-admin 403, and a refused call moves no balance | admin-crystal-grant-authz | security | done |
+| meta-15 | Amounts are validated SERVER-side on both routes: zero / negative / missing / over-cap are 400 and move nothing | admin-crystal-amount-validation | security | done |
+| meta-16 | 一鍵發放所有帳號 grants every account, reports granted/failed counts, is repeatable (does not skip accounts with a meta record), and writes ONE audit line with the account count | admin-crystal-grant-bulk | integration | done |
+| meta-17 | The console form rejects zero/negative/over-cap before the network and reports a partial bulk run as counts, not an error | adminui-crystal-grant | unit | done |
+
 ### Client + admin UI (task #118)
 
 Client champ-select meta chrome lives in `apps/client/src/ui/panels/champselect/`

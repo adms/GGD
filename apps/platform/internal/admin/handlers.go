@@ -32,6 +32,15 @@ func (h *Handlers) Mount(r chi.Router) {
 		ar.Get("/accounts/pending", h.pendingAccounts)
 		ar.Get("/accounts/{id}", h.getAccount)
 		ar.Post("/accounts/{id}/mcoin", h.adjustMCoin)
+		// 藍水晶 operator grants (task #225). They live HERE, not beside
+		// /wallet/admin/grant-mcoin, for one reason: this subrouter carries
+		// AdminOnly and this package owns the audit writer, and the brief
+		// requires every crystal grant to be logged. internal/wallet cannot
+		// write an audit line without an import cycle.
+		ar.Post("/accounts/{id}/crystal", h.grantCrystal)
+		// 一鍵發放所有帳號. A distinct first segment, so chi never confuses it
+		// with an account id under /accounts/{id}.
+		ar.Post("/crystals/grant-all", h.grantCrystalAll)
 		ar.Post("/accounts/{id}/mmr", h.setMMR)
 		ar.Post("/accounts/{id}/ban", h.ban)
 		ar.Post("/accounts/{id}/unban", h.unban)
@@ -128,6 +137,52 @@ func (h *Handlers) adjustMCoin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	httpx.WriteJSON(w, http.StatusOK, map[string]any{"mcoin": balance})
+}
+
+// crystalReq is the body of BOTH crystal grant routes. The single-account one
+// takes its target from the URL; the bulk one has no target at all.
+type crystalReq struct {
+	Amount int    `json:"amount"`
+	Reason string `json:"reason"`
+}
+
+// grantCrystal grants 藍水晶 to one account. Amount validation is SERVER-side
+// (the service re-checks it too): positive whole numbers only, capped at
+// MaxCrystalGrant. A JSON body with no `amount` decodes to 0 and is rejected by
+// the same rule, so an empty POST cannot grant anything.
+func (h *Handlers) grantCrystal(w http.ResponseWriter, r *http.Request) {
+	me := auth.MustIdentity(r.Context())
+	var req crystalReq
+	if err := httpx.DecodeJSON(r, &req); err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	balance, err := h.svc.GrantCrystal(r.Context(), me.AccountID, chi.URLParam(r, "id"), req.Amount, req.Reason)
+	if err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	httpx.WriteJSON(w, http.StatusOK, map[string]any{"crystal": balance})
+}
+
+// grantCrystalAll is the 一鍵發放所有帳號 bulk grant. It answers with the
+// per-account outcome counts so the console can report "granted N of M" rather
+// than a bare success — a partial failure is a real, reportable result here, not
+// an error.
+func (h *Handlers) grantCrystalAll(w http.ResponseWriter, r *http.Request) {
+	me := auth.MustIdentity(r.Context())
+	var req crystalReq
+	if err := httpx.DecodeJSON(r, &req); err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	res, err := h.svc.GrantCrystalAll(r.Context(), me.AccountID, req.Amount, req.Reason)
+	if err != nil {
+		// Nothing was attempted (bad amount / unreadable account directory).
+		httpx.WriteError(w, err)
+		return
+	}
+	httpx.WriteJSON(w, http.StatusOK, res)
 }
 
 type mmrReq struct {

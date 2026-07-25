@@ -151,6 +151,45 @@ export function grantMCoin(accountId: string, amount: number): Promise<{ account
   });
 }
 
+// ---- 藍水晶 crystal grants (task #225) --------------------------------------
+// BOTH live under /admin, not beside grantMCoin's /wallet/admin/grant-mcoin.
+// That is deliberate: /admin/* carries the AdminOnly middleware (a usable admin:
+// roled, unbanned, approved under the #126 gate) AND the platform's audit
+// writer, and the brief requires every crystal grant to be logged. The wallet
+// package cannot write an audit line without an import cycle, so a crystal route
+// next to grant-mcoin would have been silently unaudited.
+//
+// Amounts are validated SERVER-side (positive whole numbers, capped);
+// ../crystalGrant re-checks the same rules so the console fails fast.
+
+/** Grant 藍水晶 to ONE account. Additive. Returns the resulting balance. */
+export function grantCrystal(
+  id: string,
+  amount: number,
+  reason = "",
+): Promise<{ crystal: number }> {
+  return api.request<{ crystal: number }>(`/admin/accounts/${encodeURIComponent(id)}/crystal`, {
+    body: { amount, reason },
+  });
+}
+
+/**
+ * 一鍵發放所有帳號藍水晶 — the bulk grant. Returns the per-account outcome
+ * counts, including `firstError` when some accounts failed: a partial run is a
+ * 200 with counts, not an error, because the operator must be able to tell
+ * "everyone got it" from "900 of 901 got it" before deciding whether to re-run
+ * (re-running double-grants the 900 — this action is repeatable by design).
+ */
+export function grantCrystalAll(
+  amount: number,
+  reason = "",
+): Promise<{ accounts: number; granted: number; failed: number; firstError?: string }> {
+  return api.request<{ accounts: number; granted: number; failed: number; firstError?: string }>(
+    "/admin/crystals/grant-all",
+    { body: { amount, reason } },
+  );
+}
+
 export function setMMR(id: string, mmr: number, reason: string): Promise<{ mmr: number }> {
   return api.request<{ mmr: number }>(`/admin/accounts/${encodeURIComponent(id)}/mmr`, {
     body: { mmr, reason },
