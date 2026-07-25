@@ -16,15 +16,18 @@
  *
  * GEOMETRY NOTE — every position here is expressed as an offset from the ZONE
  * CENTRE, on the line `z = center.z + 12`. Zone 0 of SKELETON_ARENA is centred
- * at (-40, 0) with a 24 u boundary and three pillars; a unit placed at the world
- * origin is 40 u outside it and gets clamped back in by MovementSystem, which
- * silently destroys every distance this file asserts on. The +12 lane clears all
- * three pillars (centre r2.5 at z=0, and the two r1.8 at |z|=8).
+ * at (-40, 0) with a 24 u boundary; a unit placed at the world origin is 40 u
+ * outside it and gets clamped back in by MovementSystem, which silently destroys
+ * every distance this file asserts on. The +12 lane also clears the two
+ * remaining r1.8 obstacles at |z|=8. (Task #218 deleted the centre r2.5 pillar
+ * from every arena, so the lane now has more room than when this was written —
+ * it is kept as-is because the boundary clamp, not the pillars, is what these
+ * distances actually need protecting from.)
  */
 import { describe, it, expect } from "vitest";
 import { SimWorld } from "./SimWorld";
 import { SKELETON_ARENA } from "./world/ArenaDef";
-import { asSeatId, asTeamId, type AbilityId, type ChampionId, type EntityId } from "../ids";
+import { asSeatId, asTeamId, type AbilityId, type ChampionId, type EntityId, type SeatId } from "../ids";
 import { Stat, zeroStats } from "./stats/statTypes";
 import type { AbilitiesComp } from "./stats/statsComp";
 import type { IntentFrame } from "./intents";
@@ -86,6 +89,11 @@ function spawnFighter(
     xp: 0,
     gold: 0,
     items: [],
+    augments: [],
+    statStacks: 0,
+    statCapstonePct: 0,
+    pendingOrbSlots: 0,
+    undoStack: [],
   });
   return id;
 }
@@ -129,7 +137,9 @@ function spawnMob(world: SimWorld, pos: V.Vec2, hp = 100): EntityId {
     attackTarget: null,
     attackTargetAuto: false,
   });
-  world.mob.set(id, { zone: 0, target: -1 as EntityId, attackCdTicks: 0, level: 1 });
+  // MobComp carries no level of its own — #217 put the mob's effective level on
+  // the arm-time MobRules instead, so it is immutable state no system can drift.
+  world.mob.set(id, { zone: 0, team: MONSTER_TEAM, target: -1 as EntityId, attackCdTicks: 0, spawnTick: 0 });
   return id;
 }
 
@@ -152,11 +162,11 @@ function settle(world: SimWorld): void {
 }
 
 /** An IntentFrame carrying one order (`commands` is required by the contract). */
-function order(o: IntentFrame["order"]): Map<number, IntentFrame> {
+function order(o: IntentFrame["order"]): Map<SeatId, IntentFrame> {
   return new Map([[asSeatId(0), { order: o, commands: [] }]]);
 }
 
-const NO_INTENTS = new Map<number, IntentFrame>();
+const NO_INTENTS = new Map<SeatId, IntentFrame>();
 
 /** Mark `attacker` as having just damaged `victim` (the real threat store). */
 function markThreat(world: SimWorld, victim: EntityId, attacker: EntityId): void {

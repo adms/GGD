@@ -232,7 +232,14 @@ describe("a SETTLED zone stands its mobs down (#216 + #215)", () => {
     waveIntervalTicks: 3,
     mobsPerWaveCap: 3,
     maxAlivePerZone: 5,
+    // #217 widened MobRules with the arm-time level and its derived stats after
+    // this literal was written; the two landed in the same v0.5.15 train, so
+    // this is merge residue rather than a behaviour choice. Level 3 = the mob's
+    // level on `fromRound` (baseLevel 3, +1 per later round).
+    level: 3,
     maxHp: 120,
+    hpRegenPerSec: 1,
+    modelKey: "champ.godie-zombiex",
     attackDamage: 12,
     attackRangeSq: 1.8 * 1.8,
     attackCdTicks: 3,
