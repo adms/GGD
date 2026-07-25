@@ -27,6 +27,13 @@
 - **支線 B（BGM/環境音）→ 全部完成（owner 2026-07-25 親自確認核准）**：`#75` 龍吼（`sfx/dragon-roar*.mp3` + `retired/…-4.4s` 縮短錨點版）、火圈 intro（`bgm/fireRing.mp3` 已渲染）、控室重寫（`bgm/room.mp3`，score 在 `tools/bgm-gen/src/ggd/`，非計畫寫的 `scores/`）、`#135` 招牌 intro（`audition.py:54 SCENE_INTRO` + `:69 SCENE_RAP`）皆在硬碟上並已 owner 試聽核准。**支線 B 從〈接下來優先批次〉移除。**
 - **累計兩個 owner/map 佐證：這份 2026-07-23 計畫顯著低估完成度（Batch 4 的 7/8、整條支線 B）。往後每個「pending」項一律先 map 實查 HEAD 再動工，不照計畫文字重造。**
 
+### Round 2（3 條平行工作流）+ 全面對帳 → 計畫幾乎完成
+- **Batch 3C 火圈真幾何 = NO-OP（已完成）**：map 實查 —— 位置感知整身安全圈（`fireRing.ts:145 fireRingIsSafe` per-zone）、60s→20s 收縮律、burn 不走 damageQueue（`hp.hp-=dmg`+自帶 `fireRingDamage` 事件）、收縮預告 torus band、紅屏 `BurnTintFx`、收圈音效 全部在 HEAD。owner D4「真的會縮圈」**已經是遊戲現況**。（數字在 `config.match.json` 不是 arena-rules.json。）
+- **Batch 5D 商店貨架 = NO-OP（已完成）**：`shelfDisplay.ts` + IntermissionScene 佈貨、#146 商人頭像（PNG 已由圖示側線於 07-24 補上）皆在 HEAD，layout+sightline+shelfDisplay+IntermissionScene 測試同時綠。
+- **Batch 5B 行動裝置/HUD = 1 個真修**：#151 橫向/#107 殘留/#152 觸控名稱皆已完成；唯一真缺口 **#152 桌機技能名被圖示蓋掉**（`<IconImg fill>` inset:0 蓋住 in-flow 名字）→ 加底部 scrim 名字覆蓋層，桌機技能名終於看得到（`f2716b6`）。
+- **六連 NO-OP 的結論 → 全面對帳**（實查 HEAD）：`hitFeel` **已 143 檔完成**（計畫說 0，過期）。**真正仍開著的少數缺口**：① `useItem`/`recall` 仍 inert（`CommandSystem.ts:121`）—— 主動道具/回城按了沒反應，唯一與 gameplay 有關的；② `canCrit` ≈0（技能暴擊政策/內容）；③ `descriptionRoles`=0（tooltip 顏色，+#125 地雷）；④ `spriteSheet`=0（粒子 flipbook，繫於匯入器 #56）。②③④ 屬打磨。
+- **判斷：計畫已達 owner 的「只剩不重要議題」線。** 最後一個「還算重要」的是 ① 主動道具/回城 —— 排 Round 3 清掉它，之後就只剩打磨，供 owner 拍板 deploy。
+
 ---
 
 ## 🚀 v0.5.0 · 2026-07-25 pre-push localhost 試玩紀錄（PASS）
