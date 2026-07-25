@@ -25,6 +25,7 @@
 | **全技能** VFX 綁定（92% 共用火焰佔位、依文冰要有冰） | #79 | ✅（48 名冊 240 技能，**2026-07-24 補完鏡像**） | 全數改掉 `fx.ember-bolt-cast`,逐技能綁 element+primitive;依文 Q/E/R→`fx.prim.ice.*`(冷藍)。逐次參數=#50(`artParams.ts`)。⚠️ **原本只改了一半**:#79 的 owned surface 寫死 `content/abilities/*.json`,但每個 QWER 技能在 `content/champions/<cid>.json` `abilities[<slot>]` 還有一份反正規化鏡像 —— 452 對裡有 **192 對**的 `vfxKey` 兩邊都在、值卻不同(embedded 還停在 `fx.ember-bolt-cast`)。已同步 + 加 4 條守衛,見下方 2026-07-24 段落與 `docs/todo/ability-vfx.md` av-14..17 |
 | 遮擋物**全掃** | #29 | ✅ | |
 | **分場景載入**(不要開機全載) | #63 | ✅（SFX） | 稽核結論:模型/語音/BGM **已經是** lazy,只有 SFX 是刻意 eager(~2.5MB)。#63 已改為**分場景載入**:開機抓 0 個 SFX,UI 小核心在 unlock 暖機,各場景進入時只暖自己的子集(`audio/sfxManifest.ts` → `AudioSystem.preloadSceneSfx`),未列/未暖的 cue 仍會在首次 `playSfx` lazy 抓。model/voice 的分場景載入仍未做(見下方確認缺口#3,擴大範圍) |
+| **每個角色**的施展預告特效都要確實(能反應閃避) | **#228** | ✅（48 名冊 255 可施放格） | 舊做法只是 `abilityCast` 剛好帶 `point` 就畫圈:誠實覆蓋率 **43/255 = 16.9%**,93 格 `targeted` 畫的是捏造的 0.72u 圈(單體技根本沒有範圍,教出假閃避),118 格 `self`/`skillshot`/`dash` 地上什麼都沒有。改成**內容驅動**的純函式 `apps/client/src/vfx/telegraphShape.ts`(castType/radius/彈道 doc/dash 距離 → circle/lock/line/self,一律套 #136 `abilityRange`),推不出形狀就回 `null` **並讓測試紅**。填充進度改讀施法條同一個來源(`CastTracker.progressFor`),所以 hitstop 會跟著暫停、`castInterrupt` 會取消(舊的圈打斷後還會照放「就落在這裡」的爆點)。敵/友/己三色通道 + 併發預算見 `telegraphChannel.ts`。逐技能矩陣:`docs/_telegraph-coverage-228.md`(由 `telegraphCoverage.test.ts` 每次跑重生) |
 
 ---
 
