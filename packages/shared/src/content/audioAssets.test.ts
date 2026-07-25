@@ -25,8 +25,33 @@ import { cover } from "../../testkit/cover";
 import { zConfigAudioMapDoc, type ConfigAudioMapDoc } from "./schema/config";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const CONTENT = join(HERE, "../../../../content");
+const REPO = join(HERE, "../../../..");
+const CONTENT = join(REPO, "content");
 const AUDIO = join(CONTENT, "assets", "audio");
+
+/**
+ * THE COPYRIGHT-GATE CARVE-OUT (content/assets/blizzard-local/README.md).
+ * The per-ability stock-MPQ cast clips (`wc3.*` keys of the task-#78 音效 port)
+ * are Blizzard-owned and NOT redistributable, so their files deliberately do
+ * NOT exist under content/ — they live in the git-ignored
+ * data/blizzard-overlay/ability-sfx/ store (tools/w3x-import/
+ * extract_stock_sfx.py) and the audio map references them through the dev-only
+ * `assets/blizzard-local/` mount, which prod never serves BY CONSTRUCTION.
+ * The on-disk checks below therefore resolve these refs against the overlay
+ * store when a machine has staged it, and only shape-check them when it has
+ * not (CI has neither the MPQs nor the store). The client never fetches them
+ * outside a full-asset build (combatSfx.WC3_OVERLAY_ABILITY_SFX gates on
+ * config/fullAssets), so a shipped bundle cannot be pointed at the mount.
+ */
+const OVERLAY_PREFIX = "assets/blizzard-local/";
+const OVERLAY_STORE = join(REPO, "data", "blizzard-overlay");
+const OVERLAY_REF_SHAPE = /^assets\/blizzard-local\/ability-sfx\/[a-z0-9]+\.(wav|mp3)$/;
+
+/** content-relative ref → absolute path in the overlay store, or null. */
+function overlayStorePath(ref: string): string | null {
+  if (!ref.startsWith(OVERLAY_PREFIX)) return null;
+  return join(OVERLAY_STORE, ref.slice(OVERLAY_PREFIX.length));
+}
 
 /** The server's MSG.EVENT whitelist (apps/game-server MatchRoom.loop). */
 const EVENT_WHITELIST = [
@@ -163,7 +188,34 @@ describe("authored audio-map.json", () => {
     expect(paths.size).toBeGreaterThan(0);
     for (const p of paths) {
       expect(p.startsWith("assets/"), `${p} under assets/`).toBe(true);
+      const overlay = overlayStorePath(p);
+      if (overlay) {
+        // copyright gate: the file must NOT exist under content/ (committing it
+        // would ship a Blizzard asset), must match the ability-sfx shape, and
+        // must exist in the git-ignored overlay store when this machine has one.
+        expect(p, `${p} matches the overlay ability-sfx shape`).toMatch(OVERLAY_REF_SHAPE);
+        expect(existsSync(join(CONTENT, p)), `${p} must stay OUT of content/`).toBe(false);
+        if (existsSync(join(OVERLAY_STORE, "ability-sfx"))) {
+          expect(existsSync(overlay), `${p} staged in data/blizzard-overlay`).toBe(true);
+        }
+        continue;
+      }
       expect(existsSync(join(CONTENT, p)), `${p} exists`).toBe(true);
+    }
+  });
+
+  it("routes the blizzard-local mount ONLY through wc3.* sfx keys (never bgm)", () => {
+    cover("audio-map-overlay-keys-only");
+    const doc = loadDoc();
+    for (const [scene, t] of Object.entries(doc.bgm)) {
+      expect(t.file.startsWith(OVERLAY_PREFIX), `bgm ${scene} never rides the overlay`).toBe(false);
+    }
+    for (const [key, e] of Object.entries(doc.sfx)) {
+      for (const f of e.files) {
+        if (f.startsWith(OVERLAY_PREFIX)) {
+          expect(key.startsWith("wc3."), `${key} -> ${f}: only wc3.* keys may reference the dev-only mount`).toBe(true);
+        }
+      }
     }
   });
 
@@ -194,8 +246,11 @@ describe("authored audio-map.json", () => {
 
     const missing: string[] = [];
     const bad: string[] = [];
+    const overlayStaged = existsSync(join(OVERLAY_STORE, "ability-sfx"));
     for (const r of refs) {
-      const abs = join(CONTENT, r.file);
+      const overlay = overlayStorePath(r.file);
+      if (overlay && !overlayStaged) continue; // copyright gate: store not staged here
+      const abs = overlay ?? join(CONTENT, r.file);
       if (!existsSync(abs)) {
         missing.push(`${r.kind}:${r.key} -> ${r.file}`);
         continue;

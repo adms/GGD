@@ -86,6 +86,7 @@
         }
       ],
       "vfxKey": "fx.prim.blood.summon",
+      "sfxKey": "wc3.chickenwhat1",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
@@ -170,6 +171,7 @@
         }
       ],
       "vfxKey": "fx.prim.arcane.bolt",
+      "sfxKey": "wc3.gluescreenmeteorhit1",
       "castTimeSec": 0.7
     },
     "R": {
@@ -205,6 +207,7 @@
         }
       ],
       "vfxKey": "fx.prim.holy.pulse-lg",
+      "sfxKey": "wc3.sealwhat2",
       "castTimeSec": 0.3
     }
   },

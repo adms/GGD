@@ -88,6 +88,7 @@
         }
       ],
       "vfxKey": "fx.prim.ki.nova",
+      "sfxKey": "wc3.defendcaster",
       "targetsEnemies": true,
       "radius": 5.5,
       "castTimeSec": 0.5
@@ -137,6 +138,7 @@
         }
       ],
       "vfxKey": "fx.prim.void.bolt",
+      "sfxKey": "wc3.flaretarget3",
       "castTimeSec": 0.5
     },
     "E": {
@@ -181,6 +183,7 @@
         }
       ],
       "vfxKey": "fx.prim.holy.nova",
+      "sfxKey": "wc3.markofchaos",
       "targetsEnemies": true,
       "castTimeSec": 0.5
     },
@@ -229,6 +232,7 @@
         }
       ],
       "vfxKey": "fx.cinder-ward",
+      "sfxKey": "wc3.soulgem",
       "targetsEnemies": true,
       "radius": 6.0,
       "castTimeSec": 0.8

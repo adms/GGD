@@ -172,6 +172,7 @@
         }
       ],
       "vfxKey": "fx.prim.arcane.pulse",
+      "sfxKey": "wc3.waygatewhat1",
       "targetsEnemies": false,
       "radius": 1.5,
       "castTimeSec": 0.3
@@ -215,6 +216,7 @@
         }
       ],
       "vfxKey": "fx.prim.fire.explosion-lg",
+      "sfxKey": "wc3.taunt",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     }

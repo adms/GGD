@@ -197,6 +197,33 @@ describe("combat SFX key selection (juice-sfx-key)", () => {
       expect(wc3CastKey(undefined)).toBeNull();
       expect(wc3CastKey(7)).toBeNull();
     });
+
+    it("honours a stock-MPQ overlay cue only when the full-asset overlay is on", () => {
+      cover("juice-sfx-key");
+      // The stock wave (task #78 remainder) lives in the dev-only
+      // assets/blizzard-local mount, so the key passes on an overlay build…
+      expect(wc3CastKey("wc3.flaretarget3", true)).toBe("wc3.flaretarget3");
+      expect(wc3CastKey("wc3.peondeath", true)).toBe("wc3.peondeath");
+      expect(wc3CastKey("wc3.taunt", true)).toBe("wc3.taunt");
+      // …and answers null on a public bundle — the cast must fall back to the
+      // element/generic voice, never resolve to a URL prod does not serve.
+      expect(wc3CastKey("wc3.flaretarget3", false)).toBeNull();
+      expect(wc3CastKey("wc3.peondeath", false)).toBeNull();
+      // the committed map-author imports are honoured on EVERY tier
+      expect(wc3CastKey("wc3.nocute", false)).toBe("wc3.nocute");
+      // junk stays junk regardless of tier
+      expect(wc3CastKey("wc3.not-shipped", true)).toBeNull();
+    });
+
+    it("routes a full ability cast through an overlay cue (vitest = dev build)", () => {
+      cover("juice-sfx-key");
+      // vitest runs under vite's dev env, so the default overlayEnabled arm is
+      // the full-asset one — the stock cue outranks the element whoosh exactly
+      // like the committed three do.
+      expect(
+        combatSfxKey(ev("abilityCast", { sfxKey: "wc3.soulgem", vfxKey: "fx.prim.fire.nova" })),
+      ).toBe("wc3.soulgem");
+    });
   });
 
   describe("archery: 放箭 / 箭矢命中 joined client-side (no new sim event)", () => {

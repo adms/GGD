@@ -81,6 +81,7 @@
         }
       ],
       "vfxKey": "fx.prim.void.pulse-sm",
+      "sfxKey": "wc3.gruntyesattack1",
       "targetsEnemies": true,
       "castTimeSec": 0.4
     },
@@ -227,6 +228,7 @@
         }
       ],
       "vfxKey": "fx.prim.physical.shockwave",
+      "sfxKey": "wc3.rokhanwhat2",
       "targetsEnemies": true,
       "radius": 1.5,
       "castTimeSec": 0.6
@@ -270,6 +272,7 @@
         }
       ],
       "vfxKey": "fx.prim.void.nova-lg",
+      "sfxKey": "wc3.gruntyesattack3",
       "targetsEnemies": true,
       "castTimeSec": 0.5
     }

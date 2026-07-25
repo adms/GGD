@@ -114,6 +114,7 @@
         }
       ],
       "vfxKey": "fx.prim.nature.explosion",
+      "sfxKey": "wc3.pandarenbrewmasterpissed8",
       "castTimeSec": 0.3
     },
     "E": {
@@ -179,6 +180,7 @@
         }
       ],
       "vfxKey": "fx.prim.physical.swarm",
+      "sfxKey": "wc3.pandarenbrewmasterwarcry1",
       "castTimeSec": 0.3
     },
     "R": {
@@ -214,6 +216,7 @@
         }
       ],
       "vfxKey": "fx.prim.physical.shockwave-lg",
+      "sfxKey": "wc3.pandarenbrewmasteryes1",
       "castTimeSec": 0.3
     }
   },

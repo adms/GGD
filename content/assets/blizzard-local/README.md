@@ -24,6 +24,10 @@ data/blizzard-overlay/
 │                   #   warcry/pissed/ready}, clipMap}}, generated: "task #10"}
 ├── models/         # 40 per-unit .glb conversions (w3x-import pipeline)
 ├── sounds/         # 511 soundset .wav clips (22050 Hz s16le PCM)
+├── ability-sfx/    # 60 per-ability stock cast clips + MANIFEST.json (the
+│                   #   task-#78 音效 port; tools/w3x-import/extract_stock_sfx.py;
+│                   #   referenced by the audio map's wc3.* keys, which combatSfx
+│                   #   honours only on full-asset builds — config/fullAssets)
 └── batches/        # per-batch extraction reports (provenance)
 ```
 

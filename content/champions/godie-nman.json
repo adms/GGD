@@ -121,6 +121,7 @@
         }
       ],
       "vfxKey": "fx.prim.sound.nova",
+      "sfxKey": "wc3.stampedecaster1",
       "targetsEnemies": true,
       "radius": 6.0,
       "castTimeSec": 0.6
@@ -209,6 +210,7 @@
         }
       ],
       "vfxKey": "fx.prim.ki.nova-lg",
+      "sfxKey": "wc3.shamanready1",
       "targetsEnemies": true,
       "castTimeSec": 0.6
     }

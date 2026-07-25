@@ -40,6 +40,7 @@
     }
   ],
   "vfxKey": "fx.prim.physical.beam",
+  "sfxKey": "wc3.flaretarget2",
   "targetsEnemies": true,
   "radius": 6.0,
   "schema": "ability@1",

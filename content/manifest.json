@@ -1,13 +1,13 @@
 {
-  "contentVersion": "cv_a167d3ad0c57",
+  "contentVersion": "cv_8043891a2157",
   "collections": {
     "champions": {
-      "hash": "ac88e3826691",
+      "hash": "5ad81c938a6c",
       "count": 113,
       "path": "champions/_index.json"
     },
     "abilities": {
-      "hash": "22eef82f02f7",
+      "hash": "534d322ca2b6",
       "count": 662,
       "path": "abilities/_index.json"
     },
@@ -42,7 +42,7 @@
       "path": "arenas/_index.json"
     },
     "config": {
-      "hash": "2e89de33750e",
+      "hash": "268220258b23",
       "count": 11,
       "path": "config/_index.json"
     },

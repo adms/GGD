@@ -93,6 +93,7 @@
         }
       ],
       "vfxKey": "fx.prim.ki.pulse-sm",
+      "sfxKey": "wc3.mortarteampissed9",
       "castTimeSec": 0.3
     },
     "W": {
@@ -148,6 +149,7 @@
         }
       ],
       "vfxKey": "fx.prim.ki.pulse-sm",
+      "sfxKey": "wc3.mortarteampissed9",
       "castTimeSec": 0.3
     },
     "E": {
@@ -195,6 +197,7 @@
         }
       ],
       "vfxKey": "fx.prim.earth.pulse-sm",
+      "sfxKey": "wc3.mortarteampissed9",
       "targetsEnemies": true,
       "castTimeSec": 0.3
     },

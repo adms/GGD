@@ -166,6 +166,14 @@ const COMBAT_SFX: readonly string[] = [
   // ability ever fire them) but warming them costs zero extra bytes: each key
   // points at a file the generic `abilityCast` pool above already warms, and
   // the AudioSystem dedupes buffers per file — so they ride combat for free.
+  //
+  // The stock-MPQ wave (combatSfx.WC3_OVERLAY_ABILITY_SFX, ~49 keys) is
+  // deliberately NOT here, for BOTH standing reasons at once: it IS the
+  // per-weapon rule for real (each clip is a fresh 22 kHz WAV only one or two
+  // champions ever fire — warming all ~6 MB on combat entry would re-inflate
+  // the exact boot cost #63 removed), and the files live in the dev-only
+  // assets/blizzard-local/ mount, so a public bundle warming them would fetch
+  // ~49 guaranteed 404s per session. They lazy-load on the first cast.
   "wc3.moongo",
   "wc3.moonjump",
   "wc3.nocute",

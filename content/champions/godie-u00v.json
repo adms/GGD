@@ -120,6 +120,7 @@
         }
       ],
       "vfxKey": "fx.prim.earth.shockwave",
+      "sfxKey": "wc3.gluescreenmeteorhit1",
       "castTimeSec": 0.4
     },
     "E": {
@@ -170,6 +171,7 @@
         }
       ],
       "vfxKey": "fx.prim.ki.beam",
+      "sfxKey": "wc3.dragonyes2",
       "targetsEnemies": true,
       "radius": 6.0,
       "castTimeSec": 0.8
