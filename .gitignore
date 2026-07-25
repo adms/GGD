@@ -74,3 +74,4 @@ backup-*/
 # python bytecode (agent tools drop these in-repo)
 __pycache__/
 *.pyc
+apps/platform/platform
