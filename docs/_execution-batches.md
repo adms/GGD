@@ -14,7 +14,13 @@
 
 **本版內容（v0.5.2→v0.5.4，25 commits）：** #210/#211/#213 · #203 邀請由誰產生 · #214 英雄#100 喪標麥可 · #215 肉鴿小怪波(整場累積) · Batch 4 taunt warm · Batch 7A #126 pending CAP+TTL · Batch 1 守護者鎮守光環/狀態光環/中立可點/telegraph 半徑/血特效開關 · Batch 5B 桌機技能名。**Round 2 的火圈真幾何/商店貨架皆實查為已完成(no-op)。**
 
-**盯（下次）：** 剩打磨項（canCrit / descriptionRoles+#125 / spriteSheet / recall 死按鈕）+ 真實但非阻塞的 #212 兩英雄、#189 內容持久寫入 adapter、#19 i18n。deploy 前計畫已達「只剩不重要議題」線。
+**接下來批次（部署後整理 · 依相依性分組）：**
+- **A｜開放 2 位英雄 #212/#214（最高，owner 要的）**：賈修(godie-hblm)+揍敵客(godie-efur) 跑已驗證 SOP（JP 名/配音/EX map/白名單+EX/castability）。實查：**兩份 champion 文件已存在、皆未 whitelist**。單一內容寫者。
+- **B｜內容打磨鏈（接 A，同 content/abilities 序列）**：descriptionRoles+#125（同 commit）→ canCrit → spriteSheet（繫 #56）。皆實查為 0-content 真缺口。
+- **C｜i18n 三語 #19（純 client，與內容鏈平行）**：實查無框架。
+- **D｜內容持久寫入 adapter #189（platform+data，與 client 平行）**：後台改內容存進 data/。
+- **E｜收尾**：recall 死按鈕（實作或刪）。
+- **先 map 實查、很可能已完成（別重造）**：#180（已部署 200）、#147（groundfx/CombatFeedbackFx 已在）、#148（商人 tips 已實作）、#185（autofill 待複查）。
 
 ---
 
