@@ -224,7 +224,39 @@ order = [
     "單體型", "控場型", "治療護盾型", "自體強化型", "光環型", "被動-屬性型",
     "被動-觸發型", "其他",
 ]
-rows.sort(key=lambda r: (order.index(r["分類"]), r["英雄ID"], r["欄位"]))
+
+# ── 去重: 一個「技能」一列 (鍵 = rawcode; 無 rawcode 時用技能名) ──
+# 同技能多英雄 → 英雄欄合併成清單; 各實例參數若不一致, 備註標出差異欄。
+grouped: dict[str, dict] = {}
+for r in rows:
+    key = r["rawcode"] or f"name:{r['技能名']}"
+    g = grouped.get(key)
+    if g is None:
+        r["英雄"] = f"{r['英雄名']}({r['欄位']})"
+        r["實例ID"] = r["技能ID"]
+        r["參數差異"] = ""
+        grouped[key] = r
+        continue
+    g["英雄"] += f"; {r['英雄名']}({r['欄位']})"
+    g["實例ID"] += f"; {r['技能ID']}"
+    diffs = [
+        c
+        for c in ("傷害perRank", "冷卻", "魔耗", "增益", "狀態")
+        if r[c] != g[c] and c not in g["參數差異"]
+    ]
+    if diffs:
+        g["參數差異"] = "; ".join(filter(None, [g["參數差異"], *diffs]))
+rows = list(grouped.values())
+DROP = ("英雄ID", "英雄名", "技能ID")
+KEEP_FIRST = ("分類", "技能名", "英雄", "實例ID")
+for r in rows:
+    for c in DROP:
+        del r[c]
+rows = [
+    {**{c: r[c] for c in KEEP_FIRST}, **{k: v for k, v in r.items() if k not in KEEP_FIRST}}
+    for r in rows
+]
+rows.sort(key=lambda r: (order.index(r["分類"]), r["技能名"]))
 OUT.parent.mkdir(exist_ok=True)
 with OUT.open("w", newline="", encoding="utf-8-sig") as f:  # BOM: Excel 中文
     w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
