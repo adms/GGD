@@ -18,6 +18,7 @@ import (
 	"github.com/ggd/platform/internal/account"
 	"github.com/ggd/platform/internal/admin"
 	"github.com/ggd/platform/internal/ai"
+	"github.com/ggd/platform/internal/approvelink"
 	"github.com/ggd/platform/internal/auth"
 	"github.com/ggd/platform/internal/combatenv"
 	"github.com/ggd/platform/internal/config"
@@ -60,6 +61,7 @@ type Server struct {
 	OpsEnv    *opsenv.Service
 	Invites   *invite.Service
 	AI        *ai.Service
+	Approve   *approvelink.Service
 	Hub       *lobby.Hub
 	Sessions  *lobby.Sessions
 
@@ -278,6 +280,22 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 	inviteSvc := invite.New(store)
 	aiSvc := ai.New(store, rdb)
 
+	// #209 Slack pending-registration notifier + click-to-approve link. The token
+	// is signed with the JWT secret (domain-separated — see approvelink), consumed
+	// through Redis for single-use, and applied through admin.SetApprovalFromLink,
+	// the SAME "set approved" seam the console uses (audited, session-revoking,
+	// last-admin-guarded). The webhook secret comes from either the env or the
+	// admin-gated durable config; the public URL builds the absolute link the
+	// owner taps from their phone. Wired unconditionally — a nil/disabled config
+	// makes NotifyPending a cheap no-op — and injected into auth as the notifier
+	// (auth cannot import this package: it imports admin, which imports auth).
+	approveSvc := approvelink.New(store, rdb, []byte(cfg.JWTSecret), adminSvc, accounts, approvelink.Options{
+		PublicURL:     cfg.PublicURL,
+		EnvWebhookURL: cfg.SlackWebhookURL,
+		EnvEnabled:    cfg.SlackNotifyEnabled,
+	})
+	authSvc.SetPendingNotifier(approveSvc)
+
 	// Registration invite-code gate (#174). Installed ONLY when required, so a
 	// dev/CI platform keeps the open-signup flow the rest of the suite assumes
 	// (auth.Service treats a nil gate as "off"). The resolved value is logged on
@@ -302,7 +320,7 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 		Auth: authSvc, Friends: friends, Presence: pres, Rooms: rooms,
 		Ranking: rank, Gamelink: glink, Wallet: walletSvc, Admin: adminSvc,
 		Curation: curationSvc, Overlay: overlaySvc, CombatEnv: combatEnvSvc, OpsEnv: opsEnvSvc, Invites: inviteSvc,
-		AI: aiSvc, Hub: hub, Sessions: sessions,
+		AI: aiSvc, Approve: approveSvc, Hub: hub, Sessions: sessions,
 		registerRateLimit: envInt("GGD_REGISTER_RATE_LIMIT", 0),
 	}
 	s.buildRouter(templates)
@@ -395,6 +413,12 @@ func (s *Server) buildRouter(templates *room.Templates) {
 		// asset console (#assets) reads this without a login, which is the whole
 		// reason it can show live provider state instead of a stale sentence.
 		ai.NewHandlers(s.AI, s.Admin.AdminOnly).MountPublic(api)
+		// #209 click-to-approve. GET/POST /approve are TOKEN-gated, not
+		// session-gated — the owner taps them from their phone, not logged into
+		// /admin — so they live on the PUBLIC router. The GET is read-only and
+		// prefetch-safe (Slack unfurls it); only the POST mutates. See
+		// internal/approvelink.
+		approvelink.NewHandlers(s.Approve, s.Admin.AdminOnly).MountPublic(api)
 		s.Sessions.Mount(api) // WS authenticates at handshake
 
 		// Internal (HMAC-guarded, not exposed via the public edge).
@@ -427,6 +451,10 @@ func (s *Server) buildRouter(templates *room.Templates) {
 			opsenv.NewHandlers(s.OpsEnv, s.Admin.AdminOnly).Mount(pr)
 			// /ai/icon + /ai/text authed; /admin/ai/config AdminOnly inside
 			ai.NewHandlers(s.AI, s.Admin.AdminOnly).Mount(pr)
+			// #209 /admin/slack-notify — the Slack webhook config, AdminOnly
+			// inside. (The token-gated /approve endpoints are mounted PUBLIC,
+			// above.)
+			approvelink.NewHandlers(s.Approve, s.Admin.AdminOnly).Mount(pr)
 			// /admin/replays — the match-replay browser (task #175). Proxies the
 			// game server's private recording API through the admin gate, because
 			// recordings carry player names. AdminOnly inside.

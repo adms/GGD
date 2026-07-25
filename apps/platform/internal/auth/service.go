@@ -75,7 +75,32 @@ type Service struct {
 	// Injected as an interface for the same reason — auth must not import
 	// internal/wallet — via SetWalletSeeder.
 	wallet WalletSeeder
+	// notifier is the #209 pending-registration notifier (Slack). nil means OFF
+	// — the dev/CI default and what every existing test sees. When set, Register
+	// tells it each time an account lands PENDING so an out-of-band channel can
+	// alert the owner with a one-tap approve link. Injected as an interface for
+	// the same reason as invites: the implementation (internal/approvelink)
+	// imports internal/admin, which imports this package, so auth can never
+	// import it — the composition root hands it in (SetPendingNotifier).
+	notifier PendingNotifier
 }
+
+// PendingNotifier is told when a registration lands PENDING under the #126
+// approval gate, so an out-of-band channel (Slack, #209) can alert the owner and
+// hand them a one-tap approve link.
+//
+// CONTRACT: NotifyPending is called for its SIDE EFFECT only and MUST NOT be
+// able to break registration. Register invokes it fire-and-forget (its own
+// goroutine, off a detached context, with a panic recover), so a notifier that
+// blocks, errors or panics never delays or fails the account creation that
+// already succeeded. Implementations own their own timeout and logging.
+type PendingNotifier interface {
+	NotifyPending(a account.Account)
+}
+
+// SetPendingNotifier installs the pending-registration notifier (composition
+// root only). nil disables it.
+func (s *Service) SetPendingNotifier(n PendingNotifier) { s.notifier = n }
 
 // InviteGate is the invite-code half of registration, implemented by
 // internal/invite. Redeem BURNS a code for accountID or returns the 403 the
@@ -390,6 +415,10 @@ func (s *Service) Register(ctx context.Context, username, email, password string
 	// (Status "pending") with an empty token pair, which the client reads as the
 	// "awaiting approval" state.
 	if !a.IsApproved() {
+		// #209: alert the owner out of band with a one-tap approve link. Fire-
+		// and-forget — a Slack failure must never turn a successful registration
+		// into a failed one (see notifyPending / PendingNotifier).
+		s.notifyPending(a)
 		return a, TokenPair{}, nil
 	}
 	pair, err := s.issueTokens(ctx, a)

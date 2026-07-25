@@ -80,6 +80,16 @@ func (c *Client) GetDel(ctx context.Context, key string) (string, error) {
 	return v, err
 }
 
+// Exists reports whether key is present. It is the read-only companion to
+// SetNX: a caller that has already "claimed" a one-shot marker with SetNX can
+// ask, without side effect, whether it was claimed — which is exactly what a
+// prefetch-safe GET needs (see internal/approvelink: the confirm page must be
+// able to say "already used" without consuming the token).
+func (c *Client) Exists(ctx context.Context, key string) (bool, error) {
+	n, err := c.R.Exists(ctx, key).Result()
+	return n > 0, err
+}
+
 // PublishJSON marshals v and publishes it on channel.
 func (c *Client) PublishJSON(ctx context.Context, channel string, v any) error {
 	data, err := json.Marshal(v)
