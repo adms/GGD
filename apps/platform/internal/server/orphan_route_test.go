@@ -151,7 +151,6 @@ var knownOrphans = map[string]string{
 	"GET /api/v1/rooms/templates":       "no room-template picker in the client lobby; templates are only ever the compiled defaults",
 	"POST /api/v1/rooms/templates":      "no room-template editor in any UI — a saved template is durable state (data/rooms/templates/<id>.json) that nothing can create",
 	"GET /api/v1/rooms/templates/{id}":  "no room-template detail view (its list route above is unreachable too)",
-	"PATCH /api/v1/rooms/{id}/settings": "the client lobby has no host-settings panel — it posts ready/start against whatever the room was created with",
 	"POST /api/v1/friends/{accountId}/block": "the friends panel wires list/request/accept/decline/remove " +
 		"(client/src/ui/platform/api.ts:105-121) but never block — the one moderation action of the five",
 
