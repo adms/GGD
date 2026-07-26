@@ -733,6 +733,11 @@ export class GameApp {
    * controls overlay can send transport messages on it.
    */
   async connectReplay(replayId: string, ticket: string): Promise<Room<MatchState>> {
+    // task #272: a replay receives snapshots but nobody sends input into it, so
+    // no ack ever returns and RTT is unmeasurable BY CONSTRUCTION — not slow,
+    // not broken, absent. The ping chip reads this and says 「重播」 rather than
+    // sitting on a permanent 「量測中」 or, worse, printing 0 ms.
+    perfBus.netMode = "replay";
     const room = await this.sessions.connectReplay(replayId, ticket);
     setLocalAccounts(this.sessions.localAccountIds());
     room.onStateChange((state) => this.onStatePatch(state));
@@ -891,6 +896,19 @@ export class GameApp {
     this.casts.clearAll();
     resetSettlement(); // drop the settlement payload so a fresh match starts clean
     perfBus.connection = "offline";
+    // task #272: and forget the NET readings with it. perfBus is a
+    // process-global plain object, so a match that ended would otherwise leave
+    // its last ping, its sample counts and an ever-growing snapshot gap sitting
+    // there — and the always-on chip, which is on the lobby too, would report
+    // 斷線 for a match nobody is in any more.
+    this.connStats.reset();
+    perfBus.pingMs = 0;
+    perfBus.jitterMs = 0;
+    perfBus.snapshotGapMs = 0;
+    perfBus.pingSamples = 0;
+    perfBus.pingAgeMs = Number.POSITIVE_INFINITY;
+    perfBus.netSnapshots = 0;
+    perfBus.netMode = "live";
   }
 
   // --------------------------------------------------------------- arena --
@@ -1377,6 +1395,12 @@ export class GameApp {
     perfBus.jitterMs = cs.jitterMs;
     perfBus.snapshotGapMs = cs.snapshotGapMs;
     perfBus.connection = this.connStats.quality(nowMs);
+    // task #272 — the always-on ping chip refuses to print a number without
+    // these: `pingMs` is 0 before the first ack and frozen while the player
+    // issues no input, and both look identical to a flawless connection.
+    perfBus.pingSamples = cs.pingSamples;
+    perfBus.pingAgeMs = cs.pingAgeMs;
+    perfBus.netSnapshots = cs.snapshots;
     perfBus.qualityLevel = p.adaptiveLevel;
     perfBus.resolutionScale = p.resolutionScale;
     perfBus.particleDensity = p.particleDensity;

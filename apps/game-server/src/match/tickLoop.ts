@@ -55,6 +55,19 @@ export interface TickPlan {
    * spiral. The caller logs this (it is a health signal), it is NOT an error.
    */
   dropped: boolean;
+  /**
+   * HOW MANY whole ticks were shed (0 whenever `dropped` is false). Task #272.
+   *
+   * `dropped` alone cannot answer the only question an operator actually asks —
+   * 「伺服器落後多少？」 — because one shed event may throw away one tick or a
+   * hundred, and both read as `true`. This is the sim-time debt abandoned this
+   * frame; × TICK_MS it is the wall-clock the match silently skipped.
+   *
+   * OBSERVATION ONLY. It is derived from the accumulator BEFORE the shed and
+   * changes neither `steps` nor `accumulator` — #272 is explicitly forbidden
+   * from touching the clamp's behaviour ("改行為要等有資料").
+   */
+  droppedTicks: number;
 }
 
 /**
@@ -83,9 +96,19 @@ export function planTicks(
   // here) and keep only the sub-tick remainder — replaying the debt would only
   // fall further behind and pin the event loop, the very stall we prevent.
   let dropped = false;
+  let droppedTicks = 0;
   if (acc >= tickMs) {
-    acc %= tickMs;
+    // The count is derived from the SAME `%` the shed performs, so it can never
+    // disagree with what was actually thrown away: `acc − rem` is an exact
+    // multiple of tickMs, and rounding it removes float noise (a plain
+    // `Math.floor(acc / tickMs)` reports 24 for a 1-second stall at 33.333ms
+    // because 25 × TICK_MS lands a whole ulp above the accumulator).
+    // Purely observational (task #272) — `acc` is reduced by exactly the same
+    // `%` as before, so the pacing is bit-for-bit unchanged.
+    const rem = acc % tickMs;
+    droppedTicks = Math.round((acc - rem) / tickMs);
+    acc = rem;
     dropped = true;
   }
-  return { steps, accumulator: acc, dropped };
+  return { steps, accumulator: acc, dropped, droppedTicks };
 }

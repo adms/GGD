@@ -24,6 +24,7 @@ import { fetchOverlayBundle } from "./config/contentOverlay";
 import { startContentBus, platformStatusWithContent } from "./config/contentBus";
 import { startMatchHeartbeat } from "./config/matchHeartbeat";
 import { roomRegistry } from "./rooms/roomRegistry";
+import { tickHealth } from "./match/tickHealth";
 import { ReplayRoom } from "./rooms/ReplayRoom";
 import { handleInternalReplays } from "./replay/http";
 import { setActiveContentVersion } from "./replay/Player";
@@ -204,10 +205,18 @@ const httpServer = createServer((req, res) => {
     // and when. `stale: false` means the answer is yes; `stale: true` names the
     // reason it is no. Without it, the only way to check was to start a match
     // and squint at the numbers.
+    // `sim` (task #272) is the FOURTH, and it is the one this endpoint exists
+    // for in the first place: whether the authoritative loop is keeping up.
+    // #46 replaced a freeze with a silent slow-down, and the shed's only output
+    // was one console.warn — so a shard shedding ticks every minute reported
+    // `ok: true` with nothing to contradict it. `shedEvents`/`shedTicks` name
+    // the catastrophic case and `p50/p95/p99` name the one sheds cannot see
+    // (every tick slightly over budget, never reaching the clamp).
     res.end(
       JSON.stringify({
         ok: true,
         rooms: roomRegistry.stats(),
+        sim: tickHealth.snapshot(),
         platform: platformStatusWithContent(),
       }),
     );

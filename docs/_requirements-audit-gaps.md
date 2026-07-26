@@ -4246,3 +4246,105 @@ button "疾風連擊 攻擊速度 +25%，移動速度 +8%。"
 - **rr-20**：真正的 per-round 統計（見上）。
 - **rr-21**：隊伍被淘汰後 `shopGate(...).mounted === false`，商店和戰報一起消失，觀戰者
   看不到自己最後一回合的戰報。
+
+## 2026-07-26 · #272 延遲可見度 —— 兩個「沒人看得見」的洞，以及一個守衛工具本身是壞的
+
+> owner：「請你顯示玩家 ping 值在跟版本號一樣都一直畫面上」
+> 計畫書 `docs/_延遲改進計畫.md` §1-1（伺服器 tick 健康度）+ §1-4（連線資訊）
+
+### 一、`perfBus.pingMs` 單獨拿出來印是會說謊的 —— 這是本條的設計核心
+
+不是「加個數字」那麼簡單。這個值在三種**日常**情況下會**無聲凍結**在最後一個 EMA：
+
+1. 玩家站著不動 —— `net/IntentSender.update()` 沒有 pending order/aim 就直接 return，
+   不送封包 → 沒有新 seq → `seat.lastAckSeq` 不前進 → `noteAck` 的 early return 生效。
+2. 玩家死亡或實體離場 —— `GameApp.onStatePatch` 的 `if (seat && es)` 直接不呼叫 `noteAck`。
+3. replay 頁 —— 有快照但沒有人送 input，**ack 在結構上不可能存在**。
+
+再加上「第一次 ack 之前它是 0」。所以一個只印數字的晶片會在開場說「0 ms 完美」、
+在網路死掉十分鐘後說「42 ms 順暢」。**這兩句都是謊話，而且是常駐晶片最不該說的謊。**
+
+處置：`ConnectionStats.sample()` 現在回傳 **provenance**（`pingSamples` / `pingAgeMs` /
+`snapshots`），`ui/pingReadout.ts` 據此分出六個狀態
+（live / 停滯 / 量測中 / 斷線 / 重播 / 不顯示）。**數字永遠在，顏色永遠不是唯一的通道**
+（每個狀態都有中文詞；最窄的 375px 視窗會先丟掉詞、改帶 ASCII 記號，數字是階梯最後一階）。
+
+> **勘查裡有一條假設是錯的，實測更正**：沒有「單機＝無伺服器」的路徑。
+> `RoomConnection.connectDev` 離線時仍然真的 `client.create("match")`（owner 已裁定
+> bot 也要伺服器權威），所以 bot 局有**真實** RTT，只是本機 1–3ms。
+> 真正的假數字從來不是 bot 局。
+
+### 二、「如果伺服器每分鐘在丟 tick，我們現在完全不會知道」—— 現在會了
+
+`#46` 的 clamp 把「凍結」換成「無聲的變慢」，而 `plan.dropped` 唯一的出口是一行
+`console.warn`，**而且完全沒有節流**（同一個檔案裡三個方法之外的 `onLoopFault` 有節流，
+它沒有）。所以那條日誌不是安靜就是洗版，兩種狀態都回答不了問題。
+
+`match/tickHealth.ts` 是 process 級計數器（形狀照抄 `rooms/roomRegistry.ts`：純 class ＋
+單例 ＋ `stats()` 式快照 ＋ `/healthz` 一個區塊）。兩半都要：
+
+- **shed** 事件數／丟掉的整 tick 數／丟掉的模擬毫秒／最近一次 —— 災難級落後；
+- **每 tick 耗時 p50/p95/p99** —— **shed 永遠看不到的那一種**。`MatchRoom` 用
+  `TICK_MS/2`（16.7ms）驅動迴圈，累積器要欠到 ~200ms 才 shed 一次；一個每 tick 花 40ms
+  對 33.3ms 預算的房間**永遠落後 20% 而 shed 次數是 0**。計畫書判定「乙」最可能的真實形狀
+  就是這個，所以只數 shed 會把它報成健康。
+
+**實測（本機，`SIGSTOP` 凍結 game-server）**：凍 3 秒 → `shedEvents 1 / shedTicks 85 /
+behindMs 2833.333`（85 × 33.3ms ≈ 2.83s，對得上）。再連續凍 7 次 → `shedEvents 8 /
+shedTicks 264 / behindMs 8800`，而**日誌只有 5 行** —— 計數器一次都沒漏、日誌被節流住。
+正常 bot 局：`p50 0.153ms / p99 0.636ms / max 4.657ms`。
+
+### 三、⚠️ 守衛用的「剝註解」本身是壞的，而且是往危險的方向壞
+
+`GameApp.batch1Wiring.test.ts` 用兩段式：先 `replace(block)` 再 `replace(line)`。
+`GameApp.ts:489` 是這一行：
+
+```
+// render/** may not read it (client-08), so the entity → champion step
+```
+
+那個 `/**` 被第一段當成 block 註解的**開頭**，一路吃到下一個結束符 —— **231 行真程式碼消失**，
+其中包含 `this.connStats.noteSent(msg.seq, performance.now())`。
+本任務的守衛第一次跑就對著正確的程式碼變紅，才發現這件事。
+
+**壞的方向是危險的那一邊**：一條「這行不可以存在」的斷言，會在程式碼**還在**的檔案上**通過**。
+這個專案在散文裡到處寫 `render/**`、`ui/hud/**`、`packages/shared/src/sim/**`，
+所以這不是奇異案例，是隨時一個 glob 之遙。
+
+修法：`packages/shared/testkit/stripComments.ts` —— **單次**左到右交替比對（誰先開誰算）。
+三個守衛（batch1 / ping / tick-health）都改用它。
+
+### 四、順手抓到的第二個 macOS 陷阱：大小寫不敏感的模組遮蔽
+
+`ui/pingChip.ts`（純函式）與 `ui/PingChip.tsx`（元件）同目錄。macOS 檔案系統大小寫不敏感，
+而 vitest 的 `resolve.extensions` 把 `.ts` 排在 `.tsx` 前面 → `import … from "./PingChip"`
+**拿到的是純函式模組**，`pingChipStyle is not a function`。純模組已改名 `pingReadout.ts`。
+（同一家族的坑 `vitest.shared.ts` 檔頭已經記過一次：stray `.js` 分裂 singleton。）
+
+### 五、找到但**沒修**的真缺陷（留給 #107 那條線）
+
+`enemy-team` 這個 slot 在**觸控 + 780×360**（#151 breakpoint）下 y 290–356，
+**侵入下緣 10px 保留帶 6px**，x 10–160。
+版本徽章的守衛看不到它，因為徽章帶是**置中**的（該視窗 x 250–530）；
+ping 帶在左端，是第一個撞上它的東西。
+
+**沒有**從 `hudLayout` 把 `touchHeight` 66 偷偷改成 60 —— 那會讓守衛變綠而元件照樣畫 66px，
+等於把「看得見的 6px 重疊」換成「登記表在說謊」。
+處置：`versionBadgeBand.test.ts` 的 `GUTTER_INTRUDERS` 一列（鍵到 slot＋視窗＋指標型別），
+並且斷言 (a) 這一列**現在真的還會撞**（修好了就以 stale 變紅）、(b) 侵入量 ≤ 整條帶寬、
+(c) **其他任何 slot 都不准碰下緣保留帶** —— 這是置中的徽章帶做不到的、更強的敘述。
+列在 `docs/todo/latency-visibility.md` 的 `pc-09`，狀態 `in-progress`。
+
+### 六、對抗式驗證：真的做了變異，紅了幾條逐字記錄
+
+| 變異（刪掉那一行） | 套件 | 變紅 |
+|---|---|---|
+| M1 `<PingChip />` 從 `GlobalChrome` 拿掉 | client | **3 條**（`ping-chip-everywhere`、`global-chrome-every-tree`、既有的 S9「宣稱普遍性就要有契約」）；3 files failed / 305 passed |
+| M2 `perfBus.netSnapshots = cs.snapshots;` 刪掉（晶片會在每個畫面永遠隱藏） | client | **1 條** `ping-chip-wiring > 的 provenance 斷言` |
+| M3 `el.textContent = text` 刪掉（晶片掛著但永遠空白） | client | **1 條** `ping-chip-wiring > 讀真 bus 寫真 DOM` |
+| M4 `tickHealth.noteShed(...)` 換成 `const loud = true;` | game-server | **2 條** `tick-health-wiring > 餵真 droppedTicks` + `> console.warn 要被節流` |
+| M5 `tickHealth.noteTick(...)` 刪掉 | game-server | **1 條** `tick-health-wiring > 每個 tick 都被計時` |
+
+五個變異全部被抓到，且每一條的失敗訊息都直接說出「刪了會怎樣」。
+純函式測試（`pingReadout.test.ts` / `tickHealth.test.ts`）在**每一個**變異下都維持全綠 ——
+這正是它們自己檔頭寫明的、它們證明不了的事。

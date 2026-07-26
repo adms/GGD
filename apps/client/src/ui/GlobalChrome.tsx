@@ -43,6 +43,7 @@
  */
 import { AudioToggle } from "./AudioToggle";
 import { PadFocusNav } from "./PadFocusNav";
+import { PingChip } from "./PingChip";
 import { VersionBadge } from "./VersionBadge";
 
 export function GlobalChrome(): React.JSX.Element {
@@ -54,6 +55,13 @@ export function GlobalChrome(): React.JSX.Element {
       {/* build stamp: fixed, bottom-pinned, click-through, low z-index — every
           screenshot (including a replay screenshot) names the build it came from. */}
       <VersionBadge />
+      {/* #272: the player's ping, 「跟版本號一樣都一直畫面上」. Same mechanism as
+          the badge for the same reason (body portal + click-through + confined
+          to the reserved bottom band), taking the LEFT end of that strip. It
+          belongs HERE and not in AppRoot's MatchOverlay because "always" has to
+          include the lobby and the replay page; it hides itself whenever there
+          is no authoritative stream to describe. */}
+      <PingChip />
       {/* #197/#222: roving DOM focus + the shared focus glow, on EVERY tree —
           renderless, self-gating (it defers to the champion in live combat). */}
       <PadFocusNav />

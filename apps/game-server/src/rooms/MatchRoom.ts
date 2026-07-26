@@ -21,6 +21,7 @@ import { MatchController, type MatchResult, type SeatSpec } from "../match/Match
 import type { MatchPhase } from "../match/PhaseMachine";
 import { resolvePhaseConfig, resolveFireRing, resolveStartingLives } from "../match/phaseConfig";
 import { planTicks } from "../match/tickLoop";
+import { tickHealth, formatShedLog } from "../match/tickHealth";
 import { resolveArenaRules } from "../match/arenaRules";
 import { resolveArena, resolveArenaPool } from "../match/arenaSelect";
 import { isFannedOutEvent } from "../net/eventFanout";
@@ -517,15 +518,24 @@ export class MatchRoom extends Room<MatchState> {
     const plan = planTicks(this.accumulator, dtMs, TICK_MS);
     this.accumulator = plan.accumulator;
     if (plan.dropped) {
-      console.warn(
-        `[match ${this.ctl.matchId}] sim fell behind real-time; shed tick backlog to avoid a loop stall`,
-      );
+      // task #272: the shed used to produce ONE unthrottled console.warn and
+      // nothing else — no counter, no endpoint — so a shard shedding ticks
+      // every minute was indistinguishable from a healthy one. The counter
+      // records EVERY event; noteShed owns the throttle (first 5, then every
+      // 300th) so the log cannot flood at up to 60 lines/s again.
+      const loud = tickHealth.noteShed(this.ctl.matchId, plan.droppedTicks, Date.now(), TICK_MS);
+      if (loud) console.warn(formatShedLog(this.ctl.matchId, plan.droppedTicks, tickHealth.snapshot()));
     }
     let stepped = false;
     for (let step = 0; step < plan.steps; step++) {
       let phase: MatchPhase;
+      // Per-tick cost, the signal that catches "every tick is a little over
+      // budget but never reaches the clamp" — the shape sheds alone can never
+      // see. Two clock reads, no allocation (see match/tickHealth.ts).
+      const tickStartedMs = performance.now();
       try {
         phase = this.ctl.tick();
+        tickHealth.noteTick(performance.now() - tickStartedMs);
       } catch (err) {
         // DEFENSE IN DEPTH (task #46). MatchController.tick() now CONTAINS sim /
         // transition faults internally and advances the phase clock before any

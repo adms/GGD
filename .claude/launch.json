@@ -259,6 +259,37 @@
         "0.0.0.0"
       ],
       "port": 39527
+    },
+    {
+      "name": "game-server-272",
+      "runtimeExecutable": "env",
+      "runtimeArgs": [
+        "GAME_PORT=2610",
+        "GAME_PUBLIC_ENDPOINT=ws://localhost:2610",
+        "GGD_WHITELIST_BYPASS=1",
+        "pnpm",
+        "--filter",
+        "@ggd/game-server",
+        "dev"
+      ],
+      "port": 2610,
+      "comment": "#272 verification lane, THIS WORKTREE. Private port so concurrent agent sessions cannot steal :2567 mid-run; no PLATFORM_GAME_SHARED_SECRET so the client's offline 'vs bots' create is accepted; whitelist bypass so an empty curation list cannot filter the roster to zero."
+    },
+    {
+      "name": "client-272",
+      "runtimeExecutable": "env",
+      "runtimeArgs": [
+        "VITE_GAME_WS=ws://localhost:2610",
+        "pnpm",
+        "--filter",
+        "@ggd/client",
+        "dev",
+        "--port",
+        "39572",
+        "--strictPort"
+      ],
+      "port": 39572,
+      "comment": "#272 verification lane, THIS WORKTREE. Pinned to game-server-272 on :2610."
     }
   ]
 }

@@ -18,11 +18,19 @@ import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { cover } from "@ggd/shared/testkit/cover";
+import { stripComments } from "@ggd/shared/testkit/stripComments";
 
-/** GameApp source with comments stripped, so prose can't satisfy the assertions. */
-const SRC = readFileSync(fileURLToPath(new URL("./GameApp.ts", import.meta.url)), "utf8")
-  .replace(/\/\*[\s\S]*?\*\//g, "")
-  .replace(/\/\/[^\n]*/g, "");
+/**
+ * GameApp source with comments stripped, so prose can't satisfy the assertions.
+ *
+ * ⚠️ REPAIRED BY #272. This used to be `.replace(block).replace(line)`, and
+ * GameApp line 489 (`// render/** may not read it …`) opened a phantom block
+ * comment there that swallowed the next 231 LINES of real code — this file's
+ * own assertions passed only because their targets happen to sit outside that
+ * window. `stripComments` scans once with an alternation so whichever comment
+ * opens first wins; see its module doc.
+ */
+const SRC = stripComments(readFileSync(fileURLToPath(new URL("./GameApp.ts", import.meta.url)), "utf8"));
 
 describe("1B-1 status-aura layer has a live per-frame caller (status-aura-wiring)", () => {
   it("the frame loop feeds each champion's flags into vfx.statusFx.set", () => {
