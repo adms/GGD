@@ -39,6 +39,8 @@ import { attachSource } from "../stats/statPipeline";
 import type { StatModifier } from "../stats/modifiers";
 import {
   CAPSTONE_ITEM_ID,
+  CAPSTONE_MAX_PCT,
+  CAPSTONE_MIN_PCT,
   CAPSTONE_STEPS,
   STAT_TICK_PRICE,
   STAT_TICK_TARGET,
@@ -190,7 +192,11 @@ export function buyStatUpgrade(world: SimWorld, id: EntityId): StatTickOutcome {
 export function grantCapstone(world: SimWorld, id: EntityId): number {
   const champ = world.champion.get(id);
   if (!champ || champ.statCapstonePct > 0) return 0;
-  const pct = (world.rng.int(CAPSTONE_STEPS) + 1) * 10;
+  // 60 / 70 / … / 150, derived from the range constants so the three can never
+  // drift apart (owner 2026-07-26: 「提高下限 60~150%」, was 10~100 = a 1-in-10
+  // shot at an actual doubling for a 7,500-gold, six-round, all-or-nothing path).
+  const step = (CAPSTONE_MAX_PCT - CAPSTONE_MIN_PCT) / (CAPSTONE_STEPS - 1);
+  const pct = CAPSTONE_MIN_PCT + world.rng.int(CAPSTONE_STEPS) * step;
   champ.statCapstonePct = pct;
   attachSource(world, id, {
     id: `stat:capstone`,

@@ -180,8 +180,8 @@ export const CAPSTONE_ITEM_ID = "legendary-attunement";
 export const CAPSTONE_STATS: readonly Stat[] = [Stat.MaxHealth, Stat.AttackDamage, Stat.Armor, Stat.MagicResist];
 /** r is drawn from {0.1, 0.2, … 1.0} — ten equally likely 10% steps. */
 export const CAPSTONE_STEPS = 10;
-export const CAPSTONE_MIN_PCT = 10;
-export const CAPSTONE_MAX_PCT = 100;
+export const CAPSTONE_MIN_PCT = 60;
+export const CAPSTONE_MAX_PCT = 150;
 
 /** Build the capstone's modifier list for a rolled percentage (10..100). */
 export function capstoneModifiers(pct: number): StatModifier[] {

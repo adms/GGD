@@ -9,8 +9,8 @@
   "baseStats": {
     "maxHealth": 4977,
     "healthRegen": 0,
-    "maxMana": 0,
-    "manaRegen": 0.01,
+    "maxMana": 100,
+    "manaRegen": 2.01,
     "ad": 1,
     "ap": 0,
     "armor": 2,
