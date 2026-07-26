@@ -33,6 +33,7 @@ import { skillRows, slotLabel, type SkillRow, type SkillRowSlot } from "../skill
 import { innateCastNote, innateKindLabel, PASSIVE_ACCENT } from "../../passiveSlot";
 import { displayFinal, displayFinalText, isScaled, statDisplayFactor, useDisplayEnv } from "../../displayFinal";
 import { rescaleAbilityProse, WC3_PROSE_CAPTION } from "../../components/abilityText";
+import { championSheetRows } from "../../championSheet";
 import {
   champSelectSkillSeat,
   championDescription,
@@ -141,37 +142,54 @@ const BATTLE_FINAL_COLOR = "#6fd3a8";
 function StatsTab({ championId }: { championId: ChampionId }): React.JSX.Element {
   const def = Champions.get(championId);
   const env = useDisplayEnv();
-  const base = def.baseStats as Record<string, number | undefined>;
-  const growth = def.growth as Record<string, number | undefined>;
-  const keys = [...new Set([...Object.keys(base), ...Object.keys(growth)])];
+  // 三圍 (#248): rows come from the SIM's championStatBase/Growth, never from
+  // def.baseStats directly — those hold the raw w3x numbers without the
+  // attribute term. See ui/championSheet.ts.
+  const rows = championSheetRows(def, env);
+  const a = def.attributes;
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr auto auto auto", gap: "2px 16px", fontSize: 12 }}>
-      <div style={{ color: TEXT_DIM, fontSize: 10 }}>屬性</div>
-      <div style={{ color: TEXT_DIM, fontSize: 10, textAlign: "right" }}>基礎</div>
-      {/* 說明數值最終化: base × combat-env multiplier (maxHealth ×16 → 460 = 7360) */}
-      <div style={{ color: TEXT_DIM, fontSize: 10, textAlign: "right" }}>戰鬥實際</div>
-      <div style={{ color: TEXT_DIM, fontSize: 10, textAlign: "right" }}>每級成長</div>
-      {keys.map((k) => {
-        const b = base[k];
-        const g = growth[k];
-        const factor = statDisplayFactor(k);
-        const showFinal = b !== undefined && isScaled(factor, env);
-        return (
-          <div key={k} style={{ display: "contents" }}>
-            <div style={{ color: TEXT_DIM }}>{statLabel(k)}</div>
-            <div style={{ textAlign: "right", color: TEXT_MAIN }}>{b === undefined ? "—" : num(b)}</div>
-            <div style={{ textAlign: "right", color: showFinal ? BATTLE_FINAL_COLOR : TEXT_DIM }}>
-              {showFinal ? num(displayFinal(b, factor, env)) : "—"}
+    <div>
+      {a !== undefined && (
+        <div style={{ fontSize: 11, color: TEXT_DIM, marginBottom: 6 }}>
+          三圍 <span style={{ color: GOLD }}>力 {num(a.str)}</span> (+{num(a.strGrowth)}) ·{" "}
+          <span style={{ color: GOLD }}>敏 {num(a.agi)}</span> (+{num(a.agiGrowth)}) ·{" "}
+          <span style={{ color: GOLD }}>智 {num(a.int)}</span> (+{num(a.intGrowth)}) · 主屬{" "}
+          {PRIMARY_ZH[a.primary]}
+        </div>
+      )}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr auto auto auto", gap: "2px 16px", fontSize: 12 }}>
+        <div style={{ color: TEXT_DIM, fontSize: 10 }}>屬性</div>
+        <div style={{ color: TEXT_DIM, fontSize: 10, textAlign: "right" }}>基礎</div>
+        {/* 說明數值最終化: base × combat-env multiplier (maxHealth ×4 → 600 = 2400) */}
+        <div style={{ color: TEXT_DIM, fontSize: 10, textAlign: "right" }}>戰鬥實際</div>
+        <div style={{ color: TEXT_DIM, fontSize: 10, textAlign: "right" }}>每級成長</div>
+        {rows.map(({ key: k, base: b, growth: g }) => {
+          const factor = statDisplayFactor(k);
+          const showFinal = b !== undefined && isScaled(factor, env);
+          return (
+            <div key={k} style={{ display: "contents" }}>
+              <div style={{ color: TEXT_DIM }}>{statLabel(k)}</div>
+              <div style={{ textAlign: "right", color: TEXT_MAIN }}>{b === undefined ? "—" : num(b)}</div>
+              <div style={{ textAlign: "right", color: showFinal ? BATTLE_FINAL_COLOR : TEXT_DIM }}>
+                {showFinal ? num(displayFinal(b, factor, env)) : "—"}
+              </div>
+              <div style={{ textAlign: "right", color: g ? GOLD : TEXT_DIM }}>
+                {g === undefined || g === 0 ? "—" : `+${num(g)}`}
+              </div>
             </div>
-            <div style={{ textAlign: "right", color: g ? GOLD : TEXT_DIM }}>
-              {g === undefined || g === 0 ? "—" : `+${num(g)}`}
-            </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 }
+
+/** 主屬性 label — the attribute a hero's identity is built on (task #248). */
+const PRIMARY_ZH: Record<"STR" | "AGI" | "INT", string> = {
+  STR: "力量",
+  AGI: "敏捷",
+  INT: "智慧",
+};
 
 function PlayTab({ championId }: { championId: ChampionId }): React.JSX.Element {
   const def = Champions.get(championId);

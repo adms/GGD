@@ -8,13 +8,13 @@
   "attackType": "ranged",
   "modelKey": "champ.sela",
   "baseStats": {
-    "maxHealth": 440,
-    "healthRegen": 1.05,
-    "maxMana": 500,
-    "manaRegen": 1.8,
-    "ad": 39,
+    "maxHealth": 150,
+    "healthRegen": 1,
+    "maxMana": 200,
+    "manaRegen": 0.1,
+    "ad": 50,
     "ap": 0,
-    "armor": 6,
+    "armor": 2,
     "mr": 28,
     "as": 0.4,
     "ms": 4.8,
@@ -33,6 +33,16 @@
     "armor": 0.5,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 22,
+    "agi": 13,
+    "int": 25,
+    "strGrowth": 1,
+    "agiGrowth": 1.5,
+    "intGrowth": 1.5,
+    "primary": "INT",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 1,

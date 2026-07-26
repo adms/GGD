@@ -6,6 +6,7 @@ import { registerSkeletonContent } from "./content/skeleton";
 import { spawnChampion } from "./spawnChampion";
 import { asSeatId, asTeamId, type EntityId, type SeatId, type ItemId, type AugmentId, type ChampionId } from "../ids";
 import { Stat } from "./stats/statTypes";
+import { ATTRIBUTE_ENV_DEFAULTS } from "./combatEnv";
 import { ModOp } from "./stats/modifiers";
 import { attachSource, detachSource, recomputeStats } from "./stats/statPipeline";
 import { buyItem, sellItem, rollItemReward } from "./economy/shop";
@@ -112,15 +113,34 @@ describe("stat pipeline", () => {
     const world = makeWorld();
     const { sela } = duel(world);
     const hp = world.health.get(sela)!;
-    const maxAt1 = hp.maxHp; // 520
+    const maxAt1 = hp.maxHp; // read, not asserted — see the coefficient note below
     hp.hp = maxAt1 / 2; // 50%
 
     grantXp(world, sela, xpToNext(1)); // -> level 2
     recomputeStats(world, sela);
     expect(world.champion.get(sela)!.level).toBe(2);
-    expect(hp.maxHp).toBeCloseTo(maxAt1 + 90, 6);
+    // #248 — THE THREE ADDITIVE LAYERS, ASSERTED SEPARATELY.
+    //   stat(L) = baseStats + attr(L)·coefficient + growth·(L−1)
+    // Sela's level-2 health moves by BOTH the designer knob (growth.maxHealth
+    // 90) and the attribute curve (strToMaxHealth × strGrowth 3.6). That is
+    // deliberate and it is not double-counting: the owner ruled the two sources
+    // may overlap because they mean different things (see stats/attributes.ts).
+    // Spelling out the two layers rather than writing their sum is the point of
+    // the test — if a future reader drops either layer, or applies one of them
+    // twice, exactly one of these numbers moves.
+    //
+    // The coefficient is READ from the shipped table rather than typed as a
+    // literal: it is an IMPORTED number (war3mapMisc.txt StrHitPointBonus),
+    // and this test is about the LAYERS, not about which value that field
+    // holds. attributeCoefficients.test.ts is what pins the value itself.
+    const growthLayer = 90; // sela.growth[MaxHealth]
+    const attrLayer = ATTRIBUTE_ENV_DEFAULTS.strToMaxHealth * 3.6; // × sela.attributes.strGrowth
+    expect(hp.maxHp).toBeCloseTo(maxAt1 + growthLayer + attrLayer, 6);
     expect(hp.hp / hp.maxHp).toBeCloseTo(0.5, 6); // ratio preserved
-    expect(world.stats.get(sela)!.final[Stat.AttackDamage]).toBeCloseTo(52 + 3, 6);
+    // Same decomposition on a stat whose two layers DISAGREE, so the test can
+    // tell them apart: growth.ad is the hand-authored 3, the attribute curve is
+    // strToAttackDamage 1 × strGrowth 3.6.
+    expect(world.stats.get(sela)!.final[Stat.AttackDamage]).toBeCloseTo(52 + 3 + 1 * 3.6, 6);
   });
 
   it("attach/detach + timed buff expiry (fx-05, fx-06)", () => {
@@ -309,8 +329,13 @@ describe("abilities", () => {
       }
     }
     expect(projectileHit).toBe(true);
-    // rank1: 20+60 = 80 magic, mitigated by thorne MR (32): 80 * 100/132 ≈ 60.6
-    expect(abilityDamage).toBeCloseTo(80 * (100 / 132), 1);
+    // rank1: 20 + 60 flat, PLUS the 0.7 AP ratio the doc has always carried.
+    // #248 is why that last term is finally non-zero: every champion now has
+    // real AP (`intToAbilityPower × INT`, sela INT 26 → AP 26), where before the
+    // whole roster sat at AP 0 and every authored `ap` coefficient multiplied by
+    // nothing. 80 + 0.7×26 = 98.2 magic, mitigated by thorne's MR 32:
+    // 98.2 × 100/132 ≈ 74.4.
+    expect(abilityDamage).toBeCloseTo((80 + 0.7 * 26) * (100 / 132), 1);
     expect(kindlingDamage).toBeGreaterThan(0); // passive fired
     expect(world.health.get(thorne)!.hp).toBeLessThan(hpBefore);
   });

@@ -29,6 +29,7 @@ import { SKELETON_ARENA } from "../world/ArenaDef";
 import { registerSkeletonContent } from "../content/skeleton";
 import { spawnChampion } from "../spawnChampion";
 import { attachSource, detachSource, recomputeStats } from "../stats/statPipeline";
+import { championStatBase } from "../stats/attributes";
 import { ModOp, type ModifierSource } from "../stats/modifiers";
 import { Stat } from "../stats/statTypes";
 import { Abilities, Champions } from "../content/registry";
@@ -698,7 +699,9 @@ describe("the shape a content doc will use", () => {
     recomputeStats(world, ichigo);
     idle(world);
 
-    const baseMana = Champions.get("thorne" as ChampionId).baseStats[Stat.MaxMana] ?? 0;
+    // #248: the champion's real level-1 mana is `championStatBase`, not the raw
+    // `baseStats[MaxMana]` — thorne's card says 70 and he has 280 (70 + 15×INT 14).
+    const baseMana = championStatBase(Champions.get("thorne" as ChampionId), Stat.MaxMana, 1);
     expect(world.stats.get(ichigo)!.final[Stat.MaxMana]).toBeCloseTo(baseMana + 150, 6);
     expect(auraIds(world, foe)).toEqual([
       auraSourceId(ichigo, `abilityPassive:${ABILITY_ID}`, "reiatsu"),

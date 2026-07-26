@@ -606,10 +606,16 @@ describe("innate active — the SHIPPED catalogue, read-only", () => {
     // innates are summons/toggles whose visible effect is out of this harness's
     // reach, but paying a cooldown proves the cast resolved rather than no-op'd.)
     expect(inert).toEqual([]);
-    // PINNED CONTENT FINDING, not a mechanism bug: 26-00 吃洨火鍋 costs 165 mana
-    // and godie-harf's level-1 pool is 144 (+22/level) — the innate is real and
-    // reachable but unaffordable until champion level 2. Pinned so a content /
-    // balance lane sees it, and so a NEW one cannot appear unnoticed.
-    expect(underfunded).toEqual(["godie-harf.passive"]);
+    // WAS a pinned content finding: 26-00 吃洨火鍋 costs 165 mana and
+    // godie-harf's level-1 pool used to be 144 (+22/level), so the innate was
+    // real, reachable and unaffordable until champion level 2.
+    //
+    // #248 FIXED IT AS A SIDE EFFECT, and that is worth stating rather than
+    // silently deleting the pin: the champion's mana is now `w3x_mana +
+    // intToMaxMana × INT` = 0 + 15×12 = 180, where the old importer folded INT
+    // in at 12/point (144). Nobody re-tuned 賈修 — the coefficient went back to
+    // Warcraft III's own 15 and the shortfall disappeared. The assertion stays
+    // (as "nobody is underfunded") so a NEW one cannot appear unnoticed.
+    expect(underfunded).toEqual([]);
   });
 });

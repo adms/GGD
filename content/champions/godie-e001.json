@@ -7,13 +7,13 @@
   "attackType": "melee",
   "modelKey": "imported.renaryugu2",
   "baseStats": {
-    "maxHealth": 460,
-    "healthRegen": 1.1,
-    "maxMana": 292,
-    "manaRegen": 1.44,
-    "ad": 38,
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 25,
     "ap": 0,
-    "armor": 9,
+    "armor": 0,
     "mr": 28,
     "as": 0.5,
     "ms": 5.8,
@@ -32,6 +32,16 @@
     "armor": 0.8,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 17,
+    "agi": 23,
+    "int": 20,
+    "strGrowth": 1.75,
+    "agiGrowth": 2.8,
+    "intGrowth": 1.65,
+    "primary": "AGI",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 2,

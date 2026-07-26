@@ -7,13 +7,13 @@
   "attackType": "melee",
   "modelKey": "imported.herohanzouhattori",
   "baseStats": {
-    "maxHealth": 380,
-    "healthRegen": 0.9,
-    "maxMana": 400,
-    "manaRegen": 1.8,
-    "ad": 29,
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 10,
     "ap": 0,
-    "armor": 8,
+    "armor": 1,
     "mr": 28,
     "as": 0.5,
     "ms": 6.0,
@@ -32,6 +32,16 @@
     "armor": 0.6,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 13,
+    "agi": 18,
+    "int": 25,
+    "strGrowth": 1.65,
+    "agiGrowth": 2,
+    "intGrowth": 2.65,
+    "primary": "INT",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 2,

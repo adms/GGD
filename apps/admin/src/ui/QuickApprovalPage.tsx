@@ -39,10 +39,12 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   approveAccount,
   bulkWhitelist,
+  getCombatEnv,
   getStarterSet,
   getWhitelist,
   listPendingAccounts,
 } from "../api";
+import { normalizeCombatEnv, type CombatEnvMultipliers } from "@ggd/shared/sim/combatEnv";
 import { loadDocsByIds } from "../content";
 import { useApp, type Page } from "../store";
 import { waitedText } from "../approvals";
@@ -182,9 +184,20 @@ export function QuickApprovalPage(): React.JSX.Element {
       let stats = new Map<string, ChampionStats>();
       let contentOk = true;
       try {
+        // The 三圍 coefficients are OPERATOR-TUNABLE (戰鬥系統). Reading them
+        // live means the 體檢 shows the numbers this deployment will actually
+        // compute; if the read fails we fall back to the shipped table rather
+        // than refusing to check, and BOTH the candidate and the peers are
+        // parsed with the same table so the medians never mix two scales.
+        let env: CombatEnvMultipliers | undefined;
+        try {
+          env = normalizeCombatEnv((await getCombatEnv()).multipliers);
+        } catch {
+          env = undefined;
+        }
         const wanted = [...new Set([...starter.champions, ...live.champions])];
         const docs = await loadDocsByIds("champions", wanted);
-        stats = new Map([...docs].map(([id, raw]) => [id, parseChampionStats(id, raw)]));
+        stats = new Map([...docs].map(([id, raw]) => [id, parseChampionStats(id, raw, env)]));
       } catch {
         contentOk = false;
       }

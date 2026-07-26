@@ -58,15 +58,23 @@ func TestAPIAdminAuthAndDefaults(t *testing.T) {
 	r = ts.Do(http.MethodPut, "/api/v1/admin/combat-env", normal.Access, body)
 	assert.Equal(t, http.StatusForbidden, r.Status)
 
-	// Promote boss → admin GET shows the neutral default: full table, all 1.0.
+	// Promote boss → admin GET shows the SHIPPED default: the full table, every
+	// ×factor 1.0 and every 三圍 coefficient at its imported/design value (#248 —
+	// the coefficients join this table rather than getting a second config
+	// surface, so the console tunes them alongside everything else).
 	grantAdmin(t, ts, boss.ID)
 	r = ts.Do(http.MethodGet, "/api/v1/admin/combat-env", boss.Access, nil)
 	require.Equal(t, http.StatusOK, r.Status, "admin GET: %s", string(r.Raw))
 	m := multipliers(t, r)
 	assert.Len(t, m, len(combatenv.Keys))
 	for _, k := range combatenv.Keys {
-		assert.Equal(t, 1.0, m[k], "default %s", k)
+		assert.Equal(t, combatenv.DefaultFor(k), m[k], "default %s", k)
 	}
+	// …and the two kinds really are distinct: a coefficient's default is not 1.
+	// The source map's own war3mapMisc.txt says StrHitPointBonus=23, not
+	// Blizzard's 25 — see ATTRIBUTE_ENV_DEFAULTS for the full provenance table.
+	assert.Equal(t, 23.0, m["strToMaxHealth"], "力量 → 生命 ships at the MAP's 23, not Blizzard's 25")
+	assert.Equal(t, 1.0, m["cooldown"], "a ×factor still ships neutral")
 }
 
 // combatenv-api-bounds: strict PUT validation — an unknown key, a factor

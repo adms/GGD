@@ -8,13 +8,13 @@
   "modelKey": "imported.pika",
   "missileSpeed": 36.7,
   "baseStats": {
-    "maxHealth": 440,
-    "healthRegen": 1.15,
-    "maxMana": 292,
-    "manaRegen": 1.44,
-    "ad": 30,
+    "maxHealth": 100,
+    "healthRegen": 0.25,
+    "maxMana": 0,
+    "manaRegen": 0.1,
+    "ad": 10,
     "ap": 0,
-    "armor": 8,
+    "armor": 0,
     "mr": 28,
     "as": 0.5,
     "ms": 6.2,
@@ -33,6 +33,16 @@
     "armor": 0.8,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 17,
+    "agi": 20,
+    "int": 19,
+    "strGrowth": 1.6,
+    "agiGrowth": 2.6,
+    "intGrowth": 1.7,
+    "primary": "AGI",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 1,

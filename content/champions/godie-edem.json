@@ -7,13 +7,13 @@
   "attackType": "melee",
   "modelKey": "imported.herosasuke",
   "baseStats": {
-    "maxHealth": 460,
-    "healthRegen": 1.1,
-    "maxMana": 268,
-    "manaRegen": 1.36,
-    "ad": 37,
+    "maxHealth": 150,
+    "healthRegen": 0.01,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 10,
     "ap": 0,
-    "armor": 12,
+    "armor": 0,
     "mr": 28,
     "as": 0.5,
     "ms": 5.9,
@@ -32,6 +32,16 @@
     "armor": 0.8,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 17,
+    "agi": 26,
+    "int": 14,
+    "strGrowth": 1.4,
+    "agiGrowth": 2.5,
+    "intGrowth": 2,
+    "primary": "AGI",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 1,

@@ -13,6 +13,8 @@
  * that what is on screen IS the file on disk).
  */
 
+import type { ChampionAttributes } from "../sim/stats/attributes";
+
 /** The three browsable collections. */
 export type CodexKind = "item" | "champion" | "ability";
 
@@ -82,8 +84,12 @@ export interface CodexChampion {
   readonly attackType: string;
   readonly modelKey: string | null;
   readonly icon: string | null;
+  /** RAW card — the attribute term is NOT in here; see `attributes` (#248) */
   readonly baseStats: Readonly<Record<string, number>>;
+  /** per-level, for the stats with no attribute source (since #248: `mr`) */
   readonly growth: Readonly<Record<string, number>>;
+  /** 三圍 STR/AGI/INT + growths (task #248); null when the doc has none */
+  readonly attributes: ChampionAttributes | null;
   /** ability ids for Q/W/E/R in slot order (missing slots omitted) */
   readonly abilityIds: readonly string[];
   readonly exAbilityId: string | null;

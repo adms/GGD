@@ -46,6 +46,8 @@ import type { Vec2 } from "./math/vec2";
 import { pushOutOfObstacle, clampToBoundary } from "./collision/resolve";
 import { Champions } from "./content/registry";
 import { Stat } from "./stats/statTypes";
+import { championStatBase } from "./stats/attributes";
+import { COMBAT_ENV_DEFAULTS, type CombatEnvMultipliers } from "./combatEnv";
 
 /**
  * The CHAMPION DOC a mob is an avatar OF (task #217, re-scoped by #244). A mob
@@ -214,11 +216,21 @@ export function mobLevelForRound(cfg: MobWavesConfigLike, round: number): number
  * The identical arithmetic (same `Math.round`, same `base + per*(level-1)`)
  * means the shipped curve survives the split byte-for-byte: round 3 → 300,
  * round 4 → 400, round 5 → 500, round 6 → 600.
+ *
+ * TIER 2 AND #248. The legacy fallback now reads the champion sheet through
+ * `championStatBase`, not through `baseStats`/`growth` directly, because since
+ * #248 those fields hold the RAW w3x numbers and the 三圍 term lives outside
+ * them: reading them raw would have quietly handed a pre-#244 arena an 80 hp
+ * zombie where the champion card says 380. `env` defaults to the shipped
+ * coefficients — mob hp is never scaled by combat-env at all (spawnMob writes
+ * `world.health` directly), so this argument exists only so a caller that HAS
+ * a live table can stay consistent with it.
  */
 export function mobRulesFromConfig(
   cfg: MobWavesConfigLike,
   dt: number,
   round: number = cfg.fromRound,
+  env: CombatEnvMultipliers = COMBAT_ENV_DEFAULTS,
 ): MobRules {
   const ticks = (sec: number): number => Math.max(1, Math.round(sec / dt));
   const level = mobLevelForRound(cfg, round);
@@ -231,22 +243,13 @@ export function mobRulesFromConfig(
       ? Math.max(1, Math.round(cfg.mob.baseHp + (cfg.mob.hpPerLevel ?? 0) * perLevel))
       : def === undefined
         ? cfg.mob.maxHp
-        : Math.max(
-            1,
-            Math.round(
-              (def.baseStats[Stat.MaxHealth] ?? cfg.mob.maxHp) +
-                (def.growth[Stat.MaxHealth] ?? 0) * perLevel,
-            ),
-          );
+        : Math.max(1, Math.round(championStatBase(def, Stat.MaxHealth, level, env)));
   const hpRegenPerSec =
     cfg.mob.baseRegen !== undefined
       ? Math.max(0, cfg.mob.baseRegen + (cfg.mob.regenPerLevel ?? 0) * perLevel)
       : def === undefined
         ? 0
-        : Math.max(
-            0,
-            (def.baseStats[Stat.HealthRegen] ?? 0) + (def.growth[Stat.HealthRegen] ?? 0) * perLevel,
-          );
+        : Math.max(0, championStatBase(def, Stat.HealthRegen, level, env));
   return {
     fromRound: cfg.fromRound,
     firstWaveTicks: ticks(cfg.firstWaveSec),

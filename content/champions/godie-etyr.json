@@ -8,13 +8,13 @@
   "modelKey": "imported.herooichi",
   "attackDamagePoint": 0.3,
   "baseStats": {
-    "maxHealth": 420,
-    "healthRegen": 1.0,
-    "maxMana": 460,
-    "manaRegen": 2.0,
-    "ad": 41,
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 10,
     "ap": 0,
-    "armor": 7,
+    "armor": 0,
     "mr": 28,
     "as": 0.5,
     "ms": 5.6,
@@ -33,6 +33,16 @@
     "armor": 0.4,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 15,
+    "agi": 14,
+    "int": 30,
+    "strGrowth": 1.6,
+    "agiGrowth": 1.2,
+    "intGrowth": 3.2,
+    "primary": "INT",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 1,

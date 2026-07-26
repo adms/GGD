@@ -115,7 +115,12 @@ func TestContentDefaultsDegradeGracefully(t *testing.T) {
 			require.NoError(t, err, "an unreadable content tree must never fail the service")
 			assert.Len(t, doc.Multipliers, len(combatenv.Keys))
 			for _, k := range combatenv.Keys {
-				assert.Equal(t, 1.0, doc.Multipliers[k], "%s falls back to neutral", k)
+				// SHIPPED default, not a bare 1.0 (task #248). The eight 三圍
+				// coefficients are not ×factors — their neutral value is the
+				// WC3/design number (str→hp 25, int→mana 15, …), and falling
+				// back to 1 would hand every champion ~4% of its intended
+				// health on any host with an unreadable content tree.
+				assert.Equal(t, combatenv.DefaultFor(k), doc.Multipliers[k], "%s falls back to its shipped default", k)
 			}
 		})
 	}

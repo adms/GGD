@@ -30,6 +30,8 @@ import { SimWorld } from "./SimWorld";
 import { SKELETON_ARENA } from "./world/ArenaDef";
 import { registerSkeletonContent } from "./content/skeleton";
 import { Champions } from "./content/registry";
+import { championStatBase, championStatGrowth } from "./stats/attributes";
+import { Stat } from "./stats/statTypes";
 import type { ChampionDef } from "./content/defs";
 import type { ChampionId } from "../ids";
 import {
@@ -77,6 +79,10 @@ beforeAll(() => {
     modelKey: DOC.modelKey,
     baseStats: DOC.baseStats,
     growth: DOC.growth,
+    // #248: the sheet is only faithful WITH the 三圍 block — without it the raw
+    // `baseStats.maxHealth` (80) is all the legacy tier would see, instead of
+    // the 380 the champion actually has.
+    attributes: DOC.attributes,
     abilities: {} as ChampionDef["abilities"],
     skillOrder: [],
     buildPriority: [],
@@ -86,6 +92,13 @@ beforeAll(() => {
 
 const CFG: MobWavesConfig = { ...DEFAULT_MOB_WAVES_CONFIG };
 const DT = 1 / 30;
+
+/** The registered hero sheet, as an AttributeCarrier for the #248 helpers. */
+const HERO_DEF = {
+  baseStats: DOC.baseStats,
+  growth: DOC.growth,
+  attributes: DOC.attributes,
+};
 
 describe("#244 the MOB CARD is what a mob is made of (was: the hero sheet)", () => {
   it("the shipped MOB CARD carries the owner's numbers (100/+100, 1/+0.2)", () => {
@@ -153,7 +166,9 @@ describe("#244 the MOB CARD is what a mob is made of (was: the hero sheet)", () 
       DT,
       3,
     );
-    expect(legacy.maxHp).toBe(Math.round(DOC.baseStats.maxHealth! + DOC.growth.maxHealth! * 2));
+    // #248: the hero sheet's level-3 health is `championStatBase(…, 3)`, not
+    // `baseStats + growth*2` — the 三圍 term is outside those two records now.
+    expect(legacy.maxHp).toBe(Math.round(championStatBase(HERO_DEF, Stat.MaxHealth, 3)));
   });
 
   it("#244 TRIPWIRE — the hero sheet can never move the mob curve again", () => {
@@ -161,9 +176,37 @@ describe("#244 the MOB CARD is what a mob is made of (was: the hero sheet)", () 
     // Register 喪標麥可 THE HERO at his post-#244 sheet (380 base / 45 growth).
     // Before the split this alone would have made round-3 mobs 470 hp and
     // round-6 mobs 605 — a silent roguelite difficulty change nobody asked for.
-    expect(DOC.baseStats.maxHealth).toBe(380);
-    expect(DOC.growth.maxHealth).toBe(45);
-    expect(Champions.get(MOB_CHAMPION_ID as ChampionId).baseStats.maxHealth).toBe(380);
+    //
+    // #248 MOVED WHERE THE 380 LIVES, NOT WHAT IT IS. The card carries STR 12
+    // and a raw `baseStats.maxHealth`, and the sim adds `strToMaxHealth × STR`
+    // on top. The coefficient later moved (Blizzard's 25 -> the SOURCE MAP's
+    // own war3mapMisc.txt 23), so the raw card was re-back-solved 80 -> 104 and
+    // `104 + 23×12` is still exactly 380. 喪標麥可's attributes are `authored`,
+    // not w3x — they exist to REPRODUCE this sheet, so re-solving them is the
+    // only way to keep #244's number rather than let it drift to 356.
+    // Asserting the EFFECTIVE level-1 value (not the raw field) is what keeps
+    // #244's deliberate tuning pinned through both re-derivations.
+    expect(championStatBase(HERO_DEF, Stat.MaxHealth, 1)).toBe(380);
+
+    // THE +45 IS TWO LAYERS, AND THEY NO LONGER COINCIDE.
+    // #244 authored `growth.maxHealth = 45`. #248 gave the hero STR +1.8/level,
+    // which through Blizzard's 25 was ALSO exactly 45 — a coincidence that the
+    // map's real 23 ends: the attribute layer is now 41.4. The owner ruled that
+    // `growth` survives the re-derivation as a designer knob layered on the
+    // w3x-faithful attribute curve (「growth 區塊就是重複來源 => 本來就可以重複
+    // 沒有衝突」), so the effective per-level health is the SUM, 86.4. Pin the
+    // LAYERS separately, so losing either one fails here rather than silently
+    // halving or doubling the roguelite boss.
+    const ATTR_LAYER = 23 * 1.8; // strToMaxHealth (war3mapMisc StrHitPointBonus) × strGrowth
+    const GROWTH_LAYER = 45; // #244's authored growth.maxHealth — untouched
+    expect(ATTR_LAYER).toBeCloseTo(41.4, 9);
+    expect(HERO_DEF.growth[Stat.MaxHealth]).toBe(GROWTH_LAYER);
+    expect(championStatGrowth(HERO_DEF, Stat.MaxHealth)).toBeCloseTo(ATTR_LAYER + GROWTH_LAYER, 9);
+    // The owner's own sanity number, end to end: level 12, maxHealth ×4. It was
+    // 5480 under the 25 and is 5321.6 under the map's 23 — a consequence of the
+    // corrected coefficient, logged for him in docs/_execution-batches.md.
+    expect(championStatBase(HERO_DEF, Stat.MaxHealth, 12) * 4).toBeCloseTo(5321.6, 6);
+    expect(championStatBase(Champions.get(MOB_CHAMPION_ID as ChampionId), Stat.MaxHealth, 1)).toBe(380);
     // …and the mob curve does not budge.
     expect(mobRulesFromConfig(CFG, DT, 3).maxHp).toBe(300);
     expect(mobRulesFromConfig(CFG, DT, 6).maxHp).toBe(600);

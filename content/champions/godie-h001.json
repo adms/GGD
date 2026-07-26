@@ -7,13 +7,13 @@
   "attackType": "melee",
   "modelKey": "champ.sela",
   "baseStats": {
-    "maxHealth": 520,
-    "healthRegen": 1.25,
-    "maxMana": 364,
-    "manaRegen": 1.68,
-    "ad": 30,
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 10,
     "ap": 0,
-    "armor": 7,
+    "armor": 0,
     "mr": 28,
     "as": 0.5,
     "ms": 5.6,
@@ -32,6 +32,16 @@
     "armor": 0.5,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 20,
+    "agi": 13,
+    "int": 22,
+    "strGrowth": 1.95,
+    "agiGrowth": 1.55,
+    "intGrowth": 2.8,
+    "primary": "STR",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 1,

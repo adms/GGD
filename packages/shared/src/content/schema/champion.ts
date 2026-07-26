@@ -97,9 +97,58 @@ export const zChampionDef = z
     role: z.string().min(1),
     attackType: z.enum(["melee", "ranged"]),
     modelKey: zRef("models"),
+    /**
+     * The RAW stat card. Since #248 the eight attribute-derived rows hold the
+     * source map's own numbers, WITHOUT the 三圍 term — `maxHealth` on
+     * godie-e001 is the map's 150, and the sim adds `25 × STR` on top of it
+     * (sim/stats/attributes.ts). Read it through `championStatBase`, never
+     * directly, or a stat table shows 150 where the hero really has 575.
+     */
     baseStats: zPartialStatBlock,
-    /** additive per level beyond 1 */
+    /**
+     * Additive per level beyond 1 — the per-hero DESIGNER KNOB, and since #248
+     * a deliberate SECOND source alongside `attributes.*Growth`:
+     *
+     *     stat(L) = baseStats + attr(L)·coefficient + growth·(L−1)
+     *
+     * The two are summed, not reconciled. That is not double-counting: the
+     * attribute term carries the w3x-faithful part of the curve, `growth`
+     * carries the tuning laid on top, so a hero's progression is not locked to
+     * his three attributes (owner ruling on #248 —「growth 區塊就是重複來源
+     * => 本來就可以重複沒有衝突」). `championGrowthLayers.test.ts` pins the
+     * three-layer sum so a reader cannot silently apply only two of the three.
+     *
+     * `growth.mr` is simply the row where the attribute term is zero: Warcraft
+     * III has no magic-resistance attribute, so 魔抗 is growth-only by nature,
+     * not by omission.
+     */
     growth: zPartialStatBlock,
+    /**
+     * 三圍 — STRENGTH / AGILITY / INTELLIGENCE + per-level growths (task #248),
+     * recovered from the source map by walking each unit's `base` chain into
+     * the Blizzard stock tables. `source` is provenance: "w3x" for the 111
+     * champions the map can answer for, "authored" for the three it cannot
+     * (godie-zombiex, sela, thorne), whose numbers were chosen to reproduce
+     * their shipped level-1 sheet exactly.
+     *
+     * OPTIONAL in the schema, REQUIRED in the shipped tree: a doc without it
+     * simply gets no attribute term (the pre-#248 law), which keeps hand-written
+     * test fixtures valid, and `championAttributes.test.ts` asserts every real
+     * champion has one so the roster can never silently lose it.
+     */
+    attributes: z
+      .object({
+        str: z.number().finite(),
+        agi: z.number().finite(),
+        int: z.number().finite(),
+        strGrowth: z.number().finite(),
+        agiGrowth: z.number().finite(),
+        intGrowth: z.number().finite(),
+        primary: z.enum(["STR", "AGI", "INT"]),
+        source: z.enum(["w3x", "authored"]),
+      })
+      .strict()
+      .optional(),
     /** ranged auto-attack projectile speed (GGD units/sec) */
     missileSpeed: z.number().positive().optional(),
     /** wind-up (seconds) before a basic attack's hit lands */

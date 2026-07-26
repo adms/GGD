@@ -42,6 +42,7 @@ Regression suites always run **last** (enforced by the runner scheduler and the 
 | Combat timing v2 (cast time + basic-attack overhaul) | [combat-timing.md](combat-timing.md) | game + content |
 | 戰鬥系統 global multipliers + admin dynamic config | [combat-env.md](combat-env.md) | game + platform + admin |
 | TTK tuning — maxHealth for round length (≥120s min, ~180s avg) | [ttk-tuning.md](ttk-tuning.md) | game + content |
+| 三圍 STR/AGI/INT attribute derivation from the w3x | [attributes.md](attributes.md) | game + content + admin |
 | Planar collision | [collision.md](collision.md) | game |
 | Content pipeline | [content-pipeline.md](content-pipeline.md) | content |
 | EX 技能 per-hero ultimate (lvl-30 gate) | [ex-skills.md](ex-skills.md) | content + game + client |

@@ -1,13 +1,21 @@
 /**
  * Layered, order-defined stat aggregation:
  *   final = clamp( (base + Σflat) · (1 + ΣpctAdd) · Π(1 + pctMult) )
- * with Override winning outright. Base = championBase + growth·(level−1).
+ * with Override winning outright.
+ *
+ * Base = `championStatBase` (stats/attributes.ts): the authored
+ * `baseStats + growth·(level−1)` PLUS the champion's 三圍 contribution
+ * (task #248 — `maxHealth = w3x_hp + strToMaxHealth·STR`, and seven more).
+ * That helper is the single definition of "this champion's base stat"; nothing
+ * here re-derives it, and neither does any UI.
+ *
  * `attachSource`/`detachSource` are the ONLY equip/unequip/expire entry points.
  */
 import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import { ALL_STATS, STAT_CLAMPS, zeroStats, type Stat, type StatBlock } from "./statTypes";
 import { STAT_ENV_KEY } from "../combatEnv";
+import { championStatBase } from "./attributes";
 import { ModOp, type ModifierSource } from "./modifiers";
 import { Champions } from "../content/registry";
 
@@ -22,7 +30,7 @@ export function recomputeStats(world: SimWorld, id: EntityId): void {
   const next = zeroStats();
 
   for (const stat of ALL_STATS) {
-    const base = (def.baseStats[stat] ?? 0) + (def.growth[stat] ?? 0) * (level - 1);
+    const base = championStatBase(def, stat, level, world.combatEnv);
 
     let flat = 0;
     let pctAdd = 0;

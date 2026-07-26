@@ -7,13 +7,13 @@
   "attackType": "melee",
   "modelKey": "imported.herosephiroth",
   "baseStats": {
-    "maxHealth": 440,
-    "healthRegen": 1.05,
-    "maxMana": 268,
-    "manaRegen": 1.36,
-    "ad": 36,
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 10,
     "ap": 0,
-    "armor": 10,
+    "armor": 0,
     "mr": 28,
     "as": 0.5,
     "ms": 5.7,
@@ -33,6 +33,16 @@
     "armor": 0.6,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 16,
+    "agi": 26,
+    "int": 14,
+    "strGrowth": 1.8,
+    "agiGrowth": 2.1,
+    "intGrowth": 1.9,
+    "primary": "AGI",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 2,
