@@ -21,8 +21,9 @@ import {
   COMBAT_ENV_LABELS,
   MAX_FACTOR,
   MIN_FACTOR,
-  NEUTRAL,
   STEP,
+  isAttributeEnvKey,
+  neutralFor,
   changedKeys,
   emptyCombatEnvDoc,
   formFromDoc,
@@ -99,6 +100,9 @@ export function CombatEnvPage(): React.JSX.Element {
         <div style={{ fontSize: 12, color: TEXT_DIM, marginTop: 4 }}>
           全域戰鬥倍率表：每個數值都是一個乘算係數，<b style={{ color: TEXT_MAIN }}>1 = 預設</b>（與原本完全相同）。
           例如「造成傷害 1.2」= 全場傷害提高 20%，「技能冷卻時間 0.8」= 冷卻縮短 20%。可調整範圍 {MIN_FACTOR}～{MAX_FACTOR}。
+          <br />
+          最後一組「三圍派生」不是倍率，是<b style={{ color: TEXT_MAIN }}>每 1 點力量／敏捷／智慧換算出多少數值</b>
+          （預設就是魔獸三代原值，例如力量→生命 25），可調整範圍 0～100；它作用在上面那些倍率<b style={{ color: TEXT_MAIN }}>之前</b>。
         </div>
       </div>
 
@@ -162,7 +166,7 @@ export function CombatEnvPage(): React.JSX.Element {
                     envKey={key}
                     value={form[key]}
                     error={errors[key]}
-                    saved={doc.multipliers[key] ?? NEUTRAL}
+                    saved={doc.multipliers[key] ?? neutralFor(key)}
                     disabled={loading || busy}
                     onChange={(v) => patch(setField(form, key, v))}
                     onStep={(d) => patch(stepField(form, key, d))}
@@ -214,7 +218,11 @@ function Row(props: {
 }): React.JSX.Element {
   const label = COMBAT_ENV_LABELS[props.envKey];
   const n = parseFactor(props.value);
-  const neutral = n === NEUTRAL;
+  // "neutral" = at this key's SHIPPED value. For the eight 三圍 coefficients
+  // that is 25 / 15 / 0.05 …, not 1 — comparing them to 1 would paint every
+  // one of them as permanently "tuned" and disable their 重設 button never.
+  const shipped = neutralFor(props.envKey);
+  const neutral = n === shipped;
   const unsaved = n === null || n !== props.saved;
 
   return (
@@ -264,7 +272,7 @@ function Row(props: {
         small
         disabled={props.disabled || neutral}
         onClick={props.onReset}
-        title="設回 1.0"
+        title={isAttributeEnvKey(props.envKey) ? `設回預設 ${shipped}` : "設回 1.0"}
         style={{ minWidth: 54 }}
       >
         重設

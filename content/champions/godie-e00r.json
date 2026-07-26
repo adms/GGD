@@ -7,13 +7,13 @@
   "attackType": "melee",
   "modelKey": "champ.skin.rogue",
   "baseStats": {
-    "maxHealth": 480,
-    "healthRegen": 1.15,
-    "maxMana": 292,
-    "manaRegen": 1.44,
-    "ad": 26,
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 10,
     "ap": 0,
-    "armor": 7,
+    "armor": 0,
     "mr": 28,
     "as": 0.5,
     "ms": 5.8,
@@ -32,6 +32,16 @@
     "armor": 0.9,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 21,
+    "agi": 22,
+    "int": 16,
+    "strGrowth": 1.75,
+    "agiGrowth": 2.9,
+    "intGrowth": 1.55,
+    "primary": "AGI",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 3,

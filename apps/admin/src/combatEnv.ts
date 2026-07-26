@@ -18,9 +18,15 @@
  * coerced to something the admin never asked for. Everything here is a pure
  * function over plain data; the page (ui/CombatEnvPage.tsx) is presentation only.
  */
-import { COMBAT_ENV_KEYS, type CombatEnvKey } from "@ggd/shared/sim/combatEnv";
+import {
+  ATTRIBUTE_COEF_MAX,
+  COMBAT_ENV_KEYS,
+  defaultForKey,
+  isAttributeEnvKey,
+  type CombatEnvKey,
+} from "@ggd/shared/sim/combatEnv";
 
-export { COMBAT_ENV_KEYS };
+export { COMBAT_ENV_KEYS, defaultForKey, isAttributeEnvKey };
 export type { CombatEnvKey };
 
 // ------------------------------------------------------------- bounds ------
@@ -34,6 +40,31 @@ export const MAX_FACTOR = 10;
 /** Numeric-input step for the table's spinners. */
 export const STEP = 0.05;
 
+/**
+ * PER-KEY bounds (task #248). The eighteen ×factors keep the 0.1..10 band; the
+ * eight 三圍 coefficients need a different one because their SHIPPED values are
+ * 25 (力量→生命) and 15 (智慧→魔力), both outside it, and because 0 is a
+ * meaningful setting for them ("switch this derivation axis off") where a 0
+ * damage multiplier is not. Mirrors `combatenv.Bounds` on the platform, so a
+ * value this page accepts is a value the PUT accepts.
+ */
+export function minFactorFor(key: CombatEnvKey): number {
+  return isAttributeEnvKey(key) ? 0 : MIN_FACTOR;
+}
+export function maxFactorFor(key: CombatEnvKey): number {
+  return isAttributeEnvKey(key) ? ATTRIBUTE_COEF_MAX : MAX_FACTOR;
+}
+
+/**
+ * The RESET target for one key: 1.0 for a ×factor, the WC3/design coefficient
+ * for a 三圍 key. Resetting 力量→生命 to 1.0 would not be "neutral", it would
+ * delete 96% of every champion's health — so 重設 has to mean "the shipped
+ * value", not "1".
+ */
+export function neutralFor(key: CombatEnvKey): number {
+  return defaultForKey(key);
+}
+
 // ---------------------------------------------------------------- doc ------
 
 /** The combat-env document the platform GET returns. */
@@ -44,10 +75,10 @@ export interface CombatEnvDoc {
   multipliers: Record<CombatEnvKey, number>;
 }
 
-/** The neutral table: every factor 1.0 (the shipped default). */
+/** The shipped default table: every ×factor 1.0, every 三圍 coefficient its WC3 value. */
 export function neutralMultipliers(): Record<CombatEnvKey, number> {
   const m = {} as Record<CombatEnvKey, number>;
-  for (const k of COMBAT_ENV_KEYS) m[k] = NEUTRAL;
+  for (const k of COMBAT_ENV_KEYS) m[k] = neutralFor(k);
   return m;
 }
 
@@ -76,6 +107,9 @@ export function normalizeCombatEnvDoc(raw: unknown): CombatEnvDoc {
     const v = src[k];
     if (typeof v === "number" && Number.isFinite(v)) multipliers[k] = v;
   }
+  // NOTE: a missing key falls back to `neutralFor(k)`, NOT to 1.0 — a platform
+  // that predates #248 serves no 三圍 coefficients, and defaulting them to 1
+  // would render (and then SAVE) a table that guts every champion's health.
   return {
     version: typeof inner["version"] === "number" ? (inner["version"] as number) : 1,
     updatedAt: typeof inner["updatedAt"] === "string" ? (inner["updatedAt"] as string) : "",
@@ -116,6 +150,16 @@ export const COMBAT_ENV_LABELS: Record<CombatEnvKey, CombatEnvLabel> = {
   lifesteal: { zh: "生命偷取", note: "普攻吸血比例（夾制前）" },
   attackRange: { zh: "攻擊距離", note: "普攻射程" },
   abilityRange: { zh: "技能範圍", note: "技能施放距離與 AoE 半徑（不含普攻）" },
+  // 三圍係數 (#248) — 這八項不是倍率而是「每 1 點屬性換多少數值」，預設就是
+  // 魔獸三代原值（或本作設計值），不是 1.0。
+  strToMaxHealth: { zh: "力量 → 生命", note: "每 1 點力量增加的生命上限（魔獸原值 25）" },
+  strToHealthRegen: { zh: "力量 → 回血", note: "每 1 點力量增加的每秒回血（魔獸原值 0.05）" },
+  strToAttackDamage: { zh: "力量 → 攻擊力", note: "每 1 點力量增加的 AD（本作設計值 1）" },
+  agiToArmor: { zh: "敏捷 → 護甲", note: "每 1 點敏捷增加的護甲（魔獸約 0.143，本作 0.3）" },
+  agiToAttackSpeed: { zh: "敏捷 → 攻速", note: "每 1 點敏捷讓攻速 +N%（魔獸原值 0.02＝+2%）" },
+  intToMaxMana: { zh: "智慧 → 魔力", note: "每 1 點智慧增加的魔力上限（魔獸原值 15）" },
+  intToManaRegen: { zh: "智慧 → 回魔", note: "每 1 點智慧增加的每秒回魔（魔獸原值 0.05）" },
+  intToAbilityPower: { zh: "智慧 → 法強", note: "每 1 點智慧增加的 AP（本作設計值 1）" },
 };
 
 /** A titled block of rows — the page renders one table section per group. */
@@ -134,6 +178,21 @@ export const COMBAT_ENV_GROUPS: CombatEnvGroup[] = [
   { title: "機動 · 位移與攻擊", keys: ["moveSpeed", "attackSpeed", "attackRange"] },
   { title: "暴擊", keys: ["critChance", "critDamage"] },
   { title: "資源 · 魔力", keys: ["maxMana", "manaRegen"] },
+  {
+    // #248: 三圍派生係數。放在最後，因為它們作用在其他倍率「之前」——
+    // 先由三圍算出英雄的基礎值，再乘上上面那些倍率。
+    title: "三圍派生 · 力量／敏捷／智慧",
+    keys: [
+      "strToMaxHealth",
+      "strToHealthRegen",
+      "strToAttackDamage",
+      "agiToArmor",
+      "agiToAttackSpeed",
+      "intToMaxMana",
+      "intToManaRegen",
+      "intToAbilityPower",
+    ],
+  },
 ];
 
 /** True when the display groups partition the sim's key list exactly. */
@@ -160,14 +219,14 @@ export function formatFactor(n: number): string {
 /** Seed the form from a loaded doc. */
 export function formFromDoc(doc: CombatEnvDoc): CombatEnvForm {
   const form = {} as CombatEnvForm;
-  for (const k of COMBAT_ENV_KEYS) form[k] = formatFactor(doc.multipliers[k] ?? NEUTRAL);
+  for (const k of COMBAT_ENV_KEYS) form[k] = formatFactor(doc.multipliers[k] ?? neutralFor(k));
   return form;
 }
 
-/** An all-neutral form (the 全部重設 target). */
+/** The shipped-default form (the 全部重設 target). */
 export function neutralForm(): CombatEnvForm {
   const form = {} as CombatEnvForm;
-  for (const k of COMBAT_ENV_KEYS) form[k] = formatFactor(NEUTRAL);
+  for (const k of COMBAT_ENV_KEYS) form[k] = formatFactor(neutralFor(k));
   return form;
 }
 
@@ -176,21 +235,21 @@ export function setField(form: CombatEnvForm, key: CombatEnvKey, value: string):
   return { ...form, [key]: value };
 }
 
-/** Per-row 重設: put a single key back to 1.0. */
+/** Per-row 重設: put a single key back to its shipped default. */
 export function resetField(form: CombatEnvForm, key: CombatEnvKey): CombatEnvForm {
-  return { ...form, [key]: formatFactor(NEUTRAL) };
+  return { ...form, [key]: formatFactor(neutralFor(key)) };
 }
 
-/** Global 全部重設: every key back to 1.0. */
+/** Global 全部重設: every key back to its shipped default. */
 export function resetAll(): CombatEnvForm {
   return neutralForm();
 }
 
-/** Nudge a field by ±STEP, clamped into [MIN_FACTOR, MAX_FACTOR]. */
+/** Nudge a field by ±STEP, clamped into that key's own [min, max]. */
 export function stepField(form: CombatEnvForm, key: CombatEnvKey, delta: number): CombatEnvForm {
   const cur = parseFactor(form[key]);
-  const base = cur === null ? NEUTRAL : cur;
-  const next = Math.min(MAX_FACTOR, Math.max(MIN_FACTOR, base + delta));
+  const base = cur === null ? neutralFor(key) : cur;
+  const next = Math.min(maxFactorFor(key), Math.max(minFactorFor(key), base + delta));
   return { ...form, [key]: formatFactor(next) };
 }
 
@@ -208,12 +267,15 @@ export function parseFactor(text: string): number | null {
  * Field-level validation, mirroring the platform's PUT bounds so a bad value is
  * caught before the round-trip. Returns a zh-Hant message or "" when valid.
  */
-export function validateFactor(text: string): string {
+export function validateFactor(text: string, key?: CombatEnvKey): string {
+  const min = key === undefined ? MIN_FACTOR : minFactorFor(key);
+  const max = key === undefined ? MAX_FACTOR : maxFactorFor(key);
+  const attr = key !== undefined && isAttributeEnvKey(key);
   const t = text.trim();
-  if (t === "") return "請輸入倍率（1 = 預設）";
+  if (t === "") return attr ? "請輸入係數" : "請輸入倍率（1 = 預設）";
   const n = Number(t);
   if (!Number.isFinite(n)) return "必須是數字";
-  if (n < MIN_FACTOR || n > MAX_FACTOR) return `倍率必須介於 ${MIN_FACTOR} 與 ${MAX_FACTOR} 之間`;
+  if (n < min || n > max) return `${attr ? "係數" : "倍率"}必須介於 ${min} 與 ${max} 之間`;
   return "";
 }
 
@@ -223,7 +285,7 @@ export type CombatEnvErrors = Partial<Record<CombatEnvKey, string>>;
 export function validateForm(form: CombatEnvForm): CombatEnvErrors {
   const errs: CombatEnvErrors = {};
   for (const k of COMBAT_ENV_KEYS) {
-    const e = validateFactor(form[k]);
+    const e = validateFactor(form[k], k);
     if (e) errs[k] = e;
   }
   return errs;
@@ -241,7 +303,7 @@ export function changedKeys(form: CombatEnvForm, doc: CombatEnvDoc): CombatEnvKe
   return COMBAT_ENV_KEYS.filter((k) => {
     const n = parseFactor(form[k]);
     if (n === null) return true; // an empty/garbage box IS an edit (and an error)
-    return n !== (doc.multipliers[k] ?? NEUTRAL);
+    return n !== (doc.multipliers[k] ?? neutralFor(k));
   });
 }
 
@@ -250,17 +312,21 @@ export function isDirty(form: CombatEnvForm, doc: CombatEnvDoc): boolean {
   return changedKeys(form, doc).length > 0;
 }
 
-/** Keys currently tuned away from 1.0 (drives the "N 項已調整" badge). */
+/**
+ * Keys tuned away from their SHIPPED DEFAULT (drives the "N 項已調整" badge).
+ * Not "away from 1.0": the 三圍 coefficients ship at 25 / 15 / 0.05 …, so
+ * comparing them to 1 would report eight permanent phantom edits.
+ */
 export function nonNeutralKeys(form: CombatEnvForm): CombatEnvKey[] {
   return COMBAT_ENV_KEYS.filter((k) => {
     const n = parseFactor(form[k]);
-    return n !== null && n !== NEUTRAL;
+    return n !== null && n !== neutralFor(k);
   });
 }
 
 /** Same, over a saved doc (the badge after a reload). */
 export function nonNeutralDocKeys(doc: CombatEnvDoc): CombatEnvKey[] {
-  return COMBAT_ENV_KEYS.filter((k) => (doc.multipliers[k] ?? NEUTRAL) !== NEUTRAL);
+  return COMBAT_ENV_KEYS.filter((k) => (doc.multipliers[k] ?? neutralFor(k)) !== neutralFor(k));
 }
 
 // ---------------------------------------------------------------- save -----
@@ -272,16 +338,16 @@ export interface CombatEnvSave {
 
 /**
  * Build the save payload. The platform treats the body as the complete desired
- * state (an omitted key resets to 1.0), so we always send all keys explicitly —
- * what the admin sees in the table is exactly what gets stored. Invalid fields
- * fall back to the neutral 1.0, but the page gates Save on `formValid` so that
- * branch is only a safety net.
+ * state (an omitted key resets to the content-authored value), so we always send
+ * all keys explicitly — what the admin sees in the table is exactly what gets
+ * stored. Invalid fields fall back to that key's shipped default, but the page
+ * gates Save on `formValid` so that branch is only a safety net.
  */
 export function toSavePayload(form: CombatEnvForm): CombatEnvSave {
   const multipliers = {} as Record<CombatEnvKey, number>;
   for (const k of COMBAT_ENV_KEYS) {
     const n = parseFactor(form[k]);
-    multipliers[k] = n === null ? NEUTRAL : n;
+    multipliers[k] = n === null ? neutralFor(k) : n;
   }
   return { multipliers };
 }

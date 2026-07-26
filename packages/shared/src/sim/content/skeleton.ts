@@ -38,16 +38,19 @@ export const SELA: ChampionDef = {
   modelKey: "champ.sela",
   missileSpeed: 22,
   attackDamagePoint: 0.3,
+  // #248: RAW card — the 三圍 term below is added by `championStatBase`, and
+  // the authored attributes were back-solved so the level-1 sheet is byte-for-
+  // byte what sela shipped with (520 hp / 52 ad / 400 mana / 20 armor / 0.65 as).
   baseStats: {
-    [Stat.MaxHealth]: 520,
-    [Stat.HealthRegen]: 1.2,
-    [Stat.MaxMana]: 400,
-    [Stat.ManaRegen]: 1.6,
-    [Stat.AttackDamage]: 52,
+    [Stat.MaxHealth]: 70,
+    [Stat.HealthRegen]: 0.3,
+    [Stat.MaxMana]: 10,
+    [Stat.ManaRegen]: 0.3,
+    [Stat.AttackDamage]: 34,
     [Stat.AbilityPower]: 0,
-    [Stat.Armor]: 20,
+    [Stat.Armor]: 15.2,
     [Stat.MagicResist]: 28,
-    [Stat.AttackSpeed]: 0.65,
+    [Stat.AttackSpeed]: 0.492424,
     [Stat.MoveSpeed]: 6.6,
     [Stat.CritChance]: 0,
     [Stat.CritDamage]: 1.75,
@@ -55,6 +58,10 @@ export const SELA: ChampionDef = {
     [Stat.Lifesteal]: 0,
     [Stat.AttackRange]: 11,
   },
+  // UNCHANGED by #248. `growth` is the designer knob and the attribute growths
+  // are a second, additive source (owner ruling) — the two are summed by
+  // `championStatBase`, not reconciled. `mr` is simply the row where the
+  // attribute term is zero: WC3 has no magic-resistance attribute.
   growth: {
     [Stat.MaxHealth]: 90,
     [Stat.HealthRegen]: 0.12,
@@ -64,6 +71,16 @@ export const SELA: ChampionDef = {
     [Stat.Armor]: 4,
     [Stat.MagicResist]: 1.2,
     [Stat.AttackSpeed]: 0.02,
+  },
+  attributes: {
+    str: 18,
+    agi: 16,
+    int: 26,
+    strGrowth: 3.6,
+    agiGrowth: 2.031,
+    intGrowth: 3,
+    primary: "INT",
+    source: "authored",
   },
   abilities: {
     Q: {
@@ -194,16 +211,18 @@ export const THORNE: ChampionDef = {
   attackType: "melee",
   modelKey: "champ.thorne",
   attackDamagePoint: 0.25,
+  // #248: RAW card + back-solved attributes; level 1 reproduces thorne's
+  // shipped sheet exactly (640 hp / 62 ad / 280 mana / 32 armor / 0.70 as).
   baseStats: {
-    [Stat.MaxHealth]: 640,
-    [Stat.HealthRegen]: 1.8,
-    [Stat.MaxMana]: 280,
-    [Stat.ManaRegen]: 1.2,
-    [Stat.AttackDamage]: 62,
+    [Stat.MaxHealth]: 40,
+    [Stat.HealthRegen]: 0.6,
+    [Stat.MaxMana]: 70,
+    [Stat.ManaRegen]: 0.5,
+    [Stat.AttackDamage]: 38,
     [Stat.AbilityPower]: 0,
-    [Stat.Armor]: 32,
+    [Stat.Armor]: 26.6,
     [Stat.MagicResist]: 32,
-    [Stat.AttackSpeed]: 0.7,
+    [Stat.AttackSpeed]: 0.514706,
     [Stat.MoveSpeed]: 6.9,
     [Stat.CritChance]: 0,
     [Stat.CritDamage]: 1.75,
@@ -211,6 +230,7 @@ export const THORNE: ChampionDef = {
     [Stat.Lifesteal]: 0,
     [Stat.AttackRange]: 1.6,
   },
+  // Unchanged by #248 — see the note on SELA.growth above.
   growth: {
     [Stat.MaxHealth]: 110,
     [Stat.HealthRegen]: 0.16,
@@ -220,6 +240,16 @@ export const THORNE: ChampionDef = {
     [Stat.Armor]: 4.6,
     [Stat.MagicResist]: 2,
     [Stat.AttackSpeed]: 0.025,
+  },
+  attributes: {
+    str: 24,
+    agi: 18,
+    int: 14,
+    strGrowth: 4.4,
+    agiGrowth: 2.429,
+    intGrowth: 2,
+    primary: "STR",
+    source: "authored",
   },
   abilities: {
     Q: {

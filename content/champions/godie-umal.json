@@ -8,13 +8,13 @@
   "modelKey": "champ.skin.barbarian",
   "attackDamagePoint": 0.5,
   "baseStats": {
-    "maxHealth": 600,
-    "healthRegen": 1.45,
-    "maxMana": 280,
-    "manaRegen": 1.4,
-    "ad": 35,
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 14,
     "ap": 0,
-    "armor": 10,
+    "armor": 0,
     "mr": 28,
     "as": 0.5,
     "ms": 5.9,
@@ -33,6 +33,16 @@
     "armor": 0.8,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 20,
+    "agi": 20,
+    "int": 15,
+    "strGrowth": 1.95,
+    "agiGrowth": 2.8,
+    "intGrowth": 1.45,
+    "primary": "AGI",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 1,

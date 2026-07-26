@@ -24,6 +24,8 @@ import { GOLD, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
 import { displayFinal, isScaled, statDisplayFactor, useDisplayEnv } from "../displayFinal";
 import { rescaleAbilityProse, WC3_PROSE_CAPTION } from "../components/abilityText";
 import { CodexIcon } from "./CodexIcon";
+import { championSheetRows } from "../championSheet";
+import type { ChampionAttributes } from "@ggd/shared/sim/stats/attributes";
 // The ONLY editor-related runtime import: a createContext(null) + useContext.
 // The editor itself (CodexEditPanel → codexEdit → codexEditModel) arrives as a
 // COMPONENT PROP from CodexPage's `import.meta.env.DEV`-guarded dynamic import,
@@ -227,16 +229,42 @@ function Description({ text }: { text: string | null }): React.JSX.Element {
   );
 }
 
-function StatTable({
-  base,
-  growth,
-}: {
-  base: Readonly<Record<string, number>>;
-  growth: Readonly<Record<string, number>>;
-}): React.JSX.Element {
+/**
+ * The champion's 三圍 (task #248) — shown above the stat table so the derived
+ * numbers below have a visible cause. `source` is stated because it is a real
+ * distinction: 111 champions' attributes come out of the w3x, three had to be
+ * authored to reproduce their shipped sheet.
+ */
+function AttributeRow({ a }: { a: ChampionAttributes }): React.JSX.Element {
+  const primaryZh = { STR: "力量", AGI: "敏捷", INT: "智慧" }[a.primary];
+  return (
+    <div style={{ fontSize: 11, color: TEXT_DIM, marginBottom: 6 }}>
+      三圍 <span style={{ color: GOLD }}>力 {num(a.str)}</span> (+{num(a.strGrowth)}) ·{" "}
+      <span style={{ color: GOLD }}>敏 {num(a.agi)}</span> (+{num(a.agiGrowth)}) ·{" "}
+      <span style={{ color: GOLD }}>智 {num(a.int)}</span> (+{num(a.intGrowth)}) · 主屬 {primaryZh} ·
+      來源 {a.source === "w3x" ? "原始地圖" : "手工設定"}
+    </div>
+  );
+}
+
+/**
+ * #248: `def` (not two loose records) because the level-1 base and the per-level
+ * growth of eight stats are now computed from the champion's attributes, not
+ * read out of `baseStats`/`growth`. `championSheetRows` is the shared reader.
+ * EDIT MODE still edits the RAW document fields — that is the point of the
+ * editor — so it keeps iterating the doc's own keys.
+ */
+function StatTable({ champ }: { champ: CodexChampion }): React.JSX.Element {
   const edit = useDetailEdit();
   const env = useDisplayEnv();
-  const keys = [...new Set([...Object.keys(base), ...Object.keys(growth)])];
+  const base: Readonly<Record<string, number | undefined>> = champ.baseStats;
+  const growth: Readonly<Record<string, number | undefined>> = champ.growth;
+  const rows = championSheetRows(
+    { baseStats: champ.baseStats, growth: champ.growth, attributes: champ.attributes ?? undefined },
+    env,
+  );
+  const rowByKey = new Map(rows.map((r) => [r.key, r]));
+  const keys = rows.map((r) => r.key);
   return (
     <div
       style={{
@@ -254,8 +282,11 @@ function StatTable({
       {!edit && <div style={{ color: TEXT_DIM, fontSize: 10, textAlign: "right" }}>戰鬥實際</div>}
       <div style={{ color: TEXT_DIM, fontSize: 10, textAlign: edit ? "left" : "right" }}>每級成長</div>
       {keys.map((k) => {
-        const b = base[k];
-        const g = growth[k];
+        // read-only shows the RESOLVED sheet (attributes included); the editor
+        // shows/edits the raw document fields it is going to write back.
+        const row = rowByKey.get(k);
+        const b = edit ? base[k] : row?.base;
+        const g = edit ? growth[k] : row?.growth;
         const factor = statDisplayFactor(k);
         const showFinal = b !== undefined && isScaled(factor, env);
         return (
@@ -438,7 +469,8 @@ function ChampionBody({ champ, data, onNavigate }: { champ: CodexChampion; data:
         </Editable>
       </Section>
       <Section title="數值">
-        <StatTable base={champ.baseStats} growth={champ.growth} />
+        {champ.attributes !== null && <AttributeRow a={champ.attributes} />}
+        <StatTable champ={champ} />
       </Section>
       <Section title={`技能（${kit.length}）`}>
         {kit.length === 0 && <div style={{ fontSize: 12, color: "#e08878" }}>此英雄沒有任何技能參照</div>}

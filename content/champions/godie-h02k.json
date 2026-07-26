@@ -8,13 +8,13 @@
   "attackType": "melee",
   "modelKey": "champ.skin.barbarian",
   "baseStats": {
-    "maxHealth": 720,
-    "healthRegen": 1.75,
-    "maxMana": 124,
-    "manaRegen": 0.88,
-    "ad": 106,
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 46.5,
     "ap": 0,
-    "armor": 6,
+    "armor": 2,
     "mr": 28,
     "as": 0.5,
     "ms": 5.9,
@@ -33,6 +33,16 @@
     "armor": 0.0,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 30,
+    "agi": 15,
+    "int": 2,
+    "strGrowth": 0,
+    "agiGrowth": 0,
+    "intGrowth": 0,
+    "primary": "STR",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 1,

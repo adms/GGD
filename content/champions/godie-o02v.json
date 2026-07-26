@@ -8,13 +8,13 @@
   "modelKey": "imported.niya",
   "missileSpeed": 36.7,
   "baseStats": {
-    "maxHealth": 480,
-    "healthRegen": 1.15,
-    "maxMana": 1300,
-    "manaRegen": 1.8,
-    "ad": 35,
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 1000,
+    "manaRegen": 1,
+    "ad": 10,
     "ap": 0,
-    "armor": 7,
+    "armor": 0,
     "mr": 28,
     "as": 0.5,
     "ms": 5.9,
@@ -33,6 +33,16 @@
     "armor": 0.5,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 17,
+    "agi": 15,
+    "int": 25,
+    "strGrowth": 1.8,
+    "agiGrowth": 1.85,
+    "intGrowth": 2.7,
+    "primary": "INT",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 1,

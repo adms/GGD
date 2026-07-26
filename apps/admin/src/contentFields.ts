@@ -75,16 +75,25 @@ const CHAMPION_GROUPS: readonly FieldGroup[] = [
     ],
   },
   {
+    // #248: 生命／回血／攻擊力／護甲／攻速／魔力／回魔 的每級成長已改由三圍
+    // 成長推導（見下一組），不再手寫在 growth 裡，否則會雙重計算。
+    // 只剩魔抗——魔獸三代沒有「魔抗屬性」，這一項只能手工設定。
     title: "每級成長 (growth)",
+    fields: [{ path: "growth.mr", label: "魔抗", kind: "number" }],
+  },
+  {
+    // #248: 從原始地圖抓回來的力量／敏捷／智慧。上面的「基礎數值」是地圖裡的
+    // 原始值，實際數值 = 基礎值 + 係數 × 三圍（係數在「戰鬥系統」頁可調）。
+    title: "三圍 (attributes)",
     fields: [
-      { path: "growth.maxHealth", label: "生命", kind: "number" },
-      { path: "growth.healthRegen", label: "生命回復", kind: "number" },
-      { path: "growth.maxMana", label: "魔力", kind: "number" },
-      { path: "growth.manaRegen", label: "魔力回復", kind: "number" },
-      { path: "growth.ad", label: "攻擊力", kind: "number" },
-      { path: "growth.armor", label: "護甲", kind: "number" },
-      { path: "growth.mr", label: "魔抗", kind: "number" },
-      { path: "growth.as", label: "攻速", kind: "number" },
+      { path: "attributes.str", label: "力量", kind: "number" },
+      { path: "attributes.agi", label: "敏捷", kind: "number" },
+      { path: "attributes.int", label: "智慧", kind: "number" },
+      { path: "attributes.strGrowth", label: "力量成長", kind: "number", hint: "每級" },
+      { path: "attributes.agiGrowth", label: "敏捷成長", kind: "number", hint: "每級" },
+      { path: "attributes.intGrowth", label: "智慧成長", kind: "number", hint: "每級" },
+      { path: "attributes.primary", label: "主屬性", kind: "text", hint: "STR / AGI / INT" },
+      { path: "attributes.source", label: "來源", kind: "text", hint: "w3x（原始地圖）／authored（手工）" },
     ],
   },
   {

@@ -31,12 +31,36 @@
  *                   re-query, and the ability projectile hit radius in
  *                   ProjectileSystem, all via resolveAbilityRange/Radius)
  *
+ * THE EIGHT 三圍 COEFFICIENTS (task #248) join the same table rather than
+ * inventing a second config surface, so the admin 戰鬥系統 page tunes them with
+ * everything else and a match snapshots them exactly like the rest:
+ *
+ *   strToMaxHealth      力量 → 生命上限        (25)
+ *   strToHealthRegen    力量 → 每秒回血        (0.05)
+ *   strToAttackDamage   力量 → 攻擊力          (1)
+ *   agiToArmor          敏捷 → 護甲            (0.3)
+ *   agiToAttackSpeed    敏捷 → 攻速            (0.02, MULTIPLICATIVE — see below)
+ *   intToMaxMana        智慧 → 魔力上限        (15)
+ *   intToManaRegen      智慧 → 每秒回魔        (0.05)
+ *   intToAbilityPower   智慧 → 法術強度        (1)
+ *
+ * They differ from the other eighteen in three ways, all deliberate:
+ *   1. THEY ARE COEFFICIENTS, NOT FACTORS. Their neutral value is not 1.0 — it
+ *      is the shipped coefficient (COMBAT_ENV_DEFAULTS below). 25 hp per point
+ *      of strength IS Warcraft III's number, not a tuning on top of one.
+ *   2. THEY APPLY EARLIER. They build the champion's BASE stat (stats/
+ *      attributes.ts championStatBase) which the stat-mapped factors above then
+ *      multiply, so `strToMaxHealth × maxHealth` is the full HP chain.
+ *   3. THEIR RANGE IS WIDER. 0..100 rather than 0.1..10 — 25 and 15 are legal
+ *      values here (see ATTRIBUTE_COEF_MAX / the platform's per-key bounds).
+ *
  * PURITY: the table is part of SimWorld state (`world.combatEnv`), injected by
  * the host BEFORE tick 0 and never read from globals/config/fetch inside the
  * sim — two worlds with the same seed and the same table stay bit-identical.
- * DEFAULT_COMBAT_ENV (all 1.0) leaves every formula byte-identical to the
- * pre-multiplier sim, so existing tests and the client's prediction shadow
- * world are unchanged.
+ * DEFAULT_COMBAT_ENV leaves every pre-#248 formula byte-identical to the
+ * pre-multiplier sim (all eighteen legacy factors are 1.0), and gives the eight
+ * coefficients their shipped values so a champion card with attributes resolves
+ * correctly even on a host that never loaded a config.
  */
 import { Stat } from "./stats/statTypes";
 
@@ -59,21 +83,84 @@ export const COMBAT_ENV_KEYS = [
   "lifesteal",
   "attackRange",
   "abilityRange",
+  "strToMaxHealth",
+  "strToHealthRegen",
+  "strToAttackDamage",
+  "agiToArmor",
+  "agiToAttackSpeed",
+  "intToMaxMana",
+  "intToManaRegen",
+  "intToAbilityPower",
 ] as const;
 
 export type CombatEnvKey = (typeof COMBAT_ENV_KEYS)[number];
+
+/**
+ * The eight 三圍 coefficients (task #248) and their SHIPPED values. Five of
+ * them are Warcraft III's own numbers, verified against `Units\UnitBalance.slk`
+ * in the repo's Blizzard MPQ archives (str→hp 25, str→hp-regen 0.05, int→mana
+ * 15, int→mana-regen 0.05, agi→attack-speed 0.02); agi→armor (WC3 ≈ 0.143),
+ * str→ad and int→ap are this game's design.
+ *
+ * Kept as its own literal — the platform's Go mirror parses THIS object to
+ * assert it has not drifted (internal/combatenv/keysync_test.go).
+ */
+export const ATTRIBUTE_ENV_DEFAULTS = {
+  strToMaxHealth: 25,
+  strToHealthRegen: 0.05,
+  strToAttackDamage: 1,
+  agiToArmor: 0.3,
+  agiToAttackSpeed: 0.02,
+  intToMaxMana: 15,
+  intToManaRegen: 0.05,
+  intToAbilityPower: 1,
+} as const;
+
+/** The 三圍 coefficient keys — the subset of the table that is not a factor. */
+export type AttributeEnvKey = keyof typeof ATTRIBUTE_ENV_DEFAULTS;
+
+const ATTRIBUTE_KEY_SET: ReadonlySet<string> = new Set(Object.keys(ATTRIBUTE_ENV_DEFAULTS));
+
+/** True when `k` is one of the eight attribute coefficients, not a ×factor. */
+export function isAttributeEnvKey(k: string): k is AttributeEnvKey {
+  return ATTRIBUTE_KEY_SET.has(k);
+}
+
+/**
+ * Upper bound for an attribute COEFFICIENT. The eighteen ×factors keep the
+ * 0.1..10 band (combatenv.MinFactor/MaxFactor); 25 hp per strength point would
+ * be rejected by it, so the coefficients get their own 0..100 band. 0 is legal
+ * and means "switch this derivation axis off entirely".
+ */
+export const ATTRIBUTE_COEF_MAX = 100;
 
 /** One multiplicative factor per environment quantity (1.0 = neutral). */
 export type CombatEnvMultipliers = Readonly<Record<CombatEnvKey, number>>;
 
 const buildDefault = (): Record<CombatEnvKey, number> => {
   const t = {} as Record<CombatEnvKey, number>;
-  for (const k of COMBAT_ENV_KEYS) t[k] = 1;
+  for (const k of COMBAT_ENV_KEYS) {
+    t[k] = isAttributeEnvKey(k) ? ATTRIBUTE_ENV_DEFAULTS[k] : 1;
+  }
   return t;
 };
 
-/** The neutral table — every factor 1.0. Formulae reduce to legacy behavior. */
-export const DEFAULT_COMBAT_ENV: CombatEnvMultipliers = Object.freeze(buildDefault());
+/**
+ * The SHIPPED table: every ×factor 1.0 (formulae reduce to legacy behaviour)
+ * and every 三圍 coefficient at its WC3/design value. This is also the
+ * per-key "reset" target the admin page offers — for a factor that is 1.0, for
+ * a coefficient it is the number above, because resetting str→hp to 1.0 would
+ * not be neutral, it would delete 96% of every champion's health.
+ */
+export const COMBAT_ENV_DEFAULTS: CombatEnvMultipliers = Object.freeze(buildDefault());
+
+/** @deprecated name kept for the pre-#248 call sites; see COMBAT_ENV_DEFAULTS. */
+export const DEFAULT_COMBAT_ENV: CombatEnvMultipliers = COMBAT_ENV_DEFAULTS;
+
+/** The shipped default for one key (1.0 for a factor, the coefficient for the eight). */
+export function defaultForKey(k: CombatEnvKey): number {
+  return isAttributeEnvKey(k) ? ATTRIBUTE_ENV_DEFAULTS[k] : 1;
+}
 
 /**
  * Stat → env-key map consumed by recomputeStats. Cooldown is NOT here on

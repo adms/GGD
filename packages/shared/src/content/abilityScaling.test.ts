@@ -12,9 +12,11 @@
  *   coeff   proportional to the ability's own base (0.003/point of base damage),
  *           capped at 1.0 — every ability gains the same PERCENTAGE per point of
  *           ap, so a nuke and a DoT tick keep their relative weight.
- *   budget  `ap` has no base/growth on any champion, so an ap ratio is pure ITEM
- *           upside and never inflates zero-item damage. That neutrality is what
- *           fx-17 pins.
+ *   budget  ap is ATTRIBUTE-SOURCED: since task #248 it is `intToAbilityPower ×
+ *           INT`, never a hand-authored `baseStats.ap`/`growth.ap`. fx-17 used
+ *           to pin the opposite (ap zero everywhere, so ratios were pure item
+ *           upside); #248 is exactly the change that made ap live, so fx-17 now
+ *           pins the SOURCING rule instead — see the comment on that test.
  *
  * Reads docs by DIRECT file path (same rationale as standinRoster.test.ts).
  */
@@ -27,6 +29,8 @@ import { zChampionDoc, type ChampionDoc } from "./schema/champion";
 import { zItemDoc, type ItemDoc } from "./schema/item";
 import { resolveScaling, type Scaling } from "../sim/effects/effect";
 import { Stat, zeroStats } from "../sim/stats/statTypes";
+import { championStatBase } from "../sim/stats/attributes";
+import { DEFAULT_COMBAT_ENV } from "../sim/combatEnv";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CONTENT = join(HERE, "../../../../content");
@@ -147,23 +151,54 @@ describe("imported ability stat scaling", () => {
     }
   });
 
-  it("ap ratios are pure item upside: zero-item damage is unchanged (fx-17)", () => {
+  it("ap is INTELLIGENCE-sourced, never hand-authored on the card (fx-17)", () => {
     cover("ability-scaling-budget-neutral");
-    // ap has no base or growth on any imported champion, so at zero items an
-    // ap ratio contributes exactly nothing — abilities cannot have been buffed.
+    // ---------------------------------------------------------------------
+    // #248 DELIBERATELY BROKE THIS TEST'S ORIGINAL CLAIM. Read this before
+    // "fixing" a failure here.
+    //
+    // fx-17 used to assert that an ap ratio "contributes exactly nothing at
+    // zero items", because no champion had any ap. Task #248 — 智慧→AP — is
+    // precisely the change that makes ap non-zero for every champion:
+    // `ap = baseStats.ap + intToAbilityPower × INT`. So zero-item ability
+    // damage IS higher now, on purpose, and asserting otherwise would pin the
+    // bug the task was raised to remove.
+    //
+    // What survives, and is worth more, is the SOURCING rule: ap must come
+    // from the attribute layer, not from hand-authored card fields. If someone
+    // types an `ap` into `baseStats`/`growth`, that champion gets a silent
+    // second helping on top of INT — exactly the double-count #248's three
+    // additive layers make easy to introduce.
+    // ---------------------------------------------------------------------
     for (const c of champs) {
       expect(`${c.id}:${c.baseStats.ap}`).toBe(`${c.id}:0`);
       expect((c.growth as Record<string, number>).ap ?? 0).toBe(0);
+      // …and every champion DOES now carry the 三圍 block that supplies it.
+      expect(`${c.id}:${c.attributes === undefined}`).toBe(`${c.id}:false`);
     }
 
+    // The whole of a champion's zero-item ap is the attribute term, at every
+    // level — no residue from anywhere else.
     const lina = champs.find((c) => c.id === "godie-h020")!;
-    const noItems = zeroStats();
-    for (const e of amountEffects(lina)) {
-      if (!e.amount.ratios?.length) continue;
-      const withRatios = resolveScaling(noItems, e.amount, 1);
-      const withoutRatios = resolveScaling(noItems, { ...e.amount, ratios: [] }, 1);
-      expect(withRatios).toBe(withoutRatios);
+    for (const level of [1, 6, 12, 18]) {
+      const int = lina.attributes!.int + lina.attributes!.intGrowth * (level - 1);
+      expect(championStatBase(lina, Stat.AbilityPower, level)).toBeCloseTo(
+        DEFAULT_COMBAT_ENV.intToAbilityPower * int,
+        6,
+      );
     }
+
+    // And an ap ratio is now LIVE at zero items: 火球術 scales off Lina's INT.
+    const apAt1 = { ...zeroStats(), [Stat.AbilityPower]: championStatBase(lina, Stat.AbilityPower, 1) };
+    let sawLiveRatio = false;
+    for (const e of amountEffects(lina)) {
+      if (!e.amount.ratios?.some((r) => r.stat === Stat.AbilityPower)) continue;
+      const withRatios = resolveScaling(apAt1, e.amount, 1);
+      const withoutRatios = resolveScaling(apAt1, { ...e.amount, ratios: [] }, 1);
+      expect(withRatios).toBeGreaterThan(withoutRatios);
+      sawLiveRatio = true;
+    }
+    expect(sawLiveRatio, "godie-h020 must still carry an ap-scaled ability").toBe(true);
   });
 
   it("buying an AP item raises ability damage (fx-18)", () => {

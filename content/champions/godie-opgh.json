@@ -8,13 +8,13 @@
   "modelKey": "imported.zy3",
   "attackDamagePoint": 0.5,
   "baseStats": {
-    "maxHealth": 420,
-    "healthRegen": 1.0,
-    "maxMana": 268,
-    "manaRegen": 1.36,
-    "ad": 30,
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 15,
     "ap": 0,
-    "armor": 12,
+    "armor": 0,
     "mr": 28,
     "as": 0.5,
     "ms": 6.1,
@@ -33,6 +33,16 @@
     "armor": 0.8,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 15,
+    "agi": 25,
+    "int": 14,
+    "strGrowth": 2,
+    "agiGrowth": 2.5,
+    "intGrowth": 1.5,
+    "primary": "AGI",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 3,

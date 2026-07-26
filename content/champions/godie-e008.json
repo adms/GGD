@@ -7,13 +7,13 @@
   "attackType": "melee",
   "modelKey": "imported.heroshana",
   "baseStats": {
-    "maxHealth": 460,
-    "healthRegen": 1.1,
-    "maxMana": 304,
-    "manaRegen": 1.48,
-    "ad": 31,
+    "maxHealth": 150,
+    "healthRegen": 0.25,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 20,
     "ap": 0,
-    "armor": 8,
+    "armor": 0,
     "mr": 28,
     "as": 0.5,
     "ms": 6.0,
@@ -32,6 +32,16 @@
     "armor": 0.9,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 17,
+    "agi": 21,
+    "int": 17,
+    "strGrowth": 1.75,
+    "agiGrowth": 2.9,
+    "intGrowth": 1.55,
+    "primary": "AGI",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 2,

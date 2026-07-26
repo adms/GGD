@@ -61,6 +61,16 @@ const (
 	MaxFactor = 10.0
 )
 
+// Bounds for the eight 三圍 COEFFICIENTS (task #248). They are not ×factors:
+// they say how much stat one point of strength/agility/intelligence is worth,
+// so their shipped values (25 hp per STR, 15 mana per INT) sit ABOVE MaxFactor,
+// and 0 is a meaningful setting ("turn this derivation axis off") where a 0
+// damage multiplier is not. Mirrors ATTRIBUTE_COEF_MAX in the shared sim.
+const (
+	MinAttrCoef = 0.0
+	MaxAttrCoef = 100.0
+)
+
 // Keys is the canonical list of combat-env multiplier keys, mirroring
 // COMBAT_ENV_KEYS in packages/shared/src/sim/combatEnv.ts. Order matters only
 // for readability; membership is what validation enforces.
@@ -86,6 +96,59 @@ var Keys = []string{
 	// packages/shared and to the content tree but not here, so the console could
 	// not see or edit it — see the drift guard in keysync_test.go.
 	"abilityRange",
+	// The eight 三圍 coefficients (task #248). Not ×factors — see AttrDefaults.
+	"strToMaxHealth",
+	"strToHealthRegen",
+	"strToAttackDamage",
+	"agiToArmor",
+	"agiToAttackSpeed",
+	"intToMaxMana",
+	"intToManaRegen",
+	"intToAbilityPower",
+}
+
+// AttrDefaults is the SHIPPED value of each 三圍 coefficient (task #248),
+// mirroring ATTRIBUTE_ENV_DEFAULTS in packages/shared/src/sim/combatEnv.ts.
+// Membership here is also what makes a key a "coefficient": it gets the
+// [MinAttrCoef, MaxAttrCoef] bounds instead of the ×factor ones, and its
+// neutral/reset value is this number rather than 1.0.
+//
+// Getting this wrong is not cosmetic. A missing key falls back to 1.0 in
+// sanitize(), and "力量 → 生命 = 1" would give every champion roughly 4% of its
+// intended health — so keysync_test.go asserts this map against the shared
+// literal, key for key and value for value.
+var AttrDefaults = map[string]float64{
+	"strToMaxHealth":    25,
+	"strToHealthRegen":  0.05,
+	"strToAttackDamage": 1,
+	"agiToArmor":        0.3,
+	"agiToAttackSpeed":  0.02,
+	"intToMaxMana":      15,
+	"intToManaRegen":    0.05,
+	"intToAbilityPower": 1,
+}
+
+// IsAttrCoef reports whether k is one of the eight 三圍 coefficients.
+func IsAttrCoef(k string) bool {
+	_, ok := AttrDefaults[k]
+	return ok
+}
+
+// DefaultFor is a key's shipped value: 1.0 for a ×factor, the WC3/design
+// coefficient for a 三圍 key.
+func DefaultFor(k string) float64 {
+	if v, ok := AttrDefaults[k]; ok {
+		return v
+	}
+	return 1.0
+}
+
+// Bounds is the legal [min, max] a PUT accepts for one key.
+func Bounds(k string) (float64, float64) {
+	if IsAttrCoef(k) {
+		return MinAttrCoef, MaxAttrCoef
+	}
+	return MinFactor, MaxFactor
 }
 
 var known = func() map[string]struct{} {
@@ -111,13 +174,14 @@ type Doc struct {
 	Multipliers map[string]float64 `json:"multipliers"`
 }
 
-// DefaultDoc is the neutral table: every factor 1.0, byte-identical legacy
-// combat behavior. It is the floor, NOT what an operator should be shown —
-// see contentDefaults and Service.baseDoc.
+// DefaultDoc is the shipped table: every ×factor 1.0 (byte-identical legacy
+// combat behavior) and every 三圍 coefficient at its WC3/design value. It is
+// the floor, NOT what an operator should be shown — see contentDefaults and
+// Service.baseDoc.
 func DefaultDoc() Doc {
 	m := make(map[string]float64, len(Keys))
 	for _, k := range Keys {
-		m[k] = 1.0
+		m[k] = DefaultFor(k)
 	}
 	return Doc{Version: SchemaVersion, Multipliers: m}
 }
@@ -193,7 +257,7 @@ func (d *Doc) sanitizeFrom(base map[string]float64) {
 	for _, k := range Keys {
 		v, ok := d.Multipliers[k]
 		if !ok || math.IsNaN(v) || math.IsInf(v, 0) {
-			v = 1.0
+			v = DefaultFor(k)
 			if bv, has := base[k]; has {
 				v = bv
 			}
@@ -206,15 +270,18 @@ func (d *Doc) sanitizeFrom(base map[string]float64) {
 	}
 }
 
-// sanitize backfills missing keys with 1.0, drops unknown keys, and replaces
-// non-finite values with 1.0 — tolerance for hand-edited / older files. It
-// never rejects: the durable file was already validated at write time.
+// sanitize backfills missing keys with their shipped default, drops unknown
+// keys, and replaces non-finite values — tolerance for hand-edited / older
+// files. It never rejects: the durable file was already validated at write
+// time. NOTE the backfill is `DefaultFor`, not a bare 1.0: a doc written before
+// #248 carries no 三圍 coefficients, and filling those with 1 would ship a
+// roster at ~4% of its intended health.
 func (d *Doc) sanitize() {
 	out := make(map[string]float64, len(Keys))
 	for _, k := range Keys {
 		v, ok := d.Multipliers[k]
 		if !ok || math.IsNaN(v) || math.IsInf(v, 0) {
-			v = 1.0
+			v = DefaultFor(k)
 		}
 		out[k] = v
 	}
@@ -361,11 +428,12 @@ func (s *Service) Replace(ctx context.Context, in map[string]float64) (Doc, erro
 		if math.IsNaN(v) || math.IsInf(v, 0) {
 			return DefaultDoc(), httpx.BadRequest("multiplier " + k + " must be a finite number")
 		}
-		if v < MinFactor || v > MaxFactor {
+		lo, hi := Bounds(k)
+		if v < lo || v > hi {
 			return DefaultDoc(), httpx.BadRequest(
 				"multiplier " + k + " must be between " +
-					strconv.FormatFloat(MinFactor, 'g', -1, 64) + " and " +
-					strconv.FormatFloat(MaxFactor, 'g', -1, 64))
+					strconv.FormatFloat(lo, 'g', -1, 64) + " and " +
+					strconv.FormatFloat(hi, 'g', -1, 64))
 		}
 	}
 
@@ -385,8 +453,11 @@ func (s *Service) Replace(ctx context.Context, in map[string]float64) (Doc, erro
 	return doc, nil
 }
 
-// NonNeutral returns the factors that differ from 1.0, sorted by key — the
-// compact audit-detail form of a table (an all-neutral save audits as {}).
+// NonNeutral returns the entries that differ from their SHIPPED default,
+// sorted by key — the compact audit-detail form of a table (a save that
+// changes nothing audits as {}). "Shipped default", not 1.0: the eight 三圍
+// coefficients ship at 25 / 15 / 0.05 …, and measuring them against 1 would
+// stamp eight phantom changes onto every audit line.
 func NonNeutral(d Doc) map[string]float64 {
 	out := map[string]float64{}
 	keys := make([]string, 0, len(d.Multipliers))
@@ -395,7 +466,7 @@ func NonNeutral(d Doc) map[string]float64 {
 	}
 	sort.Strings(keys)
 	for _, k := range keys {
-		if d.Multipliers[k] != 1.0 {
+		if d.Multipliers[k] != DefaultFor(k) {
 			out[k] = d.Multipliers[k]
 		}
 	}

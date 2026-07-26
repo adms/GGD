@@ -8,13 +8,13 @@
   "attackType": "melee",
   "modelKey": "imported.horse",
   "baseStats": {
-    "maxHealth": 440,
-    "healthRegen": 1.05,
-    "maxMana": 352,
-    "manaRegen": 1.64,
-    "ad": 29,
+    "maxHealth": 150,
+    "healthRegen": 0.5,
+    "maxMana": 100,
+    "manaRegen": 0.1,
+    "ad": 10,
     "ap": 0,
-    "armor": 9,
+    "armor": 2,
     "mr": 28,
     "as": 0.5,
     "ms": 5.5,
@@ -33,6 +33,16 @@
     "armor": 0.8,
     "mr": 1.2,
     "as": 0.02
+  },
+  "attributes": {
+    "str": 16,
+    "agi": 23,
+    "int": 21,
+    "strGrowth": 1.5,
+    "agiGrowth": 2.5,
+    "intGrowth": 2,
+    "primary": "AGI",
+    "source": "w3x"
   },
   "hitFeel": {
     "hitstopTicks": 1,

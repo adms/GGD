@@ -260,6 +260,85 @@ describe("statPreview — reconstruction parity", () => {
   });
 });
 
+describe("#248 attr-06 — the preview tells the truth about 三圍-derived stats", () => {
+  // The preview reconstructs a champion from a SeatView-shaped context, so it
+  // recomputes the stat card from `championId` + `level`. Since #248 the card's
+  // eight attribute rows are NOT `def.baseStats` any more — they are
+  // `baseStats + attr(level)·coefficient + growth·(level−1)`. A preview that
+  // reconstructed from `baseStats` alone would under-report health by hundreds
+  // of points AND would report a level-INDEPENDENT number. #106's rule is that
+  // the panel must not lie; these pin it against the sim.
+  const ATTR_STATS = [
+    Stat.MaxHealth,
+    Stat.HealthRegen,
+    Stat.AttackDamage,
+    Stat.Armor,
+    Stat.AttackSpeed,
+    Stat.MaxMana,
+    Stat.ManaRegen,
+    Stat.AbilityPower,
+  ];
+
+  it("matches the sim exactly at every level, with no items (sp-12)", () => {
+    cover("shop-stat-preview");
+    cover("attr-248-shop-preview-truthful");
+    for (const championId of ["thorne", "sela"]) {
+      for (const level of [1, 2, 6, 12, 18]) {
+        const world = new SimWorld(SKELETON_ARENA, 1);
+        const id = spawnHero(world, championId, level);
+        expectBlocksEqual(computeStatBlock(ctxFromWorld(world, id))!, world.stats.get(id)!.final);
+      }
+    }
+  });
+
+  it("the attribute-derived rows actually move with level (sp-12)", () => {
+    cover("attr-248-shop-preview-truthful");
+    // Guards against a preview that agrees with the sim only because BOTH read
+    // a level-independent constant.
+    const w1 = new SimWorld(SKELETON_ARENA, 1);
+    const w18 = new SimWorld(SKELETON_ARENA, 1);
+    const at1 = computeStatBlock(ctxFromWorld(w1, spawnHero(w1, "thorne", 1)))!;
+    const at18 = computeStatBlock(ctxFromWorld(w18, spawnHero(w18, "thorne", 18)))!;
+    for (const s of ATTR_STATS) expect(`${s}:${at18[s] > at1[s]}`).toBe(`${s}:true`);
+    // ap is the row #248 brought to life: 0 for the whole roster before, now
+    // INT-sourced. A preview still showing 0 here means it lost the attributes.
+    expect(at1[Stat.AbilityPower]).toBeGreaterThan(0);
+    // …and the shown level-1 health really is above the raw card.
+    expect(at1[Stat.MaxHealth]).toBeGreaterThan(
+      Champions.get("thorne" as ChampionId).baseStats[Stat.MaxHealth] ?? 0,
+    );
+  });
+
+  it("stays truthful after buying an item on top of the attribute base (sp-12)", () => {
+    cover("attr-248-shop-preview-truthful");
+    const world = new SimWorld(SKELETON_ARENA, 1);
+    const id = spawnHero(world, "thorne", 12);
+    const { preview, result, after, before } = predictThenBuy(world, id, "tp-hp");
+    expect(result).toBe("ok");
+    expectBlocksEqual(preview.after, after);
+    // A FLAT hp item adds its value on top of the attribute-inflated base.
+    expect(after[Stat.MaxHealth] - before[Stat.MaxHealth]).toBeCloseTo(300, 6);
+  });
+
+  it("follows a non-neutral 三圍 coefficient (sp-12)", () => {
+    cover("attr-248-shop-preview-truthful");
+    // An operator can retune str→hp live from the admin 戰鬥系統 page, exactly
+    // like the other combat-env entries. The preview reads the env it is handed
+    // and must move with it — the same way the sim does.
+    const env = normalizeCombatEnv({ strToMaxHealth: 50 });
+    const world = new SimWorld(SKELETON_ARENA, 1);
+    world.combatEnv = env;
+    const id = spawnHero(world, "thorne", 6);
+    recomputeStats(world, id);
+    const predicted = computeStatBlock(ctxFromWorld(world, id, env))!;
+    expectBlocksEqual(predicted, world.stats.get(id)!.final);
+
+    const neutral = new SimWorld(SKELETON_ARENA, 1);
+    const nId = spawnHero(neutral, "thorne", 6);
+    expect(predicted[Stat.MaxHealth]).toBeGreaterThan(neutral.stats.get(nId)!.final[Stat.MaxHealth]);
+  });
+});
+
 describe("previewExactness — the anti-lie tell", () => {
   it("is exact with no stat ticks and an agreeing authoritative HP (sp-09)", () => {
     cover("shop-stat-preview");

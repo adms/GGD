@@ -118,9 +118,23 @@ describe("stat pipeline", () => {
     grantXp(world, sela, xpToNext(1)); // -> level 2
     recomputeStats(world, sela);
     expect(world.champion.get(sela)!.level).toBe(2);
-    expect(hp.maxHp).toBeCloseTo(maxAt1 + 90, 6);
+    // #248 — THE THREE ADDITIVE LAYERS, ASSERTED SEPARATELY.
+    //   stat(L) = baseStats + attr(L)·coefficient + growth·(L−1)
+    // Sela's level-2 health moves by BOTH the designer knob (growth.maxHealth
+    // 90) and the attribute curve (strToMaxHealth 25 × strGrowth 3.6 = 90).
+    // That is deliberate and it is not double-counting: the owner ruled the two
+    // sources may overlap because they mean different things (see
+    // stats/attributes.ts). Spelling out `90 + 90` rather than writing `180`
+    // is the point of the test — if a future reader drops either layer, or
+    // applies one of them twice, exactly one of these numbers moves.
+    const growthLayer = 90; // sela.growth[MaxHealth]
+    const attrLayer = 25 * 3.6; // strToMaxHealth × sela.attributes.strGrowth
+    expect(hp.maxHp).toBeCloseTo(maxAt1 + growthLayer + attrLayer, 6);
     expect(hp.hp / hp.maxHp).toBeCloseTo(0.5, 6); // ratio preserved
-    expect(world.stats.get(sela)!.final[Stat.AttackDamage]).toBeCloseTo(52 + 3, 6);
+    // Same decomposition on a stat whose two layers DISAGREE, so the test can
+    // tell them apart: growth.ad is the hand-authored 3, the attribute curve is
+    // strToAttackDamage 1 × strGrowth 3.6.
+    expect(world.stats.get(sela)!.final[Stat.AttackDamage]).toBeCloseTo(52 + 3 + 1 * 3.6, 6);
   });
 
   it("attach/detach + timed buff expiry (fx-05, fx-06)", () => {
@@ -309,8 +323,13 @@ describe("abilities", () => {
       }
     }
     expect(projectileHit).toBe(true);
-    // rank1: 20+60 = 80 magic, mitigated by thorne MR (32): 80 * 100/132 ≈ 60.6
-    expect(abilityDamage).toBeCloseTo(80 * (100 / 132), 1);
+    // rank1: 20 + 60 flat, PLUS the 0.7 AP ratio the doc has always carried.
+    // #248 is why that last term is finally non-zero: every champion now has
+    // real AP (`intToAbilityPower × INT`, sela INT 26 → AP 26), where before the
+    // whole roster sat at AP 0 and every authored `ap` coefficient multiplied by
+    // nothing. 80 + 0.7×26 = 98.2 magic, mitigated by thorne's MR 32:
+    // 98.2 × 100/132 ≈ 74.4.
+    expect(abilityDamage).toBeCloseTo((80 + 0.7 * 26) * (100 / 132), 1);
     expect(kindlingDamage).toBeGreaterThan(0); // passive fired
     expect(world.health.get(thorne)!.hp).toBeLessThan(hpBefore);
   });
