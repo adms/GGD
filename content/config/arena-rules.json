@@ -148,7 +148,11 @@
       "modelKey": "champ.godie-zombiex",
       "championId": "godie-zombiex",
       "baseLevel": 3,
-      "levelPerRound": 1
+      "levelPerRound": 1,
+      "baseHp": 100,
+      "hpPerLevel": 100,
+      "baseRegen": 1,
+      "regenPerLevel": 0.2
     },
     "reward": {
       "gold": 20,

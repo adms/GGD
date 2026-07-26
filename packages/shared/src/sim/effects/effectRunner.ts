@@ -115,6 +115,32 @@ function applyEffect(e: EffectDef, ctx: EffectContext): void {
       const duration = rk?.duration ?? e.duration;
       const expiresAtTick = world.tick + Math.round(duration / world.dt);
       for (const target of ctx.targets) {
+        // #244 STACKING PATH: one source per key, `stacks` counts applications.
+        // Fixes the same-tick collision the id below has (two mobs killed by one
+        // AoE on one tick used to overwrite each other and only pay once) and
+        // keeps the source list O(1) instead of one entry per proc.
+        if (e.stackKey !== undefined) {
+          const sc = world.stats.get(target);
+          if (!sc) continue;
+          const id = `buff:stack:${e.stackKey}`;
+          const existing = sc.sources.find((s) => s.id === id);
+          if (existing) {
+            const cap = e.maxStacks ?? Number.POSITIVE_INFINITY;
+            existing.stacks = Math.min((existing.stacks ?? 1) + 1, cap);
+            existing.expiresAtTick = expiresAtTick;
+            sc.dirty = true;
+          } else {
+            attachSource(world, target, {
+              id,
+              kind: "buff",
+              modifiers,
+              expiresAtTick,
+              stacks: 1,
+              ...(e.stackVisual ? { visualStacks: true } : {}),
+            });
+          }
+          continue;
+        }
         attachSource(world, target, {
           id: `buff:${ctx.origin}#${world.tick}`,
           kind: "buff",

@@ -46,6 +46,12 @@ import { glbYawOffset } from "./glbFacing";
 import { castFollowThroughMs, castStrikeFractionFor } from "../anim/castStrike";
 import { ARCHETYPE_BY_MODEL_KEY, fallbackAccentFor, type VoxelLook } from "./voxelLook";
 import { applyVoxelLook, releaseVoxelLook, type VoxelLookHandle } from "./voxelSkin";
+import {
+  GROWTH_RING_FADE_MS,
+  GROWTH_SCALE_EASE_MS,
+  GROWTH_TIER_SCALE,
+  type GrowthTier,
+} from "./growthTier";
 
 /**
  * Yaw turn rate (per second) for visual rotation smoothing. The rendered model
@@ -261,6 +267,25 @@ export class ChampionView {
   private curFacing: Facing2 = { x: 0, z: 1 };
   private targetFacing: Facing2 = { x: 0, z: 1 };
   private facingInit = false;
+
+  // ---- #244 GROWTH TIER (黑泥吞噬) ----
+  /** Tier the SERVER says this body is at (0/1/2), from two EntityState flag bits. */
+  private growthTier: GrowthTier = 0;
+  /** Tier the scale has actually been written for — the idempotence guard. */
+  private growthApplied: GrowthTier = 0;
+  /** A tier that arrived before the .glb landed, replayed at the end of the adopt. */
+  private growthPending = false;
+  /** Lazily built on the tier-2 edge; a persistent spreading black-mud ring. */
+  private mudRing: Mesh | null = null;
+  private mudRingMat: StandardMaterial | null = null;
+  /** ms at which the current tier became active (drives the ease + the fade). */
+  private growthSinceMs = 0;
+  /** the scale factor currently written to the body (the eased value). */
+  private growthFactor = 1;
+  /** factor the running ease started from (so a mid-ease change never snaps). */
+  private growthEaseFrom = 1;
+  /** true once a factor has actually been written (first write is unconditional). */
+  private growthFactorWritten = false;
 
   constructor(
     scene: Scene,
@@ -488,6 +513,156 @@ export class ChampionView {
       this.root.getScene(),
       `champ-${this.entityId}-voxel`,
     );
+  }
+
+  /** The tier the SIZE is currently written for (test/diagnostics seam). */
+  get appliedGrowthTier(): GrowthTier {
+    return this.growthApplied;
+  }
+
+  /** True once the tier-2 black-mud foot ring exists (test/diagnostics seam). */
+  get hasMudRing(): boolean {
+    return this.mudRing !== null;
+  }
+
+  /**
+   * GROWTH TIER (task #244) — the SIZE half of 黑泥吞噬. Called by the registry
+   * every sync from two `EntityState.flags` bits; idempotent and early-returns
+   * when the tier has not moved, so the per-frame cost is one integer compare.
+   *
+   * WHAT IT SCALES, AND WHAT IT DELIBERATELY DOES NOT.
+   *   • `bodyRoot` (the procedural figure) and `glbRoot` (the adopted mesh) —
+   *     the champion's ART, which is the whole point.
+   *   • `blobShadow` — a bigger thing casts a bigger shadow, and from a fixed
+   *     camera the shadow is most of what sells the size read.
+   *   • NOT `root`: the shadow and the team ring hang off it. And NOT
+   *     `teamRing`, ever. That torus is a UI affordance that must be the same
+   *     size on every champion or team identity stops being legible — #231
+   *     already flags team colour as the highest-risk surface of this work.
+   *
+   * THE GROUND SHIFT IS THE EASY THING TO GET WRONG. `tryUpgradeToGlb` sets
+   * `glbRoot.position.y = -min.y` measured in the OLD scaled frame. Scaling to
+   * 1.25× without re-measuring sinks a quarter of the body through the floor,
+   * so the shift is recomputed here every time the scale changes.
+   *
+   * #150 is NOT re-opened: that contract is about the DECLARED per-champion size
+   * baked at load time. This is a live combat-state modifier — the same category
+   * as a size buff — and it composes ON TOP of the normalization (always off the
+   * STORED `declaredScaleValue`, never off the current scaling, or the multiply
+   * would compound every call).
+   */
+  setGrowthTier(tier: GrowthTier, nowMs = 0): void {
+    if (this.disposed) return;
+    if (tier === this.growthApplied && !this.growthPending) return;
+    if (tier !== this.growthTier) {
+      this.growthTier = tier;
+      // ease FROM whatever factor is on screen right now, so a tier change
+      // mid-ease continues smoothly instead of snapping back to the old base
+      this.growthEaseFrom = this.growthFactor;
+      this.growthSinceMs = nowMs;
+    }
+    this.growthApplied = tier;
+    this.growthPending = false;
+    if (tier >= 2) this.ensureMudRing();
+    else this.mudRing?.setEnabled(false);
+    // write the first frame immediately so a tier that arrives with nowMs=0
+    // (tests, a fresh view) is visible without waiting for an update tick
+    this.applyGrowthScale(nowMs);
+  }
+
+  /** Ease the body/shadow to the current tier's factor and re-seat the glb. */
+  private applyGrowthScale(nowMs: number): void {
+    const target = GROWTH_TIER_SCALE[this.growthTier] ?? 1;
+    const t =
+      GROWTH_SCALE_EASE_MS <= 0
+        ? 1
+        : Math.min(1, Math.max(0, (nowMs - this.growthSinceMs) / GROWTH_SCALE_EASE_MS));
+    // ease-out cubic — fast at the start so the swell reads as a lurch
+    const e = 1 - (1 - t) * (1 - t) * (1 - t);
+    const f = this.growthEaseFrom + (target - this.growthEaseFrom) * e;
+    if (Math.abs(f - this.growthFactor) < 1e-4 && this.growthFactorWritten) return;
+    this.growthFactor = f;
+    this.growthFactorWritten = true;
+    this.bodyRoot.scaling.setAll(f);
+    this.blobShadow.scaling.setAll(f);
+    if (this.glbRoot) {
+      if (this.declaredScaleValue === null) {
+        this.growthPending = true; // adopt mid-flight; replay when it finishes
+      } else {
+        this.glbRoot.scaling.setAll(this.declaredScaleValue * f);
+        this.reground();
+      }
+    } else if (!this.upgradeStarted) {
+      this.growthPending = true; // no glb yet — replay after it lands
+    }
+  }
+
+  /** Re-seat the adopted glb on y=0 after its scale changed (see setGrowthTier). */
+  private reground(): void {
+    const g = this.glbRoot;
+    if (!g) return;
+    g.computeWorldMatrix(true);
+    const { min } = g.getHierarchyBoundingVectors(true);
+    if (Number.isFinite(min.y)) g.position.y = -min.y;
+  }
+
+  /**
+   * The tier-2 BLACK-MUD FOOT RING. Built lazily on the edge (a champion who
+   * never reaches 50 stacks never pays for it) and kept for the rest of the
+   * match, because the stack is permanent — this is not a transient cue.
+   *
+   * Modelled on the two ground discs this view already owns (`blobShadow`) and
+   * on ReviveCircleView, the closest existing precedent for a persistent
+   * animated ground ring: an unlit alpha-blended disc, `isPickable = false`, and
+   * its material in `ownedMaterials` so `dispose()` frees it. Sits at y=0.02 —
+   * above the blob shadow (0.03 is the shadow; the ring goes just under it at
+   * 0.02 so the shadow still reads) and below the team ring (0.04), which must
+   * stay the topmost ground mark.
+   */
+  private ensureMudRing(): void {
+    if (this.mudRing || this.disposed) return;
+    const scene = this.root.getScene();
+    const mat = new StandardMaterial(`champ-${this.entityId}-mudring-mat`, scene);
+    mat.diffuseColor = new Color3(0, 0, 0);
+    mat.emissiveColor = new Color3(0.07, 0.05, 0.09);
+    mat.specularColor = new Color3(0, 0, 0);
+    mat.disableLighting = true;
+    mat.alpha = 0; // faded in by `update`
+    this.ownedMaterials.push(mat);
+    this.mudRingMat = mat;
+    const ring = MeshBuilder.CreateDisc(
+      `champ-${this.entityId}-mudring`,
+      { radius: 0.95, tessellation: 40 },
+      scene,
+    );
+    ring.material = mat;
+    ring.parent = this.root;
+    ring.rotation.x = Math.PI / 2;
+    ring.position.y = 0.02;
+    ring.isPickable = false;
+    this.mudRing = ring;
+  }
+
+  /**
+   * Per-frame growth animation: the 0.35 s scale ease and the ring's fade +
+   * slow pulse. Driven off the `nowMs` the registry already threads into
+   * `update`, so there is no new clock and nothing to keep in sync.
+   */
+  private updateGrowth(nowMs: number): void {
+    this.applyGrowthScale(nowMs);
+    const ring = this.mudRing;
+    if (!ring || !this.mudRingMat) return;
+    if (this.growthTier < 2) {
+      this.mudRingMat.alpha = 0;
+      return;
+    }
+    const since = Math.max(0, nowMs - this.growthSinceMs);
+    const fade = Math.min(1, since / GROWTH_RING_FADE_MS);
+    // slow 2.2 s breathe so it reads as spreading mud, not a static decal
+    const pulse = 1 + 0.05 * Math.sin((since / 2200) * Math.PI * 2);
+    this.mudRingMat.alpha = 0.55 * fade;
+    ring.scaling.x = pulse;
+    ring.scaling.y = pulse;
   }
 
   /**
@@ -746,6 +921,9 @@ export class ChampionView {
     if (!visible) {
       this.teamRing.setEnabled(false);
       this.blobShadow.setEnabled(false);
+      // #244: the mud ring is a ground mark of a LIVING body — a corpse must not
+      // leave one behind. Re-enabled by `resetDissolve` with the other two.
+      this.mudRing?.setEnabled(false);
       // An AnimationGroup is NOT a node: a hidden body whose death clip is still
       // "playing" keeps costing per-frame work in scene.animationGroups. Stop
       // them all; `play()` restarts cleanly if this body is ever revived.
@@ -768,12 +946,16 @@ export class ChampionView {
       this.setBodyVisible(true, 0);
       this.teamRing.setEnabled(true);
       this.blobShadow.setEnabled(true);
+      if (this.growthTier >= 2) this.mudRing?.setEnabled(true);
     }
   }
 
   /** Advance the visual animation for this frame. */
   update(state: AnimState, nowMs: number, dtMs: number, speedUnitsPerSec = 0): void {
     this.stepFacing(dtMs); // yaw smoothing — model-source independent
+    // #244: the growth ease + the tier-2 mud ring, before the dissolve early-out
+    // (a corpse's ring is switched off by setBodyVisible, not by skipping this).
+    this.updateGrowth(nowMs);
     // #220: 3 s on the ground, then rise + fade. Once vanished there is nothing
     // left to animate, so the rest of the frame is skipped entirely.
     if (this.updateDissolve(state, nowMs)) return;
@@ -1026,6 +1208,15 @@ export class ChampionView {
         // but the tint only happens on the NEXT sync, after this returns.
         this.applyVoxelLookToGlb();
         this.declaredScaleValue = finalScale; // the render scale actually applied
+        // #244: a growth tier that arrived while this load was in flight has
+        // nothing to scale yet. Replay it now that `declaredScaleValue` exists —
+        // strictly AFTER the assignment above, because `applyGrowthScale`
+        // multiplies off the STORED value.
+        if (this.growthPending || this.growthTier !== 0) {
+          this.growthPending = false;
+          this.growthFactorWritten = false; // force the write
+          this.applyGrowthScale(this.growthSinceMs + GROWTH_SCALE_EASE_MS);
+        }
         this.clipAnimator = new ClipAnimator(inst.animationGroups, doc.clipMap);
         // hide the procedural fallback
         for (const p of this.proceduralParts) p.setEnabled(false);

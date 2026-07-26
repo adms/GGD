@@ -29,9 +29,10 @@
  * trig (the direction table is authored numeric literals, not a `Math.cos`
  * loop), no `Math.pow`, no wall-clock — see `sim/purity.test.ts`.
  *
- * LEVEL (task #217). A mob is level `baseLevel + levelPerRound*(round-fromRound)`
- * — round 3 → lv3, round 4 → lv4, … — and its maxHp/regen follow the 喪標麥可
- * champion doc's `baseStats + growth*(level-1)`. The ROUND lives on the HOST, so
+ * LEVEL (task #217, curve re-sourced by #244). A mob is level
+ * `baseLevel + levelPerRound*(round-fromRound)` — round 3 → lv3, round 4 → lv4,
+ * … — and its maxHp/regen follow the MOB CARD's own
+ * `baseHp + hpPerLevel*(level-1)`. The ROUND lives on the HOST, so
  * it reaches the sim through the one deterministic arming channel that already
  * carries everything else: `mobRulesFromConfig(cfg, dt, round)` bakes the level
  * and its stats into `MobRules` ONCE, at `beginCombatMobs` time. Nothing per-tick
@@ -47,11 +48,13 @@ import { Champions } from "./content/registry";
 import { Stat } from "./stats/statTypes";
 
 /**
- * The CHAMPION DOC a mob is an avatar of (task #217). A mob still carries NO
- * ChampionComp — the neutrality contract is untouched — but its LEVELLED stats
- * are read from this doc's `baseStats`/`growth` ONCE at arm time
- * (`mobRulesFromConfig`), so the hero sheet is the single source of truth for
- * 喪標麥可's HP curve instead of a second set of numbers drifting in the config.
+ * The CHAMPION DOC a mob is an avatar OF (task #217, re-scoped by #244). A mob
+ * carries NO ChampionComp — the neutrality contract is untouched.
+ *
+ * Since #244 this constant documents WHOSE FACE the mob wears, nothing more:
+ * the mob's levelled hp/regen come from `mobWaves.mob.baseHp`/`hpPerLevel`/
+ * `baseRegen`/`regenPerLevel`. Reading the hero sheet is now only the LEGACY
+ * FALLBACK for arenas authored before the split (see `mobRulesFromConfig`).
  * Overridable per-arena via `mobWaves.mob.championId`.
  */
 export const MOB_CHAMPION_ID = "godie-zombiex";
@@ -99,11 +102,11 @@ export interface MobRules {
    * MobComp) so it is immutable arm-time state that no system can drift.
    */
   level: number;
-  /** mob hit points AT `level` (baseStats.maxHealth + growth.maxHealth*(level-1)) */
+  /** mob hit points AT `level` (#244: `mob.baseHp + mob.hpPerLevel*(level-1)`) */
   maxHp: number;
   /**
-   * Mob hp regenerated PER SECOND at `level` (baseStats.healthRegen +
-   * growth.healthRegen*(level-1)). Applied by mobSystem with the exact
+   * Mob hp regenerated PER SECOND at `level` (#244: `mob.baseRegen +
+   * mob.regenPerLevel*(level-1)`). Applied by mobSystem with the exact
    * `hp + regen * dt` form RegenSystem uses for champions — a mob still has no
    * StatsComp, so this is the only regen path it has.
    */
@@ -144,6 +147,12 @@ export interface MobWavesConfigLike {
     championId?: string;
     baseLevel?: number;
     levelPerRound?: number;
+    /** #244 — the mob's OWN hp curve: round(baseHp + hpPerLevel*(level-1)) */
+    baseHp?: number;
+    hpPerLevel?: number;
+    /** #244 — the mob's OWN regen curve: baseRegen + regenPerLevel*(level-1) */
+    baseRegen?: number;
+    regenPerLevel?: number;
   };
   reward: {
     gold: number;
@@ -183,13 +192,28 @@ export function mobLevelForRound(cfg: MobWavesConfigLike, round: number): number
  * leak in. Omitting it re-arms at `fromRound` (level = baseLevel), which is what
  * every pre-#217 caller/test means.
  *
- * The levelled stats come from the 喪標麥可 CHAMPION DOC (`MOB_CHAMPION_ID`,
- * overridable via `mobWaves.mob.championId`) through the same `Champions`
- * registry `statPipeline.recomputeStats` reads, with the identical
- * `base + growth*(level-1)` law — one source of truth for the hero sheet and its
- * mob avatar. When that doc is not registered (skeleton content, unit tests, a
- * host with no content loaded) it falls back to the config's flat `mob.maxHp`
- * and zero regen, so the mechanic keeps working content-free.
+ * WHERE THE LEVELLED STATS COME FROM — three tiers, in strict precedence
+ * (task #244 「拆文件」):
+ *
+ *   1. THE MOB CARD (`mobWaves.mob.baseHp` / `hpPerLevel` / `baseRegen` /
+ *      `regenPerLevel`) — the SOURCE. This is what the shipped arena authors.
+ *   2. the CHAMPION DOC named by `mob.championId` — a LEGACY FALLBACK for
+ *      arenas authored before #244 (and for any test that hands in a bare
+ *      config), read with the identical `base + growth*(level-1)` law;
+ *   3. the config's flat `mob.maxHp` + zero regen, so the mechanic keeps
+ *      working content-free (skeleton content, unit tests, a host with no
+ *      content loaded).
+ *
+ * WHY THE SPLIT. Until #244 tier 2 was the ONLY tier and this comment called the
+ * champion doc "one source of truth for the hero sheet and its mob avatar". It
+ * was really a coupling BUG: 喪標麥可 is BOTH a pickable hero and the #215 mob,
+ * so every edit to the hero's `baseStats`/`growth` silently re-tuned the
+ * roguelite difficulty — on 2026-07-26 a growth change moved round-3 zombies
+ * from 200 to 300 hp with nobody asking for it. The mob now owns its numbers.
+ * `championId` still travels, but it only documents WHOSE FACE the mob wears.
+ * The identical arithmetic (same `Math.round`, same `base + per*(level-1)`)
+ * means the shipped curve survives the split byte-for-byte: round 3 → 300,
+ * round 4 → 400, round 5 → 500, round 6 → 600.
  */
 export function mobRulesFromConfig(
   cfg: MobWavesConfigLike,
@@ -200,23 +224,29 @@ export function mobRulesFromConfig(
   const level = mobLevelForRound(cfg, round);
   const def = Champions.tryGet((cfg.mob.championId ?? MOB_CHAMPION_ID) as ChampionId);
   const perLevel = level - 1;
+  // TIER 1 (#244): the mob card owns the curve. `baseHp` is the presence flag —
+  // an authored curve wins outright, and the champion doc is never consulted.
   const maxHp =
-    def === undefined
-      ? cfg.mob.maxHp
-      : Math.max(
-          1,
-          Math.round(
-            (def.baseStats[Stat.MaxHealth] ?? cfg.mob.maxHp) +
-              (def.growth[Stat.MaxHealth] ?? 0) * perLevel,
-          ),
-        );
+    cfg.mob.baseHp !== undefined
+      ? Math.max(1, Math.round(cfg.mob.baseHp + (cfg.mob.hpPerLevel ?? 0) * perLevel))
+      : def === undefined
+        ? cfg.mob.maxHp
+        : Math.max(
+            1,
+            Math.round(
+              (def.baseStats[Stat.MaxHealth] ?? cfg.mob.maxHp) +
+                (def.growth[Stat.MaxHealth] ?? 0) * perLevel,
+            ),
+          );
   const hpRegenPerSec =
-    def === undefined
-      ? 0
-      : Math.max(
-          0,
-          (def.baseStats[Stat.HealthRegen] ?? 0) + (def.growth[Stat.HealthRegen] ?? 0) * perLevel,
-        );
+    cfg.mob.baseRegen !== undefined
+      ? Math.max(0, cfg.mob.baseRegen + (cfg.mob.regenPerLevel ?? 0) * perLevel)
+      : def === undefined
+        ? 0
+        : Math.max(
+            0,
+            (def.baseStats[Stat.HealthRegen] ?? 0) + (def.growth[Stat.HealthRegen] ?? 0) * perLevel,
+          );
   return {
     fromRound: cfg.fromRound,
     firstWaveTicks: ticks(cfg.firstWaveSec),

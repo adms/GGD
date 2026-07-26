@@ -47,6 +47,23 @@ export interface HookDef {
    * damage for 15 s per kill) — with the default the buff lands on the corpse.
    */
   target?: "self" | "event";
+  /**
+   * WHAT the event's entity has to BE for this hook to fire (task #244).
+   * "champion" = only an entity carrying a ChampionComp; "mob" = only a
+   * roguelite mob (`world.mob`); "any"/absent = no filter, which is what every
+   * pre-#244 hook means and why the field is optional.
+   *
+   * The reason it exists: 黑泥吞噬 pays +8 max health for a mob kill and +40 for
+   * a champion kill, and one `onKill` event cannot express two payouts. Chosen
+   * over inventing an `onMobKill` event so there stays ONE event, one doc shape
+   * and one place to reason about firing order. It also lets a hook that was
+   * authored when mob kills never fired keep its exact old behaviour by pinning
+   * `victim: "champion"`.
+   *
+   * The filter is skipped when the event carries no entity at all (a hook with
+   * `target: "self"` on an entity-less event still fires, as before).
+   */
+  victim?: "champion" | "mob" | "any";
   /** internal cooldown in seconds (0/undefined = every trigger) */
   internalCooldown?: number;
   /**
@@ -81,6 +98,14 @@ export interface ModifierSource {
   /** for buffs: expiry tick (undefined = permanent) */
   expiresAtTick?: number;
   stacks?: number;
+  /**
+   * PRESENTATION tag (task #244): this source's `stacks` are meant to be SEEN.
+   * `visualStackCount` sums them and the snapshot turns the total into two
+   * ENTITY_FLAG threshold bits, so a "the silhouette walking at you is getting
+   * bigger" mechanic needs no new wire field and no per-champion netcode. Set
+   * from the content's `applyBuff.stackVisual`. Never alters the stat pipeline.
+   */
+  visualStacks?: boolean;
   /**
    * Pure PRESENTATION tag (does NOT alter the stat pipeline or any damage
    * number): marks this source as a "damage-reduction / guard" buff. While an

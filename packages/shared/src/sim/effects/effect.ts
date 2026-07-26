@@ -45,6 +45,27 @@ export type EffectDef =
       modifiers: StatModifier[];
       duration: number;
       perRank?: { modifiers: StatModifier[]; duration: number }[];
+      /**
+       * STACKING (task #244). Without it every application attaches a NEW
+       * ModifierSource keyed `buff:<origin>#<tick>` — which has two defects for
+       * a "permanent, once per kill" buff: 180 kills leave 180 live sources for
+       * `recomputeStats` and `fireHooks` to rescan, and two kills on the SAME
+       * TICK (one AoE, two mobs) collide on that id so only ONE lands.
+       *
+       * With `stackKey` the buff instead lands on ONE source with the fixed id
+       * `buff:stack:<stackKey>` and bumps its `stacks` counter. `statPipeline`
+       * already multiplies every flat/percent-add modifier by `stacks`, so the
+       * arithmetic is identical while the source count stays O(1).
+       */
+      stackKey?: string;
+      /** hard ceiling on `stacks` (absent = unbounded) */
+      maxStacks?: number;
+      /**
+       * This stack is meant to be SEEN: the snapshot sums `stacks` over sources
+       * flagged this way and sets the growth-tier ENTITY_FLAG bits, so a
+       * champion-agnostic "visible growth" read costs zero new wire fields.
+       */
+      stackVisual?: boolean;
     }
   /**
    * restore — WC3's `SetUnitLifePercentBJ` / `SetUnitManaPercentBJ` idiom: set a

@@ -1,37 +1,70 @@
 {
   "id": "godie-zombiex.passive",
   "schema": "ability@1",
-  "name": "100-00 黑聖杯・四拍令咒",
-  "description": "[天生技]\n40秒冷卻時間\n\n黑泥瞬間硬化成殼，短時間大幅提升護甲與魔抗，讓這隻沒有防禦的喪屍撐過爆發。",
+  "name": "100-00 黑泥吞噬",
+  "description": "[被動]\n0秒冷卻時間\n\n黑化聖杯溢出的惡意邪念，吞下去的東西全部變成自己的血肉。每擊殺一隻部隊永久增加 8 點最大生命，每擊殺一名敵方英雄永久增加 40 點最大生命，持續整場對戰。\n\n疊到 20 層時身體開始腫脹發黑，疊到 50 層時整個人大上一號、腳邊拖出一圈化不開的黑泥。",
   "slot": "PASSIVE",
-  "innateKind": "active",
+  "innateKind": "passive",
   "castType": "self",
   "maxRank": 1,
   "cooldown": [
-    40.0
+    0.0
   ],
   "manaCost": [
-    50.0
+    0.0
   ],
   "range": 0,
-  "effects": [
-    {
-      "kind": "applyBuff",
-      "modifiers": [
-        {
-          "stat": "armor",
-          "op": "flat",
-          "value": 35.0
-        },
-        {
-          "stat": "mr",
-          "op": "flat",
-          "value": 35.0
-        }
-      ],
-      "duration": 4.0
-    }
-  ],
-  "vfxKey": "fx.prim.holy.pulse-lg",
-  "castTimeSec": 0.3
+  "effects": [],
+  "vfxKey": "fx.prim.void.pulse-sm",
+  "passive": {
+    "name": "100-00 黑泥吞噬",
+    "ranks": [
+      {
+        "hooks": [
+          {
+            "on": "onKill",
+            "target": "self",
+            "victim": "mob",
+            "effects": [
+              {
+                "kind": "applyBuff",
+                "modifiers": [
+                  {
+                    "stat": "maxHealth",
+                    "op": "flat",
+                    "value": 8
+                  }
+                ],
+                "duration": 99999.0,
+                "stackKey": "blackmud-mob",
+                "maxStacks": 200,
+                "stackVisual": true
+              }
+            ]
+          },
+          {
+            "on": "onKill",
+            "target": "self",
+            "victim": "champion",
+            "effects": [
+              {
+                "kind": "applyBuff",
+                "modifiers": [
+                  {
+                    "stat": "maxHealth",
+                    "op": "flat",
+                    "value": 40
+                  }
+                ],
+                "duration": 99999.0,
+                "stackKey": "blackmud-champ",
+                "maxStacks": 40,
+                "stackVisual": true
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 }

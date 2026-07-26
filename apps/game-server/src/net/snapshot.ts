@@ -4,7 +4,8 @@
  * later without touching anything else.
  */
 import type { ArraySchema } from "@colyseus/schema";
-import { DuelState, ENTITY_FLAG, ENTITY_KIND, EntityState, MatchState, OfferState, ROUND_OUTCOME, SeatState, TeamState } from "@ggd/shared/protocol/schema";
+import { DuelState, ENTITY_FLAG, ENTITY_KIND, EntityState, GROWTH_TIER_STACKS, MatchState, OfferState, ROUND_OUTCOME, SeatState, TeamState } from "@ggd/shared/protocol/schema";
+import { visualStackCount } from "@ggd/shared/sim/stats/visualStacks";
 import { Champions } from "@ggd/shared/sim/content/registry";
 import { FLOWER_MODEL_KEY } from "@ggd/shared/sim/flowers";
 import { REVIVE_CIRCLE_MODEL_KEY } from "@ggd/shared/sim/revive";
@@ -351,6 +352,14 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
       // translucent red. Composed from the sim's burn predicate itself, so the
       // wash and the damage can never disagree.
       if (isBurnedByFireRing(world, id)) flags |= ENTITY_FLAG.BURNING;
+      // #244 — VISIBLE GROWTH. Two threshold bits in a `flags` word that is
+      // already on the wire, so the boss reveal costs ZERO extra bytes and is
+      // legible to enemies and spectators with no seat lookup. The COUNT stays
+      // server-side; the client only ever needs the tier. Champion-agnostic: the
+      // content decides which stacks are visible (`applyBuff.stackVisual`).
+      const grown = visualStackCount(world, id);
+      if (grown >= GROWTH_TIER_STACKS[0]) flags |= ENTITY_FLAG.MUD_SWELL;
+      if (grown >= GROWTH_TIER_STACKS[1]) flags |= ENTITY_FLAG.MUD_BOSS;
       es.flags = flags;
     }
   }

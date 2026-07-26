@@ -21,6 +21,8 @@ import { GuardianView } from "./views/GuardianView";
 import { ReviveCircleView } from "./views/ReviveCircleView";
 import { CoinView } from "./views/CoinView";
 import { applyModelTint, releaseModelTint, type ModelTint } from "./views/modelTint";
+import { mudTintFor, type GrowthTier } from "./views/growthTier";
+import { growthTierFromFlags } from "@ggd/shared/protocol/schema";
 import type { VoxelLook } from "./views/voxelLook";
 import type { AssetManager } from "./AssetManager";
 import {
@@ -37,6 +39,25 @@ interface TintState {
   tint: ModelTint | null;
   /** true once the tint has been applied to the .glb meshes (they arrive late) */
   glbPainted: boolean;
+  /**
+   * #244 — the GROWTH TIER the currently-painted colour includes. The mud
+   * multiply is folded INTO the #49 tint rather than painted by a second
+   * painter, so `applyModelTint`'s "always recompute from the remembered source
+   * colour" rule keeps a tier change from compounding. This field is the
+   * "has the composed colour changed" guard that keeps the per-frame cost at
+   * one integer compare.
+   */
+  tier: GrowthTier;
+}
+
+/**
+ * #244 — fold the growth-tier mud multiply into the #49 champion tint. Tier 0
+ * returns the champion's own tint untouched (so 93 of 113 untinted champions
+ * still resolve to `null` and never have their materials touched at all).
+ */
+function composeGrowth(tint: ModelTint | null, tier: GrowthTier): ModelTint | null {
+  if (tier === 0) return tint;
+  return { ...(tint ?? {}), tint: mudTintFor(tier, tint?.tint) };
 }
 
 /** EMA factor for the observed ground speed fed to run-rate sync. */
@@ -56,6 +77,12 @@ export interface EntityViewState {
   fx: number;
   fz: number;
   alive: boolean;
+  /**
+   * The authoritative `EntityState.flags` word (task #244). Optional so every
+   * existing fixture and caller stays valid; absent reads as 0 = no flags.
+   * Only the two GROWTH bits are consumed here — the rest are read by GameApp.
+   */
+  flags?: number;
   /**
    * Revive circles (kind 3) only — decoded by the caller from the reused
    * EntityState float slots (see protocol ENTITY_KIND). Absent for every other
@@ -418,19 +445,29 @@ export class EntityViewRegistry {
    * Untinted champions (93 of 113) settle to `tint: null` and cost one map
    * lookup per frame from then on.
    */
-  private applyTint(e: EntityViewState, view: ChampionView): void {
+  private applyTint(e: EntityViewState, view: ChampionView, tier: GrowthTier): void {
     let st = this.tinted.get(e.id);
     if (!st) {
       const resolved = this.content.championTintFor?.(e);
       if (resolved === undefined) return; // seat/content not known yet — retry
-      st = { tint: resolved, glbPainted: false };
+      st = { tint: resolved, glbPainted: false, tier: 0 };
       this.tinted.set(e.id, st);
-      if (!resolved) return; // resolved and neutral: never touch the materials
-      applyModelTint(view.root, resolved); // procedural figure / early meshes
+      if (!resolved && tier === 0) return; // untinted AND unmudded: never touch
+      applyModelTint(view.root, composeGrowth(resolved, tier)); // procedural / early meshes
+      st.tier = tier;
     }
-    if (!st.tint || st.glbPainted || !view.hasGlb) return;
+    // #244: a tier change repaints EVERY time, glb or not — `applyModelTint`
+    // recomputes from each material's remembered source colour, so this cannot
+    // compound and re-entering tier 0 restores the plain champion colour.
+    if (st.tier !== tier) {
+      st.tier = tier;
+      applyModelTint(view.root, composeGrowth(st.tint, tier));
+      st.glbPainted = view.hasGlb;
+      return;
+    }
+    if ((!st.tint && tier === 0) || st.glbPainted || !view.hasGlb) return;
     st.glbPainted = true;
-    applyModelTint(view.root, st.tint); // the .glb meshes just landed
+    applyModelTint(view.root, composeGrowth(st.tint, tier)); // the .glb meshes just landed
   }
 
   /** Per-frame diff + imperative transform/animation write. */
@@ -560,7 +597,13 @@ export class EntityViewRegistry {
         view.setVoxelLook(override?.voxel);
         view.tryUpgradeToGlb(this.assets, doc, relativeScaleOf(override));
       }
-      this.applyTint(e, view);
+      // #244 — the growth tier, read from two bits of the authoritative flags
+      // word. Ordered AFTER the tint on purpose: `applyTint` owns the composed
+      // colour (mud is folded into the #49 multiply), and `setGrowthTier` owns
+      // the size, so the two never race for the same material.
+      const tier = growthTierFromFlags(e.flags ?? 0);
+      this.applyTint(e, view, tier);
+      view.setGrowthTier(tier, args.nowMs);
       const pose = args.poseFor(e);
       view.setPose(pose.x, pose.z, pose.fx, pose.fz);
 

@@ -458,15 +458,37 @@ export const zMobWavesConfig = z
         /** the mob's model doc id (resolved client-side); absent = MOB_MODEL_KEY */
         modelKey: z.string().min(1).optional(),
         /**
-         * #217 — the CHAMPION DOC whose `baseStats`/`growth` give the mob its
-         * levelled maxHp/regen. Absent = `MOB_CHAMPION_ID` (godie-zombiex).
-         * When the doc is not registered the flat `maxHp` above is used instead.
+         * #217 — the CHAMPION DOC the mob wears the FACE of. Since #244 this is
+         * PRESENTATION + a LEGACY FALLBACK only: when the four `baseHp`/
+         * `hpPerLevel`/`baseRegen`/`regenPerLevel` numbers below are authored,
+         * they win and the hero sheet is never read for stats. Absent =
+         * `MOB_CHAMPION_ID` (godie-zombiex).
          */
         championId: z.string().min(1).optional(),
         /** #217 — mob level in round `fromRound` (owner: 第3場 = lv3) */
         baseLevel: z.number().int().min(1).optional(),
         /** #217 — levels gained per round past `fromRound` (owner: 每場 +1) */
         levelPerRound: z.number().int().min(0).optional(),
+        /**
+         * #244 — THE MOB'S OWN HP CURVE, split out of the hero sheet.
+         *
+         * Before #244 the mob's hp was `championDoc.baseStats.maxHealth +
+         * growth.maxHealth*(level-1)`, so editing 喪標麥可 THE HERO silently
+         * re-tuned the roguelite difficulty — it happened on 2026-07-26 when a
+         * growth change moved round-3 zombies from 200 to 300 hp. These four
+         * numbers are the mob's own source; the champion doc is now only a
+         * fallback for arenas authored before #244.
+         *
+         * Law is identical to the hero one so the shipped curve survives
+         * byte-for-byte: `round(baseHp + hpPerLevel*(level-1))`.
+         */
+        baseHp: z.number().positive().optional(),
+        /** #244 — hp gained per mob level past 1 (paired with `baseHp`) */
+        hpPerLevel: z.number().min(0).optional(),
+        /** #244 — hp regenerated per second at level 1 */
+        baseRegen: z.number().min(0).optional(),
+        /** #244 — hp/sec gained per mob level past 1 (paired with `baseRegen`) */
+        regenPerLevel: z.number().min(0).optional(),
       })
       .strict(),
     /** per-kill rewards */
@@ -493,8 +515,8 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
   mobsPerWaveCap: 10,
   maxAlivePerZone: 30,
   mob: {
-    // Fallback only (#217): with the godie-zombiex doc registered the mob's hp is
-    // 100 + 50*(level-1) — 200 at the round-3 floor of level 3.
+    // Flat LAST-RESORT fallback (#217): only reached when neither the #244 mob
+    // curve below nor a registered champion doc is available.
     maxHp: 120,
     attackDamage: 12,
     attackRange: 1.8,
@@ -503,6 +525,15 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     championId: "godie-zombiex",
     baseLevel: 3,
     levelPerRound: 1,
+    // #244 — the mob's OWN curve (owner 2026-07-26): 100 + 100*(level-1), so the
+    // round-3 floor of level 3 is 300 hp, round 4 → 400, round 5 → 500,
+    // round 6 → 600. Regen 1 + 0.2*(level-1). These used to live on the
+    // 喪標麥可 hero sheet; they are the mob's numbers now and the hero's
+    // stats can never move them again.
+    baseHp: 100,
+    hpPerLevel: 100,
+    baseRegen: 1,
+    regenPerLevel: 0.2,
   },
   reward: {
     gold: 20,

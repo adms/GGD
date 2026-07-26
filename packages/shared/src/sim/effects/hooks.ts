@@ -31,6 +31,15 @@ export function fireHooks(
       const hook = src.hooks[hi]!;
       if (hook.on !== event) continue;
       if (hook.abilitySlot && hook.abilitySlot !== abilitySlot) continue;
+      // #244 — WHAT died / was hit. Absent or "any" = no filter, so every
+      // pre-#244 hook is untouched. An entity-less event never filters.
+      if (hook.victim !== undefined && hook.victim !== "any" && target !== undefined) {
+        // Positive tests on BOTH sides: a neutral that is neither (a guardian,
+        // a flower) matches neither filter, which is the honest reading of the
+        // field name.
+        const ok = hook.victim === "mob" ? world.mob.has(target) : world.champion.has(target);
+        if (!ok) continue;
+      }
 
       // internal cooldown
       if (hook.internalCooldown) {

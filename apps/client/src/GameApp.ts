@@ -1376,7 +1376,7 @@ export class GameApp {
     state.entities.forEach((es) => {
       let e = this.entityPool[i];
       if (!e) {
-        e = { id: 0, kind: 0, seatId: 0, key: "", teamId: 0, x: 0, z: 0, fx: 0, fz: 0, alive: false };
+        e = { id: 0, kind: 0, seatId: 0, key: "", teamId: 0, x: 0, z: 0, fx: 0, fz: 0, alive: false, flags: 0 };
         this.entityPool[i] = e;
       }
       e.id = es.id;
@@ -1389,6 +1389,10 @@ export class GameApp {
       e.fx = es.fx;
       e.fz = es.fz;
       e.alive = es.alive;
+      // #244 — the authoritative flags word, forwarded verbatim. The registry
+      // reads only the two GROWTH bits from it; everything else in this file
+      // keeps reading `es.flags` directly, so nothing else changed.
+      e.flags = es.flags;
       // revive circles (kind 3) reuse the float slots for their own state —
       // see protocol ENTITY_KIND for the mapping. Decoded once here so the
       // render layer never has to know about the packing.
