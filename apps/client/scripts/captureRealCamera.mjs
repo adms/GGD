@@ -37,8 +37,13 @@ function parseArgs(argv) {
     if (a === "--shot") out.shots.push(argv[++i]);
     // which audition page to drive. Every such page exposes the same three
     // hooks (`__settled`, `__probe()`, a `#view` canvas), so the capture +
-    // diff machinery is page-agnostic; #263 added `tint-audition.html`.
+    // diff machinery is page-agnostic; #263 added `tint-audition.html` and
+    // #267 added `champion-model-audition.html`.
     else if (a === "--page") out.page = argv[++i];
+    // `--clip x,y,w,h[,scale]` magnifies a REGION OF THE SAME RENDERED FRAME
+    // (CDP clip+scale), so a small-on-screen subject can be inspected without
+    // moving the camera. It is a crop, never a different viewpoint.
+    else if (a === "--clip") out.clip = argv[++i];
     else if (a === "--base") out.base = argv[++i];
     else if (a === "--out") out.out = argv[++i];
     else if (a === "--profile") out.profile = argv[++i];
@@ -167,7 +172,13 @@ async function main() {
       if (settled) break;
     }
     const probe = settled ? await cdp.evaluate("JSON.stringify(window.__probe())") : null;
-    const png = await cdp.send("Page.captureScreenshot", { format: "png" });
+    const shotParams = { format: "png" };
+    if (args.clip) {
+      const [x, y, width, height, scale] = args.clip.split(",").map(Number);
+      shotParams.clip = { x, y, width, height, scale: scale || 1 };
+      shotParams.captureBeyondViewport = false;
+    }
+    const png = await cdp.send("Page.captureScreenshot", shotParams);
     const buf = Buffer.from(png.data, "base64");
     writeFileSync(`${args.out}/${name}.png`, buf);
     // A DOWNSAMPLED RGBA thumbnail read straight off the canvas, for the pixel

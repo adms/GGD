@@ -46,7 +46,7 @@ fixes below were applied; guard suite `tools/w3x-import/test/champion-model-guar
 
 | ID | Item | Test ID | Category | Status |
 | --- | --- | --- | --- | --- |
-| mdl-61 | #73 SWEEP: no champion model ships a stray `TeamGlow*` ground-billboard mesh — the WC3 team-colour quad baked into 36 champion glbs (redundant with ChampionView's own team ring) is stripped by `strip_teamglow.py`; the low+wide quads never define full-bbox top/bottom so the frozen bbox/scale fixtures stay valid; remaining flagged meshes are opaque equipment (Buster Sword/Excalibur/hats) correctly kept | model-teamglow-stripped | regression | done |
+| mdl-61 | ⚠️ **THIS ROW IS NOT #73** — see the #267 section below: #73's title is "sweep un-merged sphere/orb attachment geometry" and this row is the team-glow STRIP, i.e. the opposite direction. The sweep it was named for never ran; 孫悟空 stayed headless for three more months. Kept as-is because the strip itself is real and must not regress. #73 SWEEP: no champion model ships a stray `TeamGlow*` ground-billboard mesh — the WC3 team-colour quad baked into 36 champion glbs (redundant with ChampionView's own team ring) is stripped by `strip_teamglow.py`; the low+wide quads never define full-bbox top/bottom so the frozen bbox/scale fixtures stay valid; remaining flagged meshes are opaque equipment (Buster Sword/Excalibur/hats) correctly kept | model-teamglow-stripped | regression | done |
 | mdl-62 | #68 per-CLIP orientation: every clip `fix_clip_orientation.py` re-grounded (idle/run/hurt ≥45° off upright + attack/cast ≥90° inverted, 19 models / 26 clips incl. heropikachu Stand 99.7°→0° = #111) now starts ≤15° from upright — root-bone frame-0 rotation ≈ identity; death left to fall, borderline 47–74° leans left; only animation samplers rewritten so bind-pose bbox/scale fixtures unchanged | model-clip-orientation-upright | regression | done |
 | mdl-63 | #61 flying/sinking: `ChampionView.tryUpgradeToGlb` grounds every loaded glb (lowest vertex → arena floor `y=0`), the same shift StorePreview #129 / intermission #111 apply — fixes ma (+0.72 float), picacugy/gumdam (~−0.6 sink), herofate (+0.17); feet-at-0 models shift 0 | client-model-grounded | unit | done |
 | mdl-64 | #77 fallback preserves the declared model + scale: `ChampionView.declaredScale` never silently defaults; `EntityViewRegistry.modelOverrideFor`/`applyModelOverride` apply a per-champion `{scale,glbPath?,clipMap?}` over the shared stand-in doc so 小叮噹 (godie-n00b) can render at its map size 0.6, not the shared mage 0.77; override data in `content/models/_standin-overrides.json`. Wiring the championId→override in `GameApp.modelOverrideFor` is the remaining composition-root step (outside this wave's owned set) | client-declared-scale | unit | done |
@@ -151,3 +151,38 @@ fixtures and two doc examples.
 | --- | --- | --- | --- | --- |
 | mdl-258a | 借用共用模組的角色普查：四支 stand-in 各自的角色名單逐一釘住（champ.sela 18 / champ.thorne 10 / champ.skin.barbarian 9 / champ.skin.rogue 6，合計 43 且不重複）、每支 stand-in 的 model doc 真的指向 `blocky-*.glb` 且 `scale` 是誠實的 1.0、每位借用者都有自己的 recipe 且 `preferVoxelBody` 為真、43 人的調色盤兩兩不同、實測磁碟上只有 5 個檔案且總量 < 300 KB 而一角一檔的替代方案 > 8 倍、`_standin-overrides.json` 不得留下已不存在的角色、四個退場的 KayKit 檔案不得回來 | model-standin-census | regression | done |
 | mdl-258b | 體素外觀推導可稽核：`explainVoxelSkin` 對全部 114 位角色逐軸（17 軸）回報決定它的層級與證據，且**每一個被解釋的值都等於產生器實際產出的值**；L1 override 報 L1 並指向 `_voxel-skins.json`、L2 規則附上真的出現在比對字串裡的那個詞、L3 附上讀到的 `vfxKey`（或明說沒有技能特效可判讀）、L4 純雜湊時 `evidence` 必須是 `null` 而不是編一個理由；salt > 1 的重抽要講出來；解釋本身是純函式且不會擾動產生器的輸出；`matchRules` 以 `exec` 取代 `test` 後仍然無狀態（同一字串連呼兩次結果相同） | voxel-skin-explain | unit | done |
+
+## 孫悟空的頭 — 物件資料掛件（task #267，兼 #73 訂正）
+
+Owner, 2026-07-26：「孫悟空的頭 還沒補上 包括選英雄的時候」。
+
+**頭掉在轉檔之前，不在渲染。** `goku.mdx`（MODL name `Goku2`）根本沒有頭蓋骨：body256
+geoset 的 817 個頂點裡，綁到 `Head` 骨的是 **0 個**；只有一張 37 頂點的臉皮（`face.blp`）
+掛在 `Head` 上。真正的頭是**另一個檔案** `Gokuhead.mdx`（268v / 332tri），由 WC3
+「球體(Sphere, `Asph`)」技能 `A0MI` 的物件資料藝術欄位 `atat` 掛在 `origin` 掛點上。
+`w3xlib/models.py` 的 `bake_attachments()` 只讀 MDX 自己帶 `Path` 的 `ATCH` node —— 而
+recovered 的 **129 個 mdx 裡帶 Path 的 ATCH node 是 0 個**，所以那條程式碼在這張地圖上
+**一次都沒有執行過**（`models_report.json` 的 `attachments_baked`/`skipped` 全空）。
+
+**為什麼 #73 掃不到。** #73 的標題就寫著正確答案（un-merged **sphere**/orb attachment
+geometry），執行時卻把 sphere 讀成「圓形的雜物」，交付的是 `strip_teamglow.py`——**再刪掉
+一塊**，方向相反。它的三條驗收全是「某物不該在」；一個**缺席**的零件在這種斷言下永遠是綠的。
+兩份資料來源也結構性看不到：`DUMMY_ORB_MAP.json` 只掃 `war3map.j`（`A0MI` / `Gokuhead`
+在那 316 筆裡 ABSENT，因為它寫在 w3a 物件資料），`geoset_alpha_report.py` 只量**單一 glb
+內部**的 GEOA 透明度——住在別的檔案裡的幾何，這把尺量不到。
+
+**修法在轉檔層。** `models.py` 新增 `load_sphere_attachments()`：從 `OBJECTS.json`
+（英雄的常駐技能表 + 本體模型）× `INVOCATION_PARAMS.json`（#50 保住的 `atat` 藝術欄位，
+#56 的白名單把它從 OBJECTS 丟掉了）推導掛件表，`bake_attachments()` 一併烘焙。全量重匯入
+**不可行**（129 個出貨 glb 有 108 個已被 #17/#32/#59/#68/#73/#162/#168 動過刀），所以
+`merge_sphere_attachments.py` 只重轉一個 mdx，**並在覆蓋前逐項證明**新檔＝舊檔＋掛件：
+既有 prim 的 UV/JOINTS/WEIGHTS/index buffer **逐位元組相同**，位置只差**一個**均勻係數
+（最大偏差 7.6e-8），節點名單一字不差，8 段動畫的 **136 條 rotation/scale 通道逐位元組相同**
+（這就是 #68 沒退回去的證明）。
+
+| ID | Item | Test ID | Category | Status |
+| --- | --- | --- | --- | --- |
+| mdl-267a | 每一位英雄都真的有頭（幾何事實，不是材質名）：全 roster 逐檔算「綁在頭骨上的頂點佔比」，下限 6%（實測全 roster 最低 `imported.ma` 10.3%、中位 ~27%；孫悟空修好後 25.7%，**修好前 20/866 = 2.3%**），並算「網格最高點高出頭骨多少 ÷ 模型高」，下限 2%（實測最低 `imported.herooichi` 2.7%；孫悟空修好後 20.9%，**修好前 0.5%**）。六個沒有 head 命名骨的 rig 走**明列**豁免（`ye-wuqi1`/`gumdam`/`lgcr`/`luffe` 的頭在別名骨上，`horsehead`/`heroshanawingsmall` 是道具），新模型沒有頭骨會**紅**而不是被靜默跳過 —— #73 就是這樣把孫悟空弄丟的 | model-head-geometry | regression | done |
+| mdl-267b | 孫悟空的頭留在 glb 裡：`goku.glb` 帶著 268v/332tri 的 Gokuhead primitive、剛性綁在 `Head` 骨、而且是**整個剪影的最高點**；`goku-mid` / `goku-small` 兩階 LOD（#115）最上面的 primitive 同樣騎在頭骨上且沒有被砍到 30 面以下 —— 高階有頭中低階沒頭，玩家一走遠就會斷頭 | model-head-goku-merge | regression | done |
+| mdl-267c | 物件資料掛件普查（#73 本來該做的那件事）：全地圖 76 支 `Asph` 技能中，落在**出貨英雄常駐技能表**上且指向**地圖自帶 mdx** 的共 **20 筆 / 16 具本體**。其中 11 筆指向 Blizzard 內建路徑（Immolation / LightningShield / LargeBuildingFire…）＝屬 VFX 通道（#9/#183），raw/ 裡根本沒有那個 mdx；`heromusashimiyamoto` 的 `poweraura.MDX`（1088 面）是 #17/#59/#73 花三輪**刪掉**的那種常亮光效，**不可以**烘進本體。真正的本體/武器缺件第一梯只有 4 筆：`goku.mdx`←Gokuhead（**本次修好**）、`goku.mdx`←Goku3head（超3 型態，屬 #119/#249 變身系統，同一掛點烘兩顆頭會變雙頭）、`herofate.mdx`←HeroFateZemberForm 443 面 @ right hand、`hzyn.mdx`←1hswd_01 328 面 @ right hand。後兩者**只有物件資料＋面數證據，沒有人眼確認**，照 #73 的教訓不草率合併 —— 表在 `models.py:SPHERE_BAKE_ALLOW`，普查每次轉檔都寫進 `models_report.json` 的 `attachments_available`，不會再被靜默丟掉 | model-head-sphere-census | regression | done |
+| mdl-267d | 兩支手持武器（菲特的鐮刀形態 `HeroFateZemberForm`、令狐沖的 `1hswd_01`）比照 #267 的標準逐把用**畫面**確認再決定要不要烘進本體；`Goku3head` 交給變身系統。這三筆連同「locust-swarm 掛件從未掃過」是 #73 標題底下**仍然未完成**的部分 —— #73 的狀態已從 completed 訂正回 in_progress | model-head-weapon-attachments | regression | deferred |

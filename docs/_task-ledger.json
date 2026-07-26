@@ -361,8 +361,8 @@
     },
     {
       "id": 73,
-      "subject": "Sweep ALL models for un-merged sphere/orb + locust-swarm attachment geometry (孫悟空 headless is ONE case, not the whole task)",
-      "status": "completed"
+      "subject": "Sweep ALL models for un-merged sphere/orb + locust-swarm attachment geometry (孫悟空 headless is ONE case, not the whole task) — STATUS CORRECTED 2026-07-26 by #267: what shipped was strip_teamglow.py (a DELETION), the sweep in the title never ran; 孫悟空 fixed, 3 candidates + locust-swarm still open",
+      "status": "in_progress"
     },
     {
       "id": 74,
