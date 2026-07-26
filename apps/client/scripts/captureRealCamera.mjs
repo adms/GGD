@@ -31,10 +31,15 @@ const CHROME =
   process.env.CHROME_BIN || "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 
 function parseArgs(argv) {
-  const out = { shots: [], base: "http://127.0.0.1:5199", out: "./capture-out", profile: "./capture-profile", width: 1280, height: 720 };
+  const out = { shots: [], base: "http://127.0.0.1:5199", page: "presentation-audition.html", out: "./capture-out", profile: "./capture-profile", width: 1280, height: 720 };
   for (let i = 2; i < argv.length; i++) {
     const a = argv[i];
     if (a === "--shot") out.shots.push(argv[++i]);
+    else if (a === "--page") out.page = argv[++i];
+    // `--clip x,y,w,h[,scale]` magnifies a REGION OF THE SAME RENDERED FRAME
+    // (CDP clip+scale), so a small-on-screen subject can be inspected without
+    // moving the camera. It is a crop, never a different viewpoint.
+    else if (a === "--clip") out.clip = argv[++i];
     else if (a === "--base") out.base = argv[++i];
     else if (a === "--out") out.out = argv[++i];
     else if (a === "--profile") out.profile = argv[++i];
@@ -149,7 +154,7 @@ async function main() {
   const results = [];
   for (const shot of args.shots) {
     const [name, query] = shot.split(/:(.+)/);
-    const url = `${args.base}/presentation-audition.html?${query}`;
+    const url = `${args.base}/${args.page}?${query}`;
     await cdp.send("Page.navigate", { url });
     // wait for the page's own frame-stepped clock to reach the target and freeze
     let settled = false;
@@ -163,7 +168,13 @@ async function main() {
       if (settled) break;
     }
     const probe = settled ? await cdp.evaluate("JSON.stringify(window.__probe())") : null;
-    const png = await cdp.send("Page.captureScreenshot", { format: "png" });
+    const shotParams = { format: "png" };
+    if (args.clip) {
+      const [x, y, width, height, scale] = args.clip.split(",").map(Number);
+      shotParams.clip = { x, y, width, height, scale: scale || 1 };
+      shotParams.captureBeyondViewport = false;
+    }
+    const png = await cdp.send("Page.captureScreenshot", shotParams);
     const buf = Buffer.from(png.data, "base64");
     writeFileSync(`${args.out}/${name}.png`, buf);
     // A DOWNSAMPLED RGBA thumbnail read straight off the canvas, for the pixel

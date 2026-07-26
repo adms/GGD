@@ -31,6 +31,7 @@ raw MDX (GEOA/KGAO) directly — no Babylon. Regenerate the census with
 | effect geosets tied to a PLAYED clip / real silhouette | 8 | **candidate, NOT stripped** (documented below) |
 | intended always-on geometry (WC3 also always-on) | 3 (`picacugy` firering, `gumdam` glow, `lubu` halberd) | kept — not artifacts |
 | stray `TeamGlow*` ground billboards | 36 | already stripped by #73 `strip_teamglow.py` (guarded) — 0 remain |
+| **un-merged object-data sphere (`Asph`) attachments** | **20 rows / 16 bodies** | ⚠️ **THIS AUDIT NEVER LOOKED FOR THEM — see #267.** Its two censuses cannot see this class by construction: `DUMMY_ORB_MAP.json` is `generated_from war3map.j` (JASS only) and 孫悟空's head is declared in `war3map.w3a` object data, while `geoset_alpha_report.py` reads GEOA inside a SINGLE glb and the head is a SEPARATE FILE (`Gokuhead.mdx`). The line below that files 孫悟空 under "40 other imported.* … clean" is **wrong**: he had no skull at all — 0 of body256's 817 vertices weighted to `Head`. Fixed 2026-07-26 by `w3xlib/models.py::load_sphere_attachments` + `merge_sphere_attachments.py`; 3 first-tier candidates remain (Goku3head → #119/#249, HeroFateZemberForm, 1hswd_01) |
 | orientation outliers vs roster norm | **0** | none — apply nothing (evidence below) |
 
 ## Job B — orientation audit (no defect found)
@@ -145,7 +146,7 @@ geometry status (see above). All imported = forward **-X** (norm); KayKit = **+Z
 | `imported.kikyou` | 1 | -X | ok | candidate — attack bow (kept) |
 | `imported.herotoshiiemaeda` | 1 | -X | ok | candidate — spear silhouette (kept) |
 | `imported.heromusashimiyamoto` | 3 | -X | ok | clean (Tornado2b stripped #59, TeamGlow2 stripped #73) |
-| all other `imported.*` (40) | — | -X | ok | clean (TeamGlow stripped #73 where present) |
+| all other `imported.*` (40) | — | -X | ok | ⚠️ "clean" here means **only** "no stray TeamGlow / effect geoset" — it is NOT a statement that the body is complete. `imported.goku` was in this bucket while shipping with **no head** (#267). A completeness claim needs a PRESENCE measurement; see `packages/shared/src/content/modelHeadGeometry.test.ts` |
 | `champ.sela` | 18 | +Z | ok | clean (KayKit reference) |
 | `champ.skin.barbarian` | 8 | +Z | ok | clean (KayKit reference) |
 | `champ.skin.rogue` | 6 | +Z | ok | clean (KayKit reference) |

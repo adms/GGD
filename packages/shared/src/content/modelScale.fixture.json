@@ -125,7 +125,9 @@
       "normHeight": 1.7,
       "renderedFull": 1.7,
       "renderedNorm": 1.7,
-      "empty": false
+      "empty": false,
+      "largestMeshHeight": 1.3162,
+      "normHeightBasis": "silhouette (#267): 孫悟空's head is its own merged primitive, so the largest-vertex mesh measures only the torso (1.3162u). The importer normalises the UNION of the non-effect meshes, and that union is what the player sees, so this field records it."
     },
     {
       "modelKey": "imported.gumdam",

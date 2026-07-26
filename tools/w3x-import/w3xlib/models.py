@@ -15,6 +15,7 @@ GEOA per-sequence visibility are skipped — geometry/bones/animations only.
 from __future__ import annotations
 
 import io
+import json
 import os
 import re
 
@@ -191,42 +192,224 @@ def _load_sub_mdx(raw_dir: str, path: str):
     return None
 
 
-def _merge_attachment(parent, sub, node) -> None:
-    """Bake a separate attachment sub-model into `parent` at the attachment
-    node's transform: sub geosets are translated to the node's (model-space)
-    pivot and rigidly bound to the node so they follow its animation."""
-    tex_off = len(parent.textures)
-    parent.textures += list(sub.textures)
+def _merge_attachment(parent, sub, node, bind_node=None, offset=None) -> None:
+    """Bake a separate attachment sub-model into `parent`.
+
+    Placement: sub geosets are translated by `offset` (default: the attach
+    node's model-space pivot — where WC3 hangs the attached model).
+    Skinning: the baked geometry is rigidly bound to `bind_node` (default: the
+    attach node itself), so it follows that joint's animation.
+
+    Textures are de-duplicated by (path, replaceableId): a sub-model that skins
+    itself with a texture the parent already carries reuses the parent's slot
+    instead of shipping the PNG twice.
+    """
+    bind = bind_node if bind_node is not None else node
+    # texture merge with de-dup against what the parent already has
+    key = lambda t: (str(t.path).lower(), int(t.replaceable_id or 0))
+    have = {key(t): i for i, t in enumerate(parent.textures)}
+    tex_map: dict[int, int] = {}
+    for i, t in enumerate(sub.textures):
+        k = key(t)
+        if k in have:
+            tex_map[i] = have[k]
+        else:
+            tex_map[i] = len(parent.textures)
+            have[k] = tex_map[i]
+            parent.textures.append(t)
     mat_off = len(parent.materials)
     for m in sub.materials:
         for l in m.layers:
-            if l.texture_id >= 0:
-                l.texture_id += tex_off
+            if l.texture_id in tex_map:
+                l.texture_id = tex_map[l.texture_id]
         parent.materials.append(m)
-    ox, oy, oz = node.pivot
+    ox, oy, oz = offset if offset is not None else node.pivot
     for g in sub.geosets:
         g.vertices = [(vx + ox, vy + oy, vz + oz) for vx, vy, vz in g.vertices]
         g.material_id += mat_off
         g.vertex_groups = [0] * len(g.vertices)
-        g.matrix_groups = [[node.object_id]]  # rigid child of the attach node
+        g.matrix_groups = [[bind.object_id]]  # rigid child of the bind joint
         parent.geosets.append(g)
 
 
-def bake_attachments(model, raw_dir: str, entry: dict) -> tuple[list, list]:
-    """Bake every ATCH node that references a recoverable separate model.
-    Records baked/skipped in the model report entry. Most WC3 hero models
-    keep weapons/orbs inside their own geosets (nothing to bake here)."""
-    baked, skipped = [], []
+# --- object-data ("sphere") attachments — task #267 -------------------------
+# This map hangs PERMANENT body parts on its heroes with WC3 "Sphere" (`Asph`)
+# abilities, not with MDX `ATCH` Path fields: the ability's objectArt target
+# (`atat`) names a separate .mdx and `objectAttachPoints.targetAttach0` names
+# the attach point. 孫悟空's head is such a part — it lives in Gokuhead.mdx and
+# was structurally invisible to bake_attachments(), which only ever looked at
+# the body's own ATCH nodes. Across all 129 recovered mdx there are ZERO ATCH
+# nodes carrying a Path, so that branch had never fired on this map even once
+# (models_report: attachments_baked/attachments_skipped are both empty) — which
+# is exactly why task #73 could sweep "un-merged sphere/orb geometry" and find
+# nothing to merge.
+#
+# The table is DERIVED, not hand-written: OBJECTS.json gives every hero's
+# permanent ability list + its body model, and the ability's base id must be
+# `Asph`; INVOCATION_PARAMS.json (task #50) keeps the `atat` art field the
+# importer's w3u whitelist drops (task #56).
+SPHERE_BASE = "Asph"
+
+# Attach points whose sub-model is authored in the PARENT's model space rather
+# than local to the attach point. WC3's `origin` attach point sits at the model
+# origin, so an author who exports a head at its real body-space height simply
+# hangs it there — the identity transform IS the correct placement.
+MODEL_SPACE_ATTACH = {"origin"}
+
+# Bind-joint overrides, per (body mdx, attach point). Placement still comes from
+# the attach point; only the joint the baked geometry rides is overridden.
+#   goku.mdx/origin → `Head`: the body's own 37-vertex face skin (face.blp) is
+#   weighted to `Head`, so a skull rigidly bound to `Origin Ref` would tear away
+#   from its own face during Walk/Spell/Death. Riding `Head` keeps face + skull
+#   one piece. WC3 got away with origin-binding because it re-renders the orb
+#   every frame at the unit's position; a skinned glTF has no such escape hatch.
+ATTACH_BIND_OVERRIDE = {
+    ("goku.mdx", "origin"): "Head",
+}
+
+# WHICH derived rows actually get baked. The table above is a CENSUS — every
+# body/ability pair it finds is written to the model report as
+# `attachments_available` so nothing is silently dropped again — but only the
+# rows listed here become geometry, because "the map hangs a model here" does
+# NOT imply "this model is part of the body":
+#   • stock Blizzard art paths (Immolation, LightningShield, LargeBuildingFire…)
+#     are ambient VFX; they belong to the VFX channel (task #9/#183), and their
+#     .mdx is not even in raw/ so they cannot bake anyway.
+#   • `poweraura.MDX` on 索隆 is a 1088-tri glow — exactly the always-on effect
+#     mesh tasks #17/#59/#73 spent three passes REMOVING.
+#   • a second sphere on the SAME attach point is an alternate FORM
+#     (Goku3head = 超級賽亞人), which belongs to the transform system (#119/#249),
+#     not to the base body — baking both would give 孫悟空 two heads.
+# Each entry pins the sub-model's vertex/triangle count, so the bake refuses to
+# run against a different mesh than the one that was eyeballed on screen.
+SPHERE_BAKE_ALLOW: dict[tuple[str, str], dict] = {
+    ("goku.mdx", "A0MI"): {
+        "verts": 268, "tris": 332,
+        "why": "孫悟空's actual head (Gokuhead.mdx, face.blp). The body mdx has "
+               "NO skull — 0 of body256's 817 vertices are weighted to `Head`, "
+               "only a 37-vertex face skin is. Owner-reported (#267).",
+    },
+}
+
+
+def _attach_tokens(name: str) -> frozenset:
+    return frozenset(t for t in re.split(r"[^a-z0-9]+", (name or "").lower())
+                     if t and t != "ref")
+
+
+def _find_attach_node(model, attach: str):
+    """Resolve a WC3 attach-point string ("right,hand") to a model node
+    ("hand right Ref"), comparing token SETS so word order does not matter."""
+    want = _attach_tokens(attach)
+    if not want:
+        return None
     for nd in model.nodes.values():
-        if nd.kind != "attachment" or not nd.attachment_path:
+        if nd.kind == "attachment" and _attach_tokens(nd.name) == want:
+            return nd
+    return None
+
+
+def load_sphere_attachments(objects_path: str, params_path: str) -> dict:
+    """Body mdx filename (lowercased) -> [{model, attach, ability, hero}].
+
+    Only PERMANENT attachments count: the ability must be based on `Asph` AND
+    sit on the hero's always-on ability list (`abilities`), not the learnable
+    hero-ability list. Returns {} if either dataset is missing.
+    """
+    try:
+        with open(objects_path, encoding="utf-8") as fh:
+            objects = json.load(fh)
+        with open(params_path, encoding="utf-8") as fh:
+            params = json.load(fh)
+    except (OSError, ValueError):
+        return {}
+    abilities = objects.get("abilities") or {}
+    heroes = objects.get("heroes") or {}
+    art: dict[str, dict] = {}
+    for rec in params.get("abilities") or []:
+        target = ((rec.get("objectArt") or {}).get("target") or {})
+        per_level = target.get("perLevel") or {}
+        mdx = per_level.get("0") or next(iter(per_level.values()), None)
+        attach = (rec.get("objectAttachPoints") or {}).get("targetAttach0")
+        if mdx and attach:
+            art[str(rec.get("abilityId"))] = {"model": mdx, "attach": attach}
+    out: dict[str, list] = {}
+    for hid, hero in heroes.items():
+        body = str(hero.get("model") or "")
+        if not body.lower().endswith(".mdl"):
             continue
-        sub = _load_sub_mdx(raw_dir, nd.attachment_path)
+        body_mdx = body.rsplit("\\", 1)[-1].rsplit("/", 1)[-1][:-4].lower() + ".mdx"
+        for aid in hero.get("abilities") or []:
+            if (abilities.get(aid) or {}).get("base") != SPHERE_BASE:
+                continue
+            spec = art.get(aid)
+            if not spec:
+                continue
+            row = {"model": spec["model"], "attach": spec["attach"],
+                   "ability": aid, "hero": hid}
+            bucket = out.setdefault(body_mdx, [])
+            if row not in bucket:
+                bucket.append(row)
+    return out
+
+
+def bake_attachments(model, raw_dir: str, entry: dict,
+                     sphere_table: dict | None = None,
+                     source: str = "") -> tuple[list, list]:
+    """Bake every separate model this body permanently wears.
+
+    Two sources, same baking path:
+      1. MDX `ATCH` nodes that carry a Path (the classic WC3 convention).
+      2. Object-data `Asph` sphere abilities (`sphere_table`) — how THIS map
+         attaches 孫悟空's head and the map-made hand weapons (task #267).
+    """
+    baked, skipped = [], []
+    stem = source.lower()
+    jobs = [(nd.attachment_path, nd, None) for nd in model.nodes.values()
+            if nd.kind == "attachment" and nd.attachment_path]
+    census = []
+    for spec in (sphere_table or {}).get(stem, []):
+        allow = SPHERE_BAKE_ALLOW.get((stem, spec["ability"]))
+        census.append({**spec, "baked": bool(allow)})
+        if not allow:
+            continue
+        node = _find_attach_node(model, spec["attach"])
+        if node is None:
+            skipped.append(f"{spec['model']} @ {spec['attach']} (no such attach node)")
+            continue
+        offset = ((0.0, 0.0, 0.0)
+                  if _attach_tokens(spec["attach"]) & MODEL_SPACE_ATTACH else None)
+        bind_name = ATTACH_BIND_OVERRIDE.get((stem, spec["attach"].lower()))
+        bind = next((n for n in model.nodes.values() if n.name == bind_name), None) \
+            if bind_name else None
+        jobs.append((spec["model"], node, (bind, offset, spec, allow)))
+    if census:
+        entry["attachments_available"] = census
+    for path, node, extra in jobs:
+        sub = _load_sub_mdx(raw_dir, path)
         if sub is None:
-            skipped.append(nd.attachment_path)
+            skipped.append(path)
             continue
-        _merge_attachment(model, sub, nd)
-        baked.append({"node": nd.name, "path": nd.attachment_path,
-                      "geosets": len(sub.geosets)})
+        bind, offset, spec, allow = extra or (None, None, None, None)
+        if allow:  # self-checking: refuse a mesh that is not the vetted one
+            verts = sum(len(g.vertices) for g in sub.geosets)
+            tris = sum(len(g.faces) // 3 for g in sub.geosets)
+            if (verts, tris) != (allow["verts"], allow["tris"]):
+                skipped.append(
+                    f"{path}: {verts}v/{tris}tri != vetted "
+                    f"{allow['verts']}v/{allow['tris']}tri"
+                )
+                continue
+        before = len(model.geosets)
+        _merge_attachment(model, sub, node, bind_node=bind, offset=offset)
+        rec = {"node": node.name, "path": path,
+               "geosets": len(model.geosets) - before,
+               "verts": sum(len(g.vertices) for g in sub.geosets)}
+        if spec:
+            rec["ability"] = spec["ability"]
+            rec["source"] = "objectdata-sphere"
+            rec["bind"] = (bind or node).name
+        baked.append(rec)
     if baked:
         entry["attachments_baked"] = baked
     if skipped:
@@ -234,14 +417,28 @@ def bake_attachments(model, raw_dir: str, entry: dict) -> tuple[list, list]:
     return baked, skipped
 
 
-def convert_all(raw_dir: str, glb_dir: str, tex_dir: str) -> list[dict]:
+def default_sphere_table(raw_dir: str) -> dict:
+    """Locate the two object-data datasets next to `raw_dir` and build the
+    permanent-sphere-attachment table (task #267). Missing files → {}."""
+    map_dir = os.path.dirname(os.path.abspath(raw_dir))
+    out_dir = os.path.dirname(map_dir)
+    objects = os.path.join(map_dir + "-src", "OBJECTS.json")
+    params = os.path.join(out_dir, "invocation-params", "INVOCATION_PARAMS.json")
+    return load_sphere_attachments(objects, params)
+
+
+def convert_all(raw_dir: str, glb_dir: str, tex_dir: str,
+                sphere_table: dict | None = None) -> list[dict]:
+    if sphere_table is None:
+        sphere_table = default_sphere_table(raw_dir)
     try:
-        return _convert_all(raw_dir, glb_dir, tex_dir)
+        return _convert_all(raw_dir, glb_dir, tex_dir, sphere_table)
     finally:
         close_stock_archives()
 
 
-def _convert_all(raw_dir: str, glb_dir: str, tex_dir: str) -> list[dict]:
+def _convert_all(raw_dir: str, glb_dir: str, tex_dir: str,
+                 sphere_table: dict | None = None) -> list[dict]:
     os.makedirs(glb_dir, exist_ok=True)
     os.makedirs(tex_dir, exist_ok=True)
     report = []
@@ -257,8 +454,10 @@ def _convert_all(raw_dir: str, glb_dir: str, tex_dir: str) -> list[dict]:
             entry["sequences"] = [s.name for s in model.sequences]
 
             # bake any separate attachment models (weapons/orbs referenced by
-            # ATCH nodes) BEFORE texture collection so their textures load too.
-            bake_attachments(model, raw_dir, entry)
+            # ATCH nodes, or by object-data `Asph` spheres) BEFORE texture
+            # collection so their textures load too.
+            bake_attachments(model, raw_dir, entry,
+                             sphere_table=sphere_table, source=fname)
 
             textures_png: dict[int, bytes] = {}
             tex_alpha: dict[int, str] = {}

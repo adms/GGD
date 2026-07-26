@@ -1,6 +1,6 @@
 {
   "schema": "lod@1",
-  "generatedAt": "2026-07-24T03:32:55Z",
+  "generatedAt": "2026-07-26T11:48:29Z",
   "generatedBy": "tools/lod-gen/gen_lod.py",
   "tiers": [
     "mid",
@@ -260,17 +260,17 @@
       }
     },
     "assets/models/imported/goku.glb": {
-      "bytes": 233496,
-      "triangles": 918,
+      "bytes": 251648,
+      "triangles": 1250,
       "mid": {
         "path": "assets/models/imported/goku-mid.glb",
-        "bytes": 134044,
-        "triangles": 504
+        "bytes": 145248,
+        "triangles": 686
       },
       "small": {
         "path": "assets/models/imported/goku-small.glb",
-        "bytes": 92700,
-        "triangles": 266
+        "bytes": 99604,
+        "triangles": 358
       }
     },
     "assets/models/imported/gumdam.glb": {
