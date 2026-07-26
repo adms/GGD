@@ -245,11 +245,23 @@ function autoAcquirePass(world: SimWorld): void {
     // blow would whiff.
     //
     // An EMPTY slot is a different thing entirely: it is a vacuum like any
-    // other, and refusing to fill it was half of #274. A ground order blanks
-    // `attackTarget`, the pass then skipped every tick of the wind-up, so the
-    // chase had nothing to hold the champion in place with and the player's own
-    // move order walked it out of its own range before the damage point —
-    // 86.3% of ticks holding a target, 2 hits landed.
+    // other, and refusing to fill it was believed to be half of #274. A ground
+    // order blanks `attackTarget`, the pass then skipped every tick of the
+    // wind-up, so the chase had nothing to hold the champion in place with and
+    // the player's own move order walked it out of its own range before the
+    // damage point — 86.3% of ticks holding a target, 2 hits landed.
+    //
+    // ⚠️ CORRECTION (#274's adversarial pass): the `!== null` half of this
+    // condition is currently UNREACHABLE, and the A-click recovery (4% → 75%
+    // hit rate) came entirely from the `if (!nav.attackTargetAuto)` gate in the
+    // ground-order branch above, NOT from here. Reverting this line to a bare
+    // `windup` was measured: 0 tests red, and all five end-to-end scenarios
+    // byte-identical. Once ground orders stopped blanking auto targets, the
+    // only branch that nulls `attackTarget` mid-wind-up became unreachable, so
+    // the vacuum this clause fills can no longer be constructed.
+    //
+    // It is kept as a cheap invariant, not as a fix — do not cite it as the
+    // cause of anything, and do not build on the claim that it fires.
     if (world.abilities.get(id)?.windup && nav.attackTarget !== null) continue;
 
     // ---- explicit-order suppression ----

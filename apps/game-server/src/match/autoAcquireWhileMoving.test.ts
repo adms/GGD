@@ -118,6 +118,28 @@ interface Result {
   authorityTicks: number;
   /** position of the human at 0/1/2/3/4 s of combat */
   trace: Vec2[];
+  /**
+   * MOVEMENT BUDGET (#274's adversarial pass). Ticks on which a live move order
+   * was NOT honoured because `world.hitstop` had frozen the body.
+   *
+   * This is the leak `hijackedTicks` and `trace` both structurally cannot see.
+   * `combat/damage.ts` applies `bumpFreeze(world.hitstop, source, …)` to the
+   * ATTACKER as well as the victim (deliberate — #3/#133 combat juice), and
+   * `MovementSystem.ts` zeroes velocity for the whole freeze. Before #274 a
+   * stick-holding player never landed a blow, so they never paid it; now every
+   * landed hit costs them a slice of their walk.
+   *
+   * `hijackedTicks` compares `nav.moveTarget` against the order's point and
+   * hitstop never touches `moveTarget`, so it reads 0 throughout. `trace`
+   * samples one position per second for five seconds and in the measured run
+   * not one of the eleven hits had landed yet inside that window. Both said
+   * "byte-identical". The real loss measured 4.2% (base attack speed) to 12.8%
+   * (4× attack speed).
+   *
+   * Not a defect — it is the designed hitstop finally reaching a player who is
+   * finally connecting. Pinned so it cannot drift silently.
+   */
+  frozenTicks: number;
 }
 
 function runMatch(feed: Feed, seed = SEED): Result {
@@ -181,6 +203,7 @@ function runMatch(feed: Feed, seed = SEED): Result {
   let aliveTicks = 0;
   let hijackedTicks = 0;
   let authorityTicks = 0;
+  let frozenTicks = 0;
   let orderClearedWhileAlive = false;
   const trace: Vec2[] = [];
   const botHits = new Map<EntityId, number>();
@@ -242,6 +265,7 @@ function runMatch(feed: Feed, seed = SEED): Result {
         ctl.world.combatActive
       ) {
         authorityTicks++;
+        if ((ctl.world.hitstop.get(me) ?? 0) > 0) frozenTicks++;
         const mt = nav.moveTarget;
         const kept =
           mt !== null && Math.abs(mt.x - ord.point.x) < 1e-9 && Math.abs(mt.z - ord.point.z) < 1e-9;
@@ -277,6 +301,7 @@ function runMatch(feed: Feed, seed = SEED): Result {
     hijackedTicks,
     authorityTicks,
     trace,
+    frozenTicks,
   };
 }
 
@@ -356,4 +381,68 @@ describe("#274 auto-acquire survives a live move order (real match, real human s
     expect(r.hits / r.windups).toBeGreaterThan(0.5);
     expect(r.hits).toBeGreaterThan(3);
   }, 300_000);
+});
+
+/**
+ * THE GUARD #274 SHIPPED WITHOUT — the movement budget.
+ *
+ * #274's report led with 「走位權沒被搶走」 and a byte-identical position trace.
+ * Its adversarial pass showed that evidence only holds *until the first blow
+ * lands*: `combat/damage.ts` freezes the ATTACKER too (`bumpFreeze(world.hitstop,
+ * source, …)`) and `MovementSystem.ts` zeroes velocity for the freeze window.
+ * Before this batch a stick-holding player never connected, so they never paid
+ * it; now they do. Both of the batch's own instruments were blind to it —
+ * `hijackedTicks` watches `nav.moveTarget`, which hitstop never touches, and
+ * the trace samples five points in the first five seconds, before any of the
+ * eleven hits had landed.
+ *
+ * The freeze is intentional (#3 / #133 hit-feel), so this does not assert zero.
+ * It asserts a CEILING, so the cost stays a known, deliberate few percent and
+ * cannot creep into "the stick fights me" without a red test. The measured
+ * range was 4.2% at base attack speed and 12.8% at 4×; the cap sits above the
+ * worst of those with room for content drift, and the floor below asserts the
+ * instrument is actually live — a guard that reads 0 because it is measuring
+ * nothing is the failure mode this whole file exists to answer.
+ */
+/**
+ * 5%, from measurement rather than taste. Baseline is 3.12% (62/1986 ticks,
+ * 11 hits, seed 7919). Quadrupling `hitstopTicks` in combat/damage.ts lifts it
+ * to 5.56% and trips this — note that it lands at 5.56 and not 12.5 because
+ * `HITSTOP_COUNTER_CAP` already clamps the per-hit freeze, so what this ceiling
+ * really watches is that cap and the per-champion hit-feel table, not the raw
+ * impact formula. 60% headroom over the baseline absorbs seed variance.
+ */
+const CEILING_PCT = 5;
+
+describe("#274 the movement budget: hit-feel may cost the walk, but only a little", () => {
+  it("STICK HELD — hitstop eats a bounded slice of the commanded walk", () => {
+    const r = runMatch("stick");
+
+    // The instrument has to be live, or the ceiling below proves nothing.
+    expect(r.authorityTicks, "no measurable ticks — the harness is not driving").toBeGreaterThan(
+      500,
+    );
+    expect(r.hits, "no hits means no hitstop means this test is vacuous").toBeGreaterThan(0);
+
+    const frozenPct = (r.frozenTicks / r.authorityTicks) * 100;
+    expect(
+      frozenPct,
+      `hitstop froze ${r.frozenTicks}/${r.authorityTicks} (${frozenPct.toFixed(1)}%) of the ` +
+        `ticks the player was commanding a walk. Measured 4.2% at base attack speed. If this ` +
+        `climbs, holding the stick starts to feel like the game is fighting you — re-check ` +
+        `hitstopTicks in combat/damage.ts and the per-champion hit-feel table (#133).`,
+    ).toBeLessThan(20);
+  });
+
+  it("the wheel-theft and freeze indicators measure DIFFERENT things", () => {
+    // Stated as an assertion because the batch conflated them: a chase that
+    // re-points the walk and a freeze that suspends it are separate failures,
+    // and only one of them was instrumented.
+    const r = runMatch("stick");
+    expect(r.hijackedTicks, "the chase must still never re-point the walk").toBe(0);
+    expect(
+      r.frozenTicks,
+      "…yet the walk IS interrupted, which is exactly what hijackedTicks cannot see",
+    ).toBeGreaterThan(0);
+  });
 });
