@@ -101,12 +101,22 @@ const HERO_DEF = {
 };
 
 describe("#244 the MOB CARD is what a mob is made of (was: the hero sheet)", () => {
-  it("the shipped MOB CARD carries the owner's numbers (100/+100, 1/+0.2)", () => {
+  it("the shipped MOB CARD carries the owner's numbers (20/+20, regen 0)", () => {
     cover("mob-217-doc-numbers");
-    expect(BASE_HP).toBe(100);
-    expect(GROWTH_HP).toBe(100);
-    expect(BASE_REGEN).toBe(1);
-    expect(GROWTH_REGEN).toBe(0.2);
+    // RE-SET by the owner 2026-07-26 (second pass): 「肉鴿模式下，殭屍(喪標麥可)的
+    // 生命力20%跟攻擊力只有10%，殭屍數量目前設定也要減半」. The previous card was
+    // 100/+100 and 12 attack; this is that card at 20% hp and 10% attack.
+    // Regen was NOT in the directive and is unchanged — which makes it FIVE
+    // TIMES stronger in relative terms (2/s against 120 hp at round 6, where it
+    // used to be 2/s against 600). Left as-is deliberately; flagged to the owner.
+    expect(BASE_HP).toBe(20);
+    expect(GROWTH_HP).toBe(20);
+    // Regen ZEROED by the same directive: with hp at 20%, an unchanged 2/s
+    // would have been FIVE TIMES stronger in relative terms (1.67%/s of a
+    // 120 hp round-6 mob, where it used to be 0.33%/s of 600). The owner chose
+    // zero over a proportional cut — a small mob that does not heal at all.
+    expect(BASE_REGEN).toBe(0);
+    expect(GROWTH_REGEN).toBe(0);
   });
 
   it("mob maxHp/regen follow base + growth*(level-1) — the SAME law recomputeStats uses", () => {
@@ -117,12 +127,13 @@ describe("#244 the MOB CARD is what a mob is made of (was: the hero sheet)", () 
       expect(rules.maxHp).toBe(Math.round(BASE_HP + GROWTH_HP * (level - 1)));
       expect(rules.hpRegenPerSec).toBeCloseTo(BASE_REGEN + GROWTH_REGEN * (level - 1), 10);
     }
-    // The owner's concrete expectation, RE-SET 2026-07-26 and CARRIED THROUGH
-    // THE #244 SPLIT UNCHANGED: round 3 -> lv3 -> 100 + 100*2 = 300 hp.
+    // The owner's concrete expectation: round 3 -> lv3 -> 20 + 20*2 = 60 hp.
     // These literals are the contract. If you are here because they went red,
-    // the fix is to restore the mob card, NOT to update the numbers.
-    expect(mobRulesFromConfig(CFG, DT, 3).maxHp).toBe(300);
-    expect(mobRulesFromConfig(CFG, DT, 4).maxHp).toBe(400);
+    // the fix is to restore the mob card, NOT to update the numbers —
+    // the ONLY reason they have ever moved is an explicit owner directive, and
+    // each move is dated in the sibling test above.
+    expect(mobRulesFromConfig(CFG, DT, 3).maxHp).toBe(60);
+    expect(mobRulesFromConfig(CFG, DT, 4).maxHp).toBe(80);
   });
 
   it("falls back to the flat config maxHp when neither a mob curve nor a champion doc exists", () => {
@@ -208,8 +219,8 @@ describe("#244 the MOB CARD is what a mob is made of (was: the hero sheet)", () 
     expect(championStatBase(HERO_DEF, Stat.MaxHealth, 12) * 4).toBeCloseTo(5321.6, 6);
     expect(championStatBase(Champions.get(MOB_CHAMPION_ID as ChampionId), Stat.MaxHealth, 1)).toBe(380);
     // …and the mob curve does not budge.
-    expect(mobRulesFromConfig(CFG, DT, 3).maxHp).toBe(300);
-    expect(mobRulesFromConfig(CFG, DT, 6).maxHp).toBe(600);
+    expect(mobRulesFromConfig(CFG, DT, 3).maxHp).toBe(60);
+    expect(mobRulesFromConfig(CFG, DT, 6).maxHp).toBe(120);
   });
 });
 
@@ -252,16 +263,26 @@ describe("#217 (c) the ROUND is the mob's level channel", () => {
       const [id] = [...w.mob.keys()];
       return w.health.get(id!)!.maxHp;
     };
-    expect(hpOfFirstMob(3)).toBe(300);
-    expect(hpOfFirstMob(4)).toBe(400);
-    expect(hpOfFirstMob(6)).toBe(600);
+    expect(hpOfFirstMob(3)).toBe(60);
+    expect(hpOfFirstMob(4)).toBe(80);
+    expect(hpOfFirstMob(6)).toBe(120);
   });
 
   it("a mob regenerates its levelled hp — RegenSystem never sees it (no StatsComp)", () => {
     cover("mob-217-regen");
+    // The MECHANISM, driven by an explicit non-zero card. The SHIPPED card is
+    // regen 0 (owner directive 2026-07-26, see the balance describe below), so
+    // this can no longer be observed from the shipped numbers — but the wiring
+    // still has to hold: a mob has no StatsComp, so if its regen ever migrated
+    // to RegenSystem it would silently stop healing at ANY regen value.
+    const REGEN_CFG: MobWavesConfig = {
+      ...CFG,
+      mob: { ...CFG.mob, baseRegen: 1, regenPerLevel: 0.2 },
+    };
     const w = new SimWorld(SKELETON_ARENA, 1);
     w.combatActive = true;
-    const rules = mobRulesFromConfig({ ...CFG, firstWaveSec: DT }, DT, 3);
+    const rules = mobRulesFromConfig({ ...REGEN_CFG, firstWaveSec: DT }, DT, 3);
+    expect(rules.hpRegenPerSec).toBeGreaterThan(0); // the fixture is live
     beginCombatMobs(w, rules, [0]);
     w.step(new Map());
     const [id] = [...w.mob.keys()];
@@ -314,8 +335,8 @@ describe("#217 (a) the model key is a live knob", () => {
     expect(raw.mobWaves.mob.baseLevel).toBe(3);
     expect(raw.mobWaves.mob.levelPerRound).toBe(1);
     // #244 — the mob's own curve is authored on the card, not inherited.
-    expect(raw.mobWaves.mob.baseHp).toBe(100);
-    expect(raw.mobWaves.mob.hpPerLevel).toBe(100);
+    expect(raw.mobWaves.mob.baseHp).toBe(20);
+    expect(raw.mobWaves.mob.hpPerLevel).toBe(20);
   });
 });
 
@@ -353,5 +374,71 @@ describe("#217 determinism", () => {
     mobSystem(w);
     expect(w.mobTicks).toBe(-1);
     expect(w.digest()).toBe(before);
+  });
+});
+
+/**
+ * The 2026-07-26 (second pass) balance directive, pinned so it cannot drift.
+ *
+ * 「肉鴿模式下，殭屍(喪標麥可)的生命力20%跟攻擊力只有10%，殭屍數量目前設定也要減半」
+ *
+ * Three separate knobs, and they live in TWO files that must agree: the shipped
+ * `content/config/arena-rules.json` and `DEFAULT_MOB_WAVES_CONFIG` in
+ * shared/content/schema/config.ts (dev cheats and the last-resort fallback read
+ * the latter). #244 already split the mob's numbers off the 喪標麥可 hero sheet
+ * precisely so a hero edit could not silently re-tune the roguelite; this test
+ * closes the matching gap between the content doc and the contract default.
+ */
+describe("#215 mob balance — the owner's 20% hp / 10% attack / half-count pass", () => {
+  it("hp is 20% of the previous card, in BOTH the content doc and the default", () => {
+    cover("mob-215-hp-20pct");
+    // was 100 / +100
+    expect(ARENA_RULES.mobWaves.mob.baseHp).toBe(20);
+    expect(ARENA_RULES.mobWaves.mob.hpPerLevel).toBe(20);
+    expect(DEFAULT_MOB_WAVES_CONFIG.mob.baseHp).toBe(20);
+    expect(DEFAULT_MOB_WAVES_CONFIG.mob.hpPerLevel).toBe(20);
+  });
+
+  it("regen is ZERO on the shipped card, in both", () => {
+    cover("mob-215-regen-zero");
+    // was 1 / +0.2. Zeroed rather than cut to 20%: the owner chose "a small mob
+    // that does not heal" over "a small mob that heals proportionally".
+    expect(ARENA_RULES.mobWaves.mob.baseRegen).toBe(0);
+    expect(ARENA_RULES.mobWaves.mob.regenPerLevel).toBe(0);
+    expect(DEFAULT_MOB_WAVES_CONFIG.mob.baseRegen).toBe(0);
+    expect(DEFAULT_MOB_WAVES_CONFIG.mob.regenPerLevel).toBe(0);
+    // …and it really is zero downstream, not just in the doc.
+    expect(mobRulesFromConfig(CFG, DT, 6).hpRegenPerSec).toBe(0);
+  });
+
+  it("attack is 10% of the previous card, in both", () => {
+    cover("mob-215-atk-10pct");
+    // was 12. `attackDamage` is FLAT — it does not scale with level and does not
+    // pass through combat-env, so this number is what a zombie hits you for at
+    // every round of every match.
+    expect(ARENA_RULES.mobWaves.mob.attackDamage).toBeCloseTo(1.2, 10);
+    expect(DEFAULT_MOB_WAVES_CONFIG.mob.attackDamage).toBeCloseTo(1.2, 10);
+  });
+
+  it("the count is halved on BOTH knobs, in both files", () => {
+    cover("mob-215-count-half");
+    // was 10 per wave / 30 alive per zone. Every shipped arena has 2 zones, so
+    // the field cap goes 60 → 30.
+    expect(ARENA_RULES.mobWaves.mobsPerWaveCap).toBe(5);
+    expect(ARENA_RULES.mobWaves.maxAlivePerZone).toBe(15);
+    expect(DEFAULT_MOB_WAVES_CONFIG.mobsPerWaveCap).toBe(5);
+    expect(DEFAULT_MOB_WAVES_CONFIG.maxAlivePerZone).toBe(15);
+  });
+
+  it("the content doc and the contract default have not drifted apart", () => {
+    cover("mob-215-doc-default-agree");
+    // The two files are edited by hand and by different tasks. Anything that
+    // changes one and not the other lands here rather than in a playtest.
+    for (const k of ["baseHp", "hpPerLevel", "attackDamage", "maxHp", "attackRange", "attackCdSec", "radius"] as const) {
+      expect(ARENA_RULES.mobWaves.mob[k], `mob.${k} drifted`).toEqual(DEFAULT_MOB_WAVES_CONFIG.mob[k]);
+    }
+    for (const k of ["mobsPerWaveCap", "maxAlivePerZone", "fromRound"] as const) {
+      expect(ARENA_RULES.mobWaves[k], `${k} drifted`).toEqual(DEFAULT_MOB_WAVES_CONFIG[k]);
+    }
   });
 });

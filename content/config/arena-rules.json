@@ -137,11 +137,11 @@
     "fromRound": 3,
     "firstWaveSec": 1,
     "waveIntervalSec": 2,
-    "mobsPerWaveCap": 10,
-    "maxAlivePerZone": 30,
+    "mobsPerWaveCap": 5,
+    "maxAlivePerZone": 15,
     "mob": {
-      "maxHp": 120,
-      "attackDamage": 12,
+      "maxHp": 24,
+      "attackDamage": 1.2,
       "attackRange": 1.8,
       "attackCdSec": 1.0,
       "radius": 0.6,
@@ -149,10 +149,10 @@
       "championId": "godie-zombiex",
       "baseLevel": 3,
       "levelPerRound": 1,
-      "baseHp": 100,
-      "hpPerLevel": 100,
-      "baseRegen": 1,
-      "regenPerLevel": 0.2
+      "baseHp": 20,
+      "hpPerLevel": 20,
+      "baseRegen": 0,
+      "regenPerLevel": 0
     },
     "reward": {
       "gold": 20,

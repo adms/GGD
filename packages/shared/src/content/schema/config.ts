@@ -512,13 +512,13 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
   fromRound: 3,
   firstWaveSec: 1,
   waveIntervalSec: 2,
-  mobsPerWaveCap: 10,
-  maxAlivePerZone: 30,
+  mobsPerWaveCap: 5,
+  maxAlivePerZone: 15,
   mob: {
     // Flat LAST-RESORT fallback (#217): only reached when neither the #244 mob
     // curve below nor a registered champion doc is available.
-    maxHp: 120,
-    attackDamage: 12,
+    maxHp: 24,
+    attackDamage: 1.2,
     attackRange: 1.8,
     attackCdSec: 1.0,
     radius: 0.6,
@@ -530,10 +530,10 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
     // round 6 → 600. Regen 1 + 0.2*(level-1). These used to live on the
     // 喪標麥可 hero sheet; they are the mob's numbers now and the hero's
     // stats can never move them again.
-    baseHp: 100,
-    hpPerLevel: 100,
-    baseRegen: 1,
-    regenPerLevel: 0.2,
+    baseHp: 20,
+    hpPerLevel: 20,
+    baseRegen: 0,
+    regenPerLevel: 0,
   },
   reward: {
     gold: 20,
