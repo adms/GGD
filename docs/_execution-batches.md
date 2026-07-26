@@ -942,3 +942,95 @@ AA 6.0–12.0，滑鼠可點天花板 4.945。**兩邊都不能讓。**
 4. **風王結界的 `castType` 可能本來就錯**：描述寫「此為法球效應」——
    法球效應掛在自己普攻上，那是 `self`／orb passive，不是 `ground` AoE。
    **在 castType 沒被裁決前，用幾何的尺去訂它的 range 是在量一個分類錯誤的東西。**
+
+---
+
+## #276 LOD 接線 —— 不合併。接線是真的，但快取模型反噬
+
+### 做對的（獨立驗證確認，重開時直接沿用）
+
+- **`-mid.glb` / `-small.glb` 真的被請求**（真 Chrome、真 WebGL、看 resource-timing 的真實 URL）。
+  herosaber dolly 10→40 抓 `herosaber-mid.glb`；面數 1690→620（−63%）。
+- **換階真的無縫**：身高固定 1.8000（#150 正規化重新量過）、動畫 phase 持續推進不重置、
+  **#263 隊色 tint 跟著走**（`#tint` clone 數不變）、`scene.skeletons` 維持 1、
+  `animationGroups` 來回後回到 baseline（沒漏）、近→遠→近像素差 **72/24000（0.3%）**。
+- **83 組變體健康普查**：0 件 stale 本體、0 件檔案不存在、0 件零件整個消失、0 件骨架關節變化。
+  **goku 兩階都有頭** —— #267 修完後 tier 有跟著重生，我擔心的那件事是沒有的。
+- **41/166 個變體檔要隔離，全部因為減面削掉輪廓**：
+  `heroxelloss` x **−71.8%**（翅膀整片沒了）、`long` z −65.3%、`heromiku` y −39.2%（雙馬尾）、
+  `hex/rock` **兩階都壞**。這是真發現。
+
+### ⛔ 不合併的四個理由
+
+**1（最嚴重）快取從「模型」變成「模型+tier」，而那個快取明文不淘汰。**
+`AssetManager.ts:13-19` 寫著「No LRU, no eviction: that is deliberate」。
+於是同一個英雄可以同時常駐 2–3 份 AssetContainer，**永遠不釋放**
+（`ChampionView.releaseBody` 釋放的是 instantiate 出來的 clone，clone 與 container 共用 Geometry）。
+
+實測（玩家滾一次滾輪拉遠再拉回）：
+container 12→**23**、常駐三角形 16,580→**22,556（+36.0%）**、texture 34→**64（+88%）**、
+下載量 3,659,984→**5,619,944 B（+53.6%）**。三階都走過：**+63.3% tris / +144% textures / +84.5% bytes**。
+
+**而那張「−69.5% tris / −54.5% bytes」的表，每一列都是 `new Scene` + `clearAssetByteCache()`
+之後量的 —— 兩個不同的全新場景的對照，執行期永遠不會出現這個狀態。**
+真正變好的只有「每幀送出的三角形數」（那是真的）；VRAM 常駐與下載量兩軸都變差。
+
+⚠️ 而 `modelLod.ts` 的檔頭**本來就明文禁止這件事**：
+「switching it evicts the AssetContainer and issues a NETWORK FETCH … repeatedly, mid-fight,
+on the exact device that is already struggling」以及
+「Already-adopted meshes keep their tier until the scene is rebuilt — deliberately」。
+這次**沒有動那個檔頭**，所以它現在在描述一個已經不存在的行為
+（連「switching it evicts the AssetContainer」都不成立 —— 它不 evict，這正是問題本身）。
+
+**2 健康隔離閘在「沒有 `req`」的呼叫路徑上完全不生效。**
+`AssetManager.tierFor(path)` 沒有 `req` 時直接 `return preset`，**不經過 `healthiest()`**。
+而 `ArenaScene:426`、`IntermissionScene:459/731`、`FlowerView:309`、`GuardianView:189` 全是無 `req`。
+出貨的 low 預設（`autoDetectPreset` 把手機／觸控放進 low，`lodTierForPreset("low") === "small"`）下，
+實測解析出來的就是被判死的檔：`hex/rock-small`（兩階都壞）、`guardian_treant_roots-small`、
+`props/torch-small`、`props/chest-small`、`hex_water-small`、`tree_single-small`。
+**34 組隔離裡有 8 組只經由無 `req` 的路徑載入 —— 普查最該保護的佈景／守衛／道具，正好是它保護不到的。**
+
+**3 分割畫面選錯相機（跨玩家 bug）。**
+`readCamera()` 讀 `scene.activeCamera`（`EntityViewRegistry.ts:527-535`），
+但 `ViewportManager.ts:25-29` 在 `playerCount > 1`（沙發同樂 2–4 seat）時
+**只設 `scene.activeCameras`、從不設 `scene.activeCamera`**。
+Babylon 的 render loop 逐一 `_processSubCameras`，`_renderForCamera` 會設 `this._activeCamera` ——
+**一幀結束後 `scene.activeCamera` 是最後一個 viewport 的相機**，
+而 `views.sync` 在 `renderer.render` 之前，讀到的是上一幀殘留的那顆。
+→ **沙發同樂時所有英雄的 LOD 由最後一位玩家的相機決定。**
+玩家 2 死掉拉到 `DOLLY_MAX_DEAD = 90`，玩家 1 的畫面裡每一個英雄都會掉成 `-small`。
+
+**4 bbox 檢查看不到「零件在輪廓內部塌掉」。**
+逐 node 量：`imported/negi-small` mesh#3 y **1.502→0.510（−66%）**、mesh#6 z −70%；
+`shop/merchant_cart` 兩階 Cart#3 z −53%。**兩者都沒有被隔離。**
+同鏡頭渲染對照：negi high vs small 輪廓 **IoU 0.494**、寬 +37.8%、高 +27.5%。
+
+### 交付自己誠實揭露的（值得記，不是缺陷）
+
+- **draw call 是 0%**（6→6 / 10→10 / 18→18）。減面不減 submesh，它照實寫了。
+- **幀時間量不到**（NullEngine 無 GPU），它明說沒有真機數據。
+- **我交辦裡的前提是錯的**：「60 隻小怪是 CP 值最高的一群」——
+  小怪用的是 `blocky-undead.glb`，**168 tris / 52,584 B** 的 #226 生成方塊人，
+  在 `gen_lod` 的 1,500 tris 底線之下，**根本沒有 `-mid`/`-small`。今天雜兵那一階一分錢都省不到。**
+- 佈景完全沒接：`dota` 場佈景 **29,372 tris**，一個場地就超過 12 英雄最遠 zoom 總省下的 11,526。
+
+### 💀 一個工具層面的坑，值得單獨記
+
+M6 變異第一輪回報 **0 紅**。追下去發現**不是守衛沒咬** ——
+`expect(mesh.material).not.toBe(...)` 失敗時，vitest 為了印 diff 會深度序列化 Babylon 材質，
+**材質反向參照整個 scene → 4GB heap 爆掉 → worker 直接死 → JSON reporter 一條 failed 都沒收到。**
+改成比 `.name` 字串之後，M6 乾淨地變成 2 紅。
+
+**一條會咬的守衛可以偽裝成 OOM 崩潰。** 對 Babylon 物件用 `toBe`/`toEqual` 要特別小心。
+
+### 重開時的方向
+
+1. **快取要能淘汰，或 tier 不進 key。** 兩條路：(a) 給 container cache 加 LRU
+   （動 `AssetManager` 的明文設計決定，要寫清楚為什麼可以動）；
+   (b) 換階時明確 dispose 舊 tier 的 container。**先量哪一條比較省。**
+2. **`tierFor` 無 `req` 的路徑也要過 `healthiest()`** —— 這條是一行，但它是手機上的實害。
+3. **`readCamera()` 不能讀 `scene.activeCamera`** —— 要用本地玩家的那顆。
+4. **`modelLod.ts` 的檔頭要跟著改**，否則那份文件與程式碼互相矛盾。
+5. 健康檢查加「逐 node 塌陷」那一軸（整體 bbox 看不到）。
+6. **41 個被隔離的變體是死重量（166 個裡的 25%）** —— 要救得改 `gen_lod`
+   對邊界/尖端加權，或對這批降低 tris 目標。
