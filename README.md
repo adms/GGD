@@ -96,7 +96,7 @@ pnpm dev:all    # game-server + client + editor + content-api + admin
 | `platform` | `go -C apps/platform run ./cmd/platform`（⚠ 見下） | 8080 | 需要帳號、大廳、排位、白名單時 |
 | `admin` | `pnpm --filter @ggd/admin dev` | 60721 | 後台。網址是 `/admin/`，**只綁 127.0.0.1** |
 | `content-api` | `pnpm --filter @ggd/content-api dev` | 8787 | 後台「內容管理」要能存檔就得開它 |
-| `editor` | `pnpm --filter @ggd/editor dev` | 5174 | 獨立的內容編輯 SPA，`/editor/` |
+| `editor` | `pnpm --filter @ggd/editor dev` | 5174 | 獨立的內容編輯 SPA，`/editor/`。**只有這條路徑會給你一個能用的編輯器**：正式映像預設不含它（#241）|
 | `test-dashboard` | `pnpm --filter @ggd/test-dashboard dev` | 5173 | 一鍵跑測試的 UI，需搭配 `testrunner` |
 | `testrunner` | `go -C tools/testrunner run ./cmd/testrunner` | 8799 | test-dashboard 的後端 |
 
@@ -182,7 +182,7 @@ DATA_DIR=./data REDIS_ADDR=127.0.0.1:6379 PLATFORM_ADDR=127.0.0.1:8080 JWT_SIGNI
 | **煙火確認**（#93） | `http://localhost:39527/firework-audition.html` | client，同上 |
 | **地面確認**（#80） | `http://localhost:39527/ground-audition.html` | client，同上 |
 | **後台管理主控台** | `http://127.0.0.1:60721/admin/` | admin；玩家維運頁另需 platform |
-| **內容編輯器** | `http://127.0.0.1:5174/editor/` | editor + content-api |
+| **內容編輯器** | `http://127.0.0.1:5174/editor/` | editor + content-api。正式部署沒有這個路由（#241）|
 | **測試台** | `http://127.0.0.1:5173/` | test-dashboard + testrunner |
 | **平台健康檢查** | `http://localhost:8080/api/v1/healthz` | platform |
 
@@ -1237,7 +1237,7 @@ flowchart LR
   PF --> DT
 ```
 
-正式部署前面還有 nginx edge（`nginx/nginx.conf`，listen 8080，upstream `platform:8080` 與 `game:2567`），同源服務 `/`（client）、`/editor/`、`/admin/`、`/content/`、`/api/`、`/colyseus/`＋`/ws/`、`/healthz`，並把 `/api/v1/internal/` 直接 `deny all; return 404;`。`/content-api/` 只有掛了 dev include 才存在。
+正式部署前面還有 nginx edge（`nginx/nginx.conf`，listen 8080，upstream `platform:8080` 與 `game:2567`），同源服務 `/`（client）、`/admin/`、`/content/`、`/api/`、`/colyseus/`＋`/ws/`、`/healthz`，並把 `/api/v1/internal/` 直接 `deny all; return 404;`。`/content-api/` 與 `/editor/` 都只有掛了 dev include 才存在（#241：編輯器本體也只有 `--build-arg GGD_INCLUDE_EDITOR=1` 才會被烤進映像，預設 0）。
 
 ### 權威模型
 

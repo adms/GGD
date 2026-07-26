@@ -48,8 +48,10 @@ That image was **built and exercised live** while writing this. Evidence:
   the stock image and the brotli image — one config, two images.
 * `ls /usr/lib/nginx/modules | grep brotli` → `ngx_http_brotli_filter_module.so`,
   `ngx_http_brotli_static_module.so`.
-* `GET /content/assets/models/champions/knight.glb` with `Accept-Encoding: br, gzip`
-  → `Content-Encoding: br`, 316,059 B (raw 1,103,872 B).
+* `GET` of a 1,103,872 B champion `.glb` with `Accept-Encoding: br, gzip`
+  → `Content-Encoding: br`, 316,059 B. (The file measured was
+  `champions/knight.glb`, one of the four characters owner directive #226 has
+  since deleted — the ratio is a property of glTF, not of that model.)
 * The same request piped through `brotli -d` gives a SHA-256 identical to the
   source file — it decodes to the exact bytes, no corruption.
 * A `gzip`-only client against the brotli image still gets 388,867 B of gzip, so

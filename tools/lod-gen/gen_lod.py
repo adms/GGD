@@ -4,7 +4,7 @@ gen_lod — generate `<name>-mid.glb` / `<name>-small.glb` LOD tiers (task #115)
 
     python3 tools/lod-gen/gen_lod.py            # match-relevant corpus, both tiers
     python3 tools/lod-gen/gen_lod.py --dry-run  # report only, write nothing
-    python3 tools/lod-gen/gen_lod.py content/assets/models/champions/mage.glb
+    python3 tools/lod-gen/gen_lod.py content/assets/models/hex/tower_blue.glb
 
 WHAT A TIER ACTUALLY CUTS, and why all three levers are needed.
 

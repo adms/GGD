@@ -47,7 +47,7 @@ describe("the page renders without a browser", () => {
           ["extra", { id: "extra", name: "多出來的", role: "tank", maxHealth: 100, armor: 0, mr: 0, ms: 3 }],
         ]),
         pendingAccounts: [{ id: "a1", username: "表哥", waited: "等了 3 分鐘" }],
-        editorProbe: { status: 200 },
+        editorProbe: { status: 200, servesEditor: true },
       }),
       // the degenerate shapes: no risk, no stat line, no owning page
       {

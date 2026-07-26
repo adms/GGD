@@ -164,6 +164,12 @@ P1 覆蓋 **44.2%**。60% 這個數字要嘛重新定義（把 240 列物件資�
 伺服器端沒有放寬任何東西：`guard.ts`、兩份 nginx conf 都沒動，
 content-api 仍拒絕在 `NODE_ENV=production` 啟動。
 
+> **後續（#241，2026-07-26）**：上面補的是「按鈕不會騙人」，但**整個編輯器仍然
+> 對外可見**——它只是一個沒有後端、任何人都能開的內容編輯畫面。#241 把剩下的一半
+> 做完：路由搬到只在 dev 掛載的 `nginx/dev/editor.conf`，映像改成 build arg
+> `GGD_INCLUDE_EDITOR`（預設 `0`），所以正式映像裡 `/usr/share/nginx/html/editor/`
+> 是空的。**不是環境閘**（#239 已退役該作法，而且這台 edge 在 Caddy 後面）。
+
 ### 7.5 P1 沒做的（明確留給 P2）
 
 - **3D 試放**：`PreviewController.mount()` 目前仍是 renderless stub，

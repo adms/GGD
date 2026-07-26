@@ -321,8 +321,13 @@ export interface BuildRowsInput {
    * module can turn into rows it does not have.
    */
   pendingAccounts: readonly { id: string; username: string; waited: string }[];
-  /** HEAD /editor/ → status, or null when the probe itself failed */
-  editorProbe: { status: number | null; error?: string };
+  /**
+   * GET /editor/ → status plus whether the EDITOR actually answered.
+   * `servesEditor` matters because since #241 a production deploy has no
+   * /editor/ location, so the request falls through to the client SPA and comes
+   * back 200 — the status alone can no longer tell the two apart.
+   */
+  editorProbe: { status: number | null; servesEditor?: boolean; error?: string };
 }
 
 const NAME_OF = (id: string, stats: ReadonlyMap<string, ChampionStats>): string => {
@@ -451,32 +456,49 @@ export function buildRows(input: BuildRowsInput): QuickRow[] {
 }
 
 /**
- * The /editor/ row. READ-ONLY BY CONSTRUCTION: the route is baked into the edge
- * image (docker/edge.Dockerfile) and served as unauthenticated static by nginx,
- * so its exposure is a deploy decision with no admin write path at all.
- * Rendering it with a checkbox would let the owner "approve" something the click
- * cannot change — a lie in the UI. So it renders as a probe result and a
- * sentence saying where the decision actually lives.
+ * The /editor/ row. READ-ONLY BY CONSTRUCTION: whether the editor is served is
+ * decided by the edge IMAGE (docker/edge.Dockerfile's GGD_INCLUDE_EDITOR, off
+ * by default) and by whether nginx/dev/ is mounted — a deploy decision with no
+ * admin write path at all. Rendering it with a checkbox would let the owner
+ * "approve" something the click cannot change — a lie in the UI. So it renders
+ * as a probe result and a sentence saying where the decision actually lives.
+ *
+ * #241: the verdict is `servesEditor`, NOT the status code. With the route gone,
+ * /editor/ falls through to the client SPA and returns 200; reading 200 as
+ * 「開著」 would keep the warning lit forever on a deploy that fixed it, and a
+ * security row that cries wolf gets ignored. A probe that could not tell (an
+ * older caller that only sent HEAD, so `servesEditor` is undefined) says so
+ * rather than guessing in either direction.
  */
-export function editorExposureRow(probe: { status: number | null; error?: string }): QuickRow {
-  const reachable = probe.status !== null && probe.status >= 200 && probe.status < 400;
+export function editorExposureRow(probe: {
+  status: number | null;
+  servesEditor?: boolean;
+  error?: string;
+}): QuickRow {
+  const answered = probe.status !== null && probe.status >= 200 && probe.status < 400;
+  const exposed = answered && probe.servesEditor === true;
+  const unknown = answered && probe.servesEditor === undefined;
   const result =
     probe.status === null
       ? `無法探測（${probe.error ?? "請求失敗"}）`
-      : reachable
-        ? `HEAD /editor/ → ${probe.status}：這個環境確實對外開著，而且不需要登入。`
-        : `HEAD /editor/ → ${probe.status}：這個環境沒有對外提供 /editor/。`;
+      : unknown
+        ? `GET /editor/ → ${probe.status}，但這次探測沒有讀回內容，無法分辨是編輯器還是遊戲前端的 SPA fallback。`
+        : exposed
+          ? `GET /editor/ → ${probe.status} 且回的是編輯器本體：這個環境確實對外開著，而且不需要登入。`
+          : `GET /editor/ → ${probe.status}，回的不是編輯器（落到遊戲前端的 SPA fallback）：這個環境沒有提供 /editor/。`;
   return {
     key: "exposure:editor",
     kind: "exposure",
     title: "/editor/ 未驗證就對外開放",
     subtitle: "唯讀 · 這一頁按不了",
-    what: "編輯器前端被 COPY 進 edge 映像，nginx 以純靜態、無驗證的方式提供 /editor/。",
+    what:
+      "編輯器前端曾被無條件 COPY 進 edge 映像，nginx 以純靜態、無驗證的方式提供 /editor/。" +
+      "#241 之後：映像預設不含它（build arg GGD_INCLUDE_EDITOR=0），路由移到只在 dev 掛載的 nginx/dev/editor.conf。",
     why: "這是部署/映像的決定，後台沒有任何一條寫入路徑可以改它。",
     effect: "（無）這一列不參與送出。要改必須動 nginx 設定與 edge 映像並重新部署。",
-    risk: "它只是前端；真正的寫入權在 loopback 的 content-api，遠端打不到。但頁面本身仍是公開可見的。",
+    risk: "它只是前端；真正的寫入權在 loopback 的 content-api，遠端打不到。但頁面本身若還在，就是公開可見的。",
     stats: result,
-    tone: reachable ? "warn" : "dim",
+    tone: exposed || unknown ? "warn" : "dim",
     tickable: false,
     needsSecondConfirm: false,
   };

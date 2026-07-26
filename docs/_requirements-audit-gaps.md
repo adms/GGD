@@ -3085,3 +3085,94 @@ farm 速率是唯一沒被設計綁住的變數：mobWaves 一場約發 90 波�
 另外 ratio-preserving maxHealth（statPipeline.ts:70-86）代表 40% 血時擊殺只會補到 40% 的 +8 當前血量；
 那是道具與升級一路以來的法則，不為一隻英雄改。真要「擊殺像回血」，是同一個 hook 加 `heal`，
 是內容改動不是 pipeline 改動。
+
+
+---
+
+## #240 — 四支 KayKit 角色退場之後：殘留引用清乾淨 + 永久防回歸守衛
+
+**先確定範圍，不是猜名字。** 從 git（`7db24b5f` merge / `0a616444`）確認退場的是
+**KayKit Character Pack: Adventurers 1.0** 的四支角色 `mage` / `knight` /
+`barbarian` / `rogue`，連同 #115 產生的 `-mid` / `-small` 兩層 LOD，共 **12 檔**。
+**同作者但仍在樹上、絕對不能一起掃掉的有四個 pack**：Dungeon Remastered
+（`props/*.glb`）、**Character Pack: Skeletons**（`props/guardian_skeleton.glb`——
+它同時是 `arena.skeleton` 守護塔**和**聖杯黑泥醬-喪標麥可 `champ.godie-zombiex`，
+#217）、Medieval Hexagon Pack（`hex/*.glb`）、Halloween Bits
+（`guardian_treant_trunk.glb`）。所以守衛比對的是**資產路徑**與那個 pack 的名字，
+**不是「KayKit」這個字**，而且「仍在出貨的四個 pack」自己有一條斷言釘著。
+
+**實際找到的殘留（內容文件與 manifest/bundle/_lod 早就乾淨了）：**
+
+1. **出貨的版權頁在掛一個我們沒出貨的 pack** — `creditsData.ts` 的
+   「角色 / 場景 / 地形模型」條目第一個字就是 Character Pack: Adventurers。
+   掛一個不出貨的東西跟漏掛一個該掛的東西一樣不誠實。改成實際仍在樹上的四個 pack，
+   並補一條「自製體素角色」條目。
+2. **資產預算頁的 playbook 在拿刪掉的模型當量測** —
+   `model-budget.html` `renderPlaybook()` 找 `champions/knight.glb`，找不到就
+   **靜靜印出寫死的 15 / 41 / 180 / 168**，看起來像量測值。改成從報告裡挑現存
+   draw call 最高的那支；clip-trim 那一格改用仍在出貨、同樣被修剪過的
+   `guardian_skeleton.glb`（95 → 15 clip）。
+3. **`emit_report.ts` 的 RECORDED.animCpu 標著「現況」** — 那組 2.19 ms 是真的量測，
+   但量的是已經退場的模型。數字留著（它就是退場的證據，而且 c_chan 是從它推的），
+   標籤改成「#226 退場前」。
+4. 兩個測試 fixture 路徑、`gen_lod.py` 的用法範例、`nginx/brotli/README.md` 的
+   示範 URL。
+
+**守衛：`packages/shared/src/content/retiredCharacterModels.test.ts`（7 條）。**
+檔案系統、內容文件/manifest/bundle/`_lod.json`、出貨原始碼、出貨版權頁四個面向各一條，
+外加「仍在出貨的四個 pack 不可被誤殺」與**正規表達式自我測試**（六個該中、五個不該中），
+所以守衛壞掉不會安靜地過。失敗訊息直接寫 owner 指示原文與面數/骨架預算，讓未來的人
+看懂而不是把測試刪掉；如果 owner 真的改變主意，訊息要求「跟 re-add 同一個 commit 刪掉它」。
+兩個方向都實測過：放回一個 `.glb` 會紅、放回一行路徑引用也會紅。
+
+**沒做而且要說清楚的一件事**：`content/assets/model-budget/report.json` 是生成物，
+它的 `screens[]` 還留著 `champions/knight.glb` × 12。用 `budget:report` 重生了，
+但這台機器沒有 gitignore 的 `data/blizzard-overlay`，所以重生的報告**少了 40 筆
+DEV-ONLY 的 blizzard-local 列**（模型數 204 → 164）。取捨是：留著一筆宣稱「已刪除的
+6,952 面模型在五個戰鬥畫面各出現 12 次」的假資料、還要為它在守衛上挖一個豁免——比
+少 40 筆 owner 在自己機器上一行指令就能補回來的 DEV-ONLY 資料更糟。**owner 請在有
+overlay 的機器上重跑 `pnpm --filter @ggd/model-budget budget:report`。**
+
+---
+
+## #241 — `/editor/` 烤進正式映像且完全沒有驗證
+
+**先驗證宣稱，再修。** 是真的：`docker/edge.Dockerfile` 無條件
+`COPY --from=build /repo/apps/editor/dist/ /usr/share/nginx/html/editor/`，
+`nginx/nginx.conf` 有 `location /editor/`（純靜態、沒有任何 auth include，連 `/admin/`
+那個 `/etc/nginx/ggd-admin/*.conf` 的鉤子都沒有），而 `docker/compose.family.yaml`
+就是用這個 Dockerfile 建 edge。所以家用部署上任何人打那個網址就會拿到內容編輯器。
+
+**但曝露的邊界比第一眼小，這點必須講準：**
+
+- **不是寫入洞。** `apps/editor/src/api/client.ts` 的 `WRITES_ENABLED` 在
+  `vite build` 會常數摺疊成 `false`，而且 `/content-api/` 本來就不在正式 nginx 裡。
+- **AI proxy 需要 token。** `/api/v1/ai/*` 走 `auth.Middleware`，編輯器的 token 讀自
+  `localStorage["ggd.editor.token"]`，匿名訪客沒有 → 401。
+- **所以它 100% 不能動作、100% 看得見。** 洩漏的是內容模型、collection 名稱、
+  schema 推出來的整套欄位、鑄技工坊模板、AI 面板的存在，以及一整包沒必要的 JS。
+
+**修法是「不存在」，不是「要登入」，更不是環境閘。**
+(a) 環境閘是 owner 在 2026-07-26 明確退役的方向（#239），而且這台 edge 在 Caddy 後面，
+`$remote_addr` 是 proxy 不是訪客，寫在邊緣本來就錯；
+(b) 在 edge 做 session 檢查要對 Go platform 發 `auth_request` 子請求——為一棵靜態樹
+新增一套機制、一個新的失效模式、以及第二個決定「誰是 admin」的地方。`/admin/` 的
+loopback-or-session 規則一個字都沒動；
+(c) 一個什麼都不能做的 console 加上登入是儀式不是安全。
+
+兩半都要：路由搬到 `nginx/dev/editor.conf`（沿用 `/content-api/` 已經在用的
+`/etc/nginx/ggd-dev/` 機制），檔案改成 build arg `GGD_INCLUDE_EDITOR`（預設 `0`）。
+**真的建了兩個映像驗證**：預設映像 `/usr/share/nginx/html/editor/` **0 個檔**，
+`--build-arg GGD_INCLUDE_EDITOR=1` 是 347 個檔。真 nginx 容器跑過：prod layout 下
+**即使編輯器目錄被掛進去**，`/editor/` 也不會送出編輯器（落到 client SPA），
+dev layout 掛了 `nginx/dev/` 才會。
+
+**修完之後，未登入訪客拿得到什麼：** `/`（遊戲前端）、`/admin/`（維運面，
+本次未變動）、`/content/**`、`/api/**`（`/api/v1/internal/**` 仍 404）、`/ws/`、
+`/colyseus/`、`/healthz`。**拿不到**：`/editor/`（落到 client SPA）、
+`/content-api/**`（從來沒進正式 nginx）、任何編輯器的 JS/CSS chunk（映像裡沒有）。
+
+**順手修掉一個會被這次修復製造出來的謊：** 後台 Quick Approval 的 `/editor/` 探測
+本來只看狀態碼。路由拿掉之後 `/editor/` 會落到 `try_files … /index.html` 而**回 200**，
+所以那一列會在已經修好的部署上永遠喊「確實對外開著」。改成 GET 讀 body 找編輯器自己的
+`<title>`；判斷的是「回話的是不是編輯器」。永遠亮著的安全警示等於沒有警示。
