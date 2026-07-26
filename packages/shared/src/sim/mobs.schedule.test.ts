@@ -63,14 +63,16 @@ describe("the caps for a round", () => {
   it("follows the owner's table exactly", () => {
     cover("mob-schedule");
     const cfg = shippedMobWaves();
-    expect(mobCapsForRound(cfg, 8)).toEqual({ mobsPerWaveCap: 10, maxAlivePerZone: 30 });
-    expect(mobCapsForRound(cfg, 9)).toEqual({ mobsPerWaveCap: 20, maxAlivePerZone: 60 });
+    expect(mobCapsForRound(cfg, 6)).toEqual({ mobsPerWaveCap: 10, maxAlivePerZone: 20 });
+    expect(mobCapsForRound(cfg, 7)).toEqual({ mobsPerWaveCap: 15, maxAlivePerZone: 30 });
+    expect(mobCapsForRound(cfg, 8)).toEqual({ mobsPerWaveCap: 20, maxAlivePerZone: 40 });
+    expect(mobCapsForRound(cfg, 9)).toEqual({ mobsPerWaveCap: 25, maxAlivePerZone: 50 });
     expect(mobCapsForRound(cfg, 10)).toEqual({ mobsPerWaveCap: 0, maxAlivePerZone: 0 });
   });
 
   it("un-scheduled rounds keep the authored caps", () => {
     const cfg = shippedMobWaves();
-    for (const r of [3, 4, 5, 6, 7, 11, 12]) {
+    for (const r of [3, 4, 5, 11, 12]) {
       expect(mobCapsForRound(cfg, r)).toEqual({
         mobsPerWaveCap: cfg.mobsPerWaveCap,
         maxAlivePerZone: cfg.maxAlivePerZone,
@@ -102,30 +104,31 @@ describe("the rules the sim actually receives", () => {
   it("carries the scheduled caps, round by round", () => {
     cover("mob-schedule");
     const cfg = shippedMobWaves();
-    expect(mobRulesFromConfig(cfg, DT, 7).maxAlivePerZone).toBe(cfg.maxAlivePerZone);
-    expect(mobRulesFromConfig(cfg, DT, 8).maxAlivePerZone).toBe(30);
-    expect(mobRulesFromConfig(cfg, DT, 9).maxAlivePerZone).toBe(60);
+    expect(mobRulesFromConfig(cfg, DT, 5).maxAlivePerZone).toBe(cfg.maxAlivePerZone);
+    expect(mobRulesFromConfig(cfg, DT, 7).maxAlivePerZone).toBe(30);
+    expect(mobRulesFromConfig(cfg, DT, 8).maxAlivePerZone).toBe(40);
+    expect(mobRulesFromConfig(cfg, DT, 9).maxAlivePerZone).toBe(50);
     expect(mobRulesFromConfig(cfg, DT, 10).maxAlivePerZone).toBe(0);
   });
 });
 
 describe("the battlefield really fills up — and really empties (the wiring guard)", () => {
-  it("7 < 8 < 9 in bodies standing, not just in numbers on a config", () => {
+  it("5 < 7 < 9 in bodies standing, not just in numbers on a config", () => {
     // THE test. Everything above reads numbers off an object; this one counts
     // zombies in a real world. Stop threading the schedule into
     // mobRulesFromConfig and all three runs converge — which is the 「authored
     // but not wired」 failure the #215 speed test was rewritten to catch.
     cover("mob-schedule");
     const cfg = shippedMobWaves();
+    const r5 = aliveAfter(cfg, 5, 40);
     const r7 = aliveAfter(cfg, 7, 40);
-    const r8 = aliveAfter(cfg, 8, 40);
     const r9 = aliveAfter(cfg, 9, 40);
-    expect(r7).toBeGreaterThan(0);
-    expect(r8).toBeGreaterThan(r7);
-    expect(r9).toBeGreaterThan(r8);
-    // doublings, not merely "more" — a +1 each would also satisfy `>`
-    expect(r8).toBeGreaterThanOrEqual(Math.floor(r7 * 1.8));
-    expect(r9).toBeGreaterThanOrEqual(Math.floor(r8 * 1.8));
+    expect(r5).toBeGreaterThan(0);
+    expect(r7).toBeGreaterThan(r5);
+    expect(r9).toBeGreaterThan(r7);
+    // real steps, not merely "more" — a +1 each would also satisfy `>`
+    expect(r7).toBeGreaterThanOrEqual(Math.floor(r5 * 1.8));
+    expect(r9).toBeGreaterThanOrEqual(Math.floor(r7 * 1.5));
   });
 
   it("round 10 spawns NOTHING — 乾淨總決賽", () => {
@@ -134,19 +137,21 @@ describe("the battlefield really fills up — and really empties (the wiring gua
     expect(aliveAfter(shippedMobWaves(), 10, 40)).toBe(0);
   });
 
-  it("round 7 is still capped where it was authored", () => {
+  it("round 5 is still capped where it was authored", () => {
     // The opposite failure: a schedule that leaked into every round would make
     // the whole match the finale.
     const cfg = shippedMobWaves();
-    expect(aliveAfter(cfg, 7, 40)).toBeLessThanOrEqual(cfg.maxAlivePerZone);
+    expect(aliveAfter(cfg, 5, 40)).toBeLessThanOrEqual(cfg.maxAlivePerZone);
   });
 });
 
 describe("the shipped numbers are the owner's", () => {
   it("the table is exactly what was asked for", () => {
     expect(shippedMobWaves().schedule).toEqual([
-      { round: 8, mobsPerWaveCap: 10, maxAlivePerZone: 30 },
-      { round: 9, mobsPerWaveCap: 20, maxAlivePerZone: 60 },
+      { round: 6, mobsPerWaveCap: 10, maxAlivePerZone: 20 },
+      { round: 7, mobsPerWaveCap: 15, maxAlivePerZone: 30 },
+      { round: 8, mobsPerWaveCap: 20, maxAlivePerZone: 40 },
+      { round: 9, mobsPerWaveCap: 25, maxAlivePerZone: 50 },
       { round: 10, mobsPerWaveCap: 0, maxAlivePerZone: 0 },
     ]);
   });

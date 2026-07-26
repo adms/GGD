@@ -446,9 +446,12 @@ export const zMobWavesConfig = z
      * LATE-MATCH SCHEDULE (owner, 2026-07-27) — a per-round OVERRIDE of the two
      * caps above, for the escalation into the finale:
      *
-     *   round  8 →  10 / 30   (double)
-     *   round  9 →  20 / 60   (quadruple)
-     *   round 10 →   0 /  0   (乾淨總決賽 — no zombies at all)
+     *   rounds 3-5 →   5 / 15   (the authored caps — the ramp-in)
+     *   round  6   →  10 / 20
+     *   round  7   →  15 / 30
+     *   round  8   →  20 / 40
+     *   round  9   →  25 / 50
+     *   round 10   →   0 /  0   (乾淨總決賽 — no zombies at all)
      *
      * An explicit TABLE rather than a multiplier, because the owner's curve is
      * not a curve: it doubles, then doubles again, then goes to ZERO. Any
@@ -556,20 +559,20 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
   waveIntervalSec: 2,
   mobsPerWaveCap: 5,
   maxAlivePerZone: 15,
-  // owner, 2026-07-27. Round 8 doubles, round 9 doubles again, round 10 is
-  // EMPTY (乾淨總決賽). Round 8's 30 is exactly where maxAlivePerZone STARTED
-  // (#215) before the owner halved it — the escalation reclaims the original
-  // density before blowing past it.
+  // owner, 2026-07-27 (second pass — the ramp now starts at round 6 and climbs
+  // by +5 alive a round instead of doubling). Round 10 is EMPTY: 乾淨總決賽.
   //
-  // Render cost was checked rather than assumed. Round 9's 60 alive × 2 zones
-  // = 120 mobs is DOUBLE the 60 that docs/改進延遲.md computed for the old
-  // guardian_skeleton (5,288 tris ⇒ 317,280 skinned tris/frame) — but on
-  // today's blocky-undead at 168 tris those 120 mobs are 20,160 tris, still a
-  // fifteenth of the load that motivated that document. Server-side AI for 120
-  // mobs is the cost worth watching, not the renderer.
+  // Render cost was checked rather than assumed. The peak is round 9: 50 alive
+  // × 2 zones = 100 mobs, against the 60 that docs/改進延遲.md computed for the
+  // old guardian_skeleton (5,288 tris ⇒ 317,280 skinned tris/frame). On today's
+  // blocky-undead at 168 tris those 100 mobs are 16,800 tris — a nineteenth of
+  // the load that motivated that document. Server-side AI for 100 mobs is the
+  // cost worth watching, not the renderer.
   schedule: [
-    { round: 8, mobsPerWaveCap: 10, maxAlivePerZone: 30 },
-    { round: 9, mobsPerWaveCap: 20, maxAlivePerZone: 60 },
+    { round: 6, mobsPerWaveCap: 10, maxAlivePerZone: 20 },
+    { round: 7, mobsPerWaveCap: 15, maxAlivePerZone: 30 },
+    { round: 8, mobsPerWaveCap: 20, maxAlivePerZone: 40 },
+    { round: 9, mobsPerWaveCap: 25, maxAlivePerZone: 50 },
     { round: 10, mobsPerWaveCap: 0, maxAlivePerZone: 0 },
   ],
   mob: {

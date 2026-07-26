@@ -2,7 +2,7 @@
   "id": "arena-rules",
   "schema": "config.arena-rules@1",
   "ultUnlockRound": 3,
-  "exUnlockRound": 5,
+  "exUnlockRound": 7,
   "offerCount": 3,
   "rounds": {
     "1": {
@@ -15,40 +15,40 @@
       "augmentTier": "silver"
     },
     "2": {
-      "grantLevels": 1,
+      "grantLevels": 3,
       "grantGold": 450,
       "weaponLootTable": "quest-rewards",
       "augmentTier": "silver"
     },
     "3": {
-      "grantLevels": 2,
+      "grantLevels": 3,
       "grantGold": 375,
       "augmentTier": "silver"
     },
     "4": {
       "grantLevels": 3,
-      "grantGold": 525,
+      "grantGold": 1525,
       "augmentTier": "gold"
     },
     "5": {
-      "grantLevels": 3,
+      "grantLevels": 6,
       "grantGold": 525,
-      "augmentTier": "gold"
+      "augmentTier": "gold",
+      "weaponLootTable": "quest-rewards"
     },
     "6": {
-      "grantLevels": 6,
+      "grantLevels": 7,
       "grantGold": 600,
-      "weaponLootTable": "quest-rewards",
       "augmentTier": "gold"
     },
     "7": {
-      "grantLevels": 4,
+      "grantLevels": 5,
       "grantGold": 600,
       "augmentTier": "prismatic"
     },
     "8": {
-      "grantLevels": 3,
-      "grantGold": 750,
+      "grantLevels": 5,
+      "grantGold": 2750,
       "augmentTier": "prismatic"
     },
     "9": {
@@ -58,11 +58,11 @@
     },
     "10": {
       "grantLevels": 10,
-      "grantGold": 750,
+      "grantGold": 3750,
       "augmentTier": "prismatic"
     },
     "11": {
-      "grantLevels": 10,
+      "grantLevels": 0,
       "grantGold": 750,
       "augmentTier": "prismatic"
     },
@@ -140,9 +140,31 @@
     "mobsPerWaveCap": 5,
     "maxAlivePerZone": 15,
     "schedule": [
-      { "round": 8, "mobsPerWaveCap": 10, "maxAlivePerZone": 30 },
-      { "round": 9, "mobsPerWaveCap": 20, "maxAlivePerZone": 60 },
-      { "round": 10, "mobsPerWaveCap": 0, "maxAlivePerZone": 0 }
+      {
+        "round": 6,
+        "mobsPerWaveCap": 10,
+        "maxAlivePerZone": 20
+      },
+      {
+        "round": 7,
+        "mobsPerWaveCap": 15,
+        "maxAlivePerZone": 30
+      },
+      {
+        "round": 8,
+        "mobsPerWaveCap": 20,
+        "maxAlivePerZone": 40
+      },
+      {
+        "round": 9,
+        "mobsPerWaveCap": 25,
+        "maxAlivePerZone": 50
+      },
+      {
+        "round": 10,
+        "mobsPerWaveCap": 0,
+        "maxAlivePerZone": 0
+      }
     ],
     "mob": {
       "maxHp": 24,

@@ -70,7 +70,7 @@ describe("config doc + rules resolution (arena-06)", () => {
     cover("arena-config-parse");
     expect(arenaDoc.schema).toBe("config.arena-rules@1");
     expect(ARENA.ultUnlockRound).toBe(3);
-    expect(ARENA.exUnlockRound).toBe(5); // per-hero EX unlocks round 5 (WC3 lvl 30)
+    expect(ARENA.exUnlockRound).toBe(7); // per-hero EX unlocks round 7 (owner 2026-07-27)
     expect(ARENA.offerCount).toBe(3);
     // every round offers an augment 3-choose-1 (隨機三選一, #157): silver early,
     // gold mid, prismatic late. round 1 keeps its level grant + QWE auto-learn.
@@ -84,13 +84,14 @@ describe("config doc + rules resolution (arena-06)", () => {
     // `quest-rewards`; there is no longer a round that drafts a non-quest item.
     // legendary-weapons.json survives only as the 2400g 傳說寶玉 gacha pool,
     // which is not a 3-choose-1 card — see the curve block below.
-    expect(ARENA.rounds.get(2)).toMatchObject({ grantLevels: 1, weaponLootTable: "quest-rewards" });
-    expect(ARENA.rounds.get(6)).toMatchObject({ grantLevels: 6, weaponLootTable: "quest-rewards" });
-    expect(ARENA.rounds.get(3)).toMatchObject({ grantLevels: 2, grantGold: 375 });
+    expect(ARENA.rounds.get(2)).toMatchObject({ grantLevels: 3, weaponLootTable: "quest-rewards" });
+    expect(ARENA.rounds.get(5)).toMatchObject({ grantLevels: 6, weaponLootTable: "quest-rewards" });
+    expect(ARENA.rounds.get(3)).toMatchObject({ grantLevels: 3, grantGold: 375 });
     expect(ARENA.gacha).toBeNull(); // weapon offers replace the legacy gacha
-    // The table is authored out to round 13. The owner's curve reaches the L50
-    // cap at round 11, so rounds 12+ grant 0 levels and `overflow` is gold-only.
-    expect(grantForRound(ARENA, 7)).toEqual({ grantLevels: 4, grantGold: 600, augmentTier: "prismatic" });
+    // The table is authored out to round 13. The owner's 2026-07-27 curve reaches
+    // the L50 cap at round 10, so rounds 11+ grant 0 levels and `overflow` is
+    // gold-only.
+    expect(grantForRound(ARENA, 7)).toMatchObject({ grantLevels: 5, grantGold: 600, augmentTier: "prismatic" });
     expect(grantForRound(ARENA, 13)).toEqual({ grantLevels: 0, grantGold: 750, augmentTier: "prismatic" });
     expect(grantForRound(ARENA, 14)).toEqual({ grantLevels: 0, grantGold: 750, augmentTier: "prismatic" });
     expect(grantForRound(ARENA, 16)).toEqual({ grantLevels: 0, grantGold: 1050, augmentTier: "prismatic" });
@@ -265,29 +266,29 @@ describe("arena round grants (arena-01, arena-04, arena-05)", () => {
     expect(ab.slots.R.rank).toBe(1);
   });
 
-  it("per-hero EX unlocks at exUnlockRound (5), not before; EX-less never (ex-unlock-round)", () => {
+  it("per-hero EX unlocks at exUnlockRound (7), not before; EX-less never (ex-unlock-round)", () => {
     cover("ex-unlock-round");
-    expect(ARENA.exUnlockRound).toBe(5);
-    // high lives so the match reliably survives to round 5 without eliminations
+    expect(ARENA.exUnlockRound).toBe(7);
+    // high lives so the match reliably survives to round 7 without eliminations
     const ctl = new MatchController("ex-round", 4242, allBots(), FAST, 10, ARENA);
 
-    // round 4 intermission: every EX slot is still LOCKED (rank 0)
-    runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === 4);
+    // round 6 intermission: every EX slot is still LOCKED (rank 0)
+    runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === 6);
     for (const seat of ctl.seats.values()) {
       const ab = ctl.world.abilities.get(seat.entityId!)!;
       if (ab.exSlot) expect(ab.exSlot.rank).toBe(0);
     }
 
-    // round 5 intermission: active champions WITH an exAbility unlock it (rank 1),
+    // round 7 intermission: active champions WITH an exAbility unlock it (rank 1),
     // EX-less heroes never grow a slot.
-    runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === 5);
+    runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === 7);
     let unlocked = 0;
     for (const seat of ctl.seats.values()) {
       if ((ctl.lives.get(seat.teamId) ?? 0) <= 0) continue;
       const ab = ctl.world.abilities.get(seat.entityId!)!;
       const def = Champions.get(seat.championId as never);
       if (def.exAbility) {
-        expect(ab.exSlot!.rank).toBe(1); // unlocked exactly at round 5
+        expect(ab.exSlot!.rank).toBe(1); // unlocked exactly at round 7
         unlocked++;
       } else {
         expect(ab.exSlot ?? null).toBeNull(); // never for EX-less heroes
@@ -375,19 +376,19 @@ describe("every-round augment 3-choose-1 restored (arena-08, #157)", () => {
     assertAugmentPerSeat(ctl, 4, "gold");
   });
 
-  it("round 6: a gold augment AND the second weapon card coexist per seat", () => {
+  it("round 5: a gold augment AND the second weapon card coexist per seat", () => {
     cover("arena-config-parse");
-    // the Arena reservoir so the match reliably reaches round 6 with seats alive
-    const ctl = new MatchController("aug-r6", 4242, allBots(), FAST, 20, ARENA);
-    runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === 6);
-    assertAugmentPerSeat(ctl, 6, "gold");
-    // the round-6 weapon card lives alongside the augment card under a distinct
+    // the Arena reservoir so the match reliably reaches round 5 with seats alive
+    const ctl = new MatchController("aug-r5", 4242, allBots(), FAST, 20, ARENA);
+    runUntil(ctl, () => ctl.phase.phase === "intermission" && ctl.phase.round === 5);
+    assertAugmentPerSeat(ctl, 5, "gold");
+    // the round-5 weapon card lives alongside the augment card under a distinct
     // `${round}:${seatId}:w` key — both surfaces open at once, as intended.
     let weaponSeats = 0;
     for (const seat of ctl.seats.values()) {
       if ((ctl.lives.get(seat.teamId) ?? 0) <= 0) continue;
-      const weapon = ctl.offers.get(`6:${seat.seatId}:w`);
-      expect(weapon, `seat ${seat.seatId} needs a round-6 weapon offer`).toBeDefined();
+      const weapon = ctl.offers.get(`5:${seat.seatId}:w`);
+      expect(weapon, `seat ${seat.seatId} needs a round-5 weapon offer`).toBeDefined();
       expect(weapon!.kind).toBe("item");
       weaponSeats++;
     }
@@ -573,7 +574,7 @@ describe("the per-round curve (arena-curve)", () => {
     expect(grantForRound(ARENA, LAST + 1)?.augmentTier).toBe("prismatic");
   });
 
-  it("gold ramps while the build is assembled, then plateaus once the slots are full", () => {
+  it("gold no longer ramps monotonically — the owner's curve spikes and dips", () => {
     cover("arena-config-parse");
     // Round 1 grants NO gold: the 600g opening purse is the whole turn-1
     // decision (two SIMPLE, or bank toward a POWERFUL) and #82 priced it that way.
@@ -583,26 +584,39 @@ describe("the per-round curve (arena-curve)", () => {
     // for a seat that LOST round 1. 600 + roundLose + 450 = exactly 1,200.
     expect(STARTING_GOLD + GOLD_REWARDS.roundLose + gold(2)).toBe(ITEM_TIER_PRICE.POWERFUL);
     expect(gold(2)).toBeGreaterThan(gold(3));
-    // From round 3 on it is monotonic — no later round is poorer than an earlier.
-    for (let r = 4; r <= LAST; r++) {
-      expect(gold(r), `round ${r} gold must not fall below round ${r - 1}`).toBeGreaterThanOrEqual(gold(r - 1));
+    // MONOTONICITY IS GONE (owner 2026-07-27, 「都在接受範圍」). The new table
+    // spikes on 4 / 8 / 10 and dips back between them, so a player leaves the
+    // round-5 shop poorer than they left round 4's. Pinned as SPIKES rather
+    // than deleted, so the shape stays a decision instead of drifting.
+    const SPIKES = [4, 8, 10];
+    for (const r of SPIKES) {
+      expect(gold(r), `round ${r} is a spike`).toBeGreaterThan(gold(r - 1));
+      if (r < LAST) expect(gold(r), `round ${r} spike dips after`).toBeGreaterThan(gold(r + 1));
     }
-    // The plateau is deliberate, not laziness: 6 inventory slots cap the item
-    // path, so once the build is complete (~R8) extra gold only buys orbs and
-    // upgrades. Escalating past that point would be pure inflation.
-    for (let r = 8; r <= LAST; r++) expect(gold(r)).toBe(gold(8));
-    // Every price in the ladder is a multiple of 75 (itemTiers.ts); so is every grant.
-    for (let r = 1; r <= LAST; r++) expect(gold(r) % 75, `round ${r} gold is off the 75g ladder`).toBe(0);
+    // Every price in the ladder is a multiple of 25 (the 75g ladder no longer
+    // holds: the owner's +1525 / +2750 spikes are not multiples of 75).
+    for (let r = 1; r <= LAST; r++) expect(gold(r) % 25, `round ${r} gold is off the 25g ladder`).toBe(0);
   });
 
-  it("PRESERVES THE #82 FORK: deterministic income can never buy a full build AND the stat path", () => {
+  it("THE #82 FORK IS RETIRED — income now affords BOTH paths (owner 2026-07-27)", () => {
     cover("arena-config-parse");
-    // The fork is the whole point of the stat path: 20 ticks cost about one
-    // match's income, so committing to them COSTS you the item build. A longer
-    // match makes both affordable unless the curve is held down deliberately.
+    // INVERTED, and deliberately so. The fork WAS the point of the stat path:
+    // 20 ticks cost about one match's income, so committing to them COSTS you
+    // the item build — 「沒有購買任何道具」 enforced by arithmetic rather than by
+    // a rule the player has to remember.
+    //
+    // The owner's 2026-07-27 reward table (R4 +1525, R8 +2750, R10 +3750) lifts
+    // deterministic income far past that ceiling, and when this was raised as a
+    // consequence the owner's answer was 「都在接受範圍」. So the stat path is no
+    // longer a COMMITMENT, it is an additional purchase: a winning player can
+    // finish a long match with the full build AND all 20 ticks.
+    //
+    // Asserted in the NEW direction rather than deleted, because a silent
+    // deletion would let the old invariant creep back in unnoticed and quietly
+    // re-cap the owner's curve.
     //
     // THE ITEM PATH COSTS 4,800, NOT 7,200. Two of the six slots are filled free
-    // by the round-2 and round-6 weapon cards, so a complete build is FOUR
+    // by the round-2 and round-5 weapon cards, so a complete build is FOUR
     // bought POWERFUL items. That is the number the ceiling has to clear.
     const fullBuild = 4 * ITEM_TIER_PRICE.POWERFUL;
     const statPath = STAT_TICK_PRICE * STAT_TICK_TARGET;
@@ -615,40 +629,45 @@ describe("the per-round curve (arena-curve)", () => {
     // ladder may be derived against.
     const ceiling = (n: number): number =>
       STARTING_GOLD + [...Array(n)].reduce((s, _, i) => s + gold(i + 1), 0) + GOLD_REWARDS.roundWin * n;
-    expect(ceiling(11)).toBe(9975); // median match, winning every round
-    expect(ceiling(13)).toBe(12075); // the longest match measured, winning every round
+    expect(ceiling(11)).toBe(15975); // median match, winning every round
+    expect(ceiling(13)).toBe(18075); // the longest match measured, winning every round
     expect(
       ceiling(LAST),
-      "a seat that wins every round of the longest possible match must still not afford both paths",
-    ).toBeLessThan(fullBuild + statPath);
+      "owner 2026-07-27: both paths ARE affordable now — if this ever goes back " +
+        "under the sum, the reward table has been quietly re-capped",
+    ).toBeGreaterThan(fullBuild + statPath);
   });
 
-  it("puts the 20th stat tick in the round-9 shop — where #104's gate must move", () => {
+  it("the 20th stat tick first becomes affordable in the round-8 shop", () => {
     cover("arena-config-parse");
-    // #82 tuned 375g so the 20th tick lands in the LAST-THIRD shop, and #104
-    // added `round >= 6` to stop a rich winner buying it early. At 6 rounds the
-    // all-wins deterministic path crossed 7,500 in the round-6 shop, which is
-    // why the gate was 6. That same crossing is now ROUND 9 — which is also a
-    // High Stakes round, so the capstone lands on a marquee round.
+    // MEASURED, not assumed: with the owner's 2026-07-27 curve the all-wins
+    // deterministic purse first clears 7,500 in the ROUND-8 shop (round 6 is
+    // 5,575, round 7 is 6,475, round 8 is 9,525 — the +2750 spike does it).
+    //
+    // ⚠️ CAPSTONE_ROUND_GATE still reads 6, so the gate is now LOOSER than the
+    // economy: rounds 6-7 can no longer afford the capstone anyway, which makes
+    // the gate inert rather than wrong. The owner's reward table lists
+    // 「🔓 傳說·萬象強化解鎖」 on round 6, and that is what the constant says, so
+    // it is left alone deliberately — this assertion records that the ARITHMETIC
+    // crossing and the AUTHORED unlock are two different rounds now.
     //
     // CAPSTONE_ROUND_GATE lives in packages/shared/src/sim/economy/statPath.ts
-    // (outside this lane). This assertion is the evidence for moving it 6 -> 9;
-    // it deliberately does NOT import the constant, so it states the requirement
-    // even while the constant still reads 6.
+    // (outside this lane); this assertion is the evidence that 6 is still right.
     const shopPurse = (n: number, perRound: number): number =>
       STARTING_GOLD + [...Array(n)].reduce((s, _, i) => s + gold(i + 1), 0) + perRound * (n - 1);
     const statPath = STAT_TICK_PRICE * STAT_TICK_TARGET;
-    const WANT_GATE = 9;
+    const WANT_GATE = 8;
 
     // winning every round: affordable in the round-9 shop, NOT in round 8's…
     expect(shopPurse(WANT_GATE - 1, GOLD_REWARDS.roundWin)).toBeLessThan(statPath);
     expect(shopPurse(WANT_GATE, GOLD_REWARDS.roundWin)).toBeGreaterThanOrEqual(statPath);
     // …and the cushion is real but thin, exactly as #82 wanted it (「reachable
     // but only just」): a hundred-gold-scale margin, not a thousand.
-    expect(shopPurse(WANT_GATE, GOLD_REWARDS.roundWin) - statPath).toBeLessThan(300);
+    // The cushion is no longer thin — the owner's spike overshoots deliberately.
+    expect(shopPurse(WANT_GATE, GOLD_REWARDS.roundWin) - statPath).toBeGreaterThan(0);
   });
 
-  it("gives every round exactly one landmark — the round-3 pile-up is gone", () => {
+  it("keeps the R/EX unlocks off the tier steps (the round-3 pile-up stays gone)", () => {
     cover("arena-config-parse");
     // Before: round 3 carried +2500 gold (the biggest grant in the match), the
     // first round the 2400g orb was affordable, the jump to gold augments AND
@@ -657,25 +676,45 @@ describe("the per-round curve (arena-curve)", () => {
     expect(ARENA.rounds.get(3)?.augmentTier).toBe(ARENA.rounds.get(2)?.augmentTier); // no tier step on 3
     expect(ARENA.rounds.get(3)?.weaponLootTable).toBeUndefined(); // no card on 3
     expect(gold(3)).toBeLessThan(gold(4)); // and it is not the gold spike either
+    // ⚠️ Round 4 now carries BOTH the gold spike (+1525) and the tier step to
+    // gold. That is a deliberate pile-up in the owner's 2026-07-27 table, not a
+    // regression of the round-3 problem this test was written for — the R and
+    // EX unlocks are still on their own rounds, which is the part that mattered.
 
     // The tier steps land on their own rounds, away from the ability unlocks.
     const tierStep = (r: number): boolean => ARENA.rounds.get(r)?.augmentTier !== ARENA.rounds.get(r - 1)?.augmentTier;
     expect(tierStep(4)).toBe(true); // -> gold
     expect(tierStep(7)).toBe(true); // -> prismatic
-    expect(tierStep(ARENA.exUnlockRound!)).toBe(false); // EX round carries no tier step
+    // ⚠️ EX moved to round 7 (owner 2026-07-27), which IS the prismatic step —
+    // so the EX unlock and the tier step now share a round on purpose. Asserted
+    // in the new direction rather than dropped, so the collision stays visible.
+    expect(tierStep(ARENA.exUnlockRound!)).toBe(true); // EX round IS the prismatic step
     expect(tierStep(ARENA.ultUnlockRound!)).toBe(false); // R round carries no tier step
   });
 
-  it("aligns EX to the first High Stakes round and keeps the shop steps off the rest", () => {
+  it("keeps the shop steps off the High Stakes rounds (EX no longer aligns)", () => {
     cover("arena-config-parse");
     // High Stakes fires on 5, 9, 13 (PairedDuels). Round 5 is DELIBERATELY
     // shared with the EX unlock: both say the same thing — the stakes just rose
     // — so they reinforce rather than compete. Every OTHER shop landmark (tier
     // steps, weapon cards) is kept off 5/9/13 so the health rhythm and the shop
     // rhythm interleave instead of piling up.
-    expect(ARENA.exUnlockRound).toBe(HIGH_STAKES_FIRST_ROUND);
+    // EX no longer sits on the first High Stakes round: the owner moved it to 7
+    // (2026-07-27) while High Stakes still fires on 5 / 9 / 13. The rest of this
+    // test — keeping the SHOP landmarks off the High Stakes rounds — still holds
+    // and is what it now guards.
+    expect(ARENA.exUnlockRound).toBe(7);
+    expect(ARENA.exUnlockRound).not.toBe(HIGH_STAKES_FIRST_ROUND);
     for (let r = HIGH_STAKES_FIRST_ROUND; r <= LAST; r += HIGH_STAKES_PERIOD) {
-      expect(ARENA.rounds.get(r)?.weaponLootTable, `round ${r} is High Stakes; keep the weapon card off it`).toBeUndefined();
+      // ⚠️ ROUND 5 IS NOW BOTH. The owner's 2026-07-27 table moved the second
+      // weapon card from round 6 to round 5, which is the FIRST High Stakes
+      // round — so the health-rhythm beat and the shop beat collide there. This
+      // was a deliberate interleave before; it is a deliberate pile-up now.
+      // Round 5 is exempted by name rather than by loosening the rule, so every
+      // OTHER High Stakes round is still guarded.
+      if (r !== 5) {
+        expect(ARENA.rounds.get(r)?.weaponLootTable, `round ${r} is High Stakes; keep the weapon card off it`).toBeUndefined();
+      }
       expect(
         ARENA.rounds.get(r)?.augmentTier,
         `round ${r} is High Stakes; keep the tier step off it`,
@@ -718,7 +757,7 @@ describe("the per-round curve (arena-curve)", () => {
     const cards = [...Array(LAST)]
       .map((_, i) => [i + 1, ARENA.rounds.get(i + 1)?.weaponLootTable] as const)
       .filter(([, t]) => t !== undefined);
-    expect(cards.map(([r]) => r)).toEqual([2, 6]);
+    expect(cards.map(([r]) => r)).toEqual([2, 5]);
     for (const [r, table] of cards) {
       expect(table, `round ${r} weapon card must roll the quest set`).toBe("quest-rewards");
     }
@@ -729,15 +768,17 @@ describe("the per-round curve (arena-curve)", () => {
     expect(cards.length).toBe(2);
   });
 
-  it("round grants carry to L50 by round 11; the true cap is 99 (mob XP fills the rest)", () => {
+  it("round grants carry to L50 by round 10; the true cap is 99 (mob XP fills the rest)", () => {
     cover("arena-config-parse");
-    // Owner's round→cumulative-level table (2026-07-25): 3,4,6,9,12,18,22,25,30,40,50.
-    // Per-round grants back out to these; rounds 12+ grant 0 (rounds top out at 50).
-    const grant = [2, 1, 2, 3, 3, 6, 4, 3, 5, 10, 10, 0, 0]; // rounds 1..13
+    // Owner's round→cumulative-level table (2026-07-27, REPLACING 2026-07-25's):
+    // 3,6,9,12,18,25,30,35,40,50 — L50 now arrives a round EARLIER, at round 10,
+    // which is also the 乾淨總決賽 (no mobs) and the intended last round.
+    // Per-round grants back out to these; rounds 11+ grant 0 (rounds top out at 50).
+    const grant = [2, 3, 3, 3, 6, 7, 5, 5, 5, 10, 0, 0, 0]; // rounds 1..13
     for (let r = 1; r <= LAST; r++) expect(levels(r)).toBe(grant[r - 1]);
     const levelAfter = (n: number): number => 1 + [...Array(n)].reduce((s, _, i) => s + levels(i + 1), 0);
-    expect(levelAfter(11)).toBe(50); // round grants top out at 50 by round 11
-    expect(levelAfter(13)).toBe(50); // rounds 12+ grant 0 — rounds never exceed 50
+    expect(levelAfter(10)).toBe(50); // round grants top out at 50 by round 10
+    expect(levelAfter(13)).toBe(50); // rounds 11+ grant 0 — rounds never exceed 50
     expect(LEVEL_CAP).toBe(99); // true cap; L50→L99 comes from XP (mobs, next version)
     expect(levelAfter(LAST)).toBeLessThanOrEqual(LEVEL_CAP);
   });
