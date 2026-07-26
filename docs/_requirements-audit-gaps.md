@@ -2830,3 +2830,18 @@ Owner 指令：另開分支做 體素角色生成器網頁，整合進後台；*
 5. `ChampionView.ts` 的程序化分支改成 `buildFigure`/`sampleClip` 的薄轉接層，是 payoff 但動到 client render path，屬 #226。在那之前工坊預覽的是**bake 會產出什麼**，正確但還不是遊戲內同一條 code path。
 
 **其他誠實聲明**：`attachPoints` / `teamTintMaterials` 目前**有人寫、沒人讀**（`overheadAnchors.ts` 用寫死高度）；工坊是它們第一個真正的產生者，讓它們成為消費者是新的 client render 工作，不在本次範圍。IP：全部幾何是自寫數值產生的軸對齊方塊，`@babylonjs/loaders` **不是**本 app 的依賴、頁面上沒有任何 file input／FileReader——結構上就無法吃進第三方 skin。
+
+#### 🚦 2026-07-26 #242：後台 Quick Approval（一鍵送出待 owner 確認的事）
+Owner 指令逐字：「48+3 (賈修, 揍敵客, 喪標麥可) 開放如果你真的需要我允許才能開放，請你做成後台快速一鍵確認的按鈕，讓我按一下就全部通過。這個按鈕可以放在後台新的一頁，叫做 Quick Approval, 把所有需要審查確認的項目條列在這一頁，打勾/取消 後，一鍵送出確認」
+
+**做了什麼**：`apps/admin/src/ui/QuickApprovalPage.tsx` + 純邏輯 `apps/admin/src/quickApproval.ts`。四種可勾選的列 + 兩種唯讀列，**全部在開頁當下即時算出來**（starter bundle ⨯ 這台伺服器的白名單 ⨯ 待審帳號佇列 ⨯ 對 `/editor/` 的 HEAD 探測），檔案裡沒有任何一個寫死的英雄 id 或血量數字——因為家用主機 ggd.adms.ai 的白名單跟本機不同，寫死就等於對 owner 說謊。
+
+**必須誠實講清楚的三件事**：
+
+1. **不是「所有需要確認的項目」，是「所有可以從真實狀態列舉出來的項目」。** 版權閘（#239）沒有列進來：它是一個**程式決定**，後台沒有任何寫入路徑可以改它，畫一個打勾框等於讓 owner「核准」一件按下去不會發生的事。`/editor/`（#241）同理**唯讀**列出——它烤在 edge 映像裡由 nginx 當靜態檔送，改它要動 deploy。這兩件事仍然需要 owner 決定，只是**不在這一頁按**。
+2. **喪標麥可不是「要不要開放」，他已經開放中。** 他在 `data/curation/whitelist.json` 的 champions 裡、卻**不在** starter.go 的 50 人名單裡（唯一一個），而且是唯一的「半開放英雄」（只有 `.ex`，q/w/e/r 都不在）。所以他是**紅色警告列、不可勾選**，能做的只有「停用」（獨立二次確認，刻意不在一鍵送出的路徑上）或等 #236 把技能補滿。數值體檢也不是寫死他的名字：頁面拿候選英雄跟**已開放名單的中位數**比，血量 <50%、護甲/魔抗 0（別人不是 0）、移速 <70% 就紅。今天 `content/champions/godie-zombiex.json` 的實測值是 base 100 HP / growth 100 / armor 0 / mr 0 / ms 3.0，對照同場中位數約 480 HP / 6 / 28 / 5.9 —— 四條全中。
+3. **這一頁永遠不會替你關掉東西。** 送出只走 `POST /curation/whitelist/bulk`，`disable` 恆為 `[]`（union，server 端 `Service.Bulk` merge），帳號走 `POST /admin/accounts/{id}/approve`。**刻意不 import** `saveWhitelist`/`diffDoc`/`putWhitelist`——那套 draft diff 會依「這一頁知道的東西」算出 disable 清單，一鍵就會刪掉 owner 白名單裡 21 個不在任何 starter 清單中的項目（20 個道具 + 喪標麥可）。測試逐檔 grep 這三個名字。
+
+**其他刻意的取捨**：沒有「全選」預設、沒有任何一列預先打勾（預先打勾＝橡皮圖章，比沒有這一頁更危險）；數值讀不到時**體檢視為未通過**（fail closed），而不是當成沒問題；勾選英雄一定連同 5 個技能格一起 union（只開英雄會做出新的半開放英雄）。新增 Go 程式碼：**0 行**——全部走既有 AdminOnly 路由與既有 audit 行（`curation.bulk` / `approval_approved`）。
+
+**保護這一頁存在的測試**：`quickApprovalBundle.test.ts` 跑真的 `vite build --mode production` 並斷言 bundle **含有**導覽標籤與「一鍵送出確認」——正好是 `contentGate.test.ts` 對 內容管理 斷言的反面。因為這一頁若掉進那個 `import.meta.env.DEV` dead-fold，就只剩本機能用，而本機正是 owner 唯一不需要它的地方。

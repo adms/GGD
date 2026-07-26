@@ -75,9 +75,12 @@ export function contentAssetUrl(icon: string | null | undefined, base = CONTENT_
 
 export interface LoadOptions {
   fetchFn?: typeof fetch;
-  base?: string;
   /** parallel doc fetches (default 16) */
   concurrency?: number;
+  base?: string;
+}
+
+export interface LoadCollectionOptions extends LoadOptions {
   /** called with the full row array whenever a batch of docs lands */
   onProgress?: (rows: ContentRow[], hydrated: number) => void;
 }
@@ -93,7 +96,10 @@ async function getJson(fetchFn: typeof fetch, url: string): Promise<unknown> {
  * the index itself is unreachable (nothing to show); individual doc failures
  * just leave that row as its id.
  */
-export async function loadCollection(kind: EditCollection, opts: LoadOptions = {}): Promise<ContentRow[]> {
+export async function loadCollection(
+  kind: EditCollection,
+  opts: LoadCollectionOptions = {},
+): Promise<ContentRow[]> {
   const fetchFn = opts.fetchFn ?? ((...args: Parameters<typeof fetch>) => fetch(...args));
   const base = opts.base ?? CONTENT_BASE;
   const concurrency = Math.max(1, opts.concurrency ?? 16);
@@ -122,4 +128,48 @@ export async function loadCollection(kind: EditCollection, opts: LoadOptions = {
   await Promise.all(Array.from({ length: Math.min(concurrency, rows.length) }, worker));
   opts.onProgress?.([...rows], hydrated);
   return rows;
+}
+
+/**
+ * Fetch the RAW docs for a named set of ids (task #242's Quick Approval needs
+ * the numbers, not the trimmed row: HP / armor / MR / MS live in `baseStats`,
+ * which `rowFromDoc` deliberately drops).
+ *
+ * Same index-first shape as loadCollection — the `_index.json` owns the id →
+ * path mapping, so this never guesses a URL from an id. Missing ids and failed
+ * doc fetches are simply absent from the returned map: the caller must be able
+ * to say "I could not read this one" rather than being handed a fabricated
+ * default, because the whole point of the numbers is that they decide whether a
+ * champion is safe to enable.
+ */
+export async function loadDocsByIds(
+  kind: EditCollection,
+  ids: readonly string[],
+  opts: LoadOptions = {},
+): Promise<Map<string, unknown>> {
+  const out = new Map<string, unknown>();
+  if (ids.length === 0) return out;
+  const fetchFn = opts.fetchFn ?? ((...args: Parameters<typeof fetch>) => fetch(...args));
+  const base = opts.base ?? CONTENT_BASE;
+  const concurrency = Math.max(1, opts.concurrency ?? 16);
+
+  const index = parseIndex(await getJson(fetchFn, `${base}/${kind}/_index.json`));
+  const byId = new Map(index.map((e) => [e.id, e.path]));
+  const wanted = [...new Set(ids)].filter((id) => byId.has(id));
+  if (wanted.length === 0) return out;
+
+  let next = 0;
+  const worker = async (): Promise<void> => {
+    for (;;) {
+      const id = wanted[next++];
+      if (id === undefined) return;
+      try {
+        out.set(id, await getJson(fetchFn, `${base}/${byId.get(id) as string}`));
+      } catch {
+        // absent from the map — "unknown", never a default
+      }
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(concurrency, wanted.length) }, worker));
+  return out;
 }

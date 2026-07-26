@@ -104,6 +104,22 @@ export type Page =
    */
   | "approvals"
   /**
+   * Quick Approval (task #242) — every decision that is blocked on the OWNER,
+   * on one page, cleared with one submit: the roster the version-controlled
+   * starter set declares but this deploy has not enabled, champions enabled
+   * with half their ability slots, champions enabled that no list ever
+   * declared, and the #126 account queue. It OWNS NO STATE — every row is
+   * derived at view time from the same public/admin endpoints the other pages
+   * use, and every write goes through those pages' existing audited seams
+   * (POST /curation/whitelist/bulk with an always-empty `disable`, POST
+   * /admin/accounts/{id}/approve).
+   *
+   * Platform-admin-backed, so it is session-gated below — and unlike the
+   * content routes it is EAGERLY imported in ui/App.tsx, because a Quick
+   * Approval that vanishes from a production build cannot do its job.
+   */
+  | "quickApproval"
+  /**
    * 對戰回放 (task #175) — the owner's playtest feedback channel. Lists match
    * recordings and opens them in the reused game renderer. Platform-admin-backed
    * (recordings carry player names), so session-gated below.
@@ -182,6 +198,11 @@ export interface AppState {
 const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "players",
   "approvals",
+  // #242: every one of its writes is platform-admin-backed (curation bulk +
+  // account approve), so without this the loopback dev drop-in would render it
+  // with `account === null` and every submit would 401 — a failure that looks
+  // like a platform bug rather than a missing sign-in.
+  "quickApproval",
   "matches",
   "announcements",
   "curation",
