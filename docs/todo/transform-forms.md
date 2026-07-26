@@ -79,6 +79,28 @@ the same hero") and it is NOT a reason to put the alternate back on the roster. 
 `godie-umal` would be using the skin system to do a transform, which contradicts the owner's ruling,
 so it is left for #119 / #116.
 
+**The voice regression, and why it needed no assets.** The roster swap left the ten swapped-in
+bases with NO combat voice: `content/assets/audio/voices/lines/` was generated against the OLD
+roster, so it holds exactly the ten alternates. Owner ruling 2026-07-26 「變身前/後共用就好」 —
+which is #249's own finding applied to audio, since `Eme1`/`Emeu` + the `unsf` sub-names already
+prove the two halves are ONE character. So the pack is SHARED across the form link instead of
+generating 460 duplicate clips.
+
+*Which lookup actually needed it.* Five voice systems, and only one was short. `champion-voices.json`
+(115 keys), the champ-select 稱號/全名 call-out (114), the 名言 pack (114) and the victory taunts (113)
+**already cover both halves of every pair** — no fallback needed, and none was added. The gap was
+`champions/MANIFEST.json` (51 keys), which is the ONLY source `contextualVoice.ts` reads: the click
+has the name/quote rungs beneath it and was never silent, but combat has no floor, so the ten were
+mute for every skill call-out, hurt grunt, kill line, death cry and win shout.
+
+*Both layers, one table.* `packClips()` is the single reader; `resolveVoicePackId()` sends a
+champion with no pack of its own to `counterpartFormId()`. `tools/voice-gen/index-lines.mjs` bakes
+the same plan into the manifest (`sharedFrom` + a `formShares` header) so the mapping is inspectable
+in the artifact, and the runtime resolution is the net for a STALE artifact — see `tform-16`, which
+is not hypothetical. Direction-agnostic by construction: 10 alternate→base today, 9 base→alternate
+(the direction #119's morph will need). `ROSTER.json` was NOT touched — it is a generated status
+snapshot, and a share is playback, not generation.
+
 **Three pairs carry no duration**, and that is data, not a gap: `A0DZ 20-01 風王結界` and
 `A0O6 70-00 紮根` are TOGGLES (no `ahdu` at all — the form persists until re-cast) and
 `Aphx 61-00 百連我殺` is a death-state morph (`adur` 0.01s, an instant swap).
@@ -97,4 +119,7 @@ so it is left for #119 / #116.
 | tform-10 | Import the four alternate bodies that have no champion doc (`H00W` / `O030` / `N01B` / `E010`) so every pair is complete | transform-forms-import-missing | integration | pending |
 | tform-11 | `content/config/store.json`'s `championPrices` and the first open roster are the SAME SET in BOTH directions, every price is 0 or the flat 300, and the economy keeps its 12-free / 38-priced shape — the guard that was missing when the ten swaps left the prices behind | whitelist-store-prices | regression | done |
 | tform-12 | A stored wallet favourite naming a champion the catalog no longer carries is filtered out of every wallet read, while valid pins beside it survive and the durable record keeps all of them | meta-favourite-catalog-filter | regression | done |
-| tform-13 | Generate the 46-clip CosyVoice battle-voice pack for the ten swapped-in BASE heroes — `content/assets/audio/voices/lines/` still holds exactly the ten ALTERNATES, so every one of the ten is mute in combat | (task #142) | integration | pending |
+| tform-13 | ~~Generate the 46-clip CosyVoice battle-voice pack for the ten swapped-in BASE heroes~~ — SUPERSEDED by the owner's 2026-07-26 ruling 「變身前/後共用就好」: a base and its alternate are ONE character, so the pack is SHARED across the form link instead of duplicating 460 clips. Closed by tform-14/tform-15 | transform-forms-voice-shared | regression | done |
+| tform-14 | The share PLAN works in both directions on a real pair (alternate→base and base→alternate), never lends to a champion that owns a pack, lends nothing when neither half has one, and is order-independent + sorted so the generated manifest diff is stable | transform-forms-voice-share | unit | done |
+| tform-15 | Every one of the 50 first-open-roster champions resolves to a non-empty combat voice pack in the SHIPPED manifest, through the real reader, with every clip on disk — and the failure message NAMES the mute champions. This is the regression that was missing when #249 swapped ten slots and left them silent | transform-forms-voice-coverage | regression | done |
+| tform-16 | `pnpm voice:index` cannot regenerate `champions/MANIFEST.json` today: `godie-zombiex`'s four `skill-name.{q,e,r,ex}` clips fail the byte gate (status.json records takes that were never rendered — the audio on disk still speaks the pre-#244 skill names). PRE-EXISTING on main, unrelated to the form share, and it needs re-synthesis, not a metadata edit. The committed manifest is also stale for `godie-huth` / `godie-hvwd` / `godie-ogld` / `godie-osam` / `godie-udea` (texts + durations moved when `apply_skill_readings` ran) | (task #244) | integration | pending |

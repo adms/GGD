@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env tsx
 /**
  * tools/voice-gen/index-lines.mjs — fold the generated CosyVoice3 voice line
  * corpus (content/assets/audio/voices/lines/) into the drop-in client contract
@@ -26,6 +26,23 @@
  * reality + status.json, NOT ROSTER.json's `counts.generated` — that snapshot
  * lags the last generation pass (skill-name lines land after it is written).
  *
+ * FORM SHARING —「變身前/後共用就好」 (owner 2026-07-26, task #249). A base and
+ * its alternate are ONE character (the map's own `Eme1`/`Emeu` + `unsf` names
+ * say so), so after the per-hero pass every pair with clips on exactly ONE side
+ * lends them to the other: the entry is a copy of the donor's, stamped
+ * `sharedFrom`, with the clip paths still pointing at the DONOR's files. Nothing
+ * is copied, symlinked or re-encoded. Both directions happen for real today —
+ * ten alternate→base (the #249 roster swap left the ten swapped-in bases mute)
+ * and nine base→alternate (what the #119 morph will need). The plan comes from
+ * `packages/shared/src/content/voiceFormSharing.ts`, which reads the closed
+ * 26-pair table; this file only applies it. That is why the script runs under
+ * `tsx` rather than bare node.
+ *
+ * A shared entry is NOT a generation status. `ROSTER.json` and the admin voice
+ * page still show these champions as having no clips of their own, because they
+ * do not — the share is a playback fallback, and conflating the two would
+ * fabricate generation status.
+ *
  * DETERMINISTIC. Champion keys and category keys are sorted so the git diff is
  * stable and reviewable. Run before `pnpm content:build`.
  */
@@ -33,6 +50,10 @@ import { createHash } from "node:crypto";
 import { existsSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  applyFormVoiceShares,
+  planFormVoiceShares,
+} from "../../packages/shared/src/content/voiceFormSharing.ts";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..", "..");
@@ -161,9 +182,18 @@ function main() {
     shipped++;
   }
 
+  // FORM SHARING. Every pair with clips on exactly ONE side lends them to the
+  // other, in whichever direction the corpus happens to sit. The borrowed entry
+  // is the donor's, stamped `sharedFrom`, so its clip paths still point at the
+  // donor's files — nothing is copied. A champion that owns a pack is never
+  // named, so a real recorded asset can never be shadowed by a borrowed one.
+  const shares = planFormVoiceShares(Object.keys(champions));
+  const withShares = applyFormVoiceShares(champions, shares);
+  const landed = shares.filter((s) => withShares[s.championId]);
+
   // Sort champion keys for a stable diff.
   const sortedChamps = {};
-  for (const id of Object.keys(champions).sort()) sortedChamps[id] = champions[id];
+  for (const id of Object.keys(withShares).sort()) sortedChamps[id] = withShares[id];
 
   const manifest = {
     id: "champion-voice-pack",
@@ -179,13 +209,28 @@ function main() {
       "CosyVoice3 cv3-0.5b clone, per-line takes; clips point directly at lines/ (verified by status.json bytes+hash).",
     selectSourceCategories: SELECT_SOURCE_CATEGORIES,
     categoryCount: CANON.length,
-    championCount: shipped,
+    /** Champions with clips of their OWN under lines/. */
+    generatedCount: shipped,
+    /** Champions speaking with their w3x form counterpart's pack (see formShares). */
+    sharedCount: landed.length,
+    /** Total entries a client can resolve = generatedCount + sharedCount. */
+    championCount: shipped + landed.length,
+    formSharesNote:
+      "「變身前/後共用就好」 (owner 2026-07-26, task #249): a base and its ALTERNATE form are ONE " +
+      "character per the map's Eme1/Emeu + unsf evidence, so one pack serves both. Each entry below " +
+      "carries `sharedFrom` and its clip paths point at the DONOR's files — nothing was copied. " +
+      "This is a PLAYBACK fallback, not a generation status: ROSTER.json still (correctly) shows " +
+      "these champions as having no clips of their own.",
+    formShares: landed,
     champions: sortedChamps,
   };
 
   writeFileSync(OUT_PATH, JSON.stringify(manifest, null, 2) + "\n", "utf8");
+  const byDir = landed.reduce((m, s) => ((m[s.direction] = (m[s.direction] ?? 0) + 1), m), {});
   console.log(
-    `[voice:index] wrote ${OUT_PATH}\n  ${shipped} champions shipped, ${skipped} skipped, ${CANON.length} categories each + select pool.`,
+    `[voice:index] wrote ${OUT_PATH}\n  ${shipped} champions shipped, ${skipped} skipped, ${CANON.length} categories each + select pool.` +
+      `\n  ${landed.length} form-shared entries (${JSON.stringify(byDir)}):` +
+      landed.map((s) => `\n    ${s.championId} ← ${s.sharedFrom}  #${s.heroNumber}`).join(""),
   );
 }
 

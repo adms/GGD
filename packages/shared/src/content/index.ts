@@ -94,6 +94,14 @@ export {
   type ChampionFormPair,
   type PerLevelSeconds,
 } from "./championForms";
+// 「變身前/後共用就好」 (owner 2026-07-26): a base and its alternate are ONE
+// character, so one generated voice pack serves both halves of a w3x form pair.
+export {
+  planFormVoiceShares,
+  applyFormVoiceShares,
+  type FormVoiceShare,
+  type FormShareDirection,
+} from "./voiceFormSharing";
 export {
   BLOCKING_FOOTPRINTS,
   NON_BLOCKING,

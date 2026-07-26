@@ -17,7 +17,7 @@
     "lint": "pnpm -r --if-present lint",
     "todo:check": "tsx tools/todo-check/src/cli.ts --static",
     "todo:runtime": "tsx tools/todo-check/src/cli.ts --runtime",
-    "voice:index": "node tools/voice-gen/index-lines.mjs",
+    "voice:index": "tsx tools/voice-gen/index-lines.mjs",
     "voxel:gen": "pnpm --filter @ggd/voxel-gen voxel:gen",
     "voxel:check": "pnpm --filter @ggd/voxel-gen voxel:check",
     "content:build": "pnpm --filter @ggd/shared content:build",
