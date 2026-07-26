@@ -20,6 +20,7 @@ const (
 	ActionStage        = "archive.stage"
 	ActionPlan         = "archive.plan"
 	ActionBackup       = "archive.backup"
+	ActionBackupDelete = "archive.backup_delete"
 	ActionCommitBegin  = "archive.commit_begin"
 	ActionCommitEnd    = "archive.commit_end"
 	ActionCommitFailed = "archive.commit_failed"
@@ -64,8 +65,8 @@ func New(d Deps) *Service {
 		d.Now = time.Now
 	}
 	s := &Service{deps: d}
-	if err := SweepStaging(d.DataDir, d.Now()); err != nil {
-		slog.Warn("platformarchive: staging sweep failed at boot", "err", err)
+	if err := Sweep(d.DataDir, d.Now()); err != nil {
+		slog.Warn("platformarchive: _migration sweep failed at boot", "err", err)
 	}
 	return s
 }
@@ -173,12 +174,19 @@ func (s *Service) Stage(actorID string, body io.Reader, declaredLen int64) (*Sta
 
 // Status is the console's third tab.
 type Status struct {
-	Stage      *Stage       `json:"stage"`
-	Backups    []BackupInfo `json:"backups"`
-	FreeBytes  int64        `json:"freeBytes"`
-	FreeKnown  bool         `json:"freeKnown"`
-	ReplayDir  string       `json:"replayDir"`
-	StageTTLHr int          `json:"stageTtlHours"`
+	Stage   *Stage       `json:"stage"`
+	Backups []BackupInfo `json:"backups"`
+	// BackupBytes is what the whole pile holds. Surfaced as its own number
+	// because "how much credential material is sitting in DATA_DIR" is the
+	// question, and nobody adds up a list of sizes by eye.
+	BackupBytes int64 `json:"backupBytes"`
+	// BackupRetention is the live policy, sent so the page states the same
+	// numbers the sweep enforces instead of keeping a second copy of them.
+	BackupRetention BackupRetention `json:"backupRetention"`
+	FreeBytes       int64           `json:"freeBytes"`
+	FreeKnown       bool            `json:"freeKnown"`
+	ReplayDir       string          `json:"replayDir"`
+	StageTTLHr      int             `json:"stageTtlHours"`
 }
 
 // Status reports the staging slot, existing backups and disk headroom.
@@ -193,10 +201,30 @@ func (s *Service) Status() (*Status, error) {
 	}
 	free, known := FreeBytes(s.deps.DataDir)
 	return &Status{
-		Stage: st, Backups: backups, FreeBytes: free, FreeKnown: known,
+		Stage: st, Backups: backups,
+		BackupBytes:     BackupBytes(backups),
+		BackupRetention: Retention(),
+		FreeBytes:       free, FreeKnown: known,
 		ReplayDir:  ReplayDirFor(s.deps.DataDir, s.deps.ReplayDir),
 		StageTTLHr: int(StageTTL / time.Hour),
 	}, nil
+}
+
+// DeleteBackup removes one pre-import backup on the operator's instruction and
+// audits it.
+//
+// The audit line is the point: these files are the only undo an import has, so
+// "it is gone and nobody knows who" is not an acceptable state. It records the
+// stamp, the size and what the backup was taken before.
+func (s *Service) DeleteBackup(actorID, stamp string) (*BackupInfo, error) {
+	b, err := DeleteBackup(s.deps.DataDir, stamp)
+	if err != nil {
+		return nil, err
+	}
+	s.audit(actorID, ActionBackupDelete, b.Stamp, map[string]any{
+		"bytes": b.Bytes, "entries": b.Entries, "reason": b.Reason,
+	})
+	return b, nil
 }
 
 // Plan computes a dry run against a staged archive. It writes nothing.

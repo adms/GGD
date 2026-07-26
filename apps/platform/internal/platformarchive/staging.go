@@ -122,7 +122,10 @@ func StageUpload(dataDir string, body io.Reader, declaredLen int64, now time.Tim
 	if err := os.MkdirAll(dir, 0o750); err != nil {
 		return nil, err
 	}
-	if err := SweepStaging(dataDir, now); err != nil {
+	// Sweep, not SweepStaging: an upload is the moment an operator is about to
+	// create ANOTHER credential-bearing file under _migration, which makes it
+	// the right moment to expire the ones that are past their retention.
+	if err := Sweep(dataDir, now); err != nil {
 		return nil, err
 	}
 

@@ -66,6 +66,7 @@ Regression suites always run **last** (enforced by the runner scheduler and the 
 | 兩台後台的內容同步 (tick-box, field-level arbitration) | [content-sync.md](content-sync.md) | platform + admin + content |
 | 內容圖鑑 codex (live item/champion/ability browser) | [content-codex.md](content-codex.md) | client + content |
 | AI icon/text generation (proxy + admin config + editor) | [ai.md](ai.md) | platform + admin + editor |
+| 資料搬遷封存：匯入前備份的保留與可見性 (#243) | [platform-archive.md](platform-archive.md) | platform + admin |
 | Infra & one-click K8s | [infra.md](infra.md) | infra |
 | Warcraft III map importer | [w3x-import.md](w3x-import.md) | content |
 | WC3 particle port (vfx/ribbon/ambient engine) | [particles.md](particles.md) | content + client |

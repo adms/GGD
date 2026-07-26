@@ -210,7 +210,15 @@ func Apply(ctx context.Context, a *Archive, t *Target, opts ApplyOptions) (*Appl
 				list = append(list, g)
 			}
 		}
-		backup, err := BackupTarget(t.Store.Root(), opts.ContentDir, t.ReplayDir, list, now, opts.PlatformVersion)
+		backup, err := BackupTarget(BackupOptions{
+			DataDir:         t.Store.Root(),
+			ContentDir:      opts.ContentDir,
+			ReplayDir:       t.ReplayDir,
+			Groups:          list,
+			PlatformVersion: opts.PlatformVersion,
+			Reason:          backupReason(a),
+			Now:             now,
+		})
 		if err != nil {
 			return nil, err
 		}
@@ -332,6 +340,22 @@ func Apply(ctx context.Context, a *Archive, t *Target, opts ApplyOptions) (*Appl
 		opts.AuditEnd(res, nil)
 	}
 	return res, nil
+}
+
+// backupReason names the import a backup was taken before, from the archive's
+// own manifest. Six months later the operator is looking at a directory of
+// timestamps; this is the sentence that tells him which one is the state he
+// wants back.
+func backupReason(a *Archive) string {
+	if a == nil || a.Manifest == nil {
+		return "匯入前的自動備份"
+	}
+	host := a.Manifest.Source.Host
+	if host == "" {
+		host = "（未知主機）"
+	}
+	return fmt.Sprintf("匯入「%s」於 %s 匯出的封存（%d 個檔案）之前",
+		host, a.Manifest.ExportedAt.UTC().Format("2006-01-02 15:04 UTC"), a.Manifest.Totals.Entries)
 }
 
 func applyFailed(opts ApplyOptions, res *ApplyResult, err error) {
