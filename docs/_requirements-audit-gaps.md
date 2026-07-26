@@ -3338,3 +3338,174 @@ apply-time 就是 cast-time，維持原路徑不變。
 ba72202e+a16f6ddf 上就已經紅的 6 個 `DashOverride | LeapOverride` 收窄錯誤——
 上一條的閘門紀錄只跑了 Go testrunner，沒跑 tsc）、`pnpm todo:check`、
 `pnpm --filter @ggd/{shared,client} test`。
+
+---
+
+---
+
+## 2026-07-26 — #243 後台一鍵 ZIP 匯出／匯入平台資料（無痛移機）
+
+**需求原話（owner）**：「後台增加一個功能，是一鍵打包 zip 遊戲平台資料匯出/匯入，
+方便變更主機的時候重新匯入可以無痛移機」。依 rolling-log 紀律，需求一出現就立刻登錄。
+
+**主場景是「搬到一台全新主機」**（舊主機匯出 → 新主機空的 data/ 匯入 → 家人用原本的
+帳號密碼登入）。覆蓋一台已經有資料的主機是次要且危險的情境，UI 用橘底標明。
+
+### 為什麼開新 Kind 而不是 opstate v2
+
+`opstate`（#179）帶的是**營運選擇**（白名單 + 戰鬥系統 + 系統運維），而且**刻意拒絕**
+帳號與邀請碼。#243 帶的正好相反：密碼雜湊、未兌換邀請碼、錢包、整棵 data 樹。語意不同
+就開新 Kind（`docs/design/content-sync.md` 立下的規矩）：`ggd-platform-archive` v1。
+`ggd-operator-state` v1 原封不動，`make family-restore` 繼續指向它。
+
+### 落點
+
+- Go：`apps/platform/internal/platformarchive/`（scope / manifest / export / inspect /
+  plan / apply / backup / staging / reindex / freespace / service / handlers）
+  + CLI `cmd/platformarchive`（export / inspect / plan / apply，烤進 platform 映像）。
+- 平台改動：`internal/server/server.go`（路由 + **路徑感知的 body cap 豁免**）、
+  `internal/auth/password.go`（抽出 `ReauthPassword`，ChangePassword 行為不變）。
+- 前端：`apps/admin/src/archive.ts`、`ui/DataMigrationPage.tsx`、`api.ts`、`session.ts`、
+  `store.ts`、`ui/App.tsx`、`migrationGate.test.ts`。
+- 其他：`nginx/nginx.conf`（一條 exact-match location）、`Makefile`（archive-* /
+  family-archive-*）、`docs/runbooks/platform-migration.md`（新）。
+
+### 這次真正買下來的東西（不是設計稿，是程式碼裡的性質）
+
+1. **匯出永不 `WalkDir(dataDir)`。** 只走一張明確的規則表（`scope.go`），所以
+   `owner-setup-token`（DATA_DIR 根、持有即可宣告新部署擁有權）與 `journal/`
+   是**結構上到不了**，不是被 denylist 擋掉。denylist 會被下一個新增的集合繞過。
+2. **枚舉一律 `Scan`，不用 `List`。** `readIndex` 把 index 缺失讀成空集合（fail-OPEN），
+   一台 index 損毀的來源主機會匯出「零個帳號」而且匯入完全成功。#225 已為同一理由選過
+   `Scan`。測試：刪掉 fixture 的 `accounts/_index.json`，匯出仍須含 35 個帳號。
+3. **絕不半寫。** jsonstore 只有單物件原子性（結算為此養了一整套 WAL）。所以
+   驗證整包 → 解析每個名字（走 `Store.Path`，即 jsonstore 自己的 `resolve`）→ 算完整份
+   plan → 比對 `planDigest` → 做完備份，**全部在寫入之前**。
+4. **`planDigest`。** commit 會重算 plan 並和操作者核准的 digest 比對，不同就 409、
+   一個位元組都不寫。這是「你核准的內容 = 實際寫下去的內容」的機制保證。
+5. **`admin-audit` 是 AppendOnly。** 目標已有當天的檔案就一律略過，永不覆寫也永不合併 ——
+   覆寫等於偽造目標主機自己的稽核軌跡，而且會蓋掉記錄「這次匯入」的那一行。
+6. **匯入後的 Redis 重建不呼叫 `boot.Rebuild`。** 那支用 `SetNX`，不會修正被搬遷取代的
+   使用者名稱索引（症狀：密碼正確但登進錯的帳號，**重啟平台也修不好**）；而且它的第一步
+   是重播 WAL intent。本套件的 `reindex.go` 用 `SET`（+ 被擠掉的映射先 `DEL`）。
+7. **兩個 1 MiB body cap。** 平台 `server.go` 的全域 cap 與 nginx 的 `client_max_body_size`
+   任一漏掉，每一次匯入都會 413 而且兩邊都不解釋。平台改成**路徑感知**（exact match，
+   不是 prefix），nginx 加一條 exact-match location，兩邊都是 512 MiB。
+8. **匯出與匯入都要再輸入自己的密碼。** 判例是 `/account/password`：session 本身不足以
+   構成憑證動作的授權。一次匯出就等於整台部署的每一個密碼雜湊。
+9. **身分衝突是一級檢查。** 新主機為了能登入後台先註冊的帳號幾乎必然與舊主機撞名；
+   若當成普通 Additive「略過」，結果是「密碼正確、登進去是空帳號」而且沒有訊息。
+   預設整包拒絕；`adopt-archive` 才改指，且**被擠掉的帳號絕不刪除**。
+10. **這一頁必須在正式 bundle 裡。** `App.tsx` 有兩個裸 `if (!import.meta.env.DEV) return;`
+    守著動態 import，rollup 會整塊折掉。最容易做錯的方式是把新頁塞進
+    `ui/ContentPage.tsx` 的 `CONTENT_ROUTES`（#229 的鑄形工坊就在那）。正確做法是
+    **靜態 top-level import + NAV 條目**，並由新的 `migrationGate.test.ts` 釘住「存在」
+    （`contentGate.test.ts` 只釘「缺席」，此前沒有任何東西釘存在）。
+
+### 刻意不帶
+
+`config/ai-provider`（明文金鑰）、`config/slack-notify`（webhook 密鑰）、`journal/`、
+`owner-setup-token`、`blizzard-overlay/`（84 MB 素材，隨映像走 —— **UI 主動說「新主機
+看起來很空是正常的」**）、`content-backups/`、`icon-src-original/`、`_index.json`、
+`_migration/`。每一條都逐字寫進 manifest 的 `scope.excluded` 與 UI 表格，
+因為「不在裡面」和「我忘了」看起來一模一樣。
+
+### 安全差（必須說出來，不能默默繼承）
+
+#179 把 `accounts` 設成 opt-in、`invites` 完全不帶。#243 **定義上反轉這兩項** ——
+不帶就不叫搬遷。這個反轉就是整個安全差，已寫進 `archive.ts` 的 `SECURITY_DELTA`
+並由測試釘住它出現在 UI 文案裡。
+
+### 還沒做，不在本次 scope
+
+- **ZIP 的 central directory 是明文**，`unzip -l` 就能看到全家人的使用者名稱與 email
+  （那兩個 id 就是登入解析的 key）。這不是可以靠工程消除的，只在 UI 與 runbook 揭露。
+- **對戰回放預設關**。它是 game-server 的檔案、在另一個掛載點，UI 直接建議
+  `scp -r data/replays/`。
+- **家用主機 nginx 前面還有 Caddy**。依 owner 2026-07-26 指令，本次**完全沒有連線到
+  ggd.adms.ai**，所以看不到主機上的 Caddyfile；若上傳在邊緣就 413，要查的是
+  `request_body max_size`。這條寫進 runbook，實際改動是 owner 在主機上的動作。
+- 本功能**永遠不刪任何東西**。若日後希望匯入後自動清掉臨時管理員帳號，那會是這個
+  功能唯一會刪東西的地方，需要 owner 明確指示。
+
+---
+
+## 2026-07-26 — #243 修正：試算會說謊（PLAN ≠ COMMIT）
+
+**驗證者判定 SUSPECT，這一條單獨就足以擋下合併。**
+
+### 症狀（實測，全在合成 fixture 上）
+
+把同一包封存**匯入第二次**：
+
+```
+BEFORE   plan.Writes = 0    apply.Written = 169   apply.Added = 169
+AFTER    plan.Writes = 0    apply.Written = 0     apply.Unchanged = 169
+```
+
+169 是本 repo `fixture_test.go` 用 `-groups all` 匯出的全部 entry 數。也就是說：
+畫面上寫「將寫入 0 筆」，按下確認之後，目標主機上**每一個文件都被重寫了一遍**。
+
+### 為什麼是致命而不是美觀問題
+
+這個功能的**全部**安全故事就是「看試算，再核准」。一個讀到 「這次不會寫入任何東西」
+才按下確認的操作者，不可以得到 169 個文件被改寫的結果。而且重跑正是最容易發生的情境：
+不確定第一次有沒有成功的人，就是會再跑一次。
+
+### 根因
+
+`CollectionPlan.Items` 只收「值得注意」的項目（`written` / `skipped` / `blocked`），
+`added` 與 `unchanged` 都不入列。`Apply` 走的是**另一條路**：它自己再枚舉一次
+`a.ByCollection[col]`，在 `verdicts` map 裡查不到就 `verdict = ResultAdded` 然後
+`Put`。於是所有 `unchanged` 的 entry 一律被當成新增重寫。
+
+digest 也擋不住 —— 它算的是那份**殘缺**的 plan，兩邊都「一致」，所以 409 從來不會觸發。
+
+### 修法（結構性，不是防禦性）
+
+1. **plan 是完整的**：`cp.Items` 現在收每一個 entry，含 `added` / `unchanged`。
+   Console 端自己過濾顯示（`notableItems` + 「展開時列出每一筆文件」切換），
+   伺服器永遠不縮短這份清單。
+2. **只有一條路徑能變成寫入**：新增 `Plan.Executable(a)`，把核准過的 plan 逐筆
+   解析回封存的 entry，回傳 `[]PlannedWrite`。`Apply` 只跑這份清單。
+   判定只由 `planEntry` 產生一次；沒有第二個地方能自己決定判定，所以兩邊不可能再漂移。
+   plan 與封存對不起來（少一筆／多一筆）是**硬錯誤**，不是默默略過也不是默默多寫，
+   而且在備份之前就發生 ⇒ 零寫入。
+3. **digest 因此涵蓋逐筆判定**：`Items` 完整，`planDigest` 就自動涵蓋每一筆的
+   verdict，不只是 entry 集合。`TestPlanDigestCoversPerEntryVerdicts` 用兩個
+   「entry 集合相同、彙總數字相同、只有逐筆判定對調」的目標證明 digest 會不同 ——
+   舊的 digest 會高高興興地放行這個 bug 本身。
+4. **實際結果是觀測來的，不是抄 plan 的**：`ApplyResult.Results` 在每次寫入前
+   `targetHas()` 問一次目標，所以它**可以**和 plan 不一致；不一致就進 warning、
+   進 UI 紅字、進 `archive.commit_end` 稽核（`promisedWrites` 與 `written` 並列）。
+
+### 測試（`internal/platformarchive/contract_test.go`，全部 `t.TempDir()`）
+
+- `TestReImportWritesNothingItDidNotPromise` —— 匯入、再匯入同一包，逐檔用
+  **mtime** 斷言沒有被重寫。byte 比對做不到這件事：重新 `Put` 一份相同的文件會產生
+  完全相同的位元組，正是這個 bug 藏身的地方。
+- `TestPlanVerdictMapEqualsApplyResultMapExactly` —— **真正的交付物**。24 個
+  seed，每個 seed 隨機決定每一份文件在目標上的狀態（不存在／相同／不同／比封存新）
+  以及 `allowOverwrite`，斷言 plan 的逐筆判定 map 與 apply 的逐筆結果 map
+  `reflect.DeepEqual` **完全相等**，並且檔案系統同意（只有 added/written 的檔案
+  mtime 有動）。blocked 的 plan 另外斷言零寫入。最後檢查隨機真的走過五種判定，
+  否則這個性質證明的比它宣稱的少。
+- `TestPlanDigestCoversPerEntryVerdicts`、
+  `TestApplyRefusesAPlanThatDoesNotMatchTheArchive`。
+- 反向驗證：把 bug 重新注入（`ResultUnchanged` 落回寫入），前兩個測試立刻紅
+  （`plan promised 0 write(s), the commit performed 169`）。
+
+### UI 文案（同一個 bug 的另一半）
+
+「即將寫入 0 個文件」配一顆紅色的「我確認，開始匯入」，正是操作者被騙的那一幕。
+改成 `commitPromise(plan)`：零寫入時直接說「這次不會寫入任何文件…按下確認只會產生
+一份備份，資料不會有任何改動」；有寫入時把新增／覆蓋／相同／略過都說出來。
+確認步驟加上 `PLAN_IS_THE_CONTRACT`（「試算就是契約…一筆不多、一筆不少」），
+完成畫面用 `importOutcome` + `outcomeMatchesPlan` 把「承諾 N 筆 / 實際 M 筆」並列，
+不一致就轉紅並指向備份。
+
+### 仍然成立、沒有被動到的
+
+路徑穿越／絕對路徑／zip bomb／截斷／CRC 竄改／未知 collection 全部照樣零寫入拒絕；
+真 argon2id 雜湊的 round-trip 照樣可登入；append-only 檔案照樣永不覆寫；
+adopt-archive 照樣不刪任何帳號。本次**完全沒有連線 ggd.adms.ai**。

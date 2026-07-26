@@ -13,6 +13,14 @@ import type { InvitePayload } from "./invites";
 import { normalizeLog, normalizeStatus } from "./contentOverlay";
 import type { OverlayHead, OverlayLogLine, OverlayStatus } from "./contentOverlay";
 import type {
+  ApplyResp,
+  ArchiveGroup,
+  PlanResp,
+  PreviewResp,
+  StageResp,
+  StatusResp,
+} from "./archive";
+import type {
   AccountRow,
   AccountSearch,
   Announcement,
@@ -508,4 +516,78 @@ export function revokeInvite(code: string): Promise<InvitePayload> {
   return api
     .request<unknown>(`/admin/invites/${encodeURIComponent(code)}/revoke`, { body: {} })
     .then(normalizeInvitePayload);
+}
+
+// ---- 資料搬遷 platform archive (task #243) -----------------------------------
+// The most dangerous surface in the console. Every route is admin-gated on the
+// server; export and commit additionally re-confirm the OPERATOR'S OWN
+// PASSWORD, which is why those two wrappers take one.
+//
+// EXPORT IS A POST. A GET would land in browser history, be bookmarkable and
+// prefetchable, put its parameters in the edge's access log, and have nowhere
+// to carry the password re-confirmation — for a response that IS every
+// credential hash on the deploy.
+
+export function archivePreview(): Promise<PreviewResp> {
+  return api.request<PreviewResp>("/admin/platform-archive/preview", { body: {} });
+}
+
+export function archiveStatus(): Promise<StatusResp> {
+  return api.request<StatusResp>("/admin/platform-archive/status");
+}
+
+/** Stream the archive down as a Blob. `groups` always implies core server-side. */
+export function archiveExport(groups: ArchiveGroup[], confirmPassword: string): Promise<Blob> {
+  return api.requestBlob("/admin/platform-archive/export", { groups, confirmPassword });
+}
+
+/** Upload an archive to the single staging slot. Writes nothing outside _migration. */
+export function archiveStage(file: Blob): Promise<StageResp> {
+  return api.postRaw<StageResp>("/admin/platform-archive/stage", file, "application/zip");
+}
+
+export interface ArchivePlanArgs {
+  stageId: string;
+  groups?: ArchiveGroup[];
+  allowOverwrite?: boolean;
+  resolveCollisions?: string;
+}
+
+/** Dry run. Writes nothing; returns the digest commit must be given back. */
+export function archivePlan(args: ArchivePlanArgs): Promise<PlanResp> {
+  return api.request<PlanResp>("/admin/platform-archive/plan", { body: args });
+}
+
+/**
+ * Back up, then write. `planDigest` MUST be the digest from the plan the
+ * operator just approved — the server recomputes the plan and refuses with a
+ * 409 if the target moved in between, which is what makes "what you approved is
+ * what gets written" a mechanism rather than a hope.
+ */
+export function archiveCommit(
+  args: ArchivePlanArgs & { planDigest: string; confirmPassword: string },
+): Promise<ApplyResp> {
+  return api.request<ApplyResp>("/admin/platform-archive/commit", { body: args });
+}
+
+export function archiveDiscardStage(stageId: string): Promise<{ status: string }> {
+  return api.request<{ status: string }>(
+    `/admin/platform-archive/stage/${encodeURIComponent(stageId)}`,
+    { method: "DELETE" },
+  );
+}
+
+/**
+ * Remove ONE pre-import backup by its UTC stamp.
+ *
+ * No password re-confirmation, and that asymmetry is deliberate: export and
+ * commit are gated because they MOVE credentials; this one destroys a copy of
+ * them, which is the direction an operator should never be discouraged from
+ * taking. The server audits it.
+ */
+export function archiveDeleteBackup(stamp: string): Promise<{ status: string; stamp: string }> {
+  return api.request<{ status: string; stamp: string }>(
+    `/admin/platform-archive/backups/${encodeURIComponent(stamp)}`,
+    { method: "DELETE" },
+  );
 }

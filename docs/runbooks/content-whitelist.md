@@ -262,6 +262,26 @@ session two). The 84 MB Blizzard overlay is task #177's `make family-ship`, not 
 Code: `apps/platform/internal/opstate/`, CLI `apps/platform/cmd/opstate/`, boot check wired
 in `apps/platform/cmd/platform/main.go`.
 
+### Not this tool: moving the WHOLE platform (task #243)
+
+`opstate` / `make family-restore` remains the **whitelist-only** path, and it stays that
+way on purpose: it deliberately refuses to carry credentials, so it is safe to keep in the
+routine deploy script.
+
+If you are **changing hosts** and want the family to log in with their existing passwords,
+that is a different tool with a different threat model — `platformarchive`, which carries
+accounts (password hashes included), invite codes, wallets, rankings and the content
+overlay as one ZIP:
+
+```bash
+make archive-export                        # old host → ggd-platform-archive.zip
+make family-archive-apply ARCHIVE=…        # → the new host (run BEFORE registering there)
+```
+
+The two formats are different Kinds (`ggd-operator-state` vs `ggd-platform-archive`) and
+each refuses the other with an explicit message, so they cannot be confused at the point of
+use. Full procedure, including the identity-collision trap: **`docs/runbooks/platform-migration.md`**.
+
 ---
 
 ## Related

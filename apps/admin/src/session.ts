@@ -175,6 +175,42 @@ export class ApiClient {
     if (!res.ok) throw await parseError(res);
     return (await res.json()) as T;
   }
+
+  /**
+   * POST a JSON body and read a BINARY response (task #243's archive export).
+   *
+   * `request` cannot serve this: it calls res.json() on the way out, which
+   * would corrupt a ZIP. The 401 path still parses the standard error envelope,
+   * so a wrong-password refusal reads exactly like every other API failure
+   * rather than arriving as an unreadable blob.
+   *
+   * refreshOn401 defaults to FALSE here for the same reason /account/password
+   * turns it off: these routes re-confirm a password, so a 401 means "that
+   * credential was wrong", not "your token expired", and retrying would spend
+   * the server's brute-force budget twice.
+   */
+  async requestBlob(path: string, body: unknown, opts: RequestOptions = {}): Promise<Blob> {
+    let res = await this.rawRequest(path, { ...opts, body, method: opts.method ?? "POST" });
+    if (res.status === 401 && opts.refreshOn401 === true && this.tokens) {
+      const refreshed = await this.refreshOnce();
+      if (refreshed) res = await this.rawRequest(path, { ...opts, body, method: opts.method ?? "POST" });
+    }
+    if (!res.ok) throw await parseError(res);
+    return await res.blob();
+  }
+
+  /**
+   * POST RAW BYTES (the archive upload). The body is sent as-is with an
+   * explicit content type — no JSON.stringify — because the payload is a file
+   * the operator picked, and re-encoding it would be both wrong and enormous.
+   */
+  async postRaw<T>(path: string, body: BodyInit, contentType: string): Promise<T> {
+    const headers: Record<string, string> = { "Content-Type": contentType };
+    if (this.tokens) headers["Authorization"] = `Bearer ${this.tokens.accessToken}`;
+    const res = await this.fetchFn(this.base + path, { method: "POST", headers, body });
+    if (!res.ok) throw await parseError(res);
+    return (await res.json()) as T;
+  }
 }
 
 /**

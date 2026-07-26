@@ -148,9 +148,9 @@ var knownOrphans = map[string]string{
 		"account JSON — exactly what the route was added to stop.",
 
 	// ---- lobby/room features whose backend shipped ahead of the UI ---------
-	"GET /api/v1/rooms/templates":       "no room-template picker in the client lobby; templates are only ever the compiled defaults",
-	"POST /api/v1/rooms/templates":      "no room-template editor in any UI — a saved template is durable state (data/rooms/templates/<id>.json) that nothing can create",
-	"GET /api/v1/rooms/templates/{id}":  "no room-template detail view (its list route above is unreachable too)",
+	"GET /api/v1/rooms/templates":      "no room-template picker in the client lobby; templates are only ever the compiled defaults",
+	"POST /api/v1/rooms/templates":     "no room-template editor in any UI — a saved template is durable state (data/rooms/templates/<id>.json) that nothing can create",
+	"GET /api/v1/rooms/templates/{id}": "no room-template detail view (its list route above is unreachable too)",
 	"POST /api/v1/friends/{accountId}/block": "the friends panel wires list/request/accept/decline/remove " +
 		"(client/src/ui/platform/api.ts:105-121) but never block — the one moderation action of the five",
 
@@ -534,7 +534,19 @@ func callSiteRegexp(pattern string) *regexp.Regexp {
 	var parts []string
 	for _, seg := range strings.Split(suffix, "/") {
 		if strings.HasPrefix(seg, "{") && strings.HasSuffix(seg, "}") {
-			parts = append(parts, `[^/"'`+"`"+`]+`)
+			// NEWLINE IS EXCLUDED, and that is a correctness fix rather than a
+			// style choice. callerCorpus joins literals with '\n' precisely so
+			// "a route can never match across two unrelated literals" — but a
+			// class that admitted '\n' let a TRAILING {param} run greedily off
+			// the end of its own literal, through the separator, and into the
+			// next one, where the trailing-boundary check then saw whatever
+			// character happened to follow. #243's
+			// DELETE /admin/platform-archive/stage/{id} is the first route whose
+			// {param} is the LAST segment with no literal after it, so it was
+			// the first to be reported orphaned while its call site sat in
+			// admin/src/api.ts. This NARROWS what counts as a call — it can only
+			// make more routes look orphaned, never fewer.
+			parts = append(parts, `[^/"'`+"`"+"\n"+`]+`)
 			continue
 		}
 		parts = append(parts, regexp.QuoteMeta(seg))
