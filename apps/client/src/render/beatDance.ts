@@ -411,26 +411,57 @@ export interface PoseTarget {
 }
 
 /**
+ * Per-node record of the vertical offset this module last added, so the next
+ * frame can take it back before adding a new one.
+ *
+ * ⛔ This exists because an earlier version of this file asserted that
+ * `ChampionView.sync` re-authors `root.position.x/y/z` every frame and that
+ * `+=` therefore could not accumulate. **Three of those four channels are
+ * re-authored; `y` is not.** `EntityViewRegistry.ts:608` calls
+ * `view.setPose(x, z, fx, fz)` and `ChampionView.setPose` writes only
+ * `position.x` / `position.z`. The only writers of `root.position.y` are
+ * `updateDissolve` / `resetDissolve`, and both return early for a living body.
+ * So `+=` on `y` accumulated: `dy` has a positive mean (≈ +0.039/frame at full
+ * energy), which levitates the dancer ~2.3 units/second and takes him out of a
+ * 9.27-unit-high camera inside one phrase — permanently, because nothing ever
+ * writes that channel back down.
+ *
+ * The fix does NOT depend on knowing which channels `sync` re-authors, and does
+ * not need the body's base height: subtracting the previous offset before
+ * adding the new one is identical to setting `base + dy`, whoever owns `base`.
+ */
+const lastDy = new WeakMap<PoseTarget, number>();
+
+/**
  * Add the dance to whatever `ChampionView.sync` just wrote.
  *
- * MUST run AFTER `EntityViewRegistry.sync` in the same frame. That ordering is
- * not a nicety, it is what makes this safe: `ChampionView` rewrites
- * `root.position.x/y/z` and `root.rotation.y` from the authoritative pose every
- * single frame, so adding an offset here can never accumulate or drift the body
- * away from its hitbox. `rotation.x` / `rotation.z` are the exception — nothing
- * else writes them — so they are SET absolutely and cleared by `clearPose`.
+ * MUST run AFTER `EntityViewRegistry.sync` in the same frame.
+ *
+ * - `position.x` / `position.z` / `rotation.y` are re-authored by `sync` every
+ *   frame, so they take a plain `+=` offset that is wiped next frame.
+ * - `position.y` is NOT re-authored (see `lastDy`), so the previous offset is
+ *   taken back first — net effect is absolute, and idempotent if called twice.
+ * - `rotation.x` / `rotation.z` are ours alone, so they are SET and are put
+ *   back by `clearPose`.
  */
 export function applyDancePose(node: PoseTarget, pose: DancePose): void {
   node.position.x += pose.dx;
-  node.position.y += pose.dy;
+  node.position.y += pose.dy - (lastDy.get(node) ?? 0);
+  lastDy.set(node, pose.dy);
   node.position.z += pose.dz;
   node.rotation.y += pose.yawRad;
   node.rotation.x = pose.pitchRad;
   node.rotation.z = pose.rollRad;
 }
 
-/** Put the two tilts back; the other channels are re-authored by `sync`. */
+/**
+ * Put back everything this module owns: the two tilts, and the vertical offset.
+ * `x` / `z` / `yaw` need no undo — `sync` re-authors them next frame.
+ */
 export function clearPose(node: PoseTarget): void {
   node.rotation.x = 0;
   node.rotation.z = 0;
+  const dy = lastDy.get(node);
+  if (dy !== undefined && dy !== 0) node.position.y -= dy;
+  lastDy.set(node, 0);
 }

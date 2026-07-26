@@ -265,4 +265,50 @@ describe("the pose lands on a live ChampionView root", () => {
     expect(view.root.rotation.z).toBe(0);
     view.dispose();
   });
+
+  // The first version of this module asserted that `sync` re-authors
+  // position.y along with x/z. It does not — `ChampionView.setPose` writes x
+  // and z only, and for a living body nothing else touches y. `+=` therefore
+  // accumulated: dy has a positive mean, so the dancer levitated ~2.3 units a
+  // second and left a 9.27-unit-high camera inside one phrase, permanently.
+  // The old 600-frame test missed it by asserting only the channels that ARE
+  // re-authored. This one asserts the one that is not, and walks a real
+  // phrase (changing `beats`) rather than re-applying a frozen pose.
+  it("does not levitate the body over a long phrase — position.y never drifts", () => {
+    const view = new ChampionView(scene, 3, "champ.godie-zombiex", 1);
+    view.setPose(4, 0, 0, 1);
+    view.update("idle", 0, 16);
+    const baseY = view.root.position.y;
+
+    let peak = 0;
+    for (let f = 0; f < 900; f++) {
+      view.setPose(4, 0, 0, 1); // sync writes x/z, never y
+      view.update("idle", 16 * (f + 1), 16);
+      const pose = dancePose({ beats: f * 0.05, energy: 1 });
+      applyDancePose(view.root, pose);
+      peak = Math.max(peak, Math.abs(view.root.position.y - baseY));
+      // at every single frame the body is exactly base + that frame's dy
+      expect(view.root.position.y).toBeCloseTo(baseY + pose.dy, 6);
+    }
+    // 15 seconds of dancing: the bob stays a bob, it never becomes a climb
+    expect(peak).toBeLessThan(1);
+
+    // and letting go puts him back on the floor, not at whatever height he
+    // happened to be at when the music stopped
+    clearPose(view.root);
+    expect(view.root.position.y).toBeCloseTo(baseY, 6);
+    view.dispose();
+  });
+
+  it("applying twice in one frame is idempotent, not doubled", () => {
+    const view = new ChampionView(scene, 4, "champ.godie-zombiex", 1);
+    view.setPose(4, 0, 0, 1);
+    view.update("idle", 0, 16);
+    const baseY = view.root.position.y;
+    const pose = dancePose({ beats: 0.4, energy: 1 });
+    applyDancePose(view.root, pose);
+    applyDancePose(view.root, pose);
+    expect(view.root.position.y).toBeCloseTo(baseY + pose.dy, 6);
+    view.dispose();
+  });
 });
