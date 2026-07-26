@@ -14,5 +14,7 @@ export * from "./palette";
 export * from "./rules";
 export * from "./hints";
 export * from "./generate";
+// task #231's second half: WHY a champion came out that colour, per axis.
+export * from "./explain";
 export * from "./paint";
 export * from "./roster";

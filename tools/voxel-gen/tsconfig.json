@@ -2,9 +2,9 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "noEmit": true,
-    "lib": ["ES2022"],
+    "lib": ["ES2022", "DOM"],
     "types": ["node"],
     "skipLibCheck": true
   },
-  "include": ["png.ts", "glbWrite.ts", "boxman.ts", "clips.ts", "archetypes.ts", "gen.ts", "gen.test.ts"]
+  "include": ["gen.ts", "gen.test.ts"]
 }

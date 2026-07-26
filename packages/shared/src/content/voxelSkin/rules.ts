@@ -205,6 +205,16 @@ export interface RuleHit {
   axis: RuleAxis;
   value: string;
   why: string;
+  /**
+   * The literal text in the champion's own words that fired this rule (task
+   * #231's inspectability requirement). "the 稱號 matched" is not an
+   * explanation; 「貞子」 is. Without it the sheet can say WHICH rule decided an
+   * axis but not WHY that rule thought this champion qualified, which is the
+   * half an owner needs to judge whether the derivation is right or merely
+   * confident. Filled from the RegExp's own match, so it cannot drift from the
+   * pattern that produced it.
+   */
+  match: string;
 }
 
 /**
@@ -216,9 +226,13 @@ export function matchRules(haystack: string): { forced: Map<RuleAxis, string>; h
   const hits: RuleHit[] = [];
   for (const rule of SKIN_RULES) {
     if (forced.has(rule.axis)) continue;
-    if (!rule.re.test(haystack)) continue;
+    // `exec`, not `test`: it decides the same thing and additionally reports
+    // WHICH word fired. Every pattern here is unanchored and stateless (no /g),
+    // so `exec` cannot advance a lastIndex between champions.
+    const m = rule.re.exec(haystack);
+    if (m === null) continue;
     forced.set(rule.axis, rule.value);
-    hits.push({ axis: rule.axis, value: rule.value, why: rule.why });
+    hits.push({ axis: rule.axis, value: rule.value, why: rule.why, match: m[0] });
   }
   return { forced, hits };
 }
