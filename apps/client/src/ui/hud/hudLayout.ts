@@ -873,6 +873,84 @@ export function hudStampBandRect(viewport: HudViewport): HudRect {
   };
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+ * THE PING BAND (task #272) — the same 10px strip, LEFT of the build stamp.
+ *
+ * 「請你顯示玩家 ping 值在跟版本號一樣都一直畫面上」. "As permanent as the
+ * version number" is a claim about UBIQUITY, and this project already knows
+ * exactly one way to make that true without covering anything: paint inside the
+ * bottom `HUD_STAMP_BAND` gutter, with `pointer-events: none`, from a <body>
+ * portal so no stacking context can bury it. So the ping chip does not invent a
+ * mechanism — it takes the OTHER end of the strip the badge already reserved.
+ *
+ * WHY THE LEFT END, MEASURED RATHER THAN PREFERRED:
+ *   • The stamp band is CENTRED and `HUD_STAMP_BAND_W` (280px) wide, so both
+ *     ends of the bottom edge are genuinely free.
+ *   • The RIGHT end is not usable. When the shop docks left, the ☰ menu
+ *     RELOCATES to the end of the top-right stack; on a 780x360 landscape phone
+ *     that stack already runs to 300, so the displaced ☰ lands at y 308-352 —
+ *     8px off the bottom edge. A chip there would sit on the player's only
+ *     escape hatch. (`hudDisplacedRect("menu", …)`; the guard proves it.)
+ *   • The LEFT end is clear: the lowest bottom-left slot is `gamepad`, whose
+ *     rect ends exactly at the band's top edge (offset HUD_EDGE = the band
+ *     height), and `hudRectsOverlap` treats touching edges as clear.
+ *
+ * ⛔ AND WHY IT IS NOT A HUD SLOT. Two reasons, both hard:
+ *   1. `hudLayout.test.ts` asserts `hudStackEnd("bottom-left", …, {skipTransient})`
+ *      equals `hudSlotBand("fps").end` — any new non-transient slot with
+ *      order > 1 in that corner fails it;
+ *   2. slots only exist DURING A MATCH (they are rendered by MatchOverlay), and
+ *      "always on screen" has to include the lobby and the replay page.
+ * It is chrome in the badge's sense, so it is declared here as a BAND and
+ * mounted from GlobalChrome, exactly as the badge is.
+ *
+ * THE 375px CONSTRAINT IS REAL AND IS WHY THE WIDTH IS COMPUTED, NOT CHOSEN.
+ * On the narrowest guard viewport (375 wide) the centred 280px stamp band
+ * leaves (375−280)/2 = 47.5px on each side. That is the entire budget — box,
+ * padding and text. The chip therefore caps at whichever is smaller, that free
+ * gap or `HUD_PING_BAND_W`, and its label shrinks through a tier ladder to fit
+ * (ui/pingChip.ts) instead of being clipped mid-number.
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/**
+ * Widest the ping chip may ever be, INCLUDING its padding. Comfortably fits the
+ * long form (「順暢 42 ms · 抖動 6 ms」 ≈ 118px at the 10px monospace this band
+ * uses) with headroom for a 3-digit ping, and small enough that it reads as a
+ * corner stamp rather than a bar across the bottom of the screen.
+ */
+export const HUD_PING_BAND_W = 150;
+
+/** Horizontal padding inside the chip (each side). Deliberately half the
+ * badge's 8px: at 375 wide the whole box gets 47.5px, and padding is the one
+ * part of that budget which shows nothing. */
+export const HUD_PING_CHIP_PAD_X = 4;
+
+/**
+ * The chip's outer width in a concrete viewport: the free gap left of the
+ * centred stamp band, capped at HUD_PING_BAND_W. Zero on a viewport too narrow
+ * to have a gap at all (< HUD_STAMP_BAND_W), which is the honest answer — there
+ * is nowhere to put it that does not sit on the build stamp.
+ */
+export function hudPingChipBoxPx(viewportWidth: number): number {
+  const stamp = Math.min(viewportWidth, HUD_STAMP_BAND_W);
+  return Math.max(0, Math.min(HUD_PING_BAND_W, (viewportWidth - stamp) / 2));
+}
+
+/** Content width available to the chip's TEXT (box minus both paddings). */
+export function hudPingChipContentPx(viewportWidth: number): number {
+  return Math.max(0, hudPingChipBoxPx(viewportWidth) - HUD_PING_CHIP_PAD_X * 2);
+}
+
+/** The ping chip's reserved rect: same row as the stamp band, hard left. */
+export function hudPingBandRect(viewport: HudViewport): HudRect {
+  return {
+    x: 0,
+    y: viewport.height - HUD_STAMP_BAND,
+    w: hudPingChipBoxPx(viewport.width),
+    h: HUD_STAMP_BAND,
+  };
+}
+
 /**
  * Near-offset of a slot when it RELOCATES to its `displacedCorner`: docked one
  * gap past that corner's whole existing stack (its `displacedOrder`, but robust

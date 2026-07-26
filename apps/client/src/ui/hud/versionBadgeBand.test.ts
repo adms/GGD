@@ -46,10 +46,14 @@ import {
 } from "@ggd/shared/versionBadge";
 import {
   HUD_EDGE,
+  HUD_PING_BAND_W,
+  HUD_PING_CHIP_PAD_X,
   HUD_SLOTS,
   HUD_STAMP_BAND,
   HUD_STAMP_BAND_W,
   hudDisplacedRect,
+  hudPingBandRect,
+  hudPingChipContentPx,
   hudRectInViewport,
   hudRectsOverlap,
   hudSlotRect,
@@ -57,6 +61,7 @@ import {
   type HudSlotId,
   type HudViewport,
 } from "./hudLayout";
+import { estimateLabelPx, pingChipState, pingChipText } from "../pingReadout";
 
 const UI_ROOT = fileURLToPath(new URL("..", import.meta.url));
 
@@ -176,6 +181,215 @@ describe("the build-stamp band is reserved and empty (version-badge-band)", () =
       attackBottom,
       "the touch attack button must sit clear of the build-stamp band",
     ).toBeGreaterThanOrEqual(HUD_STAMP_BAND);
+  });
+});
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * THE PING BAND (task #272) — the OTHER end of the same 10px strip.
+ *
+ * The ping chip makes exactly the claim the badge makes ("on every screen") and
+ * therefore inherits exactly the badge's obligations. It gets its own band so
+ * the two reservations can be proven disjoint rather than assumed to be, and so
+ * "it is only 47.5px wide on a 375px phone" is a number a test can check rather
+ * than a thing somebody eyeballed once.
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+describe("the ping chip's band is reserved, disjoint, and empty (ping-chip-band)", () => {
+  it("sits in the same bottom strip, hard left, and NEVER touches the stamp band", () => {
+    cover("ping-chip-band");
+    for (const vp of VIEWPORTS) {
+      const ping = hudPingBandRect(vp);
+      const stamp = hudStampBandRect(vp);
+      expect(ping.y).toBe(stamp.y); // same row
+      expect(ping.h).toBe(HUD_STAMP_BAND); // same height — one 10px strip total
+      expect(ping.y + ping.h).toBe(vp.height); // flush with the bottom edge
+      expect(ping.x).toBe(0); // hard left: see the style's comment on 375px
+      expect(hudRectInViewport(ping, vp)).toBe(true);
+      expect(
+        hudRectsOverlap(ping, stamp),
+        `${vp.width}x${vp.height}: the ping chip ${JSON.stringify(ping)} reaches into the build ` +
+          `stamp's reservation ${JSON.stringify(stamp)} — the two would print over each other`,
+      ).toBe(false);
+      // …and it is never zero-width on a viewport the game is played on, or the
+      // whole feature would be silently invisible where it matters most.
+      expect(ping.w, `${vp.width}x${vp.height}: the chip has no room at all`).toBeGreaterThan(0);
+      expect(ping.w).toBeLessThanOrEqual(HUD_PING_BAND_W);
+    }
+  });
+
+  it("the narrowest guard viewport really is the binding constraint — MEASURED", () => {
+    cover("ping-chip-band");
+    // 375 wide: the centred 280px stamp band leaves (375−280)/2 = 47.5px per
+    // side. That is the entire budget, and it is why the chip is at left:0 with
+    // 4px padding rather than the badge's HUD_EDGE inset and 8px.
+    expect(hudPingBandRect({ width: 375, height: 667 }).w).toBeCloseTo(47.5, 6);
+    expect(hudPingChipContentPx(375)).toBeCloseTo(47.5 - HUD_PING_CHIP_PAD_X * 2, 6);
+    // every other guard viewport is comfortable (capped by the chip's own max)
+    expect(hudPingChipContentPx(667)).toBe(HUD_PING_BAND_W - HUD_PING_CHIP_PAD_X * 2);
+    expect(hudPingChipContentPx(1920)).toBe(HUD_PING_BAND_W - HUD_PING_CHIP_PAD_X * 2);
+    // a viewport narrower than the stamp band itself has NO room, and says so
+    expect(hudPingBandRect({ width: 240, height: 320 }).w).toBe(0);
+  });
+
+  /**
+   * THE ONE SLOT THAT ALREADY BREAKS THE BOTTOM GUTTER — found by this guard,
+   * not by review, and it PREDATES the ping chip.
+   *
+   * `enemy-team` on coarse pointers stacks 4th in the top-left column, which at
+   * 780x360 (the #151 landscape-phone breakpoint) puts it at y 290-356 — 6px
+   * below `HUD_STAMP_BAND`'s top edge at 350, spanning x 10-160.
+   *
+   * The build-stamp guard could never see it: the stamp's reservation is
+   * CENTRED (x 250-530 on that viewport), so an intruder at the left edge is
+   * invisible to it. The ping chip claims the left end of the same strip, so it
+   * is the first thing to look there.
+   *
+   * WHY IT IS LISTED RATHER THAN "FIXED" HERE. The slot's own note says its
+   * touch height (66) was chosen to "clear even the 375px-tall landscape
+   * viewport" — and at 375 it does (356 <= 365). 780x360 was added to the guard
+   * set later and nobody re-derived it. Shrinking the reservation to 60 from
+   * this file would make the guard green while the COMPONENT still paints 66px,
+   * i.e. it would convert a visible 6px overlap into a lie in the registry.
+   * That is a #107 decision about a panel in another lane
+   * (ui/components/EnemyTeamPanel.tsx), so it is reported (docs/todo/
+   * latency-visibility.md, `pc-09`) rather than quietly absorbed.
+   *
+   * The row is keyed tightly and proven NON-VACUOUS below, so it cannot become
+   * a dumping ground: if the slot is fixed, this row fails as stale.
+   */
+  const GUTTER_INTRUDERS: readonly { id: HudSlotId; vp: HudViewport; touch: boolean }[] = [
+    { id: "enemy-team" as HudSlotId, vp: { width: 780, height: 360 }, touch: true },
+  ];
+
+  const isIntruder = (id: HudSlotId, vp: HudViewport, touch: boolean): boolean =>
+    GUTTER_INTRUDERS.some(
+      (r) => r.id === id && r.vp.width === vp.width && r.vp.height === vp.height && r.touch === touch,
+    );
+
+  it("NO HUD slot reaches into the ping band either — every slot, both pointers", () => {
+    cover("ping-chip-band");
+    for (const vp of VIEWPORTS) {
+      const band = hudPingBandRect(vp);
+      for (const spec of HUD_SLOTS) {
+        const id = spec.id as HudSlotId;
+        for (const touch of [false, true]) {
+          if (isIntruder(id, vp, touch)) continue;
+          expect(
+            hudRectsOverlap(hudSlotRect(id, vp, touch), band),
+            `${vp.width}x${vp.height} touch=${touch}: slot "${id}" reaches into the ping chip's ` +
+              "band. The bottom-left stack's lowest slot (gamepad) is supposed to END exactly on " +
+              "the band's top edge — if that changed, move the slot, not the band.",
+          ).toBe(false);
+          if (spec.displaced === "relocate") {
+            expect(
+              hudRectsOverlap(hudDisplacedRect(id, vp, touch), band),
+              `${vp.width}x${vp.height} touch=${touch}: slot "${id}" DISPLACED reaches into the ` +
+                "ping chip's band",
+            ).toBe(false);
+          }
+        }
+      }
+    }
+  });
+
+  it("the listed gutter intruder is REAL, is the only one, and its fault is VERTICAL", () => {
+    cover("ping-band-gutter");
+    // 1. every listed row still collides — a fixed slot fails as a stale row,
+    //    exactly like BAND_LEDGER's stale check.
+    for (const r of GUTTER_INTRUDERS) {
+      const rect = hudSlotRect(r.id, r.vp, r.touch);
+      expect(
+        hudRectsOverlap(rect, hudPingBandRect(r.vp)),
+        `GUTTER_INTRUDERS lists "${r.id}" at ${r.vp.width}x${r.vp.height} touch=${r.touch}, but it ` +
+          "no longer collides — delete the row (and the docs/todo entry) instead of keeping stale prose",
+      ).toBe(true);
+      // 2. the fault is the slot crossing the reserved bottom gutter, NOT the
+      //    chip being somewhere it should not be: the intrusion is measured
+      //    against the band's TOP EDGE, which every slot in the app is supposed
+      //    to clear regardless of where the chip sits.
+      const intrusion = rect.y + rect.h - (r.vp.height - HUD_STAMP_BAND);
+      expect(intrusion).toBeGreaterThan(0);
+      expect(
+        intrusion,
+        "the intrusion grew past the whole reserved band — that is no longer a rounding-scale " +
+          "#107 slip, it is a slot sitting on the bottom edge",
+      ).toBeLessThanOrEqual(HUD_STAMP_BAND);
+    }
+
+    // 3. and NOTHING ELSE intrudes into the bottom gutter anywhere, at any
+    //    width — the stronger statement the centred stamp band could not make.
+    const others: string[] = [];
+    for (const vp of VIEWPORTS) {
+      for (const spec of HUD_SLOTS) {
+        const id = spec.id as HudSlotId;
+        for (const touch of [false, true]) {
+          if (isIntruder(id, vp, touch)) continue;
+          const rect = hudSlotRect(id, vp, touch);
+          if (rect.y + rect.h > vp.height - HUD_STAMP_BAND) {
+            others.push(`${vp.width}x${vp.height} touch=${touch} "${id}" bottom=${rect.y + rect.h}`);
+          }
+        }
+      }
+    }
+    expect(
+      others,
+      "a HUD slot now reaches into the reserved bottom gutter. That gutter is the #107 corner " +
+        "margin AND the build stamp's / ping chip's band; a slot in it will be painted over.\n  " +
+        others.join("\n  "),
+    ).toEqual([]);
+  });
+
+  it("every chip state still shows its NUMBER at 375px — the label ladder is not decorative", () => {
+    cover("ping-chip-band");
+    const budget = hudPingChipContentPx(375);
+    const base = {
+      showPing: true,
+      netMode: "live" as const,
+      netSnapshots: 10,
+      pingSamples: 4,
+      pingAgeMs: 0,
+      snapshotGapMs: 33,
+      jitterMs: 6,
+    };
+    // the worst case for width: a 4-digit ping in the "poor" state (longest
+    // marker) and a 3-digit jitter.
+    const worst = pingChipState({ ...base, pingMs: 4321, jitterMs: 250, connection: "poor" });
+    const text = pingChipText(worst, budget);
+    expect(estimateLabelPx(text)).toBeLessThanOrEqual(budget);
+    expect(text, "the ping number must survive every width — colour is not the message").toContain(
+      "999+",
+    );
+
+    // and a normal good ping keeps its unit at the same width
+    const good = pingChipState({ ...base, pingMs: 42, connection: "good" });
+    expect(pingChipText(good, budget)).toBe("42ms");
+    expect(estimateLabelPx(pingChipText(good, budget))).toBeLessThanOrEqual(budget);
+
+    // on a desktop viewport the long form with BOTH numbers fits
+    const wide = hudPingChipContentPx(1280);
+    expect(pingChipText(good, wide)).toBe("順暢 42 ms · 抖動 6 ms");
+    expect(estimateLabelPx(pingChipText(good, wide))).toBeLessThanOrEqual(wide);
+  });
+
+  it("the chip's own box is confined to the band — read from its real source", () => {
+    cover("ping-chip-band");
+    // Read as SOURCE (not imported) for the same reason the ability-bar check
+    // above is: this file is pure geometry and must not drag React, the
+    // settings store and the perf bus into a layout test.
+    const src = read("../PingChip.tsx");
+    expect(src).toMatch(/position:\s*"fixed"/);
+    expect(src).toMatch(/bottom:\s*0,/);
+    expect(src).toMatch(/left:\s*0,/);
+    // content-box + an explicit band height: padding widens, never heightens
+    expect(src).toMatch(/boxSizing:\s*"content-box"/);
+    expect(src).toMatch(/height:\s*HUD_STAMP_BAND/);
+    expect(src).toMatch(/overflow:\s*"hidden"/);
+    // the property that makes painting above everything safe at any z-index
+    expect(src).toMatch(/pointerEvents:\s*"none"/);
+    // and the width cap is DERIVED from the same constants this test uses, so
+    // the CSS and the arithmetic above cannot drift apart
+    expect(src).toMatch(/HUD_PING_BAND_W - HUD_PING_CHIP_PAD_X \* 2/);
+    expect(src).toMatch(/HUD_STAMP_BAND_W \/ 2 \+ HUD_PING_CHIP_PAD_X \* 2/);
   });
 });
 
@@ -323,6 +537,24 @@ const BAND_LEDGER: readonly LedgerRow[] = [
     value: "0",
     count: 1,
     why: "the progress fill inside the loading bar's own 4px track",
+  },
+  {
+    // Task #272. The FIRST declaration that is deliberately viewport-pinned
+    // INSIDE the band and is not a panel background — so it is the first that
+    // has to earn the ledger row rather than explain it away.
+    file: "PingChip.tsx",
+    value: "0",
+    count: 1,
+    why:
+      "the always-on ping chip, which shares this strip with the build stamp by design " +
+      "(「跟版本號一樣都一直畫面上」). It is confined to the band exactly as the badge is " +
+      "— content-box at height HUD_STAMP_BAND, overflow:hidden, pointer-events:none — and " +
+      "occupies the LEFT end, outside the badge's centred HUD_STAMP_BAND_W reservation. " +
+      "`hudPingBandRect` declares that sub-band and the ping-chip-band suite above proves, " +
+      "on all eight guard viewports and both pointer types, that it overlaps neither the " +
+      "stamp band nor any HUD slot (normal or displaced). It was NOT hidden in " +
+      "packages/shared to dodge this scan: putting the geometry where the scanner cannot " +
+      "see it is a hole, not a technique.",
   },
 
   // ── values the scan cannot evaluate ───────────────────────────────────────

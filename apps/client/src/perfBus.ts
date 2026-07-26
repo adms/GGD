@@ -8,6 +8,15 @@
 
 export type ConnectionQuality = "good" | "fair" | "poor" | "offline";
 
+/**
+ * Which kind of stream the renderer is bound to (task #272). A REPLAY receives
+ * authoritative snapshots exactly like a live match, but nobody is sending
+ * input into it, so no ack ever comes back and the RTT estimator can never
+ * produce a sample. Without this flag the ping chip on the replay page would
+ * sit at 「量測中」 forever — technically true, permanently useless.
+ */
+export type NetMode = "live" | "replay";
+
 export interface PerfBus {
   /** smoothed instantaneous fps (1000 / frame delta). */
   fps: number;
@@ -27,6 +36,21 @@ export interface PerfBus {
   /** ms since the last authoritative snapshot patch. */
   snapshotGapMs: number;
   connection: ConnectionQuality;
+
+  /* --- ping PROVENANCE (task #272) — see net/ConnectionStats.ConnectionReport.
+   * `pingMs` alone cannot be displayed honestly: it is 0 before the first ack
+   * and frozen whenever the player stops issuing input. These three say whether
+   * the number is a measurement, how fresh it is, and whether there is a match
+   * stream at all. The always-on ping chip refuses to print a number without
+   * them. */
+  /** RTT samples measured this session. 0 ⇒ `pingMs` was never measured. */
+  pingSamples: number;
+  /** ms since the last RTT sample; Infinity when none. */
+  pingAgeMs: number;
+  /** authoritative snapshots received this session. 0 ⇒ not in a match. */
+  netSnapshots: number;
+  /** "live" = a real match; "replay" = a recording (no player RTT exists). */
+  netMode: NetMode;
 
   /** current adaptive ladder level + resolved resolution scale. */
   qualityLevel: number;
@@ -51,6 +75,10 @@ export const perfBus: PerfBus = {
   jitterMs: 0,
   snapshotGapMs: 0,
   connection: "offline",
+  pingSamples: 0,
+  pingAgeMs: Number.POSITIVE_INFINITY,
+  netSnapshots: 0,
+  netMode: "live",
   qualityLevel: 0,
   resolutionScale: 1,
   particleDensity: 1,

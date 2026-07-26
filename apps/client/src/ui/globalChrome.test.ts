@@ -24,8 +24,16 @@ import { cover } from "@ggd/shared/testkit/cover";
 const read = (rel: string): string =>
   readFileSync(fileURLToPath(new URL(rel, import.meta.url)), "utf8");
 
-/** Components that must exist on every page, whichever entry booted it. */
-const REQUIRED_CHROME = ["AudioToggle", "VersionBadge"] as const;
+/**
+ * Components that must exist on every page, whichever entry booted it.
+ *
+ * `PingChip` joined the list for task #272: 「請你顯示玩家 ping 值在跟版本號一樣
+ * 都一直畫面上」 is word-for-word the same ubiquity claim `VersionBadge` is here
+ * for, so it inherits the same guard. Deleting `<PingChip />` from GlobalChrome
+ * removes the feature from every screen at once and this test is what turns
+ * red.
+ */
+const REQUIRED_CHROME = ["AudioToggle", "VersionBadge", "PingChip"] as const;
 
 /**
  * Where each top-level tree component lives. A `root.render(<X/>)` whose X is
