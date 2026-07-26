@@ -463,3 +463,128 @@ owner 的原話：「通常攻擊與技能都是命中時才看實際情況計�
 
 → **#268 重開**，用實測的梯形可達區當尺（`rig.screenToGround` 逐方位角掃），
 而不是 VFX 取景邊界。普查那 187 支的清單與 WC3-600 根因**可以直接沿用**，重算的是判準。
+
+---
+
+## #269 魔力 + 自動攻擊 —— 修法被推翻，診斷保留
+
+### A. 自動攻擊：不是 Saber，是**所有角色**，而且觸發條件是「玩家在動」
+
+sim 層普查（`packages/shared/src/sim/autoAttackCensus.test.ts`，真 `spawnChampion()` + 真 combat-env）：
+**113 位英雄，射程內不會自動攻擊的 = 0 位。** 規則本身沒有壞。
+
+真正的機制在 `packages/shared/src/sim/systems/OrderSystem.ts:230-231`：
+
+```ts
+case "move":
+  if (nav.moveTarget !== null) continue;   // still walking where told
+```
+
+而客戶端 `apps/client/src/input/GamepadInput.ts:193-198`（`MOVE_LEAD = 4`）左搖桿只要有偏移，
+就**每一幀合成一個全新的 `{kind:"move", point: self + dir*4}`**；觸控搖桿一樣
+（`TouchInput.ts:95-99` + `:419`）。`InputMailbox` 每 tick drain 一次 →
+`nav.moveTarget` 每 tick 被重寫，**永遠不是 null** → `continue` →
+**`autoAcquirePass(world)` 對這個玩家永遠不執行。**
+
+實測（真 `MatchController` + `HumanDriver`，英雄 Saber `godie-e002`）：
+
+| 情境 | 普攻命中 | 持有目標的 tick |
+|---|---:|---|
+| 完全不動的玩家 | 13 | 27.8%（586/2109） |
+| 同場 bot 平均 | 34.7 | — |
+| **按住搖桿 67 秒** | **0** | **0 / 2022（0.0%）** |
+| 全場只右鍵點一次「區外」地面 | **0** | **0 / 2029** |
+| A-click 連發 | 2 | 86.3%（前搖中走出射程被取消） |
+
+第二個入口：`apps/client/src/input/InputCapture.ts:23-26` 的 `mapRightClick`
+把地面點原封不動送出，**沒有夾到 zone 內**；身體被 `boundaryRadius` 夾住 →
+`ARRIVE_EPS(0.05)` 到點判定永遠不成立 → `nav.order` 永遠停在 `move` → 同一行 `continue`。
+**一次點到走不到的地方 = 一整場關閉自動攻擊。**
+
+⚠️ **#269 只修了「邊界」那一半。** 對抗驗證證明**障礙物裡的目的地一樣搆不到**：
+0 hits / 750 ticks、`moveOrderEverCleared = false`，而且**與 pre-#269 main 的數字逐位元組相同**。
+每張出貨競技場每區有 8–28 個障礙物，而 `self + dir*4` 的前導點推向柱子正是手把玩家的自然動作。
+
+### 正確的修法方向（重開時照這個做）
+
+**不要去讓「到點」變得可達** —— 那是在追症狀。真正的錯誤是
+**把「找目標」和「追過去」綁在同一個 `continue` 上**。
+- `autoAcquirePass` 只寫 `nav.attackTarget`；`BasicAttackSystem` 只要有 `attackTarget` + 在射程內就會揮。
+- 會跟顯式 move order 打架的是**追擊解算**（`OrderSystem.ts:97-121` 改寫 `moveTarget`），不是取得目標。
+→ **讓 auto-acquire 永遠執行，只在顯式 move order 存續期間抑制「追擊」那一段。**
+玩家走過敵人旁邊就會自動揮，移動完全不被搶走。這一刀同時關掉上表的前三種失效。
+
+⚠️ 順帶要處理的兩件：
+1. `OrderSystem.ts:219` `if (world.abilities.get(id)?.windup) continue` 讓前搖中不補回目標 →
+   B4 的「前搖中走出射程」。
+2. **bot 有 48u 接戰掃描（`Tier0Brain.ts:75` `AI_ENGAGE_RANGE = 48`），玩家只有
+   `MELEE_ACQUIRE_FLOOR = 6`**（`targeting.ts:88`）。這是不動的玩家只有 bot 37% 的原因。
+   要不要給玩家更大的取得半徑是**設計決定，需要 owner 裁決**（給太大會搶走走位權）。
+3. 普查的閘是 `hits === 0`，所以「60 秒只揮一刀」的角色會綠燈通過且不被點名 → 閘要改成速率。
+
+### #221 為什麼全綠
+
+`packages/shared/src/sim/autoAcquire.test.ts` 26 個 case 全綠，但：
+- 受測體是 `spawnFighter()`，`championId: "probe"` —— **registry 裡根本沒有這個 ChampionDef**，
+  攻速寫死 0.5、`baseAttackTime` 走 `?? 1.0` fallback。**從來沒有跑過一位真英雄**。
+- intent 一律是 `NO_INTENTS` 或**單一 tick 的一筆 order**。
+  **從來沒有模擬過「同一個 order 每 tick 都重來」的真實輸入流。**
+- 它甚至有一個 case（`:366-378`「an explicit MOVE order suppresses acquisition for the whole walk」）
+  **明文把這個 bug 的行為釘成正確**。
+- `castabilitySweep.test.ts` 的 basic 欄位也看不到：`:461` 每個 tick 直接
+  `world.nav.get(caster)!.attackTarget = foe;` —— 把 auto-acquire 該產出的東西手動塞進去。
+
+**#221 證明的是規則正確；它沒有、也無法證明真英雄在真對戰中被真客戶端輸入流驅動時會自動攻擊。**
+
+### B. 魔力：是**雙峰**，不是「倍率太高」
+
+實測 5 場真 bot 對戰、113,640 個 champion-tick（回合實際長度 78/81/70/77/73 秒 —— 火圈把它壓到 ~77s）：
+- 低於 50% 的時間佔 **15.72%**，完全見底 **0.00%**
+- **出場 48 位裡 38 位整場沒掉到 50% 以下，26 位連 80% 都沒破** ← owner 的感覺對
+- 但另一端 7 位是真的被榨乾：`godie-h02y 志志雄真實` 67.8% 的時間在 50% 以下、
+  `godie-o02w 令狐沖` 68.9%、`godie-h02n 打我阿笨蛋` 72.1%、`godie-osam 殺生丸` 60.7%
+
+**79% 的角色魔力不是資源，另外 ~15% 反而被魔力鎖死。整體調降會把後者直接打廢。**
+
+三軸隔離（同 3 seed，只改一顆旋鈕）：
+
+| 設定 | 低於50% | 低於20% |
+|---|---|---|
+| 現況 maxMana×3 manaRegen×4 | 10.62% | 6.93% |
+| manaRegen×1 | 16.88% | 8.43% |
+| **maxMana×1** | **28.45%** | **17.08%** |
+| 兩者都 ×1 | 47.73% | 31.96% |
+| manaRegen×1 **+ cooldown×1** | **0.00%** | **0.00%** |
+
+→ 主因是 `maxMana ×3`（影響力是 `manaRegen ×4` 的 ~1.7 倍）。
+⚠️ **最後一列是關鍵耦合：`cooldown 0.2` 才是唯一讓魔力有壓力的東西。**
+把冷卻倍率調回 1.0，不管魔力怎麼調，魔力都會變成 0.00% 的死數值。
+**魔力平衡不能離開 cooldown 單獨談。**
+
+#269 的修法（maxMana ×3→×2 **同時** manaRegen ×4→×6）被推翻，因為兩顆旋鈕互相抵消：
+一回合真正能花掉的總魔力中位只掉 **11.6%**，技能總施放次數 **681 → 665（−2.3%）**。
+而 `manaRegen 4→6` 這一半**方向與 owner 的要求相反**。
+且矯枉過正集中在本來就吃魔的角色：`godie-h02k` 熊貓最長**連續 39.0 秒**每個鍵都是灰的，
+整場 72 秒只放出 5 個技能；`godie-o02w` 令狐沖連續等魔 28.3s → **45.6s**（佔整回合 63%）。
+
+→ **這是 owner 裁決題，不是工程題。** 資料已備齊，等 owner 醒來。
+
+### ⛔ C. 一個會讓所有 combat-env 調整靜默失效的機制（**這條最重要**）
+
+`apps/game-server/src/config/combatEnv.ts:141` 是
+`normalizeCombatEnv({ ...content, ...admin })` —— **admin override 逐 key 蓋掉 content**。
+而後台 console 每次存檔都 PUT **完整 26 個 key**
+（`apps/admin/src/combatEnv.ts:336`「ALWAYS the complete table」，
+`apps/platform/internal/combatenv/handlers.go:61` 也寫死「Once an operator saves anything the full table ships」）。
+
+**只要 owner 在 後台→戰鬥系統 存過任何一次，`content/config/combat-env.json` 對他玩到的那一場就零影響。**
+而帳本記著 owner 說過「調過的戰鬥數值（combat-env 的 admin override）也一起帶上主機」——
+**override 確實存在而且已經搬到他在玩的主機上了。**
+
+更糟：後台對 `maxMana` 的「重設值」是 `defaultForKey("maxMana") = 1`
+（`packages/shared/src/sim/combatEnv.ts:212`），**不是出貨值**。按下該列的「重設」會設成 1.0。
+
+→ 這是**第 10 個**「這個專案一直在犯的同一個錯」的案例，而且形狀是新的：
+**不是測試看不到，是線上的資料層蓋掉了你改的那一層。**
+→ 必須做：(a) 一條斷言 sim 實際收到的**合併後**表格的測試；
+(b) 後台每一列顯示「內容檔出貨值 vs 目前 override 值」並讓「重設」回到出貨值而不是 1.0。
