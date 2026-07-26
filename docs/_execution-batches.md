@@ -1034,3 +1034,111 @@ M6 變異第一輪回報 **0 紅**。追下去發現**不是守衛沒咬** —�
 5. 健康檢查加「逐 node 塌陷」那一軸（整體 bbox 看不到）。
 6. **41 個被隔離的變體是死重量（166 個裡的 25%）** —— 要救得改 `gen_lod`
    對邊界/尖端加權，或對這批降低 tris 目標。
+
+---
+
+## #275 戰場道具欄 + 鍛造層數 —— 不合併。診斷是金子，修法把缺陷搬到中場
+
+### 診斷：#44 從來沒有「沒做」（owner 說「我有提過了」是對的，但原因不是沒做）
+
+`<EquipmentBar />` 一直掛在 `HudRoot.tsx:205`，條件是 `inGame && !couch`
+（`inGame` = `phase !== "champSelect" && phase !== "matchEnd"`，所以 combat/intermission/resolution 都渲染），
+資料鏈也通（`snapshot.ts:128` → `schema.ts:52` → `RoomStore.ts:360`），道具跨回合保留。
+
+**壞的是位置。四個實測原因：**
+
+| | 情況 | 量到的 |
+|---|---|---|
+| **C-1** | 觸控 844×390 | equipment `x684..834, y252..300` 壓在攻擊鈕 `716..804, 262..350`，**重疊 88×38 px**。而且 `HUD_Z.slot(25) > TouchControls(20)` 且 `pointerEvents:"auto"` → **它吃掉那塊區域的觸控** |
+| C-2 | 滑鼠 844×390 | equipment `y42..92` 躲在 scoreboard(44..70) 與 audio-toggle(78..122) 底下；audio-toggle 是 body portal，z 2147483000，一定贏 |
+| C-3 | 桌機 | 190×50 深色盒、26px 格子、10px 標題，疊在 208px 小地圖蓋子上，沒有分隔 —— 「畫出來但讀不出是自己的道具欄」 |
+| C-4 | 手機 | 細節面板只綁 hover，**沒有長按路徑** → #140 的內容在手機戰鬥中 100% 拿不到 |
+| C-5 | 分割畫面 | `CouchHudGrid` 裡 items/裝備 grep 零命中 |
+
+### 版面契約的兩個盲點（這個 bug 就住在這裡）
+
+1. **沒有「所有 slot 兩兩交叉比對」的守衛。** `hudLayout.test.ts:196` 只比同一角落內**相鄰**的 band（一維），
+   `:371` 只比 minimap 對其他人。**所以 bottom-right 的 equipment 撞上 top-right 的
+   scoreboard/audio-toggle，全套測試看不到。**
+2. **`TouchControls` 完全不在 `hudLayout` 的世界裡。** 攻擊鈕 / QWER 弧 / 天生技鈕全是自己 pin 的
+   fixed 元素，registry 沒有任何一列描述它們（唯一鏡像 `controlLegendModel.ts:576-582`
+   只鏡了置中的能力叢集，沒有右下角的弧）。**C-1 那個 88×38 重疊，現行任何守衛都抓不到。**
+
+### 鍛造「翻倍」：查清楚了，**沒有那個門檻**
+
+`statPath.ts:174-181` 觸發 = `statStacks >= STAT_TICK_TARGET(20) && statCapstonePct === 0
+&& round >= CAPSTONE_ROUND_GATE(6)`；`statPath.ts:193` `const pct = (world.rng.int(CAPSTONE_STEPS) + 1) * 10;`
+
+→ **「翻倍」＝滿 20 層 + 第 6 場後開出的傳說·萬象強化，擲 10~100% 均勻分布，
+擲中 100% 才等於翻倍，機率 1/10。不是保證的門檻獎勵。**
+作用在 `MaxHealth / AttackDamage / Armor / MagicResist`（AP 刻意排除），
+`PercentAdd`、`statPipeline` 是 `(base+flat)×(1+pctAdd)×pctMult` 且這四項無 clamp ——
+**倍率是真的會生效，不是只印在畫面上**（驗證者獨立逐行核對過）。
+
+⚠️ **`CAPSTONE_ROUND_GATE` 在改動前於 `apps/client` 全域 grep 零命中** ——
+滿 20 層卻在第 3 場沒拿到東西時，**畫面從來不解釋原因**。
+
+→ **要不要改成保證翻倍是 owner 的設計決定。**
+
+### ⛔ 不合併的三個理由
+
+**1 `displaced:"hide"` 對真正蓋住它的那個面板不會執行。**
+新的 gutter 分支在任何幾何判定**之前**先 `panels.filter(p => p.covers.length > 0)`，
+而 `augment-draft` 宣告 `edge:"center"`、`covers: []`（`hudLayout.ts:861`）——
+**置中 modal 永遠無法讓 gutter slot 讓位。**
+實測 12 組 viewport×pointer 裡有 **8 組**（844×390 / 812×375 / 780×360 / 1280×720，滑鼠觸控皆是）
+`hudRectsOverlap(equipment, augment-draft) === true` 而 `resolveSlotUnderPanels(...).hidden === false`。
+而新加的「幾何 hide == 執行期 hide」守衛**只餵 `[hudPanel("shop")]` 一個面板**
+（唯一 covers 非空的那個）—— **它結構上不可能抓到這個。**
+
+→ **所有 ≤1280×720 的畫面（含 owner 的 844×390 掌機），每一次中場，
+道具/鍛造面板都被三選一 modal 整個蓋住。** 那正是你剛花完錢、最想確認自己有什麼的那一刻。
+
+同一類還有：Ready-up 按鈕（z 40，`bottom:190`）直接畫在道具格那一列上
+（gutter 下緣 `HUD_CENTER_GUTTER_BOTTOM = 128+44+8 = 180`，面板高 104 → **結構上必然壓到**）。
+新守衛只比「registry slot 對 registry slot」，而 ReadyButton / PrepClock / AbilityBar
+都是中央 chrome、不是 slot。
+
+**2 第一回合戰鬥，桌機上這個面板整場不在畫面上，而且是白讓。**
+`EquipmentBar` 用 `controlLegendVisible(...)` 當 gate，為真就 `return null`。
+但 `controlLegendVisible` = `phase==="combat" && round<=1 && !dismissed && !panelCovering`，
+**沒有任何視窗尺寸條件**。而衝突只存在於觸控/窄視窗 —— 桌機的說明畫在最左側 flank，
+跟置中的 gutter **零重疊**。
+→ prep 買完第一批裝備 → 進 Round 1 → **面板不存在**。正好打在這件事想解決的痛點上。
+（844×390 滑鼠時 `controlLegendRect` 回 null＝說明根本畫不出來，gate 卻仍為真 —— 兩個都不見。）
+
+**3 變異 C 是誤報，而它宣稱關掉的洞仍然開著。**
+它說加上 negative lookbehind `(?<!\$)` 之後，刪掉顯示獎勵那行會 → 1 條紅。**實測不會。**
+那個 lookbehind 排掉了第 46 行 template literal 裡的 `${view.reward}`，
+**排不掉第 124 行的純 JSX 屬性 `title={view.reward}`** —— 它完全符合那條 regex，卻一個像素都不畫。
+它自己做變異時一定連 `title` 屬性一起刪了，才以為補好了。
+**「被提到」冒充「被畫出來」這個洞，對 reward 這一欄仍然是開的。**
+
+**另外一條守衛是被放寬而不是被滿足**：`roundReportLayout.test.ts` 把原本的矩形斷言
+`rect.y >= equip.y + equip.h` 換成宣告斷言 `expect(hudSlot("equipment").displaced).toBe("hide")`
+—— **掩護的正好是理由 1**。斷言欄位的宣告值而不是畫面上發生的事，正是 #73 的形狀。
+
+### 做對的（重開時沿用）
+
+- **中央欄（CENTRE GUTTER）這個歸屬本身是好設計**：滑鼠置中 236×104 六格一列；
+  觸控 `right-half` 92×104 3×2 格，**左緣正好壓在畫面中線** ——
+  這不是美觀：搖桿是「canvas 左半邊任何觸控」錨定（`GameApp.isJoystickArea`），
+  置中的 `pointerEvents:auto` 面板會吃掉搖桿起手。
+- 觸控 top-right 那疊短了 56px，667×375 上重新定位的 ☰ 不再壓到金幣框。
+- `ResourceBars` 的 `bottom:128/width:260` 從硬寫改成 import `HUD_RESOURCE_BARS`
+  （原本 `roundReportLayout` 有一份只靠註解維繫的手抄鏡像，現在真的只剩一份）。
+- 觸控長按 320ms 開細節卡（補上 C-4）。
+- **跨角落重疊守衛 + REGRESSION 反證**（手工重建 #44 的舊矩形，證明同一個比對真的會判紅）
+  —— 這三條是真的變強了，不是繞過。
+- 鍛造數字全部 import 常數，`forgeModel.test.ts` 用常數寫斷言而非字面值。
+
+### 重開時要補的
+
+1. **gutter 矩形要對「中央底部 chrome」（ReadyButton / PrepClock / PhaseTimer / ability cluster）
+   逐 phase × 逐 viewport 守衛** —— 它們不是 slot，現有任何守衛都看不到。
+2. **中場要嘛把 gutter 收掉、要嘛挪到不跟 Ready/Clock 搶的位置**，
+   而且守衛要斷言「畫面上不重疊」，**不是「`displaced` 欄位等於 hide」**。
+3. **`covers: []` 的置中 modal 也要能讓 gutter slot 讓位** —— 這是機制層的洞。
+4. **說明↔道具欄的互斥要看視窗**（或直接看「說明這次到底畫出來沒有」，
+   因為 `controlLegendRect` 可能回 null），不能無條件讓掉整個 Round 1。
+5. `title={...}` 這種「被提到但不畫」的形狀要一起擋掉。
