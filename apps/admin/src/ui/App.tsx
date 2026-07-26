@@ -4,6 +4,14 @@ import { pageRequiresSession, useApp, type Page } from "../store";
 import { LoginScreen } from "./LoginScreen";
 import { ConsoleHub } from "./ConsoleHub";
 import { ApprovalsPage } from "./ApprovalsPage";
+// Quick Approval (task #242) — a PLAIN, EAGER, TOP-LEVEL import, on purpose.
+// The 內容管理 suite below is reached through an `import.meta.env.DEV`-guarded
+// dynamic import so rollup can prove it unreachable and never emit it; this page
+// must be the exact opposite. Its whole reason to exist is the owner clearing
+// approvals from ggd.adms.ai on a phone — a Quick Approval that only exists on
+// localhost is the very problem it was asked to fix. quickApprovalBundle.test.ts
+// fails if this line ever moves under a DEV gate or the label leaves the bundle.
+import { QuickApprovalPage } from "./QuickApprovalPage";
 import { PlayersPage } from "./PlayersPage";
 import { MatchesPage } from "./MatchesPage";
 import { ReplaysPage } from "./ReplaysPage";
@@ -46,6 +54,12 @@ const NAV: NavItem[] = [
   // 營運 — session-gated player/operations surfaces. 帳號審核 leads (task #126):
   // it is the one page with real people waiting, and it carries the pending badge.
   { page: "approvals", label: "帳號審核", emoji: "🛂", section: SEC_OPS },
+  // Quick Approval (task #242) — everything that is waiting on the OWNER
+  // specifically, on one page with one submit. Sits next to 帳號審核 because it
+  // is the same job (clear what is blocked on a decision) at a wider scope: the
+  // account queue is one of its rows, and every other row deep-links to the page
+  // that actually owns that thing. This page owns no state of its own.
+  { page: "quickApproval", label: "Quick Approval", emoji: "🚦", section: SEC_OPS },
   { page: "players", label: "Players", emoji: "👤", section: SEC_OPS },
   { page: "matches", label: "Matches", emoji: "⚔️", section: SEC_OPS },
   { page: "replays", label: "對戰回放", emoji: "🎞️", section: SEC_OPS },
@@ -483,6 +497,7 @@ function Console(): React.JSX.Element {
           <>
             {page === "hub" && <ConsoleHub />}
             {page === "approvals" && <ApprovalsPage />}
+            {page === "quickApproval" && <QuickApprovalPage />}
             {page === "players" && <PlayersPage />}
             {page === "matches" && <MatchesPage />}
             {page === "replays" && <ReplaysPage />}
