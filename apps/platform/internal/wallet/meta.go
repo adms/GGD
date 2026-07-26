@@ -53,12 +53,12 @@ import (
 // High Stakes round every 4th round from round 5 that pays each winner +15.
 //
 //	REFERENCE POINT — 4 teams x 20 starting Team Health:
-//	one match  = champ-select 40s + ~11.6 rounds x (~180s combat + 40s
-//	             intermission + 6s resolution) ~= 44 minutes.
-//	             (content/config/config.match.json: combatMaxSec 240,
-//	             fireRing.startSec 180 so a round typically resolves near 3
-//	             minutes; every round going the full 240 is ~56 minutes.)
-//	one family evening ~= 1-2 hours ~= 1-3 matches.
+//	one match  = champ-select 20s + ~11.6 rounds x (~60s combat + 40s
+//	             intermission + 6s resolution) ~= 21 minutes.
+//	             (content/config/config.match.json: combatMaxSec 100,
+//	             fireRing.startSec 60 so a round typically resolves near 1
+//	             minute; every round going the full 100 is ~29 minutes.)
+//	one family evening ~= 1-2 hours ~= 3-6 matches.
 //
 // THAT IS A REFERENCE POINT, NOT A LIVE READING, and it is deliberately the
 // CONSERVATIVE one: it comes from a model that treats every duel as a coin flip,
@@ -76,26 +76,50 @@ import (
 // button label (apps/client/.../champselect/walletMeta.ts CRYSTAL_UNLOCK_COST),
 // so the tuning lever is the GRANT, not the cost:
 //
-//	place 1  120  -> 2.5 matches per unlock (~1.8h of play)
-//	place 2   90
-//	place 3   70
-//	place 4   60  -> 5.0 matches per unlock (~3.7h of play)
-//	average   85  -> 3.5 matches per unlock (~2.6h of play)
+//	place 1  240  -> 1.25 matches per unlock (~0.4h of play)
+//	place 2   90  -> 3.3  matches per unlock (~1.2h of play)
+//	place 3   70  -> 4.3  matches per unlock (~1.5h of play)
+//	place 4   60  -> 5.0  matches per unlock (~1.7h of play)
+//	average  115  -> 2.6  matches per unlock (~0.9h of play)
 //
-// THE HOURS MOVED; THE GRANTS DID NOT. They were computed against the old
-// 25-minute figure and read ~1h / ~2h / ~1.5h. A longer match is worth the same
-// crystals, so 「about one champion per evening」 no longer holds at the average
-// — it is now closer to one champion per two evenings. Whether to raise the
-// grants is a BALANCE decision for the owner, not a side effect of correcting a
-// comment, so it is deliberately NOT being made here and is flagged instead.
-// What is fixed is that the number that decision would be made from is no
-// longer wrong.
+// THE MATCH GOT SHORTER; THE GRANTS DID NOT MOVE, AND THAT IS THE DECISION —
+// NOT AN OVERSIGHT (#250). Read the history in order, because the obvious
+// "fix" here is the wrong one:
+//
+//	#118 tuned these grants against a ~25-minute match.
+//	Then the reference block above was corrected to ~44 minutes, and this
+//	paragraph used to say 「one champion per evening」 had become one champion
+//	per TWO evenings, with raising the grants flagged as an open question.
+//	Then #132 and #153 tuned the ROUND down — combatMaxSec 240 -> 100,
+//	fireRing.startSec 180 -> 60, champ-select 40s -> 20s. The same ~11.6
+//	rounds now take ~21 minutes, so the play-hours landed back on the ~1h /
+//	~2h / ~1.5h the grants were originally tuned against and
+//	「about one champion per evening」 holds again at the average.
+//	The 44 was never re-derived, so this file went on claiming a match length
+//	that had not existed for two content revisions.
+//
+// The owner was shown the resulting gap — the economy pays out per match at a
+// rate set for a match twice as long — and ruled:
+//
+//	「藍水晶本來就是獎勵 有人抱怨我們再來改」
+//
+// So the grants below are DELIBERATELY UNCHANGED. 藍水晶 is a reward, not a
+// throttle; the faster payout is the intended feel until a player complains.
+// The defect this task fixed was the COMMENT, which was still describing a
+// 44-minute match that no longer exists — not the payout, which is doing what
+// the owner wants.
+//
+// IF YOU ARE HERE TO "REBALANCE THE ECONOMY": cutting these numbers reverses an
+// explicit owner decision, and TestCrystalGrantsAreTheOwnersDecision in
+// meta_pin_test.go will stop you and say so. Bring the owner a new decision
+// first; do not infer one from arithmetic.
 //
 // Last place still earns: 「水晶（打場免費賺）」 is free THROUGH PLAY, not free
-// through winning. The 2:1 winner:loser spread makes placement matter without
-// stalling the family member who keeps losing. Across the 36 priced champions
-// the full roster is a long-term goal (~126 matches at the average), which is
-// why the starter roster in content/config/store.json is a generous 12.
+// through winning. The 4:1 first:last spread (吃雞 doubling included) makes
+// placement matter without stalling the family member who keeps losing. Across
+// the 38 priced champions in content/config/store.json the full roster is a
+// long-term goal (~99 matches at the average), which is why that same file
+// leaves 12 champions at price 0 as a generous starter roster.
 const (
 	// CrystalUnlockCost is the DEFAULT crystal price to unlock one champion.
 	// The authoritative per-champion price is content/config/store.json

@@ -274,6 +274,31 @@ func (r *Repo) mirror(ctx context.Context, d Doc) {
 	if err := r.rdb.R.Set(ctx, RedisKey, string(data), 0).Err(); err != nil {
 		slog.Warn("combatenv: redis mirror failed (JSON truth is intact)", "err", err)
 	}
+	// AND TELL THE RUNNING SHARDS. The Set above only helps a consumer that
+	// polls Redis; the game-server reads GET /api/v1/combat-env over HTTP and
+	// CACHES it, so without this announcement an operator's 戰鬥系統 edit reaches
+	// a running shard only when its TTL happens to expire. Same contract as
+	// curation: an etag, never the document — the shard re-fetches through the
+	// one ingestion path #48 hardened (see redisx/contentbus.go).
+	//
+	// DELETED ONCE ALREADY, BY ACCIDENT (#250). Commit 7dd31bf ("sweep gosec")
+	// removed these eight lines while adding an unrelated #nosec annotation
+	// twenty lines above. Nothing about the mutation broke — the file still
+	// saved, the mirror still wrote, the console still answered 200 — so the
+	// only witness was TestCombatEnvReplacePublishesInvalidation going red, and
+	// that red was then written off in docs/todo/admin.md as "this machine has
+	// no Redis" (it does not need one; the test runs miniredis in-process). The
+	// combat-env bus was dead in every build from that commit onward. If this
+	// block ever looks like dead weight in a sweep: it is the whole reason the
+	// owner does not have to restart a shard after nudging a multiplier.
+	//
+	// Best-effort by contract: the durable file is already written above, so a
+	// failure here means "picked up on the next TTL", never "the edit was lost".
+	if err := r.rdb.PublishContentInvalidation(
+		ctx, redisx.ContentKindCombatEnv, redisx.ContentETag(data), d.UpdatedAt,
+	); err != nil {
+		slog.Warn("combatenv: content-invalidation publish failed (shards refresh on their TTL)", "err", err)
+	}
 }
 
 // Service applies combat-env policy on top of the repository. The document is

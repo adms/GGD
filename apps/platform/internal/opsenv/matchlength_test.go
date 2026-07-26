@@ -378,6 +378,11 @@ const staleFactor = 2.0
 //     are playing.
 func TestWalletPlayRateAgreesWithTheDerivedLength(t *testing.T) {
 	testkit.Cover(t, "opsenv-match-length-derived")
+	// admin-46 names this test by id. The other half of that row — that the
+	// grants themselves stay where the owner put them — is pinned by
+	// TestCrystalGrantsAreTheOwnersDecision in internal/wallet, which emits the
+	// same beacon.
+	testkit.Cover(t, "opsenv-wallet-playrate")
 
 	path := filepath.Join(repoRoot(t), "apps", "platform", "internal", "wallet", "meta.go")
 	src := string(mustRead(t, path))
