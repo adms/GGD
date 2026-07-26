@@ -292,3 +292,27 @@ HTML**——於是那一列會在「已經修好」的部署上永遠喊「確�
 | ID | Item | Test ID | Category | Status |
 | --- | --- | --- | --- | --- |
 | admin-70 | Quick Approval 的 `/editor/` 曝露列以「回的是不是編輯器本體」判定，不是以狀態碼：SPA fallback 的 200 讀成「沒有提供」(dim)、真的編輯器 200 讀成 warn、`servesEditor` 未知時明講無法分辨且維持 warn，三者的文案各自不同且都不可勾選 | adminui-editor-probe | regression | done |
+
+## #229 的產生器頁真的進正式 bundle（task #258）
+
+#229 出貨的是 **鑄形工坊**，一個 owner 打不開的好工具：它住在 App.tsx 那道
+`import.meta.env.DEV` 後面的內容 dev chunk 裡、建構 loopback 的 `contentApi` 寫入端、又為了
+即時預覽 lazy import 約 1 MB 的 Babylon。三件事對一個 dev 編輯器都是對的，對一個「要能在
+ggd.adms.ai 上用手機開」的頁面則三件都是致命的。`contentGate.test.ts` 不只是允許那個缺席，
+它**強制**那個缺席（bundle 內出現 鑄形工坊 / 體素角色生成器 / ArcRotateCamera 就讓 build 紅）。
+
+所以做法不是把工坊解閘，而是照 #242 的 Quick Approval 前例，另起一個守得住三條正式約束的
+**體素鑄造廠**：沒有 3D 引擎（預覽改成純 2D canvas 的正投影畫家演算法，方塊人本來就是 14 個
+軸對齊方塊）、寫入走 #189 的平台覆蓋層（admin JWT + 稽核，不碰 `/content-api`）、而且**真的
+產出檔案**——`bakeLook` 從 node `Buffer` 移到 `Uint8Array` 之後可以在瀏覽器裡跑，所以頁面直接
+產生 .glb bytes、顯示 sha256、可下載。一個只會印出終端機指令的「產生器頁」是同一條死路換個顏色。
+
+同時把產生器**解 fork**：`tools/voxel-gen/{boxman,clips,archetypes,glbWrite,png}.ts` 是
+`packages/shared/src/voxel/` 的重複副本（shared 那邊的檔頭自己就寫著 merge 時應該改成
+re-export），現已刪除，`gen.ts` 縮成純 CLI。五個出貨 .glb 的 sha256 pin 一個字都沒改——那就是
+「這是搬家不是重寫」的證明。
+
+| ID | Item | Test ID | Category | Status |
+| --- | --- | --- | --- | --- |
+| admin-71 | 體素鑄造廠 SHIPS IN THE PRODUCTION BUNDLE：來源斷言（永遠跑）釘住 App.tsx 的 top-level static import、任何 `import.meta.env.DEV` 前後 400 字內不得出現該頁或其 nav label、不在 `CONTENT_SUITE_PAGES`、在 `SESSION_REQUIRED_PAGES`、寫入端是 `putOverlayDoc` 而非 `../contentApi`、整頁不得出現 `@babylonjs`／`ArcRotateCamera`、必須經由 `@ggd/shared/voxel` 的 `bakeLook`/`buildFigure`（不得 fork 第二個產生器）、必須有 `RETIRED_MODELS`+`budgetVerdict` 且「比被取代的重」判定為失敗、不得改寫 `relativeScale`；`GGD_BUILD_GATE=1` 那半跑真的 `vite build --mode production`，斷言 bundle 內**有** 體素鑄造廠／鑄造模型／寫入覆蓋層／`ggd-voxel-gen`／`assets/models/voxel`／`/content-overlay/docs/`，且**沒有** `/content-api`／內容管理／鑄形工坊／體素角色生成器／ArcRotateCamera／HemisphericLight | adminui-voxel-foundry-bundle | regression | done |
+| admin-72 | 體素鑄造廠的純函式層：`forge()` 一次產出「操作者下載的 bytes」與「會被寫入的 model@1 文件」，且文件的 `glbPath` 必定等於那份 bytes 的路徑（下載檔名取自 `voxelGlbPath` 的 basename，不得為了好看而剝掉 `voxel.` 前綴——否則主機上會載不到）；輸出是純 `Uint8Array`（node Buffer 不是合法的 BlobPart）；GLB magic/version/length 三個欄位可驗；同名同 look 兩次鑄造 sha256 相同且等於 shared bake；預算比較基準是**最輕**的退場角色（贏最重的沒有意義），比它重時 `budgetVerdict.ok` 為 false 且升級成 error issue；原型預設不得帶 per-champion 抖動（bake 出來要與出貨的 blocky-knight.glb sha256 相同） | adminui-voxel-foundry | unit | done |

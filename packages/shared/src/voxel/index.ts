@@ -27,3 +27,11 @@ export * from "./look";
 export * from "./figure";
 export * from "./texture";
 export * from "./doc";
+// task #229 — the OUTPUT half. `bake` emits real .glb bytes as a `Uint8Array`,
+// which is what lets the 後台 page produce a file instead of printing a command
+// for the owner to run in a terminal he does not have on his phone. Pure: the
+// writers under it use `Uint8Array`/`DataView`, never node's `Buffer`.
+export * from "./bytes";
+export * from "./pngWrite";
+export * from "./glbWrite";
+export * from "./bake";

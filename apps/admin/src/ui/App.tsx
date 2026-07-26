@@ -24,6 +24,14 @@ import { AiSettingsPage } from "./AiSettingsPage";
 import { ModelBudgetPage } from "./ModelBudgetPage";
 import { IconTrackingPage } from "./IconTrackingPage";
 import { VoxelSkinSheetPage } from "./VoxelSkinSheetPage";
+// 體素鑄造廠 (task #229) — EAGER, like Quick Approval and for the same reason.
+// The 鑄形工坊 studio lives in the DEV chunk below and is enforced ABSENT from a
+// production build by contentGate.test.ts (it drags Babylon in), which means the
+// owner has never been able to open a voxel generator on the host he actually
+// uses. This page is the production-shippable one: no Babylon, writes through
+// the platform overlay, and it emits the real .glb in the browser.
+// voxelFoundryBundle.test.ts fails if this line moves under a DEV gate.
+import { VoxelFoundryPage } from "./VoxelFoundryPage";
 import { MCoinGrantPage } from "./MCoinGrantPage";
 import { InvitesPage } from "./InvitesPage";
 import { AuditPage } from "./AuditPage";
@@ -92,6 +100,11 @@ const NAV: NavItem[] = [
   // skins. Sits beside its asset-review siblings because that is where the
   // owner already goes to approve art.
   { page: "voxelSkins", label: "體素外觀對照表", emoji: "🧱", section: SEC_ASSETS },
+  // task #229 — the generator itself, next to the sheet that reviews its output.
+  // The label is written HERE, in the eager shell, which is exactly what makes
+  // it survive `vite build`; the dev studio's label travels with its chunk and
+  // does not.
+  { page: "voxelForge", label: "體素鑄造廠", emoji: "🧰", section: SEC_ASSETS },
   // 系統
   { page: "hub", label: "Console Hub", emoji: "🗂️", section: SEC_SYS },
   { page: "combatEnv", label: "戰鬥系統", emoji: "⚖️", section: SEC_SYS },
@@ -527,6 +540,7 @@ function Console(): React.JSX.Element {
             {page === "modelBudget" && <ModelBudgetPage />}
             {page === "iconTracking" && <IconTrackingPage />}
             {page === "voxelSkins" && <VoxelSkinSheetPage />}
+            {page === "voxelForge" && <VoxelFoundryPage />}
             {page === "voiceGen" && voiceAdmin !== null && <voiceAdmin.Page />}
             {page === "voiceGen" && voiceAdmin === null && (
               <div style={{ color: TEXT_DIM, padding: 8 }}>載入語音生成頁…</div>

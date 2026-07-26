@@ -346,6 +346,10 @@ importers:
   tools/tts-gen: {}
 
   tools/voxel-gen:
+    dependencies:
+      '@ggd/shared':
+        specifier: workspace:*
+        version: link:../../packages/shared
     devDependencies:
       '@types/node':
         specifier: ^22.9.0

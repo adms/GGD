@@ -9,6 +9,9 @@
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "vitest run"
   },
+  "dependencies": {
+    "@ggd/shared": "workspace:*"
+  },
   "devDependencies": {
     "@types/node": "^22.9.0",
     "tsx": "^4.19.2",

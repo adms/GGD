@@ -83,6 +83,15 @@ export type Page =
    */
   | "voxelSkins"
   /**
+   * 體素鑄造廠 (task #229) — the production-shippable 體素角色生成器. Unlike
+   * "voxelStudio" above it is NOT in the dev chunk: it is a top-level static
+   * import in ui/App.tsx and it IS in SESSION_REQUIRED_PAGES, because its save
+   * goes through the platform's admin-only content-overlay API (#189) rather
+   * than the loopback content-api. Bake + download work without a session; only
+   * the write needs one.
+   */
+  | "voxelForge"
+  /**
    * 角色語音生成 (owner spec step 4) — DEV BUILDS ONLY, same shape as "content":
    * the page module is reached through an `import.meta.env.DEV`-guarded dynamic
    * import in ui/App.tsx, so a production admin build never emits it (nor its
@@ -229,6 +238,10 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   // deployed host, so it takes a real operator session like every other
   // platform-backed page.
   "contentOverlay",
+  // #229: its save is a `putOverlayDoc` — the same admin-JWT, audited platform
+  // writer 內容覆蓋層 uses — so without a session every 寫入覆蓋層 would 401 and
+  // read as a broken page rather than a missing sign-in.
+  "voxelForge",
   "ai",
   "combatEnv",
   "serverOps",

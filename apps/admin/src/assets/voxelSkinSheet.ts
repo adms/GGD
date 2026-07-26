@@ -21,6 +21,7 @@ import {
   STAND_IN_MODEL_KEYS,
   VOXEL_SKINS_SCHEMA,
   type ChampionLike,
+  type VoxelSkinInput,
   type VoxelSkinOverride,
   type VoxelSkinRecipe,
 } from "@ggd/shared/content/voxelSkin";
@@ -52,6 +53,18 @@ export interface SkinRow {
   motifBoxes: number;
   /** measured relative luminance of outfitPrimary (the legibility number) */
   outfitLuminance: number;
+  /**
+   * The exact generator input this row's recipe came from, and the salt the
+   * ROSTER run settled on (task #231's inspectability half). Carried on the row
+   * rather than re-derived by a page, because re-deriving is how a "why" panel
+   * ends up explaining a different champion than the one on screen: the salt in
+   * particular is a property of the whole-roster collision ratchet and is not
+   * recoverable from one doc.
+   */
+  input: VoxelSkinInput;
+  salt: number;
+  /** the L1 override that applied, if any — the top layer of the explanation */
+  override: VoxelSkinOverride | null;
 }
 
 /** Whole-sheet numbers, all computed from the same functions the tests assert on. */
@@ -121,6 +134,11 @@ export function buildSheet(
     const name = doc.name ?? "";
     const i = name.indexOf(" - ");
     rows.push({
+      input: voxelSkinInputOf(doc),
+      salt: recipe.salt,
+      override: Object.prototype.hasOwnProperty.call(overrides, doc.id)
+        ? (overrides[doc.id] ?? null)
+        : null,
       championId: doc.id,
       title: i < 0 ? "" : name.slice(0, i),
       proper: i < 0 ? name : name.slice(i + 3),
