@@ -33,6 +33,16 @@
     "mr": 1.2,
     "as": 0.02
   },
+  "attributes": {
+    "str": 17,
+    "agi": 18,
+    "int": 19,
+    "strGrowth": 1.7,
+    "agiGrowth": 2.6,
+    "intGrowth": 1.7,
+    "primary": "AGI",
+    "source": "w3x"
+  },
   "hitFeel": {
     "hitstopTicks": 3,
     "shakeMag": 0.44,
