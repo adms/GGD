@@ -1088,9 +1088,19 @@ export class ChampionView {
    * normalised factor captured once at load, and the ground offset is re-derived
    * at the new scale so a grown champion neither sinks into nor floats above the
    * floor. m = 1 restores the normalised size exactly.
+   *
+   * IT ALSO COMPOSES WITH #244's GROWTH FACTOR (integration batch A). Both
+   * features arrived independently and both write `bodyRoot` / `glbRoot` /
+   * `blobShadow` scaling, and this one runs LAST every frame — so reading only
+   * `scaleMul` here silently reverted a 黑泥 boss to normal size on the very next
+   * frame after `setGrowthTier`. The composed factor is the product: growth is
+   * the persistent combat-state size, `scaleMul` is the transient one, and
+   * `baseScale`/`declaredScaleValue` (the same #150 number) is the base both
+   * multiply. The shadow multiplies growth by the altitude shrink for the same
+   * reason — a big champion mid-leap casts a big shadow that shrinks with height.
    */
   private applyAirborne(): void {
-    const m = this.scaleMul;
+    const m = this.scaleMul * this.growthFactor;
     if (this.glbRoot) {
       this.glbRoot.scaling.setAll(this.baseScale * m);
       this.glbRoot.position.y = this.leapY + this.groundOffsetUnit * this.baseScale * m;
@@ -1102,7 +1112,7 @@ export class ChampionView {
     }
     // Ground cues stay ON THE GROUND; the shadow reads the altitude instead.
     const shrink = 1 / (1 + Math.max(0, this.leapY) * 0.15);
-    this.blobShadow.scaling.setAll(shrink);
+    this.blobShadow.scaling.setAll(this.growthFactor * shrink);
     const shadowMat = this.blobShadow.material as { alpha?: number } | null;
     if (shadowMat) shadowMat.alpha = 0.38 * shrink;
   }
