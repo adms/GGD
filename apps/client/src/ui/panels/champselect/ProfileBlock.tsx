@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import { audioSystem } from "../../../audio";
 import { Abilities, Champions } from "@ggd/shared/sim/content/registry";
 import type { AbilityId, ChampionId } from "@ggd/shared/ids";
+import type { CombatEnvMultipliers } from "@ggd/shared/sim/combatEnv";
 import {
   loadChampionQuotes,
   quoteEntryFor,
@@ -56,10 +57,27 @@ function slotAccent(slot: SkillRowSlot): string {
   return slot === "PASSIVE" ? PASSIVE_ACCENT : SLOT_COLOR[slot];
 }
 
-/** One skill row — icon or letter-tile fallback, name, meta line, description. */
-function SkillRowView({ row }: { row: SkillRow }): React.JSX.Element {
+/**
+ * One skill row — icon or letter-tile fallback, name, meta line, description.
+ *
+ * EXPORTED for the lobby 英靈殿 (task #258) so the showcase reuses this exact
+ * renderer instead of growing a second one that could drift. `env` is the one
+ * addition: in a MATCH the live table comes off the HUD store, but the lobby
+ * has no match and `useDisplayEnv()` there always returns the neutral all-1.0
+ * table — printing 「冷卻 60 秒」 for a 12-second ability. A lobby caller passes
+ * the pre-match table it resolved itself (ui/platform/lobbyCombatEnv); every
+ * in-match caller omits it and behaves exactly as before.
+ */
+export function SkillRowView({
+  row,
+  env: envOverride,
+}: {
+  row: SkillRow;
+  env?: CombatEnvMultipliers;
+}): React.JSX.Element {
   const accent = slotAccent(row.slot);
-  const env = useDisplayEnv();
+  const liveEnv = useDisplayEnv();
+  const env = envOverride ?? liveEnv;
   const innate = row.slot === "PASSIVE";
   const meta: string[] = [];
   // 天生技 leads with WHY it has no rank: it is owned from level 1, not learned.

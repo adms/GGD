@@ -57,3 +57,24 @@
     grid-template-columns: 1fr;
   }
 }
+
+/*
+ * SHORT VIEWPORT — the phone-LANDSCAPE hole (#151, re-opened by #258).
+ *
+ * An iPhone in landscape is 844×390: 844 > 720, so the rule above does NOT
+ * fire and the lobby keeps three side-by-side columns inside 390px of height.
+ * Neither `.ggd-lobby-body` nor `.ggd-lobby-col` declared any overflow there,
+ * so anything past the fold — measured on this build, the ROOMS panel already —
+ * was simply unreachable: not clipped-with-a-scrollbar, GONE.
+ *
+ * The 英靈殿 card collapses to a single line at this height precisely so it
+ * cannot make that worse (see ui/platform/valhalla.ts), but "cannot make it
+ * worse" is not the same as "can be read", and an EXPANDED card has to be
+ * reachable. So the body scrolls here too. Height-keyed, not width-keyed, so a
+ * desktop window is untouched.
+ */
+@media (max-height: 520px) {
+  .ggd-lobby-body {
+    overflow-y: auto;
+  }
+}

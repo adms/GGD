@@ -3780,3 +3780,64 @@ take**（磁碟上的音檔講的還是 #244 改名前的技能名）。順帶�
 > - `apps/client/src/render/effectFraming.ts` —— 真相機模型 + **遮擋**判定 + `verticalHeadroom`
 > - `apps/client/public/presentation-audition.html` —— 真 `CameraRig` + 真 `buildZoneGround`
 > - `apps/client/scripts/captureRealCamera.mjs` —— 無頭 CDP 逐格截圖 **+ 像素差**
+
+---
+
+## 2026-07-26 · #258 大廳英靈殿 —— 一條「大廳中央要有東西」的需求，和它路上撿到的兩個舊洞
+
+**owner 原話**：「大廳中央上面 (單人vsBot 之上) 增加一個區塊 [英靈殿] 用 3d model + 英雄全名+稱號,
+描述, 技能介紹 隨機介紹一個英雄，並且每過1分鐘就會輪播隨機下一個英雄」。
+
+實作：`apps/client/src/ui/platform/ValhallaPanel.tsx`（組合層）+ `valhalla.ts`（純規則）+
+`lobbyCombatEnv.ts`（賽前 combat-env）。名冊、稱號/全名、故事、技能列、3D 舞台**全部是既有 selector**，
+沒有第二套 parser、沒有第三個 Babylon 殼。清單見 `docs/todo/valhalla.md`。
+
+### 這條需求本身的四個「會做出來但玩家看不到」的死法，逐一釘住
+
+| 死法 | 前例 | 這次怎麼擋 |
+|---|---|---|
+| 大廳先畫、內容後載 → 名冊永遠是空的 | #18 登入跑馬燈上線到被抓包**一次都沒畫出 `<img>`** | `useContentReady()` 進 memo deps；內容/白名單未到齊時畫**骨架**，不是 `return null`（`return null` 看起來就跟「沒做」一樣） |
+| 3D 開天窗 | #129 選角預覽黑畫面 | `StorePreviewCanvas` 新增 `onStatus`；`loading`/`failed`/沒有 modelKey 一律蓋上該英雄頭像（頭像也缺 → 首字磚）。**任何狀態都不是空白** |
+| 把比它重要的東西擠出畫面 | #247 跳躍 77% 在畫面外 | 見下方 390px 段落 |
+| 顯示的數字跟戰鬥不一致 | #125 | 見下方 combat-env 段落 |
+
+### 路上撿到的舊洞 1 —— #125 在**整個大廳**是失效的（不只英靈殿）
+
+`ui/displayFinal.useDisplayEnv()` 讀的是 `MatchState.combatEnvJson`，也就是**比賽**的表。大廳沒有比賽：
+`RoomStore` 初值 `combatEnvJson: ""` → `parseCombatEnvJson("")` → 全 1.0 中性表；全專案只有
+`GameApp.ts:1021` 與 `:1907` 兩處會灌值，兩處都在比賽內。而實際出貨的
+`content/config/combat-env.json` 是 `cooldown 0.2`、`abilityRange 0.6`、`maxHealth 4.0`。
+
+⇒ **任何在大廳印技能數字的畫面都會說謊 5 倍**（60 秒 vs 實際 12 秒）。這不是英靈殿造成的，
+英靈殿只是第一個會踩到的新畫面。`lobbyCombatEnv.ts` 依照 game-server 自己的順序解一份
+（content 預設 + `GET /api/v1/combat-env` admin 覆寫，admin 勝出，失敗**退回 content 而不是中性**），
+`SkillRowView` 加一個 optional `env` prop 收下它。
+
+**仍然沒修的同一個洞**：圖鑑（`ui/codex/CodexDetail.tsx:259` / `:514`）也用 `useDisplayEnv()`，
+而圖鑑就是從大廳 `#codex` 開的 —— 它照樣印 base。這次沒動它（不在 #258 範圍），
+但修法已經現成：把 `useLobbyCombatEnv()` 接上去即可。→ 併入 #125 尾巴。
+
+### 路上撿到的舊洞 2 —— iPhone 橫向（844×390）大廳**沒有任何捲動**
+
+`platform/ranking.css` 唯一的響應式規則是 `@media (max-width: 720px)`。iPhone 橫向是 **844**×390，
+844 > 720，所以規則**不會觸發**：390px 高的畫面裡仍然是三欄，`.ggd-lobby-body` 與 `.ggd-lobby-col`
+都沒有 `overflow-y`。實測（本次 headless 量到）：`ROOMS` 面板本來就已經在畫面外，而且**捲不到**。
+
+- 加了 `@media (max-height: 520px) { .ggd-lobby-body { overflow-y: auto } }`（依高度、不依寬度，桌機不受影響）。
+- 英靈殿在 ≤520px 高**塌成一行 31px**（🏛 + 頭像 + 稱號·全名 + 展開/下一位 + 2px 進度線）。
+  第一版是兩行 86px，實測把「⚔️ 一鍵開打」從 y=283..337 推到 y=380..434 —— **推出畫面**。
+  收成一行之後按鈕落在 y=326..380，`inViewport: true`。這個 31px 不是美感，是預算。
+
+### 驗收（測試綠不算證據）
+
+無頭 Chrome + SwiftShader 打本機 dev client（`:39628`）與**自己的**拋棄式平台（`:8158`，
+scratch `DATA_DIR`，真的 49 位白名單）。全程沒有碰 ggd.adms.ai。腳本與截圖在 scratchpad，
+量到的數字：舞台非背景像素 28–49%（不是黑框）、`valhallaAboveBot: true`、
+一次執行內拍兩張證明輪播（`桔梗 → Rider`，`identicalBytes: false`）、console 全程 0 error。
+
+### 已知、沒修、要知道
+
+- 拳四郎（`godie-u00l`）的 `modelKey` 是 `imported.heropikachu`，展示櫃會把這個 #77/#113 舊債**放大**到
+  玩家眼前（輪到他時 3D 長成皮卡丘）。這次沒動內容。
+- `godie-h02r 妙蛙花` 的 `description` 是空的 → 卡片顯示「（此英雄在原地圖沒有描述文字）」。
+- 43 位仍在預覽舞台上共用方塊人替身（#226/#231 的 open question），卡片上有 🎭 徽章說明。

@@ -59,6 +59,7 @@ Regression suites always run **last** (enforced by the runner scheduler and the 
 | Champion select voice (click your own hero, CHARACTER quips) | [champion-voices.md](champion-voices.md) | client + content |
 | Animated isekai login background (procedural Babylon) | [login-scene.md](login-scene.md) | client |
 | Champion-portrait login marquee (roster showcase) | [champion-marquee.md](champion-marquee.md) | client |
+| 英靈殿 lobby champion showcase (3D + 稱號/全名/描述/技能, 1-minute rotation) | [valhalla.md](valhalla.md) | client |
 | Champion identity (hero 編號, not model/portrait) | [champion-identity.md](champion-identity.md) | content + client + platform |
 | Champion role taxonomy (six real roles, not `fighter`/`marksman`) | [role-taxonomy.md](role-taxonomy.md) | content |
 | Platform web UI (auth/lobby/rooms/store) | [web-ui.md](web-ui.md) | client |

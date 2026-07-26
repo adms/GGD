@@ -82,6 +82,15 @@ export class StorePreview {
   private animator: ClipAnimator | null = null;
   private showToken = 0;
   private disposed = false;
+  /**
+   * Task #258. The render loop is UNCONDITIONAL in this class — unlike
+   * LoginScene and IntermissionScene, which both stop on `document.hidden` —
+   * so a lobby left open in a background tab kept a WebGL context spinning at
+   * 60 fps forever. The lobby 英靈殿 is a screen players park on, so the pause
+   * gate is here rather than in one caller: `setPaused(true)` skips the render
+   * (and the auto-orbit) without tearing down the engine, so resuming is free.
+   */
+  private paused = false;
 
   /**
    * @param host  a real `<canvas>` (production) OR an existing `Scene`
@@ -136,7 +145,7 @@ export class StorePreview {
     if (this.ownsScene) {
       // only drive the loop / resize when we own the engine (a canvas host)
       this.engine.runRenderLoop(() => {
-        if (!this.disposed) this.scene.render();
+        if (!this.disposed && !this.paused) this.scene.render();
       });
       if (host instanceof HTMLCanvasElement && typeof ResizeObserver !== "undefined") {
         const ro = new ResizeObserver(() => this.engine.resize());
@@ -149,6 +158,21 @@ export class StorePreview {
   /** The framed model root, or null when nothing is loaded (test/introspection). */
   get modelNode(): TransformNode | null {
     return this.modelRoot;
+  }
+
+  /**
+   * Stop / resume drawing without disposing the engine (#258). Paused, the
+   * render loop still runs but does nothing, so the GPU goes idle; the camera's
+   * auto-rotation is driven by the scene, so it freezes with it. Callers gate
+   * on `document.hidden` and on the card being scrolled off-screen.
+   */
+  setPaused(paused: boolean): void {
+    this.paused = paused;
+  }
+
+  /** Whether drawing is currently suppressed (introspection / tests). */
+  get isPaused(): boolean {
+    return this.paused;
   }
 
   /** Swap the displayed model (clears the previous one). Never throws. */
