@@ -50,7 +50,6 @@ import {
   MAX_PILLARS,
   MOTE_PERIOD_MS,
   MOTE_COUNT,
-  PILLAR_HEIGHT,
   RELEASE_MS,
   SHELL_RADIUS,
   SHELL_TOP_TAPER,
@@ -62,6 +61,14 @@ import {
   type PillarPalette,
   type PillarPhase,
 } from "./castPillar";
+import {
+  BEAM_DEFAULT_HEADROOM,
+  beamKnotHeight,
+  beamRiseProfile,
+  beamVerdict,
+  castBeamPlan,
+  type BeamVerdict,
+} from "./castBeam";
 
 /** Cylinder sides. 20 reads round at arena zoom; 16×3×MAX_PILLARS stays cheap. */
 const SIDES = 20;
@@ -70,6 +77,16 @@ const SHELL_FLUTES = 4;
 
 /** Ground flare sits just above the floor, under the blob shadow's decal band. */
 const GROUND_Y = 0.045;
+
+/**
+ * Emit cadence of the #233 descending impact knot. Faster than the rising
+ * motes (150 ms) because the knot has to read as ONE object moving rather than
+ * as a sequence of separate puffs — at 150 ms on a 0.6 s cast you would see
+ * four unrelated sparks, not a countdown.
+ */
+const KNOT_PERIOD_MS = 70;
+/** Particle budget of one knot pulse, relative to a mote pulse. */
+const KNOT_SCALE = 3;
 
 const GROUND_TEXTURE = "assets/textures/particles/magic_05.png";
 /** Soft glow sheet the two shafts are masked with (shape only — see material). */
@@ -101,7 +118,12 @@ function bakeRiseGradient(mesh: Mesh, flutes: number): Float32Array {
     const z = pos[i * 3 + 2] as number;
     // the unit cylinder is centred on its origin: y runs -0.5 (foot) → +0.5
     const t = Math.max(0, Math.min(1, y + 0.5));
-    const rise = Math.pow(1 - t, 1.4) * 0.75 + 0.25; // falloff, never fully dark
+    // TASK #233: the profile now carries a TIP FLARE as well as the falloff, so
+    // the column terminates in something instead of dissolving into the sky.
+    // A beam the eye cannot find the end of does not read as reaching upward —
+    // and now that the height is framed (see castBeamPlan) the tip is on screen
+    // to be found.
+    const rise = beamRiseProfile(t);
     // FLAME LICKS without a texture: a gentle angular ripple so the shaft reads
     // as fluted fire rather than a glass pipe. Deterministic (no rng anywhere
     // near the render loop) and free — it is baked once into the vertex buffer.
@@ -147,6 +169,17 @@ function tintGradient(
 export interface CastPillarDeps {
   /** rendered position of an entity (view space), or null if unknown */
   entityPos(id: number): { x: number; z: number } | null;
+  /**
+   * TASK #233. Vertical budget above a ground point through the camera that is
+   * actually presenting, in world units — `render/effectFraming.verticalHeadroom`.
+   *
+   * Without it the column is a CONSTANT 6.4 u tall, and measured over the
+   * ground positions the shipped combat camera can see, a 6.4 u column fits
+   * inside the frame at 6% of them. The other 94% announce themselves off the
+   * top of the screen. Optional so a NullEngine test can leave it out, but the
+   * production wiring always supplies it (see VfxSystem).
+   */
+  headroomAt?(x: number, z: number): number | null;
 }
 
 export interface CastPillarOptions extends PresetSystemOptions {
@@ -177,6 +210,10 @@ interface Slot {
   palette: PillarPalette;
   moteKey: string;
   nextMoteMs: number;
+  /** next frame the descending impact knot may emit (task #233) */
+  nextKnotMs: number;
+  /** whether this cast leaves a human ANY reaction time (task #233) */
+  verdict: BeamVerdict;
   x: number;
   z: number;
   active: boolean;
@@ -256,6 +293,12 @@ export class CastPillarFx {
     slot.palette = palette;
     slot.moteKey = motePoolKey(palette);
     slot.nextMoteMs = nowMs;
+    slot.nextKnotMs = nowMs;
+    // TASK #233: does this cast leave a human any reaction time at all? The
+    // descending impact knot is only drawn when the answer is yes — see
+    // castBeam.beamKnotHeight for why counting down to an unavoidable hit is
+    // the one thing a telegraph must never do.
+    slot.verdict = beamVerdict(durationMs);
     slot.x = pos.x;
     slot.z = pos.z;
     slot.active = true;
@@ -365,7 +408,13 @@ export class CastPillarFx {
     }
     const shape = pillarShape(slot.phase, u);
     const crowd = crowdAlphaScale(active);
-    const h = Math.max(0.001, shape.height) * PILLAR_HEIGHT;
+    // TASK #233 — the beam is as tall as the FRAME allows, not as tall as a
+    // constant says. `PILLAR_HEIGHT` is now only the authoring reference the
+    // plan is clamped against (see castBeam).
+    const plan = castBeamPlan({
+      headroom: this.deps.headroomAt?.(slot.x, slot.z) ?? BEAM_DEFAULT_HEADROOM,
+    });
+    const h = Math.max(0.001, shape.height) * plan.height;
     const r = Math.max(0.001, shape.radius);
 
     slot.pivot.position.set(slot.x, 0, slot.z);
@@ -380,8 +429,12 @@ export class CastPillarFx {
     // 1, and `StandardMaterial.needAlphaBlending()` tests `alpha < 1` — an
     // un-clamped 1.13 can drop a shaft out of the transparent pass for the one
     // frame that matters most and render it as an opaque tube over the caster.
-    const shellA = Math.min(1, shape.shellAlpha * crowd);
-    const coreA = Math.min(1, shape.coreAlpha * crowd);
+    // A caster pinned against the edge of the frame has no room for a column at
+    // all; drawing half of one there is noise, not information, so the ground
+    // flare (which sits on the caster's own framed feet) carries the telegraph
+    // alone until they move back into view.
+    const shellA = plan.degraded ? 0 : Math.min(1, shape.shellAlpha * crowd);
+    const coreA = plan.degraded ? 0 : Math.min(1, shape.coreAlpha * crowd);
     const groundA = Math.min(1, shape.groundAlpha * crowd);
     slot.shellMat.alpha = shellA;
     slot.coreMat.alpha = coreA;
@@ -396,6 +449,28 @@ export class CastPillarFx {
       slot.nextMoteMs = nowMs + MOTE_PERIOD_MS;
       const scale = (this.getScale() * motesPerPulse(active, 1)) / MOTE_COUNT;
       this.motes.fireAt(slot.moteKey, moteSpec(slot.palette), slot.x, slot.z, 0.15, nowMs, scale);
+    }
+
+    // TASK #233 — THE DESCENDING IMPACT KNOT. A bright cluster falls down the
+    // beam and touches the floor on the frame the ability resolves, so the
+    // telegraph says HOW LONG rather than only THAT. It rides the same pooled
+    // mote systems (a separate key so the two never steal each other's
+    // instances) and is skipped entirely for a cast nobody can react to.
+    if (slot.phase === "cast" && !plan.degraded && nowMs >= slot.nextKnotMs) {
+      const knot = beamKnotHeight(u, slot.verdict);
+      if (knot !== null) {
+        slot.nextKnotMs = nowMs + KNOT_PERIOD_MS;
+        const scale = (this.getScale() * KNOT_SCALE) / MOTE_COUNT;
+        this.motes.fireAt(
+          `${slot.moteKey}/knot`,
+          moteSpec(slot.palette),
+          slot.x,
+          slot.z,
+          Math.max(0.05, knot * h),
+          nowMs,
+          scale,
+        );
+      }
     }
   }
 
@@ -564,6 +639,8 @@ export class CastPillarFx {
       palette: { core: [1, 1, 1], fringe: [1, 1, 1], element: null },
       moteKey: "castpillar/default",
       nextMoteMs: 0,
+      nextKnotMs: 0,
+      verdict: "notice",
       x: 0,
       z: 0,
       active: false,
