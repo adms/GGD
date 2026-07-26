@@ -74,10 +74,10 @@ const CFG: MobWavesConfig = { ...DEFAULT_MOB_WAVES_CONFIG };
 const DT = 1 / 30;
 
 describe("#217 (b) the hero sheet is what a mob is made of", () => {
-  it("the shipped godie-zombiex doc carries the owner's numbers (100/+50, 1/+0.2)", () => {
+  it("the shipped godie-zombiex doc carries the owner's numbers (100/+100, 1/+0.2)", () => {
     cover("mob-217-doc-numbers");
     expect(BASE_HP).toBe(100);
-    expect(GROWTH_HP).toBe(50);
+    expect(GROWTH_HP).toBe(100);
     expect(BASE_REGEN).toBe(1);
     expect(GROWTH_REGEN).toBe(0.2);
   });
@@ -90,9 +90,11 @@ describe("#217 (b) the hero sheet is what a mob is made of", () => {
       expect(rules.maxHp).toBe(Math.round(BASE_HP + GROWTH_HP * (level - 1)));
       expect(rules.hpRegenPerSec).toBeCloseTo(BASE_REGEN + GROWTH_REGEN * (level - 1), 10);
     }
-    // the owner's concrete expectation: round 3 → lv3 → 100 + 50*2 = 200 hp
-    expect(mobRulesFromConfig(CFG, DT, 3).maxHp).toBe(200);
-    expect(mobRulesFromConfig(CFG, DT, 4).maxHp).toBe(250);
+    // The owner's concrete expectation, RE-SET 2026-07-26: growth 50 -> 100, so
+    // round 3 -> lv3 -> 100 + 100*2 = 300 hp. Base 100 was left alone, which is
+    // what makes 喪標麥可 a late scaler: fragile early, the tankiest hero by L50.
+    expect(mobRulesFromConfig(CFG, DT, 3).maxHp).toBe(300);
+    expect(mobRulesFromConfig(CFG, DT, 4).maxHp).toBe(400);
   });
 
   it("falls back to the flat config maxHp when the champion doc is not registered", () => {
@@ -142,9 +144,9 @@ describe("#217 (c) the ROUND is the mob's level channel", () => {
       const [id] = [...w.mob.keys()];
       return w.health.get(id!)!.maxHp;
     };
-    expect(hpOfFirstMob(3)).toBe(200);
-    expect(hpOfFirstMob(4)).toBe(250);
-    expect(hpOfFirstMob(6)).toBe(350);
+    expect(hpOfFirstMob(3)).toBe(300);
+    expect(hpOfFirstMob(4)).toBe(400);
+    expect(hpOfFirstMob(6)).toBe(600);
   });
 
   it("a mob regenerates its levelled hp — RegenSystem never sees it (no StatsComp)", () => {
