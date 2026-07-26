@@ -1,11 +1,27 @@
-# blizzard-local — COPYRIGHT GATE (LOCAL DEV ONLY)
+# blizzard-local — Blizzard-owned assets, NOT in git, openly served where mounted
+
+> **STATUS, 2026-07-26.** This file used to open with "COPYRIGHT GATE (LOCAL DEV
+> ONLY)" and to say the assets must never be deployed. **Both halves of that are
+> now out of date, and the honest statement is:**
+>
+> - **They are deployed.** #177 ships the 87 MB overlay to the family host,
+>   where it is bind-mounted into the edge and served under this URL prefix.
+> - **They are not access-controlled.** The per-peer copyright gate that used to
+>   403 a `public` requester was retired on 2026-07-26 by explicit owner decision
+>   (#239) — see `docs/copyright-content-gate.md`. Where the overlay is mounted,
+>   anyone with the URL can fetch it. No session, cookie, invite code or approval
+>   is checked on `/content/assets/**`, and never was.
+>
+> What is still true, and still enforced: **the bytes never enter git and are
+> never baked into an image.** They travel only as an explicit runtime mount.
+> That is a storage/redistribution rule, not an access rule, and the rest of this
+> document describes it accurately.
 
 This directory is the **URL mount point** for Warcraft III assets that are
 **owned by Blizzard Entertainment**. They are extracted from the user's own
 locally-installed MPQ archives (`war3.mpq`, `War3x.mpq`, `War3xLocal.mpq`,
-`War3Patch.mpq` at the repo root) purely so local development can preview the
-original unit models and soundsets. They are **NOT redistributable** and must
-**NEVER be deployed, published, committed, or shipped in any build**.
+`War3Patch.mpq` at the repo root). They are **not redistributable**: do not
+commit them, do not bake them into an image, do not re-host them.
 
 The only exception: the handful of *user-reskin* textures (marked
 `"textureSource": "user-reskin"` in the manifest) are the map author's own
@@ -35,11 +51,14 @@ data/blizzard-overlay/
 `.gitignore`), never part of any Docker build context COPY, and never baked
 into any image.
 
-## How dev serves it (and why prod cannot)
+## How it is served (dev, and the family deploy)
 
 Consumers fetch the stable URL path `/content/assets/blizzard-local/**`
 (e.g. `/content/assets/blizzard-local/MANIFEST.json`). That path is backed by
-`data/blizzard-overlay/` **only via dev-only routes**:
+`data/blizzard-overlay/` **only where something explicitly mounts it** — which
+today means a developer machine, or the family deploy (#176/#177) that mounts
+`nginx/tier/family/` and the byte store together. On a stack that does neither,
+every URL here 404s. The dev routes are:
 
 1. **Vite dev/preview server** — the `serveBlizzardOverlay()` middleware in
    `apps/client/vite.config.ts` maps `/content/assets/blizzard-local/*` →
@@ -57,7 +76,9 @@ Consumers fetch the stable URL path `/content/assets/blizzard-local/**`
    deliberately NOT synced into `deploy/helm/ggd/files/` by
    `make helm-sync-nginx`. Without both mounts every URL here 404s.
 
-**Prod exclusion is by construction, not by filter:**
+**A stack that does not opt in excludes the overlay by construction, not by
+filter** (this is what makes "default off" real — it is about mounts, not about
+who is asking):
 
 - Prod nginx (`nginx/nginx.conf`, mirrored in
   `deploy/helm/ggd/files/nginx.conf`) serves `/content/` from `/srv/content`,

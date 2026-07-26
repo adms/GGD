@@ -13,8 +13,14 @@
  *
  *   1. DEFAULT OFF. Nothing about a normal build, image, chart or compose stack
  *      requests, serves, bakes or mounts the overlay. A deploy that does not
- *      opt in behaves exactly as it did before #176 — including the copyright
- *      gate that refuses the restricted mounts to a public peer.
+ *      opt in has no blizzard-local route at all.
+ *
+ *      (Before #239 this clause also covered a per-peer copyright gate that
+ *      403'd the restricted mounts for a `public` $remote_addr. That gate was
+ *      RETIRED on 2026-07-26 by explicit owner decision, taken knowing that
+ *      /content/assets/** authenticates nobody — see
+ *      docs/copyright-content-gate.md. What is asserted below is therefore
+ *      about MOUNTS and BYTES, never about who may read them.)
  *   2. OPT-IN IS ONE EXPLICIT, VISIBLE ACT. Turning it on is a separate compose
  *      overlay file that must be named on the command line, and it flips FOUR
  *      coordinated switches at once (declared tier, client build flag, nginx
@@ -72,11 +78,22 @@ describe("overlay gate: content/ ships no Blizzard binaries", () => {
     expect(entries).toEqual(["README.md"]);
   });
 
-  it("the README states LOCAL DEV ONLY and points at the real store", () => {
+  it("the README names the owner, points at the real store, and states the redistribution rule", () => {
+    // This used to assert the README said "LOCAL DEV ONLY". It no longer does,
+    // and it MUST not: since #177 the overlay is mounted on the family host,
+    // and since #239 no per-peer gate stands in front of it. A README that
+    // still claimed "never deployed" would be the lie a future audit "fixes"
+    // by re-adding a gate the owner deliberately removed.
+    //
+    // What is still true — and is the whole point of this file living in
+    // content/ as a signpost rather than as bytes — is asserted instead.
     const readme = read("content/assets/blizzard-local/README.md");
-    expect(readme).toMatch(/LOCAL DEV ONLY/i);
     expect(readme).toMatch(/Blizzard/);
     expect(readme).toContain(OVERLAY_DIR);
+    expect(readme, "the README must state the bytes are not redistributable").toMatch(
+      /not redistributable/i,
+    );
+    expect(readme, "the README must say the bytes never enter git").toMatch(/git-ignored/i);
   });
 
   it("the overlay store is git-ignored wholesale (never committed)", () => {
@@ -176,16 +193,43 @@ describe("overlay gate: OPT-IN is explicit and turns everything on together", ()
     expect(fam).toMatch(/blizzard-overlay[^\n]*:\/srv\/blizzard-overlay/);
   });
 
-  it("the family tier fragments actually serve the URL prefix behind the copyright gate", () => {
-    const geo = read("nginx/tier/family/00-full-assets.geo.conf");
-    // The catch-all that reclassifies every peer into the served tier.
-    expect(stripHashComments(geo)).toMatch(/0\.0\.0\.0\/0\s+lan/);
+  it("the family tier fragments actually serve the URL prefix", () => {
+    const geo = stripHashComments(read("nginx/tier/family/00-full-assets.geo.conf"));
+    // The two halves of /0 that classify every peer into the served tier. They
+    // are deliberately NOT written as `0.0.0.0/0`: that is the same network as
+    // geo's own `default`, which nginx warns about and resolves by position,
+    // making the outcome depend on where the include lands (#239).
+    expect(geo).toMatch(/0\.0\.0\.0\/1\s+lan/);
+    expect(geo).toMatch(/128\.0\.0\.0\/1\s+lan/);
+    expect(geo).toMatch(/::\/1\s+lan/);
+    expect(geo).toMatch(/8000::\/1\s+lan/);
+    expect(geo, "a /0 row duplicates geo's own default — use the two /1 halves").not.toMatch(
+      /0\.0\.0\.0\/0|(^|\s)::\/0/m,
+    );
     const srv = read("nginx/tier/family/10-blizzard-overlay.server.conf");
     expect(srv).toContain(`location ${OVERLAY_URL_PREFIX}/`);
     expect(srv).toContain("alias /srv/blizzard-overlay/");
-    // Even here the per-peer gate is kept, so mounting the location without the
-    // geo switch still fails safe.
-    expect(srv).toMatch(/\$ggd_deny_copyright/);
+  });
+
+  it("no nginx file references the retired $ggd_deny_copyright variable", () => {
+    // THE DANGLING-VARIABLE TRAP. The copyright gate was retired on 2026-07-26
+    // by explicit owner decision (#239): the `map $ggd_env_tier
+    // $ggd_deny_copyright` is gone from nginx.conf, so ANY surviving reference
+    // in a mounted fragment makes nginx refuse to start with `unknown
+    // "ggd_deny_copyright" variable`. infracheck's `nginx -t` runs against
+    // nginx.conf ALONE and cannot see the fragments, so this text assertion is
+    // the only thing standing between a stray `if` and a dead family edge
+    // (compose.family.yaml sets restart: "no" — the site would stay down).
+    for (const conf of [
+      "nginx/nginx.conf",
+      "deploy/helm/ggd/files/nginx.conf",
+      "nginx/tier/family/00-full-assets.geo.conf",
+      "nginx/tier/family/10-blizzard-overlay.server.conf",
+      "nginx/dev/blizzard-overlay.conf",
+      "nginx/dev/content-api.conf",
+    ]) {
+      expect(stripHashComments(read(conf)), conf).not.toMatch(/\$ggd_deny_copyright/);
+    }
   });
 
   it("the overlay is served with the ?h= immutable cache policy, not no-store", () => {
