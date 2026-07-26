@@ -1,0 +1,583 @@
+/**
+ * ValhallaPanel — 英靈殿, the lobby's champion showcase (task #258).
+ *
+ * Owner's words: 「大廳中央上面 (單人vsBot 之上) 增加一個區塊 [英靈殿] 用 3d model
+ * + 英雄全名+稱號, 描述, 技能介紹 隨機介紹一個英雄，並且每過1分鐘就會輪播隨機
+ * 下一個英雄」. So: a 3D stage, 稱號 + 全名, the map's own 故事 text, the full
+ * six-slot kit, one champion at a time, a new one every minute.
+ *
+ * ---------------------------------------------------------------------------
+ * EVERYTHING HERE IS COMPOSITION — the data all comes from existing selectors
+ * ---------------------------------------------------------------------------
+ *   · roster    → `valhallaRoster` (registry ∩ operator whitelist, ./valhalla)
+ *   · 稱號/全名/故事 → `championDisplayFor` + `parseDescriptionSections`
+ *   · 技能      → `skillRows(champSelectSkillSeat(def))`, rendered with
+ *                 champ-select's own `SkillRowView`
+ *   · 3D        → `StorePreviewCanvas` (one shared Babylon viewer class)
+ * No second parser, no second renderer, no second Babylon shell.
+ *
+ * ---------------------------------------------------------------------------
+ * THE FOUR WAYS A SHOWCASE LIKE THIS SHIPS BROKEN, AND WHAT STOPS EACH
+ * ---------------------------------------------------------------------------
+ * 1. PERMANENTLY EMPTY (#18/#170). The lobby paints BEFORE the content bundle
+ *    loads, so `Champions.ids()` is `[]` on first render. This subscribes to
+ *    `useContentReady()` and puts it in the memo deps; while either the content
+ *    or the whitelist is still in flight it draws a SKELETON, never `null` —
+ *    a null would look exactly like "the feature was never built".
+ * 2. A BLACK HOLE WHERE THE MODEL SHOULD BE (#129). WebGL may be unavailable,
+ *    the model doc may 404, the glb may fail to parse. `StorePreviewCanvas`
+ *    now reports its status, and any non-"ready" outcome swaps in the
+ *    champion's portrait (or a letter tile when even that is missing). The
+ *    block is never blank, in any state.
+ * 3. PUSHING 「一鍵開打」 OFF A PHONE (#151/#247). See `valhallaLayout` — at
+ *    ≤520px of viewport height the card collapses to one 30px line.
+ * 4. NUMBERS THAT DISAGREE WITH COMBAT (#125). `useDisplayEnv()` reads the
+ *    MATCH's table and there is no match here, so the cooldowns would print
+ *    5× too long. The pre-match table is resolved by `useLobbyCombatEnv` and
+ *    passed explicitly into every row.
+ *
+ * SILENCE IS A REQUIREMENT, NOT AN OVERSIGHT. Nothing in this file imports the
+ * audio system, and the 「下一位」 control is a plain <button> rather than the
+ * shared `Btn` — `Btn` carries the #24 hover/click SFX, and a showcase that
+ * chirps every time a family member's cursor crosses the lobby (or clicks
+ * through heroes) is noise. The 60-second auto-swap is likewise silent by
+ * construction: there is no code path from here to `playSfx`.
+ */
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Champions } from "@ggd/shared/sim/content/registry";
+import type { ChampionId } from "@ggd/shared/ids";
+import { useContentReady } from "./ContentGate";
+import { useWhitelist } from "../panels/whitelist";
+import { championDisplayFor } from "./championDisplay";
+import { championDescription, champSelectSkillSeat, parseDescriptionSections } from "../panels/champselect/championProfile";
+import { isStandInModel, STAND_IN_NOTE_EN, STAND_IN_NOTE_ZH } from "../panels/champselect/standIn";
+import { SkillRowView } from "../panels/champselect/ProfileBlock";
+import { skillRows } from "../panels/skillDetails";
+import { StorePreviewCanvas, type PreviewStatus } from "./StorePreviewCanvas";
+import { IconImg } from "../components/IconImg";
+import { championIconUrl } from "../icons";
+import { attackTypeLabel } from "../codex/codexLabels";
+import { useLobbyCombatEnv } from "./lobbyCombatEnv";
+import { Panel, ACCENT } from "./widgets";
+import { GOLD, PANEL_BG, TEXT_DIM, TEXT_MAIN } from "../theme";
+import {
+  draw,
+  EMPTY_ROTATION,
+  shouldCount,
+  VALHALLA_EXPANDED_STAGE,
+  VALHALLA_ROTATION_MS,
+  VALHALLA_TICK_MS,
+  valhallaLayout,
+  valhallaRoster,
+  type RotationState,
+  type ValhallaLayout,
+} from "./valhalla";
+
+const TITLE = "英靈殿";
+
+/** Live viewport box — the layout tier is a function of it, so it must track resizes. */
+function useViewport(): { width: number; height: number } {
+  const [box, setBox] = useState(() => ({
+    width: typeof window === "undefined" ? 1280 : window.innerWidth,
+    height: typeof window === "undefined" ? 720 : window.innerHeight,
+  }));
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const onResize = (): void => setBox({ width: window.innerWidth, height: window.innerHeight });
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+  return box;
+}
+
+/** `document.hidden`, as a React value. Drives both the clock and the render loop. */
+function useTabHidden(): boolean {
+  const [hidden, setHidden] = useState(() => typeof document !== "undefined" && document.hidden);
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    const onChange = (): void => setHidden(document.hidden);
+    document.addEventListener("visibilitychange", onChange);
+    onChange();
+    return () => document.removeEventListener("visibilitychange", onChange);
+  }, []);
+  return hidden;
+}
+
+/**
+ * Is the card actually on screen? On a phone the lobby body scrolls, and a
+ * showcase parked below the fold has no business holding a WebGL context busy.
+ * No IntersectionObserver (jsdom/node test envs lack it) → assume visible.
+ */
+function useOnScreen(ref: React.RefObject<HTMLElement>): boolean {
+  const [onScreen, setOnScreen] = useState(true);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver((entries) => {
+      const e = entries[0];
+      if (e) setOnScreen(e.isIntersecting);
+    });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [ref]);
+  return onScreen;
+}
+
+/** The portrait shown when the 3D stage cannot be trusted (or is collapsed). */
+function ChampionPortrait({ id, size }: { id: string; size: number }): React.JSX.Element {
+  const url = championIconUrl(id);
+  const letter = (championDisplayFor(id).fullName || id).slice(0, 1);
+  return (
+    <div
+      style={{
+        width: size,
+        height: size,
+        flexShrink: 0,
+        borderRadius: 8,
+        overflow: "hidden",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "#121826",
+        border: `1px solid ${ACCENT}55`,
+        color: GOLD,
+        fontWeight: 800,
+        fontSize: Math.max(12, Math.round(size * 0.42)),
+      }}
+    >
+      {/* IconImg renders NOTHING when the icon is absent or 404s, so the letter
+          tile behind it is the real floor — 1 of the 49 has no icon at all. */}
+      <IconImg src={url} size={size} alt="" style={{ borderRadius: 8 }} />
+      {url === null && letter}
+    </div>
+  );
+}
+
+/** The 3D stage, with its portrait fallback and the 替身模型 badge. */
+function ValhallaStage({
+  championId,
+  height,
+  paused,
+}: {
+  championId: string;
+  height: number;
+  paused: boolean;
+}): React.JSX.Element {
+  const def = Champions.tryGet(championId as ChampionId);
+  const [status, setStatus] = useState<PreviewStatus>("loading");
+  const onStatus = useCallback((s: PreviewStatus) => setStatus(s), []);
+  // reset the status the moment the champion changes, or a previous "failed"
+  // would keep the fallback pinned over a model that loads fine
+  useEffect(() => setStatus("loading"), [championId]);
+  const modelKey = def?.modelKey ?? null;
+  const standIn = isStandInModel(modelKey);
+  return (
+    <div
+      data-ggd-valhalla-stage=""
+      // the 3D stage's real state, published to the DOM: "did the player get a
+      // model or a fallback?" has to be answerable from a screenshot harness,
+      // not inferred from how the pixels look (#93's lesson)
+      data-ggd-valhalla-model={modelKey === null ? "none" : status}
+      style={{
+        position: "relative",
+        height,
+        flexShrink: 0,
+        borderRadius: 10,
+        overflow: "hidden",
+        background: "#0e1219",
+        // the canvas owns wheel + drag; without this a finger dragging the
+        // phone lobby would spin the model instead of scrolling the page
+        touchAction: "pan-y",
+      }}
+    >
+      {modelKey !== null && (
+        <StorePreviewCanvas
+          modelKey={modelKey}
+          paused={paused}
+          hideEmptyHint
+          minHeight={height}
+          onStatus={onStatus}
+        />
+      )}
+      {/* NEVER A HOLE. Three states cover the stage with the portrait: no model
+          key at all, a failed load, and the seconds a large .glb spends in
+          flight (measured: some champions take >20s to decode under software
+          rendering, and an empty black box for 20s is indistinguishable from a
+          broken feature). Only "ready" leaves the canvas alone. */}
+      {(modelKey === null || status === "failed" || status === "loading") && (
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 8,
+            background: "#0e1219",
+            opacity: status === "loading" ? 0.72 : 1,
+          }}
+        >
+          <ChampionPortrait id={championId} size={Math.min(96, Math.max(48, height - 56))} />
+          <div style={{ fontSize: 10.5, color: TEXT_DIM }}>
+            {status === "loading" ? "3D 模型載入中…" : "3D 模型無法載入 · 以立繪代替"}
+          </div>
+        </div>
+      )}
+      {standIn && status !== "failed" && (
+        // SHORT ON PURPOSE. The full champ-select wording is two lines wide and
+        // covered the champion's HEAD on this 220px stage — a disclaimer that
+        // hides the thing it is disclaiming. The long text moves to the tooltip.
+        <div
+          title={`${STAND_IN_NOTE_ZH} — ${STAND_IN_NOTE_EN}`}
+          style={{
+            position: "absolute",
+            right: 6,
+            top: 6,
+            padding: "1px 6px",
+            borderRadius: 999,
+            background: "rgba(58, 44, 28, 0.85)",
+            border: "1px solid #e0a878",
+            color: "#f0cfa8",
+            fontSize: 9.5,
+            whiteSpace: "nowrap",
+          }}
+        >
+          🎭 替身
+        </div>
+      )}
+    </div>
+  );
+}
+
+/** Grey placeholder shown until content + whitelist land — never `null`. */
+function ValhallaSkeleton({ note }: { note: string }): React.JSX.Element {
+  return (
+    <Panel
+      data-ggd-valhalla=""
+      title={TITLE}
+      style={{ border: `1px solid ${ACCENT}55`, gap: 8, flexShrink: 0 }}
+    >
+      <div
+        aria-busy="true"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 12,
+          minHeight: 44,
+          color: TEXT_DIM,
+          fontSize: 12,
+        }}
+      >
+        <div
+          style={{
+            width: 36,
+            height: 36,
+            borderRadius: 8,
+            background: "linear-gradient(90deg,#141a28,#1d2536,#141a28)",
+            flexShrink: 0,
+          }}
+        />
+        {note}
+      </div>
+    </Panel>
+  );
+}
+
+export function ValhallaPanel(): React.JSX.Element {
+  const contentReady = useContentReady();
+  const { whitelist, loading: whitelistLoading } = useWhitelist();
+  const { env } = useLobbyCombatEnv(contentReady);
+  const { width, height } = useViewport();
+  const hidden = useTabHidden();
+  const rootRef = useRef<HTMLDivElement>(null);
+  const onScreen = useOnScreen(rootRef);
+
+  // SUBSCRIBE, DON'T SNAPSHOT: `contentReady` in the deps is what keeps this
+  // from freezing on the empty registry the lobby's first paint sees (#170).
+  const roster = useMemo(
+    () => (contentReady ? valhallaRoster(whitelist) : []),
+    [contentReady, whitelist],
+  );
+
+  const [rotation, setRotation] = useState<RotationState>(EMPTY_ROTATION);
+  const [current, setCurrent] = useState<string | null>(null);
+  const [engaged, setEngaged] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+
+  const barRef = useRef<HTMLDivElement>(null);
+  const elapsedRef = useRef(0);
+  const currentRef = useRef<string | null>(null);
+  currentRef.current = current;
+
+  /** Advance to the next champion and restart the minute. */
+  const advance = useCallback(() => {
+    setRotation((prev) => {
+      const next = draw(prev, roster, Math.random, currentRef.current);
+      if (next.id !== null) setCurrent(next.id);
+      return next.state;
+    });
+    elapsedRef.current = 0;
+    if (barRef.current) barRef.current.style.width = "0%";
+  }, [roster]);
+
+  // first draw (and a re-draw when the roster arrives / changes under us)
+  useEffect(() => {
+    if (roster.length === 0) {
+      setCurrent(null);
+      return;
+    }
+    if (current !== null && roster.includes(current)) return;
+    advance();
+    // `advance` closes over the roster; `current` is intentionally not a dep —
+    // re-running on every swap would restart the bag every minute.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [roster]);
+
+  // THE CLOCK. One 500ms interval, and it only accrues while the card is
+  // countable: a hidden tab, an off-screen card, or a player with the pointer
+  // parked on it all FREEZE the counter rather than queueing swaps. So a
+  // deferred rotation fires the instant the player looks away — never six at
+  // once when they come back to the tab.
+  const counting = shouldCount({ hidden, offscreen: !onScreen, engaged });
+  useEffect(() => {
+    if (!counting || current === null) return;
+    const timer = window.setInterval(() => {
+      elapsedRef.current += VALHALLA_TICK_MS;
+      const frac = Math.min(1, elapsedRef.current / VALHALLA_ROTATION_MS);
+      if (barRef.current) barRef.current.style.width = `${(frac * 100).toFixed(1)}%`;
+      if (elapsedRef.current >= VALHALLA_ROTATION_MS) advance();
+    }, VALHALLA_TICK_MS);
+    return () => window.clearInterval(timer);
+  }, [counting, current, advance]);
+
+  const layout: ValhallaLayout = valhallaLayout({ viewportHeight: height, viewportWidth: width });
+
+  if (!contentReady || whitelistLoading) {
+    return <ValhallaSkeleton note={!contentReady ? "英靈殿整備中…" : "確認開放名單…"} />;
+  }
+  if (roster.length === 0 || current === null) {
+    return <ValhallaSkeleton note="目前沒有開放中的英雄可以展示（請管理員在後台開放名單）。" />;
+  }
+
+  const def = Champions.tryGet(current as ChampionId);
+  if (!def) return <ValhallaSkeleton note="英靈殿整備中…" />;
+
+  const display = championDisplayFor(current);
+  const sections = parseDescriptionSections(championDescription(def));
+  const story = sections.story ?? (sections.hasSections ? "" : (championDescription(def) ?? ""));
+  const blurb = story || display.blurb;
+  const rows = skillRows(champSelectSkillSeat(def));
+  const strip = layout.mode === "strip" && !expanded;
+  const stageHeight = layout.mode === "strip" ? VALHALLA_EXPANDED_STAGE : layout.stageHeight;
+  // ~3 lines of 11.5px/1.6 prose, never more than a third of the detail budget
+  const descHeight = Math.min(56, Math.round(layout.bodyMaxHeight * 0.34));
+
+  /** Chrome button styling — deliberately NOT `Btn` (which carries the #24 SFX). */
+  const chip = (small: boolean): React.CSSProperties => ({
+    border: `1px solid ${ACCENT}77`,
+    background: "transparent",
+    color: TEXT_MAIN,
+    borderRadius: 6,
+    padding: small ? "0 6px" : "2px 9px",
+    fontSize: small ? 10 : 11,
+    lineHeight: small ? "16px" : undefined,
+    cursor: "pointer",
+    whiteSpace: "nowrap",
+    flexShrink: 0,
+  });
+
+  const nextButton = (
+    <button
+      type="button"
+      data-ggd-valhalla-next=""
+      onClick={advance}
+      title="立刻換下一位英雄（不必等滿 1 分鐘）"
+      style={chip(strip)}
+    >
+      下一位 ▸
+    </button>
+  );
+
+  const expandButton = layout.mode === "strip" && (
+    <button
+      type="button"
+      data-ggd-valhalla-expand=""
+      onClick={() => setExpanded((v) => !v)}
+      title={expanded ? "收合英靈殿" : "展開英靈殿（會佔用畫面高度）"}
+      style={chip(strip)}
+    >
+      {expanded ? "收合 ▴" : "展開 ▾"}
+    </button>
+  );
+
+  const header = (
+    <div style={{ display: "flex", alignItems: "center", gap: 8, minWidth: 0 }}>
+      <span style={{ fontSize: 12, fontWeight: 700, letterSpacing: 1.2, color: TEXT_DIM, flexShrink: 0 }}>
+        🏛 {TITLE}
+      </span>
+      <span style={{ fontSize: 10, color: TEXT_DIM, flexShrink: 0 }}>
+        每分鐘輪播 · 共 {roster.length} 位
+      </span>
+      <div style={{ flex: 1 }} />
+      {expandButton}
+      {nextButton}
+    </div>
+  );
+
+  const identity = (
+    <div style={{ minWidth: 0 }}>
+      {display.title && (
+        <div style={{ fontSize: 11, color: GOLD, letterSpacing: 1, lineHeight: 1.3 }}>{display.title}</div>
+      )}
+      <div
+        style={{
+          fontSize: strip ? 14 : 19,
+          fontWeight: 700,
+          color: TEXT_MAIN,
+          lineHeight: 1.25,
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          whiteSpace: strip ? "nowrap" : "normal",
+        }}
+      >
+        {display.fullName}
+      </div>
+      {!strip && (
+        <div style={{ fontSize: 11, color: TEXT_DIM, marginTop: 2 }}>
+          {attackTypeLabel(def.attackType)} · {rows.length} 個技能格
+        </div>
+      )}
+    </div>
+  );
+
+  // ── the collapsed one-liner (phone landscape) ───────────────────────────
+  //
+  // ONE 30px ROW, and the budget is not aesthetic. MEASURED at 844×390 on this
+  // build: 「⚔️ 一鍵開打」 sits at y=283..337, i.e. 53px from the bottom edge.
+  // Every pixel this card spends comes straight out of that margin (plus the
+  // column's 12px gap), so a two-row strip — the first attempt, 86px — pushed
+  // the button to y=380..434 and off the screen. Title, portrait, 稱號·全名 and
+  // both controls share a single line; the minute bar is the row's own 2px hem.
+  if (strip) {
+    return (
+      <Panel
+        data-ggd-valhalla={current}
+        ref={rootRef}
+        style={{ border: `1px solid ${ACCENT}55`, gap: 0, padding: "3px 8px", flexShrink: 0 }}
+        onMouseEnter={() => setEngaged(true)}
+        onMouseLeave={() => setEngaged(false)}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 6, minWidth: 0, height: 21 }}>
+          <span style={{ fontSize: 11, fontWeight: 700, color: TEXT_DIM, flexShrink: 0 }} title={TITLE}>
+            🏛
+          </span>
+          <ChampionPortrait id={current} size={18} />
+          <span
+            style={{
+              fontSize: 11.5,
+              color: TEXT_MAIN,
+              fontWeight: 600,
+              minWidth: 0,
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}
+            title={`${TITLE} · ${display.name}`}
+          >
+            {display.title && <span style={{ color: GOLD, fontWeight: 400 }}>{display.title} · </span>}
+            {display.fullName}
+          </span>
+          <div style={{ flex: 1 }} />
+          {expandButton}
+          {nextButton}
+        </div>
+        <div style={{ height: 2, background: "#1b2233", borderRadius: 2, overflow: "hidden", flexShrink: 0 }}>
+          <div ref={barRef} style={{ height: "100%", width: "0%", background: `${ACCENT}aa` }} />
+        </div>
+      </Panel>
+    );
+  }
+
+  // ── the full card ───────────────────────────────────────────────────────
+  return (
+    <Panel
+      data-ggd-valhalla={current}
+      ref={rootRef}
+      style={{
+        border: `1px solid ${ACCENT}55`,
+        background: `linear-gradient(180deg, rgba(111,143,224,0.10) 0%, ${PANEL_BG} 55%)`,
+        gap: 8,
+        flexShrink: 0,
+      }}
+      onMouseEnter={() => setEngaged(true)}
+      onMouseLeave={() => setEngaged(false)}
+    >
+      {header}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: layout.stacked ? "column" : "row",
+          gap: 12,
+          minWidth: 0,
+        }}
+      >
+        <div style={{ flex: layout.stacked ? "0 0 auto" : "0 0 240px", minWidth: 0 }}>
+          <ValhallaStage
+            championId={current}
+            height={stageHeight}
+            paused={hidden || !onScreen}
+          />
+        </div>
+        <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: 6 }}>
+          {identity}
+          {/* TWO scroll regions, not one. Sharing a single scroller looked
+              tidier but meant a champion with a six-line 故事 pushed 技能介紹
+              entirely below the fold — the player would have had to scroll to
+              discover the showcase even HAS a kit, which is half of what the
+              owner asked for. The description gets a small fixed budget with
+              its own scrollbar; the kit always starts on screen. */}
+          <div
+            data-ggd-valhalla-desc=""
+            onScroll={() => setEngaged(true)}
+            style={{
+              maxHeight: descHeight,
+              overflowY: "auto",
+              overflowX: "hidden",
+              paddingRight: 4,
+              fontSize: 11.5,
+              lineHeight: 1.6,
+              color: "#c8d0e0",
+              whiteSpace: "pre-wrap",
+              flexShrink: 0,
+            }}
+          >
+            {blurb || "（此英雄在原地圖沒有描述文字）"}
+          </div>
+          <div
+            data-ggd-valhalla-body=""
+            onScroll={() => setEngaged(true)}
+            onPointerLeave={() => setEngaged(false)}
+            style={{
+              maxHeight: Math.max(64, layout.bodyMaxHeight - descHeight),
+              overflowY: "auto",
+              overflowX: "hidden",
+              paddingRight: 4,
+              borderTop: "1px solid #1b2233",
+            }}
+          >
+            {rows.length === 0 ? (
+              <div style={{ fontSize: 11, color: TEXT_DIM }}>此英雄沒有技能資料</div>
+            ) : (
+              rows.map((r) => <SkillRowView key={`${r.slot}-${r.rawName}`} row={r} env={env} />)
+            )}
+          </div>
+        </div>
+      </div>
+      <div style={{ height: 2, background: "#1b2233", borderRadius: 2, overflow: "hidden" }}>
+        <div ref={barRef} style={{ height: "100%", width: "0%", background: `${ACCENT}aa` }} />
+      </div>
+    </Panel>
+  );
+}

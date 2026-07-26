@@ -1,5 +1,5 @@
 /** Small shared building blocks for the platform screens (theme-consistent). */
-import { useEffect, useRef, useState } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 import { PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, GOLD } from "../theme";
 import { buttonSfx } from "../buttonSfx";
 import type { StoreCurrency } from "./currency";
@@ -9,13 +9,37 @@ export const ACCENT_BG = "#2c3f6b";
 export const DANGER = "#e5483f";
 export const OK = "#47cc6a";
 
-export function Panel(props: {
+export interface PanelProps {
   title?: string;
   style?: React.CSSProperties;
   children: React.ReactNode;
-}): React.JSX.Element {
+  /**
+   * Pointer hooks (task #258): the lobby 英靈殿 defers its 60-second rotation
+   * while the player has the pointer on the card. Optional, so every existing
+   * Panel is byte-identical in behaviour.
+   */
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
+  /** `data-*` hooks for screenshot probes / e2e selectors. */
+  [dataAttr: `data-${string}`]: unknown;
+}
+
+/**
+ * forwardRef so a caller can observe the panel itself (the showcase attaches an
+ * IntersectionObserver to stop its WebGL context while scrolled off-screen).
+ */
+export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
+  { title, style, children, onMouseEnter, onMouseLeave, ...rest },
+  ref,
+): React.JSX.Element {
+  const dataProps: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(rest)) if (k.startsWith("data-")) dataProps[k] = v;
   return (
     <div
+      ref={ref}
+      {...dataProps}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
       style={{
         background: PANEL_BG,
         border: PANEL_BORDER,
@@ -25,10 +49,10 @@ export function Panel(props: {
         display: "flex",
         flexDirection: "column",
         minHeight: 0,
-        ...props.style,
+        ...style,
       }}
     >
-      {props.title && (
+      {title && (
         <div
           style={{
             fontSize: 12,
@@ -39,13 +63,13 @@ export function Panel(props: {
             marginBottom: 10,
           }}
         >
-          {props.title}
+          {title}
         </div>
       )}
-      {props.children}
+      {children}
     </div>
   );
-}
+});
 
 export function Btn(props: {
   onClick?: () => void;

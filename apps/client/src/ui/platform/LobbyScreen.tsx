@@ -19,6 +19,7 @@ import { LeaderboardPanel } from "./LeaderboardPanel";
 import { RoomListPanel } from "./RoomListPanel";
 import { RoomView } from "./RoomView";
 import { StoreScreen } from "./StoreScreen";
+import { ValhallaPanel } from "./ValhallaPanel";
 import { openCodex } from "../codex/CodexRoute";
 import { topRightClear, topRightReserve } from "../chromeReserve";
 import { Btn, MCoin, Crystal, Panel, CodeBox, ACCENT, OK, DANGER } from "./widgets";
@@ -474,6 +475,13 @@ export function LobbyScreen(): React.JSX.Element {
             <ReferralPanel />
           </div>
           <div className="ggd-lobby-col" style={{ flex: 1, display: "flex", flexDirection: "column", gap: 12, minWidth: 0 }}>
+            {/* 英靈殿 (#258) — owner: 「大廳中央上面 (單人vsBot 之上)」. It is an
+                ordinary Panel in the column's flow, so it inherits the gap and
+                claims no persistent chrome (#107); it collapses to one line
+                under 520px of viewport height so it can never push 一鍵開打
+                off a phone in landscape (#151/#247). Hidden inside a room,
+                where the column belongs to the room view. */}
+            {!room && <ValhallaPanel />}
             {!room && <BotMatchStrip mapId={offlineMap} onMapId={setOfflineMap} />}
             {room ? <RoomView /> : <RoomListPanel />}
           </div>
