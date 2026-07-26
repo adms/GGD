@@ -133,6 +133,7 @@ import { SpatialSfxQueue } from "./audio/SpatialSfxQueue";
 import type { SfxRelation, SpatialListener } from "./audio/spatial";
 import { FootstepCadence } from "./audio/footsteps";
 import { RemoteFootsteps, type FootstepSample } from "./audio/remoteFootsteps";
+import { beatPerformance } from "./beat";
 import { effectiveQuality, onQualityChange } from "./render/RenderConfig";
 import {
   heavyPostFxEnabled,
@@ -1184,6 +1185,13 @@ export class GameApp {
             ? { cx: center.x, cz: center.z, maxDistance: drawDist }
             : undefined,
       });
+
+      // 4·五 「四拍令咒」 (#257). AFTER sync, deliberately: the dance is an
+      // OFFSET added on top of the authoritative pose ChampionView just wrote,
+      // which is what stops it accumulating or dragging the body off its
+      // hitbox. No-ops entirely until the #252 kit calls beatPerformance
+      // .beatStack()/.empowered() — see apps/client/src/beat/beatPerformance.ts.
+      beatPerformance.update(nowMs, (id) => this.views.getChampionView(id)?.root ?? null);
 
       // 4a) REMOTE FOOTSTEPS. Eleven of the twelve bodies in a fight are silent
       // today: the sim deliberately emits no per-tick footstep event, so the cue
