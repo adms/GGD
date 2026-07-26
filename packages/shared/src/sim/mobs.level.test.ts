@@ -292,10 +292,24 @@ describe("#217 (a) the model key is a live knob", () => {
     expect(mobRulesFromConfig(cfg, DT, 3).modelKey).toBe("champ.sela");
   });
 
-  it("the shipped arena-rules doc points the mob at the zombie model, not the knight", () => {
+  it("the shipped arena-rules doc points the mob at its OWN smaller zombie body", () => {
     cover("mob-217-arena-rules-model");
     const raw = ARENA_RULES;
-    expect(raw.mobWaves.mob.modelKey).toBe("champ.godie-zombiex");
+    // Was `champ.godie-zombiex` — the hero's own mesh — until the owner played it
+    // (2026-07-26): 「肉鴿殭屍…縮小到適合尺寸…不然現在根本玩不了」.
+    //
+    // Measured, not guessed: every generated voxel body's glb is 1.800 u tall and
+    // the hero normalisation lands every champion at 1.800 u too, so a trash mob
+    // was standing exactly as tall as a hero — which is what "too big" actually
+    // meant. `champ.mob.zombie` is the same blocky-undead body at scale 0.68
+    // (1.224 u, ~68% of a hero), so the wave READS as a wave.
+    //
+    // It is a SEPARATE doc on purpose: `mob.modelKey` is an independent knob
+    // (the test above proves it reaches the rules), so shrinking the mob leaves
+    // the HERO 喪標麥可 — the one #236 is filling out to five slots — untouched.
+    expect(raw.mobWaves.mob.modelKey).toBe("champ.mob.zombie");
+    // …and it must NOT be the hero's own doc, or the two sizes are welded again.
+    expect(raw.mobWaves.mob.modelKey).not.toBe(MOB_MODEL_KEY);
     expect(raw.mobWaves.mob.championId).toBe(MOB_CHAMPION_ID);
     expect(raw.mobWaves.mob.baseLevel).toBe(3);
     expect(raw.mobWaves.mob.levelPerRound).toBe(1);
