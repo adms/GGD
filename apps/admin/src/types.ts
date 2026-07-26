@@ -47,6 +47,31 @@ export interface AccountRow {
    * re-implements the grandfathering rule ("" or "approved") and drifts from it.
    */
   approved?: boolean;
+
+  /**
+   * #246 上線燈號 — the last moment this account did ANYTHING on an
+   * authenticated session (any REST call, the lobby socket opening, or one of
+   * its heartbeats). ISO-8601.
+   *
+   * OPTIONAL for the same reason `status` is: an ABSENT field is a real,
+   * distinct answer. The platform omits it entirely for an account that has
+   * never been seen, and a server build that predates #246 omits it for
+   * everyone — both correctly render as「沒有記錄」, so the console degrades to
+   * "no light" instead of confidently drawing a dark one against a timestamp it
+   * invented. ./players.ts `seenState` is where that is decided once.
+   */
+  lastSeenAt?: string;
+  /**
+   * #246 second tooltip line — the LIVE lobby-socket state straight out of
+   * Redis: "in-match" | "in-lobby" | "online" | "offline".
+   *
+   * Absent means the presence source could not be read (Redis restarted, or an
+   * older server build). That is deliberately NOT the same as "offline": the
+   * page then shows the last-seen line alone rather than claiming the player is
+   * disconnected. Fail-open, never an error banner — this is a decoration on a
+   * row, and it must never keep the row from rendering.
+   */
+  presence?: string;
 }
 
 export interface AccountSearch {

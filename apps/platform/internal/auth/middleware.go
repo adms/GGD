@@ -95,6 +95,13 @@ func (s *Service) Middleware(next http.Handler) http.Handler {
 			return
 		}
 		ctx := WithIdentity(r.Context(), Identity{AccountID: claims.Subject, Username: claims.Username})
+		// #246 liveness stamp. This is the natural home for it: the owner's rule
+		// is that ANY authenticated session activity counts, and this is the one
+		// place every authenticated REST call passes through. Throttled to one
+		// durable write per account per minute and silent on every failure — see
+		// TouchLastSeen. (The lobby WS authenticates itself and never reaches
+		// here, so it stamps separately; see lobby.Sessions.handleWS.)
+		s.TouchLastSeen(ctx, claims.Subject)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }

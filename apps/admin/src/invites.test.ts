@@ -1,10 +1,12 @@
 import { describe, expect, it } from "vitest";
+import { cover } from "@ggd/shared/testkit/cover";
 
 import {
   FALLBACK_LIMITS,
   canRevoke,
   defaultRegisterUrl,
   expiryText,
+  filterBySource,
   inviteMessage,
   normalizeInvitePayload,
   parseMint,
@@ -95,7 +97,51 @@ describe("status presentation", () => {
         row({ effectiveStatus: "revoked" }),
         row({ effectiveStatus: "expired" }),
       ]),
-    ).toEqual({ active: 1, redeemed: 1, dead: 2 });
+    ).toEqual({ active: 1, redeemed: 1, dead: 2, admin: 4, referral: 0 });
+  });
+
+  // adminui-invites-source: the #246 來源 split. The list has been a MIXED feed
+  // since #203 — one auto-minted personal referral code per registration,
+  // interleaved newest-first with the operator's own — so the console has to be
+  // able to tell them apart and say how many of each there are.
+  it("counts admin vs referral rows so the header can state what is filtered", () => {
+    cover("adminui-invites-source");
+    const s = summarize([row(), row({ source: "referral" }), row({ source: "referral" })]);
+    expect(s.admin).toBe(1);
+    expect(s.referral).toBe(2);
+    // the pre-existing three are untouched — this ADDED fields, never replaced any
+    expect(s.active).toBe(3);
+  });
+});
+
+describe("filterBySource (adminui-invites-source)", () => {
+  const rows = [
+    row({ code: "GGD-AAAA-1111", source: "admin" }),
+    row({ code: "GGD-BBBB-2222", source: "referral" }),
+    // an older server build that predates the source tag
+    row({ code: "GGD-CCCC-3333", source: "" }),
+  ];
+
+  it("empty filter is a no-op — nothing is ever removed, only hidden from a view", () => {
+    cover("adminui-invites-source");
+    expect(filterBySource(rows, "")).toHaveLength(3);
+  });
+
+  it("referral matches only the tagged rows", () => {
+    cover("adminui-invites-source");
+    expect(filterBySource(rows, "referral").map((r) => r.code)).toEqual(["GGD-BBBB-2222"]);
+  });
+
+  it("an UNTAGGED row counts as admin — the direction that cannot hide the owner's own codes", () => {
+    cover("adminui-invites-source");
+    expect(filterBySource(rows, "admin").map((r) => r.code)).toEqual(["GGD-AAAA-1111", "GGD-CCCC-3333"]);
+  });
+
+  it("every row is reachable: the two source views partition the list exactly", () => {
+    cover("adminui-invites-source");
+    const admin = filterBySource(rows, "admin");
+    const referral = filterBySource(rows, "referral");
+    expect(admin.length + referral.length).toBe(rows.length);
   });
 });
 

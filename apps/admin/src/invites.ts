@@ -198,17 +198,69 @@ export function parseMint(input: MintInput, limits: InviteLimits): MintParse {
   return { ok: true, value: { note, count: input.count, ttlDays: input.ttlDays } };
 }
 
-/** Headline counts for the panel header. */
-export function summarize(rows: InviteRow[]): { active: number; redeemed: number; dead: number } {
+// ---- 來源 (#246) --------------------------------------------------------------
+//
+// WHY THIS EXISTS. Since #203 every registration auto-mints that account's own
+// personal referral code, and List() returns those alongside the operator's own
+// — newest first, interleaved, with no grouping. So the table the owner opens to
+// find「我發給媽媽的那組」 grows by one row per signup that he never created and
+// does not manage, and on a 35-account deploy those are the MAJORITY of rows.
+// That is the real reason the page reads as cramped; CSS alone could not fix it.
+//
+// The fix is a VIEW filter, not a content cut (「不要減少資訊」): every row is
+// still one tap away, the header counts both kinds, and the filtered-out count
+// is stated out loud rather than silently dropped.
+
+/** The 來源 segment control. Order matters — this is the tab order. */
+export const SOURCE_FILTERS: ReadonlyArray<{ value: string; label: string }> = [
+  { value: "admin", label: "後台發出" },
+  { value: "referral", label: "玩家推薦" },
+  { value: "", label: "全部" },
+];
+
+/**
+ * Filter by source. An empty filter means everything.
+ *
+ * A row whose `source` is missing counts as `admin`, deliberately: only the
+ * referral path is explicitly tagged (`srcOf` on the platform derives it from a
+ * non-empty referrerId), so an untagged row from an older server build is an
+ * operator-minted code — and defaulting the unknown case INTO the owner's own
+ * view is the direction that cannot hide his codes from him.
+ */
+export function filterBySource(rows: InviteRow[], source: string): InviteRow[] {
+  if (source === "") return rows;
+  if (source === "referral") return rows.filter((r) => r.source === "referral");
+  return rows.filter((r) => r.source !== "referral");
+}
+
+/**
+ * Headline counts for the panel header.
+ *
+ * `admin` / `referral` were ADDED in #246 rather than replacing anything, so the
+ * header can state how much of the list is referral traffic — which is the one
+ * number that tells the owner whether the filter is hiding anything he cares
+ * about. Adding information, not removing it.
+ */
+export function summarize(rows: InviteRow[]): {
+  active: number;
+  redeemed: number;
+  dead: number;
+  admin: number;
+  referral: number;
+} {
   let active = 0;
   let redeemed = 0;
   let dead = 0;
+  let admin = 0;
+  let referral = 0;
   for (const r of rows) {
     if (r.effectiveStatus === "active") active++;
     else if (r.effectiveStatus === "redeemed") redeemed++;
     else dead++;
+    if (r.source === "referral") referral++;
+    else admin++;
   }
-  return { active, redeemed, dead };
+  return { active, redeemed, dead, admin, referral };
 }
 
 /**

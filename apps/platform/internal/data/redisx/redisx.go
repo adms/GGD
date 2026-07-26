@@ -49,6 +49,14 @@ func KeyMatchDone(mid string) string            { return "match:result:done:" + 
 func KeyMatchPending(mid string) string         { return "match:pending:" + mid }
 func KeyMatchesPending() string                 { return "matches:pending" }
 
+// KeySeenGate is the #246 last-seen COALESCING GATE: a SetNX marker with a
+// one-minute TTL that lets exactly one authenticated request per account per
+// window perform the durable LastSeenAt write.
+//
+// It is a throttle, not state. Losing it (a Redis flush) costs at most one
+// extra account-file write; the truth stays in data/accounts/<id>.json.
+func KeySeenGate(aid string) string { return "seen:gate:" + aid }
+
 // KeyBootstrapOwner is the short-lived MUTEX that serialises simultaneous
 // first-owner registrations: a SETNX with a TTL, released as soon as the
 // registration finishes either way.

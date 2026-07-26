@@ -95,6 +95,11 @@ func (s *Sessions) handleWS(w http.ResponseWriter, r *http.Request) {
 	s.hub.register(c)
 	ctx := r.Context()
 	_ = s.pres.Set(ctx, ident.AccountID, presence.StateInLobby)
+	// #246 liveness stamp. This handler is NOT behind auth.Middleware — it does
+	// its own token verification above — so without this call a player sitting
+	// in a match with the socket open and no REST polling would silently go dark
+	// on the admin console's online light. Same one-write-per-minute gate.
+	s.authn.TouchLastSeen(ctx, ident.AccountID)
 
 	// Writer.
 	go func() {
@@ -125,6 +130,10 @@ func (s *Sessions) handleWS(w http.ResponseWriter, r *http.Request) {
 		switch msg.Type {
 		case "heartbeat":
 			_ = s.pres.Heartbeat(ctx, ident.AccountID)
+			// The heartbeat IS session activity (#246), and for a player deep in
+			// a match it may be the only traffic there is. Same one-per-minute
+			// gate, so a 20s heartbeat cadence still costs one write a minute.
+			s.authn.TouchLastSeen(ctx, ident.AccountID)
 			c.send([]byte(`{"type":"heartbeat_ack"}`))
 		case "chat":
 			if err := s.SendChat(ctx, ident, msg.RoomID, msg.Text); err != nil {

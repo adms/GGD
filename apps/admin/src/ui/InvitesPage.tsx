@@ -19,10 +19,12 @@ import { getInvites, mintInvites, revokeInvite } from "../api";
 import {
   COUNT_CHOICES,
   FALLBACK_LIMITS,
+  SOURCE_FILTERS,
   TTL_CHOICES,
   canRevoke,
   defaultRegisterUrl,
   expiryText,
+  filterBySource,
   inviteMessage,
   parseMint,
   shortTime,
@@ -72,6 +74,15 @@ export function InvitesPage(): React.JSX.Element {
   const [apiErr, setApiErr] = useState<string | null>(null);
   const [flash, setFlash] = useState<string | null>(null);
 
+  /**
+   * 來源 filter (#246). Defaults to 後台發出 — the codes the owner MINTED are what
+   * he opens this page to find, and one auto-minted personal referral code per
+   * registration otherwise interleaves with them newest-first until his own are
+   * buried. Nothing is removed: 全部 is one tap away and the header states how
+   * many rows each view holds.
+   */
+  const [source, setSource] = useState("admin");
+
   const [note, setNote] = useState("");
   const [count, setCount] = useState(1);
   const [ttlDays, setTtlDays] = useState(FALLBACK_LIMITS.defaultTtlDays);
@@ -95,6 +106,9 @@ export function InvitesPage(): React.JSX.Element {
   }, []);
 
   const stats = useMemo(() => summarize(rows), [rows]);
+  const shown = useMemo(() => filterBySource(rows, source), [rows, source]);
+  const shownStats = useMemo(() => summarize(shown), [shown]);
+  const hidden = rows.length - shown.length;
   const parsed = useMemo(() => parseMint({ note, count, ttlDays }, limits), [note, count, ttlDays, limits]);
 
   const onMint = async (): Promise<void> => {
@@ -106,6 +120,9 @@ export function InvitesPage(): React.JSX.Element {
       setRows(p.invites);
       setLimits(p.limits);
       setMinted(p.minted);
+      // A freshly minted code is an operator code; never leave the table on a
+      // view that would hide what the owner just made.
+      setSource("admin");
       setFlash(`✓ 已產生 ${p.minted.length} 組邀請碼（備註：${parsed.value.note}）`);
       setNote("");
     } catch (err) {
@@ -143,6 +160,9 @@ export function InvitesPage(): React.JSX.Element {
         <div style={{ fontSize: 12, color: TEXT_DIM, marginTop: 4, lineHeight: 1.8 }}>
           這是私人測試版的<b style={{ color: TEXT_MAIN }}>唯一入口</b>：沒有邀請碼就<b style={{ color: TEXT_MAIN }}>註冊不了</b>
           （檢查在伺服器端，不是網頁上的必填欄位）。一組邀請碼<b style={{ color: TEXT_MAIN }}>只能用一次</b>，用掉之後這裡會顯示是誰用的、什麼時候用的。
+          <br />
+          這裡有<b style={{ color: TEXT_MAIN }}>兩種</b>邀請碼：你在下面產生的「後台發出」，以及每個人註冊時系統自動給他一組的「玩家推薦」。
+          下面的表格預設只顯示你自己發的，按<b style={{ color: TEXT_MAIN }}>來源</b>可以切換。
         </div>
       </div>
 
@@ -261,16 +281,32 @@ export function InvitesPage(): React.JSX.Element {
         </Panel>
       )}
 
+      {/*
+        THE TABLE (#246 layout pass).
+
+        The owner said 排版有點擠 and 不要減少資訊, and those are not in tension
+        here — the crowding came from two things, both fixed without deleting a
+        single value:
+
+        1. ROW COUNT. Since #203 the list is a MIXED feed: one auto-minted
+           personal referral code per registration, interleaved newest-first with
+           the operator's own. The 來源 segment control below splits them; every
+           row stays one tap away and the header counts both.
+        2. COLUMN COUNT. Eight columns at minWidth 720 inside a 940 container.
+           Now six: 備註 absorbs the 來源 badge and 狀態 absorbs 到期, both of
+           which were one-word cells that each cost a full column. Every value
+           that was rendered before is still rendered.
+      */}
       <Panel
         title="全部邀請碼 · All codes"
         right={
           loading ? (
             <span style={{ fontSize: 11, color: TEXT_DIM }}>載入中…</span>
           ) : (
-            <div style={{ display: "flex", gap: 6 }}>
-              <Badge color={OK}>未使用 {stats.active}</Badge>
-              <Badge color={TEXT_DIM}>已使用 {stats.redeemed}</Badge>
-              {stats.dead > 0 && <Badge color={WARN}>失效 {stats.dead}</Badge>}
+            <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+              <Badge color={OK}>未使用 {shownStats.active}</Badge>
+              <Badge color={TEXT_DIM}>已使用 {shownStats.redeemed}</Badge>
+              {shownStats.dead > 0 && <Badge color={WARN}>失效 {shownStats.dead}</Badge>}
             </div>
           )
         }
@@ -280,90 +316,141 @@ export function InvitesPage(): React.JSX.Element {
             還沒有任何邀請碼。上面填個備註（例如「媽媽」）按下產生就可以了。
           </div>
         ) : (
-          <div style={{ overflowX: "auto" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12.5, minWidth: 720 }}>
-              <thead>
-                <tr style={{ color: TEXT_DIM, textAlign: "left" }}>
-                  <Th>邀請碼</Th>
-                  <Th>備註</Th>
-                  <Th>由誰產生</Th>
-                  <Th>狀態</Th>
-                  <Th>使用者</Th>
-                  <Th>到期</Th>
-                  <Th>建立</Th>
-                  <Th> </Th>
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((r) => {
-                  const label = statusLabel(r.effectiveStatus);
-                  return (
-                    <tr key={r.code} style={{ borderTop: PANEL_BORDER }}>
-                      <Td>
-                        <code
-                          style={{
-                            fontSize: 13.5,
-                            fontWeight: 700,
-                            letterSpacing: 1,
-                            color: r.effectiveStatus === "active" ? ACCENT : TEXT_DIM,
-                            userSelect: "all",
-                          }}
-                        >
-                          {r.code}
-                        </code>
+          <>
+            {/* 來源 filter. Counts live on the chips so the owner can see what
+                each view holds BEFORE switching to it — the filter can never
+                quietly swallow rows. */}
+            <div style={{ display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center", marginBottom: 10 }}>
+              <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, color: ACCENT, marginRight: 2 }}>
+                來源
+              </span>
+              {SOURCE_FILTERS.map((f) => (
+                <Btn
+                  key={f.value || "all"}
+                  small
+                  kind={f.value === source ? "primary" : "ghost"}
+                  onClick={() => setSource(f.value)}
+                >
+                  {f.label} {f.value === "admin" ? stats.admin : f.value === "referral" ? stats.referral : rows.length}
+                </Btn>
+              ))}
+            </div>
+            {hidden > 0 && (
+              <div style={{ fontSize: 11, color: TEXT_DIM, marginBottom: 8, lineHeight: 1.7 }}>
+                另有 {hidden} 組沒有顯示（這是檢視篩選，沒有刪掉任何東西——按上面的「全部」就看得到）。
+                {source === "admin" && "「玩家推薦」是每個人註冊時系統自動給他的個人推薦碼，不是你發的。"}
+              </div>
+            )}
+
+            <div style={{ overflowX: "auto" }}>
+              <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12.5, minWidth: 560 }}>
+                <thead>
+                  <tr style={{ color: TEXT_DIM, textAlign: "left" }}>
+                    <Th>邀請碼</Th>
+                    <Th>備註 · 來源</Th>
+                    <Th>狀態 · 到期</Th>
+                    <Th>使用者</Th>
+                    <Th style={{ textAlign: "right" }}>建立</Th>
+                    <Th> </Th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {shown.length === 0 && (
+                    <tr style={{ borderTop: PANEL_BORDER }}>
+                      <Td style={{ color: TEXT_DIM }}>
+                        這個來源目前沒有邀請碼。
                       </Td>
-                      <Td>{r.note || "—"}</Td>
-                      <Td>
-                        {r.source === "referral" ? (
-                          <span>
-                            <Badge color={ACCENT}>玩家推薦</Badge>
-                            {r.note.includes("·") ? (
-                              <>
-                                <br />
-                                <span style={{ fontSize: 11, color: TEXT_DIM }}>
-                                  {r.note.split("·").pop()?.trim()}
-                                </span>
-                              </>
-                            ) : null}
-                          </span>
-                        ) : (
-                          <span style={{ fontSize: 12, color: TEXT_DIM }}>後台</span>
-                        )}
-                      </Td>
-                      <Td>
-                        <Badge color={TONE[label.tone]}>{label.text}</Badge>
-                      </Td>
-                      <Td>
-                        {r.redeemedUsername ? (
-                          <span>
-                            <b style={{ color: TEXT_MAIN }}>{r.redeemedUsername}</b>
-                            <br />
-                            <span style={{ fontSize: 11, color: TEXT_DIM }}>{shortTime(r.redeemedAt)}</span>
-                          </span>
-                        ) : (
-                          "—"
-                        )}
-                      </Td>
-                      <Td>{r.effectiveStatus === "redeemed" ? "—" : expiryText(r.expiresAt)}</Td>
-                      <Td style={{ fontSize: 11, color: TEXT_DIM }}>{shortTime(r.createdAt)}</Td>
-                      <Td>
-                        <div style={{ display: "flex", gap: 6, justifyContent: "flex-end" }}>
-                          <Btn small onClick={() => void doCopy(r.code, "邀請碼")}>
-                            複製
-                          </Btn>
-                          {canRevoke(r) && (
-                            <Btn small kind="danger" disabled={busy} onClick={() => void onRevoke(r)}>
-                              撤銷
-                            </Btn>
-                          )}
-                        </div>
-                      </Td>
+                      <Td> </Td>
+                      <Td> </Td>
+                      <Td> </Td>
+                      <Td> </Td>
+                      <Td> </Td>
                     </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+                  )}
+                  {shown.map((r) => {
+                    const label = statusLabel(r.effectiveStatus);
+                    const referral = r.source === "referral";
+                    // A referral code's 備註 is "個人推薦碼 · <username>" — the tail
+                    // is the player it belongs to, and it is the only thing that
+                    // makes one of these rows identifiable.
+                    const owner = referral && r.note.includes("·") ? r.note.split("·").pop()?.trim() : "";
+                    return (
+                      <tr key={r.code} style={{ borderTop: PANEL_BORDER }}>
+                        <Td>
+                          {/* NOT truncated. GGD-XXXX-XXXX is 13 characters and it
+                              is the one value this page exists to convey — the
+                              owner reads it aloud on the phone. */}
+                          <code
+                            style={{
+                              fontSize: 13.5,
+                              fontWeight: 700,
+                              letterSpacing: 1,
+                              color: r.effectiveStatus === "active" ? ACCENT : TEXT_DIM,
+                              userSelect: "all",
+                              whiteSpace: "nowrap",
+                            }}
+                          >
+                            {r.code}
+                          </code>
+                        </Td>
+                        <Td>
+                          {referral ? (
+                            <span>
+                              <Badge color={ACCENT}>玩家推薦</Badge>
+                              {owner ? (
+                                <span style={{ marginLeft: 6, color: TEXT_MAIN }}>{owner}</span>
+                              ) : null}
+                            </span>
+                          ) : (
+                            <span>
+                              <span style={{ color: TEXT_MAIN }}>{r.note || "—"}</span>
+                              <br />
+                              <span style={{ fontSize: 11, color: TEXT_DIM }}>後台發出</span>
+                            </span>
+                          )}
+                        </Td>
+                        <Td>
+                          <Badge color={TONE[label.tone]}>{label.text}</Badge>
+                          {r.effectiveStatus !== "redeemed" && (
+                            <>
+                              <br />
+                              <span style={{ fontSize: 11, color: TEXT_DIM }}>{expiryText(r.expiresAt)}</span>
+                            </>
+                          )}
+                        </Td>
+                        <Td>
+                          {r.redeemedUsername ? (
+                            <span>
+                              <b style={{ color: TEXT_MAIN }}>{r.redeemedUsername}</b>
+                              <br />
+                              <span style={{ fontSize: 11, color: TEXT_DIM }}>{shortTime(r.redeemedAt)}</span>
+                            </span>
+                          ) : (
+                            "—"
+                          )}
+                        </Td>
+                        <Td style={{ fontSize: 11, color: TEXT_DIM, textAlign: "right", whiteSpace: "nowrap" }}>
+                          {shortTime(r.createdAt)}
+                        </Td>
+                        <Td>
+                          <div style={{ display: "flex", gap: 6, justifyContent: "flex-end" }}>
+                            <Btn small onClick={() => void doCopy(r.code, "邀請碼")}>
+                              複製
+                            </Btn>
+                            {canRevoke(r) && (
+                              <Btn small kind="danger" disabled={busy} onClick={() => void onRevoke(r)}>
+                                撤銷
+                              </Btn>
+                            )}
+                          </div>
+                        </Td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
       </Panel>
 
@@ -423,8 +510,10 @@ function Chips<T extends number>(props: {
   );
 }
 
-function Th(props: { children: React.ReactNode }): React.JSX.Element {
-  return <th style={{ padding: "6px 8px", fontWeight: 700, whiteSpace: "nowrap" }}>{props.children}</th>;
+function Th(props: { children: React.ReactNode; style?: React.CSSProperties }): React.JSX.Element {
+  return (
+    <th style={{ padding: "6px 8px", fontWeight: 700, whiteSpace: "nowrap", ...props.style }}>{props.children}</th>
+  );
 }
 
 function Td(props: { children: React.ReactNode; style?: React.CSSProperties }): React.JSX.Element {

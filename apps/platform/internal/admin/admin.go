@@ -256,6 +256,35 @@ type AccountRow struct {
 	// so the console never has to re-implement the grandfathering rule (`"" or
 	// "approved"`) and drift from the server's answer.
 	Approved bool `json:"approved"`
+
+	// LastSeenAt is the #246 online light: the last moment this account did
+	// ANYTHING on an authenticated session (any REST call through
+	// auth.Middleware, the lobby WS connect, or a WS heartbeat).
+	//
+	// A POINTER, and omitted when nil, because "never seen" has to arrive at the
+	// console as an ABSENT field. A plain time.Time would serialise the zero
+	// value as "0001-01-01T00:00:00Z" — `omitempty` does nothing for a struct —
+	// and the console would have to know that one magic string means never,
+	// which is exactly the kind of shared secret that drifts.
+	//
+	// It is ±60s accurate by design (the write is coalesced to one per account
+	// per minute) and it is deliberately NOT filtered by "importance": a browser
+	// tab left open polling in the background keeps it fresh. That is the
+	// owner's explicit choice, and the console's tooltip says so out loud rather
+	// than letting the light imply more than it means.
+	LastSeenAt *time.Time `json:"lastSeenAt,omitempty"`
+
+	// Presence is the LIVE lobby-socket state read straight out of Redis at
+	// render time: "in-match", "in-lobby", "online", or "offline". Empty means
+	// the presence source could not be read (Redis down) — the console then
+	// renders the last-seen line alone rather than an error, which is why this
+	// is omitempty and why "offline" and "unknown" are different values here.
+	//
+	// It is a strictly NARROWER claim than LastSeenAt, not a stronger one: the
+	// lobby socket opens the moment a player reaches the lobby menu, so
+	// "in-lobby" means connected, NOT playing — which is exactly why the console
+	// renders 對戰中 / 大廳中 separately instead of one ambiguous 「連線中」.
+	Presence string `json:"presence,omitempty"`
 }
 
 func rowOf(a account.Account) AccountRow {
@@ -267,7 +296,42 @@ func rowOf(a account.Account) AccountRow {
 		ID: a.ID, Username: a.Username, Email: a.Email, MMR: a.MMR,
 		Games: a.Games, Wins: a.Wins, MCoin: a.MCoin, Banned: a.Banned,
 		BanReason: a.BanReason, Roles: roles, CreatedAt: a.CreatedAt,
-		Status: a.Status, Approved: a.IsApproved(),
+		Status: a.Status, Approved: a.IsApproved(), LastSeenAt: seenPtr(a.LastSeenAt),
+	}
+}
+
+// seenPtr turns the durable "never seen" sentinel (the zero time) into a nil
+// pointer, so the field is genuinely absent on the wire instead of arriving as
+// "0001-01-01T00:00:00Z" for every account that has not come back yet.
+func seenPtr(t time.Time) *time.Time {
+	if t.IsZero() {
+		return nil
+	}
+	return &t
+}
+
+// withPresence fills the LIVE presence field on a page of rows from Redis
+// (task #246, second tooltip line). Best-effort by contract: the account files
+// are the truth this page exists to show, and Redis is a rebuildable cache that
+// a restart legitimately empties, so a read failure leaves Presence unset and
+// the console falls back to the last-seen line alone. It must never fail the
+// search, and it never blocks a row.
+//
+// Cost is one GET per row of the CURRENT PAGE (pageSize 20), not per account in
+// the store — the same order of work the row already cost to read off disk.
+func (s *Service) withPresence(ctx context.Context, rows []AccountRow) {
+	if s.rdb == nil {
+		return
+	}
+	for i := range rows {
+		st, err := s.rdb.GetPresence(ctx, rows[i].ID)
+		if err != nil {
+			// One unreadable key almost certainly means the whole hot layer is
+			// down; stop asking rather than paying 20 timeouts for one page.
+			slog.Warn("admin: presence unavailable — the players page will show last-seen only", "err", err)
+			return
+		}
+		rows[i].Presence = st
 	}
 }
 
@@ -342,6 +406,7 @@ func (s *Service) searchAccounts(ctx context.Context, query, status string, olde
 	for _, a := range paginate(matched, page, pageSize) {
 		rows = append(rows, rowOf(a))
 	}
+	s.withPresence(ctx, rows)
 	return rows, total, nil
 }
 
@@ -359,7 +424,11 @@ func (s *Service) GetProfile(ctx context.Context, id string) (Profile, error) {
 	if doc, err := s.friends.Get(ctx, id); err == nil {
 		friendsCount = len(doc.Friends)
 	}
-	return Profile{Account: rowOf(a), UpdatedAt: a.UpdatedAt, Wallet: w, FriendsCount: friendsCount}, nil
+	// One extra Redis GET so the detail drawer agrees with the list's light
+	// instead of silently reading "unknown" for the account you just clicked.
+	rows := []AccountRow{rowOf(a)}
+	s.withPresence(ctx, rows)
+	return Profile{Account: rows[0], UpdatedAt: a.UpdatedAt, Wallet: w, FriendsCount: friendsCount}, nil
 }
 
 // ---- account mutations (all audited) ----------------------------------------

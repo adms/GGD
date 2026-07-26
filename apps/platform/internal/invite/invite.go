@@ -165,8 +165,16 @@ type Doc struct {
 	// admin-minted invite. A referral code is a normal single-use invite in
 	// every other respect (it burns the same way and satisfies the same gate) —
 	// the only added behaviour is that burning it fast-tracks this referrer from
-	// pending → approved. The admin console's List() hides these; they are the
-	// USER'S code, surfaced to that user, not an operator artefact.
+	// pending → approved.
+	//
+	// List() DOES return these — it always has, despite what this comment used
+	// to claim (fixed in #246). They are labelled instead of hidden: srcOf turns
+	// a non-empty ReferrerID into Source == SourceReferral, and the console's
+	// 來源 filter is what keeps them from burying the operator's own codes. One
+	// is minted per registration and never deleted, so on a 35-account deploy
+	// they are the majority of the table; hiding them would have meant an
+	// operator could not see who a code came from, which is precisely what the
+	// owner asked for.
 	ReferrerID string `json:"referrerId,omitempty"`
 
 	RedeemedBy       string    `json:"redeemedBy,omitempty"`

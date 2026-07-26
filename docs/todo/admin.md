@@ -241,3 +241,35 @@ page's remedy for "no provider" is a link to AI 生成設定.
 | admin-36 | A value is only "within budget" when a real limit came with the report — a missing limit or a missing measurement is `unknown`, never `ok`; per-screen limits beat report-wide ones and neither is invented | adminui-model-budget-limits | unit | done |
 | admin-37 | ICON 生成追蹤's numbers come out of #97's own `computeIconCoverage` over #72's own plan (dropped leaves the denominator, blocked stays in it, a declared-but-unfetchable icon is demoted), and tier counts are never invented without a plan | adminui-icon-tracking | unit | done |
 | admin-38 | The one thing the consolidated page owns: whether its feeds AGREE. Missing plan, stale plan, missing/drifted style spec, mismatched content digests, an unreachable platform vs a 404 platform (different fixes), an unscanned byte pass — each produces a note, and no note ever carries key material | adminui-icon-tracking-notes | unit | done |
+
+## 上線燈號 + 邀請碼排版 (#246)
+
+Two console changes the owner asked for on the same day, both additive.
+
+**上線燈號.** The Players table gains ONE column answering 「1小時內曾經有動作的
+玩家」. Two independent signals, deliberately not merged: `lastSeenAt` (the last
+authenticated session activity of any kind, stamped platform-side — see auth-43)
+and `presence` (the live lobby socket, read from Redis at render time). The
+second is the NARROWER claim, not the stronger one — the lobby socket opens the
+moment a player reaches the menu — so the tooltip renders 對戰中 / 大廳中 rather
+than one ambiguous 「目前連線中」. Presence is best-effort: an unreadable Redis
+leaves the field unset and the row shows the last-seen line alone.
+
+Two honesty requirements ride along. Background polling counts as activity (the
+owner's explicit choice), so a parked tab keeps someone lit — stated once in a
+legend under the table instead of on every row. And the table now refreshes
+itself every 30s with a visible 資料時間 stamp, because a liveness light frozen
+at page-load reads as authoritative while quietly ageing.
+
+**邀請碼排版.** The crowding had two causes and CSS was only one of them. Since
+#203 the list is a MIXED feed — one auto-minted personal referral code per
+registration, interleaved newest-first with the operator's own — so a 來源 filter
+(defaulting to 後台發出) does most of the work, with per-source counts on the
+chips and the hidden count spelled out. Then the columns: 8 → 6, by folding 來源
+into 備註 and 到期 into 狀態. Nothing was deleted and the code itself is never
+truncated — `GGD-XXXX-XXXX` is the one value the page exists to convey.
+
+| ID | Item | Test ID | Category | Status |
+| --- | --- | --- | --- | --- |
+| admin-42 | The online light answers 「1小時內有動作」 and nothing more: the hour threshold is inclusive at the boundary, a missing/unparseable stamp reads as never (not as offline), a live socket outranks the timestamp and names 對戰中 vs 大廳中 separately, and an ABSENT presence field says nothing about connectivity while the last-seen half still works | adminui-players-seen | unit | done |
+| admin-43 | The 邀請碼 來源 split is a VIEW filter, never a content cut: the two source views partition the list exactly, an untagged row from an older server counts as 後台 (the direction that cannot hide the owner's own codes), and `summarize` gained per-source counts without changing the three it already returned | adminui-invites-source | unit | done |
