@@ -13,6 +13,7 @@ import (
 	"github.com/ggd/platform/internal/combatenv"
 	"github.com/ggd/platform/internal/data/jsonstore"
 	"github.com/ggd/platform/internal/data/redisx"
+	"github.com/ggd/platform/pkg/testkit"
 )
 
 // nextInvalidation subscribes to chan:content BEFORE the write (pub/sub has no
@@ -43,7 +44,17 @@ func nextInvalidation(t *testing.T, mr *miniredis.Miniredis) func() redisx.Conte
 // TUNING 戰鬥系統 ANNOUNCES ITSELF. This is the case from the bug report: the
 // owner changes a multiplier in the console and the running shard keeps using
 // the old table. The write now publishes a kind + etag.
+//
+// THIS TEST NEEDS NO REDIS AND NEVER DID. It runs miniredis in-process
+// (`miniredis.RunT`), so a red here has only ever meant one thing: the platform
+// stopped publishing. It was red from 7dd31bf to #250 because the gosec sweep
+// deleted the publish out of combatenv's mirror, and the red was filed in
+// docs/todo/admin.md as an environment problem ("no Redis on this machine")
+// rather than as the product bug it was. Do not add a skip guard here — a skip
+// would have hidden a dead content bus for the whole of that window.
 func TestCombatEnvReplacePublishesInvalidation(t *testing.T) {
+	testkit.Cover(t, "combatenv-invalidate-guard")
+
 	store, err := jsonstore.New(t.TempDir())
 	require.NoError(t, err)
 	mr := miniredis.RunT(t)
