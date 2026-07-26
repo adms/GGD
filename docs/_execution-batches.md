@@ -53,18 +53,19 @@
 - **#230** VFX 真實引用普查：93% 技能用通用替身，106 支抽出的原作特效閒置
 - **#178** 圖示補完（602 張）
 
-### 批次 5 · 只有 owner 能做的一步（沒有它，程式碼再對也不會上線）
+### 批次 5 · ~~只有 owner 能做的一步~~ ✅ owner 已執行（2026-07-26）
 
-**賈修（`godie-hblm`）／揍敵客（`godie-efur`）目前在線上是關的。**
-兩位已進 `starter.go`，但不在線上的 operator 白名單，而 `ApplyStarterSet` 在白名單非空時不會重跑 ——
-所以程式碼只在「全新安裝」時才會開他們。開機日誌現在仍是 `whitelist enables 48 champions`。
+**賈修（`godie-hblm`）／揍敵客（`godie-efur`）—— owner 已在後台按下「套用起始名單」。**
 
-我試著自己補，讀到 `apps/platform/internal/auth/bootstrap.go:67`：**loopback 當管理員的機制刻意沒有啟用**，
-因為 platform 坐在反向代理後面、每個遠端請求進來都長得像 127.0.0.1。所以我沒有管理員權杖，也不該有。
-**這是設計在正常運作，不是缺陷。**
+原本的狀況：兩位已進 `starter.go`，但不在線上的 operator 白名單，而 `ApplyStarterSet`
+在白名單非空時不會重跑，所以程式碼只在「全新安裝」時才會開他們，開機日誌一直是
+`whitelist enables 48 champions`。我沒有管理員權杖也不該有
+（`apps/platform/internal/auth/bootstrap.go:67`：platform 坐在反向代理後面，
+每個遠端請求進來都長得像 127.0.0.1，所以 loopback 當管理員被刻意關掉了 —— 設計正常運作）。
 
-→ **在後台按一次「套用起始名單」**（`POST /api/v1/curation/whitelist/starter`，**union 語意**，
-不會洗掉你額外開的喪標麥可）即可上線。（#212 / #214）
+⚠️ **尚未由我親眼確認。** 我沒有為了驗這一條去戳線上主機。
+**下一次部署的驗收清單要加一項**：開機日誌的 `whitelist enables N champions` 應該是 **50**，
+而且選角畫面要真的看得到這兩位。（#212 / #214）
 
 ---
 
