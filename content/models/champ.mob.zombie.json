@@ -1,7 +1,6 @@
 {
   "id": "champ.mob.zombie",
   "schema": "model@1",
-  "note": "肉鴿殭屍波（#215）專用的身體。owner 2026-07-26 回報：『肉鴿殭屍的 3d model 體素顏色(綠色)跟縮小到適合尺寸…不然現在根本玩不了』。\n\n它跟英雄版的 champ.godie-zombiex 刻意分開，因為 arena-rules.json 的 mob.modelKey 是獨立設定 —— 這樣縮小雜兵不會連帶把英雄版（#236 要補滿五格技能的那一隻）也縮掉。\n\n尺寸：blocky-undead.glb 原始高 1.800 u，全名冊每一具素體與正規化後的英雄都是 1.800 u。一隻雜兵長得跟英雄一樣高，讀起來就是英雄 —— 那正是 owner 說的『太大』。scale 0.68 → 1.224 u，約英雄的 68%，一眼分得出來是小兵。\n\n黑泥吞噬的成長階（GROWTH_TIER_SCALE [1.0, 1.08, 1.25]）疊在這個新基準上：\n  tier0 1.224 u（雜兵）· tier1 1.322 u · tier2 1.530 u（boss，約英雄的 85%）\n boss 仍然明顯比雜兵大、但不會蓋過英雄。\n\n順帶：從 guardian_skeleton.glb（1,036,516 B）換成 blocky-undead.glb（52,584 B）——\n場上同時最多 30 隻，這一項本身就是 #226 體積路線該有的樣子。",
   "glbPath": "assets/models/champions/blocky-undead.glb",
   "scale": 0.68,
   "collisionRadius": 0.6,
