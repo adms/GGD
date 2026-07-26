@@ -154,6 +154,47 @@ describe("#244 the body grows; the team ring never does", () => {
     view.dispose();
   });
 
+  /**
+   * INTEGRATION REGRESSION (batch A, #244 × #247). `applyAirborne` runs LAST in
+   * `update` and is the other writer of `blobShadow.scaling` and of the glb's
+   * ground offset. Both features were green alone and red together: a grown
+   * champion snapped back to 1× on the frame after `setGrowthTier`, and a grown
+   * champion's feet left the floor because the airborne path re-seated the glb
+   * with the offset measured at ADOPTION scale.
+   */
+  it("a GROWN champion keeps its size and its footing while airborne (#244 × #247)", async () => {
+    cover("growth-tier-airborne-compose");
+    const view = new ChampionView(scene, 9106, "champ.sela", 0);
+    view.setPose(0, 0, 0, 1);
+    view.tryUpgradeToGlb(assetsFor(makeContainer(0.72)), DOC);
+    await Promise.resolve();
+    await Promise.resolve();
+    expect(view.hasGlb).toBe(true);
+    const shadow = meshNamed(view, "-shadow")!;
+
+    view.setGrowthTier(2, 0);
+    view.update("idle", GROWTH_SCALE_EASE_MS, 16);
+    // GROUNDED and grown: the shadow carries the growth factor, feet on y=0.
+    expect(shadow.scaling.x).toBeCloseTo(GROWTH_TIER_SCALE[2], 4);
+    expect(worldMinY(view)).toBeCloseTo(0, 1);
+
+    // MID-LEAP and grown: the size survives (the bug reverted it to 1×), the
+    // shadow stays on the ground and only shrinks with altitude, and the body
+    // is lifted by exactly the fly height rather than being re-seated wrong.
+    const h = 2.4;
+    view.setPose(0, 0, 0, 1, h, true);
+    view.update("idle", GROWTH_SCALE_EASE_MS * 2, 16);
+    expect(shadow.scaling.x).toBeCloseTo(GROWTH_TIER_SCALE[2] / (1 + h * 0.15), 4);
+    expect(worldMinY(view)).toBeCloseTo(h, 1);
+
+    // BACK ON THE GROUND: still grown, still seated on the floor.
+    view.setPose(0, 0, 0, 1, 0, false);
+    view.update("idle", GROWTH_SCALE_EASE_MS * 3, 16);
+    expect(shadow.scaling.x).toBeCloseTo(GROWTH_TIER_SCALE[2], 4);
+    expect(worldMinY(view)).toBeCloseTo(0, 1);
+    view.dispose();
+  });
+
   it("re-entering tier 0 returns the body to its declared size (no drift)", () => {
     cover("growth-tier-reversible");
     const view = new ChampionView(scene, 9103, "champ.sela", 0);

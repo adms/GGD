@@ -232,29 +232,23 @@ export class ChampionView {
    *  factor × the per-champion relative multiplier (task #150; #77 declared scale). */
   private declaredScaleValue: number | null = null;
   /**
-   * TASK #247 airborne/scale state.
+   * TASK #247 airborne state.
    *
-   * `baseScale` is the #150-NORMALISED size, written ONCE at glb adoption and
-   * never touched by an ability. `groundOffsetUnit` is the model's foot offset
-   * expressed at UNIT scale, so it can be re-multiplied whenever the scale
-   * changes — the trap `tryUpgradeToGlb` sets is that its `position.y = -min.y`
-   * shift is measured in the ALREADY-SCALED frame, so naively multiplying the
-   * scaling would leave the offset stale and sink (or float) the champion by
-   * `(m-1) x groundOffset`. Keeping the offset at unit scale is the fix.
+   * `groundOffsetY` is the model's foot offset in the ALREADY-SCALED frame —
+   * the `position.y = -min.y` shift `tryUpgradeToGlb` computes — kept so that
+   * `applyAirborne` can rewrite `glbRoot.position.y` every frame (fly height +
+   * offset) without re-measuring the bounding box.
    *
-   * `scaleMul` of 1 therefore restores the normalised size BIT-EXACTLY, so no
-   * ability can permanently disturb #150 — not even one interrupted mid-ramp,
-   * because the sim deletes the airborne entry and the wire sends sc = 0, which
-   * the client maps to 1 (never to 0).
+   * (#247 also shipped a `scaleMul` here, fed by the wire's `sc` percent. The
+   * sim never wrote anything but 1, so the whole lane was removed as dead — see
+   * protocol/schema.ts. Nothing in this file scales `glbRoot` any more, which is
+   * what keeps #150's normalised size untouchable by an ability.)
    */
-  private baseScale = 1;
-  private groundOffsetUnit = 0;
+  private groundOffsetY = 0;
   /** interpolated fly height in GGD units (0 = grounded). */
   private leapY = 0;
   /** ENTITY_FLAG.AIRBORNE this frame — true on the takeoff/landing ticks too. */
   private airborne = false;
-  /** interpolated temporary scale multiplier (1 = the #150-normalised size). */
-  private scaleMul = 1;
   private upgradeStarted = false;
   private walkPhase = 0;
   private lastPose = { x: 0, z: 0 };
@@ -695,12 +689,11 @@ export class ChampionView {
    * TARGET here (the yaw eases toward it in `update`), except on the very first
    * pose where there is no prior orientation to preserve, so we snap once.
    */
-  setPose(x: number, z: number, fx: number, fz: number, h = 0, sc = 1, airborne = false): void {
-    // TASK #247: height and temporary scale are recorded here and APPLIED in
-    // `update`, which is where the dissolve/bob/idle writers also live so all
-    // three compose on the correct nodes instead of fighting over `root`.
+  setPose(x: number, z: number, fx: number, fz: number, h = 0, airborne = false): void {
+    // TASK #247: height is recorded here and APPLIED in `update`, which is where
+    // the dissolve/bob/idle writers also live so all of them compose on the
+    // correct nodes instead of fighting over `root`.
     this.leapY = h;
-    this.scaleMul = sc > 0 ? sc : 1;
     this.airborne = airborne;
     const dx = x - this.lastPose.x;
     const dz = z - this.lastPose.z;
@@ -1071,7 +1064,7 @@ export class ChampionView {
   }
 
   /**
-   * TASK #247 — apply the interpolated fly height and temporary model scale.
+   * TASK #247 — apply the interpolated fly height.
    *
    * NOT ON `root`. `root` parents four things: bodyRoot, glbRoot, the TEAM RING
    * and the BLOB SHADOW. Writing height there would fly the ring and the shadow
@@ -1084,31 +1077,25 @@ export class ChampionView {
    * the idle bob (which writes `bodyRoot.position.y`): different nodes /
    * additive composition, both documented at their own sites.
    *
-   * SCALE composes with #150 rather than replacing it: `baseScale` is the
-   * normalised factor captured once at load, and the ground offset is re-derived
-   * at the new scale so a grown champion neither sinks into nor floats above the
-   * floor. m = 1 restores the normalised size exactly.
+   * SCALE IS NOT TOUCHED HERE. #247 shipped a `scaleMul` composed on top of
+   * #150's normalised `glbRoot.scaling`, but the sim only ever sent 1, so the
+   * lane was removed (see protocol/schema.ts). `glbRoot.scaling` is now written
+   * exactly once, at adoption — plus #244's growth factor, which is the ONLY
+   * other writer and owns the size for the whole match.
    *
-   * IT ALSO COMPOSES WITH #244's GROWTH FACTOR (integration batch A). Both
-   * features arrived independently and both write `bodyRoot` / `glbRoot` /
-   * `blobShadow` scaling, and this one runs LAST every frame — so reading only
-   * `scaleMul` here silently reverted a 黑泥 boss to normal size on the very next
-   * frame after `setGrowthTier`. The composed factor is the product: growth is
-   * the persistent combat-state size, `scaleMul` is the transient one, and
-   * `baseScale`/`declaredScaleValue` (the same #150 number) is the base both
-   * multiply. The shadow multiplies growth by the altitude shrink for the same
+   * THE GROUND OFFSET STILL HAS TO FOLLOW #244's GROWTH (integration batch A).
+   * `groundOffsetY` is `-min.y` measured in the ADOPTION-scale frame, and this
+   * method rewrites `glbRoot.position.y` every frame — so on a grown champion it
+   * would overwrite the re-ground `applyGrowthScale` just did and sink a quarter
+   * of the body through the floor. `min.y` scales linearly with `glbRoot.scaling`
+   * (the scale is about glbRoot's own origin), so multiplying the stored offset
+   * by `growthFactor` reproduces the re-measured value exactly, and is identity
+   * at tier 0. The shadow multiplies growth by the altitude shrink for the same
    * reason — a big champion mid-leap casts a big shadow that shrinks with height.
    */
   private applyAirborne(): void {
-    const m = this.scaleMul * this.growthFactor;
     if (this.glbRoot) {
-      this.glbRoot.scaling.setAll(this.baseScale * m);
-      this.glbRoot.position.y = this.leapY + this.groundOffsetUnit * this.baseScale * m;
-    } else if (m !== 1) {
-      // procedural voxel figure: no measured ground offset, its feet are at y=0
-      this.bodyRoot.scaling.setAll(m);
-    } else if (this.bodyRoot.scaling.x !== 1) {
-      this.bodyRoot.scaling.setAll(1);
+      this.glbRoot.position.y = this.leapY + this.groundOffsetY * this.growthFactor;
     }
     // Ground cues stay ON THE GROUND; the shadow reads the altitude instead.
     const shrink = 1 / (1 + Math.max(0, this.leapY) * 0.15);
@@ -1285,13 +1272,12 @@ export class ChampionView {
         glbRoot.computeWorldMatrix(true);
         const { min } = glbRoot.getHierarchyBoundingVectors(true);
         if (Number.isFinite(min.y)) glbRoot.position.y = -min.y;
-        // #247: remember the #150-normalised factor and the ground offset AT
-        // UNIT SCALE, so a temporary scale multiplier can re-derive both without
-        // ever overwriting the normalisation. `finalScale` is never mutated
-        // afterwards — that is what makes m = 1 restore #150 bit-exactly.
-        this.baseScale = finalScale;
-        this.groundOffsetUnit =
-          Number.isFinite(min.y) && finalScale > 0 ? -min.y / finalScale : 0;
+        // #247: remember the ground offset, because `applyAirborne` REWRITES
+        // `glbRoot.position.y` every frame (fly height + offset) and would
+        // otherwise clobber the shift measured on the line above. Kept in the
+        // scaled frame — `glbRoot.scaling` is written exactly once, right here,
+        // and nothing may change it afterwards (that is what keeps #150).
+        this.groundOffsetY = Number.isFinite(min.y) ? -min.y : 0;
         this.glbRoot = glbRoot;
         this.glbSkeletons = inst.skeletons as unknown as { bones: { name: string }[] }[];
         // #226 per-champion palette/proportions/props. MUST run before the

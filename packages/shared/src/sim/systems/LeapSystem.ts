@@ -32,7 +32,44 @@ import { enemiesInCircle, resolveAbilityRadius } from "../abilities/abilitySyste
 import { leapHeightAt, leapPosAt, cancelLeap } from "../movement/leap";
 import { sub, scale, normalize, lenSq } from "../math/vec2";
 
+/** One touchdown, queued during the walk and detonated after it. See below. */
+interface PendingLanding {
+  flyerId: EntityId;
+  casterId: EntityId;
+  landRadius: number;
+  rank: number;
+  origin: string;
+  onLand: import("../effects/effect").EffectDef[];
+  slot: import("../intents").CastableSlot | undefined;
+}
+
 export function leapSystem(world: SimWorld): void {
+  /**
+   * TWO PHASES, and the split is load-bearing.
+   *
+   * Phase 1 walks `world.transform` and advances every arc. Phase 2 detonates
+   * the landings. They are separated because `detonate` runs `runEffects`, and
+   * effects are allowed to ADD and REMOVE entities: `spawnProjectile` calls
+   * `world.spawn()` + `world.transform.set(...)`, and a death path can despawn.
+   * A JS Map visits entries inserted DURING a `for..of`, so a landing that
+   * spawned a projectile would have had that projectile visited by the very
+   * loop that created it — and a delete during iteration is worse.
+   *
+   * Today's shipped `onLand` arrays are damage/status only, so nothing in the
+   * tree actually mutates the collection. That is precisely the problem: the
+   * safety was a property of the CONTENT, not of the code, and neither the
+   * `zEffectDef` schema nor the tpl-leap-strike template stops an author from
+   * dropping a `spawnProjectile` into `onLand` from the editor — which #247's
+   * own form now renders as a first-class card.
+   *
+   * ORDERING. Phase 2 preserves the phase-1 (id) order, so the sequence of
+   * detonations is unchanged and determinism is untouched. What DOES change is
+   * that a still-flying leaper now always advances BEFORE any other body's
+   * landing effects run, instead of before-or-after depending on the two ids'
+   * relative order. That asymmetry was unreachable but arbitrary; uniform is
+   * both cheaper to reason about and the same thing a cast-started leap gets.
+   */
+  const landings: PendingLanding[] = [];
   // id order (world.transform is the same ordered store MovementSystem walks)
   for (const [id, t] of world.transform) {
     const nav = world.nav.get(id);
@@ -68,16 +105,31 @@ export function leapSystem(world: SimWorld): void {
     if (lenSq(travel) > 1e-12) t.facing = normalize(travel);
 
     if (k < N) {
-      world.airborne.set(id, { y: leapHeightAt(k, N, ov.apexMilli), scaleMul: 1 });
+      world.airborne.set(id, { y: leapHeightAt(k, N, ov.apexMilli) });
       continue;
     }
 
     // ---- LANDING TICK ----
     // Height is exactly 0 here (branch, not arithmetic) and `t.pos` is
-    // bit-identical to the point proved legal at takeoff.
+    // bit-identical to the point proved legal at takeoff. Clearing the override
+    // and the airborne entry is safe INSIDE the walk (it mutates values and a
+    // side map, never `world.transform`'s key set); only the payload waits.
     world.airborne.delete(id);
     nav.override = null;
-    detonate(world, id, ov.casterId, ov.landRadius, ov.rank, ov.origin, ov.onLand, ov.slot);
+    landings.push({
+      flyerId: id,
+      casterId: ov.casterId,
+      landRadius: ov.landRadius,
+      rank: ov.rank,
+      origin: ov.origin,
+      onLand: ov.onLand,
+      slot: ov.slot,
+    });
+  }
+
+  // ---- PHASE 2: detonate, now that nothing is iterating world.transform ----
+  for (const L of landings) {
+    detonate(world, L.flyerId, L.casterId, L.landRadius, L.rank, L.origin, L.onLand, L.slot);
   }
 }
 

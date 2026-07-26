@@ -86,10 +86,25 @@ describe("discriminated EffectDef union (editor-02)", () => {
     const union = effects.item as UIDiscriminatedUnion;
     expect(union.kind).toBe("discriminatedUnion");
     expect(union.discriminator).toBe("kind");
+    // This list is a DELIBERATE tripwire: it goes red the moment the shared
+    // schema grows an effect kind, so the editor cannot silently fall behind the
+    // sim. Adding the tag here is NOT the fix on its own — see the `leap` case
+    // below and PreviewController.effectLines, which must both learn the kind.
     const tags = union.variants.map((v) => v.tag).sort();
     expect(tags).toEqual(
       // `leap` joined the union in #247 (the parabolic jump EffectDef).
-      ["applyBuff", "applyStatus", "damage", "dash", "heal", "leap", "restore", "shield", "spawnProjectile", "spawnVfx"].sort(),
+      [
+        "applyBuff",
+        "applyStatus",
+        "damage",
+        "dash",
+        "heal",
+        "leap", // task #247
+        "restore",
+        "shield",
+        "spawnProjectile",
+        "spawnVfx",
+      ].sort(),
     );
 
     // damage variant: enum + nested scaling object
@@ -112,6 +127,49 @@ describe("discriminated EffectDef union (editor-02)", () => {
     // low depth cap degrades to the JSON fallback instead of infinite recursion
     const capped = walkZod(zAbilityDoc, "", "Ability", { maxDepth: 2 });
     expect(capped.kind).toBe("object");
+  });
+
+  /**
+   * TASK #247 follow-up. `leap` reaching the tag list above only proves the
+   * walker SAW the variant. What a designer needs is a card with real widgets
+   * on it — and, because `leap` is the SECOND recursive member of the union
+   * (`onLand`, alongside spawnProjectile's `onHit`), that its recursion still
+   * terminates at the depth cap rather than blowing the stack.
+   */
+  it("the leap variant is a REAL editable card, not just a tag", () => {
+    cover("leap-editor-form");
+    const ability = walkZod(zAbilityDoc, "", "Ability");
+    const union = (fieldsOf(ability).get("effects") as UIArray).item as UIDiscriminatedUnion;
+    const leap = union.variants.find((v) => v.tag === "leap")!;
+    const f = new Map(leap.fields.map((x) => [x.path.split(".").pop()!, x]));
+
+    // every authored knob is a typed widget the form can actually render …
+    expect(f.get("mode")).toMatchObject({ kind: "enum", options: ["toPoint", "inPlace"] });
+    expect(f.get("applyTo")).toMatchObject({
+      kind: "enum",
+      options: ["self", "target"],
+      optional: true,
+    });
+    expect(f.get("apexHeight")).toMatchObject({ kind: "number", min: 0, optional: false });
+    expect(f.get("durationSec")).toMatchObject({ kind: "number", optional: false });
+    expect(f.get("throwDistance")).toMatchObject({ kind: "number", optional: true });
+    expect(f.get("landRadius")).toMatchObject({ kind: "number", optional: true });
+    // … and the landing payload is the SAME union card, one level down, so a
+    // designer can author "leap here, then blast" without touching JSON.
+    const onLand = f.get("onLand") as UIArray;
+    expect(onLand.kind).toBe("array");
+    expect(onLand.item.kind).toBe("discriminatedUnion");
+    const nested = (onLand.item as UIDiscriminatedUnion).variants.map((v) => v.tag);
+    expect(nested).toContain("damage");
+    expect(nested).toContain("applyStatus");
+
+    // switching the card to `leap` seeds every REQUIRED field (a variant switch
+    // that produced `{kind:"leap"}` alone would hand the server a 422).
+    const seeded = defaultForVariant(union, "leap") as Record<string, unknown>;
+    expect(seeded.kind).toBe("leap");
+    expect(seeded.mode).toBe("toPoint");
+    expect(seeded).toHaveProperty("apexHeight");
+    expect(seeded).toHaveProperty("durationSec");
   });
 
   it("provides sane defaults for new items and variant switches", () => {

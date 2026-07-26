@@ -84,16 +84,14 @@ export interface EntityViewState {
    */
   flags?: number;
   /**
-   * Champions only (task #247): fly height in GGD units, temporary model-scale
-   * multiplier, and the AIRBORNE flag. Absent = grounded / normal size, which is
-   * every other kind and every pre-#247 caller.
+   * Champions only (task #247): fly height in GGD units and the AIRBORNE flag.
+   * Absent = grounded, which is every other kind and every pre-#247 caller.
    *
    * `airborne` is deliberately a FLAG rather than `h > 0`: it is also true on the
    * takeoff and landing ticks, where the height is exactly 0, and locomotion has
    * to stay suppressed for the whole flight.
    */
   h?: number;
-  sc?: number;
   airborne?: boolean;
   /**
    * Revive circles (kind 3) only — decoded by the caller from the reused
@@ -222,7 +220,7 @@ export interface SyncArgs {
   /** pose override seam: interpolation (remotes) / prediction (local) */
   poseFor: (
     e: EntityViewState,
-  ) => { x: number; z: number; fx: number; fz: number; h?: number; sc?: number };
+  ) => { x: number; z: number; fx: number; fz: number; h?: number };
   nowMs: number;
   dtMs: number;
   /** try to upgrade champions to .glb models (disabled in headless tests) */
@@ -617,10 +615,10 @@ export class EntityViewRegistry {
       this.applyTint(e, view, tier);
       view.setGrowthTier(tier, args.nowMs);
       const pose = args.poseFor(e);
-      // #247: the interpolated height/scale ride the same pose seam as x/z. The
+      // #247: the interpolated height rides the same pose seam as x/z. The
       // AIRBORNE flag comes off the entity (not off `h > 0`) so takeoff and
       // landing ticks, where h is exactly 0, still count as in-flight.
-      view.setPose(pose.x, pose.z, pose.fx, pose.fz, pose.h ?? e.h ?? 0, pose.sc ?? e.sc ?? 1, e.airborne === true);
+      view.setPose(pose.x, pose.z, pose.fx, pose.fz, pose.h ?? e.h ?? 0, e.airborne === true);
 
       // draw-distance cull: hide champions beyond the configured radius
       if (args.cull) {

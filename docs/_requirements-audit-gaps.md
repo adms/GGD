@@ -3216,3 +3216,21 @@ template slot 的單位從 `wc3u` 改成新的 `wc3h`；`range`/`radius`/`landRa
 但腳都不在畫面上時再多的地面提示也換不回一個看得見的角色；專門的落點預告是 #233 的範圍。
 量測不涵蓋 EX 特寫 punch-in（dolly 5，高度餘裕減半，260ms）與「鏡頭沒跟著跳的人」的情況，
 理由都寫在測試檔頭。
+
+---
+
+#### 🦘 2026-07-26 追記：#247 leap 的滾動日誌補登 + 三個對抗式驗證發現的修正
+
+**先認錯**：#247（從 JASS 重建 leap）整批做完、合併，卻**一行 todo 都沒寫**，`docs/_requirements-audit-gaps.md` 也沒動。專案的鐵律是「每一條需求當下就登錄」，這次是純粹漏做，不是判斷差異。現已補上 `docs/todo/leap.md`（leap-01..15，其中 14 條 `done` 皆有真實 `cover()` 對應、1 條 `pending`）與本段。
+
+**對抗式驗證確認保住的東西**（不得回歸）：同 seed 60 tick digest 逐位元相同（且飛行中）；真的飛過柱子（腳印內 22 tick 高度 >1u，走路則 0）；高度 1:1 上畫面、影子與隊伍圈留在地面且影子隨高度縮小淡出；拋物線代數對得上 war3map.j 全部十處 `SetUnitFlyHeightBJ`。
+
+**這次修的四件事**：
+
+1. **編輯器真的被擋紅了**（`apps/editor/src/form/walk.test.ts:90` 釘死 EffectDef union tag 清單，#247 加了 `leap` 沒同步）。但**只補 tag 是在騙那條測試** —— 那條測試存在的意義是「schema 長出新 kind 時逼編輯器跟上」。實際查過之後：表單那半其實是好的（walker 走 zod 產出 enum/number/array 小工具，`onLand` 是同一張 union 卡再一層，遞迴在 depth cap 收斂）；**壞掉的是預覽那半** —— `apps/editor/src/preview/PreviewController.ts` 的 `effectLines` switch 沒有 `leap` case，所以一個「只有 leap」的技能（正是 #247 的主角 `godie-hpb1.e` 蒼月潮 07-03）在編輯器裡預覽成**一片空白的效果清單**。這正是同一個檔案自己在 `restore`/`spawnVfx` 上記過的坑，第三次發生。現在補了 leap case（含 `onLand` 遞迴逐 rank 傷害），並在 `default` 放 `never` 收斂 —— 下一個 kind 由**編譯器**擋，不用再等測試。
+
+2. **`resolveLandingPoint` 的射程夾限是保證不會觸發的死碼**。唯一呼叫端傳的是 `len(requested - flyer.pos)`，也就是它要夾的那個點自己的距離，`d > maxRange` 永遠為假。判斷是**刪掉而不是「把它變真」**：射程在上游就已經綁住了 —— `ground` 施法在 `abilitySystem` 就用 `clampLen(target - caster, resolveAbilityRange(def.range))` 夾過，`targeted` 直接拒絕超距目標，被丟的受害者（`applyTo:"target"`）飛的是自己的 `throwDistance`（已過 #136 係數）。而且對被丟的受害者來說，量距的原點根本是**受害者**不是施法者，「受害者不得被丟得比施法者射程遠、從受害者站的地方量」不是 JASS 也不是設計有的規則。刪掉之後補了 `leap-reach-upstream`：用真的 `godie-hpb1.e`（range 14、#136 係數 0.6 → 8.4u）點 60u 外，跑完真的施法路徑後量落點 —— 停在 8.4u。
+
+3. **`EntityState.sc`（暫時模型縮放）整條線是出貨的死線路**：sim 每個寫入點都是字面量 1，wire/內插/ChampionView/測試全在，但那條測試是自己餵 1.2/1.9/1.0 給 buffer，**證明不了遊戲裡任何事**。查過真的 JASS 之後決定**移除**而不是接上：全地圖唯一會縮放**施法者**的技能是 A0U8 巨神一擊（`Trig_Gigantomakhia_*`，j:51866-52040），數值是 `SetUnitScalePercent` 絕對值 130→190（7 tick × 0.04s，`Size = 190 - Color*2`，Color 30→0），衝完在 j:52028 回到 120 —— 而 120 正是這位英雄自己的 base（`Hapm.scale = 1.2`），換算成 GGD #150 正規化尺寸的乘數是 1.083 → 1.583 → 1.0。**但它不是 leap**（它那一整串裡沒有任何 `SetUnitFlyHeightBJ`，是「暫停→變大→貼地衝刺→爆」），所以擁有 `world.airborne` 的 `LeapSystem` 根本驅動不了它。要接上得新增一種 EffectDef、一個 ramp store、它自己的死亡/回合重置拆線、digest 摺入 —— 那是**新功能**不是「把線接完」，不屬於這次收尾。真實數值已寫進 `packages/shared/src/protocol/schema.ts` 原欄位的位置，交給 #249（變身系統）/#50（逐次美術參數），並登記為 `leap-15 pending`。移除範圍：schema 欄位 + `defineTypes` + snapshot 寫入 + `world.airborne.scaleMul` + digest 摺入 + `InterpSample/InterpPose.sc` + `EntityViewState.sc` + `ChampionView.baseScale/scaleMul` + 那條假測試。副作用是好的：`glbRoot.scaling` 現在**一輩子只寫一次**（載入時），#150 的正規化尺寸從「乘數剛好是 1」升級成「結構上碰不到」。
+
+4. **`leapSystem` 邊走 `world.transform` 邊跑落地 payload**。JS Map 的 `for..of` **會走訪迭代中插入的項目**，而 `runEffects` 是允許增刪實體的（`spawnProjectile` 會 `world.spawn()`）。今天出貨的 `onLand` 只有傷害/狀態所以碰不到 —— 問題正在這裡：**安全性是內容的性質，不是程式的性質**，schema 和 `tpl-leap-strike` 都沒有東西擋作者從（現在會正確渲染的）編輯器卡片裡塞一個 `spawnProjectile` 進 `onLand`。改成兩段式：先走完所有弧線，再依同樣的 id 順序引爆。順序語意也順便變乾淨了 —— 舊寫法下「落地把還在飛的人再丟一次」會依兩者 id 大小決定新弧線是否在同一 tick 就前進一格（id 大的 `elapsed` 直接變 1），現在一律 0。這一條有**會紅的**測試（`leap-detonate-order`：把兩段式改回交錯就紅）。

@@ -35,7 +35,7 @@ Regression suites always run **last** (enforced by the runner scheduler and the 
 | WC3 dummy-effect-units + orbs → spawnVfx/ambient (化繁為簡) | [dummy-orb.md](dummy-orb.md) | game + content + client |
 | Themed arenas + map select + cast bar | [arenas.md](arenas.md) | client + game + content |
 | Sim determinism | [sim-determinism.md](sim-determinism.md) | game |
-| Leap (跳躍落地 — JASS parabola + on-screen framing gate) | [leap.md](leap.md) | game + client + content |
+| Leap — parabolic jump primitive (JASS parabola + on-screen framing gate) | [leap.md](leap.md) | game + content + client + editor |
 | Victory settlement (stats + grade + rank + freeze) | [settlement.md](settlement.md) | game + client |
 | Victory fireworks (round volley + 吃雞 roast-chicken) | [victory-fireworks.md](victory-fireworks.md) | client |
 | 中場 intermission scene + centre-stage shop | [intermission.md](intermission.md) | game + client + content |

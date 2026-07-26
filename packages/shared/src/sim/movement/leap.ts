@@ -5,13 +5,20 @@
  * ---------------------------------------------------------------------------
  * WHERE THE CURVE COMES FROM (war3map.j)
  * ---------------------------------------------------------------------------
- * Nine `SetUnitFlyHeightBJ` sites in war3map.j write the SAME idiom:
+ * TEN `SetUnitFlyHeightBJ` sites in war3map.j write the SAME idiom:
  *
  *     h(i) = -k * Pow((i - m), 2.00) + A          over i = 1 … 2m-1
  *
+ * Ten sites, NINE abilities: A0JZ (AKT戰隊) owns two of them — Trig_AKT_1
+ * (j:30802) and Trig_AKT_4_Effect (j:30990), both gated on
+ * `GetSpellAbilityId() == 'A0JZ'` (j:30558 / j:31013) — and they are two
+ * DIFFERENT arcs, 600 and 400, on two different dummies. The count that matters
+ * to the algebra below is the number of (k, m, A) triples, i.e. ten; the table
+ * in leap.test.ts has ten rows for exactly that reason.
+ *
  *   j:25841 A0J2  龍虎亂舞          k=1.50 m=21 A=600
  *   j:30802 A0JZ  AKT戰隊           k=1.50 m=21 A=600
- *   j:30990 A0LZ' AKT (2nd arc)     k=1.00 m=21 A=400
+ *   j:30990 A0JZ  AKT戰隊 (2nd arc) k=1.00 m=21 A=400
  *   j:33716 A0UX  01-02 隕石擊      k=1.50 m=21 A=600
  *   j:34285 A0G3  07-03 列、在、前  k=1.50 m=21 A=600
  *   j:36347 A0IS  76-01 橡膠戰斧    k=1.50 m=21 A=600
@@ -31,8 +38,8 @@
  *     h = A · [1 - (2u-1)²] = 4·A·u·(1-u)
  *
  * The GGD primitive is therefore not an approximation of the JASS — it is the
- * same curve, re-parameterised. `leapArcExactness` in leap.test.ts asserts this
- * against all nine (k, m, A) triples at every integer index.
+ * same curve, re-parameterised. leap.test.ts asserts this against all TEN
+ * (k, m, A) triples at every integer index.
  *
  * ---------------------------------------------------------------------------
  * DETERMINISM (task #247 hard constraint)
@@ -62,7 +69,6 @@ import type { EffectDef } from "../effects/effect";
 import type { CastableSlot } from "../intents";
 import type { SimWorld } from "../SimWorld";
 import type { LeapOverride } from "../components";
-import { sub, len, scale } from "../math/vec2";
 import { relaxBody } from "../collision/resolve";
 import { TICK_HZ } from "../../constants";
 
@@ -110,14 +116,10 @@ export function leapTicks(durationSec: number): number {
 
 /**
  * The LEGAL landing point, resolved ONCE at takeoff — never corrected at
- * touchdown.
- *
- *   1. clamp the requested point to `maxRange` of the caster (the #136 reach
- *      factor is applied by the caller, exactly like a ground cast),
- *   2. push a body of the caster's radius out of every obstacle and back inside
- *      the zone boundary, using the SAME two relaxation passes the walker uses
- *      (`relaxBody`, exported from collision/resolve.ts so a future change to
- *      wall geometry cannot make the leap and the walker disagree).
+ * touchdown. It pushes a body of the flyer's radius out of every obstacle and
+ * back inside the zone boundary, using the SAME two relaxation passes the
+ * walker uses (`relaxBody`, exported from collision/resolve.ts so a future
+ * change to wall geometry cannot make the leap and the walker disagree).
  *
  * DECISION — a blocked landing point RE-AIMS THE ARC at takeoff. The whole
  * parabola is computed against the corrected `to`, so the body flies to, and
@@ -126,34 +128,37 @@ export function leapTicks(durationSec: number): number {
  * mode of leaps in this genre. Consequences, all deliberate:
  *   - it can never end inside an obstacle (`to` was pushed out before flight,
  *     and leapPosAt(N,N) returns `to` verbatim),
- *   - it can never end outside the boundary (the clamp ran last, same body),
- *   - it can never out-range its own ability (the range clamp ran first) — the
- *     corrected point may be SHORTER than requested, never longer.
+ *   - it can never end outside the boundary (the boundary clamp is part of
+ *     `relaxBody`, and runs last on the same body).
  *
- * No mid-flight clamp is needed or wanted: a zone boundary is a DISC (a radial
- * clamp about zone.center), a disc is convex, and the segment between two
- * interior points lies wholly inside it — so every intermediate position of a
- * straight-line arc is already legal by construction.
+ * NO RANGE CLAMP LIVES HERE (task #247 follow-up). This function used to take a
+ * `maxRange` and clamp `requested` toward the flyer, and the ONE caller passed
+ * `len(requested - flyer.pos)` — the distance to the point it was clamping —
+ * so the guard could never fire. Deleting it rather than "making it real" is
+ * the correct fix, because REACH IS ALREADY BOUNDED UPSTREAM, at cast
+ * resolution, where the ability's own range is actually known:
+ *   - castType "ground"   — abilitySystem clamps the point with
+ *     `clampLen(target - caster, resolveAbilityRange(world, def.range))`,
+ *   - castType "targeted" — an out-of-range target is REJECTED outright,
+ *   - a thrown victim with no cast point (`applyTo: "target"`, the A0U1 arc)
+ *     flies its own `throwDistance`, itself already put through the #136 reach
+ *     factor by effectRunner.
+ * So every `requested` that reaches a leap is inside the ability's reach before
+ * it gets here. A second clamp would also measure from the WRONG origin for a
+ * thrown victim — the flyer is the victim, not the caster, and "the victim may
+ * not be thrown further than the caster's cast range, measured from where the
+ * victim stands" is a rule neither the JASS nor the design has.
+ *
+ * No mid-flight clamp is needed or wanted either: a zone boundary is a DISC (a
+ * radial clamp about zone.center), a disc is convex, and the segment between
+ * two interior points lies wholly inside it — so every intermediate position of
+ * a straight-line arc is already legal by construction.
  */
-export function resolveLandingPoint(
-  world: SimWorld,
-  casterId: EntityId,
-  requested: Vec2,
-  maxRange: number,
-): Vec2 {
-  const t = world.transform.get(casterId);
+export function resolveLandingPoint(world: SimWorld, flyerId: EntityId, requested: Vec2): Vec2 {
+  const t = world.transform.get(flyerId);
   if (!t) return { x: requested.x, z: requested.z };
   const zone = world.arena.zones[t.zone] ?? world.arena.zones[0]!;
-  let target = { x: requested.x, z: requested.z };
-  if (maxRange > 0) {
-    const off = sub(target, t.pos);
-    const d = len(off);
-    if (d > maxRange) {
-      const step = scale(off, maxRange / d);
-      target = { x: t.pos.x + step.x, z: t.pos.z + step.z };
-    }
-  }
-  const body = { pos: target, radius: t.radius };
+  const body = { pos: { x: requested.x, z: requested.z }, radius: t.radius };
   relaxBody(body, zone);
   return body.pos;
 }
@@ -210,7 +215,7 @@ export function startLeap(world: SimWorld, id: EntityId, opts: StartLeapOptions)
   nav.override = ov;
   // AIRBORNE from the takeoff tick (height is still exactly 0 there, which is
   // why the render side keys "in the air" off the FLAG, not off h > 0).
-  world.airborne.set(id, { y: 0, scaleMul: 1 });
+  world.airborne.set(id, { y: 0 });
   // The takeoff cue (蒼月潮's A0G3 plays gg_snd_moonjump right here, j:34211)
   // and the client's jump-animation trigger. Cosmetic: mutates nothing.
   world.emit("leapStart", {

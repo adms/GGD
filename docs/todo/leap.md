@@ -1,10 +1,34 @@
-# Leap (跳躍落地) — the parabolic jump rebuilt from the map's JASS
+# Leap — parabolic jump primitive (task #247) — TODO
 
-The primitive itself (#247): ten `SetUnitFlyHeightBJ(-k*Pow(i-m,2)+A)` sites in
-`war3map.j` all satisfy `A = k(m-1)²`, so substituting `u = (i-1)/(2m-2)`
-collapses every one of them onto a single normalised parabola
-`h = 4·A·u·(1-u)`. The GGD leap is not an approximation of that curve, it IS
-that curve re-parameterised. See `packages/shared/src/sim/movement/leap.ts`.
+`packages/shared/src/sim/movement/leap.ts` + `sim/systems/LeapSystem.ts`, the `leap` EffectDef
+(`content/schema/effect.ts`), the `h` wire channel (`protocol/schema.ts` → `net/snapshot.ts` →
+`net/InterpolationBuffer.ts` → `render/views/ChampionView.ts`), and the `tpl-leap-strike`
+Skill-Forge template.
+
+Rebuilt from the source map's own JASS, not invented: **ten** `SetUnitFlyHeightBJ(-k·Pow(i-m,2)+A)`
+sites across **nine** abilities (A0JZ owns two arcs, j:30802 + j:30990). Every one satisfies
+`A = k(m-1)²`, so they all collapse to the single normalised parabola `h = 4·A·u·(1-u)` that the
+primitive ships. Bound abilities: `godie-hpb1.e` (A0G3), `godie-hart.w` (A0UX),
+`godie-u00n.r`/`godie-u00o.r` (A0RZ, vertical inPlace), `godie-hapm.w` (A0U1, `applyTo: "target"` —
+the victim flies, not the caster).
+
+| ID | Item | Test ID | Category | Status |
+| --- | --- | --- | --- | --- |
+| leap-01 | the normalised arc reproduces all TEN JASS `(k, m, A)` triples at every integer index | leap-jass-arc | unit | done |
+| leap-02 | same seed ⇒ byte-identical digests with a leap in flight, and the leap is genuinely inside the hash | leap-determinism | determinism | done |
+| leap-03 | no trig / rng / clock reachable from the arc sources (static ban) | leap-no-trig | determinism | done |
+| leap-04 | a leap CROSSES a pillar a walker cannot pass, and lands on the requested point | leap-crosses-terrain | integration | done |
+| leap-05 | a blocked / out-of-bounds landing re-aims at TAKEOFF and touches down legally, with no landing-tick snap | leap-landing-legal | integration | done |
+| leap-06 | hitstop freezes the arc and it resumes on the exact same curve | leap-hitstop | integration | done |
+| leap-07 | death mid-air drops the body to the floor and fires NO landing effects | leap-death-midair | integration | done |
+| leap-08 | the landing detonates `onLand` on the landing tick, centred on the landing point | leap-detonate | integration | done |
+| leap-09 | reach is bounded UPSTREAM at cast resolution — a ground cast clicked far past its range lands at the range, not at the click | leap-reach-upstream | integration | done |
+| leap-10 | a landing payload may MUTATE the entity set (`spawnProjectile` in `onLand`) without corrupting the arc walk | leap-payload-mutates | regression | done |
+| leap-11 | detonation order is uniform: a re-leap fired by a landing starts at `elapsed 0` regardless of spawn order | leap-detonate-order | regression | done |
+| leap-12 | fly height reaches the renderer and interpolates (Catmull-Rom), and a body killed at apex SNAPS down | leap-render-height | unit | done |
+| leap-13 | the editor form renders a REAL leap card (typed widgets + recursive `onLand`), not just a union tag | leap-editor-form | unit | done |
+| leap-14 | the editor's live preview lists a leap-only ability instead of showing an empty effect list | leap-editor-preview | unit | done |
+| leap-15 | wire the caster model-scale ramp (A0U8 巨神一擊: 130→190 % over 7×0.04 s, restore to the hero's 120 % base) — needs a real EffectDef + ramp store; the #247 `sc` channel was removed as dead | leap-caster-scale | integration | pending |
 
 ## #247b — the apex was ported through the WRONG RULER, and the leap was off-screen
 
@@ -74,12 +98,13 @@ feature's camera override, and no leap in content is an EX slot.
 
 | ID | Item | Test ID | Category | Status |
 | --- | --- | --- | --- | --- |
-| leap-01 | the rig this suite measures against IS the shipped one (68°, dolly 10 = DOLLY_MIN, fov 0.8, minZ 0.5), and the vertical budget is aspect-independent (fov stays VERTICAL-fixed, so a phone in landscape inherits it) | leap-framing-camera | regression | done |
-| leap-02 | EVERY leap in content — standalone + embedded champion copies, four headings — is never behind the near plane, off-frame ≤15% of its flight, cropped ≤35%, measured through the real CameraRig at DOLLY_DEFAULT | leap-framing-onscreen | regression | done |
-| leap-03 | the near-plane wall is located by bisecting the real rig (~8.45 u of fly height for a champion's head) and every shipped apex is proven under it — the #247 values 11.00 / 18.33 were over it | leap-framing-nearplane | regression | done |
-| leap-04 | NEGATIVE CONTROL — the exact #247 arc (apex 11.00, 1.44 s, 14 u) still fails this gate, so a quietly widened limit cannot show green | leap-framing-negative | regression | done |
-| leap-05 | DOLLY_DEFAULT is the WORST case: zooming out never increases off-frame / cropped / near-plane counts, which is why gating one dolly is enough | leap-framing-dolly | regression | done |
-| leap-06 | altitude converts at `GGD_APEX_PER_WC3 = 1/250` (never the planar 11/600), the JASS family's ordering survives the rescale with no two arcs colliding, and every shipped apex is a value from that family | leap-apex-scale | unit | done |
+| leap-16 | the rig this suite measures against IS the shipped one (68°, dolly 10 = DOLLY_MIN, fov 0.8, minZ 0.5), and the vertical budget is aspect-independent (fov stays VERTICAL-fixed, so a phone in landscape inherits it) | leap-framing-camera | regression | done |
+| leap-17 | EVERY leap in content — standalone + embedded champion copies, four headings — is never behind the near plane, off-frame ≤15% of its flight, cropped ≤35%, measured through the real CameraRig at DOLLY_DEFAULT | leap-framing-onscreen | regression | done |
+| leap-18 | the near-plane wall is located by bisecting the real rig (~8.45 u of fly height for a champion's head) and every shipped apex is proven under it — the #247 values 11.00 / 18.33 were over it | leap-framing-nearplane | regression | done |
+| leap-19 | NEGATIVE CONTROL — the exact #247 arc (apex 11.00, 1.44 s, 14 u) still fails this gate, so a quietly widened limit cannot show green | leap-framing-negative | regression | done |
+| leap-20 | DOLLY_DEFAULT is the WORST case: zooming out never increases off-frame / cropped / near-plane counts, which is why gating one dolly is enough | leap-framing-dolly | regression | done |
+| leap-21 | altitude converts at `GGD_APEX_PER_WC3 = 1/250` (never the planar 11/600), the JASS family's ordering survives the rescale with no two arcs colliding, and every shipped apex is a value from that family | leap-apex-scale | unit | done |
+| leap-22 | INTEGRATION (#244 x #247): a GROWN champion keeps its growth size and its footing through a whole leap — `applyAirborne` runs last and composes with the growth factor instead of reverting it | growth-tier-airborne-compose | regression | done |
 
 See also: `sim-determinism.md` (the arc is bit-identical and rng-free) and
 `victory-fireworks.md` #93 (the same "nobody ever pointed the game camera at it"

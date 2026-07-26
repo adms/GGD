@@ -237,7 +237,7 @@ export class SimWorld {
 
   /**
    * AIRBORNE RENDER STATE (task #247) — entity → { y: GGD units above the arena
-   * floor, scaleMul: TEMPORARY model-scale multiplier }. ABSENT = grounded.
+   * floor }. ABSENT = grounded.
    *
    * A separate store rather than a field on `Transform`, whose contract is
    * literally "planar … NO y". Absence-means-grounded keeps every non-leaping
@@ -246,8 +246,14 @@ export class SimWorld {
    *
    * Created at takeoff, DELETED at landing/cancel — so a nulled `nav.override`
    * and an absent entry always agree about who is in the air.
+   *
+   * The `scaleMul` companion field #247 shipped alongside `y` is GONE (#247
+   * follow-up): every writer set it to a literal 1, so the whole scale lane —
+   * this field, the `sc` wire channel, its interpolation and its ChampionView
+   * plumbing — was dead. See protocol/schema.ts for the removal note and for the
+   * real JASS numbers of the one ability (A0U8 巨神一擊) that would have used it.
    */
-  readonly airborne = new Map<EntityId, { y: number; scaleMul: number }>();
+  readonly airborne = new Map<EntityId, { y: number }>();
 
   /** queued damage, drained by combatResolveSystem in one ordered pass */
   readonly damageQueue: DamagePacket[] = [];
@@ -619,7 +625,6 @@ export class SimWorld {
       if (air) {
         mix(id);
         mix(air.y);
-        mix(air.scaleMul);
       }
     }
     // match scoreboard is authoritative world state — a desync here (a counter
