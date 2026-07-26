@@ -2948,3 +2948,90 @@ git 也不含它（`.gitignore:34-36` 吃掉 `/data/**`，所以 `git pull` 也�
 閘門：`apps/platform` 全套 —— 新的 `contentoverlay` 15 例全綠；紅的 5 例
 （`internal/auth` 3 例＝#237 邀請碼未標記 redeemed、`internal/combatenv` 1、`internal/opsenv` 1）
 在 main 工作樹上覆驗**完全相同**，屬既有。`@ggd/admin` typecheck clean、31 檔 342 綠（新增 11 例）。
+
+---
+
+## 2026-07-26 — #243 後台一鍵 ZIP 匯出／匯入平台資料（無痛移機）
+
+**需求原話（owner）**：「後台增加一個功能，是一鍵打包 zip 遊戲平台資料匯出/匯入，
+方便變更主機的時候重新匯入可以無痛移機」。依 rolling-log 紀律，需求一出現就立刻登錄。
+
+**主場景是「搬到一台全新主機」**（舊主機匯出 → 新主機空的 data/ 匯入 → 家人用原本的
+帳號密碼登入）。覆蓋一台已經有資料的主機是次要且危險的情境，UI 用橘底標明。
+
+### 為什麼開新 Kind 而不是 opstate v2
+
+`opstate`（#179）帶的是**營運選擇**（白名單 + 戰鬥系統 + 系統運維），而且**刻意拒絕**
+帳號與邀請碼。#243 帶的正好相反：密碼雜湊、未兌換邀請碼、錢包、整棵 data 樹。語意不同
+就開新 Kind（`docs/design/content-sync.md` 立下的規矩）：`ggd-platform-archive` v1。
+`ggd-operator-state` v1 原封不動，`make family-restore` 繼續指向它。
+
+### 落點
+
+- Go：`apps/platform/internal/platformarchive/`（scope / manifest / export / inspect /
+  plan / apply / backup / staging / reindex / freespace / service / handlers）
+  + CLI `cmd/platformarchive`（export / inspect / plan / apply，烤進 platform 映像）。
+- 平台改動：`internal/server/server.go`（路由 + **路徑感知的 body cap 豁免**）、
+  `internal/auth/password.go`（抽出 `ReauthPassword`，ChangePassword 行為不變）。
+- 前端：`apps/admin/src/archive.ts`、`ui/DataMigrationPage.tsx`、`api.ts`、`session.ts`、
+  `store.ts`、`ui/App.tsx`、`migrationGate.test.ts`。
+- 其他：`nginx/nginx.conf`（一條 exact-match location）、`Makefile`（archive-* /
+  family-archive-*）、`docs/runbooks/platform-migration.md`（新）。
+
+### 這次真正買下來的東西（不是設計稿，是程式碼裡的性質）
+
+1. **匯出永不 `WalkDir(dataDir)`。** 只走一張明確的規則表（`scope.go`），所以
+   `owner-setup-token`（DATA_DIR 根、持有即可宣告新部署擁有權）與 `journal/`
+   是**結構上到不了**，不是被 denylist 擋掉。denylist 會被下一個新增的集合繞過。
+2. **枚舉一律 `Scan`，不用 `List`。** `readIndex` 把 index 缺失讀成空集合（fail-OPEN），
+   一台 index 損毀的來源主機會匯出「零個帳號」而且匯入完全成功。#225 已為同一理由選過
+   `Scan`。測試：刪掉 fixture 的 `accounts/_index.json`，匯出仍須含 35 個帳號。
+3. **絕不半寫。** jsonstore 只有單物件原子性（結算為此養了一整套 WAL）。所以
+   驗證整包 → 解析每個名字（走 `Store.Path`，即 jsonstore 自己的 `resolve`）→ 算完整份
+   plan → 比對 `planDigest` → 做完備份，**全部在寫入之前**。
+4. **`planDigest`。** commit 會重算 plan 並和操作者核准的 digest 比對，不同就 409、
+   一個位元組都不寫。這是「你核准的內容 = 實際寫下去的內容」的機制保證。
+5. **`admin-audit` 是 AppendOnly。** 目標已有當天的檔案就一律略過，永不覆寫也永不合併 ——
+   覆寫等於偽造目標主機自己的稽核軌跡，而且會蓋掉記錄「這次匯入」的那一行。
+6. **匯入後的 Redis 重建不呼叫 `boot.Rebuild`。** 那支用 `SetNX`，不會修正被搬遷取代的
+   使用者名稱索引（症狀：密碼正確但登進錯的帳號，**重啟平台也修不好**）；而且它的第一步
+   是重播 WAL intent。本套件的 `reindex.go` 用 `SET`（+ 被擠掉的映射先 `DEL`）。
+7. **兩個 1 MiB body cap。** 平台 `server.go` 的全域 cap 與 nginx 的 `client_max_body_size`
+   任一漏掉，每一次匯入都會 413 而且兩邊都不解釋。平台改成**路徑感知**（exact match，
+   不是 prefix），nginx 加一條 exact-match location，兩邊都是 512 MiB。
+8. **匯出與匯入都要再輸入自己的密碼。** 判例是 `/account/password`：session 本身不足以
+   構成憑證動作的授權。一次匯出就等於整台部署的每一個密碼雜湊。
+9. **身分衝突是一級檢查。** 新主機為了能登入後台先註冊的帳號幾乎必然與舊主機撞名；
+   若當成普通 Additive「略過」，結果是「密碼正確、登進去是空帳號」而且沒有訊息。
+   預設整包拒絕；`adopt-archive` 才改指，且**被擠掉的帳號絕不刪除**。
+10. **這一頁必須在正式 bundle 裡。** `App.tsx` 有兩個裸 `if (!import.meta.env.DEV) return;`
+    守著動態 import，rollup 會整塊折掉。最容易做錯的方式是把新頁塞進
+    `ui/ContentPage.tsx` 的 `CONTENT_ROUTES`（#229 的鑄形工坊就在那）。正確做法是
+    **靜態 top-level import + NAV 條目**，並由新的 `migrationGate.test.ts` 釘住「存在」
+    （`contentGate.test.ts` 只釘「缺席」，此前沒有任何東西釘存在）。
+
+### 刻意不帶
+
+`config/ai-provider`（明文金鑰）、`config/slack-notify`（webhook 密鑰）、`journal/`、
+`owner-setup-token`、`blizzard-overlay/`（84 MB 素材，隨映像走 —— **UI 主動說「新主機
+看起來很空是正常的」**）、`content-backups/`、`icon-src-original/`、`_index.json`、
+`_migration/`。每一條都逐字寫進 manifest 的 `scope.excluded` 與 UI 表格，
+因為「不在裡面」和「我忘了」看起來一模一樣。
+
+### 安全差（必須說出來，不能默默繼承）
+
+#179 把 `accounts` 設成 opt-in、`invites` 完全不帶。#243 **定義上反轉這兩項** ——
+不帶就不叫搬遷。這個反轉就是整個安全差，已寫進 `archive.ts` 的 `SECURITY_DELTA`
+並由測試釘住它出現在 UI 文案裡。
+
+### 還沒做，不在本次 scope
+
+- **ZIP 的 central directory 是明文**，`unzip -l` 就能看到全家人的使用者名稱與 email
+  （那兩個 id 就是登入解析的 key）。這不是可以靠工程消除的，只在 UI 與 runbook 揭露。
+- **對戰回放預設關**。它是 game-server 的檔案、在另一個掛載點，UI 直接建議
+  `scp -r data/replays/`。
+- **家用主機 nginx 前面還有 Caddy**。依 owner 2026-07-26 指令，本次**完全沒有連線到
+  ggd.adms.ai**，所以看不到主機上的 Caddyfile；若上傳在邊緣就 413，要查的是
+  `request_body max_size`。這條寫進 runbook，實際改動是 owner 在主機上的動作。
+- 本功能**永遠不刪任何東西**。若日後希望匯入後自動清掉臨時管理員帳號，那會是這個
+  功能唯一會刪東西的地方，需要 owner 明確指示。

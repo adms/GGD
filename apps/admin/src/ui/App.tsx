@@ -19,6 +19,13 @@ import { VoxelSkinSheetPage } from "./VoxelSkinSheetPage";
 import { MCoinGrantPage } from "./MCoinGrantPage";
 import { InvitesPage } from "./InvitesPage";
 import { AuditPage } from "./AuditPage";
+// #243 資料搬遷. A STATIC top-level import, deliberately: the two dev-gated
+// pages below reach their modules through `if (!import.meta.env.DEV) return;`
+// + a dynamic import, which rollup dead-folds out of a production build. A
+// migration tool that only exists on localhost cannot migrate a host, so this
+// one must be in the production bundle — see migrationGate.test.ts, which
+// fails if it ever leaves.
+import { DataMigrationPage } from "./DataMigrationPage";
 import { ChangePasswordDialog } from "./ChangePasswordDialog";
 import { Btn, Panel } from "./widgets";
 import { ACCENT, BG, PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN, WARN } from "./theme";
@@ -75,6 +82,10 @@ const NAV: NavItem[] = [
   { page: "hub", label: "Console Hub", emoji: "🗂️", section: SEC_SYS },
   { page: "combatEnv", label: "戰鬥系統", emoji: "⚖️", section: SEC_SYS },
   { page: "serverOps", label: "系統運維", emoji: "🛠️", section: SEC_SYS },
+  // #243 — 一鍵打包 ZIP 匯出／匯入平台資料，無痛移機. Session-gated (see
+  // store.ts) and PRESENT IN THE PRODUCTION BUNDLE, because a migration tool
+  // that only runs on localhost cannot migrate a host.
+  { page: "dataMigration", label: "資料搬遷", emoji: "📦", section: SEC_SYS },
 ];
 
 /**
@@ -496,6 +507,7 @@ function Console(): React.JSX.Element {
             )}
             {page === "combatEnv" && <CombatEnvPage />}
             {page === "serverOps" && <ServerOpsPage />}
+            {page === "dataMigration" && <DataMigrationPage />}
             {page === "ai" && <AiSettingsPage />}
             {page === "modelBudget" && <ModelBudgetPage />}
             {page === "iconTracking" && <IconTrackingPage />}

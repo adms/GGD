@@ -34,6 +34,7 @@ import (
 	"github.com/ggd/platform/internal/invite"
 	"github.com/ggd/platform/internal/lobby"
 	"github.com/ggd/platform/internal/opsenv"
+	"github.com/ggd/platform/internal/platformarchive"
 	"github.com/ggd/platform/internal/presence"
 	"github.com/ggd/platform/internal/ranking"
 	"github.com/ggd/platform/internal/room"
@@ -62,8 +63,10 @@ type Server struct {
 	Invites   *invite.Service
 	AI        *ai.Service
 	Approve   *approvelink.Service
-	Hub       *lobby.Hub
-	Sessions  *lobby.Sessions
+	// Archive is #243's whole-platform ZIP export/import.
+	Archive  *platformarchive.Service
+	Hub      *lobby.Hub
+	Sessions *lobby.Sessions
 
 	// registerRateLimit is the max /auth/register calls allowed per minute
 	// server-wide (0 = disabled). This is an app-layer backstop to the edge's
@@ -317,6 +320,21 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 	inviteSvc := invite.New(store)
 	aiSvc := ai.New(store, rdb)
 
+	// #243 whole-platform migration archive. It is handed the auth service as
+	// its Reauthenticator (export and commit re-confirm the caller's OWN
+	// password on top of the admin session) and a Reindexer that writes the
+	// Redis uniqueness indexes with SET — deliberately NOT boot.Rebuild, which
+	// uses SetNX and therefore cannot repair a username index the migration
+	// just re-pointed. See internal/platformarchive/reindex.go.
+	archiveSvc := platformarchive.New(platformarchive.Deps{
+		Store:           store,
+		DataDir:         store.Root(),
+		ContentDir:      cfg.ContentDir,
+		PlatformVersion: os.Getenv("GGD_PLATFORM_VERSION"),
+		Auth:            authSvc,
+		Reindex:         &platformarchive.Reindexer{Rdb: rdb, Season: rank.Season()},
+	})
+
 	// #209 Slack pending-registration notifier + click-to-approve link. The token
 	// is signed with the JWT secret (domain-separated — see approvelink), consumed
 	// through Redis for single-use, and applied through admin.SetApprovalFromLink,
@@ -357,7 +375,7 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 		Auth: authSvc, Friends: friends, Presence: pres, Rooms: rooms,
 		Ranking: rank, Gamelink: glink, Wallet: walletSvc, Admin: adminSvc,
 		Curation: curationSvc, Overlay: overlaySvc, CombatEnv: combatEnvSvc, OpsEnv: opsEnvSvc, Invites: inviteSvc,
-		AI: aiSvc, Approve: approveSvc, Hub: hub, Sessions: sessions,
+		AI: aiSvc, Approve: approveSvc, Archive: archiveSvc, Hub: hub, Sessions: sessions,
 		registerRateLimit:  envInt("GGD_REGISTER_RATE_LIMIT", 0),
 		requireApproval:    requireApproval,
 		pendingApprovalTTL: cfg.PendingApprovalTTL,
@@ -371,6 +389,24 @@ func New(cfg config.Config, opts Options) (*Server, error) {
 // that works today is affected; it additionally protects any route that reads
 // the raw body without DecodeJSON.
 const maxRequestBodyBytes int64 = 1 << 20 // 1 MiB
+
+// maxArchiveUploadBytes is the cap for the ONE route that legitimately carries
+// a large body: #243's platform-archive upload. A real migration archive is
+// tens of MB (hundreds if the operator opts replays in), so the global 1 MiB
+// cap would 413 every single import — with no explanation on either side, since
+// MaxBytesReader's error surfaces as a generic decode failure.
+//
+// RAISING THE GLOBAL CAP INSTEAD WOULD NOT BE ACCEPTABLE: it exists as #126
+// go-live hardening and applies to every route precisely so no route has to
+// remember to bound itself.
+const maxArchiveUploadBytes int64 = 512 << 20 // 512 MiB
+
+// archiveStagePath is the only path exempt from the global body cap.
+//
+// EXACT match, never a prefix: a prefix exemption would silently enlarge every
+// future route added under the same subtree (plan and commit, which take small
+// JSON bodies, live right next to it).
+const archiveStagePath = platformarchive.StagePath
 
 // hstsHeader sets HTTP Strict-Transport-Security on every response. TLS
 // terminates upstream of this binary, but the header travels with the app so
@@ -387,7 +423,11 @@ func hstsHeader(next http.Handler) http.Handler {
 func capRequestBody(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.Body != nil {
-			r.Body = http.MaxBytesReader(w, r.Body, maxRequestBodyBytes)
+			limit := maxRequestBodyBytes
+			if r.URL.Path == archiveStagePath {
+				limit = maxArchiveUploadBytes
+			}
+			r.Body = http.MaxBytesReader(w, r.Body, limit)
 		}
 		next.ServeHTTP(w, r)
 	})
@@ -498,6 +538,11 @@ func (s *Server) buildRouter(templates *room.Templates) {
 			// game server's private recording API through the admin gate, because
 			// recordings carry player names. AdminOnly inside.
 			gamelink.NewReplayHandlers(s.Gamelink, s.Admin.AdminOnly).Mount(pr)
+			// #243 /admin/platform-archive/* — the whole-platform ZIP
+			// export/import. AdminOnly inside, and the two dangerous verbs
+			// (export, commit) additionally re-confirm the caller's OWN
+			// password through auth.ReauthPassword. See internal/platformarchive.
+			platformarchive.NewHandlers(s.Archive, s.Admin.AdminOnly).Mount(pr)
 		})
 
 		// #126 private-deploy: admin account-approval gate. Registered as its own

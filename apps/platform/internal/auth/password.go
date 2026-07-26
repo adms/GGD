@@ -81,39 +81,13 @@ func (s *Service) ChangePassword(ctx context.Context, accountID, currentPassword
 	if err := ValidatePassword(newPassword); err != nil {
 		return TokenPair{}, err
 	}
-	// An over-long current password is a non-starter — refuse it the same way
-	// Login does rather than paying argon2id for it.
-	if len(currentPassword) > 128 || hasControl(currentPassword) {
-		_, _ = argon2id.ComparePasswordAndHash("x", s.dummyHash)
-		return TokenPair{}, ErrInvalidCredentials
-	}
-
-	// 2. Throttle the current-password guess, per account.
-	ok, err := s.rdb.RateAllow(ctx, "password-change", accountID, passwordChangeRateLimit, passwordChangeRateWindow)
+	// 2–3. Length guard, throttle the guess, verify the current password, and
+	//    refuse a banned account — in that order, unchanged. Extracted into
+	//    ReauthPassword so the platform has ONE proof-of-possession check; see
+	//    its doc comment.
+	a, err := s.reauth(ctx, accountID, currentPassword, "password-change")
 	if err != nil {
 		return TokenPair{}, err
-	}
-	if !ok {
-		return TokenPair{}, httpx.RateLimited("too many password change attempts")
-	}
-
-	// 3. Verify the current password with the SAME timing-safe comparison Login
-	//    uses, and fail identically when the account is gone.
-	a, err := s.accounts.GetByID(ctx, accountID)
-	if err != nil {
-		if errors.Is(err, account.ErrNotFound) {
-			_, _ = argon2id.ComparePasswordAndHash(currentPassword, s.dummyHash)
-			return TokenPair{}, ErrInvalidCredentials
-		}
-		return TokenPair{}, err
-	}
-	match, err := argon2id.ComparePasswordAndHash(currentPassword, a.PasswordHash)
-	if err != nil || !match {
-		return TokenPair{}, ErrInvalidCredentials
-	}
-	// A banned account may not rotate its own credentials.
-	if a.Banned {
-		return TokenPair{}, ErrBanned(a.BanReason)
 	}
 
 	// 4. Reject a no-op change. Checked against the STORED HASH rather than by
@@ -155,6 +129,64 @@ func (s *Service) ChangePassword(ctx context.Context, accountID, currentPassword
 	//    change happened, by whom, and that sessions were revoked.
 	s.auditPasswordChange(ctx, a)
 	return pair, nil
+}
+
+// ReauthPassword confirms that the caller HOLDS the account's password RIGHT
+// NOW, on top of a valid session.
+//
+// It exists because a session token is not authorisation for a credential
+// action. That rule was first bought by /account/password (see this file's
+// header: a stolen token must not be enough to lock the owner out), and #243's
+// platform-data export/import re-uses it — one export is every password hash
+// and every live invite code on the deploy, which is a larger exposure than any
+// other route in the product.
+//
+// scope names the rate-limit bucket, so a different dangerous action gets its
+// own budget instead of eating the password-change one. Failure is always the
+// generic ErrInvalidCredentials, so this is not an oracle.
+func (s *Service) ReauthPassword(ctx context.Context, accountID, password, scope string) error {
+	if scope == "" {
+		scope = "reauth"
+	}
+	_, err := s.reauth(ctx, accountID, password, scope)
+	return err
+}
+
+// reauth is the shared body: length guard, per-account throttle, timing-safe
+// argon2id comparison, ban check.
+func (s *Service) reauth(ctx context.Context, accountID, password, scope string) (account.Account, error) {
+	// An over-long password is a non-starter — refuse it the way Login does
+	// rather than paying argon2id for it, while still burning a dummy compare
+	// so the timing shape does not change.
+	if len(password) > 128 || hasControl(password) {
+		_, _ = argon2id.ComparePasswordAndHash("x", s.dummyHash)
+		return account.Account{}, ErrInvalidCredentials
+	}
+	ok, err := s.rdb.RateAllow(ctx, scope, accountID, passwordChangeRateLimit, passwordChangeRateWindow)
+	if err != nil {
+		return account.Account{}, err
+	}
+	if !ok {
+		return account.Account{}, httpx.RateLimited("too many attempts, please wait a moment")
+	}
+	a, err := s.accounts.GetByID(ctx, accountID)
+	if err != nil {
+		if errors.Is(err, account.ErrNotFound) {
+			_, _ = argon2id.ComparePasswordAndHash(password, s.dummyHash)
+			return account.Account{}, ErrInvalidCredentials
+		}
+		return account.Account{}, err
+	}
+	match, err := argon2id.ComparePasswordAndHash(password, a.PasswordHash)
+	if err != nil || !match {
+		return account.Account{}, ErrInvalidCredentials
+	}
+	// A banned account may not rotate its own credentials, nor perform any
+	// other action that re-proves them.
+	if a.Banned {
+		return account.Account{}, ErrBanned(a.BanReason)
+	}
+	return a, nil
 }
 
 // auditPasswordChange appends the audit line, best effort: the password has

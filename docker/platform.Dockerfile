@@ -45,6 +45,7 @@ COPY apps/platform/ ./
 RUN CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags="-s -w" -o /out/platform ./cmd/platform \
  && CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags="-s -w" -o /out/seed ./cmd/seed \
  && CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags="-s -w" -o /out/opstate ./cmd/opstate \
+ && CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags="-s -w" -o /out/platformarchive ./cmd/platformarchive \
  && CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags="-s -w" -o /out/ownerreset ./cmd/ownerreset
 
 # Distroless static: no shell, no package manager, runs as nonroot (uid 65532).
@@ -53,6 +54,12 @@ COPY --from=build /out/platform /platform
 COPY --from=build /out/seed /seed
 COPY --from=build /out/ownerreset /ownerreset
 COPY --from=build /out/opstate /opstate
+# #243 whole-platform migration archive. It is baked in for the reason the
+# console button cannot cover: a BRAND-NEW host has no account, so nobody can
+# sign into /admin to press it. The first import on a fresh host is
+#   docker compose … exec -T platform /platformarchive apply -in - -data /data \
+#       -content /srv/content < ggd-platform-archive-….zip
+COPY --from=build /out/platformarchive /platformarchive
 
 # All configuration and secrets come from the environment (K8s ConfigMap +
 # Secret / compose env). NOTHING secret is baked into this image (infra-09).
