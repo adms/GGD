@@ -7,10 +7,16 @@
  *   1. `h` survives the interpolation buffer and is smooth between ticks,
  *   2. the teleport classifier became 3-D — a body killed at apex SNAPS down
  *      instead of being smeared through the air — while staying a NO-OP for
- *      every grounded entity that shipped before this task,
- *   3. `sc` (temporary scale) rides the same seam and lands exactly on 1.
+ *      every grounded entity that shipped before this task.
+ *
+ * There used to be a third case here, for the `sc` temporary-scale channel. It
+ * has been deleted along with the channel (#247 follow-up): the sim wrote a
+ * literal 1 at every site, so the test hand-fed the buffer 1.2/1.9/1.0 samples
+ * no server could ever produce and proved nothing about the game. See the note
+ * in packages/shared/src/protocol/schema.ts.
  */
 import { describe, it, expect } from "vitest";
+import { cover } from "@ggd/shared/testkit/cover";
 import { InterpolationBuffer } from "./InterpolationBuffer";
 import { TELEPORT_STEP_UNITS } from "../render/math/motion";
 import { leapHeightAt, leapTicks } from "@ggd/shared/sim";
@@ -21,6 +27,7 @@ const APEX_MILLI = 11000;
 
 describe("#247 render seam — fly height reaches the client", () => {
   it("interpolates h between snapshots instead of dropping it", () => {
+    cover("leap-render-height");
     const buf = new InterpolationBuffer();
     for (let k = 0; k <= N; k++) {
       buf.push(1, { tick: k, x: k * 0.3, z: 0, fx: 1, fz: 0, h: leapHeightAt(k, N, APEX_MILLI) });
@@ -84,18 +91,5 @@ describe("#247 render seam — fly height reaches the client", () => {
     expect(mid.x).toBeGreaterThan(0.4);
     expect(mid.x).toBeLessThan(0.6);
     expect(mid.h).toBe(0);
-    expect(mid.sc).toBe(1);
-  });
-
-  it("temporary scale rides the same seam and lands EXACTLY on 1", () => {
-    const buf = new InterpolationBuffer();
-    // godie-hapm.r 巨神一擊: 120 % → 190 % over 8 ticks, then back to normal.
-    buf.push(1, { tick: 0, x: 0, z: 0, fx: 1, fz: 0, sc: 1.2 });
-    buf.push(1, { tick: 8, x: 0, z: 0, fx: 1, fz: 0, sc: 1.9 });
-    buf.push(1, { tick: 9, x: 0, z: 0, fx: 1, fz: 0, sc: 1 });
-    expect(buf.sample(1, 4)!.sc).toBeCloseTo(1.55, 6); // linear, no overshoot
-    // absent (= wire 0 = "no ability is scaling me") maps to 1, NEVER to 0 —
-    // the one careless read that would make champions vanish.
-    expect(buf.sample(1, 9)!.sc).toBe(1);
   });
 });

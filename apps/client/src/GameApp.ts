@@ -961,9 +961,7 @@ export class GameApp {
     const seen = new Set<number>();
     state.entities.forEach((es) => {
       seen.add(es.id);
-      // #247: fly height + temporary scale interpolate on the same seam as x/z.
-      // `sc` is a PERCENT on the wire and 0 means ABSENT, not 0 % — mapping it
-      // to 0 here would shrink every champion to nothing.
+      // #247: fly height interpolates on the same seam as x/z.
       this.interp.push(es.id, {
         tick: state.tick,
         x: es.x,
@@ -971,7 +969,6 @@ export class GameApp {
         fx: es.fx,
         fz: es.fz,
         h: es.h,
-        sc: es.sc > 0 ? es.sc / 100 : 1,
       });
     });
     this.interp.prune(seen);
@@ -1387,7 +1384,7 @@ export class GameApp {
     state.entities.forEach((es) => {
       let e = this.entityPool[i];
       if (!e) {
-        e = { id: 0, kind: 0, seatId: 0, key: "", teamId: 0, x: 0, z: 0, fx: 0, fz: 0, alive: false, h: 0, sc: 1, airborne: false };
+        e = { id: 0, kind: 0, seatId: 0, key: "", teamId: 0, x: 0, z: 0, fx: 0, fz: 0, alive: false, h: 0, airborne: false };
         this.entityPool[i] = e;
       }
       e.id = es.id;
@@ -1400,9 +1397,8 @@ export class GameApp {
       e.fx = es.fx;
       e.fz = es.fz;
       e.alive = es.alive;
-      // #247 airborne channel (champions only in practice; 0/1 for everyone else)
+      // #247 airborne channel (champions only in practice; 0/false for everyone else)
       e.h = es.h;
-      e.sc = es.sc > 0 ? es.sc / 100 : 1;
       e.airborne = (es.flags & ENTITY_FLAG.AIRBORNE) !== 0;
       // revive circles (kind 3) reuse the float slots for their own state —
       // see protocol ENTITY_KIND for the mapping. Decoded once here so the

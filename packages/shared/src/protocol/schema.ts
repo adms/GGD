@@ -340,18 +340,32 @@ export class EntityState extends Schema {
    * of honest field beats a shield bar that flickers during a jump.
    */
   declare h: number;
-  /**
-   * TEMPORARY model scale as a PERCENT of the #150-normalised size (task #247).
+  /*
+   * NO `sc` (temporary model scale) FIELD — deliberately removed, #247
+   * follow-up. #247 shipped a uint8 `sc` percent channel end to end (wire →
+   * interpolation → ChampionView) for godie-hapm.r 巨神一擊, but the sim never
+   * wrote anything but 1: the whole lane was dead weight with a green test that
+   * hand-fed it fabricated numbers, so the test proved nothing about the game.
    *
-   * 0 = ABSENT, i.e. normal size — NOT "0 %". The client maps 0 → multiplier 1,
-   * never → 0, which is the one place a careless read would make champions
-   * vanish. Exercised today by exactly one shipped ability (godie-hapm.r
-   * 巨神一擊, the only ability in the map that scales the CASTER rather than a
-   * dummy: 14 of the 15 SetUnitScalePercent call sites target
-   * GetLastCreatedUnit()). uint8 covers its 120 %→190 % ramp with room to spare;
-   * 1 % of a 1.8 u champion is 1.8 cm, well below perceptibility.
+   * WHY IT WAS NOT SIMPLY WIRED UP. 巨神一擊 (JASS rawcode A0U8,
+   * `Trig_Gigantomakhia_*`, war3map.j j:51866-52040) IS the only ability in the
+   * map that scales the CASTER, and its real numbers are: absolute
+   * SetUnitScalePercent 130 → 190 in 10-point steps over 7 ticks of a 0.04 s
+   * timer (j:51931-51932, `Size = 190 - Color*2` with `Color` counting 30→0),
+   * held through the charge, then restored to 120 at the blast (j:52028) —
+   * which is the hero's own base scale (`Hapm.scale = 1.2` in OBJECTS.json), so
+   * as a multiplier over GGD's #150-normalised size the ramp is 1.083 → 1.583
+   * and back to 1.0.
+   *
+   * But that ability is NOT a leap — it is a paused grow-then-charge with no
+   * `SetUnitFlyHeightBJ` anywhere in its cluster — so `LeapSystem`, the only
+   * thing that owns `world.airborne`, cannot drive it. Wiring it needs a new
+   * EffectDef kind, a new per-entity ramp store, its own death/round-reset
+   * teardown and a digest fold: a new sim feature, not the completion of a
+   * wire, and out of scope for a follow-up fix. It belongs with #249 (變身系統)
+   * / #50 (per-invocation art params), which own unit scaling; the JASS numbers
+   * are recorded here so whoever picks it up does not have to re-derive them.
    */
-  declare sc: number;
 
   constructor() {
     super();
@@ -372,7 +386,6 @@ export class EntityState extends Schema {
     this.alive = true;
     this.flags = 0;
     this.h = 0;
-    this.sc = 0;
   }
 }
 defineTypes(EntityState, {
@@ -393,7 +406,6 @@ defineTypes(EntityState, {
   alive: "boolean",
   flags: "uint16",
   h: "float32",
-  sc: "uint8",
 });
 
 export class MatchState extends Schema {

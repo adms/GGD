@@ -351,13 +351,12 @@ export function projectSnapshot(ctl: MatchController, state: MatchState, humanDr
       // translucent red. Composed from the sim's burn predicate itself, so the
       // wash and the damage can never disagree.
       if (isBurnedByFireRing(world, id)) flags |= ENTITY_FLAG.BURNING;
-      // #247 AIRBORNE: fly height + temporary model scale. Absent (the normal
-      // case) writes 0/0, which Colyseus's delta encoder then never puts on the
-      // wire — so a match with no leaps costs exactly zero extra bytes.
-      // `sc` is a PERCENT and 0 means ABSENT, not 0 % (see protocol schema).
+      // #247 AIRBORNE: fly height. Absent (the normal case) writes 0, which
+      // Colyseus's delta encoder then never puts on the wire — so a match with
+      // no leaps costs exactly zero extra bytes. (The companion `sc` model-scale
+      // channel was removed as dead — see the note in protocol/schema.ts.)
       const air = world.airborne.get(id);
       es.h = air ? air.y : 0;
-      es.sc = air ? Math.round(air.scaleMul * 100) : 0;
       if (air) flags |= ENTITY_FLAG.AIRBORNE;
       es.flags = flags;
     }

@@ -135,6 +135,28 @@ function effectLines(
       case "dash":
         out.push({ depth, kind: e.kind, summary: `dash ${e.mode} ${e.maxDistance}u @ ${e.speed}u/s` });
         break;
+      // TASK #247 follow-up. `leap` was added to the shared EffectDef union but
+      // never taught to this switch, so 蒼月潮 07-03 — an ability whose ONLY
+      // effect is a leap — previewed as an EMPTY effect list: the exact
+      // 「表單看到的 == 遊戲跑的」 break the `restore`/`spawnVfx` note below
+      // already records. The landing payload recurses like spawnProjectile's,
+      // because that is where a leap's damage actually lives.
+      case "leap": {
+        const who = e.applyTo === "target" ? "target" : "self";
+        const where =
+          e.mode === "inPlace"
+            ? "in place"
+            : `to point${e.throwDistance !== undefined ? ` (throw ${e.throwDistance}u)` : ""}`;
+        out.push({
+          depth,
+          kind: e.kind,
+          summary: `leap ${who} ${where}, apex ${e.apexHeight}u over ${e.durationSec}s${
+            e.landRadius ? `, land AoE ${e.landRadius}u` : ""
+          }${e.onLand?.length ? ", on land:" : ""}`,
+        });
+        if (e.onLand?.length) effectLines(e.onLand, finalStats, maxRank, depth + 1, out);
+        break;
+      }
       case "spawnProjectile":
         out.push({ depth, kind: e.kind, summary: `projectile ${e.projectileId}, on hit:` });
         effectLines(e.onHit, finalStats, maxRank, depth + 1, out);
@@ -161,6 +183,16 @@ function effectLines(
           summary: `vfx ${e.vfxId} at ${e.at ?? "self"}${e.durationSec !== undefined ? ` for ${e.durationSec}s` : ""}`,
         });
         break;
+      default: {
+        // EXHAUSTIVENESS TRIPWIRE (task #247 follow-up). This switch used to
+        // fall through silently, which is how `restore`, `spawnVfx` and then
+        // `leap` each shipped previewing as a BLANK line. `never` makes the
+        // compiler refuse the next EffectDef kind until it is handled here —
+        // the same job walk.test.ts's tag list does for the form, done at
+        // build time instead of test time.
+        const unhandled: never = e;
+        throw new Error(`preview: unhandled effect kind ${(unhandled as EffectDef).kind}`);
+      }
     }
   }
   return out;

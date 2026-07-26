@@ -15,7 +15,7 @@ import { startDash } from "../systems/MovementSystem";
 import { startLeap, resolveLandingPoint } from "../movement/leap";
 import { Projectiles } from "../content/registry";
 import { resolveAbilityRange } from "../abilities/abilitySystem";
-import { normalize, sub, len } from "../math/vec2";
+import { normalize, sub } from "../math/vec2";
 
 export function runEffects(effects: readonly EffectDef[], ctx: EffectContext): void {
   for (const e of effects) applyEffect(e, ctx);
@@ -199,10 +199,16 @@ function applyEffect(e: EffectDef, ctx: EffectContext): void {
         }
         // The landing point is proved LEGAL here, once, at takeoff — the arc is
         // re-aimed rather than corrected at touchdown (see movement/leap.ts).
-        // The range clamp uses the caster→point distance so a leap can never
-        // out-range the ability that spawned it.
-        const dist = len(sub(requested, ft.pos));
-        const to = resolveLandingPoint(world, flyer, requested, dist);
+        // "Legal" means obstacle-free and inside the zone boundary; it does NOT
+        // mean range-clamped, and there is deliberately no clamp here. Reach was
+        // already bounded upstream, where the ability's range is known: a
+        // "ground" cast has its point clamped to `resolveAbilityRange(def.range)`
+        // by abilitySystem, a "targeted" cast rejects an out-of-range target
+        // outright, and the thrown-victim branch above flies its own
+        // `throwDistance` (already through the #136 reach factor). The clamp this
+        // call used to carry was passed `len(requested - flyer.pos)` — its own
+        // input distance — so it could never fire; see resolveLandingPoint.
+        const to = resolveLandingPoint(world, flyer, requested);
         startLeap(world, flyer, {
           to,
           apexHeight: e.apexHeight,
