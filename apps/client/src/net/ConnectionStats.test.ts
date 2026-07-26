@@ -8,6 +8,9 @@ import { SNAPSHOT_MS } from "@ggd/shared/constants";
 import {
   ConnectionStats,
   OFFLINE_SNAPSHOT_GAP_MS,
+  PING_GOOD_MS,
+  PING_POOR_MS,
+  PING_PROTOCOL_FLOOR_MS,
   classifyConnection,
 } from "./ConnectionStats";
 
@@ -165,5 +168,54 @@ describe("the ping carries its own provenance (ping-provenance)", () => {
     cs.noteSent(7, 10_000);
     cs.noteAck(7, 10_030);
     expect(cs.sample(10_030).pingSamples).toBe(1);
+  });
+});
+
+/**
+ * The classifier's ping cuts must be measured from the protocol's own floor.
+ *
+ * #272's adversarial pass spliced a TCP delay proxy between a local client and
+ * a local game-server and found the readout sits at 34.4 / 34.7 ms with ZERO
+ * injected latency — two 30 Hz quantisations (tick-boundary input consumption
+ * + ack riding the next state patch) that no connection can remove. Bare 60 /
+ * 140 cuts therefore meant ~26 / ~106 ms of real network RTT, one grade
+ * pessimistic for every player. The owner's family plays Taiwan → asia-east1
+ * (real RTT ~5–40 ms), i.e. 39–74 ms displayed: most of them would have read
+ * 「普通」 on a flawless connection.
+ */
+describe("#272 the ping cuts sit on the protocol floor, not at zero", () => {
+  const at = (pingMs: number) =>
+    classifyConnection({ pingMs, jitterMs: 0, snapshotGapMs: 0 });
+
+  it("a perfect connection reads good, not fair", () => {
+    // The measured floor itself, and the worst of the two measured samples.
+    expect(at(34)).toBe("good");
+    expect(at(34.7)).toBe("good");
+  });
+
+  it("Taiwan → asia-east1 (real RTT 5–40ms) reads good across the whole range", () => {
+    for (const realRtt of [5, 10, 20, 26, 40]) {
+      const displayed = PING_PROTOCOL_FLOOR_MS + realRtt;
+      const q = at(displayed);
+      // 40ms of real RTT is past the 26ms good budget — fair is correct there,
+      // but nothing in this range may read `poor`.
+      expect(q, `real ${realRtt}ms → displayed ${displayed}ms`).not.toBe("poor");
+    }
+    expect(at(PING_PROTOCOL_FLOOR_MS + 26)).toBe("good");
+    expect(at(PING_PROTOCOL_FLOOR_MS + 27)).toBe("fair");
+  });
+
+  it("the budgets above the floor are still #272's original 26 / 106", () => {
+    expect(PING_GOOD_MS - PING_PROTOCOL_FLOOR_MS).toBe(26);
+    expect(PING_POOR_MS - PING_PROTOCOL_FLOOR_MS).toBe(106);
+    expect(at(PING_POOR_MS)).not.toBe("poor");
+    expect(at(PING_POOR_MS + 0.1)).toBe("poor");
+  });
+
+  it("jitter needs no floor correction — the cadence deviation cancels it", () => {
+    // A perfect 30Hz stream deviates 0 from the nominal gap, so the same 15/45
+    // cuts hold regardless of the ping plinth.
+    expect(classifyConnection({ pingMs: 34, jitterMs: 15, snapshotGapMs: 0 })).toBe("good");
+    expect(classifyConnection({ pingMs: 34, jitterMs: 46, snapshotGapMs: 0 })).toBe("poor");
   });
 });

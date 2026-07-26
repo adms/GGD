@@ -57,16 +57,47 @@ export interface ConnectionReport extends ConnectionSample {
 export const OFFLINE_SNAPSHOT_GAP_MS = 2000;
 
 /**
- * Pure classifier: ping + jitter (+ a stale-snapshot guard) → quality chip.
- * good  ≤ 60ms ping, ≤ 15ms jitter; poor > 140ms ping or > 45ms jitter or a
- * snapshot gap > 500ms; fair in between; `offline` once the stream has been
- * silent for OFFLINE_SNAPSHOT_GAP_MS (see above).
+ * What `pingMs` reads on a PERFECT connection — the protocol's own floor.
+ *
+ * `pingMs` is an input→ack round trip, not a network round trip, and two 30Hz
+ * quantisations sit inside it that no amount of bandwidth removes: the server
+ * only consumes input on a tick boundary (SNAPSHOT_MS), and the ack only rides
+ * home on the next state patch (SNAPSHOT_MS again).
+ *
+ * MEASURED, not derived (task #272's adversarial pass): a TCP delay proxy was
+ * spliced between a local client and a local game-server, and with **zero**
+ * injected latency the readout settled at 34.4 / 34.7 ms. Injecting 100 ms of
+ * RTT moved it to 137.9 / 139.4 (+103.5 / +104.9); 200 ms → 237.8 / 238.2
+ * (+203.4 / +203.8); returning to 0 came back to 34.4. So the estimator tracks
+ * real latency to ≤5 ms — it simply sits on a ~34 ms plinth.
+ *
+ * The classifier's thresholds have to be measured from the plinth, or every
+ * player on a flawless connection reads one grade worse than they are. The
+ * owner's family plays from Taiwan against asia-east1 — real RTT roughly
+ * 5–40 ms — which lands at 39–74 ms displayed and would have shown 「普通」
+ * for most of them under a bare 60 ms cut.
  */
+export const PING_PROTOCOL_FLOOR_MS = 34;
+
+/**
+ * Pure classifier: ping + jitter (+ a stale-snapshot guard) → quality chip.
+ *
+ * The ping cuts are `PING_PROTOCOL_FLOOR_MS + (network budget)`, so they mean
+ * what they look like they mean: `good` is ≤26 ms of real network RTT, `poor`
+ * is >106 ms. Those two budgets are the original #272 intent (60 / 140); only
+ * the plinth is new. Jitter needs no such correction — it is a deviation from
+ * the nominal cadence, so the quantisation cancels out of it.
+ *
+ * `offline` once the stream has been silent for OFFLINE_SNAPSHOT_GAP_MS.
+ */
+export const PING_GOOD_MS = PING_PROTOCOL_FLOOR_MS + 26;
+export const PING_POOR_MS = PING_PROTOCOL_FLOOR_MS + 106;
+
 export function classifyConnection(s: ConnectionSample): ConnectionQuality {
   if (s.snapshotGapMs > OFFLINE_SNAPSHOT_GAP_MS) return "offline";
   if (s.snapshotGapMs > 500) return "poor";
-  if (s.pingMs > 140 || s.jitterMs > 45) return "poor";
-  if (s.pingMs <= 60 && s.jitterMs <= 15) return "good";
+  if (s.pingMs > PING_POOR_MS || s.jitterMs > 45) return "poor";
+  if (s.pingMs <= PING_GOOD_MS && s.jitterMs <= 15) return "good";
   return "fair";
 }
 
