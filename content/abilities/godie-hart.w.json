@@ -28,7 +28,7 @@
       "mode": "toPoint",
       "apexHeight": 11.0,
       "durationSec": 0.82,
-      "landRadius": 5.5,
+      "landRadius": 4.58,
       "onLand": [
         {
           "kind": "damage",
@@ -60,7 +60,7 @@
   ],
   "vfxKey": "fx.prim.fire.explosion",
   "targetsEnemies": true,
-  "radius": 5.5,
+  "radius": 4.58,
   "schema": "ability@1",
   "castTimeSec": 0.7
 }

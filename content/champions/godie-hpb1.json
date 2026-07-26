@@ -116,6 +116,12 @@
               }
             ]
           }
+        },
+        {
+          "kind": "applyStatus",
+          "statusId": "moon-combo",
+          "duration": 1.0,
+          "applyTo": "self"
         }
       ],
       "vfxKey": "fx.prim.physical.pulse-sm",
@@ -170,6 +176,17 @@
                     "coeff": 0.5
                   }
                 ]
+              },
+              "comboBonus": {
+                "statusId": "moon-combo",
+                "amount": {
+                  "ratios": [
+                    {
+                      "stat": "ad",
+                      "coeff": 1.25
+                    }
+                  ]
+                }
               }
             }
           ]

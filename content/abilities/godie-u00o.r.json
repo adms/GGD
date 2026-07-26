@@ -24,7 +24,7 @@
       "mode": "inPlace",
       "apexHeight": 18.33,
       "durationSec": 0.84,
-      "landRadius": 3.67,
+      "landRadius": 6.97,
       "onLand": [
         {
           "kind": "damage",
@@ -54,7 +54,7 @@
   ],
   "vfxKey": "fx.prim.ki.bolt-lg",
   "targetsEnemies": true,
-  "radius": 3.67,
+  "radius": 6.97,
   "schema": "ability@1",
   "castTimeSec": 0.9
 }

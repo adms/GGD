@@ -71,7 +71,16 @@ describe("ContentLoader + FsContentSource (content-05)", () => {
     expect(Configs.get("config.match").tick.tickHz).toBe(30);
     expect(Models.get("champ.sela").glbPath).toBe("assets/models/champions/blocky-mage.glb");
     expect(VfxDefs.ids().length).toBeGreaterThanOrEqual(2);
-    expect(StatusEffects.ids().sort()).toEqual(["burnstun", "root", "slow25", "slow30", "slow40"]);
+    // `moon-combo` is #247's 者、皆、陣 combo window (war3map.j:34438) — the
+    // first BUFF-polarity status doc the tree has ever carried.
+    expect(StatusEffects.ids().sort()).toEqual([
+      "burnstun",
+      "moon-combo",
+      "root",
+      "slow25",
+      "slow30",
+      "slow40",
+    ]);
   });
 
   /**

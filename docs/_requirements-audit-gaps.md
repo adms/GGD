@@ -2963,3 +2963,58 @@ Owner 指令逐字：「48+3 (賈修, 揍敵客, 喪標麥可) 開放如果你�
 **其他刻意的取捨**：沒有「全選」預設、沒有任何一列預先打勾（預先打勾＝橡皮圖章，比沒有這一頁更危險）；數值讀不到時**體檢視為未通過**（fail closed），而不是當成沒問題；勾選英雄一定連同 5 個技能格一起 union（只開英雄會做出新的半開放英雄）。新增 Go 程式碼：**0 行**——全部走既有 AdminOnly 路由與既有 audit 行（`curation.bulk` / `approval_approved`）。
 
 **保護這一頁存在的測試**：`quickApprovalBundle.test.ts` 跑真的 `vite build --mode production` 並斷言 bundle **含有**導覽標籤與「一鍵送出確認」——正好是 `contentGate.test.ts` 對 內容管理 斷言的反面。因為這一頁若掉進那個 `import.meta.env.DEV` dead-fold，就只剩本機能用，而本機正是 owner 唯一不需要它的地方。
+
+#### 🎯 2026-07-26 #247 追修：四支 leap 技能的 JASS 對帳（landRadius / 連段 / 拖回）
+
+Owner 的標準（2026-07-26 逐字）：「war3 編輯器設定 設定不了 JASS 實作效果，遇到這種情形一律以 JASS 實際參數為準」。
+優先序是 **JASS > w3a/w3u 物件列 > tooltip**，逐欄適用。物件列跟觸發不合是**預期**，不是資料品質意外——
+WC3 物件編輯器根本表達不了觸發做的事，所以只要觸發覆蓋了物件列，物件列就是一具過期的空殼。
+四筆全部就地改成 JASS 值，並把來源行號寫進斷言訊息（`packages/shared/src/sim/leapJassFidelity.test.ts`），
+測試自己會去讀 `war3map.j` 那一行，行號漂掉就變紅。
+
+| 技能 | 原本（哪來的） | 改成（哪一行） |
+| --- | --- | --- |
+| `godie-hart.w` A0UX 隕石擊 | landRadius/radius 5.50（＝w3a 範圍 300） | **4.58**（j:33722 `GetUnitsInRangeOfLocMatching(250.00)`） |
+| `godie-u00n.r` / `godie-u00o.r` A0RZ 巨人迴旋彈 | landRadius/radius 3.67（＝wc3 200） | **6.97**（j:36781 的 380，圓心是 j:36660 的施法者位置） |
+| `godie-hpb1.w` 者、皆、陣 | 只有傷害 | 追加 `applyStatus moon-combo 1.0s applyTo:self`（j:34438→j:34440） |
+| `godie-hpb1.e` 列、在、前 | 描述有連段、程式沒有 | `comboBonus`：窗口內 +ad×1.25（j:34189 判定、j:34214 的 5×AGI） |
+| `godie-hapm.w` A0U1 蹂躪編年史 | 從受害者原地丟 | `dragToCaster: true` —— 先抓回施法者（j:51749 判定／j:51760 每格 50 單位），再從**施法者**位置丟（j:51765） |
+
+**A0RZ 的 perRank 沒有錯，錯的是 JASS 自己的註解。** 驗證者說 `[600,900,1200]` 與 JASS 不合；
+實際執行的是 j:36719 `300 + 300×level + STR×2` → 600/900/1200，跟地圖 tooltip「600+力量*2傷害」一致。
+j:36779 的註解 `300+(sLV*200)+(力量*3)` 從來不會執行。**規則是 JASS 為準，而 JASS 指的是會跑的那一行**，
+2 票對 1 票，perRank 維持不動並加測試釘住這個結論。
+
+**新的模擬器機制（兩個，都很小）**：
+- `applyStatus.applyTo: "self"` —— 連段窗口必須落在施法者身上。者、皆、陣是單體指定技，
+  沒有這個欄位，marker 會蓋到被打的人身上。
+- `damage.comboBonus: { statusId, amount }` —— 只在施法者仍持有該 status 時加成，
+  **在 target 迴圈之前解析一次**（JASS 也是在施法當下讀一次 `udg_MoonCombo` 然後把結果烤進
+  `udg_MoonDamage`，逐目標讀會變成另一個技能）。不會被消耗，只會過期——JASS 也是只有過期。
+- `leap.dragToCaster` + `startLeap({ from })` + `resolveLandingPoint(…, anchor)` —— 拋物線的**起點**
+  也要跟著搬，否則落點會差掉整段「施法者→受害者」距離（這技能施程 5.5u，最壞差 75%）。
+
+**誠實講三件做不到的事**：
+
+1. **GGD 沒有敏捷這個屬性。** JASS 的連段加成是 `5.00 × AGI`（j:34214）。GGD 的 stat 表只有
+   ad/ap/as…，敏捷要等 #248 才會從 w3u 重建。所以敏捷項掛在 **ad** 上，倍率用**這份文件自己的換算率**
+   推出來：它的 `力量*2`（j:34211）出貨成 `ad × 0.5`，也就是每一點 WC3 屬性倍率 = 0.25 ad 係數，
+   於是 5 × 0.25 = **1.25**。是從文件推的，不是我發明的，而且測試把這條推導也寫成斷言——
+   哪天有人改了基礎項的係數，這一條會跟著紅。**這是近似值，#248 應該回來重算。**
+2. **EX 模式那半實作不出來。** j:34216 在 `udg_EX_Mode[player] == true` 時給 +10×AGI。
+   GGD 沒有「每位玩家的 EX 模式旗標」這種東西（`exAbility` 是一個技能格，不是一個模式），
+   要做得先有一個全域的 per-player 模式狀態機。登記為 `jass-247-07` **deferred**。
+   描述文字（w3x 原文）維持不動——那是地圖原文，不是我們寫的。
+3. **者、皆、陣自己的連段（+3×AGI，j:34342 判定／j:34398 加成）沒做。** 它需要 Q(臨、兵、鬥)
+   再放一個 marker 形成 Q→W→E 三段鏈；本次任務只點名 E，所以只補了 W→E 這一段。
+   `godie-hpb1.w` 的描述因此**仍然多承諾了它自己那半**。登記為 `jass-247-08` deferred，不要當成沒事。
+
+**另外：拖回被壓縮成起跳那一格。** JASS 的拖回是每 0.05s 拉 50 wc3、直到距施法者 50 以內
+（最遠 0.3 秒），GGD 直接把弧線起點設成施法者位置。落點因此完全正確，代價是少了那 ≤0.3 秒的拉扯過程，
+而且殘留 ≤50 wc3（0.92 GGD）的接觸間隙沒有模擬。
+
+**閘門**：`go run ./cmd/testrunner -once -mode all`。這次順手修了三支**因為 #247 自己**而紅的測試
+（`apps/editor` walk.test 的 EffectDef union 少了 `leap`——在 ba72202e 上覆驗就是紅的；
+`loader.test` / `fieldAdoption.test` 的狀態列表因為新增 `moon-combo` 而需要更新，後者的
+`enum:status-effects.polarity=buff` 豁免條目已被採用，依測試自己的指示刪除）。
+`internal/opsenv` 與 `internal/combatenv` 兩支 Go 紅屬既有，由另一條工作流處理。

@@ -1,0 +1,10 @@
+{
+  "id": "moon-combo",
+  "schema": "status-effect@1",
+  "name": "者、皆、陣 連段",
+  "description": "蒼月潮在 1 秒內接續施展 07-03 列、在、前 可獲得追加傷害。對應 war3map.j 的 udg_MoonCombo == 2（j:34438 設定、1.00 秒後 j:34440 清除）。",
+  "polarity": "buff",
+  "tags": [
+    "combo"
+  ]
+}

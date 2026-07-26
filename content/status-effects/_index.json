@@ -1,12 +1,18 @@
 {
   "collection": "status-effects",
-  "hash": "5bbbcf3981b7",
+  "hash": "e115818e13bd",
   "entries": [
     {
       "id": "burnstun",
       "path": "status-effects/burnstun.json",
       "hash": "bc55859bf21c",
       "size": 178
+    },
+    {
+      "id": "moon-combo",
+      "path": "status-effects/moon-combo.json",
+      "hash": "6e6ba7e26ae1",
+      "size": 335
     },
     {
       "id": "root",

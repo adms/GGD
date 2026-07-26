@@ -25,13 +25,39 @@ function casterStats(ctx: EffectContext): Record<Stat, number> {
   return ctx.world.stats.get(ctx.caster)?.final ?? ({} as Record<Stat, number>);
 }
 
+/**
+ * Does `id` still carry `statusId` on THIS tick? StatusSystem prunes expired
+ * entries at the top of the tick, but it runs before abilities resolve within a
+ * tick, so the `> world.tick` re-check is what makes the combo window close on
+ * the exact tick the JASS's `TriggerSleepAction(1.00)` would have cleared the
+ * marker — one tick either way is a different spell at 30 Hz.
+ */
+function hasStatus(
+  world: import("../SimWorld").SimWorld,
+  id: import("../../ids").EntityId,
+  statusId: import("../../ids").StatusId,
+): boolean {
+  const st = world.status.get(id);
+  if (!st) return false;
+  return st.effects.some((s) => s.statusId === statusId && s.expiresAtTick > world.tick);
+}
+
 function applyEffect(e: EffectDef, ctx: EffectContext): void {
   const { world } = ctx;
   switch (e.kind) {
     case "damage": {
       const stats = casterStats(ctx);
+      // COMBO WINDOW (#247 follow-up): resolved ONCE, before the target loop —
+      // the JASS reads `udg_MoonCombo` once at cast time (j:34189) and bakes the
+      // result into `udg_MoonDamage`, so every unit in the blast takes the same
+      // boosted number. Reading it per target would be a different spell.
+      const combo = e.comboBonus;
+      const comboAdd =
+        combo !== undefined && hasStatus(world, ctx.caster, combo.statusId)
+          ? resolveScaling(stats, combo.amount, ctx.rank)
+          : 0;
       for (const target of ctx.targets) {
-        let amount = resolveScaling(stats, e.amount, ctx.rank);
+        let amount = resolveScaling(stats, e.amount, ctx.rank) + comboAdd;
         let crit = false;
         if (e.canCrit) {
           const cc = stats[Stat.CritChance] ?? 0;
@@ -81,7 +107,11 @@ function applyEffect(e: EffectDef, ctx: EffectContext): void {
       const expiresAtTick = world.tick + Math.round(e.duration / world.dt);
       // hard/soft CC (stun/root/slow) applied to an enemy scores ccAppliedTicks
       const isCc = e.stun === true || e.root === true || (e.moveSpeedMult !== undefined && e.moveSpeedMult < 1);
-      for (const target of ctx.targets) {
+      // `applyTo: "self"` is the COMBO-WINDOW form: the marker belongs on the
+      // caster even though the ability's own targeting resolved enemies (07-02
+      // 者、皆、陣 is unit-targeted and still sets udg_MoonCombo, j:34438).
+      const subjects = e.applyTo === "self" ? [ctx.caster] : ctx.targets;
+      for (const target of subjects) {
         const st = world.status.get(target);
         if (!st) continue;
         // refresh rule: same status id + origin replaces (no stacking in skeleton)
@@ -182,17 +212,26 @@ function applyEffect(e: EffectDef, ctx: EffectContext): void {
         // SetUnitPositionLoc on the caster anywhere in its cluster); "toPoint"
         // aims at the snapshotted cast point, or — for a thrown target with no
         // point — straight along the caster's facing by the arc's own reach.
-        let requested = { x: ft.pos.x, z: ft.pos.z };
+        // DRAG PHASE (j:51755-51763): 52-02 蹂躪編年史 yanks the victim to the
+        // caster BEFORE throwing, and the JASS aims the throw from the caster's
+        // own location (j:51765-51767) — not from wherever the victim stood. So
+        // the arc's ORIGIN moves too, or the landing point is off by the whole
+        // caster→victim distance. The pull is compressed into the takeoff tick;
+        // in the JASS it takes dist/1000 s (≤0.3 s at this ability's 300-unit
+        // cast range) and ends within 50 wc3 u (0.92 GGD) of the caster.
+        const ct = world.transform.get(ctx.caster);
+        const drag = e.dragToCaster === true && applyTo === "target" && ct !== undefined;
+        const takeoff = drag && ct ? { x: ct.pos.x, z: ct.pos.z } : { x: ft.pos.x, z: ft.pos.z };
+        let requested = { x: takeoff.x, z: takeoff.z };
         if (e.mode === "toPoint") {
           if (applyTo === "target" && ctx.point === undefined) {
             // A thrown victim on a UNIT-targeted ability has no cast point to
             // aim at, so it flies `throwDistance` along the caster's facing —
             // the JASS's own PolarProjection(caster, 400, facing) (j:51767),
             // put through the #136 reach factor like every other length.
-            const ct = world.transform.get(ctx.caster);
             const dir = ctx.direction ?? ct?.facing ?? { x: 0, z: 1 };
             const reach = resolveAbilityRange(world, e.throwDistance ?? 0);
-            requested = { x: ft.pos.x + dir.x * reach, z: ft.pos.z + dir.z * reach };
+            requested = { x: takeoff.x + dir.x * reach, z: takeoff.z + dir.z * reach };
           } else if (ctx.point) {
             requested = { x: ctx.point.x, z: ctx.point.z };
           }
@@ -201,9 +240,13 @@ function applyEffect(e: EffectDef, ctx: EffectContext): void {
         // re-aimed rather than corrected at touchdown (see movement/leap.ts).
         // The range clamp uses the caster→point distance so a leap can never
         // out-range the ability that spawned it.
-        const dist = len(sub(requested, ft.pos));
-        const to = resolveLandingPoint(world, flyer, requested, dist);
+        const dist = len(sub(requested, takeoff));
+        // Anchor the range clamp at the TAKEOFF point (the caster, when dragged)
+        // but relax the body with the FLYER's own radius — it is the victim that
+        // must not end up inside a pillar.
+        const to = resolveLandingPoint(world, flyer, requested, dist, takeoff);
         startLeap(world, flyer, {
+          ...(drag ? { from: takeoff } : {}),
           to,
           apexHeight: e.apexHeight,
           durationSec: e.durationSec,

@@ -140,17 +140,27 @@ export function resolveLandingPoint(
   casterId: EntityId,
   requested: Vec2,
   maxRange: number,
+  /**
+   * Where the range clamp is measured FROM. Defaults to the body's own
+   * position, which is right for every leap that takes off where it stands.
+   * 52-02 蹂躪編年史 is the exception: its victim is dragged to the caster
+   * first (j:51755-51763) and thrown from THERE (j:51765-51767), so the clamp
+   * anchor is the takeoff point while the body relaxed out of obstacles below
+   * is still the victim's.
+   */
+  anchor?: Vec2,
 ): Vec2 {
   const t = world.transform.get(casterId);
   if (!t) return { x: requested.x, z: requested.z };
   const zone = world.arena.zones[t.zone] ?? world.arena.zones[0]!;
+  const from = anchor ?? t.pos;
   let target = { x: requested.x, z: requested.z };
   if (maxRange > 0) {
-    const off = sub(target, t.pos);
+    const off = sub(target, from);
     const d = len(off);
     if (d > maxRange) {
       const step = scale(off, maxRange / d);
-      target = { x: t.pos.x + step.x, z: t.pos.z + step.z };
+      target = { x: from.x + step.x, z: from.z + step.z };
     }
   }
   const body = { pos: target, radius: t.radius };
@@ -161,6 +171,14 @@ export function resolveLandingPoint(
 export interface StartLeapOptions {
   /** requested landing point; omit (or pass the caster's own pos) for inPlace */
   to: Vec2;
+  /**
+   * Where the arc STARTS. Defaults to the flyer's current position, which is
+   * true of every self-leap. 52-02 蹂躪編年史 overrides it: the JASS drags the
+   * victim to the caster before the throw (j:51755-51763), so the parabola runs
+   * from the CASTER's location (j:51765-51767) and the drag is compressed into
+   * the takeoff tick.
+   */
+  from?: Vec2;
   /** apex height in GGD units */
   apexHeight: number;
   /** flight time in seconds (converted to integer ticks here, once) */
@@ -194,7 +212,7 @@ export function startLeap(world: SimWorld, id: EntityId, opts: StartLeapOptions)
   const ticks = leapTicks(opts.durationSec);
   const ov: LeapOverride = {
     kind: "leap",
-    from: { x: t.pos.x, z: t.pos.z },
+    from: opts.from ? { x: opts.from.x, z: opts.from.z } : { x: t.pos.x, z: t.pos.z },
     to: { x: opts.to.x, z: opts.to.z },
     // integer milli-units, computed once — see the determinism note above
     apexMilli: Math.round(opts.apexHeight * 1000),
