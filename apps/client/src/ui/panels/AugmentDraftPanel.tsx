@@ -59,6 +59,14 @@ import { Tooltip } from "../components/Tooltip";
 import { SfxButton } from "../SfxButton";
 import { resolveChoice } from "./resolveChoice";
 import { DRAFT_CONFIRM_SFX, tierColor, tierLabel, weaponEffectDescription } from "./draftCardStyle";
+import {
+  DRAFT_CHOICE_SUFFIX,
+  draftCardDescId,
+  draftCardFallbackLabel,
+  draftCardLabelledBy,
+  draftCardNameId,
+  draftDialogLabelId,
+} from "./draftA11y";
 import { isLegendaryOffer, revealSchedule } from "./draftReveal";
 import { FOCUS_FADE_MS, FOCUS_HINT, FOCUS_SCRIM_BG, INTERMISSION_Z } from "./intermissionLayout";
 import { PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
@@ -100,6 +108,15 @@ export function AugmentDraftPanel(): React.JSX.Element | null {
         // out of the 41–49 band unless it truly must outrank the draft.
         data-pad-scope="augment-draft"
         data-pad-scope-priority="40"
+        // task #265 (#252) — this is a MODAL CHOICE with its own scrim, so it
+        // is a dialog, and it has to say so. Before this the panel carried no
+        // ARIA at all: opening it announced nothing, and a pad/AT user landing
+        // on a card heard two unlabelled divs read back. The label points at
+        // the tier header already on screen (see draftA11y for why every name
+        // here is `aria-labelledby` and never a re-typed `aria-label`).
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={offers.map((o) => draftDialogLabelId(o.offerId)).join(" ")}
         style={{
           position: "absolute",
           // BOTH axes — the panel's #107 registry row declares `edge: "center"`
@@ -142,8 +159,14 @@ export function AugmentDraftPanel(): React.JSX.Element | null {
  * `draftCardReveal` sparkle, and a legendary lands on `legendaryWin`. `revealed`
  * counts how many cards have flipped; a card below that count is face-up, the
  * rest are dimmed and lifted until their turn.
+ *
+ * EXPORTED for `draftA11y.test.ts`: the accessible-name guard server-renders
+ * this — one offer per tier the family serves — and scans every focusable
+ * element it produces. The panel itself reads the store, which the node test
+ * env has no room for; the offer is the whole payload, so rendering it directly
+ * exercises exactly the markup a player's AT would meet.
  */
-function DraftOffer({ offer }: { offer: OfferView }): React.JSX.Element {
+export function DraftOffer({ offer }: { offer: OfferView }): React.JSX.Element {
   const accent = tierColor(offer.tier);
   const [revealed, setRevealed] = useState(0);
 
@@ -171,11 +194,14 @@ function DraftOffer({ offer }: { offer: OfferView }): React.JSX.Element {
 
   return (
     <div>
-      <div style={{ textAlign: "center", marginBottom: 10 }}>
+      {/* the dialog's label node — `aria-labelledby` on the panel points here,
+          so the announced string IS the visible header, character for
+          character, and can never drift from it. */}
+      <div id={draftDialogLabelId(offer.offerId)} style={{ textAlign: "center", marginBottom: 10 }}>
         <span style={{ fontSize: 14, fontWeight: "bold", color: accent, letterSpacing: "0.06em" }}>
           {tierLabel(offer.tier)}
         </span>
-        <span style={{ fontSize: 11, color: TEXT_DIM }}> · 三選一</span>
+        <span style={{ fontSize: 11, color: TEXT_DIM }}> · {DRAFT_CHOICE_SUFFIX}</span>
       </div>
       <div style={{ display: "flex", gap: 8 }}>
         {offer.choices.map((choice, idx) => {
@@ -195,6 +221,25 @@ function DraftOffer({ offer }: { offer: OfferView }): React.JSX.Element {
             >
               <SfxButton
                 kind="card"
+                // task #265 (#252) — the card's accessible name. The GlyphTile
+                // is `aria-hidden`, so without this a focused card offered an
+                // AT/pad user two anonymous divs and, during the reveal, an
+                // `opacity: 0` control with nothing to announce at all. Points
+                // at the name + effect nodes THIS card already renders, so the
+                // spoken name is exactly what is drawn. `SfxButton` spreads
+                // `...rest` onto the real <button>, so no component change.
+                aria-labelledby={draftCardLabelledBy(offer.offerId, idx)}
+                // …and the SAME two values as a flat fallback. Per accname,
+                // `aria-labelledby` wins wherever it is implemented, so this is
+                // never what a compliant screen reader speaks. It exists because
+                // simpler tree walkers — including the accessibility snapshot in
+                // this repo's own browser tooling, measured 2026-07-26 with a
+                // control probe — resolve neither `aria-labelledby` NOR
+                // name-from-contents across the card's nested divs, and read the
+                // button as unnamed. This is NOT a second copy of the text: it is
+                // the same two expressions the JSX below renders, so the two can
+                // not drift.
+                aria-label={draftCardFallbackLabel(name, cardDesc)}
                 // encode the chosen index so the server applies THIS card
                 // (host accepts "offerId#idx"; plain id falls back to choice 0)
                 onClick={() => {
@@ -240,10 +285,18 @@ function DraftOffer({ offer }: { offer: OfferView }): React.JSX.Element {
                   size={46}
                   radius={10}
                 />
-                <div style={{ fontSize: 12.5, fontWeight: "bold", color: accent, lineHeight: 1.15 }}>
+                <div
+                  id={draftCardNameId(offer.offerId, idx)}
+                  style={{ fontSize: 12.5, fontWeight: "bold", color: accent, lineHeight: 1.15 }}
+                >
                   {name}
                 </div>
-                <div style={{ fontSize: 10, color: TEXT_DIM, lineHeight: 1.3 }}>{cardDesc}</div>
+                <div
+                  id={draftCardDescId(offer.offerId, idx)}
+                  style={{ fontSize: 10, color: TEXT_DIM, lineHeight: 1.3 }}
+                >
+                  {cardDesc}
+                </div>
               </SfxButton>
             </Tooltip>
           );

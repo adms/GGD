@@ -50,6 +50,7 @@ import { GOLD, PANEL_BG, PANEL_BORDER, TEXT_DIM, TEXT_MAIN } from "../theme";
 import { shopCatalogue } from "./champSelectFilter";
 import { useWhitelist } from "./whitelist";
 import { shopGate, shouldAutoOpen } from "./shopGate";
+import { RoundReportCard } from "./RoundReportCard";
 import { INTERMISSION_Z } from "./intermissionLayout";
 import { shopClockChip } from "./prepCountdown";
 import { groupCatalogue, type Shelf, type ShelfItem } from "./shopGrouping";
@@ -291,6 +292,13 @@ export function MerchantShop(): React.JSX.Element | null {
   if (!open) {
     const rail = shopDockAnchor(false);
     return (
+      <>
+        {/* task #265 — the round report is a SIBLING of the card in BOTH states.
+            Rendered inside the card it would vanish the moment the player
+            collapses the shop, which is precisely when they are looking at
+            their champion and reading the round back. It owns the RIGHT edge
+            (roundReportLayout), which is outside this card either way. */}
+        <RoundReportCard />
       <div
         style={{
           position: "absolute",
@@ -345,6 +353,7 @@ export function MerchantShop(): React.JSX.Element | null {
           🛒 {gate.label}
         </SfxButton>
       </div>
+      </>
     );
   }
 
@@ -361,6 +370,10 @@ export function MerchantShop(): React.JSX.Element | null {
 
   const dock = shopDockAnchor(true);
   return (
+    <>
+    {/* see the collapsed branch above: the round report (#265) is a sibling of
+        the card, never a section inside it. */}
+    <RoundReportCard />
     <div
       style={{
         position: "absolute",
@@ -514,6 +527,7 @@ export function MerchantShop(): React.JSX.Element | null {
         )}
       </div>
     </div>
+    </>
   );
 }
 
