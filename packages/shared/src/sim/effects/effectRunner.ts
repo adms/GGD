@@ -12,9 +12,10 @@ import { addShield } from "../combat/damage";
 import { healTarget, restoreMana } from "../combat/restore";
 import { recordCc } from "../stats/matchStats";
 import { startDash } from "../systems/MovementSystem";
+import { startLeap, resolveLandingPoint } from "../movement/leap";
 import { Projectiles } from "../content/registry";
 import { resolveAbilityRange } from "../abilities/abilitySystem";
-import { normalize, sub } from "../math/vec2";
+import { normalize, sub, len } from "../math/vec2";
 
 export function runEffects(effects: readonly EffectDef[], ctx: EffectContext): void {
   for (const e of effects) applyEffect(e, ctx);
@@ -166,6 +167,54 @@ function applyEffect(e: EffectDef, ctx: EffectContext): void {
           ? normalize(sub(ctx.point, t.pos))
           : ctx.direction ?? t.facing;
       startDash(world, ctx.caster, dir, e.speed, e.maxDistance);
+      break;
+    }
+    case "leap": {
+      // Task #247. The FLYER is either the caster (the shipped self-leaps: 蒼月潮
+      // 07-03, 01-02 隕石擊, 76-04 三檔) or each resolved target (the thrown arcs:
+      // 52-02 蹂躪編年史, 77-00 浮雲-旋一閃) — one primitive, two subjects.
+      const applyTo = e.applyTo ?? "self";
+      const flyers = applyTo === "target" ? ctx.targets : [ctx.caster];
+      for (const flyer of flyers) {
+        const ft = world.transform.get(flyer);
+        if (!ft) continue;
+        // "inPlace" is a vertical hop (76-04 三檔.巨人迴旋彈 has NO
+        // SetUnitPositionLoc on the caster anywhere in its cluster); "toPoint"
+        // aims at the snapshotted cast point, or — for a thrown target with no
+        // point — straight along the caster's facing by the arc's own reach.
+        let requested = { x: ft.pos.x, z: ft.pos.z };
+        if (e.mode === "toPoint") {
+          if (applyTo === "target" && ctx.point === undefined) {
+            // A thrown victim on a UNIT-targeted ability has no cast point to
+            // aim at, so it flies `throwDistance` along the caster's facing —
+            // the JASS's own PolarProjection(caster, 400, facing) (j:51767),
+            // put through the #136 reach factor like every other length.
+            const ct = world.transform.get(ctx.caster);
+            const dir = ctx.direction ?? ct?.facing ?? { x: 0, z: 1 };
+            const reach = resolveAbilityRange(world, e.throwDistance ?? 0);
+            requested = { x: ft.pos.x + dir.x * reach, z: ft.pos.z + dir.z * reach };
+          } else if (ctx.point) {
+            requested = { x: ctx.point.x, z: ctx.point.z };
+          }
+        }
+        // The landing point is proved LEGAL here, once, at takeoff — the arc is
+        // re-aimed rather than corrected at touchdown (see movement/leap.ts).
+        // The range clamp uses the caster→point distance so a leap can never
+        // out-range the ability that spawned it.
+        const dist = len(sub(requested, ft.pos));
+        const to = resolveLandingPoint(world, flyer, requested, dist);
+        startLeap(world, flyer, {
+          to,
+          apexHeight: e.apexHeight,
+          durationSec: e.durationSec,
+          ...(e.landRadius !== undefined ? { landRadius: e.landRadius } : {}),
+          ...(e.onLand !== undefined ? { onLand: e.onLand } : {}),
+          casterId: ctx.caster,
+          rank: ctx.rank,
+          origin: ctx.origin,
+          ...(ctx.abilitySlot !== undefined ? { slot: ctx.abilitySlot } : {}),
+        });
+      }
       break;
     }
     case "spawnProjectile": {

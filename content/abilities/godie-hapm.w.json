@@ -21,22 +21,33 @@
   "range": 5.5,
   "effects": [
     {
-      "kind": "damage",
-      "damageType": "magic",
-      "amount": {
-        "perRank": [
-          350.0,
-          450.0,
-          550.0,
-          650.0
-        ],
-        "ratios": [
-          {
-            "stat": "ap",
-            "coeff": 0.5
+      "kind": "leap",
+      "applyTo": "target",
+      "mode": "toPoint",
+      "apexHeight": 5.5,
+      "durationSec": 0.42,
+      "throwDistance": 7.33,
+      "landRadius": 4.95,
+      "onLand": [
+        {
+          "kind": "damage",
+          "damageType": "magic",
+          "amount": {
+            "perRank": [
+              350.0,
+              450.0,
+              550.0,
+              650.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.5
+              }
+            ]
           }
-        ]
-      }
+        }
+      ]
     }
   ],
   "vfxKey": "fx.prim.physical.shockwave",

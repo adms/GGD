@@ -119,6 +119,15 @@ export function movementSystem(world: SimWorld): void {
 
     const zone = world.arena.zones[t.zone] ?? world.arena.zones[0]!;
 
+    // 0) AIRBORNE (task #247): a leap is integrated by LeapSystem, which ran
+    //    immediately before this system and already wrote t.pos/t.vel/t.facing
+    //    absolutely from its arc. Touching the body here would (a) run
+    //    moveWithCollision, the one call that must NOT happen because it is
+    //    exactly what stops a body at a wall, and (b) overwrite the parametric
+    //    position. So: leave it alone, and leave the velocity LeapSystem set
+    //    (it is the real per-tick displacement, which the animation layer reads).
+    if (nav.override?.kind === "leap") continue;
+
     // 1) Movement override (dash/knockback) — ignores root by design (dashes
     //    committed before CC still complete; knockbacks are forced).
     if (nav.override) {
@@ -201,12 +210,18 @@ export function movementSystem(world: SimWorld): void {
     // dropped coins (task #191) are loot on the floor: never push, never pushed
     // — and, being out of the grid, never visible to the inner loop either
     if (world.coin.has(id)) continue;
+    // AIRBORNE (task #247): a leaping body is out of the planar physics world —
+    // it must neither shove someone standing underneath it nor be shoved off
+    // its arc. Same shape as the coin/revive-circle exemptions above, and
+    // guarded on BOTH loops so the pair is skipped from either side.
+    if (isAirborneNav(world, id)) continue;
     const hp = world.health.get(id);
     if (hp && !hp.alive) continue;
     const near = world.grid.queryCircle(t.pos, t.radius + 2);
     for (const otherId of near) {
       if (otherId <= id) continue; // each pair once, ordered
       if (world.projectile.has(otherId)) continue;
+      if (isAirborneNav(world, otherId)) continue;
       const o = world.transform.get(otherId);
       if (!o || o.zone !== t.zone) continue;
       const oHp = world.health.get(otherId);
@@ -246,12 +261,29 @@ export function movementSystem(world: SimWorld): void {
     // zone CENTRE, which legitimately coincides with the centre pillar, and a
     // push-out would eject it ~one body-width off its post every combat tick.
     if (world.structure.has(id)) continue;
+    // AIRBORNE (task #247): never push a body in flight out of an obstacle or
+    // clamp it — a leap OVER a pillar that got pushed out every tick would be
+    // teleported sideways at apex. The landing tick is not airborne any more,
+    // so it DOES run this pass — and it is a no-op there, because the landing
+    // point was relaxed at takeoff and `leapPosAt(N,N)` returns it verbatim.
+    // No mid-flight boundary clamp is needed either: the boundary is a DISC,
+    // a disc is convex, so the straight segment between two interior points is
+    // wholly interior by construction.
+    if (isAirborneNav(world, id)) continue;
     const zone = world.arena.zones[t.zone] ?? world.arena.zones[0]!;
     const body = { pos: t.pos, radius: t.radius };
     for (const ob of zone.obstacles) pushOutOfObstacle(body, ob);
     clampToBoundary(body, zone);
     t.pos = body.pos;
   }
+}
+
+/**
+ * Is this body mid-LEAP (task #247)? Local so MovementSystem stays free of any
+ * import from movement/leap.ts — the predicate is one field read.
+ */
+function isAirborneNav(world: SimWorld, id: import("../../ids").EntityId): boolean {
+  return world.nav.get(id)?.override?.kind === "leap";
 }
 
 /** Helper for abilities: begin a dash override on an entity. */

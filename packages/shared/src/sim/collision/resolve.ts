@@ -89,7 +89,17 @@ export function moveWithCollision(body: Body, delta: Vec2, zone: ZoneDef): void 
   relax(body, zone);
 }
 
-/** Push a body out of every obstacle + the boundary (2 passes settle corners). */
+/**
+ * Push a body out of every obstacle + the boundary (2 passes settle corners).
+ *
+ * Exported as `relaxBody` (task #247) so a LEAP can prove its landing point
+ * legal with the EXACT same relaxation the walker uses — a future change to
+ * wall geometry then cannot make the two disagree about where a body may stand.
+ */
+export function relaxBody(body: Body, zone: ZoneDef): void {
+  relax(body, zone);
+}
+
 function relax(body: Body, zone: ZoneDef): void {
   for (let pass = 0; pass < 2; pass++) {
     for (const ob of zone.obstacles) pushOutOfObstacle(body, ob);

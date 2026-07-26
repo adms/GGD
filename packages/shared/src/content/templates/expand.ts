@@ -58,7 +58,17 @@ export const SIM_CAPABILITIES: Readonly<Record<string, SimCapability>> = {
   applyStatus: { p: 1, available: true },
   auras: { p: 1, available: true },
   dash: { p: 2, available: true }, // kind exists, but no P1 family uses it
-  leap: { p: 2, available: false },
+  // task #247 — the `leap` EffectDef, LeapSystem, the wire height/scale channel
+  // and the client arc all shipped, ported from the map's own nine
+  // SetUnitFlyHeightBJ parabolas. Flipping this one flag is load-bearing and
+  // free downstream: `missingCaps` stops returning "leap", so the editor's
+  // degrade panel drops its red badge and grows a green ✓ chip with NO editor
+  // change at all — which is exactly what the shared table was for.
+  leap: { p: 2, available: true },
+  // UNCHANGED, deliberately. The knockback in combat/damage.ts is a REACTION to
+  // a landed hit, not an EffectDef a template author can emit — there is no
+  // `knockback` kind. #247's `applyTo: "target"` is not it either: that is a
+  // parabola, not a directed impulse. False stays the honest answer.
   knockback: { p: 2, available: false },
   summon: { p: 3, available: false },
   combo: { p: 3, available: false },
@@ -269,6 +279,40 @@ const FAMILIES: Readonly<Record<string, Family>> = {
       ...(has(t, p, "internalCooldown") ? { internalCooldown: num(t, p, "internalCooldown") } : {}),
     };
     return { castType: "self", innateKind: "passive", effects: [], passive: procPassive(hook) };
+  },
+
+  // 9. 跳躍落地 (task #247) — the map's own parabola. Every default is the REAL
+  // A0G3 number, so an empty form expands to 蒼月潮's 07-03 列、在、前 and the
+  // template documents itself against the source. `wc3u` slots go through
+  // `toLen`, so apexHeight 600 reaches the sim as 11.00 and landRadius 330 as
+  // 6.05 — no second conversion constant anywhere.
+  //
+  // castType is always "ground": a leap targets a POINT (the JASS reads
+  // GetSpellTargetLoc at j:34196), never a unit.
+  "leap-strike": (t, p) => {
+    const landRadius = num(t, p, "landRadius");
+    const mode = str(t, p, "mode") as "toPoint" | "inPlace";
+    const applyTo = str(t, p, "applyTo") as "self" | "target";
+    const onLand: EffectDef[] = [
+      damageEffect(damageType(t, p, "damageType"), scaling(t, p, "damage")),
+    ];
+    return {
+      castType: "ground",
+      targetsEnemies: true,
+      radius: landRadius,
+      ...(has(t, p, "castTimeSec") ? { castTimeSec: num(t, p, "castTimeSec") } : {}),
+      effects: [
+        {
+          kind: "leap",
+          mode,
+          applyTo,
+          apexHeight: num(t, p, "apexHeight"),
+          durationSec: num(t, p, "durationSec"),
+          landRadius,
+          onLand,
+        },
+      ],
+    };
   },
 
   // 8. 變身強化(數值面) — self stat buff, NUMERIC side only. 戰鬥涅吉 82-04 闇之魔法.

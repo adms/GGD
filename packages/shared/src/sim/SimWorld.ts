@@ -34,6 +34,7 @@ import type { ArenaDef } from "./world/ArenaDef";
 import { TICK_MS } from "../constants";
 import { orderSystem } from "./systems/OrderSystem";
 import { movementSystem } from "./systems/MovementSystem";
+import { leapSystem } from "./systems/LeapSystem";
 import { statRecomputeSystem, buffExpirySystem } from "./stats/statPipeline";
 import { auraSystem } from "./aura/aura";
 import { commandSystem } from "./systems/CommandSystem";
@@ -233,6 +234,20 @@ export class SimWorld {
   readonly hitstop = new Map<EntityId, number>();
   readonly knockdown = new Map<EntityId, number>();
   readonly hitstun = new Map<EntityId, number>();
+
+  /**
+   * AIRBORNE RENDER STATE (task #247) — entity → { y: GGD units above the arena
+   * floor, scaleMul: TEMPORARY model-scale multiplier }. ABSENT = grounded.
+   *
+   * A separate store rather than a field on `Transform`, whose contract is
+   * literally "planar … NO y". Absence-means-grounded keeps every non-leaping
+   * entity (projectiles, coins, flowers, twelve champions) byte-identical to a
+   * pre-#247 world, which is also why the digest folds it in ONLY when present.
+   *
+   * Created at takeoff, DELETED at landing/cancel — so a nulled `nav.override`
+   * and an absent entry always agree about who is in the air.
+   */
+  readonly airborne = new Map<EntityId, { y: number; scaleMul: number }>();
 
   /** queued damage, drained by combatResolveSystem in one ordered pass */
   readonly damageQueue: DamagePacket[] = [];
@@ -498,6 +513,10 @@ export class SimWorld {
     //                             — and ARM recovery at the end of startup
     commandSystem(this, intents); // 3. cast / buy / pick / rank commands
     orderSystem(this, intents); // 4. orders -> nav targets
+    leapSystem(this); //     4b. advance parabolic leaps (task #247) — position,
+    //                             height and the landing detonation. IMMEDIATELY
+    //                             before movementSystem, which then sees the
+    //                             `leap` override and leaves the body alone.
     movementSystem(this); // 5. integrate + collide
     basicAttackSystem(this); // 6. autos on attack targets in range
     projectileSystem(this); // 7. advance projectiles, swept hits
@@ -588,6 +607,19 @@ export class SimWorld {
       if (at !== null && at !== undefined) {
         mix(id);
         mix(at);
+      }
+      // task #247: AIRBORNE state is authoritative world state — a replica whose
+      // leap is one tick out of phase (or that cancelled one the other did not)
+      // must surface HERE, on the tick it happens, rather than as an unexplained
+      // position drift three seconds later. Folded in ONLY when the entity is in
+      // the air, following the `attackTarget` precedent above verbatim: mixing a
+      // 0 for every grounded entity would change the hash of every pre-#247
+      // world and break the #191 disarmed-golden canary for no information gain.
+      const air = this.airborne.get(id);
+      if (air) {
+        mix(id);
+        mix(air.y);
+        mix(air.scaleMul);
       }
     }
     // match scoreboard is authoritative world state — a desync here (a counter

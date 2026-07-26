@@ -129,7 +129,7 @@
       "icon": "assets/icons/abilities/godie-hpb1.e.webp",
       "description": "[主動攻擊]\n65秒冷卻時間\n用盡全身力氣跳起落下斬擊使得大地震動，區域內敵人皆受到(力量*2)+450傷害。\n\n在\"者、皆、陣\"發動後1秒內施展可增加(敏捷係數*5)傷害，30級之後可增加(敏捷係數*10)傷害",
       "slot": "E",
-      "castType": "targeted",
+      "castType": "ground",
       "maxRank": 4,
       "cooldown": [
         65.0,
@@ -144,30 +144,41 @@
         310.0
       ],
       "range": 14.0,
+      "radius": 6.05,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
-            "perRank": [
-              450.0,
-              550.0,
-              650.0,
-              750.0
-            ],
-            "ratios": [
-              {
-                "stat": "ad",
-                "coeff": 0.5
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "toPoint",
+          "apexHeight": 11.0,
+          "durationSec": 1.44,
+          "landRadius": 6.05,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "perRank": [
+                  450.0,
+                  550.0,
+                  650.0,
+                  750.0
+                ],
+                "ratios": [
+                  {
+                    "stat": "ad",
+                    "coeff": 0.5
+                  }
+                ]
               }
-            ]
-          }
+            }
+          ]
         }
       ],
       "vfxKey": "fx.prim.physical.beam",
       "sfxKey": "wc3.moonjump",
       "targetsEnemies": true,
-      "castTimeSec": 0.5
+      "castTimeSec": 0.6
     },
     "R": {
       "id": "godie-hpb1.r",

@@ -15,6 +15,21 @@ export { queryOverlap, type OverlapOptions } from "./collision/queries";
 export * from "./world/ArenaDef";
 export { orderSystem } from "./systems/OrderSystem";
 export { movementSystem, startDash } from "./systems/MovementSystem";
+// task #247 — the leap primitive. The pure arc helpers are exported because the
+// CLIENT's render tests derive the expected curve from the same source the sim
+// runs (a hand-copied formula in the test would be free to drift from it).
+export {
+  leapHeightMilli,
+  leapHeightAt,
+  leapPosAt,
+  leapTicks,
+  resolveLandingPoint,
+  startLeap,
+  cancelLeap,
+  isAirborne,
+  MIN_LEAP_TICKS,
+} from "./movement/leap";
+export { leapSystem } from "./systems/LeapSystem";
 
 export * from "./stats/statTypes";
 export * from "./stats/modifiers";

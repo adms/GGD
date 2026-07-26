@@ -142,6 +142,11 @@ function walk(effects: readonly EffectDef[], fn: (e: EffectDef) => void): void {
   for (const e of effects) {
     fn(e);
     if (e.kind === "spawnProjectile") walk(e.onHit, fn);
+    // task #247: a leap's payload lives in `onLand`, so the punish score has to
+    // descend into it — otherwise a leap-strike reads as an ability with NO
+    // damage and no CC and collapses onto the 0.3 floor, which is the opposite
+    // of what 蒼月潮's 43-tick slam deserves.
+    if (e.kind === "leap" && e.onLand) walk(e.onLand, fn);
   }
 }
 
@@ -307,6 +312,13 @@ export function deriveCastTime(def: AbilityDef, cooldownMult = SHIPPED_COOLDOWN_
   // is not an escape; the measured failure was displacement flat until tick 18.
   // Gets the FLOOR rather than 0 so the cast pillar still fires (the owner's
   // visual requirement is that every cast is telegraphed) at 9 ticks.
+  // NOTE (task #247): a `leap` is deliberately NOT exempted here, even though it
+  // is also displacement. The exemption exists because "an escape that announces
+  // itself is not an escape" — but a leap-strike is an ENGAGE, not an escape,
+  // and the JASS telegraphs it hard on purpose (A0G3 sets the caster's animation
+  // time scale to 40 % and plays "attack slam" before the arc even starts,
+  // j:34209-34210). It stays on the punish curve, where its landing damage and
+  // AoE put it.
   if (f.dash) return exempt("mobility", CAST_FLOOR, f, { cooldownCeiling });
 
   // ── EXEMPTION 4: defensive / reactive. A shield or heal that lands 0.6 s

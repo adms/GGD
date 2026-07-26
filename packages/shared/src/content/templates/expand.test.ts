@@ -56,8 +56,9 @@ describe("GGD_PER_WC3 length constant (11/600)", () => {
 describe("SIM_CAPABILITIES + missingCaps", () => {
   it("marks the P1 families' caps available and P2/P3 unavailable", () => {
     expect(missingCaps(["projectile", "hooks", "applyBuff", "auras"])).toEqual([]);
+    // task #247 flipped `leap` to available (real LeapSystem + wire channel),
+    // so it is no longer part of the missing set.
     expect(missingCaps(["leap", "knockback", "summon"])).toEqual([
-      "leap",
       "knockback",
       "summon",
     ]);

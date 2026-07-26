@@ -82,6 +82,24 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       maxDistance: z.number().positive(),
     })
     .strict(),
+  /**
+   * leap (task #247) — mirrors the `leap` member of `EffectDef`. Ported from
+   * the map's own parabola (see sim/movement/leap.ts); `apexHeight`/`landRadius`
+   * arrive here in GGD units, converted from the JASS wc3 values by `toLen`
+   * inside the template expander, so there is no second conversion constant.
+   */
+  z
+    .object({
+      kind: z.literal("leap"),
+      applyTo: z.enum(["self", "target"]).optional(),
+      mode: z.enum(["toPoint", "inPlace"]),
+      apexHeight: z.number().min(0),
+      durationSec: z.number().positive(),
+      throwDistance: z.number().min(0).optional(),
+      landRadius: z.number().min(0).optional(),
+      onLand: z.array(z.lazy(() => zEffectDef)).optional(),
+    })
+    .strict(),
   z
     .object({
       kind: z.literal("spawnProjectile"),
