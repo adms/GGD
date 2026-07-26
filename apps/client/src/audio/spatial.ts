@@ -110,6 +110,37 @@ export const TEXTURE_NEAR = 3;
 export const TEXTURE_EXP = 1.8;
 export const TEXTURE_FAR = 14;
 
+/**
+ * "voice" = a champion SPEAKING (task #259 —「角色語音、音效這些都要有遠近空間之
+ * 分，只有自己的才是全播放」). The GENTLEST of the three curves, deliberately, and
+ * the reason is a difference in kind, not a taste call:
+ *
+ *   A HIT SOUND IS TEXTURE; A VOICE LINE IS INFORMATION. `hit` tells you a blow
+ *   connected — you already saw the number, the flash and the knockback, so the
+ *   audio is confirming something three other channels carry. 「誰在痛、誰死了」
+ *   is carried by NOTHING else once the speaker is off-screen (at dolly 10 the
+ *   camera frames ~15 × 9.4 u of a 48 u zone, so most of a twelve-body fight is
+ *   outside the frame). Spend the same curve on both and the mid-field goes
+ *   mute: `focus` is already at 0.133 by 30 u, i.e. −17.5 dB, which under a
+ *   combat bed is nothing. That would silently delete the thing #223 had just
+ *   fixed (「敵人被我攻擊沒發出受傷或死亡等語音」) while every test stayed green.
+ *
+ * NEAR 6 (a duel's own spacing — nothing inside your fight is attenuated at
+ * all), EXP 0.6 (SUB-linear: half the exponent of `focus`), FAR = SPATIAL_FAR so
+ * a voice you can hear is a voice whose hit you could also hear, and so the
+ * cross-zone silence argument on SPATIAL_FAR covers voices unchanged.
+ *
+ * MEASURED against the other two classes (bare distance term, before relation):
+ *   d:       6      8     12     16     20     30
+ *   voice    1.000  0.841  0.660  0.555  0.486  0.381
+ *   focus    0.667  0.500  0.333  0.250  0.200  0.133
+ *   texture  0.287  0.171  0.082  ————— past its 14 u cutoff —————
+ * i.e. at the 30 u cutoff a voice is −8.4 dB where a focus SFX is −17.5 dB.
+ */
+export const VOICE_NEAR = 6;
+export const VOICE_EXP = 0.6;
+export const VOICE_FAR = SPATIAL_FAR;
+
 /** Relation ducking. ALWAYS ≤ 1 — the spatial layer never amplifies. */
 export const RELATION_GAIN = {
   victim: 1.0,
@@ -192,9 +223,22 @@ export function gateKeyFor(key: string, r: SfxRelation): string {
 /**
  * How aggressively a sound falls off with distance. `focus` carries the events
  * a player must not miss; `texture` is ambience that has to get out of the way
- * fast or 12 bodies of chatter bury the one hit that mattered.
+ * fast or 12 bodies of chatter bury the one hit that mattered; `voice` is a
+ * champion SPEAKING, the gentlest curve of the three because a line is the only
+ * channel carrying 「誰在痛、誰死了」 once the speaker is off-screen (#259).
  */
-export type SfxClass = "focus" | "texture";
+export type SfxClass = "focus" | "texture" | "voice";
+
+/**
+ * The three distance laws, in ONE table so a class can never be half-added: a
+ * new member here is a compile error in every consumer that switches on it, and
+ * `farCutoff` / `distanceGain` cannot drift apart about what "far" means.
+ */
+export const CLASS_LAW: Readonly<Record<SfxClass, { near: number; exp: number; far: number }>> = {
+  focus: { near: FOCUS_NEAR, exp: FOCUS_EXP, far: FOCUS_FAR },
+  texture: { near: TEXTURE_NEAR, exp: TEXTURE_EXP, far: TEXTURE_FAR },
+  voice: { near: VOICE_NEAR, exp: VOICE_EXP, far: VOICE_FAR },
+};
 
 /**
  * How the sound relates to the local player. `victim` = it landed ON you;
@@ -281,14 +325,13 @@ export function panForOffset(dx: number): number {
  */
 export function distanceGain(d: number, cls: SfxClass): number {
   if (!finite(d) || d < 0) return 0;
-  const near = cls === "focus" ? FOCUS_NEAR : TEXTURE_NEAR;
-  const exp = cls === "focus" ? FOCUS_EXP : TEXTURE_EXP;
-  return Math.pow(Math.min(1, near / Math.max(d, 1e-6)), exp);
+  const law = CLASS_LAW[cls] ?? CLASS_LAW.focus;
+  return Math.pow(Math.min(1, law.near / Math.max(d, 1e-6)), law.exp);
 }
 
 /** The audibility cutoff for a class (ground u). Beyond it: do not play. */
 export function farCutoff(cls: SfxClass): number {
-  return cls === "focus" ? FOCUS_FAR : TEXTURE_FAR;
+  return (CLASS_LAW[cls] ?? CLASS_LAW.focus).far;
 }
 
 /**

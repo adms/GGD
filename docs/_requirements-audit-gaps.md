@@ -3871,3 +3871,101 @@ zustand 的 `useStore` 把 **`api.getInitialState`** 當 server snapshot。這�
 那些測試只驗到靜態文字，任何 store 驅動的元素消失都不會紅。`useApp` 改成手寫
 `useSyncExternalStore(subscribe, snap, snap)`（client 端行為與 zustand 完全相同，
 差別只有第三個參數；production 不做 SSR／hydration，所以碰不到）。改完 287 檔 / 3362 test 全綠。
+
+---
+
+## 2026-07-26 · 語音空間化（本輪指派為 #259）：第五次「算對了但玩家聽不到」，這次是整條語音通道
+
+**需求原話**：「角色語音、音效這些都要有遠近空間之分，只有自己的才是全播放」。
+
+> ⚠️ **編號撞號，需要 owner 裁定。** `#259` 在本檔上一節已經被「大廳公告」用掉了
+> （2026-07-26）。本輪的 orchestrator 又把 `#259` 指派給語音空間化。程式與文件都用
+> `#259` 記錄（`docs/todo/spatial-voice.md`），但兩件事是不同的需求 —— 其中一個要改號。
+
+### 缺口：模型早就在了，只是從來沒有變成音量
+
+音效那一側 #194 已經完整：145 個 key 走 `SpatialSfxQueue` → `spatial.spatialMix` →
+`makeSpatialChain`，`{volume, pan, lowpassHz}` 一個不缺。**語音那一側一個欄位都沒有。**
+
+最刺眼的是 #223 自己：它算出了關係帶（self/engaged/enemy/ally/third）**與距離**，
+然後在 `voiceAudience.ts:163-175` 把距離折成一個「機率」純量就丟掉，
+`VoiceCandidate` 裡連 x/z 都沒留 —— **型別上的斷點**。整套關係＋距離模型只用來決定
+「要不要講」，從來沒有變成「多大聲、從哪邊來」。終點 `contextualVoice.ts:291`
+一路寫死 `volume: 1`，型別上也塞不進去（`ContextualPlayOptions` 只有兩個欄位）。
+
+更糟的三條**完全沒有經過任何評分**：`skill-name.<slot>`、`crit`/`attack-heavy`、
+CC 的 `stun`/`slow`/`bind` —— 在 drain 迴圈裡**直接播**，不限本地、沒有 audience、
+沒有距離。十二個人輪技能 = 十二句正中央全音量的喊話；另一組 duel（≥32 u 外）
+的人被暈了，也會在你正中央叫。
+
+### 做了什麼
+
+**接到既有引擎上，沒有第二套模型。** `spatial.ts` 多一條距離律 `voice`
+（`NEAR 6 / EXP 0.6 / FAR 30`，刻意比 `focus` 溫和），其餘 pan 律、深度低通、
+relation 折扣、30 u 跨區截止全部沿用 —— 因為那份檔頭「為什麼不用 HRTF PannerNode」
+的推理講的是**相機**（68° 固定、yaw 恆 0、前後被轉成仰角），與播的是什麼聲音無關。
+
+**owner 的規則寫成一條 early return**：`voiceSpatial.SELF_VOICE_MIX` 在讀 listener
+與座標**之前**就回傳，volume 1 / 不 pan / 不濾波。測試直接斷言它**不依賴距離** ——
+因為跳躍飛行中（#247）、衝刺、傳送、reconcile 回拉、自由平移、結算凍結這六種情況
+都會讓你的身體離錨點很遠，只要 self 走距離曲線，你自己的聲音就會在那些瞬間
+比旁邊的陌生人還小，而「volume 是個數字」的測試永遠是綠的。
+
+**flush 從 step 1 搬到 step 5b**（相機更新之後，與 `sfxQueue.flush` 並列）。
+留在原處算 pan 會拿到**上一 frame** 的方向錨 —— `SpatialSfxQueue` 檔頭記載過的同一個坑。
+代價是最多一 frame 的延遲，而這條線自己的全域節流是 1200 ms。
+
+### 量測（在瀏覽器裡對出貨模組直接取值，不是估算）
+
+| 距離 | self | engaged | enemy | ally | third |
+| --- | --- | --- | --- | --- | --- |
+| 0 u | 1.000 | 1.000 | 0.800 | 0.600 | 0.450 |
+| 8 u | 1.000 | 0.8415 | 0.6732 | 0.5049 | 0.3787 |
+| 12 u | 1.000 | 0.6598 | 0.5278 | 0.3959 | 0.2969 |
+| 20 u | 1.000 | 0.4856 | 0.3885 | 0.2914 | 0.2185 |
+| 30 u | 1.000 | 0.3807 | 0.3046 | 0.2284 | 0.1713 |
+| 32 u | 1.000 | 0.3810 | **不播** | **不播** | **不播** |
+
+`pan` 4/8/12/20/30 u = 0.347 / 0.571 / 0.679 / 0.740 / 0.749（上限 0.75）；
+`self` 恆 0 → 不建 panner → **1 node/voice，和空間化之前完全一樣**。
+往畫面上方 12 u 的敵人：volume 0.3715、pan 0.476、lowpass 3008 Hz。
+
+**戰場沒有被弄安靜**（這是本題最可能的失敗模式）：交戰距離 2–8 u 的 engaged ≥ 0.84；
+12 u 的敵人 0.53、第三方 0.30。語音曲線在**每一段**都比命中音大：
+30 u 時語音 −8.4 dB、命中音 −17.5 dB。
+
+### 「不可以被空間化」變成一張可掃描的表
+
+`apps/client/src/audio/spatialPolicy.ts`：41 個 client SFX key ＋ 46 個語音類別，
+每一列一個 policy（world / self / screen / flat）＋ 一句理由。
+`spatialPolicy.test.ts` 拿它去對**兩份不是手寫的清單**（`sfxReachability` 的 145 列
+＝audio-map 的 key 集合、語音 manifest 的 46 個類別）雙向比對 —— 下個月新增一個
+UI 音而沒有分類，測試就紅，而不是悄悄被 pan 掉。
+`screen` 是刻意的第三態：登入頁雙龍吼用 NDC pan，那條法則不能被搬到 world 引擎
+（登入場景沒有 world listener），也不能因為「不是 flat」就拿掉。
+
+### 證據形式：測試綠不算，混音數字才算
+
+#62 讓 agent 永遠聽不到自己做的東西（`shouldSilenceAudio` ⇒ `ctxFactory` 回 null
+⇒ 整個 WebAudio graph 從不建立）。所以：
+- `voiceDelivery.test.ts` 跑**真的 `AudioSystem` ＋ 真的 `ContextualVoicePlayer`**
+  over 一個會**計數**的 FakeCtx，斷言 `panner.pan.value` / `filter.frequency.value` /
+  `gain.gain.value` 的實際數字，以及 `gain → panner → filter → sfxBus` 的接法
+  （插在 per-voice gain 與 bus **之間**，所以 SFX 滑桿與靜音鈕仍然管得到）。
+- `public/voice-spatial-audition.html` 是 owner 自己按的那一面：選關係帶、拖位置、
+  按下去聽，**同時**把 volume / pan / lowpassHz 顯示出來。它 import 的是出貨模組本身，
+  `voiceAuditionPage.test.ts` 斷言它沒有重寫任何幾何（禁止出現 `Math.tanh`、`Math.pow`、
+  以及 20000/1600/0.75 這些字面值）也不會被打進正式 bundle。
+
+### 沒做的，照實記
+
+1. **語音沒有 phase 閘**（#238 的近親）：回合結束後仍在佇列裡的 damage/death 事件
+   會把語音講進商店。`combatSfx` 的 `gateCombatBed` 只擋三個持續床，
+   `dispatchContextualVoice` / `dispatchStatusVoice` 完全沒有 phase 檢查。
+   **故意沒修** —— 它改的是「誰有資格出聲」，而 owner 對本題的規定是節流與資格一個都不許動。
+   已列為 `docs/todo/spatial-voice.md` 的 sv-14（pending）。
+2. **距離被算了兩次**：`voiceProbScale` 已按距離砍機率，音量層又砍一次。
+   實測 20 u 的 enemy：出聲機率 ×0.1、出聲時音量 0.389。不是聽不到，但
+   **要不要把機率層退回成只做 far cutoff 是設計決定，需要 owner 裁定**（改了會改變出聲次數）。
+3. **我沒有聽過任何一句。** #62 硬規則。試聽頁我只用 `?silent=1` 開過、讀過它算出來的數字、
+   截了圖，**沒有按過播放**。曲線調得對不對，只有 owner 在自己機器上拖過才算數。

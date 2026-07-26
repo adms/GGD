@@ -52,6 +52,7 @@ Regression suites always run **last** (enforced by the runner scheduler and the 
 | iPhone support (touch + mobile HUD + PWA) | [mobile.md](mobile.md) | client |
 | Settings + adaptive quality/FPS + connection tuning | [settings-perf.md](settings-perf.md) | client |
 | Client audio (WebAudio BGM/SFX + audio-map) | [audio.md](audio.md) | client + content |
+| 語音的遠近空間之分（#259 — 只有自己的才是全播放） | [spatial-voice.md](spatial-voice.md) | client |
 | Global always-accessible music/SFX quick-toggle | [audio-toggle.md](audio-toggle.md) | client |
 | JRPG custom cursor (size-adjustable S/M/L/XL) | [cursor.md](cursor.md) | client |
 | Champ-select champion-name VO (Japanese full name) | [name-voice.md](name-voice.md) | client + content |

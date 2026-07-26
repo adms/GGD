@@ -48,7 +48,7 @@
  *
  * CLIENT-ONLY, and nothing here imports packages/shared/src/sim.
  */
-import { FOCUS_FAR, SPATIAL_FAR } from "./spatial";
+import { SPATIAL_FAR, VOICE_FAR as SPATIAL_VOICE_FAR } from "./spatial";
 
 /**
  * How a would-be voice line relates to the local player. Deliberately NOT
@@ -100,13 +100,18 @@ export function isNearAudience(a: VoiceAudience): boolean {
 }
 
 /**
- * Far cutoff for the unrelated bands. Reuses the spatial layer's "focus" cutoff
- * (decisive events — hits, casts, explosions) rather than inventing a second
- * distance law, so a voice you can hear is a voice whose hit you could also
- * hear. Beyond it the line is not merely quiet, it is NOT DISPATCHED — which is
- * the point: a dropped candidate cannot contest the global slot at all.
+ * Far cutoff for the unrelated bands. Reuses the spatial layer's own voice
+ * cutoff rather than inventing a second distance law, so a voice you can hear is
+ * a voice whose hit you could also hear. Beyond it the line is not merely quiet,
+ * it is NOT DISPATCHED — which is the point: a dropped candidate cannot contest
+ * the global slot at all.
+ *
+ * #259 made this identity load-bearing rather than incidental: the MIX drops an
+ * unrelated speaker past `spatial.VOICE_FAR` and this layer drops the candidate
+ * past `VOICE_FAR`. They must be the same number or one of the two silently
+ * becomes dead code — see the equality assertion in voiceSpatial.test.ts.
  */
-export const VOICE_FAR = FOCUS_FAR;
+export const VOICE_FAR = SPATIAL_VOICE_FAR;
 
 /** Width of one audience band in the priority scale (mirrors spatial.ts). */
 const PRIORITY_BAND = 100;
@@ -197,6 +202,17 @@ export interface VoiceCandidate {
   preempt: boolean;
   /** higher dispatches first within the frame. */
   priority: number;
+  /**
+   * WHERE THE SPEAKER IS (#259), or null when the position was not resolvable.
+   *
+   * This is the field whose absence was the whole defect: #223 measured a
+   * distance, folded it into `probScale`, and threw the coordinates away — so a
+   * complete relation + distance model could only ever answer 「要不要講」 and
+   * never 「多大聲、從哪邊來」. It is carried RAW, not pre-mixed, because the
+   * listener frame is only current after the camera update (`GameApp.frame`
+   * step 5) and this candidate is built during the event drain (step 1).
+   */
+  pos: { x: number; z: number } | null;
 }
 
 /** Fraction of the VICTIM'S OWN max hp that makes a blow a heavy grunt. */
@@ -211,6 +227,8 @@ export interface DamageVoiceInput extends AudienceInput {
   killingBlow: boolean;
   /** victim-to-listener distance in world units, or null when unresolvable. */
   distance: number | null;
+  /** victim's world position (#259) — the `damage` packet carries it verbatim. */
+  pos?: { x: number; z: number } | null;
 }
 
 /**
@@ -241,12 +259,15 @@ export function damageVoiceCandidate(inp: DamageVoiceInput): VoiceCandidate | nu
     probScale,
     preempt: false, // a grunt NEVER preempts; only the death cry may
     priority: voicePriority(audience, inp.distance),
+    pos: inp.pos ?? null,
   };
 }
 
 export interface DeathVoiceInput extends AudienceInput {
   champId: string | null;
   distance: number | null;
+  /** corpse's world position (#259), resolved from the authoritative schema. */
+  pos?: { x: number; z: number } | null;
 }
 
 /**
@@ -272,6 +293,54 @@ export function deathVoiceCandidate(inp: DeathVoiceInput): VoiceCandidate | null
     probScale,
     preempt: isNearAudience(audience),
     priority: voicePriority(audience, inp.distance),
+    pos: inp.pos ?? null,
+  };
+}
+
+export interface PlainVoiceInput extends AudienceInput {
+  champId: string | null;
+  category: string;
+  /** speaker-to-listener distance in world units, or null when unresolvable. */
+  distance: number | null;
+  /** speaker's world position (#259). */
+  pos?: { x: number; z: number } | null;
+}
+
+/**
+ * A candidate whose ELIGIBILITY is deliberately unchanged — `probScale` is a
+ * hard 1 — that exists only so the line can be PLACED (#259).
+ *
+ * `skill-name.*`, `crit`/`attack-heavy` and the CC lines used to call
+ * `playContextualVoice` inline during the event drain. Two things follow from
+ * that, and both are defects the mix cannot fix from where they stood:
+ *
+ *   1. THE LISTENER IS NOT CURRENT YET. The drain is frame step 1; the camera
+ *      moves in step 5. A pan computed inline uses LAST frame's direction anchor
+ *      — the exact staleness `SpatialSfxQueue` exists to avoid. Placing them
+ *      therefore REQUIRES deferring them to the same post-camera flush.
+ *   2. THEY SPENT THE 1.2 s SLOT BEFORE ANYONE WAS RANKED. Firing inline meant a
+ *      stranger's skill name, drained early, could take the global slot that
+ *      your own hurt line then could not have.
+ *
+ * WHAT THIS FACTORY MUST NOT DO is change how often they fire. `probScale: 1`
+ * and `preempt: false` reproduce today's call exactly (`playContextualVoice
+ * (champ, cat)` with no options), so the category's own owner-tuned `prob` and
+ * cooldown remain the only things deciding whether the line happens. The only
+ * new way one of these can be lost is the geometric one every other sound in the
+ * game already obeys: an unrelated speaker more than `VOICE_FAR` away — i.e. the
+ * OTHER duel zone, which is ≥ 32 u out and was never meant to be audible.
+ */
+export function plainVoiceCandidate(inp: PlainVoiceInput): VoiceCandidate | null {
+  if (!inp.champId || !inp.category) return null;
+  const audience = voiceAudienceOf(inp);
+  return {
+    champId: inp.champId,
+    category: inp.category,
+    audience,
+    probScale: 1, // UNCHANGED eligibility — see the doc comment
+    preempt: false,
+    priority: voicePriority(audience, inp.distance),
+    pos: inp.pos ?? null,
   };
 }
 

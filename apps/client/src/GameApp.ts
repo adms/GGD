@@ -125,8 +125,10 @@ import {
   damageVoiceCandidate,
   deathVoiceCandidate,
   orderVoiceCandidates,
+  plainVoiceCandidate,
   type VoiceCandidate,
 } from "./audio/voiceAudience";
+import { voicePlayOptions, voiceSpatialMix } from "./audio/voiceSpatial";
 import { combatSfxKey } from "./audio/combatSfx";
 import { resolveSpatial } from "./audio/combatSfxSpatial";
 import { SpatialSfxQueue } from "./audio/SpatialSfxQueue";
@@ -1081,11 +1083,8 @@ export class GameApp {
         recordSettlement(ev.data as unknown as MatchSettlement);
       }
     }
-    // #223: the widened hurt/defeat lines were SCORED during the drain, not
-    // played — dispatch them now, best band first, so the arena-wide 1.2 s voice
-    // slot goes to the line that matters most rather than to whichever packet
-    // happened to be drained first. (Same reason SpatialSfxQueue sorts.)
-    this.flushContextualVoices();
+    // (The frame's voice lines were SCORED during the drain and are dispatched
+    // in step 5b, next to the SFX flush — see there for why they had to move.)
 
     // match-outcome freeze: once the server decides the winner it pins every
     // hero idle for the settlement front-view. Mirror it client-side so local
@@ -1237,7 +1236,7 @@ export class GameApp {
         // CONTEXTUAL VOICE — a CC status line on the 0→1 flag edge (client-side
         // edge detector over the authoritative bitmask; no sim edit). poison/blind
         // have no ENTITY_FLAG bit, so they stay dormant (see manifest).
-        this.dispatchStatusVoice(es.id, es.flags, localId);
+        this.dispatchStatusVoice(es.id, es.flags, localId, p);
       });
       // hum — the LOCAL champion idles a quiet line after HUM_IDLE_MS of no
       // input / combat. Suppressed during the settlement freeze (the match is
@@ -1293,7 +1292,20 @@ export class GameApp {
     // the views have synced (step 4). The cost is up to one frame of added
     // latency on a one-shot — far under the network jitter already in the pipe,
     // and the queue had to exist for the priority sort anyway.
-    this.sfxQueue.flush(this.audioListener(localPose), (key, opts) => audioSystem.playSfx(key, opts));
+    const listener = this.audioListener(localPose);
+    this.sfxQueue.flush(listener, (key, opts) => audioSystem.playSfx(key, opts));
+    // 5b-ii) AND THE VOICES, through the SAME listener frame (#259).
+    //
+    // This used to sit at the end of the drain (step 1), which was fine while a
+    // voice was a flat `volume: 1` — and is wrong the moment it has a pan, for
+    // exactly the reason SpatialSfxQueue documents: the direction anchor is
+    // rig 0's target, and rig 0 does not move until step 5. Dispatching here
+    // costs at most one frame of latency on a line whose own throttle is 1200 ms.
+    //
+    // `spectating` is「the listener has no BODY」, not「no camera」: with no body
+    // `voiceAudienceOf` demotes every speaker to `third`, and the relation duck
+    // that follows from that is not information — see voiceSpatial.
+    this.flushContextualVoices(listener, (localPose ?? this.localSelfPos()) === null);
 
     // 5c) decor auto-fade — ghost tall landmark props (audit #29 "fade") that
     // block any camera→hero sightline; no-op on arenas without fade props.
@@ -1612,20 +1624,47 @@ export class GameApp {
     if (ev.type === "abilityCast") {
       const slot = typeof d.slot === "string" ? d.slot : null;
       if (!slot || slot === "PASSIVE") return; // 天生技 does not shout a skill name
-      const champ = this.championIdForEntity(Number(d.caster));
-      if (champ) playContextualVoice(champ, `skill-name.${slot.toLowerCase()}`);
+      const caster = Number(d.caster);
+      // #259 — QUEUED, not played. Twelve champions rotating abilities used to
+      // shout twelve skill names dead centre at full level; the shout belongs to
+      // the caster's BODY. It has to go through the post-camera flush to be
+      // placed at all (the drain is step 1, the camera moves in step 5), and
+      // `plainVoiceCandidate` keeps probScale at 1 so how OFTEN it fires is
+      // exactly what it was.
+      this.queueVoiceCandidate(
+        plainVoiceCandidate({
+          champId: this.championIdForEntity(caster),
+          category: `skill-name.${slot.toLowerCase()}`,
+          speaker: caster,
+          counterpart: null,
+          localId,
+          teamOf: this.audioTeamOf,
+          ...this.voiceWhere(caster),
+        }),
+      );
       return;
     }
     if (ev.type === "damage") {
       const source = Number(d.source);
       const target = Number(d.target);
       if (d.crit === true) {
-        const attacker = this.championIdForEntity(source);
         // No genuine non-crit heavy-swing signal exists, so attack-heavy rides
         // the crit edge: 二擇一 (client Math.random) between the existing "crit"
         // line and "attack-heavy" so a crit fires exactly ONE of them, never both
         // (voice-binding-design.md §三). Own buckets → no shared cooldown.
-        if (attacker) playContextualVoice(attacker, Math.random() < 0.5 ? "crit" : "attack-heavy");
+        // #259: spoken by the ATTACKER, so it is placed on the ATTACKER's body —
+        // not on the victim's x/z that the same packet carries.
+        this.queueVoiceCandidate(
+          plainVoiceCandidate({
+            champId: this.championIdForEntity(source),
+            category: Math.random() < 0.5 ? "crit" : "attack-heavy",
+            speaker: source,
+            counterpart: Number.isFinite(target) ? target : null,
+            localId,
+            teamOf: this.audioTeamOf,
+            ...this.voiceWhere(source),
+          }),
+        );
       }
       // block is gated to the LOCAL defender: a hit you fully/partly warded off.
       if (d.blocked === true && localId !== null && target === localId) {
@@ -1650,6 +1689,11 @@ export class GameApp {
             typeof d.x === "number" ? d.x : null,
             typeof d.z === "number" ? d.z : null,
           ),
+          // #259 — the same packet coordinates, kept RAW this time instead of
+          // being folded into probScale and discarded. `damage.ts` emits the
+          // victim's own transform, and the victim is who speaks a hurt line.
+          pos:
+            typeof d.x === "number" && typeof d.z === "number" ? { x: d.x, z: d.z } : null,
         }),
       );
       if (localId !== null && target === localId) {
@@ -1694,7 +1738,7 @@ export class GameApp {
           counterpart: killer,
           localId,
           teamOf: this.audioTeamOf,
-          distance: this.entityListenerDistance(id),
+          ...this.voiceWhere(id),
         }),
       );
     }
@@ -1718,12 +1762,24 @@ export class GameApp {
    * the de-dup, the throttle, the mute/unlock gates and the silent
    * fall-through for an unpacked champion all apply untouched.
    */
-  private flushContextualVoices(): void {
+  private flushContextualVoices(listener: SpatialListener, spectating: boolean): void {
     if (this.frameVoices.length === 0) return;
     for (const c of orderVoiceCandidates(this.frameVoices)) {
+      // #259 — the mix, computed HERE because this is the only point in the
+      // frame where the listener frame is current (the camera moved in step 5)
+      // and the only place that holds both anchors. A null mix is the SFX
+      // layer's own out-of-range instruction: do not play at all, so a fight in
+      // the other duel zone cannot spend the arena-wide 1.2 s voice slot.
+      const mix = voiceSpatialMix(listener, {
+        audience: c.audience,
+        pos: c.pos,
+        spectating,
+      });
+      if (!mix) continue;
       playContextualVoice(c.champId, c.category, {
         probScale: c.probScale,
         preempt: c.preempt,
+        ...voicePlayOptions(mix),
       });
     }
     this.frameVoices.length = 0;
@@ -1743,14 +1799,24 @@ export class GameApp {
     return Math.hypot(x - body.x, z - body.z);
   }
 
-  /** Same, for an entity resolved from the AUTHORITATIVE schema tick. */
-  private entityListenerDistance(id: number): number | null {
-    // Deliberately schemaPos, not audioEntityPos: this runs in step 1 of the
-    // frame and `views.sync` is step 4, so posOf would be a frame stale and null
-    // for anything culled — which would silently mute distant bodies for a
-    // reason that has nothing to do with the audience policy.
+  /**
+   * WHERE a speaker is and HOW FAR (#259), from the AUTHORITATIVE schema tick.
+   *
+   * Deliberately `schemaPos`, not `audioEntityPos`: this runs in step 1 of the
+   * frame and `views.sync` is step 4, so `posOf` would be a frame stale and null
+   * for anything culled — which would silently mute (and now also mis-place)
+   * distant bodies for a reason that has nothing to do with the audience policy.
+   *
+   * One lookup, two consumers: `distance` feeds the #223 probability + priority
+   * bands (unchanged), `pos` feeds the #259 mix. They must come from the SAME
+   * sample or a line can be ranked as near and mixed as far.
+   */
+  private voiceWhere(id: number): {
+    pos: { x: number; z: number } | null;
+    distance: number | null;
+  } {
     const p = this.schemaPos(id);
-    return p ? this.listenerDistance(p.x, p.z) : null;
+    return { pos: p, distance: p ? this.listenerDistance(p.x, p.z) : null };
   }
 
   /**
@@ -1759,7 +1825,12 @@ export class GameApp {
    * bitmask itself is authoritative). Only the freshly-SET bit speaks, so a
    * status that lingers across many ticks says its line once, not every frame.
    */
-  private dispatchStatusVoice(entityId: number, flags: number, localId: number | null): void {
+  private dispatchStatusVoice(
+    entityId: number,
+    flags: number,
+    localId: number | null,
+    pos: { x: number; z: number } | null,
+  ): void {
     const prev = this.prevEntityFlags.get(entityId) ?? 0;
     this.prevEntityFlags.set(entityId, flags);
     const rose = flags & ~prev; // bits newly set this tick
@@ -1767,17 +1838,36 @@ export class GameApp {
     const champ = this.championIdForEntity(entityId);
     if (!champ) return;
     const isLocal = localId !== null && entityId === localId;
-    // CC lines (any champion the edge detector can see). A local hard-CC edge
-    // additionally rolls a 怒罵 "curse" — 二擇一 (client Math.random) so a stun
-    // never stacks two voices on the same frame (voice-binding-design.md §三).
+    // #259 — the CC lines fan out to EVERY champion (this edge detector walks
+    // every entity), so before this they were the WORST offender in the whole
+    // voice channel: a stun in the other duel zone shouted at full level, dead
+    // centre, with no audience weighting at all. Queued now, like everything
+    // else with a body. probScale stays 1 — the roll rate is untouched.
+    const cc = (category: string): void => {
+      this.queueVoiceCandidate(
+        plainVoiceCandidate({
+          champId: champ,
+          category,
+          speaker: entityId,
+          counterpart: null,
+          localId,
+          teamOf: this.audioTeamOf,
+          pos,
+          distance: pos ? this.listenerDistance(pos.x, pos.z) : null,
+        }),
+      );
+    };
+    // A local hard-CC edge additionally rolls a 怒罵 "curse" — 二擇一 (client
+    // Math.random) so a stun never stacks two voices on the same frame
+    // (voice-binding-design.md §三).
     if (rose & ENTITY_FLAG.STUNNED) {
-      if (isLocal && Math.random() < 0.5) playContextualVoice(champ, "curse");
-      else playContextualVoice(champ, "stun");
+      if (isLocal && Math.random() < 0.5) cc("curse");
+      else cc("stun");
     }
-    if (rose & ENTITY_FLAG.SLOWED) playContextualVoice(champ, "slow");
+    if (rose & ENTITY_FLAG.SLOWED) cc("slow");
     if (rose & ENTITY_FLAG.ROOTED) {
-      if (isLocal && Math.random() < 0.5) playContextualVoice(champ, "curse");
-      else playContextualVoice(champ, "bind");
+      if (isLocal && Math.random() < 0.5) cc("curse");
+      else cc("bind");
     }
     // T1 self-only movement/attack lines: only YOUR champion narrates its own
     // basic-attack windup and dash, on the flag's rising edge (never per frame).
