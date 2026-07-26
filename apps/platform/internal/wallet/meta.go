@@ -230,14 +230,48 @@ func (s *Service) mutateMeta(ctx context.Context, accountID string, fn func(*met
 }
 
 // overlayMeta populates the crystal + favourites fields of a wallet projection
-// from the meta record.
+// from the meta record, dropping favourites the catalog no longer knows.
 func (s *Service) overlayMeta(ctx context.Context, accountID string, w *Wallet) {
 	m := s.loadMeta(ctx, accountID)
 	w.Crystal = m.Crystal
-	w.Favourites = m.Favourites
-	if w.Favourites == nil {
-		w.Favourites = []string{}
+	w.Favourites = s.liveFavourites(m.Favourites)
+}
+
+// liveFavourites filters a stored favourite list down to champions the CURRENT
+// catalog still carries.
+//
+// WHY VALIDATE ON READ RATHER THAN MIGRATE (task #249). ToggleFavourite already
+// rejects an unknown champion, so nothing can WRITE a bad pin — but the roster
+// moves underneath the stored list. When #249 swapped ten first-open-roster
+// slots from a 變身 alternate to its base unit, any player who had pinned one of
+// the ten alternates was left holding an id champ-select no longer renders: a
+// silent dead entry, and one that costs a favourite slot's worth of ordering.
+//
+// A one-shot migration would have to DELETE those entries from the durable
+// record, which is irreversible and wrong for this data: a champion can leave
+// and re-enter the catalog (the operator whitelist is editable, and the #119
+// transform work may yet make an alternate pickable again). Filtering on read
+// is idempotent, needs no migration step, cannot lose a pin that becomes valid
+// again, and puts the check on the ONE path every surface reads through.
+//
+// An EMPTY catalog is not evidence that a favourite is dead — the platform
+// boots with no content mounted (LoadCatalog returns an empty catalog and a nil
+// error), and filtering then would blank every player's pins on a
+// misconfiguration. So an empty catalog passes everything through unchanged.
+func (s *Service) liveFavourites(stored []string) []string {
+	if len(stored) == 0 {
+		return []string{}
 	}
+	if len(s.cat.ChampionPrices) == 0 {
+		return append([]string{}, stored...)
+	}
+	out := make([]string, 0, len(stored))
+	for _, id := range stored {
+		if _, ok := s.cat.ChampionPrice(id); ok {
+			out = append(out, id)
+		}
+	}
+	return out
 }
 
 // CrystalOf returns the account's current crystal balance (0 when it has none

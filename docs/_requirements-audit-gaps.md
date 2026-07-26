@@ -3136,3 +3136,34 @@ farm 速率是唯一沒被設計綁住的變數：mobWaves 一場約發 90 波�
   初音/志志雄、賈修/阿強一號、e00j/e015/harf、皮卡丘/曹操）與變身無關，推導會把它們刪掉並讓
   重複圖示的 bug 復活；反過來 妙蛙花 / 臥草泥馬 / 傑桑 是真變身態但**不在**那張表裡（圖不同）。
   兩件事已徹底分離：**form link 決定「顯不顯示」，圖片 bytes 只決定「同一張圖畫幾次」**。
+
+## #249 的連帶回歸：換名冊沒有連帶換價目表（`fix/249-store-alignment`，已修）
+
+**缺口本身**：`starterChampions`（Go）與 `content/config/store.json` 的 `championPrices`（content）
+是同一組 50 個 id 被寫了兩次，而**沒有任何測試釘住這層關係**。#249 換掉 10 格，價目表原封不動，
+兩個方向同時漂掉 10 筆，所有閘門仍是綠的。
+
+| | 免費 | 付費 | 備註 |
+| --- | --- | --- | --- |
+| 換名冊前 | 12 | 38 | roster 50 = prices 50，兩邊零落差 |
+| 換名冊後（壞掉） | **19** | **31** | 沒價格 = 免費（client `lockStateOf`、server `OwnsChampion` 兩邊都是）；`FreeChampions()` 還在送 `h020`/`o00x`/`u01u` 給每個新帳號 |
+| 修好後 | 12 | 38 | 每個本體**繼承它取代的變身態的價位**，10 個舊 id 移除；價格一律 300 |
+
+**守衛**（重點在這，不在修）：`TestStarterRosterMatchesChampionPrices`（`whitelist-store-prices`）
+＋ `curationVsContentModel.test.ts` 的 TS 鏡像。兩個方向都驗、**失敗訊息列出漂掉的 id 本身**，
+並且把 `12 / 38` 的形狀一起釘死，因為 owner 已裁示藍水晶不動。starter.go 新增 **R7** 條款。
+
+**同批普查的其餘消費端**：`champion-voices` / `victory-taunts` / `quotes` / VFX provenance 都是
+全 113 位覆蓋，沒漂；頭像覆蓋率**完全沒變**（缺圖的前後都是 #90 妙蛙種子與 #92 草泥馬本人）；
+champ-select / codex / 白名單一律吃 `starterChampions`。**唯一還漂著的是戰鬥語音包**：
+`content/assets/audio/voices/lines/` 的 50 個目錄正好是舊名冊，換進來的 10 個本體一個 clip 都沒有
+（各需 46 支 CosyVoice）。那是資產產線工作，**沒有加守衛因為現在加就是紅的** → `tform-13` / #142。
+
+**最愛（favourites）**：`ToggleFavourite` 本來就擋不存在的英雄，所以壞資料寫不進去；壞法是名冊在
+合法 pin 底下被抽走。改成**讀取時過濾**（`liveFavourites`，`meta.go`）而非資料遷移——遷移要永久刪掉
+耐久紀錄裡那一筆，可是英雄會回來（白名單可編輯、#119 之後變身態可能重新可選）；過濾冪等、免遷移、
+不會弄丟一筆日後會再合法的 pin。空 catalog 不當證據（平台沒掛 content 也會開機），原樣放行。
+
+**owner 螢幕上會看到的**：拳四郎從 `imported.heropikachu`（那是北斗之鼠的模型）掉回 CC0 替身
+`champ.skin.barbarian`。**這是修正的必然結果**——地圖給本體的模型是 Blizzard 內建 VillagerMan1，
+拿不到；且符合 starter.go 早就寫明的政策。不要為了好看把名冊換回變身態。

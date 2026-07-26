@@ -60,6 +60,25 @@ counterpart is a recovered fact, not a TODO. `O02N` — 曹操孟德's BASE — 
 sweep and IS imported here, because pruning it left the hero present only in his transformed
 state.
 
+**The roster swap moved the ECONOMY too, and that was missed once.** `content/config/store.json`'s
+`championPrices` is the same 50-id set as `starterChampions`, and swapping the ten slots left it
+holding the ten ALTERNATES: the swapped-in bases had no price (free on both sides — client
+`lockStateOf` reads `price === undefined` as `"free"`, server `OwnsChampion` reads `!priced` as
+`true`), and the swapped-out alternates kept theirs, so `FreeChampions()` went on seeding
+`godie-h020` / `godie-o00x` / `godie-u01u` into every new account. Realigned by having each base
+INHERIT the price of the alternate it replaced, so the economy shape is untouched at
+**12 free / 38 priced @ 300**. Pinned in both directions by `tform-11` (Go) and its mirror in
+`apps/game-server/src/curation/curationVsContentModel.test.ts`.
+
+**拳四郎 got visibly worse, deliberately.** `godie-u00l` 北斗之鼠 wears the real
+`imported.heropikachu`; the base `godie-umal` wears the CC0 stand-in `champ.skin.barbarian`, because
+the map gives 拳四郎's base unit the Blizzard built-in VillagerMan1 and there is no mesh to import.
+That is in policy per `starter.go` ("a shared stand-in mesh means the art is missing, not that it is
+the same hero") and it is NOT a reason to put the alternate back on the roster. The existing skin doc
+`content/skins/skin.godie-u00l.heropika.json` now hangs off an unpickable champion; re-pointing it at
+`godie-umal` would be using the skin system to do a transform, which contradicts the owner's ruling,
+so it is left for #119 / #116.
+
 **Three pairs carry no duration**, and that is data, not a gap: `A0DZ 20-01 風王結界` and
 `A0O6 70-00 紮根` are TOGGLES (no `ahdu` at all — the form persists until re-cast) and
 `Aphx 61-00 百連我殺` is a death-state morph (`adur` 0.01s, an instant swap).
@@ -76,3 +95,6 @@ state.
 | tform-08 | No first-open-roster id is an alternate form, and the ten that were wrong now hold their base id-for-id | whitelist-no-alternate-forms | regression | done |
 | tform-09 | Build the transform MECHANIC: form swap, revert on the map's own timer, reset to base per round. Owner is still deciding the auto-trigger conditions for the four passive-slot transforms | (task #119) | integration | pending |
 | tform-10 | Import the four alternate bodies that have no champion doc (`H00W` / `O030` / `N01B` / `E010`) so every pair is complete | transform-forms-import-missing | integration | pending |
+| tform-11 | `content/config/store.json`'s `championPrices` and the first open roster are the SAME SET in BOTH directions, every price is 0 or the flat 300, and the economy keeps its 12-free / 38-priced shape — the guard that was missing when the ten swaps left the prices behind | whitelist-store-prices | regression | done |
+| tform-12 | A stored wallet favourite naming a champion the catalog no longer carries is filtered out of every wallet read, while valid pins beside it survive and the durable record keeps all of them | meta-favourite-catalog-filter | regression | done |
+| tform-13 | Generate the 46-clip CosyVoice battle-voice pack for the ten swapped-in BASE heroes — `content/assets/audio/voices/lines/` still holds exactly the ten ALTERNATES, so every one of the ten is mute in combat | (task #142) | integration | pending |

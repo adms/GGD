@@ -827,3 +827,40 @@ graph LR
 
 - 30 臭作、70 白木卡迪那：帶 `Eme1`/`Emeu` 的技能**不在本體的技能列上**（`A0YT`/`A0O6` 只掛在變身體），war3map.j 也沒引用。變身沒有可達的觸發點，要先解決。
 - 球體掛件是 `Asph` 物件表機制，76 個物件，**完全沒接線**。變身態的視覺簽名就是它（`球體(武裝霸王)` 掛索隆變身態、`球體(悟空超3)` 換掉本體的 `球體(悟空正常)`）。五個模型其實**已經在 content 裡**，缺的是掛點通道，不是粒子抽取。
+
+### #249 換名冊的連帶損傷 —— 藍水晶經濟被無聲改掉（已修，`fix/249-store-alignment`）
+
+換 10 格名冊時 **`content/config/store.json` 的 `championPrices` 沒有跟著換**，而且沒有任何測試釘住這層關係，所以全部閘門都是綠的。
+
+**沒有價格 = 免費，兩邊都是**：client `lockStateOf` 看到 `price === undefined` 回 `"free"`；server `wallet.OwnsChampion` 看到 `!priced` 直接回 `true`。後果有兩個，第二個比第一個嚴重：
+
+1. 換進來的 10 個本體完全跳過 300 水晶解鎖 → 免費英雄 **12 → 19**、水晶去化池 **38 → 31**。
+2. `FreeChampions()` 用 `price == 0` 種新帳號的 `OwnedChampions`，所以**每一個新註冊的帳號都還在被贈送 `godie-h020` / `godie-o00x` / `godie-u01u`** —— 三個現在根本選不到的 id。大廳商店也照樣為這 10 個孤兒各畫一列死掉的商品。
+
+**修法：形狀原封不動。** 每個換進來的本體**繼承它取代的變身態的價位**，10 個舊 id 移除。前 / 壞掉 / 修好 = `12 免費 · 38 付費` → `19 · 31` → `12 · 38`，價格一律 300。owner 已明講藍水晶不動（「藍水晶本來就是獎勵 有人抱怨我們再來改」），所以移動的只有 id，不是數字。副作用：免費那 3 格從變身態換成本體，所以現在免費的是莉娜因巴斯 / 悟空 / 索隆本人。
+
+**守衛（這比修本身重要）**：`TestStarterRosterMatchesChampionPrices`（Go，`whitelist-store-prices`）＋ game-server 的 `curationVsContentModel.test.ts` 鏡像檢查。兩個方向都驗，而且**失敗訊息直接列出漂掉的 id**，不是只報數量。連 `12 / 38` 的形狀也一起釘住，下一個動名冊的人會被逼著明講他要改經濟。
+
+### 其餘 roster id 消費端的普查結果
+
+| 消費端 | 有沒有漂 |
+|---|---|
+| `championPrices`（商店 / 解鎖 / 新帳號種子 / 大廳商店列） | **漂了** —— 就是上面那條，已修＋已守 |
+| `FreeChampions()` / 新帳號種子 | 沒有自己的表，跟著 `championPrices` 一起修好 |
+| 錢包最愛（favourites） | 舊資料可能留下死 id，改成**讀取時過濾**（見下） |
+| `content/config/champion-voices.json` | 沒漂（113 位全覆蓋） |
+| `content/config/victory-taunts.json`、`quotes.json` | 沒漂（111 / 112 位全覆蓋） |
+| `content/assets/vfx/w3x-ability-provenance.json`（VFX 綁定表） | 沒漂（109 位、639 支技能全覆蓋，本體與變身態都在） |
+| 英雄頭像覆蓋率 | **完全沒變**：換出去缺圖的是 `h02r` / `h02u`，換進來缺圖的是 `hgam` / `h02v` —— 同樣兩位英雄（#90 妙蛙種子、#92 草泥馬），名冊缺圖數維持 8 |
+| champ-select / codex / 白名單 | 一律吃 `starterChampions`，自動跟著走 |
+| **戰鬥語音包** `content/assets/audio/voices/lines/` | **漂了，本批沒修** —— 50 個目錄正好是**舊**名冊，換進來的 10 個本體一個語音包都沒有（每位 46 clip）。要跑 CosyVoice 產檔，是資產產線的工作不是本批的；**沒有加守衛，因為現在加就是紅的**。歸 #142／語音批次 |
+
+### owner 會在畫面上看到的一件事：拳四郎變醜了
+
+`godie-u00l` 北斗之鼠穿的是**真的 `imported.heropikachu`**；換回本體 `godie-umal` 拳四郎之後，他穿的是 CC0 替身 `champ.skin.barbarian`。**這是修正本身的必然結果，不是 bug**：地圖給拳四郎本體的模型是 Blizzard 內建的 VillagerMan1，本來就拿不到，而 `starter.go` 早就寫明「共用替身模型＝美術還沒補，不是同一個英雄」。**不要為了好看把名冊換回變身態。** 另外 `content/skins/skin.godie-u00l.heropika.json` 這件造型現在掛在一個選不到的英雄身上（大廳商店會用 `deriveStoreRows` 的 fallback 幫它補一列），要不要改掛到 `godie-umal` 是設計題 —— 但那等於用造型系統做變身，跟 owner「變身態改由技能觸發」的裁示牴觸，所以本批**不動**，留給 #119／#116。
+
+### 最愛（favourites）：選擇「讀取時過濾」而不是資料遷移
+
+`ToggleFavourite` 本來就擋不存在的英雄，所以**寫不進**壞資料；壞掉的方式是名冊在合法的 pin 底下被換走。改在 `overlayMeta` → `liveFavourites` 過濾（`apps/platform/internal/wallet/meta.go`）。
+
+選它不選遷移的理由：遷移要**永久刪掉**耐久紀錄裡的那筆，而英雄是會回來的（白名單可編輯、#119 之後變身態也可能重新可選）；過濾是冪等的、不需要遷移步驟、不會弄丟一筆之後會再度合法的 pin，而且掛在所有介面都會經過的那一條讀取路徑上。空 catalog（平台沒掛 content 也會開機）**不當成證據**，原樣放行，否則一個設定錯誤就會清空所有人的置頂。測試：`TestFavouritesDropChampionsTheCatalogLost`。

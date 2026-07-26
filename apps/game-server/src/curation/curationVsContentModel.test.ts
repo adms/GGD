@@ -485,6 +485,70 @@ describe("curation data vs the content model — the STARTER SET (audited in CI)
   });
 });
 
+// ---------------------------------------------------------------------------
+// THE ECONOMY half of the same bundle.
+//
+// `starterChampions` says who is PICKABLE; content/config/store.json's
+// `championPrices` says who must be PAID FOR. They are one set described twice,
+// and until task #249 nothing said so — so when ten roster slots were swapped
+// from the 變身 alternate to the base unit, store.json kept the old ten and
+// every gate stayed green while:
+//
+//   • the ten swapped-IN bases had no price entry at all, which BOTH sides read
+//     as free (client `lockStateOf`: `price === undefined` → "free";
+//     server `wallet.OwnsChampion`: `!priced` → true), so they skipped the
+//     300-crystal unlock and the crystal sink shrank from 38 champions to 31;
+//   • the ten swapped-OUT alternates kept their prices, so `FreeChampions()`
+//     went on seeding godie-h020 / godie-o00x / godie-u01u into every NEW
+//     account and the lobby store rendered a row per orphan — all unpickable.
+//
+// Mirrored here as well as in Go (TestStarterRosterMatchesChampionPrices)
+// because the two halves are read by two different stacks: Go serves
+// /store/catalog, this repo's TS client turns it into the champ-select lock
+// state. A guard on one side only leaves the other free to drift.
+// ---------------------------------------------------------------------------
+const STORE_JSON = join(CONTENT_DIR, "config/store.json");
+/** Mirrors `wallet.CrystalUnlockCost` (Go) and `CRYSTAL_UNLOCK_COST` (client). */
+const CRYSTAL_UNLOCK_COST = 300;
+
+describe("the crystal economy vs the first open roster", () => {
+  it("championPrices and starterChampions are the SAME SET, in both directions", () => {
+    const roster = starterDoc().champions;
+    const prices = (JSON.parse(readFileSync(STORE_JSON, "utf-8")) as { championPrices: Record<string, number> })
+      .championPrices;
+    const priced = new Set(Object.keys(prices));
+    const rostered = new Set(roster);
+
+    const unpriced = roster.filter((id) => !priced.has(id)).sort();
+    expect(
+      unpriced,
+      `${unpriced.length} first-open-roster champion(s) have NO championPrices entry in ` +
+        `content/config/store.json, so both the client (lockStateOf → "free") and the server ` +
+        `(OwnsChampion → true) hand them out for nothing: ${unpriced.join(", ")}. Add a price for ` +
+        `each, or drop them from starterChampions.`,
+    ).toEqual([]);
+
+    const orphaned = [...priced].filter((id) => !rostered.has(id)).sort();
+    expect(
+      orphaned,
+      `${orphaned.length} championPrices entr(ies) in content/config/store.json name a champion ` +
+        `that is not on the first open roster: ${orphaned.map((id) => `${id}=${prices[id]}`).join(", ")}. ` +
+        `A 0-price orphan is seeded into every new account by Catalog.FreeChampions() and a priced ` +
+        `one draws a dead lobby-store row — for an id no player can select. Remove each, or add it ` +
+        `to starterChampions in apps/platform/internal/curation/starter.go on purpose.`,
+    ).toEqual([]);
+
+    // One flat unlock cost. A third value would print one number on the
+    // champ-select unlock button and charge another.
+    const offPrice = roster.filter((id) => prices[id] !== 0 && prices[id] !== CRYSTAL_UNLOCK_COST).sort();
+    expect(
+      offPrice,
+      `every roster champion must cost 0 or exactly ${CRYSTAL_UNLOCK_COST} crystals; these do not: ` +
+        offPrice.map((id) => `${id}=${prices[id]}`).join(", "),
+    ).toEqual([]);
+  });
+});
+
 const envDoc = process.env.GGD_WHITELIST_FILE;
 describe("curation data vs the content model — an EXPORTED whitelist (GGD_WHITELIST_FILE)", () => {
   it(
