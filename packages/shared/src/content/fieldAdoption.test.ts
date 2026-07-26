@@ -293,10 +293,11 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
     status: "debt",
     why: "extract_item_roles.py recovers 7 roles from the map triggers and assigned `direct` to nothing across 214 items. Either the extractor never emits it (a recovery gap worth checking against the JASS) or the role is redundant and should leave the enum.",
   },
-  "enum:status-effects.polarity=buff": {
-    status: "debt",
-    why: "all 5 shipped status-effect docs are debuffs, so any UI that colours or filters by positive polarity has never rendered a single case. The map's buff-side statuses (haste/regen auras) were not imported.",
-  },
+  // `enum:status-effects.polarity=buff` used to sit here: all 5 shipped
+  // status-effect docs were debuffs. The #247 JASS-fidelity follow-up adopted
+  // it — `moon-combo` is the 者、皆、陣 combo window (war3map.j:34438), a
+  // caster-side marker that is unambiguously positive — so the exemption became
+  // a lie and was deleted, which is exactly what this census asks for.
   // 鑄技工坊 (Skill Forge P1, #141/#205): the `template` link landed on
   // zAbilityDef this commit, and the 29 template@1 docs + the pure expand() ship
   // with it, but NO existing content doc references a template yet — the editor's

@@ -21,13 +21,38 @@ export interface Scaling {
 }
 
 export type EffectDef =
-  | { kind: "damage"; damageType: DamageType; amount: Scaling; canCrit?: boolean }
+  | {
+      kind: "damage";
+      damageType: DamageType;
+      amount: Scaling;
+      canCrit?: boolean;
+      /**
+       * COMBO WINDOW bonus — extra damage added ONLY while the CASTER still
+       * carries `statusId`. The WC3 idiom this ports is a global integer the
+       * map flips for exactly one second: 蒼月潮's `udg_MoonCombo` is set to 2
+       * at the end of 07-02 者、皆、陣 (war3map.j:34438) and cleared 1.00 s
+       * later (j:34440); 07-03 列、在、前 reads `udg_MoonCombo == 2` at
+       * j:34189 and, when true, adds `5.00 × AGI` to its damage (j:34210).
+       *
+       * Expressed as a Scaling so the bonus scales exactly like the base term.
+       * NOT consumed on use — the JASS marker only ever expires, it is never
+       * cleared by the follow-up cast.
+       */
+      comboBonus?: { statusId: StatusId; amount: Scaling };
+    }
   | { kind: "heal"; amount: Scaling }
   | { kind: "shield"; amount: Scaling; duration: number }
   | {
       kind: "applyStatus";
       statusId: StatusId;
       duration: number;
+      /**
+       * Who receives it: each resolved target (default), or the CASTER. The
+       * self form is how a combo WINDOW is opened — 者、皆、陣 is a
+       * unit-targeted strike whose JASS also sets the caster-side marker
+       * (j:34438), so without `applyTo` the marker would land on the victim.
+       */
+      applyTo?: "self" | "target";
       moveSpeedMult?: number;
       root?: boolean;
       stun?: boolean;
@@ -102,6 +127,21 @@ export type EffectDef =
        * GGD units; ignored for `applyTo: "self"` and for `mode: "inPlace"`.
        */
       throwDistance?: number;
+      /**
+       * DRAG PHASE (52-02 蹂躪編年史「迅速將目標抓回」). When true the flyer is
+       * yanked to the CASTER before the throw, so the arc runs
+       * caster.pos → caster.pos + facing × throwDistance instead of starting
+       * where the victim happened to be standing.
+       *
+       * That is what the JASS does: `Trig_Trample_Effect` pulls the victim 50
+       * wc3 units per 0.05 s tick toward the caster until it is within 50
+       * (war3map.j:51755-51763), and only THEN is the throw aimed —
+       * `PolarProjectionBJ(casterLoc, 400.00, GetUnitFacing(caster))` at
+       * j:51765-51767. Without this flag the landing point is off by the
+       * original caster→victim distance, which on a 5.5-unit cast range is up
+       * to 75 % of the throw itself.
+       */
+      dragToCaster?: boolean;
       /** landing burst radius, GGD units (0/absent = the flyer alone) */
       landRadius?: number;
       /** effects run on the LANDING tick, centred on the landing point */

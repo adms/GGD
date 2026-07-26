@@ -116,6 +116,7 @@
           "apexHeight": 1.2,
           "durationSec": 0.42,
           "throwDistance": 7.33,
+          "dragToCaster": true,
           "landRadius": 4.95,
           "onLand": [
             {

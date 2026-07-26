@@ -166,6 +166,14 @@ export function resolveLandingPoint(world: SimWorld, flyerId: EntityId, requeste
 export interface StartLeapOptions {
   /** requested landing point; omit (or pass the caster's own pos) for inPlace */
   to: Vec2;
+  /**
+   * Where the arc STARTS. Defaults to the flyer's current position, which is
+   * true of every self-leap. 52-02 蹂躪編年史 overrides it: the JASS drags the
+   * victim to the caster before the throw (j:51755-51763), so the parabola runs
+   * from the CASTER's location (j:51765-51767) and the drag is compressed into
+   * the takeoff tick.
+   */
+  from?: Vec2;
   /** apex height in GGD units */
   apexHeight: number;
   /** flight time in seconds (converted to integer ticks here, once) */
@@ -199,7 +207,7 @@ export function startLeap(world: SimWorld, id: EntityId, opts: StartLeapOptions)
   const ticks = leapTicks(opts.durationSec);
   const ov: LeapOverride = {
     kind: "leap",
-    from: { x: t.pos.x, z: t.pos.z },
+    from: opts.from ? { x: opts.from.x, z: opts.from.z } : { x: t.pos.x, z: t.pos.z },
     to: { x: opts.to.x, z: opts.to.z },
     // integer milli-units, computed once — see the determinism note above
     apexMilli: Math.round(opts.apexHeight * 1000),

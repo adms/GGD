@@ -33,6 +33,14 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       damageType: zDamageType,
       amount: zScaling,
       canCrit: z.boolean().optional(),
+      /** combo-window bonus, added only while the CASTER holds `statusId` (j:34189) */
+      comboBonus: z
+        .object({
+          statusId: zRef<StatusId>("status-effects", { soft: true }),
+          amount: zScaling,
+        })
+        .strict()
+        .optional(),
     })
     .strict(),
   z.object({ kind: z.literal("heal"), amount: zScaling }).strict(),
@@ -44,6 +52,8 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       kind: z.literal("applyStatus"),
       statusId: zRef<StatusId>("status-effects", { soft: true }),
       duration: z.number().min(0),
+      /** "self" puts it on the CASTER (combo windows); default "target" */
+      applyTo: z.enum(["self", "target"]).optional(),
       moveSpeedMult: z.number().positive().optional(),
       root: z.boolean().optional(),
       stun: z.boolean().optional(),
@@ -106,6 +116,8 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
       apexHeight: z.number().min(0),
       durationSec: z.number().positive(),
       throwDistance: z.number().min(0).optional(),
+      /** yank the flyer to the caster before the throw (j:51755-51767) */
+      dragToCaster: z.boolean().optional(),
       landRadius: z.number().min(0).optional(),
       onLand: z.array(z.lazy(() => zEffectDef)).optional(),
     })

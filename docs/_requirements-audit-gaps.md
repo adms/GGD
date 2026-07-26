@@ -3234,3 +3234,107 @@ template slot 的單位從 `wc3u` 改成新的 `wc3h`；`range`/`radius`/`landRa
 3. **`EntityState.sc`（暫時模型縮放）整條線是出貨的死線路**：sim 每個寫入點都是字面量 1，wire/內插/ChampionView/測試全在，但那條測試是自己餵 1.2/1.9/1.0 給 buffer，**證明不了遊戲裡任何事**。查過真的 JASS 之後決定**移除**而不是接上：全地圖唯一會縮放**施法者**的技能是 A0U8 巨神一擊（`Trig_Gigantomakhia_*`，j:51866-52040），數值是 `SetUnitScalePercent` 絕對值 130→190（7 tick × 0.04s，`Size = 190 - Color*2`，Color 30→0），衝完在 j:52028 回到 120 —— 而 120 正是這位英雄自己的 base（`Hapm.scale = 1.2`），換算成 GGD #150 正規化尺寸的乘數是 1.083 → 1.583 → 1.0。**但它不是 leap**（它那一整串裡沒有任何 `SetUnitFlyHeightBJ`，是「暫停→變大→貼地衝刺→爆」），所以擁有 `world.airborne` 的 `LeapSystem` 根本驅動不了它。要接上得新增一種 EffectDef、一個 ramp store、它自己的死亡/回合重置拆線、digest 摺入 —— 那是**新功能**不是「把線接完」，不屬於這次收尾。真實數值已寫進 `packages/shared/src/protocol/schema.ts` 原欄位的位置，交給 #249（變身系統）/#50（逐次美術參數），並登記為 `leap-15 pending`。移除範圍：schema 欄位 + `defineTypes` + snapshot 寫入 + `world.airborne.scaleMul` + digest 摺入 + `InterpSample/InterpPose.sc` + `EntityViewState.sc` + `ChampionView.baseScale/scaleMul` + 那條假測試。副作用是好的：`glbRoot.scaling` 現在**一輩子只寫一次**（載入時），#150 的正規化尺寸從「乘數剛好是 1」升級成「結構上碰不到」。
 
 4. **`leapSystem` 邊走 `world.transform` 邊跑落地 payload**。JS Map 的 `for..of` **會走訪迭代中插入的項目**，而 `runEffects` 是允許增刪實體的（`spawnProjectile` 會 `world.spawn()`）。今天出貨的 `onLand` 只有傷害/狀態所以碰不到 —— 問題正在這裡：**安全性是內容的性質，不是程式的性質**，schema 和 `tpl-leap-strike` 都沒有東西擋作者從（現在會正確渲染的）編輯器卡片裡塞一個 `spawnProjectile` 進 `onLand`。改成兩段式：先走完所有弧線，再依同樣的 id 順序引爆。順序語意也順便變乾淨了 —— 舊寫法下「落地把還在飛的人再丟一次」會依兩者 id 大小決定新弧線是否在同一 tick 就前進一格（id 大的 `elapsed` 直接變 1），現在一律 0。這一條有**會紅的**測試（`leap-detonate-order`：把兩段式改回交錯就紅）。
+
+---
+
+#### 🎯 2026-07-26 #247 追修：四支 leap 技能的 JASS 對帳（landRadius / 連段 / 拖回）
+
+Owner 的標準（2026-07-26 逐字）：「war3 編輯器設定 設定不了 JASS 實作效果，遇到這種情形一律以 JASS 實際參數為準」。
+優先序是 **JASS > w3a/w3u 物件列 > tooltip**，逐欄適用。物件列跟觸發不合是**預期**，不是資料品質意外——
+WC3 物件編輯器根本表達不了觸發做的事，所以只要觸發覆蓋了物件列，物件列就是一具過期的空殼。
+四筆全部就地改成 JASS 值，並把來源行號寫進斷言訊息（`packages/shared/src/sim/leapJassFidelity.test.ts`），
+測試自己會去讀 `war3map.j` 那一行，行號漂掉就變紅。
+
+| 技能 | 原本（哪來的） | 改成（哪一行） |
+| --- | --- | --- |
+| `godie-hart.w` A0UX 隕石擊 | landRadius/radius 5.50（＝w3a 範圍 300） | **4.58**（j:33722 `GetUnitsInRangeOfLocMatching(250.00)`） |
+| `godie-u00n.r` / `godie-u00o.r` A0RZ 巨人迴旋彈 | landRadius/radius 3.67（＝wc3 200） | **6.97**（j:36781 的 380，圓心是 j:36660 的施法者位置） |
+| `godie-hpb1.w` 者、皆、陣 | 只有傷害 | 追加 `applyStatus moon-combo 1.0s applyTo:self`（j:34438→j:34440） |
+| `godie-hpb1.e` 列、在、前 | 描述有連段、程式沒有 | `comboBonus`：窗口內 +ad×1.25（j:34189 判定、j:34214 的 5×AGI） |
+| `godie-hapm.w` A0U1 蹂躪編年史 | 從受害者原地丟 | `dragToCaster: true` —— 先抓回施法者（j:51749 判定／j:51760 每格 50 單位），再從**施法者**位置丟（j:51765） |
+
+**A0RZ 的 perRank 沒有錯，錯的是 JASS 自己的註解。** 驗證者說 `[600,900,1200]` 與 JASS 不合；
+實際執行的是 j:36719 `300 + 300×level + STR×2` → 600/900/1200，跟地圖 tooltip「600+力量*2傷害」一致。
+j:36779 的註解 `300+(sLV*200)+(力量*3)` 從來不會執行。**規則是 JASS 為準，而 JASS 指的是會跑的那一行**，
+2 票對 1 票，perRank 維持不動並加測試釘住這個結論。
+
+**新的模擬器機制（兩個，都很小）**：
+- `applyStatus.applyTo: "self"` —— 連段窗口必須落在施法者身上。者、皆、陣是單體指定技，
+  沒有這個欄位，marker 會蓋到被打的人身上。
+- `damage.comboBonus: { statusId, amount }` —— 只在施法者仍持有該 status 時加成，
+  **在 target 迴圈之前解析一次**（JASS 也是在施法當下讀一次 `udg_MoonCombo` 然後把結果烤進
+  `udg_MoonDamage`，逐目標讀會變成另一個技能）。不會被消耗，只會過期——JASS 也是只有過期。
+- `leap.dragToCaster` + `startLeap({ from })` + `resolveLandingPoint(…, anchor)` —— 拋物線的**起點**
+  也要跟著搬，否則落點會差掉整段「施法者→受害者」距離（這技能施程 5.5u，最壞差 75%）。
+
+**誠實講三件做不到的事**：
+
+1. **GGD 沒有敏捷這個屬性。** JASS 的連段加成是 `5.00 × AGI`（j:34214）。GGD 的 stat 表只有
+   ad/ap/as…，敏捷要等 #248 才會從 w3u 重建。所以敏捷項掛在 **ad** 上，倍率用**這份文件自己的換算率**
+   推出來：它的 `力量*2`（j:34211）出貨成 `ad × 0.5`，也就是每一點 WC3 屬性倍率 = 0.25 ad 係數，
+   於是 5 × 0.25 = **1.25**。是從文件推的，不是我發明的，而且測試把這條推導也寫成斷言——
+   哪天有人改了基礎項的係數，這一條會跟著紅。**這是近似值，#248 應該回來重算。**
+2. **EX 模式那半實作不出來。** j:34216 在 `udg_EX_Mode[player] == true` 時給 +10×AGI。
+   GGD 沒有「每位玩家的 EX 模式旗標」這種東西（`exAbility` 是一個技能格，不是一個模式），
+   要做得先有一個全域的 per-player 模式狀態機。登記為 `jass-247-07` **deferred**。
+   描述文字（w3x 原文）維持不動——那是地圖原文，不是我們寫的。
+3. **者、皆、陣自己的連段（+3×AGI，j:34342 判定／j:34398 加成）沒做。** 它需要 Q(臨、兵、鬥)
+   再放一個 marker 形成 Q→W→E 三段鏈；本次任務只點名 E，所以只補了 W→E 這一段。
+   `godie-hpb1.w` 的描述因此**仍然多承諾了它自己那半**。登記為 `jass-247-08` deferred，不要當成沒事。
+
+**另外：拖回被壓縮成起跳那一格。** JASS 的拖回是每 0.05s 拉 50 wc3、直到距施法者 50 以內
+（最遠 0.3 秒），GGD 直接把弧線起點設成施法者位置。落點因此完全正確，代價是少了那 ≤0.3 秒的拉扯過程，
+而且殘留 ≤50 wc3（0.92 GGD）的接觸間隙沒有模擬。
+
+**閘門**：`go run ./cmd/testrunner -once -mode all`。這次順手修了三支**因為 #247 自己**而紅的測試
+（`apps/editor` walk.test 的 EffectDef union 少了 `leap`——在 ba72202e 上覆驗就是紅的；
+`loader.test` / `fieldAdoption.test` 的狀態列表因為新增 `moon-combo` 而需要更新，後者的
+`enum:status-effects.polarity=buff` 豁免條目已被採用，依測試自己的指示刪除）。
+`internal/opsenv` 與 `internal/combatenv` 兩支 Go 紅屬既有，由另一條工作流處理。
+
+---
+
+#### 🎯 2026-07-26 #247 追修 2：連段加成「實作了、測綠了、真的一場遊戲裡不可能發生」
+
+**上一條（`jass-247-05`）被對抗式驗證推翻。** 缺陷不在數字，在**時機**：
+
+- **JASS 是施法當下就烤好**。`Trig_Jump_Start_Actions`（j:34195）在 SPELL_EFFECT 動作裡
+  算出完整的 `udg_MoonDamage`——**含** `udg_MoonCombo == 2` 那條加成（判定 j:34189/34212、
+  非 EX +5×AGI j:34214、EX +10×AGI j:34216）——**然後才**打開弧線觸發（j:34226）。
+  弧線 `Trig_Jump_Effect` 整段（j:34241-34314）**一次都沒有再讀** `udg_MoonCombo`；
+  `Index >= 41`（j:34274）時發出的 AoE 打的是已經烤好的變數（j:34262）。
+  窗口在飛行途中過期在 WC3 裡完全無所謂，**正因為數字在施法當下就凍結了**。
+- **GGD 原本相反**。`comboBonus` 在 `applyEffect` 的 damage 分支解析，而那份傷害是
+  **落地**才跑。弧線 41 tick × (0.35/10) = **1.435 秒**（GGD 43 tick / 1.44 秒），
+  窗口 **1.00 秒**（30 tick）。也就是說**傷害解析時窗口一定已經關了**——
+  這個加成在任何時機、任何操作下都不可能觸發。
+
+**為什麼會過關**：舊測試把 damage effect 單獨拿出來 apply，中間沒有飛行。
+「完成宣告要問這條觸發在正常一場遊戲裡真的會發生嗎」——這條規則的又一次學費。
+
+**修法**：新增 `bakeCastTimeConditionals()`（`sim/effects/effectRunner.ts`）。
+在 payload **離開施法那一刻**（`leap` 起跳、`spawnProjectile` 發射）把條件項解析掉，
+解析出來的數額摺進 payload 自己的 `amount.flat`，`comboBonus` 一併從飛出去的那份拿掉——
+**還帶著條件飛的 payload 就是缺陷本身**。立即傷害（instant cast / cast time 結算那一格）
+apply-time 就是 cast-time，維持原路徑不變。
+
+**新測試（都在真 `SimWorld` 上飛完整條弧線）**：
+- `jass-fid-a0g3-flight-open`：窗口開著時施法 → 飛滿 43 tick → 落地 **520**
+  （450 + ad×0.5 + ad×1.25，ad=40）。而且斷言**窗口確實在半空中關掉了**，
+  否則這條測試什麼都沒證明。
+- `jass-fid-a0g3-flight-lapsed`：先讓窗口過期（31 tick）再施法 → 落地 **470**。
+- 反向對照跑過：把 bake 那行拿掉，第一條立刻紅成 `expected 470 to be close to 520`——
+  就是缺陷本身的數字。
+
+**同類普查（cast-time vs apply-time）**：全 content 掃過 `leap.onLand` / `spawnProjectile.onHit`
+兩個延遲 payload 通道，**條件式加成只有 1 處**（`godie-hpb1.e`，已修）。
+另外 9 處是**只有屬性係數**的延遲項（`godie-hapm.w`/`godie-hart.w`/`godie-u00n.r`/
+`godie-u00o.r` 的 onLand，`godie-u00n.e`/`godie-u010.e`/`sela.q`/`thorne.e`/`storm-arrow`
+的 onHit）：它們**一定會觸發**，只是飛行途中 buff 過期會讓數值飄——與「永遠不觸發」不同級，
+且改成快照會動到全遊戲每一支飛彈。登記 `jass-247-14` deferred，**不擴大範圍**。
+`canCrit` 在落地才擲骰：JASS 沒有這個項（crit 是 GGD 自己的物品模型），不算不一致。
+
+**閘門**：`pnpm -r --if-present typecheck`（順手修好 `leapJassFidelity.test.ts` 在
+ba72202e+a16f6ddf 上就已經紅的 6 個 `DashOverride | LeapOverride` 收窄錯誤——
+上一條的閘門紀錄只跑了 Go testrunner，沒跑 tsc）、`pnpm todo:check`、
+`pnpm --filter @ggd/{shared,client} test`。

@@ -152,7 +152,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 海克力斯 - Berserker `godie-hapm` | EX | 52-002 射殺百頭 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 最終幻想 - 克勞德 `godie-hart` | PASSIVE | 01-00 怒斬 | `—` | — | 🟣 PASSIVE | never cast |
 | 最終幻想 - 克勞德 `godie-hart` | Q | 01-01 凶斬 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 最終幻想 - 克勞德 `godie-hart` | W | 01-02 隕石擊 | `ground` | circle r=3.30u | ✅ OK | radius 5.5 × abilityRange 0.6 |
+| 最終幻想 - 克勞德 `godie-hart` | W | 01-02 隕石擊 | `ground` | circle r=2.75u | ✅ OK | radius 4.58 × abilityRange 0.6 |
 | 最終幻想 - 克勞德 `godie-hart` | E | 01-03 畫龍點睛 | `ground` | circle r=3.85u | ✅ OK | radius 6.42 × abilityRange 0.6 |
 | 最終幻想 - 克勞德 `godie-hart` | R | 01-04 超究武神霸斬 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 最終幻想 - 克勞德 `godie-hart` | EX | 01-002 究極魔劍 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
@@ -297,7 +297,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 草帽小子 - 蒙其.D.魯夫 `godie-u00n` | Q | 76-01 伸縮自如的橡膠戰斧 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 草帽小子 - 蒙其.D.魯夫 `godie-u00n` | W | 76-02 伸縮自如的橡膠火箭砲 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 草帽小子 - 蒙其.D.魯夫 `godie-u00n` | E | 76-03 伸縮自如的槍亂打 | `skillshot` | line 7.20×1.08u | ✅ OK | imported.wave maxRange 12 × abilityRange 0.6, hitRadius 0.9 ×2 × abilityRange 0.6 |
-| 草帽小子 - 蒙其.D.魯夫 `godie-u00n` | R | 76-04 三檔.巨人迴旋彈 | `ground` | circle r=2.20u | ✅ OK | radius 3.67 × abilityRange 0.6 |
+| 草帽小子 - 蒙其.D.魯夫 `godie-u00n` | R | 76-04 三檔.巨人迴旋彈 | `ground` | circle r=4.18u | ✅ OK | radius 6.97 × abilityRange 0.6 |
 | 草帽小子 - 蒙其.D.魯夫 `godie-u00n` | EX | 76-002 霸王色 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 黑手黨老大 - 基廉列克 `godie-u00v` | PASSIVE | 78-00 銅皮鐵骨 | `—` | — | 🟣 PASSIVE | never cast |
 | 黑手黨老大 - 基廉列克 `godie-u00v` | Q | 78-01 斬鐵拳 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |

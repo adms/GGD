@@ -91,8 +91,10 @@ describe("discriminated EffectDef union (editor-02)", () => {
     // sim. Adding the tag here is NOT the fix on its own — see the `leap` case
     // below and PreviewController.effectLines, which must both learn the kind.
     const tags = union.variants.map((v) => v.tag).sort();
+    // `leap` joined the union in #247 (the parabolic jump ported from the map's
+    // own SetUnitFlyHeightBJ sites) — this list had not been updated with it,
+    // so the suite was red on the #247 branch before this line changed.
     expect(tags).toEqual(
-      // `leap` joined the union in #247 (the parabolic jump EffectDef).
       [
         "applyBuff",
         "applyStatus",
