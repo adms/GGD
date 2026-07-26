@@ -139,6 +139,11 @@
     "waveIntervalSec": 2,
     "mobsPerWaveCap": 5,
     "maxAlivePerZone": 15,
+    "schedule": [
+      { "round": 8, "mobsPerWaveCap": 10, "maxAlivePerZone": 30 },
+      { "round": 9, "mobsPerWaveCap": 20, "maxAlivePerZone": 60 },
+      { "round": 10, "mobsPerWaveCap": 0, "maxAlivePerZone": 0 }
+    ],
     "mob": {
       "maxHp": 24,
       "attackDamage": 1.2,

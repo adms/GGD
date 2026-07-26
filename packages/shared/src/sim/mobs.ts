@@ -149,6 +149,8 @@ export interface MobWavesConfigLike {
   waveIntervalSec: number;
   mobsPerWaveCap: number;
   maxAlivePerZone: number;
+  /** per-round cap overrides (owner 2026-07-27); absent ⇒ authored caps everywhere */
+  schedule?: readonly { round: number; mobsPerWaveCap: number; maxAlivePerZone: number }[];
   mob: {
     maxHp: number;
     attackDamage: number;
@@ -187,6 +189,34 @@ export const DEFAULT_MOB_LEVEL_PER_ROUND = 1;
  * `round <= fromRound` clamps to `baseLevel` so a mis-armed early round can
  * never produce a level below the floor (or, worse, a negative one).
  */
+/**
+ * The two caps in effect for `round` — the authored ones, unless the schedule
+ * overrides that round (owner, 2026-07-27: round 8 → 10/30, round 9 → 20/60,
+ * round 10 → 0/0 乾淨總決賽).
+ *
+ * ZERO IS A VALUE, not "unset". `maxAlivePerZone: 0` is how the grand final
+ * gets no zombies at all, so every read here uses `??` on the FIELD rather than
+ * `||` on the number — `0 || 15` is 15, and that one operator would silently
+ * repopulate the round the owner asked to empty.
+ *
+ * `round <= 0` is the 「no round tracking」 sentinel used by unit tests and the
+ * client's prediction shadow (same convention as mobLevelForRound): it reads as
+ * the authored caps, never as a scheduled row.
+ */
+export function mobCapsForRound(
+  cfg: MobWavesConfigLike,
+  round: number,
+): { mobsPerWaveCap: number; maxAlivePerZone: number } {
+  const authored = { mobsPerWaveCap: cfg.mobsPerWaveCap, maxAlivePerZone: cfg.maxAlivePerZone };
+  if (!cfg.schedule || round <= 0) return authored;
+  const row = cfg.schedule.find((r) => r.round === Math.round(round));
+  if (!row) return authored;
+  return {
+    mobsPerWaveCap: Math.max(0, row.mobsPerWaveCap),
+    maxAlivePerZone: Math.max(0, row.maxAlivePerZone),
+  };
+}
+
 export function mobLevelForRound(cfg: MobWavesConfigLike, round: number): number {
   const base = cfg.mob.baseLevel ?? DEFAULT_MOB_BASE_LEVEL;
   const per = cfg.mob.levelPerRound ?? DEFAULT_MOB_LEVEL_PER_ROUND;
@@ -261,12 +291,16 @@ export function mobRulesFromConfig(
       : def === undefined
         ? 0
         : Math.max(0, championStatBase(def, Stat.HealthRegen, level, env));
+  const caps = mobCapsForRound(cfg, round);
   return {
     fromRound: cfg.fromRound,
     firstWaveTicks: ticks(cfg.firstWaveSec),
     waveIntervalTicks: ticks(cfg.waveIntervalSec),
-    mobsPerWaveCap: cfg.mobsPerWaveCap,
-    maxAlivePerZone: cfg.maxAlivePerZone,
+    // Both caps come from the per-round schedule. Baked HERE, at arm time, next
+    // to the level — so the per-tick spawn path keeps reading two plain numbers
+    // and still has no idea what a round is.
+    mobsPerWaveCap: caps.mobsPerWaveCap,
+    maxAlivePerZone: caps.maxAlivePerZone,
     level,
     maxHp,
     hpRegenPerSec,

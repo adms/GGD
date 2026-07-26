@@ -442,6 +442,44 @@ export const zMobWavesConfig = z
     mobsPerWaveCap: z.number().int().min(1),
     /** hard cap on mobs ALIVE per battlefield/duel zone at once */
     maxAlivePerZone: z.number().int().min(1),
+    /**
+     * LATE-MATCH SCHEDULE (owner, 2026-07-27) — a per-round OVERRIDE of the two
+     * caps above, for the escalation into the finale:
+     *
+     *   round  8 →  10 / 30   (double)
+     *   round  9 →  20 / 60   (quadruple)
+     *   round 10 →   0 /  0   (乾淨總決賽 — no zombies at all)
+     *
+     * An explicit TABLE rather than a multiplier, because the owner's curve is
+     * not a curve: it doubles, then doubles again, then goes to ZERO. Any
+     * formula that produces 0 at round 10 also produces nonsense on the way
+     * there, and the grand final's emptiness is a design statement — the last
+     * round is champions only, with nothing to farm and nowhere to hide.
+     *
+     * Applied where the LEVEL already is (`mobRulesFromConfig(cfg, dt, round)`),
+     * so it needs no new channel for the round to reach the sim and nothing
+     * per-tick learns what a round is.
+     *
+     * Rounds not listed keep the authored caps. Absent block ⇒ no schedule,
+     * which is what every legacy doc, unit test and the client's prediction
+     * shadow world see.
+     *
+     * min(0), unlike the base caps' min(1): 0 is the whole point of round 10.
+     */
+    schedule: z
+      .array(
+        z
+          .object({
+            /** 1-based round this row applies to */
+            round: z.number().int().min(1),
+            /** cap on mobs spawned per wave in that round (0 = none) */
+            mobsPerWaveCap: z.number().int().min(0),
+            /** cap on mobs ALIVE per zone in that round (0 = none) */
+            maxAlivePerZone: z.number().int().min(0),
+          })
+          .strict(),
+      )
+      .optional(),
     /** the mob unit's combat stats */
     mob: z
       .object({
@@ -518,6 +556,22 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
   waveIntervalSec: 2,
   mobsPerWaveCap: 5,
   maxAlivePerZone: 15,
+  // owner, 2026-07-27. Round 8 doubles, round 9 doubles again, round 10 is
+  // EMPTY (乾淨總決賽). Round 8's 30 is exactly where maxAlivePerZone STARTED
+  // (#215) before the owner halved it — the escalation reclaims the original
+  // density before blowing past it.
+  //
+  // Render cost was checked rather than assumed. Round 9's 60 alive × 2 zones
+  // = 120 mobs is DOUBLE the 60 that docs/改進延遲.md computed for the old
+  // guardian_skeleton (5,288 tris ⇒ 317,280 skinned tris/frame) — but on
+  // today's blocky-undead at 168 tris those 120 mobs are 20,160 tris, still a
+  // fifteenth of the load that motivated that document. Server-side AI for 120
+  // mobs is the cost worth watching, not the renderer.
+  schedule: [
+    { round: 8, mobsPerWaveCap: 10, maxAlivePerZone: 30 },
+    { round: 9, mobsPerWaveCap: 20, maxAlivePerZone: 60 },
+    { round: 10, mobsPerWaveCap: 0, maxAlivePerZone: 0 },
+  ],
   mob: {
     // Flat LAST-RESORT fallback (#217): only reached when neither the #244 mob
     // curve below nor a registered champion doc is available.
