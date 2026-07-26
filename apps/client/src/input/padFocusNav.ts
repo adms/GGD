@@ -107,6 +107,51 @@ export function pickActiveScope(scopes: readonly { priority: number; order: numb
   return best;
 }
 
+// ------------------------------------------------- B = back, but never OUT --
+
+/**
+ * Labels B is allowed to press when a scope declares no explicit
+ * `data-pad-back`. DISMISSAL WORDS ONLY. The original list also carried
+ * `離開|leave`, which is how task #271 happened: with no modal open the pad's
+ * scope is `document.body`, and the top-right Leave chip (`title="leave the
+ * match"`, text `Leave`) was the first match in the whole document. One tap of
+ * B — no focus, no A, no prompt — ended the match. In champSelect and in every
+ * intermission the focus layer is live, so this fired constantly; with the shop
+ * open the first B closed the shop and the second one hit Leave, which is the
+ * "B backs out one level" reflex every pad player has.
+ */
+export const BACK_ALLOW_RE = /取消|關閉|收起|返回|back|close|cancel|dismiss|✕|×|╳/i;
+
+/**
+ * …and the VETO, which beats the allow-list. A back button is a courtesy; it
+ * must never be able to do something the player cannot undo. `返回大廳`
+ * contains `返回`, so without this the settlement card's and MatchEndPanel's
+ * "return to lobby" would still be one blind press of B.
+ *
+ * Anything genuinely destructive should ALSO be reachable only by focusing it
+ * and pressing A — that is the deliberate-movement half of #271 — so this list
+ * is the safety net, not the design.
+ */
+export const BACK_VETO_RE = /離開|退出|返回大廳|投降|放棄|解散|刪除|leave|exit|quit|abandon|surrender|delete/i;
+
+/**
+ * Index of the control B should press, given each candidate's accessible text
+ * (aria-label + title + textContent, concatenated by the caller), or -1 when
+ * nothing here is a safe back control.
+ *
+ * PURE so it can be tested at all: the DOM half lives in ui/PadFocusNav, which
+ * the client's `node` vitest env cannot render, and this heuristic — not any
+ * key binding — was the actual one-press exit. See ui/PadFocusNav.findBackControl.
+ */
+export function backControlIndex(labels: readonly string[]): number {
+  for (let i = 0; i < labels.length; i++) {
+    const label = labels[i] ?? "";
+    if (BACK_VETO_RE.test(label)) continue;
+    if (BACK_ALLOW_RE.test(label)) return i;
+  }
+  return -1;
+}
+
 function center(r: FocusRect): { x: number; y: number } {
   return { x: r.x + r.w / 2, y: r.y + r.h / 2 };
 }

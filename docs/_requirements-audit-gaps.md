@@ -4027,3 +4027,71 @@ scratch `DATA_DIR`，真的 49 位白名單）。全程沒有碰 ggd.adms.ai。�
   玩家眼前（輪到他時 3D 長成皮卡丘）。這次沒動內容。
 - `godie-h02r 妙蛙花` 的 `description` 是空的 → 卡片顯示「（此英雄在原地圖沒有描述文字）」。
 - 43 位仍在預覽舞台上共用方塊人替身（#226/#231 的 open question），卡片上有 🎭 徽章說明。
+## 2026-07-26 · #271 離開對戰確認閘 —— 「一鍵退出」不是綁定，是一條沒人測過的啟發式
+
+> owner：「戰鬥中不應該讓手把按鍵一鍵退出，應該要移動過去甚至按 [確認/取消] 的確認後才能退回大廳」
+
+### 病灶：找對地方比修對地方更難
+
+七條離開路徑裡，owner 講的那個「一鍵」**不在任何按鍵表上**。
+`apps/client/src/ui/PadFocusNav.tsx` 的 B 鍵處理是一條正則啟發式：掃 scope 內每個可聚焦元素的
+`aria-label + title + textContent`，比對 `/取消|關閉|返回|離開|leave|back|close|cancel|✕|×|╳/i`，
+第一個命中就 `.click()`。對戰中沒有 modal 時 scope 就是 `document.body`，而右上角 Leave 晶片的
+`title="leave the match"` + 文字 `Leave` **同時命中 `leave` 兩次**，還是全文件第一個命中。
+
+**在本機實測（v0.6.0 分支、offline bot match、中場備戰階段）逐字量到的結果**：
+
+```
+可聚焦元素（document.body scope）：
+  ["", "Scoreboard", "settings ⚙", "open menu menu (Esc) ☰", "cheats (`) 🐞 cheats",
+   "leave the match Leave", "Show volume and cursor size…", "Music off…", "Sound effects off…"]
+舊正則 B 會點的： "leave the match Leave"   ← 一下 B，整場沒了
+新 backControlIndex： null                   ← B 什麼都不做
+```
+
+不需要先聚焦、不需要按 A、沒有任何確認。而且 `findBackControl` 住在只有瀏覽器跑得到的
+`.tsx` 裡，client 的 vitest env 是 `node` —— **它從來沒有被任何測試碰過**
+（`input/padFocusNav.test.ts` 只測到純函式那一半）。
+
+### 這是哪一種形狀：**「危險的程式碼躲在測不到的那一層」**
+
+跟 S6（後端做完前端沒入口）不同，這條是反過來的：**純邏輯被測得很細，
+真正會造成損害的那一段因為需要 DOM 而被留在測試邊界外**。
+本次的處置也就是通則：**把判斷從 DOM 層抽成純函式**
+（`input/padFocusNav.ts` 的 `backControlIndex(labels)`），DOM 層只負責蒐集 label 與執行 click。
+抽完之後它才第一次有測試（`pad-back-no-destructive` / `pad-back-closes`）。
+
+> **給下一條「啟發式」的規範**：任何「掃描 DOM 然後替使用者按下去」的程式碼，
+> 判斷部分一律抽成吃字串陣列的純函式。留在 `.tsx` 裡 = 永遠不會有人測它。
+
+### 第二個通則：白名單不夠，要有**否決表**
+
+`返回大廳` 含 `返回`、Leave 晶片含 `leave` —— 光靠「哪些字算返回」是分不開的。
+現在是 `BACK_ALLOW_RE`（只留關閉/取消語意）+ `BACK_VETO_RE`（離開/退出/返回大廳/leave/exit/…）
+**否決壓過白名單**。B 是禮貌，不該能做不可逆的事。
+
+### 文案是照程式碼寫的，不是編的
+
+`ui/leaveConfirm.ts` 每一句都對得上一處程式碼：AI 接手＝`MatchRoom.ts:649`；
+60 秒重連寬限只給斷線＝`MatchRoom.ts:654` 的 `if (consented) return;` 在 `allowReconnection` 之前，
+而 Leave 走的是 `RoomConnection.ts:333` 的 `room.leave(true)`；藍水晶/排名只在
+`finishMatch()` → `settleToPlatform()` 發＝`MatchRoom.ts:685+`。
+**刻意沒寫「你拿不到水晶」** —— 座位保留 `accountId` 且 `spec.isBot` 仍是 false
+（`MatchController.ts:1356`），別人把這場打完時離開者仍在結算 payload 裡。誇大比照實更糟。
+
+### 順帶量到的、比這條更廣的洞（**未修，留給後續**）
+
+`net/RoomStore` 的 `useHud` 還是 zustand 原生 `useStore` —— 也就是上一段 `useApp` 修掉的
+**同一個** server-snapshot 盲點，只是換到 HUD 這一側。任何
+「`hudStore.setState({phase:…})` 之後 `renderToStaticMarkup`」的測試，看到的永遠是 `connecting`。
+本次為了讓「比賽結束時對話框自己消失」這條斷言為真，在 `ui/LeaveConfirmDialog.tsx` 內
+自寫了一個窄版 `usePhase()`；**沒有動 `useHud` 本身**（那是全 HUD 範圍的改動，不屬於這條任務）。
+→ 這是一條真缺口，`docs/todo/leave-flow.md` 沒有列它，因為它不是離開流程的問題，是測試基礎建設的問題。
+
+### 未做、需 owner 拍板的兩件事（已列進 `docs/todo/leave-flow.md`）
+
+| 項目 | 現況 | 為什麼沒順手做 |
+|---|---|---|
+| 瀏覽器上一頁／關分頁 | 全專案沒有 `beforeunload`，1 個動作、無確認、無 teardown | 它會在 F5 重整、開發時很煩，是產品決定不是 bug 修正 |
+| 暫停選單「↻ Restart match」 | 線上模式直接 `returnToLobby()`，零確認，就緊鄰 Leave 上方 | owner 這條只講「離開」，把 Restart 一起關進閘門是擴權 |
+| `panels/LeaveSettlementOverlay` 沒有 `data-pad-scope` | `combat`/`resolution` 期間它彈出時**手把完全操作不到** —— 今天就存在的 bug | `ui/panels/**` 是 #265 的工作面，同時改會撞車 |

@@ -8,7 +8,8 @@
  */
 import { useEffect, useState } from "react";
 import { useApp } from "./platform/store";
-import { useRequestLeave } from "./leaveFlow";
+import { leaveConfirmStore, useRequestLeave } from "./leaveFlow";
+import { LeaveConfirmDialog } from "./LeaveConfirmDialog";
 import { openCodex } from "./codex/CodexRoute";
 import { SfxButton } from "./SfxButton";
 import { hudTouch } from "./hud/HudSlot";
@@ -51,12 +52,23 @@ export function PauseMenu(): React.JSX.Element {
   const requestLeave = useRequestLeave();
   const account = useApp((s) => s.account);
 
-  // Esc toggles the menu (ignored while typing in a field, e.g. cheat search)
+  // Esc toggles the menu (ignored while typing in a field, e.g. cheat search).
+  //
+  // #271 — this is the ONE Escape listener in the match tree, so the leave
+  // confirmation is resolved HERE rather than growing a second one. With the
+  // dialog open, Escape means "取消" and nothing else: it must not ALSO toggle
+  // the pause menu underneath, and the dialog must not swallow Escape either
+  // (this listener stays unconditional, so a wedged game is still one Escape
+  // away from the menu — see the ☰/menuHidden note above).
   useEffect(() => {
     const onKey = (e: KeyboardEvent): void => {
       if (e.key !== "Escape") return;
       if (typingInField(e.target)) return;
       e.preventDefault();
+      if (leaveConfirmStore.getState().open) {
+        leaveConfirmStore.getState().cancel();
+        return;
+      }
       setOpen((v) => !v);
     };
     window.addEventListener("keydown", onKey);
@@ -172,6 +184,14 @@ export function PauseMenu(): React.JSX.Element {
           </div>
         </div>
       )}
+
+      {/* #271 — the [確認 / 取消] step EVERY leave trigger passes through. It is
+          mounted here, not in platform/AppRoot, because this file is the
+          in-match menu layer AppRoot already renders on every match surface,
+          and because ui/leaveFlow (which asks for it) and this Escape handler
+          (which cancels it) both live alongside it. It self-gates on the store
+          and renders nothing during normal play. */}
+      <LeaveConfirmDialog />
     </>
   );
 }
