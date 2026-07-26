@@ -109,19 +109,42 @@ function useTabHidden(): boolean {
  * showcase parked below the fold has no business holding a WebGL context busy.
  * No IntersectionObserver (jsdom/node test envs lack it) → assume visible.
  */
-function useOnScreen(ref: React.RefObject<HTMLElement>): boolean {
+/**
+ * ⛔ THIS USED TO BE DEAD CODE, and the adversarial pass measured it: with
+ * `[ref]` as the deps (a `useRef` object is referentially STABLE, so that array
+ * never changes) the effect ran exactly once — on the first commit, which is
+ * ALWAYS the skeleton, because `useWhitelist()`'s cold cache starts `loading`.
+ * The skeleton does not mount `ref`, so `ref.current` was `null`, the effect
+ * returned early, and it never ran again for the life of the component.
+ * `onScreen` was therefore permanently `true`: measured 1,324 GPU draws over 3 s
+ * with the card scrolled 1,335 px off the top of the viewport.
+ *
+ * The fix is a CALLBACK REF, which React invokes whenever the node attaches or
+ * detaches — so the observer is created the moment the real card replaces the
+ * skeleton, and re-created if the card ever remounts. `document.hidden` (the
+ * other half of the pause) was verified working and is untouched.
+ */
+function useOnScreen(): { onScreen: boolean; attach: (el: HTMLElement | null) => void } {
   const [onScreen, setOnScreen] = useState(true);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el || typeof IntersectionObserver === "undefined") return;
+  const ioRef = useRef<IntersectionObserver | null>(null);
+
+  const attach = useCallback((el: HTMLElement | null) => {
+    ioRef.current?.disconnect();
+    ioRef.current = null;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      setOnScreen(true);
+      return;
+    }
     const io = new IntersectionObserver((entries) => {
       const e = entries[0];
       if (e) setOnScreen(e.isIntersecting);
     });
     io.observe(el);
-    return () => io.disconnect();
-  }, [ref]);
-  return onScreen;
+    ioRef.current = io;
+  }, []);
+
+  useEffect(() => () => ioRef.current?.disconnect(), []);
+  return { onScreen, attach };
 }
 
 /** The portrait shown when the 3D stage cannot be trusted (or is collapsed). */
@@ -165,12 +188,30 @@ function ValhallaStage({
   paused: boolean;
 }): React.JSX.Element {
   const def = Champions.tryGet(championId as ChampionId);
+  const modelKey = def?.modelKey ?? null;
   const [status, setStatus] = useState<PreviewStatus>("loading");
   const onStatus = useCallback((s: PreviewStatus) => setStatus(s), []);
-  // reset the status the moment the champion changes, or a previous "failed"
-  // would keep the fallback pinned over a model that loads fine
-  useEffect(() => setStatus("loading"), [championId]);
-  const modelKey = def?.modelKey ?? null;
+  /**
+   * Reset on the MODEL KEY, not the champion id.
+   *
+   * ⛔ This was keyed to `championId` and the adversarial pass caught what that
+   * costs: `StorePreviewCanvas` only re-reports its status when `props.modelKey`
+   * changes (its effect deps are `[props.modelKey, engineFailed]`), so rotating
+   * from one champion to another that shares a model reset us to "loading" and
+   * then NOTHING ever set us back to "ready" — the 「3D 模型載入中…」 overlay
+   * stayed pinned over a model that was already drawn, permanently.
+   *
+   * That is not a rare edge: 43 of the roster borrow one of four shared voxel
+   * bodies (see packages/shared/src/content/standinCensus.test.ts), so the
+   * shuffle bag hits a same-key pair constantly.
+   *
+   * Keying the reset to `modelKey` makes the two sides agree: the status is
+   * cleared exactly when the canvas will speak again, and a same-model rotation
+   * keeps the "ready" it already earned. The original reason for the reset — a
+   * stale "failed" pinning the fallback over a model that loads fine — still
+   * holds, because a different champion with a broken model has a different key.
+   */
+  useEffect(() => setStatus("loading"), [modelKey]);
   const standIn = isStandInModel(modelKey);
   return (
     <div
@@ -291,8 +332,8 @@ export function ValhallaPanel(): React.JSX.Element {
   const { env } = useLobbyCombatEnv(contentReady);
   const { width, height } = useViewport();
   const hidden = useTabHidden();
-  const rootRef = useRef<HTMLDivElement>(null);
-  const onScreen = useOnScreen(rootRef);
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  const { onScreen, attach: attachOnScreen } = useOnScreen();
 
   // SUBSCRIBE, DON'T SNAPSHOT: `contentReady` in the deps is what keeps this
   // from freezing on the empty registry the lobby's first paint sees (#170).
@@ -464,7 +505,10 @@ export function ValhallaPanel(): React.JSX.Element {
     return (
       <Panel
         data-ggd-valhalla={current}
-        ref={rootRef}
+        ref={(el) => {
+          rootRef.current = el;
+          attachOnScreen(el);
+        }}
         style={{ border: `1px solid ${ACCENT}55`, gap: 0, padding: "3px 8px", flexShrink: 0 }}
         onMouseEnter={() => setEngaged(true)}
         onMouseLeave={() => setEngaged(false)}
@@ -504,7 +548,10 @@ export function ValhallaPanel(): React.JSX.Element {
   return (
     <Panel
       data-ggd-valhalla={current}
-      ref={rootRef}
+      ref={(el) => {
+        rootRef.current = el;
+        attachOnScreen(el);
+      }}
       style={{
         border: `1px solid ${ACCENT}55`,
         background: `linear-gradient(180deg, rgba(111,143,224,0.10) 0%, ${PANEL_BG} 55%)`,
@@ -555,22 +602,63 @@ export function ValhallaPanel(): React.JSX.Element {
           >
             {blurb || "（此英雄在原地圖沒有描述文字）"}
           </div>
+          {/* KIT: NAMES ONLY, one wrapped line.
+              owner 2026-07-26, after seeing it: 「英靈殿佔的高度太多了 你可以拿掉
+              技能詳細說明的部分」. The full `SkillRowView` rows (icon + name +
+              cooldown + mana + the whole description) were the single tallest
+              thing on the card — six of them could run past 300 px on their own.
+              That height is exactly what pushed 「⚔️ 一鍵開打」 off the bottom of
+              every 720–1099 × 521–850 viewport (iPad landscape included), with
+              `html, body { overflow: hidden }` making the page unable to scroll
+              down to it. So this is not only the owner's taste call, it is the
+              root-cause fix for the adversarial pass's blocking finding.
+              What survives is what a showcase actually needs: WHICH slots this
+              hero has and what they are CALLED. The full detail already lives one
+              click away in champ-select, which is where a player reads it before
+              committing — the lobby card only has to make them curious. */}
           <div
             data-ggd-valhalla-body=""
-            onScroll={() => setEngaged(true)}
             onPointerLeave={() => setEngaged(false)}
             style={{
-              maxHeight: Math.max(64, layout.bodyMaxHeight - descHeight),
-              overflowY: "auto",
-              overflowX: "hidden",
-              paddingRight: 4,
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "3px 6px",
+              paddingTop: 5,
               borderTop: "1px solid #1b2233",
+              fontSize: 11,
+              lineHeight: 1.5,
             }}
           >
             {rows.length === 0 ? (
-              <div style={{ fontSize: 11, color: TEXT_DIM }}>此英雄沒有技能資料</div>
+              <div style={{ color: TEXT_DIM }}>此英雄沒有技能資料</div>
             ) : (
-              rows.map((r) => <SkillRowView key={`${r.slot}-${r.rawName}`} row={r} env={env} />)
+              rows.map((r) => (
+                <span
+                  key={`${r.slot}-${r.rawName}`}
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "baseline",
+                    gap: 4,
+                    padding: "1px 6px",
+                    borderRadius: 4,
+                    background: "#141a26",
+                    border: "1px solid #1b2233",
+                    maxWidth: "100%",
+                  }}
+                >
+                  <b style={{ color: ACCENT, fontWeight: 500, flex: "0 0 auto" }}>{r.slot}</b>
+                  <span
+                    style={{
+                      color: "#c8d0e0",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {r.rawName}
+                  </span>
+                </span>
+              ))
             )}
           </div>
         </div>

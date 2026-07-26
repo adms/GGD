@@ -154,7 +154,12 @@ describe("valhalla layout never buries 一鍵開打", () => {
     for (const viewportHeight of [600, 720, 900, 1200]) {
       const l = valhallaLayout({ viewportWidth: 1280, viewportHeight });
       expect(l.mode).toBe("full");
-      expect(l.stageHeight).toBeGreaterThanOrEqual(120);
+      // owner 2026-07-26, after seeing it live: 「然後英靈殿 3d model 展示也可以縮小」.
+      // The floor came down 120 → 96 with him; what it still protects is that the
+      // stage never degenerates into a thumbnail — below ~96 px a 1.8 u figure
+      // framed head-to-toe is smaller than the portrait fallback beside it, and
+      // then the 3D is costing a WebGL context to show LESS than a PNG would.
+      expect(l.stageHeight).toBeGreaterThanOrEqual(96);
       // the whole card (stage + chrome) must stay well under half the screen or
       // the bot strip below it starts sliding out of view
       expect(l.stageHeight).toBeLessThan(viewportHeight / 3);

@@ -167,7 +167,7 @@ export interface ValhallaLayout {
 export const VALHALLA_STRIP_MAX_HEIGHT = 520;
 
 /** Stage height used when a strip-mode card is expanded by hand. */
-export const VALHALLA_EXPANDED_STAGE = 150;
+export const VALHALLA_EXPANDED_STAGE = 116;
 
 export function valhallaLayout(opts: {
   viewportHeight: number;
@@ -180,9 +180,9 @@ export function valhallaLayout(opts: {
   if (h <= VALHALLA_STRIP_MAX_HEIGHT) {
     return { mode: "strip", stageHeight: 0, bodyMaxHeight: 0, stacked };
   }
-  if (h < 660) return { mode: "full", stageHeight: 140, bodyMaxHeight: 110, stacked };
-  if (h < 860) return { mode: "full", stageHeight: 190, bodyMaxHeight: 168, stacked };
-  return { mode: "full", stageHeight: 240, bodyMaxHeight: 232, stacked };
+  if (h < 660) return { mode: "full", stageHeight: 104, bodyMaxHeight: 92, stacked };
+  if (h < 860) return { mode: "full", stageHeight: 136, bodyMaxHeight: 120, stacked };
+  return { mode: "full", stageHeight: 168, bodyMaxHeight: 156, stacked };
 }
 
 // ---------------------------------------------------------------------------

@@ -73,8 +73,26 @@
  * reachable. So the body scrolls here too. Height-keyed, not width-keyed, so a
  * desktop window is untouched.
  */
-@media (max-height: 520px) {
-  .ggd-lobby-body {
-    overflow-y: auto;
-  }
+/*
+ * ⛔ THIS USED TO BE `@media (max-height: 520px)`, and the height gate is what
+ * made it useless. The adversarial pass on #258 measured the real hole:
+ * 「⚔️ 一鍵開打」 went completely off the bottom of the screen — and the page
+ * could not be scrolled down to it, because `html, body { overflow: hidden }` —
+ * on EVERY viewport between 720–1099 px wide and 521–~850 px tall. That band is
+ * iPad landscape (1024×768, 1080×810) and any desktop window narrower than
+ * 1100 px. On those sizes the lobby's single most important control did not
+ * exist for the player.
+ *
+ * Both halves of the old rescue missed it for the same reason: the strip-mode
+ * collapse in ui/platform/valhalla.ts and this scroll container were BOTH keyed
+ * to ≤520 px, the one size that had been measured (phone landscape).
+ *
+ * The fix is to stop guessing the band. `overflow-y: auto` shows a scrollbar
+ * only when the content actually overflows, so an unconditional rule costs a
+ * desktop nothing and cannot have a hole in it — there is no viewport where the
+ * body is too tall AND unscrollable. Guarding a specific range is how this bug
+ * was born; the range was simply wrong.
+ */
+.ggd-lobby-body {
+  overflow-y: auto;
 }
