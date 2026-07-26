@@ -78,6 +78,8 @@ import { isPassiveOnly, abilityPassiveSourceId } from "./abilities/abilityPassiv
 import { asSeatId, asTeamId, type ChampionId, type EntityId } from "../ids";
 import type { AbilityDef, CastType } from "./content/defs";
 import type { AbilitySlot, CastTarget, CoreAbilitySlot } from "./intents";
+import { leapTicks } from "./movement/leap";
+import type { EffectDef } from "./effects/effect";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, "../../../.."); // packages/shared/src/sim -> repo root
@@ -98,14 +100,20 @@ const ROSTER_SIZE = 50;
  *     299/300 (291 PASS + 8 PASSIVE). All 12 new cells fire, so the floor is
  *     RATCHETED by exactly the 12 newly-measured working cells, 287 → 299. The
  *     number was read off a real run, not predicted.
+ *   - 2026-07-26, task #247 (leap): re-measured at 300/300 (292 PASS + 8
+ *     PASSIVE, 0 FAIL). The last gap was godie-u00n R — "a ground cast accepted
+ *     with no measurable effect". It was never a content bug: at castTimeSec
+ *     0.9 the ability resolves on tick 27, ONE tick after the 26-tick window
+ *     closed (the KNOWN HARNESS ARTEFACT above). #247 rebound it to a real
+ *     leap, and `leapWindow` extends the observation by exactly the authored
+ *     flight time — so the harness now watches long enough to SEE the landing
+ *     damage, and the cell measures green for the right reason. Floor ratcheted
+ *     299 → 300, read off a real run.
  *
- * The single remaining gap (godie-u00n R — a ground cast accepted with no
- * measurable effect) is itemised in the FAIL table of docs/_castability-128.md
- * and belongs to the ability-fidelity / VFX owners. Raise this to 300 when that
- * one is fixed. Do NOT lower it to green a red run: a drop means a slot that
- * used to fire no longer does.
+ * Do NOT lower this to green a red run: a drop means a slot that used to fire
+ * no longer does.
  */
-const WORKING_CELL_FLOOR = 299;
+const WORKING_CELL_FLOOR = 300;
 
 const NO_INTENTS = new Map();
 const Z0 = SKELETON_ARENA.zones[0]!;
@@ -131,6 +139,27 @@ const DUMMY = "godie-hart" as ChampionId;
  * here so the next reader does not re-derive it.
  */
 const WINDOW = 26;
+/**
+ * TASK #247 — an ability whose effects are DEFERRED BEHIND A FLIGHT TIME needs a
+ * window that covers the flight, or the harness stops watching before the thing
+ * it is measuring happens. `leapWindow` adds exactly the authored tick budget of
+ * the longest leap in the ability's effect tree, and NOTHING else: an ability
+ * with no `leap` effect gets the same WINDOW it always had, so this cannot move
+ * any pre-#247 measurement. (The self-leaps would pass anyway — `moved` sees the
+ * nav override — but that would only prove the caster left the ground, never
+ * that the LANDING DAMAGE lands. Watching the whole arc measures the real thing.)
+ */
+function leapWindow(effects: readonly EffectDef[]): number {
+  let extra = 0;
+  for (const e of effects) {
+    if (e.kind === "leap") {
+      extra = Math.max(extra, leapTicks(e.durationSec) + 1);
+    } else if (e.kind === "spawnProjectile") {
+      extra = Math.max(extra, leapWindow(e.onHit));
+    }
+  }
+  return extra;
+}
 /** Ticks allowed for the FIRST basic-attack swing to land. */
 const BASIC_WINDOW = 40;
 
@@ -359,7 +388,8 @@ function testSlot(championId: string, slot: AbilitySlot): Cell {
     }
     events.push(...world.events.map((e) => e.type));
 
-    for (let i = 0; i < WINDOW; i++) {
+    const window = WINDOW + leapWindow(def.effects);
+    for (let i = 0; i < window; i++) {
       world.step(NO_INTENTS);
       events.push(...world.events.map((e) => e.type));
       // re-pin the two dummies so a knockback / shove cannot carry them out of

@@ -231,6 +231,30 @@ export class ChampionView {
   /** The render scale actually applied to the adopted .glb — the height-normalized
    *  factor × the per-champion relative multiplier (task #150; #77 declared scale). */
   private declaredScaleValue: number | null = null;
+  /**
+   * TASK #247 airborne/scale state.
+   *
+   * `baseScale` is the #150-NORMALISED size, written ONCE at glb adoption and
+   * never touched by an ability. `groundOffsetUnit` is the model's foot offset
+   * expressed at UNIT scale, so it can be re-multiplied whenever the scale
+   * changes — the trap `tryUpgradeToGlb` sets is that its `position.y = -min.y`
+   * shift is measured in the ALREADY-SCALED frame, so naively multiplying the
+   * scaling would leave the offset stale and sink (or float) the champion by
+   * `(m-1) x groundOffset`. Keeping the offset at unit scale is the fix.
+   *
+   * `scaleMul` of 1 therefore restores the normalised size BIT-EXACTLY, so no
+   * ability can permanently disturb #150 — not even one interrupted mid-ramp,
+   * because the sim deletes the airborne entry and the wire sends sc = 0, which
+   * the client maps to 1 (never to 0).
+   */
+  private baseScale = 1;
+  private groundOffsetUnit = 0;
+  /** interpolated fly height in GGD units (0 = grounded). */
+  private leapY = 0;
+  /** ENTITY_FLAG.AIRBORNE this frame — true on the takeoff/landing ticks too. */
+  private airborne = false;
+  /** interpolated temporary scale multiplier (1 = the #150-normalised size). */
+  private scaleMul = 1;
   private upgradeStarted = false;
   private walkPhase = 0;
   private lastPose = { x: 0, z: 0 };
@@ -671,7 +695,13 @@ export class ChampionView {
    * TARGET here (the yaw eases toward it in `update`), except on the very first
    * pose where there is no prior orientation to preserve, so we snap once.
    */
-  setPose(x: number, z: number, fx: number, fz: number): void {
+  setPose(x: number, z: number, fx: number, fz: number, h = 0, sc = 1, airborne = false): void {
+    // TASK #247: height and temporary scale are recorded here and APPLIED in
+    // `update`, which is where the dissolve/bob/idle writers also live so all
+    // three compose on the correct nodes instead of fighting over `root`.
+    this.leapY = h;
+    this.scaleMul = sc > 0 ? sc : 1;
+    this.airborne = airborne;
     const dx = x - this.lastPose.x;
     const dz = z - this.lastPose.z;
     const step = Math.sqrt(dx * dx + dz * dz);
@@ -679,7 +709,10 @@ export class ChampionView {
     // respawn, blink) would spin the walk cycle through a random phase in one
     // frame. A step this large is never locomotion (the fastest dash covers
     // ~1 u per 30 Hz tick), so treat it as a teleport and hold the phase.
-    if (step < TELEPORT_STEP_UNITS) this.walkPhase += step * 4.2;
+    // A leaping champion covers ~0.33 u/tick planar — under TELEPORT_STEP_UNITS
+    // — so without the airborne gate it would RUN THROUGH THE AIR with its legs
+    // cycling. Hold the phase for the whole flight (#247).
+    if (step < TELEPORT_STEP_UNITS && !airborne) this.walkPhase += step * 4.2;
     this.lastPose = { x, z };
     this.root.position.x = x;
     this.root.position.z = z;
@@ -959,6 +992,7 @@ export class ChampionView {
     // #220: 3 s on the ground, then rise + fade. Once vanished there is nothing
     // left to animate, so the rest of the frame is skipped entirely.
     if (this.updateDissolve(state, nowMs)) return;
+    this.applyAirborne(); // #247 fly height + temporary scale (see below)
     const frozen = nowMs < this.hitstopUntilMs; // hitstop window
     this.applyHitstopShiver(nowMs, frozen); // 破碎 buzz on the frozen body
     if (this.clipAnimator?.hasClips) {
@@ -1027,9 +1061,50 @@ export class ChampionView {
     this.armR.rotation.x += (armR - this.armR.rotation.x) * k;
     this.legL.rotation.x += (leg - this.legL.rotation.x) * k;
     this.legR.rotation.x += (-leg - this.legR.rotation.x) * k;
-    this.bodyRoot.position.y = this.bodyRoot.position.y + bob;
+    // Writers of bodyRoot.position.y, in order: the death sink (above), this
+    // bob, and #247's leapY. They COMPOSE additively and all three belong on
+    // bodyRoot — never on `root`, which also parents the team ring and the blob
+    // shadow (see applyAirborne).
+    this.bodyRoot.position.y = this.bodyRoot.position.y + bob + this.leapY;
 
     this.applyFlash(nowMs);
+  }
+
+  /**
+   * TASK #247 — apply the interpolated fly height and temporary model scale.
+   *
+   * NOT ON `root`. `root` parents four things: bodyRoot, glbRoot, the TEAM RING
+   * and the BLOB SHADOW. Writing height there would fly the ring and the shadow
+   * into the air with the body, destroying the one cue that tells a player where
+   * a leaper is going to land. So the height goes on the BODY nodes only, and
+   * the shadow instead shrinks and fades with altitude — the classic, and free,
+   * jump-readability cue.
+   *
+   * No conflict with the #220 dissolve (which writes `root.position.y`) or with
+   * the idle bob (which writes `bodyRoot.position.y`): different nodes /
+   * additive composition, both documented at their own sites.
+   *
+   * SCALE composes with #150 rather than replacing it: `baseScale` is the
+   * normalised factor captured once at load, and the ground offset is re-derived
+   * at the new scale so a grown champion neither sinks into nor floats above the
+   * floor. m = 1 restores the normalised size exactly.
+   */
+  private applyAirborne(): void {
+    const m = this.scaleMul;
+    if (this.glbRoot) {
+      this.glbRoot.scaling.setAll(this.baseScale * m);
+      this.glbRoot.position.y = this.leapY + this.groundOffsetUnit * this.baseScale * m;
+    } else if (m !== 1) {
+      // procedural voxel figure: no measured ground offset, its feet are at y=0
+      this.bodyRoot.scaling.setAll(m);
+    } else if (this.bodyRoot.scaling.x !== 1) {
+      this.bodyRoot.scaling.setAll(1);
+    }
+    // Ground cues stay ON THE GROUND; the shadow reads the altitude instead.
+    const shrink = 1 / (1 + Math.max(0, this.leapY) * 0.15);
+    this.blobShadow.scaling.setAll(shrink);
+    const shadowMat = this.blobShadow.material as { alpha?: number } | null;
+    if (shadowMat) shadowMat.alpha = 0.38 * shrink;
   }
 
   /**
@@ -1200,6 +1275,13 @@ export class ChampionView {
         glbRoot.computeWorldMatrix(true);
         const { min } = glbRoot.getHierarchyBoundingVectors(true);
         if (Number.isFinite(min.y)) glbRoot.position.y = -min.y;
+        // #247: remember the #150-normalised factor and the ground offset AT
+        // UNIT SCALE, so a temporary scale multiplier can re-derive both without
+        // ever overwriting the normalisation. `finalScale` is never mutated
+        // afterwards — that is what makes m = 1 restore #150 bit-exactly.
+        this.baseScale = finalScale;
+        this.groundOffsetUnit =
+          Number.isFinite(min.y) && finalScale > 0 ? -min.y / finalScale : 0;
         this.glbRoot = glbRoot;
         this.glbSkeletons = inst.skeletons as unknown as { bones: { name: string }[] }[];
         // #226 per-champion palette/proportions/props. MUST run before the

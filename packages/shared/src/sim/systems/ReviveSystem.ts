@@ -317,6 +317,7 @@ function completeRevive(
     nav.attackTargetAuto = false;
     nav.override = null;
   }
+  world.airborne.delete(rc.ownerId); // #247: a revived body is never mid-arc
   const ab = world.abilities.get(rc.ownerId);
   if (ab) {
     // ability COOLDOWNS are deliberately not reset — they are tick-based and

@@ -2,16 +2,79 @@
   "id": "tpl-leap-strike",
   "schema": "template@1",
   "name": "跳躍落地",
-  "description": "P2 拋物線跳躍 + 落點效果 (需 leap 詞彙)。",
+  "description": "拋物線跳躍到指定點（或原地垂直跳），落地造成範圍傷害。飛行中無視地形；落點被障礙物或場地邊界擋住時，起跳當下就改瞄最近的合法落點，弧線隨之重算，你看到的落地位置就是實際位置。",
   "family": "leap-strike",
-  "status": "draft",
-  "params": {},
+  "status": "enabled",
+  "params": {
+    "mode": {
+      "type": "enum",
+      "values": [
+        "toPoint",
+        "inPlace"
+      ],
+      "default": "toPoint"
+    },
+    "applyTo": {
+      "type": "enum",
+      "values": [
+        "self",
+        "target"
+      ],
+      "default": "self"
+    },
+    "apexHeight": {
+      "type": "number",
+      "default": 600,
+      "min": 0,
+      "max": 1200,
+      "unit": "wc3u"
+    },
+    "durationSec": {
+      "type": "number",
+      "default": 1.44,
+      "min": 0.1,
+      "max": 3,
+      "unit": "s"
+    },
+    "landRadius": {
+      "type": "number",
+      "default": 330,
+      "min": 0,
+      "max": 900,
+      "unit": "wc3u"
+    },
+    "damage": {
+      "type": "scaling",
+      "default": {
+        "perRank": [
+          450
+        ],
+        "ratios": []
+      }
+    },
+    "damageType": {
+      "type": "enum",
+      "values": [
+        "magic",
+        "physical",
+        "true"
+      ],
+      "default": "physical"
+    },
+    "castTimeSec": {
+      "type": "number",
+      "default": 0.5,
+      "min": 0,
+      "max": 5,
+      "unit": "s"
+    }
+  },
   "requires": [
     "leap"
   ],
   "gapScore": 5,
   "exemplar": {
-    "skill": "(draft)",
-    "jass": "(P2/P3)"
+    "skill": "07-03 列、在、前",
+    "jass": "A0G3"
   }
 }

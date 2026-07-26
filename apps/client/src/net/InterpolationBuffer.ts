@@ -26,6 +26,13 @@ export interface InterpSample {
   z: number;
   fx: number;
   fz: number;
+  /**
+   * AIRBORNE HEIGHT above the floor, GGD units (task #247). Absent = 0 =
+   * grounded, which every pre-#247 caller and test implicitly supplies.
+   */
+  h?: number;
+  /** temporary model-scale multiplier (1 = normal). Absent = 1. */
+  sc?: number;
 }
 
 interface StoredSample extends InterpSample {
@@ -38,6 +45,10 @@ export interface InterpPose {
   z: number;
   fx: number;
   fz: number;
+  /** interpolated fly height (task #247); 0 for every grounded entity. */
+  h: number;
+  /** interpolated temporary scale multiplier; 1 when nothing is scaling. */
+  sc: number;
 }
 
 const lerp = (a: number, b: number, t: number): number => a + (b - a) * t;
@@ -78,8 +89,8 @@ export class InterpolationBuffer {
     if (!buf || buf.length === 0) return null;
     const first = buf[0]!;
     const last = buf[buf.length - 1]!;
-    if (renderTick <= first.tick) return { x: first.x, z: first.z, fx: first.fx, fz: first.fz };
-    if (renderTick >= last.tick) return { x: last.x, z: last.z, fx: last.fx, fz: last.fz };
+    if (renderTick <= first.tick) return poseOf(first);
+    if (renderTick >= last.tick) return poseOf(last);
     // find bracket (buffers are small; linear scan from the tail is fine)
     for (let i = buf.length - 2; i >= 0; i--) {
       const a = buf[i]!;
@@ -88,7 +99,7 @@ export class InterpolationBuffer {
         // TELEPORT: `b` is discontinuous from `a` — hold at `a` for the whole
         // bracket and let the tick boundary do the jump, so a respawn/blink
         // reads as an instant relocation instead of a glide across the arena.
-        if (b.snap) return { x: a.x, z: a.z, fx: a.fx, fz: a.fz };
+        if (b.snap) return poseOf(a);
         const t = (renderTick - a.tick) / (b.tick - a.tick);
         // Catmull-Rom needs the two outer samples for its tangents; at a buffer
         // edge the neighbour is absent and the tangent falls back one-sided.
@@ -103,10 +114,19 @@ export class InterpolationBuffer {
           z: catmullRom1D(p0?.z ?? a.z, a.z, b.z, p3?.z ?? b.z, t, !!p0, !!p3),
           fx: lerp(a.fx, b.fx, t),
           fz: lerp(a.fz, b.fz, t),
+          // HEIGHT gets the SAME Catmull-Rom as x/z (task #247): C1 continuity
+          // matters more on an arc than anywhere else, because a plain lerp puts
+          // a velocity kink at every 30 Hz sample and the eye reads VERTICAL
+          // kinks far more readily than horizontal ones.
+          h: catmullRom1D(p0?.h ?? a.h ?? 0, a.h ?? 0, b.h ?? 0, p3?.h ?? b.h ?? 0, t, !!p0, !!p3),
+          // SCALE stays linear: it is a slow ramp and it must land EXACTLY on
+          // 1.0 (a Catmull-Rom overshoot at the end of a ramp would leave the
+          // champion a hair off its #150-normalised size).
+          sc: lerp(a.sc ?? 1, b.sc ?? 1, t),
         };
       }
     }
-    return { x: first.x, z: first.z, fx: first.fx, fz: first.fz };
+    return poseOf(first);
   }
 
   has(entityId: number): boolean {
@@ -141,6 +161,24 @@ function isSnap(prev: InterpSample | undefined, cur: InterpSample): boolean {
   const dTicks = Math.max(1, cur.tick - prev.tick);
   const dx = cur.x - prev.x;
   const dz = cur.z - prev.z;
+  // TASK #247 — the classifier is 3-D now. For every grounded entity dh === 0,
+  // so this is a BEHAVIOURAL NO-OP for everything that shipped before the leap
+  // and every existing test stays green. It matters for exactly one case: a
+  // champion KILLED AT APEX, whose height drops 11–18 units in one tick. Without
+  // it, Catmull-Rom would smear the corpse down through the air over several
+  // frames while the death animation plays on the ground; with it, the drop
+  // snaps at the tick boundary — the same treatment a blink already gets.
+  //
+  // Checked against TELEPORT_STEP_UNITS = 4: the largest LEGITIMATE per-tick
+  // height step is at takeoff, 4·A·(N-1)/N² — 1.00 u for the 43-tick/11.00 u arc
+  // and 2.82 u for the 25-tick/18.33 u vertical leap. Both comfortably under 4,
+  // so no real leap is ever misclassified as a teleport.
+  const dh = (cur.h ?? 0) - (prev.h ?? 0);
   const budget = TELEPORT_STEP_UNITS * dTicks;
-  return dx * dx + dz * dz > budget * budget;
+  return dx * dx + dz * dz + dh * dh > budget * budget;
+}
+
+/** A stored sample as a pose (grounded defaults for pre-#247 samples). */
+function poseOf(s: StoredSample): InterpPose {
+  return { x: s.x, z: s.z, fx: s.fx, fz: s.fz, h: s.h ?? 0, sc: s.sc ?? 1 };
 }

@@ -790,6 +790,9 @@ export class MatchController {
         nav.attackTargetAuto = false;
         nav.override = null;
       }
+      // #247: a round boundary drops anyone still mid-leap out of the air. The
+      // override and the airborne entry are cleared together, always.
+      this.world.airborne.delete(seat.entityId);
     }
     // The champions actually SCHEDULED into a duel this round — filled by the
     // placement loop below and handed to beginCombatCoins. A bye team and an
@@ -1192,6 +1195,9 @@ export class MatchController {
         nav.attackTargetAuto = false;
         nav.override = null;
       }
+      // #247: a round boundary drops anyone still mid-leap out of the air. The
+      // override and the airborne entry are cleared together, always.
+      this.world.airborne.delete(seat.entityId);
       const t = this.world.transform.get(seat.entityId);
       if (t) {
         t.vel = { x: 0, z: 0 }; // kill residual momentum so the hero stands still

@@ -76,6 +76,37 @@ export type EffectDef =
    */
   | { kind: "restore"; healthPct?: number; manaPct?: number }
   | { kind: "dash"; mode: "forward" | "toPoint"; speed: number; maxDistance: number }
+  /**
+   * leap (task #247) — the map's own parabolic jump, ported from the nine
+   * `SetUnitFlyHeightBJ(-k*Pow(i-m,2)+A)` sites in war3map.j. A SEPARATE kind
+   * from `dash` because it needs a different integrator: no per-tick collision
+   * (terrain crossing IS the point), an absolute parametric position so the arc
+   * cannot drift, a height channel, an integer tick budget and a deferred
+   * effect payload. See sim/movement/leap.ts for the arc math and the
+   * blocked-landing rule.
+   */
+  | {
+      kind: "leap";
+      /** who flies: the caster (default), or each resolved target (thrown arcs) */
+      applyTo?: "self" | "target";
+      /** "toPoint" = the snapshotted cast point; "inPlace" = vertical, distance 0 */
+      mode: "toPoint" | "inPlace";
+      /** apex height in GGD units (JASS peak × 11/600) */
+      apexHeight: number;
+      /** flight time; converted to an INTEGER tick count exactly once, at takeoff */
+      durationSec: number;
+      /**
+       * How far a THROWN body travels when there is no cast point to aim at —
+       * i.e. `applyTo: "target"` on a unit-targeted ability (52-02 蹂躪編年史
+       * hurls its victim 400 wc3 units along the caster's facing, j:51767).
+       * GGD units; ignored for `applyTo: "self"` and for `mode: "inPlace"`.
+       */
+      throwDistance?: number;
+      /** landing burst radius, GGD units (0/absent = the flyer alone) */
+      landRadius?: number;
+      /** effects run on the LANDING tick, centred on the landing point */
+      onLand?: EffectDef[];
+    }
   | { kind: "spawnProjectile"; projectileId: ProjectileId; onHit: EffectDef[] }
   /**
    * spawnVfx — the WC3 "dummy effect unit" idiom (化繁為簡): a Locust/invuln

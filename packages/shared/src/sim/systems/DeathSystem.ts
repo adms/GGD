@@ -7,6 +7,7 @@ import type { SimWorld } from "../SimWorld";
 import { grantXp, grantGold, XP_REWARDS, GOLD_REWARDS } from "../economy/progression";
 import { fireHooks } from "../effects/hooks";
 import { recordChampionDeath, recordFlowerEaten } from "../stats/matchStats";
+import { cancelLeap } from "../movement/leap";
 
 export function deathSystem(world: SimWorld): void {
   // last damage source per target this tick (events are ordered)
@@ -32,6 +33,12 @@ export function deathSystem(world: SimWorld): void {
     if (!hp.alive || hp.hp > 0) continue;
     hp.hp = 0;
     hp.alive = false;
+    // Task #247: a leaper killed at apex drops to the floor ON THE DEATH TICK,
+    // so the #220 dissolve plays on the ground rather than in mid-air, and the
+    // landing effects never fire — a killed leaper deals no landing damage.
+    // (LeapSystem re-checks this next tick too; doing it here removes the
+    // one-tick corpse-hanging-in-the-air window.)
+    cancelLeap(world, id);
     const killer = killingBlowSource.get(id) ?? lastDamager.get(id) ?? null;
     world.emit("death", { id, killer });
 

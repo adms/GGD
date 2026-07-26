@@ -118,29 +118,39 @@
       "range": 8.25,
       "effects": [
         {
-          "kind": "damage",
-          "damageType": "physical",
-          "amount": {
-            "perRank": [
-              200,
-              400,
-              600,
-              800,
-              1000
-            ],
-            "ratios": [
-              {
-                "stat": "ad",
-                "coeff": 0.5
+          "kind": "leap",
+          "applyTo": "self",
+          "mode": "toPoint",
+          "apexHeight": 11.0,
+          "durationSec": 0.82,
+          "landRadius": 5.5,
+          "onLand": [
+            {
+              "kind": "damage",
+              "damageType": "physical",
+              "amount": {
+                "perRank": [
+                  200,
+                  400,
+                  600,
+                  800,
+                  1000
+                ],
+                "ratios": [
+                  {
+                    "stat": "ad",
+                    "coeff": 0.5
+                  }
+                ]
               }
-            ]
-          }
-        },
-        {
-          "kind": "applyStatus",
-          "statusId": "slow25",
-          "duration": 1.5,
-          "moveSpeedMult": 0.6
+            },
+            {
+              "kind": "applyStatus",
+              "statusId": "slow25",
+              "duration": 1.5,
+              "moveSpeedMult": 0.6
+            }
+          ]
         }
       ],
       "vfxKey": "fx.prim.fire.explosion",

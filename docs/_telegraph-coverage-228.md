@@ -19,9 +19,9 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 
 | castType | cells | shape language |
 | --- | ---: | --- |
-| `targeted` | 97 | lock (arc at the victim + tether to the caster) — walking does not help |
+| `targeted` | 96 | lock (arc at the victim + tether to the caster) — walking does not help |
 | `self` | 95 | self marker at the caster's feet |
-| `ground` | 45 | circle — the real `enemiesInCircle` disc; you can walk out |
+| `ground` | 46 | circle — the real `enemiesInCircle` disc; you can walk out |
 | `—` | 32 | not cast |
 | `skillshot` | 22 | line — the projectile's corridor; step sideways |
 | `dash` | 8 | line — the sweep of the dash body |
@@ -171,7 +171,7 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 獸矛傳承使 - 蒼月潮 `godie-hpb1` | PASSIVE | 07-00 獸化心靈 | `—` | — | 🟣 PASSIVE | never cast |
 | 獸矛傳承使 - 蒼月潮 `godie-hpb1` | Q | 07-01 臨、兵、鬥 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 獸矛傳承使 - 蒼月潮 `godie-hpb1` | W | 07-02 者、皆、陣 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 獸矛傳承使 - 蒼月潮 `godie-hpb1` | E | 07-03 列、在、前 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 獸矛傳承使 - 蒼月潮 `godie-hpb1` | E | 07-03 列、在、前 | `ground` | circle r=3.63u | ✅ OK | radius 6.05 × abilityRange 0.6 |
 | 獸矛傳承使 - 蒼月潮 `godie-hpb1` | R | 07-04 神聖結界 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 獸矛傳承使 - 蒼月潮 `godie-hpb1` | EX | 07-002 獸矛持有者 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 超級普烏 - 魔人普烏 `godie-huth` | PASSIVE | 28-00 無限再生 | `—` | — | 🟣 PASSIVE | never cast |

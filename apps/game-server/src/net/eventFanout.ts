@@ -118,6 +118,20 @@ export const FANNED_OUT_EVENT_TYPES: ReadonlySet<string> = new Set<string>([
   // `{ caster, abilityId, x, z }` — the point, so the effect plays where the
   // ability landed rather than on the caster.
   "explosion",
+  // TAKEOFF OF A PARABOLIC LEAP (task #247, sim/movement/leap.ts). ONE event per
+  // leap — bounded by casts, never per-tick — carrying
+  // `{ id, caster, x, z, ticks, apex }`: the FLYER's entity id (which is not the
+  // caster for a thrown victim), the landing point, the integer flight length
+  // and the apex height.
+  //
+  // CLIENT CONSUMER: the jump cue + the landing telegraph. The height itself
+  // rides the snapshot (`EntityState.h` + ENTITY_FLAG.AIRBORNE), so the arc
+  // renders with or without this; the event exists so the takeoff SFX
+  // (蒼月潮's A0G3 plays gg_snd_moonjump at exactly this moment, j:34211) and
+  // the ground marker fire ON the takeoff tick rather than being inferred a
+  // frame later from h > 0. The LANDING half already has a cue — LeapSystem
+  // emits the shared `explosion` above at the impact point.
+  "leapStart",
   // A STAT BUFF ACTUALLY ATTACHED (effects/effectRunner). One discrete 增益 cue
   // per resolved buff effect, fired only when the target set was non-empty, so
   // an ability that buffed nobody stays silent. Rate is bounded by casts.
