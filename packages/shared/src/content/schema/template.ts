@@ -22,7 +22,13 @@ import { zId } from "./common";
 import { zRef } from "./common";
 
 /** Unit a numeric slot is measured in — drives the expander's length conversion. */
-export const zParamUnit = z.enum(["wc3u", "s", "count", "ratio"]);
+/**
+ * `wc3u` is a PLANAR WC3 length (range/radius/distance) and converts at
+ * GGD_PER_WC3; `wc3h` is a WC3 FLY HEIGHT and converts at the separate
+ * GGD_APEX_PER_WC3 — the vertical axis is set by the camera, not by the map
+ * (task #247b; the full reasoning lives on GGD_APEX_PER_WC3 in templates/expand).
+ */
+export const zParamUnit = z.enum(["wc3u", "wc3h", "s", "count", "ratio"]);
 
 /** The kind of value a slot carries; the expander switches on it. */
 export const zParamType = z.enum(["number", "enum", "scaling", "statModifiers"]);

@@ -15,6 +15,7 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { cover } from "../../testkit/cover";
 import { SimWorld } from "./SimWorld";
 import { PILLAR_ARENA } from "../../testkit/arenas";
 import { asSeatId, asTeamId, type EntityId } from "../ids";
@@ -26,7 +27,7 @@ import {
   startLeap,
   resolveLandingPoint,
 } from "./movement/leap";
-import { GGD_PER_WC3, round2 } from "../content/templates/expand";
+import { GGD_PER_WC3, GGD_APEX_PER_WC3, round2, toApex } from "../content/templates/expand";
 import * as V from "./math/vec2";
 
 const Z0 = PILLAR_ARENA.zones[0]!;
@@ -126,13 +127,32 @@ describe("#247 arc — the shipped parabola IS the JASS parabola", () => {
     expect(TICK_HZ).toBe(30);
   });
 
-  it("the shipped GGD heights are the JASS heights at 11/600", () => {
-    expect(round2(600 * GGD_PER_WC3)).toBe(11);
-    expect(round2(1000 * GGD_PER_WC3)).toBe(18.33);
-    expect(round2(300 * GGD_PER_WC3)).toBe(5.5);
-    expect(round2(330 * GGD_PER_WC3)).toBe(6.05);
-    expect(round2(270 * GGD_PER_WC3)).toBe(4.95);
-    expect(round2(400 * GGD_PER_WC3)).toBe(7.33);
+  it("PLANAR lengths convert at 11/600 — radius, throw distance, reach", () => {
+    expect(round2(330 * GGD_PER_WC3)).toBe(6.05); // A0G3 landRadius
+    expect(round2(270 * GGD_PER_WC3)).toBe(4.95); // A0U1 landRadius
+    expect(round2(400 * GGD_PER_WC3)).toBe(7.33); // A0U1 throwDistance
+  });
+
+  it("ALTITUDE converts at 1/250 — a different ruler, on purpose (#247b)", () => {
+    cover("leap-apex-scale");
+    // #247 ported the fly heights through the PLANAR scale, which put 蒼月潮's
+    // apex at 11.00 u — behind the near plane of the game's own 68° camera at
+    // the shipped dolly, i.e. invisible. The vertical axis is set by the camera,
+    // not by the map's geometry; the reasoning lives on GGD_APEX_PER_WC3 and the
+    // numbers are re-measured every run in
+    // apps/client/src/render/leapFraming.test.ts.
+    expect(GGD_APEX_PER_WC3).toBe(1 / 250);
+    expect(toApex(600)).toBe(2.4); // A0J2/A0JZ/A0UX/A0G3/A0IS
+    expect(toApex(400)).toBe(1.6); // A0JZ' / A0LZ
+    expect(toApex(1000)).toBe(4); // A0RZ
+    expect(toApex(300)).toBe(1.2); // A0U1
+    expect(toApex(250)).toBe(1); // A0JD
+    // ORDERING — the part of faithfulness that survives a rescale. One linear
+    // factor, so the map's own hierarchy of arcs is intact.
+    const jassA = [...new Set(JASS_PARABOLAS.map((p) => p.A))].sort((a, b) => a - b);
+    const ggd = jassA.map(toApex);
+    expect(ggd).toEqual([...ggd].sort((a, b) => a - b));
+    expect(new Set(ggd).size).toBe(jassA.length); // no two arcs collapse together
   });
 
   it("the planar position is absolute — tick k never depends on how we got there", () => {

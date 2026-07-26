@@ -88,7 +88,8 @@ describe("discriminated EffectDef union (editor-02)", () => {
     expect(union.discriminator).toBe("kind");
     const tags = union.variants.map((v) => v.tag).sort();
     expect(tags).toEqual(
-      ["applyBuff", "applyStatus", "damage", "dash", "heal", "restore", "shield", "spawnProjectile", "spawnVfx"].sort(),
+      // `leap` joined the union in #247 (the parabolic jump EffectDef).
+      ["applyBuff", "applyStatus", "damage", "dash", "heal", "leap", "restore", "shield", "spawnProjectile", "spawnVfx"].sort(),
     );
 
     // damage variant: enum + nested scaling object
