@@ -185,23 +185,20 @@ var knownOrphans = map[string]string{
 	"POST /api/v1/ai/music": "#53's 一鍵 BGM pack generation. The provider config UI exists (musicBaseUrl / " +
 		"musicModel / musicReady in admin/src/ai.ts) and there is no button that spends it.",
 
-	// ---- #189 durable content overlay: store shipped, console adapter pending -
-	// The durable data/ overlay store, the admin-gated write path and the public
-	// bundle read all shipped this pass (internal/contentoverlay), and the
-	// game-server already consumes the bundle at boot. What is left is the
-	// 內容管理 console's PRODUCTION adapter: today the editor is a dev-only chunk
-	// that writes to the localhost content-api (apps/admin/src/ui/App.tsx gates it
-	// behind import.meta.env.DEV), so no shipped UI calls these three yet. Wiring
-	// that adapter + the divergence indicator is the remaining work in
-	// docs/todo/content-sync.md.
-	"GET /api/v1/content-overlay/head": "#189 — the cheap divergence probe (generation / fingerprint) the " +
-		"內容管理 console polls for its sync badge. Backend shipped this pass; the console adapter + " +
-		"divergence indicator (docs/todo/content-sync.md) is the remaining UI, so no shipped page reads it yet.",
-	"PUT /api/v1/content-overlay/docs/{collection}/{id}": "#189 — admin overlay upsert (the host's durable " +
-		"write path for a champion/ability/item edit). Store + endpoint shipped; the production 內容管理 " +
-		"adapter that would POST here is still the dev-only content-api path, so nothing in a shipped build calls it.",
-	"DELETE /api/v1/content-overlay/docs/{collection}/{id}": "#189 — admin overlay delete (tombstone over a " +
-		"shipped doc). Same story as the overlay PUT above: backend shipped this pass, console adapter pending.",
+	// ---- #189 durable content overlay -------------------------------------
+	// The console adapter this ledger was waiting for SHIPPED: apps/admin/src/
+	// ui/ContentOverlayPage.tsx (statically imported, so it exists in the
+	// production bundle) drives the whole surface through apps/admin/src/api.ts
+	// — status, log, shipped, PUT docs, DELETE docs, DELETE entries. Those six
+	// entries are gone from this ledger, which is the shrink-only behaviour the
+	// file promises. Only the public probe below is left, and its absence is
+	// now a DESIGN decision rather than missing UI.
+	"GET /api/v1/content-overlay/head": "#189 — the PUBLIC divergence probe (generation / fingerprint / " +
+		"degraded). No UI calls it and that is deliberate: being unauthenticated it blanks updatedBy, so the " +
+		"console reads the admin-only /content-overlay/status instead, which carries the per-entry " +
+		"'when + by whom' the operator actually needs. Kept as the cheap polling probe for a future " +
+		"consumer-side divergence badge (docs/design/content-sync.md §3.1/§4); delete the route if that " +
+		"never lands.",
 	// ---- #209 Slack-notify config: backend shipped ahead of the toggle UI --
 	// The webhook secret + enable flag are settable two ways: the environment
 	// (GGD_SLACK_WEBHOOK_URL / GGD_SLACK_NOTIFY_ENABLED), which needs no route,

@@ -281,6 +281,63 @@ data/content-sync/state.json
 
 ---
 
+## 6.5 合併優先權規則（#189 已落地，2026-07-26）
+
+同步引擎還沒做，但**單向合併**已經在跑了：主機上玩家看到的是
+`merged = shipped(content/) ⊕ overlay(data/content-overlay/)`。這一節把那個 ⊕ 的規則寫死，
+因為它就是 §3.2 三方比較的 base 從哪來。
+
+### 規則本身（`apps/platform/internal/contentoverlay/precedence.go`）
+
+1. **覆蓋層永遠贏。** 覆蓋的 doc 取代出貨 doc；tombstone 讓該 id 從合併樹消失；
+   覆蓋層獨有的 id 追加進索引。**無條件**，包含「出貨 bundle 在編輯之後被改掉」的情況。
+2. **基準對不上的項目要被標記，不是被丟掉。** 每筆 entry 帶 `baseHash`（編輯當下出貨 doc 的 hash），
+   每次讀狀態都拿去和現在的出貨 `_index.json` 比。不同 → 該筆仍然生效，但標成 `stale`、
+   計入 `flaggedCount`、開機時 warn 一行、後台那一列變黃。
+3. **沒有基準 ≠ 基準相同。** 舊版 overlay（沒有 `bases` 欄位）或編輯當下讀不到 `content/`，
+   一律報 `unknown-base` 並標記。對應 csync-03：缺 base 一律降級成需要人看，絕不挑一邊。
+
+### 為什麼是「贏 + 標記」而不是「過期就輸」
+
+兩種錯的代價不對稱。過期就輸 → 一次 `git pull` 會**無聲**回捲家人正在玩的調整，
+沒有警告、也看不到失去了什麼。贏 + 標記 → 最壞情況只是 repo 的新版還沒生效，
+而後台有一列紅字說明，按一下「還原」就採用 repo 版本。**任何一邊都不會在沒人被問到的情況下消失。**
+
+### 狀態表
+
+| 狀態 | 情況 | 標記 |
+|---|---|---|
+| `clean` | 出貨 doc 和編輯當下的基準一致 | 否 |
+| `stale` | 出貨 doc 被改過（git pull） | **是** |
+| `orphan` | 基準所指的出貨 doc 已被刪除 | **是** |
+| `added` | 出貨樹本來沒有、現在也沒有這個 id | 否 |
+| `shadow` | 新增的 id，出貨樹後來也長出同名 doc | **是** |
+| `unknown-base` | 沒有可用基準（舊 entry／讀不到 content/） | **是** |
+| `tombstone` / `tombstone-moot` | 隱藏中／出貨樹已無此 id 的殘留隱藏 | 否 |
+
+### `baseHash` 從哪裡來（**Go 不自己算 hash**）
+
+`hashDoc` 是 TypeScript（`packages/shared/src/content/hash.ts`，safe-stable-stringify + sha256 取 12 碼）。
+在 Go 重寫一份、要求 byte 對 byte 相同，是會讓每一筆永遠報 `stale` 的陷阱。
+所以改成讀 `pnpm content:build` **已經寫好的** `content/<collection>/_index.json` 裡的 `hash`。
+寫入當下記下來的值、與日後比對的值，來自同一支 TS pipeline 算出的同一個檔案，因此天生自洽。
+
+console 也**不**負責提供 `baseHash`：它有出貨 doc 在手，但那樣基準就變成呼叫端宣稱的，
+一個開了一小時的分頁就能把「已比對」蓋在一份一小時前的 doc 上。
+
+### 三個動詞，不是兩個
+
+| 動詞 | 端點 | 語意 |
+|---|---|---|
+| upsert | `PUT /content-overlay/docs/{c}/{id}` | 蓋掉出貨 doc |
+| tombstone | `DELETE /content-overlay/docs/{c}/{id}` | 讓該 id 從合併樹消失（**連出貨版一起**） |
+| revert | `DELETE /content-overlay/entries/{c}/{id}` | 移除覆蓋層的意見，回到出貨 doc |
+
+`revert` 是 `stale` 的唯一非破壞性出口。只有 tombstone 的話，遇到 repo 更新的 doc，
+操作者手上沒有任何「算了，repo 是對的」的動作可用。
+
+---
+
 ## 7. 工作順序
 
 > **在 #189 落地之前，遠端存檔不存在。** 不是「不好用」，是不存在：

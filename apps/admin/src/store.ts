@@ -23,6 +23,14 @@ export type Page =
   | "announcements"
   | "curation"
   /**
+   * 內容覆蓋層 (task #189) — SHIPS IN PRODUCTION, unlike every other content
+   * route below. It reads and writes the platform's durable `data/` overlay
+   * through the admin API (JWT + AdminOnly + audited), so it is safe by
+   * AUTHORISATION rather than by absence, and it is the only way to change
+   * content on ggd.adms.ai. Session-gated below for the same reason.
+   */
+  | "contentOverlay"
+  /**
    * 內容管理 (task #102) — DEV BUILDS ONLY. The page module is reached through
    * an `import.meta.env.DEV`-guarded dynamic import in ui/App.tsx, so a
    * production admin build never emits it; naming the route here costs one
@@ -185,6 +193,11 @@ const SESSION_REQUIRED_PAGES: ReadonlySet<Page> = new Set<Page>([
   "matches",
   "announcements",
   "curation",
+  // #189: backed by the platform's admin-only overlay API. Deliberately NOT in
+  // the loopback drop-in — this one writes what every player sees on the
+  // deployed host, so it takes a real operator session like every other
+  // platform-backed page.
+  "contentOverlay",
   "ai",
   "combatEnv",
   "serverOps",

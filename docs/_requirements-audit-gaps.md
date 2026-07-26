@@ -2884,3 +2884,67 @@ cousin **當場自動核准**（再登入即 200 approved），server log `refer
 **閘門**：`internal/auth` + `internal/invite` 全綠。`go test ./...` 另有 **2 個既有紅**
 （`combatenv/TestCombatEnvReplacePublishesInvalidation`、`opsenv/TestWalletPlayRateAgreesWithTheDerivedLength`），
 已用 `git stash` 在 base commit `c8a069d` 上覆驗**同樣紅**，與本次改動無關。
+
+---
+
+## 2026-07-26 — #189 內容持久層：store 有了，但**沒有任何東西寫進去**
+
+### 問題（查證，非推測）
+
+前一趟（`18da320`）落地的是 backend-only 的耐久 overlay。這一趟開始前實測三件事：
+
+1. **正式 admin bundle 裡沒有 內容管理 這一頁。** `apps/admin/src/ui/App.tsx` 用
+   `if (!import.meta.env.DEV) return;` 擋在 `import("./ContentPage")` 上方 —— vite 代換成字面 `false`、
+   rollup 直接摺掉，chunk 根本不會產出（`contentGate.test.ts` 用真的 `vite build` + grep dist 釘住）。
+   `docker/edge.Dockerfile:64` 就是用 `pnpm --filter "@ggd/admin" build`，所以 ggd.adms.ai 上那頁不存在。
+2. **就算存在，它唯一的寫入端指向沒有部署的服務。** `apps/admin/src/contentApi.ts` 全部 PUT 到
+   `/content-api/{collection}/{id}`，那是 dev-only 的 loopback Fastify（`compose.yaml` profiles: dev），
+   而且它的 nginx route **刻意**沒有進 edge image。這是對的，loopbackOnly 不動。
+3. 於是 `data/content-overlay/` 在這台機器上**從來沒有被建立過**（`ls data/` 沒有這個目錄）。
+
+換句話說：#189 缺的不是耐久性，是**生產者**。
+
+### 這一趟做的
+
+- **生產者**：`apps/admin/src/ui/ContentOverlayPage.tsx`（**靜態 import**，正式 build 一定含它）＋
+  `apps/admin/src/contentOverlay.ts`（純邏輯）＋ `api.ts` 六個 wrapper。全部走平台
+  `/api/v1/content-overlay/…`（admin JWT + AdminOnly + 稽核），**完全不碰 `/content-api`**。
+  它是「第二個寫入端」而不是「放寬 dev gate」：dev 那頁靠**不存在**保證安全，這頁靠**授權**保證安全。
+- **優先權 + baseHash**：每筆 entry 記下編輯當下出貨 doc 的 hash，讀狀態時和現在的
+  `content/<collection>/_index.json` 比。規則與狀態表寫在 `docs/design/content-sync.md` §6.5。
+  **Go 不自己算 hash** —— 讀 TS content build 已經寫好的 index，所以跨語言 hashDoc 的陷阱不存在。
+- **損毀降級**：garbage / 半寫的 `overlay.json` → 讀取降級成空覆蓋（純出貨內容）、`degraded=true`、
+  原始 bytes 以 base64 完整隔離到 `overlay.corrupt-<hash>`（**不刪**），平台與 game-server 照常開機。
+  之前這條路徑「理論上會動」但**完全沒有測試**，而且是 500 而不是降級。
+- **稽核改成 fail-closed**：audit line 移進 `commit()` 並在耐久寫入**之前**寫；寫不進 audit 就拒絕改內容。
+  這是刻意的行為改變（原本是 handler 端 best-effort，一個新 route 忘了呼叫就沒有紀錄）。
+- **可見性**：admin-only `GET /content-overlay/status`（每筆的 state / baseHash→shippedHash / 何時 / 誰）、
+  `GET /content-overlay/log`（`data/content-overlay-log/` 第一次有讀取端）、
+  `GET /content-overlay/shipped/{c}/{id}`（repo 現在的版本）。**公開的 head/bundle 一律不帶操作者 id**。
+- 順手抓到一個**新洩漏**：新增的 `bases` 欄位把 `updatedBy` 早先修掉的 account ULID 又帶回公開 bundle。
+  既有的 `TestPublicEndpointsDoNotLeakUpdatedBy` 當場紅 → 加了 `Overlay.PublicBundle()` 一併剝掉。
+
+### 生存性（驗收條件本身）
+
+`DATA_DIR/content-overlay/overlay.json` → 容器內 `/data` → `compose.yaml:69-72` 的 `../data:/data` →
+主機 `<repo>/data`。image 不含它（`docker compose build && up -d` 換掉 image 與 container，不碰 bind mount），
+git 也不含它（`.gitignore:34-36` 吃掉 `/data/**`，所以 `git pull` 也刪不掉）。
+`compose.family.yaml` 對 `platform` 沒有 `volumes:` 覆寫，base mount 原樣生效（**特地確認過**，
+一個 volumes 覆寫會無聲換掉整份清單）。測試 `content-overlay-durable` 直接斷言這個路徑。
+
+### 還沒做，且**不在**這次 scope（apps/client / apps/game-server）
+
+1. `apps/client/src/content/bootContent.ts` 沒有包 `OverlayContentSource`。所以後台改一份 doc，
+   **sim 會變、大廳／選角／圖鑑的畫面不會變**，而且 client 的 `cv_`（出貨）與 game-server 的 `cv_`（合併）
+   會不一致。這是 owner 最容易踩到的落差，必須先講。
+2. `apps/game-server/src/config/contentBus.ts` 的 `CONTENT_KINDS` 只有
+   `curation / combat-env / server-ops`，不含 `content-overlay`（平台在
+   `redisx/contentbus.go:64` 有發），所以覆蓋寫入的失效訊息會被每個 shard 當成 unknown-kind 丟掉。
+   v0.5.12 修好的是那三個**營運** doc 的傳播；內容 doc 依設計是 boot-only，
+   **所以內容改動目前仍需重啟 game container**。
+3. 覆蓋 bundle 是**公開未驗證**的第二個內容表面。目前它只裝操作者編過的 doc，
+   但 #127 的分級閘讀的是 `content/` 而不是 overlay —— 之後若有版權物走這條路要重新想。
+
+閘門：`apps/platform` 全套 —— 新的 `contentoverlay` 15 例全綠；紅的 5 例
+（`internal/auth` 3 例＝#237 邀請碼未標記 redeemed、`internal/combatenv` 1、`internal/opsenv` 1）
+在 main 工作樹上覆驗**完全相同**，屬既有。`@ggd/admin` typecheck clean、31 檔 342 綠（新增 11 例）。

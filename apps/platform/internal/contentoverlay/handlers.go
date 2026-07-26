@@ -20,19 +20,36 @@ const publicMaxAgeSeconds = "5"
 // per-doc cap, so an oversized body is rejected here rather than buffered whole.
 const readDocLimit = MaxDocBytes + 4096
 
+// logDays / logLimit bound the generation-history read. Two weeks is well past
+// "what did I change before the deploy broke?" without paging.
+const (
+	logDays  = 14
+	logLimit = 200
+)
+
 // Handlers exposes the content-overlay REST surface (task #189):
 //
-//	GET    /api/v1/content-overlay/head                       public, cacheable
-//	GET    /api/v1/content-overlay/bundle                     public, cacheable
-//	PUT    /api/v1/content-overlay/docs/{collection}/{id}     admin only — upsert
-//	DELETE /api/v1/content-overlay/docs/{collection}/{id}     admin only — tombstone
+//	GET    /api/v1/content-overlay/head                          public, cacheable
+//	GET    /api/v1/content-overlay/bundle                        public, cacheable
+//	PUT    /api/v1/content-overlay/docs/{collection}/{id}        admin — upsert
+//	DELETE /api/v1/content-overlay/docs/{collection}/{id}        admin — tombstone
+//	DELETE /api/v1/content-overlay/entries/{collection}/{id}     admin — revert to shipped
+//	GET    /api/v1/content-overlay/status                        admin — overlaid vs shipped
+//	GET    /api/v1/content-overlay/log                           admin — generation history
+//	GET    /api/v1/content-overlay/shipped/{collection}/{id}     admin — the repo's version
 //
-// The reads are public for the same reason /curation/whitelist is: the game
-// server and the client both fetch the merged content without a token, and
-// content JSON is not secret. The writes are admin-gated because they change
-// what every player sees. /content-api (the dev-only localhost editor) is a
-// SEPARATE surface and stays absent from the production edge — this overlay is
-// the host's durable write path.
+// The two reads at the top are public for the same reason /curation/whitelist
+// is: the game server and the client both fetch the merged content without a
+// token, and content JSON is not secret. Everything else is admin-gated —
+// the writes because they change what every player sees, and status/log/shipped
+// because they carry the EDITING OPERATOR'S ACCOUNT ID. That is why requirement
+// 6's "when + by whom" landed on a new admin route rather than by un-blanking
+// UpdatedBy on the public pair: the public endpoints must keep leaking nothing
+// (see head() / bundle() and TestPublicEndpointsDoNotLeakUpdatedBy).
+//
+// /content-api (the dev-only localhost editor) is a SEPARATE surface and stays
+// absent from the production edge — this overlay is the host's durable write
+// path, reached with an admin JWT through the normal /api proxy.
 type Handlers struct {
 	svc       *Service
 	adminOnly func(http.Handler) http.Handler
@@ -59,6 +76,48 @@ func (h *Handlers) Mount(r chi.Router) {
 		}
 		ar.Put("/content-overlay/docs/{collection}/{id}", h.put)
 		ar.Delete("/content-overlay/docs/{collection}/{id}", h.delete)
+		ar.Delete("/content-overlay/entries/{collection}/{id}", h.revert)
+		ar.Get("/content-overlay/status", h.status)
+		ar.Get("/content-overlay/log", h.log)
+		ar.Get("/content-overlay/shipped/{collection}/{id}", h.shippedDoc)
+	})
+}
+
+// status is requirement 6: what is overlaid, what the repo says, when, by whom,
+// and which entries the shipped tree has moved underneath. Admin only.
+func (h *Handlers) status(w http.ResponseWriter, r *http.Request) {
+	st, err := h.svc.Status(r.Context())
+	if err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	httpx.WriteJSON(w, http.StatusOK, st)
+}
+
+// log serves the generation history from data/content-overlay-log/. Admin only
+// (it names the editing operator).
+func (h *Handlers) log(w http.ResponseWriter, r *http.Request) {
+	lines, err := h.svc.ReadLog(logDays, logLimit)
+	if err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	httpx.WriteJSON(w, http.StatusOK, map[string]any{"entries": lines})
+}
+
+// shippedDoc returns the SHIPPED (repo) version of a doc so the console can put
+// it side by side with the overlaid one. Read-only; never touches content/.
+func (h *Handlers) shippedDoc(w http.ResponseWriter, r *http.Request) {
+	collection := chi.URLParam(r, "collection")
+	id := chi.URLParam(r, "id")
+	doc, hash, err := h.svc.ShippedDoc(collection, id)
+	if err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	httpx.WriteJSON(w, http.StatusOK, map[string]any{
+		"collection": collection, "id": id,
+		"present": doc != nil, "hash": hash, "doc": doc,
 	})
 }
 
@@ -83,9 +142,10 @@ func (h *Handlers) bundle(w http.ResponseWriter, r *http.Request) {
 		httpx.WriteError(w, err)
 		return
 	}
-	o.UpdatedBy = "" // public endpoint — see head() (don't leak the editor's account id)
+	// public endpoint — see head(). PublicBundle blanks UpdatedBy AND drops the
+	// per-entry `bases` provenance, which carries the same account id.
 	w.Header().Set("Cache-Control", "public, max-age="+publicMaxAgeSeconds)
-	httpx.WriteJSON(w, http.StatusOK, o)
+	httpx.WriteJSON(w, http.StatusOK, o.PublicBundle())
 }
 
 func (h *Handlers) put(w http.ResponseWriter, r *http.Request) {
@@ -102,9 +162,10 @@ func (h *Handlers) put(w http.ResponseWriter, r *http.Request) {
 		httpx.WriteError(w, err)
 		return
 	}
-	h.svc.Audit(me.AccountID, "content-overlay.put", map[string]any{
-		"collection": collection, "id": id, "generation": hd.Generation,
-	})
+	// NOTE: the audit line is NOT written here any more. It is written inside
+	// Service.commit, BEFORE the durable write, and a failed append aborts the
+	// mutation — so "every write leaves an audit line" is a guarantee of the
+	// store rather than something each handler has to remember.
 	httpx.WriteJSON(w, http.StatusOK, hd)
 }
 
@@ -117,8 +178,21 @@ func (h *Handlers) delete(w http.ResponseWriter, r *http.Request) {
 		httpx.WriteError(w, err)
 		return
 	}
-	h.svc.Audit(me.AccountID, "content-overlay.delete", map[string]any{
-		"collection": collection, "id": id, "generation": hd.Generation,
-	})
-	httpx.WriteJSON(w, http.StatusOK, hd)
+	httpx.WriteJSON(w, http.StatusOK, hd) // audited inside commit — see put()
+}
+
+// revert drops the overlay's entry for a key entirely, so the merged tree falls
+// back to the shipped doc. This is the non-destructive exit from a STALE entry:
+// DELETE /docs would tombstone the doc (hiding the repo's new version too),
+// DELETE /entries takes the repo's version.
+func (h *Handlers) revert(w http.ResponseWriter, r *http.Request) {
+	me := auth.MustIdentity(r.Context())
+	collection := chi.URLParam(r, "collection")
+	id := chi.URLParam(r, "id")
+	hd, err := h.svc.RevertDoc(r.Context(), collection, id, me.AccountID)
+	if err != nil {
+		httpx.WriteError(w, err)
+		return
+	}
+	httpx.WriteJSON(w, http.StatusOK, hd) // audited inside commit — see put()
 }

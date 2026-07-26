@@ -9,6 +9,7 @@ import { MatchesPage } from "./MatchesPage";
 import { ReplaysPage } from "./ReplaysPage";
 import { AnnouncementsPage } from "./AnnouncementsPage";
 import { CurationPage } from "./CurationPage";
+import { ContentOverlayPage } from "./ContentOverlayPage";
 import { CombatEnvPage } from "./CombatEnvPage";
 import { ServerOpsPage } from "./ServerOpsPage";
 import { AiSettingsPage } from "./AiSettingsPage";
@@ -56,6 +57,11 @@ const NAV: NavItem[] = [
   // 內容·素材管理 — the dev content routes + 角色語音生成 splice in AFTER audit and
   // BEFORE this always-present member, so the whole section reads contiguously.
   { page: "curation", label: "內容白名單", emoji: "✅", section: SEC_CONTENT },
+  // #189 — the one content-editing route that EXISTS IN A PRODUCTION BUILD.
+  // It writes to the platform's durable data/ overlay (admin JWT + audited),
+  // never to the loopback content-api, so it needs no dev gate and is the only
+  // way to change content on the deployed host.
+  { page: "contentOverlay", label: "內容覆蓋層", emoji: "🗂", section: SEC_CONTENT },
   // 資產產線 — the asset consoles (task #102). They RENDER measurements published
   // by #99 (models) and #97/#101 (icons); neither counts anything itself.
   { page: "ai", label: "AI 生成設定", emoji: "🤖", section: SEC_ASSETS },
@@ -482,6 +488,7 @@ function Console(): React.JSX.Element {
             {page === "replays" && <ReplaysPage />}
             {page === "announcements" && <AnnouncementsPage />}
             {page === "curation" && <CurationPage />}
+            {page === "contentOverlay" && <ContentOverlayPage />}
             {/* 內容·素材管理 dev routes — all mounted from the one dev chunk. */}
             {contentSuite !== null && contentSuite.render(page, onNavigate)}
             {contentSuite === null && isContentSuitePage(page) && (
