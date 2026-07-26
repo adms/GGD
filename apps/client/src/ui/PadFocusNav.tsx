@@ -24,6 +24,7 @@
 import { useEffect } from "react";
 import { listPadSources } from "../input/GamepadInput";
 import {
+  backControlIndex,
   firstConnectedPad,
   focusNavActive,
   initialFocusIndex,
@@ -102,16 +103,28 @@ function setFocus(el: HTMLElement): void {
   el.scrollIntoView?.({ block: "nearest", inline: "nearest" });
 }
 
-/** B → a close/back/cancel control within the scope, or null (nothing to back out of). */
+/**
+ * B → a close/back/cancel control within the scope, or null (nothing to back
+ * out of).
+ *
+ * An explicit `data-pad-back` is the contract and always wins. The label scan
+ * behind it is a courtesy for scopes that declare none — and it is the exact
+ * mechanism task #271 was filed about: it used to accept `離開|leave`, so with
+ * no modal open (scope = `document.body`) B clicked the top-right Leave chip on
+ * sight, ending the match with one press, no focus and no confirmation. The
+ * allow/veto decision now lives in the PURE `backControlIndex`, where the
+ * client's DOM-less test env can actually pin it (see input/padFocusNav.test).
+ */
 function findBackControl(root: ParentNode): HTMLElement | null {
   const explicit = root.querySelector<HTMLElement>("[data-pad-back]");
   if (explicit && isVisible(explicit)) return explicit;
-  const re = /取消|關閉|返回|離開|leave|back|close|cancel|✕|×|╳/i;
-  for (const el of getFocusables(root)) {
-    const label = `${el.getAttribute("aria-label") ?? ""} ${el.getAttribute("title") ?? ""} ${el.textContent ?? ""}`;
-    if (re.test(label)) return el;
-  }
-  return null;
+  const candidates = getFocusables(root);
+  const labels = candidates.map(
+    (el) =>
+      `${el.getAttribute("aria-label") ?? ""} ${el.getAttribute("title") ?? ""} ${el.textContent ?? ""}`,
+  );
+  const idx = backControlIndex(labels);
+  return idx >= 0 ? candidates[idx]! : null;
 }
 
 export function PadFocusNav(): null {

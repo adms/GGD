@@ -3,8 +3,10 @@
  * the edge/repeat reader, against plain rects and injected fake pads.
  */
 import { describe, it, expect } from "vitest";
+import { cover } from "@ggd/shared/testkit/cover";
 import type { PadInfo } from "./gamepadDetect";
 import {
+  backControlIndex,
   focusNavActive,
   initialFocusIndex,
   NAV_ACTIVATE_BTN,
@@ -167,5 +169,52 @@ describe("PadMenuNav — edges + auto-repeat", () => {
     expect(nav.read([null], 16)).toEqual([]);
     // after a gap, a held A reads as a fresh press again
     expect(nav.read([pad([0, 0], [NAV_ACTIVATE_BTN])], 32)).toEqual(["activate"]);
+  });
+});
+
+/**
+ * The B button (task #271). This logic is "new" only in the sense that it used
+ * to be an untested inline regex inside ui/PadFocusNav.tsx — a file this `node`
+ * test env cannot render — and that regex is what let ONE press of B end a
+ * match: with no modal open the pad's scope is `document.body`, and the
+ * top-right Leave chip (`title="leave the match"`, text `Leave`) was the first
+ * thing it matched. No focus, no A, no confirmation. The shop case was worse:
+ * B closed the shop, and the second B — the "back out one more level" reflex —
+ * hit Leave.
+ */
+describe("backControlIndex — B closes things, B never leaves", () => {
+  it("does NOT pick the Leave chip (the #271 one-press exit)", () => {
+    cover("pad-back-no-destructive");
+    // exactly the string ui/PadFocusNav builds for that chip:
+    // `${aria-label} ${title} ${textContent}`
+    expect(backControlIndex([" leave the match Leave"])).toBe(-1);
+  });
+
+  it("does NOT pick 返回大廳 — plain 返回 is allowed, 返回大廳 is vetoed", () => {
+    cover("pad-back-no-destructive");
+    expect(backControlIndex(["  返回大廳"])).toBe(-1);
+    expect(backControlIndex(["  ⏻ Leave to menu 返回大廳"])).toBe(-1);
+    expect(backControlIndex(["  返回"])).toBe(0);
+  });
+
+  it("skips a destructive control and takes the real close button behind it", () => {
+    cover("pad-back-no-destructive");
+    // the champSelect / intermission body scope: the Leave chip comes first in
+    // document order, the shop's close button after it
+    expect(backControlIndex([" leave the match Leave", " 關閉商店 ✕"])).toBe(1);
+  });
+
+  it("still closes the ordinary overlays a pad player expects B to close", () => {
+    cover("pad-back-closes");
+    expect(backControlIndex([" 關閉商店 ✕"])).toBe(0);
+    expect(backControlIndex(["Close settings "])).toBe(0);
+    expect(backControlIndex(["", "取消"])).toBe(1);
+    expect(backControlIndex(["  ✕"])).toBe(0);
+  });
+
+  it("returns -1 when nothing in the scope is a back control", () => {
+    cover("pad-back-closes");
+    expect(backControlIndex(["購買", "Ready", ""])).toBe(-1);
+    expect(backControlIndex([])).toBe(-1);
   });
 });

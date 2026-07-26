@@ -49,6 +49,7 @@ Regression suites always run **last** (enforced by the runner scheduler and the 
 | Client HUD & netcode | [client-hud.md](client-hud.md) | client |
 | Client roster, content-load & smoothing | [client-roster.md](client-roster.md) | client |
 | Leave/Restart flow, offline cheats & spectator cam | [restart-cheats.md](restart-cheats.md) | client + game |
+| 離開對戰確認閘 + 手把 B 鍵不再一鍵退出 (#271) | [leave-flow.md](leave-flow.md) | client |
 | iPhone support (touch + mobile HUD + PWA) | [mobile.md](mobile.md) | client |
 | Settings + adaptive quality/FPS + connection tuning | [settings-perf.md](settings-perf.md) | client |
 | Client audio (WebAudio BGM/SFX + audio-map) | [audio.md](audio.md) | client + content |
