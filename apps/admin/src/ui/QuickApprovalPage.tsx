@@ -100,16 +100,34 @@ interface Loaded {
 /**
  * Probe /editor/ from the browser, same-origin.
  *
- * A RUNTIME SIGNAL, NOT A CLAIM. nginx serves /editor/ as unauthenticated
- * static from the edge image, and the admin console sits behind the same nginx
- * — so this request answers for THIS deploy rather than for whatever the repo
- * looked like when the page was written. `no-store` because a cached 200 would
- * make the row lie after a redeploy that removed the route.
+ * A RUNTIME SIGNAL, NOT A CLAIM: the admin console sits behind the same nginx,
+ * so this request answers for THIS deploy rather than for whatever the repo
+ * looked like when the page was written. `no-store` because a cached answer
+ * would make the row lie after a redeploy that changed the route.
+ *
+ * WHY NOT HEAD, AND WHY THE BODY IS READ (task #241). The status code alone
+ * CANNOT answer the question any more. Now that the /editor/ location is
+ * dev-only, a request for it in production falls through to `location /` and
+ * `try_files … /index.html` — which returns **200 with the game client's
+ * index.html**. A HEAD probe would therefore see 200 and go on reporting
+ * 「這個環境確實對外開著」 forever, on a deploy where the editor does not exist.
+ * That is worse than no probe: a security row that cries wolf gets ignored.
+ * So the probe reads the body and looks for the editor's own <title>. Exposed
+ * means "the editor answered", not "something answered".
  */
-async function probeEditor(): Promise<{ status: number | null; error?: string }> {
+const EDITOR_MARKER = "GGD Content Editor";
+
+async function probeEditor(): Promise<{
+  status: number | null;
+  servesEditor?: boolean;
+  error?: string;
+}> {
   try {
-    const res = await fetch("/editor/", { method: "HEAD", cache: "no-store" });
-    return { status: res.status };
+    const res = await fetch("/editor/", { cache: "no-store" });
+    // Only a 2xx can be the editor; anything else is decided by status alone.
+    if (!res.ok) return { status: res.status, servesEditor: false };
+    const body = await res.text();
+    return { status: res.status, servesEditor: body.includes(EDITOR_MARKER) };
   } catch (err) {
     return { status: null, error: err instanceof Error ? err.message : String(err) };
   }

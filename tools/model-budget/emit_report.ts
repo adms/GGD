@@ -368,14 +368,23 @@ const RECORDED = {
     login: { loaded: 235, drawn: 167 },
     intermission: { loaded: 187, drawn: 107, shadowRedraw: 78 },
   },
+  /**
+   * #240. These are the #99 measurements taken on the four KayKit Adventurers
+   * champions BEFORE owner directive #226 deleted them. They are kept because
+   * they are the evidence FOR the deletion (a 41-joint rig costs 8× a 15-joint
+   * one at identical triangle counts) and because c_chan is derived from them —
+   * but the labels no longer claim 「現況」, because the models they measured are
+   * gone. Re-measuring on the generated box-men would produce a number so small
+   * it teaches nothing; the imported-skeleton row is the live comparison.
+   */
   animCpu: {
     method:
-      "NullEngine，12 份 knight.glb 以 ChampionView 的方式實例化並各播一個 loop clip，600–900 幀後取 p50（Apple M5 Max）",
+      "NullEngine，12 份同一支英雄 glb 以 ChampionView 的方式實例化並各播一個 loop clip，600–900 幀後取 p50（Apple M5 Max）",
     samples: [
-      { label: "12 隻 KayKit（現況）", ms: 2.19 },
-      { label: "12 隻 KayKit，關掉 ClipAnimator 的 enableBlending", ms: 1.0 },
-      { label: "12 隻 KayKit，drawDistance 剔除後（root.setEnabled(false)）", ms: 0.49 },
-      { label: "12 隻 herosaber（中位 imported 骨架）", ms: 0.27 },
+      { label: "12 隻 KayKit（#226 退場前，41 關節 × 123 通道）", ms: 2.19 },
+      { label: "12 隻 KayKit（退場前），關掉 ClipAnimator 的 enableBlending", ms: 1.0 },
+      { label: "12 隻 KayKit（退場前），drawDistance 剔除後（root.setEnabled(false)）", ms: 0.49 },
+      { label: "12 隻 herosaber（中位 imported 骨架，仍在樹上）", ms: 0.27 },
     ],
   },
 } as const;

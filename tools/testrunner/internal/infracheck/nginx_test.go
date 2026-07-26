@@ -61,9 +61,15 @@ func TestNginxEdgeRouting(t *testing.T) {
 		assert.Equal(t, 200, status)
 		assert.Contains(t, body, "GGD client stub")
 
+		// #241: /editor/ is NOT a production route any more. It must NOT serve
+		// the editor tree even when that tree is present on disk (it is, in this
+		// container — mounted below — precisely so this assertion proves the
+		// LOCATION is gone rather than the files merely being absent).
 		status, _, body = c.get(t, "/editor/")
-		assert.Equal(t, 200, status)
-		assert.Contains(t, body, "GGD editor stub")
+		assert.Equal(t, 200, status, "unknown paths fall through to the SPA")
+		assert.NotContains(t, body, "GGD editor stub",
+			"/editor/ must not be routed in the prod layout — see nginx/dev/editor.conf")
+		assert.Contains(t, body, "GGD client stub")
 
 		status, hdr, body := c.get(t, "/content/champions/sela.json")
 		assert.Equal(t, 200, status)
@@ -126,6 +132,12 @@ func TestNginxEdgeDevLayout(t *testing.T) {
 
 	status, _, _ := c.get(t, "/content-api/champions")
 	assert.Equal(t, 502, status, "/content-api/ must proxy in the dev layout (dead upstream → 502)")
+
+	// #241: the editor rides the same dev-only include. Mounting nginx/dev/ is
+	// what turns it on — and it is the only thing that does.
+	status, _, body := c.get(t, "/editor/")
+	assert.Equal(t, 200, status)
+	assert.Contains(t, body, "GGD editor stub", "/editor/ must be served in the dev layout")
 
 	// WebSocket upgrade headers are configured for the game routes; a plain
 	// HTTP request still proxies (Colyseus speaks HTTP on the same port).

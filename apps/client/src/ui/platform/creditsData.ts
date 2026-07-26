@@ -59,12 +59,31 @@ export const CREDITS: readonly CreditEntry[] = [
     terms: "本作品採用 CC-BY 4.0 授權，署名為授權條件，並非禮貌性標示。",
   },
   {
-    what: "角色 / 場景 / 地形模型",
-    title: "Character Pack: Adventurers · Dungeon Remastered · Medieval Hexagon Pack",
+    // #240 / owner directive #226: the retired character pack used to head this
+    // line. Its four models (mage / knight / barbarian / rogue) were DELETED
+    // from the tree and replaced by the in-repo generated box-men, so crediting
+    // that pack here would claim provenance for bytes we do not ship — exactly
+    // as dishonest as omitting a credit we owe. The packs named below are the
+    // ones still in content/assets/models/**; the retired one keeps its full
+    // record in content/assets/CREDITS.md under "RETIRED", and
+    // packages/shared/src/content/retiredCharacterModels.test.ts keeps it out
+    // of here.
+    what: "場景 / 地形 / 守護塔模型",
+    title: "Dungeon Remastered · Medieval Hexagon Pack · Character Pack: Skeletons · Halloween Bits",
     author: "Kay Lousberg (KayKit)",
     license: "CC0",
     sourceUrl: "https://kaylousberg.com/",
     mandatory: false,
+  },
+  {
+    what: "角色模型（方塊人）",
+    title: "GGD 自製體素角色（5 支）",
+    author: "本專案 tools/voxel-gen 程式生成",
+    license: "本專案自有",
+    mandatory: false,
+    terms:
+      "14 個軸對齊方塊、168 面、一張 16×16 內嵌調色盤 PNG，全部由 `pnpm voxel:gen` 確定性生成，" +
+      "非第三方素材，無須署名。它們取代了原本的四支高面數 CC0 角色（owner 指示 #226）。",
   },
   {
     what: "音效",

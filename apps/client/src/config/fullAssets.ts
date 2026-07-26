@@ -14,8 +14,9 @@
  * The consequence is not "the assets 404". It is that THE REQUEST IS NEVER
  * MADE. You can mount all 84 MB of data/blizzard-overlay into the edge, open
  * the nginx location, verify with curl that every byte is served — and the game
- * still shows 40 of 113 champions as one of four generic KayKit stand-ins with
- * no voice, because the client decided at BUILD time that it was a production
+ * still shows 40 of 113 champions on a generic stand-in mesh with
+ * no voice (four CC0 KayKit characters at the time; since #226, the generated
+ * box-men), because the client decided at BUILD time that it was a production
  * bundle and therefore had no overlay to look for. Nothing is logged. The
  * owner on localhost (a dev server, DEV=true) sees the right models; a family
  * member on the deployed build does not; neither can tell the builds differ.

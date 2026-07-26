@@ -275,3 +275,20 @@ truncated — `GGD-XXXX-XXXX` is the one value the page exists to convey.
 | admin-45 | The 邀請碼 來源 split is a VIEW filter, never a content cut: the two source views partition the list exactly, an untagged row from an older server counts as 後台 (the direction that cannot hide the owner's own codes), and `summarize` gained per-source counts without changing the three it already returned | adminui-invites-source | unit | done |
 | admin-46 | 經濟與場長脫鉤 (#250)：`wallet/meta.go` 的註解宣稱「一場 ~44 分鐘」，但 `opsenv` 在 LIVE 設定（4 隊 × 20 Team Health）算出 ~11.6 回合 ≈ 21 分鐘。**結論：錯的是註解，不是發放率。**#132/#153 把回合砍短（combatMaxSec 240→100、fireRing 180→60、選角 40s→20s），那個 44 從此沒重推過；owner 看過落差後裁示「藍水晶本來就是獎勵 有人抱怨我們再來改」，所以 240/90/70/60 一毛不動。改的是註解（純註解 diff，常數 byte-identical），並新增 `TestCrystalGrantsAreTheOwnersDecision` 把發放額釘死，讓未來的「重平衡」必須明著推翻 owner 決定才動得了 | opsenv-wallet-playrate | unit | done |
 | admin-47 | `TestCombatEnvReplacePublishesInvalidation` 一直紅。**原本的診斷是錯的**——它本來就用 in-process `miniredis.RunT`，從來不需要真的 Redis，所以不是環境問題也不該加 skip 守衛。真因是 7dd31bf「sweep gosec」在加一行無關的 `#nosec` 時，順手刪掉了 `combatenv.Repo.mirror` 裡的 `PublishContentInvalidation`：檔案照存、mirror 照寫、後台照回 200，只有 running shard 收不到失效通知，戰鬥系統改了要等 TTL 才生效。已把 publish 補回，並加 `TestEveryContentKindStillHasAPublisher` 以 AST 掃描確保四種 content kind 都還有非測試的發布點 | combatenv-invalidate-guard | unit | done |
+
+| admin-46 | 經濟與場長脫鉤 (#250): `wallet/meta.go` 的藍水晶發放率是照「一場 ~44 分鐘」訂的，但 `opsenv` 的場長模型在 LIVE 設定（4 隊 × 20 Team Health）算出 ~11.6 回合 ≈ 21 分鐘。`TestWalletPlayRateAgreesWithTheDerivedLength` 已經紅了一段時間並明說「the economy now pays out far faster than intended」——出水速度是設計值的兩倍。修的是兩者之一，不是把測試的容忍度放寬 | opsenv-wallet-playrate | unit | pending |
+| admin-47 | `TestCombatEnvReplacePublishesInvalidation` 在沒有 Redis 的機器上必然紅（「no content invalidation published within 3s」），但它沒有 skip 守衛，所以本機跑 `go test ./...` 永遠是紅的，真正的迴歸就藏在噪音裡。要嘛自帶 miniredis、要嘛在缺 Redis 時明確 skip 並說明 | combatenv-invalidate-guard | unit | pending |
+
+## Quick Approval 的 `/editor/` 探測在修好之後會變成常態誤報 (#241)
+
+`editorExposureRow` 原本只看 HTTP 狀態碼。#241 把 `/editor/` 從正式 nginx 拿掉之後，
+這個路徑會落到 `location /` 的 `try_files … /index.html`，**回 200 加上遊戲前端的
+HTML**——於是那一列會在「已經修好」的部署上永遠喊「確實對外開著」。一個永遠亮著的
+安全警示等於沒有警示，owner 會學會跳過它。所以探測改成 GET 並讀 body，找編輯器自己的
+`<title>`；判斷依據是「回話的是不是編輯器」，不是「有沒有人回話」。舊的 HEAD-only 呼叫者
+（`servesEditor` 為 undefined）明說自己分辨不出來，並且維持 warn ——安全列上的「不知道」
+不等於「沒事」。
+
+| ID | Item | Test ID | Category | Status |
+| --- | --- | --- | --- | --- |
+| admin-70 | Quick Approval 的 `/editor/` 曝露列以「回的是不是編輯器本體」判定，不是以狀態碼：SPA fallback 的 200 讀成「沒有提供」(dim)、真的編輯器 200 讀成 warn、`servesEditor` 未知時明講無法分辨且維持 warn，三者的文案各自不同且都不可勾選 | adminui-editor-probe | regression | done |

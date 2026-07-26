@@ -133,7 +133,7 @@ describe("round-trip", () => {
 
   it("returns null for a doc the generator does not own", () => {
     cover("voxel-studio-save");
-    expect(lookFromDoc({ id: "champ.sela", glbPath: "assets/models/champions/mage.glb" })).toBeNull();
+    expect(lookFromDoc({ id: "champ.sela", glbPath: "assets/models/imported/heroichigo.glb" })).toBeNull();
     expect(lookFromDoc({ voxel: { archetype: "mage" } })).toBeNull();
   });
 });
@@ -144,7 +144,7 @@ describe("the schema change is ADDITIVE", () => {
     const legacy = {
       id: "champ.sela",
       schema: "model@1" as const,
-      glbPath: "assets/models/champions/mage.glb",
+      glbPath: "assets/models/imported/heroichigo.glb",
       scale: 0.7727,
       collisionRadius: 0.6,
       clipMap: {

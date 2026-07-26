@@ -56,7 +56,7 @@ function statsMap(...s: ChampionStats[]): Map<string, ChampionStats> {
   return new Map(s.map((x) => [x.id, x]));
 }
 
-const NO_PROBE = { status: 404 };
+const NO_PROBE = { status: 404, servesEditor: false };
 
 function input(over: Partial<BuildRowsInput> = {}): BuildRowsInput {
   return {
@@ -238,7 +238,7 @@ describe("rows carry a reason and a risk — never a bare label", () => {
       liveAbilities: [...abilityIdsFor("peer1"), ...abilityIdsFor("peer2"), "extra.ex"],
       stats: statsMap(healthy("peer1"), healthy("peer2"), healthy("good"), mobLike("extra"), mobLike("bad")),
       pendingAccounts: [{ id: "acc1", username: "表哥", waited: "等了 3 分鐘" }],
-      editorProbe: { status: 200 },
+      editorProbe: { status: 200, servesEditor: true },
     }),
   );
 
@@ -308,14 +308,41 @@ describe("rows carry a reason and a risk — never a bare label", () => {
 
   it("the /editor/ exposure row is READ-ONLY and reports the live probe", () => {
     cover("adminui-quick-approval");
-    const reachable = editorExposureRow({ status: 200 });
+    const reachable = editorExposureRow({ status: 200, servesEditor: true });
     expect(reachable.tickable).toBe(false);
     expect(reachable.stats).toContain("200");
     expect(reachable.effect).toContain("不參與送出");
-    const absent = editorExposureRow({ status: 404 });
+    const absent = editorExposureRow({ status: 404, servesEditor: false });
     expect(absent.tone).toBe("dim");
     const failed = editorExposureRow({ status: null, error: "network down" });
     expect(failed.stats).toContain("network down");
+  });
+
+  /**
+   * #241 REGRESSION. Once /editor/ stopped being a production route, a request
+   * for it falls through to `location /` + `try_files … /index.html` and comes
+   * back **200 with the game client's HTML**. The old row keyed off the status
+   * code alone, so it would have kept shouting 「確實對外開著」 on precisely the
+   * deploys where the exposure had been fixed. A permanent false positive is
+   * worse than no row: the owner learns to skip it.
+   */
+  it("a 200 that is the SPA fallback, not the editor, reads as NOT exposed", () => {
+    cover("adminui-editor-probe");
+    const fellThrough = editorExposureRow({ status: 200, servesEditor: false });
+    expect(fellThrough.tone).toBe("dim");
+    expect(fellThrough.stats).toContain("不是編輯器");
+    expect(fellThrough.stats).toContain("沒有提供");
+
+    const reallyExposed = editorExposureRow({ status: 200, servesEditor: true });
+    expect(reallyExposed.tone).toBe("warn");
+    expect(reallyExposed.stats).toContain("編輯器本體");
+
+    // An old caller that only sent HEAD cannot know. It must say so rather than
+    // silently picking a side — and it stays a warning, because "unknown" on a
+    // security row is not "fine".
+    const cannotTell = editorExposureRow({ status: 200 });
+    expect(cannotTell.tone).toBe("warn");
+    expect(cannotTell.stats).toContain("無法分辨");
   });
 
   it("every champion row deep-links to the page that OWNS the whitelist", () => {

@@ -41,6 +41,24 @@ describe("creditsData", () => {
     expect(kaykit!.mandatory).toBe(false);
   });
 
+  /**
+   * #240. The four **Character Pack: Adventurers** characters (mage / knight /
+   * barbarian / rogue) were deleted by owner directive #226 「我不想再看到這些
+   * 模組了」. A credit page that still names a pack we do not ship is a false
+   * provenance claim, so the pack name must be gone from the SHIPPED ledger —
+   * while the packs that ARE still in the tree (Dungeon Remastered props,
+   * Medieval Hexagon terrain, Character Pack: Skeletons for guardian_skeleton,
+   * Halloween Bits for the treant trunk) must keep their courtesy credit.
+   */
+  it("no longer credits the RETIRED Adventurers pack, but keeps the packs still shipped", () => {
+    cover("credits-data");
+    const blob = JSON.stringify(CREDITS);
+    expect(blob).not.toContain("Adventurers");
+    expect(blob).toContain("Dungeon Remastered");
+    expect(blob).toContain("Medieval Hexagon");
+    expect(blob).toContain("Character Pack: Skeletons");
+  });
+
   it("restates the 効果音ラボ usage terms (AI-training + re-cut prohibitions) though attribution is optional", () => {
     cover("credits-data");
     const lab = CREDITS.find((c) => c.title.includes("効果音ラボ"));

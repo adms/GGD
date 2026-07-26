@@ -332,12 +332,13 @@ function renderVerdict() {
       <li><b>貼圖 VRAM</b> — 五個競技場有四個超線，而且<b>換誰上場都一樣超</b>，因為它跟選角無關：
         25 支 <code>.glb</code> 各自內嵌了同一張 1024² 的 24 色調色盤，Babylon 逐支上傳，
         一張 5.33 MB × 25 = 133.33 MB。<b>這是浪費，不是危險</b> —— 不會當掉，只是花了 6 倍冤枉錢。</li>
-      <li><b>draw call / mesh 數</b> — 只有在<b>替身陣容</b>下才超線（113 位英雄裡有 42 位穿著那 4 支 KayKit 替身，
-        所以 12 人全替身是合法的）。中位陣容下每一座競技場都過關，只有 godie 例外：
-        它用面數看是最便宜的一座（3,700），用 draw call 看是最貴的一座 —— 50 棵各 74 面的櫻花樹，
-        每棵帶著 1 根骨頭，於是 100 個無法 instance 的 draw call。</li>
-      <li><b>動畫 CPU</b> — 12 隻 KayKit = 1,476 個通道/幀，實測在 M5 Max 上就要 2.19 ms，
-        還沒畫任何一個像素。同樣 12 隻中位 imported 英雄只要 0.27 ms。<b>10 倍差距，而它們的面數只差 3.4 倍。</b></li>
+      <li><b>draw call / mesh 數</b> — 這一條在 #226 之後<b>不再由英雄貢獻</b>：替身陣容原本是 4 支
+        15-mesh / 41-關節的 KayKit 角色（42 位英雄穿它），現在是 5 支<b>各 1 個 mesh、168 面</b>的自製方塊人，
+        12 人全替身只花 12 個 draw call。剩下的壓力全在場景：godie 用面數看是最便宜的一座（3,700），
+        用 draw call 看是最貴的一座 —— 50 棵各 74 面的櫻花樹，每棵帶著 1 根骨頭，於是 100 個無法 instance 的 draw call。</li>
+      <li><b>動畫 CPU</b> — 同樣被 #226 拆掉一半：舊的 12 隻 KayKit = 1,476 個通道/幀，實測在 M5 Max 上要 2.19 ms，
+        還沒畫任何一個像素；換成方塊人是 12 × 8 = <b>96 個通道</b>。下面那張對照表是<b>退場前</b>的量測，
+        留著是因為它解釋了為什麼要退場，不是因為它還是現況。中位 imported 英雄 12 隻仍是 0.27 ms —— 那條線沒變。</li>
     </ul>
   </div>
   <p class="sub">
@@ -353,7 +354,8 @@ function renderCostModel() {
   document.getElementById("costmodel").innerHTML = `
     <dl class="kv">
       <dt>c_mesh</dt><dd>0.0083 ms / 每個常駐 mesh —— 取自 #80 的 A/B：同一個場景 279 個 mesh 是 p50 5.6 ms、713 個是 9.2 ms，兩點連線。</dd>
-      <dt>c_chan</dt><dd>0.00148 ms / 每幀每個動畫通道 —— 取自 #99 的 runtime 量測：12 隻 KayKit = 1,476 通道 = 2.19 ms（NullEngine，Apple M5 Max）。</dd>
+      <dt>c_chan</dt><dd>0.00148 ms / 每幀每個動畫通道 —— 取自 #99 的 runtime 量測：12 隻 KayKit = 1,476 通道 = 2.19 ms（NullEngine，Apple M5 Max）。
+        <b>係數仍然有效，被量的模型已經退場</b>（#226/#240）：常數是「每通道多少毫秒」，跟哪一支 glb 無關。</dd>
     </dl>
     <h3>同一支量測工具跑出來的四組對照（${esc(rec.animCpu.method)}）</h3>
     <div class="tblwrap"><table><thead><tr><th class="no-sort">情境</th><th class="num no-sort">p50 幀時間</th></tr></thead><tbody>
@@ -361,7 +363,8 @@ function renderCostModel() {
     </tbody></table></div>
     <p class="sub">注意第二列：<code>ClipAnimator</code> 對每一個 clip 的每一條 animation 都設了
     <code>enableBlending = true</code>（12 隻 KayKit 共 104,544 個），把同一幀的成本從 1.00 ms 推到 2.19 ms。
-    這是一行程式碼的差別，不是資產的差別。</p>
+    這是一行程式碼的差別，不是資產的差別 —— 也是為什麼這張表在四支 KayKit 角色退場（#226）之後仍然留著：
+    那一行程式碼還在，換上任何一副重骨架都會再踩一次。</p>
     <h3>錐體剔除之後真正送出去的 draw（${esc(rec.culling.method)}）</h3>
     <div class="tblwrap"><table><thead><tr><th class="no-sort">相機距離</th><th class="num no-sort">godie</th><th class="num no-sort">dota</th></tr></thead><tbody>
     ${rec.culling.combat.map((c) => `<tr><td>${esc(c.at)}</td><td class="num">${c.godie}</td><td class="num">${c.dota}</td></tr>`).join("")}
@@ -445,17 +448,25 @@ function renderBroken() {
 }
 
 function renderPlaybook() {
-  const knight = R.models.find((m) => m.path.endsWith("champions/knight.glb"));
+  // #240: this step used to be measured off champions/knight.glb. That model
+  // (and its three siblings) was DELETED by owner directive #226 — 「我不想再看
+  // 到這些模組了」 — so the lookup found nothing and the page silently printed
+  // the hard-coded fallback numbers as if they were measurements. The lever is
+  // still real; it is now demonstrated on a model that actually ships.
+  const heavy = R.models
+    .filter((m) => m.shipping && m.drawCalls > 0)
+    .sort((a, b) => b.drawCalls - a.drawCalls)[0];
+  const skel = R.models.find((m) => m.path.endsWith("props/guardian_skeleton.glb"));
   const cherry = R.models.find((m) => m.path.endsWith("japanesecherry.glb"));
   const dragon = R.models.find((m) => m.path.endsWith("dragon2.glb"));
   document.getElementById("playbook").innerHTML = `<div class="panel">
     <p class="lead" style="margin-top:0">超線的處理順序，由便宜到昂貴。<b>「減面」排在很後面</b>，因為面數幾乎從來不是超線的原因。</p>
     <ol>
       <li><b>合併共用同一份材質的 primitive</b>（零視覺變化，效果最大）。
-        <code>knight.glb</code> 是 ${knight ? knight.drawCalls : 15} 個獨立蒙皮 mesh，共用
-        <b>1 份材質、1 張 1024² 貼圖、1 副 ${knight ? knight.joints : 41} 關節骨架</b> —— 可以離線合成 1 個。
-        12 隻英雄就是 ${knight ? knight.drawCalls * 12 : 180} → 12 個 draw call，整幀省下
-        ${knight ? knight.drawCalls * 12 - 12 : 168} 個，面數一個都沒少。</li>
+        目前 draw call 最多的一支是 <code>${heavy ? esc(heavy.path.split("/").pop()) : "（報告尚未產生）"}</code>：
+        <b>${heavy ? heavy.drawCalls : "?"} 個獨立 mesh、${heavy ? heavy.joints : "?"} 根關節</b>，
+        可以離線合成成少數幾個。12 個同時在場就是 ${heavy ? heavy.drawCalls * 12 : "?"} → 12 個 draw call，
+        面數一個都沒少。<span class="sub">（這一格原本量的是已退場的 <code>knight.glb</code>，見 #226/#240。）</span></li>
       <li><b>把貼圖改成像素上限，不是壓縮率</b>。那 25 張 1024² 是 24 個色塊加兩條漸層（3,918 種顏色 / 1,048,576 像素）。
         縮到 128² 資訊完全不損（縮放誤差平均 2.15/255，而且全部落在 UV 從不取樣的色塊邊界），
         VRAM 從 5.33 MB → 83 KB，<b>一支省 64 倍</b>。這是整頁投報率最高的一刀。</li>
@@ -466,9 +477,12 @@ function renderPlaybook() {
         帶著 1 根骨頭、1 個 clip。因為它是蒙皮的，Babylon <b>永遠</b>不會硬體 instance 它
         （<code>assetContainer.js</code>：<code>node.skeleton ⇒ canInstance = false</code>），
         於是 50 棵樹 = 100 個真 mesh + 50 副骨架 + 50 個 AnimationGroup。拔掉骨架 → 2 個 draw call。</li>
-      <li><b>減 clip，不是減面</b>（<span style="opacity:.75">已執行</span>）。KayKit 的每個 clip 都是 41 關節 × 位移+旋轉+縮放 = 123 條通道，
-        原本有 76 個 clip，現已由 <code>tools/model-budget/trimClips.ts</code> 修剪為
-        ${knight ? knight.clips : 16} 個（四支英雄 glb 共 14,478,324 → 4,257,056 B，−70.6%）。
+      <li><b>減 clip，不是減面</b>（<span style="opacity:.75">已執行</span>）。<code>guardian_skeleton.glb</code>
+        的每個 clip 都是 ${skel ? skel.joints : 41} 關節 × 位移+旋轉+縮放 = 123 條通道，原本有 95 個 clip，
+        現已由 <code>tools/model-budget/trimClips.ts</code> 修剪為 ${skel ? skel.clips : 15} 個
+        （4,814,296 → 1,036,516 B，−78.5%），幾何/骨架/材質/貼圖逐位元組不變。
+        <span class="sub">同一刀也做在四支 KayKit 英雄上（76 → 16 clip，−70.6%）；它們已於 #226 整批退場，
+        由 168 面的自製方塊人取代，所以那筆帳現在只剩歷史意義。</span>
         剩下的路是：非 root 關節的位移與縮放軌幾乎都是常數，離線烘掉就從 123 條降到 41 條左右。中位 imported 骨架只有 17 條。</li>
       <li><b>開 instancing</b>。<code>ArenaScene.placeInstance</code> 沒有傳 options，而 Babylon 的
         <code>instantiateModelsToScene</code> 預設 <code>doNotInstantiate: true</code>，
@@ -587,8 +601,9 @@ function renderModels() {
 /* COMPRESSION, and why `Content-Length` alone is not safe to compare.
    A compressed response's Content-Length is the size of the COMPRESSED body,
    which has nothing to do with the bytes this report recorded from disk.
-   Measured on the real nginx image: `HEAD knight.glb` with a `.gz` sidecar
-   present reported Content-Length 388867 against a recorded 1103872 — i.e.
+   Measured on the real nginx image (on `knight.glb`, since retired by #226 —
+   the measurement is about gzip, not about that model): `HEAD` with a `.gz`
+   sidecar present reported Content-Length 388867 against a recorded 1103872 — i.e.
    every compressed asset would be flagged "changed" and the page would scream
    that 163 files are stale when nothing had moved. Browsers always send
    `Accept-Encoding: gzip` and it is a forbidden header name, so the page cannot

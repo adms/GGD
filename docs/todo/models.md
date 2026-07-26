@@ -99,3 +99,33 @@ with this defect — every other rig's idle root drift is ≤ 0.056u.
 | --- | --- | --- | --- | --- |
 | mdl-162 | `imported.heroichigo` idle no longer floats: `flatten_root_float.py` restored the corrupt single-keyframe root translation in all four stand-pose clips (`stand`, `stand 2`, `stand alternate`, `stand alternate 2`) to `bone_waist`'s grounded bind value — a 32-byte in-place surgical edit (no re-import), zeroing the +5.24-native vertical float AND a co-corrupt +1.43 lateral shove. Every other byte/clip/node identical (62 nodes / 1 mesh / 1 skin / 19 anims); `dissipate` death-poof left untouched. GLB re-validated, idempotent | model-idle-grounded | regression | done |
 | mdl-162-sweep | Roster sweep: 51 `imported.*` champions checked for an idle/stand clip whose skeleton-root translation-Y rises off the grounded start. Only `heroichigo` floated; next-worst `horse` +0.056u (natural idle shift). Non-roster floaters (`enchant`/`firefly`/`darkraor`/`bahamut`(flying summon)/`heronarutos4effect`/`heroryuk`) are effect/projectile/summon models, out of scope. Guarded by `modelIdleGrounding.test.ts` — heroichigo pins + a roster-wide backstop (every champion idle root drift < 0.4 native) | model-idle-grounded-sweep | regression | done |
+
+## The four retired KayKit characters must not come back (#226 / #240)
+
+Owner directive, 2026-07-26: 「我不想再看到這些模組了」. #226 deleted the four CC0
+**KayKit Character Pack: Adventurers** meshes (`mage` / `knight` / `barbarian` /
+`rogue`, plus their `-mid` / `-small` LOD tiers — twelve files, 9,725,524 B,
+46,687 triangles) and replaced every champion that wore one with a generated
+box-man from `tools/voxel-gen` (168 tris, 1 draw call, 15 joints, 8 anim
+channels each). The deploy verified the four URLs 404 — and then nothing
+prevented a re-add.
+
+**Scope is narrow on purpose.** "KayKit" is not the banned thing: Kay Lousberg
+authored four more packs this project still ships and credits —
+**Dungeon Remastered** (`props/*.glb`), **Character Pack: Skeletons**
+(`props/guardian_skeleton.glb`, which is both the `arena.skeleton` guardian and
+聖杯黑泥醬-喪標麥可), **Medieval Hexagon Pack** (`hex/*.glb`) and
+**Halloween Bits** (`guardian_treant_trunk.glb`). The guard matches asset PATHS
+and the retired pack's own name, never the vendor, and the "still shipped" set is
+pinned by its own assertion so a future widening fails loudly.
+
+Residual references cleaned at the same time: the shipped credits ledger
+(`creditsData.ts` credited a pack we no longer distribute), the asset-budget
+page's playbook (it looked up the deleted `knight.glb`, found nothing, and
+printed its hard-coded fallback numbers as if they were measurements), the
+`emit_report.ts` recorded-measurement labels that still said 「現況」, two test
+fixtures and two doc examples.
+
+| ID | Item | Test ID | Category | Status |
+| --- | --- | --- | --- | --- |
+| mdl-240 | Permanent guard against re-adding the four retired KayKit Adventurers characters: none of the twelve `.glb` exists on disk, the five `blocky-*` replacements ARE present, no shipped source / content doc / manifest / LOD table / built bundle references a `models/champions/<mage/knight/barbarian/rogue>(-mid or -small).glb` path, the shipped credit ledger no longer names the pack, the four KayKit packs still in the tree are explicitly NOT swept up, and the matcher self-tests both directions so a broken regex cannot pass silently. Failure message states the owner directive and the poly/rig budget so a future contributor understands rather than deleting the guard | model-retired-kaykit-guard | regression | done |

@@ -125,7 +125,7 @@ describe("the stand-in population is actually moved off the shared mesh", () => 
       throw new Error("tryUpgradeToGlb must not reach the AssetManager for a voxel-body champion");
     },
   } as unknown as AssetManager;
-  const DOC = { glbPath: "assets/models/champions/mage.glb", scale: 1, clipMap: {} } as ModelDoc;
+  const DOC = { glbPath: "assets/models/imported/heroichigo.glb", scale: 1, clipMap: {} } as ModelDoc;
 
   it("a champion on a shared stand-in mesh DECLINES the glb and keeps its own body", () => {
     cover("voxel-skin-standin");

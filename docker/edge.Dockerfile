@@ -1,4 +1,4 @@
-# docker/edge.Dockerfile — Nginx edge: reverse proxy + client/editor static.
+# docker/edge.Dockerfile — Nginx edge: reverse proxy + client/admin static.
 #
 # CONTRACT NOTE: apps/client, apps/editor and apps/admin are built in parallel
 # by other engineers. This Dockerfile is written to the planned contract:
@@ -9,6 +9,39 @@
 #
 # Game content is NOT baked in: /srv/content is a read-only mount
 # (kind hostPath / PVC / compose bind — see deploy/ and docker/compose.yaml).
+#
+# ---------------------------------------------------------------------------
+# THE EDITOR IS NOT IN THIS IMAGE BY DEFAULT (task #241)
+# ---------------------------------------------------------------------------
+# apps/editor is a CONTENT-AUTHORING surface. It used to be built and COPYd here
+# unconditionally, and nginx served it at `/editor/` as plain static with no
+# authentication of any kind — so on ggd.adms.ai anyone who typed the URL got
+# the authoring console: the collection list, the schema-derived forms for every
+# champion / ability / item, the 鑄技工坊 template gallery, the 3D model and VFX
+# inspectors and the AI-icon / AI-fill controls.
+#
+# It was not a WRITE hole — apps/editor/src/api/client.ts dead-folds
+# WRITES_ENABLED to false in a `vite build`, and `/content-api/` is deliberately
+# absent from the production nginx (see nginx/dev/content-api.conf) — so the
+# save buttons could not have worked. Which is the point: the surface was
+# 100% non-functional in production and 100% visible. Shipping it bought
+# nothing and exposed the whole internal content model.
+#
+# THE FIX IS EXPOSURE, NOT AN ENVIRONMENT GATE. It is deliberately NOT a
+# $remote_addr rule: the owner retired that approach on 2026-07-26 (#239), and
+# it would be wrong here anyway because this edge sits behind Caddy, so
+# $remote_addr is the proxy. The route is instead simply absent, exactly like
+# `/content-api/` — the surface a deploy does not contain cannot be reached,
+# authenticated or otherwise.
+#
+# Local authoring is unaffected: `pnpm dev:editor` runs vite on 127.0.0.1:5174
+# with its own /content-api proxy. To build an image WITH the editor (a dev or
+# LAN box that also mounts nginx/dev/ for the `/editor/` location):
+#
+#     docker build -f docker/edge.Dockerfile --build-arg GGD_INCLUDE_EDITOR=1 .
+#
+# Both halves are required — the files without the nginx location, or the
+# location without the files, serves nothing. That is intentional.
 
 FROM node:22-alpine AS build
 RUN corepack enable
@@ -56,12 +89,25 @@ ENV VITE_GGD_FULL_ASSETS=$VITE_GGD_FULL_ASSETS
 # UNSTAMPED-BUILD: visibly broken beats plausibly wrong.
 ARG GGD_BUILD_STAMP=""
 ENV GGD_BUILD_STAMP=$GGD_BUILD_STAMP
-RUN echo "edge build: VITE_GGD_FULL_ASSETS='${VITE_GGD_FULL_ASSETS}' GGD_BUILD_STAMP='${GGD_BUILD_STAMP}'" \
+# ---- THE EDITOR OPT-IN (task #241) -----------------------------------------
+# Default OFF. See the header. `/dist-out/editor` is created either way so the
+# final stage's COPY has a source in both configurations — an image built
+# without the opt-in gets an EMPTY directory there, which is the whole point.
+ARG GGD_INCLUDE_EDITOR="0"
+ENV GGD_INCLUDE_EDITOR=$GGD_INCLUDE_EDITOR
+RUN echo "edge build: VITE_GGD_FULL_ASSETS='${VITE_GGD_FULL_ASSETS}' GGD_BUILD_STAMP='${GGD_BUILD_STAMP}' GGD_INCLUDE_EDITOR='${GGD_INCLUDE_EDITOR}'" \
  && if [ -z "${GGD_BUILD_STAMP}" ]; then \
       echo "!! WARNING: no GGD_BUILD_STAMP build arg — this image will ship an UNSTAMPED-BUILD badge." >&2; \
       echo "!!          pass --build-arg GGD_BUILD_STAMP=\"\$(git rev-parse --short HEAD) \$(date -u +%F)\"" >&2; \
     fi \
- && pnpm --filter "@ggd/client" build && pnpm --filter "@ggd/editor" build && pnpm --filter "@ggd/admin" build
+ && pnpm --filter "@ggd/client" build && pnpm --filter "@ggd/admin" build \
+ && mkdir -p /dist-out/editor \
+ && if [ "${GGD_INCLUDE_EDITOR}" = "1" ]; then \
+      echo "edge build: INCLUDING the content editor at /editor/ — this image must NOT be deployed publicly." >&2; \
+      pnpm --filter "@ggd/editor" build && cp -a apps/editor/dist/. /dist-out/editor/; \
+    else \
+      echo "edge build: content editor OMITTED (task #241). Pass --build-arg GGD_INCLUDE_EDITOR=1 for a dev image." >&2; \
+    fi
 
 # ---- precompress the SPA bundles -------------------------------------------
 # nginx serves these with `gzip_static on` (and `brotli_static on` in the
@@ -78,7 +124,7 @@ RUN echo "edge build: VITE_GGD_FULL_ASSETS='${VITE_GGD_FULL_ASSETS}' GGD_BUILD_S
 COPY nginx/precompress.sh nginx/
 RUN apk add --no-cache brotli \
     && sh nginx/precompress.sh \
-        /repo/apps/client/dist /repo/apps/editor/dist /repo/apps/admin/dist
+        /repo/apps/client/dist /dist-out/editor /repo/apps/admin/dist
 
 # Unprivileged nginx: uid 101, listens 8080, pid/temp under /tmp.
 FROM nginxinc/nginx-unprivileged:alpine
@@ -88,7 +134,12 @@ COPY nginx/nginx.conf /etc/nginx/nginx.conf
 # /content-api/ route is mounted at /etc/nginx/ggd-dev/ by the Helm chart only
 # when dev.enabled=true (infra-05).
 COPY --from=build /repo/apps/client/dist/ /usr/share/nginx/html/client/
-COPY --from=build /repo/apps/editor/dist/ /usr/share/nginx/html/editor/
+# The CONTENT EDITOR (task #241). This copies /dist-out/editor, which the build
+# stage leaves EMPTY unless --build-arg GGD_INCLUDE_EDITOR=1 was passed — so the
+# default image contains no editor bundle at all. Do not point this back at
+# /repo/apps/editor/dist: that would bake the authoring console into every
+# image again regardless of the flag, which is the whole defect.
+COPY --from=build /dist-out/editor/ /usr/share/nginx/html/editor/
 COPY --from=build /repo/apps/admin/dist/ /usr/share/nginx/html/admin/
 # ---- full-asset boot assertion (task #176) ---------------------------------
 # The official nginx entrypoint runs /docker-entrypoint.d/*.sh under `set -e`
