@@ -253,7 +253,11 @@ func runPlanOrApply(args []string, dryRun bool) error {
 		return printJSON(res)
 	}
 	printPlan(res.Plan)
-	fmt.Printf("\n✓ 匯入完成：寫入 %d 筆（新增 %d）\n", res.Written, res.Added)
+	fmt.Printf("\n✓ 匯入完成：寫入 %d 筆（新增 %d）、相同不動 %d 筆、略過 %d 筆\n",
+		res.Written, res.Added, res.Unchanged, res.Skipped)
+	if res.Written != res.Plan.Writes {
+		fmt.Printf("  ⚠ 試算承諾寫入 %d 筆，實際寫入 %d 筆 —— 請檢查備份\n", res.Plan.Writes, res.Written)
+	}
 	if res.Backup != nil {
 		fmt.Printf("  備份：%s\n", res.Backup.Path)
 	}
@@ -270,7 +274,11 @@ func printPlan(p *platformarchive.Plan) {
 		fmt.Printf("%-28s %6d %6d %6d %6d %6d\n",
 			c.Collection, c.Added, c.Written, c.Unchanged, c.Skipped, c.Blocked)
 	}
-	fmt.Printf("\n將寫入 %d 筆。digest %s\n", p.Writes, p.Digest[:16])
+	// The full account, not just the writes: "0 筆" has to be readable as a
+	// FACT ("everything is already there") rather than as a missing number.
+	fmt.Printf("\n將寫入 %d 筆；相同不動 %d 筆、略過 %d 筆、擋下 %d 筆。digest %s\n",
+		p.Writes, p.Unchanged, p.Skipped, p.BlockedEntries, p.Digest[:16])
+	fmt.Println("這份試算就是契約：apply 只會執行上面逐筆列出的判定，不多寫任何一筆。")
 	for _, line := range p.BlockedLines() {
 		fmt.Println("  BLOCKED  " + line)
 	}

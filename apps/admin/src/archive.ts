@@ -82,6 +82,15 @@ export interface CollectionPlan {
   written: number;
   skipped: number;
   blocked: number;
+  /**
+   * The COMPLETE per-document verdict list — every entry, including the boring
+   * "added" and "unchanged" ones. It is complete because the server EXECUTES it:
+   * the commit performs exactly these verdicts and nothing else. An earlier
+   * version sent only the interesting entries and let the commit guess the rest,
+   * which re-wrote every document on a re-import while the dry run promised
+   * zero writes. Filter it here for display (notableItems); never ask the server
+   * to shorten it.
+   */
   items?: PlanItem[] | null;
 }
 
@@ -98,7 +107,12 @@ export interface PlanResp {
   collisions?: IdentityCollision[] | null;
   notes?: string[] | null;
   warnings?: string[] | null;
+  /** Documents the commit will write. ApplyResp.written comes out equal to it. */
   writes: number;
+  /** The rest of the account, so "0 writes" can be read as a fact, not a gap. */
+  unchanged: number;
+  skipped: number;
+  blockedEntries: number;
   blocked: boolean;
   targetPopulated: boolean;
   digest: string;
@@ -117,6 +131,8 @@ export interface ApplyResp {
   backup?: BackupInfo | null;
   written: number;
   added: number;
+  unchanged: number;
+  skipped: number;
   notes?: string[] | null;
   warnings?: string[] | null;
 }
@@ -252,6 +268,78 @@ export function planTotals(plan: PlanResp): {
     }),
     { added: 0, written: 0, unchanged: 0, skipped: 0, blocked: 0 },
   );
+}
+
+/**
+ * THE SENTENCE THE PAGE EXISTS TO BE ABLE TO SAY.
+ *
+ * The dry run is not an estimate and not a preview: the server resolves the
+ * approved plan back onto the archive and performs exactly the verdicts it
+ * showed, entry by entry. The 409 on a changed digest is what makes that true
+ * across the gap between pressing 試算 and pressing 確認.
+ *
+ * It is stated out loud because the operator is being asked to approve a write
+ * to every family account on the strength of a table of numbers. If the numbers
+ * were "roughly what will happen", reading them would be pointless.
+ */
+export const PLAN_IS_THE_CONTRACT =
+  "上面的試算就是契約：實際寫入的文件與這裡列出的完全一致，一筆不多、一筆不少。" +
+  "如果目標主機在你按下確認之前有任何變動，匯入會直接拒絕並要你重新試算 —— 絕不會憑一份過期的試算動手。";
+
+/**
+ * Step 3's headline, derived from the plan rather than hard-coded, so the
+ * zero-write case reads as a fact instead of as a suspiciously empty promise.
+ *
+ * "即將寫入 0 個文件" next to a red 開始匯入 button is exactly the moment the old
+ * bug bit: the operator read it, pressed confirm, and 169 documents were
+ * rewritten. The wording now names what will happen to the OTHER entries too.
+ */
+export function commitPromise(plan: PlanResp): string {
+  const t = planTotals(plan);
+  if (plan.writes === 0) {
+    return (
+      `這次不會寫入任何文件。封存裡的 ${t.unchanged} 筆和這台主機上的現況相同` +
+      (t.skipped > 0 ? `，另有 ${t.skipped} 筆會保留目標主機的版本` : "") +
+      "。按下確認只會產生一份備份，資料不會有任何改動。"
+    );
+  }
+  return (
+    `即將寫入 ${plan.writes} 個文件（新增 ${t.added}、覆蓋 ${t.written}）` +
+    (t.unchanged > 0 ? `，${t.unchanged} 筆相同不動` : "") +
+    (t.skipped > 0 ? `，${t.skipped} 筆略過保留目標版本` : "") +
+    "。"
+  );
+}
+
+/** The same account, after the fact. */
+export function importOutcome(res: ApplyResp): string {
+  return (
+    `✅ 匯入完成。寫入 ${res.written} 筆（新增 ${res.added}）、` +
+    `相同不動 ${res.unchanged} 筆、略過 ${res.skipped} 筆。` +
+    `試算當時承諾寫入 ${res.plan.writes} 筆。`
+  );
+}
+
+/**
+ * Whether the commit did exactly what the dry run promised. The page shows this
+ * rather than assuming it: the assertion is cheap, and a mismatch is the one
+ * thing about this feature that must never be discovered later from a diff.
+ */
+export function outcomeMatchesPlan(res: ApplyResp): boolean {
+  return (
+    res.written === res.plan.writes &&
+    res.unchanged === res.plan.unchanged &&
+    res.skipped === res.plan.skipped
+  );
+}
+
+/**
+ * The entries an operator needs to READ. `items` is complete by contract, and a
+ * full listing of 169 unremarkable documents would bury the two that matter, so
+ * the table shows these by default and keeps the rest behind a toggle.
+ */
+export function notableItems(c: CollectionPlan): PlanItem[] {
+  return (c.items ?? []).filter((it) => it.result !== "added" && it.result !== "unchanged");
 }
 
 /** Unresolved identity collisions — the case that blocks an import by default. */

@@ -35,15 +35,21 @@ import {
   HEADER_WARNING,
   MAX_UPLOAD_BYTES,
   NOT_INCLUDED,
+  PLAN_IS_THE_CONTRACT,
   RESOLVE_ADOPT_ARCHIVE,
   SECURITY_DELTA,
   adoptConsequence,
+  commitPromise,
   exportBlocker,
   formatBytes,
+  importOutcome,
+  notableItems,
+  outcomeMatchesPlan,
   planTotals,
   selectedBytes,
   suggestedFileName,
   unresolvedCollisions,
+  type ApplyResp,
   type ArchiveGroup,
   type PlanResp,
   type PreviewResp,
@@ -242,12 +248,21 @@ describe("B: the page tells the truth about what it does", () => {
         },
       ],
       writes: 69,
+      unchanged: 0,
+      skipped: 0,
+      blockedEntries: 1,
       blocked: true,
       targetPopulated: true,
       digest: "d",
     };
     expect(planTotals(plan)).toEqual({ added: 69, written: 0, unchanged: 0, skipped: 0, blocked: 1 });
     expect(unresolvedCollisions(plan).map((c) => c.key)).toEqual(["takuro"]);
+    // The per-collection roll-up and the server's own totals are two views of
+    // one fact and must never disagree.
+    expect(planTotals(plan).blocked).toBe(plan.blockedEntries);
+    expect(planTotals(plan).unchanged).toBe(plan.unchanged);
+    expect(planTotals(plan).skipped).toBe(plan.skipped);
+    expect(planTotals(plan).added + planTotals(plan).written).toBe(plan.writes);
   });
 
   it("formats bytes and builds a timestamped, host-scoped file name", () => {
@@ -258,6 +273,174 @@ describe("B: the page tells the truth about what it does", () => {
     const name = suggestedFileName("ggd.adms.ai", new Date(Date.UTC(2026, 6, 26, 14, 3, 11)));
     expect(name).toBe("ggd-platform-archive-ggd-adms-ai-20260726-140311Z.zip");
     expect(RESOLVE_ADOPT_ARCHIVE).toBe("adopt-archive");
+  });
+});
+
+// ---------------------------------------------------------------------------
+// B2. THE PLAN IS THE CONTRACT — the copy must not promise anything the server
+//     cannot deliver, and must not stay silent about the zero-write case.
+//
+//     The bug this pins: the dry run said 「即將寫入 0 個文件」, the operator
+//     pressed 確認, and the commit rewrote every document in the target. The
+//     server side is fixed (platformarchive.Plan.Executable), and the page's
+//     job now is to state the promise plainly enough that a broken one would be
+//     noticed rather than shrugged at.
+// ---------------------------------------------------------------------------
+
+const PAGE_SRC = read("apps/admin/src/ui/DataMigrationPage.tsx");
+
+function planFixture(over: Partial<PlanResp> = {}): PlanResp {
+  return {
+    collections: [
+      {
+        collection: "accounts",
+        zh: "帳號",
+        group: "core",
+        policy: "additive",
+        added: 0,
+        unchanged: 2,
+        written: 0,
+        skipped: 0,
+        blocked: 0,
+        items: [
+          { id: "u_a", result: "unchanged" },
+          { id: "u_b", result: "unchanged" },
+        ],
+      },
+    ],
+    writes: 0,
+    unchanged: 2,
+    skipped: 0,
+    blockedEntries: 0,
+    blocked: false,
+    targetPopulated: true,
+    digest: "d",
+    ...over,
+  };
+}
+
+describe("B2: the dry run is the contract, and the copy says so", () => {
+  it("states the contract out loud, in the operator's terms", () => {
+    cover("archive-commit-copy");
+    expect(PLAN_IS_THE_CONTRACT).toContain("完全一致");
+    expect(PLAN_IS_THE_CONTRACT).toContain("重新試算");
+    expect(PAGE_SRC).toContain("PLAN_IS_THE_CONTRACT");
+  });
+
+  it("the ZERO-WRITE case says nothing will be written, not just '0'", () => {
+    cover("archive-commit-copy");
+    // This is the exact screen the old bug lied on: a re-import of an archive
+    // already imported. Everything is unchanged and NOTHING may be rewritten.
+    const line = commitPromise(planFixture());
+    expect(line).toContain("不會寫入任何文件");
+    expect(line).toContain("2"); // …and how many entries that verdict covers
+    expect(line).not.toMatch(/即將寫入\s*0/);
+  });
+
+  it("the write case names added vs overwritten vs left alone", () => {
+    cover("migration-page-ships");
+    const line = commitPromise(
+      planFixture({
+        collections: [
+          {
+            collection: "accounts",
+            zh: "帳號",
+            group: "core",
+            policy: "additive",
+            added: 3,
+            unchanged: 1,
+            written: 2,
+            skipped: 4,
+            blocked: 0,
+          },
+        ],
+        writes: 5,
+        unchanged: 1,
+        skipped: 4,
+      }),
+    );
+    expect(line).toContain("即將寫入 5 個文件");
+    expect(line).toContain("新增 3");
+    expect(line).toContain("覆蓋 2");
+    expect(line).toContain("略過"); // the 4 the target keeps
+  });
+
+  it("the result panel reports the commit AGAINST the promise", () => {
+    cover("archive-commit-copy");
+    const plan = planFixture();
+    const honest: ApplyResp = { plan, written: 0, added: 0, unchanged: 2, skipped: 0 };
+    expect(outcomeMatchesPlan(honest)).toBe(true);
+    expect(importOutcome(honest)).toContain("寫入 0 筆");
+    expect(importOutcome(honest)).toContain("試算當時承諾寫入 0 筆");
+
+    // The exact shape of the bug: plan said 0, commit wrote 14.
+    const lying: ApplyResp = { plan, written: 14, added: 14, unchanged: 0, skipped: 0 };
+    expect(outcomeMatchesPlan(lying)).toBe(false);
+  });
+
+  it("items are COMPLETE, and the table filters them rather than the server", () => {
+    cover("archive-plan-complete");
+    const c = {
+      collection: "accounts",
+      zh: "帳號",
+      group: "core",
+      policy: "additive",
+      added: 1,
+      unchanged: 1,
+      written: 1,
+      skipped: 1,
+      blocked: 0,
+      items: [
+        { id: "u_new", result: "added" },
+        { id: "u_same", result: "unchanged" },
+        { id: "u_over", result: "written" },
+        { id: "u_kept", result: "skipped" },
+      ],
+    };
+    // Every entry is present in the payload…
+    expect(c.items).toHaveLength(c.added + c.unchanged + c.written + c.skipped);
+    // …and only the ones worth reading are shown by default.
+    expect(notableItems(c).map((i) => i.id)).toEqual(["u_over", "u_kept"]);
+    expect(PAGE_SRC).toContain("notableItems");
+  });
+
+  it("the Go side keeps the plan complete and executes it", () => {
+    cover("migration-page-ships");
+    cover("archive-plan-is-contract");
+    const plan = read("apps/platform/internal/platformarchive/plan.go");
+    // The complete-list contract and the single verdict path.
+    expect(plan).toContain("func (p *Plan) Executable(a *Archive)");
+    expect(plan).toContain("cp.Items = append(cp.Items, item)");
+    const apply = read("apps/platform/internal/platformarchive/apply.go");
+    expect(apply).toContain("plan.Executable(a)");
+    // The defaulting that caused the bug must not come back.
+    expect(apply).not.toMatch(/verdict\s*=\s*ResultAdded/);
+    // …and no second place may re-derive a verdict from the archive: the only
+    // loop over archive entries lives in BuildPlan.
+    expect(apply).not.toContain("a.ByCollection[col]");
+  });
+
+  // The Go suite emits no cover() beacons, so the beacons for the three Go-side
+  // claims are raised HERE, by pinning the tests that carry them. The tests
+  // themselves run in the go-platform CI job; this guard makes a rename or a
+  // deletion loud instead of silent, which is the failure mode that would
+  // otherwise leave a "done" item with nothing behind it.
+  it("the Go regression + property + digest tests exist by name", () => {
+    cover("archive-reimport-zero-write");
+    cover("archive-verdict-property");
+    cover("archive-digest-verdicts");
+    const src = read("apps/platform/internal/platformarchive/contract_test.go");
+    expect(src).toContain("func TestReImportWritesNothingItDidNotPromise(t *testing.T)");
+    expect(src).toContain("func TestPlanVerdictMapEqualsApplyResultMapExactly(t *testing.T)");
+    expect(src).toContain("func TestPlanDigestCoversPerEntryVerdicts(t *testing.T)");
+    expect(src).toContain("func TestApplyRefusesAPlanThatDoesNotMatchTheArchive(t *testing.T)");
+    // The property test is only worth something if it asserts the maps are
+    // EQUAL rather than merely compatible, and if it checks the filesystem.
+    expect(src).toContain("reflect.DeepEqual(want, got)");
+    expect(src).toContain("wasTouched");
+    // Fixtures only — this feature is never verified against the live host.
+    expect(src).toContain("t.TempDir()");
+    expect(src).not.toContain("ggd.adms.ai");
   });
 });
 

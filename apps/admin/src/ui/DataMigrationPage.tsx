@@ -25,17 +25,23 @@ import {
   FRESH_HOST_HELP,
   HEADER_WARNING,
   NOT_INCLUDED,
+  PLAN_IS_THE_CONTRACT,
   RESOLVE_ADOPT_ARCHIVE,
   SECURITY_DELTA,
   adoptConsequence,
+  commitPromise,
   exportBlocker,
   formatBytes,
+  importOutcome,
+  notableItems,
+  outcomeMatchesPlan,
   planTotals,
   selectedBytes,
   suggestedFileName,
   unresolvedCollisions,
   type ApplyResp,
   type ArchiveGroup,
+  type CollectionPlan,
   type PlanResp,
   type PreviewResp,
   type StageResp,
@@ -425,12 +431,15 @@ function ImportTab(props: { onError: (m: string | null) => void }): React.JSX.El
       {plan && !plan.blocked && result === null && (
         <Panel title="步驟 3／3　確認匯入">
           <div style={{ fontSize: 13, lineHeight: 1.9 }}>
-            即將寫入 <b>{plan.writes}</b> 個文件。
+            <b>{commitPromise(plan)}</b>
             <br />
             寫入前會先自動備份這台主機現有的資料到 <code>data/_migration/backups/</code>。
             <b>備份失敗就不會寫入。</b>
             <br />
             這個動作<b>不會刪除任何東西</b> —— 封存只做新增與（你勾選時的）覆蓋。
+          </div>
+          <div style={{ fontSize: 12, color: TEXT_DIM, marginTop: 8, lineHeight: 1.8 }}>
+            {PLAN_IS_THE_CONTRACT}
           </div>
           <div style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 12, flexWrap: "wrap" }}>
             <TextInput
@@ -503,9 +512,17 @@ function ImportTab(props: { onError: (m: string | null) => void }): React.JSX.El
   );
 }
 
+// PlanTable renders the dry run. `items` arrives COMPLETE from the server (it is
+// the list the commit executes), so the expansion shows the entries worth
+// reading by default and offers the full listing behind a toggle — the operator
+// can always see the whole contract, but 169 lines of 「新增」 never bury the one
+// account being held back.
 function PlanTable(props: { plan: PlanResp }): React.JSX.Element {
   const [open, setOpen] = useState<string | null>(null);
+  const [showAll, setShowAll] = useState(false);
   const t = planTotals(props.plan);
+  const shown = (c: CollectionPlan): { id: string; result: string; detail?: string }[] =>
+    showAll ? (c.items ?? []) : notableItems(c);
   return (
     <div style={{ overflowX: "auto" }}>
       <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
@@ -528,18 +545,18 @@ function PlanTable(props: { plan: PlanResp }): React.JSX.Element {
                   style={{
                     background: "none",
                     border: "none",
-                    color: (c.items?.length ?? 0) > 0 ? ACCENT : TEXT_MAIN,
-                    cursor: (c.items?.length ?? 0) > 0 ? "pointer" : "default",
+                    color: shown(c).length > 0 ? ACCENT : TEXT_MAIN,
+                    cursor: shown(c).length > 0 ? "pointer" : "default",
                     padding: 0,
                     fontSize: 13,
                   }}
                 >
                   {c.zh || c.collection}
-                  {(c.items?.length ?? 0) > 0 && " ▸"}
+                  {shown(c).length > 0 && " ▸"}
                 </button>
                 {open === c.collection && (
                   <ul style={{ margin: "6px 0 0 12px", color: TEXT_DIM, fontSize: 12 }}>
-                    {(c.items ?? []).map((it) => (
+                    {shown(c).map((it) => (
                       <li key={it.id}>
                         <code>{it.id}</code> — {it.result}
                         {it.detail ? `：${it.detail}` : ""}
@@ -557,8 +574,16 @@ function PlanTable(props: { plan: PlanResp }): React.JSX.Element {
           ))}
         </tbody>
       </table>
-      <div style={{ marginTop: 8, fontSize: 12, color: TEXT_DIM }}>
-        合計 新增 {t.added} · 覆蓋 {t.written} · 相同 {t.unchanged} · 略過 {t.skipped} · 擋下 {t.blocked}
+      <div style={{ marginTop: 8, fontSize: 12, color: TEXT_DIM, display: "flex", gap: 10, flexWrap: "wrap" }}>
+        <span>
+          合計 新增 {t.added} · 覆蓋 {t.written} · 相同 {t.unchanged} · 略過 {t.skipped} · 擋下 {t.blocked}
+        </span>
+        <button
+          onClick={() => setShowAll(!showAll)}
+          style={{ background: "none", border: "none", color: ACCENT, cursor: "pointer", padding: 0, fontSize: 12 }}
+        >
+          {showAll ? "只列出需要注意的項目" : "展開時列出每一筆文件"}
+        </button>
       </div>
       {(props.plan.warnings ?? []).map((w) => (
         <div key={w} style={{ color: WARN, fontSize: 12, marginTop: 6, lineHeight: 1.7 }}>
@@ -570,11 +595,19 @@ function PlanTable(props: { plan: PlanResp }): React.JSX.Element {
 }
 
 function ImportResult(props: { res: ApplyResp }): React.JSX.Element {
+  const kept = outcomeMatchesPlan(props.res);
   return (
     <Panel title="匯入完成">
-      <div style={{ fontSize: 13, lineHeight: 1.9, color: OK }}>
-        ✅ 匯入完成。寫入 {props.res.written} 筆（新增 {props.res.added}）。
+      <div style={{ fontSize: 13, lineHeight: 1.9, color: kept ? OK : DANGER }}>
+        {importOutcome(props.res)}
       </div>
+      {!kept && (
+        <div style={{ fontSize: 13, color: DANGER, marginTop: 6, lineHeight: 1.8 }}>
+          ⚠️ 實際結果與試算不一致。請把這一頁的內容記下來並檢查
+          <code> data/_migration/backups/ </code>
+          裡的備份 —— 這代表匯入途中目標主機被改動了。
+        </div>
+      )}
       {props.res.backup && (
         <div style={{ fontSize: 12, color: TEXT_DIM, marginTop: 6 }}>
           備份在 <code>{props.res.backup.path}</code>

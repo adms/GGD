@@ -51,9 +51,23 @@ type ApplyOptions struct {
 type ApplyResult struct {
 	Plan   *Plan       `json:"plan"`
 	Backup *BackupInfo `json:"backup,omitempty"`
-	// Written counts documents actually written (added + overwritten).
+	// Written counts documents actually written (added + overwritten). It MUST
+	// equal Plan.Writes, and Added/Unchanged/Skipped must equal the plan's own
+	// counts entry for entry: the dry run is the contract, not an estimate.
 	Written int `json:"written"`
 	Added   int `json:"added"`
+	// Unchanged and Skipped count the entries deliberately left alone, so the
+	// result is a complete account of every entry the plan considered rather
+	// than only of the ones that moved.
+	Unchanged int `json:"unchanged"`
+	Skipped   int `json:"skipped"`
+	// Results is the per-entry account of what the commit ACTUALLY did,
+	// collection → id → result. For a write it is OBSERVED (did the target hold
+	// this document immediately before the Put?), not copied from the plan, so
+	// comparing it with Plan.VerdictMap() is a real check rather than a
+	// restatement. Not serialised: Plan travels inside this struct already and
+	// carries the same listing.
+	Results map[string]map[string]string `json:"-"`
 	// AccountIDs are the accounts whose documents were written — the input to
 	// the Redis re-index.
 	AccountIDs []string `json:"accountIds,omitempty"`
@@ -79,6 +93,39 @@ func (r *ApplyResult) note(format string, args ...any) {
 
 func (r *ApplyResult) warn(format string, args ...any) {
 	r.Warnings = append(r.Warnings, fmt.Sprintf(format, args...))
+}
+
+// record files one entry's ACTUAL outcome into Results.
+func (r *ApplyResult) record(col, id, result string) {
+	if r.Results == nil {
+		r.Results = map[string]map[string]string{}
+	}
+	m := r.Results[col]
+	if m == nil {
+		m = map[string]string{}
+		r.Results[col] = m
+	}
+	m[id] = result
+}
+
+// targetHas reports whether the target already holds this entry RIGHT NOW,
+// using the same three storage shapes writeEntry writes through.
+func targetHas(t *Target, rule *Rule, e Entry) (bool, error) {
+	switch rule.Kind {
+	case KindDoc:
+		return t.Store.Exists(e.Collection, e.ID)
+	case KindJSONL:
+		return jsonlExists(t.Store, e.Collection, e.ID)
+	default:
+		_, err := os.Stat(filepath.Join(t.ReplayDir, e.ID))
+		if err == nil {
+			return true, nil
+		}
+		if os.IsNotExist(err) {
+			return false, nil
+		}
+		return false, err
+	}
 }
 
 // writeOrder is the order collections are written in, and it is not cosmetic:
@@ -118,10 +165,12 @@ func writeOrder(cols []string) []string {
 //  2. recompute the plan against the target as it is NOW;
 //  3. compare it to the digest the operator approved → 409 on any difference;
 //  4. refuse if anything is Blocked;
-//  5. take the automatic backup, refusing on a failure or on low disk;
-//  6. write the audit "commit_begin" line;
-//  7. write, accounts first, then the refs, then everything else;
-//  8. rebuild the Redis hot layer WITHOUT boot.Rebuild (see reindex.go).
+//  5. resolve the plan onto the archive — this fixes the ENTIRE write list, and
+//     its verdicts, before anything else happens;
+//  6. take the automatic backup, refusing on a failure or on low disk;
+//  7. write the audit "commit_begin" line;
+//  8. write, accounts first, then the refs, then everything else;
+//  9. rebuild the Redis hot layer WITHOUT boot.Rebuild (see reindex.go).
 func Apply(ctx context.Context, a *Archive, t *Target, opts ApplyOptions) (*ApplyResult, error) {
 	now := opts.Now
 	if now == nil {
@@ -141,7 +190,14 @@ func Apply(ctx context.Context, a *Archive, t *Target, opts ApplyOptions) (*Appl
 		return nil, fmt.Errorf("%w: %v", ErrBlocked, plan.BlockedLines())
 	}
 
-	res := &ApplyResult{Plan: plan}
+	// THE WRITE LIST IS THE PLAN. Resolved here, before the backup, so that a
+	// plan that does not line up with the archive is a guaranteed zero-write.
+	planned, err := plan.Executable(a)
+	if err != nil {
+		return nil, err
+	}
+
+	res := &ApplyResult{Plan: plan, Results: map[string]map[string]string{}}
 
 	if !opts.SkipBackup {
 		groups := map[string]bool{}
@@ -170,60 +226,87 @@ func Apply(ctx context.Context, a *Archive, t *Target, opts ApplyOptions) (*Appl
 		opts.AuditBegin(plan, res.Backup)
 	}
 
-	verdicts := map[string]map[string]string{}
-	for _, c := range plan.Collections {
-		m := map[string]string{}
-		for _, it := range c.Items {
-			m[it.ID] = it.Result
-		}
-		verdicts[c.Collection] = m
-	}
-	cols := []string{}
-	for _, c := range plan.Collections {
-		cols = append(cols, c.Collection)
-	}
 	accountIDs := map[string]bool{}
 
-	for _, col := range writeOrder(cols) {
-		rule := RuleFor(col)
-		for _, e := range a.ByCollection[col] {
-			// An entry with no recorded verdict was a plain "added" (plan.Items
-			// only lists the non-obvious ones).
-			verdict, ok := verdicts[col][e.ID]
-			if !ok {
-				verdict = ResultAdded
+	// ONE PASS OVER THE PLAN. Nothing here decides anything: every entry the
+	// commit considers arrived from Plan.Executable carrying the verdict the dry
+	// run showed the operator, and the only thing left to choose is which of the
+	// five verdicts to perform.
+	for _, pw := range planned {
+		e := pw.Entry
+		switch pw.Verdict {
+		case ResultAdded, ResultWritten:
+			// fall through to the write below
+		case ResultUnchanged:
+			res.Unchanged++
+			res.record(pw.Collection, e.ID, ResultUnchanged)
+			continue
+		case ResultSkipped:
+			res.Skipped++
+			res.record(pw.Collection, e.ID, ResultSkipped)
+			continue
+		case ResultBlocked:
+			// Unreachable: a blocked plan is refused above, before the backup.
+			// Kept explicit so a future verdict cannot fall into the default.
+			err := fmt.Errorf("%w: %s/%s", ErrBlocked, pw.Collection, e.ID)
+			applyFailed(opts, res, err)
+			return res, err
+		default:
+			err := fmt.Errorf("platformarchive: 未知的試算結果 %q（%s/%s）—— 拒絕匯入",
+				pw.Verdict, pw.Collection, e.ID)
+			applyFailed(opts, res, err)
+			return res, err
+		}
+
+		// OBSERVED, not assumed: whether this is an add or an overwrite is read
+		// off the target immediately before the write, so ApplyResult.Results is
+		// an independent account that can DISAGREE with the plan rather than a
+		// restatement of it.
+		existed, err := targetHas(t, pw.Rule, e)
+		if err != nil {
+			applyFailed(opts, res, err)
+			return res, err
+		}
+		if err := writeEntry(a, t, pw.Rule, e); err != nil {
+			res.warn("寫入 %s 失敗：%v", e.Name, err)
+			applyFailed(opts, res, err)
+			return res, fmt.Errorf("platformarchive: 寫到一半失敗（%s）—— 備份在 %s：%w",
+				e.Name, backupPathOf(res), err)
+		}
+		observed := ResultAdded
+		if existed {
+			observed = ResultWritten
+		}
+		if observed != pw.Verdict {
+			// The target moved between the plan and this write. Nothing is undone
+			// (that would be a second, unplanned write), but it is said out loud:
+			// a silent difference here is exactly the class of bug this rework
+			// exists to kill.
+			res.warn("%s/%s：試算說「%s」，實際寫入時目標的狀態是「%s」—— 目標主機在匯入途中被改動了。",
+				pw.Collection, e.ID, pw.Verdict, observed)
+		}
+		res.record(pw.Collection, e.ID, observed)
+		res.Written++
+		if observed == ResultAdded {
+			res.Added++
+		}
+		if pw.Collection == account.ColAccounts {
+			accountIDs[e.ID] = true
+		}
+		if isIdentityRef(pw.Collection) && pw.Verdict == ResultWritten {
+			newID, err := refAccountID(a, e)
+			if err != nil {
+				return res, err
 			}
-			if verdict != ResultAdded && verdict != ResultWritten {
-				continue
-			}
-			if err := writeEntry(a, t, rule, e); err != nil {
-				res.warn("寫入 %s 失敗：%v", e.Name, err)
-				applyFailed(opts, res, err)
-				return res, fmt.Errorf("platformarchive: 寫到一半失敗（%s）—— 備份在 %s：%w",
-					e.Name, backupPathOf(res), err)
-			}
-			res.Written++
-			if verdict == ResultAdded {
-				res.Added++
-			}
-			if col == account.ColAccounts {
-				accountIDs[e.ID] = true
-			}
-			if isIdentityRef(col) && verdict == ResultWritten {
-				newID, err := refAccountID(a, e)
-				if err != nil {
-					return res, err
+			old := ""
+			for _, c := range plan.Collisions {
+				if c.Collection == pw.Collection && c.Key == e.ID {
+					old = c.TargetID
 				}
-				old := ""
-				for _, c := range plan.Collisions {
-					if c.Collection == col && c.Key == e.ID {
-						old = c.TargetID
-					}
-				}
-				res.DisplacedRefs = append(res.DisplacedRefs, DisplacedRef{
-					Collection: col, Key: e.ID, OldID: old, NewID: newID,
-				})
 			}
+			res.DisplacedRefs = append(res.DisplacedRefs, DisplacedRef{
+				Collection: pw.Collection, Key: e.ID, OldID: old, NewID: newID,
+			})
 		}
 	}
 

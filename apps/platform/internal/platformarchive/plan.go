@@ -43,11 +43,19 @@ type PlanOptions struct {
 	ResolveCollisions string
 }
 
-// ItemPlan is one document's verdict.
+// ItemPlan is one document's verdict — the unit of the plan's contract.
 type ItemPlan struct {
 	ID     string `json:"id"`
 	Result string `json:"result"`
 	Detail string `json:"detail,omitempty"`
+}
+
+// Notable reports whether the operator needs to READ this entry rather than
+// merely count it. The console renders the notable ones by default and hides
+// the rest behind a toggle — but the plan itself always carries all of them,
+// because the plan is what the commit executes.
+func (it ItemPlan) Notable() bool {
+	return it.Result != ResultAdded && it.Result != ResultUnchanged
 }
 
 // CollectionPlan is the per-collection roll-up the console renders as one row.
@@ -61,8 +69,17 @@ type CollectionPlan struct {
 	Written    int    `json:"written"`
 	Skipped    int    `json:"skipped"`
 	Blocked    int    `json:"blocked"`
-	// Items lists every entry that is NOT a plain Added — the operator needs
-	// names for the ones being kept back, not for the ones simply arriving.
+	// Items is the COMPLETE per-document verdict list for this collection: every
+	// entry the archive carries in it, sorted by id, INCLUDING the boring
+	// ResultAdded and ResultUnchanged ones.
+	//
+	// IT IS COMPLETE BECAUSE IT IS THE CONTRACT. Apply derives nothing of its
+	// own; it resolves these entries back onto the archive (Plan.Executable) and
+	// performs exactly the verdicts recorded here. The first draft of this file
+	// listed only the "interesting" entries and let Apply default everything else
+	// to ResultAdded — so a re-import of an already-imported archive promised
+	// plan.Writes=0 and then re-wrote every single document. Do not shrink this
+	// list again to save payload; filter it in the UI instead (the console does).
 	Items []ItemPlan `json:"items,omitempty"`
 }
 
@@ -90,8 +107,18 @@ type Plan struct {
 	Collisions  []IdentityCollision `json:"collisions"`
 	Notes       []string            `json:"notes"`
 	Warnings    []string            `json:"warnings"`
-	// Writes is how many documents commit would write.
+	// Writes is how many documents commit would write (added + overwritten).
+	// ApplyResult.Written MUST come out equal to it — that equality is the whole
+	// promise of the dry run, and TestReImportWritesNothingItDidNotPromise pins
+	// it on the case that used to break it.
 	Writes int `json:"writes"`
+	// Unchanged, Skipped and BlockedEntries complete the account: together with
+	// Writes they add up to every entry the commit will consider. Without them a
+	// reader cannot tell "0 writes because there is nothing to do" from "0 writes
+	// because the archive is empty".
+	Unchanged      int `json:"unchanged"`
+	Skipped        int `json:"skipped"`
+	BlockedEntries int `json:"blockedEntries"`
 	// Blocked is true when anything refuses. A blocked plan cannot be committed.
 	Blocked bool `json:"blocked"`
 	// TargetPopulated is true when the target already holds accounts — i.e.
@@ -195,17 +222,22 @@ func BuildPlan(a *Archive, t *Target, opts PlanOptions) (*Plan, error) {
 			case ResultWritten:
 				cp.Written++
 				p.Writes++
-				cp.Items = append(cp.Items, item)
 			case ResultUnchanged:
 				cp.Unchanged++
+				p.Unchanged++
 			case ResultSkipped:
 				cp.Skipped++
-				cp.Items = append(cp.Items, item)
+				p.Skipped++
 			case ResultBlocked:
 				cp.Blocked++
+				p.BlockedEntries++
 				p.Blocked = true
-				cp.Items = append(cp.Items, item)
+			default:
+				return nil, fmt.Errorf("platformarchive: 內部錯誤：%s/%s 得到未知的試算結果 %q",
+					col, e.ID, item.Result)
 			}
+			// EVERY entry is recorded, verdict and all. See CollectionPlan.Items.
+			cp.Items = append(cp.Items, item)
 		}
 		p.Collections = append(p.Collections, cp)
 	}
@@ -224,6 +256,86 @@ func BuildPlan(a *Archive, t *Target, opts PlanOptions) (*Plan, error) {
 	}
 	p.Digest = digest
 	return p, nil
+}
+
+// PlannedWrite pairs ONE recorded verdict with the archive member it names.
+type PlannedWrite struct {
+	Collection string
+	Rule       *Rule
+	Entry      Entry
+	// Verdict is the plan's verdict, verbatim. Apply performs it; it never
+	// second-guesses it and it never invents one for an entry the plan omitted.
+	Verdict string
+}
+
+// Executable resolves the plan back onto the archive it was computed from, in
+// write order (accounts before the refs that resolve to them).
+//
+// THIS IS THE ONLY WAY APPLY LEARNS WHAT TO DO. There is exactly one function in
+// this package that decides a verdict — planEntry — and exactly one path from it
+// to a write, through the plan. That is what makes "the dry run is the contract"
+// a structural property instead of a promise two code paths have to keep
+// separately (they did not: an entry missing from the plan used to be defaulted
+// to ResultAdded and re-written).
+//
+// Any disagreement between the plan's entry set and the archive's is a HARD
+// ERROR. Silently skipping an unplanned entry and silently writing one are both
+// ways for the commit to differ from what the operator approved, and this
+// function refuses both. It writes nothing, so a refusal here is a zero-write.
+func (p *Plan) Executable(a *Archive) ([]PlannedWrite, error) {
+	if a == nil {
+		return nil, errors.New("platformarchive: no archive")
+	}
+	cols := make([]string, 0, len(p.Collections))
+	byCol := make(map[string]*CollectionPlan, len(p.Collections))
+	for i := range p.Collections {
+		col := p.Collections[i].Collection
+		if _, dup := byCol[col]; dup {
+			return nil, fmt.Errorf("platformarchive: 內部錯誤：試算裡有兩筆 %q", col)
+		}
+		cols = append(cols, col)
+		byCol[col] = &p.Collections[i]
+	}
+	out := make([]PlannedWrite, 0, p.Writes+p.Unchanged+p.Skipped)
+	for _, col := range writeOrder(cols) {
+		cp := byCol[col]
+		rule := RuleFor(col)
+		if rule == nil {
+			return nil, reject("集合 %q 不在允許清單內", col)
+		}
+		entries := make(map[string]Entry, len(a.ByCollection[col]))
+		for _, e := range a.ByCollection[col] {
+			entries[e.ID] = e
+		}
+		if len(cp.Items) != len(entries) {
+			return nil, fmt.Errorf("platformarchive: 試算與封存不一致 —— 集合 %q 的試算有 %d 筆、"+
+				"封存有 %d 筆。請重新試算後再匯入（一個位元組都沒有寫入）",
+				col, len(cp.Items), len(entries))
+		}
+		for _, it := range cp.Items {
+			e, ok := entries[it.ID]
+			if !ok {
+				return nil, fmt.Errorf("platformarchive: 試算列出了 %s/%s，但封存裡沒有這個項目。"+
+					"請重新試算後再匯入（一個位元組都沒有寫入）", col, it.ID)
+			}
+			out = append(out, PlannedWrite{Collection: col, Rule: rule, Entry: e, Verdict: it.Result})
+		}
+	}
+	return out, nil
+}
+
+// VerdictMap is the plan as collection → id → result. It is what the commit's
+// own per-entry account (ApplyResult.Results) is compared against.
+func (p *Plan) VerdictMap() map[string]map[string]string {
+	out := make(map[string]map[string]string, len(p.Collections))
+	for _, c := range p.Collections {
+		m := make(map[string]string, len(c.Items))
+		for _, it := range c.Items {
+			m[it.ID] = it.Result
+		}
+		out[c.Collection] = m
+	}
+	return out
 }
 
 // planEntry is the per-document policy table from the design, in code.
