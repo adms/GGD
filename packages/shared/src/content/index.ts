@@ -96,6 +96,11 @@ export {
   GGD_PER_WC3,
   round2,
   toLen,
+  // the SEPARATE vertical ruler (#247b) — altitude is set by the camera, not by
+  // the map's geometry, so a fly height never goes through `toLen`.
+  GGD_APEX_PER_WC3,
+  round3,
+  toApex,
   SIM_CAPABILITIES,
   missingCaps,
   expand,
