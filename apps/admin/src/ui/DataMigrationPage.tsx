@@ -23,15 +23,22 @@ import {
   archiveStatus,
 } from "../api";
 import {
+  ADDED_DOCS_PREVIEW,
   BACKUP_WARNING,
   FRESH_HOST_HELP,
   HEADER_WARNING,
   NOT_INCLUDED,
   PLAN_IS_THE_CONTRACT,
   RESOLVE_ADOPT_ARCHIVE,
+  RESTORE_LIMITS,
+  RESTORE_RECOVERS,
   SECURITY_DELTA,
+  UNDO_PREVIEW_WARNING,
+  addedDocsSummary,
   adoptConsequence,
   commitPromise,
+  groupAddedDocs,
+  restoreCommand,
   backupSummary,
   deleteBackupConfirm,
   exportBlocker,
@@ -448,6 +455,7 @@ function ImportTab(props: { onError: (m: string | null) => void }): React.JSX.El
             匯入完請到「狀態」分頁確認並自行刪除。
             <br />
             這個動作<b>不會刪除任何東西</b> —— 封存只做新增與（你勾選時的）覆蓋。
+            <div style={{ color: WARN, marginTop: 8 }}>{UNDO_PREVIEW_WARNING}</div>
           </div>
           <div style={{ fontSize: 12, color: TEXT_DIM, marginTop: 8, lineHeight: 1.8 }}>
             {PLAN_IS_THE_CONTRACT}
@@ -605,6 +613,94 @@ function PlanTable(props: { plan: PlanResp }): React.JSX.Element {
   );
 }
 
+/**
+ * The block that tells the operator how to get back — and, more importantly,
+ * how far back it gets them.
+ *
+ * Rendered on the SUCCESS panel because the import that needs undoing is by
+ * definition one that reported success. The order is: what comes BACK, then
+ * what does not, then the command, then the names. A frightened reader must
+ * learn the important half is recoverable before he can take in anything else.
+ *
+ * THE NAMES ARE THE POINT, and they must be TRUE. The previous cut of this
+ * block built its list from an unvalidated count: on a no-op re-import it named
+ * every account on the host — the operator's own admin included — as something
+ * to go and 婉拒. res.addedDocs is now a projection of the per-entry result map
+ * (see platformarchive/apply.go), and the empty case gets its own reassuring
+ * sentence instead of rendering as an absence.
+ */
+function UndoBlock(props: { res: ApplyResp }): React.JSX.Element | null {
+  const backup = props.res.backup;
+  if (!backup) return null;
+  const docs = props.res.addedDocs ?? [];
+  const groups = groupAddedDocs(docs);
+  let shown = 0;
+  return (
+    <div style={{ marginTop: 14, borderTop: PANEL_BORDER, paddingTop: 12 }}>
+      <div style={{ fontSize: 13, color: TEXT_MAIN, fontWeight: 600 }}>萬一匯錯了，要怎麼回去</div>
+      <div style={{ fontSize: 12, color: OK, marginTop: 8, lineHeight: 1.8 }}>
+        還原<b>救得回來</b>：
+        <ul style={{ margin: "4px 0 0 18px", padding: 0 }}>
+          {RESTORE_RECOVERS.map((l) => (
+            <li key={l}>{l}</li>
+          ))}
+        </ul>
+      </div>
+      <div style={{ fontSize: 12, color: WARN, marginTop: 10, lineHeight: 1.8 }}>
+        還原<b>救不回來</b>：
+        <ul style={{ margin: "4px 0 0 18px", padding: 0 }}>
+          {RESTORE_LIMITS.map((l) => (
+            <li key={l}>{l}</li>
+          ))}
+        </ul>
+      </div>
+      <div style={{ fontSize: 12, color: TEXT_DIM, marginTop: 10 }}>
+        還原指令（兩個旗標都不能少）：
+      </div>
+      <pre
+        style={{
+          background: "#10141f",
+          border: PANEL_BORDER,
+          borderRadius: 8,
+          padding: 10,
+          marginTop: 6,
+          overflowX: "auto",
+          color: TEXT_DIM,
+          fontSize: 12,
+        }}
+      >
+        {restoreCommand(backup.path)}
+      </pre>
+      <div
+        style={{
+          marginTop: 10,
+          fontSize: 12,
+          color: docs.length === 0 ? OK : TEXT_DIM,
+          lineHeight: 1.8,
+        }}
+      >
+        {addedDocsSummary(docs)}
+        {groups.length > 0 && (
+          <ul style={{ margin: "6px 0 0 18px", padding: 0 }}>
+            {groups.map((g) => {
+              const room = Math.max(0, ADDED_DOCS_PREVIEW - shown);
+              const list = g.ids.slice(0, room);
+              shown += list.length;
+              return (
+                <li key={g.collection}>
+                  <code>{g.collection}</code> ×{g.ids.length}
+                  {list.length > 0 && <>：{list.join("、")}</>}
+                  {g.ids.length > list.length && ` …（另 ${g.ids.length - list.length} 筆，見備份旁的 .json）`}
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function ImportResult(props: { res: ApplyResp }): React.JSX.Element {
   const kept = outcomeMatchesPlan(props.res);
   return (
@@ -624,6 +720,7 @@ function ImportResult(props: { res: ApplyResp }): React.JSX.Element {
           備份在 <code>{props.res.backup.path}</code>
         </div>
       )}
+      <UndoBlock res={props.res} />
       {(props.res.notes ?? []).map((n) => (
         <div key={n} style={{ fontSize: 12, color: TEXT_DIM, marginTop: 6, lineHeight: 1.7 }}>
           {n}
@@ -750,6 +847,28 @@ function BackupsPanel(props: {
       {backups.length === 0 ? (
         <div style={{ color: TEXT_DIM, fontSize: 13 }}>還沒有備份。</div>
       ) : (
+        <>
+        {/* The limits travel with the LIST too, not only with the fresh import
+            result: this tab is where somebody lands weeks later, looking for
+            the undo, with the console tab from the import long closed. */}
+        <div style={{ fontSize: 12, marginBottom: 8, lineHeight: 1.8 }}>
+          <div style={{ color: OK }}>
+            還原<b>救得回來</b>：
+            <ul style={{ margin: "4px 0 0 18px", padding: 0 }}>
+              {RESTORE_RECOVERS.map((l) => (
+                <li key={l}>{l}</li>
+              ))}
+            </ul>
+          </div>
+          <div style={{ color: WARN, marginTop: 8 }}>
+            還原<b>救不回來</b>：
+            <ul style={{ margin: "4px 0 0 18px", padding: 0 }}>
+              {RESTORE_LIMITS.map((l) => (
+                <li key={l}>{l}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
         <div style={{ display: "grid", gap: 8, fontSize: 12 }}>
           {backups.map((b) => (
             <div key={b.stamp} style={{ borderTop: PANEL_BORDER, paddingTop: 8 }}>
@@ -775,7 +894,7 @@ function BackupsPanel(props: {
                   color: TEXT_DIM,
                 }}
               >
-                {`docker compose … exec -T platform /platformarchive apply -in - -data /data -content /srv/content -allow-overwrite < ${b.path}`}
+                {restoreCommand(b.path)}
               </pre>
               {confirming === b.stamp ? (
                 <div
@@ -813,6 +932,7 @@ function BackupsPanel(props: {
             </div>
           ))}
         </div>
+        </>
       )}
     </Panel>
   );

@@ -42,6 +42,42 @@ loud instead of silent.
 | archive-5 | The 409 digest guard covers the per-entry VERDICTS, not just the entry set: two targets with an identical entry set and identical aggregate counts but swapped verdicts hash differently (`TestPlanDigestCoversPerEntryVerdicts`) | archive-digest-verdicts | regression | done |
 | archive-6 | The console's copy promises only what the plan delivers: the zero-write case says 「不會寫入任何文件」 rather than 「即將寫入 0 個文件」, the contract sentence is on the confirm step, and the result panel reports the commit AGAINST the promise (red when they differ) | archive-commit-copy | unit | done |
 
+## THE RECOVERY IS PARTIAL, AND EVERY SURFACE SAYS SO
+
+The feature never deletes, so a restore cannot be complete. Owner decision
+2026-07-26: it STAYS non-deleting — a reconciling restore would be the only
+operation in the product able to destroy 35 real family accounts, run once, by
+one frightened non-DBA facing a "delete 214 documents?" prompt he cannot audit.
+The price of that decision is one sentence: 「這裡是這次匯入新增的清單，多出來的
+自己處理」.
+
+**That sentence is only worth anything if the list is true.** The first attempt
+built it from `ApplyResult.AddedDocs` accumulated in a second pass over the
+write loop, so it inherited the plan-completeness bug wholesale. Measured on the
+repo's own fixture, re-importing a byte-identical archive:
+
+| | before (`fix/243-recovery-honesty`) | after |
+| --- | --- | --- |
+| plan | `Writes=0` | `Writes=0`, `Unchanged=169` |
+| apply | `Written=163  Added=163` | `Written=0  Added=0` |
+| receipt | `addedDocs` named **all 163** documents, admin included | `addedDocs=[]`, and the note says 「這次沒有新增任何文件」 |
+| after the restore | `added=1`, naming `accounts/u_TARGET_OWNER` — **the host's own admin** | `added=0`, `addedDocs=[]` |
+
+So the list is now a PROJECTION of the one per-entry result map, not a second
+tally, and the two runbook instructions it points at are driven end to end
+against a genuinely imported account and a genuinely imported invite code.
+
+| ID | Item | Test ID | Category | Status |
+| --- | --- | --- | --- | --- |
+| archive-7 | `AddedDocs` is a projection of `ApplyResult.Results`, never accumulated separately: exactly one assignment, `res.AddedDocs = addedDocsOf(res.Results)`, and for 24 randomised target states it equals the plan's `added` entries EXACTLY — checked against the fixture's own record of what it seeded (`TestAddedDocsAgreeWithThePlanForEveryEntry`) | archive-addeddocs-property | regression | done |
+| archive-8 | Re-importing the identical archive names NOTHING as added — `added=0`, `addedDocs=[]` — and the receipt says so in words rather than as an empty list; the restore path likewise never names the target's own pre-existing accounts (`TestNoOpReImportNamesNothingAsAdded`, `TestRestoreNeverNamesTheHostsOwnAccounts`) | archive-addeddocs-noop-reimport | regression | done |
+| archive-9 | The console groups the additions by collection, biggest first, so accounts and invite codes are never buried under ranking snapshots | archive-addeddocs-grouping | unit | done |
+| archive-10 | The documented restore command carries BOTH flags and really recovers the adopt-archive lockout: identity refs return to the target's own owner and its password hash is restored (`TestDocumentedRestoreCommandIsTheOneThatWorks`; `-allow-overwrite` alone is refused with zero writes) | archive-restore-command-works | regression | done |
+| archive-11 | The restore does NOT remove what the import added, and the disclosure says so AND names the control for each kind — 婉拒 / 撤銷 — rather than shrugging (`TestRestoreDoesNotRemoveWhatTheImportAdded`) | archive-restore-never-deletes | regression | done |
+| archive-12 | The runbook's residue instruction is TRUE end to end: an IMPORTED account appears on the Players page, 婉拒 makes its login `account_denied`; an IMPORTED invite code appears on the 邀請碼 page, 撤銷 makes it unusable for registration; and an already-redeemed imported code is refused by 撤銷, which the disclosure states (`TestTheRunbooksResidueInstructionActuallyWorks`) | archive-restore-runbook | integration | done |
+| archive-13 | The recovery copy cannot drift: `RESTORE_RECOVERS` / `RESTORE_LIMITS` in the console are compared character for character against `platformarchive.RestoreRecovers` / `RestoreLimits`, which the CLI, the runbook §5.5 and the backup sidecar all render | archive-restore-copy-mirrored | unit | done |
+| archive-14 | The confirm step warns BEFORE the write that the undo is partial — 「不會刪除任何東西」 has a flip side and the page used to show only the flattering half | archive-restore-preview-warning | unit | done |
+
 # 平台資料搬遷封存 — 匯入前備份的保留與可見性 (#243) — TODO
 
 Scope of THIS file: the pre-import backup that `/admin/platform-archive/commit`

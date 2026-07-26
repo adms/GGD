@@ -137,6 +137,12 @@ export interface BackupRetentionPolicy {
   minKeep: number;
 }
 
+/** One document, named by collection + id. Mirrors platformarchive.DocRef. */
+export interface DocRef {
+  collection: string;
+  id: string;
+}
+
 export interface ApplyResp {
   plan: PlanResp;
   backup?: BackupInfo | null;
@@ -144,6 +150,15 @@ export interface ApplyResp {
   added: number;
   unchanged: number;
   skipped: number;
+  /**
+   * Every document this import CREATED — the residue a restore cannot remove.
+   *
+   * Always present: `[]` is the receipt saying "this import created nothing",
+   * which is the answer for a no-op re-import and the one the first cut of
+   * this feature could not give (it named every byte-identical document on the
+   * host, admin included, as an addition).
+   */
+  addedDocs: DocRef[];
   notes?: string[] | null;
   warnings?: string[] | null;
 }
@@ -432,6 +447,110 @@ export function deleteBackupConfirm(b: BackupInfo, remaining: number): string {
     );
   }
   return head + "這個動作無法復原。";
+}
+
+// ---------------------------------------------------------------------------
+// THE RECOVERY STORY. Mirrors internal/platformarchive/restore.go WORD FOR
+// WORD; archiveRestore.test.ts fails if the two ever drift. Four surfaces (the
+// runbook, the CLI, this page and the backup sidecar) must not be able to make
+// four slightly different promises about the one paragraph an operator reads
+// straight after breaking their own platform.
+// ---------------------------------------------------------------------------
+
+/**
+ * THE RESTORE COMMAND, and it must carry BOTH flags.
+ *
+ * See platformarchive.RestoreCommand for the argument. Short version: if the
+ * bad import was itself an adopt-archive one, it repointed usernames at its own
+ * accounts, so the backup's refs now look like a fresh collision. Without the
+ * flag the restore is REFUSED and writes nothing — the operator, already locked
+ * out of the account they were signed in as, gets a wall of red at the exact
+ * moment they can least afford one. With no collisions the flag is a no-op, so
+ * one command covers every case instead of a decision tree.
+ */
+export function restoreCommand(zipPath: string): string {
+  return (
+    "docker compose … exec -T platform /platformarchive apply " +
+    "-in - -data /data -content /srv/content " +
+    `-allow-overwrite -resolve-collisions=adopt-archive < ${zipPath}`
+  );
+}
+
+/** What re-applying a backup genuinely DOES undo. */
+export const RESTORE_RECOVERS: readonly string[] = [
+  "被這次匯入蓋掉的文件，會變回匯入前那一版。",
+  "被改指到別人身上的使用者名稱／email，會指回原本的帳號 —— 也就是你自己的後台登入會回來。",
+  "密碼也一起回來：帳號文件是整份換回去的，所以你原本的密碼照樣能用。",
+] as const;
+
+/**
+ * What re-applying a backup does NOT undo.
+ *
+ * Owner decision (2026-07-26): the feature stays NON-DELETING. A restore that
+ * reconciled the target by deleting documents would be the only operation here
+ * capable of destroying 35 real family accounts, run once, by one frightened
+ * non-DBA, who cannot meaningfully audit a "delete 214 documents?" prompt. The
+ * residue it would clean up is handled instead by controls that already exist,
+ * are reversible and are audited: 婉拒 an account, 撤銷 an invite code — both
+ * verified end to end against an IMPORTED account and an IMPORTED code in
+ * apps/platform/internal/server/archive_recovery_runbook_test.go.
+ */
+export const RESTORE_LIMITS: readonly string[] = [
+  "它不會刪東西。這次匯入「新增」的帳號、邀請碼、水晶紀錄，還原完都還在 —— 新帳號甚至還能用它自己的密碼登入。",
+  "但你不用猜是哪些：匯入完成那一頁會逐筆列出新增了什麼，同一份清單也寫在備份旁邊的 .json 裡（import.addedDocs）。這次如果沒有新增，那份清單就是空的，代表還原之後就真的乾淨了。",
+  "照著清單處理：多出來的帳號，到後台「玩家」頁按「婉拒」，他就登不進來了（按錯了再按一次「放行」就好）；多出來的邀請碼，到「邀請碼」頁按「撤銷」。兩個都會留下稽核紀錄。",
+  "清單裡如果有已經被用掉的邀請碼，撤銷不了，也不必撤銷 —— 它早就沒有效力了，要處理的是它帶進來的那個帳號。",
+  "備份之後才發生的事會一起被蓋掉：有人打了幾場、改了密碼、後台改了設定，全部回到備份當時。所以要還原就趁早。",
+  "稽核紀錄、個人戰績履歷、內容覆蓋層歷程是只增不改的，還原不動它們 —— 壞匯入的那一行會永遠留在稽核裡，這是刻意的。",
+  "備份只涵蓋這次匯入會碰到的資料組。沒被碰到的資料組本來就沒被動過，所以不在備份裡也不影響。",
+  "還原本身也是一次匯入，所以它自己也會先備份一次 —— 連「還原還原錯了」都有退路。",
+] as const;
+
+/**
+ * The one sentence shown BEFORE the operator commits, next to 「不會刪除任何東西」.
+ *
+ * That reassurance has a flip side and the page used to show only the
+ * flattering half: never deleting is exactly why a rollback cannot be complete.
+ */
+export const UNDO_PREVIEW_WARNING =
+  "萬一匯錯了：還原備份可以把「被覆蓋」的東西換回來，但「換不掉新增」的東西 —— " +
+  "因為這個功能不刪任何文件。匯入後這一頁會逐筆列出新增了哪些，那些要自己處理。";
+
+/** How many added-document names the result panel lists before collapsing. */
+export const ADDED_DOCS_PREVIEW = 40;
+
+/**
+ * The line the result panel leads with. The ZERO case is a sentence of its own
+ * and is deliberately reassuring: "nothing was added" is a real answer, and the
+ * refuted branch could not give it — it reported every byte-identical document
+ * on the host as an addition, so a no-op re-import produced a named instruction
+ * to 婉拒 the operator's own family.
+ */
+export function addedDocsSummary(docs: readonly DocRef[]): string {
+  if (docs.length === 0) {
+    return "這次沒有新增任何文件，所以沒有殘留要你處理 —— 還原這包備份就能完整回到匯入前。";
+  }
+  return (
+    `這次新增了 ${docs.length} 筆文件，還原不會把它們移除。` +
+    "逐筆清單如下，同一份也寫在備份旁邊的 .json（import.addedDocs）："
+  );
+}
+
+/**
+ * Group the added documents for display, biggest group first. Accounts and
+ * invite codes are what an operator actually has to act on, and they are the
+ * ones that must not be buried under 60 ranking snapshots.
+ */
+export function groupAddedDocs(docs: readonly DocRef[]): { collection: string; ids: string[] }[] {
+  const byCol = new Map<string, string[]>();
+  for (const d of docs) {
+    const list = byCol.get(d.collection);
+    if (list === undefined) byCol.set(d.collection, [d.id]);
+    else list.push(d.id);
+  }
+  return [...byCol.entries()]
+    .map(([collection, ids]) => ({ collection, ids }))
+    .sort((a, b) => b.ids.length - a.ids.length || a.collection.localeCompare(b.collection));
 }
 
 /** A stable, sortable download name mirroring the server's Content-Disposition. */
