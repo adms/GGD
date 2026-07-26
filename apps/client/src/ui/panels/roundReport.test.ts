@@ -430,3 +430,50 @@ describe("the stat rows show only raw server counters (#125 has nothing to bite 
     }
   });
 });
+
+/**
+ * The card must never congratulate the player for the thing that cost them the
+ * grade. Found by the adversarial pass on #265, hit on BOTH rounds it played:
+ * the clean-win praise fired on `WON && deaths === 0 && alive` with no
+ * `kills > 0` guard, so a 0-kill round opened with
+ * 「零陣亡拿下這回合，0 殺 —— 保持這個站位」 while the letter beside it was held
+ * down to B *because* 0 kills zeroed frag — the heaviest axis. The line that
+ * would have explained that ordered last and was sliced off by MAX_ROUND_HINTS
+ * the moment the player had an unspent offer or skill point, i.e. essentially
+ * always.
+ */
+describe("#265 praise must not contradict the letter it sits next to", () => {
+  const wonNoFrag = facts({ outcome: ROUND_OUTCOME.WON, kills: 0, deaths: 0, alive: true });
+
+  it("a 0-kill won round does NOT get the 保持這個站位 clean-win line", () => {
+    const keys = roundHints(input({ facts: wonNoFrag })).map((h) => h.key);
+    expect(keys, "clean-win is for rounds that actually killed something").not.toContain(
+      "clean-win",
+    );
+  });
+
+  it("it names the frag hole INSTEAD, and survives the hint cap", () => {
+    // The cap is what killed the honest line before: load the card up with
+    // every competing tip and the explanation must still be on screen.
+    const crowded = roundHints(
+      input({
+        facts: wonNoFrag,
+        pendingOffers: 2,
+        unspentPoints: 9,
+        gold: 8205,
+        cheapestAffordable: 100,
+        affordableCount: 30,
+        statStacks: 12,
+      }),
+    );
+    expect(crowded.length).toBeLessThanOrEqual(MAX_ROUND_HINTS);
+    const shown = crowded.map((h) => h.text).join(" | ");
+    expect(shown, "the 0-kill explanation must be visible, not sliced off").toContain("0 擊殺");
+    expect(shown).not.toContain("保持這個站位");
+  });
+
+  it("a won round WITH kills still gets its praise", () => {
+    expect(roundHints(input({ facts: facts({ kills: 2, deaths: 0, alive: true }) })).map((h) => h.key))
+      .toContain("clean-win");
+  });
+});

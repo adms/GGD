@@ -384,12 +384,36 @@ export function roundHints(input: RoundReportInput): RoundHint[] {
   const out: RoundHint[] = [];
 
   // ── earned praise ────────────────────────────────────────────────────────
-  if (facts.outcome === ROUND_OUTCOME.WON && facts.deaths === 0 && facts.alive) {
+  // `kills > 0` is NOT decoration. Without it a 0-kill won round opened with
+  // 「零陣亡拿下這回合，0 殺 —— 保持這個站位」 while the letter on the SAME card
+  // was held down to B *because* 0 kills zeroed frag — the heaviest axis at
+  // {@link ROUND_WEIGHTS}.frag. The card congratulated the player for the exact
+  // thing that cost them the grade. Praise that contradicts the letter it sits
+  // next to is worse than no praise: it teaches the player to stop reading.
+  if (
+    facts.outcome === ROUND_OUTCOME.WON &&
+    facts.deaths === 0 &&
+    facts.alive &&
+    facts.kills > 0
+  ) {
     out.push({
       key: "clean-win",
       tone: "praise",
       text: `零陣亡拿下這回合，${facts.kills} 殺 —— 保持這個站位`,
       evidence: `roundDeaths=0,roundKills=${facts.kills}`,
+    });
+  } else if (facts.outcome === ROUND_OUTCOME.WON && facts.deaths === 0 && facts.alive) {
+    // Won it, never died, never killed. Both halves in ONE line so the honest
+    // half cannot be sliced off by MAX_ROUND_HINTS the way a separate
+    // "no-kills" tip was (it ordered last, and any unspent offer or skill point
+    // pushed it out — i.e. essentially always).
+    out.push({
+      key: "clean-win-no-frag",
+      tone: "praise",
+      text: `零陣亡拿下這回合 —— 但 0 擊殺，評價裡最重的擊殺項（佔 ${Math.round(
+        ROUND_WEIGHTS.frag * 100,
+      )}%）整項掛零`,
+      evidence: `roundDeaths=0,roundKills=0,fragWeightPct=${Math.round(ROUND_WEIGHTS.frag * 100)}`,
     });
   } else if (facts.outcome === ROUND_OUTCOME.LOST && facts.kills >= 2) {
     out.push({
