@@ -588,3 +588,25 @@ case "move":
 **不是測試看不到，是線上的資料層蓋掉了你改的那一層。**
 → 必須做：(a) 一條斷言 sim 實際收到的**合併後**表格的測試；
 (b) 後台每一列顯示「內容檔出貨值 vs 目前 override 值」並讓「重設」回到出貨值而不是 1.0。
+
+---
+
+## 工作流交辦的一個結構性錯誤（我犯了第三次）
+
+**勘查／量尺階段的 agent 沒有 `isolation: 'worktree'`，所以它們在主 worktree 裡跑。**
+
+已發生三次：
+1. `tools/w3x-import/_wk73_load.mts` 被我的 `git add -A` 掃進 main
+2. 一個 scout agent 在主 worktree 裡 `git checkout` 了自己的分支，
+   我接下來一整段工作（殭屍熱修、#259 合併、守衛、骷髏退場）全落在錯的分支上，
+   而 `git push origin main` 一路回報「Everything up-to-date」
+3. **這一輪**：#268 v2 的量尺 agent 在主 worktree 建了 `apps/client/src/render/aimReach.measure.test.ts`；
+   另一條工作流在我跑 client 全套的**同時**建立又刪除了 `src/render/__dbg.test.ts`，
+   造成一次假的 FAIL（vitest 收集到檔案、執行時檔案已消失）
+
+**規則（從現在起每一份工作流交辦都要帶）：**
+- **每一個會寫檔的 agent 都要 `isolation: 'worktree'`**，不只是實作 agent。
+  「唯讀勘查」不是理由 —— 勘查 agent 會寫探針、會寫暫存腳本、會 checkout 分支。
+- docs commit **一律逐檔列出路徑**，永遠不用 `git add -A`。
+- 主 worktree 的測試結果，若失敗的是一個**不存在的檔案**，先懷疑是併行工作流的競態，
+  再重跑一次確認。
