@@ -63,11 +63,13 @@ import { Tooltip } from "../components/Tooltip";
 import { rescaleAbilityProse, WC3_PROSE_CAPTION } from "../components/abilityText";
 import {
   computeStatBlock,
+  computeBaseStatBlock,
   previewItem,
   previewExactness,
   statContextFromSeat,
   type ItemPreview,
 } from "./statPreview";
+import { STAT_TICK_TARGET } from "@ggd/shared/sim/economy/itemTiers";
 import {
   CLOSE_SFX,
   OPEN_SFX,
@@ -617,6 +619,11 @@ function GoodsTab(props: GoodsProps): React.JSX.Element {
         seat.items,
         seat.augments,
         seat.statCapstonePct,
+        // WITHOUT this the panel would not recompute on a stat-tick purchase:
+        // `sig` is the only dependency the memo has, and buying a tick moves
+        // neither items nor augments nor the capstone. The (+xxx) would sit
+        // frozen at its pre-purchase value — the exact silence being fixed here.
+        seat.statRollCounts,
         props.combatEnvJson,
       ]),
     [seat, props.combatEnvJson],
@@ -625,6 +632,8 @@ function GoodsTab(props: GoodsProps): React.JSX.Element {
   const env = useMemo(() => parseCombatEnvJson(props.combatEnvJson), [props.combatEnvJson]);
   const ctx = useMemo(() => statContextFromSeat(seat, env), [sig]); // eslint-disable-line react-hooks/exhaustive-deps
   const panelBlock = useMemo(() => computeStatBlock(ctx), [sig]); // eslint-disable-line react-hooks/exhaustive-deps
+  // the same champion with an EMPTY build — the subtrahend behind every (+xxx)
+  const baseBlock = useMemo(() => computeBaseStatBlock(ctx), [sig]); // eslint-disable-line react-hooks/exhaustive-deps
   const preview = useMemo(
     () => (focused ? previewItem(ctx, focused) : null),
     [sig, focused], // eslint-disable-line react-hooks/exhaustive-deps
@@ -662,10 +671,15 @@ function GoodsTab(props: GoodsProps): React.JSX.Element {
       {panelBlock && (
         <StatPanel
           block={panelBlock}
+          base={baseBlock}
           preview={preview}
           exact={exact.exact}
           authMaxHp={props.localMaxHp}
           authMaxMana={props.localMaxMana}
+          level={seat.level}
+          statStacks={seat.statStacks}
+          statTarget={STAT_TICK_TARGET}
+          capstonePct={seat.statCapstonePct}
         />
       )}
 
@@ -733,12 +747,24 @@ function GoodsTab(props: GoodsProps): React.JSX.Element {
 
 function StatPanel(props: {
   block: StatBlock;
+  /**
+   * The same champion at the same LEVEL with nothing bought — items, augments,
+   * capstone and 屬性強化 ticks all stripped (statPreview.computeBaseStatBlock).
+   * `block − base` is the `(+xxx)` this panel prints.
+   */
+  base: StatBlock | null;
   preview: ItemPreview | null;
   exact: boolean;
   authMaxHp: number;
   authMaxMana: number;
+  /** hero level — the header number the owner asked for. */
+  level: number;
+  /** 屬性強化 purchase COUNT and target (「次數」), and whether the path is live. */
+  statStacks: number;
+  statTarget: number;
+  capstonePct: number;
 }): React.JSX.Element {
-  const { block, preview, exact } = props;
+  const { block, base, preview, exact } = props;
   const colA = STAT_META.filter((m) => m.column === 0);
   const colB = STAT_META.filter((m) => m.column === 1);
 
@@ -750,9 +776,28 @@ function StatPanel(props: {
     return block[stat];
   };
 
+  /**
+   * How much of this stat was BOUGHT — final minus the same champion with an
+   * empty build. This is the whole point of the panel for a shopper: an absolute
+   * 「128.4 攻擊力」 does not tell you whether the last 375g did anything, and
+   * before this the answer was invisible in both directions (the stat ticks were
+   * not even on the wire — see protocol/schema SeatState.statRollCounts).
+   *
+   * HP/mana read their bonus off the AUTHORITATIVE value the wire carries, for
+   * the same reason `shown()` does: those two are pinned, so deriving their
+   * bonus from the reconstructed block instead would contradict the number
+   * printed right next to it.
+   */
+  const bonusOf = (stat: Stat): number | null => {
+    if (!base) return null;
+    return shown(stat) - base[stat];
+  };
+
   const cell = (meta: (typeof STAT_META)[number]): React.JSX.Element => {
     const delta = preview?.deltas[meta.stat];
     const showDelta = delta !== undefined && isVisibleDelta(meta.stat, delta);
+    const bonus = bonusOf(meta.stat);
+    const showBonus = bonus !== null && isVisibleDelta(meta.stat, bonus);
     return (
       <div
         key={meta.stat}
@@ -769,6 +814,23 @@ function StatPanel(props: {
           }}
         >
           {formatStatValue(meta.stat, shown(meta.stat))}
+        </span>
+        {/* (+xxx) — everything this champion GAINED over its bare self. Its own
+            column so it never jitters the absolute beside it, and it holds the
+            row's width even when empty (a build with nothing bought must not
+            reflow the grid the moment the first item lands). */}
+        <span
+          style={{
+            fontSize: 10,
+            fontVariantNumeric: "tabular-nums",
+            color: showBonus ? (bonus! > 0 ? "#8fd6a0" : "#e0a88a") : "transparent",
+            width: 52,
+            textAlign: "right",
+            flexShrink: 0,
+          }}
+          title={showBonus ? "本場累積加成（道具・強化・屬性強化）" : undefined}
+        >
+          {showBonus ? `(${formatStatDelta(meta.stat, bonus!)})` : "·"}
         </span>
         <span
           style={{
@@ -798,6 +860,40 @@ function StatPanel(props: {
     >
       <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 3 }}>
         <span style={{ fontSize: 11, fontWeight: "bold", color: ACCENT }}>英雄全屬性狀態</span>
+        {/* 等級 — the owner asked for it up here with the attributes, and it is
+            also the disclaimer the (+xxx) column needs: the bonus deliberately
+            EXCLUDES level growth (see computeBaseStatBlock), so the level has to
+            be legible somewhere or a player would wonder where it went. */}
+        <span
+          style={{
+            fontSize: 11,
+            fontWeight: "bold",
+            color: "#f2d98c",
+            fontVariantNumeric: "tabular-nums",
+          }}
+          title="英雄等級（(+xxx) 不含等級成長）"
+        >
+          Lv {props.level}
+        </span>
+        {/* 次數 — how many 屬性強化 have been bought, out of the 20 that earn
+            傳說·萬象強化. It lived only in the round report before; a player
+            deciding whether to spend the next 375g is reading THIS panel. */}
+        {props.capstonePct > 0 ? (
+          <span style={{ fontSize: 10, color: "#f2a13c", fontVariantNumeric: "tabular-nums" }}>
+            屬性強化 傳說已達成 +{props.capstonePct}%
+          </span>
+        ) : (
+          <span
+            style={{ fontSize: 10, color: TEXT_DIM, fontVariantNumeric: "tabular-nums" }}
+            title={
+              props.statStacks > 0
+                ? `已購買 ${props.statStacks} 次 —— 買任何一般道具都會把它歸零`
+                : "累積 20 次可獲得 傳說·萬象強化"
+            }
+          >
+            屬性強化 {props.statStacks} / {props.statTarget} 次
+          </span>
+        )}
         {!exact && (
           <span style={{ fontSize: 9, color: "#d9b26a" }} title="已購買屬性強化，部分數值僅供參考">
             ≈ 屬性強化未同步，實際以戰鬥面板為準

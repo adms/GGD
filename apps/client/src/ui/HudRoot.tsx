@@ -20,6 +20,7 @@ import { EnemyTeamPanel } from "./components/EnemyTeamPanel";
 import { GoldLevel } from "./components/GoldLevel";
 import { PhaseTimer } from "./components/PhaseTimer";
 import { TeamLivesBar } from "./components/TeamLivesBar";
+import { SpectateNotice } from "./hud/SpectateNotice";
 import { ReviveBanner } from "./components/ReviveBanner";
 import { Scoreboard } from "./components/Scoreboard";
 import { ChampSelectPanel } from "./panels/ChampSelectPanel";
@@ -177,6 +178,10 @@ export function HudRoot(): React.JSX.Element {
       {/* task #139 — round-end (moment 3) champion-quote VO trigger (headless) */}
       <RoundEndVoice />
       <PhaseTimer />
+      {/* 「等待並觀戰別的競技場晉級戰鬥中」 — the camera jumps to another zone the
+          moment your own duel is decided (#208), and until now it did so in
+          total silence. */}
+      <SpectateNotice />
       <TeamLivesBar />
       {/* revive circles (task #84): mounted for LIVING and DEAD players alike —
           the spectating owner is the person who most needs to see it. */}

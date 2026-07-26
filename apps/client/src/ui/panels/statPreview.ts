@@ -51,6 +51,7 @@ import { syncAbilityPassives } from "@ggd/shared/sim/abilities/abilityPassives";
 import { attachSource, recomputeStats } from "@ggd/shared/sim/stats/statPipeline";
 import { Champions, Items, Augments } from "@ggd/shared/sim/content/registry";
 import { capstoneModifiers } from "@ggd/shared/sim/economy/itemTiers";
+import { statRollModifiers } from "@ggd/shared/sim/economy/statPath";
 import { ALL_STATS, Stat, type StatBlock } from "@ggd/shared/sim/stats/statTypes";
 import {
   DEFAULT_COMBAT_ENV,
@@ -77,6 +78,14 @@ export interface ChampionStatContext {
   items: readonly string[];
   augments: readonly string[];
   statCapstonePct: number;
+  /**
+   * SeatView.statRollCounts — one count per `STAT_TICK_ROLLS` entry. Reattached
+   * below through the same `attachSource` the server used, which is what makes
+   * this reconstruction EXACT. Before it rode the wire these were the one stat
+   * source the client could not see, and the panel silently under-reported every
+   * champion who had ever bought a tick.
+   */
+  statRollCounts?: readonly number[];
   /** live combat-env table; defaults to neutral if absent. */
   env?: CombatEnvMultipliers;
 }
@@ -146,6 +155,13 @@ function buildWorld(ctx: ChampionStatContext): { world: SimWorld; id: EntityId }
     });
   }
 
+  // 能力屬性強化 ticks (statPath.ts buyStatUpgrade) — one source per tick, with
+  // the SAME `stat:<N>` id shape, so the pipeline sums them exactly as the
+  // server's does rather than letting one overwrite the next.
+  statRollModifiers(ctx.statRollCounts).forEach((mod, i) => {
+    attachSource(world, id, { id: `stat:${i + 1}`, kind: "augment", modifiers: [mod] });
+  });
+
   // capstone (statPath.ts grantCapstone) — rebuilt from its rolled magnitude
   if (ctx.statCapstonePct > 0) {
     attachSource(world, id, {
@@ -174,6 +190,31 @@ export function computeStatBlock(ctx: ChampionStatContext): StatBlock | null {
   const built = buildWorld(ctx);
   if (!built) return null;
   return copyBlock(built.world.stats.get(built.id)!.final);
+}
+
+/**
+ * The champion STRIPPED of everything it acquired — same champion, same level,
+ * no items, no augments, no capstone, no stat ticks. Subtracting this from
+ * {@link computeStatBlock} is what the shop's `(+xxx)` means: 「這場我變強了多少」.
+ *
+ * LEVEL IS KEPT deliberately. Level growth is not something you shop for, and
+ * folding it into the bonus would make a champion who has bought nothing at all
+ * show a fat green `(+…)` on every row — a number that answers no question the
+ * player is asking. The panel prints the level separately, right in the header.
+ */
+export function computeBaseStatBlock(ctx: ChampionStatContext): StatBlock | null {
+  return computeStatBlock({
+    championId: ctx.championId,
+    level: ctx.level,
+    abilityRanks: ctx.abilityRanks,
+    exAbilityId: ctx.exAbilityId,
+    exRank: ctx.exRank,
+    items: ZERO_ITEMS,
+    augments: [],
+    statCapstonePct: 0,
+    statRollCounts: undefined,
+    env: ctx.env,
+  });
 }
 
 export interface ItemPreview {
@@ -231,23 +272,34 @@ export interface Exactness {
 }
 
 /**
- * Can the panel be trusted to the last point? It can, unless the champion is
- * carrying stat-tick rolls the wire never sent (economy/statPath.ts). Two
- * independent tells: an active streak (`statStacks > 0`), and a reconstructed
- * maxHealth / maxMana that disagrees with the authoritative value the wire DID
- * carry (a post-reset residual that moved HP or mana). Either one flips the
- * panel into its "≈" disclosure; the item deltas stay exact for every unclamped
- * stat regardless.
+ * Can the panel be trusted to the last point?
+ *
+ * `statStacks > 0` USED to be an automatic no: the rolls were not on the wire,
+ * so any champion mid-streak was reconstructed short by every tick it had
+ * bought, and the panel had to hedge. `SeatState.statRollCounts` now carries
+ * them, `buildWorld` reattaches them, and a streak on its own proves nothing
+ * about accuracy — so that tell is gone, and with it the permanent 「≈」 every
+ * stat-path player used to read.
+ *
+ * The RECONCILIATION tell stays, and is now the whole check: compare the
+ * reconstructed maxHealth / maxMana against the authoritative values the wire
+ * carries anyway (EntityState hp/mana). It is a genuine end-to-end guard —
+ * if any future source goes missing from the reconstruction the panel will say
+ * so, whether or not anyone remembered to add a flag for it.
  */
 export function previewExactness(
   reconBlock: StatBlock,
   opts: {
-    statStacks: number;
+    /**
+     * Kept in the signature though no longer decisive: callers pass it, and a
+     * silent parameter removal would read as "the streak is irrelevant" rather
+     * than "the streak is now RECONSTRUCTED". See the doc comment above.
+     */
+    statStacks?: number;
     authMaxHp?: number;
     authMaxMana?: number;
   },
 ): Exactness {
-  if (opts.statStacks > 0) return { exact: false, reason: "hidden-stat-ticks" };
   const agrees = (recon: number, auth?: number): boolean => {
     if (auth === undefined || auth <= 0) return true; // nothing to check against
     return Math.abs(recon - auth) <= Math.max(1.5, auth * 0.01);
@@ -272,6 +324,7 @@ export function statContextFromSeat(
     items: readonly string[];
     augments: readonly string[];
     statCapstonePct: number;
+    statRollCounts?: readonly number[];
   },
   env?: CombatEnvMultipliers,
 ): ChampionStatContext {
@@ -284,6 +337,7 @@ export function statContextFromSeat(
     items: seat.items,
     augments: seat.augments,
     statCapstonePct: seat.statCapstonePct,
+    statRollCounts: seat.statRollCounts,
     env,
   };
 }

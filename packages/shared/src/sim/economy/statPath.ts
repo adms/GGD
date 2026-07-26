@@ -128,6 +128,54 @@ export function statPathView(stacks: number, capstonePct: number): StatPathView 
   };
 }
 
+/**
+ * The champion's stat-tick history as one COUNT PER ROLL, indexed exactly like
+ * {@link STAT_TICK_ROLLS}. This is what rides the wire (`SeatState.statRollCounts`)
+ * so the shop can finally answer 「這 375g 買到什麼」.
+ *
+ * Counted from the LIVE sources, never from a mirrored field. Two reasons:
+ * the sources are the pipeline's own truth, and they OUTLIVE `statStacks` —
+ * buying a real item zeroes the streak (the commitment rule) while every
+ * `stat:<N>` source stays attached, because the reset withdraws the CAPSTONE's
+ * progress, not stats already paid for. A player who bought 8 ticks then an item
+ * still carries those 8 rolls, and until now no client could see them.
+ *
+ * Each roll owns a distinct {@link Stat}, so matching on `stat` is exact —
+ * there is no roll that could be confused for another.
+ */
+export function statRollCounts(world: SimWorld, id: EntityId): number[] {
+  const counts = STAT_TICK_ROLLS.map(() => 0);
+  const sc = world.stats.get(id);
+  if (!sc) return counts;
+  for (const src of sc.sources) {
+    if (!src.id.startsWith("stat:")) continue;
+    for (const m of src.modifiers ?? []) {
+      const idx = STAT_TICK_ROLLS.findIndex((r) => r.stat === m.stat);
+      if (idx >= 0) counts[idx] = (counts[idx] ?? 0) + 1;
+    }
+  }
+  return counts;
+}
+
+/**
+ * The inverse, for the CLIENT: counts → the exact `StatModifier` list those
+ * ticks attached. `ui/panels/statPreview` feeds this back into the same
+ * `attachSource` the server used, which is what makes its reconstructed panel
+ * exact instead of short-by-every-tick-ever-bought.
+ *
+ * Tolerant of a short/absent array (a legacy snapshot, or a seat with no
+ * champion yet) — those read as "no ticks", which is what they were.
+ */
+export function statRollModifiers(counts: readonly number[] | undefined): StatModifier[] {
+  const out: StatModifier[] = [];
+  if (!counts) return out;
+  for (let i = 0; i < STAT_TICK_ROLLS.length; i++) {
+    const n = counts[i] ?? 0;
+    for (let k = 0; k < n; k++) out.push({ ...STAT_TICK_ROLLS[i]! });
+  }
+  return out;
+}
+
 /** Ticks still owed before the capstone (0 once earned or once past target). */
 export function statTicksRemaining(world: SimWorld, id: EntityId): number {
   const champ = world.champion.get(id);

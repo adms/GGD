@@ -238,6 +238,7 @@ describe("a SETTLED zone stands its mobs down (#216 + #215)", () => {
     // level on `fromRound` (baseLevel 3, +1 per later round).
     level: 3,
     maxHp: 120,
+    moveSpeed: 3,
     hpRegenPerSec: 1,
     modelKey: "champ.godie-zombiex",
     attackDamage: 12,

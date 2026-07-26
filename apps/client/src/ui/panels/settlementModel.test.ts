@@ -30,6 +30,7 @@ import {
   matchDecided,
   roundLeaderChampion,
   roundEndQuoteChampion,
+  roundWinnerTeamChampions,
   type RoundSeatView,
   type RoundTeamView,
 } from "./settlementModel";
@@ -416,16 +417,23 @@ describe("round-end winner = the leading team's round MVP (settle-round-mvp)", (
     ];
     // the VO's champion IS the leader champion on any non-deciding round…
     expect(roundEndQuoteChampion(seats, leadingTeams)).toBe(roundLeaderChampion(seats, leadingTeams));
-    // …and GameApp builds the centre-screen model doc from that same call, so
-    // the hero on screen can never disagree with the voice.
+    // …and GameApp builds the centre-screen models from that same call. Since
+    // 2026-07-27 the stage shows the whole winning TEAM (owner:「勝利的時候應該
+    // 秀隊伍三人的模組」), so GameApp calls roundWinnerTeamChampions — which is
+    // itself built ON TOP of roundEndQuoteChampion and returns it at [0]. The
+    // linkage this test protects is unchanged and is asserted directly below,
+    // in code rather than by regex: MVP === the VO's champion === team[0].
+    expect(roundWinnerTeamChampions(seats, leadingTeams)[0]).toBe(
+      roundEndQuoteChampion(seats, leadingTeams),
+    );
     const app = readFileSync(join(HERE, "..", "..", "GameApp.ts"), "utf8");
-    expect(app).toMatch(/const champ = roundEndQuoteChampion\(hud\.seats, hud\.teams\)/);
-    expect(app).toMatch(/roundWinnerModelDoc\(champ, hud\.seats\)/);
+    expect(app).toMatch(/roundWinnerTeamChampions\(hud\.seats, hud\.teams\)/);
+    expect(app).toMatch(/roundWinnerModelDoc\(id, hud\.seats\)/);
     // …and that SAME champion is handed to the stage as context. Without it the
     // stage's `if (!champ) return` silently drops the whole 嘲諷台詞 half of #93
     // — the selector and the presentation would be wired but not connected.
     expect(app).toMatch(
-      /this\.roundWinner\.show\(doc, \{\s*championId: champ[^,]*, round: state\.round \}\)/,
+      /this\.roundWinner\.showTeam\(members, \{\s*championId: team\[0\], round: state\.round \}\)/,
     );
   });
 });

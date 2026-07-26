@@ -70,6 +70,13 @@ export interface RoundWinnerContext {
   round?: number;
 }
 
+/** One member of the winning team, as {@link RoundWinnerStage.showTeam} takes them. */
+export interface WinnerEntry {
+  doc: ModelDoc;
+  /** carries the w3x vertex tint through to the previewer (task #263) */
+  championId?: string;
+}
+
 export interface RoundWinnerStageOptions {
   /** element the overlay layers are mounted into (production: document.body). */
   host: HTMLElement | null;
@@ -87,19 +94,38 @@ export interface RoundWinnerStageOptions {
 }
 
 /**
- * Position the overlay canvas as a centred portrait card over the arena: fixed
- * to the viewport, above the world-anchored HP bars (#anchor-layer, z 5) and
- * below the HUD (#hud-root, z 10); never intercepts input.
+ * Position one winner's canvas within the ROW of them.
+ *
+ * The owner asked for the whole team, not the MVP alone (2026-07-27:
+ * 「勝利的時候應該秀隊伍三人的模組」) — a 3v3v3v3 round is won by three people
+ * and presenting only the top scorer quietly told the other two they were
+ * scenery. So the card became a row, and every card is laid out from its INDEX
+ * rather than pinned to dead centre.
+ *
+ * Sized from the count, not from a constant: one winner keeps the full-width
+ * portrait the single-model beat always had, and three share the width without
+ * anyone falling off a phone. `left` walks the row in even steps and each card
+ * is centred on its own step, so the row is symmetric about the screen for any
+ * `total` — no special case for 1, 2 or 3.
+ *
+ * Fixed to the viewport, above the world-anchored HP bars (#anchor-layer, z 5)
+ * and below the HUD (#hud-root, z 10); never intercepts input.
  */
-function styleOverlayCanvas(canvas: HTMLCanvasElement): void {
+function styleOverlayCanvas(canvas: HTMLCanvasElement, index: number, total: number): void {
   const s = canvas.style;
   if (!s) return; // headless fake — nothing to style
+  const n = Math.max(1, total);
+  // width per card: the solo card keeps its old size; a row divides the space.
+  const w = n === 1 ? "min(40vh, 84vw)" : `min(${Math.round(34 / n + 8)}vh, ${Math.round(88 / n)}vw)`;
+  const h = n === 1 ? "min(54vh, 96vw)" : `min(${Math.round(46 / n + 10)}vh, ${Math.round(96 / n)}vw)`;
+  // centre of this card's slot, as a percentage across the viewport
+  const centre = ((index + 0.5) / n) * 100;
   s.position = "fixed";
-  s.left = "50%";
+  s.left = `${centre}%`;
   s.top = "46%";
   s.transform = "translate(-50%, -50%)";
-  s.width = "min(40vh, 84vw)";
-  s.height = "min(54vh, 96vw)";
+  s.width = w;
+  s.height = h;
   s.zIndex = "6";
   s.pointerEvents = "none";
   s.borderRadius = "14px";
@@ -178,10 +204,10 @@ export class RoundWinnerStage {
   private readonly createElement: (tag: string) => HTMLElement | null;
   private readonly createPreview: (canvas: HTMLCanvasElement) => WinnerPreview;
   private readonly taunt: RoundTauntPort | null;
-  private canvas: HTMLCanvasElement | null = null;
+  private canvases: HTMLCanvasElement[] = [];
   private wash: HTMLElement | null = null;
   private subtitle: HTMLElement | null = null;
-  private preview: WinnerPreview | null = null;
+  private previews: WinnerPreview[] = [];
   private disposed = false;
   /** monotonic show id — a late taunt never subtitles a later/cleared round */
   private showSeq = 0;
@@ -198,7 +224,12 @@ export class RoundWinnerStage {
 
   /** True while a winner is currently on the stage. */
   get active(): boolean {
-    return this.preview !== null;
+    return this.previews.length > 0;
+  }
+
+  /** How many champions are currently standing on the stage (observability / tests). */
+  get memberCount(): number {
+    return this.previews.length;
   }
 
   /** The taunt currently subtitled (observability / tests). */
@@ -212,33 +243,72 @@ export class RoundWinnerStage {
    * the overlay layers on first use, then swaps the model on later shows. Never
    * throws (the model load and the taunt both self-degrade to nothing).
    */
+  /**
+   * Single-champion convenience: the whole winning team is one person.
+   * Kept so callers (and tests) that only ever have one model stay unchanged.
+   */
   show(doc: ModelDoc, ctx: RoundWinnerContext = {}): void {
-    if (this.disposed) return;
+    this.showTeam([{ doc, championId: ctx.championId }], ctx);
+  }
+
+  /**
+   * Stand the winning TEAM on the grey wash — one card per member, in the order
+   * given — and speak the taunt for `ctx.championId` (the round's MVP, resolved
+   * by the caller from the same authoritative state the VO reads).
+   *
+   * Layers are rebuilt whenever the member COUNT changes rather than reused: a
+   * canvas's size is baked into its Babylon engine at construction, so a
+   * three-card row cannot be produced by restyling one full-width card. Same
+   * count on a later round reuses everything and just swaps the models.
+   *
+   * Never throws — every model load and the taunt all self-degrade to nothing.
+   */
+  showTeam(members: readonly WinnerEntry[], ctx: RoundWinnerContext = {}): void {
+    if (this.disposed || members.length === 0) return;
     const spec = victoryPresentation("round");
-    if (!this.canvas) {
-      // wash FIRST so it is under the card in both z-index and DOM order
-      const wash = this.createElement("div");
-      styleWash(wash);
-      if (wash) this.host?.appendChild(wash);
-      this.wash = wash;
-      // hand the screen over from the #85 death greyscale as a CROSSFADE
-      raiseWash(wash, () => this.wash === wash);
 
-      const canvas = this.createCanvas();
-      styleOverlayCanvas(canvas);
-      this.host?.appendChild(canvas);
-      this.canvas = canvas;
-      this.preview = this.createPreview(canvas);
+    if (this.canvases.length !== members.length) {
+      // count changed (or first show) — tear the canvases down and rebuild.
+      // The wash and subtitle are count-independent, so they survive: dropping
+      // and re-adding the wash would re-run its fade from transparent and blink
+      // the arena back to full colour mid-beat.
+      for (const p of this.previews) p.dispose();
+      for (const c of this.canvases) c.remove();
+      this.previews = [];
+      this.canvases = [];
 
-      const subtitle = this.createElement("div");
-      styleSubtitle(subtitle);
-      if (subtitle) this.host?.appendChild(subtitle);
-      this.subtitle = subtitle;
+      if (!this.wash) {
+        // wash FIRST so it is under the cards in both z-index and DOM order
+        const wash = this.createElement("div");
+        styleWash(wash);
+        if (wash) this.host?.appendChild(wash);
+        this.wash = wash;
+        // hand the screen over from the #85 death greyscale as a CROSSFADE
+        raiseWash(wash, () => this.wash === wash);
+      }
+
+      for (let i = 0; i < members.length; i++) {
+        const canvas = this.createCanvas();
+        styleOverlayCanvas(canvas, i, members.length);
+        this.host?.appendChild(canvas);
+        this.canvases.push(canvas);
+        this.previews.push(this.createPreview(canvas));
+      }
+
+      if (!this.subtitle) {
+        const subtitle = this.createElement("div");
+        styleSubtitle(subtitle);
+        if (subtitle) this.host?.appendChild(subtitle);
+        this.subtitle = subtitle;
+      }
     }
-    // #263: hand the winner's championId to the previewer so its w3x art
+
+    // #263: hand each winner's championId to its previewer so the w3x art
     // colour is painted here too. Before this the card showed the RAW mesh —
     // 黑化Saber won a round and stood there as a plain gold Saber.
-    void this.preview?.show(doc, { championId: ctx.championId ?? null });
+    members.forEach((m, i) => {
+      void this.previews[i]?.show(m.doc, { championId: m.championId ?? null });
+    });
 
     const seq = ++this.showSeq;
     this.setSubtitle("");
@@ -247,6 +317,10 @@ export class RoundWinnerStage {
     // The line is picked deterministically from replicated state, so every
     // client hears the SAME joke; it is delayed past the round-end 名言 so the
     // two voices never talk over each other (render/victoryPresentation).
+    //
+    // ONE taunt for the team, not three: three champions barking over each
+    // other is noise, and the line is written as a jeer at the loser rather
+    // than a self-introduction. It belongs to the MVP the caller resolved.
     //
     // The subtitle is driven by `onSpeak`, NOT by the returned promise: the
     // promise resolves as soon as the line is CHOSEN (next microtask), so
@@ -271,10 +345,11 @@ export class RoundWinnerStage {
   clear(): void {
     this.showSeq += 1; // any in-flight taunt resolution is now stale
     this.taunt?.cancel();
-    this.preview?.dispose();
-    this.preview = null;
-    for (const el of [this.canvas, this.wash, this.subtitle]) el?.remove();
-    this.canvas = null;
+    for (const p of this.previews) p.dispose();
+    this.previews = [];
+    for (const c of this.canvases) c.remove();
+    this.canvases = [];
+    for (const el of [this.wash, this.subtitle]) el?.remove();
     this.wash = null;
     this.subtitle = null;
   }

@@ -148,7 +148,7 @@ import {
 import { prefersReducedMotion } from "./ui/buttonSfx";
 import { SETTLEMENT_EVENT, TEAM_SETTLEMENT_EVENT } from "@ggd/shared/protocol/messages";
 import type { EventMessage, MatchSettlement } from "@ggd/shared/protocol/messages";
-import { roundEndQuoteChampion } from "./ui/panels/settlementModel";
+import { roundWinnerTeamChampions } from "./ui/panels/settlementModel";
 
 const SLOT_INDEX: Record<AbilitySlot, number> = { Q: 0, W: 1, E: 2, R: 3, EX: 4 };
 /** authoritative error beyond which we treat the correction as a teleport */
@@ -2209,8 +2209,11 @@ export class GameApp {
   /**
    * Round-end winner presentation (task #143). On the phase EDGE into
    * `resolution` — the SAME "Round over" beat the #142 round-end VO fires on —
-   * stand the round WINNER's champion model centre-screen for a few seconds,
-   * then clear. The winner is the round's rank-1 champion resolved from the SAME
+   * stand the winning TEAM's champion models centre-screen for a few seconds,
+   * then clear. MVP first, then the rest of that team (owner, 2026-07-27:
+   * 「勝利的時候應該秀隊伍三人的模組」 — a 3v3v3v3 round is won by three people,
+   * and presenting only the top scorer told the other two they were scenery).
+   * The MVP — who owns the taunt — is the round's rank-1 champion resolved from the SAME
    * authoritative seats/teams the VO uses (roundEndQuoteChampion in
    * ui/panels/settlementModel), so the model on screen and the voice you hear are
    * always the same champion. That selector returns null on the match-DECIDING
@@ -2226,13 +2229,23 @@ export class GameApp {
     // edge into the round-end phase → present the round winner (if resolvable)
     if (state && phase === "resolution" && prev !== "resolution") {
       const hud = hudStore.getState();
-      const champ = roundEndQuoteChampion(hud.seats, hud.teams);
-      const doc = champ ? this.roundWinnerModelDoc(champ, hud.seats) : null;
-      if (doc) {
-        // Forward the resolved winner + round: the stage needs BOTH to pick the
-        // taunt deterministically (audio/victoryTaunt hashes championId+round),
-        // and with no ctx it silently skips the whole 嘲諷台詞 half of #93.
-        this.roundWinner.show(doc, { championId: champ ?? undefined, round: state.round });
+      // The whole winning TEAM, MVP first (owner: 「勝利的時候應該秀隊伍三人的模組」).
+      // A member whose model doc has not loaded is DROPPED rather than allowed to
+      // blank a card — three champions with one empty slot reads as a bug, and
+      // the beat is still correct with two.
+      const team = roundWinnerTeamChampions(hud.seats, hud.teams);
+      const members = team
+        .map((id) => {
+          const doc = this.roundWinnerModelDoc(id, hud.seats);
+          return doc ? { doc, championId: id } : null;
+        })
+        .filter((m): m is { doc: ModelDoc; championId: string } => m !== null);
+      if (members.length > 0) {
+        // Forward the MVP + round: the stage needs BOTH to pick the taunt
+        // deterministically (audio/victoryTaunt hashes championId+round), and
+        // with no ctx it silently skips the whole 嘲諷台詞 half of #93. The MVP
+        // is `team[0]`, which is also the leftmost card.
+        this.roundWinner.showTeam(members, { championId: team[0], round: state.round });
         this.roundWinnerUntilMs = nowMs + ROUND_PRESENT_MS;
       }
     }

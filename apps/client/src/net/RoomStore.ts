@@ -100,6 +100,17 @@ export interface SeatView {
   statStacks: number;
   statCapstonePct: number;
   /**
+   * WHAT those ticks rolled — one count per `STAT_TICK_ROLLS` entry (#82's
+   * 9-roll table). `statStacks` alone is a streak counter and answers nothing
+   * about the stats you actually bought; this is what lets the shop panel print
+   * a real (+xxx) and drop its 「≈ 屬性強化未同步」 disclaimer.
+   * Empty on a legacy snapshot or a seat with no champion — both mean "no ticks".
+   * OPTIONAL so the many hand-built SeatView fixtures across the test suite stay
+   * valid: this is a display detail, and a fixture that omits it is asserting
+   * "no ticks", which is exactly what an absent array means on the wire too.
+   */
+  statRollCounts?: number[];
+  /**
    * How many buy/sell steps of THIS shopping session can still be reversed
    * (task #121) — the server's own `champ.undoStack.length`.
    *
@@ -367,6 +378,7 @@ export function syncHudFromState(state: MatchState, localAccountId: string): voi
       passiveCooldown: ss.passiveCooldown,
       statStacks: ss.statStacks,
       statCapstonePct: ss.statCapstonePct,
+      statRollCounts: [...(ss.statRollCounts ?? [])],
       undoDepth: ss.undoDepth,
       roundKills: ss.roundKills,
       roundDeaths: ss.roundDeaths,

@@ -59,20 +59,18 @@ import {
 import { PANEL_BG, PANEL_BORDER, teamCss, TEXT_DIM, TEXT_MAIN } from "../theme";
 
 /**
- * Seconds on the settlement screen before it auto-advances to the leaderboard.
+ * REMOVED — the settlement no longer auto-advances (owner, 2026-07-27:
+ * 「戰鬥勝利/失敗 最後結算的時候要停留 不要自動轉到大廳」). See MatchEndPanel's
+ * body where the countdown used to live.
  *
- * On a WIN this is counted from the moment the victory sting ENDS, not from
- * mount — because the sting's length is not a constant this file may assume.
- * #137 rotates the sting per scene entry and tools/bgm-gen can re-render it at
- * any time. Counting from mount against a fixed value meant the screen could
- * leave BEFORE the longer sting finished, so 主題曲·寧靜女聲 — the whole point
- * of the 破關 handover — was crossfaded away unheard.
- *
- * Counting from the sting's end makes the calm tail the same length whichever
- * variant played, and stays correct if the music is ever re-rendered. That is
- * also why no sting duration may be written down here; a test enforces it.
+ * Kept as a comment rather than deleted silently, because the constant carried
+ * a real, hard-won finding worth not re-discovering: it was counted from the
+ * moment the victory sting ENDS, never from mount, because the sting's length
+ * is not a constant this file may assume (#137 rotates it per scene entry and
+ * tools/bgm-gen can re-render it). Any future timed transition on this screen
+ * inherits that constraint — and a test still forbids writing a sting duration
+ * down here.
  */
-const AUTO_ADVANCE_SEC = 12;
 
 /**
  * Height of the ranking list's own scroll window. Bounded (rather than letting
@@ -349,23 +347,21 @@ export function MatchEndPanel(): React.JSX.Element {
   const winStingEnded = useBedEnded(wonMatch ? MATCH_WIN_STING : null);
   useBgmSceneOverride(matchEndBedScene(wonMatch, winStingEnded));
 
-  // auto-advance to the leaderboard delta screen after a grace period. The
-  // countdown updater stays pure (no navigation side-effect inside setState); a
-  // separate effect fires the transition exactly once when it reaches 0.
-  // On a win the clock does not start until the victory sting has ended (see
-  // AUTO_ADVANCE_SEC); on a loss there is no sting to wait for, so it starts at
-  // mount as before.
-  const advanceArmed = hasPayload && (!wonMatch || winStingEnded);
-  const [secsLeft, setSecsLeft] = useState(AUTO_ADVANCE_SEC);
-  useEffect(() => {
-    if (!advanceArmed) return;
-    setSecsLeft(AUTO_ADVANCE_SEC);
-    const iv = setInterval(() => setSecsLeft((s) => (s <= 0 ? 0 : s - 1)), 1000);
-    return () => clearInterval(iv);
-  }, [advanceArmed]);
-  useEffect(() => {
-    if (hasPayload && secsLeft === 0) viewRankChange();
-  }, [hasPayload, secsLeft, viewRankChange]);
+  // THE SETTLEMENT DOES NOT LEAVE ON ITS OWN (owner, 2026-07-27: 「戰鬥勝利/失敗
+  // 最後結算的時候要停留 不要自動轉到大廳」).
+  //
+  // There used to be an AUTO_ADVANCE_SEC countdown here that called
+  // viewRankChange() the moment it hit 0, with a 「Ns 後自動前往」 caption. It is
+  // gone — not paused, not lengthened. A timer is the wrong shape for this
+  // screen: it is the ONLY place a player reads their grade, their KDA, the
+  // damage they did and where they placed on the ranking that auto-scrolls to
+  // their own row (#36), and a fixed budget cannot know when they have finished
+  // reading. Worse, it fired hardest exactly when there was most to read — a
+  // winner's card is withheld for the chicken firework (MATCH_PANEL_HOLD_MS)
+  // and then had less of the same countdown left to read it in.
+  //
+  // Both exits stay explicit and stay visible: 返回大廳 and the rank-delta
+  // screen are buttons. Nothing about this screen expires.
 
   // task #93 — 暗色底 + 巨大烤雞煙火. The giant roast-chicken shell launches on the
   // very frame the match is decided, which is the same frame this panel mounts —
@@ -564,7 +560,9 @@ export function MatchEndPanel(): React.JSX.Element {
             查看戰績變化
           </Btn>
           <Btn onClick={() => void returnToLobby()}>返回大廳</Btn>
-          <span style={{ fontSize: 11, color: TEXT_DIM, whiteSpace: "nowrap" }}>{secsLeft}s 後自動前往</span>
+          <Btn kind="primary" onClick={() => viewRankChange()}>
+            查看排名變化
+          </Btn>
         </div>
       </div>
     </div>

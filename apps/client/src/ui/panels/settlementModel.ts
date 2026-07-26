@@ -434,6 +434,38 @@ export function roundLeaderChampion(
 }
 
 /**
+ * The whole winning TEAM's champions, MVP first — what the round-end stage
+ * actually presents (owner, 2026-07-27: 「勝利的時候應該秀隊伍三人的模組」).
+ *
+ * Deliberately built ON TOP of {@link roundLeaderChampion} rather than beside
+ * it: that function already owns every hard-won rule about which team counts
+ * (BYE teams excluded by MEMBERSHIP, winners before participants, a team with
+ * nobody locked in falling through to the next), and forking those rules into a
+ * second selector is how the model on screen and the voice you hear drift apart.
+ * So the MVP is resolved first, its TEAM is read off that seat, and the rest of
+ * the roster is appended behind it.
+ *
+ * MVP FIRST is load-bearing twice over: the taunt belongs to `[0]`, and on a
+ * narrow viewport the leftmost card is the one a player looks at.
+ *
+ * Empty ⇒ present nothing, exactly as a null champion did.
+ */
+export function roundWinnerTeamChampions(
+  seats: readonly RoundSeatView[],
+  teams: readonly RoundTeamView[],
+): string[] {
+  const mvp = roundEndQuoteChampion(seats, teams);
+  if (!mvp) return [];
+  const mvpSeat = seats.find((s) => s.championId === mvp);
+  if (!mvpSeat) return [mvp];
+  const mates = seats
+    .filter((s) => s.teamId === mvpSeat.teamId && s.championId && s.championId !== mvp)
+    .sort(compareRoundMvp)
+    .map((s) => s.championId);
+  return [mvp, ...mates];
+}
+
+/**
  * The champion whose quote plays at a ROUND-end settlement (moment 3): the
  * round's MVP (roundLeaderChampion), EXCEPT on the match-deciding round (whose
  * beat is the settlement's local-win quote). Null ⇒ silent (no round-end quote

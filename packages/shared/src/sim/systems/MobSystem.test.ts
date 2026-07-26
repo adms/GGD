@@ -47,6 +47,7 @@ const RULES: MobRules = {
   maxAlivePerZone: 5,
   level: 3,
   maxHp: 120,
+  moveSpeed: 3,
   hpRegenPerSec: 0,
   modelKey: MOB_MODEL_KEY,
   attackDamage: 12,

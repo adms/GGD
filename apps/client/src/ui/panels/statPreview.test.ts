@@ -353,12 +353,20 @@ describe("previewExactness — the anti-lie tell", () => {
     expect(ex.exact).toBe(true);
   });
 
-  it("is NOT exact while a stat-tick streak is live (sp-10)", () => {
+  it("a live stat-tick streak no longer forfeits exactness (sp-10)", () => {
+    // INVERTED on purpose, 2026-07-27. This used to assert that any streak made
+    // the panel inexact — correct at the time, because the rolls were the ONE
+    // stat source not on the wire, so a mid-streak champion was reconstructed
+    // short by every tick it had bought. `SeatState.statRollCounts` now carries
+    // them and buildWorld reattaches them, so the streak proves nothing about
+    // accuracy, and asserting the old way would pin the 「≈ 屬性強化未同步」
+    // disclaimer permanently back onto every stat-path player — the exact thing
+    // the owner reported as 「購買屬性看不到加多少屬性」.
     cover("shop-stat-preview");
     const world = new SimWorld(SKELETON_ARENA, 1);
     const id = spawnHero(world);
     const block = world.stats.get(id)!.final;
-    expect(previewExactness(block, { statStacks: 3 }).exact).toBe(false);
+    expect(previewExactness(block, { statStacks: 3 }).exact).toBe(true);
   });
 
   it("is NOT exact when reconstructed HP disagrees with the wire (hidden post-reset ticks) (sp-11)", () => {

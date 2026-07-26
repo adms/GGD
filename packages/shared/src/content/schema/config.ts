@@ -543,7 +543,14 @@ export const DEFAULT_MOB_WAVES_CONFIG: MobWavesConfig = {
   reward: {
     gold: 20,
     xp: 40,
-    killsPerLevel: 30,
+    // owner, 2026-07-27: 「打殭屍 變成每打死6支升1級」 (was 30).
+    // Deliberate 5x acceleration of the roguelite climb, and it composes with
+    // the v0.7.1 nerfs rather than compounding them: a zombie now has 20 base HP,
+    // 1.2 attack and half the move speed, so six of them is a short errand
+    // rather than the grind thirty of them used to be. The reward that used to
+    // arrive once a round now arrives several times, which is the point —
+    // 「肉鴿」 is supposed to feel like a climb, not like homework.
+    killsPerLevel: 6,
   },
 };
 
