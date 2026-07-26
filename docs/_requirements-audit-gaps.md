@@ -3018,3 +3018,50 @@ j:36779 的註解 `300+(sLV*200)+(力量*3)` 從來不會執行。**規則是 JA
 `loader.test` / `fieldAdoption.test` 的狀態列表因為新增 `moon-combo` 而需要更新，後者的
 `enum:status-effects.polarity=buff` 豁免條目已被採用，依測試自己的指示刪除）。
 `internal/opsenv` 與 `internal/combatenv` 兩支 Go 紅屬既有，由另一條工作流處理。
+
+---
+
+#### 🎯 2026-07-26 #247 追修 2：連段加成「實作了、測綠了、真的一場遊戲裡不可能發生」
+
+**上一條（`jass-247-05`）被對抗式驗證推翻。** 缺陷不在數字，在**時機**：
+
+- **JASS 是施法當下就烤好**。`Trig_Jump_Start_Actions`（j:34195）在 SPELL_EFFECT 動作裡
+  算出完整的 `udg_MoonDamage`——**含** `udg_MoonCombo == 2` 那條加成（判定 j:34189/34212、
+  非 EX +5×AGI j:34214、EX +10×AGI j:34216）——**然後才**打開弧線觸發（j:34226）。
+  弧線 `Trig_Jump_Effect` 整段（j:34241-34314）**一次都沒有再讀** `udg_MoonCombo`；
+  `Index >= 41`（j:34274）時發出的 AoE 打的是已經烤好的變數（j:34262）。
+  窗口在飛行途中過期在 WC3 裡完全無所謂，**正因為數字在施法當下就凍結了**。
+- **GGD 原本相反**。`comboBonus` 在 `applyEffect` 的 damage 分支解析，而那份傷害是
+  **落地**才跑。弧線 41 tick × (0.35/10) = **1.435 秒**（GGD 43 tick / 1.44 秒），
+  窗口 **1.00 秒**（30 tick）。也就是說**傷害解析時窗口一定已經關了**——
+  這個加成在任何時機、任何操作下都不可能觸發。
+
+**為什麼會過關**：舊測試把 damage effect 單獨拿出來 apply，中間沒有飛行。
+「完成宣告要問這條觸發在正常一場遊戲裡真的會發生嗎」——這條規則的又一次學費。
+
+**修法**：新增 `bakeCastTimeConditionals()`（`sim/effects/effectRunner.ts`）。
+在 payload **離開施法那一刻**（`leap` 起跳、`spawnProjectile` 發射）把條件項解析掉，
+解析出來的數額摺進 payload 自己的 `amount.flat`，`comboBonus` 一併從飛出去的那份拿掉——
+**還帶著條件飛的 payload 就是缺陷本身**。立即傷害（instant cast / cast time 結算那一格）
+apply-time 就是 cast-time，維持原路徑不變。
+
+**新測試（都在真 `SimWorld` 上飛完整條弧線）**：
+- `jass-fid-a0g3-flight-open`：窗口開著時施法 → 飛滿 43 tick → 落地 **520**
+  （450 + ad×0.5 + ad×1.25，ad=40）。而且斷言**窗口確實在半空中關掉了**，
+  否則這條測試什麼都沒證明。
+- `jass-fid-a0g3-flight-lapsed`：先讓窗口過期（31 tick）再施法 → 落地 **470**。
+- 反向對照跑過：把 bake 那行拿掉，第一條立刻紅成 `expected 470 to be close to 520`——
+  就是缺陷本身的數字。
+
+**同類普查（cast-time vs apply-time）**：全 content 掃過 `leap.onLand` / `spawnProjectile.onHit`
+兩個延遲 payload 通道，**條件式加成只有 1 處**（`godie-hpb1.e`，已修）。
+另外 9 處是**只有屬性係數**的延遲項（`godie-hapm.w`/`godie-hart.w`/`godie-u00n.r`/
+`godie-u00o.r` 的 onLand，`godie-u00n.e`/`godie-u010.e`/`sela.q`/`thorne.e`/`storm-arrow`
+的 onHit）：它們**一定會觸發**，只是飛行途中 buff 過期會讓數值飄——與「永遠不觸發」不同級，
+且改成快照會動到全遊戲每一支飛彈。登記 `jass-247-14` deferred，**不擴大範圍**。
+`canCrit` 在落地才擲骰：JASS 沒有這個項（crit 是 GGD 自己的物品模型），不算不一致。
+
+**閘門**：`pnpm -r --if-present typecheck`（順手修好 `leapJassFidelity.test.ts` 在
+ba72202e+a16f6ddf 上就已經紅的 6 個 `DashOverride | LeapOverride` 收窄錯誤——
+上一條的閘門紀錄只跑了 Go testrunner，沒跑 tsc）、`pnpm todo:check`、
+`pnpm --filter @ggd/{shared,client} test`。

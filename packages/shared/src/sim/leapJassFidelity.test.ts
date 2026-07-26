@@ -31,10 +31,12 @@ import { readFileSync } from "node:fs";
 import { SimWorld } from "./SimWorld";
 import { PILLAR_ARENA } from "../../testkit/arenas";
 import { asSeatId, asTeamId, type EntityId, type StatusId, type ChampionId } from "../ids";
-import { runEffects } from "./effects/effectRunner";
+import { runEffects, bakeCastTimeConditionals } from "./effects/effectRunner";
 import { leapSystem } from "./systems/LeapSystem";
+import { leapTicks } from "./movement/leap";
+import { TICK_HZ } from "../constants";
 import type { EffectDef } from "./effects/effect";
-import { Stat } from "./stats/statTypes";
+import { Stat, zeroStats } from "./stats/statTypes";
 import { GGD_PER_WC3, round2 } from "../content/templates/expand";
 import * as V from "./math/vec2";
 
@@ -224,66 +226,211 @@ describe("#247 fidelity — godie-hpb1.e (A0G3) 者、皆、陣 combo window", (
     }
   });
 
-  it("BEHAVIOUR: the bonus lands only when the marker is on the caster", () => {
+  it("applyTo:self puts the marker on the CASTER, never on the victim (j:34438)", () => {
     const world = new SimWorld(PILLAR_ARENA, 7);
     const caster = spawnUnit(world, 0, { x: 0, z: 0 });
     const victim = spawnUnit(world, 1, { x: 1, z: 0 });
-    world.stats.set(caster, statsWithAd(40));
-
-    const dmg: EffectDef = {
-      kind: "damage",
-      damageType: "physical",
-      amount: { perRank: [450], ratios: [{ stat: Stat.AttackDamage, coeff: 0.5 }] },
-      comboBonus: {
-        statusId: MOON_COMBO,
-        amount: { ratios: [{ stat: Stat.AttackDamage, coeff: 1.25 }] },
-      },
-    };
-    const ctx = {
+    runEffects([W_WINDOW], {
       world,
       caster,
       rank: 1,
       targets: [victim],
-      origin: "ability:godie-hpb1.e",
+      origin: "ability:godie-hpb1.w",
       rng: world.rng,
-    };
-
-    // window CLOSED -> base only: 450 + 40×0.5
-    world.damageQueue.length = 0;
-    runEffects([dmg], ctx);
-    expect(world.damageQueue[0]!.amount).toBeCloseTo(450 + 20, 6);
-
-    // 07-02 opens it on the CASTER
-    world.damageQueue.length = 0;
-    runEffects(
-      [
-        {
-          kind: "applyStatus",
-          statusId: MOON_COMBO,
-          duration: 1.0,
-          applyTo: "self" as const,
-        },
-      ],
-      ctx,
-    );
+    });
     expect(world.status.get(caster)!.effects.some((s) => s.statusId === "moon-combo")).toBe(true);
     expect(
       world.status.get(victim)!.effects.length,
       "applyTo:self must NOT put the marker on the victim",
     ).toBe(0);
+    // exactly the JASS's one second (j:34439), in ticks
+    expect(world.status.get(caster)!.effects[0]!.expiresAtTick).toBe(Math.round(1.0 / world.dt));
+  });
+});
 
-    // window OPEN -> base + 40×1.25
-    runEffects([dmg], ctx);
-    expect(world.damageQueue[0]!.amount).toBeCloseTo(450 + 20 + 50, 6);
+// ---------------------------------------------------------------------------
+// 3b. THE REFUTED CLAIM — cast-time vs apply-time
+//
+// The combo bonus was implemented, tested green, and could not fire in a real
+// game. The old test applied the damage effect on its own, with no flight in
+// between; the shipped ability puts a 43-tick arc between the cast and the
+// damage, and the window is 30 ticks. So the tests below fly the WHOLE arc on a
+// real SimWorld, both ways round.
+// ---------------------------------------------------------------------------
 
-    // and it EXPIRES — the JASS clears it 1.00 s later (j:34440), it is never
-    // consumed by the follow-up cast.
-    const st = world.status.get(caster)!;
-    expect(st.effects[0]!.expiresAtTick).toBe(0 + Math.round(1.0 / world.dt));
-    st.effects[0]!.expiresAtTick = world.tick; // simulate the window closing
-    world.damageQueue.length = 0;
-    runEffects([dmg], ctx);
-    expect(world.damageQueue[0]!.amount).toBeCloseTo(450 + 20, 6);
+describe("#247 combo timing — the JASS bakes at CAST and pays the baked number", () => {
+  it("j:34211-34216 is inside Jump Start; j:34262 deals the pre-computed variable", () => {
+    cover("jass-fid-a0g3-cast-time");
+    // (a) the value is computed in the SPELL_EFFECT action of A0G3 …
+    pinJass(34195, "function Trig_Jump_Start_Actions takes nothing returns nothing");
+    pinJass(34211, "set udg_MoonDamage = I2R(");
+    pinJass(34212, "if ( Trig_Jump_Start_Func017C() ) then"); // == the udg_MoonCombo test
+    pinJass(34189, "udg_MoonCombo == 2");
+    pinJass(34214, "( 5.00 * I2R(GetHeroStatBJ(bj_HEROSTAT_AGI"); //   non-EX branch
+    pinJass(34216, "( 10.00 * I2R(GetHeroStatBJ(bj_HEROSTAT_AGI"); //  EX branch
+    // (b) … and ONLY THEN is the arc trigger switched on, so the whole 41-tick
+    //     flight happens after the number is already frozen.
+    pinJass(34226, "call EnableTrigger( gg_trg_Jump_Effect )");
+    // (c) the arc's landing AoE deals that variable verbatim — no re-read of
+    //     udg_MoonCombo anywhere in Jump Effect.
+    pinJass(34274, "udg_Jump_Index >= 41.00");
+    pinJass(34262, "UnitDamageTargetBJ( udg_Jump_Caster, GetEnumUnit(), udg_MoonDamage");
+    const jumpEffect = JASS_LINES.slice(34241 - 1, 34314).join("\n");
+    expect(
+      jumpEffect.includes("udg_MoonCombo"),
+      "Trig_Jump_Effect must NOT consult the combo marker — that is the whole point",
+    ).toBe(false);
+
+    // (d) the arithmetic that makes apply-time resolution IMPOSSIBLE:
+    //     41 ticks × (0.35/10) s = 1.435 s of flight against a 1.00 s window.
+    pinJass(34320, "TriggerRegisterTimerEventPeriodic( gg_trg_Jump_Effect, ( 0.35 / 10.00 ) )");
+    const flightSec = 41 * (0.35 / 10);
+    expect(flightSec).toBeCloseTo(1.435, 6);
+    expect(
+      flightSec,
+      "the window (j:34439) lapses mid-flight — so a bonus asked for at LANDING can never fire",
+    ).toBeGreaterThan(1.0);
+  });
+
+  it("GGD keeps the same inequality: a 43-tick arc against a 30-tick window", () => {
+    const leap = leapEffect(readDoc("abilities/godie-hpb1.e.json"));
+    const ticks = leapTicks(leap["durationSec"] as number);
+    const windowTicks = Math.round(1.0 * TICK_HZ);
+    expect(ticks).toBe(43);
+    expect(windowTicks).toBe(30);
+    expect(
+      ticks,
+      "if this ever inverts the bug becomes invisible again — keep the test honest",
+    ).toBeGreaterThan(windowTicks);
+  });
+
+  it("REAL FLIGHT, window OPEN at cast: the bonus survives the window closing mid-air", () => {
+    cover("jass-fid-a0g3-flight-open");
+    const world = new SimWorld(PILLAR_ARENA, 23);
+    const { caster, victim, point } = comboFixture(world);
+
+    // 07-02 者、皆、陣 opens the window (tick 0) …
+    castW(world, caster, victim);
+    // … the player presses E 10 ticks (0.33 s) later — inside the window.
+    for (let i = 0; i < 10; i++) world.step(NO_INTENTS);
+    expect(holdsWindow(world, caster), "precondition: the window is open at CAST").toBe(true);
+    castE(world, caster, point);
+
+    const ov = leapOverride(world, caster);
+    expect(ov.ticks).toBe(43);
+
+    // Fly every tick of the arc through the FULL pipeline.
+    let windowLapsedMidFlight = false;
+    let dealt: number | undefined;
+    for (let k = 0; k < ov.ticks; k++) {
+      world.step(NO_INTENTS);
+      if (!holdsWindow(world, caster)) windowLapsedMidFlight = true;
+      dealt ??= abilityDamage(world);
+    }
+
+    expect(
+      windowLapsedMidFlight,
+      "the window MUST have closed before touchdown — otherwise this test proves nothing",
+    ).toBe(true);
+    expect(holdsWindow(world, caster), "…and it is still closed when the blast lands").toBe(false);
+    expect(dealt, "the landing AoE must have hit the victim").toBeDefined();
+    // base 450 + ad×0.5 (=20) + combo ad×1.25 (=50) = 520, frozen at cast.
+    expect(rawDamage(world, dealt!)).toBeCloseTo(BASE_DAMAGE + COMBO_BONUS, 4);
+  });
+
+  it("REAL FLIGHT, window LAPSED before the cast: no bonus (j:34440 cleared it)", () => {
+    cover("jass-fid-a0g3-flight-lapsed");
+    const world = new SimWorld(PILLAR_ARENA, 24);
+    const { caster, victim, point } = comboFixture(world);
+
+    castW(world, caster, victim);
+    // 31 ticks > the 30-tick window: 07-02's marker is gone before E is pressed.
+    for (let i = 0; i < 31; i++) world.step(NO_INTENTS);
+    expect(holdsWindow(world, caster), "precondition: the window has lapsed at CAST").toBe(false);
+    castE(world, caster, point);
+
+    const ov = leapOverride(world, caster);
+    let dealt: number | undefined;
+    for (let k = 0; k < ov.ticks; k++) {
+      world.step(NO_INTENTS);
+      dealt ??= abilityDamage(world);
+    }
+    expect(dealt).toBeDefined();
+    expect(rawDamage(world, dealt!)).toBeCloseTo(BASE_DAMAGE, 4);
+  });
+
+  it("the payload that leaves the launcher carries NO unresolved condition", () => {
+    cover("jass-fid-a0g3-payload-frozen");
+    const world = new SimWorld(PILLAR_ARENA, 25);
+    const { caster, point } = comboFixture(world);
+    castW(world, caster, null);
+    castE(world, caster, point);
+    const onLand = leapOverride(world, caster).onLand;
+    const dmg = onLand.find((e) => e.kind === "damage");
+    expect(dmg, "the arc must carry its damage payload").toBeDefined();
+    expect(
+      dmg!.kind === "damage" ? dmg!.comboBonus : "n/a",
+      "a `comboBonus` still riding the arc would be re-asked at landing — the defect",
+    ).toBeUndefined();
+    // and the resolved amount travelled with it, folded into `flat`
+    expect(dmg!.kind === "damage" ? dmg!.amount.flat : undefined).toBeCloseTo(COMBO_BONUS, 6);
+  });
+
+  it("CLASS GUARD: every deferred payload carrier bakes, not just leap", () => {
+    cover("jass-fid-bake-carriers");
+    const world = new SimWorld(PILLAR_ARENA, 26);
+    const { caster, victim } = comboFixture(world);
+    castW(world, caster, victim);
+    const ctx = {
+      world,
+      caster,
+      rank: 1,
+      targets: [victim],
+      origin: "test:bake",
+      rng: world.rng,
+    };
+    const conditional: EffectDef = {
+      kind: "damage",
+      damageType: "physical",
+      amount: { flat: 100 },
+      comboBonus: {
+        statusId: MOON_COMBO,
+        amount: { ratios: [{ stat: Stat.AttackDamage, coeff: 1.25 }] },
+      },
+    };
+    // Every EffectDef kind that carries a NESTED EffectDef[] is a gap between
+    // cast and payout. Both must be baked; a new one must be added here.
+    const carriers: { name: string; def: EffectDef; nested: (e: EffectDef) => EffectDef[] }[] = [
+      {
+        name: "leap.onLand",
+        def: {
+          kind: "leap",
+          mode: "inPlace",
+          apexHeight: 5,
+          durationSec: 0.5,
+          onLand: [conditional],
+        },
+        nested: (e) => (e.kind === "leap" ? e.onLand ?? [] : []),
+      },
+      {
+        name: "spawnProjectile.onHit",
+        def: { kind: "spawnProjectile", projectileId: "x" as never, onHit: [conditional] },
+        nested: (e) => (e.kind === "spawnProjectile" ? e.onHit : []),
+      },
+    ];
+    for (const c of carriers) {
+      const baked = bakeCastTimeConditionals([c.def], ctx)[0]!;
+      const inner = c.nested(baked)[0]!;
+      expect(inner.kind).toBe("damage");
+      expect(
+        inner.kind === "damage" ? inner.comboBonus : "n/a",
+        `${c.name} must resolve its conditional at CAST time`,
+      ).toBeUndefined();
+      expect(inner.kind === "damage" ? inner.amount.flat : undefined).toBeCloseTo(
+        100 + COMBO_BONUS,
+        6,
+      );
+    }
   });
 });
 
@@ -351,8 +498,7 @@ describe("#247 fidelity — godie-hapm.w (A0U1) drags before it throws", () => {
       },
     );
 
-    const ov = world.nav.get(victim)!.override!;
-    expect(ov.kind).toBe("leap");
+    const ov = leapOverride(world, victim);
     // the arc STARTS at the caster (the drag), not where the victim stood
     expect(ov.from.x).toBeCloseTo(casterPos.x, 6);
     expect(ov.from.z).toBeCloseTo(casterPos.z, 6);
@@ -402,12 +548,118 @@ function spawnUnit(world: SimWorld, seat: number, pos: V.Vec2): EntityId {
 /** The combo marker id, branded once. */
 const MOON_COMBO = "moon-combo" as StatusId;
 
+const NO_INTENTS = new Map<never, never>();
+
 /**
- * A stats component carrying nothing but `ad` — the only stat either formula
- * under test reads. `final` is what `resolveScaling` consults.
+ * The two SHIPPED effects the combo tests fly — read out of content, not
+ * retyped. If a doc is re-authored these tests follow it, which is the only way
+ * a fidelity test can keep meaning anything.
+ */
+const W_WINDOW = (readDoc("abilities/godie-hpb1.w.json")["effects"] as Json[]).find(
+  (e) => e["kind"] === "applyStatus",
+) as unknown as EffectDef;
+const E_LEAP = leapEffect(readDoc("abilities/godie-hpb1.e.json")) as unknown as EffectDef;
+
+/** ad on the test caster; the only stat either formula reads. */
+const TEST_AD = 40;
+/** perRank[0] 450 + ad×0.5 — the unconditional half (j:34211). */
+const BASE_DAMAGE = 450 + TEST_AD * 0.5;
+/** ad×1.25 — the combo half (j:34214, at this doc's own 0.25/point rate). */
+const COMBO_BONUS = TEST_AD * 1.25;
+
+const ORIGIN_E = "ability:godie-hpb1.e";
+
+/**
+ * Caster and victim placed so the arc is a plain 12-unit hop clear of the
+ * centre pillar and well inside the boundary — `resolveLandingPoint` therefore
+ * returns the requested point verbatim and the test is about TIMING, not
+ * geometry (leap.test.ts owns geometry).
+ */
+function comboFixture(world: SimWorld): {
+  caster: EntityId;
+  victim: EntityId;
+  point: V.Vec2;
+} {
+  const z0 = PILLAR_ARENA.zones[0]!;
+  const point = { x: z0.center.x + 2, z: z0.center.z + 9 };
+  const caster = spawnUnit(world, 0, { x: z0.center.x - 10, z: z0.center.z + 9 });
+  const victim = spawnUnit(world, 1, { x: point.x, z: point.z });
+  world.stats.set(caster, statsWithAd(TEST_AD));
+  return { caster, victim, point };
+}
+
+/** Cast 07-02 者、皆、陣's marker half. `victim` may be null (self-only check). */
+function castW(world: SimWorld, caster: EntityId, victim: EntityId | null): void {
+  runEffects([W_WINDOW], {
+    world,
+    caster,
+    rank: 1,
+    targets: victim === null ? [] : [victim],
+    origin: "ability:godie-hpb1.w",
+    rng: world.rng,
+  });
+}
+
+/** Cast 07-03 列、在、前 at `point` — the real shipped leap effect. */
+function castE(world: SimWorld, caster: EntityId, point: V.Vec2): void {
+  runEffects([E_LEAP], {
+    world,
+    caster,
+    rank: 1,
+    targets: [],
+    point,
+    origin: ORIGIN_E,
+    rng: world.rng,
+  });
+}
+
+/** Is the 1.00 s combo window still open on `id` RIGHT NOW? */
+function holdsWindow(world: SimWorld, id: EntityId): boolean {
+  const st = world.status.get(id);
+  return (
+    st?.effects.some((s) => s.statusId === "moon-combo" && s.expiresAtTick > world.tick) ?? false
+  );
+}
+
+/** The live leap override on `id`, narrowed (a dash would be a test bug). */
+function leapOverride(world: SimWorld, id: EntityId): import("./components").LeapOverride {
+  const ov = world.nav.get(id)?.override;
+  if (!ov || ov.kind !== "leap") throw new Error(`entity ${String(id)} is not mid-leap`);
+  return ov;
+}
+
+/** This tick's 列、在、前 damage event amount, if the blast landed. */
+function abilityDamage(world: SimWorld): number | undefined {
+  for (const ev of world.events) {
+    if (ev.type !== "damage") continue;
+    if ((ev.data as { origin?: string }).origin !== ORIGIN_E) continue;
+    return (ev.data as { amount: number }).amount;
+  }
+  return undefined;
+}
+
+/**
+ * Undo the ONE global factor between the effect's number and the hp that came
+ * off: `combatEnv.damageDealt` (combat/damage.ts:498). The victim carries no
+ * StatsComp, so armour mitigation is the identity — nothing else is in the way.
+ */
+function rawDamage(world: SimWorld, dealt: number): number {
+  return dealt / world.combatEnv.damageDealt;
+}
+
+/**
+ * A stats component whose only NON-ZERO entry is `ad` — the only stat either
+ * formula under test reads. `final` is what `resolveScaling` consults.
+ *
+ * It must be a COMPLETE `zeroStats()` block, not a `{ ad }` shim: the tests
+ * below run the full `world.step` pipeline, and `regenSystem` reads
+ * `final[HpRegen]` unconditionally — a missing key makes hp NaN on tick 1, the
+ * body dies, and `leapSystem` cancels the arc. (That is exactly how a shim
+ * passes a test that only calls `leapSystem` by hand and fails one that flies.)
  */
 function statsWithAd(ad: number): import("./stats/statsComp").StatsComp {
-  const block = { ad } as unknown as import("./stats/statTypes").StatBlock;
+  const block = zeroStats();
+  block[Stat.AttackDamage] = ad;
   return {
     championId: "test" as ChampionId,
     final: block,
