@@ -1,0 +1,6711 @@
+{
+ "meta": {
+  "generator": "tools/w3x-import/resolve_unit_tints.py",
+  "archives": [
+   "war3.mpq",
+   "War3x.mpq",
+   "War3Patch.mpq"
+  ],
+  "table": "Units\\UnitUI.slk",
+  "note": "Blizzard STOCK unit art row. `red`/`green`/`blue` are the 0..255 vertex tint a w3u entry INHERITS when it sets no uclr/uclg/uclb of its own — absent means 255, never 0.",
+  "count": 837
+ },
+ "units": {
+  "egol": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 5.5
+  },
+  "eaoe": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "eaom": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "eaow": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "earc": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "eate": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "ebal": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3
+  },
+  "echm": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "Edem": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "Edmm": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "edob": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.2
+  },
+  "edoc": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "edcm": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "edos": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "edot": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "edtm": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "edry": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "efon": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "ehip": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "ehpr": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "Ekee": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.25
+  },
+  "Emoo": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.25
+  },
+  "emow": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3
+  },
+  "esen": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "etoa": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.75
+  },
+  "etoe": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.75
+  },
+  "etol": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.75
+  },
+  "etrp": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3
+  },
+  "ewsp": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "halt": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "Hamg": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "harm": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.25
+  },
+  "hars": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.75
+  },
+  "hbar": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 5
+  },
+  "hbla": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "hcas": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 6.3
+  },
+  "hctw": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "nws1": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "hfoo": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "hgra": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "hgry": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "hgtw": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "hgyr": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "hhou": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "hkee": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 6.3
+  },
+  "hkni": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.4
+  },
+  "hlum": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.25
+  },
+  "hmil": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "Hmkg": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "hmpr": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "hmtm": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.3
+  },
+  "Hpal": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "hpea": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "hrif": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "hsor": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "hmtt": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "htow": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 6.3
+  },
+  "hwat": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.6
+  },
+  "hwt2": {
+   "red": 255,
+   "green": 192,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.6
+  },
+  "hwt3": {
+   "red": 192,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.6
+  },
+  "hwtw": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "nadw": {
+   "red": 150,
+   "green": 150,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "nadk": {
+   "red": 150,
+   "green": 180,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "nadr": {
+   "red": 255,
+   "green": 180,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.25
+  },
+  "nbrg": {
+   "red": 255,
+   "green": 200,
+   "blue": 150,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nban": {
+   "red": 255,
+   "green": 200,
+   "blue": 150,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nbdk": {
+   "red": 255,
+   "green": 200,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "nbdr": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "nbld": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "nass": {
+   "red": 255,
+   "green": 150,
+   "blue": 200,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nbwm": {
+   "red": 255,
+   "green": 200,
+   "blue": 200,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.25
+  },
+  "ncea": {
+   "red": 255,
+   "green": 150,
+   "blue": 170,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "ncim": {
+   "red": 255,
+   "green": 120,
+   "blue": 140,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "ncen": {
+   "red": 255,
+   "green": 255,
+   "blue": 170,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "ncer": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "ncks": {
+   "red": 150,
+   "green": 120,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.4
+  },
+  "ncnk": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.85
+  },
+  "ncop": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "ncp2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "ncp3": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.5
+  },
+  "nder": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.1
+  },
+  "ndog": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "ndrr": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 6.6
+  },
+  "ndrg": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 6.6
+  },
+  "ndrz": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 6.6
+  },
+  "ndrk": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 6.6
+  },
+  "ndru": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 6.6
+  },
+  "ndth": {
+   "red": 200,
+   "green": 120,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "ndtp": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "ndtb": {
+   "red": 180,
+   "green": 200,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "ndtw": {
+   "red": 255,
+   "green": 200,
+   "blue": 110,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "ndtr": {
+   "red": 100,
+   "green": 200,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "ndtt": {
+   "red": 100,
+   "green": 255,
+   "blue": 100,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nele": {
+   "red": 255,
+   "green": 120,
+   "blue": 165,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.6
+  },
+  "nelb": {
+   "red": 255,
+   "green": 50,
+   "blue": 120,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.6
+  },
+  "nenc": {
+   "red": 255,
+   "green": 140,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nenf": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nenp": {
+   "red": 170,
+   "green": 255,
+   "blue": 60,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.35
+  },
+  "nepl": {
+   "red": 150,
+   "green": 160,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.45
+  },
+  "nfel": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nfrb": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nfrg": {
+   "red": 255,
+   "green": 120,
+   "blue": 150,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nfrl": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nfra": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "nfrs": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nfre": {
+   "red": 255,
+   "green": 150,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nfrp": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nfsh": {
+   "red": 130,
+   "green": 255,
+   "blue": 130,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nfsp": {
+   "red": 255,
+   "green": 220,
+   "blue": 140,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nftb": {
+   "red": 130,
+   "green": 255,
+   "blue": 130,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nftk": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "nftr": {
+   "red": 255,
+   "green": 220,
+   "blue": 140,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nftt": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "ngad": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.75
+  },
+  "nggr": {
+   "red": 150,
+   "green": 100,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3
+  },
+  "ngh1": {
+   "red": 110,
+   "green": 150,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "ngh2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "ngir": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "ngme": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.5
+  },
+  "ngna": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "ngnb": {
+   "red": 255,
+   "green": 140,
+   "blue": 140,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "ngno": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "ngns": {
+   "red": 100,
+   "green": 100,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "ngnv": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "ngnw": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "ngol": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 5
+  },
+  "ngrk": {
+   "red": 150,
+   "green": 110,
+   "blue": 70,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "ngsp": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "ngst": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.85
+  },
+  "narg": {
+   "red": 255,
+   "green": 255,
+   "blue": 200,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nwrg": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.9
+  },
+  "nsgg": {
+   "red": 255,
+   "green": 120,
+   "blue": 180,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.3
+  },
+  "nhar": {
+   "red": 255,
+   "green": 140,
+   "blue": 120,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.2
+  },
+  "nhfp": {
+   "red": 255,
+   "green": 120,
+   "blue": 120,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nhdc": {
+   "red": 170,
+   "green": 120,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.1
+  },
+  "nhhr": {
+   "red": 255,
+   "green": 255,
+   "blue": 120,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "nhns": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nhrw": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.2
+  },
+  "nhrh": {
+   "red": 100,
+   "green": 200,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nhrq": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "nhrr": {
+   "red": 255,
+   "green": 255,
+   "blue": 150,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.2
+  },
+  "nith": {
+   "red": 170,
+   "green": 130,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nitp": {
+   "red": 190,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nitr": {
+   "red": 190,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nits": {
+   "red": 170,
+   "green": 130,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nitt": {
+   "red": 170,
+   "green": 255,
+   "blue": 170,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nitw": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nkob": {
+   "red": 255,
+   "green": 255,
+   "blue": 165,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nkog": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nkol": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nkot": {
+   "red": 255,
+   "green": 150,
+   "blue": 180,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nltl": {
+   "red": 255,
+   "green": 255,
+   "blue": 120,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "nthl": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "nstw": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3
+  },
+  "nmer": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": 0,
+   "customTeamColor": 0,
+   "scale": 6
+  },
+  "nmr2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": 12,
+   "customTeamColor": 0,
+   "scale": 6
+  },
+  "nmr3": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": 1,
+   "customTeamColor": 0,
+   "scale": 6
+  },
+  "nmr4": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": 11,
+   "customTeamColor": 0,
+   "scale": 6
+  },
+  "nmr5": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": 10,
+   "customTeamColor": 0,
+   "scale": 6
+  },
+  "nmr6": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": 6,
+   "customTeamColor": 0,
+   "scale": 6
+  },
+  "nmr7": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": 3,
+   "customTeamColor": 0,
+   "scale": 6
+  },
+  "nmr8": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": 9,
+   "customTeamColor": 0,
+   "scale": 6
+  },
+  "nmr9": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": 8,
+   "customTeamColor": 0,
+   "scale": 6
+  },
+  "nmr0": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": 5,
+   "customTeamColor": 0,
+   "scale": 6
+  },
+  "nmra": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": 0,
+   "customTeamColor": 0,
+   "scale": 6
+  },
+  "nmrb": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": 0,
+   "customTeamColor": 0,
+   "scale": 6
+  },
+  "nmoo": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 5
+  },
+  "nfoh": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 5
+  },
+  "nmfs": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nmpg": {
+   "red": 255,
+   "green": 120,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nmmu": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nmrl": {
+   "red": 200,
+   "green": 255,
+   "blue": 200,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nmrm": {
+   "red": 255,
+   "green": 200,
+   "blue": 200,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nmrr": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nnwa": {
+   "red": 255,
+   "green": 255,
+   "blue": 140,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "nnwl": {
+   "red": 255,
+   "green": 130,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "nnws": {
+   "red": 255,
+   "green": 255,
+   "blue": 155,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.8
+  },
+  "nnwr": {
+   "red": 160,
+   "green": 200,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.8
+  },
+  "nnwq": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "nspd": {
+   "red": 120,
+   "green": 200,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nogl": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "nogm": {
+   "red": 255,
+   "green": 160,
+   "blue": 160,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.2
+  },
+  "nogr": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.2
+  },
+  "nomg": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.2
+  },
+  "nowb": {
+   "red": 255,
+   "green": 255,
+   "blue": 170,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.6
+  },
+  "nowe": {
+   "red": 255,
+   "green": 160,
+   "blue": 160,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.8
+  },
+  "nowk": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.3
+  },
+  "npig": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.9
+  },
+  "nrat": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.9
+  },
+  "nrdk": {
+   "red": 255,
+   "green": 200,
+   "blue": 50,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "nrdr": {
+   "red": 255,
+   "green": 100,
+   "blue": 200,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "nrog": {
+   "red": 255,
+   "green": 150,
+   "blue": 200,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nrvf": {
+   "red": 255,
+   "green": 120,
+   "blue": 120,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nrvs": {
+   "red": 180,
+   "green": 150,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nrvl": {
+   "red": 255,
+   "green": 255,
+   "blue": 150,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nrvi": {
+   "red": 150,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.1
+  },
+  "nrvd": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.2
+  },
+  "nrwm": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.25
+  },
+  "nrzb": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nrzg": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nrzm": {
+   "red": 255,
+   "green": 150,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nrzs": {
+   "red": 255,
+   "green": 255,
+   "blue": 120,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nrzt": {
+   "red": 255,
+   "green": 170,
+   "blue": 200,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nqbh": {
+   "red": 255,
+   "green": 140,
+   "blue": 170,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nsat": {
+   "red": 255,
+   "green": 120,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nsea": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nshe": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.9
+  },
+  "nshf": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.8
+  },
+  "nska": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nske": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nskg": {
+   "red": 255,
+   "green": 150,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nskm": {
+   "red": 100,
+   "green": 150,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nskf": {
+   "red": 255,
+   "green": 100,
+   "blue": 150,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nslh": {
+   "red": 255,
+   "green": 255,
+   "blue": 140,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "nslr": {
+   "red": 255,
+   "green": 150,
+   "blue": 170,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "nslv": {
+   "red": 255,
+   "green": 200,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "nsll": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "nspr": {
+   "red": 200,
+   "green": 200,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.1
+  },
+  "nsgt": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nssp": {
+   "red": 255,
+   "green": 255,
+   "blue": 100,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nsbm": {
+   "red": 255,
+   "green": 80,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nslm": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nslf": {
+   "red": 255,
+   "green": 100,
+   "blue": 180,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "nsln": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3
+  },
+  "nspg": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nspb": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.1
+  },
+  "nsqt": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.2
+  },
+  "nsqe": {
+   "red": 255,
+   "green": 170,
+   "blue": 170,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.2
+  },
+  "nsqo": {
+   "red": 255,
+   "green": 150,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "nsqa": {
+   "red": 255,
+   "green": 170,
+   "blue": 170,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.45
+  },
+  "nsth": {
+   "red": 255,
+   "green": 255,
+   "blue": 140,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "nstl": {
+   "red": 255,
+   "green": 130,
+   "blue": 150,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nsts": {
+   "red": 180,
+   "green": 200,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nsty": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nvil": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nvl2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nvlw": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nvlk": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.75
+  },
+  "nvk2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.75
+  },
+  "nvul": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nwen": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.2
+  },
+  "nwiz": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nwlt": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.1
+  },
+  "nwlg": {
+   "red": 150,
+   "green": 120,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.2
+  },
+  "nwld": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.3
+  },
+  "nwwf": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "nwwg": {
+   "red": 150,
+   "green": 120,
+   "blue": 140,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nwwd": {
+   "red": 150,
+   "green": 120,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "nwna": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nwnr": {
+   "red": 255,
+   "green": 200,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nwns": {
+   "red": 130,
+   "green": 160,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.2
+  },
+  "nwzd": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nwzg": {
+   "red": 255,
+   "green": 190,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nwzr": {
+   "red": 255,
+   "green": 255,
+   "blue": 170,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nzep": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nzom": {
+   "red": 255,
+   "green": 150,
+   "blue": 150,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "oalt": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.5
+  },
+  "oang": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "obar": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.5
+  },
+  "obea": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.5
+  },
+  "Obla": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "ocat": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.75
+  },
+  "odoc": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "oeye": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.75
+  },
+  "otot": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.75
+  },
+  "Ofar": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "ofor": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "ofrt": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 6.6
+  },
+  "ogre": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 6.6
+  },
+  "ogru": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "ohun": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.1
+  },
+  "ohwd": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.75
+  },
+  "okod": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.25
+  },
+  "opeo": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "orai": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.6
+  },
+  "oshm": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.15
+  },
+  "osld": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "ostr": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 6.6
+  },
+  "osw1": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "osw2": {
+   "red": 170,
+   "green": 170,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "osw3": {
+   "red": 255,
+   "green": 170,
+   "blue": 170,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "otau": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.6
+  },
+  "Otch": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "otrb": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.75
+  },
+  "otto": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.25
+  },
+  "owtw": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "owyv": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "uabo": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.1
+  },
+  "uaco": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "uaod": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.25
+  },
+  "uban": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "ubon": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 5
+  },
+  "ucry": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.85
+  },
+  "Udea": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.85
+  },
+  "Udre": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "ufro": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.25
+  },
+  "ugar": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "ugrm": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "ugol": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 5.5
+  },
+  "ugho": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.1
+  },
+  "ugrv": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 5
+  },
+  "Ulic": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "umtw": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "unec": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "unp1": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 6.6
+  },
+  "unp2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 6.6
+  },
+  "unpl": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 6.6
+  },
+  "uplg": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.75
+  },
+  "usap": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.5
+  },
+  "usep": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 5
+  },
+  "ushd": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "uske": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "uslh": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.25
+  },
+  "utod": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.25
+  },
+  "uzig": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.25
+  },
+  "uzg1": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.25
+  },
+  "ninf": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "Uwar": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.1
+  },
+  "nbal": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "Npld": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3
+  },
+  "nwgt": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 1,
+   "scale": 3.5
+  },
+  "nbzw": {
+   "red": 255,
+   "green": 180,
+   "blue": 80,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "nbzk": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "nbzd": {
+   "red": 255,
+   "green": 180,
+   "blue": 120,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.25
+  },
+  "ngrd": {
+   "red": 180,
+   "green": 255,
+   "blue": 150,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.25
+  },
+  "ngdk": {
+   "red": 255,
+   "green": 255,
+   "blue": 180,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "ngrw": {
+   "red": 255,
+   "green": 230,
+   "blue": 0,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "nspp": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "ncnt": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nct1": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nct2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "ntnt": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "ntt2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "ngnh": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "ngt2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nten": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3
+  },
+  "ntn2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3
+  },
+  "nfh0": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nfh1": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nth0": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nth1": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "ncb0": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "ncb1": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "ncb2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "ncb3": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "ncb4": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "ncb5": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "ncb6": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "ncb7": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "ncb8": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "ncb9": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "ncba": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "ncbb": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "ncbc": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "ncbd": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "ncbe": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "ncbf": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "ngni": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "ngwr": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "nfr1": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nfr2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nmh0": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nmh1": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nnzg": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "hcth": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.2
+  },
+  "hhes": {
+   "red": 255,
+   "green": 255,
+   "blue": 180,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.2
+  },
+  "Hart": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.1
+  },
+  "Harf": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.1
+  },
+  "Uear": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.85
+  },
+  "Huth": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.1
+  },
+  "Hpb1": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.1
+  },
+  "Hpb2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.1
+  },
+  "Hjai": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "uktn": {
+   "red": 125,
+   "green": 255,
+   "blue": 200,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "Uktl": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "Uclc": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "uktg": {
+   "red": 125,
+   "green": 255,
+   "blue": 200,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "Hmbr": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "Utic": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "oosc": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "ownr": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "Hvwd": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "uswb": {
+   "red": 120,
+   "green": 150,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.3
+  },
+  "Umal": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "Hant": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nemi": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nser": {
+   "red": 255,
+   "green": 200,
+   "blue": 200,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.25
+  },
+  "nthr": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.25
+  },
+  "hhdl": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.4
+  },
+  "nmed": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "nmdm": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "uabc": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.1
+  },
+  "Othr": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "Ogrh": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.15
+  },
+  "Opgh": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.15
+  },
+  "Ocbh": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "Otcc": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "Nman": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3
+  },
+  "Eill": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "Eilm": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "Eidm": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "Ecen": {
+   "red": 255,
+   "green": 200,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3
+  },
+  "Ekgg": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.25
+  },
+  "Efur": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "Etyr": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.25
+  },
+  "Nbbc": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.15
+  },
+  "nhef": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nhem": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nhea": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "eshd": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nshr": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "nefm": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nef0": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nef1": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nef2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nef3": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nef4": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nef5": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nef6": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nef7": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "negt": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "negf": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "negm": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "owar": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "ocbw": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.75
+  },
+  "nchg": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nchr": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.6
+  },
+  "nchw": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.15
+  },
+  "nckb": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.25
+  },
+  "ncpn": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nw2w": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.15
+  },
+  "nbsp": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "nglm": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.75
+  },
+  "npgf": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.75
+  },
+  "nheb": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "nbfl": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 5
+  },
+  "ndfl": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 5
+  },
+  "ndrb": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nbsm": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "nhcn": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "nfrm": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "ngob": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "ndgt": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "nbwd": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.2
+  },
+  "ncmw": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3
+  },
+  "ncta": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.75
+  },
+  "ncte": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.75
+  },
+  "nctl": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.75
+  },
+  "ncap": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "ncaw": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "ndmg": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 5
+  },
+  "nwc1": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.3
+  },
+  "nwc2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.3
+  },
+  "nmgv": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.3
+  },
+  "zmar": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "zhyd": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.2
+  },
+  "zjug": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "zzrg": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nwat": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nssn": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.15
+  },
+  "zcso": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "zsmc": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.2
+  },
+  "zshv": {
+   "red": 255,
+   "green": 255,
+   "blue": 165,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.2
+  },
+  "Hblm": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "hbot": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3
+  },
+  "hbsh": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "hdes": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3
+  },
+  "hdhw": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "hphx": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "hpxe": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "hrtt": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "hspt": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.2
+  },
+  "hatw": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "hshy": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 5
+  },
+  "hvlt": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.5
+  },
+  "Oshd": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.2
+  },
+  "nwad": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.75
+  },
+  "obot": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3
+  },
+  "odes": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3
+  },
+  "osp1": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.75
+  },
+  "osp2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.75
+  },
+  "osp3": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.75
+  },
+  "osp4": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.75
+  },
+  "ospm": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.15
+  },
+  "ospw": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.15
+  },
+  "otbk": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.1
+  },
+  "otbr": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "oshy": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 5
+  },
+  "ovln": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.5
+  },
+  "Ewar": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "ebsh": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "edes": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3
+  },
+  "efdr": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "emtg": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3
+  },
+  "espv": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "even": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "eden": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.5
+  },
+  "eshy": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 5
+  },
+  "Ucrl": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.85
+  },
+  "ubsp": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "ucrm": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.85
+  },
+  "ucs1": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "ucs2": {
+   "red": 170,
+   "green": 170,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "ucs3": {
+   "red": 255,
+   "green": 170,
+   "blue": 170,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "ucsB": {
+   "red": 170,
+   "green": 170,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "ucsC": {
+   "red": 255,
+   "green": 170,
+   "blue": 170,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "uloc": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "uobs": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.1
+  },
+  "uskm": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "uubs": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "ushp": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.75
+  },
+  "utom": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 5.5
+  },
+  "uzg2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.25
+  },
+  "Nbrn": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "Nbst": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "Nngs": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "Npbm": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "Nplh": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "ndr1": {
+   "red": 230,
+   "green": 230,
+   "blue": 230,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "ndr2": {
+   "red": 200,
+   "green": 200,
+   "blue": 200,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.2
+  },
+  "ndr3": {
+   "red": 150,
+   "green": 150,
+   "blue": 150,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.4
+  },
+  "ngz1": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "ngz2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "ngz3": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "ngzc": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "ngzd": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "ngza": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.2
+  },
+  "ngz4": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.4
+  },
+  "npn1": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.4
+  },
+  "npn2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.4
+  },
+  "npn3": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.4
+  },
+  "npn4": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.7
+  },
+  "npn5": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.7
+  },
+  "npn6": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.7
+  },
+  "nqb1": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.4
+  },
+  "nqb2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.6
+  },
+  "nqb3": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.8
+  },
+  "nqb4": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "nwe1": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "nwe2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nwe3": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "nahy": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3
+  },
+  "nanb": {
+   "red": 200,
+   "green": 200,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.4
+  },
+  "nanm": {
+   "red": 200,
+   "green": 200,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.4
+  },
+  "nanc": {
+   "red": 200,
+   "green": 255,
+   "blue": 200,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.2
+  },
+  "nane": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.7
+  },
+  "nano": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.8
+  },
+  "nanw": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.6
+  },
+  "nbda": {
+   "red": 210,
+   "green": 255,
+   "blue": 210,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.8
+  },
+  "nbdm": {
+   "red": 210,
+   "green": 210,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.8
+  },
+  "nbdo": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "nbds": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.4
+  },
+  "nbdw": {
+   "red": 255,
+   "green": 235,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.2
+  },
+  "nbnb": {
+   "red": 200,
+   "green": 200,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.4
+  },
+  "nbot": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "ncfs": {
+   "red": 255,
+   "green": 255,
+   "blue": 128,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.8
+  },
+  "ndqn": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "ndqp": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.4
+  },
+  "ndqs": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "ndqt": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.4
+  },
+  "ndqv": {
+   "red": 255,
+   "green": 120,
+   "blue": 190,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.2
+  },
+  "ndrv": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nehy": {
+   "red": 150,
+   "green": 110,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "nerd": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "ners": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "nerw": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "nfgb": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.35
+  },
+  "nfgo": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.3
+  },
+  "nfgt": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.75
+  },
+  "nfgu": {
+   "red": 255,
+   "green": 200,
+   "blue": 200,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nfod": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.4
+  },
+  "nfor": {
+   "red": 180,
+   "green": 180,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.4
+  },
+  "nfot": {
+   "red": 255,
+   "green": 150,
+   "blue": 150,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "nfov": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nfpc": {
+   "red": 255,
+   "green": 120,
+   "blue": 150,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nfpe": {
+   "red": 255,
+   "green": 150,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nfpl": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nfps": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nfpt": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nfpu": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "nhyc": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "nhyd": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "nhyh": {
+   "red": 255,
+   "green": 255,
+   "blue": 125,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nina": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "ninc": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.25
+  },
+  "ninm": {
+   "red": 255,
+   "green": 150,
+   "blue": 135,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.75
+  },
+  "njgb": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.7
+  },
+  "njga": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.45
+  },
+  "njg1": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.1
+  },
+  "nlds": {
+   "red": 250,
+   "green": 250,
+   "blue": 100,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "nlkl": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "nlpd": {
+   "red": 125,
+   "green": 255,
+   "blue": 225,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.65
+  },
+  "nlpr": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.4
+  },
+  "nlps": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.4
+  },
+  "nlrv": {
+   "red": 100,
+   "green": 175,
+   "blue": 175,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nlsn": {
+   "red": 150,
+   "green": 255,
+   "blue": 125,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.9
+  },
+  "nltc": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nlur": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.75
+  },
+  "nmam": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "nmbg": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.9
+  },
+  "nmcf": {
+   "red": 255,
+   "green": 255,
+   "blue": 128,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.8
+  },
+  "nmdr": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "nmgd": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3
+  },
+  "nmgr": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.75
+  },
+  "nmgw": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.25
+  },
+  "nmit": {
+   "red": 255,
+   "green": 165,
+   "blue": 100,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.1
+  },
+  "nmrv": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.45
+  },
+  "nmsc": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nmsn": {
+   "red": 192,
+   "green": 192,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.1
+  },
+  "nmtw": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nmyr": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "nmys": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "nndk": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "nndr": {
+   "red": 60,
+   "green": 255,
+   "blue": 0,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "nnht": {
+   "red": 255,
+   "green": 50,
+   "blue": 50,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.65
+  },
+  "nnmg": {
+   "red": 200,
+   "green": 170,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.15
+  },
+  "nnrg": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.25
+  },
+  "nnrs": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.25
+  },
+  "nnsu": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nnsw": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "noga": {
+   "red": 255,
+   "green": 235,
+   "blue": 215,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.2
+  },
+  "nogn": {
+   "red": 255,
+   "green": 225,
+   "blue": 235,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "nogo": {
+   "red": 255,
+   "green": 230,
+   "blue": 210,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "npfl": {
+   "red": 240,
+   "green": 255,
+   "blue": 240,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.2
+  },
+  "npfm": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "nplb": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.8
+  },
+  "nplg": {
+   "red": 160,
+   "green": 200,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.4
+  },
+  "nrel": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.6
+  },
+  "nsbs": {
+   "red": 255,
+   "green": 255,
+   "blue": 120,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "nsc2": {
+   "red": 255,
+   "green": 255,
+   "blue": 150,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nsc3": {
+   "red": 255,
+   "green": 175,
+   "blue": 150,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.72
+  },
+  "nscb": {
+   "red": 100,
+   "green": 125,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.2
+  },
+  "nsel": {
+   "red": 100,
+   "green": 190,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.6
+  },
+  "nsgb": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3
+  },
+  "nsgh": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.4
+  },
+  "nsgn": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "nsko": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nsnp": {
+   "red": 255,
+   "green": 255,
+   "blue": 120,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "nsns": {
+   "red": 192,
+   "green": 192,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.1
+  },
+  "nsoc": {
+   "red": 175,
+   "green": 175,
+   "blue": 250,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "nsog": {
+   "red": 150,
+   "green": 255,
+   "blue": 150,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nsra": {
+   "red": 255,
+   "green": 175,
+   "blue": 150,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.1
+  },
+  "nsrh": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "nsrn": {
+   "red": 100,
+   "green": 200,
+   "blue": 200,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "nsrv": {
+   "red": 100,
+   "green": 100,
+   "blue": 100,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nsrw": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "ntka": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "ntkc": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "ntkf": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "ntkh": {
+   "red": 255,
+   "green": 190,
+   "blue": 95,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "ntks": {
+   "red": 255,
+   "green": 225,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.66
+  },
+  "ntkt": {
+   "red": 255,
+   "green": 190,
+   "blue": 95,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.66
+  },
+  "ntkw": {
+   "red": 255,
+   "green": 190,
+   "blue": 95,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.66
+  },
+  "ntor": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "ntrd": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "ntrg": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3
+  },
+  "ntrh": {
+   "red": 192,
+   "green": 192,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "ntrs": {
+   "red": 180,
+   "green": 255,
+   "blue": 192,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "ntrt": {
+   "red": 192,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "ntrv": {
+   "red": 255,
+   "green": 200,
+   "blue": 150,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "ntws": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nubk": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "nubr": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nubw": {
+   "red": 255,
+   "green": 100,
+   "blue": 100,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "nvde": {
+   "red": 255,
+   "green": 50,
+   "blue": 50,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nvdg": {
+   "red": 80,
+   "green": 80,
+   "blue": 80,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.3
+  },
+  "nvdl": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nvdw": {
+   "red": 50,
+   "green": 50,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.2
+  },
+  "nwgs": {
+   "red": 150,
+   "green": 150,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "nchp": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nhym": {
+   "red": 255,
+   "green": 255,
+   "blue": 170,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "nalb": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.8
+  },
+  "ncrb": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.9
+  },
+  "ndwm": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.9
+  },
+  "nfbr": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.9
+  },
+  "nhmc": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.9
+  },
+  "now2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.2
+  },
+  "now3": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.2
+  },
+  "nowl": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.2
+  },
+  "npng": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.9
+  },
+  "npnw": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.9
+  },
+  "nsha": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.9
+  },
+  "nshw": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.9
+  },
+  "nskk": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.9
+  },
+  "nsno": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.8
+  },
+  "ndch": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "ndh0": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "ndh1": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "ndh2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.25
+  },
+  "ndh3": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.25
+  },
+  "ndh4": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.25
+  },
+  "ndro": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 6.6
+  },
+  "nmg0": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nmg1": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nmrc": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": 1,
+   "customTeamColor": 0,
+   "scale": 6
+  },
+  "nmrd": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": 9,
+   "customTeamColor": 0,
+   "scale": 6
+  },
+  "nmre": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": 12,
+   "customTeamColor": 0,
+   "scale": 6
+  },
+  "nmrf": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": 3,
+   "customTeamColor": 0,
+   "scale": 6
+  },
+  "nmrk": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": 0,
+   "customTeamColor": 0,
+   "scale": 6
+  },
+  "nshp": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.75
+  },
+  "ntav": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": 0,
+   "customTeamColor": 0,
+   "scale": 6
+  },
+  "Eevi": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "Eevm": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "Emfr": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.25
+  },
+  "Emns": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.25
+  },
+  "Ewrd": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "Hapm": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.1
+  },
+  "Hdgo": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.1
+  },
+  "Hhkl": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.1
+  },
+  "Hkal": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "Hlgr": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.6
+  },
+  "Hmgd": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.1
+  },
+  "Hvsh": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "Nklj": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.7
+  },
+  "Nkjx": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3
+  },
+  "Nmag": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3
+  },
+  "Nsjs": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "Ocb2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "Odrt": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "Ogld": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.4
+  },
+  "Orex": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "Orkn": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.2
+  },
+  "Osam": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "Uanb": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.85
+  },
+  "Ubal": {
+   "red": 255,
+   "green": 200,
+   "blue": 200,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.9
+  },
+  "Udth": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "Usyl": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "Uvar": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "Uvng": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "Hgam": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "eilw": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "enec": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "ensh": {
+   "red": 255,
+   "green": 125,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.5
+  },
+  "etrs": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3
+  },
+  "hbew": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "hrdh": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.4
+  },
+  "Naka": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "nsw1": {
+   "red": 255,
+   "green": 200,
+   "blue": 200,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nsw2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.7
+  },
+  "nsw3": {
+   "red": 220,
+   "green": 220,
+   "blue": 220,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "ncat": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.75
+  },
+  "nbee": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nbel": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.2
+  },
+  "ndmu": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.1
+  },
+  "ndrd": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "ndrn": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "ndrt": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.2
+  },
+  "ndrf": {
+   "red": 255,
+   "green": 165,
+   "blue": 165,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.85
+  },
+  "ndrh": {
+   "red": 140,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.05
+  },
+  "ndrj": {
+   "red": 200,
+   "green": 150,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.45
+  },
+  "ndrm": {
+   "red": 255,
+   "green": 255,
+   "blue": 140,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.85
+  },
+  "ndrp": {
+   "red": 165,
+   "green": 165,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.95
+  },
+  "ndrs": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "ndrw": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.05
+  },
+  "ndrl": {
+   "red": 210,
+   "green": 210,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.8
+  },
+  "ndsa": {
+   "red": 255,
+   "green": 190,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "negz": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nfgl": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3
+  },
+  "ngbl": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "nhew": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "njks": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "nmpe": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nmsh": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.4
+  },
+  "nspc": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3
+  },
+  "odkt": {
+   "red": 255,
+   "green": 220,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.25
+  },
+  "ogrk": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "ojgn": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "omtg": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "onzg": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.6
+  },
+  "oswy": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.75
+  },
+  "ovlj": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "uarb": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "ubdd": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "ubdr": {
+   "red": 200,
+   "green": 180,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.7
+  },
+  "ubot": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3
+  },
+  "udes": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3
+  },
+  "hprt": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "haro": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 6.3
+  },
+  "nbt1": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "nbt2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "ndke": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 8.5
+  },
+  "ndkw": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 8.5
+  },
+  "ndt1": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "ndt2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "net1": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "net2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "nfnp": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 5
+  },
+  "nfrt": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "nft1": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "nft2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "nfv0": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nfv1": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nfv2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nfv3": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nfv4": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nico": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nitb": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.3
+  },
+  "nnad": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "nnfm": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3
+  },
+  "nnsa": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4.5
+  },
+  "nnsg": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 5
+  },
+  "nntg": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.25
+  },
+  "nntt": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 5.5
+  },
+  "npgr": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "ntt1": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "ntx2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2.5
+  },
+  "nvr0": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nvr1": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nvr2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nzin": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nbse": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nbsw": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.5
+  },
+  "nzlc": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 4
+  },
+  "Nalc": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "Nalm": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "Nal2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "Nal3": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "Ntin": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "Nrob": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.2
+  },
+  "ncgb": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.15
+  },
+  "ncg1": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.15
+  },
+  "ncg2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.15
+  },
+  "ncg3": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.15
+  },
+  "nfac": {
+   "red": 155,
+   "green": 155,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.3
+  },
+  "nfa1": {
+   "red": 155,
+   "green": 155,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.3
+  },
+  "nfa2": {
+   "red": 155,
+   "green": 155,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 3.3
+  },
+  "Nfir": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "nlv1": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.6
+  },
+  "nlv2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.6
+  },
+  "nlv3": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1.6
+  },
+  "nba2": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 2
+  },
+  "nsca": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nsce": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 1
+  },
+  "nfro": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.9
+  },
+  "nech": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.9
+  },
+  "necr": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.9
+  },
+  "nrac": {
+   "red": 255,
+   "green": 255,
+   "blue": 255,
+   "teamColor": -1,
+   "customTeamColor": 0,
+   "scale": 0.9
+  }
+ }
+}

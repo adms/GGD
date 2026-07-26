@@ -16,6 +16,16 @@
  * loaded model is now measured and the camera is FRAMED to its actual bounding
  * box (and the model grounded so its feet sit on the podium), so any champion —
  * KayKit or imported, centred or offset — is centred and fully in view.
+ *
+ * VERTEX TINT (task #263). #49 ported the w3x per-unit art colour but wired it
+ * ONLY into the arena (`EntityViewRegistry.applyTint`), so every champion the
+ * map recoloured showed up in its RAW palette on this stage — 黑化Saber, 貞子,
+ * 黑人牙膏 and Berserker were near-black in play and plain in champ-select, the
+ * store and the round-winner card, which are the three screens that use this
+ * viewer. `show()` now takes the champion whose model this is and paints the
+ * SAME `applyModelTint` the arena uses, so the gamma correction, the team-mesh
+ * exclusion list and the material cloning are shared code, not a second
+ * implementation that could disagree.
  */
 import { Engine } from "@babylonjs/core/Engines/engine";
 import { Scene } from "@babylonjs/core/scene";
@@ -31,6 +41,8 @@ import type { ModelDoc } from "@ggd/shared/content";
 import { AssetManager } from "./AssetManager";
 import { ClipAnimator } from "./ClipAnimator";
 import { glbYawOffset } from "./views/glbFacing";
+import { championTintForId } from "./views/championTint";
+import { applyModelTint, releaseModelTint } from "./views/modelTint";
 
 /** The 3/4 hero-shot angle the stage always resolves to after framing. */
 const STORE_CAM_ALPHA = Math.PI / 2.6;
@@ -151,8 +163,16 @@ export class StorePreview {
     return this.modelRoot;
   }
 
-  /** Swap the displayed model (clears the previous one). Never throws. */
-  async show(doc: ModelDoc): Promise<void> {
+  /**
+   * Swap the displayed model (clears the previous one). Never throws.
+   *
+   * @param opts.championId whose art colour to paint on (task #263). The tint
+   *   is a per-CHAMPION field and `doc.id` is the MODEL key — many-to-one, so
+   *   the model alone cannot answer it (`champ.sela` is shared by 18 champions,
+   *   tinted and untinted together). Omitted / unknown / untinted → nothing is
+   *   painted and not one material is touched, exactly as before.
+   */
+  async show(doc: ModelDoc, opts: { championId?: string | null } = {}): Promise<void> {
     const token = ++this.showToken;
     this.clearModel();
     const container = await this.assets.load(doc.glbPath);
@@ -164,6 +184,12 @@ export class StorePreview {
     for (const node of inst.rootNodes) node.parent = root;
     this.modelRoot = root;
     this.frameToModel(root);
+    // AFTER the meshes are parented (applyModelTint walks `root`'s children)
+    // and BEFORE the first frame, so a tinted champion never flashes untinted.
+    // `championTintForId` returns undefined while content is still loading —
+    // treated as "no tint" here rather than retried, because this stage shows
+    // one model on demand instead of running a per-frame diff.
+    applyModelTint(root, championTintForId(opts.championId ?? null) ?? null);
     this.animator = new ClipAnimator(inst.animationGroups, doc.clipMap);
     this.animator.play("idle");
   }
@@ -194,6 +220,12 @@ export class StorePreview {
 
   private clearModel(): void {
     if (this.modelRoot) {
+      // Hand the CACHED source materials back before the meshes go away
+      // (#263). `applyModelTint` swaps in per-view clones; the originals belong
+      // to the AssetManager's container and the NEXT `show()` of the same glb
+      // reuses them, so an unreleased clone both leaks and strands the cache.
+      // No-op when nothing was tinted.
+      releaseModelTint(this.modelRoot);
       // NOT `dispose(_, true)`: everything under modelRoot was instantiated
       // with `cloneMaterials: false`, so its materials are the AssetContainer's
       // — cached by `this.assets` per glb path. Force-disposing them here would

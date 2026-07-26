@@ -364,7 +364,11 @@ export function ChampionProfile({
         {/* NOT keyed: StorePreviewCanvas swaps the model in the SAME Babylon
             engine on a modelKey change, so a hover preview never re-creates the
             WebGL context (only the model reloads). */}
-        <StorePreviewCanvas modelKey={def.modelKey} />
+        {/* championId (#263): the w3x art colour is per-CHAMPION, and 18 of
+            them share `champ.sela` — without the id this stage shows 黑化Saber
+            /貞子/黑人牙膏 in the untinted stand-in palette and only the arena
+            turns them dark, which is what the owner saw. */}
+        <StorePreviewCanvas modelKey={def.modelKey} championId={def.id} />
         {standIn && (
           <div
             title={STAND_IN_NOTE_EN}

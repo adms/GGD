@@ -2,6 +2,12 @@
  * StorePreviewCanvas — plain component boundary around render/StorePreview:
  * the @babylonjs import stays in render/ (client-08); this file only owns the
  * <canvas> element + lifecycle and fetches the model doc for a modelKey.
+ *
+ * `championId` (task #263) rides alongside `modelKey` because the w3x vertex
+ * tint is a per-CHAMPION field while `modelKey` is many-to-one: without it this
+ * stage cannot tell 黑化Saber from any other champion on the same mesh. It is
+ * passed through as a plain string and RESOLVED inside render/StorePreview, so
+ * no @babylonjs (nor the content registry the resolve walks) leaks into ui/.
  */
 import { useEffect, useRef } from "react";
 import { StorePreview } from "../../render/StorePreview";
@@ -18,7 +24,11 @@ async function fetchModelDoc(modelKey: string): Promise<ModelDoc | null> {
   }
 }
 
-export function StorePreviewCanvas(props: { modelKey: string | null }): React.JSX.Element {
+export function StorePreviewCanvas(props: {
+  modelKey: string | null;
+  /** whose art colour to paint on this model; absent = leave it untinted */
+  championId?: string | null;
+}): React.JSX.Element {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const previewRef = useRef<StorePreview | null>(null);
 
@@ -35,13 +45,16 @@ export function StorePreviewCanvas(props: { modelKey: string | null }): React.JS
   useEffect(() => {
     if (!props.modelKey) return;
     let cancelled = false;
+    const championId = props.championId ?? null;
     void fetchModelDoc(props.modelKey).then((doc) => {
-      if (!cancelled && doc && previewRef.current) void previewRef.current.show(doc);
+      if (!cancelled && doc && previewRef.current) void previewRef.current.show(doc, { championId });
     });
     return () => {
       cancelled = true;
     };
-  }, [props.modelKey]);
+    // championId is a dep too (#263): two champions can share one modelKey, so
+    // hovering from a tinted to an untinted one changes NOTHING but the colour.
+  }, [props.modelKey, props.championId]);
 
   return (
     <div style={{ position: "relative", width: "100%", height: "100%", minHeight: 260 }}>

@@ -45,6 +45,9 @@ _UNIT_CODES = frozenset({
     "ua1r", "ua1c", "ua1b", "ua1d", "ua1s",
     "ustr", "uagi", "uint", "ustp", "uagp", "uinp", "upra", "ugol",
     "uabi", "uhab",
+    # ART TINT (task #263) — see w3xlib/stats.py for the full note. Absent
+    # per channel means INHERIT, never 0; resolve_unit_tints.py owns the chain.
+    "uclr", "uclg", "uclb",
 })
 _ITEM_CODES = frozenset({
     "unam", "utip", "utub", "ides", "igol", "ilum", "ilev", "icla", "iico", "iabi",
@@ -164,6 +167,10 @@ def build_objects(arc: W3XArchive, strings: dict) -> dict:
             "int_growth": e.get("uinp"),
             "primary_attr": e.get("upra"),
             "gold_cost": e.get("ugol"),
+            # Art Red/Green/Blue Tint AS SET BY THIS ENTRY (task #263). A null
+            # channel means INHERIT (base entry -> Units\UnitUI.slk -> 255),
+            # NOT zero; the resolved value lives in UNIT_TINTS.json.
+            "tint_raw": [e.get("uclr"), e.get("uclg"), e.get("uclb")],
             "abilities": [
                 a.strip() for a in str(e.get("uabi") or "").split(",") if a.strip()
             ],

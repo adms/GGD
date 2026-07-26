@@ -3871,3 +3871,66 @@ zustand 的 `useStore` 把 **`api.getInitialState`** 當 server snapshot。這�
 那些測試只驗到靜態文字，任何 store 驅動的元素消失都不會紅。`useApp` 改成手寫
 `useSyncExternalStore(subscribe, snap, snap)`（client 端行為與 zustand 完全相同，
 差別只有第三個參數；production 不做 SSR／hydration，所以碰不到）。改完 287 檔 / 3362 test 全綠。
+
+---
+
+## 2026-07-26 · #263 w3x 頂點染色 —— owner 舉的兩個例子是**兩種機制**，這件事本身就是結論
+
+Owner 的原話：「小熊維尼(黃)、小叮噹(藍) 都有為角色特別調整顏色，請你清查沒有讀取 w3x
+設定的角色重新上色」。**這兩個例子看起來同類，實際上一個是 tint、一個不是**，而分不清楚
+就會做出「幫小叮噹塗藍色」這種發明顏色的事。
+
+| | 維尼 `E00V` | 小叮噹 `N00B` |
+|---|---|---|
+| w3x 有效 RGB | 255,200,0 | **255,255,255 = 沒染色** |
+| 顏色從哪來 | `uclr/uclg/uclb`（red 繼承自 stock `Ewrd`，green/blue 是地圖自己設的） | 那顆 `StormPandarenBrewmaster` mdl 的**貼圖本身**就是藍熊貓 |
+| #263 能做的 | 已經對了，本次只負責不弄壞（實測前後 byte 級相符） | **什麼都不能做** —— 補 tint = 發明顏色 |
+
+### 三個真缺口，一個一個講
+
+**1. 匯入器從來沒讀過顏色欄位。** `uclr/uclg/uclb` 不在 `w3xlib/stats.py` 也不在
+`src_objects.py` 的白名單，所以 `OBJECTS.json` 裡**連欄位都沒有**（`grep -c uclr` → 0）。
+#49 是用手抄的方式救回 20 位，`content/config/unit-tints.json` 是**手寫稽核文件不是產生器
+輸出** —— 這正是它會漏的原因。已把三個 code 加進兩份白名單並落成 `tint_raw`。
+
+**2. 繼承鏈少一段，漏掉 1 位。** 正確順序是
+`entry 自己的 mod → base（如果 base 本身也是 w3u 的一筆）→ 沿 base 鏈的 stock UnitUI.slk → 255`。
+#49 做了第 1、3 步，**沒有第 2 步**，所以 `U00L`（北斗之鼠·拳四郎，從 original 表的 `Umal`
+繼承 200/200/200）整個掉了。它是 25 號拳四郎的**變身型**，本體 `godie-umal` 有 0.7843 ——
+畫面上就是「變身把灰色洗掉」。全名冊重算後只有這 1 位缺，其餘 20 位誤差 0。
+
+**3. #49 只在競技場套色。** 選角 3D 展示台、大廳商店預覽、回合勝者卡、中場商店櫃檯
+**四個畫面都顯示原色**。黑化Saber 在選角是金色 Saber、一進場才變黑。順帶抓到
+`GameApp.roundWinnerModelDoc` 的註解宣稱回合勝者「vertex tint apply exactly as they do
+in-world」—— **那句是假的**（`model@1` 根本沒有 tint 欄位），已改掉。
+
+### 這一輪學到的：**「有欄位」不等於「有讀」，「有讀」不等於「畫得出來」**
+
+這是同一種病的第三次發作，前兩次是 #93（煙火在地板下）與 #233（光柱只有 6% 在畫面內）。
+#49 的測試有 20 筆 golden pin，全綠，而且值全部正確 —— 它們只是從來沒問過
+**「除了競技場以外的畫面，這個顏色到得了螢幕嗎」**。
+
+補的守衛有兩層：
+
+- **資料層（雙向）**：`tools/w3x-import/resolve_unit_tints.py` 從 w3u + SLK 重算 588 個單位，
+  產出 `out/GoDieEX22s-src/UNIT_TINTS.json`；`tint263-resolver` 測試要求
+  「resolver ↔ champion doc ↔ 台帳」三邊**兩個方向**都一致。單向只走台帳的測試永遠看不到
+  **缺一列**（#49 的失效形狀就是缺列，不是數字錯）。
+- **像素層**：`public/tint-audition.html` 用真 `CameraRig`（68°/dolly 10/fov 0.8）＋真
+  `buildZoneGround` ＋真 `ChampionView`，`tint=off/on` 之間唯一的差別是有沒有呼叫
+  `applyModelTint`，配 `captureRealCamera.mjs` 的像素 diff。
+
+### 隊伍顏色沒有被吃掉（實測，不是推論）
+
+染色只吃身體材質；`-teamring` / `-teamband` / `-shadow` 由 `UNTINTED_MESH_SUFFIXES` 排除。
+真鏡頭截圖的 probe 逐材質比對：四位角色的前後兩張，隊伍色三塊全部
+`#4073f2` / `#ffffff` / `#000000` **一位元都沒變**。
+
+### 第 3 類：42 位角色的顏色**還原不回來**，這不是偷懶是事實
+
+它們的 `modelKey` 指向 4 具共用方塊人，顏色由 championId 的 FNV-1a hash 決定，
+**完全沒有讀 w3x 的 `umdl`** —— 角色真正的顏色在原圖躺在那顆 mdl 的貼圖裡，轉檔時丟了。
+小叮噹正是這一類。40/42 在 `data/blizzard-overlay/MANIFEST.json` 有真模型但只在 dev build 開，
+2/42（`godie-o02n` 阿瞞大人、`godie-u011` 克勞薩先生）連 overlay 都沒有。
+**補 tint 欄位對這一類沒有用**，修法屬於 #81/#116（模型替身正式化）或 #264（體素 palette
+override），不屬於 #263。這 42 位在本次**刻意不動**。

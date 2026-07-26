@@ -298,7 +298,14 @@ export function StoreScreen(): React.JSX.Element {
 
       {/* 3D preview */}
       <Panel title={shown ? `預覽 · ${shown.name}` : "預覽"} style={{ flex: 1, minWidth: 320 }}>
-        <StorePreviewCanvas modelKey={shown?.modelKey ?? null} />
+        {/* #263: a skin belongs to a champion, and that champion may carry a
+            w3x tint — the shop must show the same colour the arena will. No
+            skin doc overrides `tint` today, so this matches the arena's own
+            `championTintForId` resolve exactly. */}
+        <StorePreviewCanvas
+          modelKey={shown?.modelKey ?? null}
+          championId={shown?.championId ?? null}
+        />
         {/* #227: the caption used to print `modelKey` and `championId` — two
             developer strings — at the player. It says whose skin this is, by
             name, and how to look around. */}

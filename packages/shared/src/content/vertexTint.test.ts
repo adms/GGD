@@ -9,8 +9,14 @@
  *   tint-schema-champion  — champion@1 accepts/rejects `tint` + `alpha`
  *   tint-schema-skin      — skin@1 carries the same pair as an override
  *   tint-berserker        — godie-hapm's 黑紅: dark static tint + red buff state
- *   tint-roster-values    — all 20 extracted champion tints, pinned
+ *   tint-roster-values    — all 21 extracted champion tints, pinned
  *   tint-ledger           — config.unit-tints@1: alpha<1, refs, agreement, bugs
+ *   tint263-inheritance   — TASK #263: the w3u→w3u step #49 lacked (U00L), plus
+ *                           the two champions the owner named as the reference
+ *                           (維尼 = tint, 小叮噹 = NOT a tint)
+ *   tint263-resolver      — TASK #263: the resolver's own output, the champion
+ *                           docs and the ledger agree IN BOTH DIRECTIONS, so a
+ *                           MISSING row (the #49 failure) fails too
  *
  * Live content is read by DIRECT path (like championVoices.test.ts) so the
  * suite is green both before and after `content:build` reindexes.
@@ -179,7 +185,14 @@ describe("海克力斯 Berserker 黑紅 (tint-berserker)", () => {
 
 // ---------------------------------------------------------------- roster
 
-/** The 20 champion-mapped units from the extract, exact values pinned. */
+/**
+ * The 21 champion-mapped units from the extract, exact values pinned.
+ *
+ * 20 landed with #49; `godie-u00l` is the #263 catch-up — it inherits its
+ * colour from the ORIGINAL-table entry `Umal` (a w3u→w3u step #49's resolver
+ * did not have), so it shipped untinted while its 變身 counterpart
+ * `godie-umal` carried 0.7843 and transforming visibly washed the grey off.
+ */
 const EXPECTED: ReadonlyArray<readonly [string, readonly [number, number, number]]> = [
   ["godie-hapm", [0.3137, 0.3137, 0.3137]],
   ["godie-e00q", [0.2941, 0.2941, 0.2941]],
@@ -192,6 +205,7 @@ const EXPECTED: ReadonlyArray<readonly [string, readonly [number, number, number
   ["godie-u012", [0.5882, 0.5882, 0.5882]],
   ["godie-h02z", [0.7059, 0.7059, 0.7059]],
   ["godie-umal", [0.7843, 0.7843, 0.7843]],
+  ["godie-u00l", [0.7843, 0.7843, 0.7843]], // #263 — inherited from Umal
   ["godie-u00b", [0.9412, 0.5882, 0.5882]],
   ["godie-nman", [1, 0.3922, 0.3922]],
   ["godie-othr", [1, 1, 0]],
@@ -251,9 +265,10 @@ describe("config.unit-tints@1 ledger (tint-ledger)", () => {
     expect(zConfigDoc.parse(doc).schema).toBe("config.unit-tints@1");
     expect(validateDoc("config", doc).ok).toBe(true);
 
-    // the full extract: 52 units, 20 of them mapped to a champion doc
+    // the full extract: 53 units (52 from #49 + U00L from #263), 21 of them
+    // mapped to a champion doc
     const entries = Object.entries(doc.units);
-    expect(entries).toHaveLength(52);
+    expect(entries).toHaveLength(53);
     const mapped = entries.filter(([, e]) => e.championId !== undefined);
     expect(mapped).toHaveLength(EXPECTED.length);
 
@@ -304,5 +319,139 @@ describe("config.unit-tints@1 ledger (tint-ledger)", () => {
     }
     // Berserker is the champion the original map does NOT bug out
     expect(bugs.some((s) => s.championId === "godie-hapm")).toBe(false);
+  });
+});
+
+// ------------------------------------------------ #263 inheritance + controls
+
+/**
+ * Task #263 — the w3u→w3u inheritance step #49 did not have, and the two
+ * champions the owner named as the reference.
+ *
+ * The resolution chain is: the entry's own `uclr/uclg/uclb` → its BASE entry in
+ * `war3map.w3u` (custom OR original table) → the base chain's stock
+ * `Units\UnitUI.slk` row → 255. #49 implemented steps 1 and 3 and skipped 2, so
+ * `U00L` — which sets no colour of its own and inherits 200/200/200 from the
+ * ORIGINAL-table entry `Umal` — shipped untinted.
+ *
+ * The controls exist because a shared-path change is how this gets broken:
+ *   • 維尼 (godie-e00v) is coloured PARTLY by inheritance — the map sets only
+ *     green=200 and blue=0, red comes from the stock `Ewrd` row (255). A
+ *     resolver that treated a missing channel as 0 would turn him black; one
+ *     that skipped the SLK would turn him red-less.
+ *   • 小叮噹 (godie-n00b) resolves to (255,255,255) — NO tint at all. Its blue
+ *     is the StormPandarenBrewmaster mesh's own texture. It must never grow a
+ *     `tint` field: that would be inventing a colour the w3x never set.
+ *
+ * Regenerate with `python3 tools/w3x-import/resolve_unit_tints.py --check`.
+ */
+describe("#263 inheritance chain + the owner's two reference champions (tint263-inheritance)", () => {
+  it("U00L inherits its base's colour; 維尼 keeps his; 小叮噹 stays untinted", () => {
+    cover("tint263-inheritance");
+
+    // THE FIX: the 變身 pair now agrees. Before #263 the alternate form was
+    // untinted, so transforming visibly WASHED THE GREY OFF 拳四郎.
+    const base = readChampion("godie-umal");
+    const alternate = readChampion("godie-u00l");
+    expect(base.tint).toEqual([0.7843, 0.7843, 0.7843]);
+    expect(alternate.tint, "U00L inherits 200/200/200 from original-table Umal").toEqual(
+      base.tint,
+    );
+    // and they really are the two halves of one 變身 link
+    expect(base.transform?.counterpartId).toBe("godie-u00l");
+    expect(alternate.transform?.counterpartId).toBe("godie-umal");
+
+    // CONTROL 1 — 維尼: red 255 inherited from the stock Ewrd row, green 200
+    // and blue 0 from the map. Byte-exact, not "roughly yellow".
+    expect(readChampion("godie-e00v").tint).toEqual([1, 0.7843, 0]);
+
+    // CONTROL 2 — 小叮噹: the w3x sets no vertex colour on N00B at all.
+    expect(readChampion("godie-n00b").tint).toBeUndefined();
+    expect(readChampion("godie-n00b").alpha).toBeUndefined();
+
+    // the ledger records WHICH step of the chain each value came from, so a
+    // future resolver change cannot quietly reclassify one
+    const units = ledger().units;
+    expect(units.U00L?.source).toBe("w3u-base-inherited");
+    expect(units.Umal?.source).toBe("w3u-static");
+    expect(units.E00V?.source).toBe("w3u-static"); // green/blue are explicit mods
+    expect(units.Ecen?.source).toBe("slk-inherited");
+    // 小叮噹 is not in the ledger at all — it has no colour to record
+    expect(units.N00B).toBeUndefined();
+  });
+});
+
+// -------------------------------------------------- #263 resolver ↔ content
+
+/**
+ * Task #263 — the RESOLVER GUARD. `tools/w3x-import/resolve_unit_tints.py`
+ * re-derives every unit's effective colour from `war3map.w3u` + the stock
+ * `Units\UnitUI.slk` and writes `out/GoDieEX22s-src/UNIT_TINTS.json`. That file
+ * is the only machine-checkable statement of what the w3x actually says, and
+ * this test is what makes it a GUARD rather than a report: three sources —
+ * the resolver output, the champion docs, and the `config/unit-tints.json`
+ * ledger — must agree in both directions.
+ *
+ * Why both directions matter. #49's ledger was hand-written, so the failure it
+ * shipped was not a wrong number but a MISSING row (`U00L`). A test that only
+ * walks the ledger can never see that. This one walks the resolver's 588 units
+ * and fails when a tinted champion is absent from either the doc or the ledger
+ * — which is exactly the shape of the #263 bug.
+ *
+ * The .json is committed, so this runs with no MPQs and no source map present
+ * (a git worktree has neither).
+ */
+describe("#263 resolver ↔ champion docs ↔ ledger (tint263-resolver)", () => {
+  it("agrees in both directions: no missing rows, no invented colours", () => {
+    cover("tint263-resolver");
+    const path = join(HERE, "../../../../tools/w3x-import/out/GoDieEX22s-src/UNIT_TINTS.json");
+    const doc = JSON.parse(readFileSync(path, "utf8")) as {
+      units: Record<
+        string,
+        { rgb255: number[]; tint: number[]; neutral: boolean; championId?: string }
+      >;
+    };
+    const units = Object.entries(doc.units);
+    expect(units.length).toBeGreaterThan(500); // the whole w3u, not a slice
+
+    const led = ledger().units;
+    let checked = 0;
+    for (const [rawcode, u] of units) {
+      // an effective colour is (r,g,b)/255 — never a raw 0..255 channel
+      expect(u.tint.every((c) => c >= 0 && c <= 1), rawcode).toBe(true);
+      expect(u.neutral, rawcode).toBe(u.rgb255.every((c) => c === 255));
+
+      if (!u.championId) continue;
+      const champ = readChampion(u.championId);
+      if (u.neutral) {
+        // NOT tinted in the w3x ⇒ must not be tinted here. This is the
+        // "don't invent a colour" rule, and 小叮噹 (N00B) is the case that
+        // matters: its blue is the mesh texture, not a vertex colour.
+        expect(champ.tint, `${rawcode} is untinted in the w3x`).toBeUndefined();
+        expect(led[rawcode], `${rawcode} must not be in the ledger`).toBeUndefined();
+        continue;
+      }
+      checked++;
+      // the champion doc carries the resolved value, to 4dp
+      expect(champ.tint, `${rawcode} -> ${u.championId}`).toBeDefined();
+      for (let i = 0; i < 3; i++) {
+        expect(Math.abs(champ.tint![i]! - u.tint[i]!), `${rawcode} ch${i}`).toBeLessThan(0.002);
+      }
+      // …and so does the ledger (the audit document may not drift from either)
+      expect(led[rawcode], `${rawcode} missing from the ledger`).toBeDefined();
+      expect(led[rawcode]!.tint, `${rawcode} ledger`).toEqual(champ.tint);
+    }
+    // every champion-mapped tinted unit was actually walked
+    expect(checked).toBe(EXPECTED.length);
+
+    // and nothing in the ledger claims a colour the w3x does not have
+    for (const [rawcode, e] of Object.entries(led)) {
+      const u = doc.units[rawcode];
+      expect(u, `ledger has ${rawcode}, the w3u does not`).toBeDefined();
+      expect(u!.neutral, `${rawcode} is neutral in the w3x`).toBe(false);
+      for (let i = 0; i < 3; i++) {
+        expect(Math.abs(e.tint![i]! - u!.tint[i]!), `${rawcode} ch${i}`).toBeLessThan(0.002);
+      }
+    }
   });
 });
