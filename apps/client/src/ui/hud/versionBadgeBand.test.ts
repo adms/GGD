@@ -405,6 +405,25 @@ const BAND_LEDGER: readonly LedgerRow[] = [
     why: "`max(10px, env(safe-area-inset-bottom))` — the TIGHTEST thing in the app: its bottom edge lands exactly on the band's top edge, adjacent to the badge and not overlapping it. Lowering that 10 puts the login credits under the stamp",
   },
   {
+    // Sixth "green on both branches, red only after the merge" of this session.
+    // #245's guard landed first; the lobby announcement popup landed second and
+    // brought a `bottom:` the scanner cannot evaluate. The guard did exactly what
+    // it exists to do — it refused to let an unevaluatable offset through silently
+    // and named the file. This row is the answer, not a suppression.
+    file: "platform/LobbyAnnouncement.tsx",
+    value: "bottomChromeClear()",
+    count: 1,
+    why:
+      "the popup's full-screen scrim, deliberately NOT inset:0 — it stops at " +
+      "`calc(var(--ggd-chrome-bottom-h, 18px) + env(safe-area-inset-bottom, 0px))` so the " +
+      "build stamp stays readable UNDER it. That is the same publish/consume shape " +
+      "../chromeReserve uses, with a local fallback because VersionBadge belongs to another " +
+      "lane and this module must not import it; if that lane ever publishes a measured height " +
+      "this picks it up with no edit. Measured in a browser at 1280x800: scrim ends y=782, " +
+      "badge paints 788-798. `bottomChromeClearPx` is the pure form of the same arithmetic and " +
+      "is asserted numerically in announcements.test.ts, so this row is not the only proof.",
+  },
+  {
     file: "mobile.css",
     value: "env(safe-area-inset-bottom",
     count: 1,
