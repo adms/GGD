@@ -73,7 +73,18 @@
  * reader, not a second file. A missing file, a missing champion and a 404 all
  * degrade to "this rung is empty" — never to a throw and never to silence,
  * because rung 5 is below it.
+ *
+ * ── rung 2 and 變身: one character, one pack ───────────────────────────────
+ * A champion with no pack of its own borrows its w3x FORM COUNTERPART's — see
+ * `resolveVoicePackId`. That is the whole of 「變身前/後共用就好」 (owner
+ * 2026-07-26): 悟空 and 超級賽亞人-悟空 are the same person, so they get the same
+ * voice, and the alternative was generating 460 duplicate CosyVoice clips. It
+ * matters far more to the CONTEXTUAL combat layer than to this click — the click
+ * has rungs 4 and 5 under it and was never silent, but contextualVoice.ts reads
+ * this pack and nothing else, so the ten champions the #249 roster swap brought
+ * in had no combat voice AT ALL until the share landed.
  */
+import { counterpartFormId } from "@ggd/shared/content/championForms";
 import type { BlizzardManifest, ChampionVoicesConfig } from "./championVoice";
 import type { ChampionNamesManifest, ChampionQuotesManifest } from "./nameVoice";
 import type { Rng } from "./audioSelect";
@@ -138,6 +149,13 @@ export interface VoicePackEntry {
   variant: string;
   /** category → clips, in play order. Only "select" is read by the click. */
   lines: Record<string, VoicePackClip[]>;
+  /**
+   * Set by the generator when this entry is BORROWED from the champion's w3x
+   * form counterpart rather than generated for it (see `resolveVoicePackId`).
+   * Absent/null on a champion's own pack, so "has a donor" reads as "borrowed"
+   * everywhere downstream.
+   */
+  sharedFrom: string | null;
 }
 
 export interface ChampionVoicePack {
@@ -197,9 +215,68 @@ export function voicePackFromDoc(doc: unknown): ChampionVoicePack | null {
         if (clips.length > 0) lines[cat] = clips;
       }
     }
-    out[id] = { engine: str(o.engine), variant: str(o.variant), lines };
+    const shared = (raw as { sharedFrom?: unknown }).sharedFrom;
+    out[id] = {
+      engine: str(o.engine),
+      variant: str(o.variant),
+      lines,
+      sharedFrom: typeof shared === "string" && shared.length > 0 ? shared : null,
+    };
   }
   return { champions: out };
+}
+
+/** Where a champion's combat voice actually comes from. */
+export interface ResolvedVoicePack {
+  /** The pack entry's key — the champion itself, or its form counterpart. */
+  id: string;
+  /** The donor when the pack is borrowed; null when the champion owns it. */
+  sharedFrom: string | null;
+}
+
+/**
+ * WHICH PACK ANSWERS FOR `champId` —「變身前/後共用就好」 (owner 2026-07-26, #249).
+ *
+ * A champion with its own pack always answers with it. A champion with none
+ * borrows its w3x form counterpart's, because a base and its alternate are ONE
+ * character: the map's `Eme1`/`Emeu` pair says so, and its `unsf` sub-names
+ * prove the direction (every base is the bare 編號 「(NN)」, every alternate names
+ * the form 「(NN變身名)」). 悟空 and 超級賽亞人-悟空 have one voice.
+ *
+ * DIRECTION-AGNOSTIC. `counterpartFormId` answers for either half, so this works
+ * both ways: a base borrowing from its alternate (the ten champions the #249
+ * roster swap left mute, because the corpus was generated against the OLD
+ * roster) and an alternate borrowing from its base (what the #119 morph needs
+ * the moment a player transforms into a body with no clips).
+ *
+ * NEVER SHADOWS. The champion's own entry is checked first, so a real recorded
+ * pack can never be displaced by a borrowed one — and the resolution is
+ * WHOLE-ENTRY, exactly like the generator's build-time share, so the two layers
+ * can never disagree about who speaks.
+ *
+ * WHY BOTH LAYERS. `tools/voice-gen/index-lines.mjs` bakes the same shares into
+ * the manifest (`sharedFrom` + a `formShares` header) so the mapping is
+ * inspectable in the shipped artifact. This runtime resolution is the net for
+ * an artifact that is STALE — which is not hypothetical: `pnpm voice:index` is
+ * currently red on main for an unrelated asset drift, so the ten silent
+ * champions could not be fixed by regenerating alone. Both layers read the same
+ * closed 26-pair table, so a baked share and a resolved one name the same donor.
+ *
+ * Returns null — never throws — when the pack is absent, the champion is in no
+ * pair, or its counterpart has no clips either.
+ */
+export function resolveVoicePackId(
+  pack: ChampionVoicePack | null,
+  champId: string,
+): ResolvedVoicePack | null {
+  if (!pack || !champId) return null;
+  const own = pack.champions[champId];
+  if (own) return { id: champId, sharedFrom: own.sharedFrom };
+  const counterpart = counterpartFormId(champId);
+  if (counterpart && pack.champions[counterpart]) {
+    return { id: counterpart, sharedFrom: counterpart };
+  }
+  return null;
 }
 
 /**
@@ -207,14 +284,19 @@ export function voicePackFromDoc(doc: unknown): ChampionVoicePack | null {
  * click reads "select"; the contextual combat-voice layer (contextualVoice.ts)
  * reads the same pack for skill-name.<slot>, crit, hurt, kill-N, defeat, victory,
  * stun/slow/bind and the rest — one manifest, one reader, no second file.
+ *
+ * Resolves through `resolveVoicePackId`, so a champion with no pack of its own
+ * speaks with its w3x form counterpart's. That is the ONE place the form share
+ * happens at runtime; nothing else may re-derive it.
  */
 export function packClips(
   pack: ChampionVoicePack | null,
   champId: string,
   category: string,
 ): VoicePackClip[] {
-  const clips = pack?.champions[champId]?.lines?.[category];
-  return clips ?? [];
+  const resolved = resolveVoicePackId(pack, champId);
+  if (!resolved) return [];
+  return pack?.champions[resolved.id]?.lines?.[category] ?? [];
 }
 
 /** The generated `select` pool for a champion (empty when the pack has none). */

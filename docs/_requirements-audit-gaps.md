@@ -3663,6 +3663,32 @@ champ-select / codex / 白名單一律吃 `starterChampions`。**唯一還漂著
 `content/assets/audio/voices/lines/` 的 50 個目錄正好是舊名冊，換進來的 10 個本體一個 clip 都沒有
 （各需 46 支 CosyVoice）。那是資產產線工作，**沒有加守衛因為現在加就是紅的** → `tform-13` / #142。
 
+**〔2026-07-26 更新〕owner 裁示：「變身前/後共用就好」——所以 460 支 clip 不用生。** #249 的整個結論
+就是本體與變身態是**同一個角色**（地圖自己的 `Eme1`/`Emeu`，加上 `unsf` 副名：本體一律「(NN)」、
+變身態一律「(NN變身名)」，26/26）。悟空與超級賽亞人-悟空是同一個人，聲音本來就該是同一份。
+
+**實作在哪裡（先普查，不用猜）**：語音系統有五套，只有**最後一套**是短的。
+`content/config/champion-voices.json`（115 key，兩態都在，rung-1 map quip ＋ soundset）、
+champ-select 稱號/全名 call-out（`names/MANIFEST.json`，114 位）、名言（`quotes/quotes.json`，114 位）、
+勝利嘲諷（`victory-taunts.json` `roundWin`，113 位）——**四套都已經兩態齊全，不需要 fallback**。
+會漏的只有 `champions/MANIFEST.json`（由 `lines/` 索引出來的 CosyVoice 包），它只有 51 個 key，
+而且是**唯一**餵給 `contextualVoice.ts` 的來源：點擊聲有 rung 4/5 撐著從來沒啞過，**戰鬥語音沒有底層**，
+所以那 10 位在場上是完全無聲（技能名、受傷、擊殺、陣亡、勝利全部沒有）。
+
+**唯一的 reader 是 `packClips()`**，`contextualVoice` 與 ladder rung-2 都走它，所以 fallback 只加在那裡：
+`resolveVoicePackId()` 找不到自己的包時，用 `counterpartFormId()` 借對面那一態的。**雙向**——今天是
+10 個 alternate→base，另外 9 對是 base→alternate（#119 變身後借本體的，就靠這個方向）。
+自己有包的一律不借（不會蓋掉真資產），兩態都沒有的**回空陣列不丟例外**。
+`tools/voice-gen/index-lines.mjs` 也在 build 時把同一份 plan 烤進 manifest（`sharedFrom` ＋ `formShares`
+表頭）讓它在產物裡看得見；runtime 那層是**產物過期時的安全網**——這不是假設，見下一條。
+
+**⚠ 順手撞到的既有紅燈（不是這次改的）**：`pnpm voice:index` 在 main 上就跑不起來。
+`godie-zombiex` 的 `skill-name.{q,e,r,ex}` 四支過不了 byte gate——status.json 記了四個**從來沒被算出來的
+take**（磁碟上的音檔講的還是 #244 改名前的技能名）。順帶查到 committed manifest 對
+`godie-huth`/`godie-hvwd`/`godie-ogld`/`godie-osam`/`godie-udea` 也已經過期（`apply_skill_readings` 跑過
+之後沒重新索引）。這需要**重新合成**，不是改 metadata，所以沒動 completeness gate、也沒動 ROSTER.json
+（那是產生出來的狀態快照，手改就是偽造產線狀態）→ `tform-16` / #244。
+
 **最愛（favourites）**：`ToggleFavourite` 本來就擋不存在的英雄，所以壞資料寫不進去；壞法是名冊在
 合法 pin 底下被抽走。改成**讀取時過濾**（`liveFavourites`，`meta.go`）而非資料遷移——遷移要永久刪掉
 耐久紀錄裡那一筆，可是英雄會回來（白名單可編輯、#119 之後變身態可能重新可選）；過濾冪等、免遷移、
