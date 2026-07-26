@@ -242,15 +242,23 @@ describe("arena round grants (arena-01, arena-04, arena-05)", () => {
     }
     expect(surviving).toBeGreaterThan(0);
 
-    // R is now learnable BELOW the classic level gate (6 for rank 1): pick a
-    // seat whose champion level is under 6 with R unlearned — the classic
-    // 6/11/16 gate would reject this exact rank-up
-    const below = [...ctl.seats.values()].find((s) => {
-      const c = ctl.world.champion.get(s.entityId!)!;
-      const a = ctl.world.abilities.get(s.entityId!)!;
-      return c.level < 6 && a.slots.R.rank === 0;
-    });
+    // R is now learnable BELOW the classic level gate (6 for rank 1): take a
+    // seat with R unlearned and PIN its level under the gate, so the rank-up
+    // below is one the classic 6/11/16 rule would reject.
+    //
+    // The level is set here rather than searched for. It used to be searched
+    // for (`c.level < 6 && R rank 0`), which silently made this test depend on
+    // the level distribution one particular simulated match happens to produce
+    // by round 3 — and that moves whenever combat behaviour moves (task #274
+    // let a champion keep auto-attacking while it walks, so bots now trade
+    // while they kite and retreat, and every seat is level 6-7 by round 3).
+    // The subject here is the GATE, not the level curve.
+    const below = [...ctl.seats.values()].find(
+      (s) => ctl.world.abilities.get(s.entityId!)!.slots.R.rank === 0,
+    );
     expect(below).toBeDefined();
+    const belowChamp = ctl.world.champion.get(below!.entityId!)!;
+    belowChamp.level = 5;
     const ab = ctl.world.abilities.get(below!.entityId!)!;
     ab.unspentPoints = Math.max(1, ab.unspentPoints);
     expect(rankUpAbility(ctl.world, below!.entityId!, "R")).toBe(true);

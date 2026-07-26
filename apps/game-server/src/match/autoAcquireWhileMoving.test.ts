@@ -1,0 +1,359 @@
+/**
+ * TASK #274 — WIRING GUARD: auto-acquire must survive a live move order.
+ *
+ * WHY THIS IS NOT A UNIT TEST. `sim/autoAcquire.test.ts` proves the RULE on a
+ * hand-built `championId: "probe"` fighter with a single hand-fed intent frame;
+ * `sim/autoAttackCensus.test.ts` proves every real champion swings when it is
+ * given NO orders at all. Both are green on the broken build, because the bug
+ * only exists on the path a HUMAN actually drives: the analog stick and the
+ * virtual joystick synthesise a BRAND-NEW `{kind:"move"}` order EVERY FRAME
+ * (GamepadInput.ts MOVE_LEAD, TouchInput.ts), so `nav.moveTarget` is rewritten
+ * every tick and never reaches ARRIVE_EPS — and the old
+ * `case "move": if (nav.moveTarget !== null) continue` in OrderSystem's
+ * auto-acquire pass therefore skipped that seat for the WHOLE MATCH.
+ *
+ * So this suite drives the REAL live path: a real `MatchController` with the
+ * shipped combat-env and fire-ring config, one seat swapped to a real
+ * `HumanDriver`, and the exact order stream a real client produces pushed into
+ * that seat's mailbox. It measures OUTCOMES a player can see (basic-attack hits
+ * landed) and OWNERSHIP of the movement channel (did the sim ever re-point the
+ * destination the player asked for?), never the arithmetic of a pure function.
+ *
+ * FIVE FEEDS — the four the #269 forensics covered plus the one it MISSED:
+ *   idle          no input at all (the control)
+ *   stick         left stick held: a fresh move order to self+4u every tick
+ *   clickOutside  ONE right-click on ground outside the zone, then nothing
+ *   obstacle      ONE right-click INTO A PILLAR — the half #269 could not fix
+ *                 by clamping the destination into the zone, because a point
+ *                 inside an obstacle is inside the zone and still unreachable
+ *   aclick        A-click (attackMove) held, same cadence as `stick`
+ */
+import { describe, it, beforeAll, expect } from "vitest";
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { normalizeCombatEnv, type CombatEnvMultipliers } from "@ggd/shared/sim/combatEnv";
+import { ContentLoader, registerAll } from "@ggd/shared/content";
+import { FsContentSource } from "@ggd/shared/content/node";
+import { asSeatId, type ChampionId, type EntityId } from "@ggd/shared/ids";
+import type { FireRingConfig } from "@ggd/shared/content";
+import type { Vec2 } from "@ggd/shared/sim/math/vec2";
+import { MatchController, type SeatSpec } from "./MatchController";
+import { HumanDriver } from "../seat/HumanDriver";
+
+const HERE = dirname(fileURLToPath(import.meta.url));
+const CONTENT = join(HERE, "../../../..", "content");
+
+let ENV: CombatEnvMultipliers;
+let FR: FireRingConfig;
+let COMBAT_MAX_SEC = 180;
+
+beforeAll(async () => {
+  registerAll((await new ContentLoader(new FsContentSource(CONTENT)).load()).store);
+  const doc = JSON.parse(readFileSync(join(CONTENT, "config/config.match.json"), "utf8")) as {
+    match: { fireRing: FireRingConfig; combatMaxSec: number };
+  };
+  FR = doc.match.fireRing;
+  COMBAT_MAX_SEC = doc.match.combatMaxSec;
+  ENV = normalizeCombatEnv(
+    (
+      JSON.parse(readFileSync(join(CONTENT, "config/combat-env.json"), "utf8")) as {
+        multipliers: Record<string, number>;
+      }
+    ).multipliers,
+  );
+});
+
+/** The champion the owner reported: 「Saber 似乎不會自動攻擊」. */
+const SABER = "godie-e002" as ChampionId;
+/** GamepadInput.MOVE_LEAD — the lead distance the stick puts in front of you. */
+const MOVE_LEAD = 4;
+const SEED = 7919;
+
+function seats(champ: ChampionId): SeatSpec[] {
+  return Array.from({ length: 12 }, (_, i) => ({
+    seatId: i,
+    teamId: Math.floor(i / 3),
+    isBot: i !== 0,
+    championId: i === 0 ? champ : undefined,
+  }));
+}
+
+type Feed = "idle" | "stick" | "clickOutside" | "obstacle" | "aclick";
+
+interface Result {
+  feed: Feed;
+  championId: string;
+  /** basic-attack damage events sourced by the human seat */
+  hits: number;
+  /**
+   * Swings COMMITTED by the human (`attackWindup`). Every one of these has
+   * already paid the full attack-interval cooldown, so `hits / windups` is the
+   * connect rate: the fraction of committed swings that were not walked out of
+   * their own range before the damage point.
+   */
+  windups: number;
+  /** ticks on which the human held ANY attack target */
+  heldTicks: number;
+  ticks: number;
+  /** ticks the human was alive */
+  aliveTicks: number;
+  /** mean basic-attack hits across the bots in the same match */
+  botHitsAvg: number;
+  /**
+   * Did the explicit move order EVER get consumed while the champion was alive
+   * and had not yet died once? (Death and revive reset `nav.order` by design —
+   * MatchController / ReviveSystem — so measuring past the first death would
+   * report a clear that the WALK never earned.) `false` here is #269's own
+   * forensic marker: the destination was never reached, not even once.
+   */
+  orderClearedWhileAlive: boolean;
+  /**
+   * MOVEMENT AUTHORITY. Ticks on which an explicit `move` order was live and
+   * the sim had re-pointed `nav.moveTarget` somewhere OTHER than the point the
+   * order carries — i.e. the chase stole the wheel. Must be 0.
+   */
+  hijackedTicks: number;
+  /** ticks the above was actually measurable (alive, combat live, order live) */
+  authorityTicks: number;
+  /** position of the human at 0/1/2/3/4 s of combat */
+  trace: Vec2[];
+}
+
+function runMatch(feed: Feed, seed = SEED): Result {
+  const cfg = {
+    champSelectTicks: 2,
+    intermissionTicks: 3,
+    combatMaxTicks: COMBAT_MAX_SEC * 30,
+    resolutionTicks: 3,
+  };
+  const ctl = new MatchController(
+    "aa274-" + feed,
+    seed,
+    seats(SABER),
+    cfg,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    ENV,
+    FR,
+  );
+  const human = new HumanDriver();
+  ctl.seats.get(asSeatId(0))!.setDriver(human);
+  while (ctl.phase.phase !== "combat") ctl.tick();
+
+  const meSeat = ctl.seats.get(asSeatId(0))!;
+  const me = meSeat.entityId as EntityId | null;
+  const championId = String(meSeat.championId ?? "");
+
+  // ONE-SHOT destinations, resolved from the live world at combat start.
+  let onceTarget: Vec2 | null = null;
+  if (me !== null) {
+    const t = ctl.world.transform.get(me)!;
+    if (feed === "clickOutside") {
+      onceTarget = { x: 400, z: 400 }; // far outside the zone: body clamps, never arrives
+    } else if (feed === "obstacle") {
+      // The PILLAR case. Pick the circular obstacle nearest the player in its
+      // own zone and click its dead centre: the destination is INSIDE the zone
+      // (so #269's clamp is a no-op) but the body can never stand there, so
+      // ARRIVE_EPS never fires and `nav.order` stays `move` for the whole round.
+      const zone = ctl.world.arena.zones[t.zone] ?? ctl.world.arena.zones[0]!;
+      let best: Vec2 | null = null;
+      let bestD2 = Infinity;
+      for (const o of zone.obstacles) {
+        if (o.kind !== "circle") continue;
+        const d2 = (o.center.x - t.pos.x) ** 2 + (o.center.z - t.pos.z) ** 2;
+        if (d2 < bestD2) {
+          bestD2 = d2;
+          best = { x: o.center.x, z: o.center.z };
+        }
+      }
+      if (!best) throw new Error("no circular obstacle in the human's zone");
+      onceTarget = best;
+    }
+  }
+
+  let hits = 0;
+  let windups = 0;
+  let heldTicks = 0;
+  let ticks = 0;
+  let aliveTicks = 0;
+  let hijackedTicks = 0;
+  let authorityTicks = 0;
+  let orderClearedWhileAlive = false;
+  const trace: Vec2[] = [];
+  const botHits = new Map<EntityId, number>();
+  let firedOnce = false;
+  let sawMoveOrder = false;
+  let diedOnce = false;
+  let guard = 0;
+
+  while (ctl.phase.phase === "combat" && guard++ < 20000) {
+    // ---- the client's order stream for this tick ----
+    if (me !== null) {
+      const t = ctl.world.transform.get(me);
+      if ((feed === "clickOutside" || feed === "obstacle") && !firedOnce && onceTarget) {
+        firedOnce = true;
+        human.mailbox.push({ order: { kind: "move", point: onceTarget } } as never);
+      } else if (feed === "stick" && t) {
+        // GamepadInput.ts:193-198 / TouchInput.ts:95-99 — every frame the stick
+        // is deflected, a brand-new move order MOVE_LEAD units ahead.
+        human.mailbox.push({
+          order: { kind: "move", point: { x: t.pos.x + MOVE_LEAD, z: t.pos.z } },
+        } as never);
+      } else if (feed === "aclick" && t) {
+        human.mailbox.push({
+          order: { kind: "attackMove", point: { x: t.pos.x + MOVE_LEAD, z: t.pos.z } },
+        } as never);
+      }
+    }
+
+    ctl.tick();
+    ticks++;
+
+    if (me !== null) {
+      const nav = ctl.world.nav.get(me);
+      const t = ctl.world.transform.get(me);
+      const hp = ctl.world.health.get(me);
+      if (nav?.attackTarget != null) heldTicks++;
+      if (hp?.alive) aliveTicks++;
+      else if (sawMoveOrder) diedOnce = true;
+      if (nav?.order?.kind === "move") sawMoveOrder = true;
+      else if (sawMoveOrder && !diedOnce && hp?.alive && nav?.order == null) {
+        orderClearedWhileAlive = true;
+      }
+
+      // ---- movement authority ----
+      // A live EXPLICIT `move` order must own `nav.moveTarget`. Read from
+      // `nav.order` itself (not from what we pushed), so the one-shot right-click
+      // feeds are measured for the WHOLE life of their order, not just the tick
+      // they were sent. Sampled only while alive and while combat is live — a
+      // settled/frozen zone rewrites the intent to `stop` by design
+      // (MatchController.freezeCombatIntent) — and never during a dash override,
+      // which owns movement on purpose (#247).
+      const ord = nav?.order;
+      if (
+        ord?.kind === "move" &&
+        ord.point &&
+        nav &&
+        !nav.override &&
+        hp?.alive &&
+        ctl.world.combatActive
+      ) {
+        authorityTicks++;
+        const mt = nav.moveTarget;
+        const kept =
+          mt !== null && Math.abs(mt.x - ord.point.x) < 1e-9 && Math.abs(mt.z - ord.point.z) < 1e-9;
+        if (!kept) hijackedTicks++;
+      }
+      if (t && ticks % 30 === 1 && trace.length < 5) trace.push({ x: t.pos.x, z: t.pos.z });
+    }
+
+    for (const e of ctl.world.events) {
+      const d = e.data as { source?: EntityId; origin?: string };
+      if (e.type === "attackWindup" && d.source === me) {
+        windups++;
+        continue;
+      }
+      if (e.type !== "damage") continue;
+      if (d.origin !== "basic" || d.source === undefined) continue;
+      if (d.source === me) hits++;
+      else botHits.set(d.source, (botHits.get(d.source) ?? 0) + 1);
+    }
+  }
+
+  const vals = [...botHits.values()];
+  return {
+    feed,
+    championId,
+    hits,
+    windups,
+    heldTicks,
+    ticks,
+    aliveTicks,
+    botHitsAvg: vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : 0,
+    orderClearedWhileAlive,
+    hijackedTicks,
+    authorityTicks,
+    trace,
+  };
+}
+
+function report(r: Result): string {
+  const pct = ((100 * r.heldTicks) / Math.max(1, r.ticks)).toFixed(1);
+  const tr = r.trace.map((p) => `(${p.x.toFixed(2)},${p.z.toFixed(2)})`).join(" → ");
+  return (
+    `[${r.feed}] champion=${r.championId} hits=${r.hits}/${r.windups} swings (connect ${(
+      (100 * r.hits) / Math.max(1, r.windups)
+    ).toFixed(0)}%) held=${r.heldTicks}/${r.ticks} (${pct}%) ` +
+    `alive=${r.aliveTicks} botAvg=${r.botHitsAvg.toFixed(1)} ` +
+    `orderClearedWhileAlive=${r.orderClearedWhileAlive} ` +
+    `hijacked=${r.hijackedTicks}/${r.authorityTicks} trace=${tr}`
+  );
+}
+
+describe("#274 auto-acquire survives a live move order (real match, real human seat)", () => {
+  it("IDLE — the control: a seat that never touches anything still fights", () => {
+    const r = runMatch("idle");
+    console.log(report(r));
+    expect(r.championId).toBe(SABER);
+    expect(r.hits).toBeGreaterThan(0);
+  }, 300_000);
+
+  it("STICK HELD — a continuous move order must NOT switch auto-attack off", () => {
+    const r = runMatch("stick");
+    console.log(report(r));
+    // THE REGRESSION. Pre-#274 this was exactly 0 hits and 0 held ticks over
+    // ~2000 ticks (67 s) because autoAcquirePass `continue`d on the live move
+    // order every single tick.
+    expect(r.hits).toBeGreaterThan(0);
+    expect(r.heldTicks).toBeGreaterThan(0);
+  }, 300_000);
+
+  it("STICK HELD — and the player keeps the wheel: the chase never re-points the walk", () => {
+    const r = runMatch("stick");
+    console.log(report(r));
+    expect(r.authorityTicks).toBeGreaterThan(500); // the sample is real
+    // Movement authority: with a live explicit move order the sim must never
+    // rewrite the destination, no matter what it acquired.
+    expect(r.hijackedTicks).toBe(0);
+    // And it must actually have WALKED the ordered way (+x), not stood and
+    // brawled: the trace advances monotonically in x for the first seconds.
+    const xs = r.trace.map((p) => p.x);
+    expect(xs.length).toBeGreaterThanOrEqual(4);
+    for (let i = 1; i < xs.length; i++) expect(xs[i]!).toBeGreaterThan(xs[i - 1]!);
+  }, 300_000);
+
+  it("ONE right-click OUTSIDE the zone — one misclick must not disarm the match", () => {
+    const r = runMatch("clickOutside");
+    console.log(report(r));
+    expect(r.hits).toBeGreaterThan(0);
+    expect(r.heldTicks).toBeGreaterThan(0);
+  }, 300_000);
+
+  it("ONE right-click INTO A PILLAR — the half #269's zone-clamp could not reach", () => {
+    const r = runMatch("obstacle");
+    console.log(report(r));
+    // The destination is inside the zone and still unreachable, so the move
+    // order is never consumed — proving the fix is the DECOUPLING and not
+    // "make the destination reachable".
+    expect(r.orderClearedWhileAlive).toBe(false);
+    expect(r.hits).toBeGreaterThan(0);
+    expect(r.heldTicks).toBeGreaterThan(0);
+  }, 300_000);
+
+  it("A-CLICK HELD — attack-move lands real hits, not just holds a target", () => {
+    const r = runMatch("aclick");
+    console.log(report(r));
+    // Pre-#274: 86.3% of ticks held a target and 45 swings were COMMITTED, but
+    // only 2 landed — a 4% connect rate. The ground order blanked
+    // `nav.attackTarget` and the wind-up gate then refused to refill it, so the
+    // chase had nothing to hold the champion with and the player's own
+    // move-lead walked it out of its own reach before every damage point.
+    expect(r.heldTicks).toBeGreaterThan(0);
+    expect(r.windups).toBeGreaterThan(0);
+    expect(r.hits / r.windups).toBeGreaterThan(0.5);
+    expect(r.hits).toBeGreaterThan(3);
+  }, 300_000);
+});
