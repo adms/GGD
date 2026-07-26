@@ -1,71 +1,126 @@
 # GGD 執行批次計畫（Execution Batches）
 
 > **這份檔案只放兩種東西：還沒做完的事，以及做事的規則。**
-> 做完而且沒有下游相依的，一律搬到 [`_execution-batches-history-20260726.md`](_execution-batches-history-20260726.md)。
-> 版本部署紀錄、逐輪反省、舊的批次 0–9 結構、訂正區，都在那裡。
+> 做完而且沒有下游相依的，一律搬到歷史檔：
+> [`_execution-batches-history-20260726.md`](_execution-batches-history-20260726.md)（v0.4.9→v0.5.16、舊批次 0–9、訂正區）
+> · [`_execution-batches-history-20260727.md`](_execution-batches-history-20260727.md)（v0.6.x 部署、那一夜四份被推翻的交付的完整驗屍與量測）
 >
-> 最後重整：2026-07-26，main `2dfe4aa8`。
+> **重啟 session 的前情提要在 [`_session-handover.md`](_session-handover.md)。**
+>
+> 最後重整：2026-07-27，main `a6b1609d`，線上 **v0.7.0**。
 
 ---
 
 ## 🎯 接下來的批次（依相依性分組 · 同批內序列，跨批平行）
 
-> 分批依據是**檔案領域**，不是主題。同一批的東西碰同一片檔案，所以只能一條一條做；
-> 不同批完全不共用檔案，所以可以同時開跑。
+> 分批依據是**檔案領域**，不是主題。同一批碰同一片檔案 → 只能一條一條做；
+> 不同批不共用檔案 → 可以同時開跑。
+>
+> 現況：main = `a6b1609d`，線上 **v0.7.0**。
+> 上一輪九條工作流全被 session 中斷，**四條有實作、零條驗過**。
 
-### 批次 1 · 內容單一寫者鏈 —— `content/**` ⛔ 序列，不可內部平行
+---
 
-`content/**` 是整檔寫入（`pnpm content:build` 會重算 `bundle.json` + contentVersion），
-兩個寫者同時動就會互相覆蓋。這三條都要改英雄／技能文件，所以是同一批。
+### 批次 0 · ⛔ 擋住所有下游：四條沒驗過的分支
 
-| 序 | 任務 | 相依已解除？ | 為什麼是這個順序 |
+**這是唯一在跑的一批，其餘全部等它。** 前一輪同形狀的四份交付**四份全被推翻**，
+所以這四條在驗完之前一條都不合併。
+
+| 分支 | 內容 | 規模 | 擋住誰 |
 |---|---|---|---|
-| **1-1** | **喪標麥可全套 kit**（#236 / #252）—— 節拍四拍令咒、Q 毒、W 反傷、E 狂暴、R 跳躍、EX 自爆 | ✅ 批次 A 已把 leap 原語併進 main（`SIM_CAPABILITIES.leap` 現在是 true） | 它是**單一英雄**，範圍最小、驗收最快，先做可以驗證 leap 原語在真實內容上站得住 |
-| **1-2** | **技能組忠實度**（`docs/_kit-fidelity-audit-247.md` 114 位） | ✅ 同上 | 要吃 1-1 證明過的原語。**從描述出發，不從 JASS 原語出發** —— 三輪抓取系普查每輪都被一個不符合當輪特徵的例子打臉（`A0MV 冥道殘月破` 定住 6 秒卻從不寫座標，任何靠位移不對稱的偵測器都看不到它）。描述是有限且可窮舉的，JASS 原語不是。**每個衝突都列給 owner 裁定，不可自行和解** |
-| **1-3** | **變身系統實作**（#249 的 26 對） | ✅ 批次 A 已把 `formOf` 關聯併進 main | 變身要能換技能組，所以必須等 1-2 把技能組定稿，否則換過去的是還沒修好的舊組 |
+| `feat/262b-vfx-gaps` | #262 特效回收表 + 四個缺口 | 25 檔 +3640 | 批次 3 的 vfx/** |
+| `feat/277-mouse-target-assist` | 滑鼠世界座標索敵（解 #268 死結） | 7 檔 +1412 | 批次 3 的 input/**、#268 射程 |
+| `feat/280-round-end` | per-round 傷害＋殭屍擊殺**上協定** | 7 檔 +434 | **批次 1 全部** |
+| `fix/281-firering-mobs` | 火圈燒小怪 24 hp/s、不算擊殺 | 9 檔 +752 | 批次 4 的小怪數值 |
 
-> ⚠️ **1-1 有一個尚未回答的前置問題**（見〈等 owner 裁決〉第 5 條）：
-> 節拍疊層掛在 `StatsComp` 上，而肉鴿殭屍**沒有** `StatsComp`（`effectRunner.ts:123` `if (!sc) continue`），
-> 所以整套連段對殭屍波是**完全無效**的。這題不先答，1-1 做完會是一個打不到自己主場敵人的 kit。
+⚠️ **`feat/280-round-end` 只有伺服器半邊。** 前端呈現那一半從來沒跑。
 
-### 批次 2 · 呈現層 —— `apps/client/src/{render,vfx,audio}` ✅ 與批次 1 完全平行
+---
 
-飛行中，四條工作流各自獨佔不同檔案。共同的驗收規則見〈同一個錯〉的鏡頭條款。
+### 批次 1 · 回合結束與死亡的呈現 —— `ui/panels` + `ui/` ⛔ 序列
 
-- **#235** 回合煙火＋全場烤雞煙火（從來沒有任何玩家看過）
-- **#233** 施法向天光束預告（讓人來得及閃）
-- **#234** 擊殺語音（一殺／二殺…）＋周圍觀眾歡呼
-- **四拍令咒**：Thriller 風貝斯 riff ＋ 程序生成狼人舞，打越快節奏越快
-- **#232** 每回合進商店顯示 S~D 評價＋改善建議（尚未開工）
+三條講的是**同一個時刻、同一片畫面**，所以不能平行。**全部等 `feat/280` 驗完合併。**
 
-### 批次 3 · 平台與後台 —— `apps/platform` / `apps/admin` ✅ 完全平行
+| 序 | 任務 | 相依 |
+|---|---|---|
+| **1-1** | **大大的 WIN / LOSE**（回合結束） | 等 280 伺服器半邊 |
+| **1-2** | **MVP + 排名分數**用 owner 公式：HP 剩餘**比例**×3000 ＋ 對敵英雄傷害×7 ＋ 殭屍擊殺×30 | 吃 1-1 的版面 |
+| **1-3** | **死亡當下就看得到評價結算**（#279 灰階 + 「你已經死了」也在這裡） | 吃 1-2 的分數模型 |
 
-- **大廳公告彈窗**（飛行中）—— 後台寫得出來、API 送得出去、玩家從來沒看過
-- **#189** 內容覆寫層要能在 ggd.adms.ai 上持久化
-- **#241** `/editor/` 烤進正式映像且完全沒有驗證
+⚠️ **1-3 的文字不可以說謊**：#84/#206 的復活圈還在，隊友讀 5 秒能把你拉起來。
+「稍等這回合結束」在隊友正在救你時是**假的**。文字要跟狀態走。
+⚠️ 死亡當下回合還沒結束，分數還在變 → 要嘛標明「暫定」，要嘛等回合真的結束才定案。
 
-### 批次 4 · 資產 —— `content/assets/**` ✅ 平行，但與批次 1 共用 `content/`
+---
 
-⚠️ 這一批動的是 `content/assets/models/**`（位元組），批次 1 動的是 `content/champions/*.json`（文字）。
-**不同片空間，但 `pnpm content:build` 是同一個**，所以兩批不要在同一分鐘 commit。
+### 批次 2 · 戰場道具欄 + 鍛造層數 —— `ui/hud` ⛔ 與批次 1 共用 HudRoot
 
-- **#226 / #229 / #231** 體素角色（飛行中）
+`feat/275b-gutter-chrome` 分支上**只有 #275 的基底 commit，補洞那一輪沒 commit**。
+前一輪被推翻的三個理由（實測）：
+
+1. `displaced:"hide"` 對真正蓋住它的面板不執行 —— gutter 分支在幾何判定**前**先濾掉
+   `covers: []` 的面板，而三選一 modal 就是 `covers: []`。
+   **12 組 viewport×pointer 裡有 8 組有真實重疊而 `hidden === false`。**
+2. 第一回合桌機上面板整場不在（`controlLegendVisible` 沒有視窗尺寸條件，
+   但衝突只存在於窄視窗）
+3. 變異證明是誤報（lookbehind 排不掉 `title={view.reward}` 這種「被提到但不畫」）
+
+⚠️ **`ReadyButton` / `PrepClock` / `PhaseTimer` / `TouchControls` 都不是 registry slot，
+所以現有任何守衛都看不到它們。** 這是 #44 與 #275 兩次踩到的同一個盲區。
+
+---
+
+### 批次 3 · 三條完全沒開工的 ✅ 各自獨立，可同時開
+
+| 任務 | 領域 | 狀態 |
+|---|---|---|
+| **#278 開好房間拉好友進來** | `ui/platform` + `apps/platform` | 分支沒建。**整條路徑其實都已存在**（見下），要做的是實測找斷點 |
+| **#282 隱形技能/道具沒作用** | `sim` + `render` | 0 commit。**先普查 sim 有沒有這個狀態** —— 若根本沒有，那就是答案 |
+| **作弊碼不算分**（1 vs bot 可用，用了就沒分數與藍水晶） | `sim` + `platform` | 全新，完全沒查過 |
+
+**#278 已查證的前提（不要重查）**：好友面板 `FriendsPanel.tsx` 掛在 `LobbyScreen:474`、
+每個好友旁有 Invite 鈕（`:86`）→ `store.ts:914` → `POST /rooms/{id}/invite`；
+後端 `room/invite.go` 發 TTL + 單次 + **綁收件人**的券；大廳 WS 推 `invite` frame；
+`lobbyReducer:84` 收、`LobbyScreen:33-51` 顯示。
+**按鈕的閘是 `iAmHost && online && !memberIds.has(f.id)`** ——
+最可能的斷點是 `iAmHost` 怎麼算、以及 presence 有沒有真的送到好友那端。
+
+---
+
+### 批次 4 · 內容單一寫者鏈 —— `content/**` ⛔ 序列，不可內部平行
+
+`content/**` 是整檔寫入（`pnpm content:build` 重算 `bundle.json` + contentVersion），
+兩個寫者同時動就互相覆蓋。
+
+| 序 | 任務 | 相依 |
+|---|---|---|
+| **4-1** | **喪標麥可全套 kit**（#236/#252）—— 四拍令咒、Q 毒、W 反傷、E 狂暴、R 跳躍、EX 自爆 | leap 原語已在 main。⚠️ 見下方節拍問題 |
+| **4-2** | **技能組忠實度**（114 位，`docs/_kit-fidelity-audit-247.md`） | 吃 4-1 驗證過的原語 |
+| **4-3** | **變身系統**（#249 的 26 對） | 等 4-2 定稿，否則換過去的是還沒修好的舊組 |
+| **4-4** | **遠距投射物逐英雄從 w3x 移植** | 與 4-2 同一片檔案 |
+
+⚠️ **4-1 卡在一個 owner 已裁決但還沒做的前置**：節拍疊層掛在 `StatsComp` 上，
+而肉鴿殭屍**沒有** `StatsComp`（`effectRunner.ts:123` `if (!sc) continue`）→
+整套連段對殭屍波**完全無效**。owner 裁決是 **(a) 給小怪 StatsComp 和 (b) 節拍改掛攻擊者身上，兩個都要做**。
+
+---
+
+### 批次 5 · 延遲改進計畫的剩餘 —— `render` + `net` ✅ 平行
+
+- **`feat/276b-lod-cache`** 分支上**只有 #276 基底，補洞沒 commit**。
+  前一輪被推翻的核心：cache key 從「模型」變成「模型+tier」而那個 cache 明文不淘汰 →
+  滾一次滾輪拉遠拉回，**常駐三角形 +36%、texture +88%、下載 +53.6%，拉回來一分錢都沒還**。
+- **客戶端 zone 剔除**（延遲計畫 1-2）—— `GameApp.ts:965-976` 對每個實體都 `interp.push()`，不分 zone
+- **施法輸入與回饋**（延遲計畫批次三）
+
+---
+
+### 批次 6 · 資產與後台 ✅ 完全平行
+
 - **#230** VFX 真實引用普查：93% 技能用通用替身，106 支抽出的原作特效閒置
 - **#178** 圖示補完（602 張）
-
-### 批次 5 · ~~只有 owner 能做的一步~~ ✅ owner 已執行（2026-07-26）
-
-**賈修（`godie-hblm`）／揍敵客（`godie-efur`）—— owner 已在後台按下「套用起始名單」。**
-
-原本的狀況：兩位已進 `starter.go`，但不在線上的 operator 白名單，而 `ApplyStarterSet`
-在白名單非空時不會重跑，所以程式碼只在「全新安裝」時才會開他們，開機日誌一直是
-`whitelist enables 48 champions`。我沒有管理員權杖也不該有
-（`apps/platform/internal/auth/bootstrap.go:67`：platform 坐在反向代理後面，
-每個遠端請求進來都長得像 127.0.0.1，所以 loopback 當管理員被刻意關掉了 —— 設計正常運作）。
-
-⚠️ **尚未由我親眼確認。** 我沒有為了驗這一條去戳線上主機。
-**下一次部署的驗收清單要加一項**：開機日誌的 `whitelist enables N champions` 應該是 **50**，
-而且選角畫面要真的看得到這兩位。（#212 / #214）
+- **#259 的語音空間混音試聽頁要收進後台**
+- **#189** 內容覆寫層在 ggd.adms.ai 上持久化 · **#241** `/editor/` 沒有驗證
 
 ---
 
@@ -286,311 +341,6 @@ owner 的原話：「通常攻擊與技能都是命中時才看實際情況計�
 
 ---
 
-## 🚀 2026-07-26 · v0.6.0 已部署 ggd.adms.ai
-
-`b22a8a78` · 46 commits · 403 files · 128 份英雄／技能文件 · 上一版 v0.5.22 (`7a09d48c`)
-
-部署前備份：`/home/can/backups/data-pre-v0.6.0.tgz`，58 MB / 1086 項。
-
-### 五項驗收（全過）
-
-| # | 項目 | 結果 |
-|---|---|---|
-| 1 | **白名單** | `curation: 50 champion(s) enabled` —— **原本 48。owner 按的「套用起始名單」生效了，賈修／揍敵客真的上線。** |
-| 2 | HTTPS + build stamp | 200 / 0.20 s；`b22a8a78 2026-07-26` 出現在服務出去的 `index-BhXwuzDK.js` 裡 |
-| 3 | 公告 feed | `GET /api/v1/announcements` **未帶 token** 200，回 `{"announcements":[]}`（還沒發過任何一則） |
-| 4 | 帳號 | 部署前後都是 114 個 JSON，未動 |
-| 5 | 資產位元組 | `guardian_skeleton.glb` **1,036,516 B**，與 v0.5.22 逐位元相同；四具方塊人 52,120 / 52,088 / 52,124 / 52,120 B，與體素工作流回報的數字一致 |
-
-`panic`/`fatal` 0 行。`[content-bus] subscribed to chan:content` 有出現（v0.5.21 修的那條匯流排活著）。
-
-### ⚠️ 我第二次在同一類錯誤上絆倒（要記住）
-
-探測資產時我用了 `content/assets/models/guardian_skeleton.glb`，拿到 404，
-一度以為資產被 tier 掉了。**實際路徑有子目錄**：`models/props/` 與 `models/champions/`。
-
-這跟 v0.5.22 那次是同一類錯誤（那次是把 `/assets/` 當成 `/content/assets/`）。
-**教訓：404 先當成「我路徑寫錯」，不要當成「東西不見了」** ——
-在容器裡 `find` 一次比猜十次快，而且不會產生一個假的災難回報。
-
-### 這一版沒有的東西
-
-七條工作流的成果都是下一車：空間音訊 #259 · 大廳英靈殿 #258 · 節拍雙軌 #260 ·
-三條 JASS 修正＋克勞薩 #261 · 煙火加密＋播完才轉場 #262 · w3x 顏色普查 #263 · 麥塊式體素貼圖 #264。
-
-### 玩家公告
-
-**尚未發布。** 草稿在 `scratchpad/announcement-v0.6.0.txt`，等 owner 自己貼進後台
-—— 對玩家發佈內容是 owner 的動作，不由我代勞。
-公告管線本身這一版才上線，所以這會是**史上第一則玩家真的看得到的公告**。
-
----
-
-## 📥 2026-07-26 · owner 部署後回報（v0.6.0 之後）—— 全部已開工作流
-
-**一次八件，其中三件是「宣稱修好但玩家還是看得到」。** 這個形狀今天出現三次，要當成系統性問題看。
-
-| # | owner 原話 | 開的工作流 | 值得注意的地方 |
-|---|---|---|---|
-| **#267** | 「孫悟空的頭 還沒捕上 包括選英雄的時候」 | 孫悟空缺頭 | ⚠️ **#73 已標完成**。「選角也一樣」指向模型檔本身而非渲染情境。已交代：修在對的那一層，渲染層硬塞一顆球不叫修好 |
-| **#268** | 「技能施展距離都要調整更短一點…亞瑟王風王結界太遠了」 | 技能射程普查 | 有客觀的尺：#233 實測可見地面只有 **8.2 u 深 × 14.3 u 寬**，射程 10 u 就是打到畫面外 |
-| **#269a** | 「魔力倍率似乎太高了 根本用不完 MP」 | 魔力＋自動攻擊 | 要分開量：問題出在 `maxMana ×3`、`manaRegen ×4`、還是技能成本太低？三者修法不同 |
-| **#269b** | 「Saber 似乎不會自動攻擊？請檢查所有英雄」 | 同上 | ⚠️ **#221 已標完成**。要做成**逐英雄實跑的普查測試**留在倉庫裡 |
-| **#270** | 「素體模組大小大得太誇張…喪標麥可太大…應該是綠色系為主」 | 素體尺寸＋綠 | 綠色走 **L1 手寫層** `_voxel-skins.json`（四層鏈最高優先），不要去改生成器規則間接達成 |
-| **#262** | 「煙火粒子密度太低並且沒有爆炸感跟拖曳」＋「生命週期結束要回收（回收表）」＋**「我甚至都看到煙火跟技能特效殘留」** | 特效回收表（原煙火條已停掉重下） | ⚠️ **#131 已標完成**。殘留是洩漏不是打磨。**爆炸感來自時間曲線不是數量** —— 慢慢張開的花再多粒子也不會爆 |
-| **#271** | 「戰鬥中不應該讓手把按鍵一鍵退出，應該要移動過去甚至按 [確認/取消]」 | 離開要確認 | 這是**安全問題**：誤觸一次整隊一場就沒了。`leaveFlow.ts` 是共用回呼＝正確的修改點 |
-| — | 「語音空間混音試聽 #259 遠近之分 記得也要收錄到後台頁面」 | 待 #259 落地後接 | 試聽面留在 `public/*.html` 只有開發看得到；#229 體素鑄造廠已立先例（2D canvas、不拉 Babylon 進正式包） |
-
-### ⚠️ 今天第三次的同一個形狀，要記進〈這個專案一直在犯的同一個錯〉
-
-**#73（孫悟空的頭）、#221（自動攻擊）、#131（特效殘留）—— 三個都標成完成，三個玩家都還看得到。**
-
-共同點不是「沒修」，而是**驗收方式看不到那個 bug**：
-掃描腳本回報 OK、單元測試綠、但沒有人用**玩家會用的路徑**看過一次。
-
-→ 這三條工作流我都明確要求：**訂正原任務的狀態**，寫下它漏了什麼、
-以及**為什麼它的驗收方式看不到這個 bug**。守衛要用**事實**
-（幾何、實跑傷害、物件計數回到基線），不是「有呼叫 dispose」那種自我證明。
-
----
-
-## 📥 2026-07-26 深夜 · 三個改變前提的發現（owner 睡覺期間）
-
-### 一、#263：owner 舉的兩個例子是**兩種完全不同的機制**
-
-> 「小熊維尼(黃)、小叮噹(藍) 都有為角色特別調整顏色」
-
-- **維尼 `E00V`** 的黃色**是**頂點染色：白熊 `PolarBear.mdl` + `uclg=200 uclb=0`。
-- **小叮噹 `N00B`** 的 `uclr/uclg/uclb` **三個通道全部沒設**，有效值 (255,255,255) = 完全沒染色。
-  牠的藍色是 `StormPandarenBrewmaster.mdl` **那顆模型自己的貼圖**。
-
-⇒ 「小叮噹沒吃到 w3x 設定」這個前提**不成立**——牠本來就不靠染色。
-
-**而 `OBJECTS.json` 裡根本沒有顏色欄位**（`grep -c uclr` → 0）：那份檔案是在匯入器加上
-`raw_mods` 之前產出的，hero/unit 記錄只有 33 個 key。在它上面做普查，連「有沒有設」
-都判斷不了——不是讀到 null，是**整個欄位不存在**。唯一的 ground truth 是
-`raw/war3map.w3u`（588 筆）。
-
-**真正的缺口不是「漏了誰」**：112 位有 w3u 對應列、21 位有效顏色 ≠ 白、#49 已落地 20 位，
-只差 1 位。**缺的是 #49 只做了競技場** —— 選角預覽 / 商店 / 回合勝者 / 中場一律沒有染色。
-（已補。）
-
-### 二、#260：小怪拿到 StatsComp 很便宜，但**它後面還有兩道閘**
-
-實測（真 `SimWorld`，60 隻同時在場的真上限）：
-記憶體 **19.9 KB**、每 tick **+0.0009 ms**（33.33 ms 預算的 **0.003%**）。
-⇒ **成本完全不是理由。**
-
-但只加一行 StatsComp 會得到「計數器能動、整條 stat pipeline 對小怪靜默死掉」：
-
-1. **`recomputeStats` 第一行就是 `if (!sc || !champ) return;`** —— 小怪沒有 `ChampionComp`，
-   所以 `final` 永遠全 0。實測掛一個 `+50 armor` 上去，`final.armor` 依然是 **0**。
-2. **⛔ 第二道閘才是頭條**：四拍的爆發條件 `empower.requires.targetHasStatus: "poison"`
-   讀的是 **`world.status`**，而 `spawnMob` 從來沒有 set 過 `world.status`。
-   `applyStatus` 自己也會 `if (!st) continue` 掉頭走人。
-   ⇒ 疊層會疊到 4，**第 5 下永遠不爆**。
-   **順帶一提：Q 的減速、E 的定身、R 的重減速，今天對殭屍波也全部是 no-op。**
-
-⚠️ **要 owner 決定**：是只給 StatsComp（那條軸能動但爆發不了），
-還是連 `StatusComp` 一起給（整套控場才對殭屍生效，但那會讓所有 debuff 都能作用在小怪身上）？
-我沒有自己決定，因為後者是**遊戲設計改動**不是修 bug。
-
-### 三、「測試自我證明」在同一場對話出現**七次**，而且最後三個交付連續中招
-
-| 交付 | 刪掉什麼 | 功能 | 測試 |
-|---|---|---|---|
-| #259 語音空間化 | `...voicePlayOptions(mix)` | 100% 撤銷 | 3,563 全綠 |
-| #258 大廳英靈殿 | （暫停與遮罩本身就是死碼） | 從來沒動作過 | 全綠 |
-| #271 離開確認 | `shouldConfirmLeave` 分支 | 回到一鍵離開 | 全綠 |
-
-**形狀每次都一樣：測試測的是純函式，而可以被刪掉的是接線。**
-
-→ **新規則，已寫進所有新工作流的交辦**：
-每個交付必須包含一條「接線守衛」——找出「哪一行被刪掉會讓功能靜靜消失」，
-寫一條會因為那個刪除而變紅的測試，**然後真的做那個變異一次**，
-把「紅了幾條、哪幾條」寫進報告。**沒做這一步的交付視為未完成。**
-
-若那條縫無法無頭實例化（React hook / Babylon / socket），原始碼掃描是合法且正確的手段——
-它只要掃**真正承載功能的那一行**，不是掃一個兩邊都不會動的呼叫簽章。
-
-### 四、我自己在這一輪犯的兩個錯（記下來免得再犯）
-
-1. **對原始碼與產生檔做聯集解衝突。** `.ts` 聯集會產生重複程式碼，`bundle.json` 應該重新產生。
-   已中止重來。**規則：附加型 md 才聯集；原始碼逐處人工；產生檔取一邊再重跑產生器。**
-2. **在錯的分支上工作了一整段。** 勘查 agent 在主工作樹切了分支（它們沒有 worktree 隔離，
-   我只給了實作 agent），我的 commit 全落在那條分支上，而 `git push origin main` 一直回
-   "Everything up-to-date"。**下一輪要把勘查階段也放進 worktree。**
-
-### 五、#268 技能射程 —— **被推翻，不合併，而且錯的起點是我給的**
-
-對抗式驗證用 client **自己的** `CameraRig` + Babylon picking ray
-（`rig.screenToGround`，**滑鼠點擊走的同一條路徑**，NullEngine 1280×720，dolly 10、68°、fov 0.8）
-重量了一次：
-
-| | 我交辦裡給的數字 | 實測 |
-|---|---|---|
-| 正前方可達地面 | 4.72 u | **5.50 u** |
-| 可見地面形狀 | （當成一條線） | **梯形，±60° 方向可達 10.60 u** |
-| 6.60 u 搆得到的方位角比例 | （宣稱「規格上是死字」） | **59.5%** |
-
-**4.72 是把 `effectFraming.ts` 的 `VERTICAL_MARGIN = 0.12` 套上去、又只量正前方一條線得到的。
-那是特效取景的安全邊界，不是瞄準的尺。** 而它正是把 131 支近戰技能從 6.60 砍到 4.40 的那個閘。
-
-⚠️ **這個錯的起點在我的工作流交辦裡** —— 我寫「#233 實測可見地面只有 8.2 u 深 × 14.3 u 寬，
-射程 10 u 就是打到畫面外」，把一把 VFX 取景的尺當成瞄準的尺遞給它。
-**教訓：一把尺被證明對某個用途正確，不代表它對另一個用途正確。**
-量「特效在不在畫面裡」和量「游標點不點得到」是兩件事，前者要留安全邊界，後者不要。
-
-### 但普查本身是對的，而且找到了真正的根因
-
-- **361 支有射程的技能裡，175 支的 raw 值就是 `11.0`** —— 那是 WC3 600 的匯入預設。
-  14.0 出現 30 次、8.25 出現 25 次。**這不是設計出來的分布，是匯入殘留。**
-- **近戰與遠程的中位數完全一樣（6.60）** —— 因為它們共用同一個 WC3 600。這就是病灶。
-- **遠程有 92 支技能的射程比自己的普攻還短**（30 位英雄）。
-- `EX` 是唯一被人為調過的槽（中位 4.59），其他五槽全是原封不動的匯入值。
-- 亞瑟王風王結界：raw 11.0 → final 6.60，radius 2.20，最遠緣 **8.80**；而他是 **melee AR 1.6**。
-  射程是自己普攻的 **4.13 倍**。owner 的直覺是對的，只是「太遠」的量要用對的尺重算。
-
-### 還有兩個獨立的發現，跟射程無關但一起挖到
-
-1. **18 支 `castType: "self"` 的技能帶著 `range: 11.0`**（同一個 WC3 600 病灶常數）。
-   `GameApp.resolveHoldPreview` 對所有 castType 一律畫 `range × abilityRange`，
-   所以它們會畫一個 **6.60 u 的預告圈，而實際觸及是 0**。這是「圈跟射程對不起來」的最壞形式。
-2. **`docs/_castability-128.md` 被那條分支覆寫**（commit `246419b7`，15 增 27 刪），
-   把一份版控中的診斷從「61 英雄 / 366 格」砍成「50 英雄 / 300 格」，
-   並刪掉「本機額外加掃」的來源說明行。報告卻寫「我把那份報告 checkout 回原狀」。
-   **不合併也連帶擋掉這個。**
-
-→ **#268 重開**，用實測的梯形可達區當尺（`rig.screenToGround` 逐方位角掃），
-而不是 VFX 取景邊界。普查那 187 支的清單與 WC3-600 根因**可以直接沿用**，重算的是判準。
-
----
-
-## #269 魔力 + 自動攻擊 —— 修法被推翻，診斷保留
-
-### A. 自動攻擊：不是 Saber，是**所有角色**，而且觸發條件是「玩家在動」
-
-sim 層普查（`packages/shared/src/sim/autoAttackCensus.test.ts`，真 `spawnChampion()` + 真 combat-env）：
-**113 位英雄，射程內不會自動攻擊的 = 0 位。** 規則本身沒有壞。
-
-真正的機制在 `packages/shared/src/sim/systems/OrderSystem.ts:230-231`：
-
-```ts
-case "move":
-  if (nav.moveTarget !== null) continue;   // still walking where told
-```
-
-而客戶端 `apps/client/src/input/GamepadInput.ts:193-198`（`MOVE_LEAD = 4`）左搖桿只要有偏移，
-就**每一幀合成一個全新的 `{kind:"move", point: self + dir*4}`**；觸控搖桿一樣
-（`TouchInput.ts:95-99` + `:419`）。`InputMailbox` 每 tick drain 一次 →
-`nav.moveTarget` 每 tick 被重寫，**永遠不是 null** → `continue` →
-**`autoAcquirePass(world)` 對這個玩家永遠不執行。**
-
-實測（真 `MatchController` + `HumanDriver`，英雄 Saber `godie-e002`）：
-
-| 情境 | 普攻命中 | 持有目標的 tick |
-|---|---:|---|
-| 完全不動的玩家 | 13 | 27.8%（586/2109） |
-| 同場 bot 平均 | 34.7 | — |
-| **按住搖桿 67 秒** | **0** | **0 / 2022（0.0%）** |
-| 全場只右鍵點一次「區外」地面 | **0** | **0 / 2029** |
-| A-click 連發 | 2 | 86.3%（前搖中走出射程被取消） |
-
-第二個入口：`apps/client/src/input/InputCapture.ts:23-26` 的 `mapRightClick`
-把地面點原封不動送出，**沒有夾到 zone 內**；身體被 `boundaryRadius` 夾住 →
-`ARRIVE_EPS(0.05)` 到點判定永遠不成立 → `nav.order` 永遠停在 `move` → 同一行 `continue`。
-**一次點到走不到的地方 = 一整場關閉自動攻擊。**
-
-⚠️ **#269 只修了「邊界」那一半。** 對抗驗證證明**障礙物裡的目的地一樣搆不到**：
-0 hits / 750 ticks、`moveOrderEverCleared = false`，而且**與 pre-#269 main 的數字逐位元組相同**。
-每張出貨競技場每區有 8–28 個障礙物，而 `self + dir*4` 的前導點推向柱子正是手把玩家的自然動作。
-
-### 正確的修法方向（重開時照這個做）
-
-**不要去讓「到點」變得可達** —— 那是在追症狀。真正的錯誤是
-**把「找目標」和「追過去」綁在同一個 `continue` 上**。
-- `autoAcquirePass` 只寫 `nav.attackTarget`；`BasicAttackSystem` 只要有 `attackTarget` + 在射程內就會揮。
-- 會跟顯式 move order 打架的是**追擊解算**（`OrderSystem.ts:97-121` 改寫 `moveTarget`），不是取得目標。
-→ **讓 auto-acquire 永遠執行，只在顯式 move order 存續期間抑制「追擊」那一段。**
-玩家走過敵人旁邊就會自動揮，移動完全不被搶走。這一刀同時關掉上表的前三種失效。
-
-⚠️ 順帶要處理的兩件：
-1. `OrderSystem.ts:219` `if (world.abilities.get(id)?.windup) continue` 讓前搖中不補回目標 →
-   B4 的「前搖中走出射程」。
-2. **bot 有 48u 接戰掃描（`Tier0Brain.ts:75` `AI_ENGAGE_RANGE = 48`），玩家只有
-   `MELEE_ACQUIRE_FLOOR = 6`**（`targeting.ts:88`）。這是不動的玩家只有 bot 37% 的原因。
-   要不要給玩家更大的取得半徑是**設計決定，需要 owner 裁決**（給太大會搶走走位權）。
-3. 普查的閘是 `hits === 0`，所以「60 秒只揮一刀」的角色會綠燈通過且不被點名 → 閘要改成速率。
-
-### #221 為什麼全綠
-
-`packages/shared/src/sim/autoAcquire.test.ts` 26 個 case 全綠，但：
-- 受測體是 `spawnFighter()`，`championId: "probe"` —— **registry 裡根本沒有這個 ChampionDef**，
-  攻速寫死 0.5、`baseAttackTime` 走 `?? 1.0` fallback。**從來沒有跑過一位真英雄**。
-- intent 一律是 `NO_INTENTS` 或**單一 tick 的一筆 order**。
-  **從來沒有模擬過「同一個 order 每 tick 都重來」的真實輸入流。**
-- 它甚至有一個 case（`:366-378`「an explicit MOVE order suppresses acquisition for the whole walk」）
-  **明文把這個 bug 的行為釘成正確**。
-- `castabilitySweep.test.ts` 的 basic 欄位也看不到：`:461` 每個 tick 直接
-  `world.nav.get(caster)!.attackTarget = foe;` —— 把 auto-acquire 該產出的東西手動塞進去。
-
-**#221 證明的是規則正確；它沒有、也無法證明真英雄在真對戰中被真客戶端輸入流驅動時會自動攻擊。**
-
-### B. 魔力：是**雙峰**，不是「倍率太高」
-
-實測 5 場真 bot 對戰、113,640 個 champion-tick（回合實際長度 78/81/70/77/73 秒 —— 火圈把它壓到 ~77s）：
-- 低於 50% 的時間佔 **15.72%**，完全見底 **0.00%**
-- **出場 48 位裡 38 位整場沒掉到 50% 以下，26 位連 80% 都沒破** ← owner 的感覺對
-- 但另一端 7 位是真的被榨乾：`godie-h02y 志志雄真實` 67.8% 的時間在 50% 以下、
-  `godie-o02w 令狐沖` 68.9%、`godie-h02n 打我阿笨蛋` 72.1%、`godie-osam 殺生丸` 60.7%
-
-**79% 的角色魔力不是資源，另外 ~15% 反而被魔力鎖死。整體調降會把後者直接打廢。**
-
-三軸隔離（同 3 seed，只改一顆旋鈕）：
-
-| 設定 | 低於50% | 低於20% |
-|---|---|---|
-| 現況 maxMana×3 manaRegen×4 | 10.62% | 6.93% |
-| manaRegen×1 | 16.88% | 8.43% |
-| **maxMana×1** | **28.45%** | **17.08%** |
-| 兩者都 ×1 | 47.73% | 31.96% |
-| manaRegen×1 **+ cooldown×1** | **0.00%** | **0.00%** |
-
-→ 主因是 `maxMana ×3`（影響力是 `manaRegen ×4` 的 ~1.7 倍）。
-⚠️ **最後一列是關鍵耦合：`cooldown 0.2` 才是唯一讓魔力有壓力的東西。**
-把冷卻倍率調回 1.0，不管魔力怎麼調，魔力都會變成 0.00% 的死數值。
-**魔力平衡不能離開 cooldown 單獨談。**
-
-#269 的修法（maxMana ×3→×2 **同時** manaRegen ×4→×6）被推翻，因為兩顆旋鈕互相抵消：
-一回合真正能花掉的總魔力中位只掉 **11.6%**，技能總施放次數 **681 → 665（−2.3%）**。
-而 `manaRegen 4→6` 這一半**方向與 owner 的要求相反**。
-且矯枉過正集中在本來就吃魔的角色：`godie-h02k` 熊貓最長**連續 39.0 秒**每個鍵都是灰的，
-整場 72 秒只放出 5 個技能；`godie-o02w` 令狐沖連續等魔 28.3s → **45.6s**（佔整回合 63%）。
-
-→ **這是 owner 裁決題，不是工程題。** 資料已備齊，等 owner 醒來。
-
-### ⛔ C. 一個會讓所有 combat-env 調整靜默失效的機制（**這條最重要**）
-
-`apps/game-server/src/config/combatEnv.ts:141` 是
-`normalizeCombatEnv({ ...content, ...admin })` —— **admin override 逐 key 蓋掉 content**。
-而後台 console 每次存檔都 PUT **完整 26 個 key**
-（`apps/admin/src/combatEnv.ts:336`「ALWAYS the complete table」，
-`apps/platform/internal/combatenv/handlers.go:61` 也寫死「Once an operator saves anything the full table ships」）。
-
-**只要 owner 在 後台→戰鬥系統 存過任何一次，`content/config/combat-env.json` 對他玩到的那一場就零影響。**
-而帳本記著 owner 說過「調過的戰鬥數值（combat-env 的 admin override）也一起帶上主機」——
-**override 確實存在而且已經搬到他在玩的主機上了。**
-
-更糟：後台對 `maxMana` 的「重設值」是 `defaultForKey("maxMana") = 1`
-（`packages/shared/src/sim/combatEnv.ts:212`），**不是出貨值**。按下該列的「重設」會設成 1.0。
-
-→ 這是**第 10 個**「這個專案一直在犯的同一個錯」的案例，而且形狀是新的：
-**不是測試看不到，是線上的資料層蓋掉了你改的那一層。**
-→ 必須做：(a) 一條斷言 sim 實際收到的**合併後**表格的測試；
-(b) 後台每一列顯示「內容檔出貨值 vs 目前 override 值」並讓「重設」回到出貨值而不是 1.0。
-
----
-
 ## 工作流交辦的一個結構性錯誤（我犯了第三次）
 
 **勘查／量尺階段的 agent 沒有 `isolation: 'worktree'`，所以它們在主 worktree 裡跑。**
@@ -612,533 +362,3 @@ case "move":
   再重跑一次確認。
 
 ---
-
-## #262 特效殘留 —— 根因找到了、商店那條路修好了，但**不合併**（三個缺口）
-
-### 根因（漂亮，而且可以直接沿用）
-
-**`scene.render()` 不跑時，Babylon 的 ParticleSystem 完全不老化，但東西全部留在場上。**
-
-`GameApp.ts:1339` 是 `if (!this.renderSuppressed) this.renderer.render();`，
-而 `renderSuppressed` 由商店開關（`IntermissionStage.tsx:109` / `:134`）。
-
-實驗（真鏡頭）：把烤雞停在 t=3600 的 droop 中 → `live=404`、`ps=13`、mesh `enabled=true`；
-**完全不渲染，等 25 秒真實時間 → 404 / 13 / enabled。一顆粒子都沒死。**
-恢復渲染的第一格 → 395。**從凍結的那一格繼續播。**
-
-→ **任何在「戰鬥→商店」那一格還活著的粒子，會被冷凍 40 秒
-（`intermissionSec: 40`），然後在下一回合開打的第一格重新出現在上一回合的世界座標上。**
-
-**更狠的第二種形狀**：`VfxSystem.play()` 做的是 `ps.start(); ps.manualEmitCount = N`
-（`VfxSystem.ts:644-646`）。Babylon 只在 `animate()`（＝被畫出來的那一格）消費 `manualEmitCount`。
-**剛好在商店掛載那一格施放的技能，整個 burst 會延遲 40 秒、
-在下一回合第一格以滿亮度炸開 —— 而沒有任何人在施法。**
-
-### 為什麼煙火/擊中的殘留會自己消失、技能特效不會
-
-商店期間 `vfx.update()` 仍然被呼叫（GameApp 第 6 步在第 7 步 render 判斷之前）。所以：
-- ✅ 用 `BurstPool` 的層（煙火、擊中、血、腳步灰、狀態光環）→ 8 秒後 reaper 會 `ps.dispose()`
-- ❌ **`VfxSystem.pool`（技能／死亡／投射物的 vfx doc 專用池）完全沒有任何回收路徑**：
-  `play()`（`:607-648`）只 push 不 pop、`update()`（`:1362-1385`）完全沒碰 `this.pool`、
-  唯一釋放點是 `dispose()`（`:1391`）。**這是「技能特效殘留」的主路徑。**
-
-### 兩處只增不減（程式碼層面的無界成長）
-
-1. `VfxSystem.pool: Map<docId, PooledSystem[]>` —— 每個 doc id 最多 4 個實例，**永不回收**。
-   理論天花板 = 662 個 ability doc × 4 = **2648 個 ParticleSystem**。
-2. `Telegraph` 的 per-scene 共享池 `sharedByScene`（`Telegraph.ts:86-97`）——
-   `rings: Map<radiusKey, Mesh[]>` 以半徑 2 位小數當 key，**整個模組沒有任何 dispose 函式**。
-   #136 的 `abilityRange` 乘數讓半徑變成任意浮點數 ⇒ key 數隨技能種類線性成長，
-   每 key 最多 8 個 torus，活到離開整場比賽為止。
-
-### ⛔ 不合併的三個理由（都是對抗驗證量出來的）
-
-**1. 分頁切到背景那條路完全沒修，而程式註解白紙黑字宣稱涵蓋了它。**
-淬火機制住在 `VfxSystem.update()`（`VfxSystem.ts:1466`），唯一驅動源是 GameApp 的 rAF 鏈
-（`GameApp.ts:1018`）。**分頁隱藏時瀏覽器完全不發 rAF**，所以 `observeUpdate()`
-一次都不會被呼叫、`quenches` 永遠是 0。
-
-商店期有效是因為 **rAF 還在跑、只有 render 被跳過**；分頁背景是**連 update 都停**。
-**兩者形狀完全不同，而報告與程式註解把它們當成同一件事：**
-- `vfxLedger.ts:34-35`「…**and a backgrounded tab suppresses it too**」
-- `VfxSystem.ts:1459-1463`「the shop is up, **or the tab is in the background**」
-
-實測：切走前 26 systems / **504 粒子** / 8 支排隊的 `manualEmitCount`；
-隱藏 30 秒後仍是 **26 / 504 / 8，quenches = 0**；
-回到分頁的第一格畫出 **481–496 顆上一回合的粒子**，同時那 8 支 burst 在同一格滿亮度炸開。
-`IntermissionScene.ts:275` 與 `LoginScene.ts:313` 都有 visibilitychange —— **唯獨競技場那條 loop 沒有**。
-
-**2. 煙火那一半（＝標題）完全沒有測試涵蓋。**
-- 刪掉 peony 的 `dragCurve: "blast"`（**整個爆炸感機制**）→ **3533 全綠**
-- 永遠不發 willow 層（報告自己稱之為「像煙火」與「像閃光」的分界線）→ **3533 全綠**
-只有彗星那個破壞會紅，而且是靠 lease 計數紅的，不是靠任何視覺斷言。
-
-**3. 幀時間量在錯的時刻，而真正的峰值會掉幀。**
-報告只量 t=2400 就宣告「齊射沒有可量測的退步」—— 但 t=2400 齊射只剩 ~5 顆粒子，**已經結束了**。
-在真正的峰值 t=780（231 → 655 粒子）量：
-frame mean 9.12–15.36 → **18.38–23.05 ms**；p95 24.7–42.9 → **52.0–80.4 ms（約 13 fps）**。
-⚠️ 這是 SwiftShader 軟體光柵，不是 GPU 數字 —— 但**「沒有可量測的退步」這個正面主張
-是用同一支工具做出來的，而它在真正重要的那一格站不住。**
-而且 owner 正在抱怨延遲，這條不能放過。
-
-**4.（次要）反困住守衛是同義反覆。** `celebrationGate.test.ts:91` 的期望值
-是從 `ARENA_HOLD_CAP_MS` 自己導出來的。把上限從 2500 拉到 600000
-（＝盯著競技場十分鐘進不了商店，正是該檔註解說要防的失敗）→ **3533 全綠**。
-出貨值 2500 沒問題，但那條測試偵測不到上限被拿掉，而那正是它宣稱在做的事。
-
-### 重開時要補的（其餘照舊，不要重做）
-
-1. **競技場 loop 加 visibilitychange**，並把「rAF 停」與「只有 render 停」當成兩件事處理。
-   把 `vfxLedger.ts` 與 `VfxSystem.ts` 那兩句**說謊的註解**改對。
-2. **煙火視覺半邊要有會咬的守衛**：拿掉 `dragCurve: "blast"` 要紅、不發 willow 要紅。
-   斷言可以是粒子數/速度分布/生命期分布，不必是像素。
-3. **在 t=780（真正的峰值）重量幀時間**，若確實加倍就把密度往回收。
-   密度的錢從 draw call 出不是從粒子預算出（`SCREEN_SYSTEM_BUDGET 64` 才是天花板，
-   `SCREEN_PARTICLE_BUDGET 8000` 只用了 8.6%）。
-4. `celebrationGate.test.ts:91` 的期望值要寫死，不可以從被測常數導出。
-
----
-
-## #272 已合併 —— 兩條對抗驗證都沒推翻，而且驗得比實作還硬
-
-**ping 晶片**照版本徽章的模子複製，沒有發明新機制：`<body>` portal
-（逃出 `#hud-root` 的 z-index 10 stacking context）＋ `pointer-events:none`
-（**這才是「蓋在所有東西上還安全」的真正依據**，不是 z-index）＋下緣 10px 保留帶。
-徽章占中央 280px，晶片占左端 —— 右端不能用，因為 780×360 觸控＋商店左靠時
-displaced 的 ☰ 落在**離下緣只剩 8px**。
-
-**六個狀態**，因為 `perfBus.pingMs` 單獨印出來會說謊：
-第一次 ack 之前是 0；玩家站著不動（`IntentSender.update()` 沒 pending order 就不送封包
-→ seq 不前進 → ack 不前進）、死亡或實體離場、replay 頁三種會**無聲凍結**。
-375px 只剩 47.5px 時階梯先丟中文詞、改帶 ASCII 記號，**數字永遠最後才丟**。
-
-順手修兩個真 bug：`Show ping` 原本是**死開關**（整個 overlay 在 `showPerfOverlay=false`
-（預設）時 `return null`）；真斷線**永遠不會變 offline**（`quality()` 只在「從未收過快照」時回 offline）。
-
-### 驗證方式值得記下來（這是本專案至今最紮實的兩條）
-
-一條**自己寫了一支 TCP 延遲代理**插在 client 與 game-server 之間，雙向各延遲 D：
-
-| 注入 RTT | 晶片字串 | 相對基線 |
-|---|---|---|
-| 0 | 順暢 34 ms · 抖動 1 ms | — |
-| 100 ms | 普通 138 ms | **+103.5 / +104.9** |
-| 200 ms | 延遲 238 ms | **+203.4 / +203.8** |
-| 回到 0 | 順暢 34 ms | 回得來，沒卡住 |
-
-另一條寫了一支**對照 pre-#272 `planTicks` 的差分測試，跑 200,000 組輸入**
-（隨機＋對抗性：0、−1、NaN、±Infinity、剛好 tick 倍數、差 1 ulp、5×/6× tick、60 秒），
-`steps` / `accumulator`（用 `Object.is` 比，所以 NaN 與 −0 也算）/ `dropped`
-**每一組都相同**。並實際 `kill -STOP` 3 秒製造落後，拿到
-`shedEvents 1 / shedTicks 85 / shedBehindMs 2833.333`，是**它自己的 match id**，所以是推導不是抄的。
-
-### 伺服器那半修的是 shed 永遠看不到的那一種
-
-`MatchRoom` 用 `TICK_MS/2`（16.7ms）驅動迴圈，累積器要欠到 ~200ms 才 shed 一次。
-所以**一個每 tick 花 40ms 對 33.3ms 預算的房間永遠落後 20%，而 `shedEvents` 是 0**。
-`tickHealth.ts` 的 p50/p95/p99（512 筆 `Float64Array` ring buffer）就是為了這個。
-真實 bot 局抓到 `tickP50Ms=0.54 tickP99Ms=6.333 tickMaxMs=49.555`。
-
-### 合併後我補的一刀
-
-驗證者量到 `pingMs` 的**地板是 ~34ms** —— 兩層 30Hz 量化（伺服器只在 tick 邊界消費輸入、
-ack 只搭下一個 state patch 回來），任何頻寬都消不掉。
-所以裸 60/140 的門檻代表 **~26/~106 ms 的真實網路 RTT**，對每個連線良好的玩家都低估一階。
-owner 家人在台灣連 asia-east1（真實 RTT 約 5–40ms）→ 顯示 39–74ms →
-**大部分人在完美連線下會一直看到「普通」。**
-
-→ 改成 `PING_PROTOCOL_FLOOR_MS(34) + 原本的 26/106 預算`。抖動不需要修正
-（它量的是對名目節拍的偏差，量化在裡面自己抵銷）。變異證明：退回裸 60/140 → 2 紅。
-
----
-
-## #274 已合併 —— 移動中的玩家終於會自動攻擊，但有三件事要 owner 裁決
-
-### 修法：解開「取得目標」與「追擊」的耦合（不是「讓到點可達」）
-
-主刀是 `OrderSystem.ts` 追擊迴圈開頭一行讓路：
-`if (nav.order?.kind === "move" && nav.moveTarget !== null) continue;`
-有目標只會讓你**揮**（`BasicAttackSystem` 只看射程），會搶走位的是**追擊**。
-
-另外三項：`autoAcquirePass` 的 `move` 不再抑制取得目標；
-地面指令只取消**玩家自己點的**目標（`if (!nav.attackTargetAuto)`）——
-理由不是為了多打幾下，是**語意不能取決於 client 的重送頻率**：
-手把每秒送 30 次等價 move order，若每次都清掉 auto 目標，
-等於握著搖桿的玩家用「全比較器每幀重擲」、放開搖桿的玩家用「leash + 只換更好的」，
-**同一個意圖兩套規則** —— 那正是這個 bug 本身的錯誤形狀。
-
-實測（真 MatchController + 真 HumanDriver + Saber，seed 7919）：
-
-| 情境 | 命中/揮擊 前 → 後 | 持有目標 tick 前 → 後 |
-|---|---|---|
-| 完全不動（對照） | 13/14 → 12/13 | 27.8% → 25.7% |
-| **按住搖桿 67 秒** | **0/0 → 11/12（92%）** | **0.0% → 54.2%** |
-| **只右鍵點一次區外** | **0/0 → 12/12（100%）** | **0.0% → 58.8%** |
-| **右鍵點進障礙物**（#269 漏的那半） | **0/0 → 26/28（93%）** | **0.0% → 86.8%** |
-| A-click 連發 | 2/45（4%）→ 9/12（75%） | 86.3% → 96.7% |
-
-障礙物那格 `orderClearedWhileAlive` 修後仍是 `false` —— **目的地一次都沒到過**，
-證明這一刀是解耦，不是讓到點可達。
-
-### 交付自己抓到自己的洞（值得記）
-
-它做變異 C（拿掉 `if (!nav.attackTargetAuto)`）時**第一次是 0 條紅、全綠**，
-而且量出來的命中數還「更好看」。它沒有裝作沒看到，補了一條不變量測試
-（兩個敵人，把 HP 對調成「全比較器會換人但穩定性前綴不該換」的局面）之後重做 → 1 條紅。
-
-### ⛔ 三件要 owner 裁決
-
-**1. 這一刀也改了 bot，而且量級比交付報的大一個數量級。**
-`Tier0Brain` 風箏後撤與去踩復活圈時發的是 move order，**以前那段時間 bot 完全不攻擊，現在會邊退邊打**。
-交付報「bot 平均命中 34.7 → 36.1（+4%）」；對抗驗證在完整對戰量到 **+11.9% ~ +52.6%**、
-**英雄死亡數 +21.7%**、digest 在 tick ≤1000 就分岔。
-交付被迫改 `arenaRules.test.ts`（第 3 回合等級分布從「6 人 4 級 / 6 人 6-7 級」變成全部 6-7 級）
-就是同一個訊號。**風箏的定義本來就是邊退邊打，我傾向保留，但這是平衡變更。**
-
-**2. 近戰在「一直按住搖桿」的極端下沒有被完全解決。**
-對抗驗證掃 Saber × 10 seeds 的 stick 情境：命中 **0, 0, 2, 2, 2, 5, 5, 11, 11, 15** ——
-中位數約 3.5，**仍有 2/10 場是 0**。其中 seed 11 持有目標 81% 卻 `windups = 0`：
-近戰射程 1.6u，chase 讓路後全靠玩家自己的路線把人帶進去。
-**交付表裡的「0 → 11」是 10 個 seed 裡第 2 好的那一個。**
-
-**3. 玩家的取得半徑 6 vs bot 的 48（依交辦沒動）。**
-不動的玩家 12 命中 vs 同場 bot 平均 36.1，**約 1/3**；持有目標的 tick 只有 25.7%。
-放大會拉近差距，但也會讓「走過去」變成「被拉過去」。
-
-### 我合併後補的兩刀
-
-**(a) 走位預算守衛** —— 對抗驗證證明交付的頭號證據只在第一刀砍中之前成立：
-`combat/damage.ts:393` 的 `bumpFreeze(world.hitstop, source, …)` 把 hitstop **同時打在攻擊者身上**，
-`MovementSystem.ts:85` 遇到 hitstop > 0 就 `t.vel = {0,0}`。
-修前握著搖桿的玩家一下都揮不到 → 永遠不吃這個凍結；**修後每揮中一下就凍住走位。**
-兩個「獨立量測」結構上都看不到：`hijackedTicks` 比的是 `nav.moveTarget`，hitstop 不碰它；
-位移軌跡只取樣前 5 秒各一點，而**全場 11 次命中在那個視窗內一次都還沒發生**。
-
-凍結本身是 #3/#133 刻意的打擊感，所以守衛斷言**天花板**不是零：
-基準 3.12%（62/1986 tick），天花板 5%。變異：`hitstopTicks ×4` → 5.56% → 紅
-（不是 12.5% 是因為 `HITSTOP_COUNTER_CAP` 已經在夾 ——
-**所以這條守衛真正守的是那個 cap 與 #133 的手感表**）。
-
-**(b) 更正一條假的因果敘述** —— 交付四項改動裡的第 4 項（`windup && attackTarget !== null`）
-是**死碼**：還原成裸 `windup` → 0 條紅、五個情境數字逐位元組相同。
-A-click 4%→75% 完全來自第 3 項。註解已改成「保留為廉價不變量，不是修法，
-不要引用它當任何事的原因」。**把一條不做事的改動寫成關鍵修法，是頭號失敗模式的變體。**
-
-### 普查速率閘掉出 6 位英雄（用 ratchet 停住，沒調低門檻）
-
-`u011 0.14 / zombiex 0.29 / h01u・hpb1・naka・udea 0.43`。真因追到 tick 級：
-`godie-u011` t45 提交揮擊並**立刻扣掉整段 45 tick 冷卻** → t52-57 前搖被 hitstop/hitstun 凍住
-→ t56 擊退把目標從 1.35 推到 1.80、超出 1.60 射程 → t58 傷害點取消＝空揮。
-修正點在 `BasicAttackSystem` 與擊退手感，另開任務。
-
----
-
-## #268 v2 —— 量尺做對了，判準做錯了；但**它指出了正確答案**
-
-### 量尺這次是紮實的，直接沿用，不要再重量
-
-用 shipped `CameraRig` + `scene.createPickingRay`（= `rig.screenToGround`，滑鼠點擊走的同一條路徑），
-round-trip 判定（`projectToScreen` → 像素在 viewport 內 → picking ray 打回地面 → 誤差 < 1e-3），沿方位角二分：
-
-| 方向 | 16:9 | 4:3 | 844×390 |
-|---|---|---|---|
-| 正前方 0° | **5.499** | 5.499 | 5.499 |
-| 正後方 180° | **3.895** | 3.895 | 3.895 |
-| 側向 90° | 7.516 | 5.637 | 9.150 |
-| 極大 | **10.601 @58.75°** | 8.739 @51° | 12.325 @63.5° |
-| 6.60u 覆蓋率 | 51.4% | **19.4%** | 51.4% |
-
-閉式（可自行驗算）：eyeY = 10·sin68° = 9.2718，standoff = 10·cos68° = 3.7461，fov 垂直 0.8 rad。
-遠邊 z = eyeY/tan(68°−22.918°) − standoff = **+5.499**；近邊 = **−3.894**。全部隨 dolly 線性。
-
-**四個我沒想到的事實：**
-1. **1280×720 與 1920×1080 逐位元完全相同。** `camera.fov` 是垂直視角且固定，
-   水平半角 = atan(tan(fov/2)·aspect) —— **解析度根本不進入幾何**。它們不是兩個樣本，是同一個。
-2. **最保守的不是手機橫向，是 4:3。** 手機橫向比桌機**寬**（2.164 > 1.778），側向反而多搆 1.6u。
-   而 `effectFraming.MIN_ASPECT = 4/3` 已經把 4:3 寫成 client 支援的最窄版面。
-3. **HUD 真的擋住底部**：`AbilityBar` `bottom:14` + tile 52 = 66px 且 `pointerEvents:"auto"`。
-   180° 從 3.89 → 3.27（720p）／**2.71（844×390）**。加上相機跟隨落後
-   （`FOLLOW_LERP_HALFLIFE_MS = 90` → τ 129.8ms × ms 中位 5.8u/s ≈ **0.75u**），
-   **實戰最壞的全方位保證可達半徑 ≈ 2.6u。**
-4. **`dolly 10` 既是最保守也是玩家開局位置**（`DOLLY_DEFAULT = DOLLY_MIN`）——
-   不是理論最壞，是預設。
-
-**還有一把上一階段沒有的關鍵尺**：`targeted` 不需要點到敵人中心，只要落在 `pickUnit` 的圓盤上
-（body 0.6 + slack 0.45 = **1.05u**，用 shipped `pickUnit` 二分量出來）。
-→ **`CLICK_MIN` = 3.895 + 1.05 = 4.945u** = 全 360° 保證點得到的 targeted 半徑。
-→ 正前方上限 = 5.499 + 1.05 = 6.549u。
-**今天的 6.60u 連正前方上限都超過 —— 它的最外圈在任何方向都點不到。**
-
-### 判準的核心洞見（這個也對，沿用）
-
-**不存在單一射程上限。可瞄準性由 castType 決定**，因為四種取得目標的路徑完全不同
-（`AimResolver.resolveCastTarget`）：
-
-| castType | 支數 | 游標角色 | 被可達距離綁住？ |
-|---|---|---|---|
-| `self` | 287 (42.6%) | 無 | **否**，range 是裝飾 |
-| `skillshot`/`dash` | 67 (9.9%) | 只取 `normalize(cursor − self)` **方向** | **否** |
-| `ground` | 94 (13.9%) | `clampLen(cursor − self, range)` | 單向（仍送出合法點）|
-| `targeted` | 225 (33.4%) | 必須 `pickEnemy ≠ null` | **是，硬性，靜默失敗** |
-
-**47.3% 受約束、52.7% 完全不受。任何一刀切都會砍到一半根本不需要砍的東西。**
-
-### ⛔ 但改動被推翻，而且是量出來的
-
-真對戰（shipped `MatchController` + 12 個 Tier0 bot + 6 個固定 seed，程式碼相同、只換 content 樹）：
-
-| 指標 | 改前 | 改後 | |
-|---|---|---|---|
-| targeted 成功施放 | 5,671 | 3,412 | **−39.8%** |
-| out-of-range 靜默失敗 | 6,764 | **23,607** | **+249%** |
-| targeted 成功率 | 45.6% | **12.6%** | −33pp |
-| 技能傷害事件 | 7,895 | 5,788 | −26.7% |
-
-不含 RNG 的靜態確認：遠程英雄的 targeted 實效射程 < 0.9 × 自己普攻射程
-（= `OrderSystem` 讓遠程單位站定的那個點）的比例：**改前 53/74，改後 74/74 = 100%**。
-
-**→ 改完之後，沒有任何一位遠程英雄能在自己開打的距離放出自己任何一支 targeted 技能。**
-
-守衛結構上抓不到：把 `godie-ogld.q`（普攻 12u 的法師）兩份鏡像砍到 eff 1.5u = 廢掉 → **6/6 全綠**。
-**那把尺只量「點不點得到」，量不到「短到不能用」。**
-
-另外兩個守衛盲點（第一條驗證用變異拆穿）：
-- **守衛從頭到尾沒讀過 `radius`。** 給 `godie-orkn.passive` 加 `radius: 100`，
-  外緣 68.40u vs 極大可達 10.601 → **6/6 全綠**。
-  而交付自己宣告的正確尺就是「外緣 = range + radius，因為 owner 抱怨的是他看到的那個圈」——
-  **它只把那把尺用在 3 支近戰 ground 上。** 實測 26/53 支 ground 的外緣超過 4:3 極大，
-  最糟 `godie-ubal.passive` 鬼眼外緣 **15.00u**。它處決了 6.60，卻留下 15.00。
-- **skillshot 51 支 + dash 14 支完全無守衛。** dash 改成 eff 120u → 6/6 全綠。
-- 42 支 **authored**（非 11.0 殘留）的值被壓進 4 個桶，**WC3 作者寫的「這支比那支遠」被抹掉**。
-  同樣落在天花板底下，做**單調壓縮**就能同時滿足幾何又保住排序。
-
-### ✅ 正確答案（這才是這一輪真正的產出）
-
-**幾何與角色定位在遠程 targeted 上是真的打架，而且不可能同時滿足**：
-AA 6.0–12.0，滑鼠可點天花板 4.945。**兩邊都不能讓。**
-
-但**只有滑鼠會被幾何咬**：
-- `GamepadInput.ts` 用 `nearestEnemy(self, ability.range, aimDir)` —— **純世界座標索敵，完全繞過螢幕**
-- `TouchInput.ts` 的 `tapCastCommand` / `aimCastCommand` 同樣走 `pickNearestUnit` —— **也繞過螢幕**
-- **滑鼠＋鍵盤是唯一沒有的那條，而那正是 owner 家人在玩的主要路徑**
-
-**→ 這題的解不是射程，是給滑鼠加上手把與觸控早就有的世界座標目標輔助。**
-一旦滑鼠也走 `pickNearestUnit`，`targeted` 的硬天花板 4.945 直接消失，
-217 支射程一支都不用動，遠程英雄也拿回自己的定位。
-
-⚠️ **`self` 那 18 支的幽靈預告圈可以獨立先做**（改 `range → 0`，287 支裡另外 269 支本來就是 0）——
-它與射程判準無關，是純粹的假資料，而且會同時修好 tooltip / codex / 後台內容管理 / editor 預覽。
-
-### 順帶挖到的四個獨立問題（都不是 #268 的守備範圍）
-
-1. **`Tier0Brain.ts:331/340/347` 用未乘 `abilityRange` 的 raw range 跟世界距離比**，
-   而 sim 用 `range × 0.6` → **bot 在 0.6R~R 之間一直發出會被拒的施法，燒法力與冷卻。**
-2. **`InputCapture` → `AimResolver` 的 ground `clampLen` 吃 base range，
-   而 #152 的虛線預告圈吃乘過 0.6 的值** —— 玩家看到的圈跟 client 夾的點不是同一個數。
-3. **`docs/_castability-128.md` 與 `content/assets/model-budget/report.json` 是「跑測試就重寫」的產物**，
-   在缺 gitignore 的 `data/curation/whitelist.json` 時會自動縮水。
-   **所以上一版被指控「說謊覆寫」很可能是不公平的** —— 它是 checkout 之後又跑了一次測試。
-   **這個陷阱本身該修**（產物寫進 gitignore 的路徑，或測試在缺白名單時拒跑）。
-4. **風王結界的 `castType` 可能本來就錯**：描述寫「此為法球效應」——
-   法球效應掛在自己普攻上，那是 `self`／orb passive，不是 `ground` AoE。
-   **在 castType 沒被裁決前，用幾何的尺去訂它的 range 是在量一個分類錯誤的東西。**
-
----
-
-## #276 LOD 接線 —— 不合併。接線是真的，但快取模型反噬
-
-### 做對的（獨立驗證確認，重開時直接沿用）
-
-- **`-mid.glb` / `-small.glb` 真的被請求**（真 Chrome、真 WebGL、看 resource-timing 的真實 URL）。
-  herosaber dolly 10→40 抓 `herosaber-mid.glb`；面數 1690→620（−63%）。
-- **換階真的無縫**：身高固定 1.8000（#150 正規化重新量過）、動畫 phase 持續推進不重置、
-  **#263 隊色 tint 跟著走**（`#tint` clone 數不變）、`scene.skeletons` 維持 1、
-  `animationGroups` 來回後回到 baseline（沒漏）、近→遠→近像素差 **72/24000（0.3%）**。
-- **83 組變體健康普查**：0 件 stale 本體、0 件檔案不存在、0 件零件整個消失、0 件骨架關節變化。
-  **goku 兩階都有頭** —— #267 修完後 tier 有跟著重生，我擔心的那件事是沒有的。
-- **41/166 個變體檔要隔離，全部因為減面削掉輪廓**：
-  `heroxelloss` x **−71.8%**（翅膀整片沒了）、`long` z −65.3%、`heromiku` y −39.2%（雙馬尾）、
-  `hex/rock` **兩階都壞**。這是真發現。
-
-### ⛔ 不合併的四個理由
-
-**1（最嚴重）快取從「模型」變成「模型+tier」，而那個快取明文不淘汰。**
-`AssetManager.ts:13-19` 寫著「No LRU, no eviction: that is deliberate」。
-於是同一個英雄可以同時常駐 2–3 份 AssetContainer，**永遠不釋放**
-（`ChampionView.releaseBody` 釋放的是 instantiate 出來的 clone，clone 與 container 共用 Geometry）。
-
-實測（玩家滾一次滾輪拉遠再拉回）：
-container 12→**23**、常駐三角形 16,580→**22,556（+36.0%）**、texture 34→**64（+88%）**、
-下載量 3,659,984→**5,619,944 B（+53.6%）**。三階都走過：**+63.3% tris / +144% textures / +84.5% bytes**。
-
-**而那張「−69.5% tris / −54.5% bytes」的表，每一列都是 `new Scene` + `clearAssetByteCache()`
-之後量的 —— 兩個不同的全新場景的對照，執行期永遠不會出現這個狀態。**
-真正變好的只有「每幀送出的三角形數」（那是真的）；VRAM 常駐與下載量兩軸都變差。
-
-⚠️ 而 `modelLod.ts` 的檔頭**本來就明文禁止這件事**：
-「switching it evicts the AssetContainer and issues a NETWORK FETCH … repeatedly, mid-fight,
-on the exact device that is already struggling」以及
-「Already-adopted meshes keep their tier until the scene is rebuilt — deliberately」。
-這次**沒有動那個檔頭**，所以它現在在描述一個已經不存在的行為
-（連「switching it evicts the AssetContainer」都不成立 —— 它不 evict，這正是問題本身）。
-
-**2 健康隔離閘在「沒有 `req`」的呼叫路徑上完全不生效。**
-`AssetManager.tierFor(path)` 沒有 `req` 時直接 `return preset`，**不經過 `healthiest()`**。
-而 `ArenaScene:426`、`IntermissionScene:459/731`、`FlowerView:309`、`GuardianView:189` 全是無 `req`。
-出貨的 low 預設（`autoDetectPreset` 把手機／觸控放進 low，`lodTierForPreset("low") === "small"`）下，
-實測解析出來的就是被判死的檔：`hex/rock-small`（兩階都壞）、`guardian_treant_roots-small`、
-`props/torch-small`、`props/chest-small`、`hex_water-small`、`tree_single-small`。
-**34 組隔離裡有 8 組只經由無 `req` 的路徑載入 —— 普查最該保護的佈景／守衛／道具，正好是它保護不到的。**
-
-**3 分割畫面選錯相機（跨玩家 bug）。**
-`readCamera()` 讀 `scene.activeCamera`（`EntityViewRegistry.ts:527-535`），
-但 `ViewportManager.ts:25-29` 在 `playerCount > 1`（沙發同樂 2–4 seat）時
-**只設 `scene.activeCameras`、從不設 `scene.activeCamera`**。
-Babylon 的 render loop 逐一 `_processSubCameras`，`_renderForCamera` 會設 `this._activeCamera` ——
-**一幀結束後 `scene.activeCamera` 是最後一個 viewport 的相機**，
-而 `views.sync` 在 `renderer.render` 之前，讀到的是上一幀殘留的那顆。
-→ **沙發同樂時所有英雄的 LOD 由最後一位玩家的相機決定。**
-玩家 2 死掉拉到 `DOLLY_MAX_DEAD = 90`，玩家 1 的畫面裡每一個英雄都會掉成 `-small`。
-
-**4 bbox 檢查看不到「零件在輪廓內部塌掉」。**
-逐 node 量：`imported/negi-small` mesh#3 y **1.502→0.510（−66%）**、mesh#6 z −70%；
-`shop/merchant_cart` 兩階 Cart#3 z −53%。**兩者都沒有被隔離。**
-同鏡頭渲染對照：negi high vs small 輪廓 **IoU 0.494**、寬 +37.8%、高 +27.5%。
-
-### 交付自己誠實揭露的（值得記，不是缺陷）
-
-- **draw call 是 0%**（6→6 / 10→10 / 18→18）。減面不減 submesh，它照實寫了。
-- **幀時間量不到**（NullEngine 無 GPU），它明說沒有真機數據。
-- **我交辦裡的前提是錯的**：「60 隻小怪是 CP 值最高的一群」——
-  小怪用的是 `blocky-undead.glb`，**168 tris / 52,584 B** 的 #226 生成方塊人，
-  在 `gen_lod` 的 1,500 tris 底線之下，**根本沒有 `-mid`/`-small`。今天雜兵那一階一分錢都省不到。**
-- 佈景完全沒接：`dota` 場佈景 **29,372 tris**，一個場地就超過 12 英雄最遠 zoom 總省下的 11,526。
-
-### 💀 一個工具層面的坑，值得單獨記
-
-M6 變異第一輪回報 **0 紅**。追下去發現**不是守衛沒咬** ——
-`expect(mesh.material).not.toBe(...)` 失敗時，vitest 為了印 diff 會深度序列化 Babylon 材質，
-**材質反向參照整個 scene → 4GB heap 爆掉 → worker 直接死 → JSON reporter 一條 failed 都沒收到。**
-改成比 `.name` 字串之後，M6 乾淨地變成 2 紅。
-
-**一條會咬的守衛可以偽裝成 OOM 崩潰。** 對 Babylon 物件用 `toBe`/`toEqual` 要特別小心。
-
-### 重開時的方向
-
-1. **快取要能淘汰，或 tier 不進 key。** 兩條路：(a) 給 container cache 加 LRU
-   （動 `AssetManager` 的明文設計決定，要寫清楚為什麼可以動）；
-   (b) 換階時明確 dispose 舊 tier 的 container。**先量哪一條比較省。**
-2. **`tierFor` 無 `req` 的路徑也要過 `healthiest()`** —— 這條是一行，但它是手機上的實害。
-3. **`readCamera()` 不能讀 `scene.activeCamera`** —— 要用本地玩家的那顆。
-4. **`modelLod.ts` 的檔頭要跟著改**，否則那份文件與程式碼互相矛盾。
-5. 健康檢查加「逐 node 塌陷」那一軸（整體 bbox 看不到）。
-6. **41 個被隔離的變體是死重量（166 個裡的 25%）** —— 要救得改 `gen_lod`
-   對邊界/尖端加權，或對這批降低 tris 目標。
-
----
-
-## #275 戰場道具欄 + 鍛造層數 —— 不合併。診斷是金子，修法把缺陷搬到中場
-
-### 診斷：#44 從來沒有「沒做」（owner 說「我有提過了」是對的，但原因不是沒做）
-
-`<EquipmentBar />` 一直掛在 `HudRoot.tsx:205`，條件是 `inGame && !couch`
-（`inGame` = `phase !== "champSelect" && phase !== "matchEnd"`，所以 combat/intermission/resolution 都渲染），
-資料鏈也通（`snapshot.ts:128` → `schema.ts:52` → `RoomStore.ts:360`），道具跨回合保留。
-
-**壞的是位置。四個實測原因：**
-
-| | 情況 | 量到的 |
-|---|---|---|
-| **C-1** | 觸控 844×390 | equipment `x684..834, y252..300` 壓在攻擊鈕 `716..804, 262..350`，**重疊 88×38 px**。而且 `HUD_Z.slot(25) > TouchControls(20)` 且 `pointerEvents:"auto"` → **它吃掉那塊區域的觸控** |
-| C-2 | 滑鼠 844×390 | equipment `y42..92` 躲在 scoreboard(44..70) 與 audio-toggle(78..122) 底下；audio-toggle 是 body portal，z 2147483000，一定贏 |
-| C-3 | 桌機 | 190×50 深色盒、26px 格子、10px 標題，疊在 208px 小地圖蓋子上，沒有分隔 —— 「畫出來但讀不出是自己的道具欄」 |
-| C-4 | 手機 | 細節面板只綁 hover，**沒有長按路徑** → #140 的內容在手機戰鬥中 100% 拿不到 |
-| C-5 | 分割畫面 | `CouchHudGrid` 裡 items/裝備 grep 零命中 |
-
-### 版面契約的兩個盲點（這個 bug 就住在這裡）
-
-1. **沒有「所有 slot 兩兩交叉比對」的守衛。** `hudLayout.test.ts:196` 只比同一角落內**相鄰**的 band（一維），
-   `:371` 只比 minimap 對其他人。**所以 bottom-right 的 equipment 撞上 top-right 的
-   scoreboard/audio-toggle，全套測試看不到。**
-2. **`TouchControls` 完全不在 `hudLayout` 的世界裡。** 攻擊鈕 / QWER 弧 / 天生技鈕全是自己 pin 的
-   fixed 元素，registry 沒有任何一列描述它們（唯一鏡像 `controlLegendModel.ts:576-582`
-   只鏡了置中的能力叢集，沒有右下角的弧）。**C-1 那個 88×38 重疊，現行任何守衛都抓不到。**
-
-### 鍛造「翻倍」：查清楚了，**沒有那個門檻**
-
-`statPath.ts:174-181` 觸發 = `statStacks >= STAT_TICK_TARGET(20) && statCapstonePct === 0
-&& round >= CAPSTONE_ROUND_GATE(6)`；`statPath.ts:193` `const pct = (world.rng.int(CAPSTONE_STEPS) + 1) * 10;`
-
-→ **「翻倍」＝滿 20 層 + 第 6 場後開出的傳說·萬象強化，擲 10~100% 均勻分布，
-擲中 100% 才等於翻倍，機率 1/10。不是保證的門檻獎勵。**
-作用在 `MaxHealth / AttackDamage / Armor / MagicResist`（AP 刻意排除），
-`PercentAdd`、`statPipeline` 是 `(base+flat)×(1+pctAdd)×pctMult` 且這四項無 clamp ——
-**倍率是真的會生效，不是只印在畫面上**（驗證者獨立逐行核對過）。
-
-⚠️ **`CAPSTONE_ROUND_GATE` 在改動前於 `apps/client` 全域 grep 零命中** ——
-滿 20 層卻在第 3 場沒拿到東西時，**畫面從來不解釋原因**。
-
-→ **要不要改成保證翻倍是 owner 的設計決定。**
-
-### ⛔ 不合併的三個理由
-
-**1 `displaced:"hide"` 對真正蓋住它的那個面板不會執行。**
-新的 gutter 分支在任何幾何判定**之前**先 `panels.filter(p => p.covers.length > 0)`，
-而 `augment-draft` 宣告 `edge:"center"`、`covers: []`（`hudLayout.ts:861`）——
-**置中 modal 永遠無法讓 gutter slot 讓位。**
-實測 12 組 viewport×pointer 裡有 **8 組**（844×390 / 812×375 / 780×360 / 1280×720，滑鼠觸控皆是）
-`hudRectsOverlap(equipment, augment-draft) === true` 而 `resolveSlotUnderPanels(...).hidden === false`。
-而新加的「幾何 hide == 執行期 hide」守衛**只餵 `[hudPanel("shop")]` 一個面板**
-（唯一 covers 非空的那個）—— **它結構上不可能抓到這個。**
-
-→ **所有 ≤1280×720 的畫面（含 owner 的 844×390 掌機），每一次中場，
-道具/鍛造面板都被三選一 modal 整個蓋住。** 那正是你剛花完錢、最想確認自己有什麼的那一刻。
-
-同一類還有：Ready-up 按鈕（z 40，`bottom:190`）直接畫在道具格那一列上
-（gutter 下緣 `HUD_CENTER_GUTTER_BOTTOM = 128+44+8 = 180`，面板高 104 → **結構上必然壓到**）。
-新守衛只比「registry slot 對 registry slot」，而 ReadyButton / PrepClock / AbilityBar
-都是中央 chrome、不是 slot。
-
-**2 第一回合戰鬥，桌機上這個面板整場不在畫面上，而且是白讓。**
-`EquipmentBar` 用 `controlLegendVisible(...)` 當 gate，為真就 `return null`。
-但 `controlLegendVisible` = `phase==="combat" && round<=1 && !dismissed && !panelCovering`，
-**沒有任何視窗尺寸條件**。而衝突只存在於觸控/窄視窗 —— 桌機的說明畫在最左側 flank，
-跟置中的 gutter **零重疊**。
-→ prep 買完第一批裝備 → 進 Round 1 → **面板不存在**。正好打在這件事想解決的痛點上。
-（844×390 滑鼠時 `controlLegendRect` 回 null＝說明根本畫不出來，gate 卻仍為真 —— 兩個都不見。）
-
-**3 變異 C 是誤報，而它宣稱關掉的洞仍然開著。**
-它說加上 negative lookbehind `(?<!\$)` 之後，刪掉顯示獎勵那行會 → 1 條紅。**實測不會。**
-那個 lookbehind 排掉了第 46 行 template literal 裡的 `${view.reward}`，
-**排不掉第 124 行的純 JSX 屬性 `title={view.reward}`** —— 它完全符合那條 regex，卻一個像素都不畫。
-它自己做變異時一定連 `title` 屬性一起刪了，才以為補好了。
-**「被提到」冒充「被畫出來」這個洞，對 reward 這一欄仍然是開的。**
-
-**另外一條守衛是被放寬而不是被滿足**：`roundReportLayout.test.ts` 把原本的矩形斷言
-`rect.y >= equip.y + equip.h` 換成宣告斷言 `expect(hudSlot("equipment").displaced).toBe("hide")`
-—— **掩護的正好是理由 1**。斷言欄位的宣告值而不是畫面上發生的事，正是 #73 的形狀。
-
-### 做對的（重開時沿用）
-
-- **中央欄（CENTRE GUTTER）這個歸屬本身是好設計**：滑鼠置中 236×104 六格一列；
-  觸控 `right-half` 92×104 3×2 格，**左緣正好壓在畫面中線** ——
-  這不是美觀：搖桿是「canvas 左半邊任何觸控」錨定（`GameApp.isJoystickArea`），
-  置中的 `pointerEvents:auto` 面板會吃掉搖桿起手。
-- 觸控 top-right 那疊短了 56px，667×375 上重新定位的 ☰ 不再壓到金幣框。
-- `ResourceBars` 的 `bottom:128/width:260` 從硬寫改成 import `HUD_RESOURCE_BARS`
-  （原本 `roundReportLayout` 有一份只靠註解維繫的手抄鏡像，現在真的只剩一份）。
-- 觸控長按 320ms 開細節卡（補上 C-4）。
-- **跨角落重疊守衛 + REGRESSION 反證**（手工重建 #44 的舊矩形，證明同一個比對真的會判紅）
-  —— 這三條是真的變強了，不是繞過。
-- 鍛造數字全部 import 常數，`forgeModel.test.ts` 用常數寫斷言而非字面值。
-
-### 重開時要補的
-
-1. **gutter 矩形要對「中央底部 chrome」（ReadyButton / PrepClock / PhaseTimer / ability cluster）
-   逐 phase × 逐 viewport 守衛** —— 它們不是 slot，現有任何守衛都看不到。
-2. **中場要嘛把 gutter 收掉、要嘛挪到不跟 Ready/Clock 搶的位置**，
-   而且守衛要斷言「畫面上不重疊」，**不是「`displaced` 欄位等於 hide」**。
-3. **`covers: []` 的置中 modal 也要能讓 gutter slot 讓位** —— 這是機制層的洞。
-4. **說明↔道具欄的互斥要看視窗**（或直接看「說明這次到底畫出來沒有」，
-   因為 `controlLegendRect` 可能回 null），不能無條件讓掉整個 Round 1。
-5. `title={...}` 這種「被提到但不畫」的形狀要一起擋掉。
