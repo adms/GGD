@@ -152,7 +152,9 @@ export function IntermissionStage(): React.JSX.Element | null {
     if (!championId) return;
     const model = hudActions.localChampionModel();
     if (!model) return;
-    void sceneRef.current?.setChampion(model.glbPath, model.scale, model.modelKey);
+    // championId last (#263): the shop must paint the SAME w3x art colour the
+    // arena does — `modelKey` cannot answer that, it is many-to-one.
+    void sceneRef.current?.setChampion(model.glbPath, model.scale, model.modelKey, championId);
   }, [championId]);
 
   // ---- a completed purchase: merchant hands it over, YOUR hero RESPONDS -----

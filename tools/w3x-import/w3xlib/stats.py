@@ -28,6 +28,13 @@ UNIT_FIELD_CODES = frozenset({
     "ua1r", "ua1c", "ua1b", "ua1d", "ua1s",
     "ustr", "uagi", "uint", "ustp", "uagp", "uinp", "upra",
     "uabi", "uhab", "ugol",
+    # ART TINT (task #263). `uclr/uclg/uclb` = Art Red/Green/Blue Tint, 0..255,
+    # WC3 default 255. Left out of every whitelist until now, so the map's
+    # per-unit vertex colour never reached `parsed/` at all and #49 had to
+    # recover it by hand. NOTE these are the ENTRY's own mods only: an absent
+    # channel means INHERIT (base entry -> stock UnitUI.slk -> 255), never 0 —
+    # `resolve_unit_tints.py` owns that chain.
+    "uclr", "uclg", "uclb",
 })
 ITEM_FIELD_CODES = frozenset({
     "unam", "utip", "utub", "ides", "igol", "ilum", "iabi", "iico",
@@ -107,6 +114,10 @@ def parse_all(raw_dir: str) -> dict:
             "str_growth": e.get("ustp"), "agi_growth": e.get("uagp"),
             "int_growth": e.get("uinp"),
             "primary_attr": e.get("upra"),
+            # Art Red/Green/Blue Tint AS SET BY THIS ENTRY (task #263). `None`
+            # per channel = INHERIT, not 0 — resolve with resolve_unit_tints.py
+            # (entry -> w3u base -> stock Units\UnitUI.slk -> 255).
+            "tint_raw": [e.get("uclr"), e.get("uclg"), e.get("uclb")],
             "abilities": [
                 a.strip() for a in str(e.get("uabi") or "").split(",") if a.strip()
             ],

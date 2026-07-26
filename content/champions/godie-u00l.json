@@ -250,6 +250,11 @@
   "exAbility": "godie-u00l.ex",
   "passiveAbility": "godie-u00l.passive",
   "icon": "assets/icons/champions/godie-u00l.png",
+  "tint": [
+    0.7843,
+    0.7843,
+    0.7843
+  ],
   "transform": {
     "role": "alternate",
     "counterpartId": "godie-umal",

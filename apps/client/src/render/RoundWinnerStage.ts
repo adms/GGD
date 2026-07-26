@@ -44,7 +44,8 @@ import { victoryTaunts, type PlayTauntOptions, type VictoryTauntLine } from "../
 
 /** The slice of StorePreview this stage drives (injectable for headless tests). */
 export interface WinnerPreview {
-  show(doc: ModelDoc): Promise<void> | void;
+  /** `opts.championId` carries the w3x vertex tint through (task #263). */
+  show(doc: ModelDoc, opts?: { championId?: string | null }): Promise<void> | void;
   dispose(): void;
 }
 
@@ -234,7 +235,10 @@ export class RoundWinnerStage {
       if (subtitle) this.host?.appendChild(subtitle);
       this.subtitle = subtitle;
     }
-    void this.preview?.show(doc);
+    // #263: hand the winner's championId to the previewer so its w3x art
+    // colour is painted here too. Before this the card showed the RAW mesh —
+    // 黑化Saber won a round and stood there as a plain gold Saber.
+    void this.preview?.show(doc, { championId: ctx.championId ?? null });
 
     const seq = ++this.showSeq;
     this.setSubtitle("");

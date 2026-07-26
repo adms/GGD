@@ -103,7 +103,9 @@ describe("RoundWinnerStage", () => {
     stage.show(DOC);
     expect(canvases.length).toBe(1);
     expect(previews.length).toBe(1);
-    expect(previews[0]!.show).toHaveBeenCalledWith(DOC);
+    // the 2nd arg is the #263 tint context — `show(doc)` with no ctx resolves
+    // to an explicit `null` championId, never a stale one
+    expect(previews[0]!.show).toHaveBeenCalledWith(DOC, { championId: null });
     expect(stage.active).toBe(true);
     // wash + canvas + subtitle all mounted into the host
     expect(host.appendChild).toHaveBeenCalledTimes(3);
@@ -198,7 +200,7 @@ describe("RoundWinnerStage", () => {
     expect(divs.length).toBe(2); // same wash + subtitle reused
     expect(host.appendChild).toHaveBeenCalledTimes(3);
     expect(previews.length).toBe(1);
-    expect(previews[0]!.show).toHaveBeenNthCalledWith(2, DOC2);
+    expect(previews[0]!.show).toHaveBeenNthCalledWith(2, DOC2, { championId: null });
   });
 
   it("clear() disposes the previewer and removes every overlay layer", () => {
@@ -223,7 +225,7 @@ describe("RoundWinnerStage", () => {
     expect(divs.length).toBe(4);
     expect(previews.length).toBe(2);
     expect(host.appendChild).toHaveBeenCalledTimes(6);
-    expect(previews[1]!.show).toHaveBeenCalledWith(DOC2);
+    expect(previews[1]!.show).toHaveBeenCalledWith(DOC2, { championId: null });
     expect(stage.active).toBe(true);
   });
 

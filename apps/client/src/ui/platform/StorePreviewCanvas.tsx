@@ -11,6 +11,12 @@
  *     show a hole (the showcase) can then swap in the champion's portrait
  *     instead of leaving an empty black stage, which is what this component
  *     did on a 404 before.
+ *
+ * `championId` (task #263) rides alongside `modelKey` because the w3x vertex
+ * tint is a per-CHAMPION field while `modelKey` is many-to-one: without it this
+ * stage cannot tell 黑化Saber from any other champion on the same mesh. It is
+ * passed through as a plain string and RESOLVED inside render/StorePreview, so
+ * no @babylonjs (nor the content registry the resolve walks) leaks into ui/.
  */
 import { useEffect, useRef, useState } from "react";
 import { StorePreview } from "../../render/StorePreview";
@@ -43,6 +49,8 @@ export function StorePreviewCanvas(props: {
    */
   minHeight?: number;
   onStatus?: (status: PreviewStatus) => void;
+  /** whose art colour to paint on this model; absent = leave it untinted */
+  championId?: string | null;
 }): React.JSX.Element {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const previewRef = useRef<StorePreview | null>(null);
@@ -84,6 +92,7 @@ export function StorePreviewCanvas(props: {
     }
     let cancelled = false;
     statusRef.current?.("loading");
+    const championId = props.championId ?? null;
     void fetchModelDoc(props.modelKey).then(async (doc) => {
       if (cancelled) return;
       const preview = previewRef.current;
@@ -91,7 +100,7 @@ export function StorePreviewCanvas(props: {
         statusRef.current?.("failed");
         return;
       }
-      await preview.show(doc);
+      await preview.show(doc, { championId });
       if (cancelled) return;
       // `show()` never throws: a glb that 404s or fails to parse simply leaves
       // no model node. That is the honest signal — report it rather than
@@ -101,7 +110,11 @@ export function StorePreviewCanvas(props: {
     return () => {
       cancelled = true;
     };
-  }, [props.modelKey, engineFailed]);
+    // championId is a dep too (#263): two champions can share one modelKey, so
+    // hovering from a tinted to an untinted one changes NOTHING but the colour.
+    // It also makes the #258 status round-trip fire on a same-model rotation,
+    // which is what keeps the showcase's 「載入中」 overlay from sticking.
+  }, [props.modelKey, props.championId, engineFailed]);
 
   return (
     <div style={{ position: "relative", width: "100%", height: "100%", minHeight: props.minHeight ?? 260 }}>

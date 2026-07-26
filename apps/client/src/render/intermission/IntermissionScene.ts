@@ -59,6 +59,8 @@ import "@babylonjs/core/Rendering/depthRendererSceneComponent";
 
 import { AssetManager } from "../AssetManager";
 import { glbYawOffset } from "../views/glbFacing";
+import { championTintForId } from "../views/championTint";
+import { applyModelTint, releaseModelTint } from "../views/modelTint";
 import { pickReactionClip } from "./reactionClip";
 import { groundShiftY } from "./stance";
 import { writeCameraDrift } from "../menu/procedural/math";
@@ -124,6 +126,13 @@ export interface IntermissionSceneOptions {
    * = no hero in frame, which is what champ-select-less dev boots get.
    */
   champion?: { glbPath: string; scale: number } | null;
+  /**
+   * Inject the model loader (task #263 test seam, mirroring StorePreview's own
+   * `assets` ctor arg). Headless runs cannot fetch a .glb — a relative URL has
+   * no origin — so without this nothing can assert on what `setChampion`
+   * actually did to the loaded meshes. Production never passes it.
+   */
+  assets?: AssetManager;
 }
 
 /** Merchant animation the scene can be asked to play. */
@@ -263,7 +272,7 @@ export class IntermissionScene {
     // instance, so re-opening the market on round 2 re-parses from memory and
     // downloads nothing (2,283,528 B / 14 requests saved per round; measured in
     // intermission/assetReuse.test.ts).
-    this.assets = new AssetManager(this.scene);
+    this.assets = opts.assets ?? new AssetManager(this.scene);
     this.stage = new TransformNode("intermission-stage", this.scene);
 
     this.buildStatic();
@@ -730,12 +739,25 @@ export class IntermissionScene {
    * token-guarded so a fast champion change cannot leave two heroes standing.
    * The yaw offset comes from the shared `glbYawOffset` rule, so an imported
    * w3x hero faces the merchant exactly like a KayKit one.
+   *
+   * `championId` (task #263) carries the w3x vertex tint. `modelKey` cannot
+   * stand in for it: it is many-to-one, and the colour is a per-champion art
+   * field — without this the shop showed the hero in a different colour from
+   * the arena he had just walked out of.
    */
-  async setChampion(glbPath: string, scale: number, modelKey?: string): Promise<void> {
+  async setChampion(
+    glbPath: string,
+    scale: number,
+    modelKey?: string,
+    championId?: string | null,
+  ): Promise<void> {
     if (this.disposed) return;
     const token = ++this.championToken;
     const container = await this.assets.load(glbPath);
     if (!container || this.disposed || token !== this.championToken) return;
+    // give the AssetManager's cached materials back before the old hero goes
+    // (see modelTint's header: the clones are ours, the originals are not)
+    if (this.championRoot) releaseModelTint(this.championRoot);
     this.championRoot?.dispose(false, false);
     // a new hero inherits none of the previous one's reaction bookkeeping
     this.championReaction = null;
@@ -758,6 +780,9 @@ export class IntermissionScene {
     // on the floor". A per-model root-transform, so it costs nothing on a rig
     // already grounded at 0.
     this.groundChampion(root);
+    // #263: paint the w3x art colour, through the SAME applyModelTint the arena
+    // uses (gamma correction + team-mesh exclusions + material cloning included).
+    applyModelTint(root, championTintForId(championId ?? null) ?? null);
     // loop an idle clip when the .glb ships one — a hero frozen in its bind
     // pose at a market stall looks broken, and every rig names it differently,
     // so this is a tolerant substring match that degrades to "stands still".
@@ -985,6 +1010,11 @@ export class IntermissionScene {
     this.lanterns.length = 0;
     this.merchantClips.clear();
     this.activeGesture = null;
+    // #263: put the AssetManager's own materials back before the scene goes.
+    // `scene.dispose()` would take the clones with it either way, but the
+    // CACHED originals must not be left swapped out of meshes that outlive us.
+    if (this.championRoot) releaseModelTint(this.championRoot);
+    this.championRoot = null;
     this.championGroups = [];
     this.championIdle = null;
     this.championReaction = null;

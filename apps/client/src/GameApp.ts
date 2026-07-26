@@ -2221,9 +2221,16 @@ export class GameApp {
 
   /**
    * The round winner's model doc, resolved through the SAME `modelDocFor` seam
-   * the arena ChampionView uses — so the dev-only Blizzard overlay and vertex
-   * tint apply exactly as they do in-world. null before the content DB has the
-   * doc (then the stage simply shows nothing; the VO still plays).
+   * the arena ChampionView uses, so the dev-only Blizzard overlay picks the
+   * same mesh as in-world. null before the content DB has the doc (then the
+   * stage simply shows nothing; the VO still plays).
+   *
+   * The VERTEX TINT does NOT ride on the ModelDoc — `model@1` has no tint field
+   * and never did, because `modelKey` is many-to-one (this comment used to
+   * claim the tint "applies exactly as in-world", and it was false: the card
+   * showed the raw mesh until #263). `RoundWinnerStage.show` gets the
+   * `championId` in its ctx and hands it to the previewer, which resolves and
+   * paints the colour itself.
    */
   private roundWinnerModelDoc(
     championId: string,

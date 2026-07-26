@@ -771,10 +771,14 @@ export const zUnitTintEntry = z
     alpha: zAlpha.optional(),
     /**
      * `w3u-static`  — explicit `uclr/uclg/uclb` mods in `war3map.w3u`;
-     * `slk-inherited` — no mods; the colour comes from the BASE unit's stock
-     *                   `Units\UnitUI.slk` row (43 units in this map).
+     * `w3u-base-inherited` — no mods of its own; the colour comes from the
+     *                   entry's BASE, which is itself a `war3map.w3u` entry
+     *                   (custom OR original table). #49 had no such step and
+     *                   lost `U00L` (北斗之鼠) because of it — see task #263;
+     * `slk-inherited` — no mods anywhere in the w3u chain; the colour comes
+     *                   from the stock `Units\UnitUI.slk` row (43 units here).
      */
-    source: z.enum(["w3u-static", "slk-inherited"]),
+    source: z.enum(["w3u-static", "w3u-base-inherited", "slk-inherited"]),
     /** where the number came from, in enough detail to re-derive it */
     evidence: z.string().min(1),
   })

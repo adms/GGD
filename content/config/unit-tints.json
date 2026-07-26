@@ -123,6 +123,17 @@
       "source": "w3u-static",
       "evidence": "war3map.w3u original entry Umal (model units\\critters\\VillagerMan1\\VillagerMan1.mdl): uclr=uclg=uclb=200. Champion 「北斗神拳掌門人 - 拳四郎」; blizzard-overlay unit."
     },
+    "U00L": {
+      "championId": "godie-u00l",
+      "name": "北斗之鼠",
+      "tint": [
+        0.7843,
+        0.7843,
+        0.7843
+      ],
+      "source": "w3u-base-inherited",
+      "evidence": "TASK #263. war3map.w3u custom entry U00L (model HeroPikachu.mdl) sets NO uclr/uclg/uclb of its own; its base is the ORIGINAL-table entry Umal, which sets uclr=uclg=uclb=200 -> 0.7843 each. #49 resolved only 'entry has its own mod' and 'entry -> stock UnitUI.slk' and had no w3u->w3u step, so this one champion was dropped. It is the 變身 alternate form of 拳四郎 (TRANSFORM_FORMS pair 25, counterpart godie-umal which DOES carry 0.7843), so the miss was visible in play: transforming washed the grey off. Re-derived by tools/w3x-import/resolve_unit_tints.py; see out/GoDieEX22s-src/UNIT_TINTS.json entry U00L (channelSource = w3u:Umal(original) x3, baseChain = [U00L, Umal])."
+    },
     "U00B": {
       "championId": "godie-u00b",
       "name": "最M的魔法Jizz",

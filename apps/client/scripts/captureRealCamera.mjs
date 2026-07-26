@@ -31,10 +31,14 @@ const CHROME =
   process.env.CHROME_BIN || "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 
 function parseArgs(argv) {
-  const out = { shots: [], base: "http://127.0.0.1:5199", out: "./capture-out", profile: "./capture-profile", width: 1280, height: 720 };
+  const out = { shots: [], base: "http://127.0.0.1:5199", page: "presentation-audition.html", out: "./capture-out", profile: "./capture-profile", width: 1280, height: 720 };
   for (let i = 2; i < argv.length; i++) {
     const a = argv[i];
     if (a === "--shot") out.shots.push(argv[++i]);
+    // which audition page to drive. Every such page exposes the same three
+    // hooks (`__settled`, `__probe()`, a `#view` canvas), so the capture +
+    // diff machinery is page-agnostic; #263 added `tint-audition.html`.
+    else if (a === "--page") out.page = argv[++i];
     else if (a === "--base") out.base = argv[++i];
     else if (a === "--out") out.out = argv[++i];
     else if (a === "--profile") out.profile = argv[++i];
@@ -149,7 +153,7 @@ async function main() {
   const results = [];
   for (const shot of args.shots) {
     const [name, query] = shot.split(/:(.+)/);
-    const url = `${args.base}/presentation-audition.html?${query}`;
+    const url = `${args.base}/${args.page}?${query}`;
     await cdp.send("Page.navigate", { url });
     // wait for the page's own frame-stepped clock to reach the target and freeze
     let settled = false;
