@@ -14,6 +14,7 @@ import { useApp } from "./store";
 import { SettingsScreen } from "../SettingsScreen";
 import { ChangePasswordDialog } from "./ChangePasswordDialog";
 import { FriendsPanel } from "./FriendsPanel";
+import { LobbyAnnouncement } from "./LobbyAnnouncement";
 import { LeaderboardPanel } from "./LeaderboardPanel";
 import { RoomListPanel } from "./RoomListPanel";
 import { RoomView } from "./RoomView";
@@ -329,6 +330,11 @@ export function LobbyScreen(): React.JSX.Element {
   const setLobbyView = useApp((s) => s.setLobbyView);
   const room = useApp((s) => s.room);
   const doLogout = useApp((s) => s.doLogout);
+  // 大廳公告 (#259): the header chip that reopens a dismissed announcement. It
+  // exists only while there IS one, so a lobby with no announcement gains no
+  // new control at all.
+  const announcement = useApp((s) => s.announcement);
+  const openAnnouncement = useApp((s) => s.openAnnouncement);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [passwordOpen, setPasswordOpen] = useState(false);
   const [offlineMap, setOfflineMap] = useState(DEFAULT_MAP_ID);
@@ -384,6 +390,11 @@ export function LobbyScreen(): React.JSX.Element {
         <Btn small kind={lobbyView === "store" ? "primary" : "ghost"} onClick={() => setLobbyView(lobbyView === "store" ? "play" : "store")}>
           {lobbyView === "store" ? "Back to lobby" : "Store"}
         </Btn>
+        {announcement && (
+          <Btn small onClick={openAnnouncement} title={`最新公告：${announcement.title}`}>
+            📢 公告
+          </Btn>
+        )}
         <Btn small onClick={openCodex} title="內容圖鑑：所有道具 / 英雄 / 技能的完整資料 (#codex)">
           📖 圖鑑
         </Btn>
@@ -424,6 +435,13 @@ export function LobbyScreen(): React.JSX.Element {
 
       <InviteToasts />
       <ErrorToast />
+      {/* 大廳公告 (#259) — 「玩家會在大廳跳出訊息看到」. Self-gating: renders null
+          unless the public feed handed us an announcement this browser has not
+          already closed, so on an ordinary day the lobby is byte-identical to
+          what it was. It is LAST in the tree and `position: fixed`, so it sits
+          over the lobby without disturbing any panel's layout — and it stops
+          short of the build-stamp band rather than covering it (#66/#107). */}
+      <LobbyAnnouncement />
     </div>
   );
 }
