@@ -76,6 +76,17 @@ import "sort"
 //	   by the closed w3x table in packages/shared/src/content/championForms.ts
 //	   (26 pairs, from the WC3 Metamorphosis fields Eme1/Emeu), asserted by
 //	   TestStarterRosterHasNoAlternateForms.
+//	R7 THE PRICE LIST MOVES WITH THE ROSTER. content/config/store.json's
+//	   `championPrices` must name EXACTLY these ids — it is this same set
+//	   described a second time, in content. An absent price means FREE on both
+//	   sides (client lockStateOf: `price === undefined` → "free"; server
+//	   wallet.OwnsChampion: `!priced` → true), and a price left behind for a
+//	   dropped id keeps being seeded into new accounts by
+//	   Catalog.FreeChampions(). Asserted in both directions, id by id, by
+//	   TestStarterRosterMatchesChampionPrices — which also pins the economy's
+//	   SHAPE (12 free / 38 priced @ 300). R7 is R6's own regression: the #249
+//	   swap moved ten ids and left all ten prices behind, and every gate was
+//	   green. Move an id here and you must move its price with it.
 //
 // R6 IS A BUG FIX, NOT A TIDY-UP (task #249). Ten of these fifty slots used to
 // be the ALTERNATE body, offered to players as if it were the hero, because the

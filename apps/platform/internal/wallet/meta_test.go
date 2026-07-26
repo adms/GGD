@@ -176,6 +176,50 @@ func TestFavouriteTogglePersists(t *testing.T) {
 	require.Equal(t, []string{"vex"}, strs(wallet(ts, u.Access).Body["favourites"]))
 }
 
+// TestFavouritesDropChampionsTheCatalogLost: a stored favourite naming a
+// champion the catalog no longer carries is filtered OUT of every wallet read,
+// while the valid pins beside it survive.
+//
+// THE DRIFT IS REAL, NOT HYPOTHETICAL (task #249). ToggleFavourite validates on
+// WRITE, so the only way to hold a dead pin is for the ROSTER to move under a
+// pin that was legal when it was made — which is exactly what happened when ten
+// first-open-roster slots were swapped from a 變身 alternate to its base unit:
+// anyone who had favourited 北斗之鼠 or 超級賽亞人 kept an id champ-select can no
+// longer draw. Fixed by validating on READ (see liveFavourites in meta.go) so
+// nothing is destroyed and a champion that returns brings its pin back with it.
+//
+// The dead entry is written straight to the jsonstore truth because that is the
+// only way to reproduce the real cause: the record was written legally and the
+// catalog changed afterwards. "walletmeta" is wallet.ColWalletMeta — spelled out
+// because this file's own wallet() helper shadows the package name.
+func TestFavouritesDropChampionsTheCatalogLost(t *testing.T) {
+	testkit.Cover(t, "meta-favourite-catalog-filter")
+	ts := testutil.New(t)
+	u := ts.Register("alice")
+
+	// A legal pin first, so the assertion below distinguishes "filtered the dead
+	// one" from "returned nothing".
+	r := ts.Do(http.MethodPost, "/api/v1/wallet/favourites", u.Access, map[string]any{"champion": "vex", "favourite": true})
+	require.Equal(t, http.StatusOK, r.Status, string(r.Raw))
+
+	require.NoError(t, ts.Srv.Store.Put("walletmeta", u.ID, map[string]any{
+		"crystal":    0,
+		"favourites": []string{"sela", "godie-u00l", "vex"},
+	}))
+	ts.Mini.FlushAll() // the mirror is a cache; force a read from the truth
+
+	// godie-u00l is not in the fixture catalog → dropped. sela and vex are.
+	require.Equal(t, []string{"sela", "vex"}, strs(wallet(ts, u.Access).Body["favourites"]))
+
+	// NOT a migration: the durable record still holds all three, so the pin
+	// comes back intact if the champion re-enters the catalog.
+	var stored struct {
+		Favourites []string `json:"favourites"`
+	}
+	require.NoError(t, ts.Srv.Store.Get("walletmeta", u.ID, &stored))
+	require.Equal(t, []string{"sela", "godie-u00l", "vex"}, stored.Favourites)
+}
+
 // TestAdminGrantMCoin: an admin can grant M COIN (造型幣) into an account and the
 // player can then SPEND it; a non-admin cannot, and the target balance is
 // unchanged on refusal.
