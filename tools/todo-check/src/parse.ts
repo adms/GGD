@@ -27,7 +27,13 @@ export const CATEGORIES = [
   "regression",
 ] as const;
 
-export const STATUSES = ["pending", "in-progress", "done", "deferred"] as const;
+// `withdrawn` = the OWNER cancelled the requirement, so the row describes something
+// that deliberately no longer exists. It is not `done` (that would claim the thing is
+// there) and not `deferred` (that would claim we still intend to build it). #239's
+// copyright gate is the first: the owner chose full openness knowing static routes are
+// anonymous, so both edge gates were deleted rather than finished. Keep the row instead
+// of deleting it — a withdrawn requirement that quietly vanishes is how it gets rebuilt.
+export const STATUSES = ["pending", "in-progress", "done", "deferred", "withdrawn"] as const;
 
 const splitRow = (line: string): string[] =>
   line
