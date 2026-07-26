@@ -114,6 +114,29 @@ type Account struct {
 	// carrying this account's id as referrerId. Empty on accounts created before
 	// the feature, or on a deploy with no invite gate (referrals require it).
 	ReferralCode string `json:"referralCode,omitempty"`
+
+	// LastSeenAt is the last moment this account did ANYTHING on an
+	// authenticated session (task #246): any REST call that passes
+	// auth.Middleware, plus the lobby WS connect and its heartbeats. It is
+	// deliberately NOT filtered by "importance" — the owner asked for「有做任何
+	// session 連線動作都算」— so a client polling in the background keeps it
+	// fresh, and the admin console's tooltip says so rather than pretending
+	// otherwise.
+	//
+	// The zero TIME is the "never seen" sentinel — for accounts written before
+	// this field existed as well as for one that has never come back since. It
+	// carries no `omitempty` because that tag is INERT on time.Time (a struct is
+	// never "empty" to encoding/json), and a tag that looks like it omits the
+	// zero value while silently emitting it is worse than no tag: the API row
+	// that must genuinely distinguish never-seen uses a *time.Time for exactly
+	// that reason (see admin.AccountRow.LastSeenAt).
+	//
+	// Writes go through Repo.SetLastSeen, never Update,
+	// because Update also stamps UpdatedAt and that field means something else
+	// (see SetLastSeen). Writes are coalesced to at most one per account per
+	// minute upstream (auth.Service.TouchLastSeen), so this is ±60s accurate —
+	// 1.7% of the one-hour threshold the console renders it against.
+	LastSeenAt time.Time `json:"lastSeenAt"`
 }
 
 // IsApproved reports whether the account may log in to play. The zero-value
@@ -599,6 +622,35 @@ func (r *Repo) Update(ctx context.Context, id string, fn func(*Account) error) (
 		return a, err
 	}
 	return a, nil
+}
+
+// SetLastSeen stamps the session-activity timestamp (task #246) on one account
+// and NOTHING ELSE. It takes the same per-account lock as Update, so it stays
+// single-writer safe against a concurrent settlement or operator action.
+//
+// IT DELIBERATELY DOES NOT GO THROUGH Update. Update unconditionally sets
+// UpdatedAt = now, whose meaning is "the account record meaningfully changed" —
+// it is surfaced on the admin profile. Routing a liveness ping through it would
+// make UpdatedAt ≈ LastSeenAt for every active account and quietly destroy that
+// field: an operator could no longer tell "this account was edited an hour ago"
+// from "this player refreshed their lobby an hour ago".
+//
+// A stamp that is not newer than the stored one is a no-op, so an out-of-order
+// call (or a replayed one) can never move the timestamp backwards, and the
+// common re-stamp inside the same second costs no file write.
+func (r *Repo) SetLastSeen(ctx context.Context, id string, t time.Time) error {
+	unlock := r.locks.Lock(id)
+	defer unlock()
+	a, err := r.GetByID(ctx, id)
+	if err != nil {
+		return err
+	}
+	t = t.UTC()
+	if !t.After(a.LastSeenAt) {
+		return nil
+	}
+	a.LastSeenAt = t
+	return r.store.Put(ColAccounts, a.ID, a)
 }
 
 // List returns every account id in the store (boot rebuild).

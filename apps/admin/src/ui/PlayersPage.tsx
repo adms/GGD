@@ -11,10 +11,10 @@
  * live here too. The badges come from ../approvals.ts through the shared
  * AccountStateBadges, so this list and the queue page cannot disagree.
  */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as apiFns from "../api";
 import { ApiError } from "../session";
-import { filterAccounts, winRate } from "../players";
+import { filterAccounts, seenState, winRate, type SeenTone } from "../players";
 import {
   DENY_VS_BAN,
   STATUS_FILTERS,
@@ -28,7 +28,26 @@ import { useApp } from "../store";
 import type { AccountRow, Profile } from "../types";
 import { AccountStateBadges, DenyAccountDialog } from "./ApprovalsPage";
 import { Badge, Btn, ConfirmDialog, ErrorBanner, Panel, TextInput } from "./widgets";
-import { GOLD, TEXT_DIM, TEXT_MAIN, WARN } from "./theme";
+import { ACCENT, GOLD, OK, TEXT_DIM, TEXT_MAIN, WARN } from "./theme";
+
+/**
+ * #246 上線燈號 — how often the table re-reads itself.
+ *
+ * A liveness light frozen at page-load time is WORSE than no light: it looks
+ * authoritative while quietly ageing, and no tooltip can rescue that. Before
+ * this, `search()` only ran on mount and after a mutation. 30s is well under the
+ * light's own 60s write granularity, so the displayed answer is never more than
+ * one coalescing window behind the truth.
+ */
+const SEEN_REFRESH_MS = 30_000;
+
+/** Dot colours, brightest = a live socket. */
+const SEEN_DOT: Record<SeenTone, { fill: string; ring: string }> = {
+  live: { fill: OK, ring: OK },
+  active: { fill: ACCENT, ring: "transparent" },
+  dim: { fill: "#3c4460", ring: "transparent" },
+  off: { fill: "transparent", ring: "#3c4460" },
+};
 
 export function PlayersPage(): React.JSX.Element {
   const [query, setQuery] = useState("");
@@ -45,23 +64,54 @@ export function PlayersPage(): React.JSX.Element {
   const pendingCount = useApp((s) => s.pendingCount);
   const refreshPendingCount = useApp((s) => s.refreshPendingCount);
 
+  const [seenAsOf, setSeenAsOf] = useState(() => Date.now());
+
   const pageSize = 20;
+
+  /**
+   * What the CURRENT listing is (as opposed to what is typed in the box).
+   * The background refresh reads this ref rather than closing over state, so
+   * one interval installed on mount always re-runs the query actually on
+   * screen — including after paging or switching the status filter.
+   */
+  const shown = useRef({ query: "", page: 1, status: "" });
 
   async function search(p = 1, st = status): Promise<void> {
     setLoading(true);
     setError(null);
     try {
       const res = await apiFns.searchAccounts(query, p, pageSize, st);
+      shown.current = { query, page: p, status: st };
       setRows(res.accounts);
       setTotal(res.total);
       setPage(p);
       setStatus(st);
+      setSeenAsOf(Date.now());
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "search failed");
     } finally {
       setLoading(false);
     }
     void refreshPendingCount();
+  }
+
+  /**
+   * The background re-read behind the online light. Deliberately quieter than
+   * `search`: it never shows the spinner (the table must not flicker every 30s)
+   * and it never raises the error banner, because a transient blip on a poll the
+   * operator did not ask for is not worth interrupting them — the 「資料時間」
+   * stamp simply stops advancing, which is the honest signal.
+   */
+  async function refreshSeen(): Promise<void> {
+    const at = shown.current;
+    try {
+      const res = await apiFns.searchAccounts(at.query, at.page, pageSize, at.status);
+      setRows(res.accounts);
+      setTotal(res.total);
+      setSeenAsOf(Date.now());
+    } catch {
+      /* keep the last good page and the last good timestamp */
+    }
   }
 
   /** Approve or decline straight from the list — the owner is already here. */
@@ -85,6 +135,17 @@ export function PlayersPage(): React.JSX.Element {
   useEffect(() => {
     void search(1);
     void refreshPendingCount();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Keep the online light live. Skipped while the tab is hidden — an operator
+  // who is not looking does not need the poll, and it is free to resume.
+  useEffect(() => {
+    const id = setInterval(() => {
+      if (typeof document !== "undefined" && document.hidden) return;
+      void refreshSeen();
+    }, SEEN_REFRESH_MS);
+    return () => clearInterval(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -196,20 +257,21 @@ export function PlayersPage(): React.JSX.Element {
                 <th style={th}>Win%</th>
                 <th style={th}>M COIN</th>
                 <th style={th}>審核 / 狀態</th>
+                <th style={th}>上線</th>
                 <th style={th}></th>
               </tr>
             </thead>
             <tbody>
               {loading && (
                 <tr>
-                  <td style={td} colSpan={7}>
+                  <td style={td} colSpan={8}>
                     Loading…
                   </td>
                 </tr>
               )}
               {!loading && visible.length === 0 && (
                 <tr>
-                  <td style={{ ...td, color: TEXT_DIM }} colSpan={7}>
+                  <td style={{ ...td, color: TEXT_DIM }} colSpan={8}>
                     No players.
                   </td>
                 </tr>
@@ -236,6 +298,15 @@ export function PlayersPage(): React.JSX.Element {
                   */}
                   <td style={td}>
                     <AccountStateBadges row={r} />
+                  </td>
+                  {/*
+                    #246 上線燈號. Deliberately NOT folded into AccountStateBadges:
+                    that component is APPROVAL state, shared with the 帳號審核
+                    queue, and liveness is a different question that must not
+                    start looking like a moderation verdict.
+                  */}
+                  <td style={td}>
+                    <SeenLight row={r} now={seenAsOf} />
                   </td>
                   <td style={{ ...td, textAlign: "right", whiteSpace: "nowrap" }}>
                     <div style={{ display: "inline-flex", gap: 6, justifyContent: "flex-end", flexWrap: "wrap" }}>
@@ -266,6 +337,29 @@ export function PlayersPage(): React.JSX.Element {
             </tbody>
           </table>
         </div>
+        {/*
+          THE HONEST CAVEAT, stated once instead of on every row's tooltip. The
+          owner chose 「有做任何 session 連線動作都算」, which means a browser tab
+          left open keeps someone lit. That is his call, but the light would be
+          misread without it being written down somewhere he can see.
+        */}
+        <div style={{ marginTop: 10, fontSize: 11, color: TEXT_DIM, lineHeight: 1.9 }}>
+          <span style={{ marginRight: 14, whiteSpace: "nowrap" }}>
+            <Dot tone="live" /> 目前連線中（對戰中 / 大廳中）
+          </span>
+          <span style={{ marginRight: 14, whiteSpace: "nowrap" }}>
+            <Dot tone="active" /> 1 小時內有動作
+          </span>
+          <span style={{ marginRight: 14, whiteSpace: "nowrap" }}>
+            <Dot tone="dim" /> 超過 1 小時
+          </span>
+          <span style={{ whiteSpace: "nowrap" }}>
+            <Dot tone="off" /> 沒有記錄
+          </span>
+          <br />
+          任何連線動作都算，包含畫面自動更新——所以分頁一直開著的人會一直亮著。滑過燈號可以看最後動作時間。
+        </div>
+
         <div style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 12, color: TEXT_DIM, fontSize: 12 }}>
           <Btn small disabled={page <= 1} onClick={() => void search(page - 1)}>
             ← Prev
@@ -275,6 +369,12 @@ export function PlayersPage(): React.JSX.Element {
           </span>
           <Btn small disabled={page >= maxPage} onClick={() => void search(page + 1)}>
             Next →
+          </Btn>
+          <span style={{ flex: 1 }} />
+          {/* The light is only as fresh as this stamp says it is. */}
+          <span title="上線燈號每 30 秒自動更新一次">資料時間 {clockText(seenAsOf)}</span>
+          <Btn small onClick={() => void refreshSeen()}>
+            重新整理
           </Btn>
         </div>
       </Panel>
@@ -379,6 +479,11 @@ function PlayerDetail(props: {
       <Row k="Champions" v={String(profile.wallet.ownedChampions.length)} />
       <Row k="Friends" v={String(profile.friendsCount)} />
       <Row k="Banned" v={profile.account.banned ? `yes — ${profile.account.banReason ?? ""}` : "no"} />
+      {/* Same light as the list, so the drawer cannot disagree with the row. */}
+      <div style={{ display: "flex", justifyContent: "space-between", gap: 10, fontSize: 12, padding: "3px 0" }}>
+        <span style={{ color: TEXT_DIM }}>上線</span>
+        <SeenLight row={profile.account} now={Date.now()} />
+      </div>
 
       {/* 帳號審核 (#126) — the drawer is where an operator lands after clicking
           a name, so the approval decision has to be reachable from here too. */}
@@ -433,6 +538,58 @@ function Row(props: { k: string; v: string; mono?: boolean }): React.JSX.Element
         {props.v}
       </span>
     </div>
+  );
+}
+
+/** HH:MM for the 「資料時間」 stamp. */
+function clockText(ms: number): string {
+  const d = new Date(ms);
+  const p = (n: number): string => String(n).padStart(2, "0");
+  return `${p(d.getHours())}:${p(d.getMinutes())}`;
+}
+
+/** The bare dot, reused by the row light and the legend. */
+function Dot(props: { tone: SeenTone }): React.JSX.Element {
+  const c = SEEN_DOT[props.tone];
+  return (
+    <span
+      style={{
+        display: "inline-block",
+        width: 8,
+        height: 8,
+        borderRadius: 999,
+        background: c.fill,
+        border: `1px solid ${c.ring === "transparent" ? c.fill : c.ring}`,
+        // only a live socket glows — the difference has to be visible at a glance
+        boxShadow: props.tone === "live" ? `0 0 6px ${c.fill}` : "none",
+        verticalAlign: "middle",
+        marginRight: 5,
+      }}
+    />
+  );
+}
+
+/**
+ * #246 上線燈號 for one row. All the judgement lives in ../players.ts
+ * (`seenState`), so this is presentation only — and the tooltip carries both
+ * approved lines: 最後動作 N 分鐘前, and the REAL connection state rather than an
+ * ambiguous 「目前連線中」 that an idle lobby tab would also satisfy.
+ */
+function SeenLight(props: { row: AccountRow; now: number }): React.JSX.Element {
+  const s = seenState(props.row, props.now);
+  return (
+    <span
+      title={s.tooltip}
+      style={{
+        whiteSpace: "nowrap",
+        cursor: "help",
+        color: s.tone === "live" ? TEXT_MAIN : s.tone === "off" ? TEXT_DIM : TEXT_MAIN,
+        fontWeight: s.tone === "live" ? 700 : 400,
+      }}
+    >
+      <Dot tone={s.tone} />
+      {s.label}
+    </span>
   );
 }
 
