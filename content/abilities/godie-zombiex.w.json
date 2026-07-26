@@ -2,7 +2,7 @@
   "id": "godie-zombiex.w",
   "schema": "ability@1",
   "name": "100-02 黑天覆七重咖哩・硬啦",
-  "description": "[主動攻擊]\n拖著腐爛的身體向前衝撞，是這隻慢吞吞喪屍唯一的突進手段。",
+  "description": "[主動攻擊]\n拖著腐爛的身體向前衝撞，是這隻慢吞吞喪屍唯一的突進手段。\n衝撞的同時黑泥瞬間硬化成殼，短時間大幅提升護甲與魔抗 —— 對一隻護甲魔抗都是 0 的喪屍來說，這 4 秒是他全部的生存視窗。",
   "slot": "W",
   "castType": "dash",
   "maxRank": 4,
@@ -25,6 +25,22 @@
       "mode": "toPoint",
       "speed": 25.0,
       "maxDistance": 6.0
+    },
+    {
+      "kind": "applyBuff",
+      "modifiers": [
+        {
+          "stat": "armor",
+          "op": "flat",
+          "value": 35.0
+        },
+        {
+          "stat": "mr",
+          "op": "flat",
+          "value": 35.0
+        }
+      ],
+      "duration": 4.0
     }
   ],
   "vfxKey": "fx.prim.holy.dash",
