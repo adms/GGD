@@ -233,5 +233,15 @@
     0.5882,
     0.5882,
     0.5882
-  ]
+  ],
+  "transform": {
+    "role": "alternate",
+    "counterpartId": "godie-u012",
+    "normalUnitRawcode": "U012",
+    "alternateUnitRawcode": "U011",
+    "triggerAbility": {
+      "rawcode": "Aphx",
+      "name": "61-00百連我殺 效果"
+    }
+  }
 }

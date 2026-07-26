@@ -1,0 +1,250 @@
+{
+  "id": "godie-o02n",
+  "schema": "champion@1",
+  "name": "曹操孟德 - 阿瞞大人",
+  "description": "故事：\n。\n(出自:)\n\n推薦玩家 : 連技殺手\n上手度 : 難\n\n角色成長：\n力量 + 1.70\n敏捷 + 2.60\n智慧 + 1.70\n基礎跑速 320\n\n可學習的技能：\n電光一閃、十萬伏特、就決定是你了!小智、打雷絕招",
+  "role": "fighter",
+  "attackType": "melee",
+  "modelKey": "champ.skin.rogue",
+  "baseStats": {
+    "maxHealth": 440,
+    "healthRegen": 1.15,
+    "maxMana": 292,
+    "manaRegen": 1.44,
+    "ad": 22,
+    "ap": 0,
+    "armor": 7,
+    "mr": 28,
+    "as": 0.5,
+    "ms": 6.4,
+    "critChance": 0,
+    "critDamage": 1.75,
+    "cdr": 0,
+    "lifesteal": 0,
+    "range": 1.6
+  },
+  "growth": {
+    "maxHealth": 34,
+    "healthRegen": 0.09,
+    "maxMana": 20,
+    "manaRegen": 0.07,
+    "ad": 1.7,
+    "armor": 0.8,
+    "mr": 1.2,
+    "as": 0.02
+  },
+  "hitFeel": {
+    "hitstopTicks": 3,
+    "shakeMag": 0.44,
+    "knockbackMag": 0.25
+  },
+  "abilities": {
+    "Q": {
+      "id": "godie-o02n.q",
+      "name": "87-01 大紅蓮斬",
+      "icon": "assets/icons/abilities/godie-o02n.q.webp",
+      "description": "[主動攻擊]\n35秒冷卻時間\n\n氣貫長槍，以電光石火之速回旋猛刺，其勢威猛，似可弒殺鬼神，造成前方敵方部隊250點傷害。",
+      "slot": "Q",
+      "castType": "skillshot",
+      "maxRank": 5,
+      "cooldown": [
+        35.0,
+        35.0,
+        35.0,
+        35.0,
+        35.0
+      ],
+      "manaCost": [
+        75.0,
+        175.0,
+        275.0,
+        275.0,
+        275.0
+      ],
+      "range": 5.5,
+      "effects": [
+        {
+          "kind": "spawnProjectile",
+          "projectileId": "imported.wave",
+          "onHit": [
+            {
+              "kind": "damage",
+              "damageType": "magic",
+              "amount": {
+                "perRank": [
+                  250.0,
+                  550.0,
+                  850.0,
+                  850.0,
+                  850.0
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "vfxKey": "fx.prim.lightning.slash",
+      "castTimeSec": 0.5
+    },
+    "W": {
+      "id": "godie-o02n.w",
+      "name": "87-02 霸體",
+      "icon": "assets/icons/abilities/godie-o02n.w.webp",
+      "description": "[被動]\n0秒冷卻時間\n\n霸王威能，有10%降低所有施加在身上的傷害。",
+      "slot": "W",
+      "castType": "self",
+      "maxRank": 3,
+      "cooldown": [
+        12.0,
+        12.0,
+        12.0
+      ],
+      "manaCost": [
+        60.0,
+        60.0,
+        60.0
+      ],
+      "range": 0,
+      "effects": [
+        {
+          "kind": "applyBuff",
+          "modifiers": [
+            {
+              "stat": "armor",
+              "op": "flat",
+              "value": 20
+            }
+          ],
+          "duration": 8.0
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.pulse-sm",
+      "castTimeSec": 0.3
+    },
+    "E": {
+      "id": "godie-o02n.e",
+      "name": "87-03 天下號令",
+      "icon": "assets/icons/abilities/godie-o02n.e.webp",
+      "description": "[變身]\n60秒冷卻時間\n\n變身超級曹操，持續6秒。",
+      "slot": "E",
+      "castType": "targeted",
+      "maxRank": 4,
+      "cooldown": [
+        60.0,
+        60.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        90.0,
+        180.0,
+        270.0,
+        360.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "damage",
+          "damageType": "physical",
+          "amount": {
+            "perRank": [
+              80,
+              120,
+              160,
+              200
+            ],
+            "ratios": [
+              {
+                "stat": "ad",
+                "coeff": 0.5
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.prim.physical.pulse-sm",
+      "targetsEnemies": true,
+      "castTimeSec": 0.4
+    },
+    "R": {
+      "id": "godie-o02n.r",
+      "name": "87-04 逆我必殺",
+      "icon": "assets/icons/abilities/godie-o02n.r.webp",
+      "description": "[輔助]\n60秒冷卻時間\n\n殺！增加100點傷害，攻擊時獲得生命回饋80%，可持續9秒",
+      "slot": "R",
+      "castType": "targeted",
+      "maxRank": 3,
+      "cooldown": [
+        12.0,
+        60.0,
+        60.0
+      ],
+      "manaCost": [
+        50.0,
+        80.0,
+        110.0
+      ],
+      "range": 11.0,
+      "effects": [
+        {
+          "kind": "heal",
+          "amount": {
+            "perRank": [
+              100.0,
+              200.0,
+              300.0
+            ],
+            "ratios": [
+              {
+                "stat": "ap",
+                "coeff": 0.9
+              }
+            ]
+          }
+        }
+      ],
+      "vfxKey": "fx.prim.arcane.pulse-lg",
+      "targetsEnemies": false,
+      "castTimeSec": 0.3
+    }
+  },
+  "skillOrder": [
+    "Q",
+    "W",
+    "E",
+    "R"
+  ],
+  "buildPriority": [
+    "swift-boots",
+    "serrated-edge"
+  ],
+  "tags": [
+    "wc3-import",
+    "godie",
+    "voxel-standin"
+  ],
+  "passiveAbility": "godie-o02n.passive",
+  "icon": "assets/icons/champions/godie-o02n.png",
+  "transform": {
+    "role": "base",
+    "counterpartId": "godie-o02o",
+    "normalUnitRawcode": "O02N",
+    "alternateUnitRawcode": "O02O",
+    "triggerAbility": {
+      "rawcode": "A0DB",
+      "name": "87-03 天下號令",
+      "durationSec": {
+        "1": 6.0,
+        "2": 12.0,
+        "3": 18.0,
+        "4": 24.0
+      },
+      "cooldownSec": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 60.0
+      }
+    }
+  }
+}

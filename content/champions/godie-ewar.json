@@ -256,5 +256,27 @@
   ],
   "exAbility": "godie-ewar.ex",
   "passiveAbility": "godie-ewar.passive",
-  "icon": "assets/icons/champions/godie-ewar.png"
+  "icon": "assets/icons/champions/godie-ewar.png",
+  "transform": {
+    "role": "base",
+    "counterpartId": "godie-e007",
+    "normalUnitRawcode": "EWAR",
+    "alternateUnitRawcode": "E007",
+    "triggerAbility": {
+      "rawcode": "A02W",
+      "name": "12-03 破凰之心-徒手空破山",
+      "durationSec": {
+        "1": 12.0,
+        "2": 18.0,
+        "3": 24.0,
+        "4": 30.0
+      },
+      "cooldownSec": {
+        "1": 45.0,
+        "2": 45.0,
+        "3": 45.0,
+        "4": 45.0
+      }
+    }
+  }
 }

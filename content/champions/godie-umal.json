@@ -245,5 +245,27 @@
     0.7843,
     0.7843,
     0.7843
-  ]
+  ],
+  "transform": {
+    "role": "base",
+    "counterpartId": "godie-u00l",
+    "normalUnitRawcode": "UMAL",
+    "alternateUnitRawcode": "U00L",
+    "triggerAbility": {
+      "rawcode": "A0HW",
+      "name": "25-04 ChangeDNA",
+      "durationSec": {
+        "1": 8.0,
+        "2": 16.0,
+        "3": 24.0,
+        "4": 28.0
+      },
+      "cooldownSec": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 75.0
+      }
+    }
+  }
 }

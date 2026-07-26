@@ -54,6 +54,41 @@
  * `heroNumberCollisions()` reports these so a human can decide; the SHIPPED
  * behaviour is always "keep both".
  *
+ * ---------------------------------------------------------------------------
+ * THE ONE EXCEPTION — w3x `Eme1`/`Emeu` EVIDENCE (owner ruling, 2026-07-26)
+ * ---------------------------------------------------------------------------
+ * READ THIS BEFORE ADDING A SECOND ONE. THE LENIENT DEFAULT ABOVE IS UNCHANGED.
+ *
+ * The 2026-07-22 ruling 「疑慮一律判斷寬鬆為多英雄」 is about DOUBT. Task #249 took
+ * the doubt away for exactly 26 pairs: the source map's ability table carries
+ * the WC3 Metamorphosis field pair `Eme1` (normal-form unit) / `Emeu`
+ * (alternate-form unit), which is the map author STATING, in data, that two
+ * unit definitions are two bodies of one hero. That is not a resemblance and
+ * not an inference — it is the same class of first-party evidence as the hero
+ * 編號 itself. The owner ruled: where that evidence exists, it WINS.
+ *
+ * Three pins in this file's test suite were overturned by that ruling — heroes
+ * 25 (拳四郎), 58 (皮卡丘) and 61 (克勞薩) had been recorded as hero-number
+ * COLLISIONS with `sameCharacter() === false`, on the strength of differing
+ * 稱號 and differing meshes. The w3x says otherwise in all three cases:
+ *   25  A0HW 25-04 ChangeDNA        UMAL 北斗神拳掌門人 ⇄ U00L 北斗之鼠
+ *   58  A040 58-04 瘋狂皮卡丘        OFAR 神奇寶貝兒     ⇄ O02L 神騎寶貝
+ *   61  Aphx 61-00 百連我殺 效果      U012 克勞薩II世     ⇄ U011 克勞薩先生
+ *
+ * THE EXCEPTION IS A CLOSED TABLE, NOT A PRINCIPLE. It reads exactly one
+ * source — `championForms.ts`'s 26 pairs, generated from the map by
+ * `tools/w3x-import/extract_transform_forms.py` and pinned against that fixture
+ * — and it can only ever fire for an id that appears in it. It is NOT licence
+ * to merge lookalikes:
+ *   • no `Eme1`/`Emeu` pair ⇒ the lenient default applies, unchanged. 05
+ *     (賈修貝爾/阿強一號), 53 (傑洛士/涼宮八ㄦ匕) and 91 (死亡騎士/不良少年) carry no
+ *     transform evidence and therefore STAY two heroes each;
+ *   • it never crosses a hero number (the check runs AFTER the 編號 guard), so
+ *     it can never resurrect the 黑化Saber bug — e00q is 69, e002 is 20;
+ *   • "they look alike", "they share a mesh", "they share a portrait" and "the
+ *     name is nearly the same" remain non-evidence. If you want to merge a pair
+ *     that is not in the w3x table, that is a NEW owner ruling, not this one.
+ *
  * `championIdentity.test.ts` PINS this policy so a later refactor cannot
  * quietly tighten it back into over-merging.
  *
@@ -78,7 +113,9 @@
  * @see tools/w3x-import/out/GoDieEX22s-src/HERO_NUMBERS.json — the importer's
  *      own record of hero numbers. The test cross-checks every champion doc
  *      against it (they agree on all 107 numbered champions today).
+ * @see ./championForms.ts — the 26 `Eme1`/`Emeu` pairs the exception reads.
  */
+import { baseFormIdOf, isAlternateForm, isW3xFormPair } from "./championForms";
 
 /**
  * `NN-0X` / `NN-00X` ability-name prefix (task #11). The trailing `(?!\d)`
@@ -226,6 +263,14 @@ export function isSameCharacter(a: IdentityChampion, b: IdentityChampion): boole
   //    portrait can ever collapse them.
   if (na !== nb) return false;
 
+  // 2b. THE ONE EXCEPTION (owner ruling 2026-07-26) — the source map's WC3
+  //     Metamorphosis fields `Eme1`/`Emeu` name these two ids as the two BODIES
+  //     of one hero, so the evidence wins over the lenient default. Closed
+  //     table of 26 pairs (championForms.ts); runs AFTER the 編號 guard so it
+  //     can never merge across hero numbers. Absent such evidence nothing
+  //     changes — see the file header before extending this.
+  if (isW3xFormPair(a.id, b.id)) return true;
+
   // 3. Identical display name ⇒ same character, even across meshes/tints.
   if (normalizeName(a.name) === normalizeName(b.name)) return true;
 
@@ -276,12 +321,21 @@ export const RANDOM_HERO_POOL_IDS: ReadonlySet<string> = new Set([
 ]);
 
 /**
- * Ordering WITHIN a proven-identical group (never across groups): the id the
- * map plays wins, then a real imported mesh beats a CC0 stand-in, then the
- * lexicographically first id so the choice is deterministic.
+ * Ordering WITHIN a proven-identical group (never across groups):
+ *   0. a BASE form beats an ALTERNATE form. An alternate body is not a hero a
+ *      player may pick (owner ruling 2026-07-26 —「換成本體，變身態改由技能觸發」),
+ *      so it must never end up as the id that REPRESENTS the character. This
+ *      key is first precisely because the other three are all weaker signals:
+ *      the random-hero pool happens to list the base in every one of today's
+ *      26 pairs, but that is a coincidence of the map's own pick list, not a
+ *      rule, and relying on it is what let 妙蛙花 sit on the roster;
+ *   1. then the id the map itself plays (the random-hero pool);
+ *   2. then a real imported mesh over a CC0 stand-in;
+ *   3. then the lexicographically first id, so the choice is deterministic.
  */
-function canonicalRank(c: IdentityChampion): [number, number, string] {
+function canonicalRank(c: IdentityChampion): [number, number, number, string] {
   return [
+    isAlternateForm(c.id) ? 1 : 0,
     RANDOM_HERO_POOL_IDS.has(c.id) ? 0 : 1,
     isStandInModel(c.modelKey) ? 1 : 0,
     c.id,
@@ -295,8 +349,9 @@ function canonicalRank(c: IdentityChampion): [number, number, string] {
  * inventing a second, divergent notion of "the canonical one".
  */
 export function compareCanonical(a: IdentityChampion, b: IdentityChampion): number {
-  const [ap, am, ai] = canonicalRank(a);
-  const [bp, bm, bi] = canonicalRank(b);
+  const [af, ap, am, ai] = canonicalRank(a);
+  const [bf, bp, bm, bi] = canonicalRank(b);
+  if (af !== bf) return af - bf;
   if (ap !== bp) return ap - bp;
   if (am !== bm) return am - bm;
   return ai < bi ? -1 : ai > bi ? 1 : 0;
@@ -359,11 +414,41 @@ export function characterKeys(roster: readonly IdentityChampion[]): Map<string, 
  * The roster with duplicate ENTRIES of the same character removed — one row per
  * character, input order preserved. This is the ONLY sanctioned way to dedupe a
  * champion list; do not reintroduce name-, model- or icon-based heuristics.
+ *
+ * WHAT A base+alt PAIR COUNTS AS (task #249). A transform pair is ONE
+ * character, and the row that survives is always the BASE — the alternate is
+ * the same hero's transformed body, not a second hero and not a skin. So the
+ * count this returns is "how many heroes are there", and a 26-pair map
+ * contributes 26 rows, not 52. The three pairs the owner overturned on
+ * 2026-07-26 (25 拳四郎, 58 皮卡丘, 61 克勞薩) moved from two rows to one each,
+ * which is the whole point: the roster count is now honest about the fact that
+ * 北斗之鼠 is 拳四郎 mid-transform rather than a hero anyone can pick.
  */
 export function distinctCharacters<T extends IdentityChampion>(roster: readonly T[]): T[] {
   const keep = new Set(groupCharacters(roster).map((g) => g.canonicalId));
   return roster.filter((c) => keep.has(c.id));
 }
+
+/**
+ * The roster entries that are TRANSFORMED BODIES, not pickable heroes — the ids
+ * the w3x `Emeu` field names (see `championForms.ts`).
+ *
+ * Exported so every surface asks the SAME question instead of each inventing
+ * its own test. `starter.go`'s roster gate, the login marquee and any future
+ * champ-select filter all mean this and only this; in particular none of them
+ * should ever go back to reading a shared portrait or a shared mesh, both of
+ * which have already produced the wrong answer here.
+ */
+export function alternateForms<T extends IdentityChampion>(roster: readonly T[]): T[] {
+  return roster.filter((c) => isAlternateForm(c.id));
+}
+
+/**
+ * `id`'s BASE form when `id` is a transformed body, otherwise `id` itself.
+ * Re-exported from `championForms` so callers that already depend on identity
+ * do not need a second import to answer "which id should I actually ship?".
+ */
+export const baseFormOf = baseFormIdOf;
 
 /** True when both entries resolve to the same character within `roster`. */
 export function sameCharacterInRoster(

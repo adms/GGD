@@ -1,0 +1,1106 @@
+{
+  "schema": "w3x-transform-forms@1",
+  "source": "src_gogodieEX227s.w3x — war3map.w3a Eme1/Emeu (level 1) + war3map.w3u",
+  "generatedBy": "tools/w3x-import/extract_transform_forms.py",
+  "mechanism": "WC3 Metamorphosis family: ability field Eme1 = normal-form unit rawcode, Emeu = alternate-form unit rawcode. Read at LEVEL 1 only — cloned abilities keep the donor's rawcodes on levels 2-4.",
+  "directionProof": "every normal unit's `unsf` sub-name is the bare 編號 「(NN)」 and every alternate's names the form 「(NN變身名)」 — 26/26.",
+  "count": 26,
+  "pairs": [
+    {
+      "heroNumber": "04",
+      "abilityRawcode": "A0OE",
+      "abilityBase": "AEIl",
+      "abilityName": "04-002 惡夢魔王的碎片",
+      "normalUnit": {
+        "rawcode": "HJAI",
+        "championId": "godie-hjai",
+        "subName": "(04)",
+        "properName": "莉娜因巴斯",
+        "model": "LinaInvers.mdl",
+        "scale": null,
+        "moveSpeed": 290,
+        "inW3u": true
+      },
+      "alternateUnit": {
+        "rawcode": "H020",
+        "championId": "godie-h020",
+        "subName": "(04惡夢)",
+        "properName": "莉娜因巴斯",
+        "model": "LinaInvers.mdl",
+        "scale": null,
+        "moveSpeed": 290,
+        "inW3u": true
+      },
+      "durationSecByLevel": {
+        "1": 20.0,
+        "2": 12.0,
+        "3": 18.0,
+        "4": 24.0
+      },
+      "cooldownSecByLevel": {
+        "1": 70.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 60.0
+      },
+      "manaCostByLevel": {
+        "1": 360.0,
+        "2": 240.0,
+        "3": 360.0,
+        "4": 480.0
+      },
+      "unitDurationSecByLevel": {}
+    },
+    {
+      "heroNumber": "06",
+      "abilityRawcode": "A0Y1",
+      "abilityBase": "AEme",
+      "abilityName": "06-04 傑桑變化",
+      "normalUnit": {
+        "rawcode": "UCRL",
+        "championId": "godie-ucrl",
+        "subName": "(06)",
+        "properName": "傑 富力士",
+        "model": "units\\critters\\HighElfPeasant\\HighElfPeasant.mdl",
+        "scale": 1.100000023841858,
+        "moveSpeed": 315,
+        "inW3u": true
+      },
+      "alternateUnit": {
+        "rawcode": "U034",
+        "championId": "godie-u034",
+        "subName": "(06 傑桑)",
+        "properName": "傑 富力士",
+        "model": "HeroBigGon.mdl",
+        "scale": 1.2999999523162842,
+        "moveSpeed": 360,
+        "inW3u": true
+      },
+      "durationSecByLevel": {
+        "1": 7.0,
+        "2": 14.0,
+        "3": 21.0
+      },
+      "cooldownSecByLevel": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0
+      },
+      "manaCostByLevel": {
+        "1": 200.0,
+        "2": 300.0,
+        "3": 400.0
+      },
+      "unitDurationSecByLevel": {}
+    },
+    {
+      "heroNumber": "08",
+      "abilityRawcode": "A0T1",
+      "abilityBase": "AEIl",
+      "abilityName": "08-002 龍魔人",
+      "normalUnit": {
+        "rawcode": "NBBC",
+        "championId": "godie-nbbc",
+        "subName": "(08)",
+        "properName": "勇者小呆",
+        "model": "SD2.mdl",
+        "scale": 1.100000023841858,
+        "moveSpeed": 305,
+        "inW3u": true
+      },
+      "alternateUnit": {
+        "rawcode": "N01C",
+        "championId": "godie-n01c",
+        "subName": "(08龍魔人)",
+        "properName": "勇者小呆",
+        "model": "SD2.mdl",
+        "scale": 1.100000023841858,
+        "moveSpeed": 305,
+        "inW3u": true
+      },
+      "durationSecByLevel": {
+        "1": 20.0,
+        "2": 15.0,
+        "3": 21.0,
+        "4": 27.0
+      },
+      "cooldownSecByLevel": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 60.0
+      },
+      "manaCostByLevel": {
+        "1": 200.0,
+        "2": 210.0,
+        "3": 300.0,
+        "4": 390.0
+      },
+      "unitDurationSecByLevel": {}
+    },
+    {
+      "heroNumber": "09",
+      "abilityRawcode": "A09E",
+      "abilityBase": "AEIl",
+      "abilityName": "09-03 超級賽亞人",
+      "normalUnit": {
+        "rawcode": "OGRH",
+        "championId": "godie-ogrh",
+        "subName": "(09)",
+        "properName": "悟空",
+        "model": "goku.mdl",
+        "scale": null,
+        "moveSpeed": 310,
+        "inW3u": true
+      },
+      "alternateUnit": {
+        "rawcode": "O00X",
+        "championId": "godie-o00x",
+        "subName": "(09超三)",
+        "properName": "悟空",
+        "model": "Goku.mdl",
+        "scale": null,
+        "moveSpeed": 400,
+        "inW3u": true
+      },
+      "durationSecByLevel": {
+        "1": 8.0,
+        "2": 12.0,
+        "3": 16.0,
+        "4": 20.0
+      },
+      "cooldownSecByLevel": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 60.0
+      },
+      "manaCostByLevel": {
+        "1": 160.0,
+        "2": 240.0,
+        "3": 320.0,
+        "4": 400.0
+      },
+      "unitDurationSecByLevel": {}
+    },
+    {
+      "heroNumber": "11",
+      "abilityRawcode": "A10N",
+      "abilityBase": "AEIl",
+      "abilityName": "11-002 武裝色霸氣",
+      "normalUnit": {
+        "rawcode": "UDRE",
+        "championId": "godie-udre",
+        "subName": "(11)",
+        "properName": "索隆",
+        "model": "HeroMusashiMiyamoto.mdl",
+        "scale": null,
+        "moveSpeed": 315,
+        "inW3u": true
+      },
+      "alternateUnit": {
+        "rawcode": "U01U",
+        "championId": "godie-u01u",
+        "subName": "(11武裝霸王)",
+        "properName": "索隆",
+        "model": "HeroMusashiMiyamoto.mdl",
+        "scale": null,
+        "moveSpeed": 315,
+        "inW3u": true
+      },
+      "durationSecByLevel": {
+        "1": 15.0,
+        "2": 15.0,
+        "3": 21.0,
+        "4": 27.0
+      },
+      "cooldownSecByLevel": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 60.0
+      },
+      "manaCostByLevel": {
+        "1": 200.0,
+        "2": 210.0,
+        "3": 300.0,
+        "4": 390.0
+      },
+      "unitDurationSecByLevel": {}
+    },
+    {
+      "heroNumber": "12",
+      "abilityRawcode": "A02W",
+      "abilityBase": "AEIl",
+      "abilityName": "12-03 破凰之心-徒手空破山",
+      "normalUnit": {
+        "rawcode": "EWAR",
+        "championId": "godie-ewar",
+        "subName": "(12)",
+        "properName": "天地志狼",
+        "model": "HeroLingTong.mdl",
+        "scale": null,
+        "moveSpeed": 300,
+        "inW3u": true
+      },
+      "alternateUnit": {
+        "rawcode": "E007",
+        "championId": "godie-e007",
+        "subName": "(12破凰狀態)",
+        "properName": "天地志狼",
+        "model": "HeroLingTong.mdl",
+        "scale": null,
+        "moveSpeed": 300,
+        "inW3u": true
+      },
+      "durationSecByLevel": {
+        "1": 12.0,
+        "2": 18.0,
+        "3": 24.0,
+        "4": 30.0
+      },
+      "cooldownSecByLevel": {
+        "1": 45.0,
+        "2": 45.0,
+        "3": 45.0,
+        "4": 45.0
+      },
+      "manaCostByLevel": {
+        "2": 225.0,
+        "3": 300.0,
+        "4": 375.0
+      },
+      "unitDurationSecByLevel": {}
+    },
+    {
+      "heroNumber": "18",
+      "abilityRawcode": "A0IH",
+      "abilityBase": "AEIl",
+      "abilityName": "18-03 妖狐變化",
+      "normalUnit": {
+        "rawcode": "NSJS",
+        "championId": "godie-nsjs",
+        "subName": "(18)",
+        "properName": "南野秀一",
+        "model": "fox2.mdl",
+        "scale": 1.0499999523162842,
+        "moveSpeed": 300,
+        "inW3u": true
+      },
+      "alternateUnit": {
+        "rawcode": "N00P",
+        "championId": "godie-n00p",
+        "subName": "(18 妖狐化)",
+        "properName": "南野秀一",
+        "model": "fox.mdl",
+        "scale": 1.149999976158142,
+        "moveSpeed": 300,
+        "inW3u": true
+      },
+      "durationSecByLevel": {
+        "1": 8.0,
+        "2": 12.0,
+        "3": 16.0,
+        "4": 20.0
+      },
+      "cooldownSecByLevel": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 60.0
+      },
+      "manaCostByLevel": {
+        "1": 200.0,
+        "2": 300.0,
+        "3": 400.0,
+        "4": 500.0
+      },
+      "unitDurationSecByLevel": {}
+    },
+    {
+      "heroNumber": "19",
+      "abilityRawcode": "A0SZ",
+      "abilityBase": "AEIl",
+      "abilityName": "19-002 紫色披風",
+      "normalUnit": {
+        "rawcode": "E00K",
+        "championId": "godie-e00k",
+        "subName": "(19)",
+        "properName": "安云",
+        "model": "HeroKunoichi.mdl",
+        "scale": null,
+        "moveSpeed": 310,
+        "inW3u": true
+      },
+      "alternateUnit": {
+        "rawcode": "E00Z",
+        "championId": "godie-e00z",
+        "subName": "(19紫色披風)",
+        "properName": "安云",
+        "model": "HeroKunoichi.mdl",
+        "scale": null,
+        "moveSpeed": 522,
+        "inW3u": true
+      },
+      "durationSecByLevel": {
+        "1": 10.0,
+        "2": 15.0,
+        "3": 21.0,
+        "4": 27.0
+      },
+      "cooldownSecByLevel": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 60.0
+      },
+      "manaCostByLevel": {
+        "1": 200.0,
+        "2": 210.0,
+        "3": 300.0,
+        "4": 390.0
+      },
+      "unitDurationSecByLevel": {}
+    },
+    {
+      "heroNumber": "20",
+      "abilityRawcode": "A0DZ",
+      "abilityBase": "ANrg",
+      "abilityName": "20-01 風王結界",
+      "normalUnit": {
+        "rawcode": "E002",
+        "championId": "godie-e002",
+        "subName": "(20)",
+        "properName": "Saber",
+        "model": "HeroSaber.mdl",
+        "scale": 1.100000023841858,
+        "moveSpeed": 300,
+        "inW3u": true
+      },
+      "alternateUnit": {
+        "rawcode": "E00L",
+        "championId": "godie-e00l",
+        "subName": "(20風王結界)",
+        "properName": "Saber",
+        "model": "HeroSaber.mdl",
+        "scale": 1.100000023841858,
+        "moveSpeed": 300,
+        "inW3u": true
+      },
+      "durationSecByLevel": {},
+      "cooldownSecByLevel": {},
+      "manaCostByLevel": {},
+      "unitDurationSecByLevel": {}
+    },
+    {
+      "heroNumber": "22",
+      "abilityRawcode": "A02Q",
+      "abilityBase": "AEIl",
+      "abilityName": "22-04 雛見澤症候群L5",
+      "normalUnit": {
+        "rawcode": "E001",
+        "championId": "godie-e001",
+        "subName": "(22)",
+        "properName": "龍宮禮奈",
+        "model": "RenaRyugu2.mdl",
+        "scale": null,
+        "moveSpeed": 300,
+        "inW3u": true
+      },
+      "alternateUnit": {
+        "rawcode": "E00N",
+        "championId": "godie-e00n",
+        "subName": "(22L5)",
+        "properName": "龍宮禮奈",
+        "model": "RenaRyugu2.mdl",
+        "scale": null,
+        "moveSpeed": 400,
+        "inW3u": true
+      },
+      "durationSecByLevel": {
+        "1": 7.0,
+        "2": 14.0,
+        "3": 21.0,
+        "4": 28.0
+      },
+      "cooldownSecByLevel": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 75.0
+      },
+      "manaCostByLevel": {
+        "1": 70.0,
+        "2": 140.0,
+        "3": 210.0
+      },
+      "unitDurationSecByLevel": {}
+    },
+    {
+      "heroNumber": "25",
+      "abilityRawcode": "A0HW",
+      "abilityBase": "AEIl",
+      "abilityName": "25-04 ChangeDNA",
+      "normalUnit": {
+        "rawcode": "UMAL",
+        "championId": "godie-umal",
+        "subName": "(25)",
+        "properName": "拳四郎",
+        "model": "units\\critters\\VillagerMan1\\VillagerMan1.mdl",
+        "scale": 1.649999976158142,
+        "moveSpeed": 305,
+        "inW3u": true
+      },
+      "alternateUnit": {
+        "rawcode": "U00L",
+        "championId": "godie-u00l",
+        "subName": "(25變身)",
+        "properName": "拳四郎",
+        "model": "HeroPikachu.mdl",
+        "scale": 2.0,
+        "moveSpeed": 305,
+        "inW3u": true
+      },
+      "durationSecByLevel": {
+        "1": 8.0,
+        "2": 16.0,
+        "3": 24.0,
+        "4": 28.0
+      },
+      "cooldownSecByLevel": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 75.0
+      },
+      "manaCostByLevel": {
+        "1": 80.0,
+        "2": 160.0,
+        "3": 240.0
+      },
+      "unitDurationSecByLevel": {}
+    },
+    {
+      "heroNumber": "26",
+      "abilityRawcode": "A0EW",
+      "abilityBase": "AEIl",
+      "abilityName": "26-04 開天闢地‧洨者聖臨",
+      "normalUnit": {
+        "rawcode": "HARF",
+        "championId": "godie-harf",
+        "subName": "(26)",
+        "properName": "鄭先生",
+        "model": "units\\human\\HeroPaladin\\HeroPaladin.mdl",
+        "scale": null,
+        "moveSpeed": 305,
+        "inW3u": true
+      },
+      "alternateUnit": {
+        "rawcode": "H00W",
+        "championId": "godie-h00w",
+        "subName": "(26洨者狀態)",
+        "properName": "鄭先生",
+        "model": "units\\human\\HeroPaladin\\HeroPaladin.mdl",
+        "scale": null,
+        "moveSpeed": 305,
+        "inW3u": true
+      },
+      "durationSecByLevel": {
+        "1": 7.0,
+        "2": 10.5,
+        "3": 14.0
+      },
+      "cooldownSecByLevel": {
+        "1": 75.0,
+        "2": 75.0,
+        "3": 75.0
+      },
+      "manaCostByLevel": {
+        "1": 140.0,
+        "2": 210.0,
+        "3": 280.0
+      },
+      "unitDurationSecByLevel": {}
+    },
+    {
+      "heroNumber": "30",
+      "abilityRawcode": "A0YT",
+      "abilityBase": "AEIl",
+      "abilityName": "30-002 變態紳士",
+      "normalUnit": {
+        "rawcode": "ORKN",
+        "championId": "godie-orkn",
+        "subName": "(30)",
+        "properName": "臭作",
+        "model": null,
+        "scale": null,
+        "moveSpeed": 295,
+        "inW3u": true
+      },
+      "alternateUnit": {
+        "rawcode": "O030",
+        "championId": "godie-o030",
+        "subName": "(30變態紳士)",
+        "properName": "臭作",
+        "model": null,
+        "scale": 3.0,
+        "moveSpeed": 295,
+        "inW3u": true
+      },
+      "durationSecByLevel": {
+        "1": 15.0,
+        "2": 15.0,
+        "3": 21.0,
+        "4": 27.0
+      },
+      "cooldownSecByLevel": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 60.0
+      },
+      "manaCostByLevel": {
+        "1": 200.0,
+        "2": 210.0,
+        "3": 300.0,
+        "4": 390.0
+      },
+      "unitDurationSecByLevel": {}
+    },
+    {
+      "heroNumber": "38",
+      "abilityRawcode": "A0OH",
+      "abilityBase": "AEme",
+      "abilityName": "38-00 邪眼全開",
+      "normalUnit": {
+        "rawcode": "UVNG",
+        "championId": "godie-uvng",
+        "subName": "(38)",
+        "properName": "飛影",
+        "model": "HeroHehi.mdl",
+        "scale": 0.8500000238418579,
+        "moveSpeed": 310,
+        "inW3u": true
+      },
+      "alternateUnit": {
+        "rawcode": "U010",
+        "championId": "godie-u010",
+        "subName": "(38邪眼)",
+        "properName": "飛影",
+        "model": "HeroHehi.mdl",
+        "scale": 0.8500000238418579,
+        "moveSpeed": 360,
+        "inW3u": true
+      },
+      "durationSecByLevel": {
+        "1": 10.0
+      },
+      "cooldownSecByLevel": {
+        "1": 60.0
+      },
+      "manaCostByLevel": {},
+      "unitDurationSecByLevel": {}
+    },
+    {
+      "heroNumber": "40",
+      "abilityRawcode": "A0ND",
+      "abilityBase": "AEIl",
+      "abilityName": "40-03 萬解-貓王胖虎",
+      "normalUnit": {
+        "rawcode": "NMAN",
+        "championId": "godie-nman",
+        "subName": "(40)",
+        "properName": "憤怒的胖虎",
+        "model": "Units\\Creeps\\EarthPandarenBrewmaster\\EarthPandarenBrewmaster.mdl",
+        "scale": 1.0,
+        "moveSpeed": 310,
+        "inW3u": true
+      },
+      "alternateUnit": {
+        "rawcode": "N01B",
+        "championId": "godie-n01b",
+        "subName": "(40萬解)",
+        "properName": "憤怒的胖虎",
+        "model": "Units\\Creeps\\EarthPandarenBrewmaster\\EarthPandarenBrewmaster.mdl",
+        "scale": 1.0,
+        "moveSpeed": 310,
+        "inW3u": true
+      },
+      "durationSecByLevel": {
+        "1": 12.0,
+        "2": 18.0,
+        "3": 24.0,
+        "4": 30.0
+      },
+      "cooldownSecByLevel": {
+        "1": 75.0,
+        "2": 75.0,
+        "3": 75.0,
+        "4": 75.0
+      },
+      "manaCostByLevel": {
+        "1": 90.0,
+        "2": 180.0,
+        "3": 270.0,
+        "4": 360.0
+      },
+      "unitDurationSecByLevel": {}
+    },
+    {
+      "heroNumber": "42",
+      "abilityRawcode": "A06K",
+      "abilityBase": "AEIl",
+      "abilityName": "42-002 魔力印章",
+      "normalUnit": {
+        "rawcode": "N003",
+        "championId": "godie-n003",
+        "subName": "(42)",
+        "properName": "依文潔琳",
+        "model": "Long.mdl",
+        "scale": 0.699999988079071,
+        "moveSpeed": 295,
+        "inW3u": true
+      },
+      "alternateUnit": {
+        "rawcode": "N01G",
+        "championId": "godie-n01g",
+        "subName": "(42魔力印章)",
+        "properName": "依文潔琳",
+        "model": "Long.mdl",
+        "scale": 0.699999988079071,
+        "moveSpeed": 160,
+        "inW3u": true
+      },
+      "durationSecByLevel": {
+        "1": 7.0,
+        "2": 15.0,
+        "3": 21.0,
+        "4": 27.0
+      },
+      "cooldownSecByLevel": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 60.0
+      },
+      "manaCostByLevel": {
+        "1": 999.0,
+        "2": 210.0,
+        "3": 300.0,
+        "4": 390.0
+      },
+      "unitDurationSecByLevel": {}
+    },
+    {
+      "heroNumber": "58",
+      "abilityRawcode": "A040",
+      "abilityBase": "AEIl",
+      "abilityName": "58-04 瘋狂皮卡丘",
+      "normalUnit": {
+        "rawcode": "OFAR",
+        "championId": "godie-ofar",
+        "subName": "(58)",
+        "properName": "皮卡丘",
+        "model": "HeroPikachu.mdl",
+        "scale": 0.8999999761581421,
+        "moveSpeed": null,
+        "inW3u": true
+      },
+      "alternateUnit": {
+        "rawcode": "O02L",
+        "championId": "godie-o02l",
+        "subName": "(58變身)",
+        "properName": "皮卡丘",
+        "model": "picacugy.mdl",
+        "scale": 1.7999999523162842,
+        "moveSpeed": null,
+        "inW3u": true
+      },
+      "durationSecByLevel": {
+        "1": 6.0,
+        "2": 12.0,
+        "3": 18.0,
+        "4": 24.0
+      },
+      "cooldownSecByLevel": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 60.0
+      },
+      "manaCostByLevel": {
+        "1": 90.0,
+        "2": 180.0,
+        "3": 270.0,
+        "4": 360.0
+      },
+      "unitDurationSecByLevel": {}
+    },
+    {
+      "heroNumber": "61",
+      "abilityRawcode": "Aphx",
+      "abilityBase": "Aphx",
+      "abilityName": "61-00百連我殺 效果",
+      "normalUnit": {
+        "rawcode": "U012",
+        "championId": "godie-u012",
+        "subName": "(61)",
+        "properName": "克勞薩II世",
+        "model": null,
+        "scale": 1.2000000476837158,
+        "moveSpeed": 300,
+        "inW3u": true
+      },
+      "alternateUnit": {
+        "rawcode": "U011",
+        "championId": "godie-u011",
+        "subName": "(61 鳳凰蛋)",
+        "properName": "克勞薩先生",
+        "model": "collision.mdl",
+        "scale": 1.5,
+        "moveSpeed": 0,
+        "inW3u": true
+      },
+      "durationSecByLevel": {},
+      "cooldownSecByLevel": {},
+      "manaCostByLevel": {
+        "1": 500.0
+      },
+      "unitDurationSecByLevel": {
+        "1": 0.01
+      }
+    },
+    {
+      "heroNumber": "70",
+      "abilityRawcode": "A0O6",
+      "abilityBase": "ANrg",
+      "abilityName": "70-00 紮根",
+      "normalUnit": {
+        "rawcode": "E00S",
+        "championId": "godie-e00s",
+        "subName": "(70)",
+        "properName": "白木卡迪那",
+        "model": "buildings\\nightelf\\AncientProtector\\AncientProtector.mdl",
+        "scale": 1.100000023841858,
+        "moveSpeed": 275,
+        "inW3u": true
+      },
+      "alternateUnit": {
+        "rawcode": "E010",
+        "championId": "godie-e010",
+        "subName": "(70紮根)",
+        "properName": "白木卡迪那",
+        "model": "buildings\\nightelf\\AncientProtector\\AncientProtector.mdl",
+        "scale": 1.0,
+        "moveSpeed": 0,
+        "inW3u": true
+      },
+      "durationSecByLevel": {},
+      "cooldownSecByLevel": {
+        "1": 15.0
+      },
+      "manaCostByLevel": {},
+      "unitDurationSecByLevel": {}
+    },
+    {
+      "heroNumber": "76",
+      "abilityRawcode": "A0IR",
+      "abilityBase": "AEme",
+      "abilityName": "76-00 二檔",
+      "normalUnit": {
+        "rawcode": "U00N",
+        "championId": "godie-u00n",
+        "subName": "(76)",
+        "properName": "蒙其.D.魯夫",
+        "model": "Luffe.mdl",
+        "scale": 1.100000023841858,
+        "moveSpeed": 315,
+        "inW3u": true
+      },
+      "alternateUnit": {
+        "rawcode": "U00O",
+        "championId": "godie-u00o",
+        "subName": "(76 二檔)",
+        "properName": "蒙其.D.魯夫",
+        "model": "Luffe.mdl",
+        "scale": 1.100000023841858,
+        "moveSpeed": 415,
+        "inW3u": true
+      },
+      "durationSecByLevel": {
+        "1": 20.0
+      },
+      "cooldownSecByLevel": {
+        "1": 60.0
+      },
+      "manaCostByLevel": {},
+      "unitDurationSecByLevel": {
+        "1": 0.1
+      }
+    },
+    {
+      "heroNumber": "77",
+      "abilityRawcode": "A0JG",
+      "abilityBase": "AEIl",
+      "abilityName": "77-03 GLADIARIA ALAT",
+      "normalUnit": {
+        "rawcode": "E00W",
+        "championId": "godie-e00w",
+        "subName": "(77)",
+        "properName": "櫻綻剎那",
+        "model": "mfls.mdl",
+        "scale": null,
+        "moveSpeed": 300,
+        "inW3u": true
+      },
+      "alternateUnit": {
+        "rawcode": "E00X",
+        "championId": "godie-e00x",
+        "subName": "(77 變身)",
+        "properName": "櫻綻剎那",
+        "model": "mfls.mdl",
+        "scale": null,
+        "moveSpeed": 522,
+        "inW3u": true
+      },
+      "durationSecByLevel": {
+        "1": 6.0,
+        "2": 12.0,
+        "3": 18.0,
+        "4": 24.0
+      },
+      "cooldownSecByLevel": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 60.0
+      },
+      "manaCostByLevel": {
+        "1": 90.0,
+        "2": 180.0,
+        "3": 270.0,
+        "4": 360.0
+      },
+      "unitDurationSecByLevel": {}
+    },
+    {
+      "heroNumber": "79",
+      "abilityRawcode": "A0LN",
+      "abilityBase": "AEme",
+      "abilityName": "79-04 卍解",
+      "normalUnit": {
+        "rawcode": "H01N",
+        "championId": "godie-h01n",
+        "subName": "(79)",
+        "properName": "黑崎一護",
+        "model": "HeroIchigo.mdl",
+        "scale": 0.699999988079071,
+        "moveSpeed": 295,
+        "inW3u": true
+      },
+      "alternateUnit": {
+        "rawcode": "H01O",
+        "championId": "godie-h01o",
+        "subName": "(79卍解)",
+        "properName": "黑崎一護",
+        "model": "HeroIchigo.mdl",
+        "scale": 0.699999988079071,
+        "moveSpeed": 400,
+        "inW3u": true
+      },
+      "durationSecByLevel": {
+        "1": 8.0,
+        "2": 16.0,
+        "3": 24.0,
+        "4": 25.0
+      },
+      "cooldownSecByLevel": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 30.0
+      },
+      "manaCostByLevel": {
+        "1": 100.0,
+        "2": 200.0,
+        "3": 300.0,
+        "4": 10.0
+      },
+      "unitDurationSecByLevel": {}
+    },
+    {
+      "heroNumber": "81",
+      "abilityRawcode": "A0XP",
+      "abilityBase": "AEIl",
+      "abilityName": "81-002 Exellion Mode",
+      "normalUnit": {
+        "rawcode": "O01Z",
+        "championId": "godie-o01z",
+        "subName": "(81)",
+        "properName": "高町奈葉",
+        "model": "niya.mdl",
+        "scale": null,
+        "moveSpeed": 295,
+        "inW3u": true
+      },
+      "alternateUnit": {
+        "rawcode": "O02V",
+        "championId": "godie-o02v",
+        "subName": "(81EX mode)",
+        "properName": "高町奈葉",
+        "model": "niya.mdl",
+        "scale": null,
+        "moveSpeed": 305,
+        "inW3u": true
+      },
+      "durationSecByLevel": {
+        "1": 15.0,
+        "2": 12.0,
+        "3": 18.0,
+        "4": 24.0
+      },
+      "cooldownSecByLevel": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 60.0
+      },
+      "manaCostByLevel": {
+        "1": 350.0,
+        "2": 240.0,
+        "3": 360.0,
+        "4": 480.0
+      },
+      "unitDurationSecByLevel": {}
+    },
+    {
+      "heroNumber": "87",
+      "abilityRawcode": "A0DB",
+      "abilityBase": "AEIl",
+      "abilityName": "87-03 天下號令",
+      "normalUnit": {
+        "rawcode": "O02N",
+        "championId": "godie-o02n",
+        "subName": "(87)",
+        "properName": "阿瞞大人",
+        "model": "units\\demon\\ChaosWolfRider\\ChaosWolfRider.mdl",
+        "scale": 1.2999999523162842,
+        "moveSpeed": 330,
+        "inW3u": true
+      },
+      "alternateUnit": {
+        "rawcode": "O02O",
+        "championId": "godie-o02o",
+        "subName": "(87變身)",
+        "properName": "阿瞞大人",
+        "model": "units\\demon\\ChaosWolfRider\\ChaosWolfRider.mdl",
+        "scale": 1.2999999523162842,
+        "moveSpeed": 330,
+        "inW3u": true
+      },
+      "durationSecByLevel": {
+        "1": 6.0,
+        "2": 12.0,
+        "3": 18.0,
+        "4": 24.0
+      },
+      "cooldownSecByLevel": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 60.0
+      },
+      "manaCostByLevel": {
+        "1": 90.0,
+        "2": 180.0,
+        "3": 270.0,
+        "4": 360.0
+      },
+      "unitDurationSecByLevel": {}
+    },
+    {
+      "heroNumber": "90",
+      "abilityRawcode": "A0VG",
+      "abilityBase": "AEme",
+      "abilityName": "90-002 超進化! 妙蛙花",
+      "normalUnit": {
+        "rawcode": "HGAM",
+        "championId": "godie-hgam",
+        "subName": "(90)",
+        "properName": "妙蛙種子",
+        "model": "Bulbasaur.mdl",
+        "scale": 1.2000000476837158,
+        "moveSpeed": 300,
+        "inW3u": true
+      },
+      "alternateUnit": {
+        "rawcode": "H02R",
+        "championId": "godie-h02r",
+        "subName": "(90 妙蛙花)",
+        "properName": "妙蛙花",
+        "model": "Bulbasaur.mdl",
+        "scale": 3.0,
+        "moveSpeed": 240,
+        "inW3u": true
+      },
+      "durationSecByLevel": {
+        "1": 18.0,
+        "4": 25.0
+      },
+      "cooldownSecByLevel": {
+        "1": 75.0,
+        "4": 30.0
+      },
+      "manaCostByLevel": {
+        "1": 350.0,
+        "4": 10.0
+      },
+      "unitDurationSecByLevel": {}
+    },
+    {
+      "heroNumber": "92",
+      "abilityRawcode": "A0W9",
+      "abilityBase": "AEme",
+      "abilityName": "92-01 臥草泥馬",
+      "normalUnit": {
+        "rawcode": "H02V",
+        "championId": "godie-h02v",
+        "subName": "(92)",
+        "properName": "草泥馬",
+        "model": "horse.mdl",
+        "scale": null,
+        "moveSpeed": 310,
+        "inW3u": true
+      },
+      "alternateUnit": {
+        "rawcode": "H02U",
+        "championId": "godie-h02u",
+        "subName": "(92 臥草)",
+        "properName": "草泥馬",
+        "model": "horse.mdl",
+        "scale": null,
+        "moveSpeed": 0,
+        "inW3u": true
+      },
+      "durationSecByLevel": {
+        "1": 10.0,
+        "2": 10.0,
+        "3": 5.0,
+        "4": 5.0
+      },
+      "cooldownSecByLevel": {
+        "1": 40.0,
+        "2": 40.0,
+        "3": 20.0,
+        "4": 20.0
+      },
+      "manaCostByLevel": {
+        "1": 160.0,
+        "2": 160.0,
+        "3": 160.0,
+        "4": 160.0
+      },
+      "unitDurationSecByLevel": {}
+    }
+  ]
+}

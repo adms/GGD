@@ -227,5 +227,27 @@
   ],
   "exAbility": "godie-e00z.ex",
   "passiveAbility": "godie-e00z.passive",
-  "icon": "assets/icons/champions/godie-e00z.png"
+  "icon": "assets/icons/champions/godie-e00z.png",
+  "transform": {
+    "role": "alternate",
+    "counterpartId": "godie-e00k",
+    "normalUnitRawcode": "E00K",
+    "alternateUnitRawcode": "E00Z",
+    "triggerAbility": {
+      "rawcode": "A0SZ",
+      "name": "19-002 紫色披風",
+      "durationSec": {
+        "1": 10.0,
+        "2": 15.0,
+        "3": 21.0,
+        "4": 27.0
+      },
+      "cooldownSec": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 60.0
+      }
+    }
+  }
 }

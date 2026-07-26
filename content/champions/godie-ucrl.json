@@ -273,5 +273,25 @@
     0.3922,
     1.0,
     0.3922
-  ]
+  ],
+  "transform": {
+    "role": "base",
+    "counterpartId": "godie-u034",
+    "normalUnitRawcode": "UCRL",
+    "alternateUnitRawcode": "U034",
+    "triggerAbility": {
+      "rawcode": "A0Y1",
+      "name": "06-04 傑桑變化",
+      "durationSec": {
+        "1": 7.0,
+        "2": 14.0,
+        "3": 21.0
+      },
+      "cooldownSec": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0
+      }
+    }
+  }
 }

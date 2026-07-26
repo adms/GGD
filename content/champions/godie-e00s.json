@@ -223,5 +223,17 @@
     1.0,
     0.7843,
     1.0
-  ]
+  ],
+  "transform": {
+    "role": "base",
+    "normalUnitRawcode": "E00S",
+    "alternateUnitRawcode": "E010",
+    "triggerAbility": {
+      "rawcode": "A0O6",
+      "name": "70-00 紮根",
+      "cooldownSec": {
+        "1": 15.0
+      }
+    }
+  }
 }

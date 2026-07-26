@@ -72,6 +72,8 @@ export {
   groupCharacters,
   characterKeys,
   distinctCharacters,
+  alternateForms,
+  baseFormOf,
   sameCharacterInRoster,
   heroNumberCollisions,
   type IdentityAbility,
@@ -79,6 +81,19 @@ export {
   type CharacterGroup,
   type HeroNumberCollision,
 } from "./championIdentity";
+export {
+  CHAMPION_FORM_PAIRS,
+  FORM_PAIR_BY_ALTERNATE_ID,
+  FORM_PAIR_BY_BASE_ID,
+  isAlternateForm,
+  isAlternateFormId,
+  isBaseForm,
+  counterpartFormId,
+  baseFormIdOf,
+  isW3xFormPair,
+  type ChampionFormPair,
+  type PerLevelSeconds,
+} from "./championForms";
 export {
   BLOCKING_FOOTPRINTS,
   NON_BLOCKING,

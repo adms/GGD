@@ -234,5 +234,27 @@
   ],
   "exAbility": "godie-n01c.ex",
   "passiveAbility": "godie-n01c.passive",
-  "icon": "assets/icons/champions/godie-n01c.png"
+  "icon": "assets/icons/champions/godie-n01c.png",
+  "transform": {
+    "role": "alternate",
+    "counterpartId": "godie-nbbc",
+    "normalUnitRawcode": "NBBC",
+    "alternateUnitRawcode": "N01C",
+    "triggerAbility": {
+      "rawcode": "A0T1",
+      "name": "08-002 龍魔人",
+      "durationSec": {
+        "1": 20.0,
+        "2": 15.0,
+        "3": 21.0,
+        "4": 27.0
+      },
+      "cooldownSec": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 60.0
+      }
+    }
+  }
 }

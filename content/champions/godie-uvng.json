@@ -291,5 +291,21 @@
   ],
   "exAbility": "godie-uvng.ex",
   "passiveAbility": "godie-uvng.passive",
-  "icon": "assets/icons/champions/godie-uvng.png"
+  "icon": "assets/icons/champions/godie-uvng.png",
+  "transform": {
+    "role": "base",
+    "counterpartId": "godie-u010",
+    "normalUnitRawcode": "UVNG",
+    "alternateUnitRawcode": "U010",
+    "triggerAbility": {
+      "rawcode": "A0OH",
+      "name": "38-00 邪眼全開",
+      "durationSec": {
+        "1": 10.0
+      },
+      "cooldownSec": {
+        "1": 60.0
+      }
+    }
+  }
 }

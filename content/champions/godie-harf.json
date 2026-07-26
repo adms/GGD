@@ -216,5 +216,24 @@
   ],
   "exAbility": "godie-harf.ex",
   "passiveAbility": "godie-harf.passive",
-  "icon": "assets/icons/champions/godie-harf.png"
+  "icon": "assets/icons/champions/godie-harf.png",
+  "transform": {
+    "role": "base",
+    "normalUnitRawcode": "HARF",
+    "alternateUnitRawcode": "H00W",
+    "triggerAbility": {
+      "rawcode": "A0EW",
+      "name": "26-04 開天闢地‧洨者聖臨",
+      "durationSec": {
+        "1": 7.0,
+        "2": 10.5,
+        "3": 14.0
+      },
+      "cooldownSec": {
+        "1": 75.0,
+        "2": 75.0,
+        "3": 75.0
+      }
+    }
+  }
 }

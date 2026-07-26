@@ -232,5 +232,23 @@
     "godie"
   ],
   "exAbility": "godie-h02r.ex",
-  "passiveAbility": "godie-h02r.passive"
+  "passiveAbility": "godie-h02r.passive",
+  "transform": {
+    "role": "alternate",
+    "counterpartId": "godie-hgam",
+    "normalUnitRawcode": "HGAM",
+    "alternateUnitRawcode": "H02R",
+    "triggerAbility": {
+      "rawcode": "A0VG",
+      "name": "90-002 超進化! 妙蛙花",
+      "durationSec": {
+        "1": 18.0,
+        "4": 25.0
+      },
+      "cooldownSec": {
+        "1": 75.0,
+        "4": 30.0
+      }
+    }
+  }
 }

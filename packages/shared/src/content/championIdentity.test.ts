@@ -32,6 +32,7 @@ import {
   RANDOM_HERO_POOL_IDS,
   type IdentityChampion,
 } from "./championIdentity";
+import { isAlternateForm, isW3xFormPair } from "./championForms";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CONTENT_DIR = join(HERE, "../../../../content");
@@ -198,12 +199,26 @@ describe("true duplicates still collapse (champion-identity-true-duplicates)", (
     ["11", "godie-udre", "godie-u01u"], // 三刀流劍士 - 索隆              imported.heromusashimiyamoto
     ["06", "godie-ucrl", "godie-u034"], // 職業獵人 - 傑 富力士  (thorne stand-in ⇄ herobiggon)
     ["18", "godie-nsjs", "godie-n00p"], // 妖狐藏馬 - 南野秀一   (fox2 ⇄ fox)
+    ["87", "godie-o02n", "godie-o02o"], // 曹操孟德 - 阿瞞大人   (#249 imported the base O02N)
+  ] as const;
+
+  /**
+   * The three pairs that fold ONLY because of the w3x `Eme1`/`Emeu` exception
+   * (owner ruling 2026-07-26). They share a hero 編號 but differ in BOTH 稱號 and
+   * mesh, so no name/mesh rule above reaches them — they used to be recorded as
+   * hero-number COLLISIONS. Kept in their own list so the two mechanisms stay
+   * visibly separate: PAIRS folds on names/meshes, this folds on map evidence.
+   */
+  const W3X_OVERTURNED: readonly (readonly [string, string, string])[] = [
+    ["25", "godie-umal", "godie-u00l"], // 北斗神拳掌門人/北斗之鼠 — A0HW 25-04 ChangeDNA
+    ["58", "godie-ofar", "godie-o02l"], // 神奇寶貝兒/神騎寶貝    — A040 58-04 瘋狂皮卡丘
+    ["61", "godie-u012", "godie-u011"], // 克勞薩II世/克勞薩先生   — Aphx 61-00 百連我殺
   ] as const;
 
   it("collapses every known duplicate pair to exactly one surviving entry", () => {
     cover("champion-identity-true-duplicates");
     const survivors = new Set(distinctCharacters(ROSTER).map((c) => c.id));
-    for (const [num, keep, drop] of PAIRS) {
+    for (const [num, keep, drop] of [...PAIRS, ...W3X_OVERTURNED]) {
       expect(heroNumberOf(champ(keep)), `${keep} number`).toBe(num);
       expect(heroNumberOf(champ(drop)), `${drop} number`).toBe(num);
       expect(isSameCharacter(champ(keep), champ(drop)), `${keep} ≡ ${drop}`).toBe(true);
@@ -211,8 +226,8 @@ describe("true duplicates still collapse (champion-identity-true-duplicates)", (
       expect(survivors.has(keep), `${keep} survives`).toBe(true);
       expect(survivors.has(drop), `${drop} folded away`).toBe(false);
     }
-    // 18 pairs fold ⇒ the roster loses exactly 18 entries and nothing else.
-    expect(ROSTER.length - survivors.size).toBe(PAIRS.length);
+    // 19 + 3 pairs fold ⇒ the roster loses exactly 22 entries and nothing else.
+    expect(ROSTER.length - survivors.size).toBe(PAIRS.length + W3X_OVERTURNED.length);
   });
 
   it("keeps the map's own random-hero pick as the canonical id of each pair", () => {
@@ -229,17 +244,33 @@ describe("true duplicates still collapse (champion-identity-true-duplicates)", (
 describe("stand-in meshes never imply sameness (champion-identity-standin-mesh)", () => {
   const STAND_INS = ["champ.sela", "champ.thorne", "champ.skin.barbarian", "champ.skin.rogue"];
 
+  /**
+   * The ONE pair of stand-in wearers that IS one character: 曹操孟德's two unit
+   * definitions, both on `champ.skin.rogue` because his w3x model is a Blizzard
+   * built-in. They fold on their IDENTICAL AUTHORED NAME plus the w3x form link
+   * — never on the shared mesh, which is what this suite exists to forbid.
+   */
+  const SAME_CHARACTER_ON_ONE_MESH = new Set(["godie-o02n", "godie-o02o"]);
+
   it("treats every champion sharing a CC0 stand-in as its own character", () => {
     cover("champion-identity-standin-mesh");
     for (const mesh of STAND_INS) {
       const wearers = ROSTER.filter((c) => c.modelKey === mesh);
       expect(wearers.length, `${mesh} wearers`).toBeGreaterThan(1);
+      const exempt = wearers.filter((c) => SAME_CHARACTER_ON_ONE_MESH.has(c.id));
       const keys = new Set(wearers.map((c) => KEYS.get(c.id)));
-      // Every wearer keeps its own identity — no two are ever folded together.
-      expect(keys.size, `${mesh} wearers stay distinct`).toBe(wearers.length);
+      // Every wearer keeps its own identity — no two are ever folded together,
+      // except the one documented same-character pair above.
+      const folded = exempt.length > 1 ? exempt.length - 1 : 0;
+      expect(keys.size, `${mesh} wearers stay distinct`).toBe(wearers.length - folded);
       for (const a of wearers) {
         for (const b of wearers) {
           if (a.id === b.id) continue;
+          if (SAME_CHARACTER_ON_ONE_MESH.has(a.id) && SAME_CHARACTER_ON_ONE_MESH.has(b.id)) {
+            // proven by NAME, so removing the mesh evidence changes nothing
+            expect(a.name, "the exemption is a name match, not a mesh match").toBe(b.name);
+            continue;
+          }
           expect(isSameCharacter(a, b), `${a.id} vs ${b.id} on ${mesh}`).toBe(false);
         }
       }
@@ -291,7 +322,13 @@ describe("leniency policy pins (champion-identity-leniency)", () => {
   it("keeps BOTH sides of every hero-number collision, and reports them", () => {
     cover("champion-identity-leniency");
     const collisions = heroNumberCollisions(ROSTER);
-    expect(collisions.map((c) => c.heroNumber)).toEqual(["05", "25", "53", "58", "61", "91"]);
+    // Was ["05","25","53","58","61","91"]. 25 / 58 / 61 left the list at task
+    // #249: the w3x `Eme1`/`Emeu` fields prove each is one hero in two bodies,
+    // and the owner ruled (2026-07-26) that such evidence beats the lenient
+    // default. The three that remain carry NO transform evidence — the author
+    // simply cloned a hero and never renumbered it — so they stay two heroes,
+    // which is the point: the exception did not loosen the rule.
+    expect(collisions.map((c) => c.heroNumber)).toEqual(["05", "53", "91"]);
 
     const members = (num: string): string[] =>
       (collisions.find((c) => c.heroNumber === num)?.characters ?? [])
@@ -300,20 +337,10 @@ describe("leniency policy pins (champion-identity-leniency)", () => {
     // UNRELATED — the map author cloned a hero and never renumbered it.
     expect(members("05")).toEqual(["godie-h021", "godie-hblm"]); // 阿強一號 / 賈修貝爾
     expect(members("53")).toEqual(["godie-o00l", "godie-o02s"]); // 傑洛士 / 涼宮八ㄦ匕
-    expect(members("61")).toEqual(["godie-u011", "godie-u012"]); // 克勞薩先生 / 克勞薩II世
     expect(members("91")).toEqual(["godie-h02s", "godie-h02z"]); // 死亡騎士 / 不良少年
-    // RELATED — a skin/variant of one franchise character on two meshes.
-    expect(members("25")).toEqual(["godie-u00l", "godie-umal"]); // 拳四郎 ×2
-    expect(members("58")).toEqual(["godie-o02l", "godie-ofar"]); // 皮卡丘 ×2
     const related = (num: string): boolean =>
       collisions.find((c) => c.heroNumber === num)?.related ?? false;
-    expect([related("25"), related("58")]).toEqual([true, true]);
-    expect([related("05"), related("53"), related("61"), related("91")]).toEqual([
-      false,
-      false,
-      false,
-      false,
-    ]);
+    expect([related("05"), related("53"), related("91")]).toEqual([false, false, false]);
 
     // Shipped behaviour, both flavours: every colliding champion stays.
     const survivors = new Set(distinctCharacters(ROSTER).map((c) => c.id));
@@ -326,13 +353,61 @@ describe("leniency policy pins (champion-identity-leniency)", () => {
     }
   });
 
-  it("keeps same-number/different-mesh variants apart (skins are not duplicates)", () => {
-    // hero 25 拳四郎 and hero 58 皮卡丘 each appear on two DIFFERENT meshes with
-    // different 稱號. A shared name component alone must never merge them.
-    expect(sameCharacter("godie-umal", "godie-u00l")).toBe(false);
-    expect(sameCharacter("godie-ofar", "godie-o02l")).toBe(false);
+  it("a shared name component ALONE still never merges (the rule is unchanged)", () => {
+    // This used to pin 拳四郎 (25) and 皮卡丘 (58) apart. Both now merge — but on
+    // the w3x transform evidence, NOT on names or meshes. The underlying rule is
+    // untouched, and the way to show that is to strip the id (which is all the
+    // exception reads) and re-ask: with a synthetic id the pair is two heroes
+    // again, exactly as before.
+    const anonymised = (id: string, as: string): IdentityChampion => ({
+      ...champ(id),
+      id: as,
+    });
+    expect(
+      isSameCharacter(anonymised("godie-umal", "x1"), anonymised("godie-u00l", "x2")),
+      "25 拳四郎: shared 拳四郎 component + different meshes ⇒ still NOT a merge",
+    ).toBe(false);
+    expect(
+      isSameCharacter(anonymised("godie-ofar", "y1"), anonymised("godie-o02l", "y2")),
+      "58 皮卡丘: same",
+    ).toBe(false);
     expect(nameComponents("北斗神拳掌門人 - 拳四郎")).toEqual(["北斗神拳掌門人", "拳四郎"]);
     expect(nameComponents("英靈-亞瑟王 - 黑化Saber")).toEqual(["英靈-亞瑟王", "黑化Saber"]);
+  });
+
+  it("the w3x exception fires ONLY on a real Eme1/Emeu pair (champion-identity-form-exception)", () => {
+    cover("champion-identity-form-exception");
+    // OVERTURNED: the three the owner ruled on (2026-07-26), now one hero each.
+    expect(sameCharacter("godie-umal", "godie-u00l")).toBe(true); // 25 拳四郎
+    expect(sameCharacter("godie-ofar", "godie-o02l")).toBe(true); // 58 皮卡丘
+    expect(sameCharacter("godie-u012", "godie-u011")).toBe(true); // 61 克勞薩
+    expect(isW3xFormPair("godie-umal", "godie-u00l")).toBe(true);
+    expect(isW3xFormPair("godie-u00l", "godie-umal")).toBe(true); // symmetric
+
+    // …and the BASE is the id that represents the character, never the body.
+    for (const [base, alt] of [
+      ["godie-umal", "godie-u00l"],
+      ["godie-ofar", "godie-o02l"],
+      ["godie-u012", "godie-u011"],
+    ] as const) {
+      expect(KEYS.get(alt), `${alt} resolves to its base`).toBe(base);
+      expect(isAlternateForm(alt), `${alt} is the alternate`).toBe(true);
+      expect(isAlternateForm(base), `${base} is not`).toBe(false);
+    }
+
+    // NOT OVERTURNED: an unrelated lookalike with no transform evidence stays
+    // two heroes. 05 賈修貝爾/阿強一號 share a hero number, the SAME child mesh,
+    // the SAME portrait bytes and the same four ability rawcodes — everything
+    // except an Eme1/Emeu pair. That is the whole difference.
+    expect(isW3xFormPair("godie-hblm", "godie-h021")).toBe(false);
+    expect(sameCharacter("godie-hblm", "godie-h021")).toBe(false);
+    expect(isW3xFormPair("godie-o00l", "godie-o02s")).toBe(false); // 53
+    expect(sameCharacter("godie-o00l", "godie-o02s")).toBe(false);
+    expect(isW3xFormPair("godie-h02s", "godie-h02z")).toBe(false); // 91
+    expect(sameCharacter("godie-h02s", "godie-h02z")).toBe(false);
+    // …and it can never cross a hero number: 黑化Saber (69) vs Saber (20).
+    expect(isW3xFormPair("godie-e002", "godie-e00q")).toBe(false);
+    expect(sameCharacter("godie-e002", "godie-e00q")).toBe(false);
   });
 
   it("is reflexive, symmetric and order-independent", () => {

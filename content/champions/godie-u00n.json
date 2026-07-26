@@ -269,5 +269,21 @@
   ],
   "exAbility": "godie-u00n.ex",
   "passiveAbility": "godie-u00n.passive",
-  "icon": "assets/icons/champions/godie-u00n.png"
+  "icon": "assets/icons/champions/godie-u00n.png",
+  "transform": {
+    "role": "base",
+    "counterpartId": "godie-u00o",
+    "normalUnitRawcode": "U00N",
+    "alternateUnitRawcode": "U00O",
+    "triggerAbility": {
+      "rawcode": "A0IR",
+      "name": "76-00 二檔",
+      "durationSec": {
+        "1": 20.0
+      },
+      "cooldownSec": {
+        "1": 60.0
+      }
+    }
+  }
 }

@@ -1460,6 +1460,26 @@
     "truePeakDb": -1.5
   },
   {
+    "id": "vo-title-godie-o02n",
+    "lang": "zh-TW",
+    "voice": "Tingting",
+    "text": "曹操孟德",
+    "out": "godie-o02n.title.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
+    "id": "vo-name-godie-o02n",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "阿瞞大人",
+    "out": "godie-o02n.name.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
     "id": "vo-title-godie-o02o",
     "lang": "zh-TW",
     "voice": "Tingting",

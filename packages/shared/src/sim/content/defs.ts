@@ -164,6 +164,29 @@ export interface ChampionDef {
   tint?: [number, number, number];
   /** Opacity 0..1; absent = 1 (opaque). Visual only, like `tint`. */
   alpha?: number;
+  /**
+   * 變身 form link recovered from the map's WC3 Metamorphosis fields `Eme1` /
+   * `Emeu` (task #249) — see `content/schema/champion.ts` for the full contract
+   * and `content/championForms.ts` for the shipped 26-pair table.
+   *
+   * DATA ONLY: the sim never reads this. It rides along exactly like `icon` and
+   * `tint` so registry reads stay typed, and so the transform MECHANIC (task
+   * #119) can be built without another trip into the .w3x. `role: "alternate"`
+   * marks a body that is NOT independently pickable.
+   */
+  transform?: {
+    role: "base" | "alternate";
+    counterpartId?: ChampionId;
+    normalUnitRawcode: string;
+    alternateUnitRawcode: string;
+    triggerAbility: {
+      rawcode: string;
+      name?: string;
+      /** per level, keyed "1".."4"; absent = toggle / death-state morph */
+      durationSec?: Record<string, number>;
+      cooldownSec?: Record<string, number>;
+    };
+  };
   /** AI hints (Q/W/E/R only) */
   skillOrder: CoreAbilitySlot[];
   buildPriority: ItemId[];

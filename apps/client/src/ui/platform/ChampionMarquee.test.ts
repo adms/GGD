@@ -29,6 +29,7 @@ import {
   type MarqueeChampion,
 } from "./marqueeRoster";
 import { revealedPortraitCount } from "./ChampionMarquee";
+import { isAlternateForm } from "@ggd/shared/content";
 
 const ICONED: MarqueeChampion = {
   id: "godie-e001",
@@ -133,16 +134,75 @@ describe("marqueeRoster.buildMarqueeTiles", () => {
 
     // REGRESSION: "曹操孟德 wears 皮卡丘's PNG" is an icon bug, NOT an identity
     // one. isSelectableChampion must no longer blocklist it by id — it is a
-    // real champion that other screens still show.
+    // real champion that other screens still show. (godie-o02n is the BASE unit
+    // O02N; its 天下號令 form godie-o02o is excluded as a transform, below.)
     const CAOCAO: MarqueeChampion = {
-      id: "godie-o02o",
+      id: "godie-o02n",
       name: "曹操孟德 - 阿瞞大人",
-      icon: "assets/icons/champions/godie-o02o.png",
+      icon: "assets/icons/champions/godie-o02n.png",
       tags: ["godie"],
       modelKey: "champ.skin.rogue",
       abilities: { Q: { name: "87-01 亂世奸雄" } },
     };
     expect(isSelectableChampion(CAOCAO)).toBe(true);
+  });
+
+  // ── task #249: FORM decides visibility, PORTRAIT BYTES do not ─────────────
+  it("excludes 變身 forms by the w3x form link, not by a shared portrait", () => {
+    cover("champ-marquee-form-exclusion");
+    // 妙蛙花 has its OWN portrait, so the icon-dedup pass never touched it — it
+    // sat on the roster as a pickable hero. The form link is what removes it.
+    const BULBA_ALT: MarqueeChampion = {
+      id: "godie-h02r",
+      name: "種子神奇寶貝 - 妙蛙花",
+      icon: "assets/icons/champions/godie-h02r.webp",
+      modelKey: "imported.bulbasaur",
+      abilities: { Q: { name: "90-01 飛葉快刀" } },
+    };
+    const BULBA_BASE: MarqueeChampion = { ...BULBA_ALT, id: "godie-hgam", name: "種子神奇寶貝 - 妙蛙種子" };
+    expect(isSelectableChampion(BULBA_ALT), "妙蛙花 is a transformed body").toBe(false);
+    expect(isSelectableChampion(BULBA_BASE), "妙蛙種子 is the hero").toBe(true);
+    // …and the same for 草泥馬's lying-down 臥 body (w3x move speed 0).
+    const ALPACA_ALT: MarqueeChampion = {
+      id: "godie-h02u",
+      name: "看似憂鬱的神獸 - 草泥馬",
+      icon: "assets/icons/champions/godie-h02u.webp",
+      modelKey: "imported.horse",
+      abilities: { Q: { name: "92-01 臥草泥馬" } },
+    };
+    expect(isSelectableChampion(ALPACA_ALT)).toBe(false);
+    expect(isSelectableChampion({ ...ALPACA_ALT, id: "godie-h02v" })).toBe(true);
+    // A champion in NO form pair is untouched, however similar it looks.
+    expect(isSelectableChampion({ ...BULBA_ALT, id: "godie-e00q", name: "英靈-亞瑟王 - 黑化Saber" })).toBe(
+      true,
+    );
+  });
+
+  it("keeps the SIX non-transform icon-dedup groups (they are a different bug)", () => {
+    cover("champ-marquee-icon-groups-survive");
+    // SHARED_PORTRAIT_GROUPS is an icon-BYTES table pinned to disk, NOT a
+    // transform table. Deriving it from the form link would delete these six,
+    // every one of which is two genuinely unrelated champions the extractor
+    // handed one PNG. This is the regression guard for that mistake.
+    const NON_TRANSFORM_GROUPS = [
+      ["godie-o00l", "godie-o02s"], // 傑洛士 / 涼宮八ㄦ匕
+      ["godie-emfr", "godie-h022"], // 涅吉 / 白色之翼
+      ["godie-h02y", "godie-o02p"], // 志志雄 / 初音
+      ["godie-h021", "godie-hblm"], // 阿強一號 / 賈修貝爾
+      ["godie-e00j", "godie-e015", "godie-harf"], // 皇者 + 金居福 / 鄭先生
+      ["godie-o02l", "godie-o02n", "godie-o02o", "godie-ofar"], // 皮卡丘 ×2 + 曹操 ×2
+    ];
+    const declared = new Set(SHARED_PORTRAIT_GROUPS.map((g) => [...g].sort().join(",")));
+    for (const g of NON_TRANSFORM_GROUPS) {
+      expect(declared.has([...g].sort().join(",")), `icon group ${g.join("/")} survives`).toBe(true);
+    }
+    // …and none of the six is a form pair, which is exactly why the two tables
+    // cannot be merged. (The 皮卡丘/曹操 group mixes both: o02l and o02o ARE
+    // alternate forms, ofar and o02n are not — one more reason to keep the
+    // concerns apart.)
+    for (const g of NON_TRANSFORM_GROUPS.slice(0, 5)) {
+      for (const id of g) expect(isAlternateForm(id), `${id} is not a transform form`).toBe(false);
+    }
   });
 
   it("stable chip hue, clamps copies, empty roster", () => {

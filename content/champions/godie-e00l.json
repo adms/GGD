@@ -265,5 +265,15 @@
   ],
   "exAbility": "godie-e00l.ex",
   "passiveAbility": "godie-e00l.passive",
-  "icon": "assets/icons/champions/godie-e00l.png"
+  "icon": "assets/icons/champions/godie-e00l.png",
+  "transform": {
+    "role": "alternate",
+    "counterpartId": "godie-e002",
+    "normalUnitRawcode": "E002",
+    "alternateUnitRawcode": "E00L",
+    "triggerAbility": {
+      "rawcode": "A0DZ",
+      "name": "20-01 風王結界"
+    }
+  }
 }

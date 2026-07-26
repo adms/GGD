@@ -255,5 +255,27 @@
   ],
   "exAbility": "godie-hjai.ex",
   "passiveAbility": "godie-hjai.passive",
-  "icon": "assets/icons/champions/godie-hjai.png"
+  "icon": "assets/icons/champions/godie-hjai.png",
+  "transform": {
+    "role": "base",
+    "counterpartId": "godie-h020",
+    "normalUnitRawcode": "HJAI",
+    "alternateUnitRawcode": "H020",
+    "triggerAbility": {
+      "rawcode": "A0OE",
+      "name": "04-002 惡夢魔王的碎片",
+      "durationSec": {
+        "1": 20.0,
+        "2": 12.0,
+        "3": 18.0,
+        "4": 24.0
+      },
+      "cooldownSec": {
+        "1": 70.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 60.0
+      }
+    }
+  }
 }

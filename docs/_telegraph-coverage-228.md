@@ -42,12 +42,6 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 亞瑟王 - Saber `godie-e002` | E | 20-03 約束與勝利之劍 | `skillshot` | line 7.20×1.08u | ✅ OK | imported.wave maxRange 12 × abilityRange 0.6, hitRadius 0.9 ×2 × abilityRange 0.6 |
 | 亞瑟王 - Saber `godie-e002` | R | 20-04 Avalon-永恆的理想鄉 | `ground` | circle r=2.20u | ✅ OK | radius 3.67 × abilityRange 0.6 |
 | 亞瑟王 - Saber `godie-e002` | EX | 20-002 解放.約束勝利劍MAX | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 龍之子 - 天地志狼 `godie-e007` | PASSIVE | 12-00 感應意脈 | `—` | — | 🟣 PASSIVE | never cast |
-| 龍之子 - 天地志狼 `godie-e007` | Q | 12-01 鬥仙術 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 龍之子 - 天地志狼 `godie-e007` | W | 12-02 仙氣．採藥 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 龍之子 - 天地志狼 `godie-e007` | E | 12-03 破凰之心-徒手空破山 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 龍之子 - 天地志狼 `godie-e007` | R | 12-04 龍氣爆發 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 龍之子 - 天地志狼 `godie-e007` | EX | 12-002 仙氣發勁 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 火霧戰士 - 夏娜 `godie-e008` | PASSIVE | 21-00 灼眼 | `—` | — | 🟣 PASSIVE | never cast |
 | 火霧戰士 - 夏娜 `godie-e008` | Q | 21-02 拔焰刀 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 火霧戰士 - 夏娜 `godie-e008` | W | 21-01 火羽 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
@@ -102,6 +96,12 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 治癒系公主 - 木乃香 `godie-etyr` | E | 14-02 式神炸裂 | `ground` | circle r=0.90u | ✅ OK | radius 1.5 × abilityRange 0.6 |
 | 治癒系公主 - 木乃香 `godie-etyr` | R | 14-04 聖夜降臨 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 治癒系公主 - 木乃香 `godie-etyr` | EX | 14-002 魔力激發 | `—` | — | 🟣 PASSIVE | never cast |
+| 龍之子 - 天地志狼 `godie-ewar` | PASSIVE | 12-00 感應意脈 | `—` | — | 🟣 PASSIVE | never cast |
+| 龍之子 - 天地志狼 `godie-ewar` | Q | 12-01 鬥仙術 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 龍之子 - 天地志狼 `godie-ewar` | W | 12-02 仙氣．採藥 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 龍之子 - 天地志狼 `godie-ewar` | E | 12-03 破凰之心-徒手空破山 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 龍之子 - 天地志狼 `godie-ewar` | R | 12-04 龍氣爆發 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 龍之子 - 天地志狼 `godie-ewar` | EX | 12-002 仙氣發勁 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 時空勇者 - 林克 `godie-h00l` | PASSIVE | 60-00 聖光盾 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 時空勇者 - 林克 `godie-h00l` | Q | 60-01 科奇利族的迴旋鏢 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 時空勇者 - 林克 `godie-h00l` | W | 60-02 鎖鏈槍 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
@@ -120,30 +120,18 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 亂世癿王者 - 呂布奉先 `godie-h01u` | E | 80-03 鬼神烈戟 | `ground` | circle r=5.83u | ✅ OK | radius 9.72 × abilityRange 0.6 |
 | 亂世癿王者 - 呂布奉先 `godie-h01u` | R | 80-04 赤兔咆哮 | `skillshot` | line 7.20×1.08u | ✅ OK | imported.wave maxRange 12 × abilityRange 0.6, hitRadius 0.9 ×2 × abilityRange 0.6 |
 | 亂世癿王者 - 呂布奉先 `godie-h01u` | EX | 80-002 戰無不勝 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 黑魔導士 - 莉娜因巴斯 `godie-h020` | PASSIVE | 04-00 翔封界 | `—` | — | 🟣 PASSIVE | never cast |
-| 黑魔導士 - 莉娜因巴斯 `godie-h020` | Q | 04-01 火球術 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 黑魔導士 - 莉娜因巴斯 `godie-h020` | W | 04-02 炸彈陣 | `ground` | circle r=3.30u | ✅ OK | radius 5.5 × abilityRange 0.6 |
-| 黑魔導士 - 莉娜因巴斯 `godie-h020` | E | 04-03 龍破斬 | `ground` | circle r=4.95u | ✅ OK | radius 8.25 × abilityRange 0.6 |
-| 黑魔導士 - 莉娜因巴斯 `godie-h020` | R | 04-04 神滅斬 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 黑魔導士 - 莉娜因巴斯 `godie-h020` | EX | 04-002 惡夢魔王的碎片 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 國寶級的畜生 - 熊貓 `godie-h02k` | PASSIVE | 89-00 憤怒的門牙 | `—` | — | 🟣 PASSIVE | never cast |
 | 國寶級的畜生 - 熊貓 `godie-h02k` | Q | 89-01 憤怒的頭槌 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 國寶級的畜生 - 熊貓 `godie-h02k` | W | 89-02 憤怒的菊花 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 國寶級的畜生 - 熊貓 `godie-h02k` | E | 89-03 憤怒的胸毛 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 國寶級的畜生 - 熊貓 `godie-h02k` | R | 89-04 憤怒的簡諧運動 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 國寶級的畜生 - 熊貓 `godie-h02k` | EX | 89-002 俄羅斯輪盤 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 種子神奇寶貝 - 妙蛙花 `godie-h02r` | PASSIVE | 90-00 寄生種子 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 種子神奇寶貝 - 妙蛙花 `godie-h02r` | Q | 90-01 飛葉快刀 | `ground` | circle r=2.47u | ✅ OK | radius 4.12 × abilityRange 0.6 |
-| 種子神奇寶貝 - 妙蛙花 `godie-h02r` | W | 90-02 麻痺粉 | `ground` | circle r=3.60u | ✅ OK | radius 6 × abilityRange 0.6 |
-| 種子神奇寶貝 - 妙蛙花 `godie-h02r` | E | 90-03 藤鞭 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 種子神奇寶貝 - 妙蛙花 `godie-h02r` | R | 90-04 陽光烈焰 | `skillshot` | line 7.20×1.08u | ✅ OK | imported.wave maxRange 12 × abilityRange 0.6, hitRadius 0.9 ×2 × abilityRange 0.6 |
-| 種子神奇寶貝 - 妙蛙花 `godie-h02r` | EX | 90-002 超進化! 妙蛙花 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 看似憂鬱的神獸 - 草泥馬 `godie-h02u` | PASSIVE | 92-00 憂鬱的眼神 | `—` | — | 🟣 PASSIVE | never cast |
-| 看似憂鬱的神獸 - 草泥馬 `godie-h02u` | Q | 92-01 臥草泥馬 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 看似憂鬱的神獸 - 草泥馬 `godie-h02u` | W | 92-02 狂草泥馬 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 看似憂鬱的神獸 - 草泥馬 `godie-h02u` | E | 92-03 消化液 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 看似憂鬱的神獸 - 草泥馬 `godie-h02u` | R | 92-04 馬勒戈壁 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 看似憂鬱的神獸 - 草泥馬 `godie-h02u` | EX | 92-002 最終戈壁 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 看似憂鬱的神獸 - 草泥馬 `godie-h02v` | PASSIVE | 92-00 憂鬱的眼神 | `—` | — | 🟣 PASSIVE | never cast |
+| 看似憂鬱的神獸 - 草泥馬 `godie-h02v` | Q | 92-01 臥草泥馬 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 看似憂鬱的神獸 - 草泥馬 `godie-h02v` | W | 92-03 狂草泥馬 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 看似憂鬱的神獸 - 草泥馬 `godie-h02v` | E | 92-02 消化液 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 看似憂鬱的神獸 - 草泥馬 `godie-h02v` | R | 92-04 馬勒戈壁 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 看似憂鬱的神獸 - 草泥馬 `godie-h02v` | EX | 92-002 最終戈壁 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 海克力斯 - Berserker `godie-hapm` | PASSIVE | 52-00 十二道試煉 | `—` | — | 🟣 PASSIVE | never cast |
 | 海克力斯 - Berserker `godie-hapm` | Q | 52-01 狂戰士之怒 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 海克力斯 - Berserker `godie-hapm` | W | 52-02 蹂躪編年史 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
@@ -162,6 +150,18 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 慈悲的王者 - 賈修貝爾 `godie-hblm` | E | 05-03 及喀爾度 | `ground` | circle r=3.60u | ✅ OK | radius 6 × abilityRange 0.6 |
 | 慈悲的王者 - 賈修貝爾 `godie-hblm` | R | 05-04 巴歐．薩喀爾嘎 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 慈悲的王者 - 賈修貝爾 `godie-hblm` | EX | 05-002 金色巨龍 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 種子神奇寶貝 - 妙蛙種子 `godie-hgam` | PASSIVE | 90-00 寄生種子 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 種子神奇寶貝 - 妙蛙種子 `godie-hgam` | Q | 90-01 飛葉快刀 | `ground` | circle r=2.47u | ✅ OK | radius 4.12 × abilityRange 0.6 |
+| 種子神奇寶貝 - 妙蛙種子 `godie-hgam` | W | 90-02 麻痺粉 | `ground` | circle r=3.60u | ✅ OK | radius 6 × abilityRange 0.6 |
+| 種子神奇寶貝 - 妙蛙種子 `godie-hgam` | E | 90-03 藤鞭 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 種子神奇寶貝 - 妙蛙種子 `godie-hgam` | R | 90-04 陽光烈焰 | `skillshot` | line 7.20×1.08u | ✅ OK | imported.wave maxRange 12 × abilityRange 0.6, hitRadius 0.9 ×2 × abilityRange 0.6 |
+| 種子神奇寶貝 - 妙蛙種子 `godie-hgam` | EX | 90-002 超進化! 妙蛙花 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 黑魔導士 - 莉娜因巴斯 `godie-hjai` | PASSIVE | 04-00 翔封界 | `—` | — | 🟣 PASSIVE | never cast |
+| 黑魔導士 - 莉娜因巴斯 `godie-hjai` | Q | 04-01 火球術 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 黑魔導士 - 莉娜因巴斯 `godie-hjai` | W | 04-02 炸彈陣 | `ground` | circle r=3.30u | ✅ OK | radius 5.5 × abilityRange 0.6 |
+| 黑魔導士 - 莉娜因巴斯 `godie-hjai` | E | 04-03 龍破斬 | `ground` | circle r=3.60u | ✅ OK | radius 6 × abilityRange 0.6 |
+| 黑魔導士 - 莉娜因巴斯 `godie-hjai` | R | 04-04 神滅斬 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 黑魔導士 - 莉娜因巴斯 `godie-hjai` | EX | 04-002 惡夢魔王的碎片 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 不死之身-無 - 藤井八雲 `godie-hpal` | PASSIVE | 35-00 召喚佩 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 不死之身-無 - 藤井八雲 `godie-hpal` | Q | 35-01 土爪 | `skillshot` | line 7.20×1.08u | ✅ OK | imported.wave maxRange 12 × abilityRange 0.6, hitRadius 0.9 ×2 × abilityRange 0.6 |
 | 不死之身-無 - 藤井八雲 `godie-hpal` | W | 35-02 石絲 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
@@ -204,24 +204,24 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 小叮噹 - 哆拉A夢 `godie-n00b` | E | 57-02 任意門 | `dash` | line 11.00×1.20u | ✅ OK | dash maxDistance 11 (sim applies no abilityRange), body width 1.2 — movement only, no damage |
 | 小叮噹 - 哆拉A夢 `godie-n00b` | R | 57-04 竹蜻蜓 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 小叮噹 - 哆拉A夢 `godie-n00b` | EX | 57-002 時光機 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 妖狐藏馬 - 南野秀一 `godie-n00p` | PASSIVE | 18-00 薔薇荊棘之刃 | `—` | — | 🟣 PASSIVE | never cast |
-| 妖狐藏馬 - 南野秀一 `godie-n00p` | Q | 18-01 風華圓舞陣 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 妖狐藏馬 - 南野秀一 `godie-n00p` | W | 18-02 寄生種子 | `skillshot` | line 7.20×0.60u | ✅ OK | imported.bolt maxRange 12 × abilityRange 0.6, hitRadius 0.5 ×2 × abilityRange 0.6 |
-| 妖狐藏馬 - 南野秀一 `godie-n00p` | E | 18-03 妖狐變化 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 妖狐藏馬 - 南野秀一 `godie-n00p` | R | 18-04 億年樹 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 妖狐藏馬 - 南野秀一 `godie-n00p` | EX | 18-002 魔界吸血植物 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 傳說的龍騎士 - 勇者小呆 `godie-n01c` | PASSIVE | 08-00 龍紋記憶 | `—` | — | 🟣 PASSIVE | never cast |
-| 傳說的龍騎士 - 勇者小呆 `godie-n01c` | Q | 08-01 雙龍紋 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 傳說的龍騎士 - 勇者小呆 `godie-n01c` | W | 08-02 萊丁快速劍 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 傳說的龍騎士 - 勇者小呆 `godie-n01c` | E | 08-03 龍鬥氣砲咒文 | `skillshot` | line 7.20×1.08u | ✅ OK | imported.wave maxRange 12 × abilityRange 0.6, hitRadius 0.9 ×2 × abilityRange 0.6 |
-| 傳說的龍騎士 - 勇者小呆 `godie-n01c` | R | 08-04 阿邦快速劍X | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 傳說的龍騎士 - 勇者小呆 `godie-n01c` | EX | 08-002 龍魔人 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 傳說的龍騎士 - 勇者小呆 `godie-nbbc` | PASSIVE | 08-00 龍紋記憶 | `—` | — | 🟣 PASSIVE | never cast |
+| 傳說的龍騎士 - 勇者小呆 `godie-nbbc` | Q | 08-01 雙龍紋 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 傳說的龍騎士 - 勇者小呆 `godie-nbbc` | W | 08-02 萊丁快速劍 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 傳說的龍騎士 - 勇者小呆 `godie-nbbc` | E | 08-03 龍鬥氣砲咒文 | `skillshot` | line 7.20×1.08u | ✅ OK | imported.wave maxRange 12 × abilityRange 0.6, hitRadius 0.9 ×2 × abilityRange 0.6 |
+| 傳說的龍騎士 - 勇者小呆 `godie-nbbc` | R | 08-04 阿邦快速劍X | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 傳說的龍騎士 - 勇者小呆 `godie-nbbc` | EX | 08-002 龍魔人 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 通靈人 - 麻倉葉 `godie-nplh` | PASSIVE | 16-00 通靈能力 | `—` | — | 🟣 PASSIVE | never cast |
 | 通靈人 - 麻倉葉 `godie-nplh` | Q | 16-03 無無明亦無 | `skillshot` | line 7.20×0.60u | ✅ OK | imported.bolt maxRange 12 × abilityRange 0.6, hitRadius 0.5 ×2 × abilityRange 0.6 |
 | 通靈人 - 麻倉葉 `godie-nplh` | W | 16-01 超．占事略決 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 通靈人 - 麻倉葉 `godie-nplh` | E | 16-04 劍之精靈 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 通靈人 - 麻倉葉 `godie-nplh` | R | 16-02 阿彌陀流真空佛陀斬 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 通靈人 - 麻倉葉 `godie-nplh` | EX | 16-002 布都御魂 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 妖狐藏馬 - 南野秀一 `godie-nsjs` | PASSIVE | 18-00 薔薇荊棘之刃 | `—` | — | 🟣 PASSIVE | never cast |
+| 妖狐藏馬 - 南野秀一 `godie-nsjs` | Q | 18-01 風華圓舞陣 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 妖狐藏馬 - 南野秀一 `godie-nsjs` | W | 18-02 寄生種子 | `skillshot` | line 7.20×0.60u | ✅ OK | imported.bolt maxRange 12 × abilityRange 0.6, hitRadius 0.5 ×2 × abilityRange 0.6 |
+| 妖狐藏馬 - 南野秀一 `godie-nsjs` | E | 18-03 妖狐變化 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 妖狐藏馬 - 南野秀一 `godie-nsjs` | R | 18-04 億年樹 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 妖狐藏馬 - 南野秀一 `godie-nsjs` | EX | 18-002 魔界吸血植物 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 傲嬌電氣老鼠 - 皮卡娘 `godie-o00k` | PASSIVE | 86-00 裝可愛 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 傲嬌電氣老鼠 - 皮卡娘 `godie-o00k` | Q | 86-01 十萬伏特 | `ground` | circle r=3.85u | ✅ OK | radius 6.42 × abilityRange 0.6 |
 | 傲嬌電氣老鼠 - 皮卡娘 `godie-o00k` | W | 86-02 電光一閃 | `dash` | line 11.00×1.20u | ✅ OK | dash maxDistance 11 (sim applies no abilityRange), body width 1.2 — movement only, no damage |
@@ -234,12 +234,6 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 獸神官 - 傑洛士 `godie-o00l` | E | 53-03 破法對咒 | `ground` | circle r=0.90u | ✅ OK | radius 1.5 × abilityRange 0.6 |
 | 獸神官 - 傑洛士 `godie-o00l` | R | 53-04 暴爆咒 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 獸神官 - 傑洛士 `godie-o00l` | EX | 53-002 恐懼力量 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 超級賽亞人 - 悟空 `godie-o00x` | PASSIVE | 09-00 賽亞人的血脈 | `—` | — | 🟣 PASSIVE | never cast |
-| 超級賽亞人 - 悟空 `godie-o00x` | Q | 09-01 界王拳 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 超級賽亞人 - 悟空 `godie-o00x` | W | 09-02 瞬間移動 | `dash` | line 11.00×1.20u | ✅ OK | dash maxDistance 11 (sim applies no abilityRange), body width 1.2 — movement only, no damage |
-| 超級賽亞人 - 悟空 `godie-o00x` | E | 09-03 超級賽亞人 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 超級賽亞人 - 悟空 `godie-o00x` | R | 09-04 龜派氣功 | `skillshot` | line 7.20×1.08u | ✅ OK | imported.wave maxRange 12 × abilityRange 0.6, hitRadius 0.9 ×2 × abilityRange 0.6 |
-| 超級賽亞人 - 悟空 `godie-o00x` | EX | 09-002 十倍龜派氣功 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 夢幻之星 - 初音 `godie-o02p` | PASSIVE | 99-00 可愛就是正義 | `—` | — | 🟣 PASSIVE | never cast |
 | 夢幻之星 - 初音 `godie-o02p` | Q | 99-01 甩蔥歌 | `ground` | circle r=4.40u | ✅ OK | radius 7.33 × abilityRange 0.6 |
 | 夢幻之星 - 初音 `godie-o02p` | W | 99-02 最初的聲音 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
@@ -257,6 +251,12 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 美白大法師 - 黑人牙膏 `godie-ogld` | E | 72-03 超亮白 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 美白大法師 - 黑人牙膏 `godie-ogld` | R | 72-04 黑化 | `ground` | circle r=2.20u | ✅ OK | radius 3.67 × abilityRange 0.6 |
 | 美白大法師 - 黑人牙膏 `godie-ogld` | EX | 72-002 億萬衛星殞落 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 賽亞人 - 悟空 `godie-ogrh` | PASSIVE | 09-00 賽亞人的血脈 | `—` | — | 🟣 PASSIVE | never cast |
+| 賽亞人 - 悟空 `godie-ogrh` | Q | 09-01 界王拳 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 賽亞人 - 悟空 `godie-ogrh` | W | 09-02 瞬間移動 | `dash` | line 11.00×1.20u | ✅ OK | dash maxDistance 11 (sim applies no abilityRange), body width 1.2 — movement only, no damage |
+| 賽亞人 - 悟空 `godie-ogrh` | E | 09-03 超級賽亞人 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 賽亞人 - 悟空 `godie-ogrh` | R | 09-04 龜派氣功 | `skillshot` | line 7.20×1.08u | ✅ OK | imported.wave maxRange 12 × abilityRange 0.6, hitRadius 0.9 ×2 × abilityRange 0.6 |
+| 賽亞人 - 悟空 `godie-ogrh` | EX | 09-002 十倍龜派氣功 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 電車癡漢 - 臭作 `godie-orkn` | PASSIVE | 30-00 攝影機 | `ground` | circle r=0.60u | 🟡 AMBIGUOUS | sim default radius 1 × abilityRange 0.6 |
 | 電車癡漢 - 臭作 `godie-orkn` | Q | 30-01 綁架 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 電車癡漢 - 臭作 `godie-orkn` | W | 30-02 酒精灌腸 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
@@ -287,12 +287,6 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 邪惡意念集合體 - 死之王 `godie-u00k` | E | 71-03 厄夜靈魂 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 邪惡意念集合體 - 死之王 `godie-u00k` | R | 71-04 萬惡歸宗 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 邪惡意念集合體 - 死之王 `godie-u00k` | EX | 71-002 夜之主 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 北斗之鼠 - 拳四郎 `godie-u00l` | PASSIVE | 25-00 北斗暗殺拳 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 北斗之鼠 - 拳四郎 `godie-u00l` | Q | 25-01 北斗懺悔拳 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 北斗之鼠 - 拳四郎 `godie-u00l` | W | 25-02 北斗神拳秘訣轉龍呼吸法 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 北斗之鼠 - 拳四郎 `godie-u00l` | E | 25-03 北斗百裂拳 | `ground` | circle r=3.60u | ✅ OK | radius 6 × abilityRange 0.6 |
-| 北斗之鼠 - 拳四郎 `godie-u00l` | R | 25-04 ChangeDNA | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 北斗之鼠 - 拳四郎 `godie-u00l` | EX | 25-002 喔拉喔拉喔拉喔拉 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 草帽小子 - 蒙其.D.魯夫 `godie-u00n` | PASSIVE | 76-00 二檔 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 草帽小子 - 蒙其.D.魯夫 `godie-u00n` | Q | 76-01 伸縮自如的橡膠戰斧 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 草帽小子 - 蒙其.D.魯夫 `godie-u00n` | W | 76-02 伸縮自如的橡膠火箭砲 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
@@ -305,18 +299,6 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 黑手黨老大 - 基廉列克 `godie-u00v` | E | 78-03 廬山昇龍破 | `ground` | circle r=3.60u | ✅ OK | radius 6 × abilityRange 0.6 |
 | 黑手黨老大 - 基廉列克 `godie-u00v` | R | 78-04 死亡噴射肘擊 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 黑手黨老大 - 基廉列克 `godie-u00v` | EX | 78-002 加速爆體 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 邪眼師 - 飛影 `godie-u010` | PASSIVE | 38-00 邪眼全開 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 邪眼師 - 飛影 `godie-u010` | Q | 38-01 邪王炎殺劍 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 邪眼師 - 飛影 `godie-u010` | W | 38-02 邪王炎殺煉獄焦 | `ground` | circle r=3.60u | ✅ OK | radius 6 × abilityRange 0.6 |
-| 邪眼師 - 飛影 `godie-u010` | E | 38-03 邪王炎殺黑龍波 | `skillshot` | line 7.20×1.08u | ✅ OK | imported.wave maxRange 12 × abilityRange 0.6, hitRadius 0.9 ×2 × abilityRange 0.6 |
-| 邪眼師 - 飛影 `godie-u010` | R | 38-04 黑龍波吸收 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 邪眼師 - 飛影 `godie-u010` | EX | 38-002 究極暴走黑龍波 | `ground` | circle r=3.60u | ✅ OK | radius 6 × abilityRange 0.6 |
-| 三刀流劍士 - 索隆 `godie-u01u` | PASSIVE | 11-00 三刀流 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 三刀流劍士 - 索隆 `godie-u01u` | Q | 11-01 燒鬼斬 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 三刀流劍士 - 索隆 `godie-u01u` | W | 11-02 虎狩獵 | `ground` | circle r=2.20u | ✅ OK | radius 3.67 × abilityRange 0.6 |
-| 三刀流劍士 - 索隆 `godie-u01u` | E | 11-03 鬼氣九刀流-阿修羅壹霧銀 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
-| 三刀流劍士 - 索隆 `godie-u01u` | R | 11-04 三千世界 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
-| 三刀流劍士 - 索隆 `godie-u01u` | EX | 11-002 武裝色霸氣 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
 | 魔界霸主 - 巴恩大魔王 `godie-ubal` | PASSIVE | 37-00 鬼眼 | `ground` | circle r=6.60u | ✅ OK | radius 11 × abilityRange 0.6 |
 | 魔界霸主 - 巴恩大魔王 `godie-ubal` | Q | 37-01 凱薩之鷹 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 魔界霸主 - 巴恩大魔王 `godie-ubal` | W | 37-03 災難之牆 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
@@ -329,3 +311,21 @@ Every ability of every champion on the tracked open roster (`apps/platform/inter
 | 至尊學長 - 飛鼠先生 `godie-udea` | E | 65-03 魔法膨脹 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
 | 至尊學長 - 飛鼠先生 `godie-udea` | R | 65-04 天譴 | `dash` | line 8.25×1.20u | ✅ OK | dash maxDistance 8.25 (sim applies no abilityRange), body width 1.2 — movement only, no damage |
 | 至尊學長 - 飛鼠先生 `godie-udea` | EX | 65-002 永恆的愚蠢鄉 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 三刀流劍士 - 索隆 `godie-udre` | PASSIVE | 11-00 三刀流 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 三刀流劍士 - 索隆 `godie-udre` | Q | 11-01 燒鬼斬 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 三刀流劍士 - 索隆 `godie-udre` | W | 11-02 虎狩獵 | `ground` | circle r=2.20u | ✅ OK | radius 3.67 × abilityRange 0.6 |
+| 三刀流劍士 - 索隆 `godie-udre` | E | 11-03 鬼氣九刀流-阿修羅壹霧銀 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 三刀流劍士 - 索隆 `godie-udre` | R | 11-04 三千世界 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 三刀流劍士 - 索隆 `godie-udre` | EX | 11-002 武裝色霸氣 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 北斗神拳掌門人 - 拳四郎 `godie-umal` | PASSIVE | 25-00 北斗暗殺拳 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 北斗神拳掌門人 - 拳四郎 `godie-umal` | Q | 25-01 北斗懺悔拳 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 北斗神拳掌門人 - 拳四郎 `godie-umal` | W | 25-02 北斗神拳秘訣轉龍呼吸法 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 北斗神拳掌門人 - 拳四郎 `godie-umal` | E | 25-03 北斗百裂拳 | `ground` | circle r=3.60u | ✅ OK | radius 6 × abilityRange 0.6 |
+| 北斗神拳掌門人 - 拳四郎 `godie-umal` | R | 25-04 ChangeDNA | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 北斗神拳掌門人 - 拳四郎 `godie-umal` | EX | 25-002 喔拉喔拉喔拉喔拉 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 邪眼師 - 飛影 `godie-uvng` | PASSIVE | 38-00 邪眼全開 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 邪眼師 - 飛影 `godie-uvng` | Q | 38-01 邪王炎殺劍 | `targeted` | lock r=0.60u | ✅ OK | single target — body radius 0.6 (no AoE exists) |
+| 邪眼師 - 飛影 `godie-uvng` | W | 38-02 邪王炎殺煉獄焦 | `ground` | circle r=3.60u | ✅ OK | radius 6 × abilityRange 0.6 |
+| 邪眼師 - 飛影 `godie-uvng` | E | 38-03 邪王炎殺黑龍波 | `skillshot` | line 7.20×1.08u | ✅ OK | imported.wave maxRange 12 × abilityRange 0.6, hitRadius 0.9 ×2 × abilityRange 0.6 |
+| 邪眼師 - 飛影 `godie-uvng` | R | 38-04 黑龍波吸收 | `self` | self r=0.60u | ✅ OK | self-target — body radius 0.6 (sim hits only the caster) |
+| 邪眼師 - 飛影 `godie-uvng` | EX | 38-002 究極暴走黑龍波 | `ground` | circle r=3.60u | ✅ OK | radius 6 × abilityRange 0.6 |

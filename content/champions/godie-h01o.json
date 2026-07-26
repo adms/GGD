@@ -241,5 +241,27 @@
   ],
   "exAbility": "godie-h01o.ex",
   "passiveAbility": "godie-h01o.passive",
-  "icon": "assets/icons/champions/godie-h01o.png"
+  "icon": "assets/icons/champions/godie-h01o.png",
+  "transform": {
+    "role": "alternate",
+    "counterpartId": "godie-h01n",
+    "normalUnitRawcode": "H01N",
+    "alternateUnitRawcode": "H01O",
+    "triggerAbility": {
+      "rawcode": "A0LN",
+      "name": "79-04 卍解",
+      "durationSec": {
+        "1": 8.0,
+        "2": 16.0,
+        "3": 24.0,
+        "4": 25.0
+      },
+      "cooldownSec": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 30.0
+      }
+    }
+  }
 }

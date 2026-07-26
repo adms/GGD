@@ -2588,6 +2588,38 @@
         }
       ]
     },
+    "godie-o02n": {
+      "zhName": "曹操孟德 - 阿瞞大人",
+      "zhTitle": "曹操孟德",
+      "zhFullName": "阿瞞大人",
+      "spokenTitle": "ソウソウモウトク",
+      "spokenName": "アマンサマ",
+      "jaTitle": "ソウソウモウトク",
+      "jaName": "アマンサマ",
+      "reading": "Sou Sou Moutoku Aman-sama",
+      "confidence": "high",
+      "evidence": "RULE 1/4 — Kyoko reads the whole call-out in Japanese. Either a canonical Japanese original exists and is restored, or Sino-Japanese on'yomi is the correct standard Japanese reading of a Chinese name.",
+      "clip": "assets/audio/voices/names/godie-o02n.mp3",
+      "voSegments": [
+        {
+          "part": "title",
+          "lang": "zh-TW",
+          "voice": "Tingting",
+          "text": "曹操孟德",
+          "clip": "assets/audio/voices/names/godie-o02n.title.mp3"
+        },
+        {
+          "part": "name",
+          "lang": "ja-JP",
+          "voice": "Kyoko",
+          "text": "阿瞞大人",
+          "clip": "assets/audio/voices/names/godie-o02n.name.mp3"
+        }
+      ],
+      "spokenLine": "ソウソウモウトク・アマンサマ。",
+      "lang": "ja-JP",
+      "voice": "Kyoko"
+    },
     "godie-o02o": {
       "zhName": "曹操孟德 - 阿瞞大人",
       "zhTitle": "曹操孟德",

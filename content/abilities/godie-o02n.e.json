@@ -1,0 +1,46 @@
+{
+  "id": "godie-o02n.e",
+  "schema": "ability@1",
+  "name": "87-03 天下號令",
+  "icon": "assets/icons/abilities/godie-o02n.e.webp",
+  "description": "[變身]\n60秒冷卻時間\n\n變身超級曹操，持續6秒。",
+  "slot": "E",
+  "castType": "targeted",
+  "maxRank": 4,
+  "cooldown": [
+    60.0,
+    60.0,
+    60.0,
+    60.0
+  ],
+  "manaCost": [
+    90.0,
+    180.0,
+    270.0,
+    360.0
+  ],
+  "range": 11.0,
+  "effects": [
+    {
+      "kind": "damage",
+      "damageType": "physical",
+      "amount": {
+        "perRank": [
+          80,
+          120,
+          160,
+          200
+        ],
+        "ratios": [
+          {
+            "stat": "ad",
+            "coeff": 0.5
+          }
+        ]
+      }
+    }
+  ],
+  "vfxKey": "fx.prim.physical.pulse-sm",
+  "targetsEnemies": true,
+  "castTimeSec": 0.4
+}
