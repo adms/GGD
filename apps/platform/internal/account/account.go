@@ -182,7 +182,28 @@ type Public struct {
 	// it. It is the caller's own code to share, never anyone else's — every
 	// Public response is either the caller's own account or an admin-gated one —
 	// so it is not a disclosure. Omitted when the account has none.
+	//
+	// IT IS PRESENT ONLY WHILE THE CODE IS STILL REDEEMABLE (task #237). The
+	// stored Account.ReferralCode is a mirror of a document in the invite store
+	// and is written exactly once; the moment a friend burns it, the stored
+	// value names a credential the gate now refuses. Every UI that reads this
+	// field puts it in a copy box under the words「分享給一位朋友」, so emitting a
+	// spent code is emitting a lie. auth.Service.PublicAccount is the ONE place
+	// that fills this projection in, and it drops the code unless the invite
+	// store says it is live — see ReferralCodeStatus for what happened to it.
 	ReferralCode string `json:"referralCode,omitempty"`
+	// ReferralCodeStatus is the DERIVED lifecycle of the account's personal
+	// referral code: "active", "redeemed", "expired", "revoked" or "unknown"
+	// (the invite package's status vocabulary, which the admin console already
+	// renders). Never stored — resolved per response from the invite document,
+	// so it cannot drift from the gate the way the mirrored code itself did.
+	//
+	// It exists so a spent code DISAPPEARS WITH A REASON rather than silently:
+	// the panel that offered it can say「已經被使用了」instead of vanishing, which
+	// is the difference between the UI telling the truth and the UI telling
+	// nothing. Omitted when the account has no code at all, or when the deploy
+	// has no invite gate to ask.
+	ReferralCodeStatus string `json:"referralCodeStatus,omitempty"`
 }
 
 // Public returns the API-safe projection.

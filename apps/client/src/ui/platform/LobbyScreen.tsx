@@ -304,16 +304,66 @@ function BotMatchStrip(props: { mapId: string; onMapId: (id: string) => void }):
  * a lobby viewer is already approved, so here the message is simply "invite a
  * friend". The code is single-use, which the copy makes honest: it is for one
  * friend, and the server mints the next account its own.
+ *
+ * ONCE IT IS SPENT, THE PANEL SAYS SO (#237). The code is single-use, and the
+ * server now withholds `referralCode` the moment the invite document is burned —
+ * before that it kept handing back a string this box printed under「分享給一位
+ * 朋友」, so the player kept giving friends a code the gate answered with
+ * 「這組邀請碼已經被使用過了」. `referralCodeStatus` survives the withholding, so
+ * the panel reports what became of the code instead of silently disappearing:
+ * the used state is information the player wants (it means their invite landed),
+ * not clutter to hide.
  */
+export type ReferralPanelView =
+  /** no code on this account at all — render nothing */
+  | { kind: "none" }
+  /** a live code to share */
+  | { kind: "offer"; code: string }
+  /** the code is gone; `why` is the sentence explaining what happened to it */
+  | { kind: "spent"; why: string };
+
+/**
+ * What the panel should show, as a pure decision (testable without React, and
+ * without zustand's server-snapshot caveat that keeps the render tests from
+ * seeing store state).
+ *
+ * The ONLY input that may put a code in front of the player is `code` — which
+ * the server withholds unless the invite store says it is live — so this cannot
+ * re-introduce #237 by, say, falling back to a cached value.
+ */
+export function referralPanelView(code?: string, status?: string): ReferralPanelView {
+  if (code) return { kind: "offer", code };
+  if (!status) return { kind: "none" };
+  if (status === "redeemed") return { kind: "spent", why: "你的專屬邀請碼已經被朋友使用了 —— 一組只能用一次。" };
+  if (status === "expired") return { kind: "spent", why: "你的專屬邀請碼已經過期了。" };
+  if (status === "revoked") return { kind: "spent", why: "你的專屬邀請碼已經被管理員撤銷了。" };
+  // "unknown" (or anything a newer server invents): the code is not usable, and
+  // saying so vaguely is still better than offering it.
+  return { kind: "spent", why: "你的專屬邀請碼目前無法使用。" };
+}
+
 function ReferralPanel(): React.JSX.Element | null {
   const referralCode = useApp((s) => s.account?.referralCode);
-  if (!referralCode) return null;
+  const status = useApp((s) => s.account?.referralCodeStatus);
+  const view = referralPanelView(referralCode, status);
+  if (view.kind === "none") return null;
+  if (view.kind === "spent") {
+    return (
+      <Panel title="邀請好友" style={{ gap: 8 }}>
+        <div style={{ fontSize: 12, color: TEXT_DIM, lineHeight: 1.5 }}>{view.why}</div>
+        <div style={{ fontSize: 11, color: TEXT_DIM, lineHeight: 1.5 }}>
+          想再邀請其他人，請向管理員索取新的邀請碼。
+        </div>
+      </Panel>
+    );
+  }
+  const referralCodeToShare = view.code;
   return (
     <Panel title="邀請好友" style={{ gap: 8 }}>
       <div style={{ fontSize: 12, color: TEXT_DIM, lineHeight: 1.5 }}>
         把這組<span style={{ color: ACCENT, fontWeight: 700 }}>專屬邀請碼</span>分享給一位朋友，他就能註冊加入去死團。
       </div>
-      <CodeBox value={referralCode} />
+      <CodeBox value={referralCodeToShare} />
       <div style={{ fontSize: 11, color: TEXT_DIM, lineHeight: 1.5 }}>
         限用一次。想邀更多人，可再向管理員索取邀請碼。
       </div>

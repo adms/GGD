@@ -22,8 +22,45 @@ vi.mock("./api", async (importOriginal) => {
 });
 
 const { appStore } = await import("./store");
-const { LobbyScreen } = await import("./LobbyScreen");
+const { LobbyScreen, referralPanelView } = await import("./LobbyScreen");
 const { Crystal } = await import("./widgets");
+
+describe("referral panel state (#237)", () => {
+  // The lobby used to print whatever `referralCode` the server sent, forever.
+  // The server now WITHHOLDS a code the invite gate would refuse and reports
+  // `referralCodeStatus` instead, so the panel must read the pair, not the code.
+  it("offers a live code", () => {
+    expect(referralPanelView("GGD-AAAA-BBBB", "active")).toEqual({
+      kind: "offer",
+      code: "GGD-AAAA-BBBB",
+    });
+  });
+
+  it("a SPENT code is never offered — the panel explains what happened to it", () => {
+    const v = referralPanelView(undefined, "redeemed");
+    expect(v.kind).toBe("spent");
+    if (v.kind === "spent") expect(v.why).toContain("已經被朋友使用");
+  });
+
+  it("expired and revoked each get their own honest sentence", () => {
+    for (const [status, needle] of [
+      ["expired", "過期"],
+      ["revoked", "撤銷"],
+    ] as const) {
+      const v = referralPanelView(undefined, status);
+      expect(v.kind).toBe("spent");
+      if (v.kind === "spent") expect(v.why).toContain(needle);
+    }
+  });
+
+  it("an unrecognised status still refuses to offer anything", () => {
+    expect(referralPanelView(undefined, "something-new-from-a-newer-server").kind).toBe("spent");
+  });
+
+  it("no code and no status (non-gated deploy) renders nothing at all", () => {
+    expect(referralPanelView(undefined, undefined)).toEqual({ kind: "none" });
+  });
+});
 
 describe("藍水晶 chip (#204)", () => {
   it("renders the balance with locale grouping and its own blue glyph", () => {

@@ -89,7 +89,7 @@ func (h *Handlers) register(w http.ResponseWriter, r *http.Request) {
 		httpx.WriteError(w, err)
 		return
 	}
-	httpx.WriteJSON(w, http.StatusCreated, sessionResp{Account: a.Public(), Tokens: pair})
+	httpx.WriteJSON(w, http.StatusCreated, sessionResp{Account: h.svc.PublicAccount(r.Context(), a), Tokens: pair})
 }
 
 // bootstrapStateResp is the first-owner probe the register UI reads on load.
@@ -123,7 +123,7 @@ func (h *Handlers) login(w http.ResponseWriter, r *http.Request) {
 		httpx.WriteError(w, err)
 		return
 	}
-	httpx.WriteJSON(w, http.StatusOK, sessionResp{Account: a.Public(), Tokens: pair})
+	httpx.WriteJSON(w, http.StatusOK, sessionResp{Account: h.svc.PublicAccount(r.Context(), a), Tokens: pair})
 }
 
 type refreshReq struct {
@@ -227,7 +227,7 @@ func (h *Handlers) devicePoll(w http.ResponseWriter, r *http.Request) {
 	}
 	resp := devicePollResp{Status: res.Status, PollInterval: res.PollInterval}
 	if res.Status == devStatusApproved {
-		pub := res.Account.Public()
+		pub := h.svc.PublicAccount(r.Context(), res.Account)
 		tok := res.Tokens
 		resp.Tokens = &tok
 		resp.Account = &pub
@@ -266,5 +266,5 @@ func (h *Handlers) me(w http.ResponseWriter, r *http.Request) {
 		httpx.WriteError(w, httpx.NotFound("account not found"))
 		return
 	}
-	httpx.WriteJSON(w, http.StatusOK, map[string]account.Public{"account": a.Public()})
+	httpx.WriteJSON(w, http.StatusOK, map[string]account.Public{"account": h.svc.PublicAccount(r.Context(), a)})
 }

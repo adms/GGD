@@ -40,7 +40,7 @@ import { iconSrc } from "../icons";
 import { IconImg } from "../components/IconImg";
 import { SfxButton } from "../SfxButton";
 import { isTouchDevice, readTouchEnv } from "../../input/mobileDetect";
-import { hudSlotBand } from "../hud/hudLayout";
+import { HUD_GAP, HUD_STAMP_BAND, hudSlotBand } from "../hud/hudLayout";
 import { topRightReserve } from "../chromeReserve";
 import { GOLD, PANEL_BG, PANEL_BORDER, teamCss, TEXT_DIM, TEXT_MAIN } from "../theme";
 import {
@@ -788,11 +788,30 @@ export function ChampSelectPanel(): React.JSX.Element {
       {/* ── the first-10-seconds rules briefing (silent, layered above) ────── */}
       {briefingActive && <RulesBriefing onDismiss={dismissBriefing} />}
 
-      {/* a hairline hint that the clock is real and fixed */}
+      {/*
+        A hairline hint that the clock is real and fixed.
+
+        ITS OFFSET IS DERIVED, NOT CHOSEN (task #245). This panel's root is
+        `position:absolute; inset:0` — a full-screen layer — so this `bottom` is
+        measured from the bottom of the viewport, not from the card above it. At
+        its original `bottom: 6` this line sat INSIDE the build stamp's reserved
+        band (`HUD_STAMP_BAND`), horizontally centred: exactly the pixels the
+        badge occupies on every screen. The badge is what has to stay put — its
+        entire purpose is that a screenshot of ANY screen carries the build id in
+        the SAME place, and it is a <body> child that cannot know which screen is
+        mounted. This hint is one screen's decorative, `pointerEvents:"none"`
+        status line whose only requirement is "near the bottom, centred, out of
+        the way", so it is the one that moves.
+
+        Reading HUD_STAMP_BAND rather than hard-coding 18 means a later change to
+        the band moves this line with it instead of silently re-colliding;
+        versionBadgeBand.test.ts enumerates every bottom offset under ui/ and
+        would fail here otherwise.
+      */}
       <div
         style={{
           position: "absolute",
-          bottom: 6,
+          bottom: HUD_STAMP_BAND + HUD_GAP,
           left: "50%",
           transform: "translateX(-50%)",
           fontSize: 10,
