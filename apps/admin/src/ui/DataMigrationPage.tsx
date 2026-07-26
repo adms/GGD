@@ -14,6 +14,7 @@ import { useCallback, useEffect, useState } from "react";
 
 import {
   archiveCommit,
+  archiveDeleteBackup,
   archiveDiscardStage,
   archiveExport,
   archivePlan,
@@ -22,20 +23,25 @@ import {
   archiveStatus,
 } from "../api";
 import {
+  BACKUP_WARNING,
   FRESH_HOST_HELP,
   HEADER_WARNING,
   NOT_INCLUDED,
   RESOLVE_ADOPT_ARCHIVE,
   SECURITY_DELTA,
   adoptConsequence,
+  backupSummary,
+  deleteBackupConfirm,
   exportBlocker,
   formatBytes,
   planTotals,
+  retentionLine,
   selectedBytes,
   suggestedFileName,
   unresolvedCollisions,
   type ApplyResp,
   type ArchiveGroup,
+  type BackupInfo,
   type PlanResp,
   type PreviewResp,
   type StageResp,
@@ -430,6 +436,11 @@ function ImportTab(props: { onError: (m: string | null) => void }): React.JSX.El
             寫入前會先自動備份這台主機現有的資料到 <code>data/_migration/backups/</code>。
             <b>備份失敗就不會寫入。</b>
             <br />
+            <b style={{ color: WARN }}>
+              注意：那一包備份跟匯出檔一樣含全部帳號與密碼雜湊，會留在這台主機上。
+            </b>
+            匯入完請到「狀態」分頁確認並自行刪除。
+            <br />
             這個動作<b>不會刪除任何東西</b> —— 封存只做新增與（你勾選時的）覆蓋。
           </div>
           <div style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 12, flexWrap: "wrap" }}>
@@ -629,36 +640,7 @@ function StatusTab(props: { onError: (m: string | null) => void }): React.JSX.El
         )}
       </Panel>
 
-      <Panel title="既有備份">
-        {status.backups.length === 0 ? (
-          <div style={{ color: TEXT_DIM, fontSize: 13 }}>還沒有備份。</div>
-        ) : (
-          <div style={{ display: "grid", gap: 8, fontSize: 12 }}>
-            {status.backups.map((b) => (
-              <div key={b.path} style={{ borderTop: PANEL_BORDER, paddingTop: 8 }}>
-                <div style={{ color: TEXT_MAIN }}>{new Date(b.createdAt).toLocaleString()}</div>
-                <div style={{ color: TEXT_DIM }}>
-                  <code>{b.path}</code> · {formatBytes(b.bytes)}
-                  {b.empty && "（這台主機當時是空的）"}
-                </div>
-                <pre
-                  style={{
-                    background: "#10141f",
-                    border: PANEL_BORDER,
-                    borderRadius: 8,
-                    padding: 8,
-                    marginTop: 6,
-                    overflowX: "auto",
-                    color: TEXT_DIM,
-                  }}
-                >
-                  {`docker compose … exec -T platform /platformarchive apply -in - -data /data -content /srv/content -allow-overwrite < ${b.path}`}
-                </pre>
-              </div>
-            ))}
-          </div>
-        )}
-      </Panel>
+      <BackupsPanel status={status} reload={reload} onError={props.onError} />
 
       <Panel title="磁碟">
         <div style={{ fontSize: 13, color: TEXT_DIM, lineHeight: 1.8 }}>
@@ -668,5 +650,137 @@ function StatusTab(props: { onError: (m: string | null) => void }): React.JSX.El
         </div>
       </Panel>
     </div>
+  );
+}
+
+/**
+ * 既有備份 — the panel blocker 3 exists for.
+ *
+ * Every import writes a full snapshot of this host, in the SAME format as the
+ * export, which means every argon2id hash on the deploy. Before this panel the
+ * operator had no way to see that those files existed, no idea how much they
+ * held, and no way to remove one; the server now expires them on a policy, but
+ * an automatic sweep the owner cannot see is not what he asked for. So: the
+ * list, the total, the policy stated in the SERVER's own numbers, and a
+ * two-press delete.
+ */
+function BackupsPanel(props: {
+  status: StatusResp;
+  reload: () => void;
+  onError: (m: string | null) => void;
+}): React.JSX.Element {
+  const [confirming, setConfirming] = useState<string | null>(null);
+  const [busy, setBusy] = useState<string | null>(null);
+  const backups = props.status.backups ?? [];
+
+  const remove = async (b: BackupInfo): Promise<void> => {
+    setBusy(b.stamp);
+    props.onError(null);
+    try {
+      await archiveDeleteBackup(b.stamp);
+      setConfirming(null);
+      props.reload();
+    } catch (e) {
+      props.onError(errText(e));
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  return (
+    <Panel title="既有備份（含密碼雜湊）">
+      <div
+        style={{
+          border: `1px solid ${WARN}`,
+          background: "#2c2110",
+          borderRadius: 8,
+          padding: 12,
+          fontSize: 12,
+          lineHeight: 1.8,
+          marginBottom: 12,
+        }}
+      >
+        {BACKUP_WARNING.map((line) => (
+          <p key={line} style={{ margin: "4px 0" }}>
+            {line}
+          </p>
+        ))}
+        <p style={{ margin: "8px 0 0", color: TEXT_DIM }}>
+          {retentionLine(props.status.backupRetention)}
+        </p>
+      </div>
+
+      <div style={{ fontSize: 12, color: TEXT_MAIN, marginBottom: 8 }}>
+        {backupSummary(backups, props.status.backupBytes ?? 0)}
+      </div>
+
+      {backups.length === 0 ? (
+        <div style={{ color: TEXT_DIM, fontSize: 13 }}>還沒有備份。</div>
+      ) : (
+        <div style={{ display: "grid", gap: 8, fontSize: 12 }}>
+          {backups.map((b) => (
+            <div key={b.stamp} style={{ borderTop: PANEL_BORDER, paddingTop: 8 }}>
+              <div style={{ color: TEXT_MAIN }}>
+                {new Date(b.createdAt).toLocaleString()} · {formatBytes(b.bytes)}
+                {b.entries > 0 && ` · ${b.entries} 個檔案`}
+                {b.empty && "（這台主機當時是空的）"}
+              </div>
+              {b.reason && (
+                <div style={{ color: GOLD, marginTop: 4 }}>{b.reason}</div>
+              )}
+              <div style={{ color: TEXT_DIM, marginTop: 4 }}>
+                <code>{b.path}</code>
+              </div>
+              <pre
+                style={{
+                  background: "#10141f",
+                  border: PANEL_BORDER,
+                  borderRadius: 8,
+                  padding: 8,
+                  marginTop: 6,
+                  overflowX: "auto",
+                  color: TEXT_DIM,
+                }}
+              >
+                {`docker compose … exec -T platform /platformarchive apply -in - -data /data -content /srv/content -allow-overwrite < ${b.path}`}
+              </pre>
+              {confirming === b.stamp ? (
+                <div
+                  style={{
+                    border: `1px solid ${DANGER}`,
+                    background: "#33161a",
+                    borderRadius: 8,
+                    padding: 10,
+                    marginTop: 6,
+                    lineHeight: 1.8,
+                  }}
+                >
+                  {deleteBackupConfirm(b, backups.length)}
+                  <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
+                    <Btn
+                      small
+                      kind="danger"
+                      disabled={busy !== null}
+                      onClick={() => void remove(b)}
+                    >
+                      {busy === b.stamp ? "刪除中…" : "確認刪除"}
+                    </Btn>
+                    <Btn small onClick={() => setConfirming(null)}>
+                      取消
+                    </Btn>
+                  </div>
+                </div>
+              ) : (
+                <div style={{ marginTop: 6 }}>
+                  <Btn small onClick={() => setConfirming(b.stamp)}>
+                    刪除
+                  </Btn>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+    </Panel>
   );
 }

@@ -105,11 +105,22 @@ export interface PlanResp {
 }
 
 export interface BackupInfo {
+  /** The UTC second the backup was taken — its identity, and the only handle the delete route accepts. */
+  stamp: string;
   path: string;
   createdAt: string;
   bytes: number;
   entries: number;
+  groups?: string[] | null;
+  /** What this backup was taken BEFORE, in the operator's language. */
+  reason?: string;
   empty: boolean;
+}
+
+/** The server's live retention policy, mirrored from platformarchive.Retention(). */
+export interface BackupRetentionPolicy {
+  ttlDays: number;
+  minKeep: number;
 }
 
 export interface ApplyResp {
@@ -124,6 +135,8 @@ export interface ApplyResp {
 export interface StatusResp {
   stage: StageInfo | null;
   backups: BackupInfo[];
+  backupBytes: number;
+  backupRetention: BackupRetentionPolicy;
   freeBytes: number;
   freeKnown: boolean;
   replayDir: string;
@@ -270,6 +283,67 @@ export function adoptConsequence(collisions: readonly IdentityCollision[]): stri
     `勾選後：${keys} 之後會解析到封存裡的帳號。被擠掉的帳號不會被刪除，` +
     "只是不再能用這個名稱登入 —— 你會需要用舊主機的帳號密碼重新登入本後台。"
   );
+}
+
+/**
+ * THE BACKUP WARNING (task #243, blocker 3).
+ *
+ * Every import silently writes a full snapshot of this host to
+ * data/_migration/backups/ before it touches anything. That snapshot is not a
+ * log or a diff — it is the SAME format as the export, which means it contains
+ * every account document and therefore every argon2id password hash on the
+ * deploy. Until this panel existed, nothing in the product said so and nothing
+ * ever removed one.
+ *
+ * The owner's standing position is that he wants to understand what the system
+ * is doing rather than have it hidden, so an automatic sweep alone was never an
+ * acceptable answer. These sentences plus the delete button are the other half.
+ */
+export const BACKUP_WARNING = [
+  "每次匯入前，系統會先把這台主機「現有的」資料整包備份起來，放在 data/_migration/backups/。",
+  "那一包跟匯出檔一樣危險：裡面有全部帳號文件與 argon2id 密碼雜湊。它不會被匯出帶走，但它就躺在這台主機的磁碟上。",
+  "備份是匯入唯一的還原點，所以自動清理刻意保守。真的要把憑證從磁碟上移掉，請在下面按「刪除」——那是刻意要你自己動手的。",
+] as const;
+
+/**
+ * The retention policy as a sentence, built from the numbers the SERVER sent.
+ *
+ * Deliberately not hard-coded on this side: if the policy in
+ * platformarchive/backup.go changes, this line changes with it instead of
+ * quietly becoming a lie about what the sweep does.
+ */
+export function retentionLine(policy: BackupRetentionPolicy | null | undefined): string {
+  if (!policy || policy.minKeep < 1 || policy.ttlDays < 1) {
+    return "備份保留政策未知 —— 請把這一頁的狀態回報出來，不要自己手動刪 data/_migration/。";
+  }
+  return (
+    `自動清理：超過 ${policy.ttlDays} 天的備份會被移除，但永遠至少保留最新的 ${policy.minKeep} 包。` +
+    "在同一次匯入裡連續重試產生的備份不會被清掉 —— 最舊的那一包才是「動手之前」的狀態，" +
+    "而自動清理永遠不會刪掉你唯一的還原點。"
+  );
+}
+
+/** One line summarising the pile, so nobody has to add up a column of sizes. */
+export function backupSummary(list: readonly BackupInfo[], totalBytes: number): string {
+  if (list.length === 0) return "目前沒有備份。";
+  return `${list.length} 包 · 合計 ${formatBytes(totalBytes)} · 全部含密碼雜湊`;
+}
+
+/**
+ * The confirmation sentence for deleting one backup. It changes when it is the
+ * LAST one, because that is the press that leaves the host with no undo — and
+ * the automatic sweep is specifically forbidden from ever doing it.
+ */
+export function deleteBackupConfirm(b: BackupInfo, remaining: number): string {
+  const head = `即將永久刪除 ${new Date(b.createdAt).toLocaleString()} 的備份（${formatBytes(b.bytes)}）。`;
+  if (remaining <= 1) {
+    return (
+      head +
+      "這是這台主機上「最後一包」備份。刪掉之後，上一次匯入就沒有任何還原點了。" +
+      "如果你只是想清掉憑證，這是對的；如果你還可能要回滾，請先把它 scp 到別的地方。"
+    );
+  }
+  return head + "這個動作無法復原。";
 }
 
 /** A stable, sortable download name mirroring the server's Content-Disposition. */

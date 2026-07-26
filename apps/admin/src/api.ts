@@ -576,3 +576,18 @@ export function archiveDiscardStage(stageId: string): Promise<{ status: string }
     { method: "DELETE" },
   );
 }
+
+/**
+ * Remove ONE pre-import backup by its UTC stamp.
+ *
+ * No password re-confirmation, and that asymmetry is deliberate: export and
+ * commit are gated because they MOVE credentials; this one destroys a copy of
+ * them, which is the direction an operator should never be discouraged from
+ * taking. The server audits it.
+ */
+export function archiveDeleteBackup(stamp: string): Promise<{ status: string; stamp: string }> {
+  return api.request<{ status: string; stamp: string }>(
+    `/admin/platform-archive/backups/${encodeURIComponent(stamp)}`,
+    { method: "DELETE" },
+  );
+}

@@ -89,6 +89,9 @@ docker compose -f docker/compose.yaml -f docker/compose.family.yaml --env-file d
   主機變了，請重跑一次」）。
 - 寫入前會**自動備份**目標主機現有資料到 `data/_migration/backups/<UTC ts>.zip`。
   **備份失敗就不寫入**，磁碟空間不足也不寫入。
+- ⚠️ **那一包備份跟匯出檔一樣是憑證**：格式相同，所以裡面有全部帳號文件與
+  `$argon2id$` 密碼雜湊。它不會被下一次匯出帶走（`_migration` 開頭底線，永遠不是
+  合法 collection），但它就躺在這台主機的磁碟上。詳見 §7。
 
 ---
 
@@ -139,8 +142,8 @@ docker compose -f docker/compose.yaml -f docker/compose.family.yaml --env-file d
    這是主機上的檔案，本 repo 看不到 —— 請去主機上查 `Caddyfile`。
 
 **「磁碟空間不足」（507）** ⇒ 匯入前會要求「估算備份大小 × 3 + 256 MiB」的餘量。
-半寫的備份是最糟的狀態，所以這裡刻意 fail-closed。先清 `data/_migration/backups/`
-的舊備份。
+半寫的備份是最糟的狀態，所以這裡刻意 fail-closed。到後台「狀態」分頁刪掉幾包舊備份
+（見 §7），不要自己 `rm -rf data/_migration/` —— 那會連正在等待的暫存包一起殺掉。
 
 **匯入成功但某人登入到錯的帳號** ⇒ 這是 §3 的身分衝突。重啟平台**修不好**
 （開機用 `SetNX`，不覆寫既有索引）。後台的匯入路徑會用 `SET` 直接重寫索引；
@@ -166,7 +169,39 @@ docker compose … exec -T platform /platformarchive apply \
 
 `archive.export` / `archive.stage` / `archive.plan` / `archive.backup` /
 `archive.commit_begin` / `archive.commit_end` / `archive.commit_failed` /
-`archive.discard`。
+`archive.discard` / `archive.backup_delete`。
 
 `commit_begin` 是在**第一次寫入之前**落地的 —— 行程中途死掉時，稽核仍然看得到
 「有人動手了」。
+
+---
+
+## 7. 匯入前備份的保留與刪除
+
+**這些檔案是憑證，不是 log。** 每一包 `data/_migration/backups/<UTC>.zip` 都含全部
+帳號文件與 argon2id 密碼雜湊。以前沒有任何機制會清掉它們，後台也沒有任何地方提到
+它們存在 —— `DATA_DIR` 會慢慢變成一疊完整的密碼資料庫。
+
+**自動清理（保守，永遠不會刪掉你的還原點）**
+
+- 超過 **90 天**的備份會被移除，但**永遠至少保留最新的 3 包**。
+- 因此：同一個下午連續重試四次產生的四包，**一包都不會被清掉**。最舊的那一包才是
+  「你動手之前」的狀態，而那正是 keep-N-most-recent 會第一個刪掉的東西 —— 所以這裡
+  是**年齡決定、數量只負責保護**。完整推論寫在
+  `apps/platform/internal/platformarchive/backup.go` 的 `backupTTL` 上方。
+- 清理在**開機**、**每次上傳暫存包**、以及**每次剛備份完**跑一次。正在進行中的匯入
+  的備份必然是最新的一包，所以任何時鐘下都不會被清掉。
+
+**手動刪除（真的要把憑證從磁碟上移掉時）**
+
+後台 →「資料搬遷」→「狀態」→「既有備份（含密碼雜湊）」。每一包都列出時間、大小、
+檔案數，以及**它是在匯入哪一包封存之前拍的**。按「刪除」→「確認刪除」。
+
+手動刪除**可以**刪掉最後一包（自動清理不行）—— 那是刻意的：如果連最後一包都不能刪，
+這一頁就永遠清不乾淨憑證，那這個功能就沒有意義。刪最後一包時的確認文案會特別提醒
+你先 `scp` 出去。每一次刪除都會寫 `archive.backup_delete` 稽核。
+
+**檔案權限**：zip 與 `.json` 都是 `0640`，`_migration` 與 `_migration/backups` 都是
+`0750`，而且**每次備份都重新 chmod 一次** —— `mkdir -p` 對已存在的目錄是 no-op，
+所以一個被誰用 0777 建出來的 `_migration` 否則會一直開著。暫存檔也強制留在 backups
+目錄裡（`renameio.WithTempDir`），不會經過共用的 `/tmp`。

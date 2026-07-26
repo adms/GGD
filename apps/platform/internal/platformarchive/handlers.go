@@ -30,6 +30,7 @@ const ExportPath = "/api/v1/admin/platform-archive/export"
 //	POST   /admin/platform-archive/plan         dry run
 //	POST   /admin/platform-archive/commit       backup + write (password)
 //	DELETE /admin/platform-archive/stage/{id}   drop the upload
+//	DELETE /admin/platform-archive/backups/{stamp}  drop one pre-import backup
 //	GET    /admin/platform-archive/status       stage / backups / disk
 //
 // EXPORT IS A POST, NOT A GET, deliberately: it carries a body (the scope and
@@ -59,6 +60,7 @@ func (h *Handlers) Mount(r chi.Router) {
 		ar.Post("/plan", h.plan)
 		ar.Post("/commit", h.commit)
 		ar.Delete("/stage/{id}", h.discard)
+		ar.Delete("/backups/{stamp}", h.deleteBackup)
 	})
 }
 
@@ -212,6 +214,26 @@ func (h *Handlers) discard(w http.ResponseWriter, r *http.Request) {
 	httpx.WriteJSON(w, http.StatusOK, map[string]string{"status": "discarded"})
 }
 
+// deleteBackup removes ONE pre-import backup by its UTC stamp.
+//
+// No password re-confirmation, deliberately, and the asymmetry is the point:
+// export and commit are gated because they MOVE credentials (out of the host,
+// or into it). This one DESTROYS a copy of them, which is the direction the
+// operator should never be discouraged from taking. It is admin-gated and
+// audited, which is enough to answer "who removed the undo".
+func (h *Handlers) deleteBackup(w http.ResponseWriter, r *http.Request) {
+	me := auth.MustIdentity(r.Context())
+	b, err := h.svc.DeleteBackup(me.AccountID, chi.URLParam(r, "stamp"))
+	if err != nil {
+		httpx.WriteError(w, stageError(err))
+		return
+	}
+	noStore(w)
+	httpx.WriteJSON(w, http.StatusOK, map[string]any{
+		"status": "deleted", "stamp": b.Stamp, "bytes": b.Bytes,
+	})
+}
+
 // stageError maps this package's sentinels onto the platform's error envelope.
 // Each status is chosen so the console can say something true and specific:
 // 422 = "this archive is not acceptable", 409 = "the target moved under you",
@@ -221,6 +243,8 @@ func stageError(err error) error {
 	switch {
 	case errors.Is(err, ErrNoStage):
 		return httpx.NotFound("找不到這個暫存封存（可能已過期或被丟棄）")
+	case errors.Is(err, ErrNoBackup):
+		return httpx.NotFound("找不到這個備份（可能已被刪除或已過保留期限）")
 	case errors.Is(err, ErrStageBusy):
 		return httpx.Conflict(err.Error())
 	case errors.Is(err, ErrRejected):
