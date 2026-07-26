@@ -471,6 +471,19 @@ family-restore:
 #   make archive-apply DATA=… ARCHIVE=…        # write (auto-backs-up first)
 #   make family-archive-export                 # HOST → a local ARCHIVE
 #   make family-archive-apply ARCHIVE=…        # a local ARCHIVE → the HOST
+#
+# UNDOING an import = re-applying the automatic backup, and it needs BOTH flags:
+#
+#   make family-archive-apply ARCHIVE=<backup>.zip OVERWRITE=1 ADOPT=1
+#
+# ADOPT=1 is not optional. A bad import run with adopt-archive repointed the
+# usernames, so the backup's own refs now read as a fresh collision and a restore
+# without it is REFUSED — zero bytes written. With no collisions it is a no-op.
+# The restore never DELETES either, so whatever the bad import ADDED is still
+# there afterwards; every apply prints that list by name (and stores it in the
+# backup's .json), and an import that added nothing says so. Deal with the
+# residue in the console: 玩家 page → 婉拒, 邀請碼 page → 撤銷.
+# Read docs/runbooks/platform-migration.md §5.5 before running it.
 # ---------------------------------------------------------------------------
 ARCHIVE ?= ggd-platform-archive.zip
 # GROUPS selects the optional data: matches,history,audit,replays (core always).

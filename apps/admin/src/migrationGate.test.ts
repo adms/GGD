@@ -368,13 +368,13 @@ describe("B2: the dry run is the contract, and the copy says so", () => {
   it("the result panel reports the commit AGAINST the promise", () => {
     cover("archive-commit-copy");
     const plan = planFixture();
-    const honest: ApplyResp = { plan, written: 0, added: 0, unchanged: 2, skipped: 0 };
+    const honest: ApplyResp = { plan, written: 0, added: 0, unchanged: 2, skipped: 0, addedDocs: [] };
     expect(outcomeMatchesPlan(honest)).toBe(true);
     expect(importOutcome(honest)).toContain("寫入 0 筆");
     expect(importOutcome(honest)).toContain("試算當時承諾寫入 0 筆");
 
     // The exact shape of the bug: plan said 0, commit wrote 14.
-    const lying: ApplyResp = { plan, written: 14, added: 14, unchanged: 0, skipped: 0 };
+    const lying: ApplyResp = { plan, written: 14, added: 14, unchanged: 0, skipped: 0, addedDocs: [] };
     expect(outcomeMatchesPlan(lying)).toBe(false);
   });
 

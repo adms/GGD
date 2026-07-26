@@ -61,6 +61,27 @@ type ApplyResult struct {
 	// than only of the ones that moved.
 	Unchanged int `json:"unchanged"`
 	Skipped   int `json:"skipped"`
+	// AddedDocs NAMES every document this import created, id-sorted within
+	// collection. It is the one operator-facing artefact in this package that is
+	// an INSTRUCTION rather than a statistic — the runbook, the console and the
+	// backup sidecar all tell the operator "the restore cannot remove these; go
+	// deal with them yourself", and this is the list they act on.
+	//
+	// IT IS A PROJECTION OF Results, NEVER AN INDEPENDENT TALLY. See
+	// addedDocsOf. The first cut of this list appended inside the write branch,
+	// which made it a SECOND enumeration of "what happened" — the same shape as
+	// the bug that made Apply re-derive verdicts. It inherited that bug's output
+	// verbatim: with plan.go omitting `added`/`unchanged` from Items and Apply
+	// defaulting the missing ones to ResultAdded, a no-op re-import of a
+	// byte-identical archive produced added=10 and named all 10 documents,
+	// including the host's own admin. An operator following the runbook would
+	// then have been told, by name, to 婉拒 their own family's accounts.
+	//
+	// So there is exactly ONE place a per-entry outcome is decided (planEntry),
+	// ONE place it is recorded (record, from what was OBSERVED on the target),
+	// and this list is computed from that record. It cannot drift, because there
+	// is nothing for it to drift from.
+	AddedDocs []DocRef `json:"addedDocs"`
 	// Results is the per-entry account of what the commit ACTUALLY did,
 	// collection → id → result. For a write it is OBSERVED (did the target hold
 	// this document immediately before the Put?), not copied from the plan, so
@@ -77,6 +98,37 @@ type ApplyResult struct {
 	Duration      time.Duration  `json:"duration"`
 	Notes         []string       `json:"notes"`
 	Warnings      []string       `json:"warnings"`
+}
+
+// DocRef names one document by collection + id.
+type DocRef struct {
+	Collection string `json:"collection"`
+	ID         string `json:"id"`
+}
+
+// addedDocsOf projects the named-additions list out of the per-entry result
+// map. Deterministically ordered (collection, then id) so the console, the CLI
+// and the sidecar all show the same list in the same order.
+//
+// Returning a non-nil empty slice matters: `[]` in the JSON is the receipt
+// saying "this import created nothing", which is the honest answer for the
+// no-op re-import and the one the old code could not give.
+func addedDocsOf(results map[string]map[string]string) []DocRef {
+	out := []DocRef{}
+	for col, m := range results {
+		for id, verdict := range m {
+			if verdict == ResultAdded {
+				out = append(out, DocRef{Collection: col, ID: id})
+			}
+		}
+	}
+	sort.Slice(out, func(i, j int) bool {
+		if out[i].Collection != out[j].Collection {
+			return out[i].Collection < out[j].Collection
+		}
+		return out[i].ID < out[j].ID
+	})
+	return out
 }
 
 // DisplacedRef records one login key that changed owner.
@@ -323,11 +375,35 @@ func Apply(ctx context.Context, a *Archive, t *Target, opts ApplyOptions) (*Appl
 	}
 	sort.Strings(res.AccountIDs)
 
+	// The named-additions list, projected from the one per-entry account. See
+	// ApplyResult.AddedDocs for why it may never be accumulated separately.
+	res.AddedDocs = addedDocsOf(res.Results)
+
 	if opts.Reindex != nil {
 		if err := opts.Reindex(ctx, res); err != nil {
 			res.warn("Redis 熱層重建失敗：%v —— 請重啟平台。帳號文件已經寫好了。", err)
 		} else {
 			res.note("使用者名稱／email 索引與排行榜已即時重建，帳號現在就能登入。")
+		}
+	}
+
+	// THE RECOVERY RECEIPT, written on the SUCCESS path on purpose: the import
+	// that needs undoing is by definition one that reported success, and by the
+	// time anybody goes looking the console tab is long closed. The restore
+	// COMMAND and its limits are not repeated into Notes — the CLI and the
+	// console each render RestoreCommand/RestoreLimits themselves. What belongs
+	// here is the one thing only this run knows: what it added, by name.
+	if res.Backup != nil {
+		if err := recordImportReceipt(res, now()); err != nil {
+			res.warn("匯入收據寫不進 %s（%v）—— 匯入本身已經完成，只是那份「新增了哪些文件」的清單沒有落地。",
+				res.Backup.ManifestPath, err)
+		} else if len(res.AddedDocs) == 0 {
+			res.note("這次沒有新增任何文件，所以沒有殘留要你處理 —— 還原 %s 就能完整回到匯入前的狀態。",
+				res.Backup.Path)
+		} else {
+			res.note("這次新增了 %d 筆文件。還原備份能換回被覆蓋的東西，但「不會」移除新增的東西 —— "+
+				"本功能不刪任何文件。逐筆清單在 %s 的 import.addedDocs。",
+				len(res.AddedDocs), res.Backup.ManifestPath)
 		}
 	}
 

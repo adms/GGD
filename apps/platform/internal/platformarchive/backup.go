@@ -335,7 +335,14 @@ func BackupTarget(opts BackupOptions) (*BackupInfo, error) {
 		"reason":      opts.Reason,
 		"collections": rep.Collections,
 		"contains":    backupContainsWarning,
-		"restoreWith": "docker compose … exec -T platform /platformarchive apply -in - -data /data -content /srv/content -allow-overwrite < " + filepath.Base(zipPath),
+		// The command and the two honesty lists come from restore.go so this
+		// file, the runbook, the CLI and the console cannot drift apart. The
+		// command used to be spelled out here WITHOUT
+		// -resolve-collisions=adopt-archive, which is refused (zero writes) in
+		// the one case an operator most needs it — see RestoreCommand.
+		"restoreWith":     RestoreCommand(filepath.Base(zipPath)),
+		"restoreRecovers": RestoreRecovers,
+		"restoreLimits":   RestoreLimits,
 	}, "", "  ")
 	if err != nil {
 		return nil, err

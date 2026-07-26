@@ -76,6 +76,25 @@ func usage() {
 
 Environment fallbacks: -data ← DATA_DIR, -content ← CONTENT_DIR, replays ← GGD_ARCHIVE_REPLAY_DIR.
 
+UNDOING AN IMPORT. Every apply first writes an automatic backup to
+data/_migration/backups/<UTC ts>.zip. Re-apply it with BOTH flags:
+
+    platformarchive apply -in - -data /data -content /srv/content \
+        -allow-overwrite -resolve-collisions=adopt-archive < <backup>.zip
+
+-resolve-collisions is not optional. A bad import run WITH adopt-archive
+repointed usernames at its own accounts, so the backup's refs now read as a
+fresh collision — without the flag the restore is refused and writes nothing.
+
+That restore DOES bring back: every document the bad import overwrote, the
+identity refs it repointed, and therefore your own console login.
+
+It does NOT delete, so anything the bad import ADDED is still there afterwards.
+Every apply prints the additions BY NAME and stores the same list in the
+backup's .json (import.addedDocs); an import that added nothing prints so. Deal
+with the residue in the console: 玩家 page → 婉拒 the extra accounts, 邀請碼
+page → 撤銷 the extra codes. Full detail: docs/runbooks/platform-migration.md §5.5.
+
 The archive contains PASSWORD HASHES and UNREDEEMED INVITE CODES. Move it with
 scp or a USB stick, never email/chat/cloud, and delete both copies afterwards.
 `)
@@ -260,12 +279,48 @@ func runPlanOrApply(args []string, dryRun bool) error {
 	}
 	if res.Backup != nil {
 		fmt.Printf("  備份：%s\n", res.Backup.Path)
+		printUndo(res)
 	}
 	printLines(os.Stdout, "note", res.Notes)
 	printLines(os.Stdout, "WARN", res.Warnings)
 	fmt.Println("\n  Redis 熱層沒有從 CLI 重建（這支程式不連 Redis）——" +
 		"請重啟平台，開機會從帳號 JSON 重建索引與排行榜。")
 	return nil
+}
+
+// printUndo is the recovery block, printed on the SUCCESS path because the
+// import that needs undoing is by definition one that reported success.
+//
+// The order is deliberate: what comes BACK first (a frightened reader must
+// learn the important half is recoverable before he can take in anything
+// else), then what does not, then the command, then the names.
+//
+// THE NAMES ARE THE POINT. "Deal with the extra ones yourself" is only an
+// instruction if the operator can see which ones they are. The previous cut of
+// this block printed a list built from an unvalidated count, and on a no-op
+// re-import it named every account on the host — including the operator's own
+// family — as something to 婉拒. So the empty case is printed EXPLICITLY here:
+// "this import added nothing" is a real, reassuring answer, not an absence.
+func printUndo(res *platformarchive.ApplyResult) {
+	fmt.Println("\n  要還原這次匯入（兩個旗標都不能少）：")
+	fmt.Println("    " + platformarchive.RestoreCommand(res.Backup.Path))
+	fmt.Println("  還原救得回來：")
+	for _, l := range platformarchive.RestoreRecovers {
+		fmt.Println("    ✓ " + l)
+	}
+	fmt.Println("  還原救不回來：")
+	for _, l := range platformarchive.RestoreLimits {
+		fmt.Println("    ! " + l)
+	}
+	if len(res.AddedDocs) == 0 {
+		fmt.Println("  這次新增了 0 筆文件 —— 沒有殘留要你處理，還原就能完整回到匯入前。")
+		return
+	}
+	fmt.Printf("  這次新增的 %d 筆（還原不會移除，清單也在 %s）：\n",
+		len(res.AddedDocs), res.Backup.ManifestPath)
+	for _, d := range res.AddedDocs {
+		fmt.Printf("    + %s/%s\n", d.Collection, d.ID)
+	}
 }
 
 func printPlan(p *platformarchive.Plan) {

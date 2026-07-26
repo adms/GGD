@@ -3509,3 +3509,81 @@ digest 也擋不住 —— 它算的是那份**殘缺**的 plan，兩邊都「�
 路徑穿越／絕對路徑／zip bomb／截斷／CRC 竄改／未知 collection 全部照樣零寫入拒絕；
 真 argon2id 雜湊的 round-trip 照樣可登入；append-only 檔案照樣永不覆寫；
 adopt-archive 照樣不刪任何帳號。本次**完全沒有連線 ggd.adms.ai**。
+
+---
+
+## #243 · 「那份要操作者自己去婉拒的清單」本身是錯的（blocker 2 重做）
+
+**日期**：2026-07-26　**分支**：`fix/243-recovery-honesty-v2`（接在 blocker 1 的
+`8b3e9596`「試算就是契約」之後）
+
+### 前一次嘗試被打回的理由，要先記住
+
+上一版選了 option (B)：還原不刪除，但每一個介面都要把「救得回什麼／救不回什麼」
+講清楚。**這個選擇是對的，而且那支 `RestoreCommand` 是真的可用**（驗證者親自跑完
+adopt-archive 鎖死的情境，帳號索引與密碼雜湊都回來了）。被打回的是另一半：
+
+(B) 的整個承諾是「這裡是這次匯入新增的清單，多出來的自己處理」。那份清單是從
+`ApplyResult.AddedDocs` 產生的，而 `AddedDocs` 是在寫入迴圈裡**第二次**累加出來的，
+所以完整繼承了 blocker 1 的 bug：plan.go 當時不列 `added`/`unchanged`，apply 把
+清單裡找不到的項目一律當 `ResultAdded`。於是**每一份位元組完全相同的文件都被指名
+為「新增」**。
+
+驗證者的判詞值得抄下來：「一個被灌水的整數是抽象的。這個分支把它變成了一條指名道姓、
+會留在磁碟上、對著操作者說話的指令。半夜照著這個分支自己的新 runbook、跑完這個分支
+自己的新還原指令的非 DBA，會被叫去婉拒他自己家人的帳號。」
+
+### 實測（同一份 repo fixture，同一個情境）
+
+| | before（`e5e865a7`） | after（本分支） |
+| --- | --- | --- |
+| 重匯完全相同的封存 · plan | `Writes=0` | `Writes=0`、`Unchanged=169` |
+| 重匯完全相同的封存 · apply | `Written=163  Added=163` | `Written=0  Added=0` |
+| 收據 | `addedDocs` 列出全部 163 筆，含 admin | `addedDocs=[]`，且 note 明說「這次沒有新增任何文件」 |
+| 跑完還原之後 | `added=1`，指名 `accounts/u_TARGET_OWNER` —— **本機自己的管理員** | `added=0`、`addedDocs=[]` |
+
+（163 vs 169 只是兩個 commit 之間 fixture 的預設 group 不同，兩邊都是整包；
+結論的形狀不受影響。）
+
+### 修法：清單是投影，不是第二份帳
+
+`AddedDocs` 現在只有一個賦值點：`res.AddedDocs = addedDocsOf(res.Results)`。
+`Results` 是寫入前對目標**實際觀測**的結果，`Results` 又被 blocker 1 的性質測試
+釘死等於 plan 的逐筆判定。所以清單沒有可以漂移的對象。
+守衛：`TestAddedDocsAgreeWithThePlanForEveryEntry`（24 seed × 隨機目標狀態，
+比對「清單」對「試算」，並且用 fixture 自己記下的 seed 狀態獨立確認每一個被指名的
+文件在匯入前確實不存在）。
+
+### runbook 那兩顆按鈕，這次真的按了
+
+「多出來的帳號去婉拒、多出來的邀請碼去撤銷」以前從來沒有針對**匯入進來的**文件
+驗證過。合理的懷疑是：玩家頁的搜尋讀的是衍生的 `_index.json`，一個只丟檔案不維護
+索引的匯入器會讓那個帳號在後台**根本看不到** —— 看不到就婉拒不了。
+
+`apps/platform/internal/server/archive_recovery_runbook_test.go` 用兩台完整啟動的
+平台（miniredis + t.TempDir，不碰任何線上主機）跑完整條 HTTP：舊主機註冊玩家 +
+鑄 2 組邀請碼（1 組用掉、1 組留著）→ 匯出 → 新主機 stage/plan/commit →
+玩家頁看得到 → 用舊密碼登得進去 → 婉拒 → 登入變成 403 `account_denied`；
+邀請碼頁看得到那組還活著的碼 → 撤銷 → 拿它註冊被拒。
+
+**結論：runbook 的建議是對的，不用改功能。** 但發現一個必須誠實寫出來的例外：
+匯入進來的、**在舊主機上已經被用掉**的邀請碼，撤銷會回 409「已被使用的邀請碼無法
+撤銷」（那份文件是「誰進來過」的稽核紀錄，故意不給刪）。它本來就沒有效力了，要處理
+的是它帶進來的那個帳號 —— 這一條現在寫進 `RestoreLimits` 並且有測試盯著。
+
+### 文案：一份資料，四個介面
+
+`RestoreRecovers`（救得回來）與 `RestoreLimits`（救不回來）是
+`internal/platformarchive/restore.go` 裡的 `[]string`，runbook §5.5、CLI、後台頁面、
+備份 sidecar 全部直接印同一份；`apps/admin/src/archiveRestore.test.ts` 逐字比對 Go
+原始碼，兩邊漂移就紅。順序是刻意的：先講救得回什麼（嚇壞的人要先知道重要的那一半
+回得來），再講救不回什麼，而且每一條救不回來的後面都接一顆具體的按鈕。
+sidecar 的 `restoreWith` 也順手修掉了 —— 它以前寫的是**沒有** `-resolve-collisions`
+的那條指令，在最需要它的情境下是零寫入拒絕。
+
+### 仍然成立、沒有被動到的
+
+路徑穿越／絕對路徑／zip bomb／截斷／CRC 竄改／未知 collection 全部照樣零寫入拒絕；
+真 argon2id 雜湊的 round-trip 照樣可登入；append-only 檔案照樣永不覆寫；
+還原照樣不刪任何文件（owner 2026-07-26 的決定，沒有重新討論）。
+本次**完全沒有連線 ggd.adms.ai**，全部在 t.TempDir 與 miniredis 上跑。
