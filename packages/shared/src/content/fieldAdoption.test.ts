@@ -172,6 +172,14 @@ const EXEMPTIONS: Readonly<Record<string, Exemption>> = {
   // --- recovery / cast root: LIVE BY DEFAULT, deliberately (task #181,
   // sim/abilities/abilityRecovery.ts DEFAULT_RECOVERY_SEC = 0.6). Absence of
   // the field does NOT mean absence of the 後搖 — every ability has one.
+  // --- #244 hook victim filter. `"any"` IS the absent behaviour, so writing it
+  // into a doc is a no-op. The two filtering members ("mob"/"champion") are
+  // authored on 黑泥吞噬 and 飛將神弓 respectively, which is the proof the
+  // mechanism works end to end.
+  "enum:abilities.passive.ranks[].hooks[].victim=any": {
+    status: "default-live",
+    why: "sim/effects/hooks.ts:34 skips the filter when `victim` is absent OR \"any\" — the member exists so a doc can say 'no filter' explicitly, never because the behaviour needs it.",
+  },
   "field:abilities.recoverySec": {
     status: "default-live",
     why: "abilityRecovery.ts:171 `def.recoverySec ?? DEFAULT_RECOVERY_SEC` — 0.6 s applies to all 662 abilities. The field only shortens/lengthens one.",

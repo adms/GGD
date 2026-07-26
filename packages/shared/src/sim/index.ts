@@ -51,6 +51,7 @@ export {
   detachSource,
   statRecomputeSystem,
 } from "./stats/statPipeline";
+export { visualStackCount } from "./stats/visualStacks";
 export {
   auraSystem,
   auraSourceId,

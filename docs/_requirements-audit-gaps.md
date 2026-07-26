@@ -2963,3 +2963,125 @@ Owner 指令逐字：「48+3 (賈修, 揍敵客, 喪標麥可) 開放如果你�
 **其他刻意的取捨**：沒有「全選」預設、沒有任何一列預先打勾（預先打勾＝橡皮圖章，比沒有這一頁更危險）；數值讀不到時**體檢視為未通過**（fail closed），而不是當成沒問題；勾選英雄一定連同 5 個技能格一起 union（只開英雄會做出新的半開放英雄）。新增 Go 程式碼：**0 行**——全部走既有 AdminOnly 路由與既有 audit 行（`curation.bulk` / `approval_approved`）。
 
 **保護這一頁存在的測試**：`quickApprovalBundle.test.ts` 跑真的 `vite build --mode production` 並斷言 bundle **含有**導覽標籤與「一鍵送出確認」——正好是 `contentGate.test.ts` 對 內容管理 斷言的反面。因為這一頁若掉進那個 `import.meta.env.DEV` dead-fold，就只剩本機能用，而本機正是 owner 唯一不需要它的地方。
+
+---
+
+## #244 喪標麥可・黑泥吞噬 — 拆文件 + 數值重定 + 擊殺永久疊加 + 體素門檻 (2026-07-26)
+
+Owner 讀過提案後說「你的提案我很喜歡，就照你說的」，四層照序做完，第一層是其他三層的硬前提。
+
+### 第一層 · 拆文件（小怪的數值不再吃英雄卡）
+
+`mobRulesFromConfig()` 以前明講 champion doc 是「one source of truth for the hero sheet and its
+mob avatar」，小怪 hp = `baseStats.maxHealth + growth.maxHealth*(level-1)`。所以動英雄血量＝動肉鴿難度，
+**今天就發生過**：growth 50→100 把第 3 場殭屍從 200 抬到 300，沒有人要求。
+
+改成三層優先權（`packages/shared/src/sim/mobs.ts`）：
+1. **小怪卡**：`mobWaves.mob.baseHp / hpPerLevel / baseRegen / regenPerLevel`（新欄位，出貨值 100 / 100 / 1 / 0.2）
+2. champion doc（**legacy fallback**，讓 #244 之前的 arena doc 與所有傳裸 config 的單元測試逐位元不變）
+3. 扁平 `mob.maxHp`（無內容環境）
+
+算式完全相同（同一個 `Math.round`、同一條 `base + per*(level-1)`），所以 owner 今天訂的曲線
+**逐位元存活**：第 3 場 300 / 第 4 場 400 / 第 5 場 500 / 第 6 場 600，regen 1 + 0.2*(lv-1)。
+`zMobWavesConfig.mob` 兩層都是 `.strict()`，所以 schema／`DEFAULT_MOB_WAVES_CONFIG`／出貨 doc
+**同一個 commit** 一起改，否則 doc 開機直接載不進來（硬失敗，不是降級）。
+
+`mobs.level.test.ts` 改成讀**新的來源**（arena-rules 的 mobWaves.mob），字面值 300/400/600 一個都沒動；
+另加一條守門測試：把英雄卡設成 #244 後的 380/45 之後，`mobRulesFromConfig(CFG, DT, 3).maxHp` 仍是 300。
+**這條測試就是「英雄卡再也動不了肉鴿難度」的證據。**
+
+### 第二層 · 英雄數值
+
+`baseStats.maxHealth` 100 → **380**、`growth.maxHealth` 100 → **45**（healthRegen 1 / 0.2 不動）。
+380 = 「全場最脆，但不會被一套秒」（Saber 580、揍敵客 420、魯夫 480）。成長刻意壓回接近一般的 45：
+爆發力不能來自看不見的成長曲線，要來自第三層——玩家看得到、也賺得到。理由同時寫進 champion doc 的
+description（JSON 沒有註解）、mobs.ts 的拆檔註解，以及上面那條守門測試。
+
+### 第三層 · 天生技改寫（REPLACE，不是並存）
+
+`godie-zombiex.passive` 從 `innateKind: "active"`（100-00 黑聖杯・四拍令咒，40s CD，護甲/魔抗 +35 撐 4 秒）
+改成純被動 **100-00 黑泥吞噬**：擊殺部隊 +8、擊殺敵方英雄 +40 最大生命，整場永久。
+
+**為什麼不能「並存」**：`syncAbilityPassives`（abilityPassives.ts:140）有一行
+`if (isActiveInnate(def)) continue;` —— active innate 就算同時掛 `passive.ranks[0].hooks`，
+zod 不擋、載得進來、hook 卻**永遠不會被掛上**。那行守衛的註解寫得很清楚，存在的理由正是
+「不讓誤寫的 doc 把 40 秒大招悄悄變成免費靈氣」。要並存就得為一隻英雄在引擎守衛上鑿洞。
+代價講明白：他從此**沒有任何保命鍵**，前三場（380 血、第 1–2 場小怪還沒出、疊層是 0）是全遊戲最脆。
+防禦層的正確歸宿是 #236 的五格技能重寫。
+
+三個閘門必須彼此同意，doc 因此是 slot PASSIVE + innateKind "passive" + `effects: []` + `passive` 區塊。
+#128 棘輪安全：`isPassiveOnly` 記為 PASSIVE＝WORKING，而且 godie-zombiex 不在 50 隻追蹤名單內。
+
+### 引擎三件事（都是通用能力，沒有一件是為單一英雄寫的）
+
+1. **`HookDef.victim`**（`"champion" | "mob" | "any"`，缺省＝any）。一個 `onKill` 沒辦法表達
+   「部隊 +8、英雄 +40」。選它而不是發明 `onMobKill`：一個事件、一種 doc 形狀、一處排序推理。
+2. **小怪擊殺以前根本不觸發 `onKill`** —— 這是**活著的 bug**，不只是 #244 的擋路石。
+   `fireHooks(…, "onKill", …)` 只在 `DeathSystem.ts:58` 的 champion 分支被呼叫；小怪的死亡結算
+   在 `MobSystem.ts` 另一條掃描裡（金錢／XP／每 30 殺升級／`mobSlain`），從來沒呼叫過。
+   所以孫悟空 09-00 賽亞人的血脈的「每殺死一個部隊增加2點生命」自 #215 以來**一次都沒生效過**。
+   修在 grantLevels 之後、`mobSlain` 之前，順序固定且可決定。
+   **行為變更要講**：悟空（godie-o00x / godie-ogrh，敘述本來就寫「部隊」＝修 bug）與呂布
+   （godie-h01u，每殺 +10 攻擊力 10 秒＝真的變強）。依提案的 (B) 方案，呂布的 hook 補上
+   `victim: "champion"` 維持現狀，悟空維持 `any` 讓他的敘述終於成真。
+3. **`applyBuff.stackKey / maxStacks / stackVisual`**。#224 的形狀 `buff:${origin}#${tick}` 有兩個缺陷：
+   180 次擊殺＝180 個活的 ModifierSource（每個 dirty tick 被 `recomputeStats`、每個 hook 事件被
+   `fireHooks` 重掃），而且**同一 tick 被一發 AoE 殺掉的兩隻小怪撞同一個 id，只有一份 +8 落地**
+   ——安靜、可決定的少算。改成固定 id `buff:stack:<key>` + `stacks` 計數；
+   `statPipeline.ts` 本來就 `flat += m.value * (src.stacks ?? 1)`，算術完全一樣、成長 O(1)、
+   同 tick 的漏算連悟空一起修好。上限 200（部隊）/ 40（英雄）：正常節奏最多疊到 180，
+   **上限在意圖曲線上完全不會生效**，但把 100 kills/round 的極端 farm 從第 11 場 11,315 HP 壓回 5,715。
+
+### 第四層 · 疊層怎麼上線 + 體素門檻
+
+**兩個 bit，零個新欄位。** `EntityState.flags` 已經是 uint16 且只用到 1..256，加
+`MUD_SWELL: 512` / `MUD_BOSS: 1024` 與共用常數 `GROWTH_TIER_STACKS = [20, 50]`。
+沒用 `ChampionComp.statStacks`（那是 #82 的屬性強化計數器，被 statPath / shop / undo 三處讀寫，
+寫進去會用小怪擊殺誤觸 #104 的傳說capstone、被任何購買清零、被 undo 回滾）；
+也沒用「從 maxHp 差值反推」（道具／增幅／capstone／護盾／combatEnv 都會動 maxHealth，反推會說謊）。
+伺服器端 `visualStackCount()` 只加總 content 標記 `stackVisual` 的 source ——
+**champion-agnostic**：未來任何「看得見的成長」機制不用碰 netcode。
+
+體素側：喪標麥可**不是**程序體素身體（#217 給了他自己的 guardian_skeleton.glb，
+`preferVoxelBody === false`），所以重上色走的是 #49 的 tint 槽而不是 64×64 atlas painter。
+黑泥乘法是**折進 #49 的 tint 再套用**，不是第二個 painter —— `applyModelTint.paint()` 永遠從
+材質記住的**原始**顏色重算，所以換階不會疊加、退回 tier 0 會精確還原。
+可讀性下限是必要的、不是裝飾：#231 把 outfitPrimary 亮度夾在 [0.16, 0.58] 並釘住「最暗 tint
+（狂戰士 ×0.3137）之後 ≥0.045」；tier 2 的 ×0.60 疊上去是 ≈0.030，**低於下限**，所以
+`mudTintFor()` 對合成後的乘法做等比夾擠。體型只放大 `bodyRoot` / `glbRoot` / 血影，
+**團隊光環永遠不放大**（#231 自己把團隊色列為最高風險面）；glb 放大後**必須重跑落地位移**
+（`position.y = -min.y` 是在舊縮放框裡量的，1.25× 不重量會沉進地板）——這是最容易錯的一件事。
+
+### 超車曲線（用出貨的等級表真的算出來的，不是估的）
+
+`rounds.*.grantLevels` 累積 → 第 1 場 L3、第 11 場 L50（不打小怪），`xpToNext(l)=100+80*(l-1)`，
+`XP_REWARDS.mob=40`、`killsPerLevel=30`。假設第 3 場起每場 20 隻，參照組 Saber（580/54）同樣打。
+
+| 場 | 麥可 L | 疊層 | 疊加 HP | 麥可 HP | Saber L | Saber HP | Δ |
+|---|---|---|---|---|---|---|---|
+| 1 | 3 | 0 | +0 | 470 | 3 | 688 | −218 |
+| 2 | 4 | 0 | +0 | 515 | 4 | 742 | −227 |
+| 3 | 7 | 20 | +160 | 810 | 7 | 904 | −94 |
+| **4** | **11** | **40** | **+320** | **1150** | **11** | **1120** | **+30** ← 超車 |
+| 5 | 15 | 60 | +480 | 1490 | 15 | 1336 | +154 |
+| 6 | 21 | 80 | +640 | 1920 | 21 | 1660 | +260 |
+| 7 | 26 | 100 | +800 | 2305 | 26 | 1930 | +375 |
+| 8 | 30 | 120 | +960 | 2645 | 30 | 2146 | +499 |
+| 9 | 35 | 140 | +1120 | 3030 | 35 | 2416 | +614 |
+| 10 | 46 | 160 | +1280 | 3685 | 46 | 3010 | +675 |
+| 11 | 57 | 180 | +1440 | 4340 | 57 | 3604 | +736 |
+
+**誠實回報：目標是「大約第 5 場超車」，實際是第 4 場——早一場，往玩家有利的方向偏。**
+所以剩下 7 場享受這個幻想而不是 6 場，設計超額達成自己的意圖，**+8 / +40 不調整**。
+敏感度：若 Saber 完全不打小怪，超車仍在第 4 場（+138），所以結果不是「共同 farm」假設的產物。
+免費的好消息：20 / 50 兩個門檻剛好落在第 3 場結束（超車前一場的「有事發生」）與第 5 場中段
+（超車後的 boss 揭示），這是從出貨的表算出來的，不是挑數字湊的。
+
+### 已知風險（最高的那條）
+
+farm 速率是唯一沒被設計綁住的變數：mobWaves 一場約發 90 波、單區可生成約 855 隻，
+20 隻/場是**地板不是天花板**。100 隻/場的同一套算術：第 3 場 1,720（已超 Saber 的 1,228）、
+第 11 場 11,315 vs 5,062。`maxStacks` 200 / 40 就是為這條擋的，**不要不設上限出貨**。
+另外 ratio-preserving maxHealth（statPipeline.ts:70-86）代表 40% 血時擊殺只會補到 40% 的 +8 當前血量；
+那是道具與升級一路以來的法則，不為一隻英雄改。真要「擊殺像回血」，是同一個 hook 加 `heal`，
+是內容改動不是 pipeline 改動。

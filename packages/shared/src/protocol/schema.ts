@@ -551,4 +551,43 @@ export const ENTITY_FLAG = {
    * sim's own burn predicate, so the wash can never disagree with the damage.
    */
   BURNING: 256,
+  /**
+   * GROWTH TIER 1 (task #244 黑泥吞噬): this champion has accrued at least
+   * `GROWTH_TIER_STACKS[0]` VISIBLE stacks. The client swells the body slightly
+   * and deepens its palette.
+   */
+  MUD_SWELL: 512,
+  /**
+   * GROWTH TIER 2: at least `GROWTH_TIER_STACKS[1]` visible stacks — visibly one
+   * size larger plus the black-mud ring at the feet. MUD_SWELL is set too, so a
+   * client that only knows tier 1 degrades gracefully.
+   *
+   * WHY TWO FLAG BITS AND NOT A COUNT. `flags` is a uint16 already present in
+   * every champion patch and bits 512/1024 were free, so the whole feature costs
+   * ZERO extra bytes on the wire — a new EntityState field would cost a byte per
+   * entity per change plus an append-only schema index forever. The client only
+   * ever needs the THRESHOLD (there are exactly two visual states), a raw uint8
+   * count would clip at 255 while ~900 kills is reachable at high farm rates, and
+   * a flag on the ENTITY is legible to spectators and enemies with no seat
+   * lookup (EntityViewRegistry is deliberately walled off from the seat table).
+   */
+  MUD_BOSS: 1024,
 } as const;
+
+/**
+ * The two visible-stack thresholds behind `ENTITY_FLAG.MUD_SWELL` / `MUD_BOSS`
+ * (owner-approved, task #244). Lives here so the server that SETS the bits and
+ * the client that READS them share one literal.
+ *
+ * They land on the story beats for free: at the honest ~20 kills/round farm rate
+ * 20 stacks is the end of round 3 (one round BEFORE he overtakes the reference
+ * bruiser) and 50 is mid round 5 (just after).
+ */
+export const GROWTH_TIER_STACKS = [20, 50] as const;
+
+/** 0 / 1 / 2 from an EntityState.flags word — the client's only growth read. */
+export function growthTierFromFlags(flags: number): 0 | 1 | 2 {
+  if (flags & ENTITY_FLAG.MUD_BOSS) return 2;
+  if (flags & ENTITY_FLAG.MUD_SWELL) return 1;
+  return 0;
+}

@@ -24,6 +24,7 @@
           {
             "on": "onKill",
             "target": "self",
+            "victim": "champion",
             "effects": [
               {
                 "kind": "applyBuff",

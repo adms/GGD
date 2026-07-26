@@ -63,6 +63,16 @@ export const zEffectDefUnion = z.discriminatedUnion("kind", [
         )
         .min(1)
         .optional(),
+      /**
+       * #244 — STACK instead of attaching a fresh source per application. All
+       * applications carrying the same key share one source `buff:stack:<key>`
+       * whose `stacks` counter the stat pipeline already multiplies by.
+       */
+      stackKey: z.string().min(1).optional(),
+      /** #244 — hard ceiling on the stack count (absent = unbounded) */
+      maxStacks: z.number().int().min(1).optional(),
+      /** #244 — this stack drives the client's growth-tier flags (see snapshot) */
+      stackVisual: z.boolean().optional(),
     })
     .strict(),
   z
@@ -113,6 +123,12 @@ export const zHookDef = z
     chance: z.number().min(0).max(1).optional(),
     /** who the effects resolve against: the event's entity (default) or the owner */
     target: z.enum(["self", "event"]).optional(),
+    /**
+     * #244 — WHAT the event's entity must be for the hook to fire. Absent =
+     * "any" (every pre-#244 hook). Lets one `onKill` doc pay differently for a
+     * 部隊 kill and a 英雄 kill.
+     */
+    victim: z.enum(["champion", "mob", "any"]).optional(),
   })
   .strict();
 

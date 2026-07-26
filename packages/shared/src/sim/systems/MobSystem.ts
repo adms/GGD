@@ -47,6 +47,7 @@ import type { EntityId } from "../../ids";
 import type { SimWorld } from "../SimWorld";
 import { distSq } from "../math/vec2";
 import { grantGold, grantXp, grantLevels } from "../economy/progression";
+import { fireHooks } from "../effects/hooks";
 import {
   type MobRules,
   MONSTER_TEAM,
@@ -157,6 +158,15 @@ export function mobSystem(world: SimWorld): void {
       if (rules.killsPerLevel > 0 && n % rules.killsPerLevel === 0) {
         grantLevels(world, killer, 1);
       }
+      // #244 — A MOB KILL IS A KILL. `fireHooks(…, "onKill", …)` used to live
+      // ONLY in DeathSystem's champion branch, so every `onKill` passive was
+      // silently dead against mobs: 孫悟空's 09-00 賽亞人的血脈 literally reads
+      // 「每殺死一個部隊增加2點生命」 and had never once paid out since #215
+      // shipped. Fired here, AFTER the gold/xp/level bookkeeping and BEFORE the
+      // `mobSlain` event, so the ordering is fixed and deterministic. The mob
+      // entity is still alive in `world.mob` at this point, which is what lets a
+      // hook's `victim: "mob"` filter tell a 部隊 kill from a 英雄 kill.
+      fireHooks(world, killer, "onKill", id);
       world.emit("mobSlain", {
         id,
         killer,

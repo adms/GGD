@@ -10,10 +10,14 @@
  *       editing the hero sheet changed nothing on the field;
  *   (c) every mob was the same strength in every round — there was no level.
  *
- * The champion numbers are read from the REAL content doc on disk (direct file
- * read + zChampionDoc, the standinRoster.test.ts pattern) so this suite fails if
- * the doc and the mob curve ever drift apart. Only `baseStats`/`growth` are used,
- * which is all `mobRulesFromConfig` reads — no ability graph is needed.
+ * TASK #244 RE-SOURCED (b). The mob's curve no longer comes from the hero sheet
+ * at all: it is authored on `mobWaves.mob` in content/config/arena-rules.json.
+ * This suite now reads the numbers from THERE (still a direct on-disk read, the
+ * standinRoster.test.ts pattern) so it keeps failing if the shipped doc and the
+ * curve drift apart — while the champion doc is still loaded and registered so
+ * the new tripwire can prove that moving 喪標麥可's HERO stats does NOT move the
+ * mob. The literals 300 / 400 / 600 are the owner's contract and must survive
+ * every refactor byte-for-byte.
  */
 import { describe, it, expect, beforeAll } from "vitest";
 import { dirname, join } from "node:path";
@@ -45,10 +49,20 @@ const DOC = zChampionDoc.parse(
   JSON.parse(readFileSync(join(CONTENT_DIR, "champions", `${MOB_CHAMPION_ID}.json`), "utf8")),
 );
 
-const BASE_HP = DOC.baseStats.maxHealth!;
-const GROWTH_HP = DOC.growth.maxHealth!;
-const BASE_REGEN = DOC.baseStats.healthRegen!;
-const GROWTH_REGEN = DOC.growth.healthRegen!;
+/**
+ * THE SHIPPED ARENA DOC — since #244 THIS is where the mob's curve lives. It
+ * used to be read off `DOC` (the hero sheet) right below, which is exactly the
+ * coupling #244 broke: 喪標麥可 is both a pickable hero and the #215 mob, so a
+ * hero-stat edit silently re-tuned the roguelite difficulty.
+ */
+const ARENA_RULES = JSON.parse(
+  readFileSync(join(CONTENT_DIR, "config", "arena-rules.json"), "utf8"),
+) as { mobWaves: MobWavesConfig };
+
+const BASE_HP = ARENA_RULES.mobWaves.mob.baseHp!;
+const GROWTH_HP = ARENA_RULES.mobWaves.mob.hpPerLevel!;
+const BASE_REGEN = ARENA_RULES.mobWaves.mob.baseRegen!;
+const GROWTH_REGEN = ARENA_RULES.mobWaves.mob.regenPerLevel!;
 
 beforeAll(() => {
   registerSkeletonContent();
@@ -73,8 +87,8 @@ beforeAll(() => {
 const CFG: MobWavesConfig = { ...DEFAULT_MOB_WAVES_CONFIG };
 const DT = 1 / 30;
 
-describe("#217 (b) the hero sheet is what a mob is made of", () => {
-  it("the shipped godie-zombiex doc carries the owner's numbers (100/+100, 1/+0.2)", () => {
+describe("#244 the MOB CARD is what a mob is made of (was: the hero sheet)", () => {
+  it("the shipped MOB CARD carries the owner's numbers (100/+100, 1/+0.2)", () => {
     cover("mob-217-doc-numbers");
     expect(BASE_HP).toBe(100);
     expect(GROWTH_HP).toBe(100);
@@ -90,18 +104,69 @@ describe("#217 (b) the hero sheet is what a mob is made of", () => {
       expect(rules.maxHp).toBe(Math.round(BASE_HP + GROWTH_HP * (level - 1)));
       expect(rules.hpRegenPerSec).toBeCloseTo(BASE_REGEN + GROWTH_REGEN * (level - 1), 10);
     }
-    // The owner's concrete expectation, RE-SET 2026-07-26: growth 50 -> 100, so
-    // round 3 -> lv3 -> 100 + 100*2 = 300 hp. Base 100 was left alone, which is
-    // what makes 喪標麥可 a late scaler: fragile early, the tankiest hero by L50.
+    // The owner's concrete expectation, RE-SET 2026-07-26 and CARRIED THROUGH
+    // THE #244 SPLIT UNCHANGED: round 3 -> lv3 -> 100 + 100*2 = 300 hp.
+    // These literals are the contract. If you are here because they went red,
+    // the fix is to restore the mob card, NOT to update the numbers.
     expect(mobRulesFromConfig(CFG, DT, 3).maxHp).toBe(300);
     expect(mobRulesFromConfig(CFG, DT, 4).maxHp).toBe(400);
   });
 
-  it("falls back to the flat config maxHp when the champion doc is not registered", () => {
+  it("falls back to the flat config maxHp when neither a mob curve nor a champion doc exists", () => {
     cover("mob-217-stats-fallback");
-    const rules = mobRulesFromConfig({ ...CFG, mob: { ...CFG.mob, championId: "no-such-hero" } }, DT, 7);
+    // Strip the #244 curve AND point at a missing champion: tier 3, the
+    // content-free path every bare-config unit test takes.
+    const rules = mobRulesFromConfig(
+      {
+        ...CFG,
+        mob: {
+          ...CFG.mob,
+          championId: "no-such-hero",
+          baseHp: undefined,
+          hpPerLevel: undefined,
+          baseRegen: undefined,
+          regenPerLevel: undefined,
+        },
+      },
+      DT,
+      7,
+    );
     expect(rules.maxHp).toBe(CFG.mob.maxHp);
     expect(rules.hpRegenPerSec).toBe(0);
+  });
+
+  it("the LEGACY champion-doc tier still works for a pre-#244 arena (no mob curve authored)", () => {
+    cover("mob-244-legacy-champion-tier");
+    // No baseHp/… on the card → the hero sheet is read, exactly as before #244.
+    // This is what keeps every pre-split arena doc loading unchanged.
+    const legacy = mobRulesFromConfig(
+      {
+        ...CFG,
+        mob: {
+          ...CFG.mob,
+          baseHp: undefined,
+          hpPerLevel: undefined,
+          baseRegen: undefined,
+          regenPerLevel: undefined,
+        },
+      },
+      DT,
+      3,
+    );
+    expect(legacy.maxHp).toBe(Math.round(DOC.baseStats.maxHealth! + DOC.growth.maxHealth! * 2));
+  });
+
+  it("#244 TRIPWIRE — the hero sheet can never move the mob curve again", () => {
+    cover("mob-244-hero-sheet-decoupled");
+    // Register 喪標麥可 THE HERO at his post-#244 sheet (380 base / 45 growth).
+    // Before the split this alone would have made round-3 mobs 470 hp and
+    // round-6 mobs 605 — a silent roguelite difficulty change nobody asked for.
+    expect(DOC.baseStats.maxHealth).toBe(380);
+    expect(DOC.growth.maxHealth).toBe(45);
+    expect(Champions.get(MOB_CHAMPION_ID as ChampionId).baseStats.maxHealth).toBe(380);
+    // …and the mob curve does not budge.
+    expect(mobRulesFromConfig(CFG, DT, 3).maxHp).toBe(300);
+    expect(mobRulesFromConfig(CFG, DT, 6).maxHp).toBe(600);
   });
 });
 
@@ -186,13 +251,14 @@ describe("#217 (a) the model key is a live knob", () => {
 
   it("the shipped arena-rules doc points the mob at the zombie model, not the knight", () => {
     cover("mob-217-arena-rules-model");
-    const raw = JSON.parse(
-      readFileSync(join(CONTENT_DIR, "config", "arena-rules.json"), "utf8"),
-    ) as { mobWaves: MobWavesConfig };
+    const raw = ARENA_RULES;
     expect(raw.mobWaves.mob.modelKey).toBe("champ.godie-zombiex");
     expect(raw.mobWaves.mob.championId).toBe(MOB_CHAMPION_ID);
     expect(raw.mobWaves.mob.baseLevel).toBe(3);
     expect(raw.mobWaves.mob.levelPerRound).toBe(1);
+    // #244 — the mob's own curve is authored on the card, not inherited.
+    expect(raw.mobWaves.mob.baseHp).toBe(100);
+    expect(raw.mobWaves.mob.hpPerLevel).toBe(100);
   });
 });
 
