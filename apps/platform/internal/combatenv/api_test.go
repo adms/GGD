@@ -59,7 +59,7 @@ func TestAPIAdminAuthAndDefaults(t *testing.T) {
 	assert.Equal(t, http.StatusForbidden, r.Status)
 
 	// Promote boss → admin GET shows the SHIPPED default: the full table, every
-	// ×factor 1.0 and every 三圍 coefficient at its WC3/design value (#248 —
+	// ×factor 1.0 and every 三圍 coefficient at its imported/design value (#248 —
 	// the coefficients join this table rather than getting a second config
 	// surface, so the console tunes them alongside everything else).
 	grantAdmin(t, ts, boss.ID)
@@ -71,7 +71,9 @@ func TestAPIAdminAuthAndDefaults(t *testing.T) {
 		assert.Equal(t, combatenv.DefaultFor(k), m[k], "default %s", k)
 	}
 	// …and the two kinds really are distinct: a coefficient's default is not 1.
-	assert.Equal(t, 25.0, m["strToMaxHealth"], "力量 → 生命 ships at WC3's 25")
+	// The source map's own war3mapMisc.txt says StrHitPointBonus=23, not
+	// Blizzard's 25 — see ATTRIBUTE_ENV_DEFAULTS for the full provenance table.
+	assert.Equal(t, 23.0, m["strToMaxHealth"], "力量 → 生命 ships at the MAP's 23, not Blizzard's 25")
 	assert.Equal(t, 1.0, m["cooldown"], "a ×factor still ships neutral")
 }
 

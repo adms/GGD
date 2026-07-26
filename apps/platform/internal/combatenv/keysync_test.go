@@ -59,6 +59,20 @@ func TestKeysMatchTheSharedSimList(t *testing.T) {
 var attrDefaultsRe = regexp.MustCompile(`(?s)ATTRIBUTE_ENV_DEFAULTS\s*=\s*\{(.*?)\}`)
 var pairRe = regexp.MustCompile(`([a-zA-Z]+):\s*([0-9.]+)`)
 
+// Each coefficient now carries a PROVENANCE comment naming the file and field
+// it came from ("war3mapMisc.txt StrRegenBonus = 0.04 (Blizzard MiscGame.txt:
+// 0.05)"), and `pairRe` cheerfully reads `txt: 0.05` out of one as a ninth
+// coefficient. Strip comments before parsing — the alternative is banning
+// comments from the literal, and a wrong-source comment is precisely what this
+// whole change exists to stop.
+var lineCommentRe = regexp.MustCompile(`(?m)//.*$`)
+var blockCommentRe = regexp.MustCompile(`(?s)/\*.*?\*/`)
+
+// stripTSComments removes // and /* */ comments so only the code is parsed.
+func stripTSComments(src []byte) []byte {
+	return lineCommentRe.ReplaceAll(blockCommentRe.ReplaceAll(src, []byte(" ")), []byte(""))
+}
+
 // combatenv-attr-defaults-in-sync: the eight 三圍 COEFFICIENTS (task #248) are
 // not ×factors — their neutral value is the Warcraft III number (力量→生命 25,
 // 智慧→魔力 15, …), not 1.0. combatenv.AttrDefaults is what the platform
@@ -75,7 +89,7 @@ func TestAttributeDefaultsMatchTheSharedSimTable(t *testing.T) {
 	raw, err := os.ReadFile(path)
 	require.NoError(t, err)
 
-	m := attrDefaultsRe.FindSubmatch(raw)
+	m := attrDefaultsRe.FindSubmatch(stripTSComments(raw))
 	require.Len(t, m, 2, "could not find the ATTRIBUTE_ENV_DEFAULTS object literal in %s", path)
 
 	shared := map[string]float64{}

@@ -39,8 +39,20 @@ export const SELA: ChampionDef = {
   missileSpeed: 22,
   attackDamagePoint: 0.3,
   // #248: RAW card — the 三圍 term below is added by `championStatBase`, and
-  // the authored attributes were back-solved so the level-1 sheet is byte-for-
-  // byte what sela shipped with (520 hp / 52 ad / 400 mana / 20 armor / 0.65 as).
+  // the authored attributes were back-solved against Blizzard's coefficients so
+  // the level-1 sheet was byte-for-byte what sela shipped with (520 hp / 52 ad /
+  // 400 mana / 20 armor / 0.65 as).
+  //
+  // THAT BACK-SOLVE IS NOW ONE COEFFICIENT STALE and deliberately left so.
+  // The shipped coefficients came off Blizzard's defaults and onto the SOURCE
+  // MAP's own war3mapMisc.txt (str→hp 25→23, agi→armor 0.30→0.15, …), which
+  // moves sela's level-1 hp to 484 and armour to 17.6. Unlike godie-zombiex —
+  // whose 380 is an OWNER DECISION (#244) and was therefore re-solved — sela and
+  // thorne are SKELETON TEST CONTENT: their absolute numbers carry no design
+  // intent, only "a champion exists with plausible stats". Re-solving them would
+  // need a negative manaRegen base (1.6 − 0.07×26 = −0.22) to chase a fixture
+  // number nobody looks at. Every test that cares reads the value instead of
+  // asserting a literal.
   baseStats: {
     [Stat.MaxHealth]: 70,
     [Stat.HealthRegen]: 0.3,
@@ -211,8 +223,10 @@ export const THORNE: ChampionDef = {
   attackType: "melee",
   modelKey: "champ.thorne",
   attackDamagePoint: 0.25,
-  // #248: RAW card + back-solved attributes; level 1 reproduces thorne's
-  // shipped sheet exactly (640 hp / 62 ad / 280 mana / 32 armor / 0.70 as).
+  // #248: RAW card + back-solved attributes; under Blizzard's coefficients
+  // level 1 reproduced thorne's shipped sheet exactly (640 hp / 62 ad / 280
+  // mana / 32 armor / 0.70 as). See the note on SELA.baseStats for why that
+  // back-solve is intentionally NOT redone against the source map's numbers.
   baseStats: {
     [Stat.MaxHealth]: 40,
     [Stat.HealthRegen]: 0.6,

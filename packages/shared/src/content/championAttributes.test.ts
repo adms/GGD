@@ -225,7 +225,12 @@ describe("#248 attr-03 — the roster and the coefficient table are complete", (
     // A coefficient's neutral value is NOT 1.0 — resetting str→hp to 1 would
     // delete 96% of every champion's health, which is why they are a distinct
     // kind of entry in the same table.
-    expect(ATTRIBUTE_ENV_DEFAULTS.strToMaxHealth).toBe(25);
+    //
+    // 23, not Blizzard's 25: the SOURCE MAP ships its own gameplay-constants
+    // table (`war3mapMisc.txt`, StrHitPointBonus=23) and it wins. The full
+    // provenance, per coefficient, and the guard that READS both source files
+    // live in sim/attributeCoefficients.test.ts.
+    expect(ATTRIBUTE_ENV_DEFAULTS.strToMaxHealth).toBe(23);
     expect(ATTRIBUTE_ENV_DEFAULTS.intToMaxMana).toBe(15);
     // …and every non-attribute key is still a neutral ×1 factor.
     for (const k of COMBAT_ENV_KEYS) {
@@ -276,12 +281,29 @@ describe("#248 attr-04 — `growth` survived the re-derivation", () => {
     // Stated in the #248 brief as the check that our attribute resolution
     // agrees with his: level 12, maxHealth multiplier ×4, both sources kept.
     // (Deleting `growth` would land these at 50–63% instead of 78–91%.)
+    //
+    // THESE FOUR MOVED, and the reason is recorded rather than papered over.
+    // #248 computed them with Blizzard's strToMaxHealth 25; the SOURCE MAP's
+    // own war3mapMisc.txt says 23, and the map wins. Every level-12 figure
+    // therefore drops by `2 × STR(12)`, roughly −5%:
+    //
+    //   godie-e002    8246 -> 7824   (亞瑟王 - Saber)
+    //   godie-u00n    8241 -> 7837   (蒙其.D.魯夫)
+    //   godie-efur    5070 -> 4818   (揍敵客桀諾)
+    //   godie-zombiex 5480 -> 5322   (喪標麥可 — see attr-05: his LEVEL-1 380
+    //                                 is owner-chosen and was re-preserved by
+    //                                 back-solving the raw card 80 -> 104; only
+    //                                 the per-level attribute layer moved)
+    //
+    // These are a CONSEQUENCE of a corrected coefficient, not a re-tune. If the
+    // owner wants the old totals back, the lever is the combat-env maxHealth
+    // ×factor, not the imported coefficient.
     const MULT = 4;
     const expected: Record<string, number> = {
-      "godie-e002": 8246, // 亞瑟王 - Saber
-      "godie-u00n": 8241, // 蒙其.D.魯夫
-      "godie-efur": 5070, // 揍敵客桀諾
-      "godie-zombiex": 5480, // 喪標麥可
+      "godie-e002": 7824, // 亞瑟王 - Saber
+      "godie-u00n": 7837, // 蒙其.D.魯夫
+      "godie-efur": 4818, // 揍敵客桀諾
+      "godie-zombiex": 5322, // 喪標麥可
     };
     for (const [id, want] of Object.entries(expected)) {
       const c = champs.find((x) => x.id === id)!;
@@ -296,15 +318,26 @@ describe("#248 attr-05 — godie-zombiex keeps #244's deliberate tuning", () => 
     cover("attr-248-zombiex-pinned");
     const z = champs.find((c) => c.id === "godie-zombiex")!;
     // #244 chose 380 / +45 on purpose. #248 moved WHERE the 380 comes from
-    // (raw 80 + strToMaxHealth 25 × STR 12) without changing it.
+    // without changing it, and the coefficient correction had to move it AGAIN.
+    //
+    // 喪標麥可 has NO w3x source — his `attributes.source` is "authored", i.e.
+    // the block exists only to REPRODUCE a sheet the owner chose. So when the
+    // reconstruction constant changed (strToMaxHealth 25 -> the map's 23), the
+    // reconstruction was redone rather than left to drift: the raw card went
+    // 80 -> 104 so that `104 + 23 × 12` is still exactly 380. Leaving it would
+    // have silently dropped him to 356 and quietly undone #244.
+    expect(z.attributes!.source).toBe("authored");
     expect(championStatBase(z, Stat.MaxHealth, 1)).toBe(380);
     expect(z.attributes!.str).toBe(12);
     expect(z.attributes!.strGrowth).toBe(1.8);
-    expect(ATTRIBUTE_ENV_DEFAULTS.strToMaxHealth * z.attributes!.strGrowth).toBeCloseTo(45, 9);
-    // The doc's own knob is still #244's 45; the effective per-level is the
-    // sum of the two, which is the owner's ruling and the reason his level-12
-    // figure above comes out at 5480.
+    // WHAT COULD NOT BE PRESERVED, stated plainly. Under 25 the attribute layer
+    // happened to supply exactly +45/level, matching #244's authored growth.
+    // Under 23 it supplies 41.4, and hitting 45 would need strGrowth 1.9565…,
+    // a number invented to flatter a coincidence. The owner's AUTHORED knob is
+    // untouched at 45; the effective per-level is now 86.4 instead of 90 and is
+    // logged for him in docs/_execution-batches.md.
+    expect(ATTRIBUTE_ENV_DEFAULTS.strToMaxHealth * z.attributes!.strGrowth).toBeCloseTo(41.4, 9);
     expect((z.growth as Record<string, number>)[Stat.MaxHealth]).toBe(45);
-    expect(championStatGrowth(z, Stat.MaxHealth)).toBeCloseTo(90, 9);
+    expect(championStatGrowth(z, Stat.MaxHealth)).toBeCloseTo(86.4, 9);
   });
 });

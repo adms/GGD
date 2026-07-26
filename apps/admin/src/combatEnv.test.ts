@@ -146,7 +146,11 @@ describe("combat-env form editing (adminui-combatenv)", () => {
     for (const k of COMBAT_ENV_KEYS) {
       expect(all[k], k).toBe(isAttributeEnvKey(k) ? String(defaultForKey(k)) : "1");
     }
-    expect(resetField(form, "strToMaxHealth").strToMaxHealth).toBe("25");
+    // The literals are the SOURCE MAP's, not Blizzard's: war3mapMisc.txt says
+    // StrHitPointBonus=23 where MiscGame.txt says 25. Spelled out rather than
+    // read from defaultForKey so a silent drift back to the WC3 number someone
+    // half-remembers fails here as well as in attributeCoefficients.test.ts.
+    expect(resetField(form, "strToMaxHealth").strToMaxHealth).toBe("23");
     expect(resetField(form, "intToMaxMana").intToMaxMana).toBe("15");
   });
 

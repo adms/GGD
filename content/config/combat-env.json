@@ -21,13 +21,13 @@
     "lifesteal": 1.0,
     "attackRange": 1.0,
     "abilityRange": 0.6,
-    "strToMaxHealth": 25,
-    "strToHealthRegen": 0.05,
+    "strToMaxHealth": 23,
+    "strToHealthRegen": 0.04,
     "strToAttackDamage": 1,
-    "agiToArmor": 0.3,
+    "agiToArmor": 0.15,
     "agiToAttackSpeed": 0.02,
     "intToMaxMana": 15,
-    "intToManaRegen": 0.05,
+    "intToManaRegen": 0.07,
     "intToAbilityPower": 1
   }
 }

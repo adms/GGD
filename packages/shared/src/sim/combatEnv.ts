@@ -35,19 +35,22 @@
  * inventing a second config surface, so the admin 戰鬥系統 page tunes them with
  * everything else and a match snapshots them exactly like the rest:
  *
- *   strToMaxHealth      力量 → 生命上限        (25)
- *   strToHealthRegen    力量 → 每秒回血        (0.05)
+ *   strToMaxHealth      力量 → 生命上限        (23)
+ *   strToHealthRegen    力量 → 每秒回血        (0.04)
  *   strToAttackDamage   力量 → 攻擊力          (1)
- *   agiToArmor          敏捷 → 護甲            (0.3)
+ *   agiToArmor          敏捷 → 護甲            (0.15)
  *   agiToAttackSpeed    敏捷 → 攻速            (0.02, MULTIPLICATIVE — see below)
  *   intToMaxMana        智慧 → 魔力上限        (15)
- *   intToManaRegen      智慧 → 每秒回魔        (0.05)
+ *   intToManaRegen      智慧 → 每秒回魔        (0.07)
  *   intToAbilityPower   智慧 → 法術強度        (1)
+ *
+ * Seven of the eight are IMPORTED, not chosen — see ATTRIBUTE_ENV_DEFAULTS below
+ * for the file and field each one comes from.
  *
  * They differ from the other eighteen in three ways, all deliberate:
  *   1. THEY ARE COEFFICIENTS, NOT FACTORS. Their neutral value is not 1.0 — it
- *      is the shipped coefficient (COMBAT_ENV_DEFAULTS below). 25 hp per point
- *      of strength IS Warcraft III's number, not a tuning on top of one.
+ *      is the shipped coefficient (COMBAT_ENV_DEFAULTS below). 23 hp per point
+ *      of strength IS the source map's own number, not a tuning on top of one.
  *   2. THEY APPLY EARLIER. They build the champion's BASE stat (stats/
  *      attributes.ts championStatBase) which the stat-mapped factors above then
  *      multiply, so `strToMaxHealth × maxHealth` is the full HP chain.
@@ -96,23 +99,69 @@ export const COMBAT_ENV_KEYS = [
 export type CombatEnvKey = (typeof COMBAT_ENV_KEYS)[number];
 
 /**
- * The eight 三圍 coefficients (task #248) and their SHIPPED values. Five of
- * them are Warcraft III's own numbers, verified against `Units\UnitBalance.slk`
- * in the repo's Blizzard MPQ archives (str→hp 25, str→hp-regen 0.05, int→mana
- * 15, int→mana-regen 0.05, agi→attack-speed 0.02); agi→armor (WC3 ≈ 0.143),
- * str→ad and int→ap are this game's design.
+ * The eight 三圍 coefficients (task #248) and their SHIPPED values.
+ *
+ * PROVENANCE, PER COEFFICIENT — the file and the FIELD each number came from.
+ * (#248 originally credited these to `Units\UnitBalance.slk`. That was invented:
+ * UnitBalance.slk has 60 columns and not one of them is a coefficient — it is a
+ * PER-UNIT table (STR/AGI/INT/STRplus/HP/def/…). The derivation constants live
+ * in `Units\MiscGame.txt`, and the SOURCE MAP OVERRIDES FOUR OF THEM. Reading
+ * Blizzard's default where the map wrote its own is the same error class #248
+ * itself was restarted to fix, one layer up from the w3u.)
+ *
+ * 「一律以 JASS 實際參數為準」— a map-authored constants table is first-party
+ * evidence of the same kind, so THE MAP'S VALUE IS THE DEFAULT. Where the map
+ * does not override a field, Blizzard's is the documented fallback.
+ *
+ *   key                map file / field                     Blizzard  used
+ *   ------------------ ------------------------------------ --------- ------
+ *   strToMaxHealth     war3mapMisc [Misc] StrHitPointBonus   25        23
+ *   strToHealthRegen   war3mapMisc [Misc] StrRegenBonus      0.05      0.04
+ *   strToAttackDamage  war3mapMisc [Misc] StrAttackBonus     1.0       1
+ *   agiToArmor         war3mapMisc [Misc] AgiDefenseBonus    0.30      0.15
+ *   agiToAttackSpeed   (map does NOT override)               0.02      0.02
+ *   intToMaxMana       war3mapMisc [Misc] IntManaBonus       15        15
+ *   intToManaRegen     war3mapMisc [Misc] IntRegenBonus      0.05      0.07
+ *   intToAbilityPower  (no WC3 concept at all)               —         1
+ *
+ * SEVEN ARE IMPORTED, ONE IS THE OWNER'S. `intToAbilityPower` is the only row
+ * with no upstream source: Warcraft III has no 法強 attribute axis, so 智慧→AP
+ * ×1 is a GGD design decision the owner made and it is his to re-tune.
+ * `strToAttackDamage` was ALSO labelled "this game's design" before — it is not;
+ * `StrAttackBonus=1.0` is written verbatim in both the map and Blizzard's table.
+ * The value the owner chose and the imported value happen to agree at 1.
+ *
+ * Two more map constants matter and are deliberately NOT modelled here:
+ *   - `AgiDefenseBase` — map 0.0, Blizzard −2. GGD's armour law has no constant
+ *     offset term, which reproduces the MAP (0), not Blizzard.
+ *   - `AgiMoveBonus`   — map 0.1, Blizzard 0. The map DOES give move speed per
+ *     agility; GGD has no agi→移速 axis. Logged for the owner in
+ *     docs/_execution-batches.md, not silently invented here.
+ *
+ * The map file is committed at
+ * `tools/w3x-import/out/GoDieEX22s-src/raw/war3mapMisc.txt` and the Blizzard
+ * fallback at `tools/w3x-import/out/stock/STOCK_MISCGAME.json`; both are READ
+ * by attributeCoefficients.test.ts, which fails if this object drifts from them.
  *
  * Kept as its own literal — the platform's Go mirror parses THIS object to
  * assert it has not drifted (internal/combatenv/keysync_test.go).
  */
 export const ATTRIBUTE_ENV_DEFAULTS = {
-  strToMaxHealth: 25,
-  strToHealthRegen: 0.05,
+  /** war3mapMisc.txt [Misc] StrHitPointBonus = 23.0  (Blizzard MiscGame.txt: 25) */
+  strToMaxHealth: 23,
+  /** war3mapMisc.txt [Misc] StrRegenBonus = 0.04     (Blizzard MiscGame.txt: 0.05) */
+  strToHealthRegen: 0.04,
+  /** war3mapMisc.txt [Misc] StrAttackBonus = 1.0     (Blizzard MiscGame.txt: 1.0) */
   strToAttackDamage: 1,
-  agiToArmor: 0.3,
+  /** war3mapMisc.txt [Misc] AgiDefenseBonus = 0.15   (Blizzard MiscGame.txt: 0.30) */
+  agiToArmor: 0.15,
+  /** Blizzard MiscGame.txt AgiAttackSpeedBonus = 0.02 — the map never overrides it */
   agiToAttackSpeed: 0.02,
+  /** war3mapMisc.txt [Misc] IntManaBonus = 15.0      (Blizzard MiscGame.txt: 15) */
   intToMaxMana: 15,
-  intToManaRegen: 0.05,
+  /** war3mapMisc.txt [Misc] IntRegenBonus = 0.07     (Blizzard MiscGame.txt: 0.05) */
+  intToManaRegen: 0.07,
+  /** OWNER'S DESIGN — no WC3 source exists; Warcraft III has no 法強 attribute */
   intToAbilityPower: 1,
 } as const;
 
@@ -147,10 +196,11 @@ const buildDefault = (): Record<CombatEnvKey, number> => {
 
 /**
  * The SHIPPED table: every ×factor 1.0 (formulae reduce to legacy behaviour)
- * and every 三圍 coefficient at its WC3/design value. This is also the
- * per-key "reset" target the admin page offers — for a factor that is 1.0, for
- * a coefficient it is the number above, because resetting str→hp to 1.0 would
- * not be neutral, it would delete 96% of every champion's health.
+ * and every 三圍 coefficient at its imported (map/Blizzard) or owner-chosen
+ * value. This is also the per-key "reset" target the admin page offers — for a
+ * factor that is 1.0, for a coefficient it is the number above, because
+ * resetting str→hp to 1.0 would not be neutral, it would delete 96% of every
+ * champion's health.
  */
 export const COMBAT_ENV_DEFAULTS: CombatEnvMultipliers = Object.freeze(buildDefault());
 

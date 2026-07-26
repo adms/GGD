@@ -43,7 +43,7 @@ export const STEP = 0.05;
 /**
  * PER-KEY bounds (task #248). The eighteen ×factors keep the 0.1..10 band; the
  * eight 三圍 coefficients need a different one because their SHIPPED values are
- * 25 (力量→生命) and 15 (智慧→魔力), both outside it, and because 0 is a
+ * 23 (力量→生命) and 15 (智慧→魔力), both outside it, and because 0 is a
  * meaningful setting for them ("switch this derivation axis off") where a 0
  * damage multiplier is not. Mirrors `combatenv.Bounds` on the platform, so a
  * value this page accepts is a value the PUT accepts.
@@ -150,16 +150,18 @@ export const COMBAT_ENV_LABELS: Record<CombatEnvKey, CombatEnvLabel> = {
   lifesteal: { zh: "生命偷取", note: "普攻吸血比例（夾制前）" },
   attackRange: { zh: "攻擊距離", note: "普攻射程" },
   abilityRange: { zh: "技能範圍", note: "技能施放距離與 AoE 半徑（不含普攻）" },
-  // 三圍係數 (#248) — 這八項不是倍率而是「每 1 點屬性換多少數值」，預設就是
-  // 魔獸三代原值（或本作設計值），不是 1.0。
-  strToMaxHealth: { zh: "力量 → 生命", note: "每 1 點力量增加的生命上限（魔獸原值 25）" },
-  strToHealthRegen: { zh: "力量 → 回血", note: "每 1 點力量增加的每秒回血（魔獸原值 0.05）" },
-  strToAttackDamage: { zh: "力量 → 攻擊力", note: "每 1 點力量增加的 AD（本作設計值 1）" },
-  agiToArmor: { zh: "敏捷 → 護甲", note: "每 1 點敏捷增加的護甲（魔獸約 0.143，本作 0.3）" },
-  agiToAttackSpeed: { zh: "敏捷 → 攻速", note: "每 1 點敏捷讓攻速 +N%（魔獸原值 0.02＝+2%）" },
-  intToMaxMana: { zh: "智慧 → 魔力", note: "每 1 點智慧增加的魔力上限（魔獸原值 15）" },
-  intToManaRegen: { zh: "智慧 → 回魔", note: "每 1 點智慧增加的每秒回魔（魔獸原值 0.05）" },
-  intToAbilityPower: { zh: "智慧 → 法強", note: "每 1 點智慧增加的 AP（本作設計值 1）" },
+  // 三圍係數 (#248) — 這八項不是倍率而是「每 1 點屬性換多少數值」，預設不是 1.0。
+  // 七項是「匯入值」：原地圖自帶的 war3mapMisc.txt（[Misc] 區段）就寫了自己的
+  // 常數表，並且改寫了暴雪四項；地圖沒寫的那一項才回退暴雪 MiscGame.txt。
+  // 只有 智慧→法強 沒有任何上游來源，那是 owner 的設計值。
+  strToMaxHealth: { zh: "力量 → 生命", note: "每 1 點力量增加的生命上限（地圖 StrHitPointBonus=23；暴雪 25）" },
+  strToHealthRegen: { zh: "力量 → 回血", note: "每 1 點力量增加的每秒回血（地圖 StrRegenBonus=0.04；暴雪 0.05）" },
+  strToAttackDamage: { zh: "力量 → 攻擊力", note: "每 1 點力量增加的 AD（地圖 StrAttackBonus=1.0，與暴雪相同）" },
+  agiToArmor: { zh: "敏捷 → 護甲", note: "每 1 點敏捷增加的護甲（地圖 AgiDefenseBonus=0.15；暴雪 0.30）" },
+  agiToAttackSpeed: { zh: "敏捷 → 攻速", note: "每 1 點敏捷讓攻速 +N%（地圖未覆寫，回退暴雪 AgiAttackSpeedBonus=0.02＝+2%）" },
+  intToMaxMana: { zh: "智慧 → 魔力", note: "每 1 點智慧增加的魔力上限（地圖 IntManaBonus=15，與暴雪相同）" },
+  intToManaRegen: { zh: "智慧 → 回魔", note: "每 1 點智慧增加的每秒回魔（地圖 IntRegenBonus=0.07；暴雪 0.05）" },
+  intToAbilityPower: { zh: "智慧 → 法強", note: "每 1 點智慧增加的 AP（owner 設計值 1；魔獸三代沒有法強這根軸）" },
 };
 
 /** A titled block of rows — the page renders one table section per group. */
@@ -314,7 +316,7 @@ export function isDirty(form: CombatEnvForm, doc: CombatEnvDoc): boolean {
 
 /**
  * Keys tuned away from their SHIPPED DEFAULT (drives the "N 項已調整" badge).
- * Not "away from 1.0": the 三圍 coefficients ship at 25 / 15 / 0.05 …, so
+ * Not "away from 1.0": the 三圍 coefficients ship at 23 / 15 / 0.04 …, so
  * comparing them to 1 would report eight permanent phantom edits.
  */
 export function nonNeutralKeys(form: CombatEnvForm): CombatEnvKey[] {

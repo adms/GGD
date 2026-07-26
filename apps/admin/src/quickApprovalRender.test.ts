@@ -41,10 +41,13 @@ describe("the page renders without a browser", () => {
         liveChampions: ["peer", "extra"],
         liveAbilities: ["peer.q", "peer.w", "peer.e", "peer.r", "peer.ex", "extra.ex"],
         stats: new Map([
-          ["peer", { id: "peer", name: "同伴", role: "fighter", maxHealth: 480, armor: 6, mr: 28, ms: 5.9 }],
-          ["ok", { id: "ok", name: "健康", role: "mage", maxHealth: 460, armor: 5, mr: 28, ms: 5.9 }],
-          ["risky", { id: "risky", name: "危險", role: "tank", maxHealth: 100, armor: 0, mr: 0, ms: 3 }],
-          ["extra", { id: "extra", name: "多出來的", role: "tank", maxHealth: 100, armor: 0, mr: 0, ms: 3 }],
+          // `attributeDerived: false` = "these came straight off the card".
+          // Synthetic rows here on purpose: this file tests RENDERING, and the
+          // derivation itself is covered against real docs in quickApproval.test.ts.
+          ["peer", { id: "peer", name: "同伴", role: "fighter", maxHealth: 480, armor: 6, mr: 28, ms: 5.9, attributeDerived: false }],
+          ["ok", { id: "ok", name: "健康", role: "mage", maxHealth: 460, armor: 5, mr: 28, ms: 5.9, attributeDerived: false }],
+          ["risky", { id: "risky", name: "危險", role: "tank", maxHealth: 100, armor: 0, mr: 0, ms: 3, attributeDerived: false }],
+          ["extra", { id: "extra", name: "多出來的", role: "tank", maxHealth: 100, armor: 0, mr: 0, ms: 3, attributeDerived: false }],
         ]),
         pendingAccounts: [{ id: "a1", username: "表哥", waited: "等了 3 分鐘" }],
         editorProbe: { status: 200 },

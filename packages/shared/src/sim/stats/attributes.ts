@@ -15,13 +15,13 @@
  * Now the champion doc carries the attributes and `baseStats` carries the RAW
  * w3x values, and the sim adds the attribute term at recompute time:
  *
- *     maxHealth   = base + strToMaxHealth      · STR      (25)
- *     healthRegen = base + strToHealthRegen    · STR      (0.05)
+ *     maxHealth   = base + strToMaxHealth      · STR      (23)
+ *     healthRegen = base + strToHealthRegen    · STR      (0.04)
  *     ad          = base + strToAttackDamage   · STR      (1)
- *     armor       = base + agiToArmor          · AGI      (0.3)
+ *     armor       = base + agiToArmor          · AGI      (0.15)
  *     as          = base × (1 + agiToAttackSpeed · AGI)   (0.02)
  *     maxMana     = base + intToMaxMana        · INT      (15)
- *     manaRegen   = base + intToManaRegen      · INT      (0.05)
+ *     manaRegen   = base + intToManaRegen      · INT      (0.07)
  *     ap          = base + intToAbilityPower   · INT      (1)
  *
  * ---------------------------------------------------------------------------
@@ -45,10 +45,23 @@
  * one row that survived a cull: Warcraft III has no magic-resistance attribute,
  * so 魔抗 is growth-only by nature.
  *
- * Five of those eight coefficients (25 / 0.05 / 15 / 0.05 / 0.02) are a 1:1
- * reproduction of Warcraft III's own numbers, verified against the Blizzard
- * `Units\UnitBalance.slk` in the repo's MPQ archives; agi→armor (WC3 ≈ 1/7),
- * str→ad and int→ap are this game's design.
+ * SEVEN of those eight coefficients are IMPORTED, not chosen. The source map
+ * ships its own gameplay-constants table — `war3mapMisc.txt`, extracted to
+ * `tools/w3x-import/out/GoDieEX22s-src/raw/war3mapMisc.txt` — and it OVERRIDES
+ * four of Blizzard's: StrHitPointBonus 25→23, StrRegenBonus 0.05→0.04,
+ * AgiDefenseBonus 0.30→0.15, IntRegenBonus 0.05→0.07. The one field the map
+ * does not touch, AgiAttackSpeedBonus, falls back to Blizzard's 0.02. The
+ * per-coefficient table with every file and field name is on
+ * `ATTRIBUTE_ENV_DEFAULTS` in ../combatEnv.ts; it is the single provenance
+ * record and attributeCoefficients.test.ts re-reads both files to enforce it.
+ *
+ * Only `intToAbilityPower` is the owner's own design: Warcraft III has no 法強
+ * attribute, so 智慧→AP ×1 has no upstream source and is his to re-tune.
+ * (`strToAttackDamage` used to be labelled design too — it is not; the map and
+ * Blizzard both write StrAttackBonus=1.0 verbatim.)
+ *
+ * Do NOT re-derive these from memory. The numbers a WC3 player "knows" — 25 hp,
+ * 0.05 regen, 1/7 armour — are Blizzard's defaults, and this map is not on them.
  *
  * ---------------------------------------------------------------------------
  * WHY ATTACK SPEED IS THE ONE MULTIPLICATIVE ROW

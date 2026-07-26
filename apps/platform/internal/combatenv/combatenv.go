@@ -63,7 +63,7 @@ const (
 
 // Bounds for the eight 三圍 COEFFICIENTS (task #248). They are not ×factors:
 // they say how much stat one point of strength/agility/intelligence is worth,
-// so their shipped values (25 hp per STR, 15 mana per INT) sit ABOVE MaxFactor,
+// so their shipped values (23 hp per STR, 15 mana per INT) sit ABOVE MaxFactor,
 // and 0 is a meaningful setting ("turn this derivation axis off") where a 0
 // damage multiplier is not. Mirrors ATTRIBUTE_COEF_MAX in the shared sim.
 const (
@@ -117,15 +117,22 @@ var Keys = []string{
 // sanitize(), and "力量 → 生命 = 1" would give every champion roughly 4% of its
 // intended health — so keysync_test.go asserts this map against the shared
 // literal, key for key and value for value.
+//
+// PROVENANCE lives on the shared literal (ATTRIBUTE_ENV_DEFAULTS) — file and
+// field per coefficient. Seven of the eight are IMPORTED from the source map's
+// own war3mapMisc.txt (which overrides four of Blizzard's MiscGame.txt numbers)
+// or from Blizzard's table where the map is silent; only intToAbilityPower is
+// the owner's design. Do not "correct" these back to the WC3 defaults from
+// memory — 25 / 0.05 / 0.30 / 0.05 are Blizzard's, and this map is not on them.
 var AttrDefaults = map[string]float64{
-	"strToMaxHealth":    25,
-	"strToHealthRegen":  0.05,
-	"strToAttackDamage": 1,
-	"agiToArmor":        0.3,
-	"agiToAttackSpeed":  0.02,
-	"intToMaxMana":      15,
-	"intToManaRegen":    0.05,
-	"intToAbilityPower": 1,
+	"strToMaxHealth":    23,   // war3mapMisc.txt StrHitPointBonus  (Blizzard 25)
+	"strToHealthRegen":  0.04, // war3mapMisc.txt StrRegenBonus     (Blizzard 0.05)
+	"strToAttackDamage": 1,    // war3mapMisc.txt StrAttackBonus    (Blizzard 1.0)
+	"agiToArmor":        0.15, // war3mapMisc.txt AgiDefenseBonus   (Blizzard 0.30)
+	"agiToAttackSpeed":  0.02, // Blizzard MiscGame.txt AgiAttackSpeedBonus (map silent)
+	"intToMaxMana":      15,   // war3mapMisc.txt IntManaBonus      (Blizzard 15)
+	"intToManaRegen":    0.07, // war3mapMisc.txt IntRegenBonus     (Blizzard 0.05)
+	"intToAbilityPower": 1,    // OWNER'S DESIGN — no WC3 source exists
 }
 
 // IsAttrCoef reports whether k is one of the eight 三圍 coefficients.
@@ -134,8 +141,8 @@ func IsAttrCoef(k string) bool {
 	return ok
 }
 
-// DefaultFor is a key's shipped value: 1.0 for a ×factor, the WC3/design
-// coefficient for a 三圍 key.
+// DefaultFor is a key's shipped value: 1.0 for a ×factor, the imported
+// (map/Blizzard) or owner-designed coefficient for a 三圍 key.
 func DefaultFor(k string) float64 {
 	if v, ok := AttrDefaults[k]; ok {
 		return v
@@ -175,7 +182,7 @@ type Doc struct {
 }
 
 // DefaultDoc is the shipped table: every ×factor 1.0 (byte-identical legacy
-// combat behavior) and every 三圍 coefficient at its WC3/design value. It is
+// combat behavior) and every 三圍 coefficient at its imported/design value. It is
 // the floor, NOT what an operator should be shown — see contentDefaults and
 // Service.baseDoc.
 func DefaultDoc() Doc {
