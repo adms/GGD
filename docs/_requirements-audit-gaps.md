@@ -3871,3 +3871,97 @@ zustand 的 `useStore` 把 **`api.getInitialState`** 當 server snapshot。這�
 那些測試只驗到靜態文字，任何 store 驅動的元素消失都不會紅。`useApp` 改成手寫
 `useSyncExternalStore(subscribe, snap, snap)`（client 端行為與 zustand 完全相同，
 差別只有第三個參數；production 不做 SSR／hydration，所以碰不到）。改完 287 檔 / 3362 test 全綠。
+
+---
+
+## 2026-07-26 · #265（owner #232）回合戰報：三個「本來會做成裝飾品」的地方
+
+**需求原話**：「每回合進商店：右側顯示 S~D 評價 + 改善建議」。同一輪一起收 #252
+「三選一卡片沒有無障礙名稱 —— 手把焦點停上去沒東西可念」。完整檢查表：
+`docs/todo/round-report.md`。
+
+### 1. 「第二把尺」是這個需求預設的失敗，不是意外
+
+結算畫面（#25）已經有一套評分。做一張新的評價卡，最自然的實作就是**再算一次**，
+然後商店說 B、結算說 A，沒有人重建得出原因。所以：字母走 `rating.gradeFromScore()`
+**同一張 `GRADE_CUTS`**，S~D 是那十二階的折疊（`C-` → `D`，而 `ROUND_D_CEILING` 直接
+讀 `GRADE_CUTS[GRADES.indexOf("C")]`，#25 重調刻度時這張卡跟著動或測試變紅），而且
+卡片上**同時印出折疊前的那一階**（「對應結算階梯 C-」），兩把刻度在螢幕上就是同一把。
+
+**但權重必須不同，而這是系統的性質不是妥協**：`compositeScore()` 的輸入
+`PlayerMatchStats` 是**從英雄生成起累積、從不按回合歸零**的，系統裡根本沒有「這一回合
+的傷害」這個數字（server 也沒有）；而且它一半權重是 lobby percentile，單人 lobby 恆為
+1.0 → 保底 B+。所以回合卡只用四件真的 per-round 且 server 權威的事實
+（`roundKills`/`roundDeaths`/`alive`/`roundOutcome`），並在卡片上明寫
+「只計 勝負·擊殺·陣亡·存活 · 傷害等完整數據在結算畫面」。
+
+> **下一步（跨工作流，已列 rr-20）**：`concludeCombat` 對 `world.matchStats` 做 per-round
+> diff → `roundSettlement` 事件 → client 直接呼叫 `grade()` / `reflectionHints()`。
+> 那才是「同一個函式」而不只是「同一個階梯」。
+
+### 2. 「改善建議」的預設失敗是萬用廢話 —— 用測試把它堵死
+
+`settlementModel.reflectionHints()` 十條判準有九條讀 client 沒有的欄位，門檻又全是整場
+尺度（`deaths >= 6`、`damageDealt >= 12000`），一個 ≤90 秒的回合到不了 → 直接沿用會
+90% 落到「全面發揮，繼續保持這個節奏」。
+
+改成：每一條建議帶 `evidence`（`field=value`），**測試斷言「建議文字裡出現的每一個數字
+都必須在 evidence 裡有出處」**，而且是對**每一個能觸發建議的分支**跑。寫不出數字就寫不
+出建議；沒有可寫的就回空陣列，卡片顯示一句「這回合打得很穩」而不是硬擠。
+
+### 3. 「右側」不是空的 —— 借帶子要用讀原始碼的方式守
+
+中場右半已被英雄 3D 模型（~67% 寬）、商人提示框、英雄反應泡泡、Ready、倒數、#107 角落
+堆疊佔滿，**而且商店靠左時 ☰ 會重新歸位到右上角**，讓那一欄比任何其他階段都高。卡片
+用的是 **minimap 的保留帶**：`ui/hud/Minimap.tsx` 在 intermission 不繪製，所以整個商店
+期間右欄中間有一條 208px 的洞。
+
+這是跨檔案假設，所以測試會**讀 `Minimap.tsx`**，那個 `phase !== "intermission"` 條件消失
+就變紅。同一支測試還對 #107 整組視窗 × 兩種指標斷言：不含任何角落錨點（因此不需要
+`hudLayout.PANELS` 加列、不需要任何 chrome 讓位）、不進版本徽章帶、不蓋 Ready／倒數／
+商店卡／右欄 chrome。**第一次跑就抓到四個真碰撞**（375×667 蓋到金幣讀數、667×375 蓋到
+再歸位的裝備欄、375 寬時邊緣卡壓到商店卡、以及邊緣卡壓到英雄），全部由純函式的
+`avoidPainted()` 收斂掉。
+
+### 4. #252 的教訓：**無障礙工具本身也會說謊**
+
+先說一個更正：改動前那三張卡**不是**字面上「唸不出東西」—— 瀏覽器仍可用
+name-from-contents 串起兩個裸 div。真正壞掉的是（a）面板完全沒有 aria（沒有
+`role="dialog"`、沒有標籤，開起來什麼都不宣告），（b）名稱是**意外**不是宣告，任何人往
+卡片加一個徽章都會默默改掉被唸出來的字串。
+
+修法照要求用 `aria-labelledby` 指向卡片**已經畫出來的**節點（不重寫一份）。**然後實測發現
+本專案自己的瀏覽器無障礙快照（`read_page`）根本不解析 `aria-labelledby`**。控制組探針
+（直接注進活頁面）：
+
+| 探針 | 快照讀到 |
+| --- | --- |
+| `<button aria-labelledby="#外部節點">X</button>` | `"X"` —— labelledby 被忽略 |
+| `<button><div>名稱</div><div>描述</div></button>` | `""` —— 不跨巢狀元素走內容 |
+| `<button aria-label="…">…</button>` | 讀到 label |
+
+也就是說，**只掛 `aria-labelledby` 的卡片在我們自己的驗收工具裡仍然是「無名按鈕」**，和
+bug 本身分不出來。所以卡片同時掛一個扁平 `aria-label`，值由
+`draftCardFallbackLabel(name, cardDesc)` 從 **JSX 正在渲染的同兩個變數**算出（依 accname，
+`aria-labelledby` 優先，真的螢幕閱讀器永遠唸不到這個 fallback）。加上之後
+`read_page` 讀到：
+
+```
+button "奧術專注 法術強度 +40，冷卻縮減 +8%。"
+button "生命湧動 最大生命 +12%，每秒生命回復 +25。"
+button "疾風連擊 攻擊速度 +25%，移動速度 +8%。"
+```
+
+> **給下一條無障礙需求的規範**：先用一個**控制組探針**確認驗收工具讀得懂你打算用的
+> 名稱來源，再決定 markup。否則你會做出一個規格正確、但在自己的驗收管道裡與 bug
+> 完全同形的修法。
+
+### 5. 還沒關掉的（都列在 `docs/todo/round-report.md`）
+
+- **rr-19**：翻牌期整張卡 `opacity:0`，`PadFocusNav.isVisible()` 因此拒絕 focus，手把玩家
+  在 augment 最後一張 560ms／legendary 1260ms 內沒有任何可停留的目標。**刻意沒改**
+  （那時也不可點，讓它可 focus 等於讓手把選看不見的牌），要 owner 決定要不要給
+  「跳過翻牌」或先 focus 面板本身。
+- **rr-20**：真正的 per-round 統計（見上）。
+- **rr-21**：隊伍被淘汰後 `shopGate(...).mounted === false`，商店和戰報一起消失，觀戰者
+  看不到自己最後一回合的戰報。

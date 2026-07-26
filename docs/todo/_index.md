@@ -39,6 +39,7 @@ Regression suites always run **last** (enforced by the runner scheduler and the 
 | Victory settlement (stats + grade + rank + freeze) | [settlement.md](settlement.md) | game + client |
 | Victory fireworks (round volley + 吃雞 roast-chicken) | [victory-fireworks.md](victory-fireworks.md) | client |
 | 中場 intermission scene + centre-stage shop | [intermission.md](intermission.md) | game + client + content |
+| 上一回合戰報 (S~D 評價 + 改善建議) + 三選一無障礙名稱 | [round-report.md](round-report.md) | client |
 | Combat timing v2 (cast time + basic-attack overhaul) | [combat-timing.md](combat-timing.md) | game + content |
 | 戰鬥系統 global multipliers + admin dynamic config | [combat-env.md](combat-env.md) | game + platform + admin |
 | TTK tuning — maxHealth for round length (≥120s min, ~180s avg) | [ttk-tuning.md](ttk-tuning.md) | game + content |
