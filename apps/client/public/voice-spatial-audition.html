@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>語音空間混音試聽 — #259 遠近之分</title>
+<style>
+  :root { --bg:#07080c; --panel:#12161f; --line:#2a3145; --fg:#e8ecf6; --dim:#98a2bd;
+          --accent:#7dd3fc; --gold:#f0c674; --self:#7ec97e; --bad:#e07a7a; }
+  * { box-sizing:border-box; }
+  html,body { margin:0; }
+  body { background:var(--bg); color:var(--fg); padding:22px 16px 70px;
+         font:14.5px/1.6 -apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans TC",sans-serif; }
+  .wrap { max-width:1000px; margin:0 auto; }
+  h1 { font-size:21px; margin:0 0 4px; letter-spacing:.02em; }
+  h2 { font-size:14px; margin:26px 0 8px; color:var(--dim); text-transform:uppercase; letter-spacing:.09em; }
+  p  { margin:6px 0; color:var(--dim); font-size:13px; }
+  code { background:#0009; padding:1px 5px; border-radius:4px; font-size:12px; }
+  .panel { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px 16px; margin-top:12px; }
+  .row { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+  button { font:inherit; font-size:13px; color:var(--fg); background:#1d2334; border:1px solid var(--line);
+           border-radius:7px; padding:6px 12px; cursor:pointer; }
+  button:hover { border-color:var(--accent); }
+  button.on { border-color:var(--gold); background:#2a2211; color:var(--gold); }
+  button.play { border-color:var(--accent); background:#132330; color:var(--accent); font-size:15px; padding:9px 22px; }
+  select { font:inherit; font-size:13px; background:#1d2334; color:var(--fg); border:1px solid var(--line);
+           border-radius:7px; padding:6px 8px; max-width:100%; }
+  label.sl { display:block; margin-top:12px; }
+  label.sl b { color:var(--fg); font-weight:600; }
+  input[type=range] { width:100%; accent-color:var(--accent); }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin-top:12px; }
+  .stat { background:#0c1018; border:1px solid var(--line); border-radius:8px; padding:10px 12px; }
+  .stat .k { color:var(--dim); font-size:11px; text-transform:uppercase; letter-spacing:.08em; }
+  .stat .v { font-size:22px; font-variant-numeric:tabular-nums; margin-top:2px; }
+  .stat .n { color:var(--dim); font-size:11px; }
+  .stat.self .v { color:var(--self); }
+  table { border-collapse:collapse; width:100%; margin-top:10px; font-size:13px; }
+  th,td { border-top:1px solid var(--line); padding:6px 8px; text-align:right; font-variant-numeric:tabular-nums; }
+  th:first-child, td:first-child { text-align:left; }
+  th { color:var(--dim); font-weight:600; font-size:11.5px; text-transform:uppercase; letter-spacing:.06em; }
+  tr.hot td { background:rgba(125,211,252,.07); }
+  .bar { height:7px; background:#0c1018; border:1px solid var(--line); border-radius:4px; overflow:hidden; }
+  .bar i { display:block; height:100%; background:linear-gradient(90deg,#2a6f8f,#7dd3fc); }
+  #field { width:100%; height:230px; display:block; background:#0a0d14; border:1px solid var(--line);
+           border-radius:10px; touch-action:none; cursor:crosshair; }
+  .warn { border-color:#7f2d2d; background:#2a1212; color:#f0c0c0; }
+  .warn code { background:#0006; }
+  .tag { display:inline-block; border:1px solid var(--line); border-radius:99px; padding:1px 9px;
+         font-size:11px; color:var(--dim); margin-left:6px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>語音空間混音試聽 <span class="tag">#259 遠近之分</span></h1>
+<p>owner 原話：<b>「角色語音、音效這些都要有遠近空間之分，只有自己的才是全播放」</b>。
+   這一頁用的是<b>正式程式碼本身</b> —— <code>audio/voiceSpatial.ts</code> 算混音數字、
+   <code>audio/AudioSystem.playClip</code> 建同一條 WebAudio 鏈（<code>gain → panner → lowpass → sfxBus</code>）。
+   這裡聽到的就是對局裡聽到的；螢幕上的數字就是送進 AudioParam 的數字。</p>
+
+<div class="panel warn" id="err" style="display:none">
+  <b>載入失敗</b> — <span id="errmsg"></span><br>
+  這頁只在 <code>pnpm --filter @ggd/client dev</code> 下可用（它直接載入 <code>/src/audio/*.ts</code>）。
+  它<b>不會</b>進正式 bundle：<code>public/*.html</code> 不是 build entry。
+</div>
+
+<div class="panel">
+  <div class="row">
+    <span style="color:var(--dim);font-size:12px">英雄</span>
+    <select id="champ"></select>
+    <span style="color:var(--dim);font-size:12px">語音</span>
+    <select id="cat"></select>
+    <button class="play" id="play">▶ 播放</button>
+    <span id="status" style="color:var(--dim);font-size:12px"></span>
+  </div>
+
+  <h2 style="margin-top:18px">關係帶（誰在講話）</h2>
+  <div class="row" id="bands"></div>
+
+  <label class="sl">左右位置 <b id="xv">0.0</b> u
+    <span style="color:var(--dim);font-size:12px">（負 = 螢幕左，正 = 螢幕右）</span>
+    <input type="range" id="x" min="-30" max="30" step="0.5" value="6">
+  </label>
+  <label class="sl">前後位置 <b id="zv">0.0</b> u
+    <span style="color:var(--dim);font-size:12px">（正 = 畫面上方／遠離鏡頭 → 變暗；負 = 靠近鏡頭 → 永不濾波）</span>
+    <input type="range" id="z" min="-30" max="30" step="0.5" value="0">
+  </label>
+  <p id="dist"></p>
+</div>
+
+<canvas id="field" width="960" height="230"></canvas>
+<p>你 = 中央的綠點（level anchor＋dir anchor）。虛線圈是 <code>VOICE_FAR</code> 的可聞邊界，
+   圈外的<b>非交戰</b>語音<b>不會播放</b>（不是變小聲 —— 是根本不進 mixer，這樣另一組 duel 才搶不走 1.2 秒的語音格）。
+   直接在圖上點／拖也可以移動發聲者。</p>
+
+<div class="grid">
+  <div class="stat" id="cvol"><div class="k">volume</div><div class="v">–</div><div class="n"></div></div>
+  <div class="stat" id="cpan"><div class="k">pan</div><div class="v">–</div><div class="n"></div></div>
+  <div class="stat" id="clpf"><div class="k">lowpassHz</div><div class="v">–</div><div class="n"></div></div>
+  <div class="stat" id="cnode"><div class="k">node / voice</div><div class="v">–</div><div class="n"></div></div>
+</div>
+
+<h2>同一個距離下，五個關係帶各是多大聲</h2>
+<p>這張表是為了防止本題最可能的失敗：<b>把非自己的一律壓很低，團戰聽起來像空的</b>。
+   拉距離的時候盯著 <code>engaged</code>（你正在打的那一個）—— 它掉到聽不見就是做壞了。</p>
+<table id="bandtable">
+  <thead><tr><th>關係帶</th><th>volume</th><th>相對 dB</th><th style="width:38%">　</th><th>會播嗎</th></tr></thead>
+  <tbody></tbody>
+</table>
+
+<h2>距離曲線：語音 vs 音效</h2>
+<p>語音是<b>資訊</b>（誰在痛、誰死了），命中音是<b>質感</b>。所以 <code>voice</code> 這條曲線刻意比
+   <code>focus</code> 溫和 —— 在 30 u 的邊界上，語音是 −8.4 dB，命中音是 −17.5 dB。</p>
+<table id="curve">
+  <thead><tr><th>距離 (u)</th><th>voice</th><th>focus（命中）</th><th>texture（腳步）</th></tr></thead>
+  <tbody></tbody>
+</table>
+
+<h2>不會被空間化的東西</h2>
+<p>UI／商店／抽卡／倒數／播報員／觀眾歡呼／BGM 一律置中，這條界線寫在
+   <code>audio/spatialPolicy.ts</code> 的表裡，並由 <code>spatialPolicy.test.ts</code> 對著
+   audio-map 與語音 manifest 逐條掃描 —— 新增一個 UI 音而沒有分類，測試會紅。
+   你自己的語音（<code>self</code>）也在這一側：<b>volume 1、不 pan、不濾波、和距離無關</b>。</p>
+
+</div>
+
+<script type="module">
+const $ = (id) => document.getElementById(id);
+const fail = (msg) => { $("err").style.display = "block"; $("errmsg").textContent = msg; };
+
+let mod, spatial, audio;
+try {
+  mod = await import("/src/audio/voiceSpatial.ts");
+  spatial = await import("/src/audio/spatial.ts");
+  audio = (await import("/src/audio/AudioSystem.ts")).audioSystem;
+} catch (e) {
+  fail(String(e && e.message ? e.message : e));
+}
+
+const BANDS = [
+  ["self", "自己", "你的英雄 — 全播放"],
+  ["engaged", "交戰對象", "你正在互毆的那一個"],
+  ["enemy", "敵人", "場上其他敵人"],
+  ["ally", "隊友", "場上其他隊友"],
+  ["third", "第三方", "另一組人／中立"],
+];
+let band = "engaged";
+let pack = null;
+
+// ---- champion + category pickers, from the SHIPPED manifest ---------------
+try {
+  const res = await fetch("/content/assets/audio/voices/champions/MANIFEST.json");
+  pack = await res.json();
+} catch (e) {
+  fail("讀不到語音 MANIFEST：" + e);
+}
+const champSel = $("champ"), catSel = $("cat");
+if (pack) {
+  const ids = Object.keys(pack.champions || {}).filter((id) => !pack.champions[id].sharedFrom).sort();
+  for (const id of ids) {
+    const o = document.createElement("option");
+    o.value = id; o.textContent = id;
+    champSel.appendChild(o);
+  }
+  champSel.value = ids.includes("godie-e001") ? "godie-e001" : ids[0];
+  fillCats();
+}
+function fillCats() {
+  const lines = pack.champions[champSel.value]?.lines ?? {};
+  const prefer = ["hurt", "hurt-heavy", "defeat", "skill-name.q", "crit", "stun"];
+  const cats = Object.keys(lines).sort((a, b) => {
+    const ia = prefer.indexOf(a), ib = prefer.indexOf(b);
+    return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib) || a.localeCompare(b);
+  });
+  catSel.innerHTML = "";
+  for (const c of cats) {
+    const o = document.createElement("option");
+    o.value = c; o.textContent = c;
+    catSel.appendChild(o);
+  }
+}
+champSel.onchange = fillCats;
+
+// ---- band buttons ---------------------------------------------------------
+for (const [id, label, hint] of BANDS) {
+  const b = document.createElement("button");
+  b.textContent = label;
+  b.title = hint;
+  b.dataset.band = id;
+  b.onclick = () => { band = id; paintBands(); render(); };
+  $("bands").appendChild(b);
+}
+function paintBands() {
+  for (const b of $("bands").children) b.classList.toggle("on", b.dataset.band === band);
+}
+paintBands();
+
+// ---- the mix --------------------------------------------------------------
+const LISTENER = { levelX: 0, levelZ: 0, dirX: 0, dirZ: 0 };
+function mixFor(b, x, z) {
+  return mod.voiceSpatialMix(LISTENER, { audience: b, pos: { x, z } });
+}
+function dB(v) { return v <= 0 ? "−∞" : (20 * Math.log10(v)).toFixed(1); }
+
+function render() {
+  if (!mod) return;
+  const x = Number($("x").value), z = Number($("z").value);
+  $("xv").textContent = x.toFixed(1);
+  $("zv").textContent = z.toFixed(1);
+  const d = Math.hypot(x, z);
+  $("dist").textContent =
+    `離你 ${d.toFixed(2)} u　·　可聞邊界 VOICE_FAR = ${spatial.VOICE_FAR} u　·　` +
+    `跨 duel zone 的最短距離是 32 u（所以另一組的語音永遠聽不到）`;
+
+  const mix = mixFor(band, x, z);
+  const opts = mix ? mod.voicePlayOptions(mix) : null;
+  const setStat = (el, v, note, isSelf) => {
+    el.querySelector(".v").textContent = v;
+    el.querySelector(".n").textContent = note;
+    el.classList.toggle("self", !!isSelf);
+  };
+  if (!mix) {
+    setStat($("cvol"), "—", "超出可聞範圍：不播放");
+    setStat($("cpan"), "—", "");
+    setStat($("clpf"), "—", "");
+    setStat($("cnode"), "0", "沒有任何 node 被建立");
+  } else {
+    const flat = band === "self";
+    setStat($("cvol"), mix.volume.toFixed(3), flat ? "全播放（與距離無關）" : `${dB(mix.volume)} dB`, flat);
+    setStat($("cpan"), opts.pan === undefined ? "略過" : mix.pan.toFixed(3),
+      opts.pan === undefined ? `|pan| < ${spatial.PAN_SKIP} → 不建 panner` : (mix.pan < 0 ? "偏左" : "偏右"), flat);
+    setStat($("clpf"), opts.lowpassHz === undefined ? "略過" : Math.round(mix.lowpassHz) + " Hz",
+      opts.lowpassHz === undefined ? "沒有往畫面上方 → 不濾波" : "越遠越暗", flat);
+    const n = 1 + (opts.pan !== undefined ? 1 : 0) + (opts.lowpassHz !== undefined ? 1 : 0);
+    setStat($("cnode"), String(n), n === 1 ? "和空間化之前一樣" : "gain + " + (n - 1) + " 個插入", flat);
+  }
+
+  const tb = $("bandtable").querySelector("tbody");
+  tb.innerHTML = "";
+  for (const [id, label] of BANDS) {
+    const m = mixFor(id, x, z);
+    const tr = document.createElement("tr");
+    if (id === band) tr.className = "hot";
+    const v = m ? m.volume : 0;
+    tr.innerHTML =
+      `<td>${label} <span style="color:var(--dim)">${id}</span></td>` +
+      `<td>${m ? v.toFixed(3) : "—"}</td>` +
+      `<td>${m ? dB(v) : "—"}</td>` +
+      `<td><div class="bar"><i style="width:${Math.round(v * 100)}%"></i></div></td>` +
+      `<td style="color:${m ? "var(--fg)" : "var(--bad)"}">${m ? "會" : "不播"}</td>`;
+    tb.appendChild(tr);
+  }
+  draw(x, z);
+}
+
+// ---- the field ------------------------------------------------------------
+const cv = $("field"), g = cv.getContext("2d");
+const SCALE = 3.4; // px per world unit
+function draw(sx, sz) {
+  const w = cv.width, h = cv.height, cx = w / 2, cy = h / 2;
+  g.clearRect(0, 0, w, h);
+  g.strokeStyle = "#1b2130"; g.lineWidth = 1;
+  for (let u = -40; u <= 40; u += 5) {
+    g.beginPath(); g.moveTo(cx + u * SCALE, 0); g.lineTo(cx + u * SCALE, h); g.stroke();
+    g.beginPath(); g.moveTo(0, cy + u * SCALE); g.lineTo(w, cy + u * SCALE); g.stroke();
+  }
+  g.setLineDash([5, 5]); g.strokeStyle = "#3d4a6b";
+  g.beginPath(); g.arc(cx, cy, spatial.VOICE_FAR * SCALE, 0, Math.PI * 2); g.stroke();
+  g.setLineDash([]);
+  g.fillStyle = "#7ec97e";
+  g.beginPath(); g.arc(cx, cy, 6, 0, Math.PI * 2); g.fill();
+  g.fillStyle = "#98a2bd"; g.font = "12px sans-serif";
+  g.fillText("你", cx + 10, cy + 4);
+  g.fillText("← 螢幕左", 8, cy - 8);
+  g.fillText("畫面上方（遠離鏡頭）→ 變暗", 8, 16);
+  const px = cx + sx * SCALE, py = cy + sz * SCALE;
+  const m = mixFor(band, sx, sz);
+  g.strokeStyle = m ? "#7dd3fc" : "#e07a7a"; g.lineWidth = 2;
+  g.beginPath(); g.moveTo(cx, cy); g.lineTo(px, py); g.stroke();
+  g.fillStyle = m ? "#7dd3fc" : "#e07a7a";
+  g.beginPath(); g.arc(px, py, 7, 0, Math.PI * 2); g.fill();
+}
+function pick(ev) {
+  const r = cv.getBoundingClientRect();
+  const k = cv.width / r.width;
+  const x = ((ev.clientX - r.left) * k - cv.width / 2) / SCALE;
+  const z = ((ev.clientY - r.top) * k - cv.height / 2) / SCALE;
+  $("x").value = Math.max(-30, Math.min(30, x)).toFixed(1);
+  $("z").value = Math.max(-30, Math.min(30, z)).toFixed(1);
+  render();
+}
+cv.onpointerdown = (e) => { cv.setPointerCapture(e.pointerId); pick(e); };
+cv.onpointermove = (e) => { if (e.buttons) pick(e); };
+
+// ---- the curve table ------------------------------------------------------
+{
+  const tb = $("curve").querySelector("tbody");
+  for (const d of [0, 2, 4, 6, 8, 10, 12, 14, 16, 20, 25, 30]) {
+    const tr = document.createElement("tr");
+    const cell = (cls) => {
+      const far = spatial.farCutoff(cls);
+      if (d > far) return `<td style="color:var(--dim)">— 已超出 ${far}u —</td>`;
+      const v = spatial.distanceGain(d, cls);
+      return `<td>${v.toFixed(3)} <span style="color:var(--dim)">${dB(v)} dB</span></td>`;
+    };
+    tr.innerHTML = `<td>${d}</td>${cell("voice")}${cell("focus")}${cell("texture")}`;
+    tb.appendChild(tr);
+  }
+}
+
+// ---- playback: the REAL mixer, on a real user gesture ---------------------
+let ready = false;
+$("play").onclick = async () => {
+  if (!audio || !pack) return;
+  const st = $("status");
+  try {
+    if (!ready) {
+      await audio.loadMap();
+      audio.unlock();
+      ready = true;
+    }
+    const x = Number($("x").value), z = Number($("z").value);
+    const mix = mixFor(band, x, z);
+    if (!mix) { st.textContent = "超出可聞範圍 —— 這一句不會播（刻意的）"; return; }
+    const lines = pack.champions[champSel.value]?.lines?.[catSel.value] ?? [];
+    if (lines.length === 0) { st.textContent = "這個英雄沒有這一句"; return; }
+    const clip = lines[Math.floor(Math.random() * lines.length)].clip;
+    const ok = audio.playClip(clip, mod.voicePlayOptions(mix));
+    st.textContent = ok
+      ? `▶ ${clip.split("/").pop()}　volume ${mix.volume.toFixed(3)}`
+      : "mixer 拒絕播放（靜音／未解鎖？）";
+  } catch (e) {
+    fail(String(e && e.message ? e.message : e));
+  }
+};
+
+$("x").oninput = render;
+$("z").oninput = render;
+render();
+</script>
+</body>
+</html>

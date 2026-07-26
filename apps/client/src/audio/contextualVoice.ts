@@ -163,6 +163,28 @@ export interface ContextualPlayOptions {
    * never be given this or the throttle stops being a ceiling.
    */
   preempt?: boolean;
+  /**
+   * ── the spatial mix (#259) ──────────────────────────────────────────────
+   * Three PLAIN NUMBERS, computed by `audio/voiceSpatial` from the listener
+   * frame that only `GameApp` holds, and handed straight to
+   * `AudioSystem.playClip`. This is the shape the census called for and it is
+   * the one the file header already committed to: the audio layer still has no
+   * idea what a localId, a relation or a distance is, and it still must not
+   * start. A conveyor belt for mix numbers is not knowledge of geometry.
+   *
+   * Absent = today's behaviour exactly (`volume: 1`, no panner, no filter), so
+   * every existing caller — the champ-select quip, the settlement quote, the
+   * kill lines — is byte-identical.
+   */
+  /** 0..1 multiplier on the clip's level. Default 1. NEVER above 1: the SFX bus
+   *  has no clamp above unity (`audioSelect.sfxVoiceMultiplier`), and `hurt` /
+   *  `defeat` are already among the loudest clips in the pack. */
+  volume?: number;
+  /** stereo pan; OMIT (do not pass 0) when inaudible — a present `pan` is what
+   *  makes the mixer allocate a StereoPannerNode per voice. */
+  pan?: number;
+  /** 前後 low-pass cutoff in Hz; omit when the source is not up-screen. */
+  lowpassHz?: number;
 }
 
 export interface ContextualVoiceOptions {
@@ -288,7 +310,17 @@ export class ContextualVoicePlayer {
     const release = (): void => {
       this.activeClips.delete(clip);
     };
-    const ok = this.audio.playClip(clip, { volume: 1, onEnded: release });
+    // #259: the spatial mix, when the call site had a listener frame to compute
+    // one from. `pan` / `lowpassHz` are OMITTED rather than passed as 0/∞ so a
+    // centred line still allocates exactly one node (see voiceSpatial
+    // .voicePlayOptions and AudioSystem.makeSpatialChain). No mix ⇒ the old
+    // `volume: 1`, byte-identical.
+    const ok = this.audio.playClip(clip, {
+      volume: clamp01(opts?.volume ?? 1),
+      ...(typeof opts?.pan === "number" ? { pan: opts.pan } : {}),
+      ...(typeof opts?.lowpassHz === "number" ? { lowpassHz: opts.lowpassHz } : {}),
+      onEnded: release,
+    });
     if (!ok) {
       // play refused synchronously (disposed / a mid-flight lock) — don't leak.
       release();

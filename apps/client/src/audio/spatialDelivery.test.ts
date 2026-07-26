@@ -402,8 +402,11 @@ describe("the queue is WIRED into the frame loop (spatial-delivery)", () => {
       .replace(/\/\/[^\n]*/g, "");
     // pushed at the event drain, with the SAME position resolver the VFX uses
     expect(src).toMatch(/this\.sfxQueue\.push\(sfxKey, resolveSpatial\(/);
-    // and flushed into the REAL mixer, not a stub
-    expect(src).toMatch(/this\.sfxQueue\.flush\(\s*this\.audioListener\(/);
+    // and flushed into the REAL mixer, not a stub. #259 hoisted the listener
+    // into a local so the VOICE flush can share the exact same frame — the two
+    // fields must never be computed from different camera states.
+    expect(src).toMatch(/const listener = this\.audioListener\(localPose\);/);
+    expect(src).toMatch(/this\.sfxQueue\.flush\(listener,/);
     expect(src).toContain("audioSystem.playSfx(key, opts)");
     // the flush must come AFTER the camera update, or the listener is a frame
     // stale — asserted by position, since that ordering is the whole reason the
