@@ -696,3 +696,56 @@ frame mean 9.12–15.36 → **18.38–23.05 ms**；p95 24.7–42.9 → **52.0–
    密度的錢從 draw call 出不是從粒子預算出（`SCREEN_SYSTEM_BUDGET 64` 才是天花板，
    `SCREEN_PARTICLE_BUDGET 8000` 只用了 8.6%）。
 4. `celebrationGate.test.ts:91` 的期望值要寫死，不可以從被測常數導出。
+
+---
+
+## #272 已合併 —— 兩條對抗驗證都沒推翻，而且驗得比實作還硬
+
+**ping 晶片**照版本徽章的模子複製，沒有發明新機制：`<body>` portal
+（逃出 `#hud-root` 的 z-index 10 stacking context）＋ `pointer-events:none`
+（**這才是「蓋在所有東西上還安全」的真正依據**，不是 z-index）＋下緣 10px 保留帶。
+徽章占中央 280px，晶片占左端 —— 右端不能用，因為 780×360 觸控＋商店左靠時
+displaced 的 ☰ 落在**離下緣只剩 8px**。
+
+**六個狀態**，因為 `perfBus.pingMs` 單獨印出來會說謊：
+第一次 ack 之前是 0；玩家站著不動（`IntentSender.update()` 沒 pending order 就不送封包
+→ seq 不前進 → ack 不前進）、死亡或實體離場、replay 頁三種會**無聲凍結**。
+375px 只剩 47.5px 時階梯先丟中文詞、改帶 ASCII 記號，**數字永遠最後才丟**。
+
+順手修兩個真 bug：`Show ping` 原本是**死開關**（整個 overlay 在 `showPerfOverlay=false`
+（預設）時 `return null`）；真斷線**永遠不會變 offline**（`quality()` 只在「從未收過快照」時回 offline）。
+
+### 驗證方式值得記下來（這是本專案至今最紮實的兩條）
+
+一條**自己寫了一支 TCP 延遲代理**插在 client 與 game-server 之間，雙向各延遲 D：
+
+| 注入 RTT | 晶片字串 | 相對基線 |
+|---|---|---|
+| 0 | 順暢 34 ms · 抖動 1 ms | — |
+| 100 ms | 普通 138 ms | **+103.5 / +104.9** |
+| 200 ms | 延遲 238 ms | **+203.4 / +203.8** |
+| 回到 0 | 順暢 34 ms | 回得來，沒卡住 |
+
+另一條寫了一支**對照 pre-#272 `planTicks` 的差分測試，跑 200,000 組輸入**
+（隨機＋對抗性：0、−1、NaN、±Infinity、剛好 tick 倍數、差 1 ulp、5×/6× tick、60 秒），
+`steps` / `accumulator`（用 `Object.is` 比，所以 NaN 與 −0 也算）/ `dropped`
+**每一組都相同**。並實際 `kill -STOP` 3 秒製造落後，拿到
+`shedEvents 1 / shedTicks 85 / shedBehindMs 2833.333`，是**它自己的 match id**，所以是推導不是抄的。
+
+### 伺服器那半修的是 shed 永遠看不到的那一種
+
+`MatchRoom` 用 `TICK_MS/2`（16.7ms）驅動迴圈，累積器要欠到 ~200ms 才 shed 一次。
+所以**一個每 tick 花 40ms 對 33.3ms 預算的房間永遠落後 20%，而 `shedEvents` 是 0**。
+`tickHealth.ts` 的 p50/p95/p99（512 筆 `Float64Array` ring buffer）就是為了這個。
+真實 bot 局抓到 `tickP50Ms=0.54 tickP99Ms=6.333 tickMaxMs=49.555`。
+
+### 合併後我補的一刀
+
+驗證者量到 `pingMs` 的**地板是 ~34ms** —— 兩層 30Hz 量化（伺服器只在 tick 邊界消費輸入、
+ack 只搭下一個 state patch 回來），任何頻寬都消不掉。
+所以裸 60/140 的門檻代表 **~26/~106 ms 的真實網路 RTT**，對每個連線良好的玩家都低估一階。
+owner 家人在台灣連 asia-east1（真實 RTT 約 5–40ms）→ 顯示 39–74ms →
+**大部分人在完美連線下會一直看到「普通」。**
+
+→ 改成 `PING_PROTOCOL_FLOOR_MS(34) + 原本的 26/106 預算`。抖動不需要修正
+（它量的是對名目節拍的偏差，量化在裡面自己抵銷）。變異證明：退回裸 60/140 → 2 紅。
