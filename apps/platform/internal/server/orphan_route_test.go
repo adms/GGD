@@ -177,11 +177,24 @@ var knownOrphans = map[string]string{
 		"the batch form above: no sender exists in apps/game-server.",
 
 	// ---- shipped backend, unbuilt front half ------------------------------
-	// NOT in the audit document — this test found these two on its first run,
+	// NOT in the audit document — this test found these on its first run,
 	// which is the only evidence that matters for whether it was worth writing.
-	"GET /api/v1/announcements": "the PUBLIC announcement feed. The admin console can create, edit and " +
-		"activate announcements (admin/src/api.ts:134-161) and no UI anywhere reads them back — so an " +
-		"operator can publish a notice that literally no player can see.",
+	//
+	// `GET /api/v1/announcements` USED TO BE THE FIRST LINE OF THIS BLOCK, and
+	// it is gone because the front half shipped (#259): the lobby fetches the
+	// feed on entry (client/src/ui/platform/store.ts refreshAnnouncement, in
+	// the same landing fan-out as friends/wallet) and pops it as a dismissible
+	// 大廳公告 (client/src/ui/platform/LobbyAnnouncement.tsx). This test is what
+	// forced the deletion — it went red with "a front-end calls it now" — which
+	// is the shrink-only behaviour the file promises, observed working.
+	//
+	// Worth recording for the next entry here: the ledger caught the orphan
+	// but the ledger is not a test of the FIX. Nothing in it can tell whether
+	// the UI that removes an entry actually puts anything on a player's screen,
+	// because a single `api.request("/announcements")` anywhere in apps/client
+	// retires the line. The companion assertion is
+	// client/src/ui/platform/announcements.test.ts, which renders the real
+	// LobbyScreen and looks for the operator's own words in the markup.
 	"POST /api/v1/ai/music": "#53's 一鍵 BGM pack generation. The provider config UI exists (musicBaseUrl / " +
 		"musicModel / musicReady in admin/src/ai.ts) and there is no button that spends it.",
 

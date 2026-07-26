@@ -371,3 +371,23 @@ export function buyItem(kind: "champion" | "skin", id: string): Promise<Wallet> 
 export function equipSkin(championId: string, skinId: string | null): Promise<Wallet> {
   return api.request<Wallet>("/store/equip", { body: { championId, skinId } });
 }
+
+// ------------------------------------------------------- announcements ----
+
+/**
+ * 大廳公告 — the ACTIVE operator announcements (task #259).
+ *
+ * `auth: false` is not an oversight and not a laxity: the route is registered by
+ * `admin.Handlers.MountPublic` on the platform's PUBLIC router, above
+ * `pr.Use(s.Auth.Middleware)`, and the response is the `PublicAnnouncement`
+ * projection with `active`/`updatedAt` stripped. Sending a Bearer header would
+ * be pointless, and — the reason it matters — it would make the feed fail for a
+ * player whose access token has just expired, at exactly the moment the lobby
+ * is loading. An announcement must never depend on session freshness.
+ *
+ * The raw body is returned UNPARSED so `./announcements.parseAnnouncementFeed`
+ * can be the single, total, defensive reader of the wire shape.
+ */
+export function publicAnnouncements(): Promise<unknown> {
+  return api.request<unknown>("/announcements", { auth: false });
+}

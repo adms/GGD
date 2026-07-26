@@ -5,8 +5,8 @@
  * the `set` closure inside the creator (no external .setState calls).
  * main.tsx subscribes to `screen` to boot/dispose the imperative GameApp.
  */
+import { useCallback, useSyncExternalStore } from "react";
 import { createStore } from "zustand/vanilla";
-import { useStore } from "zustand";
 import { registerSkeletonContent } from "@ggd/shared/sim/content/skeleton";
 import { Champions } from "@ggd/shared/sim/content/registry";
 import type { ChampionId } from "@ggd/shared/ids";
@@ -30,6 +30,15 @@ import {
   type PurchaseState,
 } from "./purchase";
 import { buildSkinOverrides } from "./catalog";
+import {
+  announcementView,
+  browserDismissStorage,
+  markDismissed,
+  parseAnnouncementFeed,
+  readDismissed,
+  writeDismissed,
+  type PublicAnnouncement,
+} from "./announcements";
 import { ensureContentLoaded } from "../../content/bootContent";
 import { isPlatformRestrictedError, OFFLINE_RESTRICTED_MESSAGE } from "./firstOwner";
 import { restartAction, ONLINE_RESTART_NOTE } from "./restart";
@@ -161,6 +170,19 @@ export interface AppState {
   skinDocs: Map<string, SkinDoc>;
   purchase: PurchaseState;
 
+  // ---- 大廳公告 (task #259) ----------------------------------------------
+  /**
+   * The newest ACTIVE announcement from the platform's public feed, or null —
+   * null being every ordinary case: no announcement published, the feed
+   * unreachable, or this browser already closed the current one. The lobby
+   * renders identically to today whenever this is null, which is the whole
+   * fail-quiet contract: a platform hiccup must not change the lobby at all.
+   */
+  announcement: PublicAnnouncement | null;
+  /** true while the popup is on screen. Closing it hides the popup but keeps
+   *  `announcement` set, so 📢 公告 in the header can reopen the same one. */
+  announcementOpen: boolean;
+
   match: MatchLaunch | null;
   /** login→battle handoff (task #74): a launch held behind the loading bar */
   matchLoading: MatchLoading | null;
@@ -271,6 +293,18 @@ export interface AppState {
   viewRankChange(): void;
   dismissRankChange(): void;
 
+  /**
+   * Pull the public announcement feed and decide whether anything should pop up
+   * (task #259). Runs on every lobby entry. NEVER throws and never sets
+   * `lastError` — an unreachable feed is not something to interrupt a player
+   * with, it is something to be silent about.
+   */
+  refreshAnnouncement(): Promise<void>;
+  /** 「知道了」 — close the popup and remember this id so it will not nag again. */
+  dismissAnnouncement(): void;
+  /** 📢 公告 in the lobby header — reopen the announcement after dismissing it. */
+  openAnnouncement(): void;
+
   purchaseBegin(item: PurchaseItem): void;
   purchaseCancel(): void;
   purchaseConfirm(): Promise<void>;
@@ -356,6 +390,13 @@ export const appStore = createStore<AppState>()((set, get) => {
       s.refreshRankedLadder(),
       s.refreshWallet(),
       s.refreshCatalog(),
+      // 大廳公告 (#259). Sits in the SAME landing fan-out as friends/rooms/
+      // wallet rather than in a component effect, because "the lobby loads its
+      // data here" is the one place a reviewer looks to answer "does anything
+      // read the announcement feed?" — and for four releases the answer was no.
+      // It is fail-quiet (see refreshAnnouncement), so it can never fail this
+      // Promise.all and strand a player on a half-loaded lobby.
+      s.refreshAnnouncement(),
     ]);
   }
 
@@ -437,6 +478,8 @@ export const appStore = createStore<AppState>()((set, get) => {
     catalog: null,
     skinDocs: new Map(),
     purchase: purchaseIdle,
+    announcement: null,
+    announcementOpen: false,
     match: null,
     matchLoading: null,
     matchEpoch: 0,
@@ -564,6 +607,11 @@ export const appStore = createStore<AppState>()((set, get) => {
         wallet: null,
         catalog: null,
         purchase: purchaseIdle,
+        // The next person to sign in on this machine re-fetches the feed on
+        // their own lobby entry; leaving the last session's announcement in
+        // state would pop it over THEIR first lobby paint.
+        announcement: null,
+        announcementOpen: false,
         match: null,
         matchLoading: null,
         botMatchBusy: false,
@@ -984,6 +1032,40 @@ export const appStore = createStore<AppState>()((set, get) => {
       set({ showRankChange: false });
     },
 
+    // ------------------------------------------------- 大廳公告 (#259) --
+
+    async refreshAnnouncement() {
+      try {
+        const feed = parseAnnouncementFeed(await apiFns.publicAnnouncements());
+        const view = announcementView(feed, readDismissed(browserDismissStorage()));
+        // TWO SEPARATE FACTS, deliberately:
+        //   `announcement`     — what the operator has published (or null).
+        //   `announcementOpen` — whether it should INTERRUPT this player now.
+        // Dismissal only answers the second. Collapsing them (storing only the
+        // announcement that is still pending) was the first cut, and it threw
+        // the text away on the next page load: the 📢 公告 chip vanished, so a
+        // player who closed the popup before reading it had no way back to it.
+        // Found by driving a browser, not by reading the code.
+        set({ announcement: view.current, announcementOpen: view.open });
+      } catch {
+        // Platform down, feed 404 on an old build, offline, garbage body — the
+        // lobby is unchanged and the player is never told. An announcement
+        // system that breaks the lobby is worse than no announcement system.
+      }
+    },
+
+    dismissAnnouncement() {
+      const current = get().announcement;
+      set({ announcementOpen: false });
+      if (!current) return;
+      const storage = browserDismissStorage();
+      writeDismissed(storage, markDismissed(readDismissed(storage), current.id));
+    },
+
+    openAnnouncement() {
+      if (get().announcement) set({ announcementOpen: true });
+    },
+
     // ------------------------------------------------------------ store --
 
     purchaseBegin(item) {
@@ -1067,7 +1149,32 @@ export const appStore = createStore<AppState>()((set, get) => {
   };
 });
 
-/** React hook over the vanilla store. */
+/**
+ * React hook over the vanilla store.
+ *
+ * WHY THIS IS HAND-ROLLED INSTEAD OF `useStore(appStore, selector)`.
+ * The client-side half is IDENTICAL to zustand's own `useStore` — same
+ * `useSyncExternalStore`, same `useCallback([selector])` memo, so no extra
+ * subscribe churn and no behaviour change in the browser. The difference is the
+ * THIRD argument, the server snapshot: zustand passes `api.getInitialState`,
+ * so anything rendered through `react-dom/server` sees the store as it was at
+ * module load, no matter what has been `setState`d since.
+ *
+ * That is not an abstract concern here. `react-dom/server`'s
+ * `renderToStaticMarkup` is how this repo's client tests render React at all —
+ * the vitest env is `node`, there is no DOM — and several suites do
+ * `appStore.setState({...})` and then render a screen. Under zustand's default
+ * every one of those writes was invisible to the markup: the tests passed on
+ * the parts that are static text and could not have caught a store-driven
+ * element that fails to appear. That is the same class of hole that let #93,
+ * #247 and 蒼月潮 ship invisible, and #259's announcement popup is entirely
+ * store-driven, so it had to be closed before its test could mean anything.
+ *
+ * Production is untouched: this app never server-renders and never hydrates
+ * (main.tsx uses `createRoot().render`), so React never asks for the server
+ * snapshot outside a test.
+ */
 export function useApp<T>(selector: (s: AppState) => T): T {
-  return useStore(appStore, selector);
+  const snapshot = useCallback(() => selector(appStore.getState()), [selector]);
+  return useSyncExternalStore(appStore.subscribe, snapshot, snapshot);
 }

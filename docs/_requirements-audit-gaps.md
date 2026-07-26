@@ -3825,3 +3825,49 @@ Round 2 備戰＋三選一＋傳說武器三選一。
 修好前 changedPixels = 0，修好後 3.0–3.4%）以及對抗式驗證者**自己重跑一次**並打開 PNG
 （「看得到金色牡丹、冰藍彗星和拖尾」）。那比我用肉眼瞄一眼更強，但**不等於我看過了**。
 下次試玩要專門守在回合結束那一刻。
+
+---
+
+## 2026-07-26 · #259 大廳公告：S6 的第一次「真的關掉」，以及棘輪本身的盲點
+
+**需求原話**：「給玩家看的公告 應該是玩家會在大廳跳出訊息看到才對」。
+
+**缺口**：後端整條早就在了 —— `internal/admin/announcements.go` 存、`PublicFeed` 只放
+active、`handlers.go:62 MountPublic` 掛在**未驗證**的 `/api/v1/announcements`，後台
+`AnnouncementsPage.tsx` 連「Active (shown to players)」勾選框和玩家端預覽都做了。
+**client 端一行都沒有**：`grep -rl announcement apps/client/src` 只回 `castAnnounce.ts`
+和 `abilityCue.ts`，那是戰鬥中的施法播報，完全無關。這是 **S6（後端做完、前端沒有入口）**。
+
+**已做**：`apps/client/src/ui/platform/announcements.ts`（純模型：解析／取最新／已讀清單）
+· `LobbyAnnouncement.tsx`（跳出式公告，保留版本號徽章帶狀區）· `store.ts` 的
+`refreshAnnouncement()` 放進 `enterLobby` 的同一批 fan-out（跟 friends／wallet 同層）。
+呈現決定：**跳出**（owner 說「跳出」），但**每則只跳一次**（id 記在 localStorage），
+換一則新的才會再跳；已關掉的仍留 📢 公告 chip 可重看 —— 關掉是「別再打斷我」，不是「刪掉」。
+
+### 這一輪真正的收穫：**棘輪抓到了它，但棘輪不是修好的證據**
+
+`apps/platform/internal/server/orphan_route_test.go`（S6 的 CI 形式）**早就把這條路由
+記在 `knownOrphans` 裡**，描述一字不差：「an operator can publish a notice that literally
+no player can see」。它做對了它該做的事 —— 本次 client 接上之後，那支測試自己紅了，訊息是
+"knownOrphans still lists ... but a front-end calls it now. Fixed — delete that line"，
+於是那一列被刪掉（shrink-only 行為**實測有效**）。
+
+但要誠實記下它的**盲點**：孤兒路由帳本只問「有沒有人呼叫」。
+**apps/client 裡任何一行 `api.request("/announcements")` 都能讓那一列消失**，
+即使那個回應被丟進一個永遠不 render 的 state。它抓得到 #93／#247／蒼月潮那一類
+「蓋好了沒人看到」的**上游**，抓不到**下游**。所以配套斷言是
+`apps/client/src/ui/platform/announcements.test.ts`：它跑**真的 `LobbyScreen`**
+（`renderToStaticMarkup`），在 markup 裡找 operator 自己打的字。
+
+> **給下一條 S6 的規範**：從 `knownOrphans` 刪掉一列時，**必須同時附上一條「玩家看得到」
+> 的斷言**。刪掉那一列只證明有人呼叫了 API。
+
+### 順帶修掉的一個更廣的洞（不在需求裡，但它讓上面那條斷言變得可能）
+
+zustand 的 `useStore` 把 **`api.getInitialState`** 當 server snapshot。這個 repo 的 client
+測試環境是 `node`，唯一的 React 渲染手段是 `react-dom/server` 的 `renderToStaticMarkup` ——
+所以**每一支「`appStore.setState({...})` 之後渲染畫面」的既有測試，寫進去的 state 從來沒被
+畫出來過**（實測：設 `account.username` 後渲染 `LobbyScreen`，markup 裡找不到那個名字）。
+那些測試只驗到靜態文字，任何 store 驅動的元素消失都不會紅。`useApp` 改成手寫
+`useSyncExternalStore(subscribe, snap, snap)`（client 端行為與 zustand 完全相同，
+差別只有第三個參數；production 不做 SSR／hydration，所以碰不到）。改完 287 檔 / 3362 test 全綠。
