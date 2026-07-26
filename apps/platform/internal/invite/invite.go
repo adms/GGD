@@ -72,6 +72,11 @@ const (
 	StatusRevoked  = "revoked"
 	// StatusExpired is only ever a DERIVED value (EffectiveStatus / the console).
 	StatusExpired = "expired"
+	// StatusUnknown is likewise never stored: it is what StatusOf reports for a
+	// code this store has no document for — including one it could not read. It
+	// means "not usable, and nothing more can be said", which is the same
+	// fail-closed direction Redeem takes on an unreadable store.
+	StatusUnknown = "unknown"
 )
 
 // Mint limits.
@@ -501,6 +506,45 @@ func (s *Service) ReferrerOf(ctx context.Context, rawCode string) (string, error
 		return "", err
 	}
 	return doc.ReferrerID, nil
+}
+
+// StatusOf reports the DERIVED lifecycle of one code — StatusActive,
+// StatusRedeemed, StatusExpired, StatusRevoked, or StatusUnknown.
+//
+// WHY THIS EXISTS (task #237). A code's spent-ness is written in exactly one
+// place: the document under DATA_DIR/invites. Anything that keeps its OWN copy
+// of a code — account.ReferralCode is the one that exists, pinned at
+// registration by #203 so the lobby can show a player their personal code — is a
+// MIRROR of that document, and this codebase has now been bitten twice by a
+// mirror nobody reconciles. Redeem correctly burns the document; the account
+// field is written once and never again, so every surface reading the field kept
+// offering a credential the gate would refuse. The fix is not a second write on
+// the burn path (that is another mirror, with its own failure window): it is to
+// DERIVE the display state from the document at read time, exactly as
+// EffectiveStatus already derives expiry.
+//
+// FAIL CLOSED, deliberately. A code this store cannot read reports
+// StatusUnknown (never StatusActive), so a transient store error can only ever
+// hide a live code — never advertise a dead one. That is the same direction
+// Redeem takes when it cannot read the store, and it is the safe one here for
+// the same reason: the caller's question is "may I still offer this to somebody?"
+//
+// It is NOT a public "is this code valid?" oracle: it takes a code the CALLER
+// already owns (their own account's referral code, or an operator's listing),
+// and every route that reaches it is authenticated. See the package header.
+func (s *Service) StatusOf(ctx context.Context, rawCode string) (string, error) {
+	id := Normalize(rawCode)
+	if id == "" {
+		return StatusUnknown, nil
+	}
+	doc, err := s.get(id)
+	if err != nil {
+		if errors.Is(err, jsonstore.ErrNotFound) {
+			return StatusUnknown, nil
+		}
+		return StatusUnknown, err
+	}
+	return doc.EffectiveStatus(s.now().UTC()), nil
 }
 
 // mintOne writes a single code, retrying on the (astronomically unlikely)

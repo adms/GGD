@@ -29,8 +29,20 @@ export interface AccountPublic {
    * GGD-XXXX-XXXX. Share it so a friend can register — and, if you are still
    * pending, their successful registration auto-approves you. Omitted on a
    * non-gated deploy (no invite system) or accounts that predate the feature.
+   *
+   * PRESENT ONLY WHILE THE CODE IS STILL REDEEMABLE (#237). The server withholds
+   * it the moment the code is spent/expired/revoked, so this field is safe to
+   * put straight into a copy box: if it is here, it works. Read
+   * `referralCodeStatus` to find out what happened to a code that is gone.
    */
   referralCode?: string;
+  /**
+   * Lifecycle of THIS account's personal referral code, derived server-side from
+   * the invite store (#237): "active" | "redeemed" | "expired" | "revoked" |
+   * "unknown". Present whenever the account has a code at all — including after
+   * it was spent, which is the case `referralCode` deliberately stops covering.
+   */
+  referralCodeStatus?: string;
 }
 
 export interface SessionResp {

@@ -48,6 +48,9 @@
  * the minimap guard can prove the map lands on empty screen.
  */
 import type { CSSProperties } from "react";
+// task #245: the build stamp's reserved bottom strip. Imported rather than
+// re-stated so the badge's own geometry and this contract cannot disagree.
+import { VERSION_BADGE_BAND_PX, VERSION_BADGE_BAND_W_PX } from "@ggd/shared/versionBadge";
 
 export type HudCorner = "top-left" | "top-right" | "bottom-left" | "bottom-right";
 
@@ -809,6 +812,65 @@ export function hudPanelCovers(id: HudPanelId, viewport: HudViewport): HudCorner
 /** A slot that opts out of yielding: it rides above panels, or accepts cover. */
 export function isPanelExempt(spec: HudSlotSpec): boolean {
   return !!spec.portal || !!spec.overlay;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ * THE BUILD-STAMP BAND (task #245, inside the #107 contract).
+ *
+ * The version badge (ui/VersionBadge.tsx) is the one piece of chrome that must
+ * be visible on EVERY screen — lobby, champion select, battle, shop,
+ * settlement, replay — because the owner's whole use for it is 「以利擷圖回報」:
+ * a screenshot has to name the build it came from. #66 satisfied that by
+ * putting it at `z-index: 1` UNDER everything, which meant it was covered on
+ * exactly the screens most often screenshotted (the settlement panel and the
+ * shop card both paint an opaque box at z 40 over it).
+ *
+ * So it now paints ABOVE everything, and the thing that keeps it from covering
+ * gameplay is not its z-index but this DECLARATION: it may only ever occupy a
+ * CENTRED strip `HUD_STAMP_BAND` px tall and `HUD_STAMP_BAND_W` px wide at the
+ * bottom edge. `versionBadgeBand.test.ts` proves the strip stays empty for every
+ * SLOT (both pointer types, both displaced and normal placement) at every guard
+ * viewport — every corner stack starts `HUD_EDGE` in from its edges, the desktop
+ * ability bar sits at `bottom: 14`, the touch attack button at `bottom: 40`.
+ *
+ * "EMPTY BY CONSTRUCTION" IS NOT A CLAIM THIS MODULE GETS TO MAKE, and saying it
+ * anyway is how the band shipped with something already in it: `HUD_SLOTS` is
+ * the registry of CORNER chrome, and the thing that was sitting in the band was
+ * `ui/panels/ChampSelectPanel.tsx`'s bottom-centre status line at `bottom: 6`
+ * inside a full-screen `inset:0` layer — centred, 4px deep, invisible to a guard
+ * that enumerates slots. The guard therefore ALSO enumerates every `bottom:`
+ * declaration under `apps/client/src/ui` and requires each one to either clear
+ * the band arithmetically or carry a written reason. Chrome that wants the last
+ * 10px has to say so out loud; this comment cannot vouch for it.
+ *
+ * CENTRED, not full width, because that is the honest claim: on a 780x360
+ * landscape phone the shop legitimately displaces the ☰ menu to the end of the
+ * top-right stack, 8px off the bottom edge — a full-width reservation would
+ * report a collision with a badge sitting 400px away in the middle of the
+ * screen.
+ *
+ * A PANEL's rect may span the band and that is not a collision: the badge is
+ * MEANT to paint over the settlement wash and the shop card's background, or
+ * those screenshots carry no version, which is the whole defect. The line is
+ * chrome vs. content — the badge may cover a panel's background, never a slot
+ * or a control.
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/** Height (px) of the bottom strip reserved for the build stamp. */
+export const HUD_STAMP_BAND = VERSION_BADGE_BAND_PX;
+
+/** Width (px) of that strip — it is centred, so this is not the viewport width. */
+export const HUD_STAMP_BAND_W = VERSION_BADGE_BAND_W_PX;
+
+/** The reserved band's rect in a concrete viewport (centred, bottom edge). */
+export function hudStampBandRect(viewport: HudViewport): HudRect {
+  const w = Math.min(viewport.width, HUD_STAMP_BAND_W);
+  return {
+    x: (viewport.width - w) / 2,
+    y: viewport.height - HUD_STAMP_BAND,
+    w,
+    h: HUD_STAMP_BAND,
+  };
 }
 
 /**

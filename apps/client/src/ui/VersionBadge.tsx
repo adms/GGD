@@ -1,80 +1,88 @@
 /**
- * VersionBadge — a tiny, unobtrusive build stamp pinned to the BOTTOM of every
- * screen (task #66). Mounted ONCE in AppRoot, above the screen switch, so the
- * same badge rides over login, lobby, champ-select AND a live match — every
- * screenshot is therefore traceable back to the exact build it was taken on.
+ * VersionBadge — the build stamp, on EVERY screen of the game client (task #66,
+ * repaired by #245).
  *
  * WHERE THE STAMP COMES FROM. It is injected at BUILD TIME by vite's `define`
  * (see apps/client/vite.config.ts): `import.meta.env.VITE_BUILD_STAMP` = the
- * short git sha + the build date. There is NO git call at runtime — the browser
+ * short git sha (+ `-dirty`) and the build date, resolved by
+ * apps/client/dev/buildStamp.ts. There is NO git call at runtime — the browser
  * never shells out; it only reads the string baked into the bundle. When the
- * var was never injected (a build with no git, or plain vitest which does not
- * run the define), `resolveStamp` falls back to "dev".
+ * var was never injected (plain vitest, which does not run the define), the
+ * shared `resolveStamp` falls back to the honest label "dev".
  *
- * ...AND WHY THAT WAS NOT ENOUGH (playtest P8: badge stuck at `7d1bb37` while
- * HEAD was far ahead). TWO separate defects produced that one symptom, and both
- * follow from `define` being a compile-time substitution evaluated ONCE:
+ * ...AND WHY THAT WAS NOT ENOUGH, TWICE.
  *
- *   1. UNDER THE DEV SERVER THE DEFINE NEVER LANDS AT ALL. Vite owns
- *      `import.meta.env` in serve mode and synthesizes it per request, so a
- *      `define` keyed on `import.meta.env.VITE_BUILD_STAMP` is not substituted
- *      there. MEASURED on :39527: the badge's first paint read `undefined` and
- *      fell back to "dev". A dev screenshot carried NO build identity whatsoever.
- *   2. A BUILT BUNDLE FREEZES AT ITS BUILD. That is correct by construction —
- *      but a bundle built at 7d1bb37 and served for days keeps saying 7d1bb37
- *      no matter how far the repo moves, which is exactly what a stale deploy
- *      looks like from the outside. The badge was not lying there; it was
- *      reporting a stale artifact honestly.
- *
- * The fix targets (1), the one that is a bug: `useLiveStamp` polls the dev-only
- * route `/__ggd-build-stamp` (registered by `liveBuildStamp()` with
+ * (1) PLAYTEST P8 — THE DEV SERVER FROZE THE STAMP. `define` is a compile-time
+ * substitution and vite owns `import.meta.env` in serve mode, so under the dev
+ * server the define never lands at all (MEASURED on :39527: the badge's first
+ * paint read `undefined` and fell back to "dev"), and even where it does land it
+ * freezes on the commit the server booted with. `useLiveStamp` polls the
+ * dev-only route `/__ggd-build-stamp` (registered by `liveBuildStamp()` with
  * `apply:"serve"`, so it does not exist in prod) and shows what the dev server
  * reports. Still no git in the browser — the dev server runs it, on the dev
- * machine. Every failure mode (no route, non-2xx, blank body, fetch absent,
- * unmounted) falls back to the baked literal, so the badge can never be worse
- * off than before. For (2) the badge now tells the truth loudly instead: a
- * deployed page showing an old sha IS an old deploy, and that is the signal.
+ * machine. Every failure mode (no route, non-2xx, blank body, an SPA fallback
+ * handing back index.html, fetch absent, unmounted) falls back to the baked
+ * literal, so the badge can never be worse off than before.
  *
- * WHY IT CANNOT GET IN THE WAY. The box is `position:fixed` at the very bottom
- * edge, `pointer-events:none` (it can never swallow a click) and sits at a LOW
- * z-index — below #hud-root (z 10) and every overlay — so it renders under, not
- * over, any interactive chrome. It hugs the bottom-centre strip where no HUD or
- * lobby control lives, and is `aria-hidden` so it is not announced.
+ * (2) TASK #245 — IT WAS IN THE DOM AND INVISIBLE ON THE SCREENS THAT MATTER.
+ * #66 mounted the badge INSIDE `#hud-root` at `z-index: 1`, deliberately "below
+ * #hud-root (z 10) and every overlay". `#hud-root` carries `z-index: 10` and so
+ * opens a stacking context: everything the HUD paints — including every
+ * full-screen panel — outranks a child at z 1. WALKED, screen by screen:
+ *
+ *   surface            covering layer                                   verdict
+ *   ─────────────────  ──────────────────────────────────────────────  ────────
+ *   login / lobby      nothing over the bottom strip                    visible
+ *   champion select    centred card, clears the corners (#107 row)      visible
+ *   battle HUD         ability bar at `bottom: 14`; touch arc at 40     visible
+ *   shop / intermission MerchantShop left card, z 40, min(45vw,560px)   COVERED
+ *                       full height — eats the badge's left half on any
+ *                       viewport under ~1240px
+ *   settlement         MatchEndPanel `inset: 0`, z 40, opaque wash      COVERED
+ *   leave-settlement   LeaveSettlementOverlay, z HUD_Z.modal            COVERED
+ *   pause / codex /    PauseMenu + the hash-routed overlays, z modal    COVERED
+ *   credits / assets
+ *   loading / rotate   MatchLoadingOverlay z 60, RotateOverlay z 100    COVERED
+ *
+ * The end-of-match screenshot — the single most-reported screen — carried no
+ * build identity at all. So the badge now paints ABOVE everything
+ * (`VERSION_BADGE_Z`) and escapes `#hud-root` through a <body> portal, exactly
+ * as the audio cluster does for the same reason.
+ *
+ * WHY THAT CANNOT GET IN THE WAY (the #107 contract, respected not bypassed):
+ *   • `pointer-events: none` — it can never swallow a click, at any z-index.
+ *     Raising z is therefore incapable of breaking a control.
+ *   • it is confined to `VERSION_BADGE_BAND_PX` (10px) of the bottom edge — the
+ *     gutter `HUD_EDGE` already keeps empty for every corner slot. That band is
+ *     DECLARED in ui/hud/hudLayout.ts (`hudStampBandRect`) and enforced by
+ *     ui/hud/versionBadgeBand.test.ts, which fails if any slot or docked panel
+ *     ever reaches into it. It is a reservation, not an assumption.
+ *   • `aria-hidden`, so it is never announced.
  */
 import { useEffect, useState } from "react";
-import { TEXT_DIM } from "./theme";
+import { createPortal } from "react-dom";
+import {
+  BUILD_STAMP_FALLBACK,
+  LIVE_STAMP_POLL_MS,
+  LIVE_STAMP_ROUTE,
+  isPlausibleLiveStamp,
+  preferLiveStamp,
+  resolveStamp,
+  versionBadgeStyle,
+} from "@ggd/shared/versionBadge";
 
-/** Shown when no build stamp was injected (no git, or under vitest). */
-export const BUILD_STAMP_FALLBACK = "dev";
-
-/**
- * Resolve a raw injected stamp to what the badge should display. Pure, so the
- * fallback is testable without depending on whatever `import.meta.env` holds in
- * a given runtime.
- */
-export function resolveStamp(raw: string | undefined): string {
-  return typeof raw === "string" && raw.trim().length > 0 ? raw : BUILD_STAMP_FALLBACK;
-}
+// Re-exported so the client's own tests and any consumer keep one import site.
+export {
+  BUILD_STAMP_FALLBACK,
+  LIVE_STAMP_POLL_MS,
+  LIVE_STAMP_ROUTE,
+  preferLiveStamp,
+  resolveStamp,
+};
 
 /** The build stamp baked in by vite (`VITE_BUILD_STAMP`), or "dev". */
 export function buildStamp(): string {
   return resolveStamp(import.meta.env.VITE_BUILD_STAMP);
-}
-
-/** Dev-server route serving a FRESHLY computed stamp (vite `liveBuildStamp`). */
-export const LIVE_STAMP_ROUTE = "/__ggd-build-stamp";
-/** How often dev re-asks. A commit lands every few minutes at most; one local
- *  `git rev-parse` every 15 s is free, and prod never polls at all. */
-export const LIVE_STAMP_POLL_MS = 15_000;
-
-/**
- * Decide what the badge shows given the baked literal and whatever the dev route
- * last returned. Pure, so the precedence rule is testable without a network:
- * a non-empty live stamp wins (it is the fresher fact); anything else — no
- * route, an error page, a blank body — leaves the baked stamp untouched.
- */
-export function preferLiveStamp(baked: string, live: string | null): string {
-  return typeof live === "string" && live.trim().length > 0 ? live.trim() : baked;
 }
 
 /**
@@ -92,9 +100,7 @@ function useLiveStamp(baked: string): string {
       fetch(LIVE_STAMP_ROUTE, { cache: "no-store" })
         .then((r) => (r.ok ? r.text() : null))
         .then((text) => {
-          // Guard against an SPA fallback handing back index.html rather than a
-          // stamp: a real stamp is one short line, never markup.
-          if (!alive || text === null || text.length > 64 || text.includes("<")) return;
+          if (!alive || !isPlausibleLiveStamp(text)) return;
           setLive(text);
         })
         .catch(() => undefined); // dev server gone → keep the baked literal
@@ -112,35 +118,25 @@ function useLiveStamp(baked: string): string {
 /** Pure, prop-driven view — the render target for tests. */
 export function VersionBadgeView({ stamp }: { stamp: string }): React.JSX.Element {
   return (
-    <div
-      data-ggd-version-badge
-      aria-hidden
-      style={{
-        position: "fixed",
-        bottom: 2,
-        left: "50%",
-        transform: "translateX(-50%)",
-        // Below #hud-root (z 10) and every overlay: it renders UNDER interactive
-        // chrome, never over it, and pointer-events:none keeps it click-through.
-        zIndex: 1,
-        pointerEvents: "none",
-        fontSize: 10,
-        lineHeight: 1,
-        letterSpacing: "0.3px",
-        fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
-        color: TEXT_DIM,
-        opacity: 0.55,
-        userSelect: "none",
-        whiteSpace: "nowrap",
-        // Respect the phone's bottom safe-area so it clears the home indicator.
-        marginBottom: "env(safe-area-inset-bottom, 0px)",
-      }}
-    >
+    // The two data-* attributes are written literally (JSX cannot take a
+    // computed attribute name without losing type-checking); versionBadge
+    // .test.ts asserts they equal VERSION_BADGE_ATTR / VERSION_BADGE_APP_ATTR,
+    // so the shared constants stay the single source of truth for the guards.
+    <div data-ggd-version-badge data-ggd-version-badge-app="client" aria-hidden style={versionBadgeStyle()}>
       {stamp}
     </div>
   );
 }
 
 export function VersionBadge(): React.JSX.Element {
-  return <VersionBadgeView stamp={useLiveStamp(buildStamp())} />;
+  const view = <VersionBadgeView stamp={useLiveStamp(buildStamp())} />;
+  // Portal to <body> so we escape #hud-root's stacking context (z-index 10) and
+  // ride above the in-match HUD, the shop card and the settlement panel on every
+  // screen. Same mechanism, and the same reason, as ui/AudioToggle.tsx. In a
+  // non-DOM env (vitest's `node` environment / SSR) fall back to inline
+  // rendering so the view is still assertable.
+  if (typeof document !== "undefined" && document.body) {
+    return createPortal(view, document.body);
+  }
+  return view;
 }

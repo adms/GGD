@@ -124,13 +124,30 @@ func (s *Service) SetPendingNotifier(n PendingNotifier) { s.notifier = n }
 // for never landed. MintPersonalReferral mints the new account's own single-use
 // referral code (task #203) and ReferrerOf reports which account a code was
 // minted for (empty for an admin code) so a referral can fast-track its
-// inviter. See invite.Service for the ordering rationale.
+// inviter. StatusOf reports whether a code is still redeemable, which is what
+// keeps the account's mirrored copy of its own code honest (#237). See
+// invite.Service for the ordering rationale.
 type InviteGate interface {
 	Redeem(ctx context.Context, code, accountID, username string) error
 	Release(ctx context.Context, code, accountID string) error
 	MintPersonalReferral(ctx context.Context, referrerID, username string) (string, error)
 	ReferrerOf(ctx context.Context, code string) (string, error)
+	StatusOf(ctx context.Context, code string) (string, error)
 }
+
+// The invite lifecycle strings this package has to name. auth CANNOT import
+// internal/invite (import cycle: invite → admin → auth), which is why the gate
+// is an interface here at all — so the two statuses this file branches on are
+// literals. They are pinned to the invite package's real constants BEHAVIOURALLY
+// rather than by a string compare: referral_mirror_test.go lives in package
+// auth_test (which may import both) and asserts the wire values it sees against
+// invite.StatusActive / invite.StatusRedeemed through the fully-wired server, so
+// a rename in either package fails there instead of silently making every code
+// read as "not active".
+const (
+	referralStatusActive  = "active"
+	referralStatusUnknown = "unknown"
+)
 
 // WalletSeeder grants a brand-new account its one-time welcome balance (task
 // #204). Implemented by internal/wallet; returns the amount actually granted (0
@@ -468,6 +485,57 @@ func (s *Service) Register(ctx context.Context, username, email, password string
 	}
 	pair, err := s.issueTokens(ctx, a)
 	return a, pair, err
+}
+
+// PublicAccount projects an account onto the wire.
+//
+// IT IS THE ONLY WAY AN ACCOUNT LEAVES THIS PACKAGE, and handlers_public_test.go
+// scans handlers.go to keep it that way. account.Account.Public() is a pure
+// struct projection and cannot reach the invite store, so anything DERIVED has
+// to be filled in here — today that is exactly one thing, and it is the whole of
+// task #237.
+//
+// THE BUG IT CLOSES. #203 mints every new account its own single-use personal
+// referral code and pins the display form onto the account so the lobby can show
+// it. That stored field is a MIRROR of the invite document, written once at
+// registration and never touched again — while the document itself is correctly
+// burned the instant a friend registers with it (invite.Service.Redeem, under
+// the code's keyed mutex, verified durable). Nothing reconciled the two, so
+// /me, /login and /register kept handing back a code the gate would refuse, and
+// the lobby kept printing it in a copy box under「分享給一位朋友，他就能註冊」.
+// The redemption was written; it was never SURFACED.
+//
+// Deriving here rather than clearing the mirror on the burn path is deliberate:
+// a second write is a second thing that can fail halfway (the burn happens
+// inside somebody else's registration, whose post-create steps are all
+// best-effort by design), whereas a read that consults the document cannot be
+// stale and heals the accounts that are ALREADY wrong on the live deploy without
+// a migration. Same reasoning as invite.Doc.EffectiveStatus deriving expiry.
+func (s *Service) PublicAccount(ctx context.Context, a account.Account) account.Public {
+	pub := a.Public()
+	if pub.ReferralCode == "" || s.invites == nil {
+		// No code to mirror, or no gate to ask: leave the projection alone. A
+		// deploy with no invite gate mints no referral codes in the first place.
+		return pub
+	}
+	status, err := s.invites.StatusOf(ctx, pub.ReferralCode)
+	if err != nil {
+		// Fail CLOSED, like every other read on this gate: an unreadable store
+		// may hide a live code for one response, but must never advertise a dead
+		// one. StatusOf already returns "unknown" alongside the error; this
+		// re-states it so the branch below cannot depend on that.
+		slog.Error("auth: could not read the state of an account's own referral code; withholding it for this response",
+			"err", err, "accountId", a.ID)
+		status = referralStatusUnknown
+	}
+	pub.ReferralCodeStatus = status
+	if status != referralStatusActive {
+		// Spent, expired, revoked or unreadable — all of them mean "offering
+		// this to a friend produces a 403". The status stays so the UI can say
+		// WHY the code is gone instead of silently dropping the panel.
+		pub.ReferralCode = ""
+	}
+	return pub
 }
 
 // seedWelcomeCrystals grants the one-time 藍水晶 welcome balance (task #204).
