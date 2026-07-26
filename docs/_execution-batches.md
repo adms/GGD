@@ -610,3 +610,89 @@ case "move":
 - docs commit **一律逐檔列出路徑**，永遠不用 `git add -A`。
 - 主 worktree 的測試結果，若失敗的是一個**不存在的檔案**，先懷疑是併行工作流的競態，
   再重跑一次確認。
+
+---
+
+## #262 特效殘留 —— 根因找到了、商店那條路修好了，但**不合併**（三個缺口）
+
+### 根因（漂亮，而且可以直接沿用）
+
+**`scene.render()` 不跑時，Babylon 的 ParticleSystem 完全不老化，但東西全部留在場上。**
+
+`GameApp.ts:1339` 是 `if (!this.renderSuppressed) this.renderer.render();`，
+而 `renderSuppressed` 由商店開關（`IntermissionStage.tsx:109` / `:134`）。
+
+實驗（真鏡頭）：把烤雞停在 t=3600 的 droop 中 → `live=404`、`ps=13`、mesh `enabled=true`；
+**完全不渲染，等 25 秒真實時間 → 404 / 13 / enabled。一顆粒子都沒死。**
+恢復渲染的第一格 → 395。**從凍結的那一格繼續播。**
+
+→ **任何在「戰鬥→商店」那一格還活著的粒子，會被冷凍 40 秒
+（`intermissionSec: 40`），然後在下一回合開打的第一格重新出現在上一回合的世界座標上。**
+
+**更狠的第二種形狀**：`VfxSystem.play()` 做的是 `ps.start(); ps.manualEmitCount = N`
+（`VfxSystem.ts:644-646`）。Babylon 只在 `animate()`（＝被畫出來的那一格）消費 `manualEmitCount`。
+**剛好在商店掛載那一格施放的技能，整個 burst 會延遲 40 秒、
+在下一回合第一格以滿亮度炸開 —— 而沒有任何人在施法。**
+
+### 為什麼煙火/擊中的殘留會自己消失、技能特效不會
+
+商店期間 `vfx.update()` 仍然被呼叫（GameApp 第 6 步在第 7 步 render 判斷之前）。所以：
+- ✅ 用 `BurstPool` 的層（煙火、擊中、血、腳步灰、狀態光環）→ 8 秒後 reaper 會 `ps.dispose()`
+- ❌ **`VfxSystem.pool`（技能／死亡／投射物的 vfx doc 專用池）完全沒有任何回收路徑**：
+  `play()`（`:607-648`）只 push 不 pop、`update()`（`:1362-1385`）完全沒碰 `this.pool`、
+  唯一釋放點是 `dispose()`（`:1391`）。**這是「技能特效殘留」的主路徑。**
+
+### 兩處只增不減（程式碼層面的無界成長）
+
+1. `VfxSystem.pool: Map<docId, PooledSystem[]>` —— 每個 doc id 最多 4 個實例，**永不回收**。
+   理論天花板 = 662 個 ability doc × 4 = **2648 個 ParticleSystem**。
+2. `Telegraph` 的 per-scene 共享池 `sharedByScene`（`Telegraph.ts:86-97`）——
+   `rings: Map<radiusKey, Mesh[]>` 以半徑 2 位小數當 key，**整個模組沒有任何 dispose 函式**。
+   #136 的 `abilityRange` 乘數讓半徑變成任意浮點數 ⇒ key 數隨技能種類線性成長，
+   每 key 最多 8 個 torus，活到離開整場比賽為止。
+
+### ⛔ 不合併的三個理由（都是對抗驗證量出來的）
+
+**1. 分頁切到背景那條路完全沒修，而程式註解白紙黑字宣稱涵蓋了它。**
+淬火機制住在 `VfxSystem.update()`（`VfxSystem.ts:1466`），唯一驅動源是 GameApp 的 rAF 鏈
+（`GameApp.ts:1018`）。**分頁隱藏時瀏覽器完全不發 rAF**，所以 `observeUpdate()`
+一次都不會被呼叫、`quenches` 永遠是 0。
+
+商店期有效是因為 **rAF 還在跑、只有 render 被跳過**；分頁背景是**連 update 都停**。
+**兩者形狀完全不同，而報告與程式註解把它們當成同一件事：**
+- `vfxLedger.ts:34-35`「…**and a backgrounded tab suppresses it too**」
+- `VfxSystem.ts:1459-1463`「the shop is up, **or the tab is in the background**」
+
+實測：切走前 26 systems / **504 粒子** / 8 支排隊的 `manualEmitCount`；
+隱藏 30 秒後仍是 **26 / 504 / 8，quenches = 0**；
+回到分頁的第一格畫出 **481–496 顆上一回合的粒子**，同時那 8 支 burst 在同一格滿亮度炸開。
+`IntermissionScene.ts:275` 與 `LoginScene.ts:313` 都有 visibilitychange —— **唯獨競技場那條 loop 沒有**。
+
+**2. 煙火那一半（＝標題）完全沒有測試涵蓋。**
+- 刪掉 peony 的 `dragCurve: "blast"`（**整個爆炸感機制**）→ **3533 全綠**
+- 永遠不發 willow 層（報告自己稱之為「像煙火」與「像閃光」的分界線）→ **3533 全綠**
+只有彗星那個破壞會紅，而且是靠 lease 計數紅的，不是靠任何視覺斷言。
+
+**3. 幀時間量在錯的時刻，而真正的峰值會掉幀。**
+報告只量 t=2400 就宣告「齊射沒有可量測的退步」—— 但 t=2400 齊射只剩 ~5 顆粒子，**已經結束了**。
+在真正的峰值 t=780（231 → 655 粒子）量：
+frame mean 9.12–15.36 → **18.38–23.05 ms**；p95 24.7–42.9 → **52.0–80.4 ms（約 13 fps）**。
+⚠️ 這是 SwiftShader 軟體光柵，不是 GPU 數字 —— 但**「沒有可量測的退步」這個正面主張
+是用同一支工具做出來的，而它在真正重要的那一格站不住。**
+而且 owner 正在抱怨延遲，這條不能放過。
+
+**4.（次要）反困住守衛是同義反覆。** `celebrationGate.test.ts:91` 的期望值
+是從 `ARENA_HOLD_CAP_MS` 自己導出來的。把上限從 2500 拉到 600000
+（＝盯著競技場十分鐘進不了商店，正是該檔註解說要防的失敗）→ **3533 全綠**。
+出貨值 2500 沒問題，但那條測試偵測不到上限被拿掉，而那正是它宣稱在做的事。
+
+### 重開時要補的（其餘照舊，不要重做）
+
+1. **競技場 loop 加 visibilitychange**，並把「rAF 停」與「只有 render 停」當成兩件事處理。
+   把 `vfxLedger.ts` 與 `VfxSystem.ts` 那兩句**說謊的註解**改對。
+2. **煙火視覺半邊要有會咬的守衛**：拿掉 `dragCurve: "blast"` 要紅、不發 willow 要紅。
+   斷言可以是粒子數/速度分布/生命期分布，不必是像素。
+3. **在 t=780（真正的峰值）重量幀時間**，若確實加倍就把密度往回收。
+   密度的錢從 draw call 出不是從粒子預算出（`SCREEN_SYSTEM_BUDGET 64` 才是天花板，
+   `SCREEN_PARTICLE_BUDGET 8000` 只用了 8.6%）。
+4. `celebrationGate.test.ts:91` 的期望值要寫死，不可以從被測常數導出。
