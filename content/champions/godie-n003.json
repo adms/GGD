@@ -255,5 +255,27 @@
   ],
   "exAbility": "godie-n003.ex",
   "passiveAbility": "godie-n003.passive",
-  "icon": "assets/icons/champions/godie-n003.png"
+  "icon": "assets/icons/champions/godie-n003.png",
+  "transform": {
+    "role": "base",
+    "counterpartId": "godie-n01g",
+    "normalUnitRawcode": "N003",
+    "alternateUnitRawcode": "N01G",
+    "triggerAbility": {
+      "rawcode": "A06K",
+      "name": "42-002 魔力印章",
+      "durationSec": {
+        "1": 7.0,
+        "2": 15.0,
+        "3": 21.0,
+        "4": 27.0
+      },
+      "cooldownSec": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 60.0
+      }
+    }
+  }
 }

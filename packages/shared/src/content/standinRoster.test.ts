@@ -8,7 +8,14 @@
  * (keep everything except duplicates): godie-e010 / godie-o02n (exact-name twins of
  * godie-e00s / godie-o02o) and godie-h00w / godie-n01b / godie-o030 (exact-name
  * duplicates of live champions godie-harf / godie-nman / godie-orkn — transform
- * forms sharing the base hero's map number). 20 remain.
+ * forms sharing the base hero's map number).
+ *
+ * TASK #249 UN-PRUNED ONE OF THEM. Four of those five really are ALTERNATE
+ * (變身) bodies, so leaving them out costs nothing while the transform mechanic
+ * does not exist. `godie-o02n` was the exception and the prune had it backwards:
+ * the map's `Eme1`/`Emeu` fields make O02N the BASE unit of 曹操孟德 and the
+ * SHIPPED godie-o02o his 87-03 天下號令 transform, so the prune deleted the hero
+ * and kept the transformation. It is promoted, giving 21 kept / 4 pruned.
  *
  * IMPORTANT: this suite reads the promoted docs by DIRECT file path (not via
  * FsContentSource/ContentLoader) because content/champions/_index.json is only
@@ -27,7 +34,7 @@ import type { EffectDef } from "../sim/effects/effect";
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CONTENT_DIR = join(HERE, "../../../../content");
 
-/** The 20 kept stand-ins (drafts/PROMOTED.md is the authoritative table). */
+/** The 21 kept stand-ins (drafts/PROMOTED.md is the authoritative table). */
 const STANDIN_IDS = [
   "godie-e00r",
   "godie-e00s",
@@ -44,6 +51,7 @@ const STANDIN_IDS = [
   "godie-h02z",
   "godie-n00b",
   "godie-n01l",
+  "godie-o02n",
   "godie-o02o",
   "godie-u00b",
   "godie-u00k",
@@ -51,8 +59,17 @@ const STANDIN_IDS = [
   "godie-u01f",
 ] as const;
 
-/** Pruned duplicates — must NOT exist on disk (whitelist rule: 除非重複). */
-const PRUNED_IDS = ["godie-e010", "godie-o02n", "godie-h00w", "godie-n01b", "godie-o030"] as const;
+/**
+ * Pruned duplicates — must NOT exist on disk (whitelist rule: 除非重複).
+ *
+ * `godie-o02n` was REMOVED from this list at task #249. The prune misread it:
+ * the map's WC3 Metamorphosis fields (`Eme1`/`Emeu` on ability A0DB 87-03
+ * 天下號令) make O02N 曹操孟德's BASE unit and O02O his TRANSFORMED body, so
+ * "exact-name twin of godie-o02o" was the transform relationship, not a
+ * duplicate — and dropping the base left the hero present in the game ONLY in
+ * his transformed state. It is promoted now (see STANDIN_IDS).
+ */
+const PRUNED_IDS = ["godie-e010", "godie-h00w", "godie-n01b", "godie-o030"] as const;
 
 /** The four KayKit voxel block model docs (pre-existing model@1 ids). */
 const VOXEL_MODELS = ["champ.sela", "champ.thorne", "champ.skin.barbarian", "champ.skin.rogue"];
@@ -78,10 +95,10 @@ function walkEffects(effects: EffectDef[], visit: (e: EffectDef) => void): void 
 const parsedDocs = (): ChampionDoc[] => STANDIN_IDS.map((id) => zChampionDoc.parse(readDoc(id)));
 
 describe("voxel stand-in roster (standin-roster)", () => {
-  it("all 20 kept champion docs exist, all 5 pruned duplicates are gone (draft-promote-count)", () => {
+  it("all 21 kept champion docs exist, all 4 pruned duplicates are gone (draft-promote-count)", () => {
     cover("draft-promote-count");
-    expect(STANDIN_IDS.length).toBe(20);
-    expect(new Set<string>(STANDIN_IDS).size).toBe(20);
+    expect(STANDIN_IDS.length).toBe(21);
+    expect(new Set<string>(STANDIN_IDS).size).toBe(21);
     for (const id of STANDIN_IDS) {
       expect(existsSync(join(CONTENT_DIR, "champions", `${id}.json`)), id).toBe(true);
     }

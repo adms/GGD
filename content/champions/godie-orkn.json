@@ -230,5 +230,26 @@
   ],
   "exAbility": "godie-orkn.ex",
   "passiveAbility": "godie-orkn.passive",
-  "icon": "assets/icons/champions/godie-orkn.png"
+  "icon": "assets/icons/champions/godie-orkn.png",
+  "transform": {
+    "role": "base",
+    "normalUnitRawcode": "ORKN",
+    "alternateUnitRawcode": "O030",
+    "triggerAbility": {
+      "rawcode": "A0YT",
+      "name": "30-002 變態紳士",
+      "durationSec": {
+        "1": 15.0,
+        "2": 15.0,
+        "3": 21.0,
+        "4": 27.0
+      },
+      "cooldownSec": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 60.0
+      }
+    }
+  }
 }

@@ -141,9 +141,11 @@ describe("champion call-out VO pack", () => {
     const withTitle = [...champs.entries()].filter(
       ([id, name]) => name.includes(TITLE_SEP) && !skipped.has(id),
     );
-    // 110 of 114 champions are authored "稱號 - 全名"; one of those is the
-    // skipped test hero, leaving 109 that must speak both halves.
-    expect(withTitle.length, "champions authored with a 稱號").toBe(109);
+    // 111 of 115 champions are authored "稱號 - 全名"; one of those is the
+    // skipped test hero, leaving 110 that must speak both halves. (Was 109 —
+    // task #249 imported godie-o02n, 曹操孟德's BASE unit O02N, which carries the
+    // same authored name as its already-shipped 天下號令 form.)
+    expect(withTitle.length, "champions authored with a 稱號").toBe(110);
 
     for (const [id, zhName] of withTitle) {
       const e = doc.champions[id]!;

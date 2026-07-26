@@ -71,16 +71,39 @@ import "sort"
 //	R5 the roster is EXACTLY these 50 canonical ids — pinned id-for-id by
 //	   TestFirstOpenRoster so a re-import or a careless edit cannot silently add,
 //	   drop or swap a champion.
+//	R6 NO ALTERNATE (變身) FORM. Every id here is a BASE unit — the hero a player
+//	   picks — never the transformed body the map's `Emeu` field names. Decided
+//	   by the closed w3x table in packages/shared/src/content/championForms.ts
+//	   (26 pairs, from the WC3 Metamorphosis fields Eme1/Emeu), asserted by
+//	   TestStarterRosterHasNoAlternateForms.
+//
+// R6 IS A BUG FIX, NOT A TIDY-UP (task #249). Ten of these fifty slots used to
+// be the ALTERNATE body, offered to players as if it were the hero, because the
+// importer drops Eme1/Emeu (task #56 — it whitelists ~30 of 180 w3u field
+// codes) and NOTHING downstream could tell the two apart. What shipped:
+//
+//	godie-h02u  草泥馬 in its lying-down 臥 body — w3x movement speed 0
+//	godie-h02r  妙蛙花, the final evolution at usca 3.0, from round one
+//	godie-u00l  北斗之鼠, the joke Pikachu-DNA form, instead of 拳四郎 himself
+//	godie-o00x  超級賽亞人, so 悟空's own R「超級賽亞人」 turned him into what he
+//	            already was
+//	godie-h020 · godie-n01c · godie-u01u · godie-e007 · godie-n00p · godie-u010
+//
+// The owner ruled (2026-07-26):「換成本體，變身態改由技能觸發」— each slot now
+// holds the base, and the second form becomes reachable only through its
+// transform ability once that mechanic exists (task #119). The alternate docs
+// are NOT deleted and NOT un-whitelisted by this change; they simply stop being
+// offered as picks.
 //
 // WHAT IS DELIBERATELY **NOT** GATED (and why the old showcase gates G2–G6 are
 // gone). A 50-champion selectable roster is a different thing from a 13-tile
 // demo grid, and the visual/uniqueness gates that made the grid pretty would
 // now DELETE champions the user explicitly asked for:
 //
-//   - ICON on disk. 妙蛙花 (h02r) ships no portrait (stock art), the client
-//     already treats `icon` as optional ("absent for stock-art heroes"), and a
-//     parallel batch is still writing icon fields — so the seed must not depend
-//     on a PNG being present.
+//   - ICON on disk. Several roster entries ship no portrait (stock art), the
+//     client already treats `icon` as optional ("absent for stock-art heroes"),
+//     and a parallel batch is still writing icon fields — so the seed must not
+//     depend on a PNG being present.
 //   - OWN / UNIQUE mesh. 80 of 113 champions wear one of four CC0 stand-in
 //     meshes because their WC3 model was a Blizzard built-in (champ.sela alone
 //     is worn by 18 unrelated heroes); the roster intentionally includes
@@ -242,7 +265,6 @@ var (
 	starterChampions = []string{
 		"godie-e001", // 龍宮禮奈 - 蟬在叫人壞掉  #22
 		"godie-e002", // Saber - 亞瑟王  #20  — 選 e002（e00l 劇情空白）
-		"godie-e007", // 天地志狼 - 龍之子  #12  — 選 e007（附錄A 保留；剔 ewar）
 		"godie-e008", // 夏娜 - 火霧戰士  #21
 		"godie-e00k", // 安云 - 戰國刺客Azumi  #19  — 選 e00k（e00z 劇情空白）
 		"godie-e00r", // 初號機 - 最終泛用人型決戰兵器  #59
@@ -252,16 +274,17 @@ var (
 		"godie-emfr", // 涅吉。史普林。菲爾德 - 魔法老師  #15  — 選 #15 emfr（#82 h022 為另一獨立英雄）
 		"godie-emns", // 夜神月 - 奇樂  #44
 		"godie-etyr", // 木乃香 - 治癒系公主  #14
+		"godie-ewar", // 天地志狼 - 龍之子  #12  — 本體；e007 是 12-03 破凰之心 的變身態
 		"godie-h00l", // 林克 - 時空勇者  #60
 		"godie-h01n", // 黑崎一護 - 開外掛的死神  #79  — 選 h01n（h01o 劇情空白）
 		"godie-h01u", // 呂布奉先 - 亂世癿王者  #80
-		"godie-h020", // 莉娜因巴斯 - 黑魔導士  #04  — 選 h020（剔 hjai）
 		"godie-h02k", // 熊貓 - 國寶級的畜生  #89
-		"godie-h02r", // 妙蛙花 - 種子神奇寶貝  #90  — 注意：無 icon（stock 美術）
-		"godie-h02u", // 草泥馬 - 看似憂鬱的神獸  #92  — 選 h02u（剔 h02v）
+		"godie-h02v", // 草泥馬 - 看似憂鬱的神獸  #92  — 本體；h02u 是 92-01 臥草泥馬 的變身態（w3x 移動速度 0）
 		"godie-hapm", // Berserker - 海克力斯  #52
 		"godie-hart", // 克勞德 - 最終幻想  #01
 		"godie-hblm", // 賈修貝爾 - 慈悲的王者  #05  — 任務 #212 追加（雙胞胎 godie-h021 阿強一號 同為 #05，故不得一併開放）
+		"godie-hgam", // 妙蛙種子 - 種子神奇寶貝  #90  — 本體；h02r 妙蛙花 是 90-002 超進化! 的變身態（usca 1.2 → 3.0）
+		"godie-hjai", // 莉娜因巴斯 - 黑魔導士  #04  — 本體；h020 是 04-002 惡夢魔王的碎片 的變身態
 		"godie-hpal", // 藤井八雲 - 不死之身-無  #35
 		"godie-hpb1", // 蒼月潮 - 獸矛傳承使  #07
 		"godie-huth", // 魔人普烏 - 超級普烏  #28  — 注意：EX 描述為空（不影響可選性）
@@ -269,27 +292,27 @@ var (
 		"godie-hvwd", // 桔梗 - 除魔巫女  #02
 		"godie-n003", // 依文潔琳 - 黑暗福音  #42  — 選 n003（剔 n01g）
 		"godie-n00b", // 哆拉A夢 - 小叮噹  #57
-		"godie-n00p", // 南野秀一 - 妖狐藏馬  #18  — 選 n00p（剔 nsjs）
-		"godie-n01c", // 勇者小呆 - 傳說的龍騎士  #08  — 選 n01c（剔 nbbc）
+		"godie-nbbc", // 勇者小呆 - 傳說的龍騎士  #08  — 本體；n01c 是 08-002 龍魔人 的變身態
 		"godie-nplh", // 麻倉葉 - 通靈人  #16
+		"godie-nsjs", // 南野秀一 - 妖狐藏馬  #18  — 本體；n00p 是 18-03 妖狐變化 的變身態
 		"godie-o00k", // 皮卡娘 - 傲嬌電氣老鼠  #86
 		"godie-o00l", // 傑洛士 - 獸神官  #53
-		"godie-o00x", // 悟空 - 超級賽亞人  #09  — 選 SSJ o00x（剔 base ogrh）
 		"godie-o02p", // 初音 - 夢幻之星  #99
 		"godie-ofar", // 皮卡丘 - 神奇寶貝兒  #58  — 選 ofar（o02l 劇情空白）
 		"godie-ogld", // 黑人牙膏 - 美白大法師  #72
+		"godie-ogrh", // 悟空 - 賽亞人  #09  — 本體；o00x 超級賽亞人 是 09-03 的變身態（否則 R 變身成他已經是的樣子）
 		"godie-orkn", // 臭作 - 電車癡漢  #30
 		"godie-osam", // 殺生丸 - 犬妖  #34
 		"godie-u00h", // 鬼畜狂刀KYO - 鬼畜紅王  #39
 		"godie-u00j", // 賽菲洛斯 - 神性的流失  #74
 		"godie-u00k", // 死之王 - 邪惡意念集合體  #71
-		"godie-u00l", // 拳四郎 - 北斗之鼠  #25  — 選 u00l（剔 umal）
 		"godie-u00n", // 蒙其.D.魯夫 - 草帽小子  #76  — 選 u00n（剔 u00o）
 		"godie-u00v", // 基廉列克 - 黑手黨老大  #78
-		"godie-u010", // 飛影 - 邪眼師  #38  — 選 u010（剔 uvng）
-		"godie-u01u", // 索隆 - 三刀流劍士  #11  — 選 u01u（reject 測試 u01q；剔 udre）
 		"godie-ubal", // 巴恩大魔王 - 魔界霸主  #37
 		"godie-udea", // 飛鼠先生 - 至尊學長  #65
+		"godie-udre", // 索隆 - 三刀流劍士  #11  — 本體；u01u 是 11-002 武裝色霸氣 的變身態（測試英雄 u01q 仍排除）
+		"godie-umal", // 拳四郎 - 北斗神拳掌門人  #25  — 本體；u00l 北斗之鼠 是 25-04 ChangeDNA 的變身態
+		"godie-uvng", // 飛影 - 邪眼師  #38  — 本體；u010 是 38-00 邪眼全開 的變身態
 	}
 
 	// SHOP items — the FINAL CRAFTED WEAPONS, and nothing else (owner rule 1,

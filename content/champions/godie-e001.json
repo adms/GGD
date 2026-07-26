@@ -321,5 +321,27 @@
   ],
   "exAbility": "godie-e001.ex",
   "passiveAbility": "godie-e001.passive",
-  "icon": "assets/icons/champions/godie-e001.png"
+  "icon": "assets/icons/champions/godie-e001.png",
+  "transform": {
+    "role": "base",
+    "counterpartId": "godie-e00n",
+    "normalUnitRawcode": "E001",
+    "alternateUnitRawcode": "E00N",
+    "triggerAbility": {
+      "rawcode": "A02Q",
+      "name": "22-04 雛見澤症候群L5",
+      "durationSec": {
+        "1": 7.0,
+        "2": 14.0,
+        "3": 21.0,
+        "4": 28.0
+      },
+      "cooldownSec": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 75.0
+      }
+    }
+  }
 }

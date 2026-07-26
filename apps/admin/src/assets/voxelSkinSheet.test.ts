@@ -55,7 +55,9 @@ describe("buildSheet over the real roster", () => {
   // so it left the shared-stand-in population. Same number the shared-side
   // `voxelSkin/generate.test.ts` asserts — the two must agree.
   it("flags the shared-stand-in population and the hand-authored overrides", () => {
-    expect(sheet.stats.standInChampions).toBe(43);
+    // 44 since task #249 imported godie-o02n (曹操孟德 BASE unit O02N), one more
+    // champ.skin.rogue wearer.
+    expect(sheet.stats.standInChampions).toBe(44);
     expect(sheet.stats.overriddenChampions).toBe(Object.keys(overrides).length);
     for (const row of sheet.rows) {
       if (row.sharedStandIn) expect(row.recipe.preferVoxelBody).toBe(true);
@@ -101,7 +103,7 @@ describe("filters, sorts and the review loop", () => {
     const all = applyFilter(sheet.rows, EMPTY_FILTER);
     expect(all.length).toBe(sheet.rows.length);
     const standIn = applyFilter(sheet.rows, { ...EMPTY_FILTER, onlyStandIn: true });
-    expect(standIn.length).toBe(43);
+    expect(standIn.length).toBe(44);
     const tinted = applyFilter(sheet.rows, { ...EMPTY_FILTER, onlyTinted: true });
     expect(tinted.length).toBeGreaterThan(0);
     expect(tinted.every((r) => r.tint)).toBe(true);

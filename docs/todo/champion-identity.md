@@ -62,6 +62,7 @@ shrinks `SHARED_PORTRAIT_GROUPS` (its test fails until the stale entry is delete
 | ident-09 | Login marquee keeps 黑化Saber on its own tile (tinted) while still folding the real Saber twin; a shared-portrait champion is hidden from the STRIP only, never from the roster | champ-marquee-saber-alter | regression | done |
 | ident-10 | `SHARED_PORTRAIT_GROUPS` equals the byte-identical portrait groups actually on disk — no stale entries, and fixing an icon shrinks the table | champ-marquee-portrait-groups | unit | done |
 | ident-11 | Re-extract the mis-assigned champion portraits so the 9 remaining shared-PNG groups disappear (曹操孟德 wearing 皮卡丘's icon, 志志雄 wearing 初音's, …) | champion-identity-icon-reextract | integration | pending |
+| ident-12 | THE ONE EXCEPTION (owner 2026-07-26): where the w3x carries `Eme1`/`Emeu` evidence for a pair, that evidence wins — heroes 25 拳四郎 / 58 皮卡丘 / 61 克勞薩 now resolve as ONE hero each. Absent such evidence the lenient default is UNCHANGED: 05 / 53 / 91 stay two heroes, a shared name component alone still never merges, and the exception can never cross a hero 編號 (黑化Saber) | champion-identity-form-exception | regression | done |
 
 **#113 investigation (2026-07-23) — 14 same-name doc pairs → all DEDUP, no doc removed.**
 See `docs/_champion-dedup-113.md`. All 14 pairs resolve to `isSameCharacter = true`

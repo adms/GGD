@@ -237,5 +237,26 @@
     1.0,
     0.3922,
     0.3922
-  ]
+  ],
+  "transform": {
+    "role": "base",
+    "normalUnitRawcode": "NMAN",
+    "alternateUnitRawcode": "N01B",
+    "triggerAbility": {
+      "rawcode": "A0ND",
+      "name": "40-03 萬解-貓王胖虎",
+      "durationSec": {
+        "1": 12.0,
+        "2": 18.0,
+        "3": 24.0,
+        "4": 30.0
+      },
+      "cooldownSec": {
+        "1": 75.0,
+        "2": 75.0,
+        "3": 75.0,
+        "4": 75.0
+      }
+    }
+  }
 }

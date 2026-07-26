@@ -123,12 +123,16 @@ describe("voxel skin — coverage over the real roster", () => {
    * `voxel-standin` tag, so it left the shared-mesh population before #231 merged.
    * It is still both the #215 mob AND a pickable hero — nothing about that
    * identity changed; it simply is not on a shared stand-in mesh any more.
-   * Measured distribution: sela 18 / thorne 10 / barbarian 9 / rogue 6 = 43.
+   * Measured distribution was sela 18 / thorne 10 / barbarian 9 / rogue 6 = 43.
+   *
+   * BACK TO 44 at task #249: importing `godie-o02n` (曹操孟德's BASE unit O02N,
+   * whose map model is a Blizzard built-in) added one more `champ.skin.rogue`
+   * wearer — rogue 6 → 7.
    */
   it("every champion on a shared stand-in mesh is moved onto the voxel body", () => {
     cover("voxel-skin-standin");
     const standIns = DOCS.filter((d) => STAND_IN_MODEL_KEYS.includes(d.modelKey ?? ""));
-    expect(standIns.length).toBe(43);
+    expect(standIns.length).toBe(44);
     for (const d of standIns) expect(ROSTER.recipes.get(d.id)!.preferVoxelBody).toBe(true);
     // ...and a champion with its OWN imported mesh keeps it
     const own = DOCS.filter((d) => (d.modelKey ?? "").startsWith("imported."));

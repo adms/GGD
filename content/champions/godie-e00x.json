@@ -239,5 +239,27 @@
   ],
   "exAbility": "godie-e00x.ex",
   "passiveAbility": "godie-e00x.passive",
-  "icon": "assets/icons/champions/godie-e00x.png"
+  "icon": "assets/icons/champions/godie-e00x.png",
+  "transform": {
+    "role": "alternate",
+    "counterpartId": "godie-e00w",
+    "normalUnitRawcode": "E00W",
+    "alternateUnitRawcode": "E00X",
+    "triggerAbility": {
+      "rawcode": "A0JG",
+      "name": "77-03 GLADIARIA ALAT",
+      "durationSec": {
+        "1": 6.0,
+        "2": 12.0,
+        "3": 18.0,
+        "4": 24.0
+      },
+      "cooldownSec": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 60.0
+      }
+    }
+  }
 }

@@ -255,5 +255,27 @@
   ],
   "exAbility": "godie-o02v.ex",
   "passiveAbility": "godie-o02v.passive",
-  "icon": "assets/icons/champions/godie-o02v.png"
+  "icon": "assets/icons/champions/godie-o02v.png",
+  "transform": {
+    "role": "alternate",
+    "counterpartId": "godie-o01z",
+    "normalUnitRawcode": "O01Z",
+    "alternateUnitRawcode": "O02V",
+    "triggerAbility": {
+      "rawcode": "A0XP",
+      "name": "81-002 Exellion Mode",
+      "durationSec": {
+        "1": 15.0,
+        "2": 12.0,
+        "3": 18.0,
+        "4": 24.0
+      },
+      "cooldownSec": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 60.0
+      }
+    }
+  }
 }

@@ -1,6 +1,6 @@
 {
   "collection": "abilities",
-  "hash": "10e29817ff9f",
+  "hash": "661297363dcf",
   "entries": [
     {
       "id": "godie-e001.e",
@@ -2635,6 +2635,36 @@
       "path": "abilities/godie-o02l.w.json",
       "hash": "290c79f024e9",
       "size": 777
+    },
+    {
+      "id": "godie-o02n.e",
+      "path": "abilities/godie-o02n.e.json",
+      "hash": "1c1add5dcdad",
+      "size": 819
+    },
+    {
+      "id": "godie-o02n.passive",
+      "path": "abilities/godie-o02n.passive.json",
+      "hash": "62159d7e4824",
+      "size": 996
+    },
+    {
+      "id": "godie-o02n.q",
+      "path": "abilities/godie-o02n.q.json",
+      "hash": "c0258129fd87",
+      "size": 988
+    },
+    {
+      "id": "godie-o02n.r",
+      "path": "abilities/godie-o02n.r.json",
+      "hash": "f0a6f1344ce5",
+      "size": 793
+    },
+    {
+      "id": "godie-o02n.w",
+      "path": "abilities/godie-o02n.w.json",
+      "hash": "73276aa76607",
+      "size": 675
     },
     {
       "id": "godie-o02o.e",

@@ -880,6 +880,16 @@
     ]
   },
   {
+    "id": "name-godie-o02n",
+    "lang": "ja-JP",
+    "voice": "Kyoko",
+    "text": "ソウソウモウトク・アマンサマ。",
+    "out": "../assets/audio/voices/names/godie-o02n.mp3",
+    "rate": 185,
+    "targetLufs": -16,
+    "truePeakDb": -1.5
+  },
+  {
     "id": "name-godie-o02o",
     "lang": "ja-JP",
     "voice": "Kyoko",

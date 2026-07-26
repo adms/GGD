@@ -554,17 +554,25 @@ func TestStarterDraftIsQuestSet(t *testing.T) {
 // (賈修貝爾 #05). Adding a champion here is deliberate and reviewable — that is
 // the whole point of the pin. The new-hero checklist that must be walked before
 // an id lands in this list is docs/新英雄上架SOP.md.
+// TASK #249 SWAPPED TEN OF THESE from the 變身 form to the BASE unit. Each swap
+// is `alternate → base` for one hero, so the roster SIZE and the set of hero
+// 編號 are unchanged; what changed is which BODY the player picks:
+//
+//	#04 h020→hjai  #08 n01c→nbbc  #09 o00x→ogrh  #11 u01u→udre  #12 e007→ewar
+//	#18 n00p→nsjs  #25 u00l→umal  #38 u010→uvng  #90 h02r→hgam  #92 h02u→h02v
+//
+// Owner ruling 2026-07-26:「換成本體，變身態改由技能觸發」.
 var firstOpenRoster = []string{
-	"godie-e001", "godie-e002", "godie-e007", "godie-e008", "godie-e00k",
-	"godie-e00r", "godie-e00w", "godie-edem", "godie-efur", "godie-emfr",
-	"godie-emns", "godie-etyr", "godie-h00l", "godie-h01n", "godie-h01u",
-	"godie-h020", "godie-h02k", "godie-h02r", "godie-h02u", "godie-hapm",
-	"godie-hart", "godie-hblm", "godie-hpal", "godie-hpb1", "godie-huth",
-	"godie-hvsh", "godie-hvwd", "godie-n003", "godie-n00b", "godie-n00p",
-	"godie-n01c", "godie-nplh", "godie-o00k", "godie-o00l", "godie-o00x",
-	"godie-o02p", "godie-ofar", "godie-ogld", "godie-orkn", "godie-osam",
-	"godie-u00h", "godie-u00j", "godie-u00k", "godie-u00l", "godie-u00n",
-	"godie-u00v", "godie-u010", "godie-u01u", "godie-ubal", "godie-udea",
+	"godie-e001", "godie-e002", "godie-e008", "godie-e00k", "godie-e00r",
+	"godie-e00w", "godie-edem", "godie-efur", "godie-emfr", "godie-emns",
+	"godie-etyr", "godie-ewar", "godie-h00l", "godie-h01n", "godie-h01u",
+	"godie-h02k", "godie-h02v", "godie-hapm", "godie-hart", "godie-hblm",
+	"godie-hgam", "godie-hjai", "godie-hpal", "godie-hpb1", "godie-huth",
+	"godie-hvsh", "godie-hvwd", "godie-n003", "godie-n00b", "godie-nbbc",
+	"godie-nplh", "godie-nsjs", "godie-o00k", "godie-o00l", "godie-o02p",
+	"godie-ofar", "godie-ogld", "godie-ogrh", "godie-orkn", "godie-osam",
+	"godie-u00h", "godie-u00j", "godie-u00k", "godie-u00n", "godie-u00v",
+	"godie-ubal", "godie-udea", "godie-udre", "godie-umal", "godie-uvng",
 }
 
 // whitelist-first-open-roster: the enabled champion set the starter bundle

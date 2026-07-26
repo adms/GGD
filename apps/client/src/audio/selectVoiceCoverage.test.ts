@@ -62,7 +62,8 @@ function sha(rel: string): string {
 describe("select-voice coverage on the PUBLIC tier", () => {
   it("answers for every champion, with files that exist", () => {
     cover("voice-select-coverage");
-    expect(CHAMP_IDS).toHaveLength(114);
+    // 115 since task #249 imported godie-o02n (曹操孟德's BASE unit O02N).
+    expect(CHAMP_IDS).toHaveLength(115);
 
     const silent: string[] = [];
     const missing: string[] = [];
@@ -85,7 +86,9 @@ describe("select-voice coverage on the PUBLIC tier", () => {
     // The generated voice pack (51 CosyVoice3 heroes) now answers rung 2 for the
     // 42 packed heroes without an authored map-quip; authored stays 16, and the
     // 42 are drawn out of what was previously the name rung (95 → 54, task #184).
-    expect(byTier).toEqual({ authored: 16, generated: 42, name: 54, quote: 2 });
+    // name 54 → 55: task #249 imported godie-o02n (曹操孟德's BASE unit O02N),
+    // which answers on the name rung exactly like its 天下號令 form.
+    expect(byTier).toEqual({ authored: 16, generated: 42, name: 55, quote: 2 });
   });
 
   it("never gives two DIFFERENT characters the same audio file — outside the two the w3x already shared", () => {

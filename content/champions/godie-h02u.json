@@ -275,5 +275,27 @@
         ]
       }
     ]
+  },
+  "transform": {
+    "role": "alternate",
+    "counterpartId": "godie-h02v",
+    "normalUnitRawcode": "H02V",
+    "alternateUnitRawcode": "H02U",
+    "triggerAbility": {
+      "rawcode": "A0W9",
+      "name": "92-01 臥草泥馬",
+      "durationSec": {
+        "1": 10.0,
+        "2": 10.0,
+        "3": 5.0,
+        "4": 5.0
+      },
+      "cooldownSec": {
+        "1": 40.0,
+        "2": 40.0,
+        "3": 20.0,
+        "4": 20.0
+      }
+    }
   }
 }

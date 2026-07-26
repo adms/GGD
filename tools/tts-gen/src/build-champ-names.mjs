@@ -199,6 +199,9 @@ const CASTING = {
   "godie-usyl": ["ja", "サツリクノキバ", "Satsuriku no Kiba", "エイリアン", "Alien"],
 
   // ── RULE 4 — Chinese classical/historical name: on'yomi is CORRECT, not a gag.
+  // 曹操 has TWO unit definitions — O02N (base) and O02O (its 87-03 天下號令
+  // form). Same character, same authored name, so deliberately the same casting.
+  "godie-o02n": ["ja", "ソウソウモウトク", "Sou Sou Moutoku", "アマンサマ", "Aman-sama"],
   "godie-o02o": ["ja", "ソウソウモウトク", "Sou Sou Moutoku", "アマンサマ", "Aman-sama"],
   "godie-opgh": ["ja", "ジョウショウショウグン", "Joushou Shougun", "チョウウンシリュウ", "Chou Un Shiryuu"],
   "godie-h01u": ["ja", "ランセイノオウジャ", "Ransei no Ouja", "リョフホウセン", "Ryofu Housen"],

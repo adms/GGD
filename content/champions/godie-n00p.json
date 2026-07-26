@@ -234,5 +234,27 @@
   ],
   "exAbility": "godie-n00p.ex",
   "passiveAbility": "godie-n00p.passive",
-  "icon": "assets/icons/champions/godie-n00p.png"
+  "icon": "assets/icons/champions/godie-n00p.png",
+  "transform": {
+    "role": "alternate",
+    "counterpartId": "godie-nsjs",
+    "normalUnitRawcode": "NSJS",
+    "alternateUnitRawcode": "N00P",
+    "triggerAbility": {
+      "rawcode": "A0IH",
+      "name": "18-03 妖狐變化",
+      "durationSec": {
+        "1": 8.0,
+        "2": 12.0,
+        "3": 16.0,
+        "4": 20.0
+      },
+      "cooldownSec": {
+        "1": 60.0,
+        "2": 60.0,
+        "3": 60.0,
+        "4": 60.0
+      }
+    }
+  }
 }
